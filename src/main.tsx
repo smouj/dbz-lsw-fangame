@@ -279,6 +279,9 @@ function BattleScreen({ playerFormId, enemyFormId, onExit }: {
   const [flashEnemy, setFlashEnemy] = useState(false);
   const [pBuffs, setPBuffs] = useState({ str: 0, ki: 0 });
   const [eBuffs, setEBuffs] = useState({ str: 0, ki: 0 });
+  // Guardia activa: defensa usada en el turno que mitiga el próximo ataque enemigo
+  const [playerGuard, setPlayerGuard] = useState<null | { type: 'avoid_beam' | 'avoid_damage' | 'reduce' | 'absorb' }>(null);
+  const [enemyGuard, setEnemyGuard] = useState<null | { type: 'avoid_beam' | 'avoid_damage' | 'reduce' | 'absorb' }>(null);
 
   useEffect(() => {
     setBgId(BATTLE_BGS[Math.floor(Math.random() * BATTLE_BGS.length)].id);
@@ -335,8 +338,16 @@ function BattleScreen({ playerFormId, enemyFormId, onExit }: {
           const gain = card.id === 97 ? 5 : 3;
           setPlayer(prev => ({ ...prev, cc: Math.min(prev.maxCc, prev.cc + gain) }));
           addLog(`${player.name} ${t('battle.uses')} ${card.name} — +${gain} CC!`);
-        } else if (eff === 'command_cancel' || eff === 'avoid_beam' || eff === 'avoid_damage' || eff === 'avoid_damage_taiyoken' || eff === 'reduce_damage' || eff === 'absorb_beam' || eff === 'beam_shield' || eff === 'damage_shield') {
-          addLog(`${player.name} ${t('battle.uses')} ${card.name} — guard!`);
+        } else if (eff === 'avoid_beam' || eff === 'avoid_damage' || eff === 'avoid_damage_taiyoken' || eff === 'reduce_damage' || eff === 'absorb_beam' || eff === 'beam_shield' || eff === 'damage_shield' || eff === 'command_cancel') {
+          // Activar guardia: mitiga el próximo ataque enemigo (persistente hasta usarse)
+          const gType: 'avoid_beam' | 'avoid_damage' | 'reduce' | 'absorb' =
+            eff === 'avoid_damage' || eff === 'avoid_damage_taiyoken' || eff === 'damage_shield' ? 'avoid_damage'
+            : eff === 'absorb_beam' || eff === 'beam_shield' ? 'absorb'
+            : eff === 'reduce_damage' ? 'reduce'
+            : 'avoid_beam';
+          setPlayerGuard({ type: gType });
+          const label = gType === 'avoid_beam' ? 'BEAM GUARD' : gType === 'avoid_damage' ? 'DAMAGE GUARD' : gType === 'absorb' ? 'ABSORB' : 'ENDURANCE';
+          addLog(`${player.name} ${t('battle.uses')} ${card.name} — ${label}!`);
         } else if (eff === 'ohko_lowacc' || eff === 'android_kill') {
           // OHKO con baja precisión
           if (Math.random() < card.acc / 100) {
@@ -452,7 +463,24 @@ function BattleScreen({ playerFormId, enemyFormId, onExit }: {
         if (enemy.position === 'front') posMod *= 1.1;
         let atkMod = card.atk + (card.type === 'beam' ? (enemy.ki + eBuffs.ki) * 0.5 : (enemy.str + eBuffs.str) * 0.3);
         damage = Math.floor(atkMod * posMod);
-        addLog(`${enemy.name} → ${card.name} — ${damage} ${t('battle.dmg')}`);
+        // Aplicar guardia activa del jugador
+        if (playerGuard) {
+          const g = playerGuard.type;
+          if ((g === 'avoid_beam' && card.type === 'beam') || (g === 'avoid_damage' && card.type === 'damage')) {
+            damage = 0; hitType = 'guard';
+            addLog(`${player.name} bloquea ${card.name}!`);
+          } else if (g === 'reduce') {
+            damage = Math.floor(damage * 0.5);
+            addLog(`${player.name} resiste — ${damage} ${t('battle.dmg')}`);
+          } else if (g === 'absorb' && card.type === 'beam') {
+            damage = 0; hitType = 'guard';
+            setPlayer(prev => ({ ...prev, hp: Math.min(prev.maxHp, prev.hp + Math.floor(prev.maxHp * 0.1)) }));
+            addLog(`${player.name} absorbe el beam +${Math.floor(player.maxHp * 0.1)} HP!`);
+          }
+          setPlayerGuard(null); // la guardia se consume
+        } else {
+          addLog(`${enemy.name} → ${card.name} — ${damage} ${t('battle.dmg')}`);
+        }
       }
       setPlayer(prev => ({ ...prev, hp: Math.max(0, prev.hp - damage) }));
       // CC al recibir daño significativo (más en posición vulnerable)
@@ -466,6 +494,7 @@ function BattleScreen({ playerFormId, enemyFormId, onExit }: {
       else if (hitType === 'miss') Sfx.dodge();
       setTimeout(() => setFlashPlayer(false), 150);
       if (damage > 0) { setPlayerPose('hurt'); setDamageNums(prev => [...prev, { value: damage, type: 'damage', x: 30, y: 50, id: Date.now() }]); }
+      else if (hitType === 'guard') setDamageNums(prev => [...prev, { value: 0, type: 'guard', x: 30, y: 50, id: Date.now() }]);
       else if (hitType === 'miss') setDamageNums(prev => [...prev, { value: 0, type: 'miss', x: 30, y: 50, id: Date.now() }]);
 
       // +3 CC por turno atacante + CC de la carta; +1 CC extra al infligir daño
