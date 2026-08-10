@@ -3,6 +3,7 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { createRoot } from 'react-dom/client';
 import './styles.css';
 import { FORMS, CHARACTERS, getCharacter, getForm, idleSpriteUrl } from './data/roster';
+import { needsFlip } from './data/facing';
 import { CARDS, CARD_COLORS, CARD_TYPE_NAMES, CardDef, CardType, DECK_SIZE, MAX_COPIES, getCard, CardEffect } from './data/cards';
 import { cardIconUrl, MINI_PORTRAITS, MENU_PORTRAITS, TYPE_ICONS } from './data/icons';
 import { initAudio, Sfx, setSfxEnabled, setVolume } from './audio/sfx';
@@ -121,12 +122,13 @@ function CharacterSprite({ formId, height = 92, className = '' }: {
   if (!idle || !form) {
     return <div className={`char-sprite-missing ${className}`} style={{ height }}>?</div>;
   }
-  // mantener proporción: width = height * (w/h) del sprite
+  const flip = needsFlip(form.sheet);
+  // mantener proporción: width = height * (w/h) del sprite; voltear a la derecha si el sheet lo requiere
   return (
     <img className={`char-idle-sprite ${className}`}
       src={idle}
       alt={form.character}
-      style={{ height, width: 'auto', imageRendering: 'pixelated' }}
+      style={{ height, width: 'auto', imageRendering: 'pixelated', transform: flip ? 'scaleX(-1)' : 'none' }}
     />
   );
 }

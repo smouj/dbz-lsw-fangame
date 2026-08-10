@@ -1481,3 +1481,94 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 .sheet-sprite.char-idle-sprite {
   animation-duration: 2.8s;
 }
+
+/* ═══════════════════════════════════════════════════════════
+   POLISH — HUD + coherencia visual
+   ═══════════════════════════════════════════════════════════ */
+
+/* Retrato más visible con marco GBC */
+.hud-portrait {
+  width: 30px; height: 34px;
+  border: 2px solid var(--border);
+  background: var(--panel-lo);
+  overflow: hidden;
+  flex-shrink: 0;
+  box-shadow: inset 1px 1px 0 rgba(0,0,0,0.5);
+}
+
+.hud-portrait img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  image-rendering: pixelated;
+}
+
+/* Nombre con sombra legible */
+.hud-name {
+  gap: 6px;
+  text-shadow: 1px 1px 0 #000;
+}
+
+/* Barras HP más pulidas */
+.hp-bar-track {
+  border-radius: 0;
+  background: #06060c;
+}
+
+/* CC con separación */
+.cc-display {
+  gap: 6px;
+}
+
+/* Fase: separar turno/fase con divisor */
+.phase-info {
+  gap: 12px;
+}
+
+.turn-label {
+  background: var(--panel-hi);
+  border: 1px solid var(--border-lo);
+  padding: 2px 8px;
+}
+
+/* Log: fondo sutil */
+.battle-log {
+  background: #101018;
+}
+
+/* Coherencia: botón FIGHT principal en todas las páginas */
+.char-detail .btn-primary,
+.versus-layout .btn-primary {
+  margin-top: auto;
+  width: 100%;
+}
+
+/* Detalle personaje: sprite centrado con plataforma */
+.char-detail-header {
+  justify-content: center;
+}
+
+.char-detail-sprite {
+  width: 110px; height: 120px;
+}
+
+/* Grid: celdas uniformes */
+.char-cell {
+  min-height: 108px;
+  justify-content: space-between;
+}
+
+/* Menú: nav centrado y consistente */
+.menu-nav {
+  min-width: 280px;
+}
+
+/* Story: nodos con altura uniforme */
+.chapter-node {
+  min-height: 52px;
+}
+
+/* Settings: filas alineadas */
+.setting-row {
+  min-height: 44px;
+}
