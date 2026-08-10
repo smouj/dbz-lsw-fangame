@@ -251,42 +251,50 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   display: flex;
   justify-content: space-between;
   align-items: stretch;
-  gap: 120px; /* espacio central reservado para la insignia VS */
-  padding: 5px 10px;
-  background: linear-gradient(180deg, #243040 0%, var(--panel) 45%, #141b26 100%);
+  gap: 120px;
+  padding: 6px 10px;
+  background: var(--panel-lo);
   border-bottom: 3px solid var(--border);
-  box-shadow: inset 0 1px 0 var(--border-lo), 0 3px 10px rgba(0,0,0,.45);
+  box-shadow: inset 0 -4px 0 var(--border-lo), 0 3px 10px rgba(0,0,0,.45);
   z-index: 10;
   position: relative;
 }
-/* brillo dorado sutil en la base del HUD */
+/* acento dorado tipo sello en la base */
 .hud-top::after {
   content: ''; position: absolute; left: 0; right: 0; bottom: -3px; height: 3px;
-  background: linear-gradient(90deg, transparent 4%, rgba(216,168,48,.55) 20%, rgba(216,168,48,.9) 50%, rgba(216,168,48,.55) 80%, transparent 96%);
+  background: linear-gradient(90deg, transparent 4%, rgba(216,168,48,.6) 18%, rgba(216,168,48,.95) 50%, rgba(216,168,48,.6) 82%, transparent 96%);
   pointer-events: none;
 }
 
 .fighter-hud {
   display: flex; flex-direction: column; gap: 3px;
-  min-width: 260px;
-  padding: 6px 10px;
-  background: linear-gradient(180deg, rgba(30,40,55,.97) 0%, rgba(12,16,24,.97) 60%, rgba(22,28,40,.97) 100%);
-  border: 2px solid var(--border);
-  /* borde pixel escalonado (estilo GBC) + acento dorado en la base */
-  box-shadow: inset 2px 2px 0 var(--border-lo), inset -2px -2px 0 var(--panel-lo),
-              0 2px 0 #000, 2px 0 0 #000, 0 -2px 0 #000, -2px 0 0 #000,
-              inset 0 -3px 0 rgba(216,168,48,.35);
+  min-width: 264px;
+  padding: 6px 10px 7px;
+  background: var(--panel);
+  border: 3px solid var(--border);
+  border-top-color: var(--panel-hi);
+  box-shadow: inset 2px 2px 0 var(--panel-lo), inset -2px -2px 0 var(--panel-lo),
+              0 3px 0 #000, 3px 0 0 #000, 0 -3px 0 #000, -3px 0 0 #000;
   position: relative;
 }
-.fighter-hud::before {
-  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
-  background: linear-gradient(90deg, transparent, rgba(216,168,48,.5), transparent);
+/* etiqueta tipo sello con el nombre del luchador */
+.fighter-hud::after {
+  content: ''; position: absolute; bottom: -3px; left: 8px; right: 8px; height: 2px;
+  background: rgba(216,168,48,.55);
   pointer-events: none;
 }
 
 .fighter-hud.right {
   text-align: right;
   align-items: flex-end;
+}
+/* CRÍTICO: con flex-end los hijos colapsan a ancho 0 → la barra de vida
+   del rival no se veía. Forzar ancho completo en los elementos de barra. */
+.fighter-hud .hp-bar,
+.fighter-hud .cc-display,
+.fighter-hud .hud-stats,
+.fighter-hud .hud-name {
+  width: 100%;
 }
 
 .hud-name {
@@ -299,25 +307,27 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 }
 
 .hud-portrait {
-  width: 34px; height: 34px;
-  border: 2px solid var(--border);
+  width: 36px; height: 36px;
+  border: 3px solid var(--border);
+  border-top-color: var(--panel-hi);
   background: #06090d;
   overflow: hidden;
-  box-shadow: inset 1px 1px 0 rgba(255,255,255,.08), 0 0 8px rgba(216,168,48,.25);
+  box-shadow: inset 1px 1px 0 rgba(255,255,255,.1), 2px 2px 0 #000;
   flex-shrink: 0;
 }
 .fighter-hud:hover .hud-portrait { border-color: var(--gold); box-shadow: inset 1px 1px 0 rgba(255,255,255,.08), 0 0 12px rgba(216,168,48,.45); }
 .hud-portrait img { width: 100%; height: 100%; object-fit: cover; }
 
 .hud-level {
-  color: #ffe9a3;
+  color: #1a1200;
   font-size: 7px;
   margin-left: 3px;
   letter-spacing: 1px;
-  background: rgba(216,168,48,.18);
-  border: 1px solid rgba(216,168,48,.5);
-  padding: 2px 5px;
-  text-shadow: 1px 1px 0 #000;
+  background: var(--gold);
+  border: 2px solid #7a5a10;
+  padding: 2px 6px;
+  text-shadow: none;
+  box-shadow: 2px 2px 0 #000;
 }
 
 .hud-stats {
@@ -329,15 +339,16 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 
 /* ─── HP Bar (estilo GBC) ─── */
 
-.hp-bar { position: relative; height: 16px; margin: 2px 0; }
+.hp-bar { position: relative; height: 18px; margin: 2px 0; }
 
 .hp-bar-track {
-  width: 100%; height: 12px;
+  width: 100%; height: 14px;
   background: #06090d;
   border: 2px solid var(--border);
+  border-top-color: var(--panel-hi);
   position: relative;
   overflow: hidden;
-  box-shadow: inset 1px 1px 0 rgba(0,0,0,0.6), inset -1px -1px 0 rgba(255,255,255,.06);
+  box-shadow: inset 1px 1px 0 rgba(0,0,0,0.6), inset -1px -1px 0 rgba(255,255,255,.06), 2px 2px 0 #000;
 }
 /* segmentos de la barra (divisores pixel cada 10px) */
 .hp-bar-track::after {
@@ -365,15 +376,18 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 @keyframes hp-flash { 0% { opacity: 1; } 100% { opacity: 0.5; } }
 
 .hp-bar-text {
-  position: absolute; top: 0; left: 0; right: 0;
+  position: absolute; top: 50%; left: 0; right: 0;
+  transform: translateY(-50%);
   text-align: center;
   font-family: var(--fpx);
-  font-size: 6px;
-  line-height: 10px;
+  font-size: 7px;
+  line-height: 1;
   color: #fff;
-  text-shadow: 1px 1px 0 #000;
-  z-index: 3;
+  text-shadow: 1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;
+  z-index: 6;
   letter-spacing: 1px;
+  white-space: nowrap;
+  pointer-events: none;
 }
 
 /* ─── CC ─── */
@@ -674,7 +688,8 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 
 .command-strip button:hover:not(:disabled) {
   transform: translateY(-2px);
-  box-shadow: inset 1px 1px 0 var(--border-lo), 0 3px 8px rgba(0,0,0,0.5);
+  border-color: var(--gold);
+  box-shadow: 3px 5px 0 #000;
 }
 
 .command-strip button:active:not(:disabled) { transform: translateY(0) scale(0.97); }
