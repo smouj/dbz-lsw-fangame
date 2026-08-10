@@ -1597,3 +1597,179 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 @media (max-width: 480px) {
   .menu-art-frame { width: min(140px, 50vw); padding: 5px; }
 }
+
+/* ═══════════════════════════════════════════════════════════
+   STARTER — elección de mazo inicial (Damage o Beam)
+   ═══════════════════════════════════════════════════════════ */
+
+.starter-screen {
+  position: relative;
+  width: 100%; height: 100vh;
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden;
+}
+
+.starter-bg {
+  position: absolute; inset: 0;
+  background:
+    linear-gradient(180deg, rgba(10,10,24,0.7) 0%, rgba(10,10,24,0.4) 50%, rgba(8,8,20,0.85) 100%),
+    url('/menu-art.png') center center / cover no-repeat;
+}
+
+.starter-content {
+  position: relative; z-index: 1;
+  display: flex; flex-direction: column; align-items: center; gap: 14px;
+  padding: 20px;
+  text-align: center;
+}
+
+.starter-title {
+  font-family: var(--fpx);
+  font-size: 16px;
+  color: var(--gold);
+  letter-spacing: 3px;
+  text-shadow: 2px 2px 0 #000;
+}
+
+.starter-sub {
+  font-family: var(--fui);
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.starter-decks {
+  display: flex; gap: 16px;
+  margin-top: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.starter-deck-card {
+  width: 300px;
+  min-height: 260px;
+  background: var(--panel);
+  border: 3px solid var(--border);
+  box-shadow: inset 2px 2px 0 var(--border-lo), inset -2px -2px 0 var(--panel-lo);
+  padding: 16px;
+  cursor: pointer;
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+  transition: border-color 120ms, transform 120ms, box-shadow 120ms;
+  font-family: var(--fpx);
+}
+
+.starter-deck-card:hover, .starter-deck-card.hover {
+  border-color: var(--gold);
+  transform: translateY(-4px);
+  box-shadow: inset 2px 2px 0 var(--border-lo), 0 8px 24px rgba(0,0,0,0.5), 0 0 20px rgba(216,168,48,0.2);
+}
+
+.starter-deck-name {
+  font-size: 11px;
+  color: var(--orange);
+  letter-spacing: 2px;
+}
+
+.starter-deck-icon { font-size: 36px; }
+
+.starter-deck-desc {
+  font-family: var(--fui);
+  font-size: 10px;
+  color: var(--muted);
+}
+
+.starter-deck-cards {
+  font-family: var(--fui);
+  font-size: 9px;
+  color: var(--dim);
+  line-height: 1.6;
+  max-height: 90px;
+  overflow: hidden;
+}
+
+/* ─── Personajes bloqueados ─── */
+
+.char-cell.char-locked {
+  cursor: not-allowed;
+  opacity: 0.5;
+  filter: grayscale(0.8);
+  background: var(--panel-lo);
+  justify-content: center;
+  gap: 8px;
+  min-height: 108px;
+}
+
+.char-locked-icon {
+  color: var(--dim);
+  display: flex; align-items: center; justify-content: center;
+  width: 32px; height: 32px;
+  border: 2px solid var(--border);
+  background: var(--panel);
+}
+
+/* ─── Recompensa post-batalla ─── */
+
+.reward-overlay {
+  position: absolute; inset: 0;
+  z-index: 50;
+  background: rgba(5,5,15,0.85);
+  display: flex; align-items: center; justify-content: center;
+}
+
+.reward-panel {
+  background: var(--panel);
+  border: 3px solid var(--gold);
+  box-shadow: inset 2px 2px 0 var(--border-lo), 0 0 40px rgba(216,168,48,0.25);
+  padding: 20px;
+  display: flex; flex-direction: column; align-items: center; gap: 14px;
+  max-width: 520px;
+}
+
+.reward-title {
+  font-family: var(--fpx);
+  font-size: 11px;
+  color: var(--gold);
+  letter-spacing: 2px;
+}
+
+.reward-cards {
+  display: flex; gap: 10px;
+}
+
+.reward-card {
+  width: 130px;
+  background: var(--panel-hi);
+  border: 2px solid var(--border-lo);
+  padding: 8px;
+  cursor: pointer;
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+  transition: border-color 100ms, transform 100ms;
+}
+
+.reward-card:hover {
+  border-color: var(--gold);
+  transform: translateY(-4px);
+}
+
+.reward-card-img {
+  width: 56px; height: 42px;
+  image-rendering: pixelated;
+}
+
+.reward-card-name {
+  font-family: var(--fpx);
+  font-size: 6px;
+  text-align: center;
+  color: var(--text);
+}
+
+.reward-card-type {
+  font-family: var(--fpx);
+  font-size: 5px;
+  color: var(--muted);
+  letter-spacing: 1px;
+}
+
+@media (max-width: 640px) {
+  .starter-deck-card { width: 240px; min-height: 220px; }
+  .reward-cards { flex-direction: column; }
+}

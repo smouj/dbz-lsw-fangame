@@ -1,0 +1,79 @@
+// ═══════════════════════════════════════════════════════════
+// DBZ LSW — Sistema de desbloqueos (fiel al GBC)
+// - Al empezar: elegir mazo inicial Damage o Beam (20 cartas)
+// - Personajes: solo Goku al inicio; el resto se desbloquea
+//   ganándoles en batalla o por retos de la historia
+// - Cartas: las del mazo inicial + desbloqueos por nivel/victoria
+// ═══════════════════════════════════════════════════════════
+
+export const UNLOCK_KEY = '***';
+
+// Mazos iniciales (como el GBC: orientado a Damage o a Beam)
+export const STARTER_DAMAGE_DECK = [1, 2, 3, 4, 5, 5, 6, 11, 15, 25, 29, 34, 37, 43, 46, 19, 124, 88, 104, 23];
+export const STARTER_BEAM_DECK = [1, 2, 3, 4, 7, 8, 10, 12, 30, 32, 35, 38, 47, 63, 125, 45, 88, 117, 23, 59];
+
+// Personajes desbloqueados de inicio (Goku como en el GBC)
+export const STARTER_CHARACTERS = ['goku'];
+
+// Cartas que se desbloquean automáticamente por nivel (progresión)
+// Cada nivel desbloquea un lote adicional
+export function cardsForLevel(level: number): number[] {
+  const lots: Record<number, number[]> = {
+    2: [26, 27, 28, 53, 54, 56, 57],          // defensas + beams de apoyo
+    3: [16, 79, 96, 97, 99, 100, 101],        // curaciones y soporte
+    4: [21, 22, 24, 33, 36, 40, 44],          // beams potentes
+    5: [17, 18, 20, 31, 48, 49, 50],          // beams variados
+    6: [42, 51, 59, 68, 72, 73, 82],          // soporte y beams
+    7: [13, 14, 41, 52, 55, 58, 60],          // specials y combos
+    8: [61, 62, 64, 65, 66, 67, 69],          // beams/specials
+    9: [70, 71, 74, 75, 76, 77, 78],          // androides/cell
+    10: [80, 81, 83, 84, 85, 86, 87],         // buu + apoyo
+    11: [89, 90, 91, 92, 93, 94, 95],         // apoyo mayor
+    12: [98, 102, 103, 105, 106, 107, 108],   // ítems
+    13: [109, 110, 111, 112, 113, 114, 115],  // ítems defensivos
+    14: [116, 118, 119, 120, 121, 122, 123],  // técnicas finales
+  };
+  const unlocked: number[] = [];
+  for (const lvl of Object.keys(lots).map(Number)) {
+    if (level >= lvl) unlocked.push(...lots[lvl]);
+  }
+  return unlocked;
+}
+
+// Recompensa post-batalla: elegir 1 de 3 cartas aleatorias no desbloqueadas
+export function pickRewards(owned: Set<number>, count = 3): number[] {
+  const all = Array.from({ length: 125 }, (_, i) => i + 1);
+  const available = all.filter(id => !owned.has(id));
+  // barajar
+  for (let i = available.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [available[i], available[j]] = [available[j], available[i]];
+  }
+  return available.slice(0, count);
+}
+
+// Personajes que se desbloquean al ganarles en Versus (como el GBC)
+export const VS_UNLOCKS: Record<string, string> = {
+  'vegeta_base': 'vegeta',
+  'gohan_young': 'gohan',
+  'piccolo_base': 'piccolo',
+  'krillin_base': 'krillin',
+  'trunks_kid': 'trunks',
+  'goten_base': 'goten',
+  'gotenks_ssj': 'gotenks',
+  'frieza_final': 'frieza',
+  'cell_imperfect': 'cell',
+  'cell_jr': 'cell_jr',
+  'android_16': 'android_16',
+  'android_17': 'android_17',
+  'android_18': 'android_18',
+  'android_19': 'android_19',
+  'android_20': 'android_20',
+  'ginyu': 'ginyu',
+  'recoome': 'recoome',
+  'guldo': 'guldo',
+  'jeice': 'jeice',
+  'burter': 'burter',
+  'nappa': 'nappa',
+  'buu_base': 'buu',
+};

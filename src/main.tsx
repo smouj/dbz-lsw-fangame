@@ -4,6 +4,7 @@ import { createRoot } from 'react-dom/client';
 import './styles.css';
 import { FORMS, CHARACTERS, getCharacter, getForm, idleSpriteUrl } from './data/roster';
 import { needsFlip } from './data/facing';
+import { UNLOCK_KEY, STARTER_DAMAGE_DECK, STARTER_BEAM_DECK, STARTER_CHARACTERS, cardsForLevel, pickRewards, VS_UNLOCKS } from './data/unlocks';
 import { CARDS, CARD_COLORS, CARD_TYPE_NAMES, CardDef, CardType, DECK_SIZE, MAX_COPIES, getCard, CardEffect } from './data/cards';
 import { cardIconUrl, MINI_PORTRAITS, MENU_PORTRAITS, TYPE_ICONS } from './data/icons';
 import { initAudio, Sfx, setSfxEnabled, setVolume } from './audio/sfx';
@@ -630,9 +631,40 @@ function BattleScreen({ playerFormId, enemyFormId, onExit }: {
 
 function MainMenu({ onNavigate }: { onNavigate: (s: Screen) => void }) {
   const { t } = useLang();
+  const [reward, setReward] = useState<number[] | null>(() => loadUnlocks().pendingReward);
+
+  const claimReward = (cardId: number) => {
+    const u = loadUnlocks();
+    u.cards = [...new Set([...u.cards, cardId])];
+    u.pendingReward = null;
+    saveUnlocks(u);
+    setReward(null);
+    Sfx.confirm();
+  };
+
   return (
     <div className="menu-screen">
       <div className="menu-bg" />
+      {/* Recompensa post-batalla */}
+      {reward && reward.length > 0 && (
+        <div className="reward-overlay">
+          <div className="reward-panel">
+            <div className="reward-title">CHOOSE REWARD CARD</div>
+            <div className="reward-cards">
+              {reward.map(cardId => {
+                const card = getCard(cardId)!;
+                return (
+                  <button key={cardId} className="reward-card" onClick={() => claimReward(cardId)}>
+                    <img className="reward-card-img" src={`/assets/cards/icons/card_${String(cardId).padStart(3, '0')}.png`} alt="" />
+                    <div className="reward-card-name">{card.name}</div>
+                    <div className="reward-card-type">{CARD_TYPE_NAMES[card.type]}</div>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      )}
       <div className="menu-content">
         <h1 className="menu-title">{t('menu.title')}</h1>
         <h2 className="menu-subtitle">{t('menu.subtitle')}</h2>
@@ -703,6 +735,67 @@ function loadProgress(): SaveState {
 
 function saveProgress(p: SaveState) {
   try { localStorage.setItem(PROGRESS_KEY, JSON.stringify(p)); } catch { /* noop */ }
+}
+
+// ═══════════════════════════════════════════════════════════
+// DESBLOQUEOS — cartas y personajes (localStorage dbzlsw_unlocks)
+// ═══════════════════════════════════════════════════════════
+
+interface UnlockState {
+  starterDeck: 'damage' | 'beam' | null;  // mazo elegido al empezar
+  characters: string[];                    // personajes desbloqueados
+  cards: number[];                         // cartas desbloqueadas (ids)
+  pendingReward: number[] | null;          // cartas para elegir tras ganar
+}
+
+function loadUnlocks(): UnlockState {
+  try {
+    const raw = localStorage.getItem(UNLOCK_KEY);
+    if (raw) {
+      const u = JSON.parse(raw);
+      if (u && Array.isArray(u.characters) && Array.isArray(u.cards)) return u;
+    }
+  } catch { /* noop */ }
+  return { starterDeck: null, characters: [...STARTER_CHARACTERS], cards: [], pendingReward: null };
+}
+
+function saveUnlocks(u: UnlockState) {
+  try { localStorage.setItem(UNLOCK_KEY, JSON.stringify(u)); } catch { /* noop */ }
+}
+
+// Iniciar con un mazo: desbloquea las 20 cartas del mazo elegido
+function startWithDeck(kind: 'damage' | 'beam') {
+  const deck = kind === 'damage' ? STARTER_DAMAGE_DECK : STARTER_BEAM_DECK;
+  const u = loadUnlocks();
+  u.starterDeck = kind;
+  u.cards = [...new Set([...u.cards, ...deck])];
+  u.pendingReward = null;
+  saveUnlocks(u);
+  // El mazo de batalla por defecto pasa a ser el elegido
+  try { localStorage.setItem(DECK_KEY, JSON.stringify(deck)); } catch { /* noop */ }
+}
+
+// Cartas desbloqueadas efectivas = iniciales + por nivel
+function ownedCards(u: UnlockState, level: number): Set<number> {
+  const set = new Set<number>(u.cards);
+  for (const c of cardsForLevel(level)) set.add(c);
+  return set;
+}
+
+// Desbloquear personaje al ganarle (Versus)
+function unlockCharacter(charId: string) {
+  const u = loadUnlocks();
+  if (!u.characters.includes(charId)) {
+    u.characters = [...u.characters, charId];
+    saveUnlocks(u);
+    return true;
+  }
+  return false;
+}
+
+// Personaje desbloqueado?
+function isCharacterUnlocked(charId: string): boolean {
+  return loadUnlocks().characters.includes(charId);
 }
 
 // EXP necesaria para subir del nivel actual al siguiente
@@ -788,6 +881,7 @@ function CharactersScreen({ onNavigate, onSelectFighter }: {
 
   const sel = getForm(selected)!;
   const selChar = getCharacter(sel.character)!;
+  const selUnlocked = isCharacterUnlocked(selChar.id);
 
   return (
     <div className="page-screen characters-screen">
@@ -797,11 +891,21 @@ function CharactersScreen({ onNavigate, onSelectFighter }: {
         <div className="page-spacer" />
       </div>
       <div className="characters-layout">
-        {/* Grid de personajes */}
+        {/* Grid de personajes: solo desbloqueados; bloqueados con candado */}
         <div className="char-grid">
           {CHARACTERS.map(c => {
             const baseForm = getForm(c.forms[0])!;
             const active = c.id === sel.character;
+            const unlocked = isCharacterUnlocked(c.id);
+            if (!unlocked) {
+              return (
+                <div key={c.id} className="char-cell char-locked">
+                  <div className="char-locked-icon"><Lock size={14} /></div>
+                  <div className="char-name">{c.name}</div>
+                  <div className="char-forms">???</div>
+                </div>
+              );
+            }
             return (
               <button key={c.id} className={`char-cell ${active ? 'active' : ''}`}
                 onClick={() => setSelected(baseForm.id)}>
@@ -844,7 +948,8 @@ function CharactersScreen({ onNavigate, onSelectFighter }: {
             })}
           </div>
 
-          <button className="btn-primary" onClick={() => onSelectFighter(selected)}>{t('common.useInBattle')}</button>
+          {selUnlocked && <button className="btn-primary" onClick={() => onSelectFighter(selected)}>{t('common.useInBattle')}</button>}
+          {!selUnlocked && <div className="deck-warning">DEFEAT THIS FIGHTER TO UNLOCK</div>}
         </div>
       </div>
     </div>
@@ -959,7 +1064,8 @@ function DeckScreen({ onNavigate }: { onNavigate: (s: Screen) => void }) {
 
 function CardsScreen({ onNavigate }: { onNavigate: (s: Screen) => void }) {
   const { t } = useLang();
-  const [owned, setOwned] = useState<Set<number>>(new Set(CARDS.filter(c => c.rarity <= 2).map(c => c.id)));
+  const prog = loadProgress();
+  const [owned, setOwned] = useState<Set<number>>(() => ownedCards(loadUnlocks(), prog.level));
   const [filter, setFilter] = useState<CardType | 'all'>('all');
 
   const filtered = CARDS.filter(c => filter === 'all' || c.type === filter);
@@ -1084,6 +1190,7 @@ function VersusScreen({ onNavigate, onStartVersus }: {
   const [selected, setSelected] = useState('vegeta_base');
   const deckSize = loadDeck().length;
   const deckValid = deckSize === DECK_SIZE;
+  const unlockedChars = loadUnlocks().characters;
 
   const sel = getForm(selected)!;
   const selChar = getCharacter(sel.character)!;
@@ -1100,6 +1207,16 @@ function VersusScreen({ onNavigate, onStartVersus }: {
           {CHARACTERS.map(c => {
             const baseForm = getForm(c.forms[0])!;
             const active = c.id === sel.character;
+            const unlocked = unlockedChars.includes(c.id);
+            if (!unlocked) {
+              return (
+                <div key={c.id} className="char-cell char-locked">
+                  <div className="char-locked-icon"><Lock size={14} /></div>
+                  <div className="char-name">{c.name}</div>
+                  <div className="char-forms">???</div>
+                </div>
+              );
+            }
             return (
               <button key={c.id} className={`char-cell ${active ? 'active' : ''}`}
                 onClick={() => setSelected(baseForm.id)}>
@@ -1141,11 +1258,58 @@ function VersusScreen({ onNavigate, onStartVersus }: {
 }
 
 // ═══════════════════════════════════════════════════════════
+// STARTER — Elegir mazo inicial (Damage o Beam, como el GBC)
+// ═══════════════════════════════════════════════════════════
+
+function StarterScreen({ onDone }: { onDone: () => void }) {
+  const { t } = useLang();
+  const [hover, setHover] = useState<'damage' | 'beam' | null>(null);
+
+  const choose = (kind: 'damage' | 'beam') => {
+    startWithDeck(kind);
+    Sfx.confirm();
+    onDone();
+  };
+
+  const dmgCards = STARTER_DAMAGE_DECK.map(id => getCard(id)!).filter(Boolean);
+  const beamCards = STARTER_BEAM_DECK.map(id => getCard(id)!).filter(Boolean);
+
+  return (
+    <div className="page-screen starter-screen">
+      <div className="starter-bg" />
+      <div className="starter-content">
+        <h1 className="starter-title">CHOOSE STARTER DECK</h1>
+        <div className="starter-sub">Como en el GBC: tu mazo inicial define tus primeras 20 cartas</div>
+        <div className="starter-decks">
+          <button className={`starter-deck-card ${hover === 'damage' ? 'hover' : ''}`}
+            onMouseEnter={() => setHover('damage')} onMouseLeave={() => setHover(null)}
+            onClick={() => choose('damage')}>
+            <div className="starter-deck-name">PHYSICAL / DAMAGE</div>
+            <div className="starter-deck-icon">👊</div>
+            <div className="starter-deck-desc">Cont.Punch, Sonic Kick, Tail, Solid Shot...</div>
+            <div className="starter-deck-cards">{dmgCards.map(c => c.name.slice(0, 12)).join(' · ')}</div>
+          </button>
+          <button className={`starter-deck-card ${hover === 'beam' ? 'hover' : ''}`}
+            onMouseEnter={() => setHover('beam')} onMouseLeave={() => setHover(null)}
+            onClick={() => choose('beam')}>
+            <div className="starter-deck-name">ENERGY / BEAM</div>
+            <div className="starter-deck-icon">💫</div>
+            <div className="starter-deck-desc">Energy Wave, Kamehameha, Galick-Ho, Final Flash...</div>
+            <div className="starter-deck-cards">{beamCards.map(c => c.name.slice(0, 12)).join(' · ')}</div>
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════
 // APP
 // ═══════════════════════════════════════════════════════════
 
 function AppInner() {
   const [screen, setScreen] = useState<Screen>('main');
+  const [needsStarter, setNeedsStarter] = useState(() => loadUnlocks().starterDeck === null);
   const [playerForm, setPlayerForm] = useState('goku_base');
   const [enemyForm, setEnemyForm] = useState('vegeta_base');
   const [storyChapter, setStoryChapter] = useState<number | null>(null);
@@ -1185,8 +1349,31 @@ function AppInner() {
       const next = storyChapter + 1;
       saveStoryProgress(Math.min(next, CHAPTERS.length));
     }
+    if (won && !storyChapter) {
+      // Versus: desbloquear el personaje vencido + recompensa de carta
+      const form = getForm(enemyForm);
+      if (form) {
+        const charId = VS_UNLOCKS[form.id] || form.character;
+        const newlyUnlocked = unlockCharacter(charId);
+        const u = loadUnlocks();
+        const owned = ownedCards(u, loadProgress().level);
+        const rewards = pickRewards(owned, 3);
+        if (rewards.length > 0) {
+          u.pendingReward = rewards;
+          saveUnlocks(u);
+        }
+        if (newlyUnlocked) {
+          // Aviso visual: se muestra en la pantalla de recompensa
+          setTimeout(() => alert(`${charId.toUpperCase()} UNLOCKED!`), 300);
+        }
+      }
+    }
     setScreen('main');
   };
+
+  if (needsStarter) {
+    return <StarterScreen onDone={() => setNeedsStarter(false)} />;
+  }
 
   switch (screen) {
     case 'story': return <StoryScreen onNavigate={setScreen} onStartChapter={startChapter} />;
