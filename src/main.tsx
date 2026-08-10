@@ -881,6 +881,8 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
       const storyDeck = storyChapter ? (STORY_ENEMY_DECKS[storyChapter] || []).map(id => getCard(id)).filter((c): c is CardDef => !!c) : [];
       const allPool = storyDeck.length > 0 ? storyDeck : CARDS;
       const attackCards = allPool.filter(c => (c.type === 'damage' || c.type === 'beam') && !c.compatible);
+      // Stage Attacks GRATIS (cc 0) del pool: la IA los usa cuando no tiene CC
+      const freeStages = allPool.filter(c => c.type === 'command' && c.cc === 0 && c.name.includes('Stage'));
       let card: CardDef;
       if (ai.mode === 1) {
         // Gather Power: no ataca, sube STR/KI (mecánica real)
@@ -893,6 +895,14 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
         return;
       }
       const affordable = attackCards.filter(c => c.cc <= enemy.cc);
+      if (affordable.length === 0 && freeStages.length > 0) {
+        // Sin CC: la IA hace un Stage Attack básico (gratis, +1 CC por input en el GBC)
+        card = freeStages[Math.floor(Math.random() * freeStages.length)];
+        incomingCard.current = card;
+        addLog(`${enemy.name} ${t('battle.uses')} ${card.name}`);
+        setTimeout(() => setPhase('defend'), 350);
+        return;
+      }
       if (ai.mode === 2) {
         // 5 Stage Attack tras gather (patrón real)
         const fiveStage = CARDS.filter(c => c.type === 'command' && /5/i.test(c.name) && c.cc <= enemy.cc);
