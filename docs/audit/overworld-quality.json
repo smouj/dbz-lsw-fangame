@@ -1,0 +1,380 @@
+{
+ "Android_16": {
+  "frame": "Android_16_8.png",
+  "w": 12,
+  "h": 16,
+  "ratio": 0.75,
+  "sym": 0.99,
+  "integ": 0.99,
+  "score": 1.0
+ },
+ "Android_17": {
+  "frame": "Android_17_4.png",
+  "w": 14,
+  "h": 18,
+  "ratio": 0.78,
+  "sym": 1.0,
+  "integ": 1.0,
+  "score": 0.92
+ },
+ "Android_18": {
+  "frame": "Android_18_0.png",
+  "w": 12,
+  "h": 16,
+  "ratio": 0.75,
+  "sym": 0.97,
+  "integ": 0.99,
+  "score": 0.99
+ },
+ "Android_19": {
+  "frame": "Android_19_8.png",
+  "w": 12,
+  "h": 15,
+  "ratio": 0.8,
+  "sym": 0.99,
+  "integ": 0.99,
+  "score": 1.0
+ },
+ "Android_20": {
+  "frame": "Android_20_8.png",
+  "w": 14,
+  "h": 16,
+  "ratio": 0.88,
+  "sym": 0.93,
+  "integ": 1.0,
+  "score": 0.98
+ },
+ "Burter": {
+  "frame": "Burter_27.png",
+  "w": 16,
+  "h": 17,
+  "ratio": 0.94,
+  "sym": 0.99,
+  "integ": 0.91,
+  "score": 0.98
+ },
+ "Buu": {
+  "frame": "Buu_0.png",
+  "w": 14,
+  "h": 15,
+  "ratio": 0.93,
+  "sym": 0.99,
+  "integ": 1.0,
+  "score": 1.0
+ },
+ "Buu_Gohan": {
+  "frame": "Buu_Gohan_1.png",
+  "w": 12,
+  "h": 14,
+  "ratio": 0.86,
+  "sym": 0.98,
+  "integ": 1.0,
+  "score": 1.0
+ },
+ "Buu_Gotenks": {
+  "frame": "Buu_Gotenks_ow.png",
+  "w": 12,
+  "h": 14,
+  "ratio": 0.86,
+  "sym": 0.98,
+  "integ": 0.93,
+  "score": 0.98
+ },
+ "Cell_Imperfect_Form": {
+  "frame": "Cell_Imperfect_Form_8.png",
+  "w": 13,
+  "h": 15,
+  "ratio": 0.87,
+  "sym": 0.98,
+  "integ": 1.0,
+  "score": 1.0
+ },
+ "Cell_Jr": {
+  "frame": "Cell_Jr_0.png",
+  "w": 13,
+  "h": 16,
+  "ratio": 0.81,
+  "sym": 1.0,
+  "integ": 1.0,
+  "score": 1.0
+ },
+ "Cell_Perfect": {
+  "frame": "Cell_Perfect_1.png",
+  "w": 14,
+  "h": 16,
+  "ratio": 0.88,
+  "sym": 0.98,
+  "integ": 1.0,
+  "score": 0.99
+ },
+ "Cell_Semi-Perfect_Form": {
+  "frame": "Cell_Semi-Perfect_Form_ow.png",
+  "w": 12,
+  "h": 16,
+  "ratio": 0.75,
+  "sym": 0.96,
+  "integ": 0.87,
+  "score": 0.96
+ },
+ "Frieza": {
+  "frame": "Frieza_6.png",
+  "w": 14,
+  "h": 13,
+  "ratio": 1.08,
+  "sym": 0.98,
+  "integ": 1.0,
+  "score": 0.82
+ },
+ "Future_Trunks": {
+  "frame": "Future_Trunks_0.png",
+  "w": 12,
+  "h": 16,
+  "ratio": 0.75,
+  "sym": 1.0,
+  "integ": 0.99,
+  "score": 1.0
+ },
+ "Ginyu": {
+  "frame": "Ginyu_4.png",
+  "w": 13,
+  "h": 14,
+  "ratio": 0.93,
+  "sym": 0.97,
+  "integ": 1.0,
+  "score": 0.99
+ },
+ "Ginyu_Gokus_Body": {
+  "frame": "Ginyu_Gokus_Body_3.png",
+  "w": 15,
+  "h": 18,
+  "ratio": 0.83,
+  "sym": 0.98,
+  "integ": 0.8,
+  "score": 0.95
+ },
+ "Gohan_Super_Saiyan_1_2": {
+  "frame": "Gohan_Super_Saiyan_1_2_4.png",
+  "w": 13,
+  "h": 15,
+  "ratio": 0.87,
+  "sym": 0.99,
+  "integ": 1.0,
+  "score": 1.0
+ },
+ "Gohan_Ultimate": {
+  "frame": "Gohan_Ultimate_1.png",
+  "w": 13,
+  "h": 15,
+  "ratio": 0.87,
+  "sym": 0.98,
+  "integ": 1.0,
+  "score": 1.0
+ },
+ "Goku": {
+  "frame": "Goku_5.png",
+  "w": 16,
+  "h": 16,
+  "ratio": 1.0,
+  "sym": 0.95,
+  "integ": 1.0,
+  "score": 0.99
+ },
+ "Goku_Super_Saiyan": {
+  "frame": "Goku_Super_Saiyan_2.png",
+  "w": 15,
+  "h": 16,
+  "ratio": 0.94,
+  "sym": 0.99,
+  "integ": 0.99,
+  "score": 1.0
+ },
+ "Goku_Super_Saiyan_2": {
+  "frame": "Goku_Super_Saiyan_2_0.png",
+  "w": 13,
+  "h": 16,
+  "ratio": 0.81,
+  "sym": 0.96,
+  "integ": 0.99,
+  "score": 0.99
+ },
+ "Goku_Super_Saiyan_3": {
+  "frame": "Goku_Super_Saiyan_3_1.png",
+  "w": 14,
+  "h": 16,
+  "ratio": 0.88,
+  "sym": 0.99,
+  "integ": 0.98,
+  "score": 0.99
+ },
+ "Goten": {
+  "frame": "Goten_1.png",
+  "w": 16,
+  "h": 16,
+  "ratio": 1.0,
+  "sym": 0.95,
+  "integ": 1.0,
+  "score": 0.99
+ },
+ "Goten_Super_Saiyan": {
+  "frame": "Goten_Super_Saiyan_2.png",
+  "w": 15,
+  "h": 16,
+  "ratio": 0.94,
+  "sym": 0.99,
+  "integ": 0.99,
+  "score": 1.0
+ },
+ "Gotenks_Super_Saiyan": {
+  "frame": "Gotenks_Super_Saiyan_4.png",
+  "w": 12,
+  "h": 16,
+  "ratio": 0.75,
+  "sym": 0.99,
+  "integ": 1.0,
+  "score": 1.0
+ },
+ "Gotenks_Super_Saiyan_3": {
+  "frame": "Gotenks_Super_Saiyan_3_1.png",
+  "w": 14,
+  "h": 16,
+  "ratio": 0.88,
+  "sym": 0.97,
+  "integ": 0.98,
+  "score": 0.99
+ },
+ "Guldo": {
+  "frame": "Guldo_6.png",
+  "w": 12,
+  "h": 14,
+  "ratio": 0.86,
+  "sym": 1.0,
+  "integ": 1.0,
+  "score": 1.0
+ },
+ "Jeice": {
+  "frame": "Jeice_4.png",
+  "w": 13,
+  "h": 16,
+  "ratio": 0.81,
+  "sym": 0.91,
+  "integ": 0.99,
+  "score": 0.97
+ },
+ "Kid_Buu": {
+  "frame": "Kid_Buu_1.png",
+  "w": 12,
+  "h": 14,
+  "ratio": 0.86,
+  "sym": 0.98,
+  "integ": 1.0,
+  "score": 1.0
+ },
+ "Krillin": {
+  "frame": "Krillin_4.png",
+  "w": 12,
+  "h": 14,
+  "ratio": 0.86,
+  "sym": 0.95,
+  "integ": 1.0,
+  "score": 0.98
+ },
+ "Nappa": {
+  "frame": "Nappa_3.png",
+  "w": 12,
+  "h": 15,
+  "ratio": 0.8,
+  "sym": 0.98,
+  "integ": 1.0,
+  "score": 0.99
+ },
+ "Piccolo": {
+  "frame": "Piccolo_2.png",
+  "w": 12,
+  "h": 15,
+  "ratio": 0.8,
+  "sym": 0.99,
+  "integ": 1.0,
+  "score": 1.0
+ },
+ "Recoome": {
+  "frame": "Recoome_7.png",
+  "w": 12,
+  "h": 16,
+  "ratio": 0.75,
+  "sym": 0.98,
+  "integ": 0.99,
+  "score": 0.99
+ },
+ "Super_Buu": {
+  "frame": "Super_Buu_4.png",
+  "w": 12,
+  "h": 14,
+  "ratio": 0.86,
+  "sym": 0.98,
+  "integ": 1.0,
+  "score": 1.0
+ },
+ "Trunks": {
+  "frame": "Trunks_0.png",
+  "w": 12,
+  "h": 16,
+  "ratio": 0.75,
+  "sym": 0.99,
+  "integ": 0.99,
+  "score": 1.0
+ },
+ "Trunks_Super_Saiyan": {
+  "frame": "Trunks_Super_Saiyan_1.png",
+  "w": 13,
+  "h": 16,
+  "ratio": 0.81,
+  "sym": 0.99,
+  "integ": 1.0,
+  "score": 1.0
+ },
+ "Vegeta": {
+  "frame": "Vegeta_5.png",
+  "w": 13,
+  "h": 16,
+  "ratio": 0.81,
+  "sym": 0.96,
+  "integ": 0.99,
+  "score": 0.99
+ },
+ "Vegeta_Super_Saiyan___Majin": {
+  "frame": "Vegeta_Super_Saiyan___Majin_1.png",
+  "w": 14,
+  "h": 16,
+  "ratio": 0.88,
+  "sym": 0.99,
+  "integ": 1.0,
+  "score": 1.0
+ },
+ "Young_Gohan": {
+  "frame": "Young_Gohan_ow.png",
+  "w": 13,
+  "h": 16,
+  "ratio": 0.81,
+  "sym": 0.97,
+  "integ": 0.89,
+  "score": 0.97
+ },
+ "Young_Gohan_Super_Saiyan": {
+  "frame": "Young_Gohan_Super_Saiyan_1.png",
+  "w": 14,
+  "h": 16,
+  "ratio": 0.88,
+  "sym": 0.98,
+  "integ": 1.0,
+  "score": 0.99
+ },
+ "Young_Gohan_Super_Saiyan_2": {
+  "frame": "Young_Gohan_Super_Saiyan_2_1.png",
+  "w": 13,
+  "h": 16,
+  "ratio": 0.81,
+  "sym": 0.98,
+  "integ": 1.0,
+  "score": 0.99
+ }
+}

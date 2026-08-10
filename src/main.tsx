@@ -108,10 +108,13 @@ function FighterSprite({ charId, pose, facing, scale = 8, flash = false }: {
   charId: 'goku' | 'vegeta'; pose: string; facing?: 'left' | 'right'; scale?: number; flash?: boolean;
 }) {
   const { src, w, h } = useSpriteAnim(charId, pose);
+  // Escala uniforme: base --spr=8 → height = h * scale / 8 (el prop antes era inerte)
+  const px = Math.round(h * scale / 8);
+  const pw = Math.round(w * scale / 8);
   return (
     <div className={`fighter-sprite ${flash ? 'flash' : ''}`}
       style={{ transform: facing === 'left' ? 'scaleX(-1)' : 'scaleX(1)' }}>
-      <img src={src} alt={charId} style={{ imageRendering: 'pixelated' }} />
+      <img src={src} alt={charId} style={{ imageRendering: 'pixelated', width: pw, height: px }} />
     </div>
   );
 }
@@ -1302,7 +1305,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
         <div className="battlefield-fighters">
           <div className={`fighter-container player ${player.elevation} ${player.position}`}>
             {player.battleId
-              ? <FighterSprite charId={player.battleId} pose={playerPose} facing="right" scale={13} flash={flashPlayer || gatherTurns > 0} />
+              ? <FighterSprite charId={player.battleId} pose={playerPose} facing="right" scale={15} flash={flashPlayer || gatherTurns > 0} />
               : (overworldUrl(playerFormId) && playerPose === 'idle'
                   ? <img src={overworldUrl(playerFormId)!} alt="" className={`overworld-sprite ${gatherTurns > 0 ? 'gathering' : ''}`} />
                   : <CharacterSprite formId={playerFormId} className={`sheet-sprite ${gatherTurns > 0 ? 'gathering' : ''}`} height={152} />)}
@@ -1310,7 +1313,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
           </div>
           <div className={`fighter-container enemy ${enemy.elevation} ${enemy.position}`}>
             {enemy.battleId
-              ? <FighterSprite charId={enemy.battleId} pose={enemyPose} facing="left" scale={13} flash={flashEnemy} />
+              ? <FighterSprite charId={enemy.battleId} pose={enemyPose} facing="left" scale={15} flash={flashEnemy} />
               : (overworldUrl(enemyFormId) && enemyPose === 'idle'
                   ? <img src={overworldUrl(enemyFormId)!} alt="" className="overworld-sprite" />
                   : <CharacterSprite formId={enemyFormId} className="sheet-sprite" height={152} />)}
