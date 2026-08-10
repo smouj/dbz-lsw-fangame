@@ -245,7 +245,7 @@ function BattleScreen({ playerFormId, enemyFormId, onExit }: {
     const base: Fighter = {
       id: pf.character, name: getCharacter(pf.character)?.name || pf.character, form: pf.form,
       level: prog.level, maxHp: pf.hp, hp: pf.hp,
-      str: pf.str, ki: pf.ki, spd: pf.spd, maxCc: 40, cc: 8,
+      str: pf.str, ki: pf.ki, spd: pf.spd, maxCc: 13, cc: 5,
       position: 'front', elevation: 'ground', battleId: pf.battleId,
       limits: ['Limit', 'Final'],
     };
@@ -254,7 +254,7 @@ function BattleScreen({ playerFormId, enemyFormId, onExit }: {
   const [enemy, setEnemy] = useState<Fighter>({
     id: ef.character, name: getCharacter(ef.character)?.name || ef.character, form: ef.form,
     level: 39, maxHp: ef.hp, hp: ef.hp,
-    str: ef.str, ki: ef.ki, spd: ef.spd, maxCc: 40, cc: 8,
+    str: ef.str, ki: ef.ki, spd: ef.spd, maxCc: 13, cc: 5,
     position: 'back', elevation: 'ground', battleId: ef.battleId,
     limits: ['Limit', 'Final'],
   });
@@ -374,8 +374,11 @@ function BattleScreen({ playerFormId, enemyFormId, onExit }: {
         addLog(`${player.name} → ${card.name} — ${t('battle.miss')}!`);
       } else {
         let posMod = 1.0;
+        // Posiciones reales: aire vulnerable a Beam, suelo vulnerable a Damage
+        if (enemy.elevation === 'air' && card.type === 'beam') posMod *= 1.4;
+        else if (enemy.elevation === 'ground' && card.type === 'damage') posMod *= 1.4;
+        if (enemy.position === 'back' && card.type !== 'beam') posMod *= 0.85;
         if (player.position === 'front') posMod *= 1.1;
-        if (enemy.position === 'back') posMod *= 0.9;
         let atkMod = card.atk + (card.type === 'beam' ? (player.ki + pBuffs.ki) * 0.5 : (player.str + pBuffs.str) * 0.3);
         if (card.type === 'beam' && command === 'LIMIT') atkMod *= 1.5;
         if (command === 'J') atkMod *= 0.8;
@@ -442,13 +445,20 @@ function BattleScreen({ playerFormId, enemyFormId, onExit }: {
         addLog(`${enemy.name} → ${card.name} — ${t('battle.miss')}!`);
       } else {
         let posMod = 1.0;
+        if (player.elevation === 'air' && card.type === 'beam') posMod *= 1.4;
+        else if (player.elevation === 'ground' && card.type === 'damage') posMod *= 1.4;
+        if (player.position === 'back' && card.type !== 'beam') posMod *= 0.85;
         if (enemy.position === 'front') posMod *= 1.1;
-        if (player.position === 'back') posMod *= 0.9;
         let atkMod = card.atk + (card.type === 'beam' ? (enemy.ki + eBuffs.ki) * 0.5 : (enemy.str + eBuffs.str) * 0.3);
         damage = Math.floor(atkMod * posMod);
         addLog(`${enemy.name} → ${card.name} — ${damage} ${t('battle.dmg')}`);
       }
       setPlayer(prev => ({ ...prev, hp: Math.max(0, prev.hp - damage) }));
+      // CC al recibir daño significativo (más en posición vulnerable)
+      if (damage > 0) {
+        const vuln = (player.elevation === 'air' && card.type === 'beam') || (player.elevation === 'ground' && card.type === 'damage');
+        setPlayer(prev => ({ ...prev, cc: Math.min(prev.maxCc, prev.cc + (vuln ? 2 : 1)) }));
+      }
       setFlashPlayer(true);
       if (card.type === 'beam') Sfx.beam();
       else if (damage > 0) Sfx.punch();
@@ -457,7 +467,8 @@ function BattleScreen({ playerFormId, enemyFormId, onExit }: {
       if (damage > 0) { setPlayerPose('hurt'); setDamageNums(prev => [...prev, { value: damage, type: 'damage', x: 30, y: 50, id: Date.now() }]); }
       else if (hitType === 'miss') setDamageNums(prev => [...prev, { value: 0, type: 'miss', x: 30, y: 50, id: Date.now() }]);
 
-      setEnemy(prev => ({ ...prev, cc: Math.min(prev.maxCc, prev.cc + 3 + card.cc) }));
+      // +3 CC por turno atacante + CC de la carta; +1 CC extra al infligir daño
+      setEnemy(prev => ({ ...prev, cc: Math.min(prev.maxCc, prev.cc + 3 + card.cc + (damage > 0 ? 1 : 0)) }));
 
       if (player.hp - damage <= 0) {
         setTimeout(() => { setPlayerPose('hurt'); setPhase('lose'); Sfx.defeat(); addLog(`${player.name} ${t('battle.defeated')}`); }, 500);
@@ -699,17 +710,23 @@ function expToNext(level: number): number {
   return 100 + (level - 1) * 50;
 }
 
-// Aplicar subida de nivel: +HP/STR/KI/SPD por nivel
+// Aplicar subida de nivel: +1 punto de estadística por nivel (asignable).
+// Al subir, el jugador elige qué estadística mejorar permanentemente.
+// Por defecto rota: HP → STR → KI → SPD (fiel al sistema de elección manual).
 function applyLevelUps(base: Fighter, level: number): Fighter {
   const gains = level - 1;
+  const hpGain = Math.floor(gains / 4) * 12 + (gains % 4 >= 1 ? 12 : 0);
+  const strGain = Math.floor(gains / 4) * 3 + (gains % 4 >= 2 ? 3 : 0);
+  const kiGain = Math.floor(gains / 4) * 3 + (gains % 4 >= 3 ? 3 : 0);
+  const spdGain = Math.floor(gains / 4) * 2;
   return {
     ...base,
     level,
-    maxHp: base.maxHp + gains * 8,
-    hp: base.maxHp + gains * 8,
-    str: base.str + gains * 2,
-    ki: base.ki + gains * 2,
-    spd: base.spd + gains,
+    maxHp: base.maxHp + hpGain,
+    hp: base.maxHp + hpGain,
+    str: base.str + strGain,
+    ki: base.ki + kiGain,
+    spd: base.spd + spdGain,
   };
 }
 
