@@ -5,6 +5,7 @@ import './styles.css';
 import { FORMS, CHARACTERS, getCharacter, getForm, sheetUrl } from './data/roster';
 import { CARDS, CARD_COLORS, CARD_TYPE_NAMES, CardDef, CardType, DECK_SIZE, MAX_COPIES, getCard } from './data/cards';
 import { cardIconUrl, MINI_PORTRAITS, MENU_PORTRAITS, TYPE_EMOJI } from './data/icons';
+import { initAudio, Sfx, setSfxEnabled, setVolume } from './audio/sfx';
 
 // ═══════════════════════════════════════════════════════════
 // DBZ LSW Fangame — Estilo Magazine GBC Auténtico
@@ -238,13 +239,15 @@ function BattleScreen({ playerFormId, enemyFormId, onExit }: {
   const addLog = useCallback((msg: string) => setLog(prev => [...prev.slice(-6), msg]), []);
 
   const setPosition = (pos: Position, elev: Elevation) => {
+    Sfx.position();
     setPlayer(prev => ({ ...prev, position: pos, elevation: elev }));
     setPhase('command');
     addLog(`${elev.toUpperCase()}/${pos.toUpperCase()}`);
   };
 
   const selectCommand = (cmd: CommandType) => {
-    if (cmd === 'LIMIT' && player.cc < 20) { addLog('CC insuficiente para LIMIT!'); return; }
+    Sfx.select();
+    if (cmd === 'LIMIT' && player.cc < 20) { addLog('CC insuficiente para LIMIT!'); Sfx.cancel(); return; }
     setCommand(cmd);
     setPhase('cardSelect');
   };
@@ -252,6 +255,7 @@ function BattleScreen({ playerFormId, enemyFormId, onExit }: {
   const selectCard = (idx: number) => {
     const card = hand[idx];
     setSelectedCard(idx);
+    Sfx.cardPlay();
     setPlayerPose(card.type === 'beam' ? 'beam_charge' : card.type === 'damage' ? 'attack_fwd' : card.type === 'defense' ? 'guard' : 'idle');
 
     setTimeout(() => {
@@ -297,6 +301,9 @@ function BattleScreen({ playerFormId, enemyFormId, onExit }: {
 
       setEnemy(prev => ({ ...prev, hp: Math.max(0, prev.hp - damage) }));
       setFlashEnemy(true);
+      if (card.type === 'beam') Sfx.beam();
+      else if (damage > 0) Sfx.hit();
+      else if (hitType === 'miss') Sfx.dodge();
       setTimeout(() => setFlashEnemy(false), 150);
 
       if (damage > 0) setDamageNums(prev => [...prev, { value: damage, type: hitType === 'guard' ? 'guard' : 'damage', x: 70, y: 30, id: Date.now() }]);
@@ -307,7 +314,7 @@ function BattleScreen({ playerFormId, enemyFormId, onExit }: {
       setPlayer(prev => ({ ...prev, cc: Math.min(prev.maxCc, prev.cc + card.cc) }));
 
       if (enemy.hp - damage <= 0) {
-        setTimeout(() => { setEnemyPose('hurt'); setPhase('win'); addLog(`${enemy.name} derrotado!`); }, 500);
+        setTimeout(() => { setEnemyPose('hurt'); setPhase('win'); Sfx.victory(); addLog(`${enemy.name} derrotado!`); }, 500);
         return;
       }
 
@@ -344,6 +351,9 @@ function BattleScreen({ playerFormId, enemyFormId, onExit }: {
       }
       setPlayer(prev => ({ ...prev, hp: Math.max(0, prev.hp - damage) }));
       setFlashPlayer(true);
+      if (card.type === 'beam') Sfx.beam();
+      else if (damage > 0) Sfx.punch();
+      else if (hitType === 'miss') Sfx.dodge();
       setTimeout(() => setFlashPlayer(false), 150);
       if (damage > 0) { setPlayerPose('hurt'); setDamageNums(prev => [...prev, { value: damage, type: 'damage', x: 30, y: 50, id: Date.now() }]); }
       else if (hitType === 'miss') setDamageNums(prev => [...prev, { value: 0, type: 'miss', x: 30, y: 50, id: Date.now() }]);
@@ -351,7 +361,7 @@ function BattleScreen({ playerFormId, enemyFormId, onExit }: {
       setEnemy(prev => ({ ...prev, cc: Math.min(prev.maxCc, prev.cc + 3 + card.cc) }));
 
       if (player.hp - damage <= 0) {
-        setTimeout(() => { setPlayerPose('hurt'); setPhase('lose'); addLog(`${player.name} derrotado!`); }, 500);
+        setTimeout(() => { setPlayerPose('hurt'); setPhase('lose'); Sfx.defeat(); addLog(`${player.name} derrotado!`); }, 500);
         return;
       }
 
@@ -807,10 +817,13 @@ function CardsScreen({ onNavigate }: { onNavigate: (s: Screen) => void }) {
 // ═══════════════════════════════════════════════════════════
 
 function SettingsScreen({ onNavigate }: { onNavigate: (s: Screen) => void }) {
-  const [volume, setVolume] = useState(70);
-  const [sfx, setSfx] = useState(true);
+  const [volume, setVolumeState] = useState(70);
+  const [sfx, setSfxState] = useState(true);
   const [speed, setSpeed] = useState<'normal' | 'fast'>('normal');
   const [screenMode, setScreenMode] = useState<'windowed' | 'fullscreen'>('windowed');
+
+  const setVolume = (v: number) => { setVolumeState(v); setVolume(v); };
+  const setSfx = (v: boolean) => { setSfxState(v); setSfxEnabled(v); if (v) Sfx.confirm(); };
 
   return (
     <div className="page-screen settings-screen">
@@ -932,6 +945,13 @@ export default function App() {
   const [enemyForm, setEnemyForm] = useState('vegeta_base');
   const [storyChapter, setStoryChapter] = useState<number | null>(null);
   const [battleKey, setBattleKey] = useState(0);
+
+  // Inicializar audio con el primer gesto del usuario
+  useEffect(() => {
+    const onFirst = () => { initAudio(); window.removeEventListener('pointerdown', onFirst); };
+    window.addEventListener('pointerdown', onFirst);
+    return () => window.removeEventListener('pointerdown', onFirst);
+  }, []);
 
   const startBattle = (playerFormId?: string) => {
     if (playerFormId) setPlayerForm(playerFormId);
