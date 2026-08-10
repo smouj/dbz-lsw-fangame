@@ -106,8 +106,8 @@ function FighterSprite({ charId, pose, facing, scale = 8, flash = false }: {
   const { src, w, h } = useSpriteAnim(charId, pose);
   return (
     <div className={`fighter-sprite ${flash ? 'flash' : ''}`}
-      style={{ width: w * scale, height: h * scale, transform: facing === 'left' ? 'scaleX(-1)' : 'scaleX(1)' }}>
-      <img src={src} alt={charId} style={{ width: w * scale, height: h * scale }} />
+      style={{ transform: facing === 'left' ? 'scaleX(-1)' : 'scaleX(1)' }}>
+      <img src={src} alt={charId} style={{ imageRendering: 'pixelated' }} />
     </div>
   );
 }
@@ -471,13 +471,13 @@ function BattleScreen({ playerFormId, enemyFormId, onExit }: {
           <div className={`fighter-container player ${player.elevation} ${player.position}`}>
             {player.battleId
               ? <FighterSprite charId={player.battleId} pose={playerPose} facing="right" scale={8} flash={flashPlayer} />
-              : <CharacterSprite formId={playerFormId} height={260} className="sheet-sprite" />}
+              : <CharacterSprite formId={playerFormId} className="sheet-sprite" />}
             <div className="fighter-position-tag">{player.elevation.toUpperCase()}/{player.position.toUpperCase()}</div>
           </div>
           <div className={`fighter-container enemy ${enemy.elevation} ${enemy.position}`}>
             {enemy.battleId
               ? <FighterSprite charId={enemy.battleId} pose={enemyPose} facing="left" scale={8} flash={flashEnemy} />
-              : <CharacterSprite formId={enemyFormId} height={260} className="sheet-sprite" />}
+              : <CharacterSprite formId={enemyFormId} className="sheet-sprite" />}
             <div className="fighter-position-tag">{enemy.elevation.toUpperCase()}/{enemy.position.toUpperCase()}</div>
           </div>
         </div>

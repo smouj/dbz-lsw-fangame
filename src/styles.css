@@ -379,6 +379,14 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   overflow: hidden;
 }
 
+/* Fondo auténtico de la ROM: expandir sin mosaico y escalar nítido */
+.battle-bg.authentic {
+  background-size: cover !important;
+  background-repeat: no-repeat !important;
+  background-position: center center !important;
+  image-rendering: pixelated;
+}
+
 .bg-layer { position: absolute; inset: 0; }
 
 .bg-sky {
@@ -414,9 +422,9 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 .battlefield-fighters {
   position: absolute; inset: 0;
   display: flex;
-  align-items: flex-end;
+  align-items: stretch;
   justify-content: space-around;
-  padding: 0 10% 12%;
+  padding: 2% 8% 4%;
   z-index: 2;
 }
 
@@ -424,6 +432,9 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: flex-end;
+  height: 100%;
+  min-height: 0;
   transition: transform 0.12s ease, filter 0.12s ease;
 }
 
@@ -446,6 +457,15 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   image-rendering: pixelated;
   image-rendering: crisp-edges;
   transition: filter 80ms;
+  max-height: 100%;
+  max-width: 100%;
+}
+
+.fighter-sprite img {
+  max-height: 100%;
+  max-width: 100%;
+  width: auto !important;
+  height: auto !important;
 }
 
 .fighter-sprite.flash { animation: sprite-flash 0.15s ease; }
@@ -1295,7 +1315,10 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 .sheet-sprite {
   image-rendering: pixelated;
   image-rendering: crisp-edges;
-  max-width: none;
+  max-width: 100%;
+  max-height: 100%;
+  width: auto !important;
+  height: auto !important;
 }
 
 /* Scrollbars pixel */
@@ -1441,4 +1464,20 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 
 .char-idle-sprite {
   display: block;
+}
+
+/* ─── Animación idle de personaje (respiración sutil) ─── */
+.char-idle-sprite {
+  animation: char-idle-breathe 2.6s ease-in-out infinite;
+  transform-origin: 50% 100%;
+}
+
+@keyframes char-idle-breathe {
+  0%, 100% { transform: scaleY(1) scaleX(1) translateY(0); }
+  50% { transform: scaleY(1.012) scaleX(0.996) translateY(-1px); }
+}
+
+/* En batalla, los luchadores estáticos también respiran suavemente */
+.sheet-sprite.char-idle-sprite {
+  animation-duration: 2.8s;
 }
