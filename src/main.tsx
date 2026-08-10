@@ -219,7 +219,10 @@ function BattleScreen({ playerFormId, enemyFormId, onExit }: {
   const [command, setCommand] = useState<CommandType | null>(null);
   const [bgId, setBgId] = useState('bg1');
   const [hand, setHand] = useState<CardDef[]>(() => {
-    const shuffled = [...BATTLE_DECK].sort(() => Math.random() - 0.5);
+    // Usar el mazo persistido del jugador (o el default si no hay)
+    const deckIds = loadDeck();
+    const battleDeck = deckIds.map(id => getCard(id)).filter((c): c is CardDef => !!c);
+    const shuffled = [...battleDeck].sort(() => Math.random() - 0.5);
     return shuffled.slice(0, 5);
   });
   const [selectedCard, setSelectedCard] = useState<number | null>(null);
@@ -324,7 +327,7 @@ function BattleScreen({ playerFormId, enemyFormId, onExit }: {
 
   const finishPlayerTurn = (idx: number) => {
     const newHand = [...hand];
-    newHand[idx] = BATTLE_DECK[Math.floor(Math.random() * BATTLE_DECK.length)];
+    newHand[idx] = getCard(loadDeck()[Math.floor(Math.random() * loadDeck().length)]) || BATTLE_DECK[0];
     setHand(newHand);
     setSelectedCard(null);
     setTimeout(() => enemyTurn(0), 600);
@@ -690,10 +693,28 @@ function CharactersScreen({ onNavigate, onSelectFighter }: {
 // DECK — Constructor de mazos
 // ═══════════════════════════════════════════════════════════
 
+const DECK_KEY = 'dbzlsw_deck';
+const DEFAULT_DECK = [1, 1, 2, 2, 4, 25, 25, 26, 27, 28, 53, 64, 65, 96, 96, 79, 80, 111, 5, 12];
+
+function loadDeck(): number[] {
+  try {
+    const raw = localStorage.getItem(DECK_KEY);
+    if (!raw) return DEFAULT_DECK;
+    const parsed = JSON.parse(raw);
+    if (Array.isArray(parsed) && parsed.length > 0 && parsed.length <= DECK_SIZE) return parsed;
+    return DEFAULT_DECK;
+  } catch { return DEFAULT_DECK; }
+}
+
 function DeckScreen({ onNavigate }: { onNavigate: (s: Screen) => void }) {
-  const [deck, setDeck] = useState<number[]>([1, 1, 2, 2, 4, 25, 25, 26, 27, 28, 53, 64, 65, 96, 96, 79, 80, 111, 5, 12]);
+  const [deck, setDeck] = useState<number[]>(loadDeck);
   const [filter, setFilter] = useState<CardType | 'all'>('all');
   const [search, setSearch] = useState('');
+
+  // Persist deck on change
+  useEffect(() => {
+    try { localStorage.setItem(DECK_KEY, JSON.stringify(deck)); } catch { /* noop */ }
+  }, [deck]);
 
   const deckCounts: Record<number, number> = {};
   deck.forEach(id => { deckCounts[id] = (deckCounts[id] || 0) + 1; });
