@@ -1279,7 +1279,10 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
               <button onClick={() => selectCommand('LIMIT')} className="cmd-limit">L</button>
               <button onClick={() => selectCommand('J')} className="cmd-j">J</button>
               <button onClick={() => selectCommand('B')} className="cmd-b">B</button>
-              <button onClick={() => selectCommand('C')} className={`cmd-c ${player2 ? 'has-ally' : ''}`} title={player2 ? `CHARA: ${player2.name}` : t('battle.noAlly')}>C{player2 ? '²' : ''}</button>
+              {/* CHARA solo aparece en combates de equipo (FAQ: en individuales no existe) */}
+              {player2 && (
+                <button onClick={() => selectCommand('C')} className="cmd-c has-ally" title={`CHARA: ${player2.name}`}>C²</button>
+              )}
             </div>
             <div className="command-help">{t('battle.basicFree')} · {t('battle.limitedHelp')}</div>
           </div>
