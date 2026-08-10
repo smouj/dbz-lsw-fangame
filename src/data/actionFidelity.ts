@@ -27,8 +27,19 @@ export interface FrameTiming {
   gbcFrames: number;
 }
 
-export function gbcFramesToSeconds(frames: number): number {
-  return frames / GBC_NATIVE_FPS;
+export function gbcFramesToSeconds(gbcFrames: number): number {
+  return gbcFrames / GBC_NATIVE_FPS;
+}
+
+// ═══ Conversiones frame GBC ↔ frame de captura ═══
+// captureFrame → gbcFrame: × (59.7275 / 60)   [≈ 0.99546]
+export function captureFrameToGbcFrame(captureFrame: number): number {
+  return captureFrame * (GBC_NATIVE_FPS / CAPTURE_FPS);
+}
+
+// gbcFrame → captureFrame: × (60 / 59.7275)   [≈ 1.00456]
+export function gbcFrameToCaptureFrame(gbcFrame: number): number {
+  return gbcFrame * (CAPTURE_FPS / GBC_NATIVE_FPS);
 }
 
 // ═══ Evidencia (cada número canónico trazable a una captura) ═══

@@ -291,7 +291,9 @@ CAPTURE_FPS    = 60;                  // solo para vídeo de captura
 - Los datos canónicos se almacenan en **frames GBC** (`FrameTiming { gbcFrames }`), nunca en segundos como unidad principal.
 - `gbcFramesToSeconds(frames) = frames / GBC_NATIVE_FPS` (solo runtime/presentación).
 - **GBC FRAME ≠ VIDEO CAPTURE FRAME**: al capturar a 60fps hay deriva (~0.45% — importante en secuencias de 100-300 frames).
-- Conversión captura→nativo: `gbcFrame = captureFrame * (60 / 59.7275)`.
+- Conversión captura→nativo: `gbcFrame = captureFrame × (59.7275 / 60)` ≈ ×0.99546
+- Conversión nativo→captura: `captureFrame = gbcFrame × (60 / 59.7275)` ≈ ×1.00456
+- Ejemplo: captureFrame 300 ≈ GBC frame 298.64 · GBC frame 300 ≈ captureFrame 301.37
 
 ---
 
@@ -388,6 +390,16 @@ Ejemplo real posible:
   frame 84 → SFX impacto
   frame 87 → HP actualizado
 ```
+
+### Jerarquía de evidencia (captura forense)
+
+Un vídeo a 60 FPS NO tiene correspondencia 1:1 con los frames GBC (el
+capturador periódicamente repite/redistribuye un frame). Para datos críticos
+(`contactFrame`, `hpChangeFrame`, `hitstopFrames`) usar, en este orden:
+
+1. **Frame advance del emulador / frame emulado real** (fuente primaria)
+2. Captura por frame o estado del emulador
+3. Vídeo 60 FPS solo como referencia audiovisual
 
 ### Evidencia trazable
 
