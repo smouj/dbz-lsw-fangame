@@ -1,0 +1,242 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: #121515;
+  color: #171717;
+  font-family: "Courier New", ui-monospace, monospace;
+}
+
+button {
+  font: inherit;
+}
+
+.game-shell {
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  gap: 12px;
+  padding: 16px;
+  background: #2b333e;
+}
+
+.topbar,
+.command-area {
+  width: min(960px, 100%);
+  margin: 0 auto;
+  border: 4px solid #171717;
+  background: #7f9b73;
+  box-shadow: 5px 5px 0 #07090c;
+}
+
+.topbar {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: 12px;
+  align-items: center;
+  padding: 10px 12px;
+  color: #f8efb8;
+}
+
+.topbar strong {
+  font-size: clamp(1.1rem, 3vw, 1.8rem);
+  color: #fff4b8;
+}
+
+.topbar button,
+.card-grid button {
+  border: 3px solid #171717;
+  background: #f1b24b;
+  color: #171717;
+  padding: 8px 10px;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.gb-frame {
+  position: relative;
+  width: min(960px, calc(100vw - 32px));
+  aspect-ratio: 160 / 144;
+  max-height: calc(100vh - 250px);
+  margin: 0 auto;
+  overflow: hidden;
+  border: 10px solid #171717;
+  background:
+    linear-gradient(#9dbb91 0 41%, #d8d28c 41% 50%, #7f9b73 50%),
+    #7f9b73;
+  box-shadow: 7px 7px 0 #07090c;
+  image-rendering: pixelated;
+}
+
+.gb-frame::after {
+  content: "";
+  position: absolute;
+  inset: 50% 0 auto;
+  height: 2px;
+  background: rgba(23, 23, 23, 0.55);
+}
+
+.battlefield {
+  position: absolute;
+  inset: 0;
+}
+
+.combatant-panel {
+  position: absolute;
+  z-index: 5;
+  display: grid;
+  gap: 3px;
+  width: 38%;
+  border: 3px solid #171717;
+  background: #f8efb8;
+  padding: 5px 7px;
+  font-size: clamp(0.58rem, 1.8vw, 0.95rem);
+  font-weight: 900;
+}
+
+.combatant-panel.enemy {
+  top: 8px;
+  right: 8px;
+  text-align: right;
+}
+
+.combatant-panel.player {
+  left: 8px;
+  bottom: 8px;
+}
+
+.meter {
+  height: 5px;
+  border: 1px solid #171717;
+  background: #fff4b8;
+}
+
+.meter i {
+  display: block;
+  height: 100%;
+  background: #2caa78;
+}
+
+.fighter-sprite {
+  position: absolute;
+  z-index: 3;
+  width: 26%;
+  max-width: 172px;
+  min-width: 70px;
+  aspect-ratio: 1;
+  object-fit: contain;
+  image-rendering: pixelated;
+  transition: transform 180ms steps(2, end), filter 120ms linear;
+}
+
+.fighter-sprite.player {
+  left: 23%;
+  bottom: 25%;
+}
+
+.fighter-sprite.enemy {
+  right: 22%;
+  top: 24%;
+  transform: scaleX(-1);
+}
+
+.fighter-sprite.player.active {
+  transform: translate(18%, -6%);
+}
+
+.fighter-sprite.enemy.active {
+  transform: scaleX(-1) translate(18%, 8%);
+}
+
+.fighter-sprite.player[src$="hurt.png"],
+.fighter-sprite.enemy[src$="hurt.png"] {
+  filter: brightness(1.25);
+}
+
+.beam-effect {
+  position: absolute;
+  z-index: 4;
+  left: 39%;
+  top: 43%;
+  width: 0;
+  height: 9px;
+  border-top: 3px solid #fff8cf;
+  border-bottom: 3px solid #48b6ff;
+  background: #f8efb8;
+  opacity: 0;
+  transition: width 180ms steps(4, end), opacity 80ms linear;
+}
+
+.beam-effect.active {
+  width: 24%;
+  opacity: 1;
+}
+
+.beam-effect.reverse {
+  left: auto;
+  right: 38%;
+}
+
+.command-area {
+  display: grid;
+  gap: 10px;
+  padding: 10px;
+}
+
+.battle-log {
+  display: grid;
+  gap: 3px;
+  border: 3px solid #171717;
+  background: #f8efb8;
+  padding: 8px 10px;
+  font-weight: 900;
+}
+
+.battle-log span,
+.card-grid span {
+  color: #425044;
+  font-size: 0.78rem;
+  font-weight: 900;
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.card-grid button {
+  display: grid;
+  gap: 5px;
+  min-height: 82px;
+  text-align: left;
+  background: #fff4b8;
+  box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.28);
+}
+
+.card-grid button:not(.disabled):hover {
+  background: #f1b24b;
+}
+
+.card-grid button.disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+  filter: grayscale(0.8);
+}
+
+@media (max-width: 760px) {
+  .game-shell {
+    padding: 10px;
+  }
+
+  .gb-frame {
+    width: calc(100vw - 20px);
+    max-height: none;
+  }
+
+  .card-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
