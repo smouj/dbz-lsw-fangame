@@ -1318,7 +1318,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
         <div className="battlefield-fighters">
           <div className={`fighter-container player ${player.elevation} ${player.position}`}>
             {playerPose === 'idle' && overworldUrl(playerFormId)
-              ? <img src={overworldUrl(playerFormId)!} alt="" className={`overworld-sprite ${gatherTurns > 0 ? 'gathering' : ''}`} />
+              ? <img src={overworldUrl(playerFormId)!} alt="" className={`overworld-sprite ${gatherTurns > 0 ? 'gathering' : ''}`} style={{ transform: 'scaleX(1)' }} />
               : (spriteManifestUrl(playerFormId)
                   ? <FighterSprite formId={playerFormId} pose={playerPose} facing="right" scale={15} flash={flashPlayer || gatherTurns > 0} />
                   : <CharacterSprite formId={playerFormId} className={`sheet-sprite ${gatherTurns > 0 ? 'gathering' : ''}`} height={152} />)}
@@ -1326,7 +1326,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
           </div>
           <div className={`fighter-container enemy ${enemy.elevation} ${enemy.position}`}>
             {enemyPose === 'idle' && overworldUrl(enemyFormId)
-              ? <img src={overworldUrl(enemyFormId)!} alt="" className="overworld-sprite" />
+              ? <img src={overworldUrl(enemyFormId)!} alt="" className="overworld-sprite" style={{ transform: 'scaleX(-1)' }} />
               : (spriteManifestUrl(enemyFormId)
                   ? <FighterSprite formId={enemyFormId} pose={enemyPose} facing="left" scale={15} flash={flashEnemy} />
                   : <CharacterSprite formId={enemyFormId} className="sheet-sprite" height={152} />)}

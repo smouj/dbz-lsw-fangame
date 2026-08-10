@@ -2518,7 +2518,7 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   height: 88px;
   width: auto;
   filter: drop-shadow(0 0 8px rgba(255,190,60,.3)) drop-shadow(0 5px 10px rgba(0,0,0,.45));
-  animation: char-idle-breathe 2.6s ease-in-out infinite;
+  /* sin animación: el transform inline del facing (scaleX) debe funcionar */
 }
 .overworld-sprite.gathering { animation: gather-flicker .45s infinite alternate; filter: drop-shadow(0 0 14px rgba(255,210,80,.9)) brightness(1.35); }
 /* Sprites de OVERWORLD en el campo (vista sin ataque, como el GBC) */
@@ -2527,6 +2527,9 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   height: 88px;
   width: auto;
   filter: drop-shadow(0 0 8px rgba(255,190,60,.3)) drop-shadow(0 5px 10px rgba(0,0,0,.45));
-  animation: char-idle-breathe 2.6s ease-in-out infinite;
+  /* sin animación: el transform inline del facing (scaleX) debe funcionar */
 }
 .overworld-sprite.gathering { animation: gather-flicker .45s infinite alternate; filter: drop-shadow(0 0 14px rgba(255,210,80,.9)) brightness(1.35); }
+/* Facing del overworld en el campo: el sprite frontal es simétrico,
+   el flip garantiza que personajes asimétricos miren al lado correcto */
+.overworld-sprite { image-rendering: pixelated; }
