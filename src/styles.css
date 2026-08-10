@@ -5,7 +5,7 @@
    Paleta GBC real, bordes pixel, tipografía bitmap.
    ═══════════════════════════════════════════════════════════ */
 
-@import url('https://fonts.googleapis.com/css2?family=DotGothic16&family=Bangers&family=VT323&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DotGothic16&family=Press+Start+2P&family=Bangers&family=VT323&display=swap');
 
 :root {
   /* ─── Paleta GBC (colores reales del juego) ─── */
@@ -43,9 +43,13 @@
      --fpx: pixel japonés (UI, HUD, botones)
      --fepic: manga épico (títulos VS, FIGHT, menú, resultados)
      --fui: pixel CRT legible (stats, números) */
-  --fpx: 'DotGothic16', monospace;
-  --fepic: 'Bangers', cursive;
-  --fui: 'VT323', monospace;
+  /* Stacks multi-idioma:
+     DotGothic16 = latín + kanji/kana (ja/zh)
+     Press Start 2P = cirílico/griego (ru) + fallback pixel
+     monospace/sistema = árabe, bengalí, hindi (sin fuente pixel universal) */
+  --fpx: 'DotGothic16', 'Press Start 2P', monospace;
+  --fepic: 'Bangers', 'Press Start 2P', cursive;
+  --fui: 'VT323', 'Press Start 2P', monospace;
 
   /* Escalas */
   --card-w: 128px;
@@ -247,6 +251,7 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   display: flex;
   justify-content: space-between;
   align-items: stretch;
+  gap: 120px; /* espacio central reservado para la insignia VS */
   padding: 5px 10px;
   background: linear-gradient(180deg, #243040 0%, var(--panel) 45%, #141b26 100%);
   border-bottom: 3px solid var(--border);
@@ -860,9 +865,18 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 
 @media (max-width: 768px) {
   :root { --card-w: 90px; --card-h: 128px; --spr: 5; }
-  .hud-top { padding: 3px 5px; }
+  .hud-top { padding: 3px 5px; gap: 70px; }
   .fighter-hud { min-width: 0; padding: 2px 3px; }
   .hud-name { font-size: 7px; }
+  .hud-portrait { width: 26px; height: 26px; }
+  .hud-center-badge { min-width: 70px; padding: 2px 6px; }
+  .hud-center-vs { font-size: 18px; }
+  .hud-center-round { font-size: 7px; }
+  .hud-center-order { font-size: 6px; }
+  .hud-stats { font-size: 7px; }
+  .cc-display { font-size: 7px; }
+  .hp-bar { height: 13px; }
+  .hp-bar-track { height: 9px; }
   .battlefield-fighters { padding: 0 6% 8%; }
   .hand-cards { gap: 3px; }
   .card { padding: 2px; gap: 0; }
@@ -2210,13 +2224,18 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 
 /* ═══ INSIGNIA CENTRAL DEL HUD (ROUND / VS) ═══ */
 .hud-center-badge {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
   display: flex; flex-direction: column; align-items: center; justify-content: center;
-  gap: 2px; min-width: 90px;
-  background: linear-gradient(180deg, rgba(216,168,48,.16), rgba(216,168,48,.05));
-  border: 2px solid rgba(216,168,48,.45);
-  box-shadow: inset 2px 2px 0 rgba(216,168,48,.2), 0 0 14px rgba(216,168,48,.18);
-  padding: 3px 10px;
+  gap: 2px; min-width: 96px;
+  background: linear-gradient(180deg, rgba(216,168,48,.18), rgba(216,168,48,.05));
+  border: 2px solid rgba(216,168,48,.5);
+  box-shadow: inset 2px 2px 0 rgba(216,168,48,.2), 0 0 16px rgba(216,168,48,.2);
+  padding: 3px 12px;
   text-shadow: 1px 1px 0 #000;
+  pointer-events: none;
 }
 .hud-center-round { font-family: var(--fpx); font-size: 9px; color: #ffe9a3; letter-spacing: 2px; text-shadow: 1px 1px 0 #000; }
 .hud-center-vs { font-family: var(--fepic); font-size: 26px; color: var(--hp-red); letter-spacing: 2px; text-shadow: 0 0 14px rgba(255,60,40,.7), 2px 2px 0 rgba(60,0,0,.9); line-height: 1; }

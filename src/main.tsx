@@ -1236,11 +1236,6 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
 
       {/* HUD */}
       <div className="hud-top">
-        <div className="hud-center-badge">
-          <span className="hud-center-round">ROUND {turn}</span>
-          <span className="hud-center-vs">VS</span>
-          <span className="hud-center-order">{speedOrderLabel.split(' ')[0]}</span>
-        </div>
         <div className="fighter-hud left">
           <div className="hud-name">
             <span className="hud-portrait">
@@ -1292,6 +1287,12 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
               <span className="team-reserve-hp">{enemy2.hp}/{enemy2.maxHp}</span>
             </div>
           )}
+        </div>
+        {/* Insignia central: centrada ABSOLUTA (independiente del flujo) */}
+        <div className="hud-center-badge">
+          <span className="hud-center-round">ROUND {turn}</span>
+          <span className="hud-center-vs">VS</span>
+          <span className="hud-center-order">{speedOrderLabel.split(' ')[0]}</span>
         </div>
       </div>
 
