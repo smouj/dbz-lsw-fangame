@@ -6,3 +6,6 @@ dist/
 *.gbc
 *.sav
 *.srm
+
+__pycache__/
+*.pyc
