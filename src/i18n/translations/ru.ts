@@ -172,4 +172,6 @@ export const ru: Dict = {
   'battle.fight': 'БОЙ!',
   'battle.powerOn': 'МАКС. СИЛА',
   'battle.vs': 'VS',
+  'battle.forfeit': 'СДАТЬСЯ',
+  'battle.keyHint': 'КЛАВИАТУРА: A / B',
 };

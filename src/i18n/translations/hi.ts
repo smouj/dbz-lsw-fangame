@@ -172,4 +172,6 @@ export const hi: Dict = {
   'battle.fight': 'लड़ो!',
   'battle.powerOn': 'पूरी शक्ति',
   'battle.vs': 'VS',
+  'battle.forfeit': 'हार मानो',
+  'battle.keyHint': 'कीबोर्ड: A / B दबाएं',
 };

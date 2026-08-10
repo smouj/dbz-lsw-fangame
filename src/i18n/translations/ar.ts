@@ -172,4 +172,6 @@ export const ar: Dict = {
   'battle.fight': 'قتال!',
   'battle.powerOn': 'قوة قصوى',
   'battle.vs': 'VS',
+  'battle.forfeit': 'استسلام',
+  'battle.keyHint': 'لوحة المفاتيح: A / B',
 };

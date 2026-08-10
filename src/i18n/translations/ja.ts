@@ -172,4 +172,6 @@ export const ja: Dict = {
   'battle.fight': 'ファイト！',
   'battle.powerOn': 'パワー全開',
   'battle.vs': 'VS',
+  'battle.forfeit': '降参',
+  'battle.keyHint': 'キーボード：A / B キー',
 };

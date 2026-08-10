@@ -172,4 +172,6 @@ export const pt: Dict = {
   'battle.fight': 'LUTE!',
   'battle.powerOn': 'PODER MÁXIMO',
   'battle.vs': 'VS',
+  'battle.forfeit': 'DESISTIR',
+  'battle.keyHint': 'TECLADO: A / B',
 };

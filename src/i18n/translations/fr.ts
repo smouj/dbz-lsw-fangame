@@ -172,4 +172,6 @@ export const fr: Dict = {
   'battle.fight': 'COMBAT !',
   'battle.powerOn': 'PUISSANCE MAX',
   'battle.vs': 'VS',
+  'battle.forfeit': 'ABANDONNER',
+  'battle.keyHint': 'CLAVIER : A / B',
 };

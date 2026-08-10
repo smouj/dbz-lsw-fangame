@@ -144,8 +144,8 @@ function HPBar({ current, max, side }: { current: number; max: number; side: 'le
       <div className="hp-bar-track">
         <div className="hp-bar-recent" style={{ width: `${pct}%` }} />
         <div className="hp-bar-current" style={{ width: `${pct}%` }} />
+        <div className="hp-bar-text">{current}/{max}</div>
       </div>
-      <div className="hp-bar-text">{current} / {max}</div>
     </div>
   );
 }
@@ -343,6 +343,8 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
   const pBuffs = { str: pStages.str * 8, ki: pStages.ki * 8 };
   const eBuffs = { str: eStages.str * 8, ki: eStages.ki * 8 };
   const clampStage = (v: number) => Math.max(-3, Math.min(3, v));
+  // ═══ CINEMÁTICA DE CARTA (como el GBC): zoom del luchador + carta + animación ═══
+  const [cardFx, setCardFx] = useState<{ card: CardDef; side: 'player' | 'enemy' } | null>(null);
   // Precisión/evasión (Reading Ki / Afterimage / Lock On): flags temporales
   const [pLockOn, setPLockOn] = useState(false);
   const [pAcc, setPAcc] = useState(0);   // turnos de +30% precisión
@@ -409,6 +411,28 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
       enemyAttack();
     }
   };
+
+  // ═══ TECLADO FÍSICO: A/B para Stage Attacks (como el GBC pero con teclado) ═══
+  const [pressedKey, setPressedKey] = useState<'A' | 'B' | null>(null);
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      const k = e.key.toLowerCase();
+      if (phase !== 'stageInput') return;
+      if (k !== 'a' && k !== 'b') return;
+      e.preventDefault();
+      const key = k === 'a' ? 'A' : 'B';
+      setPressedKey(key);
+      setTimeout(() => setPressedKey(null), 120);
+      if (stageFailed) {
+        stageRecover(key === 'B'); // A = abandonar · B = reparar
+      } else {
+        stageInput(key);
+      }
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [phase, stageFailed, stageSeq, stageIdx, stageCorrect]);
 
   // Arranque: primer ROUND del combate tras la intro cinematográfica (~3s)
   const startedRef = useRef(false);
@@ -494,9 +518,9 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
     setStageFailed(false);
     setStageCard(card);
     setPhase('stageInput');
-    // Ventana por distancia: cerca = 1200ms, lejos = 650ms
+    // Ventana por distancia (tiempo humano): cerca ~2000ms, lejos ~1400ms
     const dist = player.position === 'front' ? (player.elevation === 'air' ? 1 : 2) : (player.elevation === 'air' ? 3 : 4);
-    const window = Math.max(650, 1300 - dist * 160);
+    const window = Math.max(1400, 2200 - dist * 200);
     setStageTimeLeft(window);
     if (stageTimer.current) clearInterval(stageTimer.current);
     stageTimer.current = setInterval(() => {
@@ -554,7 +578,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
       Sfx.confirm();
       setStageFailed(false);
       setStageIdx(prev => prev + 1);
-      const window = Math.max(650, 1300 - (player.position === 'front' ? 2 : 4) * 160);
+      const window = Math.max(1400, 2200 - (player.position === 'front' ? 2 : 4) * 200);
       setStageTimeLeft(window);
       if (stageTimer.current) clearInterval(stageTimer.current);
       stageTimer.current = setInterval(() => {
@@ -639,7 +663,12 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
 
     Sfx.cardPlay();
     setPlayerPose(card.type === 'beam' ? 'beam_charge' : card.type === 'damage' ? 'attack_fwd' : card.type === 'defense' ? 'guard' : 'idle');
-    setTimeout(() => resolveCardPlay(card, false, idx), 0);
+    // Secuencia cinematográfica del GBC: zoom del luchador + carta ~1.9s
+    setCardFx({ card, side: 'player' });
+    setTimeout(() => {
+      setCardFx(null);
+      resolveCardPlay(card, false, idx);
+    }, 1950);
   };
 
   // Resolución de una carta JOINT o LIMITED (misma mecánica; solo cambia la mano)
@@ -887,7 +916,11 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
     Sfx.cardPlay();
     setPlayerPose(card.type === 'beam' ? 'beam_charge' : card.type === 'damage' ? 'attack_fwd' : 'idle');
     setSelectedCard(null);
-    setTimeout(() => resolveCardPlay(card, true, -1), 0);
+    setCardFx({ card, side: 'player' });
+    setTimeout(() => {
+      setCardFx(null);
+      resolveCardPlay(card, true, -1);
+    }, 1950);
   };
 
   const finishPlayerTurn = (idx: number) => {
@@ -990,7 +1023,13 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
       }
       incomingCard.current = card;
       addLog(`${enemy.name} ${t('battle.uses')} ${card.name}`);
-      setTimeout(() => setPhase('defend'), 350);
+      setCardFx({ card, side: 'enemy' });
+      setEnemyPose(card.type === 'beam' ? 'beam_charge' : 'attack_fwd');
+      setTimeout(() => {
+        setCardFx(null);
+        setEnemyPose('idle');
+        setPhase('defend');
+      }, 1950);
     }, 450);
   };
 
@@ -1156,6 +1195,30 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
         </div>
       )}
 
+      {/* ═══ CINEMÁTICA DE CARTA (GBC): zoom luchador + carta + animación por tipo ═══ */}
+      {cardFx && (
+        <div className={`card-fx fx-${cardFx.card.type} ${cardFx.side}`} key={cardFx.card.id + cardFx.side}>
+          <div className="fx-vignette" />
+          <div className="fx-fighter">
+            {cardFx.side === 'player'
+              ? (pf.battleId
+                  ? <FighterSprite charId={pf.battleId} pose={cardFx.card.type === 'beam' ? 'beam_charge' : cardFx.card.type === 'damage' ? 'attack_fwd' : 'power_up'} facing="right" scale={14} />
+                  : <CharacterSprite formId={playerFormId} className="fx-sprite" height={200} />)
+              : (ef.battleId
+                  ? <FighterSprite charId={ef.battleId} pose={cardFx.card.type === 'beam' ? 'beam_charge' : 'attack_fwd'} facing="left" scale={14} />
+                  : <CharacterSprite formId={enemyFormId} className="fx-sprite" height={200} />)}
+          </div>
+          <div className="fx-card">
+            {cardIconUrl(cardFx.card.id) && <img src={cardIconUrl(cardFx.card.id)} alt="" className="fx-card-icon" />}
+            <span className="fx-card-name">{cardFx.card.name}</span>
+          </div>
+          {cardFx.card.type === 'beam' && <div className="fx-beam" />}
+          {cardFx.card.type === 'damage' && <div className="fx-swing" />}
+          {cardFx.card.type === 'support' && <div className="fx-aura" />}
+          <div className="fx-impact" />
+        </div>
+      )}
+
       {/* Overlay de transformación en combate */}
       {battleTransform > 0 && (
         <div className="battle-transform-fx" key={battleTransform}>
@@ -1227,15 +1290,15 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
         <div className="battlefield-fighters">
           <div className={`fighter-container player ${player.elevation} ${player.position}`}>
             {player.battleId
-              ? <FighterSprite charId={player.battleId} pose={playerPose} facing="right" scale={8} flash={flashPlayer || gatherTurns > 0} />
-              : <CharacterSprite formId={playerFormId} className={`sheet-sprite ${gatherTurns > 0 ? 'gathering' : ''}`} />}
-            <div className="fighter-position-tag">{player.elevation.toUpperCase()}/{player.position.toUpperCase()}</div>
+              ? <FighterSprite charId={player.battleId} pose={playerPose} facing="right" scale={11} flash={flashPlayer || gatherTurns > 0} />
+              : <CharacterSprite formId={playerFormId} className={`sheet-sprite ${gatherTurns > 0 ? 'gathering' : ''}`} height={122} />}
+            <div className="fighter-position-tag hidden">{player.elevation.toUpperCase()}/{player.position.toUpperCase()}</div>
           </div>
           <div className={`fighter-container enemy ${enemy.elevation} ${enemy.position}`}>
             {enemy.battleId
-              ? <FighterSprite charId={enemy.battleId} pose={enemyPose} facing="left" scale={8} flash={flashEnemy} />
-              : <CharacterSprite formId={enemyFormId} className="sheet-sprite" />}
-            <div className="fighter-position-tag">{enemy.elevation.toUpperCase()}/{enemy.position.toUpperCase()}</div>
+              ? <FighterSprite charId={enemy.battleId} pose={enemyPose} facing="left" scale={11} flash={flashEnemy} />
+              : <CharacterSprite formId={enemyFormId} className="sheet-sprite" height={122} />}
+            <div className="fighter-position-tag hidden">{enemy.elevation.toUpperCase()}/{enemy.position.toUpperCase()}</div>
           </div>
         </div>
         {damageNums.map(dn => <DamageNumber key={dn.id} value={dn.value} type={dn.type} x={dn.x} y={dn.y} />)}
@@ -1257,7 +1320,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
              phase === 'defend' ? t('battle.defendAction') : ''}
           </span>
         </div>
-        <button className="btn-exit" onClick={() => onExit(false)}><X size={12} /></button>
+        <button className="btn-exit" onClick={() => onExit(false)}><X size={12} /> {t('battle.forfeit')}</button>
       </div>
 
       {/* Controles */}
@@ -1348,17 +1411,17 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
                 </div>
                 <div className="stage-timer" style={{ width: `${(stageTimeLeft / 1300) * 100}%` }} />
                 <div className="stage-actions">
-                  <button className="stage-btn-a" onClick={() => stageInput('A')}>A</button>
-                  <button className="stage-btn-b" onClick={() => stageInput('B')}>B</button>
+                  <button className={`stage-btn-a ${pressedKey === 'A' ? 'pressed' : ''}`} onClick={() => stageInput('A')}>A</button>
+                  <button className={`stage-btn-b ${pressedKey === 'B' ? 'pressed' : ''}`} onClick={() => stageInput('B')}>B</button>
                 </div>
-                <div className="stage-help">Pulsa el botón indicado a tiempo (+1 CC por acierto)</div>
+                <div className="stage-help">Pulsa el botón indicado a tiempo (+1 CC por acierto) · {t('battle.keyHint')}</div>
               </>
             ) : (
               <>
                 <div className="stage-fail">INPUT FAILED — {stageCorrect} CC ganados</div>
                 <div className="stage-recover">
-                  <button className="stage-btn-a" onClick={() => stageRecover(false)}>A: ABANDON</button>
-                  <button className="stage-btn-b" onClick={() => stageRecover(true)}>B: REPAIR</button>
+                  <button className={`stage-btn-a ${pressedKey === 'A' ? 'pressed' : ''}`} onClick={() => stageRecover(false)}>A: ABANDON</button>
+                  <button className={`stage-btn-b ${pressedKey === 'B' ? 'pressed' : ''}`} onClick={() => stageRecover(true)}>B: REPAIR</button>
                 </div>
                 <div className="stage-help">A = conservar CC y defender · B = reparar la cadena</div>
               </>

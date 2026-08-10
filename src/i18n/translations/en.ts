@@ -172,4 +172,6 @@ export const en: Dict = {
   'battle.fight': 'FIGHT!',
   'battle.powerOn': 'POWER UP',
   'battle.vs': 'VS',
+  'battle.forfeit': 'FORFEIT',
+  'battle.keyHint': 'KEYBOARD: press A / B',
 };

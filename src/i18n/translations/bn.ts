@@ -172,4 +172,6 @@ export const bn: Dict = {
   'battle.fight': 'যুদ্ধ!',
   'battle.powerOn': 'পূর্ণ শক্তি',
   'battle.vs': 'VS',
+  'battle.forfeit': 'পরাজয় স্বীকার',
+  'battle.keyHint': 'কীবোর্ড: A / B চাপুন',
 };
