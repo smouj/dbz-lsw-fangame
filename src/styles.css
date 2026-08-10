@@ -1810,3 +1810,132 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 }
 
 .form-chip-locked svg { display: block; }
+
+/* ═══════════════════════════════════════════════════════════
+   POLISH VISUAL — integración y coherencia de tonos
+   ═══════════════════════════════════════════════════════════ */
+
+/* Battlefield: integración con el HUD y la fase (vignette sutil) */
+.battle-bg.authentic::after {
+  content: '';
+  position: absolute; inset: 0;
+  background:
+    linear-gradient(180deg, rgba(10,10,24,0.35) 0%, transparent 12%),
+    linear-gradient(0deg, rgba(10,10,24,0.30) 0%, transparent 14%),
+    radial-gradient(ellipse 90% 70% at 50% 45%, transparent 60%, rgba(8,8,20,0.22) 100%);
+  pointer-events: none;
+}
+
+/* Sombra bajo el HUD para separarlo del campo */
+.hud-top {
+  box-shadow: 0 3px 10px rgba(0,0,0,0.35);
+}
+
+/* Panel de fase: integrar con el battlefield */
+.phase-bar {
+  background: linear-gradient(180deg, var(--panel) 0%, #1c1c30 100%);
+}
+
+/* Controles: panel con profundidad */
+.battle-controls {
+  background: linear-gradient(180deg, #20203a 0%, var(--panel) 100%);
+}
+
+/* Botones de comando: mejor contraste de color por tipo */
+.command-strip button {
+  background: #1a1a2e;
+}
+
+.cmd-limit { background: linear-gradient(180deg, #3a3010, #221c08) !important; }
+.cmd-j { background: linear-gradient(180deg, #3a1414, #221010) !important; }
+.cmd-b { background: linear-gradient(180deg, #122a44, #0e1e30) !important; }
+.cmd-c { background: linear-gradient(180deg, #123a1e, #0c2814) !important; }
+
+/* Cartas: sombra de profundidad y hover más suave */
+.card {
+  box-shadow:
+    inset 1px 1px 0 rgba(255,255,255,0.05),
+    inset -1px -1px 0 rgba(0,0,0,0.3),
+    0 2px 6px rgba(0,0,0,0.3);
+}
+
+/* Retratos HUD con marco dorado sutil al hover */
+.fighter-hud.left:hover .hud-portrait,
+.fighter-hud.right:hover .hud-portrait {
+  border-color: var(--gold);
+}
+
+/* Números de daño con halo para legibilidad */
+.damage-number {
+  filter: drop-shadow(0 0 4px rgba(0,0,0,0.8));
+}
+
+/* Log: entradas con mejor separación */
+.battle-log {
+  gap: 18px;
+  font-size: 11px;
+}
+
+/* Scrollbars más coherentes con la paleta */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: #14141f; }
+::-webkit-scrollbar-thumb { background: #3a3a58; border: 2px solid #14141f; border-radius: 0; }
+::-webkit-scrollbar-thumb:hover { background: var(--gold); }
+
+/* ═══════════════════════════════════════════════════════════
+   PROFUNDIDAD — gradientes sutiles en páginas y paneles
+   ═══════════════════════════════════════════════════════════ */
+
+/* Páginas internas: fondo con gradiente sutil en lugar de plano */
+.page-screen {
+  background: linear-gradient(180deg, #1a1a30 0%, var(--bg) 18%, var(--bg) 100%);
+}
+
+/* Encabezados de página con borde inferior dorado sutil */
+.page-header {
+  border-bottom: 2px solid var(--border);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+
+/* Celdas de personaje: hover con elevación */
+.char-cell {
+  transition: transform 90ms, border-color 90ms, background 90ms, box-shadow 90ms;
+}
+
+.char-cell:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+}
+
+/* Panel de detalle: fondo con gradiente */
+.char-detail {
+  background: linear-gradient(180deg, #26263e 0%, var(--panel) 30%);
+}
+
+/* Fichas de filtro: active con relieve */
+.filter-chip.active {
+  box-shadow: inset 1px 1px 0 rgba(0,0,0,0.25);
+}
+
+/* Mazo actual: cabecera con separador dorado */
+.deck-current-title {
+  color: var(--gold);
+  border-bottom: 1px solid rgba(216,168,48,0.4);
+  padding-bottom: 6px;
+  margin-bottom: 4px;
+}
+
+/* Settings: filas con hover sutil */
+.setting-row {
+  transition: border-color 80ms, background 80ms;
+}
+
+.setting-row:hover {
+  border-color: var(--border);
+  background: #26263e;
+}
+
+/* Título de página con brillo */
+.page-title {
+  text-shadow: 2px 2px 0 #000, 0 0 12px rgba(216,168,48,0.15);
+}
