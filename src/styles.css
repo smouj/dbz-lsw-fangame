@@ -2235,3 +2235,16 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 @keyframes result-pop { from { transform: scale(.82); opacity: 0; } to { transform: scale(1); opacity: 1; } }
 .result-title { animation: result-title-in .5s cubic-bezier(.2,1.6,.4,1) .15s both; }
 @keyframes result-title-in { from { transform: scale(2.2); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+/* ═══ HUD DE EQUIPO 2v2 (reservas) ═══ */
+.team-reserve {
+  display: flex; align-items: center; gap: 5px; margin-top: 3px;
+  background: rgba(10,14,24,.7); border: 1px solid var(--border-lo);
+  padding: 2px 6px; max-width: 100%;
+}
+.team-reserve.left { align-self: flex-start; }
+.team-reserve.right { align-self: flex-end; }
+.team-reserve-portrait img { height: 16px; width: auto; image-rendering: pixelated; }
+.team-reserve-name { font-size: 0.62rem; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.team-reserve-hp { font-size: 0.58rem; color: var(--hp-red); margin-left: auto; }
+.cmd-c.has-ally { border-color: #8dffb0 !important; color: #8dffb0 !important; animation: sel-blink 1.2s infinite alternate; }

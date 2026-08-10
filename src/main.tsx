@@ -2,8 +2,8 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { createRoot } from 'react-dom/client';
 import './styles.css';
-import { FORMS, CHARACTERS, getCharacter, getForm, idleSpriteUrl, growthFor, statAtLevel, LIMIT_DEFAULTS, loadLimits, saveLimits } from './data/roster';
-import { STORY_ENEMY_DECKS, STORY_AI_BOOSTS } from './data/enemy_decks';
+import { FORMS, CHARACTERS, getCharacter, getForm, idleSpriteUrl, statAtLevel, LIMIT_DEFAULTS, loadLimits, saveLimits } from './data/roster';
+import { STORY_ENEMY_DECKS, STORY_AI_BOOSTS, TEAM_BATTLES } from './data/enemy_decks';
 import { needsFlip } from './data/facing';
 import { UNLOCK_KEY, STARTER_DAMAGE_DECK, STARTER_BEAM_DECK, STARTER_CHARACTERS, cardsForLevel, pickRewards, VS_UNLOCKS, isFormUnlocked, FORM_UNLOCK_LEVELS } from './data/unlocks';
 import { CARDS, CARD_COLORS, CARD_TYPE_NAMES, CardDef, CardType, DECK_SIZE, MAX_COPIES, getCard, CardEffect } from './data/cards';
@@ -19,7 +19,7 @@ import { ArrowLeft, X, Lock, ChevronRight, Languages, Sword, Shield, type Lucide
 // ═══════════════════════════════════════════════════════════
 
 type Screen = 'main' | 'story' | 'battle' | 'versus' | 'deck' | 'characters' | 'cards' | 'settings';
-type BattlePhase = 'position' | 'command' | 'basic' | 'limitSelect' | 'cardSelect' | 'stageInput' | 'resolve' | 'enemyTurn' | 'defend' | 'win' | 'lose';
+type BattlePhase = 'position' | 'command' | 'basic' | 'limitSelect' | 'cardSelect' | 'stageInput' | 'enemyTurn' | 'defend' | 'win' | 'lose';
 type Position = 'front' | 'back';
 type Elevation = 'ground' | 'air';
 type CommandType = 'LIMIT' | 'J' | 'B' | 'C';
@@ -249,13 +249,38 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
       level: prog.level, maxHp: pf.hp, hp: pf.hp,
       str: pf.str, ki: pf.ki, spd: pf.spd, maxCc: 99, cc: 0,
       position: 'front', elevation: 'ground', battleId: pf.battleId,
-      limits: ['Limit', 'Final'],
+      limits: [],
     };
     return applyLevelUps(base, prog.level);
   });
   // Nivel IA real (spreadsheet oficial): aiLevel = (playerLevel-1)*2+1
   // El AI siempre tiene 2 upgrades por cada 1 del jugador (Hp/Str/Ki/Spd)
   const aiLevel = Math.max(1, (prog.level - 1) * 2 + 1);
+  // Combates 2v2 (cap 7 Jeice&Burter, 16 16&18, 21 17&18): compañero y 2º jefe
+  const teamBattle = storyChapter ? TEAM_BATTLES[storyChapter] : null;
+  const [player2, setPlayer2] = useState<Fighter | null>(() => {
+    if (!teamBattle?.ally) return null;
+    const af = getForm(teamBattle.ally)!;
+    const base: Fighter = {
+      id: af.character, name: getCharacter(af.character)?.name || af.character, form: af.form,
+      level: prog.level, maxHp: af.hp, hp: af.hp,
+      str: af.str, ki: af.ki, spd: af.spd, maxCc: 99, cc: 0,
+      position: 'back', elevation: 'ground', limits: [],
+    };
+    return applyLevelUps(base, prog.level);
+  });
+  const [enemy2, setEnemy2] = useState<Fighter | null>(() => {
+    if (!teamBattle?.enemy2) return null;
+    const ef2 = getForm(teamBattle.enemy2)!;
+    const b2 = storyChapter ? STORY_AI_BOOSTS[storyChapter] : null;
+    const base: Fighter = {
+      id: ef2.character, name: getCharacter(ef2.character)?.name || ef2.character, form: ef2.form,
+      level: aiLevel, maxHp: ef2.hp + (b2?.hp || 0), hp: ef2.hp + (b2?.hp || 0),
+      str: ef2.str + (b2?.str || 0), ki: ef2.ki + (b2?.ki || 0), spd: ef2.spd + (b2?.spd || 0),
+      maxCc: 99, cc: 0, position: 'front', elevation: 'ground', limits: [],
+    };
+    return base;
+  });
   const [enemy, setEnemy] = useState<Fighter>(() => {
     // Story mode: stats FIJOS del jefe + su AI boost real (spreadsheet oficial)
     const boost = storyChapter ? STORY_AI_BOOSTS[storyChapter] : null;
@@ -265,7 +290,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
       str: ef.str + (boost?.str || 0), ki: ef.ki + (boost?.ki || 0), spd: ef.spd + (boost?.spd || 0),
       maxCc: 99, cc: 0,
       position: 'back', elevation: 'ground', battleId: ef.battleId,
-      limits: ['Limit', 'Final'],
+      limits: [],
     };
     // En versus: la IA escala con aiLevel=(playerLevel-1)*2+1; en story, stats fijos
     return storyChapter ? base : applyLevelUps(base, aiLevel);
@@ -288,7 +313,6 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
   const speedOrderLabel = turnOwner === 'player'
     ? `${getForm(playerFormId)!.character.toUpperCase()} STRIKES FIRST`
     : `${getForm(enemyFormId)!.character.toUpperCase()} STRIKES FIRST`;
-  const [command, setCommand] = useState<CommandType | null>(null);
   const [bgId, setBgId] = useState('bg1');
   const [hand, setHand] = useState<CardDef[]>(() => {
     // Mano inicial: 3 Joint aleatorias (como el GBC) + 1 robo al empezar
@@ -310,13 +334,17 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
   const [buffTurns, setBuffTurns] = useState(0);
   // Transformación en combate (cartas Sup.Saiyan): flash + aura + zoom
   const [battleTransform, setBattleTransform] = useState(0);
+  useEffect(() => {
+    if (!battleTransform) return;
+    const tm = setTimeout(() => setBattleTransform(0), 1400);
+    return () => clearTimeout(tm);
+  }, [battleTransform]);
   const [eStages, setEStages] = useState({ str: 0, ki: 0, spd: 0, guard: 0 });
   const pBuffs = { str: pStages.str * 8, ki: pStages.ki * 8 };
   const eBuffs = { str: eStages.str * 8, ki: eStages.ki * 8 };
   const clampStage = (v: number) => Math.max(-3, Math.min(3, v));
   // Guardia activa: defensa usada en el turno que mitiga el próximo ataque enemigo
   const [playerGuard, setPlayerGuard] = useState<null | { type: 'avoid_beam' | 'avoid_damage' | 'reduce' | 'absorb' | 'cancel' }>(null);
-  const [enemyGuard, setEnemyGuard] = useState<null | { type: 'avoid_beam' | 'avoid_damage' | 'reduce' | 'absorb' }>(null);
   // Gather Power: PowerState real (FULL_POWER → HALF_POWER → NORMAL)
   const [powerState, setPowerState] = useState<'NORMAL' | 'HALF_POWER' | 'FULL_POWER'>('NORMAL');
   const [gatherTurns, setGatherTurns] = useState(0);
@@ -425,13 +453,18 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
 
   const selectCommand = (cmd: CommandType) => {
     Sfx.select();
-    setCommand(cmd);
     if (cmd === 'B') { setPhase('basic'); return; }
     if (cmd === 'LIMIT') { setPhase('limitSelect'); return; }
     if (cmd === 'C') {
-      // CHARA: cambio de personaje (requiere batalla 2v2, pendiente)
-      addLog(t('battle.noAlly'));
-      Sfx.cancel();
+      // CHARA: cambiar al compañero (Select Character del GBC). Consume la acción.
+      if (!player2) { addLog(t('battle.noAlly')); Sfx.cancel(); return; }
+      Sfx.confirm();
+      const incoming = player2;
+      setPlayer2(player);
+      setPlayer(incoming);
+      setPlayerPose('idle');
+      addLog(`${incoming.name} entra al combate! (CHARA)`);
+      setTimeout(() => roundStart(), 600);
       return;
     }
     setPhase('cardSelect');
@@ -543,6 +576,17 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
       addLog(`${player.name} → ${card.name} — ${dmg} ${t('battle.dmg')}`);
       Sfx.hit();
       setTimeout(() => setFlashEnemy(false), 150);
+      if (enemy.hp - dmg <= 0 && enemy2) {
+        // 2v2: relevo del segundo jefe
+        const fallen = enemy.name;
+        const next = enemy2;
+        setEnemy(next);
+        setEnemy2(null);
+        setEnemyPose('idle');
+        addLog(`${fallen} K.O.! ${next.name} entra al combate!`);
+        setTimeout(() => finishPlayerTurnStage(0), 900);
+        return;
+      }
       if (enemy.hp - dmg <= 0) {
         setTimeout(() => { setEnemyPose('hurt'); setPhase('win'); Sfx.victory(); addLog(`${enemy.name} ${t('battle.defeated')}`); }, 500);
         return;
@@ -719,6 +763,18 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
       // Coste real de la carta (JOINT)
       setPlayer(prev => ({ ...prev, cc: Math.max(0, prev.cc - card.cc) }));
 
+      if (enemy.hp - damage <= 0 && enemy2) {
+        // 2v2: cae el primer jefe, entra el segundo (mecánica real del GBC)
+        const fallen = enemy.name;
+        const next = enemy2;
+        setEnemy(next);
+        setEnemy2(null);
+        setEnemyPose('idle');
+        setFlashEnemy(false);
+        addLog(`${fallen} K.O.! ${next.name} entra al combate!`);
+        setTimeout(() => endTurn(), 900);
+        return;
+      }
       if (enemy.hp - damage <= 0) {
         // Otorgar EXP al ganar
         const prog = loadProgress();
@@ -936,6 +992,22 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
     else if (hitType === 'guard') setDamageNums(prev => [...prev, { value: 0, type: 'guard', x: 30, y: 50, id: Date.now() }]);
     else if (hitType === 'miss') setDamageNums(prev => [...prev, { value: 0, type: 'miss', x: 30, y: 50, id: Date.now() }]);
 
+    if (player.hp - damage <= 0 && player2) {
+      // 2v2: cae el jugador activo, entra el compañero con HP completo (como el GBC)
+      const fallen = player.name;
+      const next = player2;
+      setPlayer2(null);
+      setPlayer(next);
+      setPlayerPose('idle');
+      setFlashPlayer(false);
+      addLog(`${fallen} K.O.! ${next.name} entra al combate!`);
+      setTimeout(() => {
+        setEnemyPose('idle');
+        setTurn(t => t + 1); setSelectedCard(null);
+        roundStart();
+      }, 900);
+      return;
+    }
     if (player.hp - damage <= 0) {
       setTimeout(() => { setPlayerPose('hurt'); setPhase('lose'); Sfx.defeat(); addLog(`${player.name} ${t('battle.defeated')}`); }, 500);
       return;
@@ -1020,6 +1092,15 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
             {gatherTurns > 0 && <span className="power-indicator">{t('battle.powerState')} {powerState.replace('_', ' ')}</span>}
           </div>
           <CCDisplay cc={player.cc} maxCc={player.maxCc} />
+          {player2 && (
+            <div className="team-reserve left">
+              <span className="team-reserve-portrait">
+                <img src={portraitFor(player2.id) || ''} alt="" onError={e => (e.currentTarget.style.display = 'none')} />
+              </span>
+              <span className="team-reserve-name">{player2.name}</span>
+              <span className="team-reserve-hp">{player2.hp}/{player2.maxHp}</span>
+            </div>
+          )}
         </div>
         <div className="fighter-hud right">
           <div className="hud-name">
@@ -1036,6 +1117,15 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
             <span>STR{enemy.str + eBuffs.str}</span><span>KI{enemy.ki + eBuffs.ki}</span><span>SPD{enemy.spd}</span>
           </div>
           <CCDisplay cc={enemy.cc} maxCc={enemy.maxCc} />
+          {enemy2 && (
+            <div className="team-reserve right">
+              <span className="team-reserve-portrait">
+                <img src={portraitFor(enemy2.id) || ''} alt="" onError={e => (e.currentTarget.style.display = 'none')} />
+              </span>
+              <span className="team-reserve-name">{enemy2.name}</span>
+              <span className="team-reserve-hp">{enemy2.hp}/{enemy2.maxHp}</span>
+            </div>
+          )}
         </div>
       </div>
 
@@ -1097,7 +1187,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
               <button onClick={() => selectCommand('LIMIT')} className="cmd-limit">L</button>
               <button onClick={() => selectCommand('J')} className="cmd-j">J</button>
               <button onClick={() => selectCommand('B')} className="cmd-b">B</button>
-              <button onClick={() => selectCommand('C')} className="cmd-c">C</button>
+              <button onClick={() => selectCommand('C')} className={`cmd-c ${player2 ? 'has-ally' : ''}`} title={player2 ? `CHARA: ${player2.name}` : t('battle.noAlly')}>C{player2 ? '²' : ''}</button>
             </div>
             <div className="command-help">{t('battle.basicFree')} · {t('battle.limitedHelp')}</div>
           </div>

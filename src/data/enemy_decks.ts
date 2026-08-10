@@ -70,3 +70,14 @@ export const STORY_AI_BOOSTS: Record<number, { hp: number; str: number; ki: numb
   31: { hp: 13, str: 9, ki: 8, spd: 4 },
   32: { hp: 26, str: 9, ki: 3, spd: 4 },
 };
+
+// ═══ COMBATES 2v2 REALES (story mode) ═══
+// Del GBC: "The most you'll ever have to fight in a story battle is two".
+// El jugador también tiene compañero en algunos (walkthrough):
+// cap 7 = Gohan + Goku vs Jeice & Burter · cap 16 = Piccolo + Goku SSJ vs 16 & 18
+// cap 21 = Super Trunks SOLO vs 17 & 18 (sin ally)
+export const TEAM_BATTLES: Record<number, { enemy2: string; ally?: string }> = {
+  7: { enemy2: 'burter', ally: 'goku_ssj' },
+  16: { enemy2: 'android_18', ally: 'goku_ssj' },
+  21: { enemy2: 'android_18' },
+};
