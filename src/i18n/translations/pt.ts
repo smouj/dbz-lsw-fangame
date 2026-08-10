@@ -174,4 +174,5 @@ export const pt: Dict = {
   'battle.vs': 'VS',
   'battle.forfeit': 'DESISTIR',
   'battle.keyHint': 'TECLADO: A / B',
+  'battle.cancel': 'CANCELAR',
 };

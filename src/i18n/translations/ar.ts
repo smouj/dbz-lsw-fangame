@@ -174,4 +174,5 @@ export const ar: Dict = {
   'battle.vs': 'VS',
   'battle.forfeit': 'استسلام',
   'battle.keyHint': 'لوحة المفاتيح: A / B',
+  'battle.cancel': 'إلغاء',
 };

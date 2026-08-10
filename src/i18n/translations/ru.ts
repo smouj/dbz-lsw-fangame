@@ -174,4 +174,5 @@ export const ru: Dict = {
   'battle.vs': 'VS',
   'battle.forfeit': 'СДАТЬСЯ',
   'battle.keyHint': 'КЛАВИАТУРА: A / B',
+  'battle.cancel': 'ОТМЕНА',
 };

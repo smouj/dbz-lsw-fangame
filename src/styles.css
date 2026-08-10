@@ -2338,3 +2338,11 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   opacity: 0; animation: fx-impact-anim .45s ease 1.35s both;
 }
 @keyframes fx-impact-anim { 0% { opacity: 0; transform: scale(.2); } 30% { opacity: 1; } 100% { opacity: 0; transform: scale(2.4); } }
+.btn-cancel-card {
+  margin-top: 8px; padding: 8px 18px;
+  background: linear-gradient(180deg, #20242e, #14171e);
+  border: 2px solid var(--border); color: var(--muted);
+  font-family: var(--fpx); font-size: 9px; cursor: pointer; letter-spacing: .08em;
+}
+.btn-cancel-card:hover { color: var(--text); border-color: var(--gold); }
+.menu-lv { color: var(--gold); }

@@ -174,4 +174,5 @@ export const fr: Dict = {
   'battle.vs': 'VS',
   'battle.forfeit': 'ABANDONNER',
   'battle.keyHint': 'CLAVIER : A / B',
+  'battle.cancel': 'ANNULER',
 };

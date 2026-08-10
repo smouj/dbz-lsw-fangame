@@ -174,4 +174,5 @@ export const ja: Dict = {
   'battle.vs': 'VS',
   'battle.forfeit': '降参',
   'battle.keyHint': 'キーボード：A / B キー',
+  'battle.cancel': 'キャンセル',
 };

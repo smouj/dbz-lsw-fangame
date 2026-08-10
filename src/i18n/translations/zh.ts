@@ -174,4 +174,5 @@ export const zh: Dict = {
   'battle.vs': 'VS',
   'battle.forfeit': '认输',
   'battle.keyHint': '键盘：按 A / B',
+  'battle.cancel': '取消',
 };

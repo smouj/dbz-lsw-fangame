@@ -1035,6 +1035,9 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
 
   // El defensor (jugador) elige: DEFEND (mitad de daño) o MOVE (reposicionarse)
   const defendChoice = (choice: 'defend' | 'move', pos?: Position, elev?: Elevation) => {
+    // Desmontar el pad YA (evita doble disparo si el jugador hace clic dos veces
+    // durante la resolución ~400ms — bug real detectado en test E2E)
+    setPhase('enemyTurn');
     const card = incomingCard.current || CARDS[25];
     if (choice === 'move' && pos && elev) {
       Sfx.position();
@@ -1393,7 +1396,12 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
           </div>
         )}
         {phase === 'cardSelect' && (
-          <HandComponent cards={hand} selectedIndex={selectedCard} onSelect={selectCard} />
+          <>
+            <HandComponent cards={hand} selectedIndex={selectedCard} onSelect={selectCard} />
+            <button className="btn-cancel-card" onClick={() => { Sfx.cancel(); setSelectedCard(null); setPhase('command'); }}>
+              ← {t('battle.cancel')}
+            </button>
+          </>
         )}
         {phase === 'stageInput' && (
           <div className="stage-input-area">
@@ -1528,7 +1536,7 @@ function MainMenu({ onNavigate }: { onNavigate: (s: Screen) => void }) {
           <button onClick={() => onNavigate('settings')}>{t('menu.settings')}</button>
           <button onClick={() => onNavigate('battle')} className="btn-primary">{t('menu.continue')}</button>
         </nav>
-        <div className="menu-footer">{t('menu.footer')}</div>
+        <div className="menu-footer">{t('menu.footer')} <b className="menu-lv">Lv.{loadProgress().level}</b></div>
       </div>
     </div>
   );

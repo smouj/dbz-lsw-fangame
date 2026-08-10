@@ -174,4 +174,5 @@ export const hi: Dict = {
   'battle.vs': 'VS',
   'battle.forfeit': 'हार मानो',
   'battle.keyHint': 'कीबोर्ड: A / B दबाएं',
+  'battle.cancel': 'रद्द करें',
 };

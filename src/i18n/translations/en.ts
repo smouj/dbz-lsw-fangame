@@ -10,7 +10,7 @@ export const en: Dict = {
   'menu.cards': 'CARDS',
   'menu.settings': 'SETTINGS',
   'menu.continue': 'CONTINUE',
-  'menu.footer': 'Continue Lv.38',
+  'menu.footer': 'Continue',
   'common.back': '◀',
   'common.start': 'START',
   'common.fight': 'FIGHT!',
@@ -174,4 +174,5 @@ export const en: Dict = {
   'battle.vs': 'VS',
   'battle.forfeit': 'FORFEIT',
   'battle.keyHint': 'KEYBOARD: press A / B',
+  'battle.cancel': 'CANCEL',
 };
