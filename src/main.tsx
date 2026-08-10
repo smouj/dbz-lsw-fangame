@@ -3,6 +3,7 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { createRoot } from 'react-dom/client';
 import './styles.css';
 import { FORMS, CHARACTERS, getCharacter, getForm, idleSpriteUrl, growthFor, statAtLevel, LIMIT_DEFAULTS, loadLimits, saveLimits } from './data/roster';
+import { STORY_ENEMY_DECKS } from './data/enemy_decks';
 import { needsFlip } from './data/facing';
 import { UNLOCK_KEY, STARTER_DAMAGE_DECK, STARTER_BEAM_DECK, STARTER_CHARACTERS, cardsForLevel, pickRewards, VS_UNLOCKS, isFormUnlocked, FORM_UNLOCK_LEVELS } from './data/unlocks';
 import { CARDS, CARD_COLORS, CARD_TYPE_NAMES, CardDef, CardType, DECK_SIZE, MAX_COPIES, getCard, CardEffect } from './data/cards';
@@ -234,8 +235,8 @@ function healAmountFor(card: CardDef, maxHp: number): number {
 // PANTALLA DE BATALLA
 // ═══════════════════════════════════════════════════════════
 
-function BattleScreen({ playerFormId, enemyFormId, onExit }: {
-  playerFormId: string; enemyFormId: string; onExit: (won: boolean) => void;
+function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
+  playerFormId: string; enemyFormId: string; storyChapter: number | null; onExit: (won: boolean) => void;
 }) {
   const { t } = useLang();
   const pf = getForm(playerFormId)!;
@@ -304,7 +305,7 @@ function BattleScreen({ playerFormId, enemyFormId, onExit }: {
   const eBuffs = { str: eStages.str * 8, ki: eStages.ki * 8 };
   const clampStage = (v: number) => Math.max(-3, Math.min(3, v));
   // Guardia activa: defensa usada en el turno que mitiga el próximo ataque enemigo
-  const [playerGuard, setPlayerGuard] = useState<null | { type: 'avoid_beam' | 'avoid_damage' | 'reduce' | 'absorb' }>(null);
+  const [playerGuard, setPlayerGuard] = useState<null | { type: 'avoid_beam' | 'avoid_damage' | 'reduce' | 'absorb' | 'cancel' }>(null);
   const [enemyGuard, setEnemyGuard] = useState<null | { type: 'avoid_beam' | 'avoid_damage' | 'reduce' | 'absorb' }>(null);
   // Gather Power: PowerState real (FULL_POWER → HALF_POWER → NORMAL)
   const [powerState, setPowerState] = useState<'NORMAL' | 'HALF_POWER' | 'FULL_POWER'>('NORMAL');
@@ -604,10 +605,11 @@ function BattleScreen({ playerFormId, enemyFormId, onExit }: {
           addLog(`${player.name} ${t('battle.uses')} ${card.name} — +${gain} CC!`);
         } else if (eff === 'avoid_beam' || eff === 'avoid_damage' || eff === 'avoid_damage_taiyoken' || eff === 'reduce_damage' || eff === 'absorb_beam' || eff === 'beam_shield' || eff === 'damage_shield' || eff === 'command_cancel') {
           // Activar guardia: mitiga el próximo ataque enemigo (persistente hasta usarse)
-          const gType: 'avoid_beam' | 'avoid_damage' | 'reduce' | 'absorb' =
+          const gType: 'avoid_beam' | 'avoid_damage' | 'reduce' | 'absorb' | 'cancel' =
             eff === 'avoid_damage' || eff === 'avoid_damage_taiyoken' || eff === 'damage_shield' ? 'avoid_damage'
             : eff === 'absorb_beam' || eff === 'beam_shield' ? 'absorb'
             : eff === 'reduce_damage' ? 'reduce'
+            : eff === 'command_cancel' ? 'cancel'
             : 'avoid_beam';
           setPlayerGuard({ type: gType });
           const label = gType === 'avoid_beam' ? 'BEAM GUARD' : gType === 'avoid_damage' ? 'DAMAGE GUARD' : gType === 'absorb' ? 'ABSORB' : 'ENDURANCE';
@@ -790,7 +792,10 @@ function BattleScreen({ playerFormId, enemyFormId, onExit }: {
       : { position: 'front', elevation: 'air' };
     setEnemy(prev => ({ ...prev, ...ePos }));
     setTimeout(() => {
-      const attackCards = CARDS.filter(c => (c.type === 'damage' || c.type === 'beam') && !c.compatible);
+      // Mazo REAL del jefe en story mode (spreadsheet oficial); en versus, pool global
+      const storyDeck = storyChapter ? (STORY_ENEMY_DECKS[storyChapter] || []).map(id => getCard(id)).filter((c): c is CardDef => !!c) : [];
+      const allPool = storyDeck.length > 0 ? storyDeck : CARDS;
+      const attackCards = allPool.filter(c => (c.type === 'damage' || c.type === 'beam') && !c.compatible);
       let card: CardDef;
       if (ai.mode === 1) {
         // Gather Power: no ataca, sube STR/KI (mecánica real)
@@ -857,7 +862,11 @@ function BattleScreen({ playerFormId, enemyFormId, onExit }: {
       // Guardia activa del jugador (cartas Taiyoken/Avoid/Endurance/Absorb)
       if (playerGuard) {
         const g = playerGuard.type;
-        if ((g === 'avoid_beam' && card.type === 'beam') || (g === 'avoid_damage' && card.type === 'damage')) {
+        if (g === 'cancel' && card.type === 'command') {
+          // Foresight/Telepathy/Time Freeze: el Stage Attack enemigo FALLA (mecánica real)
+          damage = 0; hitType = 'guard';
+          addLog(`${player.name} cancela el Stage Attack de ${enemy.name}!`);
+        } else if ((g === 'avoid_beam' && card.type === 'beam') || (g === 'avoid_damage' && card.type === 'damage')) {
           damage = 0; hitType = 'guard';
           addLog(`${player.name} ${t('battle.blocks')} ${card.name}!`);
         } else if (g === 'reduce') {
@@ -1331,6 +1340,8 @@ function startWithDeck(kind: 'damage' | 'beam') {
 function ownedCards(u: UnlockState, level: number): Set<number> {
   const set = new Set<number>(u.cards);
   for (const c of cardsForLevel(level)) set.add(c);
+  // 6 Stage Attack solo tras COMPLETAR story mode (mecánica real del GBC)
+  if (loadStoryProgress() < CHAPTERS.length) set.delete(4);
   return set;
 }
 
@@ -1968,7 +1979,7 @@ function AppInner() {
     case 'characters': return <CharactersScreen onNavigate={setScreen} onSelectFighter={startBattle} />;
     case 'cards': return <CardsScreen onNavigate={setScreen} />;
     case 'settings': return <SettingsScreen onNavigate={setScreen} />;
-    case 'battle': return <BattleScreen key={battleKey} playerFormId={playerForm} enemyFormId={enemyForm} onExit={exitBattle} />;
+    case 'battle': return <BattleScreen key={battleKey} playerFormId={playerForm} enemyFormId={enemyForm} storyChapter={storyChapter} onExit={exitBattle} />;
     default: return <MainMenu onNavigate={setScreen} />;
   }
 }
