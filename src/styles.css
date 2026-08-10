@@ -1288,3 +1288,30 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   cursor: not-allowed;
   filter: grayscale(1);
 }
+
+/* ─── Versus ─── */
+
+.versus-layout {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 360px;
+  gap: 12px;
+  padding: 12px;
+  overflow: hidden;
+}
+
+.versus-vs {
+  font-family: var(--fpx);
+  font-size: 24px;
+  color: var(--orange);
+  text-align: center;
+  text-shadow: 2px 2px 0 #000;
+  letter-spacing: 4px;
+  margin-bottom: 4px;
+  animation: vs-pulse 1.2s ease-in-out infinite alternate;
+}
+
+@keyframes vs-pulse {
+  0% { opacity: 0.7; transform: scale(1); }
+  100% { opacity: 1; transform: scale(1.08); }
+}

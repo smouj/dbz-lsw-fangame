@@ -11,7 +11,7 @@ import { cardIconUrl, MINI_PORTRAITS, MENU_PORTRAITS, TYPE_EMOJI } from './data/
 // Sprites reales, mecánicas fieles, pixel art nítido
 // ═══════════════════════════════════════════════════════════
 
-type Screen = 'main' | 'story' | 'battle' | 'deck' | 'characters' | 'cards' | 'settings';
+type Screen = 'main' | 'story' | 'battle' | 'versus' | 'deck' | 'characters' | 'cards' | 'settings';
 type BattlePhase = 'position' | 'command' | 'cardSelect' | 'resolve' | 'enemyTurn' | 'win' | 'lose';
 type Position = 'front' | 'back';
 type Elevation = 'ground' | 'air';
@@ -516,7 +516,7 @@ function MainMenu({ onNavigate }: { onNavigate: (s: Screen) => void }) {
         <h2 className="menu-subtitle">LEGENDARY SUPER WARRIORS</h2>
         <nav className="menu-nav">
           <button onClick={() => onNavigate('story')}>STORY</button>
-          <button onClick={() => onNavigate('battle')}>BATTLE</button>
+          <button onClick={() => onNavigate('versus')}>BATTLE</button>
           <button onClick={() => onNavigate('deck')}>DECK</button>
           <button onClick={() => onNavigate('characters')}>CHARACTERS</button>
           <button onClick={() => onNavigate('cards')}>CARDS</button>
@@ -862,6 +862,67 @@ function SettingsScreen({ onNavigate }: { onNavigate: (s: Screen) => void }) {
 }
 
 // ═══════════════════════════════════════════════════════════
+// VERSUS — Selección de batalla
+// ═══════════════════════════════════════════════════════════
+
+function VersusScreen({ onNavigate, onStartVersus }: {
+  onNavigate: (s: Screen) => void; onStartVersus: (enemyFormId: string) => void;
+}) {
+  const [selected, setSelected] = useState('vegeta_base');
+
+  const sel = getForm(selected)!;
+  const selChar = getCharacter(sel.character)!;
+
+  return (
+    <div className="page-screen versus-screen">
+      <div className="page-header">
+        <button className="btn-back" onClick={() => onNavigate('main')}>◀</button>
+        <h1 className="page-title">BATTLE MODE</h1>
+        <div className="page-spacer" />
+      </div>
+      <div className="versus-layout">
+        <div className="char-grid">
+          {CHARACTERS.map(c => {
+            const baseForm = getForm(c.forms[0])!;
+            const active = c.id === sel.character;
+            return (
+              <button key={c.id} className={`char-cell ${active ? 'active' : ''}`}
+                onClick={() => setSelected(baseForm.id)}>
+                <img className="char-thumb" src={sheetUrl(baseForm)} alt={c.name} />
+                <div className="char-name">{c.name}</div>
+                <div className="char-forms">{c.forms.length} form{c.forms.length > 1 ? 's' : ''}</div>
+              </button>
+            );
+          })}
+        </div>
+        <div className="char-detail">
+          <div className="versus-vs">VS</div>
+          <img className="char-detail-sprite" src={sheetUrl(sel)} alt={sel.character} />
+          <div className="char-detail-name">{selChar.name}</div>
+          <div className="char-detail-form">{sel.form}</div>
+          <div className="stat-block">
+            <div className="stat-row"><span>HP</span><div className="stat-bar"><div className="stat-fill hp" style={{ width: `${sel.hp / 6}%` }} /></div><b>{sel.hp}</b></div>
+            <div className="stat-row"><span>STR</span><div className="stat-bar"><div className="stat-fill str" style={{ width: `${sel.str / 1.2}%` }} /></div><b>{sel.str}</b></div>
+            <div className="stat-row"><span>KI</span><div className="stat-bar"><div className="stat-fill ki" style={{ width: `${sel.ki / 1.2}%` }} /></div><b>{sel.ki}</b></div>
+            <div className="stat-row"><span>SPD</span><div className="stat-bar"><div className="stat-fill spd" style={{ width: `${sel.spd}%` }} /></div><b>{sel.spd}</b></div>
+          </div>
+          <div className="form-select">
+            {selChar.forms.map(fid => {
+              const f = getForm(fid)!;
+              return (
+                <button key={fid} className={`form-chip ${fid === selected ? 'active' : ''}`}
+                  onClick={() => setSelected(fid)}>{f.form}</button>
+              );
+            })}
+          </div>
+          <button className="btn-primary" onClick={() => onStartVersus(selected)}>FIGHT!</button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════
 // APP
 // ═══════════════════════════════════════════════════════════
 
@@ -876,6 +937,13 @@ export default function App() {
     if (playerFormId) setPlayerForm(playerFormId);
     setStoryChapter(null);
     setEnemyForm('vegeta_base');
+    setBattleKey(k => k + 1);
+    setScreen('battle');
+  };
+
+  const startVersus = (enemyFormId: string) => {
+    setEnemyForm(enemyFormId);
+    setStoryChapter(null);
     setBattleKey(k => k + 1);
     setScreen('battle');
   };
@@ -898,6 +966,7 @@ export default function App() {
 
   switch (screen) {
     case 'story': return <StoryScreen onNavigate={setScreen} onStartChapter={startChapter} />;
+    case 'versus': return <VersusScreen onNavigate={setScreen} onStartVersus={startVersus} />;
     case 'deck': return <DeckScreen onNavigate={setScreen} />;
     case 'characters': return <CharactersScreen onNavigate={setScreen} onSelectFighter={startBattle} />;
     case 'cards': return <CardsScreen onNavigate={setScreen} />;
