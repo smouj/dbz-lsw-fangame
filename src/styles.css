@@ -73,17 +73,73 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 .menu-bg {
   position: absolute; inset: 0;
   background:
-    linear-gradient(180deg, #18182a 0%, #20203a 40%, #18182a 100%);
+    radial-gradient(120% 90% at 70% 20%, rgba(255,170,60,0.28) 0%, transparent 45%),
+    radial-gradient(80% 60% at 20% 10%, rgba(120,180,255,0.18) 0%, transparent 50%),
+    linear-gradient(180deg, #1a1a3a 0%, #2a2050 30%, #4a2a55 55%, #7a4035 80%, #2a1a2a 100%);
   z-index: 0;
+  overflow: hidden;
+}
+
+/* Sol con halo (estilo atardecer DBZ) */
+.menu-bg::before {
+  content: '';
+  position: absolute;
+  left: 62%; top: 34%;
+  width: 220px; height: 220px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #ffd98a 0%, #ffb64d 35%, #ff8a3d 60%, transparent 72%);
+  filter: blur(1px);
+  opacity: 0.85;
+  pointer-events: none;
 }
 
 .menu-bg::after {
   content: '';
   position: absolute; inset: 0;
-  background: repeating-linear-gradient(
-    0deg, transparent 0px, transparent 3px, rgba(0,0,0,0.06) 3px, rgba(0,0,0,0.06) 4px
-  );
+  background:
+    /* montañas lejanas */
+    linear-gradient(175deg, transparent 62%, rgba(30,20,45,0.9) 63%, rgba(22,14,36,0.95) 68%, transparent 69%),
+    linear-gradient(178deg, transparent 70%, rgba(18,12,32,0.95) 71%, rgba(10,8,24,0.98) 78%, transparent 79%),
+    /* scanline sutil */
+    repeating-linear-gradient(
+      0deg, transparent 0px, transparent 3px, rgba(0,0,0,0.05) 3px, rgba(0,0,0,0.05) 4px
+    );
   pointer-events: none;
+}
+
+/* Esferas del dragón (icono DBZ) en el fondo */
+.menu-screen::before {
+  content: '✦';
+  position: absolute;
+  left: 8%; top: 12%;
+  font-size: 22px; color: rgba(255,190,80,0.5);
+  text-shadow: 0 0 12px rgba(255,150,40,0.8);
+  z-index: 0; pointer-events: none;
+  animation: dbz-star-float 7s ease-in-out infinite alternate;
+}
+.menu-screen::after {
+  content: '✦';
+  position: absolute;
+  right: 10%; bottom: 18%;
+  font-size: 16px; color: rgba(255,190,80,0.4);
+  text-shadow: 0 0 10px rgba(255,150,40,0.7);
+  z-index: 0; pointer-events: none;
+  animation: dbz-star-float 9s ease-in-out infinite alternate-reverse;
+}
+@keyframes dbz-star-float {
+  0% { transform: translateY(0) scale(1); opacity: 0.4; }
+  100% { transform: translateY(-14px) scale(1.15); opacity: 0.9; }
+}
+
+/* Logo con brillo tipo ki */
+.menu-title {
+  position: relative;
+  background: linear-gradient(180deg, #ffe9a8 0%, #ffb64d 45%, #ff7a2a 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: none;
+  filter: drop-shadow(0 3px 0 rgba(120,40,10,0.9)) drop-shadow(0 0 18px rgba(255,150,50,0.45));
 }
 
 .menu-content {
@@ -1375,4 +1431,14 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 
 @media (max-width: 640px) {
   .language-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* ─── Sprites de personaje: realce tipo emulador ─── */
+.char-idle-sprite,
+.sheet-sprite {
+  filter: brightness(1.25) contrast(1.15) saturate(1.2);
+}
+
+.char-idle-sprite {
+  display: block;
 }

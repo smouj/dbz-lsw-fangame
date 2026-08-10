@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { createRoot } from 'react-dom/client';
 import './styles.css';
-import { FORMS, CHARACTERS, getCharacter, getForm, sheetUrl } from './data/roster';
+import { FORMS, CHARACTERS, getCharacter, getForm, idleSpriteUrl } from './data/roster';
 import { CARDS, CARD_COLORS, CARD_TYPE_NAMES, CardDef, CardType, DECK_SIZE, MAX_COPIES, getCard, CardEffect } from './data/cards';
 import { cardIconUrl, MINI_PORTRAITS, MENU_PORTRAITS, TYPE_ICONS } from './data/icons';
 import { initAudio, Sfx, setSfxEnabled, setVolume } from './audio/sfx';
@@ -109,6 +109,25 @@ function FighterSprite({ charId, pose, facing, scale = 8, flash = false }: {
       style={{ width: w * scale, height: h * scale, transform: facing === 'left' ? 'scaleX(-1)' : 'scaleX(1)' }}>
       <img src={src} alt={charId} style={{ width: w * scale, height: h * scale }} />
     </div>
+  );
+}
+
+// ─── Sprite idle recortado de un sheet auténtico ─────────
+function CharacterSprite({ formId, height = 92, className = '' }: {
+  formId: string; height?: number; className?: string;
+}) {
+  const form = getForm(formId);
+  const idle = form ? idleSpriteUrl(form) : undefined;
+  if (!idle || !form) {
+    return <div className={`char-sprite-missing ${className}`} style={{ height }}>?</div>;
+  }
+  // mantener proporción: width = height * (w/h) del sprite
+  return (
+    <img className={`char-idle-sprite ${className}`}
+      src={idle}
+      alt={form.character}
+      style={{ height, width: 'auto', imageRendering: 'pixelated' }}
+    />
   );
 }
 
@@ -452,13 +471,13 @@ function BattleScreen({ playerFormId, enemyFormId, onExit }: {
           <div className={`fighter-container player ${player.elevation} ${player.position}`}>
             {player.battleId
               ? <FighterSprite charId={player.battleId} pose={playerPose} facing="right" scale={8} flash={flashPlayer} />
-              : <img className="sheet-sprite" src={sheetUrl(pf)} alt={player.name} style={{ height: 320 }} />}
+              : <CharacterSprite formId={playerFormId} height={260} className="sheet-sprite" />}
             <div className="fighter-position-tag">{player.elevation.toUpperCase()}/{player.position.toUpperCase()}</div>
           </div>
           <div className={`fighter-container enemy ${enemy.elevation} ${enemy.position}`}>
             {enemy.battleId
               ? <FighterSprite charId={enemy.battleId} pose={enemyPose} facing="left" scale={8} flash={flashEnemy} />
-              : <img className="sheet-sprite" src={sheetUrl(ef)} alt={enemy.name} style={{ height: 320 }} />}
+              : <CharacterSprite formId={enemyFormId} height={260} className="sheet-sprite" />}
             <div className="fighter-position-tag">{enemy.elevation.toUpperCase()}/{enemy.position.toUpperCase()}</div>
           </div>
         </div>
@@ -669,7 +688,7 @@ function CharactersScreen({ onNavigate, onSelectFighter }: {
             return (
               <button key={c.id} className={`char-cell ${active ? 'active' : ''}`}
                 onClick={() => setSelected(baseForm.id)}>
-                <img className="char-thumb" src={sheetUrl(baseForm)} alt={c.name} />
+                <CharacterSprite formId={baseForm.id} height={64} className="char-thumb" />
                 <div className="char-name">{c.name}</div>
                 <div className="char-forms">{c.forms.length} {t('characters.forms')}</div>
               </button>
@@ -680,7 +699,7 @@ function CharactersScreen({ onNavigate, onSelectFighter }: {
         {/* Detalle */}
         <div className="char-detail">
           <div className="char-detail-header">
-            <img className="char-detail-sprite" src={sheetUrl(sel)} alt={sel.character} />
+            <CharacterSprite formId={selected} height={160} className="char-detail-sprite" />
             <div className="char-detail-info">
               <div className="char-detail-name">{selChar.name}</div>
               <div className="char-detail-form">{t('characters.form')}: {sel.form}</div>
@@ -965,7 +984,7 @@ function VersusScreen({ onNavigate, onStartVersus }: {
             return (
               <button key={c.id} className={`char-cell ${active ? 'active' : ''}`}
                 onClick={() => setSelected(baseForm.id)}>
-                <img className="char-thumb" src={sheetUrl(baseForm)} alt={c.name} />
+                <CharacterSprite formId={baseForm.id} height={64} className="char-thumb" />
                 <div className="char-name">{c.name}</div>
                 <div className="char-forms">{c.forms.length} {t('characters.forms')}</div>
               </button>
@@ -974,7 +993,7 @@ function VersusScreen({ onNavigate, onStartVersus }: {
         </div>
         <div className="char-detail">
           <div className="versus-vs">{t('versus.vs')}</div>
-          <img className="char-detail-sprite" src={sheetUrl(sel)} alt={sel.character} />
+          <CharacterSprite formId={selected} height={160} className="char-detail-sprite" />
           <div className="char-detail-name">{selChar.name}</div>
           <div className="char-detail-form">{sel.form}</div>
           <div className="stat-block">

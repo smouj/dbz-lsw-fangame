@@ -1,0 +1,296 @@
+{
+ "android-16": {
+  "file": "android-16_idle.png",
+  "w": 26,
+  "h": 43,
+  "src_x": 70,
+  "src_y": 3
+ },
+ "android-17": {
+  "file": "android-17_idle.png",
+  "w": 30,
+  "h": 43,
+  "src_x": 69,
+  "src_y": 4
+ },
+ "android-18": {
+  "file": "android-18_idle.png",
+  "w": 22,
+  "h": 40,
+  "src_x": 78,
+  "src_y": 13
+ },
+ "android-19": {
+  "file": "android-19_idle.png",
+  "w": 21,
+  "h": 43,
+  "src_x": 74,
+  "src_y": 3
+ },
+ "android-20-dr-gero": {
+  "file": "android-20-dr-gero_idle.png",
+  "w": 23,
+  "h": 46,
+  "src_x": 71,
+  "src_y": 1
+ },
+ "burter": {
+  "file": "burter_idle.png",
+  "w": 28,
+  "h": 31,
+  "src_x": 74,
+  "src_y": 16
+ },
+ "buu-gohan": {
+  "file": "buu-gohan_idle.png",
+  "w": 30,
+  "h": 42,
+  "src_x": 69,
+  "src_y": 15
+ },
+ "buu-gotenks": {
+  "file": "buu-gotenks_idle.png",
+  "w": 30,
+  "h": 42,
+  "src_x": 69,
+  "src_y": 15
+ },
+ "buu": {
+  "file": "buu_idle.png",
+  "w": 28,
+  "h": 40,
+  "src_x": 71,
+  "src_y": 17
+ },
+ "cell-imperfect-form": {
+  "file": "cell-imperfect-form_idle.png",
+  "w": 30,
+  "h": 44,
+  "src_x": 68,
+  "src_y": 3
+ },
+ "cell-jr": {
+  "file": "cell-jr_idle.png",
+  "w": 30,
+  "h": 35,
+  "src_x": 71,
+  "src_y": 18
+ },
+ "cell-perfect": {
+  "file": "cell-perfect_idle.png",
+  "w": 31,
+  "h": 46,
+  "src_x": 71,
+  "src_y": 7
+ },
+ "cell-semi-perfect-form": {
+  "file": "cell-semi-perfect-form_idle.png",
+  "w": 30,
+  "h": 45,
+  "src_x": 71,
+  "src_y": 8
+ },
+ "frieza": {
+  "file": "frieza_idle.png",
+  "w": 28,
+  "h": 40,
+  "src_x": 72,
+  "src_y": 6
+ },
+ "future-trunks": {
+  "file": "future-trunks_idle.png",
+  "w": 27,
+  "h": 41,
+  "src_x": 72,
+  "src_y": 16
+ },
+ "ginyu-gokus-body": {
+  "file": "ginyu-gokus-body_idle.png",
+  "w": 30,
+  "h": 46,
+  "src_x": 75,
+  "src_y": 0
+ },
+ "ginyu": {
+  "file": "ginyu_idle.png",
+  "w": 26,
+  "h": 39,
+  "src_x": 75,
+  "src_y": 5
+ },
+ "gohan-super-saiyan-1-2": {
+  "file": "gohan-super-saiyan-1-2_idle.png",
+  "w": 27,
+  "h": 46,
+  "src_x": 75,
+  "src_y": 11
+ },
+ "gohan-ultimate": {
+  "file": "gohan-ultimate_idle.png",
+  "w": 27,
+  "h": 46,
+  "src_x": 73,
+  "src_y": 11
+ },
+ "goku-super-saiyan-2": {
+  "file": "goku-super-saiyan-2_idle.png",
+  "w": 28,
+  "h": 46,
+  "src_x": 72,
+  "src_y": 11
+ },
+ "goku-super-saiyan-3": {
+  "file": "goku-super-saiyan-3_idle.png",
+  "w": 30,
+  "h": 45,
+  "src_x": 79,
+  "src_y": 5
+ },
+ "goku-super-saiyan": {
+  "file": "goku-super-saiyan_idle.png",
+  "w": 28,
+  "h": 46,
+  "src_x": 80,
+  "src_y": 9
+ },
+ "goku": {
+  "file": "goku_idle.png",
+  "w": 30,
+  "h": 46,
+  "src_x": 75,
+  "src_y": 0
+ },
+ "goten-super-saiyan": {
+  "file": "goten-super-saiyan_idle.png",
+  "w": 29,
+  "h": 39,
+  "src_x": 76,
+  "src_y": 9
+ },
+ "goten": {
+  "file": "goten_idle.png",
+  "w": 30,
+  "h": 39,
+  "src_x": 72,
+  "src_y": 17
+ },
+ "gotenks-super-saiyan-3": {
+  "file": "gotenks-super-saiyan-3_idle.png",
+  "w": 27,
+  "h": 41,
+  "src_x": 80,
+  "src_y": 8
+ },
+ "gotenks-super-saiyan": {
+  "file": "gotenks-super-saiyan_idle.png",
+  "w": 29,
+  "h": 43,
+  "src_x": 73,
+  "src_y": 7
+ },
+ "guldo": {
+  "file": "guldo_idle.png",
+  "w": 22,
+  "h": 35,
+  "src_x": 77,
+  "src_y": 8
+ },
+ "jeice": {
+  "file": "jeice_idle.png",
+  "w": 28,
+  "h": 42,
+  "src_x": 73,
+  "src_y": 3
+ },
+ "kid-buu": {
+  "file": "kid-buu_idle.png",
+  "w": 26,
+  "h": 38,
+  "src_x": 76,
+  "src_y": 19
+ },
+ "krillin": {
+  "file": "krillin_idle.png",
+  "w": 21,
+  "h": 35,
+  "src_x": 77,
+  "src_y": 7
+ },
+ "nappa": {
+  "file": "nappa_idle.png",
+  "w": 26,
+  "h": 39,
+  "src_x": 80,
+  "src_y": 5
+ },
+ "piccolo": {
+  "file": "piccolo_idle.png",
+  "w": 29,
+  "h": 39,
+  "src_x": 73,
+  "src_y": 12
+ },
+ "recoome": {
+  "file": "recoome_idle.png",
+  "w": 26,
+  "h": 45,
+  "src_x": 75,
+  "src_y": 2
+ },
+ "super-buu": {
+  "file": "super-buu_idle.png",
+  "w": 20,
+  "h": 43,
+  "src_x": 78,
+  "src_y": 6
+ },
+ "trunks-super-saiyan": {
+  "file": "trunks-super-saiyan_idle.png",
+  "w": 30,
+  "h": 40,
+  "src_x": 74,
+  "src_y": 8
+ },
+ "trunks": {
+  "file": "trunks_idle.png",
+  "w": 30,
+  "h": 37,
+  "src_x": 73,
+  "src_y": 21
+ },
+ "vegeta-super-saiyan-majin": {
+  "file": "vegeta-super-saiyan-majin_idle.png",
+  "w": 32,
+  "h": 42,
+  "src_x": 73,
+  "src_y": 9
+ },
+ "vegeta": {
+  "file": "vegeta_idle.png",
+  "w": 30,
+  "h": 42,
+  "src_x": 77,
+  "src_y": 3
+ },
+ "young-gohan-super-saiyan-2": {
+  "file": "young-gohan-super-saiyan-2_idle.png",
+  "w": 25,
+  "h": 44,
+  "src_x": 72,
+  "src_y": 13
+ },
+ "young-gohan-super-saiyan": {
+  "file": "young-gohan-super-saiyan_idle.png",
+  "w": 27,
+  "h": 41,
+  "src_x": 73,
+  "src_y": 16
+ },
+ "young-gohan": {
+  "file": "young-gohan_idle.png",
+  "w": 26,
+  "h": 43,
+  "src_x": 80,
+  "src_y": 3
+ }
+}
