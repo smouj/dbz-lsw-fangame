@@ -246,7 +246,7 @@ function BattleScreen({ playerFormId, enemyFormId, onExit }: {
     const base: Fighter = {
       id: pf.character, name: getCharacter(pf.character)?.name || pf.character, form: pf.form,
       level: prog.level, maxHp: pf.hp, hp: pf.hp,
-      str: pf.str, ki: pf.ki, spd: pf.spd, maxCc: 13, cc: 5,
+      str: pf.str, ki: pf.ki, spd: pf.spd, maxCc: 99, cc: 0,
       position: 'front', elevation: 'ground', battleId: pf.battleId,
       limits: ['Limit', 'Final'],
     };
@@ -255,35 +255,34 @@ function BattleScreen({ playerFormId, enemyFormId, onExit }: {
   const [enemy, setEnemy] = useState<Fighter>({
     id: ef.character, name: getCharacter(ef.character)?.name || ef.character, form: ef.form,
     level: 39, maxHp: ef.hp, hp: ef.hp,
-    str: ef.str, ki: ef.ki, spd: ef.spd, maxCc: 13, cc: 5,
+    str: ef.str, ki: ef.ki, spd: ef.spd, maxCc: 99, cc: 0,
     position: 'back', elevation: 'ground', battleId: ef.battleId,
     limits: ['Limit', 'Final'],
   });
   const [phase, setPhase] = useState<BattlePhase>('position');
   const [turn, setTurn] = useState(1);
-  // El de mayor Speed ataca primero (mecánica real del GBC)
-  const [playerFirst] = useState(() => {
+  // El de mayor Speed ataca primero (mecánica real del GBC).
+  // Se recalcula al inicio de cada ROUND (si Speed cambia, cambia el orden).
+  const [playerFirst, setPlayerFirst] = useState(() => {
     const p = getForm(playerFormId)!;
     const e = getForm(enemyFormId)!;
     if (p.spd === e.spd) return Math.random() < 0.5;
     return p.spd > e.spd;
   });
+  const speedOrderLabel = playerFirst
+    ? `${getForm(playerFormId)!.character.toUpperCase()} STRIKES FIRST`
+    : `${getForm(enemyFormId)!.character.toUpperCase()} STRIKES FIRST`;
   const [command, setCommand] = useState<CommandType | null>(null);
   const [bgId, setBgId] = useState('bg1');
   const [hand, setHand] = useState<CardDef[]>(() => {
-    // Usar el mazo persistido del jugador (o el default si no hay)
+    // Mano inicial: 3 Joint aleatorias (como el GBC) + 1 robo al empezar
     const deckIds = loadDeck();
     const battleDeck = deckIds.map(id => getCard(id)).filter((c): c is CardDef => !!c);
     const shuffled = [...battleDeck].sort(() => Math.random() - 0.5);
-    return shuffled.slice(0, 5);
+    return shuffled.slice(0, 4); // 3 iniciales + 1 robo al iniciar Attack Phase
   });
   const [selectedCard, setSelectedCard] = useState<number | null>(null);
-  const [log, setLog] = useState<string[]>(() => {
-    const p = getForm(playerFormId)!;
-    const e = getForm(enemyFormId)!;
-    const first = p.spd >= e.spd ? p.character : e.character;
-    return [`${t('battle.start')}`, `${first.toUpperCase()} STRIKES FIRST (SPD)`];
-  });
+  const [log, setLog] = useState<string[]>([t('battle.start')]);
   const [damageNums, setDamageNums] = useState<{ value: number; type: 'damage' | 'heal' | 'miss' | 'guard'; x: number; y: number; id: number }[]>([]);
   const [playerPose, setPlayerPose] = useState('idle');
   const [enemyPose, setEnemyPose] = useState('idle');
@@ -294,7 +293,8 @@ function BattleScreen({ playerFormId, enemyFormId, onExit }: {
   // Guardia activa: defensa usada en el turno que mitiga el próximo ataque enemigo
   const [playerGuard, setPlayerGuard] = useState<null | { type: 'avoid_beam' | 'avoid_damage' | 'reduce' | 'absorb' }>(null);
   const [enemyGuard, setEnemyGuard] = useState<null | { type: 'avoid_beam' | 'avoid_damage' | 'reduce' | 'absorb' }>(null);
-  // Gather Power: habilita el Limit Deck durante 2 turnos (sprite parpadea)
+  // Gather Power: PowerState real (FULL_POWER → HALF_POWER → NORMAL)
+  const [powerState, setPowerState] = useState<'NORMAL' | 'HALF_POWER' | 'FULL_POWER'>('NORMAL');
   const [gatherTurns, setGatherTurns] = useState(0);
 
   useEffect(() => {
@@ -306,18 +306,36 @@ function BattleScreen({ playerFormId, enemyFormId, onExit }: {
   const setPosition = (pos: Position, elev: Elevation) => {
     Sfx.position();
     setPlayer(prev => ({ ...prev, position: pos, elevation: elev }));
+    // Al comenzar Attack Phase: robar +1 Joint (máx 6 transitorio, 5 persistente)
+    setHand(prev => {
+      if (prev.length >= 6) return prev;
+      const deckIds = loadDeck();
+      const battleDeck = deckIds.map(id => getCard(id)).filter((c): c is CardDef => !!c);
+      const usedIds = new Set(prev.map(c => c.id));
+      const pool = battleDeck.filter(c => !usedIds.has(c.id));
+      if (pool.length === 0) return prev;
+      return [...prev, pool[Math.floor(Math.random() * pool.length)]];
+    });
     setPhase('command');
-    addLog(`${elev.toUpperCase()}/${pos.toUpperCase()}`);
+    addLog(`${elev.toUpperCase()}/${pos.toUpperCase()} — +1 CARD`);
   };
 
   const gatherPower = () => {
     Sfx.powerUp();
+    setPowerState('FULL_POWER');
     setGatherTurns(2);
-    // Gather Power: +KI y +STR temporal (como el GBC) + habilita Limit Deck
-    setPBuffs(b => ({ str: b.str + 6, ki: b.ki + 6 }));
-    addLog(`${player.name} GATHER POWER! +STR/KI, LIMIT DECK activo (2 turnos)`);
+    // Gather Power (GBC): +4 STR +4 KI, habilita Limit Deck, Basic → 4 Stage
+    setPBuffs(b => ({ str: b.str + 4, ki: b.ki + 4 }));
+    addLog(`${player.name} GATHER POWER! FULL POWER (+4 STR/KI, LIMIT DECK 2 turnos)`);
     setPlayerPose('power_up');
-    setTimeout(() => { setPlayerPose('idle'); setPhase('cardSelect'); }, 600);
+    // Consume la acción de ataque completa
+    setTimeout(() => {
+      setPlayerPose('idle');
+      setPhase('cardSelect');
+      // Termina el turno tras Gather (acción completa consumida)
+      setSelectedCard(null);
+      setTimeout(() => enemyTurn(0), 600);
+    }, 800);
   };
 
   const selectCommand = (cmd: CommandType) => {
@@ -462,8 +480,19 @@ function BattleScreen({ playerFormId, enemyFormId, onExit }: {
 
   const finishPlayerTurn = (idx: number) => {
     const newHand = [...hand];
-    newHand[idx] = getCard(loadDeck()[Math.floor(Math.random() * loadDeck().length)]) || BATTLE_DECK[0];
-    setHand(newHand);
+    // La carta usada desaparece de la mano (JOINT)
+    newHand.splice(idx, 1);
+    // Reponer con carta del deck si no llegamos al robo del próximo turno
+    if (newHand.length < 5) {
+      const deckIds = loadDeck();
+      const battleDeck = deckIds.map(id => getCard(id)).filter((c): c is CardDef => !!c);
+      const usedIds = new Set(newHand.map(c => c.id));
+      const pool = battleDeck.filter(c => !usedIds.has(c.id));
+      if (pool.length > 0) newHand.push(pool[Math.floor(Math.random() * pool.length)]);
+    }
+    // Descartar hasta 5 (mano persistente)
+    const finalHand = newHand.slice(0, 5);
+    setHand(finalHand);
     setSelectedCard(null);
     setTimeout(() => enemyTurn(0), 600);
   };
@@ -531,8 +560,16 @@ function BattleScreen({ playerFormId, enemyFormId, onExit }: {
 
       setTimeout(() => {
         setPlayerPose('idle'); setEnemyPose('idle');
+        // Nuevo ROUND: recalcular prioridad por SPEED actual (los buffs de Speed cuentan)
+        const pSpd = getForm(playerFormId)!.spd;
+        const eSpd = getForm(enemyFormId)!.spd;
+        setPlayerFirst(pSpd === eSpd ? Math.random() < 0.5 : pSpd > eSpd);
         setPhase('position'); setTurn(t => t + 1); setSelectedCard(null);
-        if (gatherTurns > 0) setGatherTurns(g => g - 1);
+        if (gatherTurns > 0) {
+          setGatherTurns(g => g - 1);
+          // FULL_POWER → HALF_POWER → NORMAL (estados reales)
+          setPowerState(prev => prev === 'FULL_POWER' ? 'HALF_POWER' : prev === 'HALF_POWER' ? 'NORMAL' : prev);
+        }
       }, 400);
     }, 500);
   };
@@ -608,6 +645,7 @@ function BattleScreen({ playerFormId, enemyFormId, onExit }: {
       <div className="phase-bar">
         <div className="phase-info">
           <span className="turn-label">{t('battle.turn')} {turn}</span>
+          <span className="speed-order-label">{speedOrderLabel}</span>
           <span className="phase-label">
             {phase === 'position' ? t('battle.choosePosition') :
              phase === 'command' ? t('battle.selectCommand') :
@@ -638,7 +676,9 @@ function BattleScreen({ playerFormId, enemyFormId, onExit }: {
               <button onClick={() => selectCommand('J')} className="cmd-j">J</button>
               <button onClick={() => selectCommand('B')} className="cmd-b">B</button>
               <button onClick={() => selectCommand('C')} className="cmd-c">C</button>
-              <button onClick={gatherPower} className={`cmd-gather ${gatherTurns > 0 ? 'active' : ''}`} disabled={gatherTurns > 0}>GATHER</button>
+              <button onClick={gatherPower} className={`cmd-gather ${gatherTurns > 0 ? 'active' : ''}`} disabled={gatherTurns > 0}>
+                {gatherTurns > 0 ? powerState.replace('_', ' ') : 'GATHER'}
+              </button>
             </div>
             {gatherTurns > 0 && (
               <div className="limit-deck-bar">
