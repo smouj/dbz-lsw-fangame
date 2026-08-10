@@ -1,0 +1,232 @@
+{
+ "idle": {
+  "frame_count": 1,
+  "fps": 3,
+  "loop": true,
+  "frames": [
+   {
+    "name": "goten_base_idle_00",
+    "file": "goten_base_idle_00.png",
+    "w": 30,
+    "h": 39
+   }
+  ]
+ },
+ "move": {
+  "frame_count": 4,
+  "fps": 6,
+  "loop": true,
+  "frames": [
+   {
+    "name": "goten_base_move_00",
+    "file": "goten_base_move_00.png",
+    "w": 23,
+    "h": 41
+   },
+   {
+    "name": "goten_base_move_01",
+    "file": "goten_base_move_01.png",
+    "w": 40,
+    "h": 31
+   },
+   {
+    "name": "goten_base_move_02",
+    "file": "goten_base_move_02.png",
+    "w": 26,
+    "h": 39
+   },
+   {
+    "name": "goten_base_move_03",
+    "file": "goten_base_move_03.png",
+    "w": 31,
+    "h": 38
+   }
+  ]
+ },
+ "guard": {
+  "frame_count": 3,
+  "fps": 6,
+  "loop": false,
+  "frames": [
+   {
+    "name": "goten_base_guard_00",
+    "file": "goten_base_guard_00.png",
+    "w": 35,
+    "h": 50
+   },
+   {
+    "name": "goten_base_guard_01",
+    "file": "goten_base_guard_01.png",
+    "w": 27,
+    "h": 52
+   },
+   {
+    "name": "goten_base_guard_02",
+    "file": "goten_base_guard_02.png",
+    "w": 29,
+    "h": 52
+   }
+  ]
+ },
+ "attack_fwd": {
+  "frame_count": 7,
+  "fps": 6,
+  "loop": false,
+  "frames": [
+   {
+    "name": "goten_base_attack_fwd_00",
+    "file": "goten_base_attack_fwd_00.png",
+    "w": 24,
+    "h": 43
+   },
+   {
+    "name": "goten_base_attack_fwd_01",
+    "file": "goten_base_attack_fwd_01.png",
+    "w": 28,
+    "h": 42
+   },
+   {
+    "name": "goten_base_attack_fwd_02",
+    "file": "goten_base_attack_fwd_02.png",
+    "w": 31,
+    "h": 40
+   },
+   {
+    "name": "goten_base_attack_fwd_03",
+    "file": "goten_base_attack_fwd_03.png",
+    "w": 30,
+    "h": 40
+   },
+   {
+    "name": "goten_base_attack_fwd_04",
+    "file": "goten_base_attack_fwd_04.png",
+    "w": 35,
+    "h": 39
+   },
+   {
+    "name": "goten_base_attack_fwd_05",
+    "file": "goten_base_attack_fwd_05.png",
+    "w": 35,
+    "h": 38
+   },
+   {
+    "name": "goten_base_attack_fwd_06",
+    "file": "goten_base_attack_fwd_06.png",
+    "w": 35,
+    "h": 38
+   }
+  ]
+ },
+ "attack_ud": {
+  "frame_count": 4,
+  "fps": 6,
+  "loop": false,
+  "frames": [
+   {
+    "name": "goten_base_attack_ud_00",
+    "file": "goten_base_attack_ud_00.png",
+    "w": 28,
+    "h": 41
+   },
+   {
+    "name": "goten_base_attack_ud_01",
+    "file": "goten_base_attack_ud_01.png",
+    "w": 28,
+    "h": 38
+   },
+   {
+    "name": "goten_base_attack_ud_02",
+    "file": "goten_base_attack_ud_02.png",
+    "w": 26,
+    "h": 41
+   },
+   {
+    "name": "goten_base_attack_ud_03",
+    "file": "goten_base_attack_ud_03.png",
+    "w": 33,
+    "h": 43
+   }
+  ]
+ },
+ "hurt": {
+  "frame_count": 6,
+  "fps": 6,
+  "loop": false,
+  "frames": [
+   {
+    "name": "goten_base_hurt_00",
+    "file": "goten_base_hurt_00.png",
+    "w": 27,
+    "h": 48
+   },
+   {
+    "name": "goten_base_hurt_01",
+    "file": "goten_base_hurt_01.png",
+    "w": 22,
+    "h": 41
+   },
+   {
+    "name": "goten_base_hurt_02",
+    "file": "goten_base_hurt_02.png",
+    "w": 26,
+    "h": 38
+   },
+   {
+    "name": "goten_base_hurt_03",
+    "file": "goten_base_hurt_03.png",
+    "w": 27,
+    "h": 46
+   },
+   {
+    "name": "goten_base_hurt_04",
+    "file": "goten_base_hurt_04.png",
+    "w": 31,
+    "h": 28
+   },
+   {
+    "name": "goten_base_hurt_05",
+    "file": "goten_base_hurt_05.png",
+    "w": 43,
+    "h": 27
+   }
+  ]
+ },
+ "beam_charge": {
+  "frame_count": 2,
+  "fps": 8,
+  "loop": false,
+  "frames": [
+   {
+    "name": "goten_base_beam_charge_00",
+    "file": "goten_base_beam_charge_00.png",
+    "w": 31,
+    "h": 40
+   },
+   {
+    "name": "goten_base_beam_charge_01",
+    "file": "goten_base_beam_charge_01.png",
+    "w": 30,
+    "h": 40
+   }
+  ]
+ },
+ "beam_fire": {
+  "frame_count": 2,
+  "fps": 8,
+  "loop": false,
+  "frames": [
+   {
+    "name": "goten_base_beam_fire_02",
+    "file": "goten_base_beam_fire_02.png",
+    "w": 30,
+    "h": 40
+   },
+   {
+    "name": "goten_base_beam_fire_03",
+    "file": "goten_base_beam_fire_03.png",
+    "w": 28,
+    "h": 39
+   }
+  ]
+ }
+}

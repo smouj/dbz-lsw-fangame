@@ -9,6 +9,7 @@ import { UNLOCK_KEY, STARTER_DAMAGE_DECK, STARTER_BEAM_DECK, STARTER_CHARACTERS,
 import { CARDS, CARD_COLORS, CARD_TYPE_NAMES, CardDef, CardType, DECK_SIZE, MAX_COPIES, getCard, CardEffect } from './data/cards';
 import { cardIconUrl, MINI_PORTRAITS, MENU_PORTRAITS, TYPE_ICONS } from './data/icons';
 import { overworldUrl } from './data/overworld';
+import { spriteManifestUrl, spriteFrameUrl, spriteDirFor } from './data/spriteManifest';
 import { initAudio, Sfx, setSfxEnabled, setVolume } from './audio/sfx';
 import { LanguageProvider, useLang } from './i18n/LanguageContext';
 import { LANGUAGES, LangCode, TKey } from './i18n';
@@ -71,17 +72,19 @@ const BATTLE_DECK: CardDef[] = [
   getCard(16)!, getCard(23)!, getCard(9)!, getCard(15)!, getCard(11)!,
 ];
 
-// ─── Animación de sprites ─────────────────────────────────
-function useSpriteAnim(charId: 'goku' | 'vegeta', pose: string): { src: string; w: number; h: number } {
+// ─── Animación de sprites (Sprite Database completa, 42 personajes) ───
+function useSpriteAnim(formId: string, pose: string): { src: string; w: number; h: number } | null {
   const [frameIdx, setFrameIdx] = useState(0);
   const [manifest, setManifest] = useState<CharManifest | null>(null);
 
   useEffect(() => {
-    fetch(`/assets/sprites/${charId}/manifest.json`)
+    const url = spriteManifestUrl(formId);
+    if (!url) { setManifest(null); return; }
+    fetch(url)
       .then(r => r.json())
       .then(setManifest)
       .catch(() => setManifest(null));
-  }, [charId]);
+  }, [formId]);
 
   useEffect(() => {
     if (!manifest || !manifest[pose]) { setFrameIdx(0); return; }
@@ -97,24 +100,24 @@ function useSpriteAnim(charId: 'goku' | 'vegeta', pose: string): { src: string; 
     return () => clearInterval(timer);
   }, [manifest, pose]);
 
-  if (!manifest || !manifest[pose]) return { src: `/assets/sprites/${charId}/${charId}_idle_00.png`, w: 30, h: 46 };
+  if (!manifest || !manifest[pose]) return null;
   const anim = manifest[pose];
   const f = anim.frames[Math.min(frameIdx, anim.frames.length - 1)];
-  return { src: `/assets/sprites/${charId}/${f.file}`, w: f.w, h: f.h };
+  return { src: spriteFrameUrl(formId, f.file), w: f.w, h: f.h };
 }
 
-// ─── Sprite del luchador ─────────────────────────────────
-function FighterSprite({ charId, pose, facing, scale = 8, flash = false }: {
-  charId: 'goku' | 'vegeta'; pose: string; facing?: 'left' | 'right'; scale?: number; flash?: boolean;
+// ─── Sprite del luchador (animado si hay manifest; null si no) ───
+function FighterSprite({ formId, pose, facing, scale = 8, flash = false }: {
+  formId: string; pose: string; facing?: 'left' | 'right'; scale?: number; flash?: boolean;
 }) {
-  const { src, w, h } = useSpriteAnim(charId, pose);
-  // Escala uniforme: base --spr=8 → height = h * scale / 8 (el prop antes era inerte)
-  const px = Math.round(h * scale / 8);
-  const pw = Math.round(w * scale / 8);
+  const anim = useSpriteAnim(formId, pose);
+  if (!anim) return null;
+  const px = Math.round(anim.h * scale / 8);
+  const pw = Math.round(anim.w * scale / 8);
   return (
     <div className={`fighter-sprite ${flash ? 'flash' : ''}`}
       style={{ transform: facing === 'left' ? 'scaleX(-1)' : 'scaleX(1)' }}>
-      <img src={src} alt={charId} style={{ imageRendering: 'pixelated', width: pw, height: px }} />
+      <img src={anim.src} alt={formId} style={{ imageRendering: 'pixelated', width: pw, height: px }} />
     </div>
   );
 }
@@ -1181,8 +1184,8 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
           <div className="intro-burst-right" />
           <div className="intro-fighter intro-left">
             <div className="intro-sprite-wrap">
-              {pf.battleId
-                ? <FighterSprite charId={pf.battleId} pose="idle" facing="right" scale={16} />
+              {spriteManifestUrl(playerFormId)
+                ? <FighterSprite formId={playerFormId} pose="idle" facing="right" scale={16} />
                 : <CharacterSprite formId={playerFormId} className="intro-sprite" height={230} />}
             </div>
             <div className="intro-name">{player.name}</div>
@@ -1191,8 +1194,8 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
           <div className="intro-vs">{t('battle.vs')}</div>
           <div className="intro-fighter intro-right">
             <div className="intro-sprite-wrap">
-              {ef.battleId
-                ? <FighterSprite charId={ef.battleId} pose="idle" facing="left" scale={16} />
+              {spriteManifestUrl(enemyFormId)
+                ? <FighterSprite formId={enemyFormId} pose="idle" facing="left" scale={16} />
                 : <CharacterSprite formId={enemyFormId} className="intro-sprite" height={230} />}
             </div>
             <div className="intro-name">{enemy.name}</div>
@@ -1210,11 +1213,11 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
           <div className="fx-vignette" />
           <div className="fx-fighter">
             {cardFx.side === 'player'
-              ? (pf.battleId
-                  ? <FighterSprite charId={pf.battleId} pose={cardFx.card.type === 'beam' ? 'beam_charge' : cardFx.card.type === 'damage' ? 'attack_fwd' : 'power_up'} facing="right" scale={14} />
+              ? (spriteManifestUrl(playerFormId)
+                  ? <FighterSprite formId={playerFormId} pose={cardFx.card.type === 'beam' ? 'beam_charge' : cardFx.card.type === 'damage' ? 'attack_fwd' : 'guard'} facing="right" scale={14} />
                   : <CharacterSprite formId={playerFormId} className="fx-sprite" height={200} />)
-              : (ef.battleId
-                  ? <FighterSprite charId={ef.battleId} pose={cardFx.card.type === 'beam' ? 'beam_charge' : 'attack_fwd'} facing="left" scale={14} />
+              : (spriteManifestUrl(enemyFormId)
+                  ? <FighterSprite formId={enemyFormId} pose={cardFx.card.type === 'beam' ? 'beam_charge' : 'attack_fwd'} facing="left" scale={14} />
                   : <CharacterSprite formId={enemyFormId} className="fx-sprite" height={200} />)}
           </div>
           <div className="fx-card">
@@ -1304,18 +1307,18 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
         <div className="battle-bg authentic" style={{ backgroundImage: `url(${bg.file})` }} />
         <div className="battlefield-fighters">
           <div className={`fighter-container player ${player.elevation} ${player.position}`}>
-            {player.battleId
-              ? <FighterSprite charId={player.battleId} pose={playerPose} facing="right" scale={15} flash={flashPlayer || gatherTurns > 0} />
-              : (overworldUrl(playerFormId) && playerPose === 'idle'
-                  ? <img src={overworldUrl(playerFormId)!} alt="" className={`overworld-sprite ${gatherTurns > 0 ? 'gathering' : ''}`} />
+            {playerPose === 'idle' && overworldUrl(playerFormId)
+              ? <img src={overworldUrl(playerFormId)!} alt="" className={`overworld-sprite ${gatherTurns > 0 ? 'gathering' : ''}`} />
+              : (spriteManifestUrl(playerFormId)
+                  ? <FighterSprite formId={playerFormId} pose={playerPose} facing="right" scale={15} flash={flashPlayer || gatherTurns > 0} />
                   : <CharacterSprite formId={playerFormId} className={`sheet-sprite ${gatherTurns > 0 ? 'gathering' : ''}`} height={152} />)}
             <div className="fighter-position-tag hidden">{player.elevation.toUpperCase()}/{player.position.toUpperCase()}</div>
           </div>
           <div className={`fighter-container enemy ${enemy.elevation} ${enemy.position}`}>
-            {enemy.battleId
-              ? <FighterSprite charId={enemy.battleId} pose={enemyPose} facing="left" scale={15} flash={flashEnemy} />
-              : (overworldUrl(enemyFormId) && enemyPose === 'idle'
-                  ? <img src={overworldUrl(enemyFormId)!} alt="" className="overworld-sprite" />
+            {enemyPose === 'idle' && overworldUrl(enemyFormId)
+              ? <img src={overworldUrl(enemyFormId)!} alt="" className="overworld-sprite" />
+              : (spriteManifestUrl(enemyFormId)
+                  ? <FighterSprite formId={enemyFormId} pose={enemyPose} facing="left" scale={15} flash={flashEnemy} />
                   : <CharacterSprite formId={enemyFormId} className="sheet-sprite" height={152} />)}
             <div className="fighter-position-tag hidden">{enemy.elevation.toUpperCase()}/{enemy.position.toUpperCase()}</div>
           </div>
