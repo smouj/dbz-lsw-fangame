@@ -182,3 +182,34 @@ export function idleSpriteDir(sheet: string): string | undefined {
 export function idleSpriteUrl(form: FormDef): string | undefined {
   return idleSpriteDir(form.sheet);
 }
+
+// ─── Crecimiento por personaje (fiel al GBC: no es +1 universal) ───
+// Cada personaje tiene incrementos específicos por estadística al subir de nivel.
+// Los valores son relativos al tier (los luchadores más fuertes crecen más).
+export interface GrowthRates { hp: number; str: number; ki: number; spd: number; }
+
+const GROWTH_BY_TIER: Record<number, GrowthRates> = {
+  5: { hp: 14, str: 4, ki: 4, spd: 2 },
+  4: { hp: 12, str: 3, ki: 3, spd: 2 },
+  3: { hp: 10, str: 3, ki: 3, spd: 1 },
+  2: { hp: 8, str: 2, ki: 2, spd: 1 },
+  1: { hp: 6, str: 2, ki: 2, spd: 1 },
+};
+
+// Ajustes individuales (personajes con crecimiento peculiar)
+const GROWTH_OVERRIDES: Record<string, GrowthRates> = {
+  'goku': { hp: 15, str: 4, ki: 4, spd: 2 },
+  'vegeta': { hp: 13, str: 5, ki: 3, spd: 2 },
+  'gohan': { hp: 12, str: 3, ki: 5, spd: 2 },
+  'piccolo': { hp: 14, str: 4, ki: 4, spd: 1 },
+  'krillin': { hp: 9, str: 2, ki: 3, spd: 2 },
+  'trunks': { hp: 13, str: 4, ki: 3, spd: 2 },
+  'buu': { hp: 18, str: 4, ki: 4, spd: 1 },
+  'frieza': { hp: 13, str: 3, ki: 5, spd: 2 },
+  'cell': { hp: 15, str: 4, ki: 4, spd: 2 },
+  'android_16': { hp: 16, str: 5, ki: 1, spd: 1 },
+};
+
+export function growthFor(charId: string, tier: number): GrowthRates {
+  return GROWTH_OVERRIDES[charId] || GROWTH_BY_TIER[tier] || GROWTH_BY_TIER[3];
+}

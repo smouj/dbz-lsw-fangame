@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { createRoot } from 'react-dom/client';
 import './styles.css';
-import { FORMS, CHARACTERS, getCharacter, getForm, idleSpriteUrl } from './data/roster';
+import { FORMS, CHARACTERS, getCharacter, getForm, idleSpriteUrl, growthFor } from './data/roster';
 import { needsFlip } from './data/facing';
 import { UNLOCK_KEY, STARTER_DAMAGE_DECK, STARTER_BEAM_DECK, STARTER_CHARACTERS, cardsForLevel, pickRewards, VS_UNLOCKS, isFormUnlocked, FORM_UNLOCK_LEVELS } from './data/unlocks';
 import { CARDS, CARD_COLORS, CARD_TYPE_NAMES, CardDef, CardType, DECK_SIZE, MAX_COPIES, getCard, CardEffect } from './data/cards';
@@ -288,8 +288,12 @@ function BattleScreen({ playerFormId, enemyFormId, onExit }: {
   const [enemyPose, setEnemyPose] = useState('idle');
   const [flashPlayer, setFlashPlayer] = useState(false);
   const [flashEnemy, setFlashEnemy] = useState(false);
-  const [pBuffs, setPBuffs] = useState({ str: 0, ki: 0 });
-  const [eBuffs, setEBuffs] = useState({ str: 0, ki: 0 });
+  // Stat stages reales: -3..+3 (cada stage = 8 unidades internas, como el GBC)
+  const [pStages, setPStages] = useState({ str: 0, ki: 0, spd: 0, guard: 0 });
+  const [eStages, setEStages] = useState({ str: 0, ki: 0, spd: 0, guard: 0 });
+  const pBuffs = { str: pStages.str * 8, ki: pStages.ki * 8 };
+  const eBuffs = { str: eStages.str * 8, ki: eStages.ki * 8 };
+  const clampStage = (v: number) => Math.max(-3, Math.min(3, v));
   // Guardia activa: defensa usada en el turno que mitiga el próximo ataque enemigo
   const [playerGuard, setPlayerGuard] = useState<null | { type: 'avoid_beam' | 'avoid_damage' | 'reduce' | 'absorb' }>(null);
   const [enemyGuard, setEnemyGuard] = useState<null | { type: 'avoid_beam' | 'avoid_damage' | 'reduce' | 'absorb' }>(null);
@@ -333,7 +337,7 @@ function BattleScreen({ playerFormId, enemyFormId, onExit }: {
     setPowerState('FULL_POWER');
     setGatherTurns(2);
     // Gather Power (GBC): +4 STR +4 KI, habilita Limit Deck, Basic → 4 Stage
-    setPBuffs(b => ({ str: b.str + 4, ki: b.ki + 4 }));
+    setPStages(s => ({ ...s, str: clampStage(s.str + 1), ki: clampStage(s.ki + 1) }));
     addLog(`${player.name} GATHER POWER! FULL POWER (+4 STR/KI, LIMIT DECK 2 turnos)`);
     setPlayerPose('power_up');
     // Consume la acción de ataque completa
@@ -544,12 +548,12 @@ function BattleScreen({ playerFormId, enemyFormId, onExit }: {
           }
         } else if (eff.startsWith('buff_') || eff.startsWith('debuff_') || eff === 'accuracy_up' || eff === 'evasion_up' || eff === 'lock_on' || eff === 'powerup_dispel' || eff === 'support_dispel' || eff === 'powerdown_cleanse' || eff === 'knockdown_dmg' || eff === 'knockdown_min' || eff === 'attack_power_down' || eff === 'sunglasses' || eff === 'gamebomb' || eff === 'candy' || eff === 'naughty_book' || eff === 'special_card') {
           // Buffs +8, debuffs -8, otros efectos de estado
-          if (eff === 'buff_ki8' || eff === 'buff_str_ki8') setPBuffs(b => ({ ...b, ki: b.ki + 8 }));
-          if (eff === 'buff_str8' || eff === 'buff_str_ki8') setPBuffs(b => ({ ...b, str: b.str + 8 }));
-          if (eff === 'buff_speed8') { /* velocidad: se ignora en el HUD actual */ }
-          if (eff === 'buff_guard8') { /* guard: se refleja como reducción */ }
-          if (eff === 'buff_kaio') setPBuffs(b => ({ str: b.str + player.str, ki: b.ki + player.ki }));
-          if (eff.startsWith('debuff_')) setEBuffs(b => ({ ...b, str: Math.max(0, b.str - 8), ki: Math.max(0, b.ki - 8) }));
+          if (eff === 'buff_ki8' || eff === 'buff_str_ki8') setPStages(s => ({ ...s, ki: clampStage(s.ki + 1) }));
+          if (eff === 'buff_str8' || eff === 'buff_str_ki8') setPStages(s => ({ ...s, str: clampStage(s.str + 1) }));
+          if (eff === 'buff_speed8') setPStages(s => ({ ...s, spd: clampStage(s.spd + 1) }));
+          if (eff === 'buff_guard8') setPStages(s => ({ ...s, guard: clampStage(s.guard + 1) }));
+          if (eff === 'buff_kaio') setPStages(s => ({ ...s, str: clampStage(s.str + 2), ki: clampStage(s.ki + 2) }));
+          if (eff.startsWith('debuff_')) setEStages(s => ({ ...s, str: clampStage(s.str - 1), ki: clampStage(s.ki - 1) }));
           if (eff === 'gamebomb' || eff === 'candy' || eff === 'naughty_book' || eff === 'knockdown_dmg' || eff === 'knockdown_min') {
             const dmg = Math.floor((card.atk || 20) + player.str * 0.2);
             setEnemy(prev => ({ ...prev, hp: Math.max(0, prev.hp - dmg) }));
@@ -642,8 +646,27 @@ function BattleScreen({ playerFormId, enemyFormId, onExit }: {
     setPhase('enemyTurn');
     setEnemyPose('attack_fwd');
     setTimeout(() => {
-      const enemyCards = CARDS.filter(c => (c.type === 'damage' || c.type === 'beam') && !c.compatible);
-      const card = enemyCards[Math.floor(Math.random() * enemyCards.length)] || CARDS[25];
+      // IA mejorada: decide según CC, posición del jugador (vulnerabilidad) y mano
+      // (patrón real del GBC con excepciones por contexto)
+      let card: CardDef;
+      const enemyCc = enemy.cc;
+      const playerAir = player.elevation === 'air';
+      const playerGround = player.elevation === 'ground';
+      const affordable = CARDS.filter(c =>
+        (c.type === 'damage' || c.type === 'beam') && !c.compatible && c.cc <= enemyCc + 3
+      );
+      // Si el jugador está en el aire → preferir Beam (vulnerable); en suelo → Damage
+      const idealType = playerAir ? 'beam' : 'damage';
+      let pool = affordable.filter(c => c.type === idealType);
+      if (pool.length === 0) pool = affordable;
+      if (pool.length === 0) pool = CARDS.filter(c => (c.type === 'damage' || c.type === 'beam') && !c.compatible);
+      // Preferir cartas con buena precisión salvo que tenga CC de sobra
+      const risky = enemyCc >= 20 && Math.random() < 0.2;
+      if (!risky) {
+        const accurate = pool.filter(c => c.acc >= 85);
+        if (accurate.length > 0) pool = accurate;
+      }
+      card = pool[Math.floor(Math.random() * pool.length)] || CARDS[25];
       let damage = 0;
       let hitType: 'damage' | 'miss' | 'guard' = 'damage';
       if (Math.random() > card.acc / 100) {
@@ -965,15 +988,41 @@ function MainMenu({ onNavigate }: { onNavigate: (s: Screen) => void }) {
 // STORY — Mapa de capítulos
 // ═══════════════════════════════════════════════════════════
 
+// 32 capítulos reales del walkthrough del GBC (RPGClassics shrine)
+// nameKey/descKey usan story.chN/story.dN; enemy = forma del jefe real
 const CHAPTERS: { id: number; nameKey: TKey; descKey: TKey; enemy: string }[] = [
   { id: 1, nameKey: 'story.ch1', descKey: 'story.d1', enemy: 'piccolo_base' },
-  { id: 2, nameKey: 'story.ch2', descKey: 'story.d2', enemy: 'ginyu' },
-  { id: 3, nameKey: 'story.ch3', descKey: 'story.d3', enemy: 'frieza_final' },
-  { id: 4, nameKey: 'story.ch4', descKey: 'story.d4', enemy: 'android_20' },
-  { id: 5, nameKey: 'story.ch5', descKey: 'story.d5', enemy: 'cell_perfect' },
-  { id: 6, nameKey: 'story.ch6', descKey: 'story.d6', enemy: 'buu_base' },
-  { id: 7, nameKey: 'story.ch7', descKey: 'story.d7', enemy: 'buu_super' },
-  { id: 8, nameKey: 'story.ch8', descKey: 'story.d8', enemy: 'buu_kid' },
+  { id: 2, nameKey: 'story.ch2', descKey: 'story.d2', enemy: 'nappa' },
+  { id: 3, nameKey: 'story.ch3', descKey: 'story.d3', enemy: 'vegeta_base' },
+  { id: 4, nameKey: 'story.ch4', descKey: 'story.d4', enemy: 'vegeta_base' },
+  { id: 5, nameKey: 'story.ch5', descKey: 'story.d5', enemy: 'guldo' },
+  { id: 6, nameKey: 'story.ch6', descKey: 'story.d6', enemy: 'recoome' },
+  { id: 7, nameKey: 'story.ch7', descKey: 'story.d7', enemy: 'jeice' },
+  { id: 8, nameKey: 'story.ch8', descKey: 'story.d8', enemy: 'ginyu_goku' },
+  { id: 9, nameKey: 'story.ch9', descKey: 'story.d9', enemy: 'frieza_final' },
+  { id: 10, nameKey: 'story.ch10', descKey: 'story.d10', enemy: 'frieza_final' },
+  { id: 11, nameKey: 'story.ch11', descKey: 'story.d11', enemy: 'goku_base' },
+  { id: 12, nameKey: 'story.ch12', descKey: 'story.d12', enemy: 'android_19' },
+  { id: 13, nameKey: 'story.ch13', descKey: 'story.d13', enemy: 'android_20' },
+  { id: 14, nameKey: 'story.ch14', descKey: 'story.d14', enemy: 'cell_imperfect' },
+  { id: 15, nameKey: 'story.ch15', descKey: 'story.d15', enemy: 'android_17' },
+  { id: 16, nameKey: 'story.ch16', descKey: 'story.d16', enemy: 'android_16' },
+  { id: 17, nameKey: 'story.ch17', descKey: 'story.d17', enemy: 'cell_perfect' },
+  { id: 18, nameKey: 'story.ch18', descKey: 'story.d18', enemy: 'cell_jr' },
+  { id: 19, nameKey: 'story.ch19', descKey: 'story.d19', enemy: 'cell_perfect' },
+  { id: 20, nameKey: 'story.ch20', descKey: 'story.d20', enemy: 'cell_perfect' },
+  { id: 21, nameKey: 'story.ch21', descKey: 'story.d21', enemy: 'android_17' },
+  { id: 22, nameKey: 'story.ch22', descKey: 'story.d22', enemy: 'cell_perfect' },
+  { id: 23, nameKey: 'story.ch23', descKey: 'story.d23', enemy: 'goten_base' },
+  { id: 24, nameKey: 'story.ch24', descKey: 'story.d24', enemy: 'trunks_kid' },
+  { id: 25, nameKey: 'story.ch25', descKey: 'story.d25', enemy: 'vegeta_majin' },
+  { id: 26, nameKey: 'story.ch26', descKey: 'story.d26', enemy: 'buu_base' },
+  { id: 27, nameKey: 'story.ch27', descKey: 'story.d27', enemy: 'trunks_future' },
+  { id: 28, nameKey: 'story.ch28', descKey: 'story.d28', enemy: 'buu_super' },
+  { id: 29, nameKey: 'story.ch29', descKey: 'story.d29', enemy: 'buu_gohan' },
+  { id: 30, nameKey: 'story.ch30', descKey: 'story.d30', enemy: 'buu_gotenks' },
+  { id: 31, nameKey: 'story.ch31', descKey: 'story.d31', enemy: 'buu_gohan' },
+  { id: 32, nameKey: 'story.ch32', descKey: 'story.d32', enemy: 'buu_kid' },
 ];
 
 // Progreso de historia persistente
@@ -1081,15 +1130,17 @@ function expToNext(level: number): number {
   return 100 + (level - 1) * 50;
 }
 
-// Aplicar subida de nivel: +1 punto de estadística por nivel (asignable).
-// Al subir, el jugador elige qué estadística mejorar permanentemente.
-// Por defecto rota: HP → STR → KI → SPD (fiel al sistema de elección manual).
+// Aplicar subida de nivel con crecimiento ESPECÍFICO por personaje
+// (fiel al GBC: cada luchador tiene su propio growth; no es +1 universal).
+// La elección de qué estadística subir rota: HP → STR → KI → SPD.
 function applyLevelUps(base: Fighter, level: number): Fighter {
   const gains = level - 1;
-  const hpGain = Math.floor(gains / 4) * 12 + (gains % 4 >= 1 ? 12 : 0);
-  const strGain = Math.floor(gains / 4) * 3 + (gains % 4 >= 2 ? 3 : 0);
-  const kiGain = Math.floor(gains / 4) * 3 + (gains % 4 >= 3 ? 3 : 0);
-  const spdGain = Math.floor(gains / 4) * 2;
+  if (gains <= 0) return { ...base, level };
+  const g = growthFor(base.id, getCharacter(base.id)?.tier ?? 3);
+  const hpGain = Math.floor(gains / 4) * g.hp + (gains % 4 >= 1 ? g.hp : 0);
+  const strGain = Math.floor(gains / 4) * g.str + (gains % 4 >= 2 ? g.str : 0);
+  const kiGain = Math.floor(gains / 4) * g.ki + (gains % 4 >= 3 ? g.ki : 0);
+  const spdGain = Math.floor(gains / 4) * g.spd;
   return {
     ...base,
     level,
@@ -1661,22 +1712,24 @@ function AppInner() {
       const next = storyChapter + 1;
       saveStoryProgress(Math.min(next, CHAPTERS.length));
     }
-    if (won && !storyChapter) {
-      // Versus: desbloquear el personaje vencido + recompensa de carta
-      const form = getForm(enemyForm);
-      if (form) {
-        const charId = VS_UNLOCKS[form.id] || form.character;
-        const newlyUnlocked = unlockCharacter(charId);
-        const u = loadUnlocks();
-        const owned = ownedCards(u, loadProgress().level);
-        const rewards = pickRewards(owned, 3);
-        if (rewards.length > 0) {
-          u.pendingReward = rewards;
-          saveUnlocks(u);
-        }
-        if (newlyUnlocked) {
-          // Aviso visual: se muestra en la pantalla de recompensa
-          setTimeout(() => alert(`${charId.toUpperCase()} UNLOCKED!`), 300);
+    if (won) {
+      // Recompensa de carta (elegir 1 de 3) en STORY y Versus — como el GBC
+      const u = loadUnlocks();
+      const owned = ownedCards(u, loadProgress().level);
+      const rewards = pickRewards(owned, 3);
+      if (rewards.length > 0) {
+        u.pendingReward = rewards;
+        saveUnlocks(u);
+      }
+      // En Versus además se desbloquea el personaje vencido
+      if (!storyChapter) {
+        const form = getForm(enemyForm);
+        if (form) {
+          const charId = VS_UNLOCKS[form.id] || form.character;
+          const newlyUnlocked = unlockCharacter(charId);
+          if (newlyUnlocked) {
+            setTimeout(() => alert(`${charId.toUpperCase()} UNLOCKED!`), 300);
+          }
         }
       }
     }
