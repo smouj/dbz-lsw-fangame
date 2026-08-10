@@ -18,7 +18,7 @@ import { ArrowLeft, X, Lock, ChevronRight, Languages, Sword, Shield, type Lucide
 // ═══════════════════════════════════════════════════════════
 
 type Screen = 'main' | 'story' | 'battle' | 'versus' | 'deck' | 'characters' | 'cards' | 'settings';
-type BattlePhase = 'position' | 'command' | 'cardSelect' | 'resolve' | 'enemyTurn' | 'win' | 'lose';
+type BattlePhase = 'position' | 'command' | 'cardSelect' | 'stageInput' | 'resolve' | 'enemyTurn' | 'win' | 'lose';
 type Position = 'front' | 'back';
 type Elevation = 'ground' | 'air';
 type CommandType = 'LIMIT' | 'J' | 'B' | 'C';
@@ -296,6 +296,14 @@ function BattleScreen({ playerFormId, enemyFormId, onExit }: {
   // Gather Power: PowerState real (FULL_POWER → HALF_POWER → NORMAL)
   const [powerState, setPowerState] = useState<'NORMAL' | 'HALF_POWER' | 'FULL_POWER'>('NORMAL');
   const [gatherTurns, setGatherTurns] = useState(0);
+  // Stage Attack: secuencia de inputs A/B a tiempo (mecánica real del GBC)
+  const [stageSeq, setStageSeq] = useState<('A' | 'B')[]>([]);
+  const [stageIdx, setStageIdx] = useState(0);
+  const [stageCorrect, setStageCorrect] = useState(0);
+  const [stageFailed, setStageFailed] = useState(false);
+  const [stageTimeLeft, setStageTimeLeft] = useState(0);
+  const [stageCard, setStageCard] = useState<CardDef | null>(null);
+  const stageTimer = useRef<ReturnType<typeof setInterval> | null>(null);
 
   useEffect(() => {
     setBgId(BATTLE_BGS[Math.floor(Math.random() * BATTLE_BGS.length)].id);
@@ -345,9 +353,142 @@ function BattleScreen({ playerFormId, enemyFormId, onExit }: {
     setPhase('cardSelect');
   };
 
+  // ═══ Stage Attack: secuencia de inputs A/B a tiempo ═══
+  // La ventana de input depende de la distancia (más cerca = más tiempo)
+  const startStageAttack = (card: CardDef) => {
+    // Etapas según la carta (3/4/5/6 Stage)
+    let stages = 3;
+    if (card.name.includes('4')) stages = 4;
+    else if (card.name.includes('5')) stages = 5;
+    else if (card.name.includes('6')) stages = 6;
+    // Gather Power convierte Basic 3 Stage → 4 Stage (ya manejado en BASIC)
+    const seq: ('A' | 'B')[] = Array.from({ length: stages }, () => Math.random() < 0.5 ? 'A' : 'B');
+    setStageSeq(seq);
+    setStageIdx(0);
+    setStageCorrect(0);
+    setStageFailed(false);
+    setStageCard(card);
+    setPhase('stageInput');
+    // Ventana por distancia: cerca = 1200ms, lejos = 650ms
+    const dist = player.position === 'front' ? (player.elevation === 'air' ? 1 : 2) : (player.elevation === 'air' ? 3 : 4);
+    const window = Math.max(650, 1300 - dist * 160);
+    setStageTimeLeft(window);
+    if (stageTimer.current) clearInterval(stageTimer.current);
+    stageTimer.current = setInterval(() => {
+      setStageTimeLeft(prev => {
+        if (prev <= 50) {
+          // Tiempo agotado: fallo del input actual
+          if (stageTimer.current) clearInterval(stageTimer.current);
+          setStageFailed(true);
+          return 0;
+        }
+        return prev - 50;
+      });
+    }, 50);
+    Sfx.cardPlay();
+  };
+
+  // Input A o B del Stage Attack
+  const stageInput = (pressed: 'A' | 'B') => {
+    if (stageFailed) return;
+    const expected = stageSeq[stageIdx];
+    if (pressed === expected) {
+      // Acierto: +1 CC y continúa
+      Sfx.confirm();
+      const newCorrect = stageCorrect + 1;
+      setStageCorrect(newCorrect);
+      setPlayer(prev => ({ ...prev, cc: Math.min(prev.maxCc, prev.cc + 1) }));
+      const next = stageIdx + 1;
+      if (next >= stageSeq.length) {
+        // Secuencia completada
+        if (stageTimer.current) clearInterval(stageTimer.current);
+        setStageIdx(next);
+        addLog(`${player.name} completa el Stage Attack! (+${newCorrect} CC)`);
+        // El ataque conecta: daño basado en la carta command
+        finishStageAttack(stageCard!, true, newCorrect);
+      } else {
+        setStageIdx(next);
+      }
+    } else {
+      // Fallo: ventana A=abandonar / B=reparar (mantener CC acumulado)
+      if (stageTimer.current) clearInterval(stageTimer.current);
+      setStageFailed(true);
+      Sfx.cancel();
+      addLog(`${player.name} falla un input del Stage Attack!`);
+    }
+  };
+
+  // Tras fallar: A = abandonar (conserva CC), B = reparar y seguir
+  const stageRecover = (recover: boolean) => {
+    if (!recover) {
+      // A: abandonar — conserva el CC ganado, ataque incompleto
+      addLog(`${player.name} abandona el Stage Attack (conserva +${stageCorrect} CC)`);
+      finishStageAttack(stageCard!, false, stageCorrect);
+    } else {
+      // B: reparar — continúa la cadena
+      Sfx.confirm();
+      setStageFailed(false);
+      setStageIdx(prev => prev + 1);
+      const window = Math.max(650, 1300 - (player.position === 'front' ? 2 : 4) * 160);
+      setStageTimeLeft(window);
+      if (stageTimer.current) clearInterval(stageTimer.current);
+      stageTimer.current = setInterval(() => {
+        setStageTimeLeft(prev => {
+          if (prev <= 50) {
+            if (stageTimer.current) clearInterval(stageTimer.current);
+            setStageFailed(true);
+            return 0;
+          }
+          return prev - 50;
+        });
+      }, 50);
+    }
+  };
+
+  // Resolver el Stage Attack (completado o abandonado)
+  const finishStageAttack = (card: CardDef, complete: boolean, ccGained: number) => {
+    if (stageTimer.current) clearInterval(stageTimer.current);
+    if (complete) {
+      // Ataque completo: daño moderado + el CC ya acumulado
+      let dmg = Math.floor((card.atk + player.str * 0.3) * 1.2);
+      setEnemy(prev => ({ ...prev, hp: Math.max(0, prev.hp - dmg) }));
+      setFlashEnemy(true);
+      setDamageNums(prev => [...prev, { value: dmg, type: 'damage', x: 70, y: 30, id: Date.now() }]);
+      addLog(`${player.name} → ${card.name} — ${dmg} ${t('battle.dmg')}`);
+      Sfx.hit();
+      setTimeout(() => setFlashEnemy(false), 150);
+      if (enemy.hp - dmg <= 0) {
+        setTimeout(() => { setEnemyPose('hurt'); setPhase('win'); Sfx.victory(); addLog(`${enemy.name} ${t('battle.defeated')}`); }, 500);
+        return;
+      }
+    } else {
+      addLog(`${player.name} no completa el ataque (${ccGained} CC ganados)`);
+    }
+    // Terminar turno con el CC acumulado
+    setPlayer(prev => ({ ...prev, cc: Math.min(prev.maxCc, prev.cc + (complete ? 0 : 0)) }));
+    setPhase('cardSelect');
+    setTimeout(() => {
+      finishPlayerTurnStage(ccGained);
+    }, 500);
+  };
+
+  // Variante de finishPlayerTurn para stage attacks (no usar carta de la mano)
+  const finishPlayerTurnStage = (ccGained: number) => {
+    setSelectedCard(null);
+    setStageSeq([]); setStageIdx(0); setStageCorrect(0); setStageFailed(false); setStageCard(null);
+    setTimeout(() => enemyTurn(0), 600);
+  };
+
   const selectCard = (idx: number) => {
     const card = hand[idx];
     setSelectedCard(idx);
+
+    // Stage Attack (command): secuencia de inputs A/B a tiempo
+    if (card.type === 'command' && card.effect.startsWith('command_')) {
+      startStageAttack(card);
+      return;
+    }
+
     Sfx.cardPlay();
     setPlayerPose(card.type === 'beam' ? 'beam_charge' : card.type === 'damage' ? 'attack_fwd' : card.type === 'defense' ? 'guard' : 'idle');
 
@@ -650,6 +791,7 @@ function BattleScreen({ playerFormId, enemyFormId, onExit }: {
             {phase === 'position' ? t('battle.choosePosition') :
              phase === 'command' ? t('battle.selectCommand') :
              phase === 'cardSelect' ? t('battle.selectCard') :
+             phase === 'stageInput' ? 'STAGE INPUT' :
              phase === 'enemyTurn' ? t('battle.enemyTurn') : ''}
           </span>
         </div>
@@ -693,6 +835,39 @@ function BattleScreen({ playerFormId, enemyFormId, onExit }: {
         )}
         {phase === 'cardSelect' && (
           <HandComponent cards={hand} selectedIndex={selectedCard} onSelect={selectCard} />
+        )}
+        {phase === 'stageInput' && (
+          <div className="stage-input-area">
+            <div className="stage-label">
+              {stageCard?.name} — STAGE {Math.min(stageIdx + 1, stageSeq.length)}/{stageSeq.length}
+            </div>
+            {!stageFailed ? (
+              <>
+                <div className="stage-prompts">
+                  {stageSeq.map((s, i) => (
+                    <span key={i} className={`stage-prompt ${i < stageIdx ? 'done' : i === stageIdx ? 'current' : ''} ${s}`}>
+                      {s}
+                    </span>
+                  ))}
+                </div>
+                <div className="stage-timer" style={{ width: `${(stageTimeLeft / 1300) * 100}%` }} />
+                <div className="stage-actions">
+                  <button className="stage-btn-a" onClick={() => stageInput('A')}>A</button>
+                  <button className="stage-btn-b" onClick={() => stageInput('B')}>B</button>
+                </div>
+                <div className="stage-help">Pulsa el botón indicado a tiempo (+1 CC por acierto)</div>
+              </>
+            ) : (
+              <>
+                <div className="stage-fail">INPUT FAILED — {stageCorrect} CC ganados</div>
+                <div className="stage-recover">
+                  <button className="stage-btn-a" onClick={() => stageRecover(false)}>A: ABANDON</button>
+                  <button className="stage-btn-b" onClick={() => stageRecover(true)}>B: REPAIR</button>
+                </div>
+                <div className="stage-help">A = conservar CC y defender · B = reparar la cadena</div>
+              </>
+            )}
+          </div>
         )}
         {phase === 'enemyTurn' && (
           <div className="enemy-turn-overlay"><div className="turn-text">{t('battle.enemyTurn')}</div></div>

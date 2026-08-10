@@ -2011,3 +2011,76 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   padding: 2px 6px;
   background: rgba(56,144,216,0.08);
 }
+
+/* ─── Stage Attack: inputs A/B ─── */
+.stage-input-area {
+  display: flex; flex-direction: column; align-items: center; gap: 10px;
+  padding: 8px;
+}
+
+.stage-label {
+  font-family: var(--fpx);
+  font-size: 9px;
+  color: var(--gold);
+  letter-spacing: 2px;
+}
+
+.stage-prompts {
+  display: flex; gap: 10px;
+}
+
+.stage-prompt {
+  width: 44px; height: 44px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--fpx);
+  font-size: 18px;
+  border: 3px solid var(--border);
+  background: var(--panel-hi);
+  color: var(--muted);
+}
+
+.stage-prompt.A { color: var(--ki-blue); border-color: var(--ki-blue); }
+.stage-prompt.B { color: var(--hp-red); border-color: var(--hp-red); }
+.stage-prompt.current { animation: stage-blink 0.4s infinite alternate; }
+.stage-prompt.done { opacity: 0.3; }
+
+@keyframes stage-blink { 0% { transform: scale(1); } 100% { transform: scale(1.15); } }
+
+.stage-timer {
+  height: 6px;
+  background: var(--gold);
+  transition: width 50ms linear;
+  max-width: 320px;
+}
+
+.stage-actions, .stage-recover {
+  display: flex; gap: 16px;
+}
+
+.stage-btn-a, .stage-btn-b {
+  width: 64px; height: 48px;
+  font-family: var(--fpx);
+  font-size: 16px;
+  border: 3px solid;
+  background: var(--panel-hi);
+  cursor: pointer;
+  transition: transform 60ms;
+}
+
+.stage-btn-a { border-color: var(--ki-blue); color: var(--ki-blue); }
+.stage-btn-b { border-color: var(--hp-red); color: var(--hp-red); }
+.stage-btn-a:hover, .stage-btn-b:hover { transform: scale(1.08); }
+.stage-btn-a:active, .stage-btn-b:active { transform: scale(0.95); }
+
+.stage-fail {
+  font-family: var(--fpx);
+  font-size: 11px;
+  color: var(--hp-red);
+  letter-spacing: 2px;
+}
+
+.stage-help {
+  font-family: var(--fui);
+  font-size: 10px;
+  color: var(--dim);
+}
