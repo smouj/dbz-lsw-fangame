@@ -2533,3 +2533,16 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 /* Facing del overworld en el campo: el sprite frontal es simétrico,
    el flip garantiza que personajes asimétricos miren al lado correcto */
 .overworld-sprite { image-rendering: pixelated; }
+/* Stage Attack: ACTION VIEW con sprite grande + PUSH */
+.stage-input-area { position: relative; }
+.stage-fighter {
+  position: absolute; left: 4vw; bottom: 10vh; z-index: 5;
+  filter: drop-shadow(0 0 18px rgba(255,190,60,.5));
+  animation: fx-zoom-in .5s cubic-bezier(.2,1.4,.4,1) both;
+}
+.stage-push {
+  display: inline-block; font-family: var(--fepic); font-size: 22px; color: #ffd700;
+  text-shadow: 0 0 16px rgba(255,215,0,.9), 2px 2px 0 #000;
+  animation: sel-blink .5s infinite alternate; margin-right: 8px;
+}
+@media (max-width: 768px) { .stage-fighter { left: 1vw; bottom: 8vh; } .stage-fighter img { height: 110px !important; } }

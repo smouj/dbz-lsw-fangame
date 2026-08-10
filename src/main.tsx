@@ -10,6 +10,7 @@ import { CARDS, CARD_COLORS, CARD_TYPE_NAMES, CardDef, CardType, DECK_SIZE, MAX_
 import { cardIconUrl, MINI_PORTRAITS, MENU_PORTRAITS, TYPE_ICONS } from './data/icons';
 import { overworldUrl } from './data/overworld';
 import { spriteManifestUrl, spriteFrameUrl, spriteDirFor } from './data/spriteManifest';
+import { SCENARIOS, SPECIAL_ACTION_BACKGROUND, type BattleViewMode } from './data/scenarios';
 import { initAudio, Sfx, setSfxEnabled, setVolume } from './audio/sfx';
 import { LanguageProvider, useLang } from './i18n/LanguageContext';
 import { LANGUAGES, LangCode, TKey } from './i18n';
@@ -331,6 +332,12 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
     ? `${getForm(playerFormId)!.character.toUpperCase()} STRIKES FIRST`
     : `${getForm(enemyFormId)!.character.toUpperCase()} STRIKES FIRST`;
   const [bgId, setBgId] = useState('bg1');
+  // ═══ DOS REPRESENTACIONES (estructura real del GBC) ═══
+  // TACTICAL (OVERVIEW): fondo world_overview + sprites pequeños — selección,
+  // posición, estado normal. ACTION: fondo battle_action + sprites grandes —
+  // solo durante una acción (QTE, animación de ataque/beam/support).
+  const [scenario] = useState(() => SCENARIOS[Math.floor(Math.random() * SCENARIOS.length)]);
+  const [viewMode, setViewMode] = useState<BattleViewMode>('OVERVIEW');
   const [hand, setHand] = useState<CardDef[]>(() => {
     // Mano inicial: 3 Joint aleatorias (como el GBC) + 1 robo al empezar
     const deckIds = loadDeck();
@@ -484,6 +491,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
 
   const gatherPower = () => {
     Sfx.powerUp();
+    setViewMode('ACTION');
     setPowerState('FULL_POWER');
     setGatherTurns(2);
     // Gather Power (GBC): +4 STR +4 KI (COMMUNITY_TESTED; la fórmula exacta es UNKNOWN),
@@ -494,6 +502,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
     // Consume la acción de ataque completa
     setTimeout(() => {
       setPlayerPose('idle');
+      setViewMode('OVERVIEW');
       // Termina el turno tras Gather (acción completa consumida)
       setSelectedCard(null);
       setTimeout(() => roundStart(), 600);
@@ -534,6 +543,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
     setStageCorrect(0);
     setStageFailed(false);
     setStageCard(card);
+    setViewMode('ACTION');
     setPhase('stageInput');
     // Ventana por distancia (tiempo humano): cerca ~2000ms, lejos ~1400ms
     const dist = player.position === 'front' ? (player.elevation === 'air' ? 1 : 2) : (player.elevation === 'air' ? 3 : 4);
@@ -655,6 +665,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
   const finishPlayerTurnStage = (ccGained: number) => {
     setSelectedCard(null);
     setStageSeq([]); setStageIdx(0); setStageCorrect(0); setStageFailed(false); setStageCard(null);
+    setViewMode('OVERVIEW');
     setTimeout(() => roundStart(), 600);
   };
 
@@ -680,10 +691,12 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
 
     Sfx.cardPlay();
     setPlayerPose(card.type === 'beam' ? 'beam_charge' : card.type === 'damage' ? 'attack_fwd' : card.type === 'defense' ? 'guard' : 'idle');
-    // Secuencia cinematográfica del GBC: zoom del luchador + carta ~1.9s
+    // Secuencia cinematográfica del GBC: ACTION_VIEW (fondo action + sprites grandes)
+    setViewMode('ACTION');
     setCardFx({ card, side: 'player' });
     setTimeout(() => {
       setCardFx(null);
+      setViewMode('OVERVIEW');
       resolveCardPlay(card, false, idx);
     }, 1950);
   };
@@ -933,9 +946,11 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
     Sfx.cardPlay();
     setPlayerPose(card.type === 'beam' ? 'beam_charge' : card.type === 'damage' ? 'attack_fwd' : 'idle');
     setSelectedCard(null);
+    setViewMode('ACTION');
     setCardFx({ card, side: 'player' });
     setTimeout(() => {
       setCardFx(null);
+      setViewMode('OVERVIEW');
       resolveCardPlay(card, true, -1);
     }, 1950);
   };
@@ -1040,10 +1055,12 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
       }
       incomingCard.current = card;
       addLog(`${enemy.name} ${t('battle.uses')} ${card.name}`);
+      setViewMode('ACTION');
       setCardFx({ card, side: 'enemy' });
       setEnemyPose(card.type === 'beam' ? 'beam_charge' : 'attack_fwd');
       setTimeout(() => {
         setCardFx(null);
+        setViewMode('OVERVIEW');
         setEnemyPose('idle');
         setPhase('defend');
       }, 1950);
@@ -1184,6 +1201,9 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
   }, [damageNums]);
 
   const bg = BATTLE_BGS.find(b => b.id === bgId)!;
+  const battleBgUrl = viewMode === 'ACTION' ? scenario.actionBackground
+    : viewMode === 'SPECIAL_ACTION' ? SPECIAL_ACTION_BACKGROUND
+    : scenario.overviewBackground;
 
   return (
     <div className="battle-screen">
@@ -1314,7 +1334,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
 
       {/* Campo de batalla */}
       <div className="battlefield">
-        <div className="battle-bg authentic" style={{ backgroundImage: `url(${bg.file})` }} />
+        <div className="battle-bg authentic" style={{ backgroundImage: `url(${battleBgUrl})` }} />
         <div className="battlefield-fighters">
           <div className={`fighter-container player ${player.elevation} ${player.position}`}>
             {playerPose === 'idle' && overworldUrl(playerFormId)
@@ -1434,8 +1454,14 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
         )}
         {phase === 'stageInput' && (
           <div className="stage-input-area">
+            {/* Sprite GRANDE del atacante (ACTION VIEW del GBC) */}
+            <div className="stage-fighter">
+              {spriteManifestUrl(playerFormId)
+                ? <FighterSprite formId={playerFormId} pose={stageIdx > 0 ? 'attack_fwd' : 'idle'} facing="right" scale={18} flash={stageIdx > 0} />
+                : <CharacterSprite formId={playerFormId} className="fx-sprite" height={170} />}
+            </div>
             <div className="stage-label">
-              {stageCard?.name} — STAGE {Math.min(stageIdx + 1, stageSeq.length)}/{stageSeq.length}
+              <span className="stage-push">PUSH</span> {stageCard?.name} — STAGE {Math.min(stageIdx + 1, stageSeq.length)}/{stageSeq.length}
             </div>
             {!stageFailed ? (
               <>
