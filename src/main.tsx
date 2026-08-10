@@ -294,6 +294,8 @@ function BattleScreen({ playerFormId, enemyFormId, onExit }: {
   // Guardia activa: defensa usada en el turno que mitiga el próximo ataque enemigo
   const [playerGuard, setPlayerGuard] = useState<null | { type: 'avoid_beam' | 'avoid_damage' | 'reduce' | 'absorb' }>(null);
   const [enemyGuard, setEnemyGuard] = useState<null | { type: 'avoid_beam' | 'avoid_damage' | 'reduce' | 'absorb' }>(null);
+  // Gather Power: habilita el Limit Deck durante 2 turnos (sprite parpadea)
+  const [gatherTurns, setGatherTurns] = useState(0);
 
   useEffect(() => {
     setBgId(BATTLE_BGS[Math.floor(Math.random() * BATTLE_BGS.length)].id);
@@ -306,6 +308,16 @@ function BattleScreen({ playerFormId, enemyFormId, onExit }: {
     setPlayer(prev => ({ ...prev, position: pos, elevation: elev }));
     setPhase('command');
     addLog(`${elev.toUpperCase()}/${pos.toUpperCase()}`);
+  };
+
+  const gatherPower = () => {
+    Sfx.powerUp();
+    setGatherTurns(2);
+    // Gather Power: +KI y +STR temporal (como el GBC) + habilita Limit Deck
+    setPBuffs(b => ({ str: b.str + 6, ki: b.ki + 6 }));
+    addLog(`${player.name} GATHER POWER! +STR/KI, LIMIT DECK activo (2 turnos)`);
+    setPlayerPose('power_up');
+    setTimeout(() => { setPlayerPose('idle'); setPhase('cardSelect'); }, 600);
   };
 
   const selectCommand = (cmd: CommandType) => {
@@ -520,6 +532,7 @@ function BattleScreen({ playerFormId, enemyFormId, onExit }: {
       setTimeout(() => {
         setPlayerPose('idle'); setEnemyPose('idle');
         setPhase('position'); setTurn(t => t + 1); setSelectedCard(null);
+        if (gatherTurns > 0) setGatherTurns(g => g - 1);
       }, 400);
     }, 500);
   };
@@ -577,8 +590,8 @@ function BattleScreen({ playerFormId, enemyFormId, onExit }: {
         <div className="battlefield-fighters">
           <div className={`fighter-container player ${player.elevation} ${player.position}`}>
             {player.battleId
-              ? <FighterSprite charId={player.battleId} pose={playerPose} facing="right" scale={8} flash={flashPlayer} />
-              : <CharacterSprite formId={playerFormId} className="sheet-sprite" />}
+              ? <FighterSprite charId={player.battleId} pose={playerPose} facing="right" scale={8} flash={flashPlayer || gatherTurns > 0} />
+              : <CharacterSprite formId={playerFormId} className={`sheet-sprite ${gatherTurns > 0 ? 'gathering' : ''}`} />}
             <div className="fighter-position-tag">{player.elevation.toUpperCase()}/{player.position.toUpperCase()}</div>
           </div>
           <div className={`fighter-container enemy ${enemy.elevation} ${enemy.position}`}>
@@ -625,7 +638,16 @@ function BattleScreen({ playerFormId, enemyFormId, onExit }: {
               <button onClick={() => selectCommand('J')} className="cmd-j">J</button>
               <button onClick={() => selectCommand('B')} className="cmd-b">B</button>
               <button onClick={() => selectCommand('C')} className="cmd-c">C</button>
+              <button onClick={gatherPower} className={`cmd-gather ${gatherTurns > 0 ? 'active' : ''}`} disabled={gatherTurns > 0}>GATHER</button>
             </div>
+            {gatherTurns > 0 && (
+              <div className="limit-deck-bar">
+                <span className="limit-deck-label">LIMIT DECK ({gatherTurns} turno{gatherTurns > 1 ? 's' : ''})</span>
+                {player.limits.map((lim, i) => (
+                  <button key={i} className="limit-chip" onClick={() => selectCommand('LIMIT')}>{lim}</button>
+                ))}
+              </div>
+            )}
             <div className="command-help">{t('battle.limitHelp')}</div>
           </div>
         )}

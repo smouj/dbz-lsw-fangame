@@ -1406,25 +1406,30 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 
 .language-row {
   flex-direction: column;
-  align-items: flex-start;
+  align-items: stretch;
   gap: 8px;
+  max-width: 100%;
 }
 
 .language-grid {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 6px;
   width: 100%;
+  min-width: 0;
 }
 
 .lang-chip {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 6px;
-  padding: 6px 4px;
-  font-size: 9px;
+  gap: 5px;
+  padding: 6px 3px;
+  font-size: 8px;
   white-space: nowrap;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .lang-tag {
@@ -1939,3 +1944,59 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 .page-title {
   text-shadow: 2px 2px 0 #000, 0 0 12px rgba(216,168,48,0.15);
 }
+
+/* ─── Gather Power / Limit Deck ─── */
+.cmd-gather {
+  border-color: var(--gold) !important;
+  color: var(--gold) !important;
+  font-size: 9px !important;
+  padding: 8px 12px !important;
+}
+
+.cmd-gather.active {
+  background: var(--gold) !important;
+  color: #000 !important;
+}
+
+.limit-deck-bar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 4px;
+  background: rgba(216,168,48,0.08);
+  border: 1px solid rgba(216,168,48,0.3);
+  padding: 4px 8px;
+}
+
+.limit-deck-label {
+  font-family: var(--fpx);
+  font-size: 6px;
+  color: var(--gold);
+  letter-spacing: 1px;
+}
+
+.limit-chip {
+  background: var(--panel-hi);
+  border: 1px solid var(--gold);
+  color: var(--gold);
+  font-family: var(--fpx);
+  font-size: 7px;
+  padding: 4px 8px;
+  cursor: pointer;
+  transition: background 80ms;
+}
+
+.limit-chip:hover { background: var(--gold); color: #000; }
+
+/* Sprite parpadea durante Gather Power */
+.sheet-sprite.gathering {
+  animation: gather-flicker 0.5s infinite alternate;
+}
+
+@keyframes gather-flicker {
+  0% { filter: brightness(1.6) saturate(1.5); }
+  100% { filter: brightness(0.9) saturate(1.2); }
+}
+
+.fighter-sprite:has(> img[src*="idle"]) .flash,
+.fighter-sprite.flash { animation: sprite-flash 0.15s ease; }
