@@ -307,27 +307,62 @@ function BattleScreen({ playerFormId, enemyFormId, onExit }: {
 
     setTimeout(() => {
       let damage = 0;
-      let hitType: 'damage' | 'miss' | 'guard' = 'damage';
+      let hitType: 'damage' | 'miss' = 'damage';
       let heal = 0;
       const acc = card.acc / 100;
       const roll = Math.random();
 
-      // Support: curar/buff
-      if (card.type === 'support' || card.effect === 'heal' || card.effect === 'buff' || card.effect === 'stun' || card.effect === 'dodge') {
-        if (card.effect === 'heal') {
-          heal = healAmountFor(card, player.maxHp);
+      // Support/Defensa: curar, buff, debuff, escudos, cancelar comando, etc.
+      const supEffects = ['heal_25pct','heal_strong','heal_light','buff_kaio','buff_ki8','buff_str8','buff_speed8','buff_guard8','buff_str_ki8','debuff_str8','debuff_ki8','debuff_speed8','debuff_speed8_lowacc','debuff_guard8','attack_power_down','powerup_dispel','support_dispel','powerdown_cleanse','avoid_beam','avoid_damage','avoid_damage_taiyoken','reduce_damage','absorb_beam','command_cancel','accuracy_up','evasion_up','knockdown_dmg','knockdown_min','life_drain','cc_recovery','lock_on','sunglasses','beam_shield','damage_shield','ohko_lowacc','android_kill','special_card','gamebomb','candy','naughty_book'];
+      if (card.type === 'support' || card.type === 'defense' || card.type === 'special' || supEffects.includes(card.effect)) {
+        const eff = card.effect;
+        // Curación
+        if (eff === 'heal_25pct' || eff === 'heal_strong' || eff === 'heal_light') {
+          const pct = eff === 'heal_strong' ? 0.6 : eff === 'heal_light' ? 0.3 : 0.25;
+          heal = Math.floor(player.maxHp * pct);
           setPlayer(prev => ({ ...prev, hp: Math.min(prev.maxHp, prev.hp + heal) }));
           setDamageNums(prev => [...prev, { value: heal, type: 'heal', x: 30, y: 40, id: Date.now() }]);
           addLog(`${player.name} ${t('battle.uses')} ${card.name} — +${heal} ${t('battle.hp')}!`);
-        } else if (card.effect === 'stun') {
-          addLog(`${player.name} ${t('battle.uses')} ${card.name} — stun!`);
-        } else if (card.effect === 'dodge') {
-          addLog(`${player.name} ${t('battle.uses')} ${card.name} — dodge!`);
-        } else {
-          const sBoost = card.id === 23 ? 6 : card.id === 42 ? 4 : card.id === 59 ? 2 : 3;
-          const kBoost = card.id === 23 ? 4 : card.id === 42 ? 3 : card.id === 59 ? 0 : 2;
-          setPBuffs(b => ({ str: b.str + sBoost, ki: b.ki + kBoost }));
-          addLog(`${player.name} ${t('battle.uses')} ${card.name} — ${t('battle.buff')}`);
+        } else if (eff === 'life_drain') {
+          // roba vida: daño + cura
+          const drain = Math.floor((card.atk + player.str * 0.2) * 0.5);
+          setEnemy(prev => ({ ...prev, hp: Math.max(0, prev.hp - drain) }));
+          setPlayer(prev => ({ ...prev, hp: Math.min(prev.maxHp, prev.hp + drain) }));
+          setDamageNums(prev => [...prev, { value: drain, type: 'damage', x: 70, y: 30, id: Date.now() }]);
+          addLog(`${player.name} ${t('battle.uses')} ${card.name} — ${drain} ${t('battle.dmg')} (+${drain} HP)`);
+        } else if (eff === 'cc_recovery') {
+          const gain = card.id === 97 ? 5 : 3;
+          setPlayer(prev => ({ ...prev, cc: Math.min(prev.maxCc, prev.cc + gain) }));
+          addLog(`${player.name} ${t('battle.uses')} ${card.name} — +${gain} CC!`);
+        } else if (eff === 'command_cancel' || eff === 'avoid_beam' || eff === 'avoid_damage' || eff === 'avoid_damage_taiyoken' || eff === 'reduce_damage' || eff === 'absorb_beam' || eff === 'beam_shield' || eff === 'damage_shield') {
+          addLog(`${player.name} ${t('battle.uses')} ${card.name} — guard!`);
+        } else if (eff === 'ohko_lowacc' || eff === 'android_kill') {
+          // OHKO con baja precisión
+          if (Math.random() < card.acc / 100) {
+            setEnemy(prev => ({ ...prev, hp: 0 }));
+            setDamageNums(prev => [...prev, { value: 999, type: 'damage', x: 70, y: 30, id: Date.now() }]);
+            addLog(`${player.name} ${t('battle.uses')} ${card.name} — OHKO!`);
+            setTimeout(() => { setEnemyPose('hurt'); setPhase('win'); Sfx.victory(); addLog(`${enemy.name} ${t('battle.defeated')}`); }, 500);
+            return;
+          } else {
+            addLog(`${player.name} → ${card.name} — ${t('battle.miss')}!`);
+          }
+        } else if (eff.startsWith('buff_') || eff.startsWith('debuff_') || eff === 'accuracy_up' || eff === 'evasion_up' || eff === 'lock_on' || eff === 'powerup_dispel' || eff === 'support_dispel' || eff === 'powerdown_cleanse' || eff === 'knockdown_dmg' || eff === 'knockdown_min' || eff === 'attack_power_down' || eff === 'sunglasses' || eff === 'gamebomb' || eff === 'candy' || eff === 'naughty_book' || eff === 'special_card') {
+          // Buffs +8, debuffs -8, otros efectos de estado
+          if (eff === 'buff_ki8' || eff === 'buff_str_ki8') setPBuffs(b => ({ ...b, ki: b.ki + 8 }));
+          if (eff === 'buff_str8' || eff === 'buff_str_ki8') setPBuffs(b => ({ ...b, str: b.str + 8 }));
+          if (eff === 'buff_speed8') { /* velocidad: se ignora en el HUD actual */ }
+          if (eff === 'buff_guard8') { /* guard: se refleja como reducción */ }
+          if (eff === 'buff_kaio') setPBuffs(b => ({ str: b.str + player.str, ki: b.ki + player.ki }));
+          if (eff.startsWith('debuff_')) setEBuffs(b => ({ ...b, str: Math.max(0, b.str - 8), ki: Math.max(0, b.ki - 8) }));
+          if (eff === 'gamebomb' || eff === 'candy' || eff === 'naughty_book' || eff === 'knockdown_dmg' || eff === 'knockdown_min') {
+            const dmg = Math.floor((card.atk || 20) + player.str * 0.2);
+            setEnemy(prev => ({ ...prev, hp: Math.max(0, prev.hp - dmg) }));
+            setDamageNums(prev => [...prev, { value: dmg, type: 'damage', x: 70, y: 30, id: Date.now() }]);
+            addLog(`${player.name} ${t('battle.uses')} ${card.name} — ${dmg} ${t('battle.dmg')}`);
+          } else {
+            addLog(`${player.name} ${t('battle.uses')} ${card.name} — ${t('battle.buff')}`);
+          }
         }
         setPlayer(prev => ({ ...prev, cc: Math.min(prev.maxCc, prev.cc + card.cc) }));
         finishPlayerTurn(idx);
@@ -346,7 +381,6 @@ function BattleScreen({ playerFormId, enemyFormId, onExit }: {
         if (command === 'J') atkMod *= 0.8;
         if (command === 'B') atkMod *= 1.2;
         damage = Math.floor(atkMod * posMod);
-        if (card.type === 'defense') { hitType = 'guard'; damage = Math.floor(damage * 0.5); }
         addLog(`${player.name} → ${card.name} — ${damage} ${t('battle.dmg')}`);
       }
 
@@ -357,7 +391,7 @@ function BattleScreen({ playerFormId, enemyFormId, onExit }: {
       else if (hitType === 'miss') Sfx.dodge();
       setTimeout(() => setFlashEnemy(false), 150);
 
-      if (damage > 0) setDamageNums(prev => [...prev, { value: damage, type: hitType === 'guard' ? 'guard' : 'damage', x: 70, y: 30, id: Date.now() }]);
+      if (damage > 0) setDamageNums(prev => [...prev, { value: damage, type: 'damage', x: 70, y: 30, id: Date.now() }]);
       else if (hitType === 'miss') setDamageNums(prev => [...prev, { value: 0, type: 'miss', x: 70, y: 30, id: Date.now() }]);
 
       // CC gain
