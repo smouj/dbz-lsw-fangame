@@ -1263,3 +1263,28 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 }
 
 .card.small .card-art-img { width: 36px; height: 27px; }
+
+/* ─── Story chapters locked/unlocked ─── */
+
+.chapter-node.locked {
+  opacity: 0.45;
+  cursor: not-allowed;
+  filter: grayscale(0.6);
+}
+
+.chapter-node.unlocked { cursor: pointer; }
+
+.chapter-select {
+  color: var(--orange);
+  font-family: var(--fpx);
+  font-size: 10px;
+  animation: sel-blink 0.8s infinite alternate;
+}
+
+@keyframes sel-blink { 0% { opacity: 0.4; } 100% { opacity: 1; } }
+
+.btn-primary:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  filter: grayscale(1);
+}

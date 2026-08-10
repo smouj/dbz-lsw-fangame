@@ -194,7 +194,7 @@ function DamageNumber({ value, type, x, y }: { value: number; type: 'damage' | '
 // ═══════════════════════════════════════════════════════════
 
 function BattleScreen({ playerFormId, enemyFormId, onExit }: {
-  playerFormId: string; enemyFormId: string; onExit: () => void;
+  playerFormId: string; enemyFormId: string; onExit: (won: boolean) => void;
 }) {
   const pf = getForm(playerFormId)!;
   const ef = getForm(enemyFormId)!;
@@ -440,7 +440,7 @@ function BattleScreen({ playerFormId, enemyFormId, onExit }: {
              phase === 'enemyTurn' ? 'ENEMY TURN' : ''}
           </span>
         </div>
-        <button className="btn-exit" onClick={onExit}>✕</button>
+        <button className="btn-exit" onClick={() => onExit(false)}>✕</button>
       </div>
 
       {/* Controles */}
@@ -480,7 +480,7 @@ function BattleScreen({ playerFormId, enemyFormId, onExit }: {
               <div>EXP +184</div>
               <div>HP {player.hp}/{player.maxHp}</div>
             </div>
-            <button className="btn-primary" onClick={onExit}>NEW BATTLE</button>
+            <button className="btn-primary" onClick={() => onExit(true)}>NEW BATTLE</button>
           </div>
         )}
         {phase === 'lose' && (
@@ -490,7 +490,7 @@ function BattleScreen({ playerFormId, enemyFormId, onExit }: {
               <div>Turn {turn}</div>
               <div>HP 0/{player.maxHp}</div>
             </div>
-            <button className="btn-primary" onClick={onExit}>RETRY</button>
+            <button className="btn-primary" onClick={() => onExit(false)}>RETRY</button>
           </div>
         )}
       </div>
@@ -544,7 +544,30 @@ const CHAPTERS = [
   { id: 8, name: 'Final Battle', desc: 'Kid Buu', enemy: 'buu_kid' },
 ];
 
-function StoryScreen({ onNavigate }: { onNavigate: (s: Screen) => void }) {
+// Progreso de historia persistente
+const STORY_KEY = 'dbzlsw_story_progress';
+
+function loadStoryProgress(): number {
+  try {
+    return Number(localStorage.getItem(STORY_KEY) || '1');
+  } catch { return 1; }
+}
+
+function saveStoryProgress(chapter: number) {
+  try { localStorage.setItem(STORY_KEY, String(chapter)); } catch { /* noop */ }
+}
+
+function StoryScreen({ onNavigate, onStartChapter }: {
+  onNavigate: (s: Screen) => void; onStartChapter: (enemyFormId: string, chapterName: string) => void;
+}) {
+  const [progress, setProgress] = useState(loadStoryProgress);
+  const [selected, setSelected] = useState(1);
+
+  const start = () => {
+    const ch = CHAPTERS.find(c => c.id === selected)!;
+    onStartChapter(ch.enemy, ch.name);
+  };
+
   return (
     <div className="page-screen story-screen">
       <div className="page-header">
@@ -553,18 +576,27 @@ function StoryScreen({ onNavigate }: { onNavigate: (s: Screen) => void }) {
         <div className="page-spacer" />
       </div>
       <div className="story-map">
-        {CHAPTERS.map((ch, i) => (
-          <div key={ch.id} className={`chapter-node ${i === 0 ? 'active' : ''}`}>
-            <div className="chapter-icon">{i + 1}</div>
-            <div className="chapter-info">
-              <div className="chapter-name">{ch.name}</div>
-              <div className="chapter-desc">{ch.desc}</div>
+        {CHAPTERS.map(ch => {
+          const unlocked = ch.id <= progress;
+          const isSel = ch.id === selected;
+          return (
+            <div key={ch.id}
+              className={`chapter-node ${isSel ? 'active' : ''} ${unlocked ? 'unlocked' : 'locked'}`}
+              onClick={() => unlocked && setSelected(ch.id)}>
+              <div className="chapter-icon">{unlocked ? ch.id : '🔒'}</div>
+              <div className="chapter-info">
+                <div className="chapter-name">{ch.name}</div>
+                <div className="chapter-desc">{unlocked ? ch.desc : 'Not unlocked yet'}</div>
+              </div>
+              {unlocked && isSel && <div className="chapter-select">▶</div>}
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
       <div className="page-footer">
-        <button className="btn-primary" onClick={() => onNavigate('battle')}>START CHAPTER</button>
+        <button className="btn-primary" onClick={start} disabled={!CHAPTERS.find(c => c.id === selected)?.id}>
+          START {CHAPTERS.find(c => c.id === selected)?.name.toUpperCase()}
+        </button>
       </div>
     </div>
   );
@@ -837,19 +869,40 @@ export default function App() {
   const [screen, setScreen] = useState<Screen>('main');
   const [playerForm, setPlayerForm] = useState('goku_base');
   const [enemyForm, setEnemyForm] = useState('vegeta_base');
+  const [storyChapter, setStoryChapter] = useState<number | null>(null);
+  const [battleKey, setBattleKey] = useState(0);
 
   const startBattle = (playerFormId?: string) => {
     if (playerFormId) setPlayerForm(playerFormId);
+    setStoryChapter(null);
+    setEnemyForm('vegeta_base');
+    setBattleKey(k => k + 1);
     setScreen('battle');
   };
 
+  const startChapter = (enemyFormId: string, chapterName: string) => {
+    setEnemyForm(enemyFormId);
+    const ch = CHAPTERS.find(c => c.name === chapterName);
+    setStoryChapter(ch?.id ?? null);
+    setBattleKey(k => k + 1);
+    setScreen('battle');
+  };
+
+  const exitBattle = (won: boolean) => {
+    if (won && storyChapter) {
+      const next = storyChapter + 1;
+      saveStoryProgress(Math.min(next, CHAPTERS.length));
+    }
+    setScreen('main');
+  };
+
   switch (screen) {
-    case 'story': return <StoryScreen onNavigate={setScreen} />;
+    case 'story': return <StoryScreen onNavigate={setScreen} onStartChapter={startChapter} />;
     case 'deck': return <DeckScreen onNavigate={setScreen} />;
     case 'characters': return <CharactersScreen onNavigate={setScreen} onSelectFighter={startBattle} />;
     case 'cards': return <CardsScreen onNavigate={setScreen} />;
     case 'settings': return <SettingsScreen onNavigate={setScreen} />;
-    case 'battle': return <BattleScreen playerFormId={playerForm} enemyFormId={enemyForm} onExit={() => setScreen('main')} />;
+    case 'battle': return <BattleScreen key={battleKey} playerFormId={playerForm} enemyFormId={enemyForm} onExit={exitBattle} />;
     default: return <MainMenu onNavigate={setScreen} />;
   }
 }
