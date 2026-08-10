@@ -74,7 +74,7 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   position: absolute; inset: 0;
   background:
     linear-gradient(180deg, rgba(10,10,24,0.55) 0%, rgba(10,10,24,0.25) 30%, rgba(10,10,24,0.35) 60%, rgba(8,8,20,0.85) 100%),
-    url('/menu-art.png') center center / cover no-repeat;
+    url('/menu-art-desktop.png') center center / cover no-repeat;
   z-index: 0;
   overflow: hidden;
   animation: menu-kenburns 30s ease-in-out infinite alternate;
@@ -776,6 +776,15 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 /* ═══════════════════════════════════════════════════════════
    RESPONSIVE
    ═══════════════════════════════════════════════════════════ */
+
+@media (max-width: 900px) {
+  .menu-bg {
+    background:
+      linear-gradient(180deg, rgba(10,10,24,0.55) 0%, rgba(10,10,24,0.25) 30%, rgba(10,10,24,0.35) 60%, rgba(8,8,20,0.85) 100%),
+      url('/menu-art.png') center center / cover no-repeat;
+    animation: none;
+  }
+}
 
 @media (max-width: 768px) {
   :root { --card-w: 90px; --card-h: 128px; --spr: 5; }
