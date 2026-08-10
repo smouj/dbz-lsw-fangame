@@ -261,6 +261,13 @@ function BattleScreen({ playerFormId, enemyFormId, onExit }: {
   });
   const [phase, setPhase] = useState<BattlePhase>('position');
   const [turn, setTurn] = useState(1);
+  // El de mayor Speed ataca primero (mecánica real del GBC)
+  const [playerFirst] = useState(() => {
+    const p = getForm(playerFormId)!;
+    const e = getForm(enemyFormId)!;
+    if (p.spd === e.spd) return Math.random() < 0.5;
+    return p.spd > e.spd;
+  });
   const [command, setCommand] = useState<CommandType | null>(null);
   const [bgId, setBgId] = useState('bg1');
   const [hand, setHand] = useState<CardDef[]>(() => {
@@ -271,7 +278,12 @@ function BattleScreen({ playerFormId, enemyFormId, onExit }: {
     return shuffled.slice(0, 5);
   });
   const [selectedCard, setSelectedCard] = useState<number | null>(null);
-  const [log, setLog] = useState<string[]>([t('battle.start')]);
+  const [log, setLog] = useState<string[]>(() => {
+    const p = getForm(playerFormId)!;
+    const e = getForm(enemyFormId)!;
+    const first = p.spd >= e.spd ? p.character : e.character;
+    return [`${t('battle.start')}`, `${first.toUpperCase()} STRIKES FIRST (SPD)`];
+  });
   const [damageNums, setDamageNums] = useState<{ value: number; type: 'damage' | 'heal' | 'miss' | 'guard'; x: number; y: number; id: number }[]>([]);
   const [playerPose, setPlayerPose] = useState('idle');
   const [enemyPose, setEnemyPose] = useState('idle');
