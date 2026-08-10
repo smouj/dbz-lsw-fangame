@@ -623,6 +623,9 @@ function MainMenu({ onNavigate }: { onNavigate: (s: Screen) => void }) {
     <div className="menu-screen">
       <div className="menu-bg" />
       <div className="menu-content">
+        <div className="menu-art-frame">
+          <img className="menu-art" src="/menu-art.png" alt="DBZ LSW" />
+        </div>
         <h1 className="menu-title">{t('menu.title')}</h1>
         <h2 className="menu-subtitle">{t('menu.subtitle')}</h2>
         <nav className="menu-nav">

@@ -1582,3 +1582,47 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   text-align: center;
   animation: sel-blink 1s infinite alternate;
 }
+
+/* ─── Arte del menú principal ─── */
+.menu-art-frame {
+  position: relative;
+  width: min(240px, 38vw);
+  padding: 8px;
+  background: var(--panel);
+  border: 3px solid var(--border);
+  box-shadow:
+    inset 2px 2px 0 var(--border-lo),
+    inset -2px -2px 0 var(--panel-lo),
+    0 0 24px rgba(255, 150, 50, 0.25),
+    0 0 60px rgba(255, 120, 30, 0.15);
+  animation: art-glow 3s ease-in-out infinite alternate;
+}
+
+@keyframes art-glow {
+  0% { box-shadow: inset 2px 2px 0 var(--border-lo), inset -2px -2px 0 var(--panel-lo), 0 0 18px rgba(255,150,50,0.2), 0 0 40px rgba(255,120,30,0.1); }
+  100% { box-shadow: inset 2px 2px 0 var(--border-lo), inset -2px -2px 0 var(--panel-lo), 0 0 30px rgba(255,170,60,0.4), 0 0 80px rgba(255,140,40,0.25); }
+}
+
+.menu-art {
+  display: block;
+  width: 100%;
+  height: auto;
+  image-rendering: auto;
+  border: 2px solid var(--border-lo);
+}
+
+.menu-art-frame::after {
+  content: '';
+  position: absolute;
+  inset: -6px;
+  border: 1px solid rgba(255, 180, 80, 0.15);
+  pointer-events: none;
+}
+
+@media (max-width: 768px) {
+  .menu-art-frame { width: min(180px, 45vw); padding: 6px; }
+}
+
+@media (max-width: 480px) {
+  .menu-art-frame { width: min(140px, 50vw); padding: 5px; }
+}
