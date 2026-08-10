@@ -1,0 +1,345 @@
+{
+  "idle": {
+    "frame_count": 1,
+    "fps": 4,
+    "loop": true,
+    "frames": [
+      {
+        "name": "vegeta_idle_00",
+        "file": "vegeta_idle_00.png",
+        "w": 30,
+        "h": 42,
+        "src_x": 79,
+        "src_y": 5,
+        "src_w": 30,
+        "src_h": 42
+      }
+    ]
+  },
+  "move": {
+    "frame_count": 2,
+    "fps": 6,
+    "loop": true,
+    "frames": [
+      {
+        "name": "vegeta_move_00",
+        "file": "vegeta_move_00.png",
+        "w": 28,
+        "h": 44,
+        "src_x": 79,
+        "src_y": 52,
+        "src_w": 28,
+        "src_h": 44
+      },
+      {
+        "name": "vegeta_move_01",
+        "file": "vegeta_move_01.png",
+        "w": 32,
+        "h": 41,
+        "src_x": 120,
+        "src_y": 54,
+        "src_w": 32,
+        "src_h": 41
+      }
+    ]
+  },
+  "guard": {
+    "frame_count": 2,
+    "fps": 4,
+    "loop": true,
+    "frames": [
+      {
+        "name": "vegeta_guard_00",
+        "file": "vegeta_guard_00.png",
+        "w": 34,
+        "h": 42,
+        "src_x": 74,
+        "src_y": 100,
+        "src_w": 34,
+        "src_h": 42
+      },
+      {
+        "name": "vegeta_guard_01",
+        "file": "vegeta_guard_01.png",
+        "w": 30,
+        "h": 43,
+        "src_x": 119,
+        "src_y": 99,
+        "src_w": 30,
+        "src_h": 43
+      }
+    ]
+  },
+  "attack_fwd": {
+    "frame_count": 6,
+    "fps": 10,
+    "loop": false,
+    "frames": [
+      {
+        "name": "vegeta_attack_fwd_00",
+        "file": "vegeta_attack_fwd_00.png",
+        "w": 32,
+        "h": 41,
+        "src_x": 79,
+        "src_y": 150,
+        "src_w": 32,
+        "src_h": 41
+      },
+      {
+        "name": "vegeta_attack_fwd_01",
+        "file": "vegeta_attack_fwd_01.png",
+        "w": 31,
+        "h": 41,
+        "src_x": 119,
+        "src_y": 150,
+        "src_w": 31,
+        "src_h": 41
+      },
+      {
+        "name": "vegeta_attack_fwd_02",
+        "file": "vegeta_attack_fwd_02.png",
+        "w": 30,
+        "h": 44,
+        "src_x": 169,
+        "src_y": 148,
+        "src_w": 30,
+        "src_h": 44
+      },
+      {
+        "name": "vegeta_attack_fwd_03",
+        "file": "vegeta_attack_fwd_03.png",
+        "w": 24,
+        "h": 40,
+        "src_x": 216,
+        "src_y": 148,
+        "src_w": 24,
+        "src_h": 40
+      },
+      {
+        "name": "vegeta_attack_fwd_04",
+        "file": "vegeta_attack_fwd_04.png",
+        "w": 38,
+        "h": 40,
+        "src_x": 260,
+        "src_y": 149,
+        "src_w": 38,
+        "src_h": 40
+      },
+      {
+        "name": "vegeta_attack_fwd_05",
+        "file": "vegeta_attack_fwd_05.png",
+        "w": 23,
+        "h": 45,
+        "src_x": 313,
+        "src_y": 144,
+        "src_w": 23,
+        "src_h": 45
+      }
+    ]
+  },
+  "attack_ud": {
+    "frame_count": 4,
+    "fps": 10,
+    "loop": false,
+    "frames": [
+      {
+        "name": "vegeta_attack_ud_00",
+        "file": "vegeta_attack_ud_00.png",
+        "w": 40,
+        "h": 40,
+        "src_x": 72,
+        "src_y": 200,
+        "src_w": 40,
+        "src_h": 40
+      },
+      {
+        "name": "vegeta_attack_ud_01",
+        "file": "vegeta_attack_ud_01.png",
+        "w": 29,
+        "h": 42,
+        "src_x": 131,
+        "src_y": 199,
+        "src_w": 29,
+        "src_h": 42
+      },
+      {
+        "name": "vegeta_attack_ud_02",
+        "file": "vegeta_attack_ud_02.png",
+        "w": 22,
+        "h": 45,
+        "src_x": 174,
+        "src_y": 196,
+        "src_w": 22,
+        "src_h": 45
+      },
+      {
+        "name": "vegeta_attack_ud_03",
+        "file": "vegeta_attack_ud_03.png",
+        "w": 29,
+        "h": 31,
+        "src_x": 208,
+        "src_y": 203,
+        "src_w": 29,
+        "src_h": 31
+      }
+    ]
+  },
+  "hurt": {
+    "frame_count": 5,
+    "fps": 8,
+    "loop": false,
+    "frames": [
+      {
+        "name": "vegeta_hurt_00",
+        "file": "vegeta_hurt_00.png",
+        "w": 28,
+        "h": 43,
+        "src_x": 77,
+        "src_y": 251,
+        "src_w": 28,
+        "src_h": 43
+      },
+      {
+        "name": "vegeta_hurt_01",
+        "file": "vegeta_hurt_01.png",
+        "w": 27,
+        "h": 38,
+        "src_x": 113,
+        "src_y": 255,
+        "src_w": 27,
+        "src_h": 38
+      },
+      {
+        "name": "vegeta_hurt_02",
+        "file": "vegeta_hurt_02.png",
+        "w": 32,
+        "h": 37,
+        "src_x": 149,
+        "src_y": 256,
+        "src_w": 32,
+        "src_h": 37
+      },
+      {
+        "name": "vegeta_hurt_03",
+        "file": "vegeta_hurt_03.png",
+        "w": 22,
+        "h": 41,
+        "src_x": 191,
+        "src_y": 255,
+        "src_w": 22,
+        "src_h": 41
+      },
+      {
+        "name": "vegeta_hurt_04",
+        "file": "vegeta_hurt_04.png",
+        "w": 25,
+        "h": 48,
+        "src_x": 230,
+        "src_y": 248,
+        "src_w": 25,
+        "src_h": 48
+      }
+    ]
+  },
+  "beam_charge": {
+    "frame_count": 4,
+    "fps": 6,
+    "loop": true,
+    "frames": [
+      {
+        "name": "vegeta_beam_charge_00",
+        "file": "vegeta_beam_charge_00.png",
+        "w": 32,
+        "h": 41,
+        "src_x": 72,
+        "src_y": 308,
+        "src_w": 32,
+        "src_h": 41
+      },
+      {
+        "name": "vegeta_beam_charge_01",
+        "file": "vegeta_beam_charge_01.png",
+        "w": 32,
+        "h": 41,
+        "src_x": 115,
+        "src_y": 306,
+        "src_w": 32,
+        "src_h": 41
+      },
+      {
+        "name": "vegeta_beam_charge_02",
+        "file": "vegeta_beam_charge_02.png",
+        "w": 28,
+        "h": 45,
+        "src_x": 169,
+        "src_y": 303,
+        "src_w": 28,
+        "src_h": 45
+      },
+      {
+        "name": "vegeta_beam_charge_03",
+        "file": "vegeta_beam_charge_03.png",
+        "w": 32,
+        "h": 41,
+        "src_x": 210,
+        "src_y": 307,
+        "src_w": 32,
+        "src_h": 41
+      }
+    ]
+  },
+  "beam_fire": {
+    "frame_count": 1,
+    "fps": 6,
+    "loop": false,
+    "frames": [
+      {
+        "name": "vegeta_beam_fire_00",
+        "file": "vegeta_beam_fire_00.png",
+        "w": 30,
+        "h": 42,
+        "src_x": 272,
+        "src_y": 373,
+        "src_w": 30,
+        "src_h": 42
+      }
+    ]
+  },
+  "overworld": {
+    "frame_count": 3,
+    "fps": 4,
+    "loop": true,
+    "frames": [
+      {
+        "name": "vegeta_overworld_00",
+        "file": "vegeta_overworld_00.png",
+        "w": 27,
+        "h": 43,
+        "src_x": 70,
+        "src_y": 359,
+        "src_w": 27,
+        "src_h": 43
+      },
+      {
+        "name": "vegeta_overworld_01",
+        "file": "vegeta_overworld_01.png",
+        "w": 33,
+        "h": 43,
+        "src_x": 111,
+        "src_y": 360,
+        "src_w": 33,
+        "src_h": 43
+      },
+      {
+        "name": "vegeta_overworld_02",
+        "file": "vegeta_overworld_02.png",
+        "w": 76,
+        "h": 38,
+        "src_x": 157,
+        "src_y": 363,
+        "src_w": 76,
+        "src_h": 38
+      }
+    ]
+  }
+}

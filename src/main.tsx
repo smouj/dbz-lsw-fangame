@@ -1,503 +1,649 @@
-import React, { useMemo, useState } from "react";
-import { createRoot } from "react-dom/client";
-import "./styles.css";
+/** @refresh reload */
+import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { createRoot } from 'react-dom/client';
+import './styles.css';
 
-type FighterId = "goku" | "vegeta";
-type Screen = "main" | "story" | "deck" | "character" | "cards" | "battle";
-type BattlePhase = "position" | "command" | "card" | "resolve" | "enemy" | "win" | "lose";
-type BattleCommand = "LIMIT" | "J" | "B" | "C";
-type Pose = "idle" | "power" | "beam" | "hurt" | "guard";
-type RangePosition = "front" | "back";
-type HeightPosition = "ground" | "air";
+// ═══════════════════════════════════════════════════════════
+// DBZ LSW Fangame — Neo-GBC PC Remake
+// Authentic sprites, faithful mechanics, 16:9 pixel art
+// ═══════════════════════════════════════════════════════════
 
-type Card = {
-  id: string;
-  number: number;
+// ─── Types ────────────────────────────────────────────────
+
+type FighterId = 'goku' | 'vegeta';
+type Screen = 'main' | 'story' | 'deck' | 'characters' | 'cards' | 'battle';
+type BattlePhase = 'position' | 'command' | 'cardSelect' | 'resolve' | 'enemyTurn' | 'win' | 'lose';
+type Position = 'front' | 'back';
+type Elevation = 'ground' | 'air';
+type CommandType = 'LIMIT' | 'J' | 'B' | 'C';
+
+interface SpriteAnim {
+  frames: string[];
+  fps: number;
+  loop: boolean;
+}
+
+interface CharManifest {
+  [pose: string]: { frames: { file: string; w: number; h: number }[]; fps: number; loop: boolean };
+}
+
+interface CardDef {
+  id: number;
   name: string;
-  type: "command" | "damage" | "beam" | "support" | "defense" | "special";
-  command: BattleCommand;
-  attack: number;
-  accuracy: number;
+  type: 'command' | 'damage' | 'beam' | 'support' | 'defense' | 'special';
+  description: string;
+  atk: number;
+  acc: number;
   cc: number;
-  rarity: number;
-  text: string;
-};
+  rarity: number; // 1-5 stars
+  compatible?: FighterId[];
+}
 
-type Fighter = {
+interface Fighter {
   id: FighterId;
   name: string;
   level: number;
-  hp: number;
   maxHp: number;
-  cc: number;
-  maxCc: number;
+  hp: number;
   str: number;
   ki: number;
   spd: number;
-  pose: Pose;
-  range: RangePosition;
-  height: HeightPosition;
-  powerTurns: number;
-  guardTurns: number;
-};
-
-const cards: Card[] = [
-  { id: "3-stage", number: 1, name: "3 Stage Atk.", type: "command", command: "B", attack: 14, accuracy: 95, cc: 0, rarity: 1, text: "Short physical chain. Builds CC." },
-  { id: "4-stage", number: 2, name: "4 Stage Atk.", type: "command", command: "B", attack: 18, accuracy: 88, cc: 0, rarity: 1, text: "Longer chain. Builds CC." },
-  { id: "5-stage", number: 3, name: "5 Stage Atk.", type: "command", command: "B", attack: 23, accuracy: 80, cc: 0, rarity: 2, text: "Riskier physical combo." },
-  { id: "kamehameha", number: 12, name: "Kamehameha", type: "beam", command: "J", attack: 22, accuracy: 82, cc: 3, rarity: 2, text: "Beam technique. Stronger from back/air." },
-  { id: "s-kamehameha", number: 13, name: "S.Kamehameha", type: "special", command: "LIMIT", attack: 34, accuracy: 72, cc: 5, rarity: 3, text: "Limit beam. Needs Power Up." },
-  { id: "final-flash", number: 23, name: "Final Flash", type: "beam", command: "LIMIT", attack: 38, accuracy: 68, cc: 6, rarity: 3, text: "Heavy beam attack." },
-  { id: "big-bang", number: 24, name: "Big Bang", type: "beam", command: "LIMIT", attack: 32, accuracy: 78, cc: 5, rarity: 3, text: "Explosive ki attack." },
-  { id: "guard", number: 121, name: "Endurance", type: "defense", command: "J", attack: 0, accuracy: 100, cc: 1, rarity: 2, text: "Guard for the next enemy phase." },
-  { id: "afterimage", number: 125, name: "Avoiding", type: "defense", command: "J", attack: 0, accuracy: 100, cc: 2, rarity: 2, text: "Improves evasion this phase." },
-  { id: "reading-ki", number: 119, name: "Reading Ki", type: "support", command: "J", attack: 0, accuracy: 100, cc: 2, rarity: 2, text: "Raises accuracy and timing." },
-  { id: "power-up", number: 90, name: "Power Up", type: "support", command: "C", attack: 0, accuracy: 100, cc: 0, rarity: 1, text: "Gain CC and enable limits." },
-  { id: "move", number: 91, name: "Change Pos.", type: "support", command: "C", attack: 0, accuracy: 100, cc: 0, rarity: 1, text: "Switch front/back and ground/air." }
-];
-
-const defaultDeckIds = [
-  "3-stage", "3-stage", "3-stage",
-  "4-stage", "4-stage", "4-stage",
-  "5-stage", "5-stage",
-  "kamehameha", "kamehameha", "kamehameha",
-  "s-kamehameha", "s-kamehameha",
-  "guard", "guard", "guard",
-  "afterimage", "reading-ki",
-  "power-up", "move"
-];
-
-const characters = [
-  { id: "goku" as const, name: "Goku", level: 38, hp: 312, str: 42, ki: 47, spd: 39, limits: ["S.Kamehameha", "Spirit Bomb", "Kaioken"] },
-  { id: "vegeta" as const, name: "Vegeta", level: 39, hp: 304, str: 45, ki: 44, spd: 41, limits: ["Galick Gun", "Big Bang", "Final Flash"] }
-];
-
-function makeFighter(id: FighterId): Fighter {
-  const base = characters.find((character) => character.id === id)!;
-  return {
-    id,
-    name: base.name,
-    level: base.level,
-    hp: base.hp,
-    maxHp: base.hp,
-    cc: 8,
-    maxCc: 40,
-    str: base.str,
-    ki: base.ki,
-    spd: base.spd,
-    pose: id === "goku" ? "idle" : "guard",
-    range: id === "goku" ? "front" : "back",
-    height: "ground",
-    powerTurns: 0,
-    guardTurns: 0
-  };
+  maxCc: number;
+  cc: number;
+  position: Position;
+  elevation: Elevation;
+  limits: string[];
 }
 
-function App() {
-  const [screen, setScreen] = useState<Screen>("main");
-  const [selectedCharacter, setSelectedCharacter] = useState<FighterId>("goku");
-  const [deckIds, setDeckIds] = useState<string[]>(defaultDeckIds);
-  const [player, setPlayer] = useState(() => makeFighter("goku"));
-  const [enemy, setEnemy] = useState(() => makeFighter("vegeta"));
-  const [phase, setPhase] = useState<BattlePhase>("position");
-  const [activeCommand, setActiveCommand] = useState<BattleCommand>("B");
-  const [log, setLog] = useState("Set position, then choose a command.");
-  const [turn, setTurn] = useState(1);
-  const [selectedCard, setSelectedCard] = useState<Card | null>(null);
-  const [floatingText, setFloatingText] = useState("");
+// ─── Card Data (125 cards, subset for prototype) ──────────
 
-  const hand = useMemo(() => {
-    const unique = [...new Set(deckIds)];
-    return unique.slice(0, 5).map((id) => cards.find((card) => card.id === id)!).filter(Boolean);
-  }, [deckIds]);
+const CARDS: CardDef[] = [
+  // Command cards (build CC)
+  { id: 1, name: '3 Stage Atk.', type: 'command', description: 'Short physical chain. Builds CC.', atk: 14, acc: 95, cc: 0, rarity: 1 },
+  { id: 2, name: '4 Stage Atk.', type: 'command', description: 'Longer chain. Builds CC.', atk: 18, acc: 88, cc: 0, rarity: 1 },
+  { id: 3, name: '5 Stage Atk.', type: 'command', description: 'Riskier physical combo.', atk: 23, acc: 80, cc: 0, rarity: 2 },
+  { id: 4, name: 'Power Up', type: 'command', description: 'Focus energy. +5 CC.', atk: 0, acc: 100, cc: 5, rarity: 1 },
+  { id: 5, name: 'Counter', type: 'command', description: 'Counter-attack after blocking.', atk: 16, acc: 90, cc: 0, rarity: 2 },
+  // Damage cards
+  { id: 20, name: 'Punch', type: 'damage', description: 'Basic physical attack.', atk: 12, acc: 95, cc: 3, rarity: 1 },
+  { id: 21, name: 'Kick', type: 'damage', description: 'Basic kick attack.', atk: 14, acc: 92, cc: 3, rarity: 1 },
+  { id: 22, name: 'Rush Attack', type: 'damage', description: 'Multi-hit physical.', atk: 22, acc: 85, cc: 6, rarity: 2 },
+  { id: 23, name: 'Critical Punch', type: 'damage', description: 'High damage, lower accuracy.', atk: 30, acc: 75, cc: 8, rarity: 3 },
+  // Beam cards
+  { id: 40, name: 'Kamehameha', type: 'beam', description: 'Goku\'s signature beam.', atk: 28, acc: 90, cc: 16, rarity: 3, compatible: ['goku'] },
+  { id: 41, name: 'Masenko', type: 'beam', description: 'Gohan\'s beam attack.', atk: 22, acc: 88, cc: 12, rarity: 2, compatible: ['goku'] },
+  { id: 42, name: 'Galick Gun', type: 'beam', description: 'Vegeta\'s signature beam.', atk: 28, acc: 90, cc: 16, rarity: 3, compatible: ['vegeta'] },
+  { id: 43, name: 'Final Flash', type: 'beam', description: 'Vegeta\'s ultimate beam.', atk: 38, acc: 80, cc: 23, rarity: 4, compatible: ['vegeta'] },
+  // Support cards
+  { id: 60, name: 'Senzu Bean', type: 'support', description: 'Restore 50 HP.', atk: 0, acc: 100, cc: 4, rarity: 2 },
+  { id: 61, name: 'Ki Boost', type: 'support', description: '+3 STR, +3 KI this turn.', atk: 0, acc: 100, cc: 3, rarity: 1 },
+  // Defense cards
+  { id: 80, name: 'Guard', type: 'defense', description: 'Block 50% damage.', atk: 0, acc: 100, cc: 2, rarity: 1 },
+  { id: 81, name: 'Dodge', type: 'defense', description: 'Evade with 70% chance.', atk: 0, acc: 70, cc: 4, rarity: 2 },
+  // Special cards
+  { id: 100, name: 'Spirit Bomb', type: 'special', description: 'Massive damage. Requires full CC.', atk: 45, acc: 70, cc: 30, rarity: 5, compatible: ['goku'] },
+];
 
-  const commandCards = useMemo(() => hand.filter((card) => card.command === activeCommand), [activeCommand, hand]);
+const CARD_TYPE_COLORS: Record<string, string> = {
+  command: '#8899aa',
+  damage: '#c44040',
+  beam: '#4488dd',
+  support: '#44aa55',
+  defense: '#6655aa',
+  special: '#ddaa33',
+};
 
-  const reset = () => {
-    setPlayer(makeFighter(selectedCharacter));
-    setEnemy(makeFighter(selectedCharacter === "goku" ? "vegeta" : "goku"));
-    setPhase("position");
-    setActiveCommand("B");
-    setLog("Set position, then choose a command.");
-    setTurn(1);
-    setSelectedCard(null);
-    setFloatingText("");
-  };
+const CARD_TYPE_ICONS: Record<string, string> = {
+  command: '⚡',
+  damage: '👊',
+  beam: '💫',
+  support: '💚',
+  defense: '🛡',
+  special: '⭐',
+};
 
-  const startBattle = () => {
-    reset();
-    setScreen("battle");
-  };
+// ─── Sprite Animation System ──────────────────────────────
 
-  if (screen !== "battle") {
-    return (
-      <MenuShell
-        deckIds={deckIds}
-        screen={screen}
-        selectedCharacter={selectedCharacter}
-        onDeckChange={setDeckIds}
-        onScreenChange={setScreen}
-        onSelectCharacter={setSelectedCharacter}
-        onStartBattle={startBattle}
-      />
-    );
+function useSpriteAnim(charId: FighterId, pose: string): { src: string; w: number; h: number } {
+  const [frameIdx, setFrameIdx] = useState(0);
+  const [manifest, setManifest] = useState<CharManifest | null>(null);
+
+  useEffect(() => {
+    fetch(`/assets/sprites/${charId}/manifest.json`)
+      .then(r => r.json())
+      .then(setManifest)
+      .catch(() => setManifest(null));
+  }, [charId]);
+
+  useEffect(() => {
+    if (!manifest || !manifest[pose]) {
+      setFrameIdx(0);
+      return;
+    }
+    const anim = manifest[pose];
+    if (anim.frames.length <= 1) {
+      setFrameIdx(0);
+      return;
+    }
+    const interval = 1000 / anim.fps;
+    let idx = 0;
+    const timer = setInterval(() => {
+      idx++;
+      if (idx >= anim.frames.length) {
+        if (anim.loop) idx = 0;
+        else { clearInterval(timer); return; }
+      }
+      setFrameIdx(idx);
+    }, interval);
+    return () => clearInterval(timer);
+  }, [manifest, pose]);
+
+  if (!manifest || !manifest[pose]) {
+    return { src: `/assets/sprites/${charId}/${charId}_idle_00.png`, w: 30, h: 46 };
   }
+  const anim = manifest[pose];
+  const f = anim.frames[Math.min(frameIdx, anim.frames.length - 1)];
+  return { src: `/assets/sprites/${charId}/${f.file}`, w: f.w, h: f.h };
+}
 
-  const setPosition = (range: RangePosition, height: HeightPosition) => {
-    if (phase !== "position") return;
-    setPlayer((current) => ({ ...current, range, height }));
-    setPhase("command");
-    setLog(`${range.toUpperCase()} / ${height.toUpperCase()} selected.`);
-  };
+// ─── Fighter Sprites ──────────────────────────────────────
 
-  const chooseCommand = (command: BattleCommand) => {
-    if (phase !== "command" && phase !== "card") return;
-    setActiveCommand(command);
-    setPhase("card");
-    setLog(command === "B" ? "Choose a command chain." : command === "J" ? "Choose support/defense/beam." : command === "C" ? "Choose Power Up or movement." : "Choose a limit technique.");
-  };
-
-  const endPlayerAction = (nextPlayer: Fighter, nextEnemy: Fighter, message: string, card: Card, damage: number) => {
-    setSelectedCard(card);
-    setPlayer({ ...nextPlayer, pose: card.type === "defense" ? "guard" : card.id === "power-up" ? "power" : card.attack > 0 ? "beam" : "idle" });
-    setEnemy({ ...nextEnemy, pose: damage > 0 ? "hurt" : "guard" });
-    setFloatingText(damage > 0 ? `-${damage}` : card.id === "power-up" ? "+8 CC" : "GUARD");
-    setLog(message);
-    setPhase("resolve");
-
-    window.setTimeout(() => {
-      setPlayer((current) => ({ ...current, pose: "idle" }));
-      setEnemy((current) => ({ ...current, pose: current.hp <= 0 ? "hurt" : "guard" }));
-      setFloatingText("");
-    }, 520);
-
-    if (nextEnemy.hp <= 0) {
-      window.setTimeout(() => {
-        setPhase("win");
-        setLog("Victory. Card reward pending.");
-      }, 880);
-      return;
-    }
-
-    window.setTimeout(() => {
-      setPhase("enemy");
-      setLog(`${nextEnemy.name} prepares a counter.`);
-      setEnemy((currentEnemy) => ({ ...currentEnemy, pose: "beam" }));
-      setPlayer((current) => ({ ...current, pose: current.guardTurns > 0 ? "guard" : "hurt" }));
-    }, 880);
-
-    window.setTimeout(() => {
-      setPlayer((current) => {
-        const guarded = current.guardTurns > 0;
-        const baseDamage = guarded ? 8 : 20;
-        const nextHp = Math.max(0, current.hp - baseDamage);
-        if (nextHp <= 0) {
-          setPhase("lose");
-          setLog(`${current.name} is down.`);
-        } else {
-          setPhase("position");
-          setLog("Set position, then choose a command.");
-          setTurn((value) => value + 1);
-        }
-        setFloatingText(guarded ? "GUARD -8" : "-20");
-        return {
-          ...current,
-          hp: nextHp,
-          cc: Math.min(current.maxCc, current.cc + 4),
-          pose: "idle",
-          guardTurns: Math.max(0, current.guardTurns - 1),
-          powerTurns: Math.max(0, current.powerTurns - 1)
-        };
-      });
-      setEnemy((current) => ({ ...current, cc: Math.min(current.maxCc, current.cc + 3), pose: "guard" }));
-      setSelectedCard(null);
-      window.setTimeout(() => setFloatingText(""), 420);
-    }, 1350);
-  };
-
-  const playCard = (card: Card) => {
-    if (phase !== "card" || player.cc < card.cc) return;
-    if (card.command === "LIMIT" && player.powerTurns <= 0) {
-      setLog("Power Up is required before Limit.");
-      return;
-    }
-
-    const positionBonus = player.range === "back" && ["beam", "special"].includes(card.type) ? 5 : 0;
-    const heightBonus = player.height === "air" && card.type === "beam" ? 4 : 0;
-    const generatedCc = card.command === "B" ? 7 : card.id === "power-up" ? 8 : 2;
-    const hit = card.accuracy >= 100 || Math.floor(Math.random() * 100) < card.accuracy;
-    const damage = card.attack > 0 && hit ? Math.max(1, card.attack + positionBonus + heightBonus + (player.powerTurns > 0 ? 6 : 0)) : 0;
-
-    const nextPlayer: Fighter = {
-      ...player,
-      cc: Math.min(player.maxCc, player.cc - card.cc + generatedCc),
-      powerTurns: card.id === "power-up" ? 3 : player.powerTurns,
-      guardTurns: card.type === "defense" ? 2 : player.guardTurns,
-      range: card.id === "move" ? (player.range === "front" ? "back" : "front") : player.range,
-      height: card.id === "move" ? (player.height === "ground" ? "air" : "ground") : player.height
-    };
-    const nextEnemy = { ...enemy, hp: Math.max(0, enemy.hp - damage) };
-    const message = !hit ? `${card.name} missed.` : card.id === "power-up" ? `${player.name} powers up.` : card.id === "move" ? `${player.name} changes position.` : `${player.name} used ${card.name}.`;
-
-    endPlayerAction(nextPlayer, nextEnemy, message, card, damage);
-  };
-
+function FighterSprite({ charId, pose, facing, scale = 8, flash = false }: {
+  charId: FighterId; pose: string; facing?: 'left' | 'right'; scale?: number; flash?: boolean;
+}) {
+  const { src, w, h } = useSpriteAnim(charId, pose);
   return (
-    <main className="game-shell">
-      <header className="topbar">
-        <strong>dbz-lsw-fangame</strong>
-        <span>Turn {turn} / Phase {phase.toUpperCase()}</span>
-        <button type="button" onClick={() => setScreen("main")}>Menu</button>
-      </header>
-
-      <section className="battle-stage" aria-label="Battle screen">
-        <div className="top-status">
-          <CombatantPanel fighter={player} side="player" />
-          <CombatantPanel fighter={enemy} side="enemy" />
-        </div>
-
-        <div className="battlefield">
-          <div className="layer sky" />
-          <div className="layer mountains" />
-          <div className="layer arena" />
-          <FighterSprite fighter={player} side="player" active={phase === "resolve"} />
-          <FighterSprite fighter={enemy} side="enemy" active={phase === "enemy"} />
-          <div className={`beam-effect ${selectedCard && selectedCard.attack > 0 ? "active" : ""} ${phase === "enemy" ? "reverse" : ""}`} />
-          <img alt="" className={`impact-effect ${floatingText.startsWith("-") ? "active" : ""}`} src="/assets/sprites/fx_impact.png" />
-          {floatingText && <div className="floating-text">{floatingText}</div>}
-        </div>
-
-        <div className="battle-controls">
-          {phase === "position" ? (
-            <div className="position-pad">
-              <button type="button" onClick={() => setPosition("back", "air")}>AIR/BACK</button>
-              <button type="button" onClick={() => setPosition("front", "air")}>AIR/FRONT</button>
-              <button type="button" onClick={() => setPosition("back", "ground")}>GROUND/BACK</button>
-              <button type="button" onClick={() => setPosition("front", "ground")}>GROUND/FRONT</button>
-            </div>
-          ) : (
-            <div className="position-status">
-              <span>POSITION</span>
-              <strong>{player.height.toUpperCase()} / {player.range.toUpperCase()}</strong>
-            </div>
-          )}
-
-          <div className="command-strip">
-            {(["LIMIT", "J", "B", "C"] as BattleCommand[]).map((command) => (
-              <button className={activeCommand === command ? "active" : ""} disabled={phase !== "command" && phase !== "card"} key={command} type="button" onClick={() => chooseCommand(command)}>
-                {command}
-              </button>
-            ))}
-          </div>
-
-          <div className="message-window">
-            <strong>{selectedCard?.name ?? "Your turn"}</strong>
-            <span>{log}</span>
-            <em>CC {player.cc}/{player.maxCc}</em>
-          </div>
-        </div>
-      </section>
-
-      <section className="hand-area">
-        {commandCards.length === 0 && <div className="empty-hand">No cards for {activeCommand}. Choose another command.</div>}
-        <div className="hand">
-          {commandCards.map((card, index) => (
-            <button
-              className={`card type-${card.type} ${player.cc < card.cc || phase !== "card" ? "disabled" : ""}`}
-              key={card.id}
-              style={{ "--fan": `${index - 2}` } as React.CSSProperties}
-              type="button"
-              onClick={() => playCard(card)}
-            >
-              <span>#{card.number.toString().padStart(3, "0")} / {card.type}</span>
-              <strong>{card.name}</strong>
-              <i>{card.text}</i>
-              <small>ATK {card.attack} / ACC {card.accuracy}% / CC {card.cc}</small>
-              <em>{"*".repeat(card.rarity)}</em>
-            </button>
-          ))}
-        </div>
-      </section>
-    </main>
+    <div className={`fighter-sprite ${flash ? 'flash' : ''}`}
+      style={{
+        width: w * scale, height: h * scale,
+        imageRendering: 'pixelated',
+        transform: facing === 'left' ? 'scaleX(-1)' : 'scaleX(1)',
+      }}>
+      <img src={src} alt={charId}
+        style={{ width: w * scale, height: h * scale, imageRendering: 'pixelated' }} />
+    </div>
   );
 }
 
-function MenuShell({
-  deckIds,
-  screen,
-  selectedCharacter,
-  onDeckChange,
-  onScreenChange,
-  onSelectCharacter,
-  onStartBattle
-}: {
-  deckIds: string[];
-  screen: Screen;
-  selectedCharacter: FighterId;
-  onDeckChange: (next: string[]) => void;
-  onScreenChange: (next: Screen) => void;
-  onSelectCharacter: (next: FighterId) => void;
-  onStartBattle: () => void;
+// ─── Battle Background ────────────────────────────────────
+
+function BattleBackground() {
+  return (
+    <div className="battle-bg">
+      <div className="bg-layer bg-sky" />
+      <div className="bg-layer bg-clouds" />
+      <div className="bg-layer bg-mountains" />
+      <div className="bg-layer bg-terrain" />
+      <div className="bg-layer bg-ground" />
+    </div>
+  );
+}
+
+// ─── HP Bar ───────────────────────────────────────────────
+
+function HPBar({ current, max, side }: { current: number; max: number; side: 'left' | 'right' }) {
+  const pct = Math.max(0, Math.min(100, (current / max) * 100));
+  const low = pct <= 25;
+  return (
+    <div className={`hp-bar ${side} ${low ? 'low' : ''}`}>
+      <div className="hp-bar-track">
+        <div className="hp-bar-recent" style={{ width: `${pct}%` }} />
+        <div className="hp-bar-current" style={{ width: `${pct}%` }} />
+      </div>
+      <div className="hp-bar-text">{current} / {max}</div>
+    </div>
+  );
+}
+
+// ─── CC Display ───────────────────────────────────────────
+
+function CCDisplay({ cc, maxCc }: { cc: number; maxCc: number }) {
+  const pct = Math.max(0, Math.min(100, (cc / maxCc) * 100));
+  return (
+    <div className="cc-display">
+      <div className="cc-label">CC</div>
+      <div className="cc-bar-track">
+        <div className="cc-bar-fill" style={{ width: `${pct}%` }} />
+      </div>
+      <div className="cc-value">{cc}</div>
+    </div>
+  );
+}
+
+// ─── Card Component ───────────────────────────────────────
+
+function CardComponent({ card, selected, onClick, compact }: {
+  card: CardDef; selected?: boolean; onClick?: () => void; compact?: boolean;
+}) {
+  const color = CARD_TYPE_COLORS[card.type] || '#8899aa';
+  const icon = CARD_TYPE_ICONS[card.type] || '⚡';
+  const stars = '★'.repeat(card.rarity) + '☆'.repeat(5 - card.rarity);
+
+  return (
+    <button className={`card ${card.type} ${selected ? 'selected' : ''}`}
+      onClick={onClick}
+      style={{ '--card-color': color } as React.CSSProperties}>
+      <div className="card-header">
+        <span className="card-icon">{icon}</span>
+        <span className="card-cc">{card.cc} CC</span>
+      </div>
+      {!compact && <div className="card-art">{icon}</div>}
+      <div className="card-name">{card.name}</div>
+      <div className="card-type">{card.type}</div>
+      <div className="card-stats">
+        {card.atk > 0 && <span className="card-atk">ATK {card.atk}</span>}
+        <span className="card-acc">ACC {card.acc}%</span>
+      </div>
+      <div className="card-rarity">{stars}</div>
+    </button>
+  );
+}
+
+// ─── Hand Component ───────────────────────────────────────
+
+function HandComponent({ cards, selectedIndex, onSelect }: {
+  cards: CardDef[]; selectedIndex: number | null; onSelect: (i: number) => void;
 }) {
   return (
-    <main className="menu-shell">
-      <section className="menu-frame">
-        <header className="title-screen">
-          <strong>DRAGON BALL Z</strong>
-          <span>LEGENDARY SUPER WARRIORS ONLINE</span>
-        </header>
-
-        <nav className="main-menu">
-          {[
-            ["main", "Continue"],
-            ["story", "Story"],
-            ["deck", "Deck"],
-            ["character", "Characters"],
-            ["cards", "Cards"]
-          ].map(([id, label]) => (
-            <button className={screen === id ? "active" : ""} key={id} type="button" onClick={() => onScreenChange(id as Screen)}>{label}</button>
-          ))}
-          <button type="button" onClick={onStartBattle}>Battle</button>
-        </nav>
-
-        {screen === "main" && <MainMenuPanel selectedCharacter={selectedCharacter} deckCount={deckIds.length} onStartBattle={onStartBattle} />}
-        {screen === "story" && <StoryPanel onStartBattle={onStartBattle} />}
-        {screen === "deck" && <DeckEditor deckIds={deckIds} onDeckChange={onDeckChange} />}
-        {screen === "character" && <CharacterEditor selectedCharacter={selectedCharacter} onSelectCharacter={onSelectCharacter} />}
-        {screen === "cards" && <CardCollection />}
-      </section>
-    </main>
-  );
-}
-
-function MainMenuPanel({ selectedCharacter, deckCount, onStartBattle }: { selectedCharacter: FighterId; deckCount: number; onStartBattle: () => void }) {
-  const character = characters.find((item) => item.id === selectedCharacter)!;
-  return (
-    <div className="menu-panel two-col">
-      <div>
-        <span>Selected Fighter</span>
-        <strong>{character.name}</strong>
-        <img alt="" className="menu-character" src={`/assets/sprites/${character.id}_idle.png`} />
-      </div>
-      <div>
-        <span>Battle Setup</span>
-        <strong>Deck {deckCount}/20</strong>
-        <code>LV {character.level} / HP {character.hp} / STR {character.str} / KI {character.ki} / SPD {character.spd}</code>
-        <button type="button" onClick={onStartBattle}>Enter Battle</button>
-      </div>
-    </div>
-  );
-}
-
-function StoryPanel({ onStartBattle }: { onStartBattle: () => void }) {
-  const chapters = ["Saiyans", "Namek", "Androids", "Cell", "Future", "Majin Buu"];
-  return (
-    <div className="menu-panel">
-      <span>Story map prototype</span>
-      <div className="story-map">
-        {chapters.map((chapter, index) => (
-          <button key={chapter} type="button" onClick={onStartBattle}>
-            <strong>{chapter}</strong>
-            <small>{index < 2 ? "Clear" : index === 2 ? "Next" : "Locked"}</small>
-          </button>
+    <div className="hand-area">
+      <div className="hand-label">YOUR HAND</div>
+      <div className="hand-cards">
+        {cards.map((card, i) => (
+          <CardComponent key={card.id + '-' + i} card={card}
+            selected={i === selectedIndex} onClick={() => onSelect(i)} />
         ))}
       </div>
     </div>
   );
 }
 
-function DeckEditor({ deckIds, onDeckChange }: { deckIds: string[]; onDeckChange: (next: string[]) => void }) {
-  const countCard = (cardId: string) => deckIds.filter((id) => id === cardId).length;
-  const addCard = (cardId: string) => {
-    if (deckIds.length < 20 && countCard(cardId) < 3) onDeckChange([...deckIds, cardId]);
-  };
-  const removeCard = (cardId: string) => {
-    const index = deckIds.indexOf(cardId);
-    if (index >= 0) onDeckChange(deckIds.filter((_, currentIndex) => currentIndex !== index));
+// ─── Damage Number ────────────────────────────────────────
+
+function DamageNumber({ value, type, x, y }: { value: number; type: 'damage' | 'heal' | 'miss' | 'guard'; x: number; y: number }) {
+  const text = type === 'miss' ? 'MISS' : type === 'guard' ? 'GUARD' : `${value > 0 ? '-' : '+'}${Math.abs(value)}`;
+  return (
+    <div className={`damage-number ${type}`} style={{ left: x, top: y }}>
+      {text}
+    </div>
+  );
+}
+
+// ─── Battle Screen ────────────────────────────────────────
+
+function BattleScreen() {
+  const [player, setPlayer] = useState<Fighter>({
+    id: 'goku', name: 'Goku', level: 38, maxHp: 312, hp: 312,
+    str: 42, ki: 47, spd: 39, maxCc: 40, cc: 8,
+    position: 'front', elevation: 'ground',
+    limits: ['Kamehameha', 'Spirit Bomb'],
+  });
+  const [enemy, setEnemy] = useState<Fighter>({
+    id: 'vegeta', name: 'Vegeta', level: 39, maxHp: 304, hp: 304,
+    str: 45, ki: 44, spd: 41, maxCc: 40, cc: 8,
+    position: 'back', elevation: 'ground',
+    limits: ['Galick Gun', 'Final Flash'],
+  });
+  const [phase, setPhase] = useState<BattlePhase>('position');
+  const [turn, setTurn] = useState(1);
+  const [command, setCommand] = useState<CommandType | null>(null);
+  const [hand, setHand] = useState<CardDef[]>(() => {
+    // Draw 5 cards from a shuffled deck
+    const deck = [...CARDS];
+    const shuffled = deck.sort(() => Math.random() - 0.5);
+    return shuffled.slice(0, 5);
+  });
+  const [selectedCard, setSelectedCard] = useState<number | null>(null);
+  const [log, setLog] = useState<string[]>(['Battle Start!']);
+  const [damageNums, setDamageNums] = useState<{ value: number; type: 'damage' | 'heal' | 'miss' | 'guard'; x: number; y: number; id: number }[]>([]);
+  const [playerPose, setPlayerPose] = useState('idle');
+  const [enemyPose, setEnemyPose] = useState('idle');
+  const [flashPlayer, setFlashPlayer] = useState(false);
+  const [flashEnemy, setFlashEnemy] = useState(false);
+
+  const addLog = useCallback((msg: string) => setLog(prev => [...prev.slice(-8), msg]), []);
+
+  // Position selection
+  const setPosition = (pos: Position, elev: Elevation) => {
+    setPlayer(prev => ({ ...prev, position: pos, elevation: elev }));
+    setPhase('command');
+    addLog(`Position: ${elev}/${pos}`);
   };
 
+  // Command selection
+  const selectCommand = (cmd: CommandType) => {
+    if (cmd === 'LIMIT') {
+      if (player.cc < 20) { addLog('Not enough CC for LIMIT!'); return; }
+      setPlayerPose('beam_charge');
+      setCommand(cmd);
+      setPhase('cardSelect');
+      return;
+    }
+    setCommand(cmd);
+    setPhase('cardSelect');
+  };
+
+  // Card selection
+  const selectCard = (idx: number) => {
+    setSelectedCard(idx);
+    resolveCard(idx);
+  };
+
+  // Resolve player's card
+  const resolveCard = (idx: number) => {
+    const card = hand[idx];
+    setPlayerPose(card.type === 'beam' ? 'beam_charge' : card.type === 'damage' ? 'attack_fwd' : 'guard');
+
+    setTimeout(() => {
+      let damage = 0;
+      let hitType: 'damage' | 'miss' | 'guard' = 'damage';
+      const acc = card.acc / 100;
+      const roll = Math.random();
+
+      if (roll > acc) {
+        hitType = 'miss';
+        addLog(`${player.name} used ${card.name} — MISS!`);
+      } else {
+        // Position modifiers
+        let posMod = 1.0;
+        if (player.position === 'front') posMod *= 1.1;
+        if (enemy.position === 'back') posMod *= 0.9;
+
+        // Type modifiers
+        let atkMod = card.atk;
+        if (card.type === 'beam') atkMod += player.ki * 0.5;
+        else if (card.type === 'damage') atkMod += player.str * 0.3;
+
+        damage = Math.floor(atkMod * posMod);
+
+        if (card.type === 'defense') {
+          hitType = 'guard';
+          damage = Math.floor(damage * 0.5);
+        }
+
+        addLog(`${player.name} used ${card.name} — ${damage} damage!`);
+      }
+
+      // Apply damage
+      setEnemy(prev => ({ ...prev, hp: Math.max(0, prev.hp - damage) }));
+      setFlashEnemy(true);
+      setTimeout(() => setFlashEnemy(false), 200);
+
+      if (damage > 0) {
+        setDamageNums(prev => [...prev, { value: damage, type: hitType === 'guard' ? 'guard' : 'damage', x: 70, y: 30, id: Date.now() }]);
+      } else if (hitType === 'miss') {
+        setDamageNums(prev => [...prev, { value: 0, type: 'miss', x: 70, y: 30, id: Date.now() }]);
+      }
+
+      // CC gain
+      if (card.type === 'command') {
+        setPlayer(prev => ({ ...prev, cc: Math.min(prev.maxCc, prev.cc + 3) }));
+      }
+      setPlayer(prev => ({ ...prev, cc: Math.min(prev.maxCc, prev.cc + card.cc) }));
+
+      // Remove used card and draw new one
+      const newHand = [...hand];
+      const replacement = CARDS[Math.floor(Math.random() * CARDS.length)];
+      newHand[idx] = replacement;
+      setHand(newHand);
+
+      // Check for enemy KO
+      if (enemy.hp - damage <= 0) {
+        setTimeout(() => {
+          setEnemyPose('hurt');
+          setPhase('win');
+          addLog(`${enemy.name} defeated!`);
+        }, 600);
+        return;
+      }
+
+      // Enemy turn
+      setTimeout(() => enemyTurn(damage), 800);
+    }, 400);
+  };
+
+  // Enemy AI turn
+  const enemyTurn = (lastPlayerDmg: number) => {
+    setPhase('enemyTurn');
+    setEnemyPose('attack_fwd');
+
+    setTimeout(() => {
+      const enemyCards = CARDS.filter(c => c.type === 'damage' || c.type === 'beam');
+      const card = enemyCards[Math.floor(Math.random() * enemyCards.length)];
+
+      let damage = 0;
+      let hitType: 'damage' | 'miss' | 'guard' = 'damage';
+      const acc = card.acc / 100;
+
+      if (Math.random() > acc) {
+        hitType = 'miss';
+        addLog(`${enemy.name} used ${card.name} — MISS!`);
+      } else {
+        let posMod = 1.0;
+        if (enemy.position === 'front') posMod *= 1.1;
+        if (player.position === 'back') posMod *= 0.9;
+
+        let atkMod = card.atk;
+        if (card.type === 'beam') atkMod += enemy.ki * 0.5;
+        else atkMod += enemy.str * 0.3;
+
+        damage = Math.floor(atkMod * posMod);
+
+        if (card.type === 'defense') {
+          hitType = 'guard';
+          damage = Math.floor(damage * 0.5);
+        }
+
+        addLog(`${enemy.name} used ${card.name} — ${damage} damage!`);
+      }
+
+      setPlayer(prev => ({ ...prev, hp: Math.max(0, prev.hp - damage) }));
+      setFlashPlayer(true);
+      setTimeout(() => setFlashPlayer(false), 200);
+
+      if (damage > 0) {
+        setPlayerPose('hurt');
+        setDamageNums(prev => [...prev, { value: damage, type: hitType === 'guard' ? 'guard' : 'damage', x: 30, y: 50, id: Date.now() }]);
+      } else if (hitType === 'miss') {
+        setDamageNums(prev => [...prev, { value: 0, type: 'miss', x: 30, y: 50, id: Date.now() }]);
+      }
+
+      // Enemy CC
+      setEnemy(prev => ({ ...prev, cc: Math.min(prev.maxCc, prev.cc + 3 + card.cc) }));
+
+      if (player.hp - damage <= 0) {
+        setTimeout(() => {
+          setPlayerPose('hurt');
+          setPhase('lose');
+          addLog(`${player.name} defeated!`);
+        }, 600);
+        return;
+      }
+
+      setTimeout(() => {
+        setPlayerPose('idle');
+        setEnemyPose('idle');
+        setPhase('position');
+        setTurn(t => t + 1);
+        setSelectedCard(null);
+      }, 500);
+    }, 600);
+  };
+
+  // Clean damage numbers
+  useEffect(() => {
+    if (damageNums.length > 0) {
+      const timer = setTimeout(() => setDamageNums(prev => prev.slice(1)), 1500);
+      return () => clearTimeout(timer);
+    }
+  }, [damageNums]);
+
   return (
-    <div className="menu-panel deck-editor">
-      <span>Deck Edit / {deckIds.length}/20 cards / max 3 copies</span>
-      <div className="collection-grid">
-        {cards.map((card) => (
-          <article className={`mini-card type-${card.type}`} key={card.id}>
-            <strong>{card.name} x{countCard(card.id)}</strong>
-            <small>{card.command} / ATK {card.attack} / ACC {card.accuracy}% / CC {card.cc}</small>
-            <div>
-              <button type="button" onClick={() => removeCard(card.id)}>-</button>
-              <button type="button" onClick={() => addCard(card.id)}>+</button>
+    <div className="battle-screen">
+      {/* HUD */}
+      <div className="hud-top">
+        <div className="fighter-hud left">
+          <div className="hud-name">
+            <span className="hud-portrait">{player.id === 'goku' ? '🟠' : '🔵'}</span>
+            <strong>{player.name}</strong>
+            <span className="hud-level">LV {player.level}</span>
+          </div>
+          <HPBar current={player.hp} max={player.maxHp} side="left" />
+          <div className="hud-stats">
+            <span>STR {player.str}</span>
+            <span>KI {player.ki}</span>
+            <span>SPD {player.spd}</span>
+          </div>
+          <CCDisplay cc={player.cc} maxCc={player.maxCc} />
+        </div>
+        <div className="fighter-hud right">
+          <div className="hud-name">
+            <span className="hud-portrait">{enemy.id === 'vegeta' ? '🔵' : '🟠'}</span>
+            <strong>{enemy.name}</strong>
+            <span className="hud-level">LV {enemy.level}</span>
+          </div>
+          <HPBar current={enemy.hp} max={enemy.maxHp} side="right" />
+          <div className="hud-stats">
+            <span>STR {enemy.str}</span>
+            <span>KI {enemy.ki}</span>
+            <span>SPD {enemy.spd}</span>
+          </div>
+          <CCDisplay cc={enemy.cc} maxCc={enemy.maxCc} />
+        </div>
+      </div>
+
+      {/* Battlefield */}
+      <div className="battlefield">
+        <BattleBackground />
+        <div className="battlefield-fighters">
+          <div className={`fighter-container player ${player.elevation}`}>
+            <FighterSprite charId={player.id} pose={playerPose} facing="right" scale={8} flash={flashPlayer} />
+            <div className="fighter-position-tag">{player.elevation.toUpperCase()} / {player.position.toUpperCase()}</div>
+          </div>
+          <div className={`fighter-container enemy ${enemy.elevation}`}>
+            <FighterSprite charId={enemy.id} pose={enemyPose} facing="left" scale={8} flash={flashEnemy} />
+            <div className="fighter-position-tag">{enemy.elevation.toUpperCase()} / {enemy.position.toUpperCase()}</div>
+          </div>
+        </div>
+        {damageNums.map(dn => (
+          <DamageNumber key={dn.id} value={dn.value} type={dn.type} x={dn.x} y={dn.y} />
+        ))}
+      </div>
+
+      {/* Phase Info */}
+      <div className="phase-bar">
+        <div className="phase-info">
+          <span className="turn-label">Turn {turn}</span>
+          <span className="phase-label">{phase === 'position' ? 'CHOOSE POSITION' :
+            phase === 'command' ? 'SELECT COMMAND' :
+            phase === 'cardSelect' ? 'SELECT CARD' :
+            phase === 'resolve' ? 'RESOLVING...' :
+            phase === 'enemyTurn' ? 'ENEMY TURN' : ''}</span>
+        </div>
+      </div>
+
+      {/* Controls */}
+      <div className="battle-controls">
+        {phase === 'position' && (
+          <div className="position-select">
+            <div className="control-label">POSITION</div>
+            <div className="position-pad">
+              <button onClick={() => setPosition('back', 'air')}>AIR / BACK</button>
+              <button onClick={() => setPosition('front', 'air')}>AIR / FRONT</button>
+              <button onClick={() => setPosition('back', 'ground')}>GROUND / BACK</button>
+              <button onClick={() => setPosition('front', 'ground')}>GROUND / FRONT</button>
             </div>
-          </article>
-        ))}
+          </div>
+        )}
+
+        {phase === 'command' && (
+          <div className="command-select">
+            <div className="command-strip">
+              <button onClick={() => selectCommand('LIMIT')} disabled={player.cc < 20}
+                className="cmd-limit">LIMIT</button>
+              <button onClick={() => selectCommand('J')} className="cmd-j">J</button>
+              <button onClick={() => selectCommand('B')} className="cmd-b">B</button>
+              <button onClick={() => selectCommand('C')} className="cmd-c">C</button>
+            </div>
+          </div>
+        )}
+
+        {phase === 'cardSelect' && (
+          <HandComponent cards={hand} selectedIndex={selectedCard} onSelect={selectCard} />
+        )}
+
+        {phase === 'enemyTurn' && (
+          <div className="enemy-turn-overlay">
+            <div className="turn-text">ENEMY TURN</div>
+          </div>
+        )}
+
+        {phase === 'win' && (
+          <div className="result-screen">
+            <div className="result-title victory">VICTORY</div>
+            <FighterSprite charId={player.id} pose="idle" facing="right" scale={6} />
+            <div className="result-info">
+              <div>EXP +184</div>
+              <div>HP {player.hp}/{player.maxHp}</div>
+            </div>
+            <button className="btn-primary" onClick={() => window.location.reload()}>NEW BATTLE</button>
+          </div>
+        )}
+
+        {phase === 'lose' && (
+          <div className="result-screen">
+            <div className="result-title defeat">DEFEAT</div>
+            <div className="result-info">
+              <div>Fell at Turn {turn}</div>
+              <div>HP 0/{player.maxHp}</div>
+            </div>
+            <button className="btn-primary" onClick={() => window.location.reload()}>RETRY</button>
+          </div>
+        )}
+      </div>
+
+      {/* Battle Log */}
+      <div className="battle-log">
+        {log.slice(-3).map((msg, i) => <div key={i} className="log-entry">{msg}</div>)}
       </div>
     </div>
   );
 }
 
-function CharacterEditor({ selectedCharacter, onSelectCharacter }: { selectedCharacter: FighterId; onSelectCharacter: (next: FighterId) => void }) {
+// ─── Menu Screens ─────────────────────────────────────────
+
+function MainMenu({ onNavigate }: { onNavigate: (s: Screen) => void }) {
   return (
-    <div className="menu-panel">
-      <span>Character / Techniques</span>
-      <div className="character-list">
-        {characters.map((character) => (
-          <button className={selectedCharacter === character.id ? "active" : ""} key={character.id} type="button" onClick={() => onSelectCharacter(character.id)}>
-            <img alt="" src={`/assets/sprites/${character.id}_idle.png`} />
-            <strong>{character.name}</strong>
-            <small>LV {character.level} / HP {character.hp} / STR {character.str} / KI {character.ki} / SPD {character.spd}</small>
-            <code>{character.limits.join(" / ")}</code>
-          </button>
-        ))}
+    <div className="menu-screen">
+      <div className="menu-bg" />
+      <div className="menu-content">
+        <h1 className="menu-title">DRAGON BALL Z</h1>
+        <h2 className="menu-subtitle">LEGENDARY SUPER WARRIORS</h2>
+        <nav className="menu-nav">
+          <button onClick={() => onNavigate('story')}>STORY</button>
+          <button onClick={() => onNavigate('battle')}>BATTLE</button>
+          <button onClick={() => onNavigate('deck')}>DECK</button>
+          <button onClick={() => onNavigate('characters')}>CHARACTERS</button>
+          <button onClick={() => onNavigate('cards')}>CARDS</button>
+          <button onClick={() => onNavigate('battle')} className="btn-primary">CONTINUE</button>
+        </nav>
+        <div className="menu-footer">Continue Lv.38</div>
       </div>
     </div>
   );
 }
 
-function CardCollection() {
-  return (
-    <div className="menu-panel">
-      <span>Card Collection / prototype subset</span>
-      <div className="collection-grid">
-        {cards.map((card) => (
-          <article className={`mini-card type-${card.type}`} key={card.id}>
-            <span>#{card.number.toString().padStart(3, "0")}</span>
-            <strong>{card.name}</strong>
-            <small>{card.type} / {card.command} / ATK {card.attack} / ACC {card.accuracy}% / CC {card.cc}</small>
-          </article>
-        ))}
-      </div>
-    </div>
-  );
+// ─── App ──────────────────────────────────────────────────
+
+export default function App() {
+  const [screen, setScreen] = useState<Screen>('main');
+
+  switch (screen) {
+    case 'battle': return <BattleScreen />;
+    default: return <MainMenu onNavigate={setScreen} />;
+  }
 }
 
-function CombatantPanel({ fighter, side }: { fighter: Fighter; side: "player" | "enemy" }) {
-  return (
-    <div className={`combatant-panel ${side}`}>
-      <div>
-        <strong>{fighter.name}</strong>
-        <span>LV {fighter.level}</span>
-      </div>
-      <div className="meter hp"><i style={{ width: `${(fighter.hp / fighter.maxHp) * 100}%` }} /></div>
-      <small>HP {fighter.hp}/{fighter.maxHp}</small>
-      <small>STR {fighter.str} / KI {fighter.ki} / SPD {fighter.spd}</small>
-      <small>{fighter.range.toUpperCase()} / {fighter.height.toUpperCase()} / CC {fighter.cc}</small>
-    </div>
-  );
-}
+// ─── Mount ─────────────────────────────────────────────────
 
-function FighterSprite({ fighter, side, active }: { fighter: Fighter; side: "player" | "enemy"; active: boolean }) {
-  return (
-    <img
-      alt=""
-      className={`fighter-sprite ${side} ${fighter.height} ${fighter.range} ${active ? "active" : ""}`}
-      src={`/assets/sprites/${fighter.id}_${fighter.pose}.png`}
-    />
-  );
-}
-
-const container = document.getElementById("root")! as HTMLElement & {
-  __dbzlswRoot?: ReturnType<typeof createRoot>;
-};
-
-container.__dbzlswRoot ??= createRoot(container);
-container.__dbzlswRoot.render(<App />);
+const root = createRoot(document.getElementById('root')!);
+root.render(<App />);
