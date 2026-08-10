@@ -1,0 +1,1778 @@
+[
+ {
+  "orig": "1",
+  "base": "1",
+  "character": "Gohan",
+  "num": "1",
+  "form": "Kid",
+  "hp": 80,
+  "str": 7,
+  "ki": 12,
+  "spd": 6,
+  "hp_curve": [
+   93,
+   106,
+   119,
+   132
+  ],
+  "str_curve": [
+   12,
+   18,
+   23,
+   28
+  ],
+  "ki_curve": [
+   16,
+   21,
+   25,
+   30
+  ],
+  "spd_curve": [
+   11,
+   16,
+   21,
+   26
+  ],
+  "tier": 1,
+  "allignment": "Z Fighter"
+ },
+ {
+  "orig": "2",
+  "base": "",
+  "character": "Gohan",
+  "num": "2",
+  "form": "Ksuper",
+  "hp": 90,
+  "str": 11,
+  "ki": 14,
+  "spd": 8,
+  "hp_curve": [
+   103,
+   116,
+   129,
+   142
+  ],
+  "str_curve": [
+   16,
+   21,
+   27,
+   32
+  ],
+  "ki_curve": [
+   18,
+   23,
+   27,
+   32
+  ],
+  "spd_curve": [
+   13,
+   18,
+   23,
+   28
+  ],
+  "tier": 2,
+  "allignment": "Z Fighter"
+ },
+ {
+  "orig": "3",
+  "base": "",
+  "character": "Gohan",
+  "num": "3",
+  "form": "KSuper2",
+  "hp": 95,
+  "str": 12,
+  "ki": 15,
+  "spd": 9,
+  "hp_curve": [
+   108,
+   121,
+   134,
+   147
+  ],
+  "str_curve": [
+   18,
+   23,
+   28,
+   33
+  ],
+  "ki_curve": [
+   20,
+   24,
+   28,
+   33
+  ],
+  "spd_curve": [
+   14,
+   19,
+   24,
+   29
+  ],
+  "tier": 3,
+  "allignment": "Z Fighter"
+ },
+ {
+  "orig": "4",
+  "base": "2",
+  "character": "Piccolo",
+  "num": "5",
+  "form": "Normal",
+  "hp": 85,
+  "str": 9,
+  "ki": 14,
+  "spd": 5,
+  "hp_curve": [
+   100,
+   115,
+   130,
+   145
+  ],
+  "str_curve": [
+   15,
+   20,
+   25,
+   30
+  ],
+  "ki_curve": [
+   18,
+   21,
+   25,
+   29
+  ],
+  "spd_curve": [
+   10,
+   15,
+   20,
+   25
+  ],
+  "tier": 1,
+  "allignment": "Z Fighter"
+ },
+ {
+  "orig": "5",
+  "base": "",
+  "character": "Piccolo",
+  "num": "6",
+  "form": "Kami",
+  "hp": 95,
+  "str": 13,
+  "ki": 16,
+  "spd": 7,
+  "hp_curve": [
+   110,
+   125,
+   140,
+   155
+  ],
+  "str_curve": [
+   18,
+   24,
+   29,
+   34
+  ],
+  "ki_curve": [
+   20,
+   24,
+   27,
+   31
+  ],
+  "spd_curve": [
+   12,
+   17,
+   22,
+   27
+  ],
+  "tier": 2,
+  "allignment": "Z Fighter"
+ },
+ {
+  "orig": "6",
+  "base": "",
+  "character": "Piccolo",
+  "num": "4",
+  "form": "Evil",
+  "hp": 105,
+  "str": 17,
+  "ki": 19,
+  "spd": 9,
+  "hp_curve": [
+   120,
+   135,
+   150,
+   165
+  ],
+  "str_curve": [
+   22,
+   27,
+   33,
+   38
+  ],
+  "ki_curve": [
+   23,
+   27,
+   30,
+   34
+  ],
+  "spd_curve": [
+   14,
+   19,
+   24,
+   29
+  ],
+  "tier": 3,
+  "allignment": "Villain"
+ },
+ {
+  "orig": "7",
+  "base": "3",
+  "character": "Krillin",
+  "num": "7",
+  "form": "",
+  "hp": 85,
+  "str": 8,
+  "ki": 12,
+  "spd": 6,
+  "hp_curve": [
+   97,
+   109,
+   121,
+   133
+  ],
+  "str_curve": [
+   12,
+   15,
+   19,
+   23
+  ],
+  "ki_curve": [
+   18,
+   23,
+   28,
+   33
+  ],
+  "spd_curve": [
+   12,
+   18,
+   24,
+   30
+  ],
+  "tier": 1,
+  "allignment": "Z Fighter"
+ },
+ {
+  "orig": "8",
+  "base": "4",
+  "character": "Goku",
+  "num": "8",
+  "form": "Normal",
+  "hp": 90,
+  "str": 9,
+  "ki": 13,
+  "spd": 6,
+  "hp_curve": [
+   103,
+   116,
+   129,
+   142
+  ],
+  "str_curve": [
+   15,
+   20,
+   25,
+   30
+  ],
+  "ki_curve": [
+   17,
+   21,
+   24,
+   28
+  ],
+  "spd_curve": [
+   11,
+   16,
+   21,
+   26
+  ],
+  "tier": 1,
+  "allignment": "Z Fighter"
+ },
+ {
+  "orig": "9",
+  "base": "",
+  "character": "Goku",
+  "num": "9",
+  "form": "Super",
+  "hp": 100,
+  "str": 13,
+  "ki": 15,
+  "spd": 8,
+  "hp_curve": [
+   113,
+   126,
+   139,
+   152
+  ],
+  "str_curve": [
+   18,
+   24,
+   29,
+   34
+  ],
+  "ki_curve": [
+   19,
+   23,
+   26,
+   30
+  ],
+  "spd_curve": [
+   13,
+   18,
+   23,
+   28
+  ],
+  "tier": 2,
+  "allignment": "Z Fighter"
+ },
+ {
+  "orig": "10",
+  "base": "",
+  "character": "Goku",
+  "num": "10",
+  "form": "Super2",
+  "hp": 105,
+  "str": 15,
+  "ki": 17,
+  "spd": 9,
+  "hp_curve": [
+   118,
+   131,
+   144,
+   157
+  ],
+  "str_curve": [
+   20,
+   25,
+   30,
+   36
+  ],
+  "ki_curve": [
+   21,
+   24,
+   28,
+   32
+  ],
+  "spd_curve": [
+   14,
+   19,
+   24,
+   29
+  ],
+  "tier": 3,
+  "allignment": "Z Fighter"
+ },
+ {
+  "orig": "11",
+  "base": "",
+  "character": "Goku",
+  "num": "11",
+  "form": "Super3",
+  "hp": 110,
+  "str": 17,
+  "ki": 18,
+  "spd": 10,
+  "hp_curve": [
+   123,
+   136,
+   149,
+   162
+  ],
+  "str_curve": [
+   22,
+   27,
+   33,
+   38
+  ],
+  "ki_curve": [
+   22,
+   26,
+   30,
+   33
+  ],
+  "spd_curve": [
+   15,
+   20,
+   25,
+   30
+  ],
+  "tier": 3,
+  "allignment": "Z Fighter"
+ },
+ {
+  "orig": "12",
+  "base": "5",
+  "character": "Vegeta",
+  "num": "12",
+  "form": "Normal",
+  "hp": 95,
+  "str": 10,
+  "ki": 12,
+  "spd": 6,
+  "hp_curve": [
+   107,
+   119,
+   131,
+   143
+  ],
+  "str_curve": [
+   16,
+   22,
+   28,
+   34
+  ],
+  "ki_curve": [
+   17,
+   21,
+   26,
+   30
+  ],
+  "spd_curve": [
+   10,
+   14,
+   18,
+   22
+  ],
+  "tier": 1,
+  "allignment": "Z Fighter"
+ },
+ {
+  "orig": "13",
+  "base": "",
+  "character": "Vegeta",
+  "num": "13",
+  "form": "Super",
+  "hp": 105,
+  "str": 14,
+  "ki": 15,
+  "spd": 8,
+  "hp_curve": [
+   117,
+   129,
+   141,
+   153
+  ],
+  "str_curve": [
+   20,
+   26,
+   32,
+   38
+  ],
+  "ki_curve": [
+   19,
+   24,
+   28,
+   33
+  ],
+  "spd_curve": [
+   12,
+   16,
+   20,
+   24
+  ],
+  "tier": 2,
+  "allignment": "Z Fighter"
+ },
+ {
+  "orig": "14",
+  "base": "",
+  "character": "Vegeta",
+  "num": "14",
+  "form": "Prince",
+  "hp": 110,
+  "str": 15,
+  "ki": 16,
+  "spd": 9,
+  "hp_curve": [
+   122,
+   134,
+   146,
+   158
+  ],
+  "str_curve": [
+   21,
+   27,
+   33,
+   39
+  ],
+  "ki_curve": [
+   21,
+   25,
+   30,
+   34
+  ],
+  "spd_curve": [
+   13,
+   17,
+   21,
+   25
+  ],
+  "tier": 3,
+  "allignment": "Z Fighter"
+ },
+ {
+  "orig": "15",
+  "base": "6",
+  "character": "Gohan",
+  "num": "15",
+  "form": "Super",
+  "hp": 90,
+  "str": 9,
+  "ki": 12,
+  "spd": 6,
+  "hp_curve": [
+   102,
+   114,
+   126,
+   138
+  ],
+  "str_curve": [
+   15,
+   20,
+   25,
+   30
+  ],
+  "ki_curve": [
+   16,
+   20,
+   24,
+   27
+  ],
+  "spd_curve": [
+   11,
+   16,
+   21,
+   26
+  ],
+  "tier": 2,
+  "allignment": "Z Fighter"
+ },
+ {
+  "orig": "16",
+  "base": "",
+  "character": "Gohan",
+  "num": "16",
+  "form": "Super2",
+  "hp": 105,
+  "str": 15,
+  "ki": 16,
+  "spd": 9,
+  "hp_curve": [
+   117,
+   129,
+   141,
+   153
+  ],
+  "str_curve": [
+   20,
+   25,
+   30,
+   36
+  ],
+  "ki_curve": [
+   20,
+   24,
+   27,
+   31
+  ],
+  "spd_curve": [
+   14,
+   19,
+   24,
+   29
+  ],
+  "tier": 2,
+  "allignment": "Z Fighter"
+ },
+ {
+  "orig": "17",
+  "base": "",
+  "character": "Gohan",
+  "num": "17",
+  "form": "Warrior",
+  "hp": 110,
+  "str": 17,
+  "ki": 18,
+  "spd": 10,
+  "hp_curve": [
+   122,
+   134,
+   146,
+   158
+  ],
+  "str_curve": [
+   22,
+   27,
+   33,
+   38
+  ],
+  "ki_curve": [
+   21,
+   25,
+   29,
+   33
+  ],
+  "spd_curve": [
+   15,
+   20,
+   25,
+   30
+  ],
+  "tier": 3,
+  "allignment": "Z Fighter"
+ },
+ {
+  "orig": "18",
+  "base": "7",
+  "character": "Trunks",
+  "num": "18",
+  "form": "Normal",
+  "hp": 95,
+  "str": 9,
+  "ki": 13,
+  "spd": 6,
+  "hp_curve": [
+   107,
+   119,
+   131,
+   143
+  ],
+  "str_curve": [
+   14,
+   18,
+   23,
+   27
+  ],
+  "ki_curve": [
+   17,
+   21,
+   24,
+   28
+  ],
+  "spd_curve": [
+   11,
+   16,
+   21,
+   26
+  ],
+  "tier": 1,
+  "allignment": "Z Fighter"
+ },
+ {
+  "orig": "19",
+  "base": "",
+  "character": "Trunks",
+  "num": "19",
+  "form": "Super",
+  "hp": 105,
+  "str": 13,
+  "ki": 15,
+  "spd": 8,
+  "hp_curve": [
+   117,
+   129,
+   141,
+   153
+  ],
+  "str_curve": [
+   18,
+   22,
+   27,
+   31
+  ],
+  "ki_curve": [
+   19,
+   23,
+   27,
+   30
+  ],
+  "spd_curve": [
+   13,
+   18,
+   23,
+   28
+  ],
+  "tier": 2,
+  "allignment": "Z Fighter"
+ },
+ {
+  "orig": "20",
+  "base": "8",
+  "character": "Goten",
+  "num": "20",
+  "form": "Kid",
+  "hp": 90,
+  "str": 6,
+  "ki": 12,
+  "spd": 5,
+  "hp_curve": [
+   101,
+   112,
+   123,
+   134
+  ],
+  "str_curve": [
+   11,
+   15,
+   20,
+   24
+  ],
+  "ki_curve": [
+   16,
+   21,
+   25,
+   30
+  ],
+  "spd_curve": [
+   9,
+   13,
+   17,
+   21
+  ],
+  "tier": 1,
+  "allignment": "Z Fighter"
+ },
+ {
+  "orig": "21",
+  "base": "",
+  "character": "Goten",
+  "num": "21",
+  "form": "Ksuper",
+  "hp": 100,
+  "str": 10,
+  "ki": 14,
+  "spd": 7,
+  "hp_curve": [
+   111,
+   122,
+   133,
+   144
+  ],
+  "str_curve": [
+   15,
+   19,
+   24,
+   28
+  ],
+  "ki_curve": [
+   18,
+   23,
+   27,
+   32
+  ],
+  "spd_curve": [
+   11,
+   15,
+   19,
+   23
+  ],
+  "tier": 2,
+  "allignment": "Z Fighter"
+ },
+ {
+  "orig": "22",
+  "base": "9",
+  "character": "Trunks",
+  "num": "22",
+  "form": "Kid",
+  "hp": 90,
+  "str": 7,
+  "ki": 11,
+  "spd": 5,
+  "hp_curve": [
+   102,
+   114,
+   126,
+   138
+  ],
+  "str_curve": [
+   13,
+   19,
+   25,
+   31
+  ],
+  "ki_curve": [
+   15,
+   18,
+   22,
+   26
+  ],
+  "spd_curve": [
+   10,
+   15,
+   20,
+   25
+  ],
+  "tier": 1,
+  "allignment": "Z Fighter"
+ },
+ {
+  "orig": "23",
+  "base": "",
+  "character": "Trunks",
+  "num": "23",
+  "form": "Ksuper",
+  "hp": 100,
+  "str": 11,
+  "ki": 13,
+  "spd": 7,
+  "hp_curve": [
+   112,
+   124,
+   136,
+   148
+  ],
+  "str_curve": [
+   17,
+   23,
+   29,
+   35
+  ],
+  "ki_curve": [
+   17,
+   21,
+   24,
+   28
+  ],
+  "spd_curve": [
+   12,
+   17,
+   22,
+   27
+  ],
+  "tier": 2,
+  "allignment": "Z Fighter"
+ },
+ {
+  "orig": "24",
+  "base": "10",
+  "character": "Gotenks",
+  "num": "24",
+  "form": "Ksuper",
+  "hp": 90,
+  "str": 8,
+  "ki": 12,
+  "spd": 7,
+  "hp_curve": [
+   105,
+   120,
+   135,
+   150
+  ],
+  "str_curve": [
+   15,
+   21,
+   28,
+   35
+  ],
+  "ki_curve": [
+   17,
+   22,
+   27,
+   33
+  ],
+  "spd_curve": [
+   14,
+   21,
+   28,
+   35
+  ],
+  "tier": 2,
+  "allignment": "Z Fighter"
+ },
+ {
+  "orig": "25",
+  "base": "",
+  "character": "Gotenks",
+  "num": "25",
+  "form": "KSuper3",
+  "hp": 110,
+  "str": 15,
+  "ki": 17,
+  "spd": 11,
+  "hp_curve": [
+   125,
+   140,
+   155,
+   170
+  ],
+  "str_curve": [
+   22,
+   29,
+   36,
+   42
+  ],
+  "ki_curve": [
+   22,
+   27,
+   33,
+   38
+  ],
+  "spd_curve": [
+   18,
+   25,
+   32,
+   39
+  ],
+  "tier": 3,
+  "allignment": "Z Fighter"
+ },
+ {
+  "orig": "26",
+  "base": "11",
+  "character": "Vegito",
+  "num": "26",
+  "form": "Super",
+  "hp": 110,
+  "str": 17,
+  "ki": 18,
+  "spd": 10,
+  "hp_curve": [
+   125,
+   140,
+   155,
+   170
+  ],
+  "str_curve": [
+   24,
+   30,
+   37,
+   44
+  ],
+  "ki_curve": [
+   24,
+   29,
+   34,
+   39
+  ],
+  "spd_curve": [
+   17,
+   24,
+   31,
+   38
+  ],
+  "tier": 3,
+  "allignment": "Z Fighter"
+ },
+ {
+  "orig": "27",
+  "base": "12",
+  "character": "Nappa",
+  "num": "27",
+  "form": "",
+  "hp": 90,
+  "str": 11,
+  "ki": 10,
+  "spd": 6,
+  "hp_curve": [
+   110,
+   130,
+   150,
+   170
+  ],
+  "str_curve": [
+   17,
+   23,
+   29,
+   35
+  ],
+  "ki_curve": [
+   13,
+   16,
+   19,
+   22
+  ],
+  "spd_curve": [
+   10,
+   14,
+   18,
+   22
+  ],
+  "tier": 1,
+  "allignment": "Villain"
+ },
+ {
+  "orig": "28",
+  "base": "13",
+  "character": "Guldo",
+  "num": "28",
+  "form": "",
+  "hp": 90,
+  "str": 6,
+  "ki": 12,
+  "spd": 6,
+  "hp_curve": [
+   101,
+   112,
+   123,
+   134
+  ],
+  "str_curve": [
+   11,
+   15,
+   20,
+   24
+  ],
+  "ki_curve": [
+   16,
+   20,
+   24,
+   27
+  ],
+  "spd_curve": [
+   10,
+   14,
+   18,
+   22
+  ],
+  "tier": 1,
+  "allignment": "Villain"
+ },
+ {
+  "orig": "29",
+  "base": "14",
+  "character": "Recoome",
+  "num": "29",
+  "form": "",
+  "hp": 105,
+  "str": 12,
+  "ki": 9,
+  "spd": 7,
+  "hp_curve": [
+   125,
+   145,
+   165,
+   185
+  ],
+  "str_curve": [
+   18,
+   25,
+   32,
+   39
+  ],
+  "ki_curve": [
+   12,
+   15,
+   18,
+   21
+  ],
+  "spd_curve": [
+   11,
+   15,
+   19,
+   23
+  ],
+  "tier": 1,
+  "allignment": "Villain"
+ },
+ {
+  "orig": "30",
+  "base": "15",
+  "character": "Jeice",
+  "num": "30",
+  "form": "",
+  "hp": 100,
+  "str": 9,
+  "ki": 13,
+  "spd": 8,
+  "hp_curve": [
+   112,
+   124,
+   136,
+   148
+  ],
+  "str_curve": [
+   13,
+   18,
+   22,
+   27
+  ],
+  "ki_curve": [
+   18,
+   22,
+   27,
+   31
+  ],
+  "spd_curve": [
+   13,
+   18,
+   23,
+   28
+  ],
+  "tier": 1,
+  "allignment": "Villain"
+ },
+ {
+  "orig": "31",
+  "base": "16",
+  "character": "Burter",
+  "num": "31",
+  "form": "",
+  "hp": 95,
+  "str": 10,
+  "ki": 12,
+  "spd": 12,
+  "hp_curve": [
+   108,
+   121,
+   134,
+   147
+  ],
+  "str_curve": [
+   14,
+   18,
+   21,
+   25
+  ],
+  "ki_curve": [
+   16,
+   20,
+   24,
+   27
+  ],
+  "spd_curve": [
+   19,
+   26,
+   33,
+   40
+  ],
+  "tier": 1,
+  "allignment": "Villain"
+ },
+ {
+  "orig": "32",
+  "base": "17",
+  "character": "Ginyu",
+  "num": "32",
+  "form": "Normal",
+  "hp": 100,
+  "str": 11,
+  "ki": 14,
+  "spd": 9,
+  "hp_curve": [
+   113,
+   126,
+   139,
+   152
+  ],
+  "str_curve": [
+   16,
+   21,
+   27,
+   32
+  ],
+  "ki_curve": [
+   18,
+   21,
+   25,
+   29
+  ],
+  "spd_curve": [
+   14,
+   19,
+   24,
+   29
+  ],
+  "tier": 1,
+  "allignment": "Villain"
+ },
+ {
+  "orig": "33",
+  "base": "",
+  "character": "Ginyu",
+  "num": "48",
+  "form": "Goku",
+  "hp": 100,
+  "str": 15,
+  "ki": 14,
+  "spd": 9,
+  "hp_curve": [
+   113,
+   126,
+   139,
+   152
+  ],
+  "str_curve": [
+   20,
+   25,
+   30,
+   36
+  ],
+  "ki_curve": [
+   18,
+   21,
+   25,
+   29
+  ],
+  "spd_curve": [
+   14,
+   19,
+   24,
+   29
+  ],
+  "tier": 2,
+  "allignment": "Villain"
+ },
+ {
+  "orig": "34",
+  "base": "18",
+  "character": "Frieza",
+  "num": "33",
+  "form": "",
+  "hp": 100,
+  "str": 12,
+  "ki": 13,
+  "spd": 9,
+  "hp_curve": [
+   115,
+   130,
+   145,
+   160
+  ],
+  "str_curve": [
+   18,
+   24,
+   30,
+   36
+  ],
+  "ki_curve": [
+   18,
+   22,
+   27,
+   31
+  ],
+  "spd_curve": [
+   15,
+   21,
+   27,
+   33
+  ],
+  "tier": 2,
+  "allignment": "Villain"
+ },
+ {
+  "orig": "35",
+  "base": "19",
+  "character": "No 16",
+  "num": "34",
+  "form": "",
+  "hp": 110,
+  "str": 12,
+  "ki": 12,
+  "spd": 7,
+  "hp_curve": [
+   125,
+   140,
+   155,
+   170
+  ],
+  "str_curve": [
+   18,
+   24,
+   30,
+   36
+  ],
+  "ki_curve": [
+   15,
+   18,
+   21,
+   24
+  ],
+  "spd_curve": [
+   11,
+   15,
+   19,
+   23
+  ],
+  "tier": 1,
+  "allignment": "Z Fighter"
+ },
+ {
+  "orig": "36",
+  "base": "20",
+  "character": "No 17",
+  "num": "35",
+  "form": "",
+  "hp": 100,
+  "str": 12,
+  "ki": 13,
+  "spd": 9,
+  "hp_curve": [
+   115,
+   130,
+   145,
+   160
+  ],
+  "str_curve": [
+   17,
+   22,
+   27,
+   33
+  ],
+  "ki_curve": [
+   17,
+   21,
+   24,
+   28
+  ],
+  "spd_curve": [
+   14,
+   19,
+   24,
+   29
+  ],
+  "tier": 1,
+  "allignment": "Neutral"
+ },
+ {
+  "orig": "37",
+  "base": "21",
+  "character": "No 18",
+  "num": "36",
+  "form": "",
+  "hp": 100,
+  "str": 10,
+  "ki": 15,
+  "spd": 9,
+  "hp_curve": [
+   113,
+   126,
+   139,
+   152
+  ],
+  "str_curve": [
+   15,
+   19,
+   24,
+   28
+  ],
+  "ki_curve": [
+   19,
+   24,
+   28,
+   33
+  ],
+  "spd_curve": [
+   15,
+   21,
+   27,
+   33
+  ],
+  "tier": 1,
+  "allignment": "Z Fighter"
+ },
+ {
+  "orig": "38",
+  "base": "22",
+  "character": "No 19",
+  "num": "37",
+  "form": "",
+  "hp": 80,
+  "str": 9,
+  "ki": 12,
+  "spd": 6,
+  "hp_curve": [
+   92,
+   104,
+   116,
+   128
+  ],
+  "str_curve": [
+   12,
+   16,
+   20,
+   24
+  ],
+  "ki_curve": [
+   15,
+   18,
+   21,
+   24
+  ],
+  "spd_curve": [
+   10,
+   14,
+   18,
+   22
+  ],
+  "tier": 1,
+  "allignment": "Villain"
+ },
+ {
+  "orig": "39",
+  "base": "23",
+  "character": "No 20",
+  "num": "38",
+  "form": "",
+  "hp": 85,
+  "str": 9,
+  "ki": 12,
+  "spd": 6,
+  "hp_curve": [
+   96,
+   107,
+   118,
+   129
+  ],
+  "str_curve": [
+   12,
+   16,
+   20,
+   24
+  ],
+  "ki_curve": [
+   15,
+   19,
+   23,
+   27
+  ],
+  "spd_curve": [
+   11,
+   15,
+   20,
+   25
+  ],
+  "tier": 1,
+  "allignment": "Villain"
+ },
+ {
+  "orig": "40",
+  "base": "24",
+  "character": "Cell",
+  "num": "39",
+  "form": "First",
+  "hp": 90,
+  "str": 10,
+  "ki": 14,
+  "spd": 7,
+  "hp_curve": [
+   103,
+   116,
+   129,
+   142
+  ],
+  "str_curve": [
+   15,
+   21,
+   26,
+   31
+  ],
+  "ki_curve": [
+   18,
+   21,
+   25,
+   29
+  ],
+  "spd_curve": [
+   12,
+   17,
+   22,
+   27
+  ],
+  "tier": 1,
+  "allignment": "Villain"
+ },
+ {
+  "orig": "41",
+  "base": "",
+  "character": "Cell",
+  "num": "40",
+  "form": "Second",
+  "hp": 100,
+  "str": 14,
+  "ki": 16,
+  "spd": 9,
+  "hp_curve": [
+   113,
+   126,
+   139,
+   152
+  ],
+  "str_curve": [
+   19,
+   24,
+   30,
+   35
+  ],
+  "ki_curve": [
+   20,
+   24,
+   27,
+   31
+  ],
+  "spd_curve": [
+   14,
+   19,
+   24,
+   29
+  ],
+  "tier": 2,
+  "allignment": "Villain"
+ },
+ {
+  "orig": "42",
+  "base": "",
+  "character": "Cell",
+  "num": "41",
+  "form": "Perfect",
+  "hp": 105,
+  "str": 15,
+  "ki": 18,
+  "spd": 10,
+  "hp_curve": [
+   118,
+   131,
+   144,
+   157
+  ],
+  "str_curve": [
+   21,
+   26,
+   31,
+   36
+  ],
+  "ki_curve": [
+   21,
+   25,
+   29,
+   33
+  ],
+  "spd_curve": [
+   15,
+   20,
+   25,
+   30
+  ],
+  "tier": 3,
+  "allignment": "Villain"
+ },
+ {
+  "orig": "43",
+  "base": "25",
+  "character": "Cell Jr",
+  "num": "42",
+  "form": "",
+  "hp": 80,
+  "str": 8,
+  "ki": 13,
+  "spd": 8,
+  "hp_curve": [
+   92,
+   104,
+   116,
+   128
+  ],
+  "str_curve": [
+   14,
+   20,
+   26,
+   32
+  ],
+  "ki_curve": [
+   17,
+   21,
+   24,
+   28
+  ],
+  "spd_curve": [
+   13,
+   18,
+   23,
+   28
+  ],
+  "tier": 1,
+  "allignment": "Villain"
+ },
+ {
+  "orig": "44",
+  "base": "26",
+  "character": "Buu",
+  "num": "43",
+  "form": "Fat",
+  "hp": 95,
+  "str": 11,
+  "ki": 12,
+  "spd": 8,
+  "hp_curve": [
+   108,
+   121,
+   134,
+   147
+  ],
+  "str_curve": [
+   15,
+   20,
+   24,
+   29
+  ],
+  "ki_curve": [
+   15,
+   19,
+   23,
+   27
+  ],
+  "spd_curve": [
+   12,
+   16,
+   20,
+   24
+  ],
+  "tier": 2,
+  "allignment": "Z Fighter"
+ },
+ {
+  "orig": "45",
+  "base": "27",
+  "character": "Buu",
+  "num": "44",
+  "form": "Evil",
+  "hp": 100,
+  "str": 10,
+  "ki": 11,
+  "spd": 7,
+  "hp_curve": [
+   113,
+   126,
+   139,
+   152
+  ],
+  "str_curve": [
+   15,
+   19,
+   24,
+   28
+  ],
+  "ki_curve": [
+   15,
+   18,
+   22,
+   26
+  ],
+  "spd_curve": [
+   11,
+   15,
+   19,
+   23
+  ],
+  "tier": 2,
+  "allignment": "Villain"
+ },
+ {
+  "orig": "46",
+  "base": "",
+  "character": "Buu",
+  "num": "45",
+  "form": "Gotenks",
+  "hp": 115,
+  "str": 15,
+  "ki": 18,
+  "spd": 11,
+  "hp_curve": [
+   128,
+   141,
+   154,
+   167
+  ],
+  "str_curve": [
+   19,
+   24,
+   28,
+   33
+  ],
+  "ki_curve": [
+   22,
+   26,
+   30,
+   33
+  ],
+  "spd_curve": [
+   15,
+   19,
+   23,
+   27
+  ],
+  "tier": 3,
+  "allignment": "Villain"
+ },
+ {
+  "orig": "47",
+  "base": "",
+  "character": "Buu",
+  "num": "46",
+  "form": "Gohan",
+  "hp": 120,
+  "str": 18,
+  "ki": 16,
+  "spd": 10,
+  "hp_curve": [
+   133,
+   146,
+   159,
+   172
+  ],
+  "str_curve": [
+   22,
+   27,
+   31,
+   36
+  ],
+  "ki_curve": [
+   20,
+   24,
+   27,
+   31
+  ],
+  "spd_curve": [
+   14,
+   18,
+   22,
+   26
+  ],
+  "tier": 3,
+  "allignment": "Villain"
+ },
+ {
+  "orig": "48",
+  "base": "",
+  "character": "Buu",
+  "num": "47",
+  "form": "Normal",
+  "hp": 105,
+  "str": 14,
+  "ki": 15,
+  "spd": 17,
+  "hp_curve": [
+   118,
+   131,
+   144,
+   157
+  ],
+  "str_curve": [
+   18,
+   23,
+   27,
+   32
+  ],
+  "ki_curve": [
+   18,
+   22,
+   26,
+   30
+  ],
+  "spd_curve": [
+   21,
+   25,
+   29,
+   33
+  ],
+  "tier": 3,
+  "allignment": "Neutral"
+ }
+]

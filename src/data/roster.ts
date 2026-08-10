@@ -4,15 +4,19 @@
 // Stats aproximados por tier, sprite sheets auténticos
 // ═══════════════════════════════════════════════════════════
 
+export interface StatCurves { hp: number[]; str: number[]; ki: number[]; spd: number[]; }
+
 export interface FormDef {
   id: string;              // id único de la forma
   character: string;       // personaje padre
   form: string;            // nombre de la forma (Base, SSJ, ...)
-  hp: number;
+  hp: number;              // stats BASE reales de la ROM (nivel 1)
   str: number;
   ki: number;
   spd: number;
-  sheet: string;           // sprite sheet auténtico
+  tier: number;            // tier real del GBC (1=base, 2=super, 3=final)
+  curves?: StatCurves;     // crecimiento real por cuartos (niv 25/50/75/100)
+  sheet?: string;          // sprite sheet auténtico (opcional: fallback procedural)
   battleId?: 'goku' | 'vegeta';  // sprites animados extraídos disponibles
   portrait?: string;       // ruta al retrato (mapeado)
 }
@@ -28,78 +32,52 @@ export interface CharacterDef {
 // ─── Formas (48) ──────────────────────────────────────────
 
 export const FORMS: Record<string, FormDef> = {
-  // Goku — 4 formas
-  'goku_base': { id: 'goku_base', character: 'goku', form: 'Base', hp: 312, str: 42, ki: 47, spd: 39, sheet: 'goku.png', battleId: 'goku', portrait: 'portraits/goku.png' },
-  'goku_ssj': { id: 'goku_ssj', character: 'goku', form: 'SSJ', hp: 350, str: 52, ki: 56, spd: 44, sheet: 'goku-super-saiyan.png', portrait: 'portraits/goku_ssj.png' },
-  'goku_ssj2': { id: 'goku_ssj2', character: 'goku', form: 'SSJ2', hp: 390, str: 62, ki: 66, spd: 49, sheet: 'goku-super-saiyan-2.png' },
-  'goku_ssj3': { id: 'goku_ssj3', character: 'goku', form: 'SSJ3', hp: 440, str: 72, ki: 76, spd: 55, sheet: 'goku-super-saiyan-3.png' },
-
-  // Vegeta — 3 formas
-  'vegeta_base': { id: 'vegeta_base', character: 'vegeta', form: 'Base', hp: 304, str: 45, ki: 44, spd: 41, sheet: 'vegeta.png', battleId: 'vegeta', portrait: 'portraits/vegeta.png' },
-  'vegeta_ssj': { id: 'vegeta_ssj', character: 'vegeta', form: 'SSJ', hp: 342, str: 54, ki: 53, spd: 46, sheet: 'vegeta-super-saiyan-majin.png' },
-  'vegeta_majin': { id: 'vegeta_majin', character: 'vegeta', form: 'Majin', hp: 370, str: 60, ki: 60, spd: 48, sheet: 'vegeta-super-saiyan-majin.png' },
-
-  // Gohan — 5 formas
-  'gohan_young': { id: 'gohan_young', character: 'gohan', form: 'Young', hp: 280, str: 34, ki: 40, spd: 36, sheet: 'young-gohan.png' },
-  'gohan_young_ssj': { id: 'gohan_young_ssj', character: 'gohan', form: 'Young SSJ', hp: 320, str: 44, ki: 50, spd: 41, sheet: 'young-gohan-super-saiyan.png' },
-  'gohan_young_ssj2': { id: 'gohan_young_ssj2', character: 'gohan', form: 'SSJ2', hp: 360, str: 54, ki: 60, spd: 46, sheet: 'young-gohan-super-saiyan-2.png' },
-  'gohan_teen_ssj': { id: 'gohan_teen_ssj', character: 'gohan', form: 'Teen SSJ', hp: 380, str: 58, ki: 62, spd: 47, sheet: 'gohan-super-saiyan-1-2.png' },
-  'gohan_ultimate': { id: 'gohan_ultimate', character: 'gohan', form: 'Ultimate', hp: 430, str: 68, ki: 72, spd: 52, sheet: 'gohan-ultimate.png' },
-
-  // Trunks — 3 formas
-  'trunks_kid': { id: 'trunks_kid', character: 'trunks', form: 'Kid', hp: 270, str: 32, ki: 36, spd: 38, sheet: 'trunks.png' },
-  'trunks_future': { id: 'trunks_future', character: 'trunks', form: 'Future', hp: 330, str: 46, ki: 44, spd: 43, sheet: 'future-trunks.png' },
-  'trunks_ssj': { id: 'trunks_ssj', character: 'trunks', form: 'SSJ', hp: 370, str: 55, ki: 52, spd: 47, sheet: 'trunks-super-saiyan.png' },
-
-  // Goten — 2 formas
-  'goten_base': { id: 'goten_base', character: 'goten', form: 'Base', hp: 260, str: 30, ki: 34, spd: 37, sheet: 'goten.png' },
-  'goten_ssj': { id: 'goten_ssj', character: 'goten', form: 'SSJ', hp: 310, str: 40, ki: 44, spd: 42, sheet: 'goten-super-saiyan.png' },
-
-  // Gotenks — 2 formas
-  'gotenks_ssj': { id: 'gotenks_ssj', character: 'gotenks', form: 'SSJ', hp: 400, str: 60, ki: 58, spd: 50, sheet: 'gotenks-super-saiyan.png' },
-  'gotenks_ssj3': { id: 'gotenks_ssj3', character: 'gotenks', form: 'SSJ3', hp: 460, str: 70, ki: 68, spd: 56, sheet: 'gotenks-super-saiyan-3.png' },
-
-  // Piccolo — 2 formas
-  'piccolo_base': { id: 'piccolo_base', character: 'piccolo', form: 'Base', hp: 300, str: 40, ki: 45, spd: 35, sheet: 'piccolo.png' },
-  'piccolo_kami': { id: 'piccolo_kami', character: 'piccolo', form: 'Kami', hp: 340, str: 48, ki: 52, spd: 40, sheet: 'piccolo.png' },
-
-  // Krillin — 1 forma
-  'krillin_base': { id: 'krillin_base', character: 'krillin', form: 'Base', hp: 250, str: 30, ki: 35, spd: 38, sheet: 'krillin.png' },
-
-  // Frieza — 2 formas
-  'frieza_final': { id: 'frieza_final', character: 'frieza', form: 'Final', hp: 380, str: 56, ki: 58, spd: 48, sheet: 'frieza.png' },
-  'frieza_100': { id: 'frieza_100', character: 'frieza', form: '100%', hp: 420, str: 66, ki: 66, spd: 52, sheet: 'frieza.png' },
-
-  // Cell — 3 formas
-  'cell_imperfect': { id: 'cell_imperfect', character: 'cell', form: 'Imperfect', hp: 340, str: 48, ki: 46, spd: 42, sheet: 'cell-imperfect-form.png' },
-  'cell_semi': { id: 'cell_semi', character: 'cell', form: 'Semi', hp: 380, str: 56, ki: 54, spd: 46, sheet: 'cell-semi-perfect-form.png' },
-  'cell_perfect': { id: 'cell_perfect', character: 'cell', form: 'Perfect', hp: 440, str: 68, ki: 66, spd: 54, sheet: 'cell-perfect.png' },
-  'cell_jr': { id: 'cell_jr', character: 'cell_jr', form: 'Jr.', hp: 320, str: 44, ki: 42, spd: 44, sheet: 'cell-jr.png' },
-
-  // Androides — 5 formas
-  'android_16': { id: 'android_16', character: 'android_16', form: '16', hp: 420, str: 60, ki: 30, spd: 38, sheet: 'android-16.png' },
-  'android_17': { id: 'android_17', character: 'android_17', form: '17', hp: 380, str: 56, ki: 50, spd: 48, sheet: 'android-17.png' },
-  'android_18': { id: 'android_18', character: 'android_18', form: '18', hp: 360, str: 52, ki: 48, spd: 46, sheet: 'android-18.png' },
-  'android_19': { id: 'android_19', character: 'android_19', form: '19', hp: 330, str: 48, ki: 40, spd: 36, sheet: 'android-19.png' },
-  'android_20': { id: 'android_20', character: 'android_20', form: 'Dr. Gero', hp: 300, str: 40, ki: 45, spd: 34, sheet: 'android-20-dr-gero.png' },
-
-  // Ginyu Force — 6 formas
-  'ginyu': { id: 'ginyu', character: 'ginyu', form: 'Ginyu', hp: 340, str: 50, ki: 46, spd: 42, sheet: 'ginyu.png' },
-  'ginyu_goku': { id: 'ginyu_goku', character: 'ginyu', form: 'Goku Body', hp: 350, str: 50, ki: 48, spd: 42, sheet: 'ginyu-gokus-body.png' },
-  'recoome': { id: 'recoome', character: 'recoome', form: 'Recoome', hp: 380, str: 55, ki: 30, spd: 30, sheet: 'recoome.png' },
-  'guldo': { id: 'guldo', character: 'guldo', form: 'Guldo', hp: 240, str: 28, ki: 38, spd: 28, sheet: 'guldo.png' },
-  'jeice': { id: 'jeice', character: 'jeice', form: 'Jeice', hp: 300, str: 42, ki: 40, spd: 42, sheet: 'jeice.png' },
-  'burter': { id: 'burter', character: 'burter', form: 'Burter', hp: 290, str: 40, ki: 36, spd: 50, sheet: 'burter.png' },
-
-  // Nappa — 1 forma
-  'nappa': { id: 'nappa', character: 'nappa', form: 'Nappa', hp: 360, str: 55, ki: 25, spd: 26, sheet: 'nappa.png' },
-
-  // Buu — 5 formas
-  'buu_base': { id: 'buu_base', character: 'buu', form: 'Buu', hp: 400, str: 55, ki: 55, spd: 42, sheet: 'buu.png' },
-  'buu_super': { id: 'buu_super', character: 'buu', form: 'Super Buu', hp: 450, str: 64, ki: 62, spd: 48, sheet: 'super-buu.png' },
-  'buu_gotenks': { id: 'buu_gotenks', character: 'buu', form: 'Buu/Gotenks', hp: 500, str: 70, ki: 68, spd: 50, sheet: 'buu-gotenks.png' },
-  'buu_gohan': { id: 'buu_gohan', character: 'buu', form: 'Buu/Gohan', hp: 550, str: 78, ki: 76, spd: 52, sheet: 'buu-gohan.png' },
-  'buu_kid': { id: 'buu_kid', character: 'buu', form: 'Kid Buu', hp: 520, str: 76, ki: 74, spd: 60, sheet: 'kid-buu.png' },
+  'goku_base': { id: 'goku_base', character: 'goku', form: 'Normal', hp: 90, str: 9, ki: 13, spd: 6, tier: 1, curves: { hp: [103, 116, 129, 142], str: [15, 20, 25, 30], ki: [17, 21, 24, 28], spd: [11, 16, 21, 26] }, sheet: 'goku.png', battleId: 'goku', portrait: 'portraits/goku.png' },
+  'goku_ssj': { id: 'goku_ssj', character: 'goku', form: 'Super', hp: 100, str: 13, ki: 15, spd: 8, tier: 2, curves: { hp: [113, 126, 139, 152], str: [18, 24, 29, 34], ki: [19, 23, 26, 30], spd: [13, 18, 23, 28] }, sheet: 'goku-super-saiyan.png', portrait: 'portraits/goku_ssj.png' },
+  'goku_ssj2': { id: 'goku_ssj2', character: 'goku', form: 'Super2', hp: 105, str: 15, ki: 17, spd: 9, tier: 3, curves: { hp: [118, 131, 144, 157], str: [20, 25, 30, 36], ki: [21, 24, 28, 32], spd: [14, 19, 24, 29] }, sheet: 'goku-super-saiyan-2.png' },
+  'goku_ssj3': { id: 'goku_ssj3', character: 'goku', form: 'Super3', hp: 110, str: 17, ki: 18, spd: 10, tier: 3, curves: { hp: [123, 136, 149, 162], str: [22, 27, 33, 38], ki: [22, 26, 30, 33], spd: [15, 20, 25, 30] }, sheet: 'goku-super-saiyan-3.png' },
+  'vegeta_base': { id: 'vegeta_base', character: 'vegeta', form: 'Normal', hp: 95, str: 10, ki: 12, spd: 6, tier: 1, curves: { hp: [107, 119, 131, 143], str: [16, 22, 28, 34], ki: [17, 21, 26, 30], spd: [10, 14, 18, 22] }, sheet: 'vegeta.png', battleId: 'vegeta', portrait: 'portraits/vegeta.png' },
+  'vegeta_ssj': { id: 'vegeta_ssj', character: 'vegeta', form: 'Super', hp: 105, str: 14, ki: 15, spd: 8, tier: 2, curves: { hp: [117, 129, 141, 153], str: [20, 26, 32, 38], ki: [19, 24, 28, 33], spd: [12, 16, 20, 24] }, sheet: 'vegeta-super-saiyan-majin.png' },
+  'vegeta_majin': { id: 'vegeta_majin', character: 'vegeta', form: 'Prince', hp: 110, str: 15, ki: 16, spd: 9, tier: 3, curves: { hp: [122, 134, 146, 158], str: [21, 27, 33, 39], ki: [21, 25, 30, 34], spd: [13, 17, 21, 25] }, sheet: 'vegeta-super-saiyan-majin.png' },
+  'gohan_young': { id: 'gohan_young', character: 'gohan', form: 'Kid', hp: 80, str: 7, ki: 12, spd: 6, tier: 1, curves: { hp: [93, 106, 119, 132], str: [12, 18, 23, 28], ki: [16, 21, 25, 30], spd: [11, 16, 21, 26] }, sheet: 'young-gohan.png' },
+  'gohan_young_ssj': { id: 'gohan_young_ssj', character: 'gohan', form: 'Ksuper', hp: 90, str: 11, ki: 14, spd: 8, tier: 2, curves: { hp: [103, 116, 129, 142], str: [16, 21, 27, 32], ki: [18, 23, 27, 32], spd: [13, 18, 23, 28] }, sheet: 'young-gohan-super-saiyan.png' },
+  'gohan_young_ssj2': { id: 'gohan_young_ssj2', character: 'gohan', form: 'KSuper2', hp: 95, str: 12, ki: 15, spd: 9, tier: 3, curves: { hp: [108, 121, 134, 147], str: [18, 23, 28, 33], ki: [20, 24, 28, 33], spd: [14, 19, 24, 29] }, sheet: 'young-gohan-super-saiyan-2.png' },
+  'gohan_teen_ssj': { id: 'gohan_teen_ssj', character: 'gohan', form: 'Super', hp: 90, str: 9, ki: 12, spd: 6, tier: 2, curves: { hp: [102, 114, 126, 138], str: [15, 20, 25, 30], ki: [16, 20, 24, 27], spd: [11, 16, 21, 26] }, sheet: 'gohan-super-saiyan-1-2.png' },
+  'gohan_ultimate': { id: 'gohan_ultimate', character: 'gohan', form: 'Warrior', hp: 110, str: 17, ki: 18, spd: 10, tier: 3, curves: { hp: [122, 134, 146, 158], str: [22, 27, 33, 38], ki: [21, 25, 29, 33], spd: [15, 20, 25, 30] }, sheet: 'gohan-ultimate.png' },
+  'trunks_kid': { id: 'trunks_kid', character: 'trunks', form: 'Kid', hp: 90, str: 7, ki: 11, spd: 5, tier: 1, curves: { hp: [102, 114, 126, 138], str: [13, 19, 25, 31], ki: [15, 18, 22, 26], spd: [10, 15, 20, 25] }, sheet: 'trunks.png' },
+  'trunks_future': { id: 'trunks_future', character: 'trunks', form: 'Normal', hp: 95, str: 9, ki: 13, spd: 6, tier: 1, curves: { hp: [107, 119, 131, 143], str: [14, 18, 23, 27], ki: [17, 21, 24, 28], spd: [11, 16, 21, 26] }, sheet: 'future-trunks.png' },
+  'trunks_ssj': { id: 'trunks_ssj', character: 'trunks', form: 'Super', hp: 105, str: 13, ki: 15, spd: 8, tier: 2, curves: { hp: [117, 129, 141, 153], str: [18, 22, 27, 31], ki: [19, 23, 27, 30], spd: [13, 18, 23, 28] }, sheet: 'trunks-super-saiyan.png' },
+  'goten_base': { id: 'goten_base', character: 'goten', form: 'Kid', hp: 90, str: 6, ki: 12, spd: 5, tier: 1, curves: { hp: [101, 112, 123, 134], str: [11, 15, 20, 24], ki: [16, 21, 25, 30], spd: [9, 13, 17, 21] }, sheet: 'goten.png' },
+  'goten_ssj': { id: 'goten_ssj', character: 'goten', form: 'Ksuper', hp: 100, str: 10, ki: 14, spd: 7, tier: 2, curves: { hp: [111, 122, 133, 144], str: [15, 19, 24, 28], ki: [18, 23, 27, 32], spd: [11, 15, 19, 23] }, sheet: 'goten-super-saiyan.png' },
+  'gotenks_ssj': { id: 'gotenks_ssj', character: 'gotenks', form: 'Ksuper', hp: 90, str: 8, ki: 12, spd: 7, tier: 2, curves: { hp: [105, 120, 135, 150], str: [15, 21, 28, 35], ki: [17, 22, 27, 33], spd: [14, 21, 28, 35] }, sheet: 'gotenks-super-saiyan.png' },
+  'gotenks_ssj3': { id: 'gotenks_ssj3', character: 'gotenks', form: 'KSuper3', hp: 110, str: 15, ki: 17, spd: 11, tier: 3, curves: { hp: [125, 140, 155, 170], str: [22, 29, 36, 42], ki: [22, 27, 33, 38], spd: [18, 25, 32, 39] }, sheet: 'gotenks-super-saiyan-3.png' },
+  'piccolo_base': { id: 'piccolo_base', character: 'piccolo', form: 'Normal', hp: 85, str: 9, ki: 14, spd: 5, tier: 1, curves: { hp: [100, 115, 130, 145], str: [15, 20, 25, 30], ki: [18, 21, 25, 29], spd: [10, 15, 20, 25] }, sheet: 'piccolo.png' },
+  'piccolo_kami': { id: 'piccolo_kami', character: 'piccolo', form: 'Kami', hp: 95, str: 13, ki: 16, spd: 7, tier: 2, curves: { hp: [110, 125, 140, 155], str: [18, 24, 29, 34], ki: [20, 24, 27, 31], spd: [12, 17, 22, 27] }, sheet: 'piccolo.png' },
+  'krillin_base': { id: 'krillin_base', character: 'krillin', form: 'Base', hp: 85, str: 8, ki: 12, spd: 6, tier: 1, curves: { hp: [97, 109, 121, 133], str: [12, 15, 19, 23], ki: [18, 23, 28, 33], spd: [12, 18, 24, 30] }, sheet: 'krillin.png' },
+  'frieza_final': { id: 'frieza_final', character: 'frieza', form: 'Base', hp: 100, str: 12, ki: 13, spd: 9, tier: 2, curves: { hp: [115, 130, 145, 160], str: [18, 24, 30, 36], ki: [18, 22, 27, 31], spd: [15, 21, 27, 33] }, sheet: 'frieza.png' },
+  'frieza_100': { id: 'frieza_100', character: 'frieza', form: 'Base', hp: 100, str: 12, ki: 13, spd: 9, tier: 2, curves: { hp: [115, 130, 145, 160], str: [18, 24, 30, 36], ki: [18, 22, 27, 31], spd: [15, 21, 27, 33] }, sheet: 'frieza.png' },
+  'cell_imperfect': { id: 'cell_imperfect', character: 'cell', form: 'First', hp: 90, str: 10, ki: 14, spd: 7, tier: 1, curves: { hp: [103, 116, 129, 142], str: [15, 21, 26, 31], ki: [18, 21, 25, 29], spd: [12, 17, 22, 27] }, sheet: 'cell-imperfect-form.png' },
+  'cell_semi': { id: 'cell_semi', character: 'cell', form: 'Second', hp: 100, str: 14, ki: 16, spd: 9, tier: 2, curves: { hp: [113, 126, 139, 152], str: [19, 24, 30, 35], ki: [20, 24, 27, 31], spd: [14, 19, 24, 29] }, sheet: 'cell-semi-perfect-form.png' },
+  'cell_perfect': { id: 'cell_perfect', character: 'cell', form: 'Perfect', hp: 105, str: 15, ki: 18, spd: 10, tier: 3, curves: { hp: [118, 131, 144, 157], str: [21, 26, 31, 36], ki: [21, 25, 29, 33], spd: [15, 20, 25, 30] }, sheet: 'cell-perfect.png' },
+  'cell_jr': { id: 'cell_jr', character: 'celljr', form: 'Base', hp: 80, str: 8, ki: 13, spd: 8, tier: 1, curves: { hp: [92, 104, 116, 128], str: [14, 20, 26, 32], ki: [17, 21, 24, 28], spd: [13, 18, 23, 28] }, sheet: 'cell-jr.png' },
+  'android_16': { id: 'android_16', character: 'no16', form: 'Base', hp: 110, str: 12, ki: 12, spd: 7, tier: 1, curves: { hp: [125, 140, 155, 170], str: [18, 24, 30, 36], ki: [15, 18, 21, 24], spd: [11, 15, 19, 23] }, sheet: 'android-16.png' },
+  'android_17': { id: 'android_17', character: 'no17', form: 'Base', hp: 100, str: 12, ki: 13, spd: 9, tier: 1, curves: { hp: [115, 130, 145, 160], str: [17, 22, 27, 33], ki: [17, 21, 24, 28], spd: [14, 19, 24, 29] }, sheet: 'android-17.png' },
+  'android_18': { id: 'android_18', character: 'no18', form: 'Base', hp: 100, str: 10, ki: 15, spd: 9, tier: 1, curves: { hp: [113, 126, 139, 152], str: [15, 19, 24, 28], ki: [19, 24, 28, 33], spd: [15, 21, 27, 33] }, sheet: 'android-18.png' },
+  'android_19': { id: 'android_19', character: 'no19', form: 'Base', hp: 80, str: 9, ki: 12, spd: 6, tier: 1, curves: { hp: [92, 104, 116, 128], str: [12, 16, 20, 24], ki: [15, 18, 21, 24], spd: [10, 14, 18, 22] }, sheet: 'android-19.png' },
+  'android_20': { id: 'android_20', character: 'no20', form: 'Base', hp: 85, str: 9, ki: 12, spd: 6, tier: 1, curves: { hp: [96, 107, 118, 129], str: [12, 16, 20, 24], ki: [15, 19, 23, 27], spd: [11, 15, 20, 25] }, sheet: 'android-20-dr-gero.png' },
+  'ginyu': { id: 'ginyu', character: 'ginyu', form: 'Normal', hp: 100, str: 11, ki: 14, spd: 9, tier: 1, curves: { hp: [113, 126, 139, 152], str: [16, 21, 27, 32], ki: [18, 21, 25, 29], spd: [14, 19, 24, 29] }, sheet: 'ginyu.png' },
+  'ginyu_goku': { id: 'ginyu_goku', character: 'ginyu', form: 'Goku', hp: 100, str: 15, ki: 14, spd: 9, tier: 2, curves: { hp: [113, 126, 139, 152], str: [20, 25, 30, 36], ki: [18, 21, 25, 29], spd: [14, 19, 24, 29] }, sheet: 'ginyu-gokus-body.png' },
+  'recoome': { id: 'recoome', character: 'recoome', form: 'Base', hp: 105, str: 12, ki: 9, spd: 7, tier: 1, curves: { hp: [125, 145, 165, 185], str: [18, 25, 32, 39], ki: [12, 15, 18, 21], spd: [11, 15, 19, 23] }, sheet: 'recoome.png' },
+  'guldo': { id: 'guldo', character: 'guldo', form: 'Base', hp: 90, str: 6, ki: 12, spd: 6, tier: 1, curves: { hp: [101, 112, 123, 134], str: [11, 15, 20, 24], ki: [16, 20, 24, 27], spd: [10, 14, 18, 22] }, sheet: 'guldo.png' },
+  'jeice': { id: 'jeice', character: 'jeice', form: 'Base', hp: 100, str: 9, ki: 13, spd: 8, tier: 1, curves: { hp: [112, 124, 136, 148], str: [13, 18, 22, 27], ki: [18, 22, 27, 31], spd: [13, 18, 23, 28] }, sheet: 'jeice.png' },
+  'burter': { id: 'burter', character: 'burter', form: 'Base', hp: 95, str: 10, ki: 12, spd: 12, tier: 1, curves: { hp: [108, 121, 134, 147], str: [14, 18, 21, 25], ki: [16, 20, 24, 27], spd: [19, 26, 33, 40] }, sheet: 'burter.png' },
+  'nappa': { id: 'nappa', character: 'nappa', form: 'Base', hp: 90, str: 11, ki: 10, spd: 6, tier: 1, curves: { hp: [110, 130, 150, 170], str: [17, 23, 29, 35], ki: [13, 16, 19, 22], spd: [10, 14, 18, 22] }, sheet: 'nappa.png' },
+  'buu_base': { id: 'buu_base', character: 'buu', form: 'Fat', hp: 95, str: 11, ki: 12, spd: 8, tier: 2, curves: { hp: [108, 121, 134, 147], str: [15, 20, 24, 29], ki: [15, 19, 23, 27], spd: [12, 16, 20, 24] }, sheet: 'buu.png' },
+  'buu_super': { id: 'buu_super', character: 'buu', form: 'Evil', hp: 100, str: 10, ki: 11, spd: 7, tier: 2, curves: { hp: [113, 126, 139, 152], str: [15, 19, 24, 28], ki: [15, 18, 22, 26], spd: [11, 15, 19, 23] }, sheet: 'super-buu.png' },
+  'buu_gotenks': { id: 'buu_gotenks', character: 'buu', form: 'Gotenks', hp: 115, str: 15, ki: 18, spd: 11, tier: 3, curves: { hp: [128, 141, 154, 167], str: [19, 24, 28, 33], ki: [22, 26, 30, 33], spd: [15, 19, 23, 27] }, sheet: 'buu-gotenks.png' },
+  'buu_gohan': { id: 'buu_gohan', character: 'buu', form: 'Gohan', hp: 120, str: 18, ki: 16, spd: 10, tier: 3, curves: { hp: [133, 146, 159, 172], str: [22, 27, 31, 36], ki: [20, 24, 27, 31], spd: [14, 18, 22, 26] }, sheet: 'buu-gohan.png' },
+  'buu_kid': { id: 'buu_kid', character: 'buu', form: 'Normal', hp: 105, str: 14, ki: 15, spd: 17, tier: 3, curves: { hp: [118, 131, 144, 157], str: [18, 23, 27, 32], ki: [18, 22, 26, 30], spd: [21, 25, 29, 33] }, sheet: 'kid-buu.png' },
+  'vegito_base': { id: 'vegito_base', character: 'vegito', form: 'Super', hp: 110, str: 17, ki: 18, spd: 10, tier: 3, curves: { hp: [125, 140, 155, 170], str: [24, 30, 37, 44], ki: [24, 29, 34, 39], spd: [17, 24, 31, 38] } },
 };
 
 // ─── Personajes (24) ──────────────────────────────────────
@@ -180,6 +158,7 @@ export function idleSpriteDir(sheet: string): string | undefined {
 }
 
 export function idleSpriteUrl(form: FormDef): string | undefined {
+  if (!form.sheet) return undefined;
   return idleSpriteDir(form.sheet);
 }
 
@@ -188,28 +167,77 @@ export function idleSpriteUrl(form: FormDef): string | undefined {
 // Los valores son relativos al tier (los luchadores más fuertes crecen más).
 export interface GrowthRates { hp: number; str: number; ki: number; spd: number; }
 
-const GROWTH_BY_TIER: Record<number, GrowthRates> = {
-  5: { hp: 14, str: 4, ki: 4, spd: 2 },
-  4: { hp: 12, str: 3, ki: 3, spd: 2 },
-  3: { hp: 10, str: 3, ki: 3, spd: 1 },
-  2: { hp: 8, str: 2, ki: 2, spd: 1 },
-  1: { hp: 6, str: 2, ki: 2, spd: 1 },
+// Crecimiento REAL del GBC: cada forma tiene curvas por cuartos de nivel
+// (valores en niveles 25/50/75/100 extraídos de la ROM — spreadsheet oficial).
+// El incremento por nivel = (curva[i] - curva[i-1]) / 25 dentro de cada cuarto.
+export function growthFor(form: FormDef): GrowthRates {
+  const c = form.curves;
+  if (!c) return { hp: 0, str: 0, ki: 0, spd: 0 };
+  const inc = (curve: number[], base: number) => {
+    // Media del incremento por nivel en el primer cuarto (niv 1→25)
+    return Math.max(0, Math.round(((curve[0] - base) / 25) * 100) / 100);
+  };
+  return {
+    hp: inc(c.hp, form.hp),
+    str: inc(c.str, form.str),
+    ki: inc(c.ki, form.ki),
+    spd: inc(c.spd, form.spd),
+  };
+}
+
+// Stat real a un nivel dado (interpolación lineal entre cuartos, como el GBC)
+export function statAtLevel(form: FormDef, level: number, stat: 'hp' | 'str' | 'ki' | 'spd'): number {
+  const c = form.curves;
+  if (!c || level <= 1) return form[stat];
+  if (level >= 100) return c[stat][3];
+  const quarter = Math.min(3, Math.floor((level - 1) / 25));
+  const prev = quarter === 0 ? form[stat] : c[stat][quarter - 1];
+  const next = c[stat][quarter];
+  const inQuarter = (level - 1 - quarter * 25) / 25;
+  return Math.round(prev + (next - prev) * inQuarter);
+}
+
+// ─── Limited Cards (L) — fiel al GBC ───
+// Cada personaje puede usar hasta 3 Limited Cards (Androids 19/20 solo 2),
+// reutilizables mientras tengas CC suficiente. Se configuran en menu→team→limit.
+// Valores por defecto basados en el walkthrough (ej. "equipa a Goku con
+// Super Kamehameha + Kaioken", "Super Kamehameha en Gohan", "Final Flash/Big
+// Bang Attack" en Vegeta, "Super Kamehameha + Teleport + Big Bang" en Vegito).
+export const LIMIT_DEFAULTS: Record<string, number[]> = {
+  'goku': [23, 13, 24],      // Kaio Ken, S.Kamehameha, Spirit Bomb
+  'gohan': [13, 10],         // S.Kamehameha, Masenko
+  'vegeta': [32, 31, 30],    // Final Flash, Big Bang Atk, Galick-Ho
+  'piccolo': [17, 18],       // S.Beam Can., F.Lightbomb
+  'krillin': [22, 21],       // S.Destruc-D., Destruct-Disk
+  'trunks': [35, 44],        // Burning Atk., Flash.Sword
+  'frieza': [64, 57],        // Super E-Ball, Purple Comet
+  'cell': [48, 71, 54],      // Lightning C., Crazy Rush, Eraser Can.
+  'buu': [80, 64],           // Potbelly Atk, Super E-Ball
+  'android_19': [39, 63],    // solo 2 (regla Androids)
+  'android_20': [39, 63],    // solo 2 (regla Androids)
+  'android_16': [69, 35],    // Rocket Punch, Burning Atk.
+  'android_17': [69, 35],
+  'android_18': [69, 35],
+  'goten': [12, 10],         // Kamehameha, Masenko
+  'vegito': [13, 26, 31],    // S.Kamehameha, Teleport., Big Bang Atk (walkthrough)
 };
 
-// Ajustes individuales (personajes con crecimiento peculiar)
-const GROWTH_OVERRIDES: Record<string, GrowthRates> = {
-  'goku': { hp: 15, str: 4, ki: 4, spd: 2 },
-  'vegeta': { hp: 13, str: 5, ki: 3, spd: 2 },
-  'gohan': { hp: 12, str: 3, ki: 5, spd: 2 },
-  'piccolo': { hp: 14, str: 4, ki: 4, spd: 1 },
-  'krillin': { hp: 9, str: 2, ki: 3, spd: 2 },
-  'trunks': { hp: 13, str: 4, ki: 3, spd: 2 },
-  'buu': { hp: 18, str: 4, ki: 4, spd: 1 },
-  'frieza': { hp: 13, str: 3, ki: 5, spd: 2 },
-  'cell': { hp: 15, str: 4, ki: 4, spd: 2 },
-  'android_16': { hp: 16, str: 5, ki: 1, spd: 1 },
-};
+export function loadLimits(charId: string): number[] {
+  try {
+    const raw = localStorage.getItem('dbzlsw_limits');
+    if (raw) {
+      const all = JSON.parse(raw) as Record<string, number[]>;
+      if (Array.isArray(all[charId])) return all[charId];
+    }
+  } catch { /* noop */ }
+  return [];
+}
 
-export function growthFor(charId: string, tier: number): GrowthRates {
-  return GROWTH_OVERRIDES[charId] || GROWTH_BY_TIER[tier] || GROWTH_BY_TIER[3];
+export function saveLimits(charId: string, ids: number[]): void {
+  try {
+    const raw = localStorage.getItem('dbzlsw_limits');
+    const all = raw ? JSON.parse(raw) as Record<string, number[]> : {};
+    all[charId] = ids;
+    localStorage.setItem('dbzlsw_limits', JSON.stringify(all));
+  } catch { /* noop */ }
 }

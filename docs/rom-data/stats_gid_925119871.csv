@@ -1,0 +1,49 @@
+Orig,Base,Character,#,Form,Hp,Str,Ki,Spd,HpMax,StrMax,KiMax,SpdMax,Hp 1-4,Str1,2,3,4,Ki1,2,3,4,Spd 1-4,Tier,Affiliation 1,Affiliation 2,Affiliation 3,Allignment,Common
+1,1,Gohan,1,Kid,80,7,12,6,132,28,30,26,13,5,6,5,5,4,5,4,5,5,1,Saiyan,Human,Son,Z Fighter,Base
+2,,Gohan,2,Ksuper,90,11,14,8,142,32,32,28,13,5,5,6,5,4,5,4,5,5,2,Saiyan,Human,Son,Z Fighter,Super Saiyan
+3,,Gohan,3,KSuper2,95,12,15,9,147,33,33,29,13,6,5,5,5,5,4,5,4,5,3,Saiyan,Human,Son,Z Fighter,Super Saiyan
+4,2,Piccolo,5,Normal,85,9,14,5,145,30,29,25,15,6,5,5,5,4,3,4,4,5,1,,Bio,,Z Fighter,Base
+5,,Piccolo,6,Kami,95,13,16,7,155,34,31,27,15,5,6,5,5,4,4,3,4,5,2,,Bio,Fusion,Z Fighter,Absorbed
+6,,Piccolo,4,Evil,105,17,19,9,165,38,34,29,15,5,5,6,5,4,4,3,4,5,3,,Bio,,Villain,Base
+7,3,Krillin,7,,85,8,12,6,133,23,33,30,12,4,3,4,4,6,5,5,5,6,1,,Human,,Z Fighter,Base
+8,4,Goku,8,Normal,90,9,13,6,142,30,28,26,13,6,5,5,5,4,4,3,4,5,1,Saiyan,,Son,Z Fighter,Base
+9,,Goku,9,Super,100,13,15,8,152,34,30,28,13,5,6,5,5,4,4,4,3,5,2,Saiyan,,Son,Z Fighter,Super Saiyan
+10,,Goku,10,Super2,105,15,17,9,157,36,32,29,13,5,5,5,6,4,3,4,4,5,3,Saiyan,,Son,Z Fighter,Super Saiyan
+11,,Goku,11,Super3,110,17,18,10,162,38,33,30,13,5,5,6,5,4,4,4,3,5,3,Saiyan,,Son,Z Fighter,Super Saiyan
+12,5,Vegeta,12,Normal,95,10,12,6,143,34,30,22,12,6,6,6,6,5,4,5,4,4,1,Saiyan,,Vegeta,Z Fighter,Base
+13,,Vegeta,13,Super,105,14,15,8,153,38,33,24,12,6,6,6,6,4,5,4,5,4,2,Saiyan,,Vegeta,Z Fighter,Super Saiyan
+14,,Vegeta,14,Prince,110,15,16,9,158,39,34,25,12,6,6,6,6,5,4,5,4,4,3,Saiyan,Majin,Vegeta,Z Fighter,Super Saiyan
+15,6,Gohan,15,Super,90,9,12,6,138,30,27,26,12,6,5,5,5,4,4,4,3,5,2,Saiyan,Human,Son,Z Fighter,Super Saiyan
+16,,Gohan,16,Super2,105,15,16,9,153,36,31,29,12,5,5,5,6,4,4,3,4,5,2,Saiyan,Human,Son,Z Fighter,Super Saiyan
+17,,Gohan,17,Warrior,110,17,18,10,158,38,33,30,12,5,5,6,5,3,4,4,4,5,3,Saiyan,Human,Son,Z Fighter,Base
+18,7,Trunks,18,Normal,95,9,13,6,143,27,28,26,12,5,4,5,4,4,4,3,4,5,1,Saiyan,Human,Vegeta,Z Fighter,Base
+19,,Trunks,19,Super,105,13,15,8,153,31,30,28,12,5,4,5,4,4,4,4,3,5,2,Saiyan,Human,Vegeta,Z Fighter,Super Saiyan
+20,8,Goten,20,Kid,90,6,12,5,134,24,30,21,11,5,4,5,4,4,5,4,5,4,1,Saiyan,Human,Son,Z Fighter,Base
+21,,Goten,21,Ksuper,100,10,14,7,144,28,32,23,11,5,4,5,4,4,5,4,5,4,2,Saiyan,Human,Son,Z Fighter,Super Saiyan
+22,9,Trunks,22,Kid,90,7,11,5,138,31,26,25,12,6,6,6,6,4,3,4,4,5,1,Saiyan,Human,Vegeta,Z Fighter,Base
+23,,Trunks,23,Ksuper,100,11,13,7,148,35,28,27,12,6,6,6,6,4,4,3,4,5,2,Saiyan,Human,Vegeta,Z Fighter,Super Saiyan
+24,10,Gotenks,24,Ksuper,90,8,12,7,150,35,33,35,15,7,6,7,7,5,5,5,6,7,2,Saiyan,Human,Fusion,Z Fighter,Super Saiyan
+25,,Gotenks,25,KSuper3,110,15,17,11,170,42,38,39,15,7,7,7,6,5,5,6,5,7,3,Saiyan,Human,Fusion,Z Fighter,Super Saiyan
+26,11,Vegito,26,Super,110,17,18,10,170,44,39,38,15,7,6,7,7,6,5,5,5,7,3,Saiyan,,Fusion,Z Fighter,Super Saiyan
+27,12,Nappa,27,,90,11,10,6,170,35,22,22,20,6,6,6,6,3,3,3,3,4,1,Saiyan,,Vegeta,Villain,Base
+28,13,Guldo,28,,90,6,12,6,134,24,27,22,11,5,4,5,4,4,4,4,3,4,1,,,Frieza,Villain,Base
+29,14,Recoome,29,,105,12,9,7,185,39,21,23,20,6,7,7,7,3,3,3,3,4,1,,,Frieza,Villain,Base
+30,15,Jeice,30,,100,9,13,8,148,27,31,28,12,4,5,4,5,5,4,5,4,5,1,,,Frieza,Villain,Base
+31,16,Burter,31,,95,10,12,12,147,25,27,40,13,4,4,3,4,4,4,4,3,7,1,,,Frieza,Villain,Base
+32,17,Ginyu,32,Normal,100,11,14,9,152,32,29,29,13,5,5,6,5,4,3,4,4,5,1,,,Frieza,Villain,Base
+33,,Ginyu,48,Goku,100,15,14,9,152,36,29,29,13,5,5,5,6,4,3,4,4,5,2,Saiyan,,Frieza,Villain,Switch
+34,18,Frieza,33,,100,12,13,9,160,36,31,33,15,6,6,6,6,5,4,5,4,6,2,,,Frieza,Villain,Base
+35,19,No 16,34,,110,12,12,7,170,36,24,23,15,6,6,6,6,3,3,3,3,4,1,Android,,,Z Fighter,Base
+36,20,No 17,35,,100,12,13,9,160,33,28,29,15,5,5,5,6,4,4,3,4,5,1,Android,Human,,Neutral,Base
+37,21,No 18,36,,100,10,15,9,152,28,33,33,13,5,4,5,4,4,5,4,5,6,1,Android,Human,,Z Fighter,Base
+38,22,No 19,37,,80,9,12,6,128,24,24,22,12,3,4,4,4,3,3,3,3,4,1,Android,,,Villain,Base
+39,23,No 20,38,,85,9,12,6,129,24,27,25,11,3,4,4,4,3,4,4,4,5,1,Android,Human,,Villain,Base
+40,24,Cell,39,First,90,10,14,7,142,31,29,27,13,5,6,5,5,4,3,4,4,5,1,Android,Bio,,Villain,Base
+41,,Cell,40,Second,100,14,16,9,152,35,31,29,13,5,5,6,5,4,4,3,4,5,2,Android,Bio,Fusion,Villain,Absorbed
+42,,Cell,41,Perfect,105,15,18,10,157,36,33,30,13,6,5,5,5,3,4,4,4,5,3,Android,Bio,Fusion,Villain,Absorbed
+43,25,Cell Jr,42,,80,8,13,8,128,32,28,28,12,6,6,6,6,4,4,3,4,5,1,Android,Bio,,Villain,Base
+44,26,Buu,43,Fat,95,11,12,8,147,29,27,24,13,4,5,4,5,3,4,4,4,4,2,,Majin,,Z Fighter,Absorbed
+45,27,Buu,44,Evil,100,10,11,7,152,28,26,23,13,5,4,5,4,4,3,4,4,4,2,,Majin,,Villain,Absorbed
+46,,Buu,45,Gotenks,115,15,18,11,167,33,33,27,13,4,5,4,5,4,4,4,3,4,3,,Majin,Fusion,Villain,Absorbed
+47,,Buu,46,Gohan,120,18,16,10,172,36,31,26,13,4,5,4,5,4,4,3,4,4,3,,Majin,Fusion,Villain,Absorbed
+48,,Buu,47,Normal,105,14,15,17,157,32,30,33,13,4,5,4,5,3,4,4,4,4,3,,Majin,,Neutral,Base

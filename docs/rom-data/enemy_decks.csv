@@ -1,0 +1,29 @@
+"----
+
+
+
+This document is intended to list all possible decks the ai can come at you with.
+Story modes’s quirk is that it has an AI boost field. This is here to show you just how big of a disadvantage you’re at.
+Round 2 just has everyone at an impossibly high level and has stats you can never hope to match.
+Battle mode contains 3 tiers of characters based mostly on their form. Final form characters are generally tier 3,
+untransformed are usually tier 1, and anything in between is usually tier 2. You’ll only ever run into characters in the same tier.
+As for their decks, each character tends to run their own deck and will not deviate from their strategy.
+
+An important note, in battle mode, the level the Ai is at is determined by a formula.
+
+If (playerLevel >= 5 && playerLevel < 9) playerLevel = 5;
+aiUpgrades = (playerLevel – 1) * 2; 
+aiLevel = aiUpgrades + 1;
+
+This means that the ai will always have 2 upgrades for every 1 upgrade you can have.
+Star upgrades: Hp/Str/Ki/Spd
+
+PLevel 1 | 0/0/0/0 | aiLevel 1
+PLevel 2 | 1/0/0/1 | aiLevel 3
+PLevel 3 | 1/1/1/1 | aiLevel 5
+PLevel 4 | 2/1/2/1 | aiLevel 7
+PLevel 5 | 2/2/2/2 | aiLevel 9
+
+On a funny side note, a level 9 or above character breaks the ai. Have you ever seen a level 35 Jeice?
+
+"

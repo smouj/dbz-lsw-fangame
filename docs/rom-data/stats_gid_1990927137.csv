@@ -1,0 +1,40 @@
+Relevant Variables,Character,Form,HP,STR,KI,SPD,Guard up,Guard down,Damage Protection?,Position,Guard?,Move?,Powered up?,Attack used,Expected Damage,Damage taken,HP left,Observation
+Formula Theory: Damage = (power + move) * positionMultiplier * guardLevel? * block + GuardSquare,,,,,,,,,,,,,,,,,,
+"Power = str or ki || move = attack power like galick gun is 20 || positionMultiplier = area on battlefield, exact multipliers to be determined || block = if a move has been enduranced or guarded. 0.5x",,,,,,,,,,,,,,,,,,
+Data Type,Enemy,Form,Hp,Str,Ki,Spd,G Up,G Down,Damage Guard,Position,Guard,string,Power State,Attack,Expected Damage,Damage taken,Life,float
+Relevant Variables,Character,Form,HP,STR,KI,SPD,Guard up,Guard down,Damage Protection?,Position,Guard?,Move?,Powered up?,Attack used,Expected Damage,Damage taken,HP left,Observation
+,Buu,Evil,100,10,11,7,like,like,like,one of,guard,move,gather,move being,Power plus,,,
+,Goten,Normal,90,6,12,5,old armor or,kiai or,tien or,4 possible,squared,position,power,used,move power,,,
+,Cell,2nd,100,14,16,9,flesh guard,scouter,hercule,positions,off,,,,equals expected,,,
+,,,,,,,,,,,,,,,,,,
+Example,Goten,Normal,null,6,null,null,null,null,null,Lower Back,null,null,yes,cont. punch,20,null,null,Damage
+,Buu,Evil,100,null,null,null,0,0,no,Lower Back,yes,null,null,null,,10,90,Taken
+,,,,,,,,,,,,,,,,,,
+Test 1,Goten,Normal,null,6,null,null,null,null,null,Lower Back,null,null,yes,cont. punch,20,null,null,
+Idle 4,Buu,Evil,100,null,null,null,0,0,no,Lower Back,yes,no,,,,10,90,50.00%
+Idle 4,Buu,Evil,90,null,null,null,0,0,no,Upper Back,yes,no,,,,10,80,50.00%
+Idle 4,Buu,Evil,80,null,null,null,0,0,no,Top Front,yes,no,,,,10,70,50.00%
+Idle 4,Buu,Evil,70,null,null,null,0,0,no,Bottom Front,yes,no,,,,16,54,80.00%
+damage guard,Buu,Evil,100,null,null,null,0,0,yes,Bottom Front,no,no,,,,15,85,75.00%
+BF movement,Buu,Evil,85,null,null,null,0,0,no,Bottom Front,no,up,,,,12,73,60.00%
+TF movement,Buu,Evil,73,null,null,null,0,0,no,Top Front,no,down,,,,20,53,100.00%
+BF movement,Buu,Evil,53,null,null,null,0,0,no,Bottom Front,no,<^,,,,10,43,50.00%
+TB movement,Buu,Evil,43,null,null,null,0,0,no,Upper Back,no,v>,,,,20,23,100.00%
+BF movement,Buu,Evil,23,null,null,null,0,0,no,Bottom Front,no,left,,,,12,11,60.00%
+BB movement,Buu,Evil,100,null,null,null,0,0,no,Lower Back,no,right,,,,20,80,100.00%
+support card,Buu,Evil,80,null,null,null,0,0,no,Bottom Front,no,no,,,,20,60,100.00%
+TF movement,Buu,Evil,60,null,null,null,0,0,no,Top Front,no,left,,,,10,50,50.00%
+TB movement,Buu,Evil,50,null,null,null,0,0,no,Upper Back,no,right,,,,12,38,60.00%
+TF movement,Buu,Evil,38,null,null,null,0,0,no,Top Front,no,<v,,,,12,26,60.00%
+BB movement,Buu,Evil,61,null,null,null,0,0,no,Lower Back,no,^>,,,,12,49,60.00%
+BB movement,Buu,Evil,49,null,null,null,0,0,no,Lower Back,no,up,,,,10,39,50.00%
+TB movement,Buu,Evil,39,null,null,null,0,0,no,Upper Back,no,down,,,,12,27,60.00%
+damage guard,Buu,Evil,100,null,null,null,0,0,yes,Lower Back,no,no,,,,7,93,35.00%
+support card,Buu,Evil,93,null,null,null,0,0,no,Lower Back,no,no,,,,12,81,60.00%
+damage guard,Buu,Evil,81,null,null,null,0,0,yes,Top Front,no,no,,,,7,74,35.00%
+support card,Buu,Evil,74,null,null,null,0,0,no,Top Front,no,no,,,,12,62,60.00%
+support card,Buu,Evil,62,null,null,null,0,0,no,Upper Back,no,no,,,,10,52,50.00%
+damage guard,Buu,Evil,52,null,null,null,0,0,yes,Upper Back,no,no,,,,5,47,25.00%
+guard up,Buu,Evil,100,null,null,null,1,0,no,Bottom Front,yes,no,,,,10,90,50.00%
+guard up,Buu,Evil,90,null,null,null,2,0,no,Bottom Front,yes,no,,,,10,80,50.00%
+guard up,Buu,Evil,80,null,null,null,3,0,no,Bottom Front,yes,no,,,,10,70,50.00%

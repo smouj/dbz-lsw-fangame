@@ -166,3 +166,67 @@ Nunca decide reglas. Mismo motor para Story, Battle, VS y tests.
 3. Máquina exacta de decisión de la IA.
 4. Clamp de CC (confirmar 99).
 5. Valores de crecimiento por personaje.
+
+---
+
+## 📡 ACTUALIZACIÓN 2026-08-10: Fórmulas reales extraídas (spreadsheets oficiales)
+
+Fuente: https://legendarysuperwarriors.wordpress.com/spreadsheets/ (Mochi/LSW team)
+Datos crudos en `docs/rom-data/` (6 spreadsheets + 12 pestañas CSV).
+
+### Fórmula de daño REAL (validada con tests de la comunidad)
+
+```
+Damage = (power + move) × positionMultiplier × block
+```
+
+- `power` = STR del atacante (cartas Damage) o KI (cartas Beam)
+- `move` = poder de la carta (ej. Galick Gun = 20)
+- `positionMultiplier` REAL (tests con Buu Evil recibiendo Cont.Punch de Goten STR 6):
+  | Posición | Mult |
+  |---|---|
+  | Front + tipo vulnerable (ground+Damage / air+Beam) | **0.8** |
+  | Resto (back, front con tipo no vulnerable) | **0.5** |
+- `block` = defend/endurance del GBC = **×0.5**
+- `damage guard` (carta de guardia) = **×0.7**
+
+### Stats reales del GBC (48 formas)
+
+- Cada forma tiene stats BASE (nivel 1) + curva de crecimiento por cuartos
+  (valores en niveles 25/50/75/100). Interpolación lineal entre cuartos.
+- Ej: Goku Normal 90/9/13/6 → max 142/30/28/26; Vegito Super 110/17/18/10 → 170/44/39/38
+- Códigos de transformación (ROM hex): Super = Life+10, Str+5, Ki+3, Spd+2;
+  Ultimate = +15/7/5/3; Mystic = +20/10/7/4
+- Implementado: `roster.ts` (FormDef.curves) + `statAtLevel()` + `applyLevelUps()`
+
+### Nivel IA real (battle mode)
+
+```
+aiLevel = (playerLevel - 1) * 2 + 1
+```
+- La IA tiene 2 upgrades (Hp/Str/Ki/Spd) por cada 1 del jugador
+- PLevel 1 → aiLevel 1 · PLevel 5 → aiLevel 9
+- Battle mode: 3 tiers de personajes (forma final = tier 3, sin transformar = tier 1)
+- Story mode tiene campo "AI boost"
+
+### Turnos / roles reales
+
+- Cada round hay UN atacante y UN defensor; la SPEED decide quién empieza
+- El turno ALTERNA jugador ↔ enemigo (la velocidad solo decide el primero)
+- Atacante: posición + B (gather / 3-stage, 4 con power) o J (cartas) o L (limits)
+- Defensor: MOVE (reposicionar) o DEFEND (block ×0.5)
+- BASIC no cuesta CC · Command Cards CC=0 (+1 CC por comando acertado)
+
+### Economía CC real
+
+- +3 CC cada vez que eres el atacante
+- +1 CC por comando acertado de Command Card
+- +2 CC cuando tu HP baja sustancialmente (≥15% en un golpe)
+- Bonus por localización (aire+Beam / suelo+Damage)
+- Las cartas Joint/Limited CUESTAN su CC (18 cartas cuestan 0)
+
+### Mazos enemigos reales (story/battle)
+
+- Cada jefe usa un mazo fijo: Stage Attacks (3/4/5/6) + sus especiales
+- Story tab 1 (32 jefes) y battle tab 2 (48 formas) en docs/rom-data/enemy_gid_*.csv
+- Patrón IA: ataca → gather → 5 Stage → Beam/Damage → repite

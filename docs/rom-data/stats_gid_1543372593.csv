@@ -1,0 +1,50 @@
+Orig,Base,Ingame Tier,Tier,Character,#,Form,Hp,Str,Ki,Spd,HpMax,StrMax,KiMax,SpdMax,Hp *,Str *,Ki *,Spd *,Special Notes
+8,4,1,1,Goku,8,Normal,90,9,13,6,142,30,28,26,13,"6, 5, 5, 5","4, 4, 3, 4",5,Competes with Tier 3 Vegito for highest possible Str
+35,19,1,2,No 16,34,,110,12,12,7,170,36,24,23,15,6,3,4,Mid tier 2 stats on a tier 1 character
+29,14,1,3,Recoome,29,,105,12,9,7,185,39,21,23,20,"6, 7, 7, 7",3,4,Great Str and Hp upgrades. Best tier 1 Cont. Puncher without card upgrades
+37,21,1,4,No 18,36,,100,10,15,9,152,28,33,33,13,"5, 4","4, 5",6,"Mid tier 2 stats on a tier 1 character, Best base ki"
+36,20,1,5,No 17,35,,100,12,13,9,160,33,28,29,15,"5, 5, 5, 6","4, 4, 3, 4",5,Mid tier 2 stats on a tier 1 character
+40,24,1,5,Cell,39,First,90,10,14,7,142,31,29,27,13,"5, 6, 5, 5","4, 3, 4, 4",5,Borderline tier 2 in stats combined with a huge movepool
+43,25,1,6,Cell Jr,42,,80,8,13,8,128,32,28,28,12,6,"4, 4, 3, 4",5,"Low stats, but a huge movepool"
+4,2,1,7,Piccolo,5,Normal,85,9,14,5,145,30,29,25,15,"6, 5, 5, 5","4, 3, 4, 4",5,Decent Moveset with great staying power. Very high Ki.
+32,17,1,8,Ginyu,32,Normal,100,11,14,9,152,32,29,29,13,"5, 5, 6, 5","4, 3, 4, 4",5,"high stats, high cost moves, unblockable beam"
+27,12,1,9,Nappa,27,,90,11,10,6,170,35,22,22,20,6,3,4,Great Str and Hp upgrades.
+28,13,1,10,Guldo,28,,90,6,12,6,134,24,27,22,11,"5, 4","4, 4, 4, 3",4,Best tier 1 Ki Spammer
+18,7,1,11,Trunks,18,Normal,95,9,13,6,143,27,28,26,12,"5, 4","4, 4, 3, 4",5,
+7,3,1,12,Krillin,7,,85,8,12,6,133,23,33,30,12,"4, 3, 4, 4","6, 5, 5, 5",6,Strongest natural tier 1 ki user
+31,16,1,13,Burter,31,,95,10,12,12,147,25,27,40,13,"4, 4, 3, 4","4, 4, 4, 3",7,"Fastest in the game, but no real offense."
+12,5,1,14,Vegeta,12,Normal,95,10,12,6,143,34,30,22,12,6,"5, 4",4,"Great Stats, but too few moves to take advantage of them"
+22,9,1,15,Trunks,22,Kid,90,7,11,5,138,31,26,25,12,6,"4, 3, 4, 4",5,"Bad starting stats, small movepool"
+30,15,1,16,Jeice,30,,100,9,13,8,148,27,31,28,12,"4, 5","5, 4",5,
+1,1,1,17,Gohan,1,Kid,80,7,12,6,132,28,30,26,13,"5, 6, 5, 5","4, 5",5,Tail
+39,23,1,18,No 20,38,,85,9,12,6,129,24,27,22,11,"3, 4, 4, 4","3, 4, 4, 4",5,"2 limits, bad stats"
+38,22,1,19,No 19,37,,80,9,12,6,128,24,24,22,12,"3, 4, 4, 4",3,4,"2 limits, bad stats"
+20,8,1,20,Goten,20,Kid,90,6,12,5,134,24,30,21,11,"5, 4","4, 5",4,Bad overall stats with the smallest movepool possible for a character
+34,18,2,1,Frieza,33,,100,12,13,9,160,36,31,33,15,6,"5, 4",6,"Large upgrades, great movepool."
+24,10,2,2,Gotenks,24,Ksuper,90,8,12,7,150,35,33,35,15,"7, 6, 7, 7","5, 5, 5, 6",7,"Low starting stats, but huge upgrades and great movepool"
+41,,2,3,Cell,40,Second,100,14,16,9,152,35,31,29,13,"5, 5, 6, 5","4, 4, 3, 4",5,Borderline tier 3 in stats combined with a huge movepool
+16,,2,4,Gohan,16,Super2,105,15,16,9,153,36,31,29,12,"5, 5, 5, 6","4, 4, 3, 4",5,Borderline tier 3 in stats with a large reliable movepool
+19,,2,5,Trunks,19,Super,105,13,15,8,153,31,30,28,12,"5, 4","4, 4, 4, 3",5,"Big movepool, piccolo school team player"
+23,,2,6,Trunks,23,Ksuper,100,11,13,7,148,35,28,27,12,6,"4, 4, 3, 4",5,Shares his strongest move with his adult form. Great stats for his moveset.
+33,,2,7,Ginyu,48,Goku,100,15,14,9,152,36,29,29,13,"5, 5, 5, 6","4, 3, 4, 4",5,"except for teleport, better than ss goku"
+9,,2,8,Goku,9,Super,100,13,15,8,152,34,30,28,13,"5, 6, 5, 5","4, 4, 4, 3",5,One of the largest movepools in the game
+5,,2,9,Piccolo,6,Kami,95,13,16,7,155,34,31,27,15,"5, 6, 5, 5","4, 4, 3, 4",5,Gains a reliable power beam
+13,,2,10,Vegeta,13,Super,105,14,15,8,153,38,33,24,12,6,"4, 5",4,"Powerful Ki moves, but stats alligned more to Str"
+44,26,2,11,Buu,43,Fat,95,11,12,8,147,29,27,24,13,"4, 5","3, 4, 4, 4",4,
+2,,2,12,Gohan,2,Ksuper,90,11,14,8,142,32,32,28,13,"5, 5, 6, 5","4, 5",5,tail
+45,27,2,13,Buu,44,Evil,100,10,11,7,152,28,26,23,13,"5, 4","4, 3, 4, 4",4,
+15,6,2,14,Gohan,15,Super,90,9,12,6,138,30,27,26,12,"6, 5, 5, 5","4, 4, 4, 3",5,upgrades and movepool is all that saves him
+21,,2,15,Goten,21,Ksuper,100,10,14,7,144,28,32,23,11,"5, 4","4, 5",4,Worse SS Vegeta
+26,11,3,1,Vegito,26,Super,110,17,18,10,170,44,39,38,15,"7, 6, 7, 7","6, 5, 5, 5",7,best at nearly everything
+25,,3,2,Gotenks,25,KSuper3,110,15,17,10,170,42,38,38,15,"7, 7, 7, 6","5, 5, 6, 5",7,best ki spammer in the game
+14,,3,3,Vegeta,14,Prince,110,15,16,9,158,39,34,25,12,6,"5, 4",4,"most powerful beam in the game, likely to end games quickly"
+11,,3,4,Goku,11,Super3,110,17,18,10,162,38,33,30,13,"5, 5, 6, 5","4, 4, 4, 3",5,outclasses ss2 entirely
+42,,3,5,Cell,41,Perfect,105,15,18,10,157,36,33,30,13,"6, 5, 5, 5","3, 4, 4, 4",5,One of the largest movepools in the game
+46,,3,6,Buu,45,Gotenks,115,15,18,11,167,33,33,27,13,"4, 5","4, 4, 4, 3",4,slightly better ki spammer than cell
+47,,3,7,Buu,46,Gohan,120,18,16,10,172,36,31,26,13,"4, 5","4, 4, 3, 4",4,"can do everything his gotenks form can do, but slightly weaker"
+17,,3,8,Gohan,17,Warrior,110,17,18,10,158,38,33,30,12,"5, 5, 6, 5","3, 4, 4, 4",5,lost dunkshot
+3,,3,9,Gohan,3,KSuper2,95,12,15,9,147,33,33,29,13,"6, 5, 5, 5","5, 4",5,"tail and ult kameha, but worst stats in tier 3"
+6,,3,10,Piccolo,4,Evil,105,17,19,9,165,38,34,29,15,"5, 5, 6, 5","4, 4, 3, 4",5,best base ki
+48,,3,11,Buu,47,Normal,105,14,15,17,157,32,30,33,13,"4, 5","3, 4, 4, 4",4,"best base speed, ok offensive stats"
+10,,3,12,Goku,10,Super2,105,15,17,9,157,36,32,29,13,"5, 5, 5, 6","4, 3, 4, 4",5,everything his ss1 counterpart could do
+,,,,,,,,,,,,,,,,,,,"Note* everybody in tier 3 is good, so take with a grain of salt who is ranked lower"

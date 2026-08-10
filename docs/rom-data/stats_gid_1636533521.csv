@@ -1,0 +1,30 @@
+"---
+--
+*Note, tiers are still in development and are subject to change.
+
+Outclassed      = theres no reason to ever pick that form.
+Outclassed2    = the same as 1, but for characters instead of forms.
+Outperformed = that are justifiable with a different upgrade path, but someone can fill their role better.
+Optimal?          = that you can make an argument for that form being the optimal one to use.
+A = passed initial filter
+B = chosen over other form
+C = outperformed by B
+
+The stars visually work in one of the following ways
+1. One flat increase every time. Ex. All Health and speed. Some characters have a Str or Ki Stat that does this like Vegeta’s Str.
+2. An alternating value such as 4 and 5 repeating.
+3. A single value and 3 other numbers either higher or lower than it.
+4. Regardless of which case, these loop in quantities of 4, so if you cheated more level ups, it would repeat the same 4.
+5. Most importantly, the order of the values shuffles on each upgrade, so an upgrade for one form isn’t necessarily the best one for another. Goku in his normal form gets a 6 for his first Str upgrade while its a 5 for his first star in every other form. Normally, this isnt a problem as higher forms regardless will generally have better stats even with a lower upgrade.
+6. Str and Ki only alternate because those 2 stats follow an arithmetic sequence of +1, +1, +1, +0 etc Ex. 0, 1, 2, 3, 3, 4, 5, 6, 6, 7, etc.
+7. In the addresses,  numbers add up exactly in hex, so the above rule must be kept in mind if modifying the rom.
+
+Tiers are chosen based on combat effectiveness; anyone with the outclassed1 or 2 status is separated into a different list.
+On a different note, if you just want to choose a character to spam the basic cont punch or basic energy moves, merely look at who has the best max Str or Ki based on what you want.
+
+Standard Upgrade from Tier 1 to 2 is 10HP 4Str 2Ki 2Spd (+0A, +05, +03, +02)
+   Vegeta gains 3Ki instead and Ginyu only gets the Str boost.
+Tier 2 to Tier 3 has less patterns due to almost everyone having a unique boost, but the non unique boost is generally around this range
+   5Hp 1-2Str 1-2Ki 1Spd
+
+Due to how str and ki work, Precise Characters shows the base stats in hex, and the numbers they increase by in decimal to make keeping track of them easier."

@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { createRoot } from 'react-dom/client';
 import './styles.css';
-import { FORMS, CHARACTERS, getCharacter, getForm, idleSpriteUrl, growthFor } from './data/roster';
+import { FORMS, CHARACTERS, getCharacter, getForm, idleSpriteUrl, growthFor, statAtLevel, LIMIT_DEFAULTS, loadLimits, saveLimits } from './data/roster';
 import { needsFlip } from './data/facing';
 import { UNLOCK_KEY, STARTER_DAMAGE_DECK, STARTER_BEAM_DECK, STARTER_CHARACTERS, cardsForLevel, pickRewards, VS_UNLOCKS, isFormUnlocked, FORM_UNLOCK_LEVELS } from './data/unlocks';
 import { CARDS, CARD_COLORS, CARD_TYPE_NAMES, CardDef, CardType, DECK_SIZE, MAX_COPIES, getCard, CardEffect } from './data/cards';
@@ -18,7 +18,7 @@ import { ArrowLeft, X, Lock, ChevronRight, Languages, Sword, Shield, type Lucide
 // ═══════════════════════════════════════════════════════════
 
 type Screen = 'main' | 'story' | 'battle' | 'versus' | 'deck' | 'characters' | 'cards' | 'settings';
-type BattlePhase = 'position' | 'command' | 'cardSelect' | 'stageInput' | 'resolve' | 'enemyTurn' | 'win' | 'lose';
+type BattlePhase = 'position' | 'command' | 'basic' | 'limitSelect' | 'cardSelect' | 'stageInput' | 'resolve' | 'enemyTurn' | 'defend' | 'win' | 'lose';
 type Position = 'front' | 'back';
 type Elevation = 'ground' | 'air';
 type CommandType = 'LIMIT' | 'J' | 'B' | 'C';
@@ -123,7 +123,7 @@ function CharacterSprite({ formId, height = 92, className = '' }: {
   if (!idle || !form) {
     return <div className={`char-sprite-missing ${className}`} style={{ height }}>?</div>;
   }
-  const flip = needsFlip(form.sheet);
+  const flip = form.sheet ? needsFlip(form.sheet) : false;
   // mantener proporción: width = height * (w/h) del sprite; voltear a la derecha si el sheet lo requiere
   return (
     <img className={`char-idle-sprite ${className}`}
@@ -240,9 +240,9 @@ function BattleScreen({ playerFormId, enemyFormId, onExit }: {
   const { t } = useLang();
   const pf = getForm(playerFormId)!;
   const ef = getForm(enemyFormId)!;
+  const prog = loadProgress();
 
   const [player, setPlayer] = useState<Fighter>(() => {
-    const prog = loadProgress();
     const base: Fighter = {
       id: pf.character, name: getCharacter(pf.character)?.name || pf.character, form: pf.form,
       level: prog.level, maxHp: pf.hp, hp: pf.hp,
@@ -252,24 +252,33 @@ function BattleScreen({ playerFormId, enemyFormId, onExit }: {
     };
     return applyLevelUps(base, prog.level);
   });
-  const [enemy, setEnemy] = useState<Fighter>({
-    id: ef.character, name: getCharacter(ef.character)?.name || ef.character, form: ef.form,
-    level: 39, maxHp: ef.hp, hp: ef.hp,
-    str: ef.str, ki: ef.ki, spd: ef.spd, maxCc: 99, cc: 0,
-    position: 'back', elevation: 'ground', battleId: ef.battleId,
-    limits: ['Limit', 'Final'],
+  // Nivel IA real (spreadsheet oficial): aiLevel = (playerLevel-1)*2+1
+  // El AI siempre tiene 2 upgrades por cada 1 del jugador (Hp/Str/Ki/Spd)
+  const aiLevel = Math.max(1, (prog.level - 1) * 2 + 1);
+  const [enemy, setEnemy] = useState<Fighter>(() => {
+    const base: Fighter = {
+      id: ef.character, name: getCharacter(ef.character)?.name || ef.character, form: ef.form,
+      level: aiLevel, maxHp: ef.hp, hp: ef.hp,
+      str: ef.str, ki: ef.ki, spd: ef.spd, maxCc: 99, cc: 0,
+      position: 'back', elevation: 'ground', battleId: ef.battleId,
+      limits: ['Limit', 'Final'],
+    };
+    return applyLevelUps(base, aiLevel);
   });
   const [phase, setPhase] = useState<BattlePhase>('position');
   const [turn, setTurn] = useState(1);
   // El de mayor Speed ataca primero (mecánica real del GBC).
   // Se recalcula al inicio de cada ROUND (si Speed cambia, cambia el orden).
-  const [playerFirst, setPlayerFirst] = useState(() => {
+  // Turnos alternados (mecánica real): la velocidad solo decide QUIÉN EMPIEZA.
+  // Después, el turno alterna jugador ↔ enemigo (atacante = dueño del turno).
+  const turnOwnerRef = useRef<'player' | 'enemy' | null>(null);
+  if (turnOwnerRef.current === null) {
     const p = getForm(playerFormId)!;
     const e = getForm(enemyFormId)!;
-    if (p.spd === e.spd) return Math.random() < 0.5;
-    return p.spd > e.spd;
-  });
-  const speedOrderLabel = playerFirst
+    turnOwnerRef.current = p.spd === e.spd ? (Math.random() < 0.5 ? 'player' : 'enemy') : p.spd > e.spd ? 'player' : 'enemy';
+  }
+  const [turnOwner, setTurnOwner] = useState<'player' | 'enemy'>(turnOwnerRef.current);
+  const speedOrderLabel = turnOwner === 'player'
     ? `${getForm(playerFormId)!.character.toUpperCase()} STRIKES FIRST`
     : `${getForm(enemyFormId)!.character.toUpperCase()} STRIKES FIRST`;
   const [command, setCommand] = useState<CommandType | null>(null);
@@ -307,13 +316,55 @@ function BattleScreen({ playerFormId, enemyFormId, onExit }: {
   const [stageFailed, setStageFailed] = useState(false);
   const [stageTimeLeft, setStageTimeLeft] = useState(0);
   const [stageCard, setStageCard] = useState<CardDef | null>(null);
+  // IA real del GBC (battle.shtml): ataca regularmente → gather power →
+  // 5 Stage Attack → Beam/Damage → repite. No usa energy cards sin gather.
+  const aiRef = useRef({ mode: 0, attacks: 0, gathered: false });
   const stageTimer = useRef<ReturnType<typeof setInterval> | null>(null);
+  const [limits, setLimits] = useState<number[]>(() => {
+    const assigned = loadLimits(playerFormId);
+    return assigned.length > 0 ? assigned : LIMIT_DEFAULTS[getForm(playerFormId)?.character || ''] || [];
+  });
 
   useEffect(() => {
     setBgId(BATTLE_BGS[Math.floor(Math.random() * BATTLE_BGS.length)].id);
   }, []);
 
   const addLog = useCallback((msg: string) => setLog(prev => [...prev.slice(-6), msg]), []);
+  const limitCards = (limits
+    .map(id => getCard(id))
+    .filter((c): c is CardDef => !!c));
+  // limitCards con coste real: el jugador debe tener CC suficiente
+  const minLimitCost = limitCards.length > 0 ? Math.min(...limitCards.map(c => c.cc)) : 0;
+
+  // ═══ ROUND (mecánica real del GBC) ═══
+  // Cada round hay UN atacante y UN defensor. El más rápido ataca primero.
+  // "Each time you're the attacker, you get 3 CC" (battle.shtml).
+  const roundStart = () => {
+    // Alternar: el otro luchador actúa en el siguiente round
+    const owner = turnOwnerRef.current;
+    turnOwnerRef.current = owner === 'player' ? 'enemy' : 'player';
+    setTurnOwner(turnOwnerRef.current);
+    if (owner === 'player') {
+      // El jugador es el atacante: +3 CC
+      setPlayer(prev => ({ ...prev, cc: Math.min(prev.maxCc, prev.cc + 3) }));
+      addLog(`${getForm(playerFormId)!.character.toUpperCase()} ${t('battle.strikesFirst')} (+3 CC)`);
+      setPhase('position');
+    } else {
+      // El enemigo es el atacante: +3 CC y ataca
+      setEnemy(prev => ({ ...prev, cc: Math.min(prev.maxCc, prev.cc + 3) }));
+      addLog(`${getForm(enemyFormId)!.character.toUpperCase()} ${t('battle.strikesFirst')} (+3 CC)`);
+      enemyAttack();
+    }
+  };
+
+  // Arranque: primer ROUND del combate (guard contra doble mount de StrictMode)
+  const startedRef = useRef(false);
+  useEffect(() => {
+    if (startedRef.current) return;
+    startedRef.current = true;
+    roundStart();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const setPosition = (pos: Position, elev: Elevation) => {
     Sfx.position();
@@ -343,17 +394,23 @@ function BattleScreen({ playerFormId, enemyFormId, onExit }: {
     // Consume la acción de ataque completa
     setTimeout(() => {
       setPlayerPose('idle');
-      setPhase('cardSelect');
       // Termina el turno tras Gather (acción completa consumida)
       setSelectedCard(null);
-      setTimeout(() => enemyTurn(0), 600);
+      setTimeout(() => roundStart(), 600);
     }, 800);
   };
 
   const selectCommand = (cmd: CommandType) => {
     Sfx.select();
-    if (cmd === 'LIMIT' && player.cc < 20) { addLog(t('battle.ccInsufficient')); Sfx.cancel(); return; }
     setCommand(cmd);
+    if (cmd === 'B') { setPhase('basic'); return; }
+    if (cmd === 'LIMIT') { setPhase('limitSelect'); return; }
+    if (cmd === 'C') {
+      // CHARA: cambio de personaje (requiere batalla 2v2, pendiente)
+      addLog(t('battle.noAlly'));
+      Sfx.cancel();
+      return;
+    }
     setPhase('cardSelect');
   };
 
@@ -453,8 +510,10 @@ function BattleScreen({ playerFormId, enemyFormId, onExit }: {
   const finishStageAttack = (card: CardDef, complete: boolean, ccGained: number) => {
     if (stageTimer.current) clearInterval(stageTimer.current);
     if (complete) {
-      // Ataque completo: daño moderado + el CC ya acumulado
-      let dmg = Math.floor((card.atk + player.str * 0.3) * 1.2);
+      // Ataque completo: daño real (power + move) × posMult (front vulnerable)
+      const vulnerable = (player.elevation === 'air' && card.type === 'beam') || (player.elevation === 'ground' && card.type === 'damage');
+      const posMult = (enemy.position === 'front' && vulnerable) ? 0.8 : 0.5;
+      let dmg = Math.floor((card.atk + player.str) * posMult);
       setEnemy(prev => ({ ...prev, hp: Math.max(0, prev.hp - dmg) }));
       setFlashEnemy(true);
       setDamageNums(prev => [...prev, { value: dmg, type: 'damage', x: 70, y: 30, id: Date.now() }]);
@@ -480,22 +539,40 @@ function BattleScreen({ playerFormId, enemyFormId, onExit }: {
   const finishPlayerTurnStage = (ccGained: number) => {
     setSelectedCard(null);
     setStageSeq([]); setStageIdx(0); setStageCorrect(0); setStageFailed(false); setStageCard(null);
-    setTimeout(() => enemyTurn(0), 600);
+    setTimeout(() => roundStart(), 600);
   };
 
   const selectCard = (idx: number) => {
     const card = hand[idx];
     setSelectedCard(idx);
 
+    // Economía real: las cartas CUESTAN CC ("may or may not reduce your CC")
+    if (player.cc < card.cc) {
+      addLog(`${t('battle.insufficientCc')} (${card.name} ${card.cc} CC)`);
+      Sfx.cancel();
+      setSelectedCard(null);
+      return;
+    }
+
     // Stage Attack (command): secuencia de inputs A/B a tiempo
     if (card.type === 'command' && card.effect.startsWith('command_')) {
+      // Pagar coste (las command cards también cuestan CC)
+      setPlayer(prev => ({ ...prev, cc: Math.max(0, prev.cc - card.cc) }));
       startStageAttack(card);
       return;
     }
 
     Sfx.cardPlay();
     setPlayerPose(card.type === 'beam' ? 'beam_charge' : card.type === 'damage' ? 'attack_fwd' : card.type === 'defense' ? 'guard' : 'idle');
+    setTimeout(() => resolveCardPlay(card, false, idx), 0);
+  };
 
+  // Resolución de una carta JOINT o LIMITED (misma mecánica; solo cambia la mano)
+  const resolveCardPlay = (card: CardDef, isLimit: boolean, handIdx: number) => {
+    const endTurn = () => {
+      if (isLimit) { setSelectedCard(null); setTimeout(() => roundStart(), 600); }
+      else finishPlayerTurn(handIdx);
+    };
     setTimeout(() => {
       let damage = 0;
       let hitType: 'damage' | 'miss' = 'damage';
@@ -516,7 +593,7 @@ function BattleScreen({ playerFormId, enemyFormId, onExit }: {
           addLog(`${player.name} ${t('battle.uses')} ${card.name} — +${heal} ${t('battle.hp')}!`);
         } else if (eff === 'life_drain') {
           // roba vida: daño + cura
-          const drain = Math.floor((card.atk + player.str * 0.2) * 0.5);
+          const drain = Math.floor((card.atk + player.str) * 0.5);
           setEnemy(prev => ({ ...prev, hp: Math.max(0, prev.hp - drain) }));
           setPlayer(prev => ({ ...prev, hp: Math.min(prev.maxHp, prev.hp + drain) }));
           setDamageNums(prev => [...prev, { value: drain, type: 'damage', x: 70, y: 30, id: Date.now() }]);
@@ -555,7 +632,7 @@ function BattleScreen({ playerFormId, enemyFormId, onExit }: {
           if (eff === 'buff_kaio') setPStages(s => ({ ...s, str: clampStage(s.str + 2), ki: clampStage(s.ki + 2) }));
           if (eff.startsWith('debuff_')) setEStages(s => ({ ...s, str: clampStage(s.str - 1), ki: clampStage(s.ki - 1) }));
           if (eff === 'gamebomb' || eff === 'candy' || eff === 'naughty_book' || eff === 'knockdown_dmg' || eff === 'knockdown_min') {
-            const dmg = Math.floor((card.atk || 20) + player.str * 0.2);
+            const dmg = Math.floor((card.atk || 20) + player.str);
             setEnemy(prev => ({ ...prev, hp: Math.max(0, prev.hp - dmg) }));
             setDamageNums(prev => [...prev, { value: dmg, type: 'damage', x: 70, y: 30, id: Date.now() }]);
             addLog(`${player.name} ${t('battle.uses')} ${card.name} — ${dmg} ${t('battle.dmg')}`);
@@ -563,8 +640,8 @@ function BattleScreen({ playerFormId, enemyFormId, onExit }: {
             addLog(`${player.name} ${t('battle.uses')} ${card.name} — ${t('battle.buff')}`);
           }
         }
-        setPlayer(prev => ({ ...prev, cc: Math.min(prev.maxCc, prev.cc + card.cc) }));
-        finishPlayerTurn(idx);
+        setPlayer(prev => ({ ...prev, cc: Math.max(0, prev.cc - card.cc) }));
+        endTurn();
         return;
       }
 
@@ -572,18 +649,30 @@ function BattleScreen({ playerFormId, enemyFormId, onExit }: {
         hitType = 'miss';
         addLog(`${player.name} → ${card.name} — ${t('battle.miss')}!`);
       } else {
-        let posMod = 1.0;
-        // Posiciones reales: aire vulnerable a Beam, suelo vulnerable a Damage
-        if (enemy.elevation === 'air' && card.type === 'beam') posMod *= 1.4;
-        else if (enemy.elevation === 'ground' && card.type === 'damage') posMod *= 1.4;
-        if (enemy.position === 'back' && card.type !== 'beam') posMod *= 0.85;
-        if (player.position === 'front') posMod *= 1.1;
-        let atkMod = card.atk + (card.type === 'beam' ? (player.ki + pBuffs.ki) * 0.5 : (player.str + pBuffs.str) * 0.3);
-        if (card.type === 'beam' && command === 'LIMIT') atkMod *= 1.5;
-        if (command === 'J') atkMod *= 0.8;
-        if (command === 'B') atkMod *= 1.2;
-        damage = Math.floor(atkMod * posMod);
-        addLog(`${player.name} → ${card.name} — ${damage} ${t('battle.dmg')}`);
+        // Respuesta del defensor (enemigo): 55% DEFEND (block ×0.5) / 45% MOVE
+        // (el defensor del GBC solo puede defenderse o moverse)
+        const eResp = Math.random() < 0.55 ? 'defend' : 'move';
+        let ePos = enemy.position;
+        let eElev = enemy.elevation;
+        if (eResp === 'move') {
+          ePos = Math.random() < 0.5 ? 'front' : 'back';
+          eElev = Math.random() < 0.25 ? 'air' : 'ground';
+          setEnemy(prev => ({ ...prev, position: ePos, elevation: eElev }));
+        }
+        // Fórmula REAL del GBC: Damage = (power + move) × positionMultiplier × block
+        // power = STR (damage) o KI (beam) · move = poder de la carta
+        // positionMultiplier real (test ROM): front vulnerable = 0.8, resto = 0.5
+        const power = card.type === 'beam' ? player.ki + pBuffs.ki : player.str + pBuffs.str;
+        const vulnerable = (eElev === 'air' && card.type === 'beam') || (eElev === 'ground' && card.type === 'damage');
+        const posMult = (ePos === 'front' && vulnerable) ? 0.8 : 0.5;
+        damage = Math.floor((card.atk + power) * posMult);
+        if (eResp === 'defend') {
+          // block (defend del GBC) = ×0.5
+          damage = Math.floor(damage * 0.5);
+          addLog(`${enemy.name} ${t('battle.defends')} — ${damage} ${t('battle.dmg')}`);
+        } else {
+          addLog(`${player.name} → ${card.name} — ${damage} ${t('battle.dmg')}`);
+        }
       }
 
       setEnemy(prev => ({ ...prev, hp: Math.max(0, prev.hp - damage) }));
@@ -596,9 +685,8 @@ function BattleScreen({ playerFormId, enemyFormId, onExit }: {
       if (damage > 0) setDamageNums(prev => [...prev, { value: damage, type: 'damage', x: 70, y: 30, id: Date.now() }]);
       else if (hitType === 'miss') setDamageNums(prev => [...prev, { value: 0, type: 'miss', x: 70, y: 30, id: Date.now() }]);
 
-      // CC gain
-      if (card.type === 'command') setPlayer(prev => ({ ...prev, cc: Math.min(prev.maxCc, prev.cc + 3) }));
-      setPlayer(prev => ({ ...prev, cc: Math.min(prev.maxCc, prev.cc + card.cc) }));
+      // Coste real de la carta (JOINT)
+      setPlayer(prev => ({ ...prev, cc: Math.max(0, prev.cc - card.cc) }));
 
       if (enemy.hp - damage <= 0) {
         // Otorgar EXP al ganar
@@ -619,8 +707,51 @@ function BattleScreen({ playerFormId, enemyFormId, onExit }: {
         return;
       }
 
-      setTimeout(() => enemyTurn(damage), 700);
+      setTimeout(() => endTurn(), 700);
     }, 350);
+  };
+
+  // ─── BASIC: acciones gratuitas del GBC (no cuestan CC) ───
+  const basicAction = (action: 'gather' | 'stage' | 'guard') => {
+    if (action === 'gather') { gatherPower(); return; }
+    if (action === 'guard') {
+      Sfx.select();
+      setPlayerGuard({ type: 'reduce' });
+      addLog(`${player.name} ${t('battle.defends')} (ENDURANCE — próximo golpe a la mitad)`);
+      setTimeout(() => roundStart(), 500);
+      return;
+    }
+    // Stage Attack básico: 3 etapas (4 si se ha gathered — mecánica real)
+    const stages = powerState !== 'NORMAL' ? 4 : 3;
+    const basicCard: CardDef = {
+      id: -1,
+      name: stages === 4 ? '4 Stage Atk.' : '3 Stage Atk.',
+      type: 'command',
+      effect: 'command_3',
+      atk: 12,
+      acc: 100,
+      cc: 0,
+      rarity: 1,
+    };
+    startStageAttack(basicCard);
+  };
+
+  // ─── LIMITED CARDS (L): reutilizables, cuestan CC, no salen de la mano ───
+  const playLimit = (card: CardDef) => {
+    if (player.cc < card.cc) {
+      addLog(`${t('battle.insufficientCc')} (${card.name} ${card.cc} CC)`);
+      Sfx.cancel();
+      return;
+    }
+    if (card.type === 'command' && card.effect.startsWith('command_')) {
+      setPlayer(prev => ({ ...prev, cc: Math.max(0, prev.cc - card.cc) }));
+      startStageAttack(card);
+      return;
+    }
+    Sfx.cardPlay();
+    setPlayerPose(card.type === 'beam' ? 'beam_charge' : card.type === 'damage' ? 'attack_fwd' : 'idle');
+    setSelectedCard(null);
+    setTimeout(() => resolveCardPlay(card, true, -1), 0);
   };
 
   const finishPlayerTurn = (idx: number) => {
@@ -639,103 +770,149 @@ function BattleScreen({ playerFormId, enemyFormId, onExit }: {
     const finalHand = newHand.slice(0, 5);
     setHand(finalHand);
     setSelectedCard(null);
-    setTimeout(() => enemyTurn(0), 600);
+    setTimeout(() => roundStart(), 600);
   };
 
-  const enemyTurn = (lastDmg: number) => {
+  // ═══ ENEMY ATTACK: IA real del GBC (battle.shtml) ═══
+  // Patrón: ataca regularmente → gather power → 5 Stage Attack → Beam/Damage → repite.
+  // Rara vez usa energy cards sin haber gathered power.
+  const incomingCard = useRef<CardDef | null>(null);
+
+  const enemyAttack = () => {
     setPhase('enemyTurn');
     setEnemyPose('attack_fwd');
+    const ai = aiRef.current;
+    // El enemigo elige posición al atacar (frente/suelo la mayoría de veces)
+    const posRoll = Math.random();
+    const ePos: { position: Position; elevation: Elevation } =
+      posRoll < 0.5 ? { position: 'front', elevation: 'ground' }
+      : posRoll < 0.75 ? { position: 'back', elevation: 'ground' }
+      : { position: 'front', elevation: 'air' };
+    setEnemy(prev => ({ ...prev, ...ePos }));
     setTimeout(() => {
-      // IA mejorada: decide según CC, posición del jugador (vulnerabilidad) y mano
-      // (patrón real del GBC con excepciones por contexto)
+      const attackCards = CARDS.filter(c => (c.type === 'damage' || c.type === 'beam') && !c.compatible);
       let card: CardDef;
-      const enemyCc = enemy.cc;
-      const playerAir = player.elevation === 'air';
-      const playerGround = player.elevation === 'ground';
-      const affordable = CARDS.filter(c =>
-        (c.type === 'damage' || c.type === 'beam') && !c.compatible && c.cc <= enemyCc + 3
-      );
-      // Si el jugador está en el aire → preferir Beam (vulnerable); en suelo → Damage
-      const idealType = playerAir ? 'beam' : 'damage';
-      let pool = affordable.filter(c => c.type === idealType);
-      if (pool.length === 0) pool = affordable;
-      if (pool.length === 0) pool = CARDS.filter(c => (c.type === 'damage' || c.type === 'beam') && !c.compatible);
-      // Preferir cartas con buena precisión salvo que tenga CC de sobra
-      const risky = enemyCc >= 20 && Math.random() < 0.2;
-      if (!risky) {
-        const accurate = pool.filter(c => c.acc >= 85);
-        if (accurate.length > 0) pool = accurate;
-      }
-      card = pool[Math.floor(Math.random() * pool.length)] || CARDS[25];
-      let damage = 0;
-      let hitType: 'damage' | 'miss' | 'guard' = 'damage';
-      if (Math.random() > card.acc / 100) {
-        hitType = 'miss';
-        addLog(`${enemy.name} → ${card.name} — ${t('battle.miss')}!`);
-      } else {
-        let posMod = 1.0;
-        if (player.elevation === 'air' && card.type === 'beam') posMod *= 1.4;
-        else if (player.elevation === 'ground' && card.type === 'damage') posMod *= 1.4;
-        if (player.position === 'back' && card.type !== 'beam') posMod *= 0.85;
-        if (enemy.position === 'front') posMod *= 1.1;
-        let atkMod = card.atk + (card.type === 'beam' ? (enemy.ki + eBuffs.ki) * 0.5 : (enemy.str + eBuffs.str) * 0.3);
-        damage = Math.floor(atkMod * posMod);
-        // Aplicar guardia activa del jugador
-        if (playerGuard) {
-          const g = playerGuard.type;
-          if ((g === 'avoid_beam' && card.type === 'beam') || (g === 'avoid_damage' && card.type === 'damage')) {
-            damage = 0; hitType = 'guard';
-            addLog(`${player.name} bloquea ${card.name}!`);
-          } else if (g === 'reduce') {
-            damage = Math.floor(damage * 0.5);
-            addLog(`${player.name} resiste — ${damage} ${t('battle.dmg')}`);
-          } else if (g === 'absorb' && card.type === 'beam') {
-            damage = 0; hitType = 'guard';
-            setPlayer(prev => ({ ...prev, hp: Math.min(prev.maxHp, prev.hp + Math.floor(prev.maxHp * 0.1)) }));
-            addLog(`${player.name} absorbe el beam +${Math.floor(player.maxHp * 0.1)} HP!`);
-          }
-          setPlayerGuard(null); // la guardia se consume
-        } else {
-          addLog(`${enemy.name} → ${card.name} — ${damage} ${t('battle.dmg')}`);
-        }
-      }
-      setPlayer(prev => ({ ...prev, hp: Math.max(0, prev.hp - damage) }));
-      // CC al recibir daño significativo (más en posición vulnerable)
-      if (damage > 0) {
-        const vuln = (player.elevation === 'air' && card.type === 'beam') || (player.elevation === 'ground' && card.type === 'damage');
-        setPlayer(prev => ({ ...prev, cc: Math.min(prev.maxCc, prev.cc + (vuln ? 2 : 1)) }));
-      }
-      setFlashPlayer(true);
-      if (card.type === 'beam') Sfx.beam();
-      else if (damage > 0) Sfx.punch();
-      else if (hitType === 'miss') Sfx.dodge();
-      setTimeout(() => setFlashPlayer(false), 150);
-      if (damage > 0) { setPlayerPose('hurt'); setDamageNums(prev => [...prev, { value: damage, type: 'damage', x: 30, y: 50, id: Date.now() }]); }
-      else if (hitType === 'guard') setDamageNums(prev => [...prev, { value: 0, type: 'guard', x: 30, y: 50, id: Date.now() }]);
-      else if (hitType === 'miss') setDamageNums(prev => [...prev, { value: 0, type: 'miss', x: 30, y: 50, id: Date.now() }]);
-
-      // +3 CC por turno atacante + CC de la carta; +1 CC extra al infligir daño
-      setEnemy(prev => ({ ...prev, cc: Math.min(prev.maxCc, prev.cc + 3 + card.cc + (damage > 0 ? 1 : 0)) }));
-
-      if (player.hp - damage <= 0) {
-        setTimeout(() => { setPlayerPose('hurt'); setPhase('lose'); Sfx.defeat(); addLog(`${player.name} ${t('battle.defeated')}`); }, 500);
+      if (ai.mode === 1) {
+        // Gather Power: no ataca, sube STR/KI (mecánica real)
+        Sfx.powerUp();
+        setEStages(s => ({ ...s, str: clampStage(s.str + 1), ki: clampStage(s.ki + 1) }));
+        setEnemyPose('power_up');
+        addLog(`${enemy.name} ${t('battle.gathers')}! (+8 STR/KI)`);
+        ai.mode = 2;
+        setTimeout(() => { setEnemyPose('idle'); roundStart(); }, 800);
         return;
       }
+      const affordable = attackCards.filter(c => c.cc <= enemy.cc);
+      if (ai.mode === 2) {
+        // 5 Stage Attack tras gather (patrón real)
+        const fiveStage = CARDS.filter(c => c.type === 'command' && /5/i.test(c.name) && c.cc <= enemy.cc);
+        card = fiveStage.length > 0 ? fiveStage[Math.floor(Math.random() * fiveStage.length)]
+          : affordable.find(c => c.type === 'beam') || attackCards[Math.floor(Math.random() * attackCards.length)];
+        ai.mode = 3;
+      } else if (ai.mode === 3) {
+        // Beam/Damage tras el 5-stage → vuelve al inicio del patrón
+        const beams = affordable.filter(c => c.type === 'beam');
+        card = beams.length > 0 ? beams[Math.floor(Math.random() * beams.length)]
+          : affordable[Math.floor(Math.random() * affordable.length)] || attackCards[Math.floor(Math.random() * attackCards.length)];
+        ai.mode = 0; ai.attacks = 0;
+      } else {
+        // Modo 0: ataque regular (Damage preciso) — rara vez energy cards
+        ai.attacks++;
+        const accurate = affordable.filter(c => c.type === 'damage' && c.acc >= 85);
+        card = accurate.length > 0 ? accurate[Math.floor(Math.random() * accurate.length)]
+          : affordable[Math.floor(Math.random() * affordable.length)] || attackCards[Math.floor(Math.random() * attackCards.length)];
+        if (ai.attacks >= 2) ai.mode = 1;
+      }
+      incomingCard.current = card;
+      addLog(`${enemy.name} ${t('battle.uses')} ${card.name}`);
+      setTimeout(() => setPhase('defend'), 350);
+    }, 450);
+  };
 
-      setTimeout(() => {
-        setPlayerPose('idle'); setEnemyPose('idle');
-        // Nuevo ROUND: recalcular prioridad por SPEED actual (los buffs de Speed cuentan)
-        const pSpd = getForm(playerFormId)!.spd;
-        const eSpd = getForm(enemyFormId)!.spd;
-        setPlayerFirst(pSpd === eSpd ? Math.random() < 0.5 : pSpd > eSpd);
-        setPhase('position'); setTurn(t => t + 1); setSelectedCard(null);
-        if (gatherTurns > 0) {
-          setGatherTurns(g => g - 1);
-          // FULL_POWER → HALF_POWER → NORMAL (estados reales)
-          setPowerState(prev => prev === 'FULL_POWER' ? 'HALF_POWER' : prev === 'HALF_POWER' ? 'NORMAL' : prev);
+  // El defensor (jugador) elige: DEFEND (mitad de daño) o MOVE (reposicionarse)
+  const defendChoice = (choice: 'defend' | 'move', pos?: Position, elev?: Elevation) => {
+    const card = incomingCard.current || CARDS[25];
+    if (choice === 'move' && pos && elev) {
+      Sfx.position();
+      setPlayer(prev => ({ ...prev, position: pos, elevation: elev }));
+      resolveEnemyAttack(false, pos, elev, card);
+    } else {
+      resolveEnemyAttack(true, player.position, player.elevation, card);
+    }
+  };
+
+  const resolveEnemyAttack = (defended: boolean, pos: Position, elev: Elevation, card: CardDef) => {
+    setPlayer(prev => ({ ...prev, position: pos, elevation: elev }));
+    let damage = 0;
+    let hitType: 'damage' | 'miss' | 'guard' = 'damage';
+    if (Math.random() > card.acc / 100) {
+      hitType = 'miss';
+      addLog(`${enemy.name} → ${card.name} — ${t('battle.miss')}!`);
+    } else {
+      // Fórmula REAL del GBC: Damage = (power + move) × positionMultiplier × block
+      const power = card.type === 'beam' ? enemy.ki + eBuffs.ki : enemy.str + eBuffs.str;
+      const vulnerable = (elev === 'air' && card.type === 'beam') || (elev === 'ground' && card.type === 'damage');
+      const posMult = (pos === 'front' && vulnerable) ? 0.8 : 0.5;
+      damage = Math.floor((card.atk + power) * posMult);
+      // Guardia activa del jugador (cartas Taiyoken/Avoid/Endurance/Absorb)
+      if (playerGuard) {
+        const g = playerGuard.type;
+        if ((g === 'avoid_beam' && card.type === 'beam') || (g === 'avoid_damage' && card.type === 'damage')) {
+          damage = 0; hitType = 'guard';
+          addLog(`${player.name} ${t('battle.blocks')} ${card.name}!`);
+        } else if (g === 'reduce') {
+          damage = Math.floor(damage * 0.5);
+          addLog(`${player.name} ${t('battle.resists')} — ${damage} ${t('battle.dmg')}`);
+        } else if (g === 'absorb' && card.type === 'beam') {
+          damage = 0; hitType = 'guard';
+          const heal = Math.floor(player.maxHp * 0.1);
+          setPlayer(prev => ({ ...prev, hp: Math.min(prev.maxHp, prev.hp + heal) }));
+          addLog(`${player.name} ${t('battle.absorbs')} +${heal} HP!`);
         }
-      }, 400);
-    }, 500);
+        setPlayerGuard(null);
+      } else if (defended) {
+        // DEFEND básico: mitad de daño (defender del GBC)
+        damage = Math.floor(damage * 0.5);
+        addLog(`${player.name} ${t('battle.defends')} — ${damage} ${t('battle.dmg')}`);
+      } else {
+        addLog(`${enemy.name} → ${card.name} — ${damage} ${t('battle.dmg')}`);
+      }
+    }
+    setPlayer(prev => ({ ...prev, hp: Math.max(0, prev.hp - damage) }));
+    // CC al recibir daño: +1 base, +1 extra si sustancial (≥15% HP), +1 en posición vulnerable
+    if (damage > 0) {
+      const substantial = damage >= player.maxHp * 0.15;
+      const vuln = (elev === 'air' && card.type === 'beam') || (elev === 'ground' && card.type === 'damage');
+      const gain = 1 + (substantial ? 1 : 0) + (vuln ? 1 : 0);
+      setPlayer(prev => ({ ...prev, cc: Math.min(prev.maxCc, prev.cc + gain) }));
+      addLog(`${player.name} +${gain} CC (${t('battle.hp')} bajo)`);
+    }
+    // La carta del enemigo CUESTA CC (economía real)
+    setEnemy(prev => ({ ...prev, cc: Math.max(0, prev.cc - card.cc) }));
+    setFlashPlayer(true);
+    if (card.type === 'beam') Sfx.beam();
+    else if (damage > 0) Sfx.punch();
+    else if (hitType === 'miss') Sfx.dodge();
+    setTimeout(() => setFlashPlayer(false), 150);
+    if (damage > 0) { setPlayerPose('hurt'); setDamageNums(prev => [...prev, { value: damage, type: 'damage', x: 30, y: 50, id: Date.now() }]); }
+    else if (hitType === 'guard') setDamageNums(prev => [...prev, { value: 0, type: 'guard', x: 30, y: 50, id: Date.now() }]);
+    else if (hitType === 'miss') setDamageNums(prev => [...prev, { value: 0, type: 'miss', x: 30, y: 50, id: Date.now() }]);
+
+    if (player.hp - damage <= 0) {
+      setTimeout(() => { setPlayerPose('hurt'); setPhase('lose'); Sfx.defeat(); addLog(`${player.name} ${t('battle.defeated')}`); }, 500);
+      return;
+    }
+
+    setTimeout(() => {
+      setPlayerPose('idle'); setEnemyPose('idle');
+      setTurn(t => t + 1); setSelectedCard(null);
+      // Decaer Gather Power (FULL_POWER → HALF_POWER → NORMAL)
+      if (gatherTurns > 0) {
+        setGatherTurns(g => g - 1);
+        setPowerState(prev => prev === 'FULL_POWER' ? 'HALF_POWER' : prev === 'HALF_POWER' ? 'NORMAL' : prev);
+      }
+      roundStart();
+    }, 400);
   };
 
   useEffect(() => {
@@ -813,9 +990,12 @@ function BattleScreen({ playerFormId, enemyFormId, onExit }: {
           <span className="phase-label">
             {phase === 'position' ? t('battle.choosePosition') :
              phase === 'command' ? t('battle.selectCommand') :
+             phase === 'basic' ? t('battle.basic') :
+             phase === 'limitSelect' ? t('battle.limit') :
              phase === 'cardSelect' ? t('battle.selectCard') :
              phase === 'stageInput' ? 'STAGE INPUT' :
-             phase === 'enemyTurn' ? t('battle.enemyTurn') : ''}
+             phase === 'enemyTurn' ? t('battle.enemyTurn') :
+             phase === 'defend' ? t('battle.defendAction') : ''}
           </span>
         </div>
         <button className="btn-exit" onClick={() => onExit(false)}><X size={12} /></button>
@@ -837,23 +1017,54 @@ function BattleScreen({ playerFormId, enemyFormId, onExit }: {
         {phase === 'command' && (
           <div className="command-select">
             <div className="command-strip">
-              <button onClick={() => selectCommand('LIMIT')} disabled={player.cc < 20} className="cmd-limit">{t('battle.limit')}</button>
+              <button onClick={() => selectCommand('LIMIT')} className="cmd-limit">L</button>
               <button onClick={() => selectCommand('J')} className="cmd-j">J</button>
               <button onClick={() => selectCommand('B')} className="cmd-b">B</button>
               <button onClick={() => selectCommand('C')} className="cmd-c">C</button>
-              <button onClick={gatherPower} className={`cmd-gather ${gatherTurns > 0 ? 'active' : ''}`} disabled={gatherTurns > 0}>
-                {gatherTurns > 0 ? powerState.replace('_', ' ') : 'GATHER'}
+            </div>
+            <div className="command-help">{t('battle.basicFree')} · {t('battle.limitedHelp')}</div>
+          </div>
+        )}
+        {phase === 'basic' && (
+          <div className="command-select">
+            <div className="basic-menu">
+              <button className="basic-btn" onClick={() => basicAction('stage')}>
+                <strong>{t('battle.stageAttack')}</strong>
+                <span>{powerState !== 'NORMAL' ? '4 ' : '3 '}{t('battle.powerState')} · A/B</span>
+              </button>
+              <button className="basic-btn" onClick={() => basicAction('gather')} disabled={gatherTurns > 0}>
+                <strong>{t('battle.gatherPower')}</strong>
+                <span>{gatherTurns > 0 ? powerState.replace('_', ' ') : '+8 STR/KI'}</span>
+              </button>
+              <button className="basic-btn" onClick={() => basicAction('guard')}>
+                <strong>{t('battle.defendAction')}</strong>
+                <span>−50% {t('battle.dmg')}</span>
+              </button>
+              <button className="basic-btn basic-back" onClick={() => { Sfx.cancel(); setPhase('command'); }}>
+                {t('battle.back')}
               </button>
             </div>
-            {gatherTurns > 0 && (
-              <div className="limit-deck-bar">
-                <span className="limit-deck-label">LIMIT DECK ({gatherTurns} turno{gatherTurns > 1 ? 's' : ''})</span>
-                {player.limits.map((lim, i) => (
-                  <button key={i} className="limit-chip" onClick={() => selectCommand('LIMIT')}>{lim}</button>
-                ))}
-              </div>
-            )}
-            <div className="command-help">{t('battle.limitHelp')}</div>
+            <div className="command-help">{t('battle.basicFree')}</div>
+          </div>
+        )}
+        {phase === 'limitSelect' && (
+          <div className="command-select">
+            <div className="limit-panel">
+              <div className="limit-title">LIMITED — {player.name}</div>
+              {limitCards.length === 0 && <div className="limit-empty">{t('battle.limitHelp')}</div>}
+              {limitCards.map((c, i) => (
+                <button key={i} className={`limit-row ${player.cc < c.cc ? 'locked' : ''}`}
+                  disabled={player.cc < c.cc} onClick={() => playLimit(c)}>
+                  <span className="limit-name">{c.name}</span>
+                  <span className="limit-cost">{c.cc} CC</span>
+                  {player.cc < c.cc && <span className="limit-lock">{t('battle.insufficientCc')}</span>}
+                </button>
+              ))}
+              <button className="basic-btn basic-back" onClick={() => { Sfx.cancel(); setPhase('command'); }}>
+                {t('battle.back')}
+              </button>
+            </div>
+            <div className="command-help">{t('battle.limitedHelp')}</div>
           </div>
         )}
         {phase === 'cardSelect' && (
@@ -894,6 +1105,20 @@ function BattleScreen({ playerFormId, enemyFormId, onExit }: {
         )}
         {phase === 'enemyTurn' && (
           <div className="enemy-turn-overlay"><div className="turn-text">{t('battle.enemyTurn')}</div></div>
+        )}
+        {phase === 'defend' && (
+          <div className="position-select">
+            <div className="control-label">{t('battle.defendAction')} — {t('battle.choosePosition')}</div>
+            <div className="position-pad">
+              <button onClick={() => defendChoice('move', 'back', 'air')}>{t('battle.airBack')}</button>
+              <button onClick={() => defendChoice('move', 'front', 'air')}>{t('battle.airFront')}</button>
+              <button onClick={() => defendChoice('move', 'back', 'ground')}>{t('battle.gndBack')}</button>
+              <button onClick={() => defendChoice('move', 'front', 'ground')}>{t('battle.gndFront')}</button>
+            </div>
+            <button className="btn-defend" onClick={() => defendChoice('defend')}>
+              <strong>{t('battle.defendAction')}</strong> (−50% {t('battle.dmg')})
+            </button>
+          </div>
         )}
         {phase === 'win' && (
           <div className="result-screen">
@@ -1130,25 +1355,21 @@ function expToNext(level: number): number {
   return 100 + (level - 1) * 50;
 }
 
-// Aplicar subida de nivel con crecimiento ESPECÍFICO por personaje
-// (fiel al GBC: cada luchador tiene su propio growth; no es +1 universal).
-// La elección de qué estadística subir rota: HP → STR → KI → SPD.
+// Aplicar subida de nivel con las CURVAS REALES del GBC
+// (interpolación entre cuartos de nivel 25/50/75/100 por forma).
 function applyLevelUps(base: Fighter, level: number): Fighter {
-  const gains = level - 1;
-  if (gains <= 0) return { ...base, level };
-  const g = growthFor(base.id, getCharacter(base.id)?.tier ?? 3);
-  const hpGain = Math.floor(gains / 4) * g.hp + (gains % 4 >= 1 ? g.hp : 0);
-  const strGain = Math.floor(gains / 4) * g.str + (gains % 4 >= 2 ? g.str : 0);
-  const kiGain = Math.floor(gains / 4) * g.ki + (gains % 4 >= 3 ? g.ki : 0);
-  const spdGain = Math.floor(gains / 4) * g.spd;
+  if (level <= 1) return { ...base, level };
+  const form = getForm(base.id);
+  if (!form || !form.curves) return { ...base, level };
+  const s = (stat: 'hp' | 'str' | 'ki' | 'spd') => statAtLevel(form, level, stat);
   return {
     ...base,
     level,
-    maxHp: base.maxHp + hpGain,
-    hp: base.maxHp + hpGain,
-    str: base.str + strGain,
-    ki: base.ki + kiGain,
-    spd: base.spd + spdGain,
+    maxHp: s('hp'),
+    hp: s('hp'),
+    str: s('str'),
+    ki: s('ki'),
+    spd: s('spd'),
   };
 }
 

@@ -2084,3 +2084,40 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   font-size: 10px;
   color: var(--dim);
 }
+
+/* ═══ BASIC menu (B) y Limited Cards (L) — reales del GBC ═══ */
+.basic-menu { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; width: min(460px, 92vw); }
+.basic-btn {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 4px; padding: 12px 10px; min-height: 58px;
+  background: linear-gradient(180deg, #243447, #16202e);
+  border: 2px solid var(--border); border-radius: 10px; color: var(--text);
+  font-family: inherit; cursor: pointer; transition: transform 0.12s, border-color 0.12s, box-shadow 0.12s;
+}
+.basic-btn strong { font-size: 0.92rem; letter-spacing: 0.06em; color: #ffe9a3; }
+.basic-btn span { font-size: 0.7rem; opacity: 0.75; }
+.basic-btn:hover:not(:disabled) { transform: translateY(-2px); border-color: var(--gold); box-shadow: 0 4px 14px rgba(0,0,0,.45); }
+.basic-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+.basic-btn.basic-back { grid-column: 1 / -1; min-height: 40px; background: linear-gradient(180deg, #2a2233, #1a1520); border-color: #4a3a5a; }
+.limit-panel { display: flex; flex-direction: column; gap: 6px; width: min(420px, 92vw); background: rgba(8,10,18,.82); border: 2px solid var(--border); border-radius: 10px; padding: 12px; }
+.limit-title { font-size: 0.8rem; letter-spacing: 0.14em; color: var(--gold); text-align: center; margin-bottom: 4px; }
+.limit-row {
+  display: flex; align-items: center; justify-content: space-between; gap: 10px;
+  padding: 9px 12px; background: linear-gradient(180deg, #26354a, #182434);
+  border: 2px solid var(--border); border-radius: 8px; color: var(--text);
+  font-family: inherit; cursor: pointer; transition: transform 0.12s, border-color 0.12s;
+}
+.limit-row:hover:not(:disabled) { transform: translateY(-1px); border-color: var(--gold); }
+.limit-row.locked, .limit-row:disabled { opacity: 0.4; cursor: not-allowed; }
+.limit-name { font-size: 0.85rem; font-weight: 600; }
+.limit-cost { font-size: 0.72rem; color: #7fd4ff; background: rgba(0,120,200,.18); padding: 2px 8px; border-radius: 999px; }
+.limit-lock { font-size: 0.62rem; color: #ff9a8a; }
+.limit-empty { color: var(--muted); font-size: 0.8rem; text-align: center; padding: 12px; }
+.btn-defend {
+  margin-top: 10px; padding: 12px 28px; min-width: 220px;
+  background: linear-gradient(180deg, #2c4a63, #1a3045); border: 2px solid #5a9bc4;
+  border-radius: 10px; color: var(--text); font-family: inherit; font-size: 0.95rem;
+  cursor: pointer; transition: transform 0.12s, box-shadow 0.12s;
+}
+.btn-defend:hover { transform: translateY(-2px); box-shadow: 0 4px 16px rgba(60,150,220,.35); }
+.btn-defend strong { color: #bfe6ff; letter-spacing: 0.1em; }
