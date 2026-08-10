@@ -1247,3 +1247,19 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 ::-webkit-scrollbar-track { background: var(--panel-lo); }
 ::-webkit-scrollbar-thumb { background: var(--border); border: 2px solid var(--panel-lo); }
 ::-webkit-scrollbar-thumb:hover { background: var(--border-hi); }
+
+/* ─── Iconos de carta reales ─── */
+
+.card-icon-img {
+  width: 24px; height: 18px;
+  image-rendering: pixelated;
+  object-fit: contain;
+}
+
+.card-art-img {
+  width: 56px; height: 42px;
+  image-rendering: pixelated;
+  object-fit: contain;
+}
+
+.card.small .card-art-img { width: 36px; height: 27px; }

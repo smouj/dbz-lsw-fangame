@@ -3,7 +3,8 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { createRoot } from 'react-dom/client';
 import './styles.css';
 import { FORMS, CHARACTERS, getCharacter, getForm, sheetUrl } from './data/roster';
-import { CARDS, CARD_COLORS, CARD_ICONS, CARD_TYPE_NAMES, CardDef, CardType, DECK_SIZE, MAX_COPIES, getCard } from './data/cards';
+import { CARDS, CARD_COLORS, CARD_TYPE_NAMES, CardDef, CardType, DECK_SIZE, MAX_COPIES, getCard } from './data/cards';
+import { cardIconUrl, MINI_PORTRAITS, MENU_PORTRAITS, TYPE_EMOJI } from './data/icons';
 
 // ═══════════════════════════════════════════════════════════
 // DBZ LSW Fangame — Estilo Magazine GBC Auténtico
@@ -33,35 +34,15 @@ interface Fighter {
   limits: string[];
 }
 
-// ─── Retratos (mapeo provisional, verificar visualmente) ──
-const PORTRAITS: Record<string, string> = {
-  goku: '/assets/portraits/cell_02_01.png',
-  vegeta: '/assets/portraits/cell_02_02.png',
-  gohan: '/assets/portraits/cell_02_03.png',
-  piccolo: '/assets/portraits/cell_02_04.png',
-  krillin: '/assets/portraits/cell_02_05.png',
-  trunks: '/assets/portraits/cell_02_06.png',
-  goten: '/assets/portraits/cell_02_07.png',
-  gotenks: '/assets/portraits/cell_02_08.png',
-  frieza: '/assets/portraits/cell_02_09.png',
-  cell: '/assets/portraits/cell_02_10.png',
-  buu: '/assets/portraits/cell_03_01.png',
-  nappa: '/assets/portraits/cell_03_02.png',
-  ginyu: '/assets/portraits/cell_03_03.png',
-  recoome: '/assets/portraits/cell_03_04.png',
-  guldo: '/assets/portraits/cell_03_05.png',
-  jeice: '/assets/portraits/cell_03_06.png',
-  burter: '/assets/portraits/cell_03_07.png',
-  android_16: '/assets/portraits/cell_03_08.png',
-  android_17: '/assets/portraits/cell_03_09.png',
-  android_18: '/assets/portraits/cell_03_10.png',
-  android_19: '/assets/portraits/cell_04_01.png',
-  android_20: '/assets/portraits/cell_04_02.png',
-  cell_jr: '/assets/portraits/cell_04_03.png',
-};
+// ─── Retratos (Sprite Database) ────────────────────────────
+const PORTRAITS: Record<string, string> = MENU_PORTRAITS;
 
 function portraitFor(charId: string): string | undefined {
   return PORTRAITS[charId];
+}
+
+function miniPortraitFor(charId: string): string | undefined {
+  return MINI_PORTRAITS[charId];
 }
 
 // ─── Fondos de batalla (extraídos) ────────────────────────
@@ -159,16 +140,21 @@ function CardVisual({ card, selected, onClick, small }: {
   card: CardDef; selected?: boolean; onClick?: () => void; small?: boolean;
 }) {
   const color = CARD_COLORS[card.type];
-  const icon = CARD_ICONS[card.type];
+  const iconUrl = cardIconUrl(card.id);
+  const icon = TYPE_EMOJI[card.type];
   const stars = '★'.repeat(card.rarity) + '☆'.repeat(5 - card.rarity);
   return (
     <button className={`card ${card.type} ${selected ? 'selected' : ''} ${small ? 'small' : ''}`}
       onClick={onClick} style={{ '--card-color': color } as React.CSSProperties}>
       <div className="card-header">
-        <span className="card-icon">{icon}</span>
+        <span className="card-icon">
+          {iconUrl ? <img className="card-icon-img" src={iconUrl} alt="" onError={e => (e.currentTarget.style.display = 'none')} /> : icon}
+        </span>
         <span className="card-cc">{card.cc}CC</span>
       </div>
-      <div className="card-art">{icon}</div>
+      <div className="card-art">
+        {iconUrl ? <img className="card-art-img" src={iconUrl} alt="" onError={e => (e.currentTarget.style.display = 'none')} /> : icon}
+      </div>
       <div className="card-name">{card.name}</div>
       <div className="card-type">{CARD_TYPE_NAMES[card.type]}</div>
       <div className="card-stats">
@@ -724,7 +710,7 @@ function DeckScreen({ onNavigate }: { onNavigate: (s: Screen) => void }) {
               const card = getCard(cardId)!;
               return (
                 <div key={i} className="deck-row">
-                  <span className="deck-row-icon">{CARD_ICONS[card.type]}</span>
+                  <span className="deck-row-icon">{TYPE_EMOJI[card.type]}</span>
                   <span className="deck-row-name" style={{ color: CARD_COLORS[card.type] }}>{card.name}</span>
                   <span className="deck-row-atk">{card.atk > 0 ? `ATK ${card.atk}` : ''}</span>
                   <button className="deck-row-remove" onClick={() => removeCard(cardId)}>✕</button>
