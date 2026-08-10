@@ -240,12 +240,16 @@ function BattleScreen({ playerFormId, enemyFormId, onExit }: {
   const pf = getForm(playerFormId)!;
   const ef = getForm(enemyFormId)!;
 
-  const [player, setPlayer] = useState<Fighter>({
-    id: pf.character, name: getCharacter(pf.character)?.name || pf.character, form: pf.form,
-    level: 38, maxHp: pf.hp, hp: pf.hp,
-    str: pf.str, ki: pf.ki, spd: pf.spd, maxCc: 40, cc: 8,
-    position: 'front', elevation: 'ground', battleId: pf.battleId,
-    limits: ['Limit', 'Final'],
+  const [player, setPlayer] = useState<Fighter>(() => {
+    const prog = loadProgress();
+    const base: Fighter = {
+      id: pf.character, name: getCharacter(pf.character)?.name || pf.character, form: pf.form,
+      level: prog.level, maxHp: pf.hp, hp: pf.hp,
+      str: pf.str, ki: pf.ki, spd: pf.spd, maxCc: 40, cc: 8,
+      position: 'front', elevation: 'ground', battleId: pf.battleId,
+      limits: ['Limit', 'Final'],
+    };
+    return applyLevelUps(base, prog.level);
   });
   const [enemy, setEnemy] = useState<Fighter>({
     id: ef.character, name: getCharacter(ef.character)?.name || ef.character, form: ef.form,
@@ -361,7 +365,21 @@ function BattleScreen({ playerFormId, enemyFormId, onExit }: {
       setPlayer(prev => ({ ...prev, cc: Math.min(prev.maxCc, prev.cc + card.cc) }));
 
       if (enemy.hp - damage <= 0) {
-        setTimeout(() => { setEnemyPose('hurt'); setPhase('win'); Sfx.victory(); addLog(`${enemy.name} ${t('battle.defeated')}`); }, 500);
+        // Otorgar EXP al ganar
+        const prog = loadProgress();
+        const gained = 80 + enemy.level * 20;
+        let newExp = prog.exp + gained;
+        let newLevel = prog.level;
+        while (newExp >= expToNext(newLevel)) {
+          newExp -= expToNext(newLevel);
+          newLevel++;
+        }
+        saveProgress({ level: newLevel, exp: newExp });
+        setTimeout(() => {
+          setEnemyPose('hurt'); setPhase('win'); Sfx.victory();
+          addLog(`${enemy.name} ${t('battle.defeated')}`);
+          if (newLevel > prog.level) addLog(`LEVEL UP! ${newLevel} (+HP/STR/KI/SPD)`);
+        }, 500);
         return;
       }
 
@@ -534,7 +552,8 @@ function BattleScreen({ playerFormId, enemyFormId, onExit }: {
           <div className="result-screen">
             <div className="result-title victory">{t('battle.victory')}</div>
             <div className="result-info">
-              <div>{t('battle.exp')} +184</div>
+              <div>LV {player.level}</div>
+              <div>{t('battle.exp')} +{80 + enemy.level * 20}</div>
               <div>{t('battle.hp')} {player.hp}/{player.maxHp}</div>
             </div>
             <button className="btn-primary" onClick={() => onExit(true)}>{t('common.newBattle')}</button>
@@ -613,6 +632,51 @@ function loadStoryProgress(): number {
 
 function saveStoryProgress(chapter: number) {
   try { localStorage.setItem(STORY_KEY, String(chapter)); } catch { /* noop */ }
+}
+
+// ═══════════════════════════════════════════════════════════
+// PROGRESO — EXP y niveles (localStorage dbzlsw_progress)
+// ═══════════════════════════════════════════════════════════
+
+const PROGRESS_KEY = 'dbzlsw_progress';
+
+interface SaveState {
+  level: number;
+  exp: number;
+}
+
+function loadProgress(): SaveState {
+  try {
+    const raw = localStorage.getItem(PROGRESS_KEY);
+    if (raw) {
+      const p = JSON.parse(raw);
+      if (typeof p.level === 'number' && typeof p.exp === 'number') return p;
+    }
+  } catch { /* noop */ }
+  return { level: 1, exp: 0 };
+}
+
+function saveProgress(p: SaveState) {
+  try { localStorage.setItem(PROGRESS_KEY, JSON.stringify(p)); } catch { /* noop */ }
+}
+
+// EXP necesaria para subir del nivel actual al siguiente
+function expToNext(level: number): number {
+  return 100 + (level - 1) * 50;
+}
+
+// Aplicar subida de nivel: +HP/STR/KI/SPD por nivel
+function applyLevelUps(base: Fighter, level: number): Fighter {
+  const gains = level - 1;
+  return {
+    ...base,
+    level,
+    maxHp: base.maxHp + gains * 8,
+    hp: base.maxHp + gains * 8,
+    str: base.str + gains * 2,
+    ki: base.ki + gains * 2,
+    spd: base.spd + gains,
+  };
 }
 
 function StoryScreen({ onNavigate, onStartChapter }: {
@@ -967,6 +1031,8 @@ function VersusScreen({ onNavigate, onStartVersus }: {
 }) {
   const { t } = useLang();
   const [selected, setSelected] = useState('vegeta_base');
+  const deckSize = loadDeck().length;
+  const deckValid = deckSize === DECK_SIZE;
 
   const sel = getForm(selected)!;
   const selChar = getCharacter(sel.character)!;
@@ -1013,7 +1079,10 @@ function VersusScreen({ onNavigate, onStartVersus }: {
               );
             })}
           </div>
-          <button className="btn-primary" onClick={() => onStartVersus(selected)}>{t('common.fight')}</button>
+          <button className="btn-primary" onClick={() => onStartVersus(selected)} disabled={!deckValid}>
+            {deckValid ? t('common.fight') : `DECK ${deckSize}/${DECK_SIZE}`}
+          </button>
+          {!deckValid && <div className="deck-warning">DECK MUST HAVE {DECK_SIZE} CARDS</div>}
         </div>
       </div>
     </div>

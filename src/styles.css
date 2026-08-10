@@ -1572,3 +1572,13 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 .setting-row {
   min-height: 44px;
 }
+
+/* ─── Aviso de mazo incompleto ─── */
+.deck-warning {
+  font-family: var(--fpx);
+  font-size: 7px;
+  color: var(--hp-red);
+  letter-spacing: 1px;
+  text-align: center;
+  animation: sel-blink 1s infinite alternate;
+}

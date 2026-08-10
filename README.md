@@ -47,7 +47,8 @@ El idioma se cambia en **Settings → Language** y se guarda en `localStorage` (
 - 125 cartas reales de la ROM (nombres/stats verificados contra la ROM USA)
 - Sheets de personajes byte-idénticos a la ROM (48/48 verificados)
 - Iconos de carta, retratos de menú (131) y mini (19) de la Sprite Database
-- Mazo persistente (20 cartas), colección de cartas
+- Mazo persistente (20 cartas) con validación (FIGHT bloqueado si ≠ 20), colección de cartas
+- EXP/niveles: subida de stats (+HP/STR/KI/SPD) al ganar, persistencia `dbzlsw_progress`
 - Audio GBC sintetizado (18 SFX) + settings de volumen/SFX
 - i18n completo en 10 idiomas con selector en Settings
 - Repo GitHub privado creado
@@ -55,8 +56,7 @@ El idioma se cambia en **Settings → Language** y se guarda en `localStorage` (
 ### ⏳ Pendiente
 - ⚠️ Verificación visual del mapeo retratos/iconos (contact sheets: `public/assets/portraits/menu_contact.png`, `cards/contact_sheet.png`, `portraits/mini_contact.png`)
 - Extraer overworld sprites (extractor listo: `scripts/extract_overworld.py`)
-- EXP/niveles con subida de stats (localStorage `dbzlsw_progress`)
-- Deck validation (FIGHT bloqueado si el mazo ≠ 20 cartas)
+- Transformaciones animadas (aura + flash + palette swap)
 - Transformaciones animadas (aura + flash + palette swap)
 - BGM real (GBS 20 pistas → WAV/MP3)
 - Más personajes con animación completa (solo goku/vegeta con `battleId`)
