@@ -22,6 +22,139 @@ button {
   background: #2b333e;
 }
 
+.menu-shell {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 16px;
+  background: #2b333e;
+}
+
+.menu-frame {
+  width: min(960px, 100%);
+  min-height: min(700px, calc(100vh - 32px));
+  border: 10px solid #171717;
+  background: #7f9b73;
+  box-shadow: 7px 7px 0 #07090c;
+  padding: 14px;
+}
+
+.title-screen {
+  display: grid;
+  gap: 6px;
+  border: 4px solid #171717;
+  background: #f8efb8;
+  padding: 14px;
+  text-align: center;
+}
+
+.title-screen strong {
+  font-size: clamp(1.7rem, 5vw, 3.4rem);
+}
+
+.title-screen span {
+  font-weight: 900;
+}
+
+.main-menu {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+  margin: 12px 0;
+}
+
+.main-menu button,
+.menu-panel button {
+  border: 3px solid #171717;
+  background: #fff4b8;
+  color: #171717;
+  padding: 9px 10px;
+  font: inherit;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.main-menu button.active,
+.menu-panel button.active,
+.main-menu button:hover,
+.menu-panel button:hover {
+  background: #f1b24b;
+}
+
+.menu-panel {
+  display: grid;
+  gap: 12px;
+  border: 4px solid #171717;
+  background: #f8efb8;
+  padding: 14px;
+}
+
+.menu-panel.two-col {
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+}
+
+.menu-panel > div {
+  display: grid;
+  gap: 8px;
+  align-content: start;
+}
+
+.menu-panel span {
+  color: #425044;
+  font-size: 0.78rem;
+  font-weight: 900;
+}
+
+.menu-panel strong {
+  font-size: clamp(1rem, 2.5vw, 1.5rem);
+}
+
+.menu-character {
+  width: 96px;
+  height: 96px;
+  object-fit: contain;
+  image-rendering: pixelated;
+}
+
+.deck-list,
+.character-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.deck-row,
+.character-list button {
+  display: grid;
+  gap: 5px;
+  text-align: left;
+}
+
+.deck-row {
+  grid-template-columns: minmax(0, 1fr) 42px 42px;
+  align-items: center;
+  border: 3px solid #171717;
+  background: #fff4b8;
+  padding: 7px;
+}
+
+.deck-row.active {
+  background: #f1b24b;
+}
+
+.deck-row button {
+  min-height: 34px;
+  padding: 0;
+  text-align: center;
+}
+
+.character-list img {
+  width: 64px;
+  height: 64px;
+  object-fit: contain;
+  image-rendering: pixelated;
+}
+
 .topbar,
 .command-area {
   width: min(960px, 100%);
@@ -64,7 +197,7 @@ button {
   overflow: hidden;
   border: 10px solid #171717;
   background:
-    linear-gradient(#9dbb91 0 41%, #d8d28c 41% 50%, #7f9b73 50%),
+    linear-gradient(#8cc8e8 0 38%, #f8efb8 38% 40%, #7f9b73 40% 77%, #171717 77%),
     #7f9b73;
   box-shadow: 7px 7px 0 #07090c;
   image-rendering: pixelated;
@@ -73,9 +206,11 @@ button {
 .gb-frame::after {
   content: "";
   position: absolute;
-  inset: 50% 0 auto;
-  height: 2px;
-  background: rgba(23, 23, 23, 0.55);
+  inset: 35% 0 auto;
+  height: 10%;
+  background:
+    linear-gradient(90deg, transparent 0 10%, #5d854b 10% 16%, transparent 16% 25%, #5d854b 25% 34%, transparent 34% 49%, #5d854b 49% 58%, transparent 58% 72%, #5d854b 72% 83%, transparent 83%),
+    #d8d28c;
 }
 
 .battlefield {
@@ -96,15 +231,34 @@ button {
   font-weight: 900;
 }
 
-.combatant-panel.enemy {
-  top: 8px;
-  right: 8px;
+.top-status {
+  position: absolute;
+  z-index: 8;
+  top: 2px;
+  left: 0;
+  right: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8%;
+  padding: 0 4px;
+}
+
+.combatant-panel.compact {
+  position: static;
+  width: 100%;
+  border: 0;
+  border-bottom: 2px solid #171717;
+  background: #f8efb8;
+  padding: 2px 4px;
+  font-size: clamp(0.5rem, 1.2vw, 0.72rem);
+}
+
+.combatant-panel.enemy.compact {
   text-align: right;
 }
 
-.combatant-panel.player {
-  left: 8px;
-  bottom: 8px;
+.combatant-panel.player.compact {
+  text-align: left;
 }
 
 .meter {
@@ -122,9 +276,9 @@ button {
 .fighter-sprite {
   position: absolute;
   z-index: 3;
-  width: 26%;
-  max-width: 172px;
-  min-width: 70px;
+  width: 9%;
+  max-width: 68px;
+  min-width: 28px;
   aspect-ratio: 1;
   object-fit: contain;
   image-rendering: pixelated;
@@ -132,22 +286,22 @@ button {
 }
 
 .fighter-sprite.player {
-  left: 23%;
-  bottom: 25%;
+  left: 36%;
+  bottom: 37%;
 }
 
 .fighter-sprite.enemy {
-  right: 22%;
-  top: 24%;
+  right: 34%;
+  top: 49%;
   transform: scaleX(-1);
 }
 
 .fighter-sprite.player.active {
-  transform: translate(18%, -6%);
+  transform: translate(46%, -4%);
 }
 
 .fighter-sprite.enemy.active {
-  transform: scaleX(-1) translate(18%, 8%);
+  transform: scaleX(-1) translate(46%, 4%);
 }
 
 .fighter-sprite.player[src$="hurt.png"],
@@ -158,8 +312,8 @@ button {
 .beam-effect {
   position: absolute;
   z-index: 4;
-  left: 39%;
-  top: 43%;
+  left: 45%;
+  top: 58%;
   width: 0;
   height: 9px;
   border-top: 3px solid #fff8cf;
@@ -170,13 +324,80 @@ button {
 }
 
 .beam-effect.active {
-  width: 24%;
+  width: 12%;
   opacity: 1;
 }
 
 .beam-effect.reverse {
   left: auto;
-  right: 38%;
+  right: 45%;
+}
+
+.game-command-strip {
+  position: absolute;
+  z-index: 9;
+  left: 0;
+  right: 0;
+  bottom: 31px;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  height: 14px;
+  background: #171717;
+  color: #f8efb8;
+  font-size: clamp(0.5rem, 1.4vw, 0.76rem);
+  font-weight: 900;
+  line-height: 14px;
+}
+
+.game-command-strip button {
+  padding: 0 5px;
+  border-right: 2px solid #f1b24b;
+  border-top: 0;
+  border-bottom: 0;
+  border-left: 0;
+  background: #171717;
+  color: #f8efb8;
+  font: inherit;
+  font-weight: 900;
+  line-height: 14px;
+  text-align: left;
+  cursor: pointer;
+}
+
+.game-command-strip button:first-child {
+  color: #fff4b8;
+}
+
+.game-command-strip button.active {
+  background: #f1b24b;
+  color: #171717;
+}
+
+.game-card-window {
+  position: absolute;
+  z-index: 9;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: grid;
+  grid-template-columns: 44px 1fr auto;
+  align-items: center;
+  gap: 6px;
+  height: 31px;
+  border-top: 2px solid #171717;
+  background: #f8efb8;
+  padding: 3px 6px;
+  font-size: clamp(0.5rem, 1.3vw, 0.78rem);
+  font-weight: 900;
+}
+
+.game-card-window strong {
+  color: #171717;
+}
+
+.game-card-window em {
+  font-style: normal;
+  align-self: end;
 }
 
 .command-area {
