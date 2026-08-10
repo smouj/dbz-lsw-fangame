@@ -301,3 +301,42 @@ damage_formula: (power + move) * posMult * block
 - **P1**: umbral "daño sustancial" (+2 CC)
 - **P1**: contadores internos de Gather Power
 - **P1**: buff/debuff stacking (máx acumulaciones, persistencia al cambiar personaje)
+
+---
+
+## 🛡️ Separación de estados defensivos (Guard NO es un único valor)
+
+La hoja de cartas confirma efectos explícitos de Guard (Kiai −8, Flesh Guard +8,
+Scouter −8) → Guard es un stat independiente de la posición. El motor distingue:
+
+| Estado | Representación | Cartas que lo afectan |
+|---|---|---|
+| `positionDefense` | front/back · air/ground (4 posiciones) | — |
+| `guardStat` | pStages.guard / eStages.guard (−3..+3, cada stage = 8) | Kiai(−), Flesh Guard(+), Scouter(−) |
+| `basicGuardAction` | DEFEND (block ×0.5) al defender | — |
+| `defensiveCard` | playerGuard: avoid_beam/avoid_damage/reduce/absorb/cancel | Teleport, Barrier, Taiyoken, Avoiding, Endurance, Foresight... |
+| `avoidStatus` | pEva (Afterimage +30% evasión, 2 turnos) | Afterimage |
+| `lockOnStatus` | pLockOn (próximo ataque no falla) | Lock On |
+
+### Crecimientos por estrella (arrays, no valores únicos)
+`docs/rom-data/growth_deltas.json`: las 48 formas con deltas por estrella
+(base→25, 25→50, 50→75, 75→100) por stat. Ejemplos verificados contra la doc:
+- Gohan Kid STR: [5, 6, 5, 5] (la doc decía +5,+5,+6,+5 según orden de lectura)
+- Goku Normal STR: [6, 5, 5, 5] ("Goku obtiene un 6 en su primera mejora STR" ✓)
+- Cada forma tiene su propia tabla (las transformaciones alteran el orden)
+
+### Efectos especiales con flags (verificados en cards.ts)
+| Flag | Carta(s) | Estado |
+|---|---|---|
+| UNAVOIDABLE | Tail (damage_pierce) | ✅ |
+| UNBLOCKABLE | Body Change (beam_varhp, ½ HP) | ✅ |
+| COMMAND_INTERRUPT | Foresight/Telepathy/Time Freeze (solo Guldo) | ✅ |
+| ANDROID_KILL | Stop Device | ✅ |
+| LIFE_STEAL | Absorb Ki (life_drain) | ✅ |
+| END_GATHER | Yakon (id 95: disipa el poder + resetea mejoras) | ✅ nuevo |
+| RESET_BUFFS | Babidi/Yakon (powerup_dispel → eStages a 0) | ✅ nuevo |
+| ANTI_BEAM | Teleport/Barrier/Kibito (avoid_beam/beam_shield) | ✅ |
+| LOCK_ON | Lock On (próximo ataque asegurado) | ✅ nuevo |
+| ACC_UP / EVADE_UP | Reading Ki (+30% 2t) / Afterimage (+30% evasión 2t) | ✅ nuevo |
+| CC_BONUS | Caps. Fridge (+5 CC) | ✅ |
+| DEBUFF_SPD / DEBUFF_GUARD | Paralysis / Kiai·Scouter | ✅ corregido (antes restaban STR/KI) |

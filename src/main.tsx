@@ -343,6 +343,10 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
   const pBuffs = { str: pStages.str * 8, ki: pStages.ki * 8 };
   const eBuffs = { str: eStages.str * 8, ki: eStages.ki * 8 };
   const clampStage = (v: number) => Math.max(-3, Math.min(3, v));
+  // Precisión/evasión (Reading Ki / Afterimage / Lock On): flags temporales
+  const [pLockOn, setPLockOn] = useState(false);
+  const [pAcc, setPAcc] = useState(0);   // turnos de +30% precisión
+  const [pEva, setPEva] = useState(0);   // turnos de +30% evasión
   // Guardia activa: defensa usada en el turno que mitiga el próximo ataque enemigo
   const [playerGuard, setPlayerGuard] = useState<null | { type: 'avoid_beam' | 'avoid_damage' | 'reduce' | 'absorb' | 'cancel' }>(null);
   // Gather Power: PowerState real (FULL_POWER → HALF_POWER → NORMAL)
@@ -379,6 +383,9 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
   // Cada round hay UN atacante y UN defensor. El más rápido ataca primero.
   // "Each time you're the attacker, you get 3 CC" (battle.shtml).
   const roundStart = () => {
+    // Decay de precisión/evasión (Reading Ki/Afterimage: 2 turnos)
+    setPAcc(prev => (prev > 0 ? prev - 1 : 0));
+    setPEva(prev => (prev > 0 ? prev - 1 : 0));
     // Buffs temporales: se desvanecen al agotarse (fade over time del GBC)
     setBuffTurns(prev => {
       if (prev <= 0) return 0;
@@ -714,7 +721,26 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
           if (eff === 'buff_speed8') setPStages(s => ({ ...s, spd: clampStage(s.spd + 1) }));
           if (eff === 'buff_guard8') setPStages(s => ({ ...s, guard: clampStage(s.guard + 1) }));
           if (eff === 'buff_kaio') setPStages(s => ({ ...s, str: clampStage(s.str + 2), ki: clampStage(s.ki + 2) }));
-          if (eff.startsWith('debuff_')) setEStages(s => ({ ...s, str: clampStage(s.str - 1), ki: clampStage(s.ki - 1) }));
+          // Debuffs específicos (antes restaban STR/KI siempre — BUG): cada stat real
+          if (eff === 'debuff_str8') setEStages(s => ({ ...s, str: clampStage(s.str - 1) }));
+          if (eff === 'debuff_ki8') setEStages(s => ({ ...s, ki: clampStage(s.ki - 1) }));
+          if (eff === 'debuff_speed8' || eff === 'debuff_speed8_lowacc') setEStages(s => ({ ...s, spd: clampStage(s.spd - 1) }));
+          if (eff === 'debuff_guard8') setEStages(s => ({ ...s, guard: clampStage(s.guard - 1) }));
+          // Babidi/Yakon: eliminan TODAS las mejoras enemigas (RESET_BUFFS)
+          if (eff === 'powerup_dispel') {
+            setEStages({ str: 0, ki: 0, spd: 0, guard: 0 });
+            addLog(`${card.name}: mejoras del enemigo eliminadas!`);
+          }
+          // Yakon (95): además TERMINA el Gather Power enemigo (END_GATHER)
+          if (card.id === 95) {
+            aiRef.current.mode = 0; aiRef.current.gathered = false;
+            addLog(`${card.name}: el poder de ${enemy.name} se disipa!`);
+          }
+          // Lock On: el próximo ataque no puede fallar (CONFIRMED_MANUAL)
+          if (eff === 'lock_on') setPLockOn(true);
+          // Reading Ki: +30% precisión 2 turnos · Afterimage: +30% evasión 2 turnos
+          if (eff === 'accuracy_up') setPAcc(2);
+          if (eff === 'evasion_up') setPEva(2);
           if (eff === 'gamebomb' || eff === 'candy' || eff === 'naughty_book' || eff === 'knockdown_dmg' || eff === 'knockdown_min') {
             const dmg = Math.floor((card.atk || 20) + player.str);
             setEnemy(prev => ({ ...prev, hp: Math.max(0, prev.hp - dmg) }));
@@ -729,10 +755,13 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
         return;
       }
 
-      if (roll > acc) {
+      // Lock On: ataque asegurado (se consume) · Reading Ki: +30% precisión
+      const effAcc = pAcc > 0 ? Math.min(100, acc + 30) : acc;
+      if (roll > effAcc && !pLockOn) {
         hitType = 'miss';
         addLog(`${player.name} → ${card.name} — ${t('battle.miss')}!`);
       } else {
+        if (pLockOn) { setPLockOn(false); addLog('LOCK ON!'); }
         // Respuesta del defensor (enemigo): 55% DEFEND (block ×0.5) / 45% MOVE
         // (el defensor del GBC solo puede defenderse o moverse)
         const eResp = Math.random() < 0.55 ? 'defend' : 'move';
@@ -954,7 +983,8 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
     setPlayer(prev => ({ ...prev, position: pos, elevation: elev }));
     let damage = 0;
     let hitType: 'damage' | 'miss' | 'guard' = 'damage';
-    if (Math.random() > card.acc / 100) {
+    const effAcc = pEva > 0 ? Math.max(0, card.acc - 30) : card.acc;
+    if (Math.random() > effAcc / 100) {
       hitType = 'miss';
       addLog(`${enemy.name} → ${card.name} — ${t('battle.miss')}!`);
     } else {

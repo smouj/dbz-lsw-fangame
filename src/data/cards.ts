@@ -112,7 +112,7 @@ export const CARDS: CardDef[] = [
   { id: 49, name: "Telekinesis", type: 'beam', effect: 'beam', atk: 20, acc: 90, cc: 14, rarity: 2, compatible: ["cell"] },
   { id: 50, name: "M.Soundwave", type: 'beam', effect: 'beam', atk: 15, acc: 100, cc: 10, rarity: 2 },
   { id: 51, name: "Paralysis", type: 'support', effect: 'debuff_speed8', atk: 0, acc: 95, cc: 5, rarity: 1 },
-  { id: 52, name: "Time Freeze", type: 'defense', effect: 'command_cancel', atk: 0, acc: 0, cc: 1, rarity: 1 },
+  { id: 52, name: "Time Freeze", type: 'defense', effect: 'command_cancel', atk: 0, acc: 0, cc: 1, rarity: 1, compatible: ["guldo"] },
   { id: 53, name: "Breath", type: 'defense', effect: 'avoid_beam', atk: 0, acc: 0, cc: 5, rarity: 1 },
   { id: 54, name: "Eraser Can.", type: 'beam', effect: 'beam', atk: 25, acc: 90, cc: 18, rarity: 3, compatible: ["cell"] },
   { id: 55, name: "R.F.B.Atk.", type: 'damage', effect: 'damage_low_acc', atk: 35, acc: 50, cc: 24, rarity: 4 },
