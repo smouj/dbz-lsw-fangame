@@ -46,6 +46,8 @@
   /* Escalas */
   --card-w: 128px;
   --card-h: 174px;
+  --card-w-battle: 104px;
+  --card-h-battle: 140px;
   --spr: 8;
 }
 
@@ -236,22 +238,37 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 .hud-top {
   display: flex;
   justify-content: space-between;
-  padding: 4px 8px;
-  background: var(--panel);
+  align-items: stretch;
+  padding: 5px 10px;
+  background: linear-gradient(180deg, #243040 0%, var(--panel) 45%, #141b26 100%);
   border-bottom: 3px solid var(--border);
-  box-shadow: inset 0 1px 0 var(--border-lo);
+  box-shadow: inset 0 1px 0 var(--border-lo), 0 3px 10px rgba(0,0,0,.45);
   z-index: 10;
+  position: relative;
+}
+/* brillo dorado sutil en la base del HUD */
+.hud-top::after {
+  content: ''; position: absolute; left: 0; right: 0; bottom: -3px; height: 3px;
+  background: linear-gradient(90deg, transparent 4%, rgba(216,168,48,.55) 20%, rgba(216,168,48,.9) 50%, rgba(216,168,48,.55) 80%, transparent 96%);
+  pointer-events: none;
 }
 
 .fighter-hud {
-  display: flex; flex-direction: column; gap: 2px;
-  min-width: 250px;
-  padding: 5px 8px;
-  background: linear-gradient(180deg, rgba(27,35,48,.95), rgba(10,14,20,.95));
+  display: flex; flex-direction: column; gap: 3px;
+  min-width: 260px;
+  padding: 6px 10px;
+  background: linear-gradient(180deg, rgba(30,40,55,.97) 0%, rgba(12,16,24,.97) 60%, rgba(22,28,40,.97) 100%);
   border: 2px solid var(--border);
-  /* borde pixel escalonado (estilo GBC) */
+  /* borde pixel escalonado (estilo GBC) + acento dorado en la base */
   box-shadow: inset 2px 2px 0 var(--border-lo), inset -2px -2px 0 var(--panel-lo),
-              0 2px 0 #000, 2px 0 0 #000, 0 -2px 0 #000, -2px 0 0 #000;
+              0 2px 0 #000, 2px 0 0 #000, 0 -2px 0 #000, -2px 0 0 #000,
+              inset 0 -3px 0 rgba(216,168,48,.35);
+  position: relative;
+}
+.fighter-hud::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(216,168,48,.5), transparent);
+  pointer-events: none;
 }
 
 .fighter-hud.right {
@@ -260,27 +277,34 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 }
 
 .hud-name {
-  display: flex; align-items: center; gap: 5px;
+  display: flex; align-items: center; gap: 6px;
   font-family: var(--fpx);
-  font-size: 9px;
+  font-size: 10px;
   letter-spacing: 1px;
   line-height: 1;
+  text-shadow: 0 0 10px rgba(255,200,80,.35);
 }
 
 .hud-portrait {
-  width: 24px; height: 24px;
+  width: 34px; height: 34px;
   border: 2px solid var(--border);
-  background: var(--panel-lo);
+  background: #06090d;
   overflow: hidden;
+  box-shadow: inset 1px 1px 0 rgba(255,255,255,.08), 0 0 8px rgba(216,168,48,.25);
+  flex-shrink: 0;
 }
-
-.hud-portrait img { width: 100%; height: 100%; }
+.fighter-hud:hover .hud-portrait { border-color: var(--gold); box-shadow: inset 1px 1px 0 rgba(255,255,255,.08), 0 0 12px rgba(216,168,48,.45); }
+.hud-portrait img { width: 100%; height: 100%; object-fit: cover; }
 
 .hud-level {
-  color: var(--gold);
-  font-size: 6px;
+  color: #ffe9a3;
+  font-size: 7px;
   margin-left: 3px;
   letter-spacing: 1px;
+  background: rgba(216,168,48,.18);
+  border: 1px solid rgba(216,168,48,.5);
+  padding: 2px 5px;
+  text-shadow: 1px 1px 0 #000;
 }
 
 .hud-stats {
@@ -292,15 +316,15 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 
 /* ─── HP Bar (estilo GBC) ─── */
 
-.hp-bar { position: relative; height: 14px; margin: 1px 0; }
+.hp-bar { position: relative; height: 16px; margin: 2px 0; }
 
 .hp-bar-track {
-  width: 100%; height: 10px;
+  width: 100%; height: 12px;
   background: #06090d;
   border: 2px solid var(--border);
   position: relative;
   overflow: hidden;
-  box-shadow: inset 1px 1px 0 rgba(0,0,0,0.6);
+  box-shadow: inset 1px 1px 0 rgba(0,0,0,0.6), inset -1px -1px 0 rgba(255,255,255,.06);
 }
 /* segmentos de la barra (divisores pixel cada 10px) */
 .hp-bar-track::after {
@@ -353,7 +377,7 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 }
 
 .cc-bar-track {
-  flex: 1; height: 6px;
+  flex: 1; height: 8px;
   background: #06090d;
   border: 1px solid var(--border);
   box-shadow: inset 1px 1px 0 rgba(0,0,0,0.5);
@@ -547,12 +571,22 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 /* ─── Controles de batalla ─── */
 
 .battle-controls {
-  padding: 8px 12px;
-  background: var(--panel);
+  padding: 6px 12px;
+  background: linear-gradient(180deg, rgba(20,26,36,.94), rgba(8,11,17,.97));
   border-top: 3px solid var(--border);
-  min-height: 180px;
+  min-height: 122px;
   box-shadow: inset 0 2px 0 var(--border-lo);
+  backdrop-filter: blur(2px);
 }
+
+.battle-controls .hand-cards .card {
+  width: var(--card-w-battle);
+  min-height: var(--card-h-battle);
+  padding: 2px;
+}
+.battle-controls .hand-cards .card .card-icon { width: 56px; height: 42px; }
+.battle-controls .hand-cards .card .card-name { font-size: 7px; }
+.battle-controls .hand-cards .card .card-atk, .battle-controls .hand-cards .card .card-acc { font-size: 6px; }
 
 /* ─── Selección de posición ─── */
 
@@ -1896,8 +1930,9 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 
 /* Log: entradas con mejor separación */
 .battle-log {
-  gap: 18px;
-  font-size: 11px;
+  gap: 14px;
+  font-size: 10px;
+  padding: 3px 10px;
 }
 
 /* Scrollbars más coherentes con la paleta */
@@ -2150,6 +2185,20 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 .btn-defend:hover { transform: translateY(-2px); box-shadow: 0 4px 16px rgba(60,150,220,.35); }
 .btn-defend strong { color: #bfe6ff; letter-spacing: 0.1em; }
 .buff-indicator { color: #8dffb0; font-size: 0.62rem; background: rgba(20,120,60,.25); padding: 1px 6px; border-radius: 0; letter-spacing: .05em; }
+
+/* ═══ INSIGNIA CENTRAL DEL HUD (ROUND / VS) ═══ */
+.hud-center-badge {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 2px; min-width: 90px;
+  background: linear-gradient(180deg, rgba(216,168,48,.16), rgba(216,168,48,.05));
+  border: 2px solid rgba(216,168,48,.45);
+  box-shadow: inset 2px 2px 0 rgba(216,168,48,.2), 0 0 14px rgba(216,168,48,.18);
+  padding: 3px 10px;
+  text-shadow: 1px 1px 0 #000;
+}
+.hud-center-round { font-family: var(--fpx); font-size: 8px; color: #ffe9a3; letter-spacing: 2px; }
+.hud-center-vs { font-family: var(--fpx); font-size: 14px; color: var(--hp-red); letter-spacing: 1px; text-shadow: 0 0 10px rgba(255,60,40,.5); }
+.hud-center-order { font-family: var(--fpx); font-size: 6px; color: var(--muted); letter-spacing: 1px; }
 
 /* ═══ INTRO CINEMATOGRÁFICA DE COMBATE (como el GBC) ═══
    Timeline: 0s sprites fuera · 0.6s slide-in · 0.7s VS pop · 1.4s READY ·
