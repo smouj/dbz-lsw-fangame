@@ -55,13 +55,23 @@ function miniPortraitFor(charId: string): string | undefined {
 }
 
 // ─── Fondos de batalla (extraídos) ────────────────────────
+// Fondos REALES del GBC (ZIP del usuario, pixel-perfect 160x80):
+// 13 escenarios + 1 fondo especial de acción
 const BATTLE_BGS: { id: string; name: string; file: string }[] = [
-  { id: 'bg1', name: 'Arena', file: '/assets/backgrounds/cell_00_00.png' },
-  { id: 'bg2', name: 'Wasteland', file: '/assets/backgrounds/cell_00_01.png' },
-  { id: 'bg3', name: 'Mountains', file: '/assets/backgrounds/cell_00_02.png' },
-  { id: 'bg4', name: 'City', file: '/assets/backgrounds/cell_00_03.png' },
-  { id: 'bg5', name: 'Namek', file: '/assets/backgrounds/cell_01_00.png' },
-  { id: 'bg6', name: 'Ruins', file: '/assets/backgrounds/cell_01_01.png' },
+  { id: 'bg1', name: 'Scenario 1', file: '/assets/backgrounds/01_battle.png' },
+  { id: 'bg2', name: 'Scenario 2', file: '/assets/backgrounds/02_battle.png' },
+  { id: 'bg3', name: 'Scenario 3', file: '/assets/backgrounds/03_battle.png' },
+  { id: 'bg4', name: 'Scenario 4', file: '/assets/backgrounds/04_battle.png' },
+  { id: 'bg5', name: 'Scenario 5', file: '/assets/backgrounds/05_battle.png' },
+  { id: 'bg6', name: 'Scenario 6', file: '/assets/backgrounds/06_battle.png' },
+  { id: 'bg7', name: 'Scenario 7', file: '/assets/backgrounds/07_battle.png' },
+  { id: 'bg8', name: 'Scenario 8', file: '/assets/backgrounds/08_battle.png' },
+  { id: 'bg9', name: 'Scenario 9', file: '/assets/backgrounds/09_battle.png' },
+  { id: 'bg10', name: 'Scenario 10', file: '/assets/backgrounds/10_battle.png' },
+  { id: 'bg11', name: 'Scenario 11', file: '/assets/backgrounds/11_battle.png' },
+  { id: 'bg12', name: 'Scenario 12', file: '/assets/backgrounds/12_battle.png' },
+  { id: 'bg13', name: 'Scenario 13', file: '/assets/backgrounds/13_battle.png' },
+  { id: 'bg14', name: 'Special', file: '/assets/backgrounds/14_special_action.png' },
 ];
 
 // ─── Sistema de cartas para batalla ───────────────────────
