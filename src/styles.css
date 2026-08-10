@@ -1315,3 +1315,64 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   0% { opacity: 0.7; transform: scale(1); }
   100% { opacity: 1; transform: scale(1.08); }
 }
+
+/* ─── Selector de idioma (Settings) ─── */
+
+.language-row {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.language-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 6px;
+  width: 100%;
+}
+
+.lang-chip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 6px 4px;
+  font-size: 9px;
+  white-space: nowrap;
+}
+
+.lang-tag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 22px;
+  height: 16px;
+  padding: 0 4px;
+  background: var(--panel-hi);
+  border: 1px solid var(--border);
+  font-family: var(--fpx);
+  font-size: 7px;
+  letter-spacing: 0.5px;
+  color: var(--gold);
+}
+
+.lang-chip.active .lang-tag {
+  background: #000;
+  color: var(--gold);
+  border-color: var(--gold-dk);
+}
+
+.setting-label svg { vertical-align: -2px; margin-right: 4px; color: var(--gold); }
+
+.btn-back { display: inline-flex; align-items: center; justify-content: center; }
+.btn-exit { display: inline-flex; align-items: center; justify-content: center; }
+
+.chapter-select svg, .chapter-icon svg { display: block; }
+.deck-row-icon svg { display: block; }
+
+.card-icon svg { display: block; }
+.card-art svg { display: block; }
+
+@media (max-width: 640px) {
+  .language-grid { grid-template-columns: repeat(2, 1fr); }
+}

@@ -101,7 +101,19 @@ export const MENU_PORTRAITS: Record<string, string> = {
   cell_jr: '/assets/portraits/menu/cell_03_03.png',
 };
 
-// Fallback: mapa por tipo de carta → emoji (si no hay icono real)
+// Fallback: mapa por tipo de carta → icono Lucide (si no hay icono real)
+import { Zap, Sword, Sparkles, Heart, Shield, Star, Command, type LucideIcon } from 'lucide-react';
+
+export const TYPE_ICONS: Record<CardType, LucideIcon> = {
+  command: Command,
+  damage: Sword,
+  beam: Zap,
+  support: Heart,
+  defense: Shield,
+  special: Star,
+};
+
+// Fallback emoji legacy (no se usa en UI nueva; se mantiene por compatibilidad)
 export const TYPE_EMOJI: Record<CardType, string> = {
   command: '⚡',
   damage: '👊',

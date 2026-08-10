@@ -3,13 +3,16 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { createRoot } from 'react-dom/client';
 import './styles.css';
 import { FORMS, CHARACTERS, getCharacter, getForm, sheetUrl } from './data/roster';
-import { CARDS, CARD_COLORS, CARD_TYPE_NAMES, CardDef, CardType, DECK_SIZE, MAX_COPIES, getCard } from './data/cards';
-import { cardIconUrl, MINI_PORTRAITS, MENU_PORTRAITS, TYPE_EMOJI } from './data/icons';
+import { CARDS, CARD_COLORS, CARD_TYPE_NAMES, CardDef, CardType, DECK_SIZE, MAX_COPIES, getCard, CardEffect } from './data/cards';
+import { cardIconUrl, MINI_PORTRAITS, MENU_PORTRAITS, TYPE_ICONS } from './data/icons';
 import { initAudio, Sfx, setSfxEnabled, setVolume } from './audio/sfx';
+import { LanguageProvider, useLang } from './i18n/LanguageContext';
+import { LANGUAGES, LangCode, TKey } from './i18n';
+import { ArrowLeft, X, Lock, ChevronRight, Languages, Sword, Shield, type LucideIcon } from 'lucide-react';
 
 // ═══════════════════════════════════════════════════════════
 // DBZ LSW Fangame — Estilo Magazine GBC Auténtico
-// Sprites reales, mecánicas fieles, pixel art nítido
+// Sprites reales, mecánicas fieles, pixel art nítido, 10 idiomas
 // ═══════════════════════════════════════════════════════════
 
 type Screen = 'main' | 'story' | 'battle' | 'versus' | 'deck' | 'characters' | 'cards' | 'settings';
@@ -59,9 +62,9 @@ const BATTLE_BGS: { id: string; name: string; file: string }[] = [
 // ─── Sistema de cartas para batalla ───────────────────────
 const BATTLE_DECK: CardDef[] = [
   getCard(1)!, getCard(1)!, getCard(2)!, getCard(2)!, getCard(4)!,
-  getCard(25)!, getCard(25)!, getCard(26)!, getCard(27)!, getCard(28)!,
-  getCard(53)!, getCard(64)!, getCard(65)!, getCard(96)!, getCard(96)!,
-  getCard(79)!, getCard(80)!, getCard(111)!, getCard(5)!, getCard(12)!,
+  getCard(5)!, getCard(5)!, getCard(6)!, getCard(25)!, getCard(29)!,
+  getCard(12)!, getCard(7)!, getCard(8)!, getCard(19)!, getCard(19)!,
+  getCard(16)!, getCard(23)!, getCard(9)!, getCard(15)!, getCard(11)!,
 ];
 
 // ─── Animación de sprites ─────────────────────────────────
@@ -142,19 +145,19 @@ function CardVisual({ card, selected, onClick, small }: {
 }) {
   const color = CARD_COLORS[card.type];
   const iconUrl = cardIconUrl(card.id);
-  const icon = TYPE_EMOJI[card.type];
+  const IconCmp = TYPE_ICONS[card.type];
   const stars = '★'.repeat(card.rarity) + '☆'.repeat(5 - card.rarity);
   return (
     <button className={`card ${card.type} ${selected ? 'selected' : ''} ${small ? 'small' : ''}`}
       onClick={onClick} style={{ '--card-color': color } as React.CSSProperties}>
       <div className="card-header">
         <span className="card-icon">
-          {iconUrl ? <img className="card-icon-img" src={iconUrl} alt="" onError={e => (e.currentTarget.style.display = 'none')} /> : icon}
+          {iconUrl ? <img className="card-icon-img" src={iconUrl} alt="" onError={e => (e.currentTarget.style.display = 'none')} /> : <IconCmp size={16} strokeWidth={2.2} />}
         </span>
         <span className="card-cc">{card.cc}CC</span>
       </div>
       <div className="card-art">
-        {iconUrl ? <img className="card-art-img" src={iconUrl} alt="" onError={e => (e.currentTarget.style.display = 'none')} /> : icon}
+        {iconUrl ? <img className="card-art-img" src={iconUrl} alt="" onError={e => (e.currentTarget.style.display = 'none')} /> : <IconCmp size={40} strokeWidth={1.8} />}
       </div>
       <div className="card-name">{card.name}</div>
       <div className="card-type">{CARD_TYPE_NAMES[card.type]}</div>
@@ -171,9 +174,10 @@ function CardVisual({ card, selected, onClick, small }: {
 function HandComponent({ cards, selectedIndex, onSelect }: {
   cards: CardDef[]; selectedIndex: number | null; onSelect: (i: number) => void;
 }) {
+  const { t } = useLang();
   return (
     <div className="hand-area">
-      <div className="hand-label">— HAND —</div>
+      <div className="hand-label">— {t('battle.hand')} —</div>
       <div className="hand-cards">
         {cards.map((card, i) => (
           <CardVisual key={card.id + '-' + i} card={card}
@@ -186,8 +190,22 @@ function HandComponent({ cards, selectedIndex, onSelect }: {
 
 // ─── Número de daño ───────────────────────────────────────
 function DamageNumber({ value, type, x, y }: { value: number; type: 'damage' | 'heal' | 'miss' | 'guard'; x: number; y: number }) {
-  const text = type === 'miss' ? 'MISS' : type === 'guard' ? 'GUARD' : `${value > 0 ? '-' : '+'}${Math.abs(value)}`;
+  const { t } = useLang();
+  const text = type === 'miss' ? t('battle.miss') : type === 'guard' ? t('battle.guard') : `${value > 0 ? '-' : '+'}${Math.abs(value)}`;
   return <div className={`damage-number ${type}`} style={{ left: x, top: y }}>{text}</div>;
+}
+
+// ─── Soporte de cartas: cantidad de curación por id ───────
+function healAmountFor(card: CardDef, maxHp: number): number {
+  switch (card.id) {
+    case 16: return Math.floor(maxHp * 0.5);  // Resurrection
+    case 88: return Math.floor(maxHp * 0.6);  // Dende
+    case 99: return Math.floor(maxHp * 0.35); // Life Preserver
+    case 100: return Math.floor(maxHp * 0.5); // Medical Machine
+    case 114: return Math.floor(maxHp * 0.7); // Heart Medicine
+    case 117: return maxHp;                   // Full Spirit
+    default: return Math.floor(maxHp * 0.3);
+  }
 }
 
 // ═══════════════════════════════════════════════════════════
@@ -197,6 +215,7 @@ function DamageNumber({ value, type, x, y }: { value: number; type: 'damage' | '
 function BattleScreen({ playerFormId, enemyFormId, onExit }: {
   playerFormId: string; enemyFormId: string; onExit: (won: boolean) => void;
 }) {
+  const { t } = useLang();
   const pf = getForm(playerFormId)!;
   const ef = getForm(enemyFormId)!;
 
@@ -226,7 +245,7 @@ function BattleScreen({ playerFormId, enemyFormId, onExit }: {
     return shuffled.slice(0, 5);
   });
   const [selectedCard, setSelectedCard] = useState<number | null>(null);
-  const [log, setLog] = useState<string[]>(['Battle Start!']);
+  const [log, setLog] = useState<string[]>([t('battle.start')]);
   const [damageNums, setDamageNums] = useState<{ value: number; type: 'damage' | 'heal' | 'miss' | 'guard'; x: number; y: number; id: number }[]>([]);
   const [playerPose, setPlayerPose] = useState('idle');
   const [enemyPose, setEnemyPose] = useState('idle');
@@ -250,7 +269,7 @@ function BattleScreen({ playerFormId, enemyFormId, onExit }: {
 
   const selectCommand = (cmd: CommandType) => {
     Sfx.select();
-    if (cmd === 'LIMIT' && player.cc < 20) { addLog('CC insuficiente para LIMIT!'); Sfx.cancel(); return; }
+    if (cmd === 'LIMIT' && player.cc < 20) { addLog(t('battle.ccInsufficient')); Sfx.cancel(); return; }
     setCommand(cmd);
     setPhase('cardSelect');
   };
@@ -269,17 +288,21 @@ function BattleScreen({ playerFormId, enemyFormId, onExit }: {
       const roll = Math.random();
 
       // Support: curar/buff
-      if (card.type === 'support') {
-        if (card.name.includes('Senzu') || card.name.includes('Full Heal') || card.name.includes('Regenerate') || card.name.includes('Second Wind')) {
-          heal = card.id === 84 ? 100 : card.id === 83 ? 30 : card.id === 91 ? 20 : 50;
+      if (card.type === 'support' || card.effect === 'heal' || card.effect === 'buff' || card.effect === 'stun' || card.effect === 'dodge') {
+        if (card.effect === 'heal') {
+          heal = healAmountFor(card, player.maxHp);
           setPlayer(prev => ({ ...prev, hp: Math.min(prev.maxHp, prev.hp + heal) }));
           setDamageNums(prev => [...prev, { value: heal, type: 'heal', x: 30, y: 40, id: Date.now() }]);
-          addLog(`${player.name} usa ${card.name} — +${heal} HP!`);
+          addLog(`${player.name} ${t('battle.uses')} ${card.name} — +${heal} ${t('battle.hp')}!`);
+        } else if (card.effect === 'stun') {
+          addLog(`${player.name} ${t('battle.uses')} ${card.name} — stun!`);
+        } else if (card.effect === 'dodge') {
+          addLog(`${player.name} ${t('battle.uses')} ${card.name} — dodge!`);
         } else {
-          const sBoost = card.name.includes('Hyper') || card.name.includes('Max') ? 6 : card.name.includes('Rage') ? 8 : card.name.includes('Ki') ? 3 : 0;
-          const kBoost = card.name.includes('Hyper') ? 6 : card.name.includes('Max') ? 10 : card.name.includes('Ki') ? 3 : 0;
-          setPBuffs(b => ({ str: b.str + (sBoost || 4), ki: b.ki + (kBoost || 2) }));
-          addLog(`${player.name} usa ${card.name} — buff activado!`);
+          const sBoost = card.id === 23 ? 6 : card.id === 42 ? 4 : card.id === 59 ? 2 : 3;
+          const kBoost = card.id === 23 ? 4 : card.id === 42 ? 3 : card.id === 59 ? 0 : 2;
+          setPBuffs(b => ({ str: b.str + sBoost, ki: b.ki + kBoost }));
+          addLog(`${player.name} ${t('battle.uses')} ${card.name} — ${t('battle.buff')}`);
         }
         setPlayer(prev => ({ ...prev, cc: Math.min(prev.maxCc, prev.cc + card.cc) }));
         finishPlayerTurn(idx);
@@ -288,7 +311,7 @@ function BattleScreen({ playerFormId, enemyFormId, onExit }: {
 
       if (roll > acc) {
         hitType = 'miss';
-        addLog(`${player.name} → ${card.name} — MISS!`);
+        addLog(`${player.name} → ${card.name} — ${t('battle.miss')}!`);
       } else {
         let posMod = 1.0;
         if (player.position === 'front') posMod *= 1.1;
@@ -299,7 +322,7 @@ function BattleScreen({ playerFormId, enemyFormId, onExit }: {
         if (command === 'B') atkMod *= 1.2;
         damage = Math.floor(atkMod * posMod);
         if (card.type === 'defense') { hitType = 'guard'; damage = Math.floor(damage * 0.5); }
-        addLog(`${player.name} → ${card.name} — ${damage} dmg!`);
+        addLog(`${player.name} → ${card.name} — ${damage} ${t('battle.dmg')}`);
       }
 
       setEnemy(prev => ({ ...prev, hp: Math.max(0, prev.hp - damage) }));
@@ -317,7 +340,7 @@ function BattleScreen({ playerFormId, enemyFormId, onExit }: {
       setPlayer(prev => ({ ...prev, cc: Math.min(prev.maxCc, prev.cc + card.cc) }));
 
       if (enemy.hp - damage <= 0) {
-        setTimeout(() => { setEnemyPose('hurt'); setPhase('win'); Sfx.victory(); addLog(`${enemy.name} derrotado!`); }, 500);
+        setTimeout(() => { setEnemyPose('hurt'); setPhase('win'); Sfx.victory(); addLog(`${enemy.name} ${t('battle.defeated')}`); }, 500);
         return;
       }
 
@@ -343,14 +366,14 @@ function BattleScreen({ playerFormId, enemyFormId, onExit }: {
       let hitType: 'damage' | 'miss' | 'guard' = 'damage';
       if (Math.random() > card.acc / 100) {
         hitType = 'miss';
-        addLog(`${enemy.name} → ${card.name} — MISS!`);
+        addLog(`${enemy.name} → ${card.name} — ${t('battle.miss')}!`);
       } else {
         let posMod = 1.0;
         if (enemy.position === 'front') posMod *= 1.1;
         if (player.position === 'back') posMod *= 0.9;
         let atkMod = card.atk + (card.type === 'beam' ? (enemy.ki + eBuffs.ki) * 0.5 : (enemy.str + eBuffs.str) * 0.3);
         damage = Math.floor(atkMod * posMod);
-        addLog(`${enemy.name} → ${card.name} — ${damage} dmg!`);
+        addLog(`${enemy.name} → ${card.name} — ${damage} ${t('battle.dmg')}`);
       }
       setPlayer(prev => ({ ...prev, hp: Math.max(0, prev.hp - damage) }));
       setFlashPlayer(true);
@@ -364,7 +387,7 @@ function BattleScreen({ playerFormId, enemyFormId, onExit }: {
       setEnemy(prev => ({ ...prev, cc: Math.min(prev.maxCc, prev.cc + 3 + card.cc) }));
 
       if (player.hp - damage <= 0) {
-        setTimeout(() => { setPlayerPose('hurt'); setPhase('lose'); Sfx.defeat(); addLog(`${player.name} derrotado!`); }, 500);
+        setTimeout(() => { setPlayerPose('hurt'); setPhase('lose'); Sfx.defeat(); addLog(`${player.name} ${t('battle.defeated')}`); }, 500);
         return;
       }
 
@@ -392,7 +415,7 @@ function BattleScreen({ playerFormId, enemyFormId, onExit }: {
           <div className="hud-name">
             <span className="hud-portrait">
               <img src={portraitFor(player.id) || ''} alt="" onError={e => (e.currentTarget.style.display = 'none')} />
-              {!portraitFor(player.id) && '🟠'}
+              {!portraitFor(player.id) && <Sword size={14} />}
             </span>
             <strong>{player.name}</strong>
             <span className="hud-form">{player.form}</span>
@@ -408,7 +431,7 @@ function BattleScreen({ playerFormId, enemyFormId, onExit }: {
           <div className="hud-name">
             <span className="hud-portrait">
               <img src={portraitFor(enemy.id) || ''} alt="" onError={e => (e.currentTarget.style.display = 'none')} />
-              {!portraitFor(enemy.id) && '🔵'}
+              {!portraitFor(enemy.id) && <Shield size={14} />}
             </span>
             <strong>{enemy.name}</strong>
             <span className="hud-form">{enemy.form}</span>
@@ -445,65 +468,65 @@ function BattleScreen({ playerFormId, enemyFormId, onExit }: {
       {/* Barra de fase */}
       <div className="phase-bar">
         <div className="phase-info">
-          <span className="turn-label">TURN {turn}</span>
+          <span className="turn-label">{t('battle.turn')} {turn}</span>
           <span className="phase-label">
-            {phase === 'position' ? 'CHOOSE POSITION' :
-             phase === 'command' ? 'SELECT COMMAND' :
-             phase === 'cardSelect' ? 'SELECT CARD' :
-             phase === 'enemyTurn' ? 'ENEMY TURN' : ''}
+            {phase === 'position' ? t('battle.choosePosition') :
+             phase === 'command' ? t('battle.selectCommand') :
+             phase === 'cardSelect' ? t('battle.selectCard') :
+             phase === 'enemyTurn' ? t('battle.enemyTurn') : ''}
           </span>
         </div>
-        <button className="btn-exit" onClick={() => onExit(false)}>✕</button>
+        <button className="btn-exit" onClick={() => onExit(false)}><X size={12} /></button>
       </div>
 
       {/* Controles */}
       <div className="battle-controls">
         {phase === 'position' && (
           <div className="position-select">
-            <div className="control-label">POSITION</div>
+            <div className="control-label">{t('battle.position')}</div>
             <div className="position-pad">
-              <button onClick={() => setPosition('back', 'air')}>AIR/BACK</button>
-              <button onClick={() => setPosition('front', 'air')}>AIR/FRONT</button>
-              <button onClick={() => setPosition('back', 'ground')}>GND/BACK</button>
-              <button onClick={() => setPosition('front', 'ground')}>GND/FRONT</button>
+              <button onClick={() => setPosition('back', 'air')}>{t('battle.airBack')}</button>
+              <button onClick={() => setPosition('front', 'air')}>{t('battle.airFront')}</button>
+              <button onClick={() => setPosition('back', 'ground')}>{t('battle.gndBack')}</button>
+              <button onClick={() => setPosition('front', 'ground')}>{t('battle.gndFront')}</button>
             </div>
           </div>
         )}
         {phase === 'command' && (
           <div className="command-select">
             <div className="command-strip">
-              <button onClick={() => selectCommand('LIMIT')} disabled={player.cc < 20} className="cmd-limit">LIMIT</button>
+              <button onClick={() => selectCommand('LIMIT')} disabled={player.cc < 20} className="cmd-limit">{t('battle.limit')}</button>
               <button onClick={() => selectCommand('J')} className="cmd-j">J</button>
               <button onClick={() => selectCommand('B')} className="cmd-b">B</button>
               <button onClick={() => selectCommand('C')} className="cmd-c">C</button>
             </div>
-            <div className="command-help">LIMIT: 1.5x daño (20 CC) · J: físico · B: beam · C: support</div>
+            <div className="command-help">{t('battle.limitHelp')}</div>
           </div>
         )}
         {phase === 'cardSelect' && (
           <HandComponent cards={hand} selectedIndex={selectedCard} onSelect={selectCard} />
         )}
         {phase === 'enemyTurn' && (
-          <div className="enemy-turn-overlay"><div className="turn-text">ENEMY TURN</div></div>
+          <div className="enemy-turn-overlay"><div className="turn-text">{t('battle.enemyTurn')}</div></div>
         )}
         {phase === 'win' && (
           <div className="result-screen">
-            <div className="result-title victory">VICTORY</div>
+            <div className="result-title victory">{t('battle.victory')}</div>
             <div className="result-info">
-              <div>EXP +184</div>
-              <div>HP {player.hp}/{player.maxHp}</div>
+              <div>{t('battle.exp')} +184</div>
+              <div>{t('battle.hp')} {player.hp}/{player.maxHp}</div>
             </div>
-            <button className="btn-primary" onClick={() => onExit(true)}>NEW BATTLE</button>
+            <button className="btn-primary" onClick={() => onExit(true)}>{t('common.newBattle')}</button>
           </div>
         )}
         {phase === 'lose' && (
           <div className="result-screen">
-            <div className="result-title defeat">DEFEAT</div>
+            <div className="result-title defeat">{t('battle.defeat')}</div>
             <div className="result-info">
-              <div>Turn {turn}</div>
-              <div>HP 0/{player.maxHp}</div>
+              <div>{t('battle.turn')} {turn}</div>
+              <div>{t('battle.hp')} 0/{player.maxHp}</div>
             </div>
-            <button className="btn-primary" onClick={() => onExit(false)}>RETRY</button>
+            <button className="btn-primary" onClick={() => onExit(false)}>{t('common.retry')}</button>
           </div>
         )}
       </div>
@@ -521,22 +544,23 @@ function BattleScreen({ playerFormId, enemyFormId, onExit }: {
 // ═══════════════════════════════════════════════════════════
 
 function MainMenu({ onNavigate }: { onNavigate: (s: Screen) => void }) {
+  const { t } = useLang();
   return (
     <div className="menu-screen">
       <div className="menu-bg" />
       <div className="menu-content">
-        <h1 className="menu-title">DRAGON BALL Z</h1>
-        <h2 className="menu-subtitle">LEGENDARY SUPER WARRIORS</h2>
+        <h1 className="menu-title">{t('menu.title')}</h1>
+        <h2 className="menu-subtitle">{t('menu.subtitle')}</h2>
         <nav className="menu-nav">
-          <button onClick={() => onNavigate('story')}>STORY</button>
-          <button onClick={() => onNavigate('versus')}>BATTLE</button>
-          <button onClick={() => onNavigate('deck')}>DECK</button>
-          <button onClick={() => onNavigate('characters')}>CHARACTERS</button>
-          <button onClick={() => onNavigate('cards')}>CARDS</button>
-          <button onClick={() => onNavigate('settings')}>SETTINGS</button>
-          <button onClick={() => onNavigate('battle')} className="btn-primary">CONTINUE</button>
+          <button onClick={() => onNavigate('story')}>{t('menu.story')}</button>
+          <button onClick={() => onNavigate('versus')}>{t('menu.battle')}</button>
+          <button onClick={() => onNavigate('deck')}>{t('menu.deck')}</button>
+          <button onClick={() => onNavigate('characters')}>{t('menu.characters')}</button>
+          <button onClick={() => onNavigate('cards')}>{t('menu.cards')}</button>
+          <button onClick={() => onNavigate('settings')}>{t('menu.settings')}</button>
+          <button onClick={() => onNavigate('battle')} className="btn-primary">{t('menu.continue')}</button>
         </nav>
-        <div className="menu-footer">Continue Lv.38</div>
+        <div className="menu-footer">{t('menu.footer')}</div>
       </div>
     </div>
   );
@@ -546,15 +570,15 @@ function MainMenu({ onNavigate }: { onNavigate: (s: Screen) => void }) {
 // STORY — Mapa de capítulos
 // ═══════════════════════════════════════════════════════════
 
-const CHAPTERS = [
-  { id: 1, name: 'Saiyan Saga', desc: 'Raditz vs Goku', enemy: 'piccolo_base' },
-  { id: 2, name: 'Namek Arrival', desc: 'Ginyu Force', enemy: 'ginyu' },
-  { id: 3, name: 'Frieza Battle', desc: 'Frieza Final Form', enemy: 'frieza_final' },
-  { id: 4, name: 'Android Threat', desc: 'Dr. Gero', enemy: 'android_20' },
-  { id: 5, name: 'Cell Games', desc: 'Perfect Cell', enemy: 'cell_perfect' },
-  { id: 6, name: 'Buu Awakens', desc: 'Majin Buu', enemy: 'buu_base' },
-  { id: 7, name: 'Fusion Fighters', desc: 'Super Buu', enemy: 'buu_super' },
-  { id: 8, name: 'Final Battle', desc: 'Kid Buu', enemy: 'buu_kid' },
+const CHAPTERS: { id: number; nameKey: TKey; descKey: TKey; enemy: string }[] = [
+  { id: 1, nameKey: 'story.ch1', descKey: 'story.d1', enemy: 'piccolo_base' },
+  { id: 2, nameKey: 'story.ch2', descKey: 'story.d2', enemy: 'ginyu' },
+  { id: 3, nameKey: 'story.ch3', descKey: 'story.d3', enemy: 'frieza_final' },
+  { id: 4, nameKey: 'story.ch4', descKey: 'story.d4', enemy: 'android_20' },
+  { id: 5, nameKey: 'story.ch5', descKey: 'story.d5', enemy: 'cell_perfect' },
+  { id: 6, nameKey: 'story.ch6', descKey: 'story.d6', enemy: 'buu_base' },
+  { id: 7, nameKey: 'story.ch7', descKey: 'story.d7', enemy: 'buu_super' },
+  { id: 8, nameKey: 'story.ch8', descKey: 'story.d8', enemy: 'buu_kid' },
 ];
 
 // Progreso de historia persistente
@@ -571,21 +595,22 @@ function saveStoryProgress(chapter: number) {
 }
 
 function StoryScreen({ onNavigate, onStartChapter }: {
-  onNavigate: (s: Screen) => void; onStartChapter: (enemyFormId: string, chapterName: string) => void;
+  onNavigate: (s: Screen) => void; onStartChapter: (enemyFormId: string, chapterId: number) => void;
 }) {
+  const { t } = useLang();
   const [progress, setProgress] = useState(loadStoryProgress);
   const [selected, setSelected] = useState(1);
 
   const start = () => {
     const ch = CHAPTERS.find(c => c.id === selected)!;
-    onStartChapter(ch.enemy, ch.name);
+    onStartChapter(ch.enemy, ch.id);
   };
 
   return (
     <div className="page-screen story-screen">
       <div className="page-header">
-        <button className="btn-back" onClick={() => onNavigate('main')}>◀</button>
-        <h1 className="page-title">STORY</h1>
+        <button className="btn-back" onClick={() => onNavigate('main')}><ArrowLeft size={14} /></button>
+        <h1 className="page-title">{t('story.title')}</h1>
         <div className="page-spacer" />
       </div>
       <div className="story-map">
@@ -596,19 +621,19 @@ function StoryScreen({ onNavigate, onStartChapter }: {
             <div key={ch.id}
               className={`chapter-node ${isSel ? 'active' : ''} ${unlocked ? 'unlocked' : 'locked'}`}
               onClick={() => unlocked && setSelected(ch.id)}>
-              <div className="chapter-icon">{unlocked ? ch.id : '🔒'}</div>
+              <div className="chapter-icon">{unlocked ? ch.id : <Lock size={14} />}</div>
               <div className="chapter-info">
-                <div className="chapter-name">{ch.name}</div>
-                <div className="chapter-desc">{unlocked ? ch.desc : 'Not unlocked yet'}</div>
+                <div className="chapter-name">{t(ch.nameKey)}</div>
+                <div className="chapter-desc">{unlocked ? t(ch.descKey) : t('story.notUnlocked')}</div>
               </div>
-              {unlocked && isSel && <div className="chapter-select">▶</div>}
+              {unlocked && isSel && <div className="chapter-select"><ChevronRight size={14} /></div>}
             </div>
           );
         })}
       </div>
       <div className="page-footer">
         <button className="btn-primary" onClick={start} disabled={!CHAPTERS.find(c => c.id === selected)?.id}>
-          START {CHAPTERS.find(c => c.id === selected)?.name.toUpperCase()}
+          {t('story.start')} {t(CHAPTERS.find(c => c.id === selected)?.nameKey ?? 'story.ch1').toUpperCase()}
         </button>
       </div>
     </div>
@@ -622,6 +647,7 @@ function StoryScreen({ onNavigate, onStartChapter }: {
 function CharactersScreen({ onNavigate, onSelectFighter }: {
   onNavigate: (s: Screen) => void; onSelectFighter: (formId: string) => void;
 }) {
+  const { t } = useLang();
   const [selected, setSelected] = useState<string>('goku_base');
 
   const sel = getForm(selected)!;
@@ -630,8 +656,8 @@ function CharactersScreen({ onNavigate, onSelectFighter }: {
   return (
     <div className="page-screen characters-screen">
       <div className="page-header">
-        <button className="btn-back" onClick={() => onNavigate('main')}>◀</button>
-        <h1 className="page-title">CHARACTERS</h1>
+        <button className="btn-back" onClick={() => onNavigate('main')}><ArrowLeft size={14} /></button>
+        <h1 className="page-title">{t('characters.title')}</h1>
         <div className="page-spacer" />
       </div>
       <div className="characters-layout">
@@ -645,7 +671,7 @@ function CharactersScreen({ onNavigate, onSelectFighter }: {
                 onClick={() => setSelected(baseForm.id)}>
                 <img className="char-thumb" src={sheetUrl(baseForm)} alt={c.name} />
                 <div className="char-name">{c.name}</div>
-                <div className="char-forms">{c.forms.length} form{c.forms.length > 1 ? 's' : ''}</div>
+                <div className="char-forms">{c.forms.length} {t('characters.forms')}</div>
               </button>
             );
           })}
@@ -657,18 +683,18 @@ function CharactersScreen({ onNavigate, onSelectFighter }: {
             <img className="char-detail-sprite" src={sheetUrl(sel)} alt={sel.character} />
             <div className="char-detail-info">
               <div className="char-detail-name">{selChar.name}</div>
-              <div className="char-detail-form">{sel.form}</div>
-              <div className="char-detail-saga">{selChar.saga} Saga</div>
-              <div className="char-tier">Tier {'★'.repeat(selChar.tier)}{'☆'.repeat(5 - selChar.tier)}</div>
+              <div className="char-detail-form">{t('characters.form')}: {sel.form}</div>
+              <div className="char-detail-saga">{selChar.saga} {t('characters.saga')}</div>
+              <div className="char-tier">{t('characters.tier')} {'★'.repeat(selChar.tier)}{'☆'.repeat(5 - selChar.tier)}</div>
             </div>
           </div>
 
           {/* Stats */}
           <div className="stat-block">
-            <div className="stat-row"><span>HP</span><div className="stat-bar"><div className="stat-fill hp" style={{ width: `${sel.hp / 6}%` }} /></div><b>{sel.hp}</b></div>
-            <div className="stat-row"><span>STR</span><div className="stat-bar"><div className="stat-fill str" style={{ width: `${sel.str / 1.2}%` }} /></div><b>{sel.str}</b></div>
-            <div className="stat-row"><span>KI</span><div className="stat-bar"><div className="stat-fill ki" style={{ width: `${sel.ki / 1.2}%` }} /></div><b>{sel.ki}</b></div>
-            <div className="stat-row"><span>SPD</span><div className="stat-bar"><div className="stat-fill spd" style={{ width: `${sel.spd}%` }} /></div><b>{sel.spd}</b></div>
+            <div className="stat-row"><span>{t('attr.hp')}</span><div className="stat-bar"><div className="stat-fill hp" style={{ width: `${sel.hp / 6}%` }} /></div><b>{sel.hp}</b></div>
+            <div className="stat-row"><span>{t('attr.str')}</span><div className="stat-bar"><div className="stat-fill str" style={{ width: `${sel.str / 1.2}%` }} /></div><b>{sel.str}</b></div>
+            <div className="stat-row"><span>{t('attr.ki')}</span><div className="stat-bar"><div className="stat-fill ki" style={{ width: `${sel.ki / 1.2}%` }} /></div><b>{sel.ki}</b></div>
+            <div className="stat-row"><span>{t('attr.spd')}</span><div className="stat-bar"><div className="stat-fill spd" style={{ width: `${sel.spd}%` }} /></div><b>{sel.spd}</b></div>
           </div>
 
           {/* Formas */}
@@ -682,7 +708,7 @@ function CharactersScreen({ onNavigate, onSelectFighter }: {
             })}
           </div>
 
-          <button className="btn-primary" onClick={() => onSelectFighter(selected)}>USE IN BATTLE</button>
+          <button className="btn-primary" onClick={() => onSelectFighter(selected)}>{t('common.useInBattle')}</button>
         </div>
       </div>
     </div>
@@ -694,7 +720,7 @@ function CharactersScreen({ onNavigate, onSelectFighter }: {
 // ═══════════════════════════════════════════════════════════
 
 const DECK_KEY = 'dbzlsw_deck';
-const DEFAULT_DECK = [1, 1, 2, 2, 4, 25, 25, 26, 27, 28, 53, 64, 65, 96, 96, 79, 80, 111, 5, 12];
+const DEFAULT_DECK = [1, 1, 2, 2, 4, 5, 5, 6, 25, 29, 12, 7, 8, 19, 19, 16, 23, 9, 15, 11];
 
 function loadDeck(): number[] {
   try {
@@ -707,6 +733,7 @@ function loadDeck(): number[] {
 }
 
 function DeckScreen({ onNavigate }: { onNavigate: (s: Screen) => void }) {
+  const { t } = useLang();
   const [deck, setDeck] = useState<number[]>(loadDeck);
   const [filter, setFilter] = useState<CardType | 'all'>('all');
   const [search, setSearch] = useState('');
@@ -740,8 +767,8 @@ function DeckScreen({ onNavigate }: { onNavigate: (s: Screen) => void }) {
   return (
     <div className="page-screen deck-screen">
       <div className="page-header">
-        <button className="btn-back" onClick={() => onNavigate('main')}>◀</button>
-        <h1 className="page-title">DECK EDIT</h1>
+        <button className="btn-back" onClick={() => onNavigate('main')}><ArrowLeft size={14} /></button>
+        <h1 className="page-title">{t('deck.title')}</h1>
         <div className="deck-count">{deck.length}/{DECK_SIZE}</div>
       </div>
 
@@ -749,12 +776,12 @@ function DeckScreen({ onNavigate }: { onNavigate: (s: Screen) => void }) {
         {/* Colección */}
         <div className="deck-collection">
           <div className="deck-toolbar">
-            <input className="deck-search" placeholder="SEARCH..." value={search}
+            <input className="deck-search" placeholder={t('deck.search')} value={search}
               onChange={e => setSearch(e.target.value)} />
             <div className="deck-filters">
-              {(['all', 'command', 'damage', 'beam', 'support', 'defense', 'special'] as const).map(t => (
-                <button key={t} className={`filter-chip ${filter === t ? 'active' : ''}`}
-                  onClick={() => setFilter(t)}>{t === 'all' ? 'ALL' : t.toUpperCase()}</button>
+              {(['all', 'command', 'damage', 'beam', 'support', 'defense', 'special'] as const).map(tp => (
+                <button key={tp} className={`filter-chip ${filter === tp ? 'active' : ''}`}
+                  onClick={() => setFilter(tp)}>{tp === 'all' ? t('deck.all') : CARD_TYPE_NAMES[tp]}</button>
               ))}
             </div>
           </div>
@@ -767,16 +794,16 @@ function DeckScreen({ onNavigate }: { onNavigate: (s: Screen) => void }) {
 
         {/* Deck actual */}
         <div className="deck-current">
-          <div className="deck-current-title">YOUR DECK</div>
+          <div className="deck-current-title">{t('deck.yourDeck')}</div>
           <div className="deck-list">
             {deck.map((cardId, i) => {
               const card = getCard(cardId)!;
               return (
                 <div key={i} className="deck-row">
-                  <span className="deck-row-icon">{TYPE_EMOJI[card.type]}</span>
+                  <span className="deck-row-icon">{(() => { const I = TYPE_ICONS[card.type]; return <I size={14} />; })()}</span>
                   <span className="deck-row-name" style={{ color: CARD_COLORS[card.type] }}>{card.name}</span>
                   <span className="deck-row-atk">{card.atk > 0 ? `ATK ${card.atk}` : ''}</span>
-                  <button className="deck-row-remove" onClick={() => removeCard(cardId)}>✕</button>
+                  <button className="deck-row-remove" onClick={() => removeCard(cardId)}><X size={10} /></button>
                 </div>
               );
             })}
@@ -795,6 +822,7 @@ function DeckScreen({ onNavigate }: { onNavigate: (s: Screen) => void }) {
 // ═══════════════════════════════════════════════════════════
 
 function CardsScreen({ onNavigate }: { onNavigate: (s: Screen) => void }) {
+  const { t } = useLang();
   const [owned, setOwned] = useState<Set<number>>(new Set(CARDS.filter(c => c.rarity <= 2).map(c => c.id)));
   const [filter, setFilter] = useState<CardType | 'all'>('all');
 
@@ -803,15 +831,15 @@ function CardsScreen({ onNavigate }: { onNavigate: (s: Screen) => void }) {
   return (
     <div className="page-screen cards-screen">
       <div className="page-header">
-        <button className="btn-back" onClick={() => onNavigate('main')}>◀</button>
-        <h1 className="page-title">CARD COLLECTION</h1>
+        <button className="btn-back" onClick={() => onNavigate('main')}><ArrowLeft size={14} /></button>
+        <h1 className="page-title">{t('cards.title')}</h1>
         <div className="deck-count">{owned.size}/{CARDS.length}</div>
       </div>
       <div className="deck-toolbar">
         <div className="deck-filters">
-          {(['all', 'command', 'damage', 'beam', 'support', 'defense', 'special'] as const).map(t => (
-            <button key={t} className={`filter-chip ${filter === t ? 'active' : ''}`}
-              onClick={() => setFilter(t)}>{t === 'all' ? 'ALL' : t.toUpperCase()}</button>
+          {(['all', 'command', 'damage', 'beam', 'support', 'defense', 'special'] as const).map(tp => (
+            <button key={tp} className={`filter-chip ${filter === tp ? 'active' : ''}`}
+              onClick={() => setFilter(tp)}>{tp === 'all' ? t('deck.all') : CARD_TYPE_NAMES[tp]}</button>
           ))}
         </div>
       </div>
@@ -821,8 +849,8 @@ function CardsScreen({ onNavigate }: { onNavigate: (s: Screen) => void }) {
           if (!isOwned) {
             return (
               <div key={card.id} className="card card-unknown">
-                <div className="card-unknown-label">???</div>
-                <div className="card-unknown-sub">NOT OBTAINED</div>
+                <div className="card-unknown-label">{t('common.unknown')}</div>
+                <div className="card-unknown-sub">{t('common.notObtained')}</div>
               </div>
             );
           }
@@ -834,10 +862,11 @@ function CardsScreen({ onNavigate }: { onNavigate: (s: Screen) => void }) {
 }
 
 // ═══════════════════════════════════════════════════════════
-// SETTINGS
+// SETTINGS (incluye selector de idioma)
 // ═══════════════════════════════════════════════════════════
 
 function SettingsScreen({ onNavigate }: { onNavigate: (s: Screen) => void }) {
+  const { t, lang, setLang } = useLang();
   const [volume, setVolumeState] = useState(70);
   const [sfx, setSfxState] = useState(true);
   const [speed, setSpeed] = useState<'normal' | 'fast'>('normal');
@@ -849,39 +878,52 @@ function SettingsScreen({ onNavigate }: { onNavigate: (s: Screen) => void }) {
   return (
     <div className="page-screen settings-screen">
       <div className="page-header">
-        <button className="btn-back" onClick={() => onNavigate('main')}>◀</button>
-        <h1 className="page-title">SETTINGS</h1>
+        <button className="btn-back" onClick={() => onNavigate('main')}><ArrowLeft size={14} /></button>
+        <h1 className="page-title">{t('settings.title')}</h1>
         <div className="page-spacer" />
       </div>
       <div className="settings-list">
+        {/* ── IDIOMA / LANGUAGE ── */}
+        <div className="setting-row language-row">
+          <span className="setting-label"><Languages size={12} /> {t('settings.language')}</span>
+          <div className="language-grid">
+            {LANGUAGES.map(l => (
+              <button key={l.code} className={`filter-chip lang-chip ${lang === l.code ? 'active' : ''}`}
+                onClick={() => { setLang(l.code); Sfx.confirm(); }}>
+                <span className="lang-tag">{l.tag}</span> {l.name}
+              </button>
+            ))}
+          </div>
+        </div>
+
         <div className="setting-row">
-          <span className="setting-label">BGM VOLUME</span>
+          <span className="setting-label">{t('settings.bgmVolume')}</span>
           <input type="range" min={0} max={100} value={volume}
             onChange={e => setVolume(Number(e.target.value))} />
           <span className="setting-value">{volume}%</span>
         </div>
         <div className="setting-row">
-          <span className="setting-label">SOUND FX</span>
+          <span className="setting-label">{t('settings.soundFx')}</span>
           <button className={`toggle ${sfx ? 'on' : ''}`} onClick={() => setSfx(!sfx)}>
-            {sfx ? 'ON' : 'OFF'}
+            {sfx ? t('settings.on') : t('settings.off')}
           </button>
         </div>
         <div className="setting-row">
-          <span className="setting-label">TEXT SPEED</span>
+          <span className="setting-label">{t('settings.textSpeed')}</span>
           <div className="setting-options">
-            <button className={`filter-chip ${speed === 'normal' ? 'active' : ''}`} onClick={() => setSpeed('normal')}>NORMAL</button>
-            <button className={`filter-chip ${speed === 'fast' ? 'active' : ''}`} onClick={() => setSpeed('fast')}>FAST</button>
+            <button className={`filter-chip ${speed === 'normal' ? 'active' : ''}`} onClick={() => setSpeed('normal')}>{t('settings.normal')}</button>
+            <button className={`filter-chip ${speed === 'fast' ? 'active' : ''}`} onClick={() => setSpeed('fast')}>{t('settings.fast')}</button>
           </div>
         </div>
         <div className="setting-row">
-          <span className="setting-label">SCREEN</span>
+          <span className="setting-label">{t('settings.screen')}</span>
           <div className="setting-options">
-            <button className={`filter-chip ${screenMode === 'windowed' ? 'active' : ''}`} onClick={() => setScreenMode('windowed')}>WINDOWED</button>
-            <button className={`filter-chip ${screenMode === 'fullscreen' ? 'active' : ''}`} onClick={() => setScreenMode('fullscreen')}>FULLSCREEN</button>
+            <button className={`filter-chip ${screenMode === 'windowed' ? 'active' : ''}`} onClick={() => setScreenMode('windowed')}>{t('settings.windowed')}</button>
+            <button className={`filter-chip ${screenMode === 'fullscreen' ? 'active' : ''}`} onClick={() => setScreenMode('fullscreen')}>{t('settings.fullscreen')}</button>
           </div>
         </div>
         <div className="setting-row">
-          <span className="setting-label">CONTROLS</span>
+          <span className="setting-label">{t('settings.controls')}</span>
           <div className="setting-controls">
             <div>1-5: Select card</div>
             <div>WASD: Navigate</div>
@@ -902,6 +944,7 @@ function SettingsScreen({ onNavigate }: { onNavigate: (s: Screen) => void }) {
 function VersusScreen({ onNavigate, onStartVersus }: {
   onNavigate: (s: Screen) => void; onStartVersus: (enemyFormId: string) => void;
 }) {
+  const { t } = useLang();
   const [selected, setSelected] = useState('vegeta_base');
 
   const sel = getForm(selected)!;
@@ -910,8 +953,8 @@ function VersusScreen({ onNavigate, onStartVersus }: {
   return (
     <div className="page-screen versus-screen">
       <div className="page-header">
-        <button className="btn-back" onClick={() => onNavigate('main')}>◀</button>
-        <h1 className="page-title">BATTLE MODE</h1>
+        <button className="btn-back" onClick={() => onNavigate('main')}><ArrowLeft size={14} /></button>
+        <h1 className="page-title">{t('versus.title')}</h1>
         <div className="page-spacer" />
       </div>
       <div className="versus-layout">
@@ -924,21 +967,21 @@ function VersusScreen({ onNavigate, onStartVersus }: {
                 onClick={() => setSelected(baseForm.id)}>
                 <img className="char-thumb" src={sheetUrl(baseForm)} alt={c.name} />
                 <div className="char-name">{c.name}</div>
-                <div className="char-forms">{c.forms.length} form{c.forms.length > 1 ? 's' : ''}</div>
+                <div className="char-forms">{c.forms.length} {t('characters.forms')}</div>
               </button>
             );
           })}
         </div>
         <div className="char-detail">
-          <div className="versus-vs">VS</div>
+          <div className="versus-vs">{t('versus.vs')}</div>
           <img className="char-detail-sprite" src={sheetUrl(sel)} alt={sel.character} />
           <div className="char-detail-name">{selChar.name}</div>
           <div className="char-detail-form">{sel.form}</div>
           <div className="stat-block">
-            <div className="stat-row"><span>HP</span><div className="stat-bar"><div className="stat-fill hp" style={{ width: `${sel.hp / 6}%` }} /></div><b>{sel.hp}</b></div>
-            <div className="stat-row"><span>STR</span><div className="stat-bar"><div className="stat-fill str" style={{ width: `${sel.str / 1.2}%` }} /></div><b>{sel.str}</b></div>
-            <div className="stat-row"><span>KI</span><div className="stat-bar"><div className="stat-fill ki" style={{ width: `${sel.ki / 1.2}%` }} /></div><b>{sel.ki}</b></div>
-            <div className="stat-row"><span>SPD</span><div className="stat-bar"><div className="stat-fill spd" style={{ width: `${sel.spd}%` }} /></div><b>{sel.spd}</b></div>
+            <div className="stat-row"><span>{t('attr.hp')}</span><div className="stat-bar"><div className="stat-fill hp" style={{ width: `${sel.hp / 6}%` }} /></div><b>{sel.hp}</b></div>
+            <div className="stat-row"><span>{t('attr.str')}</span><div className="stat-bar"><div className="stat-fill str" style={{ width: `${sel.str / 1.2}%` }} /></div><b>{sel.str}</b></div>
+            <div className="stat-row"><span>{t('attr.ki')}</span><div className="stat-bar"><div className="stat-fill ki" style={{ width: `${sel.ki / 1.2}%` }} /></div><b>{sel.ki}</b></div>
+            <div className="stat-row"><span>{t('attr.spd')}</span><div className="stat-bar"><div className="stat-fill spd" style={{ width: `${sel.spd}%` }} /></div><b>{sel.spd}</b></div>
           </div>
           <div className="form-select">
             {selChar.forms.map(fid => {
@@ -949,7 +992,7 @@ function VersusScreen({ onNavigate, onStartVersus }: {
               );
             })}
           </div>
-          <button className="btn-primary" onClick={() => onStartVersus(selected)}>FIGHT!</button>
+          <button className="btn-primary" onClick={() => onStartVersus(selected)}>{t('common.fight')}</button>
         </div>
       </div>
     </div>
@@ -960,7 +1003,7 @@ function VersusScreen({ onNavigate, onStartVersus }: {
 // APP
 // ═══════════════════════════════════════════════════════════
 
-export default function App() {
+function AppInner() {
   const [screen, setScreen] = useState<Screen>('main');
   const [playerForm, setPlayerForm] = useState('goku_base');
   const [enemyForm, setEnemyForm] = useState('vegeta_base');
@@ -989,10 +1032,9 @@ export default function App() {
     setScreen('battle');
   };
 
-  const startChapter = (enemyFormId: string, chapterName: string) => {
+  const startChapter = (enemyFormId: string, chapterId: number) => {
     setEnemyForm(enemyFormId);
-    const ch = CHAPTERS.find(c => c.name === chapterName);
-    setStoryChapter(ch?.id ?? null);
+    setStoryChapter(chapterId);
     setBattleKey(k => k + 1);
     setScreen('battle');
   };
@@ -1015,6 +1057,14 @@ export default function App() {
     case 'battle': return <BattleScreen key={battleKey} playerFormId={playerForm} enemyFormId={enemyForm} onExit={exitBattle} />;
     default: return <MainMenu onNavigate={setScreen} />;
   }
+}
+
+export default function App() {
+  return (
+    <LanguageProvider>
+      <AppInner />
+    </LanguageProvider>
+  );
 }
 
 const root = createRoot(document.getElementById('root')!);
