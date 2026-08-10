@@ -13,33 +13,21 @@
   ]
  },
  "move": {
-  "frame_count": 4,
+  "frame_count": 2,
   "fps": 6,
   "loop": true,
   "frames": [
    {
     "name": "goten_super_saiyan_move_00",
     "file": "goten_super_saiyan_move_00.png",
-    "w": 23,
-    "h": 41
+    "w": 31,
+    "h": 38
    },
    {
     "name": "goten_super_saiyan_move_01",
     "file": "goten_super_saiyan_move_01.png",
     "w": 25,
     "h": 42
-   },
-   {
-    "name": "goten_super_saiyan_move_02",
-    "file": "goten_super_saiyan_move_02.png",
-    "w": 31,
-    "h": 38
-   },
-   {
-    "name": "goten_super_saiyan_move_03",
-    "file": "goten_super_saiyan_move_03.png",
-    "w": 40,
-    "h": 31
    }
   ]
  },
@@ -51,19 +39,19 @@
    {
     "name": "goten_super_saiyan_guard_00",
     "file": "goten_super_saiyan_guard_00.png",
-    "w": 23,
-    "h": 41
-   },
-   {
-    "name": "goten_super_saiyan_guard_01",
-    "file": "goten_super_saiyan_guard_01.png",
     "w": 33,
     "h": 40
    },
    {
+    "name": "goten_super_saiyan_guard_01",
+    "file": "goten_super_saiyan_guard_01.png",
+    "w": 27,
+    "h": 41
+   },
+   {
     "name": "goten_super_saiyan_guard_02",
     "file": "goten_super_saiyan_guard_02.png",
-    "w": 27,
+    "w": 23,
     "h": 41
    }
   ]
@@ -76,43 +64,43 @@
    {
     "name": "goten_super_saiyan_attack_fwd_00",
     "file": "goten_super_saiyan_attack_fwd_00.png",
-    "w": 34,
-    "h": 38
-   },
-   {
-    "name": "goten_super_saiyan_attack_fwd_01",
-    "file": "goten_super_saiyan_attack_fwd_01.png",
-    "w": 35,
-    "h": 38
-   },
-   {
-    "name": "goten_super_saiyan_attack_fwd_02",
-    "file": "goten_super_saiyan_attack_fwd_02.png",
-    "w": 23,
-    "h": 43
-   },
-   {
-    "name": "goten_super_saiyan_attack_fwd_03",
-    "file": "goten_super_saiyan_attack_fwd_03.png",
-    "w": 26,
-    "h": 42
-   },
-   {
-    "name": "goten_super_saiyan_attack_fwd_04",
-    "file": "goten_super_saiyan_attack_fwd_04.png",
-    "w": 35,
-    "h": 40
-   },
-   {
-    "name": "goten_super_saiyan_attack_fwd_05",
-    "file": "goten_super_saiyan_attack_fwd_05.png",
     "w": 31,
     "h": 40
    },
    {
+    "name": "goten_super_saiyan_attack_fwd_01",
+    "file": "goten_super_saiyan_attack_fwd_01.png",
+    "w": 30,
+    "h": 40
+   },
+   {
+    "name": "goten_super_saiyan_attack_fwd_02",
+    "file": "goten_super_saiyan_attack_fwd_02.png",
+    "w": 26,
+    "h": 42
+   },
+   {
+    "name": "goten_super_saiyan_attack_fwd_03",
+    "file": "goten_super_saiyan_attack_fwd_03.png",
+    "w": 35,
+    "h": 38
+   },
+   {
+    "name": "goten_super_saiyan_attack_fwd_04",
+    "file": "goten_super_saiyan_attack_fwd_04.png",
+    "w": 34,
+    "h": 38
+   },
+   {
+    "name": "goten_super_saiyan_attack_fwd_05",
+    "file": "goten_super_saiyan_attack_fwd_05.png",
+    "w": 23,
+    "h": 43
+   },
+   {
     "name": "goten_super_saiyan_attack_fwd_06",
     "file": "goten_super_saiyan_attack_fwd_06.png",
-    "w": 30,
+    "w": 35,
     "h": 40
    }
   ]
@@ -125,19 +113,19 @@
    {
     "name": "goten_super_saiyan_attack_ud_00",
     "file": "goten_super_saiyan_attack_ud_00.png",
-    "w": 28,
-    "h": 38
+    "w": 26,
+    "h": 41
    },
    {
     "name": "goten_super_saiyan_attack_ud_01",
     "file": "goten_super_saiyan_attack_ud_01.png",
-    "w": 22,
-    "h": 41
+    "w": 28,
+    "h": 38
    },
    {
     "name": "goten_super_saiyan_attack_ud_02",
     "file": "goten_super_saiyan_attack_ud_02.png",
-    "w": 26,
+    "w": 22,
     "h": 41
    },
    {
@@ -156,26 +144,26 @@
    {
     "name": "goten_super_saiyan_hurt_00",
     "file": "goten_super_saiyan_hurt_00.png",
-    "w": 29,
-    "h": 32
+    "w": 26,
+    "h": 40
    },
    {
     "name": "goten_super_saiyan_hurt_01",
     "file": "goten_super_saiyan_hurt_01.png",
     "w": 26,
-    "h": 40
+    "h": 39
    },
    {
     "name": "goten_super_saiyan_hurt_02",
     "file": "goten_super_saiyan_hurt_02.png",
-    "w": 26,
-    "h": 48
+    "w": 29,
+    "h": 32
    },
    {
     "name": "goten_super_saiyan_hurt_03",
     "file": "goten_super_saiyan_hurt_03.png",
-    "w": 26,
-    "h": 39
+    "w": 32,
+    "h": 29
    },
    {
     "name": "goten_super_saiyan_hurt_04",
@@ -186,8 +174,8 @@
    {
     "name": "goten_super_saiyan_hurt_05",
     "file": "goten_super_saiyan_hurt_05.png",
-    "w": 32,
-    "h": 29
+    "w": 26,
+    "h": 48
    },
    {
     "name": "goten_super_saiyan_hurt_06",
@@ -224,14 +212,14 @@
    {
     "name": "goten_super_saiyan_beam_fire_02",
     "file": "goten_super_saiyan_beam_fire_02.png",
-    "w": 29,
-    "h": 40
+    "w": 25,
+    "h": 39
    },
    {
     "name": "goten_super_saiyan_beam_fire_03",
     "file": "goten_super_saiyan_beam_fire_03.png",
-    "w": 25,
-    "h": 39
+    "w": 29,
+    "h": 40
    }
   ]
  }

@@ -13,31 +13,19 @@
   ]
  },
  "move": {
-  "frame_count": 4,
+  "frame_count": 2,
   "fps": 6,
   "loop": true,
   "frames": [
    {
     "name": "guldo_base_move_00",
     "file": "guldo_base_move_00.png",
-    "w": 23,
-    "h": 35
-   },
-   {
-    "name": "guldo_base_move_01",
-    "file": "guldo_base_move_01.png",
     "w": 26,
     "h": 36
    },
    {
-    "name": "guldo_base_move_02",
-    "file": "guldo_base_move_02.png",
-    "w": 40,
-    "h": 31
-   },
-   {
-    "name": "guldo_base_move_03",
-    "file": "guldo_base_move_03.png",
+    "name": "guldo_base_move_01",
+    "file": "guldo_base_move_01.png",
     "w": 31,
     "h": 33
    }
@@ -57,13 +45,13 @@
    {
     "name": "guldo_base_guard_01",
     "file": "guldo_base_guard_01.png",
-    "w": 22,
+    "w": 27,
     "h": 35
    },
    {
     "name": "guldo_base_guard_02",
     "file": "guldo_base_guard_02.png",
-    "w": 27,
+    "w": 22,
     "h": 35
    }
   ]
@@ -76,20 +64,20 @@
    {
     "name": "guldo_base_attack_fwd_00",
     "file": "guldo_base_attack_fwd_00.png",
-    "w": 22,
-    "h": 37
+    "w": 31,
+    "h": 34
    },
    {
     "name": "guldo_base_attack_fwd_01",
     "file": "guldo_base_attack_fwd_01.png",
-    "w": 33,
-    "h": 32
+    "w": 30,
+    "h": 34
    },
    {
     "name": "guldo_base_attack_fwd_02",
     "file": "guldo_base_attack_fwd_02.png",
-    "w": 34,
-    "h": 32
+    "w": 30,
+    "h": 34
    },
    {
     "name": "guldo_base_attack_fwd_03",
@@ -100,26 +88,26 @@
    {
     "name": "guldo_base_attack_fwd_04",
     "file": "guldo_base_attack_fwd_04.png",
-    "w": 26,
-    "h": 37
+    "w": 34,
+    "h": 32
    },
    {
     "name": "guldo_base_attack_fwd_05",
     "file": "guldo_base_attack_fwd_05.png",
-    "w": 30,
-    "h": 34
+    "w": 33,
+    "h": 32
    },
    {
     "name": "guldo_base_attack_fwd_06",
     "file": "guldo_base_attack_fwd_06.png",
-    "w": 30,
-    "h": 34
+    "w": 22,
+    "h": 37
    },
    {
     "name": "guldo_base_attack_fwd_07",
     "file": "guldo_base_attack_fwd_07.png",
-    "w": 31,
-    "h": 34
+    "w": 26,
+    "h": 37
    }
   ]
  },
@@ -131,20 +119,20 @@
    {
     "name": "guldo_base_attack_ud_00",
     "file": "guldo_base_attack_ud_00.png",
-    "w": 21,
-    "h": 35
+    "w": 28,
+    "h": 36
    },
    {
     "name": "guldo_base_attack_ud_01",
     "file": "guldo_base_attack_ud_01.png",
     "w": 28,
-    "h": 36
+    "h": 32
    },
    {
     "name": "guldo_base_attack_ud_02",
     "file": "guldo_base_attack_ud_02.png",
-    "w": 28,
-    "h": 32
+    "w": 21,
+    "h": 35
    },
    {
     "name": "guldo_base_attack_ud_03",
@@ -162,32 +150,32 @@
    {
     "name": "guldo_base_hurt_00",
     "file": "guldo_base_hurt_00.png",
-    "w": 23,
+    "w": 25,
     "h": 35
    },
    {
     "name": "guldo_base_hurt_01",
     "file": "guldo_base_hurt_01.png",
-    "w": 25,
+    "w": 23,
     "h": 35
    },
    {
     "name": "guldo_base_hurt_02",
     "file": "guldo_base_hurt_02.png",
-    "w": 24,
-    "h": 46
+    "w": 29,
+    "h": 26
    },
    {
     "name": "guldo_base_hurt_03",
     "file": "guldo_base_hurt_03.png",
     "w": 24,
-    "h": 48
+    "h": 46
    },
    {
     "name": "guldo_base_hurt_04",
     "file": "guldo_base_hurt_04.png",
-    "w": 29,
-    "h": 26
+    "w": 24,
+    "h": 48
    },
    {
     "name": "guldo_base_hurt_05",
@@ -205,19 +193,19 @@
    {
     "name": "guldo_base_beam_charge_00",
     "file": "guldo_base_beam_charge_00.png",
-    "w": 29,
+    "w": 31,
     "h": 34
    },
    {
     "name": "guldo_base_beam_charge_01",
     "file": "guldo_base_beam_charge_01.png",
-    "w": 29,
+    "w": 30,
     "h": 34
    },
    {
     "name": "guldo_base_beam_charge_02",
     "file": "guldo_base_beam_charge_02.png",
-    "w": 30,
+    "w": 29,
     "h": 34
    }
   ]
@@ -230,26 +218,26 @@
    {
     "name": "guldo_base_beam_fire_03",
     "file": "guldo_base_beam_fire_03.png",
-    "w": 31,
+    "w": 29,
     "h": 34
    },
    {
     "name": "guldo_base_beam_fire_04",
     "file": "guldo_base_beam_fire_04.png",
-    "w": 24,
-    "h": 36
+    "w": 32,
+    "h": 31
    },
    {
     "name": "guldo_base_beam_fire_05",
     "file": "guldo_base_beam_fire_05.png",
-    "w": 29,
-    "h": 34
+    "w": 24,
+    "h": 36
    },
    {
     "name": "guldo_base_beam_fire_06",
     "file": "guldo_base_beam_fire_06.png",
-    "w": 32,
-    "h": 31
+    "w": 29,
+    "h": 34
    }
   ]
  }

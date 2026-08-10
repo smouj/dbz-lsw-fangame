@@ -13,33 +13,21 @@
   ]
  },
  "move": {
-  "frame_count": 4,
+  "frame_count": 2,
   "fps": 6,
   "loop": true,
   "frames": [
    {
     "name": "cell_imperfect_form_move_00",
     "file": "cell_imperfect_form_move_00.png",
-    "w": 23,
-    "h": 38
+    "w": 32,
+    "h": 45
    },
    {
     "name": "cell_imperfect_form_move_01",
     "file": "cell_imperfect_form_move_01.png",
-    "w": 40,
-    "h": 31
-   },
-   {
-    "name": "cell_imperfect_form_move_02",
-    "file": "cell_imperfect_form_move_02.png",
     "w": 32,
     "h": 44
-   },
-   {
-    "name": "cell_imperfect_form_move_03",
-    "file": "cell_imperfect_form_move_03.png",
-    "w": 32,
-    "h": 60
    }
   ]
  },
@@ -51,20 +39,20 @@
    {
     "name": "cell_imperfect_form_guard_00",
     "file": "cell_imperfect_form_guard_00.png",
-    "w": 30,
-    "h": 44
+    "w": 34,
+    "h": 43
    },
    {
     "name": "cell_imperfect_form_guard_01",
     "file": "cell_imperfect_form_guard_01.png",
-    "w": 29,
-    "h": 55
+    "w": 30,
+    "h": 44
    },
    {
     "name": "cell_imperfect_form_guard_02",
     "file": "cell_imperfect_form_guard_02.png",
-    "w": 34,
-    "h": 43
+    "w": 29,
+    "h": 44
    }
   ]
  },
@@ -77,49 +65,49 @@
     "name": "cell_imperfect_form_attack_fwd_00",
     "file": "cell_imperfect_form_attack_fwd_00.png",
     "w": 32,
-    "h": 44
+    "h": 45
    },
    {
     "name": "cell_imperfect_form_attack_fwd_01",
     "file": "cell_imperfect_form_attack_fwd_01.png",
-    "w": 40,
-    "h": 46
+    "w": 31,
+    "h": 45
    },
    {
     "name": "cell_imperfect_form_attack_fwd_02",
     "file": "cell_imperfect_form_attack_fwd_02.png",
-    "w": 24,
-    "h": 46
+    "w": 40,
+    "h": 42
    },
    {
     "name": "cell_imperfect_form_attack_fwd_03",
     "file": "cell_imperfect_form_attack_fwd_03.png",
-    "w": 38,
-    "h": 46
-   },
-   {
-    "name": "cell_imperfect_form_attack_fwd_04",
-    "file": "cell_imperfect_form_attack_fwd_04.png",
     "w": 31,
     "h": 44
    },
    {
+    "name": "cell_imperfect_form_attack_fwd_04",
+    "file": "cell_imperfect_form_attack_fwd_04.png",
+    "w": 40,
+    "h": 46
+   },
+   {
     "name": "cell_imperfect_form_attack_fwd_05",
     "file": "cell_imperfect_form_attack_fwd_05.png",
-    "w": 40,
-    "h": 53
+    "w": 38,
+    "h": 46
    },
    {
     "name": "cell_imperfect_form_attack_fwd_06",
     "file": "cell_imperfect_form_attack_fwd_06.png",
-    "w": 41,
-    "h": 55
+    "w": 24,
+    "h": 46
    },
    {
     "name": "cell_imperfect_form_attack_fwd_07",
     "file": "cell_imperfect_form_attack_fwd_07.png",
-    "w": 34,
-    "h": 55
+    "w": 32,
+    "h": 44
    }
   ]
  },
@@ -131,26 +119,26 @@
    {
     "name": "cell_imperfect_form_attack_ud_00",
     "file": "cell_imperfect_form_attack_ud_00.png",
-    "w": 34,
-    "h": 32
+    "w": 29,
+    "h": 45
    },
    {
     "name": "cell_imperfect_form_attack_ud_01",
     "file": "cell_imperfect_form_attack_ud_01.png",
     "w": 29,
-    "h": 45
+    "h": 46
    },
    {
     "name": "cell_imperfect_form_attack_ud_02",
     "file": "cell_imperfect_form_attack_ud_02.png",
-    "w": 44,
-    "h": 71
+    "w": 29,
+    "h": 45
    },
    {
     "name": "cell_imperfect_form_attack_ud_03",
     "file": "cell_imperfect_form_attack_ud_03.png",
-    "w": 29,
-    "h": 46
+    "w": 34,
+    "h": 32
    }
   ]
  },
@@ -162,14 +150,14 @@
    {
     "name": "cell_imperfect_form_hurt_00",
     "file": "cell_imperfect_form_hurt_00.png",
-    "w": 31,
-    "h": 48
+    "w": 30,
+    "h": 44
    },
    {
     "name": "cell_imperfect_form_hurt_01",
     "file": "cell_imperfect_form_hurt_01.png",
     "w": 31,
-    "h": 46
+    "h": 38
    },
    {
     "name": "cell_imperfect_form_hurt_02",
@@ -180,14 +168,14 @@
    {
     "name": "cell_imperfect_form_hurt_03",
     "file": "cell_imperfect_form_hurt_03.png",
-    "w": 30,
-    "h": 44
+    "w": 31,
+    "h": 46
    },
    {
     "name": "cell_imperfect_form_hurt_04",
     "file": "cell_imperfect_form_hurt_04.png",
     "w": 31,
-    "h": 38
+    "h": 48
    },
    {
     "name": "cell_imperfect_form_hurt_05",
@@ -242,8 +230,8 @@
    {
     "name": "cell_imperfect_form_beam_fire_05",
     "file": "cell_imperfect_form_beam_fire_05.png",
-    "w": 40,
-    "h": 46
+    "w": 29,
+    "h": 42
    },
    {
     "name": "cell_imperfect_form_beam_fire_06",
@@ -254,8 +242,8 @@
    {
     "name": "cell_imperfect_form_beam_fire_07",
     "file": "cell_imperfect_form_beam_fire_07.png",
-    "w": 29,
-    "h": 42
+    "w": 40,
+    "h": 46
    }
   ]
  }

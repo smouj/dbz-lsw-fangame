@@ -1,17 +1,16 @@
 // ═══════════════════════════════════════════════════════════
 // DBZ LSW — Sprites de OVERWORLD (vista sin ataque, como el GBC)
-// ✅ OVERWORLD OFICIALES: la carpeta "auxiliary" de la Sprite Database
-// (ZIP del usuario) contiene los sprites de overworld chibi (12-16px).
-// El resto de poses (idle/movement/attack/beam/hurt/guard) = acción.
+// ✅ OVERWORLD OFICIALES: la carpeta "panel_sprites" del paquete FIXED
+// (QA 3189/3189) contiene los sprites de overworld chibi (12-16px).
+// Las poses (idle/movement/attack/beam/hurt/guard) = acción.
 // ═══════════════════════════════════════════════════════════
 
 const OVERWORLD_FILES: Record<string, string> = {
-  'vegeta_base': 'vegeta_base_ow.png',
-  'nappa_base': 'nappa_base_ow.png',
   'goku_base': 'goku_base_ow.png',
   'goku_ssj': 'goku_super_saiyan_ow.png',
   'goku_ssj2': 'goku_super_saiyan_2_ow.png',
   'goku_ssj3': 'goku_super_saiyan_3_ow.png',
+  'vegeta_base': 'vegeta_base_ow.png',
   'vegeta_ssj': 'vegeta_super_saiyan_majin_ow.png',
   'vegeta_majin': 'vegeta_super_saiyan_majin_ow.png',
   'gohan_young': 'young_gohan_base_ow.png',
@@ -46,6 +45,7 @@ const OVERWORLD_FILES: Record<string, string> = {
   'guldo': 'guldo_base_ow.png',
   'jeice': 'jeice_base_ow.png',
   'burter': 'burter_base_ow.png',
+  'nappa': 'nappa_base_ow.png',
   'buu_base': 'buu_base_ow.png',
   'buu_super': 'super_buu_base_ow.png',
   'buu_gotenks': 'buu_gotenks_absorbed_ow.png',
@@ -55,5 +55,5 @@ const OVERWORLD_FILES: Record<string, string> = {
 
 export function overworldUrl(formId: string): string | undefined {
   const file = OVERWORLD_FILES[formId];
-  return file ? `/assets/overworld/aux/${file}` : undefined;
+  return file ? `/assets/overworld/panel_sprites/${file}` : undefined;
 }

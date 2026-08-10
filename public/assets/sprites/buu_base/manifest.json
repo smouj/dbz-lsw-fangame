@@ -13,31 +13,19 @@
   ]
  },
  "move": {
-  "frame_count": 4,
+  "frame_count": 2,
   "fps": 6,
   "loop": true,
   "frames": [
    {
     "name": "buu_base_move_00",
     "file": "buu_base_move_00.png",
-    "w": 23,
-    "h": 41
+    "w": 30,
+    "h": 40
    },
    {
     "name": "buu_base_move_01",
     "file": "buu_base_move_01.png",
-    "w": 40,
-    "h": 31
-   },
-   {
-    "name": "buu_base_move_02",
-    "file": "buu_base_move_02.png",
-    "w": 30,
-    "h": 51
-   },
-   {
-    "name": "buu_base_move_03",
-    "file": "buu_base_move_03.png",
     "w": 32,
     "h": 37
    }
@@ -51,20 +39,20 @@
    {
     "name": "buu_base_guard_00",
     "file": "buu_base_guard_00.png",
-    "w": 30,
-    "h": 40
+    "w": 34,
+    "h": 38
    },
    {
     "name": "buu_base_guard_01",
     "file": "buu_base_guard_01.png",
-    "w": 26,
-    "h": 51
+    "w": 30,
+    "h": 40
    },
    {
     "name": "buu_base_guard_02",
     "file": "buu_base_guard_02.png",
-    "w": 34,
-    "h": 38
+    "w": 26,
+    "h": 40
    }
   ]
  },
@@ -76,44 +64,44 @@
    {
     "name": "buu_base_attack_fwd_00",
     "file": "buu_base_attack_fwd_00.png",
-    "w": 27,
-    "h": 40
+    "w": 32,
+    "h": 37
    },
    {
     "name": "buu_base_attack_fwd_01",
     "file": "buu_base_attack_fwd_01.png",
-    "w": 39,
-    "h": 40
+    "w": 32,
+    "h": 37
    },
    {
     "name": "buu_base_attack_fwd_02",
     "file": "buu_base_attack_fwd_02.png",
-    "w": 24,
+    "w": 39,
     "h": 40
    },
    {
     "name": "buu_base_attack_fwd_03",
     "file": "buu_base_attack_fwd_03.png",
-    "w": 32,
-    "h": 37
-   },
-   {
-    "name": "buu_base_attack_fwd_04",
-    "file": "buu_base_attack_fwd_04.png",
-    "w": 32,
-    "h": 37
-   },
-   {
-    "name": "buu_base_attack_fwd_05",
-    "file": "buu_base_attack_fwd_05.png",
     "w": 40,
     "h": 36
    },
    {
-    "name": "buu_base_attack_fwd_06",
-    "file": "buu_base_attack_fwd_06.png",
+    "name": "buu_base_attack_fwd_04",
+    "file": "buu_base_attack_fwd_04.png",
     "w": 39,
     "h": 36
+   },
+   {
+    "name": "buu_base_attack_fwd_05",
+    "file": "buu_base_attack_fwd_05.png",
+    "w": 24,
+    "h": 40
+   },
+   {
+    "name": "buu_base_attack_fwd_06",
+    "file": "buu_base_attack_fwd_06.png",
+    "w": 27,
+    "h": 40
    }
   ]
  },
@@ -125,20 +113,20 @@
    {
     "name": "buu_base_attack_ud_00",
     "file": "buu_base_attack_ud_00.png",
-    "w": 29,
-    "h": 40
-   },
-   {
-    "name": "buu_base_attack_ud_01",
-    "file": "buu_base_attack_ud_01.png",
     "w": 30,
     "h": 42
    },
    {
-    "name": "buu_base_attack_ud_02",
-    "file": "buu_base_attack_ud_02.png",
+    "name": "buu_base_attack_ud_01",
+    "file": "buu_base_attack_ud_01.png",
     "w": 31,
     "h": 38
+   },
+   {
+    "name": "buu_base_attack_ud_02",
+    "file": "buu_base_attack_ud_02.png",
+    "w": 29,
+    "h": 40
    },
    {
     "name": "buu_base_attack_ud_03",
@@ -156,32 +144,32 @@
    {
     "name": "buu_base_hurt_00",
     "file": "buu_base_hurt_00.png",
-    "w": 26,
-    "h": 48
+    "w": 28,
+    "h": 38
    },
    {
     "name": "buu_base_hurt_01",
     "file": "buu_base_hurt_01.png",
-    "w": 25,
-    "h": 46
+    "w": 29,
+    "h": 37
    },
    {
     "name": "buu_base_hurt_02",
     "file": "buu_base_hurt_02.png",
-    "w": 29,
+    "w": 32,
     "h": 37
    },
    {
     "name": "buu_base_hurt_03",
     "file": "buu_base_hurt_03.png",
-    "w": 28,
-    "h": 38
+    "w": 25,
+    "h": 46
    },
    {
     "name": "buu_base_hurt_04",
     "file": "buu_base_hurt_04.png",
-    "w": 32,
-    "h": 37
+    "w": 26,
+    "h": 48
    },
    {
     "name": "buu_base_hurt_05",
@@ -199,37 +187,37 @@
    {
     "name": "buu_base_beam_charge_00",
     "file": "buu_base_beam_charge_00.png",
-    "w": 30,
-    "h": 39
+    "w": 32,
+    "h": 37
    },
    {
     "name": "buu_base_beam_charge_01",
     "file": "buu_base_beam_charge_01.png",
     "w": 32,
-    "h": 38
+    "h": 37
    },
    {
     "name": "buu_base_beam_charge_02",
     "file": "buu_base_beam_charge_02.png",
-    "w": 32,
+    "w": 29,
     "h": 37
    },
    {
     "name": "buu_base_beam_charge_03",
     "file": "buu_base_beam_charge_03.png",
-    "w": 29,
-    "h": 37
+    "w": 32,
+    "h": 38
    },
    {
     "name": "buu_base_beam_charge_04",
     "file": "buu_base_beam_charge_04.png",
-    "w": 32,
-    "h": 37
+    "w": 30,
+    "h": 39
    },
    {
     "name": "buu_base_beam_charge_05",
     "file": "buu_base_beam_charge_05.png",
-    "w": 27,
+    "w": 28,
     "h": 42
    }
   ]
@@ -242,8 +230,8 @@
    {
     "name": "buu_base_beam_fire_06",
     "file": "buu_base_beam_fire_06.png",
-    "w": 28,
-    "h": 39
+    "w": 32,
+    "h": 37
    },
    {
     "name": "buu_base_beam_fire_07",
@@ -254,20 +242,20 @@
    {
     "name": "buu_base_beam_fire_08",
     "file": "buu_base_beam_fire_08.png",
-    "w": 32,
-    "h": 37
+    "w": 28,
+    "h": 39
    },
    {
     "name": "buu_base_beam_fire_09",
     "file": "buu_base_beam_fire_09.png",
-    "w": 27,
+    "w": 25,
     "h": 40
    },
    {
     "name": "buu_base_beam_fire_10",
     "file": "buu_base_beam_fire_10.png",
-    "w": 22,
-    "h": 40
+    "w": 32,
+    "h": 37
    },
    {
     "name": "buu_base_beam_fire_11",
@@ -278,8 +266,8 @@
    {
     "name": "buu_base_beam_fire_12",
     "file": "buu_base_beam_fire_12.png",
-    "w": 32,
-    "h": 37
+    "w": 27,
+    "h": 40
    }
   ]
  }

@@ -13,31 +13,19 @@
   ]
  },
  "move": {
-  "frame_count": 4,
+  "frame_count": 2,
   "fps": 6,
   "loop": true,
   "frames": [
    {
     "name": "jeice_base_move_00",
     "file": "jeice_base_move_00.png",
-    "w": 23,
-    "h": 35
+    "w": 28,
+    "h": 42
    },
    {
     "name": "jeice_base_move_01",
     "file": "jeice_base_move_01.png",
-    "w": 28,
-    "h": 56
-   },
-   {
-    "name": "jeice_base_move_02",
-    "file": "jeice_base_move_02.png",
-    "w": 40,
-    "h": 31
-   },
-   {
-    "name": "jeice_base_move_03",
-    "file": "jeice_base_move_03.png",
     "w": 32,
     "h": 39
    }
@@ -51,20 +39,20 @@
    {
     "name": "jeice_base_guard_00",
     "file": "jeice_base_guard_00.png",
-    "w": 26,
-    "h": 42
+    "w": 34,
+    "h": 41
    },
    {
     "name": "jeice_base_guard_01",
     "file": "jeice_base_guard_01.png",
-    "w": 34,
+    "w": 30,
     "h": 41
    },
    {
     "name": "jeice_base_guard_02",
     "file": "jeice_base_guard_02.png",
-    "w": 30,
-    "h": 41
+    "w": 26,
+    "h": 42
    }
   ]
  },
@@ -76,44 +64,44 @@
    {
     "name": "jeice_base_attack_fwd_00",
     "file": "jeice_base_attack_fwd_00.png",
-    "w": 38,
-    "h": 44
+    "w": 32,
+    "h": 39
    },
    {
     "name": "jeice_base_attack_fwd_01",
     "file": "jeice_base_attack_fwd_01.png",
-    "w": 24,
-    "h": 44
+    "w": 32,
+    "h": 39
    },
    {
     "name": "jeice_base_attack_fwd_02",
     "file": "jeice_base_attack_fwd_02.png",
-    "w": 40,
-    "h": 38
+    "w": 37,
+    "h": 41
    },
    {
     "name": "jeice_base_attack_fwd_03",
     "file": "jeice_base_attack_fwd_03.png",
-    "w": 39,
+    "w": 40,
     "h": 38
    },
    {
     "name": "jeice_base_attack_fwd_04",
     "file": "jeice_base_attack_fwd_04.png",
-    "w": 37,
-    "h": 55
+    "w": 39,
+    "h": 38
    },
    {
     "name": "jeice_base_attack_fwd_05",
     "file": "jeice_base_attack_fwd_05.png",
-    "w": 32,
-    "h": 39
+    "w": 24,
+    "h": 44
    },
    {
     "name": "jeice_base_attack_fwd_06",
     "file": "jeice_base_attack_fwd_06.png",
-    "w": 32,
-    "h": 39
+    "w": 38,
+    "h": 44
    }
   ]
  },
@@ -125,26 +113,26 @@
    {
     "name": "jeice_base_attack_ud_00",
     "file": "jeice_base_attack_ud_00.png",
-    "w": 32,
-    "h": 53
+    "w": 29,
+    "h": 43
    },
    {
     "name": "jeice_base_attack_ud_01",
     "file": "jeice_base_attack_ud_01.png",
-    "w": 34,
-    "h": 30
-   },
-   {
-    "name": "jeice_base_attack_ud_02",
-    "file": "jeice_base_attack_ud_02.png",
     "w": 29,
     "h": 40
    },
    {
+    "name": "jeice_base_attack_ud_02",
+    "file": "jeice_base_attack_ud_02.png",
+    "w": 26,
+    "h": 42
+   },
+   {
     "name": "jeice_base_attack_ud_03",
     "file": "jeice_base_attack_ud_03.png",
-    "w": 29,
-    "h": 43
+    "w": 34,
+    "h": 30
    }
   ]
  },
@@ -156,32 +144,32 @@
    {
     "name": "jeice_base_hurt_00",
     "file": "jeice_base_hurt_00.png",
-    "w": 27,
-    "h": 48
+    "w": 29,
+    "h": 41
    },
    {
     "name": "jeice_base_hurt_01",
     "file": "jeice_base_hurt_01.png",
     "w": 27,
-    "h": 46
+    "h": 41
    },
    {
     "name": "jeice_base_hurt_02",
     "file": "jeice_base_hurt_02.png",
-    "w": 29,
-    "h": 41
+    "w": 32,
+    "h": 34
    },
    {
     "name": "jeice_base_hurt_03",
     "file": "jeice_base_hurt_03.png",
     "w": 27,
-    "h": 41
+    "h": 46
    },
    {
     "name": "jeice_base_hurt_04",
     "file": "jeice_base_hurt_04.png",
-    "w": 32,
-    "h": 34
+    "w": 27,
+    "h": 48
    },
    {
     "name": "jeice_base_hurt_05",
@@ -199,50 +187,50 @@
    {
     "name": "jeice_base_beam_charge_00",
     "file": "jeice_base_beam_charge_00.png",
-    "w": 26,
-    "h": 42
+    "w": 32,
+    "h": 39
    },
    {
     "name": "jeice_base_beam_charge_01",
     "file": "jeice_base_beam_charge_01.png",
-    "w": 40,
-    "h": 35
+    "w": 32,
+    "h": 39
    },
    {
     "name": "jeice_base_beam_charge_02",
     "file": "jeice_base_beam_charge_02.png",
-    "w": 63,
-    "h": 63
+    "w": 26,
+    "h": 42
    },
    {
     "name": "jeice_base_beam_charge_03",
     "file": "jeice_base_beam_charge_03.png",
-    "w": 32,
-    "h": 39
+    "w": 40,
+    "h": 35
    },
    {
     "name": "jeice_base_beam_charge_04",
     "file": "jeice_base_beam_charge_04.png",
     "w": 32,
-    "h": 39
+    "h": 38
    },
    {
     "name": "jeice_base_beam_charge_05",
     "file": "jeice_base_beam_charge_05.png",
-    "w": 29,
+    "w": 27,
     "h": 43
    }
   ]
  },
  "beam_fire": {
-  "frame_count": 7,
+  "frame_count": 6,
   "fps": 8,
   "loop": false,
   "frames": [
    {
     "name": "jeice_base_beam_fire_06",
     "file": "jeice_base_beam_fire_06.png",
-    "w": 27,
+    "w": 29,
     "h": 43
    },
    {
@@ -255,29 +243,23 @@
     "name": "jeice_base_beam_fire_08",
     "file": "jeice_base_beam_fire_08.png",
     "w": 32,
-    "h": 38
+    "h": 39
    },
    {
     "name": "jeice_base_beam_fire_09",
     "file": "jeice_base_beam_fire_09.png",
-    "w": 32,
-    "h": 39
+    "w": 31,
+    "h": 48
    },
    {
     "name": "jeice_base_beam_fire_10",
     "file": "jeice_base_beam_fire_10.png",
-    "w": 31,
+    "w": 32,
     "h": 48
    },
    {
     "name": "jeice_base_beam_fire_11",
     "file": "jeice_base_beam_fire_11.png",
-    "w": 32,
-    "h": 48
-   },
-   {
-    "name": "jeice_base_beam_fire_12",
-    "file": "jeice_base_beam_fire_12.png",
     "w": 32,
     "h": 48
    }

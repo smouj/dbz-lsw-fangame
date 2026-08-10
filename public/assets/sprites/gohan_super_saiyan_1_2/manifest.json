@@ -13,33 +13,21 @@
   ]
  },
  "move": {
-  "frame_count": 4,
+  "frame_count": 2,
   "fps": 6,
   "loop": true,
   "frames": [
    {
     "name": "gohan_super_saiyan_1_2_move_00",
     "file": "gohan_super_saiyan_1_2_move_00.png",
-    "w": 28,
-    "h": 46
+    "w": 32,
+    "h": 43
    },
    {
     "name": "gohan_super_saiyan_1_2_move_01",
     "file": "gohan_super_saiyan_1_2_move_01.png",
-    "w": 23,
-    "h": 41
-   },
-   {
-    "name": "gohan_super_saiyan_1_2_move_02",
-    "file": "gohan_super_saiyan_1_2_move_02.png",
-    "w": 32,
-    "h": 56
-   },
-   {
-    "name": "gohan_super_saiyan_1_2_move_03",
-    "file": "gohan_super_saiyan_1_2_move_03.png",
-    "w": 40,
-    "h": 31
+    "w": 28,
+    "h": 46
    }
   ]
  },
@@ -51,20 +39,20 @@
    {
     "name": "gohan_super_saiyan_1_2_guard_00",
     "file": "gohan_super_saiyan_1_2_guard_00.png",
-    "w": 22,
-    "h": 46
+    "w": 34,
+    "h": 44
    },
    {
     "name": "gohan_super_saiyan_1_2_guard_01",
     "file": "gohan_super_saiyan_1_2_guard_01.png",
-    "w": 32,
-    "h": 57
+    "w": 30,
+    "h": 46
    },
    {
     "name": "gohan_super_saiyan_1_2_guard_02",
     "file": "gohan_super_saiyan_1_2_guard_02.png",
-    "w": 34,
-    "h": 44
+    "w": 22,
+    "h": 46
    }
   ]
  },
@@ -76,44 +64,44 @@
    {
     "name": "gohan_super_saiyan_1_2_attack_fwd_00",
     "file": "gohan_super_saiyan_1_2_attack_fwd_00.png",
-    "w": 37,
-    "h": 41
+    "w": 32,
+    "h": 43
    },
    {
     "name": "gohan_super_saiyan_1_2_attack_fwd_01",
     "file": "gohan_super_saiyan_1_2_attack_fwd_01.png",
-    "w": 36,
-    "h": 41
+    "w": 31,
+    "h": 43
    },
    {
     "name": "gohan_super_saiyan_1_2_attack_fwd_02",
     "file": "gohan_super_saiyan_1_2_attack_fwd_02.png",
-    "w": 37,
-    "h": 47
+    "w": 29,
+    "h": 46
    },
    {
     "name": "gohan_super_saiyan_1_2_attack_fwd_03",
     "file": "gohan_super_saiyan_1_2_attack_fwd_03.png",
-    "w": 23,
-    "h": 47
+    "w": 37,
+    "h": 41
    },
    {
     "name": "gohan_super_saiyan_1_2_attack_fwd_04",
     "file": "gohan_super_saiyan_1_2_attack_fwd_04.png",
-    "w": 32,
-    "h": 58
+    "w": 36,
+    "h": 41
    },
    {
     "name": "gohan_super_saiyan_1_2_attack_fwd_05",
     "file": "gohan_super_saiyan_1_2_attack_fwd_05.png",
-    "w": 32,
-    "h": 57
+    "w": 23,
+    "h": 47
    },
    {
     "name": "gohan_super_saiyan_1_2_attack_fwd_06",
     "file": "gohan_super_saiyan_1_2_attack_fwd_06.png",
-    "w": 31,
-    "h": 43
+    "w": 37,
+    "h": 47
    }
   ]
  },
@@ -125,20 +113,20 @@
    {
     "name": "gohan_super_saiyan_1_2_attack_ud_00",
     "file": "gohan_super_saiyan_1_2_attack_ud_00.png",
-    "w": 29,
-    "h": 55
+    "w": 36,
+    "h": 41
    },
    {
     "name": "gohan_super_saiyan_1_2_attack_ud_01",
     "file": "gohan_super_saiyan_1_2_attack_ud_01.png",
-    "w": 26,
-    "h": 57
+    "w": 29,
+    "h": 44
    },
    {
     "name": "gohan_super_saiyan_1_2_attack_ud_02",
     "file": "gohan_super_saiyan_1_2_attack_ud_02.png",
-    "w": 36,
-    "h": 41
+    "w": 23,
+    "h": 46
    },
    {
     "name": "gohan_super_saiyan_1_2_attack_ud_03",
@@ -156,38 +144,38 @@
    {
     "name": "gohan_super_saiyan_1_2_hurt_00",
     "file": "gohan_super_saiyan_1_2_hurt_00.png",
-    "w": 32,
-    "h": 36
-   },
-   {
-    "name": "gohan_super_saiyan_1_2_hurt_01",
-    "file": "gohan_super_saiyan_1_2_hurt_01.png",
-    "w": 25,
-    "h": 48
-   },
-   {
-    "name": "gohan_super_saiyan_1_2_hurt_02",
-    "file": "gohan_super_saiyan_1_2_hurt_02.png",
-    "w": 24,
-    "h": 57
-   },
-   {
-    "name": "gohan_super_saiyan_1_2_hurt_03",
-    "file": "gohan_super_saiyan_1_2_hurt_03.png",
     "w": 28,
     "h": 45
    },
    {
-    "name": "gohan_super_saiyan_1_2_hurt_04",
-    "file": "gohan_super_saiyan_1_2_hurt_04.png",
+    "name": "gohan_super_saiyan_1_2_hurt_01",
+    "file": "gohan_super_saiyan_1_2_hurt_01.png",
     "w": 29,
     "h": 42
    },
    {
-    "name": "gohan_super_saiyan_1_2_hurt_05",
-    "file": "gohan_super_saiyan_1_2_hurt_05.png",
+    "name": "gohan_super_saiyan_1_2_hurt_02",
+    "file": "gohan_super_saiyan_1_2_hurt_02.png",
+    "w": 32,
+    "h": 36
+   },
+   {
+    "name": "gohan_super_saiyan_1_2_hurt_03",
+    "file": "gohan_super_saiyan_1_2_hurt_03.png",
     "w": 36,
     "h": 32
+   },
+   {
+    "name": "gohan_super_saiyan_1_2_hurt_04",
+    "file": "gohan_super_saiyan_1_2_hurt_04.png",
+    "w": 24,
+    "h": 46
+   },
+   {
+    "name": "gohan_super_saiyan_1_2_hurt_05",
+    "file": "gohan_super_saiyan_1_2_hurt_05.png",
+    "w": 25,
+    "h": 48
    },
    {
     "name": "gohan_super_saiyan_1_2_hurt_06",
@@ -205,19 +193,19 @@
    {
     "name": "gohan_super_saiyan_1_2_beam_charge_00",
     "file": "gohan_super_saiyan_1_2_beam_charge_00.png",
-    "w": 23,
-    "h": 48
+    "w": 32,
+    "h": 43
    },
    {
     "name": "gohan_super_saiyan_1_2_beam_charge_01",
     "file": "gohan_super_saiyan_1_2_beam_charge_01.png",
-    "w": 31,
+    "w": 32,
     "h": 43
    },
    {
     "name": "gohan_super_saiyan_1_2_beam_charge_02",
     "file": "gohan_super_saiyan_1_2_beam_charge_02.png",
-    "w": 32,
+    "w": 26,
     "h": 43
    }
   ]
@@ -230,19 +218,19 @@
    {
     "name": "gohan_super_saiyan_1_2_beam_fire_03",
     "file": "gohan_super_saiyan_1_2_beam_fire_03.png",
-    "w": 32,
-    "h": 43
-   },
-   {
-    "name": "gohan_super_saiyan_1_2_beam_fire_04",
-    "file": "gohan_super_saiyan_1_2_beam_fire_04.png",
     "w": 31,
     "h": 44
    },
    {
+    "name": "gohan_super_saiyan_1_2_beam_fire_04",
+    "file": "gohan_super_saiyan_1_2_beam_fire_04.png",
+    "w": 23,
+    "h": 48
+   },
+   {
     "name": "gohan_super_saiyan_1_2_beam_fire_05",
     "file": "gohan_super_saiyan_1_2_beam_fire_05.png",
-    "w": 26,
+    "w": 31,
     "h": 43
    }
   ]

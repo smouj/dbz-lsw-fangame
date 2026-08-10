@@ -13,7 +13,7 @@
   ]
  },
  "move": {
-  "frame_count": 4,
+  "frame_count": 2,
   "fps": 6,
   "loop": true,
   "frames": [
@@ -21,25 +21,13 @@
     "name": "ginyu_gokus_body_move_00",
     "file": "ginyu_gokus_body_move_00.png",
     "w": 29,
-    "h": 57
+    "h": 43
    },
    {
     "name": "ginyu_gokus_body_move_01",
     "file": "ginyu_gokus_body_move_01.png",
     "w": 32,
     "h": 41
-   },
-   {
-    "name": "ginyu_gokus_body_move_02",
-    "file": "ginyu_gokus_body_move_02.png",
-    "w": 23,
-    "h": 40
-   },
-   {
-    "name": "ginyu_gokus_body_move_03",
-    "file": "ginyu_gokus_body_move_03.png",
-    "w": 40,
-    "h": 31
    }
   ]
  },
@@ -51,14 +39,14 @@
    {
     "name": "ginyu_gokus_body_guard_00",
     "file": "ginyu_gokus_body_guard_00.png",
-    "w": 30,
-    "h": 46
+    "w": 36,
+    "h": 43
    },
    {
     "name": "ginyu_gokus_body_guard_01",
     "file": "ginyu_gokus_body_guard_01.png",
-    "w": 36,
-    "h": 43
+    "w": 30,
+    "h": 46
    },
    {
     "name": "ginyu_gokus_body_guard_02",
@@ -76,14 +64,14 @@
    {
     "name": "ginyu_gokus_body_attack_fwd_00",
     "file": "ginyu_gokus_body_attack_fwd_00.png",
-    "w": 24,
-    "h": 48
+    "w": 32,
+    "h": 44
    },
    {
     "name": "ginyu_gokus_body_attack_fwd_01",
     "file": "ginyu_gokus_body_attack_fwd_01.png",
-    "w": 36,
-    "h": 41
+    "w": 31,
+    "h": 44
    },
    {
     "name": "ginyu_gokus_body_attack_fwd_02",
@@ -94,26 +82,26 @@
    {
     "name": "ginyu_gokus_body_attack_fwd_03",
     "file": "ginyu_gokus_body_attack_fwd_03.png",
-    "w": 39,
+    "w": 40,
     "h": 42
    },
    {
     "name": "ginyu_gokus_body_attack_fwd_04",
     "file": "ginyu_gokus_body_attack_fwd_04.png",
-    "w": 40,
+    "w": 39,
     "h": 42
    },
    {
     "name": "ginyu_gokus_body_attack_fwd_05",
     "file": "ginyu_gokus_body_attack_fwd_05.png",
-    "w": 32,
-    "h": 44
+    "w": 24,
+    "h": 48
    },
    {
     "name": "ginyu_gokus_body_attack_fwd_06",
     "file": "ginyu_gokus_body_attack_fwd_06.png",
-    "w": 31,
-    "h": 44
+    "w": 36,
+    "h": 41
    }
   ]
  },
@@ -126,19 +114,19 @@
     "name": "ginyu_gokus_body_attack_ud_00",
     "file": "ginyu_gokus_body_attack_ud_00.png",
     "w": 30,
-    "h": 55
+    "h": 42
    },
    {
     "name": "ginyu_gokus_body_attack_ud_01",
     "file": "ginyu_gokus_body_attack_ud_01.png",
     "w": 30,
-    "h": 54
+    "h": 44
    },
    {
     "name": "ginyu_gokus_body_attack_ud_02",
     "file": "ginyu_gokus_body_attack_ud_02.png",
-    "w": 45,
-    "h": 55
+    "w": 30,
+    "h": 46
    },
    {
     "name": "ginyu_gokus_body_attack_ud_03",
@@ -156,14 +144,14 @@
    {
     "name": "ginyu_gokus_body_hurt_00",
     "file": "ginyu_gokus_body_hurt_00.png",
-    "w": 27,
-    "h": 46
+    "w": 31,
+    "h": 42
    },
    {
     "name": "ginyu_gokus_body_hurt_01",
     "file": "ginyu_gokus_body_hurt_01.png",
-    "w": 31,
-    "h": 42
+    "w": 27,
+    "h": 46
    },
    {
     "name": "ginyu_gokus_body_hurt_02",
@@ -175,13 +163,13 @@
     "name": "ginyu_gokus_body_hurt_03",
     "file": "ginyu_gokus_body_hurt_03.png",
     "w": 30,
-    "h": 48
+    "h": 46
    },
    {
     "name": "ginyu_gokus_body_hurt_04",
     "file": "ginyu_gokus_body_hurt_04.png",
     "w": 30,
-    "h": 46
+    "h": 48
    },
    {
     "name": "ginyu_gokus_body_hurt_05",
@@ -205,20 +193,20 @@
    {
     "name": "ginyu_gokus_body_beam_charge_01",
     "file": "ginyu_gokus_body_beam_charge_01.png",
-    "w": 31,
+    "w": 32,
     "h": 44
    },
    {
     "name": "ginyu_gokus_body_beam_charge_02",
     "file": "ginyu_gokus_body_beam_charge_02.png",
-    "w": 32,
-    "h": 44
+    "w": 29,
+    "h": 42
    },
    {
     "name": "ginyu_gokus_body_beam_charge_03",
     "file": "ginyu_gokus_body_beam_charge_03.png",
-    "w": 29,
-    "h": 42
+    "w": 31,
+    "h": 44
    }
   ]
  },
@@ -230,26 +218,26 @@
    {
     "name": "ginyu_gokus_body_beam_fire_04",
     "file": "ginyu_gokus_body_beam_fire_04.png",
-    "w": 27,
-    "h": 48
+    "w": 38,
+    "h": 46
    },
    {
     "name": "ginyu_gokus_body_beam_fire_05",
     "file": "ginyu_gokus_body_beam_fire_05.png",
-    "w": 38,
+    "w": 31,
     "h": 46
    },
    {
     "name": "ginyu_gokus_body_beam_fire_06",
     "file": "ginyu_gokus_body_beam_fire_06.png",
-    "w": 31,
+    "w": 39,
     "h": 46
    },
    {
     "name": "ginyu_gokus_body_beam_fire_07",
     "file": "ginyu_gokus_body_beam_fire_07.png",
-    "w": 39,
-    "h": 46
+    "w": 27,
+    "h": 48
    }
   ]
  }

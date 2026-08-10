@@ -13,33 +13,21 @@
   ]
  },
  "move": {
-  "frame_count": 4,
+  "frame_count": 2,
   "fps": 6,
   "loop": true,
   "frames": [
    {
     "name": "piccolo_base_move_00",
     "file": "piccolo_base_move_00.png",
-    "w": 23,
-    "h": 41
+    "w": 32,
+    "h": 37
    },
    {
     "name": "piccolo_base_move_01",
     "file": "piccolo_base_move_01.png",
     "w": 28,
     "h": 40
-   },
-   {
-    "name": "piccolo_base_move_02",
-    "file": "piccolo_base_move_02.png",
-    "w": 32,
-    "h": 37
-   },
-   {
-    "name": "piccolo_base_move_03",
-    "file": "piccolo_base_move_03.png",
-    "w": 40,
-    "h": 31
    }
   ]
  },
@@ -51,8 +39,8 @@
    {
     "name": "piccolo_base_guard_00",
     "file": "piccolo_base_guard_00.png",
-    "w": 21,
-    "h": 40
+    "w": 34,
+    "h": 38
    },
    {
     "name": "piccolo_base_guard_01",
@@ -63,8 +51,8 @@
    {
     "name": "piccolo_base_guard_02",
     "file": "piccolo_base_guard_02.png",
-    "w": 34,
-    "h": 38
+    "w": 21,
+    "h": 40
    }
   ]
  },
@@ -77,61 +65,61 @@
     "name": "piccolo_base_attack_fwd_00",
     "file": "piccolo_base_attack_fwd_00.png",
     "w": 32,
-    "h": 38
+    "h": 37
    },
    {
     "name": "piccolo_base_attack_fwd_01",
     "file": "piccolo_base_attack_fwd_01.png",
-    "w": 32,
-    "h": 42
+    "w": 31,
+    "h": 37
    },
    {
     "name": "piccolo_base_attack_fwd_02",
     "file": "piccolo_base_attack_fwd_02.png",
-    "w": 37,
-    "h": 36
+    "w": 29,
+    "h": 40
    },
    {
     "name": "piccolo_base_attack_fwd_03",
     "file": "piccolo_base_attack_fwd_03.png",
-    "w": 36,
-    "h": 36
+    "w": 29,
+    "h": 38
    },
    {
     "name": "piccolo_base_attack_fwd_04",
     "file": "piccolo_base_attack_fwd_04.png",
     "w": 37,
-    "h": 42
+    "h": 36
    },
    {
     "name": "piccolo_base_attack_fwd_05",
     "file": "piccolo_base_attack_fwd_05.png",
-    "w": 23,
-    "h": 41
+    "w": 36,
+    "h": 36
    },
    {
     "name": "piccolo_base_attack_fwd_06",
     "file": "piccolo_base_attack_fwd_06.png",
-    "w": 29,
-    "h": 40
+    "w": 23,
+    "h": 41
    },
    {
     "name": "piccolo_base_attack_fwd_07",
     "file": "piccolo_base_attack_fwd_07.png",
-    "w": 29,
-    "h": 38
+    "w": 37,
+    "h": 42
    },
    {
     "name": "piccolo_base_attack_fwd_08",
     "file": "piccolo_base_attack_fwd_08.png",
     "w": 32,
-    "h": 37
+    "h": 38
    },
    {
     "name": "piccolo_base_attack_fwd_09",
     "file": "piccolo_base_attack_fwd_09.png",
-    "w": 31,
-    "h": 37
+    "w": 32,
+    "h": 42
    }
   ]
  },
@@ -143,14 +131,14 @@
    {
     "name": "piccolo_base_attack_ud_00",
     "file": "piccolo_base_attack_ud_00.png",
-    "w": 29,
-    "h": 38
+    "w": 33,
+    "h": 41
    },
    {
     "name": "piccolo_base_attack_ud_01",
     "file": "piccolo_base_attack_ud_01.png",
-    "w": 33,
-    "h": 41
+    "w": 29,
+    "h": 38
    },
    {
     "name": "piccolo_base_attack_ud_02",
@@ -161,14 +149,14 @@
    {
     "name": "piccolo_base_attack_ud_03",
     "file": "piccolo_base_attack_ud_03.png",
-    "w": 28,
-    "h": 52
+    "w": 33,
+    "h": 27
    },
    {
     "name": "piccolo_base_attack_ud_04",
     "file": "piccolo_base_attack_ud_04.png",
-    "w": 33,
-    "h": 27
+    "w": 21,
+    "h": 40
    }
   ]
  },
@@ -180,26 +168,26 @@
    {
     "name": "piccolo_base_hurt_00",
     "file": "piccolo_base_hurt_00.png",
-    "w": 32,
-    "h": 32
+    "w": 28,
+    "h": 39
    },
    {
     "name": "piccolo_base_hurt_01",
     "file": "piccolo_base_hurt_01.png",
-    "w": 25,
-    "h": 48
-   },
-   {
-    "name": "piccolo_base_hurt_02",
-    "file": "piccolo_base_hurt_02.png",
     "w": 27,
     "h": 39
    },
    {
+    "name": "piccolo_base_hurt_02",
+    "file": "piccolo_base_hurt_02.png",
+    "w": 32,
+    "h": 32
+   },
+   {
     "name": "piccolo_base_hurt_03",
     "file": "piccolo_base_hurt_03.png",
-    "w": 28,
-    "h": 39
+    "w": 32,
+    "h": 32
    },
    {
     "name": "piccolo_base_hurt_04",
@@ -210,8 +198,8 @@
    {
     "name": "piccolo_base_hurt_05",
     "file": "piccolo_base_hurt_05.png",
-    "w": 32,
-    "h": 32
+    "w": 25,
+    "h": 48
    },
    {
     "name": "piccolo_base_hurt_06",
@@ -229,25 +217,25 @@
    {
     "name": "piccolo_base_beam_charge_00",
     "file": "piccolo_base_beam_charge_00.png",
-    "w": 20,
-    "h": 46
+    "w": 32,
+    "h": 37
    },
    {
     "name": "piccolo_base_beam_charge_01",
     "file": "piccolo_base_beam_charge_01.png",
-    "w": 29,
-    "h": 39
+    "w": 32,
+    "h": 37
    },
    {
     "name": "piccolo_base_beam_charge_02",
     "file": "piccolo_base_beam_charge_02.png",
-    "w": 32,
+    "w": 28,
     "h": 37
    },
    {
     "name": "piccolo_base_beam_charge_03",
     "file": "piccolo_base_beam_charge_03.png",
-    "w": 31,
+    "w": 40,
     "h": 37
    }
   ]
@@ -260,7 +248,7 @@
    {
     "name": "piccolo_base_beam_fire_04",
     "file": "piccolo_base_beam_fire_04.png",
-    "w": 32,
+    "w": 24,
     "h": 37
    },
    {
@@ -272,20 +260,20 @@
    {
     "name": "piccolo_base_beam_fire_06",
     "file": "piccolo_base_beam_fire_06.png",
-    "w": 40,
-    "h": 37
+    "w": 20,
+    "h": 46
    },
    {
     "name": "piccolo_base_beam_fire_07",
     "file": "piccolo_base_beam_fire_07.png",
-    "w": 24,
+    "w": 31,
     "h": 37
    },
    {
     "name": "piccolo_base_beam_fire_08",
     "file": "piccolo_base_beam_fire_08.png",
-    "w": 28,
-    "h": 37
+    "w": 29,
+    "h": 39
    }
   ]
  }

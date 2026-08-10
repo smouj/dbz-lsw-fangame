@@ -13,31 +13,19 @@
   ]
  },
  "move": {
-  "frame_count": 4,
+  "frame_count": 2,
   "fps": 6,
   "loop": true,
   "frames": [
    {
     "name": "android_18_base_move_00",
     "file": "android_18_base_move_00.png",
-    "w": 23,
-    "h": 41
+    "w": 27,
+    "h": 40
    },
    {
     "name": "android_18_base_move_01",
     "file": "android_18_base_move_01.png",
-    "w": 40,
-    "h": 31
-   },
-   {
-    "name": "android_18_base_move_02",
-    "file": "android_18_base_move_02.png",
-    "w": 27,
-    "h": 55
-   },
-   {
-    "name": "android_18_base_move_03",
-    "file": "android_18_base_move_03.png",
     "w": 32,
     "h": 37
    }
@@ -51,19 +39,19 @@
    {
     "name": "android_18_base_guard_00",
     "file": "android_18_base_guard_00.png",
-    "w": 20,
-    "h": 51
-   },
-   {
-    "name": "android_18_base_guard_01",
-    "file": "android_18_base_guard_01.png",
     "w": 33,
     "h": 38
    },
    {
+    "name": "android_18_base_guard_01",
+    "file": "android_18_base_guard_01.png",
+    "w": 27,
+    "h": 40
+   },
+   {
     "name": "android_18_base_guard_02",
     "file": "android_18_base_guard_02.png",
-    "w": 27,
+    "w": 20,
     "h": 40
    }
   ]
@@ -76,14 +64,14 @@
    {
     "name": "android_18_base_attack_fwd_00",
     "file": "android_18_base_attack_fwd_00.png",
-    "w": 36,
-    "h": 35
+    "w": 32,
+    "h": 38
    },
    {
     "name": "android_18_base_attack_fwd_01",
     "file": "android_18_base_attack_fwd_01.png",
-    "w": 34,
-    "h": 35
+    "w": 31,
+    "h": 38
    },
    {
     "name": "android_18_base_attack_fwd_02",
@@ -94,32 +82,32 @@
    {
     "name": "android_18_base_attack_fwd_03",
     "file": "android_18_base_attack_fwd_03.png",
-    "w": 22,
-    "h": 41
+    "w": 31,
+    "h": 38
    },
    {
     "name": "android_18_base_attack_fwd_04",
     "file": "android_18_base_attack_fwd_04.png",
-    "w": 31,
-    "h": 38
+    "w": 36,
+    "h": 35
    },
    {
     "name": "android_18_base_attack_fwd_05",
     "file": "android_18_base_attack_fwd_05.png",
     "w": 34,
-    "h": 36
+    "h": 35
    },
    {
     "name": "android_18_base_attack_fwd_06",
     "file": "android_18_base_attack_fwd_06.png",
-    "w": 32,
-    "h": 38
+    "w": 22,
+    "h": 41
    },
    {
     "name": "android_18_base_attack_fwd_07",
     "file": "android_18_base_attack_fwd_07.png",
-    "w": 31,
-    "h": 38
+    "w": 34,
+    "h": 36
    }
   ]
  },
@@ -131,14 +119,14 @@
    {
     "name": "android_18_base_attack_ud_00",
     "file": "android_18_base_attack_ud_00.png",
-    "w": 28,
-    "h": 36
+    "w": 32,
+    "h": 37
    },
    {
     "name": "android_18_base_attack_ud_01",
     "file": "android_18_base_attack_ud_01.png",
-    "w": 32,
-    "h": 37
+    "w": 28,
+    "h": 36
    },
    {
     "name": "android_18_base_attack_ud_02",
@@ -162,14 +150,14 @@
    {
     "name": "android_18_base_hurt_00",
     "file": "android_18_base_hurt_00.png",
-    "w": 24,
-    "h": 48
+    "w": 27,
+    "h": 40
    },
    {
     "name": "android_18_base_hurt_01",
     "file": "android_18_base_hurt_01.png",
-    "w": 24,
-    "h": 46
+    "w": 26,
+    "h": 37
    },
    {
     "name": "android_18_base_hurt_02",
@@ -180,20 +168,20 @@
    {
     "name": "android_18_base_hurt_03",
     "file": "android_18_base_hurt_03.png",
-    "w": 27,
-    "h": 40
+    "w": 24,
+    "h": 46
    },
    {
     "name": "android_18_base_hurt_04",
     "file": "android_18_base_hurt_04.png",
-    "w": 44,
-    "h": 22
+    "w": 24,
+    "h": 48
    },
    {
     "name": "android_18_base_hurt_05",
     "file": "android_18_base_hurt_05.png",
-    "w": 26,
-    "h": 37
+    "w": 44,
+    "h": 22
    }
   ]
  },
@@ -205,20 +193,20 @@
    {
     "name": "android_18_base_beam_charge_00",
     "file": "android_18_base_beam_charge_00.png",
-    "w": 27,
-    "h": 41
+    "w": 32,
+    "h": 38
    },
    {
     "name": "android_18_base_beam_charge_01",
     "file": "android_18_base_beam_charge_01.png",
-    "w": 32,
+    "w": 31,
     "h": 38
    },
    {
     "name": "android_18_base_beam_charge_02",
     "file": "android_18_base_beam_charge_02.png",
-    "w": 31,
-    "h": 38
+    "w": 27,
+    "h": 41
    },
    {
     "name": "android_18_base_beam_charge_03",
@@ -236,8 +224,8 @@
    {
     "name": "android_18_base_beam_fire_04",
     "file": "android_18_base_beam_fire_04.png",
-    "w": 25,
-    "h": 41
+    "w": 29,
+    "h": 38
    },
    {
     "name": "android_18_base_beam_fire_05",
@@ -254,13 +242,13 @@
    {
     "name": "android_18_base_beam_fire_07",
     "file": "android_18_base_beam_fire_07.png",
-    "w": 31,
-    "h": 38
+    "w": 25,
+    "h": 41
    },
    {
     "name": "android_18_base_beam_fire_08",
     "file": "android_18_base_beam_fire_08.png",
-    "w": 29,
+    "w": 31,
     "h": 38
    }
   ]
