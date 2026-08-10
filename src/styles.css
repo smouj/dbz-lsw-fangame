@@ -5,7 +5,7 @@
    Paleta GBC real, bordes pixel, tipografía bitmap.
    ═══════════════════════════════════════════════════════════ */
 
-@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DotGothic16&family=Bangers&family=VT323&display=swap');
 
 :root {
   /* ─── Paleta GBC (colores reales del juego) ─── */
@@ -39,9 +39,13 @@
   --def-color:     #5a7a9a;
   --spc-color:     #d8a830;
 
-  /* Tipografía */
-  --fpx: 'Press Start 2P', monospace;
-  --fui: 'Courier New', monospace;
+  /* Tipografía — tema manga/GBC:
+     --fpx: pixel japonés (UI, HUD, botones)
+     --fepic: manga épico (títulos VS, FIGHT, menú, resultados)
+     --fui: pixel CRT legible (stats, números) */
+  --fpx: 'DotGothic16', monospace;
+  --fepic: 'Bangers', cursive;
+  --fui: 'VT323', monospace;
 
   /* Escalas */
   --card-w: 128px;
@@ -134,12 +138,16 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 /* Logo con brillo tipo ki */
 .menu-title {
   position: relative;
-  background: linear-gradient(180deg, #ffe9a8 0%, #ffb64d 45%, #ff7a2a 100%);
+  font-family: var(--fepic);
+  font-size: 64px;
+  letter-spacing: .04em;
+  background: linear-gradient(180deg, #fff3c0 0%, #ffd76a 40%, #ff9a2a 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
   text-shadow: none;
-  filter: drop-shadow(0 3px 0 rgba(120,40,10,0.9)) drop-shadow(0 0 18px rgba(255,150,50,0.45));
+  filter: drop-shadow(0 4px 0 rgba(120,40,10,0.95)) drop-shadow(0 0 26px rgba(255,160,50,0.6));
+  transform: rotate(-1.5deg);
 }
 
 .menu-content {
@@ -414,6 +422,19 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 .battle-bg {
   position: absolute; inset: 0;
   overflow: hidden;
+}
+
+/* Atmósfera DBZ sobre el fondo auténtico: cielo con gradiente + niebla + vignette */
+.battle-bg::after {
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  background:
+    linear-gradient(180deg, rgba(20,40,80,.35) 0%, rgba(20,40,80,.08) 35%, rgba(0,0,0,0) 55%),
+    radial-gradient(ellipse at 50% 100%, rgba(255,150,50,.12) 0%, transparent 60%),
+    radial-gradient(ellipse at center, transparent 55%, rgba(0,0,10,.5) 100%);
+}
+.battle-bg::before {
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(180deg, transparent 60%, rgba(10,14,24,.55) 100%);
 }
 
 /* Fondo auténtico de la ROM: expandir sin mosaico y escalar nítido */
@@ -773,10 +794,11 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 .result-screen { display: flex; flex-direction: column; align-items: center; gap: 12px; padding: 16px; }
 
 .result-title {
-  font-family: var(--fpx);
-  font-size: 24px;
-  letter-spacing: 5px;
-  text-shadow: 3px 3px 0 #000;
+  font-family: var(--fepic);
+  font-size: 56px;
+  letter-spacing: .06em;
+  text-shadow: 0 0 30px currentColor, 4px 4px 0 rgba(0,0,0,.85);
+  transform: rotate(-2deg);
 }
 
 .result-title.victory { color: var(--gold); }
@@ -2196,66 +2218,96 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   padding: 3px 10px;
   text-shadow: 1px 1px 0 #000;
 }
-.hud-center-round { font-family: var(--fpx); font-size: 8px; color: #ffe9a3; letter-spacing: 2px; }
-.hud-center-vs { font-family: var(--fpx); font-size: 14px; color: var(--hp-red); letter-spacing: 1px; text-shadow: 0 0 10px rgba(255,60,40,.5); }
-.hud-center-order { font-family: var(--fpx); font-size: 6px; color: var(--muted); letter-spacing: 1px; }
+.hud-center-round { font-family: var(--fpx); font-size: 9px; color: #ffe9a3; letter-spacing: 2px; text-shadow: 1px 1px 0 #000; }
+.hud-center-vs { font-family: var(--fepic); font-size: 26px; color: var(--hp-red); letter-spacing: 2px; text-shadow: 0 0 14px rgba(255,60,40,.7), 2px 2px 0 rgba(60,0,0,.9); line-height: 1; }
+.hud-center-order { font-family: var(--fpx); font-size: 7px; color: #a8d8ff; letter-spacing: 1px; text-shadow: 1px 1px 0 #000; }
 
 /* ═══ INTRO CINEMATOGRÁFICA DE COMBATE (como el GBC) ═══
    Timeline: 0s sprites fuera · 0.6s slide-in · 0.7s VS pop · 1.4s READY ·
    2.2s flash blanco · 2.3s FIGHT! zoom · 3.0s desmonta */
 .battle-intro {
   position: fixed; inset: 0; z-index: 120;
-  background: radial-gradient(ellipse at center, #0b1226 0%, #05070f 60%, #000 100%);
+  /* cielo DBZ dramático: naranja→azul noche */
+  background:
+    radial-gradient(ellipse at 50% 115%, rgba(255,140,30,.5) 0%, transparent 55%),
+    linear-gradient(180deg, #0a1633 0%, #12224a 38%, #1d3563 62%, #2a4a80 82%, #3a5c90 100%);
   display: flex; align-items: center; justify-content: center;
   overflow: hidden;
 }
+/* nubes/speed-lines sutiles */
 .battle-intro::before {
   content: ''; position: absolute; inset: 0;
-  background: repeating-linear-gradient(0deg, rgba(255,255,255,.03) 0 2px, transparent 2px 4px);
+  background:
+    repeating-linear-gradient(115deg, rgba(255,255,255,.04) 0 2px, transparent 2px 7px),
+    repeating-linear-gradient(-65deg, rgba(255,255,255,.03) 0 2px, transparent 2px 6px);
   pointer-events: none;
+  animation: intro-speedlines 1.6s linear infinite;
 }
+@keyframes intro-speedlines { from { background-position: 0 0, 0 0; } to { background-position: 80px 40px, -60px 30px; } }
+/* ráfagas de energía a los lados */
+.intro-burst-left, .intro-burst-right {
+  position: absolute; top: 50%; width: 34vw; height: 130vh;
+  transform: translateY(-50%);
+  pointer-events: none; opacity: .5;
+  background: radial-gradient(ellipse at center, rgba(255,190,60,.28) 0%, transparent 60%);
+}
+.intro-burst-left { left: -8vw; animation: intro-burst 1.4s ease-in-out infinite alternate; }
+.intro-burst-right { right: -8vw; animation: intro-burst 1.4s ease-in-out .7s infinite alternate-reverse; }
+@keyframes intro-burst { from { transform: translateY(-50%) scaleX(.7); opacity: .3; } to { transform: translateY(-50%) scaleX(1.25); opacity: .6; } }
 .intro-fighter { position: absolute; top: 50%; display: flex; flex-direction: column; align-items: center; gap: 10px; }
-.intro-left { left: 4vw; animation: intro-slide-left .65s cubic-bezier(.2,.8,.3,1) both; }
-.intro-right { right: 4vw; animation: intro-slide-right .65s cubic-bezier(.2,.8,.3,1) both; }
-@keyframes intro-slide-left { from { transform: translate(-130%, -50%); } to { transform: translate(0, -50%); } }
-@keyframes intro-slide-right { from { transform: translate(130%, -50%); } to { transform: translate(0, -50%); } }
+.intro-left { left: 3vw; animation: intro-slide-left .65s cubic-bezier(.2,.8,.3,1) both; }
+.intro-right { right: 3vw; animation: intro-slide-right .65s cubic-bezier(.2,.8,.3,1) both; }
+@keyframes intro-slide-left { from { transform: translate(-140%, -50%); } to { transform: translate(0, -50%); } }
+@keyframes intro-slide-right { from { transform: translate(140%, -50%); } to { transform: translate(0, -50%); } }
 .intro-sprite-wrap {
-  filter: drop-shadow(0 0 20px rgba(255,190,60,.4)) drop-shadow(0 0 60px rgba(255,120,30,.2));
+  filter: drop-shadow(0 0 26px rgba(255,190,60,.55)) drop-shadow(0 0 80px rgba(255,120,30,.3));
   animation: intro-breathe 1.2s ease-in-out .8s infinite alternate;
 }
-@keyframes intro-breathe { from { transform: translateY(0); } to { transform: translateY(-6px); } }
+@keyframes intro-breathe { from { transform: translateY(0) scale(1); } to { transform: translateY(-8px) scale(1.02); } }
 .intro-name {
-  font-size: clamp(1.2rem, 3.4vw, 1.9rem); font-weight: 900; color: #ffe9a3;
-  text-shadow: 0 0 14px rgba(255,180,40,.65), 2px 2px 0 rgba(0,0,0,.6);
-  letter-spacing: .08em; text-align: center;
+  font-family: var(--fepic);
+  font-size: clamp(2.2rem, 6vw, 4rem);
+  color: #ffd76a;
+  text-shadow: 0 0 20px rgba(255,180,40,.8), 3px 3px 0 rgba(120,50,0,.9), -2px -2px 0 rgba(255,255,255,.25);
+  letter-spacing: .05em; text-align: center; line-height: 1;
+  animation: intro-name-in .5s cubic-bezier(.2,1.4,.4,1) .35s both;
 }
-.intro-sub { font-size: clamp(.6rem, 1.4vw, .8rem); color: #7fd4ff; opacity: .85; letter-spacing: .25em; text-align: center; }
+@keyframes intro-name-in { from { transform: scale(2.4) rotate(-4deg); opacity: 0; } to { transform: scale(1) rotate(0); opacity: 1; } }
+.intro-sub { font-family: var(--fpx); font-size: clamp(.6rem, 1.4vw, .8rem); color: #a8d8ff; opacity: .9; letter-spacing: .3em; text-align: center; text-shadow: 1px 1px 0 #000; }
 .intro-vs {
-  font-size: clamp(2.6rem, 7vw, 4.2rem); font-weight: 900; color: #ff3b30;
-  text-shadow: 0 0 26px rgba(255,60,40,.75), 3px 3px 0 rgba(0,0,0,.7);
-  letter-spacing: .12em; animation: intro-vs-pop .45s cubic-bezier(.2,1.6,.4,1) .75s both;
+  font-family: var(--fepic);
+  font-size: clamp(4.5rem, 13vw, 8.5rem);
+  color: #ff3b30;
+  text-shadow: 0 0 40px rgba(255,60,40,.9), 5px 5px 0 rgba(90,0,0,.95), -3px -3px 0 rgba(255,255,255,.3);
+  letter-spacing: .06em;
+  animation: intro-vs-pop .45s cubic-bezier(.2,1.6,.4,1) .75s both;
+  transform-origin: center;
 }
-@keyframes intro-vs-pop { from { transform: scale(3.2); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+@keyframes intro-vs-pop { from { transform: scale(4.5) rotate(8deg); opacity: 0; } to { transform: scale(1) rotate(0); opacity: 1; } }
 .intro-ready {
-  position: absolute; bottom: 16%; font-size: clamp(1rem, 2.6vw, 1.4rem); color: #ffd76a;
-  letter-spacing: .5em; text-shadow: 0 0 16px rgba(255,215,106,.7);
+  position: absolute; bottom: 15%; font-family: var(--fepic);
+  font-size: clamp(1.6rem, 4vw, 2.6rem); color: #ffd76a;
+  letter-spacing: .35em; text-shadow: 0 0 20px rgba(255,215,106,.85), 3px 3px 0 rgba(120,60,0,.9);
   animation: intro-fade .45s ease 1.5s both;
 }
-@keyframes intro-fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes intro-fade { from { opacity: 0; transform: scale(1.4); } to { opacity: 1; transform: scale(1); } }
 .intro-flash {
   position: absolute; inset: 0; background: #fff; opacity: 0; pointer-events: none;
   animation: intro-flash-anim .45s ease 2.25s both;
 }
 @keyframes intro-flash-anim { 0% { opacity: 0; } 25% { opacity: 1; } 100% { opacity: 0; } }
 .intro-fight {
-  position: absolute; font-size: clamp(3rem, 9vw, 5.5rem); font-weight: 900; color: #ffd700;
-  text-shadow: 0 0 44px rgba(255,215,0,.85), 4px 4px 0 #b8860b, -2px -2px 0 #fff3;
-  letter-spacing: .1em; animation: intro-fight-pop .4s cubic-bezier(.2,1.8,.4,1) 2.35s both;
+  position: absolute; font-family: var(--fepic);
+  font-size: clamp(5rem, 15vw, 9rem); color: #ffd700;
+  text-shadow: 0 0 60px rgba(255,215,0,.95), 6px 6px 0 #b8860b, -3px -3px 0 #fff6;
+  letter-spacing: .08em;
+  animation: intro-fight-pop .4s cubic-bezier(.2,1.8,.4,1) 2.35s both;
 }
-@keyframes intro-fight-pop { from { transform: scale(4.5) rotate(-6deg); opacity: 0; } to { transform: scale(1) rotate(0); opacity: 1; } }
+@keyframes intro-fight-pop { from { transform: scale(5) rotate(-8deg); opacity: 0; } to { transform: scale(1) rotate(0); opacity: 1; } }
 @media (max-width: 640px) {
   .intro-left { left: 1vw; } .intro-right { right: 1vw; }
-  .intro-name { font-size: 1rem; } .intro-sub { font-size: .55rem; }
+  .intro-name { font-size: 1.4rem; } .intro-sub { font-size: .55rem; }
+  .intro-sprite-wrap img { height: 150px !important; }
 }
 
 /* Aura de Gather Power: el sprite parpadea + glow dorado (GBC power up) */
@@ -2347,7 +2399,7 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 }
 @keyframes fx-card-pop { from { transform: translateX(-50%) scale(3.4); opacity: 0; } to { transform: translateX(-50%) scale(1); opacity: 1; } }
 .fx-card-icon { width: 88px; height: 66px; image-rendering: pixelated; border: 3px solid var(--border); background: var(--panel-lo); box-shadow: 0 4px 14px rgba(0,0,0,.6); }
-.fx-card-name { font-family: var(--fpx); font-size: 13px; color: #ffe9a3; text-shadow: 2px 2px 0 #000, 0 0 16px rgba(255,180,40,.6); letter-spacing: .06em; }
+.fx-card-name { font-family: var(--fepic); font-size: 22px; color: #ffe9a3; text-shadow: 2px 2px 0 #000, 0 0 18px rgba(255,180,40,.7); letter-spacing: .04em; }
 
 /* Damage: arco de corte + lunge del luchador */
 .card-fx.fx-damage .fx-fighter { animation: fx-zoom-in .5s cubic-bezier(.2,1.4,.4,1) both, fx-lunge .45s ease .9s both; }
@@ -2395,3 +2447,27 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 }
 .btn-cancel-card:hover { color: var(--text); border-color: var(--gold); }
 .menu-lv { color: var(--gold); }
+/* Aura sutil en los luchadores del campo (presencia DBZ) */
+.fighter-container .sheet-sprite,
+.fighter-container .fighter-sprite img {
+  filter: drop-shadow(0 0 10px rgba(255,190,60,.28)) drop-shadow(0 6px 12px rgba(0,0,0,.5));
+}
+.fighter-container .sheet-sprite { image-rendering: pixelated; }
+/* Sprites de OVERWORLD en el campo (vista sin ataque, como el GBC) */
+.overworld-sprite {
+  image-rendering: pixelated;
+  height: 88px;
+  width: auto;
+  filter: drop-shadow(0 0 8px rgba(255,190,60,.3)) drop-shadow(0 5px 10px rgba(0,0,0,.45));
+  animation: char-idle-breathe 2.6s ease-in-out infinite;
+}
+.overworld-sprite.gathering { animation: gather-flicker .45s infinite alternate; filter: drop-shadow(0 0 14px rgba(255,210,80,.9)) brightness(1.35); }
+/* Sprites de OVERWORLD en el campo (vista sin ataque, como el GBC) */
+.overworld-sprite {
+  image-rendering: pixelated;
+  height: 88px;
+  width: auto;
+  filter: drop-shadow(0 0 8px rgba(255,190,60,.3)) drop-shadow(0 5px 10px rgba(0,0,0,.45));
+  animation: char-idle-breathe 2.6s ease-in-out infinite;
+}
+.overworld-sprite.gathering { animation: gather-flicker .45s infinite alternate; filter: drop-shadow(0 0 14px rgba(255,210,80,.9)) brightness(1.35); }

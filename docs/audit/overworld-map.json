@@ -1,0 +1,307 @@
+{
+ "primary": {
+  "vegeta": "cell_01_20.png",
+  "vegeta_ssj": "cell_01_21.png",
+  "vegeta_majin": "cell_02_20.png",
+  "trunks": "cell_07_16.png",
+  "trunks_ssj": "cell_07_04.png",
+  "trunks_future": "cell_07_17.png",
+  "trunks_kid": "cell_08_04.png",
+  "gohan": "cell_01_08.png",
+  "goku": "cell_01_09.png",
+  "goten": "cell_01_12.png",
+  "gotenks": "cell_13_08.png",
+  "piccolo": "cell_01_24.png",
+  "cell": "cell_01_25.png",
+  "cell_jr": "cell_01_28.png",
+  "guldo": "cell_01_04.png",
+  "recoome": "cell_07_01.png",
+  "ginyu": "cell_07_08.png",
+  "ginyu_goku": "cell_07_09.png",
+  "jeice": "cell_01_13.png",
+  "burter": "cell_01_34.png",
+  "buu": "cell_13_24.png",
+  "buu_super": "cell_13_34.png",
+  "frieza": "cell_07_34.png",
+  "nappa": "cell_19_02.png",
+  "vegito": "cell_01_01.png",
+  "android_16": "cell_07_02.png",
+  "android_17": "cell_07_28.png",
+  "android_18": "cell_08_16.png",
+  "android_19": "cell_14_29.png",
+  "android_20": "cell_02_32.png",
+  "krillin": "cell_02_21.png"
+ },
+ "by_color": {
+  "#b000f8": [
+   "cell_01_01.png",
+   "cell_01_02.png",
+   "cell_02_01.png",
+   "cell_02_02.png",
+   "cell_03_01.png",
+   "cell_03_02.png",
+   "cell_04_01.png",
+   "cell_04_02.png"
+  ],
+  "#00f800": [
+   "cell_01_04.png",
+   "cell_01_05.png",
+   "cell_02_04.png",
+   "cell_02_05.png",
+   "cell_03_04.png",
+   "cell_04_04.png",
+   "cell_13_32.png",
+   "cell_14_32.png",
+   "cell_15_32.png",
+   "cell_16_32.png"
+  ],
+  "#f80000": [
+   "cell_01_08.png",
+   "cell_01_09.png",
+   "cell_01_12.png",
+   "cell_01_13.png",
+   "cell_01_16.png",
+   "cell_01_17.png",
+   "cell_02_08.png",
+   "cell_02_09.png",
+   "cell_02_12.png",
+   "cell_02_13.png",
+   "cell_02_16.png",
+   "cell_02_17.png",
+   "cell_03_08.png",
+   "cell_03_09.png",
+   "cell_03_12.png",
+   "cell_03_13.png",
+   "cell_04_08.png",
+   "cell_04_09.png",
+   "cell_04_12.png",
+   "cell_04_13.png",
+   "cell_13_01.png",
+   "cell_13_02.png",
+   "cell_13_16.png",
+   "cell_13_17.png",
+   "cell_14_01.png",
+   "cell_14_02.png",
+   "cell_14_16.png",
+   "cell_14_17.png",
+   "cell_15_01.png",
+   "cell_15_02.png",
+   "cell_15_16.png",
+   "cell_15_17.png",
+   "cell_16_01.png",
+   "cell_16_02.png",
+   "cell_16_16.png",
+   "cell_16_17.png"
+  ],
+  "#0040b0": [
+   "cell_01_20.png",
+   "cell_01_21.png",
+   "cell_02_20.png",
+   "cell_02_21.png",
+   "cell_03_20.png",
+   "cell_03_21.png",
+   "cell_04_20.png",
+   "cell_04_21.png"
+  ],
+  "#00a000": [
+   "cell_01_24.png",
+   "cell_01_25.png",
+   "cell_01_28.png",
+   "cell_01_29.png",
+   "cell_02_24.png",
+   "cell_02_25.png",
+   "cell_02_28.png",
+   "cell_02_29.png",
+   "cell_07_24.png",
+   "cell_07_25.png",
+   "cell_08_24.png",
+   "cell_08_25.png",
+   "cell_09_24.png",
+   "cell_09_25.png",
+   "cell_10_24.png",
+   "cell_10_25.png"
+  ],
+  "#f80090": [
+   "cell_01_32.png"
+  ],
+  "#00d090": [
+   "cell_01_34.png",
+   "cell_01_35.png",
+   "cell_02_34.png",
+   "cell_02_35.png",
+   "cell_03_34.png",
+   "cell_03_35.png",
+   "cell_04_34.png",
+   "cell_04_35.png"
+  ],
+  "#000000": [
+   "cell_02_32.png",
+   "cell_03_32.png",
+   "cell_04_32.png",
+   "cell_13_04.png",
+   "cell_14_04.png",
+   "cell_15_04.png",
+   "cell_16_04.png",
+   "cell_19_32.png",
+   "overworld-sprites.png"
+  ],
+  "#00c800": [
+   "cell_07_01.png",
+   "cell_07_02.png",
+   "cell_08_01.png",
+   "cell_08_02.png",
+   "cell_09_01.png",
+   "cell_09_02.png",
+   "cell_10_01.png",
+   "cell_10_02.png"
+  ],
+  "#2171fc": [
+   "cell_07_04.png",
+   "cell_08_04.png",
+   "cell_08_05.png",
+   "cell_09_04.png",
+   "cell_09_05.png",
+   "cell_10_04.png",
+   "cell_10_05.png"
+  ],
+  "#9060f8": [
+   "cell_07_08.png",
+   "cell_07_09.png",
+   "cell_08_08.png",
+   "cell_08_09.png",
+   "cell_09_08.png",
+   "cell_09_09.png",
+   "cell_10_08.png",
+   "cell_10_09.png",
+   "cell_13_12.png",
+   "cell_13_13.png",
+   "cell_14_12.png",
+   "cell_14_13.png",
+   "cell_15_12.png",
+   "cell_15_13.png",
+   "cell_16_12.png",
+   "cell_16_13.png"
+  ],
+  "#7098d0": [
+   "cell_07_12.png",
+   "cell_07_13.png",
+   "cell_08_12.png",
+   "cell_08_13.png",
+   "cell_09_13.png",
+   "cell_10_13.png"
+  ],
+  "#0088b8": [
+   "cell_07_16.png",
+   "cell_07_17.png",
+   "cell_08_16.png",
+   "cell_08_17.png",
+   "cell_09_16.png",
+   "cell_09_17.png",
+   "cell_10_16.png",
+   "cell_10_17.png"
+  ],
+  "#d0a000": [
+   "cell_07_20.png",
+   "cell_07_21.png",
+   "cell_08_20.png",
+   "cell_08_21.png",
+   "cell_09_20.png",
+   "cell_09_21.png",
+   "cell_10_20.png",
+   "cell_10_21.png"
+  ],
+  "#0000f8": [
+   "cell_07_28.png",
+   "cell_07_29.png",
+   "cell_08_28.png",
+   "cell_08_29.png",
+   "cell_09_28.png",
+   "cell_09_29.png",
+   "cell_10_28.png",
+   "cell_10_29.png"
+  ],
+  "#f87800": [
+   "cell_07_32.png",
+   "cell_08_32.png",
+   "cell_09_32.png",
+   "cell_10_32.png"
+  ],
+  "#e8f0f8": [
+   "cell_07_34.png",
+   "cell_07_35.png",
+   "cell_08_34.png",
+   "cell_08_35.png",
+   "cell_09_34.png",
+   "cell_09_35.png",
+   "cell_10_34.png",
+   "cell_10_35.png"
+  ],
+  "#9000f8": [
+   "cell_13_05.png",
+   "cell_14_05.png",
+   "cell_15_05.png",
+   "cell_16_05.png"
+  ],
+  "#f85000": [
+   "cell_13_08.png",
+   "cell_13_09.png",
+   "cell_14_08.png",
+   "cell_14_09.png",
+   "cell_15_08.png",
+   "cell_15_09.png",
+   "cell_16_08.png",
+   "cell_16_09.png"
+  ],
+  "#8888f8": [
+   "cell_13_20.png",
+   "cell_13_21.png",
+   "cell_14_20.png",
+   "cell_14_21.png",
+   "cell_15_20.png",
+   "cell_15_21.png",
+   "cell_16_20.png",
+   "cell_16_21.png"
+  ],
+  "#f870e8": [
+   "cell_13_24.png",
+   "cell_13_25.png",
+   "cell_14_24.png",
+   "cell_14_25.png",
+   "cell_15_24.png",
+   "cell_15_25.png",
+   "cell_16_24.png",
+   "cell_16_25.png"
+  ],
+  "?": [
+   "cell_13_28.png",
+   "cell_13_29.png",
+   "cell_14_28.png",
+   "cell_15_28.png",
+   "cell_15_29.png",
+   "cell_16_28.png",
+   "cell_16_29.png"
+  ],
+  "#f880a0": [
+   "cell_13_34.png",
+   "cell_13_35.png",
+   "cell_14_34.png",
+   "cell_14_35.png",
+   "cell_15_34.png",
+   "cell_15_35.png",
+   "cell_16_34.png",
+   "cell_16_35.png"
+  ],
+  "#f80800": [
+   "cell_14_29.png"
+  ],
+  "#483828": [
+   "cell_19_01.png"
+  ],
+  "#503828": [
+   "cell_19_02.png"
+  ],
+  "#a8a8a8": [
+   "cell_19_04.png"
+  ]
+ }
+}

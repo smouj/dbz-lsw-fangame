@@ -8,6 +8,7 @@ import { needsFlip } from './data/facing';
 import { UNLOCK_KEY, STARTER_DAMAGE_DECK, STARTER_BEAM_DECK, STARTER_CHARACTERS, cardsForLevel, pickRewards, VS_UNLOCKS, isFormUnlocked, FORM_UNLOCK_LEVELS } from './data/unlocks';
 import { CARDS, CARD_COLORS, CARD_TYPE_NAMES, CardDef, CardType, DECK_SIZE, MAX_COPIES, getCard, CardEffect } from './data/cards';
 import { cardIconUrl, MINI_PORTRAITS, MENU_PORTRAITS, TYPE_ICONS } from './data/icons';
+import { overworldUrl } from './data/overworld';
 import { initAudio, Sfx, setSfxEnabled, setVolume } from './audio/sfx';
 import { LanguageProvider, useLang } from './i18n/LanguageContext';
 import { LANGUAGES, LangCode, TKey } from './i18n';
@@ -1173,11 +1174,13 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
       {/* ═══ INTRO CINEMATOGRÁFICA (como el GBC): VS screen + READY... FIGHT! ═══ */}
       {intro && (
         <div className="battle-intro">
+          <div className="intro-burst-left" />
+          <div className="intro-burst-right" />
           <div className="intro-fighter intro-left">
             <div className="intro-sprite-wrap">
               {pf.battleId
-                ? <FighterSprite charId={pf.battleId} pose="idle" facing="right" scale={10} />
-                : <CharacterSprite formId={playerFormId} className="intro-sprite" height={160} />}
+                ? <FighterSprite charId={pf.battleId} pose="idle" facing="right" scale={16} />
+                : <CharacterSprite formId={playerFormId} className="intro-sprite" height={230} />}
             </div>
             <div className="intro-name">{player.name}</div>
             <div className="intro-sub">{player.form}</div>
@@ -1186,8 +1189,8 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
           <div className="intro-fighter intro-right">
             <div className="intro-sprite-wrap">
               {ef.battleId
-                ? <FighterSprite charId={ef.battleId} pose="idle" facing="left" scale={10} />
-                : <CharacterSprite formId={enemyFormId} className="intro-sprite" height={160} />}
+                ? <FighterSprite charId={ef.battleId} pose="idle" facing="left" scale={16} />
+                : <CharacterSprite formId={enemyFormId} className="intro-sprite" height={230} />}
             </div>
             <div className="intro-name">{enemy.name}</div>
             <div className="intro-sub">{enemy.form}</div>
@@ -1298,14 +1301,18 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
         <div className="battlefield-fighters">
           <div className={`fighter-container player ${player.elevation} ${player.position}`}>
             {player.battleId
-              ? <FighterSprite charId={player.battleId} pose={playerPose} facing="right" scale={11} flash={flashPlayer || gatherTurns > 0} />
-              : <CharacterSprite formId={playerFormId} className={`sheet-sprite ${gatherTurns > 0 ? 'gathering' : ''}`} height={122} />}
+              ? <FighterSprite charId={player.battleId} pose={playerPose} facing="right" scale={13} flash={flashPlayer || gatherTurns > 0} />
+              : (overworldUrl(playerFormId) && playerPose === 'idle'
+                  ? <img src={overworldUrl(playerFormId)!} alt="" className={`overworld-sprite ${gatherTurns > 0 ? 'gathering' : ''}`} />
+                  : <CharacterSprite formId={playerFormId} className={`sheet-sprite ${gatherTurns > 0 ? 'gathering' : ''}`} height={152} />)}
             <div className="fighter-position-tag hidden">{player.elevation.toUpperCase()}/{player.position.toUpperCase()}</div>
           </div>
           <div className={`fighter-container enemy ${enemy.elevation} ${enemy.position}`}>
             {enemy.battleId
-              ? <FighterSprite charId={enemy.battleId} pose={enemyPose} facing="left" scale={11} flash={flashEnemy} />
-              : <CharacterSprite formId={enemyFormId} className="sheet-sprite" height={122} />}
+              ? <FighterSprite charId={enemy.battleId} pose={enemyPose} facing="left" scale={13} flash={flashEnemy} />
+              : (overworldUrl(enemyFormId) && enemyPose === 'idle'
+                  ? <img src={overworldUrl(enemyFormId)!} alt="" className="overworld-sprite" />
+                  : <CharacterSprite formId={enemyFormId} className="sheet-sprite" height={152} />)}
             <div className="fighter-position-tag hidden">{enemy.elevation.toUpperCase()}/{enemy.position.toUpperCase()}</div>
           </div>
         </div>
