@@ -9,15 +9,15 @@
 
 :root {
   /* ─── Paleta GBC (colores reales del juego) ─── */
-  --bg:            #18182a;
-  --panel:         #22223a;
-  --panel-hi:      #2e2e4a;
-  --panel-lo:      #12121e;
-  --border:        #4a4a6a;
-  --border-lo:     #333350;
+  --bg:            #0f141b;
+  --panel:         #1b2330;
+  --panel-hi:      #26303f;
+  --panel-lo:      #0a0e14;
+  --border:        #3d4a5c;
+  --border-lo:     #28323f;
   --text:          #f0ece0;
-  --muted:         #8a8a9e;
-  --dim:           #5a5a6e;
+  --muted:         #7e8a9a;
+  --dim:           #4d5868;
 
   /* Colores del juego */
   --orange:        #f08830;
@@ -36,7 +36,7 @@
   --dmg-color:     #c04040;
   --beam-color:    #3890d8;
   --sup-color:     #40a848;
-  --def-color:     #7060b0;
+  --def-color:     #5a7a9a;
   --spc-color:     #d8a830;
 
   /* Tipografía */
@@ -246,7 +246,12 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 .fighter-hud {
   display: flex; flex-direction: column; gap: 2px;
   min-width: 250px;
-  padding: 3px 6px;
+  padding: 5px 8px;
+  background: linear-gradient(180deg, rgba(27,35,48,.95), rgba(10,14,20,.95));
+  border: 2px solid var(--border);
+  /* borde pixel escalonado (estilo GBC) */
+  box-shadow: inset 2px 2px 0 var(--border-lo), inset -2px -2px 0 var(--panel-lo),
+              0 2px 0 #000, 2px 0 0 #000, 0 -2px 0 #000, -2px 0 0 #000;
 }
 
 .fighter-hud.right {
@@ -291,11 +296,16 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 
 .hp-bar-track {
   width: 100%; height: 10px;
-  background: #08080e;
+  background: #06090d;
   border: 2px solid var(--border);
   position: relative;
   overflow: hidden;
   box-shadow: inset 1px 1px 0 rgba(0,0,0,0.6);
+}
+/* segmentos de la barra (divisores pixel cada 10px) */
+.hp-bar-track::after {
+  content: ''; position: absolute; inset: 0; pointer-events: none; z-index: 4;
+  background: repeating-linear-gradient(90deg, transparent 0 10px, rgba(0,0,0,.55) 10px 11px);
 }
 
 .hp-bar-recent {
@@ -344,9 +354,14 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 
 .cc-bar-track {
   flex: 1; height: 6px;
-  background: #08080e;
+  background: #06090d;
   border: 1px solid var(--border);
   box-shadow: inset 1px 1px 0 rgba(0,0,0,0.5);
+  position: relative;
+}
+.cc-bar-track::after {
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  background: repeating-linear-gradient(90deg, transparent 0 10px, rgba(0,0,0,.5) 10px 11px);
 }
 
 .cc-bar-fill {
@@ -1025,7 +1040,7 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 
 .stat-bar {
   flex: 1; height: 10px;
-  background: #08080e;
+  background: #06090d;
   border: 1px solid var(--border-lo);
   overflow: hidden;
 }
@@ -1883,8 +1898,8 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 
 /* Scrollbars más coherentes con la paleta */
 ::-webkit-scrollbar { width: 10px; height: 10px; }
-::-webkit-scrollbar-track { background: #14141f; }
-::-webkit-scrollbar-thumb { background: #3a3a58; border: 2px solid #14141f; border-radius: 0; }
+::-webkit-scrollbar-track { background: #10151c; }
+::-webkit-scrollbar-thumb { background: #33404f; border: 2px solid #10151c; border-radius: 0; }
 ::-webkit-scrollbar-thumb:hover { background: var(--gold); }
 
 /* ═══════════════════════════════════════════════════════════
@@ -1914,7 +1929,7 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 
 /* Panel de detalle: fondo con gradiente */
 .char-detail {
-  background: linear-gradient(180deg, #26263e 0%, var(--panel) 30%);
+  background: linear-gradient(180deg, #202a38 0%, var(--panel) 30%);
 }
 
 /* Fichas de filtro: active con relieve */
@@ -1937,7 +1952,7 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 
 .setting-row:hover {
   border-color: var(--border);
-  background: #26263e;
+  background: #202a38;
 }
 
 /* Título de página con brillo */
@@ -2090,7 +2105,7 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 .basic-btn {
   display: flex; flex-direction: column; align-items: center; justify-content: center;
   gap: 4px; padding: 12px 10px; min-height: 58px;
-  background: linear-gradient(180deg, #243447, #16202e);
+  background: linear-gradient(180deg, #1c2634, #131c28);
   border: 2px solid var(--border); border-radius: 0; color: var(--text);
   font-family: inherit; cursor: pointer; transition: transform 0.12s, border-color 0.12s, box-shadow 0.12s;
 }
@@ -2098,12 +2113,12 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 .basic-btn span { font-size: 0.7rem; opacity: 0.75; }
 .basic-btn:hover:not(:disabled) { transform: translateY(-2px); border-color: var(--gold); box-shadow: 0 4px 14px rgba(0,0,0,.45); }
 .basic-btn:disabled { opacity: 0.35; cursor: not-allowed; }
-.basic-btn.basic-back { grid-column: 1 / -1; min-height: 40px; background: linear-gradient(180deg, #2a2233, #1a1520); border-color: #4a3a5a; }
+.basic-btn.basic-back { grid-column: 1 / -1; min-height: 40px; background: linear-gradient(180deg, #20242e, #14171e); border-color: #38424f; }
 .limit-panel { display: flex; flex-direction: column; gap: 6px; width: min(420px, 92vw); background: rgba(8,10,18,.82); border: 2px solid var(--border); border-radius: 0; padding: 12px; }
 .limit-title { font-size: 0.8rem; letter-spacing: 0.14em; color: var(--gold); text-align: center; margin-bottom: 4px; }
 .limit-row {
   display: flex; align-items: center; justify-content: space-between; gap: 10px;
-  padding: 9px 12px; background: linear-gradient(180deg, #26354a, #182434);
+  padding: 9px 12px; background: linear-gradient(180deg, #1f2a3a, #141d2a);
   border: 2px solid var(--border); border-radius: 0; color: var(--text);
   font-family: inherit; cursor: pointer; transition: transform 0.12s, border-color 0.12s;
 }
@@ -2115,7 +2130,7 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 .limit-empty { color: var(--muted); font-size: 0.8rem; text-align: center; padding: 12px; }
 .btn-defend {
   margin-top: 10px; padding: 12px 28px; min-width: 220px;
-  background: linear-gradient(180deg, #2c4a63, #1a3045); border: 2px solid #5a9bc4;
+  background: linear-gradient(180deg, #244054, #152637); border: 2px solid #5a9bc4;
   border-radius: 0; color: var(--text); font-family: inherit; font-size: 0.95rem;
   cursor: pointer; transition: transform 0.12s, box-shadow 0.12s;
 }
@@ -2248,3 +2263,4 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 .team-reserve-name { font-size: 0.62rem; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .team-reserve-hp { font-size: 0.58rem; color: var(--hp-red); margin-left: auto; }
 .cmd-c.has-ally { border-color: #8dffb0 !important; color: #8dffb0 !important; animation: sel-blink 1.2s infinite alternate; }
+.cc-max { color: var(--dim); font-size: 6px; margin-left: 1px; }

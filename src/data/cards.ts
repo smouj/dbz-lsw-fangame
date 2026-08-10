@@ -14,7 +14,7 @@ export type CardEffect = 'command_3' | 'command_4' | 'command_5' | 'command_6'
   | 'debuff_str8' | 'debuff_ki8' | 'debuff_speed8' | 'debuff_speed8_lowacc' | 'debuff_guard8'
   | 'attack_power_down' | 'powerdown_cleanse' | 'powerup_dispel' | 'support_dispel'
   | 'avoid_beam' | 'avoid_damage' | 'avoid_damage_taiyoken' | 'reduce_damage' | 'absorb_beam'
-  | 'command_cancel' | 'accuracy_up' | 'evasion_up' | 'knockdown_dmg' | 'knockdown_min'
+  | 'command_cancel' | 'accuracy_up' | 'evasion_up' | 'knockdown_dmg' | 'knockdown_min' | 'medical_machine'
   | 'life_drain' | 'cc_recovery' | 'lock_on' | 'sunglasses' | 'gamebomb' | 'candy' | 'naughty_book'
   | 'beam_shield' | 'damage_shield' | 'ohko_lowacc' | 'android_kill' | 'special_card';
 

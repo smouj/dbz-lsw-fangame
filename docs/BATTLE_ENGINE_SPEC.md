@@ -230,3 +230,74 @@ aiLevel = (playerLevel - 1) * 2 + 1
 - Cada jefe usa un mazo fijo: Stage Attacks (3/4/5/6) + sus especiales
 - Story tab 1 (32 jefes) y battle tab 2 (48 formas) en docs/rom-data/enemy_gid_*.csv
 - Patrón IA: ataca → gather → 5 Stage → Beam/Damage → repite
+
+---
+
+## 🏷️ Niveles de evidencia (regla del proyecto)
+
+Ningún valor inferido se presenta como "original del GBC" sin nivel de evidencia.
+Cada comportamiento lleva una de estas etiquetas:
+
+| Tag | Significado |
+|---|---|
+| `CONFIRMED_MANUAL` | Documentado en el manual/FAQ oficial |
+| `CONFIRMED_ROM` | Verificado desensamblando la ROM USA (CRC32 025AA88A) |
+| `CONFIRMED_MEMORY` | Verificado en la memoria del juego (direcciones conocidas) |
+| `COMMUNITY_TESTED` | Reproducido por pruebas comunitarias (no rutina desensamblada) |
+| `HYPOTHESIS` | Inferencia razonable sin confirmar |
+| `UNKNOWN` | Sin datos |
+
+### Registro de decisiones (2026-08-10, revisión canónica)
+
+```yaml
+exp_thresholds:
+  lv1_to_2: 10     # CONFIRMED_MANUAL
+  lv2_to_3: 50     # CONFIRMED_MANUAL
+  lv3_to_4: 150    # CONFIRMED_MANUAL
+  lv4_to_5: 500    # CONFIRMED_MANUAL
+  lv5_plus: 500 * 3.2^(lv-4)  # HYPOTHESIS (extrapolación, sin datos)
+
+cc:
+  maximum: 13      # Evidencia de pantalla real "CC: /13" (shrine battle.shtml).
+                   # ⚠️ REVISIÓN: NO fijar 99 solo porque GameShark pueda escribir
+                   # 0x63. clamp_cc() real pendiente de CONFIRMED_ROM.
+  attack_phase_gain: 3      # CONFIRMED_MANUAL
+  command_input_gain: 1     # CONFIRMED_MANUAL (por input acertado)
+  substantial_damage_gain: 2  # CONFIRMED_MANUAL
+  substantial_damage_threshold: 0.15 * maxHP  # HYPOTHESIS (UNKNOWN en ROM)
+  vulnerable_position_bonus: NO  # Sin evidencia → no implementado
+
+gather_power:
+  str_bonus: 4     # COMMUNITY_TESTED
+  ki_bonus: 4      # COMMUNITY_TESTED
+  limits_enabled: true      # CONFIRMED_MANUAL (2 turnos siguientes)
+  basic_stage_4: true       # CONFIRMED_MANUAL (3→4 mientras cargado)
+  duration: 2 turns         # CONFIRMED_MANUAL (activación + 1, ver ROM)
+
+healing:
+  resurrection: 0.25 * maxHP        # CONFIRMED_MANUAL (½ en defensa)
+  dende: (1/4 + 1/3) * maxHP        # CONFIRMED_MANUAL (offense)
+  medical_machine: atk + (SPD/2*4)  # HYPOTHESIS (fórmula real usa "phase")
+
+position:
+  front: +atk -def / back: -atk +def  # CONFIRMED_MANUAL
+  air_vuln_beam / ground_vuln_damage  # CONFIRMED_MANUAL
+  multipliers 0.8/0.5                  # COMMUNITY_TESTED (tests con Buu/Goten)
+
+damage_formula: (power + move) * posMult * block
+  power: STR (damage) / KI (beam)      # CONFIRMED_MANUAL
+  block: 0.5 (defend/endurance)       # COMMUNITY_TESTED
+  guard_card: 0.7                     # COMMUNITY_TESTED
+  exact_routine: UNKNOWN              # P0: extraer DamageResolver de la ROM
+```
+
+### Incógnitas abiertas (bloqueadores de fidelidad 1:1 — priorizadas)
+- **P0**: fórmula exacta Damage/Beam/Stage (orden de ops, rounding, min/max, variance)
+- **P0**: HIT/BLOCK/AVOID + Basic Guard (probabilidades, divisor de block, RNG)
+- **P0**: RNG de combate (algoritmo PRNG, seed, call order)
+- **P1**: algoritmo de decisión de la IA (mazos conocidos, decisión no)
+- **P1**: recálculo de iniciativa por SPD (momento exacto)
+- **P1**: clamp CC real (add_cc/clamp_cc en ROM)
+- **P1**: umbral "daño sustancial" (+2 CC)
+- **P1**: contadores internos de Gather Power
+- **P1**: buff/debuff stacking (máx acumulaciones, persistencia al cambiar personaje)

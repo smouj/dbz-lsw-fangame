@@ -157,7 +157,7 @@ function CCDisplay({ cc, maxCc }: { cc: number; maxCc: number }) {
     <div className="cc-display">
       <span className="cc-label">CC</span>
       <div className="cc-bar-track"><div className="cc-bar-fill" style={{ width: `${pct}%` }} /></div>
-      <span className="cc-value">{cc}</span>
+      <span className="cc-value">{cc}<span className="cc-max">/{maxCc}</span></span>
     </div>
   );
 }
@@ -247,7 +247,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
     const base: Fighter = {
       id: pf.character, name: getCharacter(pf.character)?.name || pf.character, form: pf.form,
       level: prog.level, maxHp: pf.hp, hp: pf.hp,
-      str: pf.str, ki: pf.ki, spd: pf.spd, maxCc: 99, cc: 0,
+      str: pf.str, ki: pf.ki, spd: pf.spd, maxCc: 13, cc: 0,
       position: 'front', elevation: 'ground', battleId: pf.battleId,
       limits: [],
     };
@@ -264,7 +264,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
     const base: Fighter = {
       id: af.character, name: getCharacter(af.character)?.name || af.character, form: af.form,
       level: prog.level, maxHp: af.hp, hp: af.hp,
-      str: af.str, ki: af.ki, spd: af.spd, maxCc: 99, cc: 0,
+      str: af.str, ki: af.ki, spd: af.spd, maxCc: 13, cc: 0,
       position: 'back', elevation: 'ground', limits: [],
     };
     return applyLevelUps(base, prog.level);
@@ -277,7 +277,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
       id: ef2.character, name: getCharacter(ef2.character)?.name || ef2.character, form: ef2.form,
       level: aiLevel, maxHp: ef2.hp + (b2?.hp || 0), hp: ef2.hp + (b2?.hp || 0),
       str: ef2.str + (b2?.str || 0), ki: ef2.ki + (b2?.ki || 0), spd: ef2.spd + (b2?.spd || 0),
-      maxCc: 99, cc: 0, position: 'front', elevation: 'ground', limits: [],
+      maxCc: 13, cc: 0, position: 'front', elevation: 'ground', limits: [],
     };
     return base;
   });
@@ -288,7 +288,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
       id: ef.character, name: getCharacter(ef.character)?.name || ef.character, form: ef.form,
       level: aiLevel, maxHp: ef.hp + (boost?.hp || 0), hp: ef.hp + (boost?.hp || 0),
       str: ef.str + (boost?.str || 0), ki: ef.ki + (boost?.ki || 0), spd: ef.spd + (boost?.spd || 0),
-      maxCc: 99, cc: 0,
+      maxCc: 13, cc: 0,
       position: 'back', elevation: 'ground', battleId: ef.battleId,
       limits: [],
     };
@@ -438,8 +438,9 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
     Sfx.powerUp();
     setPowerState('FULL_POWER');
     setGatherTurns(2);
-    // Gather Power (GBC): +4 STR +4 KI, habilita Limit Deck, Basic → 4 Stage
-    setPStages(s => ({ ...s, str: clampStage(s.str + 1), ki: clampStage(s.ki + 1) }));
+    // Gather Power (GBC): +4 STR +4 KI (COMMUNITY_TESTED; la fórmula exacta es UNKNOWN),
+    // habilita Limit Deck y convierte el Basic 3 Stage → 4 Stage
+    setPStages(s => ({ ...s, str: clampStage(s.str + 0.5), ki: clampStage(s.ki + 0.5) }));
     addLog(`${player.name} GATHER POWER! FULL POWER (+4 STR/KI, LIMIT DECK 2 turnos)`);
     setPlayerPose('power_up');
     // Consume la acción de ataque completa
@@ -653,8 +654,16 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
         const eff = card.effect;
         // Curación
         if (eff === 'heal_25pct' || eff === 'heal_strong' || eff === 'heal_light') {
-          const pct = eff === 'heal_strong' ? 0.6 : eff === 'heal_light' ? 0.3 : 0.25;
+          // Dende = MaxHP/4 + MaxHP/3 en offense (CONFIRMED_MANUAL); Resurrection = 25%
+          const pct = eff === 'heal_strong' ? (1 / 4 + 1 / 3) : eff === 'heal_light' ? 0.3 : 0.25;
           heal = Math.floor(player.maxHp * pct);
+          setPlayer(prev => ({ ...prev, hp: Math.min(prev.maxHp, prev.hp + heal) }));
+          setDamageNums(prev => [...prev, { value: heal, type: 'heal', x: 30, y: 40, id: Date.now() }]);
+          addLog(`${player.name} ${t('battle.uses')} ${card.name} — +${heal} ${t('battle.hp')}!`);
+        } else if (eff === 'medical_machine') {
+          // Medical Machine: Power + (Speed/2 * phase). Sin phase en nuestro engine:
+          // HYPOTHESIS — card.atk + floor(SPD/2 * 4). La fase exacta es UNKNOWN.
+          heal = card.atk + Math.floor(player.spd / 2) * 4;
           setPlayer(prev => ({ ...prev, hp: Math.min(prev.maxHp, prev.hp + heal) }));
           setDamageNums(prev => [...prev, { value: heal, type: 'heal', x: 30, y: 40, id: Date.now() }]);
           addLog(`${player.name} ${t('battle.uses')} ${card.name} — +${heal} ${t('battle.hp')}!`);
@@ -983,11 +992,12 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
       }
     }
     setPlayer(prev => ({ ...prev, hp: Math.max(0, prev.hp - damage) }));
-    // CC al recibir daño: +1 base, +1 extra si sustancial (≥15% HP), +1 en posición vulnerable
+    // CC al recibir daño: +1 base; +2 si daño sustancial (manual: "Life decreases
+    // substantially"). El umbral exacto es UNKNOWN; usamos ≥15% maxHP como HYPOTHESIS.
+    // ⚠️ Sin bonus por posición vulnerable: no hay evidencia que lo justifique.
     if (damage > 0) {
       const substantial = damage >= player.maxHp * 0.15;
-      const vuln = (elev === 'air' && card.type === 'beam') || (elev === 'ground' && card.type === 'damage');
-      const gain = 1 + (substantial ? 1 : 0) + (vuln ? 1 : 0);
+      const gain = substantial ? 2 : 1;
       setPlayer(prev => ({ ...prev, cc: Math.min(prev.maxCc, prev.cc + gain) }));
       addLog(`${player.name} +${gain} CC (${t('battle.hp')} bajo)`);
     }
@@ -1530,8 +1540,14 @@ function isCharacterUnlocked(charId: string): boolean {
 }
 
 // EXP necesaria para subir del nivel actual al siguiente
+// Umbrales EXP REALES del manual (CONFIRMED_MANUAL):
+//   Lv1→2 = 10 · Lv2→3 = 50 · Lv3→4 = 150 · Lv4→5 = 500
+// A partir de Lv5 no hay datos documentados: extrapolación HYPOTHESIS (×3.2)
+const EXP_THRESHOLDS: Record<number, number> = { 1: 10, 2: 50, 3: 150, 4: 500 };
 function expToNext(level: number): number {
-  return 100 + (level - 1) * 50;
+  const known = EXP_THRESHOLDS[level];
+  if (known !== undefined) return known;
+  return Math.round(500 * Math.pow(3.2, level - 4));
 }
 
 // Aplicar subida de nivel con las CURVAS REALES del GBC
