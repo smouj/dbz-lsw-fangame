@@ -73,23 +73,24 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 .menu-bg {
   position: absolute; inset: 0;
   background:
-    radial-gradient(120% 90% at 70% 20%, rgba(255,170,60,0.28) 0%, transparent 45%),
-    radial-gradient(80% 60% at 20% 10%, rgba(120,180,255,0.18) 0%, transparent 50%),
-    linear-gradient(180deg, #1a1a3a 0%, #2a2050 30%, #4a2a55 55%, #7a4035 80%, #2a1a2a 100%);
+    linear-gradient(180deg, rgba(10,10,24,0.55) 0%, rgba(10,10,24,0.25) 30%, rgba(10,10,24,0.35) 60%, rgba(8,8,20,0.85) 100%),
+    url('/menu-art.png') center center / cover no-repeat;
   z-index: 0;
   overflow: hidden;
+  animation: menu-kenburns 30s ease-in-out infinite alternate;
+}
+
+/* Zoom lento tipo Ken Burns para dar vida al fondo */
+@keyframes menu-kenburns {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.08); }
 }
 
 /* Sol con halo (estilo atardecer DBZ) */
 .menu-bg::before {
   content: '';
-  position: absolute;
-  left: 62%; top: 34%;
-  width: 220px; height: 220px;
-  border-radius: 50%;
-  background: radial-gradient(circle, #ffd98a 0%, #ffb64d 35%, #ff8a3d 60%, transparent 72%);
-  filter: blur(1px);
-  opacity: 0.85;
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 120% 90% at 50% 40%, transparent 55%, rgba(5,5,15,0.7) 100%);
   pointer-events: none;
 }
 
@@ -97,12 +98,9 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   content: '';
   position: absolute; inset: 0;
   background:
-    /* montañas lejanas */
-    linear-gradient(175deg, transparent 62%, rgba(30,20,45,0.9) 63%, rgba(22,14,36,0.95) 68%, transparent 69%),
-    linear-gradient(178deg, transparent 70%, rgba(18,12,32,0.95) 71%, rgba(10,8,24,0.98) 78%, transparent 79%),
-    /* scanline sutil */
+    /* scanline sutil estilo GBC */
     repeating-linear-gradient(
-      0deg, transparent 0px, transparent 3px, rgba(0,0,0,0.05) 3px, rgba(0,0,0,0.05) 4px
+      0deg, transparent 0px, transparent 3px, rgba(0,0,0,0.06) 3px, rgba(0,0,0,0.06) 4px
     );
   pointer-events: none;
 }
@@ -1581,42 +1579,6 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   letter-spacing: 1px;
   text-align: center;
   animation: sel-blink 1s infinite alternate;
-}
-
-/* ─── Arte del menú principal ─── */
-.menu-art-frame {
-  position: relative;
-  width: min(240px, 38vw);
-  padding: 8px;
-  background: var(--panel);
-  border: 3px solid var(--border);
-  box-shadow:
-    inset 2px 2px 0 var(--border-lo),
-    inset -2px -2px 0 var(--panel-lo),
-    0 0 24px rgba(255, 150, 50, 0.25),
-    0 0 60px rgba(255, 120, 30, 0.15);
-  animation: art-glow 3s ease-in-out infinite alternate;
-}
-
-@keyframes art-glow {
-  0% { box-shadow: inset 2px 2px 0 var(--border-lo), inset -2px -2px 0 var(--panel-lo), 0 0 18px rgba(255,150,50,0.2), 0 0 40px rgba(255,120,30,0.1); }
-  100% { box-shadow: inset 2px 2px 0 var(--border-lo), inset -2px -2px 0 var(--panel-lo), 0 0 30px rgba(255,170,60,0.4), 0 0 80px rgba(255,140,40,0.25); }
-}
-
-.menu-art {
-  display: block;
-  width: 100%;
-  height: auto;
-  image-rendering: auto;
-  border: 2px solid var(--border-lo);
-}
-
-.menu-art-frame::after {
-  content: '';
-  position: absolute;
-  inset: -6px;
-  border: 1px solid rgba(255, 180, 80, 0.15);
-  pointer-events: none;
 }
 
 @media (max-width: 768px) {
