@@ -168,4 +168,8 @@ export const ja: Dict = {
   'battle.limitedHelp': 'リミテッド：CCがあれば何度でも',
   'battle.powerState': 'パワー',
   'battle.back': '戻る',
+  'battle.ready': 'レディー',
+  'battle.fight': 'ファイト！',
+  'battle.powerOn': 'パワー全開',
+  'battle.vs': 'VS',
 };

@@ -168,4 +168,8 @@ export const ar: Dict = {
   'battle.limitedHelp': 'محدودة: قابلة لإعادة الاستخدام مع CC',
   'battle.powerState': 'القوة',
   'battle.back': 'رجوع',
+  'battle.ready': 'جاهز',
+  'battle.fight': 'قتال!',
+  'battle.powerOn': 'قوة قصوى',
+  'battle.vs': 'VS',
 };

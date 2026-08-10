@@ -168,4 +168,8 @@ export const en: Dict = {
   'battle.limitedHelp': 'Limited: reusable while you have CC',
   'battle.powerState': 'POWER',
   'battle.back': 'BACK',
+  'battle.ready': 'READY',
+  'battle.fight': 'FIGHT!',
+  'battle.powerOn': 'POWER UP',
+  'battle.vs': 'VS',
 };

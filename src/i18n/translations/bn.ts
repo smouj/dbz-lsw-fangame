@@ -168,4 +168,8 @@ export const bn: Dict = {
   'battle.limitedHelp': 'লিমিটেড: CC থাকলে বারবার',
   'battle.powerState': 'শক্তি',
   'battle.back': 'ফিরুন',
+  'battle.ready': 'প্রস্তুত',
+  'battle.fight': 'যুদ্ধ!',
+  'battle.powerOn': 'পূর্ণ শক্তি',
+  'battle.vs': 'VS',
 };

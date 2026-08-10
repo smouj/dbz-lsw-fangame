@@ -168,4 +168,8 @@ export const hi: Dict = {
   'battle.limitedHelp': 'लिमिटेड: CC होने पर दोबारा उपयोग',
   'battle.powerState': 'शक्ति',
   'battle.back': 'वापस',
+  'battle.ready': 'तैयार',
+  'battle.fight': 'लड़ो!',
+  'battle.powerOn': 'पूरी शक्ति',
+  'battle.vs': 'VS',
 };

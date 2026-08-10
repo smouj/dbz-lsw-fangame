@@ -168,4 +168,8 @@ export const ru: Dict = {
   'battle.limitedHelp': 'Limited: можно повторять за CC',
   'battle.powerState': 'СИЛА',
   'battle.back': 'НАЗАД',
+  'battle.ready': 'ГОТОВ',
+  'battle.fight': 'БОЙ!',
+  'battle.powerOn': 'МАКС. СИЛА',
+  'battle.vs': 'VS',
 };

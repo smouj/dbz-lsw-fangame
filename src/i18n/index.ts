@@ -66,7 +66,8 @@ export type TKey =
   | 'cardType.command' | 'cardType.damage' | 'cardType.beam' | 'cardType.support' | 'cardType.defense' | 'cardType.special'
   | 'attr.hp' | 'attr.str' | 'attr.ki' | 'attr.spd'
   | 'battle.strikesFirst' | 'battle.noAlly' | 'battle.blocks' | 'battle.resists' | 'battle.absorbs' | 'battle.defends' | 'battle.gathers' | 'battle.insufficientCc'
-  | 'battle.basic' | 'battle.gatherPower' | 'battle.stageAttack' | 'battle.defendAction' | 'battle.moveAction' | 'battle.basicFree' | 'battle.limitedHelp' | 'battle.powerState' | 'battle.back';
+  | 'battle.basic' | 'battle.gatherPower' | 'battle.stageAttack' | 'battle.defendAction' | 'battle.moveAction' | 'battle.basicFree' | 'battle.limitedHelp' | 'battle.powerState' | 'battle.back'
+  | 'battle.ready' | 'battle.fight' | 'battle.powerOn' | 'battle.vs';
 
 // ═══ Diccionarios ═══
 import { en } from './translations/en';

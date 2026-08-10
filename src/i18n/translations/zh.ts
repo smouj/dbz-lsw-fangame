@@ -168,4 +168,8 @@ export const zh: Dict = {
   'battle.limitedHelp': '限定卡：有CC即可反复使用',
   'battle.powerState': '能量',
   'battle.back': '返回',
+  'battle.ready': '准备好了',
+  'battle.fight': '战斗！',
+  'battle.powerOn': '全力爆发',
+  'battle.vs': 'VS',
 };

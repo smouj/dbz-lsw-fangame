@@ -272,6 +272,8 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
   });
   const [phase, setPhase] = useState<BattlePhase>('position');
   const [turn, setTurn] = useState(1);
+  // Secuencia cinematográfica de presentación (como el GBC): VS screen + READY/FIGHT
+  const [intro, setIntro] = useState(true);
   // El de mayor Speed ataca primero (mecánica real del GBC).
   // Se recalcula al inicio de cada ROUND (si Speed cambia, cambia el orden).
   // Turnos alternados (mecánica real): la velocidad solo decide QUIÉN EMPIEZA.
@@ -306,6 +308,8 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
   const [pStages, setPStages] = useState({ str: 0, ki: 0, spd: 0, guard: 0 });
   // Buffs temporales del GBC: se desvanecen tras ~3 turnos ("fade over time")
   const [buffTurns, setBuffTurns] = useState(0);
+  // Transformación en combate (cartas Sup.Saiyan): flash + aura + zoom
+  const [battleTransform, setBattleTransform] = useState(0);
   const [eStages, setEStages] = useState({ str: 0, ki: 0, spd: 0, guard: 0 });
   const pBuffs = { str: pStages.str * 8, ki: pStages.ki * 8 };
   const eBuffs = { str: eStages.str * 8, ki: eStages.ki * 8 };
@@ -371,14 +375,19 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
     }
   };
 
-  // Arranque: primer ROUND del combate (guard contra doble mount de StrictMode)
+  // Arranque: primer ROUND del combate tras la intro cinematográfica (~3s)
   const startedRef = useRef(false);
   useEffect(() => {
+    const tm = setTimeout(() => setIntro(false), 3100);
+    return () => clearTimeout(tm);
+  }, []);
+  useEffect(() => {
+    if (intro) return;
     if (startedRef.current) return;
     startedRef.current = true;
     roundStart();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [intro]);
 
   const setPosition = (pos: Position, elev: Elevation) => {
     Sfx.position();
@@ -641,6 +650,12 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
         } else if (eff.startsWith('buff_') || eff.startsWith('debuff_') || eff === 'accuracy_up' || eff === 'evasion_up' || eff === 'lock_on' || eff === 'powerup_dispel' || eff === 'support_dispel' || eff === 'powerdown_cleanse' || eff === 'knockdown_dmg' || eff === 'knockdown_min' || eff === 'attack_power_down' || eff === 'sunglasses' || eff === 'gamebomb' || eff === 'candy' || eff === 'naughty_book' || eff === 'special_card') {
           // Buffs +8, debuffs -8, otros efectos de estado
           if (eff.startsWith('buff_')) setBuffTurns(3);
+          // Transformación real (Sup.Saiyan-2/3): secuencia cinematográfica
+          if (card.id === 27 || card.id === 28) {
+            Sfx.transform();
+            setBattleTransform(Date.now());
+            addLog(`${player.name} ${t('battle.powerOn')}!`);
+          }
           if (eff === 'buff_ki8' || eff === 'buff_str_ki8') setPStages(s => ({ ...s, ki: clampStage(s.ki + 1) }));
           if (eff === 'buff_str8' || eff === 'buff_str_ki8') setPStages(s => ({ ...s, str: clampStage(s.str + 1) }));
           if (eff === 'buff_speed8') setPStages(s => ({ ...s, spd: clampStage(s.spd + 1) }));
@@ -949,6 +964,43 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
 
   return (
     <div className="battle-screen">
+      {/* ═══ INTRO CINEMATOGRÁFICA (como el GBC): VS screen + READY... FIGHT! ═══ */}
+      {intro && (
+        <div className="battle-intro">
+          <div className="intro-fighter intro-left">
+            <div className="intro-sprite-wrap">
+              {pf.battleId
+                ? <FighterSprite charId={pf.battleId} pose="idle" facing="right" scale={10} />
+                : <CharacterSprite formId={playerFormId} className="intro-sprite" height={160} />}
+            </div>
+            <div className="intro-name">{player.name}</div>
+            <div className="intro-sub">{player.form}</div>
+          </div>
+          <div className="intro-vs">{t('battle.vs')}</div>
+          <div className="intro-fighter intro-right">
+            <div className="intro-sprite-wrap">
+              {ef.battleId
+                ? <FighterSprite charId={ef.battleId} pose="idle" facing="left" scale={10} />
+                : <CharacterSprite formId={enemyFormId} className="intro-sprite" height={160} />}
+            </div>
+            <div className="intro-name">{enemy.name}</div>
+            <div className="intro-sub">{enemy.form}</div>
+          </div>
+          <div className="intro-flash" />
+          <div className="intro-fight">{t('battle.fight')}</div>
+          <div className="intro-ready">{t('battle.ready')}</div>
+        </div>
+      )}
+
+      {/* Overlay de transformación en combate */}
+      {battleTransform > 0 && (
+        <div className="battle-transform-fx" key={battleTransform}>
+          <div className="bt-flash" />
+          <div className="bt-aura" />
+          <div className="bt-text">{t('battle.powerOn')}</div>
+        </div>
+      )}
+
       {/* HUD */}
       <div className="hud-top">
         <div className="fighter-hud left">
@@ -965,6 +1017,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
           <div className="hud-stats">
             <span>STR{player.str + pBuffs.str}</span><span>KI{player.ki + pBuffs.ki}</span><span>SPD{player.spd}</span>
             {buffTurns > 0 && <span className="buff-indicator">BUFF {buffTurns}▲</span>}
+            {gatherTurns > 0 && <span className="power-indicator">{t('battle.powerState')} {powerState.replace('_', ' ')}</span>}
           </div>
           <CCDisplay cc={player.cc} maxCc={player.maxCc} />
         </div>
@@ -1454,6 +1507,15 @@ function CharactersScreen({ onNavigate, onSelectFighter }: {
 }) {
   const { t } = useLang();
   const [selected, setSelected] = useState<string>('goku_base');
+  // Secuencia de transformación: flash + aura al cambiar de forma (como el GBC)
+  const [transformFx, setTransformFx] = useState(0);
+
+  const pickForm = (fid: string) => {
+    if (fid === selected) return;
+    Sfx.transform();
+    setTransformFx(Date.now());
+    setSelected(fid);
+  };
 
   const sel = getForm(selected)!;
   const selChar = getCharacter(sel.character)!;
@@ -1496,7 +1558,11 @@ function CharactersScreen({ onNavigate, onSelectFighter }: {
         {/* Detalle */}
         <div className="char-detail">
           <div className="char-detail-header">
-            <CharacterSprite formId={selected} height={160} className="char-detail-sprite" />
+            <div className={`char-detail-sprite-wrap ${transformFx ? 'transforming' : ''}`} key={transformFx}>
+              {transformFx > 0 && <div className="transform-flash" />}
+              <div className="transform-aura" />
+              <CharacterSprite formId={selected} height={160} className="char-detail-sprite" />
+            </div>
             <div className="char-detail-info">
               <div className="char-detail-name">{selChar.name}</div>
               <div className="char-detail-form">{t('characters.form')}: {sel.form}</div>
@@ -1527,7 +1593,7 @@ function CharactersScreen({ onNavigate, onSelectFighter }: {
               }
               return (
                 <button key={fid} className={`form-chip ${fid === selected ? 'active' : ''}`}
-                  onClick={() => setSelected(fid)}>{f.form}</button>
+                  onClick={() => pickForm(fid)}>{f.form}</button>
               );
             })}
           </div>
