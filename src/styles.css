@@ -2121,3 +2121,4 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 }
 .btn-defend:hover { transform: translateY(-2px); box-shadow: 0 4px 16px rgba(60,150,220,.35); }
 .btn-defend strong { color: #bfe6ff; letter-spacing: 0.1em; }
+.buff-indicator { color: #8dffb0; font-size: 0.62rem; background: rgba(20,120,60,.25); padding: 1px 6px; border-radius: 999px; letter-spacing: .05em; }

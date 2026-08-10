@@ -35,3 +35,38 @@ export const STORY_ENEMY_DECKS: Record<number, number[]> = {
   31: [2, 2, 2, 3, 3, 3, 118, 53, 81, 81, 105, 105, 121, 121, 123, 39, 16, 16, 40, 124, 3, 81, 13],  // Buu
   32: [2, 2, 2, 3, 3, 3, 118, 53, 53, 6, 81, 105, 121, 121, 121, 106, 16, 16, 13, 13, 3, 81, 64],  // Buu
 };
+
+// ═══ AI BOOST REAL del story mode (spreadsheet oficial) ═══
+// Cada jefe tiene un boost de stats sobre su forma base ("Story mode AI boost").
+export const STORY_AI_BOOSTS: Record<number, { hp: number; str: number; ki: number; spd: number }> = {
+  2: { hp: 0, str: 6, ki: 0, spd: 0 },
+  3: { hp: 0, str: 6, ki: 0, spd: 0 },
+  4: { hp: 0, str: 6, ki: 0, spd: 4 },
+  5: { hp: 0, str: 5, ki: 4, spd: 0 },
+  6: { hp: 0, str: 6, ki: 3, spd: 0 },
+  7: { hp: 0, str: 4, ki: 5, spd: 7 },
+  8: { hp: 0, str: 5, ki: 4, spd: 4 },
+  9: { hp: 15, str: 6, ki: 5, spd: 0 },
+  10: { hp: 30, str: 6, ki: 5, spd: 6 },
+  11: { hp: 13, str: 6, ki: 4, spd: 0 },
+  12: { hp: 12, str: 3, ki: 0, spd: 4 },
+  13: { hp: 11, str: 0, ki: 3, spd: 5 },
+  14: { hp: 13, str: 5, ki: 4, spd: 5 },
+  15: { hp: 0, str: 10, ki: 4, spd: 5 },
+  16: { hp: 0, str: 12, ki: 3, spd: 4 },
+  17: { hp: 13, str: 6, ki: 3, spd: 5 },
+  18: { hp: 12, str: 6, ki: 4, spd: 10 },
+  19: { hp: 13, str: 11, ki: 3, spd: 5 },
+  20: { hp: 26, str: 6, ki: 7, spd: 5 },
+  21: { hp: 0, str: 1, ki: 0, spd: 1 },
+  22: { hp: 13, str: 0, ki: 4, spd: 0 },
+  23: { hp: 11, str: 9, ki: 4, spd: 8 },
+  24: { hp: 24, str: 12, ki: 0, spd: 15 },
+  25: { hp: 12, str: 6, ki: 9, spd: 4 },
+  26: { hp: 13, str: 9, ki: 3, spd: 4 },
+  28: { hp: 13, str: 5, ki: 4, spd: 8 },
+  29: { hp: 26, str: 5, ki: 4, spd: 4 },
+  30: { hp: 13, str: 4, ki: 8, spd: 4 },
+  31: { hp: 13, str: 9, ki: 8, spd: 4 },
+  32: { hp: 26, str: 9, ki: 3, spd: 4 },
+};

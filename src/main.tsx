@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { createRoot } from 'react-dom/client';
 import './styles.css';
 import { FORMS, CHARACTERS, getCharacter, getForm, idleSpriteUrl, growthFor, statAtLevel, LIMIT_DEFAULTS, loadLimits, saveLimits } from './data/roster';
-import { STORY_ENEMY_DECKS } from './data/enemy_decks';
+import { STORY_ENEMY_DECKS, STORY_AI_BOOSTS } from './data/enemy_decks';
 import { needsFlip } from './data/facing';
 import { UNLOCK_KEY, STARTER_DAMAGE_DECK, STARTER_BEAM_DECK, STARTER_CHARACTERS, cardsForLevel, pickRewards, VS_UNLOCKS, isFormUnlocked, FORM_UNLOCK_LEVELS } from './data/unlocks';
 import { CARDS, CARD_COLORS, CARD_TYPE_NAMES, CardDef, CardType, DECK_SIZE, MAX_COPIES, getCard, CardEffect } from './data/cards';
@@ -257,14 +257,18 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
   // El AI siempre tiene 2 upgrades por cada 1 del jugador (Hp/Str/Ki/Spd)
   const aiLevel = Math.max(1, (prog.level - 1) * 2 + 1);
   const [enemy, setEnemy] = useState<Fighter>(() => {
+    // Story mode: stats FIJOS del jefe + su AI boost real (spreadsheet oficial)
+    const boost = storyChapter ? STORY_AI_BOOSTS[storyChapter] : null;
     const base: Fighter = {
       id: ef.character, name: getCharacter(ef.character)?.name || ef.character, form: ef.form,
-      level: aiLevel, maxHp: ef.hp, hp: ef.hp,
-      str: ef.str, ki: ef.ki, spd: ef.spd, maxCc: 99, cc: 0,
+      level: aiLevel, maxHp: ef.hp + (boost?.hp || 0), hp: ef.hp + (boost?.hp || 0),
+      str: ef.str + (boost?.str || 0), ki: ef.ki + (boost?.ki || 0), spd: ef.spd + (boost?.spd || 0),
+      maxCc: 99, cc: 0,
       position: 'back', elevation: 'ground', battleId: ef.battleId,
       limits: ['Limit', 'Final'],
     };
-    return applyLevelUps(base, aiLevel);
+    // En versus: la IA escala con aiLevel=(playerLevel-1)*2+1; en story, stats fijos
+    return storyChapter ? base : applyLevelUps(base, aiLevel);
   });
   const [phase, setPhase] = useState<BattlePhase>('position');
   const [turn, setTurn] = useState(1);
@@ -300,6 +304,8 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
   const [flashEnemy, setFlashEnemy] = useState(false);
   // Stat stages reales: -3..+3 (cada stage = 8 unidades internas, como el GBC)
   const [pStages, setPStages] = useState({ str: 0, ki: 0, spd: 0, guard: 0 });
+  // Buffs temporales del GBC: se desvanecen tras ~3 turnos ("fade over time")
+  const [buffTurns, setBuffTurns] = useState(0);
   const [eStages, setEStages] = useState({ str: 0, ki: 0, spd: 0, guard: 0 });
   const pBuffs = { str: pStages.str * 8, ki: pStages.ki * 8 };
   const eBuffs = { str: eStages.str * 8, ki: eStages.ki * 8 };
@@ -341,6 +347,13 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
   // Cada round hay UN atacante y UN defensor. El más rápido ataca primero.
   // "Each time you're the attacker, you get 3 CC" (battle.shtml).
   const roundStart = () => {
+    // Buffs temporales: se desvanecen al agotarse (fade over time del GBC)
+    setBuffTurns(prev => {
+      if (prev <= 0) return 0;
+      const next = prev - 1;
+      if (next === 0) setPStages({ str: 0, ki: 0, spd: 0, guard: 0 });
+      return next;
+    });
     // Alternar: el otro luchador actúa en el siguiente round
     const owner = turnOwnerRef.current;
     turnOwnerRef.current = owner === 'player' ? 'enemy' : 'player';
@@ -627,6 +640,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
           }
         } else if (eff.startsWith('buff_') || eff.startsWith('debuff_') || eff === 'accuracy_up' || eff === 'evasion_up' || eff === 'lock_on' || eff === 'powerup_dispel' || eff === 'support_dispel' || eff === 'powerdown_cleanse' || eff === 'knockdown_dmg' || eff === 'knockdown_min' || eff === 'attack_power_down' || eff === 'sunglasses' || eff === 'gamebomb' || eff === 'candy' || eff === 'naughty_book' || eff === 'special_card') {
           // Buffs +8, debuffs -8, otros efectos de estado
+          if (eff.startsWith('buff_')) setBuffTurns(3);
           if (eff === 'buff_ki8' || eff === 'buff_str_ki8') setPStages(s => ({ ...s, ki: clampStage(s.ki + 1) }));
           if (eff === 'buff_str8' || eff === 'buff_str_ki8') setPStages(s => ({ ...s, str: clampStage(s.str + 1) }));
           if (eff === 'buff_speed8') setPStages(s => ({ ...s, spd: clampStage(s.spd + 1) }));
@@ -950,6 +964,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
           <HPBar current={player.hp} max={player.maxHp} side="left" />
           <div className="hud-stats">
             <span>STR{player.str + pBuffs.str}</span><span>KI{player.ki + pBuffs.ki}</span><span>SPD{player.spd}</span>
+            {buffTurns > 0 && <span className="buff-indicator">BUFF {buffTurns}▲</span>}
           </div>
           <CCDisplay cc={player.cc} maxCc={player.maxCc} />
         </div>
