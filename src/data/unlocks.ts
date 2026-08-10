@@ -77,3 +77,47 @@ export const VS_UNLOCKS: Record<string, string> = {
   'nappa': 'nappa',
   'buu_base': 'buu',
 };
+
+// ═══════════════════════════════════════════════════════════
+// Formas desbloqueables por nivel (fiel al GBC)
+// Solo la forma base está disponible al inicio; el resto se
+// desbloquea subiendo de nivel o ganando retos.
+// ═══════════════════════════════════════════════════════════
+
+// Forma base siempre disponible
+export function baseFormId(charId: string): string {
+  return `${charId}_base`;
+}
+
+// Desbloqueo de formas por nivel (id de forma → nivel mínimo)
+export const FORM_UNLOCK_LEVELS: Record<string, number> = {
+  // Goku
+  'goku_ssj': 2, 'goku_ssj2': 4, 'goku_ssj3': 7,
+  // Vegeta
+  'vegeta_ssj': 3, 'vegeta_majin': 6,
+  // Gohan
+  'gohan_young_ssj': 2, 'gohan_young_ssj2': 4, 'gohan_teen_ssj': 5, 'gohan_ultimate': 9,
+  // Trunks
+  'trunks_future': 3, 'trunks_ssj': 5,
+  // Goten
+  'goten_ssj': 4,
+  // Gotenks
+  'gotenks_ssj': 6, 'gotenks_ssj3': 10,
+  // Piccolo
+  'piccolo_kami': 4,
+  // Frieza
+  'frieza_100': 5,
+  // Cell
+  'cell_semi': 6, 'cell_perfect': 8,
+  // Buu
+  'buu_super': 7, 'buu_gotenks': 9, 'buu_gohan': 11, 'buu_kid': 12,
+  // Ginyu
+  'ginyu_goku': 6,
+};
+
+// ¿Forma desbloqueada?
+export function isFormUnlocked(formId: string, level: number): boolean {
+  const minLevel = FORM_UNLOCK_LEVELS[formId];
+  if (minLevel === undefined) return true; // forma base o sin requisito
+  return level >= minLevel;
+}

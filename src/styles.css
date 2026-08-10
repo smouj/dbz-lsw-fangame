@@ -1773,3 +1773,40 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   .starter-deck-card { width: 240px; min-height: 220px; }
   .reward-cards { flex-direction: column; }
 }
+
+/* ─── Cartas no poseídas en modo ALL del mazo ─── */
+.card-not-owned-wrap {
+  position: relative;
+}
+
+.card-not-owned-wrap .card {
+  opacity: 0.35;
+  filter: grayscale(0.8);
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
+.card-not-owned-tag {
+  position: absolute;
+  top: 4px; right: 4px;
+  font-family: var(--fpx);
+  font-size: 8px;
+  color: var(--dim);
+  background: var(--panel-lo);
+  border: 1px solid var(--border);
+  padding: 2px 5px;
+  pointer-events: none;
+}
+
+/* ─── Formas bloqueadas (por nivel) ─── */
+.form-chip.form-chip-locked {
+  opacity: 0.4;
+  filter: grayscale(0.8);
+  cursor: not-allowed;
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  color: var(--dim);
+}
+
+.form-chip-locked svg { display: block; }

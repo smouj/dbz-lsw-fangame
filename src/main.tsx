@@ -4,7 +4,7 @@ import { createRoot } from 'react-dom/client';
 import './styles.css';
 import { FORMS, CHARACTERS, getCharacter, getForm, idleSpriteUrl } from './data/roster';
 import { needsFlip } from './data/facing';
-import { UNLOCK_KEY, STARTER_DAMAGE_DECK, STARTER_BEAM_DECK, STARTER_CHARACTERS, cardsForLevel, pickRewards, VS_UNLOCKS } from './data/unlocks';
+import { UNLOCK_KEY, STARTER_DAMAGE_DECK, STARTER_BEAM_DECK, STARTER_CHARACTERS, cardsForLevel, pickRewards, VS_UNLOCKS, isFormUnlocked, FORM_UNLOCK_LEVELS } from './data/unlocks';
 import { CARDS, CARD_COLORS, CARD_TYPE_NAMES, CardDef, CardType, DECK_SIZE, MAX_COPIES, getCard, CardEffect } from './data/cards';
 import { cardIconUrl, MINI_PORTRAITS, MENU_PORTRAITS, TYPE_ICONS } from './data/icons';
 import { initAudio, Sfx, setSfxEnabled, setVolume } from './audio/sfx';
@@ -937,10 +937,18 @@ function CharactersScreen({ onNavigate, onSelectFighter }: {
             <div className="stat-row"><span>{t('attr.spd')}</span><div className="stat-bar"><div className="stat-fill spd" style={{ width: `${sel.spd}%` }} /></div><b>{sel.spd}</b></div>
           </div>
 
-          {/* Formas */}
+          {/* Formas: solo las desbloqueadas (por nivel) */}
           <div className="form-select">
             {selChar.forms.map(fid => {
               const f = getForm(fid)!;
+              const unlocked = isFormUnlocked(fid, loadProgress().level);
+              if (!unlocked) {
+                return (
+                  <div key={fid} className="form-chip form-chip-locked" title={`LV ${FORM_UNLOCK_LEVELS[fid] || '?'}+`}>
+                    <Lock size={8} /> {f.form}
+                  </div>
+                );
+              }
               return (
                 <button key={fid} className={`form-chip ${fid === selected ? 'active' : ''}`}
                   onClick={() => setSelected(fid)}>{f.form}</button>
@@ -978,6 +986,8 @@ function DeckScreen({ onNavigate }: { onNavigate: (s: Screen) => void }) {
   const [deck, setDeck] = useState<number[]>(loadDeck);
   const [filter, setFilter] = useState<CardType | 'all'>('all');
   const [search, setSearch] = useState('');
+  const [showAll, setShowAll] = useState(false);
+  const owned = ownedCards(loadUnlocks(), loadProgress().level);
 
   // Persist deck on change
   useEffect(() => {
@@ -988,6 +998,7 @@ function DeckScreen({ onNavigate }: { onNavigate: (s: Screen) => void }) {
   deck.forEach(id => { deckCounts[id] = (deckCounts[id] || 0) + 1; });
 
   const addCard = (card: CardDef) => {
+    if (!owned.has(card.id)) return;  // solo cartas desbloqueadas
     if (deck.length >= DECK_SIZE) return;
     if ((deckCounts[card.id] || 0) >= MAX_COPIES) return;
     setDeck([...deck, card.id]);
@@ -1000,6 +1011,7 @@ function DeckScreen({ onNavigate }: { onNavigate: (s: Screen) => void }) {
   };
 
   const filtered = CARDS.filter(c =>
+    (showAll || owned.has(c.id)) &&
     (filter === 'all' || c.type === filter) &&
     (search === '' || c.name.toLowerCase().includes(search.toLowerCase())) &&
     (deckCounts[c.id] || 0) < MAX_COPIES
@@ -1019,6 +1031,14 @@ function DeckScreen({ onNavigate }: { onNavigate: (s: Screen) => void }) {
           <div className="deck-toolbar">
             <input className="deck-search" placeholder={t('deck.search')} value={search}
               onChange={e => setSearch(e.target.value)} />
+            <div className="deck-owned-toggle">
+              <button className={`filter-chip ${!showAll ? 'active' : ''}`} onClick={() => setShowAll(false)}>
+                OWNED
+              </button>
+              <button className={`filter-chip ${showAll ? 'active' : ''}`} onClick={() => setShowAll(true)}>
+                ALL
+              </button>
+            </div>
             <div className="deck-filters">
               {(['all', 'command', 'damage', 'beam', 'support', 'defense', 'special'] as const).map(tp => (
                 <button key={tp} className={`filter-chip ${filter === tp ? 'active' : ''}`}
@@ -1027,9 +1047,15 @@ function DeckScreen({ onNavigate }: { onNavigate: (s: Screen) => void }) {
             </div>
           </div>
           <div className="card-collection-grid">
-            {filtered.map(card => (
-              <CardVisual key={card.id} card={card} onClick={() => addCard(card)} small />
-            ))}
+            {filtered.map(card => {
+              const isOwned = owned.has(card.id);
+              return (
+                <div key={card.id} className={isOwned ? '' : 'card-not-owned-wrap'}>
+                  <CardVisual key={card.id} card={card} onClick={() => addCard(card)} small />
+                  {!isOwned && <div className="card-not-owned-tag">???</div>}
+                </div>
+              );
+            })}
           </div>
         </div>
 
@@ -1241,6 +1267,14 @@ function VersusScreen({ onNavigate, onStartVersus }: {
           <div className="form-select">
             {selChar.forms.map(fid => {
               const f = getForm(fid)!;
+              const unlocked = isFormUnlocked(fid, loadProgress().level);
+              if (!unlocked) {
+                return (
+                  <div key={fid} className="form-chip form-chip-locked" title={`LV ${FORM_UNLOCK_LEVELS[fid] || '?'}+`}>
+                    <Lock size={8} /> {f.form}
+                  </div>
+                );
+              }
               return (
                 <button key={fid} className={`form-chip ${fid === selected ? 'active' : ''}`}
                   onClick={() => setSelected(fid)}>{f.form}</button>
