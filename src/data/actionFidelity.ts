@@ -14,13 +14,46 @@ export enum FidelityLevel {
   FRAME_VERIFIED = 'FRAME_VERIFIED',
 }
 
-// Las medidas canónicas se almacenan en FRAMES (no ms).
-// Conversión runtime: seconds = frames / ORIGINAL_TARGET_FPS
-export const ORIGINAL_TARGET_FPS = 60;
+// ═══ Temporización GBC (Pan Docs / GBDev) ═══
+// El Game Boy Color NO refresca a 60 Hz exactos:
+//   4.194.304 Hz / 70.224 dots por frame = 59.72750056960583 Hz
+// Los datos canónicos se almacenan en FRAMES GBC (unidad principal);
+// los segundos son SOLO para presentación/runtime.
+// GBC FRAME ≠ VIDEO CAPTURE FRAME (al capturar a 60fps hay deriva).
+export const GBC_NATIVE_FPS = 59.72750056960583;
+export const CAPTURE_FPS = 60;
 
-export function framesToSeconds(frames: number): number {
-  return frames / ORIGINAL_TARGET_FPS;
+export interface FrameTiming {
+  gbcFrames: number;
 }
+
+export function gbcFramesToSeconds(frames: number): number {
+  return frames / GBC_NATIVE_FPS;
+}
+
+// ═══ Evidencia (cada número canónico trazable a una captura) ═══
+export type EvidenceStatus = 'CONFIRMED' | 'COMMUNITY_TESTED' | 'HYPOTHESIS' | 'UNKNOWN';
+
+export interface FidelityEvidence {
+  status: EvidenceStatus;
+  source?: string;
+  captureId?: string;
+  gbcFrame?: number;
+  gbcFrameRange?: [number, number];
+  notes?: string;
+}
+
+// ═══ Estados intermedios del QTE (Stage Attacks) ═══
+export type QteState =
+  | 'WAITING'
+  | 'PROMPT'
+  | 'INPUT_WINDOW'
+  | 'SUCCESS'
+  | 'FAILED'
+  | 'RECOVERY_WINDOW'
+  | 'RECOVERED'
+  | 'ABORTED'
+  | 'COMPLETE';
 
 // ═══ Definición de acción (data-driven — nada hardcodeado) ═══
 
@@ -75,6 +108,8 @@ export interface ActionFidelityRecord {
 }
 
 export const ACTION_FIDELITY_REGISTRY: Record<string, ActionFidelityRecord> = {
+  // ⚠️ Temporización: GBC_NATIVE_FPS = 59.72750056960583 (no 60)
+  // Los frames medidos en capturas a 60fps deben convertirse: gbcFrame = capFrame * (60/59.7275)
   '3_stage_attack': { action: '3 Stage Attack', fidelity: FidelityLevel.INFERRED, notes: '3 inputs, +1 CC cada uno; ventana por distancia (INFERRED); pendiente FRAME_VERIFIED' },
   '4_stage_attack': { action: '4 Stage Attack', fidelity: FidelityLevel.INFERRED, notes: '4 inputs; Basic 4 Stage solo con Gather (INFERRED)' },
   '5_stage_attack': { action: '5 Stage Attack', fidelity: FidelityLevel.INFERRED, notes: '5 inputs (INFERRED)' },

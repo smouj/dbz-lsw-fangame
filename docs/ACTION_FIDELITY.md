@@ -276,3 +276,133 @@ de las 16 acciones y el enum `FidelityLevel`.
 4. Completar las fichas → FRAME_VERIFIED
 5. El 3 Stage Attack es el patrón inicial (reconstrucción completa
    principio a fin) y sirve de plantilla para 4/5/6 Stage
+
+---
+
+## ⚠️ CORRECCIÓN DE TEMPORIZACIÓN (importante)
+
+El GBC **NO refresca a 60 Hz exactos**: `4.194.304 Hz / 70.224 dots = 59.72750056960583 Hz`.
+
+```ts
+GBC_NATIVE_FPS = 59.72750056960583;  // frames nativos del GBC
+CAPTURE_FPS    = 60;                  // solo para vídeo de captura
+```
+
+- Los datos canónicos se almacenan en **frames GBC** (`FrameTiming { gbcFrames }`), nunca en segundos como unidad principal.
+- `gbcFramesToSeconds(frames) = frames / GBC_NATIVE_FPS` (solo runtime/presentación).
+- **GBC FRAME ≠ VIDEO CAPTURE FRAME**: al capturar a 60fps hay deriva (~0.45% — importante en secuencias de 100-300 frames).
+- Conversión captura→nativo: `gbcFrame = captureFrame * (60 / 59.7275)`.
+
+---
+
+## Objetivo exclusivo actual: 3 Stage Attack FRAME_VERIFIED
+
+**No avanzar a 4/5/6 Stage ni a Beam/Damage/Limit hasta completar este caso.**
+
+### Registro canónico objetivo
+
+```yaml
+action: 3_stage_attack
+fidelity: FRAME_VERIFIED
+
+capture:
+  gbc_native_hz: 59.72750056960583
+  capture_fps: 60
+  emulator: ...
+  rom:
+    region: USA
+    crc32: 025AA88A
+
+entry:
+  tactical_last_frame: 0
+  action_background_first_frame: 1
+
+hud:
+  push_first_visible_frame: ...
+  timer_first_visible_frame: ...
+  prompt_first_visible_frame: ...
+
+attacker:
+  initial_pose: ...
+  initial_x: ...
+  initial_y: ...
+
+qte:
+  input_count: 3
+
+  input_1:
+    enabled_frame: ...
+    success_frame: ...
+    pose_after_success: ...
+    cc_after_success: ...
+
+  input_2:
+    enabled_frame: ...
+    success_frame: ...
+    pose_after_success: ...
+    cc_after_success: ...
+
+  input_3:
+    enabled_frame: ...
+    success_frame: ...
+    pose_after_success: ...
+    cc_after_success: ...
+
+impact:
+  contact_frame: ...
+  defender_reaction_frame: ...
+  hp_change_frame: ...
+  hitstop_frames: ...
+
+exit:
+  action_last_frame: ...
+  tactical_first_frame: ...
+```
+
+### Capturas necesarias (12 ejecuciones)
+
+| # | Escenario | Objetivo |
+|---|---|---|
+| 1 | Éxito perfecto | frames de referencia de la secuencia completa |
+| 2 | Fallo en input 1 | ventana, pausa de fallo, recovery |
+| 3 | Fallo en input 2 | idem en etapa intermedia |
+| 4 | Fallo en input 3 | idem en etapa final |
+| 5 | Recuperación tras fallo (B) | ventana de recovery, continuación |
+| 6 | Abandono tras fallo (A) | conservación de CC parcial |
+| 7 | Distancia corta | ventana de input máxima |
+| 8 | Distancia larga | ventana de input mínima |
+| 9 | Defensor en suelo | variantes de posición |
+| 10 | Defensor en aire | variantes de posición |
+| 11 | Defensa normal | resultado BLOCK/HIT |
+| 12 | Defensa que interrumpe/esquiva | Foresight/Avoid si aplica |
+
+### Tres timelines simultáneos (no medir solo la animación)
+
+```
+VISUAL:   sprite, fondo, HUD, VFX
+GAMEPLAY: CC, HP, posición, estado, resultado
+AUDIO:    SFX inicio, impacto, transición
+
+Ejemplo real posible:
+  frame 83 → contacto visual
+  frame 84 → SFX impacto
+  frame 87 → HP actualizado
+```
+
+### Evidencia trazable
+
+Cada número canónico lleva `FidelityEvidence`:
+```ts
+{ status: 'CONFIRMED', captureId: '3stage_success_close_01', gbcFrameRange: [126, 129] }
+```
+`FRAME_VERIFIED` = cada valor rastreable a una captura concreta.
+
+### Variables a descubrir (patrón de implementación)
+
+Durante la captura probablemente aparecerán variables no previstas en
+`ActionDefinition`, por ejemplo:
+`prePromptFrames, inputGraceFrames, failurePauseFrames, recoveryWindowFrames,
+postSuccessFrames, attackerStepFrames, cameraHoldFrames, resultHoldFrames`.
+
+**Regla**: descubrirlas con UNA acción completamente estudiada, y solo
+entonces extender las 16 definiciones.
