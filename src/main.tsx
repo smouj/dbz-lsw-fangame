@@ -650,7 +650,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
     };
     setTimeout(() => {
       let damage = 0;
-      let hitType: 'damage' | 'miss' = 'damage';
+      let hitType: 'damage' | 'miss' | 'guard' = 'damage';
       let heal = 0;
       const acc = card.acc / 100;
       const roll = Math.random();
@@ -780,9 +780,20 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
         const posMult = (ePos === 'front' && vulnerable) ? 0.8 : 0.5;
         damage = Math.floor((card.atk + power) * posMult);
         if (eResp === 'defend') {
-          // block (defend del GBC) = ×0.5
-          damage = Math.floor(damage * 0.5);
-          addLog(`${enemy.name} ${t('battle.defends')} — ${damage} ${t('battle.dmg')}`);
+          // Basic Guard del enemigo: mismo sistema HIT/BLOCK/AVOID
+          const spdDef = enemy.spd + eStages.spd * 8;
+          const avoidChance = Math.max(0.05, Math.min(0.35, 0.05 + (spdDef - 25) * 0.004 + (100 - card.acc) * 0.002));
+          const gRoll = Math.random();
+          if (gRoll < avoidChance) {
+            damage = 0; hitType = 'guard';
+            addLog(`${enemy.name} AVOID! (0 ${t('battle.dmg')})`);
+          } else if (gRoll < avoidChance + 0.55) {
+            damage = Math.floor(damage * 0.25);
+            hitType = 'guard';
+            addLog(`${enemy.name} BLOCK — ${damage} ${t('battle.dmg')}`);
+          } else {
+            addLog(`${enemy.name} ${t('battle.defends')} — ${damage} ${t('battle.dmg')}`);
+          }
         } else {
           addLog(`${player.name} → ${card.name} — ${damage} ${t('battle.dmg')}`);
         }
@@ -919,6 +930,22 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
       const storyDeck = storyChapter ? (STORY_ENEMY_DECKS[storyChapter] || []).map(id => getCard(id)).filter((c): c is CardDef => !!c) : [];
       const allPool = storyDeck.length > 0 ? storyDeck : CARDS;
       const attackCards = allPool.filter(c => (c.type === 'damage' || c.type === 'beam') && !c.compatible);
+      // IA a HP bajo: si tiene carta de curación en su mazo, se cura (HYPOTHESIS —
+      // el algoritmo real de decisión es P0 ROM, pero el manual confirma que la IA
+      // puede usar support cards; el deck determina qué puede hacer)
+      if (enemy.hp < enemy.maxHp * 0.25) {
+        const heals = allPool.filter(c => c.type === 'support' && (c.effect.startsWith('heal_')));
+        if (heals.length > 0) {
+          const h = heals[0];
+          const pct = h.effect === 'heal_strong' ? (1 / 4 + 1 / 3) : h.effect === 'heal_light' ? 0.3 : 0.25;
+          const healed = Math.floor(enemy.maxHp * pct);
+          setEnemy(prev => ({ ...prev, hp: Math.min(prev.maxHp, prev.hp + healed) }));
+          setEnemyPose('power_up');
+          addLog(`${enemy.name} ${t('battle.uses')} ${h.name} — +${healed} HP!`);
+          setTimeout(() => { setEnemyPose('idle'); roundStart(); }, 800);
+          return;
+        }
+      }
       // Stage Attacks GRATIS (cc 0) del pool: la IA los usa cuando no tiene CC
       const freeStages = allPool.filter(c => c.type === 'command' && c.cc === 0 && c.name.includes('Stage'));
       let card: CardDef;
@@ -1014,9 +1041,24 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
         }
         setPlayerGuard(null);
       } else if (defended) {
-        // DEFEND básico: mitad de daño (defender del GBC)
-        damage = Math.floor(damage * 0.5);
-        addLog(`${player.name} ${t('battle.defends')} — ${damage} ${t('battle.dmg')}`);
+        // Basic Guard del GBC: 3 resultados observados por la comunidad:
+        // HIT normal / BLOCK ≈ ¼ daño / AVOID = 0 daño.
+        // Variables documentadas: Card Accuracy × Defender Speed.
+        // Probabilidades HYPOTHESIS (la rutina real es P0 ROM).
+        const spdDef = player.spd + pStages.spd * 8;
+        const avoidChance = Math.max(0.05, Math.min(0.35, 0.05 + (spdDef - 25) * 0.004 + (100 - card.acc) * 0.002));
+        const blockChance = 0.55;
+        const gRoll = Math.random();
+        if (gRoll < avoidChance) {
+          damage = 0; hitType = 'guard';
+          addLog(`${player.name} AVOID! (0 ${t('battle.dmg')})`);
+        } else if (gRoll < avoidChance + blockChance) {
+          damage = Math.floor(damage * 0.25); // BLOCK ≈ ¼ (COMMUNITY_TESTED)
+          hitType = 'guard';
+          addLog(`${player.name} BLOCK — ${damage} ${t('battle.dmg')}`);
+        } else {
+          addLog(`${player.name} ${t('battle.defends')} — ${damage} ${t('battle.dmg')}`);
+        }
       } else {
         addLog(`${enemy.name} → ${card.name} — ${damage} ${t('battle.dmg')}`);
       }

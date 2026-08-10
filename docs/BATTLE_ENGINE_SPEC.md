@@ -340,3 +340,28 @@ Scouter −8) → Guard es un stat independiente de la posición. El motor disti
 | ACC_UP / EVADE_UP | Reading Ki (+30% 2t) / Afterimage (+30% evasión 2t) | ✅ nuevo |
 | CC_BONUS | Caps. Fridge (+5 CC) | ✅ |
 | DEBUFF_SPD / DEBUFF_GUARD | Paralysis / Kiai·Scouter | ✅ corregido (antes restaban STR/KI) |
+
+---
+
+## 🛡️ Basic Guard: HIT/BLOCK/AVOID (implementado, 2026-08-10)
+
+Cuando el defensor usa Basic Guard (DEFEND) se resuelve en 3 resultados
+(observados por la comunidad, variables documentadas en el manual):
+
+```
+avoidChance = clamp(0.05 + (SPD_def − 25) × 0.004 + (100 − ACC_atk) × 0.002, 0.05, 0.35)
+blockChance = 0.55
+roll < avoid            → AVOID (0 daño)
+roll < avoid + 0.55     → BLOCK (daño × 0.25)   # COMMUNITY_TESTED (≈¼)
+roll ≥ avoid + 0.55     → HIT (daño completo)
+```
+
+- Variables: `Card Accuracy` × `Defender Speed` (CONFIRMED_MANUAL)
+- Probabilidades: HYPOTHESIS (la rutina real `resolve_guard` es P0 ROM)
+- BLOCK divisor ¼: COMMUNITY_TESTED
+- Aplicado al Basic Guard del jugador Y a la respuesta defensiva de la IA
+
+### IA: curación a HP bajo (HYPOTHESIS)
+- Si `enemy.hp < 25% maxHp` y su mazo (real del jefe) contiene cartas heal →
+  la usa (consume la acción). El deck determina qué puede hacer; el algoritmo
+  exacto de decisión sigue siendo P0 ROM.
