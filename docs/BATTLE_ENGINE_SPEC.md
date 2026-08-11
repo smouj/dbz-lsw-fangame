@@ -366,3 +366,49 @@ roll ≥ avoid + 0.55     → HIT (daño completo)
 - Si `enemy.hp < 25% maxHp` y su mazo (real del jefe) contiene cartas heal →
   la usa (consume la acción). El deck determina qué puede hacer; el algoritmo
   exacto de decisión sigue siendo P0 ROM.
+
+## Modelo de turnos (actualizado 2026-08-11 — spec de 20 puntos)
+
+El combate NO es `PLAYER_TURN → ENEMY_TURN`. Un TURN completo contiene **dos
+EXCHANGES** (el GBC los llama Attack/Defense Phase):
+
+```text
+TURN N
+├── TURN_START: recalcular SPD efectiva → fijar firstAttacker (para todo el turno)
+├── EXCHANGE 1: firstAttacker = ATTACKER (+3 CC al entrar) · rival = DEFENDER
+│   ├── ATTACK_INTENT + DEFENSE_INTENT (la defensa se elige ANTES, no reactiva)
+│   └── resolución → HP/CC/status → KO_CHECK
+├── EXCHANGE 2: roles invertidos (misma secuencia)
+└── TURN_END: expiraciones/counters → TURN N+1 (recalcular SPD)
+```
+
+- **SPD** decide quién ataca primero en cada turno; el orden queda fijado para
+  todo el turno (cambios de SPD afectan al turno siguiente — partida documentada
+  de Chiaotzu con dos Attack Phases consecutivas). `speedTiePolicy: UNKNOWN (ROM)`.
+- **+3 CC** se concede al ENTRAR en Attack Phase de cada exchange, no al turno global.
+- **Robo de Joint** (+1) también al entrar en Attack Phase.
+- **ATTACK**: BASIC (Stage Attack / Gather Power) · JOINT (COMMAND/DAMAGE/BEAM/
+  SUPPORT) · LIMIT (solo si powered) · CHARACTER (cambio de aliado).
+- **DEFENSE**: BASIC (Guard / Move) · JOINT (GUARD/SUPPORT) · LIMIT defensivas
+  si powered. **Move consume la acción defensiva pero NO cancela la ofensiva**
+  enemiga: se resuelve tras reposicionar.
+- **Gather Power** consume la Attack Phase completa (3 Stage → 4 Stage mientras
+  powered; +4 STR/KI COMMUNITY_TESTED; duración exacta ROM_VERIFY).
+- **Guard** no es daño×0.5 fijo: HIT/BLOCK/EVADE con probabilidades (fórmula
+  exacta UNKNOWN — reconstruir por ROM).
+- **CC pertenece al BattleSide** (equipo); HP/posición/Gather/Limits al Fighter.
+- **BattleState ≠ ViewMode**: TACTICAL/ACTION/SPECIAL_ACTION son presentación;
+  una defensa puede estar en TACTICAL, un Beam en ACTION.
+
+### Implementado (commit `7a936fa`)
+- `beginTurn()` (SPD → firstAttacker) · `startExchange(attacker)` (+3 CC +
+  robo al atacar) · `advanceExchange()` (Exchange 1→2→TURN_END→beginTurn)
+- Label de fase: `EXCHANGE X/2`
+- Verificado: TURN 1 → EXCHANGE 1 (Goku Stage Attack 10 dmg) → EXCHANGE 2
+  (Vegeta +3 CC ataca, Goku defiende)
+
+### UNKNOWN (emulación forense pendiente)
+speedTiePolicy · momento exacto draw/discard · orden gasto CC vs animación ·
+duración/decremento Gather Power · probabilidades HIT/BLOCK/EVADE · umbral
+`+2 CC` por pérdida sustancial · fórmula daño/posición · segundo Exchange tras
+KO · duración/tick de estados.
