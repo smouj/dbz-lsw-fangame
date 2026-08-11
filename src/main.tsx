@@ -5,6 +5,7 @@ import './styles.css';
 import { FORMS, CHARACTERS, getCharacter, getForm, idleSpriteUrl, statAtLevel, LIMIT_DEFAULTS, loadLimits, saveLimits } from './data/roster';
 import { STORY_ENEMY_DECKS, STORY_AI_BOOSTS, TEAM_BATTLES } from './data/enemy_decks';
 import { facingFlip, needsFlip } from './data/facing';
+import { BATTLE_PORTRAITS } from './data/battlePortraits';
 import { UNLOCK_KEY, STARTER_DAMAGE_DECK, STARTER_BEAM_DECK, STARTER_CHARACTERS, cardsForLevel, pickRewards, VS_UNLOCKS, isFormUnlocked, FORM_UNLOCK_LEVELS } from './data/unlocks';
 import { CARDS, CARD_COLORS, CARD_TYPE_NAMES, CardDef, CardType, DECK_SIZE, MAX_COPIES, getCard, CardEffect } from './data/cards';
 import { cardIconUrl, MINI_PORTRAITS, MENU_PORTRAITS, TYPE_ICONS } from './data/icons';
@@ -47,7 +48,9 @@ interface Fighter {
 // ─── Retratos (Sprite Database) ────────────────────────────
 const PORTRAITS: Record<string, string> = MENU_PORTRAITS;
 
-function portraitFor(charId: string): string | undefined {
+function portraitFor(charId: string, formId?: string): string | undefined {
+  // Prioridad: retrato de BATALLA pixel-perfect por formId (32×24 del GBC)
+  if (formId && BATTLE_PORTRAITS[formId]) return BATTLE_PORTRAITS[formId];
   return PORTRAITS[charId];
 }
 
@@ -1298,7 +1301,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
           <div className="intro-burst-right" />
           <div className="intro-fighter intro-left">
             <div className="intro-portrait">
-              <img src={portraitFor(player.id) || ''} alt={player.name}
+              <img src={portraitFor(player.id, playerFormId) || ''} alt={player.name}
                 onError={e => (e.currentTarget.style.display = 'none')} />
             </div>
             <div className="intro-sprite-wrap">
@@ -1312,7 +1315,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
           <div className="intro-vs">{t('battle.vs')}</div>
           <div className="intro-fighter intro-right">
             <div className="intro-portrait">
-              <img src={portraitFor(enemy.id) || ''} alt={enemy.name}
+              <img src={portraitFor(enemy.id, enemyFormId) || ''} alt={enemy.name}
                 onError={e => (e.currentTarget.style.display = 'none')} />
             </div>
             <div className="intro-sprite-wrap">
@@ -1367,7 +1370,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
         <div className="fighter-hud left">
           <div className="hud-name">
             <span className="hud-portrait">
-              <img src={portraitFor(player.id) || ''} alt="" onError={e => (e.currentTarget.style.display = 'none')} />
+              <img src={portraitFor(player.id, playerFormId) || ''} alt="" onError={e => (e.currentTarget.style.display = 'none')} />
               {!portraitFor(player.id) && <Sword size={14} />}
             </span>
             <strong>{player.name}</strong>
@@ -1394,7 +1397,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
         <div className="fighter-hud right">
           <div className="hud-name">
             <span className="hud-portrait">
-              <img src={portraitFor(enemy.id) || ''} alt="" onError={e => (e.currentTarget.style.display = 'none')} />
+              <img src={portraitFor(enemy.id, enemyFormId) || ''} alt="" onError={e => (e.currentTarget.style.display = 'none')} />
               {!portraitFor(enemy.id) && <Shield size={14} />}
             </span>
             <strong>{enemy.name}</strong>
