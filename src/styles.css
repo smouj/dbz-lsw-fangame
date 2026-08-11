@@ -4185,3 +4185,528 @@ button:focus-visible, .chapter-node:focus-visible {
   font-family: var(--fui); font-size: 12px; color: var(--text);
   line-height: 1.4;
 }
+
+/* ═══════════════════════════════════════════════════════════
+   STABILITY PASS — layout fijo, estados sin saltos
+   Menús/listas/páginas deben ganar energía por luz, borde y capas,
+   no cambiando altura o moviendo cajas que participan del layout.
+   ═══════════════════════════════════════════════════════════ */
+
+.menu-content {
+  gap: 10px;
+  width: clamp(500px, 40vw, 680px);
+  padding-top: 32px;
+  padding-bottom: 18px;
+}
+
+.menu-content::before {
+  top: 108px;
+  bottom: 44px;
+}
+
+.menu-title {
+  font-size: 52px;
+  margin-bottom: -6px;
+}
+
+.menu-subtitle {
+  margin-bottom: 6px;
+  padding-bottom: 6px;
+}
+
+.menu-continue-card {
+  height: 124px;
+  min-height: 124px;
+  flex-shrink: 0;
+  transition: background 120ms ease, box-shadow 120ms ease, filter 120ms ease;
+}
+
+.menu-continue-card:hover {
+  transform: none;
+  filter: brightness(1.04);
+}
+
+.menu-nav {
+  gap: 5px;
+  min-width: 0;
+}
+
+.menu-item,
+.menu-item-settings {
+  height: 54px;
+  min-height: 54px;
+  grid-template-columns: 34px 36px minmax(0, 1fr) 22px;
+  padding: 7px 11px 7px 0;
+  transition: background 120ms ease, color 120ms ease, box-shadow 120ms ease, opacity 120ms ease, filter 120ms ease;
+  transform: none;
+  will-change: background, box-shadow, opacity;
+}
+
+.menu-item-settings {
+  height: 44px;
+  min-height: 44px;
+  margin-top: 6px;
+}
+
+.menu-item:hover,
+.menu-item.selected,
+.menu-item-settings:hover,
+.menu-item-settings.selected {
+  height: 54px;
+  min-height: 54px;
+  transform: none;
+}
+
+.menu-item-settings:hover,
+.menu-item-settings.selected {
+  height: 44px;
+  min-height: 44px;
+}
+
+.menu-item:active {
+  transform: none;
+  filter: brightness(.96);
+}
+
+.menu-item::before {
+  width: 4px;
+  opacity: 0;
+  transition: opacity 120ms ease, box-shadow 120ms ease;
+}
+
+.menu-item:hover::before,
+.menu-item.selected::before {
+  width: 4px;
+  opacity: 1;
+}
+
+.menu-item:hover::after,
+.menu-item.selected::after {
+  left: 84px;
+  bottom: 4px;
+  animation: none;
+}
+
+.mi-copy {
+  height: 36px;
+  justify-content: center;
+}
+
+.mi-label {
+  line-height: .95;
+}
+
+.mi-desc {
+  max-height: none;
+  height: 15px;
+  opacity: .46;
+  transition: opacity 120ms ease, color 120ms ease;
+}
+
+.menu-item:hover .mi-desc,
+.menu-item.selected .mi-desc {
+  max-height: none;
+  opacity: .9;
+}
+
+.mi-arrow {
+  transform: none;
+  transition: opacity 120ms ease, color 120ms ease;
+}
+
+.menu-item:hover .mi-arrow,
+.menu-item.selected .mi-arrow {
+  transform: none;
+}
+
+/* Páginas internas: más juego, menos panel administrativo plano. */
+.page-screen {
+  background:
+    radial-gradient(ellipse 80% 60% at 76% 4%, rgba(247,147,30,.08), transparent 56%),
+    radial-gradient(ellipse 90% 80% at 10% 100%, rgba(56,144,216,.08), transparent 58%),
+    linear-gradient(180deg, #101725 0%, #090d16 34%, #070a10 100%);
+}
+
+.page-header {
+  min-height: 54px;
+  background:
+    linear-gradient(90deg, rgba(247,147,30,.1), transparent 24%, transparent 76%, rgba(56,144,216,.08)),
+    linear-gradient(180deg, #1b2433, #101723);
+  border-bottom: 2px solid rgba(246,199,68,.28);
+  box-shadow: 0 8px 20px rgba(0,0,0,.28), inset 0 -1px 0 rgba(0,0,0,.35);
+}
+
+.btn-back,
+.btn-secondary,
+.btn-primary,
+.form-chip,
+.saga-tab,
+.ui-list-item,
+.ui-char-card,
+.chapter-node,
+.setting-row {
+  transform: none;
+}
+
+.btn-back {
+  transition: background 90ms ease, color 90ms ease, border-color 90ms ease, box-shadow 90ms ease, filter 90ms ease;
+}
+
+.btn-back:hover {
+  transform: none;
+  background: var(--orange);
+  color: #000;
+  box-shadow: 0 0 16px rgba(247,147,30,.32), var(--shadow-1);
+}
+
+.btn-primary {
+  transition: box-shadow 90ms ease, filter 90ms ease, background 90ms ease;
+}
+
+.btn-primary:hover:not(:disabled),
+.btn-primary:active:not(:disabled) {
+  transform: none;
+}
+
+.btn-secondary:hover,
+.btn-secondary:active,
+.form-chip:hover,
+.saga-tab.active,
+.ui-list-item:hover,
+.ui-char-card:hover,
+.char-cell:hover:not(.locked) {
+  transform: none;
+}
+
+.saga-tab {
+  min-height: 34px;
+  transition: background 90ms ease, color 90ms ease, border-color 90ms ease, box-shadow 90ms ease, filter 90ms ease;
+}
+
+.story-layout {
+  grid-template-columns: minmax(0, 1fr) minmax(320px, 390px);
+  gap: 12px;
+  padding: 12px 16px 14px;
+}
+
+.story-map {
+  max-width: none;
+  width: auto;
+  margin: 0;
+  padding: 0 6px 0 0;
+}
+
+.chapter-node {
+  min-height: 62px;
+  background:
+    linear-gradient(90deg, rgba(18,25,39,.96), rgba(14,20,31,.96)),
+    var(--panel-lo);
+  transition: background 90ms ease, border-color 90ms ease, box-shadow 90ms ease, opacity 90ms ease, filter 90ms ease;
+}
+
+.chapter-node:hover {
+  transform: none;
+  background:
+    linear-gradient(90deg, rgba(247,147,30,.13), rgba(18,25,39,.96) 60%),
+    var(--panel);
+  box-shadow: inset 0 0 0 1px rgba(246,199,68,.14), var(--shadow-1);
+}
+
+.characters-layout,
+.versus-layout {
+  grid-template-columns: minmax(0, 1fr) minmax(340px, 380px);
+  gap: 14px;
+  padding: 14px 16px;
+}
+
+.char-grid {
+  grid-template-columns: repeat(auto-fill, minmax(118px, 1fr));
+  gap: 8px;
+  padding-right: 6px;
+}
+
+.char-cell,
+.ui-char-card {
+  min-height: 112px;
+  transition: border-color 90ms ease, background 90ms ease, box-shadow 90ms ease, filter 90ms ease;
+}
+
+.char-cell:hover:not(.locked),
+.ui-char-card:hover {
+  transform: none;
+  box-shadow: inset 0 0 0 1px rgba(240,136,48,.25), 0 0 18px rgba(240,136,48,.16), var(--shadow-1);
+}
+
+.char-cell.active,
+.ui-char-card.active {
+  box-shadow: inset 0 0 0 1px var(--border-accent), 0 0 20px rgba(240,136,48,.22), var(--shadow-2);
+}
+
+.char-detail,
+.deck-current,
+.chapter-detail-panel,
+.settings-list .setting-row {
+  border-color: rgba(246,199,68,.24);
+}
+
+.deck-layout {
+  grid-template-columns: minmax(0, 1fr) minmax(310px, 340px);
+  gap: 14px;
+  padding: 14px 16px;
+}
+
+.deck-collection {
+  background: rgba(9,13,22,.28);
+  border: 1px solid rgba(246,199,68,.12);
+  box-shadow: inset 1px 1px 0 rgba(255,255,255,.03);
+  padding: 10px;
+}
+
+.filter-chip,
+.toggle,
+.diff-btn,
+.deck-row,
+.deck-row-remove {
+  transition: background 90ms ease, color 90ms ease, border-color 90ms ease, box-shadow 90ms ease, filter 90ms ease;
+}
+
+.deck-row-remove:hover {
+  transform: none;
+}
+
+.settings-list {
+  max-width: 760px;
+  padding: 18px 18px 24px;
+  gap: 12px;
+}
+
+.setting-row {
+  min-height: 56px;
+  background:
+    linear-gradient(90deg, rgba(18,25,39,.96), rgba(12,17,27,.96));
+  border: 2px solid rgba(246,199,68,.16);
+  border-left: 4px solid rgba(246,199,68,.22);
+  padding: 12px 14px;
+}
+
+.setting-row:hover {
+  background:
+    linear-gradient(90deg, rgba(247,147,30,.12), rgba(18,25,39,.96) 52%);
+  border-color: rgba(246,199,68,.34);
+}
+
+.setting-label {
+  font-size: 10px;
+  color: var(--text-hi);
+}
+
+.setting-value,
+.setting-controls {
+  font-size: 12px;
+}
+
+@media (max-width: 900px) {
+  .story-layout,
+  .characters-layout,
+  .versus-layout,
+  .deck-layout {
+    padding: 10px;
+    gap: 10px;
+  }
+
+  .characters-layout,
+  .versus-layout {
+    grid-template-rows: minmax(0, 1fr) minmax(240px, auto);
+  }
+}
+
+@media (max-width: 768px) {
+  .menu-content {
+    width: 500px;
+    max-width: 94vw;
+    padding: 24px 5vw 16px 8vw;
+    gap: 8px;
+  }
+
+  .menu-content::before {
+    left: 5vw;
+    right: 4vw;
+    top: 84px;
+    bottom: 34px;
+  }
+
+  .menu-title { font-size: 34px; }
+  .menu-subtitle { margin-bottom: 4px; }
+  .menu-continue-card { height: 108px; min-height: 108px; }
+  .menu-item { height: 50px; min-height: 50px; }
+  .menu-item-settings { height: 42px; min-height: 42px; }
+  .menu-item:hover,
+  .menu-item.selected { height: 50px; min-height: 50px; }
+  .menu-item-settings:hover,
+  .menu-item-settings.selected { height: 42px; min-height: 42px; }
+  .mi-copy { height: 34px; }
+}
+
+@media (max-width: 480px) {
+  .menu-content {
+    gap: 7px;
+  }
+
+  .menu-continue-card { height: 92px; min-height: 92px; }
+  .menu-item { height: 42px; min-height: 42px; }
+  .menu-item-settings { height: 36px; min-height: 36px; }
+  .menu-item:hover,
+  .menu-item.selected { height: 42px; min-height: 42px; }
+  .menu-item-settings:hover,
+  .menu-item-settings.selected { height: 36px; min-height: 36px; }
+  .mi-copy { height: 22px; }
+}
+
+@media (max-height: 560px) and (min-width: 700px) {
+  .menu-content {
+    padding: 12px 0 10px 7vw;
+    gap: 5px;
+    width: 440px;
+    max-width: 58vw;
+  }
+
+  .menu-content::before {
+    left: 5vw;
+    right: -12px;
+    top: 56px;
+    bottom: 22px;
+  }
+
+  .menu-continue-card { height: 76px; min-height: 76px; }
+  .menu-item { height: 34px; min-height: 34px; }
+  .menu-item-settings { height: 30px; min-height: 30px; }
+  .menu-item:hover,
+  .menu-item.selected { height: 34px; min-height: 34px; }
+  .menu-item-settings:hover,
+  .menu-item-settings.selected { height: 30px; min-height: 30px; }
+  .mi-copy { height: 19px; }
+  .mi-desc { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .menu-bg,
+  .mc-play,
+  .versus-vs,
+  .char-idle-sprite,
+  .story-text,
+  .screen-enter,
+  .page-screen {
+    animation: none !important;
+  }
+}
+
+/* Carriles internos: el espacio vacío queda tematizado como superficie de juego. */
+.story-map,
+.char-grid,
+.deck-collection,
+.card-collection-grid.full,
+.settings-list {
+  position: relative;
+  background:
+    linear-gradient(90deg, rgba(247,147,30,.045), transparent 28%),
+    radial-gradient(ellipse 70% 52% at 78% 12%, rgba(56,144,216,.055), transparent 62%),
+    rgba(7,10,16,.38);
+  border: 1px solid rgba(246,199,68,.12);
+  box-shadow:
+    inset 1px 0 0 rgba(246,199,68,.06),
+    inset 0 1px 0 rgba(255,255,255,.025),
+    0 10px 26px rgba(0,0,0,.16);
+}
+
+.story-map::before,
+.char-grid::before,
+.card-collection-grid.full::before,
+.settings-list::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, rgba(246,199,68,.1) 0 1px, transparent 1px 100%),
+    repeating-linear-gradient(0deg, transparent 0 22px, rgba(255,255,255,.018) 22px 23px);
+  background-size: 42px 100%, auto;
+  opacity: .42;
+}
+
+.story-map::after {
+  content: '';
+  position: absolute;
+  left: 33px;
+  top: 32px;
+  bottom: 32px;
+  width: 2px;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(247,147,30,.72), rgba(246,199,68,.16), transparent);
+  box-shadow: 0 0 14px rgba(247,147,30,.18);
+}
+
+.chapter-node,
+.char-cell,
+.deck-row,
+.setting-row,
+.filter-chip,
+.toggle,
+.diff-btn {
+  position: relative;
+  z-index: 1;
+}
+
+.chapter-node {
+  margin-left: 0;
+}
+
+.chapter-icon,
+.chapter-boss,
+.mi-icon,
+.deck-row-icon {
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.05), 0 0 0 1px rgba(0,0,0,.34);
+}
+
+.deck-search {
+  background:
+    linear-gradient(90deg, rgba(247,147,30,.06), transparent 60%),
+    rgba(5,8,14,.84);
+  border-color: rgba(246,199,68,.2);
+}
+
+.card-collection-grid.full {
+  margin: 12px 16px 16px;
+  padding: 12px;
+}
+
+.settings-list {
+  margin-top: 16px;
+  max-height: calc(100vh - 86px);
+}
+
+.settings-list .setting-row {
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.03), 0 5px 16px rgba(0,0,0,.16);
+}
+
+.toggle {
+  height: 28px;
+  min-width: 72px;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.04), var(--shadow-1);
+}
+
+.toggle.on {
+  background: linear-gradient(180deg, #43d05a, #238c35);
+  color: #041408;
+  border-color: #63ef78;
+}
+
+@media (max-width: 900px) {
+  .story-map,
+  .char-grid,
+  .deck-collection,
+  .card-collection-grid.full,
+  .settings-list {
+    border-left: 0;
+    border-right: 0;
+  }
+}
