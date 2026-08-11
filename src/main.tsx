@@ -19,7 +19,7 @@ import { GBC_NATIVE_FPS, type QteState } from './data/actionFidelity';
 import { initAudio, Sfx, setSfxEnabled, setVolume } from './audio/sfx';
 import { LanguageProvider, useLang } from './i18n/LanguageContext';
 import { LANGUAGES, LangCode, TKey } from './i18n';
-import { ArrowLeft, X, Lock, ChevronRight, Languages, Sword, Shield, type LucideIcon } from 'lucide-react';
+import { ArrowLeft, X, Lock, ChevronRight, Languages, Sword, Shield, BookOpen, Swords, Library, Users, Settings, Sparkles, type LucideIcon } from 'lucide-react';
 
 // ═══════════════════════════════════════════════════════════
 // DBZ LSW Fangame — Estilo Magazine GBC Auténtico
@@ -2042,8 +2042,9 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
 // ═══════════════════════════════════════════════════════════
 
 function MainMenu({ onNavigate }: { onNavigate: (s: Screen) => void }) {
-  const { t } = useLang();
+  const { t, lang } = useLang();
   const [reward, setReward] = useState<number[] | null>(() => loadUnlocks().pendingReward);
+  const [selectedMenuIndex, setSelectedMenuIndex] = useState(0);
 
   const claimReward = (cardId: number) => {
     const u = loadUnlocks();
@@ -2067,6 +2068,48 @@ function MainMenu({ onNavigate }: { onNavigate: (s: Screen) => void }) {
     : currentChapter <= 10 ? 'NAMEK'
     : currentChapter <= 22 ? 'ANDROIDES'
     : 'MAJIN BUU';
+  const menuCopy = lang === 'es'
+    ? {
+      story: 'Saga, episodios y recompensas',
+      battle: 'Combate libre y desafios',
+      deck: 'Cartas, energia y estrategia',
+      characters: 'Formas, progreso y afinidad',
+      cards: 'Coleccion y rarezas',
+      settings: 'Audio, idioma y pantalla',
+      footer: 'v0.3 fanmade',
+    }
+    : {
+      story: 'Saga, episodes and rewards',
+      battle: 'Free battle and challenges',
+      deck: 'Cards, energy and strategy',
+      characters: 'Forms, progress and affinity',
+      cards: 'Collection and rarities',
+      settings: 'Audio, language and display',
+      footer: 'v0.3 fanmade',
+    };
+  const menuItems: Array<{ n: string; label: string; desc: string; screen: Screen; Icon: LucideIcon; tone?: string; secondary?: boolean }> = [
+    { n: '01', label: t('menu.story'), desc: menuCopy.story, screen: 'story', Icon: BookOpen },
+    { n: '02', label: t('menu.battle'), desc: menuCopy.battle, screen: 'versus', Icon: Swords, tone: 'hot' },
+    { n: '03', label: t('menu.deck'), desc: menuCopy.deck, screen: 'deck', Icon: Library },
+    { n: '04', label: t('menu.characters'), desc: menuCopy.characters, screen: 'characters', Icon: Users },
+    { n: '05', label: t('menu.cards'), desc: menuCopy.cards, screen: 'cards', Icon: Sparkles },
+    { n: '06', label: t('menu.settings'), desc: menuCopy.settings, screen: 'settings', Icon: Settings, secondary: true },
+  ];
+  const onMenuKeyDown = (ev: React.KeyboardEvent<HTMLDivElement>) => {
+    if (ev.key === 'ArrowDown' || ev.key === 'ArrowUp') {
+      ev.preventDefault();
+      Sfx.select();
+      setSelectedMenuIndex(i => {
+        const dir = ev.key === 'ArrowDown' ? 1 : -1;
+        return (i + dir + menuItems.length) % menuItems.length;
+      });
+    }
+    if (ev.key === 'Enter' || ev.key === ' ') {
+      ev.preventDefault();
+      Sfx.confirm();
+      onNavigate(menuItems[selectedMenuIndex].screen);
+    }
+  };
 
   return (
     <div className="menu-screen">
@@ -2092,39 +2135,53 @@ function MainMenu({ onNavigate }: { onNavigate: (s: Screen) => void }) {
         </div>
       )}
 
-      <div className="menu-content">
+      <div className="menu-content" tabIndex={0} onKeyDown={onMenuKeyDown}>
         <h1 className="menu-title">{t('menu.title')}</h1>
         <h2 className="menu-subtitle">{t('menu.subtitle')}</h2>
 
-        {/* Panel central unificado (spec: Continuar + opciones en un bloque) */}
-        <div className="menu-frame ui-panel">
-          {/* Tarjeta CONTINUAR con datos reales de partida */}
-          <button className="menu-continue-card" onClick={() => { Sfx.confirm(); onNavigate('battle'); }}>
-            <span className="mc-play">▶</span>
-            <span className="mc-body">
-              <span className="mc-title">{t('menu.continue')}</span>
-              <span className="mc-saga">SAGA {sagaName} · CAPÍTULO {currentChapter}</span>
-              <span className="mc-chapter">{ch ? t(ch.nameKey).toUpperCase() : '—'}</span>
+        {/* Bloque hero integrado en la banda izquierda, sin ventana exterior. */}
+        <button className="menu-continue-card" onClick={() => { Sfx.confirm(); onNavigate('battle'); }}>
+          <span className="mc-play">▶</span>
+          <span className="mc-body">
+            <span className="mc-kicker">SAGA {sagaName} · CAPÍTULO {currentChapter}</span>
+            <span className="mc-title">{t('menu.continue')}</span>
+            <span className="mc-chapter">{ch ? t(ch.nameKey).toUpperCase() : '—'}</span>
+            <span className="mc-progress-line">
               <span className="mc-progress-track"><span className="mc-progress-fill" style={{ width: `${pct}%` }} /></span>
-              <span className="mc-meta">{heroChar} · Nv. {prog.level} · {pct}%</span>
+              <span className="mc-percent">{pct}%</span>
             </span>
-            {heroUrl && <img className="mc-hero" src={heroUrl} alt="" />}
-          </button>
+            <span className="mc-meta">{heroChar} · Nv. {prog.level}</span>
+          </span>
+          {heroUrl && (
+            <span className="mc-hero-wrap">
+              <img className="mc-hero" src={heroUrl} alt="" />
+              <span className="mc-hero-name">{heroChar}</span>
+            </span>
+          )}
+        </button>
 
-          <div className="menu-divider" />
+        <nav className="menu-nav" aria-label="Main menu">
+          {menuItems.map(({ n, label, desc, screen, Icon, tone, secondary }, index) => (
+            <button
+              key={screen}
+              className={`menu-item ${tone ? `tone-${tone}` : ''} ${secondary ? 'menu-item-settings' : ''} ${index === selectedMenuIndex ? 'selected' : ''}`}
+              onMouseEnter={() => setSelectedMenuIndex(index)}
+              onFocus={() => setSelectedMenuIndex(index)}
+              onClick={() => { Sfx.select(); onNavigate(screen); }}
+              aria-current={index === selectedMenuIndex ? 'true' : undefined}
+            >
+              <span className="mi-num">{n}</span>
+              <span className="mi-icon"><Icon size={18} strokeWidth={2.4} /></span>
+              <span className="mi-copy">
+                <span className="mi-label">{label}</span>
+                <span className="mi-desc">{desc}</span>
+              </span>
+              <ChevronRight className="mi-arrow" size={18} strokeWidth={2.8} />
+            </button>
+          ))}
+        </nav>
 
-          {/* Menú principal: opciones con peso y estados claros */}
-          <nav className="menu-nav">
-            <button className="menu-item l2" onClick={() => { Sfx.select(); onNavigate('story'); }}>{t('menu.story')}</button>
-            <button className="menu-item l2" onClick={() => { Sfx.select(); onNavigate('versus'); }}>{t('menu.battle')}</button>
-            <button className="menu-item l3" onClick={() => { Sfx.select(); onNavigate('deck'); }}>{t('menu.deck')}</button>
-            <button className="menu-item l3" onClick={() => { Sfx.select(); onNavigate('characters'); }}>{t('menu.characters')}</button>
-            <button className="menu-item l3" onClick={() => { Sfx.select(); onNavigate('cards'); }}>{t('menu.cards')}</button>
-            <button className="menu-item l4" onClick={() => { Sfx.select(); onNavigate('settings'); }}>{t('menu.settings')}</button>
-          </nav>
-        </div>
-
-        <div className="menu-footer">EDICIÓN LEGENDARIA · UNA AVENTURA DE DRAGON BALL</div>
+        <div className="menu-footer">{menuCopy.footer}</div>
       </div>
     </div>
   );
