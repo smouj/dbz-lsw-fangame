@@ -723,6 +723,30 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
     }, gbcMs(attackerFrames + travelFrames + targetFrames)));
   };
 
+  const cardFxActorPose = (card: CardDef, step: CardFxStep): BattleSpritePose => {
+    if (step === 'attacker') {
+      if (card.type === 'beam') return 'beam_charge';
+      if (card.type === 'damage' || card.type === 'command' || OFFENSIVE_SUPPORT_EFFECTS.has(card.effect)) return 'power_up';
+    }
+    if (step === 'travel') {
+      if (card.type === 'beam') return 'beam_fire';
+      if (card.type === 'damage' || card.type === 'command' || OFFENSIVE_SUPPORT_EFFECTS.has(card.effect)) return 'attack_fwd';
+    }
+    return cardBattlePose(card, 'fx');
+  };
+
+  const renderCardFxActor = (step: CardFxStep) => (
+    cardFx ? <div className="fx-fighter fx-actor">
+      {cardFx.side === 'player'
+        ? (spriteManifestUrl(playerFormId)
+            ? <FighterSprite formId={playerFormId} pose={cardFxActorPose(cardFx.card, step)} side="left" scale={14} />
+            : <CharacterSprite formId={playerFormId} className="fx-sprite" height={200} side="left" />)
+        : (spriteManifestUrl(enemyFormId)
+            ? <FighterSprite formId={enemyFormId} pose={cardFxActorPose(cardFx.card, step)} side="right" scale={14} />
+            : <CharacterSprite formId={enemyFormId} className="fx-sprite" height={200} side="right" />)}
+    </div> : null
+  );
+
   // ═══ EXCHANGE: la unidad central del combate (spec §3-4) ═══
   // Cada exchange tiene un ATTACKER y un DEFENDER. El atacante recibe +3 CC
   // AL ENTRAR en su Attack Phase (no al turno global); el defensor elige su
@@ -1880,25 +1904,19 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
           {cardFx.step === 'attacker' && (
             <>
               <div className="fx-scene-label">ACTION</div>
-              <div className="fx-fighter fx-actor">
-                {cardFx.side === 'player'
-                  ? (spriteManifestUrl(playerFormId)
-                      ? <FighterSprite formId={playerFormId} pose={cardBattlePose(cardFx.card, 'fx')} side="left" scale={14} />
-                      : <CharacterSprite formId={playerFormId} className="fx-sprite" height={200} side="left" />)
-                  : (spriteManifestUrl(enemyFormId)
-                      ? <FighterSprite formId={enemyFormId} pose={cardBattlePose(cardFx.card, 'fx')} side="right" scale={14} />
-                      : <CharacterSprite formId={enemyFormId} className="fx-sprite" height={200} side="right" />)}
-              </div>
+              {renderCardFxActor('attacker')}
               <div className="fx-card">
                 {cardIconUrl(cardFx.card.id) && <img src={cardIconUrl(cardFx.card.id)} alt="" className="fx-card-icon" />}
                 <span className="fx-card-name">{cardFx.card.name}</span>
               </div>
+              {(cardFx.card.type === 'damage' || cardFx.card.type === 'command') && <div className="fx-power-burst" />}
               {cardFx.card.type === 'support' && <div className="fx-aura" />}
             </>
           )}
           {cardFx.step === 'travel' && (
             <>
               <div className="fx-scene-label">SKILL</div>
+              {renderCardFxActor('travel')}
               {cardFx.card.type === 'beam' ? <div className="fx-beam-travel" /> : <div className="fx-rush-trail" />}
               {cardFx.card.type === 'damage' && <div className="fx-swing" />}
             </>

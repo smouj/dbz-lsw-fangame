@@ -36,3 +36,4 @@ Motion feel:
 - Card names/effects should fade in as contextual battle text, not pop from extreme scale.
 - QTE feedback may move, flash or shake UI prompts, but must not scale the character sprite as a fake animation.
 - Stage Attack resolution also keeps a short return beat before dismantling the QTE layer, so the flow reads as action view -> field return instead of instant UI replacement.
+- Card cinematics start with the large action sprite centered, then place the actor on its side before the release/rush frame. Beam cards keep the actor visible while the projectile travels; physical cards keep the actor visible during the forward-and-return rush.
