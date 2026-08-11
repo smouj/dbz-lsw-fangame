@@ -341,16 +341,25 @@ function HandComponent({ cards, selectedIndex, onSelect, isPlayable }: {
   cards: CardDef[]; selectedIndex: number | null; onSelect: (i: number) => void; isPlayable?: (card: CardDef) => boolean;
 }) {
   const { t } = useLang();
+  const usable = cards.filter(c => isPlayable ? isPlayable(c) : true);
   return (
     <div className="hand-area">
       <div className="hand-label">— {t('battle.hand')} —</div>
       <div className="hand-cards">
+        {cards.length === 0 && (
+          <div className="hand-empty-slot" title="NO CARD">
+            <img src="/assets/ui/hud_buttons/no_card_red.png" alt="NO CARD" className="hand-no-card" />
+          </div>
+        )}
         {cards.map((card, i) => (
           <CardVisual key={card.id + '-' + i} card={card}
             selected={i === selectedIndex} disabled={isPlayable ? !isPlayable(card) : false}
             onClick={() => onSelect(i)} />
         ))}
       </div>
+      {cards.length > 0 && usable.length === 0 && (
+        <div className="hand-hint">{t('battle.insufficientCc')}</div>
+      )}
     </div>
   );
 }
@@ -360,19 +369,6 @@ function DamageNumber({ value, type, x, y }: { value: number; type: 'damage' | '
   const { t } = useLang();
   const text = type === 'miss' ? t('battle.miss') : type === 'guard' ? t('battle.guard') : `${value > 0 ? '-' : '+'}${Math.abs(value)}`;
   return <div className={`damage-number ${type}`} style={{ left: x, top: y }}>{text}</div>;
-}
-
-// ─── Soporte de cartas: cantidad de curación por id ───────
-function healAmountFor(card: CardDef, maxHp: number): number {
-  switch (card.id) {
-    case 16: return Math.floor(maxHp * 0.5);  // Resurrection
-    case 88: return Math.floor(maxHp * 0.6);  // Dende
-    case 99: return Math.floor(maxHp * 0.35); // Life Preserver
-    case 100: return Math.floor(maxHp * 0.5); // Medical Machine
-    case 114: return Math.floor(maxHp * 0.7); // Heart Medicine
-    case 117: return maxHp;                   // Full Spirit
-    default: return Math.floor(maxHp * 0.3);
-  }
 }
 
 // ═══════════════════════════════════════════════════════════
@@ -1347,23 +1343,48 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
         const vulnerable = (isBeamVulnerable(ePos) && card.type === 'beam') || (isDamageVulnerable(ePos) && card.type === 'damage');
         const posMult = (ePd.depth === 'FRONT' && vulnerable) ? 0.8 : 0.5;
         damage = Math.floor((card.atk + power) * posMult);
+        // Variantes ofensivas reales del GBC (CARD_SYSTEM.md)
+        const isPierce = card.effect === 'damage_pierce';   // Tail: ignora Avoiding/Shockwave
+        const isTeamAtk = card.effect === 'damage_special_team' || card.effect === 'beam_team'; // F.Kamehameha/V-ball/P.Comet Z
+        const isBodyChange = card.effect === 'beam_varhp';  // Body Change: daño ≈ ½ HP restante del rival
+        if (isBodyChange) {
+          // Body Change (62): daño proporcional a la vida restante del enemigo (~½ HP) — CONFIRMED_MANUAL
+          damage = Math.floor(enemy.hp * 0.5);
+        }
+        // Team attacks: solo con compañero (2v2). Sin compañero, daño base (HYPOTHESIS)
+        if (isTeamAtk && !player2) {
+          addLog(`${card.name}: técnica de equipo — daño reducido sin compañero`);
+          damage = Math.floor(damage * 0.6);
+        }
         if (eResp === 'defend') {
           // Basic Guard del enemigo: mismo sistema HIT/BLOCK/AVOID
-          const spdDef = enemy.spd + eStages.spd * 8;
-          const avoidChance = Math.max(0.05, Math.min(0.35, 0.05 + (spdDef - 25) * 0.004 + (100 - card.acc) * 0.002));
-          const gRoll = Math.random();
-          if (gRoll < avoidChance) {
-            damage = 0; hitType = 'guard';
-            addLog(`${enemy.name} AVOID! (0 ${t('battle.dmg')})`);
-          } else if (gRoll < avoidChance + 0.55) {
-            damage = Math.floor(damage * 0.25);
+          // Tail (pierce) IGNORA Avoiding/Shockwave (CARD_SYSTEM.md): sin esquiva, bloqueo parcial sí
+          if (isPierce) {
+            damage = Math.floor(damage * 0.5);
             hitType = 'guard';
-            addLog(`${enemy.name} BLOCK — ${damage} ${t('battle.dmg')}`);
+            addLog(`${enemy.name} BLOCK — ${damage} ${t('battle.dmg')} (Tail atraviesa)`);
           } else {
-            addLog(`${enemy.name} ${t('battle.defends')} — ${damage} ${t('battle.dmg')}`);
+            const spdDef = enemy.spd + eStages.spd * 8;
+            const avoidChance = Math.max(0.05, Math.min(0.35, 0.05 + (spdDef - 25) * 0.004 + (100 - card.acc) * 0.002));
+            const gRoll = Math.random();
+            if (gRoll < avoidChance) {
+              damage = 0; hitType = 'guard';
+              addLog(`${enemy.name} AVOID! (0 ${t('battle.dmg')})`);
+            } else if (gRoll < avoidChance + 0.55) {
+              damage = Math.floor(damage * 0.25);
+              hitType = 'guard';
+              addLog(`${enemy.name} BLOCK — ${damage} ${t('battle.dmg')}`);
+            } else {
+              addLog(`${enemy.name} ${t('battle.defends')} — ${damage} ${t('battle.dmg')}`);
+            }
           }
         } else {
           addLog(`${player.name} → ${card.name} — ${damage} ${t('battle.dmg')}`);
+        }
+        // Suicide (33): deja al USUARIO con 1 HP tras el ataque (CARD_SYSTEM.md)
+        if (card.effect === 'beam_suicide') {
+          setPlayer(prev => ({ ...prev, hp: 1 }));
+          addLog(`${player.name} ${t('battle.uses')} ${card.name} — ¡queda al borde!`);
         }
       }
 
@@ -1565,9 +1586,10 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
       }
       incomingCard.current = card;
       addLog(`${enemy.name} ${t('battle.uses')} ${card.name}`);
-      playCardCinematic(card, 'enemy', () => {
-        enterDefensePhase(card.name);
-      });
+      // ⚠️ ORDEN GBC: el defensor elige SU defensa ANTES de que se ejecute
+      // la animación del ataque. La cinemática del enemigo se dispara al
+      // elegir (defendBasic/defendJoint/defendLimit), no aquí.
+      enterDefensePhase(card.name);
     }, 450);
   };
 
@@ -1580,6 +1602,10 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
   const defendBasic = (choice: 'defense' | 'move', pos?: BattlePosition) => {
     setPhase('enemyTurn'); // desmonta el menú YA (evita doble disparo)
     const card = incomingCard.current || CARDS[25];
+    const runEnemyCinematic = (onDone: () => void) => {
+      // La animación del ataque enemigo se ejecuta DESPUÉS de elegir defensa (orden GBC)
+      playCardCinematic(card, 'enemy', onDone);
+    };
     if (choice === 'move' && pos) {
       // BASIC → MOVE: gasta la elección defensiva, cambia posición persistente
       Sfx.position();
@@ -1587,13 +1613,13 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
       setPlayer(prev => ({ ...prev, battlePos: pos! }));
       const pd = POSITION_DATA[pos];
       addLog(`${player.name} MOVE → ${pd.altitude}/${pd.depth} (${pos})`);
-      resolveEnemyAttack(true, pos, card);
+      runEnemyCinematic(() => resolveEnemyAttack(true, pos, card));
     } else {
       // BASIC → DEFENSE: quedarse y defender (reduce daño)
       setPlayerPose('guard');
       setPlayerGuard({ type: 'reduce' });
       addLog(`${player.name} ${t('battle.defends')} (−50% ${t('battle.dmg')})`);
-      resolveEnemyAttack(true, player.battlePos, card);
+      runEnemyCinematic(() => resolveEnemyAttack(true, player.battlePos, card));
     }
   };
 
@@ -1617,7 +1643,9 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
     setHand(newHand);
     setPlayer(prev => ({ ...prev, cc: Math.max(0, prev.cc - card.cc) }));
     setDefendMenu(null);
-    resolveDefenseCard(card, handIdx);
+    // Cinemática del ataque enemigo tras elegir la carta defensiva (orden GBC)
+    const cardIncoming = incomingCard.current || CARDS[25];
+    playCardCinematic(cardIncoming, 'enemy', () => resolveDefenseCard(card, handIdx));
   };
 
   // LIMIT durante Defense: solo Limits DEFENSE/SUPPORT y solo si powered
@@ -1631,7 +1659,9 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
     setPhase('enemyTurn');
     setDefendMenu(null);
     setPlayer(prev => ({ ...prev, cc: Math.max(0, prev.cc - card.cc) }));
-    resolveDefenseCard(card, -1);
+    // Cinemática del ataque enemigo tras elegir el Limit defensivo (orden GBC)
+    const cardIncoming = incomingCard.current || CARDS[25];
+    playCardCinematic(cardIncoming, 'enemy', () => resolveDefenseCard(card, -1));
   };
 
   // Resolver una carta defensiva/support del JOINT contra el ataque enemigo
@@ -2109,11 +2139,11 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
         {phase === 'basic' && (
           <div className="command-select">
             <div className="basic-menu">
-              <button className="basic-btn" onClick={() => basicAction('stage')}>
+              <button className="basic-btn basic-stage" onClick={() => basicAction('stage')}>
                 <strong>{t('battle.stageAttack')}</strong>
                 <span>{powerState !== 'NORMAL' ? '4 ' : '3 '}{t('battle.powerState')} · A/B</span>
               </button>
-              <button className="basic-btn" onClick={() => basicAction('gather')} disabled={gatherTurns > 0}>
+              <button className="basic-btn basic-gather" onClick={() => basicAction('gather')} disabled={gatherTurns > 0}>
                 <strong>{t('battle.gatherPower')}</strong>
                 <span>{gatherTurns > 0 ? powerState.replace('_', ' ') : '+8 STR/KI'}</span>
               </button>

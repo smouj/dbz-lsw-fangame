@@ -1294,39 +1294,49 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   border-color: var(--orange-lt);
 }
 
-/* ─── Tira de comandos ─── */
+/* ─── Tira de comandos (sprites GBC auténticos) ─── */
 
 .command-select { display: flex; flex-direction: column; align-items: center; gap: 8px; }
 
-.command-strip { display: flex; gap: 5px; justify-content: center; }
+.command-strip { display: flex; gap: 6px; justify-content: center; align-items: stretch; }
 
 .command-strip button {
-  background: rgba(7,10,16,.54);
-  border: 1px solid var(--border);
-  color: var(--text);
+  /* Marco GBC auténtico (48×40 de la ROM) escalado 2× pixelado */
+  --btn-frame: url('/assets/ui/hud_buttons/frame_blue.png');
+  background-image: var(--btn-frame);
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  image-rendering: pixelated;
+  background-color: transparent;
+  border: none;
+  color: #fff;
   font-family: var(--fepic);
-  font-size: 20px;
-  padding: 6px 16px;
-  cursor: pointer;
+  font-size: 26px;
   letter-spacing: 2px;
-  min-width: 54px;
-  box-shadow: inset 1px 1px 0 rgba(255,255,255,.06), inset -1px -1px 0 rgba(0,0,0,.24), 0 8px 18px rgba(0,0,0,.18);
-  transition: transform 80ms, box-shadow 80ms, background 80ms;
+  text-shadow: 2px 2px 0 rgba(0,0,0,.9);
+  width: 96px;
+  height: 80px;
+  padding: 0;
+  cursor: pointer;
+  filter: drop-shadow(0 4px 8px rgba(0,0,0,.45));
+  transition: transform 80ms, filter 80ms;
 }
 
 .command-strip button:hover:not(:disabled) {
-  transform: translateY(-1px);
-  border-color: var(--gold);
-  box-shadow: 0 10px 18px rgba(0,0,0,.28), 0 0 14px rgba(246,199,68,.18);
+  transform: translateY(-2px);
+  filter: drop-shadow(0 6px 12px rgba(0,0,0,.55)) brightness(1.15);
 }
 
-.command-strip button:active:not(:disabled) { transform: translateY(0) scale(0.97); }
-.command-strip button:disabled { opacity: 0.2; cursor: not-allowed; }
+.command-strip button:active:not(:disabled) { transform: translateY(1px) scale(0.97); }
+.command-strip button:disabled { opacity: 0.3; cursor: not-allowed; filter: grayscale(.6); }
 
-.cmd-limit { border-color: var(--gold) !important; color: var(--gold) !important; }
-.cmd-j { border-color: var(--dmg-color) !important; color: var(--dmg-color) !important; }
-.cmd-b { border-color: var(--beam-color) !important; color: var(--beam-color) !important; }
-.cmd-c { border-color: var(--sup-color) !important; color: var(--sup-color) !important; }
+/* Botones con marco y letra propia */
+.cmd-limit { --btn-frame: url('/assets/ui/hud_buttons/frame_gold.png'); color: #ffe9a3; }
+.cmd-b { --btn-frame: url('/assets/ui/hud_buttons/frame_blue.png'); color: #bfe4ff; }
+
+/* Botones con texto GBC ya incluido (JOINT / CHARA): ocultamos la letra duplicada */
+.cmd-j { --btn-frame: url('/assets/ui/hud_buttons/joint_green.png'); color: transparent; text-shadow: none; }
+.cmd-c { --btn-frame: url('/assets/ui/hud_buttons/chara_joint.png'); color: transparent; text-shadow: none; }
 
 /* ─── Mano de cartas ─── */
 
@@ -1340,6 +1350,17 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 }
 
 .hand-cards { display: flex; gap: 5px; justify-content: center; flex-wrap: nowrap; }
+
+/* Slot vacío de la mano (sprite GBC auténtico NO CARD) */
+.hand-empty-slot { display: flex; align-items: center; justify-content: center; }
+.hand-no-card {
+  image-rendering: pixelated;
+  width: 96px;
+  height: 80px;
+  filter: drop-shadow(0 4px 8px rgba(0,0,0,.45));
+  opacity: .9;
+}
+.hand-hint { color: var(--muted); font-size: .68rem; margin-top: 2px; letter-spacing: 1px; }
 
 /* ─── Carta (estilo GBC) ─── */
 
@@ -2799,16 +2820,6 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   background: linear-gradient(180deg, rgba(6,9,16,.40), rgba(6,9,16,.22));
 }
 
-/* Botones de comando: mejor contraste de color por tipo */
-.command-strip button {
-  background: rgba(7,10,16,.54);
-}
-
-.cmd-limit { background: linear-gradient(180deg, #3a3010, #221c08) !important; }
-.cmd-j { background: linear-gradient(180deg, #3a1414, #221010) !important; }
-.cmd-b { background: linear-gradient(180deg, #122a44, #0e1e30) !important; }
-.cmd-c { background: linear-gradient(180deg, #123a1e, #0c2814) !important; }
-
 /* Cartas: sombra de profundidad y hover más suave */
 .card {
   box-shadow:
@@ -3175,16 +3186,26 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 .basic-menu { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; width: min(460px, 92vw); }
 .basic-btn {
   display: flex; flex-direction: column; align-items: center; justify-content: center;
-  gap: 4px; padding: 6px 8px; min-height: 38px;
-  background: rgba(8,12,20,.48);
-  border: 1px solid var(--border); border-radius: 0; color: var(--text);
-  font-family: inherit; cursor: pointer; transition: transform 0.12s, border-color 0.12s, box-shadow 0.12s;
+  gap: 4px; padding: 6px 8px; min-height: 44px;
+  /* Marco GBC auténtico por defecto (teal) */
+  --btn-frame: url('/assets/ui/hud_buttons/frame_teal.png');
+  background-image: var(--btn-frame);
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  image-rendering: pixelated;
+  background-color: transparent;
+  border: none; color: var(--text);
+  font-family: inherit; cursor: pointer;
+  text-shadow: 1px 1px 0 rgba(0,0,0,.8);
+  transition: transform 0.12s, filter 0.12s;
 }
 .basic-btn strong { font-size: 0.92rem; letter-spacing: 0.06em; color: #ffe9a3; }
-.basic-btn span { font-size: 0.7rem; opacity: 0.75; }
-.basic-btn:hover:not(:disabled) { transform: translateY(-2px); border-color: var(--gold); box-shadow: 0 4px 14px rgba(0,0,0,.45); }
-.basic-btn:disabled { opacity: 0.35; cursor: not-allowed; }
-.basic-btn.basic-back { grid-column: 1 / -1; min-height: 40px; background: linear-gradient(180deg, #20242e, #14171e); border-color: #38424f; }
+.basic-btn span { font-size: 0.7rem; opacity: 0.85; }
+.basic-btn:hover:not(:disabled) { transform: translateY(-2px); filter: brightness(1.15); }
+.basic-btn:disabled { opacity: 0.35; cursor: not-allowed; filter: grayscale(.6); }
+.basic-btn.basic-back { grid-column: 1 / -1; min-height: 46px; --btn-frame: url('/assets/ui/hud_buttons/frame_teal.png'); }
+.basic-btn.basic-stage { --btn-frame: url('/assets/ui/hud_buttons/frame_orange.png'); }
+.basic-btn.basic-gather { --btn-frame: url('/assets/ui/hud_buttons/frame_green.png'); }
 .limit-panel { display: flex; flex-direction: column; gap: 6px; width: min(420px, 92vw); max-height: 82px; overflow: hidden; background: rgba(5,8,14,.44); border: 1px solid var(--border); border-radius: 0; padding: 7px 9px; }
 .limit-title { font-size: 0.8rem; letter-spacing: 0.14em; color: var(--gold); text-align: center; margin-bottom: 4px; }
 .limit-row {
@@ -3389,7 +3410,7 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 .team-reserve-portrait img { height: 16px; width: auto; image-rendering: pixelated; }
 .team-reserve-name { font-size: 0.62rem; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .team-reserve-hp { font-size: 0.58rem; color: var(--hp-red); margin-left: auto; }
-.cmd-c.has-ally { border-color: #8dffb0 !important; color: #8dffb0 !important; animation: sel-blink 1.2s infinite alternate; }
+.cmd-c.has-ally { animation: sel-blink 1.2s infinite alternate; }
 .cc-max { color: var(--dim); font-size: 6px; margin-left: 1px; }
 
 /* ═══ CINEMÁTICA DE CARTA (GBC): zoom luchador + carta + animación por tipo ═══
