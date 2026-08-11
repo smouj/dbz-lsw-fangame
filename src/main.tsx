@@ -1311,11 +1311,18 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
 
   // JOINT durante Defense: solo cartas DEFENSE y SUPPORT (spec defensa)
   const defendJoint = (card: CardDef, handIdx: number) => {
+    // Economía real: las cartas JOINT CUESTAN CC también en defensa
+    if (player.cc < card.cc) {
+      addLog(`${t('battle.insufficientCc')} (${card.name} ${card.cc} CC)`);
+      Sfx.cancel();
+      return;
+    }
     setPhase('enemyTurn');
     setSelectedCard(null);
     const newHand = [...hand];
     newHand.splice(handIdx, 1);
     setHand(newHand);
+    setPlayer(prev => ({ ...prev, cc: Math.max(0, prev.cc - card.cc) }));
     setDefendMenu(null);
     resolveDefenseCard(card, handIdx);
   };
@@ -1772,10 +1779,6 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
               <button className="basic-btn" onClick={() => basicAction('gather')} disabled={gatherTurns > 0}>
                 <strong>{t('battle.gatherPower')}</strong>
                 <span>{gatherTurns > 0 ? powerState.replace('_', ' ') : '+8 STR/KI'}</span>
-              </button>
-              <button className="basic-btn" onClick={() => basicAction('guard')}>
-                <strong>{t('battle.defendAction')}</strong>
-                <span>−50% {t('battle.dmg')}</span>
               </button>
               <button className="basic-btn basic-back" onClick={() => { Sfx.cancel(); setPhase('command'); }}>
                 {t('battle.back')}
