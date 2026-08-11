@@ -19,7 +19,7 @@ import { GBC_NATIVE_FPS, type QteState } from './data/actionFidelity';
 import { initAudio, Sfx, setSfxEnabled, setVolume } from './audio/sfx';
 import { LanguageProvider, useLang } from './i18n/LanguageContext';
 import { LANGUAGES, LangCode, TKey } from './i18n';
-import { ArrowLeft, X, Lock, ChevronRight, Languages, Sword, Shield, BookOpen, Swords, Library, Users, Settings, Sparkles, type LucideIcon } from 'lucide-react';
+import { ArrowLeft, X, Lock, ChevronRight, Languages, Sword, Shield, BookOpen, Swords, Library, Users, Settings, Sparkles, Volume2, Zap, Gauge, Monitor, Keyboard, type LucideIcon } from 'lucide-react';
 
 // ═══════════════════════════════════════════════════════════
 // DBZ LSW Fangame — Estilo Magazine GBC Auténtico
@@ -2381,6 +2381,10 @@ function StoryScreen({ onNavigate, onStartChapter }: {
     { name: 'MAJIN BUU', range: [23, 32] },
   ];
   const visibleChapters = CHAPTERS.filter(c => c.id >= SAGAS[sagaTab].range[0] && c.id <= SAGAS[sagaTab].range[1]);
+  const activeSaga = SAGAS[sagaTab];
+  const sagaDone = visibleChapters.filter(c => c.id < progress).length;
+  const sagaOpen = visibleChapters.filter(c => c.id <= progress).length;
+  const nextChapter = visibleChapters.find(c => c.id >= progress) ?? visibleChapters[visibleChapters.length - 1];
   const sel = CHAPTERS.find(c => c.id === selected)!;
   const selUnlocked = sel.id <= progress;
   const selDone = sel.id < progress;
@@ -2453,6 +2457,12 @@ function StoryScreen({ onNavigate, onStartChapter }: {
               </div>
             );
           })}
+          <div className="story-route-footer">
+            <div className="route-footer-kicker">{activeSaga.name} ROUTE</div>
+            <div className="route-footer-row"><span>OPEN</span><b>{sagaOpen}/{visibleChapters.length}</b></div>
+            <div className="route-footer-row"><span>CLEARED</span><b>{sagaDone}/{visibleChapters.length}</b></div>
+            <div className="route-footer-next">{nextChapter ? t(nextChapter.nameKey) : activeSaga.name}</div>
+          </div>
         </div>
 
         {/* Panel de detalle del capítulo seleccionado (spec §6) */}
@@ -2602,6 +2612,18 @@ function StorySceneScreen({ chapter, phase, onFinish, onNavigate }: {
 // CHARACTERS — Grid de personajes
 // ═══════════════════════════════════════════════════════════
 
+function statProfile(f: { hp: number; str: number; ki: number; spd: number }) {
+  const entries = [
+    { key: 'HP', value: f.hp, score: f.hp / 10, role: 'Endurance' },
+    { key: 'STR', value: f.str, score: f.str, role: 'Strike' },
+    { key: 'KI', value: f.ki, score: f.ki, role: 'Beam' },
+    { key: 'SPD', value: f.spd, score: f.spd, role: 'Tempo' },
+  ].sort((a, b) => b.score - a.score);
+  const top = entries[0];
+  const power = Math.round((f.hp / 10 + f.str + f.ki + f.spd) / 4);
+  return { top, power };
+}
+
 function CharactersScreen({ onNavigate, onSelectFighter }: {
   onNavigate: (s: Screen) => void; onSelectFighter: (formId: string) => void;
 }) {
@@ -2620,6 +2642,8 @@ function CharactersScreen({ onNavigate, onSelectFighter }: {
   const sel = getForm(selected)!;
   const selChar = getCharacter(sel.character)!;
   const selUnlocked = isCharacterUnlocked(selChar.id);
+  const unlockedForms = selChar.forms.filter(fid => isFormUnlocked(fid, loadProgress().level)).length;
+  const profile = statProfile(sel);
 
   return (
     <div className="page-screen characters-screen">
@@ -2683,6 +2707,13 @@ function CharactersScreen({ onNavigate, onSelectFighter }: {
           <div className="char-lore">
             <span className="lore-label">SAGA · ROL</span>
             <span className="lore-text">{selChar.saga} — Tier {selChar.tier} · {selChar.forms.length} formas</span>
+          </div>
+
+          <div className="char-file">
+            <div className="char-file-row"><span>PROFILE</span><b>{profile.top.role}</b></div>
+            <div className="char-file-row"><span>POWER INDEX</span><b>{profile.power}</b></div>
+            <div className="char-file-row"><span>BEST STAT</span><b>{profile.top.key} {profile.top.value}</b></div>
+            <div className="char-file-row"><span>FORMS OPEN</span><b>{unlockedForms}/{selChar.forms.length}</b></div>
           </div>
 
           {/* Formas: solo las desbloqueadas (por nivel) */}
@@ -2898,33 +2929,33 @@ function SettingsScreen({ onNavigate }: { onNavigate: (s: Screen) => void }) {
         </div>
 
         <div className="setting-row">
-          <span className="setting-label">{t('settings.bgmVolume')}</span>
+          <span className="setting-label"><Volume2 size={12} /> {t('settings.bgmVolume')}</span>
           <input type="range" min={0} max={100} value={volume}
             onChange={e => setVolume(Number(e.target.value))} />
           <span className="setting-value">{volume}%</span>
         </div>
         <div className="setting-row">
-          <span className="setting-label">{t('settings.soundFx')}</span>
+          <span className="setting-label"><Zap size={12} /> {t('settings.soundFx')}</span>
           <button className={`toggle ${sfx ? 'on' : ''}`} onClick={() => setSfx(!sfx)}>
             {sfx ? t('settings.on') : t('settings.off')}
           </button>
         </div>
         <div className="setting-row">
-          <span className="setting-label">{t('settings.textSpeed')}</span>
+          <span className="setting-label"><Gauge size={12} /> {t('settings.textSpeed')}</span>
           <div className="setting-options">
             <button className={`filter-chip ${speed === 'normal' ? 'active' : ''}`} onClick={() => setSpeed('normal')}>{t('settings.normal')}</button>
             <button className={`filter-chip ${speed === 'fast' ? 'active' : ''}`} onClick={() => setSpeed('fast')}>{t('settings.fast')}</button>
           </div>
         </div>
         <div className="setting-row">
-          <span className="setting-label">{t('settings.screen')}</span>
+          <span className="setting-label"><Monitor size={12} /> {t('settings.screen')}</span>
           <div className="setting-options">
             <button className={`filter-chip ${screenMode === 'windowed' ? 'active' : ''}`} onClick={() => setScreenMode('windowed')}>{t('settings.windowed')}</button>
             <button className={`filter-chip ${screenMode === 'fullscreen' ? 'active' : ''}`} onClick={() => setScreenMode('fullscreen')}>{t('settings.fullscreen')}</button>
           </div>
         </div>
         <div className="setting-row">
-          <span className="setting-label">{t('settings.controls')}</span>
+          <span className="setting-label"><Keyboard size={12} /> {t('settings.controls')}</span>
           <div className="setting-controls">
             <div>1-5: Select card</div>
             <div>WASD: Navigate</div>
@@ -2954,6 +2985,7 @@ function VersusScreen({ onNavigate, onStartVersus }: {
 
   const sel = getForm(selected)!;
   const selChar = getCharacter(sel.character)!;
+  const profile = statProfile(sel);
 
   return (
     <div className="page-screen versus-screen">
@@ -2970,7 +3002,7 @@ function VersusScreen({ onNavigate, onStartVersus }: {
             const unlocked = unlockedChars.includes(c.id);
             if (!unlocked) {
               return (
-                <div key={c.id} className="char-cell ui-char-card locked char-locked">
+                <div key={c.id} className={`char-cell ui-char-card locked char-locked ${active ? 'active' : ''}`}>
                   <div className="char-locked-icon"><Lock size={14} /></div>
                   <div className="char-name">{c.name}</div>
                   <div className="char-forms">???</div>
@@ -2997,6 +3029,11 @@ function VersusScreen({ onNavigate, onStartVersus }: {
             <div className="ui-statbar"><span className="ui-stat-label">{t('attr.str')}</span><div className="ui-stat-track"><div className="ui-stat-fill str" style={{ width: `${sel.str / 1.2}%` }} /></div><span className="ui-stat-val">{sel.str}</span></div>
             <div className="ui-statbar"><span className="ui-stat-label">{t('attr.ki')}</span><div className="ui-stat-track"><div className="ui-stat-fill ki" style={{ width: `${sel.ki / 1.2}%` }} /></div><span className="ui-stat-val">{sel.ki}</span></div>
             <div className="ui-statbar"><span className="ui-stat-label">{t('attr.spd')}</span><div className="ui-stat-track"><div className="ui-stat-fill spd" style={{ width: `${sel.spd}%` }} /></div><span className="ui-stat-val">{sel.spd}</span></div>
+          </div>
+          <div className="combat-file">
+            <div className="combat-file-row"><span>THREAT</span><b>{profile.power}</b></div>
+            <div className="combat-file-row"><span>STYLE</span><b>{profile.top.role}</b></div>
+            <div className="combat-file-row"><span>DECK</span><b>{deckSize}/{DECK_SIZE}</b></div>
           </div>
           <div className="form-select">
             {selChar.forms.map(fid => {
