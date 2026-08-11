@@ -2035,6 +2035,20 @@ function MainMenu({ onNavigate }: { onNavigate: (s: Screen) => void }) {
     Sfx.confirm();
   };
 
+  // ── Tarjeta CONTINUAR: progreso real de la partida ──
+  const prog = loadProgress();
+  const storyProgress = loadStoryProgress();
+  const currentChapter = Math.min(storyProgress, CHAPTERS.length);
+  const ch = CHAPTERS.find(c => c.id === currentChapter);
+  const heroUrl = ch ? overworldUrl(ch.player) : undefined;
+  const heroChar = ch ? characterName(ch.player.replace(/_base|_young|_ssj.*|_kami|_ultimate|_future|_kid.*/g, '')) : '';
+  const pct = Math.round((storyProgress / CHAPTERS.length) * 100);
+  // Saga actual según el capítulo (para la tarjeta de progreso)
+  const sagaName = currentChapter <= 3 ? 'SAIYAN'
+    : currentChapter <= 10 ? 'NAMEK'
+    : currentChapter <= 22 ? 'ANDROIDES'
+    : 'MAJIN BUU';
+
   return (
     <div className="menu-screen">
       <div className="menu-bg" />
@@ -2058,19 +2072,34 @@ function MainMenu({ onNavigate }: { onNavigate: (s: Screen) => void }) {
           </div>
         </div>
       )}
+
       <div className="menu-content">
         <h1 className="menu-title">{t('menu.title')}</h1>
         <h2 className="menu-subtitle">{t('menu.subtitle')}</h2>
+
+        {/* Tarjeta CONTINUAR con datos reales de partida */}
+        <button className="menu-continue-card" onClick={() => { Sfx.confirm(); onNavigate('battle'); }}>
+          <span className="mc-play">▶</span>
+          <span className="mc-body">
+            <span className="mc-title">{t('menu.continue')}</span>
+            <span className="mc-saga">SAGA {sagaName} · CAPÍTULO {currentChapter}</span>
+            <span className="mc-chapter">{ch ? t(ch.nameKey).toUpperCase() : '—'}</span>
+            <span className="mc-progress-track"><span className="mc-progress-fill" style={{ width: `${pct}%` }} /></span>
+            <span className="mc-meta">{heroChar} · Nv. {prog.level} · {pct}%</span>
+          </span>
+          {heroUrl && <img className="mc-hero" src={heroUrl} alt="" />}
+        </button>
+
+        {/* Menú principal: bandas jerarquizadas SIN caja (spec §4) */}
         <nav className="menu-nav">
-          <button onClick={() => onNavigate('story')}>{t('menu.story')}</button>
-          <button onClick={() => onNavigate('versus')}>{t('menu.battle')}</button>
-          <button onClick={() => onNavigate('deck')}>{t('menu.deck')}</button>
-          <button onClick={() => onNavigate('characters')}>{t('menu.characters')}</button>
-          <button onClick={() => onNavigate('cards')}>{t('menu.cards')}</button>
-          <button onClick={() => onNavigate('settings')}>{t('menu.settings')}</button>
-          <button onClick={() => onNavigate('battle')} className="btn-primary">{t('menu.continue')}</button>
+          <button className="menu-item l2" onClick={() => { Sfx.select(); onNavigate('story'); }}>{t('menu.story')}</button>
+          <button className="menu-item l2" onClick={() => { Sfx.select(); onNavigate('versus'); }}>{t('menu.battle')}</button>
+          <button className="menu-item l3" onClick={() => { Sfx.select(); onNavigate('deck'); }}>{t('menu.deck')}</button>
+          <button className="menu-item l3" onClick={() => { Sfx.select(); onNavigate('characters'); }}>{t('menu.characters')}</button>
+          <button className="menu-item l3" onClick={() => { Sfx.select(); onNavigate('cards'); }}>{t('menu.cards')}</button>
+          <button className="menu-item l4" onClick={() => { Sfx.select(); onNavigate('settings'); }}>{t('menu.settings')}</button>
         </nav>
-        <div className="menu-footer">{t('menu.footer')} <b className="menu-lv">Lv.{loadProgress().level}</b></div>
+        <div className="menu-footer">v0.3 · FANMADE · DBZ: LSW GBC</div>
       </div>
     </div>
   );
