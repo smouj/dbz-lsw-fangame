@@ -79,17 +79,17 @@ export function isDamageVulnerable(pos: BattlePosition): boolean {
 // (enemigo) NO comparten X porque BACK apunta al borde propio de cada lado.
 // Coordenadas en porcentaje del viewport del campo (0-100).
 export const LEFT_ANCHORS: Record<BattlePosition, { x: number; y: number }> = {
-  [BattlePosition.UP_BACK]: { x: 14, y: 22 },
-  [BattlePosition.UP_FRONT]: { x: 30, y: 22 },
-  [BattlePosition.DOWN_BACK]: { x: 14, y: 72 },
-  [BattlePosition.DOWN_FRONT]: { x: 30, y: 72 },
+  [BattlePosition.UP_BACK]: { x: 16, y: 26 },
+  [BattlePosition.UP_FRONT]: { x: 32, y: 26 },
+  [BattlePosition.DOWN_BACK]: { x: 16, y: 68 },
+  [BattlePosition.DOWN_FRONT]: { x: 32, y: 68 },
 };
 
 export const RIGHT_ANCHORS: Record<BattlePosition, { x: number; y: number }> = {
-  [BattlePosition.UP_BACK]: { x: 86, y: 22 },
-  [BattlePosition.UP_FRONT]: { x: 70, y: 22 },
-  [BattlePosition.DOWN_BACK]: { x: 86, y: 72 },
-  [BattlePosition.DOWN_FRONT]: { x: 70, y: 72 },
+  [BattlePosition.UP_BACK]: { x: 84, y: 26 },
+  [BattlePosition.UP_FRONT]: { x: 68, y: 26 },
+  [BattlePosition.DOWN_BACK]: { x: 84, y: 68 },
+  [BattlePosition.DOWN_FRONT]: { x: 68, y: 68 },
 };
 
 export function anchorFor(pos: BattlePosition, side: 'LEFT' | 'RIGHT') {

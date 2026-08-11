@@ -624,21 +624,6 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [intro]);
 
-  // MOVE (Basic Defense): cambio de posición PERSISTENTE. La posición del
-  // combatiente vive en el FighterState y NO se reinicia entre fases/turnos;
-  // solo cambia cuando el jugador gasta su elección defensiva en MOVE.
-  const applyMove = (pos: BattlePosition) => {
-    Sfx.position();
-    setPlayer(prev => ({ ...prev, battlePos: pos }));
-    const pd = POSITION_DATA[pos];
-    addLog(`${player.name} MOVE → ${pd.altitude}/${pd.depth} (${pos})`);
-    // El MOVE consume la elección defensiva; después se resuelve la ofensiva
-    // enemiga teniendo en cuenta la nueva posición (spec Move).
-    setPhase('enemyTurn');
-    const card = incomingCard.current || CARDS[25];
-    resolveEnemyAttack(true, pos, card);
-  };
-
   const gatherPower = () => {
     Sfx.powerUp();
     setViewMode('ACTION');

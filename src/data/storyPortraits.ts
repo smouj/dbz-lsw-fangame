@@ -17,7 +17,7 @@ interface PortraitEntry {
   forms?: Record<string, string>;                  // variantes por forma (ssj, ssj2...)
 }
 
-const P = 'portraits/story';
+const P = 'assets/portraits/story';
 
 // Mapeo personaje → retratos. La clave es el id de personaje del roster
 // (goku, vegeta, gohan...) o un id de enemigo (nappa, frieza, cell...).
