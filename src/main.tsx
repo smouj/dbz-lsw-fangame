@@ -405,7 +405,8 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
   };
   const hitImpact = (side: 'player' | 'enemy') => {
     setHitShake(side);
-    setTimeout(() => setHitShake(null), 380);
+    // Sincronizado con el field-shake CSS (0.3s ease-in-out)
+    setTimeout(() => setHitShake(null), 320);
   };
   // Stat stages reales: -3..+3 (cada stage = 8 unidades internas, como el GBC)
   const [pStages, setPStages] = useState({ str: 0, ki: 0, spd: 0, guard: 0 });
