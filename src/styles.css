@@ -1014,9 +1014,9 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 .view-fade {
   position: absolute; inset: 0; z-index: 11; pointer-events: none;
   background: #040b18;
-  animation: view-fade-out 0.35s cubic-bezier(.3,.7,.4,1) forwards;
+  animation: view-fade-out .46s steps(9, end) forwards;
 }
-@keyframes view-fade-out { from { opacity: .55; } to { opacity: 0; } }
+@keyframes view-fade-out { from { opacity: .62; } to { opacity: 0; } }
 
 .phase-cue {
   position: absolute;
@@ -1213,7 +1213,7 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   text-align: center;
   text-shadow: 2px 2px 0 #000;
   pointer-events: none;
-  animation: action-caption-in .24s steps(3, end) both;
+  animation: action-caption-in .36s steps(6, end) both;
 }
 
 .action-caption-kicker {
@@ -1251,7 +1251,7 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 }
 
 @keyframes action-caption-in {
-  from { opacity: 0; transform: translateY(6px); }
+  from { opacity: 0; transform: translateY(4px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
@@ -3051,10 +3051,10 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 .stage-btn-b { border-color: var(--hp-red); color: var(--hp-red); }
 
 /* ─── Stage Attack: embestida al acertar una dirección (desplaza al rival) ─── */
-.stage-fighter.lunging { animation: stage-lunge 0.5s cubic-bezier(.25,.6,.35,1); }
+.stage-fighter.lunging { animation: stage-lunge .58s steps(7, end); }
 @keyframes stage-lunge {
   0% { transform: translateX(0); }
-  45% { transform: translateX(46px) scale(1.05); }
+  45% { transform: translateX(38px); }
   100% { transform: translateX(0); }
 }
 
@@ -3065,33 +3065,33 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   border: 3px solid var(--ki-blue);
   background: rgba(6, 14, 28, 0.92);
   box-shadow: 3px 3px 0 #000, 0 0 22px rgba(70, 170, 255, 0.25);
-  animation: prompt-pop 0.24s cubic-bezier(.3, 1.2, .5, 1) both;
+  animation: prompt-pop .28s steps(5, end) both;
 }
 @keyframes prompt-pop {
-  from { opacity: 0; transform: scale(0.6); }
-  to { opacity: 1; transform: scale(1); }
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 .stage-prompt-big.correct {
   border-color: #6dff8a;
   background: rgba(8, 40, 18, 0.95);
   box-shadow: 3px 3px 0 #000, 0 0 26px rgba(109, 255, 138, 0.5);
-  animation: prompt-flash-correct 0.3s ease-out;
+  animation: prompt-flash-correct .32s steps(4, end);
 }
 @keyframes prompt-flash-correct {
-  0% { transform: scale(1.25); }
-  100% { transform: scale(1); }
+  0% { filter: brightness(1.65); }
+  100% { filter: brightness(1); }
 }
 .stage-prompt-big.wrong {
   border-color: var(--hp-red);
   background: rgba(44, 8, 8, 0.95);
   box-shadow: 3px 3px 0 #000, 0 0 26px rgba(255, 70, 70, 0.5);
-  animation: prompt-shake 0.3s ease-out;
+  animation: prompt-shake .32s steps(4, end);
 }
 @keyframes prompt-shake {
   0%, 100% { transform: translateX(0); }
-  25% { transform: translateX(-8px); }
-  50% { transform: translateX(7px); }
-  75% { transform: translateX(-5px); }
+  25% { transform: translateX(-5px); }
+  50% { transform: translateX(4px); }
+  75% { transform: translateX(-3px); }
 }
 .qte-key-big {
   width: 74px; height: 74px;
@@ -3404,14 +3404,18 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   z-index: 9;
   pointer-events: none;
   overflow: hidden;
+  animation: fx-scene-in .28s steps(6, end) both;
 }
-.fx-vignette { position: absolute; inset: 0; background: radial-gradient(ellipse at center, rgba(5,8,14,.25) 0%, rgba(2,3,6,.82) 100%); }
-.fx-fighter { position: absolute; bottom: clamp(16px, 5vh, 44px); animation: fx-zoom-in .5s ease-out both; filter: drop-shadow(0 0 24px rgba(255,190,60,.45)); }
+.card-fx.scene-return { animation: fx-scene-out .24s steps(5, end) both; }
+.fx-vignette { position: absolute; inset: 0; background: radial-gradient(ellipse at center, rgba(5,8,14,.20) 0%, rgba(2,3,6,.76) 100%); }
+.fx-fighter { position: absolute; bottom: clamp(16px, 5vh, 44px); animation: fx-zoom-in .64s steps(8, end) both; filter: drop-shadow(0 0 24px rgba(255,190,60,.45)); }
 .card-fx.player .fx-actor,
 .card-fx.enemy .fx-target { left: 8vw; }
 .card-fx.enemy .fx-actor,
 .card-fx.player .fx-target { right: 8vw; }
-@keyframes fx-zoom-in { from { transform: translateY(40px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+@keyframes fx-scene-in { from { opacity: 0; filter: brightness(1.24); } to { opacity: 1; filter: brightness(1); } }
+@keyframes fx-scene-out { from { opacity: 1; filter: brightness(1); } to { opacity: 0; filter: brightness(.82); } }
+@keyframes fx-zoom-in { from { transform: translateY(18px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
 .fx-sprite { image-rendering: pixelated; }
 .fx-fighter .fighter-sprite img { image-rendering: pixelated; }
 
@@ -3431,34 +3435,34 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 .fx-card {
   position: absolute; top: 18vh; left: 50%; transform: translateX(-50%);
   display: flex; flex-direction: column; align-items: center; gap: 8px;
-  animation: fx-card-pop .45s cubic-bezier(.2,1.6,.4,1) .5s both;
+  animation: fx-card-pop .48s steps(7, end) .46s both;
 }
-@keyframes fx-card-pop { from { transform: translateX(-50%) scale(3.4); opacity: 0; } to { transform: translateX(-50%) scale(1); opacity: 1; } }
+@keyframes fx-card-pop { from { transform: translateX(-50%) scale(1.18); opacity: 0; } to { transform: translateX(-50%) scale(1); opacity: 1; } }
 .fx-card-icon { width: 88px; height: 66px; image-rendering: pixelated; border: 3px solid var(--border); background: var(--panel-lo); box-shadow: 0 4px 14px rgba(0,0,0,.6); }
 .fx-card-name { font-family: var(--fepic); font-size: 22px; color: #ffe9a3; text-shadow: 2px 2px 0 #000, 0 0 18px rgba(255,180,40,.7); letter-spacing: .04em; }
 
 /* Damage: arco de corte + lunge del luchador */
-.card-fx.fx-damage .fx-fighter { animation: fx-zoom-in .5s ease-out both, fx-lunge .45s ease .9s both; }
-@keyframes fx-lunge { 0% { transform: translateX(0); } 40% { transform: translateX(6vw); } 100% { transform: translateX(0); } }
+.card-fx.fx-damage .fx-fighter { animation: fx-zoom-in .64s steps(8, end) both, fx-lunge .62s steps(8, end) 1.05s both; }
+@keyframes fx-lunge { 0% { transform: translateX(0); } 44% { transform: translateX(5vw); } 100% { transform: translateX(0); } }
 .fx-swing {
   position: absolute; top: 42%; left: 50%; width: 30vw; height: 10vw; margin-left: -15vw;
   border-radius: 50%; border: 3px solid rgba(255,255,255,.65); border-top-color: transparent;
-  opacity: 0; animation: fx-swing-anim .4s ease .92s both;
+  opacity: 0; animation: fx-swing-anim .52s steps(7, end) 1.02s both;
 }
-.scene-travel .fx-swing { animation: fx-swing-anim .4s ease .05s both; }
+.scene-travel .fx-swing { animation: fx-swing-anim .52s steps(7, end) .06s both; }
 @keyframes fx-swing-anim { 0% { transform: rotate(-120deg) scale(.3); opacity: 0; } 30% { opacity: 1; } 100% { transform: rotate(60deg) scale(1.15); opacity: 0; } }
 
 /* Beam: carga + rayo horizontal */
-.card-fx.fx-beam .fx-fighter { animation: fx-zoom-in .5s ease-out both, fx-charge .7s ease .55s both; filter: drop-shadow(0 0 30px rgba(90,180,255,.9)) brightness(1.5); }
-@keyframes fx-charge { 0% { filter: drop-shadow(0 0 8px rgba(90,180,255,.3)) brightness(1.05); } 100% { filter: drop-shadow(0 0 34px rgba(120,200,255,1)) brightness(1.55); } }
+.card-fx.fx-beam .fx-fighter { animation: fx-zoom-in .64s steps(8, end) both, fx-charge .92s steps(10, end) .58s both; filter: drop-shadow(0 0 30px rgba(90,180,255,.9)) brightness(1.5); }
+@keyframes fx-charge { 0% { filter: drop-shadow(0 0 8px rgba(90,180,255,.3)) brightness(1.05); } 100% { filter: drop-shadow(0 0 34px rgba(120,200,255,1)) brightness(1.5); } }
 .fx-beam-travel {
   position: absolute; top: 46%; width: 58vw; height: 7vh;
   background: linear-gradient(90deg, rgba(80,170,255,0) 0%, rgba(120,200,255,.95) 18%, #eaf6ff 52%, rgba(120,200,255,.95) 86%, rgba(80,170,255,0) 100%);
   box-shadow: 0 0 34px rgba(100,190,255,.9);
   opacity: 0;
 }
-.card-fx.player .fx-beam-travel { left: 14vw; animation: fx-beam-travel-player .7s steps(5, end) both; }
-.card-fx.enemy .fx-beam-travel { right: 14vw; animation: fx-beam-travel-enemy .7s steps(5, end) both; }
+.card-fx.player .fx-beam-travel { left: 14vw; animation: fx-beam-travel-player .86s steps(10, end) both; }
+.card-fx.enemy .fx-beam-travel { right: 14vw; animation: fx-beam-travel-enemy .86s steps(10, end) both; }
 @keyframes fx-beam-travel-player {
   0% { transform: translateX(-38vw); opacity: 0; }
   18% { opacity: 1; }
@@ -3479,23 +3483,23 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   filter: drop-shadow(0 0 18px rgba(255,210,80,.7));
   opacity: 0;
 }
-.card-fx.player .fx-rush-trail { left: 22vw; animation: fx-rush-player .45s steps(4, end) both; }
-.card-fx.enemy .fx-rush-trail { right: 22vw; animation: fx-rush-enemy .45s steps(4, end) both; }
-@keyframes fx-rush-player { 0% { transform: translateX(-24vw); opacity: 0; } 25% { opacity: 1; } 100% { transform: translateX(24vw); opacity: 0; } }
-@keyframes fx-rush-enemy { 0% { transform: translateX(24vw) scaleX(-1); opacity: 0; } 25% { opacity: 1; } 100% { transform: translateX(-24vw) scaleX(-1); opacity: 0; } }
+.card-fx.player .fx-rush-trail { left: 22vw; animation: fx-rush-player .62s steps(8, end) both; }
+.card-fx.enemy .fx-rush-trail { right: 22vw; animation: fx-rush-enemy .62s steps(8, end) both; }
+@keyframes fx-rush-player { 0% { transform: translateX(-20vw); opacity: 0; } 25% { opacity: 1; } 100% { transform: translateX(20vw); opacity: 0; } }
+@keyframes fx-rush-enemy { 0% { transform: translateX(20vw) scaleX(-1); opacity: 0; } 25% { opacity: 1; } 100% { transform: translateX(-20vw) scaleX(-1); opacity: 0; } }
 
 /* Support: aura de poder */
-.card-fx.fx-support .fx-fighter { animation: fx-zoom-in .5s ease-out both, fx-aura-pulse 1s ease .6s both; }
-@keyframes fx-aura-pulse { 0% { filter: brightness(1) drop-shadow(0 0 6px rgba(120,255,160,.3)); } 50% { filter: brightness(1.6) drop-shadow(0 0 36px rgba(140,255,180,.95)); } 100% { filter: brightness(1) drop-shadow(0 0 14px rgba(120,255,160,.5)); } }
+.card-fx.fx-support .fx-fighter { animation: fx-zoom-in .64s steps(8, end) both, fx-aura-pulse 1.28s steps(12, end) .62s both; }
+@keyframes fx-aura-pulse { 0% { filter: brightness(1) drop-shadow(0 0 6px rgba(120,255,160,.3)); } 50% { filter: brightness(1.48) drop-shadow(0 0 30px rgba(140,255,180,.9)); } 100% { filter: brightness(1) drop-shadow(0 0 14px rgba(120,255,160,.5)); } }
 .fx-aura {
   position: absolute; top: 40%; left: 50%; width: 46vmin; height: 46vmin; margin-left: -23vmin; border-radius: 50%;
   background: radial-gradient(circle, rgba(140,255,180,.55) 0%, rgba(80,200,140,.2) 45%, transparent 70%);
-  animation: fx-aura-spin 1.2s linear .6s both;
+  animation: fx-aura-spin 1.36s steps(12, end) .62s both;
 }
 @keyframes fx-aura-spin { 0% { transform: scale(.3) rotate(0); opacity: 0; } 30% { opacity: 1; } 100% { transform: scale(1.6) rotate(160deg); opacity: 0; } }
 
 .card-fx.scene-target .fx-fighter {
-  animation: fx-zoom-in .35s ease-out both;
+  animation: fx-zoom-in .44s steps(6, end) both;
   filter: drop-shadow(0 0 24px rgba(255,190,60,.45));
 }
 
@@ -3503,9 +3507,9 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 .fx-impact {
   position: absolute; top: 44%; left: 50%; width: 18vh; height: 18vh; margin-left: -9vh; margin-top: -9vh;
   background: radial-gradient(circle, #fff 0%, rgba(255,255,255,.4) 40%, transparent 70%);
-  opacity: 0; animation: fx-impact-anim .45s ease 1.35s both;
+  opacity: 0; animation: fx-impact-anim .56s steps(7, end) 1.24s both;
 }
-.scene-target .fx-impact { animation: fx-impact-anim .45s ease .06s both; }
+.scene-target .fx-impact { animation: fx-impact-anim .56s steps(7, end) .08s both; }
 .scene-target.player .fx-impact { left: 78%; }
 .scene-target.enemy .fx-impact { left: 22%; }
 @keyframes fx-impact-anim { 0% { opacity: 0; transform: scale(.2); } 30% { opacity: 1; } 100% { opacity: 0; transform: scale(2.4); } }
@@ -3537,7 +3541,7 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 .stage-fighter {
   position: absolute; left: 4vw; bottom: 10vh; z-index: 5;
   filter: drop-shadow(0 0 18px rgba(255,190,60,.5));
-  animation: fx-zoom-in .5s cubic-bezier(.2,1.4,.4,1) both;
+  animation: fx-zoom-in .64s steps(8, end) both;
 }
 .stage-push {
   display: inline-block; font-family: var(--fepic); font-size: 22px; color: #ffd700;

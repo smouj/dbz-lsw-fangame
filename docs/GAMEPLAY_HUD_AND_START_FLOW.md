@@ -28,3 +28,11 @@ Canonical combat view split:
 - `ACTION` is a cinematic action view: larger action sprites, card/skill presentation, projectile/impact effects and then a return to `OVERVIEW`.
 - The top HUD remains persistent across both views so HP, phase and identity stay readable.
 - Defense, support and attack presentations should use the same view split instead of duplicating sprites in the HUD.
+
+Motion feel:
+
+- Action timing is frame-paced with GBC-style beats, but transitions must not hard-cut between setup, travel, impact and field return.
+- Avoid springy/overshooting web easing for combat sprites. Use short stepped transitions, readable holds and a small `return` beat before clearing the cinematic layer.
+- Card names/effects should fade in as contextual battle text, not pop from extreme scale.
+- QTE feedback may move, flash or shake UI prompts, but must not scale the character sprite as a fake animation.
+- Stage Attack resolution also keeps a short return beat before dismantling the QTE layer, so the flow reads as action view -> field return instead of instant UI replacement.

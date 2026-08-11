@@ -547,7 +547,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
   const eBuffs = { str: eStages.str * 8, ki: eStages.ki * 8 };
   const clampStage = (v: number) => Math.max(-3, Math.min(3, v));
   // ═══ CINEMÁTICA DE ACCIÓN GBC: atacante → habilidad → rival → campo ═══
-  type CardFxStep = 'attacker' | 'travel' | 'target';
+  type CardFxStep = 'attacker' | 'travel' | 'target' | 'return';
   const [cardFx, setCardFx] = useState<{ card: CardDef; side: 'player' | 'enemy'; step: CardFxStep } | null>(null);
   const cinematicTimers = useRef<number[]>([]);
   const clearCinematicTimers = () => {
@@ -632,11 +632,11 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
   // 750ms y cortaba la animación antes del lunge/impacto CSS (~900ms).
   const presentationMs = (card: CardDef): number => {
     switch (card.type) {
-      case 'beam': return gbcMs(132);
-      case 'damage': return gbcMs(112);
-      case 'support': return gbcMs(96);
-      case 'defense': return gbcMs(78);
-      default: return gbcMs(104);
+      case 'beam': return gbcMs(156);
+      case 'damage': return gbcMs(136);
+      case 'support': return gbcMs(118);
+      case 'defense': return gbcMs(96);
+      default: return gbcMs(124);
     }
   };
 
@@ -679,11 +679,14 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
     const resetActorPose = () => side === 'player' ? setPlayerPose('idle') : setEnemyPose('idle');
     const resetTargetPose = () => side === 'player' ? setEnemyPose('idle') : setPlayerPose('idle');
     const finishCinematic = () => {
-      setCardFx(null);
+      setCardFx({ card, side, step: 'return' });
       setViewMode('OVERVIEW');
-      resetActorPose();
-      resetTargetPose();
-      cinematicTimers.current.push(window.setTimeout(onDone, gbcMs(1)));
+      cinematicTimers.current.push(window.setTimeout(() => {
+        setCardFx(null);
+        resetActorPose();
+        resetTargetPose();
+        onDone();
+      }, gbcMs(12)));
     };
 
     setViewMode('ACTION');
@@ -693,9 +696,9 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
     const hasTargetCut = card.type === 'beam' || card.type === 'damage' || card.type === 'command' || OFFENSIVE_SUPPORT_EFFECTS.has(card.effect);
     const isBeamCut = card.type === 'beam';
     const isRushCut = card.type === 'damage' || card.type === 'command' || OFFENSIVE_SUPPORT_EFFECTS.has(card.effect);
-    const attackerFrames = isBeamCut ? 42 : isRushCut ? 34 : 50;
-    const travelFrames = isBeamCut ? 42 : isRushCut ? 24 : 0;
-    const targetFrames = isBeamCut ? 38 : isRushCut ? 34 : 0;
+    const attackerFrames = isBeamCut ? 54 : isRushCut ? 44 : 58;
+    const travelFrames = isBeamCut ? 50 : isRushCut ? 32 : 0;
+    const targetFrames = isBeamCut ? 44 : isRushCut ? 38 : 0;
 
     if (!hasTargetCut) {
       cinematicTimers.current.push(window.setTimeout(() => {
@@ -1074,10 +1077,15 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
     const complete = st.result === 'FULL_SUCCESS' || st.result === 'RECOVERED_SUCCESS';
     const ccGained = st.correct;
 
-    setStageQte({ state: 'WAITING', seq: [], idx: 0, correct: 0, card: null, elapsedFrames: 0, limitFrames: 0, recoveryFrames: 0, forcedFailure: null, result: null });
+    commitQte({
+      ...st,
+      state: st.state === 'RECOVERY_WINDOW' ? 'FAILED' : st.state,
+      result: st.result ?? (complete ? 'FULL_SUCCESS' : 'FAILURE'),
+    });
     setViewMode('OVERVIEW');
-    setPhase('cardSelect');
     setTimeout(() => {
+      setStageQte({ state: 'WAITING', seq: [], idx: 0, correct: 0, card: null, elapsedFrames: 0, limitFrames: 0, recoveryFrames: 0, forcedFailure: null, result: null });
+      setPhase('cardSelect');
       if (complete) {
         const ePos = enemy.battlePos;
         const vulnerable = (isBeamVulnerable(ePos) && card.type === 'beam') || (isDamageVulnerable(ePos) && card.type === 'damage');
@@ -1112,7 +1120,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
       setTimeout(() => {
         finishPlayerTurnStage(ccGained);
       }, 500);
-    }, gbcMs(1));
+    }, gbcMs(12));
   };
 
   // Variante de finishPlayerTurn para stage attacks (no usar carta de la mano)
@@ -2039,7 +2047,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
         {cardFx ? (
           <div className={`action-caption ${cardFx.card.type}`}>
             <div className="action-caption-kicker">
-              {cardFx.step === 'attacker' ? 'ACTION SETUP' : cardFx.step === 'travel' ? 'SKILL TRAVEL' : 'HIT RESULT'}
+              {cardFx.step === 'attacker' ? 'ACTION SETUP' : cardFx.step === 'travel' ? 'SKILL TRAVEL' : cardFx.step === 'target' ? 'HIT RESULT' : 'FIELD RETURN'}
             </div>
             <div className="action-caption-main">
               <span>{cardFx.side === 'player' ? player.name : enemy.name}</span>
