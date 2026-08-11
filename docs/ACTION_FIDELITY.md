@@ -457,3 +457,22 @@ facingFlip(formId, side)  // side='left'|'right' → 1 (sin flip) o -1 (espejo)
 sprite grande (`.intro-portrait`, marco dorado GBC). Verificado en 3
 viewports (1280×720, 800×600, 390×700): **nunca tapa el sprite del otro
 luchador** (gap mínimo entre bloques: 210px).
+
+---
+
+## QTE — Esquema de inputs para PC (2026-08-11, decisión del usuario)
+
+El Stage Attack en PC replica el GBC con este mapeo:
+
+| GBC | PC |
+|---|---|
+| Botón A | Tecla **Q** |
+| Botón B | Tecla **E** |
+| Cruceta (↑↓←→) | **WASD** o **flechas** de dirección |
+
+- **3 Stage Attack**: secuencia de A/B puro (Q/E)
+- **4/5/6 Stage**: las etapas finales (1/2/3 según nivel) son de
+  desplazamiento (direcciones WASD/flechas), el resto A/B — como el GBC
+- Recuperación tras fallo: A (Q) = ABANDON · B (E) = REPAIR
+- Botones en pantalla (click): A·Q, B·E, y las 4 direcciones (W/↑ A/← S/↓ D/→)
+- Iconos: Kenney Input Prompts (`public/assets/ui/qte/` — key_a/key_b + arrow_*)

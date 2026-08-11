@@ -2298,8 +2298,48 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 
 .stage-btn-a { border-color: var(--ki-blue); color: var(--ki-blue); }
 .stage-btn-b { border-color: var(--hp-red); color: var(--hp-red); }
+
+/* ─── Teclas del QTE (Kenney Input Prompts) ─── */
+.qte-key {
+  width: 34px; height: 34px;
+  image-rendering: pixelated;
+  display: block; margin: 0 auto;
+}
+.qte-key-label {
+  font-family: var(--fpx); font-size: 8px; letter-spacing: 2px;
+  margin-top: 3px; display: block;
+}
+.qte-key-mini {
+  width: 22px; height: 22px;
+  image-rendering: pixelated;
+  display: block;
+}
+.qte-key-sm {
+  width: 20px; height: 20px;
+  image-rendering: pixelated;
+  vertical-align: middle; margin-right: 4px;
+}
 .stage-btn-a:hover, .stage-btn-b:hover { transform: translateY(-2px); }
-.stage-btn-a:active, .stage-btn-b:active, .stage-btn-a.pressed, .stage-btn-b.pressed {
+/* Botones de dirección del QTE (WASD/flechas, como la cruceta del GBC) */
+.stage-btn-dir {
+  background: var(--panel-hi);
+  border: 3px solid var(--ki-blue);
+  border-bottom-color: #0a0e14;
+  color: var(--ki-blue);
+  font-family: var(--fpx);
+  font-size: 9px;
+  padding: 6px 8px;
+  letter-spacing: 1px;
+  cursor: pointer;
+  display: flex; flex-direction: column; align-items: center; gap: 2px;
+  min-width: 58px;
+  text-transform: uppercase;
+  box-shadow: 3px 3px 0 #000;
+  transition: transform 80ms, background 80ms;
+}
+.stage-btn-dir:hover { background: var(--ki-blue); color: #000; border-color: #7fd4ff; }
+.stage-btn-dir.pressed {
+  background: var(--ki-blue); color: #000;
   transform: translateY(3px);
   border-bottom-width: 3px;
   box-shadow: 0 0 0 rgba(0,0,0,.55), inset 2px 2px 0 rgba(0,0,0,.35);

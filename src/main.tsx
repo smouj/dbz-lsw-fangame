@@ -423,7 +423,8 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
   const [powerState, setPowerState] = useState<'NORMAL' | 'HALF_POWER' | 'FULL_POWER'>('NORMAL');
   const [gatherTurns, setGatherTurns] = useState(0);
   // Stage Attack: secuencia de inputs A/B a tiempo (mecánica real del GBC)
-  const [stageSeq, setStageSeq] = useState<('A' | 'B')[]>([]);
+  type StageKey = 'A' | 'B' | 'UP' | 'DOWN' | 'LEFT' | 'RIGHT';
+  const [stageSeq, setStageSeq] = useState<StageKey[]>([]);
   const [stageIdx, setStageIdx] = useState(0);
   const [stageCorrect, setStageCorrect] = useState(0);
   const [stageFailed, setStageFailed] = useState(false);
@@ -481,14 +482,25 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
   };
 
   // ═══ TECLADO FÍSICO: A/B para Stage Attacks (como el GBC pero con teclado) ═══
-  const [pressedKey, setPressedKey] = useState<'A' | 'B' | null>(null);
+  const [pressedKey, setPressedKey] = useState<StageKey | null>(null);
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       const k = e.key.toLowerCase();
       if (phase !== 'stageInput') return;
-      if (k !== 'a' && k !== 'b') return;
+      // WASD + flechas para direcciones; A/B para botones GBC.
+      // La interpretación depende de la tecla esperada en la secuencia:
+      // si se espera una dirección, 'a'/'d'/'w'/'s' y flechas → dirección;
+      // si se espera A/B, teclas a/b → botones.
+      let key: StageKey | null = null;
+      // PC (como el GBC): Q = botón A · E = botón B · WASD + flechas = cruceta
+      if (k === 'q') key = 'A';
+      else if (k === 'e') key = 'B';
+      else if (k === 'w' || e.key === 'ArrowUp') key = 'UP';
+      else if (k === 's' || e.key === 'ArrowDown') key = 'DOWN';
+      else if (k === 'a' || e.key === 'ArrowLeft') key = 'LEFT';
+      else if (k === 'd' || e.key === 'ArrowRight') key = 'RIGHT';
+      if (!key) return;
       e.preventDefault();
-      const key = k === 'a' ? 'A' : 'B';
       setPressedKey(key);
       setTimeout(() => setPressedKey(null), 120);
       if (stageFailed) {
@@ -581,7 +593,15 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
     else if (card.name.includes('5')) stages = 5;
     else if (card.name.includes('6')) stages = 6;
     // Gather Power convierte Basic 3 Stage → 4 Stage (ya manejado en BASIC)
-    const seq: ('A' | 'B')[] = Array.from({ length: stages }, () => Math.random() < 0.5 ? 'A' : 'B');
+    // Secuencia mixta como el GBC: 3 Stage = A/B (Q/E) puro; 4/5/6 Stage
+    // añaden desplazamiento (direcciones WASD/flechas) en las etapas finales.
+    const seq: StageKey[] = [];
+    const dirs: StageKey[] = ['UP', 'DOWN', 'LEFT', 'RIGHT'];
+    const dirSlots = stages - 3; // 4S:1, 5S:2, 6S:3
+    for (let i = 0; i < stages; i++) {
+      if (i >= stages - dirSlots) seq.push(dirs[Math.floor(Math.random() * dirs.length)]);
+      else seq.push(Math.random() < 0.5 ? 'A' : 'B');
+    }
     setStageSeq(seq);
     setStageIdx(0);
     setStageCorrect(0);
@@ -609,7 +629,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
   };
 
   // Input A o B del Stage Attack
-  const stageInput = (pressed: 'A' | 'B') => {
+  const stageInput = (pressed: StageKey) => {
     if (stageFailed) return;
     const expected = stageSeq[stageIdx];
     if (pressed === expected) {
@@ -1540,25 +1560,51 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
                 <div className="stage-prompts">
                   {stageSeq.map((s, i) => (
                     <span key={i} className={`stage-prompt ${i < stageIdx ? 'done' : i === stageIdx ? 'current' : ''} ${s}`}>
-                      {s}
+                      <img src={`/assets/ui/qte/${s === 'UP' ? 'arrow_up' : s === 'DOWN' ? 'arrow_down' : s === 'LEFT' ? 'arrow_left' : s === 'RIGHT' ? 'arrow_right' : s === 'A' ? 'key_a' : 'key_b'}.png`} alt={s} className="qte-key-mini" />
                     </span>
                   ))}
                 </div>
                 <div className="stage-timer" style={{ width: `${(stageTimeLeft / 1300) * 100}%` }} />
                 <div className="stage-actions">
-                  <button className={`stage-btn-a ${pressedKey === 'A' ? 'pressed' : ''}`} onClick={() => stageInput('A')}>A</button>
-                  <button className={`stage-btn-b ${pressedKey === 'B' ? 'pressed' : ''}`} onClick={() => stageInput('B')}>B</button>
+                  <button className={`stage-btn-a ${pressedKey === 'A' ? 'pressed' : ''}`} onClick={() => stageInput('A')}>
+                    <img src="/assets/ui/qte/key_a.png" alt="A" className="qte-key" />
+                    <span className="qte-key-label">A · Q</span>
+                  </button>
+                  <button className={`stage-btn-b ${pressedKey === 'B' ? 'pressed' : ''}`} onClick={() => stageInput('B')}>
+                    <img src="/assets/ui/qte/key_b.png" alt="B" className="qte-key" />
+                    <span className="qte-key-label">B · E</span>
+                  </button>
+                  <button className={`stage-btn-dir ${pressedKey === 'UP' ? 'pressed' : ''}`} onClick={() => stageInput('UP')}>
+                    <img src="/assets/ui/qte/arrow_up.png" alt="↑" className="qte-key" />
+                    <span className="qte-key-label">W / ↑</span>
+                  </button>
+                  <button className={`stage-btn-dir ${pressedKey === 'LEFT' ? 'pressed' : ''}`} onClick={() => stageInput('LEFT')}>
+                    <img src="/assets/ui/qte/arrow_left.png" alt="←" className="qte-key" />
+                    <span className="qte-key-label">A / ←</span>
+                  </button>
+                  <button className={`stage-btn-dir ${pressedKey === 'DOWN' ? 'pressed' : ''}`} onClick={() => stageInput('DOWN')}>
+                    <img src="/assets/ui/qte/arrow_down.png" alt="↓" className="qte-key" />
+                    <span className="qte-key-label">S / ↓</span>
+                  </button>
+                  <button className={`stage-btn-dir ${pressedKey === 'RIGHT' ? 'pressed' : ''}`} onClick={() => stageInput('RIGHT')}>
+                    <img src="/assets/ui/qte/arrow_right.png" alt="→" className="qte-key" />
+                    <span className="qte-key-label">D / →</span>
+                  </button>
                 </div>
-                <div className="stage-help">Pulsa el botón indicado a tiempo (+1 CC por acierto) · {t('battle.keyHint')}</div>
+                <div className="stage-help">A/B = Q/E · Direcciones = WASD o flechas — pulsa a tiempo (+1 CC por acierto)</div>
               </>
             ) : (
               <>
                 <div className="stage-fail">INPUT FAILED — {stageCorrect} CC ganados</div>
                 <div className="stage-recover">
-                  <button className={`stage-btn-a ${pressedKey === 'A' ? 'pressed' : ''}`} onClick={() => stageRecover(false)}>A: ABANDON</button>
-                  <button className={`stage-btn-b ${pressedKey === 'B' ? 'pressed' : ''}`} onClick={() => stageRecover(true)}>B: REPAIR</button>
+                  <button className={`stage-btn-a ${pressedKey === 'A' ? 'pressed' : ''}`} onClick={() => stageRecover(false)}>
+                    <img src="/assets/ui/qte/key_a.png" alt="A" className="qte-key-sm" /> A: ABANDON
+                  </button>
+                  <button className={`stage-btn-b ${pressedKey === 'B' ? 'pressed' : ''}`} onClick={() => stageRecover(true)}>
+                    <img src="/assets/ui/qte/key_b.png" alt="B" className="qte-key-sm" /> B: REPAIR
+                  </button>
                 </div>
-                <div className="stage-help">A = conservar CC y defender · B = reparar la cadena</div>
+                <div className="stage-help">A (Q) = conservar CC y defender · B (E) = reparar la cadena</div>
               </>
             )}
           </div>
