@@ -398,6 +398,13 @@ TURN N
   FighterState y DESPUÉS se resuelve la ofensiva enemiga con la nueva posición
   (no cancela el ataque). La posición NO se reinicia entre fases/turnos; el
   atacante no elige posición al empezar su Attack Phase.
+- **POSICIONES (4 por combatiente, spec posición)**: `UP_BACK / UP_FRONT /
+  DOWN_BACK / DOWN_FRONT` (UP=Aire vulnerable a Beam · DOWN=Suelo vulnerable a
+  Damage · BACK=defensa↑/ataque↓ · FRONT=ataque↑/defensa↓). Inicial NORMAL =
+  DOWN_BACK para ambos (borde propio). Persistente: solo cambia con MOVE en
+  Basic Defense. 8 anchors visuales (LEFT/RIGHT reflejados — BACK apunta al
+  borde propio). La distancia del QTE se DERIVA del par de posiciones
+  (FRONT+FRONT→close · BACK+BACK→far · mixto→mid). Implementado `f673fb9`.
 - **Gather Power** consume la Attack Phase completa (3 Stage → 4 Stage mientras
   powered; +4 STR/KI COMMUNITY_TESTED; duración exacta ROM_VERIFY).
 - **Guard** no es daño×0.5 fijo: HIT/BLOCK/EVADE con probabilidades (fórmula
