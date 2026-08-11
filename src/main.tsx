@@ -1,6 +1,7 @@
 /** @refresh reload */
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { createRoot } from 'react-dom/client';
+import { createPortal } from 'react-dom';
 import './styles.css';
 import { FORMS, CHARACTERS, getCharacter, getForm, idleSpriteUrl, statAtLevel, LIMIT_DEFAULTS, loadLimits, saveLimits } from './data/roster';
 import { STORY_ENEMY_DECKS, STORY_AI_BOOSTS, TEAM_BATTLES } from './data/enemy_decks';
@@ -342,6 +343,49 @@ function cardEffectSummary(effect: CardEffect): string {
 function cardCompatibilityLabel(card: CardDef): string {
   if (!card.compatible || card.compatible.length === 0) return 'All fighters';
   return card.compatible.map(id => characterName(id)).join(', ');
+}
+
+// ═══════════════════════════════════════════════════════════
+// TOOLTIP GLOBAL (portal) — nunca se corta por overflow/z-index
+// Cualquier elemento con `data-tip` muestra su texto al hover,
+// posicionado en el body con position:fixed (se adapta arriba/abajo).
+// ═══════════════════════════════════════════════════════════
+function GlobalTooltip() {
+  const [tip, setTip] = useState<{ text: string; x: number; y: number; dir: 'top' | 'bottom' } | null>(null);
+
+  useEffect(() => {
+    let cur: HTMLElement | null = null;
+    const onOver = (e: MouseEvent) => {
+      const t = (e.target as HTMLElement).closest?.('[data-tip]') as HTMLElement | null;
+      if (!t) { setTip(null); cur = null; return; }
+      if (cur === t) return;
+      cur = t;
+      const text = t.getAttribute('data-tip') || '';
+      if (!text) { setTip(null); return; }
+      const r = t.getBoundingClientRect();
+      const dir: 'top' | 'bottom' = r.top > 150 ? 'top' : 'bottom';
+      setTip({ text, x: r.left + r.width / 2, y: dir === 'top' ? r.top : r.bottom, dir });
+    };
+    const onOut = (e: MouseEvent) => {
+      const t = (e.target as HTMLElement).closest?.('[data-tip]') as HTMLElement | null;
+      if (!t) { setTip(null); cur = null; return; }
+      const related = (e as MouseEvent).relatedTarget as HTMLElement | null;
+      if (!related || !related.closest?.('[data-tip]') || related.closest('[data-tip]') !== t) {
+        setTip(null); cur = null;
+      }
+    };
+    document.addEventListener('mouseover', onOver);
+    document.addEventListener('mouseout', onOut);
+    return () => { document.removeEventListener('mouseover', onOver); document.removeEventListener('mouseout', onOut); };
+  }, []);
+
+  if (!tip) return null;
+  const MAX_W = 300;
+  const left = Math.max(8, Math.min(tip.x - MAX_W / 2, window.innerWidth - MAX_W - 8));
+  return createPortal(
+    <div className={`global-tooltip dir-${tip.dir}`} style={{ left, top: tip.y }}>{tip.text}</div>,
+    document.body
+  );
 }
 
 // ─── Mano ─────────────────────────────────────────────────
@@ -2006,7 +2050,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
       {/* HUD */}
       <div className="hud-top">
         <div className="fighter-hud left">
-          <div className="hud-name">
+          <div className="hud-name" data-tip={`${player.name} — ${player.form} LV${player.level}\nHP ${player.hp}/${player.maxHp} · STR${player.str} KI${player.ki} SPD${player.spd}\nPOS: ${player.battlePos.replace('_', ' ')}`}>
             <span className="hud-portrait">
               <img src={portraitFor(player.id, playerFormId) || ''} alt="" onError={e => (e.currentTarget.style.display = 'none')} />
               {!portraitFor(player.id) && <Sword size={14} />}
@@ -2047,7 +2091,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
           )}
         </div>
         <div className="fighter-hud right">
-          <div className="hud-name">
+          <div className="hud-name" data-tip={`${enemy.name} — ${enemy.form} LV${enemy.level}\nHP ${enemy.hp}/${enemy.maxHp} · STR${enemy.str} KI${enemy.ki} SPD${enemy.spd}\nPOS: ${enemy.battlePos.replace('_', ' ')}`}>
             <span className="hud-portrait">
               <img src={portraitFor(enemy.id, enemyFormId) || ''} alt="" onError={e => (e.currentTarget.style.display = 'none')} />
               {!portraitFor(enemy.id) && <Shield size={14} />}
@@ -3728,6 +3772,7 @@ export default function App() {
   return (
     <LanguageProvider>
       <AppInner />
+      <GlobalTooltip />
     </LanguageProvider>
   );
 }

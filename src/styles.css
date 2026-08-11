@@ -1175,18 +1175,14 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   backdrop-filter: none;
 }
 
-/* Tooltip pixel (descripciones de botón fuera del texto) */
-[data-tip] {
-  position: relative;
-}
-[data-tip]:hover::after {
-  content: attr(data-tip);
-  position: absolute;
-  bottom: calc(100% + 8px);
-  left: 50%;
+/* Tooltip GLOBAL (portal, position:fixed) — nunca se corta por overflow */
+.global-tooltip {
+  position: fixed;
   transform: translateX(-50%);
+  z-index: 10000;
+  pointer-events: none;
   background: rgba(5,8,14,.97);
-  border: 1px solid rgba(246,199,68,.45);
+  border: 1px solid rgba(246,199,68,.5);
   color: #ffe9a3;
   font-family: var(--fpx);
   font-size: 8px;
@@ -1195,22 +1191,26 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   padding: 6px 10px;
   white-space: pre;
   max-width: min(300px, 64vw);
-  z-index: 70;
-  pointer-events: none;
-  box-shadow: 0 4px 14px rgba(0,0,0,.55);
+  box-shadow: 0 6px 18px rgba(0,0,0,.6);
   image-rendering: pixelated;
   text-align: center;
   text-shadow: 1px 1px 0 #000;
 }
-[data-tip]:hover::before {
+/* Flecha según dirección (dir-top: tooltip encima → flecha abajo; dir-bottom: al revés) */
+.global-tooltip::before {
   content: '';
   position: absolute;
-  bottom: calc(100% + 3px);
   left: 50%;
   transform: translateX(-50%);
   border: 5px solid transparent;
-  border-top-color: rgba(246,199,68,.45);
-  z-index: 61;
+}
+.global-tooltip.dir-top::before {
+  top: 100%;
+  border-top-color: rgba(246,199,68,.5);
+}
+.global-tooltip.dir-bottom::before {
+  bottom: 100%;
+  border-bottom-color: rgba(246,199,68,.5);
 }
 
 .battle-controls .hand-cards .card {
@@ -1364,7 +1364,8 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 .command-strip { display: flex; gap: 6px; justify-content: center; align-items: stretch; }
 
 .command-strip button {
-  /* Marco GBC auténtico (48×40 de la ROM) escalado 1.5× pixelado — cabe en el HUD */
+  /* Marco GBC auténtico (48×40 de la ROM): interior claro, letra OSCURA dentro
+     (como el GBC real — texto negro sobre fondo claro del marco). */
   --btn-frame: url('/assets/ui/hud_buttons/frame_blue.png');
   background-image: var(--btn-frame);
   background-size: 100% 100%;
@@ -1372,16 +1373,16 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   image-rendering: pixelated;
   background-color: transparent;
   border: none;
-  color: #fff;
+  color: #0a1018;
   font-family: var(--fpx);
-  font-size: 18px;
-  letter-spacing: 1px;
-  text-shadow: 1px 1px 0 rgba(0,0,0,.9);
+  font-size: 15px;
+  letter-spacing: .5px;
+  text-shadow: none;
   width: 72px;
   height: 60px;
   padding: 0;
   cursor: pointer;
-  filter: drop-shadow(0 3px 6px rgba(0,0,0,.5));
+  filter: drop-shadow(0 3px 6px rgba(0,0,0,.55));
   transition: transform 80ms, filter 80ms;
 }
 
@@ -1389,39 +1390,42 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 .command-strip button .cmd-key {
   display: block;
   font-family: var(--fepic);
-  font-size: 24px;
+  font-size: 22px;
   line-height: 1;
-  margin-top: 2px;
+  margin-top: 3px;
+  color: #0a1018;
+  text-shadow: 1px 1px 0 rgba(255,255,255,.28);
 }
 .command-strip button .cmd-name {
   display: block;
   font-family: var(--fpx);
-  font-size: 7px;
+  font-size: 6.5px;
   letter-spacing: 2px;
-  opacity: .92;
-  margin-top: 3px;
+  opacity: .8;
+  margin-top: 2px;
+  color: #0a1018;
 }
 
 .command-strip button:hover:not(:disabled) {
   transform: translateY(-2px);
-  filter: drop-shadow(0 5px 10px rgba(0,0,0,.6)) brightness(1.15);
+  filter: drop-shadow(0 5px 10px rgba(0,0,0,.65)) brightness(1.12);
 }
 
 .command-strip button:active:not(:disabled) { transform: translateY(1px) scale(0.97); }
-.command-strip button:disabled { opacity: 0.28; cursor: not-allowed; filter: grayscale(.6); }
+.command-strip button:disabled { opacity: 0.35; cursor: not-allowed; filter: grayscale(.7); }
 
-/* Botones con marco y letra propia */
-.cmd-limit { --btn-frame: url('/assets/ui/hud_buttons/frame_gold.png'); }
-.cmd-limit .cmd-key { color: #ffe9a3; }
-.cmd-b { --btn-frame: url('/assets/ui/hud_buttons/frame_blue.png'); }
-.cmd-b .cmd-key { color: #bfe4ff; }
+/* Botones con marco y letra propia (texto oscuro sobre interior claro del marco)
+   ⚠️ Especificidad: `.command-strip button` = 0,1,1 → las variantes necesitan 0,2,1
+   para que `--btn-frame` gane la cascada. */
+.command-strip button.cmd-limit { --btn-frame: url('/assets/ui/hud_buttons/frame_gold.png'); }
+.command-strip button.cmd-b { --btn-frame: url('/assets/ui/hud_buttons/frame_blue.png'); }
 
 /* Botones con texto GBC ya incluido (JOINT / CHARA): solo icono */
-.cmd-j { --btn-frame: url('/assets/ui/hud_buttons/joint_green.png'); }
-.cmd-j .cmd-key, .cmd-j .cmd-name { display: none; }
-.cmd-c { --btn-frame: url('/assets/ui/hud_buttons/chara_joint.png'); }
-.cmd-c .cmd-key, .cmd-c .cmd-name { display: none; }
-.cmd-c.has-ally { animation: sel-blink 1.2s infinite alternate; }
+.command-strip button.cmd-j { --btn-frame: url('/assets/ui/hud_buttons/joint_green.png'); }
+.command-strip button.cmd-j .cmd-key, .command-strip button.cmd-j .cmd-name { display: none; }
+.command-strip button.cmd-c { --btn-frame: url('/assets/ui/hud_buttons/chara_joint.png'); }
+.command-strip button.cmd-c .cmd-key, .command-strip button.cmd-c .cmd-name { display: none; }
+.command-strip button.cmd-c.has-ally { animation: sel-blink 1.2s infinite alternate; }
 
 /* ─── Mano de cartas ─── */
 
