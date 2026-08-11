@@ -1448,6 +1448,29 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 
 .deck-row-remove:hover { color: #ff4040; }
 
+/* Móvil: el mazo apila colección arriba y deck actual debajo (sin solapes) */
+@media (max-width: 900px) {
+  .deck-layout {
+    grid-template-columns: 1fr;
+    grid-template-rows: minmax(0, 1fr) minmax(180px, auto);
+    overflow-y: auto;
+  }
+  .deck-collection { min-height: 0; }
+  .card-collection-grid { overflow-y: auto; }
+  .deck-current { min-height: 0; overflow-y: auto; }
+}
+
+/* Móvil: Characters y Versus apilan grid + detalle (sin colapsos) */
+@media (max-width: 900px) {
+  .characters-layout, .versus-layout {
+    grid-template-columns: 1fr;
+    grid-template-rows: minmax(0, 1fr) minmax(220px, auto);
+    overflow-y: auto;
+  }
+  .char-grid { min-height: 0; overflow-y: auto; }
+  .char-detail { min-height: 0; overflow-y: auto; }
+}
+
 /* ─── Cards Screen ─── */
 
 .cards-screen { background: var(--panel-lo); }
@@ -1588,6 +1611,58 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   font-family: var(--fpx);
   font-size: 10px;
   animation: sel-blink 0.8s infinite alternate;
+}
+
+/* ─── Story: progreso + presentación mejorada ─── */
+.story-progress {
+  display: flex; align-items: center; gap: 8px;
+}
+.story-progress-num {
+  font-family: var(--fpx); font-size: 9px;
+  color: var(--gold); letter-spacing: 1px;
+  text-shadow: 1px 1px 0 #000;
+}
+.story-progress-bar {
+  width: 90px; height: 10px;
+  background: var(--panel-lo);
+  border: 2px solid var(--border-lo);
+  box-shadow: inset 1px 1px 0 rgba(0,0,0,.5);
+  overflow: hidden;
+}
+.story-progress-bar span {
+  display: block; height: 100%;
+  background: linear-gradient(90deg, var(--gold-dk), var(--gold));
+  transition: width 0.4s ease;
+}
+.chapter-boss {
+  width: 34px; height: 34px;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--panel-lo);
+  border: 2px solid var(--border-lo);
+  box-shadow: inset 1px 1px 0 rgba(0,0,0,.5);
+  flex-shrink: 0;
+}
+.chapter-boss-sprite {
+  image-rendering: pixelated;
+  max-width: 100%; max-height: 100%;
+  object-fit: contain;
+}
+.chapter-boss-none {
+  font-family: var(--fpx); font-size: 12px; color: var(--dim);
+}
+.chapter-node.done .chapter-boss { border-color: rgba(64,184,72,.5); }
+.chapter-node.done .chapter-icon { background: var(--hp-green); border-color: #2a8030; }
+.chapter-status {
+  display: flex; align-items: center; justify-content: center;
+  min-width: 22px;
+}
+.chapter-done-tag {
+  color: var(--hp-green); font-size: 14px;
+  text-shadow: 1px 1px 0 #000;
+}
+.chapter-num-tag {
+  font-family: var(--fpx); font-size: 8px; color: var(--dim);
+  letter-spacing: 1px;
 }
 
 @keyframes sel-blink { 0% { opacity: 0.4; } 100% { opacity: 1; } }
@@ -2306,6 +2381,60 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   40% { transform: translateX(46px) scale(1.06); }
   100% { transform: translateX(0); }
 }
+
+/* ─── QTE: prompt ÚNICO grande (solo teclado, sin botones) ─── */
+.stage-prompt-big {
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+  padding: 14px 22px;
+  border: 3px solid var(--ki-blue);
+  background: rgba(6, 14, 28, 0.92);
+  box-shadow: 3px 3px 0 #000, 0 0 22px rgba(70, 170, 255, 0.25);
+  animation: prompt-pop 0.28s cubic-bezier(.2, 1.4, .4, 1) both;
+}
+@keyframes prompt-pop {
+  from { opacity: 0; transform: scale(0.6); }
+  to { opacity: 1; transform: scale(1); }
+}
+.stage-prompt-big.correct {
+  border-color: #6dff8a;
+  background: rgba(8, 40, 18, 0.95);
+  box-shadow: 3px 3px 0 #000, 0 0 26px rgba(109, 255, 138, 0.5);
+  animation: prompt-flash-correct 0.3s ease-out;
+}
+@keyframes prompt-flash-correct {
+  0% { transform: scale(1.25); }
+  100% { transform: scale(1); }
+}
+.stage-prompt-big.wrong {
+  border-color: var(--hp-red);
+  background: rgba(44, 8, 8, 0.95);
+  box-shadow: 3px 3px 0 #000, 0 0 26px rgba(255, 70, 70, 0.5);
+  animation: prompt-shake 0.3s ease-out;
+}
+@keyframes prompt-shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-8px); }
+  50% { transform: translateX(7px); }
+  75% { transform: translateX(-5px); }
+}
+.qte-key-big {
+  width: 74px; height: 74px;
+  image-rendering: pixelated;
+  display: block;
+}
+.stage-prompt-label {
+  font-family: var(--fpx); font-size: 11px; letter-spacing: 3px;
+  color: #9fd8ff; text-shadow: 2px 2px 0 #000;
+}
+.stage-recover-help {
+  display: flex; gap: 18px; justify-content: center;
+}
+.stage-recover-prompt {
+  display: flex; align-items: center; gap: 6px;
+  font-family: var(--fpx); font-size: 10px; letter-spacing: 2px;
+  color: #ffd76a; text-shadow: 2px 2px 0 #000;
+}
+.stage-recover-prompt img { filter: drop-shadow(2px 2px 0 #000); }
 
 /* ─── Teclas del QTE (Kenney Input Prompts) ─── */
 .qte-key {

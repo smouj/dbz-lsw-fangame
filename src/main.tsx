@@ -486,8 +486,16 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
 
   // ═══ TECLADO FÍSICO: A/B para Stage Attacks (como el GBC pero con teclado) ═══
   const [pressedKey, setPressedKey] = useState<StageKey | null>(null);
+  const [stageFeedback, setStageFeedback] = useState<'correct' | 'wrong' | null>(null);
+  const fbTimer = useRef<number | null>(null);
+  const flashFeedback = (type: 'correct' | 'wrong') => {
+    setStageFeedback(type);
+    if (fbTimer.current) clearTimeout(fbTimer.current);
+    fbTimer.current = window.setTimeout(() => setStageFeedback(null), 300);
+  };
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
+      if (e.repeat) return; // no se puede repetir el input
       const k = e.key.toLowerCase();
       if (phase !== 'stageInput') return;
       // WASD + flechas para direcciones; A/B para botones GBC.
@@ -612,9 +620,9 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
     setStageCard(card);
     setViewMode('ACTION');
     setPhase('stageInput');
-    // Ventana por distancia (tiempo humano): cerca ~2000ms, lejos ~1400ms
-    const dist = player.position === 'front' ? (player.elevation === 'air' ? 1 : 2) : (player.elevation === 'air' ? 3 : 4);
-    const window = Math.max(1400, 2200 - dist * 200);
+    // Ventana por INPUT (decisión del usuario): 3 Stage = 5.0s; cada stage
+    // superior baja 0.1s (4S: 4.9s · 5S: 4.8s · 6S: 4.7s)
+    const window = (5000 - (stages - 3) * 100);
     setStageTimeLeft(window);
     if (stageTimer.current) clearInterval(stageTimer.current);
     stageTimer.current = setInterval(() => {
@@ -641,6 +649,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
       const newCorrect = stageCorrect + 1;
       setStageCorrect(newCorrect);
       setPlayer(prev => ({ ...prev, cc: Math.min(prev.maxCc, prev.cc + 1) }));
+      flashFeedback('correct');
       const next = stageIdx + 1;
       if (next >= stageSeq.length) {
         // Secuencia completada
@@ -651,9 +660,11 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
         finishStageAttack(stageCard!, true, newCorrect);
       } else {
         setStageIdx(next);
+        setStageTimeLeft(5000 - (stageSeq.length - 3) * 100); // tiempo por input
       }
     } else {
-      // Fallo: ventana A=abandonar / B=reparar (mantener CC acumulado)
+      // Fallo: tecla equivocada
+      flashFeedback('wrong');
       if (stageTimer.current) clearInterval(stageTimer.current);
       setStageFailed(true);
       Sfx.cancel();
@@ -1565,54 +1576,28 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
             </div>
             {!stageFailed ? (
               <>
-                <div className="stage-prompts">
-                  {stageSeq.map((s, i) => (
-                    <span key={i} className={`stage-prompt ${i < stageIdx ? 'done' : i === stageIdx ? 'current' : ''} ${s}`}>
-                      <img src={`/assets/ui/qte/${s === 'UP' ? 'arrow_up' : s === 'DOWN' ? 'arrow_down' : s === 'LEFT' ? 'arrow_left' : s === 'RIGHT' ? 'arrow_right' : s === 'A' ? 'key_a' : 'key_b'}.png`} alt={s} className="qte-key-mini" />
-                    </span>
-                  ))}
+                {/* Prompt ÚNICO: solo lo que hay que pulsar (teclado, sin botones) */}
+                <div key={stageIdx} className={`stage-prompt-big ${stageFeedback ?? ''} ${curKey}`}>
+                  <img src={`/assets/ui/qte/${curKey === 'UP' ? 'arrow_up' : curKey === 'DOWN' ? 'arrow_down' : curKey === 'LEFT' ? 'arrow_left' : curKey === 'RIGHT' ? 'arrow_right' : curKey === 'A' ? 'key_q' : 'key_e'}.png`} alt={curKey} className="qte-key-big" />
+                  <span className="stage-prompt-label">
+                    {curKey === 'UP' ? 'W / ↑' : curKey === 'DOWN' ? 'S / ↓' : curKey === 'LEFT' ? 'A / ←' : curKey === 'RIGHT' ? 'D / →' : curKey === 'A' ? 'Q' : 'E'}
+                  </span>
                 </div>
-                <div className="stage-timer" style={{ width: `${(stageTimeLeft / 1300) * 100}%` }} />
-                <div className="stage-actions">
-                  <button className={`stage-btn-a ${pressedKey === 'A' ? 'pressed' : ''}`} onClick={() => stageInput('A')}>
-                    <img src="/assets/ui/qte/key_a.png" alt="A" className="qte-key" />
-                    <span className="qte-key-label">A · Q</span>
-                  </button>
-                  <button className={`stage-btn-b ${pressedKey === 'B' ? 'pressed' : ''}`} onClick={() => stageInput('B')}>
-                    <img src="/assets/ui/qte/key_b.png" alt="B" className="qte-key" />
-                    <span className="qte-key-label">B · E</span>
-                  </button>
-                  <button className={`stage-btn-dir ${pressedKey === 'UP' ? 'pressed' : ''}`} onClick={() => stageInput('UP')}>
-                    <img src="/assets/ui/qte/arrow_up.png" alt="↑" className="qte-key" />
-                    <span className="qte-key-label">W / ↑</span>
-                  </button>
-                  <button className={`stage-btn-dir ${pressedKey === 'LEFT' ? 'pressed' : ''}`} onClick={() => stageInput('LEFT')}>
-                    <img src="/assets/ui/qte/arrow_left.png" alt="←" className="qte-key" />
-                    <span className="qte-key-label">A / ←</span>
-                  </button>
-                  <button className={`stage-btn-dir ${pressedKey === 'DOWN' ? 'pressed' : ''}`} onClick={() => stageInput('DOWN')}>
-                    <img src="/assets/ui/qte/arrow_down.png" alt="↓" className="qte-key" />
-                    <span className="qte-key-label">S / ↓</span>
-                  </button>
-                  <button className={`stage-btn-dir ${pressedKey === 'RIGHT' ? 'pressed' : ''}`} onClick={() => stageInput('RIGHT')}>
-                    <img src="/assets/ui/qte/arrow_right.png" alt="→" className="qte-key" />
-                    <span className="qte-key-label">D / →</span>
-                  </button>
-                </div>
-                <div className="stage-help">Q = puñetazo · E = patada · WASD/flechas = golpe que desplaza — pulsa a tiempo (+1 CC)</div>
+                <div className="stage-timer" style={{ width: `${(stageTimeLeft / (5000 - (stageSeq.length - 3) * 100)) * 100}%` }} />
+                <div className="stage-help">Q = puñetazo · E = patada · flechas/WASD = desplazamiento — pulsa a tiempo (+1 CC)</div>
               </>
             ) : (
               <>
                 <div className="stage-fail">INPUT FAILED — {stageCorrect} CC ganados</div>
-                <div className="stage-recover">
-                  <button className={`stage-btn-a ${pressedKey === 'A' ? 'pressed' : ''}`} onClick={() => stageRecover(false)}>
-                    <img src="/assets/ui/qte/key_a.png" alt="A" className="qte-key-sm" /> A: ABANDON
-                  </button>
-                  <button className={`stage-btn-b ${pressedKey === 'B' ? 'pressed' : ''}`} onClick={() => stageRecover(true)}>
-                    <img src="/assets/ui/qte/key_b.png" alt="B" className="qte-key-sm" /> B: REPAIR
-                  </button>
+                <div className="stage-recover-help">
+                  <div className="stage-recover-prompt">
+                    <img src="/assets/ui/qte/key_q.png" alt="Q" className="qte-key-sm" /> ABANDONAR
+                  </div>
+                  <div className="stage-recover-prompt">
+                    <img src="/assets/ui/qte/key_e.png" alt="E" className="qte-key-sm" /> REPARAR
+                  </div>
                 </div>
-                <div className="stage-help">A (Q) = conservar CC y defender · B (E) = reparar la cadena</div>
+                <div className="stage-help">Q = abandonar y defender · E = reparar la cadena</div>
               </>
             )}
           </div>
@@ -1908,27 +1893,43 @@ function StoryScreen({ onNavigate, onStartChapter }: {
     onStartChapter(ch.enemy, ch.id);
   };
 
+  const total = CHAPTERS.length;
+  const pct = Math.round((progress / total) * 100);
   return (
     <div className="page-screen story-screen">
       <div className="page-header">
         <button className="btn-back" onClick={() => onNavigate('main')}><ArrowLeft size={14} /></button>
         <h1 className="page-title">{t('story.title')}</h1>
-        <div className="page-spacer" />
+        <div className="story-progress">
+          <span className="story-progress-num">{progress}/{total}</span>
+          <span className="story-progress-bar"><span style={{ width: `${pct}%` }} /></span>
+        </div>
       </div>
       <div className="story-map">
         {CHAPTERS.map(ch => {
           const unlocked = ch.id <= progress;
           const isSel = ch.id === selected;
+          const done = ch.id < progress;
+          const boss = overworldUrl(ch.enemy);
           return (
             <div key={ch.id}
-              className={`chapter-node ${isSel ? 'active' : ''} ${unlocked ? 'unlocked' : 'locked'}`}
+              className={`chapter-node ${isSel ? 'active' : ''} ${unlocked ? 'unlocked' : 'locked'} ${done ? 'done' : ''}`}
               onClick={() => unlocked && setSelected(ch.id)}>
               <div className="chapter-icon">{unlocked ? ch.id : <Lock size={14} />}</div>
+              <div className="chapter-boss">
+                {unlocked && boss
+                  ? <img src={boss} alt="" className="chapter-boss-sprite" />
+                  : <div className="chapter-boss-none">?</div>}
+              </div>
               <div className="chapter-info">
                 <div className="chapter-name">{t(ch.nameKey)}</div>
                 <div className="chapter-desc">{unlocked ? t(ch.descKey) : t('story.notUnlocked')}</div>
               </div>
-              {unlocked && isSel && <div className="chapter-select"><ChevronRight size={14} /></div>}
+              <div className="chapter-status">
+                {done ? <span className="chapter-done-tag">✓</span>
+                  : isSel ? <ChevronRight size={14} />
+                  : <span className="chapter-num-tag">{String(ch.id).padStart(2, '0')}</span>}
+              </div>
             </div>
           );
         })}
@@ -2072,7 +2073,6 @@ function DeckScreen({ onNavigate }: { onNavigate: (s: Screen) => void }) {
   const [deck, setDeck] = useState<number[]>(loadDeck);
   const [filter, setFilter] = useState<CardType | 'all'>('all');
   const [search, setSearch] = useState('');
-  const [showAll, setShowAll] = useState(false);
   const owned = ownedCards(loadUnlocks(), loadProgress().level);
 
   // Persist deck on change
@@ -2097,7 +2097,7 @@ function DeckScreen({ onNavigate }: { onNavigate: (s: Screen) => void }) {
   };
 
   const filtered = CARDS.filter(c =>
-    (showAll || owned.has(c.id)) &&
+    owned.has(c.id) &&
     (filter === 'all' || c.type === filter) &&
     (search === '' || c.name.toLowerCase().includes(search.toLowerCase())) &&
     (deckCounts[c.id] || 0) < MAX_COPIES
@@ -2117,14 +2117,6 @@ function DeckScreen({ onNavigate }: { onNavigate: (s: Screen) => void }) {
           <div className="deck-toolbar">
             <input className="deck-search" placeholder={t('deck.search')} value={search}
               onChange={e => setSearch(e.target.value)} />
-            <div className="deck-owned-toggle">
-              <button className={`filter-chip ${!showAll ? 'active' : ''}`} onClick={() => setShowAll(false)}>
-                OWNED
-              </button>
-              <button className={`filter-chip ${showAll ? 'active' : ''}`} onClick={() => setShowAll(true)}>
-                ALL
-              </button>
-            </div>
             <div className="deck-filters">
               {(['all', 'command', 'damage', 'beam', 'support', 'defense', 'special'] as const).map(tp => (
                 <button key={tp} className={`filter-chip ${filter === tp ? 'active' : ''}`}
@@ -2133,15 +2125,9 @@ function DeckScreen({ onNavigate }: { onNavigate: (s: Screen) => void }) {
             </div>
           </div>
           <div className="card-collection-grid">
-            {filtered.map(card => {
-              const isOwned = owned.has(card.id);
-              return (
-                <div key={card.id} className={isOwned ? '' : 'card-not-owned-wrap'}>
-                  <CardVisual key={card.id} card={card} onClick={() => addCard(card)} small />
-                  {!isOwned && <div className="card-not-owned-tag">???</div>}
-                </div>
-              );
-            })}
+            {filtered.map(card => (
+              <CardVisual key={card.id} card={card} onClick={() => addCard(card)} small />
+            ))}
           </div>
         </div>
 

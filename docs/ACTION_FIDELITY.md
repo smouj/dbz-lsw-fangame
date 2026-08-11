@@ -474,5 +474,6 @@ El Stage Attack en PC replica el GBC con este mapeo:
 - **4/5/6 Stage**: las etapas finales (1/2/3 según nivel) son de
   desplazamiento (direcciones WASD/flechas), el resto A/B — como el GBC
 - Recuperación tras fallo: A (Q) = ABANDON · B (E) = REPAIR
-- Botones en pantalla (click): A·Q, B·E, y las 4 direcciones (W/↑ A/← S/↓ D/→)
-- Iconos: Kenney Input Prompts (`public/assets/ui/qte/` — key_a/key_b + arrow_*)
+- Botones en pantalla (click): **Q** (puñetazo), **E** (patada), y las 4
+  direcciones con flechas (↑←↓→ — también acepta WASD, cuenta igual)
+- Iconos: Kenney Input Prompts (`public/assets/ui/qte/` — key_q/key_e + arrow_*)
