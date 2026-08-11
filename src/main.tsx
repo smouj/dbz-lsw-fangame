@@ -36,6 +36,8 @@ interface CharManifest {
 }
 
 type BattleSpritePose = 'idle' | 'move' | 'guard' | 'attack_fwd' | 'attack_ud' | 'hurt' | 'beam_charge' | 'beam_fire' | 'power_up';
+const SPRITE_MANIFEST_CACHE = new Map<string, CharManifest>();
+const SPRITE_MANIFEST_PROMISES = new Map<string, Promise<CharManifest | null>>();
 
 const POSE_FALLBACKS: Record<BattleSpritePose, BattleSpritePose[]> = {
   idle: ['idle'],
@@ -129,16 +131,35 @@ const BATTLE_DECK: CardDef[] = [
 // ─── Animación de sprites (Sprite Database completa, 42 personajes) ───
 function useSpriteAnim(formId: string, pose: string): { src: string; w: number; h: number } | null {
   const [frameIdx, setFrameIdx] = useState(0);
-  const [manifest, setManifest] = useState<CharManifest | null>(null);
+  const [manifest, setManifest] = useState<CharManifest | null>(() => SPRITE_MANIFEST_CACHE.get(formId) ?? null);
   const activePose = manifest ? resolveManifestPose(manifest, pose) : null;
 
   useEffect(() => {
     const url = spriteManifestUrl(formId);
     if (!url) { setManifest(null); return; }
-    fetch(url)
-      .then(r => r.json())
-      .then(setManifest)
-      .catch(() => setManifest(null));
+    const cached = SPRITE_MANIFEST_CACHE.get(formId);
+    if (cached) { setManifest(cached); return; }
+
+    let cancelled = false;
+    let promise = SPRITE_MANIFEST_PROMISES.get(formId);
+    if (!promise) {
+      promise = fetch(url)
+        .then(r => r.ok ? r.json() as Promise<CharManifest> : null)
+        .then(m => {
+          if (m) SPRITE_MANIFEST_CACHE.set(formId, m);
+          SPRITE_MANIFEST_PROMISES.delete(formId);
+          return m;
+        })
+        .catch(() => {
+          SPRITE_MANIFEST_PROMISES.delete(formId);
+          return null;
+        });
+      SPRITE_MANIFEST_PROMISES.set(formId, promise);
+    }
+    promise.then(m => {
+      if (!cancelled) setManifest(m);
+    });
+    return () => { cancelled = true; };
   }, [formId]);
 
   useEffect(() => {
@@ -571,6 +592,13 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
     const setTargetPose = (pose: BattleSpritePose) => side === 'player' ? setEnemyPose(pose) : setPlayerPose(pose);
     const resetActorPose = () => side === 'player' ? setPlayerPose('idle') : setEnemyPose('idle');
     const resetTargetPose = () => side === 'player' ? setEnemyPose('idle') : setPlayerPose('idle');
+    const finishCinematic = () => {
+      setCardFx(null);
+      setViewMode('OVERVIEW');
+      resetActorPose();
+      resetTargetPose();
+      cinematicTimers.current.push(window.setTimeout(onDone, gbcMs(1)));
+    };
 
     setViewMode('ACTION');
     setActorPose(cardBattlePose(card, 'field'));
@@ -585,10 +613,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
 
     if (!hasTargetCut) {
       cinematicTimers.current.push(window.setTimeout(() => {
-        setCardFx(null);
-        setViewMode('OVERVIEW');
-        resetActorPose();
-        onDone();
+        finishCinematic();
       }, presentationMs(card)));
       return;
     }
@@ -605,11 +630,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
     }, gbcMs(attackerFrames + travelFrames)));
 
     cinematicTimers.current.push(window.setTimeout(() => {
-      setCardFx(null);
-      setViewMode('OVERVIEW');
-      resetActorPose();
-      resetTargetPose();
-      onDone();
+      finishCinematic();
     }, gbcMs(attackerFrames + travelFrames + targetFrames)));
   };
 
@@ -962,41 +983,46 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
     const card = st.card;
     const complete = st.result === 'FULL_SUCCESS' || st.result === 'RECOVERED_SUCCESS';
     const ccGained = st.correct;
-    if (complete) {
-      const pPos = player.battlePos;
-      const ePos = enemy.battlePos;
-      const vulnerable = (isBeamVulnerable(pPos) && card.type === 'beam') || (isDamageVulnerable(pPos) && card.type === 'damage');
-      const posMult = (POSITION_DATA[ePos].depth === 'FRONT' && vulnerable) ? 0.8 : 0.5;
-      const dmg = Math.floor((card.atk + player.str) * posMult);
-      setEnemy(prev => ({ ...prev, hp: Math.max(0, prev.hp - dmg) }));
-      setFlashEnemy(true);
-      hitImpact('enemy');
-      setDamageNums(prev => [...prev, { value: dmg, type: 'damage', ...dmgPos('enemy'), id: Date.now() }]);
-      addLog(`${player.name} → ${card.name} — ${dmg} ${t('battle.dmg')}`);
-      Sfx.hit();
-      setTimeout(() => setFlashEnemy(false), 150);
-      if (enemy.hp - dmg <= 0 && enemy2) {
-        const fallen = enemy.name;
-        const next = enemy2;
-        setEnemy(next);
-        setEnemy2(null);
-        setEnemyPose('idle');
-        addLog(`${fallen} K.O.! ${next.name} entra al combate!`);
-        setTimeout(() => finishPlayerTurnStage(ccGained), 900);
-        return;
-      }
-      if (enemy.hp - dmg <= 0) {
-        setTimeout(() => { setEnemyPose('hurt'); setPhase('win'); Sfx.victory(); addLog(`${enemy.name} ${t('battle.defeated')}`); }, 500);
-        return;
-      }
-    } else {
-      // SAFE_ABORT / FAILURE: sin daño de HP (spec §7/§13); el CC ganado se conserva
-      addLog(`${player.name} no completa el ataque (${ccGained} CC ganados)`);
-    }
+
+    setStageQte({ state: 'WAITING', seq: [], idx: 0, correct: 0, card: null, elapsedFrames: 0, limitFrames: 0, recoveryFrames: 0, forcedFailure: null, result: null });
+    setViewMode('OVERVIEW');
     setPhase('cardSelect');
     setTimeout(() => {
-      finishPlayerTurnStage(ccGained);
-    }, 500);
+      if (complete) {
+        const pPos = player.battlePos;
+        const ePos = enemy.battlePos;
+        const vulnerable = (isBeamVulnerable(pPos) && card.type === 'beam') || (isDamageVulnerable(pPos) && card.type === 'damage');
+        const posMult = (POSITION_DATA[ePos].depth === 'FRONT' && vulnerable) ? 0.8 : 0.5;
+        const dmg = Math.floor((card.atk + player.str) * posMult);
+        setEnemy(prev => ({ ...prev, hp: Math.max(0, prev.hp - dmg) }));
+        setFlashEnemy(true);
+        hitImpact('enemy');
+        setDamageNums(prev => [...prev, { value: dmg, type: 'damage', ...dmgPos('enemy'), id: Date.now() }]);
+        addLog(`${player.name} → ${card.name} — ${dmg} ${t('battle.dmg')}`);
+        Sfx.hit();
+        setTimeout(() => setFlashEnemy(false), 150);
+        if (enemy.hp - dmg <= 0 && enemy2) {
+          const fallen = enemy.name;
+          const next = enemy2;
+          setEnemy(next);
+          setEnemy2(null);
+          setEnemyPose('idle');
+          addLog(`${fallen} K.O.! ${next.name} entra al combate!`);
+          setTimeout(() => finishPlayerTurnStage(ccGained), 900);
+          return;
+        }
+        if (enemy.hp - dmg <= 0) {
+          setTimeout(() => { setEnemyPose('hurt'); setPhase('win'); Sfx.victory(); addLog(`${enemy.name} ${t('battle.defeated')}`); }, 500);
+          return;
+        }
+      } else {
+        // SAFE_ABORT / FAILURE: sin daño de HP (spec §7/§13); el CC ganado se conserva
+        addLog(`${player.name} no completa el ataque (${ccGained} CC ganados)`);
+      }
+      setTimeout(() => {
+        finishPlayerTurnStage(ccGained);
+      }, 500);
+    }, gbcMs(1));
   };
 
   // Variante de finishPlayerTurn para stage attacks (no usar carta de la mano)
