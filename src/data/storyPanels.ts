@@ -81,6 +81,55 @@ export function characterName(id: string): string {
 
 const bg = (n: number) => `/assets/backgrounds/${String(n).padStart(2, '0')}_world.png`;
 
+// ─── Cutscenes REALES del GBC (160×96, extraídos del paquete pixel-perfect) ───
+// Los fondos auténticos de las viñetas de historia (public/assets/cutscenes/).
+// Mapa por capítulo: el cutscene que mejor representa la escena de esa saga.
+const CS = (n: number) => {
+  const files: Record<number, string> = {
+    1: '005_grassy_valley_battlefield.png',
+    2: '006_stormy_grassy_valley.png',
+    3: '010_rocky_wasteland.png',
+    4: '012_goku_vs_great_ape_vegeta.png',
+    5: '016_namek_cliffs_and_water.png',
+    6: '017_namek_shoreline.png',
+    7: '020_ginyu_force_group_pose.png',
+    8: '021_frieza_spaceship_exterior.png',
+    9: '025_frieza_fires_energy_beam.png',
+    10: '026_namek_destruction_lightning.png',
+    11: '027_earth_tree_and_mountain_plain.png',
+    12: '032_rocky_plain.png',
+    13: '034_rocky_wasteland_overlook.png',
+    14: '039_kamis_lookout.png',
+    15: '035_rock_wall_and_rubble.png',
+    16: '040_coastal_grassland.png',
+    17: '042_cell_games_arena.png',
+    18: '044_cell_games_crater.png',
+    19: '042_cell_games_arena.png',
+    20: '046_cell_self_destruct_swollen.png',
+    21: '049_future_city_ruins.png',
+    22: '050_future_city_skyline.png',
+    23: '051_world_martial_arts_tournament_stadium.png',
+    24: '055_damaged_world_tournament_stadium.png',
+    25: '058_majin_vegeta_sacrifice_explosion.png',
+    26: '054_babidis_ship_crater.png',
+    27: '049_future_city_ruins.png',
+    28: '063_pink_energy_silhouette.png',
+    29: '059_gohan_on_sacred_world_of_kai.png',
+    30: '060_sacred_world_of_kai_purple_sky.png',
+    31: '065_giant_energy_sphere.png',
+    32: '066_kid_buu_vs_goku.png',
+  };
+  return `/assets/cutscenes/${files[n] ?? '001_seven_dragon_balls_on_grass.png'}`;
+};
+
+// Intro del GBC (recapitulación): las 4 viñetas de la introducción
+export const INTRO_CUTSCENES: StoryPanel[] = [
+  { id: 'intro1', layout: 'FULL', background: '/assets/cutscenes/001_seven_dragon_balls_on_grass.png', title: 'DRAGON BALL Z', subtitle: 'LEGENDARY SUPER WARRIORS', effects: ['zoom'] },
+  { id: 'intro2', layout: 'FULL', background: '/assets/cutscenes/002_kid_goku_riding_flying_nimbus.png', effects: ['zoom'] },
+  { id: 'intro3', layout: 'FULL', background: '/assets/cutscenes/003_goku_chichi_and_gohan_family.png', effects: ['zoom'] },
+  { id: 'intro4', layout: 'FULL', background: '/assets/cutscenes/004_goku_holds_raditz_for_special_beam_cannon.png', title: 'LA HISTORIA COMIENZA…', effects: ['zoom', 'flash'] },
+];
+
 // Viñetas específicas (caps 1-13 con escenario propio)
 export const STORY_PANELS: Record<number, StoryChapterFlow> = {
   1: {
@@ -188,14 +237,18 @@ export const STORY_PANELS: Record<number, StoryChapterFlow> = {
 // Generador por defecto para caps 14-32 (escenario según la saga)
 export function panelsForChapter(chapter: number): StoryChapterFlow {
   const specific = STORY_PANELS[chapter];
-  if (specific) return specific;
-  // Escenario aproximado por tramo de saga
-  const map = chapter <= 16 ? 8 : chapter <= 20 ? 10 : chapter <= 24 ? 11 : chapter <= 28 ? 12 : 13;
+  if (specific) {
+    // El cap 1 arranca con la recapitulación del GBC (cutscenes de introducción)
+    if (chapter === 1) {
+      return { chapter, intro: [...INTRO_CUTSCENES, ...specific.intro], outro: specific.outro };
+    }
+    return specific;
+  }
   return {
     chapter,
     intro: [
-      { id: `c${chapter}p1`, layout: 'FULL', background: bg(map), title: `CAPÍTULO ${chapter}`, subtitle: 'La saga continúa…', effects: ['zoom'] },
-      { id: `c${chapter}p2`, layout: 'IMPACT', background: bg(map), title: '¡COMBATE!', subtitle: '¡Enfréntate al enemigo!', effects: ['flash', 'shake'], transition: 'slash' },
+      { id: `c${chapter}p1`, layout: 'FULL', background: CS(chapter), title: `CAPÍTULO ${chapter}`, subtitle: 'La saga continúa…', effects: ['zoom'] },
+      { id: `c${chapter}p2`, layout: 'IMPACT', background: CS(chapter), title: '¡COMBATE!', subtitle: '¡Enfréntate al enemigo!', effects: ['flash', 'shake'], transition: 'slash' },
     ],
   };
 }
