@@ -2171,6 +2171,7 @@ function MainMenu({ onNavigate }: { onNavigate: (s: Screen) => void }) {
               key={screen}
               className={`menu-item ${tone ? `tone-${tone}` : ''} ${secondary ? 'menu-item-settings' : ''} ${index === visualMenuIndex ? 'selected' : ''}`}
               onMouseEnter={() => { setHoveredMenuIndex(index); setKeyboardMenuActive(false); }}
+              onMouseLeave={() => setHoveredMenuIndex(null)}
               onFocus={() => { setSelectedMenuIndex(index); setKeyboardMenuActive(true); }}
               onClick={() => { Sfx.select(); onNavigate(screen); }}
               aria-current={index === visualMenuIndex ? 'true' : undefined}
