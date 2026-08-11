@@ -1357,53 +1357,27 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   border-color: var(--orange-lt);
 }
 
-/* ─── Tira de comandos (sprites GBC auténticos) ─── */
+/* ─── Tira de comandos (sprites GBC auténticos con nombre incluido) ─── */
 
 .command-select { display: flex; flex-direction: column; align-items: center; gap: 8px; }
 
 .command-strip { display: flex; gap: 6px; justify-content: center; align-items: stretch; }
 
 .command-strip button {
-  /* Marco GBC auténtico (48×40 de la ROM): interior claro, letra OSCURA dentro
-     (como el GBC real — texto negro sobre fondo claro del marco). */
-  --btn-frame: url('/assets/ui/hud_buttons/frame_blue.png');
+  /* Botón GBC completo (48×40 de la ROM, texto del nombre incluido) escalado 1.5× */
+  --btn-frame: url('/assets/ui/hud_buttons/btn_basic.png');
   background-image: var(--btn-frame);
   background-size: 100% 100%;
   background-repeat: no-repeat;
   image-rendering: pixelated;
   background-color: transparent;
   border: none;
-  color: #0a1018;
-  font-family: var(--fpx);
-  font-size: 15px;
-  letter-spacing: .5px;
-  text-shadow: none;
   width: 72px;
   height: 60px;
   padding: 0;
   cursor: pointer;
   filter: drop-shadow(0 3px 6px rgba(0,0,0,.55));
   transition: transform 80ms, filter 80ms;
-}
-
-/* Etiqueta del botón: letra + nombre, descripción fuera (tooltip) */
-.command-strip button .cmd-key {
-  display: block;
-  font-family: var(--fepic);
-  font-size: 22px;
-  line-height: 1;
-  margin-top: 3px;
-  color: #0a1018;
-  text-shadow: 1px 1px 0 rgba(255,255,255,.28);
-}
-.command-strip button .cmd-name {
-  display: block;
-  font-family: var(--fpx);
-  font-size: 6.5px;
-  letter-spacing: 2px;
-  opacity: .8;
-  margin-top: 2px;
-  color: #0a1018;
 }
 
 .command-strip button:hover:not(:disabled) {
@@ -1414,17 +1388,11 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 .command-strip button:active:not(:disabled) { transform: translateY(1px) scale(0.97); }
 .command-strip button:disabled { opacity: 0.35; cursor: not-allowed; filter: grayscale(.7); }
 
-/* Botones con marco y letra propia (texto oscuro sobre interior claro del marco)
-   ⚠️ Especificidad: `.command-strip button` = 0,1,1 → las variantes necesitan 0,2,1
-   para que `--btn-frame` gane la cascada. */
-.command-strip button.cmd-limit { --btn-frame: url('/assets/ui/hud_buttons/frame_gold.png'); }
-.command-strip button.cmd-b { --btn-frame: url('/assets/ui/hud_buttons/frame_blue.png'); }
-
-/* Botones con texto GBC ya incluido (JOINT / CHARA): solo icono */
-.command-strip button.cmd-j { --btn-frame: url('/assets/ui/hud_buttons/joint_green.png'); }
-.command-strip button.cmd-j .cmd-key, .command-strip button.cmd-j .cmd-name { display: none; }
-.command-strip button.cmd-c { --btn-frame: url('/assets/ui/hud_buttons/chara_joint.png'); }
-.command-strip button.cmd-c .cmd-key, .command-strip button.cmd-c .cmd-name { display: none; }
+/* Botones GBC con nombre incluido (especificidad 0,2,1 para ganar la cascada) */
+.command-strip button.cmd-limit { --btn-frame: url('/assets/ui/hud_buttons/btn_limit.png'); }
+.command-strip button.cmd-b { --btn-frame: url('/assets/ui/hud_buttons/btn_basic.png'); }
+.command-strip button.cmd-j { --btn-frame: url('/assets/ui/hud_buttons/btn_joint.png'); }
+.command-strip button.cmd-c { --btn-frame: url('/assets/ui/hud_buttons/btn_chara.png'); }
 .command-strip button.cmd-c.has-ally { animation: sel-blink 1.2s infinite alternate; }
 
 /* ─── Mano de cartas ─── */
@@ -3294,7 +3262,7 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 .basic-btn:disabled { opacity: 0.35; cursor: not-allowed; filter: grayscale(.6); }
 .basic-btn.basic-back { grid-column: 1 / -1; min-height: 46px; --btn-frame: url('/assets/ui/hud_buttons/frame_teal.png'); }
 .basic-btn.basic-stage { --btn-frame: url('/assets/ui/hud_buttons/frame_orange.png'); }
-.basic-btn.basic-gather { --btn-frame: url('/assets/ui/hud_buttons/frame_green.png'); }
+.basic-btn.basic-gather { --btn-frame: url('/assets/ui/hud_buttons/btn_power.png'); }
 .limit-panel { display: flex; flex-direction: column; gap: 6px; width: min(420px, 92vw); max-height: 82px; overflow: hidden; background: rgba(5,8,14,.44); border: 1px solid var(--border); border-radius: 0; padding: 7px 9px; }
 .limit-title { font-size: 0.8rem; letter-spacing: 0.14em; color: var(--gold); text-align: center; margin-bottom: 4px; }
 .limit-row {
@@ -3942,23 +3910,21 @@ button:focus-visible, .chapter-node:focus-visible {
 }
 
 .defense-sources .basic-btn {
-  min-width: 120px;
-  flex: 1;
+  min-width: 72px;
+  width: 72px;
+  height: 60px;
+  flex: 0 0 auto;
   text-align: center;
-  font-family: var(--fpx);
-  font-size: 10px;
-  letter-spacing: 1px;
-  color: #fff;
+  padding: 0;
 }
 
-.defense-sources .basic-btn strong {
-  font-family: var(--fepic);
-  font-size: 20px;
-  color: var(--gold);
-  display: block;
-  line-height: 1.1;
-  text-shadow: 1px 1px 0 rgba(0,0,0,.9);
-}
+.defense-sources .basic-btn.src-basic { --btn-frame: url('/assets/ui/hud_buttons/btn_basic.png'); }
+.defense-sources .basic-btn.src-joint { --btn-frame: url('/assets/ui/hud_buttons/btn_joint.png'); }
+.defense-sources .basic-btn.src-limit { --btn-frame: url('/assets/ui/hud_buttons/btn_limit.png'); }
+
+/* Botones de acción con sprite GBC completo (GUARD / MOVE) */
+.basic-btn.act-guard { --btn-frame: url('/assets/ui/hud_buttons/btn_guard.png'); }
+.basic-btn.act-move { --btn-frame: url('/assets/ui/hud_buttons/btn_move.png'); }
 
 .defense-menu .basic-btn[disabled] {
   opacity: .45;

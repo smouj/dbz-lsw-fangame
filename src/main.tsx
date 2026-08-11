@@ -2204,27 +2204,15 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
           <div className="command-select">
             <div className="command-strip">
               <button onClick={() => selectCommand('LIMIT')} className="cmd-limit" disabled={!limitsPowered || limitCards.length === 0}
-                data-tip="LIMITED — cartas exclusivas del personaje.\nReutilizables mientras tengas CC.\nRequiere GATHER POWER activo.">
-                <span className="cmd-key">L</span>
-                <span className="cmd-name">LIMIT</span>
-              </button>
+                data-tip="LIMITED — cartas exclusivas del personaje.\nReutilizables mientras tengas CC.\nRequiere GATHER POWER activo." />
               <button onClick={() => selectCommand('J')} className="cmd-j"
-                data-tip="JOINT — cartas de tu mano.\nCuestan CC y se descartan al usarlas.">
-                <span className="cmd-key">J</span>
-                <span className="cmd-name">JOINT</span>
-              </button>
+                data-tip="JOINT — cartas de tu mano.\nCuestan CC y se descartan al usarlas." />
               <button onClick={() => selectCommand('B')} className="cmd-b"
-                data-tip="BASIC — acciones libres sin CC.\nSTAGE ATTACK (secuencia A/B) o GATHER POWER.">
-                <span className="cmd-key">B</span>
-                <span className="cmd-name">BASIC</span>
-              </button>
+                data-tip="BASIC — acciones libres sin CC.\nSTAGE ATTACK (secuencia A/B) o GATHER POWER." />
               {/* CHARA solo aparece en combates de equipo (FAQ: en individuales no existe) */}
               {player2 && (
-                <button onClick={() => selectCommand('C')} className="cmd-c has-ally" title={`CHARA: ${player2.name}`}
-                  data-tip={`CHARA — cambia a ${player2.name}.\nCuesta la acción del turno.`}>
-                  <span className="cmd-key">C²</span>
-                  <span className="cmd-name">CHARA</span>
-                </button>
+                <button onClick={() => selectCommand('C')} className="cmd-c has-ally"
+                  data-tip={`CHARA — cambia a ${player2.name}.\nCuesta la acción del turno.`} />
               )}
             </div>
           </div>
@@ -2232,15 +2220,15 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
         {phase === 'basic' && (
           <div className="command-select">
             <div className="basic-menu">
-              <button className="basic-btn basic-stage" onClick={() => basicAction('stage')}>
+              <button className="basic-btn basic-stage" onClick={() => basicAction('stage')}
+                data-tip="STAGE ATTACK — secuencia de inputs A/B a tiempo.\nCada acierto +1 CC (más si completas la cadena).">
                 <strong>{t('battle.stageAttack')}</strong>
                 <span>{powerState !== 'NORMAL' ? '4 ' : '3 '}{t('battle.powerState')} · A/B</span>
               </button>
-              <button className="basic-btn basic-gather" onClick={() => basicAction('gather')} disabled={gatherTurns > 0}>
-                <strong>{t('battle.gatherPower')}</strong>
-                <span>{gatherTurns > 0 ? powerState.replace('_', ' ') : '+8 STR/KI'}</span>
-              </button>
-              <button className="basic-btn basic-back" onClick={() => { Sfx.cancel(); setPhase('command'); }}>
+              <button className="basic-btn basic-gather" onClick={() => basicAction('gather')} disabled={gatherTurns > 0}
+                data-tip="GATHER POWER — sube STR/KI (+8).\nActiva el mazo LIMIT durante 2 turnos." />
+              <button className="basic-btn basic-back" onClick={() => { Sfx.cancel(); setPhase('command'); }}
+                data-tip="Volver al menú de comandos.">
                 {t('battle.back')}
               </button>
             </div>
@@ -2352,18 +2340,12 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
               <>
                 <div className="control-label">{t('battle.defendAction')} — {t('battle.chooseDefense')}</div>
                 <div className="defense-sources">
-                  <button className="basic-btn" onClick={() => { Sfx.select(); setDefendMenu('basic'); }}
-                    data-tip="BASIC DEFENSE — quedarte y bloquear (−50% dmg)\no MOVE para cambiar de posición (persistente).\nGratis, sin gastar CC.">
-                    <strong>B</strong> {t('battle.basic')}
-                  </button>
-                  <button className="basic-btn" onClick={() => { Sfx.select(); setDefendMenu('joint'); }}
-                    data-tip="JOINT — cartas de defensa/soporte de tu mano.\nCuestan CC y se descartan al usarlas.">
-                    <strong>J</strong> {t('battle.joint')}
-                  </button>
-                  <button className="basic-btn" onClick={() => { Sfx.select(); setDefendMenu('limit'); }} disabled={powerState === 'NORMAL' || limitCards.length === 0}
-                    data-tip="LIMITED — defensas exclusivas del personaje.\nRequiere GATHER POWER activo.">
-                    <strong>L</strong> {t('battle.limit')}
-                  </button>
+                  <button className="basic-btn src-basic" onClick={() => { Sfx.select(); setDefendMenu('basic'); }}
+                    data-tip="BASIC DEFENSE — quedarte y bloquear (−50% dmg)\no MOVE para cambiar de posición (persistente).\nGratis, sin gastar CC." />
+                  <button className="basic-btn src-joint" onClick={() => { Sfx.select(); setDefendMenu('joint'); }}
+                    data-tip="JOINT — cartas de defensa/soporte de tu mano.\nCuestan CC y se descartan al usarlas." />
+                  <button className="basic-btn src-limit" onClick={() => { Sfx.select(); setDefendMenu('limit'); }} disabled={powerState === 'NORMAL' || limitCards.length === 0}
+                    data-tip="LIMITED — defensas exclusivas del personaje.\nRequiere GATHER POWER activo." />
                 </div>
                 <div className="command-help">{t('battle.defenseHelp')}</div>
               </>
@@ -2372,14 +2354,10 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
               <>
                 <div className="control-label">{t('battle.basicDefense')}</div>
                 <div className="basic-menu">
-                  <button className="basic-btn" onClick={() => defendBasic('defense')}
-                    data-tip="DEFEND — bloqueas el ataque.\nDaño reducido −50% (sin gastar CC).">
-                    <strong>{t('battle.defendAction')}</strong>
-                  </button>
-                  <button className="basic-btn" onClick={() => { Sfx.select(); setDefendMenu('move'); }}
-                    data-tip="MOVE — cambias de posición táctica.\nLa posición persiste entre fases (spec Move).">
-                    <strong>{t('battle.move')}</strong>
-                  </button>
+                  <button className="basic-btn act-guard" onClick={() => defendBasic('defense')}
+                    data-tip="DEFEND — bloqueas el ataque.\nDaño reducido −50% (sin gastar CC)." />
+                  <button className="basic-btn act-move" onClick={() => { Sfx.select(); setDefendMenu('move'); }}
+                    data-tip="MOVE — cambias de posición táctica.\nLa posición persiste entre fases (spec Move)." />
                   <button className="basic-btn basic-back" onClick={() => { Sfx.cancel(); setDefendMenu(null); }}
                     data-tip="Volver al menú de defensa.">
                     {t('battle.back')}
