@@ -14,6 +14,8 @@
 //
 // El motor SOLO interpreta datos: editar la historia no toca código.
 
+import type { PortraitEmotion } from './storyPortraits';
+
 export type PanelLayout =
   | 'FULL'              // ilustración a pantalla completa
   | 'SPLIT_2'           // dos personajes enfrentados
@@ -24,7 +26,7 @@ export interface StoryPortrait {
   character: string;    // id de personaje (goku, piccolo...) para el retrato
   form?: string;        // forma (base, ssj...) — opcional
   side?: 'left' | 'right';
-  emotion?: string;     // clave de emoción (pendiente de mapear a cells)
+  emotion?: PortraitEmotion;  // normal/smile/surprised/angry/wounded/visor
   flip?: boolean;
 }
 
@@ -48,18 +50,6 @@ export interface StoryChapterFlow {
   chapter: number;
   intro: StoryPanel[];   // viñetas antes del combate
   outro?: StoryPanel[];  // viñetas después del combate
-}
-
-// ─── Helpers de retrato ────────────────────────────────────
-// Los 113 story portraits están en cell_XX_XX.png SIN etiquetar (hoja original
-// sin mapeo de personaje). Hasta completar el mapeo forense, usamos el retrato
-// de MENÚ (cell_00_XX) que SÍ está mapeado por personaje en MINI_PORTRAITS,
-// con fallback a un cell genérico.
-export function storyPortraitUrl(character: string, formId?: string): string | undefined {
-  // MINI_PORTRAITS mapea personaje → cell (40×56) — reutilizamos el mapeo
-  const mini = (window as unknown as Record<string, unknown>).__MINI_PORTRAITS__ as Record<string, string> | undefined;
-  if (mini && mini[character]) return `/assets/portraits/menu/${mini[character]}`;
-  return undefined;
 }
 
 // ─── Datos de viñetas por capítulo ─────────────────────────

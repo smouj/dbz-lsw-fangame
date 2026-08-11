@@ -12,6 +12,7 @@ import { CARDS, CARD_COLORS, CARD_TYPE_NAMES, CardDef, CardType, DECK_SIZE, MAX_
 import { cardIconUrl, MINI_PORTRAITS, MENU_PORTRAITS, TYPE_ICONS } from './data/icons';
 import { overworldUrl } from './data/overworld';
 import { panelsForChapter, type StoryPanel, characterName } from './data/storyPanels';
+import { storyPortraitUrl } from './data/storyPortraits';
 import { spriteManifestUrl, spriteFrameUrl, spriteDirFor } from './data/spriteManifest';
 import { SCENARIOS, SPECIAL_ACTION_BACKGROUND, type BattleViewMode } from './data/scenarios';
 import { GBC_NATIVE_FPS, type QteState } from './data/actionFidelity';
@@ -2392,7 +2393,8 @@ function StorySceneScreen({ chapter, phase, onFinish, onNavigate }: {
         {panel.characters && panel.characters.length > 0 && (
           <div className={`story-characters layout-${panel.layout.toLowerCase()}`}>
             {panel.characters.map((c, i) => {
-              const url = miniPortraitFor(c.character) || MENU_PORTRAITS[c.character];
+              // Retrato REAL del GBC (story portraits 40×56 por saga/personaje)
+              const url = storyPortraitUrl(c.character, c.form, c.emotion) || miniPortraitFor(c.character) || MENU_PORTRAITS[c.character];
               return (
                 <div key={i} className={`story-character ${c.side ?? (i === 0 ? 'left' : 'right')}`}>
                   {url
