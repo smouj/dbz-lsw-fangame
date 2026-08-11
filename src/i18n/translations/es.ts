@@ -187,4 +187,8 @@ export const es: Dict = {
   'battle.moveHelp': "Cambia de posición (persistente)",
   'battle.defenseOnly': "SOLO DEFENSA/APOYO",
   'battle.noDefenseCards': "No hay cartas de defensa/apoyo en la mano",
+  'battle.upBack': "ARRIBA · LEJOS",
+  'battle.upFront': "ARRIBA · CERCA",
+  'battle.downBack': "ABAJO · LEJOS",
+  'battle.downFront': "ABAJO · CERCA",
 };

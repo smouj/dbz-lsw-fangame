@@ -187,4 +187,8 @@ export const hi: Dict = {
   'battle.moveHelp': "Change position (persists)",
   'battle.defenseOnly': "DEFENSE/SUPPORT ONLY",
   'battle.noDefenseCards': "No defense/support cards in hand",
+  'battle.upBack': "UP · BACK",
+  'battle.upFront': "UP · FRONT",
+  'battle.downBack': "DOWN · BACK",
+  'battle.downFront': "DOWN · FRONT",
 };

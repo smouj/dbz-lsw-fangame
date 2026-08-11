@@ -5,6 +5,7 @@ import './styles.css';
 import { FORMS, CHARACTERS, getCharacter, getForm, idleSpriteUrl, statAtLevel, LIMIT_DEFAULTS, loadLimits, saveLimits } from './data/roster';
 import { STORY_ENEMY_DECKS, STORY_AI_BOOSTS, TEAM_BATTLES } from './data/enemy_decks';
 import { facingFlip, needsFlip } from './data/facing';
+import { BattlePosition, POSITION_DATA, resolveRelativeDistance, isBeamVulnerable, isDamageVulnerable, attackModifier, defenseModifier, anchorFor, BATTLE_POSITIONS } from './data/positions';
 import { BATTLE_PORTRAITS } from './data/battlePortraits';
 import { UNLOCK_KEY, STARTER_DAMAGE_DECK, STARTER_BEAM_DECK, STARTER_CHARACTERS, cardsForLevel, pickRewards, VS_UNLOCKS, isFormUnlocked, FORM_UNLOCK_LEVELS } from './data/unlocks';
 import { CARDS, CARD_COLORS, CARD_TYPE_NAMES, CardDef, CardType, DECK_SIZE, MAX_COPIES, getCard, CardEffect } from './data/cards';
@@ -26,8 +27,7 @@ import { ArrowLeft, X, Lock, ChevronRight, Languages, Sword, Shield, type Lucide
 
 type Screen = 'main' | 'story' | 'battle' | 'explore' | 'versus' | 'deck' | 'characters' | 'cards' | 'settings';
 type BattlePhase = 'position' | 'command' | 'basic' | 'limitSelect' | 'cardSelect' | 'stageInput' | 'enemyTurn' | 'defend' | 'win' | 'lose';
-type Position = 'front' | 'back';
-type Elevation = 'ground' | 'air';
+
 type CommandType = 'LIMIT' | 'J' | 'B' | 'C';
 
 interface CharManifest {
@@ -42,7 +42,7 @@ interface Fighter {
   maxHp: number; hp: number;
   str: number; ki: number; spd: number;
   maxCc: number; cc: number;
-  position: Position; elevation: Elevation;
+  battlePos: BattlePosition;
   battleId?: 'goku' | 'vegeta';
   limits: string[];
 }
@@ -272,7 +272,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
       id: pf.character, name: getCharacter(pf.character)?.name || pf.character, form: pf.form,
       level: prog.level, maxHp: pf.hp, hp: pf.hp,
       str: pf.str, ki: pf.ki, spd: pf.spd, maxCc: 999, cc: 0,
-      position: 'front', elevation: 'ground', battleId: pf.battleId,
+      battlePos: BattlePosition.DOWN_BACK, battleId: pf.battleId,
       limits: [],
     };
     return applyLevelUps(base, prog.level);
@@ -289,7 +289,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
       id: af.character, name: getCharacter(af.character)?.name || af.character, form: af.form,
       level: prog.level, maxHp: af.hp, hp: af.hp,
       str: af.str, ki: af.ki, spd: af.spd, maxCc: 999, cc: 0,
-      position: 'back', elevation: 'ground', limits: [],
+      battlePos: BattlePosition.DOWN_BACK, limits: [],
     };
     return applyLevelUps(base, prog.level);
   });
@@ -301,7 +301,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
       id: ef2.character, name: getCharacter(ef2.character)?.name || ef2.character, form: ef2.form,
       level: aiLevel, maxHp: ef2.hp + (b2?.hp || 0), hp: ef2.hp + (b2?.hp || 0),
       str: ef2.str + (b2?.str || 0), ki: ef2.ki + (b2?.ki || 0), spd: ef2.spd + (b2?.spd || 0),
-      maxCc: 999, cc: 0, position: 'front', elevation: 'ground', limits: [],
+      maxCc: 999, cc: 0, battlePos: BattlePosition.DOWN_BACK, limits: [],
     };
     return base;
   });
@@ -313,7 +313,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
       level: aiLevel, maxHp: ef.hp + (boost?.hp || 0), hp: ef.hp + (boost?.hp || 0),
       str: ef.str + (boost?.str || 0), ki: ef.ki + (boost?.ki || 0), spd: ef.spd + (boost?.spd || 0),
       maxCc: 999, cc: 0,
-      position: 'back', elevation: 'ground', battleId: ef.battleId,
+      battlePos: BattlePosition.DOWN_BACK, battleId: ef.battleId,
       limits: [],
     };
     // En versus: la IA escala con aiLevel=(playerLevel-1)*2+1; en story, stats fijos
@@ -626,15 +626,16 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
   // MOVE (Basic Defense): cambio de posición PERSISTENTE. La posición del
   // combatiente vive en el FighterState y NO se reinicia entre fases/turnos;
   // solo cambia cuando el jugador gasta su elección defensiva en MOVE.
-  const applyMove = (pos: Position, elev: Elevation) => {
+  const applyMove = (pos: BattlePosition) => {
     Sfx.position();
-    setPlayer(prev => ({ ...prev, position: pos, elevation: elev }));
-    addLog(`${player.name} MOVE → ${elev.toUpperCase()}/${pos.toUpperCase()}`);
+    setPlayer(prev => ({ ...prev, battlePos: pos }));
+    const pd = POSITION_DATA[pos];
+    addLog(`${player.name} MOVE → ${pd.altitude}/${pd.depth} (${pos})`);
     // El MOVE consume la elección defensiva; después se resuelve la ofensiva
     // enemiga teniendo en cuenta la nueva posición (spec Move).
     setPhase('enemyTurn');
     const card = incomingCard.current || CARDS[25];
-    resolveEnemyAttack(true, pos, elev, card);
+    resolveEnemyAttack(true, pos, card);
   };
 
   const gatherPower = () => {
@@ -681,10 +682,11 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
   // Distancia táctica → clase de ventana (spec §4-5: el límite depende de la
   // posición de atacante y defensor, NO es una constante universal).
   const resolveStageDistance = (): StageDistance => {
-    const bothFront = player.position === 'front' && enemy.position === 'front';
-    const bothBack = player.position === 'back' && enemy.position === 'back';
-    if (bothFront) return 'short';
-    if (bothBack) return 'long';
+    // Distancia derivada de las posiciones de AMBOS (spec 4 posiciones):
+    // FRONT+FRONT → CLOSE (short) · BACK+BACK → FAR (long) · mixto → MID
+    const dist = resolveRelativeDistance(player.battlePos, enemy.battlePos);
+    if (dist === 'CLOSE') return 'short';
+    if (dist === 'FAR') return 'long';
     return 'mid';
   };
 
@@ -851,8 +853,10 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
     const complete = st.result === 'FULL_SUCCESS' || st.result === 'RECOVERED_SUCCESS';
     const ccGained = st.correct;
     if (complete) {
-      const vulnerable = (player.elevation === 'air' && card.type === 'beam') || (player.elevation === 'ground' && card.type === 'damage');
-      const posMult = (enemy.position === 'front' && vulnerable) ? 0.8 : 0.5;
+      const pPos = player.battlePos;
+      const ePos = enemy.battlePos;
+      const vulnerable = (isBeamVulnerable(pPos) && card.type === 'beam') || (isDamageVulnerable(pPos) && card.type === 'damage');
+      const posMult = (POSITION_DATA[ePos].depth === 'FRONT' && vulnerable) ? 0.8 : 0.5;
       const dmg = Math.floor((card.atk + player.str) * posMult);
       setEnemy(prev => ({ ...prev, hp: Math.max(0, prev.hp - dmg) }));
       setFlashEnemy(true);
@@ -1048,19 +1052,19 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
         // Respuesta del defensor (enemigo): 55% DEFEND (block ×0.5) / 45% MOVE
         // (el defensor del GBC solo puede defenderse o moverse)
         const eResp = Math.random() < 0.55 ? 'defend' : 'move';
-        let ePos = enemy.position;
-        let eElev = enemy.elevation;
+        let ePos = enemy.battlePos;
         if (eResp === 'move') {
-          ePos = Math.random() < 0.5 ? 'front' : 'back';
-          eElev = Math.random() < 0.25 ? 'air' : 'ground';
-          setEnemy(prev => ({ ...prev, position: ePos, elevation: eElev }));
+          // La IA elige entre las 4 posiciones tácticas (spec 4 posiciones)
+          ePos = BATTLE_POSITIONS[Math.floor(Math.random() * BATTLE_POSITIONS.length)];
+          setEnemy(prev => ({ ...prev, battlePos: ePos }));
         }
         // Fórmula REAL del GBC: Damage = (power + move) × positionMultiplier × block
         // power = STR (damage) o KI (beam) · move = poder de la carta
         // positionMultiplier real (test ROM): front vulnerable = 0.8, resto = 0.5
         const power = card.type === 'beam' ? player.ki + pBuffs.ki : player.str + pBuffs.str;
-        const vulnerable = (eElev === 'air' && card.type === 'beam') || (eElev === 'ground' && card.type === 'damage');
-        const posMult = (ePos === 'front' && vulnerable) ? 0.8 : 0.5;
+        const ePd = POSITION_DATA[ePos];
+        const vulnerable = (isBeamVulnerable(ePos) && card.type === 'beam') || (isDamageVulnerable(ePos) && card.type === 'damage');
+        const posMult = (ePd.depth === 'FRONT' && vulnerable) ? 0.8 : 0.5;
         damage = Math.floor((card.atk + power) * posMult);
         if (eResp === 'defend') {
           // Basic Guard del enemigo: mismo sistema HIT/BLOCK/AVOID
@@ -1210,11 +1214,14 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
     const ai = aiRef.current;
     // El enemigo elige posición al atacar (frente/suelo la mayoría de veces)
     const posRoll = Math.random();
-    const ePos: { position: Position; elevation: Elevation } =
-      posRoll < 0.5 ? { position: 'front', elevation: 'ground' }
-      : posRoll < 0.75 ? { position: 'back', elevation: 'ground' }
-      : { position: 'front', elevation: 'air' };
-    setEnemy(prev => ({ ...prev, ...ePos }));
+    // La IA elige su posición de ataque entre las 4 tácticas (frecuencia
+    // orientada a DOWN_FRONT/DOWN_BACK como el GBC: la mayoría en el suelo)
+    const ePos: BattlePosition =
+      posRoll < 0.35 ? BattlePosition.DOWN_FRONT
+      : posRoll < 0.65 ? BattlePosition.DOWN_BACK
+      : posRoll < 0.85 ? BattlePosition.UP_FRONT
+      : BattlePosition.UP_BACK;
+    setEnemy(prev => ({ ...prev, battlePos: ePos }));
     setTimeout(() => {
       // Mazo REAL del jefe en story mode (spreadsheet oficial); en versus, pool global
       const storyDeck = storyChapter ? (STORY_ENEMY_DECKS[storyChapter] || []).map(id => getCard(id)).filter((c): c is CardDef => !!c) : [];
@@ -1298,20 +1305,21 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
   // Beam) quedan bloqueadas durante Defense.
   const [defendMenu, setDefendMenu] = useState<'basic' | 'joint' | 'limit' | 'move' | null>(null);
 
-  const defendBasic = (choice: 'defense' | 'move', pos?: Position, elev?: Elevation) => {
+  const defendBasic = (choice: 'defense' | 'move', pos?: BattlePosition) => {
     setPhase('enemyTurn'); // desmonta el menú YA (evita doble disparo)
     const card = incomingCard.current || CARDS[25];
-    if (choice === 'move' && pos && elev) {
+    if (choice === 'move' && pos) {
       // BASIC → MOVE: gasta la elección defensiva, cambia posición persistente
       Sfx.position();
-      setPlayer(prev => ({ ...prev, position: pos, elevation: elev }));
-      addLog(`${player.name} MOVE → ${elev!.toUpperCase()}/${pos!.toUpperCase()}`);
-      resolveEnemyAttack(true, pos, elev, card);
+      setPlayer(prev => ({ ...prev, battlePos: pos! }));
+      const pd = POSITION_DATA[pos];
+      addLog(`${player.name} MOVE → ${pd.altitude}/${pd.depth} (${pos})`);
+      resolveEnemyAttack(true, pos, card);
     } else {
       // BASIC → DEFENSE: quedarse y defender (reduce daño)
       setPlayerGuard({ type: 'reduce' });
       addLog(`${player.name} ${t('battle.defends')} (−50% ${t('battle.dmg')})`);
-      resolveEnemyAttack(true, player.position, player.elevation, card);
+      resolveEnemyAttack(true, player.battlePos, card);
     }
   };
 
@@ -1344,8 +1352,9 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
     const acc = pEva > 0 ? Math.max(0, cardIncoming.acc - 30) : cardIncoming.acc;
     const hits = Math.random() <= acc / 100;
     const power = cardIncoming.type === 'beam' ? enemy.ki + eBuffs.ki : enemy.str + eBuffs.str;
-    const vulnerable = (player.elevation === 'air' && cardIncoming.type === 'beam') || (player.elevation === 'ground' && cardIncoming.type === 'damage');
-    const posMult = (player.position === 'front' && vulnerable) ? 0.8 : 0.5;
+    const pPos = player.battlePos;
+    const vulnerable = (isBeamVulnerable(pPos) && cardIncoming.type === 'beam') || (isDamageVulnerable(pPos) && cardIncoming.type === 'damage');
+    const posMult = (POSITION_DATA[pPos].depth === 'FRONT' && vulnerable) ? 0.8 : 0.5;
     damage = Math.floor((cardIncoming.atk + power) * posMult);
     const handleDamage = (mult: number, label: string) => {
       if (!hits) {
@@ -1425,8 +1434,9 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
     }, 400);
   };
 
-  const resolveEnemyAttack = (defended: boolean, pos: Position, elev: Elevation, card: CardDef) => {
-    setPlayer(prev => ({ ...prev, position: pos, elevation: elev }));
+  const resolveEnemyAttack = (defended: boolean, pos: BattlePosition, card: CardDef) => {
+    setPlayer(prev => ({ ...prev, battlePos: pos }));
+    const pd = POSITION_DATA[pos];
     let damage = 0;
     let hitType: 'damage' | 'miss' | 'guard' = 'damage';
     const effAcc = pEva > 0 ? Math.max(0, card.acc - 30) : card.acc;
@@ -1436,8 +1446,8 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
     } else {
       // Fórmula REAL del GBC: Damage = (power + move) × positionMultiplier × block
       const power = card.type === 'beam' ? enemy.ki + eBuffs.ki : enemy.str + eBuffs.str;
-      const vulnerable = (elev === 'air' && card.type === 'beam') || (elev === 'ground' && card.type === 'damage');
-      const posMult = (pos === 'front' && vulnerable) ? 0.8 : 0.5;
+      const vulnerable = (isBeamVulnerable(pos) && card.type === 'beam') || (isDamageVulnerable(pos) && card.type === 'damage');
+      const posMult = (pd.depth === 'FRONT' && vulnerable) ? 0.8 : 0.5;
       damage = Math.floor((card.atk + power) * posMult);
       // Guardia activa del jugador (cartas Taiyoken/Avoid/Endurance/Absorb)
       if (playerGuard) {
@@ -1705,21 +1715,25 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
       <div className={`battlefield ${hitShake ? `shake-${hitShake}` : ''}`} ref={battlefieldRef}>
         <div className="battle-bg authentic" style={{ backgroundImage: `url(${battleBgUrl})` }} />
         <div className="battlefield-fighters">
-          <div ref={playerRef} className={`fighter-container player ${player.elevation} ${player.position}`}>
+          {/* Anchors por lado: LEFT (jugador) y RIGHT (enemigo) usan X
+              reflejadas — BACK apunta al borde propio de cada lado (spec) */}
+          <div ref={playerRef} className={`fighter-container player ${POSITION_DATA[player.battlePos].altitude.toLowerCase()} ${POSITION_DATA[player.battlePos].depth.toLowerCase()}`}
+            style={{ left: `${anchorFor(player.battlePos, 'LEFT').x}%`, top: `${anchorFor(player.battlePos, 'LEFT').y}%` }}>
             {playerPose === 'idle' && overworldUrl(playerFormId)
               ? <img src={overworldUrl(playerFormId)!} alt="" className={`overworld-sprite ${gatherTurns > 0 ? 'gathering' : ''}`} style={{ transform: `scaleX(${facingFlip(playerFormId, 'left')})` }} />
               : (spriteManifestUrl(playerFormId)
                   ? <FighterSprite formId={playerFormId} pose={playerPose} side="left" scale={15} flash={flashPlayer || gatherTurns > 0} />
                   : <CharacterSprite formId={playerFormId} className={`sheet-sprite ${gatherTurns > 0 ? 'gathering' : ''}`} height={152} />)}
-            <div className="fighter-position-tag hidden">{player.elevation.toUpperCase()}/{player.position.toUpperCase()}</div>
+            <div className="fighter-position-tag hidden">{player.battlePos.replace('_', ' ')}</div>
           </div>
-          <div ref={enemyRef} className={`fighter-container enemy ${enemy.elevation} ${enemy.position}`}>
+          <div ref={enemyRef} className={`fighter-container enemy ${POSITION_DATA[enemy.battlePos].altitude.toLowerCase()} ${POSITION_DATA[enemy.battlePos].depth.toLowerCase()}`}
+            style={{ left: `${anchorFor(enemy.battlePos, 'RIGHT').x}%`, top: `${anchorFor(enemy.battlePos, 'RIGHT').y}%` }}>
             {enemyPose === 'idle' && overworldUrl(enemyFormId)
               ? <img src={overworldUrl(enemyFormId)!} alt="" className="overworld-sprite" style={{ transform: `scaleX(${facingFlip(enemyFormId, 'right')})` }} />
               : (spriteManifestUrl(enemyFormId)
                   ? <FighterSprite formId={enemyFormId} pose={enemyPose} side="right" scale={15} flash={flashEnemy} />
                   : <CharacterSprite formId={enemyFormId} className="sheet-sprite" height={152} />)}
-            <div className="fighter-position-tag hidden">{enemy.elevation.toUpperCase()}/{enemy.position.toUpperCase()}</div>
+            <div className="fighter-position-tag hidden">{enemy.battlePos.replace('_', ' ')}</div>
           </div>
         </div>
         {damageNums.map(dn => <DamageNumber key={dn.id} value={dn.value} type={dn.type} x={dn.x} y={dn.y} />)}
@@ -1927,10 +1941,10 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
               <div className="position-select">
                 <div className="control-label">{t('battle.move')} — {t('battle.choosePosition')}</div>
                 <div className="position-pad">
-                  <button onClick={() => defendBasic('move', 'back', 'air')}>{t('battle.airBack')}</button>
-                  <button onClick={() => defendBasic('move', 'front', 'air')}>{t('battle.airFront')}</button>
-                  <button onClick={() => defendBasic('move', 'back', 'ground')}>{t('battle.gndBack')}</button>
-                  <button onClick={() => defendBasic('move', 'front', 'ground')}>{t('battle.gndFront')}</button>
+                  <button onClick={() => defendBasic('move', BattlePosition.UP_BACK)}>↑ {t('battle.upBack')}</button>
+                  <button onClick={() => defendBasic('move', BattlePosition.UP_FRONT)}>↑ {t('battle.upFront')}</button>
+                  <button onClick={() => defendBasic('move', BattlePosition.DOWN_BACK)}>↓ {t('battle.downBack')}</button>
+                  <button onClick={() => defendBasic('move', BattlePosition.DOWN_FRONT)}>↓ {t('battle.downFront')}</button>
                 </div>
                 <button className="basic-btn basic-back" onClick={() => { Sfx.cancel(); setDefendMenu('basic'); }}>
                   {t('battle.back')}
