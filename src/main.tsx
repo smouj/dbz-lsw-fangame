@@ -4,7 +4,7 @@ import { createRoot } from 'react-dom/client';
 import './styles.css';
 import { FORMS, CHARACTERS, getCharacter, getForm, idleSpriteUrl, statAtLevel, LIMIT_DEFAULTS, loadLimits, saveLimits } from './data/roster';
 import { STORY_ENEMY_DECKS, STORY_AI_BOOSTS, TEAM_BATTLES } from './data/enemy_decks';
-import { needsFlip } from './data/facing';
+import { facingFlip, needsFlip } from './data/facing';
 import { UNLOCK_KEY, STARTER_DAMAGE_DECK, STARTER_BEAM_DECK, STARTER_CHARACTERS, cardsForLevel, pickRewards, VS_UNLOCKS, isFormUnlocked, FORM_UNLOCK_LEVELS } from './data/unlocks';
 import { CARDS, CARD_COLORS, CARD_TYPE_NAMES, CardDef, CardType, DECK_SIZE, MAX_COPIES, getCard, CardEffect } from './data/cards';
 import { cardIconUrl, MINI_PORTRAITS, MENU_PORTRAITS, TYPE_ICONS } from './data/icons';
@@ -118,16 +118,17 @@ function useSpriteAnim(formId: string, pose: string): { src: string; w: number; 
 }
 
 // ─── Sprite del luchador (animado si hay manifest; null si no) ───
-function FighterSprite({ formId, pose, facing, scale = 8, flash = false }: {
-  formId: string; pose: string; facing?: 'left' | 'right'; scale?: number; flash?: boolean;
+function FighterSprite({ formId, pose, side, scale = 8, flash = false }: {
+  formId: string; pose: string; side?: 'left' | 'right'; scale?: number; flash?: boolean;
 }) {
   const anim = useSpriteAnim(formId, pose);
   if (!anim) return null;
   const px = Math.round(anim.h * scale / 8);
   const pw = Math.round(anim.w * scale / 8);
+  const flip = side ? facingFlip(formId, side) : 1;
   return (
     <div className={`fighter-sprite ${flash ? 'flash' : ''}`}
-      style={{ transform: facing === 'left' ? 'scaleX(-1)' : 'scaleX(1)' }}>
+      style={{ transform: `scaleX(${flip})` }}>
       <img src={anim.src} alt={formId} style={{ imageRendering: 'pixelated', width: pw, height: px }} />
     </div>
   );
@@ -1213,9 +1214,13 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
           <div className="intro-burst-left" />
           <div className="intro-burst-right" />
           <div className="intro-fighter intro-left">
+            <div className="intro-portrait">
+              <img src={portraitFor(player.id) || ''} alt={player.name}
+                onError={e => (e.currentTarget.style.display = 'none')} />
+            </div>
             <div className="intro-sprite-wrap">
               {spriteManifestUrl(playerFormId)
-                ? <FighterSprite formId={playerFormId} pose="idle" facing="right" scale={16} />
+                ? <FighterSprite formId={playerFormId} pose="idle" side="left" scale={16} />
                 : <CharacterSprite formId={playerFormId} className="intro-sprite" height={230} />}
             </div>
             <div className="intro-name">{player.name}</div>
@@ -1223,9 +1228,13 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
           </div>
           <div className="intro-vs">{t('battle.vs')}</div>
           <div className="intro-fighter intro-right">
+            <div className="intro-portrait">
+              <img src={portraitFor(enemy.id) || ''} alt={enemy.name}
+                onError={e => (e.currentTarget.style.display = 'none')} />
+            </div>
             <div className="intro-sprite-wrap">
               {spriteManifestUrl(enemyFormId)
-                ? <FighterSprite formId={enemyFormId} pose="idle" facing="left" scale={16} />
+                ? <FighterSprite formId={enemyFormId} pose="idle" side="right" scale={16} />
                 : <CharacterSprite formId={enemyFormId} className="intro-sprite" height={230} />}
             </div>
             <div className="intro-name">{enemy.name}</div>
@@ -1244,10 +1253,10 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
           <div className="fx-fighter">
             {cardFx.side === 'player'
               ? (spriteManifestUrl(playerFormId)
-                  ? <FighterSprite formId={playerFormId} pose={cardFx.card.type === 'beam' ? 'beam_charge' : cardFx.card.type === 'damage' ? 'attack_fwd' : 'guard'} facing="right" scale={14} />
+                  ? <FighterSprite formId={playerFormId} pose={cardFx.card.type === 'beam' ? 'beam_charge' : cardFx.card.type === 'damage' ? 'attack_fwd' : 'guard'} side="left" scale={14} />
                   : <CharacterSprite formId={playerFormId} className="fx-sprite" height={200} />)
               : (spriteManifestUrl(enemyFormId)
-                  ? <FighterSprite formId={enemyFormId} pose={cardFx.card.type === 'beam' ? 'beam_charge' : 'attack_fwd'} facing="left" scale={14} />
+                  ? <FighterSprite formId={enemyFormId} pose={cardFx.card.type === 'beam' ? 'beam_charge' : 'attack_fwd'} side="right" scale={14} />
                   : <CharacterSprite formId={enemyFormId} className="fx-sprite" height={200} />)}
           </div>
           <div className="fx-card">
@@ -1338,17 +1347,17 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
         <div className="battlefield-fighters">
           <div className={`fighter-container player ${player.elevation} ${player.position}`}>
             {playerPose === 'idle' && overworldUrl(playerFormId)
-              ? <img src={overworldUrl(playerFormId)!} alt="" className={`overworld-sprite ${gatherTurns > 0 ? 'gathering' : ''}`} style={{ transform: 'scaleX(1)' }} />
+              ? <img src={overworldUrl(playerFormId)!} alt="" className={`overworld-sprite ${gatherTurns > 0 ? 'gathering' : ''}`} style={{ transform: `scaleX(${facingFlip(playerFormId, 'left')})` }} />
               : (spriteManifestUrl(playerFormId)
-                  ? <FighterSprite formId={playerFormId} pose={playerPose} facing="right" scale={15} flash={flashPlayer || gatherTurns > 0} />
+                  ? <FighterSprite formId={playerFormId} pose={playerPose} side="left" scale={15} flash={flashPlayer || gatherTurns > 0} />
                   : <CharacterSprite formId={playerFormId} className={`sheet-sprite ${gatherTurns > 0 ? 'gathering' : ''}`} height={152} />)}
             <div className="fighter-position-tag hidden">{player.elevation.toUpperCase()}/{player.position.toUpperCase()}</div>
           </div>
           <div className={`fighter-container enemy ${enemy.elevation} ${enemy.position}`}>
             {enemyPose === 'idle' && overworldUrl(enemyFormId)
-              ? <img src={overworldUrl(enemyFormId)!} alt="" className="overworld-sprite" style={{ transform: 'scaleX(-1)' }} />
+              ? <img src={overworldUrl(enemyFormId)!} alt="" className="overworld-sprite" style={{ transform: `scaleX(${facingFlip(enemyFormId, 'right')})` }} />
               : (spriteManifestUrl(enemyFormId)
-                  ? <FighterSprite formId={enemyFormId} pose={enemyPose} facing="left" scale={15} flash={flashEnemy} />
+                  ? <FighterSprite formId={enemyFormId} pose={enemyPose} side="right" scale={15} flash={flashEnemy} />
                   : <CharacterSprite formId={enemyFormId} className="sheet-sprite" height={152} />)}
             <div className="fighter-position-tag hidden">{enemy.elevation.toUpperCase()}/{enemy.position.toUpperCase()}</div>
           </div>
@@ -1457,7 +1466,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
             {/* Sprite GRANDE del atacante (ACTION VIEW del GBC) */}
             <div className="stage-fighter">
               {spriteManifestUrl(playerFormId)
-                ? <FighterSprite formId={playerFormId} pose={stageIdx > 0 ? 'attack_fwd' : 'idle'} facing="right" scale={18} flash={stageIdx > 0} />
+                ? <FighterSprite formId={playerFormId} pose={stageIdx > 0 ? 'attack_fwd' : 'idle'} side="left" scale={18} flash={stageIdx > 0} />
                 : <CharacterSprite formId={playerFormId} className="fx-sprite" height={170} />}
             </div>
             <div className="stage-label">

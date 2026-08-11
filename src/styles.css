@@ -2318,6 +2318,22 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 .intro-right { right: 3vw; animation: intro-slide-right .65s cubic-bezier(.2,.8,.3,1) both; }
 @keyframes intro-slide-left { from { transform: translate(-140%, -50%); } to { transform: translate(0, -50%); } }
 @keyframes intro-slide-right { from { transform: translate(140%, -50%); } to { transform: translate(0, -50%); } }
+.intro-portrait {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #0a1628;
+  border: 3px solid #f5c542;
+  box-shadow: 3px 3px 0 #000;
+  padding: 6px;
+  animation: intro-name-in .5s cubic-bezier(.2,1.4,.4,1) .15s both;
+}
+.intro-portrait img {
+  image-rendering: pixelated;
+  height: 96px;
+  width: auto;
+  display: block;
+}
 .intro-sprite-wrap {
   filter: drop-shadow(0 0 26px rgba(255,190,60,.55)) drop-shadow(0 0 80px rgba(255,120,30,.3));
   animation: intro-breathe 1.2s ease-in-out .8s infinite alternate;
