@@ -2985,3 +2985,71 @@ button:focus-visible, .chapter-node:focus-visible {
 .explore-footer { padding: 10px; }
 .explore-fight { min-width: 280px; }
 .explore-empty { color: var(--text-dim); font-family: var(--fpx); letter-spacing: 1px; }
+
+/* ─── Stage Attack v2: secuencia + reloj global PUSH elapsed/limit ─── */
+.stage-sequence {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  align-items: center;
+  margin: 10px 0 4px;
+  min-height: 34px;
+}
+
+.stage-seq-item {
+  width: 30px; height: 30px;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--panel);
+  border: 2px solid var(--border);
+  box-shadow: 2px 2px 0 #000;
+  opacity: .45;
+  transition: opacity 90ms, border-color 90ms, transform 90ms;
+}
+
+.stage-seq-item.current {
+  opacity: 1;
+  border-color: var(--gold);
+  transform: scale(1.15);
+  box-shadow: 0 0 10px rgba(255, 215, 0, .5), 2px 2px 0 #000;
+}
+
+.stage-seq-item.done { opacity: .75; border-color: #3fae5a; }
+
+.seq-check {
+  color: #3fae5a;
+  font-family: var(--fpx);
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.stage-timer-row {
+  width: min(420px, 80vw);
+  height: 8px;
+  margin: 8px auto;
+  background: var(--panel);
+  border: 2px solid var(--border);
+  box-shadow: inset 0 1px 0 #000;
+}
+
+.stage-timer {
+  height: 100%;
+  background: linear-gradient(90deg, #c8a020, var(--gold));
+  transition: width 90ms linear;
+}
+
+.stage-recover-prompt {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border: 2px solid var(--border);
+  background: var(--panel);
+  box-shadow: 2px 2px 0 #000;
+}
+
+.stage-recover-prompt.window-open {
+  border-color: var(--gold);
+  background: var(--panel-hi);
+  box-shadow: 0 0 12px rgba(255, 215, 0, .6), 2px 2px 0 #000;
+  animation: sel-blink .3s infinite alternate;
+}

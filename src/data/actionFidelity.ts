@@ -61,6 +61,7 @@ export type QteState =
   | 'INPUT_WINDOW'
   | 'SUCCESS'
   | 'FAILED'
+  | 'RECOVERY_APPROACH'
   | 'RECOVERY_WINDOW'
   | 'RECOVERED'
   | 'ABORTED'
@@ -121,10 +122,10 @@ export interface ActionFidelityRecord {
 export const ACTION_FIDELITY_REGISTRY: Record<string, ActionFidelityRecord> = {
   // ⚠️ Temporización: GBC_NATIVE_FPS = 59.72750056960583 (no 60)
   // Los frames medidos en capturas a 60fps deben convertirse: gbcFrame = capFrame * (60/59.7275)
-  '3_stage_attack': { action: '3 Stage Attack', fidelity: FidelityLevel.INFERRED, notes: '3 inputs, +1 CC cada uno; ventana por distancia (INFERRED); pendiente FRAME_VERIFIED' },
-  '4_stage_attack': { action: '4 Stage Attack', fidelity: FidelityLevel.INFERRED, notes: '4 inputs; Basic 4 Stage solo con Gather (INFERRED)' },
-  '5_stage_attack': { action: '5 Stage Attack', fidelity: FidelityLevel.INFERRED, notes: '5 inputs (INFERRED)' },
-  '6_stage_attack': { action: '6 Stage Attack', fidelity: FidelityLevel.INFERRED, notes: '6 inputs; se desbloquea tras completar story (INFERRED)' },
+  '3_stage_attack': { action: '3 Stage Attack', fidelity: FidelityLevel.INFERRED, notes: 'QTE v2: ventana GLOBAL en frames GBC (PUSH elapsed/limit), límite por distancia táctica, +1 CC/input, daño SOLO al resolver, recovery A=abort/B=reparar con timing; tabla STAGE_TIMING_TABLE HYPOTHESIS — pendiente FRAME_VERIFIED' },
+  '4_stage_attack': { action: '4 Stage Attack', fidelity: FidelityLevel.INFERRED, notes: '4 inputs; Basic 4 Stage solo con Gather (INFERRED); ventana global + recovery como 3S' },
+  '5_stage_attack': { action: '5 Stage Attack', fidelity: FidelityLevel.INFERRED, notes: '5 inputs (INFERRED); ventana global + recovery' },
+  '6_stage_attack': { action: '6 Stage Attack', fidelity: FidelityLevel.INFERRED, notes: '6 inputs; se desbloquea tras completar story (INFERRED); ventana global + recovery' },
   'damage': { action: 'Damage físico', fidelity: FidelityLevel.INFERRED, notes: 'fórmula (power+move)×posMult COMMUNITY_TESTED; frames pendientes' },
   'beam': { action: 'Beam', fidelity: FidelityLevel.INFERRED, notes: 'carga+disparo; división de frames del sheet por estimación' },
   'gather_power': { action: 'Gather Power', fidelity: FidelityLevel.INFERRED, notes: '+4 STR/KI COMMUNITY_TESTED; powered=true 2 turnos CONFIRMED_MANUAL' },
