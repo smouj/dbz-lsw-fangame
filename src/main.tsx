@@ -266,7 +266,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
     const base: Fighter = {
       id: pf.character, name: getCharacter(pf.character)?.name || pf.character, form: pf.form,
       level: prog.level, maxHp: pf.hp, hp: pf.hp,
-      str: pf.str, ki: pf.ki, spd: pf.spd, maxCc: 13, cc: 0,
+      str: pf.str, ki: pf.ki, spd: pf.spd, maxCc: 999, cc: 0,
       position: 'front', elevation: 'ground', battleId: pf.battleId,
       limits: [],
     };
@@ -283,7 +283,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
     const base: Fighter = {
       id: af.character, name: getCharacter(af.character)?.name || af.character, form: af.form,
       level: prog.level, maxHp: af.hp, hp: af.hp,
-      str: af.str, ki: af.ki, spd: af.spd, maxCc: 13, cc: 0,
+      str: af.str, ki: af.ki, spd: af.spd, maxCc: 999, cc: 0,
       position: 'back', elevation: 'ground', limits: [],
     };
     return applyLevelUps(base, prog.level);
@@ -296,7 +296,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
       id: ef2.character, name: getCharacter(ef2.character)?.name || ef2.character, form: ef2.form,
       level: aiLevel, maxHp: ef2.hp + (b2?.hp || 0), hp: ef2.hp + (b2?.hp || 0),
       str: ef2.str + (b2?.str || 0), ki: ef2.ki + (b2?.ki || 0), spd: ef2.spd + (b2?.spd || 0),
-      maxCc: 13, cc: 0, position: 'front', elevation: 'ground', limits: [],
+      maxCc: 999, cc: 0, position: 'front', elevation: 'ground', limits: [],
     };
     return base;
   });
@@ -307,7 +307,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
       id: ef.character, name: getCharacter(ef.character)?.name || ef.character, form: ef.form,
       level: aiLevel, maxHp: ef.hp + (boost?.hp || 0), hp: ef.hp + (boost?.hp || 0),
       str: ef.str + (boost?.str || 0), ki: ef.ki + (boost?.ki || 0), spd: ef.spd + (boost?.spd || 0),
-      maxCc: 13, cc: 0,
+      maxCc: 999, cc: 0,
       position: 'back', elevation: 'ground', battleId: ef.battleId,
       limits: [],
     };
@@ -353,6 +353,49 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
   const [enemyPose, setEnemyPose] = useState('idle');
   const [flashPlayer, setFlashPlayer] = useState(false);
   const [flashEnemy, setFlashEnemy] = useState(false);
+  // ─── POLISH: carga con skeleton, shake de impacto, fade entre vistas ───
+  const battlefieldRef = useRef<HTMLDivElement>(null);
+  const playerRef = useRef<HTMLDivElement>(null);
+  const enemyRef = useRef<HTMLDivElement>(null);
+  const [loading, setLoading] = useState(true);
+  const [hitShake, setHitShake] = useState<null | 'player' | 'enemy'>(null);
+  const [viewFade, setViewFade] = useState(0);
+  // Precarga de assets clave (sprites + fondos) con skeleton mientras tanto
+  useEffect(() => {
+    const urls = [
+      spriteManifestUrl(playerFormId), spriteManifestUrl(enemyFormId),
+      overworldUrl(playerFormId), overworldUrl(enemyFormId),
+      scenario.overviewBackground, scenario.actionBackground,
+    ].filter((u): u is string => !!u);
+    let done = 0; let fired = false;
+    const finish = () => { if (!fired) { fired = true; setLoading(false); } };
+    const to = setTimeout(finish, 1600); // tope de seguridad
+    urls.forEach(u => {
+      const im = new Image();
+      im.onload = im.onerror = () => { done++; if (done >= urls.length) { clearTimeout(to); finish(); } };
+      im.src = u;
+    });
+    return () => clearTimeout(to);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  // Fade suave al alternar TACTICAL ↔ ACTION
+  useEffect(() => { setViewFade(v => v + 1); }, [viewMode]);
+  // Posición del número de daño sobre el sprite del objetivo (px relativos al campo)
+  const dmgPos = (side: 'player' | 'enemy') => {
+    const el = side === 'enemy' ? enemyRef.current : playerRef.current;
+    const field = battlefieldRef.current;
+    if (!el || !field) return { x: 70, y: 30 };
+    const er = el.getBoundingClientRect();
+    const fr = field.getBoundingClientRect();
+    return {
+      x: Math.round(er.left - fr.left + er.width / 2),
+      y: Math.round(er.top - fr.top + 6),
+    };
+  };
+  const hitImpact = (side: 'player' | 'enemy') => {
+    setHitShake(side);
+    setTimeout(() => setHitShake(null), 380);
+  };
   // Stat stages reales: -3..+3 (cada stage = 8 unidades internas, como el GBC)
   const [pStages, setPStages] = useState({ str: 0, ki: 0, spd: 0, guard: 0 });
   // Buffs temporales del GBC: se desvanecen tras ~3 turnos ("fade over time")
@@ -632,7 +675,8 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
       let dmg = Math.floor((card.atk + player.str) * posMult);
       setEnemy(prev => ({ ...prev, hp: Math.max(0, prev.hp - dmg) }));
       setFlashEnemy(true);
-      setDamageNums(prev => [...prev, { value: dmg, type: 'damage', x: 70, y: 30, id: Date.now() }]);
+      hitImpact('enemy');
+      setDamageNums(prev => [...prev, { value: dmg, type: 'damage', ...dmgPos('enemy'), id: Date.now() }]);
       addLog(`${player.name} → ${card.name} — ${dmg} ${t('battle.dmg')}`);
       Sfx.hit();
       setTimeout(() => setFlashEnemy(false), 150);
@@ -725,21 +769,21 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
           const pct = eff === 'heal_strong' ? (1 / 4 + 1 / 3) : eff === 'heal_light' ? 0.3 : 0.25;
           heal = Math.floor(player.maxHp * pct);
           setPlayer(prev => ({ ...prev, hp: Math.min(prev.maxHp, prev.hp + heal) }));
-          setDamageNums(prev => [...prev, { value: heal, type: 'heal', x: 30, y: 40, id: Date.now() }]);
+          setDamageNums(prev => [...prev, { value: heal, type: 'heal', ...dmgPos('player'), id: Date.now() }]);
           addLog(`${player.name} ${t('battle.uses')} ${card.name} — +${heal} ${t('battle.hp')}!`);
         } else if (eff === 'medical_machine') {
           // Medical Machine: Power + (Speed/2 * phase). Sin phase en nuestro engine:
           // HYPOTHESIS — card.atk + floor(SPD/2 * 4). La fase exacta es UNKNOWN.
           heal = card.atk + Math.floor(player.spd / 2) * 4;
           setPlayer(prev => ({ ...prev, hp: Math.min(prev.maxHp, prev.hp + heal) }));
-          setDamageNums(prev => [...prev, { value: heal, type: 'heal', x: 30, y: 40, id: Date.now() }]);
+          setDamageNums(prev => [...prev, { value: heal, type: 'heal', ...dmgPos('player'), id: Date.now() }]);
           addLog(`${player.name} ${t('battle.uses')} ${card.name} — +${heal} ${t('battle.hp')}!`);
         } else if (eff === 'life_drain') {
           // roba vida: daño + cura
           const drain = Math.floor((card.atk + player.str) * 0.5);
           setEnemy(prev => ({ ...prev, hp: Math.max(0, prev.hp - drain) }));
           setPlayer(prev => ({ ...prev, hp: Math.min(prev.maxHp, prev.hp + drain) }));
-          setDamageNums(prev => [...prev, { value: drain, type: 'damage', x: 70, y: 30, id: Date.now() }]);
+          setDamageNums(prev => [...prev, { value: drain, type: 'damage', ...dmgPos('enemy'), id: Date.now() }]);
           addLog(`${player.name} ${t('battle.uses')} ${card.name} — ${drain} ${t('battle.dmg')} (+${drain} HP)`);
         } else if (eff === 'cc_recovery') {
           const gain = card.id === 97 ? 5 : 3;
@@ -760,7 +804,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
           // OHKO con baja precisión
           if (Math.random() < card.acc / 100) {
             setEnemy(prev => ({ ...prev, hp: 0 }));
-            setDamageNums(prev => [...prev, { value: 999, type: 'damage', x: 70, y: 30, id: Date.now() }]);
+            setDamageNums(prev => [...prev, { value: 999, type: 'damage', ...dmgPos('enemy'), id: Date.now() }]);
             addLog(`${player.name} ${t('battle.uses')} ${card.name} — OHKO!`);
             setTimeout(() => { setEnemyPose('hurt'); setPhase('win'); Sfx.victory(); addLog(`${enemy.name} ${t('battle.defeated')}`); }, 500);
             return;
@@ -804,7 +848,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
           if (eff === 'gamebomb' || eff === 'candy' || eff === 'naughty_book' || eff === 'knockdown_dmg' || eff === 'knockdown_min') {
             const dmg = Math.floor((card.atk || 20) + player.str);
             setEnemy(prev => ({ ...prev, hp: Math.max(0, prev.hp - dmg) }));
-            setDamageNums(prev => [...prev, { value: dmg, type: 'damage', x: 70, y: 30, id: Date.now() }]);
+            setDamageNums(prev => [...prev, { value: dmg, type: 'damage', ...dmgPos('enemy'), id: Date.now() }]);
             addLog(`${player.name} ${t('battle.uses')} ${card.name} — ${dmg} ${t('battle.dmg')}`);
           } else {
             addLog(`${player.name} ${t('battle.uses')} ${card.name} — ${t('battle.buff')}`);
@@ -861,13 +905,14 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
 
       setEnemy(prev => ({ ...prev, hp: Math.max(0, prev.hp - damage) }));
       setFlashEnemy(true);
+      hitImpact('enemy');
       if (card.type === 'beam') Sfx.beam();
       else if (damage > 0) Sfx.hit();
       else if (hitType === 'miss') Sfx.dodge();
       setTimeout(() => setFlashEnemy(false), 150);
 
-      if (damage > 0) setDamageNums(prev => [...prev, { value: damage, type: 'damage', x: 70, y: 30, id: Date.now() }]);
-      else if (hitType === 'miss') setDamageNums(prev => [...prev, { value: 0, type: 'miss', x: 70, y: 30, id: Date.now() }]);
+      if (damage > 0) setDamageNums(prev => [...prev, { value: damage, type: 'damage', ...dmgPos('enemy'), id: Date.now() }]);
+      else if (hitType === 'miss') setDamageNums(prev => [...prev, { value: 0, type: 'miss', ...dmgPos('enemy'), id: Date.now() }]);
 
       // Coste real de la carta (JOINT)
       setPlayer(prev => ({ ...prev, cc: Math.max(0, prev.cc - card.cc) }));
@@ -1153,13 +1198,14 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
     // La carta del enemigo CUESTA CC (economía real)
     setEnemy(prev => ({ ...prev, cc: Math.max(0, prev.cc - card.cc) }));
     setFlashPlayer(true);
+    hitImpact('player');
     if (card.type === 'beam') Sfx.beam();
     else if (damage > 0) Sfx.punch();
     else if (hitType === 'miss') Sfx.dodge();
     setTimeout(() => setFlashPlayer(false), 150);
-    if (damage > 0) { setPlayerPose('hurt'); setDamageNums(prev => [...prev, { value: damage, type: 'damage', x: 30, y: 50, id: Date.now() }]); }
-    else if (hitType === 'guard') setDamageNums(prev => [...prev, { value: 0, type: 'guard', x: 30, y: 50, id: Date.now() }]);
-    else if (hitType === 'miss') setDamageNums(prev => [...prev, { value: 0, type: 'miss', x: 30, y: 50, id: Date.now() }]);
+    if (damage > 0) { setPlayerPose('hurt'); setDamageNums(prev => [...prev, { value: damage, type: 'damage', ...dmgPos('player'), id: Date.now() }]); }
+    else if (hitType === 'guard') setDamageNums(prev => [...prev, { value: 0, type: 'guard', ...dmgPos('player'), id: Date.now() }]);
+    else if (hitType === 'miss') setDamageNums(prev => [...prev, { value: 0, type: 'miss', ...dmgPos('player'), id: Date.now() }]);
 
     if (player.hp - damage <= 0 && player2) {
       // 2v2: cae el jugador activo, entra el compañero con HP completo (como el GBC)
@@ -1208,6 +1254,23 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
 
   return (
     <div className="battle-screen">
+      {/* ═══ PANTALLA DE CARGA con skeleton (hasta que los assets clave estén listos) ═══ */}
+      {loading && !intro && (
+        <div className="battle-loading">
+          <div className="bl-title">DRAGON BALL Z</div>
+          <div className="bl-sub">LEGENDARY SUPER WARRIORS</div>
+          <div className="bl-stage">
+            <div className="bl-skeleton bl-skel-left" />
+            <div className="bl-vs">VS</div>
+            <div className="bl-skeleton bl-skel-right" />
+          </div>
+          <div className="bl-bar"><div className="bl-bar-fill" /></div>
+        </div>
+      )}
+
+      {/* Fade suave TACTICAL ↔ ACTION (se monta en cada cambio de vista) */}
+      {viewFade > 0 && <div key={viewFade} className="view-fade" />}
+
       {/* ═══ INTRO CINEMATOGRÁFICA (como el GBC): VS screen + READY... FIGHT! ═══ */}
       {intro && (
         <div className="battle-intro">
@@ -1342,10 +1405,10 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
       </div>
 
       {/* Campo de batalla */}
-      <div className="battlefield">
+      <div className={`battlefield ${hitShake ? `shake-${hitShake}` : ''}`} ref={battlefieldRef}>
         <div className="battle-bg authentic" style={{ backgroundImage: `url(${battleBgUrl})` }} />
         <div className="battlefield-fighters">
-          <div className={`fighter-container player ${player.elevation} ${player.position}`}>
+          <div ref={playerRef} className={`fighter-container player ${player.elevation} ${player.position}`}>
             {playerPose === 'idle' && overworldUrl(playerFormId)
               ? <img src={overworldUrl(playerFormId)!} alt="" className={`overworld-sprite ${gatherTurns > 0 ? 'gathering' : ''}`} style={{ transform: `scaleX(${facingFlip(playerFormId, 'left')})` }} />
               : (spriteManifestUrl(playerFormId)
@@ -1353,7 +1416,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
                   : <CharacterSprite formId={playerFormId} className={`sheet-sprite ${gatherTurns > 0 ? 'gathering' : ''}`} height={152} />)}
             <div className="fighter-position-tag hidden">{player.elevation.toUpperCase()}/{player.position.toUpperCase()}</div>
           </div>
-          <div className={`fighter-container enemy ${enemy.elevation} ${enemy.position}`}>
+          <div ref={enemyRef} className={`fighter-container enemy ${enemy.elevation} ${enemy.position}`}>
             {enemyPose === 'idle' && overworldUrl(enemyFormId)
               ? <img src={overworldUrl(enemyFormId)!} alt="" className="overworld-sprite" style={{ transform: `scaleX(${facingFlip(enemyFormId, 'right')})` }} />
               : (spriteManifestUrl(enemyFormId)
@@ -2379,16 +2442,20 @@ function AppInner() {
     return <StarterScreen onDone={() => setNeedsStarter(false)} />;
   }
 
-  switch (screen) {
-    case 'story': return <StoryScreen onNavigate={setScreen} onStartChapter={startChapter} />;
-    case 'versus': return <VersusScreen onNavigate={setScreen} onStartVersus={startVersus} />;
-    case 'deck': return <DeckScreen onNavigate={setScreen} />;
-    case 'characters': return <CharactersScreen onNavigate={setScreen} onSelectFighter={startBattle} />;
-    case 'cards': return <CardsScreen onNavigate={setScreen} />;
-    case 'settings': return <SettingsScreen onNavigate={setScreen} />;
-    case 'battle': return <BattleScreen key={battleKey} playerFormId={playerForm} enemyFormId={enemyForm} storyChapter={storyChapter} onExit={exitBattle} />;
-    default: return <MainMenu onNavigate={setScreen} />;
-  }
+  const screenEl = (() => {
+    switch (screen) {
+      case 'story': return <StoryScreen onNavigate={setScreen} onStartChapter={startChapter} />;
+      case 'versus': return <VersusScreen onNavigate={setScreen} onStartVersus={startVersus} />;
+      case 'deck': return <DeckScreen onNavigate={setScreen} />;
+      case 'characters': return <CharactersScreen onNavigate={setScreen} onSelectFighter={startBattle} />;
+      case 'cards': return <CardsScreen onNavigate={setScreen} />;
+      case 'settings': return <SettingsScreen onNavigate={setScreen} />;
+      case 'battle': return <BattleScreen key={battleKey} playerFormId={playerForm} enemyFormId={enemyForm} storyChapter={storyChapter} onExit={exitBattle} />;
+      default: return <MainMenu onNavigate={setScreen} />;
+    }
+  })();
+  // Transición de entrada por pantalla (fade + slide sutil, estilo GBC)
+  return <div key={screen === 'battle' ? `battle-${battleKey}` : screen} className="screen-enter">{screenEl}</div>;
 }
 
 export default function App() {

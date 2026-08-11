@@ -72,6 +72,12 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
    MENÚ PRINCIPAL
    ═══════════════════════════════════════════════════════════ */
 
+.screen-enter { animation: screen-in 0.3s ease-out both; }
+@keyframes screen-in {
+  from { opacity: 0; transform: translateY(10px) scale(0.995); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
 .menu-screen {
   width: 100%; height: 100vh;
   display: flex; align-items: center; justify-content: center;
@@ -189,6 +195,7 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 }
 
 .menu-nav button {
+  animation: menu-item-in 0.4s cubic-bezier(.2,.9,.3,1.2) both;
   background: var(--panel-hi);
   border: 3px solid var(--border);
   border-top-color: var(--panel-hi);
@@ -229,6 +236,18 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 .menu-nav button.btn-primary:hover {
   background: var(--orange-lt);
 }
+/* Stagger de entrada (cada botón aparece con un pequeño retraso) */
+.menu-nav button:nth-child(1) { animation-delay: 0.10s; }
+.menu-nav button:nth-child(2) { animation-delay: 0.17s; }
+.menu-nav button:nth-child(3) { animation-delay: 0.24s; }
+.menu-nav button:nth-child(4) { animation-delay: 0.31s; }
+.menu-nav button:nth-child(5) { animation-delay: 0.38s; }
+.menu-nav button:nth-child(6) { animation-delay: 0.45s; }
+.menu-nav button:nth-child(7) { animation-delay: 0.52s; }
+@keyframes menu-item-in {
+  from { opacity: 0; transform: translateX(-18px); }
+  to { opacity: 1; transform: translateX(0); }
+}
 
 .menu-footer {
   color: var(--dim);
@@ -254,6 +273,7 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 /* ─── HUD Superior (ventana GBC) ─── */
 
 .hud-top {
+  animation: hud-in 0.5s ease-out 2.55s both;
   display: flex;
   justify-content: space-between;
   align-items: stretch;
@@ -502,6 +522,17 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   border-top: 2px solid #2a3040;
 }
 
+.battlefield.shake-player { animation: field-shake 0.38s ease-out; }
+.battlefield.shake-enemy { animation: field-shake 0.38s ease-out; }
+@keyframes field-shake {
+  0% { transform: translate(0, 0); }
+  20% { transform: translate(3px, -2px); }
+  40% { transform: translate(-3px, 1px); }
+  60% { transform: translate(2px, 2px); }
+  80% { transform: translate(-2px, -1px); }
+  100% { transform: translate(0, 0); }
+}
+
 .battlefield-fighters {
   position: absolute; inset: 0;
   display: flex;
@@ -559,6 +590,62 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 
 .fighter-sprite img { image-rendering: pixelated; image-rendering: crisp-edges; display: block; }
 
+/* ─── Pantalla de carga (skeleton) ─── */
+.battle-loading {
+  position: absolute; inset: 0; z-index: 12;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px;
+  background: #040b18;
+}
+.battle-loading .bl-title {
+  font-family: var(--fdisplay, Bangers, sans-serif);
+  font-size: clamp(1.6rem, 5vw, 3rem); letter-spacing: .12em;
+  color: #f5c542; text-shadow: 3px 3px 0 #000, 0 0 18px rgba(245, 197, 66, .35);
+}
+.battle-loading .bl-sub {
+  font-family: var(--fpx); font-size: clamp(.6rem, 1.6vw, .8rem);
+  color: #8fc7ff; letter-spacing: .35em; text-shadow: 1px 1px 0 #000;
+}
+.battle-loading .bl-stage {
+  display: flex; align-items: center; gap: 26px; margin-top: 12px;
+}
+.battle-loading .bl-vs {
+  font-family: var(--fdisplay, Bangers, sans-serif); font-size: 2.2rem;
+  color: #fff; text-shadow: 3px 3px 0 #000; animation: bl-vs-pulse 1s ease-in-out infinite alternate;
+}
+@keyframes bl-vs-pulse { from { opacity: .55; } to { opacity: 1; } }
+.battle-loading .bl-skeleton {
+  width: 88px; height: 128px;
+  border: 3px solid #173a5e; background: linear-gradient(110deg, #0b1f36 8%, #16324f 18%, #0b1f36 33%);
+  background-size: 200% 100%; animation: bl-shimmer 1.2s linear infinite;
+  box-shadow: 3px 3px 0 #000;
+}
+@keyframes bl-shimmer { from { background-position: 120% 0; } to { background-position: -80% 0; } }
+.battle-loading .bl-bar {
+  width: min(320px, 60vw); height: 12px; margin-top: 14px;
+  border: 3px solid #173a5e; background: #0b1f36; box-shadow: 3px 3px 0 #000;
+  overflow: hidden;
+}
+.battle-loading .bl-bar-fill {
+  height: 100%; width: 40%;
+  background: linear-gradient(90deg, #f5c542, #ffe9a3);
+  animation: bl-fill 1.6s ease-in-out infinite alternate;
+}
+@keyframes bl-fill { from { width: 12%; } to { width: 92%; } }
+
+/* ─── Fade entre TACTICAL ↔ ACTION ─── */
+.view-fade {
+  position: absolute; inset: 0; z-index: 11; pointer-events: none;
+  background: #040b18;
+  animation: view-fade-out 0.42s ease-out forwards;
+}
+@keyframes view-fade-out { from { opacity: .55; } to { opacity: 0; } }
+
+/* Entrada del HUD de batalla (tras la intro VS) */
+@keyframes hud-in {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 /* ─── Números de daño ─── */
 
 .damage-number {
@@ -578,9 +665,11 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 .damage-number.guard { color: var(--def-color); }
 
 @keyframes dmg-float {
-  0% { opacity: 1; transform: translateY(0) scale(1.4); }
-  25% { opacity: 1; transform: translateY(-8px) scale(1.1); }
-  100% { opacity: 0; transform: translateY(-40px) scale(0.7); }
+  0% { opacity: 0; transform: translateY(4px) scale(0.5); }
+  12% { opacity: 1; transform: translateY(0) scale(1.5); }
+  30% { opacity: 1; transform: translateY(-10px) scale(1.05); }
+  70% { opacity: 0.9; transform: translateY(-26px) scale(0.95); }
+  100% { opacity: 0; transform: translateY(-44px) scale(0.8); }
 }
 
 /* ─── Barra de fase ─── */
@@ -916,10 +1005,15 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
    ═══════════════════════════════════════════════════════════ */
 
 .page-screen {
+  animation: page-in 0.32s ease-out both;
   width: 100%; height: 100vh;
   display: flex; flex-direction: column;
   background: var(--bg);
   overflow: hidden;
+}
+@keyframes page-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .page-header {
@@ -2562,3 +2656,19 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   animation: sel-blink .5s infinite alternate; margin-right: 8px;
 }
 @media (max-width: 768px) { .stage-fighter { left: 1vw; bottom: 8vh; } .stage-fighter img { height: 110px !important; } }
+
+
+/* ─── Accesibilidad: foco visible estilo GBC ─── */
+button:focus-visible, .chapter-node:focus-visible {
+  outline: 3px solid var(--orange-lt);
+  outline-offset: 2px;
+}
+
+/* ─── Reduced motion: respetar preferencias del usuario ─── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

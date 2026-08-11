@@ -258,9 +258,10 @@ exp_thresholds:
   lv5_plus: 500 * 3.2^(lv-4)  # HYPOTHESIS (extrapolación, sin datos)
 
 cc:
-  maximum: 13      # Evidencia de pantalla real "CC: /13" (shrine battle.shtml).
-                   # ⚠️ REVISIÓN: NO fijar 99 solo porque GameShark pueda escribir
-                   # 0x63. clamp_cc() real pendiente de CONFIRMED_ROM.
+  maximum: 999     # DECISIÓN DEL USUARIO (2026-08-11): el máximo CC del remake es 999.
+                   # Revierte la revisión anterior de /13 (pantalla "CC: /13" del shrine).
+                   # El clamp en ROM real sigue pendiente de CONFIRMED_ROM, pero el
+                   # remake usa 999 como tope del contador.
   attack_phase_gain: 3      # CONFIRMED_MANUAL
   command_input_gain: 1     # CONFIRMED_MANUAL (por input acertado)
   substantial_damage_gain: 2  # CONFIRMED_MANUAL
