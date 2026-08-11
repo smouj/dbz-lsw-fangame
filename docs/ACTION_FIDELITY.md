@@ -418,3 +418,42 @@ postSuccessFrames, attackerStepFrames, cameraHoldFrames, resultHoldFrames`.
 
 **Regla**: descubrirlas con UNA acción completamente estudiada, y solo
 entonces extender las 16 definiciones.
+
+---
+
+## FACING (regla obligatoria — verificada 2026-08-11)
+
+**Regla**: el luchador en el lado IZQUIERDO mira a la DERECHA; el del lado
+DERECHO mira a la IZQUIERDA. Siempre. (El jugador siempre está a la izquierda
+en el GBC; la fase POSITION solo elige distancia/elevación.)
+
+**Hallazgo**: el paquete de sprites NO tiene orientación nativa uniforme.
+Análisis de la secuencia `attack_fwd` (windup de brazos atrás → golpe) de las
+44 formas: **35 golpean a la derecha en nativo, 9 a la izquierda**:
+
+| Nativo IZQUIERDA (9) | |
+|---|---|
+| goku_super_saiyan | goku_super_saiyan_3 |
+| gohan_super_saiyan_1_2 | goten_super_saiyan |
+| gotenks_super_saiyan | gotenks_super_saiyan_3 |
+| piccolo_base | super_buu_base |
+| trunks_super_saiyan | |
+
+(Fuente: `docs/audit/native-strike-dir.json` — generado por análisis de
+silueta windup/golpe, método validado visualmente.)
+
+**Implementación** (`src/data/facing.ts`):
+```ts
+facingFlip(formId, side)  // side='left'|'right' → 1 (sin flip) o -1 (espejo)
+// izquierda → quiere mirar derecha; derecha → quiere mirar izquierda
+```
+
+**Verificado en navegador (DOM)**:
+- Intro VS: Goku (izq) `scaleX(1)` → derecha ✓ · Piccolo (der) `scaleX(1)` → izquierda ✓
+- Campo (CHOOSE POSITION): Goku `scaleX(1)` ✓ · Piccolo `scaleX(1)` ✓
+  (antes hardcoded `scaleX(-1)` habría dejado a Piccolo mirando hacia fuera)
+
+**Portrait en la intro VS**: el retrato del personaje aparece encima del
+sprite grande (`.intro-portrait`, marco dorado GBC). Verificado en 3
+viewports (1280×720, 800×600, 390×700): **nunca tapa el sprite del otro
+luchador** (gap mínimo entre bloques: 210px).
