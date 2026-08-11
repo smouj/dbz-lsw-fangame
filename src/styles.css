@@ -1137,17 +1137,53 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 
 .battle-controls {
   min-height: 62px;
-  height: clamp(62px, 10vh, 94px);
-  padding: 4px 10px 6px;
+  height: auto;
+  padding: 6px 12px 8px;
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
   overflow: visible;
-  background: linear-gradient(180deg, transparent 0%, rgba(4,7,12,.08) 72%, rgba(4,7,12,.14) 100%);
-  border-top: 1px solid rgba(246,199,68,.06);
-  box-shadow: 0 -8px 18px rgba(0,0,0,.08);
+  background: linear-gradient(180deg, transparent 0%, rgba(4,7,12,.08) 72%, rgba(4,7,12,.16) 100%);
+  border-top: 1px solid rgba(246,199,68,.08);
+  box-shadow: 0 -8px 18px rgba(0,0,0,.10);
   backdrop-filter: none;
+}
+
+/* Tooltip pixel (descripciones de botón fuera del texto) */
+[data-tip] {
+  position: relative;
+}
+[data-tip]:hover::after {
+  content: attr(data-tip);
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(5,8,14,.96);
+  border: 1px solid rgba(246,199,68,.45);
+  color: #ffe9a3;
+  font-family: var(--fpx);
+  font-size: 8px;
+  letter-spacing: .5px;
+  line-height: 1.5;
+  padding: 5px 9px;
+  white-space: pre;
+  z-index: 60;
+  pointer-events: none;
+  box-shadow: 0 4px 14px rgba(0,0,0,.5);
+  image-rendering: pixelated;
+  text-align: center;
+}
+[data-tip]:hover::before {
+  content: '';
+  position: absolute;
+  bottom: calc(100% + 3px);
+  left: 50%;
+  transform: translateX(-50%);
+  border: 5px solid transparent;
+  border-top-color: rgba(246,199,68,.45);
+  z-index: 61;
 }
 
 .battle-controls .hand-cards .card {
@@ -1301,7 +1337,7 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 .command-strip { display: flex; gap: 6px; justify-content: center; align-items: stretch; }
 
 .command-strip button {
-  /* Marco GBC auténtico (48×40 de la ROM) escalado 2× pixelado */
+  /* Marco GBC auténtico (48×40 de la ROM) escalado 1.5× pixelado — cabe en el HUD */
   --btn-frame: url('/assets/ui/hud_buttons/frame_blue.png');
   background-image: var(--btn-frame);
   background-size: 100% 100%;
@@ -1310,33 +1346,55 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   background-color: transparent;
   border: none;
   color: #fff;
-  font-family: var(--fepic);
-  font-size: 26px;
-  letter-spacing: 2px;
-  text-shadow: 2px 2px 0 rgba(0,0,0,.9);
-  width: 96px;
-  height: 80px;
+  font-family: var(--fpx);
+  font-size: 18px;
+  letter-spacing: 1px;
+  text-shadow: 1px 1px 0 rgba(0,0,0,.9);
+  width: 72px;
+  height: 60px;
   padding: 0;
   cursor: pointer;
-  filter: drop-shadow(0 4px 8px rgba(0,0,0,.45));
+  filter: drop-shadow(0 3px 6px rgba(0,0,0,.5));
   transition: transform 80ms, filter 80ms;
+}
+
+/* Etiqueta del botón: letra + nombre, descripción fuera (tooltip) */
+.command-strip button .cmd-key {
+  display: block;
+  font-family: var(--fepic);
+  font-size: 24px;
+  line-height: 1;
+  margin-top: 2px;
+}
+.command-strip button .cmd-name {
+  display: block;
+  font-family: var(--fpx);
+  font-size: 7px;
+  letter-spacing: 2px;
+  opacity: .92;
+  margin-top: 3px;
 }
 
 .command-strip button:hover:not(:disabled) {
   transform: translateY(-2px);
-  filter: drop-shadow(0 6px 12px rgba(0,0,0,.55)) brightness(1.15);
+  filter: drop-shadow(0 5px 10px rgba(0,0,0,.6)) brightness(1.15);
 }
 
 .command-strip button:active:not(:disabled) { transform: translateY(1px) scale(0.97); }
-.command-strip button:disabled { opacity: 0.3; cursor: not-allowed; filter: grayscale(.6); }
+.command-strip button:disabled { opacity: 0.28; cursor: not-allowed; filter: grayscale(.6); }
 
 /* Botones con marco y letra propia */
-.cmd-limit { --btn-frame: url('/assets/ui/hud_buttons/frame_gold.png'); color: #ffe9a3; }
-.cmd-b { --btn-frame: url('/assets/ui/hud_buttons/frame_blue.png'); color: #bfe4ff; }
+.cmd-limit { --btn-frame: url('/assets/ui/hud_buttons/frame_gold.png'); }
+.cmd-limit .cmd-key { color: #ffe9a3; }
+.cmd-b { --btn-frame: url('/assets/ui/hud_buttons/frame_blue.png'); }
+.cmd-b .cmd-key { color: #bfe4ff; }
 
-/* Botones con texto GBC ya incluido (JOINT / CHARA): ocultamos la letra duplicada */
-.cmd-j { --btn-frame: url('/assets/ui/hud_buttons/joint_green.png'); color: transparent; text-shadow: none; }
-.cmd-c { --btn-frame: url('/assets/ui/hud_buttons/chara_joint.png'); color: transparent; text-shadow: none; }
+/* Botones con texto GBC ya incluido (JOINT / CHARA): solo icono */
+.cmd-j { --btn-frame: url('/assets/ui/hud_buttons/joint_green.png'); }
+.cmd-j .cmd-key, .cmd-j .cmd-name { display: none; }
+.cmd-c { --btn-frame: url('/assets/ui/hud_buttons/chara_joint.png'); }
+.cmd-c .cmd-key, .cmd-c .cmd-name { display: none; }
+.cmd-c.has-ally { animation: sel-blink 1.2s infinite alternate; }
 
 /* ─── Mano de cartas ─── */
 
@@ -3848,6 +3906,7 @@ button:focus-visible, .chapter-node:focus-visible {
   display: flex; flex-direction: column;
   gap: 8px; align-items: center;
   width: min(520px, 92vw);
+  padding: 4px 0 2px;
 }
 
 .defense-sources {
@@ -3858,9 +3917,13 @@ button:focus-visible, .chapter-node:focus-visible {
 }
 
 .defense-sources .basic-btn {
-  min-width: 150px;
+  min-width: 120px;
   flex: 1;
   text-align: center;
+  font-family: var(--fpx);
+  font-size: 10px;
+  letter-spacing: 1px;
+  color: #fff;
 }
 
 .defense-sources .basic-btn strong {
@@ -3868,6 +3931,8 @@ button:focus-visible, .chapter-node:focus-visible {
   font-size: 20px;
   color: var(--gold);
   display: block;
+  line-height: 1.1;
+  text-shadow: 1px 1px 0 rgba(0,0,0,.9);
 }
 
 .defense-menu .basic-btn[disabled] {
