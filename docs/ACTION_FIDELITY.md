@@ -470,10 +470,15 @@ El Stage Attack en PC replica el GBC con este mapeo:
 | Botón B | Tecla **E** | **Patada** |
 | Cruceta (↑↓←→) | **WASD** o **flechas** | **Golpe que desplaza al rival** (embestida: el atacante avanza, animación `stage-lunge`) |
 
-- **3 Stage Attack**: secuencia de A/B puro (Q/E)
+- **3 Stage Attack**: secuencia de Q/E puro (puñetazo/patada)
 - **4/5/6 Stage**: las etapas finales (1/2/3 según nivel) son de
-  desplazamiento (direcciones WASD/flechas), el resto A/B — como el GBC
-- Recuperación tras fallo: A (Q) = ABANDON · B (E) = REPAIR
+  desplazamiento (direcciones WASD/flechas), el resto Q/E — como el GBC
+- **Solo teclado**: sin botones en el HUD; prompt ÚNICO grande con lo que
+  hay que pulsar (feedback visual: flash verde acierto / shake rojo fallo)
+- **Ventana por input** (decisión del usuario): 3 Stage = 5.0s; cada stage
+  superior -0.1s (4S: 4.9s · 5S: 4.8s · 6S: 4.7s); el timer se reinicia en
+  cada acierto; e.repeat ignorado (no se puede repetir)
+- Recuperación tras fallo: Q = ABANDON · E = REPAIR
 - Botones en pantalla (click): **Q** (puñetazo), **E** (patada), y las 4
   direcciones con flechas (↑←↓→ — también acepta WASD, cuenta igual)
 - Iconos: Kenney Input Prompts (`public/assets/ui/qte/` — key_q/key_e + arrow_*)
