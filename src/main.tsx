@@ -279,6 +279,49 @@ function CardVisual({ card, selected, onClick, small }: {
   );
 }
 
+function cardEffectSummary(effect: CardEffect): string {
+  switch (effect) {
+    case 'damage':
+    case 'damage_pierce':
+    case 'damage_special':
+    case 'damage_special_team':
+    case 'damage_special_lowacc':
+    case 'damage_low_acc':
+      return 'Physical strike sequence. Uses action sprites and impact timing.';
+    case 'beam':
+    case 'beam_team':
+    case 'beam_suicide':
+    case 'beam_varhp':
+      return 'Energy attack. Opens cinematic action view and projectile travel.';
+    case 'heal_25pct':
+    case 'heal_strong':
+    case 'heal_light':
+      return 'Recovery support. Restores HP during the support phase.';
+    case 'avoid_beam':
+    case 'avoid_damage':
+    case 'avoid_damage_taiyoken':
+    case 'reduce_damage':
+    case 'absorb_beam':
+    case 'beam_shield':
+    case 'damage_shield':
+      return 'Defensive timing card. Reacts to incoming attacks or beams.';
+    case 'command_cancel':
+      return 'Interrupts or redirects the command sequence.';
+    case 'special_card':
+      return 'Rare special effect. Timing depends on the active battle state.';
+    default:
+      if (effect.startsWith('command_')) return 'Command chain card. Defines the action phase rhythm.';
+      if (effect.startsWith('buff_')) return 'Power-up support. Improves fighter stats for the next exchange.';
+      if (effect.startsWith('debuff_')) return 'Pressure support. Weakens the rival before the next exchange.';
+      return 'Support effect. Applies during the card resolution phase.';
+  }
+}
+
+function cardCompatibilityLabel(card: CardDef): string {
+  if (!card.compatible || card.compatible.length === 0) return 'All fighters';
+  return card.compatible.map(id => characterName(id)).join(', ');
+}
+
 // ─── Mano ─────────────────────────────────────────────────
 function HandComponent({ cards, selectedIndex, onSelect }: {
   cards: CardDef[]; selectedIndex: number | null; onSelect: (i: number) => void;
@@ -2942,6 +2985,12 @@ function DeckScreen({ onNavigate }: { onNavigate: (s: Screen) => void }) {
 
   const deckCounts: Record<number, number> = {};
   deck.forEach(id => { deckCounts[id] = (deckCounts[id] || 0) + 1; });
+  const deckCards = deck.map(id => getCard(id)).filter(Boolean) as CardDef[];
+  const deckPower = deckCards.reduce((sum, card) => sum + card.atk, 0);
+  const deckAvgCc = deckCards.length ? Math.round(deckCards.reduce((sum, card) => sum + card.cc, 0) / deckCards.length) : 0;
+  const deckTypeCounts = (['command', 'damage', 'beam', 'support', 'defense', 'special'] as const)
+    .map(type => ({ type, count: deckCards.filter(card => card.type === type).length }))
+    .filter(item => item.count > 0);
 
   const addCard = (card: CardDef) => {
     if (!owned.has(card.id)) return;  // solo cartas desbloqueadas
@@ -2994,6 +3043,17 @@ function DeckScreen({ onNavigate }: { onNavigate: (s: Screen) => void }) {
         {/* Deck actual */}
         <div className="deck-current">
           <div className="deck-current-title">{t('deck.yourDeck')}</div>
+          <div className="deck-summary">
+            <div className="deck-summary-row"><span>CARDS</span><b>{deck.length}/{DECK_SIZE}</b></div>
+            <div className="deck-summary-row"><span>POWER</span><b>{deckPower}</b></div>
+            <div className="deck-summary-row"><span>AVG CC</span><b>{deckAvgCc}</b></div>
+          </div>
+          <div className="deck-type-strip">
+            {deckTypeCounts.map(({ type, count }) => {
+              const I = TYPE_ICONS[type];
+              return <span key={type} className="deck-type-pill" style={{ '--type-color': CARD_COLORS[type] } as React.CSSProperties}><I size={11} /> {count}</span>;
+            })}
+          </div>
           <div className="deck-list">
             {deck.map((cardId, i) => {
               const card = getCard(cardId)!;
@@ -3025,8 +3085,16 @@ function CardsScreen({ onNavigate }: { onNavigate: (s: Screen) => void }) {
   const prog = loadProgress();
   const [owned, setOwned] = useState<Set<number>>(() => ownedCards(loadUnlocks(), prog.level));
   const [filter, setFilter] = useState<CardType | 'all'>('all');
+  const [selectedId, setSelectedId] = useState<number>(() => CARDS.find(c => ownedCards(loadUnlocks(), prog.level).has(c.id))?.id ?? CARDS[0].id);
 
   const filtered = CARDS.filter(c => filter === 'all' || c.type === filter);
+  const selectedCard = filtered.find(c => c.id === selectedId) ?? filtered[0] ?? CARDS[0];
+  const selectedOwned = owned.has(selectedCard.id);
+  const selectedStars = '★'.repeat(selectedCard.rarity) + '☆'.repeat(5 - selectedCard.rarity);
+
+  useEffect(() => {
+    if (!filtered.some(c => c.id === selectedId) && filtered[0]) setSelectedId(filtered[0].id);
+  }, [filter, selectedId, filtered]);
 
   return (
     <div className="page-screen cards-screen">
@@ -3035,27 +3103,61 @@ function CardsScreen({ onNavigate }: { onNavigate: (s: Screen) => void }) {
         <h1 className="page-title">{t('cards.title')}</h1>
         <div className="deck-count">{owned.size}/{CARDS.length}</div>
       </div>
-      <div className="deck-toolbar">
-        <div className="deck-filters">
-          {(['all', 'command', 'damage', 'beam', 'support', 'defense', 'special'] as const).map(tp => (
-            <button key={tp} className={`filter-chip ${filter === tp ? 'active' : ''}`}
-              onClick={() => setFilter(tp)}>{tp === 'all' ? t('deck.all') : CARD_TYPE_NAMES[tp]}</button>
-          ))}
+      <div className="cards-layout">
+        <div className="cards-collection-panel">
+          <div className="deck-toolbar cards-toolbar">
+            <div className="deck-filters">
+              {(['all', 'command', 'damage', 'beam', 'support', 'defense', 'special'] as const).map(tp => (
+                <button key={tp} className={`filter-chip ${filter === tp ? 'active' : ''}`}
+                  onClick={() => setFilter(tp)}>{tp === 'all' ? t('deck.all') : CARD_TYPE_NAMES[tp]}</button>
+              ))}
+            </div>
+          </div>
+          <div className="card-collection-grid full">
+            {filtered.map(card => {
+              const isOwned = owned.has(card.id);
+              const isSelected = card.id === selectedCard.id;
+              if (!isOwned) {
+                return (
+                  <button key={card.id} className={`card card-unknown ${isSelected ? 'selected' : ''}`} onClick={() => setSelectedId(card.id)}>
+                    <div className="card-unknown-label">{t('common.unknown')}</div>
+                    <div className="card-unknown-sub">{t('common.notObtained')}</div>
+                  </button>
+                );
+              }
+              return <CardVisual key={card.id} card={card} selected={isSelected} onClick={() => setSelectedId(card.id)} small />;
+            })}
+          </div>
         </div>
-      </div>
-      <div className="card-collection-grid full">
-        {filtered.map(card => {
-          const isOwned = owned.has(card.id);
-          if (!isOwned) {
-            return (
-              <div key={card.id} className="card card-unknown">
-                <div className="card-unknown-label">{t('common.unknown')}</div>
-                <div className="card-unknown-sub">{t('common.notObtained')}</div>
-              </div>
-            );
-          }
-          return <CardVisual key={card.id} card={card} small />;
-        })}
+        <aside className={`card-detail-panel ui-sidebar ${selectedOwned ? '' : 'locked'}`} style={{ '--card-color': CARD_COLORS[selectedCard.type] } as React.CSSProperties}>
+          <div key={selectedCard.id} className="card-detail-inner">
+            <div className="card-detail-kicker">CARD FILE #{String(selectedCard.id).padStart(3, '0')}</div>
+            <div className="card-detail-preview">
+              {selectedOwned ? <CardVisual card={selectedCard} selected /> : (
+                <div className="card-detail-unknown">
+                  <div className="card-unknown-label">?</div>
+                  <div className="card-unknown-sub">{t('common.notObtained')}</div>
+                </div>
+              )}
+            </div>
+            <div className="card-detail-name">{selectedOwned ? selectedCard.name : 'UNKNOWN CARD'}</div>
+            <div className="card-detail-type">{selectedOwned ? CARD_TYPE_NAMES[selectedCard.type] : 'LOCKED'} · {selectedStars}</div>
+            <div className="card-detail-stats">
+              <div><span>CC</span><b>{selectedOwned ? selectedCard.cc : '??'}</b></div>
+              <div><span>ATK</span><b>{selectedOwned ? selectedCard.atk : '??'}</b></div>
+              <div><span>ACC</span><b>{selectedOwned ? `${selectedCard.acc}%` : '??'}</b></div>
+            </div>
+            <div className="card-detail-block">
+              <span>EFFECT</span>
+              <p>{selectedOwned ? cardEffectSummary(selectedCard.effect) : 'Obtain this card to reveal its battle behavior.'}</p>
+            </div>
+            <div className="card-detail-block compact">
+              <span>COMPATIBILITY</span>
+              <p>{selectedOwned ? cardCompatibilityLabel(selectedCard) : 'Unknown'}</p>
+            </div>
+            <div className={`card-detail-status ${selectedOwned ? 'owned' : 'locked'}`}>{selectedOwned ? 'OWNED' : 'NOT OBTAINED'}</div>
+          </div>
+        </aside>
       </div>
     </div>
   );
