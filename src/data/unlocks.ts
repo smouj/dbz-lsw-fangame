@@ -12,8 +12,8 @@ export const UNLOCK_KEY = '***';
 export const STARTER_DAMAGE_DECK = [1, 2, 3, 4, 5, 5, 6, 11, 15, 25, 29, 34, 37, 43, 46, 19, 124, 88, 104, 23];
 export const STARTER_BEAM_DECK = [1, 2, 3, 4, 7, 8, 10, 12, 30, 32, 35, 38, 47, 63, 125, 45, 88, 117, 23, 59];
 
-// Personajes desbloqueados de inicio (Goku como en el GBC)
-export const STARTER_CHARACTERS = ['goku'];
+// Personajes iniciales del remake: el primer flujo jugable es Gohan vs Piccolo.
+export const STARTER_CHARACTERS = ['gohan', 'piccolo'];
 
 // Cartas que se desbloquean automáticamente por nivel (progresión)
 // Cada nivel desbloquea un lote adicional

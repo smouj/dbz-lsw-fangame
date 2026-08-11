@@ -249,8 +249,8 @@ function CCDisplay({ cc, maxCc }: { cc: number; maxCc: number }) {
 }
 
 // ─── Carta visual ─────────────────────────────────────────
-function CardVisual({ card, selected, onClick, small }: {
-  card: CardDef; selected?: boolean; onClick?: () => void; small?: boolean;
+function CardVisual({ card, selected, onClick, small, disabled }: {
+  card: CardDef; selected?: boolean; onClick?: () => void; small?: boolean; disabled?: boolean;
 }) {
   const color = CARD_COLORS[card.type];
   const iconUrl = cardIconUrl(card.id);
@@ -258,7 +258,7 @@ function CardVisual({ card, selected, onClick, small }: {
   const stars = '★'.repeat(card.rarity) + '☆'.repeat(5 - card.rarity);
   return (
     <button className={`card ${card.type} ${selected ? 'selected' : ''} ${small ? 'small' : ''}`}
-      onClick={onClick} style={{ '--card-color': color } as React.CSSProperties}>
+      onClick={onClick} disabled={disabled} style={{ '--card-color': color } as React.CSSProperties}>
       <div className="card-header">
         <span className="card-icon">
           {iconUrl ? <img className="card-icon-img" src={iconUrl} alt="" onError={e => (e.currentTarget.style.display = 'none')} /> : <IconCmp size={16} strokeWidth={2.2} />}
@@ -277,6 +277,14 @@ function CardVisual({ card, selected, onClick, small }: {
       <div className="card-rarity">{stars}</div>
     </button>
   );
+}
+
+function canPlayInAttack(card: CardDef): boolean {
+  return card.type === 'command' || card.type === 'damage' || card.type === 'beam' || card.type === 'support' || card.type === 'special';
+}
+
+function canPlayInDefense(card: CardDef): boolean {
+  return card.type === 'defense' || card.type === 'support' || card.type === 'special';
 }
 
 function cardEffectSummary(effect: CardEffect): string {
@@ -323,8 +331,8 @@ function cardCompatibilityLabel(card: CardDef): string {
 }
 
 // ─── Mano ─────────────────────────────────────────────────
-function HandComponent({ cards, selectedIndex, onSelect }: {
-  cards: CardDef[]; selectedIndex: number | null; onSelect: (i: number) => void;
+function HandComponent({ cards, selectedIndex, onSelect, isPlayable }: {
+  cards: CardDef[]; selectedIndex: number | null; onSelect: (i: number) => void; isPlayable?: (card: CardDef) => boolean;
 }) {
   const { t } = useLang();
   return (
@@ -333,7 +341,8 @@ function HandComponent({ cards, selectedIndex, onSelect }: {
       <div className="hand-cards">
         {cards.map((card, i) => (
           <CardVisual key={card.id + '-' + i} card={card}
-            selected={i === selectedIndex} onClick={() => onSelect(i)} />
+            selected={i === selectedIndex} disabled={isPlayable ? !isPlayable(card) : false}
+            onClick={() => onSelect(i)} />
         ))}
       </div>
     </div>
@@ -376,7 +385,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
     const base: Fighter = {
       id: pf.character, name: getCharacter(pf.character)?.name || pf.character, form: pf.form,
       level: prog.level, maxHp: pf.hp, hp: pf.hp,
-      str: pf.str, ki: pf.ki, spd: pf.spd, maxCc: 999, cc: 0,
+      str: pf.str, ki: pf.ki, spd: pf.spd, maxCc: 99, cc: 0,
       battlePos: BattlePosition.DOWN_BACK, battleId: pf.battleId,
       limits: [],
     };
@@ -393,7 +402,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
     const base: Fighter = {
       id: af.character, name: getCharacter(af.character)?.name || af.character, form: af.form,
       level: prog.level, maxHp: af.hp, hp: af.hp,
-      str: af.str, ki: af.ki, spd: af.spd, maxCc: 999, cc: 0,
+      str: af.str, ki: af.ki, spd: af.spd, maxCc: 99, cc: 0,
       battlePos: BattlePosition.DOWN_BACK, limits: [],
     };
     return applyLevelUps(base, prog.level);
@@ -406,7 +415,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
       id: ef2.character, name: getCharacter(ef2.character)?.name || ef2.character, form: ef2.form,
       level: aiLevel, maxHp: ef2.hp + (b2?.hp || 0), hp: ef2.hp + (b2?.hp || 0),
       str: ef2.str + (b2?.str || 0), ki: ef2.ki + (b2?.ki || 0), spd: ef2.spd + (b2?.spd || 0),
-      maxCc: 999, cc: 0, battlePos: BattlePosition.DOWN_BACK, limits: [],
+      maxCc: 99, cc: 0, battlePos: BattlePosition.DOWN_BACK, limits: [],
     };
     return base;
   });
@@ -417,7 +426,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
       id: ef.character, name: getCharacter(ef.character)?.name || ef.character, form: ef.form,
       level: aiLevel, maxHp: ef.hp + (boost?.hp || 0), hp: ef.hp + (boost?.hp || 0),
       str: ef.str + (boost?.str || 0), ki: ef.ki + (boost?.ki || 0), spd: ef.spd + (boost?.spd || 0),
-      maxCc: 999, cc: 0,
+      maxCc: 99, cc: 0,
       battlePos: BattlePosition.DOWN_BACK, battleId: ef.battleId,
       limits: [],
     };
@@ -455,11 +464,12 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
   const [scenario] = useState(() => SCENARIOS[Math.floor(Math.random() * SCENARIOS.length)]);
   const [viewMode, setViewMode] = useState<BattleViewMode>('OVERVIEW');
   const [hand, setHand] = useState<CardDef[]>(() => {
-    // Mano inicial: 3 Joint aleatorias (como el GBC) + 1 robo al empezar
+    // Mano inicial real: 3 Joint aleatorias. El +1 se roba SOLO al entrar
+    // en cada Attack Phase, no en BATTLE_INIT.
     const deckIds = loadDeck();
     const battleDeck = deckIds.map(id => getCard(id)).filter((c): c is CardDef => !!c);
     const shuffled = [...battleDeck].sort(() => Math.random() - 0.5);
-    return shuffled.slice(0, 4); // 3 iniciales + 1 robo al iniciar Attack Phase
+    return shuffled.slice(0, 3);
   });
   const [selectedCard, setSelectedCard] = useState<number | null>(null);
   const [log, setLog] = useState<string[]>([t('battle.start')]);
@@ -554,6 +564,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
   // Gather Power: PowerState real (FULL_POWER → HALF_POWER → NORMAL)
   const [powerState, setPowerState] = useState<'NORMAL' | 'HALF_POWER' | 'FULL_POWER'>('NORMAL');
   const [gatherTurns, setGatherTurns] = useState(0);
+  const gatherStartedRoundRef = useRef<number | null>(null);
   // ── Stage Attack: QTE del GBC (espec 32 puntos, docs/ACTION_FIDELITY.md) ──
   // Ventana GLOBAL para TODA la secuencia (no un timer por input), contada en
   // FRAMES GBC (GBC_NATIVE_FPS) — nunca en setTimeout/Date.now como fuente.
@@ -629,6 +640,38 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
     }
   };
 
+  const drawJointForAttack = () => {
+    setHand(prev => {
+      // El GBC permite 6 cartas de forma transitoria al robar; después de la
+      // acción hay que volver a un máximo persistente de 5.
+      if (prev.length >= 6) return prev;
+      const deckIds = loadDeck();
+      if (deckIds.length === 0) return prev;
+      const card = getCard(deckIds[Math.floor(Math.random() * deckIds.length)]);
+      return card ? [...prev, card] : prev;
+    });
+  };
+
+  const settleAttackHand = () => {
+    setHand(prev => {
+      if (prev.length <= 5) return prev;
+      return prev.slice(0, 5);
+    });
+  };
+
+  const limitsPowered = powerState !== 'NORMAL';
+
+  const advanceGatherPowerRound = () => {
+    setGatherTurns(prev => {
+      if (prev <= 0) return 0;
+      if (gatherStartedRoundRef.current === turn) return prev;
+      const next = prev - 1;
+      setPowerState(next >= 2 ? 'FULL_POWER' : next === 1 ? 'HALF_POWER' : 'NORMAL');
+      if (next === 0) gatherStartedRoundRef.current = null;
+      return next;
+    });
+  };
+
   const playCardCinematic = (card: CardDef, side: 'player' | 'enemy', onDone: () => void) => {
     clearCinematicTimers();
     const setActorPose = (pose: BattleSpritePose) => side === 'player' ? setPlayerPose(pose) : setEnemyPose(pose);
@@ -690,15 +733,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
       // La posición PERSISTE entre fases (spec Move): el atacante no elige
       // posición, va directo a seleccionar su acción. Robo de Joint al entrar
       // en Attack Phase (máx 6 transitorio, 5 persistente).
-      setHand(prev => {
-        if (prev.length >= 6) return prev;
-        const deckIds = loadDeck();
-        const battleDeck = deckIds.map(id => getCard(id)).filter((c): c is CardDef => !!c);
-        const usedIds = new Set(prev.map(c => c.id));
-        const pool = battleDeck.filter(c => !usedIds.has(c.id));
-        if (pool.length === 0) return prev;
-        return [...prev, pool[Math.floor(Math.random() * pool.length)]];
-      });
+      drawJointForAttack();
       showPhaseCue('ATTACK PHASE', `${actor} +3 CC`, () => setPhase('command'));
     } else {
       const actor = getForm(enemyFormId)!.character.toUpperCase();
@@ -749,6 +784,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
       startExchange(second);
     } else {
       // TURN_END → nuevo turno: recalcular SPD y orden
+      advanceGatherPowerRound();
       setExchangeIndex(0);
       setTurn(t => t + 1);
       beginTurn();
@@ -817,6 +853,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
     setViewMode('ACTION');
     setPowerState('FULL_POWER');
     setGatherTurns(2);
+    gatherStartedRoundRef.current = turn;
     // Gather Power (GBC): +4 STR +4 KI (COMMUNITY_TESTED; la fórmula exacta es UNKNOWN),
     // habilita Limit Deck y convierte el Basic 3 Stage → 4 Stage
     setPStages(s => ({ ...s, str: clampStage(s.str + 0.5), ki: clampStage(s.ki + 0.5) }));
@@ -828,6 +865,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
       setViewMode('OVERVIEW');
       // Termina el turno tras Gather (acción completa consumida)
       setSelectedCard(null);
+      settleAttackHand();
       setTimeout(() => advanceExchange(), gbcMs(36));
     }, gbcMs(58));
   };
@@ -835,7 +873,15 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
   const selectCommand = (cmd: CommandType) => {
     Sfx.select();
     if (cmd === 'B') { setPhase('basic'); return; }
-    if (cmd === 'LIMIT') { setPhase('limitSelect'); return; }
+    if (cmd === 'LIMIT') {
+      if (!limitsPowered || limitCards.length === 0) {
+        addLog(t('battle.needGather'));
+        Sfx.cancel();
+        return;
+      }
+      setPhase('limitSelect');
+      return;
+    }
     if (cmd === 'C') {
       // CHARA: cambiar al compañero (Select Character del GBC). Consume la acción.
       if (!player2) { addLog(t('battle.noAlly')); Sfx.cancel(); return; }
@@ -845,6 +891,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
       setPlayer(incoming);
       setPlayerPose('idle');
       addLog(`${incoming.name} entra al combate! (CHARA)`);
+      settleAttackHand();
       setTimeout(() => advanceExchange(), 600);
       return;
     }
@@ -1074,12 +1121,20 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
     setStageQte({ state: 'WAITING', seq: [], idx: 0, correct: 0, card: null, elapsedFrames: 0, limitFrames: 0, recoveryFrames: 0, forcedFailure: null, result: null });
     setViewMode('OVERVIEW');
     setEnemyPose('idle');
+    settleAttackHand();
     setTimeout(() => advanceExchange(), 600);
   };
 
   const selectCard = (idx: number) => {
     const card = hand[idx];
     setSelectedCard(idx);
+
+    if (!canPlayInAttack(card)) {
+      addLog(`${card.name}: solo puede usarse en DEFENSE PHASE`);
+      Sfx.cancel();
+      setSelectedCard(null);
+      return;
+    }
 
     // Economía real: las cartas CUESTAN CC ("may or may not reduce your CC")
     if (player.cc < card.cc) {
@@ -1108,7 +1163,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
     const endTurn = () => {
       setPlayerPose('idle');
       setEnemyPose('idle');
-      if (isLimit) { setSelectedCard(null); setTimeout(() => advanceExchange(), 600); }
+      if (isLimit) { setSelectedCard(null); settleAttackHand(); setTimeout(() => advanceExchange(), 600); }
       else finishPlayerTurn(handIdx);
     };
     setTimeout(() => {
@@ -1348,6 +1403,16 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
 
   // ─── LIMITED CARDS (L): reutilizables, cuestan CC, no salen de la mano ───
   const playLimit = (card: CardDef) => {
+    if (!limitsPowered) {
+      addLog(t('battle.needGather'));
+      Sfx.cancel();
+      return;
+    }
+    if (!canPlayInAttack(card)) {
+      addLog(`${card.name}: no es legal en ATTACK PHASE`);
+      Sfx.cancel();
+      return;
+    }
     if (player.cc < card.cc) {
       addLog(`${t('battle.insufficientCc')} (${card.name} ${card.cc} CC)`);
       Sfx.cancel();
@@ -1369,15 +1434,8 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
     const newHand = [...hand];
     // La carta usada desaparece de la mano (JOINT)
     newHand.splice(idx, 1);
-    // Reponer con carta del deck si no llegamos al robo del próximo turno
-    if (newHand.length < 5) {
-      const deckIds = loadDeck();
-      const battleDeck = deckIds.map(id => getCard(id)).filter((c): c is CardDef => !!c);
-      const usedIds = new Set(newHand.map(c => c.id));
-      const pool = battleDeck.filter(c => !usedIds.has(c.id));
-      if (pool.length > 0) newHand.push(pool[Math.floor(Math.random() * pool.length)]);
-    }
-    // Descartar hasta 5 (mano persistente)
+    // No hay reposición al terminar acción. El único robo ocurre al entrar
+    // en Attack Phase; aquí solo se fuerza mano persistente max 5.
     const finalHand = newHand.slice(0, 5);
     setHand(finalHand);
     setSelectedCard(null);
@@ -1393,16 +1451,6 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
     setPhase('enemyTurn');
     setEnemyPose('idle');
     const ai = aiRef.current;
-    // El enemigo elige posición al atacar (frente/suelo la mayoría de veces)
-    const posRoll = Math.random();
-    // La IA elige su posición de ataque entre las 4 tácticas (frecuencia
-    // orientada a DOWN_FRONT/DOWN_BACK como el GBC: la mayoría en el suelo)
-    const ePos: BattlePosition =
-      posRoll < 0.35 ? BattlePosition.DOWN_FRONT
-      : posRoll < 0.65 ? BattlePosition.DOWN_BACK
-      : posRoll < 0.85 ? BattlePosition.UP_FRONT
-      : BattlePosition.UP_BACK;
-    setEnemy(prev => ({ ...prev, battlePos: ePos }));
     setTimeout(() => {
       // Mazo REAL del jefe en story mode (spreadsheet oficial); en versus, pool global
       const storyDeck = storyChapter ? (STORY_ENEMY_DECKS[storyChapter] || []).map(id => getCard(id)).filter((c): c is CardDef => !!c) : [];
@@ -1502,6 +1550,11 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
 
   // JOINT durante Defense: solo cartas DEFENSE y SUPPORT (spec defensa)
   const defendJoint = (card: CardDef, handIdx: number) => {
+    if (!canPlayInDefense(card)) {
+      addLog(`${card.name}: no es legal en DEFENSE PHASE`);
+      Sfx.cancel();
+      return;
+    }
     // Economía real: las cartas JOINT CUESTAN CC también en defensa
     if (player.cc < card.cc) {
       addLog(`${t('battle.insufficientCc')} (${card.name} ${card.cc} CC)`);
@@ -1520,6 +1573,11 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
 
   // LIMIT durante Defense: solo Limits DEFENSE/SUPPORT y solo si powered
   const defendLimit = (card: CardDef) => {
+    if (!limitsPowered || !canPlayInDefense(card)) {
+      addLog(t('battle.needGather'));
+      Sfx.cancel();
+      return;
+    }
     if (player.cc < card.cc) return;
     setPhase('enemyTurn');
     setDefendMenu(null);
@@ -1611,10 +1669,6 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
     setTimeout(() => {
       setPlayerPose('idle'); setEnemyPose('idle');
       setSelectedCard(null);
-      if (gatherTurns > 0) {
-        setGatherTurns(g => g - 1);
-        setPowerState(prev => prev === 'FULL_POWER' ? 'HALF_POWER' : prev === 'HALF_POWER' ? 'NORMAL' : prev);
-      }
       advanceExchange();
     }, 400);
   };
@@ -1723,11 +1777,6 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
     setTimeout(() => {
       setPlayerPose('idle'); setEnemyPose('idle');
       setSelectedCard(null);
-      // Decaer Gather Power (FULL_POWER → HALF_POWER → NORMAL)
-      if (gatherTurns > 0) {
-        setGatherTurns(g => g - 1);
-        setPowerState(prev => prev === 'FULL_POWER' ? 'HALF_POWER' : prev === 'HALF_POWER' ? 'NORMAL' : prev);
-      }
       advanceExchange();
     }, 400);
   };
@@ -1753,7 +1802,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
     phase === 'position' ? 'POSITION' : '';
 
   return (
-    <div className="battle-screen">
+    <div className={`battle-screen view-${viewMode.toLowerCase()} ${cardFx ? 'is-cinematic' : ''}`}>
       {/* ═══ PANTALLA DE CARGA con skeleton (hasta que los assets clave estén listos) ═══ */}
       {loading && !intro && (
         <div className="battle-loading">
@@ -1891,7 +1940,6 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
             {buffTurns > 0 && <span className="buff-indicator">BUFF {buffTurns}▲</span>}
             {gatherTurns > 0 && <span className="power-indicator">{t('battle.powerState')} {powerState.replace('_', ' ')}</span>}
           </div>
-          <CCDisplay cc={player.cc} maxCc={player.maxCc} />
           {player2 && (
             <div className="team-reserve left">
               <span className="team-reserve-portrait">
@@ -1916,7 +1964,6 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
           <div className="hud-stats">
             <span>STR{enemy.str + eBuffs.str}</span><span>KI{enemy.ki + eBuffs.ki}</span><span>SPD{enemy.spd}</span>
           </div>
-          <CCDisplay cc={enemy.cc} maxCc={enemy.maxCc} />
           {enemy2 && (
             <div className="team-reserve right">
               <span className="team-reserve-portrait">
@@ -1944,10 +1991,10 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
           <div ref={playerRef} className={`fighter-container player ${POSITION_DATA[player.battlePos].altitude.toLowerCase()} ${POSITION_DATA[player.battlePos].depth.toLowerCase()}`}
             style={{ left: `${anchorFor(player.battlePos, 'LEFT').x}%`, top: `${anchorFor(player.battlePos, 'LEFT').y}%` }}>
             {playerPose === 'idle' && overworldUrl(playerFormId)
-              ? <img src={overworldUrl(playerFormId)!} alt="" className={`overworld-sprite ${gatherTurns > 0 ? 'gathering' : ''}`} style={{ transform: `scaleX(${facingFlip(playerFormId, 'left')})` }} />
+              ? <img src={overworldUrl(playerFormId)!} alt="" className="overworld-sprite" style={{ transform: `scaleX(${facingFlip(playerFormId, 'left')})` }} />
               : (spriteManifestUrl(playerFormId)
-                  ? <FighterSprite formId={playerFormId} pose={playerPose} side="left" scale={15} flash={flashPlayer || gatherTurns > 0} />
-                  : <CharacterSprite formId={playerFormId} className={`sheet-sprite ${gatherTurns > 0 ? 'gathering' : ''}`} height={152} side="left" />)}
+                  ? <FighterSprite formId={playerFormId} pose={playerPose} side="left" scale={15} flash={flashPlayer} />
+                  : <CharacterSprite formId={playerFormId} className="sheet-sprite" height={152} side="left" />)}
             <div className="fighter-position-tag hidden">{player.battlePos.replace('_', ' ')}</div>
           </div>
           <div ref={enemyRef} className={`fighter-container enemy ${POSITION_DATA[enemy.battlePos].altitude.toLowerCase()} ${POSITION_DATA[enemy.battlePos].depth.toLowerCase()}`}
@@ -1976,13 +2023,36 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
         <button className="btn-exit" onClick={() => onExit(false)}><X size={12} /> {t('battle.forfeit')}</button>
       </div>
 
+      <div className="cc-dock" aria-label="Card Cost">
+        <div className="cc-pocket player">
+          <span className="cc-pocket-label">P</span>
+          <CCDisplay cc={player.cc} maxCc={player.maxCc} />
+        </div>
+        <div className="cc-pocket enemy">
+          <span className="cc-pocket-label">E</span>
+          <CCDisplay cc={enemy.cc} maxCc={enemy.maxCc} />
+        </div>
+      </div>
+
       {/* Controles */}
       <div className="battle-controls">
-
+        {cardFx ? (
+          <div className={`action-caption ${cardFx.card.type}`}>
+            <div className="action-caption-kicker">
+              {cardFx.step === 'attacker' ? 'ACTION SETUP' : cardFx.step === 'travel' ? 'SKILL TRAVEL' : 'HIT RESULT'}
+            </div>
+            <div className="action-caption-main">
+              <span>{cardFx.side === 'player' ? player.name : enemy.name}</span>
+              <strong>{cardFx.card.name}</strong>
+            </div>
+            <div className="action-caption-sub">{cardEffectSummary(cardFx.card.effect)}</div>
+          </div>
+        ) : (
+          <>
         {phase === 'command' && (
           <div className="command-select">
             <div className="command-strip">
-              <button onClick={() => selectCommand('LIMIT')} className="cmd-limit">L</button>
+              <button onClick={() => selectCommand('LIMIT')} className="cmd-limit" disabled={!limitsPowered || limitCards.length === 0}>L</button>
               <button onClick={() => selectCommand('J')} className="cmd-j">J</button>
               <button onClick={() => selectCommand('B')} className="cmd-b">B</button>
               {/* CHARA solo aparece en combates de equipo (FAQ: en individuales no existe) */}
@@ -2033,7 +2103,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
         )}
         {phase === 'cardSelect' && (
           <>
-            <HandComponent cards={hand} selectedIndex={selectedCard} onSelect={selectCard} />
+            <HandComponent cards={hand} selectedIndex={selectedCard} onSelect={selectCard} isPlayable={card => canPlayInAttack(card) && player.cc >= card.cc} />
             <button className="btn-cancel-card" onClick={() => { Sfx.cancel(); setSelectedCard(null); setPhase('command'); }}>
               ← {t('battle.cancel')}
             </button>
@@ -2169,14 +2239,15 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
                 <div className="limit-panel">
                   <div className="limit-title">JOINT — {t('battle.defenseOnly')}</div>
                   {(() => {
-                    const defCards = hand.filter(c => c.type === 'defense' || c.type === 'support');
+                    const defCards = hand.filter(canPlayInDefense);
                     if (defCards.length === 0) return <div className="limit-empty">{t('battle.noDefenseCards')}</div>;
                     return defCards.map((c, i) => {
                       const handIdx = hand.indexOf(c);
                       return (
-                        <button key={i} className="limit-row" onClick={() => defendJoint(c, handIdx)}>
+                        <button key={i} className={`limit-row ${player.cc < c.cc ? 'locked' : ''}`} disabled={player.cc < c.cc} onClick={() => defendJoint(c, handIdx)}>
                           <span className="limit-name">{c.name}</span>
-                          <span className="limit-cost">{c.type.toUpperCase()}</span>
+                          <span className="limit-cost">{c.cc} CC · {c.type.toUpperCase()}</span>
+                          {player.cc < c.cc && <span className="limit-lock">{t('battle.insufficientCc')}</span>}
                         </button>
                       );
                     });
@@ -2192,7 +2263,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
                 <div className="limit-panel">
                   <div className="limit-title">LIMITED — {t('battle.defenseOnly')}</div>
                   {(() => {
-                    const defLimits = limitCards.filter(c => c.type === 'defense' || c.type === 'support');
+                    const defLimits = limitCards.filter(canPlayInDefense);
                     if (defLimits.length === 0) return <div className="limit-empty">{t('battle.noDefenseLimits')}</div>;
                     return defLimits.map((c, i) => (
                       <button key={i} className={`limit-row ${player.cc < c.cc ? 'locked' : ''}`}
@@ -2231,6 +2302,8 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
             </div>
             <button className="btn-primary" onClick={() => onExit(false)}>{t('common.retry')}</button>
           </div>
+        )}
+          </>
         )}
       </div>
 
@@ -2302,7 +2375,7 @@ function MainMenu({ onNavigate }: { onNavigate: (s: Screen) => void }) {
     { n: '05', label: t('menu.cards'), desc: menuCopy.cards, screen: 'cards', Icon: Sparkles },
     { n: '06', label: t('menu.settings'), desc: menuCopy.settings, screen: 'settings', Icon: Settings, secondary: true },
   ];
-  const visualMenuIndex = hoveredMenuIndex ?? (keyboardMenuActive ? selectedMenuIndex : null);
+  const keyboardVisualMenuIndex = keyboardMenuActive && hoveredMenuIndex === null ? selectedMenuIndex : null;
   const onMenuKeyDown = (ev: React.KeyboardEvent<HTMLDivElement>) => {
     if (ev.key === 'ArrowDown' || ev.key === 'ArrowUp') {
       ev.preventDefault();
@@ -2374,12 +2447,12 @@ function MainMenu({ onNavigate }: { onNavigate: (s: Screen) => void }) {
           {menuItems.map(({ n, label, desc, screen, Icon, tone, secondary }, index) => (
             <button
               key={screen}
-              className={`menu-item ${tone ? `tone-${tone}` : ''} ${secondary ? 'menu-item-settings' : ''} ${index === visualMenuIndex ? 'selected' : ''}`}
+              className={`menu-item ${tone ? `tone-${tone}` : ''} ${secondary ? 'menu-item-settings' : ''} ${index === hoveredMenuIndex ? 'selected' : ''} ${index === keyboardVisualMenuIndex ? 'keyboard-selected' : ''}`}
               onMouseEnter={() => { setHoveredMenuIndex(index); setKeyboardMenuActive(false); }}
               onMouseLeave={() => setHoveredMenuIndex(null)}
               onFocus={() => { setSelectedMenuIndex(index); setKeyboardMenuActive(true); }}
               onClick={() => { Sfx.select(); onNavigate(screen); }}
-              aria-current={index === visualMenuIndex ? 'true' : undefined}
+              aria-current={index === keyboardVisualMenuIndex ? 'true' : undefined}
             >
               <span className="mi-num">{n}</span>
               <span className="mi-icon"><Icon size={18} strokeWidth={2.4} /></span>
@@ -2500,7 +2573,10 @@ function loadUnlocks(): UnlockState {
     const raw = localStorage.getItem(UNLOCK_KEY);
     if (raw) {
       const u = JSON.parse(raw);
-      if (u && Array.isArray(u.characters) && Array.isArray(u.cards)) return u;
+      if (u && Array.isArray(u.characters) && Array.isArray(u.cards)) {
+        const characters = Array.from(new Set([...STARTER_CHARACTERS, ...u.characters]));
+        return { ...u, characters };
+      }
     }
   } catch { /* noop */ }
   return { starterDeck: null, characters: [...STARTER_CHARACTERS], cards: [], pendingReward: null };
@@ -2839,7 +2915,7 @@ function CharactersScreen({ onNavigate, onSelectFighter }: {
   onNavigate: (s: Screen) => void; onSelectFighter: (formId: string) => void;
 }) {
   const { t } = useLang();
-  const [selected, setSelected] = useState<string>('goku_base');
+  const [selected, setSelected] = useState<string>('gohan_young');
   // Secuencia de transformación: flash + aura al cambiar de forma (como el GBC)
   const [transformFx, setTransformFx] = useState(0);
 
@@ -3247,7 +3323,7 @@ function VersusScreen({ onNavigate, onStartVersus }: {
   onNavigate: (s: Screen) => void; onStartVersus: (enemyFormId: string) => void;
 }) {
   const { t } = useLang();
-  const [selected, setSelected] = useState('vegeta_base');
+  const [selected, setSelected] = useState('piccolo_base');
   const [difficulty, setDifficulty] = useState<'normal' | 'hard' | 'lethal'>('normal');
   const deckSize = loadDeck().length;
   const deckValid = deckSize === DECK_SIZE;
@@ -3397,8 +3473,8 @@ function StarterScreen({ onDone }: { onDone: () => void }) {
 function AppInner() {
   const [screen, setScreen] = useState<Screen>('main');
   const [needsStarter, setNeedsStarter] = useState(() => loadUnlocks().starterDeck === null);
-  const [playerForm, setPlayerForm] = useState('goku_base');
-  const [enemyForm, setEnemyForm] = useState('vegeta_base');
+  const [playerForm, setPlayerForm] = useState('gohan_young');
+  const [enemyForm, setEnemyForm] = useState('piccolo_base');
   const [storyChapter, setStoryChapter] = useState<number | null>(null);
   const [storyScene, setStoryScene] = useState<{ chapter: number; phase: 'intro' | 'outro' } | null>(null);
   const [battleKey, setBattleKey] = useState(0);
@@ -3413,12 +3489,13 @@ function AppInner() {
   const startBattle = (playerFormId?: string) => {
     if (playerFormId) setPlayerForm(playerFormId);
     setStoryChapter(null);
-    setEnemyForm('vegeta_base');
+    setEnemyForm('piccolo_base');
     setBattleKey(k => k + 1);
     setScreen('battle');
   };
 
   const startVersus = (enemyFormId: string) => {
+    setPlayerForm('gohan_young');
     setEnemyForm(enemyFormId);
     setStoryChapter(null);
     setBattleKey(k => k + 1);
