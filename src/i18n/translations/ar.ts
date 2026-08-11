@@ -192,4 +192,5 @@ export const ar: Dict = {
   'battle.downBack': "DOWN · BACK",
   'battle.downFront': "DOWN · FRONT",
   'story.epilogue': "EPILOGUE",
+  'settings.difficulty': "DIFFICULTY",
 };

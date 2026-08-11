@@ -2289,6 +2289,19 @@ function StoryScreen({ onNavigate, onStartChapter }: {
   const { t } = useLang();
   const [progress, setProgress] = useState(loadStoryProgress);
   const [selected, setSelected] = useState(1);
+  const [sagaTab, setSagaTab] = useState(0);
+
+  // Sagas del GBC (spec §6): pestañas superiores
+  const SAGAS = [
+    { name: 'SAIYAN', range: [1, 3] },
+    { name: 'NAMEK', range: [4, 10] },
+    { name: 'CELL', range: [11, 22] },
+    { name: 'MAJIN BUU', range: [23, 32] },
+  ];
+  const visibleChapters = CHAPTERS.filter(c => c.id >= SAGAS[sagaTab].range[0] && c.id <= SAGAS[sagaTab].range[1]);
+  const sel = CHAPTERS.find(c => c.id === selected)!;
+  const selUnlocked = sel.id <= progress;
+  const selDone = sel.id < progress;
 
   const start = () => {
     const ch = CHAPTERS.find(c => c.id === selected)!;
@@ -2297,6 +2310,10 @@ function StoryScreen({ onNavigate, onStartChapter }: {
 
   const total = CHAPTERS.length;
   const pct = Math.round((progress / total) * 100);
+  const selHero = overworldUrl(sel.player);
+  const selBoss = overworldUrl(sel.enemy);
+  const selCutscene = panelsForChapter(sel.id).intro[0]?.background;
+
   return (
     <div className="page-screen story-screen">
       <div className="page-header">
@@ -2307,41 +2324,84 @@ function StoryScreen({ onNavigate, onStartChapter }: {
           <span className="story-progress-bar"><span style={{ width: `${pct}%` }} /></span>
         </div>
       </div>
-      <div className="story-map">
-        {CHAPTERS.map(ch => {
-          const unlocked = ch.id <= progress;
-          const isSel = ch.id === selected;
-          const done = ch.id < progress;
-          const boss = overworldUrl(ch.enemy);
-          const hero = overworldUrl(ch.player);
+
+      {/* Pestañas de sagas (spec §6) */}
+      <div className="saga-tabs">
+        {SAGAS.map((saga, i) => {
+          const inRange = progress >= saga.range[0];
+          const active = i === sagaTab;
           return (
-            <div key={ch.id}
-              className={`chapter-node ${isSel ? 'active' : ''} ${unlocked ? 'unlocked' : 'locked'} ${done ? 'done' : ''}`}
-              onClick={() => unlocked && setSelected(ch.id)}>
-              <div className="chapter-icon">{unlocked ? ch.id : <Lock size={14} />}</div>
-              <div className="chapter-boss">
-                {unlocked && boss
-                  ? <img src={boss} alt="" className="chapter-boss-sprite" />
-                  : <div className="chapter-boss-none">?</div>}
-                {unlocked && hero && <img src={hero} alt="" className="chapter-hero-sprite" />}
-              </div>
-              <div className="chapter-info">
-                <div className="chapter-name">{t(ch.nameKey)}</div>
-                <div className="chapter-desc">{unlocked ? t(ch.descKey) : t('story.notUnlocked')}</div>
-              </div>
-              <div className="chapter-status">
-                {done ? <span className="chapter-done-tag">✓</span>
-                  : isSel ? <ChevronRight size={14} />
-                  : <span className="chapter-num-tag">{String(ch.id).padStart(2, '0')}</span>}
-              </div>
-            </div>
+            <button key={saga.name} className={`saga-tab ${active ? 'active' : ''} ${inRange ? 'open' : 'locked'}`}
+              onClick={() => { Sfx.select(); setSagaTab(i); setSelected(Math.min(Math.max(progress, saga.range[0]), saga.range[1])); }}>
+              {!inRange && <Lock size={10} />} {saga.name}
+            </button>
           );
         })}
       </div>
-      <div className="page-footer">
-        <button className="btn-primary" onClick={start} disabled={!CHAPTERS.find(c => c.id === selected)?.id}>
-          {t('story.start')} {t(CHAPTERS.find(c => c.id === selected)?.nameKey ?? 'story.ch1').toUpperCase()}
-        </button>
+
+      <div className="story-layout">
+        {/* Ruta de capítulos de la saga */}
+        <div className="story-map">
+          {visibleChapters.map(ch => {
+            const unlocked = ch.id <= progress;
+            const isSel = ch.id === selected;
+            const done = ch.id < progress;
+            const boss = overworldUrl(ch.enemy);
+            const hero = overworldUrl(ch.player);
+            return (
+              <div key={ch.id}
+                className={`chapter-node ${isSel ? 'active' : ''} ${unlocked ? 'unlocked' : 'locked'} ${done ? 'done' : ''}`}
+                onClick={() => unlocked && (Sfx.select(), setSelected(ch.id))}>
+                <div className="chapter-icon">{unlocked ? ch.id : <Lock size={14} />}</div>
+                <div className="chapter-boss">
+                  {unlocked && boss
+                    ? <img src={boss} alt="" className="chapter-boss-sprite" />
+                    : <div className="chapter-boss-none">?</div>}
+                  {unlocked && hero && <img src={hero} alt="" className="chapter-hero-sprite" />}
+                </div>
+                <div className="chapter-info">
+                  <div className="chapter-name">{t(ch.nameKey)}</div>
+                  <div className="chapter-desc">{unlocked ? t(ch.descKey) : t('story.notUnlocked')}</div>
+                </div>
+                <div className="chapter-status">
+                  {done ? <span className="chapter-done-tag">✓</span>
+                    : isSel ? <ChevronRight size={14} />
+                    : <span className="chapter-num-tag">{String(ch.id).padStart(2, '0')}</span>}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Panel de detalle del capítulo seleccionado (spec §6) */}
+        <div className="chapter-detail-panel">
+          {selCutscene && (
+            <div className="cdp-visual" style={{ backgroundImage: `url(${selCutscene})` }}>
+              <div className="cdp-visual-dim" />
+              <div className="cdp-fighters">
+                {selHero && <img src={selHero} alt="" className="cdp-hero" />}
+                {selBoss && <img src={selBoss} alt="" className="cdp-boss" />}
+              </div>
+              <span className="cdp-chapter-tag">CAPÍTULO {String(sel.id).padStart(2, '0')}</span>
+            </div>
+          )}
+          <div className="cdp-body">
+            <div className="cdp-name">{t(sel.nameKey)}</div>
+            <div className="cdp-desc">{t(sel.descKey)}</div>
+            <div className="cdp-meta">
+              <span className="cdp-badge hero">{selHero ? <img src={selHero} alt="" /> : null} {characterName(sel.player.split('_')[0])}</span>
+              <span className="cdp-badge boss">{selBoss ? <img src={selBoss} alt="" /> : null} {characterName(sel.enemy.split('_')[0])}</span>
+              {selDone && <span className="cdp-badge done">✓ COMPLETADO</span>}
+            </div>
+            <div className="cdp-objective">
+              <span className="obj-label">OBJETIVO</span>
+              {selDone ? 'Victoria conseguida. ¡El siguiente capítulo te espera!' : `Derrota a ${characterName(sel.enemy.split('_')[0])} para continuar la saga.`}
+            </div>
+            <button className="btn-primary cdp-start" onClick={start} disabled={!selUnlocked}>
+              {selUnlocked ? `▶ ${t('story.start').toUpperCase()}` : t('story.notUnlocked')}
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   );
@@ -2785,6 +2845,7 @@ function VersusScreen({ onNavigate, onStartVersus }: {
 }) {
   const { t } = useLang();
   const [selected, setSelected] = useState('vegeta_base');
+  const [difficulty, setDifficulty] = useState<'normal' | 'hard' | 'lethal'>('normal');
   const deckSize = loadDeck().length;
   const deckValid = deckSize === DECK_SIZE;
   const unlockedChars = loadUnlocks().characters;
@@ -2852,8 +2913,20 @@ function VersusScreen({ onNavigate, onStartVersus }: {
               );
             })}
           </div>
+          {/* Dificultad (spec §7: Normal/Difícil/Letal) */}
+          <div className="difficulty-select">
+            <span className="diff-label">{t('settings.difficulty')}</span>
+            <div className="diff-options">
+              {(['normal', 'hard', 'lethal'] as const).map(d => (
+                <button key={d} className={`diff-btn ${difficulty === d ? 'active' : ''}`}
+                  onClick={() => { Sfx.select(); setDifficulty(d); }}>
+                  {d.toUpperCase()}
+                </button>
+              ))}
+            </div>
+          </div>
           <button className="btn-primary" onClick={() => onStartVersus(selected)} disabled={!deckValid}>
-            {deckValid ? t('common.fight') : `DECK ${deckSize}/${DECK_SIZE}`}
+            {deckValid ? `⚔ ${t('common.fight').toUpperCase()}` : `DECK ${deckSize}/${DECK_SIZE}`}
           </button>
           {!deckValid && <div className="deck-warning">DECK MUST HAVE {DECK_SIZE} CARDS</div>}
         </div>

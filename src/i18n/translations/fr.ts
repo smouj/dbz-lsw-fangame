@@ -192,4 +192,5 @@ export const fr: Dict = {
   'battle.downBack': "BAS · LOIN",
   'battle.downFront': "BAS · PROCHE",
   'story.epilogue': "ÉPILOGUE",
+  'settings.difficulty': "DIFFICULTÉ",
 };

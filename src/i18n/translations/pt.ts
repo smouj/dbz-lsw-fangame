@@ -192,4 +192,5 @@ export const pt: Dict = {
   'battle.downBack': "BAIXO · LONGE",
   'battle.downFront': "BAIXO · PERTO",
   'story.epilogue': "EPÍLOGO",
+  'settings.difficulty': "DIFICULDADE",
 };
