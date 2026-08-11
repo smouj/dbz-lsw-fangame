@@ -35,6 +35,43 @@ interface CharManifest {
   [pose: string]: { frames: { file: string; w: number; h: number }[]; fps: number; loop: boolean };
 }
 
+type BattleSpritePose = 'idle' | 'move' | 'guard' | 'attack_fwd' | 'attack_ud' | 'hurt' | 'beam_charge' | 'beam_fire' | 'power_up';
+
+const POSE_FALLBACKS: Record<BattleSpritePose, BattleSpritePose[]> = {
+  idle: ['idle'],
+  move: ['move', 'attack_fwd', 'idle'],
+  guard: ['guard', 'idle'],
+  attack_fwd: ['attack_fwd', 'move', 'idle'],
+  attack_ud: ['attack_ud', 'attack_fwd', 'idle'],
+  hurt: ['hurt', 'guard', 'idle'],
+  beam_charge: ['beam_charge', 'power_up', 'guard', 'idle'],
+  beam_fire: ['beam_fire', 'beam_charge', 'attack_fwd', 'idle'],
+  power_up: ['power_up', 'beam_charge', 'guard', 'idle'],
+};
+
+const OFFENSIVE_SUPPORT_EFFECTS = new Set<CardEffect>([
+  'life_drain', 'knockdown_dmg', 'knockdown_min', 'gamebomb', 'candy',
+  'naughty_book', 'ohko_lowacc', 'android_kill', 'damage',
+]);
+
+const DEFENSIVE_EFFECTS = new Set<CardEffect>([
+  'avoid_beam', 'avoid_damage', 'avoid_damage_taiyoken', 'reduce_damage',
+  'absorb_beam', 'beam_shield', 'damage_shield', 'command_cancel',
+]);
+
+function resolveManifestPose(manifest: CharManifest, pose: BattleSpritePose | string): string | null {
+  const fallbacks = POSE_FALLBACKS[pose as BattleSpritePose] || [pose, 'idle'];
+  return fallbacks.find(p => manifest[p]?.frames?.length > 0) || null;
+}
+
+function cardBattlePose(card: CardDef, context: 'field' | 'fx' = 'field'): BattleSpritePose {
+  if (card.type === 'beam') return context === 'fx' ? 'beam_fire' : 'beam_charge';
+  if (card.type === 'damage' || card.type === 'command') return 'attack_fwd';
+  if (card.type === 'defense' || DEFENSIVE_EFFECTS.has(card.effect)) return 'guard';
+  if (OFFENSIVE_SUPPORT_EFFECTS.has(card.effect)) return 'attack_fwd';
+  return 'power_up';
+}
+
 interface Fighter {
   id: string;
   name: string;
@@ -93,6 +130,7 @@ const BATTLE_DECK: CardDef[] = [
 function useSpriteAnim(formId: string, pose: string): { src: string; w: number; h: number } | null {
   const [frameIdx, setFrameIdx] = useState(0);
   const [manifest, setManifest] = useState<CharManifest | null>(null);
+  const activePose = manifest ? resolveManifestPose(manifest, pose) : null;
 
   useEffect(() => {
     const url = spriteManifestUrl(formId);
@@ -104,8 +142,8 @@ function useSpriteAnim(formId: string, pose: string): { src: string; w: number; 
   }, [formId]);
 
   useEffect(() => {
-    if (!manifest || !manifest[pose]) { setFrameIdx(0); return; }
-    const anim = manifest[pose];
+    if (!manifest || !activePose) { setFrameIdx(0); return; }
+    const anim = manifest[activePose];
     if (anim.frames.length <= 1) { setFrameIdx(0); return; }
     const interval = 1000 / anim.fps;
     let idx = 0;
@@ -115,10 +153,10 @@ function useSpriteAnim(formId: string, pose: string): { src: string; w: number; 
       setFrameIdx(idx);
     }, interval);
     return () => clearInterval(timer);
-  }, [manifest, pose]);
+  }, [manifest, activePose]);
 
-  if (!manifest || !manifest[pose]) return null;
-  const anim = manifest[pose];
+  if (!manifest || !activePose) return null;
+  const anim = manifest[activePose];
   const f = anim.frames[Math.min(frameIdx, anim.frames.length - 1)];
   return { src: spriteFrameUrl(formId, f.file), w: f.w, h: f.h };
 }
@@ -371,6 +409,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
   const [loading, setLoading] = useState(true);
   const [hitShake, setHitShake] = useState<null | 'player' | 'enemy'>(null);
   const [viewFade, setViewFade] = useState(0);
+  const [phaseCue, setPhaseCue] = useState<{ id: number; title: string; sub: string } | null>(null);
   // Precarga de assets clave (sprites + fondos) con skeleton mientras tanto
   useEffect(() => {
     const urls = [
@@ -391,6 +430,14 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
   }, []);
   // Fade suave al alternar TACTICAL ↔ ACTION
   useEffect(() => { setViewFade(v => v + 1); }, [viewMode]);
+  const gbcMs = (frames: number) => Math.round((frames / GBC_NATIVE_FPS) * 1000);
+  const showPhaseCue = (title: string, sub: string, next: () => void, frames = 38) => {
+    setPhaseCue({ id: Date.now(), title, sub });
+    window.setTimeout(() => {
+      setPhaseCue(null);
+      next();
+    }, gbcMs(frames));
+  };
   // Posición del número de daño sobre el sprite del objetivo (px relativos al campo)
   const dmgPos = (side: 'player' | 'enemy') => {
     const el = side === 'enemy' ? enemyRef.current : playerRef.current;
@@ -496,21 +543,16 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
   // ═══ ROUND (mecánica real del GBC) ═══
   // Cada round hay UN atacante y UN defensor. El más rápido ataca primero.
   // "Each time you're the attacker, you get 3 CC" (battle.shtml).
-  // ═══ Duración de la presentación ACTION según la técnica (game feel) ═══
-  // Cada técnica tiene su propio tempo (spec: "tiempos y pausas correctos
-  // acorde al movimiento y técnica"):
-  //   DAMAGE  → golpe directo, rápido (0.75s)
-  //   BEAM    → carga de ki + disparo (1.5s)
-  //   SUPPORT → buff/curativo breve (0.9s)
-  //   DEFENSE → guardia (0.8s)
-  //   COMMAND → no aplica (usa QTE)
+  // ═══ Duración de presentación ACTION en frames GBC (INFERRED) ═══
+  // Debe cubrir startup + sprite de carta + pose + impacto. Antes damage duraba
+  // 750ms y cortaba la animación antes del lunge/impacto CSS (~900ms).
   const presentationMs = (card: CardDef): number => {
     switch (card.type) {
-      case 'beam': return 1500;
-      case 'damage': return 750;
-      case 'support': return 900;
-      case 'defense': return 800;
-      default: return 1100;
+      case 'beam': return gbcMs(132);
+      case 'damage': return gbcMs(112);
+      case 'support': return gbcMs(96);
+      case 'defense': return gbcMs(78);
+      default: return gbcMs(104);
     }
   };
 
@@ -520,9 +562,10 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
   // defensa ANTES de que se resuelva la ofensiva (no es un QTE reactivo).
   const startExchange = (attacker: 'player' | 'enemy') => {
     if (attacker === 'player') {
+      const actor = getForm(playerFormId)!.character.toUpperCase();
       // +3 CC por entrar como atacante (spec §4 — battle.shtml)
       setPlayer(prev => ({ ...prev, cc: Math.min(prev.maxCc, prev.cc + 3) }));
-      addLog(`${getForm(playerFormId)!.character.toUpperCase()} ${t('battle.strikesFirst')} (+3 CC)`);
+      addLog(`${actor} ${t('battle.strikesFirst')} (+3 CC)`);
       // La posición PERSISTE entre fases (spec Move): el atacante no elige
       // posición, va directo a seleccionar su acción. Robo de Joint al entrar
       // en Attack Phase (máx 6 transitorio, 5 persistente).
@@ -535,12 +578,17 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
         if (pool.length === 0) return prev;
         return [...prev, pool[Math.floor(Math.random() * pool.length)]];
       });
-      setPhase('command');
+      showPhaseCue('ATTACK PHASE', `${actor} +3 CC`, () => setPhase('command'));
     } else {
+      const actor = getForm(enemyFormId)!.character.toUpperCase();
       setEnemy(prev => ({ ...prev, cc: Math.min(prev.maxCc, prev.cc + 3) }));
-      addLog(`${getForm(enemyFormId)!.character.toUpperCase()} ${t('battle.strikesFirst')} (+3 CC)`);
-      enemyAttack();
+      addLog(`${actor} ${t('battle.strikesFirst')} (+3 CC)`);
+      showPhaseCue('ATTACK PHASE', `${actor} +3 CC`, () => enemyAttack());
     }
+  };
+
+  const enterDefensePhase = (incomingName: string) => {
+    showPhaseCue('DEFENSE PHASE', incomingName.toUpperCase(), () => setPhase('defend'), 34);
   };
 
   // TURN_START: recalcular SPD → fijar firstAttacker → Exchange 1 (spec §1-2)
@@ -659,8 +707,8 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
       setViewMode('OVERVIEW');
       // Termina el turno tras Gather (acción completa consumida)
       setSelectedCard(null);
-      setTimeout(() => advanceExchange(), 600);
-    }, 800);
+      setTimeout(() => advanceExchange(), gbcMs(36));
+    }, gbcMs(58));
   };
 
   const selectCommand = (cmd: CommandType) => {
@@ -923,7 +971,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
     }
 
     Sfx.cardPlay();
-    setPlayerPose(card.type === 'beam' ? 'beam_charge' : card.type === 'damage' ? 'attack_fwd' : card.type === 'defense' ? 'guard' : 'idle');
+    setPlayerPose(cardBattlePose(card, 'field'));
     // Secuencia cinematográfica del GBC: ACTION_VIEW (fondo action + sprites grandes)
     setViewMode('ACTION');
     setCardFx({ card, side: 'player' });
@@ -1145,9 +1193,10 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
     if (action === 'gather') { gatherPower(); return; }
     if (action === 'guard') {
       Sfx.select();
+      setPlayerPose('guard');
       setPlayerGuard({ type: 'reduce' });
       addLog(`${player.name} ${t('battle.defends')} (ENDURANCE — próximo golpe a la mitad)`);
-      setTimeout(() => advanceExchange(), 500);
+      setTimeout(() => { setPlayerPose('idle'); advanceExchange(); }, gbcMs(32));
       return;
     }
     // Stage Attack básico: 3 etapas (4 si se ha gathered — mecánica real)
@@ -1178,7 +1227,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
       return;
     }
     Sfx.cardPlay();
-    setPlayerPose(card.type === 'beam' ? 'beam_charge' : card.type === 'damage' ? 'attack_fwd' : 'idle');
+    setPlayerPose(cardBattlePose(card, 'field'));
     setSelectedCard(null);
     setViewMode('ACTION');
     setCardFx({ card, side: 'player' });
@@ -1244,7 +1293,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
           setEnemy(prev => ({ ...prev, hp: Math.min(prev.maxHp, prev.hp + healed) }));
           setEnemyPose('power_up');
           addLog(`${enemy.name} ${t('battle.uses')} ${h.name} — +${healed} HP!`);
-          setTimeout(() => { setEnemyPose('idle'); advanceExchange(); }, 800);
+          setTimeout(() => { setEnemyPose('idle'); advanceExchange(); }, gbcMs(58));
           return;
         }
       }
@@ -1258,7 +1307,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
         setEnemyPose('power_up');
         addLog(`${enemy.name} ${t('battle.gathers')}! (+8 STR/KI)`);
         ai.mode = 2;
-        setTimeout(() => { setEnemyPose('idle'); advanceExchange(); }, 800);
+        setTimeout(() => { setEnemyPose('idle'); advanceExchange(); }, gbcMs(58));
         return;
       }
       const affordable = attackCards.filter(c => c.cc <= enemy.cc);
@@ -1267,7 +1316,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
         card = freeStages[Math.floor(Math.random() * freeStages.length)];
         incomingCard.current = card;
         addLog(`${enemy.name} ${t('battle.uses')} ${card.name}`);
-        setTimeout(() => setPhase('defend'), 350);
+        setTimeout(() => enterDefensePhase(card.name), gbcMs(22));
         return;
       }
       if (ai.mode === 2) {
@@ -1294,12 +1343,12 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
       addLog(`${enemy.name} ${t('battle.uses')} ${card.name}`);
       setViewMode('ACTION');
       setCardFx({ card, side: 'enemy' });
-      setEnemyPose(card.type === 'beam' ? 'beam_charge' : 'attack_fwd');
+      setEnemyPose(cardBattlePose(card, 'field'));
       setTimeout(() => {
         setCardFx(null);
         setViewMode('OVERVIEW');
         setEnemyPose('idle');
-        setPhase('defend');
+        enterDefensePhase(card.name);
       }, presentationMs(card));
     }, 450);
   };
@@ -1316,12 +1365,14 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
     if (choice === 'move' && pos) {
       // BASIC → MOVE: gasta la elección defensiva, cambia posición persistente
       Sfx.position();
+      setPlayerPose('move');
       setPlayer(prev => ({ ...prev, battlePos: pos! }));
       const pd = POSITION_DATA[pos];
       addLog(`${player.name} MOVE → ${pd.altitude}/${pd.depth} (${pos})`);
       resolveEnemyAttack(true, pos, card);
     } else {
       // BASIC → DEFENSE: quedarse y defender (reduce daño)
+      setPlayerPose('guard');
       setPlayerGuard({ type: 'reduce' });
       addLog(`${player.name} ${t('battle.defends')} (−50% ${t('battle.dmg')})`);
       resolveEnemyAttack(true, player.battlePos, card);
@@ -1357,6 +1408,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
 
   // Resolver una carta defensiva/support del JOINT contra el ataque enemigo
   const resolveDefenseCard = (card: CardDef, _handIdx: number) => {
+    setPlayerPose(cardBattlePose(card, 'field'));
     const cardIncoming = incomingCard.current || CARDS[25];
     const eff = card.effect;
     let damage = 0;
@@ -1570,6 +1622,13 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
   const battleBgUrl = viewMode === 'ACTION' ? scenario.actionBackground
     : viewMode === 'SPECIAL_ACTION' ? SPECIAL_ACTION_BACKGROUND
     : scenario.overviewBackground;
+  const phaseShortLabel =
+    phase === 'command' || phase === 'cardSelect' || phase === 'limitSelect' ? 'ATTACK' :
+    phase === 'basic' ? 'BASIC' :
+    phase === 'stageInput' ? 'STAGE' :
+    phase === 'enemyTurn' ? 'ACTION' :
+    phase === 'defend' ? 'DEFENSE' :
+    phase === 'position' ? 'POSITION' : '';
 
   return (
     <div className="battle-screen">
@@ -1589,6 +1648,13 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
 
       {/* Fade suave TACTICAL ↔ ACTION (se monta en cada cambio de vista) */}
       {viewFade > 0 && <div key={viewFade} className="view-fade" />}
+      {phaseCue && (
+        <div className="phase-cue" key={phaseCue.id}>
+          <div className="phase-cue-line" />
+          <div className="phase-cue-title">{phaseCue.title}</div>
+          <div className="phase-cue-sub">{phaseCue.sub}</div>
+        </div>
+      )}
 
       {/* ═══ INTRO CINEMATOGRÁFICA (como el GBC): VS screen + READY... FIGHT! ═══ */}
       {intro && (
@@ -1635,10 +1701,10 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
           <div className="fx-fighter">
             {cardFx.side === 'player'
               ? (spriteManifestUrl(playerFormId)
-                  ? <FighterSprite formId={playerFormId} pose={cardFx.card.type === 'beam' ? 'beam_charge' : cardFx.card.type === 'damage' ? 'attack_fwd' : 'guard'} side="left" scale={14} />
+                  ? <FighterSprite formId={playerFormId} pose={cardBattlePose(cardFx.card, 'fx')} side="left" scale={14} />
                   : <CharacterSprite formId={playerFormId} className="fx-sprite" height={200} />)
               : (spriteManifestUrl(enemyFormId)
-                  ? <FighterSprite formId={enemyFormId} pose={cardFx.card.type === 'beam' ? 'beam_charge' : 'attack_fwd'} side="right" scale={14} />
+                  ? <FighterSprite formId={enemyFormId} pose={cardBattlePose(cardFx.card, 'fx')} side="right" scale={14} />
                   : <CharacterSprite formId={enemyFormId} className="fx-sprite" height={200} />)}
           </div>
           <div className="fx-card">
@@ -1757,15 +1823,8 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
           <span className="turn-label">{t('battle.turn')} {turn}</span>
           <span className="speed-order-label">{speedOrderLabel}</span>
           <span className="phase-label">
-            {phase === 'position' ? t('battle.choosePosition') :
-             phase === 'command' ? t('battle.selectCommand') :
-             phase === 'basic' ? t('battle.basic') :
-             phase === 'limitSelect' ? t('battle.limit') :
-             phase === 'cardSelect' ? t('battle.selectCard') :
-             phase === 'stageInput' ? 'STAGE INPUT' :
-             phase === 'enemyTurn' ? t('battle.enemyTurn') :
-             phase === 'defend' ? t('battle.defendAction') : ''}
-          {phase !== 'win' && phase !== 'lose' && phase !== 'position' ? ` · EXCHANGE ${exchangeIndex + 1}/2` : ''}
+            {phaseShortLabel}
+            {phase !== 'win' && phase !== 'lose' && phase !== 'position' ? ` ${exchangeIndex + 1}/2` : ''}
           </span>
         </div>
         <button className="btn-exit" onClick={() => onExit(false)}><X size={12} /> {t('battle.forfeit')}</button>

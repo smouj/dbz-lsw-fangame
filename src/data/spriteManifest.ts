@@ -9,7 +9,7 @@ const SPRITE_DIRS: Record<string, string> = {
   // Goku
   'goku_base': 'goku_base',
   'goku_ssj': 'goku_super_saiyan',
-  'goku_ssj2': 'goku_super_saiyan_2',
+  'goku_ssj2': 'goku_super_saiyan',
   'goku_ssj3': 'goku_super_saiyan_3',
   // Vegeta (el sheet SSJ _ Majin cubre SSJ y Majin)
   'vegeta_base': 'vegeta_base',
@@ -24,7 +24,7 @@ const SPRITE_DIRS: Record<string, string> = {
   // Trunks
   'trunks_kid': 'trunks_base',
   'trunks_future': 'future_trunks_base',
-  'trunks_ssj': 'trunks_super_saiyan',
+  'trunks_ssj': 'future_trunks_super_saiyan',
   // Goten
   'goten_base': 'goten_base',
   'goten_ssj': 'goten_super_saiyan',
@@ -51,7 +51,7 @@ const SPRITE_DIRS: Record<string, string> = {
   'android_20': 'android_20_base',
   // Ginyu Force
   'ginyu': 'ginyu_base',
-  'ginyu_goku': 'ginyu_gokus_body',
+  'ginyu_goku': 'goku_base',
   'recoome': 'recoome_base',
   'guldo': 'guldo_base',
   'jeice': 'jeice_base',
@@ -63,6 +63,8 @@ const SPRITE_DIRS: Record<string, string> = {
   'buu_gotenks': 'buu_gotenks_absorbed',
   'buu_gohan': 'buu_gohan_absorbed',
   'buu_kid': 'kid_buu_base',
+  // Fusions
+  'vegito_base': 'vegito_base',
 };
 
 export function spriteDirFor(formId: string): string | undefined {
