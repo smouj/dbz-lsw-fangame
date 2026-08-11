@@ -3053,3 +3053,35 @@ button:focus-visible, .chapter-node:focus-visible {
   box-shadow: 0 0 12px rgba(255, 215, 0, .6), 2px 2px 0 #000;
   animation: sel-blink .3s infinite alternate;
 }
+
+/* ─── Menú de defensa completo (BASIC Defense/Move + JOINT + LIMIT) ─── */
+.defense-menu {
+  display: flex; flex-direction: column;
+  gap: 8px; align-items: center;
+  width: min(520px, 92vw);
+}
+
+.defense-sources {
+  display: flex; gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.defense-sources .basic-btn {
+  min-width: 150px;
+  flex: 1;
+  text-align: center;
+}
+
+.defense-sources .basic-btn strong {
+  font-family: var(--fepic);
+  font-size: 20px;
+  color: var(--gold);
+  display: block;
+}
+
+.defense-menu .basic-btn[disabled] {
+  opacity: .45;
+  cursor: not-allowed;
+}

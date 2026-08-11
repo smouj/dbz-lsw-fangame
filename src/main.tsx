@@ -503,7 +503,19 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
       // +3 CC por entrar como atacante (spec §4 — battle.shtml)
       setPlayer(prev => ({ ...prev, cc: Math.min(prev.maxCc, prev.cc + 3) }));
       addLog(`${getForm(playerFormId)!.character.toUpperCase()} ${t('battle.strikesFirst')} (+3 CC)`);
-      setPhase('position');
+      // La posición PERSISTE entre fases (spec Move): el atacante no elige
+      // posición, va directo a seleccionar su acción. Robo de Joint al entrar
+      // en Attack Phase (máx 6 transitorio, 5 persistente).
+      setHand(prev => {
+        if (prev.length >= 6) return prev;
+        const deckIds = loadDeck();
+        const battleDeck = deckIds.map(id => getCard(id)).filter((c): c is CardDef => !!c);
+        const usedIds = new Set(prev.map(c => c.id));
+        const pool = battleDeck.filter(c => !usedIds.has(c.id));
+        if (pool.length === 0) return prev;
+        return [...prev, pool[Math.floor(Math.random() * pool.length)]];
+      });
+      setPhase('command');
     } else {
       setEnemy(prev => ({ ...prev, cc: Math.min(prev.maxCc, prev.cc + 3) }));
       addLog(`${getForm(enemyFormId)!.character.toUpperCase()} ${t('battle.strikesFirst')} (+3 CC)`);
@@ -611,21 +623,18 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [intro]);
 
-  const setPosition = (pos: Position, elev: Elevation) => {
+  // MOVE (Basic Defense): cambio de posición PERSISTENTE. La posición del
+  // combatiente vive en el FighterState y NO se reinicia entre fases/turnos;
+  // solo cambia cuando el jugador gasta su elección defensiva en MOVE.
+  const applyMove = (pos: Position, elev: Elevation) => {
     Sfx.position();
     setPlayer(prev => ({ ...prev, position: pos, elevation: elev }));
-    // Al comenzar Attack Phase: robar +1 Joint (máx 6 transitorio, 5 persistente)
-    setHand(prev => {
-      if (prev.length >= 6) return prev;
-      const deckIds = loadDeck();
-      const battleDeck = deckIds.map(id => getCard(id)).filter((c): c is CardDef => !!c);
-      const usedIds = new Set(prev.map(c => c.id));
-      const pool = battleDeck.filter(c => !usedIds.has(c.id));
-      if (pool.length === 0) return prev;
-      return [...prev, pool[Math.floor(Math.random() * pool.length)]];
-    });
-    setPhase('command');
-    addLog(`${elev.toUpperCase()}/${pos.toUpperCase()} — +1 CARD`);
+    addLog(`${player.name} MOVE → ${elev.toUpperCase()}/${pos.toUpperCase()}`);
+    // El MOVE consume la elección defensiva; después se resuelve la ofensiva
+    // enemiga teniendo en cuenta la nueva posición (spec Move).
+    setPhase('enemyTurn');
+    const card = incomingCard.current || CARDS[25];
+    resolveEnemyAttack(true, pos, elev, card);
   };
 
   const gatherPower = () => {
@@ -1283,19 +1292,137 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
     }, 450);
   };
 
-  // El defensor (jugador) elige: DEFEND (mitad de daño) o MOVE (reposicionarse)
-  const defendChoice = (choice: 'defend' | 'move', pos?: Position, elev?: Elevation) => {
-    // Desmontar el pad YA (evita doble disparo si el jugador hace clic dos veces
-    // durante la resolución ~400ms — bug real detectado en test E2E)
-    setPhase('enemyTurn');
+  // ═══ DEFENSE PHASE (spec corregida): el defensor NO está limitado a
+  // Guard/Move — BASIC (Defense | Move) + JOINT (solo Defense/Support) +
+  // LIMIT (defensivas/Support si powered). Las ofensivas (Command/Damage/
+  // Beam) quedan bloqueadas durante Defense.
+  const [defendMenu, setDefendMenu] = useState<'basic' | 'joint' | 'limit' | 'move' | null>(null);
+
+  const defendBasic = (choice: 'defense' | 'move', pos?: Position, elev?: Elevation) => {
+    setPhase('enemyTurn'); // desmonta el menú YA (evita doble disparo)
     const card = incomingCard.current || CARDS[25];
     if (choice === 'move' && pos && elev) {
+      // BASIC → MOVE: gasta la elección defensiva, cambia posición persistente
       Sfx.position();
       setPlayer(prev => ({ ...prev, position: pos, elevation: elev }));
-      resolveEnemyAttack(false, pos, elev, card);
+      addLog(`${player.name} MOVE → ${elev!.toUpperCase()}/${pos!.toUpperCase()}`);
+      resolveEnemyAttack(true, pos, elev, card);
     } else {
+      // BASIC → DEFENSE: quedarse y defender (reduce daño)
+      setPlayerGuard({ type: 'reduce' });
+      addLog(`${player.name} ${t('battle.defends')} (−50% ${t('battle.dmg')})`);
       resolveEnemyAttack(true, player.position, player.elevation, card);
     }
+  };
+
+  // JOINT durante Defense: solo cartas DEFENSE y SUPPORT (spec defensa)
+  const defendJoint = (card: CardDef, handIdx: number) => {
+    setPhase('enemyTurn');
+    setSelectedCard(null);
+    const newHand = [...hand];
+    newHand.splice(handIdx, 1);
+    setHand(newHand);
+    setDefendMenu(null);
+    resolveDefenseCard(card, handIdx);
+  };
+
+  // LIMIT durante Defense: solo Limits DEFENSE/SUPPORT y solo si powered
+  const defendLimit = (card: CardDef) => {
+    if (player.cc < card.cc) return;
+    setPhase('enemyTurn');
+    setDefendMenu(null);
+    setPlayer(prev => ({ ...prev, cc: Math.max(0, prev.cc - card.cc) }));
+    resolveDefenseCard(card, -1);
+  };
+
+  // Resolver una carta defensiva/support del JOINT contra el ataque enemigo
+  const resolveDefenseCard = (card: CardDef, _handIdx: number) => {
+    const cardIncoming = incomingCard.current || CARDS[25];
+    const eff = card.effect;
+    let damage = 0;
+    let hitType: 'damage' | 'miss' | 'guard' = 'guard';
+    const acc = pEva > 0 ? Math.max(0, cardIncoming.acc - 30) : cardIncoming.acc;
+    const hits = Math.random() <= acc / 100;
+    const power = cardIncoming.type === 'beam' ? enemy.ki + eBuffs.ki : enemy.str + eBuffs.str;
+    const vulnerable = (player.elevation === 'air' && cardIncoming.type === 'beam') || (player.elevation === 'ground' && cardIncoming.type === 'damage');
+    const posMult = (player.position === 'front' && vulnerable) ? 0.8 : 0.5;
+    damage = Math.floor((cardIncoming.atk + power) * posMult);
+    const handleDamage = (mult: number, label: string) => {
+      if (!hits) {
+        damage = 0; hitType = 'miss';
+        addLog(`${enemy.name} → ${cardIncoming.name} — ${t('battle.miss')}!`);
+      } else {
+        damage = Math.floor(damage * mult);
+        hitType = 'guard';
+        addLog(`${player.name} ${label} — ${damage} ${t('battle.dmg')}`);
+      }
+    };
+    // Guardias reales del GBC (defensa anticipada contra la acción que viene)
+    if (eff === 'beam_shield') {
+      handleDamage(cardIncoming.type === 'beam' ? 0 : 1, 'KIBITO — beam absorbido');
+      if (cardIncoming.type === 'beam') damage = 0;
+    } else if (eff === 'knockdown_dmg') {
+      handleDamage(0.25, 'CHOQUE — bloquea');
+    } else if (eff.startsWith('heal_')) {
+      const pct = eff === 'heal_strong' ? (1/4 + 1/3) : eff === 'heal_light' ? 0.3 : 0.25;
+      const healed = Math.floor(player.maxHp * pct);
+      setPlayer(prev => ({ ...prev, hp: Math.min(prev.maxHp, prev.hp + healed) }));
+      setDamageNums(prev => [...prev, { value: healed, type: 'heal', ...dmgPos('player'), id: Date.now() }]);
+      addLog(`${player.name} usa ${card.name} — +${healed} HP!`);
+      handleDamage(0.5, 'DEFIENDE');
+    } else if (eff.startsWith('buff_') || eff.startsWith('debuff_') || eff.startsWith('powerup_')) {
+      handleDamage(0.5, 'DEFIENDE');
+      addLog(`${player.name} usa ${card.name} (efecto activo)`);
+    } else if (eff === 'lock_on') {
+      handleDamage(0.25, 'BLOQUEA');
+    } else {
+      // Carta defensiva genérica (Endurance/Avoiding/Afterimage...)
+      handleDamage(0.25, 'BLOQUEA');
+    }
+    if (damage > 0) {
+      const substantial = damage >= player.maxHp * 0.15;
+      const gain = substantial ? 2 : 1;
+      setPlayer(prev => ({ ...prev, cc: Math.min(prev.maxCc, prev.cc + gain), hp: Math.max(0, prev.hp - damage) }));
+      addLog(`${player.name} +${gain} CC (${t('battle.hp')} bajo)`);
+      setFlashPlayer(true); hitImpact('player');
+      setPlayerPose('hurt');
+      if (cardIncoming.type === 'beam') Sfx.beam(); else Sfx.punch();
+      setTimeout(() => setFlashPlayer(false), 150);
+    } else {
+      setPlayer(prev => ({ ...prev, hp: Math.max(0, prev.hp - 0) }));
+      if (hitType === 'guard') setDamageNums(prev => [...prev, { value: 0, type: 'guard', ...dmgPos('player'), id: Date.now() }]);
+      else setDamageNums(prev => [...prev, { value: 0, type: 'miss', ...dmgPos('player'), id: Date.now() }]);
+    }
+    setEnemy(prev => ({ ...prev, cc: Math.max(0, prev.cc - cardIncoming.cc) }));
+    _finishDefenseResolution();
+  };
+
+  // Cierre común de la resolución defensiva (KO / cambio de fase)
+  const _finishDefenseResolution = () => {
+    if (player.hp <= 0 && player2) {
+      const fallen = player.name;
+      const next = player2;
+      setPlayer2(null);
+      setPlayer(next);
+      setPlayerPose('idle');
+      setFlashPlayer(false);
+      addLog(`${fallen} K.O.! ${next.name} entra al combate!`);
+      setTimeout(() => { setEnemyPose('idle'); setSelectedCard(null); advanceExchange(); }, 900);
+      return;
+    }
+    if (player.hp <= 0) {
+      setTimeout(() => { setPlayerPose('hurt'); setPhase('lose'); Sfx.defeat(); addLog(`${player.name} ${t('battle.defeated')}`); }, 500);
+      return;
+    }
+    setTimeout(() => {
+      setPlayerPose('idle'); setEnemyPose('idle');
+      setSelectedCard(null);
+      if (gatherTurns > 0) {
+        setGatherTurns(g => g - 1);
+        setPowerState(prev => prev === 'FULL_POWER' ? 'HALF_POWER' : prev === 'HALF_POWER' ? 'NORMAL' : prev);
+      }
+      advanceExchange();
+    }, 400);
   };
 
   const resolveEnemyAttack = (defended: boolean, pos: Position, elev: Elevation, card: CardDef) => {
@@ -1620,17 +1747,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
 
       {/* Controles */}
       <div className="battle-controls">
-        {phase === 'position' && (
-          <div className="position-select">
-            <div className="control-label">{t('battle.position')}</div>
-            <div className="position-pad">
-              <button onClick={() => setPosition('back', 'air')}>{t('battle.airBack')}</button>
-              <button onClick={() => setPosition('front', 'air')}>{t('battle.airFront')}</button>
-              <button onClick={() => setPosition('back', 'ground')}>{t('battle.gndBack')}</button>
-              <button onClick={() => setPosition('front', 'ground')}>{t('battle.gndFront')}</button>
-            </div>
-          </div>
-        )}
+
         {phase === 'command' && (
           <div className="command-select">
             <div className="command-strip">
@@ -1767,17 +1884,104 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
           <div className="enemy-turn-overlay"><div className="turn-text">{t('battle.enemyTurn')}</div></div>
         )}
         {phase === 'defend' && (
-          <div className="position-select">
-            <div className="control-label">{t('battle.defendAction')} — {t('battle.choosePosition')}</div>
-            <div className="position-pad">
-              <button onClick={() => defendChoice('move', 'back', 'air')}>{t('battle.airBack')}</button>
-              <button onClick={() => defendChoice('move', 'front', 'air')}>{t('battle.airFront')}</button>
-              <button onClick={() => defendChoice('move', 'back', 'ground')}>{t('battle.gndBack')}</button>
-              <button onClick={() => defendChoice('move', 'front', 'ground')}>{t('battle.gndFront')}</button>
-            </div>
-            <button className="btn-defend" onClick={() => defendChoice('defend')}>
-              <strong>{t('battle.defendAction')}</strong> (−50% {t('battle.dmg')})
-            </button>
+          <div className="defense-menu">
+            {defendMenu === null && (
+              <>
+                <div className="control-label">{t('battle.defendAction')} — {t('battle.chooseDefense')}</div>
+                <div className="defense-sources">
+                  <button className="basic-btn" onClick={() => { Sfx.select(); setDefendMenu('basic'); }}>
+                    <strong>B</strong> {t('battle.basic')}
+                    <span>{t('battle.basicDefense')}</span>
+                  </button>
+                  <button className="basic-btn" onClick={() => { Sfx.select(); setDefendMenu('joint'); }}>
+                    <strong>J</strong> {t('battle.joint')}
+                    <span>{t('battle.jointDefense')}</span>
+                  </button>
+                  <button className="basic-btn" onClick={() => { Sfx.select(); setDefendMenu('limit'); }} disabled={powerState === 'NORMAL' || limitCards.length === 0}>
+                    <strong>L</strong> {t('battle.limit')}
+                    <span>{powerState === 'NORMAL' ? t('battle.needGather') : t('battle.limitDefense')}</span>
+                  </button>
+                </div>
+                <div className="command-help">{t('battle.defenseHelp')}</div>
+              </>
+            )}
+            {defendMenu === 'basic' && (
+              <>
+                <div className="control-label">{t('battle.basicDefense')}</div>
+                <div className="basic-menu">
+                  <button className="basic-btn" onClick={() => defendBasic('defense')}>
+                    <strong>{t('battle.defendAction')}</strong>
+                    <span>−50% {t('battle.dmg')}</span>
+                  </button>
+                  <button className="basic-btn" onClick={() => { Sfx.select(); setDefendMenu('move'); }}>
+                    <strong>{t('battle.move')}</strong>
+                    <span>{t('battle.moveHelp')}</span>
+                  </button>
+                  <button className="basic-btn basic-back" onClick={() => { Sfx.cancel(); setDefendMenu(null); }}>
+                    {t('battle.back')}
+                  </button>
+                </div>
+              </>
+            )}
+            {defendMenu === 'move' && (
+              <div className="position-select">
+                <div className="control-label">{t('battle.move')} — {t('battle.choosePosition')}</div>
+                <div className="position-pad">
+                  <button onClick={() => defendBasic('move', 'back', 'air')}>{t('battle.airBack')}</button>
+                  <button onClick={() => defendBasic('move', 'front', 'air')}>{t('battle.airFront')}</button>
+                  <button onClick={() => defendBasic('move', 'back', 'ground')}>{t('battle.gndBack')}</button>
+                  <button onClick={() => defendBasic('move', 'front', 'ground')}>{t('battle.gndFront')}</button>
+                </div>
+                <button className="basic-btn basic-back" onClick={() => { Sfx.cancel(); setDefendMenu('basic'); }}>
+                  {t('battle.back')}
+                </button>
+              </div>
+            )}
+            {defendMenu === 'joint' && (
+              <div className="command-select">
+                <div className="limit-panel">
+                  <div className="limit-title">JOINT — {t('battle.defenseOnly')}</div>
+                  {(() => {
+                    const defCards = hand.filter(c => c.type === 'defense' || c.type === 'support');
+                    if (defCards.length === 0) return <div className="limit-empty">{t('battle.noDefenseCards')}</div>;
+                    return defCards.map((c, i) => {
+                      const handIdx = hand.indexOf(c);
+                      return (
+                        <button key={i} className="limit-row" onClick={() => defendJoint(c, handIdx)}>
+                          <span className="limit-name">{c.name}</span>
+                          <span className="limit-cost">{c.type.toUpperCase()}</span>
+                        </button>
+                      );
+                    });
+                  })()}
+                  <button className="basic-btn basic-back" onClick={() => { Sfx.cancel(); setDefendMenu(null); }}>
+                    {t('battle.back')}
+                  </button>
+                </div>
+              </div>
+            )}
+            {defendMenu === 'limit' && (
+              <div className="command-select">
+                <div className="limit-panel">
+                  <div className="limit-title">LIMITED — {t('battle.defenseOnly')}</div>
+                  {(() => {
+                    const defLimits = limitCards.filter(c => c.type === 'defense' || c.type === 'support');
+                    if (defLimits.length === 0) return <div className="limit-empty">{t('battle.noDefenseLimits')}</div>;
+                    return defLimits.map((c, i) => (
+                      <button key={i} className={`limit-row ${player.cc < c.cc ? 'locked' : ''}`}
+                        disabled={player.cc < c.cc} onClick={() => defendLimit(c)}>
+                        <span className="limit-name">{c.name}</span>
+                        <span className="limit-cost">{c.cc} CC</span>
+                        {player.cc < c.cc && <span className="limit-lock">{t('battle.insufficientCc')}</span>}
+                      </button>
+                    ));
+                  })()}
+                  <button className="basic-btn basic-back" onClick={() => { Sfx.cancel(); setDefendMenu(null); }}>
+                    {t('battle.back')}
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
         )}
         {phase === 'win' && (
