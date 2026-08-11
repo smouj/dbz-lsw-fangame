@@ -2045,6 +2045,8 @@ function MainMenu({ onNavigate }: { onNavigate: (s: Screen) => void }) {
   const { t, lang } = useLang();
   const [reward, setReward] = useState<number[] | null>(() => loadUnlocks().pendingReward);
   const [selectedMenuIndex, setSelectedMenuIndex] = useState(0);
+  const [hoveredMenuIndex, setHoveredMenuIndex] = useState<number | null>(null);
+  const [keyboardMenuActive, setKeyboardMenuActive] = useState(false);
 
   const claimReward = (cardId: number) => {
     const u = loadUnlocks();
@@ -2095,10 +2097,13 @@ function MainMenu({ onNavigate }: { onNavigate: (s: Screen) => void }) {
     { n: '05', label: t('menu.cards'), desc: menuCopy.cards, screen: 'cards', Icon: Sparkles },
     { n: '06', label: t('menu.settings'), desc: menuCopy.settings, screen: 'settings', Icon: Settings, secondary: true },
   ];
+  const visualMenuIndex = hoveredMenuIndex ?? (keyboardMenuActive ? selectedMenuIndex : null);
   const onMenuKeyDown = (ev: React.KeyboardEvent<HTMLDivElement>) => {
     if (ev.key === 'ArrowDown' || ev.key === 'ArrowUp') {
       ev.preventDefault();
       Sfx.select();
+      setKeyboardMenuActive(true);
+      setHoveredMenuIndex(null);
       setSelectedMenuIndex(i => {
         const dir = ev.key === 'ArrowDown' ? 1 : -1;
         return (i + dir + menuItems.length) % menuItems.length;
@@ -2160,15 +2165,15 @@ function MainMenu({ onNavigate }: { onNavigate: (s: Screen) => void }) {
           )}
         </button>
 
-        <nav className="menu-nav" aria-label="Main menu">
+        <nav className="menu-nav" aria-label="Main menu" onMouseLeave={() => setHoveredMenuIndex(null)}>
           {menuItems.map(({ n, label, desc, screen, Icon, tone, secondary }, index) => (
             <button
               key={screen}
-              className={`menu-item ${tone ? `tone-${tone}` : ''} ${secondary ? 'menu-item-settings' : ''} ${index === selectedMenuIndex ? 'selected' : ''}`}
-              onMouseEnter={() => setSelectedMenuIndex(index)}
-              onFocus={() => setSelectedMenuIndex(index)}
+              className={`menu-item ${tone ? `tone-${tone}` : ''} ${secondary ? 'menu-item-settings' : ''} ${index === visualMenuIndex ? 'selected' : ''}`}
+              onMouseEnter={() => { setHoveredMenuIndex(index); setKeyboardMenuActive(false); }}
+              onFocus={() => { setSelectedMenuIndex(index); setKeyboardMenuActive(true); }}
               onClick={() => { Sfx.select(); onNavigate(screen); }}
-              aria-current={index === selectedMenuIndex ? 'true' : undefined}
+              aria-current={index === visualMenuIndex ? 'true' : undefined}
             >
               <span className="mi-num">{n}</span>
               <span className="mi-icon"><Icon size={18} strokeWidth={2.4} /></span>
