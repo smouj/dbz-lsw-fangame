@@ -19,7 +19,7 @@ export type BattleSide = 'left' | 'right';
 // Dirección NATIVA del golpe por slug de sprite (44 formas, 2026-08-11)
 // Fuente: docs/audit/native-strike-dir.json (análisis windup/golpe)
 export const NATIVE_STRIKE_DIR: Record<string, StrikeDir> = {
-  // Golpe nativo a la IZQUIERDA (9): necesitan flip cuando están a la izquierda
+  // Golpe nativo a la IZQUIERDA (10): necesitan flip cuando están a la izquierda
   goku_super_saiyan: 'left',
   goku_super_saiyan_3: 'left',
   gohan_super_saiyan_1_2: 'left',
@@ -29,6 +29,7 @@ export const NATIVE_STRIKE_DIR: Record<string, StrikeDir> = {
   piccolo_base: 'left',
   super_buu_base: 'left',
   trunks_super_saiyan: 'left',
+  kid_trunks_super_saiyan: 'left',  // verificado visual 2026-08-12 (puño a la izq)
 };
 
 // Golpe nativo a la DERECHA (35) — el resto por defecto:

@@ -9,8 +9,11 @@
 export const UNLOCK_KEY = '***';
 
 // Mazos iniciales (como el GBC: orientado a Damage o a Beam)
-export const STARTER_DAMAGE_DECK = [1, 2, 3, 4, 5, 5, 6, 11, 15, 25, 29, 34, 37, 43, 46, 19, 124, 88, 104, 23];
-export const STARTER_BEAM_DECK = [1, 2, 3, 4, 7, 8, 10, 12, 30, 32, 35, 38, 47, 63, 125, 45, 88, 117, 23, 59];
+// ⚠️ SOLO cartas genéricas (Users=48 en el CSV de ROM): los mazos iniciales
+// deben ser usables por cualquier luchador de salida (Gohan/Piccolo).
+// Las cartas de personaje (con `compatible`) se filtran al robar.
+export const STARTER_DAMAGE_DECK = [1, 2, 3, 4, 5, 5, 6, 11, 29, 43, 41, 7, 8, 124, 121, 125, 88, 117, 119, 97];
+export const STARTER_BEAM_DECK = [1, 2, 3, 4, 7, 7, 8, 20, 36, 5, 6, 11, 125, 124, 121, 88, 117, 97, 119, 118];
 
 // Personajes iniciales del remake: el primer flujo jugable es Gohan vs Piccolo.
 export const STARTER_CHARACTERS = ['gohan', 'piccolo'];
@@ -91,8 +94,22 @@ export const VS_UNLOCKS: Record<string, string> = {
 // ═══════════════════════════════════════════════════════════
 
 // Forma base siempre disponible
+// ⚠️ No es `${charId}_base` para todos: frieza→frieza_final, trunks→trunks_kid,
+// gotenks→gotenks_ssj, cell→cell_imperfect, cell_jr→cell_jr, ginyu→ginyu,
+// buu→buu_base, vegito→vegito_base. Mapeo explícito para evitar ids inexistentes.
+export const BASE_FORM_BY_CHAR: Record<string, string> = {
+  goku: 'goku_base', vegeta: 'vegeta_base', gohan: 'gohan_young',
+  piccolo: 'piccolo_base', krillin: 'krillin_base', trunks: 'trunks_kid',
+  goten: 'goten_base', gotenks: 'gotenks_ssj', frieza: 'frieza_final',
+  cell: 'cell_imperfect', cell_jr: 'cell_jr', android_16: 'android_16',
+  android_17: 'android_17', android_18: 'android_18', android_19: 'android_19',
+  android_20: 'android_20', ginyu: 'ginyu', recoome: 'recoome', guldo: 'guldo',
+  jeice: 'jeice', burter: 'burter', nappa: 'nappa', buu: 'buu_base',
+  vegito: 'vegito_base',
+};
+
 export function baseFormId(charId: string): string {
-  return `${charId}_base`;
+  return BASE_FORM_BY_CHAR[charId] ?? `${charId}_base`;
 }
 
 // Desbloqueo de formas por nivel (id de forma → nivel mínimo)

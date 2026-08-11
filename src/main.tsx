@@ -3078,7 +3078,10 @@ function CharactersScreen({ onNavigate, onSelectFighter }: {
 // ═══════════════════════════════════════════════════════════
 
 const DECK_KEY = 'dbzlsw_deck';
-const DEFAULT_DECK = [1, 1, 2, 2, 4, 5, 5, 6, 25, 29, 12, 7, 8, 19, 19, 16, 23, 9, 15, 11];
+// ⚠️ SOLO cartas genéricas (Users=48): el mazo por defecto debe ser usable
+// por cualquier luchador (Gohan/Piccolo de salida). Las cartas de personaje
+// se desbloquean y añaden desde el constructor de mazos.
+const DEFAULT_DECK = [1, 1, 2, 2, 4, 5, 5, 6, 11, 29, 7, 8, 20, 43, 124, 124, 88, 117, 125, 121];
 
 function loadDeck(): number[] {
   try {
