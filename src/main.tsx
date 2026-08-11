@@ -470,8 +470,15 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
   const pBuffs = { str: pStages.str * 8, ki: pStages.ki * 8 };
   const eBuffs = { str: eStages.str * 8, ki: eStages.ki * 8 };
   const clampStage = (v: number) => Math.max(-3, Math.min(3, v));
-  // ═══ CINEMÁTICA DE CARTA (como el GBC): zoom del luchador + carta + animación ═══
-  const [cardFx, setCardFx] = useState<{ card: CardDef; side: 'player' | 'enemy' } | null>(null);
+  // ═══ CINEMÁTICA DE ACCIÓN GBC: atacante → habilidad → rival → campo ═══
+  type CardFxStep = 'attacker' | 'travel' | 'target';
+  const [cardFx, setCardFx] = useState<{ card: CardDef; side: 'player' | 'enemy'; step: CardFxStep } | null>(null);
+  const cinematicTimers = useRef<number[]>([]);
+  const clearCinematicTimers = () => {
+    cinematicTimers.current.forEach(id => window.clearTimeout(id));
+    cinematicTimers.current = [];
+  };
+  useEffect(() => clearCinematicTimers, []);
   // Precisión/evasión (Reading Ki / Afterimage / Lock On): flags temporales
   const [pLockOn, setPLockOn] = useState(false);
   const [pAcc, setPAcc] = useState(0);   // turnos de +30% precisión
@@ -554,6 +561,54 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
       case 'defense': return gbcMs(78);
       default: return gbcMs(104);
     }
+  };
+
+  const playCardCinematic = (card: CardDef, side: 'player' | 'enemy', onDone: () => void) => {
+    clearCinematicTimers();
+    const setActorPose = (pose: BattleSpritePose) => side === 'player' ? setPlayerPose(pose) : setEnemyPose(pose);
+    const setTargetPose = (pose: BattleSpritePose) => side === 'player' ? setEnemyPose(pose) : setPlayerPose(pose);
+    const resetActorPose = () => side === 'player' ? setPlayerPose('idle') : setEnemyPose('idle');
+    const resetTargetPose = () => side === 'player' ? setEnemyPose('idle') : setPlayerPose('idle');
+
+    setViewMode('ACTION');
+    setActorPose(cardBattlePose(card, 'field'));
+    setCardFx({ card, side, step: 'attacker' });
+
+    const hasTargetCut = card.type === 'beam' || card.type === 'damage' || card.type === 'command' || OFFENSIVE_SUPPORT_EFFECTS.has(card.effect);
+    const isBeamCut = card.type === 'beam';
+    const isRushCut = card.type === 'damage' || card.type === 'command' || OFFENSIVE_SUPPORT_EFFECTS.has(card.effect);
+    const attackerFrames = isBeamCut ? 42 : isRushCut ? 34 : 50;
+    const travelFrames = isBeamCut ? 42 : isRushCut ? 24 : 0;
+    const targetFrames = isBeamCut ? 38 : isRushCut ? 34 : 0;
+
+    if (!hasTargetCut) {
+      cinematicTimers.current.push(window.setTimeout(() => {
+        setCardFx(null);
+        setViewMode('OVERVIEW');
+        resetActorPose();
+        onDone();
+      }, presentationMs(card)));
+      return;
+    }
+
+    cinematicTimers.current.push(window.setTimeout(() => {
+      setCardFx({ card, side, step: 'travel' });
+      setActorPose(card.type === 'beam' ? 'beam_fire' : 'attack_fwd');
+    }, gbcMs(attackerFrames)));
+
+    cinematicTimers.current.push(window.setTimeout(() => {
+      setCardFx({ card, side, step: 'target' });
+      resetActorPose();
+      setTargetPose(card.type === 'beam' || card.type === 'damage' ? 'hurt' : 'guard');
+    }, gbcMs(attackerFrames + travelFrames)));
+
+    cinematicTimers.current.push(window.setTimeout(() => {
+      setCardFx(null);
+      setViewMode('OVERVIEW');
+      resetActorPose();
+      resetTargetPose();
+      onDone();
+    }, gbcMs(attackerFrames + travelFrames + targetFrames)));
   };
 
   // ═══ EXCHANGE: la unidad central del combate (spec §3-4) ═══
@@ -971,15 +1026,9 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
     }
 
     Sfx.cardPlay();
-    setPlayerPose(cardBattlePose(card, 'field'));
-    // Secuencia cinematográfica del GBC: ACTION_VIEW (fondo action + sprites grandes)
-    setViewMode('ACTION');
-    setCardFx({ card, side: 'player' });
-    setTimeout(() => {
-      setCardFx(null);
-      setViewMode('OVERVIEW');
+    playCardCinematic(card, 'player', () => {
       resolveCardPlay(card, false, idx);
-    }, presentationMs(card));
+    });
   };
 
   // Resolución de una carta JOINT o LIMITED (misma mecánica; solo cambia la mano)
@@ -1227,15 +1276,10 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
       return;
     }
     Sfx.cardPlay();
-    setPlayerPose(cardBattlePose(card, 'field'));
     setSelectedCard(null);
-    setViewMode('ACTION');
-    setCardFx({ card, side: 'player' });
-    setTimeout(() => {
-      setCardFx(null);
-      setViewMode('OVERVIEW');
+    playCardCinematic(card, 'player', () => {
       resolveCardPlay(card, true, -1);
-    }, presentationMs(card));
+    });
   };
 
   const finishPlayerTurn = (idx: number) => {
@@ -1341,15 +1385,9 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
       }
       incomingCard.current = card;
       addLog(`${enemy.name} ${t('battle.uses')} ${card.name}`);
-      setViewMode('ACTION');
-      setCardFx({ card, side: 'enemy' });
-      setEnemyPose(cardBattlePose(card, 'field'));
-      setTimeout(() => {
-        setCardFx(null);
-        setViewMode('OVERVIEW');
-        setEnemyPose('idle');
+      playCardCinematic(card, 'enemy', () => {
         enterDefensePhase(card.name);
-      }, presentationMs(card));
+      });
     }, 450);
   };
 
@@ -1694,27 +1732,51 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
         </div>
       )}
 
-      {/* ═══ CINEMÁTICA DE CARTA (GBC): zoom luchador + carta + animación por tipo ═══ */}
+      {/* ═══ CINEMÁTICA DE ACCIÓN GBC: atacante → habilidad → rival ═══ */}
       {cardFx && (
-        <div className={`card-fx fx-${cardFx.card.type} ${cardFx.side}`} key={cardFx.card.id + cardFx.side}>
+        <div className={`card-fx fx-${cardFx.card.type} ${cardFx.side} scene-${cardFx.step}`} key={`${cardFx.card.id}-${cardFx.side}-${cardFx.step}`}>
           <div className="fx-vignette" />
-          <div className="fx-fighter">
-            {cardFx.side === 'player'
-              ? (spriteManifestUrl(playerFormId)
-                  ? <FighterSprite formId={playerFormId} pose={cardBattlePose(cardFx.card, 'fx')} side="left" scale={14} />
-                  : <CharacterSprite formId={playerFormId} className="fx-sprite" height={200} />)
-              : (spriteManifestUrl(enemyFormId)
-                  ? <FighterSprite formId={enemyFormId} pose={cardBattlePose(cardFx.card, 'fx')} side="right" scale={14} />
-                  : <CharacterSprite formId={enemyFormId} className="fx-sprite" height={200} />)}
-          </div>
-          <div className="fx-card">
-            {cardIconUrl(cardFx.card.id) && <img src={cardIconUrl(cardFx.card.id)} alt="" className="fx-card-icon" />}
-            <span className="fx-card-name">{cardFx.card.name}</span>
-          </div>
-          {cardFx.card.type === 'beam' && <div className="fx-beam" />}
-          {cardFx.card.type === 'damage' && <div className="fx-swing" />}
-          {cardFx.card.type === 'support' && <div className="fx-aura" />}
-          <div className="fx-impact" />
+          {cardFx.step === 'attacker' && (
+            <>
+              <div className="fx-scene-label">ACTION</div>
+              <div className="fx-fighter fx-actor">
+                {cardFx.side === 'player'
+                  ? (spriteManifestUrl(playerFormId)
+                      ? <FighterSprite formId={playerFormId} pose={cardBattlePose(cardFx.card, 'fx')} side="left" scale={14} />
+                      : <CharacterSprite formId={playerFormId} className="fx-sprite" height={200} />)
+                  : (spriteManifestUrl(enemyFormId)
+                      ? <FighterSprite formId={enemyFormId} pose={cardBattlePose(cardFx.card, 'fx')} side="right" scale={14} />
+                      : <CharacterSprite formId={enemyFormId} className="fx-sprite" height={200} />)}
+              </div>
+              <div className="fx-card">
+                {cardIconUrl(cardFx.card.id) && <img src={cardIconUrl(cardFx.card.id)} alt="" className="fx-card-icon" />}
+                <span className="fx-card-name">{cardFx.card.name}</span>
+              </div>
+              {cardFx.card.type === 'support' && <div className="fx-aura" />}
+            </>
+          )}
+          {cardFx.step === 'travel' && (
+            <>
+              <div className="fx-scene-label">SKILL</div>
+              {cardFx.card.type === 'beam' ? <div className="fx-beam-travel" /> : <div className="fx-rush-trail" />}
+              {cardFx.card.type === 'damage' && <div className="fx-swing" />}
+            </>
+          )}
+          {cardFx.step === 'target' && (
+            <>
+              <div className="fx-scene-label">IMPACT</div>
+              <div className="fx-fighter fx-target">
+                {cardFx.side === 'player'
+                  ? (spriteManifestUrl(enemyFormId)
+                      ? <FighterSprite formId={enemyFormId} pose="hurt" side="right" scale={14} />
+                      : <CharacterSprite formId={enemyFormId} className="fx-sprite" height={200} />)
+                  : (spriteManifestUrl(playerFormId)
+                      ? <FighterSprite formId={playerFormId} pose="hurt" side="left" scale={14} />
+                      : <CharacterSprite formId={playerFormId} className="fx-sprite" height={200} />)}
+              </div>
+              <div className="fx-impact" />
+            </>
+          )}
         </div>
       )}
 

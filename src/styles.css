@@ -3259,11 +3259,25 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 .card-fx { position: fixed; inset: 0; z-index: 115; pointer-events: none; overflow: hidden; }
 .fx-vignette { position: absolute; inset: 0; background: radial-gradient(ellipse at center, rgba(5,8,14,.25) 0%, rgba(2,3,6,.82) 100%); }
 .fx-fighter { position: absolute; bottom: 6vh; animation: fx-zoom-in .5s ease-out both; filter: drop-shadow(0 0 24px rgba(255,190,60,.45)); }
-.card-fx.player .fx-fighter { left: 8vw; }
-.card-fx.enemy .fx-fighter { right: 8vw; }
+.card-fx.player .fx-actor,
+.card-fx.enemy .fx-target { left: 8vw; }
+.card-fx.enemy .fx-actor,
+.card-fx.player .fx-target { right: 8vw; }
 @keyframes fx-zoom-in { from { transform: translateY(40px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
 .fx-sprite { image-rendering: pixelated; }
 .fx-fighter .fighter-sprite img { image-rendering: pixelated; }
+
+.fx-scene-label {
+  position: absolute;
+  top: 7vh;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--fpx);
+  font-size: 10px;
+  letter-spacing: .22em;
+  color: rgba(255,233,163,.9);
+  text-shadow: 2px 2px 0 #000, 0 0 12px rgba(247,147,30,.55);
+}
 
 /* La carta con su icono (pop-in) */
 .fx-card {
@@ -3283,18 +3297,44 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   border-radius: 50%; border: 3px solid rgba(255,255,255,.65); border-top-color: transparent;
   opacity: 0; animation: fx-swing-anim .4s ease .92s both;
 }
+.scene-travel .fx-swing { animation: fx-swing-anim .4s ease .05s both; }
 @keyframes fx-swing-anim { 0% { transform: rotate(-120deg) scale(.3); opacity: 0; } 30% { opacity: 1; } 100% { transform: rotate(60deg) scale(1.15); opacity: 0; } }
 
 /* Beam: carga + rayo horizontal */
 .card-fx.fx-beam .fx-fighter { animation: fx-zoom-in .5s ease-out both, fx-charge .7s ease .55s both; filter: drop-shadow(0 0 30px rgba(90,180,255,.9)) brightness(1.5); }
 @keyframes fx-charge { 0% { filter: drop-shadow(0 0 8px rgba(90,180,255,.3)) brightness(1.05); } 100% { filter: drop-shadow(0 0 34px rgba(120,200,255,1)) brightness(1.55); } }
-.fx-beam {
-  position: absolute; top: 44%; left: 15%; right: 15%; height: 7vh;
-  background: linear-gradient(90deg, rgba(80,170,255,0) 0%, rgba(120,200,255,.95) 15%, #eaf6ff 50%, rgba(120,200,255,.95) 85%, rgba(80,170,255,0) 100%);
+.fx-beam-travel {
+  position: absolute; top: 46%; width: 58vw; height: 7vh;
+  background: linear-gradient(90deg, rgba(80,170,255,0) 0%, rgba(120,200,255,.95) 18%, #eaf6ff 52%, rgba(120,200,255,.95) 86%, rgba(80,170,255,0) 100%);
   box-shadow: 0 0 34px rgba(100,190,255,.9);
-  opacity: 0; animation: fx-beam-anim .55s ease .95s both;
+  opacity: 0;
 }
-@keyframes fx-beam-anim { 0% { transform: scaleX(.05); opacity: 0; } 25% { opacity: 1; } 100% { transform: scaleX(1); opacity: 0; } }
+.card-fx.player .fx-beam-travel { left: 14vw; animation: fx-beam-travel-player .7s steps(5, end) both; }
+.card-fx.enemy .fx-beam-travel { right: 14vw; animation: fx-beam-travel-enemy .7s steps(5, end) both; }
+@keyframes fx-beam-travel-player {
+  0% { transform: translateX(-38vw); opacity: 0; }
+  18% { opacity: 1; }
+  100% { transform: translateX(28vw); opacity: 0; }
+}
+@keyframes fx-beam-travel-enemy {
+  0% { transform: translateX(38vw) scaleX(-1); opacity: 0; }
+  18% { opacity: 1; }
+  100% { transform: translateX(-28vw) scaleX(-1); opacity: 0; }
+}
+
+.fx-rush-trail {
+  position: absolute;
+  top: 46%;
+  width: 42vw;
+  height: 5vh;
+  background: repeating-linear-gradient(90deg, rgba(255,255,255,.9) 0 12px, rgba(255,190,60,.55) 12px 20px, transparent 20px 34px);
+  filter: drop-shadow(0 0 18px rgba(255,210,80,.7));
+  opacity: 0;
+}
+.card-fx.player .fx-rush-trail { left: 22vw; animation: fx-rush-player .45s steps(4, end) both; }
+.card-fx.enemy .fx-rush-trail { right: 22vw; animation: fx-rush-enemy .45s steps(4, end) both; }
+@keyframes fx-rush-player { 0% { transform: translateX(-24vw); opacity: 0; } 25% { opacity: 1; } 100% { transform: translateX(24vw); opacity: 0; } }
+@keyframes fx-rush-enemy { 0% { transform: translateX(24vw) scaleX(-1); opacity: 0; } 25% { opacity: 1; } 100% { transform: translateX(-24vw) scaleX(-1); opacity: 0; } }
 
 /* Support: aura de poder */
 .card-fx.fx-support .fx-fighter { animation: fx-zoom-in .5s ease-out both, fx-aura-pulse 1s ease .6s both; }
@@ -3306,12 +3346,20 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 }
 @keyframes fx-aura-spin { 0% { transform: scale(.3) rotate(0); opacity: 0; } 30% { opacity: 1; } 100% { transform: scale(1.6) rotate(160deg); opacity: 0; } }
 
+.card-fx.scene-target .fx-fighter {
+  animation: fx-zoom-in .35s ease-out both;
+  filter: drop-shadow(0 0 24px rgba(255,190,60,.45));
+}
+
 /* Impacto final */
 .fx-impact {
   position: absolute; top: 44%; left: 50%; width: 18vh; height: 18vh; margin-left: -9vh; margin-top: -9vh;
   background: radial-gradient(circle, #fff 0%, rgba(255,255,255,.4) 40%, transparent 70%);
   opacity: 0; animation: fx-impact-anim .45s ease 1.35s both;
 }
+.scene-target .fx-impact { animation: fx-impact-anim .45s ease .06s both; }
+.scene-target.player .fx-impact { left: 78%; }
+.scene-target.enemy .fx-impact { left: 22%; }
 @keyframes fx-impact-anim { 0% { opacity: 0; transform: scale(.2); } 30% { opacity: 1; } 100% { opacity: 0; transform: scale(2.4); } }
 .btn-cancel-card {
   margin-top: 8px; padding: 8px 18px;
