@@ -9,7 +9,7 @@ const SPRITE_DIRS: Record<string, string> = {
   // Goku
   'goku_base': 'goku_base',
   'goku_ssj': 'goku_super_saiyan',
-  'goku_ssj2': 'goku_super_saiyan',
+  'goku_ssj2': 'goku_super_saiyan_2',
   'goku_ssj3': 'goku_super_saiyan_3',
   // Vegeta (el sheet SSJ _ Majin cubre SSJ y Majin)
   'vegeta_base': 'vegeta_base',
@@ -20,9 +20,11 @@ const SPRITE_DIRS: Record<string, string> = {
   'gohan_young_ssj': 'young_gohan_super_saiyan',
   'gohan_young_ssj2': 'young_gohan_super_saiyan_2',
   'gohan_teen_ssj': 'gohan_super_saiyan_1_2',
+  'gohan_teen_ssj2': 'gohan_super_saiyan_1_2',
   'gohan_ultimate': 'gohan_ultimate',
   // Trunks
   'trunks_kid': 'trunks_base',
+  'trunks_kid_ssj': 'kid_trunks_super_saiyan',
   'trunks_future': 'future_trunks_base',
   'trunks_ssj': 'future_trunks_super_saiyan',
   // Goten
@@ -34,10 +36,10 @@ const SPRITE_DIRS: Record<string, string> = {
   // Piccolo / Krillin
   'piccolo_base': 'piccolo_base',
   'piccolo_kami': 'piccolo_base',
+  'piccolo_evil': 'piccolo_base',
   'krillin_base': 'krillin_base',
   // Frieza
   'frieza_final': 'frieza_base',
-  'frieza_100': 'frieza_base',
   // Cell
   'cell_imperfect': 'cell_imperfect_form',
   'cell_semi': 'cell_semi_perfect_form',
@@ -51,7 +53,7 @@ const SPRITE_DIRS: Record<string, string> = {
   'android_20': 'android_20_base',
   // Ginyu Force
   'ginyu': 'ginyu_base',
-  'ginyu_goku': 'goku_base',
+  'ginyu_goku': 'ginyu_gokus_body',
   'recoome': 'recoome_base',
   'guldo': 'guldo_base',
   'jeice': 'jeice_base',

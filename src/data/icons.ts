@@ -229,6 +229,8 @@ export const MENU_PORTRAITS: Record<string, string> = {
   android_19: '/assets/portraits/menu/cell_03_01.png',
   android_20: '/assets/portraits/menu/cell_03_02.png',
   cell_jr: '/assets/portraits/menu/cell_03_03.png',
+  // Vegito: no hay celda dedicada en LSW_Portraits; se usa el retrato de historia
+  vegito: '/assets/portraits/story/04_Saga_Majin_Buu/Vegito/R14_C03__Vegito.png',
 };
 
 // Fallback: mapa por tipo de carta → icono Lucide (si no hay icono real)

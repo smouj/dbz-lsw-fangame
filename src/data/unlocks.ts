@@ -55,10 +55,15 @@ export function pickRewards(owned: Set<number>, count = 3): number[] {
 // Personajes que se desbloquean al ganarles en Versus (como el GBC)
 export const VS_UNLOCKS: Record<string, string> = {
   'vegeta_base': 'vegeta',
+  'vegeta_majin': 'vegeta',
   'gohan_young': 'gohan',
+  'gohan_teen_ssj2': 'gohan',
+  'gohan_ultimate': 'gohan',
   'piccolo_base': 'piccolo',
+  'piccolo_evil': 'piccolo',
   'krillin_base': 'krillin',
   'trunks_kid': 'trunks',
+  'trunks_kid_ssj': 'trunks',
   'goten_base': 'goten',
   'gotenks_ssj': 'gotenks',
   'frieza_final': 'frieza',
@@ -76,6 +81,7 @@ export const VS_UNLOCKS: Record<string, string> = {
   'burter': 'burter',
   'nappa': 'nappa',
   'buu_base': 'buu',
+  'vegito_base': 'vegito',
 };
 
 // ═══════════════════════════════════════════════════════════
@@ -96,23 +102,24 @@ export const FORM_UNLOCK_LEVELS: Record<string, number> = {
   // Vegeta
   'vegeta_ssj': 3, 'vegeta_majin': 6,
   // Gohan
-  'gohan_young_ssj': 2, 'gohan_young_ssj2': 4, 'gohan_teen_ssj': 5, 'gohan_ultimate': 9,
+  'gohan_young_ssj': 2, 'gohan_young_ssj2': 4, 'gohan_teen_ssj': 5, 'gohan_teen_ssj2': 7, 'gohan_ultimate': 9,
   // Trunks
-  'trunks_future': 3, 'trunks_ssj': 5,
+  'trunks_kid_ssj': 4, 'trunks_future': 3, 'trunks_ssj': 5,
   // Goten
   'goten_ssj': 4,
   // Gotenks
   'gotenks_ssj': 6, 'gotenks_ssj3': 10,
   // Piccolo
-  'piccolo_kami': 4,
+  'piccolo_kami': 4, 'piccolo_evil': 8,
   // Frieza
-  'frieza_100': 5,
   // Cell
   'cell_semi': 6, 'cell_perfect': 8,
   // Buu
   'buu_super': 7, 'buu_gotenks': 9, 'buu_gohan': 11, 'buu_kid': 12,
   // Ginyu
   'ginyu_goku': 6,
+  // Vegito (forma final)
+  'vegito_base': 12,
 };
 
 // ¿Forma desbloqueada?

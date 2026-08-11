@@ -287,6 +287,12 @@ function canPlayInDefense(card: CardDef): boolean {
   return card.type === 'defense' || card.type === 'support' || card.type === 'special';
 }
 
+// Compatibilidad de carta por personaje (campo `compatible` de la ROM):
+// undefined/[] = todos los luchadores; si lista, solo esos personajes.
+function cardUsableBy(card: CardDef, charId: string): boolean {
+  return !card.compatible || card.compatible.length === 0 || card.compatible.includes(charId);
+}
+
 function cardEffectSummary(effect: CardEffect): string {
   switch (effect) {
     case 'damage':
@@ -466,9 +472,11 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
   const [hand, setHand] = useState<CardDef[]>(() => {
     // Mano inicial real: 3 Joint aleatorias. El +1 se roba SOLO al entrar
     // en cada Attack Phase, no en BATTLE_INIT.
+    // Solo cartas compatibles con el personaje activo (campo `compatible` ROM).
     const deckIds = loadDeck();
-    const battleDeck = deckIds.map(id => getCard(id)).filter((c): c is CardDef => !!c);
-    const shuffled = [...battleDeck].sort(() => Math.random() - 0.5);
+    const usable = deckIds.map(id => getCard(id))
+      .filter((c): c is CardDef => !!c && cardUsableBy(c, getForm(playerFormId)!.character));
+    const shuffled = [...usable].sort(() => Math.random() - 0.5);
     return shuffled.slice(0, 3);
   });
   const [selectedCard, setSelectedCard] = useState<number | null>(null);
@@ -647,7 +655,11 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
       if (prev.length >= 6) return prev;
       const deckIds = loadDeck();
       if (deckIds.length === 0) return prev;
-      const card = getCard(deckIds[Math.floor(Math.random() * deckIds.length)]);
+      // Solo cartas compatibles con el personaje activo
+      const usable = deckIds.map(id => getCard(id))
+        .filter((c): c is CardDef => !!c && cardUsableBy(c, getForm(playerFormId)!.character));
+      if (usable.length === 0) return prev;
+      const card = usable[Math.floor(Math.random() * usable.length)];
       return card ? [...prev, card] : prev;
     });
   };
@@ -1487,12 +1499,17 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
       // Mazo REAL del jefe en story mode (spreadsheet oficial); en versus, pool global
       const storyDeck = storyChapter ? (STORY_ENEMY_DECKS[storyChapter] || []).map(id => getCard(id)).filter((c): c is CardDef => !!c) : [];
       const allPool = storyDeck.length > 0 ? storyDeck : CARDS;
-      const attackCards = allPool.filter(c => (c.type === 'damage' || c.type === 'beam') && !c.compatible);
-      // IA a HP bajo: si tiene carta de curación en su mazo, se cura (HYPOTHESIS —
-      // el algoritmo real de decisión es P0 ROM, pero el manual confirma que la IA
-      // puede usar support cards; el deck determina qué puede hacer)
+      // Cartas de ataque que el ENEMIGO puede usar: las genéricas + las compatibles
+      // con su personaje (fix: antes `!c.compatible` excluía TODAS las cartas firma,
+      // así que Goku nunca usaba Kamehameha en su mazo real).
+      const enemyCharId = getForm(enemyFormId)!.character;
+      const attackCards = allPool.filter(c => (c.type === 'damage' || c.type === 'beam')
+        && cardUsableBy(c, enemyCharId));
+      // IA a HP bajo: si tiene carta de curación compatible en su mazo, se cura
+      // (HYPOTHESIS — el algoritmo real de decisión es P0 ROM, pero el manual
+      // confirma que la IA puede usar support cards; el deck determina qué puede hacer)
       if (enemy.hp < enemy.maxHp * 0.25) {
-        const heals = allPool.filter(c => c.type === 'support' && (c.effect.startsWith('heal_')));
+        const heals = allPool.filter(c => c.type === 'support' && (c.effect.startsWith('heal_')) && cardUsableBy(c, enemyCharId));
         if (heals.length > 0) {
           const h = heals[0];
           const pct = h.effect === 'heal_strong' ? (1 / 4 + 1 / 3) : h.effect === 'heal_light' ? 0.3 : 0.25;
