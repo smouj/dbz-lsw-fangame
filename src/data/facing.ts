@@ -1,3 +1,5 @@
+import { spriteDirFor } from './spriteManifest';
+
 // ═══════════════════════════════════════════════════════════
 // DBZ LSW — FACING (orientación de sprites)
 //
@@ -42,7 +44,8 @@ export const NATIVE_STRIKE_DIR: Record<string, StrikeDir> = {
 const DEFAULT_STRIKE: StrikeDir = 'right';
 
 export function nativeStrikeDir(formId: string): StrikeDir {
-  return NATIVE_STRIKE_DIR[formId] ?? DEFAULT_STRIKE;
+  const spriteDir = spriteDirFor(formId) ?? formId;
+  return NATIVE_STRIKE_DIR[spriteDir] ?? DEFAULT_STRIKE;
 }
 
 /**
