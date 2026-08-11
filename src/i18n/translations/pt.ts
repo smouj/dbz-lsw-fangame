@@ -191,4 +191,5 @@ export const pt: Dict = {
   'battle.upFront': "CIMA · PERTO",
   'battle.downBack': "BAIXO · LONGE",
   'battle.downFront': "BAIXO · PERTO",
+  'story.epilogue': "EPÍLOGO",
 };

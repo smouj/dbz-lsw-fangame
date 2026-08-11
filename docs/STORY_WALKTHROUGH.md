@@ -80,37 +80,25 @@ quieres: **Beam o Damage** (el remake ya lo implementa en StarterScreen).
 - **SSJ3 Goku**: facilita la batalla contra Evil Buu
 - **Vegito**: fusión Potara Goku+Vegeta
 
+## Diseño del remake (2026-08-11 — decisión del usuario)
+
+**El modo historia es una experiencia narrativa LINEAL presentada con viñetas
+manga dinámicas que conectan directamente los combates. NO existe exploración
+del mapa ni movimiento libre de personajes entre encuentros.**
+
+- Flujo: MENÚ HISTORIA → INTRO (viñetas) → COMBATE → OUTRO (viñetas) → recompensa → siguiente capítulo
+- Cada capítulo es una pequeña historieta data-driven (`src/data/storyPanels.ts`):
+  layouts FULL / SPLIT_2 / PORTRAIT_DIALOGUE / IMPACT, fondos NN_world.png,
+  retratos 40×56, diálogos, efectos (flash/zoom/shake/speed)
+- Los objetos ocultos del walkthrough (Espada Yajirobe, Dende, etc.) pasan a ser
+  contenido narrativo de las viñetas, no interactividad de mapa
+- Los capítulos 14-32 usan un generador por defecto (escenario por saga) hasta
+  escribir sus viñetas específicas
+
 ## Mecánicas de historia que el remake debe respetar
 
 1. Recompensa: 1 de 3 cartas tras cada victoria
 2. Combates 2v2 con cambio de personaje (CHARA en Attack Phase)
-3. Mapa con objetos ocultos (press A en lugares específicos)
-4. Desbloqueos por condiciones específicas (perder/ganar de cierta forma)
-5. La elección de mazo inicial (Beam/Damage) afecta las recompensas
+3. Desbloqueos por condiciones específicas (perder/ganar de cierta forma)
+4. La elección de mazo inicial (Beam/Damage) afecta las recompensas
    (ej. Dunk Shot si elegiste Damage, Masenko si Beam)
-
-## Mapas de exploración (implementados 2026-08-11)
-
-Cada capítulo 1-13 visita su mapa de exploración (fondos `NN_world.png`
-extraídos de la ROM, 160×80) antes de la batalla. El jugador se mueve con
-WASD/flechas, busca los objetos ocultos (press Q/Enter junto al punto
-dorado) y pulsa START para luchar.
-
-| Cap | Mapa | Objetos ocultos (walkthrough) | Recompensa |
-|-----|------|-------------------------------|------------|
-| 1 | 01 llanura | Espada de Yajirobe (rocas) · Ki de Piccolo | Yajirobe (86) · Masenko (10) |
-| 2 | 02 desierto | Chichi (hablar) | Dunk Shot (11) |
-| 3 | 03 cañón | Goku (5 Stage Attack) | 5 stage atk. (3) |
-| 4 | 04 nave | Carta en nave (esquina sup-izq) | Solid Shot (25) |
-| 5 | 05 costa | Dende (casa tras árboles) · Dragon Ball (árbol der.) | Dende (88) |
-| 6 | 06 interior nave | Dragon Balls (camino al norte) | — |
-| 7 | 07 lago | Guru (hablar) | Guru (89) |
-| 8 | 08 ciudad | Chiaotzu (hablar) | Chaiotzu (84) |
-| 9 | 09 yermo | Memorando (nota tras edificio) | — |
-| 10 | 10 templo | Bulma (hablar) | Bulma (83) |
-| 11 | 11 bosque | Espada de Trunks (nota) | Trunks Sword (104) |
-| 12 | 12 llanura alienígena | Kaio (hablar) | Kaio (87) |
-| 13 | 13 costa verde | Tien (norte acantilado) | Tien (85) |
-
-Persistencia: `dbzlsw_explored` (objetos encontrados). Los capítulos 14-32
-saltan directo a la batalla hasta que se extraigan más mapas de la ROM.

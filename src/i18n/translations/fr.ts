@@ -191,4 +191,5 @@ export const fr: Dict = {
   'battle.upFront': "HAUT · PROCHE",
   'battle.downBack': "BAS · LOIN",
   'battle.downFront': "BAS · PROCHE",
+  'story.epilogue': "ÉPILOGUE",
 };
