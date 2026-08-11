@@ -2927,8 +2927,26 @@ function AppInner() {
   };
 
   // La intro terminó: empezar la batalla del capítulo.
+  // Fin de las viñetas: intro → empezar la batalla · outro → cerrar capítulo
   const finishStoryScene = () => {
+    const phase = storyScene?.phase;
+    const chapter = storyScene?.chapter;
     setStoryScene(null);
+    if (phase === 'outro' && chapter) {
+      // El OUTRO cierra el capítulo: progreso + recompensa de carta + volver
+      // al mapa de historia (el intro ya encadenó la batalla).
+      const next = chapter + 1;
+      saveStoryProgress(Math.min(next, CHAPTERS.length));
+      const u = loadUnlocks();
+      const owned = ownedCards(u, loadProgress().level);
+      const rewards = pickRewards(owned, 3);
+      if (rewards.length > 0) {
+        u.pendingReward = rewards;
+        saveUnlocks(u);
+      }
+      setScreen('story');
+      return;
+    }
     setBattleKey(k => k + 1);
     setScreen('battle');
   };
@@ -2937,11 +2955,13 @@ function AppInner() {
     if (won && storyChapter) {
       const flow = panelsForChapter(storyChapter);
       if (flow.outro && flow.outro.length > 0) {
-        // Outro del capítulo antes de volver al mapa de historia
+        // Outro del capítulo antes de cerrarlo (el outro guarda progreso y
+        // recompensa al terminar — evita duplicar recompensas)
         setStoryScene({ chapter: storyChapter, phase: 'outro' });
         setScreen('storyScene');
         return;
       }
+      // Sin outro: guardar progreso aquí
       const next = storyChapter + 1;
       saveStoryProgress(Math.min(next, CHAPTERS.length));
     }

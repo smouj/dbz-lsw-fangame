@@ -146,7 +146,7 @@ export const STORY_PANELS: Record<number, StoryChapterFlow> = {
     chapter: 3,
     intro: [
       { id: 'c3p1', layout: 'FULL', background: bg(3), title: 'CAPÍTULO 3', subtitle: 'Vegeta, el príncipe Saiyan', effects: ['zoom'] },
-      { id: 'c3p2', layout: 'SPLIT_2', background: bg(3), characters: [{ character: 'goku', side: 'left' }, { character: 'vegeta', side: 'right' }], dialogue: { speaker: 'Vegeta', text: 'Soy Vegeta, el príncipe de los Saiyans. ¡Ríndete!' } },
+      { id: 'c3p2', layout: 'SPLIT_2', background: bg(3), characters: [{ character: 'goku', side: 'left' }, { character: 'vegeta', side: 'right', emotion: 'angry' }], dialogue: { speaker: 'Vegeta', text: 'Soy Vegeta, el príncipe de los Saiyans. ¡Ríndete!' } },
       { id: 'c3p3', layout: 'IMPACT', background: bg(3), title: '¡COMBATE!', subtitle: 'Goku vs Vegeta', effects: ['flash', 'shake'], transition: 'slash' },
     ],
   },
@@ -190,7 +190,7 @@ export const STORY_PANELS: Record<number, StoryChapterFlow> = {
     chapter: 9,
     intro: [
       { id: 'c9p1', layout: 'FULL', background: bg(9), title: 'CAPÍTULO 9', subtitle: 'Freezer, el tirano galáctico', effects: ['zoom'] },
-      { id: 'c9p2', layout: 'SPLIT_2', background: bg(9), characters: [{ character: 'goku', side: 'left' }, { character: 'frieza', side: 'right' }], dialogue: { speaker: 'Freezer', text: '¡Miserable Saiyan! ¡Te haré pedazos!' } },
+      { id: 'c9p2', layout: 'SPLIT_2', background: bg(9), characters: [{ character: 'goku', side: 'left' }, { character: 'frieza', side: 'right', form: 'final', emotion: 'angry' }], dialogue: { speaker: 'Freezer', text: '¡Miserable Saiyan! ¡Te haré pedazos!' } },
       { id: 'c9p3', layout: 'IMPACT', background: bg(9), title: '¡COMBATE!', subtitle: 'Goku vs Freezer', effects: ['flash', 'shake'], transition: 'slash' },
     ],
   },
@@ -220,6 +220,54 @@ export const STORY_PANELS: Record<number, StoryChapterFlow> = {
     intro: [
       { id: 'c13p1', layout: 'FULL', background: bg(8), title: 'CAPÍTULO 13', subtitle: 'Android 20', effects: ['zoom'] },
       { id: 'c13p2', layout: 'IMPACT', background: bg(8), title: '¡COMBATE!', subtitle: 'Goku vs Android 20', effects: ['flash', 'shake'], transition: 'slash' },
+    ],
+  },
+  14: {
+    chapter: 14,
+    intro: [
+      { id: 'c14p1', layout: 'FULL', background: bg(10), title: 'CAPÍTULO 14', subtitle: 'Cell, el bioandroide', effects: ['zoom'] },
+      { id: 'c14p2', layout: 'SPLIT_2', background: bg(10), characters: [{ character: 'piccolo', side: 'left', form: 'kami', emotion: 'grinding' }, { character: 'cell_imperfect', side: 'right' }], dialogue: { speaker: 'Piccolo', text: '¡Esta vez no huiré, Cell!' } },
+      { id: 'c14p3', layout: 'IMPACT', background: bg(10), title: '¡COMBATE!', subtitle: 'Piccolo vs Cell', effects: ['flash', 'shake'], transition: 'slash' },
+    ],
+  },
+  16: {
+    chapter: 16,
+    intro: [
+      { id: 'c16p1', layout: 'FULL', background: bg(8), title: 'CAPÍTULO 16', subtitle: 'Los Androides 16 y 18', effects: ['zoom'] },
+      { id: 'c16p2', layout: 'SPLIT_2', background: bg(8), characters: [{ character: 'goku', side: 'left', form: 'ssj' }, { character: 'android_18', side: 'right' }], dialogue: { speaker: 'Android 18', text: 'No me subestimes, Saiyan.' } },
+      { id: 'c16p3', layout: 'IMPACT', background: bg(8), title: '¡COMBATE!', subtitle: 'Goku SSJ vs Androides', effects: ['flash', 'shake'], transition: 'slash' },
+    ],
+  },
+  18: {
+    chapter: 18,
+    intro: [
+      { id: 'c18p1', layout: 'FULL', background: bg(10), title: 'CAPÍTULO 18', subtitle: 'La furia de Gohan SSJ2', effects: ['zoom', 'flash'] },
+      { id: 'c18p2', layout: 'SPLIT_2', background: bg(10), characters: [{ character: 'gohan', side: 'left', form: 'ssj2', emotion: 'angry' }, { character: 'cell_jr', side: 'right' }], dialogue: { speaker: 'Gohan', text: '¡No tocaréis a mis amigos!' } },
+      { id: 'c18p3', layout: 'IMPACT', background: bg(10), title: '¡COMBATE!', subtitle: 'Gohan SSJ2 vs Cell Jr.', effects: ['flash', 'shake'], transition: 'slash' },
+    ],
+  },
+  25: {
+    chapter: 25,
+    intro: [
+      { id: 'c25p1', layout: 'FULL', background: bg(11), title: 'CAPÍTULO 25', subtitle: 'Majin Vegeta', effects: ['zoom'] },
+      { id: 'c25p2', layout: 'SPLIT_2', background: bg(11), characters: [{ character: 'goku', side: 'left', form: 'ssj2' }, { character: 'vegeta', side: 'right', form: 'majin', emotion: 'angry' }], dialogue: { speaker: 'Vegeta', text: '¡Goku… esta vez te aniquilaré!' } },
+      { id: 'c25p3', layout: 'IMPACT', background: bg(11), title: '¡COMBATE!', subtitle: 'Goku SSJ2 vs Majin Vegeta', effects: ['flash', 'shake'], transition: 'slash' },
+    ],
+  },
+  28: {
+    chapter: 28,
+    intro: [
+      { id: 'c28p1', layout: 'FULL', background: bg(12), title: 'CAPÍTULO 28', subtitle: 'Gotenks SSJ3', effects: ['zoom', 'flash'] },
+      { id: 'c28p2', layout: 'SPLIT_2', background: bg(12), characters: [{ character: 'gotenks', side: 'left', form: 'ssj3' }, { character: 'majin_buu', side: 'right', emotion: 'angry' }], dialogue: { speaker: 'Gotenks', text: '¡Soy el más fuerte del universo!' } },
+      { id: 'c28p3', layout: 'IMPACT', background: bg(12), title: '¡COMBATE!', subtitle: 'Gotenks SSJ3 vs Super Buu', effects: ['flash', 'shake'], transition: 'slash' },
+    ],
+  },
+  32: {
+    chapter: 32,
+    intro: [
+      { id: 'c32p1', layout: 'FULL', background: bg(13), title: 'CAPÍTULO 32', subtitle: 'Kid Buu', effects: ['zoom'] },
+      { id: 'c32p2', layout: 'SPLIT_2', background: bg(13), characters: [{ character: 'goku', side: 'left', form: 'ssj3' }, { character: 'kid_buu', side: 'right', emotion: 'angry' }], dialogue: { speaker: 'Goku', text: '¡Voy a acabar con esto… con la Genkidama!' } },
+      { id: 'c32p3', layout: 'IMPACT', background: bg(13), title: '¡COMBATE!', subtitle: 'Goku SSJ3 vs Kid Buu', effects: ['flash', 'shake'], transition: 'slash' },
     ],
   },
 };
