@@ -389,9 +389,15 @@ TURN N
 - **Robo de Joint** (+1) también al entrar en Attack Phase.
 - **ATTACK**: BASIC (Stage Attack / Gather Power) · JOINT (COMMAND/DAMAGE/BEAM/
   SUPPORT) · LIMIT (solo si powered) · CHARACTER (cambio de aliado).
-- **DEFENSE**: BASIC (Guard / Move) · JOINT (GUARD/SUPPORT) · LIMIT defensivas
-  si powered. **Move consume la acción defensiva pero NO cancela la ofensiva**
-  enemiga: se resuelve tras reposicionar.
+- **DEFENSE**: BASIC (Defense | Move) · JOINT (solo cartas DEFENSE/SUPPORT) ·
+  LIMIT (solo defensivas/Support si powered). Las ofensivas (COMMAND/DAMAGE/
+  BEAM) quedan bloqueadas durante Defense. SUPPORT es válida en Attack y
+  Defense (efecto puede variar por fase).
+- **Move** es una acción de BASIC DEFENSE (junto a Defense), NO una fase del
+  turno: consume la elección defensiva, modifica la posición PERSISTENTE del
+  FighterState y DESPUÉS se resuelve la ofensiva enemiga con la nueva posición
+  (no cancela el ataque). La posición NO se reinicia entre fases/turnos; el
+  atacante no elige posición al empezar su Attack Phase.
 - **Gather Power** consume la Attack Phase completa (3 Stage → 4 Stage mientras
   powered; +4 STR/KI COMMUNITY_TESTED; duración exacta ROM_VERIFY).
 - **Guard** no es daño×0.5 fijo: HIT/BLOCK/EVADE con probabilidades (fórmula
