@@ -756,8 +756,14 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
     const hasTargetCut = card.type === 'beam' || card.type === 'damage' || card.type === 'command' || OFFENSIVE_SUPPORT_EFFECTS.has(card.effect);
     const isBeamCut = card.type === 'beam';
     const isRushCut = card.type === 'damage' || card.type === 'command' || OFFENSIVE_SUPPORT_EFFECTS.has(card.effect);
-    const attackerFrames = isBeamCut ? 54 : isRushCut ? 44 : 58;
-    const travelFrames = isBeamCut ? 50 : isRushCut ? 32 : 0;
+    // Frames GBC por paso — alineados con las animaciones CSS para que NINGUNA
+    // se corte a mitad (fx-actor-center 0.82s, fx-rush-body 0.70s, beam 0.86s):
+    //   damage attacker: 50f (0.84s) cubre el center 0.82s
+    //   damage travel:   44f (0.74s) cubre el rush 0.70s
+    //   beam attacker:   54f (0.90s) cubre center 0.82s + margen de carga
+    //   beam travel:     54f (0.90s) cubre release+rayo 0.86s
+    const attackerFrames = isBeamCut ? 54 : isRushCut ? 50 : 58;
+    const travelFrames = isBeamCut ? 54 : isRushCut ? 44 : 0;
     const targetFrames = isBeamCut ? 44 : isRushCut ? 38 : 0;
 
     if (!hasTargetCut) {
