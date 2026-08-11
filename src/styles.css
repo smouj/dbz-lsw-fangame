@@ -664,8 +664,8 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   border-top: 2px solid #2a3040;
 }
 
-.battlefield.shake-player { animation: field-shake 0.38s ease-out; }
-.battlefield.shake-enemy { animation: field-shake 0.38s ease-out; }
+.battlefield.shake-player { animation: field-shake 0.3s ease-in-out; }
+.battlefield.shake-enemy { animation: field-shake 0.3s ease-in-out; }
 @keyframes field-shake {
   0% { transform: translate(0, 0); }
   20% { transform: translate(3px, -2px); }
@@ -778,7 +778,7 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 .view-fade {
   position: absolute; inset: 0; z-index: 11; pointer-events: none;
   background: #040b18;
-  animation: view-fade-out 0.42s ease-out forwards;
+  animation: view-fade-out 0.35s cubic-bezier(.3,.7,.4,1) forwards;
 }
 @keyframes view-fade-out { from { opacity: .55; } to { opacity: 0; } }
 
@@ -2633,10 +2633,10 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 .stage-btn-b { border-color: var(--hp-red); color: var(--hp-red); }
 
 /* ─── Stage Attack: embestida al acertar una dirección (desplaza al rival) ─── */
-.stage-fighter.lunging { animation: stage-lunge 0.55s ease-out; }
+.stage-fighter.lunging { animation: stage-lunge 0.5s cubic-bezier(.25,.6,.35,1); }
 @keyframes stage-lunge {
   0% { transform: translateX(0); }
-  40% { transform: translateX(46px) scale(1.06); }
+  45% { transform: translateX(46px) scale(1.05); }
   100% { transform: translateX(0); }
 }
 
@@ -2647,7 +2647,7 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   border: 3px solid var(--ki-blue);
   background: rgba(6, 14, 28, 0.92);
   box-shadow: 3px 3px 0 #000, 0 0 22px rgba(70, 170, 255, 0.25);
-  animation: prompt-pop 0.28s cubic-bezier(.2, 1.4, .4, 1) both;
+  animation: prompt-pop 0.24s cubic-bezier(.3, 1.2, .5, 1) both;
 }
 @keyframes prompt-pop {
   from { opacity: 0; transform: scale(0.6); }

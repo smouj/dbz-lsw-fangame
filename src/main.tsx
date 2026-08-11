@@ -495,6 +495,24 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
   // ═══ ROUND (mecánica real del GBC) ═══
   // Cada round hay UN atacante y UN defensor. El más rápido ataca primero.
   // "Each time you're the attacker, you get 3 CC" (battle.shtml).
+  // ═══ Duración de la presentación ACTION según la técnica (game feel) ═══
+  // Cada técnica tiene su propio tempo (spec: "tiempos y pausas correctos
+  // acorde al movimiento y técnica"):
+  //   DAMAGE  → golpe directo, rápido (0.75s)
+  //   BEAM    → carga de ki + disparo (1.5s)
+  //   SUPPORT → buff/curativo breve (0.9s)
+  //   DEFENSE → guardia (0.8s)
+  //   COMMAND → no aplica (usa QTE)
+  const presentationMs = (card: CardDef): number => {
+    switch (card.type) {
+      case 'beam': return 1500;
+      case 'damage': return 750;
+      case 'support': return 900;
+      case 'defense': return 800;
+      default: return 1100;
+    }
+  };
+
   // ═══ EXCHANGE: la unidad central del combate (spec §3-4) ═══
   // Cada exchange tiene un ATTACKER y un DEFENDER. El atacante recibe +3 CC
   // AL ENTRAR en su Attack Phase (no al turno global); el defensor elige su
@@ -912,7 +930,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
       setCardFx(null);
       setViewMode('OVERVIEW');
       resolveCardPlay(card, false, idx);
-    }, 1950);
+    }, presentationMs(card));
   };
 
   // Resolución de una carta JOINT o LIMITED (misma mecánica; solo cambia la mano)
@@ -1167,7 +1185,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
       setCardFx(null);
       setViewMode('OVERVIEW');
       resolveCardPlay(card, true, -1);
-    }, 1950);
+    }, presentationMs(card));
   };
 
   const finishPlayerTurn = (idx: number) => {
@@ -1281,7 +1299,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
         setViewMode('OVERVIEW');
         setEnemyPose('idle');
         setPhase('defend');
-      }, 1950);
+      }, presentationMs(card));
     }, 450);
   };
 
