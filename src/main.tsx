@@ -323,17 +323,22 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
   const [turn, setTurn] = useState(1);
   // Secuencia cinematográfica de presentación (como el GBC): VS screen + READY/FIGHT
   const [intro, setIntro] = useState(true);
-  // El de mayor Speed ataca primero (mecánica real del GBC).
-  // Se recalcula al inicio de cada ROUND (si Speed cambia, cambia el orden).
-  // Turnos alternados (mecánica real): la velocidad solo decide QUIÉN EMPIEZA.
-  // Después, el turno alterna jugador ↔ enemigo (atacante = dueño del turno).
+  // ═══ MODELO DE TURNOS (spec 20 puntos §1-2, §16): TURN → 2 EXCHANGES ═══
+  // El combate NO es playerTurn/enemyTurn. Cada TURN tiene DOS exchanges:
+  //   Exchange 1: firstAttacker ataca, el rival defiende
+  //   Exchange 2: roles invertidos
+  // La SPD efectiva se recalcula al inicio de cada TURN y fija firstAttacker
+  // para TODO el turno (los cambios de SPD afectan al turno siguiente).
   const turnOwnerRef = useRef<'player' | 'enemy' | null>(null);
+  const [exchangeIndex, setExchangeIndex] = useState(0);
   if (turnOwnerRef.current === null) {
     const p = getForm(playerFormId)!;
     const e = getForm(enemyFormId)!;
     turnOwnerRef.current = p.spd === e.spd ? (Math.random() < 0.5 ? 'player' : 'enemy') : p.spd > e.spd ? 'player' : 'enemy';
   }
   const [turnOwner, setTurnOwner] = useState<'player' | 'enemy'>(turnOwnerRef.current);
+  // El orden del turno queda FIJO al empezar; los cambios de SPD (buffs/debuffs)
+  // se aplican al recalcular en el TURN siguiente (spec §1: partida Chiaotzu).
   const speedOrderLabel = turnOwner === 'player'
     ? `${getForm(playerFormId)!.character.toUpperCase()} STRIKES FIRST`
     : `${getForm(enemyFormId)!.character.toUpperCase()} STRIKES FIRST`;
@@ -489,7 +494,25 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
   // ═══ ROUND (mecánica real del GBC) ═══
   // Cada round hay UN atacante y UN defensor. El más rápido ataca primero.
   // "Each time you're the attacker, you get 3 CC" (battle.shtml).
-  const roundStart = () => {
+  // ═══ EXCHANGE: la unidad central del combate (spec §3-4) ═══
+  // Cada exchange tiene un ATTACKER y un DEFENDER. El atacante recibe +3 CC
+  // AL ENTRAR en su Attack Phase (no al turno global); el defensor elige su
+  // defensa ANTES de que se resuelva la ofensiva (no es un QTE reactivo).
+  const startExchange = (attacker: 'player' | 'enemy') => {
+    if (attacker === 'player') {
+      // +3 CC por entrar como atacante (spec §4 — battle.shtml)
+      setPlayer(prev => ({ ...prev, cc: Math.min(prev.maxCc, prev.cc + 3) }));
+      addLog(`${getForm(playerFormId)!.character.toUpperCase()} ${t('battle.strikesFirst')} (+3 CC)`);
+      setPhase('position');
+    } else {
+      setEnemy(prev => ({ ...prev, cc: Math.min(prev.maxCc, prev.cc + 3) }));
+      addLog(`${getForm(enemyFormId)!.character.toUpperCase()} ${t('battle.strikesFirst')} (+3 CC)`);
+      enemyAttack();
+    }
+  };
+
+  // TURN_START: recalcular SPD → fijar firstAttacker → Exchange 1 (spec §1-2)
+  const beginTurn = () => {
     // Decay de precisión/evasión (Reading Ki/Afterimage: 2 turnos)
     setPAcc(prev => (prev > 0 ? prev - 1 : 0));
     setPEva(prev => (prev > 0 ? prev - 1 : 0));
@@ -500,20 +523,34 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
       if (next === 0) setPStages({ str: 0, ki: 0, spd: 0, guard: 0 });
       return next;
     });
-    // Alternar: el otro luchador actúa en el siguiente round
-    const owner = turnOwnerRef.current;
-    turnOwnerRef.current = owner === 'player' ? 'enemy' : 'player';
-    setTurnOwner(turnOwnerRef.current);
-    if (owner === 'player') {
-      // El jugador es el atacante: +3 CC
-      setPlayer(prev => ({ ...prev, cc: Math.min(prev.maxCc, prev.cc + 3) }));
-      addLog(`${getForm(playerFormId)!.character.toUpperCase()} ${t('battle.strikesFirst')} (+3 CC)`);
-      setPhase('position');
+    // Recalcular orden por SPD EFECTIVA (base + buffs/debuffs). El orden queda
+    // fijado para TODO el turno; si la SPD cambió, el siguiente turno se invierte
+    // (peculiaridad real del GBC: dos Attack Phases consecutivas visualmente).
+    const pSpd = player.spd + pStages.spd * 8;
+    const eSpd = enemy.spd + eStages.spd * 8;
+    const first: 'player' | 'enemy' = pSpd === eSpd
+      ? (Math.random() < 0.5 ? 'player' : 'enemy')  // speedTiePolicy: UNKNOWN (ROM)
+      : pSpd > eSpd ? 'player' : 'enemy';
+    turnOwnerRef.current = first;
+    setTurnOwner(first);
+    setExchangeIndex(0);
+    startExchange(first);
+  };
+
+  // Fin de un exchange: pasar al Exchange 2 (roles invertidos) o cerrar el TURN.
+  // KO_CHECK antes: si alguien murió en el exchange 1, la partida documentada no
+  // permite hardcodear si el exchange 2 se cancela — lo resolvemos por flujo de KO.
+  const advanceExchange = () => {
+    if (exchangeIndex === 0) {
+      // Exchange 2: el otro luchador ataca (spec §1)
+      setExchangeIndex(1);
+      const second: 'player' | 'enemy' = turnOwnerRef.current === 'player' ? 'enemy' : 'player';
+      startExchange(second);
     } else {
-      // El enemigo es el atacante: +3 CC y ataca
-      setEnemy(prev => ({ ...prev, cc: Math.min(prev.maxCc, prev.cc + 3) }));
-      addLog(`${getForm(enemyFormId)!.character.toUpperCase()} ${t('battle.strikesFirst')} (+3 CC)`);
-      enemyAttack();
+      // TURN_END → nuevo turno: recalcular SPD y orden
+      setExchangeIndex(0);
+      setTurn(t => t + 1);
+      beginTurn();
     }
   };
 
@@ -570,7 +607,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
     if (intro) return;
     if (startedRef.current) return;
     startedRef.current = true;
-    roundStart();
+    beginTurn();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [intro]);
 
@@ -607,7 +644,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
       setViewMode('OVERVIEW');
       // Termina el turno tras Gather (acción completa consumida)
       setSelectedCard(null);
-      setTimeout(() => roundStart(), 600);
+      setTimeout(() => advanceExchange(), 600);
     }, 800);
   };
 
@@ -624,7 +661,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
       setPlayer(incoming);
       setPlayerPose('idle');
       addLog(`${incoming.name} entra al combate! (CHARA)`);
-      setTimeout(() => roundStart(), 600);
+      setTimeout(() => advanceExchange(), 600);
       return;
     }
     setPhase('cardSelect');
@@ -844,7 +881,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
     setSelectedCard(null);
     setStageQte({ state: 'WAITING', seq: [], idx: 0, correct: 0, card: null, elapsedFrames: 0, limitFrames: 0, recoveryFrames: 0, forcedFailure: null, result: null });
     setViewMode('OVERVIEW');
-    setTimeout(() => roundStart(), 600);
+    setTimeout(() => advanceExchange(), 600);
   };
 
   const selectCard = (idx: number) => {
@@ -882,7 +919,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
   // Resolución de una carta JOINT o LIMITED (misma mecánica; solo cambia la mano)
   const resolveCardPlay = (card: CardDef, isLimit: boolean, handIdx: number) => {
     const endTurn = () => {
-      if (isLimit) { setSelectedCard(null); setTimeout(() => roundStart(), 600); }
+      if (isLimit) { setSelectedCard(null); setTimeout(() => advanceExchange(), 600); }
       else finishPlayerTurn(handIdx);
     };
     setTimeout(() => {
@@ -1092,7 +1129,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
       Sfx.select();
       setPlayerGuard({ type: 'reduce' });
       addLog(`${player.name} ${t('battle.defends')} (ENDURANCE — próximo golpe a la mitad)`);
-      setTimeout(() => roundStart(), 500);
+      setTimeout(() => advanceExchange(), 500);
       return;
     }
     // Stage Attack básico: 3 etapas (4 si se ha gathered — mecánica real)
@@ -1150,7 +1187,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
     const finalHand = newHand.slice(0, 5);
     setHand(finalHand);
     setSelectedCard(null);
-    setTimeout(() => roundStart(), 600);
+    setTimeout(() => advanceExchange(), 600);
   };
 
   // ═══ ENEMY ATTACK: IA real del GBC (battle.shtml) ═══
@@ -1186,7 +1223,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
           setEnemy(prev => ({ ...prev, hp: Math.min(prev.maxHp, prev.hp + healed) }));
           setEnemyPose('power_up');
           addLog(`${enemy.name} ${t('battle.uses')} ${h.name} — +${healed} HP!`);
-          setTimeout(() => { setEnemyPose('idle'); roundStart(); }, 800);
+          setTimeout(() => { setEnemyPose('idle'); advanceExchange(); }, 800);
           return;
         }
       }
@@ -1200,7 +1237,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
         setEnemyPose('power_up');
         addLog(`${enemy.name} ${t('battle.gathers')}! (+8 STR/KI)`);
         ai.mode = 2;
-        setTimeout(() => { setEnemyPose('idle'); roundStart(); }, 800);
+        setTimeout(() => { setEnemyPose('idle'); advanceExchange(); }, 800);
         return;
       }
       const affordable = attackCards.filter(c => c.cc <= enemy.cc);
@@ -1351,8 +1388,8 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
       addLog(`${fallen} K.O.! ${next.name} entra al combate!`);
       setTimeout(() => {
         setEnemyPose('idle');
-        setTurn(t => t + 1); setSelectedCard(null);
-        roundStart();
+        setSelectedCard(null);
+        advanceExchange();
       }, 900);
       return;
     }
@@ -1363,13 +1400,13 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
 
     setTimeout(() => {
       setPlayerPose('idle'); setEnemyPose('idle');
-      setTurn(t => t + 1); setSelectedCard(null);
+      setSelectedCard(null);
       // Decaer Gather Power (FULL_POWER → HALF_POWER → NORMAL)
       if (gatherTurns > 0) {
         setGatherTurns(g => g - 1);
         setPowerState(prev => prev === 'FULL_POWER' ? 'HALF_POWER' : prev === 'HALF_POWER' ? 'NORMAL' : prev);
       }
-      roundStart();
+      advanceExchange();
     }, 400);
   };
 
@@ -1575,6 +1612,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
              phase === 'stageInput' ? 'STAGE INPUT' :
              phase === 'enemyTurn' ? t('battle.enemyTurn') :
              phase === 'defend' ? t('battle.defendAction') : ''}
+          {phase !== 'win' && phase !== 'lose' && phase !== 'position' ? ` · EXCHANGE ${exchangeIndex + 1}/2` : ''}
           </span>
         </div>
         <button className="btn-exit" onClick={() => onExit(false)}><X size={12} /> {t('battle.forfeit')}</button>
