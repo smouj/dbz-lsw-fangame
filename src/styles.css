@@ -8,16 +8,34 @@
 @import url('https://fonts.googleapis.com/css2?family=DotGothic16&family=Press+Start+2P&family=Bangers&family=VT323&display=swap');
 
 :root {
-  /* ─── Paleta GBC (colores reales del juego) ─── */
-  --bg:            #0f141b;
-  --panel:         #1b2330;
-  --panel-hi:      #26303f;
-  --panel-lo:      #0a0e14;
-  --border:        #3d4a5c;
-  --border-lo:     #28323f;
-  --text:          #f0ece0;
-  --muted:         #7e8a9a;
-  --dim:           #4d5868;
+  /* ═══ SISTEMA DE DISEÑO — Retro anime táctico modernizado ═══
+     Dirección: remake serio con sabor GBC, presentación moderna.
+     Regla: 1 acento primario (ki naranja), 1 secundario (ki azul),
+     estados controlados. Nada de azules planos genéricos. */
+  /* Fondo: azul noche muy oscuro con matiz */
+  --bg:            #0a0e16;
+  --bg-deep:       #070a10;
+
+  /* Paneles: azul grisáceo oscuro con profundidad en capas */
+  --panel:         #151b28;
+  --panel-hi:      #1e2636;
+  --panel-hi-2:    #273247;
+  --panel-lo:      #0b0f18;
+  --panel-glow:    rgba(240,136,48,.06);
+
+  /* Bordes: SOLO 2 tipos (normal + acento) */
+  --border:        #33405a;
+  --border-hi:     #46597c;
+  --border-lo:     #222c3f;
+  --border-accent: #f08830;
+  --border-accent-lt: #ffc060;
+
+  /* Texto: jerarquía clara */
+  --text:          #ece9e0;
+  --text-hi:       #ffffff;
+  --muted:         #8b96a8;
+  --dim:           #55607a;
+  --text-ghost:    #3a4459;
 
   /* Colores del juego */
   --orange:        #f08830;
@@ -67,13 +85,13 @@
   --sp-5: 24px;
   --sp-6: 32px;
 
-  /* Jerarquía tipográfica */
-  --fs-hero: 34px;    /* títulos de pantalla (VS, FIGHT, resultados) */
+  /* Jerarquía tipográfica (más presencia en texto secundario) */
+  --fs-hero: 38px;    /* títulos de pantalla (VS, FIGHT, resultados) */
   --fs-title: 26px;   /* título de página */
-  --fs-sub: 13px;     /* subtítulos / badges grandes */
-  --fs-body: 12px;    /* cuerpo UI */
-  --fs-sm: 10px;      /* labels, stats */
-  --fs-xs: 8px;       /* meta, hints */
+  --fs-sub: 14px;     /* subtítulos / badges grandes */
+  --fs-body: 13px;    /* cuerpo UI (antes 12) */
+  --fs-sm: 11px;      /* labels, stats (antes 10) */
+  --fs-xs: 9px;       /* meta, hints (antes 8) */
 
   /* Elevación (sombras pixel) */
   --shadow-1: 2px 2px 0 #000;
@@ -1234,18 +1252,23 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 
 .chapter-node {
   display: flex; align-items: center; gap: 10px;
-  background: var(--panel);
-  border: 3px solid var(--border);
-  border-top-color: var(--panel-hi);
-  border-bottom-color: #0a0e14;
-  padding: 9px 12px;
+  background: var(--panel-lo);
+  border: 2px solid var(--border-lo);
+  border-left: 4px solid transparent;
+  padding: 10px 12px;
   cursor: pointer;
-  transition: border-color 80ms, background 80ms, transform 80ms, box-shadow 80ms;
-  box-shadow: 3px 3px 0 #000;
+  transition: border-color 90ms, background 90ms, transform 90ms, box-shadow 90ms;
+  box-shadow: var(--shadow-1);
 }
+.chapter-node:hover { background: var(--panel); border-left-color: var(--border-hi); transform: translateX(2px); }
+.chapter-node.active {
+  background: linear-gradient(90deg, rgba(240,136,48,.14), rgba(240,136,48,.03) 70%);
+  border-left-color: var(--border-accent);
+  box-shadow: inset 0 0 0 1px rgba(240,136,48,.2);
+}
+.chapter-node.locked { opacity: .55; filter: grayscale(.4); }
 
-.chapter-node:hover { border-color: var(--gold); background: var(--panel-hi); transform: translate(-1px,-1px); box-shadow: 4px 4px 0 #000; }
-.chapter-node.active { border-color: var(--gold); background: var(--panel-hi); }
+
 
 .chapter-icon {
   width: 30px; height: 30px;
@@ -2460,9 +2483,10 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   transition: transform 90ms, border-color 90ms, background 90ms, box-shadow 90ms;
 }
 
-.char-cell:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+.char-cell:hover:not(.locked) {
+  transform: translateY(-3px);
+  border-color: var(--border-accent);
+  box-shadow: var(--shadow-3), 0 0 16px rgba(240,136,48,.2);
 }
 
 /* Panel de detalle: fondo con gradiente */
@@ -3691,6 +3715,20 @@ button:focus-visible, .chapter-node:focus-visible {
   line-height: 1.4;
   margin-top: 2px;
 }
+.cdp-intel {
+  display: flex; flex-direction: column; gap: 4px;
+  border: 2px solid var(--border-lo);
+  background: rgba(10,14,20,.45);
+  padding: 8px 10px;
+}
+.intel-row {
+  display: flex; justify-content: space-between; align-items: center;
+  font-family: var(--fpx);
+  font-size: 9px;
+}
+.intel-key { color: var(--muted); letter-spacing: 1.5px; }
+.intel-val { color: var(--gold-lt); letter-spacing: 1px; text-shadow: 1px 1px 0 #000; }
+
 .cdp-objective .obj-label {
   display: block;
   font-family: var(--fpx);
@@ -3718,9 +3756,17 @@ button:focus-visible, .chapter-node:focus-visible {
 .cdp-start {
   margin-top: auto;
   width: 100%;
-  font-size: 13px;
-  padding: 12px;
-  letter-spacing: 2px;
+  font-size: 14px;
+  padding: 14px;
+  letter-spacing: 3px;
+  position: relative;
+  overflow: hidden;
+}
+.cdp-start::after {
+  content: '';
+  position: absolute; inset: 0 0 auto 0; height: 40%;
+  background: linear-gradient(180deg, rgba(255,255,255,.35), transparent);
+  pointer-events: none;
 }
 
 /* Móvil: panel de detalle debajo */
@@ -3768,4 +3814,166 @@ button:focus-visible, .chapter-node:focus-visible {
   color: #000;
   border-color: var(--orange-lt);
   font-weight: bold;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   SISTEMA DE DISEÑO — Componentes maestros (spec Opción B)
+   Retro anime táctico modernizado: paneles con profundidad,
+   acento ki naranja medido, bordes unificados, tipografía clara.
+   ═══════════════════════════════════════════════════════════ */
+
+/* 1. PrimaryButton — acción heroica con peso */
+.btn-primary {
+  background: linear-gradient(180deg, var(--orange-lt) 0%, var(--orange) 55%, var(--orange-dk) 100%);
+  color: #140800;
+  font-family: var(--fpx);
+  font-size: var(--fs-sub);
+  font-weight: bold;
+  letter-spacing: 2px;
+  padding: 13px 28px;
+  border: 2px solid var(--border-accent-lt);
+  border-bottom-color: var(--orange-dk);
+  cursor: pointer;
+  box-shadow: 0 4px 0 var(--orange-dk), var(--shadow-2), 0 0 18px rgba(240,136,48,.25);
+  text-shadow: 0 1px 0 rgba(255,255,255,.25);
+  transition: transform 90ms, box-shadow 90ms, filter 90ms;
+  text-transform: uppercase;
+}
+.btn-primary:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 0 var(--orange-dk), var(--shadow-3), 0 0 26px rgba(240,136,48,.4);
+  filter: brightness(1.06);
+}
+.btn-primary:active:not(:disabled) { transform: translateY(1px); box-shadow: 0 2px 0 var(--orange-dk); }
+.btn-primary:disabled { opacity: .45; cursor: not-allowed; filter: grayscale(.4); }
+
+/* 2. SecondaryButton — acción normal con relieve */
+.btn-secondary {
+  background: linear-gradient(180deg, var(--panel-hi) 0%, var(--panel) 100%);
+  color: var(--text);
+  font-family: var(--fpx);
+  font-size: var(--fs-sm);
+  letter-spacing: 1.5px;
+  padding: 10px 20px;
+  border: 2px solid var(--border);
+  border-top-color: var(--border-hi);
+  cursor: pointer;
+  box-shadow: 0 3px 0 var(--panel-lo), var(--shadow-1);
+  transition: border-color 90ms, color 90ms, transform 90ms, box-shadow 90ms;
+  text-transform: uppercase;
+}
+.btn-secondary:hover { border-color: var(--border-accent); color: var(--orange-lt); transform: translateY(-1px); box-shadow: 0 4px 0 var(--panel-lo), var(--shadow-2); }
+.btn-secondary:active { transform: translateY(1px); box-shadow: 0 1px 0 var(--panel-lo); }
+
+/* 3. Panel — superficie con profundidad por capas */
+.ui-panel {
+  background: linear-gradient(180deg, var(--panel-hi) 0%, var(--panel) 30%, var(--panel) 100%);
+  border: 2px solid var(--border);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.05), inset 0 -1px 0 rgba(0,0,0,.25), var(--shadow-2);
+  position: relative;
+}
+/* Panel con acento lateral (detalle / sidebar) */
+.ui-panel.accent { border-left: 4px solid var(--border-accent); }
+/* Panel elevado (modal, foco) */
+.ui-panel.raised {
+  background: linear-gradient(180deg, var(--panel-hi-2) 0%, var(--panel-hi) 40%, var(--panel) 100%);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.07), var(--shadow-3);
+}
+
+/* 4. SelectableListItem — fila seleccionable con estado claro */
+.ui-list-item {
+  display: flex; align-items: center; gap: 10px;
+  background: var(--panel-lo);
+  border: 2px solid var(--border-lo);
+  border-left: 4px solid transparent;
+  padding: 9px 12px;
+  cursor: pointer;
+  transition: background 90ms, border-color 90ms, transform 90ms, box-shadow 90ms;
+  position: relative;
+}
+.ui-list-item:hover { background: var(--panel); border-left-color: var(--border-hi); transform: translateX(2px); }
+.ui-list-item.active {
+  background: linear-gradient(90deg, rgba(240,136,48,.14), rgba(240,136,48,.03) 70%);
+  border-left-color: var(--border-accent);
+  box-shadow: inset 0 0 0 1px rgba(240,136,48,.2);
+}
+
+/* 5. CharacterCard — tarjeta de personaje compacta y con presencia */
+.ui-char-card {
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+  background: linear-gradient(180deg, var(--panel-hi) 0%, var(--panel) 100%);
+  border: 2px solid var(--border);
+  padding: 8px 6px;
+  cursor: pointer;
+  transition: border-color 90ms, transform 90ms, box-shadow 90ms;
+  box-shadow: var(--shadow-1);
+}
+.ui-char-card:hover { border-color: var(--border-accent); transform: translateY(-2px); box-shadow: var(--shadow-2), 0 0 14px rgba(240,136,48,.15); }
+.ui-char-card.active { border-color: var(--border-accent); box-shadow: inset 0 0 0 1px var(--border-accent), var(--shadow-2); }
+.ui-char-card.locked { opacity: .5; filter: grayscale(.7); cursor: default; }
+.ui-char-card .ui-char-name { font-family: var(--fpx); font-size: var(--fs-xs); letter-spacing: 1px; color: var(--text); }
+.ui-char-card .ui-char-meta { font-family: var(--fui); font-size: 9px; color: var(--muted); }
+
+/* 6. StatBar — barra de stat con track y fill jerarquizados */
+.ui-statbar { display: flex; align-items: center; gap: 8px; width: 100%; }
+.ui-statbar .ui-stat-label { width: 34px; font-family: var(--fpx); font-size: var(--fs-xs); color: var(--muted); letter-spacing: 1px; }
+.ui-statbar .ui-stat-track { flex: 1; height: 12px; background: var(--bg-deep); border: 1px solid var(--border-lo); box-shadow: inset 0 1px 3px rgba(0,0,0,.5); overflow: hidden; }
+.ui-statbar .ui-stat-fill { height: 100%; transition: width .35s ease; }
+.ui-statbar .ui-stat-val { min-width: 28px; text-align: right; font-family: var(--fui); font-size: var(--fs-sm); color: var(--gold-lt); }
+
+/* 7. FilterTab — filtro con estado activo memorable */
+.ui-filter-tab {
+  background: var(--panel);
+  border: 2px solid var(--border-lo);
+  color: var(--muted);
+  font-family: var(--fpx);
+  font-size: var(--fs-xs);
+  letter-spacing: 1px;
+  padding: 7px 14px;
+  cursor: pointer;
+  transition: all 90ms;
+  box-shadow: var(--shadow-1);
+}
+.ui-filter-tab:hover { border-color: var(--border-hi); color: var(--text); }
+.ui-filter-tab.active {
+  background: linear-gradient(180deg, var(--orange-lt), var(--orange));
+  color: #140800;
+  border-color: var(--border-accent-lt);
+  font-weight: bold;
+  box-shadow: 0 0 12px rgba(240,136,48,.35), var(--shadow-1);
+}
+
+/* 8. DetailSidebar — panel lateral de detalle con cabecera y cuerpo */
+.ui-sidebar {
+  display: flex; flex-direction: column;
+  background: linear-gradient(180deg, var(--panel-hi) 0%, var(--panel) 25%, var(--panel) 100%);
+  border: 2px solid var(--border);
+  border-left: 4px solid var(--border-accent);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.05), var(--shadow-3);
+  overflow: hidden;
+}
+.ui-sidebar .ui-sidebar-head {
+  padding: 14px 16px;
+  border-bottom: 2px solid var(--border-lo);
+  background: linear-gradient(180deg, rgba(240,136,48,.1), transparent);
+}
+.ui-sidebar .ui-sidebar-body { flex: 1; padding: 14px 16px; display: flex; flex-direction: column; gap: 10px; overflow-y: auto; }
+.ui-sidebar .ui-sidebar-title { font-family: var(--fepic); font-size: var(--fs-title); color: var(--orange-lt); letter-spacing: 1px; text-shadow: 2px 2px 0 #000; line-height: 1; }
+.ui-sidebar .ui-sidebar-sub { font-family: var(--fpx); font-size: var(--fs-xs); color: var(--muted); letter-spacing: 1.5px; margin-top: 4px; }
+
+/* Lore del personaje (ficha de colección) */
+.char-lore {
+  display: flex; flex-direction: column; gap: 3px;
+  border: 2px solid var(--border-lo);
+  border-left: 4px solid var(--ki-blue);
+  background: rgba(10,14,20,.45);
+  padding: 8px 10px;
+}
+.lore-label {
+  font-family: var(--fpx); font-size: 8px; letter-spacing: 2px;
+  color: var(--ki-blue);
+}
+.lore-text {
+  font-family: var(--fui); font-size: 12px; color: var(--text);
+  line-height: 1.4;
 }

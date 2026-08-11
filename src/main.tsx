@@ -2393,7 +2393,7 @@ function StoryScreen({ onNavigate, onStartChapter }: {
         </div>
 
         {/* Panel de detalle del capítulo seleccionado (spec §6) */}
-        <div className="chapter-detail-panel">
+        <div className="chapter-detail-panel ui-sidebar">
           {selCutscene && (
             <div className="cdp-visual" style={{ backgroundImage: `url(${selCutscene})` }}>
               <div className="cdp-visual-dim" />
@@ -2404,7 +2404,7 @@ function StoryScreen({ onNavigate, onStartChapter }: {
               <span className="cdp-chapter-tag">CAPÍTULO {String(sel.id).padStart(2, '0')}</span>
             </div>
           )}
-          <div className="cdp-body">
+          <div className="cdp-body ui-sidebar-body">
             <div className="cdp-name">{t(sel.nameKey)}</div>
             <div className="cdp-desc">{t(sel.descKey)}</div>
             <div className="cdp-meta">
@@ -2415,6 +2415,20 @@ function StoryScreen({ onNavigate, onStartChapter }: {
             <div className="cdp-objective">
               <span className="obj-label">OBJETIVO</span>
               {selDone ? 'Victoria conseguida. ¡El siguiente capítulo te espera!' : `Derrota a ${characterName(sel.enemy.split('_')[0])} para continuar la saga.`}
+            </div>
+            <div className="cdp-intel">
+              <div className="intel-row">
+                <span className="intel-key">DIFICULTAD</span>
+                <span className="intel-val">{sel.id <= 3 ? 'NORMAL' : sel.id <= 10 ? 'DIFÍCIL' : 'LETAL'}</span>
+              </div>
+              <div className="intel-row">
+                <span className="intel-key">RECOMPENSA</span>
+                <span className="intel-val">CARTA + EXP</span>
+              </div>
+              <div className="intel-row">
+                <span className="intel-key">MODO</span>
+                <span className="intel-val">{sel.id === 7 || sel.id === 16 || sel.id === 21 ? '2 VS 2' : '1 VS 1'}</span>
+              </div>
             </div>
             <button className="btn-primary cdp-start" onClick={start} disabled={!selUnlocked}>
               {selUnlocked ? `▶ ${t('story.start').toUpperCase()}` : t('story.notUnlocked')}
@@ -2560,7 +2574,7 @@ function CharactersScreen({ onNavigate, onSelectFighter }: {
             const unlocked = isCharacterUnlocked(c.id);
             if (!unlocked) {
               return (
-                <div key={c.id} className="char-cell char-locked">
+                <div key={c.id} className="char-cell ui-char-card locked char-locked">
                   <div className="char-locked-icon"><Lock size={14} /></div>
                   <div className="char-name">{c.name}</div>
                   <div className="char-forms">???</div>
@@ -2568,7 +2582,7 @@ function CharactersScreen({ onNavigate, onSelectFighter }: {
               );
             }
             return (
-              <button key={c.id} className={`char-cell ${active ? 'active' : ''}`}
+              <button key={c.id} className={`char-cell ui-char-card ${active ? 'active' : ''}`}
                 onClick={() => setSelected(baseForm.id)}>
                 <CharacterSprite formId={baseForm.id} height={64} className="char-thumb" />
                 <div className="char-name">{c.name}</div>
@@ -2579,7 +2593,7 @@ function CharactersScreen({ onNavigate, onSelectFighter }: {
         </div>
 
         {/* Detalle */}
-        <div className="char-detail">
+        <div className="char-detail ui-sidebar">
           <div className="char-detail-header">
             <div className={`char-detail-sprite-wrap ${transformFx ? 'transforming' : ''}`} key={transformFx}>
               {transformFx > 0 && <div className="transform-flash" />}
@@ -2596,10 +2610,16 @@ function CharactersScreen({ onNavigate, onSelectFighter }: {
 
           {/* Stats */}
           <div className="stat-block">
-            <div className="stat-row"><span>{t('attr.hp')}</span><div className="stat-bar"><div className="stat-fill hp" style={{ width: `${sel.hp / 6}%` }} /></div><b>{sel.hp}</b></div>
-            <div className="stat-row"><span>{t('attr.str')}</span><div className="stat-bar"><div className="stat-fill str" style={{ width: `${sel.str / 1.2}%` }} /></div><b>{sel.str}</b></div>
-            <div className="stat-row"><span>{t('attr.ki')}</span><div className="stat-bar"><div className="stat-fill ki" style={{ width: `${sel.ki / 1.2}%` }} /></div><b>{sel.ki}</b></div>
-            <div className="stat-row"><span>{t('attr.spd')}</span><div className="stat-bar"><div className="stat-fill spd" style={{ width: `${sel.spd}%` }} /></div><b>{sel.spd}</b></div>
+            <div className="ui-statbar"><span className="ui-stat-label">{t('attr.hp')}</span><div className="ui-stat-track"><div className="ui-stat-fill hp" style={{ width: `${sel.hp / 6}%` }} /></div><span className="ui-stat-val">{sel.hp}</span></div>
+            <div className="ui-statbar"><span className="ui-stat-label">{t('attr.str')}</span><div className="ui-stat-track"><div className="ui-stat-fill str" style={{ width: `${sel.str / 1.2}%` }} /></div><span className="ui-stat-val">{sel.str}</span></div>
+            <div className="ui-statbar"><span className="ui-stat-label">{t('attr.ki')}</span><div className="ui-stat-track"><div className="ui-stat-fill ki" style={{ width: `${sel.ki / 1.2}%` }} /></div><span className="ui-stat-val">{sel.ki}</span></div>
+            <div className="ui-statbar"><span className="ui-stat-label">{t('attr.spd')}</span><div className="ui-stat-track"><div className="ui-stat-fill spd" style={{ width: `${sel.spd}%` }} /></div><span className="ui-stat-val">{sel.spd}</span></div>
+          </div>
+
+          {/* Lore del personaje (rellena el panel como ficha de colección) */}
+          <div className="char-lore">
+            <span className="lore-label">SAGA · ROL</span>
+            <span className="lore-text">{selChar.saga} — Tier {selChar.tier} · {selChar.forms.length} formas</span>
           </div>
 
           {/* Formas: solo las desbloqueadas (por nivel) */}
@@ -2887,7 +2907,7 @@ function VersusScreen({ onNavigate, onStartVersus }: {
             const unlocked = unlockedChars.includes(c.id);
             if (!unlocked) {
               return (
-                <div key={c.id} className="char-cell char-locked">
+                <div key={c.id} className="char-cell ui-char-card locked char-locked">
                   <div className="char-locked-icon"><Lock size={14} /></div>
                   <div className="char-name">{c.name}</div>
                   <div className="char-forms">???</div>
@@ -2895,7 +2915,7 @@ function VersusScreen({ onNavigate, onStartVersus }: {
               );
             }
             return (
-              <button key={c.id} className={`char-cell ${active ? 'active' : ''}`}
+              <button key={c.id} className={`char-cell ui-char-card ${active ? 'active' : ''}`}
                 onClick={() => setSelected(baseForm.id)}>
                 <CharacterSprite formId={baseForm.id} height={64} className="char-thumb" />
                 <div className="char-name">{c.name}</div>
@@ -2904,16 +2924,16 @@ function VersusScreen({ onNavigate, onStartVersus }: {
             );
           })}
         </div>
-        <div className="char-detail">
+        <div className="char-detail ui-sidebar">
           <div className="versus-vs">{t('versus.vs')}</div>
           <CharacterSprite formId={selected} height={160} className="char-detail-sprite" />
           <div className="char-detail-name">{selChar.name}</div>
           <div className="char-detail-form">{sel.form}</div>
           <div className="stat-block">
-            <div className="stat-row"><span>{t('attr.hp')}</span><div className="stat-bar"><div className="stat-fill hp" style={{ width: `${sel.hp / 6}%` }} /></div><b>{sel.hp}</b></div>
-            <div className="stat-row"><span>{t('attr.str')}</span><div className="stat-bar"><div className="stat-fill str" style={{ width: `${sel.str / 1.2}%` }} /></div><b>{sel.str}</b></div>
-            <div className="stat-row"><span>{t('attr.ki')}</span><div className="stat-bar"><div className="stat-fill ki" style={{ width: `${sel.ki / 1.2}%` }} /></div><b>{sel.ki}</b></div>
-            <div className="stat-row"><span>{t('attr.spd')}</span><div className="stat-bar"><div className="stat-fill spd" style={{ width: `${sel.spd}%` }} /></div><b>{sel.spd}</b></div>
+            <div className="ui-statbar"><span className="ui-stat-label">{t('attr.hp')}</span><div className="ui-stat-track"><div className="ui-stat-fill hp" style={{ width: `${sel.hp / 6}%` }} /></div><span className="ui-stat-val">{sel.hp}</span></div>
+            <div className="ui-statbar"><span className="ui-stat-label">{t('attr.str')}</span><div className="ui-stat-track"><div className="ui-stat-fill str" style={{ width: `${sel.str / 1.2}%` }} /></div><span className="ui-stat-val">{sel.str}</span></div>
+            <div className="ui-statbar"><span className="ui-stat-label">{t('attr.ki')}</span><div className="ui-stat-track"><div className="ui-stat-fill ki" style={{ width: `${sel.ki / 1.2}%` }} /></div><span className="ui-stat-val">{sel.ki}</span></div>
+            <div className="ui-statbar"><span className="ui-stat-label">{t('attr.spd')}</span><div className="ui-stat-track"><div className="ui-stat-fill spd" style={{ width: `${sel.spd}%` }} /></div><span className="ui-stat-val">{sel.spd}</span></div>
           </div>
           <div className="form-select">
             {selChar.forms.map(fid => {
