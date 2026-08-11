@@ -989,12 +989,12 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
     setPhase('cardSelect');
     setTimeout(() => {
       if (complete) {
-        const pPos = player.battlePos;
         const ePos = enemy.battlePos;
-        const vulnerable = (isBeamVulnerable(pPos) && card.type === 'beam') || (isDamageVulnerable(pPos) && card.type === 'damage');
+        const vulnerable = (isBeamVulnerable(ePos) && card.type === 'beam') || (isDamageVulnerable(ePos) && card.type === 'damage');
         const posMult = (POSITION_DATA[ePos].depth === 'FRONT' && vulnerable) ? 0.8 : 0.5;
         const dmg = Math.floor((card.atk + player.str) * posMult);
         setEnemy(prev => ({ ...prev, hp: Math.max(0, prev.hp - dmg) }));
+        if (dmg > 0) setEnemyPose('hurt');
         setFlashEnemy(true);
         hitImpact('enemy');
         setDamageNums(prev => [...prev, { value: dmg, type: 'damage', ...dmgPos('enemy'), id: Date.now() }]);
@@ -1030,6 +1030,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
     setSelectedCard(null);
     setStageQte({ state: 'WAITING', seq: [], idx: 0, correct: 0, card: null, elapsedFrames: 0, limitFrames: 0, recoveryFrames: 0, forcedFailure: null, result: null });
     setViewMode('OVERVIEW');
+    setEnemyPose('idle');
     setTimeout(() => advanceExchange(), 600);
   };
 
@@ -1062,6 +1063,8 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
   // Resolución de una carta JOINT o LIMITED (misma mecánica; solo cambia la mano)
   const resolveCardPlay = (card: CardDef, isLimit: boolean, handIdx: number) => {
     const endTurn = () => {
+      setPlayerPose('idle');
+      setEnemyPose('idle');
       if (isLimit) { setSelectedCard(null); setTimeout(() => advanceExchange(), 600); }
       else finishPlayerTurn(handIdx);
     };
@@ -1076,6 +1079,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
       const supEffects = ['heal_25pct','heal_strong','heal_light','buff_kaio','buff_ki8','buff_str8','buff_speed8','buff_guard8','buff_str_ki8','debuff_str8','debuff_ki8','debuff_speed8','debuff_speed8_lowacc','debuff_guard8','attack_power_down','powerup_dispel','support_dispel','powerdown_cleanse','avoid_beam','avoid_damage','avoid_damage_taiyoken','reduce_damage','absorb_beam','command_cancel','accuracy_up','evasion_up','knockdown_dmg','knockdown_min','life_drain','cc_recovery','lock_on','sunglasses','beam_shield','damage_shield','ohko_lowacc','android_kill','special_card','gamebomb','candy','naughty_book'];
       if (card.type === 'support' || card.type === 'defense' || card.type === 'special' || supEffects.includes(card.effect)) {
         const eff = card.effect;
+        let supportImpact = false;
         // Curación
         if (eff === 'heal_25pct' || eff === 'heal_strong' || eff === 'heal_light') {
           // Dende = MaxHP/4 + MaxHP/3 en offense (CONFIRMED_MANUAL); Resurrection = 25%
@@ -1096,6 +1100,8 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
           const drain = Math.floor((card.atk + player.str) * 0.5);
           setEnemy(prev => ({ ...prev, hp: Math.max(0, prev.hp - drain) }));
           setPlayer(prev => ({ ...prev, hp: Math.min(prev.maxHp, prev.hp + drain) }));
+          if (drain > 0) setEnemyPose('hurt');
+          supportImpact = drain > 0;
           setDamageNums(prev => [...prev, { value: drain, type: 'damage', ...dmgPos('enemy'), id: Date.now() }]);
           addLog(`${player.name} ${t('battle.uses')} ${card.name} — ${drain} ${t('battle.dmg')} (+${drain} HP)`);
         } else if (eff === 'cc_recovery') {
@@ -1161,6 +1167,8 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
           if (eff === 'gamebomb' || eff === 'candy' || eff === 'naughty_book' || eff === 'knockdown_dmg' || eff === 'knockdown_min') {
             const dmg = Math.floor((card.atk || 20) + player.str);
             setEnemy(prev => ({ ...prev, hp: Math.max(0, prev.hp - dmg) }));
+            if (dmg > 0) setEnemyPose('hurt');
+            supportImpact = dmg > 0;
             setDamageNums(prev => [...prev, { value: dmg, type: 'damage', ...dmgPos('enemy'), id: Date.now() }]);
             addLog(`${player.name} ${t('battle.uses')} ${card.name} — ${dmg} ${t('battle.dmg')}`);
           } else {
@@ -1168,7 +1176,8 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
           }
         }
         setPlayer(prev => ({ ...prev, cc: Math.max(0, prev.cc - card.cc) }));
-        endTurn();
+        if (supportImpact) setTimeout(() => endTurn(), 500);
+        else endTurn();
         return;
       }
 
@@ -1224,7 +1233,10 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
       else if (hitType === 'miss') Sfx.dodge();
       setTimeout(() => setFlashEnemy(false), 150);
 
-      if (damage > 0) setDamageNums(prev => [...prev, { value: damage, type: 'damage', ...dmgPos('enemy'), id: Date.now() }]);
+      if (damage > 0) {
+        setEnemyPose('hurt');
+        setDamageNums(prev => [...prev, { value: damage, type: 'damage', ...dmgPos('enemy'), id: Date.now() }]);
+      }
       else if (hitType === 'miss') setDamageNums(prev => [...prev, { value: 0, type: 'miss', ...dmgPos('enemy'), id: Date.now() }]);
 
       // Coste real de la carta (JOINT)
