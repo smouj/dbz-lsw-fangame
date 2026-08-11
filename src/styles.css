@@ -2299,6 +2299,14 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 .stage-btn-a { border-color: var(--ki-blue); color: var(--ki-blue); }
 .stage-btn-b { border-color: var(--hp-red); color: var(--hp-red); }
 
+/* ─── Stage Attack: embestida al acertar una dirección (desplaza al rival) ─── */
+.stage-fighter.lunging { animation: stage-lunge 0.55s ease-out; }
+@keyframes stage-lunge {
+  0% { transform: translateX(0); }
+  40% { transform: translateX(46px) scale(1.06); }
+  100% { transform: translateX(0); }
+}
+
 /* ─── Teclas del QTE (Kenney Input Prompts) ─── */
 .qte-key {
   width: 34px; height: 34px;

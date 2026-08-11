@@ -464,11 +464,11 @@ luchador** (gap mínimo entre bloques: 210px).
 
 El Stage Attack en PC replica el GBC con este mapeo:
 
-| GBC | PC |
-|---|---|
-| Botón A | Tecla **Q** |
-| Botón B | Tecla **E** |
-| Cruceta (↑↓←→) | **WASD** o **flechas** de dirección |
+| GBC | PC | Significado (2026-08-11, usuario) |
+|---|---|---|
+| Botón A | Tecla **Q** | **Puñetazo** |
+| Botón B | Tecla **E** | **Patada** |
+| Cruceta (↑↓←→) | **WASD** o **flechas** | **Golpe que desplaza al rival** (embestida: el atacante avanza, animación `stage-lunge`) |
 
 - **3 Stage Attack**: secuencia de A/B puro (Q/E)
 - **4/5/6 Stage**: las etapas finales (1/2/3 según nivel) son de

@@ -1544,10 +1544,15 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
             </button>
           </>
         )}
-        {phase === 'stageInput' && (
+        {phase === 'stageInput' && (() => {
+          const curKey = stageSeq[stageIdx];
+          const isDirPrompt = curKey === 'UP' || curKey === 'DOWN' || curKey === 'LEFT' || curKey === 'RIGHT';
+          return (
           <div className="stage-input-area">
-            {/* Sprite GRANDE del atacante (ACTION VIEW del GBC) */}
-            <div className="stage-fighter">
+            {/* Sprite GRANDE del atacante (ACTION VIEW del GBC).
+                Q = puñetazo · E = patada · dirección = golpe que DESPLAZA
+                al rival → el atacante embiste (clase lunging) */}
+            <div className={`stage-fighter ${isDirPrompt ? 'lunging' : ''}`} key={isDirPrompt ? `dir-${stageIdx}` : `btn-${stageIdx}`}>
               {spriteManifestUrl(playerFormId)
                 ? <FighterSprite formId={playerFormId} pose={stageIdx > 0 ? 'attack_fwd' : 'idle'} side="left" scale={18} flash={stageIdx > 0} />
                 : <CharacterSprite formId={playerFormId} className="fx-sprite" height={170} />}
@@ -1591,7 +1596,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
                     <span className="qte-key-label">D / →</span>
                   </button>
                 </div>
-                <div className="stage-help">A/B = Q/E · Direcciones = WASD o flechas — pulsa a tiempo (+1 CC por acierto)</div>
+                <div className="stage-help">Q = puñetazo · E = patada · WASD/flechas = golpe que desplaza — pulsa a tiempo (+1 CC)</div>
               </>
             ) : (
               <>
@@ -1608,7 +1613,8 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
               </>
             )}
           </div>
-        )}
+          );
+        })()}
         {phase === 'enemyTurn' && (
           <div className="enemy-turn-overlay"><div className="turn-text">{t('battle.enemyTurn')}</div></div>
         )}
@@ -2514,3 +2520,9 @@ export default function App() {
 
 const root = createRoot(document.getElementById('root')!);
 root.render(<App />);
+
+// HMR limpio: desmontar el root en cada hot update de Vite para no
+// re-crear createRoot sobre el mismo contenedor (error de dev).
+if (import.meta.hot) {
+  import.meta.hot.dispose(() => { root.unmount(); });
+}
