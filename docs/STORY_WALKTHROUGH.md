@@ -88,3 +88,29 @@ quieres: **Beam o Damage** (el remake ya lo implementa en StarterScreen).
 4. Desbloqueos por condiciones específicas (perder/ganar de cierta forma)
 5. La elección de mazo inicial (Beam/Damage) afecta las recompensas
    (ej. Dunk Shot si elegiste Damage, Masenko si Beam)
+
+## Mapas de exploración (implementados 2026-08-11)
+
+Cada capítulo 1-13 visita su mapa de exploración (fondos `NN_world.png`
+extraídos de la ROM, 160×80) antes de la batalla. El jugador se mueve con
+WASD/flechas, busca los objetos ocultos (press Q/Enter junto al punto
+dorado) y pulsa START para luchar.
+
+| Cap | Mapa | Objetos ocultos (walkthrough) | Recompensa |
+|-----|------|-------------------------------|------------|
+| 1 | 01 llanura | Espada de Yajirobe (rocas) · Ki de Piccolo | Yajirobe (86) · Masenko (10) |
+| 2 | 02 desierto | Chichi (hablar) | Dunk Shot (11) |
+| 3 | 03 cañón | Goku (5 Stage Attack) | 5 stage atk. (3) |
+| 4 | 04 nave | Carta en nave (esquina sup-izq) | Solid Shot (25) |
+| 5 | 05 costa | Dende (casa tras árboles) · Dragon Ball (árbol der.) | Dende (88) |
+| 6 | 06 interior nave | Dragon Balls (camino al norte) | — |
+| 7 | 07 lago | Guru (hablar) | Guru (89) |
+| 8 | 08 ciudad | Chiaotzu (hablar) | Chaiotzu (84) |
+| 9 | 09 yermo | Memorando (nota tras edificio) | — |
+| 10 | 10 templo | Bulma (hablar) | Bulma (83) |
+| 11 | 11 bosque | Espada de Trunks (nota) | Trunks Sword (104) |
+| 12 | 12 llanura alienígena | Kaio (hablar) | Kaio (87) |
+| 13 | 13 costa verde | Tien (norte acantilado) | Tien (85) |
+
+Persistencia: `dbzlsw_explored` (objetos encontrados). Los capítulos 14-32
+saltan directo a la batalla hasta que se extraigan más mapas de la ROM.

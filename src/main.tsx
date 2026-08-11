@@ -10,6 +10,7 @@ import { UNLOCK_KEY, STARTER_DAMAGE_DECK, STARTER_BEAM_DECK, STARTER_CHARACTERS,
 import { CARDS, CARD_COLORS, CARD_TYPE_NAMES, CardDef, CardType, DECK_SIZE, MAX_COPIES, getCard, CardEffect } from './data/cards';
 import { cardIconUrl, MINI_PORTRAITS, MENU_PORTRAITS, TYPE_ICONS } from './data/icons';
 import { overworldUrl } from './data/overworld';
+import { explorationForChapter, isExplored, markExplored, loadExplored, type ExplorationMapDef } from './data/exploration';
 import { spriteManifestUrl, spriteFrameUrl, spriteDirFor } from './data/spriteManifest';
 import { SCENARIOS, SPECIAL_ACTION_BACKGROUND, type BattleViewMode } from './data/scenarios';
 import { initAudio, Sfx, setSfxEnabled, setVolume } from './audio/sfx';
@@ -22,7 +23,7 @@ import { ArrowLeft, X, Lock, ChevronRight, Languages, Sword, Shield, type Lucide
 // Sprites reales, mecánicas fieles, pixel art nítido, 10 idiomas
 // ═══════════════════════════════════════════════════════════
 
-type Screen = 'main' | 'story' | 'battle' | 'versus' | 'deck' | 'characters' | 'cards' | 'settings';
+type Screen = 'main' | 'story' | 'battle' | 'explore' | 'versus' | 'deck' | 'characters' | 'cards' | 'settings';
 type BattlePhase = 'position' | 'command' | 'basic' | 'limitSelect' | 'cardSelect' | 'stageInput' | 'enemyTurn' | 'defend' | 'win' | 'lose';
 type Position = 'front' | 'back';
 type Elevation = 'ground' | 'air';
@@ -1944,6 +1945,163 @@ function StoryScreen({ onNavigate, onStartChapter }: {
 }
 
 // ═══════════════════════════════════════════════════════════
+// EXPLORACIÓN — mapa del capítulo + objetos ocultos (como el GBC)
+// ═══════════════════════════════════════════════════════════
+
+function ExplorationScreen({ chapter, onNavigate, onFight }: {
+  chapter: number;
+  onNavigate: (s: Screen) => void;
+  onFight: () => void;
+}) {
+  const { t } = useLang();
+  const map = explorationForChapter(chapter);
+  const [pos, setPos] = useState({ x: 78, y: 60 });
+  const [found, setFound] = useState<string[]>(() => loadExplored());
+  const [toast, setToast] = useState<string | null>(null);
+  const [foundIds, setFoundIds] = useState<Set<string>>(new Set());
+  const keysRef = useRef<Set<string>>(new Set());
+  const posRef = useRef(pos);
+  posRef.current = pos;
+  const [dir, setDir] = useState<'left' | 'right'>('right');
+
+  // Dimensiones del mapa nativo (160×80) → escala 4x = 640×320
+  const MAP_W = 160;
+  const MAP_H = 80;
+  const SCALE = 4;
+
+  // Movimiento con teclado (WASD + flechas) y límites del mapa
+  useEffect(() => {
+    const down = (e: KeyboardEvent) => {
+      keysRef.current.add(e.key.toLowerCase());
+      if (['arrowup','arrowdown','arrowleft','arrowright','w','a','s','d'].includes(e.key.toLowerCase())) e.preventDefault();
+    };
+    const up = (e: KeyboardEvent) => {
+      keysRef.current.delete(e.key.toLowerCase());
+      if (e.key.toLowerCase() === 'q' || e.key === 'Enter') tryInteract();
+    };
+    window.addEventListener('keydown', down);
+    window.addEventListener('keyup', up);
+    return () => { window.removeEventListener('keydown', down); window.removeEventListener('keyup', up); };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [map, found]);
+
+  // Bucle de movimiento (10 px/s en nativos → 2 px por tick de 200 ms)
+  useEffect(() => {
+    const iv = setInterval(() => {
+      const k = keysRef.current;
+      let dx = 0, dy = 0;
+      if (k.has('arrowleft') || k.has('a')) dx -= 1;
+      if (k.has('arrowright') || k.has('d')) dx += 1;
+      if (k.has('arrowup') || k.has('w')) dy -= 1;
+      if (k.has('arrowdown') || k.has('s')) dy += 1;
+      if (dx !== 0) setDir(dx > 0 ? 'right' : 'left');
+      if (dx !== 0 || dy !== 0) {
+        setPos(prev => ({
+          x: Math.max(6, Math.min(MAP_W - 7, prev.x + dx)),
+          y: Math.max(10, Math.min(MAP_H - 4, prev.y + dy)),
+        }));
+      }
+    }, 90);
+    return () => clearInterval(iv);
+  }, []);
+
+  // Interactuar con un hotspot cercano (radio ~6 px nativos)
+  const tryInteract = () => {
+    if (!map) return;
+    for (const h of map.hotspots) {
+      if (found.includes(h.id)) continue;
+      const dx = h.x - posRef.current.x;
+      const dy = h.y - posRef.current.y;
+      if (dx * dx + dy * dy <= 49) { // 7px de radio
+        markExplored(h.id);
+        setFound(prev => [...prev, h.id]);
+        setFoundIds(prev => new Set(prev).add(h.id));
+        if (h.rewardCard) {
+          const u = loadUnlocks();
+          u.cards = [...new Set([...u.cards, h.rewardCard!])];
+          saveUnlocks(u);
+        }
+        const name = h.npc ?? h.label;
+        setToast(h.dialog ?? `${name} — ¡encontrado!`);
+        Sfx.confirm();
+        setTimeout(() => setToast(null), 3200);
+        return;
+      }
+    }
+    // Cerca de nada: pequeña respuesta (como el press A vacío del GBC)
+    Sfx.cancel();
+  };
+
+  const ch = CHAPTERS.find(c => c.id === chapter);
+  const boss = ch ? overworldUrl(ch.enemy) : undefined;
+  const sprite = map ? overworldUrl(map.playerForm) : undefined;
+  const total = map ? map.hotspots.length : 0;
+  const foundCount = found.length;
+
+  return (
+    <div className="page-screen explore-screen">
+      <div className="page-header">
+        <button className="btn-back" onClick={() => onNavigate('main')}><ArrowLeft size={14} /></button>
+        <h1 className="page-title">{t('story.title')} — {ch ? t(ch.nameKey) : chapter}</h1>
+        <div className="explore-counter">{foundCount}/{total}</div>
+      </div>
+
+      <div className="explore-stage">
+        {map && (
+          <div className="explore-map-wrap">
+            <img
+              src={map.map}
+              alt=""
+              className="explore-map"
+              style={{ width: MAP_W * SCALE, height: MAP_H * SCALE, imageRendering: 'pixelated' }}
+              draggable={false}
+            />
+            {/* Punto del jugador */}
+            <div
+              className="explore-player"
+              style={{
+                left: pos.x * SCALE - 18,
+                top: pos.y * SCALE - 20,
+                transform: `scaleX(${dir === 'left' ? -1 : 1})`,
+              }}
+            >
+              {sprite ? <img src={sprite} alt="" className="explore-player-sprite" draggable={false} /> : <div className="explore-player-dot" />}
+            </div>
+            {/* Hotspots restantes: brillo sutil para que sean buscables */}
+            {map.hotspots.map(h => {
+              if (found.includes(h.id)) return null;
+              const near = (h.x - pos.x) ** 2 + (h.y - pos.y) ** 2 <= 100;
+              return (
+                <div key={h.id}
+                  className={`explore-hotspot ${near ? 'near' : ''}`}
+                  style={{ left: h.x * SCALE - 3, top: h.y * SCALE - 3 }}
+                  title={`${h.label} — ${h.hint}`}
+                />
+              );
+            })}
+            {/* Toast de hallazgo */}
+            {toast && <div className="explore-toast">{toast}</div>}
+          </div>
+        )}
+        {!map && <div className="explore-empty">No hay mapa para este capítulo.</div>}
+      </div>
+
+      <div className="explore-hints">
+        <span>←↑↓→ / WASD mover</span>
+        <span>Q / Enter buscar</span>
+        <span className="explore-hint-boss">{boss ? <img src={boss} alt="" className="explore-boss-mini" /> : null} Jefe: {ch ? t(ch.nameKey) : ''}</span>
+      </div>
+
+      <div className="page-footer explore-footer">
+        <button className="btn-primary explore-fight" onClick={onFight}>
+          ⚔ {t('story.start').toUpperCase()} — {ch ? t(ch.nameKey).toUpperCase() : ''}
+        </button>
+      </div>
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════
 // CHARACTERS — Grid de personajes
 // ═══════════════════════════════════════════════════════════
 
@@ -2419,6 +2577,7 @@ function AppInner() {
   const [playerForm, setPlayerForm] = useState('goku_base');
   const [enemyForm, setEnemyForm] = useState('vegeta_base');
   const [storyChapter, setStoryChapter] = useState<number | null>(null);
+  const [exploreChapter, setExploreChapter] = useState<number | null>(null);
   const [battleKey, setBattleKey] = useState(0);
 
   // Inicializar audio con el primer gesto del usuario
@@ -2446,6 +2605,23 @@ function AppInner() {
   const startChapter = (enemyFormId: string, chapterId: number) => {
     setEnemyForm(enemyFormId);
     setStoryChapter(chapterId);
+    // El modo historia alterna exploración y combate como el GBC: si el
+    // capítulo tiene mapa (fondos NN_world.png extraídos de la ROM), el
+    // jugador recorre la zona y busca objetos ocultos antes de la batalla.
+    const map = explorationForChapter(chapterId);
+    if (map) {
+      setExploreChapter(chapterId);
+      setScreen('explore');
+    } else {
+      setExploreChapter(null);
+      setBattleKey(k => k + 1);
+      setScreen('battle');
+    }
+  };
+
+  // Terminar la exploración: empezar la batalla del capítulo.
+  const finishExploration = () => {
+    setExploreChapter(null);
     setBattleKey(k => k + 1);
     setScreen('battle');
   };
@@ -2491,6 +2667,7 @@ function AppInner() {
       case 'characters': return <CharactersScreen onNavigate={setScreen} onSelectFighter={startBattle} />;
       case 'cards': return <CardsScreen onNavigate={setScreen} />;
       case 'settings': return <SettingsScreen onNavigate={setScreen} />;
+      case 'explore': return <ExplorationScreen key={`explore-${exploreChapter}`} chapter={exploreChapter ?? 1} onNavigate={setScreen} onFight={finishExploration} />;
       case 'battle': return <BattleScreen key={battleKey} playerFormId={playerForm} enemyFormId={enemyForm} storyChapter={storyChapter} onExit={exitBattle} />;
       default: return <MainMenu onNavigate={setScreen} />;
     }
