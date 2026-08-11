@@ -256,9 +256,17 @@ function CardVisual({ card, selected, onClick, small, disabled }: {
   const iconUrl = cardIconUrl(card.id);
   const IconCmp = TYPE_ICONS[card.type];
   const stars = '★'.repeat(card.rarity) + '☆'.repeat(5 - card.rarity);
+  // Tooltip: efecto + compatibilidad (info sin ocupar espacio en la carta)
+  const tip = card.description
+    ? `${card.name} — ${cardEffectSummary(card.effect)}\n${card.description}`
+    : `${card.name} — ${cardEffectSummary(card.effect)}`;
+  const compat = card.compatible && card.compatible.length > 0
+    ? `\nUsable por: ${card.compatible.map(id => characterName(id)).join(', ')}`
+    : '';
   return (
     <button className={`card ${card.type} ${selected ? 'selected' : ''} ${small ? 'small' : ''}`}
-      onClick={onClick} disabled={disabled} style={{ '--card-color': color } as React.CSSProperties}>
+      onClick={onClick} disabled={disabled} style={{ '--card-color': color } as React.CSSProperties}
+      data-tip={tip + compat}>
       <div className="card-header">
         <span className="card-icon">
           {iconUrl ? <img className="card-icon-img" src={iconUrl} alt="" onError={e => (e.currentTarget.style.display = 'none')} /> : <IconCmp size={16} strokeWidth={2.2} />}
@@ -2009,9 +2017,24 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
           </div>
           <HPBar current={player.hp} max={player.maxHp} side="left" />
           <div className="hud-stats">
-            <span>STR{player.str + pBuffs.str}</span><span>KI{player.ki + pBuffs.ki}</span><span>SPD{player.spd}</span>
-            {buffTurns > 0 && <span className="buff-indicator">BUFF {buffTurns}▲</span>}
-            {gatherTurns > 0 && <span className="power-indicator">{t('battle.powerState')} {powerState.replace('_', ' ')}</span>}
+            <span>STR{player.str + pBuffs.str}</span><span>KI{player.ki + pBuffs.ki}</span><span>SPD{player.spd + pStages.spd * 8}</span>
+          </div>
+          <div className="hud-status">
+            {pStages.str > 0 && <span className="status-chip buff">STR+</span>}
+            {pStages.str < 0 && <span className="status-chip debuff">STR−</span>}
+            {pStages.ki > 0 && <span className="status-chip buff">KI+</span>}
+            {pStages.ki < 0 && <span className="status-chip debuff">KI−</span>}
+            {pStages.spd > 0 && <span className="status-chip buff">SPD+</span>}
+            {pStages.spd < 0 && <span className="status-chip debuff">SPD−</span>}
+            {pStages.guard > 0 && <span className="status-chip buff">G+</span>}
+            {pStages.guard < 0 && <span className="status-chip debuff">G−</span>}
+            {playerGuard && <span className="status-chip guard">{playerGuard.type === 'avoid_beam' ? 'BEAM⚡' : playerGuard.type === 'avoid_damage' ? 'DAMAGE🛡' : playerGuard.type === 'absorb' ? 'ABSORB' : playerGuard.type === 'reduce' ? 'GUARD' : 'CANCEL'}</span>}
+            {pAcc > 0 && <span className="status-chip acc">ACC+</span>}
+            {pEva > 0 && <span className="status-chip acc">EVA+</span>}
+            {pLockOn && <span className="status-chip acc">LOCK</span>}
+            {buffTurns > 0 && <span className="status-chip buff">BUFF×{buffTurns}</span>}
+            {gatherTurns > 0 && <span className="status-chip power">{powerState.replace('_', ' ')}</span>}
+            {pStages.str === 0 && pStages.ki === 0 && pStages.spd === 0 && pStages.guard === 0 && !playerGuard && pAcc === 0 && pEva === 0 && !pLockOn && buffTurns === 0 && gatherTurns === 0 && <span className="status-chip none">—</span>}
           </div>
           {player2 && (
             <div className="team-reserve left">
@@ -2035,7 +2058,18 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
           </div>
           <HPBar current={enemy.hp} max={enemy.maxHp} side="right" />
           <div className="hud-stats">
-            <span>STR{enemy.str + eBuffs.str}</span><span>KI{enemy.ki + eBuffs.ki}</span><span>SPD{enemy.spd}</span>
+            <span>STR{enemy.str + eBuffs.str}</span><span>KI{enemy.ki + eBuffs.ki}</span><span>SPD{enemy.spd + eStages.spd * 8}</span>
+          </div>
+          <div className="hud-status right">
+            {eStages.str > 0 && <span className="status-chip buff">STR+</span>}
+            {eStages.str < 0 && <span className="status-chip debuff">STR−</span>}
+            {eStages.ki > 0 && <span className="status-chip buff">KI+</span>}
+            {eStages.ki < 0 && <span className="status-chip debuff">KI−</span>}
+            {eStages.spd > 0 && <span className="status-chip buff">SPD+</span>}
+            {eStages.spd < 0 && <span className="status-chip debuff">SPD−</span>}
+            {eStages.guard > 0 && <span className="status-chip buff">G+</span>}
+            {eStages.guard < 0 && <span className="status-chip debuff">G−</span>}
+            {eStages.str === 0 && eStages.ki === 0 && eStages.spd === 0 && eStages.guard === 0 && <span className="status-chip none">—</span>}
           </div>
           {enemy2 && (
             <div className="team-reserve right">

@@ -687,6 +687,31 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   padding: 2px 5px;
 }
 
+/* ─── Estados activos bajo las stats (buffs/debuffs/guard) ─── */
+.hud-status {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px;
+  margin-top: 2px;
+  min-height: 13px;
+}
+.hud-status.right { justify-content: flex-end; }
+.status-chip {
+  font-family: var(--fpx);
+  font-size: 6px;
+  letter-spacing: .5px;
+  padding: 1px 4px;
+  line-height: 1.4;
+  border: 1px solid;
+  text-shadow: 1px 1px 0 rgba(0,0,0,.85);
+}
+.status-chip.buff { color: #8dffb0; border-color: rgba(80,220,120,.4); background: rgba(16,90,44,.3); }
+.status-chip.debuff { color: #ff9a8a; border-color: rgba(255,90,70,.4); background: rgba(110,20,14,.3); }
+.status-chip.guard { color: #ffd27a; border-color: rgba(246,199,68,.45); background: rgba(110,80,10,.3); }
+.status-chip.acc { color: #7fd4ff; border-color: rgba(80,180,255,.4); background: rgba(10,60,110,.3); }
+.status-chip.power { color: #ffe9a3; border-color: rgba(247,147,30,.5); background: rgba(120,60,8,.32); }
+.status-chip.none { color: rgba(242,235,217,.25); border-color: transparent; background: transparent; }
+
 /* ─── HP Bar (estilo GBC) ─── */
 
 .hp-bar { position: relative; height: 20px; margin: 2px 0 3px; }
@@ -1160,20 +1185,22 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   bottom: calc(100% + 8px);
   left: 50%;
   transform: translateX(-50%);
-  background: rgba(5,8,14,.96);
+  background: rgba(5,8,14,.97);
   border: 1px solid rgba(246,199,68,.45);
   color: #ffe9a3;
   font-family: var(--fpx);
   font-size: 8px;
   letter-spacing: .5px;
-  line-height: 1.5;
-  padding: 5px 9px;
+  line-height: 1.55;
+  padding: 6px 10px;
   white-space: pre;
-  z-index: 60;
+  max-width: min(300px, 64vw);
+  z-index: 70;
   pointer-events: none;
-  box-shadow: 0 4px 14px rgba(0,0,0,.5);
+  box-shadow: 0 4px 14px rgba(0,0,0,.55);
   image-rendering: pixelated;
   text-align: center;
+  text-shadow: 1px 1px 0 #000;
 }
 [data-tip]:hover::before {
   content: '';
@@ -3286,7 +3313,6 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 }
 .btn-defend:hover { transform: translateY(-2px); box-shadow: 0 4px 16px rgba(60,150,220,.35); }
 .btn-defend strong { color: #bfe6ff; letter-spacing: 0.1em; }
-.buff-indicator { color: #8dffb0; font-size: 0.62rem; background: rgba(20,120,60,.25); padding: 1px 6px; border-radius: 0; letter-spacing: .05em; }
 
 /* ═══ INSIGNIA CENTRAL DEL HUD (ROUND / VS) ═══ */
 .hud-center-badge {
@@ -3444,12 +3470,7 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   letter-spacing: .18em; animation: intro-fight-pop .5s cubic-bezier(.2,1.6,.4,1) .15s both;
 }
 
-/* Indicador de POWER (FULL/HALF/NORMAL) en HUD */
-.power-indicator {
-  color: #ffd76a; font-size: 0.6rem; background: rgba(180,120,20,.3);
-  padding: 1px 7px; border-radius: 0; letter-spacing: .08em;
-  animation: sel-blink 0.8s infinite alternate;
-}
+/* Indicador de POWER (FULL/HALF/NORMAL) en HUD — reemplazado por .status-chip.power */
 
 /* Pantallas de resultado con entrada animada */
 .result-screen { animation: result-pop .45s cubic-bezier(.2,1.4,.4,1) both; }
