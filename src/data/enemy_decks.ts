@@ -77,7 +77,10 @@ export const STORY_AI_BOOSTS: Record<number, { hp: number; str: number; ki: numb
 // cap 7 = Gohan + Goku vs Jeice & Burter · cap 16 = Piccolo + Goku SSJ vs 16 & 18
 // cap 21 = Super Trunks SOLO vs 17 & 18 (sin ally)
 export const TEAM_BATTLES: Record<number, { enemy2: string; ally?: string }> = {
-  7: { enemy2: 'burter', ally: 'goku_ssj' },
+  // Cap 7 (Jeice & Burter): primer 2v2 — Gohan delante, Goku atrás (walkthrough)
+  7: { enemy2: 'burter', ally: 'goku_base' },
+  // Cap 16 (Android 16 & 18): Goku SSJ ayuda
   16: { enemy2: 'android_18', ally: 'goku_ssj' },
+  // Cap 21 (Androids 17 & 18): solo Super Trunks (walkthrough: "Solo Super Trunks")
   21: { enemy2: 'android_18' },
 };

@@ -2093,39 +2093,45 @@ function MainMenu({ onNavigate }: { onNavigate: (s: Screen) => void }) {
 
 // 32 capítulos reales del walkthrough del GBC (RPGClassics shrine)
 // nameKey/descKey usan story.chN/story.dN; enemy = forma del jefe real
-const CHAPTERS: { id: number; nameKey: TKey; descKey: TKey; enemy: string }[] = [
-  { id: 1, nameKey: 'story.ch1', descKey: 'story.d1', enemy: 'piccolo_base' },
-  { id: 2, nameKey: 'story.ch2', descKey: 'story.d2', enemy: 'nappa' },
-  { id: 3, nameKey: 'story.ch3', descKey: 'story.d3', enemy: 'vegeta_base' },
-  { id: 4, nameKey: 'story.ch4', descKey: 'story.d4', enemy: 'vegeta_base' },
-  { id: 5, nameKey: 'story.ch5', descKey: 'story.d5', enemy: 'guldo' },
-  { id: 6, nameKey: 'story.ch6', descKey: 'story.d6', enemy: 'recoome' },
-  { id: 7, nameKey: 'story.ch7', descKey: 'story.d7', enemy: 'jeice' },
-  { id: 8, nameKey: 'story.ch8', descKey: 'story.d8', enemy: 'ginyu_goku' },
-  { id: 9, nameKey: 'story.ch9', descKey: 'story.d9', enemy: 'frieza_final' },
-  { id: 10, nameKey: 'story.ch10', descKey: 'story.d10', enemy: 'frieza_final' },
-  { id: 11, nameKey: 'story.ch11', descKey: 'story.d11', enemy: 'goku_base' },
-  { id: 12, nameKey: 'story.ch12', descKey: 'story.d12', enemy: 'android_19' },
-  { id: 13, nameKey: 'story.ch13', descKey: 'story.d13', enemy: 'android_20' },
-  { id: 14, nameKey: 'story.ch14', descKey: 'story.d14', enemy: 'cell_imperfect' },
-  { id: 15, nameKey: 'story.ch15', descKey: 'story.d15', enemy: 'android_17' },
-  { id: 16, nameKey: 'story.ch16', descKey: 'story.d16', enemy: 'android_16' },
-  { id: 17, nameKey: 'story.ch17', descKey: 'story.d17', enemy: 'cell_perfect' },
-  { id: 18, nameKey: 'story.ch18', descKey: 'story.d18', enemy: 'cell_jr' },
-  { id: 19, nameKey: 'story.ch19', descKey: 'story.d19', enemy: 'cell_perfect' },
-  { id: 20, nameKey: 'story.ch20', descKey: 'story.d20', enemy: 'cell_perfect' },
-  { id: 21, nameKey: 'story.ch21', descKey: 'story.d21', enemy: 'android_17' },
-  { id: 22, nameKey: 'story.ch22', descKey: 'story.d22', enemy: 'cell_perfect' },
-  { id: 23, nameKey: 'story.ch23', descKey: 'story.d23', enemy: 'goten_base' },
-  { id: 24, nameKey: 'story.ch24', descKey: 'story.d24', enemy: 'trunks_kid' },
-  { id: 25, nameKey: 'story.ch25', descKey: 'story.d25', enemy: 'vegeta_majin' },
-  { id: 26, nameKey: 'story.ch26', descKey: 'story.d26', enemy: 'buu_base' },
-  { id: 27, nameKey: 'story.ch27', descKey: 'story.d27', enemy: 'trunks_future' },
-  { id: 28, nameKey: 'story.ch28', descKey: 'story.d28', enemy: 'buu_super' },
-  { id: 29, nameKey: 'story.ch29', descKey: 'story.d29', enemy: 'buu_gohan' },
-  { id: 30, nameKey: 'story.ch30', descKey: 'story.d30', enemy: 'buu_gotenks' },
-  { id: 31, nameKey: 'story.ch31', descKey: 'story.d31', enemy: 'buu_gohan' },
-  { id: 32, nameKey: 'story.ch32', descKey: 'story.d32', enemy: 'buu_kid' },
+// Protagonista de cada capítulo según la historia REAL del GBC (walkthrough):
+// 1-2 Gohan · 3 Goku · 4 Gohan · 5-8 Gohan (Namek) · 9-10 Goku · 11 Gohan ·
+// 12-13 Goku (Androides) · 14-15 Piccolo-God · 16 Goku SSJ · 17 Goku ·
+// 18-19 Gohan SSJ2 · 20 Vegeta (opcional) · 21-22 Trunks SSJ · 23 Gohan ·
+// 24 Goten · 25-26 Goku SSJ2 · 27 Trunks futuro · 28 Gotenks SSJ3 ·
+// 29-30 Gohan Ultimate · 31 Vegito · 32 Goku SSJ3
+const CHAPTERS: { id: number; nameKey: TKey; descKey: TKey; enemy: string; player: string }[] = [
+  { id: 1, nameKey: 'story.ch1', descKey: 'story.d1', enemy: 'piccolo_base', player: 'gohan_young' },
+  { id: 2, nameKey: 'story.ch2', descKey: 'story.d2', enemy: 'nappa', player: 'gohan_young' },
+  { id: 3, nameKey: 'story.ch3', descKey: 'story.d3', enemy: 'vegeta_base', player: 'goku_base' },
+  { id: 4, nameKey: 'story.ch4', descKey: 'story.d4', enemy: 'vegeta_base', player: 'gohan_young' },
+  { id: 5, nameKey: 'story.ch5', descKey: 'story.d5', enemy: 'guldo', player: 'gohan_young' },
+  { id: 6, nameKey: 'story.ch6', descKey: 'story.d6', enemy: 'recoome', player: 'gohan_young' },
+  { id: 7, nameKey: 'story.ch7', descKey: 'story.d7', enemy: 'jeice', player: 'gohan_young' },
+  { id: 8, nameKey: 'story.ch8', descKey: 'story.d8', enemy: 'ginyu_goku', player: 'gohan_young' },
+  { id: 9, nameKey: 'story.ch9', descKey: 'story.d9', enemy: 'frieza_final', player: 'goku_base' },
+  { id: 10, nameKey: 'story.ch10', descKey: 'story.d10', enemy: 'frieza_final', player: 'goku_ssj' },
+  { id: 11, nameKey: 'story.ch11', descKey: 'story.d11', enemy: 'goku_base', player: 'gohan_young' },
+  { id: 12, nameKey: 'story.ch12', descKey: 'story.d12', enemy: 'android_19', player: 'goku_base' },
+  { id: 13, nameKey: 'story.ch13', descKey: 'story.d13', enemy: 'android_20', player: 'goku_base' },
+  { id: 14, nameKey: 'story.ch14', descKey: 'story.d14', enemy: 'cell_imperfect', player: 'piccolo_kami' },
+  { id: 15, nameKey: 'story.ch15', descKey: 'story.d15', enemy: 'android_17', player: 'piccolo_kami' },
+  { id: 16, nameKey: 'story.ch16', descKey: 'story.d16', enemy: 'android_16', player: 'goku_ssj' },
+  { id: 17, nameKey: 'story.ch17', descKey: 'story.d17', enemy: 'cell_perfect', player: 'goku_base' },
+  { id: 18, nameKey: 'story.ch18', descKey: 'story.d18', enemy: 'cell_jr', player: 'gohan_young_ssj2' },
+  { id: 19, nameKey: 'story.ch19', descKey: 'story.d19', enemy: 'cell_perfect', player: 'gohan_young_ssj2' },
+  { id: 20, nameKey: 'story.ch20', descKey: 'story.d20', enemy: 'cell_perfect', player: 'vegeta_base' },
+  { id: 21, nameKey: 'story.ch21', descKey: 'story.d21', enemy: 'android_17', player: 'trunks_ssj' },
+  { id: 22, nameKey: 'story.ch22', descKey: 'story.d22', enemy: 'cell_perfect', player: 'trunks_ssj' },
+  { id: 23, nameKey: 'story.ch23', descKey: 'story.d23', enemy: 'goten_base', player: 'gohan_young' },
+  { id: 24, nameKey: 'story.ch24', descKey: 'story.d24', enemy: 'trunks_kid', player: 'goten_base' },
+  { id: 25, nameKey: 'story.ch25', descKey: 'story.d25', enemy: 'vegeta_majin', player: 'goku_ssj2' },
+  { id: 26, nameKey: 'story.ch26', descKey: 'story.d26', enemy: 'buu_base', player: 'goku_ssj2' },
+  { id: 27, nameKey: 'story.ch27', descKey: 'story.d27', enemy: 'trunks_future', player: 'trunks_future' },
+  { id: 28, nameKey: 'story.ch28', descKey: 'story.d28', enemy: 'buu_super', player: 'gotenks_ssj3' },
+  { id: 29, nameKey: 'story.ch29', descKey: 'story.d29', enemy: 'buu_gohan', player: 'gohan_ultimate' },
+  { id: 30, nameKey: 'story.ch30', descKey: 'story.d30', enemy: 'buu_gotenks', player: 'gohan_ultimate' },
+  { id: 31, nameKey: 'story.ch31', descKey: 'story.d31', enemy: 'buu_gohan', player: 'vegito_base' },
+  { id: 32, nameKey: 'story.ch32', descKey: 'story.d32', enemy: 'buu_kid', player: 'goku_ssj3' },
 ];
 
 // Progreso de historia persistente
@@ -2289,6 +2295,7 @@ function StoryScreen({ onNavigate, onStartChapter }: {
           const isSel = ch.id === selected;
           const done = ch.id < progress;
           const boss = overworldUrl(ch.enemy);
+          const hero = overworldUrl(ch.player);
           return (
             <div key={ch.id}
               className={`chapter-node ${isSel ? 'active' : ''} ${unlocked ? 'unlocked' : 'locked'} ${done ? 'done' : ''}`}
@@ -2298,6 +2305,7 @@ function StoryScreen({ onNavigate, onStartChapter }: {
                 {unlocked && boss
                   ? <img src={boss} alt="" className="chapter-boss-sprite" />
                   : <div className="chapter-boss-none">?</div>}
+                {unlocked && hero && <img src={hero} alt="" className="chapter-hero-sprite" />}
               </div>
               <div className="chapter-info">
                 <div className="chapter-name">{t(ch.nameKey)}</div>
@@ -2919,6 +2927,9 @@ function AppInner() {
   const startChapter = (enemyFormId: string, chapterId: number) => {
     setEnemyForm(enemyFormId);
     setStoryChapter(chapterId);
+    // El protagonista del capítulo (Gohan en el 1, no Goku — historia real del GBC)
+    const ch = CHAPTERS.find(c => c.id === chapterId);
+    if (ch) setPlayerForm(ch.player);
     // Historia lineal con viñetas manga: INTRO → COMBATE → OUTRO (no hay
     // exploración de mapa ni movimiento libre entre encuentros).
     setStoryScene({ chapter: chapterId, phase: 'intro' });

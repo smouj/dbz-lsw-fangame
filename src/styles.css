@@ -3289,3 +3289,12 @@ button:focus-visible, .chapter-node:focus-visible {
   color: var(--text-dim);
   animation: sel-blink 1.2s infinite alternate;
 }
+
+/* ─── Protagonista del capítulo en el nodo de historia ─── */
+.chapter-hero-sprite {
+  height: 20px;
+  image-rendering: pixelated;
+  border: 1px solid var(--gold);
+  background: #000;
+  margin-left: 4px;
+}
