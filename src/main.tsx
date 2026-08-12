@@ -24,6 +24,7 @@ import { initAudio, Sfx, setSfxEnabled, setVolume } from './audio/sfx';
 import { LanguageProvider, useLang } from './i18n/LanguageContext';
 import { LANGUAGES, LangCode, TKey } from './i18n';
 import { ArrowLeft, X, Lock, ChevronRight, Languages, Sword, Shield, BookOpen, Swords, Library, Users, Settings, Sparkles, Volume2, Zap, Gauge, Monitor, Keyboard, type LucideIcon } from 'lucide-react';
+import { DevStudio, isDevRoute } from './devtools/DevStudio';
 
 // ═══════════════════════════════════════════════════════════
 // DBZ LSW Fangame — Estilo Magazine GBC Auténtico
@@ -3892,6 +3893,14 @@ function AppInner() {
   const [storyChapter, setStoryChapter] = useState<number | null>(null);
   const [storyScene, setStoryScene] = useState<{ chapter: number; phase: 'intro' | 'outro' } | null>(null);
   const [battleKey, setBattleKey] = useState(0);
+  const [inDev, setInDev] = useState(() => isDevRoute());
+
+  // Entrar/salir del Dev Studio por hash (#dev) o query (?dev=1)
+  useEffect(() => {
+    const onHash = () => setInDev(isDevRoute());
+    window.addEventListener('hashchange', onHash);
+    return () => window.removeEventListener('hashchange', onHash);
+  }, []);
 
   // Inicializar audio con el primer gesto del usuario
   useEffect(() => {
@@ -3990,6 +3999,10 @@ function AppInner() {
     }
     setScreen('main');
   };
+
+  if (inDev) {
+    return <DevStudio onExit={() => setInDev(false)} />;
+  }
 
   if (needsStarter) {
     return <StarterScreen onDone={() => setNeedsStarter(false)} />;
