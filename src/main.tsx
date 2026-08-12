@@ -579,8 +579,8 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
   // Precarga de assets clave (sprites + fondos) con skeleton mientras tanto
   useEffect(() => {
     const urls = [
-      spriteManifestUrl(playerFormId), spriteManifestUrl(enemyFormId),
       overworldUrl(playerFormId), overworldUrl(enemyFormId),
+      BATTLE_PORTRAITS[playerFormId], BATTLE_PORTRAITS[enemyFormId],
       scenario.overviewBackground, scenario.actionBackground,
     ].filter((u): u is string => !!u);
     let done = 0; let fired = false;
@@ -590,6 +590,17 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
       const im = new Image();
       im.onload = im.onerror = () => { done++; if (done >= urls.length) { clearTimeout(to); finish(); } };
       im.src = u;
+    });
+    // Precargar manifests de sprites (JSON, no imagen) para que el primer
+    // FighterSprite renderice al instante (cache compartido con useSpriteAnim).
+    [playerFormId, enemyFormId].forEach(fid => {
+      const url = spriteManifestUrl(fid);
+      if (!url || SPRITE_MANIFEST_CACHE.has(fid) || SPRITE_MANIFEST_PROMISES.has(fid)) return;
+      const p = fetch(url)
+        .then(r => (r.ok ? (r.json() as Promise<CharManifest>) : null))
+        .then(m => { if (m) SPRITE_MANIFEST_CACHE.set(fid, m); SPRITE_MANIFEST_PROMISES.delete(fid); return m; })
+        .catch(() => { SPRITE_MANIFEST_PROMISES.delete(fid); return null; });
+      SPRITE_MANIFEST_PROMISES.set(fid, p);
     });
     return () => clearTimeout(to);
     // eslint-disable-next-line react-hooks/exhaustive-deps
