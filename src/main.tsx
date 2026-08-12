@@ -17,6 +17,9 @@ import { storyPortraitUrl } from './data/storyPortraits';
 import { spriteManifestUrl, spriteFrameUrl, spriteDirFor } from './data/spriteManifest';
 import { SCENARIOS, SPECIAL_ACTION_BACKGROUND, type BattleViewMode } from './data/scenarios';
 import { GBC_NATIVE_FPS, type QteState } from './data/actionFidelity';
+import { BattleTimeline, type CinematicEvent } from './battle/timeline';
+import { profileFor, type CinematicKind } from './battle/profiles';
+import { isDebugCinematics } from './battle/debugCinematics';
 import { initAudio, Sfx, setSfxEnabled, setVolume } from './audio/sfx';
 import { LanguageProvider, useLang } from './i18n/LanguageContext';
 import { LANGUAGES, LangCode, TKey } from './i18n';
@@ -606,11 +609,6 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
   type CardFxStep = 'attacker' | 'travel' | 'target' | 'return';
   const [cardFx, setCardFx] = useState<{ card: CardDef; side: 'player' | 'enemy'; step: CardFxStep } | null>(null);
   const cinematicTimers = useRef<number[]>([]);
-  const clearCinematicTimers = () => {
-    cinematicTimers.current.forEach(id => window.clearTimeout(id));
-    cinematicTimers.current = [];
-  };
-  useEffect(() => clearCinematicTimers, []);
   // Precisión/evasión (Reading Ki / Afterimage / Lock On): flags temporales
   const [pLockOn, setPLockOn] = useState(false);
   const [pAcc, setPAcc] = useState(0);   // turnos de +30% precisión
@@ -734,6 +732,19 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
     });
   };
 
+  // ═══ CINEMÁTICA DE ACCIÓN GBC — DIRECTOR CINEMATOGRÁFICO (timeline único) ═══
+  // La lógica de batalla ya resolvió el RESULTADO (daño, guard, etc.) antes de
+  // llamar a playCardCinematic; aquí SOLO se presenta. Un único BattleTimeline
+  // emite eventos por tick (SHOT/ACTOR_POSE/HIT_FRAME/APPLY_DAMAGE/…); los
+  // setTimeout NO son autoridad de gameplay (plan del usuario, punto 1-2).
+  const cinematicRef = useRef<BattleTimeline | null>(null);
+  const clearCinematicTimers = () => {
+    cinematicTimers.current.forEach(id => window.clearTimeout(id));
+    cinematicTimers.current = [];
+    cinematicRef.current?.cancel();
+    cinematicRef.current = null;
+  };
+  useEffect(() => clearCinematicTimers, []);
   const playCardCinematic = (card: CardDef, side: 'player' | 'enemy', onDone: () => void) => {
     clearCinematicTimers();
     const setActorPose = (pose: BattleSpritePose) => side === 'player' ? setPlayerPose(pose) : setEnemyPose(pose);
@@ -751,44 +762,91 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
       }, gbcMs(12)));
     };
 
-    setViewMode('ACTION');
-    setActorPose(cardBattlePose(card, 'field'));
-    setCardFx({ card, side, step: 'attacker' });
-
+    // Kind de perfil: qué cinematografía declara esta carta
     const hasTargetCut = card.type === 'beam' || card.type === 'damage' || card.type === 'command' || OFFENSIVE_SUPPORT_EFFECTS.has(card.effect);
-    const isBeamCut = card.type === 'beam';
-    const isRushCut = card.type === 'damage' || card.type === 'command' || OFFENSIVE_SUPPORT_EFFECTS.has(card.effect);
-    // Frames GBC por paso — alineados con las animaciones CSS para que NINGUNA
-    // se corte a mitad (fx-actor-center 0.82s, fx-rush-body 0.70s, beam 0.86s):
-    //   damage attacker: 50f (0.84s) cubre el center 0.82s
-    //   damage travel:   44f (0.74s) cubre el rush 0.70s
-    //   beam attacker:   54f (0.90s) cubre center 0.82s + margen de carga
-    //   beam travel:     54f (0.90s) cubre release+rayo 0.86s
-    const attackerFrames = isBeamCut ? 54 : isRushCut ? 50 : 58;
-    const travelFrames = isBeamCut ? 54 : isRushCut ? 44 : 0;
-    const targetFrames = isBeamCut ? 44 : isRushCut ? 38 : 0;
+    const kind: CinematicKind = card.type === 'beam' ? 'beam'
+      : card.type === 'damage' ? 'damage'
+      : card.type === 'command' ? 'command'
+      : OFFENSIVE_SUPPORT_EFFECTS.has(card.effect) ? 'support_offensive'
+      : card.type === 'support' ? 'support' : 'support';
+    const profile = profileFor(kind, card.name);
+
+    // El plano SOLO/DUEL/PROJECTILE se aplica desde el primer tick
+    setViewMode('ACTION');
+    setCardFx({ card, side, step: 'attacker' });
+    setActorPose(cardBattlePose(card, 'field'));
+
+    // Guard: si es beam/damage con target cut, el defensor espera en guard
+    const applyEvent = (e: CinematicEvent) => {
+      switch (e.type) {
+        case 'SHOT': {
+          const shot = (e.payload as { shot?: string })?.shot;
+          // IMPACT → pose target hurt + VFX impacto (ya lo hace HIT_FRAME)
+          break;
+        }
+        case 'ACTOR_POSE': {
+          const pose = (e.payload as { pose?: BattleSpritePose })?.pose;
+          if (pose) setActorPose(pose);
+          break;
+        }
+        case 'TARGET_POSE': {
+          const pose = (e.payload as { pose?: BattleSpritePose })?.pose;
+          if (pose) setTargetPose(pose);
+          break;
+        }
+        case 'PROJECTILE': {
+          const p = e.payload as { action?: string };
+          if (p.action === 'spawn' || p.action === 'travel' || p.action === 'rush') {
+            setCardFx(prev => prev && ({ ...prev, step: 'travel' }));
+          }
+          break;
+        }
+        case 'HIT_FRAME': {
+          // TODO sincroniza TODO (plan punto 7): el consumidor decide cuándo
+          // aplicar el daño — la lógica ya está resuelta en onDone/applied.
+          setCardFx(prev => prev && ({ ...prev, step: 'target' }));
+          setTargetPose(card.type === 'beam' || card.type === 'damage' || card.type === 'command' ? 'hurt' : 'guard');
+          break;
+        }
+        case 'CAMERA': {
+          hitImpact(side === 'player' ? 'enemy' : 'player');
+          break;
+        }
+        case 'APPLY_DAMAGE': {
+          // La lógica aplica el resultado precalculado (aplicado en onDone por
+          // el llamador; aquí solo sincronizamos el flash del defensor).
+          if (side === 'player') setFlashEnemy(true); else setFlashPlayer(true);
+          Sfx.hit();
+          break;
+        }
+        case 'FIELD_RETURN': {
+          finishCinematic();
+          break;
+        }
+        default:
+          break;
+      }
+    };
 
     if (!hasTargetCut) {
-      cinematicTimers.current.push(window.setTimeout(() => {
-        finishCinematic();
-      }, presentationMs(card)));
+      // Support puro: sin target cut — el perfil SOLO se reproduce completo
+      const tl = new BattleTimeline(profile, {
+        onEvent: applyEvent,
+        onComplete: finishCinematic,
+      });
+      cinematicRef.current = tl;
+      tl.start();
       return;
     }
 
-    cinematicTimers.current.push(window.setTimeout(() => {
-      setCardFx({ card, side, step: 'travel' });
-      setActorPose(card.type === 'beam' ? 'beam_fire' : 'attack_fwd');
-    }, gbcMs(attackerFrames)));
-
-    cinematicTimers.current.push(window.setTimeout(() => {
-      setCardFx({ card, side, step: 'target' });
-      resetActorPose();
-      setTargetPose(card.type === 'beam' || card.type === 'damage' ? 'hurt' : 'guard');
-    }, gbcMs(attackerFrames + travelFrames)));
-
-    cinematicTimers.current.push(window.setTimeout(() => {
-      finishCinematic();
-    }, gbcMs(attackerFrames + travelFrames + targetFrames)));
+    // Con target cut: el timeline emite HIT_FRAME en el tick de contacto; el
+    // flash del defensor se dispara con APPLY_DAMAGE (antes era 3 setTimeout).
+    const tl = new BattleTimeline(profile, {
+      onEvent: applyEvent,
+      onComplete: finishCinematic,
+    });
+    cinematicRef.current = tl;
+    tl.start();
   };
 
   const cardFxActorPose = (card: CardDef, step: CardFxStep): BattleSpritePose => {
