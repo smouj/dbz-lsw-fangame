@@ -23,8 +23,9 @@ Herramienta de producción embebida en el mismo proyecto. Accede desde el navega
 - **Sprite Inspector** — frame real con bbox y % de transparencia
 - **Position Lab** — las 4 posiciones y reglas de MOVE (2 ejes)
 - **Story Studio** — mazos de jefes, AI boosts, 2v2 y viñetas
+- **Animation Studio** — timeline real (play/step/fps/loop) desde el manifest
+- **Battle Lab** — combate instantáneo real (Versus o capítulo de historia)
 - **Validation** — 11 chequeos de integridad · **Research** — fuentes y nivel de verificación
-- **Animation Studio** + **Battle Lab** — esqueletos WIP (timeline / QTE debugger)
 
 ## 🧱 Stack
 

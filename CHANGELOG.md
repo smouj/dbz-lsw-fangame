@@ -20,7 +20,12 @@ Todos los cambios notables en `dbz-lsw-fangame`. Formato basado en [Keep a Chang
   + vulnerabilidades/distancias.
 - **Story Studio**: 32 capítulos con mazo del jefe, AI boost, 2v2 y viñetas.
 - **Validation**: 11 chequeos de integridad. **Research**: fuentes + nivel de verificación.
-- **Animation Studio** y **Battle Lab**: esqueletos WIP (timeline / QTE debugger).
+- **Animation Studio**: timeline real (play/pause/step/fps/loop nativos del
+  manifest.json GBC) con playhead sobre la tira de thumbnails y comparativa de
+  renderizado nearest (GBC) vs bilinear (`8574916`).
+- **Battle Lab**: lanza combates reales (Versus o capítulo de historia) eligiendo
+  formas + capítulo; cablea `onLaunchBattle` a `AppInner` (`8574916`).
+  El Internal State Inspector y QTE Debugger siguen como siguiente fase.
 
 ### Retrato oficial en la tarjeta CONTINUAR (`eb13363`)
 - El personaje activo del menú usa el retrato oficial del GBC (40×56 recortado a
