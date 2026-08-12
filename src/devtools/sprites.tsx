@@ -26,7 +26,7 @@ export function SpritesModule() {
   const form = FORMS[formId];
   const dir = spriteDirFor(formId);
   const manifestUrl = spriteManifestUrl(formId);
-  const poses = ['idle', 'move', 'guard', 'attack_fwd', 'attack_ud', 'hurt', 'beam_charge', 'beam_fire'];
+  const poses = ['idle', 'move', 'guard', 'attack_fwd', 'attack_ud', 'hurt', 'beam_charge'];
   const src = dir ? spriteFrameUrl(formId, `${dir}_${pose}_00.png`) : undefined;
   const portrait = BATTLE_PORTRAITS[formId];
   const overworld = overworldUrl(formId);

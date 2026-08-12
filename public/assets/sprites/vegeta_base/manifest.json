@@ -7,8 +7,8 @@
       {
         "name": "vegeta_base_idle_00",
         "file": "vegeta_base_idle_00.png",
-        "w": 24,
-        "h": 44
+        "w": 30,
+        "h": 42
       }
     ]
   },
@@ -20,8 +20,8 @@
       {
         "name": "vegeta_base_move_00",
         "file": "vegeta_base_move_00.png",
-        "w": 23,
-        "h": 41
+        "w": 28,
+        "h": 44
       },
       {
         "name": "vegeta_base_move_01",
@@ -45,14 +45,14 @@
       {
         "name": "vegeta_base_guard_01",
         "file": "vegeta_base_guard_01.png",
-        "w": 23,
-        "h": 45
+        "w": 30,
+        "h": 43
       },
       {
         "name": "vegeta_base_guard_02",
         "file": "vegeta_base_guard_02.png",
-        "w": 28,
-        "h": 43
+        "w": 24,
+        "h": 44
       }
     ]
   },
@@ -64,205 +64,161 @@
       {
         "name": "vegeta_base_attack_fwd_00",
         "file": "vegeta_base_attack_fwd_00.png",
-        "w": 23,
+        "w": 32,
         "h": 41
       },
       {
         "name": "vegeta_base_attack_fwd_01",
         "file": "vegeta_base_attack_fwd_01.png",
-        "w": 32,
+        "w": 31,
         "h": 41
       },
       {
         "name": "vegeta_base_attack_fwd_02",
         "file": "vegeta_base_attack_fwd_02.png",
-        "w": 29,
-        "h": 42
+        "w": 30,
+        "h": 44
       },
       {
         "name": "vegeta_base_attack_fwd_03",
         "file": "vegeta_base_attack_fwd_03.png",
-        "w": 35,
-        "h": 39
-      },
-      {
-        "name": "vegeta_base_attack_fwd_04",
-        "file": "vegeta_base_attack_fwd_04.png",
-        "w": 29,
-        "h": 31
-      },
-      {
-        "name": "vegeta_base_attack_fwd_05",
-        "file": "vegeta_base_attack_fwd_05.png",
         "w": 39,
         "h": 40
       },
       {
+        "name": "vegeta_base_attack_fwd_04",
+        "file": "vegeta_base_attack_fwd_04.png",
+        "w": 38,
+        "h": 40
+      },
+      {
+        "name": "vegeta_base_attack_fwd_05",
+        "file": "vegeta_base_attack_fwd_05.png",
+        "w": 23,
+        "h": 45
+      },
+      {
         "name": "vegeta_base_attack_fwd_06",
         "file": "vegeta_base_attack_fwd_06.png",
-        "w": 47,
-        "h": 19
+        "w": 35,
+        "h": 39
       }
     ]
   },
   "attack_ud": {
-    "frame_count": 5,
+    "frame_count": 4,
     "fps": 7,
     "loop": false,
     "frames": [
       {
         "name": "vegeta_base_attack_ud_00",
         "file": "vegeta_base_attack_ud_00.png",
-        "w": 25,
-        "h": 48
+        "w": 40,
+        "h": 40
       },
       {
         "name": "vegeta_base_attack_ud_01",
         "file": "vegeta_base_attack_ud_01.png",
-        "w": 24,
-        "h": 46
+        "w": 29,
+        "h": 42
       },
       {
         "name": "vegeta_base_attack_ud_02",
         "file": "vegeta_base_attack_ud_02.png",
-        "w": 32,
-        "h": 37
+        "w": 23,
+        "h": 45
       },
       {
         "name": "vegeta_base_attack_ud_03",
         "file": "vegeta_base_attack_ud_03.png",
-        "w": 32,
-        "h": 41
-      },
-      {
-        "name": "vegeta_base_attack_ud_04",
-        "file": "vegeta_base_attack_ud_04.png",
-        "w": 32,
-        "h": 41
+        "w": 29,
+        "h": 31
       }
     ]
   },
   "hurt": {
-    "frame_count": 3,
+    "frame_count": 6,
     "fps": 6,
     "loop": false,
     "frames": [
       {
         "name": "vegeta_base_hurt_00",
         "file": "vegeta_base_hurt_00.png",
-        "w": 22,
-        "h": 45
+        "w": 28,
+        "h": 43
       },
       {
         "name": "vegeta_base_hurt_01",
         "file": "vegeta_base_hurt_01.png",
-        "w": 32,
-        "h": 41
+        "w": 27,
+        "h": 38
       },
       {
         "name": "vegeta_base_hurt_02",
         "file": "vegeta_base_hurt_02.png",
         "w": 32,
-        "h": 37
+        "h": 38
+      },
+      {
+        "name": "vegeta_base_hurt_03",
+        "file": "vegeta_base_hurt_03.png",
+        "w": 24,
+        "h": 46
+      },
+      {
+        "name": "vegeta_base_hurt_04",
+        "file": "vegeta_base_hurt_04.png",
+        "w": 25,
+        "h": 48
+      },
+      {
+        "name": "vegeta_base_hurt_05",
+        "file": "vegeta_base_hurt_05.png",
+        "w": 47,
+        "h": 19
       }
     ]
   },
   "beam_charge": {
-    "frame_count": 7,
+    "frame_count": 6,
     "fps": 7,
     "loop": false,
     "frames": [
       {
         "name": "vegeta_base_beam_charge_00",
         "file": "vegeta_base_beam_charge_00.png",
-        "w": 40,
-        "h": 40
+        "w": 32,
+        "h": 41
       },
       {
         "name": "vegeta_base_beam_charge_01",
         "file": "vegeta_base_beam_charge_01.png",
-        "w": 31,
+        "w": 32,
         "h": 41
       },
       {
         "name": "vegeta_base_beam_charge_02",
         "file": "vegeta_base_beam_charge_02.png",
-        "w": 38,
-        "h": 40
+        "w": 28,
+        "h": 45
       },
       {
         "name": "vegeta_base_beam_charge_03",
         "file": "vegeta_base_beam_charge_03.png",
-        "w": 62,
-        "h": 56
+        "w": 32,
+        "h": 41
       },
       {
         "name": "vegeta_base_beam_charge_04",
         "file": "vegeta_base_beam_charge_04.png",
-        "w": 62,
-        "h": 56
+        "w": 27,
+        "h": 43
       },
       {
         "name": "vegeta_base_beam_charge_05",
         "file": "vegeta_base_beam_charge_05.png",
-        "w": 62,
-        "h": 56
-      },
-      {
-        "name": "vegeta_base_beam_charge_06",
-        "file": "vegeta_base_beam_charge_06.png",
-        "w": 32,
-        "h": 41
-      }
-    ]
-  },
-  "beam_fire": {
-    "frame_count": 3,
-    "fps": 7,
-    "loop": false,
-    "frames": [
-      {
-        "name": "vegeta_base_beam_fire_00",
-        "file": "vegeta_base_beam_fire_00.png",
-        "w": 115,
-        "h": 41
-      },
-      {
-        "name": "vegeta_base_beam_fire_01",
-        "file": "vegeta_base_beam_fire_01.png",
-        "w": 63,
-        "h": 56
-      },
-      {
-        "name": "vegeta_base_beam_fire_02",
-        "file": "vegeta_base_beam_fire_02.png",
-        "w": 118,
-        "h": 54
-      }
-    ]
-  },
-  "power_up": {
-    "frame_count": 3,
-    "fps": 8,
-    "loop": true,
-    "frames": [
-      {
-        "name": "vegeta_base_power_up_00",
-        "file": "vegeta_base_power_up_00.png",
-        "w": 62,
-        "h": 56
-      },
-      {
-        "name": "vegeta_base_power_up_01",
-        "file": "vegeta_base_power_up_01.png",
-        "w": 62,
-        "h": 56
-      },
-      {
-        "name": "vegeta_base_power_up_02",
-        "file": "vegeta_base_power_up_02.png",
-        "w": 62,
-        "h": 56
+        "w": 33,
+        "h": 43
       }
     ]
   }

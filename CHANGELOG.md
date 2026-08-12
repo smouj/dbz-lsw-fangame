@@ -4,6 +4,24 @@ Todos los cambios notables en `dbz-lsw-fangame`. Formato basado en [Keep a Chang
 
 ## [Unreleased]
 
+### Fix: sprites de combate regenerados desde la fuente correcta
+- El rebuild anterior (`rebuild-sprites-v6.mjs`) usó la clasificación de *review*
+  del zip ATOMIC V5 (`idle_or_stance`/`downed_or_hurt`/`move_or_attack`…), más
+  gruesa: dejaba `hurt` reducido al frame de derrotado, perdía `guard` y
+  `attack_ud`, y no cubría `goku_ssj2`/`ginyu_goku`.
+- Nuevo `scripts/import-fixed-sprites.mjs` importa desde la fuente autoritativa
+  `DBZ_LSW_COMPLETE_CHARACTER_SPRITES_FIXED.zip` (`00_manifest/animations.json` +
+  `corrections.json`, 171 fixes). Mapeo: idle/move/guard/attack_fwd/attack_ud/
+  hurt (recoil completo, 6-7 frames)/beam_charge. Las 42 formas + `goku_ssj2` y
+  `ginyu_gokus_body` quedan correctas.
+- `beam_fire`/`power_up` se omiten (el zip FIXED no trae poses separadas: el beam
+  es solo carga y el proyectil es el efecto `linked_beam`); el juego hace fallback
+  a `beam_charge` vía `POSE_FALLBACKS`.
+- `vegito_base` reutiliza `goku_super_saiyan` y `future_trunks_super_saiyan`
+  reutiliza `future_trunks_base` (no están en el zip FIXED).
+- Dev Studio: la lista de poses del Sprite Inspector refleja las 7 poses reales
+  (sin `beam_fire`/`power_up`).
+
 ### Inspector de estado + QTE Debugger (`?debugState=1`)
 - **Internal State Inspector**: overlay fijo (esquina superior derecha) con el
   estado interno de `BattleScreen` en tiempo real — fase, ronda/exchange/owner,
