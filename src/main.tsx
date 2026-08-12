@@ -2134,9 +2134,19 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
     phase === 'enemyTurn' ? 'ACTION' :
     phase === 'defend' ? 'DEFENSE' :
     phase === 'position' ? 'POSITION' : '';
+  // Estado del QTE para el luchador del CAMPO (el panel inferior solo lleva
+  // la secuencia; el luchador ejecuta en el campo como en el GBC).
+  const qteCurKey = phase === 'stageInput' && stageQte ? stageQte.seq[stageQte.idx] : null;
+  const qteIsDir = qteCurKey === 'UP' || qteCurKey === 'DOWN' || qteCurKey === 'LEFT' || qteCurKey === 'RIGHT';
+  const qteFrozen = phase === 'stageInput' && stageQte
+    ? (stageQte.state === 'COUNTER_HIT' || stageQte.state === 'COUNTER_WINDOW')
+    : false;
+  const qtePose: BattleSpritePose = phase === 'stageInput'
+    ? (qteFrozen ? 'attack_fwd' : 'idle')
+    : (playerPose as BattleSpritePose);
 
   return (
-    <div className={`battle-screen view-${viewMode.toLowerCase()} ${cardFx ? 'is-cinematic' : ''}`}>
+    <div className={`battle-screen view-${viewMode.toLowerCase()} ${cardFx ? 'is-cinematic' : ''} ${phase === 'stageInput' ? 'qte-active' : ''}`}>
       {/* ═══ PANTALLA DE CARGA con skeleton (hasta que los assets clave estén listos) ═══ */}
       {loading && !intro && (
         <div className="battle-loading">
@@ -2346,12 +2356,12 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
         <div className="battlefield-fighters">
           {/* Anchors por lado: LEFT (jugador) y RIGHT (enemigo) usan X
               reflejadas — BACK apunta al borde propio de cada lado (spec) */}
-          <div ref={playerRef} className={`fighter-container player ${POSITION_DATA[player.battlePos].altitude.toLowerCase()} ${POSITION_DATA[player.battlePos].depth.toLowerCase()}`}
+          <div ref={playerRef} className={`fighter-container player ${POSITION_DATA[player.battlePos].altitude.toLowerCase()} ${POSITION_DATA[player.battlePos].depth.toLowerCase()} ${phase === 'stageInput' ? (qteFrozen ? 'qte-frozen' : qteIsDir ? 'qte-lunge' : 'qte-idle') : ''}`}
             style={{ left: `${anchorFor(player.battlePos, 'LEFT').x}%`, top: `${anchorFor(player.battlePos, 'LEFT').y}%` }}>
-            {playerPose === 'idle' && overworldUrl(playerFormId)
+            {qtePose === 'idle' && overworldUrl(playerFormId) && phase !== 'stageInput'
               ? <img src={overworldUrl(playerFormId)!} alt="" className="overworld-sprite" style={{ transform: `scaleX(${facingFlip(playerFormId, 'left')})` }} />
               : (spriteManifestUrl(playerFormId)
-                  ? <FighterSprite formId={playerFormId} pose={playerPose} side="left" scale={15} flash={flashPlayer} />
+                  ? <FighterSprite formId={playerFormId} pose={qtePose} side="left" scale={15} flash={phase === 'stageInput' ? (qteFrozen ? false : stageQte.idx > 0) : flashPlayer} />
                   : <CharacterSprite formId={playerFormId} className="sheet-sprite" height={152} side="left" />)}
             <div className="fighter-position-tag hidden">{player.battlePos.replace('_', ' ')}</div>
           </div>
@@ -2500,37 +2510,31 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
           const keyLabel = (k: StageKey) => k === 'UP' ? 'W / ↑' : k === 'DOWN' ? 'S / ↓' : k === 'LEFT' ? 'A / ←' : k === 'RIGHT' ? 'D / →' : k === 'A' ? 'Q' : 'E';
           return (
           <div className={`stage-input-area ${frozen ? 'failed' : ''}`}>
-            {/* GBC (manual): durante el QTE el luchador está en pose NEUTRAL;
-                la acción solo se ve al COMPLETAR. Si fallas, el RIVAL CONTRAATACA:
-                el luchador se congela en la pose del golpe fallido y aparece
-                ENTER COMMAND — A (defenderte) / B (reparar) con timing. */}
-            <div className={`stage-fighter ${isDirPrompt ? 'lunging' : ''} ${frozen ? 'frozen' : ''}`} key={frozen ? 'fail' : (isDirPrompt ? `dir-${q.idx}` : `btn-${q.idx}`)}>
-              {spriteManifestUrl(playerFormId)
-                ? <FighterSprite formId={playerFormId} pose={frozen ? 'attack_fwd' : 'idle'} side="left" scale={18} flash={frozen ? false : q.idx > 0} />
-                : <CharacterSprite formId={playerFormId} className="fx-sprite" height={170} side="left" />}
-            </div>
             <div className="stage-label">
               <span className="stage-push">PUSH {elapsedSec} / {limitSec}</span>
               {q.card?.name} — STAGE {Math.min(q.idx + 1, q.seq.length)}/{q.seq.length}
             </div>
             {!frozen ? (
               <>
-                {/* Secuencia completa de comandos: los hechos ✓, el actual grande,
-                    los futuros atenuados (la secuencia se congela al empezar) */}
-                <div className="stage-sequence">
-                  {q.seq.map((k, i) => (
-                    <span key={i} className={`stage-seq-item ${i < q.idx ? 'done' : i === q.idx ? 'current' : 'future'}`}>
-                      {i < q.idx ? <span className="seq-check">✓</span> : <img src={`/assets/ui/qte/${keyIcon(k)}.png`} alt={keyLabel(k)} className="qte-key-sm" />}
-                    </span>
-                  ))}
-                </div>
-                {/* Prompt ÚNICO: la tecla actual a pulsar */}
-                {q.state === 'INPUT_WINDOW' ? (
-                  <div key={q.idx} className={`stage-prompt-big ${stageFeedback ?? ''} ${curKey}`}>
-                    <img src={`/assets/ui/qte/${keyIcon(curKey)}.png`} alt={curKey} className="qte-key-big" />
-                    <span className="stage-prompt-label">{keyLabel(curKey)}</span>
+                {/* Fila compacta: secuencia (progreso) + prompt grande (tecla actual) */}
+                <div className="stage-qte-row">
+                  {/* Secuencia completa de comandos: los hechos ✓, el actual grande,
+                      los futuros atenuados (la secuencia se congela al empezar) */}
+                  <div className="stage-sequence">
+                    {q.seq.map((k, i) => (
+                      <span key={i} className={`stage-seq-item ${i < q.idx ? 'done' : i === q.idx ? 'current' : 'future'}`}>
+                        {i < q.idx ? <span className="seq-check">✓</span> : <img src={`/assets/ui/qte/${keyIcon(k)}.png`} alt={keyLabel(k)} className="qte-key-sm" />}
+                      </span>
+                    ))}
                   </div>
-                ) : null}
+                  {/* Prompt ÚNICO: la tecla actual a pulsar */}
+                  {q.state === 'INPUT_WINDOW' ? (
+                    <div key={q.idx} className={`stage-prompt-big ${stageFeedback ?? ''} ${curKey}`}>
+                      <img src={`/assets/ui/qte/${keyIcon(curKey)}.png`} alt={curKey} className="qte-key-big" />
+                      <span className="stage-prompt-label">{keyLabel(curKey)}</span>
+                    </div>
+                  ) : null}
+                </div>
                 {/* Reloj GLOBAL de la secuencia: barra + números (PUSH elapsed / limit) */}
                 <div className="stage-timer-row">
                   <div className="stage-timer" style={{ width: `${Math.min(100, (q.elapsedFrames / Math.max(1, q.limitFrames)) * 100)}%` }} />
