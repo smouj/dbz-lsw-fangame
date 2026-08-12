@@ -67,7 +67,7 @@ export type TKey =
   | 'attr.hp' | 'attr.str' | 'attr.ki' | 'attr.spd'
   | 'battle.strikesFirst' | 'battle.noAlly' | 'battle.blocks' | 'battle.resists' | 'battle.absorbs' | 'battle.defends' | 'battle.gathers' | 'battle.insufficientCc'
   | 'battle.basic' | 'battle.gatherPower' | 'battle.stageAttack' | 'battle.defendAction' | 'battle.moveAction' | 'battle.basicFree' | 'battle.limitedHelp' | 'battle.powerState' | 'battle.back'
-  | 'battle.chooseDefense' | 'battle.basicDefense' | 'battle.joint' | 'battle.jointDefense' | 'battle.needGather' | 'battle.limitDefense' | 'battle.defenseHelp' | 'battle.move' | 'battle.moveHelp' | 'battle.defenseOnly' | 'battle.noDefenseCards' | 'battle.noDefenseLimits' | 'battle.upBack' | 'battle.upFront' | 'battle.downBack' | 'battle.downFront' | 'story.epilogue' | 'settings.difficulty'
+  | 'battle.chooseDefense' | 'battle.basicDefense' | 'battle.joint' | 'battle.jointDefense' | 'battle.needGather' | 'battle.limitDefense' | 'battle.defenseHelp' | 'battle.move' | 'battle.moveHelp' | 'battle.defenseOnly' | 'battle.noDefenseCards' | 'battle.noDefenseLimits' | 'battle.upBack' | 'battle.upFront' | 'battle.downBack' | 'battle.downFront' | 'battle.chooseAxis' | 'battle.axisHorizontal' | 'battle.axisVertical' | 'story.epilogue' | 'settings.difficulty'
   | 'battle.ready' | 'battle.fight' | 'battle.powerOn' | 'battle.vs' | 'battle.forfeit' | 'battle.keyHint' | 'battle.cancel';
 
 // ═══ Diccionarios ═══

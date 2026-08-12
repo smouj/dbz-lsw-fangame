@@ -1277,6 +1277,36 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 .battle-controls .hand-cards .card .card-name { font-size: 7px; }
 .battle-controls .hand-cards .card .card-atk, .battle-controls .hand-cards .card .card-acc { font-size: 6px; }
 
+/* ─── Animación de robo de carta (manual GBC: +1 al entrar en Attack Phase) ───
+   La carta sale del mazo (fuera de pantalla, abajo-izquierda) y se desliza
+   con flip hasta la mano (centro inferior). El sprite NO se escala: la carta
+   mantiene su tamaño nativo; solo se desplaza/rota en 3D. */
+.draw-fx {
+  position: absolute;
+  left: 50%;
+  bottom: 8px;
+  z-index: 60;
+  pointer-events: none;
+  animation: draw-card-fly 0.46s cubic-bezier(.22,.9,.3,1) forwards;
+  transform-origin: 50% 50%;
+}
+
+@keyframes draw-card-fly {
+  0%   { transform: translateX(calc(-50% - 46vw)) translateY(14px) rotateZ(-14deg) rotateY(70deg); opacity: 0; }
+  22%  { opacity: 1; }
+  100% { transform: translateX(-50%) translateY(0) rotateZ(0deg) rotateY(0deg); opacity: 1; }
+}
+
+/* la carta interior recibe el drop-in al aterrizar */
+.draw-fx .card {
+  animation: draw-card-land 0.18s ease-out 0.34s both;
+}
+
+@keyframes draw-card-land {
+  0%   { transform: translateY(-4px); filter: brightness(1.35) saturate(1.2); }
+  100% { transform: translateY(0); filter: brightness(1) saturate(1); }
+}
+
 .action-caption {
   width: min(520px, 72vw);
   min-height: 58px;
@@ -1335,7 +1365,9 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* ─── Selección de posición ─── */
+/* ─── Selección de posición: Movement con 2 ejes (manual GBC 2026-08-12) ─── */
+/* Solo HORIZONTAL ↔ y VERTICAL ↕; cada uno transforma UN eje y conserva el
+   otro (nada de diagonales imposibles). Preview CURRENT → RESULT. */
 
 .position-select {
   display: flex; flex-direction: column; align-items: center; gap: 8px;
@@ -1348,31 +1380,72 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   letter-spacing: 3px;
 }
 
-.position-pad {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 4px;
-  max-width: 280px;
+.move-axis-pad {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
 }
 
-.position-pad button {
+.move-axis-btn {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 4px;
+  width: 132px;
+  height: 92px;
   background: var(--panel-hi);
   border: 2px solid var(--border-lo);
   color: var(--text);
   font-family: var(--fpx);
-  font-size: 9px;
-  padding: 10px 14px;
   cursor: pointer;
-  letter-spacing: 1px;
-  transition: background 80ms, color 80ms, border-color 80ms;
   box-shadow: var(--shadow-1);
+  transition: background 80ms, color 80ms, border-color 80ms;
 }
 
-.position-pad button:hover {
+.move-axis-icon {
+  font-size: 26px;
+  line-height: 1;
+  color: var(--gold);
+}
+
+.move-axis-label {
+  font-size: 8px;
+  letter-spacing: 2px;
+  color: var(--text-dim);
+}
+
+.move-axis-btn:hover,
+.move-axis-btn.preview {
   background: var(--orange);
-  color: #000;
   border-color: var(--orange-lt);
 }
+
+.move-axis-btn:hover .move-axis-icon,
+.move-axis-btn.preview .move-axis-icon {
+  color: #000;
+}
+
+.move-axis-btn:hover .move-axis-label,
+.move-axis-btn.preview .move-axis-label {
+  color: #000;
+}
+
+/* Preview CURRENT → RESULT antes de confirmar */
+.move-preview {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--fpx);
+  font-size: 10px;
+  letter-spacing: 1px;
+  color: var(--gold);
+  background: #000c;
+  border: 1px solid var(--border-lo);
+  padding: 6px 14px;
+}
+
+.move-preview-cur { color: var(--text-dim); }
+.move-preview-arrow { color: var(--gold); font-size: 14px; }
+.move-preview-dst { color: var(--text); }
+.move-preview-dst.active { color: var(--green-lt); text-shadow: 0 0 6px #000; }
 
 /* ─── Tira de comandos (sprites GBC auténticos con nombre incluido) ─── */
 

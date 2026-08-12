@@ -134,11 +134,17 @@ ataque × estados evasión/precisión. Extraer de ROM, no inventar %.
 - +1 adicional si el ataque acierta la vulnerabilidad de posición
   (Beam contra AIR / Damage contra GROUND).
 
-## Movimiento y empuje (manual GBC §9)
+## Movimiento y empuje (manual GBC §9, 2026-08-12)
 
 - MOVE es una acción DEFENSIVA básica (B → Movement), no una fase.
-- Al avanzar a FRONT cuando el rival está en BACK, el rival pasa a FRONT
-  (no se crea una quinta posición: el frente empuja al frente).
+- **MOVE usa SOLO 2 ejes** (nunca 4 destinos directos). Cada decisión
+  transforma UN eje y conserva el otro — imposible teletransportarse en
+  diagonal (Air/Back → Ground/Front requiere DOS acciones):
+  - `HORIZONTAL ↔` → cambia depth (BACK↔FRONT), conserva altitude.
+  - `VERTICAL ↕` → cambia altitude (GROUND↔AIR), conserva depth.
+- Al avanzar a FRONT (eje HORIZONTAL) cuando el rival está en BACK, el rival
+  pasa a FRONT (no se crea una quinta posición: el frente empuja al frente).
+  VERTICAL jamás modifica Front/Back.
 - Las 4 posiciones: AIR+BACK / AIR+FRONT / GROUND+BACK / GROUND+FRONT.
   Beam es efectivo contra AIR; Damage contra GROUND. FRONT sacrifica defensa
   por ataque; BACK al revés.

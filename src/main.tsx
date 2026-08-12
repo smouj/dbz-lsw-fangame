@@ -6,7 +6,7 @@ import './styles.css';
 import { FORMS, CHARACTERS, getCharacter, getForm, idleSpriteUrl, statAtLevel, LIMIT_DEFAULTS, loadLimits, saveLimits } from './data/roster';
 import { STORY_ENEMY_DECKS, STORY_AI_BOOSTS, TEAM_BATTLES } from './data/enemy_decks';
 import { facingFlip, needsFlip } from './data/facing';
-import { BattlePosition, POSITION_DATA, resolveRelativeDistance, isBeamVulnerable, isDamageVulnerable, attackModifier, defenseModifier, anchorFor, BATTLE_POSITIONS } from './data/positions';
+import { BattlePosition, POSITION_DATA, resolveRelativeDistance, isBeamVulnerable, isDamageVulnerable, attackModifier, defenseModifier, anchorFor, BATTLE_POSITIONS, moveHorizontal, moveVertical, applyMoveAxis, positionLabel, type MoveAxis } from './data/positions';
 import { BATTLE_PORTRAITS } from './data/battlePortraits';
 import { UNLOCK_KEY, STARTER_DAMAGE_DECK, STARTER_BEAM_DECK, STARTER_CHARACTERS, cardsForLevel, pickRewards, VS_UNLOCKS, isFormUnlocked, FORM_UNLOCK_LEVELS } from './data/unlocks';
 import { CARDS, CARD_COLORS, CARD_TYPE_NAMES, CardDef, CardType, DECK_SIZE, MAX_COPIES, getCard, CardEffect } from './data/cards';
@@ -696,20 +696,32 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
     }
   };
 
+  // ── Robo de carta ANIMADO (manual GBC: +1 carta al entrar en Attack Phase) ──
+  // La carta sale del mazo (lado izquierdo, fuera de pantalla) y se desliza
+  // hasta la mano con un flip; al terminar la animación se añade a `hand`.
+  const [drawFx, setDrawFx] = useState<{ card: CardDef; nonce: number } | null>(null);
+  const drawFxTimer = useRef<number | null>(null);
   const drawJointForAttack = () => {
-    setHand(prev => {
-      // El GBC permite 6 cartas de forma transitoria al robar; después de la
-      // acción hay que volver a un máximo persistente de 5.
-      if (prev.length >= 6) return prev;
-      const deckIds = loadDeck();
-      if (deckIds.length === 0) return prev;
-      // Solo cartas compatibles con el personaje activo
-      const usable = deckIds.map(id => getCard(id))
-        .filter((c): c is CardDef => !!c && cardUsableBy(c, getForm(playerFormId)!.character));
-      if (usable.length === 0) return prev;
-      const card = usable[Math.floor(Math.random() * usable.length)];
-      return card ? [...prev, card] : prev;
-    });
+    // El GBC permite 6 cartas de forma transitoria al robar; después de la
+    // acción hay que volver a un máximo persistente de 5.
+    if (hand.length >= 6) return;
+    const deckIds = loadDeck();
+    if (deckIds.length === 0) return;
+    // Solo cartas compatibles con el personaje activo
+    const usable = deckIds.map(id => getCard(id))
+      .filter((c): c is CardDef => !!c && cardUsableBy(c, getForm(playerFormId)!.character));
+    if (usable.length === 0) return;
+    const card = usable[Math.floor(Math.random() * usable.length)];
+    if (!card) return;
+    // Animar el robo: la carta vuela del mazo a la mano (~420ms) y luego
+    // se añade a la mano de verdad (el GBC muestra la carta entrando).
+    if (drawFxTimer.current) window.clearTimeout(drawFxTimer.current);
+    setDrawFx({ card, nonce: Date.now() });
+    Sfx.draw();
+    drawFxTimer.current = window.setTimeout(() => {
+      setHand(prev => (prev.length >= 6 ? prev : [...prev, card]));
+      setDrawFx(null);
+    }, 460);
   };
 
   const settleAttackHand = () => {
@@ -1787,29 +1799,38 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
   // LIMIT (defensivas/Support si powered). Las ofensivas (Command/Damage/
   // Beam) quedan bloqueadas durante Defense.
   const [defendMenu, setDefendMenu] = useState<'basic' | 'joint' | 'limit' | 'move' | null>(null);
+  // Movement con 2 ejes (manual GBC 2026-08-12): HORIZONTAL ↔ / VERTICAL ↕.
+  // Preview CURRENT → RESULT al pasar el cursor (sin confirmar).
+  const [moveAxisPreview, setMoveAxisPreview] = useState<MoveAxis | null>(null);
 
-  const defendBasic = (choice: 'defense' | 'move', pos?: BattlePosition) => {
+  const defendBasic = (choice: 'defense' | 'move', posOrAxis?: BattlePosition | MoveAxis) => {
     setPhase('enemyTurn'); // desmonta el menú YA (evita doble disparo)
     const card = incomingCard.current || CARDS[25];
     const runEnemyCinematic = (onDone: () => void) => {
       // La animación del ataque enemigo se ejecuta DESPUÉS de elegir defensa (orden GBC)
       playCardCinematic(card, 'enemy', onDone);
     };
-    if (choice === 'move' && pos) {
-      // BASIC → MOVE: gasta la elección defensiva, cambia posición persistente
+    if (choice === 'move' && posOrAxis) {
+      // BASIC → MOVE (manual GBC 2026-08-12): SOLO 2 ejes, cada uno modifica
+      // UN único eje y conserva el otro. Nada de teletransporte diagonal
+      // (Air/Back → Ground/Front es imposible en una sola acción).
+      const axis = posOrAxis as MoveAxis;
+      const target = applyMoveAxis(player.battlePos, axis);
       Sfx.position();
       setPlayerPose('move');
-      setPlayer(prev => ({ ...prev, battlePos: pos! }));
-      const pd = POSITION_DATA[pos];
-      addLog(`${player.name} MOVE → ${pd.altitude}/${pd.depth} (${pos})`);
-      // Manual GBC §9: si avanzas a FRONT y el rival está en BACK, el rival pasa
-      // a FRONT (no se crea una quinta posición: el frente empuja al frente).
-      if (pd.depth === 'FRONT' && POSITION_DATA[enemy.battlePos].depth === 'BACK') {
+      setPlayer(prev => ({ ...prev, battlePos: target }));
+      const pd = POSITION_DATA[target];
+      const axisLabel = axis === 'HORIZONTAL' ? '↔' : '↕';
+      addLog(`${player.name} MOVE ${axisLabel} → ${pd.altitude}/${pd.depth} (${positionLabel(target)})`);
+      // Manual GBC §9 (SOLO eje horizontal): si avanzas a FRONT y el rival
+      // está en BACK, el rival pasa a FRONT (el frente empuja al frente).
+      // Vertical jamás modifica Front/Back.
+      if (axis === 'HORIZONTAL' && pd.depth === 'FRONT' && POSITION_DATA[enemy.battlePos].depth === 'BACK') {
         const pushed: BattlePosition = POSITION_DATA[enemy.battlePos].altitude === 'AIR' ? BattlePosition.UP_FRONT : BattlePosition.DOWN_FRONT;
         setEnemy(prev => ({ ...prev, battlePos: pushed }));
         addLog(`${enemy.name} retrocede a FRONT (empuje)`);
       }
-      runEnemyCinematic(() => resolveEnemyAttack(true, pos, card));
+      runEnemyCinematic(() => resolveEnemyAttack(true, target, card));
     } else {
       // BASIC → DEFENSE: quedarse y defender (reduce daño)
       setPlayerPose('guard');
@@ -1817,6 +1838,12 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
       addLog(`${player.name} ${t('battle.defends')} (−50% ${t('battle.dmg')})`);
       runEnemyCinematic(() => resolveEnemyAttack(true, player.battlePos, card));
     }
+  };
+
+  // Movement con 2 ejes: confirmar el eje (llamado desde el menú de 2 botones)
+  const confirmMoveAxis = (axis: MoveAxis) => {
+    setMoveAxisPreview(null);
+    defendBasic('move', axis);
   };
 
   // JOINT durante Defense: solo cartas DEFENSE y SUPPORT (spec defensa)
@@ -2337,6 +2364,11 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
 
       {/* Controles */}
       <div className="battle-controls">
+        {drawFx && (
+          <div className="draw-fx" key={drawFx.nonce} aria-label="drawing card">
+            <CardVisual card={drawFx.card} selected={false} disabled={false} onClick={() => {}} />
+          </div>
+        )}
         {cardFx ? (
           <div className={`action-caption ${cardFx.card.type}`}>
             <div className="action-caption-kicker">
@@ -2533,15 +2565,39 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
               </>
             )}
             {defendMenu === 'move' && (
-              <div className="position-select">
-                <div className="control-label">{t('battle.move')} — {t('battle.choosePosition')}</div>
-                <div className="position-pad">
-                  <button onClick={() => defendBasic('move', BattlePosition.UP_BACK)}>↑ {t('battle.upBack')}</button>
-                  <button onClick={() => defendBasic('move', BattlePosition.UP_FRONT)}>↑ {t('battle.upFront')}</button>
-                  <button onClick={() => defendBasic('move', BattlePosition.DOWN_BACK)}>↓ {t('battle.downBack')}</button>
-                  <button onClick={() => defendBasic('move', BattlePosition.DOWN_FRONT)}>↓ {t('battle.downFront')}</button>
+              <div className="position-select move-axis-select">
+                <div className="control-label">{t('battle.move')} — {t('battle.chooseAxis')}</div>
+                {/* Movement real del GBC: solo 2 ejes, cada uno transforma UN
+                    eje y conserva el otro (nada de diagonales imposibles). */}
+                <div className="move-axis-pad">
+                  <button
+                    className={`move-axis-btn axis-h ${moveAxisPreview === 'HORIZONTAL' ? 'preview' : ''}`}
+                    onClick={() => confirmMoveAxis('HORIZONTAL')}
+                    onMouseEnter={() => setMoveAxisPreview('HORIZONTAL')}
+                    onMouseLeave={() => setMoveAxisPreview(null)}
+                    data-tip={`HORIZONTAL ↔ — ${t('battle.axisHorizontal')}\n${positionLabel(player.battlePos)} → ${positionLabel(applyMoveAxis(player.battlePos, 'HORIZONTAL'))}`}>
+                    <span className="move-axis-icon">↔</span>
+                    <span className="move-axis-label">FRONT/BACK</span>
+                  </button>
+                  <button
+                    className={`move-axis-btn axis-v ${moveAxisPreview === 'VERTICAL' ? 'preview' : ''}`}
+                    onClick={() => confirmMoveAxis('VERTICAL')}
+                    onMouseEnter={() => setMoveAxisPreview('VERTICAL')}
+                    onMouseLeave={() => setMoveAxisPreview(null)}
+                    data-tip={`VERTICAL ↕ — ${t('battle.axisVertical')}\n${positionLabel(player.battlePos)} → ${positionLabel(applyMoveAxis(player.battlePos, 'VERTICAL'))}`}>
+                    <span className="move-axis-icon">↕</span>
+                    <span className="move-axis-label">AIR/GROUND</span>
+                  </button>
                 </div>
-                <button className="basic-btn basic-back" onClick={() => { Sfx.cancel(); setDefendMenu('basic'); }}>
+                {/* Preview CURRENT → RESULT antes de confirmar */}
+                <div className="move-preview">
+                  <span className="move-preview-cur">{positionLabel(player.battlePos)}</span>
+                  <span className="move-preview-arrow">{moveAxisPreview === null ? '·' : moveAxisPreview === 'HORIZONTAL' ? '↔' : '↕'}</span>
+                  <span className={`move-preview-dst ${moveAxisPreview ? 'active' : ''}`}>
+                    {moveAxisPreview ? positionLabel(applyMoveAxis(player.battlePos, moveAxisPreview)) : '—'}
+                  </span>
+                </div>
+                <button className="basic-btn basic-back" onClick={() => { Sfx.cancel(); setMoveAxisPreview(null); setDefendMenu('basic'); }}>
                   {t('battle.back')}
                 </button>
               </div>

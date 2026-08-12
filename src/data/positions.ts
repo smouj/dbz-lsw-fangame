@@ -96,6 +96,42 @@ export function anchorFor(pos: BattlePosition, side: 'LEFT' | 'RIGHT') {
   return side === 'LEFT' ? LEFT_ANCHORS[pos] : RIGHT_ANCHORS[pos];
 }
 
+// ─── Movement: transformación de UN SOLO eje (manual GBC, 2026-08-12) ───
+// La interfaz de Movement NO ofrece las 4 posiciones como destinos directos
+// (eso permitiría diagonales imposibles como Air/Back → Ground/Front). Solo
+// hay DOS decisiones, cada una modifica UN eje y conserva el otro:
+//   HORIZONTAL ↔ cambia depth (BACK↔FRONT) · VERTICAL ↕ cambia altitude
+// Regla del manual §9: al avanzar a FRONT con el rival en BACK, el rival es
+// empujado a FRONT (nunca hay dos posiciones de profundidad distintas en
+// contacto); Vertical jamás toca Front/Back.
+export function moveHorizontal(pos: BattlePosition): BattlePosition {
+  const d = POSITION_DATA[pos].depth;
+  const alt = POSITION_DATA[pos].altitude;
+  return d === 'BACK'
+    ? (alt === 'AIR' ? BattlePosition.UP_FRONT : BattlePosition.DOWN_FRONT)
+    : (alt === 'AIR' ? BattlePosition.UP_BACK : BattlePosition.DOWN_BACK);
+}
+
+export function moveVertical(pos: BattlePosition): BattlePosition {
+  const d = POSITION_DATA[pos].depth;
+  const alt = POSITION_DATA[pos].altitude;
+  return alt === 'GROUND'
+    ? (d === 'BACK' ? BattlePosition.UP_BACK : BattlePosition.UP_FRONT)
+    : (d === 'BACK' ? BattlePosition.DOWN_BACK : BattlePosition.DOWN_FRONT);
+}
+
+// Resultado de aplicar un eje (para la preview CURRENT → RESULT del menú)
+export type MoveAxis = 'HORIZONTAL' | 'VERTICAL';
+export function applyMoveAxis(pos: BattlePosition, axis: MoveAxis): BattlePosition {
+  return axis === 'HORIZONTAL' ? moveHorizontal(pos) : moveVertical(pos);
+}
+
+export function positionLabel(pos: BattlePosition): string {
+  const d = POSITION_DATA[pos].depth;
+  const alt = POSITION_DATA[pos].altitude;
+  return `${alt === 'AIR' ? 'AIR' : 'GROUND'} / ${d === 'FRONT' ? 'FRONT' : 'BACK'}`;
+}
+
 // Etiquetas localizadas (la UI las traduce; aquí el nombre canónico)
 export const POSITION_NAMES: Record<BattlePosition, string> = {
   [BattlePosition.UP_BACK]: 'Arriba · Lejos',

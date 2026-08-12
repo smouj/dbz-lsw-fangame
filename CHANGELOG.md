@@ -4,6 +4,38 @@ Todos los cambios notables en `dbz-lsw-fangame`. Formato basado en [Keep a Chang
 
 ## [Unreleased]
 
+## [2026-08-13] — Movement de 2 ejes + robo de carta animado + director cinematográfico
+
+### Movement canónico (manual GBC §9)
+- **MOVE con SOLO 2 ejes** (`e969041` + `44e3dcc`): desaparecen los 4 botones
+  de posición directa. Ahora hay HORIZONTAL ↔ (FRONT/BACK) y VERTICAL ↕
+  (AIR/GROUND); cada uno transforma UN eje y conserva el otro. Imposible
+  teletransporte diagonal (Air/Back → Ground/Front requiere 2 acciones).
+- `moveHorizontal()` / `moveVertical()` / `applyMoveAxis()` en `positions.ts`.
+- **Preview CURRENT → RESULT** al pasar el cursor sobre cada eje (sin confirmar):
+  `GROUND / BACK ↔ GROUND / FRONT`. Hover solo con puntero (sin layout shift).
+- **Empuje Front/Back SOLO en eje horizontal** (manual §9): al avanzar a FRONT
+  con rival en BACK, el rival pasa a FRONT. Vertical jamás toca Front/Back.
+- i18n: 3 keys nuevas (`battle.chooseAxis` / `axisHorizontal` / `axisVertical`)
+  en los 10 idiomas.
+
+### Robo de carta animado (manual GBC)
+- **+1 carta al entrar en Attack Phase** (confirmado por LP del GBC original:
+  "draw one in every Attack Phase"). Máx 6 transitorio / 5 persistente.
+- **Animación de robo**: la carta sale del mazo (fuera de pantalla, borde
+  inferior-izquierdo) y se desliza con flip 3D hasta la mano (~460ms),
+  con SFX propio (`Sfx.draw`: fricción de mazo + tono al aterrizar).
+  La carta se añade a la mano SOLO al terminar la animación.
+- Solo cartas compatibles con el personaje activo (`cardUsableBy`).
+
+### Director cinematográfico
+- `src/battle/timeline.ts` + `profiles.ts` + `spriteSemantics.ts` +
+  `debugCinematics.ts`: reloj ÚNICO determinista en frames GBC; cada carta
+  declara su cinematografía (beam 54+54+44, rush 50+44+38, support 118);
+  `playCardCinematic` migrado al timeline (sin setTimeout como autoridad).
+- Fix: `PROJECTILE action:'rush'` y `HIT_FRAME` ahora avanzan el step CSS
+  (attacker→travel→target).
+
 ## [2026-08-12] — Pulido de combate, HUD GBC auténtico y datos ROM
 
 ### Fixes

@@ -501,3 +501,19 @@ El Stage Attack en PC replica el GBC con este mapeo:
 - Botones en pantalla (click): **Q** (puñetazo), **E** (patada), y las 4
   direcciones con flechas (↑←↓→ — también acepta WASD, cuenta igual)
 - Iconos: Kenney Input Prompts (`public/assets/ui/qte/` — key_q/key_e + arrow_*)
+
+## Robo de carta (manual GBC, 2026-08-12)
+
+- Al entrar en **Attack Phase** se roba **1 carta** del mazo (deck Joint).
+  El LP del juego original lo confirma: *"You start with 5 random cards from
+  the deck, and you draw one in every Attack Phase"*.
+- Límite: 6 cartas **transitorio** al robar (el GBC lo permite); tras la
+  acción se vuelve al máximo **persistente de 5** (`settleAttackHand`).
+- **Animación de robo** (implementada): la carta sale del mazo (fuera de
+  pantalla, borde izquierdo inferior) y se desliza con flip 3D hasta la mano
+  (centro inferior), ~460ms, con SFX propio (fricción de mazo + tono agudo al
+  aterrizar). La carta se añade a la mano SOLO al terminar la animación
+  (el GBC muestra la carta entrando antes de que puedas usarla).
+- El robo solo incluye cartas **compatibles** con el personaje activo
+  (`cardUsableBy`): el deck Joint del GBC no mezcla cartas de otros
+  personajes en tu mano.

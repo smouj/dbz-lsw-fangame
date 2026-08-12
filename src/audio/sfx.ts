@@ -73,6 +73,8 @@ export const Sfx = {
   cancel: () => beep(440, 0.1, 'square', 0.15, 220),
   select: () => beep(1320, 0.07, 'square', 0.18),
   cardPlay: () => { beep(520, 0.08, 'square', 0.2); setTimeout(() => beep(780, 0.12, 'square', 0.2), 90); },
+  // Robo de carta: fricción de mazo (ruido corto) + tono agudo de carta al aterrizar
+  draw: () => { noise(0.1, 0.35, 3000); setTimeout(() => beep(1560, 0.09, 'square', 0.2), 120); },
   punch: () => noise(0.12, 0.4, 800),
   kick: () => noise(0.15, 0.35, 600),
   beam: () => { beep(200, 0.4, 'sawtooth', 0.25, 1200); noise(0.3, 0.2, 2000); },
