@@ -91,6 +91,36 @@ interface Fighter {
   limits: string[];
 }
 
+// Retratos de menú con fondo recortado (transparente) para integrarse en la
+// tarjeta CONTINUAR del menú principal (2026-08-12: el fondo gris original del
+// asset LSW 40×56 se veía como un recuadro separado; el recorte lo funde con
+// el tema oscuro de la tarjeta). Generados por scripts desde menu/ → menu_cut/.
+const MENU_PORTRAITS_CUT: Record<string, string> = {
+  goku: '/assets/portraits/menu_cut/cell_00_00.png',
+  vegeta: '/assets/portraits/menu_cut/cell_00_01.png',
+  gohan: '/assets/portraits/menu_cut/cell_00_02.png',
+  piccolo: '/assets/portraits/menu_cut/cell_00_03.png',
+  krillin: '/assets/portraits/menu_cut/cell_00_04.png',
+  trunks: '/assets/portraits/menu_cut/cell_00_05.png',
+  goten: '/assets/portraits/menu_cut/cell_00_06.png',
+  gotenks: '/assets/portraits/menu_cut/cell_00_07.png',
+  frieza: '/assets/portraits/menu_cut/cell_01_00.png',
+  cell: '/assets/portraits/menu_cut/cell_01_01.png',
+  buu: '/assets/portraits/menu_cut/cell_01_02.png',
+  nappa: '/assets/portraits/menu_cut/cell_01_03.png',
+  ginyu: '/assets/portraits/menu_cut/cell_01_04.png',
+  recoome: '/assets/portraits/menu_cut/cell_01_05.png',
+  guldo: '/assets/portraits/menu_cut/cell_01_06.png',
+  jeice: '/assets/portraits/menu_cut/cell_01_07.png',
+  burter: '/assets/portraits/menu_cut/cell_01_08.png',
+  android_16: '/assets/portraits/menu_cut/cell_02_00.png',
+  android_17: '/assets/portraits/menu_cut/cell_02_01.png',
+  android_18: '/assets/portraits/menu_cut/cell_03_00.png',
+  android_19: '/assets/portraits/menu_cut/cell_03_01.png',
+  android_20: '/assets/portraits/menu_cut/cell_03_02.png',
+  cell_jr: '/assets/portraits/menu_cut/cell_03_03.png',
+};
+
 // ─── Retratos (Sprite Database) ────────────────────────────
 const PORTRAITS: Record<string, string> = MENU_PORTRAITS;
 
@@ -2708,8 +2738,17 @@ function MainMenu({ onNavigate }: { onNavigate: (s: Screen) => void }) {
   const storyProgress = loadStoryProgress();
   const currentChapter = Math.min(storyProgress, CHAPTERS.length);
   const ch = CHAPTERS.find(c => c.id === currentChapter);
-  const heroUrl = ch ? overworldUrl(ch.player) : undefined;
-  const heroChar = ch ? characterName(ch.player.replace(/_base|_young|_ssj.*|_kami|_ultimate|_future|_kid.*/g, '')) : '';
+  // Retrato del héroe activo: el PORTRAIT de menú del GBC (40×56) recortado a
+  // transparencia (fondo eliminado) por defecto — el chibi de overworld 13×16
+  // escalado se veía borroso (bug reportado 2026-08-12). Fallbacks: retrato de
+  // batalla (32×24) y por último el overworld.
+  const heroForm = ch ? getForm(ch.player) : undefined;
+  const heroCharId = heroForm?.character
+    || (ch ? ch.player.replace(/_base|_young|_ssj.*|_kami|_ultimate|_future|_kid.*/g, '') : '');
+  const heroUrl = ch
+    ? (MENU_PORTRAITS_CUT[heroCharId] || MENU_PORTRAITS[heroCharId] || portraitFor(heroCharId, ch.player) || overworldUrl(ch.player))
+    : undefined;
+  const heroChar = heroCharId ? characterName(heroCharId) : '';
   const pct = Math.round((storyProgress / CHAPTERS.length) * 100);
   // Saga actual según el capítulo (para la tarjeta de progreso)
   const sagaName = currentChapter <= 3 ? 'SAIYAN'

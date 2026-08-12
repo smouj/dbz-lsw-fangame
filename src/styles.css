@@ -389,10 +389,14 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   box-shadow: inset 0 0 18px rgba(247,147,30,.1), 0 0 24px rgba(247,147,30,.08);
   flex-shrink: 0;
 }
+/* Retrato del héroe (LSW_Portraits 40×56 recortado a transparencia). Se ve
+   grande y nítido, integrado con el glow cálido de la tarjeta (2026-08-12). */
 .mc-hero {
-  height: 78px; width: auto;
+  height: 92px; width: auto;
+  max-width: 68px;
+  object-fit: contain;
   image-rendering: pixelated;
-  filter: drop-shadow(0 0 10px rgba(247,147,30,.32));
+  filter: drop-shadow(0 0 12px rgba(247,147,30,.4));
   transition: transform 120ms ease;
 }
 .mc-hero-name {
@@ -1707,8 +1711,8 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   .mc-title { font-size: 24px; }
   .mc-chapter { font-size: 15px; }
   .mc-kicker, .mc-meta { font-size: 13px; }
-  .mc-hero-wrap { width: 72px; min-height: 84px; }
-  .mc-hero { height: 62px; }
+  .mc-hero-wrap { width: 78px; min-height: 92px; }
+  .mc-hero { height: 74px; max-width: 60px; }
   .menu-item { min-height: 50px; grid-template-columns: 30px 32px 1fr 18px; gap: 8px; }
   .mi-label { font-size: 20px; }
   .mi-desc { font-size: 13px; }
@@ -1727,8 +1731,8 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   .mc-chapter { font-size: 13px; }
   .mc-progress-track { height: 7px; }
   .mc-percent { font-size: 14px; min-width: 34px; }
-  .mc-hero-wrap { width: 56px; min-height: 72px; }
-  .mc-hero { height: 50px; }
+  .mc-hero-wrap { width: 64px; min-height: 78px; }
+  .mc-hero { height: 62px; max-width: 52px; }
   .mc-hero-name { display: none; }
   .menu-nav { gap: 5px; }
   .menu-item { min-height: 44px; grid-template-columns: 26px 28px 1fr 14px; gap: 6px; padding: 6px 8px 6px 0; }
@@ -1752,8 +1756,8 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   .mc-chapter { font-size: 12px; }
   .mc-progress-track { height: 5px; }
   .mc-percent { font-size: 13px; min-width: 32px; }
-  .mc-hero-wrap { width: 56px; min-height: 58px; }
-  .mc-hero { height: 42px; }
+  .mc-hero-wrap { width: 62px; min-height: 68px; }
+  .mc-hero { height: 56px; max-width: 48px; }
   .mc-hero-name { display: none; }
   .menu-nav { gap: 4px; }
   .menu-item { min-height: 36px; grid-template-columns: 28px 28px 1fr 16px; gap: 6px; padding: 5px 8px 5px 0; }
