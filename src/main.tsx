@@ -20,6 +20,7 @@ import { GBC_NATIVE_FPS, type QteState } from './data/actionFidelity';
 import { BattleTimeline, type CinematicEvent, type CinematicProfile } from './battle/timeline';
 import { profileFor, type CinematicKind } from './battle/profiles';
 import { isDebugCinematics, bindDebugControls, renderDebugOverlay, type CinematicDebugInfo, type CinematicDebugController } from './battle/debugCinematics';
+import { isDebugState, bindQteDebugControls, renderStateOverlay, type StateDebugSnapshot } from './battle/debugState';
 import { initAudio, Sfx, setSfxEnabled, setVolume } from './audio/sfx';
 import { LanguageProvider, useLang } from './i18n/LanguageContext';
 import { LANGUAGES, LangCode, TKey } from './i18n';
@@ -806,6 +807,26 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
   const debugActorPoseRef = useRef('');
   const debugTargetPoseRef = useRef('');
   const debugProjectileRef = useRef<{ x: number } | null>(null);
+  // ─── Inspector de estado + debugger QTE (?debugState=1) ───
+  // freeze/step del reloj del Stage Attack (frames GBC): cuando frozen, el
+  // reloj real se ignora y stepFrames inyecta frames manuales en el próximo tick.
+  const qteDebugRef = useRef({ frozen: false, stepFrames: 0 });
+  const [qteDebugFrozen, setQteDebugFrozen] = useState(false);
+
+  // Bind del teclado del debugger QTE (una sola vez, solo si ?debugState=1)
+  useEffect(() => {
+    if (!isDebugState()) return;
+    return bindQteDebugControls({
+      get frozen() { return qteDebugRef.current.frozen; },
+      toggleFreeze() {
+        qteDebugRef.current.frozen = !qteDebugRef.current.frozen;
+        qteDebugRef.current.stepFrames = 0; // descarta steps stale entre QTEs
+        setQteDebugFrozen(qteDebugRef.current.frozen);
+      },
+      step(frames) { qteDebugRef.current.stepFrames += frames; },
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   /** Recalcula la info del overlay a partir del timeline + refs actuales. */
   const refreshDebugInfo = (tick?: number) => {
@@ -1294,13 +1315,20 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
     if (phase !== 'stageInput') return;
     let raf = 0;
     let last = performance.now();
+    qteDebugRef.current.stepFrames = 0; // limpia steps residuales de otro QTE
     let acc = 0; // acumulador de frames GBC (ventana GLOBAL de la secuencia)
     let counterAcc = 0; // acumulador propio de la ventana de contraataque
     const tick = (now: number) => {
       const st = stageQteRef.current;
-      const delta = ((now - last) / 1000) * GBC_NATIVE_FPS;
-      acc += delta;
+      const realDelta = ((now - last) / 1000) * GBC_NATIVE_FPS;
       last = now;
+      // Debugger QTE (?debugState=1): congelado ⇒ el reloj real se ignora y
+      // stepFrames (inyectado por tecla) avanza frame a frame. Sin congelar,
+      // el delta real manda (stepFrames queda a 0 por seguridad).
+      const dbg = qteDebugRef.current;
+      const delta = dbg.frozen ? dbg.stepFrames : realDelta;
+      if (dbg.frozen) dbg.stepFrames = 0;
+      acc += delta;
       if (st.state === 'INPUT_WINDOW') {
         const elapsed = Math.floor(acc);
         setStageQte(prev => ({ ...prev, elapsedFrames: Math.max(prev.elapsedFrames, elapsed) }));
@@ -1629,7 +1657,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
           // Transformación real (Sup.Saiyan-2/3): secuencia cinematográfica
           if (card.id === 27 || card.id === 28) {
             Sfx.transform();
-            setBattleTransform(Date.now());
+            setBattleTransform(nextUid());
             addLog(`${player.name} ${t('battle.powerOn')}!`);
           }
           if (eff === 'buff_ki8' || eff === 'buff_str_ki8') setPStages(s => ({ ...s, ki: clampStage(s.ki + 1) }));
@@ -2269,11 +2297,41 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
     ? (qteFrozen ? 'attack_fwd' : 'idle')
     : (playerPose as BattleSpritePose);
 
+  // ─── Inspector de estado (?debugState=1): snapshot para el overlay ───
+  const fmtStage = (v: number) => (v > 0 ? `+${v}` : `${v}`);
+  const stateDebugSnapshot: StateDebugSnapshot | null = isDebugState() ? {
+    phase: phase.toUpperCase(),
+    round: turn,
+    exchange: `${exchangeIndex + 1}/2`,
+    owner: turnOwner,
+    fighters: [
+      { side: 'P', name: player.name, level: player.level, hp: player.hp, maxHp: player.maxHp, cc: player.cc, maxCc: player.maxCc, pos: positionLabel(player.battlePos), pose: playerPose },
+      ...(player2 ? [{ side: 'P' as const, name: player2.name, level: player2.level, hp: player2.hp, maxHp: player2.maxHp, cc: player2.cc, maxCc: player2.maxCc, pos: positionLabel(player2.battlePos), pose: 'idle' }] : []),
+      { side: 'E', name: enemy.name, level: enemy.level, hp: enemy.hp, maxHp: enemy.maxHp, cc: enemy.cc, maxCc: enemy.maxCc, pos: positionLabel(enemy.battlePos), pose: enemyPose },
+      ...(enemy2 ? [{ side: 'E' as const, name: enemy2.name, level: enemy2.level, hp: enemy2.hp, maxHp: enemy2.maxHp, cc: enemy2.cc, maxCc: enemy2.maxCc, pos: positionLabel(enemy2.battlePos), pose: 'idle' }] : []),
+    ],
+    pStages: `STR ${fmtStage(pStages.str)} · KI ${fmtStage(pStages.ki)} · SPD ${fmtStage(pStages.spd)} · GRD ${fmtStage(pStages.guard)}`,
+    eStages: `STR ${fmtStage(eStages.str)} · KI ${fmtStage(eStages.ki)} · SPD ${fmtStage(eStages.spd)} · GRD ${fmtStage(eStages.guard)}`,
+    power: powerState,
+    gather: gatherTurns,
+    buff: buffTurns,
+    lockOn: pLockOn,
+    acc: pAcc,
+    eva: pEva,
+    handSize: hand.length,
+    selected: selectedCard != null && hand[selectedCard] ? hand[selectedCard].name : null,
+    qte: stageQte.state !== 'WAITING' ? `${stageQte.state} ${stageQte.idx}/${stageQte.seq.length} (+${stageQte.correct}CC) ${stageQte.elapsedFrames}/${stageQte.limitFrames}f [${stageQte.seq.join(' ')}]` : null,
+  } : null;
+
   return (
     <div className={`battle-screen view-${viewMode.toLowerCase()} ${cardFx ? 'is-cinematic' : ''} ${phase === 'stageInput' ? 'qte-active' : ''}`}>
       {/* ═══ Depurador cinematográfico (?debugCinematics=1) ═══ */}
       {isDebugCinematics() && debugCin && (
         <pre className="cinematic-debug-overlay">{renderDebugOverlay(debugCin, debugPaused)}</pre>
+      )}
+      {/* ═══ Inspector de estado (?debugState=1) ═══ */}
+      {isDebugState() && stateDebugSnapshot && (
+        <pre className="state-debug-overlay">{renderStateOverlay(stateDebugSnapshot, qteDebugFrozen)}</pre>
       )}
       {/* ═══ PANTALLA DE CARGA con skeleton (hasta que los assets clave estén listos) ═══ */}
       {loading && !intro && (
@@ -3461,7 +3519,7 @@ function CharactersScreen({ onNavigate, onSelectFighter }: {
   const pickForm = (fid: string) => {
     if (fid === selected) return;
     Sfx.transform();
-    setTransformFx(Date.now());
+    setTransformFx(nextUid());
     setSelected(fid);
   };
 

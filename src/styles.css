@@ -7438,3 +7438,23 @@ button:focus-visible, .chapter-node:focus-visible {
   max-width: 46vw;
   text-shadow: 0 1px 0 #000;
 }
+
+/* Inspector de estado interno (?debugState=1) — esquina superior derecha */
+.state-debug-overlay {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  z-index: 9999;
+  margin: 0;
+  padding: 10px 12px;
+  background: rgba(8, 14, 22, 0.88);
+  border: 1px solid #3f9bd8;
+  border-radius: 6px;
+  color: #cfe6f5;
+  font: 11px/1.55 'Courier New', ui-monospace, monospace;
+  white-space: pre;
+  pointer-events: none;
+  max-width: 46vw;
+  text-align: left;
+  text-shadow: 0 1px 0 #000;
+}

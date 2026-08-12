@@ -4,6 +4,24 @@ Todos los cambios notables en `dbz-lsw-fangame`. Formato basado en [Keep a Chang
 
 ## [Unreleased]
 
+### Inspector de estado + QTE Debugger (`?debugState=1`)
+- **Internal State Inspector**: overlay fijo (esquina superior derecha) con el
+  estado interno de `BattleScreen` en tiempo real — fase, ronda/exchange/owner,
+  HP/CC/posición/pose de cada luchador, stages (STR/KI/SPD/GRD), POWER/GATHER/
+  BUFF/LOCK/ACC/EVA, tamaño de mano y carta seleccionada.
+- **QTE Debugger**: congela/avanza el reloj del Stage Attack (frames GBC).
+  Teclas: `F` congelar/descongelar · `.` +1 frame · `Shift+.` +10 frames. El
+  reloj real se ignora al congelar y los pasos se inyectan frame a frame (con
+  limpieza de pasos residuales entre QTEs).
+- Nuevo módulo `src/battle/debugState.ts` (`isDebugState` / `bindQteDebugControls`
+  / `renderStateOverlay`).
+
+### Fix: keys React únicas (monotónico, no `Date.now()`)
+- `damageNums` / `phaseCue` / `drawFx` / `battleTransform` / `transformFx` usaban
+  `Date.now()` como key: varios eventos en el mismo ms colisionaban ("two children
+  with the same key" → números de daño duplicados/omitidos). Sustituido por
+  `nextUid()` (contador monotónico) en todo `main.tsx`.
+
 ## [2026-08-13] — Development Studio (#dev) + retrato CONTINUAR + HUD fijo
 
 ### Development Studio (herramienta interna, `76142fa`)

@@ -27,6 +27,17 @@ Herramienta de producción embebida en el mismo proyecto. Accede desde el navega
 - **Battle Lab** — combate instantáneo real (Versus o capítulo de historia)
 - **Validation** — 11 chequeos de integridad · **Research** — fuentes y nivel de verificación
 
+### 🔬 Modos de depuración en combate
+
+Parámetros de URL que activan overlays de diagnóstico (solo desarrollo):
+
+- `?debugCinematics=1` — depurador cinematográfico: `ACTION/SHOT/TICK` + pose del
+  atacante/defensor + proyectil + próximo evento. Teclas: `Space` play/pausa ·
+  `←/→` ±1 tick · `Shift+←/→` ±10 · `R` reiniciar.
+- `?debugState=1` — Inspector de estado interno (fase, CC, posiciones, stages,
+  POWER/GATHER/etc.) + QTE Debugger. Teclas: `F` congelar/descongelar el reloj del
+  Stage Attack · `.` +1 frame · `Shift+.` +10 frames.
+
 ## 🧱 Stack
 
 - **Vite 6 + React 19 + TypeScript**
