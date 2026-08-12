@@ -7419,3 +7419,22 @@ button:focus-visible, .chapter-node:focus-visible {
   .dev-exit { width: auto; }
   .dev-main { padding: 14px; }
 }
+
+/* ─── Depurador cinematográfico (?debugCinematics=1) ─── */
+.cinematic-debug-overlay {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  z-index: 9999;
+  margin: 0;
+  padding: 10px 12px;
+  background: rgba(10, 12, 16, 0.86);
+  border: 1px solid #d8a830;
+  border-radius: 6px;
+  color: #e8e2d0;
+  font: 11px/1.55 'Courier New', ui-monospace, monospace;
+  white-space: pre;
+  pointer-events: none;
+  max-width: 46vw;
+  text-shadow: 0 1px 0 #000;
+}

@@ -17,9 +17,9 @@ import { storyPortraitUrl } from './data/storyPortraits';
 import { spriteManifestUrl, spriteFrameUrl, spriteDirFor } from './data/spriteManifest';
 import { SCENARIOS, SPECIAL_ACTION_BACKGROUND, type BattleViewMode } from './data/scenarios';
 import { GBC_NATIVE_FPS, type QteState } from './data/actionFidelity';
-import { BattleTimeline, type CinematicEvent } from './battle/timeline';
+import { BattleTimeline, type CinematicEvent, type CinematicProfile } from './battle/timeline';
 import { profileFor, type CinematicKind } from './battle/profiles';
-import { isDebugCinematics } from './battle/debugCinematics';
+import { isDebugCinematics, bindDebugControls, renderDebugOverlay, type CinematicDebugInfo, type CinematicDebugController } from './battle/debugCinematics';
 import { initAudio, Sfx, setSfxEnabled, setVolume } from './audio/sfx';
 import { LanguageProvider, useLang } from './i18n/LanguageContext';
 import { LANGUAGES, LangCode, TKey } from './i18n';
@@ -43,6 +43,11 @@ interface CharManifest {
 type BattleSpritePose = 'idle' | 'move' | 'guard' | 'attack_fwd' | 'attack_ud' | 'hurt' | 'beam_charge' | 'beam_fire' | 'power_up';
 const SPRITE_MANIFEST_CACHE = new Map<string, CharManifest>();
 const SPRITE_MANIFEST_PROMISES = new Map<string, Promise<CharManifest | null>>();
+
+// Contador monotónico para keys React (evita la colisión de Date.now() al
+// generar varios ids en el mismo milisegundo — p.ej. varios damage numbers).
+let __reactUid = 0;
+const nextUid = () => ++__reactUid;
 
 const POSE_FALLBACKS: Record<BattleSpritePose, BattleSpritePose[]> = {
   idle: ['idle'],
@@ -609,7 +614,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
   useEffect(() => { setViewFade(v => v + 1); }, [viewMode]);
   const gbcMs = (frames: number) => Math.round((frames / GBC_NATIVE_FPS) * 1000);
   const showPhaseCue = (title: string, sub: string, next: () => void, frames = 38) => {
-    setPhaseCue({ id: Date.now(), title, sub });
+    setPhaseCue({ id: nextUid(), title, sub });
     window.setTimeout(() => {
       setPhaseCue(null);
       next();
@@ -758,7 +763,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
     // Animar el robo: la carta vuela del mazo a la mano (~420ms) y luego
     // se añade a la mano de verdad (el GBC muestra la carta entrando).
     if (drawFxTimer.current) window.clearTimeout(drawFxTimer.current);
-    setDrawFx({ card, nonce: Date.now() });
+    setDrawFx({ card, nonce: nextUid() });
     Sfx.draw();
     drawFxTimer.current = window.setTimeout(() => {
       setHand(prev => (prev.length >= 6 ? prev : [...prev, card]));
@@ -792,6 +797,38 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
   // emite eventos por tick (SHOT/ACTOR_POSE/HIT_FRAME/APPLY_DAMAGE/…); los
   // setTimeout NO son autoridad de gameplay (plan del usuario, punto 1-2).
   const cinematicRef = useRef<BattleTimeline | null>(null);
+  // ─── Depurador cinematográfico (?debugCinematics=1) ───
+  const [debugCin, setDebugCin] = useState<CinematicDebugInfo | null>(null);
+  const [debugPaused, setDebugPaused] = useState(false);
+  const debugPausedRef = useRef(false);
+  const debugCtxRef = useRef<{ action: string; profile: CinematicProfile; initialPose: string } | null>(null);
+  const debugShotRef = useRef('');
+  const debugActorPoseRef = useRef('');
+  const debugTargetPoseRef = useRef('');
+  const debugProjectileRef = useRef<{ x: number } | null>(null);
+
+  /** Recalcula la info del overlay a partir del timeline + refs actuales. */
+  const refreshDebugInfo = (tick?: number) => {
+    const tl = cinematicRef.current;
+    const ctx = debugCtxRef.current;
+    if (!tl || !ctx) return;
+    const p = ctx.profile;
+    const cur = tick ?? tl.tick;
+    let next: { type: string; tick: number } | null = null;
+    for (const t of p.tracks) {
+      if (t.tick > cur && (!next || t.tick < next.tick)) next = { type: t.event.type, tick: t.tick };
+    }
+    setDebugCin({
+      action: ctx.action,
+      shot: debugShotRef.current || p.presentation,
+      tick: cur,
+      totalTicks: p.totalTicks,
+      actor: debugActorPoseRef.current ? { animation: debugActorPoseRef.current, frame: '' } : null,
+      defender: debugTargetPoseRef.current ? { animation: debugTargetPoseRef.current, frame: '' } : null,
+      projectile: debugProjectileRef.current,
+      nextEvent: next,
+    });
+  };
   const clearCinematicTimers = () => {
     cinematicTimers.current.forEach(id => window.clearTimeout(id));
     cinematicTimers.current = [];
@@ -812,6 +849,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
         setCardFx(null);
         resetActorPose();
         resetTargetPose();
+        if (isDebugCinematics()) setDebugCin(null);
         onDone();
       }, gbcMs(12)));
     };
@@ -825,6 +863,16 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
       : card.type === 'support' ? 'support' : 'support';
     const profile = profileFor(kind, card.name);
 
+    // Depurador: registrar el contexto cinematográfico actual
+    if (isDebugCinematics()) {
+      debugCtxRef.current = { action: card.name, profile, initialPose: cardBattlePose(card, 'field') };
+      debugShotRef.current = profile.presentation;
+      debugActorPoseRef.current = cardBattlePose(card, 'field');
+      debugTargetPoseRef.current = '';
+      debugProjectileRef.current = null;
+      refreshDebugInfo(0);
+    }
+
     // El plano SOLO/DUEL/PROJECTILE se aplica desde el primer tick
     setViewMode('ACTION');
     setCardFx({ card, side, step: 'attacker' });
@@ -832,6 +880,34 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
 
     // Guard: si es beam/damage con target cut, el defensor espera en guard
     const applyEvent = (e: CinematicEvent) => {
+      // Depurador: actualizar refs + overlay en cada evento
+      if (isDebugCinematics()) {
+        switch (e.type) {
+          case 'SHOT': {
+            const s = (e.payload as { shot?: string })?.shot;
+            if (s) debugShotRef.current = s;
+            break;
+          }
+          case 'ACTOR_POSE': {
+            const pose = (e.payload as { pose?: BattleSpritePose })?.pose;
+            if (pose) debugActorPoseRef.current = pose;
+            break;
+          }
+          case 'TARGET_POSE': {
+            const pose = (e.payload as { pose?: BattleSpritePose })?.pose;
+            if (pose) debugTargetPoseRef.current = pose;
+            break;
+          }
+          case 'PROJECTILE': {
+            const p = e.payload as { action?: string; progress?: number };
+            const progress = p.progress ?? (p.action === 'impact' || p.action === 'explode' ? 1 : 0);
+            debugProjectileRef.current = { x: Math.round(progress * 100) };
+            break;
+          }
+          default: break;
+        }
+        refreshDebugInfo(e.tick);
+      }
       switch (e.type) {
         case 'SHOT': {
           const shot = (e.payload as { shot?: string })?.shot;
@@ -902,6 +978,42 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
     cinematicRef.current = tl;
     tl.start();
   };
+
+  // ─── Depurador cinematográfico: controles de teclado (Space/←/→/R) ───
+  useEffect(() => {
+    if (!isDebugCinematics()) return;
+    const ctrl: CinematicDebugController = {
+      get paused() { return debugPausedRef.current; },
+      seekBy: (ticks) => {
+        const tl = cinematicRef.current;
+        if (!tl) return;
+        tl.seek(Math.max(0, Math.min(tl.tick + ticks, tl.profile.totalTicks)));
+        refreshDebugInfo();
+      },
+      togglePause: () => {
+        const tl = cinematicRef.current;
+        if (!tl) return;
+        if (tl.paused) { tl.resume(); setDebugPaused(false); debugPausedRef.current = false; }
+        else { tl.pause(); setDebugPaused(true); debugPausedRef.current = true; }
+      },
+      restart: () => {
+        const tl = cinematicRef.current;
+        if (!tl) return;
+        tl.seek(0);
+        if (tl.paused) { tl.resume(); setDebugPaused(false); debugPausedRef.current = false; }
+        const ctx = debugCtxRef.current;
+        if (ctx) {
+          debugShotRef.current = ctx.profile.presentation;
+          debugActorPoseRef.current = ctx.initialPose;
+          debugTargetPoseRef.current = '';
+          debugProjectileRef.current = null;
+        }
+        refreshDebugInfo();
+      },
+    };
+    return bindDebugControls(ctrl);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const cardFxActorPose = (card: CardDef, step: CardFxStep): BattleSpritePose => {
     if (step === 'attacker') {
@@ -1328,7 +1440,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
         if (dmg > 0) setEnemyPose('hurt');
         setFlashEnemy(true);
         hitImpact('enemy');
-        setDamageNums(prev => [...prev, { value: dmg, type: 'damage', ...dmgPos('enemy'), id: Date.now() }]);
+        setDamageNums(prev => [...prev, { value: dmg, type: 'damage', ...dmgPos('enemy'), id: nextUid() }]);
         addLog(`${player.name} → ${card.name} — ${dmg} ${t('battle.dmg')}`);
         Sfx.hit();
         setTimeout(() => setFlashEnemy(false), 150);
@@ -1385,7 +1497,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
       setPlayerPose('hurt');
       setFlashPlayer(true);
       hitImpact('player');
-      setDamageNums(prev => [...prev, { value: counterDmg, type: 'damage', ...dmgPos('player'), id: Date.now() }]);
+      setDamageNums(prev => [...prev, { value: counterDmg, type: 'damage', ...dmgPos('player'), id: nextUid() }]);
       addLog(`${enemy.name} ${t('battle.counterHit')} — ${counterDmg} ${t('battle.dmg')} (conservas ${ccGained} CC)`);
       Sfx.hit();
       setTimeout(() => setFlashPlayer(false), 150);
@@ -1467,14 +1579,14 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
           const pct = eff === 'heal_strong' ? (1 / 4 + 1 / 3) : eff === 'heal_light' ? 0.3 : 0.25;
           heal = Math.floor(player.maxHp * pct);
           setPlayer(prev => ({ ...prev, hp: Math.min(prev.maxHp, prev.hp + heal) }));
-          setDamageNums(prev => [...prev, { value: heal, type: 'heal', ...dmgPos('player'), id: Date.now() }]);
+          setDamageNums(prev => [...prev, { value: heal, type: 'heal', ...dmgPos('player'), id: nextUid() }]);
           addLog(`${player.name} ${t('battle.uses')} ${card.name} — +${heal} ${t('battle.hp')}!`);
         } else if (eff === 'medical_machine') {
           // Medical Machine: Power + (Speed/2 * phase). Sin phase en nuestro engine:
           // HYPOTHESIS — card.atk + floor(SPD/2 * 4). La fase exacta es UNKNOWN.
           heal = card.atk + Math.floor(player.spd / 2) * 4;
           setPlayer(prev => ({ ...prev, hp: Math.min(prev.maxHp, prev.hp + heal) }));
-          setDamageNums(prev => [...prev, { value: heal, type: 'heal', ...dmgPos('player'), id: Date.now() }]);
+          setDamageNums(prev => [...prev, { value: heal, type: 'heal', ...dmgPos('player'), id: nextUid() }]);
           addLog(`${player.name} ${t('battle.uses')} ${card.name} — +${heal} ${t('battle.hp')}!`);
         } else if (eff === 'life_drain') {
           // roba vida: daño + cura
@@ -1483,7 +1595,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
           setPlayer(prev => ({ ...prev, hp: Math.min(prev.maxHp, prev.hp + drain) }));
           if (drain > 0) setEnemyPose('hurt');
           supportImpact = drain > 0;
-          setDamageNums(prev => [...prev, { value: drain, type: 'damage', ...dmgPos('enemy'), id: Date.now() }]);
+          setDamageNums(prev => [...prev, { value: drain, type: 'damage', ...dmgPos('enemy'), id: nextUid() }]);
           addLog(`${player.name} ${t('battle.uses')} ${card.name} — ${drain} ${t('battle.dmg')} (+${drain} HP)`);
         } else if (eff === 'cc_recovery') {
           const gain = card.id === 97 ? 5 : 3;
@@ -1504,7 +1616,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
           // OHKO con baja precisión
           if (Math.random() < card.acc / 100) {
             setEnemy(prev => ({ ...prev, hp: 0 }));
-            setDamageNums(prev => [...prev, { value: 999, type: 'damage', ...dmgPos('enemy'), id: Date.now() }]);
+            setDamageNums(prev => [...prev, { value: 999, type: 'damage', ...dmgPos('enemy'), id: nextUid() }]);
             addLog(`${player.name} ${t('battle.uses')} ${card.name} — OHKO!`);
             setTimeout(() => { setEnemyPose('hurt'); setPhase('win'); Sfx.victory(); addLog(`${enemy.name} ${t('battle.defeated')}`); }, 500);
             return;
@@ -1550,7 +1662,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
             setEnemy(prev => ({ ...prev, hp: Math.max(0, prev.hp - dmg) }));
             if (dmg > 0) setEnemyPose('hurt');
             supportImpact = dmg > 0;
-            setDamageNums(prev => [...prev, { value: dmg, type: 'damage', ...dmgPos('enemy'), id: Date.now() }]);
+            setDamageNums(prev => [...prev, { value: dmg, type: 'damage', ...dmgPos('enemy'), id: nextUid() }]);
             addLog(`${player.name} ${t('battle.uses')} ${card.name} — ${dmg} ${t('battle.dmg')}`);
           } else {
             addLog(`${player.name} ${t('battle.uses')} ${card.name} — ${t('battle.buff')}`);
@@ -1641,9 +1753,9 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
 
       if (damage > 0) {
         setEnemyPose('hurt');
-        setDamageNums(prev => [...prev, { value: damage, type: 'damage', ...dmgPos('enemy'), id: Date.now() }]);
+        setDamageNums(prev => [...prev, { value: damage, type: 'damage', ...dmgPos('enemy'), id: nextUid() }]);
       }
-      else if (hitType === 'miss') setDamageNums(prev => [...prev, { value: 0, type: 'miss', ...dmgPos('enemy'), id: Date.now() }]);
+      else if (hitType === 'miss') setDamageNums(prev => [...prev, { value: 0, type: 'miss', ...dmgPos('enemy'), id: nextUid() }]);
 
       // Coste real de la carta (JOINT)
       setPlayer(prev => ({ ...prev, cc: Math.max(0, prev.cc - card.cc) }));
@@ -1963,7 +2075,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
       const pct = eff === 'heal_strong' ? (1/4 + 1/3) : eff === 'heal_light' ? 0.3 : 0.25;
       const healed = Math.floor(player.maxHp * pct);
       setPlayer(prev => ({ ...prev, hp: Math.min(prev.maxHp, prev.hp + healed) }));
-      setDamageNums(prev => [...prev, { value: healed, type: 'heal', ...dmgPos('player'), id: Date.now() }]);
+      setDamageNums(prev => [...prev, { value: healed, type: 'heal', ...dmgPos('player'), id: nextUid() }]);
       addLog(`${player.name} usa ${card.name} — +${healed} HP!`);
       handleDamage(0.5, 'DEFIENDE');
     } else if (eff.startsWith('buff_') || eff.startsWith('debuff_') || eff.startsWith('powerup_')) {
@@ -1986,8 +2098,8 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
       setTimeout(() => setFlashPlayer(false), 150);
     } else {
       setPlayer(prev => ({ ...prev, hp: Math.max(0, prev.hp - 0) }));
-      if (hitType === 'guard') setDamageNums(prev => [...prev, { value: 0, type: 'guard', ...dmgPos('player'), id: Date.now() }]);
-      else setDamageNums(prev => [...prev, { value: 0, type: 'miss', ...dmgPos('player'), id: Date.now() }]);
+      if (hitType === 'guard') setDamageNums(prev => [...prev, { value: 0, type: 'guard', ...dmgPos('player'), id: nextUid() }]);
+      else setDamageNums(prev => [...prev, { value: 0, type: 'miss', ...dmgPos('player'), id: nextUid() }]);
     }
     setEnemy(prev => ({ ...prev, cc: Math.max(0, prev.cc - cardIncoming.cc) }));
     _finishDefenseResolution();
@@ -2095,9 +2207,9 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
     else if (damage > 0) Sfx.punch();
     else if (hitType === 'miss') Sfx.dodge();
     setTimeout(() => setFlashPlayer(false), 150);
-    if (damage > 0) { setPlayerPose('hurt'); setDamageNums(prev => [...prev, { value: damage, type: 'damage', ...dmgPos('player'), id: Date.now() }]); }
-    else if (hitType === 'guard') setDamageNums(prev => [...prev, { value: 0, type: 'guard', ...dmgPos('player'), id: Date.now() }]);
-    else if (hitType === 'miss') setDamageNums(prev => [...prev, { value: 0, type: 'miss', ...dmgPos('player'), id: Date.now() }]);
+    if (damage > 0) { setPlayerPose('hurt'); setDamageNums(prev => [...prev, { value: damage, type: 'damage', ...dmgPos('player'), id: nextUid() }]); }
+    else if (hitType === 'guard') setDamageNums(prev => [...prev, { value: 0, type: 'guard', ...dmgPos('player'), id: nextUid() }]);
+    else if (hitType === 'miss') setDamageNums(prev => [...prev, { value: 0, type: 'miss', ...dmgPos('player'), id: nextUid() }]);
 
     if (player.hp - damage <= 0 && player2) {
       // 2v2: cae el jugador activo, entra el compañero con HP completo (como el GBC)
@@ -2159,6 +2271,10 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
 
   return (
     <div className={`battle-screen view-${viewMode.toLowerCase()} ${cardFx ? 'is-cinematic' : ''} ${phase === 'stageInput' ? 'qte-active' : ''}`}>
+      {/* ═══ Depurador cinematográfico (?debugCinematics=1) ═══ */}
+      {isDebugCinematics() && debugCin && (
+        <pre className="cinematic-debug-overlay">{renderDebugOverlay(debugCin, debugPaused)}</pre>
+      )}
       {/* ═══ PANTALLA DE CARGA con skeleton (hasta que los assets clave estén listos) ═══ */}
       {loading && !intro && (
         <div className="battle-loading">

@@ -97,6 +97,21 @@ export class BattleTimeline {
     this.raf = 0;
   }
 
+  /** True si el reloj está parado a mitad de secuencia (pausa manual). */
+  get paused(): boolean {
+    return this.raf === 0 && !this.done;
+  }
+
+  pause(): void {
+    if (this.done) return;
+    this.cancel();
+  }
+
+  resume(): void {
+    if (this.done || this.raf) return;
+    this.start();
+  }
+
   /** Salta a un tick concreto (depurador frame a frame). */
   seek(tick: number): void {
     const target = Math.max(0, Math.min(tick, this.profile.totalTicks));
