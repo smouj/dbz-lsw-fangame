@@ -180,7 +180,7 @@
     ]
   },
   "beam_charge": {
-    "frame_count": 8,
+    "frame_count": 4,
     "fps": 7,
     "loop": false,
     "frames": [
@@ -207,28 +207,35 @@
         "file": "ginyu_gokus_body_beam_charge_03.png",
         "w": 31,
         "h": 44
-      },
+      }
+    ]
+  },
+  "beam_fire": {
+    "frame_count": 4,
+    "fps": 8,
+    "loop": false,
+    "frames": [
       {
-        "name": "ginyu_gokus_body_beam_charge_04",
-        "file": "ginyu_gokus_body_beam_charge_04.png",
+        "name": "ginyu_gokus_body_beam_fire_00",
+        "file": "ginyu_gokus_body_beam_fire_00.png",
         "w": 38,
         "h": 46
       },
       {
-        "name": "ginyu_gokus_body_beam_charge_05",
-        "file": "ginyu_gokus_body_beam_charge_05.png",
+        "name": "ginyu_gokus_body_beam_fire_01",
+        "file": "ginyu_gokus_body_beam_fire_01.png",
         "w": 31,
         "h": 46
       },
       {
-        "name": "ginyu_gokus_body_beam_charge_06",
-        "file": "ginyu_gokus_body_beam_charge_06.png",
+        "name": "ginyu_gokus_body_beam_fire_02",
+        "file": "ginyu_gokus_body_beam_fire_02.png",
         "w": 39,
         "h": 46
       },
       {
-        "name": "ginyu_gokus_body_beam_charge_07",
-        "file": "ginyu_gokus_body_beam_charge_07.png",
+        "name": "ginyu_gokus_body_beam_fire_03",
+        "file": "ginyu_gokus_body_beam_fire_03.png",
         "w": 27,
         "h": 48
       }

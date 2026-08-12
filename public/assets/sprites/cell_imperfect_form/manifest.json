@@ -186,7 +186,7 @@
     ]
   },
   "beam_charge": {
-    "frame_count": 8,
+    "frame_count": 5,
     "fps": 7,
     "loop": false,
     "frames": [
@@ -219,22 +219,29 @@
         "file": "cell_imperfect_form_beam_charge_04.png",
         "w": 30,
         "h": 44
-      },
+      }
+    ]
+  },
+  "beam_fire": {
+    "frame_count": 3,
+    "fps": 8,
+    "loop": false,
+    "frames": [
       {
-        "name": "cell_imperfect_form_beam_charge_05",
-        "file": "cell_imperfect_form_beam_charge_05.png",
+        "name": "cell_imperfect_form_beam_fire_00",
+        "file": "cell_imperfect_form_beam_fire_00.png",
         "w": 29,
         "h": 42
       },
       {
-        "name": "cell_imperfect_form_beam_charge_06",
-        "file": "cell_imperfect_form_beam_charge_06.png",
+        "name": "cell_imperfect_form_beam_fire_01",
+        "file": "cell_imperfect_form_beam_fire_01.png",
         "w": 40,
         "h": 42
       },
       {
-        "name": "cell_imperfect_form_beam_charge_07",
-        "file": "cell_imperfect_form_beam_charge_07.png",
+        "name": "cell_imperfect_form_beam_fire_02",
+        "file": "cell_imperfect_form_beam_fire_02.png",
         "w": 40,
         "h": 46
       }

@@ -12,15 +12,22 @@ Todos los cambios notables en `dbz-lsw-fangame`. Formato basado en [Keep a Chang
 - Nuevo `scripts/import-fixed-sprites.mjs` importa desde la fuente autoritativa
   `DBZ_LSW_COMPLETE_CHARACTER_SPRITES_FIXED.zip` (`00_manifest/animations.json` +
   `corrections.json`, 171 fixes). Mapeo: idle/move/guard/attack_fwd/attack_ud/
-  hurt (recoil completo, 6-7 frames)/beam_charge. Las 42 formas + `goku_ssj2` y
+  hurt (recoil completo, 6-7 frames). Las 42 formas + `goku_ssj2` y
   `ginyu_gokus_body` quedan correctas.
-- `beam_fire`/`power_up` se omiten (el zip FIXED no trae poses separadas: el beam
-  es solo carga y el proyectil es el efecto `linked_beam`); el juego hace fallback
-  a `beam_charge` vía `POSE_FALLBACKS`.
+- **beam partido en carga y disparo**: la categoría `beam` del zip FIXED tiene
+  dos filas en la hoja original (carga arriba, disparo abajo). El importador
+  detecta el salto de `source_y` y genera `beam_charge` (fila superior) +
+  `beam_fire` (fila inferior) en vez de colapsar todo en `beam_charge`. La
+  dirección se verificó visualmente (carga = manos juntas, disparo = brazos
+  extendidos). Las formas con beam de una sola fila (p.ej. Piccolo, Goku SSJ,
+  Goten) siguen usando solo `beam_charge` y el juego hace fallback en `beam_fire`.
+- `power_up` sigue sin categoría propia (el zip FIXED no la trae); el juego hace
+  fallback a `beam_charge` vía `POSE_FALLBACKS`. El proyectil del beam es el
+  efecto `linked_beam`.
 - `vegito_base` reutiliza `goku_super_saiyan` y `future_trunks_super_saiyan`
   reutiliza `future_trunks_base` (no están en el zip FIXED).
-- Dev Studio: la lista de poses del Sprite Inspector refleja las 7 poses reales
-  (sin `beam_fire`/`power_up`).
+- Dev Studio: la lista de poses del Sprite Inspector refleja las 8 poses reales
+  (incluye `beam_fire`).
 
 ### Inspector de estado + QTE Debugger (`?debugState=1`)
 - **Internal State Inspector**: overlay fijo (esquina superior derecha) con el

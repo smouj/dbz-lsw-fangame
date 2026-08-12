@@ -180,7 +180,7 @@
     ]
   },
   "beam_charge": {
-    "frame_count": 11,
+    "frame_count": 4,
     "fps": 7,
     "loop": false,
     "frames": [
@@ -207,46 +207,53 @@
         "file": "android_19_base_beam_charge_03.png",
         "w": 32,
         "h": 41
-      },
+      }
+    ]
+  },
+  "beam_fire": {
+    "frame_count": 7,
+    "fps": 8,
+    "loop": false,
+    "frames": [
       {
-        "name": "android_19_base_beam_charge_04",
-        "file": "android_19_base_beam_charge_04.png",
+        "name": "android_19_base_beam_fire_00",
+        "file": "android_19_base_beam_fire_00.png",
         "w": 26,
         "h": 44
       },
       {
-        "name": "android_19_base_beam_charge_05",
-        "file": "android_19_base_beam_charge_05.png",
+        "name": "android_19_base_beam_fire_01",
+        "file": "android_19_base_beam_fire_01.png",
         "w": 32,
         "h": 39
       },
       {
-        "name": "android_19_base_beam_charge_06",
-        "file": "android_19_base_beam_charge_06.png",
+        "name": "android_19_base_beam_fire_02",
+        "file": "android_19_base_beam_fire_02.png",
         "w": 31,
         "h": 39
       },
       {
-        "name": "android_19_base_beam_charge_07",
-        "file": "android_19_base_beam_charge_07.png",
+        "name": "android_19_base_beam_fire_03",
+        "file": "android_19_base_beam_fire_03.png",
         "w": 31,
         "h": 38
       },
       {
-        "name": "android_19_base_beam_charge_08",
-        "file": "android_19_base_beam_charge_08.png",
+        "name": "android_19_base_beam_fire_04",
+        "file": "android_19_base_beam_fire_04.png",
         "w": 26,
         "h": 44
       },
       {
-        "name": "android_19_base_beam_charge_09",
-        "file": "android_19_base_beam_charge_09.png",
+        "name": "android_19_base_beam_fire_05",
+        "file": "android_19_base_beam_fire_05.png",
         "w": 32,
         "h": 39
       },
       {
-        "name": "android_19_base_beam_charge_10",
-        "file": "android_19_base_beam_charge_10.png",
+        "name": "android_19_base_beam_fire_06",
+        "file": "android_19_base_beam_fire_06.png",
         "w": 32,
         "h": 39
       }

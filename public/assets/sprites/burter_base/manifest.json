@@ -180,7 +180,7 @@
     ]
   },
   "beam_charge": {
-    "frame_count": 7,
+    "frame_count": 4,
     "fps": 7,
     "loop": false,
     "frames": [
@@ -207,22 +207,29 @@
         "file": "burter_base_beam_charge_03.png",
         "w": 38,
         "h": 35
-      },
+      }
+    ]
+  },
+  "beam_fire": {
+    "frame_count": 3,
+    "fps": 8,
+    "loop": false,
+    "frames": [
       {
-        "name": "burter_base_beam_charge_04",
-        "file": "burter_base_beam_charge_04.png",
+        "name": "burter_base_beam_fire_00",
+        "file": "burter_base_beam_fire_00.png",
         "w": 32,
         "h": 48
       },
       {
-        "name": "burter_base_beam_charge_05",
-        "file": "burter_base_beam_charge_05.png",
+        "name": "burter_base_beam_fire_01",
+        "file": "burter_base_beam_fire_01.png",
         "w": 32,
         "h": 48
       },
       {
-        "name": "burter_base_beam_charge_06",
-        "file": "burter_base_beam_charge_06.png",
+        "name": "burter_base_beam_fire_02",
+        "file": "burter_base_beam_fire_02.png",
         "w": 31,
         "h": 48
       }

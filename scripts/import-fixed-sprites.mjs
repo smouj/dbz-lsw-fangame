@@ -12,11 +12,12 @@
 // Mapeo de categorías FIXED → pose del juego:
 //   idle → idle · movement → move · guard → guard ·
 //   attack_forward → attack_fwd · attack_vertical → attack_ud ·
-//   hurt → hurt (recoil completo) · beam → beam_charge
-// beam_fire / power_up se omiten (el juego hace fallback a beam_charge
-// vía POSE_FALLBACKS, ya que el zip FIXED no trae poses separadas de
-// "fuego de beam" ni "power-up": el beam es solo carga, y el proyectil
-// es el efecto `linked_beam`).
+//   hurt → hurt (recoil completo)
+//   beam → beam_charge (fila superior) + beam_fire (fila inferior),
+//   partido por el salto de source_y en la hoja original.
+// power_up no tiene categoría propia en el zip FIXED; el juego hace fallback
+// a beam_charge vía POSE_FALLBACKS. El proyectil del beam es el efecto
+// `linked_beam` (no un frame de personaje).
 //
 // Uso: node scripts/import-fixed-sprites.mjs /abs/path/FIXED.zip
 // ═══════════════════════════════════════════════════════════
@@ -88,6 +89,9 @@ const COPY_FROM = {
 };
 
 // Categoría FIXED → pose del juego + metadatos de reproducción.
+// `beam` se PARTE en beam_charge (fila superior = carga) y beam_fire
+// (fila inferior = disparo), detectando el salto de `source_y` en la hoja
+// original. Ver POSE_MAP_BEAM abajo.
 const POSE_MAP = {
   idle: { pose: 'idle', fps: 3, loop: true },
   movement: { pose: 'move', fps: 6, loop: true },
@@ -95,11 +99,47 @@ const POSE_MAP = {
   attack_forward: { pose: 'attack_fwd', fps: 7, loop: false },
   attack_vertical: { pose: 'attack_ud', fps: 7, loop: false },
   hurt: { pose: 'hurt', fps: 6, loop: false },
-  beam: { pose: 'beam_charge', fps: 7, loop: false },
 };
+const BEAM_CHARGE = { pose: 'beam_charge', fps: 7, loop: false };
+const BEAM_FIRE = { pose: 'beam_fire', fps: 8, loop: false };
 
 // Orden canónico de poses en el manifest (igual que el formato previo).
-const POSE_ORDER = ['idle', 'move', 'guard', 'attack_fwd', 'attack_ud', 'hurt', 'beam_charge'];
+const POSE_ORDER = ['idle', 'move', 'guard', 'attack_fwd', 'attack_ud', 'hurt', 'beam_charge', 'beam_fire'];
+
+// Mapa path → source_y para los frames de `beam`, leído de sprites.csv.
+// Se usa para detectar el corte de fila (carga → disparo) en la hoja original.
+function buildBeamSourceY(tmpRoot) {
+  const csvPath = path.join(tmpRoot, '00_manifest', 'sprites.csv');
+  if (!fs.existsSync(csvPath)) return null;
+  const csv = fs.readFileSync(csvPath, 'utf8');
+  const lines = csv.split(/\r?\n/);
+  if (lines.length < 2) return null;
+  const header = lines[0].split(',');
+  const idxPath = header.indexOf('path');
+  const idxY = header.indexOf('source_y');
+  const idxKind = header.indexOf('asset_kind');
+  if (idxPath < 0 || idxY < 0) return null;
+  const map = new Map();
+  for (let i = 1; i < lines.length; i++) {
+    const line = lines[i];
+    if (!line.trim()) continue;
+    const cols = line.split(',');
+    if (cols[idxKind] !== 'frame') continue;
+    const y = parseInt(cols[idxY], 10);
+    if (!Number.isFinite(y)) continue;
+    map.set(cols[idxPath], y);
+  }
+  return map;
+}
+
+// Dado el source_y de los frames de beam (en orden de la hoja), devuelve el
+// índice donde cambia de fila (salto > 20px), o -1 si es una sola fila.
+function beamSplitIndex(sourceYs) {
+  for (let i = 1; i < sourceYs.length; i++) {
+    if (sourceYs[i] - sourceYs[i - 1] > 20) return i;
+  }
+  return -1;
+}
 
 function pngSize(filePath) {
   const buf = fs.readFileSync(filePath);
@@ -143,6 +183,7 @@ try {
     throw new Error('No se encontró 00_manifest/animations.json en el zip.');
   }
   const animations = JSON.parse(fs.readFileSync(animPath, 'utf8')).animations;
+  const sourceYMap = buildBeamSourceY(tmpRoot);
 
   let imported = 0;
   const errors = [];
@@ -167,6 +208,28 @@ try {
         return { w, h };
       });
       poses[meta.pose] = { ...meta, frames };
+    }
+
+    // beam → beam_charge + beam_fire (partir por fila: carga arriba, disparo abajo).
+    const beamPaths = anim['beam']?.frames || [];
+    if (beamPaths.length > 0) {
+      const srcYs = beamPaths.map(p => sourceYMap?.get(p) ?? 0);
+      const split = beamSplitIndex(srcYs);
+      const chargePaths = split > 0 ? beamPaths.slice(0, split) : beamPaths;
+      const firePaths = split > 0 ? beamPaths.slice(split) : [];
+      const copyBeam = (relPaths, meta) => {
+        const frames = relPaths.map((relPath, i) => {
+          const abs = path.join(tmpRoot, relPath);
+          if (!fs.existsSync(abs)) throw new Error(`Falta frame: ${relPath}`);
+          const { w, h } = pngSize(abs);
+          const dest = `${gameDir}_${meta.pose}_${String(i).padStart(2, '0')}.png`;
+          fs.copyFileSync(abs, path.join(targetDir, dest));
+          return { w, h };
+        });
+        poses[meta.pose] = { ...meta, frames };
+      };
+      copyBeam(chargePaths, BEAM_CHARGE);
+      if (firePaths.length > 0) copyBeam(firePaths, BEAM_FIRE);
     }
 
     writeManifest(gameDir, poses);

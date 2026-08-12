@@ -198,7 +198,7 @@
     ]
   },
   "beam_charge": {
-    "frame_count": 9,
+    "frame_count": 4,
     "fps": 7,
     "loop": false,
     "frames": [
@@ -225,34 +225,41 @@
         "file": "recoome_base_beam_charge_03.png",
         "w": 25,
         "h": 43
-      },
+      }
+    ]
+  },
+  "beam_fire": {
+    "frame_count": 5,
+    "fps": 8,
+    "loop": false,
+    "frames": [
       {
-        "name": "recoome_base_beam_charge_04",
-        "file": "recoome_base_beam_charge_04.png",
+        "name": "recoome_base_beam_fire_00",
+        "file": "recoome_base_beam_fire_00.png",
         "w": 32,
         "h": 42
       },
       {
-        "name": "recoome_base_beam_charge_05",
-        "file": "recoome_base_beam_charge_05.png",
+        "name": "recoome_base_beam_fire_01",
+        "file": "recoome_base_beam_fire_01.png",
         "w": 47,
         "h": 44
       },
       {
-        "name": "recoome_base_beam_charge_06",
-        "file": "recoome_base_beam_charge_06.png",
+        "name": "recoome_base_beam_fire_02",
+        "file": "recoome_base_beam_fire_02.png",
         "w": 29,
         "h": 48
       },
       {
-        "name": "recoome_base_beam_charge_07",
-        "file": "recoome_base_beam_charge_07.png",
+        "name": "recoome_base_beam_fire_03",
+        "file": "recoome_base_beam_fire_03.png",
         "w": 23,
         "h": 46
       },
       {
-        "name": "recoome_base_beam_charge_08",
-        "file": "recoome_base_beam_charge_08.png",
+        "name": "recoome_base_beam_fire_04",
+        "file": "recoome_base_beam_fire_04.png",
         "w": 25,
         "h": 43
       }

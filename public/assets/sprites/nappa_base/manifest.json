@@ -180,7 +180,7 @@
     ]
   },
   "beam_charge": {
-    "frame_count": 6,
+    "frame_count": 4,
     "fps": 7,
     "loop": false,
     "frames": [
@@ -207,16 +207,23 @@
         "file": "nappa_base_beam_charge_03.png",
         "w": 32,
         "h": 36
-      },
+      }
+    ]
+  },
+  "beam_fire": {
+    "frame_count": 2,
+    "fps": 8,
+    "loop": false,
+    "frames": [
       {
-        "name": "nappa_base_beam_charge_04",
-        "file": "nappa_base_beam_charge_04.png",
+        "name": "nappa_base_beam_fire_00",
+        "file": "nappa_base_beam_fire_00.png",
         "w": 24,
         "h": 39
       },
       {
-        "name": "nappa_base_beam_charge_05",
-        "file": "nappa_base_beam_charge_05.png",
+        "name": "nappa_base_beam_fire_01",
+        "file": "nappa_base_beam_fire_01.png",
         "w": 23,
         "h": 36
       }

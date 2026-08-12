@@ -180,7 +180,7 @@
     ]
   },
   "beam_charge": {
-    "frame_count": 6,
+    "frame_count": 4,
     "fps": 7,
     "loop": false,
     "frames": [
@@ -207,16 +207,23 @@
         "file": "goku_super_saiyan_2_beam_charge_03.png",
         "w": 31,
         "h": 44
-      },
+      }
+    ]
+  },
+  "beam_fire": {
+    "frame_count": 2,
+    "fps": 8,
+    "loop": false,
+    "frames": [
       {
-        "name": "goku_super_saiyan_2_beam_charge_04",
-        "file": "goku_super_saiyan_2_beam_charge_04.png",
+        "name": "goku_super_saiyan_2_beam_fire_00",
+        "file": "goku_super_saiyan_2_beam_fire_00.png",
         "w": 26,
         "h": 43
       },
       {
-        "name": "goku_super_saiyan_2_beam_charge_05",
-        "file": "goku_super_saiyan_2_beam_charge_05.png",
+        "name": "goku_super_saiyan_2_beam_fire_01",
+        "file": "goku_super_saiyan_2_beam_fire_01.png",
         "w": 31,
         "h": 43
       }

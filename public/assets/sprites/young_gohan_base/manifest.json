@@ -180,7 +180,7 @@
     ]
   },
   "beam_charge": {
-    "frame_count": 6,
+    "frame_count": 4,
     "fps": 7,
     "loop": false,
     "frames": [
@@ -207,16 +207,23 @@
         "file": "young_gohan_base_beam_charge_03.png",
         "w": 29,
         "h": 42
-      },
+      }
+    ]
+  },
+  "beam_fire": {
+    "frame_count": 2,
+    "fps": 8,
+    "loop": false,
+    "frames": [
       {
-        "name": "young_gohan_base_beam_charge_04",
-        "file": "young_gohan_base_beam_charge_04.png",
+        "name": "young_gohan_base_beam_fire_00",
+        "file": "young_gohan_base_beam_fire_00.png",
         "w": 25,
         "h": 47
       },
       {
-        "name": "young_gohan_base_beam_charge_05",
-        "file": "young_gohan_base_beam_charge_05.png",
+        "name": "young_gohan_base_beam_fire_01",
+        "file": "young_gohan_base_beam_fire_01.png",
         "w": 29,
         "h": 42
       }

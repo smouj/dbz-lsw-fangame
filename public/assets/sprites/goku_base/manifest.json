@@ -180,7 +180,7 @@
     ]
   },
   "beam_charge": {
-    "frame_count": 7,
+    "frame_count": 4,
     "fps": 7,
     "loop": false,
     "frames": [
@@ -207,22 +207,29 @@
         "file": "goku_base_beam_charge_03.png",
         "w": 31,
         "h": 44
-      },
+      }
+    ]
+  },
+  "beam_fire": {
+    "frame_count": 3,
+    "fps": 8,
+    "loop": false,
+    "frames": [
       {
-        "name": "goku_base_beam_charge_04",
-        "file": "goku_base_beam_charge_04.png",
+        "name": "goku_base_beam_fire_00",
+        "file": "goku_base_beam_fire_00.png",
         "w": 29,
         "h": 42
       },
       {
-        "name": "goku_base_beam_charge_05",
-        "file": "goku_base_beam_charge_05.png",
+        "name": "goku_base_beam_fire_01",
+        "file": "goku_base_beam_fire_01.png",
         "w": 31,
         "h": 44
       },
       {
-        "name": "goku_base_beam_charge_06",
-        "file": "goku_base_beam_charge_06.png",
+        "name": "goku_base_beam_fire_02",
+        "file": "goku_base_beam_fire_02.png",
         "w": 30,
         "h": 46
       }

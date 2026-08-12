@@ -186,7 +186,7 @@
     ]
   },
   "beam_charge": {
-    "frame_count": 9,
+    "frame_count": 4,
     "fps": 7,
     "loop": false,
     "frames": [
@@ -213,34 +213,41 @@
         "file": "future_trunks_base_beam_charge_03.png",
         "w": 31,
         "h": 38
-      },
+      }
+    ]
+  },
+  "beam_fire": {
+    "frame_count": 5,
+    "fps": 8,
+    "loop": false,
+    "frames": [
       {
-        "name": "future_trunks_base_beam_charge_04",
-        "file": "future_trunks_base_beam_charge_04.png",
+        "name": "future_trunks_base_beam_fire_00",
+        "file": "future_trunks_base_beam_fire_00.png",
         "w": 27,
         "h": 42
       },
       {
-        "name": "future_trunks_base_beam_charge_05",
-        "file": "future_trunks_base_beam_charge_05.png",
+        "name": "future_trunks_base_beam_fire_01",
+        "file": "future_trunks_base_beam_fire_01.png",
         "w": 22,
         "h": 42
       },
       {
-        "name": "future_trunks_base_beam_charge_06",
-        "file": "future_trunks_base_beam_charge_06.png",
+        "name": "future_trunks_base_beam_fire_02",
+        "file": "future_trunks_base_beam_fire_02.png",
         "w": 24,
         "h": 42
       },
       {
-        "name": "future_trunks_base_beam_charge_07",
-        "file": "future_trunks_base_beam_charge_07.png",
+        "name": "future_trunks_base_beam_fire_03",
+        "file": "future_trunks_base_beam_fire_03.png",
         "w": 27,
         "h": 42
       },
       {
-        "name": "future_trunks_base_beam_charge_08",
-        "file": "future_trunks_base_beam_charge_08.png",
+        "name": "future_trunks_base_beam_fire_04",
+        "file": "future_trunks_base_beam_fire_04.png",
         "w": 27,
         "h": 42
       }

@@ -180,7 +180,7 @@
     ]
   },
   "beam_charge": {
-    "frame_count": 8,
+    "frame_count": 5,
     "fps": 7,
     "loop": false,
     "frames": [
@@ -213,22 +213,29 @@
         "file": "android_16_base_beam_charge_04.png",
         "w": 29,
         "h": 44
-      },
+      }
+    ]
+  },
+  "beam_fire": {
+    "frame_count": 3,
+    "fps": 8,
+    "loop": false,
+    "frames": [
       {
-        "name": "android_16_base_beam_charge_05",
-        "file": "android_16_base_beam_charge_05.png",
+        "name": "android_16_base_beam_fire_00",
+        "file": "android_16_base_beam_fire_00.png",
         "w": 39,
         "h": 37
       },
       {
-        "name": "android_16_base_beam_charge_06",
-        "file": "android_16_base_beam_charge_06.png",
+        "name": "android_16_base_beam_fire_01",
+        "file": "android_16_base_beam_fire_01.png",
         "w": 31,
         "h": 37
       },
       {
-        "name": "android_16_base_beam_charge_07",
-        "file": "android_16_base_beam_charge_07.png",
+        "name": "android_16_base_beam_fire_02",
+        "file": "android_16_base_beam_fire_02.png",
         "w": 30,
         "h": 42
       }
