@@ -6,7 +6,7 @@ import './styles.css';
 import { FORMS, CHARACTERS, getCharacter, getForm, idleSpriteUrl, statAtLevel, LIMIT_DEFAULTS, loadLimits, saveLimits } from './data/roster';
 import { STORY_ENEMY_DECKS, STORY_AI_BOOSTS, TEAM_BATTLES } from './data/enemy_decks';
 import { facingFlip, needsFlip } from './data/facing';
-import { BattlePosition, POSITION_DATA, resolveRelativeDistance, isBeamVulnerable, isDamageVulnerable, attackModifier, defenseModifier, anchorFor, BATTLE_POSITIONS, moveHorizontal, moveVertical, applyMoveAxis, positionLabel, type MoveAxis } from './data/positions';
+import { BattlePosition, POSITION_DATA, resolveRelativeDistance, isBeamVulnerable, isDamageVulnerable, anchorFor, BATTLE_POSITIONS, moveHorizontal, moveVertical, applyMoveAxis, positionLabel, type MoveAxis } from './data/positions';
 import { BATTLE_PORTRAITS } from './data/battlePortraits';
 import { UNLOCK_KEY, STARTER_DAMAGE_DECK, STARTER_BEAM_DECK, STARTER_CHARACTERS, cardsForLevel, pickRewards, VS_UNLOCKS, isFormUnlocked, FORM_UNLOCK_LEVELS } from './data/unlocks';
 import { CARDS, CARD_COLORS, CARD_TYPE_NAMES, CardDef, CardType, DECK_SIZE, MAX_COPIES, getCard, CardEffect } from './data/cards';
@@ -4001,7 +4001,18 @@ function AppInner() {
   };
 
   if (inDev) {
-    return <DevStudio onExit={() => setInDev(false)} />;
+    return <DevStudio
+      onExit={() => setInDev(false)}
+      onLaunchBattle={(playerFormId, enemyFormId, chapter) => {
+        setPlayerForm(playerFormId);
+        setEnemyForm(enemyFormId);
+        setStoryChapter(chapter);
+        setBattleKey(k => k + 1);
+        setInDev(false);
+        setScreen('battle');
+        try { window.location.hash = ''; } catch { /* noop */ }
+      }}
+    />;
   }
 
   if (needsStarter) {

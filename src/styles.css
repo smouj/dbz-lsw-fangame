@@ -7340,3 +7340,26 @@ button:focus-visible, .chapter-node:focus-visible {
 .dev-battlelab-readout div { margin-bottom: 8px; font-size: 12px; }
 .dev-battlelab-readout label { display: block; font-size: 10px; color: #8a93a3; }
 .dev-battlelab-readout strong { color: #fff; }
+
+/* ─── Dev Studio: Animation Studio (timeline) ─── */
+.dev-anim-layout { display: grid; grid-template-columns: 260px 1fr; gap: 18px; }
+.dev-anim-stage { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+.dev-anim-controls { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.dev-anim-btn { min-width: 34px; padding: 6px 8px; background: #181c22; border: 1px solid #262b33; border-radius: 6px; cursor: pointer; color: #cdd6e2; font-family: inherit; font-size: 13px; }
+.dev-anim-btn:hover:not(:disabled) { border-color: #d8a830; }
+.dev-anim-btn:disabled { opacity: .35; cursor: default; }
+.dev-anim-play { min-width: 52px; color: #d8a830; }
+.dev-anim-counter { margin-left: auto; font-size: 12px; color: #aab2bf; font-variant-numeric: tabular-nums; }
+.dev-anim-timeline { display: flex; gap: 6px; overflow-x: auto; padding: 8px; background: #0e1013; border: 1px solid #262b33; border-radius: 8px; }
+.dev-anim-thumb { position: relative; flex: 0 0 auto; width: 56px; height: 64px; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; padding: 2px; background: repeating-conic-gradient(#1a1d22 0% 25%, #14171b 0% 50%) 0 0/12px 12px; border: 1px solid #262b33; border-radius: 4px; cursor: pointer; overflow: hidden; }
+.dev-anim-thumb img { max-width: 100%; max-height: 48px; image-rendering: pixelated; object-fit: contain; }
+.dev-anim-thumb span { position: absolute; top: 1px; left: 2px; font-size: 8px; color: #8a93a3; }
+.dev-anim-thumb.active { border-color: #d8a830; box-shadow: 0 0 0 1px #d8a830 inset; }
+.dev-anim-thumb.active span { color: #d8a830; }
+
+/* ─── Dev Studio: Battle Lab launch ─── */
+.dev-launch-btn { margin-top: 6px; padding: 10px 12px; background: #3a2c12; border: 1px solid #6b5322; border-radius: 8px; cursor: pointer; color: #f0d080; font-family: inherit; font-size: 13px; font-weight: 700; }
+.dev-launch-btn:hover:not(:disabled) { background: #4a3818; }
+.dev-launch-btn:disabled { opacity: .4; cursor: default; }
+.dev-ok { color: #7bd88a; }
+.dev-dim { color: #5a6270; font-size: 11px; }

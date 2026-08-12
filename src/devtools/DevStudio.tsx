@@ -32,8 +32,8 @@ export const DEV_MODULES: DevModuleDef[] = [
   { id: 'characters', label: 'Characters', icon: '☺', desc: 'Personajes, formas, stats y crecimiento' },
   { id: 'cards', label: 'Cards', icon: '🂠', desc: 'Base de datos de las 125 cartas' },
   { id: 'sprites', label: 'Sprites', icon: '▦', desc: 'Inspector de sprites (frame, bbox, alpha)' },
-  { id: 'animation', label: 'Animation', icon: '▶', desc: 'Timeline de animaciones (WIP)' },
-  { id: 'battlelab', label: 'Battle Lab', icon: '⚔', desc: 'Combate instantáneo y depurador (WIP)' },
+  { id: 'animation', label: 'Animation', icon: '▶', desc: 'Timeline real: play/step/fps/loop + comparativa GBC↔remake' },
+  { id: 'battlelab', label: 'Battle Lab', icon: '⚔', desc: 'Combate instantáneo real (Versus/Historia) + depurador' },
   { id: 'positions', label: 'Positions', icon: '⇄', desc: 'Laboratorio de posiciones Air/Ground × Front/Back' },
   { id: 'story', label: 'Story', icon: '▤', desc: 'Capítulos, viñetas y mazos de jefes' },
   { id: 'validation', label: 'Validation', icon: '✔', desc: 'Integridad de datos y cobertura' },
@@ -48,7 +48,10 @@ export function isDevRoute(): boolean {
   );
 }
 
-export function DevStudio({ onExit }: { onExit: () => void }) {
+export function DevStudio({ onExit, onLaunchBattle }: {
+  onExit: () => void;
+  onLaunchBattle?: (playerFormId: string, enemyFormId: string, chapter: number | null) => void;
+}) {
   const [module, setModule] = useState<DevModuleId>('dashboard');
 
   const goHome = () => {
@@ -88,7 +91,7 @@ export function DevStudio({ onExit }: { onExit: () => void }) {
           {module === 'cards' && <CardsModule />}
           {module === 'sprites' && <SpritesModule />}
           {module === 'animation' && <AnimationModule />}
-          {module === 'battlelab' && <BattleLabModule />}
+          {module === 'battlelab' && <BattleLabModule onLaunchBattle={onLaunchBattle} />}
           {module === 'positions' && <PositionsModule />}
           {module === 'story' && <StoryModule />}
           {module === 'validation' && <ValidationModule />}
