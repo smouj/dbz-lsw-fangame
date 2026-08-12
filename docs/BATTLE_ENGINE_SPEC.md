@@ -81,6 +81,25 @@ enum PowerState { NORMAL, HALF_POWER, FULL_POWER }
 
 - Cartas permitidas: Defense + Support/Item aplicable.
 - BASIC: Guard + Move.
+- **Orden canónico (implementado)**: el defensor elige su defensa ANTES de que se
+  ejecute la animación del ataque. La cinemática del atacante (playCardCinematic
+  con side del atacante) se dispara al elegir defensa, y el daño se resuelve al
+  terminar la cinemática. No es un QTE reactivo.
+
+## Cinemática de acción (timing implementado, alineado con las animaciones CSS)
+
+La presentación ACTION recorre `attacker → travel → target → return` y los frames
+GBC se eligieron para que las animaciones CSS NUNCA se corten a mitad:
+
+| Tipo | attacker | travel | target | total |
+|---|---|---|---|---|
+| Beam | 54f (0.90s) | 54f (0.90s) | 44f (0.74s) | 152f ≈ 2.54s |
+| Damage/Command | 50f (0.84s) | 44f (0.74s) | 38f (0.64s) | 132f ≈ 2.21s |
+| Support (sin target cut) | presentationMs = 118f ≈ 1.98s | — | — | — |
+
+- `fx-actor-center` 0.82s ≤ attacker 0.84s (damage) / 0.90s (beam).
+- `fx-rush-body` 0.70s ≤ travel 0.74s; `fx-beam-*` 0.86s ≤ travel 0.90s.
+- La vuelta al campo (return) mantiene un beat corto antes de desmontar la capa.
 
 ## Guard (NO es simple %)
 

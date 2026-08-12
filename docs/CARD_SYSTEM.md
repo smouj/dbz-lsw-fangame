@@ -12,6 +12,42 @@ Este documento es la referencia canónica para implementar los efectos de las 12
 
 Buffs estándar: **+8** por uso (acumulables). Debuffs: **−8**.
 
+## Compatibilidad por personaje (implementada en cards.ts)
+
+El campo `compatible` de cada carta indica qué personajes pueden usarla
+(`undefined`/vacío = todos los luchadores). Se construyó con tres fuentes:
+
+1. **Mazos oficiales** `STORY_ENEMY_DECKS` (spreadsheet): qué cartas usa cada jefe.
+2. **Walkthrough** `LIMIT_DEFAULTS`: qué cartas recomienda equipar a cada personaje.
+3. **CSV de ROM** (columna Users): `Users=48` ⇒ sin restricción (todos).
+
+La compatibilidad se aplica en combate:
+
+- La mano inicial y el robo Joint solo dan cartas usables por el personaje activo.
+- El pool de ataque de la IA incluye las cartas compatibles con el jefe enemigo
+  (antes `!c.compatible` excluía TODAS las cartas de personaje — bug corregido).
+- Las curaciones de la IA también filtran por compatibilidad.
+
+Ejemplos derivados: Kamehameha (12) → goku/cell/buu/goten; S.Kamehameha (13) →
+buu/cell/cell_jr/ginyu/gohan/goku/vegito; Ene.Absorber (102), Trunks Sword (104),
+Champ.Belt (111) y H's Choco. (112) son Users=48 ⇒ todos (antes restringidas).
+
+## Variantes ofensivas implementadas (CARD_SYSTEM.md → código)
+
+- **damage_pierce** (Tail 29): ignora Avoiding/Shockwave; bloqueo parcial ×0.5 sin esquiva.
+- **beam_varhp** (Body Change 62): daño ≈ 50% de la HP restante del rival (CONFIRMED_MANUAL).
+- **beam_suicide** (Suicide 33): deja al USUARIO con 1 HP tras el ataque.
+- **damage_special_team / beam_team** (V-ball Crash 41, P.Comet Z 58, F.Kamehameha 14,
+  Purple Comet 57): sin compañero en 2v2 el daño se reduce −40% (HYPOTHESIS).
+- **damage_low_acc / damage_special_lowacc** (R.F.B. 55, Rocket Punch 69): la precisión
+  de la carta (50%/30%) ya se aplica en el roll.
+
+## Costes CC (verificados contra CSV ROM)
+
+Solo 5 cartas cuestan 0 CC: las cuatro Stage Attacks (1-4) y Special Card (9).
+El resto cuesta su CC de la tabla (rango 1-33). La spec antigua que mencionaba
+"18 cartas a coste 0" era de la primera versión con errores y NO se implementa.
+
 ## Tabla defensiva (interacción táctica)
 
 | Ataque entrante | Defensa apropiada |

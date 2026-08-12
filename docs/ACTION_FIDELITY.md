@@ -131,7 +131,9 @@ damage_formula: "(power + move) × posMult × block"   # COMMUNITY_TESTED
   pos_mult: front+vulnerable 0.8, resto 0.5          # COMMUNITY_TESTED
   block_defend: 0.5                                  # COMMUNITY_TESTED
   guard_card: 0.7                                    # COMMUNITY_TESTED
-frames: UNKNOWN (startup/active/recovery/hitstop)
+# Timing de cinemática implementado (alineado a las animaciones CSS):
+# attacker 50f (0.84s) → travel 44f (0.74s) → target 38f (0.64s) = 132f ≈ 2.21s
+frames: 132 totales (attacker 50 / travel 44 / target 38)  # INFERRED
 ```
 
 ## 6. Beam
@@ -143,8 +145,9 @@ sequence:
   - ACTION_VIEW → pose de carga → VFX energía → pose disparo
   - proyectil/beam → defensa → impact/avoid/absorb → HP → return
 power: KI                                               # CONFIRMED_MANUAL
-# división charge/fire de los frames del sheet: 50/50 (HYPOTHESIS)
-frames: UNKNOWN
+# Timing de cinemática implementado (alineado a las animaciones CSS):
+# attacker 54f (0.90s) → travel 54f (0.90s) → target 44f (0.74s) = 152f ≈ 2.54s
+frames: 152 totales (attacker 54 / travel 54 / target 44)  # INFERRED
 ```
 
 ## 7. Gather Power

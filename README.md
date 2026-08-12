@@ -24,13 +24,16 @@ npm run typecheck  # chequeo de tipos TypeScript
 
 | Ruta | Contenido |
 |---|---|
-| `src/data/cards.ts` | 125 cartas reales de la ROM (nombres, stats, tipos verificados) |
-| `src/data/roster.ts` | 23 personajes / 48 formas con sheets auténticos |
+| `src/data/cards.ts` | 125 cartas reales de la ROM (nombres, stats, tipos, compatibilidad verificados) |
+| `src/data/roster.ts` | 24 personajes / 48 formas con sheets auténticos + curvas de crecimiento |
+| `src/data/spriteManifest.ts` | 48 mapeos forma → sprites de combate animados (ZIP V5 atómico) |
+| `src/data/enemy_decks.ts` | Mazos reales de los 32 capítulos + AI boosts + combates 2v2 |
+| `src/data/positions.ts` | 4 posiciones tácticas (aire/tierra × frente/atrás) + facing |
 | `src/data/icons.ts` | Mapeo iconos de carta + retratos de menú/mini |
 | `src/i18n/` | Traducciones (10 idiomas) + contexto de idioma |
-| `src/audio/sfx.ts` | 18 SFX sintetizados estilo chip GBC |
-| `public/assets/` | Sheets, retratos, iconos, fondos extraídos |
-| `docs/` | Planes y estado del desarrollo |
+| `src/audio/sfx.ts` | SFX sintetizados estilo chip GBC |
+| `public/assets/` | Sheets, retratos, iconos, fondos, sprites de combate, botones GBC |
+| `docs/` | Spec del motor, cartas, HUD, fidelidad de acciones, walkthrough |
 
 ## 🌍 Idiomas soportados (10)
 
@@ -41,23 +44,33 @@ El idioma se cambia en **Settings → Language** y se guarda en `localStorage` (
 ## 🗺️ Estado del desarrollo
 
 ### ✅ Completado
-- Menú principal (7 opciones), Story con 8 capítulos y progresión
-- Battle Mode (Versus) con 23 personajes seleccionables
-- Combate por turnos: posición (aire/tierra × frente/atrás), comandos LIMIT/J/B/C, CC
-- 125 cartas reales de la ROM (nombres/stats verificados contra la ROM USA)
+- Menú principal (7 opciones), Story con 32 capítulos en 4 sagas y viñetas manga
+- Battle Mode (Versus) con 24 personajes seleccionables (incl. Vegito)
+- Combate por turnos GBC: TURN → 2 EXCHANGES, orden por SPD, 4 posiciones tácticas,
+  comandos LIMIT/J/B/C, CC real (+3 al atacar, +1 por input QTE, +1/+2 por daño)
+- **Orden de defensa GBC**: el defensor elige su defensa ANTES de la animación del ataque
+- Cinemática de acción de 4 pasos (attacker → travel → target → return) con tiempos
+  alineados a las animaciones CSS (sin cortes)
+- 125 cartas reales de la ROM con **compatibilidad por personaje** aplicada en combate
+  (mano, robo e IA filtran por el luchador activo)
+- **48 formas** = ROM exacto (Gohan Super2, Trunks Ksuper, Piccolo Evil añadidos;
+  frieza_100 duplicado eliminado); Vegito en CHARACTERS
+- Sprites de combate animados (43+ dirs V5 atómicos con manifest.json) + facing por silueta
+- Botones del HUD con **sprites GBC auténticos** (nombre incluido) + tooltips en portal
+- Estados de batalla visibles en el HUD (chips buff/debuff/guard/power)
 - Sheets de personajes byte-idénticos a la ROM (48/48 verificados)
-- Iconos de carta, retratos de menú (131) y mini (19) de la Sprite Database
-- Mazo persistente (20 cartas) con validación (FIGHT bloqueado si ≠ 20), colección de cartas
-- EXP/niveles: subida de stats (+HP/STR/KI/SPD) al ganar, persistencia `dbzlsw_progress`
-- Audio GBC sintetizado (18 SFX) + settings de volumen/SFX
+- Mazo persistente (20 cartas, solo genéricas por defecto para 20/20 usables), colección
+- EXP/niveles con curvas de crecimiento por forma (persistencia `dbzlsw_progress`)
+- Audio GBC sintetizado + settings de volumen/SFX
 - i18n completo en 10 idiomas con selector en Settings
-- Repo GitHub privado creado
+- Repo GitHub privado creado (main, pushes regulares)
 
 ### ⏳ Pendiente
-- ⚠️ Verificación visual del mapeo retratos/iconos (contact sheets: `public/assets/portraits/menu_contact.png`, `cards/contact_sheet.png`, `portraits/mini_contact.png`)
-- Extraer overworld sprites (extractor listo: `scripts/extract_overworld.py`)
-- Transformaciones animadas (aura + flash + palette swap)
-- Transformaciones animadas (aura + flash + palette swap)
+- Captura forense de ROM para reemplazar valores HYPOTHESIS (STAGE_TIMING_TABLE,
+  recovery frames, probabilidades Guard, fórmulas de daño, speed tie)
+- Verificación visual del mapeo retratos/iconos (contact sheets)
+- Transformaciones animadas (aura + flash + palette swap) — base lista (fx-aura)
+- Pantalla de resultado de expedición pulida y repaso final del modo historia
 - BGM real (GBS 20 pistas → WAV/MP3)
 - Más personajes con animación completa (solo goku/vegeta con `battleId`)
 - Fondo de batalla/menú más profesional con temática Dragon Ball
