@@ -4,6 +4,34 @@ Todos los cambios notables en `dbz-lsw-fangame`. Formato basado en [Keep a Chang
 
 ## [Unreleased]
 
+## [2026-08-13] — Development Studio (#dev) + retrato CONTINUAR + HUD fijo
+
+### Development Studio (herramienta interna, `76142fa`)
+- Nueva ruta `#dev` (o `?dev=1`) embebida en el proyecto (sin router extra).
+- Shell con sidebar de 10 módulos en `src/devtools/`.
+- **Dashboard**: contadores reales computados de los datos (48 formas, 24 personajes,
+  125 cartas, 32 mazos de jefes, 13 escenarios).
+- **Character Studio**: personaje→formas→stats a nivel con `statAtLevel()` + assets
+  (retrato/overworld/idle/sheet/poses).
+- **Card Database**: 125 cartas con filtros por tipo/CC/búsqueda + ficha + JSON crudo.
+- **Sprite Inspector**: canvas zoom nearest-neighbor (1/2/4/8x) + bounding box del
+  contenido opaco + % de transparencia.
+- **Position Lab**: tablero 2×2 con el enum real `BattlePosition` + MOVE de 2 ejes
+  + vulnerabilidades/distancias.
+- **Story Studio**: 32 capítulos con mazo del jefe, AI boost, 2v2 y viñetas.
+- **Validation**: 11 chequeos de integridad. **Research**: fuentes + nivel de verificación.
+- **Animation Studio** y **Battle Lab**: esqueletos WIP (timeline / QTE debugger).
+
+### Retrato oficial en la tarjeta CONTINUAR (`eb13363`)
+- El personaje activo del menú usa el retrato oficial del GBC (40×56 recortado a
+  fondo transparente, `public/assets/portraits/menu_cut/`), no el chibi overworld.
+
+### HUD inferior fijo + QTE overlay (`1e4452b`)
+- `.battle-screen` con fila de controles de altura FIJA (`--controls-h` clamp) para
+  que el campo de batalla NO refluya entre fases.
+- El QTE de Stage ahora es un overlay flotante sobre el campo (no empuja la rejilla)
+  y usa el luchador del campo como protagonista (no sprite duplicado).
+
 ## [2026-08-13] — Movement de 2 ejes + robo de carta animado + director cinematográfico
 
 ### Movement canónico (manual GBC §9)

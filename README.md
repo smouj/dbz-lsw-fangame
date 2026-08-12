@@ -13,6 +13,19 @@ npm run build      # build de producción
 npm run typecheck  # chequeo de tipos TypeScript
 ```
 
+### 🛠️ Development Studio (interno)
+
+Herramienta de producción embebida en el mismo proyecto. Accede desde el navegador con la URL `http://localhost:5178/#dev` (o `?dev=1`). NO forma parte del flujo público.
+
+- **Dashboard** — contadores reales (48 formas / 24 personajes / 125 cartas / 32 mazos)
+- **Character Studio** — formas + stats a cualquier nivel (curvas ROM)
+- **Card Database** — las 125 cartas con filtros y ficha
+- **Sprite Inspector** — frame real con bbox y % de transparencia
+- **Position Lab** — las 4 posiciones y reglas de MOVE (2 ejes)
+- **Story Studio** — mazos de jefes, AI boosts, 2v2 y viñetas
+- **Validation** — 11 chequeos de integridad · **Research** — fuentes y nivel de verificación
+- **Animation Studio** + **Battle Lab** — esqueletos WIP (timeline / QTE debugger)
+
 ## 🧱 Stack
 
 - **Vite 6 + React 19 + TypeScript**
@@ -29,6 +42,7 @@ npm run typecheck  # chequeo de tipos TypeScript
 | `src/data/spriteManifest.ts` | 48 mapeos forma → sprites de combate animados (ZIP V5 atómico) |
 | `src/data/enemy_decks.ts` | Mazos reales de los 32 capítulos + AI boosts + combates 2v2 |
 | `src/data/positions.ts` | 4 posiciones tácticas (aire/tierra × frente/atrás) + facing |
+| `src/devtools/` | Development Studio interno (acceso `#dev`): dashboard, characters, cards, sprites, positions, story, validation, research |
 | `src/data/icons.ts` | Mapeo iconos de carta + retratos de menú/mini |
 | `src/i18n/` | Traducciones (10 idiomas) + contexto de idioma |
 | `src/audio/sfx.ts` | SFX sintetizados estilo chip GBC |
@@ -64,6 +78,8 @@ El idioma se cambia en **Settings → Language** y se guarda en `localStorage` (
 - Audio GBC sintetizado + settings de volumen/SFX
 - i18n completo en 10 idiomas con selector en Settings
 - Repo GitHub privado creado (main, pushes regulares)
+- **Development Studio** interno (`#dev`): dashboard de producción, character/card/sprites
+  inspectors, position lab, story studio, validación e investigación
 
 ### ⏳ Pendiente
 - Captura forense de ROM para reemplazar valores HYPOTHESIS (STAGE_TIMING_TABLE,
