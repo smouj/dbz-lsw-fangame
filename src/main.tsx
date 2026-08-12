@@ -634,27 +634,28 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
     correct: number;
     card: CardDef | null;
     elapsedFrames: number;
-    limitFrames: number;
-    recoveryFrames: number;      // frames transcurridos en la fase de recovery
+    limitFrames: number;      // ventana del INPUT ACTUAL (por input, no global)
+    recoveryFrames: number;   // frames congelados en la pose fallida (GBC)
     forcedFailure: string | null;
-    result: 'FULL_SUCCESS' | 'SAFE_ABORT' | 'RECOVERED_SUCCESS' | 'FAILURE' | null;
+    result: 'FULL_SUCCESS' | 'PARTIAL' | 'FAILURE' | null;
   }
   // ⚠️ Timing INFERRED (HYPOTHESIS) — la tabla real debe medirse en la ROM
-  // comercial USA (frame advance). Estructura correcta; valores provisionales
-  // basados en la captura pública "PUSH 1.3 / 1.7" (3 Stage ≈ 102 frames GBC).
-  const STAGE_TIMING_TABLE: Record<number, Record<StageDistance, number>> = {
-    3: { short: 90,  mid: 102, long: 114 },
-    4: { short: 84,  mid: 96,  long: 108 },
-    5: { short: 78,  mid: 90,  long: 102 },
-    6: { short: 72,  mid: 84,  long: 96 },
+  // comercial USA (frame advance). Estructura correcta; valores provisionales.
+  // ⚠️ 2026-08-12: el límite es POR INPUT (no global) para dar tiempo real a
+  // pulsar cada botón. Antes el límite global de 90-114f exigía reflejos de
+  // <600ms por input y el jugador no llegaba a pulsar.
+  // Cada input tiene su propia ventana en frames GBC:
+  //   short = rival cerca (menos tiempo) · long = rival lejos (más tiempo)
+  const STAGE_INPUT_WINDOW: Record<StageDistance, number> = {
+    short: 40,  // ~0.67s por botón
+    mid: 50,    // ~0.84s
+    long: 60,   // ~1.00s
   };
-  // Fases de recovery (spec §11/§30) en frames GBC — HYPOTHESIS, por medir:
-  // aproximación del atacante, apertura de la ventana B, y sub-ventana central
-  // donde B acierta (el original: "esperar el momento correcto").
-  const RECOVERY_APPROACH_FRAMES = 24;
-  const RECOVERY_WINDOW_FRAMES = 48;
-  const RECOVERY_B_START = 12;
-  const RECOVERY_B_END = 24;
+  // Frames de congelación en la pose fallida (GBC: el luchador se queda quieto
+  // en el golpe que falló mientras "avanza" hacia el rival) antes de resolver.
+  const STAGE_FAIL_FREEZE_FRAMES = 26; // ~0.44s congelado
+  // La resolución del fallo espera este beat para que la pose se lea (GBC).
+  const STAGE_FAIL_RESOLVE_FRAMES = 38; // ~0.64s total antes del daño
   const [stageQte, setStageQte] = useState<StageQteState>({
     state: 'WAITING', seq: [], idx: 0, correct: 0, card: null,
     elapsedFrames: 0, limitFrames: 0, recoveryFrames: 0,
@@ -914,13 +915,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
       e.preventDefault();
       setPressedKey(key);
       setTimeout(() => setPressedKey(null), 120);
-      const st = stageQteRef.current;
-      // Recuperación: A = abandonar (Q) · B = reparar con timing (E)
-      if (st.state === 'RECOVERY_APPROACH' || st.state === 'RECOVERY_WINDOW') {
-        stageRecoverInput(key);
-      } else {
-        submitStageInput(key);
-      }
+      submitStageInput(key);
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
@@ -1034,10 +1029,12 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
     }
     // ⚠️ pool de inputs y generación: HYPOTHESIS (spec §21) — el original puede
     // usar un generador propio; pendiente de verificar en ROM.
-    const limit = STAGE_TIMING_TABLE[stages][resolveStageDistance()];
+    // La ventana es POR INPUT (2026-08-12): cada botón tiene su tiempo, no hay
+    // límite global que agobie. Se reinicia al avanzar de input.
+    const inputWindow = STAGE_INPUT_WINDOW[resolveStageDistance()];
     commitQte({
       state: 'INPUT_WINDOW', seq, idx: 0, correct: 0, card,
-      elapsedFrames: 0, limitFrames: limit, recoveryFrames: 0,
+      elapsedFrames: 0, limitFrames: inputWindow, recoveryFrames: 0,
       forcedFailure: null, result: null,
     });
     setViewMode('ACTION');
@@ -1046,8 +1043,9 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
   };
 
   // ═══ Reloj del QTE: monotónico, en FRAMES GBC (spec §19-20) ═══
-  // Un único bucle rAF acumula tiempo real y lo convierte a frames GBC;
-  // la lógica NUNCA depende de segundos redondeados ni setTimeout.
+  // Un único bucle rAF acumula tiempo real y lo convierte a frames GBC.
+  // 2026-08-12: la ventana es POR INPUT (se reinicia al avanzar de botón) y
+  // al fallar el luchador se congela en la pose del golpe fallido (GBC).
   useEffect(() => {
     if (phase !== 'stageInput') return;
     let raf = 0;
@@ -1057,30 +1055,23 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
       acc += ((now - last) / 1000) * GBC_NATIVE_FPS;
       last = now;
       const st = stageQteRef.current;
-      // El reloj corre SIEMPRE durante el QTE; la ventana empieza al instante
       if (st.state === 'INPUT_WINDOW') {
         const elapsed = Math.floor(acc);
         setStageQte(prev => ({ ...prev, elapsedFrames: Math.max(prev.elapsedFrames, elapsed) }));
+        // Timeout del input ACTUAL → fallo: se congela en la pose fallida
         if (elapsed >= st.limitFrames) {
-          // Timeout: FAILED → RECOVERY (spec §9-10)
           enterStageFailure('TIMEOUT');
         }
       } else if (st.state === 'PROMPT') {
         // Micro-presentación del prompt (1 frame) antes de abrir inputs
         setStageQte(prev => ({ ...prev, state: 'INPUT_WINDOW' }));
-      } else if (st.state === 'RECOVERY_APPROACH') {
+      } else if (st.state === 'FAILED') {
+        // GBC: el luchador se queda QUIETO en la pose del golpe fallido mientras
+        // "avanza" hacia el rival (congelación breve), luego se resuelve el daño
+        // parcial. Sin menú de reparar/cancelar.
         const rf = st.recoveryFrames + 1;
         setStageQte(prev => ({ ...prev, recoveryFrames: rf }));
-        // La animación de acercamiento dura un tramo; después abre la ventana B
-        if (rf >= RECOVERY_APPROACH_FRAMES) {
-          setStageQte(prev => ({ ...prev, state: 'RECOVERY_WINDOW', recoveryFrames: 0 }));
-        }
-      } else if (st.state === 'RECOVERY_WINDOW') {
-        const rf = st.recoveryFrames + 1;
-        setStageQte(prev => ({ ...prev, recoveryFrames: rf }));
-        // Ventana de B con timing propio: fuera de ella = FAILURE definitivo
-        if (rf >= RECOVERY_WINDOW_FRAMES) {
-          setStageQte(prev => ({ ...prev, state: 'FAILED', result: prev.result ?? 'FAILURE' }));
+        if (rf >= STAGE_FAIL_RESOLVE_FRAMES) {
           resolveStageResult();
         }
       }
@@ -1104,15 +1095,22 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
       flashFeedback('correct');
       const next = st.idx + 1;
       if (next >= st.seq.length) {
-        // Secuencia completa → COMPLETE → resolver el ataque (spec §27)
+        // Secuencia completa → COMPLETE → se ejecuta la ANIMACIÓN de la acción
+        // (GBC: el QTE solo es la introducción; la acción se ve al completarlo).
         commitQte({ ...st, state: 'COMPLETE', idx: next, correct: newCorrect, result: 'FULL_SUCCESS' });
         addLog(`${player.name} completa el Stage Attack! (+${newCorrect} CC)`);
         resolveStageResult();
       } else {
-        commitQte({ ...st, idx: next, correct: newCorrect });
+        // Ventana por input: se reinicia el reloj para el siguiente botón
+        commitQte({
+          ...st, idx: next, correct: newCorrect,
+          elapsedFrames: 0, limitFrames: STAGE_INPUT_WINDOW[resolveStageDistance()],
+        });
       }
     } else {
-      // Fallo: input equivocado → FAILED → RECOVERY (spec §9-11)
+      // Fallo: input equivocado → FAILED → el luchador se CONGELA en la pose
+      // del golpe fallido (GBC real) y la acción se resuelve con daño parcial.
+      // Sin menú de reparar/cancelar.
       flashFeedback('wrong');
       Sfx.cancel();
       addLog(`${player.name} falla un input del Stage Attack!`);
@@ -1121,62 +1119,45 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
   };
 
   // ═══ Entrada en FAILED (input malo, timeout o stopper) ═══
+  // El luchador se queda quieto en la pose del golpe fallido mientras "avanza"
+  // hacia el rival (congelación STAGE_FAIL_FREEZE_FRAMES), luego la resolución
+  // aplica daño parcial según los aciertos (como el GBC: la acción se realiza).
   const enterStageFailure = (reason: 'WRONG_INPUT' | 'TIMEOUT' | 'DEFENSE_CARD') => {
     const st = stageQteRef.current;
-    if (st.state === 'FAILED' || st.state === 'RECOVERY_APPROACH' || st.state === 'RECOVERY_WINDOW') return;
-    commitQte({ ...st, state: 'RECOVERY_APPROACH', recoveryFrames: 0, forcedFailure: reason === 'DEFENSE_CARD' ? 'FORESIGHT' : null });
+    if (st.state === 'FAILED' || st.state === 'COMPLETE') return;
+    commitQte({
+      ...st,
+      state: 'FAILED',
+      recoveryFrames: 0,
+      forcedFailure: reason === 'DEFENSE_CARD' ? 'FORESIGHT' : null,
+      result: 'PARTIAL',
+    });
   };
 
-  // ═══ Recovery: A = ABANDON · B = reparar con timing (spec §11-13) ═══
-  const stageRecoverInput = (pressed: StageKey) => {
-    const st = stageQteRef.current;
-    if (st.state !== 'RECOVERY_WINDOW') return;
-    if (pressed === 'A') {
-      // A: SAFE_ABORT — conserva el CC de las etapas completadas (spec §12)
-      Sfx.cancel();
-      addLog(`${player.name} abandona el Stage Attack (conserva +${st.correct} CC)`);
-      commitQte({ ...st, state: 'ABORTED', result: 'SAFE_ABORT' });
-      resolveStageResult();
-    } else if (pressed === 'B') {
-      // B: la ventana de reparación tiene timing propio — solo se acierta
-      // dentro de una sub-ventana central (spec §11: "esperar el momento").
-      if (st.recoveryFrames >= RECOVERY_B_START && st.recoveryFrames <= RECOVERY_B_END) {
-        Sfx.confirm();
-        addLog(`${player.name} repara el Stage Attack!`);
-        commitQte({ ...st, state: 'INPUT_WINDOW', recoveryFrames: 0 });
-      } else {
-        // B fuera de timing → FAILURE definitivo (spec §30: una oportunidad)
-        flashFeedback('wrong');
-        Sfx.cancel();
-        addLog(`${player.name} falla la reparación.`);
-        commitQte({ ...st, state: 'FAILED', result: 'FAILURE' });
-        resolveStageResult();
-      }
-    }
-  };
+  // (el sistema de recovery con A=abandonar / B=reparar se ELIMINÓ — 2026-08-12:
+  //  el GBC no lo muestra; al fallar la acción se ejecuta congelada en la pose)
 
   // ═══ Resolución del Stage Attack (spec §27: QTE ≠ combate) ═══
-  // El daño SOLO se aplica aquí, según el resultado global:
-  //   FULL_SUCCESS / RECOVERED_SUCCESS → daño completo
-  //   SAFE_ABORT → daño parcial (espec §13: valor exacto sin fijar → 0 por ahora)
-  //   FAILURE → sin daño (los golpes visuales previos no quitan HP)
+  // 2026-08-12 (GBC real):
+  //   COMPLETE  → la ANIMACIÓN de la acción se ejecuta (playCardCinematic) y el
+  //               daño completo se aplica al terminar.
+  //   PARTIAL   → el luchador quedó congelado en la pose del golpe fallido;
+  //               la acción se realiza igual con daño proporcional a los aciertos.
   const resolveStageResult = () => {
     const st = stageQteRef.current;
     if (st.card == null) return;
     const card = st.card;
-    const complete = st.result === 'FULL_SUCCESS' || st.result === 'RECOVERED_SUCCESS';
+    const complete = st.result === 'FULL_SUCCESS';
     const ccGained = st.correct;
 
-    commitQte({
-      ...st,
-      state: st.state === 'RECOVERY_WINDOW' ? 'FAILED' : st.state,
-      result: st.result ?? (complete ? 'FULL_SUCCESS' : 'FAILURE'),
-    });
-    setViewMode('OVERVIEW');
-    setTimeout(() => {
-      setStageQte({ state: 'WAITING', seq: [], idx: 0, correct: 0, card: null, elapsedFrames: 0, limitFrames: 0, recoveryFrames: 0, forcedFailure: null, result: null });
-      setPhase('cardSelect');
-      if (complete) {
+    if (complete) {
+      // ✅ Secuencia completa: ahora SÍ se ve la animación de la acción.
+      // El QTE fue solo la introducción (GBC); la acción avanza con su
+      // cinemática normal (attacker → travel → target → return).
+      commitQte({ ...st, state: 'COMPLETE', result: 'FULL_SUCCESS' });
+      setPhase('cardSelect'); // desmonta el overlay del QTE
+      playCardCinematic(card, 'player', () => {
+        // Daño completo al terminar la cinemática
         const ePos = enemy.battlePos;
         const vulnerable = (isBeamVulnerable(ePos) && card.type === 'beam') || (isDamageVulnerable(ePos) && card.type === 'damage');
         const posMult = (POSITION_DATA[ePos].depth === 'FRONT' && vulnerable) ? 0.8 : 0.5;
@@ -1203,14 +1184,52 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
           setTimeout(() => { setEnemyPose('hurt'); setPhase('win'); Sfx.victory(); addLog(`${enemy.name} ${t('battle.defeated')}`); }, 500);
           return;
         }
+        finishPlayerTurnStage(ccGained);
+      });
+      return;
+    }
+
+    // ❌ Fallo: la acción se realiza igual (GBC) con daño parcial.
+    // El sprite quedó congelado en la pose del golpe fallido (reloj FAILED).
+    const ratio = Math.max(0, Math.min(1, ccGained / Math.max(1, st.seq.length)));
+    const ePos = enemy.battlePos;
+    const vulnerable = (isBeamVulnerable(ePos) && card.type === 'beam') || (isDamageVulnerable(ePos) && card.type === 'damage');
+    const posMult = (POSITION_DATA[ePos].depth === 'FRONT' && vulnerable) ? 0.8 : 0.5;
+    const fullDmg = Math.floor((card.atk + player.str) * posMult);
+    const dmg = Math.floor(fullDmg * ratio);
+    commitQte({ ...st, state: 'FAILED', result: 'PARTIAL' });
+    setViewMode('OVERVIEW');
+    setTimeout(() => {
+      setStageQte({ state: 'WAITING', seq: [], idx: 0, correct: 0, card: null, elapsedFrames: 0, limitFrames: 0, recoveryFrames: 0, forcedFailure: null, result: null });
+      setPhase('cardSelect');
+      if (dmg > 0) {
+        setEnemy(prev => ({ ...prev, hp: Math.max(0, prev.hp - dmg) }));
+        setEnemyPose('hurt');
+        setFlashEnemy(true);
+        hitImpact('enemy');
+        setDamageNums(prev => [...prev, { value: dmg, type: 'damage', ...dmgPos('enemy'), id: Date.now() }]);
+        addLog(`${player.name} no completa el ataque — ${dmg} ${t('battle.dmg')} (${ccGained}/${st.seq.length} inputs)`);
+        Sfx.hit();
+        setTimeout(() => setFlashEnemy(false), 150);
+        if (enemy.hp - dmg <= 0 && enemy2) {
+          const fallen = enemy.name;
+          const next = enemy2;
+          setEnemy(next);
+          setEnemy2(null);
+          setEnemyPose('idle');
+          addLog(`${fallen} K.O.! ${next.name} entra al combate!`);
+          setTimeout(() => finishPlayerTurnStage(ccGained), 900);
+          return;
+        }
+        if (enemy.hp - dmg <= 0) {
+          setTimeout(() => { setEnemyPose('hurt'); setPhase('win'); Sfx.victory(); addLog(`${enemy.name} ${t('battle.defeated')}`); }, 500);
+          return;
+        }
       } else {
-        // SAFE_ABORT / FAILURE: sin daño de HP (spec §7/§13); el CC ganado se conserva
         addLog(`${player.name} no completa el ataque (${ccGained} CC ganados)`);
       }
-      setTimeout(() => {
-        finishPlayerTurnStage(ccGained);
-      }, 500);
-    }, gbcMs(12));
+      finishPlayerTurnStage(ccGained);
+    }, gbcMs(STAGE_FAIL_FREEZE_FRAMES));
   };
 
   // Variante de finishPlayerTurn para stage attacks (no usar carta de la mano)
@@ -2273,28 +2292,28 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
           const q = stageQte;
           const curKey = q.seq[q.idx];
           const isDirPrompt = curKey === 'UP' || curKey === 'DOWN' || curKey === 'LEFT' || curKey === 'RIGHT';
-          // Tiempo global de la secuencia en SEGUNDOS GBC (spec §20: el reloj
-          // corre en frames; los segundos son solo presentación).
+          // Tiempo del input ACTUAL en SEGUNDOS GBC (ventana por input).
           const elapsedSec = (q.elapsedFrames / GBC_NATIVE_FPS).toFixed(1);
           const limitSec = (q.limitFrames / GBC_NATIVE_FPS).toFixed(1);
-          const inRecovery = q.state === 'RECOVERY_APPROACH' || q.state === 'RECOVERY_WINDOW';
-          const recoverActive = q.state === 'RECOVERY_WINDOW';
-          const recoverFrames = q.recoveryFrames;
+          const failed = q.state === 'FAILED';
           // La tecla de cada comando: Q/E para A/B, flechas+WASD para direcciones
           const keyIcon = (k: StageKey) => k === 'UP' ? 'arrow_up' : k === 'DOWN' ? 'arrow_down' : k === 'LEFT' ? 'arrow_left' : k === 'RIGHT' ? 'arrow_right' : k === 'A' ? 'key_q' : 'key_e';
           const keyLabel = (k: StageKey) => k === 'UP' ? 'W / ↑' : k === 'DOWN' ? 'S / ↓' : k === 'LEFT' ? 'A / ←' : k === 'RIGHT' ? 'D / →' : k === 'A' ? 'Q' : 'E';
           return (
-          <div className="stage-input-area">
-            <div className={`stage-fighter ${isDirPrompt ? 'lunging' : ''}`} key={isDirPrompt ? `dir-${q.idx}` : `btn-${q.idx}`}>
+          <div className={`stage-input-area ${failed ? 'failed' : ''}`}>
+            {/* GBC: durante el QTE el luchador está en pose NEUTRAL (esperando);
+                la animación de la acción solo se ve al COMPLETAR la secuencia.
+                Si falla, se CONGELA en la pose del golpe fallido (attack_fwd). */}
+            <div className={`stage-fighter ${isDirPrompt ? 'lunging' : ''} ${failed ? 'frozen' : ''}`} key={failed ? 'fail' : (isDirPrompt ? `dir-${q.idx}` : `btn-${q.idx}`)}>
               {spriteManifestUrl(playerFormId)
-                ? <FighterSprite formId={playerFormId} pose={q.idx > 0 ? 'attack_fwd' : 'idle'} side="left" scale={18} flash={q.idx > 0} />
+                ? <FighterSprite formId={playerFormId} pose={failed ? 'attack_fwd' : 'idle'} side="left" scale={18} flash={failed ? false : q.idx > 0} />
                 : <CharacterSprite formId={playerFormId} className="fx-sprite" height={170} side="left" />}
             </div>
             <div className="stage-label">
               <span className="stage-push">PUSH {elapsedSec} / {limitSec}</span>
-              {q.card?.name} — STAGE {Math.min(q.idx + 1, q.seq.length)}/{q.seq.length}
+              {q.card?.name} — STAGE {failed ? Math.min(q.idx + 1, q.seq.length) : Math.min(q.idx + 1, q.seq.length)}/{q.seq.length}
             </div>
-            {!inRecovery ? (
+            {!failed ? (
               <>
                 {/* Secuencia completa de comandos: los hechos ✓, el actual grande,
                     los futuros atenuados (spec §23: la secuencia se congela al empezar) */}
@@ -2312,7 +2331,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
                     <span className="stage-prompt-label">{keyLabel(curKey)}</span>
                   </div>
                 ) : null}
-                {/* Reloj global: barra + números (PUSH elapsed / limit) */}
+                {/* Reloj del input actual: barra + números (PUSH elapsed / limit) */}
                 <div className="stage-timer-row">
                   <div className="stage-timer" style={{ width: `${Math.min(100, (q.elapsedFrames / Math.max(1, q.limitFrames)) * 100)}%` }} />
                 </div>
@@ -2320,18 +2339,10 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
               </>
             ) : (
               <>
+                {/* GBC: al fallar el luchador se queda quieto en el golpe fallido.
+                    Sin botones de reparar/cancelar — la acción se realiza igual. */}
                 <div className="stage-fail">INPUT FAILED — {q.correct} CC ganados</div>
-                {recoverActive && (
-                  <div className="stage-recover-help">
-                    <div className="stage-recover-prompt">
-                      <img src="/assets/ui/qte/key_q.png" alt="Q" className="qte-key-sm" /> ABANDONAR (Q)
-                    </div>
-                    <div className={`stage-recover-prompt ${recoverFrames >= 12 && recoverFrames <= 24 ? 'window-open' : ''}`}>
-                      <img src="/assets/ui/qte/key_e.png" alt="E" className="qte-key-sm" /> REPARAR (E) {recoverFrames >= 12 && recoverFrames <= 24 ? '— ¡AHORA!' : ''}
-                    </div>
-                  </div>
-                )}
-                <div className="stage-help">Q = abandonar y defender (conserva CC) · E = reparar la cadena en el momento justo</div>
+                <div className="stage-help">El golpe se detiene… la acción continúa con el daño parcial</div>
               </>
             )}
           </div>
