@@ -91,6 +91,7 @@ export const ja: Dict = {
   'battle.guard': "ガード",
   'battle.uses': "つかった",
   'battle.dmg': "ダメージ！",
+  'battle.counterHit': '反撃',
   'battle.heal': "HP！",
   'battle.buff': "強化発動！",
   'cardType.command': "コマンド",

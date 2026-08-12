@@ -91,6 +91,7 @@ export const ar: Dict = {
   'battle.guard': "دفاع",
   'battle.uses': "يستخدم",
   'battle.dmg': "ضرر!",
+  'battle.counterHit': 'هجوم مضاد',
   'battle.heal': "HP!",
   'battle.buff': "تعزيز مفعل!",
   'cardType.command': "أمر",

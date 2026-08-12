@@ -62,7 +62,7 @@ export type TKey =
   | 'battle.choosePosition' | 'battle.airBack' | 'battle.airFront' | 'battle.gndBack' | 'battle.gndFront'
   | 'battle.limit' | 'battle.limitHelp' | 'battle.ccInsufficient' | 'battle.hand' | 'battle.turn'
   | 'battle.victory' | 'battle.defeat' | 'battle.exp' | 'battle.hp' | 'battle.defeated'
-  | 'battle.miss' | 'battle.guard' | 'battle.uses' | 'battle.dmg' | 'battle.heal' | 'battle.buff'
+  | 'battle.miss' | 'battle.guard' | 'battle.uses' | 'battle.dmg' | 'battle.counterHit' | 'battle.heal' | 'battle.buff'
   | 'cardType.command' | 'cardType.damage' | 'cardType.beam' | 'cardType.support' | 'cardType.defense' | 'cardType.special'
   | 'attr.hp' | 'attr.str' | 'attr.ki' | 'attr.spd'
   | 'battle.strikesFirst' | 'battle.noAlly' | 'battle.blocks' | 'battle.resists' | 'battle.absorbs' | 'battle.defends' | 'battle.gathers' | 'battle.insufficientCc'

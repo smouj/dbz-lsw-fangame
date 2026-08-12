@@ -41,17 +41,22 @@ background:
 
 attacker:
   start_pose: idle          # INFERRED (la pose exacta depende de la captura)
+  # 2026-08-12: durante el QTE el luchador está en pose NEUTRAL (idle).
+  # La animación de la acción solo se ejecuta al COMPLETAR la secuencia.
   start_x: UNKNOWN
   start_y: UNKNOWN
 
 qte:
   input_count: 3            # CONFIRMED_MANUAL
   prompt_delay_frames: UNKNOWN
-  max_time_frames: UNKNOWN  # depende de distancia (CONFIRMED: la ventana
-                            # varía con la distancia entre combatientes)
-  timeout_behavior: PARTIAL # CONFIRMED (conserva CC de etapas completadas)
-  wrong_input_behavior: RECOVERY  # CONFIRMED (B=reparar, A=abandonar)
-  recovery_behavior: "B → continuar cadena · A → abandonar conservando CC"
+  window_per_input: "40-60f según distancia (short 40 / mid 50 / long 60)"
+                            # 2026-08-12: ventana POR INPUT (no global); se
+                            # reinicia al avanzar de botón. HYPOTHESIS por medir.
+  timeout_behavior: PARTIAL # 2026-08-12: al fallar (timeout o input malo) el
+                            # luchador se CONGELA en la pose del golpe fallido
+                            # y la acción se resuelve con daño parcial.
+  wrong_input_behavior: PARTIAL  # 2026-08-12: eliminado el menú de reparar/
+                            # cancelar (GBC real: no existe).
   cc_per_input: 1           # CONFIRMED_MANUAL (+1 CC por input)
 
 sequence:

@@ -62,10 +62,25 @@ NO recalcular el orden a mitad de round (hasta que la ROM demuestre lo contrario
 ## Stage Attacks (reproducir exactamente)
 
 - 3/4/5/6 Stage. Cada input correcto: **CC += 1** y continúa.
-- **Ventana de input depende de la distancia** (más cerca = más tiempo).
-- Fallar un input → ventana de reacción: **A = abandonar/defender**
-  (conserva CC acumulado), **B = reparar y seguir**.
-- Interrupción (Foresight/Telepathy/Time Freeze): CPU no repara, jugador sí.
+- **Ventana TOTAL de la secuencia según posición relativa (manual GBC USA)**:
+  F/F (más cerca) = **1.2s** · F/B o B/F = **1.7s / 2.4s** · B/B (más lejos) =
+  **2.9s**. Convertidas a frames GBC (×59.7275): 72 / 102 / 143 / 173.
+  El reloj corre global para completar TODOS los comandos (no por input).
+- **Durante el QTE el luchador está en pose NEUTRAL (idle)**. La animación de la
+  acción SOLO se ejecuta al completar la secuencia (GBC real).
+- **Al completar**: se ejecuta la cinemática completa de la acción
+  (attacker → travel → target → return) y el daño completo se aplica al terminar.
+- **Al fallar** (input equivocado o timeout): el RIVAL CONTRAATACA (manual GBC
+  §13). El luchador se congela en la pose del golpe fallido y aparece el
+  indicador de recuperación con timing:
+  - **A (Q) = DEFENDER**: conservas los CC ya acertados y EVITAS el daño del
+    contraataque (SAFE_ABORT).
+  - **B (E) = REPARAR**: continúas el Stage Attack desde el input fallido.
+  - Si no reaccionas a tiempo: el contraataque del rival conecta con daño
+    parcial proporcional a los aciertos.
+- Interrupción (Foresight/Telepathy/Time Freeze): fuerza el fallo (0 aciertos).
+- Estados: `INPUT_WINDOW → COMPLETE` (cinemática) | `RECOVERY_WINDOW`
+  (contraataque A/B) → `SAFE_ABORT` / `PARTIAL`.
 
 ## Gather Power (estado real)
 
@@ -106,6 +121,22 @@ GBC se eligieron para que las animaciones CSS NUNCA se corten a mitad:
 Resultados posibles: NORMAL GUARD (~todo el daño, algo reducido),
 BLOCK (~1/4), AVOID (0). Probabilidad ligada a Speed defensor × Accuracy
 ataque × estados evasión/precisión. Extraer de ROM, no inventar %.
+
+## CC por daño recibido (manual GBC §14)
+
+- +1 base al recibir daño.
+- +2 si la pérdida es sustancial (≥15% maxHP, umbral HYPOTHESIS).
+- +1 adicional si el ataque acierta la vulnerabilidad de posición
+  (Beam contra AIR / Damage contra GROUND).
+
+## Movimiento y empuje (manual GBC §9)
+
+- MOVE es una acción DEFENSIVA básica (B → Movement), no una fase.
+- Al avanzar a FRONT cuando el rival está en BACK, el rival pasa a FRONT
+  (no se crea una quinta posición: el frente empuja al frente).
+- Las 4 posiciones: AIR+BACK / AIR+FRONT / GROUND+BACK / GROUND+FRONT.
+  Beam es efectivo contra AIR; Damage contra GROUND. FRONT sacrifica defensa
+  por ataque; BACK al revés.
 
 ## Campo (4 posiciones por luchador)
 

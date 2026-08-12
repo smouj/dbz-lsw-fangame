@@ -91,6 +91,7 @@ export const ru: Dict = {
   'battle.guard': "ЗАЩИТА",
   'battle.uses': "использует",
   'battle.dmg': "урон!",
+  'battle.counterHit': 'контратака',
   'battle.heal': "HP!",
   'battle.buff': "усиление активно!",
   'cardType.command': "КОМАНДА",

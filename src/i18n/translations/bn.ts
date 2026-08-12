@@ -91,6 +91,7 @@ export const bn: Dict = {
   'battle.guard': "রক্ষা",
   'battle.uses': "ব্যবহার",
   'battle.dmg': "ক্ষতি!",
+  'battle.counterHit': 'পাল্টা আক্রমণ',
   'battle.heal': "HP!",
   'battle.buff': "বাফ সক্রিয়!",
   'cardType.command': "কমান্ড",

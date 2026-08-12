@@ -3246,11 +3246,17 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 }
 
 /* ═══ BASIC menu (B) y Limited Cards (L) — reales del GBC ═══ */
-.basic-menu { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; width: min(460px, 92vw); }
+.basic-menu {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  width: min(460px, 92vw);
+}
 .basic-btn {
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
-  gap: 4px; padding: 6px 8px; min-height: 44px;
-  /* Marco GBC auténtico por defecto (teal) */
+  /* Marco GBC auténtico (48×40) escalado 2× = 96×80 — proporción nativa,
+     SIN estirar (el 100% 100% deformaba el marco en botones anchos). */
   --btn-frame: url('/assets/ui/hud_buttons/frame_teal.png');
   background-image: var(--btn-frame);
   background-size: 100% 100%;
@@ -3260,14 +3266,62 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   border: none; color: var(--text);
   font-family: inherit; cursor: pointer;
   text-shadow: 1px 1px 0 rgba(0,0,0,.8);
+  width: 96px;
+  height: 80px;
+  padding: 6px 8px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 4px;
   transition: transform 0.12s, filter 0.12s;
 }
 .basic-btn strong { font-size: 0.92rem; letter-spacing: 0.06em; color: #ffe9a3; }
 .basic-btn span { font-size: 0.7rem; opacity: 0.85; }
 .basic-btn:hover:not(:disabled) { transform: translateY(-2px); filter: brightness(1.15); }
 .basic-btn:disabled { opacity: 0.35; cursor: not-allowed; filter: grayscale(.6); }
-.basic-btn.basic-back { grid-column: 1 / -1; min-height: 46px; --btn-frame: url('/assets/ui/hud_buttons/frame_teal.png'); }
+/* BACK ocupa su propia fila centrada con el marco teal */
+.basic-btn.basic-back { width: 96px; height: 80px; --btn-frame: url('/assets/ui/hud_buttons/frame_teal.png'); }
 .basic-btn.basic-stage { --btn-frame: url('/assets/ui/hud_buttons/frame_orange.png'); }
+
+/* Icono de la carta de stage REAL dentro del botón (3/4/5/6 Stage) */
+.basic-stage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+}
+.basic-stage-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+.stage-card-icon {
+  image-rendering: pixelated;
+  width: 44px;
+  height: 33px;
+  object-fit: contain;
+  border: 2px solid rgba(246,199,68,.5);
+  background: rgba(255,255,255,.92);
+  box-shadow: 2px 2px 0 rgba(0,0,0,.7);
+}
+.basic-stage-icon strong {
+  font-family: var(--fepic);
+  font-size: 26px;
+  color: #1a1200;
+  text-shadow: none;
+  background: rgba(255,255,255,.92);
+  border: 2px solid rgba(246,199,68,.5);
+  padding: 0 10px;
+  line-height: 1.4;
+}
+.basic-stage-meta {
+  font-family: var(--fpx);
+  font-size: 7px;
+  letter-spacing: 1px;
+  color: #1a1200;
+  text-shadow: none;
+  opacity: .85;
+}
 .basic-btn.basic-gather { --btn-frame: url('/assets/ui/hud_buttons/btn_power.png'); }
 .limit-panel { display: flex; flex-direction: column; gap: 6px; width: min(420px, 92vw); max-height: 82px; overflow: hidden; background: rgba(5,8,14,.44); border: 1px solid var(--border); border-radius: 0; padding: 7px 9px; }
 .limit-title { font-size: 0.8rem; letter-spacing: 0.14em; color: var(--gold); text-align: center; margin-bottom: 4px; }

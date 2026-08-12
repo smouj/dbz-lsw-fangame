@@ -91,6 +91,7 @@ export const zh: Dict = {
   'battle.guard': "防御",
   'battle.uses': "使用",
   'battle.dmg': "伤害！",
+  'battle.counterHit': '反击',
   'battle.heal': "HP！",
   'battle.buff': "强化生效！",
   'cardType.command': "指令",

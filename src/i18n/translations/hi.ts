@@ -91,6 +91,7 @@ export const hi: Dict = {
   'battle.guard': "रक्षा",
   'battle.uses': "उपयोग",
   'battle.dmg': "नुकसान!",
+  'battle.counterHit': 'जवाबी हमला',
   'battle.heal': "HP!",
   'battle.buff': "बफ़ सक्रिय!",
   'cardType.command': "कमांड",

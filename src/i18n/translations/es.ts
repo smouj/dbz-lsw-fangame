@@ -91,6 +91,7 @@ export const es: Dict = {
   'battle.guard': 'DEFENSA',
   'battle.uses': 'usa',
   'battle.dmg': '¡daño!',
+  'battle.counterHit': 'contraataca',
   'battle.heal': '¡PV!',
   'battle.buff': '¡mejora activada!',
   'cardType.command': 'COMANDO',
