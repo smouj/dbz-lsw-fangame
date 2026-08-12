@@ -70,17 +70,22 @@ NO recalcular el orden a mitad de round (hasta que la ROM demuestre lo contrario
   acción SOLO se ejecuta al completar la secuencia (GBC real).
 - **Al completar**: se ejecuta la cinemática completa de la acción
   (attacker → travel → target → return) y el daño completo se aplica al terminar.
-- **Al fallar** (input equivocado o timeout): el RIVAL CONTRAATACA (manual GBC
-  §13). El luchador se congela en la pose del golpe fallido y aparece el
-  indicador de recuperación con timing:
-  - **A (Q) = DEFENDER**: conservas los CC ya acertados y EVITAS el daño del
-    contraataque (SAFE_ABORT).
-  - **B (E) = REPARAR**: continúas el Stage Attack desde el input fallido.
-  - Si no reaccionas a tiempo: el contraataque del rival conecta con daño
+- **Al fallar** (input equivocado o timeout): el RIVAL CONTRAATACA (manual GBC).
+  El luchador se congela en la pose del golpe fallido y aparece ENTER COMMAND
+  con timing por botón (HYPOTHESIS de la comunidad):
+  - **A (Q) = DEFENDER** (≈0.4s): conservas los CC ya acertados y EVITAS el
+    daño del contraataque (SAFE_ABORT).
+  - **B (E) = REPARAR** (≈0.15s): continúas el Stage Attack desde el input
+    fallido (la ventana de secuencia se reinicia para los inputs restantes).
+  - Si no reaccionas a tiempo o el timing no se cumple: el contraataque del
+    rival CONECTA SOBRE EL JUGADOR (COUNTER_HIT). El manual NO define daño
     parcial proporcional a los aciertos.
 - Interrupción (Foresight/Telepathy/Time Freeze): fuerza el fallo (0 aciertos).
-- Estados: `INPUT_WINDOW → COMPLETE` (cinemática) | `RECOVERY_WINDOW`
-  (contraataque A/B) → `SAFE_ABORT` / `PARTIAL`.
+- Ventana GLOBAL de secuencia (manual GBC, 4 valores por posición relativa):
+  `BACK_BACK=1.2s · BACK_FRONT=1.7s · FRONT_BACK=2.4s · FRONT_FRONT=2.9s`.
+- Estados: `INPUT_WINDOW → COMPLETED` (cinemática, daño completo) |
+  `COUNTER_WINDOW` (contraataque A/B con timing) → `SAFE_ABORT` | `COUNTER_HIT`
+  (el counter conecta sobre el atacante).
 
 ## Gather Power (estado real)
 

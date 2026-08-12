@@ -49,15 +49,24 @@ attacker:
 qte:
   input_count: 3            # CONFIRMED_MANUAL
   prompt_delay_frames: UNKNOWN
-  window_per_input: "40-60f según distancia (short 40 / mid 50 / long 60)"
-                            # 2026-08-12: ventana POR INPUT (no global); se
-                            # reinicia al avanzar de botón. HYPOTHESIS por medir.
-  timeout_behavior: PARTIAL # 2026-08-12: al fallar (timeout o input malo) el
-                            # luchador se CONGELA en la pose del golpe fallido
-                            # y la acción se resuelve con daño parcial.
-  wrong_input_behavior: PARTIAL  # 2026-08-12: eliminado el menú de reparar/
-                            # cancelar (GBC real: no existe).
-  cc_per_input: 1           # CONFIRMED_MANUAL (+1 CC por input)
+  # 2026-08-12 (manual USA): la ventana es GLOBAL para TODA la secuencia, NO
+  # por input. Cuatro valores según la posición relativa de atacante y rival:
+  #   atacante REAR + rival REAR  = 1.2s (~72f)
+  #   atacante REAR + rival FRONT = 1.7s (~102f)
+  #   atacante FRONT + rival REAR = 2.4s (~143f)
+  #   atacante FRONT + rival FRONT = 2.9s (~173f)
+  # El reloj corre MONOTÓNICO desde que arranca el QTE; nunca se reinicia por
+  # input. HYPOTHESIS: conversión frames = s × 59.7275 (GBC_NATIVE_FPS).
+  sequence_window_frames: { BACK_BACK: 72, BACK_FRONT: 102, FRONT_BACK: 143, FRONT_FRONT: 173 }
+  timeout_behavior: COUNTER  # 2026-08-12 (manual USA): al fallar (timeout o
+                            # input malo) el RIVAL CONTRAATACA: aparece ENTER
+                            # COMMAND — A = defenderte (banca CC, sin daño) ·
+                            # B = reparar y continuar. El manual NO define
+                            # daño parcial proporcional a los aciertos.
+  wrong_input_behavior: COUNTER
+  counter_a_frames: 24       # ventana DEFENDER (A) ≈0.4s — HYPOTHESIS (comunidad)
+  counter_b_frames: 9        # ventana REPARAR (B) ≈0.15s — HYPOTHESIS (comunidad)
+  cc_per_input: 1            # CONFIRMED_MANUAL (+1 CC por input)
 
 sequence:
   - frame: 0
@@ -374,10 +383,12 @@ exit:
 | # | Escenario | Objetivo |
 |---|---|---|
 | 1 | Éxito perfecto | frames de referencia de la secuencia completa |
-| 2 | Fallo en input 1 | ventana, pausa de fallo, recovery |
+| 2 | Fallo en input 1 | ventana global, congelación, contraataque (ENTER COMMAND) |
 | 3 | Fallo en input 2 | idem en etapa intermedia |
 | 4 | Fallo en input 3 | idem en etapa final |
-| 5 | Recuperación tras fallo (B) | ventana de recovery, continuación |
+| 5 | Contraataque A (defender) | ventana A ≈0.4s, banco de CC, sin daño |
+| 6 | Contraataque B (reparar) | ventana B ≈0.15s, continuación del Stage |
+| 7 | Timeout del contraataque | COUNTER_HIT: el contraataque del rival conecta sobre el atacante |
 | 6 | Abandono tras fallo (A) | conservación de CC parcial |
 | 7 | Distancia corta | ventana de input máxima |
 | 8 | Distancia larga | ventana de input mínima |

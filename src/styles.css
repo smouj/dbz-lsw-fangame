@@ -943,6 +943,21 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   justify-content: space-around;
   padding: 2% 8% 4%;
   z-index: 2;
+  /* Transición suave OVERVIEW ↔ ACTION: los sprites de campo (overworld o
+     animados) se desvanecen con fade + leve scale cuando entra la vista ACTION
+     (2026-08-12: antes se desmontaban de golpe y el cambio era brusco). */
+  transition: opacity .34s ease, transform .34s ease, filter .34s ease;
+  opacity: 1;
+  transform: none;
+}
+
+/* Vista ACTION: los fighters de campo se retiran suavemente (sin duplicidad
+   con los sprites grandes del card-fx, que aparecen encima con su propio fade). */
+.battlefield.field-action .battlefield-fighters {
+  opacity: 0;
+  transform: scale(.94);
+  filter: brightness(.6) blur(1px);
+  pointer-events: none;
 }
 
 .fighter-container {
@@ -1036,12 +1051,14 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 @keyframes bl-fill { from { width: 12%; } to { width: 92%; } }
 
 /* ─── Fade entre TACTICAL ↔ ACTION ─── */
+/* Flash sutil y corto: apenas oscurece para enmascarar el cambio de capas,
+   y desaparece con easing suave (no steps bruscos). */
 .view-fade {
   position: absolute; inset: 0; z-index: 11; pointer-events: none;
   background: #040b18;
-  animation: view-fade-out .46s steps(9, end) forwards;
+  animation: view-fade-out .32s ease-out forwards;
 }
-@keyframes view-fade-out { from { opacity: .62; } to { opacity: 0; } }
+@keyframes view-fade-out { from { opacity: .35; } to { opacity: 0; } }
 
 .phase-cue {
   position: absolute;
@@ -3536,35 +3553,37 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   z-index: 9;
   pointer-events: none;
   overflow: hidden;
-  animation: fx-scene-in .28s steps(6, end) both;
+  /* Entrada suave de la vista ACTION: fade + leve zoom (no steps bruscos) */
+  animation: fx-scene-in .3s ease-out both;
 }
-.card-fx.scene-return { animation: fx-scene-out .24s steps(5, end) both; }
-.fx-vignette { position: absolute; inset: 0; background: radial-gradient(ellipse at center, rgba(5,8,14,.20) 0%, rgba(2,3,6,.76) 100%); }
+.card-fx.scene-return { animation: fx-scene-out .26s ease-in both; }
+.fx-vignette { position: absolute; inset: 0; background: radial-gradient(ellipse at center, rgba(5,8,14,.20) 0%, rgba(2,3,6,.76) 100%); animation: fx-vignette-in .3s ease-out both; }
+@keyframes fx-vignette-in { from { opacity: 0; } to { opacity: 1; } }
 .fx-fighter { position: absolute; bottom: clamp(16px, 5vh, 44px); filter: drop-shadow(0 0 24px rgba(255,190,60,.45)); }
 .card-fx.player .fx-target,
-.card-fx.enemy .fx-target { animation: fx-zoom-in .44s steps(6, end) both; }
+.card-fx.enemy .fx-target { animation: fx-zoom-in .4s ease-out both; }
 .card-fx.enemy .fx-target { left: 8vw; }
 .card-fx.player .fx-target { right: 8vw; }
 .card-fx.player .fx-actor { left: 8vw; }
 .card-fx.enemy .fx-actor { right: 8vw; }
-.card-fx.scene-attacker.player .fx-actor { animation: fx-actor-center-player .82s steps(10, end) both; }
-.card-fx.scene-attacker.enemy .fx-actor { animation: fx-actor-center-enemy .82s steps(10, end) both; }
-.card-fx.scene-travel.player .fx-actor { left: 8vw; animation: fx-actor-hold-player .7s steps(8, end) both; }
-.card-fx.scene-travel.enemy .fx-actor { right: 8vw; animation: fx-actor-hold-enemy .7s steps(8, end) both; }
-@keyframes fx-scene-in { from { opacity: 0; filter: brightness(1.24); } to { opacity: 1; filter: brightness(1); } }
-@keyframes fx-scene-out { from { opacity: 1; filter: brightness(1); } to { opacity: 0; filter: brightness(.82); } }
-@keyframes fx-zoom-in { from { transform: translateY(18px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+.card-fx.scene-attacker.player .fx-actor { animation: fx-actor-center-player .8s ease-out both; }
+.card-fx.scene-attacker.enemy .fx-actor { animation: fx-actor-center-enemy .8s ease-out both; }
+.card-fx.scene-travel.player .fx-actor { left: 8vw; animation: fx-actor-hold-player .7s ease both; }
+.card-fx.scene-travel.enemy .fx-actor { right: 8vw; animation: fx-actor-hold-enemy .7s ease both; }
+@keyframes fx-scene-in { from { opacity: 0; filter: brightness(1.2); transform: scale(.985); } to { opacity: 1; filter: brightness(1); transform: scale(1); } }
+@keyframes fx-scene-out { from { opacity: 1; filter: brightness(1); } to { opacity: 0; filter: brightness(.85); } }
+@keyframes fx-zoom-in { from { transform: translateY(14px) scale(.94); opacity: 0; } to { transform: translateY(0) scale(1); opacity: 1; } }
 @keyframes fx-actor-center-player {
-  0% { left: 50%; transform: translateX(-50%) translateY(14px); opacity: 0; }
-  24% { left: 50%; transform: translateX(-50%) translateY(0); opacity: 1; }
-  54% { left: 50%; transform: translateX(-50%) translateY(0); opacity: 1; }
-  100% { left: 8vw; transform: translateX(0) translateY(0); opacity: 1; }
+  0% { left: 8vw; transform: translateX(0) translateY(10px) scale(.9); opacity: 0; }
+  22% { left: 50%; transform: translateX(-50%) translateY(0) scale(1); opacity: 1; }
+  56% { left: 50%; transform: translateX(-50%) translateY(0) scale(1); opacity: 1; }
+  100% { left: 8vw; transform: translateX(0) translateY(0) scale(1); opacity: 1; }
 }
 @keyframes fx-actor-center-enemy {
-  0% { right: 50%; transform: translateX(50%) translateY(14px); opacity: 0; }
-  24% { right: 50%; transform: translateX(50%) translateY(0); opacity: 1; }
-  54% { right: 50%; transform: translateX(50%) translateY(0); opacity: 1; }
-  100% { right: 8vw; transform: translateX(0) translateY(0); opacity: 1; }
+  0% { right: 8vw; transform: translateX(0) translateY(10px) scale(.9); opacity: 0; }
+  22% { right: 50%; transform: translateX(50%) translateY(0) scale(1); opacity: 1; }
+  56% { right: 50%; transform: translateX(50%) translateY(0) scale(1); opacity: 1; }
+  100% { right: 8vw; transform: translateX(0) translateY(0) scale(1); opacity: 1; }
 }
 @keyframes fx-actor-hold-player {
   0%, 100% { transform: translateX(0); opacity: 1; }

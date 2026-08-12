@@ -54,18 +54,21 @@ export interface FidelityEvidence {
   notes?: string;
 }
 
-// ═══ Estados intermedios del QTE (Stage Attacks) ═══
+// ═══ Estados intermedios del QTE (Stage Attacks) — manual GBC USA ═══
+// Flujo canónico (2026-08-12, verificado contra el manual original):
+//   INPUT_WINDOW ──todos correctos──▶ COMPLETED   (la acción se anima)
+//        │
+//        └─ error/timeout ──▶ COUNTER_WINDOW  (el rival contraataca, ENTER COMMAND)
+//                                 ├─ A con timing ──▶ SAFE_ABORT  (banca CC, sin daño)
+//                                 ├─ B con timing ──▶ INPUT_WINDOW (repara y continúa)
+//                                 └─ timeout ───────▶ COUNTER_HIT (el counter conecta)
 export type QteState =
   | 'WAITING'
-  | 'PROMPT'
   | 'INPUT_WINDOW'
-  | 'SUCCESS'
-  | 'FAILED'
-  | 'RECOVERY_APPROACH'
-  | 'RECOVERY_WINDOW'
-  | 'RECOVERED'
-  | 'ABORTED'
-  | 'COMPLETE';
+  | 'COUNTER_WINDOW'
+  | 'COMPLETED'
+  | 'SAFE_ABORT'
+  | 'COUNTER_HIT';
 
 // ═══ Definición de acción (data-driven — nada hardcodeado) ═══
 
@@ -84,11 +87,14 @@ export type SequenceType =
 
 export interface QTESpec {
   inputCount: number;
-  // ventanas en frames (null = sin medir aún → INFERRED)
-  inputWindowFrames: number | null;
-  recoveryWindowFrames: number | null;
-  timeoutBehavior: 'PARTIAL' | 'FAILED';
-  wrongInputBehavior: 'RECOVERY' | 'PARTIAL';
+  // ventana GLOBAL de la secuencia en frames según posición relativa
+  // (manual GBC): BACK_BACK=72 · BACK_FRONT=102 · FRONT_BACK=143 · FRONT_FRONT=173
+  sequenceWindowFrames: Record<string, number> | null;
+  // ventana de contraataque (ENTER COMMAND) — A≈24f · B≈9f (HYPOTHESIS)
+  counterAFrames: number | null;
+  counterBFrames: number | null;
+  timeoutBehavior: 'COUNTER';
+  wrongInputBehavior: 'COUNTER';
   ccPerInput: number;
 }
 
