@@ -7038,7 +7038,7 @@ button:focus-visible, .chapter-node:focus-visible {
   position: sticky;
   top: 0;
   height: 100vh;
-  overflow-y: auto;
+  overflow: hidden;
 }
 .dev-logo {
   display: flex;
@@ -7059,7 +7059,7 @@ button:focus-visible, .chapter-node:focus-visible {
 .dev-logo-text { display: flex; flex-direction: column; line-height: 1.1; }
 .dev-logo-text strong { font-size: 14px; color: #fff; }
 .dev-logo-text small { font-size: 10px; color: #8a93a3; }
-.dev-nav { flex: 1; padding: 8px 0; }
+.dev-nav { flex: 1; padding: 8px 0; overflow-y: auto; min-height: 0; }
 .dev-nav-item {
   display: flex;
   align-items: center;
@@ -7091,7 +7091,7 @@ button:focus-visible, .chapter-node:focus-visible {
   font-size: 12px;
 }
 .dev-exit:hover { background: #2b3542; color: #fff; }
-.dev-main { padding: 22px 26px; max-width: 1180px; }
+.dev-main { padding: 22px 26px; max-width: 1180px; min-width: 0; }
 .dev-module { animation: devFade .18s ease; }
 @keyframes devFade { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
 
@@ -7331,7 +7331,6 @@ button:focus-visible, .chapter-node:focus-visible {
 .dev-pose-table h3 { margin: 0 0 8px; font-size: 13px; color: #fff; }
 .dev-pose-row { display: flex; justify-content: space-between; padding: 5px 8px; background: #0e1013; border-radius: 4px; margin-bottom: 4px; font-size: 12px; }
 .dev-pose-status { color: #7fd48a; font-size: 11px; }
-.dev-anim-layout { display: grid; grid-template-columns: 300px 1fr; gap: 16px; }
 .dev-battlelab-layout { display: grid; grid-template-columns: 320px 1fr; gap: 16px; }
 .dev-phase-pills { display: flex; flex-wrap: wrap; gap: 4px; }
 .dev-phase-pill { padding: 4px 8px; background: #181c22; border: 1px solid #262b33; border-radius: 4px; cursor: pointer; color: #aab2bf; font-family: inherit; font-size: 10px; }
@@ -7363,3 +7362,60 @@ button:focus-visible, .chapter-node:focus-visible {
 .dev-launch-btn:disabled { opacity: .4; cursor: default; }
 .dev-ok { color: #7bd88a; }
 .dev-dim { color: #5a6270; font-size: 11px; }
+
+/* ─── Dev Studio: scrollbars sutiles ─── */
+.dev-nav::-webkit-scrollbar,
+.dev-char-list::-webkit-scrollbar,
+.dev-anim-timeline::-webkit-scrollbar,
+.dev-card-list::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+.dev-nav::-webkit-scrollbar-thumb,
+.dev-char-list::-webkit-scrollbar-thumb,
+.dev-anim-timeline::-webkit-scrollbar-thumb,
+.dev-card-list::-webkit-scrollbar-thumb {
+  background: #262b33;
+  border-radius: 4px;
+}
+.dev-nav::-webkit-scrollbar-thumb:hover,
+.dev-char-list::-webkit-scrollbar-thumb:hover,
+.dev-anim-timeline::-webkit-scrollbar-thumb:hover {
+  background: #333d4b;
+}
+
+/* ─── Dev Studio: responsive (apilar layouts de 2 columnas) ─── */
+@media (max-width: 920px) {
+  .dev-chars-layout,
+  .dev-cards-layout,
+  .dev-sprites-layout,
+  .dev-pos-layout,
+  .dev-anim-layout,
+  .dev-battlelab-layout,
+  .dev-story-grid {
+    grid-template-columns: 1fr;
+  }
+  .dev-char-list { max-height: 40vh; }
+  .dev-main { padding: 18px 18px; }
+}
+
+/* ─── Dev Studio: sidebar compacta como barra superior en pantallas estrechas ─── */
+@media (max-width: 760px) {
+  .devstudio { grid-template-columns: 1fr; grid-template-rows: auto 1fr; }
+  .dev-sidebar {
+    position: static;
+    height: auto;
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: wrap;
+    border-right: none;
+    border-bottom: 1px solid #262b33;
+  }
+  .dev-logo { border-bottom: none; padding: 8px 12px; }
+  .dev-nav { display: flex; flex-direction: row; overflow-x: auto; overflow-y: hidden; padding: 4px; }
+  .dev-nav-item { width: auto; flex: 0 0 auto; padding: 7px 10px; border-left: none; border-bottom: 2px solid transparent; }
+  .dev-nav-item.active { border-bottom-color: #d8a830; }
+  .dev-sidebar-foot { border-top: none; padding: 4px 8px; }
+  .dev-exit { width: auto; }
+  .dev-main { padding: 14px; }
+}
