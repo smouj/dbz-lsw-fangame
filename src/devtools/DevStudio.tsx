@@ -17,11 +17,13 @@ import { ResearchModule } from './research';
 import { AnimationModule } from './animation';
 import { PixelArtModule } from './pixelart';
 import { HudModule } from './hud';
+import { PixiModule } from './pixi';
 
 export type DevModuleId =
   | 'dashboard' | 'characters' | 'cards' | 'sprites' | 'animation'
   | 'pixelart' | 'hud'
-  | 'battlelab' | 'story' | 'validation' | 'research' | 'positions';
+  | 'battlelab' | 'story' | 'validation' | 'research' | 'positions'
+  | 'pixi';
 
 interface DevModuleDef {
   id: DevModuleId;
@@ -43,6 +45,7 @@ export const DEV_MODULES: DevModuleDef[] = [
   { id: 'story', label: 'Story', icon: '▤', desc: 'Capítulos, viñetas y mazos de jefes' },
   { id: 'validation', label: 'Validation', icon: '✔', desc: 'Integridad de datos y cobertura' },
   { id: 'research', label: 'Research', icon: '≣', desc: 'ROM / manual / fuentes' },
+  { id: 'pixi', label: 'Pixi Lab', icon: '🎬', desc: 'Renderer PixiJS 8 + reloj GBC único (prueba del motor gráfico)' },
 ];
 
 export function isDevRoute(): boolean {
@@ -103,6 +106,7 @@ export function DevStudio({ onExit, onLaunchBattle }: {
           {module === 'story' && <StoryModule />}
           {module === 'validation' && <ValidationModule />}
           {module === 'research' && <ResearchModule />}
+          {module === 'pixi' && <PixiModule />}
         </div>
       </main>
     </div>

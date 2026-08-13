@@ -7096,6 +7096,23 @@ button:focus-visible, .chapter-node:focus-visible {
 .dev-module { animation: devFade .18s ease; }
 @keyframes devFade { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
 
+/* ─── Pixi Lab (renderer PixiJS 8) ─── */
+.pixi-module h1 { font-size: 20px; margin: 0 0 6px; color: #fff; letter-spacing: .5px; }
+.pixi-module > p { margin: 0 0 14px; color: #8a93a3; font-size: 12.5px; line-height: 1.5; max-width: 760px; }
+.pixi-module code { background: #15191f; border: 1px solid #262b33; border-radius: 4px; padding: 0 4px; font-size: 11px; color: #cdd6e4; }
+.pixi-controls { display: flex; flex-wrap: wrap; gap: 14px; align-items: flex-end; margin-bottom: 12px; }
+.pixi-control { display: flex; flex-direction: column; gap: 5px; font-size: 11px; color: #8a93a3; text-transform: uppercase; letter-spacing: .5px; }
+.pixi-control select, .pixi-control input[type="range"] { background: #181c22; border: 1px solid #2a303a; border-radius: 6px; color: #e7ecf5; padding: 6px 8px; font-size: 13px; min-width: 140px; }
+.pixi-status { display: flex; gap: 12px; align-items: center; margin-bottom: 10px; font-size: 12px; color: #8a93a3; }
+.pixi-badge { padding: 3px 8px; border-radius: 5px; font-weight: 600; font-size: 11px; }
+.pixi-badge.loading { background: #2a2f18; color: #d8c05a; }
+.pixi-badge.ready { background: #16261b; color: #5fce7c; }
+.pixi-badge.no-manifest { background: #2a1818; color: #e06868; }
+.pixi-tick { font-variant-numeric: tabular-nums; }
+.pixi-stage { background: #0d1014; border: 1px solid #262b33; border-radius: 8px; padding: 10px; display: inline-block; line-height: 0; }
+.pixi-canvas { border-radius: 4px; background: #151a20; }
+.pixi-note { margin-top: 10px; color: #6b7484; font-size: 11.5px; }
+
 .dev-header { margin-bottom: 18px; }
 .dev-header h1 { font-size: 20px; margin: 0 0 4px; color: #fff; letter-spacing: .5px; }
 .dev-sub { margin: 0; color: #8a93a3; font-size: 12px; }
