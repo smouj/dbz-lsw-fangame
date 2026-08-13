@@ -26,6 +26,7 @@ export function PixiModule() {
   const canvasRef = useRef<BattleCanvasHandle>(null);
   const actorRef = useRef<FighterActor | null>(null);
   const tickEl = useRef<HTMLSpanElement>(null);
+  const tickRef = useRef(0);
 
   const [formId, setFormId] = useState('goku_base');
   const [pose, setPose] = useState<string>('idle');
@@ -44,16 +45,16 @@ export function PixiModule() {
       actorRef.current = actor;
       // ground line: abajo-centro de la caja lógica
       actor.position.set(LOGICAL_W / 2, LOGICAL_H - 12);
-      actor.setPose(pose);
+      actor.setPose(pose, tickRef.current);
       setStatus('ready');
     });
     return () => { cancelled = true; };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [formId]);
 
-  // Cambiar pose (reinicia el reloj de la pose).
+  // Cambiar pose (reinicia el reloj de la pose en el tick actual).
   useEffect(() => {
-    actorRef.current?.setPose(pose);
+    actorRef.current?.setPose(pose, tickRef.current);
   }, [pose]);
 
   // Cambiar escala.
@@ -79,6 +80,7 @@ export function PixiModule() {
         acc -= ticks;
         h.tick(ticks);
         total += ticks;
+        tickRef.current = total;
         if (tickEl.current) tickEl.current.textContent = String(total);
       }
       raf = requestAnimationFrame(loop);

@@ -7112,6 +7112,11 @@ button:focus-visible, .chapter-node:focus-visible {
 .pixi-stage { background: #0d1014; border: 1px solid #262b33; border-radius: 8px; padding: 10px; display: inline-block; line-height: 0; }
 .pixi-canvas { border-radius: 4px; background: #151a20; }
 .pixi-note { margin-top: 10px; color: #6b7484; font-size: 11.5px; }
+.pixi-status-text { color: #5fce7c; font-size: 12px; font-variant-numeric: tabular-nums; }
+.pixi-controls button { background: #1c2230; border: 1px solid #2e3747; border-radius: 6px; color: #e7ecf5; padding: 7px 12px; font-size: 12.5px; cursor: pointer; }
+.pixi-controls button:hover:not(:disabled) { background: #242c3d; }
+.pixi-controls button:disabled { opacity: .45; cursor: default; }
+.pixi-debug { margin-top: 12px; background: #0b0e12; border: 1px solid #1f252e; border-radius: 6px; padding: 8px 10px; color: #8fb3d9; font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 11px; min-height: 40px; max-height: 220px; overflow: auto; white-space: pre-wrap; word-break: break-all; }
 
 .dev-header { margin-bottom: 18px; }
 .dev-header h1 { font-size: 20px; margin: 0 0 4px; color: #fff; letter-spacing: .5px; }

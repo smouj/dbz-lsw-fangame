@@ -62,6 +62,12 @@ export interface CinematicProfile {
 export interface BattleTimelineOptions {
   onEvent: (e: CinematicEvent) => void;
   onComplete: () => void;
+  /**
+   * Se dispara CADA frame con el tick GBC absoluto actual (floor del acumulador).
+   * El renderer lo usa para sincronizar la animación de sprites al MISMO reloj
+   * que emite los eventos (frame = f(tick) determinista a cualquier Hz).
+   */
+  onTick?: (tick: number) => void;
 }
 
 export class BattleTimeline {
@@ -70,7 +76,7 @@ export class BattleTimeline {
   private raf = 0;
   private last = 0;
   private acc = 0;          // acumulador en frames GBC
-  private tickCursor = 0;   // último tick emitido
+  private tickCursor = -1;  // último tick emitido (-1 = aún no se emitió el tick 0)
   private done = false;
 
   constructor(profile: CinematicProfile, opts: BattleTimelineOptions) {
@@ -79,7 +85,7 @@ export class BattleTimeline {
   }
 
   get tick(): number {
-    return Math.min(this.tickCursor, this.profile.totalTicks);
+    return Math.max(0, Math.min(this.tickCursor, this.profile.totalTicks));
   }
 
   get progress(): number {
@@ -143,6 +149,9 @@ export class BattleTimeline {
         }
       }
     }
+
+    // Sincronizar la animación de sprites al mismo tick (reloj único).
+    this.opts.onTick?.(targetTick);
 
     if (this.tickCursor >= this.profile.totalTicks) {
       this.finish();

@@ -6,10 +6,13 @@
 // estable): al cambiar de frame, el personaje NO "respira" porque el ancla
 // (0.5, 1) mantiene fijo el punto de apoyo y el centro horizontal.
 //
+// El frame mostrado es f(tick GBC ABSOLUTO − poseStartTick): determinista a
+// 60/120/144/240 Hz. Nada de setInterval ni duraciones en ms.
+//
 // El flip respeta las reglas de FACING (facingFlip) y el caso especial
 // move_left (espejo del ciclo de andar).
 
-import { Container, Sprite } from 'pixi.js';
+import { Container, Sprite, Texture } from 'pixi.js';
 import { facingFlip, type BattleSide } from '../../../data/facing';
 import { currentFrame } from '../systems/SpriteAnimator';
 import type { FormAtlas, PoseAnim } from '../assets/AtlasLoader';
@@ -41,9 +44,12 @@ export class FighterActor extends Container {
   readonly formId: string;
   private readonly atlas: FormAtlas;
   private readonly sprite: Sprite;
+  /** Overlay blanco para el flash de impacto (tinte aditivo). */
+  private readonly flash: Sprite;
   private activePose: string | null = null;
   private anim: PoseAnim | null = null;
-  private elapsedTicks = 0;
+  private poseStartTick = 0;
+  private lastFrameIndex = 0;
   private baseFlip = 1;
   private scaleMag = 1;
 
@@ -57,9 +63,27 @@ export class FighterActor extends Container {
     this.sprite.roundPixels = true;
     this.addChild(this.sprite);
 
+    this.flash = new Sprite(Texture.WHITE);
+    this.flash.anchor.set(0.5, 1);
+    this.flash.width = atlas.maxW;
+    this.flash.height = atlas.maxH;
+    this.flash.blendMode = 'add';
+    this.flash.visible = false;
+    this.addChild(this.flash);
+
     this.baseFlip = facingFlip(formId, side);
     this.applyTransform();
-    this.setPose('idle');
+    this.setPose('idle', 0);
+  }
+
+  /** Pose activa (resuelta con fallbacks) — para verificación/depuración. */
+  get pose(): string | null {
+    return this.activePose;
+  }
+
+  /** Índice de frame actual — para verificación frame-determinista. */
+  get frameIndex(): number {
+    return this.lastFrameIndex;
   }
 
   setFlip(side: BattleSide): void {
@@ -73,33 +97,47 @@ export class FighterActor extends Container {
     this.applyTransform();
   }
 
-  /** Cambia la pose y reinicia su reloj GBC (frames desde cero). */
-  setPose(pose: string): void {
+  /** Posición lógica (px) del punto de apoyo (ground line). */
+  setPos(x: number, y: number): void {
+    this.position.set(x, y);
+  }
+
+  /** Tinte de flash: 0 = nada, 1 = blanco total (aditivo). */
+  setFlash(intensity: number): void {
+    const f = intensity <= 0 ? 0 : intensity;
+    this.flash.visible = f > 0;
+    this.flash.alpha = Math.min(1, f);
+  }
+
+  /** Cambia la pose en el tick absoluto `absTick` (reloj de la pose a cero). */
+  setPose(pose: string, absTick: number): void {
     const resolved = resolvePose(this.atlas, pose);
     this.activePose = resolved;
     this.anim = resolved ? (this.atlas.anims.get(resolved) ?? null) : null;
-    this.elapsedTicks = 0;
+    this.poseStartTick = absTick;
     this.applyTransform();
-    this.applyFrame();
+    this.applyFrame(Math.max(0, absTick - this.poseStartTick));
   }
 
-  /** Avanza el reloj de la pose `ticks` frames GBC (reloj ÚNICO). */
-  tick(ticks = 1): void {
-    this.elapsedTicks += ticks;
-    this.applyFrame();
+  /** Sincroniza el frame al tick GBC absoluto (reloj ÚNICO, f(tick)). */
+  sync(absTick: number): void {
+    this.applyFrame(Math.max(0, absTick - this.poseStartTick));
   }
 
   private applyTransform(): void {
     const sign = this.activePose === 'move_left' ? -this.baseFlip : this.baseFlip;
     this.sprite.scale.set(this.scaleMag * sign, this.scaleMag);
+    this.flash.scale.set(this.scaleMag, this.scaleMag);
   }
 
-  private applyFrame(): void {
+  private applyFrame(elapsedTicks: number): void {
     if (!this.anim || !this.activePose) {
       this.sprite.visible = false;
+      this.lastFrameIndex = 0;
       return;
     }
-    const state = currentFrame(this.anim, this.elapsedTicks);
+    const state = currentFrame(this.anim, elapsedTicks);
+    this.lastFrameIndex = state.frameIndex;
     const tex = this.atlas.textures.get(`${this.activePose}:${state.frameIndex}`);
     if (!tex) {
       this.sprite.visible = false;

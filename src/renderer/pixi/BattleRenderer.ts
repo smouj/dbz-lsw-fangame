@@ -11,20 +11,29 @@
 // animación de los luchadores (principio "reloj único").
 
 import { Application, Container } from 'pixi.js';
-import { loadFormAtlas } from './assets/AtlasLoader';
+import { loadFormAtlas, loadPixelTexture } from './assets/AtlasLoader';
 import { FighterActor } from './actors/FighterActor';
+import { SceneDirector } from './director/SceneDirector';
+import { ImpactSystem } from './systems/ImpactSystem';
 import type { BattleSide } from '../../data/facing';
 
 export class BattleRenderer {
   readonly app: Application;
   /** Mundo transformable (cámara): aquí cuelgan escenas y actores. */
   readonly world: Container;
+  /** Director de planos (FIELD ↔ ACTION). */
+  readonly sceneDirector: SceneDirector;
+  /** Sistema de impacto (hitstop/flash/shake) — activado por HIT_FRAME. */
+  readonly impactSystem = new ImpactSystem();
+
   private readonly fighters: FighterActor[] = [];
+  private tickCount = 0;
 
   private constructor(app: Application) {
     this.app = app;
     this.world = new Container();
     app.stage.addChild(this.world);
+    this.sceneDirector = new SceneDirector(this.world);
   }
 
   static async create(canvas: HTMLCanvasElement): Promise<BattleRenderer> {
@@ -44,21 +53,44 @@ export class BattleRenderer {
     return new BattleRenderer(app);
   }
 
-  /** Carga el atlas de una forma y crea su luchador en el mundo. */
+  /** Tick absoluto GBC actual. */
+  get currentTick(): number {
+    return this.tickCount;
+  }
+
+  /** Carga una textura suelta (fondo/overworld/proyectil) con cache + pixelate. */
+  loadTexture(url: string) {
+    return loadPixelTexture(url);
+  }
+
+  /** Carga el atlas de una forma y crea su luchador (SIN añadirlo al mundo). */
   async addFighter(formId: string, side: BattleSide, scale = 1): Promise<FighterActor | null> {
     const atlas = await loadFormAtlas(formId);
     if (!atlas) return null;
     const actor = new FighterActor(atlas, formId, side);
     actor.setScale(scale);
-    actor.setPose('idle');
-    this.world.addChild(actor);
+    actor.setPose('idle', 0);
     this.fighters.push(actor);
     return actor;
   }
 
-  /** Avanza el reloj de TODOS los luchadores (frames GBC). */
+  /** Avanza el reloj de la presentación `ticks` frames GBC (relativo). */
   tick(ticks = 1): void {
-    for (const f of this.fighters) f.tick(ticks);
+    this.sync(this.tickCount + ticks);
+  }
+
+  /** Sincroniza TODO el renderer al tick GBC absoluto `tick` (reloj ÚNICO). */
+  sync(tick: number): void {
+    this.tickCount = tick;
+    const snap = this.impactSystem.snapshot(this.tickCount);
+
+    // Sacudida de cámara (f(tick)): desplaza el mundo, no el estado lógico.
+    this.world.position.set(snap.shakeX, snap.shakeY);
+
+    // Hitstop: durante la congelación los luchadores NO avanzan (peso del golpe).
+    if (snap.hitstop) return;
+
+    for (const f of this.fighters) f.sync(tick);
   }
 
   resize(width: number, height: number): void {

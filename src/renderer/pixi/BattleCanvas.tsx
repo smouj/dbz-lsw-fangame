@@ -19,6 +19,7 @@ export interface BattleCanvasHandle {
   ready(): Promise<boolean>;
   addFighter(formId: string, side: BattleSide, scale?: number): Promise<FighterActor | null>;
   tick(ticks?: number): void;
+  sync(tick: number): void;
   resize(width: number, height: number): void;
 }
 
@@ -80,6 +81,7 @@ export const BattleCanvas = forwardRef<BattleCanvasHandle, BattleCanvasProps>(
           return r ? r.addFighter(formId, side, scale) : null;
         },
         tick: (ticks = 1) => rendererRef.current?.tick(ticks),
+        sync: (tick: number) => rendererRef.current?.sync(tick),
         resize: (w, h) => rendererRef.current?.resize(w, h),
       }),
       [],

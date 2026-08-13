@@ -1,0 +1,228 @@
+// ═══════════════════════════════════════════════════════════
+// DBZ LSW — PixiBattlePresentation (adaptador BattleTimeline → Pixi)
+// ═══════════════════════════════════════════════════════════
+// Implementa el contrato BattlePresentation sobre el BattleRenderer. El
+// BattleTimeline NO conoce Pixi: un adaptador en la capa de integración mapea
+// sus eventos (SHOT/ACTOR_POSE/TARGET_POSE/PROJECTILE/HIT_FRAME/CAMERA/
+// FIELD_RETURN) a estos métodos. Cada método es determinista: el frame es
+// consecuencia del tick GBC absoluto (renderer.tick).
+
+import { Sprite, Texture } from 'pixi.js';
+import type { BattleSide } from '../../../data/facing';
+import { facingFlip } from '../../../data/facing';
+import { overworldUrl } from '../../../data/overworld';
+import type { BattlePosition } from '../../../data/positions';
+import type { BattleRenderer } from '../BattleRenderer';
+import type { FighterActor } from '../actors/FighterActor';
+import { ACTION_ACTOR_X, ACTION_TARGET_X } from '../scenes/ActionScene';
+import { ACTION_GROUND_Y, rushX, easeOutCubic } from '../systems/MotionSystem';
+import type { BattlePresentation, BattleScene } from './BattlePresentation';
+
+export interface PixiPresentationConfig {
+  playerFormId: string;
+  enemyFormId: string;
+  overviewBackground: string;
+  actionBackground: string;
+  playerPos: BattlePosition;
+  enemyPos: BattlePosition;
+  /** Escala del luchador grande en ACTION (px por píxel de asset). */
+  scale?: number;
+}
+
+export class PixiBattlePresentation implements BattlePresentation {
+  private readonly renderer: BattleRenderer;
+  private readonly cfg: PixiPresentationConfig;
+  private readonly scale: number;
+
+  private leftActor: FighterActor | null = null;
+  private rightActor: FighterActor | null = null;
+  private attacker: BattleSide = 'left';
+  private projectile: Sprite | null = null;
+
+  // Rush: movimiento del atacante calculado como f(tick − rushStartTick).
+  private rushActive = false;
+  private rushStartTick = 0;
+  private rushDuration = 0;
+  private rushFromX = 0;
+  private rushToX = 0;
+
+  constructor(renderer: BattleRenderer, cfg: PixiPresentationConfig) {
+    this.renderer = renderer;
+    this.cfg = cfg;
+    this.scale = cfg.scale ?? 3;
+  }
+
+  /** Carga fondos, overworld y luchadores; deja el plano en FIELD. */
+  async init(): Promise<void> {
+    const dir = this.renderer.sceneDirector;
+
+    const overview = await this.renderer.loadTexture(this.cfg.overviewBackground);
+    dir.tactical.setBackground(overview);
+    const action = await this.renderer.loadTexture(this.cfg.actionBackground);
+    dir.action.setBackground(action);
+
+    const pOwUrl = overworldUrl(this.cfg.playerFormId);
+    const eOwUrl = overworldUrl(this.cfg.enemyFormId);
+    const pOw = pOwUrl ? await this.renderer.loadTexture(pOwUrl) : null;
+    const eOw = eOwUrl ? await this.renderer.loadTexture(eOwUrl) : null;
+    dir.tactical.setOverworld('left', pOw, this.cfg.playerPos, facingFlip(this.cfg.playerFormId, 'left'));
+    dir.tactical.setOverworld('right', eOw, this.cfg.enemyPos, facingFlip(this.cfg.enemyFormId, 'right'));
+
+    this.leftActor = await this.renderer.addFighter(this.cfg.playerFormId, 'left', this.scale);
+    this.rightActor = await this.renderer.addFighter(this.cfg.enemyFormId, 'right', this.scale);
+    if (this.leftActor) this.renderer.sceneDirector.action.setActor(this.leftActor);
+    if (this.rightActor) this.renderer.sceneDirector.action.setTarget(this.rightActor);
+
+    this.renderer.sceneDirector.setScene('FIELD');
+  }
+
+  /** Fija quién ataca en este exchange (player → 'left', enemy → 'right'). */
+  setAttacker(side: BattleSide): void {
+    this.attacker = side;
+    const a = side === 'left' ? this.leftActor : this.rightActor;
+    const t = side === 'left' ? this.rightActor : this.leftActor;
+    this.renderer.sceneDirector.action.setActor(a);
+    this.renderer.sceneDirector.action.setTarget(t);
+  }
+
+  private get actor(): FighterActor | null {
+    return this.attacker === 'left' ? this.leftActor : this.rightActor;
+  }
+
+  private get target(): FighterActor | null {
+    return this.attacker === 'left' ? this.rightActor : this.leftActor;
+  }
+
+  setScene(scene: BattleScene): void {
+    this.renderer.sceneDirector.setScene(scene);
+  }
+
+  setActorPose(pose: string): void {
+    this.actor?.setPose(pose, this.renderer.currentTick);
+  }
+
+  setTargetPose(pose: string): void {
+    this.target?.setPose(pose, this.renderer.currentTick);
+  }
+
+  moveActor(durationTicks: number): void {
+    const a = this.actor;
+    if (!a) return;
+    const fromX = this.attacker === 'left' ? ACTION_ACTOR_X : ACTION_TARGET_X;
+    const toX = this.attacker === 'left' ? ACTION_TARGET_X : ACTION_ACTOR_X;
+    const dir = toX > fromX ? 1 : -1;
+    const endX = toX - dir * 34; // se detiene antes de solaparse con el rival
+    this.rushActive = true;
+    this.rushStartTick = this.renderer.currentTick;
+    this.rushDuration = Math.max(1, Math.round(durationTicks));
+    this.rushFromX = fromX;
+    this.rushToX = endX;
+    a.setPos(fromX, ACTION_GROUND_Y);
+  }
+
+  spawnProjectile(kind: string): void {
+    this.clearProjectile();
+    const p = new Sprite(Texture.WHITE);
+    p.tint = kind === 'beam' ? 0x00ccff : 0xffd040;
+    p.height = 4;
+    p.anchor.set(0, 0.5);
+    this.renderer.sceneDirector.projectileLayer.addChild(p);
+    this.projectile = p;
+  }
+
+  setProjectileProgress(progress: number): void {
+    if (!this.projectile) return;
+    const fromX = this.attacker === 'left' ? ACTION_ACTOR_X : ACTION_TARGET_X;
+    const toX = this.attacker === 'left' ? ACTION_TARGET_X : ACTION_ACTOR_X;
+    const p = Math.max(0, Math.min(1, progress));
+    this.projectile.position.set(fromX + (toX - fromX) * p, ACTION_GROUND_Y - 40);
+  }
+
+  impact(): void {
+    this.renderer.impactSystem.impact(this.renderer.currentTick, { hitstop: 2, flash: 4, shake: 6, mag: 0.4 });
+  }
+
+  camera(shake: number): void {
+    this.renderer.impactSystem.shake(this.renderer.currentTick, shake);
+  }
+
+  returnToField(): void {
+    this.renderer.sceneDirector.setScene('FIELD');
+    this.clearProjectile();
+    this.cancelRush();
+    this.leftActor?.setFlash(0);
+    this.rightActor?.setFlash(0);
+    this.leftActor?.setPose('idle', this.renderer.currentTick);
+    this.rightActor?.setPose('idle', this.renderer.currentTick);
+    this.leftActor?.setPos(ACTION_ACTOR_X, ACTION_GROUND_Y);
+    this.rightActor?.setPos(ACTION_TARGET_X, ACTION_GROUND_Y);
+  }
+
+  sync(tick: number): void {
+    this.renderer.sync(tick);
+    // Rush: position = f(tick − rushStartTick) — determinista a cualquier Hz.
+    if (this.rushActive) {
+      const a = this.actor;
+      if (a) {
+        const p = this.rushDuration > 0
+          ? Math.min(1, Math.max(0, (this.renderer.currentTick - this.rushStartTick) / this.rushDuration))
+          : 1;
+        const x = rushX({ start: this.rushFromX, end: this.rushToX, easing: easeOutCubic }, p);
+        a.setPos(x, ACTION_GROUND_Y);
+        if (p >= 1) this.rushActive = false;
+      }
+    }
+    const snap = this.renderer.impactSystem.snapshot(this.renderer.currentTick);
+    this.target?.setFlash(snap.flash);
+    this.actor?.setFlash(0);
+  }
+
+  /** Vuelve a un estado inicial limpio (para replay determinista del timeline). */
+  reset(): void {
+    this.renderer.impactSystem.reset();
+    this.renderer.sync(0);
+    this.clearProjectile();
+    this.cancelRush();
+    this.leftActor?.setFlash(0);
+    this.rightActor?.setFlash(0);
+    this.leftActor?.setPose('idle', 0);
+    this.rightActor?.setPose('idle', 0);
+    this.leftActor?.setPos(ACTION_ACTOR_X, ACTION_GROUND_Y);
+    this.rightActor?.setPos(ACTION_TARGET_X, ACTION_GROUND_Y);
+    this.setAttacker(this.attacker);
+    this.renderer.sceneDirector.setScene('FIELD');
+  }
+
+  /** Snapshot determinista para verificación/depuración. */
+  debugState(): {
+    tick: number;
+    scene: BattleScene;
+    actor: { pose: string | null; frame: number; x: number; y: number } | null;
+    target: { pose: string | null; frame: number; x: number; y: number } | null;
+  } {
+    const a = this.actor;
+    const t = this.target;
+    return {
+      tick: this.renderer.currentTick,
+      scene: this.renderer.sceneDirector.scene,
+      actor: a ? { pose: a.pose, frame: a.frameIndex, x: a.position.x, y: a.position.y } : null,
+      target: t ? { pose: t.pose, frame: t.frameIndex, x: t.position.x, y: t.position.y } : null,
+    };
+  }
+
+  private clearProjectile(): void {
+    if (this.projectile) {
+      this.renderer.sceneDirector.projectileLayer.removeChild(this.projectile);
+      this.projectile.destroy({ texture: false });
+      this.projectile = null;
+    }
+  }
+
+  private cancelRush(): void {
+    this.rushActive = false;
+    this.rushStartTick = 0;
+    this.rushDuration = 0;
+    this.rushFromX = 0;
+    this.rushToX = 0;
+  }
+}

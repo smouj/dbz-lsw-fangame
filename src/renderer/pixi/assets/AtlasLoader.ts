@@ -45,6 +45,26 @@ export interface FormAtlas {
 }
 
 const CACHE = new Map<string, Promise<FormAtlas | null>>();
+const TEXTURE_CACHE = new Map<string, Promise<Texture | null>>();
+
+/**
+ * Carga una textura suelta (fondo, overworld, proyectil) con nearest-neighbour
+ * y cache por URL. Devuelve null si falla (sin romper la escena).
+ */
+export function loadPixelTexture(url: string): Promise<Texture | null> {
+  let p = TEXTURE_CACHE.get(url);
+  if (p) return p;
+  p = (async () => {
+    try {
+      const t = await Assets.load<Texture>(url);
+      return t ? pixelate(t) : null;
+    } catch {
+      return null;
+    }
+  })();
+  TEXTURE_CACHE.set(url, p);
+  return p;
+}
 
 async function fetchManifest(formId: string): Promise<FormManifest | null> {
   const url = spriteManifestUrl(formId);
