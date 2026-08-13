@@ -64,7 +64,7 @@
   },
   "attack_fwd": {
     "frame_count": 7,
-    "fps": 7,
+    "fps": 5,
     "loop": false,
     "frames": [
       {
@@ -113,7 +113,7 @@
   },
   "attack_ud": {
     "frame_count": 6,
-    "fps": 7,
+    "fps": 5,
     "loop": false,
     "frames": [
       {

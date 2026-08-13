@@ -5,7 +5,7 @@
 // frame counter, playhead sobre la tira de frames y comparativa
 // de renderizado nearest-neighbor (GBC) vs bilinear (escalado).
 // ═══════════════════════════════════════════════════════════
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { FORMS } from '../data/roster';
 import { spriteDirFor, spriteManifestUrl, spriteFrameUrl } from '../data/spriteManifest';
 
@@ -51,6 +51,18 @@ export function AnimationModule() {
   const nativeLoop = poseData?.loop ?? false;
   const fps = fpsOverride ?? nativeFps;
   const loop = loopOverride ?? nativeLoop;
+
+  // Canvas fijo de la forma (max W/H) para anclar cada frame abajo-centrado,
+  // igual que FighterSprite en batalla: evita que el canvas "respire" al
+  // cambiar de frame (los PNG están recortados a su bounding box).
+  const bounds = useMemo(() => {
+    if (!manifest) return { maxW: 0, maxH: 0 };
+    let maxW = 0, maxH = 0;
+    for (const p of Object.values(manifest)) {
+      for (const f of p.frames) { if (f.w > maxW) maxW = f.w; if (f.h > maxH) maxH = f.h; }
+    }
+    return { maxW, maxH };
+  }, [manifest]);
 
   // Si la pose actual no existe en el manifest (formas con menos poses),
   // saltar a la primera disponible.
@@ -100,16 +112,21 @@ export function AnimationModule() {
     const img = new Image();
     img.onload = () => {
       if (canvasRef.current !== cv) return;
-      cv.width = f.w * zoom;
-      cv.height = f.h * zoom;
+      const cw = Math.max(bounds.maxW, f.w) * zoom;
+      const ch = Math.max(bounds.maxH, f.h) * zoom;
+      cv.width = cw;
+      cv.height = ch;
       const ctx = cv.getContext('2d');
       if (ctx) {
         ctx.imageSmoothingEnabled = smooth;
-        ctx.drawImage(img, 0, 0, cv.width, cv.height);
+        const dx = Math.round((bounds.maxW - f.w) / 2 * zoom);
+        const dy = Math.round((bounds.maxH - f.h) * zoom);
+        ctx.clearRect(0, 0, cw, ch);
+        ctx.drawImage(img, dx, dy, f.w * zoom, f.h * zoom);
       }
     };
     img.src = spriteFrameUrl(formId, f.file);
-  }, [frames, frame, zoom, smooth, formId]);
+  }, [frames, frame, zoom, smooth, formId, bounds]);
 
   const step = (d: number) => setFrame(f => {
     const next = f + d;
@@ -177,6 +194,7 @@ export function AnimationModule() {
           <div className="dev-sprite-meta">
             <div><span>dir</span><code>{dir ?? '— (sin V5)'}</code></div>
             <div><span>pose</span><code>{poseData ? `${pose} · ${nFrames} frames · ${nativeFps}fps` : '—'}</code></div>
+            <div><span>canvas</span><code>{bounds.maxW}×{bounds.maxH} (anclado abajo-centro)</code></div>
           </div>
         </div>
 

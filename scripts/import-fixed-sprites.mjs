@@ -96,8 +96,8 @@ const POSE_MAP = {
   idle: { pose: 'idle', fps: 3, loop: true },
   movement: { pose: 'move', fps: 6, loop: true },
   guard: { pose: 'guard', fps: 6, loop: false },
-  attack_forward: { pose: 'attack_fwd', fps: 7, loop: false },
-  attack_vertical: { pose: 'attack_ud', fps: 7, loop: false },
+  attack_forward: { pose: 'attack_fwd', fps: 5, loop: false },
+  attack_vertical: { pose: 'attack_ud', fps: 5, loop: false },
   hurt: { pose: 'hurt', fps: 6, loop: false },
 };
 const BEAM_CHARGE = { pose: 'beam_charge', fps: 7, loop: false };
