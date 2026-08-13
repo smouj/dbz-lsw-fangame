@@ -4,6 +4,24 @@ Todos los cambios notables en `dbz-lsw-fangame`. Formato basado en [Keep a Chang
 
 ## [Unreleased]
 
+### Fix: animaciones de combate — alineación, timing y windup
+- **Frame jitter eliminado**: los frames del zip FIXED están recortados a su
+  bounding box (w/h variables por frame), así que `FighterSprite` "respiraba"
+  al animar. Ahora `useSpriteAnim` devuelve `maxW/maxH` de la forma y cada frame
+  se ancla abajo-centrado dentro de un canvas fijo (ground line estable).
+  Verificado: contenedor constante 79×84 en batalla (antes saltaba por frame).
+- **Timing del rush (melee) corregido**: la fase travel duraba 6 ticks (a−6 → a)
+  y cortaba el lunge CSS `fx-rush-body` (0.7s) + swing. El `HIT_FRAME` ahora cae
+  al final del travel (a+t), dando al lunge su duración real (~44 ticks).
+- **Windup del puño corregido**: los golpes físicos (damage/command) mostraban
+  `power_up`, que cae a `beam_charge` (manos juntas cargando ki, impropio de un
+  puñetazo). Ahora usan `idle` en la aproximación y `attack_fwd` en el lunge.
+- **FPS de ataque 7→5**: a 7fps el puñetazo llegaba al frame de recuperación en
+  el momento del impacto; a 5fps el contacto cae en el frame de extensión
+  (3-4), como debe ser. El import script queda coherente.
+- **Animation Studio alineado**: el canvas es fijo (max W/H de la forma) con el
+  frame anclado abajo-centrado, igual que en batalla.
+
 ### Fix: sprites de combate regenerados desde la fuente correcta
 - El rebuild anterior (`rebuild-sprites-v6.mjs`) usó la clasificación de *review*
   del zip ATOMIC V5 (`idle_or_stance`/`downed_or_hurt`/`move_or_attack`…), más
