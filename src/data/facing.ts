@@ -19,7 +19,7 @@ export type BattleSide = 'left' | 'right';
 // Dirección NATIVA del golpe por slug de sprite (44 formas, 2026-08-11)
 // Fuente: docs/audit/native-strike-dir.json (análisis windup/golpe)
 export const NATIVE_STRIKE_DIR: Record<string, StrikeDir> = {
-  // Golpe nativo a la IZQUIERDA (10): necesitan flip cuando están a la izquierda
+  // Golpe nativo a la IZQUIERDA (9): necesitan flip cuando están a la izquierda
   goku_super_saiyan: 'left',
   goku_super_saiyan_3: 'left',
   gohan_super_saiyan_1_2: 'left',
@@ -28,7 +28,6 @@ export const NATIVE_STRIKE_DIR: Record<string, StrikeDir> = {
   gotenks_super_saiyan_3: 'left',
   piccolo_base: 'left',
   super_buu_base: 'left',
-  trunks_super_saiyan: 'left',
   kid_trunks_super_saiyan: 'left',  // verificado visual 2026-08-12 (puño a la izq)
 };
 
@@ -37,9 +36,9 @@ export const NATIVE_STRIKE_DIR: Record<string, StrikeDir> = {
 // android_20_base, burter_base, buu_base, buu_gohan_absorbed,
 // buu_gotenks_absorbed, cell_imperfect_form, cell_jr_base, cell_perfect,
 // cell_semi_perfect_form, frieza_base, future_trunks_base, ginyu_base,
-// ginyu_gokus_body, gohan_ultimate, goku, goku_base, goku_super_saiyan_2,
+// ginyu_gokus_body, gohan_ultimate, goku_base, goku_super_saiyan_2,
 // goten_base, guldo_base, jeice_base, kid_buu_base, krillin_base, nappa_base,
-// recoome_base, trunks_base, vegeta, vegeta_base, vegeta_super_saiyan_majin,
+// recoome_base, trunks_base, vegeta_base, vegeta_super_saiyan_majin,
 // young_gohan_base, young_gohan_super_saiyan, young_gohan_super_saiyan_2
 
 const DEFAULT_STRIKE: StrikeDir = 'right';
