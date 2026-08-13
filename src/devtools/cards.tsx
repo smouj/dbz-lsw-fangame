@@ -5,6 +5,7 @@
 import { useMemo, useState } from 'react';
 import { CARDS, cardColor, getCard, type CardType, type CardDef } from '../data/cards';
 import { characterName } from '../data/storyPanels';
+import { cardIconUrl } from '../data/icons';
 
 const TYPES: (CardType | 'all')[] = ['all', 'command', 'damage', 'beam', 'support', 'defense', 'special'];
 
@@ -66,6 +67,9 @@ export function CardsModule() {
             <button key={c.id} className={`dev-card-row ${selectedId === c.id ? 'active' : ''}`}
               onClick={() => setSelectedId(c.id)}>
               <span className="dev-card-id">{String(c.id).padStart(3, '0')}</span>
+              <span className="dev-card-sprite">
+                {cardIconUrl(c.id) ? <img src={cardIconUrl(c.id)} alt={c.name} loading="lazy" /> : <span className="dev-card-sprite-empty">—</span>}
+              </span>
               <span className="dev-card-type" style={{ background: cardColor(c.type) }}>{c.type[0].toUpperCase()}</span>
               <span className="dev-card-name">{c.name}</span>
               <span className="dev-card-stats">⚔{c.atk} · ◎{c.acc}</span>
@@ -87,6 +91,9 @@ function CardDetail({ card }: { card: CardDef }) {
     <div className="dev-card-detail">
       <div className="dev-card-hero">
         <div className="dev-card-hero-id">{String(card.id).padStart(3, '0')}</div>
+        <div className="dev-card-hero-sprite">
+          {cardIconUrl(card.id) ? <img src={cardIconUrl(card.id)} alt={card.name} /> : <span className="dev-card-sprite-empty">Sin sprite</span>}
+        </div>
         <h2 style={{ color: cardColor(card.type) }}>{card.name}</h2>
         <div className="dev-card-hero-tags">
           <span className="dev-tag" style={{ background: cardColor(card.type) }}>{card.type}</span>

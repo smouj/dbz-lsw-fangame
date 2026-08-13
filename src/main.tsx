@@ -2783,12 +2783,12 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
               <>
                 <div className="control-label">{t('battle.defendAction')} — {t('battle.chooseDefense')}</div>
                 <div className="defense-sources">
-                  <button className="basic-btn src-basic" onClick={() => { Sfx.select(); setDefendMenu('basic'); }}
-                    data-tip="BASIC DEFENSE — quedarte y bloquear (−50% dmg)\no MOVE para cambiar de posición (persistente).\nGratis, sin gastar CC." />
-                  <button className="basic-btn src-joint" onClick={() => { Sfx.select(); setDefendMenu('joint'); }}
-                    data-tip="JOINT — cartas de defensa/soporte de tu mano.\nCuestan CC y se descartan al usarlas." />
                   <button className="basic-btn src-limit" onClick={() => { Sfx.select(); setDefendMenu('limit'); }} disabled={powerState === 'NORMAL' || limitCards.length === 0}
                     data-tip="LIMITED — defensas exclusivas del personaje.\nRequiere GATHER POWER activo." />
+                  <button className="basic-btn src-joint" onClick={() => { Sfx.select(); setDefendMenu('joint'); }}
+                    data-tip="JOINT — cartas de defensa/soporte de tu mano.\nCuestan CC y se descartan al usarlas." />
+                  <button className="basic-btn src-basic" onClick={() => { Sfx.select(); setDefendMenu('basic'); }}
+                    data-tip="BASIC DEFENSE — quedarte y bloquear (−50% dmg)\no MOVE para cambiar de posición (persistente).\nGratis, sin gastar CC." />
                 </div>
                 <div className="command-help">{t('battle.defenseHelp')}</div>
               </>

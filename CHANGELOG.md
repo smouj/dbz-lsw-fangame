@@ -4,6 +4,17 @@ Todos los cambios notables en `dbz-lsw-fangame`. Formato basado en [Keep a Chang
 
 ## [Unreleased]
 
+### Fix: Development Studio — scroll vertical + sprites de cartas + orden HUD
+- **Scroll del panel**: el `.devstudio` ahora es un shell fijo (`height: 100vh;
+  overflow: hidden`) y `.dev-main` hace scroll vertical interno. Antes el contenido
+  que excedía la altura quedaba cortado sin scroll (los `html/body/#root` tienen
+  `overflow: hidden` para el juego).
+- **Sprites de cartas visibles**: el Card Database muestra ahora el icono real de
+  cada carta (32×24, de `cardIconUrl`) en cada fila y un sprite grande (3×) en la
+  ficha de detalle. 125/125 renderizan sin imágenes rotas.
+- **Orden HUD unificado**: menú de DEFENSA reordenado a LIMIT · JOINT · BASIC,
+  igual que el menú de ataque (que ya estaba LIMIT · JOINT · BASIC · CHARA).
+
 ### Fix: Development Studio — manifest.json como imagen rota + banner desactualizado
 - **Sprite Inspector** y **Character Studio** cargaban `manifest.json` (un JSON
   de poses/frames) como `<img>`, mostrando una imagen rota en las miniaturas de
