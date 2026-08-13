@@ -81,24 +81,29 @@ function profileBeam(id: string): CinematicProfile {
 
 function profileRush(id: string, kind: 'damage' | 'command'): CinematicProfile {
   const a = T.rushAttacker, t = T.rushTravel, g = T.rushTarget;
+  // El impacto (HIT_FRAME) ocurre al FINAL del travel: antes el travel duraba
+  // solo 6 ticks (a-6 → a), lo que cortaba el lunge CSS (fx-rush-body 0.7s).
+  const contact = a + t;
   return buildProfile(id, 'ACTION_DUEL', [
     track(0, 'SHOT', { shot: 'ACTION_DUEL' }),
-    track(0, 'ACTOR_POSE', { pose: 'power_up' }),
-    // Rush: el sprite avanza (movimiento + frames sincronizados)
+    track(0, 'ACTOR_POSE', { pose: 'idle' }),
+    // Windup al final del approach
     track(a - 12, 'ACTOR_POSE', { pose: 'attack_fwd' }),
-    track(a - 6, 'PROJECTILE', { action: 'rush', progress: 0.6 }),
-    // Contacto
-    track(a, 'ACTOR_POSE', { pose: 'attack_fwd', contact: true }),
-    track(a, 'TARGET_POSE', { pose: 'hurt' }),
-    track(a, 'HIT_FRAME', {}),
-    track(a + 1, 'CAMERA', { shake: 0.35 }),
-    track(a + 2, 'MESSAGE', { text: 'IMPACT' }),
+    // Travel: lunge hacia el rival (inicio del desplazamiento)
+    track(a, 'PROJECTILE', { action: 'rush', progress: 0.0 }),
+    track(a, 'ACTOR_POSE', { pose: 'attack_fwd' }),
+    // Contacto al final del travel
+    track(contact, 'ACTOR_POSE', { pose: 'attack_fwd', contact: true }),
+    track(contact, 'TARGET_POSE', { pose: 'hurt' }),
+    track(contact, 'HIT_FRAME', {}),
+    track(contact + 1, 'CAMERA', { shake: 0.35 }),
+    track(contact + 2, 'MESSAGE', { text: 'IMPACT' }),
     // Hold del impacto + daño
-    track(a + T.impactHold, 'SHOT', { shot: 'IMPACT' }),
-    track(a + T.impactHold + 1, 'APPLY_DAMAGE', {}),
+    track(contact + T.impactHold, 'SHOT', { shot: 'IMPACT' }),
+    track(contact + T.impactHold + 1, 'APPLY_DAMAGE', {}),
     // Recovery y vuelta
-    track(a + t, 'ACTOR_POSE', { pose: 'idle' }),
-    track(a + t + g, 'FIELD_RETURN', {}),
+    track(contact + T.impactHold + T.returnField, 'ACTOR_POSE', { pose: 'idle' }),
+    track(contact + g, 'FIELD_RETURN', {}),
   ]);
 }
 

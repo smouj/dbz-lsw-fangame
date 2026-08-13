@@ -45,6 +45,23 @@ type BattleSpritePose = 'idle' | 'move' | 'guard' | 'attack_fwd' | 'attack_ud' |
 const SPRITE_MANIFEST_CACHE = new Map<string, CharManifest>();
 const SPRITE_MANIFEST_PROMISES = new Map<string, Promise<CharManifest | null>>();
 
+// Los frames del zip FIXED están recortados a su bounding box (w/h variables
+// por frame), lo que hace "respirar" al sprite si se pintan a su tamaño real.
+// Para una animación estable anclamos cada frame abajo-centrado dentro de un
+// canvas fijo = max W/H de TODOS los poses de la forma (ground line estable).
+const SPRITE_BOUNDS_CACHE = new Map<string, { maxW: number; maxH: number }>();
+
+function manifestBounds(manifest: CharManifest): { maxW: number; maxH: number } {
+  let maxW = 0, maxH = 0;
+  for (const pose of Object.values(manifest)) {
+    for (const f of pose.frames) {
+      if (f.w > maxW) maxW = f.w;
+      if (f.h > maxH) maxH = f.h;
+    }
+  }
+  return { maxW, maxH };
+}
+
 // Contador monotónico para keys React (evita la colisión de Date.now() al
 // generar varios ids en el mismo milisegundo — p.ej. varios damage numbers).
 let __reactUid = 0;
@@ -170,7 +187,7 @@ const BATTLE_DECK: CardDef[] = [
 ];
 
 // ─── Animación de sprites (Sprite Database completa, 42 personajes) ───
-function useSpriteAnim(formId: string, pose: string): { src: string; w: number; h: number } | null {
+function useSpriteAnim(formId: string, pose: string): { src: string; w: number; h: number; maxW: number; maxH: number } | null {
   const [frameIdx, setFrameIdx] = useState(0);
   const [manifest, setManifest] = useState<CharManifest | null>(() => SPRITE_MANIFEST_CACHE.get(formId) ?? null);
   const activePose = manifest ? resolveManifestPose(manifest, pose) : null;
@@ -220,7 +237,9 @@ function useSpriteAnim(formId: string, pose: string): { src: string; w: number; 
   if (!manifest || !activePose) return null;
   const anim = manifest[activePose];
   const f = anim.frames[Math.min(frameIdx, anim.frames.length - 1)];
-  return { src: spriteFrameUrl(formId, f.file), w: f.w, h: f.h };
+  let bounds = SPRITE_BOUNDS_CACHE.get(formId);
+  if (!bounds) { bounds = manifestBounds(manifest); SPRITE_BOUNDS_CACHE.set(formId, bounds); }
+  return { src: spriteFrameUrl(formId, f.file), w: f.w, h: f.h, maxW: bounds.maxW, maxH: bounds.maxH };
 }
 
 // ─── Sprite del luchador (animado si hay manifest; null si no) ───
@@ -231,10 +250,12 @@ function FighterSprite({ formId, pose, side, scale = 8, flash = false }: {
   if (!anim) return null;
   const px = Math.round(anim.h * scale / 8);
   const pw = Math.round(anim.w * scale / 8);
+  const cw = Math.round(anim.maxW * scale / 8);
+  const ch = Math.round(anim.maxH * scale / 8);
   const flip = side ? facingFlip(formId, side) : 1;
   return (
     <div className={`fighter-sprite ${flash ? 'flash' : ''}`}
-      style={{ transform: `scaleX(${flip})` }}>
+      style={{ transform: `scaleX(${flip})`, width: cw, height: ch, display: 'flex', alignItems: 'flex-end', justifyContent: 'center' }}>
       <img src={anim.src} alt={formId} style={{ imageRendering: 'pixelated', width: pw, height: px }} />
     </div>
   );
@@ -1039,7 +1060,10 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
   const cardFxActorPose = (card: CardDef, step: CardFxStep): BattleSpritePose => {
     if (step === 'attacker') {
       if (card.type === 'beam') return 'beam_charge';
-      if (card.type === 'damage' || card.type === 'command' || OFFENSIVE_SUPPORT_EFFECTS.has(card.effect)) return 'power_up';
+      // Golpe físico: aproximación en stance neutral (no 'power_up', que cae
+      // a beam_charge = manos juntas cargando ki, impropio de un puñetazo).
+      if (card.type === 'damage' || card.type === 'command') return 'idle';
+      if (OFFENSIVE_SUPPORT_EFFECTS.has(card.effect)) return 'power_up';
     }
     if (step === 'travel') {
       if (card.type === 'beam') return 'beam_fire';
