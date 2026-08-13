@@ -1,20 +1,10 @@
 // ═══════════════════════════════════════════════════════════
-// DBZ LSW — Language Context
+// DBZ LSW — Language Provider (solo componente)
+// Separado del hook y del contexto para Fast Refresh limpio.
 // ═══════════════════════════════════════════════════════════
-import React, { createContext, useContext, useState, useCallback, ReactNode } from 'react';
-import { LangCode, TKey, translate, loadLang, saveLang, DEFAULT_LANG } from './index';
-
-interface LangContextValue {
-  lang: LangCode;
-  setLang: (l: LangCode) => void;
-  t: (key: TKey) => string;
-}
-
-const LangContext = createContext<LangContextValue>({
-  lang: DEFAULT_LANG,
-  setLang: () => {},
-  t: (key) => translate(DEFAULT_LANG, key),
-});
+import React, { useState, useCallback, ReactNode } from 'react';
+import { LangCode, TKey, translate, loadLang, saveLang } from './index';
+import { LangContext } from './LanguageContext';
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
   const [lang, setLangState] = useState<LangCode>(loadLang);
@@ -32,8 +22,4 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
       {children}
     </LangContext.Provider>
   );
-}
-
-export function useLang(): LangContextValue {
-  return useContext(LangContext);
 }
