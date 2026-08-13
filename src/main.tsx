@@ -249,6 +249,42 @@ function useSpriteAnim(formId: string, pose: string): { src: string; w: number; 
   return { src: spriteFrameUrl(formId, f.file), w: f.w, h: f.h, maxW: bounds.maxW, maxH: bounds.maxH };
 }
 
+// ─── Precarga de sprites de combate ───────────────────────
+// loadManifest: única fuente del fetch+dedup del manifest (comparte cache y
+// promise con useSpriteAnim, así no hay doble fetch).
+function loadManifest(formId: string): Promise<CharManifest | null> {
+  const cached = SPRITE_MANIFEST_CACHE.get(formId);
+  if (cached) return Promise.resolve(cached);
+  const pending = SPRITE_MANIFEST_PROMISES.get(formId);
+  if (pending) return pending;
+  const url = spriteManifestUrl(formId);
+  if (!url) return Promise.resolve(null);
+  const promise = fetch(url)
+    .then(r => (r.ok ? (r.json() as Promise<CharManifest>) : null))
+    .then(m => { if (m) SPRITE_MANIFEST_CACHE.set(formId, m); SPRITE_MANIFEST_PROMISES.delete(formId); return m; })
+    .catch(() => { SPRITE_MANIFEST_PROMISES.delete(formId); return null; });
+  SPRITE_MANIFEST_PROMISES.set(formId, promise);
+  return promise;
+}
+
+// Precarga TODOS los frames PNG de una forma (poses completas) para eliminar el
+// pop-in del primer render de cada pose (idle/move/attack/beam/hurt...).
+function preloadFormSprites(formId: string): Promise<void> {
+  return loadManifest(formId).then(async manifest => {
+    if (!manifest) return;
+    const files = new Set<string>();
+    for (const anim of Object.values(manifest)) {
+      for (const f of anim.frames) files.add(spriteFrameUrl(formId, f.file));
+    }
+    await Promise.all([...files].map(src => new Promise<void>(res => {
+      const im = new Image();
+      im.onload = () => res();
+      im.onerror = () => res();
+      im.src = src;
+    })));
+  });
+}
+
 // ─── Sprite del luchador (animado si hay manifest; null si no) ───
 function FighterSprite({ formId, pose, side, scale = 8, flash = false }: {
   formId: string; pose: string; side?: 'left' | 'right'; scale?: number; flash?: boolean;
@@ -618,25 +654,22 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
       BATTLE_PORTRAITS[playerFormId], BATTLE_PORTRAITS[enemyFormId],
       scenario.overviewBackground, scenario.actionBackground,
     ].filter((u): u is string => !!u);
+    // Formas a precargar (incluye aliado y 2º jefe en combates 2v2).
+    const forms = [playerFormId, enemyFormId];
+    if (teamBattle?.ally) forms.push(teamBattle.ally);
+    if (teamBattle?.enemy2) forms.push(teamBattle.enemy2);
+    const total = urls.length + forms.length;
     let done = 0; let fired = false;
     const finish = () => { if (!fired) { fired = true; setLoading(false); } };
     const to = setTimeout(finish, 1600); // tope de seguridad
+    const mark = () => { done++; if (done >= total) { clearTimeout(to); finish(); } };
     urls.forEach(u => {
       const im = new Image();
-      im.onload = im.onerror = () => { done++; if (done >= urls.length) { clearTimeout(to); finish(); } };
+      im.onload = im.onerror = mark;
       im.src = u;
     });
-    // Precargar manifests de sprites (JSON, no imagen) para que el primer
-    // FighterSprite renderice al instante (cache compartido con useSpriteAnim).
-    [playerFormId, enemyFormId].forEach(fid => {
-      const url = spriteManifestUrl(fid);
-      if (!url || SPRITE_MANIFEST_CACHE.has(fid) || SPRITE_MANIFEST_PROMISES.has(fid)) return;
-      const p = fetch(url)
-        .then(r => (r.ok ? (r.json() as Promise<CharManifest>) : null))
-        .then(m => { if (m) SPRITE_MANIFEST_CACHE.set(fid, m); SPRITE_MANIFEST_PROMISES.delete(fid); return m; })
-        .catch(() => { SPRITE_MANIFEST_PROMISES.delete(fid); return null; });
-      SPRITE_MANIFEST_PROMISES.set(fid, p);
-    });
+    // Precargar manifest + TODOS los frames de cada forma (cero pop-in).
+    forms.forEach(fid => { preloadFormSprites(fid).then(mark).catch(mark); });
     return () => clearTimeout(to);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
