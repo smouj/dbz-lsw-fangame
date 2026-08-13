@@ -12,20 +12,39 @@
       }
     ]
   },
-  "move": {
+  "move_right": {
     "frame_count": 2,
     "fps": 6,
     "loop": true,
     "frames": [
       {
-        "name": "goten_super_saiyan_move_00",
-        "file": "goten_super_saiyan_move_00.png",
+        "name": "goten_super_saiyan_move_right_00",
+        "file": "goten_super_saiyan_move_right_00.png",
         "w": 31,
         "h": 38
       },
       {
-        "name": "goten_super_saiyan_move_01",
-        "file": "goten_super_saiyan_move_01.png",
+        "name": "goten_super_saiyan_move_right_01",
+        "file": "goten_super_saiyan_move_right_01.png",
+        "w": 25,
+        "h": 42
+      }
+    ]
+  },
+  "move_left": {
+    "frame_count": 2,
+    "fps": 6,
+    "loop": true,
+    "frames": [
+      {
+        "name": "goten_super_saiyan_move_left_00",
+        "file": "goten_super_saiyan_move_left_00.png",
+        "w": 31,
+        "h": 38
+      },
+      {
+        "name": "goten_super_saiyan_move_left_01",
+        "file": "goten_super_saiyan_move_left_01.png",
         "w": 25,
         "h": 42
       }

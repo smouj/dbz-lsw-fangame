@@ -12,20 +12,39 @@
       }
     ]
   },
-  "move": {
+  "move_right": {
     "frame_count": 2,
     "fps": 6,
     "loop": true,
     "frames": [
       {
-        "name": "vegeta_super_saiyan_majin_move_00",
-        "file": "vegeta_super_saiyan_majin_move_00.png",
+        "name": "vegeta_super_saiyan_majin_move_right_00",
+        "file": "vegeta_super_saiyan_majin_move_right_00.png",
         "w": 28,
         "h": 45
       },
       {
-        "name": "vegeta_super_saiyan_majin_move_01",
-        "file": "vegeta_super_saiyan_majin_move_01.png",
+        "name": "vegeta_super_saiyan_majin_move_right_01",
+        "file": "vegeta_super_saiyan_majin_move_right_01.png",
+        "w": 32,
+        "h": 41
+      }
+    ]
+  },
+  "move_left": {
+    "frame_count": 2,
+    "fps": 6,
+    "loop": true,
+    "frames": [
+      {
+        "name": "vegeta_super_saiyan_majin_move_left_00",
+        "file": "vegeta_super_saiyan_majin_move_left_00.png",
+        "w": 28,
+        "h": 45
+      },
+      {
+        "name": "vegeta_super_saiyan_majin_move_left_01",
+        "file": "vegeta_super_saiyan_majin_move_left_01.png",
         "w": 32,
         "h": 41
       }

@@ -12,20 +12,39 @@
       }
     ]
   },
-  "move": {
+  "move_right": {
     "frame_count": 2,
     "fps": 6,
     "loop": true,
     "frames": [
       {
-        "name": "guldo_base_move_00",
-        "file": "guldo_base_move_00.png",
+        "name": "guldo_base_move_right_00",
+        "file": "guldo_base_move_right_00.png",
         "w": 26,
         "h": 36
       },
       {
-        "name": "guldo_base_move_01",
-        "file": "guldo_base_move_01.png",
+        "name": "guldo_base_move_right_01",
+        "file": "guldo_base_move_right_01.png",
+        "w": 31,
+        "h": 33
+      }
+    ]
+  },
+  "move_left": {
+    "frame_count": 2,
+    "fps": 6,
+    "loop": true,
+    "frames": [
+      {
+        "name": "guldo_base_move_left_00",
+        "file": "guldo_base_move_left_00.png",
+        "w": 26,
+        "h": 36
+      },
+      {
+        "name": "guldo_base_move_left_01",
+        "file": "guldo_base_move_left_01.png",
         "w": 31,
         "h": 33
       }

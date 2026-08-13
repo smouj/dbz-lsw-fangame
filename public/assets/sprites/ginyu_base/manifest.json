@@ -12,20 +12,39 @@
       }
     ]
   },
-  "move": {
+  "move_right": {
     "frame_count": 2,
     "fps": 6,
     "loop": true,
     "frames": [
       {
-        "name": "ginyu_base_move_00",
-        "file": "ginyu_base_move_00.png",
+        "name": "ginyu_base_move_right_00",
+        "file": "ginyu_base_move_right_00.png",
         "w": 28,
         "h": 40
       },
       {
-        "name": "ginyu_base_move_01",
-        "file": "ginyu_base_move_01.png",
+        "name": "ginyu_base_move_right_01",
+        "file": "ginyu_base_move_right_01.png",
+        "w": 32,
+        "h": 38
+      }
+    ]
+  },
+  "move_left": {
+    "frame_count": 2,
+    "fps": 6,
+    "loop": true,
+    "frames": [
+      {
+        "name": "ginyu_base_move_left_00",
+        "file": "ginyu_base_move_left_00.png",
+        "w": 28,
+        "h": 40
+      },
+      {
+        "name": "ginyu_base_move_left_01",
+        "file": "ginyu_base_move_left_01.png",
         "w": 32,
         "h": 38
       }

@@ -15,9 +15,12 @@ import { BattleLabModule } from './battlelab';
 import { StoryModule } from './story';
 import { ResearchModule } from './research';
 import { AnimationModule } from './animation';
+import { PixelArtModule } from './pixelart';
+import { HudModule } from './hud';
 
 export type DevModuleId =
   | 'dashboard' | 'characters' | 'cards' | 'sprites' | 'animation'
+  | 'pixelart' | 'hud'
   | 'battlelab' | 'story' | 'validation' | 'research' | 'positions';
 
 interface DevModuleDef {
@@ -32,7 +35,9 @@ export const DEV_MODULES: DevModuleDef[] = [
   { id: 'characters', label: 'Characters', icon: '☺', desc: 'Personajes, formas, stats y crecimiento' },
   { id: 'cards', label: 'Cards', icon: '🂠', desc: 'Base de datos de las 125 cartas' },
   { id: 'sprites', label: 'Sprites', icon: '▦', desc: 'Inspector de sprites (frame, bbox, alpha)' },
-  { id: 'animation', label: 'Animation', icon: '▶', desc: 'Timeline real: play/step/fps/loop + comparativa GBC↔remake' },
+  { id: 'animation', label: 'Animation', icon: '▶', desc: 'Timeline real + editor de frames/animaciones (fps/loop/orden)' },
+  { id: 'pixelart', label: 'Pixel Art', icon: '✎', desc: 'Editor de píxeles: pinta/borra/corrige frames y guarda al proyecto' },
+  { id: 'hud', label: 'HUD', icon: '▤', desc: 'Visualizador del gameplay + editor del tema HUD (colores/escala/tipografía)' },
   { id: 'battlelab', label: 'Battle Lab', icon: '⚔', desc: 'Combate instantáneo real (Versus/Historia) + depurador' },
   { id: 'positions', label: 'Positions', icon: '⇄', desc: 'Laboratorio de posiciones Air/Ground × Front/Back' },
   { id: 'story', label: 'Story', icon: '▤', desc: 'Capítulos, viñetas y mazos de jefes' },
@@ -91,6 +96,8 @@ export function DevStudio({ onExit, onLaunchBattle }: {
           {module === 'cards' && <CardsModule />}
           {module === 'sprites' && <SpritesModule />}
           {module === 'animation' && <AnimationModule />}
+          {module === 'pixelart' && <PixelArtModule />}
+          {module === 'hud' && <HudModule />}
           {module === 'battlelab' && <BattleLabModule onLaunchBattle={onLaunchBattle} />}
           {module === 'positions' && <PositionsModule />}
           {module === 'story' && <StoryModule />}

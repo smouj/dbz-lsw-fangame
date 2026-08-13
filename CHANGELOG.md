@@ -4,6 +4,40 @@ Todos los cambios notables en `dbz-lsw-fangame`. Formato basado en [Keep a Chang
 
 ## [Unreleased]
 
+### Feat: editor de sprites y animaciones en el Dev Studio
+- **Animation Studio** ahora es un editor completo: reordenar (`◂ ▸`), quitar (`✕`)
+  y añadir frames (copiar un frame existente o por nombre de archivo), añadir/quitar
+  poses, y editar fps/loop directamente sobre el manifest de trabajo.
+- **Pixel Art Editor** (módulo nuevo): pinta/borra/corrige píxeles con pincel,
+  borrador y cuentagotas; paleta + selector de color, zoom, rejilla, undo/redo
+  (60 pasos). Pintura pixel-perfect con Canvas 2D (sin dependencias).
+- **Persistencia**: los cambios de manifest se guardan en localStorage (overrides)
+  y se pueden exportar como JSON o guardar al proyecto. Nuevo middleware de Vite
+  (`/__dev/write`) escribe manifests y PNGs directamente en `public/assets` con
+  guardas contra path traversal y extensiones no permitidas.
+- Flujo: crea un frame nuevo en Pixel Art (píntalo y guárdalo), luego añádelo a
+  una pose en Animation Studio por nombre de archivo, y guarda el manifest.
+
+### Feat: HUD Studio — visualizador del gameplay + editor del tema HUD
+- Módulo nuevo en el Dev Studio que muestra un **mockup completo del gameplay**
+  (HUD superior con ambos luchadores, barra de HP, stats, badge central VS, campo
+  de batalla con los sprites reales y menú de comandos) y permite **editar en vivo
+  el tema HUD**: colores (acento dorado, HP, KI, tipos de carta), escala de sprites
+  y cartas, y tamaños tipográficos.
+- Los cambios se previsualizan al instante; **Aplicar al juego** los inyecta como
+  variables CSS en `document.documentElement` (afecta a todo el juego de inmediato)
+  y los persiste en localStorage. Se reaplican al arrancar (`applyHudTheme`).
+  Reset restaura los valores de `:root` y permite exportar el tema como JSON.
+
+### Feat: pose `move` dividida en `move_right` + `move_left` (dash direccional GBC)
+- La pose de movimiento del GBC es un dash horizontal: solo hay 2 direcciones
+  (derecha/izquierda), no 4 — el desplazamiento arriba/abajo se visualiza también
+  como dash horizontal. Los 44 manifests ahora tienen `move_right` y `move_left`
+  (mismo ciclo de caminar; `move_left` se espeja en render con `scaleX(-1)`).
+- El juego selecciona la pose según la profundidad resultante del MOVE: FRONT →
+  `move_right` (mira al rival) · BACK → `move_left` (da la espalda). El importador
+  (`import-fixed-sprites.mjs`) se actualizó para regenerar esta estructura.
+
 ### Fix: Development Studio — scroll vertical + sprites de cartas + orden HUD
 - **Scroll del panel**: el `.devstudio` ahora es un shell fijo (`height: 100vh;
   overflow: hidden`) y `.dev-main` hace scroll vertical interno. Antes el contenido

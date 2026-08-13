@@ -12,20 +12,39 @@
       }
     ]
   },
-  "move": {
+  "move_right": {
     "frame_count": 2,
     "fps": 6,
     "loop": true,
     "frames": [
       {
-        "name": "gohan_ultimate_move_00",
-        "file": "gohan_ultimate_move_00.png",
+        "name": "gohan_ultimate_move_right_00",
+        "file": "gohan_ultimate_move_right_00.png",
         "w": 28,
         "h": 45
       },
       {
-        "name": "gohan_ultimate_move_01",
-        "file": "gohan_ultimate_move_01.png",
+        "name": "gohan_ultimate_move_right_01",
+        "file": "gohan_ultimate_move_right_01.png",
+        "w": 32,
+        "h": 42
+      }
+    ]
+  },
+  "move_left": {
+    "frame_count": 2,
+    "fps": 6,
+    "loop": true,
+    "frames": [
+      {
+        "name": "gohan_ultimate_move_left_00",
+        "file": "gohan_ultimate_move_left_00.png",
+        "w": 28,
+        "h": 45
+      },
+      {
+        "name": "gohan_ultimate_move_left_01",
+        "file": "gohan_ultimate_move_left_01.png",
         "w": 32,
         "h": 42
       }

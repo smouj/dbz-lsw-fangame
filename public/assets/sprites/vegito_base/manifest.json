@@ -12,26 +12,51 @@
       }
     ]
   },
-  "move": {
+  "move_right": {
     "frame_count": 3,
     "fps": 6,
     "loop": true,
     "frames": [
       {
-        "name": "vegito_base_move_00",
-        "file": "vegito_base_move_00.png",
+        "name": "vegito_base_move_right_00",
+        "file": "vegito_base_move_right_00.png",
         "w": 32,
         "h": 43
       },
       {
-        "name": "vegito_base_move_01",
-        "file": "vegito_base_move_01.png",
+        "name": "vegito_base_move_right_01",
+        "file": "vegito_base_move_right_01.png",
         "w": 28,
         "h": 46
       },
       {
-        "name": "vegito_base_move_02",
-        "file": "vegito_base_move_02.png",
+        "name": "vegito_base_move_right_02",
+        "file": "vegito_base_move_right_02.png",
+        "w": 23,
+        "h": 47
+      }
+    ]
+  },
+  "move_left": {
+    "frame_count": 3,
+    "fps": 6,
+    "loop": true,
+    "frames": [
+      {
+        "name": "vegito_base_move_left_00",
+        "file": "vegito_base_move_left_00.png",
+        "w": 32,
+        "h": 43
+      },
+      {
+        "name": "vegito_base_move_left_01",
+        "file": "vegito_base_move_left_01.png",
+        "w": 28,
+        "h": 46
+      },
+      {
+        "name": "vegito_base_move_left_02",
+        "file": "vegito_base_move_left_02.png",
         "w": 23,
         "h": 47
       }

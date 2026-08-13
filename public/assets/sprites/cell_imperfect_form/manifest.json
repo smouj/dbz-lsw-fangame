@@ -12,20 +12,39 @@
       }
     ]
   },
-  "move": {
+  "move_right": {
     "frame_count": 2,
     "fps": 6,
     "loop": true,
     "frames": [
       {
-        "name": "cell_imperfect_form_move_00",
-        "file": "cell_imperfect_form_move_00.png",
+        "name": "cell_imperfect_form_move_right_00",
+        "file": "cell_imperfect_form_move_right_00.png",
         "w": 32,
         "h": 45
       },
       {
-        "name": "cell_imperfect_form_move_01",
-        "file": "cell_imperfect_form_move_01.png",
+        "name": "cell_imperfect_form_move_right_01",
+        "file": "cell_imperfect_form_move_right_01.png",
+        "w": 32,
+        "h": 44
+      }
+    ]
+  },
+  "move_left": {
+    "frame_count": 2,
+    "fps": 6,
+    "loop": true,
+    "frames": [
+      {
+        "name": "cell_imperfect_form_move_left_00",
+        "file": "cell_imperfect_form_move_left_00.png",
+        "w": 32,
+        "h": 45
+      },
+      {
+        "name": "cell_imperfect_form_move_left_01",
+        "file": "cell_imperfect_form_move_left_01.png",
         "w": 32,
         "h": 44
       }

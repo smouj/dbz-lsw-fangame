@@ -12,20 +12,39 @@
       }
     ]
   },
-  "move": {
+  "move_right": {
     "frame_count": 2,
     "fps": 6,
     "loop": true,
     "frames": [
       {
-        "name": "goku_super_saiyan_2_move_00",
-        "file": "goku_super_saiyan_2_move_00.png",
+        "name": "goku_super_saiyan_2_move_right_00",
+        "file": "goku_super_saiyan_2_move_right_00.png",
         "w": 28,
         "h": 46
       },
       {
-        "name": "goku_super_saiyan_2_move_01",
-        "file": "goku_super_saiyan_2_move_01.png",
+        "name": "goku_super_saiyan_2_move_right_01",
+        "file": "goku_super_saiyan_2_move_right_01.png",
+        "w": 32,
+        "h": 43
+      }
+    ]
+  },
+  "move_left": {
+    "frame_count": 2,
+    "fps": 6,
+    "loop": true,
+    "frames": [
+      {
+        "name": "goku_super_saiyan_2_move_left_00",
+        "file": "goku_super_saiyan_2_move_left_00.png",
+        "w": 28,
+        "h": 46
+      },
+      {
+        "name": "goku_super_saiyan_2_move_left_01",
+        "file": "goku_super_saiyan_2_move_left_01.png",
         "w": 32,
         "h": 43
       }
