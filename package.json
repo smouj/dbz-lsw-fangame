@@ -7,6 +7,7 @@
     "dev": "vite --host 0.0.0.0 --port 5178",
     "build": "vite build",
     "typecheck": "tsc --noEmit",
+    "verify:profiles": "esbuild --bundle --format=esm --platform=node scripts/verify-action-profiles.ts --outfile=.verify.mjs && node .verify.mjs; rm -f .verify.mjs",
     "import:sprites:v5": "node scripts/import-v5-sprites.mjs"
   },
   "dependencies": {

@@ -16,6 +16,7 @@
 // frames HOLD (impacto 2-3 ticks) es lo que da peso al golpe en pixel art.
 
 import { type CinematicProfile, type CinematicTrack, buildProfile, track } from './timeline';
+import { compileActionProfile, resolveActionProfile } from './actionProfiles';
 
 // Tipos de acción que llegan de las cartas (subconjunto del runtime)
 export type CinematicKind =
@@ -164,6 +165,10 @@ const PROFILE_FACTORIES: Record<CinematicKind, (id: string) => CinematicProfile>
 };
 
 export function profileFor(kind: CinematicKind, cardName: string): CinematicProfile {
+  // Perfil firma por carta (declarativo, docs/CINEMATIC_GRAMMAR.md §23/§34).
+  const specific = resolveActionProfile(cardName);
+  if (specific) return compileActionProfile(specific);
+  // Fallback genérico por kind (técnicas sin perfil propio todavía).
   const factory = PROFILE_FACTORIES[kind] ?? profileSupport;
   return factory(`${kind}:${cardName}`);
 }
