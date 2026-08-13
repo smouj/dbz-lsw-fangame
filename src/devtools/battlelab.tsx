@@ -2,8 +2,10 @@
 // DEV STUDIO — Battle Lab
 // Combate instantáneo: elige formas + modo (Versus / capítulo de
 // historia) y lanza el BattleScreen real con ese estado inicial.
-// El Internal State Inspector (fase/CC/posiciones/stages en vivo)
-// y el QTE Debugger (freeze + step) siguen como siguiente fase.
+// Los depuradores de combate se activan por URL en la batalla:
+//   ?debugState=1      → Inspector de estado + QTE Debugger
+//                        (F freeze · . +1 frame · Shift+. +10)
+//   ?debugCinematics=1 → timeline cinematográfico (Space/←→/R)
 // ═══════════════════════════════════════════════════════════
 import { useState } from 'react';
 import { FORMS, CHARACTERS } from '../data/roster';
@@ -38,9 +40,11 @@ export function BattleLabModule({ onLaunchBattle }: Props) {
       </header>
 
       <div className="dev-wip-banner">
-        ⚠ El <em>Internal State Inspector</em> (fase/CC/posiciones/stages en vivo) y el
-        <em> QTE Debugger</em> (freeze + step) siguen en desarrollo. Ahora mismo puedes
-        lanzar combates reales con cualquier matchup sin jugar la partida completa.
+        ⚔ Lanza un combate real con cualquier matchup. Tras lanzarlo, activa los
+        depuradores por URL: <code>?debugState=1</code> (Inspector de estado + QTE
+        Debugger) y <code>?debugCinematics=1</code> (timeline cinematográfico). Teclas
+        QTE: <code>F</code> congelar · <code>.</code> +1 frame · <code>Shift+.</code> +10.
+        Cinemática: <code>Space</code> play/pausa · <code>←→</code> seek · <code>R</code> restart.
       </div>
 
       <div className="dev-battlelab-layout">

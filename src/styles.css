@@ -7198,6 +7198,8 @@ button:focus-visible, .chapter-node:focus-visible {
 .dev-asset-frame img { max-width: 100%; max-height: 100%; image-rendering: pixelated; object-fit: contain; }
 .dev-asset-frame.small2 { height: 44px; }
 .dev-asset-missing { color: #4a5058; font-size: 16px; }
+.dev-manifest-link { color: #7fd4ff; font-size: 9px; text-decoration: none; word-break: break-all; padding: 4px; line-height: 1.2; }
+.dev-manifest-link:hover { text-decoration: underline; }
 .dev-asset-label { font-size: 9px; color: #6b7484; margin-top: 4px; text-align: center; word-break: break-all; }
 .dev-pose-row { display: grid; grid-template-columns: repeat(auto-fill, minmax(44px, 1fr)); gap: 4px; margin-top: 6px; }
 

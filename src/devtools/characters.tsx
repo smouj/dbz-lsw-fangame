@@ -131,7 +131,14 @@ export function CharactersModule() {
               <AssetCell label="Overworld" src={overworldUrl(form.id)} />
               <AssetCell label="Idle (sheet)" src={idleUrl} />
               <AssetCell label="Sheet" src={form.sheet ? sheetUrl(form) : undefined} wide />
-              {manifestUrl && <AssetCell label="Manifest (combate)" src={manifestUrl} />}
+              {manifestUrl && (
+                <div className="dev-asset-cell">
+                  <div className="dev-asset-frame">
+                    <a className="dev-manifest-link" href={manifestUrl} target="_blank" rel="noreferrer">manifest.json ↗</a>
+                  </div>
+                  <div className="dev-asset-label">Manifest (combate)</div>
+                </div>
+              )}
               {spriteDir && (
                 <div className="dev-asset-cell">
                   <div className="dev-asset-label">Poses</div>

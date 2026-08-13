@@ -4,6 +4,18 @@ Todos los cambios notables en `dbz-lsw-fangame`. Formato basado en [Keep a Chang
 
 ## [Unreleased]
 
+### Fix: Development Studio — manifest.json como imagen rota + banner desactualizado
+- **Sprite Inspector** y **Character Studio** cargaban `manifest.json` (un JSON
+  de poses/frames) como `<img>`, mostrando una imagen rota en las miniaturas de
+  assets. Ahora renderizan un enlace `manifest.json ↗` que abre el JSON real en
+  una pestaña nueva.
+- **Battle Lab**: el banner seguía diciendo que el *Internal State Inspector* y
+  el *QTE Debugger* estaban "en desarrollo", cuando ya están implementados.
+  Actualizado con las teclas de ambos depuradores (`?debugState=1` y
+  `?debugCinematics=1`).
+- Verificado en navegador: 0 imágenes rotas en los 10 módulos, Battle Lab lanza
+  el BattleScreen real, sin overflow horizontal y consola limpia en carga nueva.
+
 ### Fix: animaciones de combate — alineación, timing y windup
 - **Frame jitter eliminado**: los frames del zip FIXED están recortados a su
   bounding box (w/h variables por frame), así que `FighterSprite` "respiraba"

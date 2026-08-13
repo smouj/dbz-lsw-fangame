@@ -143,7 +143,11 @@ export function SpritesModule() {
           <div className="dev-sprite-thumbs">
             <div className="dev-asset-frame small2"><img src={portrait} alt="" /></div>
             <div className="dev-asset-frame small2"><img src={overworld} alt="" /></div>
-            <div className="dev-asset-frame small2"><img src={manifestUrl} alt="" /></div>
+            <div className="dev-asset-frame small2">
+              {manifestUrl
+                ? <a className="dev-manifest-link" href={manifestUrl} target="_blank" rel="noreferrer">manifest.json ↗</a>
+                : <span className="dev-asset-missing">—</span>}
+            </div>
             <div className="dev-asset-frame small2"><img src={src} alt="" /></div>
           </div>
         </div>
