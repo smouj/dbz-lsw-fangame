@@ -22,6 +22,7 @@ import { BattleTimeline, type CinematicEvent, type CinematicProfile } from './ba
 import { profileFor, type CinematicKind } from './battle/profiles';
 import { isDebugCinematics, bindDebugControls, renderDebugOverlay, type CinematicDebugInfo, type CinematicDebugController } from './battle/debugCinematics';
 import { isDebugState, bindQteDebugControls, renderStateOverlay, type StateDebugSnapshot } from './battle/debugState';
+import { BattlePixiStage, isPixiField } from './battle/BattlePixiStage';
 import { initAudio, Sfx, setSfxEnabled, setVolume } from './audio/sfx';
 import { LanguageProvider } from './i18n/LanguageProvider';
 import { useLang } from './i18n/useLang';
@@ -2601,7 +2602,16 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
       </div>
 
       {/* Campo de batalla */}
-      <div className={`battlefield ${hitShake ? `shake-${hitShake}` : ''} ${viewMode !== 'OVERVIEW' ? 'field-action' : ''}`} ref={battlefieldRef}>
+      <div className={`battlefield ${hitShake ? `shake-${hitShake}` : ''} ${viewMode !== 'OVERVIEW' ? 'field-action' : ''} ${isPixiField() ? 'pixi-field-active' : ''}`} ref={battlefieldRef}>
+        {isPixiField() && (
+          <BattlePixiStage
+            scenario={scenario}
+            playerFormId={playerFormId}
+            enemyFormId={enemyFormId}
+            playerPos={player.battlePos}
+            enemyPos={enemy.battlePos}
+          />
+        )}
         <div className="battle-bg authentic" style={{ backgroundImage: `url(${battleBgUrl})` }} />
         {/* Los fighters quedan SIEMPRE en el DOM: la transición OVERVIEW ↔ ACTION
             se hace con fade/scale suave por CSS (clase .field-action), no desmontando
