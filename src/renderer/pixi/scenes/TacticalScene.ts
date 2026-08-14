@@ -57,6 +57,15 @@ export class TacticalScene extends Container {
     }
   }
 
+  /** Recoloca el sprite overworld de un lado en su nueva posición lógica
+   *  (MOVE táctico) SIN recargar la textura ni el flip. */
+  setOverworldPosition(side: BattleSide, pos: BattlePosition): void {
+    const s = this.overworld.get(side);
+    if (!s || !s.visible) return;
+    const a = anchorFor(pos, side === 'left' ? 'LEFT' : 'RIGHT');
+    s.position.set((a.x / 100) * BATTLE_LOGICAL_W, (a.y / 100) * BATTLE_LOGICAL_H);
+  }
+
   clearOverworld(): void {
     for (const s of this.overworld.values()) {
       this.removeChild(s);

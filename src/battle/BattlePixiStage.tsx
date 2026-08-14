@@ -80,6 +80,15 @@ export function BattlePixiStage({ scenario, playerFormId, enemyFormId, playerPos
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [scenario.id, playerFormId, enemyFormId]);
 
+  // Refleja MOVE (cambio de posición táctica) SIN reinicializar el renderer:
+  // el overworld del FIELD se recoloca en su nueva posición lógica. La primera
+  // invocación es no-op (la presentación aún no está lista); init ya coloca
+  // las posiciones iniciales.
+  useEffect(() => {
+    presentationRef?.current?.updateTactical(playerPos, enemyPos);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [playerPos, enemyPos]);
+
   return (
     <canvas
       ref={canvasRef}

@@ -97,6 +97,14 @@ export class PixiBattlePresentation implements BattlePresentation {
     this.renderer.sceneDirector.setScene(scene);
   }
 
+  /** Refleja un cambio de posición táctica (MOVE) en el overworld del FIELD.
+   *  El plano táctico debe mostrar el estado real del combate (gramática §0):
+   *  recoloca los sprites overworld sin reinicializar el renderer. */
+  updateTactical(playerPos: BattlePosition, enemyPos: BattlePosition): void {
+    this.renderer.sceneDirector.tactical.setOverworldPosition('left', playerPos);
+    this.renderer.sceneDirector.tactical.setOverworldPosition('right', enemyPos);
+  }
+
   setActorPose(pose: string): void {
     this.actor?.setPose(pose, this.renderer.currentTick);
   }
