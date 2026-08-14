@@ -60,6 +60,7 @@ export const VS_UNLOCKS: Record<string, string> = {
   'vegeta_base': 'vegeta',
   'vegeta_majin': 'vegeta',
   'gohan_young': 'gohan',
+  'gohan_adult': 'gohan',
   'gohan_teen_ssj2': 'gohan',
   'gohan_ultimate': 'gohan',
   'piccolo_base': 'piccolo',
@@ -85,6 +86,7 @@ export const VS_UNLOCKS: Record<string, string> = {
   'nappa': 'nappa',
   'buu_base': 'buu',
   'vegito_base': 'vegito',
+  'vegito_ssj': 'vegito',
 };
 
 // ═══════════════════════════════════════════════════════════
@@ -119,7 +121,7 @@ export const FORM_UNLOCK_LEVELS: Record<string, number> = {
   // Vegeta
   'vegeta_ssj': 3, 'vegeta_majin': 6,
   // Gohan
-  'gohan_young_ssj': 2, 'gohan_young_ssj2': 4, 'gohan_teen_ssj': 5, 'gohan_teen_ssj2': 7, 'gohan_ultimate': 9,
+  'gohan_young_ssj': 2, 'gohan_young_ssj2': 4, 'gohan_teen_ssj': 5, 'gohan_teen_ssj2': 7, 'gohan_adult': 8, 'gohan_ultimate': 9,
   // Trunks
   'trunks_kid_ssj': 4, 'trunks_future': 3, 'trunks_ssj': 5,
   // Goten
@@ -136,7 +138,7 @@ export const FORM_UNLOCK_LEVELS: Record<string, number> = {
   // Ginyu
   'ginyu_goku': 6,
   // Vegito (forma final)
-  'vegito_base': 12,
+  'vegito_base': 12, 'vegito_ssj': 12,
 };
 
 // ¿Forma desbloqueada?

@@ -85,7 +85,10 @@ const FORM_TO_DIR = {
 // Formas del juego que NO están en el zip FIXED → reutilizar la más cercana.
 const COPY_FROM = {
   'future_trunks_super_saiyan': 'future_trunks_base',
-  'vegito_base': 'goku_super_saiyan',
+  // Vegito no está en el FIXED; el V6 (vegito_ssj, pelo dorado) se puentea
+  // contra goku/super_saiyan. vegito_base (pelo negro) = recolor vía
+  // scripts/make-vegito-forms.py.
+  'vegito_ssj': 'goku_super_saiyan',
 };
 
 // Categoría FIXED → pose del juego + metadatos de reproducción.

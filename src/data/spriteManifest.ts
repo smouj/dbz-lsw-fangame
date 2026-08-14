@@ -21,6 +21,7 @@ const SPRITE_DIRS: Record<string, string> = {
   'gohan_young_ssj2': 'young_gohan_super_saiyan_2',
   'gohan_teen_ssj': 'gohan_super_saiyan_1_2',
   'gohan_teen_ssj2': 'gohan_super_saiyan_1_2',
+  'gohan_adult': 'gohan_ultimate',
   'gohan_ultimate': 'gohan_ultimate',
   // Trunks
   'trunks_kid': 'trunks_base',
@@ -67,6 +68,7 @@ const SPRITE_DIRS: Record<string, string> = {
   'buu_kid': 'kid_buu_base',
   // Fusions
   'vegito_base': 'vegito_base',
+  'vegito_ssj': 'vegito_ssj',
 };
 
 export function spriteDirFor(formId: string): string | undefined {

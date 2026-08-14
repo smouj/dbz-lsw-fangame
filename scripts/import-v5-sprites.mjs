@@ -55,7 +55,7 @@ const FORM_SOURCES = [
   ['buu_gotenks_absorbed', 'majin_buu', 'super_buu_gotenks_absorbed'],
   ['buu_gohan_absorbed', 'majin_buu', 'super_buu_gohan_absorbed'],
   ['kid_buu_base', 'majin_buu', 'kid_buu'],
-  ['vegito_base', 'vegito', 'base'],
+  ['vegito_ssj', 'vegito', 'base'],  // V5/V6 de Vegito = SSJ; base = recolor (make-vegito-forms.py)
 ];
 
 const POSE_INDEXES = {

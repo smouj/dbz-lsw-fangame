@@ -20,9 +20,11 @@
 # Tres fuentes de forma, cubriendo los 44 directorios del juego:
 #   1. 40 formas puenteadas V6 ↔ FIXED.
 #   2.  2 formas que V6 SÍ tiene y FIXED copiaba (future_trunks_super_saiyan,
-#        vegito_base): se puentean contra la animación FIXED PRESTADA
+#        vegito_ssj): se puentean contra la animación FIXED PRESTADA
 #        (future_trunks/base y goku/super_saiyan) — mismas poses, otros
-#        píxeles (pelo dorado real de SSJ).
+#        píxeles (pelo dorado real de SSJ). El V6 de Vegito ES SSJ (pelo
+#        amarillo); vegito_base (pelo negro) se genera por recolor con
+#        scripts/make-vegito-forms.py.
 #   3.  2 formas que V6 ELIMINÓ (goku_super_saiyan_2, ginyu_gokus_body):
 #        se importan DIRECTAMENTE del FIXED (que sí tiene animación real).
 #
@@ -99,11 +101,11 @@ V6_TO_DIR = {
     ("trunks_kid", "kid_trunks_super_saiyan"): "kid_trunks_super_saiyan",
     ("vegeta", "normal"): "vegeta_base",
     ("vegeta", "super_saiyan_majin"): "vegeta_super_saiyan_majin",
-    ("vegito", "base"): "vegito_base",
+    ("vegito", "base"): "vegito_ssj",  # V6 = SSJ (pelo dorado); base = recolor (make-vegito-forms.py)
 }
 
 # V6 (character, form) → forma del FIXED (clave de animations.json).
-# 40 nativas + 2 prestadas (future_trunks_super_saiyan y vegito_base usan
+# 40 nativas + 2 prestadas (future_trunks_super_saiyan y vegito_ssj usan
 # la estructura de poses de future_trunks/base y goku/super_saiyan).
 V6_TO_FIXED = {
     ("android_16", "base"): "01_android_16/base",

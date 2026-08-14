@@ -22,6 +22,7 @@ export const BATTLE_PORTRAITS: Record<string, string> = {
   'ginyu_goku': '/assets/portraits/battle/ginyu_goku.png',
   'gohan_teen_ssj': '/assets/portraits/battle/gohan_teen_ssj.png',
   'gohan_teen_ssj2': '/assets/portraits/battle/gohan_teen_ssj.png',
+  'gohan_adult': '/assets/portraits/battle/gohan_ultimate.png',
   'gohan_ultimate': '/assets/portraits/battle/gohan_ultimate.png',
   'gohan_young': '/assets/portraits/battle/gohan_young.png',
   'gohan_young_ssj': '/assets/portraits/battle/gohan_young_ssj.png',
@@ -50,4 +51,5 @@ export const BATTLE_PORTRAITS: Record<string, string> = {
   'vegeta_majin': '/assets/portraits/battle/vegeta_majin.png',
   'vegeta_ssj': '/assets/portraits/battle/vegeta_ssj.png',
   'vegito_base': '/assets/portraits/story/04_Saga_Majin_Buu/Vegito/R14_C03__Vegito.png',
+  'vegito_ssj': '/assets/portraits/story/04_Saga_Majin_Buu/Vegito/R14_C03__Vegito.png',
 };
