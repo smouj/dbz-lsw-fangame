@@ -10,7 +10,7 @@
 // 60/120/144/240 Hz. Nada de setInterval ni duraciones en ms.
 //
 // El flip respeta las reglas de FACING (facingFlip) y el caso especial
-// move_left (espejo del ciclo de andar).
+// move_back (espejo del ciclo de andar).
 
 import { Container, Sprite, Texture } from 'pixi.js';
 import { facingFlip, type BattleSide } from '../../../data/facing';
@@ -21,10 +21,10 @@ import type { FormAtlas, PoseAnim } from '../assets/AtlasLoader';
 // poses a un módulo compartido). Orden: pose → fallback → … → idle.
 const POSE_FALLBACKS: Record<string, string[]> = {
   idle: ['idle'],
-  move_right: ['move_right', 'move_left', 'attack_fwd', 'idle'],
-  move_left: ['move_left', 'move_right', 'attack_fwd', 'idle'],
+  move_front: ['move_front', 'move_back', 'attack_fwd', 'idle'],
+  move_back: ['move_back', 'move_front', 'attack_fwd', 'idle'],
   guard: ['guard', 'idle'],
-  attack_fwd: ['attack_fwd', 'move_right', 'idle'],
+  attack_fwd: ['attack_fwd', 'move_front', 'idle'],
   attack_ud: ['attack_ud', 'attack_fwd', 'idle'],
   hurt: ['hurt', 'guard', 'idle'],
   beam_charge: ['beam_charge', 'power_up', 'guard', 'idle'],
@@ -125,7 +125,7 @@ export class FighterActor extends Container {
   }
 
   private applyTransform(): void {
-    const sign = this.activePose === 'move_left' ? -this.baseFlip : this.baseFlip;
+    const sign = this.activePose === 'move_back' ? -this.baseFlip : this.baseFlip;
     this.sprite.scale.set(this.scaleMag * sign, this.scaleMag);
     this.flash.scale.set(this.scaleMag, this.scaleMag);
   }

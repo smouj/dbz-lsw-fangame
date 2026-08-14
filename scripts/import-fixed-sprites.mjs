@@ -94,7 +94,7 @@ const COPY_FROM = {
 // original. Ver POSE_MAP_BEAM abajo.
 const POSE_MAP = {
   idle: { pose: 'idle', fps: 3, loop: true },
-  movement: { pose: 'move_right', fps: 6, loop: true },
+  movement: { pose: 'move_front', fps: 6, loop: true },
   guard: { pose: 'guard', fps: 6, loop: false },
   attack_forward: { pose: 'attack_fwd', fps: 5, loop: false },
   attack_vertical: { pose: 'attack_ud', fps: 5, loop: false },
@@ -104,7 +104,7 @@ const BEAM_CHARGE = { pose: 'beam_charge', fps: 7, loop: false };
 const BEAM_FIRE = { pose: 'beam_fire', fps: 8, loop: false };
 
 // Orden canónico de poses en el manifest (igual que el formato previo).
-const POSE_ORDER = ['idle', 'move_right', 'move_left', 'guard', 'attack_fwd', 'attack_ud', 'hurt', 'beam_charge', 'beam_fire'];
+const POSE_ORDER = ['idle', 'move_front', 'move_back', 'guard', 'attack_fwd', 'attack_ud', 'hurt', 'beam_charge', 'beam_fire'];
 
 // Mapa path → source_y para los frames de `beam`, leído de sprites.csv.
 // Se usa para detectar el corte de fila (carga → disparo) en la hoja original.
@@ -232,18 +232,18 @@ try {
       if (firePaths.length > 0) copyBeam(firePaths, BEAM_FIRE);
     }
 
-    // move_right → move_left (mismo ciclo de caminar; el juego lo espeja en
+    // move_front → move_back (mismo ciclo de caminar; el juego lo espeja en
     // render con scaleX(-1). Aquí duplicamos frames y PNGs para que el
     // manifest tenga la pose direccional y los archivos sigan la convención
-    // `{dir}_move_left_NN.png`).
-    if (poses['move_right']) {
-      const right = poses['move_right'];
-      poses['move_left'] = { ...right, frames: [] };
+    // `{dir}_move_back_NN.png`).
+    if (poses['move_front']) {
+      const right = poses['move_front'];
+      poses['move_back'] = { ...right, frames: [] };
       right.frames.forEach((f, i) => {
-        const srcFile = path.join(targetDir, `${gameDir}_move_right_${String(i).padStart(2, '0')}.png`);
-        const dstFile = path.join(targetDir, `${gameDir}_move_left_${String(i).padStart(2, '0')}.png`);
+        const srcFile = path.join(targetDir, `${gameDir}_move_front_${String(i).padStart(2, '0')}.png`);
+        const dstFile = path.join(targetDir, `${gameDir}_move_back_${String(i).padStart(2, '0')}.png`);
         if (fs.existsSync(srcFile)) fs.copyFileSync(srcFile, dstFile);
-        poses['move_left'].frames.push({ ...f });
+        poses['move_back'].frames.push({ ...f });
       });
     }
 

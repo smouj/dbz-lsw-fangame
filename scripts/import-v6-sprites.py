@@ -14,7 +14,7 @@
 # conserva el PNG del FIXED (ya correcto).
 #
 # Esquema de poses (AUTORITATIVO, igual que import-fixed-sprites.mjs):
-#   idle, move_right, move_left, guard, attack_fwd, attack_ud, hurt,
+#   idle, move_front, move_back, guard, attack_fwd, attack_ud, hurt,
 #   beam_charge, beam_fire
 #
 # Tres fuentes de forma, cubriendo los 44 directorios del juego:
@@ -161,7 +161,7 @@ FIXED_ONLY = {
 # Categoría FIXED → pose del juego + fps/loop.
 POSE_MAP = {
     "idle": ("idle", 3, True),
-    "movement": ("move_right", 6, True),
+    "movement": ("move_front", 6, True),
     "guard": ("guard", 6, False),
     "attack_forward": ("attack_fwd", 5, False),
     "attack_vertical": ("attack_ud", 5, False),
@@ -169,7 +169,7 @@ POSE_MAP = {
 }
 BEAM_CHARGE = ("beam_charge", 7, False)
 BEAM_FIRE = ("beam_fire", 8, False)
-POSE_ORDER = ["idle", "move_right", "move_left", "guard", "attack_fwd",
+POSE_ORDER = ["idle", "move_front", "move_back", "guard", "attack_fwd",
               "attack_ud", "hurt", "beam_charge", "beam_fire"]
 
 
@@ -416,17 +416,17 @@ try:
             if fire:
                 copy_beam(fire, BEAM_FIRE)
 
-        # move_right → move_left (duplicado; el juego espeja con scaleX(-1))
-        if "move_right" in poses:
-            right = poses["move_right"]
+        # move_front → move_back (duplicado; el juego espeja con scaleX(-1))
+        if "move_front" in poses:
+            right = poses["move_front"]
             left_frames = []
             for i, f in enumerate(right["frames"]):
-                src = os.path.join(target, f"{game_dir}_move_right_{i:02d}.png")
-                dst = os.path.join(target, f"{game_dir}_move_left_{i:02d}.png")
+                src = os.path.join(target, f"{game_dir}_move_front_{i:02d}.png")
+                dst = os.path.join(target, f"{game_dir}_move_back_{i:02d}.png")
                 if os.path.exists(src):
                     shutil.copyfile(src, dst)
                 left_frames.append(dict(f))
-            poses["move_left"] = {"frames": left_frames, "fps": right["fps"], "loop": right["loop"]}
+            poses["move_back"] = {"frames": left_frames, "fps": right["fps"], "loop": right["loop"]}
 
         write_manifest(game_dir, poses)
         stats["imported"] += 1

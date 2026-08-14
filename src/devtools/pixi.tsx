@@ -14,7 +14,7 @@ import { BattleCanvas, type BattleCanvasHandle } from '../renderer/pixi/BattleCa
 import type { FighterActor } from '../renderer/pixi/actors/FighterActor';
 
 const POSES = [
-  'idle', 'move_right', 'move_left', 'guard', 'attack_fwd',
+  'idle', 'move_front', 'move_back', 'guard', 'attack_fwd',
   'attack_ud', 'hurt', 'beam_charge', 'beam_fire', 'power_up',
 ] as const;
 

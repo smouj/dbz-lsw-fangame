@@ -52,7 +52,7 @@ interface CharManifest {
   [pose: string]: { frames: { file: string; w: number; h: number }[]; fps: number; loop: boolean };
 }
 
-type BattleSpritePose = 'idle' | 'move_right' | 'move_left' | 'guard' | 'attack_fwd' | 'attack_ud' | 'hurt' | 'beam_charge' | 'beam_fire' | 'power_up';
+type BattleSpritePose = 'idle' | 'move_front' | 'move_back' | 'guard' | 'attack_fwd' | 'attack_ud' | 'hurt' | 'beam_charge' | 'beam_fire' | 'power_up';
 const SPRITE_MANIFEST_CACHE = new Map<string, CharManifest>();
 const SPRITE_MANIFEST_PROMISES = new Map<string, Promise<CharManifest | null>>();
 
@@ -80,10 +80,10 @@ const nextUid = () => ++__reactUid;
 
 const POSE_FALLBACKS: Record<BattleSpritePose, BattleSpritePose[]> = {
   idle: ['idle'],
-  move_right: ['move_right', 'move_left', 'attack_fwd', 'idle'],
-  move_left: ['move_left', 'move_right', 'attack_fwd', 'idle'],
+  move_front: ['move_front', 'move_back', 'attack_fwd', 'idle'],
+  move_back: ['move_back', 'move_front', 'attack_fwd', 'idle'],
   guard: ['guard', 'idle'],
-  attack_fwd: ['attack_fwd', 'move_right', 'idle'],
+  attack_fwd: ['attack_fwd', 'move_front', 'idle'],
   attack_ud: ['attack_ud', 'attack_fwd', 'idle'],
   hurt: ['hurt', 'guard', 'idle'],
   beam_charge: ['beam_charge', 'power_up', 'guard', 'idle'],
@@ -301,7 +301,7 @@ function FighterSprite({ formId, pose, side, scale = 8, flash = false }: {
   const cw = Math.round(anim.maxW * scale / 8);
   const ch = Math.round(anim.maxH * scale / 8);
   const baseFlip = side ? facingFlip(formId, side) : 1;
-  const flip = pose === 'move_left' ? -baseFlip : baseFlip;
+  const flip = pose === 'move_back' ? -baseFlip : baseFlip;
   return (
     <div className={`fighter-sprite ${flash ? 'flash' : ''}`}
       style={{ transform: `scaleX(${flip})`, width: cw, height: ch, display: 'flex', alignItems: 'flex-end', justifyContent: 'center' }}>
@@ -2085,10 +2085,10 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
       const axis = posOrAxis as MoveAxis;
       const target = applyMoveAxis(player.battlePos, axis);
       Sfx.position();
-      // Dirección del dash (GBC): mover al FRENTE = mirar al rival (move_right),
-      // retroceder al BACK = dar la espalda (move_left, espejo). El eje vertical
+      // Dirección del dash (GBC): mover al FRENTE = mirar al rival (move_front),
+      // retroceder al BACK = dar la espalda (move_back, espejo). El eje vertical
       // conserva la profundidad, así que la pose sigue al depth resultante.
-      setPlayerPose(POSITION_DATA[target].depth === 'FRONT' ? 'move_right' : 'move_left');
+      setPlayerPose(POSITION_DATA[target].depth === 'FRONT' ? 'move_front' : 'move_back');
       setPlayer(prev => ({ ...prev, battlePos: target }));
       const pd = POSITION_DATA[target];
       const axisLabel = axis === 'HORIZONTAL' ? '↔' : '↕';
