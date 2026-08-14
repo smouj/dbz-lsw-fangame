@@ -4,6 +4,46 @@ Todos los cambios notables en `dbz-lsw-fangame`. Formato basado en [Keep a Chang
 
 ## [Unreleased]
 
+### Feat: motor gráfico PixiJS 8 para el combate (React se queda en UI/mentores)
+- **Renderizador Pixi autocontenido** (`src/renderer/pixi/`): `BattleRenderer`
+  (WebGL, `antialias:false`, `resolution:1`, `autoDensity:false`), `AtlasLoader`
+  (manifests + frames PNG con nearest-neighbour y cache por forma), `SpriteAnimator`
+  (frame = f(ticks GBC) puro), `FighterActor` (ancla `(0.5,1)`, respeta `facingFlip`
+  y `move_left` espejo).
+- **Capa de presentación desacoplada**: contrato `BattlePresentation` + `PixiBattlePresentation`
+  + `CinematicAdapter` (eventos timeline → métodos Pixi). Reloj ÚNICO GBC: la animación
+  de sprites y los eventos avanzan por el MISMO tick; `BattleTimeline` emite el tick 0
+  (`tickCursor=-1`). Rush = `f(tick − rushStartTick)` con `easeOutCubic`, determinista.
+- **Dev Studio**: módulos `Pixi Lab` (verificación del render) y `Pixi Seq`
+  (replay live + `checkDeterminism()` con 100 runs → FRAME-DETERMINISTICO).
+
+### Feat: perfiles cinematográficos declarativos por acción
+- `src/battle/actionProfiles.ts`: formato `ActionProfileSpec` + compilador →
+  `CinematicTrack[]` + `resolveActionProfile(cardName)` + 12 perfiles firma
+  (`kamehameha`, `masenko`, `special_beam_cannon`, `spirit_bomb`, `final_flash`,
+  `cont_punch`, `cont_kick`, `rising_kick`, `sonic_kick`, `dunk_shot`, `crazy_rush`,
+  `kaio_ken`) con fidelidad `INFERRED` (timings NO canon). `profileFor(kind, cardName)`
+  resuelve firma primero y cae al fallback por kind. Script `npm run verify:profiles`.
+
+### Feat: integración BattleScreen → Pixi (gated detrás de `?pixiField=1`)
+- **Slice 1 — master shot táctico**: `BattlePixiStage` monta `BattleRenderer` +
+  `PixiBattlePresentation` con datos REALES (escenario + formas + `BattlePosition`)
+  y renderiza el plano FIELD (fondo overview + overworld). `object-fit: contain`
+  evita la distorsión del canvas 2:1. Cero regresión al camino DOM por defecto.
+- **Slice 2 — plano de ACCIÓN**: `BattlePixiStage` publica su presentación vía prop
+  `presentationRef`; `playCardCinematic` hace `pres.reset()` + `pres.setAttacker(side)`
+  y enruta cada evento con `applyCinematicEvent(pres, e)` + `onTick(tick) → pres.sync(tick)`
+  en paralelo al DOM. El HUD React permanece fijo; solo se transforma la ventana central.
+- **Fix**: `BattleRenderer.destroy()` ya no destruye las TextureSource de `Assets`
+  (cache stale → luchadores en blanco en la 2ª batalla); ahora `texture:false/textureSource:false`.
+
+### Docs: gramática cinematográfica LSW (master shot táctico + action burst)
+- `docs/CINEMATIC_GRAMMAR.md`: plano táctico = estado real del combate; el plano de
+  acción es la dramatización temporal; siempre se regresa al táctico. HUD fijo, cortes
+  discretos (no tweens), `outcome` (HIT/BLOCK/AVOID/…) influye en el perfil, MOVE es
+  táctico (no cinemática). Tabla CONFIRMADO vs PENDIENTE (forense FRAME_VERIFIED).
+- `MOVE` eliminado como kind cinematográfico (era `move→profileDefense`, incorrecto).
+
 ### Feat: editor de sprites y animaciones en el Dev Studio
 - **Animation Studio** ahora es un editor completo: reordenar (`◂ ▸`), quitar (`✕`)
   y añadir frames (copiar un frame existente o por nombre de archivo), añadir/quitar
