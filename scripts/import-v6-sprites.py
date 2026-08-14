@@ -441,10 +441,10 @@ try:
                 continue
             e_dir = os.path.join(effects_root, game_dir)
             os.makedirs(e_dir, exist_ok=True)
-            name = f"{game_dir}__effect_{len(items):02d}.png"
-            shutil.copyfile(meta["abs"], os.path.join(e_dir, name))
+            name = f"{game_dir}__effect_{len(items):02d}"
+            shutil.copyfile(meta["abs"], os.path.join(e_dir, name + ".png"))
             items.append({
-                "name": name, "file": f"{name}.png",
+                "name": name, "file": f"{game_dir}/{name}.png",
                 "w": meta["w"], "h": meta["h"],
                 "correction": meta["correction"],
                 "source_frame": frame,

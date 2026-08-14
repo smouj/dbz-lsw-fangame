@@ -3,40 +3,40 @@
     "count": 5,
     "frames": [
       {
-        "name": "android_16_base__effect_00.png",
-        "file": "android_16_base__effect_00.png.png",
+        "name": "android_16_base__effect_00",
+        "file": "android_16_base/android_16_base__effect_00.png",
         "w": 12,
         "h": 16,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "005.png"
       },
       {
-        "name": "android_16_base__effect_01.png",
-        "file": "android_16_base__effect_01.png.png",
+        "name": "android_16_base__effect_01",
+        "file": "android_16_base/android_16_base__effect_01.png",
         "w": 13,
         "h": 16,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "006.png"
       },
       {
-        "name": "android_16_base__effect_02.png",
-        "file": "android_16_base__effect_02.png.png",
+        "name": "android_16_base__effect_02",
+        "file": "android_16_base/android_16_base__effect_02.png",
         "w": 24,
         "h": 16,
         "correction": "recovered_2color_source_component",
         "source_frame": "007.png"
       },
       {
-        "name": "android_16_base__effect_03.png",
-        "file": "android_16_base__effect_03.png.png",
+        "name": "android_16_base__effect_03",
+        "file": "android_16_base/android_16_base__effect_03.png",
         "w": 16,
         "h": 12,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "035.png"
       },
       {
-        "name": "android_16_base__effect_04.png",
-        "file": "android_16_base__effect_04.png.png",
+        "name": "android_16_base__effect_04",
+        "file": "android_16_base/android_16_base__effect_04.png",
         "w": 16,
         "h": 12,
         "correction": "recovered_uncovered_source_component",
@@ -48,40 +48,40 @@
     "count": 5,
     "frames": [
       {
-        "name": "android_17_base__effect_00.png",
-        "file": "android_17_base__effect_00.png.png",
+        "name": "android_17_base__effect_00",
+        "file": "android_17_base/android_17_base__effect_00.png",
         "w": 12,
         "h": 16,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "005.png"
       },
       {
-        "name": "android_17_base__effect_01.png",
-        "file": "android_17_base__effect_01.png.png",
+        "name": "android_17_base__effect_01",
+        "file": "android_17_base/android_17_base__effect_01.png",
         "w": 12,
         "h": 15,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "006.png"
       },
       {
-        "name": "android_17_base__effect_02.png",
-        "file": "android_17_base__effect_02.png.png",
+        "name": "android_17_base__effect_02",
+        "file": "android_17_base/android_17_base__effect_02.png",
         "w": 24,
         "h": 16,
         "correction": "recovered_2color_source_component",
         "source_frame": "007.png"
       },
       {
-        "name": "android_17_base__effect_03.png",
-        "file": "android_17_base__effect_03.png.png",
+        "name": "android_17_base__effect_03",
+        "file": "android_17_base/android_17_base__effect_03.png",
         "w": 24,
         "h": 16,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "008.png"
       },
       {
-        "name": "android_17_base__effect_04.png",
-        "file": "android_17_base__effect_04.png.png",
+        "name": "android_17_base__effect_04",
+        "file": "android_17_base/android_17_base__effect_04.png",
         "w": 16,
         "h": 12,
         "correction": "recovered_uncovered_source_component",
@@ -93,56 +93,56 @@
     "count": 7,
     "frames": [
       {
-        "name": "android_18_base__effect_00.png",
-        "file": "android_18_base__effect_00.png.png",
+        "name": "android_18_base__effect_00",
+        "file": "android_18_base/android_18_base__effect_00.png",
         "w": 12,
         "h": 16,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "005.png"
       },
       {
-        "name": "android_18_base__effect_01.png",
-        "file": "android_18_base__effect_01.png.png",
+        "name": "android_18_base__effect_01",
+        "file": "android_18_base/android_18_base__effect_01.png",
         "w": 12,
         "h": 15,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "006.png"
       },
       {
-        "name": "android_18_base__effect_02.png",
-        "file": "android_18_base__effect_02.png.png",
+        "name": "android_18_base__effect_02",
+        "file": "android_18_base/android_18_base__effect_02.png",
         "w": 24,
         "h": 16,
         "correction": "recovered_2color_source_component",
         "source_frame": "007.png"
       },
       {
-        "name": "android_18_base__effect_03.png",
-        "file": "android_18_base__effect_03.png.png",
+        "name": "android_18_base__effect_03",
+        "file": "android_18_base/android_18_base__effect_03.png",
         "w": 24,
         "h": 16,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "008.png"
       },
       {
-        "name": "android_18_base__effect_04.png",
-        "file": "android_18_base__effect_04.png.png",
+        "name": "android_18_base__effect_04",
+        "file": "android_18_base/android_18_base__effect_04.png",
         "w": 16,
         "h": 12,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "037.png"
       },
       {
-        "name": "android_18_base__effect_05.png",
-        "file": "android_18_base__effect_05.png.png",
+        "name": "android_18_base__effect_05",
+        "file": "android_18_base/android_18_base__effect_05.png",
         "w": 39,
         "h": 12,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "039.png"
       },
       {
-        "name": "android_18_base__effect_06.png",
-        "file": "android_18_base__effect_06.png.png",
+        "name": "android_18_base__effect_06",
+        "file": "android_18_base/android_18_base__effect_06.png",
         "w": 39,
         "h": 12,
         "correction": "recovered_uncovered_source_component",
@@ -154,56 +154,56 @@
     "count": 7,
     "frames": [
       {
-        "name": "android_19_base__effect_00.png",
-        "file": "android_19_base__effect_00.png.png",
+        "name": "android_19_base__effect_00",
+        "file": "android_19_base/android_19_base__effect_00.png",
         "w": 12,
         "h": 15,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "009.png"
       },
       {
-        "name": "android_19_base__effect_01.png",
-        "file": "android_19_base__effect_01.png.png",
+        "name": "android_19_base__effect_01",
+        "file": "android_19_base/android_19_base__effect_01.png",
         "w": 12,
         "h": 13,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "010.png"
       },
       {
-        "name": "android_19_base__effect_02.png",
-        "file": "android_19_base__effect_02.png.png",
+        "name": "android_19_base__effect_02",
+        "file": "android_19_base/android_19_base__effect_02.png",
         "w": 24,
         "h": 16,
         "correction": "recovered_2color_source_component",
         "source_frame": "011.png"
       },
       {
-        "name": "android_19_base__effect_03.png",
-        "file": "android_19_base__effect_03.png.png",
+        "name": "android_19_base__effect_03",
+        "file": "android_19_base/android_19_base__effect_03.png",
         "w": 24,
         "h": 16,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "012.png"
       },
       {
-        "name": "android_19_base__effect_04.png",
-        "file": "android_19_base__effect_04.png.png",
+        "name": "android_19_base__effect_04",
+        "file": "android_19_base/android_19_base__effect_04.png",
         "w": 16,
         "h": 12,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "036.png"
       },
       {
-        "name": "android_19_base__effect_05.png",
-        "file": "android_19_base__effect_05.png.png",
+        "name": "android_19_base__effect_05",
+        "file": "android_19_base/android_19_base__effect_05.png",
         "w": 16,
         "h": 12,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "037.png"
       },
       {
-        "name": "android_19_base__effect_06.png",
-        "file": "android_19_base__effect_06.png.png",
+        "name": "android_19_base__effect_06",
+        "file": "android_19_base/android_19_base__effect_06.png",
         "w": 16,
         "h": 12,
         "correction": "recovered_uncovered_source_component",
@@ -215,48 +215,48 @@
     "count": 6,
     "frames": [
       {
-        "name": "android_20_base__effect_00.png",
-        "file": "android_20_base__effect_00.png.png",
+        "name": "android_20_base__effect_00",
+        "file": "android_20_base/android_20_base__effect_00.png",
         "w": 14,
         "h": 16,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "005.png"
       },
       {
-        "name": "android_20_base__effect_01.png",
-        "file": "android_20_base__effect_01.png.png",
+        "name": "android_20_base__effect_01",
+        "file": "android_20_base/android_20_base__effect_01.png",
         "w": 14,
         "h": 15,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "006.png"
       },
       {
-        "name": "android_20_base__effect_02.png",
-        "file": "android_20_base__effect_02.png.png",
+        "name": "android_20_base__effect_02",
+        "file": "android_20_base/android_20_base__effect_02.png",
         "w": 24,
         "h": 16,
         "correction": "recovered_2color_source_component",
         "source_frame": "007.png"
       },
       {
-        "name": "android_20_base__effect_03.png",
-        "file": "android_20_base__effect_03.png.png",
+        "name": "android_20_base__effect_03",
+        "file": "android_20_base/android_20_base__effect_03.png",
         "w": 24,
         "h": 16,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "008.png"
       },
       {
-        "name": "android_20_base__effect_04.png",
-        "file": "android_20_base__effect_04.png.png",
+        "name": "android_20_base__effect_04",
+        "file": "android_20_base/android_20_base__effect_04.png",
         "w": 16,
         "h": 12,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "035.png"
       },
       {
-        "name": "android_20_base__effect_05.png",
-        "file": "android_20_base__effect_05.png.png",
+        "name": "android_20_base__effect_05",
+        "file": "android_20_base/android_20_base__effect_05.png",
         "w": 16,
         "h": 12,
         "correction": "recovered_uncovered_source_component",
@@ -268,56 +268,56 @@
     "count": 7,
     "frames": [
       {
-        "name": "ginyu_base__effect_00.png",
-        "file": "ginyu_base__effect_00.png.png",
+        "name": "ginyu_base__effect_00",
+        "file": "ginyu_base/ginyu_base__effect_00.png",
         "w": 13,
         "h": 15,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "023.png"
       },
       {
-        "name": "ginyu_base__effect_01.png",
-        "file": "ginyu_base__effect_01.png.png",
+        "name": "ginyu_base__effect_01",
+        "file": "ginyu_base/ginyu_base__effect_01.png",
         "w": 13,
         "h": 14,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "024.png"
       },
       {
-        "name": "ginyu_base__effect_02.png",
-        "file": "ginyu_base__effect_02.png.png",
+        "name": "ginyu_base__effect_02",
+        "file": "ginyu_base/ginyu_base__effect_02.png",
         "w": 24,
         "h": 16,
         "correction": "recovered_2color_source_component",
         "source_frame": "025.png"
       },
       {
-        "name": "ginyu_base__effect_03.png",
-        "file": "ginyu_base__effect_03.png.png",
+        "name": "ginyu_base__effect_03",
+        "file": "ginyu_base/ginyu_base__effect_03.png",
         "w": 16,
         "h": 16,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "030.png"
       },
       {
-        "name": "ginyu_base__effect_04.png",
-        "file": "ginyu_base__effect_04.png.png",
+        "name": "ginyu_base__effect_04",
+        "file": "ginyu_base/ginyu_base__effect_04.png",
         "w": 16,
         "h": 16,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "031.png"
       },
       {
-        "name": "ginyu_base__effect_05.png",
-        "file": "ginyu_base__effect_05.png.png",
+        "name": "ginyu_base__effect_05",
+        "file": "ginyu_base/ginyu_base__effect_05.png",
         "w": 24,
         "h": 16,
         "correction": "recovered_2color_source_component",
         "source_frame": "032.png"
       },
       {
-        "name": "ginyu_base__effect_06.png",
-        "file": "ginyu_base__effect_06.png.png",
+        "name": "ginyu_base__effect_06",
+        "file": "ginyu_base/ginyu_base__effect_06.png",
         "w": 16,
         "h": 12,
         "correction": "recovered_uncovered_source_component",
@@ -329,48 +329,48 @@
     "count": 6,
     "frames": [
       {
-        "name": "cell_imperfect_form__effect_00.png",
-        "file": "cell_imperfect_form__effect_00.png.png",
+        "name": "cell_imperfect_form__effect_00",
+        "file": "cell_imperfect_form/cell_imperfect_form__effect_00.png",
         "w": 14,
         "h": 16,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "005.png"
       },
       {
-        "name": "cell_imperfect_form__effect_01.png",
-        "file": "cell_imperfect_form__effect_01.png.png",
+        "name": "cell_imperfect_form__effect_01",
+        "file": "cell_imperfect_form/cell_imperfect_form__effect_01.png",
         "w": 13,
         "h": 15,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "006.png"
       },
       {
-        "name": "cell_imperfect_form__effect_02.png",
-        "file": "cell_imperfect_form__effect_02.png.png",
+        "name": "cell_imperfect_form__effect_02",
+        "file": "cell_imperfect_form/cell_imperfect_form__effect_02.png",
         "w": 24,
         "h": 16,
         "correction": "recovered_2color_source_component",
         "source_frame": "007.png"
       },
       {
-        "name": "cell_imperfect_form__effect_03.png",
-        "file": "cell_imperfect_form__effect_03.png.png",
+        "name": "cell_imperfect_form__effect_03",
+        "file": "cell_imperfect_form/cell_imperfect_form__effect_03.png",
         "w": 24,
         "h": 16,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "008.png"
       },
       {
-        "name": "cell_imperfect_form__effect_04.png",
-        "file": "cell_imperfect_form__effect_04.png.png",
+        "name": "cell_imperfect_form__effect_04",
+        "file": "cell_imperfect_form/cell_imperfect_form__effect_04.png",
         "w": 16,
         "h": 12,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "036.png"
       },
       {
-        "name": "cell_imperfect_form__effect_05.png",
-        "file": "cell_imperfect_form__effect_05.png.png",
+        "name": "cell_imperfect_form__effect_05",
+        "file": "cell_imperfect_form/cell_imperfect_form__effect_05.png",
         "w": 16,
         "h": 12,
         "correction": "recovered_uncovered_source_component",
@@ -382,48 +382,48 @@
     "count": 6,
     "frames": [
       {
-        "name": "cell_semi_perfect_form__effect_00.png",
-        "file": "cell_semi_perfect_form__effect_00.png.png",
+        "name": "cell_semi_perfect_form__effect_00",
+        "file": "cell_semi_perfect_form/cell_semi_perfect_form__effect_00.png",
         "w": 12,
         "h": 16,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "005.png"
       },
       {
-        "name": "cell_semi_perfect_form__effect_01.png",
-        "file": "cell_semi_perfect_form__effect_01.png.png",
+        "name": "cell_semi_perfect_form__effect_01",
+        "file": "cell_semi_perfect_form/cell_semi_perfect_form__effect_01.png",
         "w": 12,
         "h": 16,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "006.png"
       },
       {
-        "name": "cell_semi_perfect_form__effect_02.png",
-        "file": "cell_semi_perfect_form__effect_02.png.png",
+        "name": "cell_semi_perfect_form__effect_02",
+        "file": "cell_semi_perfect_form/cell_semi_perfect_form__effect_02.png",
         "w": 24,
         "h": 16,
         "correction": "recovered_2color_source_component",
         "source_frame": "007.png"
       },
       {
-        "name": "cell_semi_perfect_form__effect_03.png",
-        "file": "cell_semi_perfect_form__effect_03.png.png",
+        "name": "cell_semi_perfect_form__effect_03",
+        "file": "cell_semi_perfect_form/cell_semi_perfect_form__effect_03.png",
         "w": 24,
         "h": 16,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "008.png"
       },
       {
-        "name": "cell_semi_perfect_form__effect_04.png",
-        "file": "cell_semi_perfect_form__effect_04.png.png",
+        "name": "cell_semi_perfect_form__effect_04",
+        "file": "cell_semi_perfect_form/cell_semi_perfect_form__effect_04.png",
         "w": 16,
         "h": 12,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "036.png"
       },
       {
-        "name": "cell_semi_perfect_form__effect_05.png",
-        "file": "cell_semi_perfect_form__effect_05.png.png",
+        "name": "cell_semi_perfect_form__effect_05",
+        "file": "cell_semi_perfect_form/cell_semi_perfect_form__effect_05.png",
         "w": 16,
         "h": 12,
         "correction": "recovered_uncovered_source_component",
@@ -435,48 +435,48 @@
     "count": 6,
     "frames": [
       {
-        "name": "cell_perfect__effect_00.png",
-        "file": "cell_perfect__effect_00.png.png",
+        "name": "cell_perfect__effect_00",
+        "file": "cell_perfect/cell_perfect__effect_00.png",
         "w": 14,
         "h": 16,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "005.png"
       },
       {
-        "name": "cell_perfect__effect_01.png",
-        "file": "cell_perfect__effect_01.png.png",
+        "name": "cell_perfect__effect_01",
+        "file": "cell_perfect/cell_perfect__effect_01.png",
         "w": 14,
         "h": 16,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "006.png"
       },
       {
-        "name": "cell_perfect__effect_02.png",
-        "file": "cell_perfect__effect_02.png.png",
+        "name": "cell_perfect__effect_02",
+        "file": "cell_perfect/cell_perfect__effect_02.png",
         "w": 24,
         "h": 16,
         "correction": "recovered_2color_source_component",
         "source_frame": "007.png"
       },
       {
-        "name": "cell_perfect__effect_03.png",
-        "file": "cell_perfect__effect_03.png.png",
+        "name": "cell_perfect__effect_03",
+        "file": "cell_perfect/cell_perfect__effect_03.png",
         "w": 24,
         "h": 16,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "008.png"
       },
       {
-        "name": "cell_perfect__effect_04.png",
-        "file": "cell_perfect__effect_04.png.png",
+        "name": "cell_perfect__effect_04",
+        "file": "cell_perfect/cell_perfect__effect_04.png",
         "w": 16,
         "h": 12,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "038.png"
       },
       {
-        "name": "cell_perfect__effect_05.png",
-        "file": "cell_perfect__effect_05.png.png",
+        "name": "cell_perfect__effect_05",
+        "file": "cell_perfect/cell_perfect__effect_05.png",
         "w": 16,
         "h": 12,
         "correction": "recovered_uncovered_source_component",
@@ -488,48 +488,48 @@
     "count": 6,
     "frames": [
       {
-        "name": "cell_jr_base__effect_00.png",
-        "file": "cell_jr_base__effect_00.png.png",
+        "name": "cell_jr_base__effect_00",
+        "file": "cell_jr_base/cell_jr_base__effect_00.png",
         "w": 12,
         "h": 15,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "005.png"
       },
       {
-        "name": "cell_jr_base__effect_01.png",
-        "file": "cell_jr_base__effect_01.png.png",
+        "name": "cell_jr_base__effect_01",
+        "file": "cell_jr_base/cell_jr_base__effect_01.png",
         "w": 13,
         "h": 16,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "006.png"
       },
       {
-        "name": "cell_jr_base__effect_02.png",
-        "file": "cell_jr_base__effect_02.png.png",
+        "name": "cell_jr_base__effect_02",
+        "file": "cell_jr_base/cell_jr_base__effect_02.png",
         "w": 24,
         "h": 16,
         "correction": "recovered_2color_source_component",
         "source_frame": "007.png"
       },
       {
-        "name": "cell_jr_base__effect_03.png",
-        "file": "cell_jr_base__effect_03.png.png",
+        "name": "cell_jr_base__effect_03",
+        "file": "cell_jr_base/cell_jr_base__effect_03.png",
         "w": 24,
         "h": 16,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "008.png"
       },
       {
-        "name": "cell_jr_base__effect_04.png",
-        "file": "cell_jr_base__effect_04.png.png",
+        "name": "cell_jr_base__effect_04",
+        "file": "cell_jr_base/cell_jr_base__effect_04.png",
         "w": 16,
         "h": 12,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "036.png"
       },
       {
-        "name": "cell_jr_base__effect_05.png",
-        "file": "cell_jr_base__effect_05.png.png",
+        "name": "cell_jr_base__effect_05",
+        "file": "cell_jr_base/cell_jr_base__effect_05.png",
         "w": 16,
         "h": 12,
         "correction": "recovered_uncovered_source_component",
@@ -541,40 +541,40 @@
     "count": 5,
     "frames": [
       {
-        "name": "frieza_base__effect_00.png",
-        "file": "frieza_base__effect_00.png.png",
+        "name": "frieza_base__effect_00",
+        "file": "frieza_base/frieza_base__effect_00.png",
         "w": 14,
         "h": 14,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "005.png"
       },
       {
-        "name": "frieza_base__effect_01.png",
-        "file": "frieza_base__effect_01.png.png",
+        "name": "frieza_base__effect_01",
+        "file": "frieza_base/frieza_base__effect_01.png",
         "w": 14,
         "h": 13,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "006.png"
       },
       {
-        "name": "frieza_base__effect_02.png",
-        "file": "frieza_base__effect_02.png.png",
+        "name": "frieza_base__effect_02",
+        "file": "frieza_base/frieza_base__effect_02.png",
         "w": 24,
         "h": 16,
         "correction": "recovered_2color_source_component",
         "source_frame": "007.png"
       },
       {
-        "name": "frieza_base__effect_03.png",
-        "file": "frieza_base__effect_03.png.png",
+        "name": "frieza_base__effect_03",
+        "file": "frieza_base/frieza_base__effect_03.png",
         "w": 16,
         "h": 12,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "035.png"
       },
       {
-        "name": "frieza_base__effect_04.png",
-        "file": "frieza_base__effect_04.png.png",
+        "name": "frieza_base__effect_04",
+        "file": "frieza_base/frieza_base__effect_04.png",
         "w": 39,
         "h": 12,
         "correction": "recovered_uncovered_source_component",
@@ -586,40 +586,40 @@
     "count": 5,
     "frames": [
       {
-        "name": "gohan_ultimate__effect_00.png",
-        "file": "gohan_ultimate__effect_00.png.png",
+        "name": "gohan_ultimate__effect_00",
+        "file": "gohan_ultimate/gohan_ultimate__effect_00.png",
         "w": 12,
         "h": 16,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "027.png"
       },
       {
-        "name": "gohan_ultimate__effect_01.png",
-        "file": "gohan_ultimate__effect_01.png.png",
+        "name": "gohan_ultimate__effect_01",
+        "file": "gohan_ultimate/gohan_ultimate__effect_01.png",
         "w": 13,
         "h": 15,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "028.png"
       },
       {
-        "name": "gohan_ultimate__effect_02.png",
-        "file": "gohan_ultimate__effect_02.png.png",
+        "name": "gohan_ultimate__effect_02",
+        "file": "gohan_ultimate/gohan_ultimate__effect_02.png",
         "w": 24,
         "h": 16,
         "correction": "recovered_2color_source_component",
         "source_frame": "029.png"
       },
       {
-        "name": "gohan_ultimate__effect_03.png",
-        "file": "gohan_ultimate__effect_03.png.png",
+        "name": "gohan_ultimate__effect_03",
+        "file": "gohan_ultimate/gohan_ultimate__effect_03.png",
         "w": 24,
         "h": 16,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "030.png"
       },
       {
-        "name": "gohan_ultimate__effect_04.png",
-        "file": "gohan_ultimate__effect_04.png.png",
+        "name": "gohan_ultimate__effect_04",
+        "file": "gohan_ultimate/gohan_ultimate__effect_04.png",
         "w": 16,
         "h": 12,
         "correction": "recovered_uncovered_source_component",
@@ -631,32 +631,32 @@
     "count": 4,
     "frames": [
       {
-        "name": "gohan_super_saiyan_1_2__effect_00.png",
-        "file": "gohan_super_saiyan_1_2__effect_00.png.png",
+        "name": "gohan_super_saiyan_1_2__effect_00",
+        "file": "gohan_super_saiyan_1_2/gohan_super_saiyan_1_2__effect_00.png",
         "w": 12,
         "h": 16,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "027.png"
       },
       {
-        "name": "gohan_super_saiyan_1_2__effect_01.png",
-        "file": "gohan_super_saiyan_1_2__effect_01.png.png",
+        "name": "gohan_super_saiyan_1_2__effect_01",
+        "file": "gohan_super_saiyan_1_2/gohan_super_saiyan_1_2__effect_01.png",
         "w": 13,
         "h": 15,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "028.png"
       },
       {
-        "name": "gohan_super_saiyan_1_2__effect_02.png",
-        "file": "gohan_super_saiyan_1_2__effect_02.png.png",
+        "name": "gohan_super_saiyan_1_2__effect_02",
+        "file": "gohan_super_saiyan_1_2/gohan_super_saiyan_1_2__effect_02.png",
         "w": 24,
         "h": 16,
         "correction": "recovered_2color_source_component",
         "source_frame": "029.png"
       },
       {
-        "name": "gohan_super_saiyan_1_2__effect_03.png",
-        "file": "gohan_super_saiyan_1_2__effect_03.png.png",
+        "name": "gohan_super_saiyan_1_2__effect_03",
+        "file": "gohan_super_saiyan_1_2/gohan_super_saiyan_1_2__effect_03.png",
         "w": 24,
         "h": 16,
         "correction": "recovered_uncovered_source_component",
@@ -668,40 +668,40 @@
     "count": 5,
     "frames": [
       {
-        "name": "young_gohan_base__effect_00.png",
-        "file": "young_gohan_base__effect_00.png.png",
+        "name": "young_gohan_base__effect_00",
+        "file": "young_gohan_base/young_gohan_base__effect_00.png",
         "w": 13,
         "h": 16,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "027.png"
       },
       {
-        "name": "young_gohan_base__effect_01.png",
-        "file": "young_gohan_base__effect_01.png.png",
+        "name": "young_gohan_base__effect_01",
+        "file": "young_gohan_base/young_gohan_base__effect_01.png",
         "w": 13,
         "h": 16,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "028.png"
       },
       {
-        "name": "young_gohan_base__effect_02.png",
-        "file": "young_gohan_base__effect_02.png.png",
+        "name": "young_gohan_base__effect_02",
+        "file": "young_gohan_base/young_gohan_base__effect_02.png",
         "w": 24,
         "h": 16,
         "correction": "recovered_2color_source_component",
         "source_frame": "029.png"
       },
       {
-        "name": "young_gohan_base__effect_03.png",
-        "file": "young_gohan_base__effect_03.png.png",
+        "name": "young_gohan_base__effect_03",
+        "file": "young_gohan_base/young_gohan_base__effect_03.png",
         "w": 24,
         "h": 16,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "030.png"
       },
       {
-        "name": "young_gohan_base__effect_04.png",
-        "file": "young_gohan_base__effect_04.png.png",
+        "name": "young_gohan_base__effect_04",
+        "file": "young_gohan_base/young_gohan_base__effect_04.png",
         "w": 16,
         "h": 12,
         "correction": "recovered_uncovered_source_component",
@@ -713,40 +713,40 @@
     "count": 5,
     "frames": [
       {
-        "name": "young_gohan_super_saiyan__effect_00.png",
-        "file": "young_gohan_super_saiyan__effect_00.png.png",
+        "name": "young_gohan_super_saiyan__effect_00",
+        "file": "young_gohan_super_saiyan/young_gohan_super_saiyan__effect_00.png",
         "w": 13,
         "h": 16,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "027.png"
       },
       {
-        "name": "young_gohan_super_saiyan__effect_01.png",
-        "file": "young_gohan_super_saiyan__effect_01.png.png",
+        "name": "young_gohan_super_saiyan__effect_01",
+        "file": "young_gohan_super_saiyan/young_gohan_super_saiyan__effect_01.png",
         "w": 14,
         "h": 16,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "028.png"
       },
       {
-        "name": "young_gohan_super_saiyan__effect_02.png",
-        "file": "young_gohan_super_saiyan__effect_02.png.png",
+        "name": "young_gohan_super_saiyan__effect_02",
+        "file": "young_gohan_super_saiyan/young_gohan_super_saiyan__effect_02.png",
         "w": 24,
         "h": 16,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "029.png"
       },
       {
-        "name": "young_gohan_super_saiyan__effect_03.png",
-        "file": "young_gohan_super_saiyan__effect_03.png.png",
+        "name": "young_gohan_super_saiyan__effect_03",
+        "file": "young_gohan_super_saiyan/young_gohan_super_saiyan__effect_03.png",
         "w": 24,
         "h": 16,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "030.png"
       },
       {
-        "name": "young_gohan_super_saiyan__effect_04.png",
-        "file": "young_gohan_super_saiyan__effect_04.png.png",
+        "name": "young_gohan_super_saiyan__effect_04",
+        "file": "young_gohan_super_saiyan/young_gohan_super_saiyan__effect_04.png",
         "w": 16,
         "h": 12,
         "correction": "recovered_uncovered_source_component",
@@ -758,40 +758,40 @@
     "count": 5,
     "frames": [
       {
-        "name": "young_gohan_super_saiyan_2__effect_00.png",
-        "file": "young_gohan_super_saiyan_2__effect_00.png.png",
+        "name": "young_gohan_super_saiyan_2__effect_00",
+        "file": "young_gohan_super_saiyan_2/young_gohan_super_saiyan_2__effect_00.png",
         "w": 13,
         "h": 16,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "027.png"
       },
       {
-        "name": "young_gohan_super_saiyan_2__effect_01.png",
-        "file": "young_gohan_super_saiyan_2__effect_01.png.png",
+        "name": "young_gohan_super_saiyan_2__effect_01",
+        "file": "young_gohan_super_saiyan_2/young_gohan_super_saiyan_2__effect_01.png",
         "w": 13,
         "h": 16,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "028.png"
       },
       {
-        "name": "young_gohan_super_saiyan_2__effect_02.png",
-        "file": "young_gohan_super_saiyan_2__effect_02.png.png",
+        "name": "young_gohan_super_saiyan_2__effect_02",
+        "file": "young_gohan_super_saiyan_2/young_gohan_super_saiyan_2__effect_02.png",
         "w": 24,
         "h": 16,
         "correction": "recovered_2color_source_component",
         "source_frame": "029.png"
       },
       {
-        "name": "young_gohan_super_saiyan_2__effect_03.png",
-        "file": "young_gohan_super_saiyan_2__effect_03.png.png",
+        "name": "young_gohan_super_saiyan_2__effect_03",
+        "file": "young_gohan_super_saiyan_2/young_gohan_super_saiyan_2__effect_03.png",
         "w": 24,
         "h": 16,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "030.png"
       },
       {
-        "name": "young_gohan_super_saiyan_2__effect_04.png",
-        "file": "young_gohan_super_saiyan_2__effect_04.png.png",
+        "name": "young_gohan_super_saiyan_2__effect_04",
+        "file": "young_gohan_super_saiyan_2/young_gohan_super_saiyan_2__effect_04.png",
         "w": 16,
         "h": 12,
         "correction": "recovered_uncovered_source_component",
@@ -803,40 +803,40 @@
     "count": 5,
     "frames": [
       {
-        "name": "goku_base__effect_00.png",
-        "file": "goku_base__effect_00.png.png",
+        "name": "goku_base__effect_00",
+        "file": "goku_base/goku_base__effect_00.png",
         "w": 16,
         "h": 16,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "027.png"
       },
       {
-        "name": "goku_base__effect_01.png",
-        "file": "goku_base__effect_01.png.png",
+        "name": "goku_base__effect_01",
+        "file": "goku_base/goku_base__effect_01.png",
         "w": 16,
         "h": 16,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "028.png"
       },
       {
-        "name": "goku_base__effect_02.png",
-        "file": "goku_base__effect_02.png.png",
+        "name": "goku_base__effect_02",
+        "file": "goku_base/goku_base__effect_02.png",
         "w": 24,
         "h": 16,
         "correction": "recovered_2color_source_component",
         "source_frame": "029.png"
       },
       {
-        "name": "goku_base__effect_03.png",
-        "file": "goku_base__effect_03.png.png",
+        "name": "goku_base__effect_03",
+        "file": "goku_base/goku_base__effect_03.png",
         "w": 24,
         "h": 16,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "030.png"
       },
       {
-        "name": "goku_base__effect_04.png",
-        "file": "goku_base__effect_04.png.png",
+        "name": "goku_base__effect_04",
+        "file": "goku_base/goku_base__effect_04.png",
         "w": 16,
         "h": 12,
         "correction": "recovered_uncovered_source_component",
@@ -848,40 +848,40 @@
     "count": 5,
     "frames": [
       {
-        "name": "goku_super_saiyan__effect_00.png",
-        "file": "goku_super_saiyan__effect_00.png.png",
+        "name": "goku_super_saiyan__effect_00",
+        "file": "goku_super_saiyan/goku_super_saiyan__effect_00.png",
         "w": 13,
         "h": 16,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "027.png"
       },
       {
-        "name": "goku_super_saiyan__effect_01.png",
-        "file": "goku_super_saiyan__effect_01.png.png",
+        "name": "goku_super_saiyan__effect_01",
+        "file": "goku_super_saiyan/goku_super_saiyan__effect_01.png",
         "w": 14,
         "h": 15,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "028.png"
       },
       {
-        "name": "goku_super_saiyan__effect_02.png",
-        "file": "goku_super_saiyan__effect_02.png.png",
+        "name": "goku_super_saiyan__effect_02",
+        "file": "goku_super_saiyan/goku_super_saiyan__effect_02.png",
         "w": 24,
         "h": 16,
         "correction": "recovered_2color_source_component",
         "source_frame": "029.png"
       },
       {
-        "name": "goku_super_saiyan__effect_03.png",
-        "file": "goku_super_saiyan__effect_03.png.png",
+        "name": "goku_super_saiyan__effect_03",
+        "file": "goku_super_saiyan/goku_super_saiyan__effect_03.png",
         "w": 24,
         "h": 16,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "030.png"
       },
       {
-        "name": "goku_super_saiyan__effect_04.png",
-        "file": "goku_super_saiyan__effect_04.png.png",
+        "name": "goku_super_saiyan__effect_04",
+        "file": "goku_super_saiyan/goku_super_saiyan__effect_04.png",
         "w": 16,
         "h": 12,
         "correction": "recovered_uncovered_source_component",
@@ -893,40 +893,40 @@
     "count": 5,
     "frames": [
       {
-        "name": "goku_super_saiyan_3__effect_00.png",
-        "file": "goku_super_saiyan_3__effect_00.png.png",
+        "name": "goku_super_saiyan_3__effect_00",
+        "file": "goku_super_saiyan_3/goku_super_saiyan_3__effect_00.png",
         "w": 16,
         "h": 16,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "027.png"
       },
       {
-        "name": "goku_super_saiyan_3__effect_01.png",
-        "file": "goku_super_saiyan_3__effect_01.png.png",
+        "name": "goku_super_saiyan_3__effect_01",
+        "file": "goku_super_saiyan_3/goku_super_saiyan_3__effect_01.png",
         "w": 14,
         "h": 16,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "028.png"
       },
       {
-        "name": "goku_super_saiyan_3__effect_02.png",
-        "file": "goku_super_saiyan_3__effect_02.png.png",
+        "name": "goku_super_saiyan_3__effect_02",
+        "file": "goku_super_saiyan_3/goku_super_saiyan_3__effect_02.png",
         "w": 24,
         "h": 16,
         "correction": "recovered_2color_source_component",
         "source_frame": "029.png"
       },
       {
-        "name": "goku_super_saiyan_3__effect_03.png",
-        "file": "goku_super_saiyan_3__effect_03.png.png",
+        "name": "goku_super_saiyan_3__effect_03",
+        "file": "goku_super_saiyan_3/goku_super_saiyan_3__effect_03.png",
         "w": 24,
         "h": 16,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "030.png"
       },
       {
-        "name": "goku_super_saiyan_3__effect_04.png",
-        "file": "goku_super_saiyan_3__effect_04.png.png",
+        "name": "goku_super_saiyan_3__effect_04",
+        "file": "goku_super_saiyan_3/goku_super_saiyan_3__effect_04.png",
         "w": 16,
         "h": 12,
         "correction": "recovered_uncovered_source_component",
@@ -938,40 +938,40 @@
     "count": 5,
     "frames": [
       {
-        "name": "goten_base__effect_00.png",
-        "file": "goten_base__effect_00.png.png",
+        "name": "goten_base__effect_00",
+        "file": "goten_base/goten_base__effect_00.png",
         "w": 16,
         "h": 16,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "027.png"
       },
       {
-        "name": "goten_base__effect_01.png",
-        "file": "goten_base__effect_01.png.png",
+        "name": "goten_base__effect_01",
+        "file": "goten_base/goten_base__effect_01.png",
         "w": 16,
         "h": 16,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "028.png"
       },
       {
-        "name": "goten_base__effect_02.png",
-        "file": "goten_base__effect_02.png.png",
+        "name": "goten_base__effect_02",
+        "file": "goten_base/goten_base__effect_02.png",
         "w": 24,
         "h": 16,
         "correction": "recovered_2color_source_component",
         "source_frame": "029.png"
       },
       {
-        "name": "goten_base__effect_03.png",
-        "file": "goten_base__effect_03.png.png",
+        "name": "goten_base__effect_03",
+        "file": "goten_base/goten_base__effect_03.png",
         "w": 24,
         "h": 16,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "030.png"
       },
       {
-        "name": "goten_base__effect_04.png",
-        "file": "goten_base__effect_04.png.png",
+        "name": "goten_base__effect_04",
+        "file": "goten_base/goten_base__effect_04.png",
         "w": 16,
         "h": 12,
         "correction": "recovered_uncovered_source_component",
@@ -983,40 +983,40 @@
     "count": 5,
     "frames": [
       {
-        "name": "goten_super_saiyan__effect_00.png",
-        "file": "goten_super_saiyan__effect_00.png.png",
+        "name": "goten_super_saiyan__effect_00",
+        "file": "goten_super_saiyan/goten_super_saiyan__effect_00.png",
         "w": 13,
         "h": 16,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "027.png"
       },
       {
-        "name": "goten_super_saiyan__effect_01.png",
-        "file": "goten_super_saiyan__effect_01.png.png",
+        "name": "goten_super_saiyan__effect_01",
+        "file": "goten_super_saiyan/goten_super_saiyan__effect_01.png",
         "w": 14,
         "h": 15,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "028.png"
       },
       {
-        "name": "goten_super_saiyan__effect_02.png",
-        "file": "goten_super_saiyan__effect_02.png.png",
+        "name": "goten_super_saiyan__effect_02",
+        "file": "goten_super_saiyan/goten_super_saiyan__effect_02.png",
         "w": 24,
         "h": 16,
         "correction": "recovered_2color_source_component",
         "source_frame": "029.png"
       },
       {
-        "name": "goten_super_saiyan__effect_03.png",
-        "file": "goten_super_saiyan__effect_03.png.png",
+        "name": "goten_super_saiyan__effect_03",
+        "file": "goten_super_saiyan/goten_super_saiyan__effect_03.png",
         "w": 24,
         "h": 16,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "030.png"
       },
       {
-        "name": "goten_super_saiyan__effect_04.png",
-        "file": "goten_super_saiyan__effect_04.png.png",
+        "name": "goten_super_saiyan__effect_04",
+        "file": "goten_super_saiyan/goten_super_saiyan__effect_04.png",
         "w": 16,
         "h": 12,
         "correction": "recovered_uncovered_source_component",
@@ -1028,48 +1028,48 @@
     "count": 6,
     "frames": [
       {
-        "name": "gotenks_super_saiyan__effect_00.png",
-        "file": "gotenks_super_saiyan__effect_00.png.png",
+        "name": "gotenks_super_saiyan__effect_00",
+        "file": "gotenks_super_saiyan/gotenks_super_saiyan__effect_00.png",
         "w": 16,
         "h": 12,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "032.png"
       },
       {
-        "name": "gotenks_super_saiyan__effect_01.png",
-        "file": "gotenks_super_saiyan__effect_01.png.png",
+        "name": "gotenks_super_saiyan__effect_01",
+        "file": "gotenks_super_saiyan/gotenks_super_saiyan__effect_01.png",
         "w": 16,
         "h": 12,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "033.png"
       },
       {
-        "name": "gotenks_super_saiyan__effect_02.png",
-        "file": "gotenks_super_saiyan__effect_02.png.png",
+        "name": "gotenks_super_saiyan__effect_02",
+        "file": "gotenks_super_saiyan/gotenks_super_saiyan__effect_02.png",
         "w": 13,
         "h": 16,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "046.png"
       },
       {
-        "name": "gotenks_super_saiyan__effect_03.png",
-        "file": "gotenks_super_saiyan__effect_03.png.png",
+        "name": "gotenks_super_saiyan__effect_03",
+        "file": "gotenks_super_saiyan/gotenks_super_saiyan__effect_03.png",
         "w": 13,
         "h": 16,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "047.png"
       },
       {
-        "name": "gotenks_super_saiyan__effect_04.png",
-        "file": "gotenks_super_saiyan__effect_04.png.png",
+        "name": "gotenks_super_saiyan__effect_04",
+        "file": "gotenks_super_saiyan/gotenks_super_saiyan__effect_04.png",
         "w": 24,
         "h": 16,
         "correction": "recovered_2color_source_component",
         "source_frame": "048.png"
       },
       {
-        "name": "gotenks_super_saiyan__effect_05.png",
-        "file": "gotenks_super_saiyan__effect_05.png.png",
+        "name": "gotenks_super_saiyan__effect_05",
+        "file": "gotenks_super_saiyan/gotenks_super_saiyan__effect_05.png",
         "w": 24,
         "h": 16,
         "correction": "recovered_uncovered_source_component",
@@ -1081,8 +1081,8 @@
     "count": 1,
     "frames": [
       {
-        "name": "gotenks_super_saiyan_3__effect_00.png",
-        "file": "gotenks_super_saiyan_3__effect_00.png.png",
+        "name": "gotenks_super_saiyan_3__effect_00",
+        "file": "gotenks_super_saiyan_3/gotenks_super_saiyan_3__effect_00.png",
         "w": 16,
         "h": 12,
         "correction": "recovered_uncovered_source_component",
@@ -1094,40 +1094,40 @@
     "count": 5,
     "frames": [
       {
-        "name": "guldo_base__effect_00.png",
-        "file": "guldo_base__effect_00.png.png",
+        "name": "guldo_base__effect_00",
+        "file": "guldo_base/guldo_base__effect_00.png",
         "w": 12,
         "h": 15,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "005.png"
       },
       {
-        "name": "guldo_base__effect_01.png",
-        "file": "guldo_base__effect_01.png.png",
+        "name": "guldo_base__effect_01",
+        "file": "guldo_base/guldo_base__effect_01.png",
         "w": 12,
         "h": 14,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "006.png"
       },
       {
-        "name": "guldo_base__effect_02.png",
-        "file": "guldo_base__effect_02.png.png",
+        "name": "guldo_base__effect_02",
+        "file": "guldo_base/guldo_base__effect_02.png",
         "w": 24,
         "h": 16,
         "correction": "recovered_2color_source_component",
         "source_frame": "007.png"
       },
       {
-        "name": "guldo_base__effect_03.png",
-        "file": "guldo_base__effect_03.png.png",
+        "name": "guldo_base__effect_03",
+        "file": "guldo_base/guldo_base__effect_03.png",
         "w": 24,
         "h": 16,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "008.png"
       },
       {
-        "name": "guldo_base__effect_04.png",
-        "file": "guldo_base__effect_04.png.png",
+        "name": "guldo_base__effect_04",
+        "file": "guldo_base/guldo_base__effect_04.png",
         "w": 16,
         "h": 12,
         "correction": "recovered_uncovered_source_component",
@@ -1139,40 +1139,40 @@
     "count": 5,
     "frames": [
       {
-        "name": "burter_base__effect_00.png",
-        "file": "burter_base__effect_00.png.png",
+        "name": "burter_base__effect_00",
+        "file": "burter_base/burter_base__effect_00.png",
         "w": 12,
         "h": 15,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "005.png"
       },
       {
-        "name": "burter_base__effect_01.png",
-        "file": "burter_base__effect_01.png.png",
+        "name": "burter_base__effect_01",
+        "file": "burter_base/burter_base__effect_01.png",
         "w": 13,
         "h": 14,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "006.png"
       },
       {
-        "name": "burter_base__effect_02.png",
-        "file": "burter_base__effect_02.png.png",
+        "name": "burter_base__effect_02",
+        "file": "burter_base/burter_base__effect_02.png",
         "w": 24,
         "h": 16,
         "correction": "recovered_2color_source_component",
         "source_frame": "007.png"
       },
       {
-        "name": "burter_base__effect_03.png",
-        "file": "burter_base__effect_03.png.png",
+        "name": "burter_base__effect_03",
+        "file": "burter_base/burter_base__effect_03.png",
         "w": 24,
         "h": 16,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "008.png"
       },
       {
-        "name": "burter_base__effect_04.png",
-        "file": "burter_base__effect_04.png.png",
+        "name": "burter_base__effect_04",
+        "file": "burter_base/burter_base__effect_04.png",
         "w": 16,
         "h": 12,
         "correction": "recovered_uncovered_source_component",
@@ -1184,40 +1184,40 @@
     "count": 5,
     "frames": [
       {
-        "name": "jeice_base__effect_00.png",
-        "file": "jeice_base__effect_00.png.png",
+        "name": "jeice_base__effect_00",
+        "file": "jeice_base/jeice_base__effect_00.png",
         "w": 13,
         "h": 16,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "005.png"
       },
       {
-        "name": "jeice_base__effect_01.png",
-        "file": "jeice_base__effect_01.png.png",
+        "name": "jeice_base__effect_01",
+        "file": "jeice_base/jeice_base__effect_01.png",
         "w": 13,
         "h": 16,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "006.png"
       },
       {
-        "name": "jeice_base__effect_02.png",
-        "file": "jeice_base__effect_02.png.png",
+        "name": "jeice_base__effect_02",
+        "file": "jeice_base/jeice_base__effect_02.png",
         "w": 24,
         "h": 16,
         "correction": "recovered_2color_source_component",
         "source_frame": "007.png"
       },
       {
-        "name": "jeice_base__effect_03.png",
-        "file": "jeice_base__effect_03.png.png",
+        "name": "jeice_base__effect_03",
+        "file": "jeice_base/jeice_base__effect_03.png",
         "w": 24,
         "h": 16,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "008.png"
       },
       {
-        "name": "jeice_base__effect_04.png",
-        "file": "jeice_base__effect_04.png.png",
+        "name": "jeice_base__effect_04",
+        "file": "jeice_base/jeice_base__effect_04.png",
         "w": 16,
         "h": 12,
         "correction": "recovered_uncovered_source_component",
@@ -1229,48 +1229,48 @@
     "count": 6,
     "frames": [
       {
-        "name": "krillin_base__effect_00.png",
-        "file": "krillin_base__effect_00.png.png",
+        "name": "krillin_base__effect_00",
+        "file": "krillin_base/krillin_base__effect_00.png",
         "w": 12,
         "h": 15,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "009.png"
       },
       {
-        "name": "krillin_base__effect_01.png",
-        "file": "krillin_base__effect_01.png.png",
+        "name": "krillin_base__effect_01",
+        "file": "krillin_base/krillin_base__effect_01.png",
         "w": 12,
         "h": 14,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "010.png"
       },
       {
-        "name": "krillin_base__effect_02.png",
-        "file": "krillin_base__effect_02.png.png",
+        "name": "krillin_base__effect_02",
+        "file": "krillin_base/krillin_base__effect_02.png",
         "w": 24,
         "h": 16,
         "correction": "recovered_2color_source_component",
         "source_frame": "011.png"
       },
       {
-        "name": "krillin_base__effect_03.png",
-        "file": "krillin_base__effect_03.png.png",
+        "name": "krillin_base__effect_03",
+        "file": "krillin_base/krillin_base__effect_03.png",
         "w": 24,
         "h": 16,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "012.png"
       },
       {
-        "name": "krillin_base__effect_04.png",
-        "file": "krillin_base__effect_04.png.png",
+        "name": "krillin_base__effect_04",
+        "file": "krillin_base/krillin_base__effect_04.png",
         "w": 16,
         "h": 12,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "035.png"
       },
       {
-        "name": "krillin_base__effect_05.png",
-        "file": "krillin_base__effect_05.png.png",
+        "name": "krillin_base__effect_05",
+        "file": "krillin_base/krillin_base__effect_05.png",
         "w": 55,
         "h": 16,
         "correction": "recovered_uncovered_source_component",
@@ -1282,48 +1282,48 @@
     "count": 6,
     "frames": [
       {
-        "name": "buu_base__effect_00.png",
-        "file": "buu_base__effect_00.png.png",
+        "name": "buu_base__effect_00",
+        "file": "buu_base/buu_base__effect_00.png",
         "w": 14,
         "h": 15,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "027.png"
       },
       {
-        "name": "buu_base__effect_01.png",
-        "file": "buu_base__effect_01.png.png",
+        "name": "buu_base__effect_01",
+        "file": "buu_base/buu_base__effect_01.png",
         "w": 13,
         "h": 14,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "028.png"
       },
       {
-        "name": "buu_base__effect_02.png",
-        "file": "buu_base__effect_02.png.png",
+        "name": "buu_base__effect_02",
+        "file": "buu_base/buu_base__effect_02.png",
         "w": 24,
         "h": 16,
         "correction": "recovered_2color_source_component",
         "source_frame": "029.png"
       },
       {
-        "name": "buu_base__effect_03.png",
-        "file": "buu_base__effect_03.png.png",
+        "name": "buu_base__effect_03",
+        "file": "buu_base/buu_base__effect_03.png",
         "w": 24,
         "h": 16,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "030.png"
       },
       {
-        "name": "buu_base__effect_04.png",
-        "file": "buu_base__effect_04.png.png",
+        "name": "buu_base__effect_04",
+        "file": "buu_base/buu_base__effect_04.png",
         "w": 16,
         "h": 12,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "036.png"
       },
       {
-        "name": "buu_base__effect_05.png",
-        "file": "buu_base__effect_05.png.png",
+        "name": "buu_base__effect_05",
+        "file": "buu_base/buu_base__effect_05.png",
         "w": 63,
         "h": 16,
         "correction": "recovered_uncovered_source_component",
@@ -1335,40 +1335,40 @@
     "count": 5,
     "frames": [
       {
-        "name": "kid_buu_base__effect_00.png",
-        "file": "kid_buu_base__effect_00.png.png",
+        "name": "kid_buu_base__effect_00",
+        "file": "kid_buu_base/kid_buu_base__effect_00.png",
         "w": 12,
         "h": 15,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "027.png"
       },
       {
-        "name": "kid_buu_base__effect_01.png",
-        "file": "kid_buu_base__effect_01.png.png",
+        "name": "kid_buu_base__effect_01",
+        "file": "kid_buu_base/kid_buu_base__effect_01.png",
         "w": 12,
         "h": 14,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "028.png"
       },
       {
-        "name": "kid_buu_base__effect_02.png",
-        "file": "kid_buu_base__effect_02.png.png",
+        "name": "kid_buu_base__effect_02",
+        "file": "kid_buu_base/kid_buu_base__effect_02.png",
         "w": 24,
         "h": 16,
         "correction": "recovered_2color_source_component",
         "source_frame": "029.png"
       },
       {
-        "name": "kid_buu_base__effect_03.png",
-        "file": "kid_buu_base__effect_03.png.png",
+        "name": "kid_buu_base__effect_03",
+        "file": "kid_buu_base/kid_buu_base__effect_03.png",
         "w": 24,
         "h": 16,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "030.png"
       },
       {
-        "name": "kid_buu_base__effect_04.png",
-        "file": "kid_buu_base__effect_04.png.png",
+        "name": "kid_buu_base__effect_04",
+        "file": "kid_buu_base/kid_buu_base__effect_04.png",
         "w": 16,
         "h": 12,
         "correction": "recovered_uncovered_source_component",
@@ -1380,40 +1380,40 @@
     "count": 5,
     "frames": [
       {
-        "name": "super_buu_base__effect_00.png",
-        "file": "super_buu_base__effect_00.png.png",
+        "name": "super_buu_base__effect_00",
+        "file": "super_buu_base/super_buu_base__effect_00.png",
         "w": 12,
         "h": 15,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "027.png"
       },
       {
-        "name": "super_buu_base__effect_01.png",
-        "file": "super_buu_base__effect_01.png.png",
+        "name": "super_buu_base__effect_01",
+        "file": "super_buu_base/super_buu_base__effect_01.png",
         "w": 12,
         "h": 14,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "028.png"
       },
       {
-        "name": "super_buu_base__effect_02.png",
-        "file": "super_buu_base__effect_02.png.png",
+        "name": "super_buu_base__effect_02",
+        "file": "super_buu_base/super_buu_base__effect_02.png",
         "w": 24,
         "h": 16,
         "correction": "recovered_2color_source_component",
         "source_frame": "029.png"
       },
       {
-        "name": "super_buu_base__effect_03.png",
-        "file": "super_buu_base__effect_03.png.png",
+        "name": "super_buu_base__effect_03",
+        "file": "super_buu_base/super_buu_base__effect_03.png",
         "w": 24,
         "h": 16,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "030.png"
       },
       {
-        "name": "super_buu_base__effect_04.png",
-        "file": "super_buu_base__effect_04.png.png",
+        "name": "super_buu_base__effect_04",
+        "file": "super_buu_base/super_buu_base__effect_04.png",
         "w": 16,
         "h": 12,
         "correction": "recovered_uncovered_source_component",
@@ -1425,56 +1425,56 @@
     "count": 7,
     "frames": [
       {
-        "name": "buu_gohan_absorbed__effect_00.png",
-        "file": "buu_gohan_absorbed__effect_00.png.png",
+        "name": "buu_gohan_absorbed__effect_00",
+        "file": "buu_gohan_absorbed/buu_gohan_absorbed__effect_00.png",
         "w": 12,
         "h": 15,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "027.png"
       },
       {
-        "name": "buu_gohan_absorbed__effect_01.png",
-        "file": "buu_gohan_absorbed__effect_01.png.png",
+        "name": "buu_gohan_absorbed__effect_01",
+        "file": "buu_gohan_absorbed/buu_gohan_absorbed__effect_01.png",
         "w": 26,
         "h": 17,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "028.png"
       },
       {
-        "name": "buu_gohan_absorbed__effect_02.png",
-        "file": "buu_gohan_absorbed__effect_02.png.png",
+        "name": "buu_gohan_absorbed__effect_02",
+        "file": "buu_gohan_absorbed/buu_gohan_absorbed__effect_02.png",
         "w": 26,
         "h": 17,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "029.png"
       },
       {
-        "name": "buu_gohan_absorbed__effect_03.png",
-        "file": "buu_gohan_absorbed__effect_03.png.png",
+        "name": "buu_gohan_absorbed__effect_03",
+        "file": "buu_gohan_absorbed/buu_gohan_absorbed__effect_03.png",
         "w": 12,
         "h": 14,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "033.png"
       },
       {
-        "name": "buu_gohan_absorbed__effect_04.png",
-        "file": "buu_gohan_absorbed__effect_04.png.png",
+        "name": "buu_gohan_absorbed__effect_04",
+        "file": "buu_gohan_absorbed/buu_gohan_absorbed__effect_04.png",
         "w": 16,
         "h": 12,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "036.png"
       },
       {
-        "name": "buu_gohan_absorbed__effect_05.png",
-        "file": "buu_gohan_absorbed__effect_05.png.png",
+        "name": "buu_gohan_absorbed__effect_05",
+        "file": "buu_gohan_absorbed/buu_gohan_absorbed__effect_05.png",
         "w": 40,
         "h": 22,
         "correction": "recovered_1color_source_effect",
         "source_frame": "055.png"
       },
       {
-        "name": "buu_gohan_absorbed__effect_06.png",
-        "file": "buu_gohan_absorbed__effect_06.png.png",
+        "name": "buu_gohan_absorbed__effect_06",
+        "file": "buu_gohan_absorbed/buu_gohan_absorbed__effect_06.png",
         "w": 28,
         "h": 12,
         "correction": "recovered_uncovered_source_component",
@@ -1486,40 +1486,40 @@
     "count": 5,
     "frames": [
       {
-        "name": "buu_gotenks_absorbed__effect_00.png",
-        "file": "buu_gotenks_absorbed__effect_00.png.png",
+        "name": "buu_gotenks_absorbed__effect_00",
+        "file": "buu_gotenks_absorbed/buu_gotenks_absorbed__effect_00.png",
         "w": 12,
         "h": 15,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "027.png"
       },
       {
-        "name": "buu_gotenks_absorbed__effect_01.png",
-        "file": "buu_gotenks_absorbed__effect_01.png.png",
+        "name": "buu_gotenks_absorbed__effect_01",
+        "file": "buu_gotenks_absorbed/buu_gotenks_absorbed__effect_01.png",
         "w": 12,
         "h": 14,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "028.png"
       },
       {
-        "name": "buu_gotenks_absorbed__effect_02.png",
-        "file": "buu_gotenks_absorbed__effect_02.png.png",
+        "name": "buu_gotenks_absorbed__effect_02",
+        "file": "buu_gotenks_absorbed/buu_gotenks_absorbed__effect_02.png",
         "w": 24,
         "h": 16,
         "correction": "recovered_2color_source_component",
         "source_frame": "029.png"
       },
       {
-        "name": "buu_gotenks_absorbed__effect_03.png",
-        "file": "buu_gotenks_absorbed__effect_03.png.png",
+        "name": "buu_gotenks_absorbed__effect_03",
+        "file": "buu_gotenks_absorbed/buu_gotenks_absorbed__effect_03.png",
         "w": 24,
         "h": 16,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "030.png"
       },
       {
-        "name": "buu_gotenks_absorbed__effect_04.png",
-        "file": "buu_gotenks_absorbed__effect_04.png.png",
+        "name": "buu_gotenks_absorbed__effect_04",
+        "file": "buu_gotenks_absorbed/buu_gotenks_absorbed__effect_04.png",
         "w": 16,
         "h": 12,
         "correction": "recovered_uncovered_source_component",
@@ -1531,8 +1531,8 @@
     "count": 1,
     "frames": [
       {
-        "name": "nappa_base__effect_00.png",
-        "file": "nappa_base__effect_00.png.png",
+        "name": "nappa_base__effect_00",
+        "file": "nappa_base/nappa_base__effect_00.png",
         "w": 16,
         "h": 12,
         "correction": "recovered_uncovered_source_component",
@@ -1544,40 +1544,40 @@
     "count": 5,
     "frames": [
       {
-        "name": "piccolo_base__effect_00.png",
-        "file": "piccolo_base__effect_00.png.png",
+        "name": "piccolo_base__effect_00",
+        "file": "piccolo_base/piccolo_base__effect_00.png",
         "w": 12,
         "h": 15,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "027.png"
       },
       {
-        "name": "piccolo_base__effect_01.png",
-        "file": "piccolo_base__effect_01.png.png",
+        "name": "piccolo_base__effect_01",
+        "file": "piccolo_base/piccolo_base__effect_01.png",
         "w": 12,
         "h": 15,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "028.png"
       },
       {
-        "name": "piccolo_base__effect_02.png",
-        "file": "piccolo_base__effect_02.png.png",
+        "name": "piccolo_base__effect_02",
+        "file": "piccolo_base/piccolo_base__effect_02.png",
         "w": 24,
         "h": 16,
         "correction": "recovered_2color_source_component",
         "source_frame": "029.png"
       },
       {
-        "name": "piccolo_base__effect_03.png",
-        "file": "piccolo_base__effect_03.png.png",
+        "name": "piccolo_base__effect_03",
+        "file": "piccolo_base/piccolo_base__effect_03.png",
         "w": 24,
         "h": 16,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "030.png"
       },
       {
-        "name": "piccolo_base__effect_04.png",
-        "file": "piccolo_base__effect_04.png.png",
+        "name": "piccolo_base__effect_04",
+        "file": "piccolo_base/piccolo_base__effect_04.png",
         "w": 12,
         "h": 16,
         "correction": "recovered_uncovered_source_component",
@@ -1589,40 +1589,40 @@
     "count": 5,
     "frames": [
       {
-        "name": "recoome_base__effect_00.png",
-        "file": "recoome_base__effect_00.png.png",
+        "name": "recoome_base__effect_00",
+        "file": "recoome_base/recoome_base__effect_00.png",
         "w": 12,
         "h": 16,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "005.png"
       },
       {
-        "name": "recoome_base__effect_01.png",
-        "file": "recoome_base__effect_01.png.png",
+        "name": "recoome_base__effect_01",
+        "file": "recoome_base/recoome_base__effect_01.png",
         "w": 13,
         "h": 16,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "006.png"
       },
       {
-        "name": "recoome_base__effect_02.png",
-        "file": "recoome_base__effect_02.png.png",
+        "name": "recoome_base__effect_02",
+        "file": "recoome_base/recoome_base__effect_02.png",
         "w": 24,
         "h": 16,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "007.png"
       },
       {
-        "name": "recoome_base__effect_03.png",
-        "file": "recoome_base__effect_03.png.png",
+        "name": "recoome_base__effect_03",
+        "file": "recoome_base/recoome_base__effect_03.png",
         "w": 24,
         "h": 16,
         "correction": "recovered_2color_source_component",
         "source_frame": "008.png"
       },
       {
-        "name": "recoome_base__effect_04.png",
-        "file": "recoome_base__effect_04.png.png",
+        "name": "recoome_base__effect_04",
+        "file": "recoome_base/recoome_base__effect_04.png",
         "w": 16,
         "h": 12,
         "correction": "recovered_uncovered_source_component",
@@ -1634,48 +1634,48 @@
     "count": 6,
     "frames": [
       {
-        "name": "future_trunks_base__effect_00.png",
-        "file": "future_trunks_base__effect_00.png.png",
+        "name": "future_trunks_base__effect_00",
+        "file": "future_trunks_base/future_trunks_base__effect_00.png",
         "w": 12,
         "h": 16,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "027.png"
       },
       {
-        "name": "future_trunks_base__effect_01.png",
-        "file": "future_trunks_base__effect_01.png.png",
+        "name": "future_trunks_base__effect_01",
+        "file": "future_trunks_base/future_trunks_base__effect_01.png",
         "w": 12,
         "h": 15,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "028.png"
       },
       {
-        "name": "future_trunks_base__effect_02.png",
-        "file": "future_trunks_base__effect_02.png.png",
+        "name": "future_trunks_base__effect_02",
+        "file": "future_trunks_base/future_trunks_base__effect_02.png",
         "w": 24,
         "h": 16,
         "correction": "recovered_2color_source_component",
         "source_frame": "029.png"
       },
       {
-        "name": "future_trunks_base__effect_03.png",
-        "file": "future_trunks_base__effect_03.png.png",
+        "name": "future_trunks_base__effect_03",
+        "file": "future_trunks_base/future_trunks_base__effect_03.png",
         "w": 24,
         "h": 16,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "030.png"
       },
       {
-        "name": "future_trunks_base__effect_04.png",
-        "file": "future_trunks_base__effect_04.png.png",
+        "name": "future_trunks_base__effect_04",
+        "file": "future_trunks_base/future_trunks_base__effect_04.png",
         "w": 16,
         "h": 12,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "036.png"
       },
       {
-        "name": "future_trunks_base__effect_05.png",
-        "file": "future_trunks_base__effect_05.png.png",
+        "name": "future_trunks_base__effect_05",
+        "file": "future_trunks_base/future_trunks_base__effect_05.png",
         "w": 16,
         "h": 12,
         "correction": "recovered_uncovered_source_component",
@@ -1687,40 +1687,40 @@
     "count": 5,
     "frames": [
       {
-        "name": "future_trunks_super_saiyan__effect_00.png",
-        "file": "future_trunks_super_saiyan__effect_00.png.png",
+        "name": "future_trunks_super_saiyan__effect_00",
+        "file": "future_trunks_super_saiyan/future_trunks_super_saiyan__effect_00.png",
         "w": 12,
         "h": 16,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "027.png"
       },
       {
-        "name": "future_trunks_super_saiyan__effect_01.png",
-        "file": "future_trunks_super_saiyan__effect_01.png.png",
+        "name": "future_trunks_super_saiyan__effect_01",
+        "file": "future_trunks_super_saiyan/future_trunks_super_saiyan__effect_01.png",
         "w": 13,
         "h": 16,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "028.png"
       },
       {
-        "name": "future_trunks_super_saiyan__effect_02.png",
-        "file": "future_trunks_super_saiyan__effect_02.png.png",
+        "name": "future_trunks_super_saiyan__effect_02",
+        "file": "future_trunks_super_saiyan/future_trunks_super_saiyan__effect_02.png",
         "w": 24,
         "h": 16,
         "correction": "recovered_2color_source_component",
         "source_frame": "029.png"
       },
       {
-        "name": "future_trunks_super_saiyan__effect_03.png",
-        "file": "future_trunks_super_saiyan__effect_03.png.png",
+        "name": "future_trunks_super_saiyan__effect_03",
+        "file": "future_trunks_super_saiyan/future_trunks_super_saiyan__effect_03.png",
         "w": 24,
         "h": 16,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "030.png"
       },
       {
-        "name": "future_trunks_super_saiyan__effect_04.png",
-        "file": "future_trunks_super_saiyan__effect_04.png.png",
+        "name": "future_trunks_super_saiyan__effect_04",
+        "file": "future_trunks_super_saiyan/future_trunks_super_saiyan__effect_04.png",
         "w": 16,
         "h": 12,
         "correction": "recovered_uncovered_source_component",
@@ -1732,8 +1732,8 @@
     "count": 1,
     "frames": [
       {
-        "name": "trunks_base__effect_00.png",
-        "file": "trunks_base__effect_00.png.png",
+        "name": "trunks_base__effect_00",
+        "file": "trunks_base/trunks_base__effect_00.png",
         "w": 16,
         "h": 12,
         "correction": "recovered_uncovered_source_component",
@@ -1745,40 +1745,40 @@
     "count": 5,
     "frames": [
       {
-        "name": "kid_trunks_super_saiyan__effect_00.png",
-        "file": "kid_trunks_super_saiyan__effect_00.png.png",
+        "name": "kid_trunks_super_saiyan__effect_00",
+        "file": "kid_trunks_super_saiyan/kid_trunks_super_saiyan__effect_00.png",
         "w": 15,
         "h": 16,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "024.png"
       },
       {
-        "name": "kid_trunks_super_saiyan__effect_01.png",
-        "file": "kid_trunks_super_saiyan__effect_01.png.png",
+        "name": "kid_trunks_super_saiyan__effect_01",
+        "file": "kid_trunks_super_saiyan/kid_trunks_super_saiyan__effect_01.png",
         "w": 13,
         "h": 16,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "025.png"
       },
       {
-        "name": "kid_trunks_super_saiyan__effect_02.png",
-        "file": "kid_trunks_super_saiyan__effect_02.png.png",
+        "name": "kid_trunks_super_saiyan__effect_02",
+        "file": "kid_trunks_super_saiyan/kid_trunks_super_saiyan__effect_02.png",
         "w": 24,
         "h": 16,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "026.png"
       },
       {
-        "name": "kid_trunks_super_saiyan__effect_03.png",
-        "file": "kid_trunks_super_saiyan__effect_03.png.png",
+        "name": "kid_trunks_super_saiyan__effect_03",
+        "file": "kid_trunks_super_saiyan/kid_trunks_super_saiyan__effect_03.png",
         "w": 24,
         "h": 16,
         "correction": "recovered_2color_source_component",
         "source_frame": "027.png"
       },
       {
-        "name": "kid_trunks_super_saiyan__effect_04.png",
-        "file": "kid_trunks_super_saiyan__effect_04.png.png",
+        "name": "kid_trunks_super_saiyan__effect_04",
+        "file": "kid_trunks_super_saiyan/kid_trunks_super_saiyan__effect_04.png",
         "w": 16,
         "h": 12,
         "correction": "recovered_uncovered_source_component",
@@ -1790,48 +1790,48 @@
     "count": 6,
     "frames": [
       {
-        "name": "vegeta_base__effect_00.png",
-        "file": "vegeta_base__effect_00.png.png",
+        "name": "vegeta_base__effect_00",
+        "file": "vegeta_base/vegeta_base__effect_00.png",
         "w": 13,
         "h": 16,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "027.png"
       },
       {
-        "name": "vegeta_base__effect_01.png",
-        "file": "vegeta_base__effect_01.png.png",
+        "name": "vegeta_base__effect_01",
+        "file": "vegeta_base/vegeta_base__effect_01.png",
         "w": 13,
         "h": 16,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "028.png"
       },
       {
-        "name": "vegeta_base__effect_02.png",
-        "file": "vegeta_base__effect_02.png.png",
+        "name": "vegeta_base__effect_02",
+        "file": "vegeta_base/vegeta_base__effect_02.png",
         "w": 24,
         "h": 16,
         "correction": "recovered_2color_source_component",
         "source_frame": "029.png"
       },
       {
-        "name": "vegeta_base__effect_03.png",
-        "file": "vegeta_base__effect_03.png.png",
+        "name": "vegeta_base__effect_03",
+        "file": "vegeta_base/vegeta_base__effect_03.png",
         "w": 24,
         "h": 16,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "030.png"
       },
       {
-        "name": "vegeta_base__effect_04.png",
-        "file": "vegeta_base__effect_04.png.png",
+        "name": "vegeta_base__effect_04",
+        "file": "vegeta_base/vegeta_base__effect_04.png",
         "w": 16,
         "h": 12,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "036.png"
       },
       {
-        "name": "vegeta_base__effect_05.png",
-        "file": "vegeta_base__effect_05.png.png",
+        "name": "vegeta_base__effect_05",
+        "file": "vegeta_base/vegeta_base__effect_05.png",
         "w": 39,
         "h": 12,
         "correction": "recovered_uncovered_source_component",
@@ -1843,48 +1843,48 @@
     "count": 6,
     "frames": [
       {
-        "name": "vegeta_super_saiyan_majin__effect_00.png",
-        "file": "vegeta_super_saiyan_majin__effect_00.png.png",
+        "name": "vegeta_super_saiyan_majin__effect_00",
+        "file": "vegeta_super_saiyan_majin/vegeta_super_saiyan_majin__effect_00.png",
         "w": 14,
         "h": 16,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "027.png"
       },
       {
-        "name": "vegeta_super_saiyan_majin__effect_01.png",
-        "file": "vegeta_super_saiyan_majin__effect_01.png.png",
+        "name": "vegeta_super_saiyan_majin__effect_01",
+        "file": "vegeta_super_saiyan_majin/vegeta_super_saiyan_majin__effect_01.png",
         "w": 14,
         "h": 16,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "028.png"
       },
       {
-        "name": "vegeta_super_saiyan_majin__effect_02.png",
-        "file": "vegeta_super_saiyan_majin__effect_02.png.png",
+        "name": "vegeta_super_saiyan_majin__effect_02",
+        "file": "vegeta_super_saiyan_majin/vegeta_super_saiyan_majin__effect_02.png",
         "w": 24,
         "h": 16,
         "correction": "recovered_2color_source_component",
         "source_frame": "029.png"
       },
       {
-        "name": "vegeta_super_saiyan_majin__effect_03.png",
-        "file": "vegeta_super_saiyan_majin__effect_03.png.png",
+        "name": "vegeta_super_saiyan_majin__effect_03",
+        "file": "vegeta_super_saiyan_majin/vegeta_super_saiyan_majin__effect_03.png",
         "w": 24,
         "h": 16,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "030.png"
       },
       {
-        "name": "vegeta_super_saiyan_majin__effect_04.png",
-        "file": "vegeta_super_saiyan_majin__effect_04.png.png",
+        "name": "vegeta_super_saiyan_majin__effect_04",
+        "file": "vegeta_super_saiyan_majin/vegeta_super_saiyan_majin__effect_04.png",
         "w": 16,
         "h": 12,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "036.png"
       },
       {
-        "name": "vegeta_super_saiyan_majin__effect_05.png",
-        "file": "vegeta_super_saiyan_majin__effect_05.png.png",
+        "name": "vegeta_super_saiyan_majin__effect_05",
+        "file": "vegeta_super_saiyan_majin/vegeta_super_saiyan_majin__effect_05.png",
         "w": 39,
         "h": 12,
         "correction": "recovered_uncovered_source_component",
@@ -1896,48 +1896,48 @@
     "count": 6,
     "frames": [
       {
-        "name": "vegito_base__effect_00.png",
-        "file": "vegito_base__effect_00.png.png",
+        "name": "vegito_base__effect_00",
+        "file": "vegito_base/vegito_base__effect_00.png",
         "w": 24,
         "h": 16,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "005.png"
       },
       {
-        "name": "vegito_base__effect_01.png",
-        "file": "vegito_base__effect_01.png.png",
+        "name": "vegito_base__effect_01",
+        "file": "vegito_base/vegito_base__effect_01.png",
         "w": 24,
         "h": 16,
         "correction": "recovered_2color_source_component",
         "source_frame": "006.png"
       },
       {
-        "name": "vegito_base__effect_02.png",
-        "file": "vegito_base__effect_02.png.png",
+        "name": "vegito_base__effect_02",
+        "file": "vegito_base/vegito_base__effect_02.png",
         "w": 13,
         "h": 16,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "007.png"
       },
       {
-        "name": "vegito_base__effect_03.png",
-        "file": "vegito_base__effect_03.png.png",
+        "name": "vegito_base__effect_03",
+        "file": "vegito_base/vegito_base__effect_03.png",
         "w": 14,
         "h": 15,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "008.png"
       },
       {
-        "name": "vegito_base__effect_04.png",
-        "file": "vegito_base__effect_04.png.png",
+        "name": "vegito_base__effect_04",
+        "file": "vegito_base/vegito_base__effect_04.png",
         "w": 16,
         "h": 12,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "036.png"
       },
       {
-        "name": "vegito_base__effect_05.png",
-        "file": "vegito_base__effect_05.png.png",
+        "name": "vegito_base__effect_05",
+        "file": "vegito_base/vegito_base__effect_05.png",
         "w": 39,
         "h": 12,
         "correction": "recovered_uncovered_source_component",
