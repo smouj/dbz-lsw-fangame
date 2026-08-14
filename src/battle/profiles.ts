@@ -26,8 +26,11 @@ export type CinematicKind =
   | 'support_offensive'   // efectos ofensivos de support (ej. explosión)
   | 'support'             // buffs/heal/utility
   | 'gather'              // Gather Power
-  | 'guard'               // defensa básica
-  | 'move';               // movimiento
+  | 'guard';              // defensa básica
+// NOTA: 'move' NO es un kind cinematográfico. MOVE es del espacio TÁCTICO
+// (docs/CINEMATIC_GRAMMAR.md §7): el sprite overworld se recoloca en el tablero
+// vía `defendBasic('move', axis)` en main.tsx, sin plano de acción. Por eso no
+// existe `move` aquí ni en PROFILE_FACTORIES.
 
 export interface CinematicParams {
   side: 'player' | 'enemy';
@@ -161,7 +164,6 @@ const PROFILE_FACTORIES: Record<CinematicKind, (id: string) => CinematicProfile>
   support: profileSupport,
   gather: profileGather,
   guard: profileDefense,
-  move: profileDefense,
 };
 
 export function profileFor(kind: CinematicKind, cardName: string): CinematicProfile {
