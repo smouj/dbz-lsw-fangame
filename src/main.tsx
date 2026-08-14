@@ -23,6 +23,8 @@ import { profileFor, type CinematicKind } from './battle/profiles';
 import { isDebugCinematics, bindDebugControls, renderDebugOverlay, type CinematicDebugInfo, type CinematicDebugController } from './battle/debugCinematics';
 import { isDebugState, bindQteDebugControls, renderStateOverlay, type StateDebugSnapshot } from './battle/debugState';
 import { BattlePixiStage, isPixiField } from './battle/BattlePixiStage';
+import { applyCinematicEvent } from './renderer/pixi/presentation/CinematicAdapter';
+import type { PixiBattlePresentation } from './renderer/pixi/presentation/PixiBattlePresentation';
 import { initAudio, Sfx, setSfxEnabled, setVolume } from './audio/sfx';
 import { LanguageProvider } from './i18n/LanguageProvider';
 import { useLang } from './i18n/useLang';
@@ -861,6 +863,9 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
   // emite eventos por tick (SHOT/ACTOR_POSE/HIT_FRAME/APPLY_DAMAGE/…); los
   // setTimeout NO son autoridad de gameplay (plan del usuario, punto 1-2).
   const cinematicRef = useRef<BattleTimeline | null>(null);
+  // ─── Presentación Pixi (dev flag ?pixiField=1): instancia que recibe los
+  //     eventos del timeline en paralelo al DOM (sin reemplazarlo). ───
+  const pixiPresRef = useRef<PixiBattlePresentation | null>(null);
   // ─── Depurador cinematográfico (?debugCinematics=1) ───
   const [debugCin, setDebugCin] = useState<CinematicDebugInfo | null>(null);
   const [debugPaused, setDebugPaused] = useState(false);
@@ -947,6 +952,15 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
       : card.type === 'support' ? 'support' : 'support';
     const profile = profileFor(kind, card.name);
 
+    // Pixi (dev flag ?pixiField=1): preparar la presentación para esta acción.
+    // Se enruta en PARALELO al DOM (que sigue siendo la presentación por
+    // defecto); si la presentación aún no está lista, el DOM cubre el caso.
+    const pixiPres = pixiPresRef.current;
+    if (pixiPres) {
+      pixiPres.reset();
+      pixiPres.setAttacker(side === 'player' ? 'left' : 'right');
+    }
+
     // Depurador: registrar el contexto cinematográfico actual
     if (isDebugCinematics()) {
       debugCtxRef.current = { action: card.name, profile, initialPose: cardBattlePose(card, 'field') };
@@ -964,6 +978,8 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
 
     // Guard: si es beam/damage con target cut, el defensor espera en guard
     const applyEvent = (e: CinematicEvent) => {
+      // Pixi: enrutar el evento a la presentación (además del DOM).
+      if (pixiPres) applyCinematicEvent(pixiPres, e);
       // Depurador: actualizar refs + overlay en cada evento
       if (isDebugCinematics()) {
         switch (e.type) {
@@ -1047,6 +1063,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
       const tl = new BattleTimeline(profile, {
         onEvent: applyEvent,
         onComplete: finishCinematic,
+        onTick: (tick) => { pixiPres?.sync(tick); },
       });
       cinematicRef.current = tl;
       tl.start();
@@ -1058,6 +1075,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
     const tl = new BattleTimeline(profile, {
       onEvent: applyEvent,
       onComplete: finishCinematic,
+      onTick: (tick) => { pixiPres?.sync(tick); },
     });
     cinematicRef.current = tl;
     tl.start();
@@ -2610,6 +2628,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
             enemyFormId={enemyFormId}
             playerPos={player.battlePos}
             enemyPos={enemy.battlePos}
+            presentationRef={pixiPresRef}
           />
         )}
         <div className="battle-bg authentic" style={{ backgroundImage: `url(${battleBgUrl})` }} />

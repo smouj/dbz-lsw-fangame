@@ -99,6 +99,11 @@ export class BattleRenderer {
 
   destroy(): void {
     this.fighters.length = 0;
-    this.app.destroy(true, { children: true, texture: true, textureSource: true });
+    // NO destruir las texturas: están cacheadas a nivel de módulo (CACHE/
+    // TEXTURE_CACHE en AtlasLoader) y se reutilizan entre montajes (varias
+    // batallas/HMR). Destruirlas aquí provoca el warning de Pixi
+    // "TextureSource managed by Assets was destroyed" y deja el cache stale
+    // (luchadores en blanco en la segunda batalla).
+    this.app.destroy(true, { children: true, texture: false, textureSource: false });
   }
 }
