@@ -222,6 +222,24 @@ def png_size(path):
         return im.size  # (w, h)
 
 
+def clean_fixed_png(src, dst):
+    """Copia un PNG del FIXED a dst eliminando el fondo verde claro
+    (211,249,188) residual. Ese tono es fondo de hoja del FIXED y NUNCA
+    aparece como color de sprite en V6 (verificado: 0 px en 1952 frames),
+    así que es 100% seguro eliminarlo. Los fondos cian (0,183,239) y
+    (0,255,255) NO se tocan (son colores de sprite legítimos: gi de Gohan,
+    piel de Piccolo, energía de beam)."""
+    im = Image.open(src).convert("RGBA")
+    px = im.load()
+    for y in range(im.height):
+        for x in range(im.width):
+            r, g, b, a = px[x, y]
+            if a > 0 and (r, g, b) == (211, 249, 188):
+                px[x, y] = (0, 0, 0, 0)
+    im.save(dst)
+    return im.size
+
+
 def clean_dir(d):
     os.makedirs(d, exist_ok=True)
     for f in os.listdir(d):
@@ -347,8 +365,7 @@ try:
                 w, h = copy_v6_frame(key, flipped, target_dir, dest)
                 stats["matched"] += 1
             else:
-                w, h = png_size(fixed_abs)
-                shutil.copyfile(fixed_abs, os.path.join(target_dir, dest))
+                w, h = clean_fixed_png(fixed_abs, os.path.join(target_dir, dest))
                 stats["fallback_fixed"] += 1
             return w, h
 
