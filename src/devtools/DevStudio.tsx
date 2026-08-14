@@ -4,7 +4,7 @@
 // Inspeccionar / validar / previsualizar el juego sin tocar código.
 // NO forma parte del flujo público de producción.
 // ═══════════════════════════════════════════════════════════
-import { useState } from 'react';
+import { useState, lazy, Suspense } from 'react';
 import { DashboardModule } from './dashboard';
 import { CharactersModule } from './characters';
 import { CardsModule } from './cards';
@@ -17,8 +17,10 @@ import { ResearchModule } from './research';
 import { AnimationModule } from './animation';
 import { PixelArtModule } from './pixelart';
 import { HudModule } from './hud';
-import { PixiModule } from './pixi';
-import { PixiSequenceModule } from './pixiSequence';
+// Los módulos Pixi se cargan bajo demanda (code-split): pixi.js (~790KB) solo
+// se descarga al abrir el Pixi Lab / Pixi Seq, no en el bundle principal.
+const PixiModule = lazy(() => import('./pixi').then((m) => ({ default: m.PixiModule })));
+const PixiSequenceModule = lazy(() => import('./pixiSequence').then((m) => ({ default: m.PixiSequenceModule })));
 
 export type DevModuleId =
   | 'dashboard' | 'characters' | 'cards' | 'sprites' | 'animation'
@@ -108,8 +110,8 @@ export function DevStudio({ onExit, onLaunchBattle }: {
           {module === 'story' && <StoryModule />}
           {module === 'validation' && <ValidationModule />}
           {module === 'research' && <ResearchModule />}
-          {module === 'pixi' && <PixiModule />}
-          {module === 'pixiSequence' && <PixiSequenceModule />}
+          {module === 'pixi' && <Suspense fallback={<div className="dev-module-loading">Cargando Pixi…</div>}><PixiModule /></Suspense>}
+          {module === 'pixiSequence' && <Suspense fallback={<div className="dev-module-loading">Cargando Pixi Seq…</div>}><PixiSequenceModule /></Suspense>}
         </div>
       </main>
     </div>

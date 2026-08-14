@@ -897,16 +897,21 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   image-rendering: pixelated;
 }
 
-/* Master shot Pixi (dev flag ?pixiField=1): canvas GPU cubre el campo */
-.battle-pixi {
+/* Master shot Pixi (dev flag ?pixiField=1): contenedor de letterbox centrado.
+   El canvas lógico 320×160 (2:1) se escala a un múltiplo ENTERO y se centra;
+   el hueco sobrante queda como barras (letterbox) del propio battlefield. */
+.battle-pixi-stage {
   position: absolute;
   inset: 0;
   z-index: 3;
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   pointer-events: none;
-  /* El canvas respeta su resolución lógica 2:1 (320×160): object-fit evita la
-     distorsión de estirar a la caja del battlefield (letterbox centrado). */
-  object-fit: contain;
+}
+.battle-pixi {
+  display: block;
+  image-rendering: pixelated;
 }
 /* Cuando Pixi renderiza el campo, el fondo y fighters DOM se retiran */
 .battlefield.pixi-field-active .battle-bg,
