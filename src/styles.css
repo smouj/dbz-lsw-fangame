@@ -3299,11 +3299,14 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 .stage-btn-a { border-color: var(--ki-blue); color: var(--ki-blue); }
 .stage-btn-b { border-color: var(--hp-red); color: var(--hp-red); }
 
-/* ─── Stage Attack: embestida al acertar una dirección (desplaza al rival) ─── */
+/* ─── Stage Attack: embestida al acertar una dirección (desplaza al rival) ───
+   El avance se calcula en JS (var --lunge-px) según la distancia real entre
+   luchadores para que el atacante NUNCA invada el espacio del rival: en
+   CLOSE (ambos FRONT) el avance es mínimo (16px). */
 .stage-fighter.lunging { animation: stage-lunge .58s steps(7, end); }
 @keyframes stage-lunge {
   0% { transform: translateX(0); }
-  45% { transform: translateX(38px); }
+  45% { transform: translateX(var(--lunge-px, 30px)); }
   100% { transform: translateX(0); }
 }
 
@@ -3786,8 +3789,8 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 .card-fx.scene-travel.fx-command.player .fx-actor { animation: fx-rush-body-player .7s steps(9, end) both; }
 .card-fx.scene-travel.fx-damage.enemy .fx-actor,
 .card-fx.scene-travel.fx-command.enemy .fx-actor { animation: fx-rush-body-enemy .7s steps(9, end) both; }
-@keyframes fx-rush-body-player { 0% { transform: translateX(0); } 45% { transform: translateX(22vw); } 100% { transform: translateX(0); } }
-@keyframes fx-rush-body-enemy { 0% { transform: translateX(0); } 45% { transform: translateX(-22vw); } 100% { transform: translateX(0); } }
+@keyframes fx-rush-body-player { 0% { transform: translateX(0); } 45% { transform: translateX(14vw); } 100% { transform: translateX(0); } }
+@keyframes fx-rush-body-enemy { 0% { transform: translateX(0); } 45% { transform: translateX(-14vw); } 100% { transform: translateX(0); } }
 .fx-swing {
   position: absolute; top: 42%; left: 50%; width: 30vw; height: 10vw; margin-left: -15vw;
   border-radius: 50%; border: 3px solid rgba(255,255,255,.65); border-top-color: transparent;
@@ -7247,6 +7250,18 @@ button:focus-visible, .chapter-node:focus-visible {
 .dev-manifest-link:hover { text-decoration: underline; }
 .dev-asset-label { font-size: 9px; color: #6b7484; margin-top: 4px; text-align: center; word-break: break-all; }
 .dev-pose-row { display: grid; grid-template-columns: repeat(auto-fill, minmax(44px, 1fr)); gap: 4px; margin-top: 6px; }
+
+/* Poses section (fuera del grid de assets para que no se aplaste) */
+.dev-poses-section { margin-top: 14px; border-top: 1px solid #262b33; padding-top: 12px; }
+.dev-poses-section h3 { font-size: 13px; color: #cdd6e2; margin: 0 0 10px; }
+.dev-pose-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(76px, 1fr));
+  gap: 8px;
+}
+.dev-pose-grid .dev-asset-cell { padding: 6px; }
+.dev-pose-grid .dev-asset-frame { height: 64px; }
+.dev-pose-grid .dev-asset-label { word-break: keep-all; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: 10px; color: #8a93a3; }
 
 /* Cards */
 .dev-filters { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-bottom: 14px; }

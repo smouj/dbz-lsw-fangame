@@ -217,9 +217,13 @@ export function PixelArtModule() {
       setColor(hex);
       return;
     }
-    const [r, g, b, a] = tool === 'eraser' ? [0, 0, 0, 0] : hexToRgba(color);
-    ctx.fillStyle = `rgba(${r},${g},${b},${a / 255})`;
-    ctx.fillRect(x, y, 1, 1);
+    if (tool === 'eraser') {
+      ctx.clearRect(x, y, 1, 1);
+    } else {
+      const [r, g, b, a] = hexToRgba(color);
+      ctx.fillStyle = `rgba(${r},${g},${b},${a / 255})`;
+      ctx.fillRect(x, y, 1, 1);
+    }
     setDirty(true);
     drawDisplay();
   }

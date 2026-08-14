@@ -139,17 +139,17 @@ export function CharactersModule() {
                   <div className="dev-asset-label">Manifest (combate)</div>
                 </div>
               )}
-              {spriteDir && (
-                <div className="dev-asset-cell">
-                  <div className="dev-asset-label">Poses</div>
-                  <div className="dev-pose-row">
-                    {(['idle', 'move_front', 'move_back', 'guard', 'attack_fwd', 'attack_ud', 'hurt', 'beam_charge', 'beam_fire'] as const).map(p => (
-                      <AssetCell key={p} label={p} src={spriteFrameUrl(form.id, `${spriteDir}_${p}_00.png`)} small />
-                    ))}
-                  </div>
-                </div>
-              )}
             </div>
+            {spriteDir && (
+              <div className="dev-poses-section">
+                <h3>Poses (combate)</h3>
+                <div className="dev-pose-grid">
+                  {(['idle', 'move_front', 'move_back', 'guard', 'attack_fwd', 'attack_ud', 'hurt', 'beam_charge', 'beam_fire'] as const).map(p => (
+                    <AssetCell key={p} label={p} src={spriteFrameUrl(form.id, `${spriteDir}_${p}_00.png`)} small />
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>

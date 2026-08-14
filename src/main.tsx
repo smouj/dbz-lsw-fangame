@@ -688,6 +688,14 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
       next();
     }, gbcMs(frames));
   };
+  // Desplazamiento del lunge del QTE según la distancia real entre luchadores:
+  // FAR/MID/CLOSE (resolveRelativeDistance). El lunge NUNCA debe invadir el
+  // espacio del rival — en CLOSE (FRONT+FRONT) el avance es mínimo.
+  const lungePx = (a: BattlePosition, b: BattlePosition): number => {
+    const dist = resolveRelativeDistance(a, b);
+    return dist === 'CLOSE' ? 16 : dist === 'MID' ? 30 : 44;
+  };
+
   // Posición del número de daño sobre el sprite del objetivo (px relativos al campo)
   const dmgPos = (side: 'player' | 'enemy') => {
     const el = side === 'enemy' ? enemyRef.current : playerRef.current;
@@ -2504,6 +2512,18 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
             <>
               <div className="fx-scene-label">SKILL</div>
               {renderCardFxActor('travel')}
+              {/* El defensor se muestra DURANTE el travel (guard): la embestida
+                  del atacante se dirige visiblemente hacia él — sincronía real
+                  de pegar/recibir, no un golpe hacia el vacío. */}
+              <div className="fx-fighter fx-target">
+                {cardFx.side === 'player'
+                  ? (spriteManifestUrl(enemyFormId)
+                      ? <FighterSprite formId={enemyFormId} pose="guard" side="right" scale={14} />
+                      : <CharacterSprite formId={enemyFormId} className="fx-sprite" height={200} side="right" />)
+                  : (spriteManifestUrl(playerFormId)
+                      ? <FighterSprite formId={playerFormId} pose="guard" side="left" scale={14} />
+                      : <CharacterSprite formId={playerFormId} className="fx-sprite" height={200} side="left" />)}
+              </div>
               {cardFx.card.type === 'beam' ? <div className="fx-beam-travel" /> : <div className="fx-rush-trail" />}
               {cardFx.card.type === 'damage' && <div className="fx-swing" />}
             </>
@@ -2644,7 +2664,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
           {/* Anchors por lado: LEFT (jugador) y RIGHT (enemigo) usan X
               reflejadas — BACK apunta al borde propio de cada lado (spec) */}
           <div ref={playerRef} className={`fighter-container player ${POSITION_DATA[player.battlePos].altitude.toLowerCase()} ${POSITION_DATA[player.battlePos].depth.toLowerCase()} ${phase === 'stageInput' ? (qteFrozen ? 'qte-frozen' : qteIsDir ? 'qte-lunge' : 'qte-idle') : ''}`}
-            style={{ left: `${anchorFor(player.battlePos, 'LEFT').x}%`, top: `${anchorFor(player.battlePos, 'LEFT').y}%` }}>
+            style={{ left: `${anchorFor(player.battlePos, 'LEFT').x}%`, top: `${anchorFor(player.battlePos, 'LEFT').y}%`, ['--lunge-px' as string]: `${lungePx(player.battlePos, enemy.battlePos)}px` }}>
             {qtePose === 'idle' && overworldUrl(playerFormId) && phase !== 'stageInput'
               ? <img src={overworldUrl(playerFormId)!} alt="" className="overworld-sprite" style={{ transform: `scaleX(${facingFlip(playerFormId, 'left')})` }} />
               : (spriteManifestUrl(playerFormId)
@@ -2654,11 +2674,13 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
           </div>
           <div ref={enemyRef} className={`fighter-container enemy ${POSITION_DATA[enemy.battlePos].altitude.toLowerCase()} ${POSITION_DATA[enemy.battlePos].depth.toLowerCase()}`}
             style={{ left: `${anchorFor(enemy.battlePos, 'RIGHT').x}%`, top: `${anchorFor(enemy.battlePos, 'RIGHT').y}%` }}>
-            {enemyPose === 'idle' && overworldUrl(enemyFormId)
-              ? <img src={overworldUrl(enemyFormId)!} alt="" className="overworld-sprite" style={{ transform: `scaleX(${facingFlip(enemyFormId, 'right')})` }} />
-              : (spriteManifestUrl(enemyFormId)
-                  ? <FighterSprite formId={enemyFormId} pose={enemyPose} side="right" scale={15} flash={flashEnemy} />
-                  : <CharacterSprite formId={enemyFormId} className="sheet-sprite" height={152} side="right" />)}
+            {phase === 'stageInput' && spriteManifestUrl(enemyFormId)
+              ? <FighterSprite formId={enemyFormId} pose="idle" side="right" scale={15} />
+              : (enemyPose === 'idle' && overworldUrl(enemyFormId)
+                  ? <img src={overworldUrl(enemyFormId)!} alt="" className="overworld-sprite" style={{ transform: `scaleX(${facingFlip(enemyFormId, 'right')})` }} />
+                  : (spriteManifestUrl(enemyFormId)
+                      ? <FighterSprite formId={enemyFormId} pose={enemyPose} side="right" scale={15} flash={flashEnemy} />
+                      : <CharacterSprite formId={enemyFormId} className="sheet-sprite" height={152} side="right" />))}
             <div className="fighter-position-tag hidden">{enemy.battlePos.replace('_', ' ')}</div>
           </div>
         </div>
