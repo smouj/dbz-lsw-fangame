@@ -44,6 +44,15 @@ MIRRORED_COMBAT_DIRS = {
 # Chibis verificados en vivo mirando a la DERECHA (Battle Lab, sesión previa)
 KNOWN_RIGHT = {'goku_base_ow.png', 'young_gohan_base_ow.png'}
 
+# Chibis YA normalizados a la derecha en el commit 6c06ffa (personajes cuyo
+# combate se espejó: comparten orientación con su sprite de combate).
+NORMALIZED_RIGHT = {
+    'goku_super_saiyan_ow.png', 'goku_super_saiyan_3_ow.png',
+    'gohan_super_saiyan_1_2_ow.png', 'goten_super_saiyan_ow.png',
+    'gotenks_super_saiyan_ow.png', 'gotenks_super_saiyan_3_ow.png',
+    'piccolo_base_ow.png', 'super_buu_base_ow.png', 'trunks_super_saiyan_ow.png',
+}
+
 
 def load_rgba(path):
     from PIL import Image
@@ -211,6 +220,8 @@ def main() -> None:
         # (se resuelve tras primera pasada; aquí solo informativo)
         if fname in KNOWN_RIGHT and decision == 'LEFT':
             decision = 'RIGHT(known)'
+        if fname in NORMALIZED_RIGHT and decision.startswith('LEFT'):
+            decision = 'RIGHT(norm6c06ffa)'
         if decision.startswith('LEFT'):
             lefts.append(fname)
         details.append((fname, gv, vr, vl, per, decision))

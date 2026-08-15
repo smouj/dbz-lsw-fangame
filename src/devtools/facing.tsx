@@ -21,15 +21,14 @@ import { OVERWORLD_FILES } from '../data/overworld';
 const OW_BASE = '/assets/overworld/panel_sprites';
 
 // Sugerencias de orientación: SOLO donde el análisis objetivo fue
-// consistente (voto multi-corte de silueta + sanity check completo).
+// consistente (voto multi-corte de silueta + sanity check completo) y el
+// chibi NO está ya normalizado (los 9 de personajes con combate espejado
+// ya miran a la derecha desde 6c06ffa).
 // 'left' = probablemente mira a la izquierda (verificar y voltear).
 const SUGGEST_LEFT: Record<string, boolean> = {
   'burter_base_ow.png': true,
   'cell_jr_base_ow.png': true,
   'ginyu_base_ow.png': true,
-  'gohan_super_saiyan_1_2_ow.png': true,
-  'goku_super_saiyan_3_ow.png': true,
-  'gotenks_super_saiyan_ow.png': true,
   'guldo_base_ow.png': true,
   'trunks_base_ow.png': true,
 };
