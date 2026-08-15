@@ -26,7 +26,24 @@ export function SpritesModule() {
   const form = FORMS[formId];
   const dir = spriteDirFor(formId);
   const manifestUrl = spriteManifestUrl(formId);
-  const poses = ['idle', 'move_front', 'move_back', 'guard', 'attack_fwd', 'attack_ud', 'hurt', 'beam_charge', 'beam_fire'];
+  // Poses del manifest (dinámico): incluye beam_ray/beam_ray_tip/gather_power
+  // cuando existen. Las poses base SIEMPRE se listan primero (orden canónico).
+  const [poses, setPoses] = useState<string[]>(['idle', 'move_front', 'move_back', 'guard', 'attack_fwd', 'attack_ud', 'hurt', 'beam_charge', 'beam_fire']);
+  useEffect(() => {
+    if (!manifestUrl) return;
+    let cancelled = false;
+    fetch(manifestUrl).then(r => r.ok ? r.json() : null).then((m: Record<string, unknown> | null) => {
+      if (cancelled || !m) return;
+      const base = ['idle', 'move_front', 'move_back', 'guard', 'attack_fwd', 'attack_ud', 'hurt', 'beam_charge', 'beam_fire'];
+      const extras = Object.keys(m).filter(p => !base.includes(p));
+      setPoses([...base, ...extras]);
+    }).catch(() => {});
+    return () => { cancelled = true; };
+  }, [manifestUrl]);
+  // Si la pose seleccionada no existe en el manifest, volver a idle.
+  useEffect(() => {
+    if (poses.length > 0 && !poses.includes(pose)) setPose('idle');
+  }, [poses, pose]);
   const src = dir ? spriteFrameUrl(formId, `${dir}_${pose}_00.png`) : undefined;
   const portrait = BATTLE_PORTRAITS[formId];
   const overworld = overworldUrl(formId);
