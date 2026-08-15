@@ -1892,52 +1892,52 @@
       }
     ]
   },
-  "vegito_base": {
+  "vegito_ssj": {
     "count": 6,
     "frames": [
       {
-        "name": "vegito_base__effect_00",
-        "file": "vegito_base/vegito_base__effect_00.png",
+        "name": "vegito_ssj__effect_00",
+        "file": "vegito_ssj/vegito_ssj__effect_00.png",
         "w": 24,
         "h": 16,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "005.png"
       },
       {
-        "name": "vegito_base__effect_01",
-        "file": "vegito_base/vegito_base__effect_01.png",
+        "name": "vegito_ssj__effect_01",
+        "file": "vegito_ssj/vegito_ssj__effect_01.png",
         "w": 24,
         "h": 16,
         "correction": "recovered_2color_source_component",
         "source_frame": "006.png"
       },
       {
-        "name": "vegito_base__effect_02",
-        "file": "vegito_base/vegito_base__effect_02.png",
+        "name": "vegito_ssj__effect_02",
+        "file": "vegito_ssj/vegito_ssj__effect_02.png",
         "w": 13,
         "h": 16,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "007.png"
       },
       {
-        "name": "vegito_base__effect_03",
-        "file": "vegito_base/vegito_base__effect_03.png",
+        "name": "vegito_ssj__effect_03",
+        "file": "vegito_ssj/vegito_ssj__effect_03.png",
         "w": 14,
         "h": 15,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "008.png"
       },
       {
-        "name": "vegito_base__effect_04",
-        "file": "vegito_base/vegito_base__effect_04.png",
+        "name": "vegito_ssj__effect_04",
+        "file": "vegito_ssj/vegito_ssj__effect_04.png",
         "w": 16,
         "h": 12,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "036.png"
       },
       {
-        "name": "vegito_base__effect_05",
-        "file": "vegito_base/vegito_base__effect_05.png",
+        "name": "vegito_ssj__effect_05",
+        "file": "vegito_ssj/vegito_ssj__effect_05.png",
         "w": 39,
         "h": 12,
         "correction": "recovered_uncovered_source_component",
