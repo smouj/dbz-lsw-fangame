@@ -247,5 +247,43 @@
     "h": 41
    }
   ]
+ },
+ "beam_ray": {
+  "frame_count": 3,
+  "fps": 7,
+  "loop": false,
+  "frames": [
+   {
+    "name": "young_gohan_super_saiyan_2_beam_ray_00",
+    "file": "young_gohan_super_saiyan_2_beam_ray_00.png",
+    "w": 117,
+    "h": 42
+   },
+   {
+    "name": "young_gohan_super_saiyan_2_beam_ray_01",
+    "file": "young_gohan_super_saiyan_2_beam_ray_01.png",
+    "w": 114,
+    "h": 41
+   },
+   {
+    "name": "young_gohan_super_saiyan_2_beam_ray_02",
+    "file": "young_gohan_super_saiyan_2_beam_ray_02.png",
+    "w": 113,
+    "h": 42
+   }
+  ]
+ },
+ "beam_ray_tip": {
+  "frame_count": 1,
+  "fps": 7,
+  "loop": false,
+  "frames": [
+   {
+    "name": "young_gohan_super_saiyan_2_beam_ray_tip_00",
+    "file": "young_gohan_super_saiyan_2_beam_ray_tip_00.png",
+    "w": 45,
+    "h": 25
+   }
+  ]
  }
 }

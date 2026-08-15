@@ -235,5 +235,24 @@
     "h": 40
    }
   ]
+ },
+ "beam_ray": {
+  "frame_count": 2,
+  "fps": 7,
+  "loop": false,
+  "frames": [
+   {
+    "name": "goten_base_beam_ray_00",
+    "file": "goten_base_beam_ray_00.png",
+    "w": 119,
+    "h": 40
+   },
+   {
+    "name": "goten_base_beam_ray_01",
+    "file": "goten_base_beam_ray_01.png",
+    "w": 113,
+    "h": 40
+   }
+  ]
  }
 }

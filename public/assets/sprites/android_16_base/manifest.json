@@ -259,5 +259,37 @@
     "h": 42
    }
   ]
+ },
+ "beam_ray": {
+  "frame_count": 2,
+  "fps": 7,
+  "loop": false,
+  "frames": [
+   {
+    "name": "android_16_base_beam_ray_00",
+    "file": "android_16_base_beam_ray_00.png",
+    "w": 118,
+    "h": 42
+   },
+   {
+    "name": "android_16_base_beam_ray_01",
+    "file": "android_16_base_beam_ray_01.png",
+    "w": 116,
+    "h": 41
+   }
+  ]
+ },
+ "beam_ray_tip": {
+  "frame_count": 1,
+  "fps": 7,
+  "loop": false,
+  "frames": [
+   {
+    "name": "android_16_base_beam_ray_tip_00",
+    "file": "android_16_base_beam_ray_tip_00.png",
+    "w": 47,
+    "h": 21
+   }
+  ]
  }
 }

@@ -289,5 +289,18 @@
     "h": 43
    }
   ]
+ },
+ "beam_ray": {
+  "frame_count": 1,
+  "fps": 7,
+  "loop": false,
+  "frames": [
+   {
+    "name": "recoome_base_beam_ray_00",
+    "file": "recoome_base_beam_ray_00.png",
+    "w": 116,
+    "h": 41
+   }
+  ]
  }
 }

@@ -247,5 +247,24 @@
     "h": 36
    }
   ]
+ },
+ "beam_ray": {
+  "frame_count": 2,
+  "fps": 7,
+  "loop": false,
+  "frames": [
+   {
+    "name": "nappa_base_beam_ray_00",
+    "file": "nappa_base_beam_ray_00.png",
+    "w": 120,
+    "h": 54
+   },
+   {
+    "name": "nappa_base_beam_ray_01",
+    "file": "nappa_base_beam_ray_01.png",
+    "w": 116,
+    "h": 36
+   }
+  ]
  }
 }

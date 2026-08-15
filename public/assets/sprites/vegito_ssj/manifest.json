@@ -271,5 +271,49 @@
     "h": 47
    }
   ]
+ },
+ "beam_ray": {
+  "frame_count": 3,
+  "fps": 7,
+  "loop": false,
+  "frames": [
+   {
+    "name": "vegito_ssj_beam_ray_00",
+    "file": "vegito_ssj_beam_ray_00.png",
+    "w": 121,
+    "h": 54
+   },
+   {
+    "name": "vegito_ssj_beam_ray_01",
+    "file": "vegito_ssj_beam_ray_01.png",
+    "w": 120,
+    "h": 47
+   },
+   {
+    "name": "vegito_ssj_beam_ray_02",
+    "file": "vegito_ssj_beam_ray_02.png",
+    "w": 118,
+    "h": 44
+   }
+  ]
+ },
+ "beam_ray_tip": {
+  "frame_count": 2,
+  "fps": 7,
+  "loop": false,
+  "frames": [
+   {
+    "name": "vegito_ssj_beam_ray_tip_00",
+    "file": "vegito_ssj_beam_ray_tip_00.png",
+    "w": 63,
+    "h": 28
+   },
+   {
+    "name": "vegito_ssj_beam_ray_tip_01",
+    "file": "vegito_ssj_beam_ray_tip_01.png",
+    "w": 48,
+    "h": 23
+   }
+  ]
  }
 }
