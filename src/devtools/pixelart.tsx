@@ -13,7 +13,7 @@ import {
   fetchManifest, saveToProject, dataUrlToBase64, downloadBlob, canvasToPngDataUrl,
 } from './spriteEditing';
 
-type Tool = 'pencil' | 'eraser' | 'picker';
+type Tool = 'pencil' | 'eraser' | 'picker' | 'colorEraser';
 
 const PALETTE = [
   '#000000', '#ffffff', '#9ca1a8', '#5a5e66',
@@ -50,6 +50,10 @@ export function PixelArtModule() {
   const [tool, setTool] = useState<Tool>('pencil');
   const [color, setColor] = useState('#d06830');
   const [grid, setGrid] = useState(true);
+
+  // Borrador por color: referencia del color capturado al empezar el trazo
+  const colorRef = useRef<[number, number, number] | null>(null);
+  const COLOR_TOL = 48; // tolerancia RGB para coincidencia de color
 
   const [dirty, setDirty] = useState(false);
   const [status, setStatus] = useState<string | null>(null);
@@ -219,6 +223,17 @@ export function PixelArtModule() {
     }
     if (tool === 'eraser') {
       ctx.clearRect(x, y, 1, 1);
+    } else if (tool === 'colorEraser') {
+      // Solo borra píxeles del color capturado al iniciar el trazo
+      const ref = colorRef.current;
+      if (!ref) return;
+      const d = ctx.getImageData(x, y, 1, 1).data;
+      if (d[3] > 40 &&
+          Math.abs(d[0] - ref[0]) <= COLOR_TOL &&
+          Math.abs(d[1] - ref[1]) <= COLOR_TOL &&
+          Math.abs(d[2] - ref[2]) <= COLOR_TOL) {
+        ctx.clearRect(x, y, 1, 1);
+      }
     } else {
       const [r, g, b, a] = hexToRgba(color);
       ctx.fillStyle = `rgba(${r},${g},${b},${a / 255})`;
@@ -233,6 +248,15 @@ export function PixelArtModule() {
     if (!p) return;
     try { e.currentTarget.setPointerCapture(e.pointerId); } catch { /* pointer sintético */ }
     paintingRef.current = true;
+    if (tool === 'colorEraser') {
+      // Capturar el color bajo el cursor como referencia del trazo
+      const nc = nativeRef.current;
+      const ctx = nc?.getContext('2d');
+      if (nc && ctx) {
+        const d = ctx.getImageData(p.x, p.y, 1, 1).data;
+        colorRef.current = d[3] > 40 ? [d[0], d[1], d[2]] : null;
+      }
+    }
     snapshot();
     paintAt(p.x, p.y);
   }
@@ -249,6 +273,77 @@ export function PixelArtModule() {
     setFile(newName ? `${newName}.png` : 'custom.png');
     setBlankVersion(v => v + 1);
     setStatus(null);
+  }
+
+  // ─── Flip (orientación) ────────────────────────────────────
+  function flipHorizontal() {
+    const nc = nativeRef.current;
+    if (!nc) return;
+    const ctx = nc.getContext('2d');
+    if (!ctx) return;
+    snapshot();
+    const img = ctx.getImageData(0, 0, nc.width, nc.height);
+    const d = img.data, w = nc.width, h = nc.height;
+    for (let y = 0; y < h; y++) {
+      for (let x = 0; x < Math.floor(w / 2); x++) {
+        const a = (y * w + x) * 4, b = (y * w + (w - 1 - x)) * 4;
+        for (let k = 0; k < 4; k++) { const t = d[a + k]; d[a + k] = d[b + k]; d[b + k] = t; }
+      }
+    }
+    ctx.putImageData(img, 0, 0);
+    setDirty(true);
+    drawDisplay();
+    setStatus('↔ Frame volteado horizontalmente');
+  }
+
+  function flipVertical() {
+    const nc = nativeRef.current;
+    if (!nc) return;
+    const ctx = nc.getContext('2d');
+    if (!ctx) return;
+    snapshot();
+    const img = ctx.getImageData(0, 0, nc.width, nc.height);
+    const d = img.data, w = nc.width, h = nc.height;
+    for (let y = 0; y < Math.floor(h / 2); y++) {
+      for (let x = 0; x < w; x++) {
+        const a = (y * w + x) * 4, b = ((h - 1 - y) * w + x) * 4;
+        for (let k = 0; k < 4; k++) { const t = d[a + k]; d[a + k] = d[b + k]; d[b + k] = t; }
+      }
+    }
+    ctx.putImageData(img, 0, 0);
+    setDirty(true);
+    drawDisplay();
+    setStatus('↕ Frame volteado verticalmente');
+  }
+
+  // ─── Limpiar por color (todo el frame) ─────────────────────
+  function eraseColorAll() {
+    const nc = nativeRef.current;
+    if (!nc) return;
+    const ctx = nc.getContext('2d');
+    if (!ctx) return;
+    const [r, g, b] = hexToRgba(color);
+    const img = ctx.getImageData(0, 0, nc.width, nc.height);
+    const d = img.data;
+    let n = 0;
+    for (let i = 0; i < d.length; i += 4) {
+      if (d[i + 3] > 40 &&
+          Math.abs(d[i] - r) <= COLOR_TOL &&
+          Math.abs(d[i + 1] - g) <= COLOR_TOL &&
+          Math.abs(d[i + 2] - b) <= COLOR_TOL) {
+        d[i + 3] = 0;
+        n++;
+      }
+    }
+    if (n > 0) {
+      snapshot();
+      ctx.putImageData(img, 0, 0);
+      setDirty(true);
+      drawDisplay();
+      setStatus(`🧽 Borrados ${n} px del color ${color} (tolerancia ${COLOR_TOL})`);
+    } else {
+      setStatus(`Sin píxeles del color ${color} en este frame`);
+    }
   }
 
   function selectExisting(f: string, w: number, h: number) {
@@ -329,9 +424,17 @@ export function PixelArtModule() {
           <label>Herramienta</label>
           <div className="dev-tool-row">
             <button className={`dev-tool ${tool === 'pencil' ? 'active' : ''}`} onClick={() => setTool('pencil')} title="Pincel">🖊 Pincel</button>
-            <button className={`dev-tool ${tool === 'eraser' ? 'active' : ''}`} onClick={() => setTool('eraser')} title="Borrador">🧽 Borrar</button>
+            <button className={`dev-tool ${tool === 'eraser' ? 'active' : ''}`} onClick={() => setTool('eraser')} title="Borrador (transparente)">🧽 Borrar</button>
+            <button className={`dev-tool ${tool === 'colorEraser' ? 'active' : ''}`} onClick={() => setTool('colorEraser')} title="Borrador por color: borra solo el color que capturas al clicar">🎯 Borrar color</button>
             <button className={`dev-tool ${tool === 'picker' ? 'active' : ''}`} onClick={() => setTool('picker')} title="Cuentagotas">💧 Tomar</button>
           </div>
+
+          {tool === 'colorEraser' && (
+            <div className="dev-tool-hint">
+              🎯 Clic en un píxel: borra todos los del <strong>mismo color</strong> (tolerancia {COLOR_TOL}) al arrastrar.
+              <br/>También puedes elegir el color en la paleta y usar <strong>Limpiar color</strong>.
+            </div>
+          )}
 
           <label>Color</label>
           <div className="dev-palette">
@@ -366,14 +469,19 @@ export function PixelArtModule() {
             <button className="dev-btn dev-btn-primary" onClick={savePng} disabled={!file && !newBlank}>💾 Guardar al proyecto</button>
             <button className="dev-btn" onClick={exportPng} disabled={!file && !newBlank}>↓ Exportar PNG</button>
           </div>
-          <p className="dev-hint">Pista: crea un frame nuevo aquí (píntalo y guárdalo), luego añádelo a una pose desde Animation Studio.</p>
+          <div className="dev-pixel-actions dev-pixel-actions-secondary">
+            <button className="dev-btn" onClick={flipHorizontal} disabled={!file && !newBlank} title="Voltear horizontalmente (cambiar orientación izquierda/derecha)">↔ Voltear H</button>
+            <button className="dev-btn" onClick={flipVertical} disabled={!file && !newBlank} title="Voltear verticalmente">↕ Voltear V</button>
+            <button className="dev-btn" onClick={eraseColorAll} disabled={!file && !newBlank} title={`Borrar todos los píxeles del color seleccionado (${color})`}>🧽 Limpiar color</button>
+          </div>
+          <p className="dev-hint">Pista: voltear cambia la orientación del frame (todos los sprites deben mirar a la derecha). Usa “Limpiar color” para quitar píxeles de color de fondo de golpe.</p>
         </div>
 
         <div className="dev-pixel-stage">
           <div className="dev-pixel-toolbar">
             <button className="dev-anim-btn" onClick={undo} disabled={undoRef.current.length === 0} title="Deshacer">↶</button>
             <button className="dev-anim-btn" onClick={redo} disabled={redoRef.current.length === 0} title="Rehacer">↷</button>
-            <span className="dev-dim">clic + arrastrar para pintar · {tool === 'picker' ? 'clic para tomar color' : tool === 'eraser' ? 'borra píxeles' : 'pinta píxeles'}</span>
+            <span className="dev-dim">clic + arrastrar para pintar · {tool === 'picker' ? 'clic para tomar color' : tool === 'eraser' ? 'borra a transparente' : tool === 'colorEraser' ? 'borra solo el color capturado' : 'pinta píxeles'}</span>
           </div>
           <div className="dev-checker-bg dev-pixel-canvas-wrap">
             <canvas

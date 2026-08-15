@@ -7,39 +7,23 @@ import { spriteDirFor } from './spriteManifest';
 //   · El luchador en el lado IZQUIERDO mira a la DERECHA
 //   · El luchador en el lado DERECHO mira a la IZQUIERDA
 //
-// El paquete de sprites NO tiene orientación nativa uniforme:
-// análisis de la secuencia attack_forward (windup → golpe) de las
-// 44 formas determina la dirección NATIVA del golpe de cada una.
-// El flip se computa por forma + lado del personaje.
+// NORMALIZACIÓN CANÓNICA (2026-08-15): TODOS los sprites nativos miran a la
+// DERECHA. Los 9 directorios que golpeaban nativamente a la izquierda
+// (goku_super_saiyan, goku_super_saiyan_3, gohan_super_saiyan_1_2,
+// goten_super_saiyan, gotenks_super_saiyan, gotenks_super_saiyan_3,
+// piccolo_base, super_buu_base, kid_trunks_super_saiyan) fueron espejados
+// horizontalmente con scripts/normalize-facing-right.py, así que el golpe
+// nativo de las 44 formas es 'right'. El flip se computa por lado del
+// personaje únicamente.
 // ═══════════════════════════════════════════════════════════
 
 export type StrikeDir = 'left' | 'right';
 export type BattleSide = 'left' | 'right';
 
-// Dirección NATIVA del golpe por slug de sprite (44 formas, 2026-08-11)
-// Fuente: docs/audit/native-strike-dir.json (análisis windup/golpe)
-export const NATIVE_STRIKE_DIR: Record<string, StrikeDir> = {
-  // Golpe nativo a la IZQUIERDA (9): necesitan flip cuando están a la izquierda
-  goku_super_saiyan: 'left',
-  goku_super_saiyan_3: 'left',
-  gohan_super_saiyan_1_2: 'left',
-  goten_super_saiyan: 'left',
-  gotenks_super_saiyan: 'left',
-  gotenks_super_saiyan_3: 'left',
-  piccolo_base: 'left',
-  super_buu_base: 'left',
-  kid_trunks_super_saiyan: 'left',  // verificado visual 2026-08-12 (puño a la izq)
-};
-
-// Golpe nativo a la DERECHA (35) — el resto por defecto:
-// android_16_base, android_17_base, android_18_base, android_19_base,
-// android_20_base, burter_base, buu_base, buu_gohan_absorbed,
-// buu_gotenks_absorbed, cell_imperfect_form, cell_jr_base, cell_perfect,
-// cell_semi_perfect_form, frieza_base, future_trunks_base, ginyu_base,
-// ginyu_gokus_body, gohan_ultimate, goku_base, goku_super_saiyan_2,
-// goten_base, guldo_base, jeice_base, kid_buu_base, krillin_base, nappa_base,
-// recoome_base, trunks_base, vegeta_base, vegeta_super_saiyan_majin,
-// young_gohan_base, young_gohan_super_saiyan, young_gohan_super_saiyan_2
+// Dirección NATIVA del golpe por slug de sprite (44 formas).
+// Todas 'right' tras la normalización 2026-08-15 (antes 9 eran 'left' y
+// necesitaban flip compensatorio — docs/audit/native-strike-dir.json).
+export const NATIVE_STRIKE_DIR: Record<string, StrikeDir> = {};
 
 const DEFAULT_STRIKE: StrikeDir = 'right';
 
@@ -60,18 +44,13 @@ export function facingFlip(formId: string, side: BattleSide): number {
 }
 
 // ─── Compatibilidad (vista de retratos/idle con sheets antiguos) ───
-const FLIP_TO_RIGHT: Record<string, boolean> = {
-  'android-20-dr-gero': true, 'burter': true, 'buu': true, 'buu-gohan': true,
-  'buu-gotenks': true, 'cell-imperfect-form': true, 'cell-perfect': true,
-  'cell-semi-perfect-form': true, 'frieza': true, 'gohan-super-saiyan-1-2': true,
-  'gohan-ultimate': true, 'goku-super-saiyan': true, 'goku-super-saiyan-2': true,
-  'goku-super-saiyan-3': true, 'gotenks-super-saiyan': true, 'gotenks-super-saiyan-3': true,
-  'kid-buu': true, 'krillin': true, 'piccolo': true, 'super-buu': true,
-  'trunks': true, 'vegeta-super-saiyan-majin': true, 'young-gohan-super-saiyan': true,
-  'young-gohan-super-saiyan-2': true,
-};
+// Tras la normalización 2026-08-15 TODOS los idles nativos (combate + menú)
+// miran a la derecha, así que needsFlip siempre devuelve false.
+// (Antes FLIP_TO_RIGHT marcaba 24 sheets, pero solo 9 idles de menú eran
+// realmente espejo del combate — los otros 15 se mostraban INVERTIDOS en
+// la selección de personaje. Se espejaron los 9 y se eliminó la tabla.)
+const FLIP_TO_RIGHT: Record<string, boolean> = {};
 
 export function needsFlip(sheet: string): boolean {
-  const key = sheet.replace(/\.png$/, '');
-  return FLIP_TO_RIGHT[key] ?? false;
+  return false;
 }

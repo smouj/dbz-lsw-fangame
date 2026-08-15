@@ -17,6 +17,7 @@ import { ResearchModule } from './research';
 import { AnimationModule } from './animation';
 import { PixelArtModule } from './pixelart';
 import { HudModule } from './hud';
+import { FacingModule } from './facing';
 // Los módulos Pixi se cargan bajo demanda (code-split): pixi.js (~790KB) solo
 // se descarga al abrir el Pixi Lab / Pixi Seq, no en el bundle principal.
 const PixiModule = lazy(() => import('./pixi').then((m) => ({ default: m.PixiModule })));
@@ -24,7 +25,7 @@ const PixiSequenceModule = lazy(() => import('./pixiSequence').then((m) => ({ de
 
 export type DevModuleId =
   | 'dashboard' | 'characters' | 'cards' | 'sprites' | 'animation'
-  | 'pixelart' | 'hud'
+  | 'pixelart' | 'hud' | 'facing'
   | 'battlelab' | 'story' | 'validation' | 'research' | 'positions'
   | 'pixi' | 'pixiSequence';
 
@@ -42,6 +43,7 @@ export const DEV_MODULES: DevModuleDef[] = [
   { id: 'sprites', label: 'Sprites', icon: '▦', desc: 'Inspector de sprites (frame, bbox, alpha)' },
   { id: 'animation', label: 'Animation', icon: '▶', desc: 'Timeline real + editor de frames/animaciones (fps/loop/orden)' },
   { id: 'pixelart', label: 'Pixel Art', icon: '✎', desc: 'Editor de píxeles: pinta/borra/corrige frames y guarda al proyecto' },
+  { id: 'facing', label: 'Facing', icon: '↔', desc: 'Orientación de chibis overworld: voltea y guarda (todos a la derecha)' },
   { id: 'hud', label: 'HUD', icon: '▤', desc: 'Visualizador del gameplay + editor del tema HUD (colores/escala/tipografía)' },
   { id: 'battlelab', label: 'Battle Lab', icon: '⚔', desc: 'Combate instantáneo real (Versus/Historia) + depurador' },
   { id: 'positions', label: 'Positions', icon: '⇄', desc: 'Laboratorio de posiciones Air/Ground × Front/Back' },
@@ -104,6 +106,7 @@ export function DevStudio({ onExit, onLaunchBattle }: {
           {module === 'sprites' && <SpritesModule />}
           {module === 'animation' && <AnimationModule />}
           {module === 'pixelart' && <PixelArtModule />}
+          {module === 'facing' && <FacingModule />}
           {module === 'hud' && <HudModule />}
           {module === 'battlelab' && <BattleLabModule onLaunchBattle={onLaunchBattle} />}
           {module === 'positions' && <PositionsModule />}

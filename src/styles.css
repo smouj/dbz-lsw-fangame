@@ -7649,3 +7649,55 @@ button:focus-visible, .chapter-node:focus-visible {
 .dev-hud-color input[type='text'], .dev-hud-size { width: 82px; background: #0e1013; border: 1px solid #262b33; color: #cdd6e2; padding: 5px 7px; border-radius: 6px; font-family: ui-monospace, monospace; font-size: 11px; }
 .dev-hud-reset-var { width: 26px; height: 26px; border: 1px solid #262b33; border-radius: 6px; background: #0e1013; color: #8a93a3; cursor: pointer; font-size: 12px; }
 .dev-hud-reset-var:hover { color: #fff; border-color: #3a4250; }
+
+/* ── Dev Studio: Facing (orientación de chibis overworld) ── */
+.dev-facing { padding: 16px; }
+.dev-facing-head { margin-bottom: 14px; }
+.dev-facing-head h2 { margin: 0 0 6px; font-size: 15px; color: #e8edf4; }
+.dev-facing-help { margin: 0 0 10px; font-size: 12px; color: #9aa4b2; line-height: 1.55; max-width: 900px; }
+.dev-facing-help kbd { background: #222a35; border: 1px solid #3a4452; border-radius: 4px; padding: 1px 6px; font-family: ui-monospace, monospace; font-size: 11px; color: #d5dde8; }
+.dev-facing-suggest { display: inline-block; background: #3a2f12; color: #f0c060; border-radius: 4px; padding: 0 6px; font-weight: 700; }
+.dev-facing-actions { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; flex-wrap: wrap; }
+.dev-facing-status { font-size: 12px; color: #9fe0a8; }
+.dev-btn-ghost { background: transparent; color: #8a93a3; }
+.dev-btn-ghost:hover { background: #1a2028; color: #fff; }
+.dev-btn-sm { padding: 4px 8px; font-size: 11px; }
+.dev-facing-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(96px, 1fr)); gap: 10px; }
+.dev-facing-cell {
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+  background: #171c23; border: 1px solid #262b33; border-radius: 8px; padding: 8px 6px 6px;
+}
+.dev-facing-cell.suggest { border-color: #6b5322; }
+.dev-facing-preview {
+  position: relative; width: 64px; height: 64px; display: flex; align-items: center; justify-content: center;
+  background: #0e1013; border: 1px solid #262b33; border-radius: 6px; cursor: pointer; padding: 0;
+}
+.dev-facing-preview:hover { border-color: #3a4250; }
+.dev-facing-preview img {
+  image-rendering: pixelated; width: 64px; height: 64px; object-fit: contain;
+}
+.dev-facing-cell.flipped .dev-facing-preview { border-color: #4a7a4a; background: #101a10; }
+.dev-facing-suggest-badge {
+  position: absolute; top: -7px; right: -7px; width: 20px; height: 20px; border-radius: 50%;
+  background: #6b5322; color: #ffe6a0; font-size: 12px; font-weight: 800;
+  display: flex; align-items: center; justify-content: center; border: 2px solid #171c23;
+}
+.dev-facing-flip-badge {
+  position: absolute; bottom: 3px; left: 50%; transform: translateX(-50%);
+  background: #2a4a2a; color: #b0f0b0; font-size: 8px; font-weight: 700; letter-spacing: .4px;
+  border-radius: 3px; padding: 1px 5px; white-space: nowrap;
+}
+.dev-facing-name {
+  font-size: 10px; color: #8a93a3; max-width: 90px; overflow: hidden;
+  text-overflow: ellipsis; white-space: nowrap; text-align: center;
+}
+.dev-facing-cell.suggest .dev-facing-name { color: #f0c060; }
+.dev-facing-btns { display: flex; gap: 4px; }
+
+/* ── Pixel Art: borrador por color + acciones secundarias ── */
+.dev-tool-hint {
+  font-size: 11px; color: #9aa4b2; background: #1a2028;
+  border: 1px solid #2a323e; border-radius: 6px; padding: 6px 8px; line-height: 1.5;
+}
+.dev-pixel-actions-secondary { margin-top: 4px; }
+.dev-pixel-actions-secondary .dev-btn { flex: 1; padding: 6px 8px; font-size: 11px; }

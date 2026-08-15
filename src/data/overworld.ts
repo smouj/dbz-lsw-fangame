@@ -5,7 +5,7 @@
 // Las poses (idle/movement/attack/beam/hurt/guard) = acción.
 // ═══════════════════════════════════════════════════════════
 
-const OVERWORLD_FILES: Record<string, string> = {
+export const OVERWORLD_FILES: Record<string, string> = {
   'goku_base': 'goku_base_ow.png',
   'goku_ssj': 'goku_super_saiyan_ow.png',
   'goku_ssj2': 'goku_super_saiyan_2_ow.png',
