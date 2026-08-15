@@ -63,6 +63,8 @@ const NAME: Record<string, string> = {
   android_18: 'Android 18', android_19: 'Android 19', android_20: 'Android 20',
   ginyu: 'Ginyu', recoome: 'Reacoom', guldo: 'Guldo', jeice: 'Jeice', burter: 'Burter',
   nappa: 'Nappa', cell_jr: 'Cell Jr.', vegito: 'Vegito', gotenks: 'Gotenks',
+  gohan_kid: 'Gohan Kid', gohan_adult: 'Gohan Adult',
+  trunks_kid: 'Trunks Kid', trunks_future: 'Trunks Futuro',
 };
 
 export function characterName(id: string): string {
@@ -126,8 +128,8 @@ export const STORY_PANELS: Record<number, StoryChapterFlow> = {
     chapter: 1,
     intro: [
       { id: 'c1p1', layout: 'FULL', background: bg(1), title: 'CAPÍTULO 1', subtitle: 'Entrenamiento', effects: ['zoom'], transition: 'zoom-in' },
-      { id: 'c1p2', layout: 'PORTRAIT_DIALOGUE', background: bg(1), characters: [{ character: 'piccolo', side: 'left' }, { character: 'gohan', side: 'right' }], dialogue: { speaker: 'Piccolo', text: 'Gohan… entrena tu ki. ¡Te espera un gran poder!' } },
-      { id: 'c1p3', layout: 'SPLIT_2', background: bg(1), characters: [{ character: 'piccolo', side: 'left' }, { character: 'gohan', side: 'right' }], dialogue: { speaker: 'Gohan', text: '¡Lo intentaré, Piccolo!' } },
+      { id: 'c1p2', layout: 'PORTRAIT_DIALOGUE', background: bg(1), characters: [{ character: 'piccolo', side: 'left' }, { character: 'gohan_kid', side: 'right' }], dialogue: { speaker: 'Piccolo', text: 'Gohan… entrena tu ki. ¡Te espera un gran poder!' } },
+      { id: 'c1p3', layout: 'SPLIT_2', background: bg(1), characters: [{ character: 'piccolo', side: 'left' }, { character: 'gohan_kid', side: 'right' }], dialogue: { speaker: 'Gohan', text: '¡Lo intentaré, Piccolo!' } },
       { id: 'c1p4', layout: 'IMPACT', background: bg(1), title: '¡COMBATE!', subtitle: 'Gohan vs Piccolo', effects: ['flash', 'shake'], transition: 'slash' },
     ],
     outro: [
@@ -242,7 +244,7 @@ export const STORY_PANELS: Record<number, StoryChapterFlow> = {
     chapter: 18,
     intro: [
       { id: 'c18p1', layout: 'FULL', background: bg(10), title: 'CAPÍTULO 18', subtitle: 'La furia de Gohan SSJ2', effects: ['zoom', 'flash'] },
-      { id: 'c18p2', layout: 'SPLIT_2', background: bg(10), characters: [{ character: 'gohan', side: 'left', form: 'ssj2', emotion: 'angry' }, { character: 'cell_jr', side: 'right' }], dialogue: { speaker: 'Gohan', text: '¡No tocaréis a mis amigos!' } },
+      { id: 'c18p2', layout: 'SPLIT_2', background: bg(10), characters: [{ character: 'gohan_kid', side: 'left', form: 'ssj2', emotion: 'angry' }, { character: 'cell_jr', side: 'right' }], dialogue: { speaker: 'Gohan', text: '¡No tocaréis a mis amigos!' } },
       { id: 'c18p3', layout: 'IMPACT', background: bg(10), title: '¡COMBATE!', subtitle: 'Gohan SSJ2 vs Cell Jr.', effects: ['flash', 'shake'], transition: 'slash' },
     ],
   },

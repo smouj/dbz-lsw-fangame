@@ -161,14 +161,20 @@ const MENU_PORTRAITS_CUT: Record<string, string> = {
 // ─── Retratos (Sprite Database) ────────────────────────────
 const PORTRAITS: Record<string, string> = MENU_PORTRAITS;
 
+// Alias de personajes separados → retrato del personaje base (GBC)
+const CHAR_PORTRAIT_ALIAS: Record<string, string> = {
+  gohan_kid: 'gohan', gohan_adult: 'gohan',
+  trunks_kid: 'trunks', trunks_future: 'trunks',
+};
+
 function portraitFor(charId: string, formId?: string): string | undefined {
   // Prioridad: retrato de BATALLA pixel-perfect por formId (32×24 del GBC)
   if (formId && BATTLE_PORTRAITS[formId]) return BATTLE_PORTRAITS[formId];
-  return PORTRAITS[charId];
+  return PORTRAITS[CHAR_PORTRAIT_ALIAS[charId] ?? charId];
 }
 
 function miniPortraitFor(charId: string): string | undefined {
-  return MINI_PORTRAITS[charId];
+  return MINI_PORTRAITS[CHAR_PORTRAIT_ALIAS[charId] ?? charId];
 }
 
 // ─── Fondos de batalla (extraídos) ────────────────────────
@@ -3275,8 +3281,8 @@ const CHAPTERS: { id: number; nameKey: TKey; descKey: TKey; enemy: string; playe
   { id: 26, nameKey: 'story.ch26', descKey: 'story.d26', enemy: 'buu_base', player: 'goku_ssj2' },
   { id: 27, nameKey: 'story.ch27', descKey: 'story.d27', enemy: 'trunks_future', player: 'trunks_future' },
   { id: 28, nameKey: 'story.ch28', descKey: 'story.d28', enemy: 'buu_super', player: 'gotenks_ssj3' },
-  { id: 29, nameKey: 'story.ch29', descKey: 'story.d29', enemy: 'buu_gohan', player: 'gohan_ultimate' },
-  { id: 30, nameKey: 'story.ch30', descKey: 'story.d30', enemy: 'buu_gotenks', player: 'gohan_ultimate' },
+  { id: 29, nameKey: 'story.ch29', descKey: 'story.d29', enemy: 'buu_gohan', player: 'gohan_adult_ultimate' },
+  { id: 30, nameKey: 'story.ch30', descKey: 'story.d30', enemy: 'buu_gotenks', player: 'gohan_adult_ultimate' },
   { id: 31, nameKey: 'story.ch31', descKey: 'story.d31', enemy: 'buu_gohan', player: 'vegito_ssj' },
   { id: 32, nameKey: 'story.ch32', descKey: 'story.d32', enemy: 'buu_kid', player: 'goku_ssj3' },
 ];
@@ -3627,7 +3633,7 @@ function StorySceneScreen({ chapter, phase, onFinish, onNavigate }: {
           <div className={`story-characters layout-${panel.layout.toLowerCase()}`}>
             {panel.characters.map((c, i) => {
               // Retrato REAL del GBC (story portraits 40×56 por saga/personaje)
-              const url = storyPortraitUrl(c.character, c.form, c.emotion) || miniPortraitFor(c.character) || MENU_PORTRAITS[c.character];
+              const url = storyPortraitUrl(c.character, c.form, c.emotion) || miniPortraitFor(c.character) || MENU_PORTRAITS[CHAR_PORTRAIT_ALIAS[c.character] ?? c.character];
               return (
                 <div key={i} className={`story-character ${c.side ?? (i === 0 ? 'left' : 'right')}`}>
                   {url

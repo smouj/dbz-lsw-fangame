@@ -19,10 +19,9 @@ const SPRITE_DIRS: Record<string, string> = {
   'gohan_young': 'young_gohan_base',
   'gohan_young_ssj': 'young_gohan_super_saiyan',
   'gohan_young_ssj2': 'young_gohan_super_saiyan_2',
-  'gohan_teen_ssj': 'gohan_super_saiyan_1_2',
-  'gohan_teen_ssj2': 'gohan_super_saiyan_1_2',
-  'gohan_adult': 'gohan_ultimate',
-  'gohan_ultimate': 'gohan_ultimate',
+  'gohan_adult_ssj': 'gohan_super_saiyan_1_2',
+  'gohan_adult_ssj2': 'gohan_super_saiyan_1_2',
+  'gohan_adult_ultimate': 'gohan_ultimate',
   // Trunks
   'trunks_kid': 'trunks_base',
   'trunks_kid_ssj': 'kid_trunks_super_saiyan',

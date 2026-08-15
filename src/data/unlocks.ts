@@ -16,7 +16,7 @@ export const STARTER_DAMAGE_DECK = [1, 2, 3, 4, 5, 5, 6, 11, 29, 43, 41, 7, 8, 1
 export const STARTER_BEAM_DECK = [1, 2, 3, 4, 7, 7, 8, 20, 36, 5, 6, 11, 125, 124, 121, 88, 117, 97, 119, 118];
 
 // Personajes iniciales del remake: el primer flujo jugable es Gohan vs Piccolo.
-export const STARTER_CHARACTERS = ['gohan', 'piccolo'];
+export const STARTER_CHARACTERS = ['gohan_kid', 'piccolo'];
 
 // Cartas que se desbloquean automáticamente por nivel (progresión)
 // Cada nivel desbloquea un lote adicional
@@ -59,15 +59,19 @@ export function pickRewards(owned: Set<number>, count = 3): number[] {
 export const VS_UNLOCKS: Record<string, string> = {
   'vegeta_base': 'vegeta',
   'vegeta_majin': 'vegeta',
-  'gohan_young': 'gohan',
-  'gohan_adult': 'gohan',
-  'gohan_teen_ssj2': 'gohan',
-  'gohan_ultimate': 'gohan',
+  'gohan_young': 'gohan_kid',
+  'gohan_young_ssj': 'gohan_kid',
+  'gohan_young_ssj2': 'gohan_kid',
+  'gohan_adult_ssj': 'gohan_adult',
+  'gohan_adult_ssj2': 'gohan_adult',
+  'gohan_adult_ultimate': 'gohan_adult',
   'piccolo_base': 'piccolo',
   'piccolo_evil': 'piccolo',
   'krillin_base': 'krillin',
-  'trunks_kid': 'trunks',
-  'trunks_kid_ssj': 'trunks',
+  'trunks_kid': 'trunks_kid',
+  'trunks_kid_ssj': 'trunks_kid',
+  'trunks_future': 'trunks_future',
+  'trunks_ssj': 'trunks_future',
   'goten_base': 'goten',
   'gotenks_ssj': 'gotenks',
   'frieza_final': 'frieza',
@@ -95,12 +99,15 @@ export const VS_UNLOCKS: Record<string, string> = {
 // ═══════════════════════════════════════════════════════════
 
 // Forma base siempre disponible
-// ⚠️ No es `${charId}_base` para todos: frieza→frieza_final, trunks→trunks_kid,
-// gotenks→gotenks_ssj, cell→cell_imperfect, cell_jr→cell_jr, ginyu→ginyu,
-// buu→buu_base, vegito→vegito_ssj (la ROM solo tiene Vegito SSJ). Mapeo explícito para evitar ids inexistentes.
+// ⚠️ No es `${charId}_base` para todos: frieza→frieza_final, gotenks→gotenks_ssj,
+// cell→cell_imperfect, cell_jr→cell_jr, ginyu→ginyu, buu→buu_base,
+// vegito→vegito_ssj, gohan_kid→gohan_young, gohan_adult→gohan_adult_ssj,
+// trunks_kid→trunks_kid, trunks_future→trunks_future. Mapeo explícito.
 export const BASE_FORM_BY_CHAR: Record<string, string> = {
-  goku: 'goku_base', vegeta: 'vegeta_base', gohan: 'gohan_young',
-  piccolo: 'piccolo_base', krillin: 'krillin_base', trunks: 'trunks_kid',
+  goku: 'goku_base', vegeta: 'vegeta_base', gohan_kid: 'gohan_young',
+  gohan_adult: 'gohan_adult_ssj',
+  piccolo: 'piccolo_base', krillin: 'krillin_base', trunks_kid: 'trunks_kid',
+  trunks_future: 'trunks_future',
   goten: 'goten_base', gotenks: 'gotenks_ssj', frieza: 'frieza_final',
   cell: 'cell_imperfect', cell_jr: 'cell_jr', android_16: 'android_16',
   android_17: 'android_17', android_18: 'android_18', android_19: 'android_19',
@@ -120,7 +127,7 @@ export const FORM_UNLOCK_LEVELS: Record<string, number> = {
   // Vegeta
   'vegeta_ssj': 3, 'vegeta_majin': 6,
   // Gohan
-  'gohan_young_ssj': 2, 'gohan_young_ssj2': 4, 'gohan_teen_ssj': 5, 'gohan_teen_ssj2': 7, 'gohan_adult': 8, 'gohan_ultimate': 9,
+  'gohan_young_ssj': 2, 'gohan_young_ssj2': 4, 'gohan_adult_ssj': 5, 'gohan_adult_ssj2': 7, 'gohan_adult_ultimate': 9,
   // Trunks
   'trunks_kid_ssj': 4, 'trunks_future': 3, 'trunks_ssj': 5,
   // Goten

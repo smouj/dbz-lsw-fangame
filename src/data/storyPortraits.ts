@@ -285,7 +285,13 @@ export function storyPortraitUrl(
   formId?: string,
   emotion?: PortraitEmotion,
 ): string | undefined {
-  const entry = STORY_PORTRAITS[character];
+  // Alias de personajes separados → retrato del personaje base (GBC)
+  const CHAR_ALIAS: Record<string, string> = {
+    gohan_kid: 'gohan', gohan_adult: 'gohan',
+    trunks_kid: 'trunks', trunks_future: 'trunks',
+  };
+  const key = CHAR_ALIAS[character] ?? character;
+  const entry = STORY_PORTRAITS[key];
   if (!entry) return undefined;
   // 1) Variante por FORMA si existe (ssj/ssj2/ultimate/majin/kid/kami/final...)
   if (formId) {
