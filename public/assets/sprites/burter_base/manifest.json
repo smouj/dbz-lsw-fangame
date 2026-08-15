@@ -64,8 +64,8 @@
    {
     "name": "burter_base_guard_01",
     "file": "burter_base_guard_01.png",
-    "w": 30,
-    "h": 40
+    "w": 36,
+    "h": 46
    },
    {
     "name": "burter_base_guard_02",
@@ -119,8 +119,8 @@
    {
     "name": "burter_base_attack_fwd_06",
     "file": "burter_base_attack_fwd_06.png",
-    "w": 40,
-    "h": 32
+    "w": 46,
+    "h": 38
    }
   ]
  },

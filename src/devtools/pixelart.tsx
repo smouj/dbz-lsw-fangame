@@ -33,7 +33,7 @@ function hexToRgba(hex: string): [number, number, number, number] {
   return [(n >> 16) & 255, (n >> 8) & 255, n & 255, 255];
 }
 
-export function PixelArtModule() {
+export function PixelArtModule({ target }: { target?: { formId: string; file: string; nonce: number } | null }) {
   const [formId, setFormId] = useState('goku_base');
   const [manifest, setManifest] = useState<Manifest | null>(null);
   const [loadError, setLoadError] = useState(false);
@@ -91,13 +91,26 @@ export function PixelArtModule() {
     return () => { alive = false; };
   }, [manifestUrl, dir]);
 
+  // Objetivo desde Sheets: cambiar a la forma pedida
+  useEffect(() => {
+    if (target?.formId && target.file) {
+      setFormId(target.formId);
+    }
+  }, [target?.formId, target?.nonce]);
+
   // Al cambiar de forma, seleccionar el primer frame disponible
+  // (o el frame pedido desde Sheets si existe en el manifest)
   useEffect(() => {
     if (manifest && allFrames.length > 0) {
-      const f = allFrames[0];
-      setFile(f.file); setSize({ w: f.w, h: f.h }); setNewBlank(false);
+      if (target?.file && allFrames.some(x => x.file === target.file)) {
+        const f = allFrames.find(x => x.file === target.file)!;
+        setFile(f.file); setSize({ w: f.w, h: f.h }); setNewBlank(false);
+      } else {
+        const f = allFrames[0];
+        setFile(f.file); setSize({ w: f.w, h: f.h }); setNewBlank(false);
+      }
     }
-  }, [manifest, allFrames]);
+  }, [manifest, allFrames, target?.file, target?.nonce]);
 
   const nativeUrl = useMemo(() => {
     if (newBlank || !file || !formId) return null;

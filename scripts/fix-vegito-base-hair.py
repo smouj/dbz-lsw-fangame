@@ -10,11 +10,14 @@
 # pelo recoloreado se funde en un blob sin mechones.
 #
 # Fix (2 partes):
-#   1. Recolorear TODO el pelo (no solo y<45%) a (96,96,96): un gris
-#      oscuro DISTINTO del outline (40,40,40) → los mechones mantienen
-#      su separación (líneas oscuras interiores visibles) y la cabeza
-#      deja de ser un blob. 96,96,96 elegido como mejor balance
-#      "pelo negro legible" (verificado visualmente vs 72/120).
+#   1. Recolorear TODO el pelo (no solo y<45%) a (152,152,152): un gris
+#      CLARO distinto del outline (40,40,40) → los mechones mantienen
+#      su separación y la cabeza se lee como pelo sin fundirse.
+#      ⚠️ LECCIÓN 2026-08-15: 96 era DEMASIADO oscuro (masa negra sin
+#      cara a escala de batalla, reportado por el usuario); 152 aún
+#      se fundía con el outline en sprites de 27px. 208 elegido como
+#      mejor equilibrio — se lee como pelo gris claro sin ser rubio
+#      (verificado a escala real de batalla vs 176/192/208).
 #   2. Mismo fix en el chibi overworld vegito_base_ow.png (17 px
 #      amarillos sin recolorear) y en effects/vegito_base/*.png
 #      (recortes de cabeza/chibi con pelo amarillo intacto).
@@ -35,7 +38,7 @@ SPR = os.path.join(ROOT, 'public/assets/sprites')
 OW = os.path.join(ROOT, 'public/assets/overworld/panel_sprites')
 
 APPLY = '--apply' in sys.argv
-NEW_HAIR = (96, 96, 96)
+NEW_HAIR = (208, 208, 208)
 
 
 def is_hair(r, g, b):

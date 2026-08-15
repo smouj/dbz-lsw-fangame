@@ -26,8 +26,8 @@
    {
     "name": "vegito_ssj_move_front_01",
     "file": "vegito_ssj_move_front_01.png",
-    "w": 32,
-    "h": 41
+    "w": 38,
+    "h": 47
    }
   ]
  },
@@ -267,8 +267,8 @@
    {
     "name": "vegito_ssj_move_back_01",
     "file": "vegito_ssj_move_back_01.png",
-    "w": 32,
-    "h": 41
+    "w": 38,
+    "h": 47
    }
   ]
  }

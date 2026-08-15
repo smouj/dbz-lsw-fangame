@@ -7,8 +7,8 @@
    {
     "name": "ginyu_base_idle_00",
     "file": "ginyu_base_idle_00.png",
-    "w": 26,
-    "h": 39
+    "w": 32,
+    "h": 45
    }
   ]
  },
@@ -64,14 +64,14 @@
    {
     "name": "ginyu_base_guard_01",
     "file": "ginyu_base_guard_01.png",
-    "w": 30,
-    "h": 39
+    "w": 36,
+    "h": 45
    },
    {
     "name": "ginyu_base_guard_02",
     "file": "ginyu_base_guard_02.png",
-    "w": 24,
-    "h": 39
+    "w": 30,
+    "h": 45
    }
   ]
  },

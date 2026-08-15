@@ -4,7 +4,7 @@
 // Inspeccionar / validar / previsualizar el juego sin tocar código.
 // NO forma parte del flujo público de producción.
 // ═══════════════════════════════════════════════════════════
-import { useState, lazy, Suspense } from 'react';
+import { useState, useEffect, lazy, Suspense } from 'react';
 import { DashboardModule } from './dashboard';
 import { CharactersModule } from './characters';
 import { CardsModule } from './cards';
@@ -18,6 +18,7 @@ import { AnimationModule } from './animation';
 import { PixelArtModule } from './pixelart';
 import { HudModule } from './hud';
 import { FacingModule } from './facing';
+import { SheetsModule } from './sheets';
 // Los módulos Pixi se cargan bajo demanda (code-split): pixi.js (~790KB) solo
 // se descarga al abrir el Pixi Lab / Pixi Seq, no en el bundle principal.
 const PixiModule = lazy(() => import('./pixi').then((m) => ({ default: m.PixiModule })));
@@ -25,7 +26,7 @@ const PixiSequenceModule = lazy(() => import('./pixiSequence').then((m) => ({ de
 
 export type DevModuleId =
   | 'dashboard' | 'characters' | 'cards' | 'sprites' | 'animation'
-  | 'pixelart' | 'hud' | 'facing'
+  | 'pixelart' | 'hud' | 'facing' | 'sheets'
   | 'battlelab' | 'story' | 'validation' | 'research' | 'positions'
   | 'pixi' | 'pixiSequence';
 
@@ -41,6 +42,7 @@ export const DEV_MODULES: DevModuleDef[] = [
   { id: 'characters', label: 'Characters', icon: '☺', desc: 'Personajes, formas, stats y crecimiento' },
   { id: 'cards', label: 'Cards', icon: '🂠', desc: 'Base de datos de las 125 cartas' },
   { id: 'sprites', label: 'Sprites', icon: '▦', desc: 'Inspector de sprites (frame, bbox, alpha)' },
+  { id: 'sheets', label: 'Sheets', icon: '🗂', desc: 'Revisión de sheets: todos los frames con detección de problemas (bordes, specks, duplicados)' },
   { id: 'animation', label: 'Animation', icon: '▶', desc: 'Timeline real + editor de frames/animaciones (fps/loop/orden)' },
   { id: 'pixelart', label: 'Pixel Art', icon: '✎', desc: 'Editor de píxeles: pinta/borra/corrige frames y guarda al proyecto' },
   { id: 'facing', label: 'Facing', icon: '↔', desc: 'Orientación de chibis overworld: voltea y guarda (todos a la derecha)' },
@@ -62,11 +64,54 @@ export function isDevRoute(): boolean {
   );
 }
 
+// Módulo desde el hash: '#dev/sheets' → 'sheets'
+function moduleFromHash(): DevModuleId | null {
+  if (typeof window === 'undefined') return null;
+  const m = /^#dev\/([a-zA-Z]+)/.exec(window.location.hash);
+  if (!m) return null;
+  const id = m[1] as DevModuleId;
+  return DEV_MODULES.some(d => d.id === id) ? id : null;
+}
+
+// Puente Sheets → Pixel Art: frame concreto que abrir en el editor
+export interface PixelArtTarget {
+  formId: string;
+  file: string;
+  nonce: number; // cambia en cada petición para re-disparar el efecto
+}
+
 export function DevStudio({ onExit, onLaunchBattle }: {
   onExit: () => void;
   onLaunchBattle?: (playerFormId: string, enemyFormId: string, chapter: number | null) => void;
 }) {
-  const [module, setModule] = useState<DevModuleId>('dashboard');
+  const [module, setModule] = useState<DevModuleId>(() => moduleFromHash() ?? 'dashboard');
+  const [pixelTarget, setPixelTarget] = useState<PixelArtTarget | null>(null);
+
+  // Sincronizar hash ↔ módulo (navegación profunda + botones del sidebar)
+  useEffect(() => {
+    const onHash = () => {
+      const m = moduleFromHash();
+      if (m) setModule(m);
+    };
+    window.addEventListener('hashchange', onHash);
+    return () => window.removeEventListener('hashchange', onHash);
+  }, []);
+
+  const navigate = (id: DevModuleId) => {
+    setModule(id);
+    try {
+      // Actualizar el hash sin perder el modo dev
+      const url = new URL(window.location.href);
+      url.hash = `#dev/${id}`;
+      window.history.replaceState(null, '', url.toString());
+    } catch { /* noop */ }
+  };
+
+  // Abrir un frame de Sheets en el Pixel Art (cambia módulo + objetivo)
+  const openInPixelArt = (formId: string, file: string) => {
+    setPixelTarget({ formId, file, nonce: Date.now() });
+    navigate('pixelart');
+  };
 
   const goHome = () => {
     try { window.location.hash = ''; } catch { /* noop */ }
@@ -87,7 +132,7 @@ export function DevStudio({ onExit, onLaunchBattle }: {
           {DEV_MODULES.map(m => (
             <button key={m.id}
               className={`dev-nav-item ${module === m.id ? 'active' : ''}`}
-              onClick={() => setModule(m.id)}
+              onClick={() => navigate(m.id)}
               title={m.desc}>
               <span className="dev-nav-icon">{m.icon}</span>
               <span className="dev-nav-label">{m.label}</span>
@@ -100,12 +145,13 @@ export function DevStudio({ onExit, onLaunchBattle }: {
       </aside>
       <main className="dev-main">
         <div className="dev-module">
-          {module === 'dashboard' && <DashboardModule onNavigate={setModule} />}
+          {module === 'dashboard' && <DashboardModule onNavigate={navigate} />}
           {module === 'characters' && <CharactersModule />}
           {module === 'cards' && <CardsModule />}
           {module === 'sprites' && <SpritesModule />}
+          {module === 'sheets' && <SheetsModule onOpenInPixelArt={openInPixelArt} />}
           {module === 'animation' && <AnimationModule />}
-          {module === 'pixelart' && <PixelArtModule />}
+          {module === 'pixelart' && <PixelArtModule target={pixelTarget} />}
           {module === 'facing' && <FacingModule />}
           {module === 'hud' && <HudModule />}
           {module === 'battlelab' && <BattleLabModule onLaunchBattle={onLaunchBattle} />}
