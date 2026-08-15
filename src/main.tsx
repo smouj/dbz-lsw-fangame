@@ -373,7 +373,9 @@ function CardVisual({ card, selected, onClick, small, disabled }: {
     : `${card.name} — ${cardEffectSummary(card.effect)}`;
   const compat = card.compatible && card.compatible.length > 0
     ? `\nUsable por: ${card.compatible.map(id => characterName(id)).join(', ')}`
-    : '';
+    : card.notCompatible && card.notCompatible.length > 0
+      ? `\nNO usable por: ${card.notCompatible.map(id => characterName(id)).join(', ')}`
+      : '';
   return (
     <button className={`card ${card.type} ${selected ? 'selected' : ''} ${small ? 'small' : ''}`}
       onClick={onClick} disabled={disabled} style={{ '--card-color': color } as React.CSSProperties}
@@ -408,8 +410,12 @@ function canPlayInDefense(card: CardDef): boolean {
 
 // Compatibilidad de carta por personaje (campo `compatible` de la ROM):
 // undefined/[] = todos los luchadores; si lista, solo esos personajes.
+// `notCompatible` = lista EXCLUIDA (el resto puede usarla) — p.ej. Stop Device
+// no lo pueden usar los androides (Users=43/48 de la tabla ROM).
 function cardUsableBy(card: CardDef, charId: string): boolean {
-  return !card.compatible || card.compatible.length === 0 || card.compatible.includes(charId);
+  if (card.compatible && card.compatible.length > 0 && !card.compatible.includes(charId)) return false;
+  if (card.notCompatible && card.notCompatible.includes(charId)) return false;
+  return true;
 }
 
 function cardEffectSummary(effect: CardEffect): string {
@@ -451,8 +457,13 @@ function cardEffectSummary(effect: CardEffect): string {
 }
 
 function cardCompatibilityLabel(card: CardDef): string {
-  if (!card.compatible || card.compatible.length === 0) return 'All fighters';
-  return card.compatible.map(id => characterName(id)).join(', ');
+  if (card.compatible && card.compatible.length > 0) {
+    return card.compatible.map(id => characterName(id)).join(', ');
+  }
+  if (card.notCompatible && card.notCompatible.length > 0) {
+    return `All except ${card.notCompatible.map(id => characterName(id)).join(', ')}`;
+  }
+  return 'All fighters';
 }
 
 // ═══════════════════════════════════════════════════════════

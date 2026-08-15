@@ -111,10 +111,12 @@ function CardDetail({ card }: { card: CardDef }) {
         <h4>Usable por</h4>
         {card.compatible
           ? <div className="dev-compat-chips">{card.compatible.map(c => <span key={c} className="dev-tag">{characterName(c)}</span>)}</div>
-          : <span className="dev-tag ok">Todos (CSV Users=48)</span>}
+          : card.notCompatible && card.notCompatible.length > 0
+            ? <div className="dev-compat-chips"><span className="dev-tag ok">Todos excepto</span>{card.notCompatible.map(c => <span key={c} className="dev-tag">{characterName(c)}</span>)}</div>
+            : <span className="dev-tag ok">Todos (CSV Users=48)</span>}
       </div>
       <div className="dev-card-code">
-        <code>{JSON.stringify({ id: card.id, type: card.type, effect: card.effect, atk: card.atk, acc: card.acc, cc: card.cc, rarity: card.rarity, compatible: card.compatible ?? null }, null, 2)}</code>
+        <code>{JSON.stringify({ id: card.id, type: card.type, effect: card.effect, atk: card.atk, acc: card.acc, cc: card.cc, rarity: card.rarity, compatible: card.compatible ?? null, notCompatible: card.notCompatible ?? null }, null, 2)}</code>
       </div>
     </div>
   );

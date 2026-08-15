@@ -99,6 +99,7 @@ export function ValidationModule() {
     const badCompat: string[] = [];
     for (const c of CARDS) {
       if (c.compatible) for (const cid of c.compatible) if (!charIds.has(cid)) badCompat.push(`${c.id}:${cid}`);
+      if (c.notCompatible) for (const cid of c.notCompatible) if (!charIds.has(cid)) badCompat.push(`${c.id}:!${cid}`);
     }
     out.push({
       name: 'Compatibilidad de cartas → personajes',
