@@ -4329,7 +4329,15 @@ function AppInner() {
         setBattleKey(k => k + 1);
         setInDev(false);
         setScreen('battle');
-        try { window.location.hash = ''; } catch { /* noop */ }
+        // Salir del Dev Studio por completo: limpiar hash Y query (?dev=1)
+        // para que isDevRoute() deje de devolver true (bug: con ?dev=1 en
+        // la URL el hashchange volvía a entrar en el Dev Studio).
+        try {
+          const url = new URL(window.location.href);
+          url.search = '';
+          url.hash = '';
+          window.history.replaceState(null, '', url.toString());
+        } catch { /* noop */ }
       }}
     />;
   }
