@@ -28,7 +28,7 @@ export function CharactersModule() {
   const form = getForm(formId) ?? getForm(char.forms[0])!;
   const spriteDir = spriteDirFor(form.id);
   const manifestUrl = spriteManifestUrl(form.id);
-  const idleUrl = idleSpriteUrl(form);
+  const idleUrl = idleSpriteUrl(form) ?? (spriteDir ? spriteFrameUrl(form.id, `${spriteDir}_idle_00.png`) : undefined);
   const portrait = BATTLE_PORTRAITS[form.id];
 
   const selectChar = (id: string) => {

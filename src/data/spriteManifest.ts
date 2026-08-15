@@ -67,7 +67,6 @@ const SPRITE_DIRS: Record<string, string> = {
   'buu_gohan': 'buu_gohan_absorbed',
   'buu_kid': 'kid_buu_base',
   // Fusions
-  'vegito_base': 'vegito_base',
   'vegito_ssj': 'vegito_ssj',
 };
 

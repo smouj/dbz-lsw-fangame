@@ -50,6 +50,5 @@ export const BATTLE_PORTRAITS: Record<string, string> = {
   'vegeta_base': '/assets/portraits/battle/vegeta_base.png',
   'vegeta_majin': '/assets/portraits/battle/vegeta_majin.png',
   'vegeta_ssj': '/assets/portraits/battle/vegeta_ssj.png',
-  'vegito_base': '/assets/portraits/story/04_Saga_Majin_Buu/Vegito/R14_C03__Vegito.png',
   'vegito_ssj': '/assets/portraits/battle/vegito_ssj.png',
 };

@@ -85,7 +85,6 @@ export const VS_UNLOCKS: Record<string, string> = {
   'burter': 'burter',
   'nappa': 'nappa',
   'buu_base': 'buu',
-  'vegito_base': 'vegito',
   'vegito_ssj': 'vegito',
 };
 
@@ -98,7 +97,7 @@ export const VS_UNLOCKS: Record<string, string> = {
 // Forma base siempre disponible
 // ⚠️ No es `${charId}_base` para todos: frieza→frieza_final, trunks→trunks_kid,
 // gotenks→gotenks_ssj, cell→cell_imperfect, cell_jr→cell_jr, ginyu→ginyu,
-// buu→buu_base, vegito→vegito_base. Mapeo explícito para evitar ids inexistentes.
+// buu→buu_base, vegito→vegito_ssj (la ROM solo tiene Vegito SSJ). Mapeo explícito para evitar ids inexistentes.
 export const BASE_FORM_BY_CHAR: Record<string, string> = {
   goku: 'goku_base', vegeta: 'vegeta_base', gohan: 'gohan_young',
   piccolo: 'piccolo_base', krillin: 'krillin_base', trunks: 'trunks_kid',
@@ -107,7 +106,7 @@ export const BASE_FORM_BY_CHAR: Record<string, string> = {
   android_17: 'android_17', android_18: 'android_18', android_19: 'android_19',
   android_20: 'android_20', ginyu: 'ginyu', recoome: 'recoome', guldo: 'guldo',
   jeice: 'jeice', burter: 'burter', nappa: 'nappa', buu: 'buu_base',
-  vegito: 'vegito_base',
+  vegito: 'vegito_ssj',
 };
 
 export function baseFormId(charId: string): string {
@@ -137,8 +136,8 @@ export const FORM_UNLOCK_LEVELS: Record<string, number> = {
   'buu_super': 7, 'buu_gotenks': 9, 'buu_gohan': 11, 'buu_kid': 12,
   // Ginyu
   'ginyu_goku': 6,
-  // Vegito (forma final)
-  'vegito_base': 12, 'vegito_ssj': 12,
+  // Vegito (forma final — la ROM solo tiene SSJ)
+  'vegito_ssj': 12,
 };
 
 // ¿Forma desbloqueada?

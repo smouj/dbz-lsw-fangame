@@ -11,7 +11,6 @@ export const OVERWORLD_FILES: Record<string, string> = {
   'goku_ssj2': 'goku_super_saiyan_2_ow.png',
   'goku_ssj3': 'goku_super_saiyan_3_ow.png',
   'vegeta_base': 'vegeta_base_ow.png',
-  'vegito_base': 'vegito_base_ow.png',
   'vegito_ssj': 'vegito_ssj_ow.png',
   'vegeta_ssj': 'vegeta_super_saiyan_majin_ow.png',
   'vegeta_majin': 'vegeta_super_saiyan_majin_ow.png',
