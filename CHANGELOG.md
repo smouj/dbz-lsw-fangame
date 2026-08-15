@@ -4,6 +4,38 @@ Todos los cambios notables en `dbz-lsw-fangame`. Formato basado en [Keep a Chang
 
 ## [Unreleased]
 
+### Fix: cartas `compatible` auditadas contra CSV Users + matriz de mazos (2026-08-15)
+- 21 cartas corregidas (separación Gohan/Trunks + preexistentes sobredimensionadas).
+  Fuente de verdad: columna `Users` del CSV (conteo de FORMAS por id, leído con parser
+  CSV real — el split por coma rompe con `Effect: "Heal 25%, ½ in defense"`) y la
+  matriz `enemy_gid_1696533224.csv`. Ver docs/CARD_SYSTEM.md.
+- `LIMIT_DEFAULTS` (roster) re-sincronizados: cell/android_16/17/18/19/20/goten
+  apuntaban a cartas que ya no eran suyas tras la auditoría (p.ej. cell tenía
+  Lightning C./Crazy Rush/Eraser Can. que son de Nappa/17/Recoome).
+
+### Feat: rayos de beam reales (beam_ray/beam_ray_tip) en las 48 formas
+- Todos los manifests de combate expusieron `beam_ray` (haz horizontal real del V6,
+  ancho>95px) y 44/48 `beam_ray_tip` (cabezas de rayo filtradas por color azul —
+  las auras naranja/rojo de power-up se descartaron). Solo Trunks SSJ los tenía.
+- Render: el rayo se EXTENDE desde el personaje hacia el rival (stretch por progress,
+  posición fija en el actor) — estilo GBC. Antes viajaba como objeto a escala 1×
+  (diminuto) o 3× (fuera de canvas).
+
+### Fix: Pixi Sequence Lab — secuencia completa melee/beam
+- El lab saltaba directo al golpe y hacía avance/rush incluso en beams. Ahora dos
+  flujos: MELEE (FIELD → guard → avance → ACTION_DUEL → rush → HIT) y BEAM
+  (FIELD → guard → PROJECTILE sin avance → charge → fire → el rayo viaja → impacto
+  genérico). Selectores: 48 formas × 2, acciones genéricas + 12 perfiles firma,
+  14 escenarios, velocidad 0.5×-4×, slider de seek por tick GBC.
+- `BattleTimeline.speed` (multiplicador del reloj) y `BattleRenderer.destroy`
+  con `removeView:false` (el canvas React persistía al recrear el renderer).
+
+### Feat: sprites corregidos (Trunks Futuro SSJ, Vegito, Gohan/Trunks separados)
+- `future_trunks_super_saiyan` usaba frames del normal (pelo morado): mapeados los
+  49 frames reales del V6 canónico (silueta IoU 1.0 contra el normal validado).
+- Vegito solo SSJ (recolor artificial eliminado); Gohan Kid/Adult y Trunks Kid/Futuro
+  separados como personajes distintos (roster + cartas + retratos battle).
+
 ### Feat: motor gráfico PixiJS 8 para el combate (React se queda en UI/mentores)
 - **Renderizador Pixi autocontenido** (`src/renderer/pixi/`): `BattleRenderer`
   (WebGL, `antialias:false`, `resolution:1`, `autoDensity:false`), `AtlasLoader`

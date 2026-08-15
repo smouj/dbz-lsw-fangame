@@ -28,9 +28,24 @@ La compatibilidad se aplica en combate:
   (antes `!c.compatible` excluía TODAS las cartas de personaje — bug corregido).
 - Las curaciones de la IA también filtran por compatibilidad.
 
-Ejemplos derivados: Kamehameha (12) → goku/cell/buu/goten; S.Kamehameha (13) →
-buu/cell/cell_jr/ginyu/gohan/goku/vegito; Ene.Absorber (102), Trunks Sword (104),
+Ejemplos derivados: Kamehameha (12) → buu/cell/goku/goten; S.Kamehameha (13) →
+buu/cell/cell_jr/ginyu/gohan_adult/goku/vegito; Ene.Absorber (102), Trunks Sword (104),
 Champ.Belt (111) y H's Choco. (112) son Users=48 ⇒ todos (antes restringidas).
+
+### Auditoría 2026-08-15 (compatible vs CSV + matriz de mazos)
+
+Se auditaron las 82 cartas con `compatible` contra dos fuentes: la columna `Users`
+ del CSV (conteo de FORMAS por id; leer SIEMPRE con parser CSV real — el split por
+coma rompe con campos como `Effect: "Heal 25%, ½ in defense"`) y la matriz de mazos
+enemigos `docs/rom-data/enemy_gid_1696533224.csv` (qué jefe usa qué carta). Se
+corrigieron 21 cartas (separación Gohan/Trunks: Masenko/Dunk Shot/Resurrection/Tail/
+Burning Atk./Flash Punch/N.Slasher; y preexistentes: KiBlast Bomb/Lightning C./
+Telekinesis/Eraser Can./Crasher Ball/Finger Beam/Rocket Punch/Crazy Rush/Energy
+Slash/Energy Slice/Attack No.18/Taiyoken/Sup.Saiyan-2/Galactica D.).
+
+⚠️ Limitación conocida: `cardUsableBy` filtra por personaje (charId), no por forma —
+cartas como Kaio Ken (Users=1 = solo Goku base) o cartas de Buu (5 formas vs Users=1)
+no pueden granular por forma. Quedan 6 casos así, documentados como aceptables.
 
 ## Variantes ofensivas implementadas (CARD_SYSTEM.md → código)
 
