@@ -190,6 +190,29 @@ Result:  powered_up = true
 
 + FX: `speed_lines_horizontal`, `speed_lines_vertical`, `gather_power_aura`
 
+## 9b. Poses del manifest de combate (implementación actual)
+
+Cada forma del proyecto (`public/assets/sprites/<dir>/manifest.json`) expone
+estas poses consumidas por FighterActor/AtlasLoader:
+
+| Pose | Contenido | Frames típicos |
+|------|-----------|----------------|
+| `idle` | pose neutral | 1 |
+| `move_front` / `move_back` | andar (back = espejo en runtime) | 2 |
+| `guard` | bloqueando/parando | 3 |
+| `attack_fwd` | golpe frontal | 8 |
+| `attack_ud` | golpe vertical | 4 |
+| `hurt` | recibiendo daño | 6 |
+| `beam_charge` | cargando ki | 4 |
+| `beam_fire` | disparando | 5 |
+| `beam_ray` | **RAYO real (V6): haz horizontal que se extiende** | 1-3 |
+| `beam_ray_tip` | cabeza del rayo (energía azul; opcional) | 1-2 |
+
+`beam_ray`/`beam_ray_tip` se añadieron en 2026-08-15 (48/48 formas con rayo,
+44/48 con tip — goten/nappa/recoome no tienen cabeza separable). El renderer
+los usa en modo stretch GBC: el rayo se extiende desde el personaje hacia el
+rival (ancho = f(progress), posición fija en el actor).
+
 ## 10. Excepciones por personaje (técnicas específicas)
 
 Todos cumplen el contrato base; las técnicas únicas se mapean individualmente:
