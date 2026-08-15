@@ -13,6 +13,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { FORMS } from '../data/roster';
 import { spriteDirFor, spriteManifestUrl, spriteFrameUrl } from '../data/spriteManifest';
 import { fetchManifest, type ManifestFrame } from './spriteEditing';
+import { poseSemantics, parseFrameName, POSE_ORDER } from './frameSemantics';
 
 const BG_COLORS = [
   [0, 183, 239], [211, 249, 188], [0, 255, 255], [0, 128, 96], [0, 248, 248],
@@ -133,6 +134,19 @@ export function SheetsModule({ onOpenInPixelArt }: { onOpenInPixelArt?: (formId:
 
   const problemCount = useMemo(() => frames.filter(f => f.bgSpecks > 0 || (f.touchesEdge && f.touchTop > 3)).length, [frames]);
 
+  // Agrupar por pose (semántica): pose -> frames, en orden canónico
+  const groups = useMemo(() => {
+    const byPose = new Map<string, FrameAnalysis[]>();
+    for (const f of frames) {
+      const { pose } = parseFrameName(f.file, dir ?? '');
+      const arr = byPose.get(pose) ?? [];
+      arr.push(f);
+      byPose.set(pose, arr);
+    }
+    const order = [...POSE_ORDER, ...Array.from(byPose.keys()).filter(p => !POSE_ORDER.includes(p))];
+    return order.filter(p => byPose.has(p)).map(p => ({ pose: p, sem: poseSemantics(p), frames: byPose.get(p)! }));
+  }, [frames, dir]);
+
   const selFrame = frames.find(f => f.file === selected) || null;
 
   return (
@@ -168,60 +182,84 @@ export function SheetsModule({ onOpenInPixelArt }: { onOpenInPixelArt?: (formId:
       {loading && <div className="dev-module-loading">Analizando frames…</div>}
 
       <div className="dev-sheets-layout">
-        <div className="dev-sheets-grid">
-          {frames.map(f => (
-            <button
-              key={f.file}
-              className={`dev-sheet-cell ${selected === f.file ? 'active' : ''} ${f.touchesEdge && f.touchTop > 3 ? 'edge' : ''} ${f.bgSpecks > 0 ? 'speck' : ''} ${f.dupeOf ? 'dupe' : ''}`}
-              onClick={() => setSelected(f.file)}
-              title={`${f.file}\n${f.w}×${f.h}\n${f.touchesEdge ? '⚠ toca borde' : ''}${f.bgSpecks ? `\n🧽 ${f.bgSpecks} specks` : ''}${f.dupeOf ? `\n⧉ duplicado de ${f.dupeOf}` : ''}`}
-            >
-              <img
-                src={spriteFrameUrl(formId, f.file)}
-                alt={f.file}
-                width={f.w} height={f.h}
-                style={{ width: f.w * (zoom / 2), height: f.h * (zoom / 2), imageRendering: 'pixelated' }}
-              />
-              <span className="dev-sheet-name">{f.file.replace(`${dir}_`, '').replace('.png', '')}</span>
-            </button>
+        <div className="dev-sheets-scroll">
+          {groups.map(g => (
+            <div key={g.pose} className="dev-pose-group">
+              <div className={`dev-pose-group-head cat-${g.sem.category.toLowerCase()}`}>
+                <span className="dev-pose-group-name">{g.pose}</span>
+                <span className="dev-pose-group-cat">{g.sem.category}</span>
+                <span className="dev-pose-group-meaning">{g.sem.meaning}</span>
+              </div>
+              <div className="dev-sheets-grid">
+                {g.frames.map(f => (
+                  <button
+                    key={f.file}
+                    className={`dev-sheet-cell ${selected === f.file ? 'active' : ''} ${f.touchesEdge && f.touchTop > 3 ? 'edge' : ''} ${f.bgSpecks > 0 ? 'speck' : ''} ${f.dupeOf ? 'dupe' : ''}`}
+                    onClick={() => setSelected(f.file)}
+                    title={`${f.file}\n${f.w}×${f.h} · ${g.sem.meaning}\n${f.touchesEdge ? '⚠ toca borde' : ''}${f.bgSpecks ? `\n🧽 ${f.bgSpecks} specks` : ''}${f.dupeOf ? `\n⧉ duplicado de ${f.dupeOf}` : ''}`}
+                  >
+                    <img
+                      src={spriteFrameUrl(formId, f.file)}
+                      alt={f.file}
+                      width={f.w} height={f.h}
+                      style={{ width: f.w * (zoom / 2), height: f.h * (zoom / 2), imageRendering: 'pixelated' }}
+                    />
+                    <span className="dev-sheet-name">{f.file.replace(`${dir}_`, '').replace('.png', '')}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
           ))}
         </div>
 
         <div className="dev-sheets-inspector">
-          {selFrame ? (
-            <>
-              <h3>{selFrame.file} <small>{selFrame.w}×{selFrame.h}px</small></h3>
-              <div className="dev-checker-bg">
-                <img
-                  src={spriteFrameUrl(formId, selFrame.file)}
-                  alt={selFrame.file}
-                  style={{ imageRendering: 'pixelated', width: selFrame.w * zoom, height: selFrame.h * zoom }}
-                />
-              </div>
-              <div className="dev-sheet-details">
-                <div className={selFrame.touchesEdge && selFrame.touchTop > 3 ? 'warn' : 'ok'}>
-                  {selFrame.touchesEdge && selFrame.touchTop > 3
-                    ? `⚠ Contenido tocando el borde superior (${selFrame.touchTop} px) — posible cabeza cortada`
-                    : '✓ Sin contenido pegado al borde superior'}
+          {selFrame ? (() => {
+            const { pose } = parseFrameName(selFrame.file, dir ?? '');
+            const sem = poseSemantics(pose);
+            return (
+              <>
+                <h3>{selFrame.file} <small>{selFrame.w}×{selFrame.h}px</small></h3>
+                <div className={`dev-pose-group-head cat-${sem.category.toLowerCase()}`}>
+                  <span className="dev-pose-group-name">{pose}</span>
+                  <span className="dev-pose-group-cat">{sem.category}</span>
                 </div>
-                <div className={selFrame.bgSpecks > 0 ? 'warn' : 'ok'}>
-                  {selFrame.bgSpecks > 0
-                    ? `🧽 ${selFrame.bgSpecks} píxeles de color de fondo (specks) — límpialos en Pixel Art`
-                    : '✓ Sin specks de color de fondo'}
+                <p className="dev-sheet-sem-meaning">{sem.meaning}</p>
+                <div className="dev-sheet-sem-used">
+                  <strong>Usado por:</strong>
+                  <ul>{sem.usedBy.map(u => <li key={u}>{u}</li>)}</ul>
                 </div>
-                <div className={selFrame.dupeOf ? 'info' : 'ok'}>
-                  {selFrame.dupeOf
-                    ? `⧉ Contenido idéntico a ${selFrame.dupeOf} — normal si es move_front/move_back (el juego espeja move_back)`
-                    : '✓ Frame único'}
+                <div className="dev-checker-bg">
+                  <img
+                    src={spriteFrameUrl(formId, selFrame.file)}
+                    alt={selFrame.file}
+                    style={{ imageRendering: 'pixelated', width: selFrame.w * zoom, height: selFrame.h * zoom }}
+                  />
                 </div>
-              </div>
-              <div className="dev-sheets-actions">
-                <button className="dev-btn" onClick={() => onOpenInPixelArt?.(formId, selFrame.file)}>
-                  Abrir en Pixel Art →
-                </button>
-              </div>
-            </>
-          ) : (
+                <div className="dev-sheet-details">
+                  <div className={selFrame.touchesEdge && selFrame.touchTop > 3 ? 'warn' : 'ok'}>
+                    {selFrame.touchesEdge && selFrame.touchTop > 3
+                      ? `⚠ Contenido tocando el borde superior (${selFrame.touchTop} px) — posible cabeza cortada`
+                      : '✓ Sin contenido pegado al borde superior'}
+                  </div>
+                  <div className={selFrame.bgSpecks > 0 ? 'warn' : 'ok'}>
+                    {selFrame.bgSpecks > 0
+                      ? `🧽 ${selFrame.bgSpecks} píxeles de color de fondo (specks) — límpialos en Pixel Art`
+                      : '✓ Sin specks de color de fondo'}
+                  </div>
+                  <div className={selFrame.dupeOf ? 'info' : 'ok'}>
+                    {selFrame.dupeOf
+                      ? `⧉ Contenido idéntico a ${selFrame.dupeOf} — normal si es move_front/move_back (el juego espeja move_back)`
+                      : '✓ Frame único'}
+                  </div>
+                </div>
+                <div className="dev-sheets-actions">
+                  <button className="dev-btn" onClick={() => onOpenInPixelArt?.(formId, selFrame.file)}>
+                    Abrir en Pixel Art →
+                  </button>
+                </div>
+              </>
+            );
+          })() : (
             <div className="dev-empty">Selecciona un frame para inspeccionarlo</div>
           )}
         </div>
