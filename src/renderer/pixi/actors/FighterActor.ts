@@ -109,6 +109,16 @@ export class FighterActor extends Container {
     this.flash.alpha = Math.min(1, f);
   }
 
+  /** Nº de frames de una pose del atlas (0 si no existe). */
+  poseFrameCount(pose: string): number {
+    return this.atlas.anims.get(pose)?.frames.length ?? 0;
+  }
+
+  /** Textura del frame `index` de una pose (null si no existe). */
+  getPoseTexture(pose: string, index = 0): Texture | null {
+    return this.atlas.textures.get(`${pose}:${index}`) ?? null;
+  }
+
   /** Cambia la pose en el tick absoluto `absTick` (reloj de la pose a cero). */
   setPose(pose: string, absTick: number): void {
     const resolved = resolvePose(this.atlas, pose);

@@ -104,6 +104,8 @@ export class BattleRenderer {
     // batallas/HMR). Destruirlas aquí provoca el warning de Pixi
     // "TextureSource managed by Assets was destroyed" y deja el cache stale
     // (luchadores en blanco en la segunda batalla).
-    this.app.destroy(true, { children: true, texture: false, textureSource: false });
+    // removeView: false → el canvas React persiste en el DOM y puede
+    // reutilizarse al recrear el renderer (Dev Studio / cambios de forma).
+    this.app.destroy({ removeView: false }, { children: true, texture: false, textureSource: false });
   }
 }

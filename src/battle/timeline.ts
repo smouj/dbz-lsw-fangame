@@ -68,6 +68,8 @@ export interface BattleTimelineOptions {
    * que emite los eventos (frame = f(tick) determinista a cualquier Hz).
    */
   onTick?: (tick: number) => void;
+  /** Multiplicador del reloj (1 = velocidad GBC nativa). Para Dev Studio/lab. */
+  speed?: number;
 }
 
 export class BattleTimeline {
@@ -134,7 +136,7 @@ export class BattleTimeline {
 
   private tickLoop = (now: number): void => {
     if (this.done) return;
-    const delta = ((now - this.last) / 1000) * GBC_FPS;
+    const delta = ((now - this.last) / 1000) * GBC_FPS * (this.opts.speed ?? 1);
     this.last = now;
     this.acc += delta;
 

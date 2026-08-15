@@ -38,6 +38,8 @@ export class PixiBattlePresentation implements BattlePresentation {
   private rightActor: FighterActor | null = null;
   private attacker: BattleSide = 'left';
   private projectile: Sprite | null = null;
+  /** Nº de frames del rayo real (beam_ray) del atacante; 0 = fallback genérico. */
+  private rayFrames = 0;
 
   // Rush: movimiento del atacante calculado como f(tick − rushStartTick).
   private rushActive = false;
@@ -130,6 +132,26 @@ export class PixiBattlePresentation implements BattlePresentation {
 
   spawnProjectile(kind: string): void {
     this.clearProjectile();
+    // Rayo real: si el atacante tiene frames beam_ray en su manifest (V6),
+    // usarlos en vez del rectángulo genérico — el rayo sale desde el lado del
+    // personaje y viaja hasta el rival (frame = f(progress), determinista).
+    const actor = this.actor;
+    this.rayFrames = 0;
+    if (actor && kind === 'beam') {
+      const n = actor.poseFrameCount('beam_ray');
+      if (n > 0) {
+        this.rayFrames = n;
+        const tex = actor.getPoseTexture('beam_ray', 0);
+        if (tex) {
+          const p = new Sprite(tex);
+          p.anchor.set(0, 0.5); // rayo anclado a la izquierda (sale del personaje)
+          this.renderer.sceneDirector.projectileLayer.addChild(p);
+          this.projectile = p;
+          return;
+        }
+      }
+    }
+    // Fallback: rectángulo genérico (melee/otros proyectiles sin frames).
     const p = new Sprite(Texture.WHITE);
     p.tint = kind === 'beam' ? 0x00ccff : 0xffd040;
     p.height = 4;
@@ -144,6 +166,12 @@ export class PixiBattlePresentation implements BattlePresentation {
     const toX = this.attacker === 'left' ? ACTION_TARGET_X : ACTION_ACTOR_X;
     const p = Math.max(0, Math.min(1, progress));
     this.projectile.position.set(fromX + (toX - fromX) * p, ACTION_GROUND_Y - 40);
+    // Animación del rayo: frame = f(progress) — determinista (reloj único).
+    if (this.rayFrames > 1) {
+      const idx = Math.min(this.rayFrames - 1, Math.floor(p * this.rayFrames));
+      const tex = this.actor?.getPoseTexture('beam_ray', idx);
+      if (tex && this.projectile.texture !== tex) this.projectile.texture = tex;
+    }
   }
 
   impact(): void {
@@ -219,6 +247,7 @@ export class PixiBattlePresentation implements BattlePresentation {
   }
 
   private clearProjectile(): void {
+    this.rayFrames = 0;
     if (this.projectile) {
       this.renderer.sceneDirector.projectileLayer.removeChild(this.projectile);
       this.projectile.destroy({ texture: false });
