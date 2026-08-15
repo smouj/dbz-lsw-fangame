@@ -40,6 +40,12 @@ export class PixiBattlePresentation implements BattlePresentation {
   private projectile: Sprite | null = null;
   /** Nº de frames del rayo real (beam_ray) del atacante; 0 = fallback genérico. */
   private rayFrames = 0;
+  /** True cuando el proyectil es el rayo real (modo stretch GBC). */
+  private raySprite = false;
+  /** Ancho nativo del frame de rayo actual (px del PNG). */
+  private rayBaseWidth = 0;
+  /** Escala aplicada al rayo (distancia actor→target / ancho nativo). */
+  private rayScale = 1;
 
   // Rush: movimiento del atacante calculado como f(tick − rushStartTick).
   private rushActive = false;
@@ -145,6 +151,15 @@ export class PixiBattlePresentation implements BattlePresentation {
         if (tex) {
           const p = new Sprite(tex);
           p.anchor.set(0, 0.5); // rayo anclado a la izquierda (sale del personaje)
+          // Escala para cubrir la distancia actor→target: el rayo nativo
+          // (~115px) debe llegar al rival cuando progress=1. El alto escala
+          // con la misma proporción (coherente con el luchador a `scale`×).
+          const dist = Math.abs(ACTION_TARGET_X - ACTION_ACTOR_X);
+          const sx = dist / tex.width;
+          p.scale.set(sx, sx);
+          this.raySprite = true;
+          this.rayBaseWidth = tex.width;
+          this.rayScale = sx;
           this.renderer.sceneDirector.projectileLayer.addChild(p);
           this.projectile = p;
           return;
@@ -165,6 +180,27 @@ export class PixiBattlePresentation implements BattlePresentation {
     const fromX = this.attacker === 'left' ? ACTION_ACTOR_X : ACTION_TARGET_X;
     const toX = this.attacker === 'left' ? ACTION_TARGET_X : ACTION_ACTOR_X;
     const p = Math.max(0, Math.min(1, progress));
+    if (this.raySprite) {
+      // Beam estilo GBC: el rayo se EXTENDE desde el personaje hacia el rival.
+      // Posición fija en el actor; el ancho crece con progress (anclado izq.).
+      const dist = Math.abs(toX - fromX);
+      const full = this.rayBaseWidth * this.rayScale;
+      this.projectile.position.set(fromX, ACTION_GROUND_Y - 40);
+      const stretch = Math.max(0.001, (dist * p) / Math.max(1, full));
+      this.projectile.scale.set(stretch, this.rayScale);
+      if (this.rayFrames > 1) {
+        const idx = Math.min(this.rayFrames - 1, Math.floor(p * this.rayFrames));
+        const tex = this.actor?.getPoseTexture('beam_ray', idx);
+        if (tex && this.projectile.texture !== tex) {
+          this.projectile.texture = tex;
+          this.rayBaseWidth = tex.width;
+          // re-aplicar stretch con el nuevo ancho base
+          const s2 = Math.max(0.001, (dist * p) / Math.max(1, tex.width * this.rayScale));
+          this.projectile.scale.set(s2, this.rayScale);
+        }
+      }
+      return;
+    }
     this.projectile.position.set(fromX + (toX - fromX) * p, ACTION_GROUND_Y - 40);
     // Animación del rayo: frame = f(progress) — determinista (reloj único).
     if (this.rayFrames > 1) {
@@ -248,6 +284,9 @@ export class PixiBattlePresentation implements BattlePresentation {
 
   private clearProjectile(): void {
     this.rayFrames = 0;
+    this.raySprite = false;
+    this.rayBaseWidth = 0;
+    this.rayScale = 1;
     if (this.projectile) {
       this.renderer.sceneDirector.projectileLayer.removeChild(this.projectile);
       this.projectile.destroy({ texture: false });
