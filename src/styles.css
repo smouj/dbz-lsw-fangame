@@ -7737,3 +7737,29 @@ button:focus-visible, .chapter-node:focus-visible {
 .dev-sheets-details .info { color: #c8d0e0; }
 .dev-sheets-actions { margin-top: 12px; display: flex; gap: 8px; }
 .dev-sheets-actions .dev-btn { text-decoration: none; display: inline-block; font-size: 12px; }
+
+/* ── Battle Overworld: Gather Power (taxonomía canónica) ──
+   La acción GATHER POWER muestra: pose (actor) + aura (FX sobre la pose).
+   El aura es una capa separada, NO otro frame del personaje. */
+.battle-overworld { position: relative; display: inline-flex; }
+.battle-overworld .overworld-sprite {
+  height: 96px; width: auto; image-rendering: pixelated;
+  filter: drop-shadow(0 0 8px rgba(255,190,60,.3)) drop-shadow(0 5px 10px rgba(0,0,0,.45));
+}
+.battle-overworld.gathering .overworld-sprite {
+  filter: drop-shadow(0 0 12px rgba(255,220,120,.55)) drop-shadow(0 0 20px rgba(255,180,60,.35)) drop-shadow(0 5px 10px rgba(0,0,0,.45));
+}
+.gather-power-aura {
+  position: absolute; left: 50%; top: 50%;
+  transform: translate(-50%, -50%);
+  image-rendering: pixelated;
+  height: 110px; width: auto;
+  pointer-events: none;
+  opacity: 0;
+  animation: gather-aura-pulse 1.2s ease-in-out infinite;
+}
+.battle-overworld.gathering .gather-power-aura { opacity: .95; }
+@keyframes gather-aura-pulse {
+  0%, 100% { transform: translate(-50%, -50%) scale(.92); opacity: .75; }
+  50%      { transform: translate(-50%, -50%) scale(1.08); opacity: 1; }
+}

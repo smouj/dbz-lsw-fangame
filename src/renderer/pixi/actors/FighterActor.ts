@@ -27,9 +27,9 @@ const POSE_FALLBACKS: Record<string, string[]> = {
   attack_fwd: ['attack_fwd', 'move_front', 'idle'],
   attack_ud: ['attack_ud', 'attack_fwd', 'idle'],
   hurt: ['hurt', 'guard', 'idle'],
-  beam_charge: ['beam_charge', 'power_up', 'guard', 'idle'],
+  beam_charge: ['beam_charge', 'gather_power', 'guard', 'idle'],
   beam_fire: ['beam_fire', 'beam_charge', 'attack_fwd', 'idle'],
-  power_up: ['power_up', 'beam_charge', 'guard', 'idle'],
+  gather_power: ['gather_power', 'beam_charge', 'guard', 'idle'],
 };
 
 function resolvePose(atlas: FormAtlas, pose: string): string | null {

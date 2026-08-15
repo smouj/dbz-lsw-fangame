@@ -13,6 +13,7 @@ import { UNLOCK_KEY, STARTER_DAMAGE_DECK, STARTER_BEAM_DECK, STARTER_CHARACTERS,
 import { CARDS, CARD_COLORS, CARD_TYPE_NAMES, CardDef, CardType, DECK_SIZE, MAX_COPIES, getCard, CardEffect } from './data/cards';
 import { cardIconUrl, MINI_PORTRAITS, MENU_PORTRAITS, TYPE_ICONS } from './data/icons';
 import { overworldUrl } from './data/overworld';
+import { battleOverworldActorUrl, battleOverworldAuraUrl } from './data/battleOverworld';
 import { panelsForChapter, type StoryPanel, characterName } from './data/storyPanels';
 import { storyPortraitUrl } from './data/storyPortraits';
 import { spriteManifestUrl, spriteFrameUrl, spriteDirFor } from './data/spriteManifest';
@@ -52,7 +53,7 @@ interface CharManifest {
   [pose: string]: { frames: { file: string; w: number; h: number }[]; fps: number; loop: boolean };
 }
 
-type BattleSpritePose = 'idle' | 'move_front' | 'move_back' | 'guard' | 'attack_fwd' | 'attack_ud' | 'hurt' | 'beam_charge' | 'beam_fire' | 'power_up';
+type BattleSpritePose = 'idle' | 'move_front' | 'move_back' | 'guard' | 'attack_fwd' | 'attack_ud' | 'hurt' | 'beam_charge' | 'beam_fire' | 'gather_power';
 const SPRITE_MANIFEST_CACHE = new Map<string, CharManifest>();
 const SPRITE_MANIFEST_PROMISES = new Map<string, Promise<CharManifest | null>>();
 
@@ -86,9 +87,9 @@ const POSE_FALLBACKS: Record<BattleSpritePose, BattleSpritePose[]> = {
   attack_fwd: ['attack_fwd', 'move_front', 'idle'],
   attack_ud: ['attack_ud', 'attack_fwd', 'idle'],
   hurt: ['hurt', 'guard', 'idle'],
-  beam_charge: ['beam_charge', 'power_up', 'guard', 'idle'],
+  beam_charge: ['beam_charge', 'gather_power', 'guard', 'idle'],
   beam_fire: ['beam_fire', 'beam_charge', 'attack_fwd', 'idle'],
-  power_up: ['power_up', 'beam_charge', 'guard', 'idle'],
+  gather_power: ['gather_power', 'beam_charge', 'guard', 'idle'],
 };
 
 const OFFENSIVE_SUPPORT_EFFECTS = new Set<CardEffect>([
@@ -111,7 +112,7 @@ function cardBattlePose(card: CardDef, context: 'field' | 'fx' = 'field'): Battl
   if (card.type === 'damage' || card.type === 'command') return 'attack_fwd';
   if (card.type === 'defense' || DEFENSIVE_EFFECTS.has(card.effect)) return 'guard';
   if (OFFENSIVE_SUPPORT_EFFECTS.has(card.effect)) return 'attack_fwd';
-  return 'power_up';
+  return 'gather_power';
 }
 
 interface Fighter {
@@ -306,6 +307,32 @@ function FighterSprite({ formId, pose, side, scale = 8, flash = false }: {
     <div className={`fighter-sprite ${flash ? 'flash' : ''}`}
       style={{ transform: `scaleX(${flip})`, width: cw, height: ch, display: 'flex', alignItems: 'flex-end', justifyContent: 'center' }}>
       <img src={anim.src} alt={formId} style={{ imageRendering: 'pixelated', width: pw, height: px }} />
+    </div>
+  );
+}
+
+// ─── Sprite idle recortado de un sheet auténtico ─────────
+// Battle Overworld con taxonomía canónica (docs/SPRITE_TAXONOMY.md):
+// · pose 'idle' (o sin gather): muestra battle_overworld_idle
+// · pose 'gather_power': muestra gather_power_pose + gather_power_aura (FX)
+// · fallback: idleSrc (chibi *_ow.png) si no hay battle_overworld extraído
+function BattleOverworldSprite({ formId, pose, side, idleSrc }: {
+  formId: string; pose: string; side?: 'left' | 'right'; idleSrc?: string;
+}) {
+  const flip = side ? facingFlip(formId, side) : 1;
+  const isGather = pose === 'gather_power';
+  const poseSrc = battleOverworldActorUrl(formId, isGather ? 'gather_power_pose' : 'idle');
+  const auraSrc = isGather ? battleOverworldAuraUrl(formId) : undefined;
+
+  // Si no hay battle_overworld extraído, usar el chibi *_ow.png estándar
+  const src = poseSrc ?? idleSrc;
+  if (!src) return null;
+
+  return (
+    <div className={`battle-overworld ${isGather ? 'gathering' : ''}`}
+      style={{ transform: `scaleX(${flip})` }}>
+      <img src={src} alt={formId} className="overworld-sprite" />
+      {auraSrc && <img src={auraSrc} alt="" className="gather-power-aura" />}
     </div>
   );
 }
@@ -1141,10 +1168,10 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
   const cardFxActorPose = (card: CardDef, step: CardFxStep): BattleSpritePose => {
     if (step === 'attacker') {
       if (card.type === 'beam') return 'beam_charge';
-      // Golpe físico: aproximación en stance neutral (no 'power_up', que cae
+      // Golpe físico: aproximación en stance neutral (no 'gather_power', que cae
       // a beam_charge = manos juntas cargando ki, impropio de un puñetazo).
       if (card.type === 'damage' || card.type === 'command') return 'idle';
-      if (OFFENSIVE_SUPPORT_EFFECTS.has(card.effect)) return 'power_up';
+      if (OFFENSIVE_SUPPORT_EFFECTS.has(card.effect)) return 'gather_power';
     }
     if (step === 'travel') {
       if (card.type === 'beam') return 'beam_fire';
@@ -1314,7 +1341,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
     // habilita Limit Deck y convierte el Basic 3 Stage → 4 Stage
     setPStages(s => ({ ...s, str: clampStage(s.str + 0.5), ki: clampStage(s.ki + 0.5) }));
     addLog(`${player.name} GATHER POWER! FULL POWER (+4 STR/KI, LIMIT DECK 2 turnos)`);
-    setPlayerPose('power_up');
+    setPlayerPose('gather_power');
     // Consume la acción de ataque completa
     setTimeout(() => {
       setPlayerPose('idle');
@@ -2024,7 +2051,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
           const pct = h.effect === 'heal_strong' ? (1 / 4 + 1 / 3) : h.effect === 'heal_light' ? 0.3 : 0.25;
           const healed = Math.floor(enemy.maxHp * pct);
           setEnemy(prev => ({ ...prev, hp: Math.min(prev.maxHp, prev.hp + healed) }));
-          setEnemyPose('power_up');
+          setEnemyPose('gather_power');
           addLog(`${enemy.name} ${t('battle.uses')} ${h.name} — +${healed} HP!`);
           setTimeout(() => { setEnemyPose('idle'); advanceExchange(); }, gbcMs(58));
           return;
@@ -2037,7 +2064,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
         // Gather Power: no ataca, sube STR/KI (mecánica real)
         Sfx.powerUp();
         setEStages(s => ({ ...s, str: clampStage(s.str + 1), ki: clampStage(s.ki + 1) }));
-        setEnemyPose('power_up');
+        setEnemyPose('gather_power');
         addLog(`${enemy.name} ${t('battle.gathers')}! (+8 STR/KI)`);
         ai.mode = 2;
         setTimeout(() => { setEnemyPose('idle'); advanceExchange(); }, gbcMs(58));
@@ -2677,7 +2704,12 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
           <div ref={playerRef} className={`fighter-container player ${POSITION_DATA[player.battlePos].altitude.toLowerCase()} ${POSITION_DATA[player.battlePos].depth.toLowerCase()} ${phase === 'stageInput' ? (qteFrozen ? 'qte-frozen' : qteIsDir ? 'qte-lunge' : 'qte-idle') : ''}`}
             style={{ left: `${anchorFor(player.battlePos, 'LEFT').x}%`, top: `${anchorFor(player.battlePos, 'LEFT').y}%`, ['--lunge-px' as string]: `${lungePx(player.battlePos, enemy.battlePos)}px` }}>
             {qtePose === 'idle' && overworldUrl(playerFormId) && phase !== 'stageInput'
-              ? <img src={overworldUrl(playerFormId)!} alt="" className="overworld-sprite" style={{ transform: `scaleX(${facingFlip(playerFormId, 'left')})` }} />
+              ? <BattleOverworldSprite
+                  formId={playerFormId}
+                  pose={playerPose}
+                  side="left"
+                  idleSrc={overworldUrl(playerFormId)!}
+                />
               : (spriteManifestUrl(playerFormId)
                   ? <FighterSprite formId={playerFormId} pose={qtePose} side="left" scale={15} flash={phase === 'stageInput' ? (qteFrozen ? false : stageQte.idx > 0) : flashPlayer} />
                   : <CharacterSprite formId={playerFormId} className="sheet-sprite" height={152} side="left" />)}

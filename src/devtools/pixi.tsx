@@ -15,7 +15,7 @@ import type { FighterActor } from '../renderer/pixi/actors/FighterActor';
 
 const POSES = [
   'idle', 'move_front', 'move_back', 'guard', 'attack_fwd',
-  'attack_ud', 'hurt', 'beam_charge', 'beam_fire', 'power_up',
+  'attack_ud', 'hurt', 'beam_charge', 'beam_fire', 'gather_power',
 ] as const;
 
 // Caja lógica (píxeles de "juego") y display CSS (escalado 2x pixelado).
