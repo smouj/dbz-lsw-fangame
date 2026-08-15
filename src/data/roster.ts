@@ -211,7 +211,7 @@ export function statAtLevel(form: FormDef, level: number, stat: 'hp' | 'str' | '
 // Bang Attack" en Vegeta, "Super Kamehameha + Teleport + Big Bang" en Vegito).
 export const LIMIT_DEFAULTS: Record<string, number[]> = {
   'goku': [23, 13, 24],      // Kaio Ken, S.Kamehameha, Spirit Bomb
-  'gohan_kid': [10, 13],     // Masenko, S.Kamehameha
+  'gohan_kid': [10],         // Masenko
   'gohan_adult': [13],       // S.Kamehameha
   'vegeta': [32, 31, 30],    // Final Flash, Big Bang Atk, Galick-Ho
   'piccolo': [17, 18],       // S.Beam Can., F.Lightbomb

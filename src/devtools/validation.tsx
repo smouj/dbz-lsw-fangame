@@ -2,13 +2,20 @@
 // DEV STUDIO — Validation
 // Chequeos de integridad de datos: cobertura, ids rotos, referencias.
 // ═══════════════════════════════════════════════════════════
-import { useMemo } from 'react';
-import { FORMS, CHARACTERS } from '../data/roster';
+import { useMemo, useEffect, useState } from 'react';
+import { FORMS, CHARACTERS, LIMIT_DEFAULTS } from '../data/roster';
 import { CARDS } from '../data/cards';
 import { STORY_ENEMY_DECKS, TEAM_BATTLES } from '../data/enemy_decks';
 import { spriteDirFor } from '../data/spriteManifest';
 
 interface Check { name: string; ok: boolean; detail: string; }
+
+/** Misma lógica que cardUsableBy en main.tsx (evita dependencia circular). */
+function usableBy(card: { compatible?: string[]; notCompatible?: string[] }, charId: string): boolean {
+  if (card.compatible && card.compatible.length > 0 && !card.compatible.includes(charId)) return false;
+  if (card.notCompatible && card.notCompatible.includes(charId)) return false;
+  return true;
+}
 
 export function ValidationModule() {
   const checks = useMemo<Check[]>(() => {
@@ -107,7 +114,50 @@ export function ValidationModule() {
       detail: badCompat.length === 0 ? 'todas válidas' : `rotas: ${badCompat.slice(0, 5).join(', ')}`,
     });
 
+    // 11. LIMIT_DEFAULTS: los ids existen y son usables por el personaje
+    const limitBad: string[] = [];
+    for (const [charId, ids] of Object.entries(LIMIT_DEFAULTS)) {
+      for (const cid of ids) {
+        const card = cardMap.get(cid);
+        if (!card) { limitBad.push(`${charId}:${cid} no existe`); continue; }
+        if (!usableBy(card, charId)) limitBad.push(`${charId}:${cid} no usable`);
+      }
+    }
+    out.push({
+      name: 'Limits por defecto → cartas usables',
+      ok: limitBad.length === 0,
+      detail: limitBad.length === 0 ? 'todos coherentes' : `incoherentes: ${limitBad.slice(0, 5).join(', ')}`,
+    });
+
     return out;
+  }, []);
+
+  // 12. Manifests de combate (async): poses base + beam_ray en todas las formas
+  const [manifestState, setManifestState] = useState<{ bad: string[]; withRay: number; total: number }>({ bad: [], withRay: 0, total: 0 });
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      const basePoses = ['idle', 'move_front', 'move_back', 'guard', 'attack_fwd', 'attack_ud', 'hurt', 'beam_charge', 'beam_fire'];
+      const bad: string[] = [];
+      let withRay = 0;
+      let total = 0;
+      for (const f of Object.values(FORMS)) {
+        const dir = spriteDirFor(f.id);
+        if (!dir) continue;
+        total++;
+        try {
+          const r = await fetch(`/assets/sprites/${dir}/manifest.json`);
+          if (!r.ok) { bad.push(`${f.id}: fetch`); continue; }
+          const m = await r.json() as Record<string, { frames?: unknown[] }>;
+          for (const p of basePoses) if (!m[p] || !m[p].frames?.length) bad.push(`${f.id}:${p}`);
+          if (m.beam_ray?.frames?.length) withRay++;
+        } catch {
+          bad.push(`${f.id}: fetch`);
+        }
+      }
+      if (!cancelled) setManifestState({ bad, withRay, total });
+    })();
+    return () => { cancelled = true; };
   }, []);
 
   const okCount = checks.filter(c => c.ok).length;
@@ -128,6 +178,18 @@ export function ValidationModule() {
             </div>
           </div>
         ))}
+        <div className={`dev-check-row ${manifestState.bad.length === 0 && manifestState.total > 0 ? 'ok' : 'bad'}`}>
+          <span className="dev-check-icon">{manifestState.bad.length === 0 && manifestState.total > 0 ? '✓' : '✗'}</span>
+          <div>
+            <div className="dev-check-name">Manifests de combate (poses base + rayo)</div>
+            <div className="dev-check-detail">
+              {manifestState.total === 0
+                ? 'verificando…'
+                : `${manifestState.total} manifests · ${manifestState.withRay} con beam_ray` +
+                  (manifestState.bad.length ? ` · faltan: ${manifestState.bad.slice(0, 8).join(', ')}` : ' · todos completos')}
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

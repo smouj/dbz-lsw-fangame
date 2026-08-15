@@ -22,7 +22,7 @@ export function DashboardModule({ onNavigate }: { onNavigate: (m: DevModuleId) =
 
   const stats: StatCard[] = [
     { label: 'Formas (ROM 48)', value: forms.length, total: 48, ok: forms.length === 48 },
-    { label: 'Personajes', value: CHARACTERS.length, total: 24, ok: CHARACTERS.length === 24 },
+    { label: 'Personajes', value: CHARACTERS.length, total: CHARACTERS.length, ok: CHARACTERS.length >= 24, hint: `${CHARACTERS.length} jugables` },
     { label: 'Cartas (ROM 125)', value: cards.length, total: 125, ok: cards.length === 125 },
     { label: 'Mazos de jefes', value: deckCount, total: 32, ok: deckCount >= 30 },
     { label: 'Combates de equipo', value: teamCount, total: 0, ok: teamCount > 0, hint: `${teamCount} cap. 2v2` },
