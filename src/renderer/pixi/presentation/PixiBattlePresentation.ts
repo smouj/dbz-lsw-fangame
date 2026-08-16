@@ -48,6 +48,8 @@ export class PixiBattlePresentation implements BattlePresentation {
   private rayBaseWidth = 0;
   /** Escala aplicada al rayo (distancia actor→target / ancho nativo). */
   private rayScale = 1;
+  /** Dirección horizontal del rayo: 1 jugador, -1 rival (textura espejada). */
+  private rayDirection = 1;
 
   // Rush: movimiento del atacante calculado como f(tick − rushStartTick).
   private rushActive = false;
@@ -153,13 +155,14 @@ export class PixiBattlePresentation implements BattlePresentation {
         const tex = actor.getPoseTexture('beam_ray', 0);
         if (tex) {
           const p = new Sprite(tex);
-          p.anchor.set(this.attacker === 'left' ? 0 : 1, 0.5); // crece hacia el rival desde cualquier lado
+          p.anchor.set(0, 0.5);
+          this.rayDirection = this.attacker === 'left' ? 1 : -1;
           // Escala para cubrir la distancia actor→target: el rayo nativo
           // (~115px) debe llegar al rival cuando progress=1. El alto escala
           // con la misma proporción (coherente con el luchador a `scale`×).
           const dist = Math.abs(ACTION_TARGET_X - ACTION_ACTOR_X);
           const sx = dist / tex.width;
-          p.scale.set(sx, sx);
+          p.scale.set(sx * this.rayDirection, sx);
           this.raySprite = true;
           this.rayBaseWidth = tex.width;
           this.rayScale = sx;
@@ -220,7 +223,7 @@ export class PixiBattlePresentation implements BattlePresentation {
       const full = this.rayBaseWidth * this.rayScale;
       this.projectile.position.set(fromX, ACTION_GROUND_Y - 40);
       const stretch = Math.max(0.001, (dist * p) / Math.max(1, full));
-      this.projectile.scale.set(stretch, this.rayScale);
+      this.projectile.scale.set(stretch * this.rayDirection, this.rayScale);
       if (this.rayFrames > 1) {
         const idx = Math.min(this.rayFrames - 1, Math.floor(p * this.rayFrames));
         const tex = this.actor?.getPoseTexture('beam_ray', idx);
@@ -229,7 +232,7 @@ export class PixiBattlePresentation implements BattlePresentation {
           this.rayBaseWidth = tex.width;
           // re-aplicar stretch con el nuevo ancho base
           const s2 = Math.max(0.001, (dist * p) / Math.max(1, tex.width * this.rayScale));
-          this.projectile.scale.set(s2, this.rayScale);
+          this.projectile.scale.set(s2 * this.rayDirection, this.rayScale);
         }
       }
       return;
@@ -321,6 +324,7 @@ export class PixiBattlePresentation implements BattlePresentation {
     this.raySprite = false;
     this.rayBaseWidth = 0;
     this.rayScale = 1;
+    this.rayDirection = 1;
     if (this.projectile) {
       this.renderer.sceneDirector.projectileLayer.removeChild(this.projectile);
       this.projectile.destroy({ texture: false });
