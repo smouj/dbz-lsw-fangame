@@ -3,14 +3,14 @@
 // Personaje → formas → stats con selector de nivel + assets.
 // Usa las MISMAS funciones del juego (statAtLevel, sheetUrl, etc.)
 // ═══════════════════════════════════════════════════════════
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
   CHARACTERS, FORMS, getForm, statAtLevel, sheetUrl, idleSpriteUrl,
 } from '../data/roster';
 import { spriteDirFor, spriteManifestUrl, spriteFrameUrl } from '../data/spriteManifest';
 import { BATTLE_PORTRAITS } from '../data/battlePortraits';
 import { overworldUrl } from '../data/overworld';
-import { battleOverworldActorUrl, battleOverworldAuraUrl } from '../data/battleOverworld';
+import { battleOverworldActorUrl, battleOverworldAuraUrlAsync } from '../data/battleOverworld';
 import { characterName } from '../data/storyPanels';
 import { COMBAT_POSE_ORDER, COMBAT_REQUIRED_POSES } from '../battle/spriteConfig';
 import type { DevLinkedTarget, DevModuleId } from './DevStudio';
@@ -36,7 +36,15 @@ export function CharactersModule({ onOpenModule }: {
   const idleUrl = spriteDir ? spriteFrameUrl(form.id, `${spriteDir}_idle_00.png`) : idleSpriteUrl(form);
   const battleOwIdle = battleOverworldActorUrl(form.id, 'idle');
   const battleOwPower = battleOverworldActorUrl(form.id, 'gather_power_pose');
-  const battleOwAura = battleOverworldAuraUrl(form.id);
+  // Aura: SOLO si el manifest real tiene la entrada (verificación HEAD).
+  // Si no existe, undefined → PowerUpCell muestra la pose sin aura (nunca
+  // icono roto/cyan).
+  const [battleOwAura, setBattleOwAura] = useState<string | undefined>(undefined);
+  useEffect(() => {
+    let cancelled = false;
+    battleOverworldAuraUrlAsync(form.id).then(url => { if (!cancelled) setBattleOwAura(url); });
+    return () => { cancelled = true; };
+  }, [form.id]);
   const portrait = BATTLE_PORTRAITS[form.id];
 
   const selectChar = (id: string) => {

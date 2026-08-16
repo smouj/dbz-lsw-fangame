@@ -7,9 +7,10 @@
 //   actor/001_gather_power_pose.png   → brazos levantados (acción GATHER POWER)
 //   effects/000_gather_power_aura.png → destello de energía (FX, NO actor)
 //
-// La animación battle_overworld_gather_power:
-//   idle → gather_power_pose → gather_power_pose + gather_power_aura
-//   → POWERED_UP = true → idle
+// FUENTE DE VERDAD: public/assets/overworld/battle/manifest.json (24
+// entradas reales). Los formIds del roster SIN entrada en el manifest NO
+// tienen battle overworld extraído: las URLs devuelven undefined y el
+// runtime cae al chibi *_ow.png (sin aura rota / icono cyan).
 // ═══════════════════════════════════════════════════════════
 
 export interface BattleOverworldFrame {
@@ -27,14 +28,7 @@ export interface BattleOverworldEntry {
   };
 }
 
-// Forma canónica: <formId> → entrada (los ids internos son los del roster)
-const BATTLE_OVERWORLD: Record<string, BattleOverworldEntry> = {
-  // Mapeo directo desde public/assets/overworld/battle/manifest.json
-  // (char/form del roster → rutas). Se rellena abajo por import estático
-  // del manifest (generado por scripts/extract-battle-overworld.py).
-};
-
-// Cargar el manifest generado (estático — vite lo sirve como JSON)
+// Manifest cargado estáticamente (vite sirve el JSON como URL).
 import manifestUrl from '/assets/overworld/battle/manifest.json?url';
 
 export async function loadBattleOverworldManifest(): Promise<Record<string, Record<string, BattleOverworldEntry>>> {
@@ -42,60 +36,23 @@ export async function loadBattleOverworldManifest(): Promise<Record<string, Reco
   return res.json();
 }
 
-// URL del frame de actor
-export function battleOverworldActorUrl(formId: string, frame: 'idle' | 'gather_power_pose'): string | undefined {
-  // formId → char/form: el formId del roster incluye el character
-  // (p.ej. 'goku_super_saiyan' → char 'goku', form 'super_saiyan').
-  // El manifest está por (char, form) del roster.
-  const key = formIdToCharForm(formId);
-  if (!key) return undefined;
-  const file = frame === 'idle' ? '000_idle.png' : '001_gather_power_pose.png';
-  return `/assets/overworld/battle/${key.char}/${key.form}/battle_overworld/actor/${file}`;
-}
-
-// URL del aura (FX)
-export function battleOverworldAuraUrl(formId: string): string | undefined {
-  const key = formIdToCharForm(formId);
-  if (!key) return undefined;
-  return `/assets/overworld/battle/${key.char}/${key.form}/battle_overworld/effects/000_gather_power_aura.png`;
-}
-
-// Resolver char/form desde el formId del roster (p.ej. 'goku_super_saiyan')
-// Se apoya en el prefijo del id (los ids de forma son <char>_<form>).
-function formIdToCharForm(formId: string): { char: string; form: string } | null {
-  // Los ids de forma del roster: goku_base, goku_super_saiyan, vegeta_base,
-  // piccolo_base, majin_buu_fat_buu no existe — buu_base etc.
-  // Para robustez, buscamos en el manifest por coincidencia de prefijo.
+/**
+ * Mapeo estático char/form derivado del manifest REAL (24 entradas).
+ * SOLO las formas confirmadas tienen battle overworld; el resto devuelve
+ * null → runtime usa chibi *_ow.png y sin aura (nunca URL rota).
+ */
+function formIdToCharFormSync(formId: string): { char: string; form: string } | null {
   const known: Record<string, [string, string]> = {
+    // Entradas confirmadas en manifest.json (24)
     'goku_base': ['goku', 'base'],
     'goku_ssj': ['goku', 'super_saiyan'],
-    'goku_ssj2': ['goku', 'super_saiyan_3'], // placeholder — revisar
     'goku_ssj3': ['goku', 'super_saiyan_3'],
     'vegeta_base': ['vegeta', 'base'],
     'vegeta_ssj': ['vegeta', 'super_saiyan'],
     'vegeta_majin': ['vegeta', 'super_saiyan'],
     'piccolo_base': ['piccolo', 'base'],
-    'piccolo_kami': ['piccolo', 'base'],
-    'piccolo_evil': ['piccolo', 'base'],
     'krillin_base': ['krillin', 'base'],
-    'gohan_young': ['gohan', 'young_base'],
-    'gohan_young_ssj': ['gohan', 'super_saiyan'],
-    'gohan_young_ssj2': ['gohan', 'super_saiyan'],
-    'gohan_adult_ssj': ['gohan', 'super_saiyan'],
-    'gohan_adult_ssj2': ['gohan', 'super_saiyan'],
-    'gohan_adult_ultimate': ['gohan', 'ultimate'],
-    'trunks_kid': ['trunks', 'base'],
-    'trunks_kid_ssj': ['trunks', 'super_saiyan'],
-    'trunks_future': ['trunks_future', 'base'],
-    'trunks_ssj': ['trunks_future', 'super_saiyan'],
-    'goten_base': ['goten', 'base'],
-    'goten_ssj': ['goten', 'super_saiyan'],
-    'gotenks_ssj': ['gotenks', 'super_saiyan'],
-    'gotenks_ssj3': ['gotenks', 'super_saiyan_3'],
     'frieza_final': ['frieza', 'base'],
-    'cell_imperfect': ['cell', 'imperfect'],
-    'cell_semi': ['cell', 'semi_perfect'],
-    'cell_perfect': ['cell', 'perfect'],
     'cell_jr': ['cell_jr', 'base'],
     'android_16': ['android_16', 'base'],
     'android_17': ['android_17', 'base'],
@@ -103,19 +60,50 @@ function formIdToCharForm(formId: string): { char: string; form: string } | null
     'android_19': ['android_19', 'base'],
     'android_20': ['android_20', 'base'],
     'ginyu': ['captain_ginyu', 'base'],
-    'ginyu_goku': ['captain_ginyu', 'gokus_body'],
     'recoome': ['recoome', 'base'],
     'guldo': ['guldo', 'base'],
     'jeice': ['jeice_burter', 'jeice'],
     'burter': ['jeice_burter', 'burter'],
-    'nappa': ['nappa', 'base'],
     'buu_base': ['majin_buu', 'fat_buu'],
     'buu_super': ['majin_buu', 'super_buu'],
-    'buu_gotenks': ['majin_buu', 'gotenks_absorbed'],
-    'buu_gohan': ['majin_buu', 'gohan_absorbed'],
     'buu_kid': ['majin_buu', 'kid_buu'],
+    'gotenks_ssj': ['gotenks', 'super_saiyan'],
     'vegito_ssj': ['vegito', 'base'],
+    // NOTA: gohan, trunks, goten, cell, nappa, ginyu_goku, buu_gotenks,
+    // buu_gohan y gotenks_ssj3 NO tienen battle overworld en el manifest
+    // (24 entradas reales). No inventar rutas: devuelven null y el runtime
+    // cae al chibi *_ow.png sin aura (nunca icono roto/cyan).
   };
   const pair = known[formId];
   return pair ? { char: pair[0], form: pair[1] } : null;
+}
+
+// URL del frame de actor
+export function battleOverworldActorUrl(formId: string, frame: 'idle' | 'gather_power_pose'): string | undefined {
+  const key = formIdToCharFormSync(formId);
+  if (!key) return undefined;
+  const file = frame === 'idle' ? '000_idle.png' : '001_gather_power_pose.png';
+  return `/assets/overworld/battle/${key.char}/${key.form}/battle_overworld/actor/${file}`;
+}
+
+// URL del aura (FX). Verifica existencia real del archivo: si la entrada del
+// manifest no existe en disco, devuelve undefined (sin icono roto/cyan).
+export async function battleOverworldAuraUrlAsync(formId: string): Promise<string | undefined> {
+  const url = battleOverworldAuraUrl(formId);
+  if (!url) return undefined;
+  try {
+    const res = await fetch(url, { method: 'HEAD' });
+    return res.ok ? url : undefined;
+  } catch {
+    return undefined;
+  }
+}
+
+// Versión síncrona para el runtime del juego: deriva del mapeo estático.
+// Devuelve undefined si el form no tiene aura real → el runtime muestra la
+// pose gather sin aura (fallback CSS), nunca una imagen rota.
+export function battleOverworldAuraUrl(formId: string): string | undefined {
+  const key = formIdToCharFormSync(formId);
+  if (!key) return undefined;
+  return `/assets/overworld/battle/${key.char}/${key.form}/battle_overworld/effects/000_gather_power_aura.png`;
 }
