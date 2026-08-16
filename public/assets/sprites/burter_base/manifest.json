@@ -76,7 +76,7 @@
     ]
   },
   "attack_fwd": {
-    "frame_count": 7,
+    "frame_count": 6,
     "fps": 5,
     "loop": false,
     "frames": [
@@ -115,12 +115,6 @@
         "file": "burter_base_attack_fwd_05.png",
         "w": 24,
         "h": 41
-      },
-      {
-        "name": "burter_base_attack_fwd_06",
-        "file": "burter_base_attack_fwd_06.png",
-        "w": 46,
-        "h": 38
       }
     ]
   },

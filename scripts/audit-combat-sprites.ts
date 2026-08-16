@@ -1,6 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import crypto from 'node:crypto';
+import { createHash } from 'node:crypto';
 import { FORMS } from '../src/data/roster';
 import { CARDS } from '../src/data/cards';
 import { spriteDirFor } from '../src/data/spriteManifest';
@@ -125,7 +125,7 @@ for (const form of Object.values(FORMS)) {
       // Duplicados exactos consecutivos (mismo MD5) congelan la animacion.
       const framePath = path.join(spriteRoot, dir, frame.file);
       if (fs.existsSync(framePath)) {
-        const hash = crypto.createHash('md5').update(fs.readFileSync(framePath)).digest('hex');
+        const hash = createHash('md5').update(fs.readFileSync(framePath)).digest('hex');
         if (index > 0 && prevFrameHash === hash) {
           check(`${form.id}:${pose}:${index}:noConsecutiveDuplicate`, false, frame.file);
         }
@@ -164,6 +164,30 @@ for (const card of CARDS.filter(c => c.type === 'command' || c.type === 'damage'
 const forms = Object.keys(FORMS).length;
 const manifestCount = manifests.size;
 const withBeamRay = [...manifests.values()].filter(m => m.beam_ray?.frames?.length).length;
+
+// ─── Recovery check (WARN no destructivo) ───
+// Para attack_fwd/attack_ud: el ultimo frame deberia volver cerca de la pose
+// base (recovery), no quedarse extendido. Detecta secuencias cuyo ultimo frame
+// esta mas lejos del frame 0 que del punto medio (posible lunge/daño colado).
+for (const [formId, manifest] of manifests) {
+  for (const pose of ['attack_fwd', 'attack_ud']) {
+    const frames = manifest[pose]?.frames ?? [];
+    if (frames.length < 4) continue;
+    const files = frames.map(f => f.file);
+    const dir = spriteDirFor(formId)!;
+    // Ancho del recorte como proxy de "alcance": el ultimo frame de un ataque
+    // deberia volver a recovery (ancho cercano al frame 0), no ser el mas ancho.
+    const widths = frames.map(f => f.w ?? 0);
+    const first = widths[0];
+    const last = widths[widths.length - 1];
+    const maxW = Math.max(...widths);
+    const isMax = last === maxW && widths.filter(w => w === maxW).length === 1;
+    if (first > 0 && isMax && last > first + 8) {
+      console.log(`WARN ${formId}/${pose}: ultimo frame es el MAS ANCHO (w=${last}, frame0 w=${first}) — posible lunge/daño colado en vez de recovery`);
+    }
+  }
+}
+
 console.log(`\nAudited ${forms} forms, ${manifestCount} manifests, ${withBeamRay} beam-ray sets.`);
 console.log(failures === 0 ? 'ALL CHECKS PASSED' : `${failures} CHECKS FAILED`);
 process.exit(failures === 0 ? 0 : 1);
