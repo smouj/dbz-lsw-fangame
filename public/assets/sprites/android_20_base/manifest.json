@@ -236,7 +236,7 @@
     ]
   },
   "beam_fire": {
-    "frame_count": 7,
+    "frame_count": 6,
     "fps": 8,
     "loop": false,
     "frames": [
@@ -255,12 +255,6 @@
       {
         "name": "android_20_base_beam_fire_02",
         "file": "android_20_base_beam_fire_02.png",
-        "w": 31,
-        "h": 43
-      },
-      {
-        "name": "android_20_base_beam_fire_03",
-        "file": "android_20_base_beam_fire_03.png",
         "w": 31,
         "h": 43
       },
