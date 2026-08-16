@@ -313,16 +313,16 @@ export class PixiBattlePresentation implements BattlePresentation {
   debugState(): {
     tick: number;
     scene: BattleScene;
-    actor: { pose: string | null; frame: number; x: number; y: number } | null;
-    target: { pose: string | null; frame: number; x: number; y: number } | null;
+    actor: { pose: string | null; frame: number; x: number; y: number; visible: boolean } | null;
+    target: { pose: string | null; frame: number; x: number; y: number; visible: boolean } | null;
   } {
     const a = this.actor;
     const t = this.target;
     return {
       tick: this.renderer.currentTick,
       scene: this.renderer.sceneDirector.scene,
-      actor: a ? { pose: a.pose, frame: a.frameIndex, x: a.position.x, y: a.position.y } : null,
-      target: t ? { pose: t.pose, frame: t.frameIndex, x: t.position.x, y: t.position.y } : null,
+      actor: a ? { pose: a.pose, frame: a.frameIndex, x: a.position.x, y: a.position.y, visible: a.visible } : null,
+      target: t ? { pose: t.pose, frame: t.frameIndex, x: t.position.x, y: t.position.y, visible: t.visible } : null,
     };
   }
 

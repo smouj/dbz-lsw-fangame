@@ -45,6 +45,21 @@ lateral continuo. Es:
 TÁCTICA → selección → CORTE → ACCIÓN → resolución → CORTE → TÁCTICA
 ```
 
+Para acciones de carta, la vista de acción arranca siempre con una sola
+representación principal del atacante:
+
+```text
+TACTICAL_FIELD
+  → ACTION_SOLO    (actor prepara / carga / aura)
+  → PROJECTILE     (beam/proyectil viaja)  o  ACTION_DUEL (melee/rush)
+  → IMPACT
+  → TACTICAL_FIELD
+```
+
+No puede haber dos sprites independientes del mismo personaje animando a la vez
+(por ejemplo campo DOM + escena Pixi, o campo táctico + card-fx). Si Pixi está
+activo, Pixi es dueño de la escena; si no, `card-fx` es el fallback DOM.
+
 ---
 
 ## 2. Estructura permanente de la pantalla (GBC 160×144)

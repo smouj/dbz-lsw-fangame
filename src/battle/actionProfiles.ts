@@ -142,6 +142,7 @@ export function compileActionProfile(spec: ActionProfileSpec): CinematicProfile 
 
   // 4) Rush/lunge
   if (spec.rush) {
+    tracks.push(track(spec.rush.startFrame, 'SHOT', { shot: 'ACTION_DUEL' }));
     tracks.push(track(spec.rush.startFrame, 'PROJECTILE', { action: 'rush', progress: 0, duration: spec.rush.duration }));
   }
 
@@ -155,6 +156,7 @@ export function compileActionProfile(spec: ActionProfileSpec): CinematicProfile 
       contactFrame,
       travelFrames: p.travelFrames,
     };
+    tracks.push(track(p.spawnFrame, 'SHOT', { shot: 'PROJECTILE' }));
     tracks.push(track(p.spawnFrame, 'PROJECTILE', { action: 'spawn', ...payload }));
     tracks.push(track(p.spawnFrame + Math.floor(p.travelFrames / 2), 'PROJECTILE', { action: 'travel', progress: 0.5, ...payload }));
   }
@@ -207,7 +209,7 @@ function beamSpec(id: string, label: string, match: string[], projectile: Projec
   const b = T.beam;
   return {
     id, label, kind: 'beam', fidelity: 'INFERRED', match,
-    entry: { source: 'TACTICAL', destination: 'PROJECTILE', transition: 'cut' },
+    entry: { source: 'TACTICAL', destination: 'ACTION_SOLO', transition: 'cut' },
     actor: {
       pose: 'idle',
       beats: [
@@ -228,7 +230,7 @@ function meleeSpec(id: string, label: string, match: string[]): ActionProfileSpe
   const m = T.melee;
   return {
     id, label, kind: 'damage', fidelity: 'INFERRED', match,
-    entry: { source: 'TACTICAL', destination: 'ACTION_DUEL', transition: 'cut' },
+    entry: { source: 'TACTICAL', destination: 'ACTION_SOLO', transition: 'cut' },
     actor: {
       pose: 'idle',
       beats: [

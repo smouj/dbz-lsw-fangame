@@ -40,6 +40,9 @@ Parámetros de URL que activan overlays de diagnóstico (solo desarrollo):
   `←/→` ±1 tick · `Shift+←/→` ±10 · `R` reiniciar.
   El seek reconstruye estado desde cero al retroceder y el progreso de proyectil
   se calcula por `spawnFrame/contactFrame`, no por checkpoints discretos.
+- `?pixiField=1` — renderer Pixi del campo/acción. Cuando está listo, Pixi es
+  dueño visual de la acción y se oculta el fallback DOM para evitar sprites
+  duplicados.
 - `?debugState=1` — Inspector de estado interno (fase, CC, posiciones, stages,
   POWER/GATHER/etc.) + QTE Debugger. Teclas: `F` congelar/descongelar el reloj del
   Stage Attack · `.` +1 frame · `Shift+.` +10 frames.

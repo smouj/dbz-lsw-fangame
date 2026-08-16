@@ -43,6 +43,31 @@ The visual class for projectiles comes from `ActionCardSemantics.visual`:
 All real BEAM cards must resolve to a signature profile. A generic `ray`
 fallback is only acceptable for temporary non-BEAM code paths.
 
+## Action visibility contract
+
+Card actions must never show two independent character presentations at the
+same time. The canonical sequence is:
+
+```text
+FIELD
+  -> ACTION_SOLO     actor enters / charges / prepares
+  -> PROJECTILE      beam/ball/disk/sword travels, or
+     ACTION_DUEL     melee/rush reaches the target
+  -> IMPACT          target reaction + hitstop/flash
+  -> FIELD_RETURN
+```
+
+Runtime ownership:
+
+- DOM `card-fx` is the fallback presentation when Pixi is not active.
+- Pixi is the presentation owner when `?pixiField=1` is active and the
+  `PixiBattlePresentation` is ready; in that mode DOM `card-fx` is hidden to
+  avoid duplicated actors.
+- Field fighters (`battlefield-fighters`) are hidden during card actions. The
+  action scene owns the visible actor/target until `FIELD_RETURN`.
+- `ACTION_SOLO` shows the actor only. `PROJECTILE`, `ACTION_DUEL` and `IMPACT`
+  may show the target.
+
 Projectile tracks carry timing metadata as part of the runtime contract:
 
 - `PROJECTILE { action: "spawn", kind, spawnFrame, contactFrame, travelFrames }`

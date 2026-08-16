@@ -914,6 +914,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
   // ─── Presentación Pixi (dev flag ?pixiField=1): instancia que recibe los
   //     eventos del timeline en paralelo al DOM (sin reemplazarlo). ───
   const pixiPresRef = useRef<PixiBattlePresentation | null>(null);
+  const [pixiPresentationReady, setPixiPresentationReady] = useState(false);
   // ─── Depurador cinematográfico (?debugCinematics=1) ───
   const [debugCin, setDebugCin] = useState<CinematicDebugInfo | null>(null);
   const [debugPaused, setDebugPaused] = useState(false);
@@ -2454,6 +2455,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
     : viewMode === 'SPECIAL_ACTION' ? SPECIAL_ACTION_BACKGROUND
     : scenario.overviewBackground;
   const suppressFieldActors = !!cardFx;
+  const pixiPresentationActive = isPixiField() && pixiPresentationReady;
   const phaseShortLabel =
     phase === 'command' || phase === 'cardSelect' || phase === 'limitSelect' ? 'ATTACK' :
     phase === 'basic' ? 'BASIC' :
@@ -2507,7 +2509,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
   } : null;
 
   return (
-    <div className={`battle-screen view-${viewMode.toLowerCase()} ${intro ? 'intro-active' : ''} ${cardFx ? 'is-cinematic' : ''} ${phase === 'stageInput' ? 'qte-active' : ''} ${qteResolving ? 'qte-resolving' : ''}`}>
+    <div className={`battle-screen view-${viewMode.toLowerCase()} ${intro ? 'intro-active' : ''} ${cardFx ? 'is-cinematic' : ''} ${pixiPresentationActive ? 'pixi-presentation-active' : ''} ${phase === 'stageInput' ? 'qte-active' : ''} ${qteResolving ? 'qte-resolving' : ''}`}>
       {/* ═══ Depurador cinematográfico (?debugCinematics=1) ═══ */}
       {isDebugCinematics() && debugCin && (
         <pre className="cinematic-debug-overlay">{renderDebugOverlay(debugCin, debugPaused)}</pre>
@@ -2735,6 +2737,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
               playerPos={player.battlePos}
               enemyPos={enemy.battlePos}
               presentationRef={pixiPresRef}
+              onPresentationReady={setPixiPresentationReady}
             />
           </Suspense>
         )}

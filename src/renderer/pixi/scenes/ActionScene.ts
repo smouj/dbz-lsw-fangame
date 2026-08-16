@@ -22,6 +22,7 @@ export class ActionScene extends Container {
   private bg: Sprite | null = null;
   private actor: FighterActor | null = null;
   private target: FighterActor | null = null;
+  private scene: 'ACTION_SOLO' | 'ACTION_DUEL' | 'PROJECTILE' | 'IMPACT' = 'ACTION_DUEL';
 
   constructor() {
     super();
@@ -52,6 +53,7 @@ export class ActionScene extends Container {
       this.actor = actor;
       actor.setPos(ACTION_ACTOR_X, ACTION_GROUND_Y);
       this.addChild(actor);
+      this.applySceneVisibility();
     }
   }
 
@@ -65,7 +67,13 @@ export class ActionScene extends Container {
       this.target = target;
       target.setPos(ACTION_TARGET_X, ACTION_GROUND_Y);
       this.addChild(target);
+      this.applySceneVisibility();
     }
+  }
+
+  setScene(scene: 'ACTION_SOLO' | 'ACTION_DUEL' | 'PROJECTILE' | 'IMPACT'): void {
+    this.scene = scene;
+    this.applySceneVisibility();
   }
 
   getActor(): FighterActor | null {
@@ -82,5 +90,10 @@ export class ActionScene extends Container {
 
   hide(): void {
     this.visible = false;
+  }
+
+  private applySceneVisibility(): void {
+    if (this.actor) this.actor.visible = true;
+    if (this.target) this.target.visible = this.scene !== 'ACTION_SOLO';
   }
 }

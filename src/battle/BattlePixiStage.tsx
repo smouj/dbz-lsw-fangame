@@ -25,9 +25,10 @@ interface BattlePixiStageProps {
   enemyPos: BattlePosition;
   /** Ref donde el stage publica su PixiBattlePresentation (para enrutar el timeline). */
   presentationRef?: { current: PixiBattlePresentation | null };
+  onPresentationReady?: (ready: boolean) => void;
 }
 
-export function BattlePixiStage({ scenario, playerFormId, enemyFormId, playerPos, enemyPos, presentationRef }: BattlePixiStageProps) {
+export function BattlePixiStage({ scenario, playerFormId, enemyFormId, playerPos, enemyPos, presentationRef, onPresentationReady }: BattlePixiStageProps) {
   const stageRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -83,6 +84,7 @@ export function BattlePixiStage({ scenario, playerFormId, enemyFormId, playerPos
       }
       presentation = pres;
       if (presentationRef) presentationRef.current = pres;
+      onPresentationReady?.(true);
       // Master shot inicial: plano FIELD con overworld en sus posiciones.
       renderer.sync(0);
     })();
@@ -92,6 +94,7 @@ export function BattlePixiStage({ scenario, playerFormId, enemyFormId, playerPos
       if (presentationRef && presentationRef.current === presentation) {
         presentationRef.current = null;
       }
+      onPresentationReady?.(false);
       renderer?.destroy();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps

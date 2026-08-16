@@ -1062,6 +1062,8 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   transform: scale(.94);
   filter: brightness(.6) blur(1px);
   pointer-events: none;
+  visibility: hidden;
+  transition: none;
 }
 
 /* Vista ACTION: los fighters de campo se retiran suavemente (sin duplicidad
@@ -1071,6 +1073,10 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   transform: scale(.94);
   filter: brightness(.6) blur(1px);
   pointer-events: none;
+}
+.battlefield.field-action .battlefield-fighters.suppressed {
+  visibility: hidden;
+  transition: none;
 }
 
 .fighter-container {
@@ -4135,6 +4141,9 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   animation: fx-scene-in .3s ease-out both;
 }
 .card-fx.scene-return { animation: fx-scene-out .26s ease-in both; }
+.battle-screen.pixi-presentation-active .card-fx {
+  display: none;
+}
 .fx-vignette { position: absolute; inset: 0; background: radial-gradient(ellipse at center, rgba(5,8,14,.20) 0%, rgba(2,3,6,.76) 100%); animation: fx-vignette-in .3s ease-out both; }
 @keyframes fx-vignette-in { from { opacity: 0; } to { opacity: 1; } }
 .fx-fighter { position: absolute; bottom: clamp(16px, 5vh, 44px); filter: drop-shadow(0 0 24px rgba(255,190,60,.45)); }

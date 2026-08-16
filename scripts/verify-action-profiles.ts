@@ -29,6 +29,22 @@ for (const spec of ACTION_PROFILE_REGISTRY) {
   check(`compile:${spec.id}:sorted`, JSON.stringify(ticks) === JSON.stringify(sorted));
   const shot0 = p.tracks.some(t => t.tick === 0 && t.event.type === 'SHOT');
   check(`compile:${spec.id}:shot0`, shot0);
+  if (spec.projectile) {
+    const spawnShot = p.tracks.some(t =>
+      t.tick === spec.projectile?.spawnFrame &&
+      t.event.type === 'SHOT' &&
+      (t.event.payload as { shot?: string })?.shot === 'PROJECTILE');
+    check(`compile:${spec.id}:projectileShotAtSpawn`, spawnShot);
+    check(`compile:${spec.id}:startsSolo`, p.presentation === 'ACTION_SOLO', p.presentation);
+  }
+  if (spec.rush) {
+    const duelShot = p.tracks.some(t =>
+      t.tick === spec.rush?.startFrame &&
+      t.event.type === 'SHOT' &&
+      (t.event.payload as { shot?: string })?.shot === 'ACTION_DUEL');
+    check(`compile:${spec.id}:duelShotAtRush`, duelShot);
+    check(`compile:${spec.id}:startsSolo`, p.presentation === 'ACTION_SOLO', p.presentation);
+  }
   const fr = p.tracks.find(t => t.event.type === 'FIELD_RETURN');
   check(`compile:${spec.id}:fieldReturn`, !!fr && fr.tick === spec.returnToField);
   const maxTick = Math.max(...ticks);
@@ -91,8 +107,9 @@ const kam = profileFor('beam', 'Kamehameha');
 const misty = profileFor('beam', 'Misty KiWave');
 check('profileFor:kamehameha:id', kam.id === 'kamehameha', kam.id);
 check('profileFor:misty:id', misty.id === 'finger_beam', misty.id);
-// Ambos deben ser PROJECTILE y con timing compatible hasta que se mida frame a frame.
-check('profileFor:samePresentation', kam.presentation === misty.presentation && kam.presentation === 'PROJECTILE');
+// Ambos empiezan en ACTION_SOLO: actor prepara solo y el timeline transiciona
+// a PROJECTILE al spawn. Los timings siguen compatibles hasta medicion fina.
+check('profileFor:samePresentation', kam.presentation === misty.presentation && kam.presentation === 'ACTION_SOLO');
 check('profileFor:sameTotal', kam.totalTicks === misty.totalTicks, `${kam.totalTicks} vs ${misty.totalTicks}`);
 
 // 6) Melee firma vs fallback damage
@@ -100,7 +117,7 @@ const punch = profileFor('damage', 'Cont.Punch');
 const generic = profileFor('damage', 'Atomic Break');
 check('profileFor:punch:id', punch.id === 'cont_punch');
 check('profileFor:generic:id', generic.id === 'damage:Atomic Break');
-check('profileFor:meleePresentation', punch.presentation === 'ACTION_DUEL' && generic.presentation === 'ACTION_DUEL');
+check('profileFor:meleePresentation', punch.presentation === 'ACTION_SOLO' && generic.presentation === 'ACTION_SOLO');
 
 // 7) Todas las cartas BEAM reales tienen perfil firma y visual explicito.
 for (const card of CARDS.filter(c => c.type === 'beam')) {

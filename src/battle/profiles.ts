@@ -57,12 +57,13 @@ const T = {
 
 function profileBeam(id: string): CinematicProfile {
   const a = T.beamAttacker, t = T.beamTravel, g = T.beamTarget;
-  return buildProfile(id, 'PROJECTILE', [
-    // 1) Plano PROJECTILE + el atacante carga
-    track(0, 'SHOT', { shot: 'PROJECTILE' }),
+  return buildProfile(id, 'ACTION_SOLO', [
+    // 1) Plano ACTION_SOLO + el atacante carga sin duplicar al defensor
+    track(0, 'SHOT', { shot: 'ACTION_SOLO' }),
     track(0, 'ACTOR_POSE', { pose: 'beam_charge' }),
     // 2) Release + proyectil creado (head/body/trail)
-    track(a - 6, 'PROJECTILE', { action: 'spawn' }),
+    track(a - 6, 'SHOT', { shot: 'PROJECTILE' }),
+    track(a - 6, 'PROJECTILE', { action: 'spawn', kind: 'beam', spawnFrame: a - 6, contactFrame: a + t, travelFrames: t + 6 }),
     track(a, 'ACTOR_POSE', { pose: 'beam_fire' }),
     track(a, 'SHOT', { shot: 'PROJECTILE', focus: 'beam' }),
     // 3) Viaje del beam
@@ -88,12 +89,13 @@ function profileRush(id: string, kind: 'damage' | 'command'): CinematicProfile {
   // El impacto (HIT_FRAME) ocurre al FINAL del travel: antes el travel duraba
   // solo 6 ticks (a-6 → a), lo que cortaba el lunge CSS (fx-rush-body 0.7s).
   const contact = a + t;
-  return buildProfile(id, 'ACTION_DUEL', [
-    track(0, 'SHOT', { shot: 'ACTION_DUEL' }),
+  return buildProfile(id, 'ACTION_SOLO', [
+    track(0, 'SHOT', { shot: 'ACTION_SOLO' }),
     track(0, 'ACTOR_POSE', { pose: 'idle' }),
     // Windup al final del approach
     track(a - 12, 'ACTOR_POSE', { pose: 'attack_fwd' }),
     // Travel: lunge hacia el rival (inicio del desplazamiento)
+    track(a, 'SHOT', { shot: 'ACTION_DUEL' }),
     track(a, 'PROJECTILE', { action: 'rush', progress: 0.0, duration: t }),
     track(a, 'ACTOR_POSE', { pose: 'attack_fwd' }),
     // Contacto al final del travel
@@ -113,10 +115,11 @@ function profileRush(id: string, kind: 'damage' | 'command'): CinematicProfile {
 
 function profileSupportOffensive(id: string): CinematicProfile {
   const a = T.rushAttacker, g = T.rushTarget;
-  return buildProfile(id, 'ACTION_DUEL', [
-    track(0, 'SHOT', { shot: 'ACTION_DUEL' }),
+  return buildProfile(id, 'ACTION_SOLO', [
+    track(0, 'SHOT', { shot: 'ACTION_SOLO' }),
     track(0, 'ACTOR_POSE', { pose: 'power_up' }),
     track(a - 10, 'ACTOR_POSE', { pose: 'attack_fwd' }),
+    track(a, 'SHOT', { shot: 'ACTION_DUEL' }),
     track(a, 'TARGET_POSE', { pose: 'hurt' }),
     track(a, 'HIT_FRAME', {}),
     track(a + 1, 'CAMERA', { shake: 0.3 }),

@@ -34,5 +34,7 @@ export class SceneDirector {
     const field = scene === 'FIELD';
     this.tactical.visible = field;
     this.action.visible = !field;
+    this.projectileLayer.visible = !field;
+    if (!field) this.action.setScene(scene);
   }
 }

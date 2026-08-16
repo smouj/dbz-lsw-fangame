@@ -336,7 +336,7 @@ export function PixiSequenceModule() {
         pres.sync(tick);
         if (debugRef.current) {
           const d = pres.debugState();
-          const line = `${tick}|${d.scene}|A:${d.actor?.pose ?? '-'}/${d.actor?.frame ?? '-'}@${Math.round(d.actor?.x ?? 0)}|T:${d.target?.pose ?? '-'}/${d.target?.frame ?? '-'}`;
+          const line = `${tick}|${d.scene}|A:${d.actor?.pose ?? '-'}/${d.actor?.frame ?? '-'}@${Math.round(d.actor?.x ?? 0)}:${d.actor?.visible ? 'vis' : 'hid'}|T:${d.target?.pose ?? '-'}/${d.target?.frame ?? '-'}:${d.target?.visible ? 'vis' : 'hid'}`;
           const lines = debugRef.current.textContent?.split('\n') ?? [];
           if (lines.length > 40) lines.shift();
           lines.push(line);
@@ -399,7 +399,7 @@ export function PixiSequenceModule() {
     setSeekTick(target);
     pres.sync(target);
     const d = pres.debugState();
-    showDebug(`seek ${target}|${d.scene}|A:${d.actor?.pose ?? '-'}/${d.actor?.frame ?? '-'}|T:${d.target?.pose ?? '-'}/${d.target?.frame ?? '-'}`);
+    showDebug(`seek ${target}|${d.scene}|A:${d.actor?.pose ?? '-'}/${d.actor?.frame ?? '-'}:${d.actor?.visible ? 'vis' : 'hid'}|T:${d.target?.pose ?? '-'}/${d.target?.frame ?? '-'}:${d.target?.visible ? 'vis' : 'hid'}`);
   };
 
   /** Reproduce el perfil sin rAF y comprueba frame-determinismo (100 runs). */
