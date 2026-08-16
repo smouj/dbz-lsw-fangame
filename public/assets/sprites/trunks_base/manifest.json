@@ -261,10 +261,10 @@
     "loop": false,
     "frames": [
       {
-        "name": "trunks_base_beam_ray_tip_00",
-        "file": "trunks_base_beam_ray_tip_00.png",
-        "w": 42,
-        "h": 24
+        "name": "trunks_base_beam_ray_tip_01",
+        "file": "trunks_base_beam_ray_tip_01.png",
+        "w": 64,
+        "h": 56
       }
     ]
   },
