@@ -50,6 +50,7 @@ export function DashboardModule({ onNavigate }: { onNavigate: (m: DevModuleId) =
   if (spritePct < 100) alerts.push({ level: 'info', text: `${forms.length - withSprite} formas sin sprite de combate animado (fallback sheet/procedural).` });
   if (signatureProfiles.length < 12) alerts.push({ level: 'warn', text: `Solo ${signatureProfiles.length}/12 perfiles firma registrados.` });
   alerts.push({ level: 'info', text: 'Stage Attack: ventanas BACK_BACK 1.2s · BACK_FRONT 1.7s · FRONT_BACK 2.4s · FRONT_FRONT 2.9s (manual USA).' });
+  alerts.push({ level: 'info', text: 'Stage Attack: secuencias CANÓNICAS por nivel (pool fijo, rotación determinista round-robin): 3S=6 variantes A/B, 4/5/6S añaden direcciones al final (3 golpes + n−3 dirs).' });
   alerts.push({ level: 'info', text: 'Contraataque: A≈0.4s / B≈0.15s — HYPOTHESIS hasta captura ROM.' });
   alerts.push({ level: 'info', text: 'Desempate de SPD inicial: 50/50 aleatorio — UNKNOWN hasta ROM.' });
 
