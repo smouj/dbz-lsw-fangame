@@ -7,7 +7,7 @@ import { useState, useEffect } from 'react';
 import {
   CHARACTERS, FORMS, getForm, statAtLevel, sheetUrl, idleSpriteUrl,
 } from '../data/roster';
-import { spriteDirFor, spriteManifestUrl, spriteFrameUrl } from '../data/spriteManifest';
+import { spriteDirFor, spriteManifestUrl, spriteFrameUrl, spritePoseFrameUrl } from '../data/spriteManifest';
 import { BATTLE_PORTRAITS } from '../data/battlePortraits';
 import { overworldUrl } from '../data/overworld';
 import { battleOverworldActorUrl, battleOverworldAuraUrlAsync } from '../data/battleOverworld';
@@ -175,7 +175,7 @@ export function CharactersModule({ onOpenModule }: {
                 <h3>Poses (combate)</h3>
                 <div className="dev-pose-grid">
                   {COMBAT_REQUIRED_POSES.map(p => (
-                    <AssetCell key={p} label={p} src={spriteFrameUrl(form.id, `${spriteDir}_${p}_00.png`)} small />
+                    <PoseCell key={p} formId={form.id} pose={p} small />
                   ))}
                 </div>
                 <div className="dev-semantic-pose-row">{COMBAT_POSE_ORDER.join(' · ')}</div>
@@ -199,6 +199,21 @@ function AssetCell({ label, src, wide, small }: { label: string; src?: string; w
   );
 }
 
+/**
+ * Celda de pose resuelta contra el manifest REAL (igual que el runtime).
+ * Evita URLs rotas: beam_fire sin PNG físico cae a beam_charge (fallback),
+ * y las poses compuestas muestran su primer frame real.
+ */
+function PoseCell({ formId, pose, small }: { formId: string; pose: string; small?: boolean }) {
+  const [src, setSrc] = useState<string | undefined>(undefined);
+  useEffect(() => {
+    let cancelled = false;
+    spritePoseFrameUrl(formId, pose, 0).then(url => { if (!cancelled) setSrc(url); });
+    return () => { cancelled = true; };
+  }, [formId, pose]);
+  return <AssetCell label={pose} src={src} small={small} />;
+}
+
 function CombatSheetCell({ formId, spriteDir }: { formId: string; spriteDir: string }) {
   return (
     <div className="dev-asset-cell wide combat-sheet">
@@ -206,7 +221,7 @@ function CombatSheetCell({ formId, spriteDir }: { formId: string; spriteDir: str
         <div className="dev-combat-sheet-grid">
           {COMBAT_REQUIRED_POSES.map(pose => (
             <div key={pose} className="dev-combat-sheet-frame" title={pose}>
-              <img src={spriteFrameUrl(formId, `${spriteDir}_${pose}_00.png`)} alt={pose} loading="lazy" />
+              <PoseCell formId={formId} pose={pose} />
             </div>
           ))}
         </div>

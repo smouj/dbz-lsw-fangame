@@ -30,6 +30,7 @@ export interface BattleOverworldEntry {
 
 // Manifest cargado estáticamente (vite sirve el JSON como URL).
 import manifestUrl from '/assets/overworld/battle/manifest.json?url';
+import { OVERWORLD_FILES } from './overworld';
 
 export async function loadBattleOverworldManifest(): Promise<Record<string, Record<string, BattleOverworldEntry>>> {
   const res = await fetch(manifestUrl);
@@ -79,15 +80,17 @@ function formIdToCharFormSync(formId: string): { char: string; form: string } | 
 }
 
 // URL del frame de actor
+// - 'idle': FUENTE CANÓNICA = overworld/panel_sprites (48 formas, sin duplicados).
+//   Usa el MISMO mapeo OVERWORLD_FILES que overworldUrl (los nombres de archivo
+//   NO son <formId>_ow.png para todas las formas: gohan_young→young_gohan_base_ow,
+//   trunks_kid→trunks_base_ow, etc.). Los 000_idle.png de battle/ eran copias
+//   byte-idénticas de panel_sprites (21/24) — eliminados como duplicidad.
+// - 'gather_power_pose': SOLO battle/ (brazos arriba, exclusivo del power-up);
+//   las 20 formas sin battle overworld devuelven undefined → fallback al chibi.
 export function battleOverworldActorUrl(formId: string, frame: 'idle' | 'gather_power_pose'): string | undefined {
-  // FUENTE CANÓNICA del chibi idle: overworld/panel_sprites (48 formas,
-  // sin duplicados). El battle/ solo guarda lo EXCLUSIVO: gather_power_pose
-  // (brazos arriba) y effects/aura. Los 000_idle.png de battle/ eran copias
-  // byte-idénticas de panel_sprites (21/24) — eliminados como duplicidad.
   if (frame === 'idle') {
-    // panel_sprites usa el nombre de formId del roster (goku_base_ow.png)
-    const file = `${formId}_ow.png`;
-    return `/assets/overworld/panel_sprites/${file}`;
+    const file = OVERWORLD_FILES[formId];
+    return file ? `/assets/overworld/panel_sprites/${file}` : undefined;
   }
   const key = formIdToCharFormSync(formId);
   if (!key) return undefined;

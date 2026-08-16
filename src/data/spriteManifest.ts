@@ -82,3 +82,72 @@ export function spriteFrameUrl(formId: string, file: string): string {
   const dir = SPRITE_DIRS[formId] || formId;
   return `/assets/sprites/${dir}/${file}`;
 }
+
+// ─── Resolución de pose REAL (Dev Studio + previews) ───
+// El manifest es la verdad: algunas formas NO tienen beam_fire físico
+// (beam_fire: {} — alias de beam_charge en 12 formas SSJ) y las poses
+// compuestas (punch_right, knockback_*, gather_power…) reutilizan frames de
+// poses base. Este helper devuelve la URL del frame N de una pose aplicando
+// los MISMOS fallbacks que el runtime (spriteConfig.resolveCombatPose).
+
+const manifestCache = new Map<string, Record<string, unknown>>();
+
+async function loadManifestFor(formId: string): Promise<Record<string, unknown> | null> {
+  const dir = SPRITE_DIRS[formId] || formId;
+  if (manifestCache.has(dir)) return manifestCache.get(dir)!;
+  const url = `/assets/sprites/${dir}/manifest.json`;
+  try {
+    const res = await fetch(url);
+    if (!res.ok) return null;
+    const m = await res.json() as Record<string, unknown>;
+    manifestCache.set(dir, m);
+    return m;
+  } catch {
+    return null;
+  }
+}
+
+interface ManifestPose {
+  frames?: Array<{ file?: string } | string>;
+}
+
+/**
+ * URL del frame `index` de una pose, resuelto contra el manifest REAL con
+ * fallbacks runtime. Devuelve undefined si la pose no existe en absoluto
+ * (p.ej. beam_ray sin PNG).
+ */
+export async function spritePoseFrameUrl(
+  formId: string,
+  pose: string,
+  index = 0,
+): Promise<string | undefined> {
+  const dir = SPRITE_DIRS[formId] || formId;
+  const m = await loadManifestFor(formId);
+  if (!m) return undefined;
+  const poseSpec = m[pose] as ManifestPose | undefined;
+  if (poseSpec?.frames?.length) {
+    const fr = poseSpec.frames[index] ?? poseSpec.frames[0];
+    const file = typeof fr === 'string' ? fr : fr?.file;
+    return file ? spriteFrameUrl(formId, file) : undefined;
+  }
+  // Fallbacks runtime (spriteConfig.POSE_FALLBACKS)
+  const FALLBACKS: Record<string, string[]> = {
+    beam_fire: ['beam_fire', 'beam_charge', 'attack_fwd', 'idle'],
+    gather_power: ['gather_power', 'beam_charge', 'guard', 'idle'],
+    power_up: ['power_up', 'gather_power', 'beam_charge', 'guard', 'idle'],
+    beam_charge: ['beam_charge', 'gather_power', 'guard', 'idle'],
+  };
+  for (const alt of FALLBACKS[pose] ?? []) {
+    if (alt === pose) continue;
+    const altSpec = m[alt] as ManifestPose | undefined;
+    if (altSpec?.frames?.length) {
+      const fr = altSpec.frames[0];
+      const file = typeof fr === 'string' ? fr : fr?.file;
+      if (file) return spriteFrameUrl(formId, file);
+    }
+  }
+  return undefined;
+}
+
+export const _spriteManifestInternals = { loadManifestFor };
+
