@@ -17,6 +17,7 @@ import type { FighterActor } from '../actors/FighterActor';
 import { ACTION_ACTOR_X, ACTION_TARGET_X } from '../scenes/ActionScene';
 import { ACTION_GROUND_Y, rushX, easeOutCubic } from '../systems/MotionSystem';
 import type { BattlePresentation, BattleScene } from './BattlePresentation';
+import { resolveProjectileVisualMode, type ProjectileVisualMode } from './projectileVisual';
 
 export interface PixiPresentationConfig {
   playerFormId: string;
@@ -38,6 +39,7 @@ export class PixiBattlePresentation implements BattlePresentation {
   private rightActor: FighterActor | null = null;
   private attacker: BattleSide = 'left';
   private projectile: Sprite | null = null;
+  private projectileMode: ProjectileVisualMode = 'special';
   /** Nº de frames del rayo real (beam_ray) del atacante; 0 = fallback genérico. */
   private rayFrames = 0;
   /** True cuando el proyectil es el rayo real (modo stretch GBC). */
@@ -142,15 +144,16 @@ export class PixiBattlePresentation implements BattlePresentation {
     // usarlos en vez del rectángulo genérico — el rayo sale desde el lado del
     // personaje y viaja hasta el rival (frame = f(progress), determinista).
     const actor = this.actor;
+    this.projectileMode = resolveProjectileVisualMode(kind);
     this.rayFrames = 0;
-    if (actor && kind === 'beam') {
+    if (actor && this.projectileMode === 'ray') {
       const n = actor.poseFrameCount('beam_ray');
       if (n > 0) {
         this.rayFrames = n;
         const tex = actor.getPoseTexture('beam_ray', 0);
         if (tex) {
           const p = new Sprite(tex);
-          p.anchor.set(0, 0.5); // rayo anclado a la izquierda (sale del personaje)
+          p.anchor.set(this.attacker === 'left' ? 0 : 1, 0.5); // crece hacia el rival desde cualquier lado
           // Escala para cubrir la distancia actor→target: el rayo nativo
           // (~115px) debe llegar al rival cuando progress=1. El alto escala
           // con la misma proporción (coherente con el luchador a `scale`×).
@@ -162,17 +165,47 @@ export class PixiBattlePresentation implements BattlePresentation {
           this.rayScale = sx;
           this.renderer.sceneDirector.projectileLayer.addChild(p);
           this.projectile = p;
+          this.setProjectileProgress(0);
           return;
         }
       }
     }
-    // Fallback: rectángulo genérico (melee/otros proyectiles sin frames).
+    // Fallbacks pixel-art diferenciados cuando el manifest no ofrece un asset.
     const p = new Sprite(Texture.WHITE);
-    p.tint = kind === 'beam' ? 0x00ccff : 0xffd040;
-    p.height = 4;
-    p.anchor.set(0, 0.5);
+    p.anchor.set(0.5);
+    p.roundPixels = true;
+    switch (this.projectileMode) {
+      case 'ray':
+        p.tint = 0x00ccff;
+        p.width = 24;
+        p.height = kind === 'wave' ? 7 : 4;
+        break;
+      case 'ball':
+        p.tint = 0xffd040;
+        p.width = 10;
+        p.height = 10;
+        p.rotation = Math.PI / 4;
+        break;
+      case 'disk':
+        p.tint = 0xfff17a;
+        p.width = 18;
+        p.height = 4;
+        break;
+      case 'sword':
+        p.tint = 0x8ffcff;
+        p.width = 20;
+        p.height = 3;
+        p.rotation = this.attacker === 'left' ? -0.35 : 0.35;
+        break;
+      case 'special':
+        p.tint = 0xff8a40;
+        p.width = 8;
+        p.height = 8;
+        break;
+    }
     this.renderer.sceneDirector.projectileLayer.addChild(p);
     this.projectile = p;
+    this.setProjectileProgress(0);
   }
 
   setProjectileProgress(progress: number): void {
@@ -283,6 +316,7 @@ export class PixiBattlePresentation implements BattlePresentation {
   }
 
   private clearProjectile(): void {
+    this.projectileMode = 'special';
     this.rayFrames = 0;
     this.raySprite = false;
     this.rayBaseWidth = 0;

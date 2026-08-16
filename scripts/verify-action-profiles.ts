@@ -1,6 +1,7 @@
 import { compileActionProfile, resolveActionProfile, ACTION_PROFILE_REGISTRY, actionSemanticsForCard, listActionProfiles, slugifyCardName } from '../src/battle/actionProfiles';
 import { profileFor } from '../src/battle/profiles';
 import { CARDS } from '../src/data/cards';
+import { resolveProjectileVisualMode } from '../src/renderer/pixi/presentation/projectileVisual';
 
 let failures = 0;
 function check(name: string, ok: boolean, detail?: string) {
@@ -107,6 +108,14 @@ for (const card of CARDS.filter(c => c.type === 'beam')) {
   check(`beam:${card.name}:profile`, !!spec);
   check(`beam:${card.name}:kind`, spec?.kind === 'beam', spec?.kind);
   check(`beam:${card.name}:visual`, sem.visual !== 'rush' && sem.visual !== 'power', String(sem.visual));
+}
+
+// 8) Pixi resuelve tanto el alias histórico como las nuevas familias visuales.
+for (const [kind, expected] of [
+  ['beam', 'ray'], ['ray', 'ray'], ['wave', 'ray'],
+  ['ball', 'ball'], ['disk', 'disk'], ['sword', 'sword'], ['unknown', 'special'],
+] as const) {
+  check(`pixiProjectile:${kind}→${expected}`, resolveProjectileVisualMode(kind) === expected);
 }
 
 console.log(`\n${listActionProfiles().length} perfiles firma registrados.`);
