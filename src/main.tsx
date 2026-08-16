@@ -311,8 +311,12 @@ function FighterSprite({ formId, pose, side, scale = 8, flash = false }: {
 
 // ─── Sprite idle recortado de un sheet auténtico ─────────
 // Battle Overworld con taxonomía canónica (docs/SPRITE_TAXONOMY.md):
-// · pose 'idle' (o sin gather): muestra battle_overworld_idle
-// · pose 'gather_power': muestra gather_power_pose + gather_power_aura (FX)
+// · pose 'idle' (o sin gather): muestra battle_overworld_idle (NO entra en power-up)
+// · pose 'gather_power': secuencia animada determinista por reloj GBC:
+//      fase B (breve)  → gather_power_pose (brazos arriba, sin aura)
+//      fase C (resto)  → gather_power_pose + aura PARPADEANDO rápido
+//                        (haz de luz emergiendo, on/off cada ~3 frames GBC)
+//   El power-up NUNCA muestra idle: idle es el estado previo (sin power-up).
 // · fallback: idleSrc (chibi *_ow.png) si no hay battle_overworld extraído
 function BattleOverworldSprite({ formId, pose, side, idleSrc }: {
   formId: string; pose: string; side?: 'left' | 'right'; idleSrc?: string;
@@ -320,18 +324,51 @@ function BattleOverworldSprite({ formId, pose, side, idleSrc }: {
   const [failedSrc, setFailedSrc] = useState<string | null>(null);
   const flip = side ? facingFlip(formId, side) : 1;
   const isGather = pose === 'gather_power';
-  const poseSrc = battleOverworldActorUrl(formId, isGather ? 'gather_power_pose' : 'idle');
-  const auraSrc = isGather ? battleOverworldAuraUrl(formId) : undefined;
+  const [gatherPhase, setGatherPhase] = useState<'pose' | 'aura'>('pose');
+  const [auraOn, setAuraOn] = useState(false);
+
+  // Secuencia Gather Power determinista por frames GBC (sin setInterval suelto):
+  // B=brazos arriba (primeros 10f) → C=pose+aura parpadeando (el aura alterna
+  // cada 3f para simular el haz emergiendo). Nunca hay fase idle en power-up.
+  useEffect(() => {
+    if (!isGather) {
+      setGatherPhase('pose');
+      setAuraOn(false);
+      return;
+    }
+    let raf = 0;
+    let last = performance.now();
+    let acc = 0;
+    const tick = (now: number) => {
+      const delta = ((now - last) / 1000) * GBC_NATIVE_FPS;
+      last = now;
+      acc += delta;
+      const f = Math.floor(acc);
+      if (f < 10) { setGatherPhase('pose'); setAuraOn(false); }
+      else {
+        setGatherPhase('aura');
+        setAuraOn(Math.floor((f - 10) / 3) % 2 === 0); // parpadeo rápido
+      }
+      raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [isGather]);
+
+  const showPose = isGather;
+  const showAura = isGather && gatherPhase === 'aura' && auraOn;
+  const poseSrc = battleOverworldActorUrl(formId, showPose ? 'gather_power_pose' : 'idle');
+  const auraSrc = battleOverworldAuraUrl(formId);
 
   // Si no hay battle_overworld extraído, usar el chibi *_ow.png estándar
   const src = poseSrc && failedSrc !== poseSrc ? poseSrc : idleSrc;
   if (!src) return null;
 
   return (
-    <div className={`battle-overworld ${isGather ? 'gathering' : ''}`}
+    <div className={`battle-overworld ${showAura ? 'gathering' : ''}`}
       style={{ transform: `scaleX(${flip})` }}>
       <img src={src} alt={formId} className="overworld-sprite" onError={() => setFailedSrc(src)} />
-      {auraSrc && <img src={auraSrc} alt="" className="gather-power-aura" />}
+      {auraSrc && showAura && <img src={auraSrc} alt="" className="gather-power-aura" />}
     </div>
   );
 }
