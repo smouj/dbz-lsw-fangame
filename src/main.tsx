@@ -2635,6 +2635,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
               </div>
               {(cardFx.card.type === 'damage' || cardFx.card.type === 'command') && <div className="fx-power-burst" />}
               {cardFx.card.type === 'support' && <div className="fx-aura" />}
+              {cardFx.card.type === 'support' && cardFx.card.effect === 'evasion_up' && <div className="fx-afterimage"><span /><span /><span /><span /></div>}
             </>
           )}
           {cardFx.step === 'travel' && (

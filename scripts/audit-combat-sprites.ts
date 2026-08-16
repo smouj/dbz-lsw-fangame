@@ -19,6 +19,13 @@ type PoseContract = {
   forbiddenPrefixes?: string[];
 };
 
+/** Lee w/h reales de un PNG solo desde el header IHDR (sin decodificar). */
+function pngSize(p: string): [number, number] | null {
+  const buf = fs.readFileSync(p);
+  if (buf.length < 24 || buf.readUInt32BE(0) !== 0x89504e47) return null;
+  return [buf.readUInt32BE(16), buf.readUInt32BE(20)];
+}
+
 const POSE_RUNTIME_DEFAULTS: Record<string, PoseContract> = {
   idle: { fps: 3, loop: true },
   move_front: { fps: 6, loop: true, frames: ['idle_00', 'move_front_01'] },
@@ -122,8 +129,16 @@ for (const form of Object.values(FORMS)) {
         seenIndexes.add(numericIndex);
       }
       check(`${form.id}:${pose}:${index}:size`, frame.w > 0 && frame.h > 0, `${frame.w}x${frame.h}`);
-      // Duplicados exactos consecutivos (mismo MD5) congelan la animacion.
+      // Dimensiones físicas reales del PNG deben coincidir con lo declarado
+      // (w/h mal declarados rompen aspect ratio / cropping en render).
       const framePath = path.join(spriteRoot, dir, frame.file);
+      if (fs.existsSync(framePath)) {
+        const real = pngSize(framePath);
+        if (real) {
+          check(`${form.id}:${pose}:${index}:physicalSize`, real[0] === frame.w && real[1] === frame.h, `${frame.file} declara ${frame.w}x${frame.h}, real ${real[0]}x${real[1]}`);
+        }
+      }
+      // Duplicados exactos consecutivos (mismo MD5) congelan la animacion.
       if (fs.existsSync(framePath)) {
         const hash = createHash('md5').update(fs.readFileSync(framePath)).digest('hex');
         if (index > 0 && prevFrameHash === hash) {

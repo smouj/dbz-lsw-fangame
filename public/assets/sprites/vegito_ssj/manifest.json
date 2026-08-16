@@ -299,14 +299,14 @@
       {
         "name": "vegito_ssj_beam_ray_tip_00",
         "file": "vegito_ssj_beam_ray_tip_00.png",
-        "w": 63,
-        "h": 28
+        "w": 46,
+        "h": 34
       },
       {
         "name": "vegito_ssj_beam_ray_tip_01",
         "file": "vegito_ssj_beam_ray_tip_01.png",
-        "w": 48,
-        "h": 23
+        "w": 39,
+        "h": 12
       }
     ]
   },

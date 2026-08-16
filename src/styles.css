@@ -4354,6 +4354,32 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 }
 .card-fx.fx-item.scene-attacker.enemy .fx-actor { animation: fx-actor-center-enemy .82s steps(10, end) both, fx-item-pulse 1.28s steps(12, end) .62s both; }
 @keyframes fx-item-pulse { 0% { filter: brightness(1) drop-shadow(0 0 6px rgba(120,200,255,.35)); } 50% { filter: brightness(1.4) drop-shadow(0 0 30px rgba(110,190,255,.9)); } 100% { filter: brightness(1) drop-shadow(0 0 14px rgba(120,200,255,.5)); } }
+
+/* Afterimage / teletransporte: estelas verticales desplazadas que parpadean
+   (carta Afterimage, evasion_up). El sprite parece desdoblarse a izquierda y
+   derecha como en el GBC cuando esquivas. */
+.fx-afterimage {
+  position: absolute; top: 24%; left: 50%; width: 34vmin; height: 52vmin; margin-left: -17vmin;
+  pointer-events: none;
+}
+.fx-afterimage span {
+  position: absolute; top: 0; height: 100%; width: 9%;
+  background: linear-gradient(180deg, transparent, rgba(150,220,255,.5), transparent);
+  filter: blur(1px);
+  opacity: 0;
+  animation: fx-afterimage-slice 0.9s steps(9, end) infinite;
+}
+.fx-afterimage span:nth-child(1) { left: 4%; animation-delay: 0s; }
+.fx-afterimage span:nth-child(2) { left: 32%; animation-delay: .12s; }
+.fx-afterimage span:nth-child(3) { left: 58%; animation-delay: .24s; }
+.fx-afterimage span:nth-child(4) { left: 86%; animation-delay: .36s; }
+@keyframes fx-afterimage-slice {
+  0% { opacity: 0; transform: translateX(0) scaleY(.4); }
+  30% { opacity: .8; }
+  70% { opacity: .35; transform: translateX(calc(var(--fx-dir, 1) * 3vmin)) scaleY(1); }
+  100% { opacity: 0; transform: translateX(calc(var(--fx-dir, 1) * 5vmin)) scaleY(.7); }
+}
+.card-fx.fx-item .fx-afterimage span { background: linear-gradient(180deg, transparent, rgba(150,220,255,.6), transparent); }
 @keyframes fx-aura-spin { 0% { transform: scale(.3) rotate(0); opacity: 0; } 30% { opacity: 1; } 100% { transform: scale(1.6) rotate(160deg); opacity: 0; } }
 
 .card-fx.scene-target .fx-fighter { filter: drop-shadow(0 0 24px rgba(255,190,60,.45)); }
