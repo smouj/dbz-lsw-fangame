@@ -1435,16 +1435,16 @@
       {
         "name": "buu_gohan_absorbed__effect_01",
         "file": "buu_gohan_absorbed/buu_gohan_absorbed__effect_01.png",
-        "w": 26,
-        "h": 17,
+        "w": 24,
+        "h": 16,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "028.png"
       },
       {
         "name": "buu_gohan_absorbed__effect_02",
         "file": "buu_gohan_absorbed/buu_gohan_absorbed__effect_02.png",
-        "w": 26,
-        "h": 17,
+        "w": 24,
+        "h": 16,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "029.png"
       },

@@ -76,7 +76,7 @@
     ]
   },
   "attack_fwd": {
-    "frame_count": 6,
+    "frame_count": 7,
     "fps": 5,
     "loop": false,
     "frames": [
@@ -114,6 +114,12 @@
         "name": "buu_base_attack_fwd_05",
         "file": "buu_base_attack_fwd_05.png",
         "w": 24,
+        "h": 40
+      },
+      {
+        "name": "buu_base_attack_fwd_06",
+        "file": "buu_base_attack_fwd_06.png",
+        "w": 27,
         "h": 40
       }
     ]

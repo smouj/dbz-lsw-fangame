@@ -199,7 +199,7 @@
     ]
   },
   "beam_charge": {
-    "frame_count": 2,
+    "frame_count": 4,
     "fps": 7,
     "loop": false,
     "frames": [
@@ -214,6 +214,18 @@
         "file": "trunks_base_beam_charge_01.png",
         "w": 30,
         "h": 37
+      },
+      {
+        "name": "trunks_base_beam_charge_02",
+        "file": "trunks_base_beam_charge_02.png",
+        "w": 30,
+        "h": 35
+      },
+      {
+        "name": "trunks_base_beam_charge_03",
+        "file": "trunks_base_beam_charge_03.png",
+        "w": 35,
+        "h": 35
       }
     ]
   },
@@ -538,25 +550,5 @@
         "h": 35
       }
     ]
-  },
-  "beam_fire": {
-    "frame_count": 2,
-    "fps": 8,
-    "loop": false,
-    "frames": [
-      {
-        "name": "trunks_base_beam_charge_00",
-        "file": "trunks_base_beam_charge_00.png",
-        "w": 31,
-        "h": 37
-      },
-      {
-        "name": "trunks_base_beam_charge_01",
-        "file": "trunks_base_beam_charge_01.png",
-        "w": 30,
-        "h": 37
-      }
-    ],
-    "alias_of": "beam_charge"
   }
 }

@@ -205,7 +205,7 @@
     ]
   },
   "beam_charge": {
-    "frame_count": 2,
+    "frame_count": 4,
     "fps": 7,
     "loop": false,
     "frames": [
@@ -220,6 +220,18 @@
         "file": "kid_trunks_super_saiyan_beam_charge_01.png",
         "w": 30,
         "h": 41
+      },
+      {
+        "name": "kid_trunks_super_saiyan_beam_charge_02",
+        "file": "kid_trunks_super_saiyan_beam_charge_02.png",
+        "w": 32,
+        "h": 39
+      },
+      {
+        "name": "kid_trunks_super_saiyan_beam_charge_03",
+        "file": "kid_trunks_super_saiyan_beam_charge_03.png",
+        "w": 35,
+        "h": 39
       }
     ]
   },
@@ -550,25 +562,5 @@
         "h": 39
       }
     ]
-  },
-  "beam_fire": {
-    "frame_count": 2,
-    "fps": 8,
-    "loop": false,
-    "frames": [
-      {
-        "name": "kid_trunks_super_saiyan_beam_charge_00",
-        "file": "kid_trunks_super_saiyan_beam_charge_00.png",
-        "w": 31,
-        "h": 41
-      },
-      {
-        "name": "kid_trunks_super_saiyan_beam_charge_01",
-        "file": "kid_trunks_super_saiyan_beam_charge_01.png",
-        "w": 30,
-        "h": 41
-      }
-    ],
-    "alias_of": "beam_charge"
   }
 }

@@ -156,7 +156,7 @@
     ]
   },
   "hurt": {
-    "frame_count": 6,
+    "frame_count": 7,
     "fps": 6,
     "loop": false,
     "frames": [
@@ -179,6 +179,12 @@
         "h": 37
       },
       {
+        "name": "super_buu_base_hurt_03",
+        "file": "super_buu_base_hurt_03.png",
+        "w": 36,
+        "h": 32
+      },
+      {
         "name": "super_buu_base_hurt_04",
         "file": "super_buu_base_hurt_04.png",
         "w": 24,
@@ -199,7 +205,7 @@
     ]
   },
   "beam_charge": {
-    "frame_count": 4,
+    "frame_count": 8,
     "fps": 7,
     "loop": false,
     "frames": [
@@ -226,6 +232,30 @@
         "file": "super_buu_base_beam_charge_03.png",
         "w": 31,
         "h": 40
+      },
+      {
+        "name": "super_buu_base_beam_charge_04",
+        "file": "super_buu_base_beam_charge_04.png",
+        "w": 26,
+        "h": 44
+      },
+      {
+        "name": "super_buu_base_beam_charge_05",
+        "file": "super_buu_base_beam_charge_05.png",
+        "w": 28,
+        "h": 42
+      },
+      {
+        "name": "super_buu_base_beam_charge_06",
+        "file": "super_buu_base_beam_charge_06.png",
+        "w": 25,
+        "h": 39
+      },
+      {
+        "name": "super_buu_base_beam_charge_07",
+        "file": "super_buu_base_beam_charge_07.png",
+        "w": 24,
+        "h": 39
       }
     ]
   },
@@ -604,37 +634,5 @@
         "h": 39
       }
     ]
-  },
-  "beam_fire": {
-    "frame_count": 4,
-    "fps": 8,
-    "loop": false,
-    "frames": [
-      {
-        "name": "super_buu_base_beam_charge_00",
-        "file": "super_buu_base_beam_charge_00.png",
-        "w": 32,
-        "h": 39
-      },
-      {
-        "name": "super_buu_base_beam_charge_01",
-        "file": "super_buu_base_beam_charge_01.png",
-        "w": 32,
-        "h": 39
-      },
-      {
-        "name": "super_buu_base_beam_charge_02",
-        "file": "super_buu_base_beam_charge_02.png",
-        "w": 26,
-        "h": 39
-      },
-      {
-        "name": "super_buu_base_beam_charge_03",
-        "file": "super_buu_base_beam_charge_03.png",
-        "w": 31,
-        "h": 40
-      }
-    ],
-    "alias_of": "beam_charge"
   }
 }

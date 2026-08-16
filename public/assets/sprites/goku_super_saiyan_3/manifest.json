@@ -205,7 +205,7 @@
     ]
   },
   "beam_charge": {
-    "frame_count": 4,
+    "frame_count": 8,
     "fps": 7,
     "loop": false,
     "frames": [
@@ -232,6 +232,30 @@
         "file": "goku_super_saiyan_3_beam_charge_03.png",
         "w": 32,
         "h": 43
+      },
+      {
+        "name": "goku_super_saiyan_3_beam_charge_04",
+        "file": "goku_super_saiyan_3_beam_charge_04.png",
+        "w": 27,
+        "h": 45
+      },
+      {
+        "name": "goku_super_saiyan_3_beam_charge_05",
+        "file": "goku_super_saiyan_3_beam_charge_05.png",
+        "w": 31,
+        "h": 42
+      },
+      {
+        "name": "goku_super_saiyan_3_beam_charge_06",
+        "file": "goku_super_saiyan_3_beam_charge_06.png",
+        "w": 30,
+        "h": 45
+      },
+      {
+        "name": "goku_super_saiyan_3_beam_charge_07",
+        "file": "goku_super_saiyan_3_beam_charge_07.png",
+        "w": 31,
+        "h": 45
       }
     ]
   },
@@ -610,37 +634,5 @@
         "h": 45
       }
     ]
-  },
-  "beam_fire": {
-    "frame_count": 4,
-    "fps": 8,
-    "loop": false,
-    "frames": [
-      {
-        "name": "goku_super_saiyan_3_beam_charge_00",
-        "file": "goku_super_saiyan_3_beam_charge_00.png",
-        "w": 32,
-        "h": 42
-      },
-      {
-        "name": "goku_super_saiyan_3_beam_charge_01",
-        "file": "goku_super_saiyan_3_beam_charge_01.png",
-        "w": 32,
-        "h": 42
-      },
-      {
-        "name": "goku_super_saiyan_3_beam_charge_02",
-        "file": "goku_super_saiyan_3_beam_charge_02.png",
-        "w": 29,
-        "h": 42
-      },
-      {
-        "name": "goku_super_saiyan_3_beam_charge_03",
-        "file": "goku_super_saiyan_3_beam_charge_03.png",
-        "w": 32,
-        "h": 43
-      }
-    ],
-    "alias_of": "beam_charge"
   }
 }

@@ -143,7 +143,7 @@
     ]
   },
   "attack_ud": {
-    "frame_count": 4,
+    "frame_count": 5,
     "fps": 5,
     "loop": false,
     "frames": [
@@ -170,6 +170,12 @@
         "file": "piccolo_base_attack_ud_03.png",
         "w": 33,
         "h": 27
+      },
+      {
+        "name": "piccolo_base_attack_ud_04",
+        "file": "piccolo_base_attack_ud_04.png",
+        "w": 21,
+        "h": 40
       }
     ]
   },
@@ -223,7 +229,7 @@
     ]
   },
   "beam_charge": {
-    "frame_count": 4,
+    "frame_count": 9,
     "fps": 7,
     "loop": false,
     "frames": [
@@ -250,6 +256,36 @@
         "file": "piccolo_base_beam_charge_03.png",
         "w": 40,
         "h": 37
+      },
+      {
+        "name": "piccolo_base_beam_charge_04",
+        "file": "piccolo_base_beam_charge_04.png",
+        "w": 24,
+        "h": 37
+      },
+      {
+        "name": "piccolo_base_beam_charge_05",
+        "file": "piccolo_base_beam_charge_05.png",
+        "w": 30,
+        "h": 38
+      },
+      {
+        "name": "piccolo_base_beam_charge_06",
+        "file": "piccolo_base_beam_charge_06.png",
+        "w": 20,
+        "h": 46
+      },
+      {
+        "name": "piccolo_base_beam_charge_07",
+        "file": "piccolo_base_beam_charge_07.png",
+        "w": 31,
+        "h": 37
+      },
+      {
+        "name": "piccolo_base_beam_charge_08",
+        "file": "piccolo_base_beam_charge_08.png",
+        "w": 29,
+        "h": 39
       }
     ]
   },
@@ -646,37 +682,5 @@
         "h": 39
       }
     ]
-  },
-  "beam_fire": {
-    "frame_count": 4,
-    "fps": 8,
-    "loop": false,
-    "frames": [
-      {
-        "name": "piccolo_base_beam_charge_00",
-        "file": "piccolo_base_beam_charge_00.png",
-        "w": 32,
-        "h": 37
-      },
-      {
-        "name": "piccolo_base_beam_charge_01",
-        "file": "piccolo_base_beam_charge_01.png",
-        "w": 32,
-        "h": 37
-      },
-      {
-        "name": "piccolo_base_beam_charge_02",
-        "file": "piccolo_base_beam_charge_02.png",
-        "w": 28,
-        "h": 37
-      },
-      {
-        "name": "piccolo_base_beam_charge_03",
-        "file": "piccolo_base_beam_charge_03.png",
-        "w": 40,
-        "h": 37
-      }
-    ],
-    "alias_of": "beam_charge"
   }
 }

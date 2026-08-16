@@ -230,10 +230,16 @@
     ]
   },
   "beam_fire": {
-    "frame_count": 1,
+    "frame_count": 2,
     "fps": 8,
     "loop": false,
     "frames": [
+      {
+        "name": "nappa_base_beam_fire_00",
+        "file": "nappa_base_beam_fire_00.png",
+        "w": 24,
+        "h": 39
+      },
       {
         "name": "nappa_base_beam_fire_01",
         "file": "nappa_base_beam_fire_01.png",
