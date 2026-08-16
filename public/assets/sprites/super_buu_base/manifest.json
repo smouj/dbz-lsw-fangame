@@ -156,7 +156,7 @@
     ]
   },
   "hurt": {
-    "frame_count": 7,
+    "frame_count": 6,
     "fps": 6,
     "loop": false,
     "frames": [
@@ -177,12 +177,6 @@
         "file": "super_buu_base_hurt_02.png",
         "w": 32,
         "h": 37
-      },
-      {
-        "name": "super_buu_base_hurt_03",
-        "file": "super_buu_base_hurt_03.png",
-        "w": 36,
-        "h": 32
       },
       {
         "name": "super_buu_base_hurt_04",
