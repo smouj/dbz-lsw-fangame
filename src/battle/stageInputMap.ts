@@ -8,8 +8,9 @@
 // Convención (docs/FRAMES_ACTIONS_SPEC.md — body families):
 //   A        → puñetazo derecho   (attack_fwd / punch_right)
 //   B        → puñetazo izquierdo (attack_fwd / punch_left)
-//   UP       → golpe ascendente   (attack_ud / knockback_up)
-//   DOWN     → golpe descendente  (attack_ud / knockback_down)
+//   UP       → golpe ascendente   (attack_ud — NUNCA knockback_up, que es
+//             pose de RECIBIR daño, no de atacar)
+//   DOWN     → golpe descendente  (attack_ud — idem knockback_down)
 //   LEFT     → avance frontal     (move_front → attack_fwd)
 //   RIGHT    → retroceso/guardia  (move_back / guard)
 //
@@ -32,8 +33,8 @@ export interface StageInputAnim {
 export const STAGE_INPUT_FRAMES: Record<StageKey, StageInputAnim> = {
   A: { pose: 'punch_right', fieldPose: 'attack_fwd', label: 'Puño derecho', lunge: false },
   B: { pose: 'punch_left', fieldPose: 'attack_fwd', label: 'Puño izquierdo', lunge: false },
-  UP: { pose: 'knockback_up', fieldPose: 'attack_ud', label: 'Golpe ascendente', lunge: true },
-  DOWN: { pose: 'knockback_down', fieldPose: 'attack_ud', label: 'Golpe descendente', lunge: true },
+  UP: { pose: 'attack_ud', fieldPose: 'attack_ud', label: 'Golpe ascendente', lunge: true },
+  DOWN: { pose: 'attack_ud', fieldPose: 'attack_ud', label: 'Golpe descendente', lunge: true },
   LEFT: { pose: 'move_front', fieldPose: 'move_front', label: 'Avance', lunge: true },
   RIGHT: { pose: 'guard', fieldPose: 'guard', label: 'Retroceso/guardia', lunge: false },
 };
