@@ -143,7 +143,7 @@
     ]
   },
   "attack_ud": {
-    "frame_count": 5,
+    "frame_count": 4,
     "fps": 5,
     "loop": false,
     "frames": [
@@ -170,12 +170,6 @@
         "file": "piccolo_base_attack_ud_03.png",
         "w": 33,
         "h": 27
-      },
-      {
-        "name": "piccolo_base_attack_ud_04",
-        "file": "piccolo_base_attack_ud_04.png",
-        "w": 21,
-        "h": 40
       }
     ]
   },

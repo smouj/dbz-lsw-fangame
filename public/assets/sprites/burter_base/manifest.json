@@ -199,7 +199,7 @@
     ]
   },
   "beam_charge": {
-    "frame_count": 4,
+    "frame_count": 3,
     "fps": 7,
     "loop": false,
     "frames": [
@@ -214,12 +214,6 @@
         "file": "burter_base_beam_charge_01.png",
         "w": 32,
         "h": 36
-      },
-      {
-        "name": "burter_base_beam_charge_02",
-        "file": "burter_base_beam_charge_02.png",
-        "w": 27,
-        "h": 40
       },
       {
         "name": "burter_base_beam_charge_03",

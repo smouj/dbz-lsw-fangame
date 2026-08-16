@@ -230,7 +230,7 @@
     ]
   },
   "beam_fire": {
-    "frame_count": 3,
+    "frame_count": 2,
     "fps": 8,
     "loop": false,
     "frames": [
@@ -245,12 +245,6 @@
         "file": "goku_base_beam_fire_01.png",
         "w": 31,
         "h": 44
-      },
-      {
-        "name": "goku_base_beam_fire_02",
-        "file": "goku_base_beam_fire_02.png",
-        "w": 30,
-        "h": 46
       }
     ]
   },
