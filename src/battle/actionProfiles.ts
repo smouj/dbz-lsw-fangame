@@ -269,7 +269,9 @@ function meleeSpec(id: string, label: string, match: string[], strikePose = 'pun
         { frame: m.recovery, pose: 'idle' },
       ],
     },
-    target: { beats: [{ frame: m.contact + 1, pose: targetPose }] },
+    // Pose del defensor ANTES del contacto (guard/neutral). El impacto (94)
+    // ya emite la pose especifica (knockback_*); el beat extra era redundante.
+    target: { beats: [] },
     rush: { startFrame: m.rush, duration: m.rushDur },
     impact: { contactFrame: m.contact, hitstop: m.hitstop, shake: m.shake, targetPose },
     messages: [{ frame: m.contact + 2, text: 'IMPACT' }],
@@ -309,7 +311,7 @@ function stageSpec(id: string, label: string, match: string[], stages: number): 
         { frame: m.recovery, pose: 'idle' },
       ],
     },
-    target: { beats: [{ frame: m.contact + 1, pose: 'knockback_back' }] },
+    target: { beats: [] },
     rush: { startFrame: m.rush, duration: m.rushDur },
     impact: { contactFrame: m.contact, hitstop: m.hitstop, shake: m.shake, targetPose: 'knockback_back' },
     messages: [
