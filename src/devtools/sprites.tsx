@@ -35,6 +35,9 @@ export function SpritesModule({ target }: { target?: DevLinkedTarget | null }) {
   useEffect(() => {
     if (!manifestUrl) return;
     let cancelled = false;
+    // Al cambiar de forma, limpiar inmediatamente para no mostrar frames de la forma anterior.
+    setPoses([...COMBAT_REQUIRED_POSES]);
+    setPoseFirstFiles({});
     fetch(manifestUrl).then(r => r.ok ? r.json() : null).then((m: Record<string, unknown> | null) => {
       if (cancelled || !m) return;
       const known = COMBAT_POSE_ORDER.filter(p => Object.prototype.hasOwnProperty.call(m, p));
@@ -58,7 +61,12 @@ export function SpritesModule({ target }: { target?: DevLinkedTarget | null }) {
   useEffect(() => {
     if (poses.length > 0 && !poses.includes(pose)) setPose('idle');
   }, [poses, pose]);
-  const src = dir && poseFirstFiles[pose] ? spriteFrameUrl(formId, poseFirstFiles[pose]) : undefined;
+  // Solo mostrar frames cuyo prefijo pertenezca a la forma actual (evita el frame
+  // de otra forma cuando el fetch del manifest nuevo aún no ha llegado).
+  const currentFile = dir && poseFirstFiles[pose] && poseFirstFiles[pose].startsWith(`${dir}_`)
+    ? poseFirstFiles[pose]
+    : undefined;
+  const src = dir && currentFile ? spriteFrameUrl(formId, currentFile) : undefined;
   const portrait = BATTLE_PORTRAITS[formId];
   const overworld = overworldUrl(formId);
 
