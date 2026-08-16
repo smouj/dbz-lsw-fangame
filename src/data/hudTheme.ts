@@ -27,6 +27,13 @@ export const HUD_THEME_VARS: HudThemeVar[] = [
   { key: '--hp-red-lt', label: 'HP (claro)', group: 'Colores', type: 'color', default: '#f07070' },
   { key: '--hp-green', label: 'Curación (verde)', group: 'Colores', type: 'color', default: '#40b848' },
   { key: '--ki-blue', label: 'KI (azul)', group: 'Colores', type: 'color', default: '#3890d8' },
+  // ─── Superficies reales del HUD de combate ───
+  { key: '--hud-panel', label: 'Panel HUD', group: 'HUD', type: 'color', default: '#05070c' },
+  { key: '--hud-panel-alt', label: 'Panel HUD alt', group: 'HUD', type: 'color', default: '#121927' },
+  { key: '--hud-border', label: 'Borde HUD', group: 'HUD', type: 'color', default: '#f6c744' },
+  { key: '--hud-text', label: 'Texto HUD', group: 'HUD', type: 'color', default: '#fff4cf' },
+  { key: '--hud-muted', label: 'Texto secundario', group: 'HUD', type: 'color', default: '#cdd6e2' },
+  { key: '--hud-field', label: 'Fondo campo', group: 'HUD', type: 'color', default: '#050911' },
   // ─── Colores de tipo de carta ───
   { key: '--cmd-color', label: 'Command', group: 'Cartas', type: 'color', default: '#8890a0' },
   { key: '--dmg-color', label: 'Damage', group: 'Cartas', type: 'color', default: '#c04040' },

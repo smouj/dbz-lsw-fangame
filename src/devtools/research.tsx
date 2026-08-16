@@ -41,11 +41,11 @@ export function ResearchModule() {
       <div className="dev-sources">
         <h2>Fuentes</h2>
         <ul className="dev-alerts">
-          <li className="dev-alert info">ℹ ROM USA — CRC32 <code>025AA88A</code> (tabla cartas, stats, mazos, curvas).</li>
-          <li className="dev-alert info">ℹ Manual USA §9-§10 — Stage Attack, posiciones, movimiento.</li>
-          <li className="dev-alert info">ℹ Spreadsheet oficial — mazos de jefes + AI boosts (wordpress).</li>
-          <li className="dev-alert info">ℹ Walkthrough / foros (RPGClassics) — vulnerabilidades Air/Ground, 2v2.</li>
-          <li className="dev-alert warn">⚠ Captura forense de ROM pendiente para desempates de SPD y timing de contraataque.</li>
+          <li className="dev-alert info"><strong>INFO</strong> ROM USA — CRC32 <code>025AA88A</code> (tabla cartas, stats, mazos, curvas).</li>
+          <li className="dev-alert info"><strong>INFO</strong> Manual USA §9-§10 — Stage Attack, posiciones, movimiento.</li>
+          <li className="dev-alert info"><strong>INFO</strong> Spreadsheet oficial — mazos de jefes + AI boosts (wordpress).</li>
+          <li className="dev-alert info"><strong>INFO</strong> Walkthrough / foros (RPGClassics) — vulnerabilidades Air/Ground, 2v2.</li>
+          <li className="dev-alert warn"><strong>WARN</strong> Captura forense de ROM pendiente para desempates de SPD y timing de contraataque.</li>
         </ul>
       </div>
 

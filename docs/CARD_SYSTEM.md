@@ -57,6 +57,22 @@ no pueden granular por forma. Quedan 6 casos así, documentados como aceptables.
 - **damage_low_acc / damage_special_lowacc** (R.F.B. 55, Rocket Punch 69): la precisión
   de la carta (50%/30%) ya se aplica en el roll.
 
+## Perfiles visuales de acciones
+
+Las cartas ofensivas se conectan con la gramática visual en
+`src/battle/actionProfiles.ts`:
+
+- Todas las cartas `beam` de la ROM deben resolver a un perfil firma explícito.
+- El visual del proyectil no se deduce solo por tipo: puede ser `ray`, `wave`,
+  `ball`, `disk`, `sword` o `special`.
+- Las familias de BEAM agrupadas actualmente cubren Energy Wave/Bomb,
+  Kamehameha, Masenko, Special Beam Cannon, Spirit Bomb/Super E-Ball/Sweet Beam,
+  Final Flash/Galick-Ho/Grand Wave/Hell Flash, Big Bang, Burning/Fin.Buster,
+  Destruct-Disk/Energy Slash/Slice, Finger/Eye/Misty KiWave, Flash.Sword y
+  técnicas especiales como Body Change/Suicide.
+- `npm run verify:profiles` y `npm run audit:sprites` fallan si una carta BEAM
+  queda sin perfil o visual explícito.
+
 ## Costes CC (verificados contra CSV ROM)
 
 Solo 5 cartas cuestan 0 CC: las cuatro Stage Attacks (1-4) y Special Card (9).

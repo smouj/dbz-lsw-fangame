@@ -43,7 +43,7 @@ export interface RushSpec {
 
 /** Proyectil/beam: spawn → viaje → contacto. */
 export interface ProjectileSpec {
-  kind?: string;
+  kind?: ProjectileVisualKind;
   spawnFrame: number;
   /** Frames de viaje (spawn → contacto). */
   travelFrames: number;
@@ -98,6 +98,22 @@ export interface ActionProfileSpec {
   messages?: MessageBeat[];
   /** Frame GBC de vuelta al plano táctico (FIELD_RETURN). */
   returnToField: number;
+}
+
+export type ProjectileVisualKind =
+  | 'ray'        // haz lineal: Kamehameha, Masenko, Final Flash...
+  | 'wave'       // ráfaga ancha / onda de energía
+  | 'ball'       // esfera/proyectil compacto
+  | 'disk'       // disco/corte de energía
+  | 'sword'      // corte/espada energética
+  | 'special';   // técnica singular pendiente de medición fina
+
+export interface ActionCardSemantics {
+  cardName: string;
+  animation: 'stage' | 'melee' | 'beam' | 'support';
+  visual: ProjectileVisualKind | 'rush' | 'power';
+  scope: 'shared' | 'limited' | 'unique';
+  canonicalUsers: string[];
 }
 
 // ── Timings iniciales (INHERED del template de kind — NO canon) ────────────
@@ -180,13 +196,21 @@ export function slugifyCardName(name: string): string {
 
 // ── Registro de perfiles firma ─────────────────────────────────────────────
 
-function beamSpec(id: string, label: string, match: string[]): ActionProfileSpec {
+function beamSpec(id: string, label: string, match: string[], projectile: ProjectileVisualKind = 'ray'): ActionProfileSpec {
   const b = T.beam;
   return {
     id, label, kind: 'beam', fidelity: 'INFERRED', match,
     entry: { source: 'TACTICAL', destination: 'PROJECTILE', transition: 'cut' },
-    actor: { pose: 'beam_charge', beats: [{ frame: b.charge, pose: 'beam_fire' }] },
-    projectile: { kind: 'beam', spawnFrame: b.spawn, travelFrames: b.contact - b.spawn },
+    actor: {
+      pose: 'idle',
+      beats: [
+        { frame: 12, pose: 'gather_power', note: 'preparación común: abre/cierra energía' },
+        { frame: 28, pose: 'idle', note: 'vuelve a neutral antes de ejecutar' },
+        { frame: 40, pose: 'beam_charge', note: 'carga específica del beam' },
+        { frame: b.charge, pose: 'beam_fire' },
+      ],
+    },
+    projectile: { kind: projectile, spawnFrame: b.spawn, travelFrames: b.contact - b.spawn },
     impact: { contactFrame: b.contact, hitstop: b.hitstop, shake: b.shake },
     messages: [{ frame: b.contact + 2, text: 'IMPACT' }],
     returnToField: b.return,
@@ -201,6 +225,8 @@ function meleeSpec(id: string, label: string, match: string[]): ActionProfileSpe
     actor: {
       pose: 'idle',
       beats: [
+        { frame: 12, pose: 'gather_power', note: 'preparación común de acción' },
+        { frame: 26, pose: 'idle', note: 'cierra y vuelve a neutral antes del rush' },
         { frame: m.windup, pose: 'attack_fwd' },
         { frame: m.contact, pose: 'attack_fwd' },
         { frame: m.recovery, pose: 'idle' },
@@ -227,11 +253,19 @@ function buffSpec(id: string, label: string, match: string[]): ActionProfileSpec
 
 export const ACTION_PROFILE_REGISTRY: ActionProfileSpec[] = [
   // — Beams / energía —
-  beamSpec('kamehameha', 'Kamehameha', ['kamehameha', 'skamehameha', 'fkamehameha', 'kamekameha']),
-  beamSpec('masenko', 'Masenko', ['masenko']),
-  beamSpec('special_beam_cannon', 'Special Beam Cannon', ['sbeamcan']),
-  beamSpec('spirit_bomb', 'Spirit Bomb', ['spiritbomb']),
-  beamSpec('final_flash', 'Final Flash', ['finalflash']),
+  beamSpec('energy_wave', 'Energy Wave', ['energywave'], 'wave'),
+  beamSpec('energy_bomb', 'Energy Bomb', ['energybomb', 'kiblastbomb'], 'ball'),
+  beamSpec('kamehameha', 'Kamehameha', ['kamehameha', 'skamehameha', 'fkamehameha', 'kamekameha'], 'ray'),
+  beamSpec('masenko', 'Masenko', ['masenko'], 'ray'),
+  beamSpec('special_beam_cannon', 'Special Beam Cannon', ['sbeamcan'], 'ray'),
+  beamSpec('spirit_bomb', 'Spirit Bomb', ['spiritbomb', 'supereball', 'sweetbeam'], 'ball'),
+  beamSpec('final_flash', 'Final Flash', ['finalflash', 'galickho', 'grandwave', 'hellflash'], 'ray'),
+  beamSpec('big_bang_attack', 'Big Bang Attack', ['bigbangatk'], 'ball'),
+  beamSpec('burning_attack', 'Burning Attack', ['burningatk', 'finbuster', 'flambomb', 'lightningc'], 'wave'),
+  beamSpec('energy_disk', 'Energy Disk', ['destructdisk', 'sdestrucd', 'energyslash', 'energyslice'], 'disk'),
+  beamSpec('finger_beam', 'Finger Beam', ['fingerbeam', 'eyebeam', 'mistykiwave'], 'ray'),
+  beamSpec('flash_sword', 'Flash Sword', ['flashsword'], 'sword'),
+  beamSpec('special_projectile', 'Special Projectile', ['flightbomb', 'galacticad', 'sgkatk', 'telekinesis', 'msoundwave', 'erasercan', 'crasherball', 'purplecomet', 'bodychange', 'suicide'], 'special'),
   // — Melee / golpes físicos —
   meleeSpec('cont_punch', 'Cont. Punch', ['contpunch']),
   meleeSpec('cont_kick', 'Cont. Kick', ['contkick']),
@@ -246,7 +280,12 @@ export const ACTION_PROFILE_REGISTRY: ActionProfileSpec[] = [
 const SLUG_INDEX: Map<string, ActionProfileSpec> = (() => {
   const m = new Map<string, ActionProfileSpec>();
   for (const spec of ACTION_PROFILE_REGISTRY) {
-    for (const key of spec.match) m.set(key, spec);
+    for (const key of spec.match) {
+      if (m.has(key)) {
+        throw new Error(`Duplicate action profile slug "${key}" in ${m.get(key)?.id} and ${spec.id}`);
+      }
+      m.set(key, spec);
+    }
   }
   return m;
 })();
@@ -259,4 +298,21 @@ export function resolveActionProfile(cardName: string): ActionProfileSpec | null
 /** Lista plana de perfiles firma (para auditoría / Dev Studio). */
 export function listActionProfiles(): Array<{ id: string; label: string; kind: string; fidelity: Fidelity }> {
   return ACTION_PROFILE_REGISTRY.map(s => ({ id: s.id, label: s.label, kind: s.kind, fidelity: s.fidelity }));
+}
+
+export function actionSemanticsForCard(card: { name: string; type: string; compatible?: string[] }): ActionCardSemantics {
+  const specific = resolveActionProfile(card.name);
+  const projectile = specific?.projectile?.kind ?? (card.type === 'beam' ? 'ray' : card.type === 'support' ? 'power' : 'rush');
+  const animation = card.type === 'command' ? 'stage'
+    : card.type === 'damage' ? 'melee'
+    : card.type === 'beam' ? 'beam'
+    : 'support';
+  const users = card.compatible ?? [];
+  return {
+    cardName: card.name,
+    animation,
+    visual: projectile,
+    scope: !card.compatible ? 'shared' : card.compatible.length === 1 ? 'unique' : 'limited',
+    canonicalUsers: users,
+  };
 }

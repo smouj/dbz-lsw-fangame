@@ -11,11 +11,13 @@ npm install
 npm run dev        # dev server en http://localhost:5178
 npm run build      # build de producción
 npm run typecheck  # chequeo de tipos TypeScript
+npm run verify:profiles
+npm run audit:sprites
 ```
 
 ### 🛠️ Development Studio (interno)
 
-Herramienta de producción embebida en el mismo proyecto. Accede desde el navegador con la URL `http://localhost:5178/#dev` (o `?dev=1`). NO forma parte del flujo público.
+Herramienta de producción embebida en el mismo proyecto. Accede desde el navegador con la URL `http://localhost:5178/?dev=1` y módulos como `http://localhost:5178/?dev=1#dev/sheets`. NO forma parte del flujo público.
 
 - **Dashboard** — contadores reales (48 formas / 24 personajes / 125 cartas / 32 mazos)
 - **Character Studio** — formas + stats a cualquier nivel (curvas ROM)
@@ -25,7 +27,7 @@ Herramienta de producción embebida en el mismo proyecto. Accede desde el navega
 - **Story Studio** — mazos de jefes, AI boosts, 2v2 y viñetas
 - **Animation Studio** — timeline real (play/step/fps/loop) desde el manifest
 - **Battle Lab** — combate instantáneo real (Versus o capítulo de historia)
-- **Validation** — 11 chequeos de integridad · **Research** — fuentes y nivel de verificación
+- **Validation** — chequeos de integridad reales · **Research** — fuentes y nivel de verificación
 
 ### 🔬 Modos de depuración en combate
 
@@ -54,12 +56,14 @@ Parámetros de URL que activan overlays de diagnóstico (solo desarrollo):
 | `src/data/spriteManifest.ts` | 48 mapeos forma → sprites de combate animados (ZIP V5 atómico) |
 | `src/data/enemy_decks.ts` | Mazos reales de los 32 capítulos + AI boosts + combates 2v2 |
 | `src/data/positions.ts` | 4 posiciones tácticas (aire/tierra × frente/atrás) + facing |
+| `src/battle/actionProfiles.ts` | Perfiles firma por carta: timeline declarativo, visual BEAM y resolver |
+| `src/battle/spriteConfig.ts` | Contrato compartido de poses, fallbacks y metadatos de sprites de combate |
 | `src/devtools/` | Development Studio interno (acceso `#dev`): dashboard, characters, cards, sprites, positions, story, validation, research |
 | `src/data/icons.ts` | Mapeo iconos de carta + retratos de menú/mini |
 | `src/i18n/` | Traducciones (10 idiomas) + contexto de idioma |
 | `src/audio/sfx.ts` | SFX sintetizados estilo chip GBC |
 | `public/assets/` | Sheets, retratos, iconos, fondos, sprites de combate, botones GBC |
-| `docs/` | Spec del motor, cartas, HUD, fidelidad de acciones, walkthrough |
+| `docs/` | Spec del motor, cartas, HUD, pipeline de acciones, fidelidad de acciones, walkthrough |
 
 ## 🌍 Idiomas soportados (10)
 
@@ -92,6 +96,8 @@ El idioma se cambia en **Settings → Language** y se guarda en `localStorage` (
 - Repo GitHub privado creado (main, pushes regulares)
 - **Development Studio** interno (`#dev`): dashboard de producción, character/card/sprites
   inspectors, position lab, story studio, validación e investigación
+- Pipeline de acciones documentado en `docs/COMBAT_ACTION_PIPELINE.md`: 20 perfiles firma,
+  cobertura BEAM completa, contrato de poses compartido y scripts de verificación.
 
 ### ⏳ Pendiente
 - Captura forense de ROM para reemplazar valores HYPOTHESIS (STAGE_TIMING_TABLE,

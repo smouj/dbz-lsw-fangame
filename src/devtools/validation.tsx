@@ -7,8 +7,12 @@ import { FORMS, CHARACTERS, LIMIT_DEFAULTS } from '../data/roster';
 import { CARDS } from '../data/cards';
 import { STORY_ENEMY_DECKS, TEAM_BATTLES } from '../data/enemy_decks';
 import { spriteDirFor } from '../data/spriteManifest';
+import { COMBAT_REQUIRED_POSES } from '../battle/spriteConfig';
 
 interface Check { name: string; ok: boolean; detail: string; }
+type ManifestState =
+  | { status: 'checking'; bad: string[]; withRay: number; total: number }
+  | { status: 'done'; bad: string[]; withRay: number; total: number };
 
 /** Misma lógica que cardUsableBy en main.tsx (evita dependencia circular). */
 function usableBy(card: { compatible?: string[]; notCompatible?: string[] }, charId: string): boolean {
@@ -133,11 +137,10 @@ export function ValidationModule() {
   }, []);
 
   // 12. Manifests de combate (async): poses base + beam_ray en todas las formas
-  const [manifestState, setManifestState] = useState<{ bad: string[]; withRay: number; total: number }>({ bad: [], withRay: 0, total: 0 });
+  const [manifestState, setManifestState] = useState<ManifestState>({ status: 'checking', bad: [], withRay: 0, total: 0 });
   useEffect(() => {
     let cancelled = false;
     (async () => {
-      const basePoses = ['idle', 'move_front', 'move_back', 'guard', 'attack_fwd', 'attack_ud', 'hurt', 'beam_charge', 'beam_fire'];
       const bad: string[] = [];
       let withRay = 0;
       let total = 0;
@@ -149,13 +152,13 @@ export function ValidationModule() {
           const r = await fetch(`/assets/sprites/${dir}/manifest.json`);
           if (!r.ok) { bad.push(`${f.id}: fetch`); continue; }
           const m = await r.json() as Record<string, { frames?: unknown[] }>;
-          for (const p of basePoses) if (!m[p] || !m[p].frames?.length) bad.push(`${f.id}:${p}`);
+          for (const p of COMBAT_REQUIRED_POSES) if (!m[p] || !m[p].frames?.length) bad.push(`${f.id}:${p}`);
           if (m.beam_ray?.frames?.length) withRay++;
         } catch {
           bad.push(`${f.id}: fetch`);
         }
       }
-      if (!cancelled) setManifestState({ bad, withRay, total });
+      if (!cancelled) setManifestState({ status: 'done', bad, withRay, total });
     })();
     return () => { cancelled = true; };
   }, []);
@@ -168,23 +171,23 @@ export function ValidationModule() {
         <h1>Validation</h1>
         <p className="dev-sub">{okCount}/{checks.length} chequeos OK — integridad de datos del juego.</p>
       </header>
-      <div className="dev-checks">
+      <div className="dev-checks" role="list">
         {checks.map(c => (
-          <div key={c.name} className={`dev-check-row ${c.ok ? 'ok' : 'bad'}`}>
-            <span className="dev-check-icon">{c.ok ? '✓' : '✗'}</span>
+          <div key={c.name} className={`dev-check-row ${c.ok ? 'ok' : 'bad'}`} role="listitem" aria-label={`${c.ok ? 'OK' : 'FAIL'}: ${c.name}: ${c.detail}`}>
+            <span className="dev-check-icon">{c.ok ? 'OK' : 'FAIL'}</span>
             <div>
               <div className="dev-check-name">{c.name}</div>
               <div className="dev-check-detail">{c.detail}</div>
             </div>
           </div>
         ))}
-        <div className={`dev-check-row ${manifestState.bad.length === 0 && manifestState.total > 0 ? 'ok' : 'bad'}`}>
-          <span className="dev-check-icon">{manifestState.bad.length === 0 && manifestState.total > 0 ? '✓' : '✗'}</span>
+        <div className={`dev-check-row ${manifestState.status === 'checking' ? 'pending' : manifestState.bad.length === 0 && manifestState.total > 0 ? 'ok' : 'bad'}`} role="listitem" aria-label={`Manifests de combate: ${manifestState.status === 'checking' ? 'verificando' : manifestState.bad.length === 0 ? 'OK' : 'FAIL'}`}>
+          <span className="dev-check-icon">{manifestState.status === 'checking' ? 'RUN' : manifestState.bad.length === 0 && manifestState.total > 0 ? 'OK' : 'FAIL'}</span>
           <div>
             <div className="dev-check-name">Manifests de combate (poses base + rayo)</div>
             <div className="dev-check-detail">
-              {manifestState.total === 0
-                ? 'verificando…'
+              {manifestState.status === 'checking'
+                ? 'verificando...'
                 : `${manifestState.total} manifests · ${manifestState.withRay} con beam_ray` +
                   (manifestState.bad.length ? ` · faltan: ${manifestState.bad.slice(0, 8).join(', ')}` : ' · todos completos')}
             </div>

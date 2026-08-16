@@ -8,6 +8,7 @@ import { FORMS } from '../data/roster';
 import { spriteDirFor, spriteManifestUrl, spriteFrameUrl } from '../data/spriteManifest';
 import { BATTLE_PORTRAITS } from '../data/battlePortraits';
 import { overworldUrl } from '../data/overworld';
+import { COMBAT_REQUIRED_POSES, COMBAT_POSE_ORDER } from '../battle/spriteConfig';
 
 interface FrameInfo {
   w: number; h: number;
@@ -28,15 +29,15 @@ export function SpritesModule() {
   const manifestUrl = spriteManifestUrl(formId);
   // Poses del manifest (dinámico): incluye beam_ray/beam_ray_tip/gather_power
   // cuando existen. Las poses base SIEMPRE se listan primero (orden canónico).
-  const [poses, setPoses] = useState<string[]>(['idle', 'move_front', 'move_back', 'guard', 'attack_fwd', 'attack_ud', 'hurt', 'beam_charge', 'beam_fire']);
+  const [poses, setPoses] = useState<string[]>([...COMBAT_REQUIRED_POSES]);
   useEffect(() => {
     if (!manifestUrl) return;
     let cancelled = false;
     fetch(manifestUrl).then(r => r.ok ? r.json() : null).then((m: Record<string, unknown> | null) => {
       if (cancelled || !m) return;
-      const base = ['idle', 'move_front', 'move_back', 'guard', 'attack_fwd', 'attack_ud', 'hurt', 'beam_charge', 'beam_fire'];
-      const extras = Object.keys(m).filter(p => !base.includes(p));
-      setPoses([...base, ...extras]);
+      const known = COMBAT_POSE_ORDER.filter(p => Object.prototype.hasOwnProperty.call(m, p));
+      const extras = Object.keys(m).filter(p => !COMBAT_POSE_ORDER.includes(p as typeof COMBAT_POSE_ORDER[number]));
+      setPoses([...known, ...extras]);
     }).catch(() => {});
     return () => { cancelled = true; };
   }, [manifestUrl]);

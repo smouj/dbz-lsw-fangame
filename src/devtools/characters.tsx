@@ -10,7 +10,9 @@ import {
 import { spriteDirFor, spriteManifestUrl, spriteFrameUrl } from '../data/spriteManifest';
 import { BATTLE_PORTRAITS } from '../data/battlePortraits';
 import { overworldUrl } from '../data/overworld';
+import { battleOverworldActorUrl, battleOverworldAuraUrl } from '../data/battleOverworld';
 import { characterName } from '../data/storyPanels';
+import { COMBAT_REQUIRED_POSES } from '../battle/spriteConfig';
 
 const STATS: { key: 'hp' | 'str' | 'ki' | 'spd'; label: string; color: string }[] = [
   { key: 'hp', label: 'HP', color: '#e04a4a' },
@@ -28,7 +30,10 @@ export function CharactersModule() {
   const form = getForm(formId) ?? getForm(char.forms[0])!;
   const spriteDir = spriteDirFor(form.id);
   const manifestUrl = spriteManifestUrl(form.id);
-  const idleUrl = idleSpriteUrl(form) ?? (spriteDir ? spriteFrameUrl(form.id, `${spriteDir}_idle_00.png`) : undefined);
+  const idleUrl = spriteDir ? spriteFrameUrl(form.id, `${spriteDir}_idle_00.png`) : idleSpriteUrl(form);
+  const battleOwIdle = battleOverworldActorUrl(form.id, 'idle');
+  const battleOwPower = battleOverworldActorUrl(form.id, 'gather_power_pose');
+  const battleOwAura = battleOverworldAuraUrl(form.id);
   const portrait = BATTLE_PORTRAITS[form.id];
 
   const selectChar = (id: string) => {
@@ -129,8 +134,13 @@ export function CharactersModule() {
             <div className="dev-asset-grid">
               <AssetCell label="Portrait" src={portrait} />
               <AssetCell label="Overworld" src={overworldUrl(form.id)} />
-              <AssetCell label="Idle (sheet)" src={idleUrl} />
-              <AssetCell label="Sheet" src={form.sheet ? sheetUrl(form) : undefined} wide />
+              <AssetCell label="Idle (combat)" src={idleUrl} />
+              <AssetCell label="Battle OW idle" src={battleOwIdle} />
+              <PowerUpCell poseSrc={battleOwPower} auraSrc={battleOwAura} />
+              {spriteDir
+                ? <CombatSheetCell formId={form.id} spriteDir={spriteDir} />
+                : <AssetCell label="Combat sheet" src={undefined} wide />}
+              {form.sheet && <AssetCell label="ROM sheet ref" src={sheetUrl(form)} wide />}
               {manifestUrl && (
                 <div className="dev-asset-cell">
                   <div className="dev-asset-frame">
@@ -144,7 +154,7 @@ export function CharactersModule() {
               <div className="dev-poses-section">
                 <h3>Poses (combate)</h3>
                 <div className="dev-pose-grid">
-                  {(['idle', 'move_front', 'move_back', 'guard', 'attack_fwd', 'attack_ud', 'hurt', 'beam_charge', 'beam_fire'] as const).map(p => (
+                  {COMBAT_REQUIRED_POSES.map(p => (
                     <AssetCell key={p} label={p} src={spriteFrameUrl(form.id, `${spriteDir}_${p}_00.png`)} small />
                   ))}
                 </div>
@@ -164,6 +174,39 @@ function AssetCell({ label, src, wide, small }: { label: string; src?: string; w
         {src ? <img src={src} alt={label} loading="lazy" /> : <span className="dev-asset-missing">—</span>}
       </div>
       <div className="dev-asset-label">{label}</div>
+    </div>
+  );
+}
+
+function CombatSheetCell({ formId, spriteDir }: { formId: string; spriteDir: string }) {
+  return (
+    <div className="dev-asset-cell wide combat-sheet">
+      <div className="dev-asset-frame">
+        <div className="dev-combat-sheet-grid">
+          {COMBAT_REQUIRED_POSES.map(pose => (
+            <div key={pose} className="dev-combat-sheet-frame" title={pose}>
+              <img src={spriteFrameUrl(formId, `${spriteDir}_${pose}_00.png`)} alt={pose} loading="lazy" />
+            </div>
+          ))}
+        </div>
+      </div>
+      <div className="dev-asset-label">Combat sheet ({spriteDir})</div>
+    </div>
+  );
+}
+
+function PowerUpCell({ poseSrc, auraSrc }: { poseSrc?: string; auraSrc?: string }) {
+  return (
+    <div className="dev-asset-cell">
+      <div className="dev-asset-frame dev-powerup-frame">
+        {poseSrc ? (
+          <>
+            {auraSrc && <img src={auraSrc} alt="" className="dev-powerup-aura" loading="lazy" />}
+            <img src={poseSrc} alt="Battle OW power up" className="dev-powerup-actor" loading="lazy" />
+          </>
+        ) : <span className="dev-asset-missing">—</span>}
+      </div>
+      <div className="dev-asset-label">Battle OW power</div>
     </div>
   );
 }

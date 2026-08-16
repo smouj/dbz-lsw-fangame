@@ -207,11 +207,17 @@ estas poses consumidas por FighterActor/AtlasLoader:
 | `beam_fire` | disparando | 5 |
 | `beam_ray` | **RAYO real (V6): haz horizontal que se extiende** | 1-3 |
 | `beam_ray_tip` | cabeza del rayo (energía azul; opcional) | 1-2 |
+| `gather_power` | preparación común antes de acción | opcional |
+| `power_up` | aura / transformación / buff | opcional |
 
 `beam_ray`/`beam_ray_tip` se añadieron en 2026-08-15 (48/48 formas con rayo,
 44/48 con tip — goten/nappa/recoome no tienen cabeza separable). El renderer
 los usa en modo stretch GBC: el rayo se extiende desde el personaje hacia el
 rival (ancho = f(progress), posición fija en el actor).
+
+La tabla de poses y fallbacks vive en `src/battle/spriteConfig.ts`. Runtime
+React, runtime Pixi y Dev Studio deben importar `resolveCombatPose()` en vez de
+mantener listas locales duplicadas.
 
 ## 10. Excepciones por personaje (técnicas específicas)
 

@@ -1,5 +1,6 @@
-import { compileActionProfile, resolveActionProfile, ACTION_PROFILE_REGISTRY, listActionProfiles, slugifyCardName } from '../src/battle/actionProfiles';
+import { compileActionProfile, resolveActionProfile, ACTION_PROFILE_REGISTRY, actionSemanticsForCard, listActionProfiles, slugifyCardName } from '../src/battle/actionProfiles';
 import { profileFor } from '../src/battle/profiles';
+import { CARDS } from '../src/data/cards';
 
 let failures = 0;
 function check(name: string, ok: boolean, detail?: string) {
@@ -7,7 +8,16 @@ function check(name: string, ok: boolean, detail?: string) {
 }
 
 // 1) Todos los perfiles firma compilan y son válidos
+const seenIds = new Set<string>();
+const seenSlugs = new Set<string>();
 for (const spec of ACTION_PROFILE_REGISTRY) {
+  check(`registry:${spec.id}:uniqueId`, !seenIds.has(spec.id));
+  seenIds.add(spec.id);
+  for (const slug of spec.match) {
+    check(`registry:${spec.id}:${slug}:uniqueSlug`, !seenSlugs.has(slug));
+    seenSlugs.add(slug);
+  }
+
   const p = compileActionProfile(spec);
   check(`compile:${spec.id}:totalTicks>0`, p.totalTicks > 0, `total=${p.totalTicks}`);
   check(`compile:${spec.id}:presentation`, p.presentation === spec.entry.destination);
@@ -24,6 +34,17 @@ for (const spec of ACTION_PROFILE_REGISTRY) {
   // determinismo
   const p2 = compileActionProfile(spec);
   check(`compile:${spec.id}:deterministic`, JSON.stringify(p.tracks) === JSON.stringify(p2.tracks));
+  const actorPoses = p.tracks
+    .filter(t => t.event.type === 'ACTOR_POSE')
+    .map(t => (t.event.payload as { pose?: string }).pose)
+    .filter(Boolean);
+  if (spec.kind === 'beam' || spec.kind === 'damage') {
+    check(`compile:${spec.id}:commonPrep`, actorPoses.includes('gather_power'), actorPoses.join('>'));
+  }
+  if (spec.kind === 'damage') {
+    const firstNonIdle = actorPoses.find(pose => pose !== 'idle');
+    check(`compile:${spec.id}:meleePrepNotBeamCharge`, firstNonIdle !== 'beam_charge', actorPoses.join('>'));
+  }
 }
 
 // 2) Resolver mapea los nombres de carta correctamente
@@ -35,6 +56,12 @@ const cases: Array<[string, string]> = [
   ['S.Beam Can.', 'special_beam_cannon'],
   ['Spirit Bomb', 'spirit_bomb'],
   ['Final Flash', 'final_flash'],
+  ['Energy Wave', 'energy_wave'],
+  ['Misty KiWave', 'finger_beam'],
+  ['Galick-Ho', 'final_flash'],
+  ['Big Bang Atk', 'big_bang_attack'],
+  ['Destruct-Disk', 'energy_disk'],
+  ['Flash.Sword', 'flash_sword'],
   ['Cont.Punch', 'cont_punch'],
   ['Cont.Kick', 'cont_kick'],
   ['Rising Kick', 'rising_kick'],
@@ -48,8 +75,8 @@ for (const [name, id] of cases) {
   check(`resolve:${name}→${id}`, r?.id === id, r?.id);
 }
 
-// 3) Cards sin perfil firma devuelven null
-for (const name of ['Misty KiWave', 'Energy Wave', 'Galick-Ho', 'Taiyoken', 'Barrier']) {
+// 3) Cartas no ofensivas/sin cinematica firma devuelven null
+for (const name of ['Taiyoken', 'Barrier']) {
   check(`resolve:${name}→null`, resolveActionProfile(name) === null);
 }
 
@@ -57,12 +84,12 @@ for (const name of ['Misty KiWave', 'Energy Wave', 'Galick-Ho', 'Taiyoken', 'Bar
 check('slugify', slugifyCardName('Cont.Punch') === 'contpunch');
 check('slugify2', slugifyCardName('S.Beam Can.') === 'sbeamcan');
 
-// 5) profileFor delega: Kamehameha → perfil firma; Misty KiWave → fallback genérico
+// 5) profileFor delega: Kamehameha y Misty KiWave → perfiles firma
 const kam = profileFor('beam', 'Kamehameha');
 const misty = profileFor('beam', 'Misty KiWave');
 check('profileFor:kamehameha:id', kam.id === 'kamehameha', kam.id);
-check('profileFor:misty:id', misty.id === 'beam:Misty KiWave', misty.id);
-// Ambos deben ser PROJECTILE y con los mismos totalTicks (mismo template de kind)
+check('profileFor:misty:id', misty.id === 'finger_beam', misty.id);
+// Ambos deben ser PROJECTILE y con timing compatible hasta que se mida frame a frame.
 check('profileFor:samePresentation', kam.presentation === misty.presentation && kam.presentation === 'PROJECTILE');
 check('profileFor:sameTotal', kam.totalTicks === misty.totalTicks, `${kam.totalTicks} vs ${misty.totalTicks}`);
 
@@ -72,6 +99,15 @@ const generic = profileFor('damage', 'Atomic Break');
 check('profileFor:punch:id', punch.id === 'cont_punch');
 check('profileFor:generic:id', generic.id === 'damage:Atomic Break');
 check('profileFor:meleePresentation', punch.presentation === 'ACTION_DUEL' && generic.presentation === 'ACTION_DUEL');
+
+// 7) Todas las cartas BEAM reales tienen perfil firma y visual explicito.
+for (const card of CARDS.filter(c => c.type === 'beam')) {
+  const spec = resolveActionProfile(card.name);
+  const sem = actionSemanticsForCard(card);
+  check(`beam:${card.name}:profile`, !!spec);
+  check(`beam:${card.name}:kind`, spec?.kind === 'beam', spec?.kind);
+  check(`beam:${card.name}:visual`, sem.visual !== 'rush' && sem.visual !== 'power', String(sem.visual));
+}
 
 console.log(`\n${listActionProfiles().length} perfiles firma registrados.`);
 console.log(failures === 0 ? 'ALL CHECKS PASSED ✅' : `${failures} CHECKS FAILED ❌`);

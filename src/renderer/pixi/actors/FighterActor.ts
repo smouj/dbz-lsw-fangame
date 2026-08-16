@@ -14,30 +14,12 @@
 
 import { Container, Sprite, Texture } from 'pixi.js';
 import { facingFlip, type BattleSide } from '../../../data/facing';
+import { resolveCombatPose } from '../../../battle/spriteConfig';
 import { currentFrame } from '../systems/SpriteAnimator';
 import type { FormAtlas, PoseAnim } from '../assets/AtlasLoader';
 
-// Espejo de POSE_FALLBACKS de main.tsx (se deduplicará al migrar la lógica de
-// poses a un módulo compartido). Orden: pose → fallback → … → idle.
-const POSE_FALLBACKS: Record<string, string[]> = {
-  idle: ['idle'],
-  move_front: ['move_front', 'move_back', 'attack_fwd', 'idle'],
-  move_back: ['move_back', 'move_front', 'attack_fwd', 'idle'],
-  guard: ['guard', 'idle'],
-  attack_fwd: ['attack_fwd', 'move_front', 'idle'],
-  attack_ud: ['attack_ud', 'attack_fwd', 'idle'],
-  hurt: ['hurt', 'guard', 'idle'],
-  beam_charge: ['beam_charge', 'gather_power', 'guard', 'idle'],
-  beam_fire: ['beam_fire', 'beam_charge', 'attack_fwd', 'idle'],
-  gather_power: ['gather_power', 'beam_charge', 'guard', 'idle'],
-};
-
 function resolvePose(atlas: FormAtlas, pose: string): string | null {
-  const fallbacks = POSE_FALLBACKS[pose] ?? [pose, 'idle'];
-  for (const p of fallbacks) {
-    if (atlas.anims.has(p)) return p;
-  }
-  return null;
+  return resolveCombatPose(pose, p => atlas.anims.has(p));
 }
 
 export class FighterActor extends Container {

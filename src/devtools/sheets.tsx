@@ -32,7 +32,6 @@ export function SheetsModule({ onOpenInPixelArt }: { onOpenInPixelArt?: (formId:
   const [formId, setFormId] = useState('goku_base');
   const [frames, setFrames] = useState<FrameAnalysis[]>([]);
   const [selected, setSelected] = useState<string | null>(null);
-  const [hashes, setHashes] = useState<Record<string, string>>({});
   const [loading, setLoading] = useState(false);
   const [zoom, setZoom] = useState(6);
 
@@ -43,7 +42,6 @@ export function SheetsModule({ onOpenInPixelArt }: { onOpenInPixelArt?: (formId:
   useEffect(() => {
     let alive = true;
     setFrames([]);
-    setHashes({});
     setSelected(null);
     if (!manifestUrl || !dir) return;
     setLoading(true);
@@ -110,7 +108,7 @@ export function SheetsModule({ onOpenInPixelArt }: { onOpenInPixelArt?: (formId:
                 if (group.length > 1) r.dupeOf = group.find(g => g !== r.file) || null;
               }
               setFrames(results.sort((a, b) => a.file.localeCompare(b.file)));
-              setHashes(hashMap);
+              setSelected(prev => prev ?? results.find(r => r.file.includes('_idle_'))?.file ?? results[0]?.file ?? null);
               setLoading(false);
             }
           };
@@ -121,7 +119,7 @@ export function SheetsModule({ onOpenInPixelArt }: { onOpenInPixelArt?: (formId:
             pending--;
             if (pending === 0) {
               setFrames(results.sort((a, b) => a.file.localeCompare(b.file)));
-              setHashes(hashMap);
+              setSelected(prev => prev ?? results.find(r => r.file.includes('_idle_'))?.file ?? results[0]?.file ?? null);
               setLoading(false);
             }
           };
@@ -143,7 +141,8 @@ export function SheetsModule({ onOpenInPixelArt }: { onOpenInPixelArt?: (formId:
       arr.push(f);
       byPose.set(pose, arr);
     }
-    const order = [...POSE_ORDER, ...Array.from(byPose.keys()).filter(p => !POSE_ORDER.includes(p))];
+    const poseOrder = POSE_ORDER as readonly string[];
+    const order = [...POSE_ORDER, ...Array.from(byPose.keys()).filter(p => !poseOrder.includes(p))];
     return order.filter(p => byPose.has(p)).map(p => ({ pose: p, sem: poseSemantics(p), frames: byPose.get(p)! }));
   }, [frames, dir]);
 
@@ -165,6 +164,7 @@ export function SheetsModule({ onOpenInPixelArt }: { onOpenInPixelArt?: (formId:
             <option key={fid} value={fid}>{FORMS[fid].character} / {FORMS[fid].form} ({fid})</option>
           ))}
         </select>
+        {dir && <span className="dev-sheets-dir">/assets/sprites/{dir}</span>}
         <label>Zoom</label>
         <div className="dev-zoom-row">
           {[4, 6, 8, 12].map(z => (
@@ -190,20 +190,23 @@ export function SheetsModule({ onOpenInPixelArt }: { onOpenInPixelArt?: (formId:
                 <span className="dev-pose-group-cat">{g.sem.category}</span>
                 <span className="dev-pose-group-meaning">{g.sem.meaning}</span>
               </div>
-              <div className="dev-sheets-grid">
+              <div className="dev-sheets-grid" role="list" aria-label={`${g.pose} sprite frames`}>
                 {g.frames.map(f => (
                   <button
                     key={f.file}
                     className={`dev-sheet-cell ${selected === f.file ? 'active' : ''} ${f.touchesEdge && f.touchTop > 3 ? 'edge' : ''} ${f.bgSpecks > 0 ? 'speck' : ''} ${f.dupeOf ? 'dupe' : ''}`}
                     onClick={() => setSelected(f.file)}
+                    aria-label={`${g.pose}: ${f.file}, ${f.w} by ${f.h}`}
                     title={`${f.file}\n${f.w}×${f.h} · ${g.sem.meaning}\n${f.touchesEdge ? '⚠ toca borde' : ''}${f.bgSpecks ? `\n🧽 ${f.bgSpecks} specks` : ''}${f.dupeOf ? `\n⧉ duplicado de ${f.dupeOf}` : ''}`}
                   >
-                    <img
-                      src={spriteFrameUrl(formId, f.file)}
-                      alt={f.file}
-                      width={f.w} height={f.h}
-                      style={{ width: f.w * (zoom / 2), height: f.h * (zoom / 2), imageRendering: 'pixelated' }}
-                    />
+                    <span className="dev-sheet-thumb">
+                      <img
+                        src={spriteFrameUrl(formId, f.file)}
+                        alt={f.file}
+                        width={f.w} height={f.h}
+                        style={{ width: f.w * 2, height: f.h * 2 }}
+                      />
+                    </span>
                     <span className="dev-sheet-name">{f.file.replace(`${dir}_`, '').replace('.png', '')}</span>
                   </button>
                 ))}
@@ -235,6 +238,7 @@ export function SheetsModule({ onOpenInPixelArt }: { onOpenInPixelArt?: (formId:
                     style={{ imageRendering: 'pixelated', width: selFrame.w * zoom, height: selFrame.h * zoom }}
                   />
                 </div>
+                <code className="dev-manifest-path">{spriteFrameUrl(formId, selFrame.file)}</code>
                 <div className="dev-sheet-details">
                   <div className={selFrame.touchesEdge && selFrame.touchTop > 3 ? 'warn' : 'ok'}>
                     {selFrame.touchesEdge && selFrame.touchTop > 3

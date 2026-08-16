@@ -391,7 +391,10 @@ independientes).
 
 Los números actuales (`beam: attacker 54f / travel 54f / target 44f`,
 `damage: attacker 50f / travel 44f / target 38f`) **sirvieron para estructurar
-el motor, pero NO son canon**. El formato final debe ser por-acción:
+el motor, pero NO son canon**. El runtime ya usa perfiles declarativos por carta
+en `src/battle/actionProfiles.ts`; cualquier medición forense nueva debe entrar
+ahí como datos del perfil, no como ramas especiales en el renderer. El formato
+final debe seguir siendo por-acción:
 
 ```yaml
 action: cont_punch
@@ -411,6 +414,19 @@ impact:     { explosion_frames: [...] }
 damage:     { hp_frame: ? }
 return:     { tactical_frame: ? }
 ```
+
+Contrato actual:
+
+- `ACTION_PROFILE_REGISTRY` resuelve perfiles firma por slug de carta.
+- `compileActionProfile()` convierte specs a eventos de `BattleTimeline`.
+- `profileFor(kind, cardName)` usa el perfil firma si existe y solo cae al
+  fallback genérico para acciones todavía no perfiladas.
+- `actionSemanticsForCard()` conecta la carta con su animación (`stage`, `melee`,
+  `beam`, `support`) y visual (`ray`, `wave`, `ball`, `disk`, `sword`, `special`).
+- `npm run verify:profiles` falla si hay ids/slugs duplicados o si una carta BEAM
+  real no tiene perfil firma explícito.
+
+Ver también `docs/COMBAT_ACTION_PIPELINE.md`.
 
 ---
 

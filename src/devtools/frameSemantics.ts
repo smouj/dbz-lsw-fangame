@@ -1,4 +1,6 @@
 // ═══════════════════════════════════════════════════════════
+
+import { COMBAT_POSE_ORDER } from '../battle/spriteConfig';
 // DBZ LSW — Semántica de frames de combate (para el panel Sheets)
 // Asigna a cada pose del manifest su significado canónico (SPRITE_TAXONOMY):
 // categoría (Acción/Estado/Frame/FX), significado, y qué acciones del juego
@@ -87,9 +89,7 @@ export const POSE_SEMANTICS: Record<string, PoseSemantics> = {
 
 /** Orden canónico de poses para mostrar en el grid. */
 export const POSE_ORDER = [
-  'idle', 'move_front', 'move_back', 'guard', 'attack_fwd', 'attack_ud',
-  'hurt', 'beam_charge', 'beam_fire', 'beam_ray', 'beam_ray_tip',
-  'gather_power', 'power_up',
+  ...COMBAT_POSE_ORDER,
 ];
 
 /** Semántica de una pose (con fallback genérico). */

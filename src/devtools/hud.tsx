@@ -5,11 +5,14 @@
 // se previsualizan al instante en el mockup y se aplican al juego
 // real con "Aplicar al juego" (persisten en localStorage).
 // ═══════════════════════════════════════════════════════════
+import { Check, Download, RotateCcw } from 'lucide-react';
 import { useMemo, useState } from 'react';
 import {
   HUD_THEME_VARS, HudTheme, currentHudTheme, defaultHudTheme,
   saveHudTheme, applyHudTheme, resetHudTheme,
 } from '../data/hudTheme';
+import { battleOverworldActorUrl } from '../data/battleOverworld';
+import { SCENARIOS } from '../data/scenarios';
 import { getForm } from '../data/roster';
 import { spriteDirFor, spriteFrameUrl } from '../data/spriteManifest';
 import { BATTLE_PORTRAITS } from '../data/battlePortraits';
@@ -19,7 +22,20 @@ import { downloadJson } from './spriteEditing';
 const P_FORM = 'goku_base';
 const E_FORM = 'piccolo_base';
 
-const GROUPS = ['Colores', 'Cartas', 'Escala', 'Tipografía'];
+const GROUPS = ['Colores', 'HUD', 'Cartas', 'Escala', 'Tipografía'];
+
+function PreviewHpBar({ current, max, side }: { current: number; max: number; side: 'left' | 'right' }) {
+  const pct = Math.max(0, Math.min(100, (current / max) * 100));
+  return (
+    <div className={`hp-bar ${side}`}>
+      <div className="hp-bar-track">
+        <div className="hp-bar-recent" style={{ width: `${pct + 8}%` }} />
+        <div className="hp-bar-current" style={{ width: `${pct}%` }} />
+        <div className="hp-bar-text">{current}/{max}</div>
+      </div>
+    </div>
+  );
+}
 
 export function HudModule() {
   const [theme, setTheme] = useState<HudTheme>(() => currentHudTheme());
@@ -29,10 +45,11 @@ export function HudModule() {
   const enemy = useMemo(() => getForm(E_FORM), []);
   const pDir = player ? spriteDirFor(player.id) : undefined;
   const eDir = enemy ? spriteDirFor(enemy.id) : undefined;
-  const pIdle = pDir ? spriteFrameUrl(player!.id, `${pDir}_idle_00.png`) : undefined;
-  const eIdle = eDir ? spriteFrameUrl(enemy!.id, `${eDir}_idle_00.png`) : undefined;
+  const pIdle = battleOverworldActorUrl(P_FORM, 'idle') ?? (pDir ? spriteFrameUrl(player!.id, `${pDir}_idle_00.png`) : undefined);
+  const eIdle = battleOverworldActorUrl(E_FORM, 'idle') ?? (eDir ? spriteFrameUrl(enemy!.id, `${eDir}_idle_00.png`) : undefined);
   const pPortrait = BATTLE_PORTRAITS[P_FORM];
   const ePortrait = BATTLE_PORTRAITS[E_FORM];
+  const battleBgUrl = SCENARIOS[0]?.overviewBackground ?? '/assets/backgrounds/scenarios/01_world.png';
 
   const setVar = (key: string, val: string) => setTheme(prev => ({ ...prev, [key]: val }));
 
@@ -71,9 +88,9 @@ export function HudModule() {
           </p>
         </div>
         <div className="dev-hud-actions">
-          <button className="dev-btn dev-btn-primary" onClick={apply}>✓ Aplicar al juego</button>
-          <button className="dev-btn" onClick={exportJson}>↓ Exportar JSON</button>
-          <button className="dev-btn dev-btn-danger" onClick={reset}>↺ Reset</button>
+          <button className="dev-btn dev-btn-primary" onClick={apply}><Check size={15} /> Aplicar al juego</button>
+          <button className="dev-btn" onClick={exportJson}><Download size={15} /> Exportar JSON</button>
+          <button className="dev-btn dev-btn-danger" onClick={reset}><RotateCcw size={15} /> Reset</button>
         </div>
       </div>
       {status && <div className="dev-hud-status">{status}</div>}
@@ -81,67 +98,82 @@ export function HudModule() {
       <div className="dev-hud-grid">
         {/* ─── PREVIEW / VISUALIZADOR ─── */}
         <div className="dev-hud-preview" style={mockVars}>
-          <div className="dev-hud-mock">
-            {/* HUD superior */}
-            <div className="dev-hud-mock-top">
-              <div className="dev-hud-mock-fighter left">
-                <div className="dev-hud-mock-name">
-                  <span className="dev-hud-mock-portrait">
+          <div className="battle-screen view-overview dev-hud-real-preview">
+            <div className="hud-top">
+              <div className="fighter-hud left">
+                <div className="hud-name">
+                  <span className="hud-portrait">
                     {pPortrait ? <img src={pPortrait} alt="" /> : <span className="dev-hud-mock-ph">?</span>}
                   </span>
                   <strong>GOKU</strong>
-                  <span className="dev-hud-mock-form">Base</span>
-                  <span className="dev-hud-mock-lv">LV50</span>
+                  <span className="hud-form">Base</span>
+                  <span className="hud-level">LV50</span>
                 </div>
-                <div className="dev-hud-mock-hp">
-                  <div className="dev-hud-mock-hp-fill" style={{ width: '72%' }} />
-                  <span className="dev-hud-mock-hp-txt">720/1000</span>
+                <PreviewHpBar current={720} max={1000} side="left" />
+                <div className="hud-stats"><span>STR60</span><span>KI55</span><span>SPD50</span></div>
+                <div className="hud-status">
+                  <span className="status-chip buff">STR+</span>
+                  <span className="status-chip guard">GUARD</span>
                 </div>
-                <div className="dev-hud-mock-stats">STR60 · KI55 · SPD50</div>
               </div>
 
-              <div className="dev-hud-mock-center">
-                <span className="dev-hud-mock-round">ROUND 1</span>
-                <span className="dev-hud-mock-vs">VS</span>
-                <span className="dev-hud-mock-order">GOKU FIRST</span>
-              </div>
-
-              <div className="dev-hud-mock-fighter right">
-                <div className="dev-hud-mock-name">
-                  <span className="dev-hud-mock-portrait">
+              <div className="fighter-hud right">
+                <div className="hud-name">
+                  <span className="hud-portrait">
                     {ePortrait ? <img src={ePortrait} alt="" /> : <span className="dev-hud-mock-ph">?</span>}
                   </span>
                   <strong>PICCOLO</strong>
-                  <span className="dev-hud-mock-form">Base</span>
-                  <span className="dev-hud-mock-lv">LV50</span>
+                  <span className="hud-form">Base</span>
+                  <span className="hud-level">LV50</span>
                 </div>
-                <div className="dev-hud-mock-hp">
-                  <div className="dev-hud-mock-hp-fill" style={{ width: '88%' }} />
-                  <span className="dev-hud-mock-hp-txt">880/1000</span>
+                <PreviewHpBar current={880} max={1000} side="right" />
+                <div className="hud-stats"><span>STR58</span><span>KI60</span><span>SPD48</span></div>
+                <div className="hud-status right">
+                  <span className="status-chip debuff">SPD−</span>
+                  <span className="status-chip none">—</span>
                 </div>
-                <div className="dev-hud-mock-stats">STR58 · KI60 · SPD48</div>
+              </div>
+              <div className="hud-center-badge">
+                <span className="hud-center-round">ROUND 1</span>
+                <span className="hud-center-vs">VS</span>
+                <span className="hud-center-order">GOKU</span>
               </div>
             </div>
 
-            {/* Campo de batalla */}
-            <div className="dev-hud-mock-field">
-              <div className="dev-hud-mock-bg" />
-              {pIdle && <img src={pIdle} alt="" className="dev-hud-mock-sprite left" />}
-              {eIdle && <img src={eIdle} alt="" className="dev-hud-mock-sprite right" />}
+            <div className="battlefield">
+              <div className="battle-bg authentic" style={{ backgroundImage: `url(${battleBgUrl})` }} />
+              <div className="battlefield-fighters">
+                <div className="fighter-container player down back" style={{ left: '28%', top: '64%' }}>
+                  {pIdle && <img src={pIdle} alt="" className="overworld-sprite" />}
+                  <div className="fighter-position-tag hidden">down back</div>
+                </div>
+                <div className="fighter-container enemy up back" style={{ left: '72%', top: '44%' }}>
+                  {eIdle && <img src={eIdle} alt="" className="overworld-sprite" style={{ transform: 'scaleX(-1)' }} />}
+                  <div className="fighter-position-tag hidden">up back</div>
+                </div>
+              </div>
             </div>
 
-            {/* Menú de comandos */}
-            <div className="dev-hud-mock-commands">
-              <button className="dev-hud-mock-cmd special">LIMIT</button>
-              <button className="dev-hud-mock-cmd command">JOINT</button>
-              <button className="dev-hud-mock-cmd defense">BASIC</button>
+            <div className="phase-bar">
+              <div className="phase-info">
+                <span className="turn-label">TURN 1</span>
+                <span className="speed-order-label">GOKU FIRST</span>
+                <span className="phase-label">ACTION 1/2</span>
+              </div>
+              <button className="btn-exit" type="button">EXIT</button>
             </div>
 
-            {/* Carta de ejemplo (beam) para mostrar colores + tamaño */}
-            <div className="dev-hud-mock-card">
-              <span className="dev-hud-mock-card-type">BEAM</span>
-              <strong>KAMEHAMEHA</strong>
-              <span className="dev-hud-mock-card-stats">ATK 40 · ACC 90%</span>
+            <div className="battle-controls">
+              <div className="dev-hud-command-strip">
+                <button className="dev-hud-mock-cmd special">LIMIT</button>
+                <button className="dev-hud-mock-cmd command">JOINT</button>
+                <button className="dev-hud-mock-cmd defense">BASIC</button>
+                <div className="dev-hud-mock-card">
+                  <span className="dev-hud-mock-card-type">BEAM</span>
+                  <strong>KAMEHAMEHA</strong>
+                  <span className="dev-hud-mock-card-stats">ATK 40 · ACC 90%</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -182,7 +214,7 @@ export function HudModule() {
                     className="dev-hud-reset-var"
                     title={`Restablecer ${v.label}`}
                     onClick={() => setVar(v.key, v.default)}>
-                    ↺
+                    <RotateCcw size={13} />
                   </button>
                 </div>
               ))}

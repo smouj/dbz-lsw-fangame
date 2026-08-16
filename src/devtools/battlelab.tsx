@@ -8,6 +8,7 @@
 //   ?debugCinematics=1 → timeline cinematográfico (Space/←→/R)
 // ═══════════════════════════════════════════════════════════
 import { useState } from 'react';
+import { Bug, Clapperboard, Cpu, Play } from 'lucide-react';
 import { FORMS, CHARACTERS } from '../data/roster';
 import { STORY_ENEMY_DECKS } from '../data/enemy_decks';
 
@@ -22,6 +23,9 @@ export function BattleLabModule({ onLaunchBattle }: Props) {
   const [enemy, setEnemy] = useState('piccolo_base');
   const [mode, setMode] = useState<'versus' | 'story'>('versus');
   const [chapter, setChapter] = useState(1);
+  const [debugState, setDebugState] = useState(() => new URLSearchParams(window.location.search).has('debugState'));
+  const [debugCinematics, setDebugCinematics] = useState(() => new URLSearchParams(window.location.search).has('debugCinematics'));
+  const [pixiField, setPixiField] = useState(() => new URLSearchParams(window.location.search).has('pixiField'));
 
   const charName = (fid: string) => {
     const f = FORMS[fid];
@@ -29,6 +33,15 @@ export function BattleLabModule({ onLaunchBattle }: Props) {
   };
 
   const launch = () => {
+    const url = new URL(window.location.href);
+    const setFlag = (key: string, enabled: boolean) => {
+      if (enabled) url.searchParams.set(key, '1');
+      else url.searchParams.delete(key);
+    };
+    setFlag('debugState', debugState);
+    setFlag('debugCinematics', debugCinematics);
+    setFlag('pixiField', pixiField);
+    window.history.replaceState(null, '', url.toString());
     if (onLaunchBattle) onLaunchBattle(player, enemy, mode === 'story' ? chapter : null);
   };
 
@@ -38,14 +51,6 @@ export function BattleLabModule({ onLaunchBattle }: Props) {
         <h1>Battle Lab</h1>
         <p className="dev-sub">Combate instantáneo real + depurador — elige matchup y lanza el motor de batalla.</p>
       </header>
-
-      <div className="dev-wip-banner">
-        ⚔ Lanza un combate real con cualquier matchup. Tras lanzarlo, activa los
-        depuradores por URL: <code>?debugState=1</code> (Inspector de estado + QTE
-        Debugger) y <code>?debugCinematics=1</code> (timeline cinematográfico). Teclas
-        QTE: <code>F</code> congelar · <code>.</code> +1 frame · <code>Shift+.</code> +10.
-        Cinemática: <code>Space</code> play/pausa · <code>←→</code> seek · <code>R</code> restart.
-      </div>
 
       <div className="dev-battlelab-layout">
         <div className="dev-sprite-controls">
@@ -78,8 +83,21 @@ export function BattleLabModule({ onLaunchBattle }: Props) {
             </>
           )}
 
+          <label>Depuración</label>
+          <div className="dev-debug-toggles">
+            <button className={`dev-toggle ${debugState ? 'active' : ''}`} onClick={() => setDebugState(v => !v)} type="button" aria-pressed={debugState} aria-label="Activar inspector de estado">
+              <Bug size={14} /> Estado
+            </button>
+            <button className={`dev-toggle ${debugCinematics ? 'active' : ''}`} onClick={() => setDebugCinematics(v => !v)} type="button" aria-pressed={debugCinematics} aria-label="Activar depurador cinematográfico">
+              <Clapperboard size={14} /> Cinemática
+            </button>
+            <button className={`dev-toggle ${pixiField ? 'active' : ''}`} onClick={() => setPixiField(v => !v)} type="button" aria-pressed={pixiField} aria-label="Activar renderer Pixi en batalla">
+              <Cpu size={14} /> Pixi
+            </button>
+          </div>
+
           <button className="dev-launch-btn" onClick={launch} disabled={!onLaunchBattle}>
-            ⚔ Lanzar combate
+            <Play size={15} /> Lanzar combate
           </button>
         </div>
 
@@ -87,6 +105,11 @@ export function BattleLabModule({ onLaunchBattle }: Props) {
           <div><label>Matchup</label><strong>{charName(player)} vs {charName(enemy)}</strong></div>
           <div><label>Modo</label><strong>{mode === 'story' ? `Historia · cap. ${chapter}` : 'Versus'}</strong></div>
           <div><label>Personajes registrados</label><strong>{CHARACTERS.length} · formas {Object.keys(FORMS).length}</strong></div>
+          <div><label>Debug</label><strong>{[
+            debugState ? 'estado' : null,
+            debugCinematics ? 'cinematica' : null,
+            pixiField ? 'pixi' : null,
+          ].filter(Boolean).join(' · ') || 'off'}</strong></div>
           <div><label>Motor</label><strong className="dev-ok">conectado — lanza BattleScreen real</strong></div>
         </div>
       </div>

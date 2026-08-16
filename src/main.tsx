@@ -7,7 +7,7 @@ import { applyHudTheme, loadHudTheme } from './data/hudTheme';
 import { FORMS, CHARACTERS, getCharacter, getForm, idleSpriteUrl, statAtLevel, LIMIT_DEFAULTS, loadLimits, saveLimits } from './data/roster';
 import { STORY_ENEMY_DECKS, STORY_AI_BOOSTS, TEAM_BATTLES } from './data/enemy_decks';
 import { facingFlip, needsFlip } from './data/facing';
-import { BattlePosition, POSITION_DATA, resolveRelativeDistance, isBeamVulnerable, isDamageVulnerable, anchorFor, BATTLE_POSITIONS, moveHorizontal, moveVertical, applyMoveAxis, positionLabel, type MoveAxis } from './data/positions';
+import { BattlePosition, POSITION_DATA, resolveRelativeDistance, isBeamVulnerable, isDamageVulnerable, anchorFor, applyMoveAxis, positionLabel, type MoveAxis } from './data/positions';
 import { BATTLE_PORTRAITS } from './data/battlePortraits';
 import { UNLOCK_KEY, STARTER_DAMAGE_DECK, STARTER_BEAM_DECK, STARTER_CHARACTERS, cardsForLevel, pickRewards, VS_UNLOCKS, isFormUnlocked, FORM_UNLOCK_LEVELS } from './data/unlocks';
 import { CARDS, CARD_COLORS, CARD_TYPE_NAMES, CardDef, CardType, DECK_SIZE, MAX_COPIES, getCard, CardEffect } from './data/cards';
@@ -21,6 +21,8 @@ import { SCENARIOS, SPECIAL_ACTION_BACKGROUND, type BattleViewMode } from './dat
 import { GBC_NATIVE_FPS, type QteState } from './data/actionFidelity';
 import { BattleTimeline, type CinematicEvent, type CinematicProfile } from './battle/timeline';
 import { profileFor, type CinematicKind } from './battle/profiles';
+import { actionSemanticsForCard } from './battle/actionProfiles';
+import { resolveCombatPose, type BattleSpritePose } from './battle/spriteConfig';
 import { isDebugCinematics, bindDebugControls, renderDebugOverlay, type CinematicDebugInfo, type CinematicDebugController } from './battle/debugCinematics';
 import { isDebugState, bindQteDebugControls, renderStateOverlay, type StateDebugSnapshot } from './battle/debugState';
 import { isPixiField } from './renderer/pixi/flag';
@@ -53,7 +55,6 @@ interface CharManifest {
   [pose: string]: { frames: { file: string; w: number; h: number }[]; fps: number; loop: boolean };
 }
 
-type BattleSpritePose = 'idle' | 'move_front' | 'move_back' | 'guard' | 'attack_fwd' | 'attack_ud' | 'hurt' | 'beam_charge' | 'beam_fire' | 'gather_power';
 const SPRITE_MANIFEST_CACHE = new Map<string, CharManifest>();
 const SPRITE_MANIFEST_PROMISES = new Map<string, Promise<CharManifest | null>>();
 
@@ -79,19 +80,6 @@ function manifestBounds(manifest: CharManifest): { maxW: number; maxH: number } 
 let __reactUid = 0;
 const nextUid = () => ++__reactUid;
 
-const POSE_FALLBACKS: Record<BattleSpritePose, BattleSpritePose[]> = {
-  idle: ['idle'],
-  move_front: ['move_front', 'move_back', 'attack_fwd', 'idle'],
-  move_back: ['move_back', 'move_front', 'attack_fwd', 'idle'],
-  guard: ['guard', 'idle'],
-  attack_fwd: ['attack_fwd', 'move_front', 'idle'],
-  attack_ud: ['attack_ud', 'attack_fwd', 'idle'],
-  hurt: ['hurt', 'guard', 'idle'],
-  beam_charge: ['beam_charge', 'gather_power', 'guard', 'idle'],
-  beam_fire: ['beam_fire', 'beam_charge', 'attack_fwd', 'idle'],
-  gather_power: ['gather_power', 'beam_charge', 'guard', 'idle'],
-};
-
 const OFFENSIVE_SUPPORT_EFFECTS = new Set<CardEffect>([
   'life_drain', 'knockdown_dmg', 'knockdown_min', 'gamebomb', 'candy',
   'naughty_book', 'ohko_lowacc', 'android_kill', 'damage',
@@ -103,8 +91,7 @@ const DEFENSIVE_EFFECTS = new Set<CardEffect>([
 ]);
 
 function resolveManifestPose(manifest: CharManifest, pose: BattleSpritePose | string): string | null {
-  const fallbacks = POSE_FALLBACKS[pose as BattleSpritePose] || [pose, 'idle'];
-  return fallbacks.find(p => manifest[p]?.frames?.length > 0) || null;
+  return resolveCombatPose(pose, p => manifest[p]?.frames?.length > 0);
 }
 
 function cardBattlePose(card: CardDef, context: 'field' | 'fx' = 'field'): BattleSpritePose {
@@ -113,6 +100,11 @@ function cardBattlePose(card: CardDef, context: 'field' | 'fx' = 'field'): Battl
   if (card.type === 'defense' || DEFENSIVE_EFFECTS.has(card.effect)) return 'guard';
   if (OFFENSIVE_SUPPORT_EFFECTS.has(card.effect)) return 'attack_fwd';
   return 'gather_power';
+}
+
+function cardProjectileClass(card: CardDef): string {
+  const visual = actionSemanticsForCard(card).visual;
+  return `visual-${visual}`;
 }
 
 interface Fighter {
@@ -325,19 +317,20 @@ function FighterSprite({ formId, pose, side, scale = 8, flash = false }: {
 function BattleOverworldSprite({ formId, pose, side, idleSrc }: {
   formId: string; pose: string; side?: 'left' | 'right'; idleSrc?: string;
 }) {
+  const [failedSrc, setFailedSrc] = useState<string | null>(null);
   const flip = side ? facingFlip(formId, side) : 1;
   const isGather = pose === 'gather_power';
   const poseSrc = battleOverworldActorUrl(formId, isGather ? 'gather_power_pose' : 'idle');
   const auraSrc = isGather ? battleOverworldAuraUrl(formId) : undefined;
 
   // Si no hay battle_overworld extraído, usar el chibi *_ow.png estándar
-  const src = poseSrc ?? idleSrc;
+  const src = poseSrc && failedSrc !== poseSrc ? poseSrc : idleSrc;
   if (!src) return null;
 
   return (
     <div className={`battle-overworld ${isGather ? 'gathering' : ''}`}
       style={{ transform: `scaleX(${flip})` }}>
-      <img src={src} alt={formId} className="overworld-sprite" />
+      <img src={src} alt={formId} className="overworld-sprite" onError={() => setFailedSrc(src)} />
       {auraSrc && <img src={auraSrc} alt="" className="gather-power-aura" />}
     </div>
   );
@@ -366,11 +359,11 @@ function CharacterSprite({ formId, height = 92, className = '', side }: {
 }
 
 // ─── Barra de HP ──────────────────────────────────────────
-function HPBar({ current, max, side }: { current: number; max: number; side: 'left' | 'right' }) {
+function HPBar({ current, max, side, introFill = false }: { current: number; max: number; side: 'left' | 'right'; introFill?: boolean }) {
   const pct = Math.max(0, Math.min(100, (current / max) * 100));
   const low = pct <= 25;
   return (
-    <div className={`hp-bar ${side} ${low ? 'low' : ''}`}>
+    <div className={`hp-bar ${side} ${low ? 'low' : ''} ${introFill ? 'intro-fill' : ''}`}>
       <div className="hp-bar-track">
         <div className="hp-bar-recent" style={{ width: `${pct}%` }} />
         <div className="hp-bar-current" style={{ width: `${pct}%` }} />
@@ -535,7 +528,8 @@ function GlobalTooltip() {
 
   if (!tip) return null;
   const MAX_W = 300;
-  const left = Math.max(8, Math.min(tip.x - MAX_W / 2, window.innerWidth - MAX_W - 8));
+  const half = MAX_W / 2;
+  const left = Math.max(half + 8, Math.min(tip.x, window.innerWidth - half - 8));
   return createPortal(
     <div className={`global-tooltip dir-${tip.dir}`} style={{ left, top: tip.y }}>{tip.text}</div>,
     document.body
@@ -774,7 +768,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
   const clampStage = (v: number) => Math.max(-3, Math.min(3, v));
   // ═══ CINEMÁTICA DE ACCIÓN GBC: atacante → habilidad → rival → campo ═══
   type CardFxStep = 'attacker' | 'travel' | 'target' | 'return';
-  const [cardFx, setCardFx] = useState<{ card: CardDef; side: 'player' | 'enemy'; step: CardFxStep } | null>(null);
+  const [cardFx, setCardFx] = useState<{ card: CardDef; side: 'player' | 'enemy'; step: CardFxStep; visual: string } | null>(null);
   const cinematicTimers = useRef<number[]>([]);
   // Precisión/evasión (Reading Ki / Afterimage / Lock On): flags temporales
   const [pLockOn, setPLockOn] = useState(false);
@@ -981,12 +975,15 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
   useEffect(() => clearCinematicTimers, []);
   const playCardCinematic = (card: CardDef, side: 'player' | 'enemy', onDone: () => void) => {
     clearCinematicTimers();
+    let cinematicFinished = false;
     const setActorPose = (pose: BattleSpritePose) => side === 'player' ? setPlayerPose(pose) : setEnemyPose(pose);
     const setTargetPose = (pose: BattleSpritePose) => side === 'player' ? setEnemyPose(pose) : setPlayerPose(pose);
     const resetActorPose = () => side === 'player' ? setPlayerPose('idle') : setEnemyPose('idle');
     const resetTargetPose = () => side === 'player' ? setEnemyPose('idle') : setPlayerPose('idle');
     const finishCinematic = () => {
-      setCardFx({ card, side, step: 'return' });
+      if (cinematicFinished) return;
+      cinematicFinished = true;
+      setCardFx({ card, side, step: 'return', visual: cardProjectileClass(card) });
       setViewMode('OVERVIEW');
       cinematicTimers.current.push(window.setTimeout(() => {
         setCardFx(null);
@@ -1027,7 +1024,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
 
     // El plano SOLO/DUEL/PROJECTILE se aplica desde el primer tick
     setViewMode('ACTION');
-    setCardFx({ card, side, step: 'attacker' });
+    setCardFx({ card, side, step: 'attacker', visual: cardProjectileClass(card) });
     setActorPose(cardBattlePose(card, 'field'));
 
     // Guard: si es beam/damage con target cut, el defensor espera en guard
@@ -1311,9 +1308,10 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
       setPressedKey(key);
       setTimeout(() => setPressedKey(null), 120);
       const st = stageQteRef.current;
-      // Contraataque (manual GBC §Stage Attack): A = defenderte · B = reparar
+      // En fallo de QTE el GBC no vuelve a mostrar el panel inferior: el rival
+      // resuelve el counter. Ignoramos inputs durante esa animación.
       if (st.state === 'COUNTER_WINDOW') {
-        stageRecoverInput(key);
+        return;
       } else {
         submitStageInput(key);
       }
@@ -1326,7 +1324,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
   // Arranque: primer ROUND del combate tras la intro cinematográfica (~3s)
   const startedRef = useRef(false);
   useEffect(() => {
-    const tm = setTimeout(() => setIntro(false), 3100);
+    const tm = setTimeout(() => setIntro(false), 5200);
     return () => clearTimeout(tm);
   }, []);
   useEffect(() => {
@@ -1538,7 +1536,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
       ...st,
       state: 'COUNTER_WINDOW',
       counterFrames: 0,
-      result: st.result ?? null,
+      result: 'COUNTER_HIT',
     });
   };
 
@@ -1852,8 +1850,10 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
         const eResp = Math.random() < 0.55 ? 'defend' : 'move';
         let ePos = enemy.battlePos;
         if (eResp === 'move') {
-          // La IA elige entre las 4 posiciones tácticas (spec 4 posiciones)
-          ePos = BATTLE_POSITIONS[Math.floor(Math.random() * BATTLE_POSITIONS.length)];
+          // BASIC → MOVE también conserva la regla GBC de un solo eje:
+          // horizontal o vertical, nunca salto diagonal a cualquiera de las 4.
+          const axis: MoveAxis = Math.random() < 0.5 ? 'HORIZONTAL' : 'VERTICAL';
+          ePos = applyMoveAxis(enemy.battlePos, axis);
           setEnemy(prev => ({ ...prev, battlePos: ePos }));
         }
         // Fórmula REAL del GBC: Damage = (power + move) × positionMultiplier × block
@@ -2216,6 +2216,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
     const cardIncoming = incomingCard.current || CARDS[25];
     const eff = card.effect;
     let damage = 0;
+    let heal = 0;
     let hitType: 'damage' | 'miss' | 'guard' = 'guard';
     const acc = pEva > 0 ? Math.max(0, cardIncoming.acc - 30) : cardIncoming.acc;
     const hits = Math.random() <= acc / 100;
@@ -2243,6 +2244,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
     } else if (eff.startsWith('heal_')) {
       const pct = eff === 'heal_strong' ? (1/4 + 1/3) : eff === 'heal_light' ? 0.3 : 0.25;
       const healed = Math.floor(player.maxHp * pct);
+      heal = healed;
       setPlayer(prev => ({ ...prev, hp: Math.min(prev.maxHp, prev.hp + healed) }));
       setDamageNums(prev => [...prev, { value: healed, type: 'heal', ...dmgPos('player'), id: nextUid() }]);
       addLog(`${player.name} usa ${card.name} — +${healed} HP!`);
@@ -2263,6 +2265,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
       addLog(`${player.name} +${gain} CC (${t('battle.hp')} bajo)`);
       setFlashPlayer(true); hitImpact('player');
       setPlayerPose('hurt');
+      setDamageNums(prev => [...prev, { value: damage, type: 'damage', ...dmgPos('player'), id: nextUid() }]);
       if (cardIncoming.type === 'beam') Sfx.beam(); else Sfx.punch();
       setTimeout(() => setFlashPlayer(false), 150);
     } else {
@@ -2271,12 +2274,13 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
       else setDamageNums(prev => [...prev, { value: 0, type: 'miss', ...dmgPos('player'), id: nextUid() }]);
     }
     setEnemy(prev => ({ ...prev, cc: Math.max(0, prev.cc - cardIncoming.cc) }));
-    _finishDefenseResolution();
+    const projectedPlayerHp = Math.max(0, Math.min(player.maxHp, player.hp + heal) - damage);
+    _finishDefenseResolution(projectedPlayerHp);
   };
 
   // Cierre común de la resolución defensiva (KO / cambio de fase)
-  const _finishDefenseResolution = () => {
-    if (player.hp <= 0 && player2) {
+  const _finishDefenseResolution = (projectedPlayerHp = player.hp) => {
+    if (projectedPlayerHp <= 0 && player2) {
       const fallen = player.name;
       const next = player2;
       setPlayer2(null);
@@ -2287,7 +2291,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
       setTimeout(() => { setEnemyPose('idle'); setSelectedCard(null); advanceExchange(); }, 900);
       return;
     }
-    if (player.hp <= 0) {
+    if (projectedPlayerHp <= 0) {
       setTimeout(() => { setPlayerPose('hurt'); setPhase('lose'); Sfx.defeat(); addLog(`${player.name} ${t('battle.defeated')}`); }, 500);
       return;
     }
@@ -2419,7 +2423,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
   const battleBgUrl = viewMode === 'ACTION' ? scenario.actionBackground
     : viewMode === 'SPECIAL_ACTION' ? SPECIAL_ACTION_BACKGROUND
     : scenario.overviewBackground;
-  const suppressFieldActors = !!cardFx || phase === 'stageInput';
+  const suppressFieldActors = !!cardFx;
   const phaseShortLabel =
     phase === 'command' || phase === 'cardSelect' || phase === 'limitSelect' ? 'ATTACK' :
     phase === 'basic' ? 'BASIC' :
@@ -2427,6 +2431,12 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
     phase === 'enemyTurn' ? 'ACTION' :
     phase === 'defend' ? 'DEFENSE' :
     phase === 'position' ? 'POSITION' : '';
+  const activeAttackerSide: 'player' | 'enemy' = exchangeIndex === 0
+    ? turnOwner
+    : turnOwner === 'player' ? 'enemy' : 'player';
+  const activeDefenderSide: 'player' | 'enemy' = activeAttackerSide === 'player' ? 'enemy' : 'player';
+  const activeAttackerName = activeAttackerSide === 'player' ? player.name : enemy.name;
+  const activeDefenderName = activeDefenderSide === 'player' ? player.name : enemy.name;
   // Estado del QTE para el luchador del CAMPO (el panel inferior solo lleva
   // la secuencia; el luchador ejecuta en el campo como en el GBC).
   const qteCurKey = phase === 'stageInput' && stageQte ? stageQte.seq[stageQte.idx] : null;
@@ -2434,9 +2444,11 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
   const qteFrozen = phase === 'stageInput' && stageQte
     ? (stageQte.state === 'COUNTER_HIT' || stageQte.state === 'COUNTER_WINDOW')
     : false;
+  const qteResolving = phase === 'stageInput' && stageQte.state !== 'INPUT_WINDOW';
   const qtePose: BattleSpritePose = phase === 'stageInput'
     ? (qteFrozen ? 'attack_fwd' : 'idle')
     : (playerPose as BattleSpritePose);
+  const qteEnemyPose: BattleSpritePose = qteResolving ? 'attack_fwd' : 'idle';
 
   // ─── Inspector de estado (?debugState=1): snapshot para el overlay ───
   const fmtStage = (v: number) => (v > 0 ? `+${v}` : `${v}`);
@@ -2465,7 +2477,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
   } : null;
 
   return (
-    <div className={`battle-screen view-${viewMode.toLowerCase()} ${cardFx ? 'is-cinematic' : ''} ${phase === 'stageInput' ? 'qte-active' : ''}`}>
+    <div className={`battle-screen view-${viewMode.toLowerCase()} ${intro ? 'intro-active' : ''} ${cardFx ? 'is-cinematic' : ''} ${phase === 'stageInput' ? 'qte-active' : ''} ${qteResolving ? 'qte-resolving' : ''}`}>
       {/* ═══ Depurador cinematográfico (?debugCinematics=1) ═══ */}
       {isDebugCinematics() && debugCin && (
         <pre className="cinematic-debug-overlay">{renderDebugOverlay(debugCin, debugPaused)}</pre>
@@ -2498,47 +2510,44 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
         </div>
       )}
 
-      {/* ═══ INTRO CINEMATOGRÁFICA (como el GBC): VS screen + READY... FIGHT! ═══ */}
+      {/* ═══ INTRO GBC: VS screen integrada, sin panel inferior de comandos ═══ */}
       {intro && (
         <div className="battle-intro">
-          <div className="intro-burst-left" />
-          <div className="intro-burst-right" />
-          <div className="intro-fighter intro-left">
-            <div className="intro-portrait">
-              <img src={portraitFor(player.id, playerFormId) || ''} alt={player.name}
-                onError={e => (e.currentTarget.style.display = 'none')} />
+          <div className="intro-gbc-window">
+            <div className="intro-gbc-round">ROUND {turn}</div>
+            <div className="intro-gbc-match">
+              <div className="intro-gbc-side">
+                <div className="intro-gbc-portrait">
+                  <img src={portraitFor(player.id, playerFormId) || ''} alt={player.name}
+                    onError={e => (e.currentTarget.style.display = 'none')} />
+                </div>
+                <div className="intro-gbc-name">{player.name}</div>
+                <div className="intro-gbc-form">{player.form}</div>
+              </div>
+              <div className="intro-vs">{t('battle.vs')}</div>
+              <div className="intro-gbc-side right">
+                <div className="intro-gbc-portrait">
+                  <img src={portraitFor(enemy.id, enemyFormId) || ''} alt={enemy.name}
+                    onError={e => (e.currentTarget.style.display = 'none')} />
+                </div>
+                <div className="intro-gbc-name">{enemy.name}</div>
+                <div className="intro-gbc-form">{enemy.form}</div>
+              </div>
             </div>
-            <div className="intro-sprite-wrap">
-              {spriteManifestUrl(playerFormId)
-                ? <FighterSprite formId={playerFormId} pose="idle" side="left" scale={16} />
-                : <CharacterSprite formId={playerFormId} className="intro-sprite" height={230} side="left" />}
+            <div className="intro-gbc-roles">
+              <span>ATK {activeAttackerName.toUpperCase()}</span>
+              <span>DEF {activeDefenderName.toUpperCase()}</span>
             </div>
-            <div className="intro-name">{player.name}</div>
-            <div className="intro-sub">{player.form}</div>
-          </div>
-          <div className="intro-vs">{t('battle.vs')}</div>
-          <div className="intro-fighter intro-right">
-            <div className="intro-portrait">
-              <img src={portraitFor(enemy.id, enemyFormId) || ''} alt={enemy.name}
-                onError={e => (e.currentTarget.style.display = 'none')} />
-            </div>
-            <div className="intro-sprite-wrap">
-              {spriteManifestUrl(enemyFormId)
-                ? <FighterSprite formId={enemyFormId} pose="idle" side="right" scale={16} />
-                : <CharacterSprite formId={enemyFormId} className="intro-sprite" height={230} side="right" />}
-            </div>
-            <div className="intro-name">{enemy.name}</div>
-            <div className="intro-sub">{enemy.form}</div>
+            <div className="intro-ready">{t('battle.ready')}</div>
+            <div className="intro-fight">{t('battle.fight')}</div>
           </div>
           <div className="intro-flash" />
-          <div className="intro-fight">{t('battle.fight')}</div>
-          <div className="intro-ready">{t('battle.ready')}</div>
         </div>
       )}
 
       {/* ═══ CINEMÁTICA DE ACCIÓN GBC: atacante → habilidad → rival ═══ */}
       {cardFx && (
-        <div className={`card-fx fx-${cardFx.card.type} ${cardFx.side} scene-${cardFx.step}`} key={`${cardFx.card.id}-${cardFx.side}-${cardFx.step}`}>
+        <div className={`card-fx fx-${cardFx.card.type} ${cardFx.visual} ${cardFx.side} scene-${cardFx.step}`} key={`${cardFx.card.id}-${cardFx.side}-${cardFx.step}`}>
           <div className="fx-vignette" />
           {cardFx.step === 'attacker' && (
             <>
@@ -2568,7 +2577,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
                       ? <FighterSprite formId={playerFormId} pose="guard" side="left" scale={14} />
                       : <CharacterSprite formId={playerFormId} className="fx-sprite" height={200} side="left" />)}
               </div>
-              {cardFx.card.type === 'beam' ? <div className="fx-beam-travel" /> : <div className="fx-rush-trail" />}
+              {cardFx.card.type === 'beam' ? <div className={`fx-beam-travel ${cardFx.visual}`} /> : <div className="fx-rush-trail" />}
               {cardFx.card.type === 'damage' && <div className="fx-swing" />}
             </>
           )}
@@ -2611,7 +2620,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
             <span className="hud-form">{player.form}</span>
             <span className="hud-level">LV{player.level}</span>
           </div>
-          <HPBar current={player.hp} max={player.maxHp} side="left" />
+          <HPBar current={player.hp} max={player.maxHp} side="left" introFill={intro} />
           <div className="hud-stats">
             <span>STR{player.str + pBuffs.str}</span><span>KI{player.ki + pBuffs.ki}</span><span>SPD{player.spd + pStages.spd * 8}</span>
           </div>
@@ -2652,7 +2661,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
             <span className="hud-form">{enemy.form}</span>
             <span className="hud-level">LV{enemy.level}</span>
           </div>
-          <HPBar current={enemy.hp} max={enemy.maxHp} side="right" />
+          <HPBar current={enemy.hp} max={enemy.maxHp} side="right" introFill={intro} />
           <div className="hud-stats">
             <span>STR{enemy.str + eBuffs.str}</span><span>KI{enemy.ki + eBuffs.ki}</span><span>SPD{enemy.spd + eStages.spd * 8}</span>
           </div>
@@ -2681,7 +2690,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
         <div className="hud-center-badge">
           <span className="hud-center-round">ROUND {turn}</span>
           <span className="hud-center-vs">VS</span>
-          <span className="hud-center-order">{speedOrderLabel.split(' ')[0]}</span>
+          <span className="hud-center-order">{intro ? `${activeAttackerName.toUpperCase()} ATK` : `${activeAttackerName.toUpperCase()} > ${activeDefenderName.toUpperCase()}`}</span>
         </div>
       </div>
 
@@ -2704,7 +2713,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
             se hace con fade/scale suave por CSS (clase .field-action), no desmontando
             los sprites de golpe (2026-08-12: antes suppressFieldActors los eliminaba
             al instante y el cambio de vista era brusco). */}
-        <div className="battlefield-fighters">
+        <div className={`battlefield-fighters ${suppressFieldActors ? 'suppressed' : ''}`}>
           {/* Anchors por lado: LEFT (jugador) y RIGHT (enemigo) usan X
               reflejadas — BACK apunta al borde propio de cada lado (spec) */}
           <div ref={playerRef} className={`fighter-container player ${POSITION_DATA[player.battlePos].altitude.toLowerCase()} ${POSITION_DATA[player.battlePos].depth.toLowerCase()} ${phase === 'stageInput' ? (qteFrozen ? 'qte-frozen' : qteIsDir ? 'qte-lunge' : 'qte-idle') : ''}`}
@@ -2724,7 +2733,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
           <div ref={enemyRef} className={`fighter-container enemy ${POSITION_DATA[enemy.battlePos].altitude.toLowerCase()} ${POSITION_DATA[enemy.battlePos].depth.toLowerCase()}`}
             style={{ left: `${anchorFor(enemy.battlePos, 'RIGHT').x}%`, top: `${anchorFor(enemy.battlePos, 'RIGHT').y}%` }}>
             {phase === 'stageInput' && spriteManifestUrl(enemyFormId)
-              ? <FighterSprite formId={enemyFormId} pose="idle" side="right" scale={15} />
+              ? <FighterSprite formId={enemyFormId} pose={qteEnemyPose} side="right" scale={15} flash={qteResolving ? true : false} />
               : (enemyPose === 'idle' && overworldUrl(enemyFormId)
                   ? <img src={overworldUrl(enemyFormId)!} alt="" className="overworld-sprite" style={{ transform: `scaleX(${facingFlip(enemyFormId, 'right')})` }} />
                   : (spriteManifestUrl(enemyFormId)
@@ -2741,6 +2750,8 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
         <div className="phase-info">
           <span className="turn-label">{t('battle.turn')} {turn}</span>
           <span className="speed-order-label">{speedOrderLabel}</span>
+          <span className="role-label role-atk">ATK {activeAttackerName.toUpperCase()}</span>
+          <span className="role-label role-def">DEF {activeDefenderName.toUpperCase()}</span>
           <span className="phase-label">
             {phaseShortLabel}
             {phase !== 'win' && phase !== 'lose' && phase !== 'position' ? ` ${exchangeIndex + 1}/2` : ''}
@@ -2852,14 +2863,15 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
         )}
         {phase === 'stageInput' && (() => {
           const q = stageQte;
+          if (q.state !== 'INPUT_WINDOW') return null;
           const curKey = q.seq[q.idx];
           const isDirPrompt = curKey === 'UP' || curKey === 'DOWN' || curKey === 'LEFT' || curKey === 'RIGHT';
           // Tiempo GLOBAL de la secuencia en SEGUNDOS GBC (ventana total del manual).
           const elapsedSec = (q.elapsedFrames / GBC_NATIVE_FPS).toFixed(1);
           const limitSec = (q.limitFrames / GBC_NATIVE_FPS).toFixed(1);
-          const inCounter = q.state === 'COUNTER_WINDOW';
-          const failed = q.state === 'COUNTER_HIT';
-          const frozen = failed || inCounter;
+          const inCounter = false;
+          const failed = false;
+          const frozen = false;
           // Ventana de contraataque: A≈0.4s · B≈0.15s (HYPOTHESIS).
           const counterAOpen = inCounter && q.counterFrames <= COUNTER_A_FRAMES;
           const counterBOpen = inCounter && q.counterFrames <= COUNTER_B_FRAMES;
@@ -4361,6 +4373,10 @@ function AppInner() {
     return <DevStudio
       onExit={() => setInDev(false)}
       onLaunchBattle={(playerFormId, enemyFormId, chapter) => {
+        if (loadUnlocks().starterDeck === null) {
+          startWithDeck('damage');
+          setNeedsStarter(false);
+        }
         setPlayerForm(playerFormId);
         setEnemyForm(enemyFormId);
         setStoryChapter(chapter);
@@ -4369,10 +4385,11 @@ function AppInner() {
         setScreen('battle');
         // Salir del Dev Studio por completo: limpiar hash Y query (?dev=1)
         // para que isDevRoute() deje de devolver true (bug: con ?dev=1 en
-        // la URL el hashchange volvía a entrar en el Dev Studio).
+        // la URL el hashchange volvía a entrar en el Dev Studio). Conserva
+        // flags de depuración del Battle Lab: debugState/debugCinematics/pixiField.
         try {
           const url = new URL(window.location.href);
-          url.search = '';
+          url.searchParams.delete('dev');
           url.hash = '';
           window.history.replaceState(null, '', url.toString());
         } catch { /* noop */ }

@@ -8,6 +8,7 @@
     "build": "vite build",
     "typecheck": "tsc --noEmit",
     "verify:profiles": "esbuild --bundle --format=esm --platform=node scripts/verify-action-profiles.ts --outfile=.verify.mjs && node .verify.mjs; rm -f .verify.mjs",
+    "audit:sprites": "esbuild --bundle --format=esm --platform=node scripts/audit-combat-sprites.ts --outfile=.audit-sprites.mjs && node .audit-sprites.mjs; rm -f .audit-sprites.mjs",
     "import:sprites:v5": "node scripts/import-v5-sprites.mjs"
   },
   "dependencies": {

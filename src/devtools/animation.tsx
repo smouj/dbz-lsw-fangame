@@ -7,6 +7,9 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { FORMS } from '../data/roster';
 import { spriteDirFor, spriteManifestUrl, spriteFrameUrl } from '../data/spriteManifest';
+import { CARDS } from '../data/cards';
+import { actionSemanticsForCard } from '../battle/actionProfiles';
+import { COMBAT_REQUIRED_POSES, POSE_FALLBACKS, combatPoseMeta } from '../battle/spriteConfig';
 import {
   type Manifest, type ManifestFrame, type ManifestPose,
   fetchManifest, saveOverride, clearOverride, saveToProject,
@@ -14,6 +17,10 @@ import {
 } from './spriteEditing';
 
 const FPS_CHOICES = [1, 3, 6, 7, 8, 10, 12, 15, 24, 30];
+
+function poseMeta(pose: string) {
+  return combatPoseMeta(pose);
+}
 
 function b64(s: string): string {
   const bytes = new TextEncoder().encode(s);
@@ -43,6 +50,8 @@ export function AnimationModule() {
 
   const dir = spriteDirFor(formId);
   const manifestUrl = spriteManifestUrl(formId);
+  const form = FORMS[formId];
+  const characterId = form?.character ?? formId;
 
   // Cargar el manifest (base + override en localStorage)
   useEffect(() => {
@@ -230,6 +239,16 @@ export function AnimationModule() {
     if (next >= nFrames) return loop ? 0 : nFrames - 1;
     return next;
   });
+  const actionCards = CARDS
+    .filter(c => (c.type === 'damage' || c.type === 'beam' || c.type === 'command') && (!c.compatible || c.compatible.includes(characterId)))
+    .map(c => ({
+      ...c,
+      semantics: actionSemanticsForCard(c),
+    }));
+  const stageCards = actionCards.filter(c => c.type === 'command');
+  const meleeCards = actionCards.filter(c => c.type === 'damage');
+  const beamCards = actionCards.filter(c => c.type === 'beam');
+  const runtimePrepFallback = POSE_FALLBACKS.gather_power ?? ['gather_power'];
 
   return (
     <div className="dev-panel">
@@ -255,11 +274,30 @@ export function AnimationModule() {
             {poses.map(p => (
               <span key={p} className="dev-pose-pill-wrap">
                 <button className={`dev-pose-pill ${pose === p ? 'active' : ''}`}
-                  disabled={!manifest} onClick={() => { setPose(p); setFrame(0); }}>{p}</button>
+                  disabled={!manifest} onClick={() => { setPose(p); setFrame(0); }}>
+                  <span>{poseMeta(p).label}</span>
+                  <small>{poseMeta(p).group}</small>
+                </button>
                 <button className="dev-pose-x" title={`Quitar pose ${p}`} onClick={() => removePose(p)}>✕</button>
               </span>
             ))}
             {!manifest && <span className="dev-dim">cargando…</span>}
+          </div>
+          <div className="dev-action-map">
+            <strong>{poseMeta(pose).label}</strong>
+            <span>{poseMeta(pose).gameplay}</span>
+            <code>{pose}</code>
+          </div>
+          <div className="dev-action-map">
+            <strong>Runtime contract</strong>
+            <span>Required: {COMBAT_REQUIRED_POSES.join(' · ')}</span>
+            <span>Action prep: {runtimePrepFallback.join(' -> ')}</span>
+            <code>{dir ? `public/assets/sprites/${dir}/manifest.json` : 'sin manifest de build'}</code>
+          </div>
+          <div className="dev-action-card-map">
+            <ActionCardGroup title="Stage" cards={stageCards} />
+            <ActionCardGroup title="Melee" cards={meleeCards} />
+            <ActionCardGroup title="Beam" cards={beamCards} />
           </div>
           <div className="dev-pose-add">
             <input placeholder="nueva pose (ej: taunt)" value={newPoseName} onChange={e => setNewPoseName(e.target.value)} />
@@ -357,6 +395,28 @@ export function AnimationModule() {
 
           {status && <div className="dev-pixel-status">{status}</div>}
         </div>
+      </div>
+    </div>
+  );
+}
+
+function ActionCardGroup({ title, cards }: { title: string; cards: { id: number; name: string; semantics: ReturnType<typeof actionSemanticsForCard> }[] }) {
+  return (
+    <div className="dev-action-card-group">
+      <span>{title}</span>
+      <div>
+        {cards.length === 0
+          ? <em>—</em>
+          : cards.slice(0, 8).map(c => (
+            <code
+              key={c.id}
+              className={c.semantics.scope === 'unique' ? 'unique' : ''}
+              title={`${c.name}: ${c.semantics.animation} / ${c.semantics.visual} / ${c.semantics.scope}`}
+            >
+              {c.name}<small>{c.semantics.visual}</small>
+            </code>
+          ))}
+        {cards.length > 8 && <em>+{cards.length - 8}</em>}
       </div>
     </div>
   );
