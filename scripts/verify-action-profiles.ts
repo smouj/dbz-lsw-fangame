@@ -1,4 +1,5 @@
 import { compileActionProfile, resolveActionProfile, ACTION_PROFILE_REGISTRY, actionSemanticsForCard, listActionProfiles, slugifyCardName } from '../src/battle/actionProfiles';
+import { STAGE_SEQUENCE_POOL, nextStageSequence, resetStageRotation, hasDirections } from '../src/battle/stageSequences';
 import { profileFor } from '../src/battle/profiles';
 import { BattleTimeline, buildProfile, track } from '../src/battle/timeline';
 import { CARDS } from '../src/data/cards';
@@ -64,12 +65,27 @@ for (const spec of ACTION_PROFILE_REGISTRY) {
     .filter(t => t.event.type === 'ACTOR_POSE')
     .map(t => (t.event.payload as { pose?: string }).pose)
     .filter(Boolean);
-  if (spec.kind === 'beam' || spec.kind === 'damage') {
+  if (spec.kind === 'beam') {
+    // Beam: preparación de energía real (gather → charge → fire).
     check(`compile:${spec.id}:commonPrep`, actorPoses.includes('gather_power'), actorPoses.join('>'));
+  }
+  if (spec.kind === 'damage' || spec.kind === 'command') {
+    // Melee/stage: windup de golpe (attack_fwd), NUNCA gather_power
+    // (esa pose es de carga de energía; un puñetazo no grita con brazos arriba).
+    check(`compile:${spec.id}:noGatherPower`, !actorPoses.includes('gather_power'), actorPoses.join('>'));
+    check(`compile:${spec.id}:windupAttackFwd`, actorPoses.includes('attack_fwd'), actorPoses.join('>'));
   }
   if (spec.kind === 'damage') {
     const firstNonIdle = actorPoses.find(pose => pose !== 'idle');
     check(`compile:${spec.id}:meleePrepNotBeamCharge`, firstNonIdle !== 'beam_charge', actorPoses.join('>'));
+    // El impacto debe usar la pose de knockback específica del spec
+    // (knockback_back/up/down), no hurt genérico pisándola.
+    const impactPose = p.tracks
+      .filter(t => t.event.type === 'TARGET_POSE')
+      .map(t => (t.event.payload as { pose?: string }).pose)
+      .filter(Boolean)
+      .at(-1);
+    check(`compile:${spec.id}:impactTargetPose`, spec.impact?.targetPose != null && impactPose === spec.impact.targetPose, `${impactPose} vs ${spec.impact?.targetPose}`);
   }
 }
 
@@ -184,6 +200,40 @@ for (const card of missingProfiles) {
   check(`cardProfile:${card.name}`, false, 'sin perfil firma');
 }
 check('cardProfile:allCovered', missingProfiles.length === 0, missingProfiles.map(c => c.name).join(', '));
+
+// 8) Secuencias canónicas de Stage Attack (pool fijo, rotación determinista).
+for (const level of [3, 4, 5, 6] as const) {
+  const pool = STAGE_SEQUENCE_POOL[level];
+  check(`stagePool:${level}:count`, pool.length >= 6, String(pool.length));
+  check(`stagePool:${level}:length`, pool.every(s => s.length === level), pool.map(s => s.length).join(','));
+  // Cada SLOT es un solo eje (un input nunca es diagonal). El pool solo
+  // usa claves individuales UP/DOWN/LEFT/RIGHT, así que esto es garantía
+  // estructural; el check verifica que no hay slots compuestos.
+  check(`stagePool:${level}:singleAxisPerSlot`, pool.every(s => s.every(k => k === 'A' || k === 'B' || k === 'UP' || k === 'DOWN' || k === 'LEFT' || k === 'RIGHT')));
+  // 3 Stage: solo A/B; 4+: 3 golpes + (n-3) direcciones
+  check(`stagePool:${level}:grammar`, pool.every(s => {
+    const dirs = s.filter(k => k === 'UP' || k === 'DOWN' || k === 'LEFT' || k === 'RIGHT');
+    const ab = s.filter(k => k === 'A' || k === 'B');
+    return ab.length === 3 && dirs.length === level - 3;
+  }));
+  check(`stagePool:${level}:noAdjacentDirRepetition`, pool.every(s => {
+    const dirSeq = s.filter(k => k === 'UP' || k === 'DOWN' || k === 'LEFT' || k === 'RIGHT');
+    return dirSeq.every((d, i) => i === 0 || d !== dirSeq[i - 1]);
+  }));
+}
+// Rotación round-robin: 6 llamadas seguidas al mismo nivel no repiten
+// secuencia; la 7ª vuelve a la primera (determinismo).
+for (const level of [3, 4, 5, 6] as const) {
+  resetStageRotation(level);
+  const seen = new Set<string>();
+  const poolSize = STAGE_SEQUENCE_POOL[level].length;
+  for (let i = 0; i < poolSize; i++) seen.add(nextStageSequence(level).join(''));
+  check(`stageRotation:${level}:noRepeatWithinPool`, seen.size === poolSize, `${seen.size}/${poolSize}`);
+  const first = nextStageSequence(level).join('');
+  check(`stageRotation:${level}:wrapsDeterministic`, first === STAGE_SEQUENCE_POOL[level][0].join(''), first);
+}
+resetStageRotation();
+check('stagePool:hasDirections', hasDirections(['A', 'UP']) && !hasDirections(['A', 'B']));
 
 console.log(`\n${listActionProfiles().length} perfiles firma registrados.`);
 console.log(failures === 0 ? 'ALL CHECKS PASSED ✅' : `${failures} CHECKS FAILED ❌`);

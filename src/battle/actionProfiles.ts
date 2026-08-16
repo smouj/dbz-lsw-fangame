@@ -57,6 +57,8 @@ export interface ProjectileSpec {
 export interface ImpactSpec {
   /** Frame EXACTO de contacto (HIT_FRAME). */
   contactFrame: number;
+  /** Pose del defensor al recibir (default 'hurt'). Melee usa knockback_*. */
+  targetPose?: string;
   /** Frame del SFX de impacto (null = UNKNOWN → contactFrame). */
   sfxFrame?: number | null;
   /** Frame de aplicación del daño (null = UNKNOWN → contact + hitstop + 1). */
@@ -186,7 +188,11 @@ export function compileActionProfile(spec: ActionProfileSpec): CinematicProfile 
     const hitstop = spec.impact.hitstop ?? 2;
     const hp = spec.impact.hpFrame ?? c + hitstop + 1;
     const shake = spec.impact.shake ?? 0.35;
-    tracks.push(track(c, 'TARGET_POSE', { pose: 'hurt' }));
+    // Pose del defensor al recibir: si el spec declara una pose especifica de
+    // impacto (knockback_back/up/down para melee), usarla; si no, hurt generico.
+    // Antes esto pisaba SIEMPRE con 'hurt', ignorando los knockback_*.
+    const impactPose = spec.impact.targetPose ?? 'hurt';
+    tracks.push(track(c, 'TARGET_POSE', { pose: impactPose }));
     tracks.push(track(c, 'HIT_FRAME', {}));
     tracks.push(track(c + 1, 'CAMERA', { shake }));
     if (spec.projectile) tracks.push(track(c, 'PROJECTILE', { action: 'impact' }));
@@ -253,7 +259,10 @@ function meleeSpec(id: string, label: string, match: string[], strikePose = 'pun
     actor: {
       pose: 'idle',
       beats: [
-        { frame: 12, pose: 'gather_power', note: 'preparación común de acción' },
+        // Preparación: el GBC hace una pose de windup antes del rush; para
+        // melee es la guardia/neutral, NO gather_power (esa es solo para
+        // cargar energía/ki). Un puñetazo no grita con los brazos arriba.
+        { frame: 12, pose: 'attack_fwd', note: 'windup de golpe' },
         { frame: 26, pose: 'idle', note: 'cierra y vuelve a neutral antes del rush' },
         { frame: m.windup, pose: strikePose },
         { frame: m.contact, pose: strikePose },
@@ -262,7 +271,7 @@ function meleeSpec(id: string, label: string, match: string[], strikePose = 'pun
     },
     target: { beats: [{ frame: m.contact + 1, pose: targetPose }] },
     rush: { startFrame: m.rush, duration: m.rushDur },
-    impact: { contactFrame: m.contact, hitstop: m.hitstop, shake: m.shake },
+    impact: { contactFrame: m.contact, hitstop: m.hitstop, shake: m.shake, targetPose },
     messages: [{ frame: m.contact + 2, text: 'IMPACT' }],
     returnToField: m.return,
   };
@@ -291,7 +300,9 @@ function stageSpec(id: string, label: string, match: string[], stages: number): 
     actor: {
       pose: 'idle',
       beats: [
-        { frame: 12, pose: 'gather_power', note: 'preparacion comun de accion' },
+        // Tras completar el QTE el GBC ejecuta el combo: windup de golpe,
+        // no gather_power (esa es solo para cargar energia).
+        { frame: 12, pose: 'attack_fwd', note: 'windup del combo' },
         { frame: 26, pose: 'idle' },
         { frame: m.windup, pose: strikePose },
         { frame: m.contact, pose: strikePose, note: `${stages} stage - golpe final` },
@@ -300,7 +311,7 @@ function stageSpec(id: string, label: string, match: string[], stages: number): 
     },
     target: { beats: [{ frame: m.contact + 1, pose: 'knockback_back' }] },
     rush: { startFrame: m.rush, duration: m.rushDur },
-    impact: { contactFrame: m.contact, hitstop: m.hitstop, shake: m.shake },
+    impact: { contactFrame: m.contact, hitstop: m.hitstop, shake: m.shake, targetPose: 'knockback_back' },
     messages: [
       { frame: 4, text: `${stages} STAGE` },
       { frame: m.contact + 2, text: 'IMPACT' },

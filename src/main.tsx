@@ -20,6 +20,7 @@ import { spriteManifestUrl, spriteFrameUrl, spriteDirFor } from './data/spriteMa
 import { SCENARIOS, SPECIAL_ACTION_BACKGROUND, type BattleViewMode } from './data/scenarios';
 import { GBC_NATIVE_FPS, type QteState } from './data/actionFidelity';
 import { stageInputPose, stageInputFieldPose, stageInputLunges } from './battle/stageInputMap';
+import { nextStageSequence } from './battle/stageSequences';
 import { BattleTimeline, type CinematicEvent, type CinematicProfile } from './battle/timeline';
 import { profileFor, type CinematicKind } from './battle/profiles';
 import { actionSemanticsForCard } from './battle/actionProfiles';
@@ -1484,19 +1485,16 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
   // ═══ Inicio del Stage Attack: TACTICAL → CUT → ACTION VIEW (spec §2/§28) ═══
   const startStageAttack = (card: CardDef) => {
     // Etapas según la carta (3/4/5/6 Stage)
-    let stages = 3;
+    let stages: 3 | 4 | 5 | 6 = 3;
     if (card.name.includes('4')) stages = 4;
     else if (card.name.includes('5')) stages = 5;
     else if (card.name.includes('6')) stages = 6;
     // Gather Power convierte Basic 3 Stage → 4 Stage (ya manejado en BASIC).
-    // Secuencia mixta: 3 Stage = A/B puro; 4/5/6 añaden direcciones al final.
-    const seq: StageKey[] = [];
-    const dirs: StageKey[] = ['UP', 'DOWN', 'LEFT', 'RIGHT'];
-    const dirSlots = stages - 3; // 4S:1, 5S:2, 6S:3
-    for (let i = 0; i < stages; i++) {
-      if (i >= stages - dirSlots) seq.push(dirs[Math.floor(Math.random() * dirs.length)]);
-      else seq.push(Math.random() < 0.5 ? 'A' : 'B');
-    }
+    // Secuencia CANÓNICA predeterminada (pool fijo por nivel, round-robin):
+    // NO aleatoria — el GBC tiene patrones de inputs que se repiten y el
+    // jugador los aprende; la rotación garantiza variación sin repetir hasta
+    // agotar el pool (6 variantes por nivel). docs: stageSequences.ts
+    const seq = nextStageSequence(stages);
     // ⚠️ pool de inputs y generación: HYPOTHESIS (spec §21) — el original puede
     // usar un generador propio; pendiente de verificar en ROM.
     // Ventana TOTAL de la secuencia según posición relativa (manual GBC):
