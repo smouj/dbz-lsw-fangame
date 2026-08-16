@@ -1,0 +1,29 @@
+{
+  "columns": 6,
+  "rows": 1,
+  "cell_width": 36,
+  "cell_height": 52,
+  "sprites": {
+    "gohan_super_saiyan_1_2__character_plus_effect__01__src_044.png": {
+      "x": 2,
+      "y": 4,
+      "w": 32,
+      "h": 44,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/gohan_super_saiyan_1_2/named/character_plus_effect/gohan_super_saiyan_1_2__character_plus_effect__01__src_044.png"
+    },
+    "gohan_super_saiyan_1_2__character_plus_effect__02__src_045.png": {
+      "x": 38,
+      "y": 3,
+      "w": 32,
+      "h": 45,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/gohan_super_saiyan_1_2/named/character_plus_effect/gohan_super_saiyan_1_2__character_plus_effect__02__src_045.png"
+    },
+    "gohan_super_saiyan_1_2__character_plus_effect__03__src_047.png": {
+      "x": 74,
+      "y": 2,
+      "w": 32,
+      "h": 48,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/gohan_super_saiyan_1_2/named/character_plus_effect/gohan_super_saiyan_1_2__character_plus_effect__03__src_047.png"
+    }
+  }
+}

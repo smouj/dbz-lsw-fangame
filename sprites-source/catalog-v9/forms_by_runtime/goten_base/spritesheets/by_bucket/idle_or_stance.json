@@ -1,0 +1,22 @@
+{
+  "columns": 6,
+  "rows": 1,
+  "cell_width": 28,
+  "cell_height": 47,
+  "sprites": {
+    "goten_base__idle_or_stance__01__src_010.png": {
+      "x": 3,
+      "y": 3,
+      "w": 22,
+      "h": 41,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/goten_base/named/idle_or_stance/goten_base__idle_or_stance__01__src_010.png"
+    },
+    "goten_base__idle_or_stance__02__src_014.png": {
+      "x": 30,
+      "y": 2,
+      "w": 24,
+      "h": 43,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/goten_base/named/idle_or_stance/goten_base__idle_or_stance__02__src_014.png"
+    }
+  }
+}

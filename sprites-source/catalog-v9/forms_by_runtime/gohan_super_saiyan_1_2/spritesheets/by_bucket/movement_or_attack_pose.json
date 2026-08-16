@@ -1,0 +1,155 @@
+{
+  "columns": 6,
+  "rows": 4,
+  "cell_width": 54,
+  "cell_height": 52,
+  "sprites": {
+    "gohan_super_saiyan_1_2__movement_or_attack_pose__01__src_001.png": {
+      "x": 13,
+      "y": 3,
+      "w": 27,
+      "h": 46,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/gohan_super_saiyan_1_2/named/movement_or_attack_pose/gohan_super_saiyan_1_2__movement_or_attack_pose__01__src_001.png"
+    },
+    "gohan_super_saiyan_1_2__movement_or_attack_pose__02__src_002.png": {
+      "x": 66,
+      "y": 3,
+      "w": 30,
+      "h": 46,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/gohan_super_saiyan_1_2/named/movement_or_attack_pose/gohan_super_saiyan_1_2__movement_or_attack_pose__02__src_002.png"
+    },
+    "gohan_super_saiyan_1_2__movement_or_attack_pose__03__src_003.png": {
+      "x": 118,
+      "y": 4,
+      "w": 34,
+      "h": 44,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/gohan_super_saiyan_1_2/named/movement_or_attack_pose/gohan_super_saiyan_1_2__movement_or_attack_pose__03__src_003.png"
+    },
+    "gohan_super_saiyan_1_2__movement_or_attack_pose__04__src_007.png": {
+      "x": 175,
+      "y": 3,
+      "w": 28,
+      "h": 46,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/gohan_super_saiyan_1_2/named/movement_or_attack_pose/gohan_super_saiyan_1_2__movement_or_attack_pose__04__src_007.png"
+    },
+    "gohan_super_saiyan_1_2__movement_or_attack_pose__05__src_008.png": {
+      "x": 227,
+      "y": 4,
+      "w": 32,
+      "h": 43,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/gohan_super_saiyan_1_2/named/movement_or_attack_pose/gohan_super_saiyan_1_2__movement_or_attack_pose__05__src_008.png"
+    },
+    "gohan_super_saiyan_1_2__movement_or_attack_pose__06__src_009.png": {
+      "x": 283,
+      "y": 3,
+      "w": 28,
+      "h": 45,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/gohan_super_saiyan_1_2/named/movement_or_attack_pose/gohan_super_saiyan_1_2__movement_or_attack_pose__06__src_009.png"
+    },
+    "gohan_super_saiyan_1_2__movement_or_attack_pose__07__src_010.png": {
+      "x": 12,
+      "y": 57,
+      "w": 29,
+      "h": 42,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/gohan_super_saiyan_1_2/named/movement_or_attack_pose/gohan_super_saiyan_1_2__movement_or_attack_pose__07__src_010.png"
+    },
+    "gohan_super_saiyan_1_2__movement_or_attack_pose__08__src_011.png": {
+      "x": 65,
+      "y": 60,
+      "w": 32,
+      "h": 36,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/gohan_super_saiyan_1_2/named/movement_or_attack_pose/gohan_super_saiyan_1_2__movement_or_attack_pose__08__src_011.png"
+    },
+    "gohan_super_saiyan_1_2__movement_or_attack_pose__09__src_012.png": {
+      "x": 122,
+      "y": 54,
+      "w": 25,
+      "h": 48,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/gohan_super_saiyan_1_2/named/movement_or_attack_pose/gohan_super_saiyan_1_2__movement_or_attack_pose__09__src_012.png"
+    },
+    "gohan_super_saiyan_1_2__movement_or_attack_pose__10__src_013.png": {
+      "x": 177,
+      "y": 55,
+      "w": 24,
+      "h": 46,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/gohan_super_saiyan_1_2/named/movement_or_attack_pose/gohan_super_saiyan_1_2__movement_or_attack_pose__10__src_013.png"
+    },
+    "gohan_super_saiyan_1_2__movement_or_attack_pose__11__src_016.png": {
+      "x": 227,
+      "y": 56,
+      "w": 32,
+      "h": 43,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/gohan_super_saiyan_1_2/named/movement_or_attack_pose/gohan_super_saiyan_1_2__movement_or_attack_pose__11__src_016.png"
+    },
+    "gohan_super_saiyan_1_2__movement_or_attack_pose__12__src_017.png": {
+      "x": 282,
+      "y": 55,
+      "w": 29,
+      "h": 46,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/gohan_super_saiyan_1_2/named/movement_or_attack_pose/gohan_super_saiyan_1_2__movement_or_attack_pose__12__src_017.png"
+    },
+    "gohan_super_saiyan_1_2__movement_or_attack_pose__13__src_018.png": {
+      "x": 8,
+      "y": 106,
+      "w": 37,
+      "h": 47,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/gohan_super_saiyan_1_2/named/movement_or_attack_pose/gohan_super_saiyan_1_2__movement_or_attack_pose__13__src_018.png"
+    },
+    "gohan_super_saiyan_1_2__movement_or_attack_pose__14__src_019.png": {
+      "x": 63,
+      "y": 109,
+      "w": 36,
+      "h": 41,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/gohan_super_saiyan_1_2/named/movement_or_attack_pose/gohan_super_saiyan_1_2__movement_or_attack_pose__14__src_019.png"
+    },
+    "gohan_super_saiyan_1_2__movement_or_attack_pose__15__src_020.png": {
+      "x": 120,
+      "y": 108,
+      "w": 29,
+      "h": 44,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/gohan_super_saiyan_1_2/named/movement_or_attack_pose/gohan_super_saiyan_1_2__movement_or_attack_pose__15__src_020.png"
+    },
+    "gohan_super_saiyan_1_2__movement_or_attack_pose__16__src_022.png": {
+      "x": 173,
+      "y": 114,
+      "w": 32,
+      "h": 32,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/gohan_super_saiyan_1_2/named/movement_or_attack_pose/gohan_super_saiyan_1_2__movement_or_attack_pose__16__src_022.png"
+    },
+    "gohan_super_saiyan_1_2__movement_or_attack_pose__17__src_023.png": {
+      "x": 227,
+      "y": 108,
+      "w": 32,
+      "h": 43,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/gohan_super_saiyan_1_2/named/movement_or_attack_pose/gohan_super_saiyan_1_2__movement_or_attack_pose__17__src_023.png"
+    },
+    "gohan_super_saiyan_1_2__movement_or_attack_pose__18__src_024.png": {
+      "x": 281,
+      "y": 108,
+      "w": 32,
+      "h": 43,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/gohan_super_saiyan_1_2/named/movement_or_attack_pose/gohan_super_saiyan_1_2__movement_or_attack_pose__18__src_024.png"
+    },
+    "gohan_super_saiyan_1_2__movement_or_attack_pose__19__src_025.png": {
+      "x": 9,
+      "y": 161,
+      "w": 36,
+      "h": 41,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/gohan_super_saiyan_1_2/named/movement_or_attack_pose/gohan_super_saiyan_1_2__movement_or_attack_pose__19__src_025.png"
+    },
+    "gohan_super_saiyan_1_2__movement_or_attack_pose__20__src_031.png": {
+      "x": 56,
+      "y": 160,
+      "w": 50,
+      "h": 43,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/gohan_super_saiyan_1_2/named/movement_or_attack_pose/gohan_super_saiyan_1_2__movement_or_attack_pose__20__src_031.png"
+    },
+    "gohan_super_saiyan_1_2__movement_or_attack_pose__21__src_036.png": {
+      "x": 122,
+      "y": 160,
+      "w": 26,
+      "h": 43,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/gohan_super_saiyan_1_2/named/movement_or_attack_pose/gohan_super_saiyan_1_2__movement_or_attack_pose__21__src_036.png"
+    }
+  }
+}

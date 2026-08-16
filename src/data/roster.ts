@@ -132,40 +132,23 @@ export function sheetThumbUrl(form: FormDef): string {
   return `/assets/sheets/${form.sheet}`;
 }
 // ─── Sprite idle extraído por forma ───────────────────────
-// Mapeo: sheet (archivo) → personaje → sprite idle recortado
-// Los sprites se generaron desde los sheets auténticos (public/assets/sprites/*/)
+// FUENTE CANÓNICA: public/assets/sprites/<sprite_dir>/<sprite_dir>_idle_00.png
+// (44 dirs con manifest — ver src/data/spriteManifest.ts SPRITE_DIRS).
+// El mapeo viejo por sheet (goku.png → 'goku') apuntaba a carpetas
+// pre-canonización que ya no existen; ahora se resuelve SIEMPRE con
+// spriteDirFor(form.id) para que el menú BATTLE y los fallbacks del Dev
+// Studio usen exactamente la misma fuente que el runtime del juego.
 
-const IDLE_BY_SHEET: Record<string, string> = {
-  'goku.png': 'goku', 'goku-super-saiyan.png': 'goku-super-saiyan',
-  'goku-super-saiyan-2.png': 'goku-super-saiyan-2', 'goku-super-saiyan-3.png': 'goku-super-saiyan-3',
-  'vegeta.png': 'vegeta', 'vegeta-super-saiyan-majin.png': 'vegeta-super-saiyan-majin',
-  'young-gohan.png': 'young-gohan', 'young-gohan-super-saiyan.png': 'young-gohan-super-saiyan',
-  'young-gohan-super-saiyan-2.png': 'young-gohan-super-saiyan-2',
-  'gohan-super-saiyan-1-2.png': 'gohan-super-saiyan-1-2', 'gohan-ultimate.png': 'gohan-ultimate',
-  'trunks.png': 'trunks', 'future-trunks.png': 'future-trunks', 'trunks-super-saiyan.png': 'trunks-super-saiyan',
-  'goten.png': 'goten', 'goten-super-saiyan.png': 'goten-super-saiyan',
-  'gotenks-super-saiyan.png': 'gotenks-super-saiyan', 'gotenks-super-saiyan-3.png': 'gotenks-super-saiyan-3',
-  'piccolo.png': 'piccolo', 'krillin.png': 'krillin',
-  'frieza.png': 'frieza',
-  'cell-imperfect-form.png': 'cell-imperfect-form', 'cell-semi-perfect-form.png': 'cell-semi-perfect-form',
-  'cell-perfect.png': 'cell-perfect', 'cell-jr.png': 'cell-jr',
-  'android-16.png': 'android-16', 'android-17.png': 'android-17', 'android-18.png': 'android-18',
-  'android-19.png': 'android-19', 'android-20-dr-gero.png': 'android-20-dr-gero',
-  'ginyu.png': 'ginyu', 'ginyu-gokus-body.png': 'ginyu-gokus-body',
-  'recoome.png': 'recoome', 'guldo.png': 'guldo', 'jeice.png': 'jeice', 'burter.png': 'burter',
-  'nappa.png': 'nappa',
-  'buu.png': 'buu', 'super-buu.png': 'super-buu', 'buu-gotenks.png': 'buu-gotenks',
-  'buu-gohan.png': 'buu-gohan', 'kid-buu.png': 'kid-buu',
-};
+import { spriteDirFor } from './spriteManifest';
 
-export function idleSpriteDir(sheet: string): string | undefined {
-  const key = IDLE_BY_SHEET[sheet];
-  return key ? `/assets/sprites/${key}/${key}_idle.png` : undefined;
+export function idleSpriteDir(form: FormDef): string | undefined {
+  const dir = spriteDirFor(form.id);
+  return dir ? `/assets/sprites/${dir}/${dir}_idle_00.png` : undefined;
 }
 
 export function idleSpriteUrl(form: FormDef): string | undefined {
   if (!form.sheet) return undefined;
-  return idleSpriteDir(form.sheet);
+  return idleSpriteDir(form);
 }
 
 // ─── Crecimiento por personaje (fiel al GBC: no es +1 universal) ───

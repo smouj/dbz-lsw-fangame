@@ -1,0 +1,43 @@
+{
+  "columns": 6,
+  "rows": 1,
+  "cell_width": 41,
+  "cell_height": 50,
+  "sprites": {
+    "piccolo_base__idle_or_stance__01__src_004.png": {
+      "x": 10,
+      "y": 5,
+      "w": 21,
+      "h": 40,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/piccolo_base/named/idle_or_stance/piccolo_base__idle_or_stance__01__src_004.png"
+    },
+    "piccolo_base__idle_or_stance__02__src_014.png": {
+      "x": 50,
+      "y": 4,
+      "w": 23,
+      "h": 41,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/piccolo_base/named/idle_or_stance/piccolo_base__idle_or_stance__02__src_014.png"
+    },
+    "piccolo_base__idle_or_stance__03__src_021.png": {
+      "x": 91,
+      "y": 5,
+      "w": 23,
+      "h": 40,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/piccolo_base/named/idle_or_stance/piccolo_base__idle_or_stance__03__src_021.png"
+    },
+    "piccolo_base__idle_or_stance__04__src_026.png": {
+      "x": 125,
+      "y": 7,
+      "w": 37,
+      "h": 36,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/piccolo_base/named/idle_or_stance/piccolo_base__idle_or_stance__04__src_026.png"
+    },
+    "piccolo_base__idle_or_stance__05__src_047.png": {
+      "x": 174,
+      "y": 2,
+      "w": 20,
+      "h": 46,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/piccolo_base/named/idle_or_stance/piccolo_base__idle_or_stance__05__src_047.png"
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "columns": 6,
+  "rows": 1,
+  "cell_width": 27,
+  "cell_height": 45,
+  "sprites": {
+    "super_buu_base__multi_evidence_speedlines_idle_or_stance__01__src_006.png": {
+      "x": 2,
+      "y": 2,
+      "w": 23,
+      "h": 41,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/super_buu_base/named/multi_evidence_speedlines_idle_or_stance/super_buu_base__multi_evidence_speedlines_idle_or_stance__01__src_006.png"
+    }
+  }
+}

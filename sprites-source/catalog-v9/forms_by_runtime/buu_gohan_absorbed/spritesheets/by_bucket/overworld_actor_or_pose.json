@@ -1,0 +1,22 @@
+{
+  "columns": 6,
+  "rows": 1,
+  "cell_width": 16,
+  "cell_height": 19,
+  "sprites": {
+    "buu_gohan_absorbed__overworld_actor_or_pose__01__src_027.png": {
+      "x": 2,
+      "y": 2,
+      "w": 12,
+      "h": 15,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/buu_gohan_absorbed/named/overworld_actor_or_pose/buu_gohan_absorbed__overworld_actor_or_pose__01__src_027.png"
+    },
+    "buu_gohan_absorbed__overworld_actor_or_pose__02__src_033.png": {
+      "x": 18,
+      "y": 2,
+      "w": 12,
+      "h": 14,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/buu_gohan_absorbed/named/overworld_actor_or_pose/buu_gohan_absorbed__overworld_actor_or_pose__02__src_033.png"
+    }
+  }
+}

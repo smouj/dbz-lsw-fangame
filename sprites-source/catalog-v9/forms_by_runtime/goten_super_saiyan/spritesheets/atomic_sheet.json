@@ -1,0 +1,302 @@
+{
+  "columns": 8,
+  "rows": 6,
+  "cell_width": 123,
+  "cell_height": 66,
+  "sprites": {
+    "001.png": {
+      "x": 47,
+      "y": 13,
+      "w": 29,
+      "h": 39,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/goten_super_saiyan/atomic/001.png"
+    },
+    "002.png": {
+      "x": 171,
+      "y": 12,
+      "w": 27,
+      "h": 41,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/goten_super_saiyan/atomic/002.png"
+    },
+    "003.png": {
+      "x": 291,
+      "y": 13,
+      "w": 33,
+      "h": 40,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/goten_super_saiyan/atomic/003.png"
+    },
+    "004.png": {
+      "x": 419,
+      "y": 12,
+      "w": 23,
+      "h": 41,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/goten_super_saiyan/atomic/004.png"
+    },
+    "005.png": {
+      "x": 533,
+      "y": 17,
+      "w": 40,
+      "h": 31,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/goten_super_saiyan/atomic/005.png"
+    },
+    "006.png": {
+      "x": 665,
+      "y": 12,
+      "w": 23,
+      "h": 41,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/goten_super_saiyan/atomic/006.png"
+    },
+    "007.png": {
+      "x": 787,
+      "y": 12,
+      "w": 25,
+      "h": 42,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/goten_super_saiyan/atomic/007.png"
+    },
+    "008.png": {
+      "x": 907,
+      "y": 14,
+      "w": 31,
+      "h": 38,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/goten_super_saiyan/atomic/008.png"
+    },
+    "009.png": {
+      "x": 48,
+      "y": 79,
+      "w": 26,
+      "h": 40,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/goten_super_saiyan/atomic/009.png"
+    },
+    "010.png": {
+      "x": 171,
+      "y": 79,
+      "w": 26,
+      "h": 39,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/goten_super_saiyan/atomic/010.png"
+    },
+    "011.png": {
+      "x": 293,
+      "y": 83,
+      "w": 29,
+      "h": 32,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/goten_super_saiyan/atomic/011.png"
+    },
+    "012.png": {
+      "x": 418,
+      "y": 79,
+      "w": 25,
+      "h": 40,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/goten_super_saiyan/atomic/012.png"
+    },
+    "013.png": {
+      "x": 540,
+      "y": 76,
+      "w": 26,
+      "h": 45,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/goten_super_saiyan/atomic/013.png"
+    },
+    "014.png": {
+      "x": 665,
+      "y": 77,
+      "w": 23,
+      "h": 43,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/goten_super_saiyan/atomic/014.png"
+    },
+    "015.png": {
+      "x": 777,
+      "y": 87,
+      "w": 44,
+      "h": 24,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/goten_super_saiyan/atomic/015.png"
+    },
+    "016.png": {
+      "x": 910,
+      "y": 78,
+      "w": 25,
+      "h": 42,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/goten_super_saiyan/atomic/016.png"
+    },
+    "017.png": {
+      "x": 46,
+      "y": 145,
+      "w": 30,
+      "h": 40,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/goten_super_saiyan/atomic/017.png"
+    },
+    "018.png": {
+      "x": 167,
+      "y": 145,
+      "w": 35,
+      "h": 40,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/goten_super_saiyan/atomic/018.png"
+    },
+    "019.png": {
+      "x": 294,
+      "y": 144,
+      "w": 26,
+      "h": 41,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/goten_super_saiyan/atomic/019.png"
+    },
+    "020.png": {
+      "x": 417,
+      "y": 146,
+      "w": 27,
+      "h": 38,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/goten_super_saiyan/atomic/020.png"
+    },
+    "021.png": {
+      "x": 542,
+      "y": 144,
+      "w": 22,
+      "h": 41,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/goten_super_saiyan/atomic/021.png"
+    },
+    "022.png": {
+      "x": 661,
+      "y": 149,
+      "w": 30,
+      "h": 31,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/goten_super_saiyan/atomic/022.png"
+    },
+    "023.png": {
+      "x": 784,
+      "y": 145,
+      "w": 30,
+      "h": 40,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/goten_super_saiyan/atomic/023.png"
+    },
+    "024.png": {
+      "x": 907,
+      "y": 145,
+      "w": 31,
+      "h": 40,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/goten_super_saiyan/atomic/024.png"
+    },
+    "025.png": {
+      "x": 44,
+      "y": 212,
+      "w": 34,
+      "h": 38,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/goten_super_saiyan/atomic/025.png"
+    },
+    "026.png": {
+      "x": 167,
+      "y": 212,
+      "w": 35,
+      "h": 38,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/goten_super_saiyan/atomic/026.png"
+    },
+    "027.png": {
+      "x": 301,
+      "y": 223,
+      "w": 13,
+      "h": 16,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/goten_super_saiyan/atomic/027.png"
+    },
+    "028.png": {
+      "x": 423,
+      "y": 223,
+      "w": 14,
+      "h": 15,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/goten_super_saiyan/atomic/028.png"
+    },
+    "029.png": {
+      "x": 541,
+      "y": 223,
+      "w": 24,
+      "h": 16,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/goten_super_saiyan/atomic/029.png"
+    },
+    "030.png": {
+      "x": 664,
+      "y": 223,
+      "w": 24,
+      "h": 16,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/goten_super_saiyan/atomic/030.png"
+    },
+    "031.png": {
+      "x": 784,
+      "y": 211,
+      "w": 31,
+      "h": 40,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/goten_super_saiyan/atomic/031.png"
+    },
+    "032.png": {
+      "x": 865,
+      "y": 211,
+      "w": 114,
+      "h": 40,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/goten_super_saiyan/atomic/032.png"
+    },
+    "033.png": {
+      "x": 29,
+      "y": 269,
+      "w": 64,
+      "h": 56,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/goten_super_saiyan/atomic/033.png"
+    },
+    "034.png": {
+      "x": 152,
+      "y": 269,
+      "w": 64,
+      "h": 56,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/goten_super_saiyan/atomic/034.png"
+    },
+    "035.png": {
+      "x": 275,
+      "y": 269,
+      "w": 64,
+      "h": 56,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/goten_super_saiyan/atomic/035.png"
+    },
+    "036.png": {
+      "x": 422,
+      "y": 291,
+      "w": 16,
+      "h": 12,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/goten_super_saiyan/atomic/036.png"
+    },
+    "037.png": {
+      "x": 541,
+      "y": 277,
+      "w": 25,
+      "h": 39,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/goten_super_saiyan/atomic/037.png"
+    },
+    "038.png": {
+      "x": 617,
+      "y": 277,
+      "w": 119,
+      "h": 40,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/goten_super_saiyan/atomic/038.png"
+    },
+    "039.png": {
+      "x": 777,
+      "y": 280,
+      "w": 44,
+      "h": 34,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/goten_super_saiyan/atomic/039.png"
+    },
+    "040.png": {
+      "x": 910,
+      "y": 277,
+      "w": 25,
+      "h": 39,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/goten_super_saiyan/atomic/040.png"
+    },
+    "041.png": {
+      "x": 4,
+      "y": 332,
+      "w": 115,
+      "h": 62,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/goten_super_saiyan/atomic/041.png"
+    },
+    "042.png": {
+      "x": 147,
+      "y": 335,
+      "w": 74,
+      "h": 56,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/goten_super_saiyan/atomic/042.png"
+    }
+  }
+}

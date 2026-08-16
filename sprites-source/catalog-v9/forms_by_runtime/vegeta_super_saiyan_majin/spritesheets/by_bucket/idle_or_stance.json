@@ -1,0 +1,22 @@
+{
+  "columns": 6,
+  "rows": 1,
+  "cell_width": 43,
+  "cell_height": 50,
+  "sprites": {
+    "vegeta_super_saiyan_majin__idle_or_stance__01__src_012.png": {
+      "x": 9,
+      "y": 2,
+      "w": 24,
+      "h": 46,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/vegeta_super_saiyan_majin/named/idle_or_stance/vegeta_super_saiyan_majin__idle_or_stance__01__src_012.png"
+    },
+    "vegeta_super_saiyan_majin__idle_or_stance__02__src_026.png": {
+      "x": 45,
+      "y": 5,
+      "w": 39,
+      "h": 40,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/vegeta_super_saiyan_majin/named/idle_or_stance/vegeta_super_saiyan_majin__idle_or_stance__02__src_026.png"
+    }
+  }
+}

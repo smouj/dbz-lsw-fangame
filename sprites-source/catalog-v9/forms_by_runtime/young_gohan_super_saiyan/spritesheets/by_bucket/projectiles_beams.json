@@ -1,0 +1,22 @@
+{
+  "columns": 6,
+  "rows": 1,
+  "cell_width": 121,
+  "cell_height": 67,
+  "sprites": {
+    "young_gohan_super_saiyan__projectiles_beams__01__src_032.png": {
+      "x": 3,
+      "y": 13,
+      "w": 114,
+      "h": 40,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/young_gohan_super_saiyan/named/projectiles_beams/young_gohan_super_saiyan__projectiles_beams__01__src_032.png"
+    },
+    "young_gohan_super_saiyan__projectiles_beams__02__src_041.png": {
+      "x": 123,
+      "y": 2,
+      "w": 117,
+      "h": 63,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/young_gohan_super_saiyan/named/projectiles_beams/young_gohan_super_saiyan__projectiles_beams__02__src_041.png"
+    }
+  }
+}

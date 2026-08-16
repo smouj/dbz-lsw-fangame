@@ -1,0 +1,15 @@
+{
+  "columns": 6,
+  "rows": 1,
+  "cell_width": 48,
+  "cell_height": 28,
+  "sprites": {
+    "kid_trunks_super_saiyan__downed_or_hurt__01__src_015.png": {
+      "x": 2,
+      "y": 2,
+      "w": 44,
+      "h": 24,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/kid_trunks_super_saiyan/named/downed_or_hurt/kid_trunks_super_saiyan__downed_or_hurt__01__src_015.png"
+    }
+  }
+}

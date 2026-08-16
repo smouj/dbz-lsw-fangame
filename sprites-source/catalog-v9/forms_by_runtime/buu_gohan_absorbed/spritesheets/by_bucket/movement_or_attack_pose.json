@@ -1,0 +1,239 @@
+{
+  "columns": 6,
+  "rows": 6,
+  "cell_width": 58,
+  "cell_height": 51,
+  "sprites": {
+    "buu_gohan_absorbed__movement_or_attack_pose__01__src_001.png": {
+      "x": 14,
+      "y": 4,
+      "w": 30,
+      "h": 42,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/buu_gohan_absorbed/named/movement_or_attack_pose/buu_gohan_absorbed__movement_or_attack_pose__01__src_001.png"
+    },
+    "buu_gohan_absorbed__movement_or_attack_pose__02__src_002.png": {
+      "x": 72,
+      "y": 4,
+      "w": 30,
+      "h": 42,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/buu_gohan_absorbed/named/movement_or_attack_pose/buu_gohan_absorbed__movement_or_attack_pose__02__src_002.png"
+    },
+    "buu_gohan_absorbed__movement_or_attack_pose__03__src_003.png": {
+      "x": 128,
+      "y": 5,
+      "w": 34,
+      "h": 40,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/buu_gohan_absorbed/named/movement_or_attack_pose/buu_gohan_absorbed__movement_or_attack_pose__03__src_003.png"
+    },
+    "buu_gohan_absorbed__movement_or_attack_pose__04__src_004.png": {
+      "x": 189,
+      "y": 4,
+      "w": 28,
+      "h": 42,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/buu_gohan_absorbed/named/movement_or_attack_pose/buu_gohan_absorbed__movement_or_attack_pose__04__src_004.png"
+    },
+    "buu_gohan_absorbed__movement_or_attack_pose__05__src_007.png": {
+      "x": 247,
+      "y": 4,
+      "w": 28,
+      "h": 42,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/buu_gohan_absorbed/named/movement_or_attack_pose/buu_gohan_absorbed__movement_or_attack_pose__05__src_007.png"
+    },
+    "buu_gohan_absorbed__movement_or_attack_pose__06__src_008.png": {
+      "x": 303,
+      "y": 6,
+      "w": 32,
+      "h": 39,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/buu_gohan_absorbed/named/movement_or_attack_pose/buu_gohan_absorbed__movement_or_attack_pose__06__src_008.png"
+    },
+    "buu_gohan_absorbed__movement_or_attack_pose__07__src_009.png": {
+      "x": 15,
+      "y": 56,
+      "w": 27,
+      "h": 41,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/buu_gohan_absorbed/named/movement_or_attack_pose/buu_gohan_absorbed__movement_or_attack_pose__07__src_009.png"
+    },
+    "buu_gohan_absorbed__movement_or_attack_pose__08__src_010.png": {
+      "x": 73,
+      "y": 58,
+      "w": 27,
+      "h": 37,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/buu_gohan_absorbed/named/movement_or_attack_pose/buu_gohan_absorbed__movement_or_attack_pose__08__src_010.png"
+    },
+    "buu_gohan_absorbed__movement_or_attack_pose__09__src_011.png": {
+      "x": 129,
+      "y": 59,
+      "w": 32,
+      "h": 34,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/buu_gohan_absorbed/named/movement_or_attack_pose/buu_gohan_absorbed__movement_or_attack_pose__09__src_011.png"
+    },
+    "buu_gohan_absorbed__movement_or_attack_pose__10__src_012.png": {
+      "x": 191,
+      "y": 56,
+      "w": 24,
+      "h": 40,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/buu_gohan_absorbed/named/movement_or_attack_pose/buu_gohan_absorbed__movement_or_attack_pose__10__src_012.png"
+    },
+    "buu_gohan_absorbed__movement_or_attack_pose__11__src_013.png": {
+      "x": 248,
+      "y": 54,
+      "w": 26,
+      "h": 45,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/buu_gohan_absorbed/named/movement_or_attack_pose/buu_gohan_absorbed__movement_or_attack_pose__11__src_013.png"
+    },
+    "buu_gohan_absorbed__movement_or_attack_pose__12__src_014.png": {
+      "x": 307,
+      "y": 55,
+      "w": 24,
+      "h": 43,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/buu_gohan_absorbed/named/movement_or_attack_pose/buu_gohan_absorbed__movement_or_attack_pose__12__src_014.png"
+    },
+    "buu_gohan_absorbed__movement_or_attack_pose__13__src_016.png": {
+      "x": 13,
+      "y": 107,
+      "w": 32,
+      "h": 41,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/buu_gohan_absorbed/named/movement_or_attack_pose/buu_gohan_absorbed__movement_or_attack_pose__13__src_016.png"
+    },
+    "buu_gohan_absorbed__movement_or_attack_pose__14__src_017.png": {
+      "x": 67,
+      "y": 106,
+      "w": 40,
+      "h": 43,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/buu_gohan_absorbed/named/movement_or_attack_pose/buu_gohan_absorbed__movement_or_attack_pose__14__src_017.png"
+    },
+    "buu_gohan_absorbed__movement_or_attack_pose__15__src_018.png": {
+      "x": 132,
+      "y": 107,
+      "w": 26,
+      "h": 40,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/buu_gohan_absorbed/named/movement_or_attack_pose/buu_gohan_absorbed__movement_or_attack_pose__15__src_018.png"
+    },
+    "buu_gohan_absorbed__movement_or_attack_pose__16__src_019.png": {
+      "x": 188,
+      "y": 106,
+      "w": 29,
+      "h": 42,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/buu_gohan_absorbed/named/movement_or_attack_pose/buu_gohan_absorbed__movement_or_attack_pose__16__src_019.png"
+    },
+    "buu_gohan_absorbed__movement_or_attack_pose__17__src_020.png": {
+      "x": 246,
+      "y": 107,
+      "w": 30,
+      "h": 40,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/buu_gohan_absorbed/named/movement_or_attack_pose/buu_gohan_absorbed__movement_or_attack_pose__17__src_020.png"
+    },
+    "buu_gohan_absorbed__movement_or_attack_pose__18__src_021.png": {
+      "x": 304,
+      "y": 106,
+      "w": 29,
+      "h": 42,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/buu_gohan_absorbed/named/movement_or_attack_pose/buu_gohan_absorbed__movement_or_attack_pose__18__src_021.png"
+    },
+    "buu_gohan_absorbed__movement_or_attack_pose__19__src_022.png": {
+      "x": 14,
+      "y": 162,
+      "w": 30,
+      "h": 32,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/buu_gohan_absorbed/named/movement_or_attack_pose/buu_gohan_absorbed__movement_or_attack_pose__19__src_022.png"
+    },
+    "buu_gohan_absorbed__movement_or_attack_pose__20__src_023.png": {
+      "x": 71,
+      "y": 158,
+      "w": 32,
+      "h": 41,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/buu_gohan_absorbed/named/movement_or_attack_pose/buu_gohan_absorbed__movement_or_attack_pose__20__src_023.png"
+    },
+    "buu_gohan_absorbed__movement_or_attack_pose__21__src_024.png": {
+      "x": 129,
+      "y": 159,
+      "w": 32,
+      "h": 39,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/buu_gohan_absorbed/named/movement_or_attack_pose/buu_gohan_absorbed__movement_or_attack_pose__21__src_024.png"
+    },
+    "buu_gohan_absorbed__movement_or_attack_pose__22__src_025.png": {
+      "x": 183,
+      "y": 159,
+      "w": 40,
+      "h": 38,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/buu_gohan_absorbed/named/movement_or_attack_pose/buu_gohan_absorbed__movement_or_attack_pose__22__src_025.png"
+    },
+    "buu_gohan_absorbed__movement_or_attack_pose__23__src_026.png": {
+      "x": 241,
+      "y": 159,
+      "w": 39,
+      "h": 38,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/buu_gohan_absorbed/named/movement_or_attack_pose/buu_gohan_absorbed__movement_or_attack_pose__23__src_026.png"
+    },
+    "buu_gohan_absorbed__movement_or_attack_pose__24__src_030.png": {
+      "x": 303,
+      "y": 159,
+      "w": 32,
+      "h": 39,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/buu_gohan_absorbed/named/movement_or_attack_pose/buu_gohan_absorbed__movement_or_attack_pose__24__src_030.png"
+    },
+    "buu_gohan_absorbed__movement_or_attack_pose__25__src_039.png": {
+      "x": 15,
+      "y": 208,
+      "w": 27,
+      "h": 43,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/buu_gohan_absorbed/named/movement_or_attack_pose/buu_gohan_absorbed__movement_or_attack_pose__25__src_039.png"
+    },
+    "buu_gohan_absorbed__movement_or_attack_pose__26__src_046.png": {
+      "x": 71,
+      "y": 210,
+      "w": 32,
+      "h": 39,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/buu_gohan_absorbed/named/movement_or_attack_pose/buu_gohan_absorbed__movement_or_attack_pose__26__src_046.png"
+    },
+    "buu_gohan_absorbed__movement_or_attack_pose__27__src_047.png": {
+      "x": 125,
+      "y": 218,
+      "w": 40,
+      "h": 22,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/buu_gohan_absorbed/named/movement_or_attack_pose/buu_gohan_absorbed__movement_or_attack_pose__27__src_047.png"
+    },
+    "buu_gohan_absorbed__movement_or_attack_pose__28__src_048.png": {
+      "x": 188,
+      "y": 206,
+      "w": 29,
+      "h": 47,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/buu_gohan_absorbed/named/movement_or_attack_pose/buu_gohan_absorbed__movement_or_attack_pose__28__src_048.png"
+    },
+    "buu_gohan_absorbed__movement_or_attack_pose__29__src_050.png": {
+      "x": 234,
+      "y": 218,
+      "w": 54,
+      "h": 23,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/buu_gohan_absorbed/named/movement_or_attack_pose/buu_gohan_absorbed__movement_or_attack_pose__29__src_050.png"
+    },
+    "buu_gohan_absorbed__movement_or_attack_pose__30__src_051.png": {
+      "x": 305,
+      "y": 207,
+      "w": 28,
+      "h": 45,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/buu_gohan_absorbed/named/movement_or_attack_pose/buu_gohan_absorbed__movement_or_attack_pose__30__src_051.png"
+    },
+    "buu_gohan_absorbed__movement_or_attack_pose__31__src_052.png": {
+      "x": 15,
+      "y": 258,
+      "w": 27,
+      "h": 45,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/buu_gohan_absorbed/named/movement_or_attack_pose/buu_gohan_absorbed__movement_or_attack_pose__31__src_052.png"
+    },
+    "buu_gohan_absorbed__movement_or_attack_pose__32__src_053.png": {
+      "x": 72,
+      "y": 257,
+      "w": 29,
+      "h": 47,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/buu_gohan_absorbed/named/movement_or_attack_pose/buu_gohan_absorbed__movement_or_attack_pose__32__src_053.png"
+    },
+    "buu_gohan_absorbed__movement_or_attack_pose__33__src_054.png": {
+      "x": 129,
+      "y": 261,
+      "w": 32,
+      "h": 39,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/buu_gohan_absorbed/named/movement_or_attack_pose/buu_gohan_absorbed__movement_or_attack_pose__33__src_054.png"
+    }
+  }
+}

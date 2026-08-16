@@ -1,0 +1,15 @@
+{
+  "columns": 6,
+  "rows": 1,
+  "cell_width": 27,
+  "cell_height": 45,
+  "sprites": {
+    "android_16_base__speedlines__01__src_009.png": {
+      "x": 2,
+      "y": 2,
+      "w": 23,
+      "h": 41,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/android_16_base/named/speedlines/android_16_base__speedlines__01__src_009.png"
+    }
+  }
+}

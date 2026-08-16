@@ -1,0 +1,29 @@
+{
+  "columns": 6,
+  "rows": 1,
+  "cell_width": 126,
+  "cell_height": 45,
+  "sprites": {
+    "krillin_base__projectiles_beams__01__src_036.png": {
+      "x": 6,
+      "y": 5,
+      "w": 114,
+      "h": 34,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/krillin_base/named/projectiles_beams/krillin_base__projectiles_beams__01__src_036.png"
+    },
+    "krillin_base__projectiles_beams__02__src_044.png": {
+      "x": 131,
+      "y": 2,
+      "w": 116,
+      "h": 40,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/krillin_base/named/projectiles_beams/krillin_base__projectiles_beams__02__src_044.png"
+    },
+    "krillin_base__projectiles_beams__03__src_047.png": {
+      "x": 254,
+      "y": 2,
+      "w": 122,
+      "h": 41,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/krillin_base/named/projectiles_beams/krillin_base__projectiles_beams__03__src_047.png"
+    }
+  }
+}

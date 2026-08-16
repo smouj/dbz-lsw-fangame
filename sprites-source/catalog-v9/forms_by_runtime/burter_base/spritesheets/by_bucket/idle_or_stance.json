@@ -1,0 +1,22 @@
+{
+  "columns": 6,
+  "rows": 1,
+  "cell_width": 41,
+  "cell_height": 44,
+  "sprites": {
+    "burter_base__idle_or_stance__01__src_025.png": {
+      "x": 9,
+      "y": 2,
+      "w": 22,
+      "h": 40,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/burter_base/named/idle_or_stance/burter_base__idle_or_stance__01__src_025.png"
+    },
+    "burter_base__idle_or_stance__02__src_029.png": {
+      "x": 43,
+      "y": 4,
+      "w": 37,
+      "h": 36,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/burter_base/named/idle_or_stance/burter_base__idle_or_stance__02__src_029.png"
+    }
+  }
+}

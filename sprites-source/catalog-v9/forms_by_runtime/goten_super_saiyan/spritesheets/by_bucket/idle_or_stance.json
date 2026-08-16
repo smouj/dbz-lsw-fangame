@@ -1,0 +1,29 @@
+{
+  "columns": 6,
+  "rows": 1,
+  "cell_width": 27,
+  "cell_height": 47,
+  "sprites": {
+    "goten_super_saiyan__idle_or_stance__01__src_004.png": {
+      "x": 2,
+      "y": 3,
+      "w": 23,
+      "h": 41,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/goten_super_saiyan/named/idle_or_stance/goten_super_saiyan__idle_or_stance__01__src_004.png"
+    },
+    "goten_super_saiyan__idle_or_stance__02__src_014.png": {
+      "x": 29,
+      "y": 2,
+      "w": 23,
+      "h": 43,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/goten_super_saiyan/named/idle_or_stance/goten_super_saiyan__idle_or_stance__02__src_014.png"
+    },
+    "goten_super_saiyan__idle_or_stance__03__src_021.png": {
+      "x": 56,
+      "y": 3,
+      "w": 22,
+      "h": 41,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/goten_super_saiyan/named/idle_or_stance/goten_super_saiyan__idle_or_stance__03__src_021.png"
+    }
+  }
+}

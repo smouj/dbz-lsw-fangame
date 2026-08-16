@@ -1,0 +1,22 @@
+runtime_dir,pose,fps,loop,group,gameplay,sequence_rule,manifest_truth
+buu_gotenks_absorbed,idle,3,True,base,pose táctica/espera,all idle_NN,public/assets/sprites/buu_gotenks_absorbed/manifest.json
+buu_gotenks_absorbed,move_front,6,True,movement,desplazamiento frontal,move_front_00 -> move_front_01,public/assets/sprites/buu_gotenks_absorbed/manifest.json
+buu_gotenks_absorbed,move_back,6,True,movement,desplazamiento trasero,move_back_00 -> move_back_01,public/assets/sprites/buu_gotenks_absorbed/manifest.json
+buu_gotenks_absorbed,guard,6,False,defense,bloqueo/parada,all guard_NN,public/assets/sprites/buu_gotenks_absorbed/manifest.json
+buu_gotenks_absorbed,attack_fwd,5,False,stage/melee,ataque frontal,all attack_fwd_NN,public/assets/sprites/buu_gotenks_absorbed/manifest.json
+buu_gotenks_absorbed,attack_ud,5,False,stage/melee,ataque vertical,all attack_ud_NN,public/assets/sprites/buu_gotenks_absorbed/manifest.json
+buu_gotenks_absorbed,beam_charge,7,False,beam,carga,all beam_charge_NN,public/assets/sprites/buu_gotenks_absorbed/manifest.json
+buu_gotenks_absorbed,beam_fire,8,False,beam,disparo,all beam_fire_NN; current manifest may alias beam_charge where no physical beam_fire exists,public/assets/sprites/buu_gotenks_absorbed/manifest.json
+buu_gotenks_absorbed,punch_right,5,False,melee/detail,puñetazo derecho,idle_00 -> attack_fwd_00 -> attack_fwd_01 -> attack_fwd_02 (fallback all attack_fwd),public/assets/sprites/buu_gotenks_absorbed/manifest.json
+buu_gotenks_absorbed,punch_left,5,False,melee/detail,puñetazo izquierdo/follow-up,idle_00 -> attack_fwd_03..06 when available; otherwise current manifest/fallback attack_fwd,public/assets/sprites/buu_gotenks_absorbed/manifest.json
+buu_gotenks_absorbed,kick_right,5,False,melee/detail,patada,idle_00 -> all attack_ud_NN (fallback attack_fwd),public/assets/sprites/buu_gotenks_absorbed/manifest.json
+buu_gotenks_absorbed,hurt,6,False,reaction,daño recibido,all hurt_NN,public/assets/sprites/buu_gotenks_absorbed/manifest.json
+buu_gotenks_absorbed,knockback_back,6,False,reaction,retroceso,all hurt_NN,public/assets/sprites/buu_gotenks_absorbed/manifest.json
+buu_gotenks_absorbed,knockback_up,6,False,reaction,lanzado arriba,hurt_00 -> hurt_01 -> hurt_02 -> hurt_05 when present,public/assets/sprites/buu_gotenks_absorbed/manifest.json
+buu_gotenks_absorbed,knockback_down,6,False,reaction,estampado abajo,hurt_02 -> hurt_03 -> hurt_04 -> hurt_05 when present,public/assets/sprites/buu_gotenks_absorbed/manifest.json
+buu_gotenks_absorbed,beam_guard,6,False,defense,defensa beam,all guard_NN,public/assets/sprites/buu_gotenks_absorbed/manifest.json
+buu_gotenks_absorbed,evade,8,False,defense,esquiva/afterimage,move_back_00 -> guard_01 (or guard_00) -> move_back_00,public/assets/sprites/buu_gotenks_absorbed/manifest.json
+buu_gotenks_absorbed,gather_power,7,False,shared,preparación/carga,all beam_charge_NN (fallback guard),public/assets/sprites/buu_gotenks_absorbed/manifest.json
+buu_gotenks_absorbed,power_up,8,True,shared,aura/transformación,"all beam_charge_NN, loop",public/assets/sprites/buu_gotenks_absorbed/manifest.json
+buu_gotenks_absorbed,beam_ray,,False,beam/fx-reference,referencia haz,only actual beam_ray_NN files; reference family,public/assets/sprites/buu_gotenks_absorbed/manifest.json
+buu_gotenks_absorbed,beam_ray_tip,,False,beam/fx-reference,referencia punta/impacto,only actual beam_ray_tip_NN files; reference family,public/assets/sprites/buu_gotenks_absorbed/manifest.json

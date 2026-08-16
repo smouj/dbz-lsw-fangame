@@ -1,0 +1,15 @@
+{
+  "columns": 6,
+  "rows": 1,
+  "cell_width": 52,
+  "cell_height": 26,
+  "sprites": {
+    "goku_super_saiyan__downed_or_hurt__01__src_015.png": {
+      "x": 2,
+      "y": 2,
+      "w": 48,
+      "h": 22,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/goku_super_saiyan/named/downed_or_hurt/goku_super_saiyan__downed_or_hurt__01__src_015.png"
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "columns": 6,
+  "rows": 1,
+  "cell_width": 34,
+  "cell_height": 50,
+  "sprites": {
+    "goku_super_saiyan__character_plus_effect__01__src_002.png": {
+      "x": 2,
+      "y": 2,
+      "w": 30,
+      "h": 46,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/goku_super_saiyan/named/character_plus_effect/goku_super_saiyan__character_plus_effect__01__src_002.png"
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "columns": 6,
+  "rows": 1,
+  "cell_width": 32,
+  "cell_height": 16,
+  "sprites": {
+    "buu_gohan_absorbed__beam_or_projectile_horizontal__01__src_056.png": {
+      "x": 2,
+      "y": 2,
+      "w": 28,
+      "h": 12,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/buu_gohan_absorbed/named/beam_or_projectile_horizontal/buu_gohan_absorbed__beam_or_projectile_horizontal__01__src_056.png"
+    }
+  }
+}

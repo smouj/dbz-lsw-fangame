@@ -1,0 +1,208 @@
+{
+  "github_head": "349e54824d397a47df4fa7d615cde1ef5a8e2241",
+  "input_map": {
+    "A": {
+      "pose": "punch_right",
+      "fieldPose": "attack_fwd",
+      "label": "Puño derecho",
+      "lunge": false
+    },
+    "B": {
+      "pose": "punch_left",
+      "fieldPose": "attack_fwd",
+      "label": "Puño izquierdo",
+      "lunge": false
+    },
+    "UP": {
+      "pose": "attack_ud",
+      "fieldPose": "attack_ud",
+      "label": "Golpe ascendente",
+      "lunge": true
+    },
+    "DOWN": {
+      "pose": "attack_ud",
+      "fieldPose": "attack_ud",
+      "label": "Golpe descendente",
+      "lunge": true
+    },
+    "LEFT": {
+      "pose": "move_front",
+      "fieldPose": "move_front",
+      "label": "Avance",
+      "lunge": true
+    },
+    "RIGHT": {
+      "pose": "guard",
+      "fieldPose": "guard",
+      "label": "Retroceso/guardia",
+      "lunge": false
+    }
+  },
+  "pools": {
+    "3": [
+      [
+        "A",
+        "B",
+        "A"
+      ],
+      [
+        "B",
+        "A",
+        "B"
+      ],
+      [
+        "A",
+        "A",
+        "B"
+      ],
+      [
+        "B",
+        "B",
+        "A"
+      ],
+      [
+        "A",
+        "B",
+        "B"
+      ],
+      [
+        "B",
+        "A",
+        "A"
+      ]
+    ],
+    "4": [
+      [
+        "A",
+        "B",
+        "A",
+        "UP"
+      ],
+      [
+        "B",
+        "A",
+        "B",
+        "DOWN"
+      ],
+      [
+        "A",
+        "A",
+        "B",
+        "LEFT"
+      ],
+      [
+        "B",
+        "B",
+        "A",
+        "RIGHT"
+      ],
+      [
+        "A",
+        "B",
+        "B",
+        "UP"
+      ],
+      [
+        "B",
+        "A",
+        "A",
+        "DOWN"
+      ]
+    ],
+    "5": [
+      [
+        "A",
+        "B",
+        "A",
+        "UP",
+        "LEFT"
+      ],
+      [
+        "B",
+        "A",
+        "B",
+        "DOWN",
+        "RIGHT"
+      ],
+      [
+        "A",
+        "A",
+        "B",
+        "LEFT",
+        "DOWN"
+      ],
+      [
+        "B",
+        "B",
+        "A",
+        "RIGHT",
+        "UP"
+      ],
+      [
+        "A",
+        "B",
+        "B",
+        "UP",
+        "RIGHT"
+      ],
+      [
+        "B",
+        "A",
+        "A",
+        "DOWN",
+        "LEFT"
+      ]
+    ],
+    "6": [
+      [
+        "A",
+        "B",
+        "A",
+        "UP",
+        "LEFT",
+        "DOWN"
+      ],
+      [
+        "B",
+        "A",
+        "B",
+        "DOWN",
+        "RIGHT",
+        "UP"
+      ],
+      [
+        "A",
+        "A",
+        "B",
+        "LEFT",
+        "DOWN",
+        "RIGHT"
+      ],
+      [
+        "B",
+        "B",
+        "A",
+        "RIGHT",
+        "UP",
+        "LEFT"
+      ],
+      [
+        "A",
+        "B",
+        "B",
+        "UP",
+        "RIGHT",
+        "DOWN"
+      ],
+      [
+        "B",
+        "A",
+        "A",
+        "DOWN",
+        "LEFT",
+        "UP"
+      ]
+    ]
+  },
+  "rotation": "deterministic round-robin; 6 variants per level"
+}

@@ -1,0 +1,155 @@
+{
+  "columns": 6,
+  "rows": 4,
+  "cell_width": 43,
+  "cell_height": 44,
+  "sprites": {
+    "krillin_base__movement_or_attack_pose__01__src_002.png": {
+      "x": 8,
+      "y": 4,
+      "w": 26,
+      "h": 35,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/krillin_base/named/movement_or_attack_pose/krillin_base__movement_or_attack_pose__01__src_002.png"
+    },
+    "krillin_base__movement_or_attack_pose__02__src_003.png": {
+      "x": 48,
+      "y": 5,
+      "w": 32,
+      "h": 34,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/krillin_base/named/movement_or_attack_pose/krillin_base__movement_or_attack_pose__02__src_003.png"
+    },
+    "krillin_base__movement_or_attack_pose__03__src_007.png": {
+      "x": 95,
+      "y": 4,
+      "w": 25,
+      "h": 36,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/krillin_base/named/movement_or_attack_pose/krillin_base__movement_or_attack_pose__03__src_007.png"
+    },
+    "krillin_base__movement_or_attack_pose__04__src_008.png": {
+      "x": 135,
+      "y": 5,
+      "w": 31,
+      "h": 33,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/krillin_base/named/movement_or_attack_pose/krillin_base__movement_or_attack_pose__04__src_008.png"
+    },
+    "krillin_base__movement_or_attack_pose__05__src_015.png": {
+      "x": 179,
+      "y": 9,
+      "w": 29,
+      "h": 26,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/krillin_base/named/movement_or_attack_pose/krillin_base__movement_or_attack_pose__05__src_015.png"
+    },
+    "krillin_base__movement_or_attack_pose__06__src_019.png": {
+      "x": 221,
+      "y": 5,
+      "w": 30,
+      "h": 34,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/krillin_base/named/movement_or_attack_pose/krillin_base__movement_or_attack_pose__06__src_019.png"
+    },
+    "krillin_base__movement_or_attack_pose__07__src_020.png": {
+      "x": 4,
+      "y": 48,
+      "w": 34,
+      "h": 36,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/krillin_base/named/movement_or_attack_pose/krillin_base__movement_or_attack_pose__07__src_020.png"
+    },
+    "krillin_base__movement_or_attack_pose__08__src_021.png": {
+      "x": 49,
+      "y": 47,
+      "w": 31,
+      "h": 37,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/krillin_base/named/movement_or_attack_pose/krillin_base__movement_or_attack_pose__08__src_021.png"
+    },
+    "krillin_base__movement_or_attack_pose__09__src_022.png": {
+      "x": 94,
+      "y": 47,
+      "w": 26,
+      "h": 37,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/krillin_base/named/movement_or_attack_pose/krillin_base__movement_or_attack_pose__09__src_022.png"
+    },
+    "krillin_base__movement_or_attack_pose__10__src_023.png": {
+      "x": 136,
+      "y": 50,
+      "w": 28,
+      "h": 32,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/krillin_base/named/movement_or_attack_pose/krillin_base__movement_or_attack_pose__10__src_023.png"
+    },
+    "krillin_base__movement_or_attack_pose__11__src_025.png": {
+      "x": 180,
+      "y": 53,
+      "w": 26,
+      "h": 25,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/krillin_base/named/movement_or_attack_pose/krillin_base__movement_or_attack_pose__11__src_025.png"
+    },
+    "krillin_base__movement_or_attack_pose__12__src_026.png": {
+      "x": 221,
+      "y": 49,
+      "w": 30,
+      "h": 34,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/krillin_base/named/movement_or_attack_pose/krillin_base__movement_or_attack_pose__12__src_026.png"
+    },
+    "krillin_base__movement_or_attack_pose__13__src_027.png": {
+      "x": 6,
+      "y": 93,
+      "w": 31,
+      "h": 34,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/krillin_base/named/movement_or_attack_pose/krillin_base__movement_or_attack_pose__13__src_027.png"
+    },
+    "krillin_base__movement_or_attack_pose__14__src_028.png": {
+      "x": 48,
+      "y": 94,
+      "w": 33,
+      "h": 32,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/krillin_base/named/movement_or_attack_pose/krillin_base__movement_or_attack_pose__14__src_028.png"
+    },
+    "krillin_base__movement_or_attack_pose__15__src_034.png": {
+      "x": 92,
+      "y": 93,
+      "w": 31,
+      "h": 34,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/krillin_base/named/movement_or_attack_pose/krillin_base__movement_or_attack_pose__15__src_034.png"
+    },
+    "krillin_base__movement_or_attack_pose__16__src_037.png": {
+      "x": 131,
+      "y": 104,
+      "w": 39,
+      "h": 12,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/krillin_base/named/movement_or_attack_pose/krillin_base__movement_or_attack_pose__16__src_037.png"
+    },
+    "krillin_base__movement_or_attack_pose__17__src_038.png": {
+      "x": 181,
+      "y": 90,
+      "w": 24,
+      "h": 40,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/krillin_base/named/movement_or_attack_pose/krillin_base__movement_or_attack_pose__17__src_038.png"
+    },
+    "krillin_base__movement_or_attack_pose__18__src_039.png": {
+      "x": 221,
+      "y": 93,
+      "w": 30,
+      "h": 34,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/krillin_base/named/movement_or_attack_pose/krillin_base__movement_or_attack_pose__18__src_039.png"
+    },
+    "krillin_base__movement_or_attack_pose__19__src_041.png": {
+      "x": 9,
+      "y": 134,
+      "w": 24,
+      "h": 40,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/krillin_base/named/movement_or_attack_pose/krillin_base__movement_or_attack_pose__19__src_041.png"
+    },
+    "krillin_base__movement_or_attack_pose__20__src_042.png": {
+      "x": 49,
+      "y": 137,
+      "w": 30,
+      "h": 34,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/krillin_base/named/movement_or_attack_pose/krillin_base__movement_or_attack_pose__20__src_042.png"
+    },
+    "krillin_base__movement_or_attack_pose__21__src_046.png": {
+      "x": 93,
+      "y": 138,
+      "w": 28,
+      "h": 32,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/krillin_base/named/movement_or_attack_pose/krillin_base__movement_or_attack_pose__21__src_046.png"
+    }
+  }
+}

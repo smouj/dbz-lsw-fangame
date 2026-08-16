@@ -1,0 +1,29 @@
+{
+  "columns": 6,
+  "rows": 1,
+  "cell_width": 120,
+  "cell_height": 68,
+  "sprites": {
+    "recoome_base__projectiles_beams__01__src_032.png": {
+      "x": 2,
+      "y": 13,
+      "w": 116,
+      "h": 41,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/recoome_base/named/projectiles_beams/recoome_base__projectiles_beams__01__src_032.png"
+    },
+    "recoome_base__projectiles_beams__02__src_042.png": {
+      "x": 125,
+      "y": 2,
+      "w": 110,
+      "h": 64,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/recoome_base/named/projectiles_beams/recoome_base__projectiles_beams__02__src_042.png"
+    },
+    "recoome_base__projectiles_beams__03__src_043.png": {
+      "x": 262,
+      "y": 2,
+      "w": 76,
+      "h": 64,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/recoome_base/named/projectiles_beams/recoome_base__projectiles_beams__03__src_043.png"
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "columns": 6,
+  "rows": 1,
+  "cell_width": 26,
+  "cell_height": 47,
+  "sprites": {
+    "young_gohan_super_saiyan__idle_or_stance__01__src_014.png": {
+      "x": 2,
+      "y": 2,
+      "w": 22,
+      "h": 43,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/young_gohan_super_saiyan/named/idle_or_stance/young_gohan_super_saiyan__idle_or_stance__01__src_014.png"
+    }
+  }
+}

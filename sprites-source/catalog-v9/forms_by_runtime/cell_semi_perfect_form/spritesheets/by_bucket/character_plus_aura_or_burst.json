@@ -1,0 +1,15 @@
+{
+  "columns": 6,
+  "rows": 1,
+  "cell_width": 38,
+  "cell_height": 50,
+  "sprites": {
+    "cell_semi_perfect_form__character_plus_aura_or_burst__01__src_045.png": {
+      "x": 2,
+      "y": 2,
+      "w": 34,
+      "h": 46,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/cell_semi_perfect_form/named/character_plus_aura_or_burst/cell_semi_perfect_form__character_plus_aura_or_burst__01__src_045.png"
+    }
+  }
+}

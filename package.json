@@ -11,6 +11,7 @@
     "audit:sprites": "esbuild --bundle --format=esm --platform=node scripts/audit-combat-sprites.ts --outfile=.audit-sprites.mjs && node .audit-sprites.mjs; rm -f .audit-sprites.mjs",
     "verify:gbc": "esbuild --bundle --format=esm --platform=node scripts/verify-gbc-canon.ts --outfile=.gbc-canon.mjs && node .gbc-canon.mjs; rm -f .gbc-canon.mjs",
     "verify:v8": "esbuild --bundle --format=esm --platform=node scripts/verify-v8-catalog.ts --outfile=.v8-catalog.mjs && node .v8-catalog.mjs; rm -f .v8-catalog.mjs",
+    "verify:v9": "esbuild --bundle --format=esm --platform=node scripts/verify-v9-catalog.ts --outfile=.v9-catalog.mjs && node .v9-catalog.mjs; rm -f .v9-catalog.mjs",
     "audit:sheets": "esbuild --bundle --format=esm --platform=node scripts/audit-sheets.ts --outfile=.sheet-audit.mjs && node .sheet-audit.mjs; rm -f .sheet-audit.mjs",
     "import:sprites:v5": "node scripts/import-v5-sprites.mjs"
   },

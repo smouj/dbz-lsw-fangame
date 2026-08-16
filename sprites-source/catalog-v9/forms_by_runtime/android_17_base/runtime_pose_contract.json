@@ -1,0 +1,212 @@
+[
+  {
+    "runtime_dir": "android_17_base",
+    "pose": "idle",
+    "fps": "3",
+    "loop": "True",
+    "group": "base",
+    "gameplay": "pose táctica/espera",
+    "sequence_rule": "all idle_NN",
+    "manifest_truth": "public/assets/sprites/android_17_base/manifest.json"
+  },
+  {
+    "runtime_dir": "android_17_base",
+    "pose": "move_front",
+    "fps": "6",
+    "loop": "True",
+    "group": "movement",
+    "gameplay": "desplazamiento frontal",
+    "sequence_rule": "move_front_00 -> move_front_01",
+    "manifest_truth": "public/assets/sprites/android_17_base/manifest.json"
+  },
+  {
+    "runtime_dir": "android_17_base",
+    "pose": "move_back",
+    "fps": "6",
+    "loop": "True",
+    "group": "movement",
+    "gameplay": "desplazamiento trasero",
+    "sequence_rule": "move_back_00 -> move_back_01",
+    "manifest_truth": "public/assets/sprites/android_17_base/manifest.json"
+  },
+  {
+    "runtime_dir": "android_17_base",
+    "pose": "guard",
+    "fps": "6",
+    "loop": "False",
+    "group": "defense",
+    "gameplay": "bloqueo/parada",
+    "sequence_rule": "all guard_NN",
+    "manifest_truth": "public/assets/sprites/android_17_base/manifest.json"
+  },
+  {
+    "runtime_dir": "android_17_base",
+    "pose": "attack_fwd",
+    "fps": "5",
+    "loop": "False",
+    "group": "stage/melee",
+    "gameplay": "ataque frontal",
+    "sequence_rule": "all attack_fwd_NN",
+    "manifest_truth": "public/assets/sprites/android_17_base/manifest.json"
+  },
+  {
+    "runtime_dir": "android_17_base",
+    "pose": "attack_ud",
+    "fps": "5",
+    "loop": "False",
+    "group": "stage/melee",
+    "gameplay": "ataque vertical",
+    "sequence_rule": "all attack_ud_NN",
+    "manifest_truth": "public/assets/sprites/android_17_base/manifest.json"
+  },
+  {
+    "runtime_dir": "android_17_base",
+    "pose": "beam_charge",
+    "fps": "7",
+    "loop": "False",
+    "group": "beam",
+    "gameplay": "carga",
+    "sequence_rule": "all beam_charge_NN",
+    "manifest_truth": "public/assets/sprites/android_17_base/manifest.json"
+  },
+  {
+    "runtime_dir": "android_17_base",
+    "pose": "beam_fire",
+    "fps": "8",
+    "loop": "False",
+    "group": "beam",
+    "gameplay": "disparo",
+    "sequence_rule": "all beam_fire_NN; current manifest may alias beam_charge where no physical beam_fire exists",
+    "manifest_truth": "public/assets/sprites/android_17_base/manifest.json"
+  },
+  {
+    "runtime_dir": "android_17_base",
+    "pose": "punch_right",
+    "fps": "5",
+    "loop": "False",
+    "group": "melee/detail",
+    "gameplay": "puñetazo derecho",
+    "sequence_rule": "idle_00 -> attack_fwd_00 -> attack_fwd_01 -> attack_fwd_02 (fallback all attack_fwd)",
+    "manifest_truth": "public/assets/sprites/android_17_base/manifest.json"
+  },
+  {
+    "runtime_dir": "android_17_base",
+    "pose": "punch_left",
+    "fps": "5",
+    "loop": "False",
+    "group": "melee/detail",
+    "gameplay": "puñetazo izquierdo/follow-up",
+    "sequence_rule": "idle_00 -> attack_fwd_03..06 when available; otherwise current manifest/fallback attack_fwd",
+    "manifest_truth": "public/assets/sprites/android_17_base/manifest.json"
+  },
+  {
+    "runtime_dir": "android_17_base",
+    "pose": "kick_right",
+    "fps": "5",
+    "loop": "False",
+    "group": "melee/detail",
+    "gameplay": "patada",
+    "sequence_rule": "idle_00 -> all attack_ud_NN (fallback attack_fwd)",
+    "manifest_truth": "public/assets/sprites/android_17_base/manifest.json"
+  },
+  {
+    "runtime_dir": "android_17_base",
+    "pose": "hurt",
+    "fps": "6",
+    "loop": "False",
+    "group": "reaction",
+    "gameplay": "daño recibido",
+    "sequence_rule": "all hurt_NN",
+    "manifest_truth": "public/assets/sprites/android_17_base/manifest.json"
+  },
+  {
+    "runtime_dir": "android_17_base",
+    "pose": "knockback_back",
+    "fps": "6",
+    "loop": "False",
+    "group": "reaction",
+    "gameplay": "retroceso",
+    "sequence_rule": "all hurt_NN",
+    "manifest_truth": "public/assets/sprites/android_17_base/manifest.json"
+  },
+  {
+    "runtime_dir": "android_17_base",
+    "pose": "knockback_up",
+    "fps": "6",
+    "loop": "False",
+    "group": "reaction",
+    "gameplay": "lanzado arriba",
+    "sequence_rule": "hurt_00 -> hurt_01 -> hurt_02 -> hurt_05 when present",
+    "manifest_truth": "public/assets/sprites/android_17_base/manifest.json"
+  },
+  {
+    "runtime_dir": "android_17_base",
+    "pose": "knockback_down",
+    "fps": "6",
+    "loop": "False",
+    "group": "reaction",
+    "gameplay": "estampado abajo",
+    "sequence_rule": "hurt_02 -> hurt_03 -> hurt_04 -> hurt_05 when present",
+    "manifest_truth": "public/assets/sprites/android_17_base/manifest.json"
+  },
+  {
+    "runtime_dir": "android_17_base",
+    "pose": "beam_guard",
+    "fps": "6",
+    "loop": "False",
+    "group": "defense",
+    "gameplay": "defensa beam",
+    "sequence_rule": "all guard_NN",
+    "manifest_truth": "public/assets/sprites/android_17_base/manifest.json"
+  },
+  {
+    "runtime_dir": "android_17_base",
+    "pose": "evade",
+    "fps": "8",
+    "loop": "False",
+    "group": "defense",
+    "gameplay": "esquiva/afterimage",
+    "sequence_rule": "move_back_00 -> guard_01 (or guard_00) -> move_back_00",
+    "manifest_truth": "public/assets/sprites/android_17_base/manifest.json"
+  },
+  {
+    "runtime_dir": "android_17_base",
+    "pose": "gather_power",
+    "fps": "7",
+    "loop": "False",
+    "group": "shared",
+    "gameplay": "preparación/carga",
+    "sequence_rule": "all beam_charge_NN (fallback guard)",
+    "manifest_truth": "public/assets/sprites/android_17_base/manifest.json"
+  },
+  {
+    "runtime_dir": "android_17_base",
+    "pose": "power_up",
+    "fps": "8",
+    "loop": "True",
+    "group": "shared",
+    "gameplay": "aura/transformación",
+    "sequence_rule": "all beam_charge_NN, loop",
+    "manifest_truth": "public/assets/sprites/android_17_base/manifest.json"
+  },
+  {
+    "runtime_dir": "android_17_base",
+    "pose": "beam_ray",
+    "fps": "",
+    "loop": "False",
+    "group": "beam/fx-reference",
+    "gameplay": "referencia haz",
+    "sequence_rule": "only actual beam_ray_NN files; reference family",
+    "manifest_truth": "public/assets/sprites/android_17_base/manifest.json"
+  },
+  {
+    "runtime_dir": "android_17_base",
+    "pose": "beam_ray_tip",
+    "fps": "",
+    "loop": "False",
+    "group": "beam/fx-reference",
+    "gameplay": "referencia punta/impacto",
+    "sequence_rule": "only actual beam_ray_tip_NN files; reference family",
+    "manifest_truth": "public/assets/sprites/android_17_base/manifest.json"
+  }
+]

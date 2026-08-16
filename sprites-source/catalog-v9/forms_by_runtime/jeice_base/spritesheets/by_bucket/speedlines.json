@@ -1,0 +1,22 @@
+{
+  "columns": 6,
+  "rows": 1,
+  "cell_width": 36,
+  "cell_height": 45,
+  "sprites": {
+    "jeice_base__speedlines__01__src_010.png": {
+      "x": 6,
+      "y": 2,
+      "w": 23,
+      "h": 41,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/jeice_base/named/speedlines/jeice_base__speedlines__01__src_010.png"
+    },
+    "jeice_base__speedlines__02__src_038.png": {
+      "x": 38,
+      "y": 3,
+      "w": 32,
+      "h": 38,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/jeice_base/named/speedlines/jeice_base__speedlines__02__src_038.png"
+    }
+  }
+}

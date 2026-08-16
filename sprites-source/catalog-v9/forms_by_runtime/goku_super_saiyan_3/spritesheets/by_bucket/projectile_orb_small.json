@@ -1,0 +1,15 @@
+{
+  "columns": 6,
+  "rows": 1,
+  "cell_width": 20,
+  "cell_height": 16,
+  "sprites": {
+    "goku_super_saiyan_3__projectile_orb_small__01__src_036.png": {
+      "x": 2,
+      "y": 2,
+      "w": 16,
+      "h": 12,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/goku_super_saiyan_3/named/projectile_orb_small/goku_super_saiyan_3__projectile_orb_small__01__src_036.png"
+    }
+  }
+}

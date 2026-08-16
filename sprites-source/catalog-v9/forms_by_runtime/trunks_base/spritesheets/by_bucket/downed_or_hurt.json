@@ -1,0 +1,15 @@
+{
+  "columns": 6,
+  "rows": 1,
+  "cell_width": 46,
+  "cell_height": 28,
+  "sprites": {
+    "trunks_base__downed_or_hurt__01__src_026.png": {
+      "x": 2,
+      "y": 2,
+      "w": 42,
+      "h": 24,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/trunks_base/named/downed_or_hurt/trunks_base__downed_or_hurt__01__src_026.png"
+    }
+  }
+}

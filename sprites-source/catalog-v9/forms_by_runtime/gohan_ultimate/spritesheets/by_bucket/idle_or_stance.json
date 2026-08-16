@@ -1,0 +1,43 @@
+{
+  "columns": 6,
+  "rows": 1,
+  "cell_width": 42,
+  "cell_height": 52,
+  "sprites": {
+    "gohan_ultimate__idle_or_stance__01__src_004.png": {
+      "x": 10,
+      "y": 3,
+      "w": 22,
+      "h": 46,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/gohan_ultimate/named/idle_or_stance/gohan_ultimate__idle_or_stance__01__src_004.png"
+    },
+    "gohan_ultimate__idle_or_stance__02__src_014.png": {
+      "x": 51,
+      "y": 2,
+      "w": 23,
+      "h": 47,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/gohan_ultimate/named/idle_or_stance/gohan_ultimate__idle_or_stance__02__src_014.png"
+    },
+    "gohan_ultimate__idle_or_stance__03__src_021.png": {
+      "x": 93,
+      "y": 3,
+      "w": 23,
+      "h": 46,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/gohan_ultimate/named/idle_or_stance/gohan_ultimate__idle_or_stance__03__src_021.png"
+    },
+    "gohan_ultimate__idle_or_stance__04__src_025.png": {
+      "x": 128,
+      "y": 5,
+      "w": 38,
+      "h": 42,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/gohan_ultimate/named/idle_or_stance/gohan_ultimate__idle_or_stance__04__src_025.png"
+    },
+    "gohan_ultimate__idle_or_stance__05__src_043.png": {
+      "x": 177,
+      "y": 2,
+      "w": 23,
+      "h": 48,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/gohan_ultimate/named/idle_or_stance/gohan_ultimate__idle_or_stance__05__src_043.png"
+    }
+  }
+}

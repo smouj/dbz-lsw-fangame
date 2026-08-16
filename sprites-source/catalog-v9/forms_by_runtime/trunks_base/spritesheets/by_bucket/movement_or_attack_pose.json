@@ -1,0 +1,155 @@
+{
+  "columns": 6,
+  "rows": 4,
+  "cell_width": 39,
+  "cell_height": 49,
+  "sprites": {
+    "trunks_base__movement_or_attack_pose__01__src_001.png": {
+      "x": 4,
+      "y": 6,
+      "w": 30,
+      "h": 37,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/trunks_base/named/movement_or_attack_pose/trunks_base__movement_or_attack_pose__01__src_001.png"
+    },
+    "trunks_base__movement_or_attack_pose__02__src_002.png": {
+      "x": 44,
+      "y": 5,
+      "w": 28,
+      "h": 38,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/trunks_base/named/movement_or_attack_pose/trunks_base__movement_or_attack_pose__02__src_002.png"
+    },
+    "trunks_base__movement_or_attack_pose__03__src_003.png": {
+      "x": 80,
+      "y": 6,
+      "w": 34,
+      "h": 37,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/trunks_base/named/movement_or_attack_pose/trunks_base__movement_or_attack_pose__03__src_003.png"
+    },
+    "trunks_base__movement_or_attack_pose__04__src_007.png": {
+      "x": 124,
+      "y": 5,
+      "w": 25,
+      "h": 39,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/trunks_base/named/movement_or_attack_pose/trunks_base__movement_or_attack_pose__04__src_007.png"
+    },
+    "trunks_base__movement_or_attack_pose__05__src_008.png": {
+      "x": 160,
+      "y": 6,
+      "w": 31,
+      "h": 36,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/trunks_base/named/movement_or_attack_pose/trunks_base__movement_or_attack_pose__05__src_008.png"
+    },
+    "trunks_base__movement_or_attack_pose__06__src_009.png": {
+      "x": 201,
+      "y": 6,
+      "w": 27,
+      "h": 37,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/trunks_base/named/movement_or_attack_pose/trunks_base__movement_or_attack_pose__06__src_009.png"
+    },
+    "trunks_base__movement_or_attack_pose__07__src_011.png": {
+      "x": 5,
+      "y": 58,
+      "w": 29,
+      "h": 30,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/trunks_base/named/movement_or_attack_pose/trunks_base__movement_or_attack_pose__07__src_011.png"
+    },
+    "trunks_base__movement_or_attack_pose__08__src_012.png": {
+      "x": 44,
+      "y": 53,
+      "w": 28,
+      "h": 40,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/trunks_base/named/movement_or_attack_pose/trunks_base__movement_or_attack_pose__08__src_012.png"
+    },
+    "trunks_base__movement_or_attack_pose__09__src_013.png": {
+      "x": 83,
+      "y": 51,
+      "w": 28,
+      "h": 45,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/trunks_base/named/movement_or_attack_pose/trunks_base__movement_or_attack_pose__09__src_013.png"
+    },
+    "trunks_base__movement_or_attack_pose__10__src_015.png": {
+      "x": 121,
+      "y": 55,
+      "w": 30,
+      "h": 37,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/trunks_base/named/movement_or_attack_pose/trunks_base__movement_or_attack_pose__10__src_015.png"
+    },
+    "trunks_base__movement_or_attack_pose__11__src_016.png": {
+      "x": 161,
+      "y": 54,
+      "w": 29,
+      "h": 39,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/trunks_base/named/movement_or_attack_pose/trunks_base__movement_or_attack_pose__11__src_016.png"
+    },
+    "trunks_base__movement_or_attack_pose__12__src_017.png": {
+      "x": 197,
+      "y": 55,
+      "w": 35,
+      "h": 37,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/trunks_base/named/movement_or_attack_pose/trunks_base__movement_or_attack_pose__12__src_017.png"
+    },
+    "trunks_base__movement_or_attack_pose__13__src_018.png": {
+      "x": 5,
+      "y": 103,
+      "w": 29,
+      "h": 39,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/trunks_base/named/movement_or_attack_pose/trunks_base__movement_or_attack_pose__13__src_018.png"
+    },
+    "trunks_base__movement_or_attack_pose__14__src_019.png": {
+      "x": 44,
+      "y": 105,
+      "w": 28,
+      "h": 34,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/trunks_base/named/movement_or_attack_pose/trunks_base__movement_or_attack_pose__14__src_019.png"
+    },
+    "trunks_base__movement_or_attack_pose__15__src_021.png": {
+      "x": 82,
+      "y": 109,
+      "w": 31,
+      "h": 27,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/trunks_base/named/movement_or_attack_pose/trunks_base__movement_or_attack_pose__15__src_021.png"
+    },
+    "trunks_base__movement_or_attack_pose__16__src_022.png": {
+      "x": 121,
+      "y": 104,
+      "w": 31,
+      "h": 37,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/trunks_base/named/movement_or_attack_pose/trunks_base__movement_or_attack_pose__16__src_022.png"
+    },
+    "trunks_base__movement_or_attack_pose__17__src_023.png": {
+      "x": 160,
+      "y": 104,
+      "w": 30,
+      "h": 37,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/trunks_base/named/movement_or_attack_pose/trunks_base__movement_or_attack_pose__17__src_023.png"
+    },
+    "trunks_base__movement_or_attack_pose__18__src_024.png": {
+      "x": 198,
+      "y": 105,
+      "w": 33,
+      "h": 35,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/trunks_base/named/movement_or_attack_pose/trunks_base__movement_or_attack_pose__18__src_024.png"
+    },
+    "trunks_base__movement_or_attack_pose__19__src_025.png": {
+      "x": 2,
+      "y": 154,
+      "w": 34,
+      "h": 35,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/trunks_base/named/movement_or_attack_pose/trunks_base__movement_or_attack_pose__19__src_025.png"
+    },
+    "trunks_base__movement_or_attack_pose__20__src_028.png": {
+      "x": 43,
+      "y": 153,
+      "w": 31,
+      "h": 37,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/trunks_base/named/movement_or_attack_pose/trunks_base__movement_or_attack_pose__20__src_028.png"
+    },
+    "trunks_base__movement_or_attack_pose__21__src_033.png": {
+      "x": 82,
+      "y": 154,
+      "w": 30,
+      "h": 35,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/trunks_base/named/movement_or_attack_pose/trunks_base__movement_or_attack_pose__21__src_033.png"
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "columns": 6,
+  "rows": 1,
+  "cell_width": 18,
+  "cell_height": 20,
+  "sprites": {
+    "goku_super_saiyan__overworld_actor_or_pose__01__src_027.png": {
+      "x": 2,
+      "y": 2,
+      "w": 13,
+      "h": 16,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/goku_super_saiyan/named/overworld_actor_or_pose/goku_super_saiyan__overworld_actor_or_pose__01__src_027.png"
+    },
+    "goku_super_saiyan__overworld_actor_or_pose__02__src_028.png": {
+      "x": 20,
+      "y": 2,
+      "w": 14,
+      "h": 15,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/goku_super_saiyan/named/overworld_actor_or_pose/goku_super_saiyan__overworld_actor_or_pose__02__src_028.png"
+    }
+  }
+}

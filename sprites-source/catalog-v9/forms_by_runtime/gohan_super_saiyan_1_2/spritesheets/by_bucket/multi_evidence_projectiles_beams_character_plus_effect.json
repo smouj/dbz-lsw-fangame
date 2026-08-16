@@ -1,0 +1,15 @@
+{
+  "columns": 6,
+  "rows": 1,
+  "cell_width": 78,
+  "cell_height": 60,
+  "sprites": {
+    "gohan_super_saiyan_1_2__multi_evidence_projectiles_beams_character_plus_effect__01__src_040.png": {
+      "x": 2,
+      "y": 2,
+      "w": 74,
+      "h": 56,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/gohan_super_saiyan_1_2/named/multi_evidence_projectiles_beams_character_plus_effect/gohan_super_saiyan_1_2__multi_evidence_projectiles_beams_character_plus_effect__01__src_040.png"
+    }
+  }
+}

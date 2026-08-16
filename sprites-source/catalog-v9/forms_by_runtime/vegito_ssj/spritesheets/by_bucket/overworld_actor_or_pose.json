@@ -1,0 +1,22 @@
+{
+  "columns": 6,
+  "rows": 1,
+  "cell_width": 18,
+  "cell_height": 20,
+  "sprites": {
+    "vegito_ssj__overworld_actor_or_pose__01__src_007.png": {
+      "x": 2,
+      "y": 2,
+      "w": 13,
+      "h": 16,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/vegito_ssj/named/overworld_actor_or_pose/vegito_ssj__overworld_actor_or_pose__01__src_007.png"
+    },
+    "vegito_ssj__overworld_actor_or_pose__02__src_008.png": {
+      "x": 20,
+      "y": 2,
+      "w": 14,
+      "h": 15,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/vegito_ssj/named/overworld_actor_or_pose/vegito_ssj__overworld_actor_or_pose__02__src_008.png"
+    }
+  }
+}

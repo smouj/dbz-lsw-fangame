@@ -1,0 +1,29 @@
+{
+  "columns": 6,
+  "rows": 1,
+  "cell_width": 122,
+  "cell_height": 43,
+  "sprites": {
+    "android_19_base__projectiles_beams__01__src_032.png": {
+      "x": 3,
+      "y": 2,
+      "w": 115,
+      "h": 39,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/android_19_base/named/projectiles_beams/android_19_base__projectiles_beams__01__src_032.png"
+    },
+    "android_19_base__projectiles_beams__02__src_044.png": {
+      "x": 147,
+      "y": 5,
+      "w": 72,
+      "h": 32,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/android_19_base/named/projectiles_beams/android_19_base__projectiles_beams__02__src_044.png"
+    },
+    "android_19_base__projectiles_beams__03__src_046.png": {
+      "x": 246,
+      "y": 2,
+      "w": 118,
+      "h": 39,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/android_19_base/named/projectiles_beams/android_19_base__projectiles_beams__03__src_046.png"
+    }
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "columns": 6,
+  "rows": 1,
+  "cell_width": 119,
+  "cell_height": 66,
+  "sprites": {
+    "goten_super_saiyan__projectiles_beams__01__src_032.png": {
+      "x": 2,
+      "y": 13,
+      "w": 114,
+      "h": 40,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/goten_super_saiyan/named/projectiles_beams/goten_super_saiyan__projectiles_beams__01__src_032.png"
+    },
+    "goten_super_saiyan__projectiles_beams__02__src_041.png": {
+      "x": 121,
+      "y": 2,
+      "w": 115,
+      "h": 62,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/goten_super_saiyan/named/projectiles_beams/goten_super_saiyan__projectiles_beams__02__src_041.png"
+    },
+    "goten_super_saiyan__projectiles_beams__03__src_042.png": {
+      "x": 260,
+      "y": 5,
+      "w": 74,
+      "h": 56,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/goten_super_saiyan/named/projectiles_beams/goten_super_saiyan__projectiles_beams__03__src_042.png"
+    }
+  }
+}

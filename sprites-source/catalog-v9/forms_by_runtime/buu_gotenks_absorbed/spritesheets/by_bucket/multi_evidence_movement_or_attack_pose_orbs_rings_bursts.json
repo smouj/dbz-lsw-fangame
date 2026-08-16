@@ -1,0 +1,22 @@
+{
+  "columns": 6,
+  "rows": 1,
+  "cell_width": 59,
+  "cell_height": 68,
+  "sprites": {
+    "buu_gotenks_absorbed__multi_evidence_movement_or_attack_pose_orbs_rings_bursts__01__src_038.png": {
+      "x": 6,
+      "y": 18,
+      "w": 46,
+      "h": 31,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/buu_gotenks_absorbed/named/multi_evidence_movement_or_attack_pose_orbs_rings_bursts/buu_gotenks_absorbed__multi_evidence_movement_or_attack_pose_orbs_rings_bursts__01__src_038.png"
+    },
+    "buu_gotenks_absorbed__multi_evidence_movement_or_attack_pose_orbs_rings_bursts__02__src_053.png": {
+      "x": 61,
+      "y": 2,
+      "w": 55,
+      "h": 64,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/buu_gotenks_absorbed/named/multi_evidence_movement_or_attack_pose_orbs_rings_bursts/buu_gotenks_absorbed__multi_evidence_movement_or_attack_pose_orbs_rings_bursts__02__src_053.png"
+    }
+  }
+}

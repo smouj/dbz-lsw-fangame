@@ -1,0 +1,36 @@
+{
+  "columns": 6,
+  "rows": 1,
+  "cell_width": 122,
+  "cell_height": 67,
+  "sprites": {
+    "gohan_ultimate__projectiles_beams__01__src_032.png": {
+      "x": 3,
+      "y": 12,
+      "w": 115,
+      "h": 43,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/gohan_ultimate/named/projectiles_beams/gohan_ultimate__projectiles_beams__01__src_032.png"
+    },
+    "gohan_ultimate__projectiles_beams__02__src_039.png": {
+      "x": 124,
+      "y": 12,
+      "w": 118,
+      "h": 43,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/gohan_ultimate/named/projectiles_beams/gohan_ultimate__projectiles_beams__02__src_039.png"
+    },
+    "gohan_ultimate__projectiles_beams__03__src_041.png": {
+      "x": 246,
+      "y": 2,
+      "w": 118,
+      "h": 63,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/gohan_ultimate/named/projectiles_beams/gohan_ultimate__projectiles_beams__03__src_041.png"
+    },
+    "gohan_ultimate__projectiles_beams__04__src_044.png": {
+      "x": 370,
+      "y": 11,
+      "w": 113,
+      "h": 44,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/gohan_ultimate/named/projectiles_beams/gohan_ultimate__projectiles_beams__04__src_044.png"
+    }
+  }
+}

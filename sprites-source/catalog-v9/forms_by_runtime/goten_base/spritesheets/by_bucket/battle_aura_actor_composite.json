@@ -1,0 +1,15 @@
+{
+  "columns": 6,
+  "rows": 1,
+  "cell_width": 28,
+  "cell_height": 20,
+  "sprites": {
+    "goten_base__battle_aura_actor_composite__01__src_030.png": {
+      "x": 2,
+      "y": 2,
+      "w": 24,
+      "h": 16,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/goten_base/named/battle_aura_actor_composite/goten_base__battle_aura_actor_composite__01__src_030.png"
+    }
+  }
+}

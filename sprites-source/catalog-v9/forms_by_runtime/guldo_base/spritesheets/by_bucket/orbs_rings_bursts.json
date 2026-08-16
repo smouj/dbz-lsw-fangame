@@ -1,0 +1,29 @@
+{
+  "columns": 6,
+  "rows": 1,
+  "cell_width": 68,
+  "cell_height": 60,
+  "sprites": {
+    "guldo_base__orbs_rings_bursts__01__src_031.png": {
+      "x": 2,
+      "y": 2,
+      "w": 64,
+      "h": 56,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/guldo_base/named/orbs_rings_bursts/guldo_base__orbs_rings_bursts__01__src_031.png"
+    },
+    "guldo_base__orbs_rings_bursts__02__src_032.png": {
+      "x": 70,
+      "y": 2,
+      "w": 64,
+      "h": 56,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/guldo_base/named/orbs_rings_bursts/guldo_base__orbs_rings_bursts__02__src_032.png"
+    },
+    "guldo_base__orbs_rings_bursts__03__src_033.png": {
+      "x": 138,
+      "y": 2,
+      "w": 64,
+      "h": 56,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/guldo_base/named/orbs_rings_bursts/guldo_base__orbs_rings_bursts__03__src_033.png"
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "columns": 6,
+  "rows": 1,
+  "cell_width": 46,
+  "cell_height": 22,
+  "sprites": {
+    "burter_base__actor_downed_or_special_pose__01__src_019.png": {
+      "x": 2,
+      "y": 2,
+      "w": 42,
+      "h": 18,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/burter_base/named/actor_downed_or_special_pose/burter_base__actor_downed_or_special_pose__01__src_019.png"
+    }
+  }
+}

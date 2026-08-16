@@ -1,0 +1,22 @@
+{
+  "columns": 6,
+  "rows": 1,
+  "cell_width": 121,
+  "cell_height": 46,
+  "sprites": {
+    "young_gohan_super_saiyan__character_plus_projectile__01__src_038.png": {
+      "x": 2,
+      "y": 3,
+      "w": 117,
+      "h": 40,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/young_gohan_super_saiyan/named/character_plus_projectile/young_gohan_super_saiyan__character_plus_projectile__01__src_038.png"
+    },
+    "young_gohan_super_saiyan__character_plus_projectile__02__src_045.png": {
+      "x": 158,
+      "y": 2,
+      "w": 46,
+      "h": 42,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/young_gohan_super_saiyan/named/character_plus_projectile/young_gohan_super_saiyan__character_plus_projectile__02__src_045.png"
+    }
+  }
+}

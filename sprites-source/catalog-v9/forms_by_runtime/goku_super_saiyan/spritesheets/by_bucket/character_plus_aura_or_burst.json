@@ -1,0 +1,15 @@
+{
+  "columns": 6,
+  "rows": 1,
+  "cell_width": 31,
+  "cell_height": 51,
+  "sprites": {
+    "goku_super_saiyan__character_plus_aura_or_burst__01__src_044.png": {
+      "x": 2,
+      "y": 2,
+      "w": 27,
+      "h": 47,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/goku_super_saiyan/named/character_plus_aura_or_burst/goku_super_saiyan__character_plus_aura_or_burst__01__src_044.png"
+    }
+  }
+}

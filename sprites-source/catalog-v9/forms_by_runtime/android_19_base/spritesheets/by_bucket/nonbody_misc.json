@@ -1,0 +1,29 @@
+{
+  "columns": 6,
+  "rows": 1,
+  "cell_width": 44,
+  "cell_height": 43,
+  "sprites": {
+    "android_19_base__nonbody_misc__01__src_005.png": {
+      "x": 2,
+      "y": 6,
+      "w": 40,
+      "h": 31,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/android_19_base/named/nonbody_misc/android_19_base__nonbody_misc__01__src_005.png"
+    },
+    "android_19_base__nonbody_misc__02__src_049.png": {
+      "x": 50,
+      "y": 2,
+      "w": 31,
+      "h": 38,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/android_19_base/named/nonbody_misc/android_19_base__nonbody_misc__02__src_049.png"
+    },
+    "android_19_base__nonbody_misc__03__src_052.png": {
+      "x": 94,
+      "y": 2,
+      "w": 32,
+      "h": 39,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/android_19_base/named/nonbody_misc/android_19_base__nonbody_misc__03__src_052.png"
+    }
+  }
+}

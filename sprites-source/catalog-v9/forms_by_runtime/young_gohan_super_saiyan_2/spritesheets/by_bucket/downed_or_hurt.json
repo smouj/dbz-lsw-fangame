@@ -1,0 +1,15 @@
+{
+  "columns": 6,
+  "rows": 1,
+  "cell_width": 49,
+  "cell_height": 29,
+  "sprites": {
+    "young_gohan_super_saiyan_2__downed_or_hurt__01__src_015.png": {
+      "x": 2,
+      "y": 2,
+      "w": 45,
+      "h": 25,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/young_gohan_super_saiyan_2/named/downed_or_hurt/young_gohan_super_saiyan_2__downed_or_hurt__01__src_015.png"
+    }
+  }
+}

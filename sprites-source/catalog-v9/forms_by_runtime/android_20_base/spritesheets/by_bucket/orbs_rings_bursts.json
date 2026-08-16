@@ -1,0 +1,43 @@
+{
+  "columns": 6,
+  "rows": 1,
+  "cell_width": 68,
+  "cell_height": 108,
+  "sprites": {
+    "android_20_base__orbs_rings_bursts__01__src_032.png": {
+      "x": 2,
+      "y": 26,
+      "w": 64,
+      "h": 56,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/android_20_base/named/orbs_rings_bursts/android_20_base__orbs_rings_bursts__01__src_032.png"
+    },
+    "android_20_base__orbs_rings_bursts__02__src_033.png": {
+      "x": 70,
+      "y": 26,
+      "w": 64,
+      "h": 56,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/android_20_base/named/orbs_rings_bursts/android_20_base__orbs_rings_bursts__02__src_033.png"
+    },
+    "android_20_base__orbs_rings_bursts__03__src_034.png": {
+      "x": 138,
+      "y": 26,
+      "w": 64,
+      "h": 56,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/android_20_base/named/orbs_rings_bursts/android_20_base__orbs_rings_bursts__03__src_034.png"
+    },
+    "android_20_base__orbs_rings_bursts__04__src_044.png": {
+      "x": 210,
+      "y": 2,
+      "w": 55,
+      "h": 104,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/android_20_base/named/orbs_rings_bursts/android_20_base__orbs_rings_bursts__04__src_044.png"
+    },
+    "android_20_base__orbs_rings_bursts__05__src_045.png": {
+      "x": 278,
+      "y": 22,
+      "w": 55,
+      "h": 64,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/android_20_base/named/orbs_rings_bursts/android_20_base__orbs_rings_bursts__05__src_045.png"
+    }
+  }
+}

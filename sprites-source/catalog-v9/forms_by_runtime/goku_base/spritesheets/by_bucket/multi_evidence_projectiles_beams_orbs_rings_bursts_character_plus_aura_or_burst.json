@@ -1,0 +1,15 @@
+{
+  "columns": 6,
+  "rows": 1,
+  "cell_width": 78,
+  "cell_height": 60,
+  "sprites": {
+    "goku_base__multi_evidence_projectiles_beams_orbs_rings_bursts_character_plus_aura_or_burst__01__src_042.png": {
+      "x": 2,
+      "y": 2,
+      "w": 74,
+      "h": 56,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/goku_base/named/multi_evidence_projectiles_beams_orbs_rings_bursts_character_plus_aura_or_burst/goku_base__multi_evidence_projectiles_beams_orbs_rings_bursts_character_plus_aura_or_burst__01__src_042.png"
+    }
+  }
+}

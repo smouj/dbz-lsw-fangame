@@ -1,0 +1,344 @@
+{
+  "columns": 8,
+  "rows": 6,
+  "cell_width": 119,
+  "cell_height": 108,
+  "sprites": {
+    "001.png": {
+      "x": 48,
+      "y": 34,
+      "w": 22,
+      "h": 40,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/android_18_base/atomic/001.png"
+    },
+    "002.png": {
+      "x": 165,
+      "y": 34,
+      "w": 27,
+      "h": 40,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/android_18_base/atomic/002.png"
+    },
+    "003.png": {
+      "x": 281,
+      "y": 35,
+      "w": 33,
+      "h": 38,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/android_18_base/atomic/003.png"
+    },
+    "004.png": {
+      "x": 406,
+      "y": 34,
+      "w": 20,
+      "h": 40,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/android_18_base/atomic/004.png"
+    },
+    "005.png": {
+      "x": 529,
+      "y": 46,
+      "w": 12,
+      "h": 16,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/android_18_base/atomic/005.png"
+    },
+    "006.png": {
+      "x": 648,
+      "y": 46,
+      "w": 12,
+      "h": 15,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/android_18_base/atomic/006.png"
+    },
+    "007.png": {
+      "x": 761,
+      "y": 46,
+      "w": 24,
+      "h": 16,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/android_18_base/atomic/007.png"
+    },
+    "008.png": {
+      "x": 880,
+      "y": 46,
+      "w": 24,
+      "h": 16,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/android_18_base/atomic/008.png"
+    },
+    "009.png": {
+      "x": 39,
+      "y": 146,
+      "w": 40,
+      "h": 31,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/android_18_base/atomic/009.png"
+    },
+    "010.png": {
+      "x": 167,
+      "y": 141,
+      "w": 23,
+      "h": 41,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/android_18_base/atomic/010.png"
+    },
+    "011.png": {
+      "x": 284,
+      "y": 142,
+      "w": 27,
+      "h": 40,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/android_18_base/atomic/011.png"
+    },
+    "012.png": {
+      "x": 400,
+      "y": 143,
+      "w": 32,
+      "h": 37,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/android_18_base/atomic/012.png"
+    },
+    "013.png": {
+      "x": 522,
+      "y": 142,
+      "w": 27,
+      "h": 40,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/android_18_base/atomic/013.png"
+    },
+    "014.png": {
+      "x": 641,
+      "y": 143,
+      "w": 26,
+      "h": 37,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/android_18_base/atomic/014.png"
+    },
+    "015.png": {
+      "x": 758,
+      "y": 145,
+      "w": 31,
+      "h": 33,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/android_18_base/atomic/015.png"
+    },
+    "016.png": {
+      "x": 880,
+      "y": 139,
+      "w": 24,
+      "h": 45,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/android_18_base/atomic/016.png"
+    },
+    "017.png": {
+      "x": 47,
+      "y": 247,
+      "w": 24,
+      "h": 45,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/android_18_base/atomic/017.png"
+    },
+    "018.png": {
+      "x": 167,
+      "y": 249,
+      "w": 22,
+      "h": 41,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/android_18_base/atomic/018.png"
+    },
+    "019.png": {
+      "x": 275,
+      "y": 259,
+      "w": 44,
+      "h": 22,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/android_18_base/atomic/019.png"
+    },
+    "020.png": {
+      "x": 402,
+      "y": 250,
+      "w": 28,
+      "h": 40,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/android_18_base/atomic/020.png"
+    },
+    "021.png": {
+      "x": 520,
+      "y": 251,
+      "w": 31,
+      "h": 38,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/android_18_base/atomic/021.png"
+    },
+    "022.png": {
+      "x": 637,
+      "y": 252,
+      "w": 34,
+      "h": 36,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/android_18_base/atomic/022.png"
+    },
+    "023.png": {
+      "x": 757,
+      "y": 251,
+      "w": 32,
+      "h": 37,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/android_18_base/atomic/023.png"
+    },
+    "024.png": {
+      "x": 878,
+      "y": 252,
+      "w": 28,
+      "h": 36,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/android_18_base/atomic/024.png"
+    },
+    "025.png": {
+      "x": 49,
+      "y": 358,
+      "w": 21,
+      "h": 40,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/android_18_base/atomic/025.png"
+    },
+    "026.png": {
+      "x": 165,
+      "y": 363,
+      "w": 27,
+      "h": 29,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/android_18_base/atomic/026.png"
+    },
+    "027.png": {
+      "x": 281,
+      "y": 359,
+      "w": 32,
+      "h": 38,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/android_18_base/atomic/027.png"
+    },
+    "028.png": {
+      "x": 401,
+      "y": 359,
+      "w": 31,
+      "h": 38,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/android_18_base/atomic/028.png"
+    },
+    "029.png": {
+      "x": 517,
+      "y": 360,
+      "w": 36,
+      "h": 35,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/android_18_base/atomic/029.png"
+    },
+    "030.png": {
+      "x": 637,
+      "y": 360,
+      "w": 34,
+      "h": 35,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/android_18_base/atomic/030.png"
+    },
+    "031.png": {
+      "x": 758,
+      "y": 359,
+      "w": 31,
+      "h": 38,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/android_18_base/atomic/031.png"
+    },
+    "032.png": {
+      "x": 876,
+      "y": 359,
+      "w": 32,
+      "h": 38,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/android_18_base/atomic/032.png"
+    },
+    "033.png": {
+      "x": 2,
+      "y": 467,
+      "w": 115,
+      "h": 38,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/android_18_base/atomic/033.png"
+    },
+    "034.png": {
+      "x": 146,
+      "y": 458,
+      "w": 64,
+      "h": 56,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/android_18_base/atomic/034.png"
+    },
+    "035.png": {
+      "x": 265,
+      "y": 458,
+      "w": 64,
+      "h": 56,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/android_18_base/atomic/035.png"
+    },
+    "036.png": {
+      "x": 384,
+      "y": 458,
+      "w": 64,
+      "h": 56,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/android_18_base/atomic/036.png"
+    },
+    "037.png": {
+      "x": 527,
+      "y": 480,
+      "w": 16,
+      "h": 12,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/android_18_base/atomic/037.png"
+    },
+    "038.png": {
+      "x": 627,
+      "y": 434,
+      "w": 55,
+      "h": 104,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/android_18_base/atomic/038.png"
+    },
+    "039.png": {
+      "x": 754,
+      "y": 480,
+      "w": 39,
+      "h": 12,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/android_18_base/atomic/039.png"
+    },
+    "040.png": {
+      "x": 865,
+      "y": 454,
+      "w": 55,
+      "h": 64,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/android_18_base/atomic/040.png"
+    },
+    "041.png": {
+      "x": 45,
+      "y": 575,
+      "w": 29,
+      "h": 38,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/android_18_base/atomic/041.png"
+    },
+    "042.png": {
+      "x": 164,
+      "y": 574,
+      "w": 29,
+      "h": 40,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/android_18_base/atomic/042.png"
+    },
+    "043.png": {
+      "x": 286,
+      "y": 574,
+      "w": 22,
+      "h": 40,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/android_18_base/atomic/043.png"
+    },
+    "044.png": {
+      "x": 380,
+      "y": 578,
+      "w": 72,
+      "h": 32,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/android_18_base/atomic/044.png"
+    },
+    "045.png": {
+      "x": 522,
+      "y": 573,
+      "w": 27,
+      "h": 41,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/android_18_base/atomic/045.png"
+    },
+    "046.png": {
+      "x": 639,
+      "y": 575,
+      "w": 31,
+      "h": 38,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/android_18_base/atomic/046.png"
+    },
+    "047.png": {
+      "x": 754,
+      "y": 588,
+      "w": 39,
+      "h": 12,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/android_18_base/atomic/047.png"
+    },
+    "048.png": {
+      "x": 877,
+      "y": 575,
+      "w": 31,
+      "h": 38,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/android_18_base/atomic/048.png"
+    }
+  }
+}

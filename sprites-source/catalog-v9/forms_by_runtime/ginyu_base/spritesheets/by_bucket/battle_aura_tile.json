@@ -1,0 +1,22 @@
+{
+  "columns": 6,
+  "rows": 1,
+  "cell_width": 28,
+  "cell_height": 20,
+  "sprites": {
+    "ginyu_base__battle_aura_tile__01__src_025.png": {
+      "x": 2,
+      "y": 2,
+      "w": 24,
+      "h": 16,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/ginyu_base/named/battle_aura_tile/ginyu_base__battle_aura_tile__01__src_025.png"
+    },
+    "ginyu_base__battle_aura_tile__02__src_032.png": {
+      "x": 30,
+      "y": 2,
+      "w": 24,
+      "h": 16,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/ginyu_base/named/battle_aura_tile/ginyu_base__battle_aura_tile__02__src_032.png"
+    }
+  }
+}

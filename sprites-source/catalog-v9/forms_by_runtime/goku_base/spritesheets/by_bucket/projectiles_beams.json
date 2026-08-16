@@ -1,0 +1,50 @@
+{
+  "columns": 6,
+  "rows": 1,
+  "cell_width": 122,
+  "cell_height": 66,
+  "sprites": {
+    "goku_base__projectiles_beams__01__src_032.png": {
+      "x": 3,
+      "y": 11,
+      "w": 115,
+      "h": 44,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/goku_base/named/projectiles_beams/goku_base__projectiles_beams__01__src_032.png"
+    },
+    "goku_base__projectiles_beams__02__src_033.png": {
+      "x": 151,
+      "y": 5,
+      "w": 64,
+      "h": 56,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/goku_base/named/projectiles_beams/goku_base__projectiles_beams__02__src_033.png"
+    },
+    "goku_base__projectiles_beams__03__src_034.png": {
+      "x": 273,
+      "y": 5,
+      "w": 64,
+      "h": 56,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/goku_base/named/projectiles_beams/goku_base__projectiles_beams__03__src_034.png"
+    },
+    "goku_base__projectiles_beams__04__src_035.png": {
+      "x": 395,
+      "y": 5,
+      "w": 64,
+      "h": 56,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/goku_base/named/projectiles_beams/goku_base__projectiles_beams__04__src_035.png"
+    },
+    "goku_base__projectiles_beams__05__src_038.png": {
+      "x": 490,
+      "y": 11,
+      "w": 117,
+      "h": 44,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/goku_base/named/projectiles_beams/goku_base__projectiles_beams__05__src_038.png"
+    },
+    "goku_base__projectiles_beams__06__src_041.png": {
+      "x": 612,
+      "y": 2,
+      "w": 118,
+      "h": 62,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/goku_base/named/projectiles_beams/goku_base__projectiles_beams__06__src_041.png"
+    }
+  }
+}

@@ -1,0 +1,342 @@
+{
+  "version": "V7_PROJECT_ALIGNED_GITHUB_4b9f383",
+  "asset_count": 1952,
+  "character_sheet_count": 24,
+  "form_count": 42,
+  "source_truth": "source_sheets_png_transparent/*.png derived losslessly from source_gif/*.gif",
+  "organization": "characters/<character>/<form>/frames/NNN.png; NNN follows corrected source-sheet reading order.",
+  "characters": {
+    "android_16": {
+      "character": "android_16",
+      "forms": {
+        "base": {
+          "count": 44,
+          "path": "characters/android_16/base/frames"
+        }
+      },
+      "total": 44
+    },
+    "android_17": {
+      "character": "android_17",
+      "forms": {
+        "base": {
+          "count": 44,
+          "path": "characters/android_17/base/frames"
+        }
+      },
+      "total": 44
+    },
+    "android_18": {
+      "character": "android_18",
+      "forms": {
+        "base": {
+          "count": 48,
+          "path": "characters/android_18/base/frames"
+        }
+      },
+      "total": 48
+    },
+    "android_19": {
+      "character": "android_19",
+      "forms": {
+        "base": {
+          "count": 52,
+          "path": "characters/android_19/base/frames"
+        }
+      },
+      "total": 52
+    },
+    "android_20": {
+      "character": "android_20",
+      "forms": {
+        "base": {
+          "count": 50,
+          "path": "characters/android_20/base/frames"
+        }
+      },
+      "total": 50
+    },
+    "captain_ginyu": {
+      "character": "captain_ginyu",
+      "forms": {
+        "base": {
+          "count": 52,
+          "path": "characters/captain_ginyu/base/frames"
+        }
+      },
+      "total": 52
+    },
+    "cell": {
+      "character": "cell",
+      "forms": {
+        "cell_form_1": {
+          "count": 48,
+          "path": "characters/cell/cell_form_1/frames"
+        },
+        "cell_form_2": {
+          "count": 48,
+          "path": "characters/cell/cell_form_2/frames"
+        },
+        "perfect_cell": {
+          "count": 50,
+          "path": "characters/cell/perfect_cell/frames"
+        }
+      },
+      "total": 146
+    },
+    "cell_jr": {
+      "character": "cell_jr",
+      "forms": {
+        "base": {
+          "count": 49,
+          "path": "characters/cell_jr/base/frames"
+        }
+      },
+      "total": 49
+    },
+    "frieza": {
+      "character": "frieza",
+      "forms": {
+        "base": {
+          "count": 46,
+          "path": "characters/frieza/base/frames"
+        }
+      },
+      "total": 46
+    },
+    "gohan": {
+      "character": "gohan",
+      "forms": {
+        "young_gohan_normal": {
+          "count": 42,
+          "path": "characters/gohan/young_gohan_normal/frames"
+        },
+        "young_gohan_super_saiyan": {
+          "count": 45,
+          "path": "characters/gohan/young_gohan_super_saiyan/frames"
+        },
+        "young_gohan_super_saiyan_2": {
+          "count": 45,
+          "path": "characters/gohan/young_gohan_super_saiyan_2/frames"
+        },
+        "teen_gohan_normal_mystic": {
+          "count": 45,
+          "path": "characters/gohan/teen_gohan_normal_mystic/frames"
+        },
+        "teen_gohan_super_saiyan": {
+          "count": 49,
+          "path": "characters/gohan/teen_gohan_super_saiyan/frames"
+        }
+      },
+      "total": 226
+    },
+    "goku": {
+      "character": "goku",
+      "forms": {
+        "normal": {
+          "count": 46,
+          "path": "characters/goku/normal/frames"
+        },
+        "super_saiyan": {
+          "count": 46,
+          "path": "characters/goku/super_saiyan/frames"
+        },
+        "super_saiyan_3": {
+          "count": 46,
+          "path": "characters/goku/super_saiyan_3/frames"
+        }
+      },
+      "total": 138
+    },
+    "goten": {
+      "character": "goten",
+      "forms": {
+        "normal": {
+          "count": 39,
+          "path": "characters/goten/normal/frames"
+        },
+        "super_saiyan": {
+          "count": 42,
+          "path": "characters/goten/super_saiyan/frames"
+        }
+      },
+      "total": 81
+    },
+    "gotenks": {
+      "character": "gotenks",
+      "forms": {
+        "super_saiyan": {
+          "count": 49,
+          "path": "characters/gotenks/super_saiyan/frames"
+        },
+        "super_saiyan_3": {
+          "count": 44,
+          "path": "characters/gotenks/super_saiyan_3/frames"
+        }
+      },
+      "total": 93
+    },
+    "guldo": {
+      "character": "guldo",
+      "forms": {
+        "base": {
+          "count": 43,
+          "path": "characters/guldo/base/frames"
+        }
+      },
+      "total": 43
+    },
+    "jeice_burter": {
+      "character": "jeice_burter",
+      "forms": {
+        "jeice": {
+          "count": 53,
+          "path": "characters/jeice_burter/jeice/frames"
+        },
+        "burter": {
+          "count": 36,
+          "path": "characters/jeice_burter/burter/frames"
+        }
+      },
+      "total": 89
+    },
+    "krillin": {
+      "character": "krillin",
+      "forms": {
+        "base": {
+          "count": 49,
+          "path": "characters/krillin/base/frames"
+        }
+      },
+      "total": 49
+    },
+    "majin_buu": {
+      "character": "majin_buu",
+      "forms": {
+        "fat_buu": {
+          "count": 51,
+          "path": "characters/majin_buu/fat_buu/frames"
+        },
+        "super_buu": {
+          "count": 46,
+          "path": "characters/majin_buu/super_buu/frames"
+        },
+        "super_buu_gotenks_absorbed": {
+          "count": 53,
+          "path": "characters/majin_buu/super_buu_gotenks_absorbed/frames"
+        },
+        "super_buu_gohan_absorbed": {
+          "count": 56,
+          "path": "characters/majin_buu/super_buu_gohan_absorbed/frames"
+        },
+        "kid_buu": {
+          "count": 49,
+          "path": "characters/majin_buu/kid_buu/frames"
+        }
+      },
+      "total": 255
+    },
+    "nappa": {
+      "character": "nappa",
+      "forms": {
+        "base": {
+          "count": 37,
+          "path": "characters/nappa/base/frames"
+        }
+      },
+      "total": 37
+    },
+    "piccolo": {
+      "character": "piccolo",
+      "forms": {
+        "base": {
+          "count": 49,
+          "path": "characters/piccolo/base/frames"
+        }
+      },
+      "total": 49
+    },
+    "recoome": {
+      "character": "recoome",
+      "forms": {
+        "base": {
+          "count": 45,
+          "path": "characters/recoome/base/frames"
+        }
+      },
+      "total": 45
+    },
+    "trunks_future": {
+      "character": "trunks_future",
+      "forms": {
+        "future_trunks_normal": {
+          "count": 46,
+          "path": "characters/trunks_future/future_trunks_normal/frames"
+        },
+        "future_trunks_super_saiyan": {
+          "count": 49,
+          "path": "characters/trunks_future/future_trunks_super_saiyan/frames"
+        }
+      },
+      "total": 95
+    },
+    "trunks_kid": {
+      "character": "trunks_kid",
+      "forms": {
+        "kid_trunks_normal": {
+          "count": 34,
+          "path": "characters/trunks_kid/kid_trunks_normal/frames"
+        },
+        "kid_trunks_super_saiyan": {
+          "count": 40,
+          "path": "characters/trunks_kid/kid_trunks_super_saiyan/frames"
+        }
+      },
+      "total": 74
+    },
+    "vegeta": {
+      "character": "vegeta",
+      "forms": {
+        "normal": {
+          "count": 42,
+          "path": "characters/vegeta/normal/frames"
+        },
+        "super_saiyan_majin": {
+          "count": 50,
+          "path": "characters/vegeta/super_saiyan_majin/frames"
+        }
+      },
+      "total": 92
+    },
+    "vegito": {
+      "character": "vegito",
+      "forms": {
+        "base": {
+          "count": 55,
+          "path": "characters/vegito/base/frames"
+        }
+      },
+      "total": 55
+    }
+  },
+  "background_cleanup": {
+    "method": "source-GIF border flood background mask (threshold 30) + tiny near-background island cleanup (threshold 40, component<=4)",
+    "changed_frames": 4,
+    "removed_pixels_total": 70
+  },
+  "github_alignment": {
+    "repository": "smouj/dbz-lsw-fangame",
+    "commit": "4b9f38353c1be64427deb17f7fad83b5cdbd7aec",
+    "commit_message": "feat(sprites): apply V6.1 recut with background fix + composite poses rebuild",
+    "importer": "scripts/import-v6-sprites.py",
+    "post_import": "scripts/add-composite-poses.py",
+    "runtime_auditor": "scripts/audit-combat-sprites.ts",
+    "sheet_auditor": "scripts/audit-sheets.ts"
+  },
+  "transparent_rgb_normalization": {
+    "files_changed": 1754,
+    "pixels_changed": 10927108,
+    "rule": "alpha==0 => RGBA=(0,0,0,0)",
+    "visible_pixels_changed": 0
+  }
+}

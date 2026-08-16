@@ -1,0 +1,22 @@
+{
+  "columns": 6,
+  "rows": 1,
+  "cell_width": 34,
+  "cell_height": 51,
+  "sprites": {
+    "goku_base__character_plus_effect__01__src_002.png": {
+      "x": 2,
+      "y": 2,
+      "w": 30,
+      "h": 46,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/goku_base/named/character_plus_effect/goku_base__character_plus_effect__01__src_002.png"
+    },
+    "goku_base__character_plus_effect__02__src_044.png": {
+      "x": 36,
+      "y": 2,
+      "w": 30,
+      "h": 47,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/goku_base/named/character_plus_effect/goku_base__character_plus_effect__02__src_044.png"
+    }
+  }
+}

@@ -1,0 +1,302 @@
+{
+  "columns": 8,
+  "rows": 6,
+  "cell_width": 121,
+  "cell_height": 60,
+  "sprites": {
+    "001.png": {
+      "x": 47,
+      "y": 8,
+      "w": 26,
+      "h": 43,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/young_gohan_base/atomic/001.png"
+    },
+    "002.png": {
+      "x": 166,
+      "y": 9,
+      "w": 31,
+      "h": 41,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/young_gohan_base/atomic/002.png"
+    },
+    "003.png": {
+      "x": 284,
+      "y": 9,
+      "w": 36,
+      "h": 41,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/young_gohan_base/atomic/003.png"
+    },
+    "004.png": {
+      "x": 410,
+      "y": 8,
+      "w": 26,
+      "h": 43,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/young_gohan_base/atomic/004.png"
+    },
+    "005.png": {
+      "x": 524,
+      "y": 14,
+      "w": 40,
+      "h": 31,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/young_gohan_base/atomic/005.png"
+    },
+    "006.png": {
+      "x": 654,
+      "y": 9,
+      "w": 23,
+      "h": 41,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/young_gohan_base/atomic/006.png"
+    },
+    "007.png": {
+      "x": 774,
+      "y": 9,
+      "w": 25,
+      "h": 42,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/young_gohan_base/atomic/007.png"
+    },
+    "008.png": {
+      "x": 892,
+      "y": 10,
+      "w": 31,
+      "h": 39,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/young_gohan_base/atomic/008.png"
+    },
+    "009.png": {
+      "x": 47,
+      "y": 69,
+      "w": 26,
+      "h": 42,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/young_gohan_base/atomic/009.png"
+    },
+    "010.png": {
+      "x": 168,
+      "y": 70,
+      "w": 26,
+      "h": 40,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/young_gohan_base/atomic/010.png"
+    },
+    "011.png": {
+      "x": 287,
+      "y": 73,
+      "w": 30,
+      "h": 33,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/young_gohan_base/atomic/011.png"
+    },
+    "012.png": {
+      "x": 409,
+      "y": 70,
+      "w": 28,
+      "h": 40,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/young_gohan_base/atomic/012.png"
+    },
+    "013.png": {
+      "x": 530,
+      "y": 71,
+      "w": 28,
+      "h": 38,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/young_gohan_base/atomic/013.png"
+    },
+    "014.png": {
+      "x": 654,
+      "y": 68,
+      "w": 23,
+      "h": 44,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/young_gohan_base/atomic/014.png"
+    },
+    "015.png": {
+      "x": 764,
+      "y": 78,
+      "w": 45,
+      "h": 24,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/young_gohan_base/atomic/015.png"
+    },
+    "016.png": {
+      "x": 893,
+      "y": 68,
+      "w": 28,
+      "h": 43,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/young_gohan_base/atomic/016.png"
+    },
+    "017.png": {
+      "x": 45,
+      "y": 129,
+      "w": 30,
+      "h": 42,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/young_gohan_base/atomic/017.png"
+    },
+    "018.png": {
+      "x": 164,
+      "y": 129,
+      "w": 34,
+      "h": 42,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/young_gohan_base/atomic/018.png"
+    },
+    "019.png": {
+      "x": 288,
+      "y": 128,
+      "w": 29,
+      "h": 43,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/young_gohan_base/atomic/019.png"
+    },
+    "020.png": {
+      "x": 409,
+      "y": 130,
+      "w": 28,
+      "h": 40,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/young_gohan_base/atomic/020.png"
+    },
+    "021.png": {
+      "x": 532,
+      "y": 128,
+      "w": 24,
+      "h": 43,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/young_gohan_base/atomic/021.png"
+    },
+    "022.png": {
+      "x": 648,
+      "y": 134,
+      "w": 34,
+      "h": 31,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/young_gohan_base/atomic/022.png"
+    },
+    "023.png": {
+      "x": 771,
+      "y": 129,
+      "w": 30,
+      "h": 42,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/young_gohan_base/atomic/023.png"
+    },
+    "024.png": {
+      "x": 892,
+      "y": 129,
+      "w": 31,
+      "h": 42,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/young_gohan_base/atomic/024.png"
+    },
+    "025.png": {
+      "x": 44,
+      "y": 190,
+      "w": 33,
+      "h": 40,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/young_gohan_base/atomic/025.png"
+    },
+    "026.png": {
+      "x": 164,
+      "y": 190,
+      "w": 34,
+      "h": 40,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/young_gohan_base/atomic/026.png"
+    },
+    "027.png": {
+      "x": 296,
+      "y": 202,
+      "w": 13,
+      "h": 16,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/young_gohan_base/atomic/027.png"
+    },
+    "028.png": {
+      "x": 417,
+      "y": 202,
+      "w": 13,
+      "h": 16,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/young_gohan_base/atomic/028.png"
+    },
+    "029.png": {
+      "x": 532,
+      "y": 202,
+      "w": 24,
+      "h": 16,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/young_gohan_base/atomic/029.png"
+    },
+    "030.png": {
+      "x": 653,
+      "y": 202,
+      "w": 24,
+      "h": 16,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/young_gohan_base/atomic/030.png"
+    },
+    "031.png": {
+      "x": 771,
+      "y": 189,
+      "w": 31,
+      "h": 42,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/young_gohan_base/atomic/031.png"
+    },
+    "032.png": {
+      "x": 850,
+      "y": 189,
+      "w": 114,
+      "h": 42,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/young_gohan_base/atomic/032.png"
+    },
+    "033.png": {
+      "x": 28,
+      "y": 242,
+      "w": 64,
+      "h": 56,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/young_gohan_base/atomic/033.png"
+    },
+    "034.png": {
+      "x": 149,
+      "y": 242,
+      "w": 64,
+      "h": 56,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/young_gohan_base/atomic/034.png"
+    },
+    "035.png": {
+      "x": 270,
+      "y": 242,
+      "w": 64,
+      "h": 56,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/young_gohan_base/atomic/035.png"
+    },
+    "036.png": {
+      "x": 415,
+      "y": 264,
+      "w": 16,
+      "h": 12,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/young_gohan_base/atomic/036.png"
+    },
+    "037.png": {
+      "x": 530,
+      "y": 249,
+      "w": 28,
+      "h": 42,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/young_gohan_base/atomic/037.png"
+    },
+    "038.png": {
+      "x": 607,
+      "y": 249,
+      "w": 117,
+      "h": 42,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/young_gohan_base/atomic/038.png"
+    },
+    "039.png": {
+      "x": 763,
+      "y": 253,
+      "w": 46,
+      "h": 34,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/young_gohan_base/atomic/039.png"
+    },
+    "040.png": {
+      "x": 895,
+      "y": 246,
+      "w": 25,
+      "h": 47,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/young_gohan_base/atomic/040.png"
+    },
+    "041.png": {
+      "x": 4,
+      "y": 309,
+      "w": 112,
+      "h": 42,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/young_gohan_base/atomic/041.png"
+    },
+    "042.png": {
+      "x": 158,
+      "y": 309,
+      "w": 46,
+      "h": 42,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/young_gohan_base/atomic/042.png"
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "columns": 6,
+  "rows": 1,
+  "cell_width": 44,
+  "cell_height": 50,
+  "sprites": {
+    "gohan_super_saiyan_1_2__nonbody_misc__01__src_005.png": {
+      "x": 2,
+      "y": 9,
+      "w": 40,
+      "h": 31,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/gohan_super_saiyan_1_2/named/nonbody_misc/gohan_super_saiyan_1_2__nonbody_misc__01__src_005.png"
+    },
+    "gohan_super_saiyan_1_2__nonbody_misc__02__src_046.png": {
+      "x": 50,
+      "y": 2,
+      "w": 32,
+      "h": 46,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/gohan_super_saiyan_1_2/named/nonbody_misc/gohan_super_saiyan_1_2__nonbody_misc__02__src_046.png"
+    }
+  }
+}

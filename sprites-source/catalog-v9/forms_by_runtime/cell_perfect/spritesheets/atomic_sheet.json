@@ -1,0 +1,358 @@
+{
+  "columns": 8,
+  "rows": 7,
+  "cell_width": 129,
+  "cell_height": 67,
+  "sprites": {
+    "001.png": {
+      "x": 49,
+      "y": 10,
+      "w": 31,
+      "h": 46,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/cell_perfect/atomic/001.png"
+    },
+    "002.png": {
+      "x": 178,
+      "y": 11,
+      "w": 31,
+      "h": 44,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/cell_perfect/atomic/002.png"
+    },
+    "003.png": {
+      "x": 305,
+      "y": 12,
+      "w": 34,
+      "h": 43,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/cell_perfect/atomic/003.png"
+    },
+    "004.png": {
+      "x": 437,
+      "y": 11,
+      "w": 28,
+      "h": 45,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/cell_perfect/atomic/004.png"
+    },
+    "005.png": {
+      "x": 573,
+      "y": 25,
+      "w": 14,
+      "h": 16,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/cell_perfect/atomic/005.png"
+    },
+    "006.png": {
+      "x": 702,
+      "y": 25,
+      "w": 14,
+      "h": 16,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/cell_perfect/atomic/006.png"
+    },
+    "007.png": {
+      "x": 826,
+      "y": 25,
+      "w": 24,
+      "h": 16,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/cell_perfect/atomic/007.png"
+    },
+    "008.png": {
+      "x": 955,
+      "y": 25,
+      "w": 24,
+      "h": 16,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/cell_perfect/atomic/008.png"
+    },
+    "009.png": {
+      "x": 44,
+      "y": 85,
+      "w": 40,
+      "h": 31,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/cell_perfect/atomic/009.png"
+    },
+    "010.png": {
+      "x": 182,
+      "y": 80,
+      "w": 23,
+      "h": 41,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/cell_perfect/atomic/010.png"
+    },
+    "011.png": {
+      "x": 307,
+      "y": 78,
+      "w": 30,
+      "h": 45,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/cell_perfect/atomic/011.png"
+    },
+    "012.png": {
+      "x": 435,
+      "y": 79,
+      "w": 32,
+      "h": 42,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/cell_perfect/atomic/012.png"
+    },
+    "013.png": {
+      "x": 565,
+      "y": 78,
+      "w": 30,
+      "h": 44,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/cell_perfect/atomic/013.png"
+    },
+    "014.png": {
+      "x": 695,
+      "y": 81,
+      "w": 29,
+      "h": 38,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/cell_perfect/atomic/014.png"
+    },
+    "015.png": {
+      "x": 822,
+      "y": 82,
+      "w": 32,
+      "h": 37,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/cell_perfect/atomic/015.png"
+    },
+    "016.png": {
+      "x": 954,
+      "y": 78,
+      "w": 27,
+      "h": 45,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/cell_perfect/atomic/016.png"
+    },
+    "017.png": {
+      "x": 50,
+      "y": 145,
+      "w": 28,
+      "h": 45,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/cell_perfect/atomic/017.png"
+    },
+    "018.png": {
+      "x": 181,
+      "y": 144,
+      "w": 24,
+      "h": 46,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/cell_perfect/atomic/018.png"
+    },
+    "019.png": {
+      "x": 299,
+      "y": 156,
+      "w": 47,
+      "h": 22,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/cell_perfect/atomic/019.png"
+    },
+    "020.png": {
+      "x": 431,
+      "y": 146,
+      "w": 40,
+      "h": 43,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/cell_perfect/atomic/020.png"
+    },
+    "021.png": {
+      "x": 561,
+      "y": 146,
+      "w": 39,
+      "h": 43,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/cell_perfect/atomic/021.png"
+    },
+    "022.png": {
+      "x": 696,
+      "y": 145,
+      "w": 27,
+      "h": 44,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/cell_perfect/atomic/022.png"
+    },
+    "023.png": {
+      "x": 822,
+      "y": 145,
+      "w": 33,
+      "h": 44,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/cell_perfect/atomic/023.png"
+    },
+    "024.png": {
+      "x": 952,
+      "y": 146,
+      "w": 31,
+      "h": 43,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/cell_perfect/atomic/024.png"
+    },
+    "025.png": {
+      "x": 50,
+      "y": 212,
+      "w": 29,
+      "h": 45,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/cell_perfect/atomic/025.png"
+    },
+    "026.png": {
+      "x": 176,
+      "y": 218,
+      "w": 34,
+      "h": 32,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/cell_perfect/atomic/026.png"
+    },
+    "027.png": {
+      "x": 308,
+      "y": 212,
+      "w": 29,
+      "h": 44,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/cell_perfect/atomic/027.png"
+    },
+    "028.png": {
+      "x": 435,
+      "y": 213,
+      "w": 32,
+      "h": 42,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/cell_perfect/atomic/028.png"
+    },
+    "029.png": {
+      "x": 565,
+      "y": 213,
+      "w": 31,
+      "h": 42,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/cell_perfect/atomic/029.png"
+    },
+    "030.png": {
+      "x": 689,
+      "y": 212,
+      "w": 40,
+      "h": 44,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/cell_perfect/atomic/030.png"
+    },
+    "031.png": {
+      "x": 819,
+      "y": 212,
+      "w": 39,
+      "h": 44,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/cell_perfect/atomic/031.png"
+    },
+    "032.png": {
+      "x": 951,
+      "y": 213,
+      "w": 32,
+      "h": 42,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/cell_perfect/atomic/032.png"
+    },
+    "033.png": {
+      "x": 7,
+      "y": 280,
+      "w": 115,
+      "h": 42,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/cell_perfect/atomic/033.png"
+    },
+    "034.png": {
+      "x": 161,
+      "y": 273,
+      "w": 64,
+      "h": 56,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/cell_perfect/atomic/034.png"
+    },
+    "035.png": {
+      "x": 290,
+      "y": 273,
+      "w": 64,
+      "h": 56,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/cell_perfect/atomic/035.png"
+    },
+    "036.png": {
+      "x": 419,
+      "y": 273,
+      "w": 64,
+      "h": 56,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/cell_perfect/atomic/036.png"
+    },
+    "037.png": {
+      "x": 565,
+      "y": 279,
+      "w": 30,
+      "h": 45,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/cell_perfect/atomic/037.png"
+    },
+    "038.png": {
+      "x": 701,
+      "y": 295,
+      "w": 16,
+      "h": 12,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/cell_perfect/atomic/038.png"
+    },
+    "039.png": {
+      "x": 824,
+      "y": 280,
+      "w": 29,
+      "h": 42,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/cell_perfect/atomic/039.png"
+    },
+    "040.png": {
+      "x": 908,
+      "y": 280,
+      "w": 118,
+      "h": 43,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/cell_perfect/atomic/040.png"
+    },
+    "041.png": {
+      "x": 41,
+      "y": 351,
+      "w": 46,
+      "h": 34,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/cell_perfect/atomic/041.png"
+    },
+    "042.png": {
+      "x": 179,
+      "y": 347,
+      "w": 28,
+      "h": 42,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/cell_perfect/atomic/042.png"
+    },
+    "043.png": {
+      "x": 263,
+      "y": 347,
+      "w": 118,
+      "h": 42,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/cell_perfect/atomic/043.png"
+    },
+    "044.png": {
+      "x": 404,
+      "y": 362,
+      "w": 94,
+      "h": 12,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/cell_perfect/atomic/044.png"
+    },
+    "045.png": {
+      "x": 518,
+      "y": 345,
+      "w": 125,
+      "h": 46,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/cell_perfect/atomic/045.png"
+    },
+    "046.png": {
+      "x": 701,
+      "y": 362,
+      "w": 16,
+      "h": 12,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/cell_perfect/atomic/046.png"
+    },
+    "047.png": {
+      "x": 824,
+      "y": 347,
+      "w": 29,
+      "h": 42,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/cell_perfect/atomic/047.png"
+    },
+    "048.png": {
+      "x": 908,
+      "y": 337,
+      "w": 119,
+      "h": 63,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/cell_perfect/atomic/048.png"
+    },
+    "049.png": {
+      "x": 27,
+      "y": 407,
+      "w": 74,
+      "h": 56,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/cell_perfect/atomic/049.png"
+    },
+    "050.png": {
+      "x": 176,
+      "y": 412,
+      "w": 34,
+      "h": 46,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/cell_perfect/atomic/050.png"
+    }
+  }
+}

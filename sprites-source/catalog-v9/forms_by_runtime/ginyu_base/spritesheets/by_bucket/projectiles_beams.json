@@ -1,0 +1,22 @@
+{
+  "columns": 6,
+  "rows": 1,
+  "cell_width": 130,
+  "cell_height": 66,
+  "sprites": {
+    "ginyu_base__projectiles_beams__01__src_034.png": {
+      "x": 7,
+      "y": 14,
+      "w": 115,
+      "h": 38,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/ginyu_base/named/projectiles_beams/ginyu_base__projectiles_beams__01__src_034.png"
+    },
+    "ginyu_base__projectiles_beams__02__src_046.png": {
+      "x": 132,
+      "y": 2,
+      "w": 126,
+      "h": 62,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/ginyu_base/named/projectiles_beams/ginyu_base__projectiles_beams__02__src_046.png"
+    }
+  }
+}

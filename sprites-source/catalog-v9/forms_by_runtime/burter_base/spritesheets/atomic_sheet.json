@@ -1,0 +1,260 @@
+{
+  "columns": 8,
+  "rows": 5,
+  "cell_width": 119,
+  "cell_height": 60,
+  "sprites": {
+    "001.png": {
+      "x": 45,
+      "y": 10,
+      "w": 29,
+      "h": 40,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/burter_base/atomic/001.png"
+    },
+    "002.png": {
+      "x": 163,
+      "y": 10,
+      "w": 30,
+      "h": 40,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/burter_base/atomic/002.png"
+    },
+    "003.png": {
+      "x": 280,
+      "y": 11,
+      "w": 34,
+      "h": 38,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/burter_base/atomic/003.png"
+    },
+    "004.png": {
+      "x": 403,
+      "y": 10,
+      "w": 27,
+      "h": 40,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/burter_base/atomic/004.png"
+    },
+    "005.png": {
+      "x": 529,
+      "y": 22,
+      "w": 12,
+      "h": 15,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/burter_base/atomic/005.png"
+    },
+    "006.png": {
+      "x": 648,
+      "y": 23,
+      "w": 13,
+      "h": 14,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/burter_base/atomic/006.png"
+    },
+    "007.png": {
+      "x": 761,
+      "y": 22,
+      "w": 24,
+      "h": 16,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/burter_base/atomic/007.png"
+    },
+    "008.png": {
+      "x": 880,
+      "y": 22,
+      "w": 24,
+      "h": 16,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/burter_base/atomic/008.png"
+    },
+    "009.png": {
+      "x": 39,
+      "y": 74,
+      "w": 40,
+      "h": 31,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/burter_base/atomic/009.png"
+    },
+    "010.png": {
+      "x": 167,
+      "y": 69,
+      "w": 23,
+      "h": 41,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/burter_base/atomic/010.png"
+    },
+    "011.png": {
+      "x": 282,
+      "y": 70,
+      "w": 30,
+      "h": 40,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/burter_base/atomic/011.png"
+    },
+    "012.png": {
+      "x": 400,
+      "y": 71,
+      "w": 32,
+      "h": 37,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/burter_base/atomic/012.png"
+    },
+    "013.png": {
+      "x": 520,
+      "y": 70,
+      "w": 31,
+      "h": 39,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/burter_base/atomic/013.png"
+    },
+    "014.png": {
+      "x": 641,
+      "y": 71,
+      "w": 27,
+      "h": 38,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/burter_base/atomic/014.png"
+    },
+    "015.png": {
+      "x": 757,
+      "y": 74,
+      "w": 32,
+      "h": 32,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/burter_base/atomic/015.png"
+    },
+    "016.png": {
+      "x": 880,
+      "y": 70,
+      "w": 24,
+      "h": 40,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/burter_base/atomic/016.png"
+    },
+    "017.png": {
+      "x": 46,
+      "y": 127,
+      "w": 26,
+      "h": 45,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/burter_base/atomic/017.png"
+    },
+    "018.png": {
+      "x": 166,
+      "y": 129,
+      "w": 24,
+      "h": 41,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/burter_base/atomic/018.png"
+    },
+    "019.png": {
+      "x": 276,
+      "y": 141,
+      "w": 42,
+      "h": 18,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/burter_base/atomic/019.png"
+    },
+    "020.png": {
+      "x": 397,
+      "y": 131,
+      "w": 38,
+      "h": 38,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/burter_base/atomic/020.png"
+    },
+    "021.png": {
+      "x": 519,
+      "y": 131,
+      "w": 32,
+      "h": 37,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/burter_base/atomic/021.png"
+    },
+    "022.png": {
+      "x": 634,
+      "y": 134,
+      "w": 40,
+      "h": 32,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/burter_base/atomic/022.png"
+    },
+    "023.png": {
+      "x": 759,
+      "y": 129,
+      "w": 29,
+      "h": 42,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/burter_base/atomic/023.png"
+    },
+    "024.png": {
+      "x": 878,
+      "y": 131,
+      "w": 29,
+      "h": 38,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/burter_base/atomic/024.png"
+    },
+    "025.png": {
+      "x": 48,
+      "y": 190,
+      "w": 22,
+      "h": 40,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/burter_base/atomic/025.png"
+    },
+    "026.png": {
+      "x": 162,
+      "y": 197,
+      "w": 32,
+      "h": 26,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/burter_base/atomic/026.png"
+    },
+    "027.png": {
+      "x": 281,
+      "y": 192,
+      "w": 32,
+      "h": 36,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/burter_base/atomic/027.png"
+    },
+    "028.png": {
+      "x": 401,
+      "y": 192,
+      "w": 31,
+      "h": 36,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/burter_base/atomic/028.png"
+    },
+    "029.png": {
+      "x": 517,
+      "y": 192,
+      "w": 37,
+      "h": 36,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/burter_base/atomic/029.png"
+    },
+    "030.png": {
+      "x": 636,
+      "y": 192,
+      "w": 36,
+      "h": 36,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/burter_base/atomic/030.png"
+    },
+    "031.png": {
+      "x": 757,
+      "y": 192,
+      "w": 32,
+      "h": 36,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/burter_base/atomic/031.png"
+    },
+    "032.png": {
+      "x": 835,
+      "y": 192,
+      "w": 115,
+      "h": 36,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/burter_base/atomic/032.png"
+    },
+    "033.png": {
+      "x": 27,
+      "y": 242,
+      "w": 64,
+      "h": 56,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/burter_base/atomic/033.png"
+    },
+    "034.png": {
+      "x": 146,
+      "y": 242,
+      "w": 64,
+      "h": 56,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/burter_base/atomic/034.png"
+    },
+    "035.png": {
+      "x": 265,
+      "y": 242,
+      "w": 64,
+      "h": 56,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/burter_base/atomic/035.png"
+    },
+    "036.png": {
+      "x": 408,
+      "y": 264,
+      "w": 16,
+      "h": 12,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/burter_base/atomic/036.png"
+    }
+  }
+}

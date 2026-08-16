@@ -1,0 +1,15 @@
+{
+  "columns": 6,
+  "rows": 1,
+  "cell_width": 48,
+  "cell_height": 27,
+  "sprites": {
+    "android_17_base__downed_or_hurt__01__src_030.png": {
+      "x": 2,
+      "y": 2,
+      "w": 44,
+      "h": 23,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/android_17_base/named/downed_or_hurt/android_17_base__downed_or_hurt__01__src_030.png"
+    }
+  }
+}

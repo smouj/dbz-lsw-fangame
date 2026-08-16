@@ -1,0 +1,183 @@
+{
+  "columns": 6,
+  "rows": 5,
+  "cell_width": 117,
+  "cell_height": 52,
+  "sprites": {
+    "future_trunks_base__movement_or_attack_pose__01__src_001.png": {
+      "x": 45,
+      "y": 5,
+      "w": 27,
+      "h": 41,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/future_trunks_base/named/movement_or_attack_pose/future_trunks_base__movement_or_attack_pose__01__src_001.png"
+    },
+    "future_trunks_base__movement_or_attack_pose__02__src_002.png": {
+      "x": 160,
+      "y": 5,
+      "w": 30,
+      "h": 41,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/future_trunks_base/named/movement_or_attack_pose/future_trunks_base__movement_or_attack_pose__02__src_002.png"
+    },
+    "future_trunks_base__movement_or_attack_pose__03__src_003.png": {
+      "x": 275,
+      "y": 6,
+      "w": 34,
+      "h": 39,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/future_trunks_base/named/movement_or_attack_pose/future_trunks_base__movement_or_attack_pose__03__src_003.png"
+    },
+    "future_trunks_base__movement_or_attack_pose__04__src_007.png": {
+      "x": 395,
+      "y": 5,
+      "w": 28,
+      "h": 41,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/future_trunks_base/named/movement_or_attack_pose/future_trunks_base__movement_or_attack_pose__04__src_007.png"
+    },
+    "future_trunks_base__movement_or_attack_pose__05__src_008.png": {
+      "x": 510,
+      "y": 6,
+      "w": 32,
+      "h": 40,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/future_trunks_base/named/movement_or_attack_pose/future_trunks_base__movement_or_attack_pose__05__src_008.png"
+    },
+    "future_trunks_base__movement_or_attack_pose__06__src_009.png": {
+      "x": 629,
+      "y": 6,
+      "w": 29,
+      "h": 40,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/future_trunks_base/named/movement_or_attack_pose/future_trunks_base__movement_or_attack_pose__06__src_009.png"
+    },
+    "future_trunks_base__movement_or_attack_pose__07__src_010.png": {
+      "x": 45,
+      "y": 57,
+      "w": 27,
+      "h": 42,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/future_trunks_base/named/movement_or_attack_pose/future_trunks_base__movement_or_attack_pose__07__src_010.png"
+    },
+    "future_trunks_base__movement_or_attack_pose__08__src_011.png": {
+      "x": 159,
+      "y": 61,
+      "w": 32,
+      "h": 33,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/future_trunks_base/named/movement_or_attack_pose/future_trunks_base__movement_or_attack_pose__08__src_011.png"
+    },
+    "future_trunks_base__movement_or_attack_pose__09__src_012.png": {
+      "x": 279,
+      "y": 55,
+      "w": 27,
+      "h": 45,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/future_trunks_base/named/movement_or_attack_pose/future_trunks_base__movement_or_attack_pose__09__src_012.png"
+    },
+    "future_trunks_base__movement_or_attack_pose__10__src_013.png": {
+      "x": 396,
+      "y": 55,
+      "w": 27,
+      "h": 45,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/future_trunks_base/named/movement_or_attack_pose/future_trunks_base__movement_or_attack_pose__10__src_013.png"
+    },
+    "future_trunks_base__movement_or_attack_pose__11__src_016.png": {
+      "x": 512,
+      "y": 57,
+      "w": 29,
+      "h": 41,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/future_trunks_base/named/movement_or_attack_pose/future_trunks_base__movement_or_attack_pose__11__src_016.png"
+    },
+    "future_trunks_base__movement_or_attack_pose__12__src_017.png": {
+      "x": 625,
+      "y": 58,
+      "w": 37,
+      "h": 39,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/future_trunks_base/named/movement_or_attack_pose/future_trunks_base__movement_or_attack_pose__12__src_017.png"
+    },
+    "future_trunks_base__movement_or_attack_pose__13__src_018.png": {
+      "x": 41,
+      "y": 112,
+      "w": 35,
+      "h": 36,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/future_trunks_base/named/movement_or_attack_pose/future_trunks_base__movement_or_attack_pose__13__src_018.png"
+    },
+    "future_trunks_base__movement_or_attack_pose__14__src_019.png": {
+      "x": 157,
+      "y": 109,
+      "w": 36,
+      "h": 41,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/future_trunks_base/named/movement_or_attack_pose/future_trunks_base__movement_or_attack_pose__14__src_019.png"
+    },
+    "future_trunks_base__movement_or_attack_pose__15__src_020.png": {
+      "x": 278,
+      "y": 110,
+      "w": 29,
+      "h": 39,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/future_trunks_base/named/movement_or_attack_pose/future_trunks_base__movement_or_attack_pose__15__src_020.png"
+    },
+    "future_trunks_base__movement_or_attack_pose__16__src_022.png": {
+      "x": 393,
+      "y": 116,
+      "w": 33,
+      "h": 28,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/future_trunks_base/named/movement_or_attack_pose/future_trunks_base__movement_or_attack_pose__16__src_022.png"
+    },
+    "future_trunks_base__movement_or_attack_pose__17__src_023.png": {
+      "x": 511,
+      "y": 111,
+      "w": 31,
+      "h": 38,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/future_trunks_base/named/movement_or_attack_pose/future_trunks_base__movement_or_attack_pose__17__src_023.png"
+    },
+    "future_trunks_base__movement_or_attack_pose__18__src_024.png": {
+      "x": 627,
+      "y": 111,
+      "w": 32,
+      "h": 38,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/future_trunks_base/named/movement_or_attack_pose/future_trunks_base__movement_or_attack_pose__18__src_024.png"
+    },
+    "future_trunks_base__movement_or_attack_pose__19__src_026.png": {
+      "x": 40,
+      "y": 163,
+      "w": 36,
+      "h": 37,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/future_trunks_base/named/movement_or_attack_pose/future_trunks_base__movement_or_attack_pose__19__src_026.png"
+    },
+    "future_trunks_base__movement_or_attack_pose__20__src_031.png": {
+      "x": 159,
+      "y": 163,
+      "w": 32,
+      "h": 38,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/future_trunks_base/named/movement_or_attack_pose/future_trunks_base__movement_or_attack_pose__20__src_031.png"
+    },
+    "future_trunks_base__movement_or_attack_pose__21__src_038.png": {
+      "x": 279,
+      "y": 161,
+      "w": 27,
+      "h": 42,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/future_trunks_base/named/movement_or_attack_pose/future_trunks_base__movement_or_attack_pose__21__src_038.png"
+    },
+    "future_trunks_base__movement_or_attack_pose__22__src_040.png": {
+      "x": 397,
+      "y": 161,
+      "w": 24,
+      "h": 42,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/future_trunks_base/named/movement_or_attack_pose/future_trunks_base__movement_or_attack_pose__22__src_040.png"
+    },
+    "future_trunks_base__movement_or_attack_pose__23__src_041.png": {
+      "x": 513,
+      "y": 161,
+      "w": 27,
+      "h": 42,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/future_trunks_base/named/movement_or_attack_pose/future_trunks_base__movement_or_attack_pose__23__src_041.png"
+    },
+    "future_trunks_base__movement_or_attack_pose__24__src_044.png": {
+      "x": 632,
+      "y": 158,
+      "w": 22,
+      "h": 48,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/future_trunks_base/named/movement_or_attack_pose/future_trunks_base__movement_or_attack_pose__24__src_044.png"
+    },
+    "future_trunks_base__movement_or_attack_pose__25__src_045.png": {
+      "x": 2,
+      "y": 212,
+      "w": 113,
+      "h": 44,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/future_trunks_base/named/movement_or_attack_pose/future_trunks_base__movement_or_attack_pose__25__src_045.png"
+    }
+  }
+}

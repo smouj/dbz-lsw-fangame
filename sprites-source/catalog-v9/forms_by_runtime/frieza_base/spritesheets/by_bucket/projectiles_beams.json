@@ -1,0 +1,29 @@
+{
+  "columns": 6,
+  "rows": 1,
+  "cell_width": 129,
+  "cell_height": 44,
+  "sprites": {
+    "frieza_base__projectiles_beams__01__src_031.png": {
+      "x": 6,
+      "y": 3,
+      "w": 116,
+      "h": 37,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/frieza_base/named/projectiles_beams/frieza_base__projectiles_beams__01__src_031.png"
+    },
+    "frieza_base__projectiles_beams__02__src_042.png": {
+      "x": 157,
+      "y": 6,
+      "w": 72,
+      "h": 32,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/frieza_base/named/projectiles_beams/frieza_base__projectiles_beams__02__src_042.png"
+    },
+    "frieza_base__projectiles_beams__03__src_045.png": {
+      "x": 260,
+      "y": 2,
+      "w": 125,
+      "h": 40,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/frieza_base/named/projectiles_beams/frieza_base__projectiles_beams__03__src_045.png"
+    }
+  }
+}

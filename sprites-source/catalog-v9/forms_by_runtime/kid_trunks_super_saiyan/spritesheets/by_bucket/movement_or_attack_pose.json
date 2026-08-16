@@ -1,0 +1,183 @@
+{
+  "columns": 6,
+  "rows": 5,
+  "cell_width": 42,
+  "cell_height": 49,
+  "sprites": {
+    "kid_trunks_super_saiyan__movement_or_attack_pose__01__src_001.png": {
+      "x": 6,
+      "y": 4,
+      "w": 30,
+      "h": 40,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/kid_trunks_super_saiyan/named/movement_or_attack_pose/kid_trunks_super_saiyan__movement_or_attack_pose__01__src_001.png"
+    },
+    "kid_trunks_super_saiyan__movement_or_attack_pose__02__src_002.png": {
+      "x": 48,
+      "y": 3,
+      "w": 30,
+      "h": 42,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/kid_trunks_super_saiyan/named/movement_or_attack_pose/kid_trunks_super_saiyan__movement_or_attack_pose__02__src_002.png"
+    },
+    "kid_trunks_super_saiyan__movement_or_attack_pose__03__src_003.png": {
+      "x": 88,
+      "y": 4,
+      "w": 33,
+      "h": 40,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/kid_trunks_super_saiyan/named/movement_or_attack_pose/kid_trunks_super_saiyan__movement_or_attack_pose__03__src_003.png"
+    },
+    "kid_trunks_super_saiyan__movement_or_attack_pose__04__src_004.png": {
+      "x": 133,
+      "y": 3,
+      "w": 27,
+      "h": 42,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/kid_trunks_super_saiyan/named/movement_or_attack_pose/kid_trunks_super_saiyan__movement_or_attack_pose__04__src_004.png"
+    },
+    "kid_trunks_super_saiyan__movement_or_attack_pose__05__src_007.png": {
+      "x": 175,
+      "y": 3,
+      "w": 27,
+      "h": 43,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/kid_trunks_super_saiyan/named/movement_or_attack_pose/kid_trunks_super_saiyan__movement_or_attack_pose__05__src_007.png"
+    },
+    "kid_trunks_super_saiyan__movement_or_attack_pose__06__src_008.png": {
+      "x": 215,
+      "y": 4,
+      "w": 31,
+      "h": 40,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/kid_trunks_super_saiyan/named/movement_or_attack_pose/kid_trunks_super_saiyan__movement_or_attack_pose__06__src_008.png"
+    },
+    "kid_trunks_super_saiyan__movement_or_attack_pose__07__src_009.png": {
+      "x": 7,
+      "y": 52,
+      "w": 28,
+      "h": 42,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/kid_trunks_super_saiyan/named/movement_or_attack_pose/kid_trunks_super_saiyan__movement_or_attack_pose__07__src_009.png"
+    },
+    "kid_trunks_super_saiyan__movement_or_attack_pose__08__src_010.png": {
+      "x": 50,
+      "y": 54,
+      "w": 25,
+      "h": 38,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/kid_trunks_super_saiyan/named/movement_or_attack_pose/kid_trunks_super_saiyan__movement_or_attack_pose__08__src_010.png"
+    },
+    "kid_trunks_super_saiyan__movement_or_attack_pose__09__src_011.png": {
+      "x": 90,
+      "y": 57,
+      "w": 30,
+      "h": 33,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/kid_trunks_super_saiyan/named/movement_or_attack_pose/kid_trunks_super_saiyan__movement_or_attack_pose__09__src_011.png"
+    },
+    "kid_trunks_super_saiyan__movement_or_attack_pose__10__src_012.png": {
+      "x": 133,
+      "y": 51,
+      "w": 28,
+      "h": 45,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/kid_trunks_super_saiyan/named/movement_or_attack_pose/kid_trunks_super_saiyan__movement_or_attack_pose__10__src_012.png"
+    },
+    "kid_trunks_super_saiyan__movement_or_attack_pose__11__src_013.png": {
+      "x": 175,
+      "y": 51,
+      "w": 28,
+      "h": 45,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/kid_trunks_super_saiyan/named/movement_or_attack_pose/kid_trunks_super_saiyan__movement_or_attack_pose__11__src_013.png"
+    },
+    "kid_trunks_super_saiyan__movement_or_attack_pose__12__src_014.png": {
+      "x": 219,
+      "y": 52,
+      "w": 24,
+      "h": 43,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/kid_trunks_super_saiyan/named/movement_or_attack_pose/kid_trunks_super_saiyan__movement_or_attack_pose__12__src_014.png"
+    },
+    "kid_trunks_super_saiyan__movement_or_attack_pose__13__src_016.png": {
+      "x": 6,
+      "y": 102,
+      "w": 30,
+      "h": 41,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/kid_trunks_super_saiyan/named/movement_or_attack_pose/kid_trunks_super_saiyan__movement_or_attack_pose__13__src_016.png"
+    },
+    "kid_trunks_super_saiyan__movement_or_attack_pose__14__src_017.png": {
+      "x": 48,
+      "y": 101,
+      "w": 29,
+      "h": 43,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/kid_trunks_super_saiyan/named/movement_or_attack_pose/kid_trunks_super_saiyan__movement_or_attack_pose__14__src_017.png"
+    },
+    "kid_trunks_super_saiyan__movement_or_attack_pose__15__src_018.png": {
+      "x": 86,
+      "y": 101,
+      "w": 38,
+      "h": 42,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/kid_trunks_super_saiyan/named/movement_or_attack_pose/kid_trunks_super_saiyan__movement_or_attack_pose__15__src_018.png"
+    },
+    "kid_trunks_super_saiyan__movement_or_attack_pose__16__src_019.png": {
+      "x": 132,
+      "y": 101,
+      "w": 29,
+      "h": 43,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/kid_trunks_super_saiyan/named/movement_or_attack_pose/kid_trunks_super_saiyan__movement_or_attack_pose__16__src_019.png"
+    },
+    "kid_trunks_super_saiyan__movement_or_attack_pose__17__src_020.png": {
+      "x": 174,
+      "y": 102,
+      "w": 30,
+      "h": 41,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/kid_trunks_super_saiyan/named/movement_or_attack_pose/kid_trunks_super_saiyan__movement_or_attack_pose__17__src_020.png"
+    },
+    "kid_trunks_super_saiyan__movement_or_attack_pose__18__src_021.png": {
+      "x": 215,
+      "y": 102,
+      "w": 31,
+      "h": 41,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/kid_trunks_super_saiyan/named/movement_or_attack_pose/kid_trunks_super_saiyan__movement_or_attack_pose__18__src_021.png"
+    },
+    "kid_trunks_super_saiyan__movement_or_attack_pose__19__src_022.png": {
+      "x": 3,
+      "y": 152,
+      "w": 36,
+      "h": 39,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/kid_trunks_super_saiyan/named/movement_or_attack_pose/kid_trunks_super_saiyan__movement_or_attack_pose__19__src_022.png"
+    },
+    "kid_trunks_super_saiyan__movement_or_attack_pose__20__src_023.png": {
+      "x": 44,
+      "y": 152,
+      "w": 37,
+      "h": 39,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/kid_trunks_super_saiyan/named/movement_or_attack_pose/kid_trunks_super_saiyan__movement_or_attack_pose__20__src_023.png"
+    },
+    "kid_trunks_super_saiyan__movement_or_attack_pose__21__src_028.png": {
+      "x": 89,
+      "y": 151,
+      "w": 31,
+      "h": 41,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/kid_trunks_super_saiyan/named/movement_or_attack_pose/kid_trunks_super_saiyan__movement_or_attack_pose__21__src_028.png"
+    },
+    "kid_trunks_super_saiyan__movement_or_attack_pose__22__src_034.png": {
+      "x": 131,
+      "y": 149,
+      "w": 32,
+      "h": 44,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/kid_trunks_super_saiyan/named/movement_or_attack_pose/kid_trunks_super_saiyan__movement_or_attack_pose__22__src_034.png"
+    },
+    "kid_trunks_super_saiyan__movement_or_attack_pose__23__src_035.png": {
+      "x": 174,
+      "y": 149,
+      "w": 30,
+      "h": 44,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/kid_trunks_super_saiyan/named/movement_or_attack_pose/kid_trunks_super_saiyan__movement_or_attack_pose__23__src_035.png"
+    },
+    "kid_trunks_super_saiyan__movement_or_attack_pose__24__src_036.png": {
+      "x": 217,
+      "y": 151,
+      "w": 28,
+      "h": 40,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/kid_trunks_super_saiyan/named/movement_or_attack_pose/kid_trunks_super_saiyan__movement_or_attack_pose__24__src_036.png"
+    },
+    "kid_trunks_super_saiyan__movement_or_attack_pose__25__src_038.png": {
+      "x": 5,
+      "y": 201,
+      "w": 32,
+      "h": 39,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/kid_trunks_super_saiyan/named/movement_or_attack_pose/kid_trunks_super_saiyan__movement_or_attack_pose__25__src_038.png"
+    }
+  }
+}

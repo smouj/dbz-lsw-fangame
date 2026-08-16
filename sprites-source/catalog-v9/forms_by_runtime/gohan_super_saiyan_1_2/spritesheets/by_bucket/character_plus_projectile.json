@@ -1,0 +1,15 @@
+{
+  "columns": 6,
+  "rows": 1,
+  "cell_width": 122,
+  "cell_height": 48,
+  "sprites": {
+    "gohan_super_saiyan_1_2__character_plus_projectile__01__src_037.png": {
+      "x": 2,
+      "y": 2,
+      "w": 118,
+      "h": 44,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/gohan_super_saiyan_1_2/named/character_plus_projectile/gohan_super_saiyan_1_2__character_plus_projectile__01__src_037.png"
+    }
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "columns": 6,
+  "rows": 1,
+  "cell_width": 123,
+  "cell_height": 67,
+  "sprites": {
+    "goku_super_saiyan_3__projectiles_beams__01__src_032.png": {
+      "x": 3,
+      "y": 12,
+      "w": 116,
+      "h": 42,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/goku_super_saiyan_3/named/projectiles_beams/goku_super_saiyan_3__projectiles_beams__01__src_032.png"
+    },
+    "goku_super_saiyan_3__projectiles_beams__02__src_038.png": {
+      "x": 125,
+      "y": 12,
+      "w": 119,
+      "h": 43,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/goku_super_saiyan_3/named/projectiles_beams/goku_super_saiyan_3__projectiles_beams__02__src_038.png"
+    },
+    "goku_super_saiyan_3__projectiles_beams__03__src_041.png": {
+      "x": 248,
+      "y": 2,
+      "w": 119,
+      "h": 63,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/goku_super_saiyan_3/named/projectiles_beams/goku_super_saiyan_3__projectiles_beams__03__src_041.png"
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "columns": 6,
+  "rows": 1,
+  "cell_width": 117,
+  "cell_height": 41,
+  "sprites": {
+    "guldo_base__projectiles_beams__01__src_036.png": {
+      "x": 2,
+      "y": 3,
+      "w": 113,
+      "h": 34,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/guldo_base/named/projectiles_beams/guldo_base__projectiles_beams__01__src_036.png"
+    },
+    "guldo_base__projectiles_beams__02__src_042.png": {
+      "x": 119,
+      "y": 2,
+      "w": 113,
+      "h": 37,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/guldo_base/named/projectiles_beams/guldo_base__projectiles_beams__02__src_042.png"
+    }
+  }
+}

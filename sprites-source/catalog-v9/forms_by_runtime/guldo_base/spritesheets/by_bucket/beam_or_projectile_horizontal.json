@@ -1,0 +1,15 @@
+{
+  "columns": 6,
+  "rows": 1,
+  "cell_width": 42,
+  "cell_height": 21,
+  "sprites": {
+    "guldo_base__beam_or_projectile_horizontal__01__src_019.png": {
+      "x": 2,
+      "y": 2,
+      "w": 38,
+      "h": 17,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/guldo_base/named/beam_or_projectile_horizontal/guldo_base__beam_or_projectile_horizontal__01__src_019.png"
+    }
+  }
+}

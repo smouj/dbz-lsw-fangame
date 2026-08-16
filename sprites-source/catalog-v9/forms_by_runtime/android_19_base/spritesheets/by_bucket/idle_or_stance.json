@@ -1,0 +1,57 @@
+{
+  "columns": 6,
+  "rows": 2,
+  "cell_width": 41,
+  "cell_height": 49,
+  "sprites": {
+    "android_19_base__idle_or_stance__01__src_001.png": {
+      "x": 10,
+      "y": 3,
+      "w": 21,
+      "h": 43,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/android_19_base/named/idle_or_stance/android_19_base__idle_or_stance__01__src_001.png"
+    },
+    "android_19_base__idle_or_stance__02__src_004.png": {
+      "x": 51,
+      "y": 3,
+      "w": 21,
+      "h": 42,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/android_19_base/named/idle_or_stance/android_19_base__idle_or_stance__02__src_004.png"
+    },
+    "android_19_base__idle_or_stance__03__src_016.png": {
+      "x": 91,
+      "y": 4,
+      "w": 22,
+      "h": 40,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/android_19_base/named/idle_or_stance/android_19_base__idle_or_stance__03__src_016.png"
+    },
+    "android_19_base__idle_or_stance__04__src_017.png": {
+      "x": 131,
+      "y": 2,
+      "w": 25,
+      "h": 45,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/android_19_base/named/idle_or_stance/android_19_base__idle_or_stance__04__src_017.png"
+    },
+    "android_19_base__idle_or_stance__05__src_018.png": {
+      "x": 173,
+      "y": 3,
+      "w": 23,
+      "h": 43,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/android_19_base/named/idle_or_stance/android_19_base__idle_or_stance__05__src_018.png"
+    },
+    "android_19_base__idle_or_stance__06__src_025.png": {
+      "x": 214,
+      "y": 3,
+      "w": 23,
+      "h": 42,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/android_19_base/named/idle_or_stance/android_19_base__idle_or_stance__06__src_025.png"
+    },
+    "android_19_base__idle_or_stance__07__src_030.png": {
+      "x": 2,
+      "y": 54,
+      "w": 37,
+      "h": 38,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/android_19_base/named/idle_or_stance/android_19_base__idle_or_stance__07__src_030.png"
+    }
+  }
+}

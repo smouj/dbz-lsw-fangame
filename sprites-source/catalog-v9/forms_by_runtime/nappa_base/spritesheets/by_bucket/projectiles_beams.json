@@ -1,0 +1,29 @@
+{
+  "columns": 6,
+  "rows": 1,
+  "cell_width": 124,
+  "cell_height": 60,
+  "sprites": {
+    "nappa_base__projectiles_beams__01__src_028.png": {
+      "x": 4,
+      "y": 12,
+      "w": 116,
+      "h": 36,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/nappa_base/named/projectiles_beams/nappa_base__projectiles_beams__01__src_028.png"
+    },
+    "nappa_base__projectiles_beams__02__src_036.png": {
+      "x": 126,
+      "y": 3,
+      "w": 120,
+      "h": 54,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/nappa_base/named/projectiles_beams/nappa_base__projectiles_beams__02__src_036.png"
+    },
+    "nappa_base__projectiles_beams__03__src_037.png": {
+      "x": 276,
+      "y": 2,
+      "w": 67,
+      "h": 56,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/nappa_base/named/projectiles_beams/nappa_base__projectiles_beams__03__src_037.png"
+    }
+  }
+}

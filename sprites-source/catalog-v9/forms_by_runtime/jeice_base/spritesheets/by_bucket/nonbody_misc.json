@@ -1,0 +1,22 @@
+{
+  "columns": 6,
+  "rows": 1,
+  "cell_width": 67,
+  "cell_height": 67,
+  "sprites": {
+    "jeice_base__nonbody_misc__01__src_009.png": {
+      "x": 13,
+      "y": 18,
+      "w": 40,
+      "h": 31,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/jeice_base/named/nonbody_misc/jeice_base__nonbody_misc__01__src_009.png"
+    },
+    "jeice_base__nonbody_misc__02__src_046.png": {
+      "x": 69,
+      "y": 2,
+      "w": 63,
+      "h": 63,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/jeice_base/named/nonbody_misc/jeice_base__nonbody_misc__02__src_046.png"
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "columns": 6,
+  "rows": 1,
+  "cell_width": 50,
+  "cell_height": 38,
+  "sprites": {
+    "goku_super_saiyan__multi_evidence_projectiles_beams_character_plus_aura_or_burst_movement_or_attack_pose__01__src_039.png": {
+      "x": 2,
+      "y": 2,
+      "w": 46,
+      "h": 34,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/goku_super_saiyan/named/multi_evidence_projectiles_beams_character_plus_aura_or_burst_movement_or_attack_pose/goku_super_saiyan__multi_evidence_projectiles_beams_character_plus_aura_or_burst_movement_or_attack_pose__01__src_039.png"
+    }
+  }
+}

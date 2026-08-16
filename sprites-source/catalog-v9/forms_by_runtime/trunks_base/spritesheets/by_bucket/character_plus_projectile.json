@@ -1,0 +1,15 @@
+{
+  "columns": 6,
+  "rows": 1,
+  "cell_width": 173,
+  "cell_height": 46,
+  "sprites": {
+    "trunks_base__character_plus_projectile__01__src_034.png": {
+      "x": 2,
+      "y": 2,
+      "w": 169,
+      "h": 42,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/trunks_base/named/character_plus_projectile/trunks_base__character_plus_projectile__01__src_034.png"
+    }
+  }
+}

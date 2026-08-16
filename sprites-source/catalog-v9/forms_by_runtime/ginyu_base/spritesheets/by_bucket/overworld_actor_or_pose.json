@@ -1,0 +1,36 @@
+{
+  "columns": 6,
+  "rows": 1,
+  "cell_width": 20,
+  "cell_height": 20,
+  "sprites": {
+    "ginyu_base__overworld_actor_or_pose__01__src_023.png": {
+      "x": 3,
+      "y": 2,
+      "w": 13,
+      "h": 15,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/ginyu_base/named/overworld_actor_or_pose/ginyu_base__overworld_actor_or_pose__01__src_023.png"
+    },
+    "ginyu_base__overworld_actor_or_pose__02__src_024.png": {
+      "x": 23,
+      "y": 3,
+      "w": 13,
+      "h": 14,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/ginyu_base/named/overworld_actor_or_pose/ginyu_base__overworld_actor_or_pose__02__src_024.png"
+    },
+    "ginyu_base__overworld_actor_or_pose__03__src_030.png": {
+      "x": 42,
+      "y": 2,
+      "w": 16,
+      "h": 16,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/ginyu_base/named/overworld_actor_or_pose/ginyu_base__overworld_actor_or_pose__03__src_030.png"
+    },
+    "ginyu_base__overworld_actor_or_pose__04__src_031.png": {
+      "x": 62,
+      "y": 2,
+      "w": 16,
+      "h": 16,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/ginyu_base/named/overworld_actor_or_pose/ginyu_base__overworld_actor_or_pose__04__src_031.png"
+    }
+  }
+}

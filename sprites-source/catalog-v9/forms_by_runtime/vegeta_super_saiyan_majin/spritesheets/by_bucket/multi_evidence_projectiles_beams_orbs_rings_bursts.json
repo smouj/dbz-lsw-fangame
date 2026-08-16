@@ -1,0 +1,15 @@
+{
+  "columns": 6,
+  "rows": 1,
+  "cell_width": 73,
+  "cell_height": 60,
+  "sprites": {
+    "vegeta_super_saiyan_majin__multi_evidence_projectiles_beams_orbs_rings_bursts__01__src_048.png": {
+      "x": 2,
+      "y": 2,
+      "w": 69,
+      "h": 56,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/vegeta_super_saiyan_majin/named/multi_evidence_projectiles_beams_orbs_rings_bursts/vegeta_super_saiyan_majin__multi_evidence_projectiles_beams_orbs_rings_bursts__01__src_048.png"
+    }
+  }
+}

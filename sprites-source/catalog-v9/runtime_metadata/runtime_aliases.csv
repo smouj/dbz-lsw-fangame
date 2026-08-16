@@ -1,0 +1,49 @@
+type,runtime_dir,character,form,canonical_frames_path,status,reason,game_ids,source
+canonical,android_16_base,android_16,base,characters/android_16/base/frames,native_v6_bridge,,,01_android_16/base
+canonical,android_17_base,android_17,base,characters/android_17/base/frames,native_v6_bridge,,,02_android_17/base
+canonical,android_18_base,android_18,base,characters/android_18/base/frames,native_v6_bridge,,,03_android_18/base
+canonical,android_19_base,android_19,base,characters/android_19/base/frames,native_v6_bridge,,,04_android_19/base
+canonical,android_20_base,android_20,base,characters/android_20/base/frames,native_v6_bridge,,,05_android_20/base
+canonical,ginyu_base,captain_ginyu,base,characters/captain_ginyu/base/frames,native_v6_bridge,,,16_ginyu/base
+canonical,cell_imperfect_form,cell,cell_form_1,characters/cell/cell_form_1/frames,native_v6_bridge,,,10_cell/imperfect_form
+canonical,cell_semi_perfect_form,cell,cell_form_2,characters/cell/cell_form_2/frames,native_v6_bridge,,,12_cell/semi_perfect_form
+canonical,cell_perfect,cell,perfect_cell,characters/cell/perfect_cell/frames,native_v6_bridge,,,11_cell/perfect
+canonical,cell_jr_base,cell_jr,base,characters/cell_jr/base/frames,native_v6_bridge,,,13_cell_jr/base
+canonical,frieza_base,frieza,base,characters/frieza/base/frames,native_v6_bridge,,,14_frieza/base
+canonical,gohan_ultimate,gohan,teen_gohan_normal_mystic,characters/gohan/teen_gohan_normal_mystic/frames,native_v6_bridge,,,19_gohan/ultimate
+canonical,gohan_super_saiyan_1_2,gohan,teen_gohan_super_saiyan,characters/gohan/teen_gohan_super_saiyan/frames,native_v6_bridge,,,18_gohan/super_saiyan_1_2
+canonical,young_gohan_base,gohan,young_gohan_normal,characters/gohan/young_gohan_normal/frames,native_v6_bridge,,,40_young_gohan/base
+canonical,young_gohan_super_saiyan,gohan,young_gohan_super_saiyan,characters/gohan/young_gohan_super_saiyan/frames,native_v6_bridge,,,42_young_gohan/super_saiyan
+canonical,young_gohan_super_saiyan_2,gohan,young_gohan_super_saiyan_2,characters/gohan/young_gohan_super_saiyan_2/frames,native_v6_bridge,,,41_young_gohan/super_saiyan_2
+canonical,goku_base,goku,normal,characters/goku/normal/frames,native_v6_bridge,,,20_goku/base
+canonical,goku_super_saiyan,goku,super_saiyan,characters/goku/super_saiyan/frames,native_v6_bridge,,,23_goku/super_saiyan
+canonical,goku_super_saiyan_3,goku,super_saiyan_3,characters/goku/super_saiyan_3/frames,native_v6_bridge,,,22_goku/super_saiyan_3
+canonical,goten_base,goten,normal,characters/goten/normal/frames,native_v6_bridge,,,24_goten/base
+canonical,goten_super_saiyan,goten,super_saiyan,characters/goten/super_saiyan/frames,native_v6_bridge,,,25_goten/super_saiyan
+canonical,gotenks_super_saiyan,gotenks,super_saiyan,characters/gotenks/super_saiyan/frames,native_v6_bridge,,,27_gotenks/super_saiyan
+canonical,gotenks_super_saiyan_3,gotenks,super_saiyan_3,characters/gotenks/super_saiyan_3/frames,native_v6_bridge,,,26_gotenks/super_saiyan_3
+canonical,guldo_base,guldo,base,characters/guldo/base/frames,native_v6_bridge,,,28_guldo/base
+canonical,burter_base,jeice_burter,burter,characters/jeice_burter/burter/frames,native_v6_bridge,,,06_burter/base
+canonical,jeice_base,jeice_burter,jeice,characters/jeice_burter/jeice/frames,native_v6_bridge,,,29_jeice/base
+canonical,krillin_base,krillin,base,characters/krillin/base/frames,native_v6_bridge,,,31_krillin/base
+canonical,buu_base,majin_buu,fat_buu,characters/majin_buu/fat_buu/frames,native_v6_bridge,,,07_buu/base
+canonical,kid_buu_base,majin_buu,kid_buu,characters/majin_buu/kid_buu/frames,native_v6_bridge,,,30_kid_buu/base
+canonical,super_buu_base,majin_buu,super_buu,characters/majin_buu/super_buu/frames,native_v6_bridge,,,35_super_buu/base
+canonical,buu_gohan_absorbed,majin_buu,super_buu_gohan_absorbed,characters/majin_buu/super_buu_gohan_absorbed/frames,native_v6_bridge,,,08_buu/gohan_absorbed
+canonical,buu_gotenks_absorbed,majin_buu,super_buu_gotenks_absorbed,characters/majin_buu/super_buu_gotenks_absorbed/frames,native_v6_bridge,,,09_buu/gotenks_absorbed
+canonical,nappa_base,nappa,base,characters/nappa/base/frames,native_v6_bridge,,,32_nappa/base
+canonical,piccolo_base,piccolo,base,characters/piccolo/base/frames,native_v6_bridge,,,33_piccolo/base
+canonical,recoome_base,recoome,base,characters/recoome/base/frames,native_v6_bridge,,,34_recoome/base
+canonical,future_trunks_base,trunks_future,future_trunks_normal,characters/trunks_future/future_trunks_normal/frames,native_v6_bridge,,,15_future_trunks/base
+canonical,future_trunks_super_saiyan,trunks_future,future_trunks_super_saiyan,characters/trunks_future/future_trunks_super_saiyan/frames,native_v6_bridge,,,15_future_trunks/base
+canonical,trunks_base,trunks_kid,kid_trunks_normal,characters/trunks_kid/kid_trunks_normal/frames,native_v6_bridge,,,36_trunks/base
+canonical,kid_trunks_super_saiyan,trunks_kid,kid_trunks_super_saiyan,characters/trunks_kid/kid_trunks_super_saiyan/frames,native_v6_bridge,,,37_trunks/super_saiyan
+canonical,vegeta_base,vegeta,normal,characters/vegeta/normal/frames,native_v6_bridge,,,38_vegeta/base
+canonical,vegeta_super_saiyan_majin,vegeta,super_saiyan_majin,characters/vegeta/super_saiyan_majin/frames,native_v6_bridge,,,39_vegeta/super_saiyan_majin
+canonical,vegito_ssj,vegito,base,characters/vegito/base/frames,native_v6_bridge,,,23_goku/super_saiyan
+runtime_alias,piccolo_base,,,,alias,same runtime dir used by multiple game ids,piccolo_base|piccolo_kami|piccolo_evil,
+runtime_alias,vegeta_super_saiyan_majin,,,,alias,same runtime dir used by multiple game ids,vegeta_ssj|vegeta_majin,
+runtime_alias,gohan_super_saiyan_1_2,,,,alias,same runtime dir used by multiple game ids,gohan_adult_ssj|gohan_adult_ssj2,
+runtime_only_or_derived,goku_super_saiyan_2,,,,derived,V6 canonical removed this form; current project imports it directly from FIXED,,FIXED_ONLY 21_goku/super_saiyan_2
+runtime_only_or_derived,ginyu_gokus_body,,,,derived,V6 canonical removed this form; current project imports it directly from FIXED,,FIXED_ONLY 17_ginyu/gokus_body
+runtime_only_or_derived,vegito_base,,,,derived,canonical vegito/base pixels correspond to SSJ and map to vegito_ssj; base is generated by project recolor,,project recolor/make-vegito-forms.py

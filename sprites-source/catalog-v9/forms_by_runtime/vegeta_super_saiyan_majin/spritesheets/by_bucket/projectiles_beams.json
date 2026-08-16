@@ -1,0 +1,36 @@
+{
+  "columns": 6,
+  "rows": 1,
+  "cell_width": 123,
+  "cell_height": 68,
+  "sprites": {
+    "vegeta_super_saiyan_majin__projectiles_beams__01__src_032.png": {
+      "x": 4,
+      "y": 13,
+      "w": 115,
+      "h": 41,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/vegeta_super_saiyan_majin/named/projectiles_beams/vegeta_super_saiyan_majin__projectiles_beams__01__src_032.png"
+    },
+    "vegeta_super_saiyan_majin__projectiles_beams__02__src_043.png": {
+      "x": 127,
+      "y": 2,
+      "w": 115,
+      "h": 64,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/vegeta_super_saiyan_majin/named/projectiles_beams/vegeta_super_saiyan_majin__projectiles_beams__02__src_043.png"
+    },
+    "vegeta_super_saiyan_majin__projectiles_beams__03__src_044.png": {
+      "x": 269,
+      "y": 2,
+      "w": 76,
+      "h": 64,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/vegeta_super_saiyan_majin/named/projectiles_beams/vegeta_super_saiyan_majin__projectiles_beams__03__src_044.png"
+    },
+    "vegeta_super_saiyan_majin__projectiles_beams__04__src_047.png": {
+      "x": 371,
+      "y": 7,
+      "w": 119,
+      "h": 54,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/vegeta_super_saiyan_majin/named/projectiles_beams/vegeta_super_saiyan_majin__projectiles_beams__04__src_047.png"
+    }
+  }
+}

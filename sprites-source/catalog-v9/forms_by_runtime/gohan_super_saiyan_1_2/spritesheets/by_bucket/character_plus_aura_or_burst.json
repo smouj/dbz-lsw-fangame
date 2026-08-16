@@ -1,0 +1,29 @@
+{
+  "columns": 6,
+  "rows": 1,
+  "cell_width": 50,
+  "cell_height": 50,
+  "sprites": {
+    "gohan_super_saiyan_1_2__character_plus_aura_or_burst__01__src_043.png": {
+      "x": 2,
+      "y": 4,
+      "w": 46,
+      "h": 42,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/gohan_super_saiyan_1_2/named/character_plus_aura_or_burst/gohan_super_saiyan_1_2__character_plus_aura_or_burst__01__src_043.png"
+    },
+    "gohan_super_saiyan_1_2__character_plus_aura_or_burst__02__src_048.png": {
+      "x": 55,
+      "y": 2,
+      "w": 40,
+      "h": 46,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/gohan_super_saiyan_1_2/named/character_plus_aura_or_burst/gohan_super_saiyan_1_2__character_plus_aura_or_burst__02__src_048.png"
+    },
+    "gohan_super_saiyan_1_2__character_plus_aura_or_burst__03__src_049.png": {
+      "x": 105,
+      "y": 2,
+      "w": 40,
+      "h": 46,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/gohan_super_saiyan_1_2/named/character_plus_aura_or_burst/gohan_super_saiyan_1_2__character_plus_aura_or_burst__03__src_049.png"
+    }
+  }
+}

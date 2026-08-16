@@ -1,0 +1,15 @@
+{
+  "columns": 6,
+  "rows": 1,
+  "cell_width": 50,
+  "cell_height": 46,
+  "sprites": {
+    "future_trunks_base__source_reference_unresolved__01__src_046.png": {
+      "x": 2,
+      "y": 2,
+      "w": 46,
+      "h": 42,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/future_trunks_base/named/source_reference_unresolved/future_trunks_base__source_reference_unresolved__01__src_046.png"
+    }
+  }
+}

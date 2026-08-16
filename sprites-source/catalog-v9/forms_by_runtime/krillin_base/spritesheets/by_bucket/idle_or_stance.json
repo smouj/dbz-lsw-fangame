@@ -1,0 +1,85 @@
+{
+  "columns": 6,
+  "rows": 2,
+  "cell_width": 38,
+  "cell_height": 44,
+  "sprites": {
+    "krillin_base__idle_or_stance__01__src_001.png": {
+      "x": 8,
+      "y": 4,
+      "w": 21,
+      "h": 35,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/krillin_base/named/idle_or_stance/krillin_base__idle_or_stance__01__src_001.png"
+    },
+    "krillin_base__idle_or_stance__02__src_004.png": {
+      "x": 47,
+      "y": 4,
+      "w": 20,
+      "h": 35,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/krillin_base/named/idle_or_stance/krillin_base__idle_or_stance__02__src_004.png"
+    },
+    "krillin_base__idle_or_stance__03__src_013.png": {
+      "x": 83,
+      "y": 4,
+      "w": 23,
+      "h": 35,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/krillin_base/named/idle_or_stance/krillin_base__idle_or_stance__03__src_013.png"
+    },
+    "krillin_base__idle_or_stance__04__src_014.png": {
+      "x": 122,
+      "y": 5,
+      "w": 22,
+      "h": 34,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/krillin_base/named/idle_or_stance/krillin_base__idle_or_stance__04__src_014.png"
+    },
+    "krillin_base__idle_or_stance__05__src_016.png": {
+      "x": 160,
+      "y": 2,
+      "w": 22,
+      "h": 40,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/krillin_base/named/idle_or_stance/krillin_base__idle_or_stance__05__src_016.png"
+    },
+    "krillin_base__idle_or_stance__06__src_017.png": {
+      "x": 197,
+      "y": 3,
+      "w": 23,
+      "h": 38,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/krillin_base/named/idle_or_stance/krillin_base__idle_or_stance__06__src_017.png"
+    },
+    "krillin_base__idle_or_stance__07__src_018.png": {
+      "x": 9,
+      "y": 47,
+      "w": 20,
+      "h": 37,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/krillin_base/named/idle_or_stance/krillin_base__idle_or_stance__07__src_018.png"
+    },
+    "krillin_base__idle_or_stance__08__src_024.png": {
+      "x": 46,
+      "y": 48,
+      "w": 21,
+      "h": 35,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/krillin_base/named/idle_or_stance/krillin_base__idle_or_stance__08__src_024.png"
+    },
+    "krillin_base__idle_or_stance__09__src_029.png": {
+      "x": 78,
+      "y": 50,
+      "w": 34,
+      "h": 32,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/krillin_base/named/idle_or_stance/krillin_base__idle_or_stance__09__src_029.png"
+    },
+    "krillin_base__idle_or_stance__10__src_043.png": {
+      "x": 121,
+      "y": 49,
+      "w": 23,
+      "h": 33,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/krillin_base/named/idle_or_stance/krillin_base__idle_or_stance__10__src_043.png"
+    },
+    "krillin_base__idle_or_stance__11__src_049.png": {
+      "x": 160,
+      "y": 48,
+      "w": 21,
+      "h": 35,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/krillin_base/named/idle_or_stance/krillin_base__idle_or_stance__11__src_049.png"
+    }
+  }
+}

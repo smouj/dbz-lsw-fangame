@@ -1,0 +1,15 @@
+{
+  "columns": 6,
+  "rows": 1,
+  "cell_width": 44,
+  "cell_height": 35,
+  "sprites": {
+    "goku_base__nonbody_misc__01__src_005.png": {
+      "x": 2,
+      "y": 2,
+      "w": 40,
+      "h": 31,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/goku_base/named/nonbody_misc/goku_base__nonbody_misc__01__src_005.png"
+    }
+  }
+}

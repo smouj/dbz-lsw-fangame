@@ -1,0 +1,57 @@
+{
+  "columns": 6,
+  "rows": 2,
+  "cell_width": 42,
+  "cell_height": 49,
+  "sprites": {
+    "super_buu_base__idle_or_stance__01__src_001.png": {
+      "x": 11,
+      "y": 3,
+      "w": 20,
+      "h": 43,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/super_buu_base/named/idle_or_stance/super_buu_base__idle_or_stance__01__src_001.png"
+    },
+    "super_buu_base__idle_or_stance__02__src_004.png": {
+      "x": 52,
+      "y": 3,
+      "w": 21,
+      "h": 42,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/super_buu_base/named/idle_or_stance/super_buu_base__idle_or_stance__02__src_004.png"
+    },
+    "super_buu_base__idle_or_stance__03__src_012.png": {
+      "x": 93,
+      "y": 4,
+      "w": 23,
+      "h": 40,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/super_buu_base/named/idle_or_stance/super_buu_base__idle_or_stance__03__src_012.png"
+    },
+    "super_buu_base__idle_or_stance__04__src_013.png": {
+      "x": 134,
+      "y": 2,
+      "w": 25,
+      "h": 45,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/super_buu_base/named/idle_or_stance/super_buu_base__idle_or_stance__04__src_013.png"
+    },
+    "super_buu_base__idle_or_stance__05__src_014.png": {
+      "x": 177,
+      "y": 3,
+      "w": 23,
+      "h": 43,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/super_buu_base/named/idle_or_stance/super_buu_base__idle_or_stance__05__src_014.png"
+    },
+    "super_buu_base__idle_or_stance__06__src_021.png": {
+      "x": 219,
+      "y": 3,
+      "w": 23,
+      "h": 42,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/super_buu_base/named/idle_or_stance/super_buu_base__idle_or_stance__06__src_021.png"
+    },
+    "super_buu_base__idle_or_stance__07__src_025.png": {
+      "x": 2,
+      "y": 54,
+      "w": 38,
+      "h": 38,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/super_buu_base/named/idle_or_stance/super_buu_base__idle_or_stance__07__src_025.png"
+    }
+  }
+}

@@ -1,0 +1,204 @@
+{
+  "columns": 6,
+  "rows": 5,
+  "cell_width": 121,
+  "cell_height": 51,
+  "sprites": {
+    "young_gohan_base__movement_or_attack_pose__01__src_001.png": {
+      "x": 47,
+      "y": 4,
+      "w": 26,
+      "h": 43,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/young_gohan_base/named/movement_or_attack_pose/young_gohan_base__movement_or_attack_pose__01__src_001.png"
+    },
+    "young_gohan_base__movement_or_attack_pose__02__src_002.png": {
+      "x": 166,
+      "y": 5,
+      "w": 31,
+      "h": 41,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/young_gohan_base/named/movement_or_attack_pose/young_gohan_base__movement_or_attack_pose__02__src_002.png"
+    },
+    "young_gohan_base__movement_or_attack_pose__03__src_003.png": {
+      "x": 284,
+      "y": 5,
+      "w": 36,
+      "h": 41,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/young_gohan_base/named/movement_or_attack_pose/young_gohan_base__movement_or_attack_pose__03__src_003.png"
+    },
+    "young_gohan_base__movement_or_attack_pose__04__src_004.png": {
+      "x": 410,
+      "y": 4,
+      "w": 26,
+      "h": 43,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/young_gohan_base/named/movement_or_attack_pose/young_gohan_base__movement_or_attack_pose__04__src_004.png"
+    },
+    "young_gohan_base__movement_or_attack_pose__05__src_007.png": {
+      "x": 532,
+      "y": 4,
+      "w": 25,
+      "h": 42,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/young_gohan_base/named/movement_or_attack_pose/young_gohan_base__movement_or_attack_pose__05__src_007.png"
+    },
+    "young_gohan_base__movement_or_attack_pose__06__src_008.png": {
+      "x": 650,
+      "y": 6,
+      "w": 31,
+      "h": 39,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/young_gohan_base/named/movement_or_attack_pose/young_gohan_base__movement_or_attack_pose__06__src_008.png"
+    },
+    "young_gohan_base__movement_or_attack_pose__07__src_009.png": {
+      "x": 47,
+      "y": 55,
+      "w": 26,
+      "h": 42,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/young_gohan_base/named/movement_or_attack_pose/young_gohan_base__movement_or_attack_pose__07__src_009.png"
+    },
+    "young_gohan_base__movement_or_attack_pose__08__src_010.png": {
+      "x": 168,
+      "y": 56,
+      "w": 26,
+      "h": 40,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/young_gohan_base/named/movement_or_attack_pose/young_gohan_base__movement_or_attack_pose__08__src_010.png"
+    },
+    "young_gohan_base__movement_or_attack_pose__09__src_011.png": {
+      "x": 287,
+      "y": 60,
+      "w": 30,
+      "h": 33,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/young_gohan_base/named/movement_or_attack_pose/young_gohan_base__movement_or_attack_pose__09__src_011.png"
+    },
+    "young_gohan_base__movement_or_attack_pose__10__src_012.png": {
+      "x": 409,
+      "y": 56,
+      "w": 28,
+      "h": 40,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/young_gohan_base/named/movement_or_attack_pose/young_gohan_base__movement_or_attack_pose__10__src_012.png"
+    },
+    "young_gohan_base__movement_or_attack_pose__11__src_013.png": {
+      "x": 530,
+      "y": 57,
+      "w": 28,
+      "h": 38,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/young_gohan_base/named/movement_or_attack_pose/young_gohan_base__movement_or_attack_pose__11__src_013.png"
+    },
+    "young_gohan_base__movement_or_attack_pose__12__src_016.png": {
+      "x": 651,
+      "y": 55,
+      "w": 28,
+      "h": 43,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/young_gohan_base/named/movement_or_attack_pose/young_gohan_base__movement_or_attack_pose__12__src_016.png"
+    },
+    "young_gohan_base__movement_or_attack_pose__13__src_017.png": {
+      "x": 45,
+      "y": 106,
+      "w": 30,
+      "h": 42,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/young_gohan_base/named/movement_or_attack_pose/young_gohan_base__movement_or_attack_pose__13__src_017.png"
+    },
+    "young_gohan_base__movement_or_attack_pose__14__src_018.png": {
+      "x": 164,
+      "y": 106,
+      "w": 34,
+      "h": 42,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/young_gohan_base/named/movement_or_attack_pose/young_gohan_base__movement_or_attack_pose__14__src_018.png"
+    },
+    "young_gohan_base__movement_or_attack_pose__15__src_019.png": {
+      "x": 288,
+      "y": 106,
+      "w": 29,
+      "h": 43,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/young_gohan_base/named/movement_or_attack_pose/young_gohan_base__movement_or_attack_pose__15__src_019.png"
+    },
+    "young_gohan_base__movement_or_attack_pose__16__src_020.png": {
+      "x": 409,
+      "y": 107,
+      "w": 28,
+      "h": 40,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/young_gohan_base/named/movement_or_attack_pose/young_gohan_base__movement_or_attack_pose__16__src_020.png"
+    },
+    "young_gohan_base__movement_or_attack_pose__17__src_021.png": {
+      "x": 532,
+      "y": 106,
+      "w": 24,
+      "h": 43,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/young_gohan_base/named/movement_or_attack_pose/young_gohan_base__movement_or_attack_pose__17__src_021.png"
+    },
+    "young_gohan_base__movement_or_attack_pose__18__src_022.png": {
+      "x": 648,
+      "y": 112,
+      "w": 34,
+      "h": 31,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/young_gohan_base/named/movement_or_attack_pose/young_gohan_base__movement_or_attack_pose__18__src_022.png"
+    },
+    "young_gohan_base__movement_or_attack_pose__19__src_023.png": {
+      "x": 45,
+      "y": 157,
+      "w": 30,
+      "h": 42,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/young_gohan_base/named/movement_or_attack_pose/young_gohan_base__movement_or_attack_pose__19__src_023.png"
+    },
+    "young_gohan_base__movement_or_attack_pose__20__src_024.png": {
+      "x": 166,
+      "y": 157,
+      "w": 31,
+      "h": 42,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/young_gohan_base/named/movement_or_attack_pose/young_gohan_base__movement_or_attack_pose__20__src_024.png"
+    },
+    "young_gohan_base__movement_or_attack_pose__21__src_025.png": {
+      "x": 286,
+      "y": 158,
+      "w": 33,
+      "h": 40,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/young_gohan_base/named/movement_or_attack_pose/young_gohan_base__movement_or_attack_pose__21__src_025.png"
+    },
+    "young_gohan_base__movement_or_attack_pose__22__src_026.png": {
+      "x": 406,
+      "y": 158,
+      "w": 34,
+      "h": 40,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/young_gohan_base/named/movement_or_attack_pose/young_gohan_base__movement_or_attack_pose__22__src_026.png"
+    },
+    "young_gohan_base__movement_or_attack_pose__23__src_031.png": {
+      "x": 529,
+      "y": 157,
+      "w": 31,
+      "h": 42,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/young_gohan_base/named/movement_or_attack_pose/young_gohan_base__movement_or_attack_pose__23__src_031.png"
+    },
+    "young_gohan_base__movement_or_attack_pose__24__src_037.png": {
+      "x": 651,
+      "y": 157,
+      "w": 28,
+      "h": 42,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/young_gohan_base/named/movement_or_attack_pose/young_gohan_base__movement_or_attack_pose__24__src_037.png"
+    },
+    "young_gohan_base__movement_or_attack_pose__25__src_038.png": {
+      "x": 2,
+      "y": 208,
+      "w": 117,
+      "h": 42,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/young_gohan_base/named/movement_or_attack_pose/young_gohan_base__movement_or_attack_pose__25__src_038.png"
+    },
+    "young_gohan_base__movement_or_attack_pose__26__src_039.png": {
+      "x": 158,
+      "y": 212,
+      "w": 46,
+      "h": 34,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/young_gohan_base/named/movement_or_attack_pose/young_gohan_base__movement_or_attack_pose__26__src_039.png"
+    },
+    "young_gohan_base__movement_or_attack_pose__27__src_040.png": {
+      "x": 290,
+      "y": 206,
+      "w": 25,
+      "h": 47,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/young_gohan_base/named/movement_or_attack_pose/young_gohan_base__movement_or_attack_pose__27__src_040.png"
+    },
+    "young_gohan_base__movement_or_attack_pose__28__src_041.png": {
+      "x": 367,
+      "y": 208,
+      "w": 112,
+      "h": 42,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/young_gohan_base/named/movement_or_attack_pose/young_gohan_base__movement_or_attack_pose__28__src_041.png"
+    }
+  }
+}

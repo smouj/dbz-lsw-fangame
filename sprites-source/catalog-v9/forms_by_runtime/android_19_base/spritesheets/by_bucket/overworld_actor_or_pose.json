@@ -1,0 +1,22 @@
+{
+  "columns": 6,
+  "rows": 1,
+  "cell_width": 16,
+  "cell_height": 19,
+  "sprites": {
+    "android_19_base__overworld_actor_or_pose__01__src_009.png": {
+      "x": 2,
+      "y": 2,
+      "w": 12,
+      "h": 15,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/android_19_base/named/overworld_actor_or_pose/android_19_base__overworld_actor_or_pose__01__src_009.png"
+    },
+    "android_19_base__overworld_actor_or_pose__02__src_010.png": {
+      "x": 18,
+      "y": 3,
+      "w": 12,
+      "h": 13,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/android_19_base/named/overworld_actor_or_pose/android_19_base__overworld_actor_or_pose__02__src_010.png"
+    }
+  }
+}

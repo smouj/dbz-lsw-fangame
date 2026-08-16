@@ -1,0 +1,15 @@
+{
+  "columns": 6,
+  "rows": 1,
+  "cell_width": 50,
+  "cell_height": 35,
+  "sprites": {
+    "kid_buu_base__multi_evidence_projectiles_beams_movement_or_attack_pose_orbs_rings_bursts__01__src_038.png": {
+      "x": 2,
+      "y": 2,
+      "w": 46,
+      "h": 31,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/kid_buu_base/named/multi_evidence_projectiles_beams_movement_or_attack_pose_orbs_rings_bursts/kid_buu_base__multi_evidence_projectiles_beams_movement_or_attack_pose_orbs_rings_bursts__01__src_038.png"
+    }
+  }
+}

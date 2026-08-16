@@ -1,0 +1,15 @@
+{
+  "columns": 6,
+  "rows": 1,
+  "cell_width": 123,
+  "cell_height": 44,
+  "sprites": {
+    "gotenks_super_saiyan_3__character_plus_projectile__01__src_040.png": {
+      "x": 2,
+      "y": 2,
+      "w": 119,
+      "h": 40,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/gotenks_super_saiyan_3/named/character_plus_projectile/gotenks_super_saiyan_3__character_plus_projectile__01__src_040.png"
+    }
+  }
+}

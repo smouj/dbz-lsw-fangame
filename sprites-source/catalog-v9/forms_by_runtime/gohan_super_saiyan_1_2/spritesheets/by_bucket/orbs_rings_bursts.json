@@ -1,0 +1,29 @@
+{
+  "columns": 6,
+  "rows": 1,
+  "cell_width": 68,
+  "cell_height": 60,
+  "sprites": {
+    "gohan_super_saiyan_1_2__orbs_rings_bursts__01__src_033.png": {
+      "x": 2,
+      "y": 2,
+      "w": 64,
+      "h": 56,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/gohan_super_saiyan_1_2/named/orbs_rings_bursts/gohan_super_saiyan_1_2__orbs_rings_bursts__01__src_033.png"
+    },
+    "gohan_super_saiyan_1_2__orbs_rings_bursts__02__src_034.png": {
+      "x": 70,
+      "y": 2,
+      "w": 64,
+      "h": 56,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/gohan_super_saiyan_1_2/named/orbs_rings_bursts/gohan_super_saiyan_1_2__orbs_rings_bursts__02__src_034.png"
+    },
+    "gohan_super_saiyan_1_2__orbs_rings_bursts__03__src_035.png": {
+      "x": 138,
+      "y": 2,
+      "w": 64,
+      "h": 56,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/gohan_super_saiyan_1_2/named/orbs_rings_bursts/gohan_super_saiyan_1_2__orbs_rings_bursts__03__src_035.png"
+    }
+  }
+}

@@ -1,0 +1,176 @@
+{
+  "columns": 6,
+  "rows": 4,
+  "cell_width": 43,
+  "cell_height": 49,
+  "sprites": {
+    "android_16_base__movement_or_attack_pose__01__src_001.png": {
+      "x": 8,
+      "y": 3,
+      "w": 26,
+      "h": 43,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/android_16_base/named/movement_or_attack_pose/android_16_base__movement_or_attack_pose__01__src_001.png"
+    },
+    "android_16_base__movement_or_attack_pose__02__src_002.png": {
+      "x": 49,
+      "y": 3,
+      "w": 30,
+      "h": 43,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/android_16_base/named/movement_or_attack_pose/android_16_base__movement_or_attack_pose__02__src_002.png"
+    },
+    "android_16_base__movement_or_attack_pose__03__src_003.png": {
+      "x": 90,
+      "y": 3,
+      "w": 34,
+      "h": 42,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/android_16_base/named/movement_or_attack_pose/android_16_base__movement_or_attack_pose__03__src_003.png"
+    },
+    "android_16_base__movement_or_attack_pose__04__src_010.png": {
+      "x": 136,
+      "y": 2,
+      "w": 28,
+      "h": 44,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/android_16_base/named/movement_or_attack_pose/android_16_base__movement_or_attack_pose__04__src_010.png"
+    },
+    "android_16_base__movement_or_attack_pose__05__src_011.png": {
+      "x": 177,
+      "y": 3,
+      "w": 32,
+      "h": 42,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/android_16_base/named/movement_or_attack_pose/android_16_base__movement_or_attack_pose__05__src_011.png"
+    },
+    "android_16_base__movement_or_attack_pose__06__src_012.png": {
+      "x": 222,
+      "y": 3,
+      "w": 28,
+      "h": 42,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/android_16_base/named/movement_or_attack_pose/android_16_base__movement_or_attack_pose__06__src_012.png"
+    },
+    "android_16_base__movement_or_attack_pose__07__src_013.png": {
+      "x": 8,
+      "y": 53,
+      "w": 27,
+      "h": 40,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/android_16_base/named/movement_or_attack_pose/android_16_base__movement_or_attack_pose__07__src_013.png"
+    },
+    "android_16_base__movement_or_attack_pose__08__src_014.png": {
+      "x": 48,
+      "y": 56,
+      "w": 32,
+      "h": 35,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/android_16_base/named/movement_or_attack_pose/android_16_base__movement_or_attack_pose__08__src_014.png"
+    },
+    "android_16_base__movement_or_attack_pose__09__src_015.png": {
+      "x": 94,
+      "y": 51,
+      "w": 26,
+      "h": 45,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/android_16_base/named/movement_or_attack_pose/android_16_base__movement_or_attack_pose__09__src_015.png"
+    },
+    "android_16_base__movement_or_attack_pose__10__src_016.png": {
+      "x": 137,
+      "y": 51,
+      "w": 26,
+      "h": 45,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/android_16_base/named/movement_or_attack_pose/android_16_base__movement_or_attack_pose__10__src_016.png"
+    },
+    "android_16_base__movement_or_attack_pose__11__src_018.png": {
+      "x": 178,
+      "y": 52,
+      "w": 31,
+      "h": 43,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/android_16_base/named/movement_or_attack_pose/android_16_base__movement_or_attack_pose__11__src_018.png"
+    },
+    "android_16_base__movement_or_attack_pose__12__src_019.png": {
+      "x": 220,
+      "y": 53,
+      "w": 32,
+      "h": 41,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/android_16_base/named/movement_or_attack_pose/android_16_base__movement_or_attack_pose__12__src_019.png"
+    },
+    "android_16_base__movement_or_attack_pose__13__src_020.png": {
+      "x": 8,
+      "y": 101,
+      "w": 27,
+      "h": 43,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/android_16_base/named/movement_or_attack_pose/android_16_base__movement_or_attack_pose__13__src_020.png"
+    },
+    "android_16_base__movement_or_attack_pose__14__src_021.png": {
+      "x": 50,
+      "y": 100,
+      "w": 29,
+      "h": 45,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/android_16_base/named/movement_or_attack_pose/android_16_base__movement_or_attack_pose__14__src_021.png"
+    },
+    "android_16_base__movement_or_attack_pose__15__src_022.png": {
+      "x": 93,
+      "y": 102,
+      "w": 29,
+      "h": 41,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/android_16_base/named/movement_or_attack_pose/android_16_base__movement_or_attack_pose__15__src_022.png"
+    },
+    "android_16_base__movement_or_attack_pose__16__src_024.png": {
+      "x": 134,
+      "y": 107,
+      "w": 33,
+      "h": 31,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/android_16_base/named/movement_or_attack_pose/android_16_base__movement_or_attack_pose__16__src_024.png"
+    },
+    "android_16_base__movement_or_attack_pose__17__src_025.png": {
+      "x": 177,
+      "y": 102,
+      "w": 32,
+      "h": 41,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/android_16_base/named/movement_or_attack_pose/android_16_base__movement_or_attack_pose__17__src_025.png"
+    },
+    "android_16_base__movement_or_attack_pose__18__src_026.png": {
+      "x": 220,
+      "y": 102,
+      "w": 32,
+      "h": 41,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/android_16_base/named/movement_or_attack_pose/android_16_base__movement_or_attack_pose__18__src_026.png"
+    },
+    "android_16_base__movement_or_attack_pose__19__src_027.png": {
+      "x": 3,
+      "y": 151,
+      "w": 36,
+      "h": 40,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/android_16_base/named/movement_or_attack_pose/android_16_base__movement_or_attack_pose__19__src_027.png"
+    },
+    "android_16_base__movement_or_attack_pose__20__src_030.png": {
+      "x": 48,
+      "y": 151,
+      "w": 32,
+      "h": 41,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/android_16_base/named/movement_or_attack_pose/android_16_base__movement_or_attack_pose__20__src_030.png"
+    },
+    "android_16_base__movement_or_attack_pose__21__src_039.png": {
+      "x": 93,
+      "y": 149,
+      "w": 29,
+      "h": 44,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/android_16_base/named/movement_or_attack_pose/android_16_base__movement_or_attack_pose__21__src_039.png"
+    },
+    "android_16_base__movement_or_attack_pose__22__src_042.png": {
+      "x": 131,
+      "y": 153,
+      "w": 39,
+      "h": 37,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/android_16_base/named/movement_or_attack_pose/android_16_base__movement_or_attack_pose__22__src_042.png"
+    },
+    "android_16_base__movement_or_attack_pose__23__src_043.png": {
+      "x": 178,
+      "y": 153,
+      "w": 31,
+      "h": 37,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/android_16_base/named/movement_or_attack_pose/android_16_base__movement_or_attack_pose__23__src_043.png"
+    },
+    "android_16_base__movement_or_attack_pose__24__src_044.png": {
+      "x": 217,
+      "y": 157,
+      "w": 38,
+      "h": 28,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/android_16_base/named/movement_or_attack_pose/android_16_base__movement_or_attack_pose__24__src_044.png"
+    }
+  }
+}

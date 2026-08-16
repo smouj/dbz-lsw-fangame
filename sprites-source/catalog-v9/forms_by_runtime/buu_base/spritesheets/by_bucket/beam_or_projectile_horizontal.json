@@ -1,0 +1,15 @@
+{
+  "columns": 6,
+  "rows": 1,
+  "cell_width": 67,
+  "cell_height": 20,
+  "sprites": {
+    "buu_base__beam_or_projectile_horizontal__01__src_044.png": {
+      "x": 2,
+      "y": 2,
+      "w": 63,
+      "h": 16,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/buu_base/named/beam_or_projectile_horizontal/buu_base__beam_or_projectile_horizontal__01__src_044.png"
+    }
+  }
+}

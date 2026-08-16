@@ -1,0 +1,22 @@
+{
+  "columns": 6,
+  "rows": 1,
+  "cell_width": 44,
+  "cell_height": 41,
+  "sprites": {
+    "vegeta_super_saiyan_majin__nonbody_misc__01__src_005.png": {
+      "x": 2,
+      "y": 5,
+      "w": 40,
+      "h": 31,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/vegeta_super_saiyan_majin/named/nonbody_misc/vegeta_super_saiyan_majin__nonbody_misc__01__src_005.png"
+    },
+    "vegeta_super_saiyan_majin__nonbody_misc__02__src_050.png": {
+      "x": 50,
+      "y": 2,
+      "w": 31,
+      "h": 37,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/vegeta_super_saiyan_majin/named/nonbody_misc/vegeta_super_saiyan_majin__nonbody_misc__02__src_050.png"
+    }
+  }
+}
