@@ -80,10 +80,18 @@ function formIdToCharFormSync(formId: string): { char: string; form: string } | 
 
 // URL del frame de actor
 export function battleOverworldActorUrl(formId: string, frame: 'idle' | 'gather_power_pose'): string | undefined {
+  // FUENTE CANÓNICA del chibi idle: overworld/panel_sprites (48 formas,
+  // sin duplicados). El battle/ solo guarda lo EXCLUSIVO: gather_power_pose
+  // (brazos arriba) y effects/aura. Los 000_idle.png de battle/ eran copias
+  // byte-idénticas de panel_sprites (21/24) — eliminados como duplicidad.
+  if (frame === 'idle') {
+    // panel_sprites usa el nombre de formId del roster (goku_base_ow.png)
+    const file = `${formId}_ow.png`;
+    return `/assets/overworld/panel_sprites/${file}`;
+  }
   const key = formIdToCharFormSync(formId);
   if (!key) return undefined;
-  const file = frame === 'idle' ? '000_idle.png' : '001_gather_power_pose.png';
-  return `/assets/overworld/battle/${key.char}/${key.form}/battle_overworld/actor/${file}`;
+  return `/assets/overworld/battle/${key.char}/${key.form}/battle_overworld/actor/001_gather_power_pose.png`;
 }
 
 // URL del aura (FX). Verifica existencia real del archivo: si la entrada del

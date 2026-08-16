@@ -284,3 +284,32 @@ for (const [formId, manifest] of manifests) {
 console.log(`\nAudited ${forms} forms, ${manifestCount} manifests, ${withBeamRay} beam-ray sets.`);
 console.log(failures === 0 ? 'ALL CHECKS PASSED' : `${failures} CHECKS FAILED`);
 process.exit(failures === 0 ? 0 : 1);
+
+// ── Canonical sources: sin chibis en effects/, sin battle/000_idle ──
+// (docs/CANONICAL_SPRITE_SOURCES.md — fuente única por tipo de sprite)
+{
+  const effectsDir = path.join(spriteRoot, 'effects');
+  if (fs.existsSync(effectsDir)) {
+    const eManifest = JSON.parse(fs.readFileSync(path.join(effectsDir, 'manifest.json'), 'utf8')) as Record<string, { frames?: ManifestFrame[] }>;
+    let chibiLike = 0;
+    for (const group of Object.values(eManifest)) {
+      for (const f of group?.frames ?? []) {
+        if (11 <= f.w && f.w <= 18 && 13 <= f.h && f.h <= 18) chibiLike++;
+      }
+    }
+    check('canonical:noChibisInEffects', chibiLike === 0, `${chibiLike} frames con tamaño chibi en effects/ (duplicados de panel_sprites)`);
+  }
+  let battleIdles = 0;
+  const battleDir = path.join(root, 'public/assets/overworld/battle');
+  if (fs.existsSync(battleDir)) {
+    const walk = (d: string): void => {
+      for (const e of fs.readdirSync(d, { withFileTypes: true })) {
+        const p = path.join(d, e.name);
+        if (e.isDirectory()) walk(p);
+        else if (e.name === '000_idle.png') battleIdles++;
+      }
+    };
+    walk(battleDir);
+  }
+  check('canonical:noBattleIdleDuplicates', battleIdles === 0, `${battleIdles} battle/000_idle.png (duplicados de panel_sprites)`);
+}

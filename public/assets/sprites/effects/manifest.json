@@ -1,15 +1,7 @@
 {
   "android_16_base": {
-    "count": 5,
+    "count": 4,
     "frames": [
-      {
-        "name": "android_16_base__effect_00",
-        "file": "android_16_base/android_16_base__effect_00.png",
-        "w": 12,
-        "h": 16,
-        "correction": "recovered_uncovered_source_component",
-        "source_frame": "005.png"
-      },
       {
         "name": "android_16_base__effect_01",
         "file": "android_16_base/android_16_base__effect_01.png",
@@ -45,16 +37,8 @@
     ]
   },
   "android_17_base": {
-    "count": 5,
+    "count": 4,
     "frames": [
-      {
-        "name": "android_17_base__effect_00",
-        "file": "android_17_base/android_17_base__effect_00.png",
-        "w": 12,
-        "h": 16,
-        "correction": "recovered_uncovered_source_component",
-        "source_frame": "005.png"
-      },
       {
         "name": "android_17_base__effect_01",
         "file": "android_17_base/android_17_base__effect_01.png",
@@ -90,16 +74,8 @@
     ]
   },
   "android_18_base": {
-    "count": 7,
+    "count": 6,
     "frames": [
-      {
-        "name": "android_18_base__effect_00",
-        "file": "android_18_base/android_18_base__effect_00.png",
-        "w": 12,
-        "h": 16,
-        "correction": "recovered_uncovered_source_component",
-        "source_frame": "005.png"
-      },
       {
         "name": "android_18_base__effect_01",
         "file": "android_18_base/android_18_base__effect_01.png",
@@ -151,16 +127,8 @@
     ]
   },
   "android_19_base": {
-    "count": 7,
+    "count": 6,
     "frames": [
-      {
-        "name": "android_19_base__effect_00",
-        "file": "android_19_base/android_19_base__effect_00.png",
-        "w": 12,
-        "h": 15,
-        "correction": "recovered_uncovered_source_component",
-        "source_frame": "009.png"
-      },
       {
         "name": "android_19_base__effect_01",
         "file": "android_19_base/android_19_base__effect_01.png",
@@ -212,16 +180,8 @@
     ]
   },
   "android_20_base": {
-    "count": 6,
+    "count": 5,
     "frames": [
-      {
-        "name": "android_20_base__effect_00",
-        "file": "android_20_base/android_20_base__effect_00.png",
-        "w": 14,
-        "h": 16,
-        "correction": "recovered_uncovered_source_component",
-        "source_frame": "005.png"
-      },
       {
         "name": "android_20_base__effect_01",
         "file": "android_20_base/android_20_base__effect_01.png",
@@ -265,16 +225,8 @@
     ]
   },
   "ginyu_base": {
-    "count": 7,
+    "count": 6,
     "frames": [
-      {
-        "name": "ginyu_base__effect_00",
-        "file": "ginyu_base/ginyu_base__effect_00.png",
-        "w": 13,
-        "h": 15,
-        "correction": "recovered_uncovered_source_component",
-        "source_frame": "023.png"
-      },
       {
         "name": "ginyu_base__effect_01",
         "file": "ginyu_base/ginyu_base__effect_01.png",
@@ -326,16 +278,8 @@
     ]
   },
   "cell_imperfect_form": {
-    "count": 6,
+    "count": 5,
     "frames": [
-      {
-        "name": "cell_imperfect_form__effect_00",
-        "file": "cell_imperfect_form/cell_imperfect_form__effect_00.png",
-        "w": 14,
-        "h": 16,
-        "correction": "recovered_uncovered_source_component",
-        "source_frame": "005.png"
-      },
       {
         "name": "cell_imperfect_form__effect_01",
         "file": "cell_imperfect_form/cell_imperfect_form__effect_01.png",
@@ -379,16 +323,8 @@
     ]
   },
   "cell_semi_perfect_form": {
-    "count": 6,
+    "count": 5,
     "frames": [
-      {
-        "name": "cell_semi_perfect_form__effect_00",
-        "file": "cell_semi_perfect_form/cell_semi_perfect_form__effect_00.png",
-        "w": 12,
-        "h": 16,
-        "correction": "recovered_uncovered_source_component",
-        "source_frame": "005.png"
-      },
       {
         "name": "cell_semi_perfect_form__effect_01",
         "file": "cell_semi_perfect_form/cell_semi_perfect_form__effect_01.png",
@@ -432,16 +368,8 @@
     ]
   },
   "cell_perfect": {
-    "count": 6,
+    "count": 5,
     "frames": [
-      {
-        "name": "cell_perfect__effect_00",
-        "file": "cell_perfect/cell_perfect__effect_00.png",
-        "w": 14,
-        "h": 16,
-        "correction": "recovered_uncovered_source_component",
-        "source_frame": "005.png"
-      },
       {
         "name": "cell_perfect__effect_01",
         "file": "cell_perfect/cell_perfect__effect_01.png",
@@ -538,16 +466,8 @@
     ]
   },
   "frieza_base": {
-    "count": 5,
+    "count": 4,
     "frames": [
-      {
-        "name": "frieza_base__effect_00",
-        "file": "frieza_base/frieza_base__effect_00.png",
-        "w": 14,
-        "h": 14,
-        "correction": "recovered_uncovered_source_component",
-        "source_frame": "005.png"
-      },
       {
         "name": "frieza_base__effect_01",
         "file": "frieza_base/frieza_base__effect_01.png",
@@ -800,16 +720,8 @@
     ]
   },
   "goku_base": {
-    "count": 5,
+    "count": 4,
     "frames": [
-      {
-        "name": "goku_base__effect_00",
-        "file": "goku_base/goku_base__effect_00.png",
-        "w": 16,
-        "h": 16,
-        "correction": "recovered_uncovered_source_component",
-        "source_frame": "027.png"
-      },
       {
         "name": "goku_base__effect_01",
         "file": "goku_base/goku_base__effect_01.png",
@@ -845,16 +757,8 @@
     ]
   },
   "goku_super_saiyan": {
-    "count": 5,
+    "count": 4,
     "frames": [
-      {
-        "name": "goku_super_saiyan__effect_00",
-        "file": "goku_super_saiyan/goku_super_saiyan__effect_00.png",
-        "w": 13,
-        "h": 16,
-        "correction": "recovered_uncovered_source_component",
-        "source_frame": "027.png"
-      },
       {
         "name": "goku_super_saiyan__effect_01",
         "file": "goku_super_saiyan/goku_super_saiyan__effect_01.png",
@@ -890,16 +794,8 @@
     ]
   },
   "goku_super_saiyan_3": {
-    "count": 5,
+    "count": 4,
     "frames": [
-      {
-        "name": "goku_super_saiyan_3__effect_00",
-        "file": "goku_super_saiyan_3/goku_super_saiyan_3__effect_00.png",
-        "w": 16,
-        "h": 16,
-        "correction": "recovered_uncovered_source_component",
-        "source_frame": "027.png"
-      },
       {
         "name": "goku_super_saiyan_3__effect_01",
         "file": "goku_super_saiyan_3/goku_super_saiyan_3__effect_01.png",
@@ -935,16 +831,8 @@
     ]
   },
   "goten_base": {
-    "count": 5,
+    "count": 4,
     "frames": [
-      {
-        "name": "goten_base__effect_00",
-        "file": "goten_base/goten_base__effect_00.png",
-        "w": 16,
-        "h": 16,
-        "correction": "recovered_uncovered_source_component",
-        "source_frame": "027.png"
-      },
       {
         "name": "goten_base__effect_01",
         "file": "goten_base/goten_base__effect_01.png",
@@ -1025,7 +913,7 @@
     ]
   },
   "gotenks_super_saiyan": {
-    "count": 6,
+    "count": 5,
     "frames": [
       {
         "name": "gotenks_super_saiyan__effect_00",
@@ -1042,14 +930,6 @@
         "h": 12,
         "correction": "recovered_uncovered_source_component",
         "source_frame": "033.png"
-      },
-      {
-        "name": "gotenks_super_saiyan__effect_02",
-        "file": "gotenks_super_saiyan/gotenks_super_saiyan__effect_02.png",
-        "w": 13,
-        "h": 16,
-        "correction": "recovered_uncovered_source_component",
-        "source_frame": "046.png"
       },
       {
         "name": "gotenks_super_saiyan__effect_03",
@@ -1091,16 +971,8 @@
     ]
   },
   "guldo_base": {
-    "count": 5,
+    "count": 4,
     "frames": [
-      {
-        "name": "guldo_base__effect_00",
-        "file": "guldo_base/guldo_base__effect_00.png",
-        "w": 12,
-        "h": 15,
-        "correction": "recovered_uncovered_source_component",
-        "source_frame": "005.png"
-      },
       {
         "name": "guldo_base__effect_01",
         "file": "guldo_base/guldo_base__effect_01.png",
@@ -1136,16 +1008,8 @@
     ]
   },
   "burter_base": {
-    "count": 5,
+    "count": 4,
     "frames": [
-      {
-        "name": "burter_base__effect_00",
-        "file": "burter_base/burter_base__effect_00.png",
-        "w": 12,
-        "h": 15,
-        "correction": "recovered_uncovered_source_component",
-        "source_frame": "005.png"
-      },
       {
         "name": "burter_base__effect_01",
         "file": "burter_base/burter_base__effect_01.png",
@@ -1181,16 +1045,8 @@
     ]
   },
   "jeice_base": {
-    "count": 5,
+    "count": 4,
     "frames": [
-      {
-        "name": "jeice_base__effect_00",
-        "file": "jeice_base/jeice_base__effect_00.png",
-        "w": 13,
-        "h": 16,
-        "correction": "recovered_uncovered_source_component",
-        "source_frame": "005.png"
-      },
       {
         "name": "jeice_base__effect_01",
         "file": "jeice_base/jeice_base__effect_01.png",
@@ -1226,16 +1082,8 @@
     ]
   },
   "krillin_base": {
-    "count": 6,
+    "count": 5,
     "frames": [
-      {
-        "name": "krillin_base__effect_00",
-        "file": "krillin_base/krillin_base__effect_00.png",
-        "w": 12,
-        "h": 15,
-        "correction": "recovered_uncovered_source_component",
-        "source_frame": "009.png"
-      },
       {
         "name": "krillin_base__effect_01",
         "file": "krillin_base/krillin_base__effect_01.png",
@@ -1279,16 +1127,8 @@
     ]
   },
   "buu_base": {
-    "count": 6,
+    "count": 5,
     "frames": [
-      {
-        "name": "buu_base__effect_00",
-        "file": "buu_base/buu_base__effect_00.png",
-        "w": 14,
-        "h": 15,
-        "correction": "recovered_uncovered_source_component",
-        "source_frame": "027.png"
-      },
       {
         "name": "buu_base__effect_01",
         "file": "buu_base/buu_base__effect_01.png",
@@ -1332,16 +1172,8 @@
     ]
   },
   "kid_buu_base": {
-    "count": 5,
+    "count": 4,
     "frames": [
-      {
-        "name": "kid_buu_base__effect_00",
-        "file": "kid_buu_base/kid_buu_base__effect_00.png",
-        "w": 12,
-        "h": 15,
-        "correction": "recovered_uncovered_source_component",
-        "source_frame": "027.png"
-      },
       {
         "name": "kid_buu_base__effect_01",
         "file": "kid_buu_base/kid_buu_base__effect_01.png",
@@ -1377,16 +1209,8 @@
     ]
   },
   "super_buu_base": {
-    "count": 5,
+    "count": 4,
     "frames": [
-      {
-        "name": "super_buu_base__effect_00",
-        "file": "super_buu_base/super_buu_base__effect_00.png",
-        "w": 12,
-        "h": 15,
-        "correction": "recovered_uncovered_source_component",
-        "source_frame": "027.png"
-      },
       {
         "name": "super_buu_base__effect_01",
         "file": "super_buu_base/super_buu_base__effect_01.png",
@@ -1483,16 +1307,8 @@
     ]
   },
   "buu_gotenks_absorbed": {
-    "count": 5,
+    "count": 4,
     "frames": [
-      {
-        "name": "buu_gotenks_absorbed__effect_00",
-        "file": "buu_gotenks_absorbed/buu_gotenks_absorbed__effect_00.png",
-        "w": 12,
-        "h": 15,
-        "correction": "recovered_uncovered_source_component",
-        "source_frame": "027.png"
-      },
       {
         "name": "buu_gotenks_absorbed__effect_01",
         "file": "buu_gotenks_absorbed/buu_gotenks_absorbed__effect_01.png",
@@ -1541,16 +1357,8 @@
     ]
   },
   "piccolo_base": {
-    "count": 5,
+    "count": 4,
     "frames": [
-      {
-        "name": "piccolo_base__effect_00",
-        "file": "piccolo_base/piccolo_base__effect_00.png",
-        "w": 12,
-        "h": 15,
-        "correction": "recovered_uncovered_source_component",
-        "source_frame": "027.png"
-      },
       {
         "name": "piccolo_base__effect_01",
         "file": "piccolo_base/piccolo_base__effect_01.png",
@@ -1586,16 +1394,8 @@
     ]
   },
   "recoome_base": {
-    "count": 5,
+    "count": 4,
     "frames": [
-      {
-        "name": "recoome_base__effect_00",
-        "file": "recoome_base/recoome_base__effect_00.png",
-        "w": 12,
-        "h": 16,
-        "correction": "recovered_uncovered_source_component",
-        "source_frame": "005.png"
-      },
       {
         "name": "recoome_base__effect_01",
         "file": "recoome_base/recoome_base__effect_01.png",
@@ -1631,16 +1431,8 @@
     ]
   },
   "future_trunks_base": {
-    "count": 6,
+    "count": 5,
     "frames": [
-      {
-        "name": "future_trunks_base__effect_00",
-        "file": "future_trunks_base/future_trunks_base__effect_00.png",
-        "w": 12,
-        "h": 16,
-        "correction": "recovered_uncovered_source_component",
-        "source_frame": "027.png"
-      },
       {
         "name": "future_trunks_base__effect_01",
         "file": "future_trunks_base/future_trunks_base__effect_01.png",
@@ -1787,16 +1579,8 @@
     ]
   },
   "vegeta_base": {
-    "count": 6,
+    "count": 5,
     "frames": [
-      {
-        "name": "vegeta_base__effect_00",
-        "file": "vegeta_base/vegeta_base__effect_00.png",
-        "w": 13,
-        "h": 16,
-        "correction": "recovered_uncovered_source_component",
-        "source_frame": "027.png"
-      },
       {
         "name": "vegeta_base__effect_01",
         "file": "vegeta_base/vegeta_base__effect_01.png",
@@ -1893,7 +1677,7 @@
     ]
   },
   "vegito_ssj": {
-    "count": 6,
+    "count": 5,
     "frames": [
       {
         "name": "vegito_ssj__effect_00",
@@ -1910,14 +1694,6 @@
         "h": 16,
         "correction": "recovered_2color_source_component",
         "source_frame": "006.png"
-      },
-      {
-        "name": "vegito_ssj__effect_02",
-        "file": "vegito_ssj/vegito_ssj__effect_02.png",
-        "w": 13,
-        "h": 16,
-        "correction": "recovered_uncovered_source_component",
-        "source_frame": "007.png"
       },
       {
         "name": "vegito_ssj__effect_03",
