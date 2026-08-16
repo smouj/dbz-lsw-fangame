@@ -1,0 +1,36 @@
+name: verify
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: TypeScript contracts
+        run: npm run typecheck
+
+      - name: Signature action profiles (42) + canonical stage sequences
+        run: npm run verify:profiles
+
+      - name: Sprite manifests / physical frame sizes / beam-ray sets
+        run: npm run audit:sprites
+
+      - name: GBC canon invariants (positions, deck, sequences, coverage)
+        run: npm run verify:gbc
+
+      - name: Production build
+        run: npm run build

@@ -321,6 +321,34 @@ Rules:
 - Failure does not become automatic partial damage.
 - Movement buttons represent two axes: horizontal or vertical.
 
+### Canonical input sequences (deterministic, not random)
+
+Stage Attack inputs are drawn from a **fixed pool per level** with round-robin
+rotation (`src/battle/stageSequences.ts`), so the same card used twice does not
+repeat a pattern until the whole pool is exhausted:
+
+```text
+3 Stage: A B A · B A B · A A B · B B A · A B B · B A A
+4 Stage: 3 golpes A/B + 1 dirección al final (6 variantes)
+5 Stage: 3 golpes A/B + 2 direcciones (6 variantes)
+6 Stage: 3 golpes A/B + 3 direcciones (6 variantes)
+```
+
+Grammar rules enforced by `verify:profiles`:
+
+- Length = stage number (3S=3 inputs … 6S=6).
+- Exactly 3 golpes (A/B) + `n−3` direcciones.
+- One axis per slot (never diagonal).
+- No repeated direction axis in a row.
+- Rotation is deterministic: same sequence of uses → same patterns.
+
+Each key maps to a distinct fighter pose (`src/battle/stageInputMap.ts`):
+
+```text
+A → punch_right · B → punch_left · UP → attack_ud · DOWN → attack_ud
+LEFT → move_front · RIGHT → guard
+```
+
 ## Prohibited Errors
 
 - Naming a pose by resemblance without seeing it executed.

@@ -1,63 +1,93 @@
-# DBZ LSW Fangame
+# DBZ LSW Fangame 🐉
 
-Remake web fiel de *Dragon Ball Z: Legendary Super Warriors* (GBC) — sistema de combate por cartas, sprites auténticos extraídos de la ROM USA (CRC32 `025AA88A`), estilo magazine GBC.
+[![verify](https://github.com/smouj/dbz-lsw-fangame/actions/workflows/verify.yml/badge.svg)](https://github.com/smouj/dbz-lsw-fangame/actions/workflows/verify.yml)
 
-**Repo privado** · Proyecto de desarrollo en curso.
+Remake web fiel de **Dragon Ball Z: Legendary Super Warriors** (Game Boy Color) — sistema de combate por cartas con sprites auténticos extraídos de la ROM USA (CRC32 `025AA88A`), estilo magazine GBC.
+
+> **Repo privado** · Proyecto de desarrollo en curso · 216+ commits · motor verificado con 4 suites de checks automatizados.
+
+---
+
+## ✨ Descripción
+
+DBZ LSW Fangame es un **remake de alta fidelidad** del clásico de GBC: combate por turnos con cartas, 4 posiciones tácticas (aire/tierra × frente/atrás), economía de CC (Combo Count), Stage Attacks con QTE, beams, Gather Power y 48 formas jugables — todo con los **sprites auténticos de la ROM** y el ritmo de combate del original.
+
+La **ROM y la documentación local** (`dbz-lsw-decomp/`) son la fuente de verdad: nada se reinterpreta como juego nuevo.
+
+---
 
 ## 🚀 Cómo ejecutar
 
 ```bash
 npm install
-npm run dev        # dev server en http://localhost:5178
-npm run build      # build de producción
-npm run typecheck  # chequeo de tipos TypeScript
-npm run verify:profiles
-npm run audit:sprites
+npm run dev          # dev server → http://localhost:5178
+npm run build        # build de producción
+npm run typecheck    # TypeScript (tsc --noEmit)
 ```
 
-Core animation contracts live in `docs/FRAMES_ACTIONS_SPEC.md` and
-`docs/COMBAT_ACTION_PIPELINE.md`. They define the separation between
-`TACTICAL_FIELD`, `ACTION_SOLO`, `ACTION_DUEL`, `PROJECTILE` and `IMPACT`, plus
-the naming/evidence rules for frames and effects.
+### ✅ Suites de verificación (CI local)
 
-### 🛠️ Development Studio (interno)
+```bash
+npm run verify:profiles   # 42 perfiles firma: toda carta de combate tiene animación propia
+npm run audit:sprites     # 48 formas / manifests / beam-ray: integridad + dimensiones físicas
+npm run verify:gbc        # invariantes GBC: posiciones, mazo, secuencias canónicas, cobertura
+```
 
-Herramienta de producción embebida en el mismo proyecto. Accede desde el navegador con la URL `http://localhost:5178/?dev=1` y módulos como `http://localhost:5178/?dev=1#dev/sheets`. NO forma parte del flujo público.
+Las tres deben pasar en verde antes de cada commit. Ver `docs/` para las especificaciones.
 
-- **Dashboard** — contadores reales (48 formas / 24 personajes / 125 cartas / 32 mazos)
+GitHub Actions ejecuta las 4 suites + build automáticamente en cada push a `main`
+(`.github/workflows/verify.yml`, badge en la cabecera).
+
+---
+
+## 🎮 Gameplay canonizado (GBC)
+
+| Sistema | Implementación |
+|---|---|
+| **Turno** | TURN → 2 EXCHANGES (roles invertidos), orden por SPD efectiva |
+| **Posiciones** | 4 tácticas: AIR/GROUND × FRONT/BACK; Beam vulnerable vs AIR, Damage vs GROUND |
+| **CC (Combo Count)** | +3 al atacar · +1 por input QTE · +1/+2 al recibir daño · +1 por vulnerabilidad de posición · básicas gratis |
+| **Defensa** | El defensor elige ANTES de resolver: BASIC (Defense/Move 2 ejes + empuje) / JOINT / LIMIT |
+| **Stage Attack** | QTE con secuencias **canónicas deterministas** (pool fijo, rotación round-robin): 3S=6 variantes A/B, 4/5/6S añaden direcciones |
+| **IA enemiga** | Ritmo GBC: ataque regular ×2 → Gather Power → 5 Stage → Beam/Damage → repite |
+| **Gather Power** | +4 STR/KI, habilita Limit Deck, convierte Basic 3 Stage → 4 Stage |
+
+**Orquestación**: timeline único con reloj a **59.7275 fps GBC** (acumulador determinista, eventos emitidos en tick exacto). Cinemática de carta: `FIELD → ACTION_SOLO → PROJECTILE/ACTION_DUEL → IMPACT → FIELD_RETURN` con pausas de fase, FX y SFX sincronizados.
+
+---
+
+## 🛠️ Development Studio (interno)
+
+Herramienta de producción embebida: `http://localhost:5178/?dev=1` (+ `#dev/<módulo>`). NO forma parte del flujo público.
+
+- **Dashboard** — contadores reales (48 formas / 24 personajes / 125 cartas / 32 mazos / 42 perfiles)
 - **Character Studio** — formas + stats a cualquier nivel (curvas ROM)
 - **Card Database** — las 125 cartas con filtros y ficha
 - **Sprite Inspector** — frame real con bbox y % de transparencia
-- **Position Lab** — las 4 posiciones y reglas de MOVE (2 ejes)
+- **Position Lab** — 4 posiciones y reglas de MOVE (2 ejes)
 - **Story Studio** — mazos de jefes, AI boosts, 2v2 y viñetas
 - **Animation Studio** — timeline real (play/step/fps/loop) desde el manifest
 - **Battle Lab** — combate instantáneo real (Versus o capítulo de historia)
-- **Pixi Seq** — laboratorio determinista `BattleTimeline → Pixi`, con matriz
-  visual de proyectiles (`ray`, `wave`, `ball`, `disk`, `sword`, `special`)
-- **Validation** — chequeos de integridad reales · **Research** — fuentes y nivel de verificación
+- **Pixi Seq** — laboratorio determinista `BattleTimeline → Pixi` con matriz visual de proyectiles
+- **Validation** — checks de integridad reales · **Research** — fuentes y nivel de verificación
 
 ### 🔬 Modos de depuración en combate
 
-Parámetros de URL que activan overlays de diagnóstico (solo desarrollo):
+| Parámetro | Función |
+|---|---|
+| `?debugCinematics=1` | Depurador cinematográfico: shot/pose/proyectil + próximo evento. `Space` play/pausa · `←/→` ±1 tick · `Shift+←/→` ±10 · `R` reset |
+| `?debugState=1` | Inspector de estado interno + QTE Debugger. `F` congelar · `.` +1 frame · `Shift+.` +10 |
+| `?pixiField=1` | Renderer Pixi del campo/acción (evita sprites duplicados con el fallback DOM) |
 
-- `?debugCinematics=1` — depurador cinematográfico: `ACTION/SHOT/TICK` + pose del
-  atacante/defensor + proyectil + próximo evento. Teclas: `Space` play/pausa ·
-  `←/→` ±1 tick · `Shift+←/→` ±10 · `R` reiniciar.
-  El seek reconstruye estado desde cero al retroceder y el progreso de proyectil
-  se calcula por `spawnFrame/contactFrame`, no por checkpoints discretos.
-- `?pixiField=1` — renderer Pixi del campo/acción. Cuando está listo, Pixi es
-  dueño visual de la acción y se oculta el fallback DOM para evitar sprites
-  duplicados.
-- `?debugState=1` — Inspector de estado interno (fase, CC, posiciones, stages,
-  POWER/GATHER/etc.) + QTE Debugger. Teclas: `F` congelar/descongelar el reloj del
-  Stage Attack · `.` +1 frame · `Shift+.` +10 frames.
+---
 
 ## 🧱 Stack
 
-- **Vite 6 + React 19 + TypeScript**
-- Sprites/retratos/iconos extraídos de la ROM (ver `dbz-lsw-decomp/`)
+- **Vite 6 + React 19 + TypeScript** (17.3k líneas TS/TSX)
+- **PixiJS** para la presentación cinematográfica del combate
+- Sprites/retratos/iconos extraídos de la ROM USA (`dbz-lsw-decomp/`)
 - Audio GBC sintetizado con Web Audio API (sin archivos externos)
-- Persistencia local: mazos, progreso de historia e idioma
+- Persistencia local: mazos, progreso de historia, idioma (`localStorage`)
 
 ## 📁 Estructura
 
@@ -67,60 +97,62 @@ Parámetros de URL que activan overlays de diagnóstico (solo desarrollo):
 | `src/data/roster.ts` | 24 personajes / 48 formas con sheets auténticos + curvas de crecimiento |
 | `src/data/spriteManifest.ts` | 48 mapeos forma → sprites de combate animados (ZIP V5 atómico) |
 | `src/data/enemy_decks.ts` | Mazos reales de los 32 capítulos + AI boosts + combates 2v2 |
-| `src/data/positions.ts` | 4 posiciones tácticas (aire/tierra × frente/atrás) + facing |
-| `src/battle/actionProfiles.ts` | Perfiles firma por carta: timeline declarativo, visual BEAM y resolver |
-| `src/battle/spriteConfig.ts` | Contrato compartido de poses, fallbacks y metadatos de sprites de combate |
-| `src/devtools/` | Development Studio interno (acceso `#dev`): dashboard, characters, cards, sprites, positions, story, validation, research |
-| `src/data/icons.ts` | Mapeo iconos de carta + retratos de menú/mini |
-| `src/i18n/` | Traducciones (10 idiomas) + contexto de idioma |
-| `src/audio/sfx.ts` | SFX sintetizados estilo chip GBC |
+| `src/data/positions.ts` | 4 posiciones tácticas + facing + vulnerabilidades |
+| `src/battle/actionProfiles.ts` | 42 perfiles firma por carta: timeline declarativo + resolver |
+| `src/battle/stageSequences.ts` | Secuencias canónicas del Stage Attack (pool fijo, rotación determinista) |
+| `src/battle/stageInputMap.ts` | Mapeo input del QTE → pose del luchador (A/B/↑/↓/←/→) |
+| `src/battle/spriteConfig.ts` | Contrato compartido de poses, fallbacks y metadatos |
+| `src/battle/timeline.ts` | Reloj GBC único (59.7275 fps) con seek determinista |
+| `src/devtools/` | Development Studio interno (dashboard, labs, validación) |
+| `src/renderer/pixi/` | Renderer Pixi: presentación de batalla, proyectiles, actores |
+| `scripts/` | Suites de verificación: `verify-action-profiles`, `audit-combat-sprites`, `verify-gbc-canon` |
 | `public/assets/` | Sheets, retratos, iconos, fondos, sprites de combate, botones GBC |
-| `docs/` | Spec del motor, cartas, HUD, pipeline de acciones, fidelidad de acciones, walkthrough |
+| `docs/` | 14+ especificaciones: motor, cartas, HUD, pipeline, fidelidad, gramática |
+
+## 📚 Documentación
+
+| Documento | Contenido |
+|---|---|
+| `docs/FRAMES_ACTIONS_SPEC.md` | Spec V1: vistas canónicas, naming `[role]_[action]_[variant]_[frame]`, criterio frame-perfect |
+| `docs/COMBAT_ACTION_PIPELINE.md` | Pipeline de acciones: perfiles firma → timeline → presentación |
+| `docs/BATTLE_ENGINE_SPEC.md` | Especificación del motor de combate |
+| `docs/CINEMATIC_GRAMMAR.md` | Gramática de planos y orquestación de la cinemática |
+| `docs/SPRITE_TAXONOMY.md` | Taxonomía canónica de sprites |
+| `docs/CARD_SYSTEM.md` · `docs/HUD_BUTTONS.md` · `docs/GAMEPLAY_SYSTEM.md` | Cartas, HUD y sistemas |
 
 ## 🌍 Idiomas soportados (10)
 
 English · Español · Français · Deutsch · Português · Italiano · 中文 · 日本語 · 한국어 · Русский
 
-El idioma se cambia en **Settings → Language** y se guarda en `localStorage` (`dbzlsw_lang`).
+Se cambia en **Settings → Language** y se guarda en `localStorage` (`dbzlsw_lang`).
+
+---
 
 ## 🗺️ Estado del desarrollo
 
 ### ✅ Completado
 - Menú principal (7 opciones), Story con 32 capítulos en 4 sagas y viñetas manga
 - Battle Mode (Versus) con 24 personajes seleccionables (incl. Vegito)
-- Combate por turnos GBC: TURN → 2 EXCHANGES, orden por SPD, 4 posiciones tácticas,
-  comandos LIMIT/J/B/C, CC real (+3 al atacar, +1 por input QTE, +1/+2 por daño)
-- **Orden de defensa GBC**: el defensor elige su defensa ANTES de la animación del ataque
-- Cinemática de acción de 4 pasos (attacker → travel → target → return) con tiempos
-  alineados a las animaciones CSS (sin cortes)
-- 125 cartas reales de la ROM con **compatibilidad por personaje** aplicada en combate
-  (mano, robo e IA filtran por el luchador activo)
-- **48 formas** = ROM exacto (Gohan Super2, Trunks Ksuper, Piccolo Evil añadidos;
-  frieza_100 duplicado eliminado); Vegito en CHARACTERS
-- Sprites de combate animados (43+ dirs V5 atómicos con manifest.json) + facing por silueta
-- Botones del HUD con **sprites GBC auténticos** (nombre incluido) + tooltips en portal
-- Estados de batalla visibles en el HUD (chips buff/debuff/guard/power)
+- **Combate GBC canonizado**: TURN → 2 EXCHANGES, orden por SPD, 4 posiciones, CC real completo, defensa antes de resolver
+- **Stage Attacks canónicos**: secuencias predeterminadas (no aleatorias), QTE con poses por tecla, contraataque con ventanas A/B
+- **42 perfiles firma** — las 66 cartas de combate tienen animación propia (verify:profiles exige cobertura total)
+- Cinemática de acción orquestada por **timeline único** (59.7275 fps GBC): attacker → travel → target → return con FX/CSS sincronizados
+- **48 formas** = ROM exacto, todas con 21 poses (idle..power_up) y manifests con dimensiones físicas verificadas
+- Cartas de objeto con **aura azul** (fx-item) vs buffs de ki con aura dorada; FX Afterimage con estelas de teletransporte
+- Sprites de combate animados con facing por silueta; beams procedurales (sin estiramiento ni duplicados)
 - Sheets de personajes byte-idénticos a la ROM (48/48 verificados)
-- Mazo persistente (20 cartas, solo genéricas por defecto para 20/20 usables), colección
-- EXP/niveles con curvas de crecimiento por forma (persistencia `dbzlsw_progress`)
-- Audio GBC sintetizado + settings de volumen/SFX
-- i18n completo en 10 idiomas con selector en Settings
-- Repo GitHub privado creado (main, pushes regulares)
-- **Development Studio** interno (`#dev`): dashboard de producción, character/card/sprites
-  inspectors, position lab, story studio, validación e investigación
-- Pipeline de acciones documentado en `docs/COMBAT_ACTION_PIPELINE.md`: 20 perfiles firma,
-  cobertura BEAM completa, contrato de poses compartido y scripts de verificación.
+- Mazo persistente (20 cartas), colección, EXP/niveles con curvas ROM
+- Audio GBC sintetizado + i18n en 10 idiomas
+- **3 suites de verificación** (verify:profiles / audit:sprites / verify:gbc) + typecheck + build
+- **Rendimiento**: sprites memoizados (62 FPS en QTE), caché de manifests, timeline sin timers sueltos
 
 ### ⏳ Pendiente
-- Captura forense de ROM para reemplazar valores HYPOTHESIS (STAGE_TIMING_TABLE,
-  recovery frames, probabilidades Guard, fórmulas de daño, speed tie)
+- Captura forense de ROM para reemplazar valores HYPOTHESIS (ventanas contraataque A≈0.4s/B≈0.15s, fórmulas BLOCK/AVOID, speed tie) → fidelidad frame-exacta
 - Verificación visual del mapeo retratos/iconos (contact sheets)
 - Transformaciones animadas (aura + flash + palette swap) — base lista (fx-aura)
-- Pantalla de resultado de expedición pulida y repaso final del modo historia
 - BGM real (GBS 20 pistas → WAV/MP3)
-- Más personajes con animación completa (solo goku/vegeta con `battleId`)
-- Fondo de batalla/menú más profesional con temática Dragon Ball
-- Verificación visual del estilo magazine por el usuario
+- Más personajes con `battleId` de animación completa (solo goku/vegeta)
+- Fondo de batalla/menú con temática Dragon Ball más profesional
 
 ## 🔑 localStorage keys
 
@@ -129,7 +161,8 @@ El idioma se cambia en **Settings → Language** y se guarda en `localStorage` (
 | `dbzlsw_deck` | Mazo de 20 cartas |
 | `dbzlsw_story_progress` | Capítulo desbloqueado más alto |
 | `dbzlsw_lang` | Idioma seleccionado |
+| `dbzlsw_progress` | EXP/niveles por forma |
 
 ## ⚖️ Legal
 
-Este proyecto es un **fan remake educativo sin ánimo de lucro**. Dragon Ball Z y sus personajes son © Bird Studio / Shueisha / Toei Animation. Los sprites provienen de ROMs propias y de archivos públicos de referencia (Sprite Database / Spriters Resource) para investigación. El código y las mecánicas son originales; no se distribuye la ROM.
+Proyecto **fan remake educativo sin ánimo de lucro**. Dragon Ball Z y sus personajes son © Bird Studio / Shueisha / Toei Animation. Los sprites provienen de ROMs propias y de archivos públicos de referencia (Sprite Database / Spriters Resource) para investigación. El código y las mecánicas son originales; no se distribuye la ROM.

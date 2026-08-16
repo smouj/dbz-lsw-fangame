@@ -85,15 +85,26 @@ Projectile tracks carry timing metadata as part of the runtime contract:
 
 ## Current signature profile coverage
 
-`ACTION_PROFILE_REGISTRY` currently registers 20 signature profiles:
+`ACTION_PROFILE_REGISTRY` currently registers **42 signature profiles** — the
+**66 combat cards** (command/damage/beam) all resolve to their own profile
+(`verify:profiles` fails if any real card is left without one):
 
-- Beam families: Energy Wave, Energy Bomb, Kamehameha, Masenko, Special Beam
+- **Stage Attacks (4)**: 3/4/5/6 Stage Attack — cinemática de rush melee con
+  mensaje `${n} STAGE` y secuencias canónicas de inputs (ver `stageSequences.ts`).
+- **Beam families**: Energy Wave, Energy Bomb, Kamehameha, Masenko, Special Beam
   Cannon, Spirit Bomb, Final Flash/Galick-Ho/Grand Wave/Hell Flash, Big Bang
   Attack, Burning Attack/Fin.Buster/Lightning C., Energy Disk, Finger/Eye/Misty
-  KiWave, Flash Sword and Special Projectile.
-- Melee families: Cont.Punch, Cont.Kick, Rising Kick, Sonic Kick, Dunk Shot and
-  Crazy Rush.
-- Support family: Kaio Ken.
+  KiWave, Flash Sword, Special Projectile y resto de beams firma.
+- **Melee families**: Cont.Punch, Cont.Kick, Rising Kick, Sonic Kick, Dunk Shot,
+  Crazy Rush y las 18 cartas damage restantes (Solid Shot, Tail, Flash Punch,
+  V-ball Crash, Atomic Break, N.Slasher, Dynami.Punch, Cell Combo, Step Up Atk,
+  Crasher Buu, etc.) — cada una con su pose de golpe (punch_right/left,
+  kick_right) y knockback específico (back/up/down).
+- **Support family**: Kaio Ken (buff) + cartas de objeto con aura azul.
+
+Contrato de poses de impacto: `ImpactSpec.targetPose` define la pose del
+**defensor** al recibir (knockback_back/up/down en melee; hurt por defecto) y
+se emite UNA sola vez en el tick de contacto (sin beats redundantes).
 
 Timings are still `INFERRED`. Frame-exact work should edit the profile spec, not
 the runtime renderer.
@@ -130,18 +141,24 @@ Run these before considering combat/action work done:
 ```bash
 npm run verify:profiles
 npm run audit:sprites
+npm run verify:gbc
 npm run typecheck
 npm run build
 ```
 
 What they protect:
 
-- `verify:profiles`: profile compilation, deterministic timelines, unique ids,
-  unique slugs, common action prep, profile resolver cases and complete BEAM
-  card coverage.
+- `verify:profiles`: 42 profiles compile deterministically, unique ids/slugs,
+  melee/stage windup uses `attack_fwd` (never `gather_power`), melee impact
+  emits the spec-specific knockback pose, canonical Stage Attack pools/rotation,
+  profile resolver cases and **66/66 combat cards covered** (regression guard).
 - `audit:sprites`: all 48 form manifests exist, required poses exist, frame
-  names/counts/sizes are coherent, `beam_ray` is present and beam cards have
+  names/counts are coherent, **declared w/h matches the physical PNG size**,
+  no consecutive duplicate frames, `beam_ray` ratio >= 2 and beam cards have
   explicit profiles.
+- `verify:gbc`: GBC canon invariants — position vulnerabilities (AIR→beam,
+  GROUND→damage, exclusive), deck max 3 copies, canonical Stage Attack
+  sequences, profile coverage, 48/48 roster forms resolve to manifests.
 - `typecheck`: TypeScript contracts between cards, profiles, runtime and Dev
   Studio.
 - `build`: production bundle still compiles. A >500 KB chunk warning is known
