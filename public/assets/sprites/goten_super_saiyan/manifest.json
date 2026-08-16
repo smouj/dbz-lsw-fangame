@@ -18,13 +18,13 @@
     "loop": true,
     "frames": [
       {
-        "name": "goten_super_saiyan_move_front_idle",
-        "file": "goten_super_saiyan_idle_00.png",
-        "w": 29,
-        "h": 39
+        "name": "goten_super_saiyan_move_front_00",
+        "file": "goten_super_saiyan_move_front_00.png",
+        "w": 31,
+        "h": 38
       },
       {
-        "name": "goten_super_saiyan_move_front_step",
+        "name": "goten_super_saiyan_move_front_01",
         "file": "goten_super_saiyan_move_front_01.png",
         "w": 25,
         "h": 42
@@ -37,13 +37,13 @@
     "loop": true,
     "frames": [
       {
-        "name": "goten_super_saiyan_move_back_idle",
-        "file": "goten_super_saiyan_idle_00.png",
-        "w": 29,
-        "h": 39
+        "name": "goten_super_saiyan_move_back_00",
+        "file": "goten_super_saiyan_move_back_00.png",
+        "w": 31,
+        "h": 38
       },
       {
-        "name": "goten_super_saiyan_move_back_step",
+        "name": "goten_super_saiyan_move_back_01",
         "file": "goten_super_saiyan_move_back_01.png",
         "w": 25,
         "h": 42
@@ -219,44 +219,6 @@
         "name": "goten_super_saiyan_beam_charge_01",
         "file": "goten_super_saiyan_beam_charge_01.png",
         "w": 30,
-        "h": 40
-      }
-    ]
-  },
-  "beam_fire": {
-    "frame_count": 2,
-    "fps": 8,
-    "loop": false,
-    "frames": [
-      {
-        "name": "goten_super_saiyan_beam_fire_00",
-        "file": "goten_super_saiyan_beam_fire_00.png",
-        "w": 25,
-        "h": 39
-      },
-      {
-        "name": "goten_super_saiyan_beam_fire_01",
-        "file": "goten_super_saiyan_beam_fire_01.png",
-        "w": 29,
-        "h": 40
-      }
-    ]
-  },
-  "beam_ray": {
-    "frame_count": 2,
-    "fps": 7,
-    "loop": false,
-    "frames": [
-      {
-        "name": "goten_super_saiyan_beam_ray_00",
-        "file": "goten_super_saiyan_beam_ray_00.png",
-        "w": 119,
-        "h": 40
-      },
-      {
-        "name": "goten_super_saiyan_beam_ray_01",
-        "file": "goten_super_saiyan_beam_ray_01.png",
-        "w": 114,
         "h": 40
       }
     ]
@@ -508,10 +470,10 @@
     "loop": false,
     "frames": [
       {
-        "name": "goten_super_saiyan_idle_00",
-        "file": "goten_super_saiyan_idle_00.png",
-        "w": 29,
-        "h": 39
+        "name": "goten_super_saiyan_move_back_00",
+        "file": "goten_super_saiyan_move_back_00.png",
+        "w": 31,
+        "h": 38
       },
       {
         "name": "goten_super_saiyan_guard_01",
@@ -520,15 +482,15 @@
         "h": 41
       },
       {
-        "name": "goten_super_saiyan_idle_00",
-        "file": "goten_super_saiyan_idle_00.png",
-        "w": 29,
-        "h": 39
+        "name": "goten_super_saiyan_move_back_00",
+        "file": "goten_super_saiyan_move_back_00.png",
+        "w": 31,
+        "h": 38
       }
     ]
   },
   "gather_power": {
-    "frame_count": 2,
+    "frame_count": 4,
     "fps": 6,
     "loop": true,
     "frames": [
@@ -543,11 +505,23 @@
         "file": "goten_super_saiyan_beam_charge_01.png",
         "w": 30,
         "h": 40
+      },
+      {
+        "name": "goten_super_saiyan_beam_charge_02",
+        "file": "goten_super_saiyan_beam_charge_02.png",
+        "w": 25,
+        "h": 39
+      },
+      {
+        "name": "goten_super_saiyan_beam_charge_03",
+        "file": "goten_super_saiyan_beam_charge_03.png",
+        "w": 29,
+        "h": 40
       }
     ]
   },
   "power_up": {
-    "frame_count": 2,
+    "frame_count": 4,
     "fps": 10,
     "loop": true,
     "frames": [
@@ -561,6 +535,18 @@
         "name": "goten_super_saiyan_beam_charge_01",
         "file": "goten_super_saiyan_beam_charge_01.png",
         "w": 30,
+        "h": 40
+      },
+      {
+        "name": "goten_super_saiyan_beam_charge_02",
+        "file": "goten_super_saiyan_beam_charge_02.png",
+        "w": 25,
+        "h": 39
+      },
+      {
+        "name": "goten_super_saiyan_beam_charge_03",
+        "file": "goten_super_saiyan_beam_charge_03.png",
+        "w": 29,
         "h": 40
       }
     ]

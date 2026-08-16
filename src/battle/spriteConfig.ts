@@ -109,15 +109,17 @@ export function resolvePoseFrameSequence(
   };
 
   switch (pose) {
+    // Convención V6.1: move tiene pose inicial PROPIA (move_00) + paso (01).
+    // La V6.1 NO reutiliza idle_00 (cada forma tiene move_front_00/move_back_00).
     case 'move_front': {
-      const idle = f('idle', 0);
-      const step = f('move_front', 1) ?? f('move_front', 0);
-      return [idle, step].filter(Boolean) as string[];
+      const step0 = f('move_front', 0);
+      const step1 = f('move_front', 1);
+      return [step0, step1].filter(Boolean) as string[];
     }
     case 'move_back': {
-      const idle = f('idle', 0);
-      const step = f('move_back', 1) ?? f('move_back', 0);
-      return [idle, step].filter(Boolean) as string[];
+      const step0 = f('move_back', 0);
+      const step1 = f('move_back', 1);
+      return [step0, step1].filter(Boolean) as string[];
     }
     // Contrato V1 (manifests): las poses compuestas empiezan con idle_00 como
     // windup y luego la variante del golpe. punch_right usa los 3 primeros
@@ -157,20 +159,21 @@ export function resolvePoseFrameSequence(
     }
     case 'beam_guard':
       return allOf('guard');
-    // Evade (contrato manifest): idle → guard → idle (parpadeo defensivo).
-    // El manifest usa [idle_00, guard_01, idle_00]; si guard existe, esa es
-    // la secuencia real del juego.
+    // Evade (convención V6.1): move_back_00 → guard → move_back_00
+    // (parpadeo defensivo). El manifest usa esa secuencia real.
     case 'evade': {
-      const idle = f('idle', 0);
+      const base = f('move_back', 0) ?? f('idle', 0);
       const guard = f('guard', 1) ?? f('guard', 0);
-      if (guard) return [idle, guard, idle].filter(Boolean) as string[];
+      if (base && guard) return [base, guard, base];
       const back = allOf('move_back');
-      return back.length ? back : [idle].filter(Boolean) as string[];
+      return back.length ? back : [f('idle', 0)].filter(Boolean) as string[];
     }
     case 'gather_power':
-      return allOf('beam_charge').length ? allOf('beam_charge') : allOf('guard');
+      // Contrato V6.1: gather usa beam_charge 00-03 (4 frames, dedup).
+      return seq('beam_charge', 0, 3).length ? seq('beam_charge', 0, 3) : allOf('guard');
     case 'power_up':
-      return allOf('gather_power').length ? allOf('gather_power') : allOf('beam_charge');
+      // power_up = gather_power (beam_charge 00-03, 10fps loop).
+      return seq('beam_charge', 0, 3).length ? seq('beam_charge', 0, 3) : allOf('beam_charge');
     default:
       return allOf(pose);
   }

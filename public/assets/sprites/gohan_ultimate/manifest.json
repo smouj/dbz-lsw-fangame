@@ -18,13 +18,13 @@
     "loop": true,
     "frames": [
       {
-        "name": "gohan_ultimate_move_front_idle",
-        "file": "gohan_ultimate_idle_00.png",
-        "w": 27,
-        "h": 46
+        "name": "gohan_ultimate_move_front_00",
+        "file": "gohan_ultimate_move_front_00.png",
+        "w": 28,
+        "h": 45
       },
       {
-        "name": "gohan_ultimate_move_front_step",
+        "name": "gohan_ultimate_move_front_01",
         "file": "gohan_ultimate_move_front_01.png",
         "w": 32,
         "h": 42
@@ -37,13 +37,13 @@
     "loop": true,
     "frames": [
       {
-        "name": "gohan_ultimate_move_back_idle",
-        "file": "gohan_ultimate_idle_00.png",
-        "w": 27,
-        "h": 46
+        "name": "gohan_ultimate_move_back_00",
+        "file": "gohan_ultimate_move_back_00.png",
+        "w": 28,
+        "h": 45
       },
       {
-        "name": "gohan_ultimate_move_back_step",
+        "name": "gohan_ultimate_move_back_01",
         "file": "gohan_ultimate_move_back_01.png",
         "w": 32,
         "h": 42
@@ -251,44 +251,6 @@
         "file": "gohan_ultimate_beam_fire_01.png",
         "w": 31,
         "h": 43
-      }
-    ]
-  },
-  "beam_ray": {
-    "frame_count": 3,
-    "fps": 7,
-    "loop": false,
-    "frames": [
-      {
-        "name": "gohan_ultimate_beam_ray_00",
-        "file": "gohan_ultimate_beam_ray_00.png",
-        "w": 118,
-        "h": 43
-      },
-      {
-        "name": "gohan_ultimate_beam_ray_01",
-        "file": "gohan_ultimate_beam_ray_01.png",
-        "w": 115,
-        "h": 43
-      },
-      {
-        "name": "gohan_ultimate_beam_ray_02",
-        "file": "gohan_ultimate_beam_ray_02.png",
-        "w": 113,
-        "h": 44
-      }
-    ]
-  },
-  "beam_ray_tip": {
-    "frame_count": 1,
-    "fps": 7,
-    "loop": false,
-    "frames": [
-      {
-        "name": "gohan_ultimate_beam_ray_tip_00",
-        "file": "gohan_ultimate_beam_ray_tip_00.png",
-        "w": 46,
-        "h": 34
       }
     ]
   },
@@ -533,10 +495,10 @@
     "loop": false,
     "frames": [
       {
-        "name": "gohan_ultimate_idle_00",
-        "file": "gohan_ultimate_idle_00.png",
-        "w": 27,
-        "h": 46
+        "name": "gohan_ultimate_move_back_00",
+        "file": "gohan_ultimate_move_back_00.png",
+        "w": 28,
+        "h": 45
       },
       {
         "name": "gohan_ultimate_guard_01",
@@ -545,10 +507,10 @@
         "h": 46
       },
       {
-        "name": "gohan_ultimate_idle_00",
-        "file": "gohan_ultimate_idle_00.png",
-        "w": 27,
-        "h": 46
+        "name": "gohan_ultimate_move_back_00",
+        "file": "gohan_ultimate_move_back_00.png",
+        "w": 28,
+        "h": 45
       }
     ]
   },

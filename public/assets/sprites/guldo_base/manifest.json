@@ -18,13 +18,13 @@
     "loop": true,
     "frames": [
       {
-        "name": "guldo_base_move_front_idle",
-        "file": "guldo_base_idle_00.png",
-        "w": 22,
-        "h": 35
+        "name": "guldo_base_move_front_00",
+        "file": "guldo_base_move_front_00.png",
+        "w": 26,
+        "h": 36
       },
       {
-        "name": "guldo_base_move_front_step",
+        "name": "guldo_base_move_front_01",
         "file": "guldo_base_move_front_01.png",
         "w": 31,
         "h": 33
@@ -37,13 +37,13 @@
     "loop": true,
     "frames": [
       {
-        "name": "guldo_base_move_back_idle",
-        "file": "guldo_base_idle_00.png",
-        "w": 22,
-        "h": 35
+        "name": "guldo_base_move_back_00",
+        "file": "guldo_base_move_back_00.png",
+        "w": 26,
+        "h": 36
       },
       {
-        "name": "guldo_base_move_back_step",
+        "name": "guldo_base_move_back_01",
         "file": "guldo_base_move_back_01.png",
         "w": 31,
         "h": 33
@@ -64,8 +64,8 @@
       {
         "name": "guldo_base_guard_01",
         "file": "guldo_base_guard_01.png",
-        "w": 33,
-        "h": 41
+        "w": 27,
+        "h": 35
       },
       {
         "name": "guldo_base_guard_02",
@@ -257,38 +257,6 @@
         "file": "guldo_base_beam_fire_02.png",
         "w": 29,
         "h": 34
-      }
-    ]
-  },
-  "beam_ray": {
-    "frame_count": 2,
-    "fps": 7,
-    "loop": false,
-    "frames": [
-      {
-        "name": "guldo_base_beam_ray_00",
-        "file": "guldo_base_beam_ray_00.png",
-        "w": 113,
-        "h": 34
-      },
-      {
-        "name": "guldo_base_beam_ray_01",
-        "file": "guldo_base_beam_ray_01.png",
-        "w": 113,
-        "h": 37
-      }
-    ]
-  },
-  "beam_ray_tip": {
-    "frame_count": 1,
-    "fps": 7,
-    "loop": false,
-    "frames": [
-      {
-        "name": "guldo_base_beam_ray_tip_00",
-        "file": "guldo_base_beam_ray_tip_00.png",
-        "w": 46,
-        "h": 31
       }
     ]
   },
@@ -516,8 +484,8 @@
       {
         "name": "guldo_base_guard_01",
         "file": "guldo_base_guard_01.png",
-        "w": 33,
-        "h": 41
+        "w": 27,
+        "h": 35
       },
       {
         "name": "guldo_base_guard_02",
@@ -533,22 +501,22 @@
     "loop": false,
     "frames": [
       {
-        "name": "guldo_base_idle_00",
-        "file": "guldo_base_idle_00.png",
-        "w": 22,
-        "h": 35
+        "name": "guldo_base_move_back_00",
+        "file": "guldo_base_move_back_00.png",
+        "w": 26,
+        "h": 36
       },
       {
         "name": "guldo_base_guard_01",
         "file": "guldo_base_guard_01.png",
-        "w": 33,
-        "h": 41
+        "w": 27,
+        "h": 35
       },
       {
-        "name": "guldo_base_idle_00",
-        "file": "guldo_base_idle_00.png",
-        "w": 22,
-        "h": 35
+        "name": "guldo_base_move_back_00",
+        "file": "guldo_base_move_back_00.png",
+        "w": 26,
+        "h": 36
       }
     ]
   },

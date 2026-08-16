@@ -28,8 +28,8 @@ function pngSize(p: string): [number, number] | null {
 
 const POSE_RUNTIME_DEFAULTS: Record<string, PoseContract> = {
   idle: { fps: 3, loop: true },
-  move_front: { fps: 6, loop: true, frames: ['idle_00', 'move_front_01'] },
-  move_back: { fps: 6, loop: true, frames: ['idle_00', 'move_back_01'] },
+  move_front: { fps: 6, loop: true, frames: ['move_front_00', 'move_front_01'] },
+  move_back: { fps: 6, loop: true, frames: ['move_back_00', 'move_back_01'] },
   guard: { fps: 6, loop: false },
   attack_fwd: { fps: 5, loop: false },
   attack_ud: { fps: 5, loop: false },
@@ -41,7 +41,7 @@ const POSE_RUNTIME_DEFAULTS: Record<string, PoseContract> = {
   knockback_up: { fps: 7, loop: false, containsOnlyPrefixes: ['hurt_'], forbiddenPrefixes: ['beam_', 'attack_', 'guard_'] },
   knockback_down: { fps: 7, loop: false, containsOnlyPrefixes: ['hurt_'], forbiddenPrefixes: ['beam_', 'attack_', 'guard_'] },
   beam_guard: { fps: 6, loop: false, containsOnlyPrefixes: ['guard_'], forbiddenPrefixes: ['beam_ray_', 'attack_', 'hurt_'] },
-  evade: { fps: 10, loop: false, startsWith: 'idle_', containsOnlyPrefixes: ['idle_', 'guard_', 'move_back_'], forbiddenPrefixes: ['beam_', 'attack_', 'hurt_'] },
+  evade: { fps: 10, loop: false, startsWith: 'move_back_', containsOnlyPrefixes: ['idle_', 'guard_', 'move_back_'], forbiddenPrefixes: ['beam_', 'attack_', 'hurt_'] },
   beam_charge: { fps: 7, loop: false },
   beam_fire: { fps: 8, loop: false },
   beam_ray: { fps: 7, loop: false },
@@ -75,6 +75,13 @@ for (const form of Object.values(FORMS)) {
   manifests.set(form.id, manifest);
 
   for (const pose of COMBAT_REQUIRED_POSES) {
+    // beam_fire: requerido solo si la V6.1 extrajo sus PNG (algunas formas
+    // SSJ no tienen beam_fire separado; el runtime usa fallback a beam_charge).
+    if (pose === 'beam_fire') {
+      const hasPng = fs.readdirSync(path.join(spriteRoot, dir)).some(f => f.startsWith(`${dir}_beam_fire_`));
+      if (hasPng) check(`${form.id}:${pose}`, !!manifest[pose]?.frames?.length);
+      continue;
+    }
     check(`${form.id}:${pose}`, !!manifest[pose]?.frames?.length);
   }
 
@@ -149,12 +156,17 @@ for (const form of Object.values(FORMS)) {
     });
   }
 
+  // beam_ray: OPCIONAL desde V6.1 (la fuente nueva no recorta rayos como
+  // frames separados; el proyectil runtime es procedural). Si la forma tiene
+  // beam_ray, validamos ratio; si no, es válido (el beam usa Graphics).
   const beamFrames = manifest.beam_ray?.frames ?? [];
-  check(`${form.id}:beam_ray`, beamFrames.length > 0);
-  for (const frame of beamFrames) {
-    const ratio = frame.w / frame.h;
-    check(`${form.id}:beam_ray:${frame.file}:ratio`, ratio >= 2, `${frame.w}x${frame.h}`);
-    check(`${form.id}:beam_ray:${frame.file}:height`, frame.h >= 8, `${frame.w}x${frame.h}`);
+  if (beamFrames.length > 0) {
+    check(`${form.id}:beam_ray`, true);
+    for (const frame of beamFrames) {
+      const ratio = frame.w / frame.h;
+      check(`${form.id}:beam_ray:${frame.file}:ratio`, ratio >= 2, `${frame.w}x${frame.h}`);
+      check(`${form.id}:beam_ray:${frame.file}:height`, frame.h >= 8, `${frame.w}x${frame.h}`);
+    }
   }
 
   // COHESIÓN runtime ↔ Dev Studio: la composición declarativa

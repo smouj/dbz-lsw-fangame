@@ -18,13 +18,13 @@
     "loop": true,
     "frames": [
       {
-        "name": "super_buu_base_move_front_idle",
-        "file": "super_buu_base_idle_00.png",
-        "w": 20,
-        "h": 43
+        "name": "super_buu_base_move_front_00",
+        "file": "super_buu_base_move_front_00.png",
+        "w": 32,
+        "h": 39
       },
       {
-        "name": "super_buu_base_move_front_step",
+        "name": "super_buu_base_move_front_01",
         "file": "super_buu_base_move_front_01.png",
         "w": 28,
         "h": 42
@@ -37,13 +37,13 @@
     "loop": true,
     "frames": [
       {
-        "name": "super_buu_base_move_back_idle",
-        "file": "super_buu_base_idle_00.png",
-        "w": 20,
-        "h": 43
+        "name": "super_buu_base_move_back_00",
+        "file": "super_buu_base_move_back_00.png",
+        "w": 32,
+        "h": 39
       },
       {
-        "name": "super_buu_base_move_back_step",
+        "name": "super_buu_base_move_back_01",
         "file": "super_buu_base_move_back_01.png",
         "w": 28,
         "h": 42
@@ -229,69 +229,6 @@
       }
     ]
   },
-  "beam_fire": {
-    "frame_count": 4,
-    "fps": 8,
-    "loop": false,
-    "frames": [
-      {
-        "name": "super_buu_base_beam_fire_00",
-        "file": "super_buu_base_beam_fire_00.png",
-        "w": 26,
-        "h": 44
-      },
-      {
-        "name": "super_buu_base_beam_fire_01",
-        "file": "super_buu_base_beam_fire_01.png",
-        "w": 28,
-        "h": 42
-      },
-      {
-        "name": "super_buu_base_beam_fire_02",
-        "file": "super_buu_base_beam_fire_02.png",
-        "w": 25,
-        "h": 39
-      },
-      {
-        "name": "super_buu_base_beam_fire_03",
-        "file": "super_buu_base_beam_fire_03.png",
-        "w": 24,
-        "h": 39
-      }
-    ]
-  },
-  "beam_ray": {
-    "frame_count": 2,
-    "fps": 7,
-    "loop": false,
-    "frames": [
-      {
-        "name": "super_buu_base_beam_ray_00",
-        "file": "super_buu_base_beam_ray_00.png",
-        "w": 118,
-        "h": 39
-      },
-      {
-        "name": "super_buu_base_beam_ray_01",
-        "file": "super_buu_base_beam_ray_01.png",
-        "w": 115,
-        "h": 39
-      }
-    ]
-  },
-  "beam_ray_tip": {
-    "frame_count": 1,
-    "fps": 7,
-    "loop": false,
-    "frames": [
-      {
-        "name": "super_buu_base_beam_ray_tip_00",
-        "file": "super_buu_base_beam_ray_tip_00.png",
-        "w": 72,
-        "h": 32
-      }
-    ]
-  },
   "punch_right": {
     "frame_count": 4,
     "fps": 7,
@@ -398,7 +335,7 @@
     ]
   },
   "knockback_back": {
-    "frame_count": 6,
+    "frame_count": 7,
     "fps": 7,
     "loop": false,
     "frames": [
@@ -419,6 +356,12 @@
         "file": "super_buu_base_hurt_02.png",
         "w": 32,
         "h": 37
+      },
+      {
+        "name": "super_buu_base_hurt_03",
+        "file": "super_buu_base_hurt_03.png",
+        "w": 36,
+        "h": 32
       },
       {
         "name": "super_buu_base_hurt_04",
@@ -472,7 +415,7 @@
     ]
   },
   "knockback_down": {
-    "frame_count": 3,
+    "frame_count": 4,
     "fps": 7,
     "loop": false,
     "frames": [
@@ -481,6 +424,12 @@
         "file": "super_buu_base_hurt_02.png",
         "w": 32,
         "h": 37
+      },
+      {
+        "name": "super_buu_base_hurt_03",
+        "file": "super_buu_base_hurt_03.png",
+        "w": 36,
+        "h": 32
       },
       {
         "name": "super_buu_base_hurt_04",
@@ -527,10 +476,10 @@
     "loop": false,
     "frames": [
       {
-        "name": "super_buu_base_idle_00",
-        "file": "super_buu_base_idle_00.png",
-        "w": 20,
-        "h": 43
+        "name": "super_buu_base_move_back_00",
+        "file": "super_buu_base_move_back_00.png",
+        "w": 32,
+        "h": 39
       },
       {
         "name": "super_buu_base_guard_01",
@@ -539,10 +488,10 @@
         "h": 42
       },
       {
-        "name": "super_buu_base_idle_00",
-        "file": "super_buu_base_idle_00.png",
-        "w": 20,
-        "h": 43
+        "name": "super_buu_base_move_back_00",
+        "file": "super_buu_base_move_back_00.png",
+        "w": 32,
+        "h": 39
       }
     ]
   },

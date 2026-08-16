@@ -18,13 +18,13 @@
     "loop": true,
     "frames": [
       {
-        "name": "recoome_base_move_front_idle",
-        "file": "recoome_base_idle_00.png",
-        "w": 26,
+        "name": "recoome_base_move_front_00",
+        "file": "recoome_base_move_front_00.png",
+        "w": 28,
         "h": 45
       },
       {
-        "name": "recoome_base_move_front_step",
+        "name": "recoome_base_move_front_01",
         "file": "recoome_base_move_front_01.png",
         "w": 32,
         "h": 42
@@ -37,13 +37,13 @@
     "loop": true,
     "frames": [
       {
-        "name": "recoome_base_move_back_idle",
-        "file": "recoome_base_idle_00.png",
-        "w": 26,
+        "name": "recoome_base_move_back_00",
+        "file": "recoome_base_move_back_00.png",
+        "w": 28,
         "h": 45
       },
       {
-        "name": "recoome_base_move_back_step",
+        "name": "recoome_base_move_back_01",
         "file": "recoome_base_move_back_01.png",
         "w": 32,
         "h": 42
@@ -269,19 +269,6 @@
         "file": "recoome_base_beam_fire_04.png",
         "w": 25,
         "h": 43
-      }
-    ]
-  },
-  "beam_ray": {
-    "frame_count": 1,
-    "fps": 7,
-    "loop": false,
-    "frames": [
-      {
-        "name": "recoome_base_beam_ray_00",
-        "file": "recoome_base_beam_ray_00.png",
-        "w": 116,
-        "h": 41
       }
     ]
   },
@@ -538,9 +525,9 @@
     "loop": false,
     "frames": [
       {
-        "name": "recoome_base_idle_00",
-        "file": "recoome_base_idle_00.png",
-        "w": 26,
+        "name": "recoome_base_move_back_00",
+        "file": "recoome_base_move_back_00.png",
+        "w": 28,
         "h": 45
       },
       {
@@ -550,9 +537,9 @@
         "h": 45
       },
       {
-        "name": "recoome_base_idle_00",
-        "file": "recoome_base_idle_00.png",
-        "w": 26,
+        "name": "recoome_base_move_back_00",
+        "file": "recoome_base_move_back_00.png",
+        "w": 28,
         "h": 45
       }
     ]

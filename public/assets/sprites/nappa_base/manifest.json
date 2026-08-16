@@ -18,13 +18,13 @@
     "loop": true,
     "frames": [
       {
-        "name": "nappa_base_move_front_idle",
-        "file": "nappa_base_idle_00.png",
-        "w": 26,
+        "name": "nappa_base_move_front_00",
+        "file": "nappa_base_move_front_00.png",
+        "w": 28,
         "h": 39
       },
       {
-        "name": "nappa_base_move_front_step",
+        "name": "nappa_base_move_front_01",
         "file": "nappa_base_move_front_01.png",
         "w": 32,
         "h": 36
@@ -37,13 +37,13 @@
     "loop": true,
     "frames": [
       {
-        "name": "nappa_base_move_back_idle",
-        "file": "nappa_base_idle_00.png",
-        "w": 26,
+        "name": "nappa_base_move_back_00",
+        "file": "nappa_base_move_back_00.png",
+        "w": 28,
         "h": 39
       },
       {
-        "name": "nappa_base_move_back_step",
+        "name": "nappa_base_move_back_01",
         "file": "nappa_base_move_back_01.png",
         "w": 32,
         "h": 36
@@ -238,25 +238,6 @@
         "name": "nappa_base_beam_fire_01",
         "file": "nappa_base_beam_fire_01.png",
         "w": 23,
-        "h": 36
-      }
-    ]
-  },
-  "beam_ray": {
-    "frame_count": 2,
-    "fps": 7,
-    "loop": false,
-    "frames": [
-      {
-        "name": "nappa_base_beam_ray_00",
-        "file": "nappa_base_beam_ray_00.png",
-        "w": 120,
-        "h": 54
-      },
-      {
-        "name": "nappa_base_beam_ray_01",
-        "file": "nappa_base_beam_ray_01.png",
-        "w": 116,
         "h": 36
       }
     ]
@@ -502,9 +483,9 @@
     "loop": false,
     "frames": [
       {
-        "name": "nappa_base_idle_00",
-        "file": "nappa_base_idle_00.png",
-        "w": 26,
+        "name": "nappa_base_move_back_00",
+        "file": "nappa_base_move_back_00.png",
+        "w": 28,
         "h": 39
       },
       {
@@ -514,15 +495,15 @@
         "h": 39
       },
       {
-        "name": "nappa_base_idle_00",
-        "file": "nappa_base_idle_00.png",
-        "w": 26,
+        "name": "nappa_base_move_back_00",
+        "file": "nappa_base_move_back_00.png",
+        "w": 28,
         "h": 39
       }
     ]
   },
   "gather_power": {
-    "frame_count": 4,
+    "frame_count": 3,
     "fps": 6,
     "loop": true,
     "frames": [
@@ -543,17 +524,11 @@
         "file": "nappa_base_beam_charge_02.png",
         "w": 34,
         "h": 37
-      },
-      {
-        "name": "nappa_base_beam_charge_03",
-        "file": "nappa_base_beam_charge_03.png",
-        "w": 32,
-        "h": 36
       }
     ]
   },
   "power_up": {
-    "frame_count": 4,
+    "frame_count": 3,
     "fps": 10,
     "loop": true,
     "frames": [
@@ -574,12 +549,6 @@
         "file": "nappa_base_beam_charge_02.png",
         "w": 34,
         "h": 37
-      },
-      {
-        "name": "nappa_base_beam_charge_03",
-        "file": "nappa_base_beam_charge_03.png",
-        "w": 32,
-        "h": 36
       }
     ]
   }

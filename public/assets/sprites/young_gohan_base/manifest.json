@@ -18,13 +18,13 @@
     "loop": true,
     "frames": [
       {
-        "name": "young_gohan_base_move_front_idle",
-        "file": "young_gohan_base_idle_00.png",
-        "w": 26,
-        "h": 43
+        "name": "young_gohan_base_move_front_00",
+        "file": "young_gohan_base_move_front_00.png",
+        "w": 25,
+        "h": 42
       },
       {
-        "name": "young_gohan_base_move_front_step",
+        "name": "young_gohan_base_move_front_01",
         "file": "young_gohan_base_move_front_01.png",
         "w": 31,
         "h": 39
@@ -37,13 +37,13 @@
     "loop": true,
     "frames": [
       {
-        "name": "young_gohan_base_move_back_idle",
-        "file": "young_gohan_base_idle_00.png",
-        "w": 26,
-        "h": 43
+        "name": "young_gohan_base_move_back_00",
+        "file": "young_gohan_base_move_back_00.png",
+        "w": 25,
+        "h": 42
       },
       {
-        "name": "young_gohan_base_move_back_step",
+        "name": "young_gohan_base_move_back_01",
         "file": "young_gohan_base_move_back_01.png",
         "w": 31,
         "h": 39
@@ -245,44 +245,6 @@
         "file": "young_gohan_base_beam_fire_01.png",
         "w": 29,
         "h": 42
-      }
-    ]
-  },
-  "beam_ray": {
-    "frame_count": 3,
-    "fps": 7,
-    "loop": false,
-    "frames": [
-      {
-        "name": "young_gohan_base_beam_ray_00",
-        "file": "young_gohan_base_beam_ray_00.png",
-        "w": 117,
-        "h": 42
-      },
-      {
-        "name": "young_gohan_base_beam_ray_01",
-        "file": "young_gohan_base_beam_ray_01.png",
-        "w": 114,
-        "h": 42
-      },
-      {
-        "name": "young_gohan_base_beam_ray_02",
-        "file": "young_gohan_base_beam_ray_02.png",
-        "w": 112,
-        "h": 42
-      }
-    ]
-  },
-  "beam_ray_tip": {
-    "frame_count": 1,
-    "fps": 7,
-    "loop": false,
-    "frames": [
-      {
-        "name": "young_gohan_base_beam_ray_tip_00",
-        "file": "young_gohan_base_beam_ray_tip_00.png",
-        "w": 46,
-        "h": 34
       }
     ]
   },
@@ -527,10 +489,10 @@
     "loop": false,
     "frames": [
       {
-        "name": "young_gohan_base_idle_00",
-        "file": "young_gohan_base_idle_00.png",
-        "w": 26,
-        "h": 43
+        "name": "young_gohan_base_move_back_00",
+        "file": "young_gohan_base_move_back_00.png",
+        "w": 25,
+        "h": 42
       },
       {
         "name": "young_gohan_base_guard_01",
@@ -539,10 +501,10 @@
         "h": 37
       },
       {
-        "name": "young_gohan_base_idle_00",
-        "file": "young_gohan_base_idle_00.png",
-        "w": 26,
-        "h": 43
+        "name": "young_gohan_base_move_back_00",
+        "file": "young_gohan_base_move_back_00.png",
+        "w": 25,
+        "h": 42
       }
     ]
   },

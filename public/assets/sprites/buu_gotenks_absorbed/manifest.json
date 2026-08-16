@@ -18,13 +18,13 @@
     "loop": true,
     "frames": [
       {
-        "name": "buu_gotenks_absorbed_move_front_idle",
-        "file": "buu_gotenks_absorbed_idle_00.png",
-        "w": 30,
+        "name": "buu_gotenks_absorbed_move_front_00",
+        "file": "buu_gotenks_absorbed_move_front_00.png",
+        "w": 28,
         "h": 42
       },
       {
-        "name": "buu_gotenks_absorbed_move_front_step",
+        "name": "buu_gotenks_absorbed_move_front_01",
         "file": "buu_gotenks_absorbed_move_front_01.png",
         "w": 32,
         "h": 39
@@ -37,13 +37,13 @@
     "loop": true,
     "frames": [
       {
-        "name": "buu_gotenks_absorbed_move_back_idle",
-        "file": "buu_gotenks_absorbed_idle_00.png",
-        "w": 30,
+        "name": "buu_gotenks_absorbed_move_back_00",
+        "file": "buu_gotenks_absorbed_move_back_00.png",
+        "w": 28,
         "h": 42
       },
       {
-        "name": "buu_gotenks_absorbed_move_back_step",
+        "name": "buu_gotenks_absorbed_move_back_01",
         "file": "buu_gotenks_absorbed_move_back_01.png",
         "w": 32,
         "h": 39
@@ -290,50 +290,6 @@
       }
     ]
   },
-  "beam_ray": {
-    "frame_count": 3,
-    "fps": 7,
-    "loop": false,
-    "frames": [
-      {
-        "name": "buu_gotenks_absorbed_beam_ray_00",
-        "file": "buu_gotenks_absorbed_beam_ray_00.png",
-        "w": 118,
-        "h": 42
-      },
-      {
-        "name": "buu_gotenks_absorbed_beam_ray_01",
-        "file": "buu_gotenks_absorbed_beam_ray_01.png",
-        "w": 115,
-        "h": 39
-      },
-      {
-        "name": "buu_gotenks_absorbed_beam_ray_02",
-        "file": "buu_gotenks_absorbed_beam_ray_02.png",
-        "w": 113,
-        "h": 55
-      }
-    ]
-  },
-  "beam_ray_tip": {
-    "frame_count": 2,
-    "fps": 7,
-    "loop": false,
-    "frames": [
-      {
-        "name": "buu_gotenks_absorbed_beam_ray_tip_00",
-        "file": "buu_gotenks_absorbed_beam_ray_tip_00.png",
-        "w": 54,
-        "h": 23
-      },
-      {
-        "name": "buu_gotenks_absorbed_beam_ray_tip_01",
-        "file": "buu_gotenks_absorbed_beam_ray_tip_01.png",
-        "w": 46,
-        "h": 31
-      }
-    ]
-  },
   "punch_right": {
     "frame_count": 4,
     "fps": 7,
@@ -575,9 +531,9 @@
     "loop": false,
     "frames": [
       {
-        "name": "buu_gotenks_absorbed_idle_00",
-        "file": "buu_gotenks_absorbed_idle_00.png",
-        "w": 30,
+        "name": "buu_gotenks_absorbed_move_back_00",
+        "file": "buu_gotenks_absorbed_move_back_00.png",
+        "w": 28,
         "h": 42
       },
       {
@@ -587,15 +543,15 @@
         "h": 42
       },
       {
-        "name": "buu_gotenks_absorbed_idle_00",
-        "file": "buu_gotenks_absorbed_idle_00.png",
-        "w": 30,
+        "name": "buu_gotenks_absorbed_move_back_00",
+        "file": "buu_gotenks_absorbed_move_back_00.png",
+        "w": 28,
         "h": 42
       }
     ]
   },
   "gather_power": {
-    "frame_count": 5,
+    "frame_count": 4,
     "fps": 6,
     "loop": true,
     "frames": [
@@ -622,17 +578,11 @@
         "file": "buu_gotenks_absorbed_beam_charge_03.png",
         "w": 32,
         "h": 40
-      },
-      {
-        "name": "buu_gotenks_absorbed_beam_charge_04",
-        "file": "buu_gotenks_absorbed_beam_charge_04.png",
-        "w": 29,
-        "h": 43
       }
     ]
   },
   "power_up": {
-    "frame_count": 5,
+    "frame_count": 4,
     "fps": 10,
     "loop": true,
     "frames": [
@@ -659,12 +609,6 @@
         "file": "buu_gotenks_absorbed_beam_charge_03.png",
         "w": 32,
         "h": 40
-      },
-      {
-        "name": "buu_gotenks_absorbed_beam_charge_04",
-        "file": "buu_gotenks_absorbed_beam_charge_04.png",
-        "w": 29,
-        "h": 43
       }
     ]
   }

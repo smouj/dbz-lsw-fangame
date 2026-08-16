@@ -18,13 +18,13 @@
     "loop": true,
     "frames": [
       {
-        "name": "cell_jr_base_move_front_idle",
-        "file": "cell_jr_base_idle_00.png",
-        "w": 30,
-        "h": 35
+        "name": "cell_jr_base_move_front_00",
+        "file": "cell_jr_base_move_front_00.png",
+        "w": 25,
+        "h": 37
       },
       {
-        "name": "cell_jr_base_move_front_step",
+        "name": "cell_jr_base_move_front_01",
         "file": "cell_jr_base_move_front_01.png",
         "w": 31,
         "h": 34
@@ -37,13 +37,13 @@
     "loop": true,
     "frames": [
       {
-        "name": "cell_jr_base_move_back_idle",
-        "file": "cell_jr_base_idle_00.png",
-        "w": 30,
-        "h": 35
+        "name": "cell_jr_base_move_back_00",
+        "file": "cell_jr_base_move_back_00.png",
+        "w": 25,
+        "h": 37
       },
       {
-        "name": "cell_jr_base_move_back_step",
+        "name": "cell_jr_base_move_back_01",
         "file": "cell_jr_base_move_back_01.png",
         "w": 31,
         "h": 34
@@ -269,44 +269,6 @@
         "file": "cell_jr_base_beam_fire_04.png",
         "w": 31,
         "h": 38
-      }
-    ]
-  },
-  "beam_ray": {
-    "frame_count": 3,
-    "fps": 7,
-    "loop": false,
-    "frames": [
-      {
-        "name": "cell_jr_base_beam_ray_00",
-        "file": "cell_jr_base_beam_ray_00.png",
-        "w": 123,
-        "h": 38
-      },
-      {
-        "name": "cell_jr_base_beam_ray_01",
-        "file": "cell_jr_base_beam_ray_01.png",
-        "w": 116,
-        "h": 40
-      },
-      {
-        "name": "cell_jr_base_beam_ray_02",
-        "file": "cell_jr_base_beam_ray_02.png",
-        "w": 115,
-        "h": 34
-      }
-    ]
-  },
-  "beam_ray_tip": {
-    "frame_count": 1,
-    "fps": 7,
-    "loop": false,
-    "frames": [
-      {
-        "name": "cell_jr_base_beam_ray_tip_00",
-        "file": "cell_jr_base_beam_ray_tip_00.png",
-        "w": 94,
-        "h": 12
       }
     ]
   },
@@ -551,10 +513,10 @@
     "loop": false,
     "frames": [
       {
-        "name": "cell_jr_base_idle_00",
-        "file": "cell_jr_base_idle_00.png",
-        "w": 30,
-        "h": 35
+        "name": "cell_jr_base_move_back_00",
+        "file": "cell_jr_base_move_back_00.png",
+        "w": 25,
+        "h": 37
       },
       {
         "name": "cell_jr_base_guard_01",
@@ -563,10 +525,10 @@
         "h": 36
       },
       {
-        "name": "cell_jr_base_idle_00",
-        "file": "cell_jr_base_idle_00.png",
-        "w": 30,
-        "h": 35
+        "name": "cell_jr_base_move_back_00",
+        "file": "cell_jr_base_move_back_00.png",
+        "w": 25,
+        "h": 37
       }
     ]
   },

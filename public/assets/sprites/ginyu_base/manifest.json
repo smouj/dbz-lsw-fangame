@@ -7,8 +7,8 @@
       {
         "name": "ginyu_base_idle_00",
         "file": "ginyu_base_idle_00.png",
-        "w": 32,
-        "h": 45
+        "w": 26,
+        "h": 39
       }
     ]
   },
@@ -18,13 +18,13 @@
     "loop": true,
     "frames": [
       {
-        "name": "ginyu_base_move_front_idle",
-        "file": "ginyu_base_idle_00.png",
-        "w": 32,
-        "h": 45
+        "name": "ginyu_base_move_front_00",
+        "file": "ginyu_base_move_front_00.png",
+        "w": 28,
+        "h": 40
       },
       {
-        "name": "ginyu_base_move_front_step",
+        "name": "ginyu_base_move_front_01",
         "file": "ginyu_base_move_front_01.png",
         "w": 32,
         "h": 38
@@ -37,13 +37,13 @@
     "loop": true,
     "frames": [
       {
-        "name": "ginyu_base_move_back_idle",
-        "file": "ginyu_base_idle_00.png",
-        "w": 32,
-        "h": 45
+        "name": "ginyu_base_move_back_00",
+        "file": "ginyu_base_move_back_00.png",
+        "w": 28,
+        "h": 40
       },
       {
-        "name": "ginyu_base_move_back_step",
+        "name": "ginyu_base_move_back_01",
         "file": "ginyu_base_move_back_01.png",
         "w": 32,
         "h": 38
@@ -64,14 +64,14 @@
       {
         "name": "ginyu_base_guard_01",
         "file": "ginyu_base_guard_01.png",
-        "w": 36,
-        "h": 45
+        "w": 30,
+        "h": 39
       },
       {
         "name": "ginyu_base_guard_02",
         "file": "ginyu_base_guard_02.png",
-        "w": 30,
-        "h": 45
+        "w": 24,
+        "h": 39
       }
     ]
   },
@@ -266,32 +266,6 @@
       }
     ]
   },
-  "beam_ray": {
-    "frame_count": 1,
-    "fps": 7,
-    "loop": false,
-    "frames": [
-      {
-        "name": "ginyu_base_beam_ray_00",
-        "file": "ginyu_base_beam_ray_00.png",
-        "w": 115,
-        "h": 38
-      }
-    ]
-  },
-  "beam_ray_tip": {
-    "frame_count": 1,
-    "fps": 7,
-    "loop": false,
-    "frames": [
-      {
-        "name": "ginyu_base_beam_ray_tip_00",
-        "file": "ginyu_base_beam_ray_tip_00.png",
-        "w": 42,
-        "h": 18
-      }
-    ]
-  },
   "punch_right": {
     "frame_count": 4,
     "fps": 7,
@@ -300,8 +274,8 @@
       {
         "name": "ginyu_base_idle_00",
         "file": "ginyu_base_idle_00.png",
-        "w": 32,
-        "h": 45
+        "w": 26,
+        "h": 39
       },
       {
         "name": "ginyu_base_attack_fwd_00",
@@ -331,8 +305,8 @@
       {
         "name": "ginyu_base_idle_00",
         "file": "ginyu_base_idle_00.png",
-        "w": 32,
-        "h": 45
+        "w": 26,
+        "h": 39
       },
       {
         "name": "ginyu_base_attack_fwd_03",
@@ -368,8 +342,8 @@
       {
         "name": "ginyu_base_idle_00",
         "file": "ginyu_base_idle_00.png",
-        "w": 32,
-        "h": 45
+        "w": 26,
+        "h": 39
       },
       {
         "name": "ginyu_base_attack_ud_00",
@@ -516,14 +490,14 @@
       {
         "name": "ginyu_base_guard_01",
         "file": "ginyu_base_guard_01.png",
-        "w": 36,
-        "h": 45
+        "w": 30,
+        "h": 39
       },
       {
         "name": "ginyu_base_guard_02",
         "file": "ginyu_base_guard_02.png",
-        "w": 30,
-        "h": 45
+        "w": 24,
+        "h": 39
       }
     ]
   },
@@ -533,27 +507,27 @@
     "loop": false,
     "frames": [
       {
-        "name": "ginyu_base_idle_00",
-        "file": "ginyu_base_idle_00.png",
-        "w": 32,
-        "h": 45
+        "name": "ginyu_base_move_back_00",
+        "file": "ginyu_base_move_back_00.png",
+        "w": 28,
+        "h": 40
       },
       {
         "name": "ginyu_base_guard_01",
         "file": "ginyu_base_guard_01.png",
-        "w": 36,
-        "h": 45
+        "w": 30,
+        "h": 39
       },
       {
-        "name": "ginyu_base_idle_00",
-        "file": "ginyu_base_idle_00.png",
-        "w": 32,
-        "h": 45
+        "name": "ginyu_base_move_back_00",
+        "file": "ginyu_base_move_back_00.png",
+        "w": 28,
+        "h": 40
       }
     ]
   },
   "gather_power": {
-    "frame_count": 5,
+    "frame_count": 4,
     "fps": 6,
     "loop": true,
     "frames": [
@@ -580,17 +554,11 @@
         "file": "ginyu_base_beam_charge_03.png",
         "w": 32,
         "h": 42
-      },
-      {
-        "name": "ginyu_base_beam_charge_04",
-        "file": "ginyu_base_beam_charge_04.png",
-        "w": 34,
-        "h": 41
       }
     ]
   },
   "power_up": {
-    "frame_count": 5,
+    "frame_count": 4,
     "fps": 10,
     "loop": true,
     "frames": [
@@ -617,12 +585,6 @@
         "file": "ginyu_base_beam_charge_03.png",
         "w": 32,
         "h": 42
-      },
-      {
-        "name": "ginyu_base_beam_charge_04",
-        "file": "ginyu_base_beam_charge_04.png",
-        "w": 34,
-        "h": 41
       }
     ]
   }

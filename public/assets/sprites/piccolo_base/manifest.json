@@ -18,13 +18,13 @@
     "loop": true,
     "frames": [
       {
-        "name": "piccolo_base_move_front_idle",
-        "file": "piccolo_base_idle_00.png",
-        "w": 29,
-        "h": 39
+        "name": "piccolo_base_move_front_00",
+        "file": "piccolo_base_move_front_00.png",
+        "w": 32,
+        "h": 37
       },
       {
-        "name": "piccolo_base_move_front_step",
+        "name": "piccolo_base_move_front_01",
         "file": "piccolo_base_move_front_01.png",
         "w": 28,
         "h": 40
@@ -37,13 +37,13 @@
     "loop": true,
     "frames": [
       {
-        "name": "piccolo_base_move_back_idle",
-        "file": "piccolo_base_idle_00.png",
-        "w": 29,
-        "h": 39
+        "name": "piccolo_base_move_back_00",
+        "file": "piccolo_base_move_back_00.png",
+        "w": 32,
+        "h": 37
       },
       {
-        "name": "piccolo_base_move_back_step",
+        "name": "piccolo_base_move_back_01",
         "file": "piccolo_base_move_back_01.png",
         "w": 28,
         "h": 40
@@ -250,81 +250,6 @@
         "file": "piccolo_base_beam_charge_03.png",
         "w": 40,
         "h": 37
-      }
-    ]
-  },
-  "beam_fire": {
-    "frame_count": 5,
-    "fps": 8,
-    "loop": false,
-    "frames": [
-      {
-        "name": "piccolo_base_beam_fire_00",
-        "file": "piccolo_base_beam_fire_00.png",
-        "w": 24,
-        "h": 37
-      },
-      {
-        "name": "piccolo_base_beam_fire_01",
-        "file": "piccolo_base_beam_fire_01.png",
-        "w": 30,
-        "h": 38
-      },
-      {
-        "name": "piccolo_base_beam_fire_02",
-        "file": "piccolo_base_beam_fire_02.png",
-        "w": 20,
-        "h": 46
-      },
-      {
-        "name": "piccolo_base_beam_fire_03",
-        "file": "piccolo_base_beam_fire_03.png",
-        "w": 31,
-        "h": 37
-      },
-      {
-        "name": "piccolo_base_beam_fire_04",
-        "file": "piccolo_base_beam_fire_04.png",
-        "w": 29,
-        "h": 39
-      }
-    ]
-  },
-  "beam_ray": {
-    "frame_count": 3,
-    "fps": 7,
-    "loop": false,
-    "frames": [
-      {
-        "name": "piccolo_base_beam_ray_00",
-        "file": "piccolo_base_beam_ray_00.png",
-        "w": 119,
-        "h": 38
-      },
-      {
-        "name": "piccolo_base_beam_ray_01",
-        "file": "piccolo_base_beam_ray_01.png",
-        "w": 116,
-        "h": 37
-      },
-      {
-        "name": "piccolo_base_beam_ray_02",
-        "file": "piccolo_base_beam_ray_02.png",
-        "w": 113,
-        "h": 44
-      }
-    ]
-  },
-  "beam_ray_tip": {
-    "frame_count": 1,
-    "fps": 7,
-    "loop": false,
-    "frames": [
-      {
-        "name": "piccolo_base_beam_ray_tip_00",
-        "file": "piccolo_base_beam_ray_tip_00.png",
-        "w": 94,
-        "h": 12
       }
     ]
   },
@@ -581,10 +506,10 @@
     "loop": false,
     "frames": [
       {
-        "name": "piccolo_base_idle_00",
-        "file": "piccolo_base_idle_00.png",
-        "w": 29,
-        "h": 39
+        "name": "piccolo_base_move_back_00",
+        "file": "piccolo_base_move_back_00.png",
+        "w": 32,
+        "h": 37
       },
       {
         "name": "piccolo_base_guard_01",
@@ -593,10 +518,10 @@
         "h": 40
       },
       {
-        "name": "piccolo_base_idle_00",
-        "file": "piccolo_base_idle_00.png",
-        "w": 29,
-        "h": 39
+        "name": "piccolo_base_move_back_00",
+        "file": "piccolo_base_move_back_00.png",
+        "w": 32,
+        "h": 37
       }
     ]
   },

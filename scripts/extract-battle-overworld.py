@@ -83,9 +83,25 @@ def main():
         # chibis: ancho 11-18, alto 13-18 (excluye rayo 16x12 y auras 24x16)
         chibis = [r for r in rows
                   if 11 <= int(r['width']) <= 18 and 13 <= int(r['height']) <= 18]
-        # auras: ancho 19-70, alto 12-22
-        auras = [r for r in rows
-                 if 19 <= int(r['width']) <= 70 and 12 <= int(r['height']) <= 22]
+        # auras: ancho 19-70, alto 12-22. Se FILTRAN las sospechosas:
+        # ratio w/h > 2.2 (planas) con contorno de personaje (gris 40,40,40)
+        # son sprites de personaje pequeño mal etiquetados, no auras
+        # (verificado visualmente: vegeta/frieza/android_18/krillin/guldo/
+        # jeice/burter/gotenks/captain_ginyu/kid_buu muestran el sprite chibi
+        # en vez de un aura de energía).
+        def es_aura_valida(r):
+            w, h = int(r['width']), int(r['height'])
+            if not (19 <= w <= 70 and 12 <= h <= 22):
+                return False
+            # Auras reales GBC: compactas (24x16, ratio <= 1.6). Las planas
+            # (ratio > 2.2: 39x12, 42x18, 55x16) son sprites de personaje
+            # pequeño mal etiquetados (verificado visualmente: vegeta, frieza,
+            # android_18, krillin, guldo, jeice/burter, gotenks,
+            # captain_ginyu, kid_buu muestran el chibi, no energía).
+            if w / h > 2.2:
+                return False
+            return True
+        auras = [r for r in rows if es_aura_valida(r)]
         if len(chibis) < 2 or not auras:
             continue
         chibis.sort(key=lambda r: int(r['x0']))

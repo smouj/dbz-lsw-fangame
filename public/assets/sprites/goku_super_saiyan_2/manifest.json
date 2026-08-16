@@ -18,13 +18,13 @@
     "loop": true,
     "frames": [
       {
-        "name": "goku_super_saiyan_2_move_front_idle",
-        "file": "goku_super_saiyan_2_idle_00.png",
+        "name": "goku_super_saiyan_2_move_front_00",
+        "file": "goku_super_saiyan_2_move_front_00.png",
         "w": 28,
         "h": 46
       },
       {
-        "name": "goku_super_saiyan_2_move_front_step",
+        "name": "goku_super_saiyan_2_move_front_01",
         "file": "goku_super_saiyan_2_move_front_01.png",
         "w": 32,
         "h": 43
@@ -37,13 +37,13 @@
     "loop": true,
     "frames": [
       {
-        "name": "goku_super_saiyan_2_move_back_idle",
-        "file": "goku_super_saiyan_2_idle_00.png",
+        "name": "goku_super_saiyan_2_move_back_00",
+        "file": "goku_super_saiyan_2_move_back_00.png",
         "w": 28,
         "h": 46
       },
       {
-        "name": "goku_super_saiyan_2_move_back_step",
+        "name": "goku_super_saiyan_2_move_back_01",
         "file": "goku_super_saiyan_2_move_back_01.png",
         "w": 32,
         "h": 43
@@ -245,38 +245,6 @@
         "file": "goku_super_saiyan_2_beam_fire_01.png",
         "w": 31,
         "h": 43
-      }
-    ]
-  },
-  "beam_ray": {
-    "frame_count": 2,
-    "fps": 7,
-    "loop": false,
-    "frames": [
-      {
-        "name": "goku_super_saiyan_2_beam_ray_00",
-        "file": "goku_super_saiyan_2_beam_ray_00.png",
-        "w": 117,
-        "h": 43
-      },
-      {
-        "name": "goku_super_saiyan_2_beam_ray_01",
-        "file": "goku_super_saiyan_2_beam_ray_01.png",
-        "w": 115,
-        "h": 44
-      }
-    ]
-  },
-  "beam_ray_tip": {
-    "frame_count": 1,
-    "fps": 7,
-    "loop": false,
-    "frames": [
-      {
-        "name": "goku_super_saiyan_2_beam_ray_tip_00",
-        "file": "goku_super_saiyan_2_beam_ray_tip_00.png",
-        "w": 46,
-        "h": 34
       }
     ]
   },
@@ -521,8 +489,8 @@
     "loop": false,
     "frames": [
       {
-        "name": "goku_super_saiyan_2_idle_00",
-        "file": "goku_super_saiyan_2_idle_00.png",
+        "name": "goku_super_saiyan_2_move_back_00",
+        "file": "goku_super_saiyan_2_move_back_00.png",
         "w": 28,
         "h": 46
       },
@@ -533,8 +501,8 @@
         "h": 46
       },
       {
-        "name": "goku_super_saiyan_2_idle_00",
-        "file": "goku_super_saiyan_2_idle_00.png",
+        "name": "goku_super_saiyan_2_move_back_00",
+        "file": "goku_super_saiyan_2_move_back_00.png",
         "w": 28,
         "h": 46
       }

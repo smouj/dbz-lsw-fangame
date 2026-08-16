@@ -34,8 +34,12 @@ export function CharactersModule({ onOpenModule }: {
   const spriteDir = spriteDirFor(form.id);
   const manifestUrl = spriteManifestUrl(form.id);
   const idleUrl = spriteDir ? spriteFrameUrl(form.id, `${spriteDir}_idle_00.png`) : idleSpriteUrl(form);
-  const battleOwIdle = battleOverworldActorUrl(form.id, 'idle');
-  const battleOwPower = battleOverworldActorUrl(form.id, 'gather_power_pose');
+  // Battle overworld: si no hay extraído (solo 24 formas), fallback al chibi
+  // *_ow.png del overworld táctico (existe para los 48) — así Gohan/Trunks/
+  // Goten/Cell... muestran su overworld en vez de celda vacía.
+  const owFallback = overworldUrl(form.id);
+  const battleOwIdle = battleOverworldActorUrl(form.id, 'idle') ?? owFallback;
+  const battleOwPower = battleOverworldActorUrl(form.id, 'gather_power_pose') ?? owFallback;
   // Aura: SOLO si el manifest real tiene la entrada (verificación HEAD).
   // Si no existe, undefined → PowerUpCell muestra la pose sin aura (nunca
   // icono roto/cyan).
