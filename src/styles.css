@@ -8622,3 +8622,22 @@ button:focus-visible, .chapter-node:focus-visible {
   .mi-desc { display: none; }
   .menu-footer { font-size: 9px; letter-spacing: 1px; }
 }
+
+/* ─── Menú: rango medio (641-720px) también compacto, sin scroll ─── */
+@media (max-height: 720px) and (min-height: 641px) {
+  .menu-content { padding-top: 18px; gap: 8px; }
+  .menu-content::before { top: 88px; bottom: 38px; }
+  .menu-logo-mark { width: clamp(40px, 6vh, 52px); height: clamp(40px, 6vh, 52px); }
+  .menu-title { font-size: clamp(28px, 5.2vh, 46px); margin-bottom: -4px; }
+  .menu-subtitle { margin-bottom: 6px; padding-bottom: 4px; }
+  .menu-continue-card { min-height: clamp(72px, 13vh, 112px); padding: 10px 12px; }
+  .mc-play { font-size: 24px; }
+  .mc-title { font-size: 22px; }
+  .mc-chapter { font-size: 14px; }
+  .mc-hero-wrap { width: 68px; min-height: 78px; }
+  .mc-hero { height: 64px; }
+  .menu-item,
+  .menu-item-settings { min-height: clamp(30px, 5vh, 40px); }
+  .menu-item-settings { margin-top: 3px; }
+  .menu-footer { margin-top: 3px; }
+}
