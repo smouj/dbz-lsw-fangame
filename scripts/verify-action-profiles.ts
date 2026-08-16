@@ -1,5 +1,6 @@
 import { compileActionProfile, resolveActionProfile, ACTION_PROFILE_REGISTRY, actionSemanticsForCard, listActionProfiles, slugifyCardName } from '../src/battle/actionProfiles';
 import { profileFor } from '../src/battle/profiles';
+import { BattleTimeline, buildProfile, track } from '../src/battle/timeline';
 import { CARDS } from '../src/data/cards';
 import { resolveProjectileVisualMode } from '../src/renderer/pixi/presentation/projectileVisual';
 
@@ -116,6 +117,31 @@ for (const [kind, expected] of [
   ['ball', 'ball'], ['disk', 'disk'], ['sword', 'sword'], ['unknown', 'special'],
 ] as const) {
   check(`pixiProjectile:${kind}→${expected}`, resolveProjectileVisualMode(kind) === expected);
+}
+
+// 9) BattleTimeline.seek() reconstruye el estado al retroceder.
+{
+  const events: string[] = [];
+  const ticks: number[] = [];
+  let resets = 0;
+  const p = buildProfile('seek-test', 'PROJECTILE', [
+    track(0, 'SHOT', { shot: 'PROJECTILE' }),
+    track(3, 'ACTOR_POSE', { pose: 'beam_charge' }),
+    track(5, 'PROJECTILE', { action: 'spawn', kind: 'ray', spawnFrame: 5, contactFrame: 9 }),
+    track(9, 'PROJECTILE', { action: 'impact' }),
+  ]);
+  const tl = new BattleTimeline(p, {
+    onEvent: e => events.push(`${e.tick}:${e.type}`),
+    onTick: tick => ticks.push(tick),
+    onReset: () => { resets++; events.push('RESET'); },
+    onComplete: () => {},
+  });
+  tl.seek(9);
+  tl.seek(4);
+  const afterReset = events.slice(events.lastIndexOf('RESET') + 1);
+  check('timelineSeek:resetOnce', resets === 1, String(resets));
+  check('timelineSeek:replaysPastOnly', JSON.stringify(afterReset) === JSON.stringify(['0:SHOT', '3:ACTOR_POSE']), afterReset.join(','));
+  check('timelineSeek:onTickTarget', ticks.at(-1) === 4, String(ticks.at(-1)));
 }
 
 console.log(`\n${listActionProfiles().length} perfiles firma registrados.`);

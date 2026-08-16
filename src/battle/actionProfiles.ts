@@ -148,8 +148,15 @@ export function compileActionProfile(spec: ActionProfileSpec): CinematicProfile 
   // 5) Proyectil/beam
   if (spec.projectile) {
     const p = spec.projectile;
-    tracks.push(track(p.spawnFrame, 'PROJECTILE', { action: 'spawn', kind: p.kind ?? 'beam' }));
-    tracks.push(track(p.spawnFrame + Math.floor(p.travelFrames / 2), 'PROJECTILE', { action: 'travel', progress: 0.5 }));
+    const contactFrame = p.spawnFrame + p.travelFrames;
+    const payload = {
+      kind: p.kind ?? 'beam',
+      spawnFrame: p.spawnFrame,
+      contactFrame,
+      travelFrames: p.travelFrames,
+    };
+    tracks.push(track(p.spawnFrame, 'PROJECTILE', { action: 'spawn', ...payload }));
+    tracks.push(track(p.spawnFrame + Math.floor(p.travelFrames / 2), 'PROJECTILE', { action: 'travel', progress: 0.5, ...payload }));
   }
 
   // 6) Impacto discreto

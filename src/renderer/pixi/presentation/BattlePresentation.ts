@@ -37,7 +37,7 @@ export interface BattlePresentation {
   moveActor(durationTicks: number): void;
 
   /** Crea un proyectil/beam (mapea PROJECTILE spawn). */
-  spawnProjectile(kind: string): void;
+  spawnProjectile(kind: string, timing?: { spawnTick: number; contactTick: number }): void;
 
   /** Avanza/retrocede el proyectil: progress ∈ [0,1] (mapea PROJECTILE travel). */
   setProjectileProgress(progress: number): void;

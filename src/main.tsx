@@ -955,6 +955,19 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
     for (const t of p.tracks) {
       if (t.tick > cur && (!next || t.tick < next.tick)) next = { type: t.event.type, tick: t.tick };
     }
+    const projectileSpawn = [...p.tracks].reverse().find(t => {
+      if (t.tick > cur || t.event.type !== 'PROJECTILE') return false;
+      return (t.event.payload as { action?: string })?.action === 'spawn';
+    });
+    const fieldReturn = p.tracks.find(t => t.event.type === 'FIELD_RETURN')?.tick ?? p.totalTicks;
+    let projectile = debugProjectileRef.current;
+    if (projectileSpawn && cur < fieldReturn) {
+      const payload = projectileSpawn.event.payload as { spawnFrame?: number; contactFrame?: number };
+      if (typeof payload.spawnFrame === 'number' && typeof payload.contactFrame === 'number') {
+        const duration = Math.max(1, payload.contactFrame - payload.spawnFrame);
+        projectile = { x: Math.round(Math.max(0, Math.min(1, (cur - payload.spawnFrame) / duration)) * 100) };
+      }
+    }
     setDebugCin({
       action: ctx.action,
       shot: debugShotRef.current || p.presentation,
@@ -962,7 +975,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
       totalTicks: p.totalTicks,
       actor: debugActorPoseRef.current ? { animation: debugActorPoseRef.current, frame: '' } : null,
       defender: debugTargetPoseRef.current ? { animation: debugTargetPoseRef.current, frame: '' } : null,
-      projectile: debugProjectileRef.current,
+      projectile,
       nextEvent: next,
     });
   };
@@ -1028,6 +1041,21 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
     setActorPose(cardBattlePose(card, 'field'));
 
     // Guard: si es beam/damage con target cut, el defensor espera en guard
+    const resetCinematicReplay = () => {
+      setViewMode('ACTION');
+      setCardFx({ card, side, step: 'attacker', visual: cardProjectileClass(card) });
+      setActorPose(cardBattlePose(card, 'field'));
+      resetTargetPose();
+      pixiPres?.reset();
+      pixiPres?.setAttacker(side === 'player' ? 'left' : 'right');
+      if (isDebugCinematics()) {
+        debugShotRef.current = profile.presentation;
+        debugActorPoseRef.current = cardBattlePose(card, 'field');
+        debugTargetPoseRef.current = '';
+        debugProjectileRef.current = null;
+      }
+    };
+
     const applyEvent = (e: CinematicEvent) => {
       // Pixi: enrutar el evento a la presentación (además del DOM).
       if (pixiPres) applyCinematicEvent(pixiPres, e);
@@ -1114,7 +1142,8 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
       const tl = new BattleTimeline(profile, {
         onEvent: applyEvent,
         onComplete: finishCinematic,
-        onTick: (tick) => { pixiPres?.sync(tick); },
+        onReset: resetCinematicReplay,
+        onTick: (tick) => { pixiPres?.sync(tick); if (isDebugCinematics()) refreshDebugInfo(tick); },
       });
       cinematicRef.current = tl;
       tl.start();
@@ -1126,7 +1155,8 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
     const tl = new BattleTimeline(profile, {
       onEvent: applyEvent,
       onComplete: finishCinematic,
-      onTick: (tick) => { pixiPres?.sync(tick); },
+      onReset: resetCinematicReplay,
+      onTick: (tick) => { pixiPres?.sync(tick); if (isDebugCinematics()) refreshDebugInfo(tick); },
     });
     cinematicRef.current = tl;
     tl.start();

@@ -32,7 +32,13 @@ import { BattleRenderer } from '../renderer/pixi/BattleRenderer';
 import { PixiBattlePresentation } from '../renderer/pixi/presentation/PixiBattlePresentation';
 import { applyCinematicEvent } from '../renderer/pixi/presentation/CinematicAdapter';
 import { BattleTimeline, buildProfile, track, type CinematicProfile, type CinematicTrack } from '../battle/timeline';
-import { listActionProfiles } from '../battle/actionProfiles';
+import {
+  ACTION_PROFILE_REGISTRY,
+  compileActionProfile,
+  listActionProfiles,
+  type ActionProfileSpec,
+  type ProjectileVisualKind,
+} from '../battle/actionProfiles';
 import { BattlePosition } from '../data/positions';
 import { BATTLE_LOGICAL_W, BATTLE_LOGICAL_H } from '../renderer/pixi/config';
 
@@ -44,7 +50,10 @@ interface LabAction {
   pose: string;          // pose de windup/ataque en ACTION
   rush: boolean;         // melee: lunge hacia el rival
   projectile: boolean;   // beam: spawn + travel
+  projectileKind?: ProjectileVisualKind | 'beam';
+  profileId?: string;
   signature?: boolean;   // viene del registro de perfiles firma
+  matrix?: boolean;
 }
 
 const BASE_ACTIONS: LabAction[] = [
@@ -64,11 +73,40 @@ function signatureActions(): LabAction[] {
     pose: p.kind === 'beam' ? 'beam_charge' : 'attack_fwd',
     rush: p.kind === 'damage' || p.kind === 'command',
     projectile: p.kind === 'beam',
+    profileId: p.id,
     signature: true,
   }));
 }
 
-const ALL_ACTIONS: LabAction[] = [...BASE_ACTIONS, ...signatureActions()];
+const PROJECTILE_MATRIX_IDS = [
+  'kamehameha',
+  'energy_wave',
+  'spirit_bomb',
+  'energy_disk',
+  'flash_sword',
+  'special_projectile',
+] as const;
+
+function projectileMatrixActions(): LabAction[] {
+  return PROJECTILE_MATRIX_IDS
+    .map(id => ACTION_PROFILE_REGISTRY.find(p => p.id === id))
+    .filter((p): p is ActionProfileSpec => !!p)
+    .map(p => ({
+      id: `matrix:${p.id}`,
+      label: `${p.label} — ${p.projectile?.kind ?? 'ray'}`,
+      kind: 'beam' as const,
+      pose: 'beam_charge',
+      rush: false,
+      projectile: true,
+      projectileKind: p.projectile?.kind ?? 'ray',
+      profileId: p.id,
+      matrix: true,
+    }));
+}
+
+const SIGNATURE_ACTIONS = signatureActions();
+const PROJECTILE_MATRIX_ACTIONS = projectileMatrixActions();
+const ALL_ACTIONS: LabAction[] = [...BASE_ACTIONS, ...SIGNATURE_ACTIONS, ...PROJECTILE_MATRIX_ACTIONS];
 
 // ── Escenarios (fondos) ────────────────────────────────────────────────────
 const SCENARIOS = Array.from({ length: 13 }, (_, i) => {
@@ -134,9 +172,23 @@ function buildBeamProfile(action: LabAction): CinematicProfile {
   t.push(track(T.action, 'ACTOR_POSE', { pose: 'beam_charge' }));
   // Release: dispara + el rayo nace desde el lado del personaje.
   t.push(track(chargeEnd, 'ACTOR_POSE', { pose: 'beam_fire' }));
-  t.push(track(chargeEnd, 'PROJECTILE', { action: 'spawn', kind: 'beam' }));
+  const projectileKind = action.projectileKind ?? 'beam';
+  t.push(track(chargeEnd, 'PROJECTILE', {
+    action: 'spawn',
+    kind: projectileKind,
+    spawnFrame: chargeEnd,
+    contactFrame: contact,
+    travelFrames: contact - chargeEnd,
+  }));
   // Viaje del rayo hacia el rival.
-  t.push(track(chargeEnd + Math.floor((contact - chargeEnd) / 2), 'PROJECTILE', { action: 'travel', progress: 0.5 }));
+  t.push(track(chargeEnd + Math.floor((contact - chargeEnd) / 2), 'PROJECTILE', {
+    action: 'travel',
+    kind: projectileKind,
+    progress: 0.5,
+    spawnFrame: chargeEnd,
+    contactFrame: contact,
+    travelFrames: contact - chargeEnd,
+  }));
   // Impacto del beam en el rival: FX genérico (igual para todos los personajes).
   t.push(track(contact, 'PROJECTILE', { action: 'impact' }));
   t.push(track(contact, 'TARGET_POSE', { pose: 'hurt' }));
@@ -176,6 +228,10 @@ function buildSimpleProfile(action: LabAction): CinematicProfile {
 }
 
 function buildLabProfile(action: LabAction): CinematicProfile {
+  if (action.profileId) {
+    const spec = ACTION_PROFILE_REGISTRY.find(p => p.id === action.profileId);
+    if (spec) return compileActionProfile(spec);
+  }
   if (action.kind === 'beam') return buildBeamProfile(action);
   if (action.kind === 'melee') return buildMeleeProfile(action);
   return buildSimpleProfile(action);
@@ -251,13 +307,17 @@ export function PixiSequenceModule() {
     if (debugRef.current) debugRef.current.textContent = s;
   };
 
+  const resetPresentationForReplay = (pres: PixiBattlePresentation) => {
+    pres.reset();
+    pres.setAttacker('left');
+    advancedRef.current = false;
+  };
+
   const play = () => {
     const pres = presRef.current;
     if (!pres) return;
     timelineRef.current?.cancel();
-    pres.reset();
-    pres.setAttacker('left');
-    advancedRef.current = false;
+    resetPresentationForReplay(pres);
     tickRef.current = 0;
     const profile = buildLabProfile(action);
     showDebug(`reproduciendo «${action.label}» (${profile.totalTicks} ticks, ${profile.tracks.length} eventos)\n`);
@@ -265,6 +325,7 @@ export function PixiSequenceModule() {
     const tl = new BattleTimeline(profile, {
       onEvent: e => { applyCinematicEvent(pres, e); },
       speed,
+      onReset: () => resetPresentationForReplay(pres),
       onTick: tick => {
         // Avance táctico SOLO en melee (el beam no se acerca al rival).
         if (isMelee && !advancedRef.current && tick >= T.moveFront) {
@@ -313,22 +374,22 @@ export function PixiSequenceModule() {
   const seek = (tick: number) => {
     const pres = presRef.current;
     if (!pres) return;
-    // Timeline SIEMPRE nuevo: BattleTimeline.seek() solo re-emite hacia
-    // delante (tickCursor creciente), así que para ir a cualquier tick hay
-    // que partir de cero y re-emitir todos los eventos ≤ target.
-    timelineRef.current?.cancel();
     const profile = buildLabProfile(action);
-    const t = new BattleTimeline(profile, {
-      onEvent: e => { applyCinematicEvent(pres, e); },
-      speed,
-      onTick: () => {},
-      onComplete: () => {},
-    });
-    timelineRef.current = t;
+    let t = timelineRef.current;
+    if (!t || t.profile.id !== profile.id) {
+      t?.cancel();
+      resetPresentationForReplay(pres);
+      t = new BattleTimeline(profile, {
+        onEvent: e => { applyCinematicEvent(pres, e); },
+        speed,
+        onReset: () => resetPresentationForReplay(pres),
+        onTick: (currentTick) => { pres.sync(currentTick); },
+        onComplete: () => {},
+      });
+      timelineRef.current = t;
+    }
     setTotalTicks(profile.totalTicks);
     const target = Math.max(0, Math.min(tick, profile.totalTicks));
-    pres.reset();
-    advancedRef.current = false;
     t.seek(target);
     if (isMelee && target >= T.moveFront) {
       pres.updateTactical(BattlePosition.DOWN_FRONT, BattlePosition.DOWN_BACK);
@@ -414,8 +475,13 @@ export function PixiSequenceModule() {
                 <option key={a.id} value={a.id}>{a.label}</option>
               ))}
             </optgroup>
+            <optgroup label="Matriz proyectiles">
+              {PROJECTILE_MATRIX_ACTIONS.map(a => (
+                <option key={a.id} value={a.id}>{a.label}</option>
+              ))}
+            </optgroup>
             <optgroup label="Perfiles firma (cartas)">
-              {signatureActions().map(a => (
+              {SIGNATURE_ACTIONS.map(a => (
                 <option key={a.id} value={a.id}>{a.label}</option>
               ))}
             </optgroup>

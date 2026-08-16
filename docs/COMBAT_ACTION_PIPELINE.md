@@ -43,6 +43,18 @@ The visual class for projectiles comes from `ActionCardSemantics.visual`:
 All real BEAM cards must resolve to a signature profile. A generic `ray`
 fallback is only acceptable for temporary non-BEAM code paths.
 
+Projectile tracks carry timing metadata as part of the runtime contract:
+
+- `PROJECTILE { action: "spawn", kind, spawnFrame, contactFrame, travelFrames }`
+  starts the visual and defines the travel window.
+- `PROJECTILE { action: "travel", progress }` is a checkpoint for compatibility
+  and debug readability, not the authority for per-frame movement.
+- Pixi computes continuous progress in `sync(tick)` as
+  `(tick - spawnFrame) / (contactFrame - spawnFrame)`, clamped to `[0, 1]`.
+- `BattleTimeline.seek()` can move backward: it calls `onReset`, replays only
+  events up to the target tick and then calls `onTick(target)`. Debug tools must
+  rely on this instead of creating ad hoc replay paths.
+
 ## Current signature profile coverage
 
 `ACTION_PROFILE_REGISTRY` currently registers 20 signature profiles:
@@ -113,6 +125,9 @@ What they protect:
 - Sheets: `http://localhost:5178/?dev=1#dev/sheets`
 - HUD: `http://localhost:5178/?dev=1#dev/hud`
 - Battle Lab with overlays: `http://localhost:5178/?dev=1#dev/battlelab`
+- Projectile Matrix: `http://localhost:5178/?dev=1#dev/pixiSequence` and use
+  the "Matriz proyectiles" action group for `ray`, `wave`, `ball`, `disk`,
+  `sword` and `special`.
 
 When launching a battle from Dev Studio, the app removes only `dev` from the
 query and preserves useful debug flags such as `debugState`, `debugCinematics`

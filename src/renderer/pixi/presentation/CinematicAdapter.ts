@@ -41,10 +41,19 @@ export function applyCinematicEvent(pres: BattlePresentation, e: CinematicEvent)
       break;
     }
     case 'PROJECTILE': {
-      const p = e.payload as { action?: string; progress?: number; kind?: string; duration?: number };
+      const p = e.payload as {
+        action?: string;
+        progress?: number;
+        kind?: string;
+        duration?: number;
+        spawnFrame?: number;
+        contactFrame?: number;
+      };
       switch (p.action) {
         case 'spawn':
-          pres.spawnProjectile(p.kind ?? 'beam');
+          pres.spawnProjectile(p.kind ?? 'beam', typeof p.spawnFrame === 'number' && typeof p.contactFrame === 'number'
+            ? { spawnTick: p.spawnFrame, contactTick: p.contactFrame }
+            : undefined);
           break;
         case 'travel':
           pres.setProjectileProgress(p.progress ?? 0);

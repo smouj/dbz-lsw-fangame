@@ -40,6 +40,8 @@ export class PixiBattlePresentation implements BattlePresentation {
   private attacker: BattleSide = 'left';
   private projectile: Sprite | null = null;
   private projectileMode: ProjectileVisualMode = 'special';
+  private projectileSpawnTick: number | null = null;
+  private projectileContactTick: number | null = null;
   /** Nº de frames del rayo real (beam_ray) del atacante; 0 = fallback genérico. */
   private rayFrames = 0;
   /** True cuando el proyectil es el rayo real (modo stretch GBC). */
@@ -140,8 +142,10 @@ export class PixiBattlePresentation implements BattlePresentation {
     a.setPos(fromX, ACTION_GROUND_Y);
   }
 
-  spawnProjectile(kind: string): void {
+  spawnProjectile(kind: string, timing?: { spawnTick: number; contactTick: number }): void {
     this.clearProjectile();
+    this.projectileSpawnTick = timing?.spawnTick ?? null;
+    this.projectileContactTick = timing?.contactTick ?? null;
     // Rayo real: si el atacante tiene frames beam_ray en su manifest (V6),
     // usarlos en vez del rectángulo genérico — el rayo sale desde el lado del
     // personaje y viaja hasta el rival (frame = f(progress), determinista).
@@ -268,6 +272,10 @@ export class PixiBattlePresentation implements BattlePresentation {
 
   sync(tick: number): void {
     this.renderer.sync(tick);
+    if (this.projectile && this.projectileSpawnTick != null && this.projectileContactTick != null) {
+      const duration = Math.max(1, this.projectileContactTick - this.projectileSpawnTick);
+      this.setProjectileProgress((this.renderer.currentTick - this.projectileSpawnTick) / duration);
+    }
     // Rush: position = f(tick − rushStartTick) — determinista a cualquier Hz.
     if (this.rushActive) {
       const a = this.actor;
@@ -320,6 +328,8 @@ export class PixiBattlePresentation implements BattlePresentation {
 
   private clearProjectile(): void {
     this.projectileMode = 'special';
+    this.projectileSpawnTick = null;
+    this.projectileContactTick = null;
     this.rayFrames = 0;
     this.raySprite = false;
     this.rayBaseWidth = 0;

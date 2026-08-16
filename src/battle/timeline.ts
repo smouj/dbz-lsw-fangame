@@ -63,6 +63,12 @@ export interface BattleTimelineOptions {
   onEvent: (e: CinematicEvent) => void;
   onComplete: () => void;
   /**
+   * Se dispara antes de reconstruir una posicion anterior del timeline.
+   * Los renderers lo usan para limpiar estado acumulado (poses, proyectiles,
+   * flashes) antes de reemitir los eventos <= target.
+   */
+  onReset?: () => void;
+  /**
    * Se dispara CADA frame con el tick GBC absoluto actual (floor del acumulador).
    * El renderer lo usa para sincronizar la animación de sprites al MISMO reloj
    * que emite los eventos (frame = f(tick) determinista a cualquier Hz).
@@ -123,15 +129,31 @@ export class BattleTimeline {
   /** Salta a un tick concreto (depurador frame a frame). */
   seek(tick: number): void {
     const target = Math.max(0, Math.min(tick, this.profile.totalTicks));
-    // re-emitir todos los eventos hasta el tick objetivo (reproducible)
+    const rewinding = target <= this.tickCursor || this.done;
+    const wasRunning = this.raf !== 0;
+
+    if (rewinding) {
+      this.cancel();
+      this.done = false;
+      this.tickCursor = -1;
+      this.acc = 0;
+      this.opts.onReset?.();
+    }
+
+    this.emitUntil(target);
+    this.tickCursor = target;
+    this.acc = target;
+    this.opts.onTick?.(target);
+    if (target >= this.profile.totalTicks) this.finish();
+    else if (rewinding && wasRunning) this.start();
+  }
+
+  private emitUntil(target: number): void {
     for (const track of this.profile.tracks) {
       if (track.tick > this.tickCursor && track.tick <= target) {
         this.opts.onEvent({ type: track.event.type, tick: track.tick, payload: track.event.payload });
       }
     }
-    this.tickCursor = target;
-    this.acc = target;
-    if (target >= this.profile.totalTicks) this.finish();
   }
 
   private tickLoop = (now: number): void => {

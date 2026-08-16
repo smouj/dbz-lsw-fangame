@@ -27,6 +27,8 @@ Herramienta de producción embebida en el mismo proyecto. Accede desde el navega
 - **Story Studio** — mazos de jefes, AI boosts, 2v2 y viñetas
 - **Animation Studio** — timeline real (play/step/fps/loop) desde el manifest
 - **Battle Lab** — combate instantáneo real (Versus o capítulo de historia)
+- **Pixi Seq** — laboratorio determinista `BattleTimeline → Pixi`, con matriz
+  visual de proyectiles (`ray`, `wave`, `ball`, `disk`, `sword`, `special`)
 - **Validation** — chequeos de integridad reales · **Research** — fuentes y nivel de verificación
 
 ### 🔬 Modos de depuración en combate
@@ -36,6 +38,8 @@ Parámetros de URL que activan overlays de diagnóstico (solo desarrollo):
 - `?debugCinematics=1` — depurador cinematográfico: `ACTION/SHOT/TICK` + pose del
   atacante/defensor + proyectil + próximo evento. Teclas: `Space` play/pausa ·
   `←/→` ±1 tick · `Shift+←/→` ±10 · `R` reiniciar.
+  El seek reconstruye estado desde cero al retroceder y el progreso de proyectil
+  se calcula por `spawnFrame/contactFrame`, no por checkpoints discretos.
 - `?debugState=1` — Inspector de estado interno (fase, CC, posiciones, stages,
   POWER/GATHER/etc.) + QTE Debugger. Teclas: `F` congelar/descongelar el reloj del
   Stage Attack · `.` +1 frame · `Shift+.` +10 frames.
