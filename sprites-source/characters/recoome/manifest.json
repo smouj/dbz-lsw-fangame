@@ -1,0 +1,10 @@
+{
+  "character": "recoome",
+  "forms": {
+    "base": {
+      "count": 45,
+      "path": "characters/recoome/base/frames"
+    }
+  },
+  "total": 45
+}

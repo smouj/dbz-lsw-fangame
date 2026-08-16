@@ -1,0 +1,14 @@
+{
+  "character": "trunks_kid",
+  "forms": {
+    "kid_trunks_normal": {
+      "count": 34,
+      "path": "characters/trunks_kid/kid_trunks_normal/frames"
+    },
+    "kid_trunks_super_saiyan": {
+      "count": 40,
+      "path": "characters/trunks_kid/kid_trunks_super_saiyan/frames"
+    }
+  },
+  "total": 74
+}

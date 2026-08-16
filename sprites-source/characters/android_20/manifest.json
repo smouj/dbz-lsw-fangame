@@ -1,0 +1,10 @@
+{
+  "character": "android_20",
+  "forms": {
+    "base": {
+      "count": 50,
+      "path": "characters/android_20/base/frames"
+    }
+  },
+  "total": 50
+}

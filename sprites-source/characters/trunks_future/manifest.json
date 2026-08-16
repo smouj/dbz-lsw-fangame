@@ -1,0 +1,14 @@
+{
+  "character": "trunks_future",
+  "forms": {
+    "future_trunks_normal": {
+      "count": 46,
+      "path": "characters/trunks_future/future_trunks_normal/frames"
+    },
+    "future_trunks_super_saiyan": {
+      "count": 49,
+      "path": "characters/trunks_future/future_trunks_super_saiyan/frames"
+    }
+  },
+  "total": 95
+}

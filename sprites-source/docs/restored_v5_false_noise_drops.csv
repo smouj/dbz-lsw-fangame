@@ -1,0 +1,7 @@
+﻿character,old_form,v4_frame,reason
+android_19,base,044.png,legitimate sprite restored; V5 noise heuristic false positive
+android_19,base,045.png,legitimate sprite restored; V5 noise heuristic false positive
+android_20,base,036.png,legitimate sprite restored; V5 noise heuristic false positive
+android_20,base,042.png,legitimate sprite restored; V5 noise heuristic false positive
+gohan,teen_gohan_super_saiyan,043.png,legitimate sprite restored; V5 noise heuristic false positive
+vegeta,super_saiyan_majin,044.png,legitimate sprite restored; V5 noise heuristic false positive

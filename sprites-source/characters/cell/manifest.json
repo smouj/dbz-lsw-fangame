@@ -1,0 +1,18 @@
+{
+  "character": "cell",
+  "forms": {
+    "cell_form_1": {
+      "count": 48,
+      "path": "characters/cell/cell_form_1/frames"
+    },
+    "cell_form_2": {
+      "count": 48,
+      "path": "characters/cell/cell_form_2/frames"
+    },
+    "perfect_cell": {
+      "count": 50,
+      "path": "characters/cell/perfect_cell/frames"
+    }
+  },
+  "total": 146
+}

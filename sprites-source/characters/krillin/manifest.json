@@ -1,0 +1,10 @@
+{
+  "character": "krillin",
+  "forms": {
+    "base": {
+      "count": 49,
+      "path": "characters/krillin/base/frames"
+    }
+  },
+  "total": 49
+}

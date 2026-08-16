@@ -1,0 +1,14 @@
+{
+  "character": "jeice_burter",
+  "forms": {
+    "jeice": {
+      "count": 53,
+      "path": "characters/jeice_burter/jeice/frames"
+    },
+    "burter": {
+      "count": 36,
+      "path": "characters/jeice_burter/burter/frames"
+    }
+  },
+  "total": 89
+}

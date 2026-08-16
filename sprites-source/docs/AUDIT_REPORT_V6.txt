@@ -1,0 +1,128 @@
+DBZ LSW SPRITES RECUT V6 CANONICAL — INFORME DE AUDITORÍA
+=============================================================
+
+RESULTADO
+- Assets atómicos finales: 1952
+- Hojas fuente: 24
+- Formas: 42
+- Solapamientos de píxeles opacos entre assets: 0
+- Assets vacíos: 0
+- Assets con alpha no binario: 0
+- Assets no ajustados al bounding box: 0
+- Mismatches RGB en píxeles opacos contra la hoja fuente: 0
+- Componentes significativos multi-color sin extraer tras la V6: 0
+
+ERRORES CONFIRMADOS EN V5 Y CORREGIDOS
+1. Límites de forma/personaje incorrectos:
+   - 54 ocurrencias fuente estaban asignadas a una forma equivocada.
+   - Tras atomización, afectan a 56 archivos finales.
+   - Casos importantes: Goten normal/SSJ, Goku normal/SSJ/SSJ3,
+     Jeice/Burter, Gohan, Majin Buu, Gotenks y Trunks Future.
+
+2. Falsos positivos del filtro de ruido:
+   - 6 sprites legítimos habían desaparecido de V5 y han sido restaurados.
+   - Ver restored_v5_false_noise_drops.csv.
+
+3. División atómica con recorte de píxeles:
+   - Se han rehecho 18 salidas atómicas directamente desde la hoja fuente,
+     ajustando el corte a separaciones reales y conservando todos los píxeles opacos.
+
+4. Compuestos con sub-sprites independientes:
+   - 4 componentes adicionales se separaron de compuestos contenedores
+     (por ejemplo, orbes/impactos/discos) sin duplicar píxeles.
+
+5. Contaminación por texto/vecino:
+   - El recorte problemático de Gotenks SSJ3 que contenía texto “Kamehameha”
+     y restos del sprite vecino fue reemplazado por el componente correcto.
+   - Correcciones de este tipo: 1.
+
+6. Assets omitidos por el recorte histórico:
+   - 225 componentes de gameplay adicionales fueron recuperados de las
+     hojas fuente: mini-frames de impacto, estados intermedios de explosión/energía,
+     endpoints de proyectil y otros efectos compactos.
+   - Tras esta recuperación, no queda ningún componente significativo con >=3 colores,
+     área >=50 px y altura >=10 px sin extraer.
+   - Los residuales grandes de 1–2 colores revisados manualmente son glifos/texto de
+     créditos, títulos o nombres de ataques, y no se incluyen como sprites.
+
+7. Manifiestos inconsistentes:
+   - V5 tenía conteos declarados que no coincidían con los PNG físicos en varias formas.
+   - V6 regenera todos los manifiestos desde los archivos finales; conteos sincronizados.
+
+CRITERIO DE V6
+- La hoja PNG transparente es la fuente de verdad geométrica.
+- Cada PNG final se deriva de coordenadas de la hoja fuente.
+- No se confía en los límites automáticos de V5 para separar formas.
+- No se aplican nombres semánticos especulativos por ataque/pose.
+- La numeración NNN sigue el orden visual corregido de la hoja fuente.
+- El manifiesto conserva coordenadas y referencias antiguas para trazabilidad.
+
+CONTEOS POR PERSONAJE
+- android_16: 44
+- android_17: 44
+- android_18: 48
+- android_19: 52
+- android_20: 50
+- captain_ginyu: 52
+- cell: 146
+- cell_jr: 49
+- frieza: 46
+- gohan: 226
+- goku: 138
+- goten: 81
+- gotenks: 93
+- guldo: 43
+- jeice_burter: 89
+- krillin: 49
+- majin_buu: 255
+- nappa: 37
+- piccolo: 49
+- recoome: 45
+- trunks_future: 95
+- trunks_kid: 74
+- vegeta: 92
+- vegito: 55
+
+CONTEOS POR FORMA
+- android_16/base: 44
+- android_17/base: 44
+- android_18/base: 48
+- android_19/base: 52
+- android_20/base: 50
+- captain_ginyu/base: 52
+- cell/cell_form_1: 48
+- cell/cell_form_2: 48
+- cell/perfect_cell: 50
+- cell_jr/base: 49
+- frieza/base: 46
+- gohan/teen_gohan_normal_mystic: 45
+- gohan/teen_gohan_super_saiyan: 49
+- gohan/young_gohan_normal: 42
+- gohan/young_gohan_super_saiyan: 45
+- gohan/young_gohan_super_saiyan_2: 45
+- goku/normal: 46
+- goku/super_saiyan: 46
+- goku/super_saiyan_3: 46
+- goten/normal: 39
+- goten/super_saiyan: 42
+- gotenks/super_saiyan: 49
+- gotenks/super_saiyan_3: 44
+- guldo/base: 43
+- jeice_burter/burter: 36
+- jeice_burter/jeice: 53
+- krillin/base: 49
+- majin_buu/fat_buu: 51
+- majin_buu/kid_buu: 49
+- majin_buu/super_buu: 46
+- majin_buu/super_buu_gohan_absorbed: 56
+- majin_buu/super_buu_gotenks_absorbed: 53
+- nappa/base: 37
+- piccolo/base: 49
+- recoome/base: 45
+- trunks_future/future_trunks_normal: 46
+- trunks_future/future_trunks_super_saiyan: 49
+- trunks_kid/kid_trunks_normal: 34
+- trunks_kid/kid_trunks_super_saiyan: 40
+- vegeta/normal: 42
+- vegeta/super_saiyan_majin: 50
+- vegito/base: 55

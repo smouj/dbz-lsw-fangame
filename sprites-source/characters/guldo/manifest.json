@@ -1,0 +1,10 @@
+{
+  "character": "guldo",
+  "forms": {
+    "base": {
+      "count": 43,
+      "path": "characters/guldo/base/frames"
+    }
+  },
+  "total": 43
+}

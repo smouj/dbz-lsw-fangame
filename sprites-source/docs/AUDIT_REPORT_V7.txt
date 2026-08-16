@@ -1,0 +1,63 @@
+DBZ LSW SPRITES — V7 PROJECT ALIGNED AUDIT
+
+LATEST GITHUB BASELINE
+----------------------
+Repository: smouj/dbz-lsw-fangame
+Commit: 4b9f38353c1be64427deb17f7fad83b5cdbd7aec
+Commit message: feat(sprites): apply V6.1 recut with background fix + composite poses rebuild
+
+Current project contract verified from:
+- scripts/import-v6-sprites.py
+- scripts/add-composite-poses.py
+- scripts/audit-combat-sprites.ts
+- scripts/audit-sheets.ts
+
+CURRENT PROJECT STATE AT THIS COMMIT
+------------------------------------
+Canonical V6.1 forms bridged: 42
+Runtime form dirs after importer (including FIXED-only forms): 44
+V6+FIXED matched frames reported by commit: 1023
+FIXED fallback frames reported by commit: 378
+Recovered effects reported by commit: 217
+Runtime manifests rebuilt by composite-pose pass: 48
+
+CORRECTIONS APPLIED TO THE UPLOADED V6.1 PACK
+---------------------------------------------
+PNG files with stale RGB under fully transparent pixels normalized: 1754
+Transparent pixels normalized to exact RGBA(0,0,0,0): 10927108
+Visible pixels modified by this operation: 0
+This removes the hidden background RGB that can bleed back through atlas/texture filtering or compression.
+
+NAMING / INTEGRATION
+--------------------
+42/42 canonical form directory names match the current V6_TO_DIR importer contract.
+1952/1952 canonical frame files use sequential source identities 001.png..N with no gaps.
+Semantic names are NOT guessed in the canonical pack. Runtime semantic naming is delegated to the current pixel bridge and then composite manifests are rebuilt with the V6.1 conventions.
+
+Current runtime movement convention:
+- move_front = move_front_00 + move_front_01
+- move_back  = move_back_00 + move_back_01
+
+Current composite families documented in PROJECT_RUNTIME_POSE_CONTRACT.json.
+
+FULL IMAGE/MANIFEST VALIDATION
+------------------------------
+Errors: 0
+Canonical frames: 1952
+Canonical forms: 42
+manifest.csv rows: 1952
+Hidden RGB under alpha=0 in frame PNGs: 0
+Hidden RGB under alpha=0 in transparent source sheets: 0
+Partial-alpha pixels in frames: 0
+Partial-alpha pixels in transparent source sheets: 0
+Empty frames: 0
+Non-tight frame bounding boxes: 0
+Coordinate/size mismatches: 0
+Source rectangles out of bounds: 0
+Visible RGB mismatches between frame and mapped source rectangle: 0
+Nonsequential canonical naming: 0
+Index/global-manifest mismatches: 0
+Frames with visible cyan-ish pixels: 0
+Source sheets failing the project's >10% cyan audit criterion: 0
+
+RESULT: PASS

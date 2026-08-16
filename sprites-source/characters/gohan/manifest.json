@@ -1,0 +1,26 @@
+{
+  "character": "gohan",
+  "forms": {
+    "young_gohan_normal": {
+      "count": 42,
+      "path": "characters/gohan/young_gohan_normal/frames"
+    },
+    "young_gohan_super_saiyan": {
+      "count": 45,
+      "path": "characters/gohan/young_gohan_super_saiyan/frames"
+    },
+    "young_gohan_super_saiyan_2": {
+      "count": 45,
+      "path": "characters/gohan/young_gohan_super_saiyan_2/frames"
+    },
+    "teen_gohan_normal_mystic": {
+      "count": 45,
+      "path": "characters/gohan/teen_gohan_normal_mystic/frames"
+    },
+    "teen_gohan_super_saiyan": {
+      "count": 49,
+      "path": "characters/gohan/teen_gohan_super_saiyan/frames"
+    }
+  },
+  "total": 226
+}

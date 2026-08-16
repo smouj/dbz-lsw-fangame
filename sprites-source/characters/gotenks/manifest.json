@@ -1,0 +1,14 @@
+{
+  "character": "gotenks",
+  "forms": {
+    "super_saiyan": {
+      "count": 49,
+      "path": "characters/gotenks/super_saiyan/frames"
+    },
+    "super_saiyan_3": {
+      "count": 44,
+      "path": "characters/gotenks/super_saiyan_3/frames"
+    }
+  },
+  "total": 93
+}

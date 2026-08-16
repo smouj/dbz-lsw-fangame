@@ -1,0 +1,10 @@
+{
+  "character": "piccolo",
+  "forms": {
+    "base": {
+      "count": 49,
+      "path": "characters/piccolo/base/frames"
+    }
+  },
+  "total": 49
+}

@@ -1,0 +1,10 @@
+{
+  "character": "cell_jr",
+  "forms": {
+    "base": {
+      "count": 49,
+      "path": "characters/cell_jr/base/frames"
+    }
+  },
+  "total": 49
+}

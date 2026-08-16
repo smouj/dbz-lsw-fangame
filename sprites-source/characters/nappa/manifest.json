@@ -1,0 +1,10 @@
+{
+  "character": "nappa",
+  "forms": {
+    "base": {
+      "count": 37,
+      "path": "characters/nappa/base/frames"
+    }
+  },
+  "total": 37
+}

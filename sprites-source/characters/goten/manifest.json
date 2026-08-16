@@ -1,0 +1,14 @@
+{
+  "character": "goten",
+  "forms": {
+    "normal": {
+      "count": 39,
+      "path": "characters/goten/normal/frames"
+    },
+    "super_saiyan": {
+      "count": 42,
+      "path": "characters/goten/super_saiyan/frames"
+    }
+  },
+  "total": 81
+}

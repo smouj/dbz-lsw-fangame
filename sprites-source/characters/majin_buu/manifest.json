@@ -1,0 +1,26 @@
+{
+  "character": "majin_buu",
+  "forms": {
+    "fat_buu": {
+      "count": 51,
+      "path": "characters/majin_buu/fat_buu/frames"
+    },
+    "super_buu": {
+      "count": 46,
+      "path": "characters/majin_buu/super_buu/frames"
+    },
+    "super_buu_gotenks_absorbed": {
+      "count": 53,
+      "path": "characters/majin_buu/super_buu_gotenks_absorbed/frames"
+    },
+    "super_buu_gohan_absorbed": {
+      "count": 56,
+      "path": "characters/majin_buu/super_buu_gohan_absorbed/frames"
+    },
+    "kid_buu": {
+      "count": 49,
+      "path": "characters/majin_buu/kid_buu/frames"
+    }
+  },
+  "total": 255
+}

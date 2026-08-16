@@ -1,0 +1,10 @@
+DBZ LSW SPRITES RECUT V6.1 - Background cleanup report
+Method: source GIF border flood mask (distance<=30 to sheet background color) + tiny near-background island cleanup (distance<=40, component<=4).
+
+Changed frames: 4
+Removed pixels total: 70
+
+- android_19/base/032.png: removed 0 source-bg pixels + 1 tiny near-bg pixels; new bbox=(69,287) 115x39
+- majin_buu/super_buu_gohan_absorbed/028.png: removed 32 source-bg pixels + 0 tiny near-bg pixels; new bbox=(240,1932) 24x16
+- majin_buu/super_buu_gohan_absorbed/029.png: removed 36 source-bg pixels + 0 tiny near-bg pixels; new bbox=(271,1932) 24x16
+- gotenks/super_saiyan_3/029.png: removed 0 source-bg pixels + 1 tiny near-bg pixels; new bbox=(207,770) 64x56

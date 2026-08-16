@@ -1,0 +1,5 @@
+character,form,frame,removed_source_bg_pixels,removed_near_bg_islands,new_x0,new_y0,new_w,new_h
+android_19,base,032.png,0,1,69,287,115,39
+majin_buu,super_buu_gohan_absorbed,028.png,32,0,240,1932,24,16
+majin_buu,super_buu_gohan_absorbed,029.png,36,0,271,1932,24,16
+gotenks,super_saiyan_3,029.png,0,1,207,770,64,56

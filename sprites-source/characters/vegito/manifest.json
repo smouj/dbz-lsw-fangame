@@ -1,0 +1,10 @@
+{
+  "character": "vegito",
+  "forms": {
+    "base": {
+      "count": 55,
+      "path": "characters/vegito/base/frames"
+    }
+  },
+  "total": 55
+}

@@ -1,0 +1,10 @@
+{
+  "character": "frieza",
+  "forms": {
+    "base": {
+      "count": 46,
+      "path": "characters/frieza/base/frames"
+    }
+  },
+  "total": 46
+}

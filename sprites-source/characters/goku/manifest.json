@@ -1,0 +1,18 @@
+{
+  "character": "goku",
+  "forms": {
+    "normal": {
+      "count": 46,
+      "path": "characters/goku/normal/frames"
+    },
+    "super_saiyan": {
+      "count": 46,
+      "path": "characters/goku/super_saiyan/frames"
+    },
+    "super_saiyan_3": {
+      "count": 46,
+      "path": "characters/goku/super_saiyan_3/frames"
+    }
+  },
+  "total": 138
+}

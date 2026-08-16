@@ -1,0 +1,14 @@
+{
+  "character": "vegeta",
+  "forms": {
+    "normal": {
+      "count": 42,
+      "path": "characters/vegeta/normal/frames"
+    },
+    "super_saiyan_majin": {
+      "count": 50,
+      "path": "characters/vegeta/super_saiyan_majin/frames"
+    }
+  },
+  "total": 92
+}

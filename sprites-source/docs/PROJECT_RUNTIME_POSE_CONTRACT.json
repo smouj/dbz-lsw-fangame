@@ -1,0 +1,69 @@
+{
+  "github_commit": "4b9f38353c1be64427deb17f7fad83b5cdbd7aec",
+  "base_imported_poses": {
+    "idle": {
+      "fps": 3,
+      "loop": true
+    },
+    "move_front": {
+      "fps": 6,
+      "loop": true,
+      "required_files": [
+        "move_front_00",
+        "move_front_01"
+      ]
+    },
+    "move_back": {
+      "fps": 6,
+      "loop": true,
+      "required_files": [
+        "move_back_00",
+        "move_back_01"
+      ]
+    },
+    "guard": {
+      "fps": 6,
+      "loop": false
+    },
+    "attack_fwd": {
+      "fps": 5,
+      "loop": false
+    },
+    "attack_ud": {
+      "fps": 5,
+      "loop": false
+    },
+    "hurt": {
+      "fps": 6,
+      "loop": false
+    },
+    "beam_charge": {
+      "fps": 7,
+      "loop": false
+    },
+    "beam_fire": {
+      "fps": 8,
+      "loop": false,
+      "required_only_if_png_exists": true
+    }
+  },
+  "composite_poses": {
+    "move_front": "move_front_00 + move_front_01 (6fps loop)",
+    "move_back": "move_back_00 + move_back_01 (6fps loop)",
+    "punch_right": "idle_00 + attack_fwd_00..02 (7fps)",
+    "punch_left": "idle_00 + attack_fwd_03..06 when present (7fps)",
+    "kick_right": "idle_00 + all available attack_ud_00..05 (7fps)",
+    "knockback_back": "all available hurt_00..06 (7fps)",
+    "knockback_up": "hurt_00,01,02,05 when present (7fps)",
+    "knockback_down": "hurt_02,03,04,05 when present (7fps)",
+    "beam_guard": "guard_00..02 (6fps)",
+    "evade": "move_back_00 -> guard_01 (or guard_00) -> move_back_00 (10fps)",
+    "gather_power": "unique beam_charge_00..03 frames (6fps loop)",
+    "power_up": "unique beam_charge_00..03 frames (10fps loop)",
+    "beam_ray": "optional; only existing physical beam_ray_NN files",
+    "beam_ray_tip": "optional; only existing physical beam_ray_tip_NN files"
+  },
+  "runtime_file_pattern": "<runtime_dir>_<semantic_family>_<NN>.png",
+  "canonical_file_pattern": "characters/<character>/<form>/frames/<NNN>.png",
+  "rule": "Do not replace canonical NNN filenames with semantic guesses. The importer bridges canonical pixels to semantic runtime names using FIXED animations.json pixel matching."
+}

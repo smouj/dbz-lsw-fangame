@@ -1,0 +1,10 @@
+{
+  "character": "captain_ginyu",
+  "forms": {
+    "base": {
+      "count": 52,
+      "path": "characters/captain_ginyu/base/frames"
+    }
+  },
+  "total": 52
+}
