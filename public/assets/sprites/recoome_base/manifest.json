@@ -242,7 +242,7 @@
     ]
   },
   "beam_fire": {
-    "frame_count": 5,
+    "frame_count": 4,
     "fps": 8,
     "loop": false,
     "frames": [
@@ -251,12 +251,6 @@
         "file": "recoome_base_beam_fire_00.png",
         "w": 32,
         "h": 42
-      },
-      {
-        "name": "recoome_base_beam_fire_01",
-        "file": "recoome_base_beam_fire_01.png",
-        "w": 47,
-        "h": 44
       },
       {
         "name": "recoome_base_beam_fire_02",

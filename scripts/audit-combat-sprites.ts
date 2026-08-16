@@ -185,6 +185,10 @@ for (const [formId, manifest] of manifests) {
     if (first > 0 && isMax && last > first + 8) {
       console.log(`WARN ${formId}/${pose}: ultimo frame es el MAS ANCHO (w=${last}, frame0 w=${first}) — posible lunge/daño colado en vez de recovery`);
     }
+    // Frames intermedios estrechos son NORMALES en puñetazos (puño frontal = recorte
+    // estrecho entre impactos laterales: 39->24->38). Solo se avisa cuando el frame
+    // estrecho esta DESCENTRADO (salto hacia un lado), tipico de pose de otra
+    // animacion colada (ej: recoome beam_fire_01 cx 16->28->15).
   }
 }
 
