@@ -1,5 +1,5 @@
 /** @refresh reload */
-import React, { useState, useEffect, useRef, useCallback, lazy, Suspense } from 'react';
+import React, { useState, useEffect, useRef, useCallback, lazy, Suspense, memo } from 'react';
 import { createRoot } from 'react-dom/client';
 import { createPortal } from 'react-dom';
 import './styles.css';
@@ -292,7 +292,11 @@ function preloadFormSprites(formId: string): Promise<void> {
 }
 
 // ─── Sprite del luchador (animado si hay manifest; null si no) ───
-function FighterSprite({ formId, pose, side, scale = 8, flash = false }: {
+// Memo: props estables (formId/pose/scale) → el componente NO se re-renderiza
+// cuando BattleScreen cambia de estado (QTE 60fps, logs, HP) si sus props no
+// cambiaron. Es el mayor win de rendimiento: los fighters no se re-renderizan
+// por cada frame del reloj del Stage Attack.
+const FighterSprite = memo(function FighterSprite({ formId, pose, side, scale = 8, flash = false }: {
   formId: string; pose: string; side?: 'left' | 'right'; scale?: number; flash?: boolean;
 }) {
   const anim = useSpriteAnim(formId, pose);
@@ -309,7 +313,7 @@ function FighterSprite({ formId, pose, side, scale = 8, flash = false }: {
       <img src={anim.src} alt={formId} style={{ imageRendering: 'pixelated', width: pw, height: px }} />
     </div>
   );
-}
+});
 
 // ─── Sprite idle recortado de un sheet auténtico ─────────
 // Battle Overworld con taxonomía canónica (docs/SPRITE_TAXONOMY.md):
@@ -320,7 +324,9 @@ function FighterSprite({ formId, pose, side, scale = 8, flash = false }: {
 //                        (haz de luz emergiendo, on/off cada ~3 frames GBC)
 //   El power-up NUNCA muestra idle: idle es el estado previo (sin power-up).
 // · fallback: idleSrc (chibi *_ow.png) si no hay battle_overworld extraído
-function BattleOverworldSprite({ formId, pose, side, idleSrc }: {
+// Memo: el overworld no se re-renderiza por frames del QTE si sus props no
+// cambiaron (mismo win que FighterSprite).
+const BattleOverworldSprite = memo(function BattleOverworldSprite({ formId, pose, side, idleSrc }: {
   formId: string; pose: string; side?: 'left' | 'right'; idleSrc?: string;
 }) {
   const [failedSrc, setFailedSrc] = useState<string | null>(null);
@@ -373,7 +379,7 @@ function BattleOverworldSprite({ formId, pose, side, idleSrc }: {
       {auraSrc && showAura && <img src={auraSrc} alt="" className="gather-power-aura" />}
     </div>
   );
-}
+});
 
 // ─── Sprite idle recortado de un sheet auténtico ─────────
 function CharacterSprite({ formId, height = 92, className = '', side }: {
