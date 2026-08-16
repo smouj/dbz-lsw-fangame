@@ -78,5 +78,13 @@ const brokenForms = formIds.filter(id => {
 });
 check('forms:allResolveToManifest', brokenForms.length === 0, brokenForms.join(', '));
 
+// ── Transformaciones en combate (cartas Sup.Saiyan-2/3) ──
+import { nextTransformedForm, isTransformCard } from '../src/battle/transforms';
+check('transform:gokuBaseToSsj', nextTransformedForm('goku_base') === 'goku_ssj', String(nextTransformedForm('goku_base')));
+check('transform:gokuSsjToSsj2', nextTransformedForm('goku_ssj') === 'goku_ssj2', String(nextTransformedForm('goku_ssj')));
+check('transform:lastFormIsNull', nextTransformedForm('goku_ssj3') === null, String(nextTransformedForm('goku_ssj3')));
+check('transform:noChainReturnsNull', nextTransformedForm('krillin_base') === null, String(nextTransformedForm('krillin_base')));
+check('transform:cardIds', isTransformCard(27) && isTransformCard(28) && !isTransformCard(1));
+
 console.log(failures === 0 ? '\nGBC CANON OK ✅' : `\n${failures} FAILURES ❌`);
 process.exit(failures === 0 ? 0 : 1);

@@ -21,6 +21,7 @@ import { SCENARIOS, SPECIAL_ACTION_BACKGROUND, type BattleViewMode } from './dat
 import { GBC_NATIVE_FPS, type QteState } from './data/actionFidelity';
 import { stageInputPose, stageInputFieldPose, stageInputLunges } from './battle/stageInputMap';
 import { nextStageSequence } from './battle/stageSequences';
+import { nextTransformedForm } from './battle/transforms';
 import { BattleTimeline, type CinematicEvent, type CinematicProfile } from './battle/timeline';
 import { profileFor, type CinematicKind } from './battle/profiles';
 import { actionSemanticsForCard } from './battle/actionProfiles';
@@ -627,6 +628,13 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
   const pf = getForm(playerFormId)!;
   const ef = getForm(enemyFormId)!;
   const prog = loadProgress();
+
+  // Transformación en combate (cartas Sup.Saiyan-2/3): el sprite cambia a la
+  // forma siguiente del personaje (goku_base → goku_super_saiyan → ...).
+  // La prop playerFormId NO se muta; este estado derivado solo vive durante
+  // el combate y se descarta al salir (vuelta al form base en menús).
+  const [playerTransformedForm, setPlayerTransformedForm] = useState<string | null>(null);
+  const activePlayerFormId = playerTransformedForm ?? playerFormId;
 
   const [player, setPlayer] = useState<Fighter>(() => {
     const base: Fighter = {
@@ -1266,9 +1274,9 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
   const renderCardFxActor = (step: CardFxStep) => (
     cardFx ? <div className="fx-fighter fx-actor">
       {cardFx.side === 'player'
-        ? (spriteManifestUrl(playerFormId)
-            ? <FighterSprite formId={playerFormId} pose={cardFxActorPose(cardFx.card, step)} side="left" scale={14} />
-            : <CharacterSprite formId={playerFormId} className="fx-sprite" height={200} side="left" />)
+        ? (spriteManifestUrl(activePlayerFormId)
+            ? <FighterSprite formId={activePlayerFormId} pose={cardFxActorPose(cardFx.card, step)} side="left" scale={14} />
+            : <CharacterSprite formId={activePlayerFormId} className="fx-sprite" height={200} side="left" />)
         : (spriteManifestUrl(enemyFormId)
             ? <FighterSprite formId={enemyFormId} pose={cardFxActorPose(cardFx.card, step)} side="right" scale={14} />
             : <CharacterSprite formId={enemyFormId} className="fx-sprite" height={200} side="right" />)}
@@ -1872,6 +1880,13 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
             Sfx.transform();
             setBattleTransform(nextUid());
             addLog(`${player.name} ${t('battle.powerOn')}!`);
+            // El sprite cambia a la forma siguiente (palette/design swap real):
+            // goku_base → goku_super_saiyan → ssj2 → ssj3 (si existe).
+            const nextForm = nextTransformedForm(activePlayerFormId);
+            if (nextForm && nextForm !== activePlayerFormId) {
+              setPlayerTransformedForm(nextForm);
+              addLog(`${player.name} → ${getForm(nextForm)?.form ?? nextForm}!`);
+            }
           }
           if (eff === 'buff_ki8' || eff === 'buff_str_ki8') setPStages(s => ({ ...s, ki: clampStage(s.ki + 1) }));
           if (eff === 'buff_str8' || eff === 'buff_str_ki8') setPStages(s => ({ ...s, str: clampStage(s.str + 1) }));
@@ -2598,7 +2613,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
             <div className="intro-gbc-match">
               <div className="intro-gbc-side">
                 <div className="intro-gbc-portrait">
-                  <img src={portraitFor(player.id, playerFormId) || ''} alt={player.name}
+                  <img src={portraitFor(player.id, activePlayerFormId) || ''} alt={player.name}
                     onError={e => (e.currentTarget.style.display = 'none')} />
                 </div>
                 <div className="intro-gbc-name">{player.name}</div>
@@ -2654,9 +2669,9 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
                   ? (spriteManifestUrl(enemyFormId)
                       ? <FighterSprite formId={enemyFormId} pose="guard" side="right" scale={14} />
                       : <CharacterSprite formId={enemyFormId} className="fx-sprite" height={200} side="right" />)
-                  : (spriteManifestUrl(playerFormId)
-                      ? <FighterSprite formId={playerFormId} pose="guard" side="left" scale={14} />
-                      : <CharacterSprite formId={playerFormId} className="fx-sprite" height={200} side="left" />)}
+                  : (spriteManifestUrl(activePlayerFormId)
+                      ? <FighterSprite formId={activePlayerFormId} pose="guard" side="left" scale={14} />
+                      : <CharacterSprite formId={activePlayerFormId} className="fx-sprite" height={200} side="left" />)}
               </div>
               {cardFx.card.type === 'beam' ? <div className={`fx-beam-travel ${cardFx.visual}`} /> : <div className="fx-rush-trail" />}
               {cardFx.card.type === 'damage' && <div className="fx-swing" />}
@@ -2670,9 +2685,9 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
                   ? (spriteManifestUrl(enemyFormId)
                       ? <FighterSprite formId={enemyFormId} pose="hurt" side="right" scale={14} />
                       : <CharacterSprite formId={enemyFormId} className="fx-sprite" height={200} side="right" />)
-                  : (spriteManifestUrl(playerFormId)
-                      ? <FighterSprite formId={playerFormId} pose="hurt" side="left" scale={14} />
-                      : <CharacterSprite formId={playerFormId} className="fx-sprite" height={200} side="left" />)}
+                  : (spriteManifestUrl(activePlayerFormId)
+                      ? <FighterSprite formId={activePlayerFormId} pose="hurt" side="left" scale={14} />
+                      : <CharacterSprite formId={activePlayerFormId} className="fx-sprite" height={200} side="left" />)}
               </div>
               <div className="fx-impact" />
             </>
@@ -2694,7 +2709,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
         <div className="fighter-hud left">
           <div className="hud-name" data-tip={`${player.name} — ${player.form} LV${player.level}\nHP ${player.hp}/${player.maxHp} · STR${player.str} KI${player.ki} SPD${player.spd}\nPOS: ${player.battlePos.replace('_', ' ')}`}>
             <span className="hud-portrait">
-              <img src={portraitFor(player.id, playerFormId) || ''} alt="" onError={e => (e.currentTarget.style.display = 'none')} />
+              <img src={portraitFor(player.id, activePlayerFormId) || ''} alt="" onError={e => (e.currentTarget.style.display = 'none')} />
               {!portraitFor(player.id) && <Sword size={14} />}
             </span>
             <strong>{player.name}</strong>
@@ -2781,7 +2796,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
           <Suspense fallback={null}>
             <BattlePixiStage
               scenario={scenario}
-              playerFormId={playerFormId}
+              playerFormId={activePlayerFormId}
               enemyFormId={enemyFormId}
               playerPos={player.battlePos}
               enemyPos={enemy.battlePos}
@@ -2800,16 +2815,16 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
               reflejadas — BACK apunta al borde propio de cada lado (spec) */}
           <div ref={playerRef} className={`fighter-container player ${POSITION_DATA[player.battlePos].altitude.toLowerCase()} ${POSITION_DATA[player.battlePos].depth.toLowerCase()} ${phase === 'stageInput' ? (qteFrozen ? 'qte-frozen' : qteIsDir ? 'qte-lunge' : 'qte-idle') : ''}`}
             style={{ left: `${anchorFor(player.battlePos, 'LEFT').x}%`, top: `${anchorFor(player.battlePos, 'LEFT').y}%`, ['--lunge-px' as string]: `${lungePx(player.battlePos, enemy.battlePos)}px` }}>
-            {qtePose === 'idle' && overworldUrl(playerFormId) && phase !== 'stageInput'
+            {qtePose === 'idle' && overworldUrl(activePlayerFormId) && phase !== 'stageInput'
               ? <BattleOverworldSprite
-                  formId={playerFormId}
+                  formId={activePlayerFormId}
                   pose={playerPose}
                   side="left"
-                  idleSrc={overworldUrl(playerFormId)!}
+                  idleSrc={overworldUrl(activePlayerFormId)!}
                 />
-              : (spriteManifestUrl(playerFormId)
-                  ? <FighterSprite formId={playerFormId} pose={qtePose} side="left" scale={15} flash={phase === 'stageInput' ? (qteFrozen ? false : stageQte.idx > 0) : flashPlayer} />
-                  : <CharacterSprite formId={playerFormId} className="sheet-sprite" height={152} side="left" />)}
+              : (spriteManifestUrl(activePlayerFormId)
+                  ? <FighterSprite formId={activePlayerFormId} pose={qtePose} side="left" scale={15} flash={phase === 'stageInput' ? (qteFrozen ? false : stageQte.idx > 0) : flashPlayer} />
+                  : <CharacterSprite formId={activePlayerFormId} className="sheet-sprite" height={152} side="left" />)}
             <div className="fighter-position-tag hidden">{player.battlePos.replace('_', ' ')}</div>
           </div>
           <div ref={enemyRef} className={`fighter-container enemy ${POSITION_DATA[enemy.battlePos].altitude.toLowerCase()} ${POSITION_DATA[enemy.battlePos].depth.toLowerCase()}`}
