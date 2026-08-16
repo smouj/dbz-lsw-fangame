@@ -25,6 +25,7 @@ export type CinematicEventType =
   | 'SHOT'            // cambia el plano (FIELD/SOLO/DUEL/PROJECTILE/IMPACT)
   | 'ACTOR_POSE'      // pose del atacante (idle, charge, rush, contact…)
   | 'TARGET_POSE'     // pose del defensor (idle, guard, hit…)
+  | 'RUSH'            // avance/lunge corporal del atacante (no es proyectil)
   | 'PROJECTILE'      // crear/avanzar/desvanecer proyectil
   | 'HIT_FRAME'       // instante EXACTO de contacto (sincroniza todo)
   | 'APPLY_DAMAGE'    // la lógica aplica el resultado precalculado

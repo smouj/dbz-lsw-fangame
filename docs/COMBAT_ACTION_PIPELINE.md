@@ -67,6 +67,9 @@ Runtime ownership:
   action scene owns the visible actor/target until `FIELD_RETURN`.
 - `ACTION_SOLO` shows the actor only. `PROJECTILE`, `ACTION_DUEL` and `IMPACT`
   may show the target.
+- `RUSH` is a body-motion event. It must never be encoded as
+  `PROJECTILE { action: "rush" }`; that keeps melee and autonomous projectiles
+  structurally separate.
 
 Projectile tracks carry timing metadata as part of the runtime contract:
 

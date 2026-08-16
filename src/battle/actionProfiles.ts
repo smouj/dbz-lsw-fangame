@@ -143,7 +143,7 @@ export function compileActionProfile(spec: ActionProfileSpec): CinematicProfile 
   // 4) Rush/lunge
   if (spec.rush) {
     tracks.push(track(spec.rush.startFrame, 'SHOT', { shot: 'ACTION_DUEL' }));
-    tracks.push(track(spec.rush.startFrame, 'PROJECTILE', { action: 'rush', progress: 0, duration: spec.rush.duration }));
+    tracks.push(track(spec.rush.startFrame, 'RUSH', { progress: 0, duration: spec.rush.duration }));
   }
 
   // 5) Proyectil/beam

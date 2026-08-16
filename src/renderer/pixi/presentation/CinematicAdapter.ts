@@ -45,7 +45,6 @@ export function applyCinematicEvent(pres: BattlePresentation, e: CinematicEvent)
         action?: string;
         progress?: number;
         kind?: string;
-        duration?: number;
         spawnFrame?: number;
         contactFrame?: number;
       };
@@ -58,9 +57,6 @@ export function applyCinematicEvent(pres: BattlePresentation, e: CinematicEvent)
         case 'travel':
           pres.setProjectileProgress(p.progress ?? 0);
           break;
-        case 'rush':
-          pres.moveActor(typeof p.duration === 'number' ? p.duration : 44);
-          break;
         case 'impact':
         case 'explode':
           pres.setProjectileProgress(1);
@@ -68,6 +64,11 @@ export function applyCinematicEvent(pres: BattlePresentation, e: CinematicEvent)
         default:
           break;
       }
+      break;
+    }
+    case 'RUSH': {
+      const p = e.payload as { duration?: number };
+      pres.moveActor(typeof p.duration === 'number' ? p.duration : 44);
       break;
     }
     case 'HIT_FRAME': {

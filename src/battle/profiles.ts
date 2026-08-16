@@ -96,7 +96,7 @@ function profileRush(id: string, kind: 'damage' | 'command'): CinematicProfile {
     track(a - 12, 'ACTOR_POSE', { pose: 'attack_fwd' }),
     // Travel: lunge hacia el rival (inicio del desplazamiento)
     track(a, 'SHOT', { shot: 'ACTION_DUEL' }),
-    track(a, 'PROJECTILE', { action: 'rush', progress: 0.0, duration: t }),
+    track(a, 'RUSH', { progress: 0.0, duration: t }),
     track(a, 'ACTOR_POSE', { pose: 'attack_fwd' }),
     // Contacto al final del travel
     track(contact, 'ACTOR_POSE', { pose: 'attack_fwd', contact: true }),

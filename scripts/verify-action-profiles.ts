@@ -42,9 +42,17 @@ for (const spec of ACTION_PROFILE_REGISTRY) {
       t.tick === spec.rush?.startFrame &&
       t.event.type === 'SHOT' &&
       (t.event.payload as { shot?: string })?.shot === 'ACTION_DUEL');
+    const rushTrack = p.tracks.some(t =>
+      t.tick === spec.rush?.startFrame &&
+      t.event.type === 'RUSH');
     check(`compile:${spec.id}:duelShotAtRush`, duelShot);
+    check(`compile:${spec.id}:rushTrackAtRush`, rushTrack);
     check(`compile:${spec.id}:startsSolo`, p.presentation === 'ACTION_SOLO', p.presentation);
   }
+  const projectileRush = p.tracks.some(t =>
+    t.event.type === 'PROJECTILE' &&
+    (t.event.payload as { action?: string })?.action === 'rush');
+  check(`compile:${spec.id}:noProjectileRush`, !projectileRush);
   const fr = p.tracks.find(t => t.event.type === 'FIELD_RETURN');
   check(`compile:${spec.id}:fieldReturn`, !!fr && fr.tick === spec.returnToField);
   const maxTick = Math.max(...ticks);
@@ -118,6 +126,12 @@ const generic = profileFor('damage', 'Atomic Break');
 check('profileFor:punch:id', punch.id === 'cont_punch');
 check('profileFor:generic:id', generic.id === 'damage:Atomic Break');
 check('profileFor:meleePresentation', punch.presentation === 'ACTION_SOLO' && generic.presentation === 'ACTION_SOLO');
+for (const p of [punch, generic]) {
+  check(`profileFor:${p.id}:rushEvent`, p.tracks.some(t => t.event.type === 'RUSH'));
+  check(`profileFor:${p.id}:noProjectileRush`, !p.tracks.some(t =>
+    t.event.type === 'PROJECTILE' &&
+    (t.event.payload as { action?: string })?.action === 'rush'));
+}
 
 // 7) Todas las cartas BEAM reales tienen perfil firma y visual explicito.
 for (const card of CARDS.filter(c => c.type === 'beam')) {

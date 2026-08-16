@@ -108,6 +108,7 @@ export class PixiBattlePresentation implements BattlePresentation {
   }
 
   setScene(scene: BattleScene): void {
+    this.prepareScene(scene);
     this.renderer.sceneDirector.setScene(scene);
   }
 
@@ -348,5 +349,39 @@ export class PixiBattlePresentation implements BattlePresentation {
     this.rushDuration = 0;
     this.rushFromX = 0;
     this.rushToX = 0;
+  }
+
+  /**
+   * Cada plano tiene propiedad exclusiva de sus entidades:
+   * ACTION_SOLO no muestra target, rush ni proyectil; ACTION_DUEL no muestra
+   * proyectiles; PROJECTILE no arrastra un rush corporal anterior.
+   */
+  private prepareScene(scene: BattleScene): void {
+    if (scene === 'FIELD') {
+      this.clearProjectile();
+      this.cancelRush();
+      this.leftActor?.setPos(ACTION_ACTOR_X, ACTION_GROUND_Y);
+      this.rightActor?.setPos(ACTION_TARGET_X, ACTION_GROUND_Y);
+      return;
+    }
+
+    if (scene === 'ACTION_SOLO') {
+      this.clearProjectile();
+      this.cancelRush();
+      this.actor?.setPos(ACTION_ACTOR_X, ACTION_GROUND_Y);
+      this.target?.setPos(ACTION_TARGET_X, ACTION_GROUND_Y);
+      return;
+    }
+
+    if (scene === 'ACTION_DUEL') {
+      this.clearProjectile();
+      return;
+    }
+
+    if (scene === 'PROJECTILE') {
+      this.cancelRush();
+      this.actor?.setPos(ACTION_ACTOR_X, ACTION_GROUND_Y);
+      this.target?.setPos(ACTION_TARGET_X, ACTION_GROUND_Y);
+    }
   }
 }

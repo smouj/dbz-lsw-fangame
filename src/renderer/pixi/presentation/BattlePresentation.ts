@@ -32,7 +32,7 @@ export interface BattlePresentation {
   /**
    * Inicia el rush/lunge del atacante: se desplaza hacia el rival durante
    * `durationTicks` frames GBC. La posición se calcula en `sync()` como
-   * f(tick − rushStartTick), NO por tween(durationMs). (mapea PROJECTILE rush)
+   * f(tick − rushStartTick), NO por tween(durationMs). (mapea RUSH)
    */
   moveActor(durationTicks: number): void;
 

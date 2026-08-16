@@ -15,6 +15,11 @@ npm run verify:profiles
 npm run audit:sprites
 ```
 
+Core animation contracts live in `docs/FRAMES_ACTIONS_SPEC.md` and
+`docs/COMBAT_ACTION_PIPELINE.md`. They define the separation between
+`TACTICAL_FIELD`, `ACTION_SOLO`, `ACTION_DUEL`, `PROJECTILE` and `IMPACT`, plus
+the naming/evidence rules for frames and effects.
+
 ### 🛠️ Development Studio (interno)
 
 Herramienta de producción embebida en el mismo proyecto. Accede desde el navegador con la URL `http://localhost:5178/?dev=1` y módulos como `http://localhost:5178/?dev=1#dev/sheets`. NO forma parte del flujo público.

@@ -1106,9 +1106,13 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
         }
         case 'PROJECTILE': {
           const p = e.payload as { action?: string };
-          if (p.action === 'spawn' || p.action === 'travel' || p.action === 'rush') {
+          if (p.action === 'spawn' || p.action === 'travel') {
             setCardFx(prev => prev && ({ ...prev, step: 'travel' }));
           }
+          break;
+        }
+        case 'RUSH': {
+          setCardFx(prev => prev && ({ ...prev, step: 'travel' }));
           break;
         }
         case 'HIT_FRAME': {

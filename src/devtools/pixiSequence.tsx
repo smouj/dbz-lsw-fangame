@@ -143,7 +143,7 @@ function buildMeleeProfile(action: LabAction): CinematicProfile {
   t.push(track(T.moveFront, 'ACTOR_POSE', { pose: 'move_front' }));
   t.push(track(T.action, 'SHOT', { shot: 'ACTION_DUEL' }));
   t.push(track(T.action, 'ACTOR_POSE', { pose: action.pose }));
-  t.push(track(T.action + 8, 'PROJECTILE', { action: 'rush', progress: 0, duration: contact - (T.action + 8) }));
+  t.push(track(T.action + 8, 'RUSH', { progress: 0, duration: contact - (T.action + 8) }));
   t.push(track(contact, 'TARGET_POSE', { pose: 'hurt' }));
   t.push(track(contact, 'HIT_FRAME', {}));
   t.push(track(contact + 1, 'CAMERA', { shake: 0.35 }));

@@ -2,7 +2,7 @@
 // DBZ LSW — MotionSystem (movimiento = f(tick), NO tween(durationMs))
 // ═══════════════════════════════════════════════════════════
 // El desplazamiento de un luchador (rush/lunge) se calcula por tick GBC a
-// partir del PROGRESS que emite el timeline (PROJECTILE { action:'rush',
+// partir del PROGRESS que emite el timeline (RUSH { progress, duration },
 // progress }). No hay duraciones en ms: position = f(currentTick). Resultado
 // idéntico en monitor 60/120/144/240 Hz.
 

@@ -436,6 +436,8 @@ Contrato actual:
 - `compileActionProfile()` convierte specs a eventos de `BattleTimeline`.
 - `profileFor(kind, cardName)` usa el perfil firma si existe y solo cae al
   fallback genérico para acciones todavía no perfiladas.
+- `RUSH` representa embestida corporal y `PROJECTILE` representa solo entidades
+  autónomas: beam, ball, disk, sword o special.
 - `actionSemanticsForCard()` conecta la carta con su animación (`stage`, `melee`,
   `beam`, `support`) y visual (`ray`, `wave`, `ball`, `disk`, `sword`, `special`).
 - `npm run verify:profiles` falla si hay ids/slugs duplicados o si una carta BEAM
