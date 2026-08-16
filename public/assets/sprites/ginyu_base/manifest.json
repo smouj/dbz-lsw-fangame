@@ -527,7 +527,7 @@
     ]
   },
   "gather_power": {
-    "frame_count": 4,
+    "frame_count": 5,
     "fps": 6,
     "loop": true,
     "frames": [
@@ -554,11 +554,17 @@
         "file": "ginyu_base_beam_charge_03.png",
         "w": 32,
         "h": 42
+      },
+      {
+        "name": "ginyu_base_beam_charge_04",
+        "file": "ginyu_base_beam_charge_04.png",
+        "w": 34,
+        "h": 41
       }
     ]
   },
   "power_up": {
-    "frame_count": 4,
+    "frame_count": 5,
     "fps": 10,
     "loop": true,
     "frames": [
@@ -585,6 +591,12 @@
         "file": "ginyu_base_beam_charge_03.png",
         "w": 32,
         "h": 42
+      },
+      {
+        "name": "ginyu_base_beam_charge_04",
+        "file": "ginyu_base_beam_charge_04.png",
+        "w": 34,
+        "h": 41
       }
     ]
   }

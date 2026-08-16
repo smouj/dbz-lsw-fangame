@@ -153,11 +153,24 @@ def main():
             changed = True
             total_poses += 1
 
-        # ── gather_power / power_up: beam_charge (dedup por contenido) ──
+        # ── gather_power / power_up: TODOS los beam_charge (dedup por MD5) ──
         for pose, fps, loop in [('gather_power', 6, True), ('power_up', 10, True)]:
-            frames = frames_for(d, f"{form_dir}_beam_charge", [0, 1, 2, 3])
-            if not frames:
-                frames = frames_for(d, f"{form_dir}_beam_charge", [0, 1, 2, 3, 4, 5])
+            # escanear todos los beam_charge disponibles (00..15)
+            frames = []
+            i = 0
+            while True:
+                fn = f"{form_dir}_beam_charge_{i:02d}.png"
+                if not file_exists(d, fn):
+                    if i > 0:
+                        break
+                    i += 1
+                    if i > 15:
+                        break
+                    continue
+                from PIL import Image
+                im = Image.open(os.path.join(d, fn))
+                frames.append({"name": fn.replace('.png', ''), "file": fn, "w": im.width, "h": im.height})
+                i += 1
             if frames:
                 # dedup: quitar frames byte-idénticos consecutivos (mismo MD5)
                 import hashlib

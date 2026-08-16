@@ -545,7 +545,7 @@
     ]
   },
   "gather_power": {
-    "frame_count": 4,
+    "frame_count": 5,
     "fps": 6,
     "loop": true,
     "frames": [
@@ -572,11 +572,17 @@
         "file": "frieza_base_beam_charge_03.png",
         "w": 40,
         "h": 40
+      },
+      {
+        "name": "frieza_base_beam_charge_04",
+        "file": "frieza_base_beam_charge_04.png",
+        "w": 30,
+        "h": 42
       }
     ]
   },
   "power_up": {
-    "frame_count": 4,
+    "frame_count": 5,
     "fps": 10,
     "loop": true,
     "frames": [
@@ -603,6 +609,12 @@
         "file": "frieza_base_beam_charge_03.png",
         "w": 40,
         "h": 40
+      },
+      {
+        "name": "frieza_base_beam_charge_04",
+        "file": "frieza_base_beam_charge_04.png",
+        "w": 30,
+        "h": 42
       }
     ]
   }

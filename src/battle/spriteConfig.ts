@@ -169,11 +169,13 @@ export function resolvePoseFrameSequence(
       return back.length ? back : [f('idle', 0)].filter(Boolean) as string[];
     }
     case 'gather_power':
-      // Contrato V6.1: gather usa beam_charge 00-03 (4 frames, dedup).
-      return seq('beam_charge', 0, 3).length ? seq('beam_charge', 0, 3) : allOf('guard');
+      // Contrato V6.1: gather usa TODOS los beam_charge disponibles (la V6.1
+      // extrajo 4-9 frames de carga por forma; usarlos todos = animación de
+      // carga completa). Si no hay beam_charge, fallback a guard.
+      return allOf('beam_charge').length ? allOf('beam_charge') : allOf('guard');
     case 'power_up':
-      // power_up = gather_power (beam_charge 00-03, 10fps loop).
-      return seq('beam_charge', 0, 3).length ? seq('beam_charge', 0, 3) : allOf('beam_charge');
+      // power_up = gather_power (mismos beam_charge, 10fps loop).
+      return allOf('beam_charge').length ? allOf('beam_charge') : allOf('beam_charge');
     default:
       return allOf(pose);
   }

@@ -538,5 +538,25 @@
         "h": 35
       }
     ]
+  },
+  "beam_fire": {
+    "frame_count": 2,
+    "fps": 8,
+    "loop": false,
+    "frames": [
+      {
+        "name": "trunks_base_beam_charge_00",
+        "file": "trunks_base_beam_charge_00.png",
+        "w": 31,
+        "h": 37
+      },
+      {
+        "name": "trunks_base_beam_charge_01",
+        "file": "trunks_base_beam_charge_01.png",
+        "w": 30,
+        "h": 37
+      }
+    ],
+    "alias_of": "beam_charge"
   }
 }

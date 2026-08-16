@@ -550,5 +550,25 @@
         "h": 40
       }
     ]
+  },
+  "beam_fire": {
+    "frame_count": 2,
+    "fps": 8,
+    "loop": false,
+    "frames": [
+      {
+        "name": "goten_super_saiyan_beam_charge_00",
+        "file": "goten_super_saiyan_beam_charge_00.png",
+        "w": 31,
+        "h": 40
+      },
+      {
+        "name": "goten_super_saiyan_beam_charge_01",
+        "file": "goten_super_saiyan_beam_charge_01.png",
+        "w": 30,
+        "h": 40
+      }
+    ],
+    "alias_of": "beam_charge"
   }
 }
