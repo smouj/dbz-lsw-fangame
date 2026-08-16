@@ -78,22 +78,85 @@ export function isDamageVulnerable(pos: BattlePosition): boolean {
 // El escenario completo necesita 8 puntos físicos: LEFT (jugador) y RIGHT
 // (enemigo) NO comparten X porque BACK apunta al borde propio de cada lado.
 // Coordenadas en porcentaje del viewport del campo (0-100).
-export const LEFT_ANCHORS: Record<BattlePosition, { x: number; y: number }> = {
+export type PositionAnchor = { x: number; y: number };
+export type PositionSide = 'LEFT' | 'RIGHT';
+
+export const DEFAULT_LEFT_ANCHORS: Record<BattlePosition, PositionAnchor> = {
   [BattlePosition.UP_BACK]: { x: 16, y: 26 },
   [BattlePosition.UP_FRONT]: { x: 32, y: 26 },
   [BattlePosition.DOWN_BACK]: { x: 16, y: 68 },
   [BattlePosition.DOWN_FRONT]: { x: 32, y: 68 },
 };
 
-export const RIGHT_ANCHORS: Record<BattlePosition, { x: number; y: number }> = {
+export const DEFAULT_RIGHT_ANCHORS: Record<BattlePosition, PositionAnchor> = {
   [BattlePosition.UP_BACK]: { x: 84, y: 26 },
   [BattlePosition.UP_FRONT]: { x: 68, y: 26 },
   [BattlePosition.DOWN_BACK]: { x: 84, y: 68 },
   [BattlePosition.DOWN_FRONT]: { x: 68, y: 68 },
 };
 
-export function anchorFor(pos: BattlePosition, side: 'LEFT' | 'RIGHT') {
-  return side === 'LEFT' ? LEFT_ANCHORS[pos] : RIGHT_ANCHORS[pos];
+export const LEFT_ANCHORS = DEFAULT_LEFT_ANCHORS;
+export const RIGHT_ANCHORS = DEFAULT_RIGHT_ANCHORS;
+
+const ANCHOR_OVERRIDE_KEY = 'dbzlsw:position-anchors';
+
+export type PositionAnchorOverrides = Partial<Record<PositionSide, Partial<Record<BattlePosition, PositionAnchor>>>>;
+
+function clampAnchor(anchor: PositionAnchor): PositionAnchor {
+  return {
+    x: Math.max(0, Math.min(100, Math.round(anchor.x * 10) / 10)),
+    y: Math.max(0, Math.min(100, Math.round(anchor.y * 10) / 10)),
+  };
+}
+
+export function defaultAnchorFor(pos: BattlePosition, side: PositionSide): PositionAnchor {
+  return side === 'LEFT' ? DEFAULT_LEFT_ANCHORS[pos] : DEFAULT_RIGHT_ANCHORS[pos];
+}
+
+export function loadPositionAnchorOverrides(): PositionAnchorOverrides {
+  if (typeof localStorage === 'undefined') return {};
+  try {
+    const raw = localStorage.getItem(ANCHOR_OVERRIDE_KEY);
+    return raw ? (JSON.parse(raw) as PositionAnchorOverrides) : {};
+  } catch {
+    return {};
+  }
+}
+
+export function savePositionAnchorOverrides(overrides: PositionAnchorOverrides): void {
+  if (typeof localStorage === 'undefined') return;
+  try {
+    localStorage.setItem(ANCHOR_OVERRIDE_KEY, JSON.stringify(overrides));
+  } catch {
+    // Ignore quota/private-mode errors; Position Lab can still preview defaults.
+  }
+}
+
+export function clearPositionAnchorOverrides(): void {
+  if (typeof localStorage === 'undefined') return;
+  try {
+    localStorage.removeItem(ANCHOR_OVERRIDE_KEY);
+  } catch {
+    // noop
+  }
+}
+
+export function setPositionAnchorOverride(side: PositionSide, pos: BattlePosition, anchor: PositionAnchor): PositionAnchorOverrides {
+  const current = loadPositionAnchorOverrides();
+  const next: PositionAnchorOverrides = {
+    ...current,
+    [side]: {
+      ...(current[side] ?? {}),
+      [pos]: clampAnchor(anchor),
+    },
+  };
+  savePositionAnchorOverrides(next);
+  return next;
+}
+
+export function anchorFor(pos: BattlePosition, side: PositionSide): PositionAnchor {
+  const override = loadPositionAnchorOverrides()[side]?.[pos];
+  return override ? clampAnchor(override) : defaultAnchorFor(pos, side);
 }
 
 // ─── Movement: transformación de UN SOLO eje (manual GBC, 2026-08-12) ───

@@ -17,6 +17,29 @@ import {
 } from './spriteEditing';
 
 const FPS_CHOICES = [1, 3, 6, 7, 8, 10, 12, 15, 24, 30];
+const POSE_RUNTIME_DEFAULTS: Record<string, { fps: number; loop: boolean; note: string }> = {
+  idle: { fps: 3, loop: true, note: 'hold táctico estable' },
+  move_front: { fps: 6, loop: true, note: 'ciclo de avance' },
+  move_back: { fps: 6, loop: true, note: 'mismo ciclo espejado en runtime' },
+  guard: { fps: 6, loop: false, note: 'entrada/hold corto de defensa' },
+  attack_fwd: { fps: 5, loop: false, note: 'windup -> contacto -> recover frontal' },
+  attack_ud: { fps: 5, loop: false, note: 'windup -> contacto -> recover vertical' },
+  hurt: { fps: 6, loop: false, note: 'reacción no-loop' },
+  beam_charge: { fps: 7, loop: false, note: 'carga previa al release' },
+  beam_fire: { fps: 8, loop: false, note: 'release del beam' },
+  beam_ray: { fps: 7, loop: false, note: 'FX autónomo de rayo' },
+  beam_ray_tip: { fps: 7, loop: false, note: 'punta/impacto del rayo' },
+  gather_power: { fps: 6, loop: true, note: 'preparación/aura compartida' },
+  power_up: { fps: 6, loop: true, note: 'aura/transformación' },
+};
+
+function frameOrderKey(file: string): number {
+  return Number(file.match(/_(\d+)\.png$/i)?.[1] ?? 0);
+}
+
+function sortFrames(frames: ManifestFrame[]): ManifestFrame[] {
+  return [...frames].sort((a, b) => frameOrderKey(a.file) - frameOrderKey(b.file) || a.file.localeCompare(b.file));
+}
 
 function poseMeta(pose: string) {
   return combatPoseMeta(pose);
@@ -139,6 +162,19 @@ export function AnimationModule() {
     if (pid === pose) setPose(Object.keys(manifest ?? {})[0] ?? '');
   }
 
+  function repairPoseContract() {
+    const defaults = POSE_RUNTIME_DEFAULTS[pose];
+    updatePose(pose, p => ({
+      ...p,
+      frames: sortFrames(p.frames),
+      frame_count: p.frames.length,
+      fps: defaults?.fps ?? p.fps,
+      loop: defaults?.loop ?? p.loop,
+    }));
+    setFrame(0);
+    setStatus(`✓ ${pose} reparado: orden numérico + contrato ${defaults ? `${defaults.fps}fps/${defaults.loop ? 'loop' : 'no-loop'}` : 'custom'}`);
+  }
+
   // ─── Guardar / exportar / reset ────────────────────────────
   async function saveManifest() {
     if (!manifest || !dir) return;
@@ -249,6 +285,10 @@ export function AnimationModule() {
   const meleeCards = actionCards.filter(c => c.type === 'damage');
   const beamCards = actionCards.filter(c => c.type === 'beam');
   const runtimePrepFallback = POSE_FALLBACKS.gather_power ?? ['gather_power'];
+  const poseDefault = POSE_RUNTIME_DEFAULTS[pose];
+  const orderOk = frames.every((f, i, arr) => i === 0 || frameOrderKey(arr[i - 1].file) <= frameOrderKey(f.file));
+  const countOk = poseData ? poseData.frame_count === frames.length : true;
+  const contractOk = !poseDefault || (poseDefault.fps === fps && poseDefault.loop === loop);
 
   return (
     <div className="dev-panel">
@@ -287,6 +327,18 @@ export function AnimationModule() {
             <strong>{poseMeta(pose).label}</strong>
             <span>{poseMeta(pose).gameplay}</span>
             <code>{pose}</code>
+          </div>
+          <div className={`dev-action-map ${orderOk && countOk && contractOk ? 'ok' : 'warn'}`}>
+            <strong>Contrato de secuencia</strong>
+            <span>
+              {poseDefault
+                ? `${poseDefault.note} · esperado ${poseDefault.fps}fps · ${poseDefault.loop ? 'loop' : 'no-loop'}`
+                : 'pose custom sin contrato cerrado'}
+            </span>
+            <span>
+              Orden {orderOk ? 'OK' : 'desordenado'} · frame_count {countOk ? 'OK' : `${poseData?.frame_count} != ${frames.length}`} · timing {contractOk ? 'OK' : 'requiere ajuste'}
+            </span>
+            <button className="dev-btn" disabled={!poseData} onClick={repairPoseContract}>Reparar pose</button>
           </div>
           <div className="dev-action-map">
             <strong>Runtime contract</strong>

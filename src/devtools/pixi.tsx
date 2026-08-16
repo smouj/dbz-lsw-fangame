@@ -10,63 +10,109 @@
 import { useEffect, useRef, useState } from 'react';
 import { FORMS } from '../data/roster';
 import { GBC_FPS } from '../battle/timeline';
-import { BattleCanvas, type BattleCanvasHandle } from '../renderer/pixi/BattleCanvas';
-import type { FighterActor } from '../renderer/pixi/actors/FighterActor';
+import { SCENARIOS } from '../data/scenarios';
+import { BattlePosition, BATTLE_POSITIONS, POSITION_NAMES } from '../data/positions';
+import { BattleRenderer } from '../renderer/pixi/BattleRenderer';
+import { PixiBattlePresentation } from '../renderer/pixi/presentation/PixiBattlePresentation';
+import type { BattleScene } from '../renderer/pixi/presentation/BattlePresentation';
+import { BATTLE_LOGICAL_H, BATTLE_LOGICAL_W } from '../renderer/pixi/config';
 
 const POSES = [
   'idle', 'move_front', 'move_back', 'guard', 'attack_fwd',
   'attack_ud', 'hurt', 'beam_charge', 'beam_fire', 'gather_power',
 ] as const;
 
-// Caja lógica (píxeles de "juego") y display CSS (escalado 2x pixelado).
-const LOGICAL_W = 320;
-const LOGICAL_H = 240;
-
 export function PixiModule() {
-  const canvasRef = useRef<BattleCanvasHandle>(null);
-  const actorRef = useRef<FighterActor | null>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const rendererRef = useRef<BattleRenderer | null>(null);
+  const presRef = useRef<PixiBattlePresentation | null>(null);
   const tickEl = useRef<HTMLSpanElement>(null);
   const tickRef = useRef(0);
 
   const [formId, setFormId] = useState('goku_base');
+  const [enemyFormId, setEnemyFormId] = useState('piccolo_base');
+  const [scenarioId, setScenarioId] = useState('scenario_01');
+  const [scene, setScene] = useState<BattleScene>('FIELD');
+  const [playerPos, setPlayerPos] = useState<BattlePosition>(BattlePosition.DOWN_BACK);
+  const [enemyPos, setEnemyPos] = useState<BattlePosition>(BattlePosition.DOWN_BACK);
   const [pose, setPose] = useState<string>('idle');
   const [scale, setScale] = useState(4);
   const [status, setStatus] = useState<'loading' | 'ready' | 'no-manifest'>('loading');
+  const [reloadKey, setReloadKey] = useState(0);
 
-  // Cargar el luchador cuando cambia la forma.
+  // Cargar el mismo renderer/presentation que usa el juego real.
   useEffect(() => {
     let cancelled = false;
-    const h = canvasRef.current;
-    if (!h) return;
+    const canvas = canvasRef.current;
+    const scenario = SCENARIOS.find(s => s.id === scenarioId) ?? SCENARIOS[0];
+    if (!canvas || !scenario) return;
     setStatus('loading');
-    h.addFighter(formId, 'left', scale).then(actor => {
-      if (cancelled) return;
-      if (!actor) { setStatus('no-manifest'); return; }
-      actorRef.current = actor;
-      // ground line: abajo-centro de la caja lógica
-      actor.position.set(LOGICAL_W / 2, LOGICAL_H - 12);
-      actor.setPose(pose, tickRef.current);
+    rendererRef.current?.destroy();
+    rendererRef.current = null;
+    presRef.current = null;
+
+    (async () => {
+      const renderer = await BattleRenderer.create(canvas);
+      if (cancelled) {
+        renderer.destroy();
+        return;
+      }
+      renderer.resize(BATTLE_LOGICAL_W, BATTLE_LOGICAL_H);
+      const pres = new PixiBattlePresentation(renderer, {
+        playerFormId: formId,
+        enemyFormId,
+        overviewBackground: scenario.overviewBackground,
+        actionBackground: scenario.actionBackground,
+        playerPos,
+        enemyPos,
+        scale,
+      });
+      await pres.init();
+      if (cancelled) {
+        renderer.destroy();
+        return;
+      }
+      rendererRef.current = renderer;
+      presRef.current = pres;
+      pres.setAttacker('left');
+      pres.setScene(scene);
+      pres.setActorPose(pose);
+      pres.sync(tickRef.current);
       setStatus('ready');
+    })().catch(() => {
+      if (!cancelled) setStatus('no-manifest');
     });
-    return () => { cancelled = true; };
+    return () => {
+      cancelled = true;
+      rendererRef.current?.destroy();
+      rendererRef.current = null;
+      presRef.current = null;
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [formId]);
+  }, [formId, enemyFormId, scenarioId, reloadKey]);
 
   // Cambiar pose (reinicia el reloj de la pose en el tick actual).
   useEffect(() => {
-    actorRef.current?.setPose(pose, tickRef.current);
+    presRef.current?.setActorPose(pose);
   }, [pose]);
 
   // Cambiar escala.
   useEffect(() => {
-    actorRef.current?.setScale(scale);
+    // La escala se aplica al recrear presentación para no dejar nodos stale.
+    setReloadKey(k => k + 1);
   }, [scale]);
+
+  useEffect(() => {
+    presRef.current?.setScene(scene);
+  }, [scene]);
+
+  useEffect(() => {
+    presRef.current?.updateTactical(playerPos, enemyPos);
+  }, [playerPos, enemyPos]);
 
   // Reloj GBC ÚNICO: avanza frames a GBC_FPS y alimenta el renderer.
   // El contador se escribe por DOM directo (sin setState por frame).
   useEffect(() => {
-    const h = canvasRef.current;
-    if (!h) return;
     let raf = 0;
     let last = performance.now();
     let acc = 0;
@@ -78,9 +124,9 @@ export function PixiModule() {
       const ticks = Math.floor(acc);
       if (ticks > 0) {
         acc -= ticks;
-        h.tick(ticks);
         total += ticks;
         tickRef.current = total;
+        presRef.current?.sync(total);
         if (tickEl.current) tickEl.current.textContent = String(total);
       }
       raf = requestAnimationFrame(loop);
@@ -108,6 +154,30 @@ export function PixiModule() {
           </select>
         </label>
         <label className="pixi-control">
+          <span>Rival</span>
+          <select value={enemyFormId} onChange={e => setEnemyFormId(e.target.value)}>
+            {Object.entries(FORMS).map(([id, f]) => (
+              <option key={id} value={id}>{f.character} / {f.form}</option>
+            ))}
+          </select>
+        </label>
+        <label className="pixi-control">
+          <span>Escena</span>
+          <select value={scene} onChange={e => setScene(e.target.value as BattleScene)}>
+            {(['FIELD', 'ACTION_SOLO', 'ACTION_DUEL', 'PROJECTILE', 'IMPACT'] as BattleScene[]).map(s => (
+              <option key={s} value={s}>{s}</option>
+            ))}
+          </select>
+        </label>
+        <label className="pixi-control">
+          <span>Escenario</span>
+          <select value={scenarioId} onChange={e => setScenarioId(e.target.value)}>
+            {SCENARIOS.map(s => (
+              <option key={s.id} value={s.id}>{s.id.replace('scenario_', 'Escenario ')}</option>
+            ))}
+          </select>
+        </label>
+        <label className="pixi-control">
           <span>Pose</span>
           <select value={pose} onChange={e => setPose(e.target.value)}>
             {POSES.map(p => <option key={p} value={p}>{p}</option>)}
@@ -117,6 +187,18 @@ export function PixiModule() {
           <span>Escala {scale}×</span>
           <input type="range" min={1} max={8} step={1} value={scale}
             onChange={e => setScale(Number(e.target.value))} />
+        </label>
+        <label className="pixi-control">
+          <span>Player pos</span>
+          <select value={playerPos} onChange={e => setPlayerPos(e.target.value as BattlePosition)}>
+            {BATTLE_POSITIONS.map(p => <option key={p} value={p}>{POSITION_NAMES[p]}</option>)}
+          </select>
+        </label>
+        <label className="pixi-control">
+          <span>Enemy pos</span>
+          <select value={enemyPos} onChange={e => setEnemyPos(e.target.value as BattlePosition)}>
+            {BATTLE_POSITIONS.map(p => <option key={p} value={p}>{POSITION_NAMES[p]}</option>)}
+          </select>
         </label>
       </div>
 
@@ -128,11 +210,12 @@ export function PixiModule() {
       </div>
 
       <div className="pixi-stage">
-        <BattleCanvas ref={canvasRef} width={LOGICAL_W} height={LOGICAL_H} className="pixi-canvas" />
+        <canvas ref={canvasRef} width={BATTLE_LOGICAL_W} height={BATTLE_LOGICAL_H} className="pixi-canvas" />
       </div>
       <p className="pixi-note">
-        Ground line fija (ancla 0.5,1): al cambiar de frame el personaje no
-        «respira», aunque los PNG tengan dimensiones recortadas distintas.
+        Usa el mismo `BattleRenderer` + `PixiBattlePresentation` que el combate:
+        fondo overview/action, overworld táctico, actores grandes, target oculto
+        en ACTION_SOLO y reloj GBC único.
       </p>
     </div>
   );
