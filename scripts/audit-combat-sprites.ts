@@ -40,7 +40,7 @@ const POSE_RUNTIME_DEFAULTS: Record<string, PoseContract> = {
   beam_ray: { fps: 7, loop: false },
   beam_ray_tip: { fps: 7, loop: false },
   gather_power: { fps: 6, loop: true },
-  power_up: { fps: 6, loop: true },
+  power_up: { fps: 10, loop: true }, // parpadeo rapido (haz emergiendo)
 };
 
 const root = process.cwd();

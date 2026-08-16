@@ -39,7 +39,7 @@ const POSE_RUNTIME_DEFAULTS: Record<string, { fps: number; loop: boolean; note: 
   beam_ray: { fps: 7, loop: false, note: 'FX autónomo de rayo' },
   beam_ray_tip: { fps: 7, loop: false, note: 'punta/impacto del rayo' },
   gather_power: { fps: 6, loop: true, note: 'preparación/aura compartida' },
-  power_up: { fps: 6, loop: true, note: 'aura/transformación' },
+  power_up: { fps: 10, loop: true, note: 'aura/transformación (parpadeo rápido — haz emergiendo)' },
 };
 
 function frameOrderKey(file: string): number {

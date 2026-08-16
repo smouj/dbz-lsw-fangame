@@ -593,5 +593,79 @@
         "h": 42
       }
     ]
+  },
+  "gather_power": {
+    "frame_count": 5,
+    "fps": 6,
+    "loop": true,
+    "frames": [
+      {
+        "name": "buu_gohan_absorbed_beam_charge_00",
+        "file": "buu_gohan_absorbed_beam_charge_00.png",
+        "w": 32,
+        "h": 39
+      },
+      {
+        "name": "buu_gohan_absorbed_beam_charge_01",
+        "file": "buu_gohan_absorbed_beam_charge_01.png",
+        "w": 32,
+        "h": 39
+      },
+      {
+        "name": "buu_gohan_absorbed_beam_charge_02",
+        "file": "buu_gohan_absorbed_beam_charge_02.png",
+        "w": 27,
+        "h": 43
+      },
+      {
+        "name": "buu_gohan_absorbed_beam_charge_03",
+        "file": "buu_gohan_absorbed_beam_charge_03.png",
+        "w": 32,
+        "h": 40
+      },
+      {
+        "name": "buu_gohan_absorbed_beam_charge_04",
+        "file": "buu_gohan_absorbed_beam_charge_04.png",
+        "w": 29,
+        "h": 43
+      }
+    ]
+  },
+  "power_up": {
+    "frame_count": 5,
+    "fps": 10,
+    "loop": true,
+    "frames": [
+      {
+        "name": "buu_gohan_absorbed_beam_charge_00",
+        "file": "buu_gohan_absorbed_beam_charge_00.png",
+        "w": 32,
+        "h": 39
+      },
+      {
+        "name": "buu_gohan_absorbed_beam_charge_01",
+        "file": "buu_gohan_absorbed_beam_charge_01.png",
+        "w": 32,
+        "h": 39
+      },
+      {
+        "name": "buu_gohan_absorbed_beam_charge_02",
+        "file": "buu_gohan_absorbed_beam_charge_02.png",
+        "w": 27,
+        "h": 43
+      },
+      {
+        "name": "buu_gohan_absorbed_beam_charge_03",
+        "file": "buu_gohan_absorbed_beam_charge_03.png",
+        "w": 32,
+        "h": 40
+      },
+      {
+        "name": "buu_gohan_absorbed_beam_charge_04",
+        "file": "buu_gohan_absorbed_beam_charge_04.png",
+        "w": 29,
+        "h": 43
+      }
+    ]
   }
 }

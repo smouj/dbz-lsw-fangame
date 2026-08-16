@@ -539,5 +539,43 @@
         "h": 40
       }
     ]
+  },
+  "gather_power": {
+    "frame_count": 2,
+    "fps": 6,
+    "loop": true,
+    "frames": [
+      {
+        "name": "kid_trunks_super_saiyan_beam_charge_00",
+        "file": "kid_trunks_super_saiyan_beam_charge_00.png",
+        "w": 31,
+        "h": 41
+      },
+      {
+        "name": "kid_trunks_super_saiyan_beam_charge_01",
+        "file": "kid_trunks_super_saiyan_beam_charge_01.png",
+        "w": 30,
+        "h": 41
+      }
+    ]
+  },
+  "power_up": {
+    "frame_count": 2,
+    "fps": 10,
+    "loop": true,
+    "frames": [
+      {
+        "name": "kid_trunks_super_saiyan_beam_charge_00",
+        "file": "kid_trunks_super_saiyan_beam_charge_00.png",
+        "w": 31,
+        "h": 41
+      },
+      {
+        "name": "kid_trunks_super_saiyan_beam_charge_01",
+        "file": "kid_trunks_super_saiyan_beam_charge_01.png",
+        "w": 30,
+        "h": 41
+      }
+    ]
   }
 }

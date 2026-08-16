@@ -545,5 +545,55 @@
         "h": 42
       }
     ]
+  },
+  "gather_power": {
+    "frame_count": 3,
+    "fps": 6,
+    "loop": true,
+    "frames": [
+      {
+        "name": "vegeta_super_saiyan_majin_beam_charge_00",
+        "file": "vegeta_super_saiyan_majin_beam_charge_00.png",
+        "w": 32,
+        "h": 41
+      },
+      {
+        "name": "vegeta_super_saiyan_majin_beam_charge_01",
+        "file": "vegeta_super_saiyan_majin_beam_charge_01.png",
+        "w": 28,
+        "h": 45
+      },
+      {
+        "name": "vegeta_super_saiyan_majin_beam_charge_02",
+        "file": "vegeta_super_saiyan_majin_beam_charge_02.png",
+        "w": 30,
+        "h": 44
+      }
+    ]
+  },
+  "power_up": {
+    "frame_count": 3,
+    "fps": 10,
+    "loop": true,
+    "frames": [
+      {
+        "name": "vegeta_super_saiyan_majin_beam_charge_00",
+        "file": "vegeta_super_saiyan_majin_beam_charge_00.png",
+        "w": 32,
+        "h": 41
+      },
+      {
+        "name": "vegeta_super_saiyan_majin_beam_charge_01",
+        "file": "vegeta_super_saiyan_majin_beam_charge_01.png",
+        "w": 28,
+        "h": 45
+      },
+      {
+        "name": "vegeta_super_saiyan_majin_beam_charge_02",
+        "file": "vegeta_super_saiyan_majin_beam_charge_02.png",
+        "w": 30,
+        "h": 44
+      }
+    ]
   }
 }

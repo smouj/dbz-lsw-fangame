@@ -514,5 +514,43 @@
         "h": 39
       }
     ]
+  },
+  "gather_power": {
+    "frame_count": 2,
+    "fps": 6,
+    "loop": true,
+    "frames": [
+      {
+        "name": "goten_base_beam_charge_00",
+        "file": "goten_base_beam_charge_00.png",
+        "w": 31,
+        "h": 40
+      },
+      {
+        "name": "goten_base_beam_charge_01",
+        "file": "goten_base_beam_charge_01.png",
+        "w": 30,
+        "h": 40
+      }
+    ]
+  },
+  "power_up": {
+    "frame_count": 2,
+    "fps": 10,
+    "loop": true,
+    "frames": [
+      {
+        "name": "goten_base_beam_charge_00",
+        "file": "goten_base_beam_charge_00.png",
+        "w": 31,
+        "h": 40
+      },
+      {
+        "name": "goten_base_beam_charge_01",
+        "file": "goten_base_beam_charge_01.png",
+        "w": 30,
+        "h": 40
+      }
+    ]
   }
 }
