@@ -78,6 +78,11 @@ export function AnimationModule({ target }: { target?: DevLinkedTarget | null })
   const [addCopy, setAddCopy] = useState('');
   const [addFile, setAddFile] = useState('');
 
+  // Drag & drop: paleta de sprites -> línea de tiempo
+  const [dropIndex, setDropIndex] = useState<number | null>(null);
+  const [dragOver, setDragOver] = useState(false);
+  const paletteRef = useRef<HTMLDivElement>(null);
+
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   const dir = spriteDirFor(formId);
@@ -153,6 +158,56 @@ export function AnimationModule({ target }: { target?: DevLinkedTarget | null })
   }
   function addExisting(f: ManifestFrame) {
     updatePose(pose, p => addFrame(p, { ...f }));
+  }
+
+  // ─── Drag & drop (paleta -> timeline) ───────────────────
+  function onPaletteDragStart(e: React.DragEvent, f: ManifestFrame, srcFormId: string) {
+    // Guardamos la descripción del frame en el payload del drag
+    e.dataTransfer.setData('application/x-dbzlsw-frame', JSON.stringify({ formId: srcFormId, frame: f }));
+    e.dataTransfer.effectAllowed = 'copy';
+  }
+
+  function onTimelineDragOver(e: React.DragEvent, index?: number) {
+    if (!e.dataTransfer.types.includes('application/x-dbzlsw-frame')) return;
+    e.preventDefault();
+    e.dataTransfer.dropEffect = 'copy';
+    setDropIndex(index === undefined ? nFrames : index);
+    setDragOver(true);
+  }
+
+  function onTimelineDragLeave(e: React.DragEvent) {
+    // Solo salir si realmente abandonamos la línea de tiempo
+    const rt = (e.currentTarget as HTMLElement).getBoundingClientRect();
+    const x = e.clientX, y = e.clientY;
+    if (x < rt.left || x > rt.right || y < rt.top || y > rt.bottom) {
+      setDropIndex(null);
+      setDragOver(false);
+    }
+  }
+
+  function onTimelineDrop(e: React.DragEvent, index?: number) {
+    e.preventDefault();
+    setDropIndex(null);
+    setDragOver(false);
+    const raw = e.dataTransfer.getData('application/x-dbzlsw-frame');
+    if (!raw) return;
+    try {
+      const { formId: srcFormId, frame: f } = JSON.parse(raw) as { formId: string; frame: ManifestFrame };
+      if (srcFormId === formId) {
+        // Mismo personaje: insertar el frame en la posición soltada
+        updatePose(pose, p => addFrame(p, { ...f }, index));
+        setStatus(`✓ Frame ${f.file} insertado en la posición ${index ?? nFrames}`);
+      } else {
+        setStatus(`⚠ Los frames de ${srcFormId} no se pueden arrastrar a ${formId}: pertenecen a otro personaje/form. Usa “copiar frame existente” dentro de la misma forma.`);
+      }
+    } catch {
+      setStatus('⚠ Drop inválido');
+    }
+  }
+
+  function onTimelineDropEnd() {
+    setDropIndex(null);
+    setDragOver(false);
   }
   function addByFile() {
     const file = addFile.trim();
@@ -459,6 +514,24 @@ export function AnimationModule({ target }: { target?: DevLinkedTarget | null })
             <p className="dev-hint">Crea frames nuevos desde Pixel Art Editor y añádelos aquí por nombre de archivo.</p>
           </div>
 
+          <label>Paleta de sprites (arrastra a la línea de tiempo)</label>
+          <SpritePalette
+            formId={formId}
+            activePose={pose}
+            onDragStart={onPaletteDragStart}
+            onPickFrame={(f, targetPose) => {
+              // Click rápido: insertar en la pose activa al final
+              if (targetPose === pose) {
+                addExisting(f);
+                setStatus(`✓ ${f.file} añadido a ${pose}`);
+              } else {
+                updatePose(targetPose, p => addFrame(p, { ...f }));
+                setPose(targetPose);
+                setStatus(`✓ ${f.file} añadido a ${targetPose}`);
+              }
+            }}
+          />
+
           <div className="dev-sprite-meta">
             <div><span>dir</span><code>{dir ?? '— (sin V5)'}</code></div>
             <div><span>pose</span><code>{poseData ? `${pose} · ${nFrames} frames · ${fps}fps` : '—'}</code></div>
@@ -489,11 +562,21 @@ export function AnimationModule({ target }: { target?: DevLinkedTarget | null })
             <span className="dev-anim-counter">{nFrames > 0 ? `${frame + 1} / ${nFrames}` : '0 / 0'}</span>
           </div>
 
-          <div className="dev-anim-timeline">
+          <div
+            className={`dev-anim-timeline ${dragOver ? 'drag-over' : ''}`}
+            onDragOver={e => onTimelineDragOver(e, nFrames)}
+            onDragLeave={onTimelineDragLeave}
+            onDrop={e => onTimelineDrop(e, nFrames)}
+            onDragEnd={onTimelineDropEnd}
+          >
             {frames.map((f, i) => (
-              <div key={i} className={`dev-anim-thumb-wrap ${i === frame ? 'active' : ''}`}>
-                <div className="dev-anim-thumb" onClick={() => setFrame(i)} title={f.name}>
-                  <img src={`${spriteFrameUrl(formId, f.file)}?t=${Date.now()}`} alt={f.name} />
+              <div key={i} className={`dev-anim-thumb-wrap ${i === frame ? 'active' : ''} ${dropIndex === i ? 'drop-target' : ''}`}>
+                {dropIndex === i && <div className="dev-drop-marker" />}
+                <div className="dev-anim-thumb" onClick={() => setFrame(i)} title={f.name}
+                  onDragOver={e => onTimelineDragOver(e, i)}
+                  onDragLeave={onTimelineDragLeave}
+                  onDrop={e => onTimelineDrop(e, i)}>
+                  <img src={`${spriteFrameUrl(formId, f.file)}?t=${Date.now()}`} alt={f.name} draggable={false} />
                 </div>
                 <div className="dev-anim-thumb-ops">
                   <button onClick={() => move(i, -1)} disabled={i === 0} title="Mover izquierda">◂</button>
@@ -503,6 +586,12 @@ export function AnimationModule({ target }: { target?: DevLinkedTarget | null })
                 <span className="dev-anim-thumb-idx">{i}</span>
               </div>
             ))}
+            {dropIndex === nFrames && <div className="dev-drop-marker end" />}
+            {nFrames === 0 && (
+              <div className="dev-timeline-empty" onDragOver={e => onTimelineDragOver(e, 0)} onDrop={e => onTimelineDrop(e, 0)}>
+                Suelta aquí los frames de la paleta para empezar la secuencia
+              </div>
+            )}
           </div>
 
           {status && <div className="dev-pixel-status">{status}</div>}
@@ -530,6 +619,69 @@ function ActionCardGroup({ title, cards }: { title: string; cards: { id: number;
           ))}
         {cards.length > 8 && <em>+{cards.length - 8}</em>}
       </div>
+    </div>
+  );
+}
+
+// ─── Paleta de sprites (drag & drop a la línea de tiempo) ───
+// Muestra TODOS los frames del manifest de la forma activa, agrupados por
+// pose, como miniaturas arrastrables. Soltar un frame en la línea de tiempo
+// lo inserta en la posición indicada (o al final). Click rápido = añadir al
+// final de la pose activa (o a la pose del grupo si es otra).
+function SpritePalette({ formId, activePose, onDragStart, onPickFrame }: {
+  formId: string;
+  activePose: string;
+  onDragStart: (e: React.DragEvent, f: ManifestFrame, srcFormId: string) => void;
+  onPickFrame: (f: ManifestFrame, targetPose: string) => void;
+}) {
+  const [manifest, setManifest] = useState<Manifest | null>(null);
+  const dir = spriteDirFor(formId);
+  const url = spriteManifestUrl(formId);
+
+  useEffect(() => {
+    let alive = true;
+    setManifest(null);
+    if (!url || !dir) return;
+    fetchManifest(url, dir).then(({ manifest: m }) => { if (alive) setManifest(m); }).catch(() => { /* sin paleta */ });
+    return () => { alive = false; };
+  }, [url, dir]);
+
+  const groups = useMemo(() => {
+    if (!manifest) return [];
+    return Object.entries(manifest)
+      .map(([pid, p]) => ({ pid, frames: (p.frames ?? []) as ManifestFrame[] }))
+      .filter(g => g.frames.length > 0);
+  }, [manifest]);
+
+  if (!manifest) {
+    return <div className="dev-palette-empty">Cargando paleta…</div>;
+  }
+
+  return (
+    <div className="dev-sprite-palette">
+      {groups.length === 0 && <div className="dev-palette-empty">Sin frames en este manifest.</div>}
+      {groups.map(g => (
+        <div key={g.pid} className={`dev-palette-group ${g.pid === activePose ? 'active' : ''}`}>
+          <div className="dev-palette-group-head">
+            <span>{poseMeta(g.pid).label}</span>
+            <code>{g.pid} · {g.frames.length}</code>
+          </div>
+          <div className="dev-palette-frames">
+            {g.frames.map((f, i) => (
+              <img
+                key={`${g.pid}-${i}`}
+                className="dev-palette-frame"
+                src={`${spriteFrameUrl(formId, f.file)}?t=${Date.now()}`}
+                alt={f.file}
+                title={`${f.file} (${f.w}×${f.h}) — arrastra a la línea de tiempo`}
+                draggable
+                onDragStart={e => onDragStart(e, f, formId)}
+                onClick={() => onPickFrame(f, g.pid)}
+              />
+            ))}
+          </div>
+        </div>
+      ))}
     </div>
   );
 }
