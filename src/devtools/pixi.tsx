@@ -19,7 +19,9 @@ import { BATTLE_LOGICAL_H, BATTLE_LOGICAL_W } from '../renderer/pixi/config';
 
 const POSES = [
   'idle', 'move_front', 'move_back', 'guard', 'attack_fwd',
-  'attack_ud', 'hurt', 'beam_charge', 'beam_fire', 'gather_power',
+  'attack_ud', 'punch_right', 'punch_left', 'kick_right',
+  'hurt', 'knockback_back', 'knockback_up', 'knockback_down',
+  'beam_guard', 'evade', 'beam_charge', 'beam_fire', 'gather_power',
 ] as const;
 
 export function PixiModule() {
@@ -32,11 +34,11 @@ export function PixiModule() {
   const [formId, setFormId] = useState('goku_base');
   const [enemyFormId, setEnemyFormId] = useState('piccolo_base');
   const [scenarioId, setScenarioId] = useState('scenario_01');
-  const [scene, setScene] = useState<BattleScene>('FIELD');
+  const [scene, setScene] = useState<BattleScene>('ACTION_SOLO');
   const [playerPos, setPlayerPos] = useState<BattlePosition>(BattlePosition.DOWN_BACK);
   const [enemyPos, setEnemyPos] = useState<BattlePosition>(BattlePosition.DOWN_BACK);
-  const [pose, setPose] = useState<string>('idle');
-  const [scale, setScale] = useState(4);
+  const [pose, setPose] = useState<string>('gather_power');
+  const [scale, setScale] = useState(3);
   const [status, setStatus] = useState<'loading' | 'ready' | 'no-manifest'>('loading');
   const [reloadKey, setReloadKey] = useState(0);
 
@@ -75,8 +77,7 @@ export function PixiModule() {
       rendererRef.current = renderer;
       presRef.current = pres;
       pres.setAttacker('left');
-      pres.setScene(scene);
-      pres.setActorPose(pose);
+      applyScenePreset(pres, scene, pose, tickRef.current);
       pres.sync(tickRef.current);
       setStatus('ready');
     })().catch(() => {
@@ -91,6 +92,28 @@ export function PixiModule() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [formId, enemyFormId, scenarioId, reloadKey]);
 
+  function applyScenePreset(pres: PixiBattlePresentation, nextScene: BattleScene, nextPose = pose, tick = tickRef.current) {
+    pres.setAttacker('left');
+    pres.setScene(nextScene);
+    pres.setActorPose(nextPose);
+    pres.setTargetPose('idle');
+    if (nextScene === 'FIELD') {
+      pres.setActorPose('idle');
+    } else if (nextScene === 'ACTION_SOLO') {
+      pres.setActorPose(nextPose === 'idle' ? 'gather_power' : nextPose);
+    } else if (nextScene === 'ACTION_DUEL') {
+      pres.setActorPose(nextPose === 'idle' || nextPose === 'gather_power' ? 'attack_fwd' : nextPose);
+    } else if (nextScene === 'PROJECTILE') {
+      pres.setActorPose(nextPose === 'idle' || nextPose === 'gather_power' ? 'beam_fire' : nextPose);
+      pres.spawnProjectile('ray', { spawnTick: tick, contactTick: tick + 52 });
+    } else if (nextScene === 'IMPACT') {
+      pres.setActorPose('idle');
+      pres.setTargetPose('hurt');
+      pres.impact();
+    }
+    pres.sync(tick);
+  }
+
   // Cambiar pose (reinicia el reloj de la pose en el tick actual).
   useEffect(() => {
     presRef.current?.setActorPose(pose);
@@ -103,7 +126,10 @@ export function PixiModule() {
   }, [scale]);
 
   useEffect(() => {
-    presRef.current?.setScene(scene);
+    const pres = presRef.current;
+    if (!pres) return;
+    applyScenePreset(pres, scene);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [scene]);
 
   useEffect(() => {
@@ -200,6 +226,18 @@ export function PixiModule() {
             {BATTLE_POSITIONS.map(p => <option key={p} value={p}>{POSITION_NAMES[p]}</option>)}
           </select>
         </label>
+        <div className="pixi-control">
+          <span>Preset</span>
+          <button type="button" onClick={() => { setScene('ACTION_SOLO'); setPose('gather_power'); }}>Solo carga</button>
+        </div>
+        <div className="pixi-control">
+          <span>Preset</span>
+          <button type="button" onClick={() => { setScene('PROJECTILE'); setPose('beam_fire'); }}>Beam travel</button>
+        </div>
+        <div className="pixi-control">
+          <span>Preset</span>
+          <button type="button" onClick={() => { setScene('ACTION_DUEL'); setPose('attack_fwd'); }}>Melee duel</button>
+        </div>
       </div>
 
       <div className="pixi-status">
@@ -213,9 +251,10 @@ export function PixiModule() {
         <canvas ref={canvasRef} width={BATTLE_LOGICAL_W} height={BATTLE_LOGICAL_H} className="pixi-canvas" />
       </div>
       <p className="pixi-note">
-        Usa el mismo `BattleRenderer` + `PixiBattlePresentation` que el combate:
+        Arranca en ACTION_SOLO para que el canvas no parezca vacio. Usa el mismo
+        `BattleRenderer` + `PixiBattlePresentation` que el combate:
         fondo overview/action, overworld táctico, actores grandes, target oculto
-        en ACTION_SOLO y reloj GBC único.
+        en ACTION_SOLO, proyectil real en PROJECTILE y reloj GBC único.
       </p>
     </div>
   );

@@ -12,7 +12,8 @@ import { BATTLE_PORTRAITS } from '../data/battlePortraits';
 import { overworldUrl } from '../data/overworld';
 import { battleOverworldActorUrl, battleOverworldAuraUrl } from '../data/battleOverworld';
 import { characterName } from '../data/storyPanels';
-import { COMBAT_REQUIRED_POSES } from '../battle/spriteConfig';
+import { COMBAT_POSE_ORDER, COMBAT_REQUIRED_POSES } from '../battle/spriteConfig';
+import type { DevLinkedTarget, DevModuleId } from './DevStudio';
 
 const STATS: { key: 'hp' | 'str' | 'ki' | 'spd'; label: string; color: string }[] = [
   { key: 'hp', label: 'HP', color: '#e04a4a' },
@@ -21,7 +22,9 @@ const STATS: { key: 'hp' | 'str' | 'ki' | 'spd'; label: string; color: string }[
   { key: 'spd', label: 'SPD', color: '#5ac05a' },
 ];
 
-export function CharactersModule() {
+export function CharactersModule({ onOpenModule }: {
+  onOpenModule?: (id: DevModuleId, target: Omit<DevLinkedTarget, 'nonce'>) => void;
+}) {
   const [charId, setCharId] = useState(CHARACTERS[0]?.id ?? 'goku');
   const [formId, setFormId] = useState(CHARACTERS[0]?.forms[0] ?? 'goku_base');
   const [level, setLevel] = useState(50);
@@ -98,6 +101,11 @@ export function CharactersModule() {
               {spriteDir && <span className="dev-tag ok">sprite dir: {spriteDir}</span>}
               {!spriteDir && <span className="dev-tag bad">sin dir animado</span>}
             </div>
+            <div className="dev-linked-actions">
+              <button className="dev-btn" disabled={!spriteDir} onClick={() => onOpenModule?.('animation', { formId: form.id, pose: 'idle' })}>Abrir Animation</button>
+              <button className="dev-btn" disabled={!spriteDir} onClick={() => onOpenModule?.('sprites', { formId: form.id, pose: 'idle' })}>Abrir Sprites</button>
+              <button className="dev-btn" disabled={!spriteDir} onClick={() => onOpenModule?.('sheets', { formId: form.id })}>Abrir Sheets</button>
+            </div>
 
             {/* Selector de nivel + stats */}
             <div className="dev-level-row">
@@ -158,6 +166,7 @@ export function CharactersModule() {
                     <AssetCell key={p} label={p} src={spriteFrameUrl(form.id, `${spriteDir}_${p}_00.png`)} small />
                   ))}
                 </div>
+                <div className="dev-semantic-pose-row">{COMBAT_POSE_ORDER.join(' · ')}</div>
               </div>
             )}
           </div>

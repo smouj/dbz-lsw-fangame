@@ -226,7 +226,7 @@ function beamSpec(id: string, label: string, match: string[], projectile: Projec
   };
 }
 
-function meleeSpec(id: string, label: string, match: string[]): ActionProfileSpec {
+function meleeSpec(id: string, label: string, match: string[], strikePose = 'punch_right', targetPose = 'knockback_back'): ActionProfileSpec {
   const m = T.melee;
   return {
     id, label, kind: 'damage', fidelity: 'INFERRED', match,
@@ -236,11 +236,12 @@ function meleeSpec(id: string, label: string, match: string[]): ActionProfileSpe
       beats: [
         { frame: 12, pose: 'gather_power', note: 'preparación común de acción' },
         { frame: 26, pose: 'idle', note: 'cierra y vuelve a neutral antes del rush' },
-        { frame: m.windup, pose: 'attack_fwd' },
-        { frame: m.contact, pose: 'attack_fwd' },
+        { frame: m.windup, pose: strikePose },
+        { frame: m.contact, pose: strikePose },
         { frame: m.recovery, pose: 'idle' },
       ],
     },
+    target: { beats: [{ frame: m.contact + 1, pose: targetPose }] },
     rush: { startFrame: m.rush, duration: m.rushDur },
     impact: { contactFrame: m.contact, hitstop: m.hitstop, shake: m.shake },
     messages: [{ frame: m.contact + 2, text: 'IMPACT' }],
@@ -276,12 +277,12 @@ export const ACTION_PROFILE_REGISTRY: ActionProfileSpec[] = [
   beamSpec('flash_sword', 'Flash Sword', ['flashsword'], 'sword'),
   beamSpec('special_projectile', 'Special Projectile', ['flightbomb', 'galacticad', 'sgkatk', 'telekinesis', 'msoundwave', 'erasercan', 'crasherball', 'purplecomet', 'bodychange', 'suicide'], 'special'),
   // — Melee / golpes físicos —
-  meleeSpec('cont_punch', 'Cont. Punch', ['contpunch']),
-  meleeSpec('cont_kick', 'Cont. Kick', ['contkick']),
-  meleeSpec('rising_kick', 'Rising Kick', ['risingkick']),
-  meleeSpec('sonic_kick', 'Sonic Kick', ['sonickick']),
-  meleeSpec('dunk_shot', 'Dunk Shot', ['dunkshot']),
-  meleeSpec('crazy_rush', 'Crazy Rush', ['crazyrush']),
+  meleeSpec('cont_punch', 'Cont. Punch', ['contpunch'], 'punch_right', 'knockback_back'),
+  meleeSpec('cont_kick', 'Cont. Kick', ['contkick'], 'kick_right', 'knockback_back'),
+  meleeSpec('rising_kick', 'Rising Kick', ['risingkick'], 'kick_right', 'knockback_up'),
+  meleeSpec('sonic_kick', 'Sonic Kick', ['sonickick'], 'kick_right', 'knockback_back'),
+  meleeSpec('dunk_shot', 'Dunk Shot', ['dunkshot'], 'punch_left', 'knockback_down'),
+  meleeSpec('crazy_rush', 'Crazy Rush', ['crazyrush'], 'punch_left', 'knockback_back'),
   // — Buffs emblemáticos —
   buffSpec('kaio_ken', 'Kaio Ken', ['kaioken']),
 ];

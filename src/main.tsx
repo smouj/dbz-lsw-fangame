@@ -3237,6 +3237,7 @@ function MainMenu({ onNavigate }: { onNavigate: (s: Screen) => void }) {
       )}
 
       <div className="menu-content" tabIndex={0} onKeyDown={onMenuKeyDown}>
+        <img className="menu-logo-mark" src="/logo-128.png" alt="" />
         <h1 className="menu-title">{t('menu.title')}</h1>
         <h2 className="menu-subtitle">{t('menu.subtitle')}</h2>
 

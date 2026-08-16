@@ -4,9 +4,9 @@
 // Inspeccionar / validar / previsualizar el juego sin tocar código.
 // NO forma parte del flujo público de producción.
 // ═══════════════════════════════════════════════════════════
-import { useState, useEffect, lazy, Suspense } from 'react';
+import { useState, useEffect } from 'react';
 import {
-  Activity, ArrowLeft, Bot, Boxes, Brush, CheckCircle2, Clapperboard,
+  Activity, ArrowLeft, Boxes, Brush, CheckCircle2, Clapperboard,
   Film, Gamepad2, Gauge, Grid2X2, Images, LayoutDashboard,
   Search, Sparkles, Swords, TableProperties, Users, type LucideIcon,
 } from 'lucide-react';
@@ -24,10 +24,8 @@ import { PixelArtModule } from './pixelart';
 import { HudModule } from './hud';
 import { FacingModule } from './facing';
 import { SheetsModule } from './sheets';
-// Los módulos Pixi se cargan bajo demanda (code-split): pixi.js (~790KB) solo
-// se descarga al abrir el Pixi Lab / Pixi Seq, no en el bundle principal.
-const PixiModule = lazy(() => import('./pixi').then((m) => ({ default: m.PixiModule })));
-const PixiSequenceModule = lazy(() => import('./pixiSequence').then((m) => ({ default: m.PixiSequenceModule })));
+import { PixiModule } from './pixi';
+import { PixiSequenceModule } from './pixiSequence';
 
 export type DevModuleId =
   | 'dashboard' | 'characters' | 'cards' | 'sprites' | 'animation'
@@ -103,12 +101,20 @@ export interface PixelArtTarget {
   nonce: number; // cambia en cada petición para re-disparar el efecto
 }
 
+export interface DevLinkedTarget {
+  formId: string;
+  pose?: string;
+  file?: string;
+  nonce: number;
+}
+
 export function DevStudio({ onExit, onLaunchBattle }: {
   onExit: () => void;
   onLaunchBattle?: (playerFormId: string, enemyFormId: string, chapter: number | null) => void;
 }) {
   const [module, setModule] = useState<DevModuleId>(() => initialModule());
   const [pixelTarget, setPixelTarget] = useState<PixelArtTarget | null>(null);
+  const [linkedTarget, setLinkedTarget] = useState<DevLinkedTarget | null>(null);
 
   // Sincronizar hash ↔ módulo (navegación profunda + botones del sidebar)
   useEffect(() => {
@@ -137,6 +143,11 @@ export function DevStudio({ onExit, onLaunchBattle }: {
     navigate('pixelart');
   };
 
+  const openLinkedModule = (id: DevModuleId, target: Omit<DevLinkedTarget, 'nonce'>) => {
+    setLinkedTarget({ ...target, nonce: Date.now() });
+    navigate(id);
+  };
+
   const goHome = () => {
     try { window.location.hash = ''; } catch { /* noop */ }
     onExit();
@@ -146,7 +157,7 @@ export function DevStudio({ onExit, onLaunchBattle }: {
     <div className="devstudio">
       <aside className="dev-sidebar">
         <div className="dev-logo">
-          <span className="dev-logo-badge">DEV</span>
+          <img className="dev-logo-img" src="/logo-128.png" alt="" />
           <div className="dev-logo-text">
             <strong>DBZ LSW</strong>
             <small>Development Studio</small>
@@ -174,11 +185,11 @@ export function DevStudio({ onExit, onLaunchBattle }: {
       <main className="dev-main">
         <div className="dev-module">
           {module === 'dashboard' && <DashboardModule onNavigate={navigate} />}
-          {module === 'characters' && <CharactersModule />}
+          {module === 'characters' && <CharactersModule onOpenModule={openLinkedModule} />}
           {module === 'cards' && <CardsModule />}
-          {module === 'sprites' && <SpritesModule />}
-          {module === 'sheets' && <SheetsModule onOpenInPixelArt={openInPixelArt} />}
-          {module === 'animation' && <AnimationModule />}
+          {module === 'sprites' && <SpritesModule target={linkedTarget} />}
+          {module === 'sheets' && <SheetsModule target={linkedTarget} onOpenInPixelArt={openInPixelArt} />}
+          {module === 'animation' && <AnimationModule target={linkedTarget} />}
           {module === 'pixelart' && <PixelArtModule target={pixelTarget} />}
           {module === 'facing' && <FacingModule />}
           {module === 'hud' && <HudModule />}
@@ -187,8 +198,8 @@ export function DevStudio({ onExit, onLaunchBattle }: {
           {module === 'story' && <StoryModule />}
           {module === 'validation' && <ValidationModule />}
           {module === 'research' && <ResearchModule />}
-          {module === 'pixi' && <Suspense fallback={<div className="dev-module-loading"><Bot size={15} /> Cargando Pixi...</div>}><PixiModule /></Suspense>}
-          {module === 'pixiSequence' && <Suspense fallback={<div className="dev-module-loading"><Bot size={15} /> Cargando Pixi Seq...</div>}><PixiSequenceModule /></Suspense>}
+          {module === 'pixi' && <PixiModule />}
+          {module === 'pixiSequence' && <PixiSequenceModule />}
         </div>
       </main>
     </div>

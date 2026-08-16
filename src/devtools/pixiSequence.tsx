@@ -57,10 +57,12 @@ interface LabAction {
 }
 
 const BASE_ACTIONS: LabAction[] = [
-  { id: 'melee_fwd', label: 'Golpe frontal (melee)', kind: 'melee', pose: 'attack_fwd', rush: true, projectile: false },
-  { id: 'melee_ud', label: 'Golpe vertical (arriba/abajo)', kind: 'melee', pose: 'attack_ud', rush: true, projectile: false },
+  { id: 'melee_fwd', label: 'Punetazo derecha (melee)', kind: 'melee', pose: 'punch_right', rush: true, projectile: false },
+  { id: 'melee_left', label: 'Punetazo izquierda (melee)', kind: 'melee', pose: 'punch_left', rush: true, projectile: false },
+  { id: 'melee_ud', label: 'Patada / lanzamiento vertical', kind: 'melee', pose: 'kick_right', rush: true, projectile: false },
   { id: 'beam_generic', label: 'Beam genérico (onda)', kind: 'beam', pose: 'beam_charge', rush: false, projectile: true },
-  { id: 'guard', label: 'Guardia (defensa)', kind: 'guard', pose: 'guard', rush: false, projectile: false },
+  { id: 'guard', label: 'Beam guard / parar', kind: 'guard', pose: 'beam_guard', rush: false, projectile: false },
+  { id: 'evade', label: 'Evade / afterimage', kind: 'guard', pose: 'evade', rush: false, projectile: false },
   { id: 'gather', label: 'Gather Power', kind: 'gather', pose: 'power_up', rush: false, projectile: false },
   { id: 'support', label: 'Aura / buff', kind: 'support', pose: 'power_up', rush: false, projectile: false },
 ];
@@ -139,7 +141,9 @@ function buildMeleeProfile(action: LabAction): CinematicProfile {
   t.push(track(0, 'SHOT', { shot: 'FIELD' }));
   t.push(track(0, 'ACTOR_POSE', { pose: 'idle' }));
   t.push(track(0, 'TARGET_POSE', { pose: 'idle' }));
-  t.push(track(T.guard, 'ACTOR_POSE', { pose: 'guard' }));
+  t.push(track(T.guard, 'SHOT', { shot: 'ACTION_SOLO' }));
+  t.push(track(T.guard, 'ACTOR_POSE', { pose: 'gather_power' }));
+  t.push(track(T.moveFront, 'SHOT', { shot: 'FIELD' }));
   t.push(track(T.moveFront, 'ACTOR_POSE', { pose: 'move_front' }));
   t.push(track(T.action, 'SHOT', { shot: 'ACTION_DUEL' }));
   t.push(track(T.action, 'ACTOR_POSE', { pose: action.pose }));
@@ -166,7 +170,8 @@ function buildBeamProfile(action: LabAction): CinematicProfile {
   t.push(track(0, 'SHOT', { shot: 'FIELD' }));
   t.push(track(0, 'ACTOR_POSE', { pose: 'idle' }));
   t.push(track(0, 'TARGET_POSE', { pose: 'idle' }));
-  t.push(track(T.guard, 'ACTOR_POSE', { pose: 'guard' }));
+  t.push(track(T.guard, 'SHOT', { shot: 'ACTION_SOLO' }));
+  t.push(track(T.guard, 'ACTOR_POSE', { pose: 'gather_power' }));
   // Escena del rayo: personaje a la izquierda, rival a la derecha, SIN avance.
   t.push(track(T.action, 'SHOT', { shot: 'PROJECTILE' }));
   t.push(track(T.action, 'ACTOR_POSE', { pose: 'beam_charge' }));
@@ -252,7 +257,7 @@ export function PixiSequenceModule() {
 
   const [playerFormId, setPlayerFormId] = useState('goku_base');
   const [enemyFormId, setEnemyFormId] = useState('piccolo_base');
-  const [actionId, setActionId] = useState('melee_fwd');
+  const [actionId, setActionId] = useState(PROJECTILE_MATRIX_ACTIONS[0]?.id ?? 'beam_generic');
   const [scenario, setScenario] = useState('01');
   const [speed, setSpeed] = useState<number>(1);
   const [ready, setReady] = useState(false);
@@ -263,6 +268,7 @@ export function PixiSequenceModule() {
 
   const action = ALL_ACTIONS.find(a => a.id === actionId) ?? ALL_ACTIONS[0];
   const isMelee = action.kind === 'melee';
+  const profilePreview = buildLabProfile(action);
 
   // Crear renderer + presentación cuando cambian formas o escenario.
   useEffect(() => {
@@ -320,7 +326,7 @@ export function PixiSequenceModule() {
     resetPresentationForReplay(pres);
     tickRef.current = 0;
     const profile = buildLabProfile(action);
-    showDebug(`reproduciendo «${action.label}» (${profile.totalTicks} ticks, ${profile.tracks.length} eventos)\n`);
+    showDebug(`reproduciendo «${action.label}» (${profile.totalTicks} ticks, ${profile.tracks.length} eventos)\n${profile.tracks.map(t => `${t.tick} ${t.event.type}`).join(' -> ')}\n`);
     setTotalTicks(profile.totalTicks);
     const tl = new BattleTimeline(profile, {
       onEvent: e => { applyCinematicEvent(pres, e); },
@@ -501,12 +507,28 @@ export function PixiSequenceModule() {
         </label>
       </div>
 
+      <div className="pixi-flow-strip" aria-label="Pipeline de la accion seleccionada">
+        {profilePreview.tracks
+          .filter(t => t.event.type === 'SHOT' || t.event.type === 'RUSH' || t.event.type === 'PROJECTILE' || t.event.type === 'HIT_FRAME' || t.event.type === 'FIELD_RETURN')
+          .map((t, idx) => (
+            <span key={`${t.tick}-${t.event.type}-${idx}`}>
+              <strong>{t.tick}</strong>{t.event.type === 'SHOT' ? String((t.event.payload as { shot?: string }).shot ?? 'SHOT') : t.event.type}
+            </span>
+          ))}
+      </div>
+
       <div className="pixi-controls">
         <button onClick={play} disabled={!ready || playing}>▶ Reproducir</button>
         <button onClick={stop} disabled={!playing}>⏸ Pausa</button>
         <button onClick={reset} disabled={!ready}>⏮ Reset</button>
         <button onClick={checkDeterminism} disabled={!ready}>Comprobar determinismo (100 runs)</button>
         <div ref={statusRef} className="pixi-status-text" />
+      </div>
+
+      <div className="pixi-controls">
+        <button onClick={() => seek(T.action)} disabled={!ready}>Seek ACTION</button>
+        <button onClick={() => seek(action.projectile ? T.beamChargeEnd : T.contact)} disabled={!ready}>Seek travel/contact</button>
+        <button onClick={() => seek(action.projectile ? T.beamContact : T.recovery)} disabled={!ready}>Seek impact</button>
       </div>
 
       <div className="pixi-controls">

@@ -9,6 +9,7 @@ import { spriteDirFor, spriteManifestUrl, spriteFrameUrl } from '../data/spriteM
 import { BATTLE_PORTRAITS } from '../data/battlePortraits';
 import { overworldUrl } from '../data/overworld';
 import { COMBAT_REQUIRED_POSES, COMBAT_POSE_ORDER } from '../battle/spriteConfig';
+import type { DevLinkedTarget } from './DevStudio';
 
 interface FrameInfo {
   w: number; h: number;
@@ -16,7 +17,7 @@ interface FrameInfo {
   alphaPct: number;
 }
 
-export function SpritesModule() {
+export function SpritesModule({ target }: { target?: DevLinkedTarget | null }) {
   const [formId, setFormId] = useState(Object.keys(FORMS)[0]);
   const [pose, setPose] = useState('idle');
   const [zoom, setZoom] = useState(4);
@@ -30,6 +31,7 @@ export function SpritesModule() {
   // Poses del manifest (dinámico): incluye beam_ray/beam_ray_tip/gather_power
   // cuando existen. Las poses base SIEMPRE se listan primero (orden canónico).
   const [poses, setPoses] = useState<string[]>([...COMBAT_REQUIRED_POSES]);
+  const [poseFirstFiles, setPoseFirstFiles] = useState<Record<string, string>>({});
   useEffect(() => {
     if (!manifestUrl) return;
     let cancelled = false;
@@ -37,15 +39,26 @@ export function SpritesModule() {
       if (cancelled || !m) return;
       const known = COMBAT_POSE_ORDER.filter(p => Object.prototype.hasOwnProperty.call(m, p));
       const extras = Object.keys(m).filter(p => !COMBAT_POSE_ORDER.includes(p as typeof COMBAT_POSE_ORDER[number]));
+      const firstFiles: Record<string, string> = {};
+      for (const [pid, data] of Object.entries(m as Record<string, { frames?: { file: string }[] }>)) {
+        const first = data.frames?.[0]?.file;
+        if (first) firstFiles[pid] = first;
+      }
       setPoses([...known, ...extras]);
+      setPoseFirstFiles(firstFiles);
     }).catch(() => {});
     return () => { cancelled = true; };
   }, [manifestUrl]);
+  useEffect(() => {
+    if (!target) return;
+    setFormId(target.formId);
+    if (target.pose) setPose(target.pose);
+  }, [target]);
   // Si la pose seleccionada no existe en el manifest, volver a idle.
   useEffect(() => {
     if (poses.length > 0 && !poses.includes(pose)) setPose('idle');
   }, [poses, pose]);
-  const src = dir ? spriteFrameUrl(formId, `${dir}_${pose}_00.png`) : undefined;
+  const src = dir && poseFirstFiles[pose] ? spriteFrameUrl(formId, poseFirstFiles[pose]) : undefined;
   const portrait = BATTLE_PORTRAITS[formId];
   const overworld = overworldUrl(formId);
 

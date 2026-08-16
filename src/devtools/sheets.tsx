@@ -14,6 +14,7 @@ import { FORMS } from '../data/roster';
 import { spriteDirFor, spriteManifestUrl, spriteFrameUrl } from '../data/spriteManifest';
 import { fetchManifest, type ManifestFrame } from './spriteEditing';
 import { poseSemantics, parseFrameName, POSE_ORDER } from './frameSemantics';
+import type { DevLinkedTarget } from './DevStudio';
 
 const BG_COLORS = [
   [0, 183, 239], [211, 249, 188], [0, 255, 255], [0, 128, 96], [0, 248, 248],
@@ -28,9 +29,19 @@ interface FrameAnalysis {
   dupeOf: string | null;     // archivo con contenido idéntico (hash)
 }
 
-export function SheetsModule({ onOpenInPixelArt }: { onOpenInPixelArt?: (formId: string, file: string) => void }) {
+interface FrameUsage {
+  pose: string;
+  index: number;
+  semantic: string;
+}
+
+export function SheetsModule({ target, onOpenInPixelArt }: {
+  target?: DevLinkedTarget | null;
+  onOpenInPixelArt?: (formId: string, file: string) => void;
+}) {
   const [formId, setFormId] = useState('goku_base');
   const [frames, setFrames] = useState<FrameAnalysis[]>([]);
+  const [frameUsages, setFrameUsages] = useState<Record<string, FrameUsage[]>>({});
   const [selected, setSelected] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [zoom, setZoom] = useState(6);
@@ -38,11 +49,18 @@ export function SheetsModule({ onOpenInPixelArt }: { onOpenInPixelArt?: (formId:
   const dir = spriteDirFor(formId);
   const manifestUrl = spriteManifestUrl(formId);
 
+  useEffect(() => {
+    if (!target) return;
+    setFormId(target.formId);
+    if (target.file) setSelected(target.file);
+  }, [target]);
+
   // Cargar manifest + analizar frames
   useEffect(() => {
     let alive = true;
     setFrames([]);
-    setSelected(null);
+    setFrameUsages({});
+    setSelected(target?.formId === formId ? target.file ?? null : null);
     if (!manifestUrl || !dir) return;
     setLoading(true);
     fetchManifest(manifestUrl, dir)
@@ -51,11 +69,16 @@ export function SheetsModule({ onOpenInPixelArt }: { onOpenInPixelArt?: (formId:
         // frames únicos del manifest (todas las poses)
         const seen = new Set<string>();
         const all: ManifestFrame[] = [];
-        for (const p of Object.values(manifest)) {
-          for (const f of p.frames) {
+        const usages: Record<string, FrameUsage[]> = {};
+        for (const [pose, p] of Object.entries(manifest)) {
+          const sem = poseSemantics(pose);
+          for (let i = 0; i < p.frames.length; i++) {
+            const f = p.frames[i];
+            (usages[f.file] ||= []).push({ pose, index: i, semantic: sem.meaning });
             if (!seen.has(f.file)) { seen.add(f.file); all.push(f); }
           }
         }
+        setFrameUsages(usages);
         // analizar cada frame en canvas
         const results: FrameAnalysis[] = [];
         const hashMap: Record<string, string> = {};
@@ -128,7 +151,7 @@ export function SheetsModule({ onOpenInPixelArt }: { onOpenInPixelArt?: (formId:
       })
       .catch(() => { if (alive) { setLoading(false); } });
     return () => { alive = false; };
-  }, [manifestUrl, dir, formId]);
+  }, [manifestUrl, dir, formId, target]);
 
   const problemCount = useMemo(() => frames.filter(f => f.bgSpecks > 0 || (f.touchesEdge && f.touchTop > 3)).length, [frames]);
 
@@ -147,6 +170,7 @@ export function SheetsModule({ onOpenInPixelArt }: { onOpenInPixelArt?: (formId:
   }, [frames, dir]);
 
   const selFrame = frames.find(f => f.file === selected) || null;
+  const selUsages = selFrame ? frameUsages[selFrame.file] ?? [] : [];
 
   return (
     <div className="dev-panel">
@@ -231,6 +255,18 @@ export function SheetsModule({ onOpenInPixelArt }: { onOpenInPixelArt?: (formId:
                   <strong>Usado por:</strong>
                   <ul>{sem.usedBy.map(u => <li key={u}>{u}</li>)}</ul>
                 </div>
+                {selUsages.length > 0 && (
+                  <div className="dev-sheet-sem-used">
+                    <strong>Usos reales en manifest:</strong>
+                    <ul>
+                      {selUsages.map(u => (
+                        <li key={`${u.pose}-${u.index}`}>
+                          <code>{u.pose}[{u.index}]</code> · {u.semantic}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
                 <div className="dev-checker-bg">
                   <img
                     src={spriteFrameUrl(formId, selFrame.file)}

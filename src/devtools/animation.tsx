@@ -9,22 +9,31 @@ import { FORMS } from '../data/roster';
 import { spriteDirFor, spriteManifestUrl, spriteFrameUrl } from '../data/spriteManifest';
 import { CARDS } from '../data/cards';
 import { actionSemanticsForCard } from '../battle/actionProfiles';
-import { COMBAT_REQUIRED_POSES, POSE_FALLBACKS, combatPoseMeta } from '../battle/spriteConfig';
+import { COMBAT_REQUIRED_POSES, POSE_FALLBACKS, combatPoseMeta, resolvePoseFrameSequence } from '../battle/spriteConfig';
 import {
   type Manifest, type ManifestFrame, type ManifestPose,
   fetchManifest, saveOverride, clearOverride, saveToProject,
   downloadJson, moveFrame, removeFrame, addFrame, setFps, setLoop,
 } from './spriteEditing';
+import type { DevLinkedTarget } from './DevStudio';
 
 const FPS_CHOICES = [1, 3, 6, 7, 8, 10, 12, 15, 24, 30];
 const POSE_RUNTIME_DEFAULTS: Record<string, { fps: number; loop: boolean; note: string }> = {
   idle: { fps: 3, loop: true, note: 'hold táctico estable' },
   move_front: { fps: 6, loop: true, note: 'ciclo de avance' },
-  move_back: { fps: 6, loop: true, note: 'mismo ciclo espejado en runtime' },
+  move_back: { fps: 6, loop: true, note: 'ciclo espejo de move_front en runtime' },
   guard: { fps: 6, loop: false, note: 'entrada/hold corto de defensa' },
   attack_fwd: { fps: 5, loop: false, note: 'windup -> contacto -> recover frontal' },
   attack_ud: { fps: 5, loop: false, note: 'windup -> contacto -> recover vertical' },
+  punch_right: { fps: 7, loop: false, note: 'idle -> punetazo derecho -> recover' },
+  punch_left: { fps: 7, loop: false, note: 'idle -> punetazo izquierdo / follow-up' },
+  kick_right: { fps: 7, loop: false, note: 'idle -> patada derecha -> recover' },
   hurt: { fps: 6, loop: false, note: 'reacción no-loop' },
+  knockback_back: { fps: 7, loop: false, note: 'reaccion desplazada hacia atras' },
+  knockback_up: { fps: 7, loop: false, note: 'reaccion lanzada hacia arriba' },
+  knockback_down: { fps: 7, loop: false, note: 'reaccion derribada hacia abajo' },
+  beam_guard: { fps: 6, loop: false, note: 'parada de beam / manos juntas' },
+  evade: { fps: 10, loop: false, note: 'afterimage / esquiva rapida' },
   beam_charge: { fps: 7, loop: false, note: 'carga previa al release' },
   beam_fire: { fps: 8, loop: false, note: 'release del beam' },
   beam_ray: { fps: 7, loop: false, note: 'FX autónomo de rayo' },
@@ -52,7 +61,7 @@ function b64(s: string): string {
   return btoa(bin);
 }
 
-export function AnimationModule() {
+export function AnimationModule({ target }: { target?: DevLinkedTarget | null }) {
   const [formId, setFormId] = useState('goku_base');
   const [manifest, setManifest] = useState<Manifest | null>(null);
   const [overridden, setOverridden] = useState(false);
@@ -86,6 +95,15 @@ export function AnimationModule() {
       .catch(() => { if (alive) setLoadError(true); });
     return () => { alive = false; };
   }, [manifestUrl, dir]);
+
+  useEffect(() => {
+    if (!target) return;
+    setFormId(target.formId);
+    if (target.pose) {
+      setPose(target.pose);
+      setFrame(0);
+    }
+  }, [target, formId]);
 
   const poses = manifest ? Object.keys(manifest) : [];
   const poseData: ManifestPose | undefined = manifest ? manifest[pose] : undefined;
@@ -173,6 +191,25 @@ export function AnimationModule() {
     }));
     setFrame(0);
     setStatus(`✓ ${pose} reparado: orden numérico + contrato ${defaults ? `${defaults.fps}fps/${defaults.loop ? 'loop' : 'no-loop'}` : 'custom'}`);
+  }
+
+  function repairAllCombatContracts() {
+    mutate(m => {
+      const next: Manifest = { ...m };
+      for (const [pid, p] of Object.entries(m)) {
+        const defaults = POSE_RUNTIME_DEFAULTS[pid];
+        next[pid] = {
+          ...p,
+          frames: sortFrames(p.frames),
+          frame_count: p.frames.length,
+          fps: defaults?.fps ?? p.fps,
+          loop: defaults?.loop ?? p.loop,
+        };
+      }
+      return next;
+    });
+    setFrame(0);
+    setStatus('✓ Todas las poses del manifest: orden numerico + frame_count + contratos runtime conocidos');
   }
 
   // ─── Guardar / exportar / reset ────────────────────────────
@@ -289,6 +326,20 @@ export function AnimationModule() {
   const orderOk = frames.every((f, i, arr) => i === 0 || frameOrderKey(arr[i - 1].file) <= frameOrderKey(f.file));
   const countOk = poseData ? poseData.frame_count === frames.length : true;
   const contractOk = !poseDefault || (poseDefault.fps === fps && poseDefault.loop === loop);
+  const mirroredPoseNote = pose === 'move_back'
+    ? 'move_back puede compartir frames con move_front: el runtime lo espeja con facing/scaleX.'
+    : null;
+
+  // Secuencia runtime compuesta (contrato V1): move = [idle, paso]; punch/kick/knockback/
+  // beam_guard/evade = frames heredados de attack/hurt/guard sin inventar PNGs.
+  const hasFile = (file: string) => allFrames.some(f => f.file === file);
+  const sequencePreview = dir
+    ? resolvePoseFrameSequence(pose, dir, hasFile)
+    : [];
+  const isComposite = pose === 'move_front' || pose === 'move_back' || pose === 'punch_right'
+    || pose === 'punch_left' || pose === 'kick_right' || pose === 'knockback_back'
+    || pose === 'knockback_up' || pose === 'knockback_down' || pose === 'beam_guard'
+    || pose === 'evade' || pose === 'gather_power' || pose === 'power_up';
 
   return (
     <div className="dev-panel">
@@ -339,7 +390,16 @@ export function AnimationModule() {
               Orden {orderOk ? 'OK' : 'desordenado'} · frame_count {countOk ? 'OK' : `${poseData?.frame_count} != ${frames.length}`} · timing {contractOk ? 'OK' : 'requiere ajuste'}
             </span>
             <button className="dev-btn" disabled={!poseData} onClick={repairPoseContract}>Reparar pose</button>
+            <button className="dev-btn" disabled={!manifest} onClick={repairAllCombatContracts}>Reparar manifest</button>
+            {mirroredPoseNote && <span>{mirroredPoseNote}</span>}
           </div>
+          {isComposite && (
+            <div className="dev-action-map">
+              <strong>Secuencia runtime compuesta</strong>
+              <span>Esta pose no tiene PNG propios: el runtime la compone con frames físicos reales.</span>
+              <code>{sequencePreview.length > 0 ? sequencePreview.join(' → ') : '— sin frames disponibles (fallback a idle)'}</code>
+            </div>
+          )}
           <div className="dev-action-map">
             <strong>Runtime contract</strong>
             <span>Required: {COMBAT_REQUIRED_POSES.join(' · ')}</span>

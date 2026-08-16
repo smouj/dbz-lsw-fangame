@@ -7,7 +7,7 @@
 // FIELD_RETURN) a estos métodos. Cada método es determinista: el frame es
 // consecuencia del tick GBC absoluto (renderer.tick).
 
-import { Sprite, Texture } from 'pixi.js';
+import { Graphics } from 'pixi.js';
 import type { BattleSide } from '../../../data/facing';
 import { facingFlip } from '../../../data/facing';
 import { overworldUrl } from '../../../data/overworld';
@@ -38,20 +38,10 @@ export class PixiBattlePresentation implements BattlePresentation {
   private leftActor: FighterActor | null = null;
   private rightActor: FighterActor | null = null;
   private attacker: BattleSide = 'left';
-  private projectile: Sprite | null = null;
+  private projectile: Graphics | null = null;
   private projectileMode: ProjectileVisualMode = 'special';
   private projectileSpawnTick: number | null = null;
   private projectileContactTick: number | null = null;
-  /** Nº de frames del rayo real (beam_ray) del atacante; 0 = fallback genérico. */
-  private rayFrames = 0;
-  /** True cuando el proyectil es el rayo real (modo stretch GBC). */
-  private raySprite = false;
-  /** Ancho nativo del frame de rayo actual (px del PNG). */
-  private rayBaseWidth = 0;
-  /** Escala aplicada al rayo (distancia actor→target / ancho nativo). */
-  private rayScale = 1;
-  /** Dirección horizontal del rayo: 1 jugador, -1 rival (textura espejada). */
-  private rayDirection = 1;
 
   // Rush: movimiento del atacante calculado como f(tick − rushStartTick).
   private rushActive = false;
@@ -147,72 +137,16 @@ export class PixiBattlePresentation implements BattlePresentation {
     this.clearProjectile();
     this.projectileSpawnTick = timing?.spawnTick ?? null;
     this.projectileContactTick = timing?.contactTick ?? null;
-    // Rayo real: si el atacante tiene frames beam_ray en su manifest (V6),
-    // usarlos en vez del rectángulo genérico — el rayo sale desde el lado del
-    // personaje y viaja hasta el rival (frame = f(progress), determinista).
-    const actor = this.actor;
+    // Importante: los PNG `beam_ray` recortados del sheet incluyen personaje
+    // + rayo completo. No se pueden montar como proyectil independiente porque
+    // duplican al luchador en ACTION/PROJECTILE. Hasta separar esos frames en
+    // torso/beam reales, el proyectil del renderer vive aqui como shape
+    // procedural sin personaje; el actor mantiene `beam_fire`.
     this.projectileMode = resolveProjectileVisualMode(kind);
-    this.rayFrames = 0;
-    if (actor && this.projectileMode === 'ray') {
-      const n = actor.poseFrameCount('beam_ray');
-      if (n > 0) {
-        this.rayFrames = n;
-        const tex = actor.getPoseTexture('beam_ray', 0);
-        if (tex) {
-          const p = new Sprite(tex);
-          p.anchor.set(0, 0.5);
-          this.rayDirection = this.attacker === 'left' ? 1 : -1;
-          // Escala para cubrir la distancia actor→target: el rayo nativo
-          // (~115px) debe llegar al rival cuando progress=1. El alto escala
-          // con la misma proporción (coherente con el luchador a `scale`×).
-          const dist = Math.abs(ACTION_TARGET_X - ACTION_ACTOR_X);
-          const sx = dist / tex.width;
-          p.scale.set(sx * this.rayDirection, sx);
-          this.raySprite = true;
-          this.rayBaseWidth = tex.width;
-          this.rayScale = sx;
-          this.renderer.sceneDirector.projectileLayer.addChild(p);
-          this.projectile = p;
-          this.setProjectileProgress(0);
-          return;
-        }
-      }
-    }
-    // Fallbacks pixel-art diferenciados cuando el manifest no ofrece un asset.
-    const p = new Sprite(Texture.WHITE);
-    p.anchor.set(0.5);
-    p.roundPixels = true;
-    switch (this.projectileMode) {
-      case 'ray':
-        p.tint = 0x00ccff;
-        p.width = 24;
-        p.height = kind === 'wave' ? 7 : 4;
-        break;
-      case 'ball':
-        p.tint = 0xffd040;
-        p.width = 10;
-        p.height = 10;
-        p.rotation = Math.PI / 4;
-        break;
-      case 'disk':
-        p.tint = 0xfff17a;
-        p.width = 18;
-        p.height = 4;
-        break;
-      case 'sword':
-        p.tint = 0x8ffcff;
-        p.width = 20;
-        p.height = 3;
-        p.rotation = this.attacker === 'left' ? -0.35 : 0.35;
-        break;
-      case 'special':
-        p.tint = 0xff8a40;
-        p.width = 8;
-        p.height = 8;
-        break;
-    }
-    this.renderer.sceneDirector.projectileLayer.addChild(p);
-    this.projectile = p;
+    // Proyectiles procedurales: se dibujan sin escalar ni deformar PNGs.
+    const g = new Graphics();
+    this.renderer.sceneDirector.projectileLayer.addChild(g);
+    this.projectile = g;
     this.setProjectileProgress(0);
   }
 
@@ -221,34 +155,38 @@ export class PixiBattlePresentation implements BattlePresentation {
     const fromX = this.attacker === 'left' ? ACTION_ACTOR_X : ACTION_TARGET_X;
     const toX = this.attacker === 'left' ? ACTION_TARGET_X : ACTION_ACTOR_X;
     const p = Math.max(0, Math.min(1, progress));
-    if (this.raySprite) {
-      // Beam estilo GBC: el rayo se EXTENDE desde el personaje hacia el rival.
-      // Posición fija en el actor; el ancho crece con progress (anclado izq.).
-      const dist = Math.abs(toX - fromX);
-      const full = this.rayBaseWidth * this.rayScale;
-      this.projectile.position.set(fromX, ACTION_GROUND_Y - 40);
-      const stretch = Math.max(0.001, (dist * p) / Math.max(1, full));
-      this.projectile.scale.set(stretch * this.rayDirection, this.rayScale);
-      if (this.rayFrames > 1) {
-        const idx = Math.min(this.rayFrames - 1, Math.floor(p * this.rayFrames));
-        const tex = this.actor?.getPoseTexture('beam_ray', idx);
-        if (tex && this.projectile.texture !== tex) {
-          this.projectile.texture = tex;
-          this.rayBaseWidth = tex.width;
-          // re-aplicar stretch con el nuevo ancho base
-          const s2 = Math.max(0.001, (dist * p) / Math.max(1, tex.width * this.rayScale));
-          this.projectile.scale.set(s2 * this.rayDirection, this.rayScale);
-        }
-      }
+    this.drawProceduralProjectile(this.projectile, p, fromX, toX);
+  }
+
+  private drawProceduralProjectile(g: Graphics, progress: number, fromX: number, toX: number): void {
+    const dir = this.attacker === 'left' ? 1 : -1;
+    const y = ACTION_GROUND_Y - 40;
+    const travelX = fromX + (toX - fromX) * progress;
+    g.clear();
+    if (this.projectileMode === 'ray') {
+      const len = Math.max(2, Math.abs(toX - fromX) * progress);
+      const h = this.projectileContactTick != null && this.projectileSpawnTick != null ? 5 : 4;
+      g.position.set(fromX, y);
+      g.rect(dir === 1 ? 0 : -len, -Math.floor(h / 2), len, h).fill(0x00ccff);
+      g.rect(dir === 1 ? 0 : -len, -1, len, 2).fill(0xf0ffff);
       return;
     }
-    this.projectile.position.set(fromX + (toX - fromX) * p, ACTION_GROUND_Y - 40);
-    // Animación del rayo: frame = f(progress) — determinista (reloj único).
-    if (this.rayFrames > 1) {
-      const idx = Math.min(this.rayFrames - 1, Math.floor(p * this.rayFrames));
-      const tex = this.actor?.getPoseTexture('beam_ray', idx);
-      if (tex && this.projectile.texture !== tex) this.projectile.texture = tex;
+    g.position.set(travelX, y);
+    if (this.projectileMode === 'ball') {
+      g.circle(0, 0, 6).fill(0xffd040);
+      g.circle(-2 * dir, -2, 3).fill(0xffffff);
+      return;
     }
+    if (this.projectileMode === 'disk') {
+      g.ellipse(0, 0, 10, 3).fill(0xfff17a);
+      g.ellipse(0, 0, 6, 1).fill(0xffffff);
+      return;
+    }
+    if (this.projectileMode === 'sword') {
+      g.poly([0, -2, 18 * dir, 0, 0, 2, -4 * dir, 0]).fill(0x8ffcff);
+      return;
+    }
+    g.rect(-4, -4, 8, 8).fill(0xff8a40);
   }
 
   impact(): void {
@@ -331,11 +269,6 @@ export class PixiBattlePresentation implements BattlePresentation {
     this.projectileMode = 'special';
     this.projectileSpawnTick = null;
     this.projectileContactTick = null;
-    this.rayFrames = 0;
-    this.raySprite = false;
-    this.rayBaseWidth = 0;
-    this.rayScale = 1;
-    this.rayDirection = 1;
     if (this.projectile) {
       this.renderer.sceneDirector.projectileLayer.removeChild(this.projectile);
       this.projectile.destroy({ texture: false });

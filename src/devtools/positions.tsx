@@ -2,7 +2,7 @@
 // DEV STUDIO — Position Lab
 // Las 4 posiciones GBC + reglas de MOVE (2 ejes) y vulnerabilidades.
 // ═══════════════════════════════════════════════════════════
-import { useState } from 'react';
+import { useState, type PointerEvent } from 'react';
 import {
   BATTLE_POSITIONS, POSITION_DATA, applyMoveAxis, positionLabel, POSITION_NAMES,
   isBeamVulnerable, isDamageVulnerable, attackModifier, defenseModifier,
@@ -38,6 +38,14 @@ export function PositionsModule() {
     setOverrideVersion(v => v + 1);
   }
 
+  function setEditingAnchorFromPointer(e: PointerEvent<HTMLElement>) {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = Math.max(4, Math.min(96, ((e.clientX - rect.left) / rect.width) * 100));
+    const y = Math.max(12, Math.min(88, ((e.clientY - rect.top) / rect.height) * 100));
+    setPositionAnchorOverride(editSide, editPos, { x: Number(x.toFixed(1)), y: Number(y.toFixed(1)) });
+    setOverrideVersion(v => v + 1);
+  }
+
   function resetOneAnchor() {
     setPositionAnchorOverride(editSide, editPos, defaultEditingAnchor);
     setOverrideVersion(v => v + 1);
@@ -62,7 +70,11 @@ export function PositionsModule() {
 
       <div className="dev-pos-layout">
         <div className="dev-pos-field-panel">
-          <div className="dev-pos-field" style={{ backgroundImage: `url(${scenario.overviewBackground})` }}>
+          <div
+            className="dev-pos-field"
+            style={{ backgroundImage: `url(${scenario.overviewBackground})` }}
+            onPointerDown={setEditingAnchorFromPointer}
+          >
             {overworldUrl(playerFormId) && (
               <img
                 src={overworldUrl(playerFormId)}
@@ -98,6 +110,7 @@ export function PositionsModule() {
                     className={`dev-pos-anchor ${side.toLowerCase()} ${active ? 'active' : ''} ${editing ? 'editing' : ''}`}
                     style={{ left: `${a.x}%`, top: `${a.y}%` }}
                     onClick={() => { setEditSide(side); setEditPos(pos); }}
+                    onPointerDown={e => { e.stopPropagation(); setEditSide(side); setEditPos(pos); }}
                     type="button"
                     title={`${side} ${pos} ${a.x}/${a.y}`}
                   >
@@ -185,6 +198,10 @@ export function PositionsModule() {
 
           <h3>Editar anchor del juego</h3>
           <div className="dev-pos-anchor-editor">
+            <p className="dev-hint">
+              Click en el escenario para mover el anchor seleccionado. Los
+              chibis se muestran a 2x como en el runtime Pixi.
+            </p>
             <div className="dev-pos-select-row">
               <select value={editSide} onChange={e => setEditSide(e.target.value as PositionSide)}>
                 <option value="LEFT">LEFT / Player</option>
