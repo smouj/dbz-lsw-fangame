@@ -1,0 +1,925 @@
+runtime_dir,pose,fps,loop,group,gameplay,sequence_rule,manifest_truth
+android_16_base,idle,3,True,base,pose táctica/espera,all idle_NN,public/assets/sprites/android_16_base/manifest.json
+android_16_base,move_front,6,True,movement,desplazamiento frontal,move_front_00 -> move_front_01,public/assets/sprites/android_16_base/manifest.json
+android_16_base,move_back,6,True,movement,desplazamiento trasero,move_back_00 -> move_back_01,public/assets/sprites/android_16_base/manifest.json
+android_16_base,guard,6,False,defense,bloqueo/parada,all guard_NN,public/assets/sprites/android_16_base/manifest.json
+android_16_base,attack_fwd,5,False,stage/melee,ataque frontal,all attack_fwd_NN,public/assets/sprites/android_16_base/manifest.json
+android_16_base,attack_ud,5,False,stage/melee,ataque vertical,all attack_ud_NN,public/assets/sprites/android_16_base/manifest.json
+android_16_base,beam_charge,7,False,beam,carga,all beam_charge_NN,public/assets/sprites/android_16_base/manifest.json
+android_16_base,beam_fire,8,False,beam,disparo,all beam_fire_NN; current manifest may alias beam_charge where no physical beam_fire exists,public/assets/sprites/android_16_base/manifest.json
+android_16_base,punch_right,5,False,melee/detail,puñetazo derecho,idle_00 -> attack_fwd_00 -> attack_fwd_01 -> attack_fwd_02 (fallback all attack_fwd),public/assets/sprites/android_16_base/manifest.json
+android_16_base,punch_left,5,False,melee/detail,puñetazo izquierdo/follow-up,idle_00 -> attack_fwd_03..06 when available; otherwise current manifest/fallback attack_fwd,public/assets/sprites/android_16_base/manifest.json
+android_16_base,kick_right,5,False,melee/detail,patada,idle_00 -> all attack_ud_NN (fallback attack_fwd),public/assets/sprites/android_16_base/manifest.json
+android_16_base,hurt,6,False,reaction,daño recibido,all hurt_NN,public/assets/sprites/android_16_base/manifest.json
+android_16_base,knockback_back,6,False,reaction,retroceso,all hurt_NN,public/assets/sprites/android_16_base/manifest.json
+android_16_base,knockback_up,6,False,reaction,lanzado arriba,hurt_00 -> hurt_01 -> hurt_02 -> hurt_05 when present,public/assets/sprites/android_16_base/manifest.json
+android_16_base,knockback_down,6,False,reaction,estampado abajo,hurt_02 -> hurt_03 -> hurt_04 -> hurt_05 when present,public/assets/sprites/android_16_base/manifest.json
+android_16_base,beam_guard,6,False,defense,defensa beam,all guard_NN,public/assets/sprites/android_16_base/manifest.json
+android_16_base,evade,8,False,defense,esquiva/afterimage,move_back_00 -> guard_01 (or guard_00) -> move_back_00,public/assets/sprites/android_16_base/manifest.json
+android_16_base,gather_power,7,False,shared,preparación/carga,all beam_charge_NN (fallback guard),public/assets/sprites/android_16_base/manifest.json
+android_16_base,power_up,8,True,shared,aura/transformación,"all beam_charge_NN, loop",public/assets/sprites/android_16_base/manifest.json
+android_16_base,beam_ray,,False,beam/fx-reference,referencia haz,only actual beam_ray_NN files; reference family,public/assets/sprites/android_16_base/manifest.json
+android_16_base,beam_ray_tip,,False,beam/fx-reference,referencia punta/impacto,only actual beam_ray_tip_NN files; reference family,public/assets/sprites/android_16_base/manifest.json
+android_17_base,idle,3,True,base,pose táctica/espera,all idle_NN,public/assets/sprites/android_17_base/manifest.json
+android_17_base,move_front,6,True,movement,desplazamiento frontal,move_front_00 -> move_front_01,public/assets/sprites/android_17_base/manifest.json
+android_17_base,move_back,6,True,movement,desplazamiento trasero,move_back_00 -> move_back_01,public/assets/sprites/android_17_base/manifest.json
+android_17_base,guard,6,False,defense,bloqueo/parada,all guard_NN,public/assets/sprites/android_17_base/manifest.json
+android_17_base,attack_fwd,5,False,stage/melee,ataque frontal,all attack_fwd_NN,public/assets/sprites/android_17_base/manifest.json
+android_17_base,attack_ud,5,False,stage/melee,ataque vertical,all attack_ud_NN,public/assets/sprites/android_17_base/manifest.json
+android_17_base,beam_charge,7,False,beam,carga,all beam_charge_NN,public/assets/sprites/android_17_base/manifest.json
+android_17_base,beam_fire,8,False,beam,disparo,all beam_fire_NN; current manifest may alias beam_charge where no physical beam_fire exists,public/assets/sprites/android_17_base/manifest.json
+android_17_base,punch_right,5,False,melee/detail,puñetazo derecho,idle_00 -> attack_fwd_00 -> attack_fwd_01 -> attack_fwd_02 (fallback all attack_fwd),public/assets/sprites/android_17_base/manifest.json
+android_17_base,punch_left,5,False,melee/detail,puñetazo izquierdo/follow-up,idle_00 -> attack_fwd_03..06 when available; otherwise current manifest/fallback attack_fwd,public/assets/sprites/android_17_base/manifest.json
+android_17_base,kick_right,5,False,melee/detail,patada,idle_00 -> all attack_ud_NN (fallback attack_fwd),public/assets/sprites/android_17_base/manifest.json
+android_17_base,hurt,6,False,reaction,daño recibido,all hurt_NN,public/assets/sprites/android_17_base/manifest.json
+android_17_base,knockback_back,6,False,reaction,retroceso,all hurt_NN,public/assets/sprites/android_17_base/manifest.json
+android_17_base,knockback_up,6,False,reaction,lanzado arriba,hurt_00 -> hurt_01 -> hurt_02 -> hurt_05 when present,public/assets/sprites/android_17_base/manifest.json
+android_17_base,knockback_down,6,False,reaction,estampado abajo,hurt_02 -> hurt_03 -> hurt_04 -> hurt_05 when present,public/assets/sprites/android_17_base/manifest.json
+android_17_base,beam_guard,6,False,defense,defensa beam,all guard_NN,public/assets/sprites/android_17_base/manifest.json
+android_17_base,evade,8,False,defense,esquiva/afterimage,move_back_00 -> guard_01 (or guard_00) -> move_back_00,public/assets/sprites/android_17_base/manifest.json
+android_17_base,gather_power,7,False,shared,preparación/carga,all beam_charge_NN (fallback guard),public/assets/sprites/android_17_base/manifest.json
+android_17_base,power_up,8,True,shared,aura/transformación,"all beam_charge_NN, loop",public/assets/sprites/android_17_base/manifest.json
+android_17_base,beam_ray,,False,beam/fx-reference,referencia haz,only actual beam_ray_NN files; reference family,public/assets/sprites/android_17_base/manifest.json
+android_17_base,beam_ray_tip,,False,beam/fx-reference,referencia punta/impacto,only actual beam_ray_tip_NN files; reference family,public/assets/sprites/android_17_base/manifest.json
+android_18_base,idle,3,True,base,pose táctica/espera,all idle_NN,public/assets/sprites/android_18_base/manifest.json
+android_18_base,move_front,6,True,movement,desplazamiento frontal,move_front_00 -> move_front_01,public/assets/sprites/android_18_base/manifest.json
+android_18_base,move_back,6,True,movement,desplazamiento trasero,move_back_00 -> move_back_01,public/assets/sprites/android_18_base/manifest.json
+android_18_base,guard,6,False,defense,bloqueo/parada,all guard_NN,public/assets/sprites/android_18_base/manifest.json
+android_18_base,attack_fwd,5,False,stage/melee,ataque frontal,all attack_fwd_NN,public/assets/sprites/android_18_base/manifest.json
+android_18_base,attack_ud,5,False,stage/melee,ataque vertical,all attack_ud_NN,public/assets/sprites/android_18_base/manifest.json
+android_18_base,beam_charge,7,False,beam,carga,all beam_charge_NN,public/assets/sprites/android_18_base/manifest.json
+android_18_base,beam_fire,8,False,beam,disparo,all beam_fire_NN; current manifest may alias beam_charge where no physical beam_fire exists,public/assets/sprites/android_18_base/manifest.json
+android_18_base,punch_right,5,False,melee/detail,puñetazo derecho,idle_00 -> attack_fwd_00 -> attack_fwd_01 -> attack_fwd_02 (fallback all attack_fwd),public/assets/sprites/android_18_base/manifest.json
+android_18_base,punch_left,5,False,melee/detail,puñetazo izquierdo/follow-up,idle_00 -> attack_fwd_03..06 when available; otherwise current manifest/fallback attack_fwd,public/assets/sprites/android_18_base/manifest.json
+android_18_base,kick_right,5,False,melee/detail,patada,idle_00 -> all attack_ud_NN (fallback attack_fwd),public/assets/sprites/android_18_base/manifest.json
+android_18_base,hurt,6,False,reaction,daño recibido,all hurt_NN,public/assets/sprites/android_18_base/manifest.json
+android_18_base,knockback_back,6,False,reaction,retroceso,all hurt_NN,public/assets/sprites/android_18_base/manifest.json
+android_18_base,knockback_up,6,False,reaction,lanzado arriba,hurt_00 -> hurt_01 -> hurt_02 -> hurt_05 when present,public/assets/sprites/android_18_base/manifest.json
+android_18_base,knockback_down,6,False,reaction,estampado abajo,hurt_02 -> hurt_03 -> hurt_04 -> hurt_05 when present,public/assets/sprites/android_18_base/manifest.json
+android_18_base,beam_guard,6,False,defense,defensa beam,all guard_NN,public/assets/sprites/android_18_base/manifest.json
+android_18_base,evade,8,False,defense,esquiva/afterimage,move_back_00 -> guard_01 (or guard_00) -> move_back_00,public/assets/sprites/android_18_base/manifest.json
+android_18_base,gather_power,7,False,shared,preparación/carga,all beam_charge_NN (fallback guard),public/assets/sprites/android_18_base/manifest.json
+android_18_base,power_up,8,True,shared,aura/transformación,"all beam_charge_NN, loop",public/assets/sprites/android_18_base/manifest.json
+android_18_base,beam_ray,,False,beam/fx-reference,referencia haz,only actual beam_ray_NN files; reference family,public/assets/sprites/android_18_base/manifest.json
+android_18_base,beam_ray_tip,,False,beam/fx-reference,referencia punta/impacto,only actual beam_ray_tip_NN files; reference family,public/assets/sprites/android_18_base/manifest.json
+android_19_base,idle,3,True,base,pose táctica/espera,all idle_NN,public/assets/sprites/android_19_base/manifest.json
+android_19_base,move_front,6,True,movement,desplazamiento frontal,move_front_00 -> move_front_01,public/assets/sprites/android_19_base/manifest.json
+android_19_base,move_back,6,True,movement,desplazamiento trasero,move_back_00 -> move_back_01,public/assets/sprites/android_19_base/manifest.json
+android_19_base,guard,6,False,defense,bloqueo/parada,all guard_NN,public/assets/sprites/android_19_base/manifest.json
+android_19_base,attack_fwd,5,False,stage/melee,ataque frontal,all attack_fwd_NN,public/assets/sprites/android_19_base/manifest.json
+android_19_base,attack_ud,5,False,stage/melee,ataque vertical,all attack_ud_NN,public/assets/sprites/android_19_base/manifest.json
+android_19_base,beam_charge,7,False,beam,carga,all beam_charge_NN,public/assets/sprites/android_19_base/manifest.json
+android_19_base,beam_fire,8,False,beam,disparo,all beam_fire_NN; current manifest may alias beam_charge where no physical beam_fire exists,public/assets/sprites/android_19_base/manifest.json
+android_19_base,punch_right,5,False,melee/detail,puñetazo derecho,idle_00 -> attack_fwd_00 -> attack_fwd_01 -> attack_fwd_02 (fallback all attack_fwd),public/assets/sprites/android_19_base/manifest.json
+android_19_base,punch_left,5,False,melee/detail,puñetazo izquierdo/follow-up,idle_00 -> attack_fwd_03..06 when available; otherwise current manifest/fallback attack_fwd,public/assets/sprites/android_19_base/manifest.json
+android_19_base,kick_right,5,False,melee/detail,patada,idle_00 -> all attack_ud_NN (fallback attack_fwd),public/assets/sprites/android_19_base/manifest.json
+android_19_base,hurt,6,False,reaction,daño recibido,all hurt_NN,public/assets/sprites/android_19_base/manifest.json
+android_19_base,knockback_back,6,False,reaction,retroceso,all hurt_NN,public/assets/sprites/android_19_base/manifest.json
+android_19_base,knockback_up,6,False,reaction,lanzado arriba,hurt_00 -> hurt_01 -> hurt_02 -> hurt_05 when present,public/assets/sprites/android_19_base/manifest.json
+android_19_base,knockback_down,6,False,reaction,estampado abajo,hurt_02 -> hurt_03 -> hurt_04 -> hurt_05 when present,public/assets/sprites/android_19_base/manifest.json
+android_19_base,beam_guard,6,False,defense,defensa beam,all guard_NN,public/assets/sprites/android_19_base/manifest.json
+android_19_base,evade,8,False,defense,esquiva/afterimage,move_back_00 -> guard_01 (or guard_00) -> move_back_00,public/assets/sprites/android_19_base/manifest.json
+android_19_base,gather_power,7,False,shared,preparación/carga,all beam_charge_NN (fallback guard),public/assets/sprites/android_19_base/manifest.json
+android_19_base,power_up,8,True,shared,aura/transformación,"all beam_charge_NN, loop",public/assets/sprites/android_19_base/manifest.json
+android_19_base,beam_ray,,False,beam/fx-reference,referencia haz,only actual beam_ray_NN files; reference family,public/assets/sprites/android_19_base/manifest.json
+android_19_base,beam_ray_tip,,False,beam/fx-reference,referencia punta/impacto,only actual beam_ray_tip_NN files; reference family,public/assets/sprites/android_19_base/manifest.json
+android_20_base,idle,3,True,base,pose táctica/espera,all idle_NN,public/assets/sprites/android_20_base/manifest.json
+android_20_base,move_front,6,True,movement,desplazamiento frontal,move_front_00 -> move_front_01,public/assets/sprites/android_20_base/manifest.json
+android_20_base,move_back,6,True,movement,desplazamiento trasero,move_back_00 -> move_back_01,public/assets/sprites/android_20_base/manifest.json
+android_20_base,guard,6,False,defense,bloqueo/parada,all guard_NN,public/assets/sprites/android_20_base/manifest.json
+android_20_base,attack_fwd,5,False,stage/melee,ataque frontal,all attack_fwd_NN,public/assets/sprites/android_20_base/manifest.json
+android_20_base,attack_ud,5,False,stage/melee,ataque vertical,all attack_ud_NN,public/assets/sprites/android_20_base/manifest.json
+android_20_base,beam_charge,7,False,beam,carga,all beam_charge_NN,public/assets/sprites/android_20_base/manifest.json
+android_20_base,beam_fire,8,False,beam,disparo,all beam_fire_NN; current manifest may alias beam_charge where no physical beam_fire exists,public/assets/sprites/android_20_base/manifest.json
+android_20_base,punch_right,5,False,melee/detail,puñetazo derecho,idle_00 -> attack_fwd_00 -> attack_fwd_01 -> attack_fwd_02 (fallback all attack_fwd),public/assets/sprites/android_20_base/manifest.json
+android_20_base,punch_left,5,False,melee/detail,puñetazo izquierdo/follow-up,idle_00 -> attack_fwd_03..06 when available; otherwise current manifest/fallback attack_fwd,public/assets/sprites/android_20_base/manifest.json
+android_20_base,kick_right,5,False,melee/detail,patada,idle_00 -> all attack_ud_NN (fallback attack_fwd),public/assets/sprites/android_20_base/manifest.json
+android_20_base,hurt,6,False,reaction,daño recibido,all hurt_NN,public/assets/sprites/android_20_base/manifest.json
+android_20_base,knockback_back,6,False,reaction,retroceso,all hurt_NN,public/assets/sprites/android_20_base/manifest.json
+android_20_base,knockback_up,6,False,reaction,lanzado arriba,hurt_00 -> hurt_01 -> hurt_02 -> hurt_05 when present,public/assets/sprites/android_20_base/manifest.json
+android_20_base,knockback_down,6,False,reaction,estampado abajo,hurt_02 -> hurt_03 -> hurt_04 -> hurt_05 when present,public/assets/sprites/android_20_base/manifest.json
+android_20_base,beam_guard,6,False,defense,defensa beam,all guard_NN,public/assets/sprites/android_20_base/manifest.json
+android_20_base,evade,8,False,defense,esquiva/afterimage,move_back_00 -> guard_01 (or guard_00) -> move_back_00,public/assets/sprites/android_20_base/manifest.json
+android_20_base,gather_power,7,False,shared,preparación/carga,all beam_charge_NN (fallback guard),public/assets/sprites/android_20_base/manifest.json
+android_20_base,power_up,8,True,shared,aura/transformación,"all beam_charge_NN, loop",public/assets/sprites/android_20_base/manifest.json
+android_20_base,beam_ray,,False,beam/fx-reference,referencia haz,only actual beam_ray_NN files; reference family,public/assets/sprites/android_20_base/manifest.json
+android_20_base,beam_ray_tip,,False,beam/fx-reference,referencia punta/impacto,only actual beam_ray_tip_NN files; reference family,public/assets/sprites/android_20_base/manifest.json
+burter_base,idle,3,True,base,pose táctica/espera,all idle_NN,public/assets/sprites/burter_base/manifest.json
+burter_base,move_front,6,True,movement,desplazamiento frontal,move_front_00 -> move_front_01,public/assets/sprites/burter_base/manifest.json
+burter_base,move_back,6,True,movement,desplazamiento trasero,move_back_00 -> move_back_01,public/assets/sprites/burter_base/manifest.json
+burter_base,guard,6,False,defense,bloqueo/parada,all guard_NN,public/assets/sprites/burter_base/manifest.json
+burter_base,attack_fwd,5,False,stage/melee,ataque frontal,all attack_fwd_NN,public/assets/sprites/burter_base/manifest.json
+burter_base,attack_ud,5,False,stage/melee,ataque vertical,all attack_ud_NN,public/assets/sprites/burter_base/manifest.json
+burter_base,beam_charge,7,False,beam,carga,all beam_charge_NN,public/assets/sprites/burter_base/manifest.json
+burter_base,beam_fire,8,False,beam,disparo,all beam_fire_NN; current manifest may alias beam_charge where no physical beam_fire exists,public/assets/sprites/burter_base/manifest.json
+burter_base,punch_right,5,False,melee/detail,puñetazo derecho,idle_00 -> attack_fwd_00 -> attack_fwd_01 -> attack_fwd_02 (fallback all attack_fwd),public/assets/sprites/burter_base/manifest.json
+burter_base,punch_left,5,False,melee/detail,puñetazo izquierdo/follow-up,idle_00 -> attack_fwd_03..06 when available; otherwise current manifest/fallback attack_fwd,public/assets/sprites/burter_base/manifest.json
+burter_base,kick_right,5,False,melee/detail,patada,idle_00 -> all attack_ud_NN (fallback attack_fwd),public/assets/sprites/burter_base/manifest.json
+burter_base,hurt,6,False,reaction,daño recibido,all hurt_NN,public/assets/sprites/burter_base/manifest.json
+burter_base,knockback_back,6,False,reaction,retroceso,all hurt_NN,public/assets/sprites/burter_base/manifest.json
+burter_base,knockback_up,6,False,reaction,lanzado arriba,hurt_00 -> hurt_01 -> hurt_02 -> hurt_05 when present,public/assets/sprites/burter_base/manifest.json
+burter_base,knockback_down,6,False,reaction,estampado abajo,hurt_02 -> hurt_03 -> hurt_04 -> hurt_05 when present,public/assets/sprites/burter_base/manifest.json
+burter_base,beam_guard,6,False,defense,defensa beam,all guard_NN,public/assets/sprites/burter_base/manifest.json
+burter_base,evade,8,False,defense,esquiva/afterimage,move_back_00 -> guard_01 (or guard_00) -> move_back_00,public/assets/sprites/burter_base/manifest.json
+burter_base,gather_power,7,False,shared,preparación/carga,all beam_charge_NN (fallback guard),public/assets/sprites/burter_base/manifest.json
+burter_base,power_up,8,True,shared,aura/transformación,"all beam_charge_NN, loop",public/assets/sprites/burter_base/manifest.json
+burter_base,beam_ray,,False,beam/fx-reference,referencia haz,only actual beam_ray_NN files; reference family,public/assets/sprites/burter_base/manifest.json
+burter_base,beam_ray_tip,,False,beam/fx-reference,referencia punta/impacto,only actual beam_ray_tip_NN files; reference family,public/assets/sprites/burter_base/manifest.json
+buu_base,idle,3,True,base,pose táctica/espera,all idle_NN,public/assets/sprites/buu_base/manifest.json
+buu_base,move_front,6,True,movement,desplazamiento frontal,move_front_00 -> move_front_01,public/assets/sprites/buu_base/manifest.json
+buu_base,move_back,6,True,movement,desplazamiento trasero,move_back_00 -> move_back_01,public/assets/sprites/buu_base/manifest.json
+buu_base,guard,6,False,defense,bloqueo/parada,all guard_NN,public/assets/sprites/buu_base/manifest.json
+buu_base,attack_fwd,5,False,stage/melee,ataque frontal,all attack_fwd_NN,public/assets/sprites/buu_base/manifest.json
+buu_base,attack_ud,5,False,stage/melee,ataque vertical,all attack_ud_NN,public/assets/sprites/buu_base/manifest.json
+buu_base,beam_charge,7,False,beam,carga,all beam_charge_NN,public/assets/sprites/buu_base/manifest.json
+buu_base,beam_fire,8,False,beam,disparo,all beam_fire_NN; current manifest may alias beam_charge where no physical beam_fire exists,public/assets/sprites/buu_base/manifest.json
+buu_base,punch_right,5,False,melee/detail,puñetazo derecho,idle_00 -> attack_fwd_00 -> attack_fwd_01 -> attack_fwd_02 (fallback all attack_fwd),public/assets/sprites/buu_base/manifest.json
+buu_base,punch_left,5,False,melee/detail,puñetazo izquierdo/follow-up,idle_00 -> attack_fwd_03..06 when available; otherwise current manifest/fallback attack_fwd,public/assets/sprites/buu_base/manifest.json
+buu_base,kick_right,5,False,melee/detail,patada,idle_00 -> all attack_ud_NN (fallback attack_fwd),public/assets/sprites/buu_base/manifest.json
+buu_base,hurt,6,False,reaction,daño recibido,all hurt_NN,public/assets/sprites/buu_base/manifest.json
+buu_base,knockback_back,6,False,reaction,retroceso,all hurt_NN,public/assets/sprites/buu_base/manifest.json
+buu_base,knockback_up,6,False,reaction,lanzado arriba,hurt_00 -> hurt_01 -> hurt_02 -> hurt_05 when present,public/assets/sprites/buu_base/manifest.json
+buu_base,knockback_down,6,False,reaction,estampado abajo,hurt_02 -> hurt_03 -> hurt_04 -> hurt_05 when present,public/assets/sprites/buu_base/manifest.json
+buu_base,beam_guard,6,False,defense,defensa beam,all guard_NN,public/assets/sprites/buu_base/manifest.json
+buu_base,evade,8,False,defense,esquiva/afterimage,move_back_00 -> guard_01 (or guard_00) -> move_back_00,public/assets/sprites/buu_base/manifest.json
+buu_base,gather_power,7,False,shared,preparación/carga,all beam_charge_NN (fallback guard),public/assets/sprites/buu_base/manifest.json
+buu_base,power_up,8,True,shared,aura/transformación,"all beam_charge_NN, loop",public/assets/sprites/buu_base/manifest.json
+buu_base,beam_ray,,False,beam/fx-reference,referencia haz,only actual beam_ray_NN files; reference family,public/assets/sprites/buu_base/manifest.json
+buu_base,beam_ray_tip,,False,beam/fx-reference,referencia punta/impacto,only actual beam_ray_tip_NN files; reference family,public/assets/sprites/buu_base/manifest.json
+buu_gohan_absorbed,idle,3,True,base,pose táctica/espera,all idle_NN,public/assets/sprites/buu_gohan_absorbed/manifest.json
+buu_gohan_absorbed,move_front,6,True,movement,desplazamiento frontal,move_front_00 -> move_front_01,public/assets/sprites/buu_gohan_absorbed/manifest.json
+buu_gohan_absorbed,move_back,6,True,movement,desplazamiento trasero,move_back_00 -> move_back_01,public/assets/sprites/buu_gohan_absorbed/manifest.json
+buu_gohan_absorbed,guard,6,False,defense,bloqueo/parada,all guard_NN,public/assets/sprites/buu_gohan_absorbed/manifest.json
+buu_gohan_absorbed,attack_fwd,5,False,stage/melee,ataque frontal,all attack_fwd_NN,public/assets/sprites/buu_gohan_absorbed/manifest.json
+buu_gohan_absorbed,attack_ud,5,False,stage/melee,ataque vertical,all attack_ud_NN,public/assets/sprites/buu_gohan_absorbed/manifest.json
+buu_gohan_absorbed,beam_charge,7,False,beam,carga,all beam_charge_NN,public/assets/sprites/buu_gohan_absorbed/manifest.json
+buu_gohan_absorbed,beam_fire,8,False,beam,disparo,all beam_fire_NN; current manifest may alias beam_charge where no physical beam_fire exists,public/assets/sprites/buu_gohan_absorbed/manifest.json
+buu_gohan_absorbed,punch_right,5,False,melee/detail,puñetazo derecho,idle_00 -> attack_fwd_00 -> attack_fwd_01 -> attack_fwd_02 (fallback all attack_fwd),public/assets/sprites/buu_gohan_absorbed/manifest.json
+buu_gohan_absorbed,punch_left,5,False,melee/detail,puñetazo izquierdo/follow-up,idle_00 -> attack_fwd_03..06 when available; otherwise current manifest/fallback attack_fwd,public/assets/sprites/buu_gohan_absorbed/manifest.json
+buu_gohan_absorbed,kick_right,5,False,melee/detail,patada,idle_00 -> all attack_ud_NN (fallback attack_fwd),public/assets/sprites/buu_gohan_absorbed/manifest.json
+buu_gohan_absorbed,hurt,6,False,reaction,daño recibido,all hurt_NN,public/assets/sprites/buu_gohan_absorbed/manifest.json
+buu_gohan_absorbed,knockback_back,6,False,reaction,retroceso,all hurt_NN,public/assets/sprites/buu_gohan_absorbed/manifest.json
+buu_gohan_absorbed,knockback_up,6,False,reaction,lanzado arriba,hurt_00 -> hurt_01 -> hurt_02 -> hurt_05 when present,public/assets/sprites/buu_gohan_absorbed/manifest.json
+buu_gohan_absorbed,knockback_down,6,False,reaction,estampado abajo,hurt_02 -> hurt_03 -> hurt_04 -> hurt_05 when present,public/assets/sprites/buu_gohan_absorbed/manifest.json
+buu_gohan_absorbed,beam_guard,6,False,defense,defensa beam,all guard_NN,public/assets/sprites/buu_gohan_absorbed/manifest.json
+buu_gohan_absorbed,evade,8,False,defense,esquiva/afterimage,move_back_00 -> guard_01 (or guard_00) -> move_back_00,public/assets/sprites/buu_gohan_absorbed/manifest.json
+buu_gohan_absorbed,gather_power,7,False,shared,preparación/carga,all beam_charge_NN (fallback guard),public/assets/sprites/buu_gohan_absorbed/manifest.json
+buu_gohan_absorbed,power_up,8,True,shared,aura/transformación,"all beam_charge_NN, loop",public/assets/sprites/buu_gohan_absorbed/manifest.json
+buu_gohan_absorbed,beam_ray,,False,beam/fx-reference,referencia haz,only actual beam_ray_NN files; reference family,public/assets/sprites/buu_gohan_absorbed/manifest.json
+buu_gohan_absorbed,beam_ray_tip,,False,beam/fx-reference,referencia punta/impacto,only actual beam_ray_tip_NN files; reference family,public/assets/sprites/buu_gohan_absorbed/manifest.json
+buu_gotenks_absorbed,idle,3,True,base,pose táctica/espera,all idle_NN,public/assets/sprites/buu_gotenks_absorbed/manifest.json
+buu_gotenks_absorbed,move_front,6,True,movement,desplazamiento frontal,move_front_00 -> move_front_01,public/assets/sprites/buu_gotenks_absorbed/manifest.json
+buu_gotenks_absorbed,move_back,6,True,movement,desplazamiento trasero,move_back_00 -> move_back_01,public/assets/sprites/buu_gotenks_absorbed/manifest.json
+buu_gotenks_absorbed,guard,6,False,defense,bloqueo/parada,all guard_NN,public/assets/sprites/buu_gotenks_absorbed/manifest.json
+buu_gotenks_absorbed,attack_fwd,5,False,stage/melee,ataque frontal,all attack_fwd_NN,public/assets/sprites/buu_gotenks_absorbed/manifest.json
+buu_gotenks_absorbed,attack_ud,5,False,stage/melee,ataque vertical,all attack_ud_NN,public/assets/sprites/buu_gotenks_absorbed/manifest.json
+buu_gotenks_absorbed,beam_charge,7,False,beam,carga,all beam_charge_NN,public/assets/sprites/buu_gotenks_absorbed/manifest.json
+buu_gotenks_absorbed,beam_fire,8,False,beam,disparo,all beam_fire_NN; current manifest may alias beam_charge where no physical beam_fire exists,public/assets/sprites/buu_gotenks_absorbed/manifest.json
+buu_gotenks_absorbed,punch_right,5,False,melee/detail,puñetazo derecho,idle_00 -> attack_fwd_00 -> attack_fwd_01 -> attack_fwd_02 (fallback all attack_fwd),public/assets/sprites/buu_gotenks_absorbed/manifest.json
+buu_gotenks_absorbed,punch_left,5,False,melee/detail,puñetazo izquierdo/follow-up,idle_00 -> attack_fwd_03..06 when available; otherwise current manifest/fallback attack_fwd,public/assets/sprites/buu_gotenks_absorbed/manifest.json
+buu_gotenks_absorbed,kick_right,5,False,melee/detail,patada,idle_00 -> all attack_ud_NN (fallback attack_fwd),public/assets/sprites/buu_gotenks_absorbed/manifest.json
+buu_gotenks_absorbed,hurt,6,False,reaction,daño recibido,all hurt_NN,public/assets/sprites/buu_gotenks_absorbed/manifest.json
+buu_gotenks_absorbed,knockback_back,6,False,reaction,retroceso,all hurt_NN,public/assets/sprites/buu_gotenks_absorbed/manifest.json
+buu_gotenks_absorbed,knockback_up,6,False,reaction,lanzado arriba,hurt_00 -> hurt_01 -> hurt_02 -> hurt_05 when present,public/assets/sprites/buu_gotenks_absorbed/manifest.json
+buu_gotenks_absorbed,knockback_down,6,False,reaction,estampado abajo,hurt_02 -> hurt_03 -> hurt_04 -> hurt_05 when present,public/assets/sprites/buu_gotenks_absorbed/manifest.json
+buu_gotenks_absorbed,beam_guard,6,False,defense,defensa beam,all guard_NN,public/assets/sprites/buu_gotenks_absorbed/manifest.json
+buu_gotenks_absorbed,evade,8,False,defense,esquiva/afterimage,move_back_00 -> guard_01 (or guard_00) -> move_back_00,public/assets/sprites/buu_gotenks_absorbed/manifest.json
+buu_gotenks_absorbed,gather_power,7,False,shared,preparación/carga,all beam_charge_NN (fallback guard),public/assets/sprites/buu_gotenks_absorbed/manifest.json
+buu_gotenks_absorbed,power_up,8,True,shared,aura/transformación,"all beam_charge_NN, loop",public/assets/sprites/buu_gotenks_absorbed/manifest.json
+buu_gotenks_absorbed,beam_ray,,False,beam/fx-reference,referencia haz,only actual beam_ray_NN files; reference family,public/assets/sprites/buu_gotenks_absorbed/manifest.json
+buu_gotenks_absorbed,beam_ray_tip,,False,beam/fx-reference,referencia punta/impacto,only actual beam_ray_tip_NN files; reference family,public/assets/sprites/buu_gotenks_absorbed/manifest.json
+cell_imperfect_form,idle,3,True,base,pose táctica/espera,all idle_NN,public/assets/sprites/cell_imperfect_form/manifest.json
+cell_imperfect_form,move_front,6,True,movement,desplazamiento frontal,move_front_00 -> move_front_01,public/assets/sprites/cell_imperfect_form/manifest.json
+cell_imperfect_form,move_back,6,True,movement,desplazamiento trasero,move_back_00 -> move_back_01,public/assets/sprites/cell_imperfect_form/manifest.json
+cell_imperfect_form,guard,6,False,defense,bloqueo/parada,all guard_NN,public/assets/sprites/cell_imperfect_form/manifest.json
+cell_imperfect_form,attack_fwd,5,False,stage/melee,ataque frontal,all attack_fwd_NN,public/assets/sprites/cell_imperfect_form/manifest.json
+cell_imperfect_form,attack_ud,5,False,stage/melee,ataque vertical,all attack_ud_NN,public/assets/sprites/cell_imperfect_form/manifest.json
+cell_imperfect_form,beam_charge,7,False,beam,carga,all beam_charge_NN,public/assets/sprites/cell_imperfect_form/manifest.json
+cell_imperfect_form,beam_fire,8,False,beam,disparo,all beam_fire_NN; current manifest may alias beam_charge where no physical beam_fire exists,public/assets/sprites/cell_imperfect_form/manifest.json
+cell_imperfect_form,punch_right,5,False,melee/detail,puñetazo derecho,idle_00 -> attack_fwd_00 -> attack_fwd_01 -> attack_fwd_02 (fallback all attack_fwd),public/assets/sprites/cell_imperfect_form/manifest.json
+cell_imperfect_form,punch_left,5,False,melee/detail,puñetazo izquierdo/follow-up,idle_00 -> attack_fwd_03..06 when available; otherwise current manifest/fallback attack_fwd,public/assets/sprites/cell_imperfect_form/manifest.json
+cell_imperfect_form,kick_right,5,False,melee/detail,patada,idle_00 -> all attack_ud_NN (fallback attack_fwd),public/assets/sprites/cell_imperfect_form/manifest.json
+cell_imperfect_form,hurt,6,False,reaction,daño recibido,all hurt_NN,public/assets/sprites/cell_imperfect_form/manifest.json
+cell_imperfect_form,knockback_back,6,False,reaction,retroceso,all hurt_NN,public/assets/sprites/cell_imperfect_form/manifest.json
+cell_imperfect_form,knockback_up,6,False,reaction,lanzado arriba,hurt_00 -> hurt_01 -> hurt_02 -> hurt_05 when present,public/assets/sprites/cell_imperfect_form/manifest.json
+cell_imperfect_form,knockback_down,6,False,reaction,estampado abajo,hurt_02 -> hurt_03 -> hurt_04 -> hurt_05 when present,public/assets/sprites/cell_imperfect_form/manifest.json
+cell_imperfect_form,beam_guard,6,False,defense,defensa beam,all guard_NN,public/assets/sprites/cell_imperfect_form/manifest.json
+cell_imperfect_form,evade,8,False,defense,esquiva/afterimage,move_back_00 -> guard_01 (or guard_00) -> move_back_00,public/assets/sprites/cell_imperfect_form/manifest.json
+cell_imperfect_form,gather_power,7,False,shared,preparación/carga,all beam_charge_NN (fallback guard),public/assets/sprites/cell_imperfect_form/manifest.json
+cell_imperfect_form,power_up,8,True,shared,aura/transformación,"all beam_charge_NN, loop",public/assets/sprites/cell_imperfect_form/manifest.json
+cell_imperfect_form,beam_ray,,False,beam/fx-reference,referencia haz,only actual beam_ray_NN files; reference family,public/assets/sprites/cell_imperfect_form/manifest.json
+cell_imperfect_form,beam_ray_tip,,False,beam/fx-reference,referencia punta/impacto,only actual beam_ray_tip_NN files; reference family,public/assets/sprites/cell_imperfect_form/manifest.json
+cell_jr_base,idle,3,True,base,pose táctica/espera,all idle_NN,public/assets/sprites/cell_jr_base/manifest.json
+cell_jr_base,move_front,6,True,movement,desplazamiento frontal,move_front_00 -> move_front_01,public/assets/sprites/cell_jr_base/manifest.json
+cell_jr_base,move_back,6,True,movement,desplazamiento trasero,move_back_00 -> move_back_01,public/assets/sprites/cell_jr_base/manifest.json
+cell_jr_base,guard,6,False,defense,bloqueo/parada,all guard_NN,public/assets/sprites/cell_jr_base/manifest.json
+cell_jr_base,attack_fwd,5,False,stage/melee,ataque frontal,all attack_fwd_NN,public/assets/sprites/cell_jr_base/manifest.json
+cell_jr_base,attack_ud,5,False,stage/melee,ataque vertical,all attack_ud_NN,public/assets/sprites/cell_jr_base/manifest.json
+cell_jr_base,beam_charge,7,False,beam,carga,all beam_charge_NN,public/assets/sprites/cell_jr_base/manifest.json
+cell_jr_base,beam_fire,8,False,beam,disparo,all beam_fire_NN; current manifest may alias beam_charge where no physical beam_fire exists,public/assets/sprites/cell_jr_base/manifest.json
+cell_jr_base,punch_right,5,False,melee/detail,puñetazo derecho,idle_00 -> attack_fwd_00 -> attack_fwd_01 -> attack_fwd_02 (fallback all attack_fwd),public/assets/sprites/cell_jr_base/manifest.json
+cell_jr_base,punch_left,5,False,melee/detail,puñetazo izquierdo/follow-up,idle_00 -> attack_fwd_03..06 when available; otherwise current manifest/fallback attack_fwd,public/assets/sprites/cell_jr_base/manifest.json
+cell_jr_base,kick_right,5,False,melee/detail,patada,idle_00 -> all attack_ud_NN (fallback attack_fwd),public/assets/sprites/cell_jr_base/manifest.json
+cell_jr_base,hurt,6,False,reaction,daño recibido,all hurt_NN,public/assets/sprites/cell_jr_base/manifest.json
+cell_jr_base,knockback_back,6,False,reaction,retroceso,all hurt_NN,public/assets/sprites/cell_jr_base/manifest.json
+cell_jr_base,knockback_up,6,False,reaction,lanzado arriba,hurt_00 -> hurt_01 -> hurt_02 -> hurt_05 when present,public/assets/sprites/cell_jr_base/manifest.json
+cell_jr_base,knockback_down,6,False,reaction,estampado abajo,hurt_02 -> hurt_03 -> hurt_04 -> hurt_05 when present,public/assets/sprites/cell_jr_base/manifest.json
+cell_jr_base,beam_guard,6,False,defense,defensa beam,all guard_NN,public/assets/sprites/cell_jr_base/manifest.json
+cell_jr_base,evade,8,False,defense,esquiva/afterimage,move_back_00 -> guard_01 (or guard_00) -> move_back_00,public/assets/sprites/cell_jr_base/manifest.json
+cell_jr_base,gather_power,7,False,shared,preparación/carga,all beam_charge_NN (fallback guard),public/assets/sprites/cell_jr_base/manifest.json
+cell_jr_base,power_up,8,True,shared,aura/transformación,"all beam_charge_NN, loop",public/assets/sprites/cell_jr_base/manifest.json
+cell_jr_base,beam_ray,,False,beam/fx-reference,referencia haz,only actual beam_ray_NN files; reference family,public/assets/sprites/cell_jr_base/manifest.json
+cell_jr_base,beam_ray_tip,,False,beam/fx-reference,referencia punta/impacto,only actual beam_ray_tip_NN files; reference family,public/assets/sprites/cell_jr_base/manifest.json
+cell_perfect,idle,3,True,base,pose táctica/espera,all idle_NN,public/assets/sprites/cell_perfect/manifest.json
+cell_perfect,move_front,6,True,movement,desplazamiento frontal,move_front_00 -> move_front_01,public/assets/sprites/cell_perfect/manifest.json
+cell_perfect,move_back,6,True,movement,desplazamiento trasero,move_back_00 -> move_back_01,public/assets/sprites/cell_perfect/manifest.json
+cell_perfect,guard,6,False,defense,bloqueo/parada,all guard_NN,public/assets/sprites/cell_perfect/manifest.json
+cell_perfect,attack_fwd,5,False,stage/melee,ataque frontal,all attack_fwd_NN,public/assets/sprites/cell_perfect/manifest.json
+cell_perfect,attack_ud,5,False,stage/melee,ataque vertical,all attack_ud_NN,public/assets/sprites/cell_perfect/manifest.json
+cell_perfect,beam_charge,7,False,beam,carga,all beam_charge_NN,public/assets/sprites/cell_perfect/manifest.json
+cell_perfect,beam_fire,8,False,beam,disparo,all beam_fire_NN; current manifest may alias beam_charge where no physical beam_fire exists,public/assets/sprites/cell_perfect/manifest.json
+cell_perfect,punch_right,5,False,melee/detail,puñetazo derecho,idle_00 -> attack_fwd_00 -> attack_fwd_01 -> attack_fwd_02 (fallback all attack_fwd),public/assets/sprites/cell_perfect/manifest.json
+cell_perfect,punch_left,5,False,melee/detail,puñetazo izquierdo/follow-up,idle_00 -> attack_fwd_03..06 when available; otherwise current manifest/fallback attack_fwd,public/assets/sprites/cell_perfect/manifest.json
+cell_perfect,kick_right,5,False,melee/detail,patada,idle_00 -> all attack_ud_NN (fallback attack_fwd),public/assets/sprites/cell_perfect/manifest.json
+cell_perfect,hurt,6,False,reaction,daño recibido,all hurt_NN,public/assets/sprites/cell_perfect/manifest.json
+cell_perfect,knockback_back,6,False,reaction,retroceso,all hurt_NN,public/assets/sprites/cell_perfect/manifest.json
+cell_perfect,knockback_up,6,False,reaction,lanzado arriba,hurt_00 -> hurt_01 -> hurt_02 -> hurt_05 when present,public/assets/sprites/cell_perfect/manifest.json
+cell_perfect,knockback_down,6,False,reaction,estampado abajo,hurt_02 -> hurt_03 -> hurt_04 -> hurt_05 when present,public/assets/sprites/cell_perfect/manifest.json
+cell_perfect,beam_guard,6,False,defense,defensa beam,all guard_NN,public/assets/sprites/cell_perfect/manifest.json
+cell_perfect,evade,8,False,defense,esquiva/afterimage,move_back_00 -> guard_01 (or guard_00) -> move_back_00,public/assets/sprites/cell_perfect/manifest.json
+cell_perfect,gather_power,7,False,shared,preparación/carga,all beam_charge_NN (fallback guard),public/assets/sprites/cell_perfect/manifest.json
+cell_perfect,power_up,8,True,shared,aura/transformación,"all beam_charge_NN, loop",public/assets/sprites/cell_perfect/manifest.json
+cell_perfect,beam_ray,,False,beam/fx-reference,referencia haz,only actual beam_ray_NN files; reference family,public/assets/sprites/cell_perfect/manifest.json
+cell_perfect,beam_ray_tip,,False,beam/fx-reference,referencia punta/impacto,only actual beam_ray_tip_NN files; reference family,public/assets/sprites/cell_perfect/manifest.json
+cell_semi_perfect_form,idle,3,True,base,pose táctica/espera,all idle_NN,public/assets/sprites/cell_semi_perfect_form/manifest.json
+cell_semi_perfect_form,move_front,6,True,movement,desplazamiento frontal,move_front_00 -> move_front_01,public/assets/sprites/cell_semi_perfect_form/manifest.json
+cell_semi_perfect_form,move_back,6,True,movement,desplazamiento trasero,move_back_00 -> move_back_01,public/assets/sprites/cell_semi_perfect_form/manifest.json
+cell_semi_perfect_form,guard,6,False,defense,bloqueo/parada,all guard_NN,public/assets/sprites/cell_semi_perfect_form/manifest.json
+cell_semi_perfect_form,attack_fwd,5,False,stage/melee,ataque frontal,all attack_fwd_NN,public/assets/sprites/cell_semi_perfect_form/manifest.json
+cell_semi_perfect_form,attack_ud,5,False,stage/melee,ataque vertical,all attack_ud_NN,public/assets/sprites/cell_semi_perfect_form/manifest.json
+cell_semi_perfect_form,beam_charge,7,False,beam,carga,all beam_charge_NN,public/assets/sprites/cell_semi_perfect_form/manifest.json
+cell_semi_perfect_form,beam_fire,8,False,beam,disparo,all beam_fire_NN; current manifest may alias beam_charge where no physical beam_fire exists,public/assets/sprites/cell_semi_perfect_form/manifest.json
+cell_semi_perfect_form,punch_right,5,False,melee/detail,puñetazo derecho,idle_00 -> attack_fwd_00 -> attack_fwd_01 -> attack_fwd_02 (fallback all attack_fwd),public/assets/sprites/cell_semi_perfect_form/manifest.json
+cell_semi_perfect_form,punch_left,5,False,melee/detail,puñetazo izquierdo/follow-up,idle_00 -> attack_fwd_03..06 when available; otherwise current manifest/fallback attack_fwd,public/assets/sprites/cell_semi_perfect_form/manifest.json
+cell_semi_perfect_form,kick_right,5,False,melee/detail,patada,idle_00 -> all attack_ud_NN (fallback attack_fwd),public/assets/sprites/cell_semi_perfect_form/manifest.json
+cell_semi_perfect_form,hurt,6,False,reaction,daño recibido,all hurt_NN,public/assets/sprites/cell_semi_perfect_form/manifest.json
+cell_semi_perfect_form,knockback_back,6,False,reaction,retroceso,all hurt_NN,public/assets/sprites/cell_semi_perfect_form/manifest.json
+cell_semi_perfect_form,knockback_up,6,False,reaction,lanzado arriba,hurt_00 -> hurt_01 -> hurt_02 -> hurt_05 when present,public/assets/sprites/cell_semi_perfect_form/manifest.json
+cell_semi_perfect_form,knockback_down,6,False,reaction,estampado abajo,hurt_02 -> hurt_03 -> hurt_04 -> hurt_05 when present,public/assets/sprites/cell_semi_perfect_form/manifest.json
+cell_semi_perfect_form,beam_guard,6,False,defense,defensa beam,all guard_NN,public/assets/sprites/cell_semi_perfect_form/manifest.json
+cell_semi_perfect_form,evade,8,False,defense,esquiva/afterimage,move_back_00 -> guard_01 (or guard_00) -> move_back_00,public/assets/sprites/cell_semi_perfect_form/manifest.json
+cell_semi_perfect_form,gather_power,7,False,shared,preparación/carga,all beam_charge_NN (fallback guard),public/assets/sprites/cell_semi_perfect_form/manifest.json
+cell_semi_perfect_form,power_up,8,True,shared,aura/transformación,"all beam_charge_NN, loop",public/assets/sprites/cell_semi_perfect_form/manifest.json
+cell_semi_perfect_form,beam_ray,,False,beam/fx-reference,referencia haz,only actual beam_ray_NN files; reference family,public/assets/sprites/cell_semi_perfect_form/manifest.json
+cell_semi_perfect_form,beam_ray_tip,,False,beam/fx-reference,referencia punta/impacto,only actual beam_ray_tip_NN files; reference family,public/assets/sprites/cell_semi_perfect_form/manifest.json
+frieza_base,idle,3,True,base,pose táctica/espera,all idle_NN,public/assets/sprites/frieza_base/manifest.json
+frieza_base,move_front,6,True,movement,desplazamiento frontal,move_front_00 -> move_front_01,public/assets/sprites/frieza_base/manifest.json
+frieza_base,move_back,6,True,movement,desplazamiento trasero,move_back_00 -> move_back_01,public/assets/sprites/frieza_base/manifest.json
+frieza_base,guard,6,False,defense,bloqueo/parada,all guard_NN,public/assets/sprites/frieza_base/manifest.json
+frieza_base,attack_fwd,5,False,stage/melee,ataque frontal,all attack_fwd_NN,public/assets/sprites/frieza_base/manifest.json
+frieza_base,attack_ud,5,False,stage/melee,ataque vertical,all attack_ud_NN,public/assets/sprites/frieza_base/manifest.json
+frieza_base,beam_charge,7,False,beam,carga,all beam_charge_NN,public/assets/sprites/frieza_base/manifest.json
+frieza_base,beam_fire,8,False,beam,disparo,all beam_fire_NN; current manifest may alias beam_charge where no physical beam_fire exists,public/assets/sprites/frieza_base/manifest.json
+frieza_base,punch_right,5,False,melee/detail,puñetazo derecho,idle_00 -> attack_fwd_00 -> attack_fwd_01 -> attack_fwd_02 (fallback all attack_fwd),public/assets/sprites/frieza_base/manifest.json
+frieza_base,punch_left,5,False,melee/detail,puñetazo izquierdo/follow-up,idle_00 -> attack_fwd_03..06 when available; otherwise current manifest/fallback attack_fwd,public/assets/sprites/frieza_base/manifest.json
+frieza_base,kick_right,5,False,melee/detail,patada,idle_00 -> all attack_ud_NN (fallback attack_fwd),public/assets/sprites/frieza_base/manifest.json
+frieza_base,hurt,6,False,reaction,daño recibido,all hurt_NN,public/assets/sprites/frieza_base/manifest.json
+frieza_base,knockback_back,6,False,reaction,retroceso,all hurt_NN,public/assets/sprites/frieza_base/manifest.json
+frieza_base,knockback_up,6,False,reaction,lanzado arriba,hurt_00 -> hurt_01 -> hurt_02 -> hurt_05 when present,public/assets/sprites/frieza_base/manifest.json
+frieza_base,knockback_down,6,False,reaction,estampado abajo,hurt_02 -> hurt_03 -> hurt_04 -> hurt_05 when present,public/assets/sprites/frieza_base/manifest.json
+frieza_base,beam_guard,6,False,defense,defensa beam,all guard_NN,public/assets/sprites/frieza_base/manifest.json
+frieza_base,evade,8,False,defense,esquiva/afterimage,move_back_00 -> guard_01 (or guard_00) -> move_back_00,public/assets/sprites/frieza_base/manifest.json
+frieza_base,gather_power,7,False,shared,preparación/carga,all beam_charge_NN (fallback guard),public/assets/sprites/frieza_base/manifest.json
+frieza_base,power_up,8,True,shared,aura/transformación,"all beam_charge_NN, loop",public/assets/sprites/frieza_base/manifest.json
+frieza_base,beam_ray,,False,beam/fx-reference,referencia haz,only actual beam_ray_NN files; reference family,public/assets/sprites/frieza_base/manifest.json
+frieza_base,beam_ray_tip,,False,beam/fx-reference,referencia punta/impacto,only actual beam_ray_tip_NN files; reference family,public/assets/sprites/frieza_base/manifest.json
+future_trunks_base,idle,3,True,base,pose táctica/espera,all idle_NN,public/assets/sprites/future_trunks_base/manifest.json
+future_trunks_base,move_front,6,True,movement,desplazamiento frontal,move_front_00 -> move_front_01,public/assets/sprites/future_trunks_base/manifest.json
+future_trunks_base,move_back,6,True,movement,desplazamiento trasero,move_back_00 -> move_back_01,public/assets/sprites/future_trunks_base/manifest.json
+future_trunks_base,guard,6,False,defense,bloqueo/parada,all guard_NN,public/assets/sprites/future_trunks_base/manifest.json
+future_trunks_base,attack_fwd,5,False,stage/melee,ataque frontal,all attack_fwd_NN,public/assets/sprites/future_trunks_base/manifest.json
+future_trunks_base,attack_ud,5,False,stage/melee,ataque vertical,all attack_ud_NN,public/assets/sprites/future_trunks_base/manifest.json
+future_trunks_base,beam_charge,7,False,beam,carga,all beam_charge_NN,public/assets/sprites/future_trunks_base/manifest.json
+future_trunks_base,beam_fire,8,False,beam,disparo,all beam_fire_NN; current manifest may alias beam_charge where no physical beam_fire exists,public/assets/sprites/future_trunks_base/manifest.json
+future_trunks_base,punch_right,5,False,melee/detail,puñetazo derecho,idle_00 -> attack_fwd_00 -> attack_fwd_01 -> attack_fwd_02 (fallback all attack_fwd),public/assets/sprites/future_trunks_base/manifest.json
+future_trunks_base,punch_left,5,False,melee/detail,puñetazo izquierdo/follow-up,idle_00 -> attack_fwd_03..06 when available; otherwise current manifest/fallback attack_fwd,public/assets/sprites/future_trunks_base/manifest.json
+future_trunks_base,kick_right,5,False,melee/detail,patada,idle_00 -> all attack_ud_NN (fallback attack_fwd),public/assets/sprites/future_trunks_base/manifest.json
+future_trunks_base,hurt,6,False,reaction,daño recibido,all hurt_NN,public/assets/sprites/future_trunks_base/manifest.json
+future_trunks_base,knockback_back,6,False,reaction,retroceso,all hurt_NN,public/assets/sprites/future_trunks_base/manifest.json
+future_trunks_base,knockback_up,6,False,reaction,lanzado arriba,hurt_00 -> hurt_01 -> hurt_02 -> hurt_05 when present,public/assets/sprites/future_trunks_base/manifest.json
+future_trunks_base,knockback_down,6,False,reaction,estampado abajo,hurt_02 -> hurt_03 -> hurt_04 -> hurt_05 when present,public/assets/sprites/future_trunks_base/manifest.json
+future_trunks_base,beam_guard,6,False,defense,defensa beam,all guard_NN,public/assets/sprites/future_trunks_base/manifest.json
+future_trunks_base,evade,8,False,defense,esquiva/afterimage,move_back_00 -> guard_01 (or guard_00) -> move_back_00,public/assets/sprites/future_trunks_base/manifest.json
+future_trunks_base,gather_power,7,False,shared,preparación/carga,all beam_charge_NN (fallback guard),public/assets/sprites/future_trunks_base/manifest.json
+future_trunks_base,power_up,8,True,shared,aura/transformación,"all beam_charge_NN, loop",public/assets/sprites/future_trunks_base/manifest.json
+future_trunks_base,beam_ray,,False,beam/fx-reference,referencia haz,only actual beam_ray_NN files; reference family,public/assets/sprites/future_trunks_base/manifest.json
+future_trunks_base,beam_ray_tip,,False,beam/fx-reference,referencia punta/impacto,only actual beam_ray_tip_NN files; reference family,public/assets/sprites/future_trunks_base/manifest.json
+future_trunks_super_saiyan,idle,3,True,base,pose táctica/espera,all idle_NN,public/assets/sprites/future_trunks_super_saiyan/manifest.json
+future_trunks_super_saiyan,move_front,6,True,movement,desplazamiento frontal,move_front_00 -> move_front_01,public/assets/sprites/future_trunks_super_saiyan/manifest.json
+future_trunks_super_saiyan,move_back,6,True,movement,desplazamiento trasero,move_back_00 -> move_back_01,public/assets/sprites/future_trunks_super_saiyan/manifest.json
+future_trunks_super_saiyan,guard,6,False,defense,bloqueo/parada,all guard_NN,public/assets/sprites/future_trunks_super_saiyan/manifest.json
+future_trunks_super_saiyan,attack_fwd,5,False,stage/melee,ataque frontal,all attack_fwd_NN,public/assets/sprites/future_trunks_super_saiyan/manifest.json
+future_trunks_super_saiyan,attack_ud,5,False,stage/melee,ataque vertical,all attack_ud_NN,public/assets/sprites/future_trunks_super_saiyan/manifest.json
+future_trunks_super_saiyan,beam_charge,7,False,beam,carga,all beam_charge_NN,public/assets/sprites/future_trunks_super_saiyan/manifest.json
+future_trunks_super_saiyan,beam_fire,8,False,beam,disparo,all beam_fire_NN; current manifest may alias beam_charge where no physical beam_fire exists,public/assets/sprites/future_trunks_super_saiyan/manifest.json
+future_trunks_super_saiyan,punch_right,5,False,melee/detail,puñetazo derecho,idle_00 -> attack_fwd_00 -> attack_fwd_01 -> attack_fwd_02 (fallback all attack_fwd),public/assets/sprites/future_trunks_super_saiyan/manifest.json
+future_trunks_super_saiyan,punch_left,5,False,melee/detail,puñetazo izquierdo/follow-up,idle_00 -> attack_fwd_03..06 when available; otherwise current manifest/fallback attack_fwd,public/assets/sprites/future_trunks_super_saiyan/manifest.json
+future_trunks_super_saiyan,kick_right,5,False,melee/detail,patada,idle_00 -> all attack_ud_NN (fallback attack_fwd),public/assets/sprites/future_trunks_super_saiyan/manifest.json
+future_trunks_super_saiyan,hurt,6,False,reaction,daño recibido,all hurt_NN,public/assets/sprites/future_trunks_super_saiyan/manifest.json
+future_trunks_super_saiyan,knockback_back,6,False,reaction,retroceso,all hurt_NN,public/assets/sprites/future_trunks_super_saiyan/manifest.json
+future_trunks_super_saiyan,knockback_up,6,False,reaction,lanzado arriba,hurt_00 -> hurt_01 -> hurt_02 -> hurt_05 when present,public/assets/sprites/future_trunks_super_saiyan/manifest.json
+future_trunks_super_saiyan,knockback_down,6,False,reaction,estampado abajo,hurt_02 -> hurt_03 -> hurt_04 -> hurt_05 when present,public/assets/sprites/future_trunks_super_saiyan/manifest.json
+future_trunks_super_saiyan,beam_guard,6,False,defense,defensa beam,all guard_NN,public/assets/sprites/future_trunks_super_saiyan/manifest.json
+future_trunks_super_saiyan,evade,8,False,defense,esquiva/afterimage,move_back_00 -> guard_01 (or guard_00) -> move_back_00,public/assets/sprites/future_trunks_super_saiyan/manifest.json
+future_trunks_super_saiyan,gather_power,7,False,shared,preparación/carga,all beam_charge_NN (fallback guard),public/assets/sprites/future_trunks_super_saiyan/manifest.json
+future_trunks_super_saiyan,power_up,8,True,shared,aura/transformación,"all beam_charge_NN, loop",public/assets/sprites/future_trunks_super_saiyan/manifest.json
+future_trunks_super_saiyan,beam_ray,,False,beam/fx-reference,referencia haz,only actual beam_ray_NN files; reference family,public/assets/sprites/future_trunks_super_saiyan/manifest.json
+future_trunks_super_saiyan,beam_ray_tip,,False,beam/fx-reference,referencia punta/impacto,only actual beam_ray_tip_NN files; reference family,public/assets/sprites/future_trunks_super_saiyan/manifest.json
+ginyu_base,idle,3,True,base,pose táctica/espera,all idle_NN,public/assets/sprites/ginyu_base/manifest.json
+ginyu_base,move_front,6,True,movement,desplazamiento frontal,move_front_00 -> move_front_01,public/assets/sprites/ginyu_base/manifest.json
+ginyu_base,move_back,6,True,movement,desplazamiento trasero,move_back_00 -> move_back_01,public/assets/sprites/ginyu_base/manifest.json
+ginyu_base,guard,6,False,defense,bloqueo/parada,all guard_NN,public/assets/sprites/ginyu_base/manifest.json
+ginyu_base,attack_fwd,5,False,stage/melee,ataque frontal,all attack_fwd_NN,public/assets/sprites/ginyu_base/manifest.json
+ginyu_base,attack_ud,5,False,stage/melee,ataque vertical,all attack_ud_NN,public/assets/sprites/ginyu_base/manifest.json
+ginyu_base,beam_charge,7,False,beam,carga,all beam_charge_NN,public/assets/sprites/ginyu_base/manifest.json
+ginyu_base,beam_fire,8,False,beam,disparo,all beam_fire_NN; current manifest may alias beam_charge where no physical beam_fire exists,public/assets/sprites/ginyu_base/manifest.json
+ginyu_base,punch_right,5,False,melee/detail,puñetazo derecho,idle_00 -> attack_fwd_00 -> attack_fwd_01 -> attack_fwd_02 (fallback all attack_fwd),public/assets/sprites/ginyu_base/manifest.json
+ginyu_base,punch_left,5,False,melee/detail,puñetazo izquierdo/follow-up,idle_00 -> attack_fwd_03..06 when available; otherwise current manifest/fallback attack_fwd,public/assets/sprites/ginyu_base/manifest.json
+ginyu_base,kick_right,5,False,melee/detail,patada,idle_00 -> all attack_ud_NN (fallback attack_fwd),public/assets/sprites/ginyu_base/manifest.json
+ginyu_base,hurt,6,False,reaction,daño recibido,all hurt_NN,public/assets/sprites/ginyu_base/manifest.json
+ginyu_base,knockback_back,6,False,reaction,retroceso,all hurt_NN,public/assets/sprites/ginyu_base/manifest.json
+ginyu_base,knockback_up,6,False,reaction,lanzado arriba,hurt_00 -> hurt_01 -> hurt_02 -> hurt_05 when present,public/assets/sprites/ginyu_base/manifest.json
+ginyu_base,knockback_down,6,False,reaction,estampado abajo,hurt_02 -> hurt_03 -> hurt_04 -> hurt_05 when present,public/assets/sprites/ginyu_base/manifest.json
+ginyu_base,beam_guard,6,False,defense,defensa beam,all guard_NN,public/assets/sprites/ginyu_base/manifest.json
+ginyu_base,evade,8,False,defense,esquiva/afterimage,move_back_00 -> guard_01 (or guard_00) -> move_back_00,public/assets/sprites/ginyu_base/manifest.json
+ginyu_base,gather_power,7,False,shared,preparación/carga,all beam_charge_NN (fallback guard),public/assets/sprites/ginyu_base/manifest.json
+ginyu_base,power_up,8,True,shared,aura/transformación,"all beam_charge_NN, loop",public/assets/sprites/ginyu_base/manifest.json
+ginyu_base,beam_ray,,False,beam/fx-reference,referencia haz,only actual beam_ray_NN files; reference family,public/assets/sprites/ginyu_base/manifest.json
+ginyu_base,beam_ray_tip,,False,beam/fx-reference,referencia punta/impacto,only actual beam_ray_tip_NN files; reference family,public/assets/sprites/ginyu_base/manifest.json
+ginyu_gokus_body,idle,3,True,base,pose táctica/espera,all idle_NN,public/assets/sprites/ginyu_gokus_body/manifest.json
+ginyu_gokus_body,move_front,6,True,movement,desplazamiento frontal,move_front_00 -> move_front_01,public/assets/sprites/ginyu_gokus_body/manifest.json
+ginyu_gokus_body,move_back,6,True,movement,desplazamiento trasero,move_back_00 -> move_back_01,public/assets/sprites/ginyu_gokus_body/manifest.json
+ginyu_gokus_body,guard,6,False,defense,bloqueo/parada,all guard_NN,public/assets/sprites/ginyu_gokus_body/manifest.json
+ginyu_gokus_body,attack_fwd,5,False,stage/melee,ataque frontal,all attack_fwd_NN,public/assets/sprites/ginyu_gokus_body/manifest.json
+ginyu_gokus_body,attack_ud,5,False,stage/melee,ataque vertical,all attack_ud_NN,public/assets/sprites/ginyu_gokus_body/manifest.json
+ginyu_gokus_body,beam_charge,7,False,beam,carga,all beam_charge_NN,public/assets/sprites/ginyu_gokus_body/manifest.json
+ginyu_gokus_body,beam_fire,8,False,beam,disparo,all beam_fire_NN; current manifest may alias beam_charge where no physical beam_fire exists,public/assets/sprites/ginyu_gokus_body/manifest.json
+ginyu_gokus_body,punch_right,5,False,melee/detail,puñetazo derecho,idle_00 -> attack_fwd_00 -> attack_fwd_01 -> attack_fwd_02 (fallback all attack_fwd),public/assets/sprites/ginyu_gokus_body/manifest.json
+ginyu_gokus_body,punch_left,5,False,melee/detail,puñetazo izquierdo/follow-up,idle_00 -> attack_fwd_03..06 when available; otherwise current manifest/fallback attack_fwd,public/assets/sprites/ginyu_gokus_body/manifest.json
+ginyu_gokus_body,kick_right,5,False,melee/detail,patada,idle_00 -> all attack_ud_NN (fallback attack_fwd),public/assets/sprites/ginyu_gokus_body/manifest.json
+ginyu_gokus_body,hurt,6,False,reaction,daño recibido,all hurt_NN,public/assets/sprites/ginyu_gokus_body/manifest.json
+ginyu_gokus_body,knockback_back,6,False,reaction,retroceso,all hurt_NN,public/assets/sprites/ginyu_gokus_body/manifest.json
+ginyu_gokus_body,knockback_up,6,False,reaction,lanzado arriba,hurt_00 -> hurt_01 -> hurt_02 -> hurt_05 when present,public/assets/sprites/ginyu_gokus_body/manifest.json
+ginyu_gokus_body,knockback_down,6,False,reaction,estampado abajo,hurt_02 -> hurt_03 -> hurt_04 -> hurt_05 when present,public/assets/sprites/ginyu_gokus_body/manifest.json
+ginyu_gokus_body,beam_guard,6,False,defense,defensa beam,all guard_NN,public/assets/sprites/ginyu_gokus_body/manifest.json
+ginyu_gokus_body,evade,8,False,defense,esquiva/afterimage,move_back_00 -> guard_01 (or guard_00) -> move_back_00,public/assets/sprites/ginyu_gokus_body/manifest.json
+ginyu_gokus_body,gather_power,7,False,shared,preparación/carga,all beam_charge_NN (fallback guard),public/assets/sprites/ginyu_gokus_body/manifest.json
+ginyu_gokus_body,power_up,8,True,shared,aura/transformación,"all beam_charge_NN, loop",public/assets/sprites/ginyu_gokus_body/manifest.json
+ginyu_gokus_body,beam_ray,,False,beam/fx-reference,referencia haz,only actual beam_ray_NN files; reference family,public/assets/sprites/ginyu_gokus_body/manifest.json
+ginyu_gokus_body,beam_ray_tip,,False,beam/fx-reference,referencia punta/impacto,only actual beam_ray_tip_NN files; reference family,public/assets/sprites/ginyu_gokus_body/manifest.json
+gohan_super_saiyan_1_2,idle,3,True,base,pose táctica/espera,all idle_NN,public/assets/sprites/gohan_super_saiyan_1_2/manifest.json
+gohan_super_saiyan_1_2,move_front,6,True,movement,desplazamiento frontal,move_front_00 -> move_front_01,public/assets/sprites/gohan_super_saiyan_1_2/manifest.json
+gohan_super_saiyan_1_2,move_back,6,True,movement,desplazamiento trasero,move_back_00 -> move_back_01,public/assets/sprites/gohan_super_saiyan_1_2/manifest.json
+gohan_super_saiyan_1_2,guard,6,False,defense,bloqueo/parada,all guard_NN,public/assets/sprites/gohan_super_saiyan_1_2/manifest.json
+gohan_super_saiyan_1_2,attack_fwd,5,False,stage/melee,ataque frontal,all attack_fwd_NN,public/assets/sprites/gohan_super_saiyan_1_2/manifest.json
+gohan_super_saiyan_1_2,attack_ud,5,False,stage/melee,ataque vertical,all attack_ud_NN,public/assets/sprites/gohan_super_saiyan_1_2/manifest.json
+gohan_super_saiyan_1_2,beam_charge,7,False,beam,carga,all beam_charge_NN,public/assets/sprites/gohan_super_saiyan_1_2/manifest.json
+gohan_super_saiyan_1_2,beam_fire,8,False,beam,disparo,all beam_fire_NN; current manifest may alias beam_charge where no physical beam_fire exists,public/assets/sprites/gohan_super_saiyan_1_2/manifest.json
+gohan_super_saiyan_1_2,punch_right,5,False,melee/detail,puñetazo derecho,idle_00 -> attack_fwd_00 -> attack_fwd_01 -> attack_fwd_02 (fallback all attack_fwd),public/assets/sprites/gohan_super_saiyan_1_2/manifest.json
+gohan_super_saiyan_1_2,punch_left,5,False,melee/detail,puñetazo izquierdo/follow-up,idle_00 -> attack_fwd_03..06 when available; otherwise current manifest/fallback attack_fwd,public/assets/sprites/gohan_super_saiyan_1_2/manifest.json
+gohan_super_saiyan_1_2,kick_right,5,False,melee/detail,patada,idle_00 -> all attack_ud_NN (fallback attack_fwd),public/assets/sprites/gohan_super_saiyan_1_2/manifest.json
+gohan_super_saiyan_1_2,hurt,6,False,reaction,daño recibido,all hurt_NN,public/assets/sprites/gohan_super_saiyan_1_2/manifest.json
+gohan_super_saiyan_1_2,knockback_back,6,False,reaction,retroceso,all hurt_NN,public/assets/sprites/gohan_super_saiyan_1_2/manifest.json
+gohan_super_saiyan_1_2,knockback_up,6,False,reaction,lanzado arriba,hurt_00 -> hurt_01 -> hurt_02 -> hurt_05 when present,public/assets/sprites/gohan_super_saiyan_1_2/manifest.json
+gohan_super_saiyan_1_2,knockback_down,6,False,reaction,estampado abajo,hurt_02 -> hurt_03 -> hurt_04 -> hurt_05 when present,public/assets/sprites/gohan_super_saiyan_1_2/manifest.json
+gohan_super_saiyan_1_2,beam_guard,6,False,defense,defensa beam,all guard_NN,public/assets/sprites/gohan_super_saiyan_1_2/manifest.json
+gohan_super_saiyan_1_2,evade,8,False,defense,esquiva/afterimage,move_back_00 -> guard_01 (or guard_00) -> move_back_00,public/assets/sprites/gohan_super_saiyan_1_2/manifest.json
+gohan_super_saiyan_1_2,gather_power,7,False,shared,preparación/carga,all beam_charge_NN (fallback guard),public/assets/sprites/gohan_super_saiyan_1_2/manifest.json
+gohan_super_saiyan_1_2,power_up,8,True,shared,aura/transformación,"all beam_charge_NN, loop",public/assets/sprites/gohan_super_saiyan_1_2/manifest.json
+gohan_super_saiyan_1_2,beam_ray,,False,beam/fx-reference,referencia haz,only actual beam_ray_NN files; reference family,public/assets/sprites/gohan_super_saiyan_1_2/manifest.json
+gohan_super_saiyan_1_2,beam_ray_tip,,False,beam/fx-reference,referencia punta/impacto,only actual beam_ray_tip_NN files; reference family,public/assets/sprites/gohan_super_saiyan_1_2/manifest.json
+gohan_ultimate,idle,3,True,base,pose táctica/espera,all idle_NN,public/assets/sprites/gohan_ultimate/manifest.json
+gohan_ultimate,move_front,6,True,movement,desplazamiento frontal,move_front_00 -> move_front_01,public/assets/sprites/gohan_ultimate/manifest.json
+gohan_ultimate,move_back,6,True,movement,desplazamiento trasero,move_back_00 -> move_back_01,public/assets/sprites/gohan_ultimate/manifest.json
+gohan_ultimate,guard,6,False,defense,bloqueo/parada,all guard_NN,public/assets/sprites/gohan_ultimate/manifest.json
+gohan_ultimate,attack_fwd,5,False,stage/melee,ataque frontal,all attack_fwd_NN,public/assets/sprites/gohan_ultimate/manifest.json
+gohan_ultimate,attack_ud,5,False,stage/melee,ataque vertical,all attack_ud_NN,public/assets/sprites/gohan_ultimate/manifest.json
+gohan_ultimate,beam_charge,7,False,beam,carga,all beam_charge_NN,public/assets/sprites/gohan_ultimate/manifest.json
+gohan_ultimate,beam_fire,8,False,beam,disparo,all beam_fire_NN; current manifest may alias beam_charge where no physical beam_fire exists,public/assets/sprites/gohan_ultimate/manifest.json
+gohan_ultimate,punch_right,5,False,melee/detail,puñetazo derecho,idle_00 -> attack_fwd_00 -> attack_fwd_01 -> attack_fwd_02 (fallback all attack_fwd),public/assets/sprites/gohan_ultimate/manifest.json
+gohan_ultimate,punch_left,5,False,melee/detail,puñetazo izquierdo/follow-up,idle_00 -> attack_fwd_03..06 when available; otherwise current manifest/fallback attack_fwd,public/assets/sprites/gohan_ultimate/manifest.json
+gohan_ultimate,kick_right,5,False,melee/detail,patada,idle_00 -> all attack_ud_NN (fallback attack_fwd),public/assets/sprites/gohan_ultimate/manifest.json
+gohan_ultimate,hurt,6,False,reaction,daño recibido,all hurt_NN,public/assets/sprites/gohan_ultimate/manifest.json
+gohan_ultimate,knockback_back,6,False,reaction,retroceso,all hurt_NN,public/assets/sprites/gohan_ultimate/manifest.json
+gohan_ultimate,knockback_up,6,False,reaction,lanzado arriba,hurt_00 -> hurt_01 -> hurt_02 -> hurt_05 when present,public/assets/sprites/gohan_ultimate/manifest.json
+gohan_ultimate,knockback_down,6,False,reaction,estampado abajo,hurt_02 -> hurt_03 -> hurt_04 -> hurt_05 when present,public/assets/sprites/gohan_ultimate/manifest.json
+gohan_ultimate,beam_guard,6,False,defense,defensa beam,all guard_NN,public/assets/sprites/gohan_ultimate/manifest.json
+gohan_ultimate,evade,8,False,defense,esquiva/afterimage,move_back_00 -> guard_01 (or guard_00) -> move_back_00,public/assets/sprites/gohan_ultimate/manifest.json
+gohan_ultimate,gather_power,7,False,shared,preparación/carga,all beam_charge_NN (fallback guard),public/assets/sprites/gohan_ultimate/manifest.json
+gohan_ultimate,power_up,8,True,shared,aura/transformación,"all beam_charge_NN, loop",public/assets/sprites/gohan_ultimate/manifest.json
+gohan_ultimate,beam_ray,,False,beam/fx-reference,referencia haz,only actual beam_ray_NN files; reference family,public/assets/sprites/gohan_ultimate/manifest.json
+gohan_ultimate,beam_ray_tip,,False,beam/fx-reference,referencia punta/impacto,only actual beam_ray_tip_NN files; reference family,public/assets/sprites/gohan_ultimate/manifest.json
+goku_base,idle,3,True,base,pose táctica/espera,all idle_NN,public/assets/sprites/goku_base/manifest.json
+goku_base,move_front,6,True,movement,desplazamiento frontal,move_front_00 -> move_front_01,public/assets/sprites/goku_base/manifest.json
+goku_base,move_back,6,True,movement,desplazamiento trasero,move_back_00 -> move_back_01,public/assets/sprites/goku_base/manifest.json
+goku_base,guard,6,False,defense,bloqueo/parada,all guard_NN,public/assets/sprites/goku_base/manifest.json
+goku_base,attack_fwd,5,False,stage/melee,ataque frontal,all attack_fwd_NN,public/assets/sprites/goku_base/manifest.json
+goku_base,attack_ud,5,False,stage/melee,ataque vertical,all attack_ud_NN,public/assets/sprites/goku_base/manifest.json
+goku_base,beam_charge,7,False,beam,carga,all beam_charge_NN,public/assets/sprites/goku_base/manifest.json
+goku_base,beam_fire,8,False,beam,disparo,all beam_fire_NN; current manifest may alias beam_charge where no physical beam_fire exists,public/assets/sprites/goku_base/manifest.json
+goku_base,punch_right,5,False,melee/detail,puñetazo derecho,idle_00 -> attack_fwd_00 -> attack_fwd_01 -> attack_fwd_02 (fallback all attack_fwd),public/assets/sprites/goku_base/manifest.json
+goku_base,punch_left,5,False,melee/detail,puñetazo izquierdo/follow-up,idle_00 -> attack_fwd_03..06 when available; otherwise current manifest/fallback attack_fwd,public/assets/sprites/goku_base/manifest.json
+goku_base,kick_right,5,False,melee/detail,patada,idle_00 -> all attack_ud_NN (fallback attack_fwd),public/assets/sprites/goku_base/manifest.json
+goku_base,hurt,6,False,reaction,daño recibido,all hurt_NN,public/assets/sprites/goku_base/manifest.json
+goku_base,knockback_back,6,False,reaction,retroceso,all hurt_NN,public/assets/sprites/goku_base/manifest.json
+goku_base,knockback_up,6,False,reaction,lanzado arriba,hurt_00 -> hurt_01 -> hurt_02 -> hurt_05 when present,public/assets/sprites/goku_base/manifest.json
+goku_base,knockback_down,6,False,reaction,estampado abajo,hurt_02 -> hurt_03 -> hurt_04 -> hurt_05 when present,public/assets/sprites/goku_base/manifest.json
+goku_base,beam_guard,6,False,defense,defensa beam,all guard_NN,public/assets/sprites/goku_base/manifest.json
+goku_base,evade,8,False,defense,esquiva/afterimage,move_back_00 -> guard_01 (or guard_00) -> move_back_00,public/assets/sprites/goku_base/manifest.json
+goku_base,gather_power,7,False,shared,preparación/carga,all beam_charge_NN (fallback guard),public/assets/sprites/goku_base/manifest.json
+goku_base,power_up,8,True,shared,aura/transformación,"all beam_charge_NN, loop",public/assets/sprites/goku_base/manifest.json
+goku_base,beam_ray,,False,beam/fx-reference,referencia haz,only actual beam_ray_NN files; reference family,public/assets/sprites/goku_base/manifest.json
+goku_base,beam_ray_tip,,False,beam/fx-reference,referencia punta/impacto,only actual beam_ray_tip_NN files; reference family,public/assets/sprites/goku_base/manifest.json
+goku_super_saiyan,idle,3,True,base,pose táctica/espera,all idle_NN,public/assets/sprites/goku_super_saiyan/manifest.json
+goku_super_saiyan,move_front,6,True,movement,desplazamiento frontal,move_front_00 -> move_front_01,public/assets/sprites/goku_super_saiyan/manifest.json
+goku_super_saiyan,move_back,6,True,movement,desplazamiento trasero,move_back_00 -> move_back_01,public/assets/sprites/goku_super_saiyan/manifest.json
+goku_super_saiyan,guard,6,False,defense,bloqueo/parada,all guard_NN,public/assets/sprites/goku_super_saiyan/manifest.json
+goku_super_saiyan,attack_fwd,5,False,stage/melee,ataque frontal,all attack_fwd_NN,public/assets/sprites/goku_super_saiyan/manifest.json
+goku_super_saiyan,attack_ud,5,False,stage/melee,ataque vertical,all attack_ud_NN,public/assets/sprites/goku_super_saiyan/manifest.json
+goku_super_saiyan,beam_charge,7,False,beam,carga,all beam_charge_NN,public/assets/sprites/goku_super_saiyan/manifest.json
+goku_super_saiyan,beam_fire,8,False,beam,disparo,all beam_fire_NN; current manifest may alias beam_charge where no physical beam_fire exists,public/assets/sprites/goku_super_saiyan/manifest.json
+goku_super_saiyan,punch_right,5,False,melee/detail,puñetazo derecho,idle_00 -> attack_fwd_00 -> attack_fwd_01 -> attack_fwd_02 (fallback all attack_fwd),public/assets/sprites/goku_super_saiyan/manifest.json
+goku_super_saiyan,punch_left,5,False,melee/detail,puñetazo izquierdo/follow-up,idle_00 -> attack_fwd_03..06 when available; otherwise current manifest/fallback attack_fwd,public/assets/sprites/goku_super_saiyan/manifest.json
+goku_super_saiyan,kick_right,5,False,melee/detail,patada,idle_00 -> all attack_ud_NN (fallback attack_fwd),public/assets/sprites/goku_super_saiyan/manifest.json
+goku_super_saiyan,hurt,6,False,reaction,daño recibido,all hurt_NN,public/assets/sprites/goku_super_saiyan/manifest.json
+goku_super_saiyan,knockback_back,6,False,reaction,retroceso,all hurt_NN,public/assets/sprites/goku_super_saiyan/manifest.json
+goku_super_saiyan,knockback_up,6,False,reaction,lanzado arriba,hurt_00 -> hurt_01 -> hurt_02 -> hurt_05 when present,public/assets/sprites/goku_super_saiyan/manifest.json
+goku_super_saiyan,knockback_down,6,False,reaction,estampado abajo,hurt_02 -> hurt_03 -> hurt_04 -> hurt_05 when present,public/assets/sprites/goku_super_saiyan/manifest.json
+goku_super_saiyan,beam_guard,6,False,defense,defensa beam,all guard_NN,public/assets/sprites/goku_super_saiyan/manifest.json
+goku_super_saiyan,evade,8,False,defense,esquiva/afterimage,move_back_00 -> guard_01 (or guard_00) -> move_back_00,public/assets/sprites/goku_super_saiyan/manifest.json
+goku_super_saiyan,gather_power,7,False,shared,preparación/carga,all beam_charge_NN (fallback guard),public/assets/sprites/goku_super_saiyan/manifest.json
+goku_super_saiyan,power_up,8,True,shared,aura/transformación,"all beam_charge_NN, loop",public/assets/sprites/goku_super_saiyan/manifest.json
+goku_super_saiyan,beam_ray,,False,beam/fx-reference,referencia haz,only actual beam_ray_NN files; reference family,public/assets/sprites/goku_super_saiyan/manifest.json
+goku_super_saiyan,beam_ray_tip,,False,beam/fx-reference,referencia punta/impacto,only actual beam_ray_tip_NN files; reference family,public/assets/sprites/goku_super_saiyan/manifest.json
+goku_super_saiyan_2,idle,3,True,base,pose táctica/espera,all idle_NN,public/assets/sprites/goku_super_saiyan_2/manifest.json
+goku_super_saiyan_2,move_front,6,True,movement,desplazamiento frontal,move_front_00 -> move_front_01,public/assets/sprites/goku_super_saiyan_2/manifest.json
+goku_super_saiyan_2,move_back,6,True,movement,desplazamiento trasero,move_back_00 -> move_back_01,public/assets/sprites/goku_super_saiyan_2/manifest.json
+goku_super_saiyan_2,guard,6,False,defense,bloqueo/parada,all guard_NN,public/assets/sprites/goku_super_saiyan_2/manifest.json
+goku_super_saiyan_2,attack_fwd,5,False,stage/melee,ataque frontal,all attack_fwd_NN,public/assets/sprites/goku_super_saiyan_2/manifest.json
+goku_super_saiyan_2,attack_ud,5,False,stage/melee,ataque vertical,all attack_ud_NN,public/assets/sprites/goku_super_saiyan_2/manifest.json
+goku_super_saiyan_2,beam_charge,7,False,beam,carga,all beam_charge_NN,public/assets/sprites/goku_super_saiyan_2/manifest.json
+goku_super_saiyan_2,beam_fire,8,False,beam,disparo,all beam_fire_NN; current manifest may alias beam_charge where no physical beam_fire exists,public/assets/sprites/goku_super_saiyan_2/manifest.json
+goku_super_saiyan_2,punch_right,5,False,melee/detail,puñetazo derecho,idle_00 -> attack_fwd_00 -> attack_fwd_01 -> attack_fwd_02 (fallback all attack_fwd),public/assets/sprites/goku_super_saiyan_2/manifest.json
+goku_super_saiyan_2,punch_left,5,False,melee/detail,puñetazo izquierdo/follow-up,idle_00 -> attack_fwd_03..06 when available; otherwise current manifest/fallback attack_fwd,public/assets/sprites/goku_super_saiyan_2/manifest.json
+goku_super_saiyan_2,kick_right,5,False,melee/detail,patada,idle_00 -> all attack_ud_NN (fallback attack_fwd),public/assets/sprites/goku_super_saiyan_2/manifest.json
+goku_super_saiyan_2,hurt,6,False,reaction,daño recibido,all hurt_NN,public/assets/sprites/goku_super_saiyan_2/manifest.json
+goku_super_saiyan_2,knockback_back,6,False,reaction,retroceso,all hurt_NN,public/assets/sprites/goku_super_saiyan_2/manifest.json
+goku_super_saiyan_2,knockback_up,6,False,reaction,lanzado arriba,hurt_00 -> hurt_01 -> hurt_02 -> hurt_05 when present,public/assets/sprites/goku_super_saiyan_2/manifest.json
+goku_super_saiyan_2,knockback_down,6,False,reaction,estampado abajo,hurt_02 -> hurt_03 -> hurt_04 -> hurt_05 when present,public/assets/sprites/goku_super_saiyan_2/manifest.json
+goku_super_saiyan_2,beam_guard,6,False,defense,defensa beam,all guard_NN,public/assets/sprites/goku_super_saiyan_2/manifest.json
+goku_super_saiyan_2,evade,8,False,defense,esquiva/afterimage,move_back_00 -> guard_01 (or guard_00) -> move_back_00,public/assets/sprites/goku_super_saiyan_2/manifest.json
+goku_super_saiyan_2,gather_power,7,False,shared,preparación/carga,all beam_charge_NN (fallback guard),public/assets/sprites/goku_super_saiyan_2/manifest.json
+goku_super_saiyan_2,power_up,8,True,shared,aura/transformación,"all beam_charge_NN, loop",public/assets/sprites/goku_super_saiyan_2/manifest.json
+goku_super_saiyan_2,beam_ray,,False,beam/fx-reference,referencia haz,only actual beam_ray_NN files; reference family,public/assets/sprites/goku_super_saiyan_2/manifest.json
+goku_super_saiyan_2,beam_ray_tip,,False,beam/fx-reference,referencia punta/impacto,only actual beam_ray_tip_NN files; reference family,public/assets/sprites/goku_super_saiyan_2/manifest.json
+goku_super_saiyan_3,idle,3,True,base,pose táctica/espera,all idle_NN,public/assets/sprites/goku_super_saiyan_3/manifest.json
+goku_super_saiyan_3,move_front,6,True,movement,desplazamiento frontal,move_front_00 -> move_front_01,public/assets/sprites/goku_super_saiyan_3/manifest.json
+goku_super_saiyan_3,move_back,6,True,movement,desplazamiento trasero,move_back_00 -> move_back_01,public/assets/sprites/goku_super_saiyan_3/manifest.json
+goku_super_saiyan_3,guard,6,False,defense,bloqueo/parada,all guard_NN,public/assets/sprites/goku_super_saiyan_3/manifest.json
+goku_super_saiyan_3,attack_fwd,5,False,stage/melee,ataque frontal,all attack_fwd_NN,public/assets/sprites/goku_super_saiyan_3/manifest.json
+goku_super_saiyan_3,attack_ud,5,False,stage/melee,ataque vertical,all attack_ud_NN,public/assets/sprites/goku_super_saiyan_3/manifest.json
+goku_super_saiyan_3,beam_charge,7,False,beam,carga,all beam_charge_NN,public/assets/sprites/goku_super_saiyan_3/manifest.json
+goku_super_saiyan_3,beam_fire,8,False,beam,disparo,all beam_fire_NN; current manifest may alias beam_charge where no physical beam_fire exists,public/assets/sprites/goku_super_saiyan_3/manifest.json
+goku_super_saiyan_3,punch_right,5,False,melee/detail,puñetazo derecho,idle_00 -> attack_fwd_00 -> attack_fwd_01 -> attack_fwd_02 (fallback all attack_fwd),public/assets/sprites/goku_super_saiyan_3/manifest.json
+goku_super_saiyan_3,punch_left,5,False,melee/detail,puñetazo izquierdo/follow-up,idle_00 -> attack_fwd_03..06 when available; otherwise current manifest/fallback attack_fwd,public/assets/sprites/goku_super_saiyan_3/manifest.json
+goku_super_saiyan_3,kick_right,5,False,melee/detail,patada,idle_00 -> all attack_ud_NN (fallback attack_fwd),public/assets/sprites/goku_super_saiyan_3/manifest.json
+goku_super_saiyan_3,hurt,6,False,reaction,daño recibido,all hurt_NN,public/assets/sprites/goku_super_saiyan_3/manifest.json
+goku_super_saiyan_3,knockback_back,6,False,reaction,retroceso,all hurt_NN,public/assets/sprites/goku_super_saiyan_3/manifest.json
+goku_super_saiyan_3,knockback_up,6,False,reaction,lanzado arriba,hurt_00 -> hurt_01 -> hurt_02 -> hurt_05 when present,public/assets/sprites/goku_super_saiyan_3/manifest.json
+goku_super_saiyan_3,knockback_down,6,False,reaction,estampado abajo,hurt_02 -> hurt_03 -> hurt_04 -> hurt_05 when present,public/assets/sprites/goku_super_saiyan_3/manifest.json
+goku_super_saiyan_3,beam_guard,6,False,defense,defensa beam,all guard_NN,public/assets/sprites/goku_super_saiyan_3/manifest.json
+goku_super_saiyan_3,evade,8,False,defense,esquiva/afterimage,move_back_00 -> guard_01 (or guard_00) -> move_back_00,public/assets/sprites/goku_super_saiyan_3/manifest.json
+goku_super_saiyan_3,gather_power,7,False,shared,preparación/carga,all beam_charge_NN (fallback guard),public/assets/sprites/goku_super_saiyan_3/manifest.json
+goku_super_saiyan_3,power_up,8,True,shared,aura/transformación,"all beam_charge_NN, loop",public/assets/sprites/goku_super_saiyan_3/manifest.json
+goku_super_saiyan_3,beam_ray,,False,beam/fx-reference,referencia haz,only actual beam_ray_NN files; reference family,public/assets/sprites/goku_super_saiyan_3/manifest.json
+goku_super_saiyan_3,beam_ray_tip,,False,beam/fx-reference,referencia punta/impacto,only actual beam_ray_tip_NN files; reference family,public/assets/sprites/goku_super_saiyan_3/manifest.json
+goten_base,idle,3,True,base,pose táctica/espera,all idle_NN,public/assets/sprites/goten_base/manifest.json
+goten_base,move_front,6,True,movement,desplazamiento frontal,move_front_00 -> move_front_01,public/assets/sprites/goten_base/manifest.json
+goten_base,move_back,6,True,movement,desplazamiento trasero,move_back_00 -> move_back_01,public/assets/sprites/goten_base/manifest.json
+goten_base,guard,6,False,defense,bloqueo/parada,all guard_NN,public/assets/sprites/goten_base/manifest.json
+goten_base,attack_fwd,5,False,stage/melee,ataque frontal,all attack_fwd_NN,public/assets/sprites/goten_base/manifest.json
+goten_base,attack_ud,5,False,stage/melee,ataque vertical,all attack_ud_NN,public/assets/sprites/goten_base/manifest.json
+goten_base,beam_charge,7,False,beam,carga,all beam_charge_NN,public/assets/sprites/goten_base/manifest.json
+goten_base,beam_fire,8,False,beam,disparo,all beam_fire_NN; current manifest may alias beam_charge where no physical beam_fire exists,public/assets/sprites/goten_base/manifest.json
+goten_base,punch_right,5,False,melee/detail,puñetazo derecho,idle_00 -> attack_fwd_00 -> attack_fwd_01 -> attack_fwd_02 (fallback all attack_fwd),public/assets/sprites/goten_base/manifest.json
+goten_base,punch_left,5,False,melee/detail,puñetazo izquierdo/follow-up,idle_00 -> attack_fwd_03..06 when available; otherwise current manifest/fallback attack_fwd,public/assets/sprites/goten_base/manifest.json
+goten_base,kick_right,5,False,melee/detail,patada,idle_00 -> all attack_ud_NN (fallback attack_fwd),public/assets/sprites/goten_base/manifest.json
+goten_base,hurt,6,False,reaction,daño recibido,all hurt_NN,public/assets/sprites/goten_base/manifest.json
+goten_base,knockback_back,6,False,reaction,retroceso,all hurt_NN,public/assets/sprites/goten_base/manifest.json
+goten_base,knockback_up,6,False,reaction,lanzado arriba,hurt_00 -> hurt_01 -> hurt_02 -> hurt_05 when present,public/assets/sprites/goten_base/manifest.json
+goten_base,knockback_down,6,False,reaction,estampado abajo,hurt_02 -> hurt_03 -> hurt_04 -> hurt_05 when present,public/assets/sprites/goten_base/manifest.json
+goten_base,beam_guard,6,False,defense,defensa beam,all guard_NN,public/assets/sprites/goten_base/manifest.json
+goten_base,evade,8,False,defense,esquiva/afterimage,move_back_00 -> guard_01 (or guard_00) -> move_back_00,public/assets/sprites/goten_base/manifest.json
+goten_base,gather_power,7,False,shared,preparación/carga,all beam_charge_NN (fallback guard),public/assets/sprites/goten_base/manifest.json
+goten_base,power_up,8,True,shared,aura/transformación,"all beam_charge_NN, loop",public/assets/sprites/goten_base/manifest.json
+goten_base,beam_ray,,False,beam/fx-reference,referencia haz,only actual beam_ray_NN files; reference family,public/assets/sprites/goten_base/manifest.json
+goten_base,beam_ray_tip,,False,beam/fx-reference,referencia punta/impacto,only actual beam_ray_tip_NN files; reference family,public/assets/sprites/goten_base/manifest.json
+goten_super_saiyan,idle,3,True,base,pose táctica/espera,all idle_NN,public/assets/sprites/goten_super_saiyan/manifest.json
+goten_super_saiyan,move_front,6,True,movement,desplazamiento frontal,move_front_00 -> move_front_01,public/assets/sprites/goten_super_saiyan/manifest.json
+goten_super_saiyan,move_back,6,True,movement,desplazamiento trasero,move_back_00 -> move_back_01,public/assets/sprites/goten_super_saiyan/manifest.json
+goten_super_saiyan,guard,6,False,defense,bloqueo/parada,all guard_NN,public/assets/sprites/goten_super_saiyan/manifest.json
+goten_super_saiyan,attack_fwd,5,False,stage/melee,ataque frontal,all attack_fwd_NN,public/assets/sprites/goten_super_saiyan/manifest.json
+goten_super_saiyan,attack_ud,5,False,stage/melee,ataque vertical,all attack_ud_NN,public/assets/sprites/goten_super_saiyan/manifest.json
+goten_super_saiyan,beam_charge,7,False,beam,carga,all beam_charge_NN,public/assets/sprites/goten_super_saiyan/manifest.json
+goten_super_saiyan,beam_fire,8,False,beam,disparo,all beam_fire_NN; current manifest may alias beam_charge where no physical beam_fire exists,public/assets/sprites/goten_super_saiyan/manifest.json
+goten_super_saiyan,punch_right,5,False,melee/detail,puñetazo derecho,idle_00 -> attack_fwd_00 -> attack_fwd_01 -> attack_fwd_02 (fallback all attack_fwd),public/assets/sprites/goten_super_saiyan/manifest.json
+goten_super_saiyan,punch_left,5,False,melee/detail,puñetazo izquierdo/follow-up,idle_00 -> attack_fwd_03..06 when available; otherwise current manifest/fallback attack_fwd,public/assets/sprites/goten_super_saiyan/manifest.json
+goten_super_saiyan,kick_right,5,False,melee/detail,patada,idle_00 -> all attack_ud_NN (fallback attack_fwd),public/assets/sprites/goten_super_saiyan/manifest.json
+goten_super_saiyan,hurt,6,False,reaction,daño recibido,all hurt_NN,public/assets/sprites/goten_super_saiyan/manifest.json
+goten_super_saiyan,knockback_back,6,False,reaction,retroceso,all hurt_NN,public/assets/sprites/goten_super_saiyan/manifest.json
+goten_super_saiyan,knockback_up,6,False,reaction,lanzado arriba,hurt_00 -> hurt_01 -> hurt_02 -> hurt_05 when present,public/assets/sprites/goten_super_saiyan/manifest.json
+goten_super_saiyan,knockback_down,6,False,reaction,estampado abajo,hurt_02 -> hurt_03 -> hurt_04 -> hurt_05 when present,public/assets/sprites/goten_super_saiyan/manifest.json
+goten_super_saiyan,beam_guard,6,False,defense,defensa beam,all guard_NN,public/assets/sprites/goten_super_saiyan/manifest.json
+goten_super_saiyan,evade,8,False,defense,esquiva/afterimage,move_back_00 -> guard_01 (or guard_00) -> move_back_00,public/assets/sprites/goten_super_saiyan/manifest.json
+goten_super_saiyan,gather_power,7,False,shared,preparación/carga,all beam_charge_NN (fallback guard),public/assets/sprites/goten_super_saiyan/manifest.json
+goten_super_saiyan,power_up,8,True,shared,aura/transformación,"all beam_charge_NN, loop",public/assets/sprites/goten_super_saiyan/manifest.json
+goten_super_saiyan,beam_ray,,False,beam/fx-reference,referencia haz,only actual beam_ray_NN files; reference family,public/assets/sprites/goten_super_saiyan/manifest.json
+goten_super_saiyan,beam_ray_tip,,False,beam/fx-reference,referencia punta/impacto,only actual beam_ray_tip_NN files; reference family,public/assets/sprites/goten_super_saiyan/manifest.json
+gotenks_super_saiyan,idle,3,True,base,pose táctica/espera,all idle_NN,public/assets/sprites/gotenks_super_saiyan/manifest.json
+gotenks_super_saiyan,move_front,6,True,movement,desplazamiento frontal,move_front_00 -> move_front_01,public/assets/sprites/gotenks_super_saiyan/manifest.json
+gotenks_super_saiyan,move_back,6,True,movement,desplazamiento trasero,move_back_00 -> move_back_01,public/assets/sprites/gotenks_super_saiyan/manifest.json
+gotenks_super_saiyan,guard,6,False,defense,bloqueo/parada,all guard_NN,public/assets/sprites/gotenks_super_saiyan/manifest.json
+gotenks_super_saiyan,attack_fwd,5,False,stage/melee,ataque frontal,all attack_fwd_NN,public/assets/sprites/gotenks_super_saiyan/manifest.json
+gotenks_super_saiyan,attack_ud,5,False,stage/melee,ataque vertical,all attack_ud_NN,public/assets/sprites/gotenks_super_saiyan/manifest.json
+gotenks_super_saiyan,beam_charge,7,False,beam,carga,all beam_charge_NN,public/assets/sprites/gotenks_super_saiyan/manifest.json
+gotenks_super_saiyan,beam_fire,8,False,beam,disparo,all beam_fire_NN; current manifest may alias beam_charge where no physical beam_fire exists,public/assets/sprites/gotenks_super_saiyan/manifest.json
+gotenks_super_saiyan,punch_right,5,False,melee/detail,puñetazo derecho,idle_00 -> attack_fwd_00 -> attack_fwd_01 -> attack_fwd_02 (fallback all attack_fwd),public/assets/sprites/gotenks_super_saiyan/manifest.json
+gotenks_super_saiyan,punch_left,5,False,melee/detail,puñetazo izquierdo/follow-up,idle_00 -> attack_fwd_03..06 when available; otherwise current manifest/fallback attack_fwd,public/assets/sprites/gotenks_super_saiyan/manifest.json
+gotenks_super_saiyan,kick_right,5,False,melee/detail,patada,idle_00 -> all attack_ud_NN (fallback attack_fwd),public/assets/sprites/gotenks_super_saiyan/manifest.json
+gotenks_super_saiyan,hurt,6,False,reaction,daño recibido,all hurt_NN,public/assets/sprites/gotenks_super_saiyan/manifest.json
+gotenks_super_saiyan,knockback_back,6,False,reaction,retroceso,all hurt_NN,public/assets/sprites/gotenks_super_saiyan/manifest.json
+gotenks_super_saiyan,knockback_up,6,False,reaction,lanzado arriba,hurt_00 -> hurt_01 -> hurt_02 -> hurt_05 when present,public/assets/sprites/gotenks_super_saiyan/manifest.json
+gotenks_super_saiyan,knockback_down,6,False,reaction,estampado abajo,hurt_02 -> hurt_03 -> hurt_04 -> hurt_05 when present,public/assets/sprites/gotenks_super_saiyan/manifest.json
+gotenks_super_saiyan,beam_guard,6,False,defense,defensa beam,all guard_NN,public/assets/sprites/gotenks_super_saiyan/manifest.json
+gotenks_super_saiyan,evade,8,False,defense,esquiva/afterimage,move_back_00 -> guard_01 (or guard_00) -> move_back_00,public/assets/sprites/gotenks_super_saiyan/manifest.json
+gotenks_super_saiyan,gather_power,7,False,shared,preparación/carga,all beam_charge_NN (fallback guard),public/assets/sprites/gotenks_super_saiyan/manifest.json
+gotenks_super_saiyan,power_up,8,True,shared,aura/transformación,"all beam_charge_NN, loop",public/assets/sprites/gotenks_super_saiyan/manifest.json
+gotenks_super_saiyan,beam_ray,,False,beam/fx-reference,referencia haz,only actual beam_ray_NN files; reference family,public/assets/sprites/gotenks_super_saiyan/manifest.json
+gotenks_super_saiyan,beam_ray_tip,,False,beam/fx-reference,referencia punta/impacto,only actual beam_ray_tip_NN files; reference family,public/assets/sprites/gotenks_super_saiyan/manifest.json
+gotenks_super_saiyan_3,idle,3,True,base,pose táctica/espera,all idle_NN,public/assets/sprites/gotenks_super_saiyan_3/manifest.json
+gotenks_super_saiyan_3,move_front,6,True,movement,desplazamiento frontal,move_front_00 -> move_front_01,public/assets/sprites/gotenks_super_saiyan_3/manifest.json
+gotenks_super_saiyan_3,move_back,6,True,movement,desplazamiento trasero,move_back_00 -> move_back_01,public/assets/sprites/gotenks_super_saiyan_3/manifest.json
+gotenks_super_saiyan_3,guard,6,False,defense,bloqueo/parada,all guard_NN,public/assets/sprites/gotenks_super_saiyan_3/manifest.json
+gotenks_super_saiyan_3,attack_fwd,5,False,stage/melee,ataque frontal,all attack_fwd_NN,public/assets/sprites/gotenks_super_saiyan_3/manifest.json
+gotenks_super_saiyan_3,attack_ud,5,False,stage/melee,ataque vertical,all attack_ud_NN,public/assets/sprites/gotenks_super_saiyan_3/manifest.json
+gotenks_super_saiyan_3,beam_charge,7,False,beam,carga,all beam_charge_NN,public/assets/sprites/gotenks_super_saiyan_3/manifest.json
+gotenks_super_saiyan_3,beam_fire,8,False,beam,disparo,all beam_fire_NN; current manifest may alias beam_charge where no physical beam_fire exists,public/assets/sprites/gotenks_super_saiyan_3/manifest.json
+gotenks_super_saiyan_3,punch_right,5,False,melee/detail,puñetazo derecho,idle_00 -> attack_fwd_00 -> attack_fwd_01 -> attack_fwd_02 (fallback all attack_fwd),public/assets/sprites/gotenks_super_saiyan_3/manifest.json
+gotenks_super_saiyan_3,punch_left,5,False,melee/detail,puñetazo izquierdo/follow-up,idle_00 -> attack_fwd_03..06 when available; otherwise current manifest/fallback attack_fwd,public/assets/sprites/gotenks_super_saiyan_3/manifest.json
+gotenks_super_saiyan_3,kick_right,5,False,melee/detail,patada,idle_00 -> all attack_ud_NN (fallback attack_fwd),public/assets/sprites/gotenks_super_saiyan_3/manifest.json
+gotenks_super_saiyan_3,hurt,6,False,reaction,daño recibido,all hurt_NN,public/assets/sprites/gotenks_super_saiyan_3/manifest.json
+gotenks_super_saiyan_3,knockback_back,6,False,reaction,retroceso,all hurt_NN,public/assets/sprites/gotenks_super_saiyan_3/manifest.json
+gotenks_super_saiyan_3,knockback_up,6,False,reaction,lanzado arriba,hurt_00 -> hurt_01 -> hurt_02 -> hurt_05 when present,public/assets/sprites/gotenks_super_saiyan_3/manifest.json
+gotenks_super_saiyan_3,knockback_down,6,False,reaction,estampado abajo,hurt_02 -> hurt_03 -> hurt_04 -> hurt_05 when present,public/assets/sprites/gotenks_super_saiyan_3/manifest.json
+gotenks_super_saiyan_3,beam_guard,6,False,defense,defensa beam,all guard_NN,public/assets/sprites/gotenks_super_saiyan_3/manifest.json
+gotenks_super_saiyan_3,evade,8,False,defense,esquiva/afterimage,move_back_00 -> guard_01 (or guard_00) -> move_back_00,public/assets/sprites/gotenks_super_saiyan_3/manifest.json
+gotenks_super_saiyan_3,gather_power,7,False,shared,preparación/carga,all beam_charge_NN (fallback guard),public/assets/sprites/gotenks_super_saiyan_3/manifest.json
+gotenks_super_saiyan_3,power_up,8,True,shared,aura/transformación,"all beam_charge_NN, loop",public/assets/sprites/gotenks_super_saiyan_3/manifest.json
+gotenks_super_saiyan_3,beam_ray,,False,beam/fx-reference,referencia haz,only actual beam_ray_NN files; reference family,public/assets/sprites/gotenks_super_saiyan_3/manifest.json
+gotenks_super_saiyan_3,beam_ray_tip,,False,beam/fx-reference,referencia punta/impacto,only actual beam_ray_tip_NN files; reference family,public/assets/sprites/gotenks_super_saiyan_3/manifest.json
+guldo_base,idle,3,True,base,pose táctica/espera,all idle_NN,public/assets/sprites/guldo_base/manifest.json
+guldo_base,move_front,6,True,movement,desplazamiento frontal,move_front_00 -> move_front_01,public/assets/sprites/guldo_base/manifest.json
+guldo_base,move_back,6,True,movement,desplazamiento trasero,move_back_00 -> move_back_01,public/assets/sprites/guldo_base/manifest.json
+guldo_base,guard,6,False,defense,bloqueo/parada,all guard_NN,public/assets/sprites/guldo_base/manifest.json
+guldo_base,attack_fwd,5,False,stage/melee,ataque frontal,all attack_fwd_NN,public/assets/sprites/guldo_base/manifest.json
+guldo_base,attack_ud,5,False,stage/melee,ataque vertical,all attack_ud_NN,public/assets/sprites/guldo_base/manifest.json
+guldo_base,beam_charge,7,False,beam,carga,all beam_charge_NN,public/assets/sprites/guldo_base/manifest.json
+guldo_base,beam_fire,8,False,beam,disparo,all beam_fire_NN; current manifest may alias beam_charge where no physical beam_fire exists,public/assets/sprites/guldo_base/manifest.json
+guldo_base,punch_right,5,False,melee/detail,puñetazo derecho,idle_00 -> attack_fwd_00 -> attack_fwd_01 -> attack_fwd_02 (fallback all attack_fwd),public/assets/sprites/guldo_base/manifest.json
+guldo_base,punch_left,5,False,melee/detail,puñetazo izquierdo/follow-up,idle_00 -> attack_fwd_03..06 when available; otherwise current manifest/fallback attack_fwd,public/assets/sprites/guldo_base/manifest.json
+guldo_base,kick_right,5,False,melee/detail,patada,idle_00 -> all attack_ud_NN (fallback attack_fwd),public/assets/sprites/guldo_base/manifest.json
+guldo_base,hurt,6,False,reaction,daño recibido,all hurt_NN,public/assets/sprites/guldo_base/manifest.json
+guldo_base,knockback_back,6,False,reaction,retroceso,all hurt_NN,public/assets/sprites/guldo_base/manifest.json
+guldo_base,knockback_up,6,False,reaction,lanzado arriba,hurt_00 -> hurt_01 -> hurt_02 -> hurt_05 when present,public/assets/sprites/guldo_base/manifest.json
+guldo_base,knockback_down,6,False,reaction,estampado abajo,hurt_02 -> hurt_03 -> hurt_04 -> hurt_05 when present,public/assets/sprites/guldo_base/manifest.json
+guldo_base,beam_guard,6,False,defense,defensa beam,all guard_NN,public/assets/sprites/guldo_base/manifest.json
+guldo_base,evade,8,False,defense,esquiva/afterimage,move_back_00 -> guard_01 (or guard_00) -> move_back_00,public/assets/sprites/guldo_base/manifest.json
+guldo_base,gather_power,7,False,shared,preparación/carga,all beam_charge_NN (fallback guard),public/assets/sprites/guldo_base/manifest.json
+guldo_base,power_up,8,True,shared,aura/transformación,"all beam_charge_NN, loop",public/assets/sprites/guldo_base/manifest.json
+guldo_base,beam_ray,,False,beam/fx-reference,referencia haz,only actual beam_ray_NN files; reference family,public/assets/sprites/guldo_base/manifest.json
+guldo_base,beam_ray_tip,,False,beam/fx-reference,referencia punta/impacto,only actual beam_ray_tip_NN files; reference family,public/assets/sprites/guldo_base/manifest.json
+jeice_base,idle,3,True,base,pose táctica/espera,all idle_NN,public/assets/sprites/jeice_base/manifest.json
+jeice_base,move_front,6,True,movement,desplazamiento frontal,move_front_00 -> move_front_01,public/assets/sprites/jeice_base/manifest.json
+jeice_base,move_back,6,True,movement,desplazamiento trasero,move_back_00 -> move_back_01,public/assets/sprites/jeice_base/manifest.json
+jeice_base,guard,6,False,defense,bloqueo/parada,all guard_NN,public/assets/sprites/jeice_base/manifest.json
+jeice_base,attack_fwd,5,False,stage/melee,ataque frontal,all attack_fwd_NN,public/assets/sprites/jeice_base/manifest.json
+jeice_base,attack_ud,5,False,stage/melee,ataque vertical,all attack_ud_NN,public/assets/sprites/jeice_base/manifest.json
+jeice_base,beam_charge,7,False,beam,carga,all beam_charge_NN,public/assets/sprites/jeice_base/manifest.json
+jeice_base,beam_fire,8,False,beam,disparo,all beam_fire_NN; current manifest may alias beam_charge where no physical beam_fire exists,public/assets/sprites/jeice_base/manifest.json
+jeice_base,punch_right,5,False,melee/detail,puñetazo derecho,idle_00 -> attack_fwd_00 -> attack_fwd_01 -> attack_fwd_02 (fallback all attack_fwd),public/assets/sprites/jeice_base/manifest.json
+jeice_base,punch_left,5,False,melee/detail,puñetazo izquierdo/follow-up,idle_00 -> attack_fwd_03..06 when available; otherwise current manifest/fallback attack_fwd,public/assets/sprites/jeice_base/manifest.json
+jeice_base,kick_right,5,False,melee/detail,patada,idle_00 -> all attack_ud_NN (fallback attack_fwd),public/assets/sprites/jeice_base/manifest.json
+jeice_base,hurt,6,False,reaction,daño recibido,all hurt_NN,public/assets/sprites/jeice_base/manifest.json
+jeice_base,knockback_back,6,False,reaction,retroceso,all hurt_NN,public/assets/sprites/jeice_base/manifest.json
+jeice_base,knockback_up,6,False,reaction,lanzado arriba,hurt_00 -> hurt_01 -> hurt_02 -> hurt_05 when present,public/assets/sprites/jeice_base/manifest.json
+jeice_base,knockback_down,6,False,reaction,estampado abajo,hurt_02 -> hurt_03 -> hurt_04 -> hurt_05 when present,public/assets/sprites/jeice_base/manifest.json
+jeice_base,beam_guard,6,False,defense,defensa beam,all guard_NN,public/assets/sprites/jeice_base/manifest.json
+jeice_base,evade,8,False,defense,esquiva/afterimage,move_back_00 -> guard_01 (or guard_00) -> move_back_00,public/assets/sprites/jeice_base/manifest.json
+jeice_base,gather_power,7,False,shared,preparación/carga,all beam_charge_NN (fallback guard),public/assets/sprites/jeice_base/manifest.json
+jeice_base,power_up,8,True,shared,aura/transformación,"all beam_charge_NN, loop",public/assets/sprites/jeice_base/manifest.json
+jeice_base,beam_ray,,False,beam/fx-reference,referencia haz,only actual beam_ray_NN files; reference family,public/assets/sprites/jeice_base/manifest.json
+jeice_base,beam_ray_tip,,False,beam/fx-reference,referencia punta/impacto,only actual beam_ray_tip_NN files; reference family,public/assets/sprites/jeice_base/manifest.json
+kid_buu_base,idle,3,True,base,pose táctica/espera,all idle_NN,public/assets/sprites/kid_buu_base/manifest.json
+kid_buu_base,move_front,6,True,movement,desplazamiento frontal,move_front_00 -> move_front_01,public/assets/sprites/kid_buu_base/manifest.json
+kid_buu_base,move_back,6,True,movement,desplazamiento trasero,move_back_00 -> move_back_01,public/assets/sprites/kid_buu_base/manifest.json
+kid_buu_base,guard,6,False,defense,bloqueo/parada,all guard_NN,public/assets/sprites/kid_buu_base/manifest.json
+kid_buu_base,attack_fwd,5,False,stage/melee,ataque frontal,all attack_fwd_NN,public/assets/sprites/kid_buu_base/manifest.json
+kid_buu_base,attack_ud,5,False,stage/melee,ataque vertical,all attack_ud_NN,public/assets/sprites/kid_buu_base/manifest.json
+kid_buu_base,beam_charge,7,False,beam,carga,all beam_charge_NN,public/assets/sprites/kid_buu_base/manifest.json
+kid_buu_base,beam_fire,8,False,beam,disparo,all beam_fire_NN; current manifest may alias beam_charge where no physical beam_fire exists,public/assets/sprites/kid_buu_base/manifest.json
+kid_buu_base,punch_right,5,False,melee/detail,puñetazo derecho,idle_00 -> attack_fwd_00 -> attack_fwd_01 -> attack_fwd_02 (fallback all attack_fwd),public/assets/sprites/kid_buu_base/manifest.json
+kid_buu_base,punch_left,5,False,melee/detail,puñetazo izquierdo/follow-up,idle_00 -> attack_fwd_03..06 when available; otherwise current manifest/fallback attack_fwd,public/assets/sprites/kid_buu_base/manifest.json
+kid_buu_base,kick_right,5,False,melee/detail,patada,idle_00 -> all attack_ud_NN (fallback attack_fwd),public/assets/sprites/kid_buu_base/manifest.json
+kid_buu_base,hurt,6,False,reaction,daño recibido,all hurt_NN,public/assets/sprites/kid_buu_base/manifest.json
+kid_buu_base,knockback_back,6,False,reaction,retroceso,all hurt_NN,public/assets/sprites/kid_buu_base/manifest.json
+kid_buu_base,knockback_up,6,False,reaction,lanzado arriba,hurt_00 -> hurt_01 -> hurt_02 -> hurt_05 when present,public/assets/sprites/kid_buu_base/manifest.json
+kid_buu_base,knockback_down,6,False,reaction,estampado abajo,hurt_02 -> hurt_03 -> hurt_04 -> hurt_05 when present,public/assets/sprites/kid_buu_base/manifest.json
+kid_buu_base,beam_guard,6,False,defense,defensa beam,all guard_NN,public/assets/sprites/kid_buu_base/manifest.json
+kid_buu_base,evade,8,False,defense,esquiva/afterimage,move_back_00 -> guard_01 (or guard_00) -> move_back_00,public/assets/sprites/kid_buu_base/manifest.json
+kid_buu_base,gather_power,7,False,shared,preparación/carga,all beam_charge_NN (fallback guard),public/assets/sprites/kid_buu_base/manifest.json
+kid_buu_base,power_up,8,True,shared,aura/transformación,"all beam_charge_NN, loop",public/assets/sprites/kid_buu_base/manifest.json
+kid_buu_base,beam_ray,,False,beam/fx-reference,referencia haz,only actual beam_ray_NN files; reference family,public/assets/sprites/kid_buu_base/manifest.json
+kid_buu_base,beam_ray_tip,,False,beam/fx-reference,referencia punta/impacto,only actual beam_ray_tip_NN files; reference family,public/assets/sprites/kid_buu_base/manifest.json
+kid_trunks_super_saiyan,idle,3,True,base,pose táctica/espera,all idle_NN,public/assets/sprites/kid_trunks_super_saiyan/manifest.json
+kid_trunks_super_saiyan,move_front,6,True,movement,desplazamiento frontal,move_front_00 -> move_front_01,public/assets/sprites/kid_trunks_super_saiyan/manifest.json
+kid_trunks_super_saiyan,move_back,6,True,movement,desplazamiento trasero,move_back_00 -> move_back_01,public/assets/sprites/kid_trunks_super_saiyan/manifest.json
+kid_trunks_super_saiyan,guard,6,False,defense,bloqueo/parada,all guard_NN,public/assets/sprites/kid_trunks_super_saiyan/manifest.json
+kid_trunks_super_saiyan,attack_fwd,5,False,stage/melee,ataque frontal,all attack_fwd_NN,public/assets/sprites/kid_trunks_super_saiyan/manifest.json
+kid_trunks_super_saiyan,attack_ud,5,False,stage/melee,ataque vertical,all attack_ud_NN,public/assets/sprites/kid_trunks_super_saiyan/manifest.json
+kid_trunks_super_saiyan,beam_charge,7,False,beam,carga,all beam_charge_NN,public/assets/sprites/kid_trunks_super_saiyan/manifest.json
+kid_trunks_super_saiyan,beam_fire,8,False,beam,disparo,all beam_fire_NN; current manifest may alias beam_charge where no physical beam_fire exists,public/assets/sprites/kid_trunks_super_saiyan/manifest.json
+kid_trunks_super_saiyan,punch_right,5,False,melee/detail,puñetazo derecho,idle_00 -> attack_fwd_00 -> attack_fwd_01 -> attack_fwd_02 (fallback all attack_fwd),public/assets/sprites/kid_trunks_super_saiyan/manifest.json
+kid_trunks_super_saiyan,punch_left,5,False,melee/detail,puñetazo izquierdo/follow-up,idle_00 -> attack_fwd_03..06 when available; otherwise current manifest/fallback attack_fwd,public/assets/sprites/kid_trunks_super_saiyan/manifest.json
+kid_trunks_super_saiyan,kick_right,5,False,melee/detail,patada,idle_00 -> all attack_ud_NN (fallback attack_fwd),public/assets/sprites/kid_trunks_super_saiyan/manifest.json
+kid_trunks_super_saiyan,hurt,6,False,reaction,daño recibido,all hurt_NN,public/assets/sprites/kid_trunks_super_saiyan/manifest.json
+kid_trunks_super_saiyan,knockback_back,6,False,reaction,retroceso,all hurt_NN,public/assets/sprites/kid_trunks_super_saiyan/manifest.json
+kid_trunks_super_saiyan,knockback_up,6,False,reaction,lanzado arriba,hurt_00 -> hurt_01 -> hurt_02 -> hurt_05 when present,public/assets/sprites/kid_trunks_super_saiyan/manifest.json
+kid_trunks_super_saiyan,knockback_down,6,False,reaction,estampado abajo,hurt_02 -> hurt_03 -> hurt_04 -> hurt_05 when present,public/assets/sprites/kid_trunks_super_saiyan/manifest.json
+kid_trunks_super_saiyan,beam_guard,6,False,defense,defensa beam,all guard_NN,public/assets/sprites/kid_trunks_super_saiyan/manifest.json
+kid_trunks_super_saiyan,evade,8,False,defense,esquiva/afterimage,move_back_00 -> guard_01 (or guard_00) -> move_back_00,public/assets/sprites/kid_trunks_super_saiyan/manifest.json
+kid_trunks_super_saiyan,gather_power,7,False,shared,preparación/carga,all beam_charge_NN (fallback guard),public/assets/sprites/kid_trunks_super_saiyan/manifest.json
+kid_trunks_super_saiyan,power_up,8,True,shared,aura/transformación,"all beam_charge_NN, loop",public/assets/sprites/kid_trunks_super_saiyan/manifest.json
+kid_trunks_super_saiyan,beam_ray,,False,beam/fx-reference,referencia haz,only actual beam_ray_NN files; reference family,public/assets/sprites/kid_trunks_super_saiyan/manifest.json
+kid_trunks_super_saiyan,beam_ray_tip,,False,beam/fx-reference,referencia punta/impacto,only actual beam_ray_tip_NN files; reference family,public/assets/sprites/kid_trunks_super_saiyan/manifest.json
+krillin_base,idle,3,True,base,pose táctica/espera,all idle_NN,public/assets/sprites/krillin_base/manifest.json
+krillin_base,move_front,6,True,movement,desplazamiento frontal,move_front_00 -> move_front_01,public/assets/sprites/krillin_base/manifest.json
+krillin_base,move_back,6,True,movement,desplazamiento trasero,move_back_00 -> move_back_01,public/assets/sprites/krillin_base/manifest.json
+krillin_base,guard,6,False,defense,bloqueo/parada,all guard_NN,public/assets/sprites/krillin_base/manifest.json
+krillin_base,attack_fwd,5,False,stage/melee,ataque frontal,all attack_fwd_NN,public/assets/sprites/krillin_base/manifest.json
+krillin_base,attack_ud,5,False,stage/melee,ataque vertical,all attack_ud_NN,public/assets/sprites/krillin_base/manifest.json
+krillin_base,beam_charge,7,False,beam,carga,all beam_charge_NN,public/assets/sprites/krillin_base/manifest.json
+krillin_base,beam_fire,8,False,beam,disparo,all beam_fire_NN; current manifest may alias beam_charge where no physical beam_fire exists,public/assets/sprites/krillin_base/manifest.json
+krillin_base,punch_right,5,False,melee/detail,puñetazo derecho,idle_00 -> attack_fwd_00 -> attack_fwd_01 -> attack_fwd_02 (fallback all attack_fwd),public/assets/sprites/krillin_base/manifest.json
+krillin_base,punch_left,5,False,melee/detail,puñetazo izquierdo/follow-up,idle_00 -> attack_fwd_03..06 when available; otherwise current manifest/fallback attack_fwd,public/assets/sprites/krillin_base/manifest.json
+krillin_base,kick_right,5,False,melee/detail,patada,idle_00 -> all attack_ud_NN (fallback attack_fwd),public/assets/sprites/krillin_base/manifest.json
+krillin_base,hurt,6,False,reaction,daño recibido,all hurt_NN,public/assets/sprites/krillin_base/manifest.json
+krillin_base,knockback_back,6,False,reaction,retroceso,all hurt_NN,public/assets/sprites/krillin_base/manifest.json
+krillin_base,knockback_up,6,False,reaction,lanzado arriba,hurt_00 -> hurt_01 -> hurt_02 -> hurt_05 when present,public/assets/sprites/krillin_base/manifest.json
+krillin_base,knockback_down,6,False,reaction,estampado abajo,hurt_02 -> hurt_03 -> hurt_04 -> hurt_05 when present,public/assets/sprites/krillin_base/manifest.json
+krillin_base,beam_guard,6,False,defense,defensa beam,all guard_NN,public/assets/sprites/krillin_base/manifest.json
+krillin_base,evade,8,False,defense,esquiva/afterimage,move_back_00 -> guard_01 (or guard_00) -> move_back_00,public/assets/sprites/krillin_base/manifest.json
+krillin_base,gather_power,7,False,shared,preparación/carga,all beam_charge_NN (fallback guard),public/assets/sprites/krillin_base/manifest.json
+krillin_base,power_up,8,True,shared,aura/transformación,"all beam_charge_NN, loop",public/assets/sprites/krillin_base/manifest.json
+krillin_base,beam_ray,,False,beam/fx-reference,referencia haz,only actual beam_ray_NN files; reference family,public/assets/sprites/krillin_base/manifest.json
+krillin_base,beam_ray_tip,,False,beam/fx-reference,referencia punta/impacto,only actual beam_ray_tip_NN files; reference family,public/assets/sprites/krillin_base/manifest.json
+nappa_base,idle,3,True,base,pose táctica/espera,all idle_NN,public/assets/sprites/nappa_base/manifest.json
+nappa_base,move_front,6,True,movement,desplazamiento frontal,move_front_00 -> move_front_01,public/assets/sprites/nappa_base/manifest.json
+nappa_base,move_back,6,True,movement,desplazamiento trasero,move_back_00 -> move_back_01,public/assets/sprites/nappa_base/manifest.json
+nappa_base,guard,6,False,defense,bloqueo/parada,all guard_NN,public/assets/sprites/nappa_base/manifest.json
+nappa_base,attack_fwd,5,False,stage/melee,ataque frontal,all attack_fwd_NN,public/assets/sprites/nappa_base/manifest.json
+nappa_base,attack_ud,5,False,stage/melee,ataque vertical,all attack_ud_NN,public/assets/sprites/nappa_base/manifest.json
+nappa_base,beam_charge,7,False,beam,carga,all beam_charge_NN,public/assets/sprites/nappa_base/manifest.json
+nappa_base,beam_fire,8,False,beam,disparo,all beam_fire_NN; current manifest may alias beam_charge where no physical beam_fire exists,public/assets/sprites/nappa_base/manifest.json
+nappa_base,punch_right,5,False,melee/detail,puñetazo derecho,idle_00 -> attack_fwd_00 -> attack_fwd_01 -> attack_fwd_02 (fallback all attack_fwd),public/assets/sprites/nappa_base/manifest.json
+nappa_base,punch_left,5,False,melee/detail,puñetazo izquierdo/follow-up,idle_00 -> attack_fwd_03..06 when available; otherwise current manifest/fallback attack_fwd,public/assets/sprites/nappa_base/manifest.json
+nappa_base,kick_right,5,False,melee/detail,patada,idle_00 -> all attack_ud_NN (fallback attack_fwd),public/assets/sprites/nappa_base/manifest.json
+nappa_base,hurt,6,False,reaction,daño recibido,all hurt_NN,public/assets/sprites/nappa_base/manifest.json
+nappa_base,knockback_back,6,False,reaction,retroceso,all hurt_NN,public/assets/sprites/nappa_base/manifest.json
+nappa_base,knockback_up,6,False,reaction,lanzado arriba,hurt_00 -> hurt_01 -> hurt_02 -> hurt_05 when present,public/assets/sprites/nappa_base/manifest.json
+nappa_base,knockback_down,6,False,reaction,estampado abajo,hurt_02 -> hurt_03 -> hurt_04 -> hurt_05 when present,public/assets/sprites/nappa_base/manifest.json
+nappa_base,beam_guard,6,False,defense,defensa beam,all guard_NN,public/assets/sprites/nappa_base/manifest.json
+nappa_base,evade,8,False,defense,esquiva/afterimage,move_back_00 -> guard_01 (or guard_00) -> move_back_00,public/assets/sprites/nappa_base/manifest.json
+nappa_base,gather_power,7,False,shared,preparación/carga,all beam_charge_NN (fallback guard),public/assets/sprites/nappa_base/manifest.json
+nappa_base,power_up,8,True,shared,aura/transformación,"all beam_charge_NN, loop",public/assets/sprites/nappa_base/manifest.json
+nappa_base,beam_ray,,False,beam/fx-reference,referencia haz,only actual beam_ray_NN files; reference family,public/assets/sprites/nappa_base/manifest.json
+nappa_base,beam_ray_tip,,False,beam/fx-reference,referencia punta/impacto,only actual beam_ray_tip_NN files; reference family,public/assets/sprites/nappa_base/manifest.json
+piccolo_base,idle,3,True,base,pose táctica/espera,all idle_NN,public/assets/sprites/piccolo_base/manifest.json
+piccolo_base,move_front,6,True,movement,desplazamiento frontal,move_front_00 -> move_front_01,public/assets/sprites/piccolo_base/manifest.json
+piccolo_base,move_back,6,True,movement,desplazamiento trasero,move_back_00 -> move_back_01,public/assets/sprites/piccolo_base/manifest.json
+piccolo_base,guard,6,False,defense,bloqueo/parada,all guard_NN,public/assets/sprites/piccolo_base/manifest.json
+piccolo_base,attack_fwd,5,False,stage/melee,ataque frontal,all attack_fwd_NN,public/assets/sprites/piccolo_base/manifest.json
+piccolo_base,attack_ud,5,False,stage/melee,ataque vertical,all attack_ud_NN,public/assets/sprites/piccolo_base/manifest.json
+piccolo_base,beam_charge,7,False,beam,carga,all beam_charge_NN,public/assets/sprites/piccolo_base/manifest.json
+piccolo_base,beam_fire,8,False,beam,disparo,all beam_fire_NN; current manifest may alias beam_charge where no physical beam_fire exists,public/assets/sprites/piccolo_base/manifest.json
+piccolo_base,punch_right,5,False,melee/detail,puñetazo derecho,idle_00 -> attack_fwd_00 -> attack_fwd_01 -> attack_fwd_02 (fallback all attack_fwd),public/assets/sprites/piccolo_base/manifest.json
+piccolo_base,punch_left,5,False,melee/detail,puñetazo izquierdo/follow-up,idle_00 -> attack_fwd_03..06 when available; otherwise current manifest/fallback attack_fwd,public/assets/sprites/piccolo_base/manifest.json
+piccolo_base,kick_right,5,False,melee/detail,patada,idle_00 -> all attack_ud_NN (fallback attack_fwd),public/assets/sprites/piccolo_base/manifest.json
+piccolo_base,hurt,6,False,reaction,daño recibido,all hurt_NN,public/assets/sprites/piccolo_base/manifest.json
+piccolo_base,knockback_back,6,False,reaction,retroceso,all hurt_NN,public/assets/sprites/piccolo_base/manifest.json
+piccolo_base,knockback_up,6,False,reaction,lanzado arriba,hurt_00 -> hurt_01 -> hurt_02 -> hurt_05 when present,public/assets/sprites/piccolo_base/manifest.json
+piccolo_base,knockback_down,6,False,reaction,estampado abajo,hurt_02 -> hurt_03 -> hurt_04 -> hurt_05 when present,public/assets/sprites/piccolo_base/manifest.json
+piccolo_base,beam_guard,6,False,defense,defensa beam,all guard_NN,public/assets/sprites/piccolo_base/manifest.json
+piccolo_base,evade,8,False,defense,esquiva/afterimage,move_back_00 -> guard_01 (or guard_00) -> move_back_00,public/assets/sprites/piccolo_base/manifest.json
+piccolo_base,gather_power,7,False,shared,preparación/carga,all beam_charge_NN (fallback guard),public/assets/sprites/piccolo_base/manifest.json
+piccolo_base,power_up,8,True,shared,aura/transformación,"all beam_charge_NN, loop",public/assets/sprites/piccolo_base/manifest.json
+piccolo_base,beam_ray,,False,beam/fx-reference,referencia haz,only actual beam_ray_NN files; reference family,public/assets/sprites/piccolo_base/manifest.json
+piccolo_base,beam_ray_tip,,False,beam/fx-reference,referencia punta/impacto,only actual beam_ray_tip_NN files; reference family,public/assets/sprites/piccolo_base/manifest.json
+recoome_base,idle,3,True,base,pose táctica/espera,all idle_NN,public/assets/sprites/recoome_base/manifest.json
+recoome_base,move_front,6,True,movement,desplazamiento frontal,move_front_00 -> move_front_01,public/assets/sprites/recoome_base/manifest.json
+recoome_base,move_back,6,True,movement,desplazamiento trasero,move_back_00 -> move_back_01,public/assets/sprites/recoome_base/manifest.json
+recoome_base,guard,6,False,defense,bloqueo/parada,all guard_NN,public/assets/sprites/recoome_base/manifest.json
+recoome_base,attack_fwd,5,False,stage/melee,ataque frontal,all attack_fwd_NN,public/assets/sprites/recoome_base/manifest.json
+recoome_base,attack_ud,5,False,stage/melee,ataque vertical,all attack_ud_NN,public/assets/sprites/recoome_base/manifest.json
+recoome_base,beam_charge,7,False,beam,carga,all beam_charge_NN,public/assets/sprites/recoome_base/manifest.json
+recoome_base,beam_fire,8,False,beam,disparo,all beam_fire_NN; current manifest may alias beam_charge where no physical beam_fire exists,public/assets/sprites/recoome_base/manifest.json
+recoome_base,punch_right,5,False,melee/detail,puñetazo derecho,idle_00 -> attack_fwd_00 -> attack_fwd_01 -> attack_fwd_02 (fallback all attack_fwd),public/assets/sprites/recoome_base/manifest.json
+recoome_base,punch_left,5,False,melee/detail,puñetazo izquierdo/follow-up,idle_00 -> attack_fwd_03..06 when available; otherwise current manifest/fallback attack_fwd,public/assets/sprites/recoome_base/manifest.json
+recoome_base,kick_right,5,False,melee/detail,patada,idle_00 -> all attack_ud_NN (fallback attack_fwd),public/assets/sprites/recoome_base/manifest.json
+recoome_base,hurt,6,False,reaction,daño recibido,all hurt_NN,public/assets/sprites/recoome_base/manifest.json
+recoome_base,knockback_back,6,False,reaction,retroceso,all hurt_NN,public/assets/sprites/recoome_base/manifest.json
+recoome_base,knockback_up,6,False,reaction,lanzado arriba,hurt_00 -> hurt_01 -> hurt_02 -> hurt_05 when present,public/assets/sprites/recoome_base/manifest.json
+recoome_base,knockback_down,6,False,reaction,estampado abajo,hurt_02 -> hurt_03 -> hurt_04 -> hurt_05 when present,public/assets/sprites/recoome_base/manifest.json
+recoome_base,beam_guard,6,False,defense,defensa beam,all guard_NN,public/assets/sprites/recoome_base/manifest.json
+recoome_base,evade,8,False,defense,esquiva/afterimage,move_back_00 -> guard_01 (or guard_00) -> move_back_00,public/assets/sprites/recoome_base/manifest.json
+recoome_base,gather_power,7,False,shared,preparación/carga,all beam_charge_NN (fallback guard),public/assets/sprites/recoome_base/manifest.json
+recoome_base,power_up,8,True,shared,aura/transformación,"all beam_charge_NN, loop",public/assets/sprites/recoome_base/manifest.json
+recoome_base,beam_ray,,False,beam/fx-reference,referencia haz,only actual beam_ray_NN files; reference family,public/assets/sprites/recoome_base/manifest.json
+recoome_base,beam_ray_tip,,False,beam/fx-reference,referencia punta/impacto,only actual beam_ray_tip_NN files; reference family,public/assets/sprites/recoome_base/manifest.json
+super_buu_base,idle,3,True,base,pose táctica/espera,all idle_NN,public/assets/sprites/super_buu_base/manifest.json
+super_buu_base,move_front,6,True,movement,desplazamiento frontal,move_front_00 -> move_front_01,public/assets/sprites/super_buu_base/manifest.json
+super_buu_base,move_back,6,True,movement,desplazamiento trasero,move_back_00 -> move_back_01,public/assets/sprites/super_buu_base/manifest.json
+super_buu_base,guard,6,False,defense,bloqueo/parada,all guard_NN,public/assets/sprites/super_buu_base/manifest.json
+super_buu_base,attack_fwd,5,False,stage/melee,ataque frontal,all attack_fwd_NN,public/assets/sprites/super_buu_base/manifest.json
+super_buu_base,attack_ud,5,False,stage/melee,ataque vertical,all attack_ud_NN,public/assets/sprites/super_buu_base/manifest.json
+super_buu_base,beam_charge,7,False,beam,carga,all beam_charge_NN,public/assets/sprites/super_buu_base/manifest.json
+super_buu_base,beam_fire,8,False,beam,disparo,all beam_fire_NN; current manifest may alias beam_charge where no physical beam_fire exists,public/assets/sprites/super_buu_base/manifest.json
+super_buu_base,punch_right,5,False,melee/detail,puñetazo derecho,idle_00 -> attack_fwd_00 -> attack_fwd_01 -> attack_fwd_02 (fallback all attack_fwd),public/assets/sprites/super_buu_base/manifest.json
+super_buu_base,punch_left,5,False,melee/detail,puñetazo izquierdo/follow-up,idle_00 -> attack_fwd_03..06 when available; otherwise current manifest/fallback attack_fwd,public/assets/sprites/super_buu_base/manifest.json
+super_buu_base,kick_right,5,False,melee/detail,patada,idle_00 -> all attack_ud_NN (fallback attack_fwd),public/assets/sprites/super_buu_base/manifest.json
+super_buu_base,hurt,6,False,reaction,daño recibido,all hurt_NN,public/assets/sprites/super_buu_base/manifest.json
+super_buu_base,knockback_back,6,False,reaction,retroceso,all hurt_NN,public/assets/sprites/super_buu_base/manifest.json
+super_buu_base,knockback_up,6,False,reaction,lanzado arriba,hurt_00 -> hurt_01 -> hurt_02 -> hurt_05 when present,public/assets/sprites/super_buu_base/manifest.json
+super_buu_base,knockback_down,6,False,reaction,estampado abajo,hurt_02 -> hurt_03 -> hurt_04 -> hurt_05 when present,public/assets/sprites/super_buu_base/manifest.json
+super_buu_base,beam_guard,6,False,defense,defensa beam,all guard_NN,public/assets/sprites/super_buu_base/manifest.json
+super_buu_base,evade,8,False,defense,esquiva/afterimage,move_back_00 -> guard_01 (or guard_00) -> move_back_00,public/assets/sprites/super_buu_base/manifest.json
+super_buu_base,gather_power,7,False,shared,preparación/carga,all beam_charge_NN (fallback guard),public/assets/sprites/super_buu_base/manifest.json
+super_buu_base,power_up,8,True,shared,aura/transformación,"all beam_charge_NN, loop",public/assets/sprites/super_buu_base/manifest.json
+super_buu_base,beam_ray,,False,beam/fx-reference,referencia haz,only actual beam_ray_NN files; reference family,public/assets/sprites/super_buu_base/manifest.json
+super_buu_base,beam_ray_tip,,False,beam/fx-reference,referencia punta/impacto,only actual beam_ray_tip_NN files; reference family,public/assets/sprites/super_buu_base/manifest.json
+trunks_base,idle,3,True,base,pose táctica/espera,all idle_NN,public/assets/sprites/trunks_base/manifest.json
+trunks_base,move_front,6,True,movement,desplazamiento frontal,move_front_00 -> move_front_01,public/assets/sprites/trunks_base/manifest.json
+trunks_base,move_back,6,True,movement,desplazamiento trasero,move_back_00 -> move_back_01,public/assets/sprites/trunks_base/manifest.json
+trunks_base,guard,6,False,defense,bloqueo/parada,all guard_NN,public/assets/sprites/trunks_base/manifest.json
+trunks_base,attack_fwd,5,False,stage/melee,ataque frontal,all attack_fwd_NN,public/assets/sprites/trunks_base/manifest.json
+trunks_base,attack_ud,5,False,stage/melee,ataque vertical,all attack_ud_NN,public/assets/sprites/trunks_base/manifest.json
+trunks_base,beam_charge,7,False,beam,carga,all beam_charge_NN,public/assets/sprites/trunks_base/manifest.json
+trunks_base,beam_fire,8,False,beam,disparo,all beam_fire_NN; current manifest may alias beam_charge where no physical beam_fire exists,public/assets/sprites/trunks_base/manifest.json
+trunks_base,punch_right,5,False,melee/detail,puñetazo derecho,idle_00 -> attack_fwd_00 -> attack_fwd_01 -> attack_fwd_02 (fallback all attack_fwd),public/assets/sprites/trunks_base/manifest.json
+trunks_base,punch_left,5,False,melee/detail,puñetazo izquierdo/follow-up,idle_00 -> attack_fwd_03..06 when available; otherwise current manifest/fallback attack_fwd,public/assets/sprites/trunks_base/manifest.json
+trunks_base,kick_right,5,False,melee/detail,patada,idle_00 -> all attack_ud_NN (fallback attack_fwd),public/assets/sprites/trunks_base/manifest.json
+trunks_base,hurt,6,False,reaction,daño recibido,all hurt_NN,public/assets/sprites/trunks_base/manifest.json
+trunks_base,knockback_back,6,False,reaction,retroceso,all hurt_NN,public/assets/sprites/trunks_base/manifest.json
+trunks_base,knockback_up,6,False,reaction,lanzado arriba,hurt_00 -> hurt_01 -> hurt_02 -> hurt_05 when present,public/assets/sprites/trunks_base/manifest.json
+trunks_base,knockback_down,6,False,reaction,estampado abajo,hurt_02 -> hurt_03 -> hurt_04 -> hurt_05 when present,public/assets/sprites/trunks_base/manifest.json
+trunks_base,beam_guard,6,False,defense,defensa beam,all guard_NN,public/assets/sprites/trunks_base/manifest.json
+trunks_base,evade,8,False,defense,esquiva/afterimage,move_back_00 -> guard_01 (or guard_00) -> move_back_00,public/assets/sprites/trunks_base/manifest.json
+trunks_base,gather_power,7,False,shared,preparación/carga,all beam_charge_NN (fallback guard),public/assets/sprites/trunks_base/manifest.json
+trunks_base,power_up,8,True,shared,aura/transformación,"all beam_charge_NN, loop",public/assets/sprites/trunks_base/manifest.json
+trunks_base,beam_ray,,False,beam/fx-reference,referencia haz,only actual beam_ray_NN files; reference family,public/assets/sprites/trunks_base/manifest.json
+trunks_base,beam_ray_tip,,False,beam/fx-reference,referencia punta/impacto,only actual beam_ray_tip_NN files; reference family,public/assets/sprites/trunks_base/manifest.json
+vegeta_base,idle,3,True,base,pose táctica/espera,all idle_NN,public/assets/sprites/vegeta_base/manifest.json
+vegeta_base,move_front,6,True,movement,desplazamiento frontal,move_front_00 -> move_front_01,public/assets/sprites/vegeta_base/manifest.json
+vegeta_base,move_back,6,True,movement,desplazamiento trasero,move_back_00 -> move_back_01,public/assets/sprites/vegeta_base/manifest.json
+vegeta_base,guard,6,False,defense,bloqueo/parada,all guard_NN,public/assets/sprites/vegeta_base/manifest.json
+vegeta_base,attack_fwd,5,False,stage/melee,ataque frontal,all attack_fwd_NN,public/assets/sprites/vegeta_base/manifest.json
+vegeta_base,attack_ud,5,False,stage/melee,ataque vertical,all attack_ud_NN,public/assets/sprites/vegeta_base/manifest.json
+vegeta_base,beam_charge,7,False,beam,carga,all beam_charge_NN,public/assets/sprites/vegeta_base/manifest.json
+vegeta_base,beam_fire,8,False,beam,disparo,all beam_fire_NN; current manifest may alias beam_charge where no physical beam_fire exists,public/assets/sprites/vegeta_base/manifest.json
+vegeta_base,punch_right,5,False,melee/detail,puñetazo derecho,idle_00 -> attack_fwd_00 -> attack_fwd_01 -> attack_fwd_02 (fallback all attack_fwd),public/assets/sprites/vegeta_base/manifest.json
+vegeta_base,punch_left,5,False,melee/detail,puñetazo izquierdo/follow-up,idle_00 -> attack_fwd_03..06 when available; otherwise current manifest/fallback attack_fwd,public/assets/sprites/vegeta_base/manifest.json
+vegeta_base,kick_right,5,False,melee/detail,patada,idle_00 -> all attack_ud_NN (fallback attack_fwd),public/assets/sprites/vegeta_base/manifest.json
+vegeta_base,hurt,6,False,reaction,daño recibido,all hurt_NN,public/assets/sprites/vegeta_base/manifest.json
+vegeta_base,knockback_back,6,False,reaction,retroceso,all hurt_NN,public/assets/sprites/vegeta_base/manifest.json
+vegeta_base,knockback_up,6,False,reaction,lanzado arriba,hurt_00 -> hurt_01 -> hurt_02 -> hurt_05 when present,public/assets/sprites/vegeta_base/manifest.json
+vegeta_base,knockback_down,6,False,reaction,estampado abajo,hurt_02 -> hurt_03 -> hurt_04 -> hurt_05 when present,public/assets/sprites/vegeta_base/manifest.json
+vegeta_base,beam_guard,6,False,defense,defensa beam,all guard_NN,public/assets/sprites/vegeta_base/manifest.json
+vegeta_base,evade,8,False,defense,esquiva/afterimage,move_back_00 -> guard_01 (or guard_00) -> move_back_00,public/assets/sprites/vegeta_base/manifest.json
+vegeta_base,gather_power,7,False,shared,preparación/carga,all beam_charge_NN (fallback guard),public/assets/sprites/vegeta_base/manifest.json
+vegeta_base,power_up,8,True,shared,aura/transformación,"all beam_charge_NN, loop",public/assets/sprites/vegeta_base/manifest.json
+vegeta_base,beam_ray,,False,beam/fx-reference,referencia haz,only actual beam_ray_NN files; reference family,public/assets/sprites/vegeta_base/manifest.json
+vegeta_base,beam_ray_tip,,False,beam/fx-reference,referencia punta/impacto,only actual beam_ray_tip_NN files; reference family,public/assets/sprites/vegeta_base/manifest.json
+vegeta_super_saiyan_majin,idle,3,True,base,pose táctica/espera,all idle_NN,public/assets/sprites/vegeta_super_saiyan_majin/manifest.json
+vegeta_super_saiyan_majin,move_front,6,True,movement,desplazamiento frontal,move_front_00 -> move_front_01,public/assets/sprites/vegeta_super_saiyan_majin/manifest.json
+vegeta_super_saiyan_majin,move_back,6,True,movement,desplazamiento trasero,move_back_00 -> move_back_01,public/assets/sprites/vegeta_super_saiyan_majin/manifest.json
+vegeta_super_saiyan_majin,guard,6,False,defense,bloqueo/parada,all guard_NN,public/assets/sprites/vegeta_super_saiyan_majin/manifest.json
+vegeta_super_saiyan_majin,attack_fwd,5,False,stage/melee,ataque frontal,all attack_fwd_NN,public/assets/sprites/vegeta_super_saiyan_majin/manifest.json
+vegeta_super_saiyan_majin,attack_ud,5,False,stage/melee,ataque vertical,all attack_ud_NN,public/assets/sprites/vegeta_super_saiyan_majin/manifest.json
+vegeta_super_saiyan_majin,beam_charge,7,False,beam,carga,all beam_charge_NN,public/assets/sprites/vegeta_super_saiyan_majin/manifest.json
+vegeta_super_saiyan_majin,beam_fire,8,False,beam,disparo,all beam_fire_NN; current manifest may alias beam_charge where no physical beam_fire exists,public/assets/sprites/vegeta_super_saiyan_majin/manifest.json
+vegeta_super_saiyan_majin,punch_right,5,False,melee/detail,puñetazo derecho,idle_00 -> attack_fwd_00 -> attack_fwd_01 -> attack_fwd_02 (fallback all attack_fwd),public/assets/sprites/vegeta_super_saiyan_majin/manifest.json
+vegeta_super_saiyan_majin,punch_left,5,False,melee/detail,puñetazo izquierdo/follow-up,idle_00 -> attack_fwd_03..06 when available; otherwise current manifest/fallback attack_fwd,public/assets/sprites/vegeta_super_saiyan_majin/manifest.json
+vegeta_super_saiyan_majin,kick_right,5,False,melee/detail,patada,idle_00 -> all attack_ud_NN (fallback attack_fwd),public/assets/sprites/vegeta_super_saiyan_majin/manifest.json
+vegeta_super_saiyan_majin,hurt,6,False,reaction,daño recibido,all hurt_NN,public/assets/sprites/vegeta_super_saiyan_majin/manifest.json
+vegeta_super_saiyan_majin,knockback_back,6,False,reaction,retroceso,all hurt_NN,public/assets/sprites/vegeta_super_saiyan_majin/manifest.json
+vegeta_super_saiyan_majin,knockback_up,6,False,reaction,lanzado arriba,hurt_00 -> hurt_01 -> hurt_02 -> hurt_05 when present,public/assets/sprites/vegeta_super_saiyan_majin/manifest.json
+vegeta_super_saiyan_majin,knockback_down,6,False,reaction,estampado abajo,hurt_02 -> hurt_03 -> hurt_04 -> hurt_05 when present,public/assets/sprites/vegeta_super_saiyan_majin/manifest.json
+vegeta_super_saiyan_majin,beam_guard,6,False,defense,defensa beam,all guard_NN,public/assets/sprites/vegeta_super_saiyan_majin/manifest.json
+vegeta_super_saiyan_majin,evade,8,False,defense,esquiva/afterimage,move_back_00 -> guard_01 (or guard_00) -> move_back_00,public/assets/sprites/vegeta_super_saiyan_majin/manifest.json
+vegeta_super_saiyan_majin,gather_power,7,False,shared,preparación/carga,all beam_charge_NN (fallback guard),public/assets/sprites/vegeta_super_saiyan_majin/manifest.json
+vegeta_super_saiyan_majin,power_up,8,True,shared,aura/transformación,"all beam_charge_NN, loop",public/assets/sprites/vegeta_super_saiyan_majin/manifest.json
+vegeta_super_saiyan_majin,beam_ray,,False,beam/fx-reference,referencia haz,only actual beam_ray_NN files; reference family,public/assets/sprites/vegeta_super_saiyan_majin/manifest.json
+vegeta_super_saiyan_majin,beam_ray_tip,,False,beam/fx-reference,referencia punta/impacto,only actual beam_ray_tip_NN files; reference family,public/assets/sprites/vegeta_super_saiyan_majin/manifest.json
+vegito_ssj,idle,3,True,base,pose táctica/espera,all idle_NN,public/assets/sprites/vegito_ssj/manifest.json
+vegito_ssj,move_front,6,True,movement,desplazamiento frontal,move_front_00 -> move_front_01,public/assets/sprites/vegito_ssj/manifest.json
+vegito_ssj,move_back,6,True,movement,desplazamiento trasero,move_back_00 -> move_back_01,public/assets/sprites/vegito_ssj/manifest.json
+vegito_ssj,guard,6,False,defense,bloqueo/parada,all guard_NN,public/assets/sprites/vegito_ssj/manifest.json
+vegito_ssj,attack_fwd,5,False,stage/melee,ataque frontal,all attack_fwd_NN,public/assets/sprites/vegito_ssj/manifest.json
+vegito_ssj,attack_ud,5,False,stage/melee,ataque vertical,all attack_ud_NN,public/assets/sprites/vegito_ssj/manifest.json
+vegito_ssj,beam_charge,7,False,beam,carga,all beam_charge_NN,public/assets/sprites/vegito_ssj/manifest.json
+vegito_ssj,beam_fire,8,False,beam,disparo,all beam_fire_NN; current manifest may alias beam_charge where no physical beam_fire exists,public/assets/sprites/vegito_ssj/manifest.json
+vegito_ssj,punch_right,5,False,melee/detail,puñetazo derecho,idle_00 -> attack_fwd_00 -> attack_fwd_01 -> attack_fwd_02 (fallback all attack_fwd),public/assets/sprites/vegito_ssj/manifest.json
+vegito_ssj,punch_left,5,False,melee/detail,puñetazo izquierdo/follow-up,idle_00 -> attack_fwd_03..06 when available; otherwise current manifest/fallback attack_fwd,public/assets/sprites/vegito_ssj/manifest.json
+vegito_ssj,kick_right,5,False,melee/detail,patada,idle_00 -> all attack_ud_NN (fallback attack_fwd),public/assets/sprites/vegito_ssj/manifest.json
+vegito_ssj,hurt,6,False,reaction,daño recibido,all hurt_NN,public/assets/sprites/vegito_ssj/manifest.json
+vegito_ssj,knockback_back,6,False,reaction,retroceso,all hurt_NN,public/assets/sprites/vegito_ssj/manifest.json
+vegito_ssj,knockback_up,6,False,reaction,lanzado arriba,hurt_00 -> hurt_01 -> hurt_02 -> hurt_05 when present,public/assets/sprites/vegito_ssj/manifest.json
+vegito_ssj,knockback_down,6,False,reaction,estampado abajo,hurt_02 -> hurt_03 -> hurt_04 -> hurt_05 when present,public/assets/sprites/vegito_ssj/manifest.json
+vegito_ssj,beam_guard,6,False,defense,defensa beam,all guard_NN,public/assets/sprites/vegito_ssj/manifest.json
+vegito_ssj,evade,8,False,defense,esquiva/afterimage,move_back_00 -> guard_01 (or guard_00) -> move_back_00,public/assets/sprites/vegito_ssj/manifest.json
+vegito_ssj,gather_power,7,False,shared,preparación/carga,all beam_charge_NN (fallback guard),public/assets/sprites/vegito_ssj/manifest.json
+vegito_ssj,power_up,8,True,shared,aura/transformación,"all beam_charge_NN, loop",public/assets/sprites/vegito_ssj/manifest.json
+vegito_ssj,beam_ray,,False,beam/fx-reference,referencia haz,only actual beam_ray_NN files; reference family,public/assets/sprites/vegito_ssj/manifest.json
+vegito_ssj,beam_ray_tip,,False,beam/fx-reference,referencia punta/impacto,only actual beam_ray_tip_NN files; reference family,public/assets/sprites/vegito_ssj/manifest.json
+young_gohan_base,idle,3,True,base,pose táctica/espera,all idle_NN,public/assets/sprites/young_gohan_base/manifest.json
+young_gohan_base,move_front,6,True,movement,desplazamiento frontal,move_front_00 -> move_front_01,public/assets/sprites/young_gohan_base/manifest.json
+young_gohan_base,move_back,6,True,movement,desplazamiento trasero,move_back_00 -> move_back_01,public/assets/sprites/young_gohan_base/manifest.json
+young_gohan_base,guard,6,False,defense,bloqueo/parada,all guard_NN,public/assets/sprites/young_gohan_base/manifest.json
+young_gohan_base,attack_fwd,5,False,stage/melee,ataque frontal,all attack_fwd_NN,public/assets/sprites/young_gohan_base/manifest.json
+young_gohan_base,attack_ud,5,False,stage/melee,ataque vertical,all attack_ud_NN,public/assets/sprites/young_gohan_base/manifest.json
+young_gohan_base,beam_charge,7,False,beam,carga,all beam_charge_NN,public/assets/sprites/young_gohan_base/manifest.json
+young_gohan_base,beam_fire,8,False,beam,disparo,all beam_fire_NN; current manifest may alias beam_charge where no physical beam_fire exists,public/assets/sprites/young_gohan_base/manifest.json
+young_gohan_base,punch_right,5,False,melee/detail,puñetazo derecho,idle_00 -> attack_fwd_00 -> attack_fwd_01 -> attack_fwd_02 (fallback all attack_fwd),public/assets/sprites/young_gohan_base/manifest.json
+young_gohan_base,punch_left,5,False,melee/detail,puñetazo izquierdo/follow-up,idle_00 -> attack_fwd_03..06 when available; otherwise current manifest/fallback attack_fwd,public/assets/sprites/young_gohan_base/manifest.json
+young_gohan_base,kick_right,5,False,melee/detail,patada,idle_00 -> all attack_ud_NN (fallback attack_fwd),public/assets/sprites/young_gohan_base/manifest.json
+young_gohan_base,hurt,6,False,reaction,daño recibido,all hurt_NN,public/assets/sprites/young_gohan_base/manifest.json
+young_gohan_base,knockback_back,6,False,reaction,retroceso,all hurt_NN,public/assets/sprites/young_gohan_base/manifest.json
+young_gohan_base,knockback_up,6,False,reaction,lanzado arriba,hurt_00 -> hurt_01 -> hurt_02 -> hurt_05 when present,public/assets/sprites/young_gohan_base/manifest.json
+young_gohan_base,knockback_down,6,False,reaction,estampado abajo,hurt_02 -> hurt_03 -> hurt_04 -> hurt_05 when present,public/assets/sprites/young_gohan_base/manifest.json
+young_gohan_base,beam_guard,6,False,defense,defensa beam,all guard_NN,public/assets/sprites/young_gohan_base/manifest.json
+young_gohan_base,evade,8,False,defense,esquiva/afterimage,move_back_00 -> guard_01 (or guard_00) -> move_back_00,public/assets/sprites/young_gohan_base/manifest.json
+young_gohan_base,gather_power,7,False,shared,preparación/carga,all beam_charge_NN (fallback guard),public/assets/sprites/young_gohan_base/manifest.json
+young_gohan_base,power_up,8,True,shared,aura/transformación,"all beam_charge_NN, loop",public/assets/sprites/young_gohan_base/manifest.json
+young_gohan_base,beam_ray,,False,beam/fx-reference,referencia haz,only actual beam_ray_NN files; reference family,public/assets/sprites/young_gohan_base/manifest.json
+young_gohan_base,beam_ray_tip,,False,beam/fx-reference,referencia punta/impacto,only actual beam_ray_tip_NN files; reference family,public/assets/sprites/young_gohan_base/manifest.json
+young_gohan_super_saiyan,idle,3,True,base,pose táctica/espera,all idle_NN,public/assets/sprites/young_gohan_super_saiyan/manifest.json
+young_gohan_super_saiyan,move_front,6,True,movement,desplazamiento frontal,move_front_00 -> move_front_01,public/assets/sprites/young_gohan_super_saiyan/manifest.json
+young_gohan_super_saiyan,move_back,6,True,movement,desplazamiento trasero,move_back_00 -> move_back_01,public/assets/sprites/young_gohan_super_saiyan/manifest.json
+young_gohan_super_saiyan,guard,6,False,defense,bloqueo/parada,all guard_NN,public/assets/sprites/young_gohan_super_saiyan/manifest.json
+young_gohan_super_saiyan,attack_fwd,5,False,stage/melee,ataque frontal,all attack_fwd_NN,public/assets/sprites/young_gohan_super_saiyan/manifest.json
+young_gohan_super_saiyan,attack_ud,5,False,stage/melee,ataque vertical,all attack_ud_NN,public/assets/sprites/young_gohan_super_saiyan/manifest.json
+young_gohan_super_saiyan,beam_charge,7,False,beam,carga,all beam_charge_NN,public/assets/sprites/young_gohan_super_saiyan/manifest.json
+young_gohan_super_saiyan,beam_fire,8,False,beam,disparo,all beam_fire_NN; current manifest may alias beam_charge where no physical beam_fire exists,public/assets/sprites/young_gohan_super_saiyan/manifest.json
+young_gohan_super_saiyan,punch_right,5,False,melee/detail,puñetazo derecho,idle_00 -> attack_fwd_00 -> attack_fwd_01 -> attack_fwd_02 (fallback all attack_fwd),public/assets/sprites/young_gohan_super_saiyan/manifest.json
+young_gohan_super_saiyan,punch_left,5,False,melee/detail,puñetazo izquierdo/follow-up,idle_00 -> attack_fwd_03..06 when available; otherwise current manifest/fallback attack_fwd,public/assets/sprites/young_gohan_super_saiyan/manifest.json
+young_gohan_super_saiyan,kick_right,5,False,melee/detail,patada,idle_00 -> all attack_ud_NN (fallback attack_fwd),public/assets/sprites/young_gohan_super_saiyan/manifest.json
+young_gohan_super_saiyan,hurt,6,False,reaction,daño recibido,all hurt_NN,public/assets/sprites/young_gohan_super_saiyan/manifest.json
+young_gohan_super_saiyan,knockback_back,6,False,reaction,retroceso,all hurt_NN,public/assets/sprites/young_gohan_super_saiyan/manifest.json
+young_gohan_super_saiyan,knockback_up,6,False,reaction,lanzado arriba,hurt_00 -> hurt_01 -> hurt_02 -> hurt_05 when present,public/assets/sprites/young_gohan_super_saiyan/manifest.json
+young_gohan_super_saiyan,knockback_down,6,False,reaction,estampado abajo,hurt_02 -> hurt_03 -> hurt_04 -> hurt_05 when present,public/assets/sprites/young_gohan_super_saiyan/manifest.json
+young_gohan_super_saiyan,beam_guard,6,False,defense,defensa beam,all guard_NN,public/assets/sprites/young_gohan_super_saiyan/manifest.json
+young_gohan_super_saiyan,evade,8,False,defense,esquiva/afterimage,move_back_00 -> guard_01 (or guard_00) -> move_back_00,public/assets/sprites/young_gohan_super_saiyan/manifest.json
+young_gohan_super_saiyan,gather_power,7,False,shared,preparación/carga,all beam_charge_NN (fallback guard),public/assets/sprites/young_gohan_super_saiyan/manifest.json
+young_gohan_super_saiyan,power_up,8,True,shared,aura/transformación,"all beam_charge_NN, loop",public/assets/sprites/young_gohan_super_saiyan/manifest.json
+young_gohan_super_saiyan,beam_ray,,False,beam/fx-reference,referencia haz,only actual beam_ray_NN files; reference family,public/assets/sprites/young_gohan_super_saiyan/manifest.json
+young_gohan_super_saiyan,beam_ray_tip,,False,beam/fx-reference,referencia punta/impacto,only actual beam_ray_tip_NN files; reference family,public/assets/sprites/young_gohan_super_saiyan/manifest.json
+young_gohan_super_saiyan_2,idle,3,True,base,pose táctica/espera,all idle_NN,public/assets/sprites/young_gohan_super_saiyan_2/manifest.json
+young_gohan_super_saiyan_2,move_front,6,True,movement,desplazamiento frontal,move_front_00 -> move_front_01,public/assets/sprites/young_gohan_super_saiyan_2/manifest.json
+young_gohan_super_saiyan_2,move_back,6,True,movement,desplazamiento trasero,move_back_00 -> move_back_01,public/assets/sprites/young_gohan_super_saiyan_2/manifest.json
+young_gohan_super_saiyan_2,guard,6,False,defense,bloqueo/parada,all guard_NN,public/assets/sprites/young_gohan_super_saiyan_2/manifest.json
+young_gohan_super_saiyan_2,attack_fwd,5,False,stage/melee,ataque frontal,all attack_fwd_NN,public/assets/sprites/young_gohan_super_saiyan_2/manifest.json
+young_gohan_super_saiyan_2,attack_ud,5,False,stage/melee,ataque vertical,all attack_ud_NN,public/assets/sprites/young_gohan_super_saiyan_2/manifest.json
+young_gohan_super_saiyan_2,beam_charge,7,False,beam,carga,all beam_charge_NN,public/assets/sprites/young_gohan_super_saiyan_2/manifest.json
+young_gohan_super_saiyan_2,beam_fire,8,False,beam,disparo,all beam_fire_NN; current manifest may alias beam_charge where no physical beam_fire exists,public/assets/sprites/young_gohan_super_saiyan_2/manifest.json
+young_gohan_super_saiyan_2,punch_right,5,False,melee/detail,puñetazo derecho,idle_00 -> attack_fwd_00 -> attack_fwd_01 -> attack_fwd_02 (fallback all attack_fwd),public/assets/sprites/young_gohan_super_saiyan_2/manifest.json
+young_gohan_super_saiyan_2,punch_left,5,False,melee/detail,puñetazo izquierdo/follow-up,idle_00 -> attack_fwd_03..06 when available; otherwise current manifest/fallback attack_fwd,public/assets/sprites/young_gohan_super_saiyan_2/manifest.json
+young_gohan_super_saiyan_2,kick_right,5,False,melee/detail,patada,idle_00 -> all attack_ud_NN (fallback attack_fwd),public/assets/sprites/young_gohan_super_saiyan_2/manifest.json
+young_gohan_super_saiyan_2,hurt,6,False,reaction,daño recibido,all hurt_NN,public/assets/sprites/young_gohan_super_saiyan_2/manifest.json
+young_gohan_super_saiyan_2,knockback_back,6,False,reaction,retroceso,all hurt_NN,public/assets/sprites/young_gohan_super_saiyan_2/manifest.json
+young_gohan_super_saiyan_2,knockback_up,6,False,reaction,lanzado arriba,hurt_00 -> hurt_01 -> hurt_02 -> hurt_05 when present,public/assets/sprites/young_gohan_super_saiyan_2/manifest.json
+young_gohan_super_saiyan_2,knockback_down,6,False,reaction,estampado abajo,hurt_02 -> hurt_03 -> hurt_04 -> hurt_05 when present,public/assets/sprites/young_gohan_super_saiyan_2/manifest.json
+young_gohan_super_saiyan_2,beam_guard,6,False,defense,defensa beam,all guard_NN,public/assets/sprites/young_gohan_super_saiyan_2/manifest.json
+young_gohan_super_saiyan_2,evade,8,False,defense,esquiva/afterimage,move_back_00 -> guard_01 (or guard_00) -> move_back_00,public/assets/sprites/young_gohan_super_saiyan_2/manifest.json
+young_gohan_super_saiyan_2,gather_power,7,False,shared,preparación/carga,all beam_charge_NN (fallback guard),public/assets/sprites/young_gohan_super_saiyan_2/manifest.json
+young_gohan_super_saiyan_2,power_up,8,True,shared,aura/transformación,"all beam_charge_NN, loop",public/assets/sprites/young_gohan_super_saiyan_2/manifest.json
+young_gohan_super_saiyan_2,beam_ray,,False,beam/fx-reference,referencia haz,only actual beam_ray_NN files; reference family,public/assets/sprites/young_gohan_super_saiyan_2/manifest.json
+young_gohan_super_saiyan_2,beam_ray_tip,,False,beam/fx-reference,referencia punta/impacto,only actual beam_ray_tip_NN files; reference family,public/assets/sprites/young_gohan_super_saiyan_2/manifest.json

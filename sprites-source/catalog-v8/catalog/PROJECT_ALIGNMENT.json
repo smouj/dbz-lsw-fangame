@@ -1,0 +1,558 @@
+{
+  "version": "V7_PROJECT_ALIGNED",
+  "repository": "smouj/dbz-lsw-fangame",
+  "github_commit": "4b9f38353c1be64427deb17f7fad83b5cdbd7aec",
+  "github_commit_short": "4b9f383",
+  "contract_files": [
+    "scripts/import-v6-sprites.py",
+    "scripts/add-composite-poses.py",
+    "src/data/spriteManifest.ts",
+    "src/battle/spriteConfig.ts",
+    "scripts/audit-combat-sprites.ts",
+    "scripts/audit-sheets.ts"
+  ],
+  "canonical_naming_policy": "Canonical V6/V7 frame files remain zero-padded numeric source identities (001.png..N). Semantic gameplay pose names are assigned only by the project importer from the authoritative FIXED animations.json bridge; guessing semantic names inside the canonical pack is forbidden.",
+  "authoritative_import_pose_schema": [
+    {
+      "source_category": "idle",
+      "runtime_pose": "idle",
+      "fps": 3,
+      "loop": true
+    },
+    {
+      "source_category": "movement",
+      "runtime_pose": "move_front",
+      "fps": 6,
+      "loop": true
+    },
+    {
+      "source_category": "movement_mirrored",
+      "runtime_pose": "move_back",
+      "fps": 6,
+      "loop": true
+    },
+    {
+      "source_category": "guard",
+      "runtime_pose": "guard",
+      "fps": 6,
+      "loop": false
+    },
+    {
+      "source_category": "attack_forward",
+      "runtime_pose": "attack_fwd",
+      "fps": 5,
+      "loop": false
+    },
+    {
+      "source_category": "attack_vertical",
+      "runtime_pose": "attack_ud",
+      "fps": 5,
+      "loop": false
+    },
+    {
+      "source_category": "hurt",
+      "runtime_pose": "hurt",
+      "fps": 6,
+      "loop": false
+    },
+    {
+      "source_category": "beam",
+      "runtime_pose": "beam_charge",
+      "fps": 7,
+      "loop": false
+    },
+    {
+      "source_category": "beam",
+      "runtime_pose": "beam_fire",
+      "fps": 8,
+      "loop": false
+    }
+  ],
+  "forms": [
+    {
+      "character": "android_16",
+      "form": "base",
+      "canonical_frames_path": "characters/android_16/base/frames",
+      "runtime_target_dir": "android_16_base",
+      "fixed_pose_source": "01_android_16/base",
+      "frame_count": 44,
+      "status": "native_v6_bridge",
+      "github_commit": "4b9f38353c1be64427deb17f7fad83b5cdbd7aec"
+    },
+    {
+      "character": "android_17",
+      "form": "base",
+      "canonical_frames_path": "characters/android_17/base/frames",
+      "runtime_target_dir": "android_17_base",
+      "fixed_pose_source": "02_android_17/base",
+      "frame_count": 44,
+      "status": "native_v6_bridge",
+      "github_commit": "4b9f38353c1be64427deb17f7fad83b5cdbd7aec"
+    },
+    {
+      "character": "android_18",
+      "form": "base",
+      "canonical_frames_path": "characters/android_18/base/frames",
+      "runtime_target_dir": "android_18_base",
+      "fixed_pose_source": "03_android_18/base",
+      "frame_count": 48,
+      "status": "native_v6_bridge",
+      "github_commit": "4b9f38353c1be64427deb17f7fad83b5cdbd7aec"
+    },
+    {
+      "character": "android_19",
+      "form": "base",
+      "canonical_frames_path": "characters/android_19/base/frames",
+      "runtime_target_dir": "android_19_base",
+      "fixed_pose_source": "04_android_19/base",
+      "frame_count": 52,
+      "status": "native_v6_bridge",
+      "github_commit": "4b9f38353c1be64427deb17f7fad83b5cdbd7aec"
+    },
+    {
+      "character": "android_20",
+      "form": "base",
+      "canonical_frames_path": "characters/android_20/base/frames",
+      "runtime_target_dir": "android_20_base",
+      "fixed_pose_source": "05_android_20/base",
+      "frame_count": 50,
+      "status": "native_v6_bridge",
+      "github_commit": "4b9f38353c1be64427deb17f7fad83b5cdbd7aec"
+    },
+    {
+      "character": "captain_ginyu",
+      "form": "base",
+      "canonical_frames_path": "characters/captain_ginyu/base/frames",
+      "runtime_target_dir": "ginyu_base",
+      "fixed_pose_source": "16_ginyu/base",
+      "frame_count": 52,
+      "status": "native_v6_bridge",
+      "github_commit": "4b9f38353c1be64427deb17f7fad83b5cdbd7aec"
+    },
+    {
+      "character": "cell",
+      "form": "cell_form_1",
+      "canonical_frames_path": "characters/cell/cell_form_1/frames",
+      "runtime_target_dir": "cell_imperfect_form",
+      "fixed_pose_source": "10_cell/imperfect_form",
+      "frame_count": 48,
+      "status": "native_v6_bridge",
+      "github_commit": "4b9f38353c1be64427deb17f7fad83b5cdbd7aec"
+    },
+    {
+      "character": "cell",
+      "form": "cell_form_2",
+      "canonical_frames_path": "characters/cell/cell_form_2/frames",
+      "runtime_target_dir": "cell_semi_perfect_form",
+      "fixed_pose_source": "12_cell/semi_perfect_form",
+      "frame_count": 48,
+      "status": "native_v6_bridge",
+      "github_commit": "4b9f38353c1be64427deb17f7fad83b5cdbd7aec"
+    },
+    {
+      "character": "cell",
+      "form": "perfect_cell",
+      "canonical_frames_path": "characters/cell/perfect_cell/frames",
+      "runtime_target_dir": "cell_perfect",
+      "fixed_pose_source": "11_cell/perfect",
+      "frame_count": 50,
+      "status": "native_v6_bridge",
+      "github_commit": "4b9f38353c1be64427deb17f7fad83b5cdbd7aec"
+    },
+    {
+      "character": "cell_jr",
+      "form": "base",
+      "canonical_frames_path": "characters/cell_jr/base/frames",
+      "runtime_target_dir": "cell_jr_base",
+      "fixed_pose_source": "13_cell_jr/base",
+      "frame_count": 49,
+      "status": "native_v6_bridge",
+      "github_commit": "4b9f38353c1be64427deb17f7fad83b5cdbd7aec"
+    },
+    {
+      "character": "frieza",
+      "form": "base",
+      "canonical_frames_path": "characters/frieza/base/frames",
+      "runtime_target_dir": "frieza_base",
+      "fixed_pose_source": "14_frieza/base",
+      "frame_count": 46,
+      "status": "native_v6_bridge",
+      "github_commit": "4b9f38353c1be64427deb17f7fad83b5cdbd7aec"
+    },
+    {
+      "character": "gohan",
+      "form": "teen_gohan_normal_mystic",
+      "canonical_frames_path": "characters/gohan/teen_gohan_normal_mystic/frames",
+      "runtime_target_dir": "gohan_ultimate",
+      "fixed_pose_source": "19_gohan/ultimate",
+      "frame_count": 45,
+      "status": "native_v6_bridge",
+      "github_commit": "4b9f38353c1be64427deb17f7fad83b5cdbd7aec"
+    },
+    {
+      "character": "gohan",
+      "form": "teen_gohan_super_saiyan",
+      "canonical_frames_path": "characters/gohan/teen_gohan_super_saiyan/frames",
+      "runtime_target_dir": "gohan_super_saiyan_1_2",
+      "fixed_pose_source": "18_gohan/super_saiyan_1_2",
+      "frame_count": 49,
+      "status": "native_v6_bridge",
+      "github_commit": "4b9f38353c1be64427deb17f7fad83b5cdbd7aec"
+    },
+    {
+      "character": "gohan",
+      "form": "young_gohan_normal",
+      "canonical_frames_path": "characters/gohan/young_gohan_normal/frames",
+      "runtime_target_dir": "young_gohan_base",
+      "fixed_pose_source": "40_young_gohan/base",
+      "frame_count": 42,
+      "status": "native_v6_bridge",
+      "github_commit": "4b9f38353c1be64427deb17f7fad83b5cdbd7aec"
+    },
+    {
+      "character": "gohan",
+      "form": "young_gohan_super_saiyan",
+      "canonical_frames_path": "characters/gohan/young_gohan_super_saiyan/frames",
+      "runtime_target_dir": "young_gohan_super_saiyan",
+      "fixed_pose_source": "42_young_gohan/super_saiyan",
+      "frame_count": 45,
+      "status": "native_v6_bridge",
+      "github_commit": "4b9f38353c1be64427deb17f7fad83b5cdbd7aec"
+    },
+    {
+      "character": "gohan",
+      "form": "young_gohan_super_saiyan_2",
+      "canonical_frames_path": "characters/gohan/young_gohan_super_saiyan_2/frames",
+      "runtime_target_dir": "young_gohan_super_saiyan_2",
+      "fixed_pose_source": "41_young_gohan/super_saiyan_2",
+      "frame_count": 45,
+      "status": "native_v6_bridge",
+      "github_commit": "4b9f38353c1be64427deb17f7fad83b5cdbd7aec"
+    },
+    {
+      "character": "goku",
+      "form": "normal",
+      "canonical_frames_path": "characters/goku/normal/frames",
+      "runtime_target_dir": "goku_base",
+      "fixed_pose_source": "20_goku/base",
+      "frame_count": 46,
+      "status": "native_v6_bridge",
+      "github_commit": "4b9f38353c1be64427deb17f7fad83b5cdbd7aec"
+    },
+    {
+      "character": "goku",
+      "form": "super_saiyan",
+      "canonical_frames_path": "characters/goku/super_saiyan/frames",
+      "runtime_target_dir": "goku_super_saiyan",
+      "fixed_pose_source": "23_goku/super_saiyan",
+      "frame_count": 46,
+      "status": "native_v6_bridge",
+      "github_commit": "4b9f38353c1be64427deb17f7fad83b5cdbd7aec"
+    },
+    {
+      "character": "goku",
+      "form": "super_saiyan_3",
+      "canonical_frames_path": "characters/goku/super_saiyan_3/frames",
+      "runtime_target_dir": "goku_super_saiyan_3",
+      "fixed_pose_source": "22_goku/super_saiyan_3",
+      "frame_count": 46,
+      "status": "native_v6_bridge",
+      "github_commit": "4b9f38353c1be64427deb17f7fad83b5cdbd7aec"
+    },
+    {
+      "character": "goten",
+      "form": "normal",
+      "canonical_frames_path": "characters/goten/normal/frames",
+      "runtime_target_dir": "goten_base",
+      "fixed_pose_source": "24_goten/base",
+      "frame_count": 39,
+      "status": "native_v6_bridge",
+      "github_commit": "4b9f38353c1be64427deb17f7fad83b5cdbd7aec"
+    },
+    {
+      "character": "goten",
+      "form": "super_saiyan",
+      "canonical_frames_path": "characters/goten/super_saiyan/frames",
+      "runtime_target_dir": "goten_super_saiyan",
+      "fixed_pose_source": "25_goten/super_saiyan",
+      "frame_count": 42,
+      "status": "native_v6_bridge",
+      "github_commit": "4b9f38353c1be64427deb17f7fad83b5cdbd7aec"
+    },
+    {
+      "character": "gotenks",
+      "form": "super_saiyan",
+      "canonical_frames_path": "characters/gotenks/super_saiyan/frames",
+      "runtime_target_dir": "gotenks_super_saiyan",
+      "fixed_pose_source": "27_gotenks/super_saiyan",
+      "frame_count": 49,
+      "status": "native_v6_bridge",
+      "github_commit": "4b9f38353c1be64427deb17f7fad83b5cdbd7aec"
+    },
+    {
+      "character": "gotenks",
+      "form": "super_saiyan_3",
+      "canonical_frames_path": "characters/gotenks/super_saiyan_3/frames",
+      "runtime_target_dir": "gotenks_super_saiyan_3",
+      "fixed_pose_source": "26_gotenks/super_saiyan_3",
+      "frame_count": 44,
+      "status": "native_v6_bridge",
+      "github_commit": "4b9f38353c1be64427deb17f7fad83b5cdbd7aec"
+    },
+    {
+      "character": "guldo",
+      "form": "base",
+      "canonical_frames_path": "characters/guldo/base/frames",
+      "runtime_target_dir": "guldo_base",
+      "fixed_pose_source": "28_guldo/base",
+      "frame_count": 43,
+      "status": "native_v6_bridge",
+      "github_commit": "4b9f38353c1be64427deb17f7fad83b5cdbd7aec"
+    },
+    {
+      "character": "jeice_burter",
+      "form": "burter",
+      "canonical_frames_path": "characters/jeice_burter/burter/frames",
+      "runtime_target_dir": "burter_base",
+      "fixed_pose_source": "06_burter/base",
+      "frame_count": 36,
+      "status": "native_v6_bridge",
+      "github_commit": "4b9f38353c1be64427deb17f7fad83b5cdbd7aec"
+    },
+    {
+      "character": "jeice_burter",
+      "form": "jeice",
+      "canonical_frames_path": "characters/jeice_burter/jeice/frames",
+      "runtime_target_dir": "jeice_base",
+      "fixed_pose_source": "29_jeice/base",
+      "frame_count": 53,
+      "status": "native_v6_bridge",
+      "github_commit": "4b9f38353c1be64427deb17f7fad83b5cdbd7aec"
+    },
+    {
+      "character": "krillin",
+      "form": "base",
+      "canonical_frames_path": "characters/krillin/base/frames",
+      "runtime_target_dir": "krillin_base",
+      "fixed_pose_source": "31_krillin/base",
+      "frame_count": 49,
+      "status": "native_v6_bridge",
+      "github_commit": "4b9f38353c1be64427deb17f7fad83b5cdbd7aec"
+    },
+    {
+      "character": "majin_buu",
+      "form": "fat_buu",
+      "canonical_frames_path": "characters/majin_buu/fat_buu/frames",
+      "runtime_target_dir": "buu_base",
+      "fixed_pose_source": "07_buu/base",
+      "frame_count": 51,
+      "status": "native_v6_bridge",
+      "github_commit": "4b9f38353c1be64427deb17f7fad83b5cdbd7aec"
+    },
+    {
+      "character": "majin_buu",
+      "form": "kid_buu",
+      "canonical_frames_path": "characters/majin_buu/kid_buu/frames",
+      "runtime_target_dir": "kid_buu_base",
+      "fixed_pose_source": "30_kid_buu/base",
+      "frame_count": 49,
+      "status": "native_v6_bridge",
+      "github_commit": "4b9f38353c1be64427deb17f7fad83b5cdbd7aec"
+    },
+    {
+      "character": "majin_buu",
+      "form": "super_buu",
+      "canonical_frames_path": "characters/majin_buu/super_buu/frames",
+      "runtime_target_dir": "super_buu_base",
+      "fixed_pose_source": "35_super_buu/base",
+      "frame_count": 46,
+      "status": "native_v6_bridge",
+      "github_commit": "4b9f38353c1be64427deb17f7fad83b5cdbd7aec"
+    },
+    {
+      "character": "majin_buu",
+      "form": "super_buu_gohan_absorbed",
+      "canonical_frames_path": "characters/majin_buu/super_buu_gohan_absorbed/frames",
+      "runtime_target_dir": "buu_gohan_absorbed",
+      "fixed_pose_source": "08_buu/gohan_absorbed",
+      "frame_count": 56,
+      "status": "native_v6_bridge",
+      "github_commit": "4b9f38353c1be64427deb17f7fad83b5cdbd7aec"
+    },
+    {
+      "character": "majin_buu",
+      "form": "super_buu_gotenks_absorbed",
+      "canonical_frames_path": "characters/majin_buu/super_buu_gotenks_absorbed/frames",
+      "runtime_target_dir": "buu_gotenks_absorbed",
+      "fixed_pose_source": "09_buu/gotenks_absorbed",
+      "frame_count": 53,
+      "status": "native_v6_bridge",
+      "github_commit": "4b9f38353c1be64427deb17f7fad83b5cdbd7aec"
+    },
+    {
+      "character": "nappa",
+      "form": "base",
+      "canonical_frames_path": "characters/nappa/base/frames",
+      "runtime_target_dir": "nappa_base",
+      "fixed_pose_source": "32_nappa/base",
+      "frame_count": 37,
+      "status": "native_v6_bridge",
+      "github_commit": "4b9f38353c1be64427deb17f7fad83b5cdbd7aec"
+    },
+    {
+      "character": "piccolo",
+      "form": "base",
+      "canonical_frames_path": "characters/piccolo/base/frames",
+      "runtime_target_dir": "piccolo_base",
+      "fixed_pose_source": "33_piccolo/base",
+      "frame_count": 49,
+      "status": "native_v6_bridge",
+      "github_commit": "4b9f38353c1be64427deb17f7fad83b5cdbd7aec"
+    },
+    {
+      "character": "recoome",
+      "form": "base",
+      "canonical_frames_path": "characters/recoome/base/frames",
+      "runtime_target_dir": "recoome_base",
+      "fixed_pose_source": "34_recoome/base",
+      "frame_count": 45,
+      "status": "native_v6_bridge",
+      "github_commit": "4b9f38353c1be64427deb17f7fad83b5cdbd7aec"
+    },
+    {
+      "character": "trunks_future",
+      "form": "future_trunks_normal",
+      "canonical_frames_path": "characters/trunks_future/future_trunks_normal/frames",
+      "runtime_target_dir": "future_trunks_base",
+      "fixed_pose_source": "15_future_trunks/base",
+      "frame_count": 46,
+      "status": "native_v6_bridge",
+      "github_commit": "4b9f38353c1be64427deb17f7fad83b5cdbd7aec"
+    },
+    {
+      "character": "trunks_future",
+      "form": "future_trunks_super_saiyan",
+      "canonical_frames_path": "characters/trunks_future/future_trunks_super_saiyan/frames",
+      "runtime_target_dir": "future_trunks_super_saiyan",
+      "fixed_pose_source": "15_future_trunks/base",
+      "frame_count": 49,
+      "status": "native_v6_bridge",
+      "github_commit": "4b9f38353c1be64427deb17f7fad83b5cdbd7aec"
+    },
+    {
+      "character": "trunks_kid",
+      "form": "kid_trunks_normal",
+      "canonical_frames_path": "characters/trunks_kid/kid_trunks_normal/frames",
+      "runtime_target_dir": "trunks_base",
+      "fixed_pose_source": "36_trunks/base",
+      "frame_count": 34,
+      "status": "native_v6_bridge",
+      "github_commit": "4b9f38353c1be64427deb17f7fad83b5cdbd7aec"
+    },
+    {
+      "character": "trunks_kid",
+      "form": "kid_trunks_super_saiyan",
+      "canonical_frames_path": "characters/trunks_kid/kid_trunks_super_saiyan/frames",
+      "runtime_target_dir": "kid_trunks_super_saiyan",
+      "fixed_pose_source": "37_trunks/super_saiyan",
+      "frame_count": 40,
+      "status": "native_v6_bridge",
+      "github_commit": "4b9f38353c1be64427deb17f7fad83b5cdbd7aec"
+    },
+    {
+      "character": "vegeta",
+      "form": "normal",
+      "canonical_frames_path": "characters/vegeta/normal/frames",
+      "runtime_target_dir": "vegeta_base",
+      "fixed_pose_source": "38_vegeta/base",
+      "frame_count": 42,
+      "status": "native_v6_bridge",
+      "github_commit": "4b9f38353c1be64427deb17f7fad83b5cdbd7aec"
+    },
+    {
+      "character": "vegeta",
+      "form": "super_saiyan_majin",
+      "canonical_frames_path": "characters/vegeta/super_saiyan_majin/frames",
+      "runtime_target_dir": "vegeta_super_saiyan_majin",
+      "fixed_pose_source": "39_vegeta/super_saiyan_majin",
+      "frame_count": 50,
+      "status": "native_v6_bridge",
+      "github_commit": "4b9f38353c1be64427deb17f7fad83b5cdbd7aec"
+    },
+    {
+      "character": "vegito",
+      "form": "base",
+      "canonical_frames_path": "characters/vegito/base/frames",
+      "runtime_target_dir": "vegito_ssj",
+      "fixed_pose_source": "23_goku/super_saiyan",
+      "frame_count": 55,
+      "status": "native_v6_bridge",
+      "github_commit": "4b9f38353c1be64427deb17f7fad83b5cdbd7aec"
+    }
+  ],
+  "runtime_only_or_derived": [
+    {
+      "runtime_target_dir": "goku_super_saiyan_2",
+      "source": "FIXED_ONLY 21_goku/super_saiyan_2",
+      "reason": "V6 canonical removed this form; current project imports it directly from FIXED"
+    },
+    {
+      "runtime_target_dir": "ginyu_gokus_body",
+      "source": "FIXED_ONLY 17_ginyu/gokus_body",
+      "reason": "V6 canonical removed this form; current project imports it directly from FIXED"
+    },
+    {
+      "runtime_target_dir": "vegito_base",
+      "source": "project recolor/make-vegito-forms.py",
+      "reason": "canonical vegito/base pixels correspond to SSJ and map to vegito_ssj; base is generated by project recolor"
+    }
+  ],
+  "runtime_aliases_from_spriteManifest": [
+    {
+      "game_ids": [
+        "piccolo_base",
+        "piccolo_kami",
+        "piccolo_evil"
+      ],
+      "runtime_dir": "piccolo_base"
+    },
+    {
+      "game_ids": [
+        "vegeta_ssj",
+        "vegeta_majin"
+      ],
+      "runtime_dir": "vegeta_super_saiyan_majin"
+    },
+    {
+      "game_ids": [
+        "gohan_adult_ssj",
+        "gohan_adult_ssj2"
+      ],
+      "runtime_dir": "gohan_super_saiyan_1_2"
+    }
+  ],
+  "runtime_import_result_at_baseline": {
+    "canonical_forms": 42,
+    "runtime_form_dirs": 44,
+    "matched_v6_fixed_frames": 1023,
+    "fixed_fallback_frames": 378,
+    "recovered_effects": 217,
+    "composite_manifest_count": 48
+  },
+  "runtime_composite_pose_contract": {
+    "move_front": "move_front_00 + move_front_01 (6fps loop)",
+    "move_back": "move_back_00 + move_back_01 (6fps loop)",
+    "punch_right": "idle_00 + attack_fwd_00..02 (7fps)",
+    "punch_left": "idle_00 + attack_fwd_03..06 when present (7fps)",
+    "kick_right": "idle_00 + all available attack_ud_00..05 (7fps)",
+    "knockback_back": "all available hurt_00..06 (7fps)",
+    "knockback_up": "hurt_00,01,02,05 when present (7fps)",
+    "knockback_down": "hurt_02,03,04,05 when present (7fps)",
+    "beam_guard": "guard_00..02 (6fps)",
+    "evade": "move_back_00 -> guard_01 (or guard_00) -> move_back_00 (10fps)",
+    "gather_power": "unique beam_charge_00..03 frames (6fps loop)",
+    "power_up": "unique beam_charge_00..03 frames (10fps loop)",
+    "beam_ray": "optional; only existing physical beam_ray_NN files",
+    "beam_ray_tip": "optional; only existing physical beam_ray_tip_NN files"
+  }
+}

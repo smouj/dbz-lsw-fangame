@@ -74,7 +74,35 @@ adicionales incorporar al runtime (respetando el contrato de poses actual).
 npm run audit:sprites   # manifests + poses + cohesión
 npm run audit:sheets    # sheets sin fondo cyan
 npm run verify:gbc      # invariantes GBC
+npm run verify:v8       # catálogo semántico V8 vs código runtime real
 ```
 
 El catálogo se regenera con el flujo de importación (ver `scripts/import-v6-sprites.py`
 y `docs/CANONICAL_SPRITE_SOURCES.md`).
+
+## Capa semántica V8 (catalog-v8/)
+
+`catalog-v8/` es el **catálogo semántico de animación y gameplay** entregado por el
+usuario (baseline `349e548`, SHA zip `cc2324b6…`), instalado e integrado:
+
+- `catalog/frame_catalog.csv|json` — 1.952 frames canónicos inventariados uno a uno
+  (personaje, forma, old_refs, geometría, SHA, bucket semántico, alias, confianza)
+- `catalog/runtime_exact_mapping.csv|json` — **generado contra el repo real** con
+  `tools/reconcile_with_repo.py`: 3.259 frames runtime, 1.921 con match EXACTO de
+  píxel visible → frame canónico (los 1.338 restantes son poses compuestas que
+  reutilizan PNG de poses base: punch_right, knockback_*, evade, gather_power…)
+- `semantic_named/` — 1.952 aliases PNG no destructivos
+  (`<runtime>/<bucket>/<runtime>__<bucket>__NN__src_NNN.png`)
+- `sequences/` — 924 filas matriz forma×pose, 42 perfiles de acción, 24 Stage Attacks,
+  21 familias de poses con regla de secuencia (contrato `spriteConfig.ts`)
+- `cards/` — 125/125 cartas catalogadas con perfil, pose atacante, reacción rival,
+  proyectil/FX y secuencia
+- `effects/` — 225 componentes V7 sin old_ref auditados y tipados por función
+  (chibi, aura tile, orb, beam, composite… — NO todos llamados effect)
+- `visual_review/` — 42 contact sheets de formas + 4 hojas de componentes recuperados
+- `integration/spriteSequenceContract.ts` — contrato TS generado (STAGE_INPUT_POSES,
+  STAGE_SEQUENCE_POOLS, RUNTIME_POSE_RULES); `verify:v8` lo cross-chequea contra el
+  código real (stageInputMap.ts, stageSequences.ts) en cada ejecución
+- `tools/reconcile_with_repo.py` — regenera el mapeo exacto runtime→canónico
+- `verify:v8` (scripts/verify-v8-catalog.ts, npm run verify:v8): 10 checks de
+  regresión (conteos QA, aliases, exact-mapping, pools Stage Attack, input map, SHA)

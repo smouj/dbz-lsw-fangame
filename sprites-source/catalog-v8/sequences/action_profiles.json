@@ -1,0 +1,422 @@
+[
+  {
+    "profile_id": "stage_3",
+    "representative_card": "3 stage atk.",
+    "actor_pose_or_sequence": "punch_right",
+    "target_pose": "knockback_back",
+    "visual_kind": "stage_qte",
+    "timeline_contract": "QTE pool -> attack_fwd windup@12 -> idle@26 -> final strike@38/contact94 -> target knockback@94 -> return132",
+    "fidelity": "INFERRED",
+    "github_head": "349e54824d397a47df4fa7d615cde1ef5a8e2241"
+  },
+  {
+    "profile_id": "stage_4",
+    "representative_card": "4 stage atk.",
+    "actor_pose_or_sequence": "punch_right",
+    "target_pose": "knockback_back",
+    "visual_kind": "stage_qte",
+    "timeline_contract": "QTE pool -> attack_fwd windup@12 -> idle@26 -> final strike@38/contact94 -> target knockback@94 -> return132",
+    "fidelity": "INFERRED",
+    "github_head": "349e54824d397a47df4fa7d615cde1ef5a8e2241"
+  },
+  {
+    "profile_id": "stage_5",
+    "representative_card": "5 stage atk.",
+    "actor_pose_or_sequence": "punch_left",
+    "target_pose": "knockback_back",
+    "visual_kind": "stage_qte",
+    "timeline_contract": "QTE pool -> attack_fwd windup@12 -> idle@26 -> final strike@38/contact94 -> target knockback@94 -> return132",
+    "fidelity": "INFERRED",
+    "github_head": "349e54824d397a47df4fa7d615cde1ef5a8e2241"
+  },
+  {
+    "profile_id": "stage_6",
+    "representative_card": "6 stage atk.",
+    "actor_pose_or_sequence": "punch_left",
+    "target_pose": "knockback_back",
+    "visual_kind": "stage_qte",
+    "timeline_contract": "QTE pool -> attack_fwd windup@12 -> idle@26 -> final strike@38/contact94 -> target knockback@94 -> return132",
+    "fidelity": "INFERRED",
+    "github_head": "349e54824d397a47df4fa7d615cde1ef5a8e2241"
+  },
+  {
+    "profile_id": "cont_punch",
+    "representative_card": "Cont.Punch",
+    "actor_pose_or_sequence": "punch_right",
+    "target_pose": "knockback_back",
+    "visual_kind": "rush",
+    "timeline_contract": "idle -> attack_fwd windup@12 -> idle@26 -> punch_right@38 -> rush@50/44f -> contact94 -> knockback_back -> idle@106 -> return132",
+    "fidelity": "INFERRED",
+    "github_head": "349e54824d397a47df4fa7d615cde1ef5a8e2241"
+  },
+  {
+    "profile_id": "cont_kick",
+    "representative_card": "Cont.Kick",
+    "actor_pose_or_sequence": "kick_right",
+    "target_pose": "knockback_back",
+    "visual_kind": "rush",
+    "timeline_contract": "idle -> attack_fwd windup@12 -> idle@26 -> kick_right@38 -> rush@50/44f -> contact94 -> knockback_back -> idle@106 -> return132",
+    "fidelity": "INFERRED",
+    "github_head": "349e54824d397a47df4fa7d615cde1ef5a8e2241"
+  },
+  {
+    "profile_id": "energy_wave",
+    "representative_card": "Energy Wave",
+    "actor_pose_or_sequence": "beam_charge -> beam_fire",
+    "target_pose": "hurt/knockback via impact",
+    "visual_kind": "wave",
+    "timeline_contract": "idle -> gather_power@12 -> idle@28 -> beam_charge@40 -> beam_fire@54; projectile spawn48 -> contact108 -> return152",
+    "fidelity": "INFERRED",
+    "github_head": "349e54824d397a47df4fa7d615cde1ef5a8e2241"
+  },
+  {
+    "profile_id": "energy_bomb",
+    "representative_card": "Energy Bomb",
+    "actor_pose_or_sequence": "beam_charge -> beam_fire",
+    "target_pose": "hurt/knockback via impact",
+    "visual_kind": "ball",
+    "timeline_contract": "idle -> gather_power@12 -> idle@28 -> beam_charge@40 -> beam_fire@54; projectile spawn48 -> contact108 -> return152",
+    "fidelity": "INFERRED",
+    "github_head": "349e54824d397a47df4fa7d615cde1ef5a8e2241"
+  },
+  {
+    "profile_id": "masenko",
+    "representative_card": "Masenko",
+    "actor_pose_or_sequence": "beam_charge -> beam_fire",
+    "target_pose": "hurt/knockback via impact",
+    "visual_kind": "ray",
+    "timeline_contract": "idle -> gather_power@12 -> idle@28 -> beam_charge@40 -> beam_fire@54; projectile spawn48 -> contact108 -> return152",
+    "fidelity": "INFERRED",
+    "github_head": "349e54824d397a47df4fa7d615cde1ef5a8e2241"
+  },
+  {
+    "profile_id": "dunk_shot",
+    "representative_card": "Dunk Shot",
+    "actor_pose_or_sequence": "punch_left",
+    "target_pose": "knockback_down",
+    "visual_kind": "rush",
+    "timeline_contract": "idle -> attack_fwd windup@12 -> idle@26 -> punch_left@38 -> rush@50/44f -> contact94 -> knockback_down -> idle@106 -> return132",
+    "fidelity": "INFERRED",
+    "github_head": "349e54824d397a47df4fa7d615cde1ef5a8e2241"
+  },
+  {
+    "profile_id": "kamehameha",
+    "representative_card": "Kamehameha",
+    "actor_pose_or_sequence": "beam_charge -> beam_fire",
+    "target_pose": "hurt/knockback via impact",
+    "visual_kind": "ray",
+    "timeline_contract": "idle -> gather_power@12 -> idle@28 -> beam_charge@40 -> beam_fire@54; projectile spawn48 -> contact108 -> return152",
+    "fidelity": "INFERRED",
+    "github_head": "349e54824d397a47df4fa7d615cde1ef5a8e2241"
+  },
+  {
+    "profile_id": "sonic_kick",
+    "representative_card": "Sonic Kick",
+    "actor_pose_or_sequence": "kick_right",
+    "target_pose": "knockback_back",
+    "visual_kind": "rush",
+    "timeline_contract": "idle -> attack_fwd windup@12 -> idle@26 -> kick_right@38 -> rush@50/44f -> contact94 -> knockback_back -> idle@106 -> return132",
+    "fidelity": "INFERRED",
+    "github_head": "349e54824d397a47df4fa7d615cde1ef5a8e2241"
+  },
+  {
+    "profile_id": "special_beam_cannon",
+    "representative_card": "S.Beam Can.",
+    "actor_pose_or_sequence": "beam_charge -> beam_fire",
+    "target_pose": "hurt/knockback via impact",
+    "visual_kind": "ray",
+    "timeline_contract": "idle -> gather_power@12 -> idle@28 -> beam_charge@40 -> beam_fire@54; projectile spawn48 -> contact108 -> return152",
+    "fidelity": "INFERRED",
+    "github_head": "349e54824d397a47df4fa7d615cde1ef5a8e2241"
+  },
+  {
+    "profile_id": "burning_attack",
+    "representative_card": "F.Lightbomb",
+    "actor_pose_or_sequence": "beam_charge -> beam_fire",
+    "target_pose": "hurt/knockback via impact",
+    "visual_kind": "wave",
+    "timeline_contract": "idle -> gather_power@12 -> idle@28 -> beam_charge@40 -> beam_fire@54; projectile spawn48 -> contact108 -> return152",
+    "fidelity": "INFERRED",
+    "github_head": "349e54824d397a47df4fa7d615cde1ef5a8e2241"
+  },
+  {
+    "profile_id": "finger_beam",
+    "representative_card": "Misty KiWave",
+    "actor_pose_or_sequence": "beam_charge -> beam_fire",
+    "target_pose": "hurt/knockback via impact",
+    "visual_kind": "ray",
+    "timeline_contract": "idle -> gather_power@12 -> idle@28 -> beam_charge@40 -> beam_fire@54; projectile spawn48 -> contact108 -> return152",
+    "fidelity": "INFERRED",
+    "github_head": "349e54824d397a47df4fa7d615cde1ef5a8e2241"
+  },
+  {
+    "profile_id": "energy_disk",
+    "representative_card": "Destruct-Disk",
+    "actor_pose_or_sequence": "beam_charge -> beam_fire",
+    "target_pose": "hurt/knockback via impact",
+    "visual_kind": "disk",
+    "timeline_contract": "idle -> gather_power@12 -> idle@28 -> beam_charge@40 -> beam_fire@54; projectile spawn48 -> contact108 -> return152",
+    "fidelity": "INFERRED",
+    "github_head": "349e54824d397a47df4fa7d615cde1ef5a8e2241"
+  },
+  {
+    "profile_id": "kaio_ken",
+    "representative_card": "Kaio Ken",
+    "actor_pose_or_sequence": "power_up",
+    "target_pose": "",
+    "visual_kind": "power",
+    "timeline_contract": "power_up -> AURA@39 -> apply@59 -> return106",
+    "fidelity": "INFERRED",
+    "github_head": "349e54824d397a47df4fa7d615cde1ef5a8e2241"
+  },
+  {
+    "profile_id": "spirit_bomb",
+    "representative_card": "Spirit Bomb",
+    "actor_pose_or_sequence": "beam_charge -> beam_fire",
+    "target_pose": "hurt/knockback via impact",
+    "visual_kind": "ball",
+    "timeline_contract": "idle -> gather_power@12 -> idle@28 -> beam_charge@40 -> beam_fire@54; projectile spawn48 -> contact108 -> return152",
+    "fidelity": "INFERRED",
+    "github_head": "349e54824d397a47df4fa7d615cde1ef5a8e2241"
+  },
+  {
+    "profile_id": "solid_shot",
+    "representative_card": "Solid Shot",
+    "actor_pose_or_sequence": "punch_right",
+    "target_pose": "knockback_back",
+    "visual_kind": "rush",
+    "timeline_contract": "idle -> attack_fwd windup@12 -> idle@26 -> punch_right@38 -> rush@50/44f -> contact94 -> knockback_back -> idle@106 -> return132",
+    "fidelity": "INFERRED",
+    "github_head": "349e54824d397a47df4fa7d615cde1ef5a8e2241"
+  },
+  {
+    "profile_id": "tail",
+    "representative_card": "Tail",
+    "actor_pose_or_sequence": "punch_right",
+    "target_pose": "knockback_up",
+    "visual_kind": "rush",
+    "timeline_contract": "idle -> attack_fwd windup@12 -> idle@26 -> punch_right@38 -> rush@50/44f -> contact94 -> knockback_up -> idle@106 -> return132",
+    "fidelity": "INFERRED",
+    "github_head": "349e54824d397a47df4fa7d615cde1ef5a8e2241"
+  },
+  {
+    "profile_id": "final_flash",
+    "representative_card": "Galick-Ho",
+    "actor_pose_or_sequence": "beam_charge -> beam_fire",
+    "target_pose": "hurt/knockback via impact",
+    "visual_kind": "ray",
+    "timeline_contract": "idle -> gather_power@12 -> idle@28 -> beam_charge@40 -> beam_fire@54; projectile spawn48 -> contact108 -> return152",
+    "fidelity": "INFERRED",
+    "github_head": "349e54824d397a47df4fa7d615cde1ef5a8e2241"
+  },
+  {
+    "profile_id": "big_bang_attack",
+    "representative_card": "Big Bang Atk",
+    "actor_pose_or_sequence": "beam_charge -> beam_fire",
+    "target_pose": "hurt/knockback via impact",
+    "visual_kind": "ball",
+    "timeline_contract": "idle -> gather_power@12 -> idle@28 -> beam_charge@40 -> beam_fire@54; projectile spawn48 -> contact108 -> return152",
+    "fidelity": "INFERRED",
+    "github_head": "349e54824d397a47df4fa7d615cde1ef5a8e2241"
+  },
+  {
+    "profile_id": "special_projectile",
+    "representative_card": "Suicide",
+    "actor_pose_or_sequence": "beam_charge -> beam_fire",
+    "target_pose": "hurt/knockback via impact",
+    "visual_kind": "special",
+    "timeline_contract": "idle -> gather_power@12 -> idle@28 -> beam_charge@40 -> beam_fire@54; projectile spawn48 -> contact108 -> return152",
+    "fidelity": "INFERRED",
+    "github_head": "349e54824d397a47df4fa7d615cde1ef5a8e2241"
+  },
+  {
+    "profile_id": "rising_kick",
+    "representative_card": "Rising Kick",
+    "actor_pose_or_sequence": "kick_right",
+    "target_pose": "knockback_up",
+    "visual_kind": "rush",
+    "timeline_contract": "idle -> attack_fwd windup@12 -> idle@26 -> kick_right@38 -> rush@50/44f -> contact94 -> knockback_up -> idle@106 -> return132",
+    "fidelity": "INFERRED",
+    "github_head": "349e54824d397a47df4fa7d615cde1ef5a8e2241"
+  },
+  {
+    "profile_id": "flash_punch",
+    "representative_card": "Flash Punch",
+    "actor_pose_or_sequence": "punch_right",
+    "target_pose": "knockback_back",
+    "visual_kind": "rush",
+    "timeline_contract": "idle -> attack_fwd windup@12 -> idle@26 -> punch_right@38 -> rush@50/44f -> contact94 -> knockback_back -> idle@106 -> return132",
+    "fidelity": "INFERRED",
+    "github_head": "349e54824d397a47df4fa7d615cde1ef5a8e2241"
+  },
+  {
+    "profile_id": "vball_crash",
+    "representative_card": "V-ball Crash",
+    "actor_pose_or_sequence": "punch_left",
+    "target_pose": "knockback_up",
+    "visual_kind": "rush",
+    "timeline_contract": "idle -> attack_fwd windup@12 -> idle@26 -> punch_left@38 -> rush@50/44f -> contact94 -> knockback_up -> idle@106 -> return132",
+    "fidelity": "INFERRED",
+    "github_head": "349e54824d397a47df4fa7d615cde1ef5a8e2241"
+  },
+  {
+    "profile_id": "atomic_break",
+    "representative_card": "Atomic Break",
+    "actor_pose_or_sequence": "punch_left",
+    "target_pose": "knockback_down",
+    "visual_kind": "rush",
+    "timeline_contract": "idle -> attack_fwd windup@12 -> idle@26 -> punch_left@38 -> rush@50/44f -> contact94 -> knockback_down -> idle@106 -> return132",
+    "fidelity": "INFERRED",
+    "github_head": "349e54824d397a47df4fa7d615cde1ef5a8e2241"
+  },
+  {
+    "profile_id": "flash_sword",
+    "representative_card": "Flash.Sword",
+    "actor_pose_or_sequence": "beam_charge -> beam_fire",
+    "target_pose": "hurt/knockback via impact",
+    "visual_kind": "sword",
+    "timeline_contract": "idle -> gather_power@12 -> idle@28 -> beam_charge@40 -> beam_fire@54; projectile spawn48 -> contact108 -> return152",
+    "fidelity": "INFERRED",
+    "github_head": "349e54824d397a47df4fa7d615cde1ef5a8e2241"
+  },
+  {
+    "profile_id": "n_slasher",
+    "representative_card": "N.Slasher",
+    "actor_pose_or_sequence": "punch_right",
+    "target_pose": "knockback_back",
+    "visual_kind": "rush",
+    "timeline_contract": "idle -> attack_fwd windup@12 -> idle@26 -> punch_right@38 -> rush@50/44f -> contact94 -> knockback_back -> idle@106 -> return132",
+    "fidelity": "INFERRED",
+    "github_head": "349e54824d397a47df4fa7d615cde1ef5a8e2241"
+  },
+  {
+    "profile_id": "rfb_atk",
+    "representative_card": "R.F.B.Atk.",
+    "actor_pose_or_sequence": "punch_right",
+    "target_pose": "knockback_down",
+    "visual_kind": "rush",
+    "timeline_contract": "idle -> attack_fwd windup@12 -> idle@26 -> punch_right@38 -> rush@50/44f -> contact94 -> knockback_down -> idle@106 -> return132",
+    "fidelity": "INFERRED",
+    "github_head": "349e54824d397a47df4fa7d615cde1ef5a8e2241"
+  },
+  {
+    "profile_id": "pcomet_z",
+    "representative_card": "P.Comet Z",
+    "actor_pose_or_sequence": "punch_left",
+    "target_pose": "knockback_up",
+    "visual_kind": "rush",
+    "timeline_contract": "idle -> attack_fwd windup@12 -> idle@26 -> punch_left@38 -> rush@50/44f -> contact94 -> knockback_up -> idle@106 -> return132",
+    "fidelity": "INFERRED",
+    "github_head": "349e54824d397a47df4fa7d615cde1ef5a8e2241"
+  },
+  {
+    "profile_id": "mach_attack",
+    "representative_card": "Mach Attack",
+    "actor_pose_or_sequence": "punch_right",
+    "target_pose": "knockback_back",
+    "visual_kind": "rush",
+    "timeline_contract": "idle -> attack_fwd windup@12 -> idle@26 -> punch_right@38 -> rush@50/44f -> contact94 -> knockback_back -> idle@106 -> return132",
+    "fidelity": "INFERRED",
+    "github_head": "349e54824d397a47df4fa7d615cde1ef5a8e2241"
+  },
+  {
+    "profile_id": "dynami_punch",
+    "representative_card": "Dynami.Punch",
+    "actor_pose_or_sequence": "punch_right",
+    "target_pose": "knockback_back",
+    "visual_kind": "rush",
+    "timeline_contract": "idle -> attack_fwd windup@12 -> idle@26 -> punch_right@38 -> rush@50/44f -> contact94 -> knockback_back -> idle@106 -> return132",
+    "fidelity": "INFERRED",
+    "github_head": "349e54824d397a47df4fa7d615cde1ef5a8e2241"
+  },
+  {
+    "profile_id": "sdash_elbow",
+    "representative_card": "S.Dash Elbow",
+    "actor_pose_or_sequence": "punch_left",
+    "target_pose": "knockback_up",
+    "visual_kind": "rush",
+    "timeline_contract": "idle -> attack_fwd windup@12 -> idle@26 -> punch_left@38 -> rush@50/44f -> contact94 -> knockback_up -> idle@106 -> return132",
+    "fidelity": "INFERRED",
+    "github_head": "349e54824d397a47df4fa7d615cde1ef5a8e2241"
+  },
+  {
+    "profile_id": "rocket_punch",
+    "representative_card": "Rocket Punch",
+    "actor_pose_or_sequence": "punch_right",
+    "target_pose": "knockback_back",
+    "visual_kind": "rush",
+    "timeline_contract": "idle -> attack_fwd windup@12 -> idle@26 -> punch_right@38 -> rush@50/44f -> contact94 -> knockback_back -> idle@106 -> return132",
+    "fidelity": "INFERRED",
+    "github_head": "349e54824d397a47df4fa7d615cde1ef5a8e2241"
+  },
+  {
+    "profile_id": "crazy_rush",
+    "representative_card": "Crazy Rush",
+    "actor_pose_or_sequence": "punch_left",
+    "target_pose": "knockback_back",
+    "visual_kind": "rush",
+    "timeline_contract": "idle -> attack_fwd windup@12 -> idle@26 -> punch_left@38 -> rush@50/44f -> contact94 -> knockback_back -> idle@106 -> return132",
+    "fidelity": "INFERRED",
+    "github_head": "349e54824d397a47df4fa7d615cde1ef5a8e2241"
+  },
+  {
+    "profile_id": "attack_18",
+    "representative_card": "Attack No. 18",
+    "actor_pose_or_sequence": "punch_left",
+    "target_pose": "knockback_back",
+    "visual_kind": "rush",
+    "timeline_contract": "idle -> attack_fwd windup@12 -> idle@26 -> punch_left@38 -> rush@50/44f -> contact94 -> knockback_back -> idle@106 -> return132",
+    "fidelity": "INFERRED",
+    "github_head": "349e54824d397a47df4fa7d615cde1ef5a8e2241"
+  },
+  {
+    "profile_id": "life_absorb",
+    "representative_card": "Life Absorb",
+    "actor_pose_or_sequence": "punch_right",
+    "target_pose": "knockback_back",
+    "visual_kind": "rush",
+    "timeline_contract": "idle -> attack_fwd windup@12 -> idle@26 -> punch_right@38 -> rush@50/44f -> contact94 -> knockback_back -> idle@106 -> return132",
+    "fidelity": "INFERRED",
+    "github_head": "349e54824d397a47df4fa7d615cde1ef5a8e2241"
+  },
+  {
+    "profile_id": "cell_combo",
+    "representative_card": "Cell Combo",
+    "actor_pose_or_sequence": "punch_left",
+    "target_pose": "knockback_up",
+    "visual_kind": "rush",
+    "timeline_contract": "idle -> attack_fwd windup@12 -> idle@26 -> punch_left@38 -> rush@50/44f -> contact94 -> knockback_up -> idle@106 -> return132",
+    "fidelity": "INFERRED",
+    "github_head": "349e54824d397a47df4fa7d615cde1ef5a8e2241"
+  },
+  {
+    "profile_id": "step_up_atk",
+    "representative_card": "Step Up Atk.",
+    "actor_pose_or_sequence": "kick_right",
+    "target_pose": "knockback_up",
+    "visual_kind": "rush",
+    "timeline_contract": "idle -> attack_fwd windup@12 -> idle@26 -> kick_right@38 -> rush@50/44f -> contact94 -> knockback_up -> idle@106 -> return132",
+    "fidelity": "INFERRED",
+    "github_head": "349e54824d397a47df4fa7d615cde1ef5a8e2241"
+  },
+  {
+    "profile_id": "potbelly_atk",
+    "representative_card": "Potbelly Atk",
+    "actor_pose_or_sequence": "punch_left",
+    "target_pose": "knockback_down",
+    "visual_kind": "rush",
+    "timeline_contract": "idle -> attack_fwd windup@12 -> idle@26 -> punch_left@38 -> rush@50/44f -> contact94 -> knockback_down -> idle@106 -> return132",
+    "fidelity": "INFERRED",
+    "github_head": "349e54824d397a47df4fa7d615cde1ef5a8e2241"
+  },
+  {
+    "profile_id": "crasher_buu",
+    "representative_card": "Crasher Buu",
+    "actor_pose_or_sequence": "punch_right",
+    "target_pose": "knockback_down",
+    "visual_kind": "rush",
+    "timeline_contract": "idle -> attack_fwd windup@12 -> idle@26 -> punch_right@38 -> rush@50/44f -> contact94 -> knockback_down -> idle@106 -> return132",
+    "fidelity": "INFERRED",
+    "github_head": "349e54824d397a47df4fa7d615cde1ef5a8e2241"
+  }
+]
