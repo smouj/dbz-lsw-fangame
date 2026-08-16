@@ -19,6 +19,7 @@ import { storyPortraitUrl } from './data/storyPortraits';
 import { spriteManifestUrl, spriteFrameUrl, spriteDirFor } from './data/spriteManifest';
 import { SCENARIOS, SPECIAL_ACTION_BACKGROUND, type BattleViewMode } from './data/scenarios';
 import { GBC_NATIVE_FPS, type QteState } from './data/actionFidelity';
+import { stageInputPose, stageInputFieldPose, stageInputLunges } from './battle/stageInputMap';
 import { BattleTimeline, type CinematicEvent, type CinematicProfile } from './battle/timeline';
 import { profileFor, type CinematicKind } from './battle/profiles';
 import { actionSemanticsForCard } from './battle/actionProfiles';
@@ -2518,8 +2519,10 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
     ? (stageQte.state === 'COUNTER_HIT' || stageQte.state === 'COUNTER_WINDOW')
     : false;
   const qteResolving = phase === 'stageInput' && stageQte.state !== 'INPUT_WINDOW';
+  // Cada tecla del Stage Attack tiene SU pose (docs/FRAMES_ACTIONS_SPEC):
+  // A=puño der, B=puño izq, UP=ascendente, DOWN=descendente, LEFT=avance, RIGHT=guardia.
   const qtePose: BattleSpritePose = phase === 'stageInput'
-    ? (qteFrozen ? 'attack_fwd' : 'idle')
+    ? (qteFrozen ? 'attack_fwd' : (stageInputPose(qteCurKey) as BattleSpritePose))
     : (playerPose as BattleSpritePose);
   const qteEnemyPose: BattleSpritePose = qteResolving ? 'attack_fwd' : 'idle';
 

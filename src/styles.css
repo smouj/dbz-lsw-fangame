@@ -4343,6 +4343,17 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   background: radial-gradient(circle, rgba(140,255,180,.55) 0%, rgba(80,200,140,.2) 45%, transparent 70%);
   animation: fx-aura-spin 1.36s steps(12, end) .62s both;
 }
+/* Aura AZUL para cartas de OBJETO/tecnología (Caps. Fridge, Sunglasses,
+   Stop Device, H's Choco., Champ.Belt...): mismo giro, paleta azul ki. */
+.card-fx.fx-item .fx-aura {
+  background: radial-gradient(circle, rgba(120,200,255,.6) 0%, rgba(60,140,255,.22) 45%, transparent 70%);
+}
+.card-fx.fx-item.scene-attacker.fx-support .fx-actor,
+.card-fx.fx-item.scene-attacker .fx-actor {
+  animation: fx-actor-center-player .82s steps(10, end) both, fx-item-pulse 1.28s steps(12, end) .62s both;
+}
+.card-fx.fx-item.scene-attacker.enemy .fx-actor { animation: fx-actor-center-enemy .82s steps(10, end) both, fx-item-pulse 1.28s steps(12, end) .62s both; }
+@keyframes fx-item-pulse { 0% { filter: brightness(1) drop-shadow(0 0 6px rgba(120,200,255,.35)); } 50% { filter: brightness(1.4) drop-shadow(0 0 30px rgba(110,190,255,.9)); } 100% { filter: brightness(1) drop-shadow(0 0 14px rgba(120,200,255,.5)); } }
 @keyframes fx-aura-spin { 0% { transform: scale(.3) rotate(0); opacity: 0; } 30% { opacity: 1; } 100% { transform: scale(1.6) rotate(160deg); opacity: 0; } }
 
 .card-fx.scene-target .fx-fighter { filter: drop-shadow(0 0 24px rgba(255,190,60,.45)); }

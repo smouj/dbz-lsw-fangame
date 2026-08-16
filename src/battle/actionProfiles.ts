@@ -111,10 +111,29 @@ export type ProjectileVisualKind =
 export interface ActionCardSemantics {
   cardName: string;
   animation: 'stage' | 'melee' | 'beam' | 'support';
-  visual: ProjectileVisualKind | 'rush' | 'power';
+  visual: ProjectileVisualKind | 'rush' | 'power' | 'item';
   scope: 'shared' | 'limited' | 'unique';
   canonicalUsers: string[];
 }
+
+/**
+ * Efectos de soporte que representan OBJETOS/TECNOLOGÍA (aura azul) en vez de
+ * poder ki (aura dorada). El runtime usa esto para elegir el color del aura
+ * y la pose: `item` → aura azul + pose power_up; `power` → aura dorada.
+ */
+const ITEM_SUPPORT_EFFECTS = new Set([
+  'cc_recovery',      // Caps. Fridge
+  'android_kill',     // Stop Device
+  'heal_light',       // Life Preser.
+  'sunglasses',
+  'gamebomb',
+  'candy',            // H's Choco.
+  'naughty_book',
+  'damage_shield',    // Champ.Belt
+  'support_dispel',   // Sandglass
+  'powerdown_cleanse',// Medical Mac.
+  'evasion_up',       // Afterimage
+]);
 
 // ── Timings iniciales (INHERED del template de kind — NO canon) ────────────
 // Re-medir por acción en la pasada forense (FRAME_VERIFIED).
@@ -261,7 +280,41 @@ function buffSpec(id: string, label: string, match: string[]): ActionProfileSpec
   };
 }
 
+function stageSpec(id: string, label: string, match: string[], stages: number): ActionProfileSpec {
+  // Stage Attack: el QTE es la introduccion (GBC); al completarlo la accion
+  // se ejecuta como un rush melee con la pose del golpe final.
+  const m = T.melee;
+  const strikePose = stages >= 5 ? 'punch_left' : 'punch_right';
+  return {
+    id, label, kind: 'command', fidelity: 'INFERRED', match,
+    entry: { source: 'TACTICAL', destination: 'ACTION_SOLO', transition: 'cut' },
+    actor: {
+      pose: 'idle',
+      beats: [
+        { frame: 12, pose: 'gather_power', note: 'preparacion comun de accion' },
+        { frame: 26, pose: 'idle' },
+        { frame: m.windup, pose: strikePose },
+        { frame: m.contact, pose: strikePose, note: `${stages} stage - golpe final` },
+        { frame: m.recovery, pose: 'idle' },
+      ],
+    },
+    target: { beats: [{ frame: m.contact + 1, pose: 'knockback_back' }] },
+    rush: { startFrame: m.rush, duration: m.rushDur },
+    impact: { contactFrame: m.contact, hitstop: m.hitstop, shake: m.shake },
+    messages: [
+      { frame: 4, text: `${stages} STAGE` },
+      { frame: m.contact + 2, text: 'IMPACT' },
+    ],
+    returnToField: m.return,
+  };
+}
+
 export const ACTION_PROFILE_REGISTRY: ActionProfileSpec[] = [
+  // — Stage Attacks (QTE → rush melee) —
+  stageSpec('stage_3', '3 Stage Attack', ['3stageatk'], 3),
+  stageSpec('stage_4', '4 Stage Attack', ['4stageatk'], 4),
+  stageSpec('stage_5', '5 Stage Attack', ['5stageatk'], 5),
+  stageSpec('stage_6', '6 Stage Attack', ['6stageatk'], 6),
   // — Beams / energía —
   beamSpec('energy_wave', 'Energy Wave', ['energywave'], 'wave'),
   beamSpec('energy_bomb', 'Energy Bomb', ['energybomb', 'kiblastbomb'], 'ball'),
@@ -283,6 +336,25 @@ export const ACTION_PROFILE_REGISTRY: ActionProfileSpec[] = [
   meleeSpec('sonic_kick', 'Sonic Kick', ['sonickick'], 'kick_right', 'knockback_back'),
   meleeSpec('dunk_shot', 'Dunk Shot', ['dunkshot'], 'punch_left', 'knockback_down'),
   meleeSpec('crazy_rush', 'Crazy Rush', ['crazyrush'], 'punch_left', 'knockback_back'),
+  // — Melee: cartas damage adicionales (misma gramática, pose segun tecnica) —
+  meleeSpec('solid_shot', 'Solid Shot', ['solidshot'], 'punch_right', 'knockback_back'),
+  meleeSpec('tail', 'Tail', ['tail'], 'punch_right', 'knockback_up'),
+  meleeSpec('flash_punch', 'Flash Punch', ['flashpunch'], 'punch_right', 'knockback_back'),
+  meleeSpec('vball_crash', 'V-ball Crash', ['vballcrash'], 'punch_left', 'knockback_up'),
+  meleeSpec('atomic_break', 'Atomic Break', ['atomicbreak'], 'punch_left', 'knockback_down'),
+  meleeSpec('n_slasher', 'N.Slasher', ['nslasher'], 'punch_right', 'knockback_back'),
+  meleeSpec('rfb_atk', 'R.F.B.Atk.', ['rfbatk'], 'punch_right', 'knockback_down'),
+  meleeSpec('pcomet_z', 'P.Comet Z', ['pcometz'], 'punch_left', 'knockback_up'),
+  meleeSpec('mach_attack', 'Mach Attack', ['machattack'], 'punch_right', 'knockback_back'),
+  meleeSpec('dynami_punch', 'Dynami.Punch', ['dynamipunch'], 'punch_right', 'knockback_back'),
+  meleeSpec('sdash_elbow', 'S.Dash Elbow', ['sdashelbow'], 'punch_left', 'knockback_up'),
+  meleeSpec('rocket_punch', 'Rocket Punch', ['rocketpunch'], 'punch_right', 'knockback_back'),
+  meleeSpec('attack_18', 'Attack No. 18', ['attackno18'], 'punch_left', 'knockback_back'),
+  meleeSpec('life_absorb', 'Life Absorb', ['lifeabsorb'], 'punch_right', 'knockback_back'),
+  meleeSpec('cell_combo', 'Cell Combo', ['cellcombo'], 'punch_left', 'knockback_up'),
+  meleeSpec('step_up_atk', 'Step Up Atk.', ['stepupatk'], 'kick_right', 'knockback_up'),
+  meleeSpec('potbelly_atk', 'Potbelly Atk', ['potbellyatk'], 'punch_left', 'knockback_down'),
+  meleeSpec('crasher_buu', 'Crasher Buu', ['crasherbuu'], 'punch_right', 'knockback_down'),
   // — Buffs emblemáticos —
   buffSpec('kaio_ken', 'Kaio Ken', ['kaioken']),
 ];
@@ -310,9 +382,10 @@ export function listActionProfiles(): Array<{ id: string; label: string; kind: s
   return ACTION_PROFILE_REGISTRY.map(s => ({ id: s.id, label: s.label, kind: s.kind, fidelity: s.fidelity }));
 }
 
-export function actionSemanticsForCard(card: { name: string; type: string; compatible?: string[] }): ActionCardSemantics {
+export function actionSemanticsForCard(card: { name: string; type: string; compatible?: string[]; effect?: string }): ActionCardSemantics {
   const specific = resolveActionProfile(card.name);
-  const projectile = specific?.projectile?.kind ?? (card.type === 'beam' ? 'ray' : card.type === 'support' ? 'power' : 'rush');
+  const isItem = card.type === 'support' && card.effect != null && ITEM_SUPPORT_EFFECTS.has(card.effect);
+  const projectile = specific?.projectile?.kind ?? (card.type === 'beam' ? 'ray' : card.type === 'support' ? (isItem ? 'item' : 'power') : 'rush');
   const animation = card.type === 'command' ? 'stage'
     : card.type === 'damage' ? 'melee'
     : card.type === 'beam' ? 'beam'

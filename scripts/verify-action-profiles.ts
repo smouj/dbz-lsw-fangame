@@ -120,11 +120,12 @@ check('profileFor:misty:id', misty.id === 'finger_beam', misty.id);
 check('profileFor:samePresentation', kam.presentation === misty.presentation && kam.presentation === 'ACTION_SOLO');
 check('profileFor:sameTotal', kam.totalTicks === misty.totalTicks, `${kam.totalTicks} vs ${misty.totalTicks}`);
 
-// 6) Melee firma vs fallback damage
+// 6) Melee firma vs fallback damage (todas las cartas reales tienen perfil;
+// el fallback genérico queda para cartas futuras/inventadas)
 const punch = profileFor('damage', 'Cont.Punch');
-const generic = profileFor('damage', 'Atomic Break');
+const generic = profileFor('damage', 'Unknown Future Card');
 check('profileFor:punch:id', punch.id === 'cont_punch');
-check('profileFor:generic:id', generic.id === 'damage:Atomic Break');
+check('profileFor:generic:id', generic.id === 'damage:Unknown Future Card');
 check('profileFor:meleePresentation', punch.presentation === 'ACTION_SOLO' && generic.presentation === 'ACTION_SOLO');
 for (const p of [punch, generic]) {
   check(`profileFor:${p.id}:rushEvent`, p.tracks.some(t => t.event.type === 'RUSH'));
@@ -174,6 +175,15 @@ for (const [kind, expected] of [
   check('timelineSeek:replaysPastOnly', JSON.stringify(afterReset) === JSON.stringify(['0:SHOT', '3:ACTOR_POSE']), afterReset.join(','));
   check('timelineSeek:onTickTarget', ticks.at(-1) === 4, String(ticks.at(-1)));
 }
+
+// 7) Toda carta de combate debe tener perfil firma (regresión: nada de
+// animación genérica para cartas reales).
+const combatCards = CARDS.filter(c => ['command', 'damage', 'beam'].includes(c.type));
+const missingProfiles = combatCards.filter(c => !resolveActionProfile(c.name));
+for (const card of missingProfiles) {
+  check(`cardProfile:${card.name}`, false, 'sin perfil firma');
+}
+check('cardProfile:allCovered', missingProfiles.length === 0, missingProfiles.map(c => c.name).join(', '));
 
 console.log(`\n${listActionProfiles().length} perfiles firma registrados.`);
 console.log(failures === 0 ? 'ALL CHECKS PASSED ✅' : `${failures} CHECKS FAILED ❌`);
