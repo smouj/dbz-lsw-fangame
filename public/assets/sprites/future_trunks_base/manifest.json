@@ -236,7 +236,7 @@
     ]
   },
   "beam_fire": {
-    "frame_count": 5,
+    "frame_count": 4,
     "fps": 8,
     "loop": false,
     "frames": [
@@ -261,12 +261,6 @@
       {
         "name": "future_trunks_base_beam_fire_03",
         "file": "future_trunks_base_beam_fire_03.png",
-        "w": 27,
-        "h": 42
-      },
-      {
-        "name": "future_trunks_base_beam_fire_04",
-        "file": "future_trunks_base_beam_fire_04.png",
         "w": 27,
         "h": 42
       }

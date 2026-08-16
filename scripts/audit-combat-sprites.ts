@@ -1,5 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import crypto from 'node:crypto';
 import { FORMS } from '../src/data/roster';
 import { CARDS } from '../src/data/cards';
 import { spriteDirFor } from '../src/data/spriteManifest';
@@ -103,6 +104,7 @@ for (const form of Object.values(FORMS)) {
     }
     let lastIndex = -1;
     const seenIndexes = new Set<number>();
+    let prevFrameHash: string | null = null;
     frames.forEach((frame, index) => {
       const expectedPrefix = `${dir}_${pose}_`;
       const semanticAlias = (COMBAT_POSE_ORDER as readonly string[]).includes(pose);
@@ -120,6 +122,15 @@ for (const form of Object.values(FORMS)) {
         seenIndexes.add(numericIndex);
       }
       check(`${form.id}:${pose}:${index}:size`, frame.w > 0 && frame.h > 0, `${frame.w}x${frame.h}`);
+      // Duplicados exactos consecutivos (mismo MD5) congelan la animacion.
+      const framePath = path.join(spriteRoot, dir, frame.file);
+      if (fs.existsSync(framePath)) {
+        const hash = crypto.createHash('md5').update(fs.readFileSync(framePath)).digest('hex');
+        if (index > 0 && prevFrameHash === hash) {
+          check(`${form.id}:${pose}:${index}:noConsecutiveDuplicate`, false, frame.file);
+        }
+        prevFrameHash = hash;
+      }
     });
   }
 

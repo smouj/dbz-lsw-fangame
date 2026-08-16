@@ -186,7 +186,7 @@
     ]
   },
   "beam_charge": {
-    "frame_count": 4,
+    "frame_count": 3,
     "fps": 7,
     "loop": false,
     "frames": [
@@ -199,12 +199,6 @@
       {
         "name": "vegito_ssj_beam_charge_01",
         "file": "vegito_ssj_beam_charge_01.png",
-        "w": 26,
-        "h": 42
-      },
-      {
-        "name": "vegito_ssj_beam_charge_02",
-        "file": "vegito_ssj_beam_charge_02.png",
         "w": 26,
         "h": 42
       },
