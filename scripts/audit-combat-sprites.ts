@@ -5,7 +5,7 @@ import { FORMS } from '../src/data/roster';
 import { CARDS } from '../src/data/cards';
 import { spriteDirFor } from '../src/data/spriteManifest';
 import { actionSemanticsForCard, resolveActionProfile } from '../src/battle/actionProfiles';
-import { COMBAT_POSE_ORDER, COMBAT_REQUIRED_POSES } from '../src/battle/spriteConfig';
+import { COMBAT_POSE_ORDER, COMBAT_REQUIRED_POSES, resolvePoseFrameSequence } from '../src/battle/spriteConfig';
 
 type ManifestFrame = { file: string; w: number; h: number };
 type ManifestPose = { frame_count?: number; fps?: number; loop?: boolean; frames?: ManifestFrame[] };
@@ -156,6 +156,68 @@ for (const form of Object.values(FORMS)) {
     check(`${form.id}:beam_ray:${frame.file}:ratio`, ratio >= 2, `${frame.w}x${frame.h}`);
     check(`${form.id}:beam_ray:${frame.file}:height`, frame.h >= 8, `${frame.w}x${frame.h}`);
   }
+
+  // COHESIÓN runtime ↔ Dev Studio: la composición declarativa
+  // (resolvePoseFrameSequence) debe producir SECUENCIAS válidas para el
+  // juego: cada frame compuesto debe existir en el manifest (el Dev Studio
+  // nunca muestra frames que el juego no reproduce). Los manifests pueden
+  // tener variantes locales legítimas (hurt_06, ud_04, dedup charge_01) —
+  // eso se reporta como WARN, no como fallo.
+  const compositePoses = ['move_front', 'move_back', 'punch_right', 'punch_left', 'kick_right',
+    'knockback_back', 'knockback_up', 'knockback_down', 'beam_guard', 'evade', 'gather_power', 'power_up'];
+  for (const pose of compositePoses) {
+    const manifestFiles = (manifest[pose]?.frames ?? []).map(f => f.file);
+    if (manifestFiles.length === 0) continue;
+    const composed = resolvePoseFrameSequence(pose, dir, (file) => fs.existsSync(path.join(spriteRoot, dir, file)));
+    // Dirección crítica: la composición NO puede tener frames fuera del manifest.
+    // Se permite el caso de DEDUP: frames físicamente idénticos (mismo MD5) a
+    // uno del manifest (ej: future_trunks_super_saiyan beam_charge_01 ==
+    // beam_charge_03, eliminado del manifest por duplicado).
+    const manifestHashes = new Set<string>();
+    for (const mf of manifestFiles) {
+      const mp = path.join(spriteRoot, dir, mf);
+      if (fs.existsSync(mp)) manifestHashes.add(createHash('md5').update(fs.readFileSync(mp)).digest('hex'));
+    }
+    const missingFromManifest = composed.filter(file => {
+      if (manifestFiles.includes(file)) return false;
+      const cp = path.join(spriteRoot, dir, file);
+      if (!fs.existsSync(cp)) return true; // ni siquiera existe en disco
+      const ch = createHash('md5').update(fs.readFileSync(cp)).digest('hex');
+      return !manifestHashes.has(ch); // existe pero NO es duplicado de nada del manifest
+    });
+    check(`${form.id}:${pose}:cohesion`,
+      missingFromManifest.length === 0,
+      `composicion incluye frames fuera del manifest: [${missingFromManifest.join(',')}]`);
+    // WARN (no fallo): el manifest tiene frames extra legítimos (variante local).
+    const composedSet = new Set(composed);
+    const extraInManifest = manifestFiles.filter(file => !composedSet.has(file));
+    if (extraInManifest.length > 0 && form.id === 'goku_base') {
+      console.warn(`WARN ${form.id}:${pose}:varianteLocal — manifest tiene ${extraInManifest.length} frames extra: ${extraInManifest.join(',')}`);
+    }
+  }
+}
+
+// ── Huérfanos: PNG en disco sin referencia en su manifest ──
+// Los move_front_00/move_back_00/beam_ray_tip_01 son frames ROM legítimos
+// (material de referencia del contrato V1: move = idle_00 + step_01), no
+// basura. Este check SOLO avisa; los colados conocidos se limpian a mano.
+{
+  let orphanCount = 0;
+  for (const form of Object.values(FORMS)) {
+    const dir = spriteDirFor(form.id);
+    const manifestPath = path.join(spriteRoot, dir, 'manifest.json');
+    if (!fs.existsSync(manifestPath)) continue;
+    const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf8')) as Manifest;
+    const referenced = new Set<string>();
+    for (const pose of Object.values(manifest)) {
+      for (const f of pose?.frames ?? []) referenced.add(f.file);
+    }
+    const files = fs.existsSync(path.join(spriteRoot, dir)) ? fs.readdirSync(path.join(spriteRoot, dir)) : [];
+    const orphans = files.filter(f => f.endsWith('.png') && !referenced.has(f));
+    orphanCount += orphans.length;
+    for (const o of orphans) console.warn(`WARN ${form.id}:orphan — ${o}`);
+  }
+  console.log(`\n${orphanCount} PNG huerfanos en disco (referencia ROM legitima o colado pendiente de limpiar).`);
 }
 
 const pixiPresentation = fs.readFileSync(path.join(root, 'src/renderer/pixi/presentation/PixiBattlePresentation.ts'), 'utf8');

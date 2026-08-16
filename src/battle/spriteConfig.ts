@@ -95,6 +95,18 @@ export function resolvePoseFrameSequence(
     }
     return out;
   };
+  // Escanea TODOS los frames disponibles de una familia (hasta 16) — el
+  // manifest usa exactamente los archivos que existen (frieza beam_charge
+  // tiene 6, piccolo hurt 7...). Cohesión garantizada con los manifests.
+  const allOf = (name: string): string[] => {
+    const out: string[] = [];
+    for (let i = 0; i < 16; i++) {
+      const file = f(name, i);
+      if (file) out.push(file);
+      else if (i > 8) break; // hueco tras el inicio = fin de familia
+    }
+    return out;
+  };
 
   switch (pose) {
     case 'move_front': {
@@ -107,36 +119,60 @@ export function resolvePoseFrameSequence(
       const step = f('move_back', 1) ?? f('move_back', 0);
       return [idle, step].filter(Boolean) as string[];
     }
-    case 'punch_right':
-      return seq('attack_fwd', 0, 2).length
-        ? seq('attack_fwd', 0, 2)
-        : seq('attack_fwd', 0, 6);
-    case 'punch_left':
-      return seq('attack_fwd', 3, 6).length
-        ? seq('attack_fwd', 3, 6)
-        : seq('attack_fwd', 0, 6);
-    case 'kick_right':
-      return seq('attack_ud', 0, 3).length
-        ? seq('attack_ud', 0, 3)
-        : seq('attack_fwd', 0, 6);
+    // Contrato V1 (manifests): las poses compuestas empiezan con idle_00 como
+    // windup y luego la variante del golpe. punch_right usa los 3 primeros
+    // attack_fwd; punch_left la segunda mitad. DEBE coincidir con los
+    // manifests regenerados (e7b393d) o el Dev Studio muestra otra cosa.
+    case 'punch_right': {
+      const idle = f('idle', 0);
+      const hits = seq('attack_fwd', 0, 2).length ? seq('attack_fwd', 0, 2) : allOf('attack_fwd');
+      return [idle, ...hits].filter(Boolean) as string[];
+    }
+    case 'punch_left': {
+      const idle = f('idle', 0);
+      // Contrato V1: punch_left = segunda mitad fija (3..6). punch_right usa
+      // 0..2; el manifest de punch_left referencia exactamente idle + 3..6.
+      const hits = seq('attack_fwd', 3, 6).length ? seq('attack_fwd', 3, 6) : allOf('attack_fwd');
+      return [idle, ...hits].filter(Boolean) as string[];
+    }
+    case 'kick_right': {
+      const idle = f('idle', 0);
+      const hits = allOf('attack_ud').length ? allOf('attack_ud') : allOf('attack_fwd');
+      return [idle, ...hits].filter(Boolean) as string[];
+    }
+    // Knockback: variantes que usan SOLO los frames de hurt que el manifest
+    // referencia (back=todos, up=0,1,2,5, down=2,3,4,5). No inventar frames
+    // que el runtime no usa.
     case 'knockback_back':
-    case 'knockback_up':
-    case 'knockback_down':
-      return seq('hurt', 0, 5);
+      return allOf('hurt');
+    case 'knockback_up': {
+      const out: string[] = [];
+      for (const i of [0, 1, 2, 5]) { const file = f('hurt', i); if (file) out.push(file); }
+      return out;
+    }
+    case 'knockback_down': {
+      const out: string[] = [];
+      for (const i of [2, 3, 4, 5]) { const file = f('hurt', i); if (file) out.push(file); }
+      return out;
+    }
     case 'beam_guard':
-      return seq('guard', 0, 2);
+      return allOf('guard');
+    // Evade (contrato manifest): idle → guard → idle (parpadeo defensivo).
+    // El manifest usa [idle_00, guard_01, idle_00]; si guard existe, esa es
+    // la secuencia real del juego.
     case 'evade': {
-      const back = seq('move_back', 0, 1);
-      const guard = seq('guard', 0, 2);
-      const idle = seq('idle', 0, 0);
-      return back.length ? back : guard.length ? guard : idle;
+      const idle = f('idle', 0);
+      const guard = f('guard', 1) ?? f('guard', 0);
+      if (guard) return [idle, guard, idle].filter(Boolean) as string[];
+      const back = allOf('move_back');
+      return back.length ? back : [idle].filter(Boolean) as string[];
     }
     case 'gather_power':
-      return seq('beam_charge', 0, 3).length ? seq('beam_charge', 0, 3) : seq('guard', 0, 2);
+      return allOf('beam_charge').length ? allOf('beam_charge') : allOf('guard');
     case 'power_up':
-      return seq('gather_power', 0, 0).length ? seq('gather_power', 0, 0) : seq('beam_charge', 0, 3);
+      return allOf('gather_power').length ? allOf('gather_power') : allOf('beam_charge');
     default:
-      return seq(pose, 0, 12);
+      return allOf(pose);
   }
 }
 
