@@ -3160,9 +3160,13 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
                     // 5→3, 6→4). El arte se FILLEA con FitArt (bounding box
                     // visible centrado/lleno) — igual que las cartas de la mano.
                     const icon = cardIconUrl(stages - 2);
-                    return icon
-                      ? <FitArt src={icon} areaW={56} areaH={40} className="stage-card-icon" />
-                      : <strong>{stages} Stage</strong>;
+                    return (
+                      <>
+                        {/* Fondo provisional: visible mientras el arte carga */}
+                        <strong>{stages} Stage</strong>
+                        {icon && <FitArt src={icon} areaW={56} areaH={40} className="stage-card-icon" />}
+                      </>
+                    );
                   })()}
                 </span>
               </button>
@@ -3178,14 +3182,31 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
             <div className="limit-panel">
               <div className="limit-title">LIMITED — {player.name}</div>
               {limitCards.length === 0 && <div className="limit-empty">{t('battle.limitHelp')}</div>}
-              {limitCards.map((c, i) => (
-                <button key={i} className={`limit-row ${player.cc < c.cc ? 'locked' : ''}`}
-                  disabled={player.cc < c.cc} onClick={() => playLimit(c)}>
-                  <span className="limit-name">{c.name}</span>
-                  <span className="limit-cost">{c.cc} CC</span>
-                  {player.cc < c.cc && <span className="limit-lock">{t('battle.insufficientCc')}</span>}
-                </button>
-              ))}
+              <div className="limit-grid">
+                {limitCards.map((c, i) => (
+                  <button key={i} className={`limit-card ${player.cc < c.cc ? 'locked' : ''}`}
+                    disabled={player.cc < c.cc} onClick={() => playLimit(c)}
+                    style={{ '--card-frame': `url('${CARD_FRAME_BY_TYPE[c.type] ?? CARD_FRAME_BY_TYPE.special}')` } as React.CSSProperties}
+                    data-tip={`${c.name} — ${CARD_TYPE_NAMES[c.type]}  ★${c.rarity}\nCC ${c.cc} · ${c.description ?? ''}\nReutilizable mientras tengas CC (GATHER POWER activo)`}>
+                    <div className="card-art">
+                      {cardIconUrl(c.id)
+                        ? <FitArt src={cardIconUrl(c.id)!} areaW={60} areaH={44} className="card-art-img" />
+                        : <span className="card-icon-emoji">?</span>}
+                    </div>
+                    <span className="limit-card-name">{c.name}</span>
+                    <span className="limit-card-cost">{c.cc} CC</span>
+                  </button>
+                ))}
+                {/* Huecos: cartas Limit del personaje (GBC) NO obtenidas */}
+                {(LIMIT_DEFAULTS[getForm(activePlayerFormId)?.character || ''] || [])
+                  .filter(id => !limits.includes(id))
+                  .map(id => (
+                    <div key={`slot-${id}`} className="limit-slot" data-tip="LIMIT no obtenida todavía">
+                      <Lock size={18} />
+                      <span className="limit-slot-label">??</span>
+                    </div>
+                  ))}
+              </div>
               <button className="basic-btn basic-back" data-tip="BACK — volver al menú anterior" onClick={() => { Sfx.cancel(); setPhase('command'); }} />
             </div>
             <div className="command-help">{t('battle.limitedHelp')}</div>

@@ -7,7 +7,7 @@
 // el Combat Lab. "Aplicar al juego" inyecta las variables en :root y
 // persiste en localStorage.
 // ═══════════════════════════════════════════════════════════════════════
-import { Check, Download, RotateCcw } from 'lucide-react';
+import { Check, Download, RotateCcw, Lock } from 'lucide-react';
 import { useMemo, useState } from 'react';
 import {
   HUD_THEME_VARS, HudTheme, currentHudTheme, defaultHudTheme,
@@ -284,6 +284,7 @@ export function HudModule() {
                   <div className="basic-menu">
                     <button className="basic-btn basic-stage" data-tip="STAGE ATTACK — 3 Stage · secuencia A/B">
                       <span className="basic-stage-icon">
+                        <strong>3 Stage</strong>
                         <FitArt src={cardIconUrl(1)!} areaW={56} areaH={40} className="stage-card-icon" />
                       </span>
                     </button>
@@ -293,17 +294,31 @@ export function HudModule() {
                 </div>
               )}
 
-              {/* LIMIT: cartas del personaje */}
+              {/* LIMIT: cartas GBC del personaje + huecos no obtenidos */}
               {view === 'LIMIT' && (
                 <div className="command-select">
                   <div className="limit-panel">
                     <div className="limit-title">LIMITED — GOKU</div>
-                    {limitCards.map(c => (
-                      <button key={c.id} className="limit-row" data-tip={`${c.name} — ${CARD_TYPE_NAMES[c.type]}\nCC ${c.cc} · Reutilizable mientras tengas CC`}>
-                        <span className="limit-name">{c.name}</span>
-                        <span className="limit-cost">{c.cc} CC · {c.type.toUpperCase()}</span>
-                      </button>
-                    ))}
+                    <div className="limit-grid">
+                      {limitCards.map(c => (
+                        <button key={c.id} className="limit-card"
+                          style={{ '--card-frame': `url('${CARD_FRAME_BY_TYPE[c.type] ?? CARD_FRAME_BY_TYPE.special}')` } as React.CSSProperties}
+                          data-tip={`${c.name} — ${CARD_TYPE_NAMES[c.type]}\nCC ${c.cc} · Reutilizable mientras tengas CC`}>
+                          <div className="card-art">
+                            {cardIconUrl(c.id)
+                              ? <FitArt src={cardIconUrl(c.id)!} areaW={60} areaH={44} className="card-art-img" />
+                              : <span className="card-icon-emoji">?</span>}
+                          </div>
+                          <span className="limit-card-name">{c.name}</span>
+                          <span className="limit-card-cost">{c.cc} CC</span>
+                        </button>
+                      ))}
+                      {/* Hueco de ejemplo: Limit no obtenida */}
+                      <div className="limit-slot" data-tip="LIMIT no obtenida todavía">
+                        <Lock size={18} />
+                        <span className="limit-slot-label">??</span>
+                      </div>
+                    </div>
                     <button className="basic-btn basic-back" data-tip="BACK — volver al menú de comandos" />
                   </div>
                 </div>
