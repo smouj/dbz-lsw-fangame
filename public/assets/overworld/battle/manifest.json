@@ -658,7 +658,7 @@
       }
     },
     "gohan_absorbed": {
-      "sheet": "majin_buu-gohan_absorbed.png",
+      "sheet": "buu-gohan.png",
       "actor": {
         "idle": {
           "x0": 0,
@@ -683,7 +683,7 @@
       }
     },
     "gotenks_absorbed": {
-      "sheet": "majin_buu-gotenks_absorbed.png",
+      "sheet": "buu-gotenks.png",
       "actor": {
         "idle": {
           "x0": 0,
@@ -737,7 +737,7 @@
   },
   "cell": {
     "imperfect": {
-      "sheet": "cell-imperfect.png",
+      "sheet": "cell-imperfect-form.png",
       "actor": {
         "idle": {
           "x0": 0,
@@ -787,7 +787,7 @@
       }
     },
     "semi_perfect": {
-      "sheet": "cell-semi_perfect.png",
+      "sheet": "cell-semi-perfect-form.png",
       "actor": {
         "idle": {
           "x0": 0,
@@ -814,7 +814,7 @@
   },
   "future_trunks": {
     "base": {
-      "sheet": "future_trunks-base.png",
+      "sheet": "future-trunks.png",
       "actor": {
         "idle": {
           "x0": 0,
@@ -839,7 +839,7 @@
       }
     },
     "super_saiyan": {
-      "sheet": "future_trunks-super_saiyan.png",
+      "sheet": "future-trunks-ssj.png",
       "actor": {
         "idle": {
           "x0": 0,
@@ -893,7 +893,7 @@
   },
   "gohan_adult": {
     "super_saiyan": {
-      "sheet": "gohan_adult-super_saiyan.png",
+      "sheet": "gohan-super-saiyan-1-2.png",
       "actor": {
         "idle": {
           "x0": 0,
@@ -918,7 +918,7 @@
       }
     },
     "ultimate": {
-      "sheet": "gohan_adult-ultimate.png",
+      "sheet": "gohan-ultimate.png",
       "actor": {
         "idle": {
           "x0": 0,
@@ -945,7 +945,7 @@
   },
   "goten": {
     "base": {
-      "sheet": "goten-base.png",
+      "sheet": "goten.png",
       "actor": {
         "idle": {
           "x0": 0,
@@ -970,7 +970,7 @@
       }
     },
     "super_saiyan": {
-      "sheet": "goten-super_saiyan.png",
+      "sheet": "goten-super-saiyan.png",
       "actor": {
         "idle": {
           "x0": 0,
@@ -997,7 +997,7 @@
   },
   "kid_trunks": {
     "super_saiyan": {
-      "sheet": "kid_trunks-super_saiyan.png",
+      "sheet": "trunks-super-saiyan.png",
       "actor": {
         "idle": {
           "x0": 0,
@@ -1078,7 +1078,7 @@
   },
   "young_gohan": {
     "base": {
-      "sheet": "young_gohan-base.png",
+      "sheet": "young-gohan.png",
       "actor": {
         "idle": {
           "x0": 0,
@@ -1103,7 +1103,7 @@
       }
     },
     "super_saiyan": {
-      "sheet": "young_gohan-super_saiyan.png",
+      "sheet": "young-gohan-super-saiyan.png",
       "actor": {
         "idle": {
           "x0": 0,
@@ -1128,7 +1128,7 @@
       }
     },
     "super_saiyan_2": {
-      "sheet": "young_gohan-super_saiyan_2.png",
+      "sheet": "young-gohan-super-saiyan-2.png",
       "actor": {
         "idle": {
           "x0": 0,

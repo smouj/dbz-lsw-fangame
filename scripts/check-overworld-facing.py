@@ -32,9 +32,13 @@ DEFAULT_V9 = ROOT.parent / '.openclaw/tmp/v9/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCA
 # Formas sin bucket OW en el V9 → comparar contra atomic/ con estos frames
 ATOMIC_FALLBACK = {
     'trunks_base': '004.png',
-    'nappa_base': '002.png',
     'gotenks_super_saiyan_3': '010.png',
 }
+
+# Chibis verificados VISUALMENTE por el usuario mirando a la derecha.
+# (nappa: el fallback atomic compara 30x39 contra 12x15 → señal ruidosa;
+#  el usuario confirmó en el panel Facing que el original mira a la derecha.)
+KNOWN_RIGHT = {'nappa_base_ow.png'}
 
 
 def load_rgba(path):
@@ -145,6 +149,9 @@ def main() -> None:
     lefts = []
     rows = []
     for fname in sorted(OW_DIR.glob('*_ow.png')):
+        if fname.name in KNOWN_RIGHT:
+            rows.append((fname.name, 'verificado', 0.0, 0.0, 'RIGHT(usuario)'))
+            continue
         d = ow_to_dir.get(fname.name)
         if not d:
             rows.append((fname.name, '-', 0, 0, 'NO-DIR'))
@@ -155,6 +162,9 @@ def main() -> None:
             continue
         chibi = load_rgba(fname)
         # probar también contra goku_base (referencia absoluta) si no hay match bueno
+        if fname.name in KNOWN_RIGHT:
+            rows.append((fname.name, d, 0.0, 0.0, 'RIGHT(usuario)'))
+            continue
         dmin, rel = best_rel(chibi, frames)
         # saber d_same/d_mirr del mejor frame
         cbb = bbox_of(chibi)
