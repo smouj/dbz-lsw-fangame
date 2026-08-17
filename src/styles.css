@@ -4818,11 +4818,12 @@ button:focus-visible, .chapter-node:focus-visible {
   pointer-events: none;
 }
 
-/* Anchor consistente: el retrato se ancla al suelo del panel (bottom) y
-   a su lado (left/right) o al centro; mismo anchor para todos. */
+/* Anchor consistente: el retrato se ancla SIEMPRE por encima del cuadro
+   de diálogo (que ocupa el tercio inferior) — sin solapes. Mismo anchor
+   para todos: lado (left/right) o centro. */
 .story-character {
   position: absolute;
-  bottom: 12%;
+  bottom: 44%;
   display: flex;
   flex-direction: column;
   align-items: center;
