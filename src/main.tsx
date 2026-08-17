@@ -3111,8 +3111,14 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
               || (actorRaw.toLowerCase() !== pName && lower.includes(eName) && !lower.includes(pName)))
             : (lower.includes(eName) && !lower.includes(pName));
           const side: 'left' | 'right' | null = actorRaw === null ? null : (isEnemy ? 'right' : 'left');
-          // Sprite chibi overworld del personaje que habla (idle)
-          const spriteUrl = isEnemy ? overworldUrl(enemyFormId) : overworldUrl(activePlayerFormId);
+          // Sprite de STORY del personaje que habla (retrato de las viñetas GBC)
+          const speakerChar = isEnemy
+            ? getForm(enemyFormId)?.character ?? 'goku'
+            : getForm(activePlayerFormId)?.character ?? 'goku';
+          const speakerForm = isEnemy ? enemyFormId : activePlayerFormId;
+          const spriteUrl = storyPortraitUrl(speakerChar, speakerForm)
+            || miniPortraitFor(speakerChar)
+            || MENU_PORTRAITS[CHAR_PORTRAIT_ALIAS[speakerChar] ?? speakerChar];
           return (
             <div className="gbc-dialogue" key={gbcMsg}>
               <GbcDialogueText msg={gbcMsg} side={side} spriteUrl={spriteUrl} />
@@ -4891,15 +4897,21 @@ function GbcDialogueText({ msg, side, spriteUrl }: {
   if (mUses) { actor = mUses[1]; text = mUses[2]; }
   else if (mDash) { actor = mDash[1]; text = mDash[2]; }
   return (
-    <div className={`gbc-dialogue-body ${side === 'right' ? 'right' : ''}`}>
-      {/* Sprite del personaje que habla: izquierda o derecha según su lado */}
+    <>
+      {/* Sprite de STORY del que habla, FUERA de la caja, en su lado del campo
+          (izquierda/derecha) — con máscara (overflow) y marco negro como el
+          cuadro. La caja NO cambia de tamaño. */}
       {spriteUrl && (
-        <img src={spriteUrl} alt={actor ?? ''} className="gbc-dialogue-sprite" draggable={false} />
+        <div className={`gbc-dialogue-speaker ${side === 'right' ? 'right' : 'left'}`} aria-hidden>
+          <img src={spriteUrl} alt={actor ?? ''} className="gbc-dialogue-speaker-img" draggable={false} />
+        </div>
       )}
-      <div className="gbc-dialogue-content">
-        {actor && <div className="gbc-dialogue-actor">{actor}</div>}
-        <div className="gbc-dialogue-text">{text}<span className="gbc-dialogue-cursor">▼</span></div>
+      <div className="gbc-dialogue-body">
+        <div className="gbc-dialogue-content">
+          {actor && <div className="gbc-dialogue-actor">{actor}</div>}
+          <div className="gbc-dialogue-text">{text}<span className="gbc-dialogue-cursor">▼</span></div>
+        </div>
       </div>
-    </div>
+    </>
   );
 }

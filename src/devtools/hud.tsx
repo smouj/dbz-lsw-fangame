@@ -18,6 +18,7 @@ import { SCENARIOS } from '../data/scenarios';
 import { getForm } from '../data/roster';
 import { spriteDirFor, spriteFrameUrl } from '../data/spriteManifest';
 import { BATTLE_PORTRAITS } from '../data/battlePortraits';
+import { storyPortraitUrl } from '../data/storyPortraits';
 import { downloadJson } from './spriteEditing';
 import { getCard, CARD_TYPE_NAMES, CARD_COLORS, CardDef } from '../data/cards';
 import { cardIconUrl } from '../data/icons';
@@ -297,8 +298,12 @@ export function HudModule() {
                   misma altura que los botones */}
               {view === 'DIALOGO' && (
                 <div className="gbc-dialogue">
+                  {/* Sprite de STORY del que habla, FUERA de la caja (izquierda),
+                      con máscara y marco negro — la caja no cambia de tamaño */}
+                  <div className="gbc-dialogue-speaker left">
+                    <img src={storyPortraitUrl('goku', P_FORM) || pPortrait || ''} alt="GOKU" className="gbc-dialogue-speaker-img" draggable={false} />
+                  </div>
                   <div className="gbc-dialogue-body">
-                    {pIdle && <img src={pIdle} alt="GOKU" className="gbc-dialogue-sprite" draggable={false} />}
                     <div className="gbc-dialogue-content">
                       <div className="gbc-dialogue-actor">GOKU</div>
                       <div className="gbc-dialogue-text">uses KAMEHAMEHA!<span className="gbc-dialogue-cursor">▼</span></div>
