@@ -859,6 +859,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
   const [pStages, setPStages] = useState({ str: 0, ki: 0, spd: 0, guard: 0 });
   // Buffs temporales del GBC: se desvanecen tras ~3 turnos ("fade over time")
   const [buffTurns, setBuffTurns] = useState(0);
+  const [eBuffTurns, setEBuffTurns] = useState(0);
   // Transformación en combate (cartas Sup.Saiyan): flash + aura + zoom
   const [battleTransform, setBattleTransform] = useState(0);
   useEffect(() => {
@@ -995,11 +996,12 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
     else advanceExchange();
   };
 
-  // El jugador elige la carta a descartar (DISCARD_REQUIRED)
+  // El jugador elige la carta a descartar (DISCARD_REQUIRED). La fase la
+  // conduce discardNext (advanceExchange → startExchange); no fijamos fase
+  // aquí para no pisar el phaseCue del siguiente atacante.
   const chooseDiscard = (idx: number) => {
     Sfx.select();
     setDeckState(prev => discardOne(prev, idx));
-    setPhase('enemyTurn');
     const next = discardNextRef.current;
     discardNextRef.current = null;
     setTimeout(() => { if (next) next(); }, 300);
@@ -1385,6 +1387,15 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
       if (prev <= 0) return 0;
       const next = prev - 1;
       if (next === 0) setPStages({ str: 0, ki: 0, spd: 0, guard: 0 });
+      return next;
+    });
+    // Los buffs/debuffs del ENEMIGO también decaen (antes eran permanentes:
+    // el gather enemigo duraba toda la partida y debuff_speed8 jamás se
+    // recuperaba — inconsistencia con la mecánica de 2 turnos del GBC).
+    setEBuffTurns(prev => {
+      if (prev <= 0) return 0;
+      const next = prev - 1;
+      if (next === 0) setEStages({ str: 0, ki: 0, spd: 0, guard: 0 });
       return next;
     });
     // Recalcular orden por SPD EFECTIVA (base + buffs/debuffs). El orden queda
@@ -2170,12 +2181,18 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
   };
 
   const finishPlayerTurn = (idx: number) => {
-    // La Joint usada sale de la mano → discardPile (consumible real)
-    setDeckState(prev => playJoint(prev, idx));
+    // La Joint usada sale de la mano → discardPile (consumible real).
+    // HAND CHECK evaluado sobre el estado RESULTANTE (no el stale): tras
+    // jugar una Joint de 6, quedan 5 → NO hay descarte (regla GBC).
+    const next = playJoint(deckState, idx);
+    setDeckState(next);
     setSelectedCard(null);
-    // Hand check: si tras jugar aún hay >5 (improbable pero posible con
-    // robo reciente), el jugador elige el descarte. Si no, avanza.
-    settleAttackHand(() => setTimeout(() => advanceExchange(), 600));
+    if (needsDiscard(next)) {
+      discardNextRef.current = () => setTimeout(() => advanceExchange(), 600);
+      setPhase('discard');
+    } else {
+      setTimeout(() => advanceExchange(), 600);
+    }
   };
 
   // ═══ ENEMY ATTACK: IA real del GBC (battle.shtml) ═══
@@ -2220,6 +2237,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
         // Gather Power: no ataca, sube STR/KI (mecánica real)
         Sfx.powerUp();
         setEStages(s => ({ ...s, str: clampStage(s.str + 1), ki: clampStage(s.ki + 1) }));
+        setEBuffTurns(3); // Gather del enemigo dura 2 turnos completos (GBC)
         setEnemyPose('gather_power');
         addLog(`${enemy.name} ${t('battle.gathers')}! (+8 STR/KI)`);
         ai.mode = 2;
