@@ -9509,3 +9509,14 @@ button.linklike:hover { text-decoration: underline; }
 .dev-hud-preview .battle-intro::before,
 .dev-hud-preview .battle-intro::after { animation: none; }
 .dev-hud-preview .intro-gbc-window { margin-top: 0; }
+
+/* Mockup HUD: los chibis se ven a mayor escala y anclados al suelo del campo */
+.dev-hud-preview .dev-hud-fighter-sprite {
+  transform: scale(1.7);
+  transform-origin: bottom center;
+  image-rendering: pixelated;
+}
+.dev-hud-preview .fighter-container.enemy .dev-hud-fighter-sprite {
+  transform: scaleX(-1) scale(1.7);
+  transform-origin: bottom center;
+}

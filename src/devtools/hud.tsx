@@ -195,12 +195,12 @@ export function HudModule() {
             <div className="battlefield">
               <div className="battle-bg authentic" style={{ backgroundImage: `url(${battleBgUrl})` }} />
               <div className="battlefield-fighters">
-                <div className="fighter-container player down back" style={{ left: '28%', top: '64%' }}>
-                  {pIdle && <img src={pIdle} alt="" className="overworld-sprite" />}
+                <div className="fighter-container player down back" style={{ left: '30%', top: '62%' }}>
+                  {pIdle && <img src={pIdle} alt="" className="overworld-sprite dev-hud-fighter-sprite" />}
                   <div className="fighter-position-tag hidden">down back</div>
                 </div>
-                <div className="fighter-container enemy up back" style={{ left: '72%', top: '44%' }}>
-                  {eIdle && <img src={eIdle} alt="" className="overworld-sprite" style={{ transform: 'scaleX(-1)' }} />}
+                <div className="fighter-container enemy up back" style={{ left: '70%', top: '46%' }}>
+                  {eIdle && <img src={eIdle} alt="" className="overworld-sprite dev-hud-fighter-sprite" style={{ transform: 'scaleX(-1)' }} />}
                   <div className="fighter-position-tag hidden">up back</div>
                 </div>
               </div>
