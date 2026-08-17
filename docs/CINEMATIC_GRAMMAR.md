@@ -518,3 +518,31 @@ Attack → KO → Result. Luego repetir con Cont. Punch / Beam / Gather / Move /
 Guard / Avoid / Support / Limit / transformación / KO / team swap. Con el
 `BattleTimeline` + Pixi ya construidos, esos datos se convierten directamente
 en ticks GBC.
+
+---
+
+## Mapeo de plantillas cinematográficas (spec V1 §13) ↔ motor actual
+
+La especificación define 12 plantillas (`T01`–`T12`). El motor no usa esos IDs
+literales, pero cada plantilla tiene equivalente funcional en kinds de
+`actionProfiles.ts`, escenas de `BattlePresentation.ts` y perfiles de
+`profiles.ts`:
+
+| Spec | Plantilla | Equivalente actual |
+|---|---|---|
+| `T01` | Carta/UI (revelar → confirmar → coste → commit) | `MESSAGE` + `SHOT` (timeline) + panel de carta |
+| `T02` | Entrada/salida (campo → corte → ACTION → corte → campo) | `SHOT` FIELD↔SOLO/DUEL + `FIELD_RETURN` |
+| `T03` | Melee simple | kind `melee` (actionProfiles) + `RUSH` + `HIT_FRAME` |
+| `T04` | Combo/Stage (QTE → rush → N contactos → remate) | Stage Attack (`stageInputMap` + `stageSequences` + kind `stage`) |
+| `T05` | Rayo (pose → carga → emisión → viaje → resultado) | kind `beam` + `PROJECTILE` (release→travel→contact) |
+| `T06` | Proyectil | `PROJECTILE` (create→advance→fade) |
+| `T07` | Disco/corte | `PROJECTILE` con perfil de disco (kind beam variant) |
+| `T08` | Aura/transformación | `ACTION_SOLO` + gather (`battle_overworld_gather_power_pose/aura`) + `transforms.ts` |
+| `T09` | Control | kind `control`/perfil (Body Change, Taiyoken...) en `profiles.ts` |
+| `T10` | Apoyo | kind `support` (`profileSupport`) |
+| `T11` | Objeto/HUD | `ITEM_SUPPORT_EFFECTS` (actionProfiles: aura azul + pose power_up) + `MESSAGE` |
+| `T12` | Defensa | guard (`action_guard_*`) + `IMPACT` + `TARGET_POSE` |
+
+Regla de la spec: las 125 cartas se construyen sobre estas plantillas, no como
+125 máquinas de estado — el motor ya lo cumple (perfiles por carta sobre kinds).
+Mapeo completo en `docs/FRAME_SPEC_V1_COMPLIANCE.md`.

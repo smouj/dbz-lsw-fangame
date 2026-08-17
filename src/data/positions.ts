@@ -21,6 +21,22 @@ export enum BattlePosition {
   DOWN_FRONT = 'DOWN_FRONT',
 }
 
+// Alias canónico de la especificación de frames/acciones V1 (§5.3, §20):
+// air_back/air_front/ground_back/ground_front. Mismo conjunto de 4 estados;
+// los nombres del proyecto (UP/DOWN × BACK/FRONT) son el aliasing interno.
+export type SpecBattlePosition =
+  | 'air_back' | 'air_front' | 'ground_back' | 'ground_front';
+
+export function toSpecPosition(p: BattlePosition): SpecBattlePosition {
+  const { altitude, depth } = POSITION_DATA[p];
+  return `${altitude === 'AIR' ? 'air' : 'ground'}_${depth === 'BACK' ? 'back' : 'front'}` as SpecBattlePosition;
+}
+
+export function fromSpecPosition(s: SpecBattlePosition): BattlePosition {
+  const [alt, depth] = s.split('_');
+  return (alt === 'air' ? 'UP' : 'DOWN') + '_' + (depth === 'back' ? 'BACK' : 'FRONT') as BattlePosition;
+}
+
 export const BATTLE_POSITIONS: BattlePosition[] = [
   BattlePosition.UP_BACK,
   BattlePosition.UP_FRONT,
