@@ -32,14 +32,15 @@ const E_FORM = 'piccolo_base';
 const GROUPS = ['Colores', 'HUD', 'Cartas', 'Posición', 'Escala', 'Tipografía'];
 
 // Vista del preview: cómo se ve el HUD en cada estado (sin motor — visual).
-type HudView = 'COMMAND' | 'MANO' | 'DIALOGO' | 'INTRO' | 'BASIC' | 'LIMIT';
+type HudView = 'COMMAND' | 'MANO' | 'BASIC' | 'STAGE' | 'LIMIT' | 'DIALOGO' | 'INTRO';
 
 const VIEWS: { id: HudView; label: string; tip: string }[] = [
   { id: 'COMMAND', label: 'Comando', tip: 'Command strip: LIMIT · JOINT · BASIC' },
-  { id: 'MANO', label: 'JOINT · Mano', tip: 'Cartas de la mano con sus frames GBC' },
-  { id: 'DIALOGO', label: 'Diálogo', tip: 'Cuadro de mensaje GBC estructurado' },
+  { id: 'MANO', label: 'JOINT · Mano', tip: 'Cartas de la mano con sus frames GBC + huecos' },
   { id: 'BASIC', label: 'BASIC', tip: 'Stage Attack (frame de carta) · Gather · Back' },
-  { id: 'LIMIT', label: 'LIMIT', tip: 'Cartas LIMITED del personaje' },
+  { id: 'STAGE', label: 'STAGE', tip: 'QTE del Stage Attack: inputs con los sprites del paquete' },
+  { id: 'LIMIT', label: 'LIMIT', tip: 'Cartas LIMITED del personaje + huecos' },
+  { id: 'DIALOGO', label: 'Diálogo', tip: 'Cuadro de mensaje GBC estructurado' },
   { id: 'INTRO', label: 'Intro', tip: 'Presentación de inicio (VS + READY/FIGHT)' },
 ];
 
@@ -316,13 +317,19 @@ export function HudModule() {
                 </div>
               )}
 
-              {/* MANO: cartas reales del catálogo con sus frames */}
+              {/* MANO: cartas reales + HUECOS hasta el máximo (6 transitorio /
+                  5 persistente) — como en LIMIT, se ve cuántas cartas caben */}
               {view === 'MANO' && (
                 <div className="hand-area">
-                  <div className="hand-label">— MANO —</div>
+                  <div className="hand-label">— MANO ({handCards.length}/6) —</div>
                   <div className="hand-cards">
                     {handCards.map((card, i) => (
                       <HudCard key={card.id} card={card} selected={i === 1} disabled={i === 2} />
+                    ))}
+                    {Array.from({ length: 6 - handCards.length }).map((_, i) => (
+                      <div key={`slot-${i}`} className="limit-slot" data-tip="Hueco de la mano — máx 6 transitorio (5 persistente)">
+                        <span className="hand-slot-mark">+</span>
+                      </div>
                     ))}
                   </div>
                 </div>
@@ -349,6 +356,47 @@ Cada acierto +1 CC (más si completas la cadena).">
                     })()}
                     <button className="basic-btn basic-gather" data-tip="GATHER POWER — sube STR/KI (+8)" />
                     <button className="basic-btn basic-back" data-tip="BACK — volver al menú de comandos" />
+                  </div>
+                </div>
+              )}
+
+              {/* STAGE: el QTE real — secuencia de inputs con los sprites del
+                  paquete (btn_a/btn_b/flechas 1-bit) + prompt + timer + recovery */}
+              {view === 'STAGE' && (
+                <div className="command-select">
+                  <div className="stage-input-area">
+                    <div className="stage-label">
+                      <span className="stage-push">PUSH 0.6 / 1.2</span>
+                      3 stage atk. — STAGE 2/3
+                    </div>
+                    <div className="stage-qte-row">
+                      <div className="stage-sequence">
+                        <span className="stage-seq-item done"><span className="seq-check">✓</span></span>
+                        <span className="stage-seq-item current">
+                          <img src="/assets/ui/qte/btn_a.png" alt="A" className="qte-key-sm" />
+                        </span>
+                        <span className="stage-seq-item future">
+                          <img src="/assets/ui/qte/arrow_right.png" alt="→" className="qte-key-sm" />
+                        </span>
+                      </div>
+                      <div className="stage-prompt-big A">
+                        <img src="/assets/ui/qte/btn_a.png" alt="A" className="qte-key-big" />
+                        <span className="stage-prompt-label">A (Q)</span>
+                      </div>
+                    </div>
+                    <div className="stage-timer-row">
+                      <div className="stage-timer" style={{ width: '38%' }} />
+                    </div>
+                    <div className="stage-help">A = puñetazo · B = patada · flechas/WASD = desplazamiento — pulsa a tiempo (+1 CC por acierto)</div>
+                  </div>
+                  {/* Recovery: PROTEGERSE (A) / REPARAR (B) */}
+                  <div className="stage-recover-help" style={{ marginTop: 6 }}>
+                    <div className="stage-recover-prompt window-open">
+                      <img src="/assets/ui/qte/btn_a.png" alt="A" className="qte-key-sm" /> PROTEGERSE (A)
+                    </div>
+                    <div className="stage-recover-prompt window-open">
+                      <img src="/assets/ui/qte/btn_b.png" alt="B" className="qte-key-sm" /> REPARAR (B)
+                    </div>
                   </div>
                 </div>
               )}

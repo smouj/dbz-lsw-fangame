@@ -9855,3 +9855,43 @@ button.linklike:hover { text-decoration: underline; }
 .dev-pipeline-file code { color: #7fd4ff; font-size: 11px; }
 .dev-pipeline-rol { color: #9aa4b2; }
 .dev-pipeline-ok { color: #7bd88a; font-weight: 700; }
+
+/* Vista STAGE en el preview del HUD Studio: sprites del paquete a la misma
+   resolución de píxeles que los botones (escalado entero, pixelated) */
+.dev-hud-preview .stage-input-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 14px;
+  background: rgba(8, 8, 10, .62);
+  border: 1px solid rgba(255, 255, 255, .08);
+  border-radius: 6px;
+  width: min(560px, 92vw);
+}
+.dev-hud-preview .stage-qte-row {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+.dev-hud-preview .stage-sequence {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+.dev-hud-preview .stage-seq-item.current img {
+  transform: scale(1.15);
+  filter: drop-shadow(0 0 6px rgba(127, 212, 255, .8));
+}
+.dev-hud-preview .stage-prompt-big img {
+  width: 64px;
+  height: 64px;
+  image-rendering: pixelated;
+}
+/* Hueco de la mano (JOINT): misma silueta que los slots de LIMIT */
+.hand-slot-mark {
+  font-family: var(--fpx);
+  font-size: 18px;
+  color: rgba(140, 150, 170, .45);
+  text-shadow: 1px 1px 0 #000;
+}
