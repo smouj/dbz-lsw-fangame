@@ -3675,6 +3675,10 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 }
 .stage-card-icon {
   image-rendering: pixelated;
+  /* Ajuste pixel-perfect: el fit del icono (centroide) redondea a (1,1) —
+     el arte quedaba 1px abajo y 1px a la derecha del centro del marco. */
+  margin-left: -1px;
+  margin-top: -1px;
 }
 /* Glitch del hover (FIX DEFINITIVO): ni transform ni filter en el STAGE —
    ambos creaban stacking contexts que re-compositan el arte absoluto del
