@@ -9559,7 +9559,7 @@ button.linklike:hover { text-decoration: underline; }
   padding: 0;
   /* El diálogo deja el margen lateral del lado donde está el speaker:
      el sprite (absolute, fuera) queda DENTRO del preview, sin recortarse */
-  width: calc(100% - 76px);
+  width: calc(100% - 88px);
   flex-shrink: 0;
   z-index: 40;
   background: #f8f4e4;              /* blanco GBC */
@@ -9583,8 +9583,8 @@ button.linklike:hover { text-decoration: underline; }
      con translateX(-50%) — dentro de la caja flex NO debe haber ninguno). */
   transform: none !important;
 }
-.gbc-dialogue.speaker-left { margin-left: 76px; }
-.gbc-dialogue.speaker-right { margin-right: 76px; }
+.gbc-dialogue.speaker-left { margin-left: 88px; }
+.gbc-dialogue.speaker-right { margin-right: 88px; }
 /* Cuerpo del diálogo: sprite del hablante + contenido (flex row) */
 .gbc-dialogue-body {
   width: 100%;
@@ -9615,8 +9615,8 @@ button.linklike:hover { text-decoration: underline; }
   box-sizing: border-box;
   z-index: 41;
 }
-.gbc-dialogue-speaker.left { right: calc(100% + 12px); }
-.gbc-dialogue-speaker.right { left: calc(100% + 12px); }
+.gbc-dialogue-speaker.left { right: calc(100% + 24px); }
+.gbc-dialogue-speaker.right { left: calc(100% + 24px); }
 .gbc-dialogue-speaker-img {
   width: 100%;
   height: 100%;
