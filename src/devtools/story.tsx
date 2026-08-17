@@ -87,74 +87,6 @@ export function StoryModule() {
         ))}
       </div>
 
-      <div className="dev-story-grid">
-        <section className="dev-story-card">
-          <h2>Capítulo {chapter}</h2>
-          <div className="dev-story-meta">
-            <div><label>Mazo del jefe</label><strong>{deck.length} cartas</strong></div>
-            {boost && (
-              <div><label>AI boost</label><strong>HP+{boost.hp} STR+{boost.str} KI+{boost.ki} SPD+{boost.spd}</strong></div>
-            )}
-            {team && (
-              <div><label>2v2</label><strong>+{characterName(team.enemy2)}{team.ally ? ` (ally ${characterName(team.ally)})` : ' (solo)'}</strong></div>
-            )}
-            <div><label>Viñetas</label><strong>{flow.intro.length} intro{flow.outro ? ` + ${flow.outro.length} outro` : ''}</strong></div>
-          </div>
-
-          <h3>Mazo ({deckBreakdown.length} cartas distintas)</h3>
-          <div className="dev-deck-list">
-            {deckBreakdown.map(([id, copies]) => {
-              const card = getCard(id);
-              return (
-                <div key={id} className="dev-deck-row">
-                  <span className="dev-card-id">{String(id).padStart(3, '0')}</span>
-                  <span className="dev-card-type" style={{ background: card ? cardColor(card.type) : '#666' }}>{card?.type?.[0]?.toUpperCase() ?? '?'}</span>
-                  <span className="dev-card-name">{card?.name ?? `#${id}`}</span>
-                  <span className="dev-deck-copies">×{copies}</span>
-                </div>
-              );
-            })}
-          </div>
-
-          <h3>Cobertura de retratos (capítulo)</h3>
-          <div className="dev-tag-row">
-            <span className="dev-tag ok">✓ {audit.realPortraits}/{audit.withChars} con retrato real</span>
-            {audit.fallbacks > 0 && <span className="dev-tag bad">⚠ {audit.fallbacks} con fallback</span>}
-          </div>
-          {audit.missing.length > 0 && (
-            <p className="dev-muted" style={{ marginTop: 6, fontSize: 11 }}>
-              Sin retrato real: {audit.missing.slice(0, 6).join(' · ')}{audit.missing.length > 6 ? ` +${audit.missing.length - 6}` : ''}
-            </p>
-          )}
-        </section>
-
-        <section className="dev-story-card">
-          <h2>Viñetas — selecciona para previsualizar</h2>
-          <div className="dev-panel-list">
-            {flow.intro.map(p => (
-              <button key={p.id}
-                className={`dev-panel-row dev-panel-btn ${current?.panel.id === p.id && current?.phase === 'intro' ? 'active' : ''}`}
-                onClick={() => select('intro', p.id)}>
-                <span className="dev-panel-layout">{p.layout}</span>
-                <span className="dev-panel-title">{p.title ?? p.id}</span>
-                <span className="dev-panel-sub">{(p.characters ?? []).map(c => characterName(c.character)).join('+')}</span>
-                {p.dialogue && <span className="dev-panel-dialogue">“{p.dialogue.text}”</span>}
-              </button>
-            ))}
-            {flow.outro?.map(p => (
-              <button key={p.id}
-                className={`dev-panel-row dev-panel-btn ${current?.panel.id === p.id && current?.phase === 'outro' ? 'active' : ''}`}
-                onClick={() => select('outro', p.id)}>
-                <span className="dev-panel-layout">{p.layout}</span>
-                <span className="dev-panel-title">{p.title ?? p.id}</span>
-                <span className="dev-panel-sub">{(p.characters ?? []).map(c => characterName(c.character)).join('+')}</span>
-                {p.dialogue && <span className="dev-panel-dialogue">“{p.dialogue.text}”</span>}
-              </button>
-            ))}
-          </div>
-        </section>
-      </div>
-
       {/* ══ PREVIEW DE VIÑETA (render idéntico al juego) ══ */}
       {current && (
         <section className="dev-story-card dev-story-preview-wrap">
@@ -230,6 +162,75 @@ export function StoryModule() {
           </div>
         </section>
       )}
+
+      <div className="dev-story-grid">
+        <section className="dev-story-card">
+          <h2>Capítulo {chapter}</h2>
+          <div className="dev-story-meta">
+            <div><label>Mazo del jefe</label><strong>{deck.length} cartas</strong></div>
+            {boost && (
+              <div><label>AI boost</label><strong>HP+{boost.hp} STR+{boost.str} KI+{boost.ki} SPD+{boost.spd}</strong></div>
+            )}
+            {team && (
+              <div><label>2v2</label><strong>+{characterName(team.enemy2)}{team.ally ? ` (ally ${characterName(team.ally)})` : ' (solo)'}</strong></div>
+            )}
+            <div><label>Viñetas</label><strong>{flow.intro.length} intro{flow.outro ? ` + ${flow.outro.length} outro` : ''}</strong></div>
+          </div>
+
+          <h3>Mazo ({deckBreakdown.length} cartas distintas)</h3>
+          <div className="dev-deck-list">
+            {deckBreakdown.map(([id, copies]) => {
+              const card = getCard(id);
+              return (
+                <div key={id} className="dev-deck-row">
+                  <span className="dev-card-id">{String(id).padStart(3, '0')}</span>
+                  <span className="dev-card-type" style={{ background: card ? cardColor(card.type) : '#666' }}>{card?.type?.[0]?.toUpperCase() ?? '?'}</span>
+                  <span className="dev-card-name">{card?.name ?? `#${id}`}</span>
+                  <span className="dev-deck-copies">×{copies}</span>
+                </div>
+              );
+            })}
+          </div>
+
+          <h3>Cobertura de retratos (capítulo)</h3>
+          <div className="dev-tag-row">
+            <span className="dev-tag ok">✓ {audit.realPortraits}/{audit.withChars} con retrato real</span>
+            {audit.fallbacks > 0 && <span className="dev-tag bad">⚠ {audit.fallbacks} con fallback</span>}
+          </div>
+          {audit.missing.length > 0 && (
+            <p className="dev-muted" style={{ marginTop: 6, fontSize: 11 }}>
+              Sin retrato real: {audit.missing.slice(0, 6).join(' · ')}{audit.missing.length > 6 ? ` +${audit.missing.length - 6}` : ''}
+            </p>
+          )}
+        </section>
+
+        <section className="dev-story-card">
+          <h2>Viñetas — selecciona para previsualizar</h2>
+          <div className="dev-panel-list">
+            {flow.intro.map(p => (
+              <button key={p.id}
+                className={`dev-panel-row dev-panel-btn ${current?.panel.id === p.id && current?.phase === 'intro' ? 'active' : ''}`}
+                onClick={() => select('intro', p.id)}>
+                <span className="dev-panel-layout">{p.layout}</span>
+                <span className="dev-panel-title">{p.title ?? p.id}</span>
+                <span className="dev-panel-sub">{(p.characters ?? []).map(c => characterName(c.character)).join('+')}</span>
+                {p.dialogue && <span className="dev-panel-dialogue">“{p.dialogue.text}”</span>}
+              </button>
+            ))}
+            {flow.outro?.map(p => (
+              <button key={p.id}
+                className={`dev-panel-row dev-panel-btn ${current?.panel.id === p.id && current?.phase === 'outro' ? 'active' : ''}`}
+                onClick={() => select('outro', p.id)}>
+                <span className="dev-panel-layout">{p.layout}</span>
+                <span className="dev-panel-title">{p.title ?? p.id}</span>
+                <span className="dev-panel-sub">{(p.characters ?? []).map(c => characterName(c.character)).join('+')}</span>
+                {p.dialogue && <span className="dev-panel-dialogue">“{p.dialogue.text}”</span>}
+              </button>
+            ))}
+          </div>
+        </section>
+      </div>
+
     </div>
   );
 }
