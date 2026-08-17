@@ -9353,3 +9353,21 @@ button.linklike:hover { text-decoration: underline; }
   padding: 1px 5px;
   box-shadow: 1px 1px 0 rgba(0,0,0,.6);
 }
+
+/* ── Dev Studio HUD: mockup con elementos reales del juego ── */
+.dev-hud-preview .battle-controls {
+  height: auto;
+  min-height: 0;
+  flex-direction: column;
+  gap: 2px;
+  padding: 4px 8px 10px;
+}
+.dev-hud-preview .command-strip { gap: 10px; padding: 6px 12px 4px; }
+.dev-hud-preview .hand-cards .card {
+  width: 64px;
+  min-height: 74px;
+}
+.dev-hud-preview .battle-screen {
+  height: auto;
+  min-height: 560px;
+}

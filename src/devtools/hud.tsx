@@ -17,6 +17,8 @@ import { getForm } from '../data/roster';
 import { spriteDirFor, spriteFrameUrl } from '../data/spriteManifest';
 import { BATTLE_PORTRAITS } from '../data/battlePortraits';
 import { downloadJson } from './spriteEditing';
+import { getCard, CARD_TYPE_NAMES, CARD_COLORS } from '../data/cards';
+import { cardIconUrl, TYPE_ICONS } from '../data/icons';
 
 // Formas de ejemplo para el mockup (Goku vs Piccolo, como el Battle Lab).
 const P_FORM = 'goku_base';
@@ -164,16 +166,15 @@ export function HudModule() {
             </div>
 
             <div className="battle-controls">
-              <div className="dev-hud-command-strip">
-                <button className="dev-hud-mock-cmd special">LIMIT</button>
-                <button className="dev-hud-mock-cmd command">JOINT</button>
-                <button className="dev-hud-mock-cmd defense">BASIC</button>
-                <div className="dev-hud-mock-card">
-                  <span className="dev-hud-mock-card-type">BEAM</span>
-                  <strong>KAMEHAMEHA</strong>
-                  <span className="dev-hud-mock-card-stats">ATK 40 · ACC 90%</span>
-                </div>
+              {/* Botones de comando REALES del juego (sprites GBC btn_*.png) */}
+              <div className="command-strip">
+                <button className="cmd-limit" data-tip="LIMITED" />
+                <button className="cmd-j" data-tip="JOINT" />
+                <button className="cmd-b" data-tip="BASIC" />
+                <button className="cmd-c has-ally" data-tip="CHARA" />
               </div>
+              {/* Mano REAL del juego: cartas del catálogo con su arte */}
+              <MockHand />
             </div>
           </div>
         </div>
@@ -221,6 +222,47 @@ export function HudModule() {
             </div>
           ))}
         </div>
+      </div>
+    </div>
+  );
+}
+
+
+// ── Mano del mockup: cartas REALES del catálogo (igual que el build) ──
+const MOCK_HAND_IDS = [13, 7, 5, 1]; // Kamehameha, Energy Wave, Cont. Punch, 3 Stage Attack
+
+function MockHand() {
+  const cards = MOCK_HAND_IDS.map(id => getCard(id)).filter(Boolean) as NonNullable<ReturnType<typeof getCard>>[];
+  return (
+    <div className="hand-area">
+      <div className="hand-label">— MANO —</div>
+      <div className="hand-cards">
+        {cards.map((card, i) => {
+          const color = CARD_COLORS[card.type];
+          const iconUrl = cardIconUrl(card.id);
+          const IconCmp = TYPE_ICONS[card.type];
+          return (
+            <button key={card.id} className={`card ${card.type} ${i === 1 ? 'selected' : ''}`}
+              style={{ '--card-color': color } as React.CSSProperties} disabled={i === 2}>
+              <div className="card-header">
+                <span className="card-icon">
+                  {iconUrl ? <img className="card-icon-img" src={iconUrl} alt="" /> : <IconCmp size={16} strokeWidth={2.2} />}
+                </span>
+                <span className="card-cc">{card.cc}CC</span>
+              </div>
+              <div className="card-art">
+                {iconUrl ? <img className="card-art-img" src={iconUrl} alt="" /> : <IconCmp size={40} strokeWidth={1.8} />}
+              </div>
+              <div className="card-name">{card.name}</div>
+              <div className="card-type">{CARD_TYPE_NAMES[card.type]}</div>
+              <div className="card-stats">
+                {card.atk > 0 && <span className="card-atk">ATK{card.atk}</span>}
+                <span className="card-acc">ACC{card.acc}%</span>
+              </div>
+              <div className="card-rarity">{'★'.repeat(card.rarity)}{'☆'.repeat(5 - card.rarity)}</div>
+            </button>
+          );
+        })}
       </div>
     </div>
   );
