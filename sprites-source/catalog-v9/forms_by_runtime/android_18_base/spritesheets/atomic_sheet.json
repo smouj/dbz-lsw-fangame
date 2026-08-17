@@ -1,6 +1,6 @@
 {
   "columns": 8,
-  "rows": 6,
+  "rows": 7,
   "cell_width": 119,
   "cell_height": 108,
   "sprites": {
@@ -339,6 +339,27 @@
       "w": 31,
       "h": 38,
       "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/android_18_base/atomic/048.png"
+    },
+    "049.png": {
+      "x": 27,
+      "y": 674,
+      "w": 64,
+      "h": 56,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/android_18_base/atomic/049.png"
+    },
+    "050.png": {
+      "x": 146,
+      "y": 674,
+      "w": 64,
+      "h": 56,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/android_18_base/atomic/050.png"
+    },
+    "051.png": {
+      "x": 265,
+      "y": 674,
+      "w": 64,
+      "h": 56,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/android_18_base/atomic/051.png"
     }
   }
 }

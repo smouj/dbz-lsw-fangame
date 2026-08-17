@@ -297,6 +297,27 @@
       "w": 74,
       "h": 56,
       "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/goten_super_saiyan/atomic/042.png"
+    },
+    "043.png": {
+      "x": 275,
+      "y": 335,
+      "w": 64,
+      "h": 56,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/goten_super_saiyan/atomic/043.png"
+    },
+    "044.png": {
+      "x": 398,
+      "y": 335,
+      "w": 64,
+      "h": 56,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/goten_super_saiyan/atomic/044.png"
+    },
+    "045.png": {
+      "x": 521,
+      "y": 335,
+      "w": 64,
+      "h": 56,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/goten_super_saiyan/atomic/045.png"
     }
   }
 }

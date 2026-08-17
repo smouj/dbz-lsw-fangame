@@ -346,6 +346,27 @@
       "w": 46,
       "h": 42,
       "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/piccolo_base/atomic/049.png"
+    },
+    "050.png": {
+      "x": 152,
+      "y": 414,
+      "w": 64,
+      "h": 56,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/piccolo_base/atomic/050.png"
+    },
+    "051.png": {
+      "x": 275,
+      "y": 414,
+      "w": 64,
+      "h": 56,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/piccolo_base/atomic/051.png"
+    },
+    "052.png": {
+      "x": 398,
+      "y": 414,
+      "w": 64,
+      "h": 56,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/piccolo_base/atomic/052.png"
     }
   }
 }

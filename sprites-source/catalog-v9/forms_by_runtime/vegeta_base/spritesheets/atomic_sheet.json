@@ -297,6 +297,27 @@
       "w": 69,
       "h": 56,
       "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/vegeta_base/atomic/042.png"
+    },
+    "043.png": {
+      "x": 273,
+      "y": 302,
+      "w": 64,
+      "h": 56,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/vegeta_base/atomic/043.png"
+    },
+    "044.png": {
+      "x": 395,
+      "y": 302,
+      "w": 64,
+      "h": 56,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/vegeta_base/atomic/044.png"
+    },
+    "045.png": {
+      "x": 517,
+      "y": 302,
+      "w": 64,
+      "h": 56,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/vegeta_base/atomic/045.png"
     }
   }
 }

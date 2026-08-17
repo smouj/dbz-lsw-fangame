@@ -1,6 +1,6 @@
 {
   "columns": 8,
-  "rows": 7,
+  "rows": 8,
   "cell_width": 125,
   "cell_height": 66,
   "sprites": {
@@ -388,6 +388,27 @@
       "w": 39,
       "h": 12,
       "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/vegito_ssj/atomic/055.png"
+    },
+    "056.png": {
+      "x": 905,
+      "y": 401,
+      "w": 64,
+      "h": 56,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/vegito_ssj/atomic/056.png"
+    },
+    "057.png": {
+      "x": 30,
+      "y": 467,
+      "w": 64,
+      "h": 56,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/vegito_ssj/atomic/057.png"
+    },
+    "058.png": {
+      "x": 155,
+      "y": 467,
+      "w": 64,
+      "h": 56,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/vegito_ssj/atomic/058.png"
     }
   }
 }

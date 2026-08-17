@@ -367,6 +367,27 @@
       "w": 32,
       "h": 39,
       "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/android_19_base/atomic/052.png"
+    },
+    "053.png": {
+      "x": 517,
+      "y": 674,
+      "w": 64,
+      "h": 56,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/android_19_base/atomic/053.png"
+    },
+    "054.png": {
+      "x": 639,
+      "y": 674,
+      "w": 64,
+      "h": 56,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/android_19_base/atomic/054.png"
+    },
+    "055.png": {
+      "x": 761,
+      "y": 674,
+      "w": 64,
+      "h": 56,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/android_19_base/atomic/055.png"
     }
   }
 }

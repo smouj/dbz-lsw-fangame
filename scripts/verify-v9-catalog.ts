@@ -70,10 +70,9 @@ const atomicCount = (() => {
   }
   return n;
 })();
-// 1.966 = 1.952 atómicas V7 + 14 añadidas 2026-08-17 (OW/tile/composite canónicos:
-// trunks_base 035-038, nappa_base 038-040, gotenks_ssj3 045-047, android_16 045,
-// frieza 047, buu_gohan 057, ginyu 053)
-check('v9:atomic_1966', atomicCount === 1966, `${atomicCount} frames atomic (1952 V7 + 14 canónicos añadidos)`);
+// 2.098 = 1.952 atómicas V7 + 14 añadidas 2026-08-17 (OW/tile/composite canónicos) + 132 support blue
+// (44 formas × 3 fases del aura de ACCIÓN, generadas por scripts/build-aura-variants.py)
+check('v9:atomic_2098', atomicCount === 2098, `${atomicCount} frames atomic (1952 V7 + 14 canónicos + 132 aura_support)`);
 const namedCount = (() => {
   const root = path.join(V9, 'forms_by_runtime');
   let n = 0;
@@ -90,8 +89,8 @@ const namedCount = (() => {
   }
   return n;
 })();
-// 1.952 aliases atomic + 392 aliases fixed_only + 14 aliases añadidos = 2.358
-check('v9:named_2358', namedCount === 2358, `${namedCount} aliases named (1952 atomic + 392 fixed_only + 14 añadidos)`);
+// 1.952 aliases atomic + 392 aliases fixed_only + 14 añadidos + 132 aura_support = 2.490
+check('v9:named_2490', namedCount === 2490, `${namedCount} aliases named (1952 atomic + 392 fixed_only + 14 + 132 aura_support)`);
 const sheetCount = (() => {
   const root = path.join(V9, 'forms_by_runtime');
   let n = 0;
@@ -109,7 +108,7 @@ const sheetCount = (() => {
   }
   return n;
 })();
-check('v9:spritesheets_570', sheetCount === 570, `${sheetCount} spritesheets (556 + 14 buckets nuevos 2026-08-17)`);
+check('v9:spritesheets_612', sheetCount === 612, `${sheetCount} spritesheets (556 + 14 buckets 2026-08-17 + 42 by_bucket aura_support)`);
 
 // 5-7: catálogos
 check('v9:card_sequences_125', csvRows('cards/card_sequences.csv') === 125, `${csvRows('cards/card_sequences.csv')} filas`);
@@ -150,7 +149,7 @@ print(f'{n} {bad}')
 } catch (e) {
   check('v9:transparency', false, String(e));
 }
-check('v9:transparency', checked === 1966 && hidden === 0, `${checked} PNG, ${hidden} px RGB residual`);
+check('v9:transparency', checked === 2098 && hidden === 0, `${checked} PNG, ${hidden} px RGB residual`);
 
 // 8b: fixed_only exportado (canonización V9 completa)
 const fixedRows = (() => {
@@ -267,7 +266,52 @@ print(ok)
   check('v9:facing_right', false, String(e));
 }
 
-// 10: SHA spot-check
+// 10: aura_support — variante BLUE de la animación del aura de ACCIÓN
+// (44 formas × 3 fases; personaje intacto, paleta azul exacta; generado por
+// scripts/build-aura-variants.py, auditado por scripts/audit-aura-variants.py)
+try {
+  const out = execSync(`python3 -c "
+import os, json
+from PIL import Image
+root = 'sprites-source/catalog-v9/forms_by_runtime'
+BLUE = {(0x50,0xA8,0xF0),(0xA0,0xC0,0xF8),(0x00,0x90,0xF0)}
+entries = 0
+forms = 0
+bad = 0
+for d in sorted(os.listdir(root)):
+    cat = os.path.join(root, d, 'catalog.json')
+    if not os.path.exists(cat): continue
+    catalog = json.load(open(cat))
+    sups = [e for e in catalog if e.get('semantic_bucket') == 'aura_support']
+    if not sups: continue
+    forms += 1
+    for e in sups:
+        entries += 1
+        im = Image.open(os.path.join(root, d, 'atomic', e['frame'])).convert('RGBA')
+        px = im.load()
+        for y in range(im.height):
+            for x in range(im.width):
+                r,g,b,a = px[x,y]
+                if a > 0 and (r,g,b) not in BLUE:
+                    # solo cuenta como residuo la PALETA NARANJA CANÓNICA EXACTA
+                    # (los píxeles de personaje —piel #F8D8A8, pelo, contorno—
+                    # son legítimos; la máscara real se audita en
+                    # scripts/audit-aura-variants.py con 0 tolerancia)
+                    if (r,g,b) in {(0xF0,0xA0,0x50),(0xF0,0xC8,0xA0),(0xF8,0x80,0x00)}:
+                        bad += 1
+print(f'{entries} {forms} {bad}')
+"`, { encoding: 'utf8' }).trim().split(' ');
+  const entries = Number(out[0]);
+  const forms = Number(out[1]);
+  const bad = Number(out[2]);
+  check('v9:aura_support_132', entries === 132 && forms === 42, `${entries} frames support en ${forms} formas`);
+  check('v9:aura_support_palette', bad === 0, `${bad} píxeles naranjas residuales en supports`);
+} catch (e) {
+  check('v9:aura_support_132', false, String(e));
+  check('v9:aura_support_palette', false, String(e));
+}
+
+// 11: SHA spot-check
 try {
   const sums = fs.readFileSync(path.join(V9, 'SHA256SUMS.txt'), 'utf8');
   let shaOk = true;

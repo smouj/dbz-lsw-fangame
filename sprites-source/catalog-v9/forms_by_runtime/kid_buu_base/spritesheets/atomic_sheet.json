@@ -346,6 +346,27 @@
       "w": 30,
       "h": 37,
       "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/kid_buu_base/atomic/049.png"
+    },
+    "050.png": {
+      "x": 149,
+      "y": 674,
+      "w": 64,
+      "h": 56,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/kid_buu_base/atomic/050.png"
+    },
+    "051.png": {
+      "x": 271,
+      "y": 674,
+      "w": 63,
+      "h": 56,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/kid_buu_base/atomic/051.png"
+    },
+    "052.png": {
+      "x": 391,
+      "y": 674,
+      "w": 64,
+      "h": 56,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/kid_buu_base/atomic/052.png"
     }
   }
 }

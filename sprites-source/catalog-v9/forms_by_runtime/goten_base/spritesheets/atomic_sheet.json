@@ -1,6 +1,6 @@
 {
   "columns": 8,
-  "rows": 5,
+  "rows": 6,
   "cell_width": 123,
   "cell_height": 60,
   "sprites": {
@@ -276,6 +276,27 @@
       "w": 44,
       "h": 34,
       "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/goten_base/atomic/039.png"
+    },
+    "040.png": {
+      "x": 890,
+      "y": 242,
+      "w": 64,
+      "h": 56,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/goten_base/atomic/040.png"
+    },
+    "041.png": {
+      "x": 29,
+      "y": 302,
+      "w": 64,
+      "h": 56,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/goten_base/atomic/041.png"
+    },
+    "042.png": {
+      "x": 152,
+      "y": 302,
+      "w": 64,
+      "h": 56,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/goten_base/atomic/042.png"
     }
   }
 }

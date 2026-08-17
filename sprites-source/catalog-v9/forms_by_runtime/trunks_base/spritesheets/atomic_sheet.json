@@ -1,6 +1,6 @@
 {
   "columns": 8,
-  "rows": 5,
+  "rows": 6,
   "cell_width": 122,
   "cell_height": 67,
   "sprites": {
@@ -263,9 +263,30 @@
       "h": 35,
       "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/trunks_base/atomic/037.png"
     },
+    "039.png": {
+      "x": 639,
+      "y": 273,
+      "w": 64,
+      "h": 56,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/trunks_base/atomic/039.png"
+    },
+    "040.png": {
+      "x": 761,
+      "y": 273,
+      "w": 64,
+      "h": 56,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/trunks_base/atomic/040.png"
+    },
+    "041.png": {
+      "x": 883,
+      "y": 273,
+      "w": 64,
+      "h": 56,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/trunks_base/atomic/041.png"
+    },
     "038.png": {
-      "x": 586,
-      "y": 280,
+      "x": -24,
+      "y": 347,
       "w": 169,
       "h": 42,
       "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/trunks_base/atomic/038.png"

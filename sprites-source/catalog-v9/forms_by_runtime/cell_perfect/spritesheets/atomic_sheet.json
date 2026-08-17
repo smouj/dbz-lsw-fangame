@@ -353,6 +353,27 @@
       "w": 34,
       "h": 46,
       "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/cell_perfect/atomic/050.png"
+    },
+    "051.png": {
+      "x": 290,
+      "y": 407,
+      "w": 64,
+      "h": 56,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/cell_perfect/atomic/051.png"
+    },
+    "052.png": {
+      "x": 419,
+      "y": 407,
+      "w": 64,
+      "h": 56,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/cell_perfect/atomic/052.png"
+    },
+    "053.png": {
+      "x": 548,
+      "y": 407,
+      "w": 64,
+      "h": 56,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/cell_perfect/atomic/053.png"
     }
   }
 }

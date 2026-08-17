@@ -346,6 +346,27 @@
       "w": 46,
       "h": 42,
       "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/future_trunks_super_saiyan/atomic/049.png"
+    },
+    "050.png": {
+      "x": 158,
+      "y": 362,
+      "w": 64,
+      "h": 56,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/future_trunks_super_saiyan/atomic/050.png"
+    },
+    "051.png": {
+      "x": 285,
+      "y": 362,
+      "w": 64,
+      "h": 56,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/future_trunks_super_saiyan/atomic/051.png"
+    },
+    "052.png": {
+      "x": 412,
+      "y": 362,
+      "w": 64,
+      "h": 56,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/future_trunks_super_saiyan/atomic/052.png"
     }
   }
 }

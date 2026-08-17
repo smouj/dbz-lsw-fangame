@@ -1,6 +1,6 @@
 {
   "columns": 8,
-  "rows": 6,
+  "rows": 7,
   "cell_width": 123,
   "cell_height": 65,
   "sprites": {
@@ -332,6 +332,27 @@
       "w": 24,
       "h": 16,
       "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/gotenks_super_saiyan_3/atomic/047.png"
+    },
+    "048.png": {
+      "x": 890,
+      "y": 329,
+      "w": 64,
+      "h": 56,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/gotenks_super_saiyan_3/atomic/048.png"
+    },
+    "049.png": {
+      "x": 29,
+      "y": 394,
+      "w": 64,
+      "h": 56,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/gotenks_super_saiyan_3/atomic/049.png"
+    },
+    "050.png": {
+      "x": 152,
+      "y": 394,
+      "w": 64,
+      "h": 56,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/gotenks_super_saiyan_3/atomic/050.png"
     }
   }
 }

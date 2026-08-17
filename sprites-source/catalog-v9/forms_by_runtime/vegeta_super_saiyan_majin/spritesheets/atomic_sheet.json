@@ -353,6 +353,27 @@
       "w": 31,
       "h": 37,
       "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/vegeta_super_saiyan_majin/atomic/050.png"
+    },
+    "051.png": {
+      "x": 275,
+      "y": 414,
+      "w": 64,
+      "h": 56,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/vegeta_super_saiyan_majin/atomic/051.png"
+    },
+    "052.png": {
+      "x": 398,
+      "y": 414,
+      "w": 64,
+      "h": 56,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/vegeta_super_saiyan_majin/atomic/052.png"
+    },
+    "053.png": {
+      "x": 521,
+      "y": 414,
+      "w": 64,
+      "h": 56,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/vegeta_super_saiyan_majin/atomic/053.png"
     }
   }
 }

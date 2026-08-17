@@ -1,6 +1,6 @@
 {
   "columns": 8,
-  "rows": 5,
+  "rows": 6,
   "cell_width": 126,
   "cell_height": 60,
   "sprites": {
@@ -283,6 +283,27 @@
       "w": 46,
       "h": 42,
       "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/kid_trunks_super_saiyan/atomic/040.png"
+    },
+    "041.png": {
+      "x": 31,
+      "y": 302,
+      "w": 64,
+      "h": 56,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/kid_trunks_super_saiyan/atomic/041.png"
+    },
+    "042.png": {
+      "x": 157,
+      "y": 302,
+      "w": 64,
+      "h": 56,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/kid_trunks_super_saiyan/atomic/042.png"
+    },
+    "043.png": {
+      "x": 283,
+      "y": 302,
+      "w": 64,
+      "h": 56,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/kid_trunks_super_saiyan/atomic/043.png"
     }
   }
 }

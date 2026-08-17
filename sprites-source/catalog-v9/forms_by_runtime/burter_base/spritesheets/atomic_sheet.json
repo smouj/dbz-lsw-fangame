@@ -255,6 +255,27 @@
       "w": 16,
       "h": 12,
       "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/burter_base/atomic/036.png"
+    },
+    "037.png": {
+      "x": 503,
+      "y": 242,
+      "w": 64,
+      "h": 56,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/burter_base/atomic/037.png"
+    },
+    "038.png": {
+      "x": 622,
+      "y": 242,
+      "w": 64,
+      "h": 56,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/burter_base/atomic/038.png"
+    },
+    "039.png": {
+      "x": 741,
+      "y": 242,
+      "w": 64,
+      "h": 56,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/burter_base/atomic/039.png"
     }
   }
 }

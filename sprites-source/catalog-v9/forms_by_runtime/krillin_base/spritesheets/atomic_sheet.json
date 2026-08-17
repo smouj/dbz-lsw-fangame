@@ -346,6 +346,27 @@
       "w": 21,
       "h": 35,
       "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/krillin_base/atomic/049.png"
+    },
+    "050.png": {
+      "x": 157,
+      "y": 362,
+      "w": 64,
+      "h": 56,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/krillin_base/atomic/050.png"
+    },
+    "051.png": {
+      "x": 283,
+      "y": 362,
+      "w": 64,
+      "h": 56,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/krillin_base/atomic/051.png"
+    },
+    "052.png": {
+      "x": 409,
+      "y": 362,
+      "w": 64,
+      "h": 56,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/krillin_base/atomic/052.png"
     }
   }
 }

@@ -64,6 +64,44 @@ resolvers apuntan SOLO ahí. Verificado por `audit:sprites`, `audit:sheets` y
 8. **Cada PNG debe tener RGB=(0,0,0,0) bajo alpha=0** (sin RGB residual que
    reaparezca como halo al escalar/comprimir). Verificado: 0 PNG con residual.
 
+## Variante SUPPORT BLUE del aura de ACCIÓN (2026-08-17)
+
+Las auras del **battle overworld** (24x16) NO se tocan. Esta sección cubre la
+animación del aura de las **ACCIONES**: los frames 64x56 donde el personaje
+aparece rodeado por el aura naranja de Power/Power Up, con el ciclo de paleta
+A→B→C del GBC (23 tiles 2bpp, una geometría, paleta rotada por píxel).
+
+- **Dónde viven**: bucket `orbs_rings_bursts` (y `projectiles_beams` para
+goku_base) — 3 frames 64x56 por forma con la MISMA geometría y los 3 colores
+de la paleta rotando por píxel.
+- **Bucket generado**: `aura_support` — 3 frames por forma (44 formas = 132
+frames; las 2 FIXED-only goku_ssj2/ginyu_gokus_body usan el ciclo de su forma
+fuente, arte compartido legítimo).
+- **Método (pixel-perfect, sin global color replace)**: la máscara del aura
+se deriva del CICLO: un píxel es AURA si sus 3 colores en las 3 fases son
+naranjas distintos (rota con la paleta). El personaje es estático → NUNCA se
+toca, aunque comparta RGB con el aura. Los píxeles del aura se sustituyen por
+su azul exacto: #F0A050→#50A8F0, #F0C8A0→#A0C0F8, #F88000→#0090F0 (variantes
+ROM F7/FF mapeadas por proximidad al canónico).
+- **Ciclo preservado**: cada frame support rota los 3 azules igual que el
+frame power rota los 3 naranjas (A→B→C). El personaje queda binariamente
+idéntico (verificado píxel a píxel).
+- **Scripts**: `scripts/build-aura-variants.py --apply` (idempotente; escribe
+en paquete tmp V9 + repo catalog-v9: atomic, named/aura_support, catalog,
+by_bucket, atomic_sheet rebuild) y `scripts/audit-aura-variants.py`
+(auditoría pixel-perfect: tamaño, alpha, personaje intacto, paleta azul
+exacta, 0 naranjas residuales, ciclo preservado).
+- **verify:v9**: conteos actualizados (atomic 2098, named 2490, spritesheets
+612, transparency 2098) + checks `v9:aura_support_132` y
+`v9:aura_support_palette`.
+- **Runtime**: NO se ha cambiado gameplay. Los assets están preparados con
+metadata (`palette: support_blue_2026-08-17`, `support_variant_of: <src>`) para
+que el BattleCinematicDirector pueda solicitar AURA_POWER / AURA_SUPPORT sin
+volver a procesar nada.
+- Excepción documentada: kid_buu fase 2 (63x56) tiene micro-variación de
+geometría (el GBC mueve las llamas 1px) — cubierta por la pasada 2 del
+script (convierte cualquier píxel con color de la paleta del aura).
+
 ## Verificación
 
 ```bash

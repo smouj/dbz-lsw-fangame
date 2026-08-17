@@ -304,6 +304,27 @@
       "w": 46,
       "h": 31,
       "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/guldo_base/atomic/043.png"
+    },
+    "044.png": {
+      "x": 377,
+      "y": 302,
+      "w": 64,
+      "h": 56,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/guldo_base/atomic/044.png"
+    },
+    "045.png": {
+      "x": 494,
+      "y": 302,
+      "w": 64,
+      "h": 56,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/guldo_base/atomic/045.png"
+    },
+    "046.png": {
+      "x": 611,
+      "y": 302,
+      "w": 64,
+      "h": 56,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/guldo_base/atomic/046.png"
     }
   }
 }

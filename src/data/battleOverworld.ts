@@ -80,6 +80,7 @@ function formIdToCharFormSync(formId: string): { char: string; form: string } | 
     'trunks_future': ['future_trunks', 'base'],
     'trunks_ssj': ['future_trunks', 'super_saiyan'],
     'ginyu_goku': ['ginyu', 'gokus_body'],
+    'gohan_adult_ssj': ['gohan_adult', 'super_saiyan'],
     'gohan_adult_ssj2': ['gohan_adult', 'super_saiyan'],
     'gohan_adult_ultimate': ['gohan_adult', 'ultimate'],
     'goku_ssj2': ['goku', 'super_saiyan_2'],

@@ -1,6 +1,6 @@
 {
   "columns": 8,
-  "rows": 6,
+  "rows": 7,
   "cell_width": 129,
   "cell_height": 108,
   "sprites": {
@@ -332,6 +332,27 @@
       "w": 24,
       "h": 16,
       "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/frieza_base/atomic/047.png"
+    },
+    "048.png": {
+      "x": 935,
+      "y": 566,
+      "w": 64,
+      "h": 56,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/frieza_base/atomic/048.png"
+    },
+    "049.png": {
+      "x": 32,
+      "y": 674,
+      "w": 64,
+      "h": 56,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/frieza_base/atomic/049.png"
+    },
+    "050.png": {
+      "x": 161,
+      "y": 674,
+      "w": 64,
+      "h": 56,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/frieza_base/atomic/050.png"
     }
   }
 }

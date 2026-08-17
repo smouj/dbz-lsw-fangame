@@ -1,0 +1,29 @@
+{
+  "columns": 3,
+  "rows": 1,
+  "cell_width": 68,
+  "cell_height": 60,
+  "sprites": {
+    "goku_super_saiyan_2__aura_support__01__src_033.png": {
+      "x": 2,
+      "y": 2,
+      "w": 64,
+      "h": 56,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/goku_super_saiyan/named/aura_support/goku_super_saiyan_2__aura_support__01__src_033.png"
+    },
+    "goku_super_saiyan_2__aura_support__02__src_034.png": {
+      "x": 68,
+      "y": 2,
+      "w": 64,
+      "h": 56,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/goku_super_saiyan/named/aura_support/goku_super_saiyan_2__aura_support__02__src_034.png"
+    },
+    "goku_super_saiyan_2__aura_support__03__src_035.png": {
+      "x": 134,
+      "y": 2,
+      "w": 64,
+      "h": 56,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/goku_super_saiyan/named/aura_support/goku_super_saiyan_2__aura_support__03__src_035.png"
+    }
+  }
+}

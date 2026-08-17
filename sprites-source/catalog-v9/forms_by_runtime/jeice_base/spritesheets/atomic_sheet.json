@@ -374,6 +374,27 @@
       "w": 69,
       "h": 56,
       "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/jeice_base/atomic/053.png"
+    },
+    "054.png": {
+      "x": 622,
+      "y": 407,
+      "w": 64,
+      "h": 56,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/jeice_base/atomic/054.png"
+    },
+    "055.png": {
+      "x": 741,
+      "y": 407,
+      "w": 64,
+      "h": 56,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/jeice_base/atomic/055.png"
+    },
+    "056.png": {
+      "x": 860,
+      "y": 407,
+      "w": 64,
+      "h": 56,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/jeice_base/atomic/056.png"
     }
   }
 }

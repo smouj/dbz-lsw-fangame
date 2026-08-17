@@ -402,6 +402,27 @@
       "w": 24,
       "h": 16,
       "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/buu_gohan_absorbed/atomic/057.png"
+    },
+    "058.png": {
+      "x": 152,
+      "y": 782,
+      "w": 64,
+      "h": 56,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/buu_gohan_absorbed/atomic/058.png"
+    },
+    "059.png": {
+      "x": 275,
+      "y": 782,
+      "w": 64,
+      "h": 56,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/buu_gohan_absorbed/atomic/059.png"
+    },
+    "060.png": {
+      "x": 398,
+      "y": 782,
+      "w": 64,
+      "h": 56,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/buu_gohan_absorbed/atomic/060.png"
     }
   }
 }
