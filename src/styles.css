@@ -9493,22 +9493,39 @@ button.linklike:hover { text-decoration: underline; }
   left: 50%;
   bottom: 18px;
   transform: translateX(-50%) translateY(8px);
-  width: var(--gbc-dlg-w, min(640px, 88%));
+  width: var(--gbc-dlg-w, min(720px, 92%));
   z-index: 40;
   background: #f8f4e4;              /* blanco GBC */
   border: 3px solid #000;
   outline: 2px solid #f8f4e4;
   box-shadow: 4px 4px 0 rgba(0,0,0,.55), inset 0 0 0 1px #000;
-  padding: 10px 14px 12px;
+  padding: 12px 16px 14px;
   font-family: var(--fpx);
   color: #000;
-  font-size: 13px;
-  line-height: 1.6;
-  letter-spacing: .5px;
+  font-size: 14px;
+  line-height: 1.65;
+  letter-spacing: .6px;
   image-rendering: pixelated;
   opacity: 0;
   pointer-events: none;
   transition: opacity .12s steps(3, end), transform .12s steps(3, end);
+}
+/* Actor de la acción: etiqueta superior, estilo GBC */
+.gbc-dialogue-actor {
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: #c04040;                    /* rojo GBC para el actor */
+  margin-bottom: 2px;
+  text-transform: uppercase;
+  text-shadow: 1px 1px 0 #f8f4e4;
+}
+/* Texto principal: faux-bold pixel (sombras negras 4 dir → engrosan sin bold real) */
+.gbc-dialogue-text {
+  color: #000;
+  font-weight: 400;
+  text-shadow:
+    1px 0 0 #000, -1px 0 0 #000, 0 1px 0 #000, 0 -1px 0 #000,
+    1px 1px 0 #000, -1px 1px 0 #000, 1px -1px 0 #000, -1px -1px 0 #000;
 }
 .battle-screen.gbc-msg .gbc-dialogue {
   opacity: 1;

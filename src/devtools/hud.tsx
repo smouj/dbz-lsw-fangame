@@ -220,7 +220,8 @@ export function HudModule() {
             {/* Cuadro de diálogo GBC (mensajes durante acciones) — previsualizable */}
             {view === 'DIALOGO' && (
               <div className="gbc-dialogue">
-                <div className="gbc-dialogue-text">GOKU uses KAMEHAMEHA!<span className="gbc-dialogue-cursor">▼</span></div>
+                <div className="gbc-dialogue-actor">GOKU</div>
+                <div className="gbc-dialogue-text">uses KAMEHAMEHA!<span className="gbc-dialogue-cursor">▼</span></div>
               </div>
             )}
 

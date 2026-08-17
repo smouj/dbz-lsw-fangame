@@ -2928,7 +2928,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
       {/* Cuadro de diálogo GBC: solo durante acciones (oculta los botones) */}
       {gbcMsg && (
         <div className="gbc-dialogue" key={gbcMsg}>
-          <div className="gbc-dialogue-text">{gbcMsg}<span className="gbc-dialogue-cursor">▼</span></div>
+          <GbcDialogueText msg={gbcMsg} />
         </div>
       )}
 
@@ -4664,4 +4664,21 @@ root.render(<App />);
 // re-crear createRoot sobre el mismo contenedor (error de dev).
 if (import.meta.hot) {
   import.meta.hot.dispose(() => { root.unmount(); });
+}
+
+
+// ── Texto del diálogo GBC estructurado: actor (etiqueta) + mensaje ──
+function GbcDialogueText({ msg }: { msg: string }) {
+  let actor: string | null = null;
+  let text = msg;
+  const mUses = msg.match(/^(.+?)\s+uses\s+(.+)$/i);
+  const mDash = msg.match(/^(.+?)\s+—\s+(.+)$/);
+  if (mUses) { actor = mUses[1]; text = mUses[2]; }
+  else if (mDash) { actor = mDash[1]; text = mDash[2]; }
+  return (
+    <>
+      {actor && <div className="gbc-dialogue-actor">{actor}</div>}
+      <div className="gbc-dialogue-text">{text}<span className="gbc-dialogue-cursor">▼</span></div>
+    </>
+  );
 }
