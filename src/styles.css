@@ -3428,88 +3428,63 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 }
 /* Textos y chips del QTE adaptados al fondo BLANCO de las cajas GBC */
 .gbc-dialogue .stage-inline {
-  /* Inputs del STAGE DENTRO del cuadro de diálogo: UNA sola fila, mismo
-     ancho que el texto del diálogo — nada superpuesto ni fuera */
+  /* Inputs del STAGE DENTRO del cuadro de diálogo: UNA sola fila, SOLO los
+     iconos de teclas + el tiempo numérico — sin marcos, sin texto extra,
+     sin barra de tiempo */
   display: flex;
   align-items: center;
-  gap: 12px;
+  justify-content: center;
+  gap: 18px;
   width: 100%;
   font-family: var(--fpx);
   color: #000;
 }
-.gbc-dialogue .stage-inline-name {
-  font-size: 12px;
-  font-weight: bold;
-  letter-spacing: 1px;
-  white-space: nowrap;
-}
-.gbc-dialogue .stage-inline-progress {
-  font-size: 10px;
-  color: #005a8c;
-  letter-spacing: 1px;
-  white-space: nowrap;
-}
+/* Secuencia SIN marco alrededor: solo los iconos alineados */
 .gbc-dialogue .stage-sequence {
   display: flex;
   align-items: center;
-  gap: 5px;
-  padding: 4px 8px;
-  background: rgba(0, 0, 0, .1);
-  border: 1px solid rgba(0, 0, 0, .25);
-  border-radius: 4px;
+  gap: 10px;
 }
 .gbc-dialogue .stage-seq-item img {
-  width: 22px;
-  height: 22px;
+  width: 34px;
+  height: 34px;
   image-rendering: pixelated;
   display: block;
+  object-fit: contain;
 }
 .gbc-dialogue .stage-seq-item.done .seq-check {
-  font-size: 12px;
+  font-size: 14px;
   color: #0a7a2a;
 }
 .gbc-dialogue .stage-seq-item.current img {
-  transform: scale(1.15);
-  filter: drop-shadow(0 0 5px rgba(0, 90, 140, .85));
+  transform: scale(1.25);
+  filter: drop-shadow(0 0 6px rgba(0, 90, 140, .9));
 }
-.gbc-dialogue .stage-seq-item.future { opacity: .55; }
+.gbc-dialogue .stage-seq-item.future { opacity: .5; }
+/* Prompt actual SIN marco: solo el icono grande */
 .gbc-dialogue .stage-inline-prompt {
   display: flex;
   align-items: center;
-  gap: 6px;
   flex-shrink: 0;
 }
 .gbc-dialogue .stage-inline-prompt img {
-  width: 36px;
-  height: 36px;
+  width: 56px;
+  height: 56px;
   image-rendering: pixelated;
   display: block;
+  object-fit: contain;
 }
-.gbc-dialogue .stage-prompt-label {
-  font-size: 10px;
+/* Tiempo NUMÉRICO: contando hacia arriba / máximo — sin barra */
+.gbc-dialogue .stage-inline-time {
+  font-size: 16px;
   color: #000;
   letter-spacing: 1px;
   white-space: nowrap;
+  margin-left: 6px;
 }
-.gbc-dialogue .stage-inline-push {
-  font-size: 10px;
-  color: #7a5c00;
-  letter-spacing: 1px;
-  white-space: nowrap;
-  margin-left: auto;
-}
-.gbc-dialogue .stage-inline-track {
-  width: 110px;
-  height: 8px;
-  background: rgba(0, 0, 0, .18);
-  border: 1px solid rgba(0, 0, 0, .35);
-  border-radius: 2px;
-  overflow: hidden;
-  flex-shrink: 0;
-}
-.gbc-dialogue .stage-inline-track .stage-timer {
-  height: 100%;
-  background: linear-gradient(90deg, #f6c744, #ff9d2e);
+.gbc-dialogue .stage-inline-time strong {
+  font-size: 22px;
+  color: #005a8c;
 }
 .stage-inputs-box .stage-sequence {
   background: rgba(0, 0, 0, .12);
@@ -8764,6 +8739,26 @@ button:focus-visible, .chapter-node:focus-visible {
 .dev-hud-status { margin: 10px 0 0; padding: 8px 12px; background: rgba(64, 184, 72, .12); border: 1px solid rgba(64, 184, 72, .4); border-radius: 8px; color: #7bd88a; font-size: 12px; }
 
 .dev-hud-grid { display: grid; grid-template-columns: 1fr; gap: 18px; margin-top: 12px; align-items: start; }
+.dev-hud-geo {
+  margin: 4px 0 10px;
+  padding: 8px 12px;
+  border: 1px solid rgba(255, 255, 255, .09);
+  border-radius: 6px;
+  background: rgba(255, 255, 255, .02);
+}
+.dev-hud-geo summary {
+  cursor: pointer;
+  font-size: 12px;
+  letter-spacing: .4px;
+  user-select: none;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.dev-hud-geo summary::marker { color: var(--orange-lt); }
+.dev-hud-geo[open] summary { margin-bottom: 4px; }
+.dev-hud-geo .dev-pipeline { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 4px 12px; }
+.dev-hud-geo .dev-pipeline-row { padding: 3px 8px; border: 1px solid rgba(255,255,255,.06); border-radius: 4px; font-size: 11px; }
 .dev-hud-view-select {
   display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px;
 }
@@ -10337,19 +10332,20 @@ button.linklike:hover { text-decoration: underline; }
 .gbc-dialogue .stage-sequence {
   display: flex;
   align-items: center;
-  gap: 5px;
-  padding: 4px 8px;
-  background: rgba(0, 0, 0, .1);
-  border: 1px solid rgba(0, 0, 0, .25);
-  border-radius: 4px;
+  gap: 10px;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
   box-shadow: none;
 }
 .dev-hud-preview .gbc-dialogue .stage-seq-item img,
 .gbc-dialogue .stage-seq-item img {
-  width: 22px;
-  height: 22px;
+  width: 34px;
+  height: 34px;
   image-rendering: pixelated;
   display: block;
+  object-fit: contain;
   transform: none;
   filter: none;
   margin: 0;
@@ -10374,10 +10370,11 @@ button.linklike:hover { text-decoration: underline; }
 }
 .dev-hud-preview .gbc-dialogue .stage-inline-prompt img,
 .gbc-dialogue .stage-inline-prompt img {
-  width: 36px;
-  height: 36px;
+  width: 56px;
+  height: 56px;
   image-rendering: pixelated;
   display: block;
+  object-fit: contain;
 }
 .dev-hud-preview .gbc-dialogue .stage-inline-push,
 .gbc-dialogue .stage-inline-push {

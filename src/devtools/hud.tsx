@@ -160,26 +160,28 @@ export function HudModule() {
 
       {/* ═══ CONTRATO VISUAL (baseline V1 congelada) ═══ */}
       <div className="dev-section">
-        <h2>Geometría canónica — baseline V1 (contrato único)</h2>
-        <p className="dev-muted" style={{ marginTop: -4 }}>
-          El HUD Studio es la <strong>fuente de verdad visual</strong>; el BattleEngine la
-          lógica. Juego real, preview y Combat Lab consumen estas medidas (CSS
-          via <code>--hud-layout-*</code>). No cambiar de dirección visual.
-        </p>
-        <div className="dev-pipeline" style={{ marginTop: 8 }}>
-          {Object.entries(HUD_LAYOUT).map(([k, v]) => (
-            <div key={k} className="dev-pipeline-row">
-              <span className="dev-pipeline-file"><code>--hud-layout-{k}</code></span>
-              <span className="dev-pipeline-rol"><code style={{ color: '#ffe9a3' }}>{String(v)}</code></span>
-              <span className="dev-pipeline-ok">✓</span>
-            </div>
-          ))}
-          <div className="dev-pipeline-row" style={{ borderColor: validateHudLayout().ok ? 'rgba(123,216,138,.5)' : 'rgba(255,90,70,.5)' }}>
-            <span className="dev-pipeline-file"><code>validateHudLayout()</code></span>
-            <span className="dev-pipeline-rol">{validateHudLayout().ok ? 'Invariantes OK (botones=cartas=diálogo 80px · card-art 64×48 en 18,18)' : validateHudLayout().errors.join(' · ')}</span>
-            <span className="dev-pipeline-ok">{validateHudLayout().ok ? '✓' : '✗'}</span>
+        <details className="dev-hud-geo">
+          <summary>
+            <strong>Geometría canónica — baseline V1</strong>
+            <span className="dev-muted" style={{ marginLeft: 8, fontSize: 11 }}>
+              {validateHudLayout().ok ? '✓ invariantes OK (80px · 64×48)' : '✗ ' + validateHudLayout().errors.join(' · ')}
+            </span>
+          </summary>
+          <p className="dev-muted" style={{ fontSize: 11, margin: '6px 0 0' }}>
+            HUD Studio = fuente de verdad <strong>visual</strong>; BattleEngine = lógica.
+            Juego real, preview y Combat Lab consumen estas medidas (CSS via{' '}
+            <code>--hud-layout-*</code>). No cambiar de dirección visual.
+          </p>
+          <div className="dev-pipeline" style={{ marginTop: 8 }}>
+            {Object.entries(HUD_LAYOUT).map(([k, v]) => (
+              <div key={k} className="dev-pipeline-row">
+                <span className="dev-pipeline-file"><code>--hud-layout-{k}</code></span>
+                <span className="dev-pipeline-rol"><code style={{ color: '#ffe9a3' }}>{String(v)}</code></span>
+                <span className="dev-pipeline-ok">✓</span>
+              </div>
+            ))}
           </div>
-        </div>
+        </details>
       </div>
 
       <div className="dev-hud-grid">
@@ -400,15 +402,16 @@ Cada acierto +1 CC (más si completas la cadena).">
                   </div>
                   <div className="gbc-dialogue-body">
                     <div className="stage-inline">
-                      <span className="stage-inline-name">3 stage atk.</span>
-                      <span className="stage-inline-progress">STAGE 2/3</span>
                       <div className="stage-sequence">
                         <span className="stage-seq-item done"><span className="seq-check">✓</span></span>
                         <span className="stage-seq-item current">
                           <img src="/assets/ui/qte/key_q.png" alt="Q" className="qte-key-sm" />
                         </span>
                         <span className="stage-seq-item future">
-                          <img src="/assets/ui/qte/key_up.png" alt="↑" className="qte-key-sm" />
+                          <img src="/assets/ui/qte/key_e.png" alt="E" className="qte-key-sm" />
+                        </span>
+                        <span className="stage-seq-item future">
+                          <img src="/assets/ui/qte/arrow_up.png" alt="↑" className="qte-key-sm" />
                         </span>
                         <span className="stage-seq-item future">
                           <img src="/assets/ui/qte/arrow_right.png" alt="→" className="qte-key-sm" />
@@ -416,12 +419,8 @@ Cada acierto +1 CC (más si completas la cadena).">
                       </div>
                       <div className="stage-inline-prompt A">
                         <img src="/assets/ui/qte/key_q.png" alt="Q" className="qte-key-big" />
-                        <span className="stage-prompt-label">A (Q)</span>
                       </div>
-                      <span className="stage-inline-push">PUSH <strong>0.6</strong> / 1.2s</span>
-                      <div className="stage-inline-track">
-                        <div className="stage-timer" style={{ width: '38%' }} />
-                      </div>
+                      <span className="stage-inline-time"><strong>0.6</strong> / 1.2s</span>
                     </div>
                   </div>
                 </div>

@@ -3264,7 +3264,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
           const counterBOpen = inCounter && q.counterFrames <= COUNTER_B_FRAMES;
           // Iconos del paquete ORGANIZADO (DBZ_LSW_UI_AUX_ASSETS_V1): teclas
           // reales del teclado para A/B (Q/E) y las direcciones (↑/↓ + flechas).
-          const keyIcon = (k: StageKey) => k === 'UP' ? 'key_up' : k === 'DOWN' ? 'key_down' : k === 'LEFT' ? 'arrow_left' : k === 'RIGHT' ? 'arrow_right' : k === 'A' ? 'key_q' : 'key_e';
+          const keyIcon = (k: StageKey) => k === 'UP' ? 'arrow_up' : k === 'DOWN' ? 'arrow_down' : k === 'LEFT' ? 'arrow_left' : k === 'RIGHT' ? 'arrow_right' : k === 'A' ? 'key_q' : 'key_e';
           const keyLabel = (k: StageKey) => k === 'UP' ? 'W / ↑' : k === 'DOWN' ? 'S / ↓' : k === 'LEFT' ? 'A / ←' : k === 'RIGHT' ? 'D / →' : k === 'A' ? 'A (Q)' : 'B (E)';
           return (
           /* MISMO formato EXACTO que el diálogo: caja GBC (mismo ancho),
@@ -3276,29 +3276,22 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
             </div>
             <div className="gbc-dialogue-body">
               <div className="stage-inline">
-                <span className="stage-inline-name">{q.card?.name}</span>
-                <span className="stage-inline-progress">STAGE {Math.min(q.idx + 1, q.seq.length)}/{q.seq.length}</span>
                 {!frozen && (
-                  <>
-                    <div className="stage-sequence">
-                      {q.seq.map((k, i) => (
-                        <span key={i} className={`stage-seq-item ${i < q.idx ? 'done' : i === q.idx ? 'current' : 'future'}`}>
-                          {i < q.idx ? <span className="seq-check">✓</span> : <img src={`/assets/ui/qte/${keyIcon(k)}.png`} alt={keyLabel(k)} className="qte-key-sm" />}
-                        </span>
-                      ))}
-                    </div>
-                    {q.state === 'INPUT_WINDOW' && (
-                      <div key={q.idx} className={`stage-inline-prompt ${stageFeedback ?? ''} ${curKey}`}>
-                        <img src={`/assets/ui/qte/${keyIcon(curKey)}.png`} alt={curKey} className="qte-key-big" />
-                        <span className="stage-prompt-label">{keyLabel(curKey)}</span>
-                      </div>
-                    )}
-                  </>
+                  <div className="stage-sequence">
+                    {q.seq.map((k, i) => (
+                      <span key={i} className={`stage-seq-item ${i < q.idx ? 'done' : i === q.idx ? 'current' : 'future'}`}>
+                        {i < q.idx ? <span className="seq-check">✓</span> : <img src={`/assets/ui/qte/${keyIcon(k)}.png`} alt={keyLabel(k)} className="qte-key-sm" />}
+                      </span>
+                    ))}
+                  </div>
                 )}
-                <span className="stage-inline-push">PUSH {elapsedSec} / {limitSec}</span>
-                <div className="stage-inline-track">
-                  <div className="stage-timer" style={{ width: `${Math.min(100, (q.elapsedFrames / Math.max(1, q.limitFrames)) * 100)}%` }} />
-                </div>
+                {!frozen && q.state === 'INPUT_WINDOW' && (
+                  <div key={q.idx} className={`stage-inline-prompt ${stageFeedback ?? ''} ${curKey}`}>
+                    <img src={`/assets/ui/qte/${keyIcon(curKey)}.png`} alt={curKey} className="qte-key-big" />
+                  </div>
+                )}
+                {/* Tiempo NUMÉRICO: contando hacia arriba / máximo — sin barra */}
+                <span className="stage-inline-time"><strong>{elapsedSec}</strong> / {limitSec}s</span>
               </div>
             </div>
           </div>
