@@ -215,18 +215,34 @@ function PoseCell({ formId, pose, small }: { formId: string; pose: string; small
 }
 
 function CombatSheetCell({ formId, spriteDir }: { formId: string; spriteDir: string }) {
+  const [manifestPoses, setManifestPoses] = useState<string[] | null>(null);
+  useEffect(() => {
+    let alive = true;
+    spriteManifestUrl(formId)
+      ? fetch(spriteManifestUrl(formId)!).then(r => r.ok ? r.json() : null).then((m: Record<string, { frames?: unknown[] }> | null) => {
+        if (alive && m) {
+          const poses = Object.entries(m)
+            .filter(([, spec]) => Array.isArray(spec?.frames) && spec.frames!.length > 0)
+            .map(([pid]) => pid);
+          setManifestPoses(poses);
+        }
+      }).catch(() => {})
+      : undefined;
+    return () => { alive = false; };
+  }, [formId]);
+  const poses = manifestPoses && manifestPoses.length > 0 ? manifestPoses : COMBAT_REQUIRED_POSES;
   return (
     <div className="dev-asset-cell wide combat-sheet">
       <div className="dev-asset-frame">
         <div className="dev-combat-sheet-grid">
-          {COMBAT_REQUIRED_POSES.map(pose => (
+          {poses.map(pose => (
             <div key={pose} className="dev-combat-sheet-frame" title={pose}>
               <PoseCell formId={formId} pose={pose} />
             </div>
           ))}
         </div>
       </div>
-      <div className="dev-asset-label">Combat sheet ({spriteDir})</div>
+      <div className="dev-asset-label">Combat sheet ({spriteDir}) — {poses.length} poses</div>
     </div>
   );
 }
