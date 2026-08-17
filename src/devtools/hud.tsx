@@ -6,7 +6,7 @@
 // real con "Aplicar al juego" (persisten en localStorage).
 // ═══════════════════════════════════════════════════════════
 import { Check, Download, RotateCcw } from 'lucide-react';
-import { useMemo, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import {
   HUD_THEME_VARS, HudTheme, currentHudTheme, defaultHudTheme,
   saveHudTheme, applyHudTheme, resetHudTheme,
@@ -45,6 +45,10 @@ export function HudModule() {
   const [status, setStatus] = useState('');
   // Vista del mockup: qué apartado del HUD se muestra (como al pulsar cada botón)
   const [view, setView] = useState<'INTRO' | 'DIALOGO' | 'COMMAND' | 'JOINT' | 'BASIC' | 'LIMIT'>('COMMAND');
+  // Demo: reproducción animada de una secuencia de combate (robo, turnos…)
+  const [demo, setDemo] = useState(false);
+  const [drawFx, setDrawFx] = useState<{ nonce: number } | null>(null);
+  const demoRef = useRef<ReturnType<typeof setTimeout>[]>([]);
   const VIEWS = [
     { id: 'INTRO' as const, label: 'Intro', tip: 'Presentación de inicio (VS + READY/FIGHT)' },
     { id: 'DIALOGO' as const, label: 'Diálogo', tip: 'Cuadro de mensaje GBC durante acciones' },
@@ -65,6 +69,20 @@ export function HudModule() {
   const battleBgUrl = SCENARIOS[0]?.overviewBackground ?? '/assets/backgrounds/scenarios/01_world.png';
 
   const setVar = (key: string, val: string) => setTheme(prev => ({ ...prev, [key]: val }));
+
+  const runDemo = () => {
+    if (demo) { setDemo(false); demoRef.current.forEach(clearTimeout); demoRef.current = []; return; }
+    setDemo(true);
+    const steps: { t: number; fn: () => void }[] = [
+      { t: 0, fn: () => setView('COMMAND') },
+      { t: 1800, fn: () => { setView('JOINT'); setDrawFx({ nonce: Date.now() }); } },
+      { t: 2600, fn: () => setDrawFx(null) },
+      { t: 4200, fn: () => setView('DIALOGO') },
+      { t: 6200, fn: () => setView('COMMAND') },
+    ];
+    demoRef.current = steps.map(s => setTimeout(s.fn, s.t));
+    demoRef.current.push(setTimeout(() => setDemo(false), 6800));
+  };
 
   const apply = () => {
     saveHudTheme(theme);
@@ -101,6 +119,9 @@ export function HudModule() {
           </p>
         </div>
         <div className="dev-hud-actions">
+          <button className={`dev-btn ${demo ? 'dev-btn-danger' : ''}`} onClick={runDemo}>
+            {demo ? '■ Parar demo' : '▶ Demo (robo · turnos)'}
+          </button>
           <button className="dev-btn dev-btn-primary" onClick={apply}><Check size={15} /> Aplicar al juego</button>
           <button className="dev-btn" onClick={exportJson}><Download size={15} /> Exportar JSON</button>
           <button className="dev-btn dev-btn-danger" onClick={reset}><RotateCcw size={15} /> Reset</button>
@@ -225,6 +246,15 @@ export function HudModule() {
               </div>
             )}
 
+            {/* Robo de carta: animación draw-fx del juego */}
+            {drawFx && (
+              <div className="draw-fx" key={drawFx.nonce}>
+                <button className="card beam" style={{ '--card-color': '#3890d8' } as React.CSSProperties}>
+                  <div className="card-art"><span style={{ fontSize: 26 }}>⚡</span></div>
+                </button>
+              </div>
+            )}
+
             <div className="battle-controls dev-hud-battle-controls">
               {/* Contenido según la vista: igual que las fases del juego real.
                   COMMAND: botones + mano juntos (misma línea, como el build al
@@ -232,14 +262,23 @@ export function HudModule() {
               {view === 'COMMAND' && (
                 <>
                   <div className="command-strip">
-                    <button className="cmd-limit" data-tip="LIMITED" />
-                    <button className="cmd-j" data-tip="JOINT" />
-                    <button className="cmd-b" data-tip="BASIC" />
+                    <button className="cmd-limit" data-tip="LIMITED — cartas exclusivas" onClick={() => setView('LIMIT')} />
+                    <button className="cmd-j" data-tip="JOINT — mano" onClick={() => setView('JOINT')} />
+                    <button className="cmd-b" data-tip="BASIC — acciones libres" onClick={() => setView('BASIC')} />
                   </div>
                   <MockHand compact />
                 </>
               )}
-              {view === 'JOINT' && <MockHand />}
+              {view === 'JOINT' && (
+                <>
+                  {!drawFx && <div className="draw-fx" style={{ animation: 'none', opacity: 1 }}>
+                    <button className="card beam" style={{ '--card-color': '#3890d8' } as React.CSSProperties}>
+                      <div className="card-art"><span style={{ fontSize: 26 }}>⚡</span></div>
+                    </button>
+                  </div>}
+                  <MockHand />
+                </>
+              )}
               {view === 'BASIC' && (
                 <div className="dev-hud-basic-view">
                   <div className="command-strip">
