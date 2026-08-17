@@ -283,7 +283,7 @@ export function HudModule() {
                   <div className="basic-menu">
                     <button className="basic-btn basic-stage" data-tip="STAGE ATTACK — 3 Stage · secuencia A/B">
                       <span className="basic-stage-icon">
-                        <img src={cardIconUrl(1)} alt="3 Stage Atk." className="stage-card-icon" />
+                        <FitArt src={cardIconUrl(1)!} areaW={56} areaH={40} className="stage-card-icon" />
                       </span>
                     </button>
                     <button className="basic-btn basic-gather" data-tip="GATHER POWER — sube STR/KI (+8)" />

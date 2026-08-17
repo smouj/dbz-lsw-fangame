@@ -3159,9 +3159,12 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
                   {(() => {
                     const stages = powerState !== 'NORMAL' ? 4 : 3;
                     // El id de la carta del stage de N inputs es N-2 (3→1, 4→2,
-                    // 5→3, 6→4): cardIconUrl(N) devolvía el arte de OTRA carta.
+                    // 5→3, 6→4). El arte se FILLEA con FitArt (bounding box
+                    // visible centrado/lleno) — igual que las cartas de la mano.
                     const icon = cardIconUrl(stages - 2);
-                    return icon ? <img src={icon} alt={`${stages} Stage Atk.`} className="stage-card-icon" /> : <strong>{stages} Stage</strong>;
+                    return icon
+                      ? <FitArt src={icon} areaW={56} areaH={40} className="stage-card-icon" />
+                      : <strong>{stages} Stage</strong>;
                   })()}
                 </span>
               </button>

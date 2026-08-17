@@ -3666,25 +3666,24 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   gap: 3px;
 }
 .basic-stage-icon {
+  /* área central libre del marco (igual que .card-art) — el arte se FILLEA
+     con FitArt (bounding box visible centrado), como las cartas normales */
   position: absolute;
-  top: 18px;      /* área central libre del marco (igual que .card-art) */
+  top: 18px;
   left: 18px;
   width: 60px;
   height: 44px;
   overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   line-height: 1;
 }
 .stage-card-icon {
   image-rendering: pixelated;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border: 2px solid rgba(246,199,68,.5);
-  background: rgba(255,255,255,.92);
-  box-shadow: 2px 2px 0 rgba(0,0,0,.7);
+}
+/* Glitch del hover: el transform/filter del .basic-btn movía y re-renderizaba
+   el arte absoluto del stage. El hover del STAGE solo ilumina el marco. */
+.basic-btn.basic-stage:hover:not(:disabled) {
+  transform: none;
+  filter: brightness(1.2);
 }
 .basic-stage-icon strong {
   font-family: var(--fepic);
@@ -9568,8 +9567,10 @@ button.linklike:hover { text-decoration: underline; }
   transform-origin: bottom center;
   image-rendering: pixelated;
 }
+/* El chibi del rival (Piccolo) es más bajo que Goku: escala compensada para
+   que ambos luchadores se vean proporcionados en el mockup (paridad visual). */
 .dev-hud-preview .fighter-container.enemy .dev-hud-fighter-sprite {
-  transform: scaleX(-1) scale(1.7);
+  transform: scaleX(-1) scale(2.35);
   transform-origin: bottom center;
 }
 
