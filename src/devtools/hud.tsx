@@ -1,17 +1,14 @@
 // ═══════════════════════════════════════════════════════════════════════
 // DEV STUDIO — HUD Studio
-// VENTANA SOBRE EL MISMO MOTOR DE COMBATE. Las reglas viven en
-// src/battle/state.ts (fuente única): mazo real (drawPile/hand/discardPile),
-// +3 CC por Attack Phase, robo del drawPile, HAND CHECK con selección real
-// de descarte. El juego real (main.tsx) y este visualizador usan el MISMO
-// controlador. HUD Studio solo cambia: personajes demo, seed, velocidad,
-// pause/step, reset. Si cambias una regla del combate, esto cambia solo.
-//
-// Assets: CardVisualRegistry (src/data/cardVisuals.ts) + HudAssetRegistry
-// (src/data/hudAssets.ts) — compartidos con el juego. Nada de mocks.
+// CONFIGURADOR del tema HUD: colores, HUD, cartas, posición, escala y
+// tipografía (33 variables CSS reales consumidas por el juego). El preview
+// muestra el HUD con el tema actual (paridad dev↔juego: mismas clases y
+// variables). NO es un simulador de combate — las demos/batallas viven en
+// el Combat Lab. "Aplicar al juego" inyecta las variables en :root y
+// persiste en localStorage.
 // ═══════════════════════════════════════════════════════════════════════
 import { Check, Download, RotateCcw } from 'lucide-react';
-import { useMemo, useRef, useState } from 'react';
+import { useMemo, useState } from 'react';
 import {
   HUD_THEME_VARS, HudTheme, currentHudTheme, defaultHudTheme,
   saveHudTheme, applyHudTheme, resetHudTheme,
@@ -25,159 +22,25 @@ import { downloadJson } from './spriteEditing';
 import { getCard, CARD_TYPE_NAMES, CARD_COLORS, CardDef } from '../data/cards';
 import { cardIconUrl } from '../data/icons';
 import { FitArt } from '../components/FitArt';
-// ── EL MISMO MOTOR (reglas + máquina de fases, nada paralelo) ──
-import {
-  registerCardResolver, HAND_MAX_PERSISTENT,
-} from '../battle/state';
-import {
-  initialState as engInit, enterAttackPhase as engEnterAttackPhase,
-  drawFor as engDrawFor, toCommand as engToCommand,
-  selectCommand as engSelectCommand, playCard as engPlayCard,
-  settleAfterAction as engSettle, chooseDiscard as engChooseDiscard,
-  defendAction as engDefendAction, playEnemyCard as engPlayEnemyCard,
-  settleEnemyAction as engSettleEnemy,
-  type BattleEngineState, type EnginePhase, type AttackerSide,
-} from '../battle/engine';
 import { CARD_FRAME_BY_TYPE, CARD_FRAME_SELECTED, CARD_FRAME_DISABLED } from '../data/cardVisuals';
-import { HUD_ASSET_REGISTRY } from '../data/hudAssets';
 
-registerCardResolver(id => getCard(typeof id === 'number' ? id : Number(id)));
-
-// Formas de ejemplo (Goku vs Piccolo, como el Battle Lab).
+// Formas de ejemplo del mockup (Goku vs Piccolo, como el Battle Lab).
 const P_FORM = 'goku_base';
 const E_FORM = 'piccolo_base';
-const DEMO_LIMIT_IDS = [87, 46]; // Limits demo del personaje (reutilizables)
-const DEMO_MAX_CC = 10;
-const DEMO_HP = 1000;
 
 const GROUPS = ['Colores', 'HUD', 'Cartas', 'Posición', 'Escala', 'Tipografía'];
 
-// ═══ EL MOTOR COMPARTIDO (src/battle/engine.ts): las fases, el robo, el
-// HAND CHECK y la defensa son las MISMAS transiciones que usa el juego
-// real. Este panel solo cambia: personajes demo, seed, velocidad, reset.
-function makeInitialState(seed: number): BattleEngineState {
-  const usable = (c: CardDef) => !c.compatible || c.compatible.length === 0 || c.compatible.includes(getForm(P_FORM)?.character ?? 'goku');
-  return engInit({
-    seed,
-    deckIds: Array.from({ length: 20 }, (_, i) => i + 1),
-    eDeckIds: Array.from({ length: 20 }, (_, i) => i + 21),
-    usable,
-    playerHp: DEMO_HP,
-    enemyHp: DEMO_HP,
-    initialCc: 4,
-  });
-}
+// Vista del preview: cómo se ve el HUD en cada estado (sin motor — visual).
+type HudView = 'COMMAND' | 'MANO' | 'DIALOGO' | 'INTRO' | 'BASIC' | 'LIMIT';
 
-// ═══ CONTROLADOR: MISMO motor (engine.ts) + solo presentación (timers) ═══
-// Las transiciones (ATTACK_PHASE, robo, HAND CHECK, defensa, exchange) son
-// las funciones PURAS de src/battle/engine.ts — idénticas a las del juego.
-function useBattleSim() {
-  const seedRef = useRef(20260817);
-  const speedRef = useRef(1);
-  const [state, setState] = useState<BattleEngineState>(() => makeInitialState(seedRef.current));
-  const stateRef = useRef(state);
-  stateRef.current = state;
-  const timers = useRef<Set<number>>(new Set());
-  const [running, setRunning] = useState(false);
-
-  const later = (fn: () => void, ms: number) => {
-    const id = window.setTimeout(fn, ms / speedRef.current);
-    timers.current.add(id);
-  };
-  const clearTimers = () => { timers.current.forEach(clearTimeout); timers.current.clear(); };
-
-  const reset = () => {
-    clearTimers();
-    setState(makeInitialState(seedRef.current));
-    setRunning(false);
-  };
-
-  const setSeed = (seed: number) => { seedRef.current = seed; reset(); };
-  const setSpeed = (v: number) => { speedRef.current = v; };
-
-  // ATTACK_PHASE_ENTER (engine): +3 CC → robo REAL del drawPile → COMMAND
-  const enterAttackPhase = (attacker: AttackerSide) => {
-    setState(s => engEnterAttackPhase(s, attacker));
-    later(() => setState(s => engDrawFor(s, attacker)), 500);
-    later(() => setState(s => engToCommand(s)), 1900);
-  };
-
-  // COMMAND → rama (JOINT abre la mano; nunca roba)
-  const selectCommand = (cmd: 'JOINT' | 'BASIC' | 'LIMIT') => {
-    setState(s => engSelectCommand(s, cmd));
-  };
-
-  // Jugar JOINT real (engine): hand → discardPile; luego HAND CHECK real
-  const playCard = (idx: number) => {
-    setState(s => engPlayCard(s, idx));
-    later(() => setState(s => engSettle(s)), 2000);
-  };
-
-  // DISCARD_REQUIRED (engine): el jugador ELIGE la carta
-  const chooseDiscard = (idx: number) => {
-    setState(s => engChooseDiscard(s, idx));
-  };
-
-  // Defensa (engine) → Exchange 2 o nuevo TURN → siguiente ATTACK PHASE
-  const defend = (action: 'GUARD' | 'MOVE') => {
-    let nextAttack: AttackerSide = 'enemy';
-    setState(s => {
-      const n = engDefendAction(s, action);
-      nextAttack = n.attacker;
-      return n;
-    });
-    later(() => enterAttackPhase(nextAttack), 600);
-  };
-
-  // ═══ DEMO CANÓNICA: dispara EVENTOS REALES del motor (nunca cambia la
-  // vista directamente — la vista resulta del estado).
-  // INTRO → ATTACK_PHASE (+3 CC) → robo real del drawPile → animación →
-  // COMMAND → JOINT → elige carta real → cinemática → HAND CHECK → DEFENSE
-  // → exchange 2 (enemigo) → turno 2 (jugador) → …
-  const runCanonical = () => {
-    if (running) { clearTimers(); setRunning(false); setState(s => ({ ...s, drawCard: null, cue: null, phase: 'command' })); return; }
-    clearTimers();
-    setState(makeInitialState(seedRef.current));
-    setRunning(true);
-    // Turno 1 — Exchange 1: Goku ataca
-    later(() => enterAttackPhase('player'), 2200);              // INTRO → ATTACK PHASE (+3 CC)
-    later(() => { setState(s => ({ ...s, phase: 'command' })); }, 4300);
-    later(() => selectCommand('JOINT'), 5200);                  // COMMAND → mano real
-    later(() => {
-      const idx = stateRef.current.deck.hand.findIndex(c => stateRef.current.player.cc >= c.cc);
-      if (idx >= 0) playCard(idx);                              // elegir carta real de la mano
-    }, 6200);
-    // Exchange 1 → Exchange 2: Piccolo contraataca (su propio mazo real)
-    later(() => {
-      setState(s => (s.phase === 'discard' ? s : { ...s, phase: 'defend' }));
-      if (stateRef.current.phase === 'defend') defend('GUARD');
-    }, 9400);
-    // Piccolo juega su carta (autopilot del enemigo)
-    later(() => {
-      const idx = stateRef.current.eDeck.hand.findIndex(c => stateRef.current.enemy.cc >= c.cc);
-      if (idx >= 0) playEnemyCard(idx);
-    }, 11800);
-    // El jugador defiende → Turno 2: Goku ataca (+3 CC, robo real)
-    later(() => {
-      setState(s => (s.phase === 'discard' ? s : { ...s, phase: 'defend' }));
-      if (stateRef.current.phase === 'defend') defend('GUARD');
-    }, 14000);
-    // Turno 2: Goku entra en ATTACK PHASE y roba; la demo DEJA EL CONTROL
-    // al usuario en COMMAND: puede pulsar JOINT, jugar cartas reales y
-    // acumular hasta 6 para ver el HAND CHECK él mismo.
-    later(() => { setState(s => ({ ...s, phase: 'command' })); }, 17800);
-    later(() => setRunning(false), 18200);
-  };
-
-  // El enemigo juega una carta de SU mazo real (autopilot) — transición
-  // del MISMO engine (playEnemyCard/settleEnemyAction).
-  const playEnemyCard = (idx: number) => {
-    setState(s => engPlayEnemyCard(s, idx));
-    later(() => setState(s => engSettleEnemy(s)), 2000);
-  };
-
-  return { state, running, reset, setSeed, setSpeed, enterAttackPhase, selectCommand, playCard, chooseDiscard, defend, runCanonical };
-}
+const VIEWS: { id: HudView; label: string; tip: string }[] = [
+  { id: 'COMMAND', label: 'Comando', tip: 'Command strip: LIMIT · JOINT · BASIC' },
+  { id: 'MANO', label: 'JOINT · Mano', tip: 'Cartas de la mano con sus frames GBC' },
+  { id: 'DIALOGO', label: 'Diálogo', tip: 'Cuadro de mensaje GBC estructurado' },
+  { id: 'BASIC', label: 'BASIC', tip: 'Stage Attack (frame de carta) · Gather · Back' },
+  { id: 'LIMIT', label: 'LIMIT', tip: 'Cartas LIMITED del personaje' },
+  { id: 'INTRO', label: 'Intro', tip: 'Presentación de inicio (VS + READY/FIGHT)' },
+];
 
 function PreviewHpBar({ current, max, side }: { current: number; max: number; side: 'left' | 'right' }) {
   const pct = Math.max(0, Math.min(100, (current / max) * 100));
@@ -193,15 +56,12 @@ function PreviewHpBar({ current, max, side }: { current: number; max: number; si
 }
 
 // Carta GBC real: mismo render que el juego (frame por tipo + arte centrado)
-function SimCard({ card, selected, disabled, onClick }: {
-  card: CardDef; selected?: boolean; disabled?: boolean; onClick?: () => void;
-}) {
+function HudCard({ card, selected, disabled }: { card: CardDef; selected?: boolean; disabled?: boolean }) {
   const frame = disabled ? CARD_FRAME_DISABLED : selected ? CARD_FRAME_SELECTED : (CARD_FRAME_BY_TYPE[card.type] ?? undefined);
   const iconUrl = cardIconUrl(card.id);
   const color = CARD_COLORS[card.type];
   return (
-    <button className={`card ${card.type} ${selected ? 'selected' : ''}`}
-      onClick={onClick} disabled={disabled}
+    <button className={`card ${card.type} ${selected ? 'selected' : ''}`} disabled={disabled}
       style={{ '--card-color': color, '--card-frame': frame ? `url('${frame}')` : undefined } as React.CSSProperties}
       data-tip={`${card.name} — ${CARD_TYPE_NAMES[card.type]}\nCC ${card.cc} · ATK ${card.atk > 0 ? card.atk : '—'} · ACC ${card.acc}%\n${card.description ?? ''}`}>
       <div className="card-art">
@@ -216,8 +76,7 @@ function SimCard({ card, selected, disabled, onClick }: {
 export function HudModule() {
   const [theme, setTheme] = useState<HudTheme>(() => currentHudTheme());
   const [status, setStatus] = useState('');
-  const sim = useBattleSim();
-  const { state } = sim;
+  const [view, setView] = useState<HudView>('COMMAND');
 
   const player = useMemo(() => getForm(P_FORM), []);
   const enemy = useMemo(() => getForm(E_FORM), []);
@@ -228,6 +87,10 @@ export function HudModule() {
   const pPortrait = BATTLE_PORTRAITS[P_FORM];
   const ePortrait = BATTLE_PORTRAITS[E_FORM];
   const battleBgUrl = SCENARIOS[0]?.overviewBackground ?? '/assets/backgrounds/scenarios/01_world.png';
+
+  // Cartas reales del catálogo para la vista Mano (como el build)
+  const handCards = [13, 7, 5, 1].map(id => getCard(id)).filter((c): c is CardDef => !!c);
+  const limitCards = [87, 46].map(id => getCard(id)).filter((c): c is CardDef => !!c);
 
   const setVar = (key: string, val: string) => setTheme(prev => ({ ...prev, [key]: val }));
 
@@ -253,34 +116,20 @@ export function HudModule() {
     return o as React.CSSProperties;
   }, [theme]);
 
-  const hand = state.deck.hand;
-  const showCommand = state.phase === 'command';
-  const showHand = state.phase === 'cardSelect' || state.phase === 'discard';
-  const inAction = state.phase === 'cinematic' || state.phase === 'draw' || state.phase === 'attackPhase';
-
   return (
     <div className="dev-hud">
       <div className="dev-hud-head">
         <div>
           <h1>HUD Studio</h1>
           <p className="dev-hud-sub">
-            Ventana sobre el <strong>mismo motor de combate</strong> (src/battle/state.ts): mazo real
-            (drawPile/hand/discardPile), +3 CC por Attack Phase, HAND CHECK con descarte real.
-            El preview deriva de la fase del motor — los botones son interactivos.
+            Configurador del tema HUD: 33 variables CSS reales (colores, HUD, cartas,
+            posición, escala, tipografía) con paridad dev↔juego. El preview muestra el
+            HUD con el tema actual; <strong>Aplicar al juego</strong> lo inyecta en{' '}
+            <code>:root</code> y lo persiste. Las demos y batallas viven en el{' '}
+            <strong>Combat Lab</strong>.
           </p>
         </div>
         <div className="dev-hud-actions">
-          <button className={`dev-btn ${sim.running ? 'dev-btn-danger' : ''}`} onClick={sim.runCanonical}>
-            {sim.running ? '■ Parar demo' : '▶ Ejecutar combate canónico'}
-          </button>
-          <button className="dev-btn" onClick={sim.reset} title="Reiniciar combate (nuevo seed)"><RotateCcw size={15} /> Reiniciar</button>
-          <select className="dev-btn dev-hud-speed" value={1} onChange={e => sim.setSpeed(Number(e.target.value))}
-            title="Velocidad de reproducción">
-            <option value={0.5}>0.5×</option>
-            <option value={1}>1×</option>
-            <option value={1.5}>1.5×</option>
-            <option value={2}>2×</option>
-          </select>
           <button className="dev-btn dev-btn-primary" onClick={apply}><Check size={15} /> Aplicar al juego</button>
           <button className="dev-btn" onClick={exportJson}><Download size={15} /> Exportar JSON</button>
           <button className="dev-btn dev-btn-danger" onClick={resetTheme}><RotateCcw size={15} /> Reset</button>
@@ -288,15 +137,24 @@ export function HudModule() {
       </div>
       {status && <div className="dev-hud-status">{status}</div>}
 
+      <div className="dev-hud-view-select" role="tablist" aria-label="Vista del HUD">
+        {VIEWS.map(v => (
+          <button key={v.id} className={`dev-hud-view-chip ${view === v.id ? 'active' : ''}`}
+            onClick={() => setView(v.id)} title={v.tip}>
+            {v.label}
+          </button>
+        ))}
+      </div>
+
       <div className="dev-hud-grid">
-        {/* ─── PREVIEW: EL MOTOR REAL, fase a fase ─── */}
+        {/* ─── PREVIEW: el HUD con el tema actual (estático, paridad real) ─── */}
         <div className="dev-hud-preview" style={mockVars}>
           <div className="battle-screen view-overview dev-hud-real-preview">
-            {/* INTRO (fase real del motor) */}
-            {state.phase === 'intro' && (
+            {/* INTRO */}
+            {view === 'INTRO' && (
               <div className="battle-intro">
                 <div className="intro-gbc-window">
-                  <div className="intro-gbc-round">ROUND {state.turn}</div>
+                  <div className="intro-gbc-round">ROUND 1</div>
                   <div className="intro-gbc-match">
                     <div className="intro-gbc-side">
                       <div className="intro-gbc-portrait">
@@ -315,8 +173,8 @@ export function HudModule() {
                     </div>
                   </div>
                   <div className="intro-gbc-roles">
-                    <span>ATK {state.attacker === 'player' ? 'GOKU' : 'PICCOLO'}</span>
-                    <span>DEF {state.attacker === 'player' ? 'PICCOLO' : 'GOKU'}</span>
+                    <span>ATK GOKU</span>
+                    <span>DEF PICCOLO</span>
                   </div>
                   <div className="intro-ready">READY</div>
                   <div className="intro-fight">FIGHT!</div>
@@ -324,7 +182,9 @@ export function HudModule() {
                 <div className="intro-flash" />
               </div>
             )}
-            {state.phase !== 'intro' && <div className="hud-top">
+
+            {/* HUD superior (siempre visible salvo INTRO) */}
+            {view !== 'INTRO' && <div className="hud-top">
               <div className="fighter-hud left">
                 <div className="hud-name">
                   <span className="hud-portrait">
@@ -334,11 +194,11 @@ export function HudModule() {
                   <span className="hud-form">Base</span>
                   <span className="hud-level">LV50</span>
                 </div>
-                <PreviewHpBar current={state.player.hp} max={DEMO_HP} side="left" />
-                <div className="hud-stats"><span>STR60</span><span>KI55</span><span>CC {state.player.cc}</span></div>
+                <PreviewHpBar current={720} max={1000} side="left" />
+                <div className="hud-stats"><span>STR60</span><span>KI55</span><span>SPD50</span><span>CC 6</span></div>
                 <div className="hud-status">
                   <span className="status-chip buff">STR+</span>
-                  {state.attacker === 'player' && <span className="status-chip guard">ATK</span>}
+                  <span className="status-chip guard">ATK</span>
                 </div>
               </div>
 
@@ -351,17 +211,17 @@ export function HudModule() {
                   <span className="hud-form">Base</span>
                   <span className="hud-level">LV50</span>
                 </div>
-                <PreviewHpBar current={state.enemy.hp} max={DEMO_HP} side="right" />
-                <div className="hud-stats"><span>STR58</span><span>KI60</span><span>CC {state.enemy.cc}</span></div>
+                <PreviewHpBar current={880} max={1000} side="right" />
+                <div className="hud-stats"><span>STR58</span><span>KI60</span><span>SPD48</span><span>CC 3</span></div>
                 <div className="hud-status right">
                   <span className="status-chip debuff">SPD−</span>
-                  {state.attacker === 'enemy' && <span className="status-chip guard">ATK</span>}
+                  <span className="status-chip none">—</span>
                 </div>
               </div>
               <div className="hud-center-badge">
-                <span className="hud-center-round">ROUND {state.turn}</span>
+                <span className="hud-center-round">ROUND 1</span>
                 <span className="hud-center-vs">VS</span>
-                <span className="hud-center-order">{state.attacker === 'player' ? 'GOKU' : 'PICCOLO'}</span>
+                <span className="hud-center-order">GOKU</span>
               </div>
             </div>}
 
@@ -379,128 +239,71 @@ export function HudModule() {
 
             <div className="phase-bar">
               <div className="phase-info">
-                <span className="turn-label">TURN {state.turn}</span>
-                <span className="speed-order-label">{state.attacker === 'player' ? 'GOKU' : 'PICCOLO'} FIRST</span>
-                <span className="phase-label">{state.exchange === 1 ? 'ACTION 1/2' : 'ACTION 2/2'} · {state.phase}</span>
+                <span className="turn-label">TURN 1</span>
+                <span className="speed-order-label">GOKU FIRST</span>
+                <span className="phase-label">ATTACK 1/2</span>
               </div>
             </div>
 
-            {/* Fase cue (ATTACK PHASE / DEFENSE PHASE) */}
-            {state.cue && (
-              <div className="phase-cue" key={state.cue.id}>
-                <div className="phase-cue-line" />
-                <div className="phase-cue-title">{state.cue.title}</div>
-                <div className="phase-cue-sub">{state.cue.sub}</div>
-              </div>
-            )}
-
-            {/* Carta REAL robada del drawPile (animación draw-fx del juego) */}
-            {state.drawCard && (
-              <div className="draw-fx" key={state.drawCard.nonce}>
-                <SimCard card={state.drawCard.card} />
-              </div>
-            )}
-
-            {/* Cuadro de diálogo GBC durante la cinemática */}
-            {state.played && (
+            {/* DIÁLOGO (cuadro GBC estructurado) */}
+            {view === 'DIALOGO' && (
               <div className="gbc-dialogue">
-                <div className="gbc-dialogue-actor">{state.attacker === 'player' ? 'GOKU' : 'PICCOLO'}</div>
-                <div className="gbc-dialogue-text">uses {state.played.name.toUpperCase()}!<span className="gbc-dialogue-cursor">▼</span></div>
+                <div className="gbc-dialogue-actor">GOKU</div>
+                <div className="gbc-dialogue-text">uses KAMEHAMEHA!<span className="gbc-dialogue-cursor">▼</span></div>
               </div>
             )}
 
             <div className="battle-controls dev-hud-battle-controls">
-              {/* COMMAND: LIMIT · JOINT · BASIC (· CHARA). SIN mano todavía. */}
-              {showCommand && (
+              {/* COMMAND: LIMIT · JOINT · BASIC */}
+              {view === 'COMMAND' && (
                 <div className="command-select">
                   <div className="command-strip">
-                    <button className="cmd-limit" onClick={() => sim.selectCommand('LIMIT')}
-                      data-tip="LIMITED — cartas exclusivas del personaje.\nReutilizables mientras tengas CC.\nRequiere GATHER POWER activo." />
-                    <button className="cmd-j" onClick={() => sim.selectCommand('JOINT')}
-                      data-tip="JOINT — cartas de tu mano.\nCuestan CC y se descartan al usarlas." />
-                    <button className="cmd-b" onClick={() => sim.selectCommand('BASIC')}
-                      data-tip="BASIC — acciones libres sin CC.\nSTAGE ATTACK (secuencia A/B) o GATHER POWER." />
+                    <button className="cmd-limit" data-tip="LIMITED — cartas exclusivas del personaje" />
+                    <button className="cmd-j" data-tip="JOINT — cartas de tu mano" />
+                    <button className="cmd-b" data-tip="BASIC — acciones libres sin CC" />
                   </div>
                 </div>
               )}
 
-              {/* CARD SELECT: la mano REAL del motor (la carta robada ya está aquí) */}
-              {showHand && (
+              {/* MANO: cartas reales del catálogo con sus frames */}
+              {view === 'MANO' && (
                 <div className="hand-area">
-                  <div className="hand-label">— MANO ({hand.length}/{HAND_MAX_PERSISTENT}+1) —</div>
+                  <div className="hand-label">— MANO —</div>
                   <div className="hand-cards">
-                    {hand.map((card, i) => (
-                      <SimCard key={`${card.id}-${i}`} card={card}
-                        selected={state.selectedIdx === i}
-                        disabled={state.player.cc < card.cc}
-                        onClick={() => state.phase === 'discard' ? sim.chooseDiscard(i) : sim.playCard(i)} />
+                    {handCards.map((card, i) => (
+                      <HudCard key={card.id} card={card} selected={i === 1} disabled={i === 2} />
                     ))}
                   </div>
-                  {state.phase === 'discard' && (
-                    <div className="discard-help">HAND CHECK: {hand.length} &gt; 5 — elige cuál descartar</div>
-                  )}
                 </div>
               )}
 
-              {/* BASIC: Stage Attack / Gather Power / Back */}
-              {state.phase === 'basic' && (
+              {/* BASIC: Stage (frame de carta) · Gather · Back */}
+              {view === 'BASIC' && (
                 <div className="command-select">
                   <div className="basic-menu">
-                    <button className="basic-btn basic-stage" data-tip="STAGE ATTACK — 3 Stage · secuencia de inputs A/B a tiempo.\nCada acierto +1 CC (más si completas la cadena).">
+                    <button className="basic-btn basic-stage" data-tip="STAGE ATTACK — 3 Stage · secuencia A/B">
                       <span className="basic-stage-icon">
                         <img src={cardIconUrl(3)} alt="3 Stage Atk." className="stage-card-icon" />
                       </span>
                     </button>
-                    <button className="basic-btn basic-gather" data-tip="GATHER POWER — sube STR/KI (+8).\nActiva el mazo LIMIT durante 2 turnos.">
-                      GATHER POWER
-                    </button>
-                    <button className="basic-btn basic-back" onClick={() => sim.selectCommand('JOINT')}>BACK</button>
+                    <button className="basic-btn basic-gather" data-tip="GATHER POWER — sube STR/KI (+8)" />
+                    <button className="basic-btn basic-back" data-tip="BACK — volver al menú de comandos" />
                   </div>
                 </div>
               )}
 
-              {/* LIMIT: cartas LIMITED del personaje (reutilizables) */}
-              {state.phase === 'limitSelect' && (
+              {/* LIMIT: cartas del personaje */}
+              {view === 'LIMIT' && (
                 <div className="command-select">
                   <div className="limit-panel">
                     <div className="limit-title">LIMITED — GOKU</div>
-                    {DEMO_LIMIT_IDS.map(id => {
-                      const c = getCard(id);
-                      if (!c) return null;
-                      return (
-                        <button key={id} className="limit-row" data-tip={`${c.name} — ${CARD_TYPE_NAMES[c.type]}\nCC ${c.cc} · Reutilizable mientras tengas CC`}>
-                          <span className="limit-name">{c.name}</span>
-                          <span className="limit-cost">{c.cc} CC · {c.type.toUpperCase()}</span>
-                        </button>
-                      );
-                    })}
-                    <button className="basic-btn basic-back" onClick={() => sim.selectCommand('JOINT')}>BACK</button>
-                  </div>
-                </div>
-              )}
-
-              {/* DEFENSE: GUARD / MOVE (el defensor elige antes de resolver) */}
-              {state.phase === 'defend' && (
-                <div className="command-select">
-                  <div className="basic-menu">
-                    <button className="basic-btn basic-stage" onClick={() => sim.defend('GUARD')}
-                      data-tip="GUARD — quedarte y bloquear (−50% dmg).\nGratis, sin gastar CC.">
-                      GUARD
-                    </button>
-                    <button className="basic-btn basic-gather" onClick={() => sim.defend('MOVE')}
-                      data-tip="MOVE — cambiar de posición (persistente).">
-                      MOVE
-                    </button>
-                  </div>
-                </div>
-              )}
-
-              {/* WIN */}
-              {state.phase === 'win' && (
-                <div className="command-select">
-                  <div className="limit-panel">
-                    <div className="limit-title">{state.winner === 'player' ? 'GOKU WINS!' : 'PICCOLO WINS!'}</div>
-                    <button className="basic-btn basic-stage" onClick={sim.reset}>REMATCH</button>
+                    {limitCards.map(c => (
+                      <button key={c.id} className="limit-row" data-tip={`${c.name} — ${CARD_TYPE_NAMES[c.type]}\nCC ${c.cc} · Reutilizable mientras tengas CC`}>
+                        <span className="limit-name">{c.name}</span>
+                        <span className="limit-cost">{c.cc} CC · {c.type.toUpperCase()}</span>
+                      </button>
+                    ))}
+                    <button className="basic-btn basic-back" data-tip="BACK — volver al menú de comandos" />
                   </div>
                 </div>
               )}

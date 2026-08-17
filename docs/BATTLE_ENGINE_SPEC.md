@@ -63,23 +63,28 @@ NO recalcular el orden a mitad de round (hasta que la ROM demuestre lo contrario
 
 - 3/4/5/6 Stage. Cada input correcto: **CC += 1** y continúa.
 - **Ventana TOTAL de la secuencia según posición relativa (manual GBC USA)**:
-  F/F (más cerca) = **1.2s** · F/B o B/F = **1.7s / 2.4s** · B/B (más lejos) =
-  **2.9s**. Convertidas a frames GBC (×59.7275): 72 / 102 / 143 / 173.
+  cuanto MÁS CERCA del rival, MÁS tiempo (manual) — rango observado 1.2–2.9s.
+  `BACK_BACK=1.2s · BACK_FRONT=1.7s · FRONT_BACK=2.4s · FRONT_FRONT=2.9s`
+  (×59.7275 → 72 / 102 / 143 / 173 ticks). ⚠️ Los extremos están confirmados
+  (B/B ≈ 1.2s máx distancia · F/F ≈ 2.9s mín distancia); la asignación de las
+  dos configuraciones MIXTAS (1.7 / 2.4) es HYPOTHESIS hasta captura forense.
   El reloj corre global para completar TODOS los comandos (no por input).
 - **Durante el QTE el luchador está en pose NEUTRAL (idle)**. La animación de la
   acción SOLO se ejecuta al completar la secuencia (GBC real).
 - **Al completar**: se ejecuta la cinemática completa de la acción
   (attacker → travel → target → return) y el daño completo se aplica al terminar.
-- **Al fallar** (input equivocado o timeout): el RIVAL CONTRAATACA (manual GBC).
-  El luchador se congela en la pose del golpe fallido y aparece ENTER COMMAND
-  con timing por botón (HYPOTHESIS de la comunidad):
-  - **A (Q) = DEFENDER** (≈0.4s): conservas los CC ya acertados y EVITAS el
-    daño del contraataque (SAFE_ABORT).
-  - **B (E) = REPARAR** (≈0.15s): continúas el Stage Attack desde el input
-    fallido (la ventana de secuencia se reinicia para los inputs restantes).
-  - Si no reaccionas a tiempo o el timing no se cumple: el contraataque del
-    rival CONECTA SOBRE EL JUGADOR (COUNTER_HIT). El manual NO define daño
-    parcial proporcional a los aciertos.
+- **Al fallar** (input equivocado o timeout): RECOVERY_PROMPT (manual GBC +
+  comunidad: el GBC final muestra icono en ACTION SCREEN con A/B):
+  - **A (Q) = BANK / DEFENDER**: conservas los CC ya acertados y TERMINAS el
+    Stage. ⚠️ FIDELITY V10 — A NO implica necesariamente 0 daño: veteranos y
+    Q&A aceptada documentan que los comandos completados pueden contar con
+    daño REDUCIDO/proporcional al progreso (fórmula exacta UNKNOWN/HYPOTHESIS
+    hasta captura ROM; si no hay recuperación previa sí puede acabar en 0).
+  - **B (E) = REPAIR / CONTINUAR**: continúas el Stage desde el input fallido
+    (la ventana de secuencia se reinicia para los inputs restantes).
+  - Sin input válido o ventana excedida: el contraataque del rival CONECTA
+    (COUNTER_HIT). Las ventanas exactas A/B (≈0.4s/≈0.15s actuales) son
+    HYPOTHESIS — no denominarlas canon.
 - Interrupción (Foresight/Telepathy/Time Freeze): fuerza el fallo (0 aciertos).
 - Ventana GLOBAL de secuencia (manual GBC, 4 valores por posición relativa):
   `BACK_BACK=1.2s · BACK_FRONT=1.7s · FRONT_BACK=2.4s · FRONT_FRONT=2.9s`.

@@ -766,10 +766,13 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
   // El mazo Joint se baraja UNA vez al iniciar; drawPile (17) + hand (3).
   // Cada ATTACK PHASE roba 1 del drawPile; las Joint usadas van al
   // discardPile. Nunca se vuelve a sortear el deck original.
+  // ⚠️ FIDELITY V10 — el mazo SIEMPRE son las 20 cartas configuradas (el
+  // manual describe "exactly 20 Joint Cards"); la compatibilidad es de la
+  // HABILIDAD/personaje, NO del mazo: se aplica al mostrar (carta gris/
+  // no seleccionable). CHARA recalcula qué cartas de la misma mano son
+  // usables al intercambiar. Filtrar el deck alteraba probabilidades.
   const [deckState, setDeckState] = useState<JointDeckState>(() =>
-    createBattleDeck(loadDeck(), {
-      usable: c => cardUsableBy(c, getForm(playerFormId)!.character),
-    }));
+    createBattleDeck(loadDeck()));
   const { hand, drawPile, discardPile } = deckState;
 
   // ── MAZO REAL DEL ENEMIGO ──
@@ -780,8 +783,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
   // su discardPile. Ref para que enemyAttack lea el estado fresco.
   const [eDeckState, setEDeckState] = useState<JointDeckState>(() => {
     const ids = storyChapter ? (STORY_ENEMY_DECKS[storyChapter] || []) : STARTER_DAMAGE_DECK;
-    const charId = getForm(enemyFormId)!.character;
-    return createBattleDeck(ids, { usable: c => cardUsableBy(c, charId) });
+    return createBattleDeck(ids);   // las 20 del jefe, sin filtrar
   });
   const eDeckRef = useRef(eDeckState);
   eDeckRef.current = eDeckState;
@@ -835,7 +837,11 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   // Fade suave al alternar TACTICAL ↔ ACTION
-  useEffect(() => { setViewFade(v => v + 1); }, [viewMode]);
+  // ⚠️ FIDELITY V10 — el GBC alterna TACTICAL ↔ ACTION con CORTE DURO
+  // (frame N → frame N+1, sin fade/zoom/blur — el propio CINEMATIC_GRAMMAR
+  // lo exige). El view-fade queda desactivado hasta tener una captura del
+  // original que demuestre un efecto específico.
+  // (useEffect desactivado: setViewFade(v => v + 1), [viewMode]);
   const gbcMs = (frames: number) => Math.round((frames / GBC_NATIVE_FPS) * 1000);
   const showPhaseCue = (title: string, sub: string, next: () => void, frames = 38) => {
     setPhaseCue({ id: nextUid(), title, sub });
@@ -867,7 +873,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
   const hitImpact = (side: 'player' | 'enemy') => {
     setHitShake(side);
     // Sincronizado con el field-shake CSS (0.3s ease-in-out)
-    setTimeout(() => setHitShake(null), 320);
+    setTimeout(() => setHitShake(null), gbcMs(19)); // 19 ticks ≈ 318ms (HYPOTHESIS)
   };
   // Stat stages reales: -3..+3 (cada stage = 8 unidades internas, como el GBC)
   const [pStages, setPStages] = useState({ str: 0, ki: 0, spd: 0, guard: 0 });
@@ -994,7 +1000,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
     drawFxTimer.current = window.setTimeout(() => {
       setDeckState(prev => drawOne(prev).state);
       setDrawFx(null);
-    }, 460);
+    }, gbcMs(28)); // robo: 28 ticks ≈ 469ms (draw anim, INFERRED)
   };
 
   // HAND CHECK (manual GBC): si tras la acción quedan >5 cartas, el
@@ -1399,22 +1405,12 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
     // Decay de precisión/evasión (Reading Ki/Afterimage: 2 turnos)
     setPAcc(prev => (prev > 0 ? prev - 1 : 0));
     setPEva(prev => (prev > 0 ? prev - 1 : 0));
-    // Buffs temporales: se desvanecen al agotarse (fade over time del GBC)
-    setBuffTurns(prev => {
-      if (prev <= 0) return 0;
-      const next = prev - 1;
-      if (next === 0) setPStages({ str: 0, ki: 0, spd: 0, guard: 0 });
-      return next;
-    });
-    // Los buffs/debuffs del ENEMIGO también decaen (antes eran permanentes:
-    // el gather enemigo duraba toda la partida y debuff_speed8 jamás se
-    // recuperaba — inconsistencia con la mecánica de 2 turnos del GBC).
-    setEBuffTurns(prev => {
-      if (prev <= 0) return 0;
-      const next = prev - 1;
-      if (next === 0) setEStages({ str: 0, ki: 0, spd: 0, guard: 0 });
-      return next;
-    });
+    // ⚠️ FIDELITY V10 — los STAT STAGES NO caducan por turnos (manual
+    // GameFAQs + comunidad): los cambios de parámetros de las Support Cards
+    // duran HASTA EL FINAL DE LA BATALLA (máx ±3 niveles, clampStage) y solo
+    // una carta específica (powerup_dispel/support_dispel) los anula.
+    // El GATHER POWER sí tiene duración, pero es un estado APARTE
+    // (powerState FULL→HALF→NORMAL con gatherTurns), no pStages/eStages.
     // Recalcular orden por SPD EFECTIVA (base + buffs/debuffs). El orden queda
     // fijado para TODO el turno; si la SPD cambió, el siguiente turno se invierte
     // (peculiaridad real del GBC: dos Attack Phases consecutivas visualmente).
@@ -1557,7 +1553,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
       setPlayer(incoming);
       setPlayerPose('idle');
       addLog(`${incoming.name} entra al combate! (CHARA)`);
-      settleAttackHand(() => setTimeout(() => advanceExchange(), 600));
+      settleAttackHand(() => setTimeout(() => advanceExchange(), gbcMs(36))); // 36 ticks ≈ 603ms (turn advance, INFERRED)
       return;
     }
     setPhase('cardSelect');
@@ -1782,7 +1778,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
         setDamageNums(prev => [...prev, { value: dmg, type: 'damage', ...dmgPos('enemy'), id: nextUid() }]);
         addLog(`${player.name} → ${card.name} — ${dmg} ${t('battle.dmg')}`);
         Sfx.hit();
-        setTimeout(() => setFlashEnemy(false), 150);
+        setTimeout(() => setFlashEnemy(false), gbcMs(9)); // 9 ticks ≈ 151ms (hit flash, HYPOTHESIS)
         if (enemy.hp - dmg <= 0 && enemy2) {
           const fallen = enemy.name;
           const next = enemy2;
@@ -1803,19 +1799,40 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
     }
 
     // ❌ Fallo: el rival contraataca (manual GBC — ENTER COMMAND).
-    //   SAFE_ABORT  → el jugador pulsó A a tiempo: conserva CC, evita el daño
-    //                 del contraataque y el Stage Attack termina sin daño.
-    //   COUNTER_HIT → no se defendió a tiempo (o pulsó B fuera de ventana):
-    //                 el contraataque del RIVAL conecta sobre el JUGADOR.
-    // ⚠️ El manual NO define daño parcial proporcional a los aciertos: un Stage
-    // fallido no inflige daño al rival; el counter es lo que se resuelve.
+    //   SAFE_ABORT  → A a tiempo: conserva CC y el Stage termina. ⚠️ FIDELITY
+    //                 V10 — A NO implica 0 daño: los comandos completados
+    //                 cuentan con daño REDUCIDO/proporcional al progreso
+    //                 (Q&A aceptada + veteranos). Fórmula HYPOTHESIS hasta
+    //                 captura ROM; con 0 aciertos el parcial es 0 (caso
+    //                 documentado "sin recuperación previa").
+    //   COUNTER_HIT → no se defendió a tiempo: el counter del RIVAL conecta.
     if (safeAbort) {
       commitQte({ ...st, state: 'SAFE_ABORT', result: 'SAFE_ABORT' });
       setViewMode('OVERVIEW');
+      // Daño parcial del Stage abortado: proporcional a los aciertos
+      // (HYPOTHESIS — misma fórmula de daño que el stage completo × progreso).
+      const totalSeq = st.seq.length || 1;
+      const progress = Math.min(1, st.correct / totalSeq);
+      let partialDmg = 0;
+      if (progress > 0) {
+        const ePos = enemy.battlePos;
+        const vulnerable = (isBeamVulnerable(ePos) && card.type === 'beam') || (isDamageVulnerable(ePos) && card.type === 'damage');
+        const posMult = (POSITION_DATA[ePos].depth === 'FRONT' && vulnerable) ? 0.8 : 0.5;
+        partialDmg = Math.max(0, Math.floor((card.atk + player.str) * posMult * progress));
+      }
       setTimeout(() => {
         setStageQte({ state: 'WAITING', seq: [], idx: 0, correct: 0, card: null, elapsedFrames: 0, limitFrames: 0, counterFrames: 0, result: null });
         setPhase('cardSelect');
-        addLog(`${player.name} se defiende del contraataque (+${ccGained} CC)`);
+        if (partialDmg > 0) {
+          setEnemy(prev => ({ ...prev, hp: Math.max(0, prev.hp - partialDmg) }));
+          setEnemyPose('hurt');
+          setFlashEnemy(true);
+          hitImpact('enemy');
+          setDamageNums(prev => [...prev, { value: partialDmg, type: 'damage', ...dmgPos('enemy'), id: nextUid() }]);
+          addLog(`${player.name} se defiende del contraataque — ${partialDmg} dmg parcial (${Math.round(progress * 100)}% del Stage) +${ccGained} CC`);
+        } else {
+          addLog(`${player.name} se defiende del contraataque (sin daño — 0 aciertos) +${ccGained} CC`);
+        }
         finishPlayerTurnStage(ccGained);
       }, gbcMs(24)); // ~0.4s: ventana A del counter (pose defensiva breve)
       return;
@@ -1839,7 +1856,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
       setDamageNums(prev => [...prev, { value: counterDmg, type: 'damage', ...dmgPos('player'), id: nextUid() }]);
       addLog(`${enemy.name} ${t('battle.counterHit')} — ${counterDmg} ${t('battle.dmg')} (conservas ${ccGained} CC)`);
       Sfx.hit();
-      setTimeout(() => setFlashPlayer(false), 150);
+      setTimeout(() => setFlashPlayer(false), gbcMs(9)); // 9 ticks (hit flash, HYPOTHESIS)
       if (player.hp - counterDmg <= 0) {
         setTimeout(() => { setPlayerPose('hurt'); setPhase('lose'); Sfx.defeat(); addLog(`${player.name} ${t('battle.defeated')}`); }, 500);
         return;
@@ -1855,11 +1872,17 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
     setViewMode('OVERVIEW');
     setEnemyPose('idle');
     setPlayerPose('idle');
-    settleAttackHand(() => setTimeout(() => advanceExchange(), 600));
+    settleAttackHand(() => setTimeout(() => advanceExchange(), gbcMs(36))); // 36 ticks ≈ 603ms (turn advance, INFERRED)
   };
 
   const selectCard = (idx: number) => {
     const card = hand[idx];
+    // Guard de compatibilidad con el personaje ACTIVO (el render lo pinta
+    // gris; aquí se protege la lógica). CHARA recalcula solo.
+    if (card && !cardUsableBy(card, getForm(activePlayerFormId)!.character)) {
+      Sfx.cancel();
+      return;
+    }
     setSelectedCard(idx);
 
     if (!canPlayInAttack(card)) {
@@ -1925,8 +1948,6 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
     resetPStages: boolean;
     pAcc: number; pEva: number;     // 0 = no tocar
     pLockOn: boolean; consumeLockOn: boolean;
-    buffTurns: number;              // -1 = no tocar
-    eBuffTurns: boolean;
     eStageDelta: { str: number; ki: number; spd: number; guard: number };
     resetEStages: boolean; endGather: boolean;
     transformFx: boolean; transformForm: string | null;
@@ -1952,8 +1973,8 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
       committed: false, ended: false,
       heal: 0, drain: 0, ccGain: 0, guardType: null, ohko: false,
       pStageDelta: zeroStages(), resetPStages: false,
-      pAcc: 0, pEva: 0, pLockOn: false, consumeLockOn: false, buffTurns: -1,
-      eBuffTurns: false, eStageDelta: zeroStages(), resetEStages: false, endGather: false,
+      pAcc: 0, pEva: 0, pLockOn: false, consumeLockOn: false,
+      eStageDelta: zeroStages(), resetEStages: false, endGather: false,
       transformFx: false, transformForm: null, bombDmg: 0,
       hitType: 'damage', damage: 0, ePosMove: null, suicideHp1: false,
       win: false, enemy2Fall: false, damageNum: null,
@@ -2007,7 +2028,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
           supportImpact = true;
         }
       } else if (eff.startsWith('buff_') || eff.startsWith('debuff_') || eff === 'accuracy_up' || eff === 'evasion_up' || eff === 'lock_on' || eff === 'powerup_dispel' || eff === 'support_dispel' || eff === 'powerdown_cleanse' || eff === 'knockdown_dmg' || eff === 'knockdown_min' || eff === 'attack_power_down' || eff === 'sunglasses' || eff === 'gamebomb' || eff === 'candy' || eff === 'naughty_book' || eff === 'special_card') {
-        if (eff.startsWith('buff_')) plan.buffTurns = 3;
+        // (los buffs no caducan: persisten hasta el final de la batalla)
         if (card.id === 27 || card.id === 28) {
           plan.transformFx = true;
           plan.logs.push(`${player.name} ${t('battle.powerOn')}!`);
@@ -2022,7 +2043,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
         if (eff === 'buff_speed8') plan.pStageDelta.spd += 1;
         if (eff === 'buff_guard8') plan.pStageDelta.guard += 1;
         if (eff === 'buff_kaio') { plan.pStageDelta.str += 2; plan.pStageDelta.ki += 2; }
-        if (eff.startsWith('debuff_') || eff === 'attack_power_down') plan.eBuffTurns = true;
+        // (los debuffs no caducan: persisten hasta que una carta los anule)
         if (eff === 'debuff_str8') plan.eStageDelta.str -= 1;
         if (eff === 'debuff_ki8') plan.eStageDelta.ki -= 1;
         if (eff === 'debuff_speed8' || eff === 'debuff_speed8_lowacc') plan.eStageDelta.spd -= 1;
@@ -2127,12 +2148,12 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
     if (plan.pLockOn) setPLockOn(true);
     if (plan.pAcc > 0) setPAcc(plan.pAcc);
     if (plan.pEva > 0) setPEva(plan.pEva);
-    if (plan.buffTurns >= 0) setBuffTurns(plan.buffTurns);
+
     if (plan.pStageDelta.str || plan.pStageDelta.ki || plan.pStageDelta.spd || plan.pStageDelta.guard) {
       setPStages(s => ({ str: clampStage(s.str + plan.pStageDelta.str), ki: clampStage(s.ki + plan.pStageDelta.ki), spd: clampStage(s.spd + plan.pStageDelta.spd), guard: clampStage(s.guard + plan.pStageDelta.guard) }));
     }
     if (plan.resetPStages) setPStages(zeroStages());
-    if (plan.eBuffTurns) setEBuffTurns(3);
+
     if (plan.eStageDelta.str || plan.eStageDelta.ki || plan.eStageDelta.spd || plan.eStageDelta.guard) {
       setEStages(s => ({ str: clampStage(s.str + plan.eStageDelta.str), ki: clampStage(s.ki + plan.eStageDelta.ki), spd: clampStage(s.spd + plan.eStageDelta.spd), guard: clampStage(s.guard + plan.eStageDelta.guard) }));
     }
@@ -2153,7 +2174,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
     if (plan.damage > 0 || plan.hitType !== 'damage') {
       setFlashEnemy(true);
       hitImpact('enemy');
-      setTimeout(() => setFlashEnemy(false), 150);
+      setTimeout(() => setFlashEnemy(false), gbcMs(9)); // 9 ticks ≈ 151ms (hit flash, HYPOTHESIS)
     }
     for (const s of plan.sfx) { if (s === 'beam') Sfx.beam(); else if (s === 'hit') Sfx.hit(); else if (s === 'dodge') Sfx.dodge(); }
     if (plan.damageNum && plan.damageNum.type !== 'heal') {
@@ -2175,7 +2196,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
         setEnemyPose('idle'); setFlashEnemy(false);
         addLog(`${fallen} K.O.! ${next.name} entra al combate!`);
         plan.ended = true;
-        setTimeout(() => endTurnRef.current(), 900);
+        setTimeout(() => endTurnRef.current(), gbcMs(54)); // 54 ticks ≈ 904ms (2v2 swap, INFERRED)
       } else {
         const prog = loadProgress();
         const gained = 80 + enemy.level * 20;
@@ -2254,14 +2275,14 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
     endTurnRef.current = () => {
       setPlayerPose('idle');
       setEnemyPose('idle');
-      settleAttackHand(() => setTimeout(() => advanceExchange(), 600));
+      settleAttackHand(() => setTimeout(() => advanceExchange(), gbcMs(36))); // 36 ticks ≈ 603ms (turn advance, INFERRED)
     };
     playCardCinematic(card, 'player', () => {
       if (!plan.committed) commitActionOutcome(plan);
       if (plan.ended) return;
       setPlayerPose('idle');
       setEnemyPose('idle');
-      settleAttackHand(() => setTimeout(() => advanceExchange(), 600));
+      settleAttackHand(() => setTimeout(() => advanceExchange(), gbcMs(36))); // 36 ticks ≈ 603ms (turn advance, INFERRED)
     }, (e) => {
       if (e.type === 'APPLY_DAMAGE') commitActionOutcome(plan);
     });
@@ -2275,10 +2296,10 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
     setDeckState(next);
     setSelectedCard(null);
     if (needsDiscard(next)) {
-      discardNextRef.current = () => setTimeout(() => advanceExchange(), 600);
+      discardNextRef.current = () => setTimeout(() => advanceExchange(), gbcMs(36)); // 36 ticks (turn advance, INFERRED)
       setPhase('discard');
     } else {
-      setTimeout(() => advanceExchange(), 600);
+      setTimeout(() => advanceExchange(), gbcMs(36)); // 36 ticks (turn advance, INFERRED)
     }
   };
 
@@ -2557,7 +2578,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
       setPlayerPose('hurt');
       setDamageNums(prev => [...prev, { value: damage, type: 'damage', ...dmgPos('player'), id: nextUid() }]);
       if (cardIncoming.type === 'beam') Sfx.beam(); else Sfx.punch();
-      setTimeout(() => setFlashPlayer(false), 150);
+      setTimeout(() => setFlashPlayer(false), gbcMs(9)); // 9 ticks (hit flash, HYPOTHESIS)
     } else {
       setPlayer(prev => ({ ...prev, hp: Math.max(0, prev.hp - 0) }));
       if (hitType === 'guard') setDamageNums(prev => [...prev, { value: 0, type: 'guard', ...dmgPos('player'), id: nextUid() }]);
@@ -2669,7 +2690,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
     if (card.type === 'beam') Sfx.beam();
     else if (damage > 0) Sfx.punch();
     else if (hitType === 'miss') Sfx.dodge();
-    setTimeout(() => setFlashPlayer(false), 150);
+    setTimeout(() => setFlashPlayer(false), gbcMs(9)); // 9 ticks (hit flash, HYPOTHESIS)
     if (damage > 0) { setPlayerPose('hurt'); setDamageNums(prev => [...prev, { value: damage, type: 'damage', ...dmgPos('player'), id: nextUid() }]); }
     else if (hitType === 'guard') setDamageNums(prev => [...prev, { value: 0, type: 'guard', ...dmgPos('player'), id: nextUid() }]);
     else if (hitType === 'miss') setDamageNums(prev => [...prev, { value: 0, type: 'miss', ...dmgPos('player'), id: nextUid() }]);
@@ -2931,9 +2952,9 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
             {pAcc > 0 && <span className="status-chip acc">ACC+</span>}
             {pEva > 0 && <span className="status-chip acc">EVA+</span>}
             {pLockOn && <span className="status-chip acc">LOCK</span>}
-            {buffTurns > 0 && <span className="status-chip buff">BUFF×{buffTurns}</span>}
+
             {gatherTurns > 0 && <span className="status-chip power">{powerState.replace('_', ' ')}</span>}
-            {pStages.str === 0 && pStages.ki === 0 && pStages.spd === 0 && pStages.guard === 0 && !playerGuard && pAcc === 0 && pEva === 0 && !pLockOn && buffTurns === 0 && gatherTurns === 0 && <span className="status-chip none">—</span>}
+            {pStages.str === 0 && pStages.ki === 0 && pStages.spd === 0 && pStages.guard === 0 && !playerGuard && pAcc === 0 && pEva === 0 && !pLockOn && gatherTurns === 0 && <span className="status-chip none">—</span>}
           </div>
           {player2 && (
             <div className="team-reserve left">
@@ -3169,7 +3190,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
         )}
         {phase === 'cardSelect' && (
           <>
-            <HandComponent cards={hand} selectedIndex={selectedCard} onSelect={selectCard} isPlayable={card => canPlayInAttack(card) && player.cc >= card.cc} />
+            <HandComponent cards={hand} selectedIndex={selectedCard} onSelect={selectCard} isPlayable={card => canPlayInAttack(card) && player.cc >= card.cc && cardUsableBy(card, getForm(activePlayerFormId)!.character)} />
             <button className="basic-btn basic-back" onClick={() => { Sfx.cancel(); setSelectedCard(null); setPhase('command'); }}
               data-tip="BACK — volver al menú de comandos (sin jugar carta)" />
           </>
@@ -3317,7 +3338,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
                 <div className="limit-panel">
                   <div className="limit-title">JOINT — {t('battle.defenseOnly')}</div>
                   {(() => {
-                    const defCards = hand.filter(canPlayInDefense);
+                    const defCards = hand.filter(c => canPlayInDefense(c) && cardUsableBy(c, getForm(activePlayerFormId)!.character));
                     if (defCards.length === 0) return <div className="limit-empty">{t('battle.noDefenseCards')}</div>;
                     return defCards.map((c, i) => {
                       const handIdx = hand.indexOf(c);

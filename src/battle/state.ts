@@ -81,27 +81,27 @@ export function createBattleDeck(
 }
 
 /**
- * Roba 1 carta del drawPile (Attack Phase). Si el drawPile está vacío,
- * se rebaraja el descarte (ciclo del mazo). Devuelve el nuevo estado y
- * la carta robada (o null si no hay ninguna carta posible).
+ * Roba 1 carta del drawPile (Attack Phase).
+ *
+ * ⚠️ FIDELITY V10 — NO rebaraja el discard (COMMUNITY_VERIFIED):
+ * la guía contemporánea de RPGClassics documenta que el Joint Deck son
+ * 20 cartas y que, una vez robadas las 20, NO se roba más aunque el
+ * combate continúe. El discardPile es descarte, no una segunda baraja.
+ * (Pendiente de confirmación ROM — si la ROM demostrara lo contrario,
+ * se re-introduce con etiqueta ROM_CONFIRMED.)
  */
-export function drawOne(state: JointDeckState, seed?: number): { state: JointDeckState; card: CardDef | null } {
-  let { drawPile, hand, discardPile } = state;
-  if (drawPile.length === 0) {
-    if (discardPile.length === 0) return { state, card: null };
-    drawPile = shuffle(discardPile, seed !== undefined ? seededRng(seed) : Math.random);
-    discardPile = [];
-  }
+export function drawOne(state: JointDeckState, _seed?: number): { state: JointDeckState; card: CardDef | null } {
+  const { drawPile, hand, discardPile } = state;
+  if (drawPile.length === 0) return { state, card: null };  // mazo agotado: no más robos
   const card = drawPile[0];
   if (!card) return { state, card: null };
-  drawPile = drawPile.slice(1);
+  const nextDrawPile = drawPile.slice(1);
   if (hand.length >= HAND_MAX_TRANSITORY) {
     // Mano llena (6): la carta robada va directamente al descarte
     // (no se puede tener más de 6 transitoriamente).
-    discardPile = [...discardPile, card];
-    return { state: { drawPile, hand, discardPile }, card: null };
+    return { state: { drawPile: nextDrawPile, hand, discardPile: [...discardPile, card] }, card: null };
   }
-  return { state: { drawPile, hand: [...hand, card], discardPile }, card };
+  return { state: { drawPile: nextDrawPile, hand: [...hand, card], discardPile }, card };
 }
 
 /** Usa una Joint de la mano: sale de `hand` y entra en `discardPile`. */

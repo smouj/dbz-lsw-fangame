@@ -85,18 +85,20 @@ console.log('\n▸ drawOne');
   check('drawPile consumido', d1.drawPile.length === 1, `got ${d1.drawPile.length}`);
   void card;
 }
-// Reshuffle del discard cuando el drawPile se agota (drawPile VACÍO)
+// FIDELITY V10 — el mazo NO se rebaraja (COMMUNITY_VERIFIED, RPGClassics):
+// una vez robadas las 20, no se roba más aunque el combate continúe. El
+// discardPile es descarte, no una segunda baraja. (Pendiente ROM.)
 {
   const d: JointDeckState = {
     drawPile: [],
     hand: [getCard(2)!],
     discardPile: [getCard(3)!, getCard(4)!],
   };
-  const { state: d1 } = drawOne(d);
-  check('drawPile agotado → rebaraja el discard', d1.drawPile.length === 1, `got ${d1.drawPile.length}`);
-  check('discardPile vacío tras rebarajar', d1.discardPile.length === 0, `got ${d1.discardPile.length}`);
-  check('hand 1 → 2 (la carta rebarajada se roba)', d1.hand.length === 2, `got ${d1.hand.length}`);
-  check('la carta robada viene del discard rebarajado', d1.hand.some(c => c.id === 3 || c.id === 4));
+  const { state: d1, card } = drawOne(d);
+  check('drawPile agotado → card null (NO reshuffle)', card === null);
+  check('drawPile agotado → drawPile sigue vacío', d1.drawPile.length === 0);
+  check('drawPile agotado → discardPile INTACTO (no es segunda baraja)', d1.discardPile.length === 2, `got ${d1.discardPile.length}`);
+  check('drawPile agotado → hand intacta', d1.hand.length === 1);
 }
 // Con drawPile NO vacío: roba de ahí sin tocar el discard
 {
@@ -106,7 +108,7 @@ console.log('\n▸ drawOne');
     discardPile: [getCard(3)!, getCard(4)!],
   };
   const { state: d1 } = drawOne(d);
-  check('drawPile con cartas → roba de ahí (sin rebarajar)', d1.drawPile.length === 0 && d1.discardPile.length === 2, `dp ${d1.drawPile.length} disc ${d1.discardPile.length}`);
+  check('drawPile con cartas → roba de ahí (sin tocar discard)', d1.drawPile.length === 0 && d1.discardPile.length === 2, `dp ${d1.drawPile.length} disc ${d1.discardPile.length}`);
 }
 // Sin cartas en ningún sitio → null
 {
