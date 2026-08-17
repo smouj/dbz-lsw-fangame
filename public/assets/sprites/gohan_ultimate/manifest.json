@@ -58,8 +58,8 @@
       {
         "name": "gohan_ultimate_guard_00",
         "file": "gohan_ultimate_guard_00.png",
-        "w": 34,
-        "h": 44
+        "w": 27,
+        "h": 46
       },
       {
         "name": "gohan_ultimate_guard_01",
@@ -70,8 +70,8 @@
       {
         "name": "gohan_ultimate_guard_02",
         "file": "gohan_ultimate_guard_02.png",
-        "w": 22,
-        "h": 46
+        "w": 34,
+        "h": 44
       }
     ]
   },
@@ -162,7 +162,7 @@
     ]
   },
   "hurt": {
-    "frame_count": 6,
+    "frame_count": 5,
     "fps": 6,
     "loop": false,
     "frames": [
@@ -188,19 +188,13 @@
         "name": "gohan_ultimate_hurt_03",
         "file": "gohan_ultimate_hurt_03.png",
         "w": 24,
-        "h": 46
+        "h": 45
       },
       {
         "name": "gohan_ultimate_hurt_04",
         "file": "gohan_ultimate_hurt_04.png",
         "w": 25,
         "h": 48
-      },
-      {
-        "name": "gohan_ultimate_hurt_05",
-        "file": "gohan_ultimate_hurt_05.png",
-        "w": 47,
-        "h": 21
       }
     ]
   },
@@ -323,144 +317,60 @@
     ]
   },
   "kick_right": {
-    "frame_count": 5,
+    "frame_count": 2,
     "fps": 7,
     "loop": false,
     "frames": [
       {
-        "name": "gohan_ultimate_idle_00",
-        "file": "gohan_ultimate_idle_00.png",
-        "w": 27,
-        "h": 46
+        "name": "gohan_ultimate_kick_right_00",
+        "file": "gohan_ultimate_kick_right_00.png",
+        "w": 38,
+        "h": 42
       },
       {
-        "name": "gohan_ultimate_attack_ud_00",
-        "file": "gohan_ultimate_attack_ud_00.png",
-        "w": 29,
-        "h": 46
-      },
-      {
-        "name": "gohan_ultimate_attack_ud_01",
-        "file": "gohan_ultimate_attack_ud_01.png",
-        "w": 29,
-        "h": 44
-      },
-      {
-        "name": "gohan_ultimate_attack_ud_02",
-        "file": "gohan_ultimate_attack_ud_02.png",
-        "w": 23,
-        "h": 46
-      },
-      {
-        "name": "gohan_ultimate_attack_ud_03",
-        "file": "gohan_ultimate_attack_ud_03.png",
-        "w": 31,
-        "h": 32
+        "name": "gohan_ultimate_kick_right_01",
+        "file": "gohan_ultimate_kick_right_01.png",
+        "w": 37,
+        "h": 42
       }
     ]
   },
   "knockback_back": {
-    "frame_count": 6,
+    "frame_count": 1,
     "fps": 7,
     "loop": false,
     "frames": [
       {
-        "name": "gohan_ultimate_hurt_00",
-        "file": "gohan_ultimate_hurt_00.png",
-        "w": 27,
-        "h": 45
-      },
-      {
-        "name": "gohan_ultimate_hurt_01",
-        "file": "gohan_ultimate_hurt_01.png",
+        "name": "gohan_ultimate_knockback_back_00",
+        "file": "gohan_ultimate_knockback_back_00.png",
         "w": 29,
-        "h": 42
-      },
-      {
-        "name": "gohan_ultimate_hurt_02",
-        "file": "gohan_ultimate_hurt_02.png",
-        "w": 32,
-        "h": 36
-      },
-      {
-        "name": "gohan_ultimate_hurt_03",
-        "file": "gohan_ultimate_hurt_03.png",
-        "w": 24,
-        "h": 46
-      },
-      {
-        "name": "gohan_ultimate_hurt_04",
-        "file": "gohan_ultimate_hurt_04.png",
-        "w": 25,
-        "h": 48
-      },
-      {
-        "name": "gohan_ultimate_hurt_05",
-        "file": "gohan_ultimate_hurt_05.png",
-        "w": 47,
-        "h": 21
+        "h": 44
       }
     ]
   },
   "knockback_up": {
-    "frame_count": 4,
+    "frame_count": 1,
     "fps": 7,
     "loop": false,
     "frames": [
       {
-        "name": "gohan_ultimate_hurt_00",
-        "file": "gohan_ultimate_hurt_00.png",
-        "w": 27,
+        "name": "gohan_ultimate_knockback_up_00",
+        "file": "gohan_ultimate_knockback_up_00.png",
+        "w": 39,
         "h": 45
-      },
-      {
-        "name": "gohan_ultimate_hurt_01",
-        "file": "gohan_ultimate_hurt_01.png",
-        "w": 29,
-        "h": 42
-      },
-      {
-        "name": "gohan_ultimate_hurt_02",
-        "file": "gohan_ultimate_hurt_02.png",
-        "w": 32,
-        "h": 36
-      },
-      {
-        "name": "gohan_ultimate_hurt_05",
-        "file": "gohan_ultimate_hurt_05.png",
-        "w": 47,
-        "h": 21
       }
     ]
   },
   "knockback_down": {
-    "frame_count": 4,
+    "frame_count": 1,
     "fps": 7,
     "loop": false,
     "frames": [
       {
-        "name": "gohan_ultimate_hurt_02",
-        "file": "gohan_ultimate_hurt_02.png",
-        "w": 32,
-        "h": 36
-      },
-      {
-        "name": "gohan_ultimate_hurt_03",
-        "file": "gohan_ultimate_hurt_03.png",
-        "w": 24,
-        "h": 46
-      },
-      {
-        "name": "gohan_ultimate_hurt_04",
-        "file": "gohan_ultimate_hurt_04.png",
-        "w": 25,
-        "h": 48
-      },
-      {
-        "name": "gohan_ultimate_hurt_05",
-        "file": "gohan_ultimate_hurt_05.png",
-        "w": 47,
-        "h": 21
+        "name": "gohan_ultimate_knockback_down_00",
+        "file": "gohan_ultimate_knockback_down_00.png",
+        "w": 31,
+        "h": 32
       }
     ]
   },
@@ -472,8 +382,8 @@
       {
         "name": "gohan_ultimate_guard_00",
         "file": "gohan_ultimate_guard_00.png",
-        "w": 34,
-        "h": 44
+        "w": 27,
+        "h": 46
       },
       {
         "name": "gohan_ultimate_guard_01",
@@ -484,33 +394,27 @@
       {
         "name": "gohan_ultimate_guard_02",
         "file": "gohan_ultimate_guard_02.png",
-        "w": 22,
-        "h": 46
+        "w": 34,
+        "h": 44
       }
     ]
   },
   "evade": {
-    "frame_count": 3,
+    "frame_count": 2,
     "fps": 10,
     "loop": false,
     "frames": [
       {
-        "name": "gohan_ultimate_move_back_00",
-        "file": "gohan_ultimate_move_back_00.png",
-        "w": 28,
-        "h": 45
+        "name": "gohan_ultimate_evade_00",
+        "file": "gohan_ultimate_evade_00.png",
+        "w": 23,
+        "h": 41
       },
       {
-        "name": "gohan_ultimate_guard_01",
-        "file": "gohan_ultimate_guard_01.png",
-        "w": 30,
-        "h": 46
-      },
-      {
-        "name": "gohan_ultimate_move_back_00",
-        "file": "gohan_ultimate_move_back_00.png",
-        "w": 28,
-        "h": 45
+        "name": "gohan_ultimate_evade_01",
+        "file": "gohan_ultimate_evade_01.png",
+        "w": 40,
+        "h": 31
       }
     ]
   },

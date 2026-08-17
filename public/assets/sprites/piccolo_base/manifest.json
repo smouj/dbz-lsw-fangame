@@ -58,8 +58,8 @@
       {
         "name": "piccolo_base_guard_00",
         "file": "piccolo_base_guard_00.png",
-        "w": 34,
-        "h": 38
+        "w": 29,
+        "h": 39
       },
       {
         "name": "piccolo_base_guard_01",
@@ -70,8 +70,8 @@
       {
         "name": "piccolo_base_guard_02",
         "file": "piccolo_base_guard_02.png",
-        "w": 21,
-        "h": 40
+        "w": 34,
+        "h": 38
       }
     ]
   },
@@ -180,7 +180,7 @@
     ]
   },
   "hurt": {
-    "frame_count": 7,
+    "frame_count": 5,
     "fps": 6,
     "loop": false,
     "frames": [
@@ -199,32 +199,20 @@
       {
         "name": "piccolo_base_hurt_02",
         "file": "piccolo_base_hurt_02.png",
-        "w": 32,
+        "w": 31,
         "h": 32
       },
       {
         "name": "piccolo_base_hurt_03",
         "file": "piccolo_base_hurt_03.png",
-        "w": 32,
-        "h": 32
+        "w": 25,
+        "h": 45
       },
       {
         "name": "piccolo_base_hurt_04",
         "file": "piccolo_base_hurt_04.png",
         "w": 25,
-        "h": 46
-      },
-      {
-        "name": "piccolo_base_hurt_05",
-        "file": "piccolo_base_hurt_05.png",
-        "w": 25,
-        "h": 48
-      },
-      {
-        "name": "piccolo_base_hurt_06",
-        "file": "piccolo_base_hurt_06.png",
-        "w": 42,
-        "h": 21
+        "h": 40
       }
     ]
   },
@@ -358,156 +346,60 @@
     ]
   },
   "kick_right": {
-    "frame_count": 6,
+    "frame_count": 2,
     "fps": 7,
     "loop": false,
     "frames": [
       {
-        "name": "piccolo_base_idle_00",
-        "file": "piccolo_base_idle_00.png",
-        "w": 29,
-        "h": 39
+        "name": "piccolo_base_kick_right_00",
+        "file": "piccolo_base_kick_right_00.png",
+        "w": 36,
+        "h": 36
       },
       {
-        "name": "piccolo_base_attack_ud_00",
-        "file": "piccolo_base_attack_ud_00.png",
-        "w": 33,
-        "h": 41
-      },
-      {
-        "name": "piccolo_base_attack_ud_01",
-        "file": "piccolo_base_attack_ud_01.png",
-        "w": 29,
-        "h": 38
-      },
-      {
-        "name": "piccolo_base_attack_ud_02",
-        "file": "piccolo_base_attack_ud_02.png",
-        "w": 23,
-        "h": 40
-      },
-      {
-        "name": "piccolo_base_attack_ud_03",
-        "file": "piccolo_base_attack_ud_03.png",
-        "w": 33,
-        "h": 27
-      },
-      {
-        "name": "piccolo_base_attack_ud_04",
-        "file": "piccolo_base_attack_ud_04.png",
-        "w": 21,
-        "h": 40
+        "name": "piccolo_base_kick_right_01",
+        "file": "piccolo_base_kick_right_01.png",
+        "w": 37,
+        "h": 36
       }
     ]
   },
   "knockback_back": {
-    "frame_count": 7,
+    "frame_count": 1,
     "fps": 7,
     "loop": false,
     "frames": [
       {
-        "name": "piccolo_base_hurt_00",
-        "file": "piccolo_base_hurt_00.png",
-        "w": 28,
-        "h": 39
-      },
-      {
-        "name": "piccolo_base_hurt_01",
-        "file": "piccolo_base_hurt_01.png",
-        "w": 27,
-        "h": 39
-      },
-      {
-        "name": "piccolo_base_hurt_02",
-        "file": "piccolo_base_hurt_02.png",
-        "w": 32,
-        "h": 32
-      },
-      {
-        "name": "piccolo_base_hurt_03",
-        "file": "piccolo_base_hurt_03.png",
-        "w": 32,
-        "h": 32
-      },
-      {
-        "name": "piccolo_base_hurt_04",
-        "file": "piccolo_base_hurt_04.png",
-        "w": 25,
-        "h": 46
-      },
-      {
-        "name": "piccolo_base_hurt_05",
-        "file": "piccolo_base_hurt_05.png",
-        "w": 25,
-        "h": 48
-      },
-      {
-        "name": "piccolo_base_hurt_06",
-        "file": "piccolo_base_hurt_06.png",
-        "w": 42,
-        "h": 21
+        "name": "piccolo_base_knockback_back_00",
+        "file": "piccolo_base_knockback_back_00.png",
+        "w": 29,
+        "h": 38
       }
     ]
   },
   "knockback_up": {
-    "frame_count": 4,
+    "frame_count": 1,
     "fps": 7,
     "loop": false,
     "frames": [
       {
-        "name": "piccolo_base_hurt_00",
-        "file": "piccolo_base_hurt_00.png",
-        "w": 28,
-        "h": 39
-      },
-      {
-        "name": "piccolo_base_hurt_01",
-        "file": "piccolo_base_hurt_01.png",
-        "w": 27,
-        "h": 39
-      },
-      {
-        "name": "piccolo_base_hurt_02",
-        "file": "piccolo_base_hurt_02.png",
-        "w": 32,
-        "h": 32
-      },
-      {
-        "name": "piccolo_base_hurt_05",
-        "file": "piccolo_base_hurt_05.png",
-        "w": 25,
-        "h": 48
+        "name": "piccolo_base_knockback_up_00",
+        "file": "piccolo_base_knockback_up_00.png",
+        "w": 29,
+        "h": 40
       }
     ]
   },
   "knockback_down": {
-    "frame_count": 4,
+    "frame_count": 1,
     "fps": 7,
     "loop": false,
     "frames": [
       {
-        "name": "piccolo_base_hurt_02",
-        "file": "piccolo_base_hurt_02.png",
-        "w": 32,
-        "h": 32
-      },
-      {
-        "name": "piccolo_base_hurt_03",
-        "file": "piccolo_base_hurt_03.png",
-        "w": 32,
-        "h": 32
-      },
-      {
-        "name": "piccolo_base_hurt_04",
-        "file": "piccolo_base_hurt_04.png",
-        "w": 25,
-        "h": 46
-      },
-      {
-        "name": "piccolo_base_hurt_05",
-        "file": "piccolo_base_hurt_05.png",
-        "w": 25,
-        "h": 48
+        "name": "piccolo_base_knockback_down_00",
+        "file": "piccolo_base_knockback_down_00.png",
+        "w": 33,
+        "h": 27
       }
     ]
   },
@@ -519,8 +411,8 @@
       {
         "name": "piccolo_base_guard_00",
         "file": "piccolo_base_guard_00.png",
-        "w": 34,
-        "h": 38
+        "w": 29,
+        "h": 39
       },
       {
         "name": "piccolo_base_guard_01",
@@ -531,33 +423,27 @@
       {
         "name": "piccolo_base_guard_02",
         "file": "piccolo_base_guard_02.png",
-        "w": 21,
-        "h": 40
+        "w": 34,
+        "h": 38
       }
     ]
   },
   "evade": {
-    "frame_count": 3,
+    "frame_count": 2,
     "fps": 10,
     "loop": false,
     "frames": [
       {
-        "name": "piccolo_base_move_back_00",
-        "file": "piccolo_base_move_back_00.png",
-        "w": 28,
-        "h": 40
+        "name": "piccolo_base_evade_00",
+        "file": "piccolo_base_evade_00.png",
+        "w": 23,
+        "h": 41
       },
       {
-        "name": "piccolo_base_guard_01",
-        "file": "piccolo_base_guard_01.png",
-        "w": 30,
-        "h": 40
-      },
-      {
-        "name": "piccolo_base_move_back_00",
-        "file": "piccolo_base_move_back_00.png",
-        "w": 28,
-        "h": 40
+        "name": "piccolo_base_evade_01",
+        "file": "piccolo_base_evade_01.png",
+        "w": 40,
+        "h": 31
       }
     ]
   },

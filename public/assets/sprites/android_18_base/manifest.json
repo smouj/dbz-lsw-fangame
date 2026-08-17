@@ -58,8 +58,8 @@
       {
         "name": "android_18_base_guard_00",
         "file": "android_18_base_guard_00.png",
-        "w": 33,
-        "h": 38
+        "w": 22,
+        "h": 40
       },
       {
         "name": "android_18_base_guard_01",
@@ -70,8 +70,8 @@
       {
         "name": "android_18_base_guard_02",
         "file": "android_18_base_guard_02.png",
-        "w": 20,
-        "h": 40
+        "w": 33,
+        "h": 38
       }
     ]
   },
@@ -162,7 +162,7 @@
     ]
   },
   "hurt": {
-    "frame_count": 6,
+    "frame_count": 5,
     "fps": 6,
     "loop": false,
     "frames": [
@@ -188,19 +188,13 @@
         "name": "android_18_base_hurt_03",
         "file": "android_18_base_hurt_03.png",
         "w": 24,
-        "h": 46
+        "h": 45
       },
       {
         "name": "android_18_base_hurt_04",
         "file": "android_18_base_hurt_04.png",
         "w": 24,
-        "h": 48
-      },
-      {
-        "name": "android_18_base_hurt_05",
-        "file": "android_18_base_hurt_05.png",
-        "w": 44,
-        "h": 22
+        "h": 45
       }
     ]
   },
@@ -341,144 +335,66 @@
     ]
   },
   "kick_right": {
-    "frame_count": 5,
+    "frame_count": 3,
     "fps": 7,
     "loop": false,
     "frames": [
       {
-        "name": "android_18_base_idle_00",
-        "file": "android_18_base_idle_00.png",
-        "w": 22,
-        "h": 40
+        "name": "android_18_base_kick_right_00",
+        "file": "android_18_base_kick_right_00.png",
+        "w": 31,
+        "h": 38
       },
       {
-        "name": "android_18_base_attack_ud_00",
-        "file": "android_18_base_attack_ud_00.png",
-        "w": 32,
-        "h": 37
+        "name": "android_18_base_kick_right_01",
+        "file": "android_18_base_kick_right_01.png",
+        "w": 36,
+        "h": 35
       },
       {
-        "name": "android_18_base_attack_ud_01",
-        "file": "android_18_base_attack_ud_01.png",
-        "w": 28,
-        "h": 36
-      },
-      {
-        "name": "android_18_base_attack_ud_02",
-        "file": "android_18_base_attack_ud_02.png",
-        "w": 21,
-        "h": 40
-      },
-      {
-        "name": "android_18_base_attack_ud_03",
-        "file": "android_18_base_attack_ud_03.png",
-        "w": 27,
-        "h": 29
+        "name": "android_18_base_kick_right_02",
+        "file": "android_18_base_kick_right_02.png",
+        "w": 34,
+        "h": 35
       }
     ]
   },
   "knockback_back": {
-    "frame_count": 6,
+    "frame_count": 1,
     "fps": 7,
     "loop": false,
     "frames": [
       {
-        "name": "android_18_base_hurt_00",
-        "file": "android_18_base_hurt_00.png",
-        "w": 27,
-        "h": 40
-      },
-      {
-        "name": "android_18_base_hurt_01",
-        "file": "android_18_base_hurt_01.png",
-        "w": 26,
-        "h": 37
-      },
-      {
-        "name": "android_18_base_hurt_02",
-        "file": "android_18_base_hurt_02.png",
-        "w": 31,
-        "h": 33
-      },
-      {
-        "name": "android_18_base_hurt_03",
-        "file": "android_18_base_hurt_03.png",
-        "w": 24,
-        "h": 46
-      },
-      {
-        "name": "android_18_base_hurt_04",
-        "file": "android_18_base_hurt_04.png",
-        "w": 24,
-        "h": 48
-      },
-      {
-        "name": "android_18_base_hurt_05",
-        "file": "android_18_base_hurt_05.png",
-        "w": 44,
-        "h": 22
+        "name": "android_18_base_knockback_back_00",
+        "file": "android_18_base_knockback_back_00.png",
+        "w": 28,
+        "h": 36
       }
     ]
   },
   "knockback_up": {
-    "frame_count": 4,
+    "frame_count": 1,
     "fps": 7,
     "loop": false,
     "frames": [
       {
-        "name": "android_18_base_hurt_00",
-        "file": "android_18_base_hurt_00.png",
-        "w": 27,
-        "h": 40
-      },
-      {
-        "name": "android_18_base_hurt_01",
-        "file": "android_18_base_hurt_01.png",
-        "w": 26,
-        "h": 37
-      },
-      {
-        "name": "android_18_base_hurt_02",
-        "file": "android_18_base_hurt_02.png",
-        "w": 31,
-        "h": 33
-      },
-      {
-        "name": "android_18_base_hurt_05",
-        "file": "android_18_base_hurt_05.png",
-        "w": 44,
-        "h": 22
+        "name": "android_18_base_knockback_up_00",
+        "file": "android_18_base_knockback_up_00.png",
+        "w": 34,
+        "h": 36
       }
     ]
   },
   "knockback_down": {
-    "frame_count": 4,
+    "frame_count": 1,
     "fps": 7,
     "loop": false,
     "frames": [
       {
-        "name": "android_18_base_hurt_02",
-        "file": "android_18_base_hurt_02.png",
-        "w": 31,
-        "h": 33
-      },
-      {
-        "name": "android_18_base_hurt_03",
-        "file": "android_18_base_hurt_03.png",
-        "w": 24,
-        "h": 46
-      },
-      {
-        "name": "android_18_base_hurt_04",
-        "file": "android_18_base_hurt_04.png",
-        "w": 24,
-        "h": 48
-      },
-      {
-        "name": "android_18_base_hurt_05",
-        "file": "android_18_base_hurt_05.png",
-        "w": 44,
-        "h": 22
+        "name": "android_18_base_knockback_down_00",
+        "file": "android_18_base_knockback_down_00.png",
+        "w": 27,
+        "h": 29
       }
     ]
   },
@@ -490,8 +406,8 @@
       {
         "name": "android_18_base_guard_00",
         "file": "android_18_base_guard_00.png",
-        "w": 33,
-        "h": 38
+        "w": 22,
+        "h": 40
       },
       {
         "name": "android_18_base_guard_01",
@@ -502,33 +418,27 @@
       {
         "name": "android_18_base_guard_02",
         "file": "android_18_base_guard_02.png",
-        "w": 20,
-        "h": 40
+        "w": 33,
+        "h": 38
       }
     ]
   },
   "evade": {
-    "frame_count": 3,
+    "frame_count": 2,
     "fps": 10,
     "loop": false,
     "frames": [
       {
-        "name": "android_18_base_move_back_00",
-        "file": "android_18_base_move_back_00.png",
-        "w": 27,
-        "h": 40
+        "name": "android_18_base_evade_00",
+        "file": "android_18_base_evade_00.png",
+        "w": 23,
+        "h": 41
       },
       {
-        "name": "android_18_base_guard_01",
-        "file": "android_18_base_guard_01.png",
-        "w": 27,
-        "h": 40
-      },
-      {
-        "name": "android_18_base_move_back_00",
-        "file": "android_18_base_move_back_00.png",
-        "w": 27,
-        "h": 40
+        "name": "android_18_base_evade_01",
+        "file": "android_18_base_evade_01.png",
+        "w": 40,
+        "h": 31
       }
     ]
   },

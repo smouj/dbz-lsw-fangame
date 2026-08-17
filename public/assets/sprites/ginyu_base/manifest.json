@@ -58,8 +58,8 @@
       {
         "name": "ginyu_base_guard_00",
         "file": "ginyu_base_guard_00.png",
-        "w": 34,
-        "h": 38
+        "w": 26,
+        "h": 39
       },
       {
         "name": "ginyu_base_guard_01",
@@ -70,8 +70,8 @@
       {
         "name": "ginyu_base_guard_02",
         "file": "ginyu_base_guard_02.png",
-        "w": 24,
-        "h": 39
+        "w": 34,
+        "h": 38
       }
     ]
   },
@@ -156,7 +156,7 @@
     ]
   },
   "hurt": {
-    "frame_count": 6,
+    "frame_count": 5,
     "fps": 6,
     "loop": false,
     "frames": [
@@ -182,19 +182,13 @@
         "name": "ginyu_base_hurt_03",
         "file": "ginyu_base_hurt_03.png",
         "w": 25,
-        "h": 46
+        "h": 45
       },
       {
         "name": "ginyu_base_hurt_04",
         "file": "ginyu_base_hurt_04.png",
         "w": 25,
-        "h": 48
-      },
-      {
-        "name": "ginyu_base_hurt_05",
-        "file": "ginyu_base_hurt_05.png",
-        "w": 42,
-        "h": 18
+        "h": 45
       }
     ]
   },
@@ -335,144 +329,60 @@
     ]
   },
   "kick_right": {
-    "frame_count": 5,
+    "frame_count": 2,
     "fps": 7,
     "loop": false,
     "frames": [
       {
-        "name": "ginyu_base_idle_00",
-        "file": "ginyu_base_idle_00.png",
-        "w": 26,
-        "h": 39
-      },
-      {
-        "name": "ginyu_base_attack_ud_00",
-        "file": "ginyu_base_attack_ud_00.png",
-        "w": 29,
-        "h": 42
-      },
-      {
-        "name": "ginyu_base_attack_ud_01",
-        "file": "ginyu_base_attack_ud_01.png",
-        "w": 29,
+        "name": "ginyu_base_kick_right_00",
+        "file": "ginyu_base_kick_right_00.png",
+        "w": 39,
         "h": 38
       },
       {
-        "name": "ginyu_base_attack_ud_02",
-        "file": "ginyu_base_attack_ud_02.png",
-        "w": 27,
-        "h": 40
-      },
-      {
-        "name": "ginyu_base_attack_ud_03",
-        "file": "ginyu_base_attack_ud_03.png",
-        "w": 32,
-        "h": 28
+        "name": "ginyu_base_kick_right_01",
+        "file": "ginyu_base_kick_right_01.png",
+        "w": 38,
+        "h": 38
       }
     ]
   },
   "knockback_back": {
-    "frame_count": 6,
+    "frame_count": 1,
     "fps": 7,
     "loop": false,
     "frames": [
       {
-        "name": "ginyu_base_hurt_00",
-        "file": "ginyu_base_hurt_00.png",
-        "w": 30,
-        "h": 38
-      },
-      {
-        "name": "ginyu_base_hurt_01",
-        "file": "ginyu_base_hurt_01.png",
-        "w": 28,
-        "h": 38
-      },
-      {
-        "name": "ginyu_base_hurt_02",
-        "file": "ginyu_base_hurt_02.png",
-        "w": 32,
-        "h": 32
-      },
-      {
-        "name": "ginyu_base_hurt_03",
-        "file": "ginyu_base_hurt_03.png",
-        "w": 25,
-        "h": 46
-      },
-      {
-        "name": "ginyu_base_hurt_04",
-        "file": "ginyu_base_hurt_04.png",
-        "w": 25,
-        "h": 48
-      },
-      {
-        "name": "ginyu_base_hurt_05",
-        "file": "ginyu_base_hurt_05.png",
-        "w": 42,
-        "h": 18
+        "name": "ginyu_base_knockback_back_00",
+        "file": "ginyu_base_knockback_back_00.png",
+        "w": 35,
+        "h": 34
       }
     ]
   },
   "knockback_up": {
-    "frame_count": 4,
+    "frame_count": 1,
     "fps": 7,
     "loop": false,
     "frames": [
       {
-        "name": "ginyu_base_hurt_00",
-        "file": "ginyu_base_hurt_00.png",
-        "w": 30,
+        "name": "ginyu_base_knockback_up_00",
+        "file": "ginyu_base_knockback_up_00.png",
+        "w": 29,
         "h": 38
-      },
-      {
-        "name": "ginyu_base_hurt_01",
-        "file": "ginyu_base_hurt_01.png",
-        "w": 28,
-        "h": 38
-      },
-      {
-        "name": "ginyu_base_hurt_02",
-        "file": "ginyu_base_hurt_02.png",
-        "w": 32,
-        "h": 32
-      },
-      {
-        "name": "ginyu_base_hurt_05",
-        "file": "ginyu_base_hurt_05.png",
-        "w": 42,
-        "h": 18
       }
     ]
   },
   "knockback_down": {
-    "frame_count": 4,
+    "frame_count": 1,
     "fps": 7,
     "loop": false,
     "frames": [
       {
-        "name": "ginyu_base_hurt_02",
-        "file": "ginyu_base_hurt_02.png",
+        "name": "ginyu_base_knockback_down_00",
+        "file": "ginyu_base_knockback_down_00.png",
         "w": 32,
-        "h": 32
-      },
-      {
-        "name": "ginyu_base_hurt_03",
-        "file": "ginyu_base_hurt_03.png",
-        "w": 25,
-        "h": 46
-      },
-      {
-        "name": "ginyu_base_hurt_04",
-        "file": "ginyu_base_hurt_04.png",
-        "w": 25,
-        "h": 48
-      },
-      {
-        "name": "ginyu_base_hurt_05",
-        "file": "ginyu_base_hurt_05.png",
-        "w": 42,
-        "h": 18
+        "h": 28
       }
     ]
   },
@@ -484,8 +394,8 @@
       {
         "name": "ginyu_base_guard_00",
         "file": "ginyu_base_guard_00.png",
-        "w": 34,
-        "h": 38
+        "w": 26,
+        "h": 39
       },
       {
         "name": "ginyu_base_guard_01",
@@ -496,33 +406,27 @@
       {
         "name": "ginyu_base_guard_02",
         "file": "ginyu_base_guard_02.png",
-        "w": 24,
-        "h": 39
+        "w": 34,
+        "h": 38
       }
     ]
   },
   "evade": {
-    "frame_count": 3,
+    "frame_count": 2,
     "fps": 10,
     "loop": false,
     "frames": [
       {
-        "name": "ginyu_base_move_back_00",
-        "file": "ginyu_base_move_back_00.png",
-        "w": 28,
-        "h": 40
+        "name": "ginyu_base_evade_00",
+        "file": "ginyu_base_evade_00.png",
+        "w": 23,
+        "h": 41
       },
       {
-        "name": "ginyu_base_guard_01",
-        "file": "ginyu_base_guard_01.png",
-        "w": 30,
-        "h": 39
-      },
-      {
-        "name": "ginyu_base_move_back_00",
-        "file": "ginyu_base_move_back_00.png",
-        "w": 28,
-        "h": 40
+        "name": "ginyu_base_evade_01",
+        "file": "ginyu_base_evade_01.png",
+        "w": 40,
+        "h": 31
       }
     ]
   },

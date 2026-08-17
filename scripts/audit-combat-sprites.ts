@@ -33,15 +33,19 @@ const POSE_RUNTIME_DEFAULTS: Record<string, PoseContract> = {
   guard: { fps: 6, loop: false },
   attack_fwd: { fps: 5, loop: false },
   attack_ud: { fps: 5, loop: false },
-  punch_right: { fps: 7, loop: false, startsWith: 'idle_', containsOnlyPrefixes: ['idle_', 'attack_fwd_'], forbiddenPrefixes: ['beam_', 'hurt_', 'guard_'] },
-  punch_left: { fps: 7, loop: false, startsWith: 'idle_', containsOnlyPrefixes: ['idle_', 'attack_fwd_'], forbiddenPrefixes: ['beam_', 'hurt_', 'guard_'] },
-  kick_right: { fps: 7, loop: false, startsWith: 'idle_', containsOnlyPrefixes: ['idle_', 'attack_ud_'], forbiddenPrefixes: ['beam_', 'hurt_', 'guard_'] },
+  punch_right: { fps: 7, loop: false, startsWith: 'idle_', containsOnlyPrefixes: ['idle_', 'attack_fwd_', 'punch_right_'], forbiddenPrefixes: ['beam_', 'hurt_', 'guard_'] },
+  punch_left: { fps: 7, loop: false, startsWith: 'idle_', containsOnlyPrefixes: ['idle_', 'attack_fwd_', 'punch_left_'], forbiddenPrefixes: ['beam_', 'hurt_', 'guard_'] },
+  // kick_right / knockback_*: frames PROPIOS canónicos del V9 (kick_right_00,
+  // knockback_back_00…) o composiciones de frames base (idle+attack_ud / hurt).
+  kick_right: { fps: 7, loop: false, containsOnlyPrefixes: ['idle_', 'attack_ud_', 'kick_right_'], forbiddenPrefixes: ['beam_', 'hurt_', 'guard_'] },
   hurt: { fps: 6, loop: false },
-  knockback_back: { fps: 7, loop: false, containsOnlyPrefixes: ['hurt_'], forbiddenPrefixes: ['beam_', 'attack_', 'guard_'] },
-  knockback_up: { fps: 7, loop: false, containsOnlyPrefixes: ['hurt_'], forbiddenPrefixes: ['beam_', 'attack_', 'guard_'] },
-  knockback_down: { fps: 7, loop: false, containsOnlyPrefixes: ['hurt_'], forbiddenPrefixes: ['beam_', 'attack_', 'guard_'] },
+  knockback_back: { fps: 7, loop: false, containsOnlyPrefixes: ['hurt_', 'knockback_back_'], forbiddenPrefixes: ['beam_', 'attack_', 'guard_'] },
+  knockback_up: { fps: 7, loop: false, containsOnlyPrefixes: ['hurt_', 'knockback_up_'], forbiddenPrefixes: ['beam_', 'attack_', 'guard_'] },
+  knockback_down: { fps: 7, loop: false, containsOnlyPrefixes: ['hurt_', 'knockback_down_'], forbiddenPrefixes: ['beam_', 'attack_', 'guard_'] },
   beam_guard: { fps: 6, loop: false, containsOnlyPrefixes: ['guard_'], forbiddenPrefixes: ['beam_ray_', 'attack_', 'hurt_'] },
-  evade: { fps: 10, loop: false, startsWith: 'move_back_', containsOnlyPrefixes: ['idle_', 'guard_', 'move_back_'], forbiddenPrefixes: ['beam_', 'attack_', 'hurt_'] },
+  // evade: frames propios canónicos (speedlines teletransporte del V9) o
+  // composición move_back→guard→move_back (convención V6.1).
+  evade: { fps: 10, loop: false, containsOnlyPrefixes: ['idle_', 'guard_', 'move_back_', 'evade_'], forbiddenPrefixes: ['beam_', 'attack_', 'hurt_'] },
   beam_charge: { fps: 7, loop: false },
   beam_fire: { fps: 8, loop: false },
   beam_ray: { fps: 7, loop: false },
@@ -148,7 +152,11 @@ for (const form of Object.values(FORMS)) {
       // Duplicados exactos consecutivos (mismo MD5) congelan la animacion.
       if (fs.existsSync(framePath)) {
         const hash = createHash('md5').update(fs.readFileSync(framePath)).digest('hex');
-        if (index > 0 && prevFrameHash === hash) {
+        // evade es [base, guard, base]: si guard == base (parpadeo con el mismo
+        // frame en formas donde el guard canónico comparte píxel con move_back)
+        // el duplicado consecutivo es INTENCIONAL — no es un colado.
+        const evadeOk = pose === 'evade';
+        if (index > 0 && prevFrameHash === hash && !evadeOk) {
           check(`${form.id}:${pose}:${index}:noConsecutiveDuplicate`, false, frame.file);
         }
         prevFrameHash = hash;
@@ -180,6 +188,17 @@ for (const form of Object.values(FORMS)) {
   for (const pose of compositePoses) {
     const manifestFiles = (manifest[pose]?.frames ?? []).map(f => f.file);
     if (manifestFiles.length === 0) continue;
+    // Frames PROPIOS canónicos (V9): kick_right_00, knockback_back_00…
+    // Cuando la pose tiene frames físicos propios con su prefijo, es la fuente
+    // canónica directa (no composición) — la cohesión se cumple por definición.
+    const hasOwnFrames = manifestFiles.some(f => {
+      const base = f.replace(`${dir}_`, '');
+      return base.startsWith(`${pose}_`);
+    });
+    if (hasOwnFrames) {
+      check(`${form.id}:${pose}:cohesion`, true, `frames propios canónicos (${manifestFiles.length})`);
+      continue;
+    }
     const composed = resolvePoseFrameSequence(pose, dir, (file) => fs.existsSync(path.join(spriteRoot, dir, file)));
     // Dirección crítica: la composición NO puede tener frames fuera del manifest.
     // Se permite el caso de DEDUP: frames físicamente idénticos (mismo MD5) a

@@ -58,20 +58,20 @@
       {
         "name": "future_trunks_super_saiyan_guard_00",
         "file": "future_trunks_super_saiyan_guard_00.png",
-        "w": 34,
-        "h": 39
+        "w": 27,
+        "h": 46
       },
       {
         "name": "future_trunks_super_saiyan_guard_01",
         "file": "future_trunks_super_saiyan_guard_01.png",
-        "w": 30,
-        "h": 41
+        "w": 34,
+        "h": 44
       },
       {
         "name": "future_trunks_super_saiyan_guard_02",
         "file": "future_trunks_super_saiyan_guard_02.png",
-        "w": 21,
-        "h": 41
+        "w": 24,
+        "h": 46
       }
     ]
   },
@@ -162,45 +162,15 @@
     ]
   },
   "hurt": {
-    "frame_count": 6,
+    "frame_count": 1,
     "fps": 6,
     "loop": false,
     "frames": [
       {
         "name": "future_trunks_super_saiyan_hurt_00",
         "file": "future_trunks_super_saiyan_hurt_00.png",
-        "w": 29,
-        "h": 40
-      },
-      {
-        "name": "future_trunks_super_saiyan_hurt_01",
-        "file": "future_trunks_super_saiyan_hurt_01.png",
-        "w": 27,
-        "h": 42
-      },
-      {
-        "name": "future_trunks_super_saiyan_hurt_02",
-        "file": "future_trunks_super_saiyan_hurt_02.png",
-        "w": 32,
-        "h": 33
-      },
-      {
-        "name": "future_trunks_super_saiyan_hurt_03",
-        "file": "future_trunks_super_saiyan_hurt_03.png",
-        "w": 27,
-        "h": 46
-      },
-      {
-        "name": "future_trunks_super_saiyan_hurt_04",
-        "file": "future_trunks_super_saiyan_hurt_04.png",
-        "w": 27,
-        "h": 48
-      },
-      {
-        "name": "future_trunks_super_saiyan_hurt_05",
-        "file": "future_trunks_super_saiyan_hurt_05.png",
-        "w": 43,
-        "h": 21
+        "w": 46,
+        "h": 23
       }
     ]
   },
@@ -341,144 +311,60 @@
     ]
   },
   "kick_right": {
-    "frame_count": 5,
+    "frame_count": 2,
     "fps": 7,
     "loop": false,
     "frames": [
       {
-        "name": "future_trunks_super_saiyan_idle_00",
-        "file": "future_trunks_super_saiyan_idle_00.png",
-        "w": 27,
-        "h": 41
+        "name": "future_trunks_super_saiyan_kick_right_00",
+        "file": "future_trunks_super_saiyan_kick_right_00.png",
+        "w": 39,
+        "h": 42
       },
       {
-        "name": "future_trunks_super_saiyan_attack_ud_00",
-        "file": "future_trunks_super_saiyan_attack_ud_00.png",
-        "w": 36,
-        "h": 41
-      },
-      {
-        "name": "future_trunks_super_saiyan_attack_ud_01",
-        "file": "future_trunks_super_saiyan_attack_ud_01.png",
-        "w": 29,
-        "h": 39
-      },
-      {
-        "name": "future_trunks_super_saiyan_attack_ud_02",
-        "file": "future_trunks_super_saiyan_attack_ud_02.png",
-        "w": 23,
-        "h": 41
-      },
-      {
-        "name": "future_trunks_super_saiyan_attack_ud_03",
-        "file": "future_trunks_super_saiyan_attack_ud_03.png",
-        "w": 33,
-        "h": 28
+        "name": "future_trunks_super_saiyan_kick_right_01",
+        "file": "future_trunks_super_saiyan_kick_right_01.png",
+        "w": 38,
+        "h": 42
       }
     ]
   },
   "knockback_back": {
-    "frame_count": 6,
+    "frame_count": 1,
     "fps": 7,
     "loop": false,
     "frames": [
       {
-        "name": "future_trunks_super_saiyan_hurt_00",
-        "file": "future_trunks_super_saiyan_hurt_00.png",
-        "w": 29,
-        "h": 40
-      },
-      {
-        "name": "future_trunks_super_saiyan_hurt_01",
-        "file": "future_trunks_super_saiyan_hurt_01.png",
-        "w": 27,
-        "h": 42
-      },
-      {
-        "name": "future_trunks_super_saiyan_hurt_02",
-        "file": "future_trunks_super_saiyan_hurt_02.png",
-        "w": 32,
-        "h": 33
-      },
-      {
-        "name": "future_trunks_super_saiyan_hurt_03",
-        "file": "future_trunks_super_saiyan_hurt_03.png",
-        "w": 27,
-        "h": 46
-      },
-      {
-        "name": "future_trunks_super_saiyan_hurt_04",
-        "file": "future_trunks_super_saiyan_hurt_04.png",
-        "w": 27,
-        "h": 48
-      },
-      {
-        "name": "future_trunks_super_saiyan_hurt_05",
-        "file": "future_trunks_super_saiyan_hurt_05.png",
-        "w": 43,
-        "h": 21
+        "name": "future_trunks_super_saiyan_knockback_back_00",
+        "file": "future_trunks_super_saiyan_knockback_back_00.png",
+        "w": 36,
+        "h": 41
       }
     ]
   },
   "knockback_up": {
-    "frame_count": 4,
+    "frame_count": 1,
     "fps": 7,
     "loop": false,
     "frames": [
       {
-        "name": "future_trunks_super_saiyan_hurt_00",
-        "file": "future_trunks_super_saiyan_hurt_00.png",
-        "w": 29,
-        "h": 40
-      },
-      {
-        "name": "future_trunks_super_saiyan_hurt_01",
-        "file": "future_trunks_super_saiyan_hurt_01.png",
-        "w": 27,
-        "h": 42
-      },
-      {
-        "name": "future_trunks_super_saiyan_hurt_02",
-        "file": "future_trunks_super_saiyan_hurt_02.png",
-        "w": 32,
-        "h": 33
-      },
-      {
-        "name": "future_trunks_super_saiyan_hurt_05",
-        "file": "future_trunks_super_saiyan_hurt_05.png",
-        "w": 43,
-        "h": 21
+        "name": "future_trunks_super_saiyan_knockback_up_00",
+        "file": "future_trunks_super_saiyan_knockback_up_00.png",
+        "w": 35,
+        "h": 41
       }
     ]
   },
   "knockback_down": {
-    "frame_count": 4,
+    "frame_count": 1,
     "fps": 7,
     "loop": false,
     "frames": [
       {
-        "name": "future_trunks_super_saiyan_hurt_02",
-        "file": "future_trunks_super_saiyan_hurt_02.png",
-        "w": 32,
-        "h": 33
-      },
-      {
-        "name": "future_trunks_super_saiyan_hurt_03",
-        "file": "future_trunks_super_saiyan_hurt_03.png",
-        "w": 27,
-        "h": 46
-      },
-      {
-        "name": "future_trunks_super_saiyan_hurt_04",
-        "file": "future_trunks_super_saiyan_hurt_04.png",
-        "w": 27,
-        "h": 48
-      },
-      {
-        "name": "future_trunks_super_saiyan_hurt_05",
-        "file": "future_trunks_super_saiyan_hurt_05.png",
-        "w": 43,
-        "h": 21
+        "name": "future_trunks_super_saiyan_knockback_down_00",
+        "file": "future_trunks_super_saiyan_knockback_down_00.png",
+        "w": 33,
+        "h": 32
       }
     ]
   },
@@ -490,20 +376,20 @@
       {
         "name": "future_trunks_super_saiyan_guard_00",
         "file": "future_trunks_super_saiyan_guard_00.png",
-        "w": 34,
-        "h": 39
+        "w": 27,
+        "h": 46
       },
       {
         "name": "future_trunks_super_saiyan_guard_01",
         "file": "future_trunks_super_saiyan_guard_01.png",
-        "w": 30,
-        "h": 41
+        "w": 34,
+        "h": 44
       },
       {
         "name": "future_trunks_super_saiyan_guard_02",
         "file": "future_trunks_super_saiyan_guard_02.png",
-        "w": 21,
-        "h": 41
+        "w": 24,
+        "h": 46
       }
     ]
   },
@@ -519,10 +405,10 @@
         "h": 31
       },
       {
-        "name": "future_trunks_super_saiyan_guard_01",
-        "file": "future_trunks_super_saiyan_guard_01.png",
-        "w": 30,
-        "h": 41
+        "name": "future_trunks_super_saiyan_guard_00",
+        "file": "future_trunks_super_saiyan_guard_00.png",
+        "w": 27,
+        "h": 46
       },
       {
         "name": "future_trunks_super_saiyan_move_back_00",

@@ -58,8 +58,8 @@
       {
         "name": "buu_base_guard_00",
         "file": "buu_base_guard_00.png",
-        "w": 34,
-        "h": 38
+        "w": 28,
+        "h": 40
       },
       {
         "name": "buu_base_guard_01",
@@ -70,8 +70,8 @@
       {
         "name": "buu_base_guard_02",
         "file": "buu_base_guard_02.png",
-        "w": 26,
-        "h": 40
+        "w": 34,
+        "h": 38
       }
     ]
   },
@@ -156,43 +156,13 @@
     ]
   },
   "hurt": {
-    "frame_count": 6,
+    "frame_count": 1,
     "fps": 6,
     "loop": false,
     "frames": [
       {
         "name": "buu_base_hurt_00",
         "file": "buu_base_hurt_00.png",
-        "w": 28,
-        "h": 38
-      },
-      {
-        "name": "buu_base_hurt_01",
-        "file": "buu_base_hurt_01.png",
-        "w": 29,
-        "h": 37
-      },
-      {
-        "name": "buu_base_hurt_02",
-        "file": "buu_base_hurt_02.png",
-        "w": 32,
-        "h": 37
-      },
-      {
-        "name": "buu_base_hurt_03",
-        "file": "buu_base_hurt_03.png",
-        "w": 25,
-        "h": 46
-      },
-      {
-        "name": "buu_base_hurt_04",
-        "file": "buu_base_hurt_04.png",
-        "w": 26,
-        "h": 48
-      },
-      {
-        "name": "buu_base_hurt_05",
-        "file": "buu_base_hurt_05.png",
         "w": 43,
         "h": 20
       }
@@ -359,144 +329,60 @@
     ]
   },
   "kick_right": {
-    "frame_count": 5,
+    "frame_count": 2,
     "fps": 7,
     "loop": false,
     "frames": [
       {
-        "name": "buu_base_idle_00",
-        "file": "buu_base_idle_00.png",
-        "w": 28,
-        "h": 40
+        "name": "buu_base_kick_right_00",
+        "file": "buu_base_kick_right_00.png",
+        "w": 39,
+        "h": 36
       },
       {
-        "name": "buu_base_attack_ud_00",
-        "file": "buu_base_attack_ud_00.png",
-        "w": 30,
-        "h": 42
-      },
-      {
-        "name": "buu_base_attack_ud_01",
-        "file": "buu_base_attack_ud_01.png",
-        "w": 31,
-        "h": 38
-      },
-      {
-        "name": "buu_base_attack_ud_02",
-        "file": "buu_base_attack_ud_02.png",
-        "w": 29,
-        "h": 40
-      },
-      {
-        "name": "buu_base_attack_ud_03",
-        "file": "buu_base_attack_ud_03.png",
-        "w": 29,
-        "h": 32
+        "name": "buu_base_kick_right_01",
+        "file": "buu_base_kick_right_01.png",
+        "w": 40,
+        "h": 36
       }
     ]
   },
   "knockback_back": {
-    "frame_count": 6,
+    "frame_count": 1,
     "fps": 7,
     "loop": false,
     "frames": [
       {
-        "name": "buu_base_hurt_00",
-        "file": "buu_base_hurt_00.png",
-        "w": 28,
-        "h": 38
-      },
-      {
-        "name": "buu_base_hurt_01",
-        "file": "buu_base_hurt_01.png",
-        "w": 29,
-        "h": 37
-      },
-      {
-        "name": "buu_base_hurt_02",
-        "file": "buu_base_hurt_02.png",
+        "name": "buu_base_knockback_back_00",
+        "file": "buu_base_knockback_back_00.png",
         "w": 32,
         "h": 37
-      },
-      {
-        "name": "buu_base_hurt_03",
-        "file": "buu_base_hurt_03.png",
-        "w": 25,
-        "h": 46
-      },
-      {
-        "name": "buu_base_hurt_04",
-        "file": "buu_base_hurt_04.png",
-        "w": 26,
-        "h": 48
-      },
-      {
-        "name": "buu_base_hurt_05",
-        "file": "buu_base_hurt_05.png",
-        "w": 43,
-        "h": 20
       }
     ]
   },
   "knockback_up": {
-    "frame_count": 4,
+    "frame_count": 1,
     "fps": 7,
     "loop": false,
     "frames": [
       {
-        "name": "buu_base_hurt_00",
-        "file": "buu_base_hurt_00.png",
-        "w": 28,
+        "name": "buu_base_knockback_up_00",
+        "file": "buu_base_knockback_up_00.png",
+        "w": 31,
         "h": 38
-      },
-      {
-        "name": "buu_base_hurt_01",
-        "file": "buu_base_hurt_01.png",
-        "w": 29,
-        "h": 37
-      },
-      {
-        "name": "buu_base_hurt_02",
-        "file": "buu_base_hurt_02.png",
-        "w": 32,
-        "h": 37
-      },
-      {
-        "name": "buu_base_hurt_05",
-        "file": "buu_base_hurt_05.png",
-        "w": 43,
-        "h": 20
       }
     ]
   },
   "knockback_down": {
-    "frame_count": 4,
+    "frame_count": 1,
     "fps": 7,
     "loop": false,
     "frames": [
       {
-        "name": "buu_base_hurt_02",
-        "file": "buu_base_hurt_02.png",
-        "w": 32,
-        "h": 37
-      },
-      {
-        "name": "buu_base_hurt_03",
-        "file": "buu_base_hurt_03.png",
-        "w": 25,
-        "h": 46
-      },
-      {
-        "name": "buu_base_hurt_04",
-        "file": "buu_base_hurt_04.png",
-        "w": 26,
-        "h": 48
-      },
-      {
-        "name": "buu_base_hurt_05",
-        "file": "buu_base_hurt_05.png",
-        "w": 43,
-        "h": 20
+        "name": "buu_base_knockback_down_00",
+        "file": "buu_base_knockback_down_00.png",
+        "w": 29,
+        "h": 32
       }
     ]
   },
@@ -508,8 +394,8 @@
       {
         "name": "buu_base_guard_00",
         "file": "buu_base_guard_00.png",
-        "w": 34,
-        "h": 38
+        "w": 28,
+        "h": 40
       },
       {
         "name": "buu_base_guard_01",
@@ -520,8 +406,8 @@
       {
         "name": "buu_base_guard_02",
         "file": "buu_base_guard_02.png",
-        "w": 26,
-        "h": 40
+        "w": 34,
+        "h": 38
       }
     ]
   },
@@ -537,9 +423,9 @@
         "h": 40
       },
       {
-        "name": "buu_base_guard_01",
-        "file": "buu_base_guard_01.png",
-        "w": 30,
+        "name": "buu_base_guard_00",
+        "file": "buu_base_guard_00.png",
+        "w": 28,
         "h": 40
       },
       {

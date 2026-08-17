@@ -58,14 +58,14 @@
       {
         "name": "goku_super_saiyan_3_guard_00",
         "file": "goku_super_saiyan_3_guard_00.png",
-        "w": 35,
-        "h": 43
+        "w": 30,
+        "h": 45
       },
       {
         "name": "goku_super_saiyan_3_guard_01",
         "file": "goku_super_saiyan_3_guard_01.png",
-        "w": 30,
-        "h": 45
+        "w": 35,
+        "h": 43
       },
       {
         "name": "goku_super_saiyan_3_guard_02",
@@ -156,7 +156,7 @@
     ]
   },
   "hurt": {
-    "frame_count": 7,
+    "frame_count": 5,
     "fps": 6,
     "loop": false,
     "frames": [
@@ -181,26 +181,14 @@
       {
         "name": "goku_super_saiyan_3_hurt_03",
         "file": "goku_super_saiyan_3_hurt_03.png",
-        "w": 36,
-        "h": 32
+        "w": 28,
+        "h": 46
       },
       {
         "name": "goku_super_saiyan_3_hurt_04",
         "file": "goku_super_saiyan_3_hurt_04.png",
         "w": 28,
-        "h": 46
-      },
-      {
-        "name": "goku_super_saiyan_3_hurt_05",
-        "file": "goku_super_saiyan_3_hurt_05.png",
-        "w": 28,
         "h": 48
-      },
-      {
-        "name": "goku_super_saiyan_3_hurt_06",
-        "file": "goku_super_saiyan_3_hurt_06.png",
-        "w": 47,
-        "h": 25
       }
     ]
   },
@@ -328,150 +316,60 @@
     ]
   },
   "kick_right": {
-    "frame_count": 5,
+    "frame_count": 2,
     "fps": 7,
     "loop": false,
     "frames": [
       {
-        "name": "goku_super_saiyan_3_idle_00",
-        "file": "goku_super_saiyan_3_idle_00.png",
-        "w": 30,
-        "h": 45
+        "name": "goku_super_saiyan_3_kick_right_00",
+        "file": "goku_super_saiyan_3_kick_right_00.png",
+        "w": 39,
+        "h": 41
       },
       {
-        "name": "goku_super_saiyan_3_attack_ud_00",
-        "file": "goku_super_saiyan_3_attack_ud_00.png",
-        "w": 27,
-        "h": 43
-      },
-      {
-        "name": "goku_super_saiyan_3_attack_ud_01",
-        "file": "goku_super_saiyan_3_attack_ud_01.png",
-        "w": 31,
-        "h": 43
-      },
-      {
-        "name": "goku_super_saiyan_3_attack_ud_02",
-        "file": "goku_super_saiyan_3_attack_ud_02.png",
-        "w": 29,
-        "h": 45
-      },
-      {
-        "name": "goku_super_saiyan_3_attack_ud_03",
-        "file": "goku_super_saiyan_3_attack_ud_03.png",
-        "w": 33,
-        "h": 32
+        "name": "goku_super_saiyan_3_kick_right_01",
+        "file": "goku_super_saiyan_3_kick_right_01.png",
+        "w": 40,
+        "h": 41
       }
     ]
   },
   "knockback_back": {
-    "frame_count": 7,
+    "frame_count": 1,
     "fps": 7,
     "loop": false,
     "frames": [
       {
-        "name": "goku_super_saiyan_3_hurt_00",
-        "file": "goku_super_saiyan_3_hurt_00.png",
-        "w": 27,
-        "h": 43
-      },
-      {
-        "name": "goku_super_saiyan_3_hurt_01",
-        "file": "goku_super_saiyan_3_hurt_01.png",
-        "w": 31,
-        "h": 41
-      },
-      {
-        "name": "goku_super_saiyan_3_hurt_02",
-        "file": "goku_super_saiyan_3_hurt_02.png",
-        "w": 32,
-        "h": 37
-      },
-      {
-        "name": "goku_super_saiyan_3_hurt_03",
-        "file": "goku_super_saiyan_3_hurt_03.png",
-        "w": 36,
-        "h": 32
-      },
-      {
-        "name": "goku_super_saiyan_3_hurt_04",
-        "file": "goku_super_saiyan_3_hurt_04.png",
-        "w": 28,
-        "h": 46
-      },
-      {
-        "name": "goku_super_saiyan_3_hurt_05",
-        "file": "goku_super_saiyan_3_hurt_05.png",
-        "w": 28,
-        "h": 48
-      },
-      {
-        "name": "goku_super_saiyan_3_hurt_06",
-        "file": "goku_super_saiyan_3_hurt_06.png",
-        "w": 47,
-        "h": 25
+        "name": "goku_super_saiyan_3_knockback_back_00",
+        "file": "goku_super_saiyan_3_knockback_back_00.png",
+        "w": 40,
+        "h": 38
       }
     ]
   },
   "knockback_up": {
-    "frame_count": 4,
+    "frame_count": 1,
     "fps": 7,
     "loop": false,
     "frames": [
       {
-        "name": "goku_super_saiyan_3_hurt_00",
-        "file": "goku_super_saiyan_3_hurt_00.png",
-        "w": 27,
-        "h": 43
-      },
-      {
-        "name": "goku_super_saiyan_3_hurt_01",
-        "file": "goku_super_saiyan_3_hurt_01.png",
-        "w": 31,
-        "h": 41
-      },
-      {
-        "name": "goku_super_saiyan_3_hurt_02",
-        "file": "goku_super_saiyan_3_hurt_02.png",
+        "name": "goku_super_saiyan_3_knockback_up_00",
+        "file": "goku_super_saiyan_3_knockback_up_00.png",
         "w": 32,
-        "h": 37
-      },
-      {
-        "name": "goku_super_saiyan_3_hurt_05",
-        "file": "goku_super_saiyan_3_hurt_05.png",
-        "w": 28,
-        "h": 48
+        "h": 42
       }
     ]
   },
   "knockback_down": {
-    "frame_count": 4,
+    "frame_count": 1,
     "fps": 7,
     "loop": false,
     "frames": [
       {
-        "name": "goku_super_saiyan_3_hurt_02",
-        "file": "goku_super_saiyan_3_hurt_02.png",
-        "w": 32,
-        "h": 37
-      },
-      {
-        "name": "goku_super_saiyan_3_hurt_03",
-        "file": "goku_super_saiyan_3_hurt_03.png",
-        "w": 36,
+        "name": "goku_super_saiyan_3_knockback_down_00",
+        "file": "goku_super_saiyan_3_knockback_down_00.png",
+        "w": 33,
         "h": 32
-      },
-      {
-        "name": "goku_super_saiyan_3_hurt_04",
-        "file": "goku_super_saiyan_3_hurt_04.png",
-        "w": 28,
-        "h": 46
-      },
-      {
-        "name": "goku_super_saiyan_3_hurt_05",
-        "file": "goku_super_saiyan_3_hurt_05.png",
-        "w": 28,
-        "h": 48
       }
     ]
   },
@@ -483,14 +381,14 @@
       {
         "name": "goku_super_saiyan_3_guard_00",
         "file": "goku_super_saiyan_3_guard_00.png",
-        "w": 35,
-        "h": 43
+        "w": 30,
+        "h": 45
       },
       {
         "name": "goku_super_saiyan_3_guard_01",
         "file": "goku_super_saiyan_3_guard_01.png",
-        "w": 30,
-        "h": 45
+        "w": 35,
+        "h": 43
       },
       {
         "name": "goku_super_saiyan_3_guard_02",
@@ -501,27 +399,21 @@
     ]
   },
   "evade": {
-    "frame_count": 3,
+    "frame_count": 2,
     "fps": 10,
     "loop": false,
     "frames": [
       {
-        "name": "goku_super_saiyan_3_move_back_00",
-        "file": "goku_super_saiyan_3_move_back_00.png",
-        "w": 30,
-        "h": 45
+        "name": "goku_super_saiyan_3_evade_00",
+        "file": "goku_super_saiyan_3_evade_00.png",
+        "w": 23,
+        "h": 41
       },
       {
-        "name": "goku_super_saiyan_3_guard_01",
-        "file": "goku_super_saiyan_3_guard_01.png",
-        "w": 30,
-        "h": 45
-      },
-      {
-        "name": "goku_super_saiyan_3_move_back_00",
-        "file": "goku_super_saiyan_3_move_back_00.png",
-        "w": 30,
-        "h": 45
+        "name": "goku_super_saiyan_3_evade_01",
+        "file": "goku_super_saiyan_3_evade_01.png",
+        "w": 40,
+        "h": 31
       }
     ]
   },

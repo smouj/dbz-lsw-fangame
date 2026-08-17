@@ -160,10 +160,11 @@ export function resolvePoseFrameSequence(
     case 'beam_guard':
       return allOf('guard');
     // Evade (convención V6.1): move_back_00 → guard → move_back_00
-    // (parpadeo defensivo). El manifest usa esa secuencia real.
+    // (parpadeo defensivo). guard_00 = frame canónico (el V9 no duplica guard_01
+    // como PNG propio; guard tiene 1-3 frames físicos).
     case 'evade': {
       const base = f('move_back', 0) ?? f('idle', 0);
-      const guard = f('guard', 1) ?? f('guard', 0);
+      const guard = f('guard', 0) ?? f('guard', 1) ?? f('idle', 0);
       if (base && guard) return [base, guard, base];
       const back = allOf('move_back');
       return back.length ? back : [f('idle', 0)].filter(Boolean) as string[];
