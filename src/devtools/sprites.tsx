@@ -139,7 +139,7 @@ export function SpritesModule({ target }: { target?: DevLinkedTarget | null }) {
       </header>
       {overridden && (
         <div className="dev-wip-banner">
-          ⚠ Este personaje tiene <strong>overrides locales</strong> guardados por Animation Studio (los frames mostrados
+          Este personaje tiene <strong>overrides locales</strong> guardados por Animation Studio (los frames mostrados
           pueden diferir del manifest canónico V9).{' '}
           <button className="dev-btn" onClick={() => { clearOverride(dir!); setOverridden(false); setReloadTick(t => t + 1); }}>
             Limpiar override local

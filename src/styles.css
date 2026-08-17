@@ -3648,8 +3648,8 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 .basic-btn span { font-size: 0.7rem; opacity: 0.85; }
 .basic-btn:hover:not(:disabled) { transform: translateY(-2px); filter: brightness(1.15); }
 .basic-btn:disabled { opacity: 0.35; cursor: not-allowed; filter: grayscale(.6); }
-/* BACK ocupa su propia fila centrada con el marco teal */
-.basic-btn.basic-back { width: 96px; height: 80px; --btn-frame: url('/assets/ui/hud_buttons/frame_teal.png'); }
+/* BACK: sprite EXIT del paquete GBC (el botón EXIT del phase-bar se eliminó) */
+.basic-btn.basic-back { width: 96px; height: 80px; --btn-frame: url('/assets/ui/hud_buttons/btn_exit.png'); }
 .basic-btn.basic-stage { --btn-frame: url('/assets/ui/hud_buttons/frame_orange.png'); }
 
 /* Icono de la carta de stage REAL dentro del botón (3/4/5/6 Stage) */

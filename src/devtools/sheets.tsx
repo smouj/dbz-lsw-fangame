@@ -222,7 +222,7 @@ export function SheetsModule({ target, onOpenInPixelArt }: {
                     className={`dev-sheet-cell ${selected === f.file ? 'active' : ''} ${f.touchesEdge && f.touchTop > 3 ? 'edge' : ''} ${f.bgSpecks > 0 ? 'speck' : ''} ${f.dupeOf ? 'dupe' : ''}`}
                     onClick={() => setSelected(f.file)}
                     aria-label={`${g.pose}: ${f.file}, ${f.w} by ${f.h}`}
-                    title={`${f.file}\n${f.w}×${f.h} · ${g.sem.meaning}\n${f.touchesEdge ? '⚠ toca borde' : ''}${f.bgSpecks ? `\n🧽 ${f.bgSpecks} specks` : ''}${f.dupeOf ? `\n⧉ duplicado de ${f.dupeOf}` : ''}`}
+                    title={`${f.file}\n${f.w}×${f.h} · ${g.sem.meaning}\n${f.touchesEdge ? '⚠ toca borde' : ''}${f.bgSpecks ? `\n${f.bgSpecks} specks` : ''}${f.dupeOf ? `\n⧉ duplicado de ${f.dupeOf}` : ''}`}
                   >
                     <span className="dev-sheet-thumb">
                       <img
@@ -284,7 +284,7 @@ export function SheetsModule({ target, onOpenInPixelArt }: {
                   </div>
                   <div className={selFrame.bgSpecks > 0 ? 'warn' : 'ok'}>
                     {selFrame.bgSpecks > 0
-                      ? `🧽 ${selFrame.bgSpecks} píxeles de color de fondo (specks) — límpialos en Pixel Art`
+                      ? `${selFrame.bgSpecks} píxeles de color de fondo (specks) — límpialos en Pixel Art`
                       : '✓ Sin specks de color de fondo'}
                   </div>
                   <div className={selFrame.dupeOf ? 'info' : 'ok'}>

@@ -1,3 +1,4 @@
+import { PenLine, Eraser, Droplets, Target, Save } from 'lucide-react';
 // ═══════════════════════════════════════════════════════════
 // DEV STUDIO — Pixel Art Editor
 // Pintor de píxeles profesional sobre los frames de combate:
@@ -144,7 +145,7 @@ export function PixelArtModule({ target }: { target?: { formId: string; file: st
       ctx?.drawImage(img, 0, 0);
       drawDisplay();
     };
-    img.onerror = () => { setStatus('⚠ No se pudo cargar el frame'); };
+    img.onerror = () => { setStatus('No se pudo cargar el frame'); };
     img.src = `${nativeUrl}?t=${Date.now()}`;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [nativeUrl, newBlank, blankVersion, formId]);
@@ -353,7 +354,7 @@ export function PixelArtModule({ target }: { target?: { formId: string; file: st
       ctx.putImageData(img, 0, 0);
       setDirty(true);
       drawDisplay();
-      setStatus(`🧽 Borrados ${n} px del color ${color} (tolerancia ${COLOR_TOL})`);
+      setStatus(`Borrados ${n} px del color ${color} (tolerancia ${COLOR_TOL})`);
     } else {
       setStatus(`Sin píxeles del color ${color} en este frame`);
     }
@@ -378,7 +379,7 @@ export function PixelArtModule({ target }: { target?: { formId: string; file: st
       setDirty(false);
       if (newBlank) { setNewBlank(false); setFile(name); }
     } catch (e) {
-      setStatus(`⚠ Error al guardar: ${String(e)}`);
+      setStatus(`Error al guardar: ${String(e)}`);
     }
   }
 
@@ -399,7 +400,7 @@ export function PixelArtModule({ target }: { target?: { formId: string; file: st
         <p className="dev-sub">Pinta / borra / corrige píxeles de los frames de combate. Guarda al proyecto o exporta PNG.</p>
       </header>
 
-      {loadError && <div className="dev-wip-banner">⚠ No se pudo cargar el manifest de esta forma.</div>}
+      {loadError && <div className="dev-wip-banner">No se pudo cargar el manifest de esta forma.</div>}
 
       <div className="dev-pixel-layout">
         <div className="dev-pixel-controls">
@@ -436,15 +437,15 @@ export function PixelArtModule({ target }: { target?: { formId: string; file: st
 
           <label>Herramienta</label>
           <div className="dev-tool-row">
-            <button className={`dev-tool ${tool === 'pencil' ? 'active' : ''}`} onClick={() => setTool('pencil')} title="Pincel">🖊 Pincel</button>
-            <button className={`dev-tool ${tool === 'eraser' ? 'active' : ''}`} onClick={() => setTool('eraser')} title="Borrador (transparente)">🧽 Borrar</button>
-            <button className={`dev-tool ${tool === 'colorEraser' ? 'active' : ''}`} onClick={() => setTool('colorEraser')} title="Borrador por color: borra solo el color que capturas al clicar">🎯 Borrar color</button>
-            <button className={`dev-tool ${tool === 'picker' ? 'active' : ''}`} onClick={() => setTool('picker')} title="Cuentagotas">💧 Tomar</button>
+            <button className={`dev-tool ${tool === 'pencil' ? 'active' : ''}`} onClick={() => setTool('pencil')} title="Pincel"><PenLine size={13} /> Pincel</button>
+            <button className={`dev-tool ${tool === 'eraser' ? 'active' : ''}`} onClick={() => setTool('eraser')} title="Borrador (transparente)"><Eraser size={13} /> Borrar</button>
+            <button className={`dev-tool ${tool === 'colorEraser' ? 'active' : ''}`} onClick={() => setTool('colorEraser')} title="Borrador por color: borra solo el color que capturas al clicar"><Target size={13} /> Borrar color</button>
+            <button className={`dev-tool ${tool === 'picker' ? 'active' : ''}`} onClick={() => setTool('picker')} title="Cuentagotas"><Droplets size={13} /> Tomar</button>
           </div>
 
           {tool === 'colorEraser' && (
             <div className="dev-tool-hint">
-              🎯 Clic en un píxel: borra todos los del <strong>mismo color</strong> (tolerancia {COLOR_TOL}) al arrastrar.
+              Clic en un píxel: borra todos los del <strong>mismo color</strong> (tolerancia {COLOR_TOL}) al arrastrar.
               <br/>También puedes elegir el color en la paleta y usar <strong>Limpiar color</strong>.
             </div>
           )}
@@ -479,13 +480,13 @@ export function PixelArtModule({ target }: { target?: { formId: string; file: st
           </div>
 
           <div className="dev-pixel-actions">
-            <button className="dev-btn dev-btn-primary" onClick={savePng} disabled={!file && !newBlank}>💾 Guardar al proyecto</button>
+            <button className="dev-btn dev-btn-primary" onClick={savePng} disabled={!file && !newBlank}><Save size={13} /> Guardar al proyecto</button>
             <button className="dev-btn" onClick={exportPng} disabled={!file && !newBlank}>↓ Exportar PNG</button>
           </div>
           <div className="dev-pixel-actions dev-pixel-actions-secondary">
             <button className="dev-btn" onClick={flipHorizontal} disabled={!file && !newBlank} title="Voltear horizontalmente (cambiar orientación izquierda/derecha)">↔ Voltear H</button>
             <button className="dev-btn" onClick={flipVertical} disabled={!file && !newBlank} title="Voltear verticalmente">↕ Voltear V</button>
-            <button className="dev-btn" onClick={eraseColorAll} disabled={!file && !newBlank} title={`Borrar todos los píxeles del color seleccionado (${color})`}>🧽 Limpiar color</button>
+            <button className="dev-btn" onClick={eraseColorAll} disabled={!file && !newBlank} title={`Borrar todos los píxeles del color seleccionado (${color})`}><Eraser size={13} /> Limpiar color</button>
           </div>
           <p className="dev-hint">Pista: voltear cambia la orientación del frame (todos los sprites deben mirar a la derecha). Usa “Limpiar color” para quitar píxeles de color de fondo de golpe.</p>
         </div>

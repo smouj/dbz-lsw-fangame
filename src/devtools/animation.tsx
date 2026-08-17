@@ -1,3 +1,4 @@
+import { X } from 'lucide-react';
 // ═══════════════════════════════════════════════════════════
 // DEV STUDIO — Animation Studio (editor de frames y animaciones)
 // Reproduce una pose desde manifest.json (fps/loop nativos) y
@@ -215,10 +216,10 @@ export function AnimationModule({ target }: { target?: DevLinkedTarget | null })
         updatePose(pose, p => addFrame(p, { ...f }, index));
         setStatus(`✓ Frame ${f.file} insertado en la posición ${index ?? nFrames}`);
       } else {
-        setStatus(`⚠ Los frames de ${srcFormId} no se pueden arrastrar a ${formId}: pertenecen a otro personaje/form. Usa “copiar frame existente” dentro de la misma forma.`);
+        setStatus(`Los frames de ${srcFormId} no se pueden arrastrar a ${formId}: pertenecen a otro personaje/form. Usa “copiar frame existente” dentro de la misma forma.`);
       }
     } catch {
-      setStatus('⚠ Drop inválido');
+      setStatus('Drop inválido');
     }
   }
 
@@ -293,7 +294,7 @@ export function AnimationModule({ target }: { target?: DevLinkedTarget | null })
       setOverridden(false);
       setStatus(`✓ manifest.json guardado en sprites/${dir}/`);
     } catch (e) {
-      setStatus(`⚠ Error al guardar: ${String(e)}`);
+      setStatus(`Error al guardar: ${String(e)}`);
     }
   }
   function exportManifest() {
@@ -428,7 +429,7 @@ export function AnimationModule({ target }: { target?: DevLinkedTarget | null })
         )}
       </header>
 
-      {loadError && <div className="dev-wip-banner">⚠ No se pudo cargar el manifest de esta forma.</div>}
+      {loadError && <div className="dev-wip-banner">No se pudo cargar el manifest de esta forma.</div>}
 
       <div className="dev-navigator-wrap">
         <FormNavigator formId={formId} onChange={fid => { setFormId(fid); setPose('idle'); setFrame(0); }} />
@@ -445,7 +446,7 @@ export function AnimationModule({ target }: { target?: DevLinkedTarget | null })
                   <span>{poseMeta(p).label}</span>
                   <small>{poseMeta(p).group}</small>
                 </button>
-                <button className="dev-pose-x" title={`Quitar pose ${p}`} onClick={() => removePose(p)}>✕</button>
+                <button className="dev-pose-x" title={`Quitar pose ${p}`} onClick={() => removePose(p)}><X size={11} /></button>
               </span>
             ))}
             {!manifest && <span className="dev-dim">cargando…</span>}
@@ -561,7 +562,7 @@ export function AnimationModule({ target }: { target?: DevLinkedTarget | null })
           </div>
 
           <div className="dev-pixel-actions">
-            <button className="dev-btn dev-btn-primary" onClick={saveManifest} disabled={!manifest}>💾 Guardar manifest</button>
+            <button className="dev-btn dev-btn-primary" onClick={saveManifest} disabled={!manifest}>Guardar manifest</button>
             <button className="dev-btn" onClick={exportManifest} disabled={!manifest}>↓ Exportar JSON</button>
             <button className="dev-btn" onClick={resetManifest} disabled={!manifest}>↺ Reset</button>
           </div>
@@ -603,7 +604,7 @@ export function AnimationModule({ target }: { target?: DevLinkedTarget | null })
                 <div className="dev-anim-thumb-ops">
                   <button onClick={() => move(i, -1)} disabled={i === 0} title="Mover izquierda">◂</button>
                   <button onClick={() => move(i, 1)} disabled={i === nFrames - 1} title="Mover derecha">▸</button>
-                  <button onClick={() => remove(i)} title="Quitar frame">✕</button>
+                  <button onClick={() => remove(i)} title="Quitar frame"><X size={11} /></button>
                 </div>
                 <span className="dev-anim-thumb-idx">{i}</span>
               </div>

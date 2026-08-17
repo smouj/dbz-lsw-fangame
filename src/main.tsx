@@ -2785,7 +2785,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
             {pStages.spd < 0 && <span className="status-chip debuff">SPD−</span>}
             {pStages.guard > 0 && <span className="status-chip buff">G+</span>}
             {pStages.guard < 0 && <span className="status-chip debuff">G−</span>}
-            {playerGuard && <span className="status-chip guard">{playerGuard.type === 'avoid_beam' ? 'BEAM⚡' : playerGuard.type === 'avoid_damage' ? 'DAMAGE🛡' : playerGuard.type === 'absorb' ? 'ABSORB' : playerGuard.type === 'reduce' ? 'GUARD' : 'CANCEL'}</span>}
+            {playerGuard && <span className="status-chip guard">{playerGuard.type === 'avoid_beam' ? 'BEAM' : playerGuard.type === 'avoid_damage' ? 'DAMAGE' : playerGuard.type === 'absorb' ? 'ABSORB' : playerGuard.type === 'reduce' ? 'GUARD' : 'CANCEL'}</span>}
             {pAcc > 0 && <span className="status-chip acc">ACC+</span>}
             {pEva > 0 && <span className="status-chip acc">EVA+</span>}
             {pLockOn && <span className="status-chip acc">LOCK</span>}
@@ -2910,7 +2910,6 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
             {phase !== 'win' && phase !== 'lose' && phase !== 'position' ? ` ${exchangeIndex + 1}/2` : ''}
           </span>
         </div>
-        <button className="btn-exit" onClick={() => onExit(false)}><X size={12} /> {t('battle.forfeit')}</button>
       </div>
 
       <div className="cc-dock" aria-label="Card Cost">
@@ -3003,10 +3002,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
               </button>
               <button className="basic-btn basic-gather" onClick={() => basicAction('gather')} disabled={gatherTurns > 0}
                 data-tip="GATHER POWER — sube STR/KI (+8).\nActiva el mazo LIMIT durante 2 turnos." />
-              <button className="basic-btn basic-back" onClick={() => { Sfx.cancel(); setPhase('command'); }}
-                data-tip="Volver al menú de comandos.">
-                {t('battle.back')}
-              </button>
+              <button className="basic-btn basic-back" data-tip="BACK — volver al menú anterior" onClick={() => { Sfx.cancel(); setPhase('command'); }} />
             </div>
             <div className="command-help">{t('battle.basicFree')}</div>
           </div>
@@ -3024,9 +3020,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
                   {player.cc < c.cc && <span className="limit-lock">{t('battle.insufficientCc')}</span>}
                 </button>
               ))}
-              <button className="basic-btn basic-back" onClick={() => { Sfx.cancel(); setPhase('command'); }}>
-                {t('battle.back')}
-              </button>
+              <button className="basic-btn basic-back" data-tip="BACK — volver al menú anterior" onClick={() => { Sfx.cancel(); setPhase('command'); }} />
             </div>
             <div className="command-help">{t('battle.limitedHelp')}</div>
           </div>
@@ -3139,10 +3133,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
                     data-tip="DEFEND — bloqueas el ataque.\nDaño reducido −50% (sin gastar CC)." />
                   <button className="basic-btn act-move" onClick={() => { Sfx.select(); setDefendMenu('move'); }}
                     data-tip="MOVE — cambias de posición táctica.\nLa posición persiste entre fases (spec Move)." />
-                  <button className="basic-btn basic-back" onClick={() => { Sfx.cancel(); setDefendMenu(null); }}
-                    data-tip="Volver al menú de defensa.">
-                    {t('battle.back')}
-                  </button>
+                  <button className="basic-btn basic-back" data-tip="BACK — volver al menú anterior" onClick={() => { Sfx.cancel(); setDefendMenu(null); }} />
                 </div>
               </>
             )}
@@ -3179,9 +3170,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
                     {moveAxisPreview ? positionLabel(applyMoveAxis(player.battlePos, moveAxisPreview)) : '—'}
                   </span>
                 </div>
-                <button className="basic-btn basic-back" onClick={() => { Sfx.cancel(); setMoveAxisPreview(null); setDefendMenu('basic'); }}>
-                  {t('battle.back')}
-                </button>
+                <button className="basic-btn basic-back" data-tip="BACK — volver al menú anterior" onClick={() => { Sfx.cancel(); setDefendMenu(null); }} />
               </div>
             )}
             {defendMenu === 'joint' && (
@@ -3202,9 +3191,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
                       );
                     });
                   })()}
-                  <button className="basic-btn basic-back" onClick={() => { Sfx.cancel(); setDefendMenu(null); }}>
-                    {t('battle.back')}
-                  </button>
+                  <button className="basic-btn basic-back" data-tip="BACK — volver al menú anterior" onClick={() => { Sfx.cancel(); setDefendMenu(null); }} />
                 </div>
               </div>
             )}
@@ -3224,9 +3211,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
                       </button>
                     ));
                   })()}
-                  <button className="basic-btn basic-back" onClick={() => { Sfx.cancel(); setDefendMenu(null); }}>
-                    {t('battle.back')}
-                  </button>
+                  <button className="basic-btn basic-back" data-tip="BACK — volver al menú anterior" onClick={() => { Sfx.cancel(); setDefendMenu(null); }} />
                 </div>
               </div>
             )}
@@ -4424,7 +4409,7 @@ function VersusScreen({ onNavigate, onStartVersus }: {
             </div>
           </div>
           <button className="btn-primary" onClick={() => onStartVersus(selected)} disabled={!deckValid}>
-            {deckValid ? `⚔ ${t('common.fight').toUpperCase()}` : `DECK ${deckSize}/${DECK_SIZE}`}
+            {deckValid ? <><Swords size={15} /> {t('common.fight').toUpperCase()}</> : `DECK ${deckSize}/${DECK_SIZE}`}
           </button>
           {!deckValid && <div className="deck-warning">DECK MUST HAVE {DECK_SIZE} CARDS</div>}
         </div>
@@ -4461,7 +4446,7 @@ function StarterScreen({ onDone }: { onDone: () => void }) {
             onMouseEnter={() => setHover('damage')} onMouseLeave={() => setHover(null)}
             onClick={() => choose('damage')}>
             <div className="starter-deck-name">PHYSICAL / DAMAGE</div>
-            <div className="starter-deck-icon">👊</div>
+            <div className="starter-deck-icon"><Sword size={26} strokeWidth={2.2} /></div>
             <div className="starter-deck-desc">Cont.Punch, Sonic Kick, Tail, Solid Shot...</div>
             <div className="starter-deck-cards">{dmgCards.map(c => c.name.slice(0, 12)).join(' · ')}</div>
           </button>
@@ -4469,7 +4454,7 @@ function StarterScreen({ onDone }: { onDone: () => void }) {
             onMouseEnter={() => setHover('beam')} onMouseLeave={() => setHover(null)}
             onClick={() => choose('beam')}>
             <div className="starter-deck-name">ENERGY / BEAM</div>
-            <div className="starter-deck-icon">💫</div>
+            <div className="starter-deck-icon"><Sparkles size={26} strokeWidth={2.2} /></div>
             <div className="starter-deck-desc">Energy Wave, Kamehameha, Galick-Ho, Final Flash...</div>
             <div className="starter-deck-cards">{beamCards.map(c => c.name.slice(0, 12)).join(' · ')}</div>
           </button>

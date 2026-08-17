@@ -284,7 +284,7 @@ function SimCard({ card, selected, disabled, onClick }: {
       <div className="card-art">
         {iconUrl
           ? <FitArt src={iconUrl} areaW={64} areaH={48} className="card-art-img" />
-          : <span className="card-icon-emoji">{CARD_COLORS[card.type] ? '✦' : '?'}</span>}
+          : <span className="card-icon-emoji">?</span>}
       </div>
     </button>
   );
@@ -460,7 +460,6 @@ export function HudModule() {
                 <span className="speed-order-label">{state.attacker === 'player' ? 'GOKU' : 'PICCOLO'} FIRST</span>
                 <span className="phase-label">{state.exchange === 1 ? 'ACTION 1/2' : 'ACTION 2/2'} · {state.phase}</span>
               </div>
-              <button className="btn-exit" type="button">EXIT</button>
             </div>
 
             {/* Fase cue (ATTACK PHASE / DEFENSE PHASE) */}

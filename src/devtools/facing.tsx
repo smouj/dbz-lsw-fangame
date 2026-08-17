@@ -68,9 +68,9 @@ export function FacingModule() {
       await flipAssetOnServer(`overworld/panel_sprites/${file}`);
       setFlipped(prev => ({ ...prev, [file]: false }));
       setSavedAt(prev => ({ ...prev, [file]: Date.now() }));
-      setStatus(`✔ ${file} volteado y guardado`);
+      setStatus(`${file} volteado y guardado (OK)`);
     } catch (e) {
-      setStatus(`✖ ${file}: ${String(e)}`);
+      setStatus(`Error: ${file}: ${String(e)}`);
     } finally {
       setBusy(prev => ({ ...prev, [file]: false }));
     }
@@ -84,7 +84,7 @@ export function FacingModule() {
       await saveOne(file);
     }
     setSavingAll(false);
-    setStatus(`✔ Guardados ${toSave.length} chibis volteados`);
+    setStatus(`Guardados ${toSave.length} chibis volteados (OK)`);
   }, [files, flipped, saveOne]);
 
   // tecla G = guardar todos, tecla R = reset visual
@@ -103,13 +103,13 @@ export function FacingModule() {
         <h1>Facing — orientación de chibis overworld</h1>
         <p className="dev-facing-help">
           Todos los sprites deben mirar a la <strong>DERECHA</strong> por defecto.
-          Click en un chibi = voltear en pantalla. Luego <strong>💾 Guardar</strong> lo
+          Click en un chibi = voltear en pantalla. Luego <strong>Guardar</strong> lo
           persiste al disco. Atajos: <kbd>G</kbd> guardar todos · <kbd>R</kbd> reset visual.
           Los marcados <span className="dev-facing-suggest">↔</span> probablemente miran a la izquierda (análisis consistente).
         </p>
         <div className="dev-facing-actions">
           <button className="dev-btn" onClick={saveAll} disabled={!dirty || savingAll}>
-            {savingAll ? 'Guardando…' : `💾 Guardar pendientes (${pendingCount})`}
+            {savingAll ? 'Guardando…' : `Guardar pendientes (${pendingCount})`}
           </button>
           <button className="dev-btn dev-btn-ghost" onClick={() => setFlipped({})} disabled={!dirty}>
             ↺ Reset visual
@@ -148,7 +148,7 @@ export function FacingModule() {
                   disabled={isBusy || !isFlipped}
                   onClick={() => saveOne(file)}
                 >
-                  {isBusy ? '…' : '💾 Guardar'}
+                  {isBusy ? '…' : 'Guardar'}
                 </button>
               </div>
             </div>

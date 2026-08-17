@@ -442,8 +442,8 @@ export function PixiSequenceModule() {
     pres.reset();
     advancedRef.current = false;
     setDetResult(mismatches === 0
-      ? `✅ FRAME-DETERMINISTICO: ${runs} runs idénticos (${profile.totalTicks} ticks, ${profile.tracks.length} eventos)`
-      : `❌ ${mismatches} divergencias (primera en run ${firstDivergence})`);
+      ? `FRAME-DETERMINISTICO: ${runs} runs idénticos (${profile.totalTicks} ticks, ${profile.tracks.length} eventos)`
+      : `${mismatches} divergencias (primera en run ${firstDivergence})`);
   };
 
   return (

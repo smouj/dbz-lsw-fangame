@@ -201,7 +201,7 @@ export function StoryModule() {
           <h3>Cobertura de retratos (capítulo)</h3>
           <div className="dev-tag-row">
             <span className="dev-tag ok">✓ {audit.realPortraits}/{audit.withChars} con retrato real</span>
-            {audit.fallbacks > 0 && <span className="dev-tag bad">⚠ {audit.fallbacks} con fallback</span>}
+            {audit.fallbacks > 0 && <span className="dev-tag bad">{audit.fallbacks} con fallback</span>}
           </div>
           {audit.missing.length > 0 && (
             <p className="dev-muted" style={{ marginTop: 6, fontSize: 11 }}>

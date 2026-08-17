@@ -8,6 +8,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import {
   Rocket, Settings2, Gamepad2, Monitor, AudioLines, Film, Package,
   Save, Flag, Boxes, CheckCircle2, ShieldCheck, GitBranch, Copy, X, AlertTriangle,
+  Lock,
 } from 'lucide-react';
 import {
   GAME_CONFIG, GAMEPLAY_CONFIG, RENDERER_CONFIG, AUDIO_CONFIG, SAVE_CONFIG,
@@ -47,7 +48,7 @@ function Section({ icon: Icon, title, children, defaultOpen = false }: {
 function KeyVal({ k, v, canon = false, ok }: { k: string; v: React.ReactNode; canon?: boolean; ok?: boolean }) {
   return (
     <div className="cfg-row">
-      <span className="cfg-key">{k}{canon && <span className="cfg-canon" title="CANON LOCKED: no editable">⛔</span>}</span>
+      <span className="cfg-key">{k}{canon && <span className="cfg-canon" title="CANON LOCKED: no editable"><Lock size={11} /></span>}</span>
       <span className={`cfg-val ${ok === false ? 'bad' : ok === true ? 'ok' : ''}`}>{v}</span>
     </div>
   );
@@ -132,7 +133,7 @@ export default function GameConfigPage() {
           </button>
         </div>
         {cfg.errors.length > 0 && (
-          <div className="dev-banner dev-banner-bad">{cfg.errors.map((e, i) => <div key={i}>✕ {e}</div>)}</div>
+          <div className="dev-banner dev-banner-bad">{cfg.errors.map((e, i) => <div key={i}><X size={11} /> {e}</div>)}</div>
         )}
         {report && (
           <div className="dev-muted" style={{ marginTop: 6 }}>
@@ -163,7 +164,7 @@ export default function GameConfigPage() {
         </div>
         <div className="dev-muted" style={{ marginTop: 8 }}>
           Ventanas QTE derivadas (ticks): BACK_BACK {w.BACK_BACK} · BACK_FRONT {w.BACK_FRONT} · FRONT_BACK {w.FRONT_BACK} · FRONT_FRONT {w.FRONT_FRONT}
-          <span className="cfg-canon"> ⛔ canon ~72/102/143/173</span>
+          <span className="cfg-canon"> <Lock size={10} /> canon ~72/102/143/173</span>
         </div>
       </Section>
 
@@ -205,7 +206,7 @@ export default function GameConfigPage() {
           <span className={`dev-tag ${audits.cinematics.ok ? 'ok' : 'bad'}`}>✓ {audits.cinematics.n}/125 card cinematics</span>
           <span className="dev-tag ok">✓ 42 character/forms</span>
           <span className="dev-tag ok">✓ backgrounds {audits.scenarios.n}/13</span>
-          <span className="dev-tag bad">⚠ 0 PENDING_ROM (directivas lo marcan)</span>
+          <span className="dev-tag bad">0 PENDING_ROM (directivas lo marcan)</span>
         </div>
       </Section>
 
