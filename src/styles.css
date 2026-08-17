@@ -3650,7 +3650,11 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 .basic-btn:disabled { opacity: 0.35; cursor: not-allowed; filter: grayscale(.6); }
 /* BACK: sprite EXIT del paquete GBC (el botón EXIT del phase-bar se eliminó) */
 .basic-btn.basic-back { width: 96px; height: 80px; --btn-frame: url('/assets/ui/hud_buttons/btn_exit.png'); }
-.basic-btn.basic-stage { --btn-frame: url('/assets/ui/hud_buttons/frame_orange.png'); }
+.basic-btn.basic-stage {
+  /* El botón STAGE usa el FRAME DE CARTA real (stage_attack) — como las
+     cartas de la mano: marco GBC + ilustración centrada en el área libre. */
+  --btn-frame: url('/assets/ui/card_frames/card_type_stage_attack_frame.png');
+}
 
 /* Icono de la carta de stage REAL dentro del botón (3/4/5/6 Stage) */
 .basic-stage {
@@ -3661,6 +3665,12 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   gap: 3px;
 }
 .basic-stage-icon {
+  position: absolute;
+  top: 18px;      /* área central libre del marco (igual que .card-art) */
+  left: 18px;
+  width: 60px;
+  height: 44px;
+  overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -3668,9 +3678,9 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 }
 .stage-card-icon {
   image-rendering: pixelated;
-  width: 44px;
-  height: 33px;
-  object-fit: contain;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
   border: 2px solid rgba(246,199,68,.5);
   background: rgba(255,255,255,.92);
   box-shadow: 2px 2px 0 rgba(0,0,0,.7);
@@ -3684,14 +3694,6 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   border: 2px solid rgba(246,199,68,.5);
   padding: 0 10px;
   line-height: 1.4;
-}
-.basic-stage-meta {
-  font-family: var(--fpx);
-  font-size: 7px;
-  letter-spacing: 1px;
-  color: #1a1200;
-  text-shadow: none;
-  opacity: .85;
 }
 .basic-btn.basic-gather { --btn-frame: url('/assets/ui/hud_buttons/btn_power.png'); }
 .limit-panel { display: flex; flex-direction: column; gap: 6px; width: min(420px, 92vw); max-height: 82px; overflow: hidden; background: rgba(5,8,14,.44); border: 1px solid var(--border); border-radius: 0; padding: 7px 9px; }
@@ -4462,13 +4464,6 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 .scene-target.player .fx-impact { left: 78%; }
 .scene-target.enemy .fx-impact { left: 22%; }
 @keyframes fx-impact-anim { 0% { opacity: 0; transform: scale(.2); } 30% { opacity: 1; } 100% { opacity: 0; transform: scale(2.4); } }
-.btn-cancel-card {
-  margin-top: 8px; padding: 8px 18px;
-  background: linear-gradient(180deg, #20242e, #14171e);
-  border: 2px solid var(--border); color: var(--muted);
-  font-family: var(--fpx); font-size: 9px; cursor: pointer; letter-spacing: .08em;
-}
-.btn-cancel-card:hover { color: var(--text); border-color: var(--gold); }
 .menu-lv { color: var(--gold); }
 /* Aura sutil en los luchadores del campo (presencia DBZ) */
 .fighter-container .sheet-sprite,
@@ -9493,7 +9488,7 @@ button.linklike:hover { text-decoration: underline; }
   left: 50%;
   bottom: 18px;
   transform: translateX(-50%) translateY(8px);
-  width: var(--gbc-dlg-w, min(720px, 92%));
+  width: var(--gbc-dlg-w, min(880px, 96%));
   z-index: 40;
   background: #f8f4e4;              /* blanco GBC */
   border: 3px solid #000;
@@ -9510,22 +9505,20 @@ button.linklike:hover { text-decoration: underline; }
   pointer-events: none;
   transition: opacity .12s steps(3, end), transform .12s steps(3, end);
 }
-/* Actor de la acción: etiqueta superior, estilo GBC */
+/* Actor de la acción: etiqueta superior, estilo GBC — SIN sombras */
 .gbc-dialogue-actor {
   font-size: 10px;
-  letter-spacing: 2px;
-  color: #c04040;                    /* rojo GBC para el actor */
-  margin-bottom: 2px;
+  letter-spacing: 2.5px;
+  color: #b03030;                    /* rojo GBC puro para el actor */
+  margin-bottom: 3px;
   text-transform: uppercase;
-  text-shadow: 1px 1px 0 #f8f4e4;
 }
-/* Texto principal: faux-bold pixel (sombras negras 4 dir → engrosan sin bold real) */
+/* Texto principal: NEGRO PURO sobre blanco GBC (sin faux-bold — las sombras
+   de 8 direcciones engrosaban demasiado; el GBC usa texto nítido) */
 .gbc-dialogue-text {
   color: #000;
   font-weight: 400;
-  text-shadow:
-    1px 0 0 #000, -1px 0 0 #000, 0 1px 0 #000, 0 -1px 0 #000,
-    1px 1px 0 #000, -1px 1px 0 #000, 1px -1px 0 #000, -1px -1px 0 #000;
+  text-shadow: none;
 }
 .battle-screen.gbc-msg .gbc-dialogue {
   opacity: 1;
@@ -9542,13 +9535,6 @@ button.linklike:hover { text-decoration: underline; }
 }
 .gbc-dialogue::before { top: -3px; left: -3px; border-right: 3px solid #000; border-bottom: 3px solid #000; }
 .gbc-dialogue::after { bottom: -3px; right: -3px; border-left: 3px solid #000; border-top: 3px solid #000; }
-.gbc-dialogue-label {
-  font-size: 9px;
-  letter-spacing: 2px;
-  color: #333;
-  margin-bottom: 2px;
-  text-transform: uppercase;
-}
 .gbc-dialogue-text { color: #000; }
 .gbc-dialogue-cursor {
   display: inline-block;

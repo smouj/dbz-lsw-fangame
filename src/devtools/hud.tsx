@@ -523,8 +523,10 @@ export function HudModule() {
               {state.phase === 'basic' && (
                 <div className="command-select">
                   <div className="basic-menu">
-                    <button className="basic-btn basic-stage" data-tip="STAGE ATTACK — secuencia de inputs A/B a tiempo.\nCada acierto +1 CC (más si completas la cadena).">
-                      <span className="basic-stage-meta">3 Stage Atk. · A/B</span>
+                    <button className="basic-btn basic-stage" data-tip="STAGE ATTACK — 3 Stage · secuencia de inputs A/B a tiempo.\nCada acierto +1 CC (más si completas la cadena).">
+                      <span className="basic-stage-icon">
+                        <img src={cardIconUrl(3)} alt="3 Stage Atk." className="stage-card-icon" />
+                      </span>
                     </button>
                     <button className="basic-btn basic-gather" data-tip="GATHER POWER — sube STR/KI (+8).\nActiva el mazo LIMIT durante 2 turnos.">
                       GATHER POWER

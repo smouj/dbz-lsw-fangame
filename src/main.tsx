@@ -3131,8 +3131,9 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
           <div className="command-select">
             <div className="basic-menu">
               <button className="basic-btn basic-stage" onClick={() => basicAction('stage')}
-                data-tip="STAGE ATTACK — secuencia de inputs A/B a tiempo.\nCada acierto +1 CC (más si completas la cadena).">
-                {/* El icono de la carta de stage REAL (3/4/5/6) dentro del marco */}
+                data-tip={`STAGE ATTACK — ${powerState !== 'NORMAL' ? '4' : '3'} Stage · secuencia de inputs A/B a tiempo.\nCada acierto +1 CC (más si completas la cadena).`}>
+                {/* Icono de la carta de stage REAL centrado en el área libre
+                    del marco de carta (como las cards de la mano) */}
                 <span className="basic-stage-icon">
                   {(() => {
                     const stages = powerState !== 'NORMAL' ? 4 : 3;
@@ -3140,7 +3141,6 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
                     return icon ? <img src={icon} alt={`${stages} Stage Atk.`} className="stage-card-icon" /> : <strong>{stages}</strong>;
                   })()}
                 </span>
-                <span className="basic-stage-meta">{powerState !== 'NORMAL' ? '4 ' : '3 '}{t('battle.powerState')} · A/B</span>
               </button>
               <button className="basic-btn basic-gather" onClick={() => basicAction('gather')} disabled={gatherTurns > 0}
                 data-tip="GATHER POWER — sube STR/KI (+8).\nActiva el mazo LIMIT durante 2 turnos." />
@@ -3170,9 +3170,8 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
         {phase === 'cardSelect' && (
           <>
             <HandComponent cards={hand} selectedIndex={selectedCard} onSelect={selectCard} isPlayable={card => canPlayInAttack(card) && player.cc >= card.cc} />
-            <button className="btn-cancel-card" onClick={() => { Sfx.cancel(); setSelectedCard(null); setPhase('command'); }}>
-              ← {t('battle.cancel')}
-            </button>
+            <button className="basic-btn basic-back" onClick={() => { Sfx.cancel(); setSelectedCard(null); setPhase('command'); }}
+              data-tip="BACK — volver al menú de comandos (sin jugar carta)" />
           </>
         )}
         {phase === 'stageInput' && (() => {
@@ -3290,8 +3289,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
                     onClick={() => confirmMoveAxis('HORIZONTAL')}
                     onMouseEnter={() => setMoveAxisPreview('HORIZONTAL')}
                     onMouseLeave={() => setMoveAxisPreview(null)}
-                    data-tip={`HORIZONTAL ↔ — ${t('battle.axisHorizontal')}\n${positionLabel(player.battlePos)} → ${positionLabel(applyMoveAxis(player.battlePos, 'HORIZONTAL'))}`}>
-                    <span className="move-axis-icon">↔</span>
+                    data-tip={`HORIZONTAL — ${t('battle.axisHorizontal')}\n${positionLabel(player.battlePos)} → ${positionLabel(applyMoveAxis(player.battlePos, 'HORIZONTAL'))}`}>
                     <span className="move-axis-label">FRONT/BACK</span>
                   </button>
                   <button
@@ -3299,8 +3297,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
                     onClick={() => confirmMoveAxis('VERTICAL')}
                     onMouseEnter={() => setMoveAxisPreview('VERTICAL')}
                     onMouseLeave={() => setMoveAxisPreview(null)}
-                    data-tip={`VERTICAL ↕ — ${t('battle.axisVertical')}\n${positionLabel(player.battlePos)} → ${positionLabel(applyMoveAxis(player.battlePos, 'VERTICAL'))}`}>
-                    <span className="move-axis-icon">↕</span>
+                    data-tip={`VERTICAL — ${t('battle.axisVertical')}\n${positionLabel(player.battlePos)} → ${positionLabel(applyMoveAxis(player.battlePos, 'VERTICAL'))}`}>
                     <span className="move-axis-label">AIR/GROUND</span>
                   </button>
                 </div>
