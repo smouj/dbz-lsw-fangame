@@ -4,6 +4,7 @@ import { createRoot } from 'react-dom/client';
 import { createPortal } from 'react-dom';
 import './styles.css';
 import { applyHudTheme, loadHudTheme } from './data/hudTheme';
+import { applyHudLayout } from './data/hudLayout';
 import { FORMS, CHARACTERS, getCharacter, getForm, idleSpriteUrl, statAtLevel, LIMIT_DEFAULTS, loadLimits, saveLimits } from './data/roster';
 import { STORY_ENEMY_DECKS, STORY_AI_BOOSTS, TEAM_BATTLES } from './data/enemy_decks';
 import { facingFlip, needsFlip } from './data/facing';
@@ -63,6 +64,9 @@ type Screen = 'main' | 'story' | 'battle' | 'storyScene' | 'versus' | 'deck' | '
 
 // Aplicar el tema HUD guardado al arrancar (el HUD Studio lo persiste).
 try { applyHudTheme(loadHudTheme()); } catch { /* SSR / sin DOM */ }
+// Contrato visual canónico (baseline V1): geometría estructural del HUD
+// en :root — juego, preview del dev y Combat Lab consumen las mismas vars.
+try { applyHudLayout(); } catch { /* SSR / sin DOM */ }
 
 type BattlePhase = 'position' | 'command' | 'basic' | 'limitSelect' | 'cardSelect' | 'stageInput' | 'enemyTurn' | 'defend' | 'discard' | 'win' | 'lose';
 

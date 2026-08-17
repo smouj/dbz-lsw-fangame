@@ -25,7 +25,34 @@ src/data/
 que usa `engine.ts` para sus visualizaciones). El HUD Studio es SOLO
 configurador del tema — las demos/batallas viven en el Combat Lab.
 
-## 2. Reglas estructurales y su nivel de evidencia (resumen)
+## 2. Separación de responsabilidades (HUD System / BattleEngine)
+
+```
+┌─────────────────────────┐   ┌──────────────────────────┐
+│ HUD SYSTEM (visual)     │   │ BATTLE ENGINE (lógica)   │
+│ · hudLayout.ts (contrato│   │ · battle/state.ts (reglas│
+│   GEOMÉTRICO baseline V1│   │   mazo/CC/HAND CHECK)    │
+│ · hudTheme.ts (colores/ │   │ · battle/engine.ts (fases│
+│   escala/tipografía)    │   │   y turnos, compartido)  │
+│ · hudAssets.ts (botones)│   │ · battle/combat.ts (daño/│
+│ · cardVisuals.ts (cartas│   │   defensa)               │
+│                         │   │ · battle/evidence.ts (niv│
+└───────────┬─────────────┘   └───────────┬──────────────┘
+            │                             │
+            ▼                             ▼
+   Battle Presentation (pantalla de combate)
+```
+
+- **HUD Studio = fuente de verdad VISUAL** (baseline V1 congelada — no cambiar
+  de dirección). Juego real, preview y Combat Lab consumen el MISMO CSS y las
+  vars `--hud-layout-*` (contrato en `:root` vía `applyHudLayout()`).
+- **BattleEngine = fuente de verdad LÓGICA**. No se mezclan.
+- Contrato: `src/data/hudLayout.ts` (HUD_LAYOUT: controles 96, botones/cartas
+  96×80, card-art 64×48 en 18,18, diálogo 80, HP bar 16, hand gap 5).
+  Validado por `npm run verify:hud-layout` (10 checks: invariantes + conexión
+  CSS + bootstrap + dev).
+
+## 3. Reglas estructurales y su nivel de evidencia (resumen)
 
 | Regla | Nivel | Estado |
 |---|---|---|

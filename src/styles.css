@@ -912,7 +912,7 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 .cc-dock {
   position: absolute;
   right: 14px;
-  bottom: calc(var(--controls-h, clamp(104px, 17.5vh, 136px)) + 56px);
+  bottom: calc(var(--controls-h, var(--hud-controls-h, var(--hud-layout-controls-h, clamp(104px, 17.5vh, 136px)))) + 56px);
   z-index: 28;
   display: flex;
   justify-content: flex-end;
@@ -1351,7 +1351,7 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 /* ─── Controles de batalla ─── */
 
 .battle-controls {
-  height: var(--controls-h, clamp(104px, 17.5vh, 136px));
+  height: var(--controls-h, var(--hud-controls-h, var(--hud-layout-controls-h, clamp(104px, 17.5vh, 136px))));
   min-height: 0;
   padding: 4px 12px 8px;
   display: flex;

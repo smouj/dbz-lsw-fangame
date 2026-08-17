@@ -26,7 +26,8 @@
     "prebuild:release": "node scripts/git-info.mjs",
     "canon:sprites": "python3 scripts/build-sprite-canon.py && npm run audit:sprite-canon && npm run verify:v9",
     "audit:sprite-canon": "python3 scripts/audit-sprite-canon.py",
-    "verify:battle": "esbuild --bundle --format=esm --platform=node scripts/verify-battle.ts --outfile=.verify-battle.mjs && node .verify-battle.mjs; rm -f .verify-battle.mjs"
+    "verify:battle": "esbuild --bundle --format=esm --platform=node scripts/verify-battle.ts --outfile=.verify-battle.mjs && node .verify-battle.mjs; rm -f .verify-battle.mjs",
+    "verify:hud-layout": "esbuild --bundle --format=esm --platform=node scripts/verify-hud-layout.ts --outfile=.vhud.mjs && node .vhud.mjs; rm -f .vhud.mjs"
   },
   "dependencies": {
     "@vitejs/plugin-react": "^4.3.4",

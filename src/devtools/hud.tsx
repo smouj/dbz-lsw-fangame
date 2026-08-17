@@ -23,6 +23,7 @@ import { getCard, CARD_TYPE_NAMES, CARD_COLORS, CardDef } from '../data/cards';
 import { cardIconUrl } from '../data/icons';
 import { FitArt } from '../components/FitArt';
 import { CARD_FRAME_BY_TYPE, CARD_FRAME_SELECTED, CARD_FRAME_DISABLED } from '../data/cardVisuals';
+import { HUD_LAYOUT, validateHudLayout } from '../data/hudLayout';
 
 // Formas de ejemplo del mockup (Goku vs Piccolo, como el Battle Lab).
 const P_FORM = 'goku_base';
@@ -144,6 +145,30 @@ export function HudModule() {
             {v.label}
           </button>
         ))}
+      </div>
+
+      {/* ═══ CONTRATO VISUAL (baseline V1 congelada) ═══ */}
+      <div className="dev-section">
+        <h2>Geometría canónica — baseline V1 (contrato único)</h2>
+        <p className="dev-muted" style={{ marginTop: -4 }}>
+          El HUD Studio es la <strong>fuente de verdad visual</strong>; el BattleEngine la
+          lógica. Juego real, preview y Combat Lab consumen estas medidas (CSS
+          via <code>--hud-layout-*</code>). No cambiar de dirección visual.
+        </p>
+        <div className="dev-pipeline" style={{ marginTop: 8 }}>
+          {Object.entries(HUD_LAYOUT).map(([k, v]) => (
+            <div key={k} className="dev-pipeline-row">
+              <span className="dev-pipeline-file"><code>--hud-layout-{k}</code></span>
+              <span className="dev-pipeline-rol"><code style={{ color: '#ffe9a3' }}>{String(v)}</code></span>
+              <span className="dev-pipeline-ok">✓</span>
+            </div>
+          ))}
+          <div className="dev-pipeline-row" style={{ borderColor: validateHudLayout().ok ? 'rgba(123,216,138,.5)' : 'rgba(255,90,70,.5)' }}>
+            <span className="dev-pipeline-file"><code>validateHudLayout()</code></span>
+            <span className="dev-pipeline-rol">{validateHudLayout().ok ? 'Invariantes OK (botones=cartas=diálogo 80px · card-art 64×48 en 18,18)' : validateHudLayout().errors.join(' · ')}</span>
+            <span className="dev-pipeline-ok">{validateHudLayout().ok ? '✓' : '✗'}</span>
+          </div>
+        </div>
       </div>
 
       <div className="dev-hud-grid">
