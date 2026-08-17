@@ -3164,7 +3164,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
                       <>
                         {/* Fondo provisional: visible mientras el arte carga */}
                         <strong>{stages} Stage</strong>
-                        {icon && <FitArt src={icon} areaW={56} areaH={40} className="stage-card-icon" />}
+                        {icon && <FitArt src={icon} areaW={64} areaH={48} className="stage-card-icon" />}
                       </>
                     );
                   })()}

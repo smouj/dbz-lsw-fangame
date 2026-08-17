@@ -246,6 +246,26 @@ export function HudModule() {
               </div>
             </div>
 
+            {/* CC dock real (igual que el juego: P/E con barra y valor) */}
+            <div className="cc-dock" aria-label="Card Cost">
+              <div className="cc-pocket player">
+                <span className="cc-pocket-label">P</span>
+                <div className="cc-display">
+                  <span className="cc-label">CC</span>
+                  <div className="cc-bar-track"><div className="cc-bar-fill" style={{ width: '6%' }} /></div>
+                  <span className="cc-value">6<span className="cc-max">/99</span></span>
+                </div>
+              </div>
+              <div className="cc-pocket enemy">
+                <span className="cc-pocket-label">E</span>
+                <div className="cc-display">
+                  <span className="cc-label">CC</span>
+                  <div className="cc-bar-track"><div className="cc-bar-fill" style={{ width: '3%' }} /></div>
+                  <span className="cc-value">3<span className="cc-max">/99</span></span>
+                </div>
+              </div>
+            </div>
+
             {/* DIÁLOGO (cuadro GBC estructurado) */}
             {view === 'DIALOGO' && (
               <div className="gbc-dialogue">
@@ -285,7 +305,7 @@ export function HudModule() {
                     <button className="basic-btn basic-stage" data-tip="STAGE ATTACK — 3 Stage · secuencia A/B">
                       <span className="basic-stage-icon">
                         <strong>3 Stage</strong>
-                        <FitArt src={cardIconUrl(1)!} areaW={56} areaH={40} className="stage-card-icon" />
+                        <FitArt src={cardIconUrl(1)!} areaW={64} areaH={48} className="stage-card-icon" />
                       </span>
                     </button>
                     <button className="basic-btn basic-gather" data-tip="GATHER POWER — sube STR/KI (+8)" />

@@ -3657,13 +3657,14 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   gap: 3px;
 }
 .basic-stage-icon {
-  /* área central libre del marco (igual que .card-art) — el arte se FILLEA
-     con FitArt (bounding box visible centrado), como las cartas normales */
+  /* Área EXACTA del .card-art (64×48 en 18,18): el arte del stage se centra
+     y rellena IGUAL que las cartas de la mano (FitArt 64×48) — centrado
+     perfecto en el marco del frame. */
   position: absolute;
   top: 18px;
   left: 18px;
-  width: 60px;
-  height: 44px;
+  width: 64px;
+  height: 48px;
   overflow: hidden;
   line-height: 1;
 }
@@ -3686,17 +3687,28 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   text-shadow: none;
   background: rgba(255,255,255,.92);
   border: 2px solid rgba(246,199,68,.5);
-  display: block;
-  width: 100%;
-  height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 100%;
+  height: 100%;
   padding: 0 10px;
   line-height: 1.4;
 }
 .basic-btn.basic-gather { --btn-frame: url('/assets/ui/hud_buttons/btn_power.png'); }
-.limit-panel { display: flex; flex-direction: column; gap: 6px; width: min(440px, 92vw); max-height: none; overflow: visible; background: rgba(5,8,14,.44); border: 1px solid var(--border); border-radius: 0; padding: 7px 9px; }
+.limit-panel {
+  /* Mismo lenguaje visual que los demás paneles (BASIC/COMMAND): sin fondo
+     oscuro de panel — el grid de cartas flota sobre el campo con sus marcos */
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: min(460px, 92vw);
+  max-height: none;
+  overflow: visible;
+  background: transparent;
+  border: 0;
+  padding: 0;
+}
 .limit-title { font-size: 0.8rem; letter-spacing: 0.14em; color: var(--gold); text-align: center; margin-bottom: 4px; }
 .limit-row {
   display: flex; align-items: center; justify-content: space-between; gap: 10px;
