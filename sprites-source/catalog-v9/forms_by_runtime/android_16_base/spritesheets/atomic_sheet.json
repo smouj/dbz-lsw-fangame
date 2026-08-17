@@ -311,6 +311,13 @@
       "w": 38,
       "h": 28,
       "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/android_16_base/atomic/044.png"
+    },
+    "045.png": {
+      "x": 564,
+      "y": 366,
+      "w": 24,
+      "h": 16,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/android_16_base/atomic/045.png"
     }
   }
 }

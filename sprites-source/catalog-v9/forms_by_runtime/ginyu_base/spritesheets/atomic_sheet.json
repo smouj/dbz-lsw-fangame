@@ -367,6 +367,13 @@
       "w": 27,
       "h": 48,
       "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/ginyu_base/atomic/052.png"
+    },
+    "053.png": {
+      "x": 573,
+      "y": 421,
+      "w": 24,
+      "h": 16,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/ginyu_base/atomic/053.png"
     }
   }
 }

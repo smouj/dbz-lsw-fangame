@@ -1186,5 +1186,32 @@
     "components": "12",
     "git_blob_sha1": "6b6005f3a6f39dd3cb85d95a342ebbd84cdd5578",
     "evidence": "V5:039.png:sprites/movement_or_attack_pose"
+  },
+  {
+    "canonical_id": "android_16_base/045.png",
+    "character": "android",
+    "form": "android_16_base",
+    "frame": "045.png",
+    "canonical_path": "forms_by_runtime/android_16_base/atomic/045.png",
+    "runtime_dir": "android_16_base",
+    "semantic_alias": "android_16_base__battle_aura_actor_composite__01__src_045.png",
+    "semantic_bucket": "battle_aura_actor_composite",
+    "semantic_certainty": "visual_geometry",
+    "confidence": "HIGH",
+    "v5_categories": "sprites/effects",
+    "v5_suggested_actions": "powerup_composite",
+    "old_refs": "gen:006.png+007.png",
+    "correction": "added_2026-08-17_canonical_completeness",
+    "source_sheet": "generated",
+    "x0": "0",
+    "y0": "0",
+    "width": "24",
+    "height": "16",
+    "opaque_pixels": "319",
+    "unique_rgb": "3",
+    "occupancy": "0.83073",
+    "components": "3",
+    "git_blob_sha1": "6df0f9ba724332fc1bbf751ec1868cfa31d4d29c",
+    "evidence": "V9:added_2026-08-17:composite generado (OW walk sobre tile)"
   }
 ]

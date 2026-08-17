@@ -70,7 +70,10 @@ const atomicCount = (() => {
   }
   return n;
 })();
-check('v9:atomic_1952', atomicCount === 1952, `${atomicCount} frames atomic`);
+// 1.966 = 1.952 atómicas V7 + 14 añadidas 2026-08-17 (OW/tile/composite canónicos:
+// trunks_base 035-038, nappa_base 038-040, gotenks_ssj3 045-047, android_16 045,
+// frieza 047, buu_gohan 057, ginyu 053)
+check('v9:atomic_1966', atomicCount === 1966, `${atomicCount} frames atomic (1952 V7 + 14 canónicos añadidos)`);
 const namedCount = (() => {
   const root = path.join(V9, 'forms_by_runtime');
   let n = 0;
@@ -87,8 +90,8 @@ const namedCount = (() => {
   }
   return n;
 })();
-// 1.952 aliases atomic + 392 aliases fixed_only = 2.344
-check('v9:named_2344', namedCount === 2344, `${namedCount} aliases named (1952 atomic + 392 fixed_only)`);
+// 1.952 aliases atomic + 392 aliases fixed_only + 14 aliases añadidos = 2.358
+check('v9:named_2358', namedCount === 2358, `${namedCount} aliases named (1952 atomic + 392 fixed_only + 14 añadidos)`);
 const sheetCount = (() => {
   const root = path.join(V9, 'forms_by_runtime');
   let n = 0;
@@ -106,7 +109,7 @@ const sheetCount = (() => {
   }
   return n;
 })();
-check('v9:spritesheets_556', sheetCount === 556, `${sheetCount} spritesheets`);
+check('v9:spritesheets_570', sheetCount === 570, `${sheetCount} spritesheets (556 + 14 buckets nuevos 2026-08-17)`);
 
 // 5-7: catálogos
 check('v9:card_sequences_125', csvRows('cards/card_sequences.csv') === 125, `${csvRows('cards/card_sequences.csv')} filas`);
@@ -118,7 +121,7 @@ check('v9:transparency_audit_42', csvRows('catalog/transparency_audit.csv') === 
 const sj = JSON.parse(fs.readFileSync(path.join(V9, 'cards/stage_sequences.json'), 'utf8'));
 check('v9:stage_pools_4', Object.keys(sj.pools ?? {}).length === 4, `niveles ${Object.keys(sj.pools ?? {}).join(',')}`);
 
-// 8: transparencia (muestreo completo de atomic — 1.952 PNG)
+// 8: transparencia (muestreo completo de atomic — 1.966 PNG: 1.952 V7 + 14 añadidos)
 let hidden = 0;
 let checked = 0;
 try {
@@ -147,7 +150,7 @@ print(f'{n} {bad}')
 } catch (e) {
   check('v9:transparency', false, String(e));
 }
-check('v9:transparency', checked === 1952 && hidden === 0, `${checked} PNG, ${hidden} px RGB residual`);
+check('v9:transparency', checked === 1966 && hidden === 0, `${checked} PNG, ${hidden} px RGB residual`);
 
 // 8b: fixed_only exportado (canonización V9 completa)
 const fixedRows = (() => {

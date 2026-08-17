@@ -1402,5 +1402,32 @@
     "components": "1",
     "git_blob_sha1": "dc23c0451a4022d04137f3e620966dcfbe3fdd69",
     "evidence": "V5:040.png:sprites/movement_or_attack_pose"
+  },
+  {
+    "canonical_id": "ginyu_base/053.png",
+    "character": "ginyu",
+    "form": "ginyu_base",
+    "frame": "053.png",
+    "canonical_path": "forms_by_runtime/ginyu_base/atomic/053.png",
+    "runtime_dir": "ginyu_base",
+    "semantic_alias": "ginyu_base__battle_aura_actor_composite__01__src_053.png",
+    "semantic_bucket": "battle_aura_actor_composite",
+    "semantic_certainty": "visual_geometry",
+    "confidence": "HIGH",
+    "v5_categories": "sprites/effects",
+    "v5_suggested_actions": "powerup_composite",
+    "old_refs": "gen:030.png+025.png",
+    "correction": "added_2026-08-17_canonical_completeness",
+    "source_sheet": "generated",
+    "x0": "0",
+    "y0": "0",
+    "width": "24",
+    "height": "16",
+    "opaque_pixels": "319",
+    "unique_rgb": "5",
+    "occupancy": "0.83073",
+    "components": "3",
+    "git_blob_sha1": "4768737546287cc1d8246187d3df1134ecbb81c5",
+    "evidence": "V9:added_2026-08-17:composite generado (OW sobre tile)"
   }
 ]

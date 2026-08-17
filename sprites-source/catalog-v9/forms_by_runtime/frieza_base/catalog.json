@@ -1240,5 +1240,32 @@
     "components": "2",
     "git_blob_sha1": "c676fd7139e13aca0d8b2c353fdfa3fd992d5bf8",
     "evidence": "V5:035.png:sprites/movement_or_attack_pose ; V5:041.png:sprites/movement_or_attack_pose"
+  },
+  {
+    "canonical_id": "frieza_base/047.png",
+    "character": "frieza",
+    "form": "frieza_base",
+    "frame": "047.png",
+    "canonical_path": "forms_by_runtime/frieza_base/atomic/047.png",
+    "runtime_dir": "frieza_base",
+    "semantic_alias": "frieza_base__battle_aura_actor_composite__01__src_047.png",
+    "semantic_bucket": "battle_aura_actor_composite",
+    "semantic_certainty": "visual_geometry",
+    "confidence": "HIGH",
+    "v5_categories": "sprites/effects",
+    "v5_suggested_actions": "powerup_composite",
+    "old_refs": "gen:006.png+007.png",
+    "correction": "added_2026-08-17_canonical_completeness",
+    "source_sheet": "generated",
+    "x0": "0",
+    "y0": "0",
+    "width": "24",
+    "height": "16",
+    "opaque_pixels": "316",
+    "unique_rgb": "3",
+    "occupancy": "0.82292",
+    "components": "3",
+    "git_blob_sha1": "6a846435dfb021dc341e0f6169153284025a60aa",
+    "evidence": "V9:added_2026-08-17:composite generado (OW walk sobre tile)"
   }
 ]

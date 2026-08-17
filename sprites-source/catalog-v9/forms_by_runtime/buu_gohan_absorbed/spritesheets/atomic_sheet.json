@@ -1,6 +1,6 @@
 {
   "columns": 8,
-  "rows": 7,
+  "rows": 8,
   "cell_width": 123,
   "cell_height": 108,
   "sprites": {
@@ -395,6 +395,13 @@
       "w": 28,
       "h": 12,
       "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/buu_gohan_absorbed/atomic/056.png"
+    },
+    "057.png": {
+      "x": 49,
+      "y": 802,
+      "w": 24,
+      "h": 16,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/buu_gohan_absorbed/atomic/057.png"
     }
   }
 }

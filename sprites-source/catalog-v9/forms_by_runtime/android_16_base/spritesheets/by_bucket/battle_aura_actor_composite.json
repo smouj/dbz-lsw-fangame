@@ -1,0 +1,15 @@
+{
+  "columns": 1,
+  "rows": 1,
+  "cell_width": 28,
+  "cell_height": 20,
+  "sprites": {
+    "android_16_base__battle_aura_actor_composite__01__src_045.png": {
+      "x": 2,
+      "y": 2,
+      "w": 24,
+      "h": 16,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/android_16_base/named/battle_aura_actor_composite/android_16_base__battle_aura_actor_composite__01__src_045.png"
+    }
+  }
+}

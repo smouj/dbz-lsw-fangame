@@ -262,6 +262,27 @@
       "w": 67,
       "h": 56,
       "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/nappa_base/atomic/037.png"
+    },
+    "038.png": {
+      "x": 676,
+      "y": 262,
+      "w": 12,
+      "h": 15,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/nappa_base/atomic/038.png"
+    },
+    "039.png": {
+      "x": 794,
+      "y": 262,
+      "w": 24,
+      "h": 16,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/nappa_base/atomic/039.png"
+    },
+    "040.png": {
+      "x": 918,
+      "y": 262,
+      "w": 24,
+      "h": 16,
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/nappa_base/atomic/040.png"
     }
   }
 }
