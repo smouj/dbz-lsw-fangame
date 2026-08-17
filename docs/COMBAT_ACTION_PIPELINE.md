@@ -15,6 +15,11 @@ profiles, sprite manifests and validation scripts.
 - `src/battle/spriteConfig.ts` is the shared combat sprite contract used by
   React runtime, Pixi runtime and Dev Studio. Do not duplicate pose fallback
   tables elsewhere.
+- `src/battle/state.ts` is the pure deck/CC/discard rules (JointDeckState).
+- `src/battle/engine.ts` is the shared phase/turn machine (both game and
+  HUD Studio consume the same transitions).
+- `src/battle/evidence.ts` labels every structural rule with its GBC evidence
+  level (MANUAL/ROM/COMMUNITY/FRAME_VERIFIED/HYPOTHESIS...).
 - `public/assets/sprites/<spriteDir>/manifest.json` contains per-form frames.
   `src/data/spriteManifest.ts` maps form ids to those directories.
 

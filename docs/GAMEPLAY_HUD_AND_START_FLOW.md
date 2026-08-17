@@ -6,14 +6,20 @@ Canonical gameplay start:
 - Default first opponent: `piccolo_base`.
 - Starter visible characters: Gohan and Piccolo.
 - Battle Mode opens with Piccolo selected so it mirrors the first story encounter.
-- Starter decks (`STARTER_DAMAGE_DECK` / `STARTER_BEAM_DECK`) and the `DEFAULT_DECK` contain ONLY generic cards (CSV Users=48). Character-locked cards would be filtered at draw time, so generic-only decks are 20/20 usable by any fighter.
+> ⚠️ ACTUALIZADO (FIDELITY V10, 2026-08-17): el mazo SIEMPRE son las 20 cartas
+> configuradas — la compatibilidad NO se filtra al crear el mazo. Se aplica al
+> MOSTRAR (carta gris/no seleccionable según el personaje activo) y CHARA
+> recalcula sobre la misma mano.
+
+- Starter decks (`STARTER_DAMAGE_DECK` / `STARTER_BEAM_DECK`) and the `DEFAULT_DECK` contain ONLY generic cards (CSV Users=48), usable by any fighter.
 
 Canonical gameplay HUD:
 
 - Top HUD is a translucent overlay, not a heavy panel.
 - Top HUD contains portrait, fighter name/form/level, HP bar and current status/buffs.
 - HP bars are the strongest readable element in the top HUD.
-- Below the stats there is a `.hud-status` row of pixel chips that shows the real battle state: `STR+/KI+/SPD+/G+` (buff), red debuff variants, active guard (`BEAM⚡/DAMAGE🛡/ABSORB/GUARD/CANCEL`), `ACC+/EVA+/LOCK`, `BUFF×n` and the Power state (`FULL/HALF POWER`). A single `—` means no active states. The enemy HUD shows the same row on the right from its own stages.
+- Below the stats there is a `.hud-status` row of pixel chips that shows the real battle state: `STR+/KI+/SPD+/G+` (buff), red debuff variants, active guard (`BEAM/DAMAGE/ABSORB/GUARD/CANCEL`), `ACC+/EVA+/LOCK` and the Power state (`FULL/HALF POWER`). A single `—` means no active states. The enemy HUD shows the same row on the right from its own stages.
+- Los StatStages (±STR/KI/SPD/GUARD) PERSISTEN toda la batalla (no hay `BUFF×n` temporal): solo una carta dispel los anula.
 - SPD shown in the HUD already includes stage modifiers (`spd + stages.spd * 8`).
 - CC does not live inside the fighter panels. It is docked at the lower-right of the battlefield (`cc-dock`, P/E pockets), matching the GBC combat read.
 - The lower control zone is a compact translucent tray (`battle-controls`, `height: auto`). It must not become a solid container that hides the battlefield.
