@@ -1403,21 +1403,53 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 }
 
 .battle-controls .hand-cards .card {
-  width: clamp(58px, 5.3vw, 76px);
-  min-height: clamp(68px, 8.8vh, 88px);
-  padding: 4px 4px 5px;
-  transform: perspective(720px) rotateX(8deg) translateZ(0);
+  /* Carta GBC auténtica: el frame del paquete (48×40) a 2× entero (96×80),
+     con la ilustración DENTRO del área interior blanca. */
+  width: 96px;
+  height: 80px;
+  min-height: 0;
+  padding: 0;
+  transform: perspective(720px) rotateX(6deg) translateZ(0);
   transform-origin: center bottom;
-  background:
+  background-color: transparent;
+  background-image: var(--card-frame,
     linear-gradient(180deg, rgba(255,255,255,.08), transparent 16%),
-    linear-gradient(180deg, rgba(26,35,52,.96), rgba(8,11,18,.98));
-  border: 1px solid rgba(246,199,68,.18);
-  border-top: 3px solid var(--card-color, var(--gold));
+    linear-gradient(180deg, rgba(26,35,52,.96), rgba(8,11,18,.98)));
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  image-rendering: pixelated;
+  border: 0;
   box-shadow:
     0 12px 0 -7px rgba(0,0,0,.86),
-    0 18px 28px rgba(0,0,0,.45),
-    inset 0 1px 0 rgba(255,255,255,.10),
-    inset 0 -10px 18px rgba(0,0,0,.34);
+    0 18px 28px rgba(0,0,0,.45);
+}
+/* ── Interior GBC: la ilustración dentro del marco, nombre pixel ── */
+.battle-controls .hand-cards .card .card-header,
+.battle-controls .hand-cards .card .card-type,
+.battle-controls .hand-cards .card .card-stats,
+.battle-controls .hand-cards .card .card-rarity,
+.battle-controls .hand-cards .card .card-name,
+.battle-controls .hand-cards .card .card-cc {
+  display: none;   /* carta GBC pura: SOLO marco + ilustración; la info va en el tooltip */
+}
+/* La ilustración ENCAJA en el área interior del marco (48×40 → interior
+   37×33 → a 2×: 74×66; el arte se centra sin deformarse). */
+.battle-controls .hand-cards .card .card-art {
+  position: absolute;
+  top: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 68px;
+  height: 56px;
+  background: transparent;
+  border: 0;
+  margin: 0;
+}
+.battle-controls .hand-cards .card .card-art-img {
+  width: 68px;
+  height: 56px;
+  image-rendering: pixelated;
+  object-fit: contain;
 }
 .battle-controls .hand-area { width: min(720px, 96vw); padding: 0 10px; gap: 3px; }
 .battle-controls .hand-label { display: none; }
@@ -1430,14 +1462,12 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 .battle-controls .hand-cards .card:hover:not(:disabled),
 .battle-controls .hand-cards .card.selected {
   transform: perspective(720px) rotateX(4deg) translateY(-4px) translateZ(0);
-  border-color: rgba(246,199,68,.72);
-  filter: brightness(1.12) saturate(1.08);
+  filter: brightness(1.14) saturate(1.1);
   box-shadow:
     0 16px 0 -8px rgba(0,0,0,.9),
     0 22px 34px rgba(0,0,0,.58),
-    0 0 0 1px rgba(246,199,68,.28),
-    0 0 18px rgba(247,147,30,.26),
-    inset 0 1px 0 rgba(255,255,255,.16);
+    0 0 0 1px rgba(246,199,68,.35),
+    0 0 18px rgba(247,147,30,.3);
 }
 .battle-controls .hand-cards .card:disabled {
   transform: perspective(720px) rotateX(8deg) translateZ(0);
@@ -9425,8 +9455,9 @@ button.linklike:hover { text-decoration: underline; }
 .dev-hud-preview .hand-area { gap: 4px; width: auto; max-width: 100%; flex: 0 1 auto; }
 .dev-hud-preview .hand-cards { justify-content: center; flex-wrap: nowrap; }
 .dev-hud-preview .hand-cards .card {
-  width: 64px;
-  min-height: 74px;
+  width: 96px;   /* frame GBC a 2× (48×40 → 96×80) */
+  height: 80px;
+  min-height: 0;
 }
 /* Vista BASIC: botón + opciones de acción básica */
 .dev-hud-basic-view {

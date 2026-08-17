@@ -467,6 +467,8 @@ function CardVisual({ card, selected, onClick, small, disabled }: {
     : card.notCompatible && card.notCompatible.length > 0
       ? `\nNO usable por: ${card.notCompatible.map(id => characterName(id)).join(', ')}`
       : '';
+  // Frame GBC por tipo (la carta SE VE como el GBC: marco + arte interior)
+  const frameUrl = disabled ? CARD_FRAME_DISABLED : selected ? CARD_FRAME_SELECTED : (CARD_TYPE_FRAME[card.type] ?? undefined);
   // Tooltip ENRIQUECIDO: toda la información de la carta, bien elaborado
   const richTip = [
     `${card.name} — ${CARD_TYPE_NAMES[card.type]}  ★${card.rarity}`,
@@ -478,7 +480,7 @@ function CardVisual({ card, selected, onClick, small, disabled }: {
   return (
     <button className={`card ${card.type} ${selected ? 'selected' : ''} ${small ? 'small' : ''}`}
       onClick={onClick} disabled={disabled}
-      style={{ '--card-color': color } as React.CSSProperties}
+      style={{ '--card-color': color, '--card-frame': frameUrl ? `url('${frameUrl}')` : undefined } as React.CSSProperties}
       data-tip={richTip}>
       <div className="card-header">
         <span className="card-icon">
