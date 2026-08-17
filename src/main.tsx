@@ -15,6 +15,7 @@ import {
   createBattleDeck, drawOne, playJoint, discardOne, needsDiscard,
   registerCardResolver, JointDeckState, HAND_MAX_TRANSITORY,
 } from './battle/state';
+import { resolveHitBlockAvoid, attackDamage } from './battle/combat';
 import { CARD_FRAME_BY_TYPE, CARD_FRAME_SELECTED, CARD_FRAME_DISABLED } from './data/cardVisuals';
 import { cardIconUrl, MINI_PORTRAITS, MENU_PORTRAITS, TYPE_ICONS } from './data/icons';
 import { FitArt } from './components/FitArt';
@@ -2080,10 +2081,8 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
         plan.ePosMove = applyMoveAxis(enemy.battlePos, axis);
       }
       const power = card.type === 'beam' ? player.ki + pBuffs.ki : player.str + pBuffs.str;
-      const ePd = POSITION_DATA[plan.ePosMove ?? enemy.battlePos];
-      const vulnerable = (isBeamVulnerable(plan.ePosMove ?? enemy.battlePos) && card.type === 'beam') || (isDamageVulnerable(plan.ePosMove ?? enemy.battlePos) && card.type === 'damage');
-      const posMult = (ePd.depth === 'FRONT' && vulnerable) ? 0.8 : 0.5;
-      plan.damage = Math.floor((card.atk + power) * posMult);
+      // Fórmula compartida (battle/combat.ts — única fuente): daño base + mult
+      plan.damage = attackDamage(card.atk, power, plan.ePosMove ?? enemy.battlePos, card.type);
       const isPierce = card.effect === 'damage_pierce';
       const isTeamAtk = card.effect === 'damage_special_team' || card.effect === 'beam_team';
       const isBodyChange = card.effect === 'beam_varhp';
@@ -2098,13 +2097,13 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
           plan.hitType = 'guard';
           plan.logs.push(`${enemy.name} BLOCK — ${plan.damage} ${t('battle.dmg')} (Tail atraviesa)`);
         } else {
+          // Sistema HIT/BLOCK/AVOID compartido (battle/combat.ts — única fuente)
           const spdDef = enemy.spd + eStages.spd * 8;
-          const avoidChance = Math.max(0.05, Math.min(0.35, 0.05 + (spdDef - 25) * 0.004 + (100 - card.acc) * 0.002));
-          const gRoll = Math.random();
-          if (gRoll < avoidChance) {
+          const outcome = resolveHitBlockAvoid(spdDef, card.acc);
+          if (outcome === 'avoid') {
             plan.damage = 0; plan.hitType = 'guard';
             plan.logs.push(`${enemy.name} AVOID! (0 ${t('battle.dmg')})`);
-          } else if (gRoll < avoidChance + 0.55) {
+          } else if (outcome === 'block') {
             plan.damage = Math.floor(plan.damage * 0.25);
             plan.hitType = 'guard';
             plan.logs.push(`${enemy.name} BLOCK — ${plan.damage} ${t('battle.dmg')}`);
@@ -2652,15 +2651,14 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
         // Basic Guard del GBC: 3 resultados observados por la comunidad:
         // HIT normal / BLOCK ≈ ¼ daño / AVOID = 0 daño.
         // Variables documentadas: Card Accuracy × Defender Speed.
-        // Probabilidades HYPOTHESIS (la rutina real es P0 ROM).
+        // Sistema HIT/BLOCK/AVOID compartido (battle/combat.ts — la MISMA
+        // rutina que usa el ataque del jugador: un solo cambio afecta a ambos)
         const spdDef = player.spd + pStages.spd * 8;
-        const avoidChance = Math.max(0.05, Math.min(0.35, 0.05 + (spdDef - 25) * 0.004 + (100 - card.acc) * 0.002));
-        const blockChance = 0.55;
-        const gRoll = Math.random();
-        if (gRoll < avoidChance) {
+        const outcome = resolveHitBlockAvoid(spdDef, card.acc);
+        if (outcome === 'avoid') {
           damage = 0; hitType = 'guard';
           addLog(`${player.name} AVOID! (0 ${t('battle.dmg')})`);
-        } else if (gRoll < avoidChance + blockChance) {
+        } else if (outcome === 'block') {
           damage = Math.floor(damage * 0.25); // BLOCK ≈ ¼ (COMMUNITY_TESTED)
           hitType = 'guard';
           addLog(`${player.name} BLOCK — ${damage} ${t('battle.dmg')}`);

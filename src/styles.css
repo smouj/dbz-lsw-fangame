@@ -1613,11 +1613,6 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   transition: background 80ms, color 80ms, border-color 80ms;
 }
 
-.move-axis-icon {
-  font-size: 26px;
-  line-height: 1;
-  color: var(--gold);
-}
 
 .move-axis-label {
   font-size: 8px;
@@ -1631,10 +1626,6 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   border-color: var(--orange-lt);
 }
 
-.move-axis-btn:hover .move-axis-icon,
-.move-axis-btn.preview .move-axis-icon {
-  color: #000;
-}
 
 .move-axis-btn:hover .move-axis-label,
 .move-axis-btn.preview .move-axis-label {
@@ -3679,11 +3670,14 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 .stage-card-icon {
   image-rendering: pixelated;
 }
-/* Glitch del hover: el transform/filter del .basic-btn movía y re-renderizaba
-   el arte absoluto del stage. El hover del STAGE solo ilumina el marco. */
+/* Glitch del hover (FIX DEFINITIVO): ni transform ni filter en el STAGE —
+   ambos creaban stacking contexts que re-compositan el arte absoluto del
+   FitArt (parpadeo/desplazamiento). Feedback solo con outline del marco. */
 .basic-btn.basic-stage:hover:not(:disabled) {
   transform: none;
-  filter: brightness(1.2);
+  filter: none;
+  outline: 2px solid rgba(246,199,68,.6);
+  outline-offset: 1px;
 }
 .basic-stage-icon strong {
   font-family: var(--fepic);

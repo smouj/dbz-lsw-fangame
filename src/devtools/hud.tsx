@@ -183,8 +183,9 @@ export function HudModule() {
               </div>
             )}
 
-            {/* HUD superior (siempre visible salvo INTRO) */}
-            {view !== 'INTRO' && <div className="hud-top">
+            {/* HUD superior SIEMPRE visible (como el juego: durante la intro
+                la VS screen se superpone, el hud-top queda detrás) */}
+            <div className="hud-top">
               <div className="fighter-hud left">
                 <div className="hud-name">
                   <span className="hud-portrait">
@@ -223,7 +224,7 @@ export function HudModule() {
                 <span className="hud-center-vs">VS</span>
                 <span className="hud-center-order">GOKU</span>
               </div>
-            </div>}
+            </div>
 
             <div className="battlefield">
               <div className="battle-bg authentic" style={{ backgroundImage: `url(${battleBgUrl})` }} />
