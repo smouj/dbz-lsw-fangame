@@ -8,7 +8,7 @@ import { useState, useEffect } from 'react';
 import {
   Activity, ArrowLeft, Boxes, Brush, CheckCircle2,
   Film, Gamepad2, Gauge, Grid2X2, Images, LayoutDashboard,
-  Search, Swords, TableProperties, Users, type LucideIcon,
+  Search, Swords, TableProperties, Users, Music, type LucideIcon,
 } from 'lucide-react';
 import { DashboardModule } from './dashboard';
 import { CharactersModule } from './characters';
@@ -18,6 +18,7 @@ import { PositionsModule } from './positions';
 import { ValidationModule } from './validation';
 import { StoryModule } from './story';
 import { ResearchModule } from './research';
+import MusicModule from './music';
 import { AnimationModule } from './animation';
 import { LabModule } from './lab';
 import { PixelArtModule } from './pixelart';
@@ -28,7 +29,7 @@ import { SheetsModule } from './sheets';
 export type DevModuleId =
   | 'dashboard' | 'characters' | 'cards' | 'sprites' | 'animation'
   | 'pixelart' | 'hud' | 'facing' | 'sheets'
-  | 'lab' | 'story' | 'validation' | 'research' | 'positions';
+  | 'lab' | 'story' | 'validation' | 'research' | 'music' | 'positions';
 
 interface DevModuleDef {
   id: DevModuleId;
@@ -53,6 +54,7 @@ export const DEV_MODULES: DevModuleDef[] = [
   { id: 'story', label: 'Story', icon: Gamepad2, desc: 'Capítulos, viñetas y mazos de jefes', group: 'Mundo' },
   { id: 'validation', label: 'Validation', icon: CheckCircle2, desc: 'Integridad de datos y cobertura', group: 'Mundo' },
   { id: 'research', label: 'Research', icon: Search, desc: 'ROM / manual / fuentes', group: 'Mundo' },
+  { id: 'music', label: 'Música', icon: Music, desc: 'BSO del juego: player y mapeo de contexto', group: 'Mundo' },
 ];
 
 const DEV_MODULE_STORAGE_KEY = 'dbzlsw_dev_module';
@@ -199,6 +201,7 @@ export function DevStudio({ onExit, onLaunchBattle }: {
           {module === 'story' && <StoryModule />}
           {module === 'validation' && <ValidationModule />}
           {module === 'research' && <ResearchModule />}
+          {module === 'music' && <MusicModule />}
         </div>
       </main>
     </div>

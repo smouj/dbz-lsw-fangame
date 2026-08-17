@@ -33,11 +33,12 @@ import { applyCinematicEvent } from './renderer/pixi/presentation/CinematicAdapt
 import type { PixiBattlePresentation } from './renderer/pixi/presentation/PixiBattlePresentation';
 // Code-split: pixi.js (~790KB) solo se descarga cuando ?pixiField=1 está activo.
 const BattlePixiStage = lazy(() => import('./battle/BattlePixiStage').then((m) => ({ default: m.BattlePixiStage })));
-import { initAudio, Sfx, setSfxEnabled, setVolume } from './audio/sfx';
+import { initAudio, Sfx, setSfxEnabled, setVolume as setVolumeSfx } from './audio/sfx';
+import { playMusic, stopMusic, musicForScreen, setMusicVolume, setMusicEnabled } from './audio/music';
 import { LanguageProvider } from './i18n/LanguageProvider';
 import { useLang } from './i18n/useLang';
 import { LANGUAGES, LangCode, TKey } from './i18n';
-import { ArrowLeft, X, Lock, ChevronRight, Languages, Sword, Shield, BookOpen, Swords, Library, Users, Settings, Sparkles, Volume2, Zap, Gauge, Monitor, Keyboard, type LucideIcon } from 'lucide-react';
+import { ArrowLeft, X, Lock, ChevronRight, Languages, Sword, Shield, BookOpen, Swords, Library, Users, Settings, Sparkles, Volume2, Zap, Gauge, Monitor, Keyboard, Music, type LucideIcon } from 'lucide-react';
 import { DevStudio, isDevRoute } from './devtools/DevStudio';
 
 // ═══════════════════════════════════════════════════════════
@@ -692,6 +693,17 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
   const [turn, setTurn] = useState(1);
   // Secuencia cinematográfica de presentación (como el GBC): VS screen + READY/FIGHT
   const [intro, setIntro] = useState(true);
+
+  // BSO de resultado: victoria/derrota al resolver el combate (jingle → BGM)
+  useEffect(() => {
+    if (phase === 'win') { playMusic('victory'); }
+    else if (phase === 'lose') { playMusic('game_over'); }
+  }, [phase]);
+
+  // Tema de combate: jefes de saga (cap. ≥15, Android/Buu) suenan con Epic Battle
+  useEffect(() => {
+    if (storyChapter != null && storyChapter >= 15) playMusic('epic_battle');
+  }, [storyChapter]);
   // ═══ MODELO DE TURNOS (spec 20 puntos §1-2, §16): TURN → 2 EXCHANGES ═══
   // El combate NO es playerTurn/enemyTurn. Cada TURN tiene DOS exchanges:
   //   Exchange 1: firstAttacker ataca, el rival defiende
@@ -4129,11 +4141,13 @@ function SettingsScreen({ onNavigate }: { onNavigate: (s: Screen) => void }) {
   const { t, lang, setLang } = useLang();
   const [volume, setVolumeState] = useState(70);
   const [sfx, setSfxState] = useState(true);
+  const [music, setMusicState] = useState(() => { try { return localStorage.getItem('dbzlsw.music') !== 'off'; } catch { return true; } });
   const [speed, setSpeed] = useState<'normal' | 'fast'>('normal');
   const [screenMode, setScreenMode] = useState<'windowed' | 'fullscreen'>('windowed');
 
-  const setVolume = (v: number) => { setVolumeState(v); setVolume(v); };
+  const setVolume = (v: number) => { setVolumeState(v); setVolumeSfx(v / 100); setMusicVolume(v / 100); };
   const setSfx = (v: boolean) => { setSfxState(v); setSfxEnabled(v); if (v) Sfx.confirm(); };
+  const setMusic = (v: boolean) => { setMusicState(v); setMusicEnabled(v); try { localStorage.setItem('dbzlsw.music', v ? 'on' : 'off'); } catch {} if (v) playMusic(musicForScreen('settings')); };
 
   return (
     <div className="page-screen settings-screen">
@@ -4166,6 +4180,12 @@ function SettingsScreen({ onNavigate }: { onNavigate: (s: Screen) => void }) {
           <span className="setting-label"><Zap size={12} /> {t('settings.soundFx')}</span>
           <button className={`toggle ${sfx ? 'on' : ''}`} onClick={() => setSfx(!sfx)}>
             {sfx ? t('settings.on') : t('settings.off')}
+          </button>
+        </div>
+        <div className="setting-row">
+          <span className="setting-label"><Music size={12} /> Música (BSO)</span>
+          <button className={`toggle ${music ? 'on' : ''}`} onClick={() => setMusic(!music)}>
+            {music ? t('settings.on') : t('settings.off')}
           </button>
         </div>
         <div className="setting-row">
@@ -4369,12 +4389,24 @@ function AppInner() {
     return () => window.removeEventListener('hashchange', onHash);
   }, []);
 
-  // Inicializar audio con el primer gesto del usuario
+  // Inicializar audio con el primer gesto del usuario (autoplay) y arrancar la BSO
   useEffect(() => {
-    const onFirst = () => { initAudio(); window.removeEventListener('pointerdown', onFirst); };
+    const onFirst = () => {
+      initAudio();
+      playMusic(musicForScreen(screen));
+      window.removeEventListener('pointerdown', onFirst);
+    };
     window.addEventListener('pointerdown', onFirst);
     return () => window.removeEventListener('pointerdown', onFirst);
-  }, []);
+  }, [screen]);
+
+  // BSO por pantalla: la música sigue al contexto del juego
+  useEffect(() => {
+    if (screen !== 'battle' && screen !== 'versus') {
+      playMusic(musicForScreen(screen));
+    }
+    return () => { if (screen === 'main') stopMusic(); };
+  }, [screen]);
 
   const startBattle = (playerFormId?: string) => {
     if (playerFormId) setPlayerForm(playerFormId);
