@@ -9247,3 +9247,109 @@ button.linklike:hover { text-decoration: underline; }
 .dev-atomic-role { margin: 6px 0 10px 14px; padding-left: 10px; border-left: 2px solid #232b3d; }
 .dev-atomic-role-head { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
 .dev-atomic-role-name { font-size: 12px; color: #e0b84c; font-weight: 600; text-transform: capitalize; }
+
+/* ═══════════════════════════════════════════════════════════
+   HUD NEO-GBC — pulido visual (mantiene fidelidad GBC)
+   ═══════════════════════════════════════════════════════════ */
+
+/* Panel superior con más cuerpo y acento dorado definido */
+.hud-top {
+  background:
+    linear-gradient(180deg, rgba(5, 7, 12, .94) 0%, rgba(5, 7, 12, .62) 55%, rgba(5, 7, 12, .18) 100%);
+  box-shadow: 0 6px 18px rgba(0,0,0,.38);
+}
+.hud-top::after {
+  height: 3px;
+  background:
+    linear-gradient(90deg, transparent, rgba(240,208,96,.95) 12%, rgba(240,208,96,.95) 88%, transparent),
+    repeating-linear-gradient(90deg, rgba(240,208,96,.9) 0 4px, rgba(20,24,34,.85) 4px 6px, transparent 6px 12px);
+  opacity: .8;
+}
+
+/* Nombre del luchador: más legible, con placa sutil */
+.hud-name {
+  font-size: 10px;
+  letter-spacing: .4px;
+  text-shadow: 1px 1px 0 #000, 0 0 6px rgba(0,0,0,.6);
+}
+.hud-form { opacity: .9; }
+
+/* Stats como chips legibles */
+.hud-stats {
+  gap: 6px;
+  font-size: 10px;
+}
+.hud-stats > span {
+  background: rgba(10, 14, 22, .55);
+  border: 1px solid rgba(216, 208, 184, .22);
+  padding: 1px 5px;
+  box-shadow: 1px 1px 0 rgba(0,0,0,.7);
+}
+
+/* Barras HP: brillo superior animado + glow del relleno */
+.hp-bar-track {
+  height: 13px;
+  border-width: 2px;
+}
+.hp-bar-current {
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.34),
+    inset 0 -2px 0 rgba(0,0,0,.18),
+    0 0 8px rgba(80,200,88,.28);
+}
+.hp-bar-track::before {
+  content: '';
+  position: absolute; left: 0; right: 0; top: 0; height: 40%;
+  z-index: 3;
+  background: linear-gradient(180deg, rgba(255,255,255,.16), transparent);
+  pointer-events: none;
+}
+.hp-bar.low .hp-bar-current { box-shadow: inset 0 1px 0 rgba(255,255,255,.3), 0 0 10px rgba(216,56,40,.5); }
+.hp-bar-text {
+  font-family: var(--fui);
+  font-size: 9px;
+  letter-spacing: 1px;
+  text-shadow: 1px 1px 0 #000, 0 0 4px rgba(0,0,0,.8);
+}
+
+/* Barra de comandos: panel inferior con glow dorado en los botones */
+.command-strip {
+  background: linear-gradient(180deg, rgba(8,11,18,.10), rgba(8,11,18,.42));
+  border-radius: 10px;
+  padding: 4px 10px 2px;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.06), 0 4px 12px rgba(0,0,0,.3);
+}
+.command-strip button:hover:not(:disabled) {
+  filter: drop-shadow(4px 4px 0 #000) brightness(1.18) drop-shadow(0 0 6px rgba(246,199,68,.5));
+}
+
+/* Cartas de la mano: entrada escalonada + coste destacado */
+.battle-controls .hand-cards .card {
+  animation: card-deal .28s steps(4, end) both;
+}
+.battle-controls .hand-cards .card:nth-child(1) { animation-delay: .02s; }
+.battle-controls .hand-cards .card:nth-child(2) { animation-delay: .06s; }
+.battle-controls .hand-cards .card:nth-child(3) { animation-delay: .10s; }
+.battle-controls .hand-cards .card:nth-child(4) { animation-delay: .14s; }
+.battle-controls .hand-cards .card:nth-child(5) { animation-delay: .18s; }
+.battle-controls .hand-cards .card:nth-child(6) { animation-delay: .22s; }
+@keyframes card-deal {
+  from { opacity: 0; transform: perspective(720px) rotateX(14deg) translateY(16px); }
+  to { opacity: 1; transform: perspective(720px) rotateX(8deg) translateY(0); }
+}
+.battle-controls .hand-cards .card .card-cost {
+  font-family: var(--fui);
+  font-weight: 700;
+  text-shadow: 1px 1px 0 #000;
+}
+.battle-controls .hand-cards .card.selected .card-cost {
+  color: #ffe9a3;
+  text-shadow: 0 0 8px rgba(246,199,68,.8), 1px 1px 0 #000;
+}
+
+/* Estados: chips ligeramente más presentes */
+.status-chip {
+  font-size: 7px;
+  padding: 1px 5px;
+  box-shadow: 1px 1px 0 rgba(0,0,0,.6);
+}
