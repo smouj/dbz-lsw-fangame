@@ -166,12 +166,12 @@ export function HudModule() {
             </div>
 
             <div className="battle-controls">
-              {/* Botones de comando REALES del juego (sprites GBC btn_*.png) */}
+              {/* Botones de comando REALES del juego (sprites GBC btn_*.png).
+                  Combate individual (Goku vs Piccolo): sin CHARA, como el build. */}
               <div className="command-strip">
                 <button className="cmd-limit" data-tip="LIMITED" />
                 <button className="cmd-j" data-tip="JOINT" />
                 <button className="cmd-b" data-tip="BASIC" />
-                <button className="cmd-c has-ally" data-tip="CHARA" />
               </div>
               {/* Mano REAL del juego: cartas del catálogo con su arte */}
               <MockHand />

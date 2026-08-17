@@ -1634,11 +1634,11 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   image-rendering: pixelated;
   background-color: transparent;
   border: none;
-  width: 72px;
-  height: 60px;
+  width: 96px;   /* 48×40 sprite GBC escalado 2× (múltiplo entero: píxeles nítidos) */
+  height: 80px;
   padding: 0;
   cursor: pointer;
-  filter: drop-shadow(3px 3px 0 #000);
+  filter: drop-shadow(2px 2px 0 #000);
   transition: transform 90ms steps(2, end), filter 90ms steps(2, end);
 }
 
@@ -1732,8 +1732,9 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   width: 64px; height: 44px;
   display: flex; align-items: center; justify-content: center;
   font-size: 24px;
-  background: rgba(0,0,0,0.3);
+  background: rgba(8,10,16,.74);
   border: 1px solid var(--border-lo);
+  box-shadow: inset 0 0 0 1px rgba(0,0,0,.5);
   margin: 2px 0;
 }
 
@@ -9314,13 +9315,14 @@ button.linklike:hover { text-decoration: underline; }
 
 /* Barra de comandos: panel inferior con glow dorado en los botones */
 .command-strip {
-  background: linear-gradient(180deg, rgba(8,11,18,.10), rgba(8,11,18,.42));
-  border-radius: 10px;
-  padding: 4px 10px 2px;
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.06), 0 4px 12px rgba(0,0,0,.3);
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  padding: 0;
+  box-shadow: none;
 }
 .command-strip button:hover:not(:disabled) {
-  filter: drop-shadow(4px 4px 0 #000) brightness(1.18) drop-shadow(0 0 6px rgba(246,199,68,.5));
+  filter: drop-shadow(2px 2px 0 #000) brightness(1.15);
 }
 
 /* Cartas de la mano: entrada escalonada + coste destacado */
@@ -9359,15 +9361,37 @@ button.linklike:hover { text-decoration: underline; }
   height: auto;
   min-height: 0;
   flex-direction: column;
-  gap: 2px;
+  gap: 8px;
   padding: 4px 8px 10px;
 }
-.dev-hud-preview .command-strip { gap: 10px; padding: 6px 12px 4px; }
+.dev-hud-preview .command-strip { gap: 14px; padding: 0; margin-top: 2px; }
+.dev-hud-preview .hand-area { gap: 4px; width: 100%; max-width: 100%; }
+.dev-hud-preview .hand-cards { justify-content: center; flex-wrap: nowrap; }
 .dev-hud-preview .hand-cards .card {
   width: 64px;
   min-height: 74px;
 }
 .dev-hud-preview .battle-screen {
   height: auto;
-  min-height: 560px;
+  min-height: 0;
+  width: 100% !important;
+  min-width: 0 !important;
+  max-width: 100% !important;
+  overflow: hidden;
+}
+.dev-hud-preview .battle-controls { width: 100%; }
+.dev-hud-preview .command-strip { justify-content: center; margin: 0 auto; }
+/* Campo compacto del mockup: altura fija para que TODO el HUD (HUD superior,
+   comandos y mano) quede visible sin scroll dentro del preview. */
+.dev-hud-preview .battlefield {
+  height: 118px;
+  min-height: 0;
+  position: relative;
+}
+/* En el mockup el phase-bar (TURN/EXIT) es redundante: ahorra altura
+   para que comandos y mano queden VISIBLES sin scroll. */
+.dev-hud-preview .phase-bar { display: none; }
+.dev-hud-preview .battlefield-fighters {
+  height: 100%;
+  position: relative;
 }
