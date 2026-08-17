@@ -17,7 +17,7 @@ export function CardArtHole({ frameUrl, iconUrl, className }: {
 }) {
   const hole = useFrameHole(frameUrl);
   // Fallback: la caja canónica (18,18 · 64×48) hasta que se mida el hueco
-  const box = hole ?? { left: 18, top: 18, width: 64, height: 48 };
+  const box = hole ?? { left: 16, top: 16, width: 64, height: 48 };
   return (
     <div className={`card-art ${className ?? ''}`}
       style={{ left: box.left, top: box.top, width: box.width, height: box.height }}>
