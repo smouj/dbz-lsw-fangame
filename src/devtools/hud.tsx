@@ -391,42 +391,37 @@ Cada acierto +1 CC (más si completas la cadena).">
                   paquete ORGANIZADO (key_q/key_e/↑↓/flechas) + prompt + el
                   TIEMPO de reacción destacado + recovery */}
               {view === 'STAGE' && (
-                <div className={`stage-panel speaker-${dlgSide}`}>
-                  {/* Sprite del personaje que ejecuta el stage, FUERA a su lado
-                      (mismo formato que el diálogo: marco negro + máscara) */}
+                /* MISMO formato EXACTO que el diálogo: caja GBC (mismo ancho),
+                   sprite del personaje FUERA a su lado y los inputs DENTRO
+                   del cuadro, todo en UNA sola fila */
+                <div className={`gbc-dialogue speaker-${dlgSide}`}>
                   <div className={`gbc-dialogue-speaker ${dlgSide}`}>
                     <img src={(dlgSide === 'left' ? storyPortraitUrl('goku', P_FORM) || pPortrait : storyPortraitUrl('cell', P_FORM)) || ''} alt={dlgSide === 'left' ? 'GOKU' : 'CELL'} className="gbc-dialogue-speaker-img" draggable={false} />
                   </div>
-                  {/* Caja GBC: MISMA altura que los demás paneles (80px). TODO en
-                      UNA línea: nombre + STAGE + PUSH + barra de tiempo */}
-                  <div className="stage-panel-box">
-                    <div className="stage-info-row">
-                      <span className="stage-label-name">3 stage atk.</span>
-                      <span className="stage-label-progress">STAGE 2/3</span>
-                      <span className="stage-push">PUSH <strong>0.6</strong> / 1.2s</span>
-                      <div className="stage-timer-track">
+                  <div className="gbc-dialogue-body">
+                    <div className="stage-inline">
+                      <span className="stage-inline-name">3 stage atk.</span>
+                      <span className="stage-inline-progress">STAGE 2/3</span>
+                      <div className="stage-sequence">
+                        <span className="stage-seq-item done"><span className="seq-check">✓</span></span>
+                        <span className="stage-seq-item current">
+                          <img src="/assets/ui/qte/key_q.png" alt="Q" className="qte-key-sm" />
+                        </span>
+                        <span className="stage-seq-item future">
+                          <img src="/assets/ui/qte/key_up.png" alt="↑" className="qte-key-sm" />
+                        </span>
+                        <span className="stage-seq-item future">
+                          <img src="/assets/ui/qte/arrow_right.png" alt="→" className="qte-key-sm" />
+                        </span>
+                      </div>
+                      <div className="stage-inline-prompt A">
+                        <img src="/assets/ui/qte/key_q.png" alt="Q" className="qte-key-big" />
+                        <span className="stage-prompt-label">A (Q)</span>
+                      </div>
+                      <span className="stage-inline-push">PUSH <strong>0.6</strong> / 1.2s</span>
+                      <div className="stage-inline-track">
                         <div className="stage-timer" style={{ width: '38%' }} />
                       </div>
-                    </div>
-                  </div>
-                  {/* INPUTS FUERA a la derecha del cuadro (simétrico al sprite):
-                      MÁS ANCHO y TODO en UNA línea — secuencia + prompt juntos */}
-                  <div className="stage-inputs-box">
-                    <div className="stage-sequence">
-                      <span className="stage-seq-item done"><span className="seq-check">✓</span></span>
-                      <span className="stage-seq-item current">
-                        <img src="/assets/ui/qte/key_q.png" alt="Q" className="qte-key-sm" />
-                      </span>
-                      <span className="stage-seq-item future">
-                        <img src="/assets/ui/qte/key_up.png" alt="↑" className="qte-key-sm" />
-                      </span>
-                      <span className="stage-seq-item future">
-                        <img src="/assets/ui/qte/arrow_right.png" alt="→" className="qte-key-sm" />
-                      </span>
-                    </div>
-                    <div className="stage-prompt-big A">
-                      <img src="/assets/ui/qte/key_q.png" alt="Q" className="qte-key-big" />
-                      <span className="stage-prompt-label">A (Q)</span>
                     </div>
                   </div>
                 </div>

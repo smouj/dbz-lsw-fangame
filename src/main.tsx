@@ -3267,65 +3267,39 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
           const keyIcon = (k: StageKey) => k === 'UP' ? 'key_up' : k === 'DOWN' ? 'key_down' : k === 'LEFT' ? 'arrow_left' : k === 'RIGHT' ? 'arrow_right' : k === 'A' ? 'key_q' : 'key_e';
           const keyLabel = (k: StageKey) => k === 'UP' ? 'W / ↑' : k === 'DOWN' ? 'S / ↓' : k === 'LEFT' ? 'A / ←' : k === 'RIGHT' ? 'D / →' : k === 'A' ? 'A (Q)' : 'B (E)';
           return (
-          /* MISMO formato que el diálogo: sprite del personaje que ejecuta el
-             stage FUERA a su lado (marco negro + máscara) y caja GBC a la
-             derecha con los inputs DENTRO */
-          <div className={`stage-panel speaker-left ${frozen ? 'failed' : ''}`}>
+          /* MISMO formato EXACTO que el diálogo: caja GBC (mismo ancho),
+             sprite del personaje FUERA a la izquierda y los inputs DENTRO
+             del cuadro, todo en UNA sola fila — nada superpuesto ni fuera */
+          <div className={`gbc-dialogue speaker-left ${frozen ? 'stage-frozen' : ''}`} key={`stage-${q.idx}`}>
             <div className="gbc-dialogue-speaker left">
               <img src={storyPortraitUrl(player.id, activePlayerFormId) || portraitFor(player.id, activePlayerFormId) || ''} alt={player.name} className="gbc-dialogue-speaker-img" draggable={false} />
             </div>
-            <div className="stage-panel-box">
-            <div className="stage-label">
-              <span className="stage-push">PUSH {elapsedSec} / {limitSec}</span>
-              {q.card?.name} — STAGE {Math.min(q.idx + 1, q.seq.length)}/{q.seq.length}
-            </div>
-            {!frozen ? (
-              <>
-                {/* Fila compacta: secuencia (progreso) + prompt grande (tecla actual) */}
-                <div className="stage-qte-row">
-                  {/* Secuencia completa de comandos: los hechos ✓, el actual grande,
-                      los futuros atenuados (la secuencia se congela al empezar) */}
-                  <div className="stage-sequence">
-                    {q.seq.map((k, i) => (
-                      <span key={i} className={`stage-seq-item ${i < q.idx ? 'done' : i === q.idx ? 'current' : 'future'}`}>
-                        {i < q.idx ? <span className="seq-check">✓</span> : <img src={`/assets/ui/qte/${keyIcon(k)}.png`} alt={keyLabel(k)} className="qte-key-sm" />}
-                      </span>
-                    ))}
-                  </div>
-                  {/* Prompt ÚNICO: la tecla actual a pulsar */}
-                  {q.state === 'INPUT_WINDOW' ? (
-                    <div key={q.idx} className={`stage-prompt-big ${stageFeedback ?? ''} ${curKey}`}>
-                      <img src={`/assets/ui/qte/${keyIcon(curKey)}.png`} alt={curKey} className="qte-key-big" />
-                      <span className="stage-prompt-label">{keyLabel(curKey)}</span>
+            <div className="gbc-dialogue-body">
+              <div className="stage-inline">
+                <span className="stage-inline-name">{q.card?.name}</span>
+                <span className="stage-inline-progress">STAGE {Math.min(q.idx + 1, q.seq.length)}/{q.seq.length}</span>
+                {!frozen && (
+                  <>
+                    <div className="stage-sequence">
+                      {q.seq.map((k, i) => (
+                        <span key={i} className={`stage-seq-item ${i < q.idx ? 'done' : i === q.idx ? 'current' : 'future'}`}>
+                          {i < q.idx ? <span className="seq-check">✓</span> : <img src={`/assets/ui/qte/${keyIcon(k)}.png`} alt={keyLabel(k)} className="qte-key-sm" />}
+                        </span>
+                      ))}
                     </div>
-                  ) : null}
-                </div>
-                {/* Reloj GLOBAL de la secuencia: barra + números (PUSH elapsed / limit) */}
-                <div className="stage-timer-row">
+                    {q.state === 'INPUT_WINDOW' && (
+                      <div key={q.idx} className={`stage-inline-prompt ${stageFeedback ?? ''} ${curKey}`}>
+                        <img src={`/assets/ui/qte/${keyIcon(curKey)}.png`} alt={curKey} className="qte-key-big" />
+                        <span className="stage-prompt-label">{keyLabel(curKey)}</span>
+                      </div>
+                    )}
+                  </>
+                )}
+                <span className="stage-inline-push">PUSH {elapsedSec} / {limitSec}</span>
+                <div className="stage-inline-track">
                   <div className="stage-timer" style={{ width: `${Math.min(100, (q.elapsedFrames / Math.max(1, q.limitFrames)) * 100)}%` }} />
                 </div>
-                <div className="stage-help">Q = puñetazo · E = patada · flechas/WASD = desplazamiento — pulsa a tiempo (+1 CC por acierto)</div>
-              </>
-            ) : (
-              <>
-                {/* Contraataque del rival (manual GBC — ENTER COMMAND) */}
-                <div className="stage-fail">¡{enemy.name} CONTRAATACA! — {q.correct} CC ganados</div>
-                {inCounter && (
-                  <div className="stage-recover-help">
-                    <div className={`stage-recover-prompt ${counterAOpen ? 'window-open' : 'window-closed'}`}>
-                      <img src="/assets/ui/qte/controller/xbox/xbox_a.png" alt="A" className="qte-key-sm" /> PROTEGERSE (A)
-                    </div>
-                    <div className={`stage-recover-prompt ${counterBOpen ? 'window-open' : 'window-closed'}`}>
-                      <img src="/assets/ui/qte/controller/xbox/xbox_b.png" alt="B" className="qte-key-sm" /> REPARAR (B)
-                    </div>
-                  </div>
-                )}
-                {failed && (
-                  <div className="stage-fail-result">¡El contraataque conecta!</div>
-                )}
-                <div className="stage-help">A = cubrirte del contraataque (conserva CC) · B = reparar la cadena</div>
-              </>
-            )}
+              </div>
             </div>
           </div>
           );

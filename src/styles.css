@@ -3427,20 +3427,89 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   right: calc(100% + 24px);
 }
 /* Textos y chips del QTE adaptados al fondo BLANCO de las cajas GBC */
-.stage-panel-box .stage-info-row {
+.gbc-dialogue .stage-inline {
+  /* Inputs del STAGE DENTRO del cuadro de diálogo: UNA sola fila, mismo
+     ancho que el texto del diálogo — nada superpuesto ni fuera */
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 12px;
   width: 100%;
-  max-width: 640px;
+  font-family: var(--fpx);
+  color: #000;
 }
-.stage-panel-box .stage-label { color: #000; }
-.stage-panel-box .stage-label-progress { color: #005a8c; }
-.stage-panel-box .stage-push { color: #7a5c00; }
-.stage-panel-box .stage-push strong { color: #005a8c; }
-.stage-panel-box .stage-timer-track {
+.gbc-dialogue .stage-inline-name {
+  font-size: 12px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  white-space: nowrap;
+}
+.gbc-dialogue .stage-inline-progress {
+  font-size: 10px;
+  color: #005a8c;
+  letter-spacing: 1px;
+  white-space: nowrap;
+}
+.gbc-dialogue .stage-sequence {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 8px;
+  background: rgba(0, 0, 0, .1);
+  border: 1px solid rgba(0, 0, 0, .25);
+  border-radius: 4px;
+}
+.gbc-dialogue .stage-seq-item img {
+  width: 22px;
+  height: 22px;
+  image-rendering: pixelated;
+  display: block;
+}
+.gbc-dialogue .stage-seq-item.done .seq-check {
+  font-size: 12px;
+  color: #0a7a2a;
+}
+.gbc-dialogue .stage-seq-item.current img {
+  transform: scale(1.15);
+  filter: drop-shadow(0 0 5px rgba(0, 90, 140, .85));
+}
+.gbc-dialogue .stage-seq-item.future { opacity: .55; }
+.gbc-dialogue .stage-inline-prompt {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+.gbc-dialogue .stage-inline-prompt img {
+  width: 36px;
+  height: 36px;
+  image-rendering: pixelated;
+  display: block;
+}
+.gbc-dialogue .stage-prompt-label {
+  font-size: 10px;
+  color: #000;
+  letter-spacing: 1px;
+  white-space: nowrap;
+}
+.gbc-dialogue .stage-inline-push {
+  font-size: 10px;
+  color: #7a5c00;
+  letter-spacing: 1px;
+  white-space: nowrap;
+  margin-left: auto;
+}
+.gbc-dialogue .stage-inline-track {
+  width: 110px;
+  height: 8px;
   background: rgba(0, 0, 0, .18);
-  border-color: rgba(0, 0, 0, .35);
+  border: 1px solid rgba(0, 0, 0, .35);
+  border-radius: 2px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.gbc-dialogue .stage-inline-track .stage-timer {
+  height: 100%;
+  background: linear-gradient(90deg, #f6c744, #ff9d2e);
 }
 .stage-inputs-box .stage-sequence {
   background: rgba(0, 0, 0, .12);
@@ -10249,4 +10318,89 @@ button.linklike:hover { text-decoration: underline; }
   font-size: 11px;
   color: #000;
   letter-spacing: 1px;
+}
+
+/* ═══ STAGE = DIÁLOGO EXACTO (formato único, refuerzo final) ═══
+   El panel del STAGE usa la MISMA caja que el diálogo (gbc-dialogue) con
+   los inputs DENTRO en una sola fila. Estas reglas neutralizan cualquier
+   resto obsoleto del preview (stage-panel/inputs-box/prompt flotante). */
+.dev-hud-preview .gbc-dialogue .stage-inline,
+.gbc-dialogue .stage-inline {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  font-family: var(--fpx);
+  color: #000;
+}
+.dev-hud-preview .gbc-dialogue .stage-sequence,
+.gbc-dialogue .stage-sequence {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 8px;
+  background: rgba(0, 0, 0, .1);
+  border: 1px solid rgba(0, 0, 0, .25);
+  border-radius: 4px;
+  box-shadow: none;
+}
+.dev-hud-preview .gbc-dialogue .stage-seq-item img,
+.gbc-dialogue .stage-seq-item img {
+  width: 22px;
+  height: 22px;
+  image-rendering: pixelated;
+  display: block;
+  transform: none;
+  filter: none;
+  margin: 0;
+}
+.dev-hud-preview .gbc-dialogue .stage-seq-item.current img,
+.gbc-dialogue .stage-seq-item.current img {
+  transform: scale(1.15);
+  filter: drop-shadow(0 0 5px rgba(0, 90, 140, .85));
+}
+.dev-hud-preview .gbc-dialogue .stage-inline-prompt,
+.gbc-dialogue .stage-inline-prompt {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  animation: none;
+}
+.dev-hud-preview .gbc-dialogue .stage-inline-prompt img,
+.gbc-dialogue .stage-inline-prompt img {
+  width: 36px;
+  height: 36px;
+  image-rendering: pixelated;
+  display: block;
+}
+.dev-hud-preview .gbc-dialogue .stage-inline-push,
+.gbc-dialogue .stage-inline-push {
+  font-size: 10px;
+  color: #7a5c00;
+  letter-spacing: 1px;
+  white-space: nowrap;
+  margin-left: auto;
+  text-shadow: none;
+}
+.dev-hud-preview .gbc-dialogue .stage-inline-track,
+.gbc-dialogue .stage-inline-track {
+  width: 110px;
+  height: 8px;
+  background: rgba(0, 0, 0, .18);
+  border: 1px solid rgba(0, 0, 0, .35);
+  border-radius: 2px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.dev-hud-preview .gbc-dialogue .stage-inline-track .stage-timer,
+.gbc-dialogue .stage-inline-track .stage-timer {
+  height: 100%;
+  background: linear-gradient(90deg, #f6c744, #ff9d2e);
+  box-shadow: none;
 }
