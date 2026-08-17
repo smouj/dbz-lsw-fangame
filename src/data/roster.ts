@@ -80,7 +80,7 @@ export const FORMS: Record<string, FormDef> = {
   'buu_gotenks': { id: 'buu_gotenks', character: 'buu', form: 'Gotenks', hp: 115, str: 15, ki: 18, spd: 11, tier: 3, curves: { hp: [128, 141, 154, 167], str: [19, 24, 28, 33], ki: [22, 26, 30, 33], spd: [15, 19, 23, 27] }, sheet: 'buu-gotenks.png' },
   'buu_gohan': { id: 'buu_gohan', character: 'buu', form: 'Gohan', hp: 120, str: 18, ki: 16, spd: 10, tier: 3, curves: { hp: [133, 146, 159, 172], str: [22, 27, 31, 36], ki: [20, 24, 27, 31], spd: [14, 18, 22, 26] }, sheet: 'buu-gohan.png' },
   'buu_kid': { id: 'buu_kid', character: 'buu', form: 'Normal', hp: 105, str: 14, ki: 15, spd: 17, tier: 3, curves: { hp: [118, 131, 144, 157], str: [18, 23, 27, 32], ki: [18, 22, 26, 30], spd: [21, 25, 29, 33] }, sheet: 'kid-buu.png' },
-  'vegito_ssj': { id: 'vegito_ssj', character: 'vegito', form: 'SSJ', rom: 'Super', hp: 110, str: 17, ki: 18, spd: 10, tier: 3, curves: { hp: [125, 140, 155, 170], str: [24, 30, 37, 44], ki: [24, 29, 34, 39], spd: [17, 24, 31, 38] } },
+  'vegito_ssj': { id: 'vegito_ssj', character: 'vegito', form: 'SSJ', rom: 'Super', hp: 110, str: 17, ki: 18, spd: 10, tier: 3, sheet: 'vegito.png', curves: { hp: [125, 140, 155, 170], str: [24, 30, 37, 44], ki: [24, 29, 34, 39], spd: [17, 24, 31, 38] } },
 };
 
 // ─── Personajes (24) ──────────────────────────────────────

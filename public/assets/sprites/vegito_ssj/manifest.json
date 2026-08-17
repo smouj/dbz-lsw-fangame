@@ -7,8 +7,8 @@
       {
         "name": "vegito_ssj_idle_00",
         "file": "vegito_ssj_idle_00.png",
-        "w": 28,
-        "h": 46
+        "w": 27,
+        "h": 47
       }
     ]
   },
@@ -20,14 +20,14 @@
       {
         "name": "vegito_ssj_move_front_00",
         "file": "vegito_ssj_move_front_00.png",
-        "w": 28,
-        "h": 46
+        "w": 32,
+        "h": 41
       },
       {
         "name": "vegito_ssj_move_front_01",
         "file": "vegito_ssj_move_front_01.png",
-        "w": 32,
-        "h": 43
+        "w": 28,
+        "h": 46
       }
     ]
   },
@@ -39,39 +39,33 @@
       {
         "name": "vegito_ssj_move_back_00",
         "file": "vegito_ssj_move_back_00.png",
-        "w": 32,
-        "h": 43
+        "w": 28,
+        "h": 46
       },
       {
         "name": "vegito_ssj_move_back_01",
         "file": "vegito_ssj_move_back_01.png",
-        "w": 28,
-        "h": 46
+        "w": 32,
+        "h": 41
       }
     ]
   },
   "guard": {
-    "frame_count": 3,
+    "frame_count": 2,
     "fps": 6,
     "loop": false,
     "frames": [
       {
         "name": "vegito_ssj_guard_00",
         "file": "vegito_ssj_guard_00.png",
-        "w": 27,
-        "h": 47
+        "w": 24,
+        "h": 46
       },
       {
         "name": "vegito_ssj_guard_01",
         "file": "vegito_ssj_guard_01.png",
         "w": 34,
         "h": 44
-      },
-      {
-        "name": "vegito_ssj_guard_02",
-        "file": "vegito_ssj_guard_02.png",
-        "w": 24,
-        "h": 46
       }
     ]
   },
@@ -83,44 +77,44 @@
       {
         "name": "vegito_ssj_attack_fwd_00",
         "file": "vegito_ssj_attack_fwd_00.png",
-        "w": 32,
+        "w": 29,
         "h": 44
       },
       {
         "name": "vegito_ssj_attack_fwd_01",
         "file": "vegito_ssj_attack_fwd_01.png",
-        "w": 31,
-        "h": 44
+        "w": 26,
+        "h": 46
       },
       {
         "name": "vegito_ssj_attack_fwd_02",
         "file": "vegito_ssj_attack_fwd_02.png",
-        "w": 39,
-        "h": 45
+        "w": 30,
+        "h": 46
       },
       {
         "name": "vegito_ssj_attack_fwd_03",
         "file": "vegito_ssj_attack_fwd_03.png",
-        "w": 39,
-        "h": 41
+        "w": 37,
+        "h": 44
       },
       {
         "name": "vegito_ssj_attack_fwd_04",
         "file": "vegito_ssj_attack_fwd_04.png",
-        "w": 38,
+        "w": 34,
         "h": 41
       },
       {
         "name": "vegito_ssj_attack_fwd_05",
         "file": "vegito_ssj_attack_fwd_05.png",
-        "w": 24,
-        "h": 47
+        "w": 40,
+        "h": 41
       },
       {
         "name": "vegito_ssj_attack_fwd_06",
         "file": "vegito_ssj_attack_fwd_06.png",
-        "w": 34,
-        "h": 41
+        "w": 32,
+        "h": 32
       }
     ]
   },
@@ -156,39 +150,45 @@
     ]
   },
   "hurt": {
-    "frame_count": 5,
+    "frame_count": 6,
     "fps": 6,
     "loop": false,
     "frames": [
       {
         "name": "vegito_ssj_hurt_00",
         "file": "vegito_ssj_hurt_00.png",
-        "w": 27,
-        "h": 45
-      },
-      {
-        "name": "vegito_ssj_hurt_01",
-        "file": "vegito_ssj_hurt_01.png",
-        "w": 29,
-        "h": 44
-      },
-      {
-        "name": "vegito_ssj_hurt_02",
-        "file": "vegito_ssj_hurt_02.png",
-        "w": 32,
-        "h": 37
-      },
-      {
-        "name": "vegito_ssj_hurt_03",
-        "file": "vegito_ssj_hurt_03.png",
         "w": 25,
         "h": 48
       },
       {
-        "name": "vegito_ssj_hurt_04",
-        "file": "vegito_ssj_hurt_04.png",
+        "name": "vegito_ssj_hurt_01",
+        "file": "vegito_ssj_hurt_01.png",
+        "w": 24,
+        "h": 47
+      },
+      {
+        "name": "vegito_ssj_hurt_02",
+        "file": "vegito_ssj_hurt_02.png",
         "w": 25,
         "h": 45
+      },
+      {
+        "name": "vegito_ssj_hurt_03",
+        "file": "vegito_ssj_hurt_03.png",
+        "w": 27,
+        "h": 45
+      },
+      {
+        "name": "vegito_ssj_hurt_04",
+        "file": "vegito_ssj_hurt_04.png",
+        "w": 29,
+        "h": 44
+      },
+      {
+        "name": "vegito_ssj_hurt_05",
+        "file": "vegito_ssj_hurt_05.png",
+        "w": 32,
+        "h": 37
       }
     ]
   },
@@ -261,26 +261,26 @@
       {
         "name": "vegito_ssj_idle_00",
         "file": "vegito_ssj_idle_00.png",
-        "w": 28,
-        "h": 46
+        "w": 27,
+        "h": 47
       },
       {
         "name": "vegito_ssj_attack_fwd_00",
         "file": "vegito_ssj_attack_fwd_00.png",
-        "w": 32,
+        "w": 29,
         "h": 44
       },
       {
         "name": "vegito_ssj_attack_fwd_01",
         "file": "vegito_ssj_attack_fwd_01.png",
-        "w": 31,
-        "h": 44
+        "w": 26,
+        "h": 46
       },
       {
         "name": "vegito_ssj_attack_fwd_02",
         "file": "vegito_ssj_attack_fwd_02.png",
-        "w": 39,
-        "h": 45
+        "w": 30,
+        "h": 46
       }
     ]
   },
@@ -292,49 +292,61 @@
       {
         "name": "vegito_ssj_idle_00",
         "file": "vegito_ssj_idle_00.png",
-        "w": 28,
-        "h": 46
+        "w": 27,
+        "h": 47
       },
       {
         "name": "vegito_ssj_attack_fwd_03",
         "file": "vegito_ssj_attack_fwd_03.png",
-        "w": 39,
-        "h": 41
+        "w": 37,
+        "h": 44
       },
       {
         "name": "vegito_ssj_attack_fwd_04",
         "file": "vegito_ssj_attack_fwd_04.png",
-        "w": 38,
+        "w": 34,
         "h": 41
       },
       {
         "name": "vegito_ssj_attack_fwd_05",
         "file": "vegito_ssj_attack_fwd_05.png",
-        "w": 24,
-        "h": 47
+        "w": 40,
+        "h": 41
       },
       {
         "name": "vegito_ssj_attack_fwd_06",
         "file": "vegito_ssj_attack_fwd_06.png",
-        "w": 34,
-        "h": 41
+        "w": 32,
+        "h": 32
       }
     ]
   },
   "kick_right": {
-    "frame_count": 2,
+    "frame_count": 4,
     "fps": 7,
     "loop": false,
     "frames": [
       {
         "name": "vegito_ssj_kick_right_00",
         "file": "vegito_ssj_kick_right_00.png",
-        "w": 31,
-        "h": 43
+        "w": 39,
+        "h": 42
       },
       {
         "name": "vegito_ssj_kick_right_01",
         "file": "vegito_ssj_kick_right_01.png",
+        "w": 38,
+        "h": 42
+      },
+      {
+        "name": "vegito_ssj_kick_right_02",
+        "file": "vegito_ssj_kick_right_02.png",
+        "w": 31,
+        "h": 43
+      },
+      {
+        "name": "vegito_ssj_kick_right_03",
+        "file": "vegito_ssj_kick_right_03.png",
         "w": 32,
         "h": 43
       }
@@ -387,8 +399,8 @@
       {
         "name": "vegito_ssj_guard_00",
         "file": "vegito_ssj_guard_00.png",
-        "w": 27,
-        "h": 47
+        "w": 24,
+        "h": 46
       },
       {
         "name": "vegito_ssj_guard_01",
