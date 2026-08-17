@@ -12,6 +12,7 @@ import { BATTLE_PORTRAITS } from '../data/battlePortraits';
 import { overworldUrl } from '../data/overworld';
 import { battleOverworldActorUrl, battleOverworldAuraUrlAsync } from '../data/battleOverworld';
 import { characterName } from '../data/storyPanels';
+import { SPRITE_CANON, type CanonStatus } from '../data/generated/spriteCanon.generated';
 import { COMBAT_POSE_ORDER, COMBAT_REQUIRED_POSES } from '../battle/spriteConfig';
 import type { DevLinkedTarget, DevModuleId } from './DevStudio';
 
@@ -264,23 +265,79 @@ function AtomicFrames({ sheet }: { sheet: string }) {
     return () => { alive = false; };
   }, [sheet]);
   if (!meta) return null;
-  const groups = new Map<string, AtomicFrameMeta[]>();
-  for (const f of meta.frames) {
-    const g = groups.get(f.bucket) ?? [];
-    g.push(f);
-    groups.set(f.bucket, g);
+
+  // Canon semántico V9 (spriteCanon.generated.ts): agrupar por FAMILIA/ROL,
+  // no por bucket forense. El alias <dir>__<bucket>__NN__src_XXX.png → sourceId.
+  const formDir = meta.dir;
+  const canon = new Map<string, { family: string; role: string; variant: string; status: CanonStatus }>();
+  for (const fr of SPRITE_CANON.forms.flatMap(x => x.frames)) {
+    canon.set(fr.sourceId, { family: fr.family, role: fr.role, variant: fr.variant, status: fr.canonStatus });
   }
+  const srcIdOf = (f: AtomicFrameMeta) => {
+    const m = f.alias.match(/src_(\d+)/) ?? f.file.match(/src_(\d+)/);
+    return m ? `${formDir}/${m[1]}.png` : null;
+  };
+
+  type RG = { role: string; status: CanonStatus; frames: AtomicFrameMeta[] };
+  const famGroups = new Map<string, RG[]>();
+  const unclassified: AtomicFrameMeta[] = [];
+  for (const f of meta.frames) {
+    const sid = srcIdOf(f);
+    const c = sid ? canon.get(sid) : null;
+    if (!c || c.family === 'unclassified') { unclassified.push(f); continue; }
+    let roles = famGroups.get(c.family);
+    if (!roles) { roles = []; famGroups.set(c.family, roles); }
+    let rg = roles.find(r => r.role === c.role);
+    if (!rg) { rg = { role: c.role, status: c.status, frames: [] }; roles.push(rg); }
+    rg.frames.push(f);
+  }
+
+  const FAMILY_LABELS: Record<string, string> = {
+    idle: 'Base', ready: 'Base', movement: 'Movement', defense: 'Defense',
+    melee: 'Melee', beam: 'Beam', power: 'Power', reaction: 'Reaction',
+    effect: 'Effects', projectile: 'Projectiles', overworld: 'Overworld',
+  };
+  const STATUS_TAG: Record<string, string> = {
+    CANONICAL: 'ok', RUNTIME_VERIFIED: 'ok', ASSET_VERIFIED: '', UNCLASSIFIED: 'bad', INFERRED: '',
+  };
+
   return (
     <div className="dev-atomic-section">
-      <h3>Frames atómicos V9 <span className="dev-atomic-count">({meta.frame_count} frames · {meta.sheet} · atomic_sheet {meta.cell_width}×{meta.cell_height})</span></h3>
-      {[...groups.entries()].map(([bucket, frames]) => (
-        <div key={bucket} className="dev-atomic-bucket">
+      <h3>Frames atómicos V9 — canon semántico <span className="dev-atomic-count">({meta.frame_count} frames · {meta.sheet})</span></h3>
+      {[...famGroups.entries()].map(([family, roles]) => (
+        <div key={family} className="dev-atomic-bucket">
           <div className="dev-atomic-bucket-head">
-            <span className="dev-atomic-bucket-name">{BUCKET_LABELS[bucket] ?? bucket}</span>
-            <span className="dev-atomic-bucket-cat">{frames.length} frames</span>
+            <span className="dev-atomic-bucket-name">{FAMILY_LABELS[family] ?? family}</span>
+            <span className="dev-atomic-bucket-cat">{roles.reduce((n, r) => n + r.frames.length, 0)} frames</span>
+          </div>
+          {roles.map(rg => (
+            <div key={rg.role} className="dev-atomic-role">
+              <div className="dev-atomic-role-head">
+                <span className="dev-atomic-role-name">{rg.role}</span>
+                <span className={`dev-tag ${STATUS_TAG[rg.status] ?? ''}`}>{rg.status}</span>
+                <span className="dev-atomic-bucket-cat">{rg.frames.length}</span>
+              </div>
+              <div className="dev-atomic-grid">
+                {rg.frames.map(f => (
+                  <div key={f.file} className="dev-atomic-cell" title={`${f.file} · ${f.alias}`}>
+                    {sheetImg && <FrameCanvas img={sheetImg} f={f} />}
+                    <span className="dev-atomic-file">{f.file.replace('.png', '')}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      ))}
+      {unclassified.length > 0 && (
+        <div className="dev-atomic-bucket">
+          <div className="dev-atomic-bucket-head">
+            <span className="dev-atomic-bucket-name">Unclassified</span>
+            <span className="dev-tag bad">UNKNOWN</span>
+            <span className="dev-atomic-bucket-cat">{unclassified.length} frames sin evidencia</span>
           </div>
           <div className="dev-atomic-grid">
-            {frames.map(f => (
+            {unclassified.map(f => (
               <div key={f.file} className="dev-atomic-cell" title={`${f.file} · ${f.alias}`}>
                 {sheetImg && <FrameCanvas img={sheetImg} f={f} />}
                 <span className="dev-atomic-file">{f.file.replace('.png', '')}</span>
@@ -288,7 +345,7 @@ function AtomicFrames({ sheet }: { sheet: string }) {
             ))}
           </div>
         </div>
-      ))}
+      )}
     </div>
   );
 }

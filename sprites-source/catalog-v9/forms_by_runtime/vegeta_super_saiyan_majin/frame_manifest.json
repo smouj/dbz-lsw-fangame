@@ -1,0 +1,1516 @@
+{
+ "form": "vegeta_super_saiyan_majin",
+ "frameCount": 62,
+ "frames": [
+  {
+   "sourceId": "vegeta_super_saiyan_majin/001.png",
+   "canonicalId": "vegeta_super_saiyan_majin.idle.idle.00",
+   "characterId": "vegeta_super_saiyan",
+   "formId": "vegeta_super_saiyan_majin",
+   "assetType": "actor_frame",
+   "view": "FIELD",
+   "family": "melee",
+   "role": "strike",
+   "variant": "punch_right",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "idle",
+    "guard",
+    "punch_right",
+    "punch_left",
+    "beam_guard"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "vegeta.png",
+    "frame": "001.png",
+    "x": "14",
+    "y": "448"
+   },
+   "frameKind": "atomic",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "vegeta_super_saiyan_majin/002.png",
+   "canonicalId": "vegeta_super_saiyan_majin.defense.start.02",
+   "characterId": "vegeta_super_saiyan",
+   "formId": "vegeta_super_saiyan_majin",
+   "assetType": "actor_frame",
+   "view": "FIELD",
+   "family": "defense",
+   "role": "start",
+   "variant": "guard",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "guard",
+    "beam_guard"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "vegeta.png",
+    "frame": "002.png",
+    "x": "53",
+    "y": "447"
+   },
+   "frameKind": "atomic",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "vegeta_super_saiyan_majin/003.png",
+   "canonicalId": "vegeta_super_saiyan_majin.defense.start.04",
+   "characterId": "vegeta_super_saiyan",
+   "formId": "vegeta_super_saiyan_majin",
+   "assetType": "actor_frame",
+   "view": "FIELD",
+   "family": "defense",
+   "role": "start",
+   "variant": "guard",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "guard",
+    "beam_guard"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "vegeta.png",
+    "frame": "003.png",
+    "x": "93",
+    "y": "448"
+   },
+   "frameKind": "atomic",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "vegeta_super_saiyan_majin/004.png",
+   "canonicalId": "vegeta_super_saiyan_majin.power.gather_power.00",
+   "characterId": "vegeta_super_saiyan",
+   "formId": "vegeta_super_saiyan_majin",
+   "assetType": "composite",
+   "view": "ACTION_DUEL",
+   "family": "power",
+   "role": "gather_power",
+   "variant": "gather_power",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "gather_power",
+    "power_up"
+   ],
+   "evidence": "CANONICAL",
+   "canonStatus": "CANONICAL",
+   "source": {
+    "sheet": "vegeta.png",
+    "frame": "004.png",
+    "x": "139",
+    "y": "446"
+   },
+   "frameKind": "atomic",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "vegeta_super_saiyan_majin/005.png",
+   "canonicalId": "vegeta_super_saiyan_majin.defense.start.06",
+   "characterId": "vegeta_super_saiyan",
+   "formId": "vegeta_super_saiyan_majin",
+   "assetType": "actor_frame",
+   "view": "FIELD",
+   "family": "defense",
+   "role": "start",
+   "variant": "evade",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "evade"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "vegeta.png",
+    "frame": "005.png",
+    "x": "11",
+    "y": "508"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "vegeta_super_saiyan_majin/006.png",
+   "canonicalId": "vegeta_super_saiyan_majin.defense.start.07",
+   "characterId": "vegeta_super_saiyan",
+   "formId": "vegeta_super_saiyan_majin",
+   "assetType": "actor_frame",
+   "view": "FIELD",
+   "family": "defense",
+   "role": "start",
+   "variant": "evade",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "evade"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "vegeta.png",
+    "frame": "006.png",
+    "x": "61",
+    "y": "501"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "vegeta_super_saiyan_majin/007.png",
+   "canonicalId": "vegeta_super_saiyan_majin.movement.start.00",
+   "characterId": "vegeta_super_saiyan",
+   "formId": "vegeta_super_saiyan_majin",
+   "assetType": "actor_frame",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "start",
+   "variant": "move_front",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "move_front",
+    "move_back"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "vegeta.png",
+    "frame": "007.png",
+    "x": "95",
+    "y": "497"
+   },
+   "frameKind": "atomic",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "vegeta_super_saiyan_majin/008.png",
+   "canonicalId": "vegeta_super_saiyan_majin.movement.start.02",
+   "characterId": "vegeta_super_saiyan",
+   "formId": "vegeta_super_saiyan_majin",
+   "assetType": "actor_frame",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "start",
+   "variant": "move_front",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "move_front",
+    "move_back"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "vegeta.png",
+    "frame": "008.png",
+    "x": "135",
+    "y": "501"
+   },
+   "frameKind": "atomic",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "vegeta_super_saiyan_majin/009.png",
+   "canonicalId": "vegeta_super_saiyan_majin.reaction.hurt_light.00",
+   "characterId": "vegeta_super_saiyan",
+   "formId": "vegeta_super_saiyan_majin",
+   "assetType": "actor_frame",
+   "view": "FIELD",
+   "family": "reaction",
+   "role": "hurt_light",
+   "variant": "hurt",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "hurt"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "vegeta.png",
+    "frame": "009.png",
+    "x": "15",
+    "y": "551"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "vegeta_super_saiyan_majin/010.png",
+   "canonicalId": "vegeta_super_saiyan_majin.reaction.hurt_light.01",
+   "characterId": "vegeta_super_saiyan",
+   "formId": "vegeta_super_saiyan_majin",
+   "assetType": "actor_frame",
+   "view": "FIELD",
+   "family": "reaction",
+   "role": "hurt_light",
+   "variant": "hurt",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "hurt"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "vegeta.png",
+    "frame": "010.png",
+    "x": "53",
+    "y": "556"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "vegeta_super_saiyan_majin/011.png",
+   "canonicalId": "vegeta_super_saiyan_majin.reaction.hurt_light.02",
+   "characterId": "vegeta_super_saiyan",
+   "formId": "vegeta_super_saiyan_majin",
+   "assetType": "actor_frame",
+   "view": "FIELD",
+   "family": "reaction",
+   "role": "hurt_light",
+   "variant": "hurt",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "hurt"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "vegeta.png",
+    "frame": "011.png",
+    "x": "90",
+    "y": "558"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "vegeta_super_saiyan_majin/012.png",
+   "canonicalId": "vegeta_super_saiyan_majin.reaction.hurt_light.03",
+   "characterId": "vegeta_super_saiyan",
+   "formId": "vegeta_super_saiyan_majin",
+   "assetType": "actor_frame",
+   "view": "FIELD",
+   "family": "reaction",
+   "role": "hurt_light",
+   "variant": "hurt",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "hurt"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "vegeta.png",
+    "frame": "012.png",
+    "x": "133",
+    "y": "548"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "vegeta_super_saiyan_majin/013.png",
+   "canonicalId": "vegeta_super_saiyan_majin.reaction.hurt_light.04",
+   "characterId": "vegeta_super_saiyan",
+   "formId": "vegeta_super_saiyan_majin",
+   "assetType": "actor_frame",
+   "view": "FIELD",
+   "family": "reaction",
+   "role": "hurt_light",
+   "variant": "hurt",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "hurt"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "vegeta.png",
+    "frame": "013.png",
+    "x": "169",
+    "y": "546"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "vegeta_super_saiyan_majin/014.png",
+   "canonicalId": "vegeta_super_saiyan_majin.melee.ready.02",
+   "characterId": "vegeta_super_saiyan",
+   "formId": "vegeta_super_saiyan_majin",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "melee",
+   "role": "ready",
+   "variant": "attack_forward",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "attack_fwd",
+    "punch_left"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "vegeta.png",
+    "frame": "014.png",
+    "x": "209",
+    "y": "549"
+   },
+   "frameKind": "atomic",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "vegeta_super_saiyan_majin/015.png",
+   "canonicalId": "vegeta_super_saiyan_majin.unclassified.015",
+   "characterId": "vegeta_super_saiyan",
+   "formId": "vegeta_super_saiyan_majin",
+   "assetType": "unclassified",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "unclassified",
+   "variant": "downed_or_hurt",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "UNKNOWN",
+   "canonStatus": "UNCLASSIFIED",
+   "source": {
+    "sheet": "vegeta.png",
+    "frame": "015.png",
+    "x": "246",
+    "y": "572"
+   },
+   "frameKind": "atomic",
+   "note": "bucket forense: downed_or_hurt"
+  },
+  {
+   "sourceId": "vegeta_super_saiyan_majin/016.png",
+   "canonicalId": "vegeta_super_saiyan_majin.melee.ready.04",
+   "characterId": "vegeta_super_saiyan",
+   "formId": "vegeta_super_saiyan_majin",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "melee",
+   "role": "ready",
+   "variant": "attack_forward",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "attack_fwd",
+    "punch_right"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "vegeta.png",
+    "frame": "016.png",
+    "x": "15",
+    "y": "605"
+   },
+   "frameKind": "atomic",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "vegeta_super_saiyan_majin/017.png",
+   "canonicalId": "vegeta_super_saiyan_majin.melee.ready.06",
+   "characterId": "vegeta_super_saiyan",
+   "formId": "vegeta_super_saiyan_majin",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "melee",
+   "role": "ready",
+   "variant": "attack_forward",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "attack_fwd",
+    "punch_right"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "vegeta.png",
+    "frame": "017.png",
+    "x": "57",
+    "y": "602"
+   },
+   "frameKind": "atomic",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "vegeta_super_saiyan_majin/018.png",
+   "canonicalId": "vegeta_super_saiyan_majin.reaction.knockback_back.05",
+   "characterId": "vegeta_super_saiyan",
+   "formId": "vegeta_super_saiyan_majin",
+   "assetType": "actor_frame",
+   "view": "FIELD",
+   "family": "reaction",
+   "role": "knockback_back",
+   "variant": "back",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "knockback_back",
+    "gather_power",
+    "power_up"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "vegeta.png",
+    "frame": "018.png",
+    "x": "96",
+    "y": "607"
+   },
+   "frameKind": "atomic",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "vegeta_super_saiyan_majin/019.png",
+   "canonicalId": "vegeta_super_saiyan_majin.reaction.knockback_up.06",
+   "characterId": "vegeta_super_saiyan",
+   "formId": "vegeta_super_saiyan_majin",
+   "assetType": "actor_frame",
+   "view": "FIELD",
+   "family": "reaction",
+   "role": "knockback_up",
+   "variant": "up",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "knockback_up",
+    "gather_power",
+    "power_up"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "vegeta.png",
+    "frame": "019.png",
+    "x": "141",
+    "y": "606"
+   },
+   "frameKind": "atomic",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "vegeta_super_saiyan_majin/020.png",
+   "canonicalId": "vegeta_super_saiyan_majin.melee.ready.08",
+   "characterId": "vegeta_super_saiyan",
+   "formId": "vegeta_super_saiyan_majin",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "melee",
+   "role": "ready",
+   "variant": "attack_vertical",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "attack_ud"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "vegeta.png",
+    "frame": "020.png",
+    "x": "191",
+    "y": "603"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "vegeta_super_saiyan_majin/021.png",
+   "canonicalId": "vegeta_super_saiyan_majin.melee.ready.09",
+   "characterId": "vegeta_super_saiyan",
+   "formId": "vegeta_super_saiyan_majin",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "melee",
+   "role": "ready",
+   "variant": "attack_vertical",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "attack_ud"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "vegeta.png",
+    "frame": "021.png",
+    "x": "228",
+    "y": "601"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "vegeta_super_saiyan_majin/022.png",
+   "canonicalId": "vegeta_super_saiyan_majin.reaction.knockback_down.07",
+   "characterId": "vegeta_super_saiyan",
+   "formId": "vegeta_super_saiyan_majin",
+   "assetType": "actor_frame",
+   "view": "FIELD",
+   "family": "reaction",
+   "role": "knockback_down",
+   "variant": "down",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "knockback_down"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "vegeta.png",
+    "frame": "022.png",
+    "x": "262",
+    "y": "615"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "vegeta_super_saiyan_majin/023.png",
+   "canonicalId": "vegeta_super_saiyan_majin.unclassified.023",
+   "characterId": "vegeta_super_saiyan",
+   "formId": "vegeta_super_saiyan_majin",
+   "assetType": "unclassified",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "unclassified",
+   "variant": "movement_or_attack_pose",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "UNKNOWN",
+   "canonStatus": "UNCLASSIFIED",
+   "source": {
+    "sheet": "vegeta.png",
+    "frame": "023.png",
+    "x": "15",
+    "y": "657"
+   },
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
+  },
+  {
+   "sourceId": "vegeta_super_saiyan_majin/024.png",
+   "canonicalId": "vegeta_super_saiyan_majin.melee.ready.10",
+   "characterId": "vegeta_super_saiyan",
+   "formId": "vegeta_super_saiyan_majin",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "melee",
+   "role": "ready",
+   "variant": "attack_forward",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "attack_fwd",
+    "beam_charge",
+    "punch_right"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "vegeta.png",
+    "frame": "024.png",
+    "x": "54",
+    "y": "657"
+   },
+   "frameKind": "atomic",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "vegeta_super_saiyan_majin/025.png",
+   "canonicalId": "vegeta_super_saiyan_majin.melee.strike.12",
+   "characterId": "vegeta_super_saiyan",
+   "formId": "vegeta_super_saiyan_majin",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "melee",
+   "role": "strike",
+   "variant": "kick_right",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "kick_right"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "vegeta.png",
+    "frame": "025.png",
+    "x": "95",
+    "y": "658"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "vegeta_super_saiyan_majin/026.png",
+   "canonicalId": "vegeta_super_saiyan_majin.melee.strike.13",
+   "characterId": "vegeta_super_saiyan",
+   "formId": "vegeta_super_saiyan_majin",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "melee",
+   "role": "strike",
+   "variant": "kick_right",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "kick_right"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "vegeta.png",
+    "frame": "026.png",
+    "x": "138",
+    "y": "658"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "vegeta_super_saiyan_majin/027.png",
+   "canonicalId": "vegeta_super_saiyan_majin.unclassified.027",
+   "characterId": "vegeta_super_saiyan",
+   "formId": "vegeta_super_saiyan_majin",
+   "assetType": "overworld",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "actor_pose",
+   "variant": "overworld_actor_or_pose",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
+   "source": {
+    "sheet": "vegeta.png",
+    "frame": "027.png",
+    "x": "216",
+    "y": "677"
+   },
+   "frameKind": "atomic",
+   "note": "bucket forense: overworld_actor_or_pose"
+  },
+  {
+   "sourceId": "vegeta_super_saiyan_majin/028.png",
+   "canonicalId": "vegeta_super_saiyan_majin.unclassified.028",
+   "characterId": "vegeta_super_saiyan",
+   "formId": "vegeta_super_saiyan_majin",
+   "assetType": "overworld",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "actor_pose",
+   "variant": "overworld_actor_or_pose",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
+   "source": {
+    "sheet": "vegeta.png",
+    "frame": "028.png",
+    "x": "235",
+    "y": "677"
+   },
+   "frameKind": "atomic",
+   "note": "bucket forense: overworld_actor_or_pose"
+  },
+  {
+   "sourceId": "vegeta_super_saiyan_majin/029.png",
+   "canonicalId": "vegeta_super_saiyan_majin.unclassified.029",
+   "characterId": "vegeta_super_saiyan",
+   "formId": "vegeta_super_saiyan_majin",
+   "assetType": "effect",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "aura_tile",
+   "variant": "battle_aura_tile",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
+   "source": {
+    "sheet": "vegeta.png",
+    "frame": "029.png",
+    "x": "254",
+    "y": "677"
+   },
+   "frameKind": "atomic",
+   "note": "bucket forense: battle_aura_tile"
+  },
+  {
+   "sourceId": "vegeta_super_saiyan_majin/030.png",
+   "canonicalId": "vegeta_super_saiyan_majin.unclassified.030",
+   "characterId": "vegeta_super_saiyan",
+   "formId": "vegeta_super_saiyan_majin",
+   "assetType": "composite",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "aura_composite",
+   "variant": "battle_aura_actor_composite",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
+   "source": {
+    "sheet": "vegeta.png",
+    "frame": "030.png",
+    "x": "281",
+    "y": "677"
+   },
+   "frameKind": "atomic",
+   "note": "bucket forense: battle_aura_actor_composite"
+  },
+  {
+   "sourceId": "vegeta_super_saiyan_majin/031.png",
+   "canonicalId": "vegeta_super_saiyan_majin.melee.ready.14",
+   "characterId": "vegeta_super_saiyan",
+   "formId": "vegeta_super_saiyan_majin",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "melee",
+   "role": "ready",
+   "variant": "attack_forward",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "attack_fwd",
+    "beam_charge",
+    "punch_right"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "vegeta.png",
+    "frame": "031.png",
+    "x": "17",
+    "y": "716"
+   },
+   "frameKind": "atomic",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "vegeta_super_saiyan_majin/032.png",
+   "canonicalId": "vegeta_super_saiyan_majin.unclassified.032",
+   "characterId": "vegeta_super_saiyan",
+   "formId": "vegeta_super_saiyan_majin",
+   "assetType": "projectile",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "beam_ray",
+   "variant": "projectiles_beams",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
+   "source": {
+    "sheet": "vegeta.png",
+    "frame": "032.png",
+    "x": "80",
+    "y": "716"
+   },
+   "frameKind": "atomic",
+   "note": "bucket forense: projectiles_beams"
+  },
+  {
+   "sourceId": "vegeta_super_saiyan_majin/033.png",
+   "canonicalId": "vegeta_super_saiyan_majin.effect.aura.00",
+   "characterId": "vegeta_super_saiyan",
+   "formId": "vegeta_super_saiyan_majin",
+   "assetType": "effect",
+   "view": "FIELD",
+   "family": "effect",
+   "role": "aura",
+   "variant": "aura_power",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "aura_power"
+   ],
+   "evidence": "CANONICAL",
+   "canonStatus": "CANONICAL",
+   "source": {
+    "sheet": "vegeta.png",
+    "frame": "033.png",
+    "x": "211",
+    "y": "701"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "vegeta_super_saiyan_majin/034.png",
+   "canonicalId": "vegeta_super_saiyan_majin.effect.aura.01",
+   "characterId": "vegeta_super_saiyan",
+   "formId": "vegeta_super_saiyan_majin",
+   "assetType": "effect",
+   "view": "FIELD",
+   "family": "effect",
+   "role": "aura",
+   "variant": "aura_power",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "aura_power"
+   ],
+   "evidence": "CANONICAL",
+   "canonStatus": "CANONICAL",
+   "source": {
+    "sheet": "vegeta.png",
+    "frame": "034.png",
+    "x": "282",
+    "y": "701"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "vegeta_super_saiyan_majin/035.png",
+   "canonicalId": "vegeta_super_saiyan_majin.effect.aura.02",
+   "characterId": "vegeta_super_saiyan",
+   "formId": "vegeta_super_saiyan_majin",
+   "assetType": "effect",
+   "view": "FIELD",
+   "family": "effect",
+   "role": "aura",
+   "variant": "aura_power",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "aura_power"
+   ],
+   "evidence": "CANONICAL",
+   "canonStatus": "CANONICAL",
+   "source": {
+    "sheet": "vegeta.png",
+    "frame": "035.png",
+    "x": "351",
+    "y": "701"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "vegeta_super_saiyan_majin/036.png",
+   "canonicalId": "vegeta_super_saiyan_majin.unclassified.036",
+   "characterId": "vegeta_super_saiyan",
+   "formId": "vegeta_super_saiyan_majin",
+   "assetType": "projectile",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "orb",
+   "variant": "projectile_orb_small",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
+   "source": {
+    "sheet": "vegeta.png",
+    "frame": "036.png",
+    "x": "54",
+    "y": "728"
+   },
+   "frameKind": "atomic",
+   "note": "bucket forense: projectile_orb_small"
+  },
+  {
+   "sourceId": "vegeta_super_saiyan_majin/037.png",
+   "canonicalId": "vegeta_super_saiyan_majin.unclassified.037",
+   "characterId": "vegeta_super_saiyan",
+   "formId": "vegeta_super_saiyan_majin",
+   "assetType": "projectile",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "beam_horizontal",
+   "variant": "beam_or_projectile_horizontal",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
+   "source": {
+    "sheet": "vegeta.png",
+    "frame": "037.png",
+    "x": "16",
+    "y": "776"
+   },
+   "frameKind": "atomic",
+   "note": "bucket forense: beam_or_projectile_horizontal"
+  },
+  {
+   "sourceId": "vegeta_super_saiyan_majin/038.png",
+   "canonicalId": "vegeta_super_saiyan_majin.beam.charge_start.02",
+   "characterId": "vegeta_super_saiyan",
+   "formId": "vegeta_super_saiyan_majin",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "beam",
+   "role": "charge_start",
+   "variant": "charge",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "beam_charge"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "vegeta.png",
+    "frame": "038.png",
+    "x": "30",
+    "y": "791"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "vegeta_super_saiyan_majin/039.png",
+   "canonicalId": "vegeta_super_saiyan_majin.beam.release.03",
+   "characterId": "vegeta_super_saiyan",
+   "formId": "vegeta_super_saiyan_majin",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "beam",
+   "role": "release",
+   "variant": "fire",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "beam_fire"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "vegeta.png",
+    "frame": "039.png",
+    "x": "71",
+    "y": "795"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "vegeta_super_saiyan_majin/040.png",
+   "canonicalId": "vegeta_super_saiyan_majin.beam.release.04",
+   "characterId": "vegeta_super_saiyan",
+   "formId": "vegeta_super_saiyan_majin",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "beam",
+   "role": "release",
+   "variant": "fire",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "beam_fire"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "vegeta.png",
+    "frame": "040.png",
+    "x": "115",
+    "y": "791"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "vegeta_super_saiyan_majin/041.png",
+   "canonicalId": "vegeta_super_saiyan_majin.unclassified.041",
+   "characterId": "vegeta_super_saiyan",
+   "formId": "vegeta_super_saiyan_majin",
+   "assetType": "effect",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "orbs_rings_bursts",
+   "variant": "orbs_rings_bursts",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
+   "source": {
+    "sheet": "vegeta.png",
+    "frame": "041.png",
+    "x": "165",
+    "y": "782"
+   },
+   "frameKind": "atomic",
+   "note": "bucket forense: orbs_rings_bursts"
+  },
+  {
+   "sourceId": "vegeta_super_saiyan_majin/042.png",
+   "canonicalId": "vegeta_super_saiyan_majin.beam.charge_start.05",
+   "characterId": "vegeta_super_saiyan",
+   "formId": "vegeta_super_saiyan_majin",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "beam",
+   "role": "charge_start",
+   "variant": "charge",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "beam_charge"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "vegeta.png",
+    "frame": "042.png",
+    "x": "250",
+    "y": "791"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "vegeta_super_saiyan_majin/043.png",
+   "canonicalId": "vegeta_super_saiyan_majin.unclassified.043",
+   "characterId": "vegeta_super_saiyan",
+   "formId": "vegeta_super_saiyan_majin",
+   "assetType": "projectile",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "beam_ray",
+   "variant": "projectiles_beams",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
+   "source": {
+    "sheet": "vegeta.png",
+    "frame": "043.png",
+    "x": "289",
+    "y": "780"
+   },
+   "frameKind": "atomic",
+   "note": "bucket forense: projectiles_beams"
+  },
+  {
+   "sourceId": "vegeta_super_saiyan_majin/044.png",
+   "canonicalId": "vegeta_super_saiyan_majin.unclassified.044",
+   "characterId": "vegeta_super_saiyan",
+   "formId": "vegeta_super_saiyan_majin",
+   "assetType": "projectile",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "beam_ray",
+   "variant": "projectiles_beams",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
+   "source": {
+    "sheet": "vegeta.png",
+    "frame": "044.png",
+    "x": "417",
+    "y": "780"
+   },
+   "frameKind": "atomic",
+   "note": "bucket forense: projectiles_beams"
+  },
+  {
+   "sourceId": "vegeta_super_saiyan_majin/045.png",
+   "canonicalId": "vegeta_super_saiyan_majin.beam.release.06",
+   "characterId": "vegeta_super_saiyan",
+   "formId": "vegeta_super_saiyan_majin",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "beam",
+   "role": "release",
+   "variant": "fire",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "beam_fire"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "vegeta.png",
+    "frame": "045.png",
+    "x": "15",
+    "y": "863"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "vegeta_super_saiyan_majin/046.png",
+   "canonicalId": "vegeta_super_saiyan_majin.beam.release.07",
+   "characterId": "vegeta_super_saiyan",
+   "formId": "vegeta_super_saiyan_majin",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "beam",
+   "role": "release",
+   "variant": "fire",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "beam_fire"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "vegeta.png",
+    "frame": "046.png",
+    "x": "52",
+    "y": "863"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "vegeta_super_saiyan_majin/047.png",
+   "canonicalId": "vegeta_super_saiyan_majin.unclassified.047",
+   "characterId": "vegeta_super_saiyan",
+   "formId": "vegeta_super_saiyan_majin",
+   "assetType": "projectile",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "beam_ray",
+   "variant": "projectiles_beams",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
+   "source": {
+    "sheet": "vegeta.png",
+    "frame": "047.png",
+    "x": "95",
+    "y": "853"
+   },
+   "frameKind": "atomic",
+   "note": "bucket forense: projectiles_beams"
+  },
+  {
+   "sourceId": "vegeta_super_saiyan_majin/048.png",
+   "canonicalId": "vegeta_super_saiyan_majin.unclassified.048",
+   "characterId": "vegeta_super_saiyan",
+   "formId": "vegeta_super_saiyan_majin",
+   "assetType": "unclassified",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "unclassified",
+   "variant": "multi_evidence_projectiles_beams_orbs_rings_bursts",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "UNKNOWN",
+   "canonStatus": "UNCLASSIFIED",
+   "source": {
+    "sheet": "vegeta.png",
+    "frame": "048.png",
+    "x": "224",
+    "y": "853"
+   },
+   "frameKind": "atomic",
+   "note": "bucket forense: multi_evidence_projectiles_beams_orbs_rings_bursts"
+  },
+  {
+   "sourceId": "vegeta_super_saiyan_majin/049.png",
+   "canonicalId": "vegeta_super_saiyan_majin.power.gather_power.06",
+   "characterId": "vegeta_super_saiyan",
+   "formId": "vegeta_super_saiyan_majin",
+   "assetType": "composite",
+   "view": "ACTION_DUEL",
+   "family": "power",
+   "role": "gather_power",
+   "variant": "gather_power",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "gather_power",
+    "power_up"
+   ],
+   "evidence": "CANONICAL",
+   "canonStatus": "CANONICAL",
+   "source": {
+    "sheet": "vegeta.png",
+    "frame": "049.png",
+    "x": "307",
+    "y": "868"
+   },
+   "frameKind": "atomic",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "vegeta_super_saiyan_majin/050.png",
+   "canonicalId": "vegeta_super_saiyan_majin.unclassified.050",
+   "characterId": "vegeta_super_saiyan",
+   "formId": "vegeta_super_saiyan_majin",
+   "assetType": "effect",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "misc",
+   "variant": "nonbody_misc",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
+   "source": {
+    "sheet": "vegeta.png",
+    "frame": "050.png",
+    "x": "343",
+    "y": "869"
+   },
+   "frameKind": "atomic",
+   "note": "bucket forense: nonbody_misc"
+  },
+  {
+   "sourceId": "vegeta_super_saiyan_majin/051.png",
+   "canonicalId": "vegeta_super_saiyan_majin.effect.aura.03",
+   "characterId": "vegeta_super_saiyan",
+   "formId": "vegeta_super_saiyan_majin",
+   "assetType": "effect",
+   "view": "FIELD",
+   "family": "effect",
+   "role": "aura",
+   "variant": "aura_support",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "aura_support"
+   ],
+   "evidence": "CANONICAL",
+   "canonStatus": "CANONICAL",
+   "source": {
+    "sheet": "",
+    "frame": "051.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "vegeta_super_saiyan_majin/052.png",
+   "canonicalId": "vegeta_super_saiyan_majin.effect.aura.04",
+   "characterId": "vegeta_super_saiyan",
+   "formId": "vegeta_super_saiyan_majin",
+   "assetType": "effect",
+   "view": "FIELD",
+   "family": "effect",
+   "role": "aura",
+   "variant": "aura_support",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "aura_support"
+   ],
+   "evidence": "CANONICAL",
+   "canonStatus": "CANONICAL",
+   "source": {
+    "sheet": "",
+    "frame": "052.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "vegeta_super_saiyan_majin/053.png",
+   "canonicalId": "vegeta_super_saiyan_majin.effect.aura.05",
+   "characterId": "vegeta_super_saiyan",
+   "formId": "vegeta_super_saiyan_majin",
+   "assetType": "effect",
+   "view": "FIELD",
+   "family": "effect",
+   "role": "aura",
+   "variant": "aura_support",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "aura_support"
+   ],
+   "evidence": "CANONICAL",
+   "canonStatus": "CANONICAL",
+   "source": {
+    "sheet": "",
+    "frame": "053.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "vegeta_super_saiyan_majin/000_attack_fwd.png",
+   "canonicalId": "vegeta_super_saiyan_majin.melee.ready.16",
+   "characterId": "vegeta_super_saiyan",
+   "formId": "vegeta_super_saiyan_majin",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "melee",
+   "role": "ready",
+   "variant": "attack_forward",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "attack_fwd",
+    "punch_left"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "",
+    "frame": "000_attack_fwd.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "fixed_only",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "vegeta_super_saiyan_majin/001_attack_fwd.png",
+   "canonicalId": "vegeta_super_saiyan_majin.melee.ready.18",
+   "characterId": "vegeta_super_saiyan",
+   "formId": "vegeta_super_saiyan_majin",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "melee",
+   "role": "ready",
+   "variant": "attack_forward",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "attack_fwd",
+    "punch_left"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "",
+    "frame": "001_attack_fwd.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "fixed_only",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "vegeta_super_saiyan_majin/002_attack_fwd.png",
+   "canonicalId": "vegeta_super_saiyan_majin.melee.ready.20",
+   "characterId": "vegeta_super_saiyan",
+   "formId": "vegeta_super_saiyan_majin",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "melee",
+   "role": "ready",
+   "variant": "attack_forward",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "attack_fwd",
+    "punch_left"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "",
+    "frame": "002_attack_fwd.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "fixed_only",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "vegeta_super_saiyan_majin/003_attack_ud.png",
+   "canonicalId": "vegeta_super_saiyan_majin.melee.ready.22",
+   "characterId": "vegeta_super_saiyan",
+   "formId": "vegeta_super_saiyan_majin",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "melee",
+   "role": "ready",
+   "variant": "attack_vertical",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "attack_ud"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "",
+    "frame": "003_attack_ud.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "fixed_only"
+  },
+  {
+   "sourceId": "vegeta_super_saiyan_majin/004_attack_ud.png",
+   "canonicalId": "vegeta_super_saiyan_majin.melee.ready.23",
+   "characterId": "vegeta_super_saiyan",
+   "formId": "vegeta_super_saiyan_majin",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "melee",
+   "role": "ready",
+   "variant": "attack_vertical",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "attack_ud"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "",
+    "frame": "004_attack_ud.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "fixed_only"
+  },
+  {
+   "sourceId": "vegeta_super_saiyan_majin/005_hurt.png",
+   "canonicalId": "vegeta_super_saiyan_majin.unclassified.005_hurt",
+   "characterId": "vegeta_super_saiyan",
+   "formId": "vegeta_super_saiyan_majin",
+   "assetType": "unclassified",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "unclassified",
+   "variant": "",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "UNKNOWN",
+   "canonStatus": "UNCLASSIFIED",
+   "source": {
+    "sheet": "",
+    "frame": "005_hurt.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "fixed_only",
+   "note": "sin evidencia runtime ni bucket"
+  },
+  {
+   "sourceId": "vegeta_super_saiyan_majin/006_hurt.png",
+   "canonicalId": "vegeta_super_saiyan_majin.unclassified.006_hurt",
+   "characterId": "vegeta_super_saiyan",
+   "formId": "vegeta_super_saiyan_majin",
+   "assetType": "unclassified",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "unclassified",
+   "variant": "",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "UNKNOWN",
+   "canonStatus": "UNCLASSIFIED",
+   "source": {
+    "sheet": "",
+    "frame": "006_hurt.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "fixed_only",
+   "note": "sin evidencia runtime ni bucket"
+  },
+  {
+   "sourceId": "vegeta_super_saiyan_majin/007_hurt.png",
+   "canonicalId": "vegeta_super_saiyan_majin.unclassified.007_hurt",
+   "characterId": "vegeta_super_saiyan",
+   "formId": "vegeta_super_saiyan_majin",
+   "assetType": "unclassified",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "unclassified",
+   "variant": "",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "UNKNOWN",
+   "canonStatus": "UNCLASSIFIED",
+   "source": {
+    "sheet": "",
+    "frame": "007_hurt.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "fixed_only",
+   "note": "sin evidencia runtime ni bucket"
+  },
+  {
+   "sourceId": "vegeta_super_saiyan_majin/008_hurt.png",
+   "canonicalId": "vegeta_super_saiyan_majin.unclassified.008_hurt",
+   "characterId": "vegeta_super_saiyan",
+   "formId": "vegeta_super_saiyan_majin",
+   "assetType": "unclassified",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "unclassified",
+   "variant": "",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "UNKNOWN",
+   "canonStatus": "UNCLASSIFIED",
+   "source": {
+    "sheet": "",
+    "frame": "008_hurt.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "fixed_only",
+   "note": "sin evidencia runtime ni bucket"
+  }
+ ]
+}

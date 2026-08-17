@@ -1,0 +1,1586 @@
+{
+ "form": "piccolo_base",
+ "frameCount": 65,
+ "frames": [
+  {
+   "sourceId": "piccolo_base/001.png",
+   "canonicalId": "piccolo_base.idle.idle.00",
+   "characterId": "piccolo",
+   "formId": "piccolo_base",
+   "assetType": "actor_frame",
+   "view": "FIELD",
+   "family": "melee",
+   "role": "strike",
+   "variant": "punch_right",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "idle",
+    "guard",
+    "punch_right",
+    "punch_left",
+    "beam_guard"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "piccolo.png",
+    "frame": "001.png",
+    "x": "8",
+    "y": "20"
+   },
+   "frameKind": "atomic",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "piccolo_base/002.png",
+   "canonicalId": "piccolo_base.defense.start.02",
+   "characterId": "piccolo",
+   "formId": "piccolo_base",
+   "assetType": "actor_frame",
+   "view": "FIELD",
+   "family": "defense",
+   "role": "start",
+   "variant": "guard",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "guard",
+    "beam_guard"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "piccolo.png",
+    "frame": "002.png",
+    "x": "50",
+    "y": "19"
+   },
+   "frameKind": "atomic",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "piccolo_base/003.png",
+   "canonicalId": "piccolo_base.defense.start.04",
+   "characterId": "piccolo",
+   "formId": "piccolo_base",
+   "assetType": "actor_frame",
+   "view": "FIELD",
+   "family": "defense",
+   "role": "start",
+   "variant": "guard",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "guard",
+    "beam_guard"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "piccolo.png",
+    "frame": "003.png",
+    "x": "89",
+    "y": "21"
+   },
+   "frameKind": "atomic",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "piccolo_base/004.png",
+   "canonicalId": "piccolo_base.unclassified.004",
+   "characterId": "piccolo",
+   "formId": "piccolo_base",
+   "assetType": "unclassified",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "unclassified",
+   "variant": "idle_or_stance",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "UNKNOWN",
+   "canonStatus": "UNCLASSIFIED",
+   "source": {
+    "sheet": "piccolo.png",
+    "frame": "004.png",
+    "x": "136",
+    "y": "19"
+   },
+   "frameKind": "atomic",
+   "note": "bucket forense: idle_or_stance"
+  },
+  {
+   "sourceId": "piccolo_base/005.png",
+   "canonicalId": "piccolo_base.defense.start.06",
+   "characterId": "piccolo",
+   "formId": "piccolo_base",
+   "assetType": "actor_frame",
+   "view": "FIELD",
+   "family": "defense",
+   "role": "start",
+   "variant": "evade",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "evade"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "piccolo.png",
+    "frame": "005.png",
+    "x": "7",
+    "y": "76"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "piccolo_base/006.png",
+   "canonicalId": "piccolo_base.defense.start.07",
+   "characterId": "piccolo",
+   "formId": "piccolo_base",
+   "assetType": "actor_frame",
+   "view": "FIELD",
+   "family": "defense",
+   "role": "start",
+   "variant": "evade",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "evade"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "piccolo.png",
+    "frame": "006.png",
+    "x": "58",
+    "y": "69"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "piccolo_base/007.png",
+   "canonicalId": "piccolo_base.movement.start.00",
+   "characterId": "piccolo",
+   "formId": "piccolo_base",
+   "assetType": "actor_frame",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "start",
+   "variant": "move_front",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "move_front",
+    "move_back"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "piccolo.png",
+    "frame": "007.png",
+    "x": "90",
+    "y": "67"
+   },
+   "frameKind": "atomic",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "piccolo_base/008.png",
+   "canonicalId": "piccolo_base.movement.start.02",
+   "characterId": "piccolo",
+   "formId": "piccolo_base",
+   "assetType": "actor_frame",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "start",
+   "variant": "move_front",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "move_front",
+    "move_back"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "piccolo.png",
+    "frame": "008.png",
+    "x": "129",
+    "y": "71"
+   },
+   "frameKind": "atomic",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "piccolo_base/009.png",
+   "canonicalId": "piccolo_base.reaction.hurt_light.00",
+   "characterId": "piccolo",
+   "formId": "piccolo_base",
+   "assetType": "actor_frame",
+   "view": "FIELD",
+   "family": "reaction",
+   "role": "hurt_light",
+   "variant": "hurt",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "hurt"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "piccolo.png",
+    "frame": "009.png",
+    "x": "3",
+    "y": "123"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "piccolo_base/010.png",
+   "canonicalId": "piccolo_base.reaction.hurt_light.01",
+   "characterId": "piccolo",
+   "formId": "piccolo_base",
+   "assetType": "actor_frame",
+   "view": "FIELD",
+   "family": "reaction",
+   "role": "hurt_light",
+   "variant": "hurt",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "hurt"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "piccolo.png",
+    "frame": "010.png",
+    "x": "40",
+    "y": "123"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "piccolo_base/011.png",
+   "canonicalId": "piccolo_base.reaction.hurt_light.02",
+   "characterId": "piccolo",
+   "formId": "piccolo_base",
+   "assetType": "actor_frame",
+   "view": "FIELD",
+   "family": "reaction",
+   "role": "hurt_light",
+   "variant": "hurt",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "hurt"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "piccolo.png",
+    "frame": "011.png",
+    "x": "73",
+    "y": "126"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "piccolo_base/012.png",
+   "canonicalId": "piccolo_base.reaction.hurt_light.03",
+   "characterId": "piccolo",
+   "formId": "piccolo_base",
+   "assetType": "actor_frame",
+   "view": "FIELD",
+   "family": "reaction",
+   "role": "hurt_light",
+   "variant": "hurt",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "hurt"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "piccolo.png",
+    "frame": "012.png",
+    "x": "113",
+    "y": "116"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "piccolo_base/013.png",
+   "canonicalId": "piccolo_base.reaction.hurt_light.04",
+   "characterId": "piccolo",
+   "formId": "piccolo_base",
+   "assetType": "actor_frame",
+   "view": "FIELD",
+   "family": "reaction",
+   "role": "hurt_light",
+   "variant": "hurt",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "hurt"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "piccolo.png",
+    "frame": "013.png",
+    "x": "153",
+    "y": "122"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "piccolo_base/014.png",
+   "canonicalId": "piccolo_base.melee.ready.02",
+   "characterId": "piccolo",
+   "formId": "piccolo_base",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "melee",
+   "role": "ready",
+   "variant": "attack_forward",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "attack_fwd",
+    "punch_left"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "piccolo.png",
+    "frame": "014.png",
+    "x": "191",
+    "y": "119"
+   },
+   "frameKind": "atomic",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "piccolo_base/015.png",
+   "canonicalId": "piccolo_base.unclassified.015",
+   "characterId": "piccolo",
+   "formId": "piccolo_base",
+   "assetType": "unclassified",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "unclassified",
+   "variant": "downed_or_hurt",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "UNKNOWN",
+   "canonStatus": "UNCLASSIFIED",
+   "source": {
+    "sheet": "piccolo.png",
+    "frame": "015.png",
+    "x": "233",
+    "y": "132"
+   },
+   "frameKind": "atomic",
+   "note": "bucket forense: downed_or_hurt"
+  },
+  {
+   "sourceId": "piccolo_base/016.png",
+   "canonicalId": "piccolo_base.melee.ready.04",
+   "characterId": "piccolo",
+   "formId": "piccolo_base",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "melee",
+   "role": "ready",
+   "variant": "attack_forward",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "attack_fwd",
+    "punch_right",
+    "knockback_up"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "piccolo.png",
+    "frame": "016.png",
+    "x": "11",
+    "y": "175"
+   },
+   "frameKind": "atomic",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "piccolo_base/017.png",
+   "canonicalId": "piccolo_base.reaction.knockback_back.06",
+   "characterId": "piccolo",
+   "formId": "piccolo_base",
+   "assetType": "actor_frame",
+   "view": "FIELD",
+   "family": "reaction",
+   "role": "knockback_back",
+   "variant": "back",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "knockback_back"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "piccolo.png",
+    "frame": "017.png",
+    "x": "48",
+    "y": "176"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "piccolo_base/018.png",
+   "canonicalId": "piccolo_base.unclassified.018",
+   "characterId": "piccolo",
+   "formId": "piccolo_base",
+   "assetType": "unclassified",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "unclassified",
+   "variant": "movement_or_attack_pose",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "UNKNOWN",
+   "canonStatus": "UNCLASSIFIED",
+   "source": {
+    "sheet": "piccolo.png",
+    "frame": "018.png",
+    "x": "89",
+    "y": "173"
+   },
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
+  },
+  {
+   "sourceId": "piccolo_base/019.png",
+   "canonicalId": "piccolo_base.melee.ready.06",
+   "characterId": "piccolo",
+   "formId": "piccolo_base",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "melee",
+   "role": "ready",
+   "variant": "attack_vertical",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "attack_ud"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "piccolo.png",
+    "frame": "019.png",
+    "x": "133",
+    "y": "172"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "piccolo_base/020.png",
+   "canonicalId": "piccolo_base.melee.ready.07",
+   "characterId": "piccolo",
+   "formId": "piccolo_base",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "melee",
+   "role": "ready",
+   "variant": "attack_vertical",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "attack_ud"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "piccolo.png",
+    "frame": "020.png",
+    "x": "177",
+    "y": "172"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "piccolo_base/021.png",
+   "canonicalId": "piccolo_base.melee.ready.08",
+   "characterId": "piccolo",
+   "formId": "piccolo_base",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "melee",
+   "role": "ready",
+   "variant": "attack_vertical",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "attack_ud"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "piccolo.png",
+    "frame": "021.png",
+    "x": "216",
+    "y": "170"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "piccolo_base/022.png",
+   "canonicalId": "piccolo_base.melee.ready.09",
+   "characterId": "piccolo",
+   "formId": "piccolo_base",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "melee",
+   "role": "ready",
+   "variant": "attack_vertical",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "attack_ud",
+    "knockback_down"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "piccolo.png",
+    "frame": "022.png",
+    "x": "247",
+    "y": "180"
+   },
+   "frameKind": "atomic",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "piccolo_base/023.png",
+   "canonicalId": "piccolo_base.melee.ready.10",
+   "characterId": "piccolo",
+   "formId": "piccolo_base",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "melee",
+   "role": "ready",
+   "variant": "attack_forward",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "attack_fwd",
+    "punch_right"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "piccolo.png",
+    "frame": "023.png",
+    "x": "10",
+    "y": "230"
+   },
+   "frameKind": "atomic",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "piccolo_base/024.png",
+   "canonicalId": "piccolo_base.melee.ready.12",
+   "characterId": "piccolo",
+   "formId": "piccolo_base",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "melee",
+   "role": "ready",
+   "variant": "attack_forward",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "attack_fwd",
+    "punch_right"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "piccolo.png",
+    "frame": "024.png",
+    "x": "48",
+    "y": "230"
+   },
+   "frameKind": "atomic",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "piccolo_base/025.png",
+   "canonicalId": "piccolo_base.melee.ready.14",
+   "characterId": "piccolo",
+   "formId": "piccolo_base",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "melee",
+   "role": "ready",
+   "variant": "attack_forward",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "attack_fwd",
+    "punch_left",
+    "kick_right"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "piccolo.png",
+    "frame": "025.png",
+    "x": "91",
+    "y": "231"
+   },
+   "frameKind": "atomic",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "piccolo_base/026.png",
+   "canonicalId": "piccolo_base.melee.ready.17",
+   "characterId": "piccolo",
+   "formId": "piccolo_base",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "melee",
+   "role": "ready",
+   "variant": "attack_forward",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "attack_fwd",
+    "punch_left",
+    "kick_right"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "piccolo.png",
+    "frame": "026.png",
+    "x": "139",
+    "y": "231"
+   },
+   "frameKind": "atomic",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "piccolo_base/027.png",
+   "canonicalId": "piccolo_base.unclassified.027",
+   "characterId": "piccolo",
+   "formId": "piccolo_base",
+   "assetType": "overworld",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "actor_pose",
+   "variant": "overworld_actor_or_pose",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
+   "source": {
+    "sheet": "piccolo.png",
+    "frame": "027.png",
+    "x": "207",
+    "y": "235"
+   },
+   "frameKind": "atomic",
+   "note": "bucket forense: overworld_actor_or_pose"
+  },
+  {
+   "sourceId": "piccolo_base/028.png",
+   "canonicalId": "piccolo_base.unclassified.028",
+   "characterId": "piccolo",
+   "formId": "piccolo_base",
+   "assetType": "overworld",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "actor_pose",
+   "variant": "overworld_actor_or_pose",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
+   "source": {
+    "sheet": "piccolo.png",
+    "frame": "028.png",
+    "x": "222",
+    "y": "235"
+   },
+   "frameKind": "atomic",
+   "note": "bucket forense: overworld_actor_or_pose"
+  },
+  {
+   "sourceId": "piccolo_base/029.png",
+   "canonicalId": "piccolo_base.unclassified.029",
+   "characterId": "piccolo",
+   "formId": "piccolo_base",
+   "assetType": "effect",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "aura_tile",
+   "variant": "battle_aura_tile",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
+   "source": {
+    "sheet": "piccolo.png",
+    "frame": "029.png",
+    "x": "239",
+    "y": "235"
+   },
+   "frameKind": "atomic",
+   "note": "bucket forense: battle_aura_tile"
+  },
+  {
+   "sourceId": "piccolo_base/030.png",
+   "canonicalId": "piccolo_base.unclassified.030",
+   "characterId": "piccolo",
+   "formId": "piccolo_base",
+   "assetType": "composite",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "aura_composite",
+   "variant": "battle_aura_actor_composite",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
+   "source": {
+    "sheet": "piccolo.png",
+    "frame": "030.png",
+    "x": "267",
+    "y": "235"
+   },
+   "frameKind": "atomic",
+   "note": "bucket forense: battle_aura_actor_composite"
+  },
+  {
+   "sourceId": "piccolo_base/031.png",
+   "canonicalId": "piccolo_base.unclassified.031",
+   "characterId": "piccolo",
+   "formId": "piccolo_base",
+   "assetType": "overworld",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "actor_pose",
+   "variant": "overworld_actor_or_pose",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
+   "source": {
+    "sheet": "piccolo.png",
+    "frame": "031.png",
+    "x": "296",
+    "y": "235"
+   },
+   "frameKind": "atomic",
+   "note": "bucket forense: overworld_actor_or_pose"
+  },
+  {
+   "sourceId": "piccolo_base/032.png",
+   "canonicalId": "piccolo_base.unclassified.032",
+   "characterId": "piccolo",
+   "formId": "piccolo_base",
+   "assetType": "unclassified",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "unclassified",
+   "variant": "movement_or_attack_pose",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "UNKNOWN",
+   "canonStatus": "UNCLASSIFIED",
+   "source": {
+    "sheet": "piccolo.png",
+    "frame": "032.png",
+    "x": "3",
+    "y": "289"
+   },
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
+  },
+  {
+   "sourceId": "piccolo_base/033.png",
+   "canonicalId": "piccolo_base.unclassified.033",
+   "characterId": "piccolo",
+   "formId": "piccolo_base",
+   "assetType": "projectile",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "beam_ray",
+   "variant": "projectiles_beams",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
+   "source": {
+    "sheet": "piccolo.png",
+    "frame": "033.png",
+    "x": "60",
+    "y": "289"
+   },
+   "frameKind": "atomic",
+   "note": "bucket forense: projectiles_beams"
+  },
+  {
+   "sourceId": "piccolo_base/034.png",
+   "canonicalId": "piccolo_base.effect.aura.00",
+   "characterId": "piccolo",
+   "formId": "piccolo_base",
+   "assetType": "effect",
+   "view": "FIELD",
+   "family": "effect",
+   "role": "aura",
+   "variant": "aura_power",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "aura_power"
+   ],
+   "evidence": "CANONICAL",
+   "canonStatus": "CANONICAL",
+   "source": {
+    "sheet": "piccolo.png",
+    "frame": "034.png",
+    "x": "188",
+    "y": "269"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "piccolo_base/035.png",
+   "canonicalId": "piccolo_base.effect.aura.01",
+   "characterId": "piccolo",
+   "formId": "piccolo_base",
+   "assetType": "effect",
+   "view": "FIELD",
+   "family": "effect",
+   "role": "aura",
+   "variant": "aura_power",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "aura_power"
+   ],
+   "evidence": "CANONICAL",
+   "canonStatus": "CANONICAL",
+   "source": {
+    "sheet": "piccolo.png",
+    "frame": "035.png",
+    "x": "262",
+    "y": "270"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "piccolo_base/036.png",
+   "canonicalId": "piccolo_base.effect.aura.02",
+   "characterId": "piccolo",
+   "formId": "piccolo_base",
+   "assetType": "effect",
+   "view": "FIELD",
+   "family": "effect",
+   "role": "aura",
+   "variant": "aura_power",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "aura_power"
+   ],
+   "evidence": "CANONICAL",
+   "canonStatus": "CANONICAL",
+   "source": {
+    "sheet": "piccolo.png",
+    "frame": "036.png",
+    "x": "332",
+    "y": "270"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "piccolo_base/037.png",
+   "canonicalId": "piccolo_base.unclassified.037",
+   "characterId": "piccolo",
+   "formId": "piccolo_base",
+   "assetType": "projectile",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "beam_ray",
+   "variant": "projectiles_beams",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
+   "source": {
+    "sheet": "piccolo.png",
+    "frame": "037.png",
+    "x": "348",
+    "y": "334"
+   },
+   "frameKind": "atomic",
+   "note": "bucket forense: projectiles_beams"
+  },
+  {
+   "sourceId": "piccolo_base/038.png",
+   "canonicalId": "piccolo_base.beam.charge_start.00",
+   "characterId": "piccolo",
+   "formId": "piccolo_base",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "beam",
+   "role": "charge_start",
+   "variant": "charge",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "beam_charge"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "piccolo.png",
+    "frame": "038.png",
+    "x": "6",
+    "y": "364"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "piccolo_base/039.png",
+   "canonicalId": "piccolo_base.unclassified.039",
+   "characterId": "piccolo",
+   "formId": "piccolo_base",
+   "assetType": "projectile",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "beam_ray",
+   "variant": "projectiles_beams",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
+   "source": {
+    "sheet": "piccolo.png",
+    "frame": "039.png",
+    "x": "40",
+    "y": "364"
+   },
+   "frameKind": "atomic",
+   "note": "bucket forense: projectiles_beams"
+  },
+  {
+   "sourceId": "piccolo_base/040.png",
+   "canonicalId": "piccolo_base.unclassified.040",
+   "characterId": "piccolo",
+   "formId": "piccolo_base",
+   "assetType": "projectile",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "beam_ray",
+   "variant": "projectiles_beams",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
+   "source": {
+    "sheet": "piccolo.png",
+    "frame": "040.png",
+    "x": "165",
+    "y": "371"
+   },
+   "frameKind": "atomic",
+   "note": "bucket forense: projectiles_beams"
+  },
+  {
+   "sourceId": "piccolo_base/041.png",
+   "canonicalId": "piccolo_base.beam.charge_start.01",
+   "characterId": "piccolo",
+   "formId": "piccolo_base",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "beam",
+   "role": "charge_start",
+   "variant": "charge",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "beam_charge"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "piccolo.png",
+    "frame": "041.png",
+    "x": "273",
+    "y": "358"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "piccolo_base/042.png",
+   "canonicalId": "piccolo_base.beam.charge_start.02",
+   "characterId": "piccolo",
+   "formId": "piccolo_base",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "beam",
+   "role": "charge_start",
+   "variant": "charge",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "beam_charge"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "piccolo.png",
+    "frame": "042.png",
+    "x": "309",
+    "y": "359"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "piccolo_base/043.png",
+   "canonicalId": "piccolo_base.melee.ready.20",
+   "characterId": "piccolo",
+   "formId": "piccolo_base",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "melee",
+   "role": "ready",
+   "variant": "attack_forward",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "attack_fwd"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "piccolo.png",
+    "frame": "043.png",
+    "x": "8",
+    "y": "430"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "piccolo_base/044.png",
+   "canonicalId": "piccolo_base.melee.ready.21",
+   "characterId": "piccolo",
+   "formId": "piccolo_base",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "melee",
+   "role": "ready",
+   "variant": "attack_forward",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "attack_fwd"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "piccolo.png",
+    "frame": "044.png",
+    "x": "53",
+    "y": "429"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "piccolo_base/045.png",
+   "canonicalId": "piccolo_base.power.gather_power.00",
+   "characterId": "piccolo",
+   "formId": "piccolo_base",
+   "assetType": "composite",
+   "view": "ACTION_DUEL",
+   "family": "power",
+   "role": "gather_power",
+   "variant": "gather_power",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "gather_power",
+    "power_up"
+   ],
+   "evidence": "CANONICAL",
+   "canonStatus": "CANONICAL",
+   "source": {
+    "sheet": "piccolo.png",
+    "frame": "045.png",
+    "x": "116",
+    "y": "426"
+   },
+   "frameKind": "atomic",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "piccolo_base/046.png",
+   "canonicalId": "piccolo_base.beam.charge_start.03",
+   "characterId": "piccolo",
+   "formId": "piccolo_base",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "beam",
+   "role": "charge_start",
+   "variant": "charge",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "beam_charge"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "piccolo.png",
+    "frame": "046.png",
+    "x": "159",
+    "y": "431"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "piccolo_base/047.png",
+   "canonicalId": "piccolo_base.beam.charge_start.04",
+   "characterId": "piccolo",
+   "formId": "piccolo_base",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "beam",
+   "role": "charge_start",
+   "variant": "charge",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "beam_charge"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "piccolo.png",
+    "frame": "047.png",
+    "x": "245",
+    "y": "423"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "piccolo_base/048.png",
+   "canonicalId": "piccolo_base.unclassified.048",
+   "characterId": "piccolo",
+   "formId": "piccolo_base",
+   "assetType": "projectile",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "beam_ray",
+   "variant": "projectiles_beams",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
+   "source": {
+    "sheet": "piccolo.png",
+    "frame": "048.png",
+    "x": "280",
+    "y": "425"
+   },
+   "frameKind": "atomic",
+   "note": "bucket forense: projectiles_beams"
+  },
+  {
+   "sourceId": "piccolo_base/049.png",
+   "canonicalId": "piccolo_base.unclassified.049",
+   "characterId": "piccolo",
+   "formId": "piccolo_base",
+   "assetType": "composite",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "aura_or_burst",
+   "variant": "character_plus_aura_or_burst",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
+   "source": {
+    "sheet": "piccolo.png",
+    "frame": "049.png",
+    "x": "403",
+    "y": "425"
+   },
+   "frameKind": "atomic",
+   "note": "bucket forense: character_plus_aura_or_burst"
+  },
+  {
+   "sourceId": "piccolo_base/050.png",
+   "canonicalId": "piccolo_base.effect.aura.03",
+   "characterId": "piccolo",
+   "formId": "piccolo_base",
+   "assetType": "effect",
+   "view": "FIELD",
+   "family": "effect",
+   "role": "aura",
+   "variant": "aura_support",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "aura_support"
+   ],
+   "evidence": "CANONICAL",
+   "canonStatus": "CANONICAL",
+   "source": {
+    "sheet": "",
+    "frame": "050.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "piccolo_base/051.png",
+   "canonicalId": "piccolo_base.effect.aura.04",
+   "characterId": "piccolo",
+   "formId": "piccolo_base",
+   "assetType": "effect",
+   "view": "FIELD",
+   "family": "effect",
+   "role": "aura",
+   "variant": "aura_support",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "aura_support"
+   ],
+   "evidence": "CANONICAL",
+   "canonStatus": "CANONICAL",
+   "source": {
+    "sheet": "",
+    "frame": "051.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "piccolo_base/052.png",
+   "canonicalId": "piccolo_base.effect.aura.05",
+   "characterId": "piccolo",
+   "formId": "piccolo_base",
+   "assetType": "effect",
+   "view": "FIELD",
+   "family": "effect",
+   "role": "aura",
+   "variant": "aura_support",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "aura_support"
+   ],
+   "evidence": "CANONICAL",
+   "canonStatus": "CANONICAL",
+   "source": {
+    "sheet": "",
+    "frame": "052.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "piccolo_base/000_attack_fwd.png",
+   "canonicalId": "piccolo_base.melee.ready.22",
+   "characterId": "piccolo",
+   "formId": "piccolo_base",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "melee",
+   "role": "ready",
+   "variant": "attack_forward",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "attack_fwd",
+    "punch_right",
+    "knockback_up"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "",
+    "frame": "000_attack_fwd.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "fixed_only",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "piccolo_base/001_attack_fwd.png",
+   "canonicalId": "piccolo_base.melee.ready.24",
+   "characterId": "piccolo",
+   "formId": "piccolo_base",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "melee",
+   "role": "ready",
+   "variant": "attack_forward",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "attack_fwd",
+    "punch_left"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "",
+    "frame": "001_attack_fwd.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "fixed_only",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "piccolo_base/002_attack_fwd.png",
+   "canonicalId": "piccolo_base.melee.ready.26",
+   "characterId": "piccolo",
+   "formId": "piccolo_base",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "melee",
+   "role": "ready",
+   "variant": "attack_forward",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "attack_fwd"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "",
+    "frame": "002_attack_fwd.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "fixed_only"
+  },
+  {
+   "sourceId": "piccolo_base/003_attack_ud.png",
+   "canonicalId": "piccolo_base.melee.ready.27",
+   "characterId": "piccolo",
+   "formId": "piccolo_base",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "melee",
+   "role": "ready",
+   "variant": "attack_vertical",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "attack_ud"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "",
+    "frame": "003_attack_ud.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "fixed_only"
+  },
+  {
+   "sourceId": "piccolo_base/004_beam_charge.png",
+   "canonicalId": "piccolo_base.beam.charge_start.05",
+   "characterId": "piccolo",
+   "formId": "piccolo_base",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "beam",
+   "role": "charge_start",
+   "variant": "charge",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "beam_charge",
+    "beam_charge"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "",
+    "frame": "004_beam_charge.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "fixed_only",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "piccolo_base/005_beam_charge.png",
+   "canonicalId": "piccolo_base.beam.charge_start.07",
+   "characterId": "piccolo",
+   "formId": "piccolo_base",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "beam",
+   "role": "charge_start",
+   "variant": "charge",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "beam_charge",
+    "beam_charge"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "",
+    "frame": "005_beam_charge.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "fixed_only",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "piccolo_base/006_beam_charge.png",
+   "canonicalId": "piccolo_base.beam.charge_start.09",
+   "characterId": "piccolo",
+   "formId": "piccolo_base",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "beam",
+   "role": "charge_start",
+   "variant": "charge",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "beam_charge"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "",
+    "frame": "006_beam_charge.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "fixed_only"
+  },
+  {
+   "sourceId": "piccolo_base/007_guard.png",
+   "canonicalId": "piccolo_base.unclassified.007_guard",
+   "characterId": "piccolo",
+   "formId": "piccolo_base",
+   "assetType": "unclassified",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "unclassified",
+   "variant": "",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "UNKNOWN",
+   "canonStatus": "UNCLASSIFIED",
+   "source": {
+    "sheet": "",
+    "frame": "007_guard.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "fixed_only",
+   "note": "sin evidencia runtime ni bucket"
+  },
+  {
+   "sourceId": "piccolo_base/008_hurt.png",
+   "canonicalId": "piccolo_base.unclassified.008_hurt",
+   "characterId": "piccolo",
+   "formId": "piccolo_base",
+   "assetType": "unclassified",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "unclassified",
+   "variant": "",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "UNKNOWN",
+   "canonStatus": "UNCLASSIFIED",
+   "source": {
+    "sheet": "",
+    "frame": "008_hurt.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "fixed_only",
+   "note": "sin evidencia runtime ni bucket"
+  },
+  {
+   "sourceId": "piccolo_base/009_hurt.png",
+   "canonicalId": "piccolo_base.unclassified.009_hurt",
+   "characterId": "piccolo",
+   "formId": "piccolo_base",
+   "assetType": "unclassified",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "unclassified",
+   "variant": "",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "UNKNOWN",
+   "canonStatus": "UNCLASSIFIED",
+   "source": {
+    "sheet": "",
+    "frame": "009_hurt.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "fixed_only",
+   "note": "sin evidencia runtime ni bucket"
+  },
+  {
+   "sourceId": "piccolo_base/010_hurt.png",
+   "canonicalId": "piccolo_base.unclassified.010_hurt",
+   "characterId": "piccolo",
+   "formId": "piccolo_base",
+   "assetType": "unclassified",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "unclassified",
+   "variant": "",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "UNKNOWN",
+   "canonStatus": "UNCLASSIFIED",
+   "source": {
+    "sheet": "",
+    "frame": "010_hurt.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "fixed_only",
+   "note": "sin evidencia runtime ni bucket"
+  },
+  {
+   "sourceId": "piccolo_base/011_hurt.png",
+   "canonicalId": "piccolo_base.unclassified.011_hurt",
+   "characterId": "piccolo",
+   "formId": "piccolo_base",
+   "assetType": "unclassified",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "unclassified",
+   "variant": "",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "UNKNOWN",
+   "canonStatus": "UNCLASSIFIED",
+   "source": {
+    "sheet": "",
+    "frame": "011_hurt.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "fixed_only",
+   "note": "sin evidencia runtime ni bucket"
+  },
+  {
+   "sourceId": "piccolo_base/012_hurt.png",
+   "canonicalId": "piccolo_base.unclassified.012_hurt",
+   "characterId": "piccolo",
+   "formId": "piccolo_base",
+   "assetType": "unclassified",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "unclassified",
+   "variant": "",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "UNKNOWN",
+   "canonStatus": "UNCLASSIFIED",
+   "source": {
+    "sheet": "",
+    "frame": "012_hurt.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "fixed_only",
+   "note": "sin evidencia runtime ni bucket"
+  }
+ ]
+}

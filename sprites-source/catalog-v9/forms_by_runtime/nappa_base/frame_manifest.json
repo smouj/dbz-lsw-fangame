@@ -1,0 +1,1171 @@
+{
+ "form": "nappa_base",
+ "frameCount": 47,
+ "frames": [
+  {
+   "sourceId": "nappa_base/001.png",
+   "canonicalId": "nappa_base.idle.idle.00",
+   "characterId": "nappa",
+   "formId": "nappa_base",
+   "assetType": "actor_frame",
+   "view": "FIELD",
+   "family": "melee",
+   "role": "strike",
+   "variant": "punch_right",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "idle",
+    "guard",
+    "punch_right",
+    "punch_left",
+    "beam_guard"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "nappa.png",
+    "frame": "001.png",
+    "x": "4",
+    "y": "17"
+   },
+   "frameKind": "atomic",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "nappa_base/002.png",
+   "canonicalId": "nappa_base.defense.start.02",
+   "characterId": "nappa",
+   "formId": "nappa_base",
+   "assetType": "actor_frame",
+   "view": "FIELD",
+   "family": "defense",
+   "role": "start",
+   "variant": "guard",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "guard",
+    "beam_guard"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "nappa.png",
+    "frame": "002.png",
+    "x": "38",
+    "y": "17"
+   },
+   "frameKind": "atomic",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "nappa_base/003.png",
+   "canonicalId": "nappa_base.defense.start.04",
+   "characterId": "nappa",
+   "formId": "nappa_base",
+   "assetType": "actor_frame",
+   "view": "FIELD",
+   "family": "defense",
+   "role": "start",
+   "variant": "guard",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "guard",
+    "beam_guard"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "nappa.png",
+    "frame": "003.png",
+    "x": "74",
+    "y": "19"
+   },
+   "frameKind": "atomic",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "nappa_base/004.png",
+   "canonicalId": "nappa_base.beam.release.00",
+   "characterId": "nappa",
+   "formId": "nappa_base",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "beam",
+   "role": "release",
+   "variant": "fire",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "beam_fire"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "nappa.png",
+    "frame": "004.png",
+    "x": "115",
+    "y": "17"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "nappa_base/005.png",
+   "canonicalId": "nappa_base.defense.start.06",
+   "characterId": "nappa",
+   "formId": "nappa_base",
+   "assetType": "actor_frame",
+   "view": "FIELD",
+   "family": "defense",
+   "role": "start",
+   "variant": "evade",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "evade"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "nappa.png",
+    "frame": "005.png",
+    "x": "4",
+    "y": "67"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "nappa_base/006.png",
+   "canonicalId": "nappa_base.defense.start.07",
+   "characterId": "nappa",
+   "formId": "nappa_base",
+   "assetType": "actor_frame",
+   "view": "FIELD",
+   "family": "defense",
+   "role": "start",
+   "variant": "evade",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "evade"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "nappa.png",
+    "frame": "006.png",
+    "x": "53",
+    "y": "63"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "nappa_base/007.png",
+   "canonicalId": "nappa_base.movement.start.00",
+   "characterId": "nappa",
+   "formId": "nappa_base",
+   "assetType": "actor_frame",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "start",
+   "variant": "move_front",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "move_front",
+    "move_back"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "nappa.png",
+    "frame": "007.png",
+    "x": "85",
+    "y": "69"
+   },
+   "frameKind": "atomic",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "nappa_base/008.png",
+   "canonicalId": "nappa_base.movement.start.02",
+   "characterId": "nappa",
+   "formId": "nappa_base",
+   "assetType": "actor_frame",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "start",
+   "variant": "move_front",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "move_front",
+    "move_back"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "nappa.png",
+    "frame": "008.png",
+    "x": "123",
+    "y": "72"
+   },
+   "frameKind": "atomic",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "nappa_base/009.png",
+   "canonicalId": "nappa_base.reaction.hurt_light.00",
+   "characterId": "nappa",
+   "formId": "nappa_base",
+   "assetType": "actor_frame",
+   "view": "FIELD",
+   "family": "reaction",
+   "role": "hurt_light",
+   "variant": "hurt",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "hurt"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "nappa.png",
+    "frame": "009.png",
+    "x": "7",
+    "y": "122"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "nappa_base/010.png",
+   "canonicalId": "nappa_base.reaction.hurt_light.01",
+   "characterId": "nappa",
+   "formId": "nappa_base",
+   "assetType": "actor_frame",
+   "view": "FIELD",
+   "family": "reaction",
+   "role": "hurt_light",
+   "variant": "hurt",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "hurt"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "nappa.png",
+    "frame": "010.png",
+    "x": "41",
+    "y": "122"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "nappa_base/011.png",
+   "canonicalId": "nappa_base.reaction.hurt_light.02",
+   "characterId": "nappa",
+   "formId": "nappa_base",
+   "assetType": "actor_frame",
+   "view": "FIELD",
+   "family": "reaction",
+   "role": "hurt_light",
+   "variant": "hurt",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "hurt"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "nappa.png",
+    "frame": "011.png",
+    "x": "75",
+    "y": "129"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "nappa_base/012.png",
+   "canonicalId": "nappa_base.reaction.hurt_light.03",
+   "characterId": "nappa",
+   "formId": "nappa_base",
+   "assetType": "actor_frame",
+   "view": "FIELD",
+   "family": "reaction",
+   "role": "hurt_light",
+   "variant": "hurt",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "hurt"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "nappa.png",
+    "frame": "012.png",
+    "x": "115",
+    "y": "115"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "nappa_base/013.png",
+   "canonicalId": "nappa_base.reaction.hurt_light.04",
+   "characterId": "nappa",
+   "formId": "nappa_base",
+   "assetType": "actor_frame",
+   "view": "FIELD",
+   "family": "reaction",
+   "role": "hurt_light",
+   "variant": "hurt",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "hurt"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "nappa.png",
+    "frame": "013.png",
+    "x": "151",
+    "y": "120"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "nappa_base/014.png",
+   "canonicalId": "nappa_base.melee.ready.02",
+   "characterId": "nappa",
+   "formId": "nappa_base",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "melee",
+   "role": "ready",
+   "variant": "attack_forward",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "attack_fwd",
+    "punch_left"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "nappa.png",
+    "frame": "014.png",
+    "x": "186",
+    "y": "121"
+   },
+   "frameKind": "atomic",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "nappa_base/015.png",
+   "canonicalId": "nappa_base.melee.ready.04",
+   "characterId": "nappa",
+   "formId": "nappa_base",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "melee",
+   "role": "ready",
+   "variant": "attack_forward",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "attack_fwd",
+    "punch_right",
+    "knockback_up"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "nappa.png",
+    "frame": "015.png",
+    "x": "16",
+    "y": "176"
+   },
+   "frameKind": "atomic",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "nappa_base/016.png",
+   "canonicalId": "nappa_base.melee.ready.06",
+   "characterId": "nappa",
+   "formId": "nappa_base",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "melee",
+   "role": "ready",
+   "variant": "attack_forward",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "attack_fwd",
+    "punch_left"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "nappa.png",
+    "frame": "016.png",
+    "x": "56",
+    "y": "172"
+   },
+   "frameKind": "atomic",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "nappa_base/017.png",
+   "canonicalId": "nappa_base.melee.ready.08",
+   "characterId": "nappa",
+   "formId": "nappa_base",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "melee",
+   "role": "ready",
+   "variant": "attack_forward",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "attack_fwd",
+    "punch_right",
+    "knockback_back"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "nappa.png",
+    "frame": "017.png",
+    "x": "101",
+    "y": "176"
+   },
+   "frameKind": "atomic",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "nappa_base/018.png",
+   "canonicalId": "nappa_base.melee.ready.10",
+   "characterId": "nappa",
+   "formId": "nappa_base",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "melee",
+   "role": "ready",
+   "variant": "attack_vertical",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "attack_ud"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "nappa.png",
+    "frame": "018.png",
+    "x": "151",
+    "y": "171"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "nappa_base/019.png",
+   "canonicalId": "nappa_base.melee.ready.11",
+   "characterId": "nappa",
+   "formId": "nappa_base",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "melee",
+   "role": "ready",
+   "variant": "attack_vertical",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "attack_ud"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "nappa.png",
+    "frame": "019.png",
+    "x": "187",
+    "y": "174"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "nappa_base/020.png",
+   "canonicalId": "nappa_base.melee.ready.12",
+   "characterId": "nappa",
+   "formId": "nappa_base",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "melee",
+   "role": "ready",
+   "variant": "attack_vertical",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "attack_ud"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "nappa.png",
+    "frame": "020.png",
+    "x": "222",
+    "y": "173"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "nappa_base/021.png",
+   "canonicalId": "nappa_base.melee.ready.13",
+   "characterId": "nappa",
+   "formId": "nappa_base",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "melee",
+   "role": "ready",
+   "variant": "attack_vertical",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "attack_ud",
+    "knockback_down"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "nappa.png",
+    "frame": "021.png",
+    "x": "251",
+    "y": "178"
+   },
+   "frameKind": "atomic",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "nappa_base/022.png",
+   "canonicalId": "nappa_base.melee.ready.14",
+   "characterId": "nappa",
+   "formId": "nappa_base",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "melee",
+   "role": "ready",
+   "variant": "attack_forward",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "attack_fwd",
+    "punch_right",
+    "knockback_up"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "nappa.png",
+    "frame": "022.png",
+    "x": "15",
+    "y": "228"
+   },
+   "frameKind": "atomic",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "nappa_base/023.png",
+   "canonicalId": "nappa_base.melee.ready.16",
+   "characterId": "nappa",
+   "formId": "nappa_base",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "melee",
+   "role": "ready",
+   "variant": "attack_forward",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "attack_fwd",
+    "punch_right"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "nappa.png",
+    "frame": "023.png",
+    "x": "52",
+    "y": "228"
+   },
+   "frameKind": "atomic",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "nappa_base/024.png",
+   "canonicalId": "nappa_base.melee.ready.18",
+   "characterId": "nappa",
+   "formId": "nappa_base",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "melee",
+   "role": "ready",
+   "variant": "attack_forward",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "attack_fwd",
+    "punch_left",
+    "kick_right"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "nappa.png",
+    "frame": "024.png",
+    "x": "92",
+    "y": "229"
+   },
+   "frameKind": "atomic",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "nappa_base/025.png",
+   "canonicalId": "nappa_base.melee.ready.21",
+   "characterId": "nappa",
+   "formId": "nappa_base",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "melee",
+   "role": "ready",
+   "variant": "attack_forward",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "attack_fwd",
+    "punch_left",
+    "kick_right"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "nappa.png",
+    "frame": "025.png",
+    "x": "134",
+    "y": "229"
+   },
+   "frameKind": "atomic",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "nappa_base/026.png",
+   "canonicalId": "nappa_base.unclassified.026",
+   "characterId": "nappa",
+   "formId": "nappa_base",
+   "assetType": "unclassified",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "unclassified",
+   "variant": "actor_downed_or_special_pose",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "UNKNOWN",
+   "canonStatus": "UNCLASSIFIED",
+   "source": {
+    "sheet": "nappa.png",
+    "frame": "026.png",
+    "x": "193",
+    "y": "231"
+   },
+   "frameKind": "atomic",
+   "note": "bucket forense: actor_downed_or_special_pose"
+  },
+  {
+   "sourceId": "nappa_base/027.png",
+   "canonicalId": "nappa_base.unclassified.027",
+   "characterId": "nappa",
+   "formId": "nappa_base",
+   "assetType": "unclassified",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "unclassified",
+   "variant": "movement_or_attack_pose",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "UNKNOWN",
+   "canonStatus": "UNCLASSIFIED",
+   "source": {
+    "sheet": "nappa.png",
+    "frame": "027.png",
+    "x": "13",
+    "y": "288"
+   },
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
+  },
+  {
+   "sourceId": "nappa_base/028.png",
+   "canonicalId": "nappa_base.unclassified.028",
+   "characterId": "nappa",
+   "formId": "nappa_base",
+   "assetType": "projectile",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "beam_ray",
+   "variant": "projectiles_beams",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
+   "source": {
+    "sheet": "nappa.png",
+    "frame": "028.png",
+    "x": "78",
+    "y": "288"
+   },
+   "frameKind": "atomic",
+   "note": "bucket forense: projectiles_beams"
+  },
+  {
+   "sourceId": "nappa_base/029.png",
+   "canonicalId": "nappa_base.unclassified.029",
+   "characterId": "nappa",
+   "formId": "nappa_base",
+   "assetType": "effect",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "orbs_rings_bursts",
+   "variant": "orbs_rings_bursts",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
+   "source": {
+    "sheet": "nappa.png",
+    "frame": "029.png",
+    "x": "204",
+    "y": "268"
+   },
+   "frameKind": "atomic",
+   "note": "bucket forense: orbs_rings_bursts"
+  },
+  {
+   "sourceId": "nappa_base/030.png",
+   "canonicalId": "nappa_base.beam.charge_start.01",
+   "characterId": "nappa",
+   "formId": "nappa_base",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "beam",
+   "role": "charge_start",
+   "variant": "charge",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "beam_charge",
+    "gather_power",
+    "power_up"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "nappa.png",
+    "frame": "030.png",
+    "x": "276",
+    "y": "268"
+   },
+   "frameKind": "atomic",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "nappa_base/031.png",
+   "canonicalId": "nappa_base.unclassified.031",
+   "characterId": "nappa",
+   "formId": "nappa_base",
+   "assetType": "effect",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "orbs_rings_bursts",
+   "variant": "orbs_rings_bursts",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
+   "source": {
+    "sheet": "nappa.png",
+    "frame": "031.png",
+    "x": "346",
+    "y": "268"
+   },
+   "frameKind": "atomic",
+   "note": "bucket forense: orbs_rings_bursts"
+  },
+  {
+   "sourceId": "nappa_base/032.png",
+   "canonicalId": "nappa_base.effect.aura.00",
+   "characterId": "nappa",
+   "formId": "nappa_base",
+   "assetType": "effect",
+   "view": "FIELD",
+   "family": "effect",
+   "role": "aura",
+   "variant": "aura_power",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "aura_power"
+   ],
+   "evidence": "CANONICAL",
+   "canonStatus": "CANONICAL",
+   "source": {
+    "sheet": "nappa.png",
+    "frame": "032.png",
+    "x": "51",
+    "y": "296"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "nappa_base/033.png",
+   "canonicalId": "nappa_base.effect.aura.01",
+   "characterId": "nappa",
+   "formId": "nappa_base",
+   "assetType": "effect",
+   "view": "FIELD",
+   "family": "effect",
+   "role": "aura",
+   "variant": "aura_power",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "aura_power"
+   ],
+   "evidence": "CANONICAL",
+   "canonStatus": "CANONICAL",
+   "source": {
+    "sheet": "nappa.png",
+    "frame": "033.png",
+    "x": "7",
+    "y": "365"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "nappa_base/034.png",
+   "canonicalId": "nappa_base.effect.aura.02",
+   "characterId": "nappa",
+   "formId": "nappa_base",
+   "assetType": "effect",
+   "view": "FIELD",
+   "family": "effect",
+   "role": "aura",
+   "variant": "aura_power",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "aura_power"
+   ],
+   "evidence": "CANONICAL",
+   "canonStatus": "CANONICAL",
+   "source": {
+    "sheet": "nappa.png",
+    "frame": "034.png",
+    "x": "47",
+    "y": "366"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "nappa_base/035.png",
+   "canonicalId": "nappa_base.unclassified.035",
+   "characterId": "nappa",
+   "formId": "nappa_base",
+   "assetType": "composite",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "aura_or_burst",
+   "variant": "character_plus_aura_or_burst",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
+   "source": {
+    "sheet": "nappa.png",
+    "frame": "035.png",
+    "x": "83",
+    "y": "358"
+   },
+   "frameKind": "atomic",
+   "note": "bucket forense: character_plus_aura_or_burst"
+  },
+  {
+   "sourceId": "nappa_base/036.png",
+   "canonicalId": "nappa_base.beam.charge_start.02",
+   "characterId": "nappa",
+   "formId": "nappa_base",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "beam",
+   "role": "charge_start",
+   "variant": "charge",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "beam_charge",
+    "gather_power",
+    "power_up"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "nappa.png",
+    "frame": "036.png",
+    "x": "146",
+    "y": "353"
+   },
+   "frameKind": "atomic",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "nappa_base/037.png",
+   "canonicalId": "nappa_base.beam.charge_start.03",
+   "characterId": "nappa",
+   "formId": "nappa_base",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "beam",
+   "role": "charge_start",
+   "variant": "charge",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "beam_charge",
+    "gather_power",
+    "power_up"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "nappa.png",
+    "frame": "037.png",
+    "x": "267",
+    "y": "352"
+   },
+   "frameKind": "atomic",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "nappa_base/038.png",
+   "canonicalId": "nappa_base.unclassified.038",
+   "characterId": "nappa",
+   "formId": "nappa_base",
+   "assetType": "unclassified",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "unclassified",
+   "variant": "",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "UNKNOWN",
+   "canonStatus": "UNCLASSIFIED",
+   "source": {
+    "sheet": "",
+    "frame": "038.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "atomic",
+   "note": "sin evidencia runtime ni bucket"
+  },
+  {
+   "sourceId": "nappa_base/039.png",
+   "canonicalId": "nappa_base.unclassified.039",
+   "characterId": "nappa",
+   "formId": "nappa_base",
+   "assetType": "unclassified",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "unclassified",
+   "variant": "",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "UNKNOWN",
+   "canonStatus": "UNCLASSIFIED",
+   "source": {
+    "sheet": "",
+    "frame": "039.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "atomic",
+   "note": "sin evidencia runtime ni bucket"
+  },
+  {
+   "sourceId": "nappa_base/040.png",
+   "canonicalId": "nappa_base.unclassified.040",
+   "characterId": "nappa",
+   "formId": "nappa_base",
+   "assetType": "unclassified",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "unclassified",
+   "variant": "",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "UNKNOWN",
+   "canonStatus": "UNCLASSIFIED",
+   "source": {
+    "sheet": "",
+    "frame": "040.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "atomic",
+   "note": "sin evidencia runtime ni bucket"
+  },
+  {
+   "sourceId": "nappa_base/041.png",
+   "canonicalId": "nappa_base.effect.aura.03",
+   "characterId": "nappa",
+   "formId": "nappa_base",
+   "assetType": "effect",
+   "view": "FIELD",
+   "family": "effect",
+   "role": "aura",
+   "variant": "aura_support",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "aura_support"
+   ],
+   "evidence": "CANONICAL",
+   "canonStatus": "CANONICAL",
+   "source": {
+    "sheet": "",
+    "frame": "041.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "nappa_base/042.png",
+   "canonicalId": "nappa_base.effect.aura.04",
+   "characterId": "nappa",
+   "formId": "nappa_base",
+   "assetType": "effect",
+   "view": "FIELD",
+   "family": "effect",
+   "role": "aura",
+   "variant": "aura_support",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "aura_support"
+   ],
+   "evidence": "CANONICAL",
+   "canonStatus": "CANONICAL",
+   "source": {
+    "sheet": "",
+    "frame": "042.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "nappa_base/043.png",
+   "canonicalId": "nappa_base.effect.aura.05",
+   "characterId": "nappa",
+   "formId": "nappa_base",
+   "assetType": "effect",
+   "view": "FIELD",
+   "family": "effect",
+   "role": "aura",
+   "variant": "aura_support",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "aura_support"
+   ],
+   "evidence": "CANONICAL",
+   "canonStatus": "CANONICAL",
+   "source": {
+    "sheet": "",
+    "frame": "043.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "nappa_base/000_beam_charge.png",
+   "canonicalId": "nappa_base.beam.charge_start.04",
+   "characterId": "nappa",
+   "formId": "nappa_base",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "beam",
+   "role": "charge_start",
+   "variant": "charge",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "beam_charge",
+    "gather_power",
+    "power_up"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "",
+    "frame": "000_beam_charge.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "fixed_only",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "nappa_base/001_beam_fire.png",
+   "canonicalId": "nappa_base.beam.release.05",
+   "characterId": "nappa",
+   "formId": "nappa_base",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "beam",
+   "role": "release",
+   "variant": "fire",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "beam_fire"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "",
+    "frame": "001_beam_fire.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "fixed_only"
+  },
+  {
+   "sourceId": "nappa_base/002_hurt.png",
+   "canonicalId": "nappa_base.unclassified.002_hurt",
+   "characterId": "nappa",
+   "formId": "nappa_base",
+   "assetType": "unclassified",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "unclassified",
+   "variant": "",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "UNKNOWN",
+   "canonStatus": "UNCLASSIFIED",
+   "source": {
+    "sheet": "",
+    "frame": "002_hurt.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "fixed_only",
+   "note": "sin evidencia runtime ni bucket"
+  },
+  {
+   "sourceId": "nappa_base/003_hurt.png",
+   "canonicalId": "nappa_base.unclassified.003_hurt",
+   "characterId": "nappa",
+   "formId": "nappa_base",
+   "assetType": "unclassified",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "unclassified",
+   "variant": "",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "UNKNOWN",
+   "canonStatus": "UNCLASSIFIED",
+   "source": {
+    "sheet": "",
+    "frame": "003_hurt.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "fixed_only",
+   "note": "sin evidencia runtime ni bucket"
+  }
+ ]
+}

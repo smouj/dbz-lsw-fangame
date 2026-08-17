@@ -311,6 +311,33 @@ print(f'{entries} {forms} {bad}')
   check('v9:aura_support_palette', false, String(e));
 }
 
+// 10b: CANON SEMÁNTICO (registro derivado de evidencia runtime)
+// ─────────────────────────────────────────────────────────────
+try {
+  const reg = JSON.parse(fs.readFileSync(path.join(V9, 'catalog', 'frame_semantic_registry.json'), 'utf8')) as {
+    canonicalId: string; canonStatus: string; family: string; variant: string; sourceId: string; note?: string;
+  }[];
+  const AMB = ['movement_or_attack_pose', 'idle_or_stance', 'downed_or_hurt', 'projectiles_beams',
+               'orbs_rings_bursts', 'character_plus_effect', 'nonbody_misc', 'actor_downed_or_special_pose', 'multi_evidence_'];
+  const canonical = reg.filter(e => e.canonStatus === 'CANONICAL' || e.canonStatus === 'RUNTIME_VERIFIED');
+  const ambAsCanon = canonical.filter(e => {
+    const s = `${e.variant ?? ''} ${e.note ?? ''}`;
+    return AMB.some(a => s.includes(a));
+  }).length;
+  const ids = reg.map(e => e.canonicalId);
+  const dup = ids.length - new Set(ids).size;
+  const statuses = new Set(reg.map(e => e.canonStatus));
+  const validStatus = [...statuses].every(s => ['CANONICAL', 'RUNTIME_VERIFIED', 'ASSET_VERIFIED', 'INFERRED', 'UNCLASSIFIED'].includes(s));
+  check('v9:semantic_registry_exists', reg.length > 2000, `${reg.length} frames físicos con semántica`);
+  check('v9:semantic_no_ambiguous_canonical', ambAsCanon === 0, `${ambAsCanon} con etiquetas genéricas como canónico`);
+  check('v9:semantic_unique_ids', dup === 0, `${dup} canonicalId duplicados`);
+  check('v9:semantic_valid_status', validStatus, [...statuses].join(','));
+  check('v9:semantic_unclassified_conscious', reg.some(e => e.canonStatus === 'UNCLASSIFIED'),
+    'frames sin evidencia marcados UNCLASSIFIED (nunca falsos canónicos)');
+} catch (e) {
+  check('v9:semantic_registry', false, String(e));
+}
+
 // 11: SHA spot-check
 try {
   const sums = fs.readFileSync(path.join(V9, 'SHA256SUMS.txt'), 'utf8');

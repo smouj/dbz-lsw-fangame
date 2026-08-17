@@ -1,11 +1,20 @@
 // ═══════════════════════════════════════════════════════════
+// ⚠ FUENTE ÚNICA DE VERDAD: sprites-source/catalog-v9 →
+// src/data/generated/spriteCanon.generated.ts (npm run canon:sprites).
+// Este archivo queda como TAXONOMÍA LEGIBLE de poses (metadata de Dev
+// Studio para Sheets); la semántica POR FRAME vive en SPRITE_CANON.
+// ═══════════════════════════════════════════════════════════
 
 import { COMBAT_POSE_ORDER } from '../battle/spriteConfig';
+import { SPRITE_CANON } from '../data/generated/spriteCanon.generated';
 // DBZ LSW — Semántica de frames de combate (para el panel Sheets)
 // Asigna a cada pose del manifest su significado canónico (SPRITE_TAXONOMY):
 // categoría (Acción/Estado/Frame/FX), significado, y qué acciones del juego
 // la consumen. Es metadata de DEV STUDIO — el runtime NO depende de esto.
 // ═══════════════════════════════════════════════════════════
+
+/** Frames del canon semántico (generado) para el panel Sheets. */
+export { SPRITE_CANON };
 
 export interface PoseSemantics {
   pose: string;

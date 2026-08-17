@@ -171,6 +171,7 @@ export function resolvePoseFrameSequence(
     }
     case 'gather_power':
       // La pose gather_power del manifest = personaje con aura (verificado
+// (canon semántico por frame: src/data/generated/spriteCanon.generated.ts — family power/gather_power)
       // 2026-08-17: idéntica a power_up en todas las formas) — es la
       // preparación común de energía del GBC, NO la carga del rayo.
       // Fallback: beam_charge -> guard.

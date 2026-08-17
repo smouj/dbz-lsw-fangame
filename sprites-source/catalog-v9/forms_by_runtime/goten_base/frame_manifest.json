@@ -1,0 +1,1170 @@
+{
+ "form": "goten_base",
+ "frameCount": 47,
+ "frames": [
+  {
+   "sourceId": "goten_base/001.png",
+   "canonicalId": "goten_base.idle.idle.00",
+   "characterId": "goten",
+   "formId": "goten_base",
+   "assetType": "actor_frame",
+   "view": "FIELD",
+   "family": "melee",
+   "role": "strike",
+   "variant": "punch_right",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "idle",
+    "guard",
+    "punch_right",
+    "punch_left",
+    "beam_guard"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "goten.png",
+    "frame": "001.png",
+    "x": "16",
+    "y": "28"
+   },
+   "frameKind": "atomic",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "goten_base/002.png",
+   "canonicalId": "goten_base.defense.start.02",
+   "characterId": "goten",
+   "formId": "goten_base",
+   "assetType": "actor_frame",
+   "view": "FIELD",
+   "family": "defense",
+   "role": "start",
+   "variant": "guard",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "guard",
+    "beam_guard"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "goten.png",
+    "frame": "002.png",
+    "x": "54",
+    "y": "26"
+   },
+   "frameKind": "atomic",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "goten_base/003.png",
+   "canonicalId": "goten_base.defense.start.04",
+   "characterId": "goten",
+   "formId": "goten_base",
+   "assetType": "actor_frame",
+   "view": "FIELD",
+   "family": "defense",
+   "role": "start",
+   "variant": "guard",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "guard",
+    "beam_guard"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "goten.png",
+    "frame": "003.png",
+    "x": "88",
+    "y": "28"
+   },
+   "frameKind": "atomic",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "goten_base/004.png",
+   "canonicalId": "goten_base.unclassified.004",
+   "characterId": "goten",
+   "formId": "goten_base",
+   "assetType": "unclassified",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "unclassified",
+   "variant": "movement_or_attack_pose",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "UNKNOWN",
+   "canonStatus": "UNCLASSIFIED",
+   "source": {
+    "sheet": "goten.png",
+    "frame": "004.png",
+    "x": "132",
+    "y": "26"
+   },
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
+  },
+  {
+   "sourceId": "goten_base/005.png",
+   "canonicalId": "goten_base.defense.start.06",
+   "characterId": "goten",
+   "formId": "goten_base",
+   "assetType": "actor_frame",
+   "view": "FIELD",
+   "family": "defense",
+   "role": "start",
+   "variant": "evade",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "evade"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "goten.png",
+    "frame": "005.png",
+    "x": "12",
+    "y": "82"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "goten_base/006.png",
+   "canonicalId": "goten_base.defense.start.07",
+   "characterId": "goten",
+   "formId": "goten_base",
+   "assetType": "actor_frame",
+   "view": "FIELD",
+   "family": "defense",
+   "role": "start",
+   "variant": "evade",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "evade"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "goten.png",
+    "frame": "006.png",
+    "x": "62",
+    "y": "75"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "goten_base/007.png",
+   "canonicalId": "goten_base.movement.start.00",
+   "characterId": "goten",
+   "formId": "goten_base",
+   "assetType": "actor_frame",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "start",
+   "variant": "move_front",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "move_front",
+    "move_back"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "goten.png",
+    "frame": "007.png",
+    "x": "94",
+    "y": "74"
+   },
+   "frameKind": "atomic",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "goten_base/008.png",
+   "canonicalId": "goten_base.movement.start.02",
+   "characterId": "goten",
+   "formId": "goten_base",
+   "assetType": "actor_frame",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "start",
+   "variant": "move_front",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "move_front",
+    "move_back"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "goten.png",
+    "frame": "008.png",
+    "x": "130",
+    "y": "75"
+   },
+   "frameKind": "atomic",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "goten_base/009.png",
+   "canonicalId": "goten_base.reaction.hurt_light.00",
+   "characterId": "goten",
+   "formId": "goten_base",
+   "assetType": "actor_frame",
+   "view": "FIELD",
+   "family": "reaction",
+   "role": "hurt_light",
+   "variant": "hurt",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "hurt"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "goten.png",
+    "frame": "009.png",
+    "x": "12",
+    "y": "133"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "goten_base/010.png",
+   "canonicalId": "goten_base.reaction.hurt_light.01",
+   "characterId": "goten",
+   "formId": "goten_base",
+   "assetType": "actor_frame",
+   "view": "FIELD",
+   "family": "reaction",
+   "role": "hurt_light",
+   "variant": "hurt",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "hurt"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "goten.png",
+    "frame": "010.png",
+    "x": "49",
+    "y": "130"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "goten_base/011.png",
+   "canonicalId": "goten_base.reaction.hurt_light.02",
+   "characterId": "goten",
+   "formId": "goten_base",
+   "assetType": "actor_frame",
+   "view": "FIELD",
+   "family": "reaction",
+   "role": "hurt_light",
+   "variant": "hurt",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "hurt"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "goten.png",
+    "frame": "011.png",
+    "x": "82",
+    "y": "143"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "goten_base/012.png",
+   "canonicalId": "goten_base.reaction.hurt_light.03",
+   "characterId": "goten",
+   "formId": "goten_base",
+   "assetType": "actor_frame",
+   "view": "FIELD",
+   "family": "reaction",
+   "role": "hurt_light",
+   "variant": "hurt",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "hurt"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "goten.png",
+    "frame": "012.png",
+    "x": "124",
+    "y": "124"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "goten_base/013.png",
+   "canonicalId": "goten_base.reaction.hurt_light.04",
+   "characterId": "goten",
+   "formId": "goten_base",
+   "assetType": "actor_frame",
+   "view": "FIELD",
+   "family": "reaction",
+   "role": "hurt_light",
+   "variant": "hurt",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "hurt"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "goten.png",
+    "frame": "013.png",
+    "x": "163",
+    "y": "131"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "goten_base/014.png",
+   "canonicalId": "goten_base.melee.ready.02",
+   "characterId": "goten",
+   "formId": "goten_base",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "melee",
+   "role": "ready",
+   "variant": "attack_forward",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "attack_fwd",
+    "punch_left"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "goten.png",
+    "frame": "014.png",
+    "x": "199",
+    "y": "128"
+   },
+   "frameKind": "atomic",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "goten_base/015.png",
+   "canonicalId": "goten_base.melee.ready.04",
+   "characterId": "goten",
+   "formId": "goten_base",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "melee",
+   "role": "ready",
+   "variant": "attack_forward",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "attack_fwd",
+    "punch_right"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "goten.png",
+    "frame": "015.png",
+    "x": "17",
+    "y": "183"
+   },
+   "frameKind": "atomic",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "goten_base/016.png",
+   "canonicalId": "goten_base.melee.ready.06",
+   "characterId": "goten",
+   "formId": "goten_base",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "melee",
+   "role": "ready",
+   "variant": "attack_forward",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "attack_fwd",
+    "punch_right"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "goten.png",
+    "frame": "016.png",
+    "x": "55",
+    "y": "181"
+   },
+   "frameKind": "atomic",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "goten_base/017.png",
+   "canonicalId": "goten_base.melee.ready.08",
+   "characterId": "goten",
+   "formId": "goten_base",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "melee",
+   "role": "ready",
+   "variant": "attack_forward",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "attack_fwd",
+    "punch_left",
+    "knockback_up"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "goten.png",
+    "frame": "017.png",
+    "x": "90",
+    "y": "184"
+   },
+   "frameKind": "atomic",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "goten_base/018.png",
+   "canonicalId": "goten_base.melee.ready.10",
+   "characterId": "goten",
+   "formId": "goten_base",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "melee",
+   "role": "ready",
+   "variant": "attack_vertical",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "attack_ud"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "goten.png",
+    "frame": "018.png",
+    "x": "132",
+    "y": "182"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "goten_base/019.png",
+   "canonicalId": "goten_base.melee.ready.11",
+   "characterId": "goten",
+   "formId": "goten_base",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "melee",
+   "role": "ready",
+   "variant": "attack_vertical",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "attack_ud",
+    "knockback_back"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "goten.png",
+    "frame": "019.png",
+    "x": "162",
+    "y": "185"
+   },
+   "frameKind": "atomic",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "goten_base/020.png",
+   "canonicalId": "goten_base.melee.ready.12",
+   "characterId": "goten",
+   "formId": "goten_base",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "melee",
+   "role": "ready",
+   "variant": "attack_vertical",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "attack_ud"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "goten.png",
+    "frame": "020.png",
+    "x": "198",
+    "y": "178"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "goten_base/021.png",
+   "canonicalId": "goten_base.melee.ready.13",
+   "characterId": "goten",
+   "formId": "goten_base",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "melee",
+   "role": "ready",
+   "variant": "attack_vertical",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "attack_ud",
+    "knockback_down"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "goten.png",
+    "frame": "021.png",
+    "x": "232",
+    "y": "185"
+   },
+   "frameKind": "atomic",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "goten_base/022.png",
+   "canonicalId": "goten_base.melee.ready.14",
+   "characterId": "goten",
+   "formId": "goten_base",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "melee",
+   "role": "ready",
+   "variant": "attack_forward",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "attack_fwd",
+    "punch_right"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "goten.png",
+    "frame": "022.png",
+    "x": "8",
+    "y": "235"
+   },
+   "frameKind": "atomic",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "goten_base/023.png",
+   "canonicalId": "goten_base.melee.ready.16",
+   "characterId": "goten",
+   "formId": "goten_base",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "melee",
+   "role": "ready",
+   "variant": "attack_forward",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "attack_fwd",
+    "punch_right"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "goten.png",
+    "frame": "023.png",
+    "x": "47",
+    "y": "235"
+   },
+   "frameKind": "atomic",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "goten_base/024.png",
+   "canonicalId": "goten_base.melee.ready.18",
+   "characterId": "goten",
+   "formId": "goten_base",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "melee",
+   "role": "ready",
+   "variant": "attack_forward",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "attack_fwd",
+    "punch_left",
+    "kick_right"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "goten.png",
+    "frame": "024.png",
+    "x": "88",
+    "y": "236"
+   },
+   "frameKind": "atomic",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "goten_base/025.png",
+   "canonicalId": "goten_base.melee.ready.21",
+   "characterId": "goten",
+   "formId": "goten_base",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "melee",
+   "role": "ready",
+   "variant": "attack_forward",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "attack_fwd",
+    "punch_left",
+    "kick_right"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "goten.png",
+    "frame": "025.png",
+    "x": "128",
+    "y": "237"
+   },
+   "frameKind": "atomic",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "goten_base/026.png",
+   "canonicalId": "goten_base.melee.strike.24",
+   "characterId": "goten",
+   "formId": "goten_base",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "melee",
+   "role": "strike",
+   "variant": "kick_right",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "kick_right"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "goten.png",
+    "frame": "026.png",
+    "x": "194",
+    "y": "236"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "goten_base/027.png",
+   "canonicalId": "goten_base.unclassified.027",
+   "characterId": "goten",
+   "formId": "goten_base",
+   "assetType": "overworld",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "actor_pose",
+   "variant": "overworld_actor_or_pose",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
+   "source": {
+    "sheet": "goten.png",
+    "frame": "027.png",
+    "x": "284",
+    "y": "231"
+   },
+   "frameKind": "atomic",
+   "note": "bucket forense: overworld_actor_or_pose"
+  },
+  {
+   "sourceId": "goten_base/028.png",
+   "canonicalId": "goten_base.unclassified.028",
+   "characterId": "goten",
+   "formId": "goten_base",
+   "assetType": "overworld",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "actor_pose",
+   "variant": "overworld_actor_or_pose",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
+   "source": {
+    "sheet": "goten.png",
+    "frame": "028.png",
+    "x": "302",
+    "y": "231"
+   },
+   "frameKind": "atomic",
+   "note": "bucket forense: overworld_actor_or_pose"
+  },
+  {
+   "sourceId": "goten_base/029.png",
+   "canonicalId": "goten_base.unclassified.029",
+   "characterId": "goten",
+   "formId": "goten_base",
+   "assetType": "effect",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "aura_tile",
+   "variant": "battle_aura_tile",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
+   "source": {
+    "sheet": "goten.png",
+    "frame": "029.png",
+    "x": "324",
+    "y": "231"
+   },
+   "frameKind": "atomic",
+   "note": "bucket forense: battle_aura_tile"
+  },
+  {
+   "sourceId": "goten_base/030.png",
+   "canonicalId": "goten_base.unclassified.030",
+   "characterId": "goten",
+   "formId": "goten_base",
+   "assetType": "composite",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "aura_composite",
+   "variant": "battle_aura_actor_composite",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
+   "source": {
+    "sheet": "goten.png",
+    "frame": "030.png",
+    "x": "350",
+    "y": "231"
+   },
+   "frameKind": "atomic",
+   "note": "bucket forense: battle_aura_actor_composite"
+  },
+  {
+   "sourceId": "goten_base/031.png",
+   "canonicalId": "goten_base.beam.charge_start.00",
+   "characterId": "goten",
+   "formId": "goten_base",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "beam",
+   "role": "charge_start",
+   "variant": "charge",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "beam_charge",
+    "gather_power",
+    "power_up"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "goten.png",
+    "frame": "031.png",
+    "x": "11",
+    "y": "294"
+   },
+   "frameKind": "atomic",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "goten_base/032.png",
+   "canonicalId": "goten_base.unclassified.032",
+   "characterId": "goten",
+   "formId": "goten_base",
+   "assetType": "projectile",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "beam_ray",
+   "variant": "projectiles_beams",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
+   "source": {
+    "sheet": "goten.png",
+    "frame": "032.png",
+    "x": "81",
+    "y": "294"
+   },
+   "frameKind": "atomic",
+   "note": "bucket forense: projectiles_beams"
+  },
+  {
+   "sourceId": "goten_base/033.png",
+   "canonicalId": "goten_base.effect.aura.00",
+   "characterId": "goten",
+   "formId": "goten_base",
+   "assetType": "effect",
+   "view": "FIELD",
+   "family": "effect",
+   "role": "aura",
+   "variant": "aura_power",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "aura_power"
+   ],
+   "evidence": "CANONICAL",
+   "canonStatus": "CANONICAL",
+   "source": {
+    "sheet": "goten.png",
+    "frame": "033.png",
+    "x": "204",
+    "y": "278"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "goten_base/034.png",
+   "canonicalId": "goten_base.effect.aura.01",
+   "characterId": "goten",
+   "formId": "goten_base",
+   "assetType": "effect",
+   "view": "FIELD",
+   "family": "effect",
+   "role": "aura",
+   "variant": "aura_power",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "aura_power"
+   ],
+   "evidence": "CANONICAL",
+   "canonStatus": "CANONICAL",
+   "source": {
+    "sheet": "goten.png",
+    "frame": "034.png",
+    "x": "283",
+    "y": "279"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "goten_base/035.png",
+   "canonicalId": "goten_base.effect.aura.02",
+   "characterId": "goten",
+   "formId": "goten_base",
+   "assetType": "effect",
+   "view": "FIELD",
+   "family": "effect",
+   "role": "aura",
+   "variant": "aura_power",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "aura_power"
+   ],
+   "evidence": "CANONICAL",
+   "canonStatus": "CANONICAL",
+   "source": {
+    "sheet": "goten.png",
+    "frame": "035.png",
+    "x": "358",
+    "y": "279"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "goten_base/036.png",
+   "canonicalId": "goten_base.unclassified.036",
+   "characterId": "goten",
+   "formId": "goten_base",
+   "assetType": "projectile",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "orb",
+   "variant": "projectile_orb_small",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
+   "source": {
+    "sheet": "goten.png",
+    "frame": "036.png",
+    "x": "55",
+    "y": "308"
+   },
+   "frameKind": "atomic",
+   "note": "bucket forense: projectile_orb_small"
+  },
+  {
+   "sourceId": "goten_base/037.png",
+   "canonicalId": "goten_base.beam.charge_start.01",
+   "characterId": "goten",
+   "formId": "goten_base",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "beam",
+   "role": "charge_start",
+   "variant": "charge",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "beam_charge",
+    "gather_power",
+    "power_up"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "goten.png",
+    "frame": "037.png",
+    "x": "11",
+    "y": "373"
+   },
+   "frameKind": "atomic",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "goten_base/038.png",
+   "canonicalId": "goten_base.unclassified.038",
+   "characterId": "goten",
+   "formId": "goten_base",
+   "assetType": "unclassified",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "unclassified",
+   "variant": "movement_or_attack_pose",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "UNKNOWN",
+   "canonStatus": "UNCLASSIFIED",
+   "source": {
+    "sheet": "goten.png",
+    "frame": "038.png",
+    "x": "53",
+    "y": "372"
+   },
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
+  },
+  {
+   "sourceId": "goten_base/039.png",
+   "canonicalId": "goten_base.unclassified.039",
+   "characterId": "goten",
+   "formId": "goten_base",
+   "assetType": "unclassified",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "unclassified",
+   "variant": "movement_or_attack_pose",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "UNKNOWN",
+   "canonStatus": "UNCLASSIFIED",
+   "source": {
+    "sheet": "goten.png",
+    "frame": "039.png",
+    "x": "173",
+    "y": "375"
+   },
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
+  },
+  {
+   "sourceId": "goten_base/040.png",
+   "canonicalId": "goten_base.effect.aura.03",
+   "characterId": "goten",
+   "formId": "goten_base",
+   "assetType": "effect",
+   "view": "FIELD",
+   "family": "effect",
+   "role": "aura",
+   "variant": "aura_support",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "aura_support"
+   ],
+   "evidence": "CANONICAL",
+   "canonStatus": "CANONICAL",
+   "source": {
+    "sheet": "",
+    "frame": "040.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "goten_base/041.png",
+   "canonicalId": "goten_base.effect.aura.04",
+   "characterId": "goten",
+   "formId": "goten_base",
+   "assetType": "effect",
+   "view": "FIELD",
+   "family": "effect",
+   "role": "aura",
+   "variant": "aura_support",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "aura_support"
+   ],
+   "evidence": "CANONICAL",
+   "canonStatus": "CANONICAL",
+   "source": {
+    "sheet": "",
+    "frame": "041.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "goten_base/042.png",
+   "canonicalId": "goten_base.effect.aura.05",
+   "characterId": "goten",
+   "formId": "goten_base",
+   "assetType": "effect",
+   "view": "FIELD",
+   "family": "effect",
+   "role": "aura",
+   "variant": "aura_support",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "aura_support"
+   ],
+   "evidence": "CANONICAL",
+   "canonStatus": "CANONICAL",
+   "source": {
+    "sheet": "",
+    "frame": "042.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "goten_base/000_beam_charge.png",
+   "canonicalId": "goten_base.beam.charge_start.02",
+   "characterId": "goten",
+   "formId": "goten_base",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "beam",
+   "role": "charge_start",
+   "variant": "charge",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "beam_charge",
+    "gather_power",
+    "power_up"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "",
+    "frame": "000_beam_charge.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "fixed_only",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "goten_base/001_beam_charge.png",
+   "canonicalId": "goten_base.beam.charge_start.03",
+   "characterId": "goten",
+   "formId": "goten_base",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "beam",
+   "role": "charge_start",
+   "variant": "charge",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "beam_charge",
+    "gather_power",
+    "power_up"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "",
+    "frame": "001_beam_charge.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "fixed_only",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "goten_base/002_guard.png",
+   "canonicalId": "goten_base.unclassified.002_guard",
+   "characterId": "goten",
+   "formId": "goten_base",
+   "assetType": "unclassified",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "unclassified",
+   "variant": "",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "UNKNOWN",
+   "canonStatus": "UNCLASSIFIED",
+   "source": {
+    "sheet": "",
+    "frame": "002_guard.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "fixed_only",
+   "note": "sin evidencia runtime ni bucket"
+  },
+  {
+   "sourceId": "goten_base/003_hurt.png",
+   "canonicalId": "goten_base.unclassified.003_hurt",
+   "characterId": "goten",
+   "formId": "goten_base",
+   "assetType": "unclassified",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "unclassified",
+   "variant": "",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "UNKNOWN",
+   "canonStatus": "UNCLASSIFIED",
+   "source": {
+    "sheet": "",
+    "frame": "003_hurt.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "fixed_only",
+   "note": "sin evidencia runtime ni bucket"
+  },
+  {
+   "sourceId": "goten_base/004_hurt.png",
+   "canonicalId": "goten_base.unclassified.004_hurt",
+   "characterId": "goten",
+   "formId": "goten_base",
+   "assetType": "unclassified",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "unclassified",
+   "variant": "",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "UNKNOWN",
+   "canonStatus": "UNCLASSIFIED",
+   "source": {
+    "sheet": "",
+    "frame": "004_hurt.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "fixed_only",
+   "note": "sin evidencia runtime ni bucket"
+  }
+ ]
+}

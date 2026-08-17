@@ -10,6 +10,8 @@ import { spriteDirFor, spriteManifestUrl, spriteFrameUrl } from '../data/spriteM
 import { CARDS } from '../data/cards';
 import { actionSemanticsForCard } from '../battle/actionProfiles';
 import { COMBAT_REQUIRED_POSES, POSE_FALLBACKS, combatPoseMeta, resolvePoseFrameSequence } from '../battle/spriteConfig';
+import { SPRITE_CANON, type CanonStatus } from '../data/generated/spriteCanon.generated';
+import { GBC_FPS } from '../battle/timeline';
 import { FormNavigator } from './FormNavigator';
 import {
   type Manifest, type ManifestFrame, type ManifestPose,
@@ -19,6 +21,20 @@ import {
 import type { DevLinkedTarget } from './DevStudio';
 
 const FPS_CHOICES = [1, 3, 6, 7, 8, 10, 12, 15, 24, 30];
+
+// Canon: familia por pose runtime (mismo vocabulario que spriteCanon.generated.ts)
+const POSE_FAMILY: Record<string, string> = {
+  idle: 'idle', ready: 'ready', move_front: 'movement', move_back: 'movement',
+  move_vertical: 'movement', guard: 'defense', beam_guard: 'defense', evade: 'defense',
+  attack_fwd: 'melee', attack_ud: 'melee', punch_right: 'melee', punch_left: 'melee', kick_right: 'melee',
+  hurt: 'reaction', knockback_back: 'reaction', knockback_up: 'reaction', knockback_down: 'reaction', ko: 'reaction',
+  beam_charge: 'beam', beam_fire: 'beam', beam_pose: 'beam',
+  gather_power: 'power', power_up: 'power',
+  aura_power: 'effect', aura_support: 'effect', beam_ray: 'projectile', beam_ray_tip: 'projectile',
+};
+
+/** durationTicks por frame: la definición frame-perfect (el fps es solo preview/editor). */
+const ticksPerFrame = (fps: number) => Math.max(1, Math.round(GBC_FPS / Math.max(1, fps)));
 const POSE_RUNTIME_DEFAULTS: Record<string, { fps: number; loop: boolean; note: string }> = {
   idle: { fps: 3, loop: true, note: 'hold táctico estable' },
   move_front: { fps: 6, loop: true, note: 'ciclo de avance' },
@@ -460,6 +476,7 @@ export function AnimationModule({ target }: { target?: DevLinkedTarget | null })
               <code>{sequencePreview.length > 0 ? sequencePreview.join(' → ') : '— sin frames disponibles (fallback a idle)'}</code>
             </div>
           )}
+          <CanonClipInfo formId={formId} pose={pose} fps={fps} frames={frames.length} />
           <div className="dev-action-map">
             <strong>Runtime contract</strong>
             <span>Required: {COMBAT_REQUIRED_POSES.join(' · ')}</span>
@@ -687,6 +704,39 @@ function SpritePalette({ formId, activePose, onDragStart, onPickFrame }: {
           </div>
         </div>
       ))}
+    </div>
+  );
+}
+
+
+// ── Clip canónico (V9): family/role del canon + durationTicks ──
+function CanonClipInfo({ formId, pose, fps, frames }: {
+  formId: string; pose: string; fps: number; frames: number;
+}) {
+  const family = POSE_FAMILY[pose] ?? 'unclassified';
+  // el canon está indexado por runtime_dir; el Animation Studio navega con formId del roster
+  const canonFormId = spriteDirFor(formId) ?? formId;
+  const form = SPRITE_CANON.forms.find(f => f.form === canonFormId);
+  // Frames del canon VINCULADOS a esta pose (runtimePoses incluye todos los usos:
+  // un frame puede ser idle y punch_right — el canon conserva la provenance completa).
+  const poseFrames = (form?.frames ?? []).filter(f => f.runtimePoses.includes(pose));
+  const primaryFamilies = [...new Set(poseFrames.map(f => f.family))];
+  const statusCount: Record<string, number> = {};
+  for (const f of poseFrames) statusCount[f.canonStatus] = (statusCount[f.canonStatus] ?? 0) + 1;
+  const tick = ticksPerFrame(fps);
+  return (
+    <div className="dev-action-map">
+      <strong>Clip canónico (V9)</strong>
+      <span>
+        Pose <code>{pose}</code> · familia canon <code>{family}</code> · {poseFrames.length} frames vinculados
+        {primaryFamilies.length > 0 ? ` (rol primario: ${primaryFamilies.join(', ')})` : ''}
+      </span>
+      <span>
+        {Object.entries(statusCount).map(([s, n]) => `${s} ${n}`).join(' · ') || 'sin frames en el canon — UNCLASSIFIED'}
+      </span>
+      <span>
+        durationTicks ≈ <code>{tick} ticks/frame</code> (GBC {GBC_FPS.toFixed(4)}fps ÷ {fps}fps preview) × {Math.max(frames, 1)} frames
+      </span>
     </div>
   );
 }

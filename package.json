@@ -23,7 +23,9 @@
     "predev": "node scripts/git-info.mjs",
     "prebuild": "node scripts/git-info.mjs",
     "prebuild:preview": "node scripts/git-info.mjs",
-    "prebuild:release": "node scripts/git-info.mjs"
+    "prebuild:release": "node scripts/git-info.mjs",
+    "canon:sprites": "python3 scripts/build-sprite-canon.py && npm run audit:sprite-canon && npm run verify:v9",
+    "audit:sprite-canon": "python3 scripts/audit-sprite-canon.py"
   },
   "dependencies": {
     "@vitejs/plugin-react": "^4.3.4",

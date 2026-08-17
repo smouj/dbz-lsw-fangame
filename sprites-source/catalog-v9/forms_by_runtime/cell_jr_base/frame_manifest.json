@@ -1,0 +1,1734 @@
+{
+ "form": "cell_jr_base",
+ "frameCount": 71,
+ "frames": [
+  {
+   "sourceId": "cell_jr_base/001.png",
+   "canonicalId": "cell_jr_base.idle.idle.00",
+   "characterId": "cell_jr",
+   "formId": "cell_jr_base",
+   "assetType": "actor_frame",
+   "view": "FIELD",
+   "family": "melee",
+   "role": "strike",
+   "variant": "punch_right",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "idle",
+    "guard",
+    "punch_right",
+    "punch_left",
+    "beam_guard"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "cell_jr.png",
+    "frame": "001.png",
+    "x": "11",
+    "y": "9"
+   },
+   "frameKind": "atomic",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "cell_jr_base/002.png",
+   "canonicalId": "cell_jr_base.defense.start.02",
+   "characterId": "cell_jr",
+   "formId": "cell_jr_base",
+   "assetType": "actor_frame",
+   "view": "FIELD",
+   "family": "defense",
+   "role": "start",
+   "variant": "guard",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "guard",
+    "beam_guard"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "cell_jr.png",
+    "frame": "002.png",
+    "x": "50",
+    "y": "8"
+   },
+   "frameKind": "atomic",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "cell_jr_base/003.png",
+   "canonicalId": "cell_jr_base.defense.start.04",
+   "characterId": "cell_jr",
+   "formId": "cell_jr_base",
+   "assetType": "actor_frame",
+   "view": "FIELD",
+   "family": "defense",
+   "role": "start",
+   "variant": "guard",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "guard",
+    "beam_guard"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "cell_jr.png",
+    "frame": "003.png",
+    "x": "88",
+    "y": "9"
+   },
+   "frameKind": "atomic",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "cell_jr_base/004.png",
+   "canonicalId": "cell_jr_base.unclassified.004",
+   "characterId": "cell_jr",
+   "formId": "cell_jr_base",
+   "assetType": "unclassified",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "unclassified",
+   "variant": "movement_or_attack_pose",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "UNKNOWN",
+   "canonStatus": "UNCLASSIFIED",
+   "source": {
+    "sheet": "cell_jr.png",
+    "frame": "004.png",
+    "x": "130",
+    "y": "8"
+   },
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
+  },
+  {
+   "sourceId": "cell_jr_base/005.png",
+   "canonicalId": "cell_jr_base.unclassified.005",
+   "characterId": "cell_jr",
+   "formId": "cell_jr_base",
+   "assetType": "overworld",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "actor_pose",
+   "variant": "overworld_actor_or_pose",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
+   "source": {
+    "sheet": "cell_jr.png",
+    "frame": "005.png",
+    "x": "200",
+    "y": "18"
+   },
+   "frameKind": "atomic",
+   "note": "bucket forense: overworld_actor_or_pose"
+  },
+  {
+   "sourceId": "cell_jr_base/006.png",
+   "canonicalId": "cell_jr_base.unclassified.006",
+   "characterId": "cell_jr",
+   "formId": "cell_jr_base",
+   "assetType": "overworld",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "actor_pose",
+   "variant": "overworld_actor_or_pose",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
+   "source": {
+    "sheet": "cell_jr.png",
+    "frame": "006.png",
+    "x": "217",
+    "y": "17"
+   },
+   "frameKind": "atomic",
+   "note": "bucket forense: overworld_actor_or_pose"
+  },
+  {
+   "sourceId": "cell_jr_base/007.png",
+   "canonicalId": "cell_jr_base.unclassified.007",
+   "characterId": "cell_jr",
+   "formId": "cell_jr_base",
+   "assetType": "effect",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "aura_tile",
+   "variant": "battle_aura_tile",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
+   "source": {
+    "sheet": "cell_jr.png",
+    "frame": "007.png",
+    "x": "234",
+    "y": "17"
+   },
+   "frameKind": "atomic",
+   "note": "bucket forense: battle_aura_tile"
+  },
+  {
+   "sourceId": "cell_jr_base/008.png",
+   "canonicalId": "cell_jr_base.unclassified.008",
+   "characterId": "cell_jr",
+   "formId": "cell_jr_base",
+   "assetType": "composite",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "aura_composite",
+   "variant": "battle_aura_actor_composite",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
+   "source": {
+    "sheet": "cell_jr.png",
+    "frame": "008.png",
+    "x": "265",
+    "y": "17"
+   },
+   "frameKind": "atomic",
+   "note": "bucket forense: battle_aura_actor_composite"
+  },
+  {
+   "sourceId": "cell_jr_base/009.png",
+   "canonicalId": "cell_jr_base.defense.start.06",
+   "characterId": "cell_jr",
+   "formId": "cell_jr_base",
+   "assetType": "actor_frame",
+   "view": "FIELD",
+   "family": "defense",
+   "role": "start",
+   "variant": "evade",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "evade"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "cell_jr.png",
+    "frame": "009.png",
+    "x": "9",
+    "y": "57"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "cell_jr_base/010.png",
+   "canonicalId": "cell_jr_base.defense.start.07",
+   "characterId": "cell_jr",
+   "formId": "cell_jr_base",
+   "assetType": "actor_frame",
+   "view": "FIELD",
+   "family": "defense",
+   "role": "start",
+   "variant": "evade",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "evade"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "cell_jr.png",
+    "frame": "010.png",
+    "x": "59",
+    "y": "50"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "cell_jr_base/011.png",
+   "canonicalId": "cell_jr_base.movement.start.00",
+   "characterId": "cell_jr",
+   "formId": "cell_jr_base",
+   "assetType": "actor_frame",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "start",
+   "variant": "move_front",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "move_front",
+    "move_back"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "cell_jr.png",
+    "frame": "011.png",
+    "x": "96",
+    "y": "59"
+   },
+   "frameKind": "atomic",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "cell_jr_base/012.png",
+   "canonicalId": "cell_jr_base.movement.start.02",
+   "characterId": "cell_jr",
+   "formId": "cell_jr_base",
+   "assetType": "actor_frame",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "start",
+   "variant": "move_front",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "move_front",
+    "move_back"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "cell_jr.png",
+    "frame": "012.png",
+    "x": "131",
+    "y": "62"
+   },
+   "frameKind": "atomic",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "cell_jr_base/013.png",
+   "canonicalId": "cell_jr_base.reaction.hurt_light.00",
+   "characterId": "cell_jr",
+   "formId": "cell_jr_base",
+   "assetType": "actor_frame",
+   "view": "FIELD",
+   "family": "reaction",
+   "role": "hurt_light",
+   "variant": "hurt",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "hurt"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "cell_jr.png",
+    "frame": "013.png",
+    "x": "12",
+    "y": "112"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "cell_jr_base/014.png",
+   "canonicalId": "cell_jr_base.reaction.hurt_light.01",
+   "characterId": "cell_jr",
+   "formId": "cell_jr_base",
+   "assetType": "actor_frame",
+   "view": "FIELD",
+   "family": "reaction",
+   "role": "hurt_light",
+   "variant": "hurt",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "hurt"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "cell_jr.png",
+    "frame": "014.png",
+    "x": "48",
+    "y": "114"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "cell_jr_base/015.png",
+   "canonicalId": "cell_jr_base.reaction.hurt_light.02",
+   "characterId": "cell_jr",
+   "formId": "cell_jr_base",
+   "assetType": "actor_frame",
+   "view": "FIELD",
+   "family": "reaction",
+   "role": "hurt_light",
+   "variant": "hurt",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "hurt"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "cell_jr.png",
+    "frame": "015.png",
+    "x": "85",
+    "y": "121"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "cell_jr_base/016.png",
+   "canonicalId": "cell_jr_base.reaction.hurt_light.03",
+   "characterId": "cell_jr",
+   "formId": "cell_jr_base",
+   "assetType": "actor_frame",
+   "view": "FIELD",
+   "family": "reaction",
+   "role": "hurt_light",
+   "variant": "hurt",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "hurt"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "cell_jr.png",
+    "frame": "016.png",
+    "x": "126",
+    "y": "108"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "cell_jr_base/017.png",
+   "canonicalId": "cell_jr_base.reaction.hurt_light.04",
+   "characterId": "cell_jr",
+   "formId": "cell_jr_base",
+   "assetType": "actor_frame",
+   "view": "FIELD",
+   "family": "reaction",
+   "role": "hurt_light",
+   "variant": "hurt",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "hurt"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "cell_jr.png",
+    "frame": "017.png",
+    "x": "164",
+    "y": "110"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "cell_jr_base/018.png",
+   "canonicalId": "cell_jr_base.unclassified.018",
+   "characterId": "cell_jr",
+   "formId": "cell_jr_base",
+   "assetType": "unclassified",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "unclassified",
+   "variant": "movement_or_attack_pose",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "UNKNOWN",
+   "canonStatus": "UNCLASSIFIED",
+   "source": {
+    "sheet": "cell_jr.png",
+    "frame": "018.png",
+    "x": "201",
+    "y": "110"
+   },
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
+  },
+  {
+   "sourceId": "cell_jr_base/019.png",
+   "canonicalId": "cell_jr_base.melee.ready.02",
+   "characterId": "cell_jr",
+   "formId": "cell_jr_base",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "melee",
+   "role": "ready",
+   "variant": "attack_forward",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "attack_fwd",
+    "punch_right"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "cell_jr.png",
+    "frame": "019.png",
+    "x": "7",
+    "y": "165"
+   },
+   "frameKind": "atomic",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "cell_jr_base/020.png",
+   "canonicalId": "cell_jr_base.melee.ready.04",
+   "characterId": "cell_jr",
+   "formId": "cell_jr_base",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "melee",
+   "role": "ready",
+   "variant": "attack_forward",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "attack_fwd",
+    "punch_left"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "cell_jr.png",
+    "frame": "020.png",
+    "x": "56",
+    "y": "164"
+   },
+   "frameKind": "atomic",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "cell_jr_base/021.png",
+   "canonicalId": "cell_jr_base.melee.ready.06",
+   "characterId": "cell_jr",
+   "formId": "cell_jr_base",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "melee",
+   "role": "ready",
+   "variant": "attack_forward",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "attack_fwd",
+    "knockback_up"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "cell_jr.png",
+    "frame": "021.png",
+    "x": "103",
+    "y": "165"
+   },
+   "frameKind": "atomic",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "cell_jr_base/022.png",
+   "canonicalId": "cell_jr_base.melee.ready.07",
+   "characterId": "cell_jr",
+   "formId": "cell_jr_base",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "melee",
+   "role": "ready",
+   "variant": "attack_vertical",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "attack_ud"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "cell_jr.png",
+    "frame": "022.png",
+    "x": "148",
+    "y": "163"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "cell_jr_base/023.png",
+   "canonicalId": "cell_jr_base.reaction.knockback_back.06",
+   "characterId": "cell_jr",
+   "formId": "cell_jr_base",
+   "assetType": "actor_frame",
+   "view": "FIELD",
+   "family": "reaction",
+   "role": "knockback_back",
+   "variant": "back",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "knockback_back"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "cell_jr.png",
+    "frame": "023.png",
+    "x": "183",
+    "y": "167"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "cell_jr_base/024.png",
+   "canonicalId": "cell_jr_base.melee.ready.08",
+   "characterId": "cell_jr",
+   "formId": "cell_jr_base",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "melee",
+   "role": "ready",
+   "variant": "attack_vertical",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "attack_ud"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "cell_jr.png",
+    "frame": "024.png",
+    "x": "223",
+    "y": "164"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "cell_jr_base/025.png",
+   "canonicalId": "cell_jr_base.reaction.knockback_down.07",
+   "characterId": "cell_jr",
+   "formId": "cell_jr_base",
+   "assetType": "actor_frame",
+   "view": "FIELD",
+   "family": "reaction",
+   "role": "knockback_down",
+   "variant": "down",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "knockback_down"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "cell_jr.png",
+    "frame": "025.png",
+    "x": "257",
+    "y": "174"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "cell_jr_base/026.png",
+   "canonicalId": "cell_jr_base.melee.ready.09",
+   "characterId": "cell_jr",
+   "formId": "cell_jr_base",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "melee",
+   "role": "ready",
+   "variant": "attack_forward",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "attack_fwd",
+    "punch_right"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "cell_jr.png",
+    "frame": "026.png",
+    "x": "6",
+    "y": "217"
+   },
+   "frameKind": "atomic",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "cell_jr_base/027.png",
+   "canonicalId": "cell_jr_base.unclassified.027",
+   "characterId": "cell_jr",
+   "formId": "cell_jr_base",
+   "assetType": "unclassified",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "unclassified",
+   "variant": "movement_or_attack_pose",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "UNKNOWN",
+   "canonStatus": "UNCLASSIFIED",
+   "source": {
+    "sheet": "cell_jr.png",
+    "frame": "027.png",
+    "x": "46",
+    "y": "217"
+   },
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
+  },
+  {
+   "sourceId": "cell_jr_base/028.png",
+   "canonicalId": "cell_jr_base.melee.ready.11",
+   "characterId": "cell_jr",
+   "formId": "cell_jr_base",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "melee",
+   "role": "ready",
+   "variant": "attack_forward",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "attack_fwd",
+    "punch_left",
+    "kick_right"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "cell_jr.png",
+    "frame": "028.png",
+    "x": "86",
+    "y": "219"
+   },
+   "frameKind": "atomic",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "cell_jr_base/029.png",
+   "canonicalId": "cell_jr_base.melee.strike.14",
+   "characterId": "cell_jr",
+   "formId": "cell_jr_base",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "melee",
+   "role": "strike",
+   "variant": "kick_right",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "kick_right"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "cell_jr.png",
+    "frame": "029.png",
+    "x": "128",
+    "y": "219"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "cell_jr_base/030.png",
+   "canonicalId": "cell_jr_base.melee.strike.15",
+   "characterId": "cell_jr",
+   "formId": "cell_jr_base",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "melee",
+   "role": "strike",
+   "variant": "kick_right",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "kick_right"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "cell_jr.png",
+    "frame": "030.png",
+    "x": "187",
+    "y": "221"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "cell_jr_base/031.png",
+   "canonicalId": "cell_jr_base.effect.aura.00",
+   "characterId": "cell_jr",
+   "formId": "cell_jr_base",
+   "assetType": "effect",
+   "view": "FIELD",
+   "family": "effect",
+   "role": "aura",
+   "variant": "aura_power",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "aura_power"
+   ],
+   "evidence": "CANONICAL",
+   "canonStatus": "CANONICAL",
+   "source": {
+    "sheet": "cell_jr.png",
+    "frame": "031.png",
+    "x": "199",
+    "y": "255"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "cell_jr_base/032.png",
+   "canonicalId": "cell_jr_base.effect.aura.01",
+   "characterId": "cell_jr",
+   "formId": "cell_jr_base",
+   "assetType": "effect",
+   "view": "FIELD",
+   "family": "effect",
+   "role": "aura",
+   "variant": "aura_power",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "aura_power"
+   ],
+   "evidence": "CANONICAL",
+   "canonStatus": "CANONICAL",
+   "source": {
+    "sheet": "cell_jr.png",
+    "frame": "032.png",
+    "x": "270",
+    "y": "255"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "cell_jr_base/033.png",
+   "canonicalId": "cell_jr_base.effect.aura.02",
+   "characterId": "cell_jr",
+   "formId": "cell_jr_base",
+   "assetType": "effect",
+   "view": "FIELD",
+   "family": "effect",
+   "role": "aura",
+   "variant": "aura_power",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "aura_power"
+   ],
+   "evidence": "CANONICAL",
+   "canonStatus": "CANONICAL",
+   "source": {
+    "sheet": "cell_jr.png",
+    "frame": "033.png",
+    "x": "342",
+    "y": "255"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "cell_jr_base/034.png",
+   "canonicalId": "cell_jr_base.beam.release.00",
+   "characterId": "cell_jr",
+   "formId": "cell_jr_base",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "beam",
+   "role": "release",
+   "variant": "fire",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "beam_fire"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "cell_jr.png",
+    "frame": "034.png",
+    "x": "448",
+    "y": "271"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "cell_jr_base/035.png",
+   "canonicalId": "cell_jr_base.beam.charge_start.01",
+   "characterId": "cell_jr",
+   "formId": "cell_jr_base",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "beam",
+   "role": "charge_start",
+   "variant": "charge",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "beam_charge"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "cell_jr.png",
+    "frame": "035.png",
+    "x": "6",
+    "y": "276"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "cell_jr_base/036.png",
+   "canonicalId": "cell_jr_base.unclassified.036",
+   "characterId": "cell_jr",
+   "formId": "cell_jr_base",
+   "assetType": "projectile",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "orb",
+   "variant": "projectile_orb_small",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
+   "source": {
+    "sheet": "cell_jr.png",
+    "frame": "036.png",
+    "x": "45",
+    "y": "285"
+   },
+   "frameKind": "atomic",
+   "note": "bucket forense: projectile_orb_small"
+  },
+  {
+   "sourceId": "cell_jr_base/037.png",
+   "canonicalId": "cell_jr_base.unclassified.037",
+   "characterId": "cell_jr",
+   "formId": "cell_jr_base",
+   "assetType": "projectile",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "beam_ray",
+   "variant": "projectiles_beams",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
+   "source": {
+    "sheet": "cell_jr.png",
+    "frame": "037.png",
+    "x": "72",
+    "y": "276"
+   },
+   "frameKind": "atomic",
+   "note": "bucket forense: projectiles_beams"
+  },
+  {
+   "sourceId": "cell_jr_base/038.png",
+   "canonicalId": "cell_jr_base.beam.charge_start.02",
+   "characterId": "cell_jr",
+   "formId": "cell_jr_base",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "beam",
+   "role": "charge_start",
+   "variant": "charge",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "beam_charge"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "cell_jr.png",
+    "frame": "038.png",
+    "x": "11",
+    "y": "355"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "cell_jr_base/039.png",
+   "canonicalId": "cell_jr_base.unclassified.039",
+   "characterId": "cell_jr",
+   "formId": "cell_jr_base",
+   "assetType": "composite",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "character_projectile",
+   "variant": "character_plus_projectile",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
+   "source": {
+    "sheet": "cell_jr.png",
+    "frame": "039.png",
+    "x": "47",
+    "y": "350"
+   },
+   "frameKind": "atomic",
+   "note": "bucket forense: character_plus_projectile"
+  },
+  {
+   "sourceId": "cell_jr_base/040.png",
+   "canonicalId": "cell_jr_base.unclassified.040",
+   "characterId": "cell_jr",
+   "formId": "cell_jr_base",
+   "assetType": "composite",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "aura_or_burst",
+   "variant": "character_plus_aura_or_burst",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
+   "source": {
+    "sheet": "cell_jr.png",
+    "frame": "040.png",
+    "x": "167",
+    "y": "353"
+   },
+   "frameKind": "atomic",
+   "note": "bucket forense: character_plus_aura_or_burst"
+  },
+  {
+   "sourceId": "cell_jr_base/041.png",
+   "canonicalId": "cell_jr_base.power.gather_power.00",
+   "characterId": "cell_jr",
+   "formId": "cell_jr_base",
+   "assetType": "composite",
+   "view": "ACTION_DUEL",
+   "family": "power",
+   "role": "gather_power",
+   "variant": "gather_power",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "gather_power",
+    "power_up"
+   ],
+   "evidence": "CANONICAL",
+   "canonStatus": "CANONICAL",
+   "source": {
+    "sheet": "cell_jr.png",
+    "frame": "041.png",
+    "x": "228",
+    "y": "356"
+   },
+   "frameKind": "atomic",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "cell_jr_base/042.png",
+   "canonicalId": "cell_jr_base.unclassified.042",
+   "characterId": "cell_jr",
+   "formId": "cell_jr_base",
+   "assetType": "projectile",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "beam_ray",
+   "variant": "projectiles_beams",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
+   "source": {
+    "sheet": "cell_jr.png",
+    "frame": "042.png",
+    "x": "268",
+    "y": "356"
+   },
+   "frameKind": "atomic",
+   "note": "bucket forense: projectiles_beams"
+  },
+  {
+   "sourceId": "cell_jr_base/043.png",
+   "canonicalId": "cell_jr_base.unclassified.043",
+   "characterId": "cell_jr",
+   "formId": "cell_jr_base",
+   "assetType": "projectile",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "beam_ray",
+   "variant": "projectiles_beams",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
+   "source": {
+    "sheet": "cell_jr.png",
+    "frame": "043.png",
+    "x": "396",
+    "y": "363"
+   },
+   "frameKind": "atomic",
+   "note": "bucket forense: projectiles_beams"
+  },
+  {
+   "sourceId": "cell_jr_base/044.png",
+   "canonicalId": "cell_jr_base.beam.release.03",
+   "characterId": "cell_jr",
+   "formId": "cell_jr_base",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "beam",
+   "role": "release",
+   "variant": "fire",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "beam_fire",
+    "gather_power",
+    "power_up"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "cell_jr.png",
+    "frame": "044.png",
+    "x": "13",
+    "y": "444"
+   },
+   "frameKind": "atomic",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "cell_jr_base/045.png",
+   "canonicalId": "cell_jr_base.beam.charge_start.04",
+   "characterId": "cell_jr",
+   "formId": "cell_jr_base",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "beam",
+   "role": "charge_start",
+   "variant": "charge",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "beam_charge"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "cell_jr.png",
+    "frame": "045.png",
+    "x": "88",
+    "y": "447"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "cell_jr_base/046.png",
+   "canonicalId": "cell_jr_base.unclassified.046",
+   "characterId": "cell_jr",
+   "formId": "cell_jr_base",
+   "assetType": "projectile",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "beam_ray",
+   "variant": "projectiles_beams",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
+   "source": {
+    "sheet": "cell_jr.png",
+    "frame": "046.png",
+    "x": "125",
+    "y": "430"
+   },
+   "frameKind": "atomic",
+   "note": "bucket forense: projectiles_beams"
+  },
+  {
+   "sourceId": "cell_jr_base/047.png",
+   "canonicalId": "cell_jr_base.unclassified.047",
+   "characterId": "cell_jr",
+   "formId": "cell_jr_base",
+   "assetType": "projectile",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "beam_ray",
+   "variant": "projectiles_beams",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
+   "source": {
+    "sheet": "cell_jr.png",
+    "frame": "047.png",
+    "x": "254",
+    "y": "434"
+   },
+   "frameKind": "atomic",
+   "note": "bucket forense: projectiles_beams"
+  },
+  {
+   "sourceId": "cell_jr_base/048.png",
+   "canonicalId": "cell_jr_base.unclassified.048",
+   "characterId": "cell_jr",
+   "formId": "cell_jr_base",
+   "assetType": "projectile",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "beam_ray",
+   "variant": "projectiles_beams",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
+   "source": {
+    "sheet": "cell_jr.png",
+    "frame": "048.png",
+    "x": "350",
+    "y": "444"
+   },
+   "frameKind": "atomic",
+   "note": "bucket forense: projectiles_beams"
+  },
+  {
+   "sourceId": "cell_jr_base/049.png",
+   "canonicalId": "cell_jr_base.unclassified.049",
+   "characterId": "cell_jr",
+   "formId": "cell_jr_base",
+   "assetType": "projectile",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "orb",
+   "variant": "projectile_orb_small",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
+   "source": {
+    "sheet": "cell_jr.png",
+    "frame": "049.png",
+    "x": "479",
+    "y": "454"
+   },
+   "frameKind": "atomic",
+   "note": "bucket forense: projectile_orb_small"
+  },
+  {
+   "sourceId": "cell_jr_base/050.png",
+   "canonicalId": "cell_jr_base.effect.aura.03",
+   "characterId": "cell_jr",
+   "formId": "cell_jr_base",
+   "assetType": "effect",
+   "view": "FIELD",
+   "family": "effect",
+   "role": "aura",
+   "variant": "aura_support",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "aura_support"
+   ],
+   "evidence": "CANONICAL",
+   "canonStatus": "CANONICAL",
+   "source": {
+    "sheet": "",
+    "frame": "050.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "cell_jr_base/051.png",
+   "canonicalId": "cell_jr_base.effect.aura.04",
+   "characterId": "cell_jr",
+   "formId": "cell_jr_base",
+   "assetType": "effect",
+   "view": "FIELD",
+   "family": "effect",
+   "role": "aura",
+   "variant": "aura_support",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "aura_support"
+   ],
+   "evidence": "CANONICAL",
+   "canonStatus": "CANONICAL",
+   "source": {
+    "sheet": "",
+    "frame": "051.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "cell_jr_base/052.png",
+   "canonicalId": "cell_jr_base.effect.aura.05",
+   "characterId": "cell_jr",
+   "formId": "cell_jr_base",
+   "assetType": "effect",
+   "view": "FIELD",
+   "family": "effect",
+   "role": "aura",
+   "variant": "aura_support",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "aura_support"
+   ],
+   "evidence": "CANONICAL",
+   "canonStatus": "CANONICAL",
+   "source": {
+    "sheet": "",
+    "frame": "052.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "cell_jr_base/000_attack_fwd.png",
+   "canonicalId": "cell_jr_base.melee.ready.16",
+   "characterId": "cell_jr",
+   "formId": "cell_jr_base",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "melee",
+   "role": "ready",
+   "variant": "attack_forward",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "attack_fwd",
+    "beam_charge",
+    "punch_right"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "",
+    "frame": "000_attack_fwd.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "fixed_only",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "cell_jr_base/001_attack_fwd.png",
+   "canonicalId": "cell_jr_base.melee.ready.18",
+   "characterId": "cell_jr",
+   "formId": "cell_jr_base",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "melee",
+   "role": "ready",
+   "variant": "attack_forward",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "attack_fwd",
+    "punch_left"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "",
+    "frame": "001_attack_fwd.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "fixed_only",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "cell_jr_base/002_attack_fwd.png",
+   "canonicalId": "cell_jr_base.melee.ready.20",
+   "characterId": "cell_jr",
+   "formId": "cell_jr_base",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "melee",
+   "role": "ready",
+   "variant": "attack_forward",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "attack_fwd",
+    "punch_left"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "",
+    "frame": "002_attack_fwd.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "fixed_only",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "cell_jr_base/003_attack_ud.png",
+   "canonicalId": "cell_jr_base.melee.ready.22",
+   "characterId": "cell_jr",
+   "formId": "cell_jr_base",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "melee",
+   "role": "ready",
+   "variant": "attack_vertical",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "attack_ud"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "",
+    "frame": "003_attack_ud.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "fixed_only"
+  },
+  {
+   "sourceId": "cell_jr_base/004_attack_ud.png",
+   "canonicalId": "cell_jr_base.melee.ready.23",
+   "characterId": "cell_jr",
+   "formId": "cell_jr_base",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "melee",
+   "role": "ready",
+   "variant": "attack_vertical",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "attack_ud"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "",
+    "frame": "004_attack_ud.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "fixed_only"
+  },
+  {
+   "sourceId": "cell_jr_base/005_attack_ud.png",
+   "canonicalId": "cell_jr_base.melee.ready.24",
+   "characterId": "cell_jr",
+   "formId": "cell_jr_base",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "melee",
+   "role": "ready",
+   "variant": "attack_vertical",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "attack_ud"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "",
+    "frame": "005_attack_ud.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "fixed_only"
+  },
+  {
+   "sourceId": "cell_jr_base/006_beam_charge.png",
+   "canonicalId": "cell_jr_base.melee.ready.25",
+   "characterId": "cell_jr",
+   "formId": "cell_jr_base",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "melee",
+   "role": "ready",
+   "variant": "attack_forward",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "attack_fwd",
+    "beam_charge",
+    "punch_right"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "",
+    "frame": "006_beam_charge.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "fixed_only",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "cell_jr_base/007_beam_charge.png",
+   "canonicalId": "cell_jr_base.beam.charge_start.07",
+   "characterId": "cell_jr",
+   "formId": "cell_jr_base",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "beam",
+   "role": "charge_start",
+   "variant": "charge",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "beam_charge"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "",
+    "frame": "007_beam_charge.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "fixed_only"
+  },
+  {
+   "sourceId": "cell_jr_base/008_beam_fire.png",
+   "canonicalId": "cell_jr_base.beam.release.08",
+   "characterId": "cell_jr",
+   "formId": "cell_jr_base",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "beam",
+   "role": "release",
+   "variant": "fire",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "beam_fire"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "",
+    "frame": "008_beam_fire.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "fixed_only"
+  },
+  {
+   "sourceId": "cell_jr_base/009_beam_fire.png",
+   "canonicalId": "cell_jr_base.beam.release.09",
+   "characterId": "cell_jr",
+   "formId": "cell_jr_base",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "beam",
+   "role": "release",
+   "variant": "fire",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "beam_fire"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "",
+    "frame": "009_beam_fire.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "fixed_only"
+  },
+  {
+   "sourceId": "cell_jr_base/010_beam_fire.png",
+   "canonicalId": "cell_jr_base.beam.release.10",
+   "characterId": "cell_jr",
+   "formId": "cell_jr_base",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "beam",
+   "role": "release",
+   "variant": "fire",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "beam_fire"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "",
+    "frame": "010_beam_fire.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "fixed_only"
+  },
+  {
+   "sourceId": "cell_jr_base/011_beam_fire.png",
+   "canonicalId": "cell_jr_base.beam.release.11",
+   "characterId": "cell_jr",
+   "formId": "cell_jr_base",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "beam",
+   "role": "release",
+   "variant": "fire",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "beam_fire",
+    "gather_power",
+    "power_up"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "",
+    "frame": "011_beam_fire.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "fixed_only",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "cell_jr_base/012_guard.png",
+   "canonicalId": "cell_jr_base.unclassified.012_guard",
+   "characterId": "cell_jr",
+   "formId": "cell_jr_base",
+   "assetType": "unclassified",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "unclassified",
+   "variant": "",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "UNKNOWN",
+   "canonStatus": "UNCLASSIFIED",
+   "source": {
+    "sheet": "",
+    "frame": "012_guard.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "fixed_only",
+   "note": "sin evidencia runtime ni bucket"
+  },
+  {
+   "sourceId": "cell_jr_base/013_guard.png",
+   "canonicalId": "cell_jr_base.unclassified.013_guard",
+   "characterId": "cell_jr",
+   "formId": "cell_jr_base",
+   "assetType": "unclassified",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "unclassified",
+   "variant": "",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "UNKNOWN",
+   "canonStatus": "UNCLASSIFIED",
+   "source": {
+    "sheet": "",
+    "frame": "013_guard.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "fixed_only",
+   "note": "sin evidencia runtime ni bucket"
+  },
+  {
+   "sourceId": "cell_jr_base/014_hurt.png",
+   "canonicalId": "cell_jr_base.unclassified.014_hurt",
+   "characterId": "cell_jr",
+   "formId": "cell_jr_base",
+   "assetType": "unclassified",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "unclassified",
+   "variant": "",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "UNKNOWN",
+   "canonStatus": "UNCLASSIFIED",
+   "source": {
+    "sheet": "",
+    "frame": "014_hurt.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "fixed_only",
+   "note": "sin evidencia runtime ni bucket"
+  },
+  {
+   "sourceId": "cell_jr_base/015_hurt.png",
+   "canonicalId": "cell_jr_base.unclassified.015_hurt",
+   "characterId": "cell_jr",
+   "formId": "cell_jr_base",
+   "assetType": "unclassified",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "unclassified",
+   "variant": "",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "UNKNOWN",
+   "canonStatus": "UNCLASSIFIED",
+   "source": {
+    "sheet": "",
+    "frame": "015_hurt.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "fixed_only",
+   "note": "sin evidencia runtime ni bucket"
+  },
+  {
+   "sourceId": "cell_jr_base/016_idle.png",
+   "canonicalId": "cell_jr_base.idle.idle.01",
+   "characterId": "cell_jr",
+   "formId": "cell_jr_base",
+   "assetType": "actor_frame",
+   "view": "FIELD",
+   "family": "melee",
+   "role": "strike",
+   "variant": "punch_right",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "idle",
+    "guard",
+    "punch_right",
+    "punch_left",
+    "beam_guard"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "",
+    "frame": "016_idle.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "fixed_only",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "cell_jr_base/017_move_back.png",
+   "canonicalId": "cell_jr_base.unclassified.017_move_back",
+   "characterId": "cell_jr",
+   "formId": "cell_jr_base",
+   "assetType": "unclassified",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "unclassified",
+   "variant": "",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "UNKNOWN",
+   "canonStatus": "UNCLASSIFIED",
+   "source": {
+    "sheet": "",
+    "frame": "017_move_back.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "fixed_only",
+   "note": "sin evidencia runtime ni bucket"
+  },
+  {
+   "sourceId": "cell_jr_base/018_move_front.png",
+   "canonicalId": "cell_jr_base.unclassified.018_move_front",
+   "characterId": "cell_jr",
+   "formId": "cell_jr_base",
+   "assetType": "unclassified",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "unclassified",
+   "variant": "",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "UNKNOWN",
+   "canonStatus": "UNCLASSIFIED",
+   "source": {
+    "sheet": "",
+    "frame": "018_move_front.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "fixed_only",
+   "note": "sin evidencia runtime ni bucket"
+  }
+ ]
+}

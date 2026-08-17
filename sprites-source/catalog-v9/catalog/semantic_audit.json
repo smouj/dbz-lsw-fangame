@@ -1,0 +1,26 @@
+{
+ "forms": 44,
+ "formsWithManifest": 42,
+ "physicalFrames": 2426,
+ "byKind": {
+  "atomic": 2098,
+  "fixed_only": 328
+ },
+ "byStatus": {
+  "RUNTIME_VERIFIED": 1319,
+  "UNCLASSIFIED": 377,
+  "ASSET_VERIFIED": 404,
+  "CANONICAL": 326
+ },
+ "byFamily": {
+  "melee": 564,
+  "defense": 154,
+  "unclassified": 781,
+  "movement": 69,
+  "reaction": 202,
+  "beam": 330,
+  "effect": 258,
+  "power": 68
+ },
+ "ambiguousLabelsAsCanonical": 0
+}

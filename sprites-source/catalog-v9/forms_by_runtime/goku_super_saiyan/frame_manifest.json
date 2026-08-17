@@ -1,0 +1,1598 @@
+{
+ "form": "goku_super_saiyan",
+ "frameCount": 65,
+ "frames": [
+  {
+   "sourceId": "goku_super_saiyan/001.png",
+   "canonicalId": "goku_super_saiyan.idle.idle.00",
+   "characterId": "goku_super",
+   "formId": "goku_super_saiyan",
+   "assetType": "actor_frame",
+   "view": "FIELD",
+   "family": "melee",
+   "role": "strike",
+   "variant": "punch_right",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "idle",
+    "move_front",
+    "move_back",
+    "guard",
+    "punch_right",
+    "punch_left",
+    "beam_guard"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "goku.png",
+    "frame": "001.png",
+    "x": "20",
+    "y": "584"
+   },
+   "frameKind": "atomic",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "goku_super_saiyan/002.png",
+   "canonicalId": "goku_super_saiyan.power.gather_power.00",
+   "characterId": "goku_super",
+   "formId": "goku_super_saiyan",
+   "assetType": "composite",
+   "view": "ACTION_DUEL",
+   "family": "power",
+   "role": "gather_power",
+   "variant": "gather_power",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "gather_power",
+    "power_up"
+   ],
+   "evidence": "CANONICAL",
+   "canonStatus": "CANONICAL",
+   "source": {
+    "sheet": "goku.png",
+    "frame": "002.png",
+    "x": "56",
+    "y": "584"
+   },
+   "frameKind": "atomic",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "goku_super_saiyan/003.png",
+   "canonicalId": "goku_super_saiyan.defense.start.02",
+   "characterId": "goku_super",
+   "formId": "goku_super_saiyan",
+   "assetType": "actor_frame",
+   "view": "FIELD",
+   "family": "defense",
+   "role": "start",
+   "variant": "guard",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "guard",
+    "beam_guard"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "goku.png",
+    "frame": "003.png",
+    "x": "95",
+    "y": "586"
+   },
+   "frameKind": "atomic",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "goku_super_saiyan/004.png",
+   "canonicalId": "goku_super_saiyan.defense.start.04",
+   "characterId": "goku_super",
+   "formId": "goku_super_saiyan",
+   "assetType": "actor_frame",
+   "view": "FIELD",
+   "family": "defense",
+   "role": "start",
+   "variant": "guard",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "guard",
+    "beam_guard"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "goku.png",
+    "frame": "004.png",
+    "x": "141",
+    "y": "584"
+   },
+   "frameKind": "atomic",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "goku_super_saiyan/005.png",
+   "canonicalId": "goku_super_saiyan.defense.start.06",
+   "characterId": "goku_super",
+   "formId": "goku_super_saiyan",
+   "assetType": "actor_frame",
+   "view": "FIELD",
+   "family": "defense",
+   "role": "start",
+   "variant": "evade",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "evade"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "goku.png",
+    "frame": "005.png",
+    "x": "14",
+    "y": "643"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "goku_super_saiyan/006.png",
+   "canonicalId": "goku_super_saiyan.defense.start.07",
+   "characterId": "goku_super",
+   "formId": "goku_super_saiyan",
+   "assetType": "actor_frame",
+   "view": "FIELD",
+   "family": "defense",
+   "role": "start",
+   "variant": "evade",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "evade"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "goku.png",
+    "frame": "006.png",
+    "x": "64",
+    "y": "636"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "goku_super_saiyan/007.png",
+   "canonicalId": "goku_super_saiyan.unclassified.007",
+   "characterId": "goku_super",
+   "formId": "goku_super_saiyan",
+   "assetType": "unclassified",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "unclassified",
+   "variant": "movement_or_attack_pose",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "UNKNOWN",
+   "canonStatus": "UNCLASSIFIED",
+   "source": {
+    "sheet": "goku.png",
+    "frame": "007.png",
+    "x": "100",
+    "y": "636"
+   },
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
+  },
+  {
+   "sourceId": "goku_super_saiyan/008.png",
+   "canonicalId": "goku_super_saiyan.movement.start.02",
+   "characterId": "goku_super",
+   "formId": "goku_super_saiyan",
+   "assetType": "actor_frame",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "start",
+   "variant": "move_front",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "move_front",
+    "move_back"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "goku.png",
+    "frame": "008.png",
+    "x": "140",
+    "y": "639"
+   },
+   "frameKind": "atomic",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "goku_super_saiyan/009.png",
+   "canonicalId": "goku_super_saiyan.reaction.hurt_light.00",
+   "characterId": "goku_super",
+   "formId": "goku_super_saiyan",
+   "assetType": "actor_frame",
+   "view": "FIELD",
+   "family": "reaction",
+   "role": "hurt_light",
+   "variant": "hurt",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "hurt"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "goku.png",
+    "frame": "009.png",
+    "x": "19",
+    "y": "690"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "goku_super_saiyan/010.png",
+   "canonicalId": "goku_super_saiyan.reaction.hurt_light.01",
+   "characterId": "goku_super",
+   "formId": "goku_super_saiyan",
+   "assetType": "actor_frame",
+   "view": "FIELD",
+   "family": "reaction",
+   "role": "hurt_light",
+   "variant": "hurt",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "hurt"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "goku.png",
+    "frame": "010.png",
+    "x": "59",
+    "y": "691"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "goku_super_saiyan/011.png",
+   "canonicalId": "goku_super_saiyan.reaction.hurt_light.02",
+   "characterId": "goku_super",
+   "formId": "goku_super_saiyan",
+   "assetType": "actor_frame",
+   "view": "FIELD",
+   "family": "reaction",
+   "role": "hurt_light",
+   "variant": "hurt",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "hurt"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "goku.png",
+    "frame": "011.png",
+    "x": "101",
+    "y": "697"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "goku_super_saiyan/012.png",
+   "canonicalId": "goku_super_saiyan.reaction.hurt_light.03",
+   "characterId": "goku_super",
+   "formId": "goku_super_saiyan",
+   "assetType": "actor_frame",
+   "view": "FIELD",
+   "family": "reaction",
+   "role": "hurt_light",
+   "variant": "hurt",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "hurt"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "goku.png",
+    "frame": "012.png",
+    "x": "141",
+    "y": "688"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "goku_super_saiyan/013.png",
+   "canonicalId": "goku_super_saiyan.reaction.hurt_light.04",
+   "characterId": "goku_super",
+   "formId": "goku_super_saiyan",
+   "assetType": "actor_frame",
+   "view": "FIELD",
+   "family": "reaction",
+   "role": "hurt_light",
+   "variant": "hurt",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "hurt"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "goku.png",
+    "frame": "013.png",
+    "x": "175",
+    "y": "686"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "goku_super_saiyan/014.png",
+   "canonicalId": "goku_super_saiyan.melee.ready.02",
+   "characterId": "goku_super",
+   "formId": "goku_super_saiyan",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "melee",
+   "role": "ready",
+   "variant": "attack_forward",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "attack_fwd",
+    "punch_left"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "goku.png",
+    "frame": "014.png",
+    "x": "211",
+    "y": "687"
+   },
+   "frameKind": "atomic",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "goku_super_saiyan/015.png",
+   "canonicalId": "goku_super_saiyan.unclassified.015",
+   "characterId": "goku_super",
+   "formId": "goku_super_saiyan",
+   "assetType": "unclassified",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "unclassified",
+   "variant": "downed_or_hurt",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "UNKNOWN",
+   "canonStatus": "UNCLASSIFIED",
+   "source": {
+    "sheet": "goku.png",
+    "frame": "015.png",
+    "x": "252",
+    "y": "707"
+   },
+   "frameKind": "atomic",
+   "note": "bucket forense: downed_or_hurt"
+  },
+  {
+   "sourceId": "goku_super_saiyan/016.png",
+   "canonicalId": "goku_super_saiyan.power.gather_power.02",
+   "characterId": "goku_super",
+   "formId": "goku_super_saiyan",
+   "assetType": "composite",
+   "view": "ACTION_DUEL",
+   "family": "power",
+   "role": "gather_power",
+   "variant": "gather_power",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "gather_power",
+    "power_up"
+   ],
+   "evidence": "CANONICAL",
+   "canonStatus": "CANONICAL",
+   "source": {
+    "sheet": "goku.png",
+    "frame": "016.png",
+    "x": "17",
+    "y": "742"
+   },
+   "frameKind": "atomic",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "goku_super_saiyan/017.png",
+   "canonicalId": "goku_super_saiyan.melee.ready.04",
+   "characterId": "goku_super",
+   "formId": "goku_super_saiyan",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "melee",
+   "role": "ready",
+   "variant": "attack_forward",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "attack_fwd",
+    "punch_right"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "goku.png",
+    "frame": "017.png",
+    "x": "60",
+    "y": "741"
+   },
+   "frameKind": "atomic",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "goku_super_saiyan/018.png",
+   "canonicalId": "goku_super_saiyan.melee.ready.06",
+   "characterId": "goku_super",
+   "formId": "goku_super_saiyan",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "melee",
+   "role": "ready",
+   "variant": "attack_forward",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "attack_fwd",
+    "punch_left",
+    "knockback_down"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "goku.png",
+    "frame": "018.png",
+    "x": "111",
+    "y": "745"
+   },
+   "frameKind": "atomic",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "goku_super_saiyan/019.png",
+   "canonicalId": "goku_super_saiyan.melee.ready.08",
+   "characterId": "goku_super",
+   "formId": "goku_super_saiyan",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "melee",
+   "role": "ready",
+   "variant": "attack_vertical",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "attack_ud",
+    "knockback_up"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "goku.png",
+    "frame": "019.png",
+    "x": "154",
+    "y": "744"
+   },
+   "frameKind": "atomic",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "goku_super_saiyan/020.png",
+   "canonicalId": "goku_super_saiyan.melee.ready.09",
+   "characterId": "goku_super",
+   "formId": "goku_super_saiyan",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "melee",
+   "role": "ready",
+   "variant": "attack_vertical",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "attack_ud"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "goku.png",
+    "frame": "020.png",
+    "x": "193",
+    "y": "742"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "goku_super_saiyan/021.png",
+   "canonicalId": "goku_super_saiyan.melee.ready.10",
+   "characterId": "goku_super",
+   "formId": "goku_super_saiyan",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "melee",
+   "role": "ready",
+   "variant": "attack_vertical",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "attack_ud"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "goku.png",
+    "frame": "021.png",
+    "x": "234",
+    "y": "740"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "goku_super_saiyan/022.png",
+   "canonicalId": "goku_super_saiyan.melee.ready.11",
+   "characterId": "goku_super",
+   "formId": "goku_super_saiyan",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "melee",
+   "role": "ready",
+   "variant": "attack_vertical",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "attack_ud",
+    "knockback_back"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "goku.png",
+    "frame": "022.png",
+    "x": "268",
+    "y": "744"
+   },
+   "frameKind": "atomic",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "goku_super_saiyan/023.png",
+   "canonicalId": "goku_super_saiyan.power.gather_power.04",
+   "characterId": "goku_super",
+   "formId": "goku_super_saiyan",
+   "assetType": "composite",
+   "view": "ACTION_DUEL",
+   "family": "power",
+   "role": "gather_power",
+   "variant": "gather_power",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "gather_power",
+    "power_up"
+   ],
+   "evidence": "CANONICAL",
+   "canonStatus": "CANONICAL",
+   "source": {
+    "sheet": "goku.png",
+    "frame": "023.png",
+    "x": "19",
+    "y": "794"
+   },
+   "frameKind": "atomic",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "goku_super_saiyan/024.png",
+   "canonicalId": "goku_super_saiyan.power.gather_power.06",
+   "characterId": "goku_super",
+   "formId": "goku_super_saiyan",
+   "assetType": "composite",
+   "view": "ACTION_DUEL",
+   "family": "power",
+   "role": "gather_power",
+   "variant": "gather_power",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "gather_power",
+    "power_up"
+   ],
+   "evidence": "CANONICAL",
+   "canonStatus": "CANONICAL",
+   "source": {
+    "sheet": "goku.png",
+    "frame": "024.png",
+    "x": "60",
+    "y": "794"
+   },
+   "frameKind": "atomic",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "goku_super_saiyan/025.png",
+   "canonicalId": "goku_super_saiyan.melee.ready.12",
+   "characterId": "goku_super",
+   "formId": "goku_super_saiyan",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "melee",
+   "role": "ready",
+   "variant": "attack_forward",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "attack_fwd",
+    "punch_left",
+    "kick_right"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "goku.png",
+    "frame": "025.png",
+    "x": "99",
+    "y": "797"
+   },
+   "frameKind": "atomic",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "goku_super_saiyan/026.png",
+   "canonicalId": "goku_super_saiyan.melee.ready.15",
+   "characterId": "goku_super",
+   "formId": "goku_super_saiyan",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "melee",
+   "role": "ready",
+   "variant": "attack_forward",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "attack_fwd",
+    "punch_left",
+    "kick_right"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "goku.png",
+    "frame": "026.png",
+    "x": "147",
+    "y": "797"
+   },
+   "frameKind": "atomic",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "goku_super_saiyan/027.png",
+   "canonicalId": "goku_super_saiyan.unclassified.027",
+   "characterId": "goku_super",
+   "formId": "goku_super_saiyan",
+   "assetType": "overworld",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "actor_pose",
+   "variant": "overworld_actor_or_pose",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
+   "source": {
+    "sheet": "goku.png",
+    "frame": "027.png",
+    "x": "221",
+    "y": "815"
+   },
+   "frameKind": "atomic",
+   "note": "bucket forense: overworld_actor_or_pose"
+  },
+  {
+   "sourceId": "goku_super_saiyan/028.png",
+   "canonicalId": "goku_super_saiyan.unclassified.028",
+   "characterId": "goku_super",
+   "formId": "goku_super_saiyan",
+   "assetType": "overworld",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "actor_pose",
+   "variant": "overworld_actor_or_pose",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
+   "source": {
+    "sheet": "goku.png",
+    "frame": "028.png",
+    "x": "243",
+    "y": "816"
+   },
+   "frameKind": "atomic",
+   "note": "bucket forense: overworld_actor_or_pose"
+  },
+  {
+   "sourceId": "goku_super_saiyan/029.png",
+   "canonicalId": "goku_super_saiyan.unclassified.029",
+   "characterId": "goku_super",
+   "formId": "goku_super_saiyan",
+   "assetType": "effect",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "aura_tile",
+   "variant": "battle_aura_tile",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
+   "source": {
+    "sheet": "goku.png",
+    "frame": "029.png",
+    "x": "264",
+    "y": "815"
+   },
+   "frameKind": "atomic",
+   "note": "bucket forense: battle_aura_tile"
+  },
+  {
+   "sourceId": "goku_super_saiyan/030.png",
+   "canonicalId": "goku_super_saiyan.unclassified.030",
+   "characterId": "goku_super",
+   "formId": "goku_super_saiyan",
+   "assetType": "composite",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "aura_composite",
+   "variant": "battle_aura_actor_composite",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
+   "source": {
+    "sheet": "goku.png",
+    "frame": "030.png",
+    "x": "293",
+    "y": "815"
+   },
+   "frameKind": "atomic",
+   "note": "bucket forense: battle_aura_actor_composite"
+  },
+  {
+   "sourceId": "goku_super_saiyan/031.png",
+   "canonicalId": "goku_super_saiyan.power.gather_power.08",
+   "characterId": "goku_super",
+   "formId": "goku_super_saiyan",
+   "assetType": "composite",
+   "view": "ACTION_DUEL",
+   "family": "power",
+   "role": "gather_power",
+   "variant": "gather_power",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "gather_power",
+    "power_up"
+   ],
+   "evidence": "CANONICAL",
+   "canonStatus": "CANONICAL",
+   "source": {
+    "sheet": "goku.png",
+    "frame": "031.png",
+    "x": "23",
+    "y": "853"
+   },
+   "frameKind": "atomic",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "goku_super_saiyan/032.png",
+   "canonicalId": "goku_super_saiyan.unclassified.032",
+   "characterId": "goku_super",
+   "formId": "goku_super_saiyan",
+   "assetType": "projectile",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "beam_ray",
+   "variant": "projectiles_beams",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
+   "source": {
+    "sheet": "goku.png",
+    "frame": "032.png",
+    "x": "87",
+    "y": "853"
+   },
+   "frameKind": "atomic",
+   "note": "bucket forense: projectiles_beams"
+  },
+  {
+   "sourceId": "goku_super_saiyan/033.png",
+   "canonicalId": "goku_super_saiyan.effect.aura.00",
+   "characterId": "goku_super",
+   "formId": "goku_super_saiyan",
+   "assetType": "effect",
+   "view": "FIELD",
+   "family": "effect",
+   "role": "aura",
+   "variant": "aura_power",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "aura_power"
+   ],
+   "evidence": "CANONICAL",
+   "canonStatus": "CANONICAL",
+   "source": {
+    "sheet": "goku.png",
+    "frame": "033.png",
+    "x": "214",
+    "y": "841"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "goku_super_saiyan/034.png",
+   "canonicalId": "goku_super_saiyan.effect.aura.01",
+   "characterId": "goku_super",
+   "formId": "goku_super_saiyan",
+   "assetType": "effect",
+   "view": "FIELD",
+   "family": "effect",
+   "role": "aura",
+   "variant": "aura_power",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "aura_power"
+   ],
+   "evidence": "CANONICAL",
+   "canonStatus": "CANONICAL",
+   "source": {
+    "sheet": "goku.png",
+    "frame": "034.png",
+    "x": "285",
+    "y": "842"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "goku_super_saiyan/035.png",
+   "canonicalId": "goku_super_saiyan.effect.aura.02",
+   "characterId": "goku_super",
+   "formId": "goku_super_saiyan",
+   "assetType": "effect",
+   "view": "FIELD",
+   "family": "effect",
+   "role": "aura",
+   "variant": "aura_power",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "aura_power"
+   ],
+   "evidence": "CANONICAL",
+   "canonStatus": "CANONICAL",
+   "source": {
+    "sheet": "goku.png",
+    "frame": "035.png",
+    "x": "354",
+    "y": "842"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "goku_super_saiyan/036.png",
+   "canonicalId": "goku_super_saiyan.unclassified.036",
+   "characterId": "goku_super",
+   "formId": "goku_super_saiyan",
+   "assetType": "projectile",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "orb",
+   "variant": "projectile_orb_small",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
+   "source": {
+    "sheet": "goku.png",
+    "frame": "036.png",
+    "x": "59",
+    "y": "869"
+   },
+   "frameKind": "atomic",
+   "note": "bucket forense: projectile_orb_small"
+  },
+  {
+   "sourceId": "goku_super_saiyan/037.png",
+   "canonicalId": "goku_super_saiyan.beam.charge_start.00",
+   "characterId": "goku_super",
+   "formId": "goku_super_saiyan",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "beam",
+   "role": "charge_start",
+   "variant": "charge",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "beam_charge"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "goku.png",
+    "frame": "037.png",
+    "x": "17",
+    "y": "933"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "goku_super_saiyan/038.png",
+   "canonicalId": "goku_super_saiyan.unclassified.038",
+   "characterId": "goku_super",
+   "formId": "goku_super_saiyan",
+   "assetType": "projectile",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "beam_ray",
+   "variant": "projectiles_beams",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
+   "source": {
+    "sheet": "goku.png",
+    "frame": "038.png",
+    "x": "57",
+    "y": "933"
+   },
+   "frameKind": "atomic",
+   "note": "bucket forense: projectiles_beams"
+  },
+  {
+   "sourceId": "goku_super_saiyan/039.png",
+   "canonicalId": "goku_super_saiyan.unclassified.039",
+   "characterId": "goku_super",
+   "formId": "goku_super_saiyan",
+   "assetType": "unclassified",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "unclassified",
+   "variant": "multi_evidence_projectiles_beams_character_plus_aura_or_burst_movement_or_attack_pose",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "UNKNOWN",
+   "canonStatus": "UNCLASSIFIED",
+   "source": {
+    "sheet": "goku.png",
+    "frame": "039.png",
+    "x": "182",
+    "y": "938"
+   },
+   "frameKind": "atomic",
+   "note": "bucket forense: multi_evidence_projectiles_beams_character_plus_aura_or_burst_movement_or_attack_pose"
+  },
+  {
+   "sourceId": "goku_super_saiyan/040.png",
+   "canonicalId": "goku_super_saiyan.beam.charge_start.01",
+   "characterId": "goku_super",
+   "formId": "goku_super_saiyan",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "beam",
+   "role": "charge_start",
+   "variant": "charge",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "beam_charge"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "goku.png",
+    "frame": "040.png",
+    "x": "242",
+    "y": "933"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "goku_super_saiyan/041.png",
+   "canonicalId": "goku_super_saiyan.unclassified.041",
+   "characterId": "goku_super",
+   "formId": "goku_super_saiyan",
+   "assetType": "projectile",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "beam_ray",
+   "variant": "projectiles_beams",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
+   "source": {
+    "sheet": "goku.png",
+    "frame": "041.png",
+    "x": "280",
+    "y": "922"
+   },
+   "frameKind": "atomic",
+   "note": "bucket forense: projectiles_beams"
+  },
+  {
+   "sourceId": "goku_super_saiyan/042.png",
+   "canonicalId": "goku_super_saiyan.unclassified.042",
+   "characterId": "goku_super",
+   "formId": "goku_super_saiyan",
+   "assetType": "unclassified",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "unclassified",
+   "variant": "multi_evidence_orbs_rings_bursts_projectiles_beams",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "UNKNOWN",
+   "canonStatus": "UNCLASSIFIED",
+   "source": {
+    "sheet": "goku.png",
+    "frame": "042.png",
+    "x": "409",
+    "y": "926"
+   },
+   "frameKind": "atomic",
+   "note": "bucket forense: multi_evidence_orbs_rings_bursts_projectiles_beams"
+  },
+  {
+   "sourceId": "goku_super_saiyan/043.png",
+   "canonicalId": "goku_super_saiyan.unclassified.043",
+   "characterId": "goku_super",
+   "formId": "goku_super_saiyan",
+   "assetType": "unclassified",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "unclassified",
+   "variant": "multi_evidence_projectiles_beams_character_plus_aura_or_burst",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "UNKNOWN",
+   "canonStatus": "UNCLASSIFIED",
+   "source": {
+    "sheet": "goku.png",
+    "frame": "043.png",
+    "x": "14",
+    "y": "1015"
+   },
+   "frameKind": "atomic",
+   "note": "bucket forense: multi_evidence_projectiles_beams_character_plus_aura_or_burst"
+  },
+  {
+   "sourceId": "goku_super_saiyan/044.png",
+   "canonicalId": "goku_super_saiyan.beam.charge_start.02",
+   "characterId": "goku_super",
+   "formId": "goku_super_saiyan",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "beam",
+   "role": "charge_start",
+   "variant": "charge",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "beam_charge"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "goku.png",
+    "frame": "044.png",
+    "x": "38",
+    "y": "1080"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "goku_super_saiyan/045.png",
+   "canonicalId": "goku_super_saiyan.beam.charge_start.03",
+   "characterId": "goku_super",
+   "formId": "goku_super_saiyan",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "beam",
+   "role": "charge_start",
+   "variant": "charge",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "beam_charge"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "goku.png",
+    "frame": "045.png",
+    "x": "87",
+    "y": "1082"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "goku_super_saiyan/046.png",
+   "canonicalId": "goku_super_saiyan.beam.charge_start.04",
+   "characterId": "goku_super",
+   "formId": "goku_super_saiyan",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "beam",
+   "role": "charge_start",
+   "variant": "charge",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "beam_charge"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "goku.png",
+    "frame": "046.png",
+    "x": "162",
+    "y": "1081"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "goku_super_saiyan/047.png",
+   "canonicalId": "goku_super_saiyan.effect.aura.03",
+   "characterId": "goku_super",
+   "formId": "goku_super_saiyan",
+   "assetType": "effect",
+   "view": "FIELD",
+   "family": "effect",
+   "role": "aura",
+   "variant": "aura_support",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "aura_support"
+   ],
+   "evidence": "CANONICAL",
+   "canonStatus": "CANONICAL",
+   "source": {
+    "sheet": "",
+    "frame": "047.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "goku_super_saiyan/048.png",
+   "canonicalId": "goku_super_saiyan.effect.aura.04",
+   "characterId": "goku_super",
+   "formId": "goku_super_saiyan",
+   "assetType": "effect",
+   "view": "FIELD",
+   "family": "effect",
+   "role": "aura",
+   "variant": "aura_support",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "aura_support"
+   ],
+   "evidence": "CANONICAL",
+   "canonStatus": "CANONICAL",
+   "source": {
+    "sheet": "",
+    "frame": "048.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "goku_super_saiyan/049.png",
+   "canonicalId": "goku_super_saiyan.effect.aura.05",
+   "characterId": "goku_super",
+   "formId": "goku_super_saiyan",
+   "assetType": "effect",
+   "view": "FIELD",
+   "family": "effect",
+   "role": "aura",
+   "variant": "aura_support",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "aura_support"
+   ],
+   "evidence": "CANONICAL",
+   "canonStatus": "CANONICAL",
+   "source": {
+    "sheet": "",
+    "frame": "049.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "goku_super_saiyan/050.png",
+   "canonicalId": "goku_super_saiyan.effect.aura.06",
+   "characterId": "goku_super",
+   "formId": "goku_super_saiyan",
+   "assetType": "effect",
+   "view": "FIELD",
+   "family": "effect",
+   "role": "aura",
+   "variant": "aura_support",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "aura_support"
+   ],
+   "evidence": "CANONICAL",
+   "canonStatus": "CANONICAL",
+   "source": {
+    "sheet": "",
+    "frame": "050.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "goku_super_saiyan/051.png",
+   "canonicalId": "goku_super_saiyan.effect.aura.07",
+   "characterId": "goku_super",
+   "formId": "goku_super_saiyan",
+   "assetType": "effect",
+   "view": "FIELD",
+   "family": "effect",
+   "role": "aura",
+   "variant": "aura_support",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "aura_support"
+   ],
+   "evidence": "CANONICAL",
+   "canonStatus": "CANONICAL",
+   "source": {
+    "sheet": "",
+    "frame": "051.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "goku_super_saiyan/052.png",
+   "canonicalId": "goku_super_saiyan.effect.aura.08",
+   "characterId": "goku_super",
+   "formId": "goku_super_saiyan",
+   "assetType": "effect",
+   "view": "FIELD",
+   "family": "effect",
+   "role": "aura",
+   "variant": "aura_support",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "aura_support"
+   ],
+   "evidence": "CANONICAL",
+   "canonStatus": "CANONICAL",
+   "source": {
+    "sheet": "",
+    "frame": "052.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "goku_super_saiyan/000_attack_fwd.png",
+   "canonicalId": "goku_super_saiyan.melee.ready.18",
+   "characterId": "goku_super",
+   "formId": "goku_super_saiyan",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "melee",
+   "role": "ready",
+   "variant": "attack_forward",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "attack_fwd",
+    "punch_right"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "",
+    "frame": "000_attack_fwd.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "fixed_only",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "goku_super_saiyan/001_attack_fwd.png",
+   "canonicalId": "goku_super_saiyan.melee.ready.20",
+   "characterId": "goku_super",
+   "formId": "goku_super_saiyan",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "melee",
+   "role": "ready",
+   "variant": "attack_forward",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "attack_fwd",
+    "punch_right"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "",
+    "frame": "001_attack_fwd.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "fixed_only",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "goku_super_saiyan/002_attack_fwd.png",
+   "canonicalId": "goku_super_saiyan.melee.ready.22",
+   "characterId": "goku_super",
+   "formId": "goku_super_saiyan",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "melee",
+   "role": "ready",
+   "variant": "attack_forward",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "attack_fwd",
+    "punch_left",
+    "kick_right"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "",
+    "frame": "002_attack_fwd.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "fixed_only",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "goku_super_saiyan/003_attack_ud.png",
+   "canonicalId": "goku_super_saiyan.melee.ready.25",
+   "characterId": "goku_super",
+   "formId": "goku_super_saiyan",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "melee",
+   "role": "ready",
+   "variant": "attack_vertical",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "attack_ud",
+    "knockback_up"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "",
+    "frame": "003_attack_ud.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "fixed_only",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "goku_super_saiyan/004_beam_charge.png",
+   "canonicalId": "goku_super_saiyan.beam.charge_start.05",
+   "characterId": "goku_super",
+   "formId": "goku_super_saiyan",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "beam",
+   "role": "charge_start",
+   "variant": "charge",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "beam_charge"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "",
+    "frame": "004_beam_charge.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "fixed_only"
+  },
+  {
+   "sourceId": "goku_super_saiyan/005_beam_charge.png",
+   "canonicalId": "goku_super_saiyan.beam.charge_start.06",
+   "characterId": "goku_super",
+   "formId": "goku_super_saiyan",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "beam",
+   "role": "charge_start",
+   "variant": "charge",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "beam_charge"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "",
+    "frame": "005_beam_charge.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "fixed_only"
+  },
+  {
+   "sourceId": "goku_super_saiyan/006_beam_charge.png",
+   "canonicalId": "goku_super_saiyan.beam.charge_start.07",
+   "characterId": "goku_super",
+   "formId": "goku_super_saiyan",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "beam",
+   "role": "charge_start",
+   "variant": "charge",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "beam_charge"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "",
+    "frame": "006_beam_charge.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "fixed_only"
+  },
+  {
+   "sourceId": "goku_super_saiyan/007_beam_charge.png",
+   "canonicalId": "goku_super_saiyan.beam.charge_start.08",
+   "characterId": "goku_super",
+   "formId": "goku_super_saiyan",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "beam",
+   "role": "charge_start",
+   "variant": "charge",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "beam_charge"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "",
+    "frame": "007_beam_charge.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "fixed_only"
+  },
+  {
+   "sourceId": "goku_super_saiyan/008_beam_charge.png",
+   "canonicalId": "goku_super_saiyan.beam.charge_start.09",
+   "characterId": "goku_super",
+   "formId": "goku_super_saiyan",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "beam",
+   "role": "charge_start",
+   "variant": "charge",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "beam_charge"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "",
+    "frame": "008_beam_charge.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "fixed_only"
+  },
+  {
+   "sourceId": "goku_super_saiyan/009_hurt.png",
+   "canonicalId": "goku_super_saiyan.unclassified.009_hurt",
+   "characterId": "goku_super",
+   "formId": "goku_super_saiyan",
+   "assetType": "unclassified",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "unclassified",
+   "variant": "",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "UNKNOWN",
+   "canonStatus": "UNCLASSIFIED",
+   "source": {
+    "sheet": "",
+    "frame": "009_hurt.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "fixed_only",
+   "note": "sin evidencia runtime ni bucket"
+  },
+  {
+   "sourceId": "goku_super_saiyan/010_hurt.png",
+   "canonicalId": "goku_super_saiyan.unclassified.010_hurt",
+   "characterId": "goku_super",
+   "formId": "goku_super_saiyan",
+   "assetType": "unclassified",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "unclassified",
+   "variant": "",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "UNKNOWN",
+   "canonStatus": "UNCLASSIFIED",
+   "source": {
+    "sheet": "",
+    "frame": "010_hurt.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "fixed_only",
+   "note": "sin evidencia runtime ni bucket"
+  },
+  {
+   "sourceId": "goku_super_saiyan/011_hurt.png",
+   "canonicalId": "goku_super_saiyan.unclassified.011_hurt",
+   "characterId": "goku_super",
+   "formId": "goku_super_saiyan",
+   "assetType": "unclassified",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "unclassified",
+   "variant": "",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "UNKNOWN",
+   "canonStatus": "UNCLASSIFIED",
+   "source": {
+    "sheet": "",
+    "frame": "011_hurt.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "fixed_only",
+   "note": "sin evidencia runtime ni bucket"
+  },
+  {
+   "sourceId": "goku_super_saiyan/012_hurt.png",
+   "canonicalId": "goku_super_saiyan.unclassified.012_hurt",
+   "characterId": "goku_super",
+   "formId": "goku_super_saiyan",
+   "assetType": "unclassified",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "unclassified",
+   "variant": "",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "UNKNOWN",
+   "canonStatus": "UNCLASSIFIED",
+   "source": {
+    "sheet": "",
+    "frame": "012_hurt.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "fixed_only",
+   "note": "sin evidencia runtime ni bucket"
+  }
+ ]
+}

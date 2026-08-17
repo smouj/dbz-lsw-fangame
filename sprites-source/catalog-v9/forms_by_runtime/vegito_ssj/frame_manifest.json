@@ -1,0 +1,2236 @@
+{
+ "form": "vegito_ssj",
+ "frameCount": 93,
+ "frames": [
+  {
+   "sourceId": "vegito_ssj/001.png",
+   "canonicalId": "vegito_ssj.idle.idle.00",
+   "characterId": "vegito",
+   "formId": "vegito_ssj",
+   "assetType": "actor_frame",
+   "view": "FIELD",
+   "family": "melee",
+   "role": "strike",
+   "variant": "punch_right",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "idle",
+    "punch_right",
+    "punch_left"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "vegito.png",
+    "frame": "001.png",
+    "x": "6",
+    "y": "13"
+   },
+   "frameKind": "atomic",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "vegito_ssj/002.png",
+   "canonicalId": "vegito_ssj.power.gather_power.00",
+   "characterId": "vegito",
+   "formId": "vegito_ssj",
+   "assetType": "composite",
+   "view": "ACTION_DUEL",
+   "family": "power",
+   "role": "gather_power",
+   "variant": "gather_power",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "gather_power",
+    "power_up"
+   ],
+   "evidence": "CANONICAL",
+   "canonStatus": "CANONICAL",
+   "source": {
+    "sheet": "vegito.png",
+    "frame": "002.png",
+    "x": "39",
+    "y": "14"
+   },
+   "frameKind": "atomic",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "vegito_ssj/003.png",
+   "canonicalId": "vegito_ssj.defense.start.00",
+   "characterId": "vegito",
+   "formId": "vegito_ssj",
+   "assetType": "actor_frame",
+   "view": "FIELD",
+   "family": "defense",
+   "role": "start",
+   "variant": "guard",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "guard",
+    "beam_guard"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "vegito.png",
+    "frame": "003.png",
+    "x": "77",
+    "y": "16"
+   },
+   "frameKind": "atomic",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "vegito_ssj/004.png",
+   "canonicalId": "vegito_ssj.defense.start.02",
+   "characterId": "vegito",
+   "formId": "vegito_ssj",
+   "assetType": "actor_frame",
+   "view": "FIELD",
+   "family": "defense",
+   "role": "start",
+   "variant": "guard",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "guard",
+    "beam_guard"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "vegito.png",
+    "frame": "004.png",
+    "x": "124",
+    "y": "14"
+   },
+   "frameKind": "atomic",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "vegito_ssj/005.png",
+   "canonicalId": "vegito_ssj.unclassified.005",
+   "characterId": "vegito",
+   "formId": "vegito_ssj",
+   "assetType": "composite",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "aura_composite",
+   "variant": "battle_aura_actor_composite",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
+   "source": {
+    "sheet": "vegito.png",
+    "frame": "005.png",
+    "x": "356",
+    "y": "5"
+   },
+   "frameKind": "atomic",
+   "note": "bucket forense: battle_aura_actor_composite"
+  },
+  {
+   "sourceId": "vegito_ssj/006.png",
+   "canonicalId": "vegito_ssj.unclassified.006",
+   "characterId": "vegito",
+   "formId": "vegito_ssj",
+   "assetType": "effect",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "aura_tile",
+   "variant": "battle_aura_tile",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
+   "source": {
+    "sheet": "vegito.png",
+    "frame": "006.png",
+    "x": "386",
+    "y": "5"
+   },
+   "frameKind": "atomic",
+   "note": "bucket forense: battle_aura_tile"
+  },
+  {
+   "sourceId": "vegito_ssj/007.png",
+   "canonicalId": "vegito_ssj.unclassified.007",
+   "characterId": "vegito",
+   "formId": "vegito_ssj",
+   "assetType": "overworld",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "actor_pose",
+   "variant": "overworld_actor_or_pose",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
+   "source": {
+    "sheet": "vegito.png",
+    "frame": "007.png",
+    "x": "419",
+    "y": "5"
+   },
+   "frameKind": "atomic",
+   "note": "bucket forense: overworld_actor_or_pose"
+  },
+  {
+   "sourceId": "vegito_ssj/008.png",
+   "canonicalId": "vegito_ssj.unclassified.008",
+   "characterId": "vegito",
+   "formId": "vegito_ssj",
+   "assetType": "overworld",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "actor_pose",
+   "variant": "overworld_actor_or_pose",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
+   "source": {
+    "sheet": "vegito.png",
+    "frame": "008.png",
+    "x": "438",
+    "y": "5"
+   },
+   "frameKind": "atomic",
+   "note": "bucket forense: overworld_actor_or_pose"
+  },
+  {
+   "sourceId": "vegito_ssj/009.png",
+   "canonicalId": "vegito_ssj.defense.start.04",
+   "characterId": "vegito",
+   "formId": "vegito_ssj",
+   "assetType": "actor_frame",
+   "view": "FIELD",
+   "family": "defense",
+   "role": "start",
+   "variant": "evade",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "evade"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "vegito.png",
+    "frame": "009.png",
+    "x": "12",
+    "y": "76"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "vegito_ssj/010.png",
+   "canonicalId": "vegito_ssj.defense.start.05",
+   "characterId": "vegito",
+   "formId": "vegito_ssj",
+   "assetType": "actor_frame",
+   "view": "FIELD",
+   "family": "defense",
+   "role": "start",
+   "variant": "evade",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "evade"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "vegito.png",
+    "frame": "010.png",
+    "x": "62",
+    "y": "69"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "vegito_ssj/011.png",
+   "canonicalId": "vegito_ssj.movement.start.00",
+   "characterId": "vegito",
+   "formId": "vegito_ssj",
+   "assetType": "actor_frame",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "start",
+   "variant": "move_front",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "move_front",
+    "move_back"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "vegito.png",
+    "frame": "011.png",
+    "x": "97",
+    "y": "65"
+   },
+   "frameKind": "atomic",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "vegito_ssj/012.png",
+   "canonicalId": "vegito_ssj.movement.start.02",
+   "characterId": "vegito",
+   "formId": "vegito_ssj",
+   "assetType": "actor_frame",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "start",
+   "variant": "move_front",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "move_front",
+    "move_back"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "vegito.png",
+    "frame": "012.png",
+    "x": "133",
+    "y": "71"
+   },
+   "frameKind": "atomic",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "vegito_ssj/013.png",
+   "canonicalId": "vegito_ssj.reaction.hurt_light.00",
+   "characterId": "vegito",
+   "formId": "vegito_ssj",
+   "assetType": "actor_frame",
+   "view": "FIELD",
+   "family": "reaction",
+   "role": "hurt_light",
+   "variant": "hurt",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "hurt"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "vegito.png",
+    "frame": "013.png",
+    "x": "20",
+    "y": "118"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "vegito_ssj/014.png",
+   "canonicalId": "vegito_ssj.reaction.hurt_light.01",
+   "characterId": "vegito",
+   "formId": "vegito_ssj",
+   "assetType": "actor_frame",
+   "view": "FIELD",
+   "family": "reaction",
+   "role": "hurt_light",
+   "variant": "hurt",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "hurt"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "vegito.png",
+    "frame": "014.png",
+    "x": "60",
+    "y": "120"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "vegito_ssj/015.png",
+   "canonicalId": "vegito_ssj.reaction.hurt_light.02",
+   "characterId": "vegito",
+   "formId": "vegito_ssj",
+   "assetType": "actor_frame",
+   "view": "FIELD",
+   "family": "reaction",
+   "role": "hurt_light",
+   "variant": "hurt",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "hurt"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "vegito.png",
+    "frame": "015.png",
+    "x": "101",
+    "y": "122"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "vegito_ssj/016.png",
+   "canonicalId": "vegito_ssj.reaction.hurt_light.03",
+   "characterId": "vegito",
+   "formId": "vegito_ssj",
+   "assetType": "actor_frame",
+   "view": "FIELD",
+   "family": "reaction",
+   "role": "hurt_light",
+   "variant": "hurt",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "hurt"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "vegito.png",
+    "frame": "016.png",
+    "x": "151",
+    "y": "114"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "vegito_ssj/017.png",
+   "canonicalId": "vegito_ssj.reaction.hurt_light.04",
+   "characterId": "vegito",
+   "formId": "vegito_ssj",
+   "assetType": "actor_frame",
+   "view": "FIELD",
+   "family": "reaction",
+   "role": "hurt_light",
+   "variant": "hurt",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "hurt"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "vegito.png",
+    "frame": "017.png",
+    "x": "187",
+    "y": "117"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "vegito_ssj/018.png",
+   "canonicalId": "vegito_ssj.reaction.hurt_light.05",
+   "characterId": "vegito",
+   "formId": "vegito_ssj",
+   "assetType": "actor_frame",
+   "view": "FIELD",
+   "family": "reaction",
+   "role": "hurt_light",
+   "variant": "hurt",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "hurt"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "vegito.png",
+    "frame": "018.png",
+    "x": "226",
+    "y": "116"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "vegito_ssj/019.png",
+   "canonicalId": "vegito_ssj.unclassified.019",
+   "characterId": "vegito",
+   "formId": "vegito_ssj",
+   "assetType": "unclassified",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "unclassified",
+   "variant": "downed_or_hurt",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "UNKNOWN",
+   "canonStatus": "UNCLASSIFIED",
+   "source": {
+    "sheet": "vegito.png",
+    "frame": "019.png",
+    "x": "264",
+    "y": "140"
+   },
+   "frameKind": "atomic",
+   "note": "bucket forense: downed_or_hurt"
+  },
+  {
+   "sourceId": "vegito_ssj/020.png",
+   "canonicalId": "vegito_ssj.melee.ready.02",
+   "characterId": "vegito",
+   "formId": "vegito_ssj",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "melee",
+   "role": "ready",
+   "variant": "attack_forward",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "attack_fwd",
+    "punch_right"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "vegito.png",
+    "frame": "020.png",
+    "x": "18",
+    "y": "171"
+   },
+   "frameKind": "atomic",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "vegito_ssj/021.png",
+   "canonicalId": "vegito_ssj.melee.ready.04",
+   "characterId": "vegito",
+   "formId": "vegito_ssj",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "melee",
+   "role": "ready",
+   "variant": "attack_forward",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "attack_fwd",
+    "punch_right"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "vegito.png",
+    "frame": "021.png",
+    "x": "64",
+    "y": "169"
+   },
+   "frameKind": "atomic",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "vegito_ssj/022.png",
+   "canonicalId": "vegito_ssj.melee.ready.06",
+   "characterId": "vegito",
+   "formId": "vegito_ssj",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "melee",
+   "role": "ready",
+   "variant": "attack_forward",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "attack_fwd",
+    "punch_right",
+    "knockback_back"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "vegito.png",
+    "frame": "022.png",
+    "x": "116",
+    "y": "172"
+   },
+   "frameKind": "atomic",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "vegito_ssj/023.png",
+   "canonicalId": "vegito_ssj.melee.ready.08",
+   "characterId": "vegito",
+   "formId": "vegito_ssj",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "melee",
+   "role": "ready",
+   "variant": "attack_forward",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "attack_fwd",
+    "punch_left",
+    "knockback_up"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "vegito.png",
+    "frame": "023.png",
+    "x": "167",
+    "y": "172"
+   },
+   "frameKind": "atomic",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "vegito_ssj/024.png",
+   "canonicalId": "vegito_ssj.melee.ready.10",
+   "characterId": "vegito",
+   "formId": "vegito_ssj",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "melee",
+   "role": "ready",
+   "variant": "attack_forward",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "attack_fwd",
+    "punch_left"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "vegito.png",
+    "frame": "024.png",
+    "x": "218",
+    "y": "167"
+   },
+   "frameKind": "atomic",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "vegito_ssj/025.png",
+   "canonicalId": "vegito_ssj.melee.ready.12",
+   "characterId": "vegito",
+   "formId": "vegito_ssj",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "melee",
+   "role": "ready",
+   "variant": "attack_forward",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "attack_fwd",
+    "punch_left",
+    "knockback_down"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "vegito.png",
+    "frame": "025.png",
+    "x": "253",
+    "y": "167"
+   },
+   "frameKind": "atomic",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "vegito_ssj/026.png",
+   "canonicalId": "vegito_ssj.melee.ready.14",
+   "characterId": "vegito",
+   "formId": "vegito_ssj",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "melee",
+   "role": "ready",
+   "variant": "attack_forward",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "attack_fwd",
+    "punch_left",
+    "knockback_down"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "vegito.png",
+    "frame": "026.png",
+    "x": "291",
+    "y": "174"
+   },
+   "frameKind": "atomic",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "vegito_ssj/027.png",
+   "canonicalId": "vegito_ssj.melee.ready.16",
+   "characterId": "vegito",
+   "formId": "vegito_ssj",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "melee",
+   "role": "ready",
+   "variant": "attack_vertical",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "attack_ud"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "vegito.png",
+    "frame": "027.png",
+    "x": "25",
+    "y": "225"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "vegito_ssj/028.png",
+   "canonicalId": "vegito_ssj.melee.ready.17",
+   "characterId": "vegito",
+   "formId": "vegito_ssj",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "melee",
+   "role": "ready",
+   "variant": "attack_vertical",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "attack_ud"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "vegito.png",
+    "frame": "028.png",
+    "x": "68",
+    "y": "225"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "vegito_ssj/029.png",
+   "canonicalId": "vegito_ssj.melee.ready.18",
+   "characterId": "vegito",
+   "formId": "vegito_ssj",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "melee",
+   "role": "ready",
+   "variant": "attack_vertical",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "attack_ud",
+    "kick_right"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "vegito.png",
+    "frame": "029.png",
+    "x": "126",
+    "y": "224"
+   },
+   "frameKind": "atomic",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "vegito_ssj/030.png",
+   "canonicalId": "vegito_ssj.melee.ready.20",
+   "characterId": "vegito",
+   "formId": "vegito_ssj",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "melee",
+   "role": "ready",
+   "variant": "attack_vertical",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "attack_ud",
+    "kick_right"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "vegito.png",
+    "frame": "030.png",
+    "x": "175",
+    "y": "223"
+   },
+   "frameKind": "atomic",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "vegito_ssj/031.png",
+   "canonicalId": "vegito_ssj.unclassified.031",
+   "characterId": "vegito",
+   "formId": "vegito_ssj",
+   "assetType": "projectile",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "beam_ray",
+   "variant": "projectiles_beams",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
+   "source": {
+    "sheet": "vegito.png",
+    "frame": "031.png",
+    "x": "11",
+    "y": "284"
+   },
+   "frameKind": "atomic",
+   "note": "bucket forense: projectiles_beams"
+  },
+  {
+   "sourceId": "vegito_ssj/032.png",
+   "canonicalId": "vegito_ssj.power.gather_power.02",
+   "characterId": "vegito",
+   "formId": "vegito_ssj",
+   "assetType": "composite",
+   "view": "ACTION_DUEL",
+   "family": "power",
+   "role": "gather_power",
+   "variant": "gather_power",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "gather_power",
+    "gather_power",
+    "power_up",
+    "power_up"
+   ],
+   "evidence": "CANONICAL",
+   "canonStatus": "CANONICAL",
+   "source": {
+    "sheet": "vegito.png",
+    "frame": "032.png",
+    "x": "154",
+    "y": "284"
+   },
+   "frameKind": "atomic",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "vegito_ssj/033.png",
+   "canonicalId": "vegito_ssj.effect.aura.00",
+   "characterId": "vegito",
+   "formId": "vegito_ssj",
+   "assetType": "effect",
+   "view": "FIELD",
+   "family": "effect",
+   "role": "aura",
+   "variant": "aura_power",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "aura_power"
+   ],
+   "evidence": "CANONICAL",
+   "canonStatus": "CANONICAL",
+   "source": {
+    "sheet": "vegito.png",
+    "frame": "033.png",
+    "x": "242",
+    "y": "271"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "vegito_ssj/034.png",
+   "canonicalId": "vegito_ssj.effect.aura.01",
+   "characterId": "vegito",
+   "formId": "vegito_ssj",
+   "assetType": "effect",
+   "view": "FIELD",
+   "family": "effect",
+   "role": "aura",
+   "variant": "aura_power",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "aura_power"
+   ],
+   "evidence": "CANONICAL",
+   "canonStatus": "CANONICAL",
+   "source": {
+    "sheet": "vegito.png",
+    "frame": "034.png",
+    "x": "317",
+    "y": "271"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "vegito_ssj/035.png",
+   "canonicalId": "vegito_ssj.effect.aura.02",
+   "characterId": "vegito",
+   "formId": "vegito_ssj",
+   "assetType": "effect",
+   "view": "FIELD",
+   "family": "effect",
+   "role": "aura",
+   "variant": "aura_power",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "aura_power"
+   ],
+   "evidence": "CANONICAL",
+   "canonStatus": "CANONICAL",
+   "source": {
+    "sheet": "vegito.png",
+    "frame": "035.png",
+    "x": "390",
+    "y": "271"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "vegito_ssj/036.png",
+   "canonicalId": "vegito_ssj.unclassified.036",
+   "characterId": "vegito",
+   "formId": "vegito_ssj",
+   "assetType": "projectile",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "orb",
+   "variant": "projectile_orb_small",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
+   "source": {
+    "sheet": "vegito.png",
+    "frame": "036.png",
+    "x": "193",
+    "y": "298"
+   },
+   "frameKind": "atomic",
+   "note": "bucket forense: projectile_orb_small"
+  },
+  {
+   "sourceId": "vegito_ssj/037.png",
+   "canonicalId": "vegito_ssj.beam.charge_start.00",
+   "characterId": "vegito",
+   "formId": "vegito_ssj",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "beam",
+   "role": "charge_start",
+   "variant": "charge",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "beam_charge"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "vegito.png",
+    "frame": "037.png",
+    "x": "11",
+    "y": "364"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "vegito_ssj/038.png",
+   "canonicalId": "vegito_ssj.unclassified.038",
+   "characterId": "vegito",
+   "formId": "vegito_ssj",
+   "assetType": "projectile",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "beam_ray",
+   "variant": "projectiles_beams",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
+   "source": {
+    "sheet": "vegito.png",
+    "frame": "038.png",
+    "x": "50",
+    "y": "362"
+   },
+   "frameKind": "atomic",
+   "note": "bucket forense: projectiles_beams"
+  },
+  {
+   "sourceId": "vegito_ssj/039.png",
+   "canonicalId": "vegito_ssj.unclassified.039",
+   "characterId": "vegito",
+   "formId": "vegito_ssj",
+   "assetType": "composite",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "aura_or_burst",
+   "variant": "character_plus_aura_or_burst",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
+   "source": {
+    "sheet": "vegito.png",
+    "frame": "039.png",
+    "x": "173",
+    "y": "367"
+   },
+   "frameKind": "atomic",
+   "note": "bucket forense: character_plus_aura_or_burst"
+  },
+  {
+   "sourceId": "vegito_ssj/040.png",
+   "canonicalId": "vegito_ssj.beam.charge_start.01",
+   "characterId": "vegito",
+   "formId": "vegito_ssj",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "beam",
+   "role": "charge_start",
+   "variant": "charge",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "beam_charge"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "vegito.png",
+    "frame": "040.png",
+    "x": "254",
+    "y": "359"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "vegito_ssj/041.png",
+   "canonicalId": "vegito_ssj.unclassified.041",
+   "characterId": "vegito",
+   "formId": "vegito_ssj",
+   "assetType": "projectile",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "beam_ray",
+   "variant": "projectiles_beams",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
+   "source": {
+    "sheet": "vegito.png",
+    "frame": "041.png",
+    "x": "293",
+    "y": "348"
+   },
+   "frameKind": "atomic",
+   "note": "bucket forense: projectiles_beams"
+  },
+  {
+   "sourceId": "vegito_ssj/042.png",
+   "canonicalId": "vegito_ssj.unclassified.042",
+   "characterId": "vegito",
+   "formId": "vegito_ssj",
+   "assetType": "projectile",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "beam_ray",
+   "variant": "projectiles_beams",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
+   "source": {
+    "sheet": "vegito.png",
+    "frame": "042.png",
+    "x": "415",
+    "y": "353"
+   },
+   "frameKind": "atomic",
+   "note": "bucket forense: projectiles_beams"
+  },
+  {
+   "sourceId": "vegito_ssj/043.png",
+   "canonicalId": "vegito_ssj.beam.charge_start.02",
+   "characterId": "vegito",
+   "formId": "vegito_ssj",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "beam",
+   "role": "charge_start",
+   "variant": "charge",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "beam_charge",
+    "beam_fire"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "vegito.png",
+    "frame": "043.png",
+    "x": "12",
+    "y": "432"
+   },
+   "frameKind": "atomic",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "vegito_ssj/044.png",
+   "canonicalId": "vegito_ssj.unclassified.044",
+   "characterId": "vegito",
+   "formId": "vegito_ssj",
+   "assetType": "effect",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "orbs_rings_bursts",
+   "variant": "orbs_rings_bursts",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
+   "source": {
+    "sheet": "vegito.png",
+    "frame": "044.png",
+    "x": "58",
+    "y": "427"
+   },
+   "frameKind": "atomic",
+   "note": "bucket forense: orbs_rings_bursts"
+  },
+  {
+   "sourceId": "vegito_ssj/045.png",
+   "canonicalId": "vegito_ssj.beam.charge_start.04",
+   "characterId": "vegito",
+   "formId": "vegito_ssj",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "beam",
+   "role": "charge_start",
+   "variant": "charge",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "beam_charge",
+    "beam_fire"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "vegito.png",
+    "frame": "045.png",
+    "x": "147",
+    "y": "432"
+   },
+   "frameKind": "atomic",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "vegito_ssj/046.png",
+   "canonicalId": "vegito_ssj.unclassified.046",
+   "characterId": "vegito",
+   "formId": "vegito_ssj",
+   "assetType": "projectile",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "beam_ray",
+   "variant": "projectiles_beams",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
+   "source": {
+    "sheet": "vegito.png",
+    "frame": "046.png",
+    "x": "187",
+    "y": "424"
+   },
+   "frameKind": "atomic",
+   "note": "bucket forense: projectiles_beams"
+  },
+  {
+   "sourceId": "vegito_ssj/047.png",
+   "canonicalId": "vegito_ssj.unclassified.047",
+   "characterId": "vegito",
+   "formId": "vegito_ssj",
+   "assetType": "effect",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "orbs_rings_bursts",
+   "variant": "orbs_rings_bursts",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
+   "source": {
+    "sheet": "vegito.png",
+    "frame": "047.png",
+    "x": "313",
+    "y": "423"
+   },
+   "frameKind": "atomic",
+   "note": "bucket forense: orbs_rings_bursts"
+  },
+  {
+   "sourceId": "vegito_ssj/048.png",
+   "canonicalId": "vegito_ssj.beam.charge_start.06",
+   "characterId": "vegito",
+   "formId": "vegito_ssj",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "beam",
+   "role": "charge_start",
+   "variant": "charge",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "beam_charge",
+    "beam_fire"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "vegito.png",
+    "frame": "048.png",
+    "x": "419",
+    "y": "432"
+   },
+   "frameKind": "atomic",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "vegito_ssj/049.png",
+   "canonicalId": "vegito_ssj.beam.charge_start.08",
+   "characterId": "vegito",
+   "formId": "vegito_ssj",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "beam",
+   "role": "charge_start",
+   "variant": "charge",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "beam_charge"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "vegito.png",
+    "frame": "049.png",
+    "x": "12",
+    "y": "508"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "vegito_ssj/050.png",
+   "canonicalId": "vegito_ssj.unclassified.050",
+   "characterId": "vegito",
+   "formId": "vegito_ssj",
+   "assetType": "projectile",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "beam_ray",
+   "variant": "projectiles_beams",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
+   "source": {
+    "sheet": "vegito.png",
+    "frame": "050.png",
+    "x": "51",
+    "y": "507"
+   },
+   "frameKind": "atomic",
+   "note": "bucket forense: projectiles_beams"
+  },
+  {
+   "sourceId": "vegito_ssj/051.png",
+   "canonicalId": "vegito_ssj.unclassified.051",
+   "characterId": "vegito",
+   "formId": "vegito_ssj",
+   "assetType": "unclassified",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "unclassified",
+   "variant": "downed_or_hurt",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "UNKNOWN",
+   "canonStatus": "UNCLASSIFIED",
+   "source": {
+    "sheet": "vegito.png",
+    "frame": "051.png",
+    "x": "175",
+    "y": "514"
+   },
+   "frameKind": "atomic",
+   "note": "bucket forense: downed_or_hurt"
+  },
+  {
+   "sourceId": "vegito_ssj/052.png",
+   "canonicalId": "vegito_ssj.power.gather_power.06",
+   "characterId": "vegito",
+   "formId": "vegito_ssj",
+   "assetType": "composite",
+   "view": "ACTION_DUEL",
+   "family": "power",
+   "role": "gather_power",
+   "variant": "gather_power",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "gather_power",
+    "power_up"
+   ],
+   "evidence": "CANONICAL",
+   "canonStatus": "CANONICAL",
+   "source": {
+    "sheet": "vegito.png",
+    "frame": "052.png",
+    "x": "266",
+    "y": "507"
+   },
+   "frameKind": "atomic",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "vegito_ssj/053.png",
+   "canonicalId": "vegito_ssj.unclassified.053",
+   "characterId": "vegito",
+   "formId": "vegito_ssj",
+   "assetType": "unclassified",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "unclassified",
+   "variant": "movement_or_attack_pose",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "UNKNOWN",
+   "canonStatus": "UNCLASSIFIED",
+   "source": {
+    "sheet": "vegito.png",
+    "frame": "053.png",
+    "x": "330",
+    "y": "499"
+   },
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
+  },
+  {
+   "sourceId": "vegito_ssj/054.png",
+   "canonicalId": "vegito_ssj.power.gather_power.08",
+   "characterId": "vegito",
+   "formId": "vegito_ssj",
+   "assetType": "composite",
+   "view": "ACTION_DUEL",
+   "family": "power",
+   "role": "gather_power",
+   "variant": "gather_power",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "gather_power",
+    "gather_power",
+    "power_up",
+    "power_up"
+   ],
+   "evidence": "CANONICAL",
+   "canonStatus": "CANONICAL",
+   "source": {
+    "sheet": "vegito.png",
+    "frame": "054.png",
+    "x": "396",
+    "y": "516"
+   },
+   "frameKind": "atomic",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "vegito_ssj/055.png",
+   "canonicalId": "vegito_ssj.unclassified.055",
+   "characterId": "vegito",
+   "formId": "vegito_ssj",
+   "assetType": "projectile",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "beam_horizontal",
+   "variant": "beam_or_projectile_horizontal",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
+   "source": {
+    "sheet": "vegito.png",
+    "frame": "055.png",
+    "x": "446",
+    "y": "532"
+   },
+   "frameKind": "atomic",
+   "note": "bucket forense: beam_or_projectile_horizontal"
+  },
+  {
+   "sourceId": "vegito_ssj/056.png",
+   "canonicalId": "vegito_ssj.effect.aura.03",
+   "characterId": "vegito",
+   "formId": "vegito_ssj",
+   "assetType": "effect",
+   "view": "FIELD",
+   "family": "effect",
+   "role": "aura",
+   "variant": "aura_support",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "aura_support"
+   ],
+   "evidence": "CANONICAL",
+   "canonStatus": "CANONICAL",
+   "source": {
+    "sheet": "",
+    "frame": "056.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "vegito_ssj/057.png",
+   "canonicalId": "vegito_ssj.effect.aura.04",
+   "characterId": "vegito",
+   "formId": "vegito_ssj",
+   "assetType": "effect",
+   "view": "FIELD",
+   "family": "effect",
+   "role": "aura",
+   "variant": "aura_support",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "aura_support"
+   ],
+   "evidence": "CANONICAL",
+   "canonStatus": "CANONICAL",
+   "source": {
+    "sheet": "",
+    "frame": "057.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "vegito_ssj/058.png",
+   "canonicalId": "vegito_ssj.effect.aura.05",
+   "characterId": "vegito",
+   "formId": "vegito_ssj",
+   "assetType": "effect",
+   "view": "FIELD",
+   "family": "effect",
+   "role": "aura",
+   "variant": "aura_support",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "aura_support"
+   ],
+   "evidence": "CANONICAL",
+   "canonStatus": "CANONICAL",
+   "source": {
+    "sheet": "",
+    "frame": "058.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "vegito_ssj/000_attack_fwd.png",
+   "canonicalId": "vegito_ssj.unclassified.000_attack_fwd",
+   "characterId": "vegito",
+   "formId": "vegito_ssj",
+   "assetType": "unclassified",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "unclassified",
+   "variant": "",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "UNKNOWN",
+   "canonStatus": "UNCLASSIFIED",
+   "source": {
+    "sheet": "",
+    "frame": "000_attack_fwd.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "fixed_only",
+   "note": "sin evidencia runtime ni bucket"
+  },
+  {
+   "sourceId": "vegito_ssj/001_attack_fwd.png",
+   "canonicalId": "vegito_ssj.unclassified.001_attack_fwd",
+   "characterId": "vegito",
+   "formId": "vegito_ssj",
+   "assetType": "unclassified",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "unclassified",
+   "variant": "",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "UNKNOWN",
+   "canonStatus": "UNCLASSIFIED",
+   "source": {
+    "sheet": "",
+    "frame": "001_attack_fwd.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "fixed_only",
+   "note": "sin evidencia runtime ni bucket"
+  },
+  {
+   "sourceId": "vegito_ssj/002_attack_fwd.png",
+   "canonicalId": "vegito_ssj.unclassified.002_attack_fwd",
+   "characterId": "vegito",
+   "formId": "vegito_ssj",
+   "assetType": "unclassified",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "unclassified",
+   "variant": "",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "UNKNOWN",
+   "canonStatus": "UNCLASSIFIED",
+   "source": {
+    "sheet": "",
+    "frame": "002_attack_fwd.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "fixed_only",
+   "note": "sin evidencia runtime ni bucket"
+  },
+  {
+   "sourceId": "vegito_ssj/003_attack_fwd.png",
+   "canonicalId": "vegito_ssj.unclassified.003_attack_fwd",
+   "characterId": "vegito",
+   "formId": "vegito_ssj",
+   "assetType": "unclassified",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "unclassified",
+   "variant": "",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "UNKNOWN",
+   "canonStatus": "UNCLASSIFIED",
+   "source": {
+    "sheet": "",
+    "frame": "003_attack_fwd.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "fixed_only",
+   "note": "sin evidencia runtime ni bucket"
+  },
+  {
+   "sourceId": "vegito_ssj/004_attack_fwd.png",
+   "canonicalId": "vegito_ssj.unclassified.004_attack_fwd",
+   "characterId": "vegito",
+   "formId": "vegito_ssj",
+   "assetType": "unclassified",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "unclassified",
+   "variant": "",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "UNKNOWN",
+   "canonStatus": "UNCLASSIFIED",
+   "source": {
+    "sheet": "",
+    "frame": "004_attack_fwd.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "fixed_only",
+   "note": "sin evidencia runtime ni bucket"
+  },
+  {
+   "sourceId": "vegito_ssj/005_attack_fwd.png",
+   "canonicalId": "vegito_ssj.unclassified.005_attack_fwd",
+   "characterId": "vegito",
+   "formId": "vegito_ssj",
+   "assetType": "unclassified",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "unclassified",
+   "variant": "",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "UNKNOWN",
+   "canonStatus": "UNCLASSIFIED",
+   "source": {
+    "sheet": "",
+    "frame": "005_attack_fwd.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "fixed_only",
+   "note": "sin evidencia runtime ni bucket"
+  },
+  {
+   "sourceId": "vegito_ssj/006_attack_fwd.png",
+   "canonicalId": "vegito_ssj.unclassified.006_attack_fwd",
+   "characterId": "vegito",
+   "formId": "vegito_ssj",
+   "assetType": "unclassified",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "unclassified",
+   "variant": "",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "UNKNOWN",
+   "canonStatus": "UNCLASSIFIED",
+   "source": {
+    "sheet": "",
+    "frame": "006_attack_fwd.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "fixed_only",
+   "note": "sin evidencia runtime ni bucket"
+  },
+  {
+   "sourceId": "vegito_ssj/007_attack_ud.png",
+   "canonicalId": "vegito_ssj.unclassified.007_attack_ud",
+   "characterId": "vegito",
+   "formId": "vegito_ssj",
+   "assetType": "unclassified",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "unclassified",
+   "variant": "",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "UNKNOWN",
+   "canonStatus": "UNCLASSIFIED",
+   "source": {
+    "sheet": "",
+    "frame": "007_attack_ud.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "fixed_only",
+   "note": "sin evidencia runtime ni bucket"
+  },
+  {
+   "sourceId": "vegito_ssj/008_attack_ud.png",
+   "canonicalId": "vegito_ssj.unclassified.008_attack_ud",
+   "characterId": "vegito",
+   "formId": "vegito_ssj",
+   "assetType": "unclassified",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "unclassified",
+   "variant": "",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "UNKNOWN",
+   "canonStatus": "UNCLASSIFIED",
+   "source": {
+    "sheet": "",
+    "frame": "008_attack_ud.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "fixed_only",
+   "note": "sin evidencia runtime ni bucket"
+  },
+  {
+   "sourceId": "vegito_ssj/009_attack_ud.png",
+   "canonicalId": "vegito_ssj.unclassified.009_attack_ud",
+   "characterId": "vegito",
+   "formId": "vegito_ssj",
+   "assetType": "unclassified",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "unclassified",
+   "variant": "",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "UNKNOWN",
+   "canonStatus": "UNCLASSIFIED",
+   "source": {
+    "sheet": "",
+    "frame": "009_attack_ud.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "fixed_only",
+   "note": "sin evidencia runtime ni bucket"
+  },
+  {
+   "sourceId": "vegito_ssj/010_attack_ud.png",
+   "canonicalId": "vegito_ssj.unclassified.010_attack_ud",
+   "characterId": "vegito",
+   "formId": "vegito_ssj",
+   "assetType": "unclassified",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "unclassified",
+   "variant": "",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "UNKNOWN",
+   "canonStatus": "UNCLASSIFIED",
+   "source": {
+    "sheet": "",
+    "frame": "010_attack_ud.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "fixed_only",
+   "note": "sin evidencia runtime ni bucket"
+  },
+  {
+   "sourceId": "vegito_ssj/011_beam_charge.png",
+   "canonicalId": "vegito_ssj.unclassified.011_beam_charge",
+   "characterId": "vegito",
+   "formId": "vegito_ssj",
+   "assetType": "unclassified",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "unclassified",
+   "variant": "",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "UNKNOWN",
+   "canonStatus": "UNCLASSIFIED",
+   "source": {
+    "sheet": "",
+    "frame": "011_beam_charge.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "fixed_only",
+   "note": "sin evidencia runtime ni bucket"
+  },
+  {
+   "sourceId": "vegito_ssj/012_beam_charge.png",
+   "canonicalId": "vegito_ssj.unclassified.012_beam_charge",
+   "characterId": "vegito",
+   "formId": "vegito_ssj",
+   "assetType": "unclassified",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "unclassified",
+   "variant": "",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "UNKNOWN",
+   "canonStatus": "UNCLASSIFIED",
+   "source": {
+    "sheet": "",
+    "frame": "012_beam_charge.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "fixed_only",
+   "note": "sin evidencia runtime ni bucket"
+  },
+  {
+   "sourceId": "vegito_ssj/013_beam_charge.png",
+   "canonicalId": "vegito_ssj.unclassified.013_beam_charge",
+   "characterId": "vegito",
+   "formId": "vegito_ssj",
+   "assetType": "unclassified",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "unclassified",
+   "variant": "",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "UNKNOWN",
+   "canonStatus": "UNCLASSIFIED",
+   "source": {
+    "sheet": "",
+    "frame": "013_beam_charge.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "fixed_only",
+   "note": "sin evidencia runtime ni bucket"
+  },
+  {
+   "sourceId": "vegito_ssj/014_beam_charge.png",
+   "canonicalId": "vegito_ssj.unclassified.014_beam_charge",
+   "characterId": "vegito",
+   "formId": "vegito_ssj",
+   "assetType": "unclassified",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "unclassified",
+   "variant": "",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "UNKNOWN",
+   "canonStatus": "UNCLASSIFIED",
+   "source": {
+    "sheet": "",
+    "frame": "014_beam_charge.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "fixed_only",
+   "note": "sin evidencia runtime ni bucket"
+  },
+  {
+   "sourceId": "vegito_ssj/015_beam_charge.png",
+   "canonicalId": "vegito_ssj.unclassified.015_beam_charge",
+   "characterId": "vegito",
+   "formId": "vegito_ssj",
+   "assetType": "unclassified",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "unclassified",
+   "variant": "",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "UNKNOWN",
+   "canonStatus": "UNCLASSIFIED",
+   "source": {
+    "sheet": "",
+    "frame": "015_beam_charge.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "fixed_only",
+   "note": "sin evidencia runtime ni bucket"
+  },
+  {
+   "sourceId": "vegito_ssj/016_beam_charge.png",
+   "canonicalId": "vegito_ssj.unclassified.016_beam_charge",
+   "characterId": "vegito",
+   "formId": "vegito_ssj",
+   "assetType": "unclassified",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "unclassified",
+   "variant": "",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "UNKNOWN",
+   "canonStatus": "UNCLASSIFIED",
+   "source": {
+    "sheet": "",
+    "frame": "016_beam_charge.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "fixed_only",
+   "note": "sin evidencia runtime ni bucket"
+  },
+  {
+   "sourceId": "vegito_ssj/017_beam_charge.png",
+   "canonicalId": "vegito_ssj.unclassified.017_beam_charge",
+   "characterId": "vegito",
+   "formId": "vegito_ssj",
+   "assetType": "unclassified",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "unclassified",
+   "variant": "",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "UNKNOWN",
+   "canonStatus": "UNCLASSIFIED",
+   "source": {
+    "sheet": "",
+    "frame": "017_beam_charge.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "fixed_only",
+   "note": "sin evidencia runtime ni bucket"
+  },
+  {
+   "sourceId": "vegito_ssj/018_beam_charge.png",
+   "canonicalId": "vegito_ssj.unclassified.018_beam_charge",
+   "characterId": "vegito",
+   "formId": "vegito_ssj",
+   "assetType": "unclassified",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "unclassified",
+   "variant": "",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "UNKNOWN",
+   "canonStatus": "UNCLASSIFIED",
+   "source": {
+    "sheet": "",
+    "frame": "018_beam_charge.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "fixed_only",
+   "note": "sin evidencia runtime ni bucket"
+  },
+  {
+   "sourceId": "vegito_ssj/019_beam_charge.png",
+   "canonicalId": "vegito_ssj.unclassified.019_beam_charge",
+   "characterId": "vegito",
+   "formId": "vegito_ssj",
+   "assetType": "unclassified",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "unclassified",
+   "variant": "",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "UNKNOWN",
+   "canonStatus": "UNCLASSIFIED",
+   "source": {
+    "sheet": "",
+    "frame": "019_beam_charge.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "fixed_only",
+   "note": "sin evidencia runtime ni bucket"
+  },
+  {
+   "sourceId": "vegito_ssj/020_guard.png",
+   "canonicalId": "vegito_ssj.unclassified.020_guard",
+   "characterId": "vegito",
+   "formId": "vegito_ssj",
+   "assetType": "unclassified",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "unclassified",
+   "variant": "",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "UNKNOWN",
+   "canonStatus": "UNCLASSIFIED",
+   "source": {
+    "sheet": "",
+    "frame": "020_guard.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "fixed_only",
+   "note": "sin evidencia runtime ni bucket"
+  },
+  {
+   "sourceId": "vegito_ssj/021_guard.png",
+   "canonicalId": "vegito_ssj.unclassified.021_guard",
+   "characterId": "vegito",
+   "formId": "vegito_ssj",
+   "assetType": "unclassified",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "unclassified",
+   "variant": "",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "UNKNOWN",
+   "canonStatus": "UNCLASSIFIED",
+   "source": {
+    "sheet": "",
+    "frame": "021_guard.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "fixed_only",
+   "note": "sin evidencia runtime ni bucket"
+  },
+  {
+   "sourceId": "vegito_ssj/022_guard.png",
+   "canonicalId": "vegito_ssj.unclassified.022_guard",
+   "characterId": "vegito",
+   "formId": "vegito_ssj",
+   "assetType": "unclassified",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "unclassified",
+   "variant": "",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "UNKNOWN",
+   "canonStatus": "UNCLASSIFIED",
+   "source": {
+    "sheet": "",
+    "frame": "022_guard.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "fixed_only",
+   "note": "sin evidencia runtime ni bucket"
+  },
+  {
+   "sourceId": "vegito_ssj/023_hurt.png",
+   "canonicalId": "vegito_ssj.unclassified.023_hurt",
+   "characterId": "vegito",
+   "formId": "vegito_ssj",
+   "assetType": "unclassified",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "unclassified",
+   "variant": "",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "UNKNOWN",
+   "canonStatus": "UNCLASSIFIED",
+   "source": {
+    "sheet": "",
+    "frame": "023_hurt.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "fixed_only",
+   "note": "sin evidencia runtime ni bucket"
+  },
+  {
+   "sourceId": "vegito_ssj/024_hurt.png",
+   "canonicalId": "vegito_ssj.unclassified.024_hurt",
+   "characterId": "vegito",
+   "formId": "vegito_ssj",
+   "assetType": "unclassified",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "unclassified",
+   "variant": "",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "UNKNOWN",
+   "canonStatus": "UNCLASSIFIED",
+   "source": {
+    "sheet": "",
+    "frame": "024_hurt.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "fixed_only",
+   "note": "sin evidencia runtime ni bucket"
+  },
+  {
+   "sourceId": "vegito_ssj/025_hurt.png",
+   "canonicalId": "vegito_ssj.unclassified.025_hurt",
+   "characterId": "vegito",
+   "formId": "vegito_ssj",
+   "assetType": "unclassified",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "unclassified",
+   "variant": "",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "UNKNOWN",
+   "canonStatus": "UNCLASSIFIED",
+   "source": {
+    "sheet": "",
+    "frame": "025_hurt.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "fixed_only",
+   "note": "sin evidencia runtime ni bucket"
+  },
+  {
+   "sourceId": "vegito_ssj/026_hurt.png",
+   "canonicalId": "vegito_ssj.unclassified.026_hurt",
+   "characterId": "vegito",
+   "formId": "vegito_ssj",
+   "assetType": "unclassified",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "unclassified",
+   "variant": "",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "UNKNOWN",
+   "canonStatus": "UNCLASSIFIED",
+   "source": {
+    "sheet": "",
+    "frame": "026_hurt.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "fixed_only",
+   "note": "sin evidencia runtime ni bucket"
+  },
+  {
+   "sourceId": "vegito_ssj/027_hurt.png",
+   "canonicalId": "vegito_ssj.unclassified.027_hurt",
+   "characterId": "vegito",
+   "formId": "vegito_ssj",
+   "assetType": "unclassified",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "unclassified",
+   "variant": "",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "UNKNOWN",
+   "canonStatus": "UNCLASSIFIED",
+   "source": {
+    "sheet": "",
+    "frame": "027_hurt.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "fixed_only",
+   "note": "sin evidencia runtime ni bucket"
+  },
+  {
+   "sourceId": "vegito_ssj/028_hurt.png",
+   "canonicalId": "vegito_ssj.unclassified.028_hurt",
+   "characterId": "vegito",
+   "formId": "vegito_ssj",
+   "assetType": "unclassified",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "unclassified",
+   "variant": "",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "UNKNOWN",
+   "canonStatus": "UNCLASSIFIED",
+   "source": {
+    "sheet": "",
+    "frame": "028_hurt.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "fixed_only",
+   "note": "sin evidencia runtime ni bucket"
+  },
+  {
+   "sourceId": "vegito_ssj/029_hurt.png",
+   "canonicalId": "vegito_ssj.unclassified.029_hurt",
+   "characterId": "vegito",
+   "formId": "vegito_ssj",
+   "assetType": "unclassified",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "unclassified",
+   "variant": "",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "UNKNOWN",
+   "canonStatus": "UNCLASSIFIED",
+   "source": {
+    "sheet": "",
+    "frame": "029_hurt.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "fixed_only",
+   "note": "sin evidencia runtime ni bucket"
+  },
+  {
+   "sourceId": "vegito_ssj/030_idle.png",
+   "canonicalId": "vegito_ssj.unclassified.030_idle",
+   "characterId": "vegito",
+   "formId": "vegito_ssj",
+   "assetType": "unclassified",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "unclassified",
+   "variant": "",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "UNKNOWN",
+   "canonStatus": "UNCLASSIFIED",
+   "source": {
+    "sheet": "",
+    "frame": "030_idle.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "fixed_only",
+   "note": "sin evidencia runtime ni bucket"
+  },
+  {
+   "sourceId": "vegito_ssj/031_move_back.png",
+   "canonicalId": "vegito_ssj.unclassified.031_move_back",
+   "characterId": "vegito",
+   "formId": "vegito_ssj",
+   "assetType": "unclassified",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "unclassified",
+   "variant": "",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "UNKNOWN",
+   "canonStatus": "UNCLASSIFIED",
+   "source": {
+    "sheet": "",
+    "frame": "031_move_back.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "fixed_only",
+   "note": "sin evidencia runtime ni bucket"
+  },
+  {
+   "sourceId": "vegito_ssj/032_move_back.png",
+   "canonicalId": "vegito_ssj.unclassified.032_move_back",
+   "characterId": "vegito",
+   "formId": "vegito_ssj",
+   "assetType": "unclassified",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "unclassified",
+   "variant": "",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "UNKNOWN",
+   "canonStatus": "UNCLASSIFIED",
+   "source": {
+    "sheet": "",
+    "frame": "032_move_back.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "fixed_only",
+   "note": "sin evidencia runtime ni bucket"
+  },
+  {
+   "sourceId": "vegito_ssj/033_move_front.png",
+   "canonicalId": "vegito_ssj.unclassified.033_move_front",
+   "characterId": "vegito",
+   "formId": "vegito_ssj",
+   "assetType": "unclassified",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "unclassified",
+   "variant": "",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "UNKNOWN",
+   "canonStatus": "UNCLASSIFIED",
+   "source": {
+    "sheet": "",
+    "frame": "033_move_front.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "fixed_only",
+   "note": "sin evidencia runtime ni bucket"
+  },
+  {
+   "sourceId": "vegito_ssj/034_move_front.png",
+   "canonicalId": "vegito_ssj.unclassified.034_move_front",
+   "characterId": "vegito",
+   "formId": "vegito_ssj",
+   "assetType": "unclassified",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "unclassified",
+   "variant": "",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "UNKNOWN",
+   "canonStatus": "UNCLASSIFIED",
+   "source": {
+    "sheet": "",
+    "frame": "034_move_front.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "fixed_only",
+   "note": "sin evidencia runtime ni bucket"
+  }
+ ]
+}

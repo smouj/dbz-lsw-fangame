@@ -9242,3 +9242,8 @@ button.linklike:hover { text-decoration: underline; }
   border: 1px solid #262b33;
   background: #0d1018;
 }
+
+/* ── Dev Studio: canon semántico (agrupación familia/rol) ── */
+.dev-atomic-role { margin: 6px 0 10px 14px; padding-left: 10px; border-left: 2px solid #232b3d; }
+.dev-atomic-role-head { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+.dev-atomic-role-name { font-size: 12px; color: #e0b84c; font-weight: 600; text-transform: capitalize; }

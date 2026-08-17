@@ -1,0 +1,1497 @@
+{
+ "form": "cell_perfect",
+ "frameCount": 61,
+ "frames": [
+  {
+   "sourceId": "cell_perfect/001.png",
+   "canonicalId": "cell_perfect.idle.idle.00",
+   "characterId": "cell",
+   "formId": "cell_perfect",
+   "assetType": "actor_frame",
+   "view": "FIELD",
+   "family": "melee",
+   "role": "strike",
+   "variant": "punch_right",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "idle",
+    "guard",
+    "punch_right",
+    "punch_left",
+    "beam_guard"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "cell.png",
+    "frame": "001.png",
+    "x": "8",
+    "y": "1022"
+   },
+   "frameKind": "atomic",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "cell_perfect/002.png",
+   "canonicalId": "cell_perfect.power.gather_power.00",
+   "characterId": "cell",
+   "formId": "cell_perfect",
+   "assetType": "composite",
+   "view": "ACTION_DUEL",
+   "family": "power",
+   "role": "gather_power",
+   "variant": "gather_power",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "gather_power",
+    "power_up"
+   ],
+   "evidence": "CANONICAL",
+   "canonStatus": "CANONICAL",
+   "source": {
+    "sheet": "cell.png",
+    "frame": "002.png",
+    "x": "50",
+    "y": "1024"
+   },
+   "frameKind": "atomic",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "cell_perfect/003.png",
+   "canonicalId": "cell_perfect.defense.start.02",
+   "characterId": "cell",
+   "formId": "cell_perfect",
+   "assetType": "actor_frame",
+   "view": "FIELD",
+   "family": "defense",
+   "role": "start",
+   "variant": "guard",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "guard",
+    "beam_guard"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "cell.png",
+    "frame": "003.png",
+    "x": "92",
+    "y": "1025"
+   },
+   "frameKind": "atomic",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "cell_perfect/004.png",
+   "canonicalId": "cell_perfect.defense.start.04",
+   "characterId": "cell",
+   "formId": "cell_perfect",
+   "assetType": "actor_frame",
+   "view": "FIELD",
+   "family": "defense",
+   "role": "start",
+   "variant": "guard",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "guard",
+    "beam_guard"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "cell.png",
+    "frame": "004.png",
+    "x": "138",
+    "y": "1023"
+   },
+   "frameKind": "atomic",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "cell_perfect/005.png",
+   "canonicalId": "cell_perfect.unclassified.005",
+   "characterId": "cell",
+   "formId": "cell_perfect",
+   "assetType": "overworld",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "actor_pose",
+   "variant": "overworld_actor_or_pose",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
+   "source": {
+    "sheet": "cell.png",
+    "frame": "005.png",
+    "x": "198",
+    "y": "1040"
+   },
+   "frameKind": "atomic",
+   "note": "bucket forense: overworld_actor_or_pose"
+  },
+  {
+   "sourceId": "cell_perfect/006.png",
+   "canonicalId": "cell_perfect.unclassified.006",
+   "characterId": "cell",
+   "formId": "cell_perfect",
+   "assetType": "overworld",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "actor_pose",
+   "variant": "overworld_actor_or_pose",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
+   "source": {
+    "sheet": "cell.png",
+    "frame": "006.png",
+    "x": "218",
+    "y": "1040"
+   },
+   "frameKind": "atomic",
+   "note": "bucket forense: overworld_actor_or_pose"
+  },
+  {
+   "sourceId": "cell_perfect/007.png",
+   "canonicalId": "cell_perfect.unclassified.007",
+   "characterId": "cell",
+   "formId": "cell_perfect",
+   "assetType": "effect",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "aura_tile",
+   "variant": "battle_aura_tile",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
+   "source": {
+    "sheet": "cell.png",
+    "frame": "007.png",
+    "x": "237",
+    "y": "1040"
+   },
+   "frameKind": "atomic",
+   "note": "bucket forense: battle_aura_tile"
+  },
+  {
+   "sourceId": "cell_perfect/008.png",
+   "canonicalId": "cell_perfect.unclassified.008",
+   "characterId": "cell",
+   "formId": "cell_perfect",
+   "assetType": "composite",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "aura_composite",
+   "variant": "battle_aura_actor_composite",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
+   "source": {
+    "sheet": "cell.png",
+    "frame": "008.png",
+    "x": "271",
+    "y": "1040"
+   },
+   "frameKind": "atomic",
+   "note": "bucket forense: battle_aura_actor_composite"
+  },
+  {
+   "sourceId": "cell_perfect/009.png",
+   "canonicalId": "cell_perfect.defense.start.06",
+   "characterId": "cell",
+   "formId": "cell_perfect",
+   "assetType": "actor_frame",
+   "view": "FIELD",
+   "family": "defense",
+   "role": "start",
+   "variant": "evade",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "evade"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "cell.png",
+    "frame": "009.png",
+    "x": "6",
+    "y": "1080"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "cell_perfect/010.png",
+   "canonicalId": "cell_perfect.defense.start.07",
+   "characterId": "cell",
+   "formId": "cell_perfect",
+   "assetType": "actor_frame",
+   "view": "FIELD",
+   "family": "defense",
+   "role": "start",
+   "variant": "evade",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "evade"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "cell.png",
+    "frame": "010.png",
+    "x": "56",
+    "y": "1073"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "cell_perfect/011.png",
+   "canonicalId": "cell_perfect.movement.start.00",
+   "characterId": "cell",
+   "formId": "cell_perfect",
+   "assetType": "actor_frame",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "start",
+   "variant": "move_front",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "move_front",
+    "move_back"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "cell.png",
+    "frame": "011.png",
+    "x": "92",
+    "y": "1075"
+   },
+   "frameKind": "atomic",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "cell_perfect/012.png",
+   "canonicalId": "cell_perfect.movement.start.02",
+   "characterId": "cell",
+   "formId": "cell_perfect",
+   "assetType": "actor_frame",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "start",
+   "variant": "move_front",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "move_front",
+    "move_back"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "cell.png",
+    "frame": "012.png",
+    "x": "133",
+    "y": "1078"
+   },
+   "frameKind": "atomic",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "cell_perfect/013.png",
+   "canonicalId": "cell_perfect.reaction.hurt_light.00",
+   "characterId": "cell",
+   "formId": "cell_perfect",
+   "assetType": "actor_frame",
+   "view": "FIELD",
+   "family": "reaction",
+   "role": "hurt_light",
+   "variant": "hurt",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "hurt"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "cell.png",
+    "frame": "013.png",
+    "x": "8",
+    "y": "1128"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "cell_perfect/014.png",
+   "canonicalId": "cell_perfect.reaction.hurt_light.01",
+   "characterId": "cell",
+   "formId": "cell_perfect",
+   "assetType": "actor_frame",
+   "view": "FIELD",
+   "family": "reaction",
+   "role": "hurt_light",
+   "variant": "hurt",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "hurt"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "cell.png",
+    "frame": "014.png",
+    "x": "46",
+    "y": "1134"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "cell_perfect/015.png",
+   "canonicalId": "cell_perfect.reaction.hurt_light.02",
+   "characterId": "cell",
+   "formId": "cell_perfect",
+   "assetType": "actor_frame",
+   "view": "FIELD",
+   "family": "reaction",
+   "role": "hurt_light",
+   "variant": "hurt",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "hurt"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "cell.png",
+    "frame": "015.png",
+    "x": "83",
+    "y": "1135"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "cell_perfect/016.png",
+   "canonicalId": "cell_perfect.reaction.hurt_light.03",
+   "characterId": "cell",
+   "formId": "cell_perfect",
+   "assetType": "actor_frame",
+   "view": "FIELD",
+   "family": "reaction",
+   "role": "hurt_light",
+   "variant": "hurt",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "hurt"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "cell.png",
+    "frame": "016.png",
+    "x": "125",
+    "y": "1127"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "cell_perfect/017.png",
+   "canonicalId": "cell_perfect.reaction.hurt_light.04",
+   "characterId": "cell",
+   "formId": "cell_perfect",
+   "assetType": "actor_frame",
+   "view": "FIELD",
+   "family": "reaction",
+   "role": "hurt_light",
+   "variant": "hurt",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "hurt"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "cell.png",
+    "frame": "017.png",
+    "x": "165",
+    "y": "1127"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "cell_perfect/018.png",
+   "canonicalId": "cell_perfect.melee.ready.02",
+   "characterId": "cell",
+   "formId": "cell_perfect",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "melee",
+   "role": "ready",
+   "variant": "attack_forward",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "attack_fwd",
+    "punch_left"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "cell.png",
+    "frame": "018.png",
+    "x": "206",
+    "y": "1126"
+   },
+   "frameKind": "atomic",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "cell_perfect/019.png",
+   "canonicalId": "cell_perfect.unclassified.019",
+   "characterId": "cell",
+   "formId": "cell_perfect",
+   "assetType": "unclassified",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "unclassified",
+   "variant": "downed_or_hurt",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "UNKNOWN",
+   "canonStatus": "UNCLASSIFIED",
+   "source": {
+    "sheet": "cell.png",
+    "frame": "019.png",
+    "x": "242",
+    "y": "1148"
+   },
+   "frameKind": "atomic",
+   "note": "bucket forense: downed_or_hurt"
+  },
+  {
+   "sourceId": "cell_perfect/020.png",
+   "canonicalId": "cell_perfect.melee.ready.04",
+   "characterId": "cell",
+   "formId": "cell_perfect",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "melee",
+   "role": "ready",
+   "variant": "attack_forward",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "attack_fwd",
+    "punch_right"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "cell.png",
+    "frame": "020.png",
+    "x": "5",
+    "y": "1181"
+   },
+   "frameKind": "atomic",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "cell_perfect/021.png",
+   "canonicalId": "cell_perfect.melee.ready.06",
+   "characterId": "cell",
+   "formId": "cell_perfect",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "melee",
+   "role": "ready",
+   "variant": "attack_forward",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "attack_fwd",
+    "punch_left",
+    "knockback_up"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "cell.png",
+    "frame": "021.png",
+    "x": "56",
+    "y": "1181"
+   },
+   "frameKind": "atomic",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "cell_perfect/022.png",
+   "canonicalId": "cell_perfect.melee.ready.08",
+   "characterId": "cell",
+   "formId": "cell_perfect",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "melee",
+   "role": "ready",
+   "variant": "attack_forward",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "attack_fwd"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "cell.png",
+    "frame": "022.png",
+    "x": "107",
+    "y": "1180"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "cell_perfect/023.png",
+   "canonicalId": "cell_perfect.melee.ready.09",
+   "characterId": "cell",
+   "formId": "cell_perfect",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "melee",
+   "role": "ready",
+   "variant": "attack_vertical",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "attack_ud"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "cell.png",
+    "frame": "023.png",
+    "x": "144",
+    "y": "1180"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "cell_perfect/024.png",
+   "canonicalId": "cell_perfect.melee.ready.10",
+   "characterId": "cell",
+   "formId": "cell_perfect",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "melee",
+   "role": "ready",
+   "variant": "attack_vertical",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "attack_ud",
+    "knockback_back"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "cell.png",
+    "frame": "024.png",
+    "x": "188",
+    "y": "1181"
+   },
+   "frameKind": "atomic",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "cell_perfect/025.png",
+   "canonicalId": "cell_perfect.melee.ready.11",
+   "characterId": "cell",
+   "formId": "cell_perfect",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "melee",
+   "role": "ready",
+   "variant": "attack_vertical",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "attack_ud"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "cell.png",
+    "frame": "025.png",
+    "x": "231",
+    "y": "1179"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "cell_perfect/026.png",
+   "canonicalId": "cell_perfect.melee.ready.12",
+   "characterId": "cell",
+   "formId": "cell_perfect",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "melee",
+   "role": "ready",
+   "variant": "attack_vertical",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "attack_ud",
+    "knockback_down"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "cell.png",
+    "frame": "026.png",
+    "x": "273",
+    "y": "1192"
+   },
+   "frameKind": "atomic",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "cell_perfect/027.png",
+   "canonicalId": "cell_perfect.reaction.knockback_down.08",
+   "characterId": "cell",
+   "formId": "cell_perfect",
+   "assetType": "actor_frame",
+   "view": "FIELD",
+   "family": "reaction",
+   "role": "knockback_down",
+   "variant": "down",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "knockback_down",
+    "gather_power",
+    "power_up"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "cell.png",
+    "frame": "027.png",
+    "x": "381",
+    "y": "1183"
+   },
+   "frameKind": "atomic",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "cell_perfect/028.png",
+   "canonicalId": "cell_perfect.melee.ready.13",
+   "characterId": "cell",
+   "formId": "cell_perfect",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "melee",
+   "role": "ready",
+   "variant": "attack_forward",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "attack_fwd",
+    "punch_right",
+    "kick_right"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "cell.png",
+    "frame": "028.png",
+    "x": "12",
+    "y": "1234"
+   },
+   "frameKind": "atomic",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "cell_perfect/029.png",
+   "canonicalId": "cell_perfect.melee.ready.16",
+   "characterId": "cell",
+   "formId": "cell_perfect",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "melee",
+   "role": "ready",
+   "variant": "attack_forward",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "attack_fwd",
+    "punch_right",
+    "kick_right"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "cell.png",
+    "frame": "029.png",
+    "x": "54",
+    "y": "1234"
+   },
+   "frameKind": "atomic",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "cell_perfect/030.png",
+   "canonicalId": "cell_perfect.melee.ready.19",
+   "characterId": "cell",
+   "formId": "cell_perfect",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "melee",
+   "role": "ready",
+   "variant": "attack_forward",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "attack_fwd",
+    "punch_left"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "cell.png",
+    "frame": "030.png",
+    "x": "98",
+    "y": "1232"
+   },
+   "frameKind": "atomic",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "cell_perfect/031.png",
+   "canonicalId": "cell_perfect.melee.ready.21",
+   "characterId": "cell",
+   "formId": "cell_perfect",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "melee",
+   "role": "ready",
+   "variant": "attack_forward",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "attack_fwd",
+    "punch_left"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "cell.png",
+    "frame": "031.png",
+    "x": "149",
+    "y": "1232"
+   },
+   "frameKind": "atomic",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "cell_perfect/032.png",
+   "canonicalId": "cell_perfect.beam.charge_start.00",
+   "characterId": "cell",
+   "formId": "cell_perfect",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "beam",
+   "role": "charge_start",
+   "variant": "charge",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "beam_charge",
+    "gather_power",
+    "power_up"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "cell.png",
+    "frame": "032.png",
+    "x": "6",
+    "y": "1293"
+   },
+   "frameKind": "atomic",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "cell_perfect/033.png",
+   "canonicalId": "cell_perfect.unclassified.033",
+   "characterId": "cell",
+   "formId": "cell_perfect",
+   "assetType": "projectile",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "beam_ray",
+   "variant": "projectiles_beams",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
+   "source": {
+    "sheet": "cell.png",
+    "frame": "033.png",
+    "x": "71",
+    "y": "1293"
+   },
+   "frameKind": "atomic",
+   "note": "bucket forense: projectiles_beams"
+  },
+  {
+   "sourceId": "cell_perfect/034.png",
+   "canonicalId": "cell_perfect.effect.aura.00",
+   "characterId": "cell",
+   "formId": "cell_perfect",
+   "assetType": "effect",
+   "view": "FIELD",
+   "family": "effect",
+   "role": "aura",
+   "variant": "aura_power",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "aura_power"
+   ],
+   "evidence": "CANONICAL",
+   "canonStatus": "CANONICAL",
+   "source": {
+    "sheet": "cell.png",
+    "frame": "034.png",
+    "x": "199",
+    "y": "1279"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "cell_perfect/035.png",
+   "canonicalId": "cell_perfect.effect.aura.01",
+   "characterId": "cell",
+   "formId": "cell_perfect",
+   "assetType": "effect",
+   "view": "FIELD",
+   "family": "effect",
+   "role": "aura",
+   "variant": "aura_power",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "aura_power"
+   ],
+   "evidence": "CANONICAL",
+   "canonStatus": "CANONICAL",
+   "source": {
+    "sheet": "cell.png",
+    "frame": "035.png",
+    "x": "273",
+    "y": "1279"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "cell_perfect/036.png",
+   "canonicalId": "cell_perfect.effect.aura.02",
+   "characterId": "cell",
+   "formId": "cell_perfect",
+   "assetType": "effect",
+   "view": "FIELD",
+   "family": "effect",
+   "role": "aura",
+   "variant": "aura_power",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "aura_power"
+   ],
+   "evidence": "CANONICAL",
+   "canonStatus": "CANONICAL",
+   "source": {
+    "sheet": "cell.png",
+    "frame": "036.png",
+    "x": "348",
+    "y": "1279"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "cell_perfect/037.png",
+   "canonicalId": "cell_perfect.beam.release.01",
+   "characterId": "cell",
+   "formId": "cell_perfect",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "beam",
+   "role": "release",
+   "variant": "fire",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "beam_fire"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "cell.png",
+    "frame": "037.png",
+    "x": "439",
+    "y": "1289"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "cell_perfect/038.png",
+   "canonicalId": "cell_perfect.unclassified.038",
+   "characterId": "cell",
+   "formId": "cell_perfect",
+   "assetType": "projectile",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "orb",
+   "variant": "projectile_orb_small",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
+   "source": {
+    "sheet": "cell.png",
+    "frame": "038.png",
+    "x": "45",
+    "y": "1306"
+   },
+   "frameKind": "atomic",
+   "note": "bucket forense: projectile_orb_small"
+  },
+  {
+   "sourceId": "cell_perfect/039.png",
+   "canonicalId": "cell_perfect.beam.charge_start.02",
+   "characterId": "cell",
+   "formId": "cell_perfect",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "beam",
+   "role": "charge_start",
+   "variant": "charge",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "beam_charge"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "cell.png",
+    "frame": "039.png",
+    "x": "8",
+    "y": "1372"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "cell_perfect/040.png",
+   "canonicalId": "cell_perfect.unclassified.040",
+   "characterId": "cell",
+   "formId": "cell_perfect",
+   "assetType": "projectile",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "beam_ray",
+   "variant": "projectiles_beams",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
+   "source": {
+    "sheet": "cell.png",
+    "frame": "040.png",
+    "x": "51",
+    "y": "1371"
+   },
+   "frameKind": "atomic",
+   "note": "bucket forense: projectiles_beams"
+  },
+  {
+   "sourceId": "cell_perfect/041.png",
+   "canonicalId": "cell_perfect.unclassified.041",
+   "characterId": "cell",
+   "formId": "cell_perfect",
+   "assetType": "unclassified",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "unclassified",
+   "variant": "multi_evidence_projectiles_beams_movement_or_attack_pose_character_plus_aura_or_burst",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "UNKNOWN",
+   "canonStatus": "UNCLASSIFIED",
+   "source": {
+    "sheet": "cell.png",
+    "frame": "041.png",
+    "x": "173",
+    "y": "1375"
+   },
+   "frameKind": "atomic",
+   "note": "bucket forense: multi_evidence_projectiles_beams_movement_or_attack_pose_character_plus_aura_or_burst"
+  },
+  {
+   "sourceId": "cell_perfect/042.png",
+   "canonicalId": "cell_perfect.beam.release.03",
+   "characterId": "cell",
+   "formId": "cell_perfect",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "beam",
+   "role": "release",
+   "variant": "fire",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "beam_fire"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "cell.png",
+    "frame": "042.png",
+    "x": "231",
+    "y": "1372"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "cell_perfect/043.png",
+   "canonicalId": "cell_perfect.unclassified.043",
+   "characterId": "cell",
+   "formId": "cell_perfect",
+   "assetType": "projectile",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "beam_ray",
+   "variant": "projectiles_beams",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
+   "source": {
+    "sheet": "cell.png",
+    "frame": "043.png",
+    "x": "271",
+    "y": "1372"
+   },
+   "frameKind": "atomic",
+   "note": "bucket forense: projectiles_beams"
+  },
+  {
+   "sourceId": "cell_perfect/044.png",
+   "canonicalId": "cell_perfect.unclassified.044",
+   "characterId": "cell",
+   "formId": "cell_perfect",
+   "assetType": "projectile",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "beam_ray",
+   "variant": "projectiles_beams",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
+   "source": {
+    "sheet": "cell.png",
+    "frame": "044.png",
+    "x": "402",
+    "y": "1384"
+   },
+   "frameKind": "atomic",
+   "note": "bucket forense: projectiles_beams"
+  },
+  {
+   "sourceId": "cell_perfect/045.png",
+   "canonicalId": "cell_perfect.unclassified.045",
+   "characterId": "cell",
+   "formId": "cell_perfect",
+   "assetType": "projectile",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "beam_ray",
+   "variant": "projectiles_beams",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
+   "source": {
+    "sheet": "cell.png",
+    "frame": "045.png",
+    "x": "7",
+    "y": "1468"
+   },
+   "frameKind": "atomic",
+   "note": "bucket forense: projectiles_beams"
+  },
+  {
+   "sourceId": "cell_perfect/046.png",
+   "canonicalId": "cell_perfect.unclassified.046",
+   "characterId": "cell",
+   "formId": "cell_perfect",
+   "assetType": "projectile",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "orb",
+   "variant": "projectile_orb_small",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
+   "source": {
+    "sheet": "cell.png",
+    "frame": "046.png",
+    "x": "139",
+    "y": "1483"
+   },
+   "frameKind": "atomic",
+   "note": "bucket forense: projectile_orb_small"
+  },
+  {
+   "sourceId": "cell_perfect/047.png",
+   "canonicalId": "cell_perfect.beam.charge_start.04",
+   "characterId": "cell",
+   "formId": "cell_perfect",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "beam",
+   "role": "charge_start",
+   "variant": "charge",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "beam_charge"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "cell.png",
+    "frame": "047.png",
+    "x": "174",
+    "y": "1472"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "cell_perfect/048.png",
+   "canonicalId": "cell_perfect.unclassified.048",
+   "characterId": "cell",
+   "formId": "cell_perfect",
+   "assetType": "projectile",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "beam_ray",
+   "variant": "projectiles_beams",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
+   "source": {
+    "sheet": "cell.png",
+    "frame": "048.png",
+    "x": "216",
+    "y": "1460"
+   },
+   "frameKind": "atomic",
+   "note": "bucket forense: projectiles_beams"
+  },
+  {
+   "sourceId": "cell_perfect/049.png",
+   "canonicalId": "cell_perfect.unclassified.049",
+   "characterId": "cell",
+   "formId": "cell_perfect",
+   "assetType": "projectile",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "beam_ray",
+   "variant": "projectiles_beams",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
+   "source": {
+    "sheet": "cell.png",
+    "frame": "049.png",
+    "x": "347",
+    "y": "1464"
+   },
+   "frameKind": "atomic",
+   "note": "bucket forense: projectiles_beams"
+  },
+  {
+   "sourceId": "cell_perfect/050.png",
+   "canonicalId": "cell_perfect.beam.release.05",
+   "characterId": "cell",
+   "formId": "cell_perfect",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "beam",
+   "role": "release",
+   "variant": "fire",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "beam_fire"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "cell.png",
+    "frame": "050.png",
+    "x": "446",
+    "y": "1468"
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "cell_perfect/051.png",
+   "canonicalId": "cell_perfect.effect.aura.03",
+   "characterId": "cell",
+   "formId": "cell_perfect",
+   "assetType": "effect",
+   "view": "FIELD",
+   "family": "effect",
+   "role": "aura",
+   "variant": "aura_support",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "aura_support"
+   ],
+   "evidence": "CANONICAL",
+   "canonStatus": "CANONICAL",
+   "source": {
+    "sheet": "",
+    "frame": "051.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "cell_perfect/052.png",
+   "canonicalId": "cell_perfect.effect.aura.04",
+   "characterId": "cell",
+   "formId": "cell_perfect",
+   "assetType": "effect",
+   "view": "FIELD",
+   "family": "effect",
+   "role": "aura",
+   "variant": "aura_support",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "aura_support"
+   ],
+   "evidence": "CANONICAL",
+   "canonStatus": "CANONICAL",
+   "source": {
+    "sheet": "",
+    "frame": "052.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "cell_perfect/053.png",
+   "canonicalId": "cell_perfect.effect.aura.05",
+   "characterId": "cell",
+   "formId": "cell_perfect",
+   "assetType": "effect",
+   "view": "FIELD",
+   "family": "effect",
+   "role": "aura",
+   "variant": "aura_support",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "aura_support"
+   ],
+   "evidence": "CANONICAL",
+   "canonStatus": "CANONICAL",
+   "source": {
+    "sheet": "",
+    "frame": "053.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "atomic"
+  },
+  {
+   "sourceId": "cell_perfect/000_beam_charge.png",
+   "canonicalId": "cell_perfect.beam.charge_start.06",
+   "characterId": "cell",
+   "formId": "cell_perfect",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "beam",
+   "role": "charge_start",
+   "variant": "charge",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "beam_charge",
+    "gather_power",
+    "power_up"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "",
+    "frame": "000_beam_charge.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "fixed_only",
+   "usedPoses": 1
+  },
+  {
+   "sourceId": "cell_perfect/001_beam_charge.png",
+   "canonicalId": "cell_perfect.beam.charge_start.07",
+   "characterId": "cell",
+   "formId": "cell_perfect",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "beam",
+   "role": "charge_start",
+   "variant": "charge",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "beam_charge"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "",
+    "frame": "001_beam_charge.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "fixed_only"
+  },
+  {
+   "sourceId": "cell_perfect/002_beam_charge.png",
+   "canonicalId": "cell_perfect.beam.charge_start.08",
+   "characterId": "cell",
+   "formId": "cell_perfect",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "beam",
+   "role": "charge_start",
+   "variant": "charge",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "beam_charge"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "",
+    "frame": "002_beam_charge.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "fixed_only"
+  },
+  {
+   "sourceId": "cell_perfect/003_beam_fire.png",
+   "canonicalId": "cell_perfect.beam.release.09",
+   "characterId": "cell",
+   "formId": "cell_perfect",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "beam",
+   "role": "release",
+   "variant": "fire",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "beam_fire"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "",
+    "frame": "003_beam_fire.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "fixed_only"
+  },
+  {
+   "sourceId": "cell_perfect/004_beam_fire.png",
+   "canonicalId": "cell_perfect.beam.release.10",
+   "characterId": "cell",
+   "formId": "cell_perfect",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "beam",
+   "role": "release",
+   "variant": "fire",
+   "sequenceIndex": 0,
+   "runtimePoses": [
+    "beam_fire"
+   ],
+   "evidence": "RUNTIME_VERIFIED",
+   "canonStatus": "RUNTIME_VERIFIED",
+   "source": {
+    "sheet": "",
+    "frame": "004_beam_fire.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "fixed_only"
+  },
+  {
+   "sourceId": "cell_perfect/005_hurt.png",
+   "canonicalId": "cell_perfect.unclassified.005_hurt",
+   "characterId": "cell",
+   "formId": "cell_perfect",
+   "assetType": "unclassified",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "unclassified",
+   "variant": "",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "UNKNOWN",
+   "canonStatus": "UNCLASSIFIED",
+   "source": {
+    "sheet": "",
+    "frame": "005_hurt.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "fixed_only",
+   "note": "sin evidencia runtime ni bucket"
+  },
+  {
+   "sourceId": "cell_perfect/006_hurt.png",
+   "canonicalId": "cell_perfect.unclassified.006_hurt",
+   "characterId": "cell",
+   "formId": "cell_perfect",
+   "assetType": "unclassified",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "unclassified",
+   "variant": "",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "UNKNOWN",
+   "canonStatus": "UNCLASSIFIED",
+   "source": {
+    "sheet": "",
+    "frame": "006_hurt.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "fixed_only",
+   "note": "sin evidencia runtime ni bucket"
+  },
+  {
+   "sourceId": "cell_perfect/007_hurt.png",
+   "canonicalId": "cell_perfect.unclassified.007_hurt",
+   "characterId": "cell",
+   "formId": "cell_perfect",
+   "assetType": "unclassified",
+   "view": "FIELD",
+   "family": "unclassified",
+   "role": "unclassified",
+   "variant": "",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "UNKNOWN",
+   "canonStatus": "UNCLASSIFIED",
+   "source": {
+    "sheet": "",
+    "frame": "007_hurt.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "fixed_only",
+   "note": "sin evidencia runtime ni bucket"
+  }
+ ]
+}
