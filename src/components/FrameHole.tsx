@@ -35,39 +35,39 @@ function measureHole(frameUrl: string): FrameHole | null {
   if (!ctx) return null;
   ctx.drawImage(img, 0, 0);
   const { data, width: w, height: h } = ctx.getImageData(0, 0, c.width, c.height);
-  // El interior del frame es la zona CLARA/poco saturada; el MARCO es
-  // oscuro o de color saturado. El arte debe llenar TODO el interior (hasta
-  // el borde interior del marco) — NO solo el centro: los frames del
-  // paquete tienen marcos de grosor distinto (blue: 1px, special: 9px) y
-  // por eso una caja fija 64×48 se veía desplazada en STAGE/LIMIT.
-  const isMarco = (x: number, y: number) => {
+  // El RECUADRO BLANCO interior del frame (donde va el arte en el GBC):
+  // flood fill desde el centro de la zona BLANCA (lum alta). El marco y el
+  // bisel quedan FUERA — el arte se rellena SOLO el recuadro blanco, nunca
+  // el máximo del botón.
+  const isWhite = (x: number, y: number) => {
     const i = (y * w + x) * 4;
     const r = data[i], g = data[i + 1], b = data[i + 2], al = data[i + 3];
-    if (al < 40) return true;           // fuera del frame = marco
-    const lum = (r + g + b) / 3;
-    const sat = Math.max(r, g, b) - Math.min(r, g, b);
-    return lum < 90 || sat > 70;        // oscuro o saturado = marco
+    if (al < 40) return false;
+    return (r + g + b) / 3 > 160 && Math.max(r, g, b) - Math.min(r, g, b) < 80;
   };
-  const colIsMarco = (x: number) => {
-    for (let y = 0; y < h; y++) if (!isMarco(x, y)) return false;
-    return true;
-  };
-  const rowIsMarco = (y: number) => {
-    for (let x = 0; x < w; x++) if (!isMarco(x, y)) return false;
-    return true;
-  };
-  // Interior completo: primera fila/columna SIN marco desde cada borde
-  let left = 0;
-  while (left < w && colIsMarco(left)) left++;
-  let right = w - 1;
-  while (right >= 0 && colIsMarco(right)) right--;
-  let top = 0;
-  while (top < h && rowIsMarco(top)) top++;
-  let bottom = h - 1;
-  while (bottom >= 0 && rowIsMarco(bottom)) bottom--;
-  if (right < left || bottom < top) return null;
-  // Escala 2× (48×40 → 96×80): el interior se duplica
-  return { left: left * 2, top: top * 2, width: (right - left + 1) * 2, height: (bottom - top + 1) * 2 };
+  const visited = new Uint8Array(w * h);
+  const stack: Array<[number, number]> = [[h >> 1, w >> 1]];
+  const pts: Array<[number, number]> = [];
+  while (stack.length) {
+    const [y, x] = stack.pop()!;
+    if (x < 0 || y < 0 || x >= w || y >= h) continue;
+    const idx = y * w + x;
+    if (visited[idx]) continue;
+    visited[idx] = 1;
+    if (!isWhite(x, y)) continue;
+    pts.push([x, y]);
+    stack.push([y - 1, x], [y + 1, x], [y, x - 1], [y, x + 1]);
+  }
+  if (!pts.length) return null;
+  let x0 = w, y0 = h, x1 = 0, y1 = 0;
+  for (const [x, y] of pts) {
+    if (x < x0) x0 = x;
+    if (x > x1) x1 = x;
+    if (y < y0) y0 = y;
+    if (y > y1) y1 = y;
+  }
+  // Escala 2× (48×40 → 96×80): el recuadro blanco se duplica
+  return { left: x0 * 2, top: y0 * 2, width: (x1 - x0 + 1) * 2, height: (y1 - y0 + 1) * 2 };
 }
 
 /** Hook: hueco interior real de un frame (2×), cacheado por URL. */

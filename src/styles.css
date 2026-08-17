@@ -3835,12 +3835,23 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   box-shadow:
     0 12px 0 -7px rgba(0,0,0,.86),
     0 18px 28px rgba(0,0,0,.45);
+  transition: transform 120ms ease, box-shadow 120ms ease, filter 120ms ease;
 }
 
 .basic-stage-card .card-art-img { image-rendering: pixelated; }
+/* Sin línea de acento superior (el ::before del .card base pone una barra
+   de color encima — la carta GBC pura NO la lleva, igual que la mano) */
+.basic-stage-card::before { display: none; }
+/* HOVER CANÓNICO: MISMO que la mano (JOINT) — elevación 3D + brillo +
+   resplandor dorado. NO discrepancias entre botones. */
 .basic-stage-card:hover:not(:disabled) {
   transform: perspective(720px) rotateX(4deg) translateY(-4px) translateZ(0);
   filter: brightness(1.14) saturate(1.1);
+  box-shadow:
+    0 16px 0 -8px rgba(0,0,0,.9),
+    0 22px 34px rgba(0,0,0,.58),
+    0 0 0 1px rgba(246,199,68,.35),
+    0 0 18px rgba(247,147,30,.3);
 }
 
 /* Icono de la carta de stage REAL dentro del botón (3/4/5/6 Stage) */
@@ -9960,9 +9971,19 @@ button.linklike:hover { text-decoration: underline; }
   image-rendering: pixelated;
   border: 0;
   cursor: pointer;
-  transition: transform .1s steps(2, end), filter .1s steps(2, end);
+  transition: transform 120ms ease, box-shadow 120ms ease, filter 120ms ease;
 }
-.limit-card:hover:not(:disabled) { transform: translateY(-3px); filter: brightness(1.1); }
+.limit-card:hover:not(:disabled) {
+  /* HOVER CANÓNICO: MISMO que la mano (JOINT) y STAGE — elevación 3D +
+     brillo + resplandor dorado */
+  transform: perspective(720px) rotateX(4deg) translateY(-4px) translateZ(0);
+  filter: brightness(1.14) saturate(1.1);
+  box-shadow:
+    0 16px 0 -8px rgba(0,0,0,.9),
+    0 22px 34px rgba(0,0,0,.58),
+    0 0 0 1px rgba(246,199,68,.35),
+    0 0 18px rgba(247,147,30,.3);
+}
 .limit-card:disabled {
   cursor: not-allowed;
   /* El arte se ve BIEN (como JOINT): sin grayscale ni oscurecer la imagen —
