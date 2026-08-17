@@ -271,8 +271,13 @@ export function HudModule() {
                   misma altura que los botones */}
               {view === 'DIALOGO' && (
                 <div className="gbc-dialogue">
-                  <div className="gbc-dialogue-actor">GOKU</div>
-                  <div className="gbc-dialogue-text">uses KAMEHAMEHA!<span className="gbc-dialogue-cursor">▼</span></div>
+                  <div className="gbc-dialogue-body">
+                    {pIdle && <img src={pIdle} alt="GOKU" className="gbc-dialogue-sprite" draggable={false} />}
+                    <div className="gbc-dialogue-content">
+                      <div className="gbc-dialogue-actor">GOKU</div>
+                      <div className="gbc-dialogue-text">uses KAMEHAMEHA!<span className="gbc-dialogue-cursor">▼</span></div>
+                    </div>
+                  </div>
                 </div>
               )}
               {/* COMMAND: LIMIT · JOINT · BASIC */}

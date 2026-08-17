@@ -3088,11 +3088,28 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
       <div className="battle-controls">
         {/* Cuadro de diálogo GBC: DENTRO de la caja, con la MISMA altura que
             los botones (80px) — el fondo se visualiza igual en todo momento */}
-        {gbcMsg && (
-          <div className="gbc-dialogue" key={gbcMsg}>
-            <GbcDialogueText msg={gbcMsg} />
-          </div>
-        )}
+        {gbcMsg && (() => {
+          // Lado del hablante: si el actor del mensaje es el ENEMIGO, el
+          // sprite se coloca a la derecha; si es el JUGADOR, a la izquierda.
+          const actorRaw = gbcMsg.match(/^(.+?)\s+uses\s/i)?.[1]
+            ?? gbcMsg.match(/^(.+?)\s+—\s/)?.[1]
+            ?? null;
+          const pName = player.name.toLowerCase();
+          const eName = enemy.name.toLowerCase();
+          const lower = gbcMsg.toLowerCase();
+          const isEnemy = actorRaw !== null
+            ? (actorRaw.toLowerCase() === eName
+              || (actorRaw.toLowerCase() !== pName && lower.includes(eName) && !lower.includes(pName)))
+            : (lower.includes(eName) && !lower.includes(pName));
+          const side: 'left' | 'right' | null = actorRaw === null ? null : (isEnemy ? 'right' : 'left');
+          // Sprite chibi overworld del personaje que habla (idle)
+          const spriteUrl = isEnemy ? overworldUrl(enemyFormId) : overworldUrl(activePlayerFormId);
+          return (
+            <div className="gbc-dialogue" key={gbcMsg}>
+              <GbcDialogueText msg={gbcMsg} side={side} spriteUrl={spriteUrl} />
+            </div>
+          );
+        })()}
         {drawFx && (
           <div className="draw-fx" key={drawFx.nonce} aria-label="drawing card">
             <CardVisual card={drawFx.card} selected={false} disabled={false} onClick={() => {}} />
@@ -4854,7 +4871,11 @@ if (import.meta.hot) {
 
 
 // ── Texto del diálogo GBC estructurado: actor (etiqueta) + mensaje ──
-function GbcDialogueText({ msg }: { msg: string }) {
+function GbcDialogueText({ msg, side, spriteUrl }: {
+  msg: string;
+  side?: 'left' | 'right' | null;
+  spriteUrl?: string | null;
+}) {
   let actor: string | null = null;
   let text = msg;
   const mUses = msg.match(/^(.+?)\s+uses\s+(.+)$/i);
@@ -4862,9 +4883,15 @@ function GbcDialogueText({ msg }: { msg: string }) {
   if (mUses) { actor = mUses[1]; text = mUses[2]; }
   else if (mDash) { actor = mDash[1]; text = mDash[2]; }
   return (
-    <>
-      {actor && <div className="gbc-dialogue-actor">{actor}</div>}
-      <div className="gbc-dialogue-text">{text}<span className="gbc-dialogue-cursor">▼</span></div>
-    </>
+    <div className={`gbc-dialogue-body ${side === 'right' ? 'right' : ''}`}>
+      {/* Sprite del personaje que habla: izquierda o derecha según su lado */}
+      {spriteUrl && (
+        <img src={spriteUrl} alt={actor ?? ''} className="gbc-dialogue-sprite" draggable={false} />
+      )}
+      <div className="gbc-dialogue-content">
+        {actor && <div className="gbc-dialogue-actor">{actor}</div>}
+        <div className="gbc-dialogue-text">{text}<span className="gbc-dialogue-cursor">▼</span></div>
+      </div>
+    </div>
   );
 }

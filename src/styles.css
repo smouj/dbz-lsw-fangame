@@ -9529,20 +9529,47 @@ button.linklike:hover { text-decoration: underline; }
   pointer-events: none;
   transition: opacity .12s steps(3, end);
 }
+/* Cuerpo del diálogo: sprite del hablante + contenido (flex row) */
+.gbc-dialogue-body {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  height: 100%;
+}
+.gbc-dialogue-body.right {
+  flex-direction: row-reverse;       /* el sprite del rival va a la derecha */
+}
+.gbc-dialogue-sprite {
+  image-rendering: pixelated;
+  height: 58px;
+  width: auto;
+  flex: 0 0 auto;
+  filter: drop-shadow(2px 2px 0 rgba(0,0,0,.35));
+}
+.gbc-dialogue-content {
+  flex: 1 1 auto;
+  min-width: 0;
+}
 /* Actor de la acción: etiqueta superior, estilo GBC — SIN sombras */
 .gbc-dialogue-actor {
-  font-size: 10px;
-  letter-spacing: 2.5px;
+  font-family: var(--fpx);
+  font-size: 11px;
+  letter-spacing: 3px;
   color: #b03030;                    /* rojo GBC puro para el actor */
-  margin-bottom: 3px;
+  margin-bottom: 2px;
   text-transform: uppercase;
 }
 /* Texto principal: NEGRO PURO sobre blanco GBC (sin faux-bold — las sombras
    de 8 direcciones engrosaban demasiado; el GBC usa texto nítido) */
 .gbc-dialogue-text {
+  font-family: var(--fpx);
+  font-size: 15px;
   color: #000;
   font-weight: 400;
   text-shadow: none;
+  line-height: 1.5;
+  letter-spacing: .8px;
 }
 .battle-screen.gbc-msg .battle-controls > *:not(.gbc-dialogue) { display: none; }
 .battle-screen.gbc-msg .gbc-dialogue {
