@@ -8800,9 +8800,30 @@ button:focus-visible, .chapter-node:focus-visible {
   font-size: 10px;
 }
 .dev-navigator .dev-form-info-sep { color: #3a4250; }
+.dev-navigator-sheet {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px dashed #22272f;
+}
+.dev-sheet-canonic {
+  max-height: 92px;
+  width: auto;
+  image-rendering: pixelated;
+  border: 1px solid #262b33;
+  border-radius: 6px;
+  background: #0e1013;
+}
+.dev-sheet-note { font-size: 10px; color: #6b7484; }
 @media (max-width: 900px) {
   .dev-navigator .dev-form-info { margin-left: 0; border-left: none; padding-left: 0; }
 }
 
 /* Wrapper del FormNavigator dentro de las páginas */
 .dev-navigator-wrap { margin-bottom: 14px; }
+
+/* Override-badge mini (Animation Studio) */
+.dev-btn-mini { padding: 2px 8px; font-size: 10px; margin-left: 6px; }

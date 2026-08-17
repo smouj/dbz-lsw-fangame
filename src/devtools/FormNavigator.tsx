@@ -12,10 +12,11 @@
 import { CHARACTERS, getForm } from '../data/roster';
 import { spriteDirFor } from '../data/spriteManifest';
 
-export function FormNavigator({ formId, onChange, showInfo = true }: {
+export function FormNavigator({ formId, onChange, showInfo = true, showSheet = true }: {
   formId: string;
   onChange: (formId: string) => void;
   showInfo?: boolean;
+  showSheet?: boolean;
 }) {
   const form = getForm(formId) ?? getForm(CHARACTERS[0]?.forms[0] ?? 'goku_base');
   if (!form) return null;
@@ -59,6 +60,13 @@ export function FormNavigator({ formId, onChange, showInfo = true }: {
             <code>{form.id}</code>
             {form.sheet && <><span className="dev-form-info-sep">·</span><span>{form.sheet}</span></>}
             {dir && <><span className="dev-form-info-sep">·</span><span>dir {dir}</span></>}
+          </div>
+        )}
+        {showSheet && form.sheet && (
+          <div className="dev-navigator-sheet" title="Sheet canónico V9 (atomic_sheet): incluye OW · tile · composite · aura power + support">
+            <span className="dev-navigator-label">Sheet V9</span>
+            <img className="dev-sheet-canonic" src={`/assets/sheets/${form.sheet}?t=${Date.now()}`} alt={form.sheet} loading="lazy" />
+            <span className="dev-sheet-note">atomic_sheet V9 — incluye OW · tile · composite · aura power+support</span>
           </div>
         )}
       </div>

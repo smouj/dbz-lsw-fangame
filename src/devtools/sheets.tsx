@@ -11,7 +11,7 @@
 // ═══════════════════════════════════════════════════════════
 import { useEffect, useMemo, useState } from 'react';
 import { spriteDirFor, spriteManifestUrl, spriteFrameUrl } from '../data/spriteManifest';
-import { fetchManifest, type ManifestFrame } from './spriteEditing';
+import { clearOverride, fetchManifest, type ManifestFrame } from './spriteEditing';
 import { poseSemantics, parseFrameName, POSE_ORDER } from './frameSemantics';
 import { FormNavigator } from './FormNavigator';
 import type { DevLinkedTarget } from './DevStudio';
@@ -44,6 +44,8 @@ export function SheetsModule({ target, onOpenInPixelArt }: {
   const [frameUsages, setFrameUsages] = useState<Record<string, FrameUsage[]>>({});
   const [selected, setSelected] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [overridden, setOverridden] = useState(false);
+  const [reloadTick, setReloadTick] = useState(0);
   const [zoom, setZoom] = useState(6);
 
   const dir = spriteDirFor(formId);
@@ -64,7 +66,8 @@ export function SheetsModule({ target, onOpenInPixelArt }: {
     if (!manifestUrl || !dir) return;
     setLoading(true);
     fetchManifest(manifestUrl, dir)
-      .then(({ manifest }) => {
+      .then(({ manifest, overridden: ov }) => {
+        setOverridden(ov);
         if (!alive) return;
         // frames únicos del manifest (todas las poses)
         const seen = new Set<string>();

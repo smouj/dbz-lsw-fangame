@@ -402,7 +402,14 @@ export function AnimationModule({ target }: { target?: DevLinkedTarget | null })
       <header className="dev-header">
         <h1>Animation Studio</h1>
         <p className="dev-sub">Edita los conjuntos de frames de cada animación (orden, fps, loop) y guarda el manifest.</p>
-        {overridden && <span className="dev-badge">overrides locales activos</span>}
+        {overridden && (
+          <span className="dev-badge">
+            overrides locales activos{' '}
+            <button className="dev-btn dev-btn-mini" onClick={() => { clearOverride(dir!); setOverridden(false); window.location.reload(); }}>
+              limpiar
+            </button>
+          </span>
+        )}
       </header>
 
       {loadError && <div className="dev-wip-banner">⚠ No se pudo cargar el manifest de esta forma.</div>}

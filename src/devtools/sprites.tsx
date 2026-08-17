@@ -6,6 +6,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { FORMS } from '../data/roster';
 import { spriteDirFor, spriteManifestUrl, spriteFrameUrl } from '../data/spriteManifest';
+import { clearOverride, fetchManifest } from './spriteEditing';
 import { BATTLE_PORTRAITS } from '../data/battlePortraits';
 import { overworldUrl } from '../data/overworld';
 import { COMBAT_REQUIRED_POSES, COMBAT_POSE_ORDER } from '../battle/spriteConfig';
@@ -32,27 +33,31 @@ export function SpritesModule({ target }: { target?: DevLinkedTarget | null }) {
   // Poses del manifest (dinámico): incluye beam_ray/beam_ray_tip/gather_power
   // cuando existen. Las poses base SIEMPRE se listan primero (orden canónico).
   const [poses, setPoses] = useState<string[]>([...COMBAT_REQUIRED_POSES]);
+  const [overridden, setOverridden] = useState(false);
+  const [reloadTick, setReloadTick] = useState(0);
   const [poseFirstFiles, setPoseFirstFiles] = useState<Record<string, string>>({});
   useEffect(() => {
-    if (!manifestUrl) return;
+    if (!manifestUrl || !dir) return;
     let cancelled = false;
     // Al cambiar de forma, limpiar inmediatamente para no mostrar frames de la forma anterior.
     setPoses([...COMBAT_REQUIRED_POSES]);
     setPoseFirstFiles({});
-    fetch(manifestUrl).then(r => r.ok ? r.json() : null).then((m: Record<string, unknown> | null) => {
-      if (cancelled || !m) return;
-      const known = COMBAT_POSE_ORDER.filter(p => Object.prototype.hasOwnProperty.call(m, p));
-      const extras = Object.keys(m).filter(p => !COMBAT_POSE_ORDER.includes(p as typeof COMBAT_POSE_ORDER[number]));
-      const firstFiles: Record<string, string> = {};
-      for (const [pid, data] of Object.entries(m as Record<string, { frames?: { file: string }[] }>)) {
-        const first = data.frames?.[0]?.file;
-        if (first) firstFiles[pid] = first;
-      }
-      setPoses([...known, ...extras]);
-      setPoseFirstFiles(firstFiles);
-    }).catch(() => {});
+    fetchManifest(manifestUrl, dir)
+      .then(({ manifest: m, overridden: ov }) => {
+        if (cancelled) return;
+        setOverridden(ov);
+        const known = COMBAT_POSE_ORDER.filter(p => Object.prototype.hasOwnProperty.call(m, p));
+        const extras = Object.keys(m).filter(p => !COMBAT_POSE_ORDER.includes(p as typeof COMBAT_POSE_ORDER[number]));
+        const firstFiles: Record<string, string> = {};
+        for (const [pid, data] of Object.entries(m as Record<string, { frames?: { file: string }[] }>)) {
+          const first = data.frames?.[0]?.file;
+          if (first) firstFiles[pid] = first;
+        }
+        setPoses([...known, ...extras]);
+        setPoseFirstFiles(firstFiles);
+      }).catch(() => {});
     return () => { cancelled = true; };
-  }, [manifestUrl]);
+  }, [manifestUrl, dir, reloadTick]);
   useEffect(() => {
     if (!target) return;
     setFormId(target.formId);
@@ -132,6 +137,15 @@ export function SpritesModule({ target }: { target?: DevLinkedTarget | null }) {
         <h1>Sprite Inspector</h1>
         <p className="dev-sub">Frame real de la Sprite Database con análisis de alpha y bounding box.</p>
       </header>
+      {overridden && (
+        <div className="dev-wip-banner">
+          ⚠ Este personaje tiene <strong>overrides locales</strong> guardados por Animation Studio (los frames mostrados
+          pueden diferir del manifest canónico V9).{' '}
+          <button className="dev-btn" onClick={() => { clearOverride(dir!); setOverridden(false); setReloadTick(t => t + 1); }}>
+            Limpiar override local
+          </button>
+        </div>
+      )}
 
       <div className="dev-navigator-wrap">
         <FormNavigator formId={formId} onChange={fid => { setFormId(fid); setPose('idle'); }} />
