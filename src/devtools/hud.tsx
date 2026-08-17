@@ -266,15 +266,15 @@ export function HudModule() {
               </div>
             </div>
 
-            {/* DIÁLOGO (cuadro GBC estructurado) */}
-            {view === 'DIALOGO' && (
-              <div className="gbc-dialogue">
-                <div className="gbc-dialogue-actor">GOKU</div>
-                <div className="gbc-dialogue-text">uses KAMEHAMEHA!<span className="gbc-dialogue-cursor">▼</span></div>
-              </div>
-            )}
-
             <div className="battle-controls dev-hud-battle-controls">
+              {/* DIÁLOGO (cuadro GBC estructurado) — dentro de la caja,
+                  misma altura que los botones */}
+              {view === 'DIALOGO' && (
+                <div className="gbc-dialogue">
+                  <div className="gbc-dialogue-actor">GOKU</div>
+                  <div className="gbc-dialogue-text">uses KAMEHAMEHA!<span className="gbc-dialogue-cursor">▼</span></div>
+                </div>
+              )}
               {/* COMMAND: LIMIT · JOINT · BASIC */}
               {view === 'COMMAND' && (
                 <div className="command-select">

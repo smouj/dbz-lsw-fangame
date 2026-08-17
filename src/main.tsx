@@ -3085,14 +3085,14 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
       </div>
 
       {/* Controles */}
-      {/* Cuadro de diálogo GBC: solo durante acciones (oculta los botones) */}
-      {gbcMsg && (
-        <div className="gbc-dialogue" key={gbcMsg}>
-          <GbcDialogueText msg={gbcMsg} />
-        </div>
-      )}
-
       <div className="battle-controls">
+        {/* Cuadro de diálogo GBC: DENTRO de la caja, con la MISMA altura que
+            los botones (80px) — el fondo se visualiza igual en todo momento */}
+        {gbcMsg && (
+          <div className="gbc-dialogue" key={gbcMsg}>
+            <GbcDialogueText msg={gbcMsg} />
+          </div>
+        )}
         {drawFx && (
           <div className="draw-fx" key={drawFx.nonce} aria-label="drawing card">
             <CardVisual card={drawFx.card} selected={false} disabled={false} onClick={() => {}} />

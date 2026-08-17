@@ -9501,26 +9501,33 @@ button.linklike:hover { text-decoration: underline; }
    (como el panel de mensajes del GBC: solo durante acciones)
    ═══════════════════════════════════════════════════════════ */
 .gbc-dialogue {
-  position: absolute;
-  left: 50%;
-  bottom: 18px;
-  transform: translateX(-50%) translateY(8px);
+  /* DENTRO de la caja de controles: misma altura que los botones (80px),
+     centrado — el fondo de la franja se visualiza igual en toda situación */
+  position: relative;
+  left: auto;
+  bottom: auto;
+  transform: none;
   width: var(--gbc-dlg-w, min(880px, 96%));
+  height: 80px;
   z-index: 40;
   background: #f8f4e4;              /* blanco GBC */
   border: 3px solid #000;
   outline: 2px solid #f8f4e4;
   box-shadow: 4px 4px 0 rgba(0,0,0,.55), inset 0 0 0 1px #000;
-  padding: 12px 16px 14px;
+  padding: 10px 16px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   font-family: var(--fpx);
   color: #000;
   font-size: 14px;
-  line-height: 1.65;
+  line-height: 1.55;
   letter-spacing: .6px;
   image-rendering: pixelated;
   opacity: 0;
   pointer-events: none;
-  transition: opacity .12s steps(3, end), transform .12s steps(3, end);
+  transition: opacity .12s steps(3, end);
 }
 /* Actor de la acción: etiqueta superior, estilo GBC — SIN sombras */
 .gbc-dialogue-actor {
@@ -9537,9 +9544,9 @@ button.linklike:hover { text-decoration: underline; }
   font-weight: 400;
   text-shadow: none;
 }
+.battle-screen.gbc-msg .battle-controls > *:not(.gbc-dialogue) { display: none; }
 .battle-screen.gbc-msg .gbc-dialogue {
   opacity: 1;
-  transform: translateX(-50%) translateY(0);
 }
 /* esquinas GBC (muescas) */
 .gbc-dialogue::before,
@@ -9561,12 +9568,9 @@ button.linklike:hover { text-decoration: underline; }
 }
 @keyframes gbcCursorBlink { to { visibility: hidden; } }
 
-/* Durante la acción: los botones se quitan para dar visibilidad
-   al cuadro de diálogo y al plano de la animación (estilo GBC). */
-.battle-screen.gbc-msg .battle-controls,
-.battle-screen.is-cinematic .battle-controls {
-  display: none;
-}
+/* Durante la acción: los botones se quitan (el diálogo ocupa la caja con
+   su misma altura — la franja se mantiene para que el fondo sea estable) */
+.battle-screen.is-cinematic .battle-controls > *:not(.gbc-dialogue) { display: none; }
 
 /* En el mockup del HUD Studio la intro se previsualiza ESTÁTICA
    (sin el ciclo de vida que la desvanece a los 5.2s del juego real). */
