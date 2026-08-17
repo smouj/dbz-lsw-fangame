@@ -42,6 +42,14 @@ function PreviewHpBar({ current, max, side }: { current: number; max: number; si
 export function HudModule() {
   const [theme, setTheme] = useState<HudTheme>(() => currentHudTheme());
   const [status, setStatus] = useState('');
+  // Vista del mockup: qué apartado del HUD se muestra (como al pulsar cada botón)
+  const [view, setView] = useState<'COMMAND' | 'JOINT' | 'BASIC' | 'LIMIT'>('COMMAND');
+  const VIEWS = [
+    { id: 'COMMAND' as const, label: 'Comando', tip: 'LIMIT / JOINT / BASIC (fase command)' },
+    { id: 'JOINT' as const, label: 'JOINT · Mano', tip: 'Cartas de la mano (fase cardSelect)' },
+    { id: 'BASIC' as const, label: 'BASIC', tip: 'Stage Attack / Gather Power (acción básica)' },
+    { id: 'LIMIT' as const, label: 'LIMIT', tip: 'Cartas LIMITED del personaje' },
+  ];
 
   const player = useMemo(() => getForm(P_FORM), []);
   const enemy = useMemo(() => getForm(E_FORM), []);
@@ -96,6 +104,15 @@ export function HudModule() {
         </div>
       </div>
       {status && <div className="dev-hud-status">{status}</div>}
+
+      <div className="dev-hud-view-select" role="tablist" aria-label="Vista del HUD">
+        {VIEWS.map(v => (
+          <button key={v.id} className={`dev-hud-view-chip ${view === v.id ? 'active' : ''}`}
+            onClick={() => setView(v.id)} title={v.tip}>
+            {v.label}
+          </button>
+        ))}
+      </div>
 
       <div className="dev-hud-grid">
         {/* ─── PREVIEW / VISUALIZADOR ─── */}
@@ -165,16 +182,40 @@ export function HudModule() {
               <button className="btn-exit" type="button">EXIT</button>
             </div>
 
-            <div className="battle-controls">
-              {/* Botones de comando REALES del juego (sprites GBC btn_*.png).
-                  Combate individual (Goku vs Piccolo): sin CHARA, como el build. */}
-              <div className="command-strip">
-                <button className="cmd-limit" data-tip="LIMITED" />
-                <button className="cmd-j" data-tip="JOINT" />
-                <button className="cmd-b" data-tip="BASIC" />
-              </div>
-              {/* Mano REAL del juego: cartas del catálogo con su arte */}
-              <MockHand />
+            <div className="battle-controls dev-hud-battle-controls">
+              {/* Contenido según la vista: igual que las fases del juego real.
+                  COMMAND: botones + mano juntos (misma línea, como el build al
+                  entrar en cardSelect); JOINT/BASIC/LIMIT: apartados por botón. */}
+              {view === 'COMMAND' && (
+                <>
+                  <div className="command-strip">
+                    <button className="cmd-limit" data-tip="LIMITED" />
+                    <button className="cmd-j" data-tip="JOINT" />
+                    <button className="cmd-b" data-tip="BASIC" />
+                  </div>
+                  <MockHand compact />
+                </>
+              )}
+              {view === 'JOINT' && <MockHand />}
+              {view === 'BASIC' && (
+                <div className="dev-hud-basic-view">
+                  <div className="command-strip">
+                    <button className="cmd-b" data-tip="BASIC" />
+                  </div>
+                  <div className="dev-hud-basic-options">
+                    <button className="dev-hud-basic-opt">STAGE ATTACK</button>
+                    <button className="dev-hud-basic-opt">GATHER POWER</button>
+                  </div>
+                </div>
+              )}
+              {view === 'LIMIT' && (
+                <div className="dev-hud-basic-view">
+                  <div className="command-strip">
+                    <button className="cmd-limit" data-tip="LIMITED" />
+                  </div>
+                  <MockHand limit />
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -231,8 +272,10 @@ export function HudModule() {
 // ── Mano del mockup: cartas REALES del catálogo (igual que el build) ──
 const MOCK_HAND_IDS = [13, 7, 5, 1]; // Kamehameha, Energy Wave, Cont. Punch, 3 Stage Attack
 
-function MockHand() {
-  const cards = MOCK_HAND_IDS.map(id => getCard(id)).filter(Boolean) as NonNullable<ReturnType<typeof getCard>>[];
+function MockHand({ compact, limit }: { compact?: boolean; limit?: boolean }) {
+  // LIMIT: cartas exclusivas de personaje (Goku: Kaio Ken); mano: catálogo
+  const ids = limit ? [87, 46] : MOCK_HAND_IDS;
+  const cards = ids.map(id => getCard(id)).filter(Boolean) as NonNullable<ReturnType<typeof getCard>>[];
   return (
     <div className="hand-area">
       <div className="hand-label">— MANO —</div>

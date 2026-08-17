@@ -8497,12 +8497,29 @@ button:focus-visible, .chapter-node:focus-visible {
 .dev-hud-actions { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
 .dev-hud-status { margin: 10px 0 0; padding: 8px 12px; background: rgba(64, 184, 72, .12); border: 1px solid rgba(64, 184, 72, .4); border-radius: 8px; color: #7bd88a; font-size: 12px; }
 
-.dev-hud-grid { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 18px; margin-top: 16px; align-items: start; }
-.dev-hud-grid > :first-child { position: sticky; top: 12px; }
+.dev-hud-grid { display: grid; grid-template-columns: 1fr; gap: 18px; margin-top: 12px; align-items: start; }
+.dev-hud-view-select {
+  display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px;
+}
+.dev-hud-view-chip {
+  background: #141824; border: 1px solid #232b3d; color: #c8d3e8;
+  padding: 5px 12px; border-radius: 999px; font-size: 12px; cursor: pointer;
+  font-family: inherit;
+  transition: border-color .15s, color .15s, background .15s;
+}
+.dev-hud-view-chip:hover { border-color: #b08d2e; }
+.dev-hud-view-chip.active { border-color: #b08d2e; color: #e0b84c; background: #1c2231; }
 @media (max-width: 760px) { .dev-hud-grid { grid-template-columns: 1fr; } }
 
 /* ─── Preview / visualizador ─── */
-.dev-hud-preview { background: #0a0d12; border: 1px solid #262b33; border-radius: 8px; padding: 14px; overflow: auto; }
+.dev-hud-preview {
+  background: #0d1016;
+  border: 1px solid #262b33;
+  border-radius: 8px;
+  padding: 12px;
+  overflow: hidden;
+  width: 100%;
+}
 .dev-hud-real-preview {
   width: 100%;
   min-width: 0;
@@ -9356,21 +9373,7 @@ button.linklike:hover { text-decoration: underline; }
   box-shadow: 1px 1px 0 rgba(0,0,0,.6);
 }
 
-/* ── Dev Studio HUD: mockup con elementos reales del juego ── */
-.dev-hud-preview .battle-controls {
-  height: auto;
-  min-height: 0;
-  flex-direction: column;
-  gap: 8px;
-  padding: 4px 8px 10px;
-}
-.dev-hud-preview .command-strip { gap: 14px; padding: 0; margin-top: 2px; }
-.dev-hud-preview .hand-area { gap: 4px; width: 100%; max-width: 100%; }
-.dev-hud-preview .hand-cards { justify-content: center; flex-wrap: nowrap; }
-.dev-hud-preview .hand-cards .card {
-  width: 64px;
-  min-height: 74px;
-}
+/* ── Dev Studio HUD: mockup fiel al juego, controles sobre el escenario ── */
 .dev-hud-preview .battle-screen {
   height: auto;
   min-height: 0;
@@ -9378,19 +9381,55 @@ button.linklike:hover { text-decoration: underline; }
   min-width: 0 !important;
   max-width: 100% !important;
   overflow: hidden;
+  position: relative;
+  grid-template-rows: auto minmax(0, 1fr) auto 0 0;
 }
-.dev-hud-preview .battle-controls { width: 100%; }
-.dev-hud-preview .command-strip { justify-content: center; margin: 0 auto; }
-/* Campo compacto del mockup: altura fija para que TODO el HUD (HUD superior,
-   comandos y mano) quede visible sin scroll dentro del preview. */
+/* En el mockup el phase-bar (TURN/EXIT) es redundante. */
+.dev-hud-preview .phase-bar { display: none; }
+/* Campo amplio: el escenario domina el preview (como en el juego). */
 .dev-hud-preview .battlefield {
-  height: 118px;
+  height: 380px;
   min-height: 0;
   position: relative;
+  width: 100%;
 }
-/* En el mockup el phase-bar (TURN/EXIT) es redundante: ahorra altura
-   para que comandos y mano queden VISIBLES sin scroll. */
-.dev-hud-preview .phase-bar { display: none; }
+/* CONTROLES SUPERPUESTOS al escenario: sin caja que tape el juego;
+   botones y cartas en la MISMA línea, anclados abajo. */
+.dev-hud-preview .battle-controls {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: auto;
+  min-height: 0;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  padding: 6px 10px 10px;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+}
+.dev-hud-preview .command-strip { gap: 14px; padding: 0; margin: 0; flex: 0 0 auto; }
+.dev-hud-preview .hand-area { gap: 4px; width: auto; max-width: 100%; flex: 0 1 auto; }
+.dev-hud-preview .hand-cards { justify-content: center; flex-wrap: nowrap; }
+.dev-hud-preview .hand-cards .card {
+  width: 64px;
+  min-height: 74px;
+}
+/* Vista BASIC: botón + opciones de acción básica */
+.dev-hud-basic-view {
+  display: flex; align-items: center; gap: 14px; flex-wrap: wrap; justify-content: center;
+}
+.dev-hud-basic-options { display: flex; gap: 8px; }
+.dev-hud-basic-opt {
+  background: linear-gradient(180deg, #1c2231, #141824);
+  border: 1px solid #b08d2e55; color: #e0b84c;
+  font-family: var(--fpx); font-size: 10px; letter-spacing: 1px;
+  padding: 6px 12px; border-radius: 6px; cursor: pointer;
+  box-shadow: 2px 2px 0 #000;
+}
+.dev-hud-basic-opt:hover { border-color: #b08d2e; filter: brightness(1.15); }
 .dev-hud-preview .battlefield-fighters {
   height: 100%;
   position: relative;
