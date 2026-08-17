@@ -391,46 +391,44 @@ Cada acierto +1 CC (más si completas la cadena).">
                   paquete ORGANIZADO (key_q/key_e/↑↓/flechas) + prompt + el
                   TIEMPO de reacción destacado + recovery */}
               {view === 'STAGE' && (
-                <div className="command-select">
-                  <div className="stage-input-area">
+                <div className={`stage-panel speaker-${dlgSide}`}>
+                  {/* Sprite del personaje que ejecuta el stage, FUERA a su lado
+                      (mismo formato que el diálogo: marco negro + máscara) */}
+                  <div className={`gbc-dialogue-speaker ${dlgSide}`}>
+                    <img src={(dlgSide === 'left' ? storyPortraitUrl('goku', P_FORM) || pPortrait : storyPortraitUrl('cell', P_FORM)) || ''} alt={dlgSide === 'left' ? 'GOKU' : 'CELL'} className="gbc-dialogue-speaker-img" draggable={false} />
+                  </div>
+                  {/* Caja GBC: MISMA altura que los demás paneles (80px). Contiene
+                      la info del stage (nombre + STAGE + PUSH + barra de tiempo) */}
+                  <div className="stage-panel-box">
                     <div className="stage-label">
                       <span className="stage-label-name">3 stage atk.</span>
                       <span className="stage-label-progress">STAGE 2/3</span>
                     </div>
-                    <div className="stage-qte-row">
-                      <div className="stage-sequence">
-                        <span className="stage-seq-item done"><span className="seq-check">✓</span></span>
-                        <span className="stage-seq-item current">
-                          <img src="/assets/ui/qte/key_q.png" alt="Q" className="qte-key-sm" />
-                        </span>
-                        <span className="stage-seq-item future">
-                          <img src="/assets/ui/qte/key_up.png" alt="↑" className="qte-key-sm" />
-                        </span>
-                        <span className="stage-seq-item future">
-                          <img src="/assets/ui/qte/arrow_right.png" alt="→" className="qte-key-sm" />
-                        </span>
-                      </div>
-                      <div className="stage-prompt-big A">
-                        <img src="/assets/ui/qte/key_q.png" alt="Q" className="qte-key-big" />
-                        <span className="stage-prompt-label">A (Q)</span>
-                      </div>
-                    </div>
-                    {/* TIEMPO de reacción: barra + PUSH elapsed/limit (GBC) */}
                     <div className="stage-timer-row">
                       <span className="stage-push">PUSH <strong>0.6</strong> / 1.2s</span>
                       <div className="stage-timer-track">
                         <div className="stage-timer" style={{ width: '38%' }} />
                       </div>
                     </div>
-                    <div className="stage-help">A = puñetazo · B = patada · flechas/WASD = desplazamiento — pulsa a tiempo (+1 CC por acierto)</div>
                   </div>
-                  {/* Recovery: PROTEGERSE (A) / REPARAR (B) — botones del controller */}
-                  <div className="stage-recover-help" style={{ marginTop: 6 }}>
-                    <div className="stage-recover-prompt window-open">
-                      <img src="/assets/ui/qte/controller/xbox/xbox_a.png" alt="A" className="qte-key-sm" /> PROTEGERSE (A)
+                  {/* INPUTS FUERA a la derecha del cuadro (simétrico al sprite):
+                      secuencia de teclas + prompt grande, con su propio marco */}
+                  <div className="stage-inputs-box">
+                    <div className="stage-sequence">
+                      <span className="stage-seq-item done"><span className="seq-check">✓</span></span>
+                      <span className="stage-seq-item current">
+                        <img src="/assets/ui/qte/key_q.png" alt="Q" className="qte-key-sm" />
+                      </span>
+                      <span className="stage-seq-item future">
+                        <img src="/assets/ui/qte/key_up.png" alt="↑" className="qte-key-sm" />
+                      </span>
+                      <span className="stage-seq-item future">
+                        <img src="/assets/ui/qte/arrow_right.png" alt="→" className="qte-key-sm" />
+                      </span>
                     </div>
-                    <div className="stage-recover-prompt window-open">
-                      <img src="/assets/ui/qte/controller/xbox/xbox_b.png" alt="B" className="qte-key-sm" /> REPARAR (B)
+                    <div className="stage-prompt-big A">
+                      <img src="/assets/ui/qte/key_q.png" alt="Q" className="qte-key-big" />
+                      <span className="stage-prompt-label">A (Q)</span>
                     </div>
                   </div>
                 </div>

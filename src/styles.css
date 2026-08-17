@@ -3371,24 +3371,97 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 }
 
 /* ─── Stage Attack: inputs A/B ─── */
-.stage-input-area {
-  /* Overlay flotante sobre el CAMPO (no empuja el grid — el área de controles
-     tiene altura FIJA; el QTE se superpone como hace el GBC al hacer zoom al
-     luchador). 2026-08-12: antes vivía en el flujo de .battle-controls y su
-     altura (sprite scale 18 + prompts) encogía el battlefield en cada fase. */
+.stage-panel {
+  /* MISMO formato que el diálogo: DENTRO del flujo del battle-controls
+     (no flota sobre el campo), con la MISMA altura que los demás paneles
+     (80px). Deja hueco a la IZQUIERDA para el sprite del personaje (88px)
+     y a la DERECHA para los inputs (220px) — la caja queda centrada y los
+     elementos exteriores (absolute) caen dentro del área de controles. */
+  position: relative;
+  height: 80px;
+  display: flex;
+  align-items: stretch;
+  flex-shrink: 0;
+  width: min(calc(100% - 88px - 220px), 760px);
+}
+.stage-panel.speaker-left { margin-left: 88px; margin-right: 220px; }
+.stage-panel.speaker-right { margin-right: 88px; margin-left: 220px; }
+/* Caja GBC con la info del stage: MISMA altura que el diálogo (80px) */
+.stage-panel-box {
+  flex: 1 1 auto;
+  min-width: 0;
+  height: 80px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px;
+  padding: 0 16px;
+  background: #f8f4e4;              /* blanco GBC como el diálogo */
+  border: 3px solid #000;
+  outline: 2px solid #f8f4e4;
+  box-shadow: 4px 4px 0 rgba(0,0,0,.55), inset 0 0 0 1px #000;
+  box-sizing: border-box;
+  font-family: var(--fpx);
+  color: #000;
+}
+/* INPUTS FUERA a la derecha del cuadro (simétrico al sprite de la izq) */
+.stage-inputs-box {
   position: absolute;
-  left: 50%;
-  bottom: calc(100% + 6px);
-  transform: translateX(-50%);
-  z-index: 50;
-  display: flex; flex-direction: column; align-items: center; gap: 4px;
-  padding: 6px 14px 8px;
-  width: min(480px, 92vw);
-  background:
-    linear-gradient(180deg, rgba(8, 8, 10,.90), rgba(8, 8, 10,.82));
-  border: 2px solid rgba(246,199,68,.38);
-  border-bottom-color: rgba(246,199,68,.14);
-  box-shadow: 0 -8px 28px rgba(0,0,0,.55), 0 0 0 1px rgba(0,0,0,.85);
+  top: 50%;
+  transform: translateY(-50%);
+  left: calc(100% + 24px);
+  width: 196px;
+  height: 80px;
+  background: #f8f4e4;
+  border: 3px solid #000;
+  outline: 2px solid #f8f4e4;
+  box-shadow: 4px 4px 0 rgba(0,0,0,.55);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  box-sizing: border-box;
+  font-family: var(--fpx);
+  color: #000;
+}
+.stage-panel.speaker-right .stage-inputs-box {
+  left: auto;
+  right: calc(100% + 24px);
+}
+/* Textos y chips del QTE adaptados al fondo BLANCO de las cajas GBC */
+.stage-panel-box .stage-label { color: #000; }
+.stage-panel-box .stage-push { color: #7a5c00; }
+.stage-panel-box .stage-push strong { color: #005a8c; }
+.stage-panel-box .stage-timer-track {
+  background: rgba(0, 0, 0, .18);
+  border-color: rgba(0, 0, 0, .35);
+}
+.stage-inputs-box .stage-sequence {
+  background: rgba(0, 0, 0, .12);
+  border: 1px solid rgba(0, 0, 0, .25);
+  border-radius: 4px;
+  padding: 4px 8px;
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+.stage-inputs-box .stage-seq-item.current img {
+  transform: scale(1.15);
+  filter: drop-shadow(0 0 6px rgba(0, 90, 140, .9));
+}
+.stage-inputs-box .stage-prompt-big {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.stage-inputs-box .stage-prompt-big img {
+  width: 40px;
+  height: 40px;
+  image-rendering: pixelated;
+}
+.stage-inputs-box .stage-prompt-label {
+  font-size: 11px;
+  color: #000;
+  letter-spacing: 1px;
 }
 /* Durante el QTE el luchador del CAMPO es el protagonista (como el GBC:
    la cámara se mantiene en el luchador mientras pulsas la secuencia) — el
@@ -10045,4 +10118,104 @@ button.linklike:hover { text-decoration: underline; }
   height: 100%;
   background: linear-gradient(90deg, #f6c744, #ff9d2e);
   box-shadow: 0 0 8px rgba(246, 199, 68, .5);
+}
+
+/* Vista STAGE: MISMO formato que el diálogo — sprite del personaje FUERA a
+   su lado (marco negro + máscara) y caja GBC a la derecha con los inputs
+   DENTRO (secuencia + prompt + tiempo + ayuda) */
+.dev-hud-preview .stage-panel {
+  /* MISMA altura que los demás paneles (80px = botones y diálogo).
+     Deja hueco a la IZQUIERDA para el sprite (88px) y a la DERECHA para
+     los inputs (196px + gap) — caja centrada. */
+  position: relative;
+  width: calc(100% - 88px - 220px);
+  flex-shrink: 0;
+  height: 80px;
+  display: flex;
+  align-items: stretch;
+}
+.dev-hud-preview .stage-panel.speaker-left { margin-left: 88px; }
+.dev-hud-preview .stage-panel.speaker-right { margin-right: 88px; }
+/* Caja GBC con la info del stage: MISMA altura que el diálogo (80px),
+   texto centrado verticalmente, sin padding vertical extra */
+.dev-hud-preview .stage-panel-box {
+  flex: 1 1 auto;
+  min-width: 0;
+  height: 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 0 16px;
+  background: #f8f4e4;              /* blanco GBC como el diálogo */
+  border: 3px solid #000;
+  outline: 2px solid #f8f4e4;
+  box-shadow: 4px 4px 0 rgba(0,0,0,.55), inset 0 0 0 1px #000;
+  box-sizing: border-box;
+  font-family: var(--fpx);
+  color: #000;
+}
+.dev-hud-preview .stage-panel .stage-label { color: #000; }
+.dev-hud-preview .stage-panel .stage-label-progress { color: #005a8c; }
+.dev-hud-preview .stage-panel .stage-push { color: #7a5c00; }
+.dev-hud-preview .stage-panel .stage-push strong { color: #005a8c; }
+.dev-hud-preview .stage-panel .stage-timer-track {
+  background: rgba(0, 0, 0, .18);
+  border-color: rgba(0, 0, 0, .35);
+}
+/* INPUTS FUERA a la derecha del cuadro (simétrico al sprite de la izq):
+   secuencia de teclas + prompt grande, con su propio marco negro */
+.dev-hud-preview .stage-inputs-box {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: calc(100% + 24px);
+  width: 196px;
+  height: 80px;
+  background: #f8f4e4;
+  border: 3px solid #000;
+  outline: 2px solid #f8f4e4;
+  box-shadow: 4px 4px 0 rgba(0,0,0,.55);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  box-sizing: border-box;
+  font-family: var(--fpx);
+  color: #000;
+}
+.dev-hud-preview .stage-panel.speaker-right .stage-inputs-box {
+  left: auto;
+  right: calc(100% + 24px);
+}
+.dev-hud-preview .stage-inputs-box .stage-sequence {
+  background: rgba(0, 0, 0, .12);
+  border: 1px solid rgba(0, 0, 0, .25);
+  border-radius: 4px;
+  padding: 4px 8px;
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+.dev-hud-preview .stage-inputs-box .stage-seq-item.current img {
+  transform: scale(1.15);
+  filter: drop-shadow(0 0 6px rgba(0, 90, 140, .9));
+}
+.dev-hud-preview .stage-inputs-box .stage-prompt-big {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.dev-hud-preview .stage-inputs-box .stage-prompt-big img {
+  width: 40px;
+  height: 40px;
+  image-rendering: pixelated;
+}
+.dev-hud-preview .stage-inputs-box .stage-prompt-label {
+  font-size: 11px;
+  color: #000;
+  letter-spacing: 1px;
 }

@@ -3267,7 +3267,14 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
           const keyIcon = (k: StageKey) => k === 'UP' ? 'key_up' : k === 'DOWN' ? 'key_down' : k === 'LEFT' ? 'arrow_left' : k === 'RIGHT' ? 'arrow_right' : k === 'A' ? 'key_q' : 'key_e';
           const keyLabel = (k: StageKey) => k === 'UP' ? 'W / ↑' : k === 'DOWN' ? 'S / ↓' : k === 'LEFT' ? 'A / ←' : k === 'RIGHT' ? 'D / →' : k === 'A' ? 'A (Q)' : 'B (E)';
           return (
-          <div className={`stage-input-area ${frozen ? 'failed' : ''}`}>
+          /* MISMO formato que el diálogo: sprite del personaje que ejecuta el
+             stage FUERA a su lado (marco negro + máscara) y caja GBC a la
+             derecha con los inputs DENTRO */
+          <div className={`stage-panel speaker-left ${frozen ? 'failed' : ''}`}>
+            <div className="gbc-dialogue-speaker left">
+              <img src={storyPortraitUrl(player.id, activePlayerFormId) || portraitFor(player.id, activePlayerFormId) || ''} alt={player.name} className="gbc-dialogue-speaker-img" draggable={false} />
+            </div>
+            <div className="stage-panel-box">
             <div className="stage-label">
               <span className="stage-push">PUSH {elapsedSec} / {limitSec}</span>
               {q.card?.name} — STAGE {Math.min(q.idx + 1, q.seq.length)}/{q.seq.length}
@@ -3319,6 +3326,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
                 <div className="stage-help">A = cubrirte del contraataque (conserva CC) · B = reparar la cadena</div>
               </>
             )}
+            </div>
           </div>
           );
         })()}
