@@ -4390,23 +4390,30 @@ function AppInner() {
   }, []);
 
   // Inicializar audio con el primer gesto del usuario (autoplay) y arrancar la BSO
+  // (nunca en el Dev Studio: allí la música la controla su página 'Música')
   useEffect(() => {
     const onFirst = () => {
       initAudio();
-      playMusic(musicForScreen(screen));
+      if (!inDev) playMusic(musicForScreen(screen));
       window.removeEventListener('pointerdown', onFirst);
     };
     window.addEventListener('pointerdown', onFirst);
     return () => window.removeEventListener('pointerdown', onFirst);
-  }, [screen]);
+  }, [screen, inDev]);
 
-  // BSO por pantalla: la música sigue al contexto del juego
+  // BSO por pantalla: la música sigue al contexto del juego.
+  // ⛔ En el Dev Studio NO suena nada de fondo: el dev panel reproduce
+  // pistas solo desde su página 'Música' (player propio, sin tocar el motor).
   useEffect(() => {
+    if (inDev) {
+      stopMusic();
+      return;
+    }
     if (screen !== 'battle' && screen !== 'versus') {
       playMusic(musicForScreen(screen));
     }
     return () => { if (screen === 'main') stopMusic(); };
-  }, [screen]);
+  }, [screen, inDev]);
 
   const startBattle = (playerFormId?: string) => {
     if (playerFormId) setPlayerForm(playerFormId);
