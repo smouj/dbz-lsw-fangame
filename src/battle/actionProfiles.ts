@@ -164,6 +164,7 @@ export function compileActionProfile(spec: ActionProfileSpec): CinematicProfile 
   // 4) Rush/lunge
   if (spec.rush) {
     tracks.push(track(spec.rush.startFrame, 'SHOT', { shot: 'ACTION_DUEL' }));
+    tracks.push(track(spec.rush.startFrame, 'MOVEMENT_COMMIT', {})); // spec V2 §8: única mutación de posición
     tracks.push(track(spec.rush.startFrame, 'RUSH', { progress: 0, duration: spec.rush.duration }));
   }
 
@@ -194,8 +195,10 @@ export function compileActionProfile(spec: ActionProfileSpec): CinematicProfile 
     const impactPose = spec.impact.targetPose ?? 'hurt';
     tracks.push(track(c, 'TARGET_POSE', { pose: impactPose }));
     tracks.push(track(c, 'HIT_FRAME', {}));
+    tracks.push(track(c, 'HIT_STOP_START', {})); // spec V2: congela actores/VFX desde el mismo reloj
     tracks.push(track(c + 1, 'CAMERA', { shake }));
     if (spec.projectile) tracks.push(track(c, 'PROJECTILE', { action: 'impact' }));
+    tracks.push(track(c + hitstop, 'HIT_STOP_END', {}));
     tracks.push(track(c + hitstop, 'SHOT', { shot: 'IMPACT' }));
     if (spec.projectile) tracks.push(track(c + hitstop, 'PROJECTILE', { action: 'explode' }));
     tracks.push(track(hp, 'APPLY_DAMAGE', {}));
@@ -207,7 +210,8 @@ export function compileActionProfile(spec: ActionProfileSpec): CinematicProfile 
   // 8) Mensajes del panel inferior
   for (const m of spec.messages ?? []) tracks.push(track(m.frame, 'MESSAGE', { text: m.text }));
 
-  // 9) Vuelta al plano táctico
+  // 9) Vuelta al plano táctico (cleanup → return_to_field, spec V2 §8)
+  if (spec.returnToField > 0) tracks.push(track(spec.returnToField - 1, 'CLEANUP', {}));
   tracks.push(track(spec.returnToField, 'FIELD_RETURN', {}));
 
   // Orden estable por tick (los eventos del mismo tick conservan su orden).

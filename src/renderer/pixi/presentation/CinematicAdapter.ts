@@ -10,7 +10,7 @@
 import type { CinematicEvent } from '../../../battle/timeline';
 import type { BattlePresentation, BattleScene } from './BattlePresentation';
 
-const VALID_SCENES: BattleScene[] = ['FIELD', 'ACTION_SOLO', 'ACTION_DUEL', 'PROJECTILE', 'IMPACT'];
+const VALID_SCENES: BattleScene[] = ['FIELD', 'ACTION_SOLO', 'ACTION_DUEL', 'ACTION_TEAM', 'PROJECTILE', 'IMPACT'];
 
 function asScene(shot: string): BattleScene | null {
   return (VALID_SCENES as string[]).includes(shot) ? (shot as BattleScene) : null;

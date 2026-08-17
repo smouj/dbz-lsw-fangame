@@ -16,6 +16,7 @@ export type BattleScene =
   | 'FIELD'        // vista táctica: overworld sprites + posiciones
   | 'ACTION_SOLO'  // un personaje grande (Gather/support)
   | 'ACTION_DUEL'  // ambos grandes (melee/guard/counter/stage)
+  | 'ACTION_TEAM'  // dos actores aliados / secuencia conjunta (spec V2 §2)
   | 'PROJECTILE'   // beam/proyectil: release → travel → contact
   | 'IMPACT';      // golpe/explosión/block (plano corto)
 

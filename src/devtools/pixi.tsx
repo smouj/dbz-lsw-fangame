@@ -190,7 +190,7 @@ export function PixiModule() {
         <label className="pixi-control">
           <span>Escena</span>
           <select value={scene} onChange={e => setScene(e.target.value as BattleScene)}>
-            {(['FIELD', 'ACTION_SOLO', 'ACTION_DUEL', 'PROJECTILE', 'IMPACT'] as BattleScene[]).map(s => (
+            {(['FIELD', 'ACTION_SOLO', 'ACTION_DUEL', 'ACTION_TEAM', 'PROJECTILE', 'IMPACT'] as BattleScene[]).map(s => (
               <option key={s} value={s}>{s}</option>
             ))}
           </select>

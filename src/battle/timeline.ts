@@ -22,17 +22,28 @@
 export const GBC_FPS = 59.72750056960583;
 
 export type CinematicEventType =
-  | 'SHOT'            // cambia el plano (FIELD/SOLO/DUEL/PROJECTILE/IMPACT)
+  | 'SHOT'            // cambia el plano (FIELD/SOLO/DUEL/TEAM/PROJECTILE/IMPACT)
+  | 'CLIP_START'      // comienzo de clip (alias semántico de SHOT)
   | 'ACTOR_POSE'      // pose del atacante (idle, charge, rush, contact…)
   | 'TARGET_POSE'     // pose del defensor (idle, guard, hit…)
   | 'RUSH'            // avance/lunge corporal del atacante (no es proyectil)
+  | 'MOVEMENT_COMMIT' // única mutación de posición táctica (spec V2 §8)
   | 'PROJECTILE'      // crear/avanzar/desvanecer proyectil
+  | 'CHARGE_LOOP'     // carga de energía en bucle (beam/gather)
   | 'HIT_FRAME'       // instante EXACTO de contacto (sincroniza todo)
-  | 'APPLY_DAMAGE'    // la lógica aplica el resultado precalculado
+  | 'GUARD_CONTACT'   // contacto contra guardia/barrera (BLOCK)
+  | 'AVOID_COMMIT'    // el defensor esquiva (afterimage/teleport/jump)
+  | 'ABSORB_COMMIT'   // interceptor captura el proyectil entrante
+  | 'CANCEL_COMMIT'   // ataque cancelado antes de contacto
+  | 'HIT_STOP_START'  // inicio del hit-stop (congela actores/VFX)
+  | 'HIT_STOP_END'    // fin del hit-stop
+  | 'APPLY_DAMAGE'    // la lógica aplica el resultado precalculado (resolve)
+  | 'KO_CONFIRMED'    // solo DESPUÉS de resolve (spec V2 §8)
+  | 'CLEANUP'         // limpieza de entidades (proyectiles/VFX) antes de salir
   | 'SFX'             // sonido
   | 'CAMERA'          // shake/flash/zoom
   | 'MESSAGE'         // panel inferior (sincronizado con la película)
-  | 'FIELD_RETURN'    // volver al plano FIELD
+  | 'FIELD_RETURN'    // volver al plano FIELD (return_to_field)
   | 'COMPLETE';       // fin de la cinemática
 
 export interface CinematicEvent {
