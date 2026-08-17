@@ -7948,7 +7948,12 @@ button:focus-visible, .chapter-node:focus-visible {
 
 /* Sprites */
 .dev-sprites-layout { display: grid; grid-template-columns: 300px 1fr; gap: 16px; }
-.dev-sprite-controls { display: flex; flex-direction: column; gap: 10px; }
+.dev-sprite-controls {
+  display: flex; flex-direction: column; gap: 10px;
+  background: #14181e; border: 1px solid #262b33; border-radius: 8px;
+  padding: 12px;
+  align-self: start;
+}
 .dev-sprite-controls label { font-size: 11px; color: #8a93a3; }
 .dev-sprite-controls select { background: #0e1013; border: 1px solid #262b33; color: #cdd6e2; padding: 6px 8px; border-radius: 6px; font-family: inherit; font-size: 12px; }
 .dev-pose-pills { display: flex; flex-wrap: wrap; gap: 4px; }
@@ -8007,11 +8012,16 @@ button:focus-visible, .chapter-node:focus-visible {
   border-color: rgba(216,168,48,.5);
 }
 .dev-action-card-group em { color: #566071; font-style: normal; }
-.dev-zoom-row { display: flex; gap: 4px; }
+.dev-zoom-row { display: flex; gap: 5px; }
+.dev-zoom-btn { min-width: 30px; }
 .dev-zoom-btn { padding: 4px 10px; background: #181c22; border: 1px solid #262b33; border-radius: 4px; cursor: pointer; color: #aab2bf; font-family: inherit; font-size: 11px; }
 .dev-zoom-btn.active { border-color: #d8a830; color: #fff; }
 .dev-check { display: flex; align-items: center; gap: 6px; cursor: pointer; }
-.dev-sprite-meta { margin-top: 6px; }
+.dev-sprite-meta {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid #262b33;
+}
 .dev-sprite-meta div { display: flex; justify-content: space-between; font-size: 11px; padding: 3px 0; border-bottom: 1px dashed #22262c; }
 .dev-sprite-meta span { color: #6b7484; }
 .dev-sprite-meta code { color: #d8a830; }
@@ -8174,7 +8184,7 @@ button:focus-visible, .chapter-node:focus-visible {
 .dev-toggle.active { border-color: #d8a830; background: #251f13; color: #f0d080; }
 
 /* ─── Dev Studio: Animation Studio (timeline) ─── */
-.dev-anim-layout { display: grid; grid-template-columns: 260px 1fr; gap: 18px; }
+.dev-anim-layout { display: grid; grid-template-columns: 280px 1fr; gap: 18px; }
 .dev-anim-stage { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
 .dev-anim-controls { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
 .dev-anim-btn { min-width: 34px; padding: 6px 8px; background: #181c22; border: 1px solid #262b33; border-radius: 6px; cursor: pointer; color: #cdd6e2; font-family: inherit; font-size: 13px; }
@@ -8528,10 +8538,15 @@ button:focus-visible, .chapter-node:focus-visible {
 .dev-pixel-actions-secondary .dev-btn { flex: 1; padding: 6px 8px; font-size: 11px; }
 
 /* ── Dev Studio: Sheets (revisión de sprites) ── */
-.dev-sheets-controls { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 12px; }
-.dev-sheets-controls label { font-size: 12px; color: #8a93a3; }
+.dev-sheets-controls {
+  display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+  margin-bottom: 12px;
+  background: #14181e; border: 1px solid #262b33; border-radius: 8px;
+  padding: 8px 12px;
+}
+.dev-sheets-controls label { font-size: 11px; color: #8a93a3; text-transform: uppercase; letter-spacing: .05em; }
 .dev-sheets-controls select { background: #0e1013; border: 1px solid #262b33; color: #cdd6e2; padding: 5px 8px; border-radius: 6px; font-family: inherit; font-size: 12px; }
-.dev-sheets-dir { background: #10151b; border: 1px solid #252d38; color: #8fb3d9; border-radius: 5px; padding: 4px 7px; font-size: 11px; }
+.dev-sheets-dir { background: none; border: none; color: #7c8694; padding: 0; font-size: 11px; font-family: ui-monospace, Menlo, Consolas, monospace; }
 .dev-sheets-count { font-size: 12px; color: #9aa4b2; margin-left: 6px; }
 .dev-sheets-legend { display: flex; gap: 10px; margin-left: auto; font-size: 11px; color: #8a93a3; }
 .dev-sheets-legend span { display: inline-flex; align-items: center; gap: 4px; }
@@ -8544,7 +8559,7 @@ button:focus-visible, .chapter-node:focus-visible {
   .dev-sheets-layout { grid-template-columns: 1fr; }
   .dev-sheets-inspector { position: static; }
 }
-.dev-sheets-scroll { max-height: calc(100vh - 220px); overflow-y: auto; padding-right: 6px; display: flex; flex-direction: column; gap: 10px; }
+.dev-sheets-scroll { max-height: calc(100vh - 240px); overflow-y: auto; padding-right: 6px; display: flex; flex-direction: column; gap: 10px; }
 .dev-pose-group { border: 1px solid #262b33; border-radius: 8px; overflow: hidden; background: #151a21; flex: 0 0 auto; }
 .dev-pose-group-head { display: flex; align-items: center; gap: 8px; padding: 5px 8px; font-size: 11px; border-bottom: 1px solid #262b33; }
 .dev-pose-group-head.cat-estado { background: #1c2432; }
@@ -8699,27 +8714,94 @@ button:focus-visible, .chapter-node:focus-visible {
 
 /* ─── FormNavigator compartido (Sheets/Sprites/Animation) ─── */
 .dev-navigator {
-  display: grid;
-  grid-template-columns: minmax(190px, 240px) minmax(0, 1fr);
-  gap: 14px;
-  align-items: start;
-  margin-bottom: 14px;
-}
-.dev-navigator .dev-char-list {
-  max-height: 300px;
-}
-.dev-navigator-main {
-  min-width: 0;
-  background: #181c22;
+  background: #14181e;
   border: 1px solid #262b33;
   border-radius: 8px;
   padding: 12px 14px;
+  margin-bottom: 14px;
 }
-.dev-navigator-main .dev-form-tabs { margin-bottom: 8px; }
-.dev-form-info .dev-form-id-row { margin-bottom: 0; }
+.dev-navigator-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.dev-navigator-row + .dev-navigator-row {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px dashed #22272f;
+}
+.dev-navigator-label {
+  font-size: 10px;
+  color: #6b7484;
+  text-transform: uppercase;
+  letter-spacing: .07em;
+  white-space: nowrap;
+  min-width: 58px;
+}
+.dev-navigator .dev-char-list {
+  flex-direction: row;
+  flex-wrap: nowrap;
+  gap: 5px;
+  max-height: none;
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: visible;
+  position: static;
+  padding-right: 0;
+  padding-bottom: 3px;
+  scrollbar-width: thin;
+}
+.dev-navigator .dev-char-chip {
+  min-height: 24px;
+  padding: 3px 9px;
+  font-size: 11px;
+  border-radius: 5px;
+  line-height: 1.2;
+}
+.dev-navigator .dev-char-forms {
+  padding: 0 5px;
+  font-size: 9px;
+  line-height: 1.4;
+}
+.dev-navigator .dev-form-tabs {
+  margin-bottom: 0;
+  gap: 6px;
+}
+.dev-navigator .dev-form-tab {
+  padding: 6px 13px;
+  font-size: 12px;
+  border-radius: 6px;
+}
+.dev-navigator .dev-form-tab.active {
+  border-color: #d8a830;
+  background: #2a2415;
+  color: #ffe9a8;
+}
+.dev-navigator-row-forms {
+  align-items: center;
+}
+.dev-navigator .dev-form-info {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: #6b7484;
+  font-size: 10px;
+  white-space: nowrap;
+  border-left: 1px solid #262b33;
+  padding-left: 14px;
+  margin-left: 14px;
+}
+.dev-navigator .dev-form-info code {
+  background: none;
+  padding: 0;
+  color: #9aa4b2;
+  font-size: 10px;
+}
+.dev-navigator .dev-form-info-sep { color: #3a4250; }
 @media (max-width: 900px) {
-  .dev-navigator { grid-template-columns: 1fr; }
-  .dev-navigator .dev-char-list { max-height: 180px; flex-direction: row; flex-wrap: wrap; }
+  .dev-navigator .dev-form-info { margin-left: 0; border-left: none; padding-left: 0; }
 }
 
 /* Wrapper del FormNavigator dentro de las páginas */
