@@ -20,6 +20,7 @@ import { resolveHitBlockAvoid, attackDamage } from './battle/combat';
 import { CARD_FRAME_BY_TYPE, CARD_FRAME_SELECTED, CARD_FRAME_DISABLED } from './data/cardVisuals';
 import { cardIconUrl, MINI_PORTRAITS, MENU_PORTRAITS, TYPE_ICONS } from './data/icons';
 import { FitArt } from './components/FitArt';
+import { CardArtHole } from './components/CardArtHole';
 import { overworldUrl } from './data/overworld';
 import { battleOverworldActorUrl, battleOverworldAuraUrl } from './data/battleOverworld';
 import { panelsForChapter, type StoryPanel, characterName } from './data/storyPanels';
@@ -494,11 +495,7 @@ function CardVisual({ card, selected, onClick, small, disabled }: {
         </span>
         <span className="card-cc">{card.cc}CC</span>
       </div>
-      <div className="card-art">
-        {iconUrl
-          ? <FitArt src={iconUrl} areaW={64} areaH={48} className="card-art-img" />
-          : <IconCmp size={40} strokeWidth={1.8} />}
-      </div>
+      <CardArtHole frameUrl={frameUrl} iconUrl={iconUrl} />
       <div className="card-name">{card.name}</div>
       <div className="card-type">{CARD_TYPE_NAMES[card.type]}</div>
       <div className="card-stats">
@@ -3192,11 +3189,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
                   <button className="card basic-stage-card" onClick={() => basicAction('stage')}
                     style={{ '--card-frame': `url('${CARD_FRAME_BY_TYPE[stageCard.type] ?? CARD_FRAME_BY_TYPE.command}')`, '--card-color': CARD_COLORS[stageCard.type] } as React.CSSProperties}
                     data-tip={`STAGE ATTACK — ${stages} Stage · secuencia de inputs A/B a tiempo.\nCada acierto +1 CC (más si completas la cadena).`}>
-                    <div className="card-art">
-                      {cardIconUrl(stageCard.id)
-                        ? <FitArt src={cardIconUrl(stageCard.id)!} areaW={64} areaH={48} className="card-art-img" />
-                        : <span className="card-icon-emoji">?</span>}
-                    </div>
+                    <CardArtHole frameUrl={CARD_FRAME_BY_TYPE[stageCard.type] ?? CARD_FRAME_BY_TYPE.command} iconUrl={cardIconUrl(stageCard.id)} />
                   </button>
                 );
               })()}
@@ -3220,11 +3213,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
                     disabled={player.cc < c.cc} onClick={() => playLimit(c)}
                     style={{ '--card-frame': `url('${CARD_FRAME_BY_TYPE[c.type] ?? CARD_FRAME_BY_TYPE.special}')` } as React.CSSProperties}
                     data-tip={`${c.name} — ${CARD_TYPE_NAMES[c.type]}  ★${c.rarity}\nCC ${c.cc} · ${c.description ?? ''}\nReutilizable mientras tengas CC (GATHER POWER activo)`}>
-                    <div className="card-art">
-                      {cardIconUrl(c.id)
-                        ? <FitArt src={cardIconUrl(c.id)!} areaW={64} areaH={48} className="card-art-img" />
-                        : <span className="card-icon-emoji">?</span>}
-                    </div>
+                    <CardArtHole frameUrl={CARD_FRAME_BY_TYPE[c.type] ?? CARD_FRAME_BY_TYPE.special} iconUrl={cardIconUrl(c.id)} />
                   </button>
                 ))}
                 {/* Huecos: cartas Limit del personaje (GBC) NO obtenidas */}

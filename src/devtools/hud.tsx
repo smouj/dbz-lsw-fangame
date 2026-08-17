@@ -24,6 +24,7 @@ import { downloadJson } from './spriteEditing';
 import { getCard, CARD_TYPE_NAMES, CARD_COLORS, CardDef } from '../data/cards';
 import { cardIconUrl } from '../data/icons';
 import { FitArt } from '../components/FitArt';
+import { CardArtHole } from '../components/CardArtHole';
 import { CARD_FRAME_BY_TYPE, CARD_FRAME_SELECTED, CARD_FRAME_DISABLED } from '../data/cardVisuals';
 import { HUD_LAYOUT, validateHudLayout } from '../data/hudLayout';
 
@@ -68,11 +69,7 @@ function HudCard({ card, selected, disabled }: { card: CardDef; selected?: boole
     <button className={`card ${card.type} ${selected ? 'selected' : ''}`} disabled={disabled}
       style={{ '--card-color': color, '--card-frame': frame ? `url('${frame}')` : undefined } as React.CSSProperties}
       data-tip={`${card.name} — ${CARD_TYPE_NAMES[card.type]}\nCC ${card.cc} · ATK ${card.atk > 0 ? card.atk : '—'} · ACC ${card.acc}%\n${card.description ?? ''}`}>
-      <div className="card-art">
-        {iconUrl
-          ? <FitArt src={iconUrl} areaW={64} areaH={48} className="card-art-img" />
-          : <span className="card-icon-emoji">?</span>}
-      </div>
+      <CardArtHole frameUrl={frame} iconUrl={iconUrl} />
     </button>
   );
 }
@@ -375,11 +372,7 @@ export function HudModule() {
                           style={{ '--card-frame': `url('${CARD_FRAME_BY_TYPE[stageCard.type] ?? CARD_FRAME_BY_TYPE.command}')`, '--card-color': CARD_COLORS[stageCard.type] } as React.CSSProperties}
                           data-tip="STAGE ATTACK — 3 Stage · secuencia de inputs A/B a tiempo.
 Cada acierto +1 CC (más si completas la cadena).">
-                          <div className="card-art">
-                            {cardIconUrl(stageCard.id)
-                              ? <FitArt src={cardIconUrl(stageCard.id)!} areaW={64} areaH={48} className="card-art-img" />
-                              : <span className="card-icon-emoji">?</span>}
-                          </div>
+                          <CardArtHole frameUrl={CARD_FRAME_BY_TYPE[stageCard.type] ?? CARD_FRAME_BY_TYPE.command} iconUrl={cardIconUrl(stageCard.id)} />
                         </button>
                       ) : null;
                     })()}
@@ -435,11 +428,7 @@ Cada acierto +1 CC (más si completas la cadena).">
                         <button key={c.id} className="limit-card"
                           style={{ '--card-frame': `url('${CARD_FRAME_BY_TYPE[c.type] ?? CARD_FRAME_BY_TYPE.special}')` } as React.CSSProperties}
                           data-tip={`${c.name} — ${CARD_TYPE_NAMES[c.type]}\nCC ${c.cc} · Reutilizable mientras tengas CC`}>
-                          <div className="card-art">
-                            {cardIconUrl(c.id)
-                              ? <FitArt src={cardIconUrl(c.id)!} areaW={64} areaH={48} className="card-art-img" />
-                              : <span className="card-icon-emoji">?</span>}
-                          </div>
+                          <CardArtHole frameUrl={CARD_FRAME_BY_TYPE[c.type] ?? CARD_FRAME_BY_TYPE.special} iconUrl={cardIconUrl(c.id)} />
                         </button>
                       ))}
                       {/* Hueco de ejemplo: Limit no obtenida */}
