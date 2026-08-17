@@ -9710,3 +9710,12 @@ button.linklike:hover { text-decoration: underline; }
   color: rgba(140, 150, 170, .55);
   border-radius: 2px;
 }
+
+/* LIMIT: cartas + EXIT en la MISMA fila (como BASIC) */
+.limit-cards-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+.limit-cards-row .hand-cards { flex-wrap: nowrap; }

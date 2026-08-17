@@ -305,7 +305,7 @@ export function HudModule() {
                     <button className="basic-btn basic-stage" data-tip="STAGE ATTACK — 3 Stage · secuencia A/B">
                       <span className="basic-stage-icon">
                         <strong>3 Stage</strong>
-                        <FitArt src={cardIconUrl(1)!} areaW={64} areaH={48} className="stage-card-icon" />
+                        <FitArt src={cardIconUrl(1)!} areaW={64} areaH={48} className="stage-card-icon" centerBy="centroid" />
                       </span>
                     </button>
                     <button className="basic-btn basic-gather" data-tip="GATHER POWER — sube STR/KI (+8)" />
@@ -318,7 +318,7 @@ export function HudModule() {
               {view === 'LIMIT' && (
                 <div className="command-select">
                   <div className="limit-title">LIMITED — GOKU</div>
-                  <div className="hand-area">
+                  <div className="limit-cards-row">
                     <div className="hand-cards">
                       {limitCards.map(c => (
                         <button key={c.id} className="limit-card"
@@ -336,8 +336,8 @@ export function HudModule() {
                         <Lock size={16} />
                       </div>
                     </div>
+                    <button className="basic-btn basic-back" data-tip="BACK — volver al menú de comandos" />
                   </div>
-                  <button className="basic-btn basic-back" data-tip="BACK — volver al menú de comandos" />
                 </div>
               )}
             </div>

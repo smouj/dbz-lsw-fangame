@@ -3164,7 +3164,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
                       <>
                         {/* Fondo provisional: visible mientras el arte carga */}
                         <strong>{stages} Stage</strong>
-                        {icon && <FitArt src={icon} areaW={64} areaH={48} className="stage-card-icon" />}
+                        {icon && <FitArt src={icon} areaW={64} areaH={48} className="stage-card-icon" centerBy="centroid" />}
                       </>
                     );
                   })()}
@@ -3182,8 +3182,9 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
             <div className="limit-title">LIMITED — {player.name}</div>
             {limitCards.length === 0 && <div className="limit-empty">{t('battle.limitHelp')}</div>}
             {/* MISMO layout que la mano: cartas 96×80 con marco GBC + arte en
-                UNA línea; nombre/CC van en el tooltip (como las JOINT) */}
-            <div className="hand-area">
+                UNA línea; nombre/CC van en el tooltip (como las JOINT). El
+                EXIT va en la MISMA fila, al final (como BASIC) — nunca abajo. */}
+            <div className="limit-cards-row">
               <div className="hand-cards">
                 {limitCards.map((c, i) => (
                   <button key={i} className={`limit-card ${player.cc < c.cc ? 'locked' : ''}`}
@@ -3206,8 +3207,8 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
                     </div>
                   ))}
               </div>
+              <button className="basic-btn basic-back" data-tip="BACK — volver al menú anterior" onClick={() => { Sfx.cancel(); setPhase('command'); }} />
             </div>
-            <button className="basic-btn basic-back" data-tip="BACK — volver al menú anterior" onClick={() => { Sfx.cancel(); setPhase('command'); }} />
             <div className="command-help">{t('battle.limitedHelp')}</div>
           </div>
         )}
