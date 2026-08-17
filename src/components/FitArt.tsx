@@ -35,8 +35,9 @@ export function fitBBox(img: HTMLImageElement, areaW: number, areaH: number): Fi
   if (x1 < x0) return { w: areaW, h: areaH, left: 0, top: 0 };
   const bw = x1 - x0 + 1;
   const bh = y1 - y0 + 1;
-  // Escala del contenido para llenar el área (contain, sin deformar)
-  const scale = Math.min(areaW / bw, areaH / bh);
+  // Escala del contenido para CUBRIR el área completa (cover): el arte
+  // rellena TODO el interior del marco (recorte mínimo y centrado).
+  const scale = Math.max(areaW / bw, areaH / bh);
   const w = Math.max(1, Math.round(c.width * scale));
   const h = Math.max(1, Math.round(c.height * scale));
   // Centrar el CONTENIDO real (bbox), no el canvas del PNG
