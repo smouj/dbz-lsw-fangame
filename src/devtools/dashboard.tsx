@@ -61,6 +61,32 @@ export function DashboardModule({ onNavigate }: { onNavigate: (m: DevModuleId) =
         <p className="dev-sub">Contadores computados de los datos reales — si algo difiere, el dato es la fuente.</p>
       </header>
 
+      {/* ═══ PIPELINE ÚNICO: las fuentes de verdad del motor (sin paralelos) ═══ */}
+      <div className="dev-section">
+        <h2>Pipeline único — fuentes de verdad</h2>
+        <p className="dev-muted" style={{ marginTop: -4 }}>
+          Todas las páginas del Dev Studio y el juego consumen ESTAS fuentes. No hay
+          pipelines paralelos: un cambio aquí se refleja en todo.
+        </p>
+        <div className="dev-pipeline">
+          {[
+            ['src/battle/state.ts', 'reglas puras: mazo (drawPile/hand/discard), +3 CC, HAND CHECK'],
+            ['src/battle/engine.ts', 'máquina de fases/turnos — misma para el juego y el HUD Studio'],
+            ['src/battle/combat.ts', 'sistema HIT/BLOCK/AVOID + multiplicador de posición (única fórmula)'],
+            ['src/battle/evidence.ts', 'niveles de evidencia GBC de cada regla (15 etiquetadas)'],
+            ['src/data/cardVisuals.ts', 'registro único: CardDef → frame GBC por tipo + arte'],
+            ['src/data/hudAssets.ts', 'registro único: acción → sprite de botón'],
+            ['src/data/generated/spriteCanon.generated.ts', 'canon semántico V9 (2426 frames, fuente única)'],
+          ].map(([file, rol]) => (
+            <div key={file} className="dev-pipeline-row">
+              <span className="dev-pipeline-file"><code>{file}</code></span>
+              <span className="dev-pipeline-rol">{rol}</span>
+              <span className="dev-pipeline-ok">✓</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
       <div className="dev-grid dev-grid-cards">
         {stats.map(s => (
           <div key={s.label} className={`dev-stat-card ${s.ok ? 'ok' : 'bad'}`}>
