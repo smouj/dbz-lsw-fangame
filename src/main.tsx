@@ -3179,10 +3179,12 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
         )}
         {phase === 'limitSelect' && (
           <div className="command-select">
-            <div className="limit-panel">
-              <div className="limit-title">LIMITED — {player.name}</div>
-              {limitCards.length === 0 && <div className="limit-empty">{t('battle.limitHelp')}</div>}
-              <div className="limit-grid">
+            <div className="limit-title">LIMITED — {player.name}</div>
+            {limitCards.length === 0 && <div className="limit-empty">{t('battle.limitHelp')}</div>}
+            {/* MISMO layout que la mano: cartas 96×80 con marco GBC + arte en
+                UNA línea; nombre/CC van en el tooltip (como las JOINT) */}
+            <div className="hand-area">
+              <div className="hand-cards">
                 {limitCards.map((c, i) => (
                   <button key={i} className={`limit-card ${player.cc < c.cc ? 'locked' : ''}`}
                     disabled={player.cc < c.cc} onClick={() => playLimit(c)}
@@ -3190,11 +3192,9 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
                     data-tip={`${c.name} — ${CARD_TYPE_NAMES[c.type]}  ★${c.rarity}\nCC ${c.cc} · ${c.description ?? ''}\nReutilizable mientras tengas CC (GATHER POWER activo)`}>
                     <div className="card-art">
                       {cardIconUrl(c.id)
-                        ? <FitArt src={cardIconUrl(c.id)!} areaW={60} areaH={44} className="card-art-img" />
+                        ? <FitArt src={cardIconUrl(c.id)!} areaW={64} areaH={48} className="card-art-img" />
                         : <span className="card-icon-emoji">?</span>}
                     </div>
-                    <span className="limit-card-name">{c.name}</span>
-                    <span className="limit-card-cost">{c.cc} CC</span>
                   </button>
                 ))}
                 {/* Huecos: cartas Limit del personaje (GBC) NO obtenidas */}
@@ -3202,13 +3202,12 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
                   .filter(id => !limits.includes(id))
                   .map(id => (
                     <div key={`slot-${id}`} className="limit-slot" data-tip="LIMIT no obtenida todavía">
-                      <Lock size={18} />
-                      <span className="limit-slot-label">??</span>
+                      <Lock size={16} />
                     </div>
                   ))}
               </div>
-              <button className="basic-btn basic-back" data-tip="BACK — volver al menú anterior" onClick={() => { Sfx.cancel(); setPhase('command'); }} />
             </div>
+            <button className="basic-btn basic-back" data-tip="BACK — volver al menú anterior" onClick={() => { Sfx.cancel(); setPhase('command'); }} />
             <div className="command-help">{t('battle.limitedHelp')}</div>
           </div>
         )}

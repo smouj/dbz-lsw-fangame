@@ -314,33 +314,30 @@ export function HudModule() {
                 </div>
               )}
 
-              {/* LIMIT: cartas GBC del personaje + huecos no obtenidos */}
+              {/* LIMIT: MISMO layout que la mano (una línea, marco + arte) */}
               {view === 'LIMIT' && (
                 <div className="command-select">
-                  <div className="limit-panel">
-                    <div className="limit-title">LIMITED — GOKU</div>
-                    <div className="limit-grid">
+                  <div className="limit-title">LIMITED — GOKU</div>
+                  <div className="hand-area">
+                    <div className="hand-cards">
                       {limitCards.map(c => (
                         <button key={c.id} className="limit-card"
                           style={{ '--card-frame': `url('${CARD_FRAME_BY_TYPE[c.type] ?? CARD_FRAME_BY_TYPE.special}')` } as React.CSSProperties}
                           data-tip={`${c.name} — ${CARD_TYPE_NAMES[c.type]}\nCC ${c.cc} · Reutilizable mientras tengas CC`}>
                           <div className="card-art">
                             {cardIconUrl(c.id)
-                              ? <FitArt src={cardIconUrl(c.id)!} areaW={60} areaH={44} className="card-art-img" />
+                              ? <FitArt src={cardIconUrl(c.id)!} areaW={64} areaH={48} className="card-art-img" />
                               : <span className="card-icon-emoji">?</span>}
                           </div>
-                          <span className="limit-card-name">{c.name}</span>
-                          <span className="limit-card-cost">{c.cc} CC</span>
                         </button>
                       ))}
                       {/* Hueco de ejemplo: Limit no obtenida */}
                       <div className="limit-slot" data-tip="LIMIT no obtenida todavía">
-                        <Lock size={18} />
-                        <span className="limit-slot-label">??</span>
+                        <Lock size={16} />
                       </div>
                     </div>
-                    <button className="basic-btn basic-back" data-tip="BACK — volver al menú de comandos" />
                   </div>
+                  <button className="basic-btn basic-back" data-tip="BACK — volver al menú de comandos" />
                 </div>
               )}
             </div>
