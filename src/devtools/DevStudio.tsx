@@ -35,23 +35,24 @@ interface DevModuleDef {
   label: string;
   icon: LucideIcon;
   desc: string;
+  group: string;
 }
 
 export const DEV_MODULES: DevModuleDef[] = [
-  { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard, desc: 'Estado de producción y contadores' },
-  { id: 'characters', label: 'Characters', icon: Users, desc: 'Personajes, formas, stats y crecimiento' },
-  { id: 'cards', label: 'Cards', icon: TableProperties, desc: 'Base de datos de las 125 cartas' },
-  { id: 'sprites', label: 'Sprites', icon: Images, desc: 'Inspector de sprites (frame, bbox, alpha)' },
-  { id: 'sheets', label: 'Sheets', icon: Boxes, desc: 'Revisión de sheets: todos los frames con detección de problemas' },
-  { id: 'animation', label: 'Animation', icon: Film, desc: 'Timeline real + editor de frames/animaciones' },
-  { id: 'pixelart', label: 'Pixel Art', icon: Brush, desc: 'Editor de píxeles: pinta/borra/corrige frames' },
-  { id: 'facing', label: 'Facing', icon: Activity, desc: 'Orientación de chibis overworld: voltea y guarda' },
-  { id: 'hud', label: 'HUD', icon: Gauge, desc: 'Visualizador del gameplay + editor del tema HUD' },
-  { id: 'lab', label: 'Combat Lab', icon: Swords, desc: 'Combate real + renderer Pixi en vivo + secuencias deterministas' },
-  { id: 'positions', label: 'Positions', icon: Grid2X2, desc: 'Laboratorio de posiciones Air/Ground x Front/Back' },
-  { id: 'story', label: 'Story', icon: Gamepad2, desc: 'Capítulos, viñetas y mazos de jefes' },
-  { id: 'validation', label: 'Validation', icon: CheckCircle2, desc: 'Integridad de datos y cobertura' },
-  { id: 'research', label: 'Research', icon: Search, desc: 'ROM / manual / fuentes' },
+  { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard, desc: 'Estado de producción y contadores', group: 'Visor' },
+  { id: 'characters', label: 'Characters', icon: Users, desc: 'Personajes, formas, stats y crecimiento', group: 'Personajes' },
+  { id: 'cards', label: 'Cards', icon: TableProperties, desc: 'Base de datos de las 125 cartas', group: 'Personajes' },
+  { id: 'sprites', label: 'Sprites', icon: Images, desc: 'Inspector de sprites (frame, bbox, alpha)', group: 'Personajes' },
+  { id: 'sheets', label: 'Sheets', icon: Boxes, desc: 'Revisión de sheets: todos los frames con detección de problemas', group: 'Personajes' },
+  { id: 'animation', label: 'Animation', icon: Film, desc: 'Timeline real + editor de frames/animaciones', group: 'Personajes' },
+  { id: 'pixelart', label: 'Pixel Art', icon: Brush, desc: 'Editor de píxeles: pinta/borra/corrige frames', group: 'Personajes' },
+  { id: 'facing', label: 'Facing', icon: Activity, desc: 'Orientación de chibis overworld: voltea y guarda', group: 'Personajes' },
+  { id: 'hud', label: 'HUD', icon: Gauge, desc: 'Visualizador del gameplay + editor del tema HUD', group: 'Combate' },
+  { id: 'lab', label: 'Combat Lab', icon: Swords, desc: 'Combate real + renderer Pixi en vivo + secuencias deterministas', group: 'Combate' },
+  { id: 'positions', label: 'Positions', icon: Grid2X2, desc: 'Laboratorio de posiciones Air/Ground x Front/Back', group: 'Combate' },
+  { id: 'story', label: 'Story', icon: Gamepad2, desc: 'Capítulos, viñetas y mazos de jefes', group: 'Mundo' },
+  { id: 'validation', label: 'Validation', icon: CheckCircle2, desc: 'Integridad de datos y cobertura', group: 'Mundo' },
+  { id: 'research', label: 'Research', icon: Search, desc: 'ROM / manual / fuentes', group: 'Mundo' },
 ];
 
 const DEV_MODULE_STORAGE_KEY = 'dbzlsw_dev_module';
@@ -159,9 +160,13 @@ export function DevStudio({ onExit, onLaunchBattle }: {
           </div>
         </div>
         <nav className="dev-nav">
-          {DEV_MODULES.map(m => {
+          {DEV_MODULES.map((m, i) => {
             const Icon = m.icon;
+            const prev = i > 0 ? DEV_MODULES[i - 1] : null;
             return (
+              <div key={m.id} className="dev-nav-entry">
+              {prev && prev.group !== m.group && <div className="dev-nav-group">{m.group}</div>}
+              {i === 0 && <div className="dev-nav-group">{m.group}</div>}
               <button key={m.id}
                 className={`dev-nav-item ${module === m.id ? 'active' : ''}`}
                 onClick={() => navigate(m.id)}
@@ -170,6 +175,7 @@ export function DevStudio({ onExit, onLaunchBattle }: {
                 <Icon className="dev-nav-icon" size={16} strokeWidth={1.8} />
                 <span className="dev-nav-label">{m.label}</span>
               </button>
+              </div>
             );
           })}
         </nav>
