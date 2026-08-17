@@ -1,0 +1,477 @@
+{
+ "sheet": "gotenks-super-saiyan-3.png",
+ "dir": "gotenks_super_saiyan_3",
+ "columns": 8,
+ "rows": 7,
+ "cell_width": 123,
+ "cell_height": 65,
+ "frame_count": 50,
+ "buckets": [
+  "aura_support",
+  "battle_aura_actor_composite",
+  "battle_aura_tile",
+  "character_plus_projectile",
+  "downed_or_hurt",
+  "movement_or_attack_pose",
+  "multi_evidence_movement_or_attack_pose_nonbody_misc",
+  "multi_evidence_movement_or_attack_pose_speedlines",
+  "multi_evidence_orbs_rings_bursts_projectiles_beams",
+  "multi_evidence_projectiles_beams_character_plus_aura_or_burst",
+  "orbs_rings_bursts",
+  "overworld_actor_or_pose",
+  "projectile_orb_small",
+  "projectiles_beams"
+ ],
+ "frames": [
+  {
+   "file": "027.png",
+   "bucket": "overworld_actor_or_pose",
+   "alias": "gotenks_super_saiyan_3__overworld_actor_or_pose__01__src_027.png",
+   "x": 300,
+   "y": 219,
+   "w": 14,
+   "h": 16
+  },
+  {
+   "file": "028.png",
+   "bucket": "battle_aura_tile",
+   "alias": "gotenks_super_saiyan_3__battle_aura_tile__01__src_028.png",
+   "x": 418,
+   "y": 219,
+   "w": 24,
+   "h": 16
+  },
+  {
+   "file": "029.png",
+   "bucket": "battle_aura_actor_composite",
+   "alias": "gotenks_super_saiyan_3__battle_aura_actor_composite__01__src_029.png",
+   "x": 541,
+   "y": 219,
+   "w": 24,
+   "h": 16
+  },
+  {
+   "file": "048.png",
+   "bucket": "aura_support",
+   "alias": "gotenks_super_saiyan_3__aura_support__01__src_048.png",
+   "x": 890,
+   "y": 329,
+   "w": 64,
+   "h": 56
+  },
+  {
+   "file": "049.png",
+   "bucket": "aura_support",
+   "alias": "gotenks_super_saiyan_3__aura_support__02__src_049.png",
+   "x": 29,
+   "y": 394,
+   "w": 64,
+   "h": 56
+  },
+  {
+   "file": "050.png",
+   "bucket": "aura_support",
+   "alias": "gotenks_super_saiyan_3__aura_support__03__src_050.png",
+   "x": 152,
+   "y": 394,
+   "w": 64,
+   "h": 56
+  },
+  {
+   "file": "001.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "gotenks_super_saiyan_3__movement_or_attack_pose__01__src_001.png",
+   "x": 48,
+   "y": 12,
+   "w": 27,
+   "h": 41
+  },
+  {
+   "file": "002.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "gotenks_super_saiyan_3__movement_or_attack_pose__02__src_002.png",
+   "x": 171,
+   "y": 12,
+   "w": 27,
+   "h": 41
+  },
+  {
+   "file": "003.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "gotenks_super_saiyan_3__movement_or_attack_pose__03__src_003.png",
+   "x": 291,
+   "y": 12,
+   "w": 32,
+   "h": 40
+  },
+  {
+   "file": "004.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "gotenks_super_saiyan_3__movement_or_attack_pose__04__src_004.png",
+   "x": 417,
+   "y": 12,
+   "w": 27,
+   "h": 41
+  },
+  {
+   "file": "007.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "gotenks_super_saiyan_3__movement_or_attack_pose__05__src_007.png",
+   "x": 784,
+   "y": 11,
+   "w": 31,
+   "h": 42
+  },
+  {
+   "file": "008.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "gotenks_super_saiyan_3__movement_or_attack_pose__06__src_008.png",
+   "x": 906,
+   "y": 13,
+   "w": 32,
+   "h": 38
+  },
+  {
+   "file": "009.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "gotenks_super_saiyan_3__movement_or_attack_pose__07__src_009.png",
+   "x": 48,
+   "y": 77,
+   "w": 27,
+   "h": 41
+  },
+  {
+   "file": "010.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "gotenks_super_saiyan_3__movement_or_attack_pose__08__src_010.png",
+   "x": 171,
+   "y": 80,
+   "w": 26,
+   "h": 34
+  },
+  {
+   "file": "011.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "gotenks_super_saiyan_3__movement_or_attack_pose__09__src_011.png",
+   "x": 292,
+   "y": 81,
+   "w": 30,
+   "h": 32
+  },
+  {
+   "file": "012.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "gotenks_super_saiyan_3__movement_or_attack_pose__10__src_012.png",
+   "x": 418,
+   "y": 77,
+   "w": 24,
+   "h": 40
+  },
+  {
+   "file": "013.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "gotenks_super_saiyan_3__movement_or_attack_pose__11__src_013.png",
+   "x": 541,
+   "y": 75,
+   "w": 24,
+   "h": 45
+  },
+  {
+   "file": "014.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "gotenks_super_saiyan_3__movement_or_attack_pose__12__src_014.png",
+   "x": 664,
+   "y": 76,
+   "w": 24,
+   "h": 43
+  },
+  {
+   "file": "016.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "gotenks_super_saiyan_3__movement_or_attack_pose__13__src_016.png",
+   "x": 907,
+   "y": 78,
+   "w": 31,
+   "h": 39
+  },
+  {
+   "file": "017.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "gotenks_super_saiyan_3__movement_or_attack_pose__14__src_017.png",
+   "x": 43,
+   "y": 142,
+   "w": 36,
+   "h": 40
+  },
+  {
+   "file": "018.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "gotenks_super_saiyan_3__movement_or_attack_pose__15__src_018.png",
+   "x": 165,
+   "y": 142,
+   "w": 38,
+   "h": 40
+  },
+  {
+   "file": "019.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "gotenks_super_saiyan_3__movement_or_attack_pose__16__src_019.png",
+   "x": 292,
+   "y": 142,
+   "w": 30,
+   "h": 41
+  },
+  {
+   "file": "020.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "gotenks_super_saiyan_3__movement_or_attack_pose__17__src_020.png",
+   "x": 415,
+   "y": 143,
+   "w": 30,
+   "h": 38
+  },
+  {
+   "file": "021.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "gotenks_super_saiyan_3__movement_or_attack_pose__18__src_021.png",
+   "x": 539,
+   "y": 141,
+   "w": 28,
+   "h": 42
+  },
+  {
+   "file": "022.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "gotenks_super_saiyan_3__movement_or_attack_pose__19__src_022.png",
+   "x": 662,
+   "y": 147,
+   "w": 29,
+   "h": 31
+  },
+  {
+   "file": "023.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "gotenks_super_saiyan_3__movement_or_attack_pose__20__src_023.png",
+   "x": 784,
+   "y": 143,
+   "w": 31,
+   "h": 39
+  },
+  {
+   "file": "024.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "gotenks_super_saiyan_3__movement_or_attack_pose__21__src_024.png",
+   "x": 906,
+   "y": 143,
+   "w": 32,
+   "h": 39
+  },
+  {
+   "file": "025.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "gotenks_super_saiyan_3__movement_or_attack_pose__22__src_025.png",
+   "x": 43,
+   "y": 208,
+   "w": 37,
+   "h": 38
+  },
+  {
+   "file": "026.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "gotenks_super_saiyan_3__movement_or_attack_pose__23__src_026.png",
+   "x": 165,
+   "y": 208,
+   "w": 38,
+   "h": 38
+  },
+  {
+   "file": "030.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "gotenks_super_saiyan_3__movement_or_attack_pose__24__src_030.png",
+   "x": 660,
+   "y": 208,
+   "w": 32,
+   "h": 39
+  },
+  {
+   "file": "036.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "gotenks_super_saiyan_3__movement_or_attack_pose__25__src_036.png",
+   "x": 410,
+   "y": 281,
+   "w": 40,
+   "h": 22
+  },
+  {
+   "file": "037.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "gotenks_super_saiyan_3__movement_or_attack_pose__26__src_037.png",
+   "x": 539,
+   "y": 270,
+   "w": 28,
+   "h": 44
+  },
+  {
+   "file": "038.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "gotenks_super_saiyan_3__movement_or_attack_pose__27__src_038.png",
+   "x": 660,
+   "y": 273,
+   "w": 32,
+   "h": 39
+  },
+  {
+   "file": "040.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "gotenks_super_saiyan_3__movement_or_attack_pose__28__src_040.png",
+   "x": 908,
+   "y": 270,
+   "w": 28,
+   "h": 44
+  },
+  {
+   "file": "041.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "gotenks_super_saiyan_3__movement_or_attack_pose__29__src_041.png",
+   "x": 46,
+   "y": 338,
+   "w": 31,
+   "h": 39
+  },
+  {
+   "file": "042.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "gotenks_super_saiyan_3__movement_or_attack_pose__30__src_042.png",
+   "x": 171,
+   "y": 337,
+   "w": 26,
+   "h": 41
+  },
+  {
+   "file": "045.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "gotenks_super_saiyan_3__movement_or_attack_pose__31__src_045.png",
+   "x": 540,
+   "y": 337,
+   "w": 26,
+   "h": 41
+  },
+  {
+   "file": "032.png",
+   "bucket": "orbs_rings_bursts",
+   "alias": "gotenks_super_saiyan_3__orbs_rings_bursts__01__src_032.png",
+   "x": 890,
+   "y": 199,
+   "w": 64,
+   "h": 56
+  },
+  {
+   "file": "033.png",
+   "bucket": "orbs_rings_bursts",
+   "alias": "gotenks_super_saiyan_3__orbs_rings_bursts__02__src_033.png",
+   "x": 29,
+   "y": 264,
+   "w": 64,
+   "h": 56
+  },
+  {
+   "file": "034.png",
+   "bucket": "orbs_rings_bursts",
+   "alias": "gotenks_super_saiyan_3__orbs_rings_bursts__03__src_034.png",
+   "x": 152,
+   "y": 264,
+   "w": 64,
+   "h": 56
+  },
+  {
+   "file": "031.png",
+   "bucket": "projectiles_beams",
+   "alias": "gotenks_super_saiyan_3__projectiles_beams__01__src_031.png",
+   "x": 742,
+   "y": 208,
+   "w": 115,
+   "h": 39
+  },
+  {
+   "file": "039.png",
+   "bucket": "projectiles_beams",
+   "alias": "gotenks_super_saiyan_3__projectiles_beams__02__src_039.png",
+   "x": 772,
+   "y": 281,
+   "w": 54,
+   "h": 23
+  },
+  {
+   "file": "046.png",
+   "bucket": "projectiles_beams",
+   "alias": "gotenks_super_saiyan_3__projectiles_beams__03__src_046.png",
+   "x": 617,
+   "y": 327,
+   "w": 119,
+   "h": 61
+  },
+  {
+   "file": "035.png",
+   "bucket": "projectile_orb_small",
+   "alias": "gotenks_super_saiyan_3__projectile_orb_small__01__src_035.png",
+   "x": 299,
+   "y": 286,
+   "w": 16,
+   "h": 12
+  },
+  {
+   "file": "005.png",
+   "bucket": "multi_evidence_movement_or_attack_pose_nonbody_misc",
+   "alias": "gotenks_super_saiyan_3__multi_evidence_movement_or_attack_pose_nonbody_misc__01__src_005.png",
+   "x": 533,
+   "y": 17,
+   "w": 40,
+   "h": 31
+  },
+  {
+   "file": "006.png",
+   "bucket": "multi_evidence_movement_or_attack_pose_speedlines",
+   "alias": "gotenks_super_saiyan_3__multi_evidence_movement_or_attack_pose_speedlines__01__src_006.png",
+   "x": 665,
+   "y": 12,
+   "w": 23,
+   "h": 41
+  },
+  {
+   "file": "015.png",
+   "bucket": "downed_or_hurt",
+   "alias": "gotenks_super_saiyan_3__downed_or_hurt__01__src_015.png",
+   "x": 778,
+   "y": 87,
+   "w": 43,
+   "h": 21
+  },
+  {
+   "file": "043.png",
+   "bucket": "character_plus_projectile",
+   "alias": "gotenks_super_saiyan_3__character_plus_projectile__01__src_043.png",
+   "x": 248,
+   "y": 337,
+   "w": 119,
+   "h": 40
+  },
+  {
+   "file": "044.png",
+   "bucket": "multi_evidence_projectiles_beams_character_plus_aura_or_burst",
+   "alias": "gotenks_super_saiyan_3__multi_evidence_projectiles_beams_character_plus_aura_or_burst__01__src_044.png",
+   "x": 407,
+   "y": 340,
+   "w": 46,
+   "h": 34
+  },
+  {
+   "file": "047.png",
+   "bucket": "multi_evidence_orbs_rings_bursts_projectiles_beams",
+   "alias": "gotenks_super_saiyan_3__multi_evidence_orbs_rings_bursts_projectiles_beams__01__src_047.png",
+   "x": 762,
+   "y": 329,
+   "w": 74,
+   "h": 56
+  }
+ ]
+}

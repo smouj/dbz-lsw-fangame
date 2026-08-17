@@ -1,0 +1,469 @@
+{
+ "sheet": "goku-super-saiyan-3.png",
+ "dir": "goku_super_saiyan_3",
+ "columns": 8,
+ "rows": 7,
+ "cell_width": 123,
+ "cell_height": 67,
+ "frame_count": 49,
+ "buckets": [
+  "aura_support",
+  "battle_aura_actor_composite",
+  "battle_aura_tile",
+  "character_plus_effect",
+  "downed_or_hurt",
+  "movement_or_attack_pose",
+  "multi_evidence_orbs_rings_bursts_projectiles_beams",
+  "multi_evidence_projectiles_beams_orbs_rings_bursts",
+  "multi_evidence_projectiles_beams_orbs_rings_bursts_character_plus_aura_or_burst",
+  "nonbody_misc",
+  "orbs_rings_bursts",
+  "overworld_actor_or_pose",
+  "projectile_orb_small",
+  "projectiles_beams",
+  "speedlines"
+ ],
+ "frames": [
+  {
+   "file": "027.png",
+   "bucket": "overworld_actor_or_pose",
+   "alias": "goku_super_saiyan_3__overworld_actor_or_pose__01__src_027.png",
+   "x": 299,
+   "y": 226,
+   "w": 16,
+   "h": 16
+  },
+  {
+   "file": "028.png",
+   "bucket": "overworld_actor_or_pose",
+   "alias": "goku_super_saiyan_3__overworld_actor_or_pose__02__src_028.png",
+   "x": 423,
+   "y": 226,
+   "w": 14,
+   "h": 16
+  },
+  {
+   "file": "029.png",
+   "bucket": "battle_aura_tile",
+   "alias": "goku_super_saiyan_3__battle_aura_tile__01__src_029.png",
+   "x": 541,
+   "y": 226,
+   "w": 24,
+   "h": 16
+  },
+  {
+   "file": "030.png",
+   "bucket": "battle_aura_actor_composite",
+   "alias": "goku_super_saiyan_3__battle_aura_actor_composite__01__src_030.png",
+   "x": 664,
+   "y": 226,
+   "w": 24,
+   "h": 16
+  },
+  {
+   "file": "047.png",
+   "bucket": "aura_support",
+   "alias": "goku_super_saiyan_3__aura_support__01__src_033.png",
+   "x": 767,
+   "y": 340,
+   "w": 64,
+   "h": 56
+  },
+  {
+   "file": "048.png",
+   "bucket": "aura_support",
+   "alias": "goku_super_saiyan_3__aura_support__02__src_034.png",
+   "x": 890,
+   "y": 340,
+   "w": 64,
+   "h": 56
+  },
+  {
+   "file": "049.png",
+   "bucket": "aura_support",
+   "alias": "goku_super_saiyan_3__aura_support__03__src_035.png",
+   "x": 29,
+   "y": 407,
+   "w": 64,
+   "h": 56
+  },
+  {
+   "file": "001.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "goku_super_saiyan_3__movement_or_attack_pose__01__src_001.png",
+   "x": 46,
+   "y": 11,
+   "w": 30,
+   "h": 45
+  },
+  {
+   "file": "003.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "goku_super_saiyan_3__movement_or_attack_pose__02__src_003.png",
+   "x": 290,
+   "y": 12,
+   "w": 35,
+   "h": 43
+  },
+  {
+   "file": "004.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "goku_super_saiyan_3__movement_or_attack_pose__03__src_004.png",
+   "x": 416,
+   "y": 11,
+   "w": 28,
+   "h": 45
+  },
+  {
+   "file": "007.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "goku_super_saiyan_3__movement_or_attack_pose__04__src_007.png",
+   "x": 784,
+   "y": 11,
+   "w": 30,
+   "h": 45
+  },
+  {
+   "file": "008.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "goku_super_saiyan_3__movement_or_attack_pose__05__src_008.png",
+   "x": 906,
+   "y": 13,
+   "w": 32,
+   "h": 41
+  },
+  {
+   "file": "009.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "goku_super_saiyan_3__movement_or_attack_pose__06__src_009.png",
+   "x": 48,
+   "y": 79,
+   "w": 27,
+   "h": 43
+  },
+  {
+   "file": "010.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "goku_super_saiyan_3__movement_or_attack_pose__07__src_010.png",
+   "x": 169,
+   "y": 80,
+   "w": 31,
+   "h": 41
+  },
+  {
+   "file": "011.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "goku_super_saiyan_3__movement_or_attack_pose__08__src_011.png",
+   "x": 291,
+   "y": 82,
+   "w": 32,
+   "h": 37
+  },
+  {
+   "file": "012.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "goku_super_saiyan_3__movement_or_attack_pose__09__src_012.png",
+   "x": 416,
+   "y": 77,
+   "w": 28,
+   "h": 46
+  },
+  {
+   "file": "013.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "goku_super_saiyan_3__movement_or_attack_pose__10__src_013.png",
+   "x": 539,
+   "y": 76,
+   "w": 28,
+   "h": 48
+  },
+  {
+   "file": "014.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "goku_super_saiyan_3__movement_or_attack_pose__11__src_014.png",
+   "x": 664,
+   "y": 77,
+   "w": 24,
+   "h": 46
+  },
+  {
+   "file": "016.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "goku_super_saiyan_3__movement_or_attack_pose__12__src_016.png",
+   "x": 906,
+   "y": 79,
+   "w": 32,
+   "h": 42
+  },
+  {
+   "file": "017.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "goku_super_saiyan_3__movement_or_attack_pose__13__src_017.png",
+   "x": 45,
+   "y": 145,
+   "w": 32,
+   "h": 45
+  },
+  {
+   "file": "018.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "goku_super_saiyan_3__movement_or_attack_pose__14__src_018.png",
+   "x": 164,
+   "y": 148,
+   "w": 40,
+   "h": 38
+  },
+  {
+   "file": "019.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "goku_super_saiyan_3__movement_or_attack_pose__15__src_019.png",
+   "x": 294,
+   "y": 146,
+   "w": 27,
+   "h": 43
+  },
+  {
+   "file": "020.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "goku_super_saiyan_3__movement_or_attack_pose__16__src_020.png",
+   "x": 415,
+   "y": 146,
+   "w": 31,
+   "h": 43
+  },
+  {
+   "file": "021.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "goku_super_saiyan_3__movement_or_attack_pose__17__src_021.png",
+   "x": 539,
+   "y": 145,
+   "w": 29,
+   "h": 45
+  },
+  {
+   "file": "022.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "goku_super_saiyan_3__movement_or_attack_pose__18__src_022.png",
+   "x": 660,
+   "y": 151,
+   "w": 33,
+   "h": 32
+  },
+  {
+   "file": "023.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "goku_super_saiyan_3__movement_or_attack_pose__19__src_023.png",
+   "x": 784,
+   "y": 146,
+   "w": 31,
+   "h": 42
+  },
+  {
+   "file": "024.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "goku_super_saiyan_3__movement_or_attack_pose__20__src_024.png",
+   "x": 906,
+   "y": 146,
+   "w": 32,
+   "h": 42
+  },
+  {
+   "file": "025.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "goku_super_saiyan_3__movement_or_attack_pose__21__src_025.png",
+   "x": 42,
+   "y": 214,
+   "w": 39,
+   "h": 41
+  },
+  {
+   "file": "026.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "goku_super_saiyan_3__movement_or_attack_pose__22__src_026.png",
+   "x": 164,
+   "y": 214,
+   "w": 40,
+   "h": 41
+  },
+  {
+   "file": "031.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "goku_super_saiyan_3__movement_or_attack_pose__23__src_031.png",
+   "x": 783,
+   "y": 213,
+   "w": 32,
+   "h": 42
+  },
+  {
+   "file": "037.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "goku_super_saiyan_3__movement_or_attack_pose__24__src_037.png",
+   "x": 539,
+   "y": 280,
+   "w": 29,
+   "h": 42
+  },
+  {
+   "file": "040.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "goku_super_saiyan_3__movement_or_attack_pose__25__src_040.png",
+   "x": 908,
+   "y": 280,
+   "w": 29,
+   "h": 42
+  },
+  {
+   "file": "044.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "goku_super_saiyan_3__movement_or_attack_pose__26__src_044.png",
+   "x": 417,
+   "y": 346,
+   "w": 27,
+   "h": 45
+  },
+  {
+   "file": "045.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "goku_super_saiyan_3__movement_or_attack_pose__27__src_045.png",
+   "x": 538,
+   "y": 347,
+   "w": 31,
+   "h": 42
+  },
+  {
+   "file": "046.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "goku_super_saiyan_3__movement_or_attack_pose__28__src_046.png",
+   "x": 661,
+   "y": 346,
+   "w": 30,
+   "h": 45
+  },
+  {
+   "file": "033.png",
+   "bucket": "orbs_rings_bursts",
+   "alias": "goku_super_saiyan_3__orbs_rings_bursts__01__src_033.png",
+   "x": 29,
+   "y": 273,
+   "w": 64,
+   "h": 56
+  },
+  {
+   "file": "034.png",
+   "bucket": "orbs_rings_bursts",
+   "alias": "goku_super_saiyan_3__orbs_rings_bursts__02__src_034.png",
+   "x": 152,
+   "y": 273,
+   "w": 64,
+   "h": 56
+  },
+  {
+   "file": "035.png",
+   "bucket": "orbs_rings_bursts",
+   "alias": "goku_super_saiyan_3__orbs_rings_bursts__03__src_035.png",
+   "x": 275,
+   "y": 273,
+   "w": 64,
+   "h": 56
+  },
+  {
+   "file": "032.png",
+   "bucket": "projectiles_beams",
+   "alias": "goku_super_saiyan_3__projectiles_beams__01__src_032.png",
+   "x": 864,
+   "y": 213,
+   "w": 116,
+   "h": 42
+  },
+  {
+   "file": "038.png",
+   "bucket": "projectiles_beams",
+   "alias": "goku_super_saiyan_3__projectiles_beams__02__src_038.png",
+   "x": 617,
+   "y": 280,
+   "w": 119,
+   "h": 43
+  },
+  {
+   "file": "041.png",
+   "bucket": "projectiles_beams",
+   "alias": "goku_super_saiyan_3__projectiles_beams__03__src_041.png",
+   "x": 2,
+   "y": 337,
+   "w": 119,
+   "h": 63
+  },
+  {
+   "file": "036.png",
+   "bucket": "projectile_orb_small",
+   "alias": "goku_super_saiyan_3__projectile_orb_small__01__src_036.png",
+   "x": 422,
+   "y": 295,
+   "w": 16,
+   "h": 12
+  },
+  {
+   "file": "006.png",
+   "bucket": "speedlines",
+   "alias": "goku_super_saiyan_3__speedlines__01__src_006.png",
+   "x": 665,
+   "y": 13,
+   "w": 23,
+   "h": 41
+  },
+  {
+   "file": "005.png",
+   "bucket": "nonbody_misc",
+   "alias": "goku_super_saiyan_3__nonbody_misc__01__src_005.png",
+   "x": 533,
+   "y": 18,
+   "w": 40,
+   "h": 31
+  },
+  {
+   "file": "002.png",
+   "bucket": "character_plus_effect",
+   "alias": "goku_super_saiyan_3__character_plus_effect__01__src_002.png",
+   "x": 169,
+   "y": 11,
+   "w": 30,
+   "h": 45
+  },
+  {
+   "file": "015.png",
+   "bucket": "downed_or_hurt",
+   "alias": "goku_super_saiyan_3__downed_or_hurt__01__src_015.png",
+   "x": 776,
+   "y": 88,
+   "w": 47,
+   "h": 25
+  },
+  {
+   "file": "039.png",
+   "bucket": "multi_evidence_projectiles_beams_orbs_rings_bursts_character_plus_aura_or_burst",
+   "alias": "goku_super_saiyan_3__multi_evidence_projectiles_beams_orbs_rings_bursts_character_plus_aura_or_burst__01__src_039.png",
+   "x": 776,
+   "y": 284,
+   "w": 46,
+   "h": 34
+  },
+  {
+   "file": "042.png",
+   "bucket": "multi_evidence_orbs_rings_bursts_projectiles_beams",
+   "alias": "goku_super_saiyan_3__multi_evidence_orbs_rings_bursts_projectiles_beams__01__src_042.png",
+   "x": 147,
+   "y": 340,
+   "w": 74,
+   "h": 56
+  },
+  {
+   "file": "043.png",
+   "bucket": "multi_evidence_projectiles_beams_orbs_rings_bursts",
+   "alias": "goku_super_saiyan_3__multi_evidence_projectiles_beams_orbs_rings_bursts__01__src_043.png",
+   "x": 276,
+   "y": 337,
+   "w": 63,
+   "h": 63
+  }
+ ]
+}

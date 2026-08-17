@@ -1,0 +1,494 @@
+{
+ "sheet": "krillin.png",
+ "dir": "krillin_base",
+ "columns": 8,
+ "rows": 7,
+ "cell_width": 126,
+ "cell_height": 60,
+ "frame_count": 52,
+ "buckets": [
+  "aura_support",
+  "battle_aura_actor_composite",
+  "battle_aura_tile",
+  "beam_or_projectile_horizontal",
+  "character_plus_aura_or_burst",
+  "idle_or_stance",
+  "movement_or_attack_pose",
+  "nonbody_misc",
+  "orbs_rings_bursts",
+  "overworld_actor_or_pose",
+  "projectile_orb_small",
+  "projectiles_beams",
+  "speedlines"
+ ],
+ "frames": [
+  {
+   "file": "009.png",
+   "bucket": "overworld_actor_or_pose",
+   "alias": "krillin_base__overworld_actor_or_pose__01__src_009.png",
+   "x": 57,
+   "y": 82,
+   "w": 12,
+   "h": 15
+  },
+  {
+   "file": "010.png",
+   "bucket": "overworld_actor_or_pose",
+   "alias": "krillin_base__overworld_actor_or_pose__02__src_010.png",
+   "x": 183,
+   "y": 83,
+   "w": 12,
+   "h": 14
+  },
+  {
+   "file": "011.png",
+   "bucket": "battle_aura_tile",
+   "alias": "krillin_base__battle_aura_tile__01__src_011.png",
+   "x": 303,
+   "y": 82,
+   "w": 24,
+   "h": 16
+  },
+  {
+   "file": "012.png",
+   "bucket": "battle_aura_actor_composite",
+   "alias": "krillin_base__battle_aura_actor_composite__01__src_012.png",
+   "x": 429,
+   "y": 82,
+   "w": 24,
+   "h": 16
+  },
+  {
+   "file": "050.png",
+   "bucket": "aura_support",
+   "alias": "krillin_base__aura_support__01__src_031.png",
+   "x": 157,
+   "y": 362,
+   "w": 64,
+   "h": 56
+  },
+  {
+   "file": "051.png",
+   "bucket": "aura_support",
+   "alias": "krillin_base__aura_support__02__src_032.png",
+   "x": 283,
+   "y": 362,
+   "w": 64,
+   "h": 56
+  },
+  {
+   "file": "052.png",
+   "bucket": "aura_support",
+   "alias": "krillin_base__aura_support__03__src_033.png",
+   "x": 409,
+   "y": 362,
+   "w": 64,
+   "h": 56
+  },
+  {
+   "file": "045.png",
+   "bucket": "character_plus_aura_or_burst",
+   "alias": "krillin_base__character_plus_aura_or_burst__01__src_045.png",
+   "x": 544,
+   "y": 313,
+   "w": 46,
+   "h": 34
+  },
+  {
+   "file": "048.png",
+   "bucket": "character_plus_aura_or_burst",
+   "alias": "krillin_base__character_plus_aura_or_burst__02__src_048.png",
+   "x": 922,
+   "y": 313,
+   "w": 46,
+   "h": 34
+  },
+  {
+   "file": "001.png",
+   "bucket": "idle_or_stance",
+   "alias": "krillin_base__idle_or_stance__01__src_001.png",
+   "x": 52,
+   "y": 12,
+   "w": 21,
+   "h": 35
+  },
+  {
+   "file": "004.png",
+   "bucket": "idle_or_stance",
+   "alias": "krillin_base__idle_or_stance__02__src_004.png",
+   "x": 431,
+   "y": 12,
+   "w": 20,
+   "h": 35
+  },
+  {
+   "file": "013.png",
+   "bucket": "idle_or_stance",
+   "alias": "krillin_base__idle_or_stance__03__src_013.png",
+   "x": 555,
+   "y": 72,
+   "w": 23,
+   "h": 35
+  },
+  {
+   "file": "014.png",
+   "bucket": "idle_or_stance",
+   "alias": "krillin_base__idle_or_stance__04__src_014.png",
+   "x": 682,
+   "y": 73,
+   "w": 22,
+   "h": 34
+  },
+  {
+   "file": "016.png",
+   "bucket": "idle_or_stance",
+   "alias": "krillin_base__idle_or_stance__05__src_016.png",
+   "x": 934,
+   "y": 70,
+   "w": 22,
+   "h": 40
+  },
+  {
+   "file": "017.png",
+   "bucket": "idle_or_stance",
+   "alias": "krillin_base__idle_or_stance__06__src_017.png",
+   "x": 51,
+   "y": 131,
+   "w": 23,
+   "h": 38
+  },
+  {
+   "file": "018.png",
+   "bucket": "idle_or_stance",
+   "alias": "krillin_base__idle_or_stance__07__src_018.png",
+   "x": 179,
+   "y": 131,
+   "w": 20,
+   "h": 37
+  },
+  {
+   "file": "024.png",
+   "bucket": "idle_or_stance",
+   "alias": "krillin_base__idle_or_stance__08__src_024.png",
+   "x": 934,
+   "y": 132,
+   "w": 21,
+   "h": 35
+  },
+  {
+   "file": "029.png",
+   "bucket": "idle_or_stance",
+   "alias": "krillin_base__idle_or_stance__09__src_029.png",
+   "x": 550,
+   "y": 194,
+   "w": 34,
+   "h": 32
+  },
+  {
+   "file": "043.png",
+   "bucket": "idle_or_stance",
+   "alias": "krillin_base__idle_or_stance__10__src_043.png",
+   "x": 303,
+   "y": 313,
+   "w": 23,
+   "h": 33
+  },
+  {
+   "file": "049.png",
+   "bucket": "idle_or_stance",
+   "alias": "krillin_base__idle_or_stance__11__src_049.png",
+   "x": 52,
+   "y": 372,
+   "w": 21,
+   "h": 35
+  },
+  {
+   "file": "002.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "krillin_base__movement_or_attack_pose__01__src_002.png",
+   "x": 176,
+   "y": 12,
+   "w": 26,
+   "h": 35
+  },
+  {
+   "file": "003.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "krillin_base__movement_or_attack_pose__02__src_003.png",
+   "x": 299,
+   "y": 13,
+   "w": 32,
+   "h": 34
+  },
+  {
+   "file": "007.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "krillin_base__movement_or_attack_pose__03__src_007.png",
+   "x": 806,
+   "y": 12,
+   "w": 25,
+   "h": 36
+  },
+  {
+   "file": "008.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "krillin_base__movement_or_attack_pose__04__src_008.png",
+   "x": 929,
+   "y": 13,
+   "w": 31,
+   "h": 33
+  },
+  {
+   "file": "015.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "krillin_base__movement_or_attack_pose__05__src_015.png",
+   "x": 804,
+   "y": 77,
+   "w": 29,
+   "h": 26
+  },
+  {
+   "file": "019.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "krillin_base__movement_or_attack_pose__06__src_019.png",
+   "x": 300,
+   "y": 133,
+   "w": 30,
+   "h": 34
+  },
+  {
+   "file": "020.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "krillin_base__movement_or_attack_pose__07__src_020.png",
+   "x": 424,
+   "y": 132,
+   "w": 34,
+   "h": 36
+  },
+  {
+   "file": "021.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "krillin_base__movement_or_attack_pose__08__src_021.png",
+   "x": 551,
+   "y": 131,
+   "w": 31,
+   "h": 37
+  },
+  {
+   "file": "022.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "krillin_base__movement_or_attack_pose__09__src_022.png",
+   "x": 680,
+   "y": 131,
+   "w": 26,
+   "h": 37
+  },
+  {
+   "file": "023.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "krillin_base__movement_or_attack_pose__10__src_023.png",
+   "x": 805,
+   "y": 134,
+   "w": 28,
+   "h": 32
+  },
+  {
+   "file": "025.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "krillin_base__movement_or_attack_pose__11__src_025.png",
+   "x": 50,
+   "y": 197,
+   "w": 26,
+   "h": 25
+  },
+  {
+   "file": "026.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "krillin_base__movement_or_attack_pose__12__src_026.png",
+   "x": 174,
+   "y": 193,
+   "w": 30,
+   "h": 34
+  },
+  {
+   "file": "027.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "krillin_base__movement_or_attack_pose__13__src_027.png",
+   "x": 299,
+   "y": 193,
+   "w": 31,
+   "h": 34
+  },
+  {
+   "file": "028.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "krillin_base__movement_or_attack_pose__14__src_028.png",
+   "x": 424,
+   "y": 194,
+   "w": 33,
+   "h": 32
+  },
+  {
+   "file": "034.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "krillin_base__movement_or_attack_pose__15__src_034.png",
+   "x": 173,
+   "y": 253,
+   "w": 31,
+   "h": 34
+  },
+  {
+   "file": "037.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "krillin_base__movement_or_attack_pose__16__src_037.png",
+   "x": 547,
+   "y": 264,
+   "w": 39,
+   "h": 12
+  },
+  {
+   "file": "038.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "krillin_base__movement_or_attack_pose__17__src_038.png",
+   "x": 681,
+   "y": 250,
+   "w": 24,
+   "h": 40
+  },
+  {
+   "file": "039.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "krillin_base__movement_or_attack_pose__18__src_039.png",
+   "x": 804,
+   "y": 253,
+   "w": 30,
+   "h": 34
+  },
+  {
+   "file": "041.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "krillin_base__movement_or_attack_pose__19__src_041.png",
+   "x": 51,
+   "y": 310,
+   "w": 24,
+   "h": 40
+  },
+  {
+   "file": "042.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "krillin_base__movement_or_attack_pose__20__src_042.png",
+   "x": 174,
+   "y": 313,
+   "w": 30,
+   "h": 34
+  },
+  {
+   "file": "046.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "krillin_base__movement_or_attack_pose__21__src_046.png",
+   "x": 679,
+   "y": 314,
+   "w": 28,
+   "h": 32
+  },
+  {
+   "file": "031.png",
+   "bucket": "orbs_rings_bursts",
+   "alias": "krillin_base__orbs_rings_bursts__01__src_031.png",
+   "x": 787,
+   "y": 182,
+   "w": 64,
+   "h": 56
+  },
+  {
+   "file": "032.png",
+   "bucket": "orbs_rings_bursts",
+   "alias": "krillin_base__orbs_rings_bursts__02__src_032.png",
+   "x": 913,
+   "y": 182,
+   "w": 64,
+   "h": 56
+  },
+  {
+   "file": "033.png",
+   "bucket": "orbs_rings_bursts",
+   "alias": "krillin_base__orbs_rings_bursts__03__src_033.png",
+   "x": 31,
+   "y": 242,
+   "w": 64,
+   "h": 56
+  },
+  {
+   "file": "036.png",
+   "bucket": "projectiles_beams",
+   "alias": "krillin_base__projectiles_beams__01__src_036.png",
+   "x": 384,
+   "y": 253,
+   "w": 114,
+   "h": 34
+  },
+  {
+   "file": "044.png",
+   "bucket": "projectiles_beams",
+   "alias": "krillin_base__projectiles_beams__02__src_044.png",
+   "x": 383,
+   "y": 310,
+   "w": 116,
+   "h": 40
+  },
+  {
+   "file": "047.png",
+   "bucket": "projectiles_beams",
+   "alias": "krillin_base__projectiles_beams__03__src_047.png",
+   "x": 758,
+   "y": 309,
+   "w": 122,
+   "h": 41
+  },
+  {
+   "file": "035.png",
+   "bucket": "projectile_orb_small",
+   "alias": "krillin_base__projectile_orb_small__01__src_035.png",
+   "x": 307,
+   "y": 264,
+   "w": 16,
+   "h": 12
+  },
+  {
+   "file": "006.png",
+   "bucket": "speedlines",
+   "alias": "krillin_base__speedlines__01__src_006.png",
+   "x": 681,
+   "y": 9,
+   "w": 23,
+   "h": 41
+  },
+  {
+   "file": "005.png",
+   "bucket": "nonbody_misc",
+   "alias": "krillin_base__nonbody_misc__01__src_005.png",
+   "x": 547,
+   "y": 14,
+   "w": 40,
+   "h": 31
+  },
+  {
+   "file": "030.png",
+   "bucket": "beam_or_projectile_horizontal",
+   "alias": "krillin_base__beam_or_projectile_horizontal__01__src_030.png",
+   "x": 674,
+   "y": 202,
+   "w": 38,
+   "h": 16
+  },
+  {
+   "file": "040.png",
+   "bucket": "beam_or_projectile_horizontal",
+   "alias": "krillin_base__beam_or_projectile_horizontal__02__src_040.png",
+   "x": 917,
+   "y": 262,
+   "w": 55,
+   "h": 16
+  }
+ ]
+}

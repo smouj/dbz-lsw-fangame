@@ -1,0 +1,487 @@
+{
+ "sheet": "cell-semi-perfect-form.png",
+ "dir": "cell_semi_perfect_form",
+ "columns": 8,
+ "rows": 7,
+ "cell_width": 129,
+ "cell_height": 67,
+ "frame_count": 51,
+ "buckets": [
+  "aura_support",
+  "battle_aura_actor_composite",
+  "battle_aura_tile",
+  "character_plus_aura_or_burst",
+  "character_plus_effect",
+  "downed_or_hurt",
+  "movement_or_attack_pose",
+  "multi_evidence_movement_or_attack_pose_character_plus_aura_or_burst_projectiles_beams",
+  "multi_evidence_movement_or_attack_pose_projectiles_beams",
+  "nonbody_misc",
+  "orbs_rings_bursts",
+  "overworld_actor_or_pose",
+  "projectile_orb_small",
+  "projectiles_beams",
+  "speedlines"
+ ],
+ "frames": [
+  {
+   "file": "005.png",
+   "bucket": "overworld_actor_or_pose",
+   "alias": "cell_semi_perfect_form__overworld_actor_or_pose__01__src_005.png",
+   "x": 574,
+   "y": 25,
+   "w": 12,
+   "h": 16
+  },
+  {
+   "file": "006.png",
+   "bucket": "overworld_actor_or_pose",
+   "alias": "cell_semi_perfect_form__overworld_actor_or_pose__02__src_006.png",
+   "x": 703,
+   "y": 25,
+   "w": 12,
+   "h": 16
+  },
+  {
+   "file": "007.png",
+   "bucket": "battle_aura_tile",
+   "alias": "cell_semi_perfect_form__battle_aura_tile__01__src_007.png",
+   "x": 826,
+   "y": 25,
+   "w": 24,
+   "h": 16
+  },
+  {
+   "file": "008.png",
+   "bucket": "battle_aura_actor_composite",
+   "alias": "cell_semi_perfect_form__battle_aura_actor_composite__01__src_008.png",
+   "x": 955,
+   "y": 25,
+   "w": 24,
+   "h": 16
+  },
+  {
+   "file": "049.png",
+   "bucket": "aura_support",
+   "alias": "cell_semi_perfect_form__aura_support__01__src_033.png",
+   "x": 32,
+   "y": 407,
+   "w": 64,
+   "h": 56
+  },
+  {
+   "file": "050.png",
+   "bucket": "aura_support",
+   "alias": "cell_semi_perfect_form__aura_support__02__src_034.png",
+   "x": 161,
+   "y": 407,
+   "w": 64,
+   "h": 56
+  },
+  {
+   "file": "051.png",
+   "bucket": "aura_support",
+   "alias": "cell_semi_perfect_form__aura_support__03__src_035.png",
+   "x": 290,
+   "y": 407,
+   "w": 64,
+   "h": 56
+  },
+  {
+   "file": "045.png",
+   "bucket": "character_plus_aura_or_burst",
+   "alias": "cell_semi_perfect_form__character_plus_aura_or_burst__01__src_045.png",
+   "x": 563,
+   "y": 345,
+   "w": 34,
+   "h": 46
+  },
+  {
+   "file": "001.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "cell_semi_perfect_form__movement_or_attack_pose__01__src_001.png",
+   "x": 49,
+   "y": 11,
+   "w": 30,
+   "h": 45
+  },
+  {
+   "file": "003.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "cell_semi_perfect_form__movement_or_attack_pose__02__src_003.png",
+   "x": 305,
+   "y": 12,
+   "w": 34,
+   "h": 43
+  },
+  {
+   "file": "004.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "cell_semi_perfect_form__movement_or_attack_pose__03__src_004.png",
+   "x": 437,
+   "y": 11,
+   "w": 28,
+   "h": 45
+  },
+  {
+   "file": "011.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "cell_semi_perfect_form__movement_or_attack_pose__04__src_011.png",
+   "x": 308,
+   "y": 78,
+   "w": 29,
+   "h": 45
+  },
+  {
+   "file": "012.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "cell_semi_perfect_form__movement_or_attack_pose__05__src_012.png",
+   "x": 435,
+   "y": 79,
+   "w": 32,
+   "h": 42
+  },
+  {
+   "file": "013.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "cell_semi_perfect_form__movement_or_attack_pose__06__src_013.png",
+   "x": 565,
+   "y": 78,
+   "w": 30,
+   "h": 44
+  },
+  {
+   "file": "014.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "cell_semi_perfect_form__movement_or_attack_pose__07__src_014.png",
+   "x": 694,
+   "y": 81,
+   "w": 30,
+   "h": 38
+  },
+  {
+   "file": "015.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "cell_semi_perfect_form__movement_or_attack_pose__08__src_015.png",
+   "x": 822,
+   "y": 82,
+   "w": 32,
+   "h": 37
+  },
+  {
+   "file": "016.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "cell_semi_perfect_form__movement_or_attack_pose__09__src_016.png",
+   "x": 953,
+   "y": 78,
+   "w": 28,
+   "h": 45
+  },
+  {
+   "file": "017.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "cell_semi_perfect_form__movement_or_attack_pose__10__src_017.png",
+   "x": 50,
+   "y": 145,
+   "w": 28,
+   "h": 45
+  },
+  {
+   "file": "018.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "cell_semi_perfect_form__movement_or_attack_pose__11__src_018.png",
+   "x": 181,
+   "y": 144,
+   "w": 24,
+   "h": 46
+  },
+  {
+   "file": "020.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "cell_semi_perfect_form__movement_or_attack_pose__12__src_020.png",
+   "x": 431,
+   "y": 146,
+   "w": 40,
+   "h": 43
+  },
+  {
+   "file": "021.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "cell_semi_perfect_form__movement_or_attack_pose__13__src_021.png",
+   "x": 560,
+   "y": 146,
+   "w": 40,
+   "h": 43
+  },
+  {
+   "file": "022.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "cell_semi_perfect_form__movement_or_attack_pose__14__src_022.png",
+   "x": 694,
+   "y": 147,
+   "w": 31,
+   "h": 40
+  },
+  {
+   "file": "023.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "cell_semi_perfect_form__movement_or_attack_pose__15__src_023.png",
+   "x": 821,
+   "y": 145,
+   "w": 35,
+   "h": 45
+  },
+  {
+   "file": "024.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "cell_semi_perfect_form__movement_or_attack_pose__16__src_024.png",
+   "x": 952,
+   "y": 145,
+   "w": 30,
+   "h": 44
+  },
+  {
+   "file": "025.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "cell_semi_perfect_form__movement_or_attack_pose__17__src_025.png",
+   "x": 50,
+   "y": 212,
+   "w": 29,
+   "h": 45
+  },
+  {
+   "file": "026.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "cell_semi_perfect_form__movement_or_attack_pose__18__src_026.png",
+   "x": 176,
+   "y": 218,
+   "w": 34,
+   "h": 32
+  },
+  {
+   "file": "027.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "cell_semi_perfect_form__movement_or_attack_pose__19__src_027.png",
+   "x": 306,
+   "y": 213,
+   "w": 32,
+   "h": 43
+  },
+  {
+   "file": "028.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "cell_semi_perfect_form__movement_or_attack_pose__20__src_028.png",
+   "x": 435,
+   "y": 213,
+   "w": 32,
+   "h": 43
+  },
+  {
+   "file": "029.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "cell_semi_perfect_form__movement_or_attack_pose__21__src_029.png",
+   "x": 560,
+   "y": 212,
+   "w": 40,
+   "h": 45
+  },
+  {
+   "file": "030.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "cell_semi_perfect_form__movement_or_attack_pose__22__src_030.png",
+   "x": 690,
+   "y": 212,
+   "w": 39,
+   "h": 45
+  },
+  {
+   "file": "031.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "cell_semi_perfect_form__movement_or_attack_pose__23__src_031.png",
+   "x": 822,
+   "y": 213,
+   "w": 32,
+   "h": 43
+  },
+  {
+   "file": "037.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "cell_semi_perfect_form__movement_or_attack_pose__24__src_037.png",
+   "x": 566,
+   "y": 280,
+   "w": 29,
+   "h": 42
+  },
+  {
+   "file": "040.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "cell_semi_perfect_form__movement_or_attack_pose__25__src_040.png",
+   "x": 953,
+   "y": 280,
+   "w": 29,
+   "h": 42
+  },
+  {
+   "file": "046.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "cell_semi_perfect_form__movement_or_attack_pose__26__src_046.png",
+   "x": 695,
+   "y": 347,
+   "w": 29,
+   "h": 42
+  },
+  {
+   "file": "048.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "cell_semi_perfect_form__movement_or_attack_pose__27__src_048.png",
+   "x": 952,
+   "y": 346,
+   "w": 30,
+   "h": 45
+  },
+  {
+   "file": "033.png",
+   "bucket": "orbs_rings_bursts",
+   "alias": "cell_semi_perfect_form__orbs_rings_bursts__01__src_033.png",
+   "x": 32,
+   "y": 273,
+   "w": 64,
+   "h": 56
+  },
+  {
+   "file": "034.png",
+   "bucket": "orbs_rings_bursts",
+   "alias": "cell_semi_perfect_form__orbs_rings_bursts__02__src_034.png",
+   "x": 161,
+   "y": 273,
+   "w": 64,
+   "h": 56
+  },
+  {
+   "file": "035.png",
+   "bucket": "orbs_rings_bursts",
+   "alias": "cell_semi_perfect_form__orbs_rings_bursts__03__src_035.png",
+   "x": 290,
+   "y": 273,
+   "w": 64,
+   "h": 56
+  },
+  {
+   "file": "032.png",
+   "bucket": "projectiles_beams",
+   "alias": "cell_semi_perfect_form__projectiles_beams__01__src_032.png",
+   "x": 910,
+   "y": 213,
+   "w": 115,
+   "h": 43
+  },
+  {
+   "file": "038.png",
+   "bucket": "projectiles_beams",
+   "alias": "cell_semi_perfect_form__projectiles_beams__02__src_038.png",
+   "x": 650,
+   "y": 280,
+   "w": 119,
+   "h": 42
+  },
+  {
+   "file": "041.png",
+   "bucket": "projectiles_beams",
+   "alias": "cell_semi_perfect_form__projectiles_beams__03__src_041.png",
+   "x": 5,
+   "y": 347,
+   "w": 119,
+   "h": 43
+  },
+  {
+   "file": "043.png",
+   "bucket": "projectiles_beams",
+   "alias": "cell_semi_perfect_form__projectiles_beams__04__src_043.png",
+   "x": 260,
+   "y": 345,
+   "w": 125,
+   "h": 46
+  },
+  {
+   "file": "047.png",
+   "bucket": "projectiles_beams",
+   "alias": "cell_semi_perfect_form__projectiles_beams__05__src_047.png",
+   "x": 779,
+   "y": 337,
+   "w": 119,
+   "h": 63
+  },
+  {
+   "file": "036.png",
+   "bucket": "projectile_orb_small",
+   "alias": "cell_semi_perfect_form__projectile_orb_small__01__src_036.png",
+   "x": 443,
+   "y": 295,
+   "w": 16,
+   "h": 12
+  },
+  {
+   "file": "044.png",
+   "bucket": "projectile_orb_small",
+   "alias": "cell_semi_perfect_form__projectile_orb_small__02__src_044.png",
+   "x": 443,
+   "y": 362,
+   "w": 16,
+   "h": 12
+  },
+  {
+   "file": "010.png",
+   "bucket": "speedlines",
+   "alias": "cell_semi_perfect_form__speedlines__01__src_010.png",
+   "x": 182,
+   "y": 80,
+   "w": 23,
+   "h": 41
+  },
+  {
+   "file": "009.png",
+   "bucket": "nonbody_misc",
+   "alias": "cell_semi_perfect_form__nonbody_misc__01__src_009.png",
+   "x": 44,
+   "y": 85,
+   "w": 40,
+   "h": 31
+  },
+  {
+   "file": "002.png",
+   "bucket": "character_plus_effect",
+   "alias": "cell_semi_perfect_form__character_plus_effect__01__src_002.png",
+   "x": 178,
+   "y": 11,
+   "w": 30,
+   "h": 45
+  },
+  {
+   "file": "019.png",
+   "bucket": "downed_or_hurt",
+   "alias": "cell_semi_perfect_form__downed_or_hurt__01__src_019.png",
+   "x": 299,
+   "y": 156,
+   "w": 47,
+   "h": 22
+  },
+  {
+   "file": "039.png",
+   "bucket": "multi_evidence_movement_or_attack_pose_projectiles_beams",
+   "alias": "cell_semi_perfect_form__multi_evidence_movement_or_attack_pose_projectiles_beams__01__src_039.png",
+   "x": 791,
+   "y": 295,
+   "w": 94,
+   "h": 12
+  },
+  {
+   "file": "042.png",
+   "bucket": "multi_evidence_movement_or_attack_pose_character_plus_aura_or_burst_projectiles_beams",
+   "alias": "cell_semi_perfect_form__multi_evidence_movement_or_attack_pose_character_plus_aura_or_burst_projectiles_beams__01__src_042.png",
+   "x": 170,
+   "y": 351,
+   "w": 46,
+   "h": 34
+  }
+ ]
+}

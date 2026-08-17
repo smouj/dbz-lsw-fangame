@@ -1,0 +1,570 @@
+{
+ "sheet": "buu-gohan.png",
+ "dir": "buu_gohan_absorbed",
+ "columns": 8,
+ "rows": 8,
+ "cell_width": 123,
+ "cell_height": 108,
+ "frame_count": 60,
+ "buckets": [
+  "actor_downed_or_special_pose",
+  "aura_support",
+  "battle_aura_actor_composite",
+  "battle_aura_tile",
+  "beam_or_projectile_horizontal",
+  "downed_or_hurt",
+  "movement_or_attack_pose",
+  "multi_evidence_character_plus_aura_or_burst_orbs_rings_bursts",
+  "multi_evidence_movement_or_attack_pose_nonbody_misc",
+  "multi_evidence_movement_or_attack_pose_orbs_rings_bursts_projectiles_beams",
+  "multi_evidence_projectiles_beams_orbs_rings_bursts_movement_or_attack_pose",
+  "multi_evidence_speedlines_movement_or_attack_pose",
+  "orbs_rings_bursts",
+  "overworld_actor_or_pose",
+  "projectile_orb_small",
+  "projectiles_beams",
+  "speedlines"
+ ],
+ "frames": [
+  {
+   "file": "027.png",
+   "bucket": "overworld_actor_or_pose",
+   "alias": "buu_gohan_absorbed__overworld_actor_or_pose__01__src_027.png",
+   "x": 301,
+   "y": 370,
+   "w": 12,
+   "h": 15
+  },
+  {
+   "file": "033.png",
+   "bucket": "overworld_actor_or_pose",
+   "alias": "buu_gohan_absorbed__overworld_actor_or_pose__02__src_033.png",
+   "x": 55,
+   "y": 479,
+   "w": 12,
+   "h": 14
+  },
+  {
+   "file": "028.png",
+   "bucket": "battle_aura_tile",
+   "alias": "buu_gohan_absorbed__battle_aura_tile__01__src_028.png",
+   "x": 418,
+   "y": 370,
+   "w": 24,
+   "h": 16
+  },
+  {
+   "file": "029.png",
+   "bucket": "battle_aura_tile",
+   "alias": "buu_gohan_absorbed__battle_aura_tile__02__src_029.png",
+   "x": 541,
+   "y": 370,
+   "w": 24,
+   "h": 16
+  },
+  {
+   "file": "057.png",
+   "bucket": "battle_aura_actor_composite",
+   "alias": "buu_gohan_absorbed__battle_aura_actor_composite__01__src_057.png",
+   "x": 49,
+   "y": 802,
+   "w": 24,
+   "h": 16
+  },
+  {
+   "file": "058.png",
+   "bucket": "aura_support",
+   "alias": "buu_gohan_absorbed__aura_support__01__src_032.png",
+   "x": 152,
+   "y": 782,
+   "w": 64,
+   "h": 56
+  },
+  {
+   "file": "059.png",
+   "bucket": "aura_support",
+   "alias": "buu_gohan_absorbed__aura_support__02__src_034.png",
+   "x": 275,
+   "y": 782,
+   "w": 64,
+   "h": 56
+  },
+  {
+   "file": "060.png",
+   "bucket": "aura_support",
+   "alias": "buu_gohan_absorbed__aura_support__03__src_035.png",
+   "x": 398,
+   "y": 782,
+   "w": 64,
+   "h": 56
+  },
+  {
+   "file": "001.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "buu_gohan_absorbed__movement_or_attack_pose__01__src_001.png",
+   "x": 46,
+   "y": 33,
+   "w": 30,
+   "h": 42
+  },
+  {
+   "file": "002.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "buu_gohan_absorbed__movement_or_attack_pose__02__src_002.png",
+   "x": 169,
+   "y": 33,
+   "w": 30,
+   "h": 42
+  },
+  {
+   "file": "003.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "buu_gohan_absorbed__movement_or_attack_pose__03__src_003.png",
+   "x": 290,
+   "y": 34,
+   "w": 34,
+   "h": 40
+  },
+  {
+   "file": "004.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "buu_gohan_absorbed__movement_or_attack_pose__04__src_004.png",
+   "x": 416,
+   "y": 33,
+   "w": 28,
+   "h": 42
+  },
+  {
+   "file": "007.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "buu_gohan_absorbed__movement_or_attack_pose__05__src_007.png",
+   "x": 785,
+   "y": 33,
+   "w": 28,
+   "h": 42
+  },
+  {
+   "file": "008.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "buu_gohan_absorbed__movement_or_attack_pose__06__src_008.png",
+   "x": 906,
+   "y": 34,
+   "w": 32,
+   "h": 39
+  },
+  {
+   "file": "009.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "buu_gohan_absorbed__movement_or_attack_pose__07__src_009.png",
+   "x": 48,
+   "y": 141,
+   "w": 27,
+   "h": 41
+  },
+  {
+   "file": "010.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "buu_gohan_absorbed__movement_or_attack_pose__08__src_010.png",
+   "x": 171,
+   "y": 143,
+   "w": 27,
+   "h": 37
+  },
+  {
+   "file": "011.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "buu_gohan_absorbed__movement_or_attack_pose__09__src_011.png",
+   "x": 291,
+   "y": 145,
+   "w": 32,
+   "h": 34
+  },
+  {
+   "file": "012.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "buu_gohan_absorbed__movement_or_attack_pose__10__src_012.png",
+   "x": 418,
+   "y": 142,
+   "w": 24,
+   "h": 40
+  },
+  {
+   "file": "013.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "buu_gohan_absorbed__movement_or_attack_pose__11__src_013.png",
+   "x": 540,
+   "y": 139,
+   "w": 26,
+   "h": 45
+  },
+  {
+   "file": "014.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "buu_gohan_absorbed__movement_or_attack_pose__12__src_014.png",
+   "x": 664,
+   "y": 140,
+   "w": 24,
+   "h": 43
+  },
+  {
+   "file": "016.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "buu_gohan_absorbed__movement_or_attack_pose__13__src_016.png",
+   "x": 906,
+   "y": 141,
+   "w": 32,
+   "h": 41
+  },
+  {
+   "file": "017.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "buu_gohan_absorbed__movement_or_attack_pose__14__src_017.png",
+   "x": 41,
+   "y": 248,
+   "w": 40,
+   "h": 43
+  },
+  {
+   "file": "018.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "buu_gohan_absorbed__movement_or_attack_pose__15__src_018.png",
+   "x": 171,
+   "y": 250,
+   "w": 26,
+   "h": 40
+  },
+  {
+   "file": "019.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "buu_gohan_absorbed__movement_or_attack_pose__16__src_019.png",
+   "x": 293,
+   "y": 249,
+   "w": 29,
+   "h": 42
+  },
+  {
+   "file": "020.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "buu_gohan_absorbed__movement_or_attack_pose__17__src_020.png",
+   "x": 415,
+   "y": 250,
+   "w": 30,
+   "h": 40
+  },
+  {
+   "file": "021.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "buu_gohan_absorbed__movement_or_attack_pose__18__src_021.png",
+   "x": 539,
+   "y": 249,
+   "w": 29,
+   "h": 42
+  },
+  {
+   "file": "022.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "buu_gohan_absorbed__movement_or_attack_pose__19__src_022.png",
+   "x": 661,
+   "y": 254,
+   "w": 30,
+   "h": 32
+  },
+  {
+   "file": "023.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "buu_gohan_absorbed__movement_or_attack_pose__20__src_023.png",
+   "x": 783,
+   "y": 249,
+   "w": 32,
+   "h": 41
+  },
+  {
+   "file": "024.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "buu_gohan_absorbed__movement_or_attack_pose__21__src_024.png",
+   "x": 906,
+   "y": 250,
+   "w": 32,
+   "h": 39
+  },
+  {
+   "file": "025.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "buu_gohan_absorbed__movement_or_attack_pose__22__src_025.png",
+   "x": 41,
+   "y": 359,
+   "w": 40,
+   "h": 38
+  },
+  {
+   "file": "026.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "buu_gohan_absorbed__movement_or_attack_pose__23__src_026.png",
+   "x": 165,
+   "y": 359,
+   "w": 39,
+   "h": 38
+  },
+  {
+   "file": "030.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "buu_gohan_absorbed__movement_or_attack_pose__24__src_030.png",
+   "x": 660,
+   "y": 358,
+   "w": 32,
+   "h": 39
+  },
+  {
+   "file": "039.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "buu_gohan_absorbed__movement_or_attack_pose__25__src_039.png",
+   "x": 786,
+   "y": 464,
+   "w": 27,
+   "h": 43
+  },
+  {
+   "file": "046.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "buu_gohan_absorbed__movement_or_attack_pose__26__src_046.png",
+   "x": 660,
+   "y": 574,
+   "w": 32,
+   "h": 39
+  },
+  {
+   "file": "047.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "buu_gohan_absorbed__movement_or_attack_pose__27__src_047.png",
+   "x": 779,
+   "y": 583,
+   "w": 40,
+   "h": 22
+  },
+  {
+   "file": "048.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "buu_gohan_absorbed__movement_or_attack_pose__28__src_048.png",
+   "x": 908,
+   "y": 570,
+   "w": 29,
+   "h": 47
+  },
+  {
+   "file": "050.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "buu_gohan_absorbed__movement_or_attack_pose__29__src_050.png",
+   "x": 157,
+   "y": 690,
+   "w": 54,
+   "h": 23
+  },
+  {
+   "file": "051.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "buu_gohan_absorbed__movement_or_attack_pose__30__src_051.png",
+   "x": 293,
+   "y": 679,
+   "w": 28,
+   "h": 45
+  },
+  {
+   "file": "052.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "buu_gohan_absorbed__movement_or_attack_pose__31__src_052.png",
+   "x": 417,
+   "y": 679,
+   "w": 27,
+   "h": 45
+  },
+  {
+   "file": "053.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "buu_gohan_absorbed__movement_or_attack_pose__32__src_053.png",
+   "x": 539,
+   "y": 678,
+   "w": 29,
+   "h": 47
+  },
+  {
+   "file": "054.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "buu_gohan_absorbed__movement_or_attack_pose__33__src_054.png",
+   "x": 660,
+   "y": 682,
+   "w": 32,
+   "h": 39
+  },
+  {
+   "file": "032.png",
+   "bucket": "orbs_rings_bursts",
+   "alias": "buu_gohan_absorbed__orbs_rings_bursts__01__src_032.png",
+   "x": 890,
+   "y": 350,
+   "w": 64,
+   "h": 56
+  },
+  {
+   "file": "034.png",
+   "bucket": "orbs_rings_bursts",
+   "alias": "buu_gohan_absorbed__orbs_rings_bursts__02__src_034.png",
+   "x": 152,
+   "y": 458,
+   "w": 64,
+   "h": 56
+  },
+  {
+   "file": "035.png",
+   "bucket": "orbs_rings_bursts",
+   "alias": "buu_gohan_absorbed__orbs_rings_bursts__03__src_035.png",
+   "x": 275,
+   "y": 458,
+   "w": 64,
+   "h": 56
+  },
+  {
+   "file": "042.png",
+   "bucket": "orbs_rings_bursts",
+   "alias": "buu_gohan_absorbed__orbs_rings_bursts__04__src_042.png",
+   "x": 157,
+   "y": 542,
+   "w": 55,
+   "h": 104
+  },
+  {
+   "file": "031.png",
+   "bucket": "projectiles_beams",
+   "alias": "buu_gohan_absorbed__projectiles_beams__01__src_031.png",
+   "x": 742,
+   "y": 358,
+   "w": 115,
+   "h": 39
+  },
+  {
+   "file": "037.png",
+   "bucket": "projectiles_beams",
+   "alias": "buu_gohan_absorbed__projectiles_beams__02__src_037.png",
+   "x": 497,
+   "y": 458,
+   "w": 113,
+   "h": 55
+  },
+  {
+   "file": "040.png",
+   "bucket": "projectiles_beams",
+   "alias": "buu_gohan_absorbed__projectiles_beams__03__src_040.png",
+   "x": 863,
+   "y": 465,
+   "w": 118,
+   "h": 42
+  },
+  {
+   "file": "044.png",
+   "bucket": "projectiles_beams",
+   "alias": "buu_gohan_absorbed__projectiles_beams__04__src_044.png",
+   "x": 371,
+   "y": 562,
+   "w": 119,
+   "h": 63
+  },
+  {
+   "file": "045.png",
+   "bucket": "projectiles_beams",
+   "alias": "buu_gohan_absorbed__projectiles_beams__05__src_045.png",
+   "x": 516,
+   "y": 566,
+   "w": 74,
+   "h": 56
+  },
+  {
+   "file": "036.png",
+   "bucket": "projectile_orb_small",
+   "alias": "buu_gohan_absorbed__projectile_orb_small__01__src_036.png",
+   "x": 422,
+   "y": 480,
+   "w": 16,
+   "h": 12
+  },
+  {
+   "file": "049.png",
+   "bucket": "speedlines",
+   "alias": "buu_gohan_absorbed__speedlines__01__src_049.png",
+   "x": 45,
+   "y": 682,
+   "w": 32,
+   "h": 39
+  },
+  {
+   "file": "055.png",
+   "bucket": "actor_downed_or_special_pose",
+   "alias": "buu_gohan_absorbed__actor_downed_or_special_pose__01__src_055.png",
+   "x": 779,
+   "y": 691,
+   "w": 40,
+   "h": 22
+  },
+  {
+   "file": "005.png",
+   "bucket": "multi_evidence_movement_or_attack_pose_nonbody_misc",
+   "alias": "buu_gohan_absorbed__multi_evidence_movement_or_attack_pose_nonbody_misc__01__src_005.png",
+   "x": 533,
+   "y": 38,
+   "w": 40,
+   "h": 31
+  },
+  {
+   "file": "006.png",
+   "bucket": "multi_evidence_speedlines_movement_or_attack_pose",
+   "alias": "buu_gohan_absorbed__multi_evidence_speedlines_movement_or_attack_pose__01__src_006.png",
+   "x": 665,
+   "y": 33,
+   "w": 23,
+   "h": 41
+  },
+  {
+   "file": "015.png",
+   "bucket": "downed_or_hurt",
+   "alias": "buu_gohan_absorbed__downed_or_hurt__01__src_015.png",
+   "x": 777,
+   "y": 151,
+   "w": 44,
+   "h": 22
+  },
+  {
+   "file": "038.png",
+   "bucket": "multi_evidence_projectiles_beams_orbs_rings_bursts_movement_or_attack_pose",
+   "alias": "buu_gohan_absorbed__multi_evidence_projectiles_beams_orbs_rings_bursts_movement_or_attack_pose__01__src_038.png",
+   "x": 653,
+   "y": 470,
+   "w": 46,
+   "h": 31
+  },
+  {
+   "file": "041.png",
+   "bucket": "multi_evidence_character_plus_aura_or_burst_orbs_rings_bursts",
+   "alias": "buu_gohan_absorbed__multi_evidence_character_plus_aura_or_burst_orbs_rings_bursts__01__src_041.png",
+   "x": 38,
+   "y": 577,
+   "w": 46,
+   "h": 34
+  },
+  {
+   "file": "043.png",
+   "bucket": "multi_evidence_movement_or_attack_pose_orbs_rings_bursts_projectiles_beams",
+   "alias": "buu_gohan_absorbed__multi_evidence_movement_or_attack_pose_orbs_rings_bursts_projectiles_beams__01__src_043.png",
+   "x": 280,
+   "y": 562,
+   "w": 55,
+   "h": 64
+  },
+  {
+   "file": "056.png",
+   "bucket": "beam_or_projectile_horizontal",
+   "alias": "buu_gohan_absorbed__beam_or_projectile_horizontal__01__src_056.png",
+   "x": 908,
+   "y": 696,
+   "w": 28,
+   "h": 12
+  }
+ ]
+}

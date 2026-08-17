@@ -1,0 +1,439 @@
+{
+ "sheet": "guldo.png",
+ "dir": "guldo_base",
+ "columns": 8,
+ "rows": 6,
+ "cell_width": 117,
+ "cell_height": 60,
+ "frame_count": 46,
+ "buckets": [
+  "aura_support",
+  "battle_aura_actor_composite",
+  "battle_aura_tile",
+  "beam_or_projectile_horizontal",
+  "idle_or_stance",
+  "movement_or_attack_pose",
+  "nonbody_misc",
+  "orbs_rings_bursts",
+  "overworld_actor_or_pose",
+  "projectile_orb_small",
+  "projectiles_beams",
+  "speedlines"
+ ],
+ "frames": [
+  {
+   "file": "005.png",
+   "bucket": "overworld_actor_or_pose",
+   "alias": "guldo_base__overworld_actor_or_pose__01__src_005.png",
+   "x": 520,
+   "y": 22,
+   "w": 12,
+   "h": 15
+  },
+  {
+   "file": "006.png",
+   "bucket": "overworld_actor_or_pose",
+   "alias": "guldo_base__overworld_actor_or_pose__02__src_006.png",
+   "x": 637,
+   "y": 23,
+   "w": 12,
+   "h": 14
+  },
+  {
+   "file": "007.png",
+   "bucket": "battle_aura_tile",
+   "alias": "guldo_base__battle_aura_tile__01__src_007.png",
+   "x": 748,
+   "y": 22,
+   "w": 24,
+   "h": 16
+  },
+  {
+   "file": "008.png",
+   "bucket": "battle_aura_actor_composite",
+   "alias": "guldo_base__battle_aura_actor_composite__01__src_008.png",
+   "x": 865,
+   "y": 22,
+   "w": 24,
+   "h": 16
+  },
+  {
+   "file": "044.png",
+   "bucket": "aura_support",
+   "alias": "guldo_base__aura_support__01__src_031.png",
+   "x": 377,
+   "y": 302,
+   "w": 64,
+   "h": 56
+  },
+  {
+   "file": "045.png",
+   "bucket": "aura_support",
+   "alias": "guldo_base__aura_support__02__src_032.png",
+   "x": 494,
+   "y": 302,
+   "w": 64,
+   "h": 56
+  },
+  {
+   "file": "046.png",
+   "bucket": "aura_support",
+   "alias": "guldo_base__aura_support__03__src_033.png",
+   "x": 611,
+   "y": 302,
+   "w": 64,
+   "h": 56
+  },
+  {
+   "file": "001.png",
+   "bucket": "idle_or_stance",
+   "alias": "guldo_base__idle_or_stance__01__src_001.png",
+   "x": 47,
+   "y": 12,
+   "w": 22,
+   "h": 35
+  },
+  {
+   "file": "004.png",
+   "bucket": "idle_or_stance",
+   "alias": "guldo_base__idle_or_stance__02__src_004.png",
+   "x": 398,
+   "y": 12,
+   "w": 22,
+   "h": 35
+  },
+  {
+   "file": "014.png",
+   "bucket": "idle_or_stance",
+   "alias": "guldo_base__idle_or_stance__03__src_014.png",
+   "x": 632,
+   "y": 72,
+   "w": 23,
+   "h": 35
+  },
+  {
+   "file": "018.png",
+   "bucket": "idle_or_stance",
+   "alias": "guldo_base__idle_or_stance__04__src_018.png",
+   "x": 164,
+   "y": 131,
+   "w": 22,
+   "h": 37
+  },
+  {
+   "file": "025.png",
+   "bucket": "idle_or_stance",
+   "alias": "guldo_base__idle_or_stance__05__src_025.png",
+   "x": 48,
+   "y": 192,
+   "w": 21,
+   "h": 35
+  },
+  {
+   "file": "029.png",
+   "bucket": "idle_or_stance",
+   "alias": "guldo_base__idle_or_stance__06__src_029.png",
+   "x": 509,
+   "y": 194,
+   "w": 34,
+   "h": 32
+  },
+  {
+   "file": "039.png",
+   "bucket": "idle_or_stance",
+   "alias": "guldo_base__idle_or_stance__07__src_039.png",
+   "x": 744,
+   "y": 256,
+   "w": 32,
+   "h": 28
+  },
+  {
+   "file": "002.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "guldo_base__movement_or_attack_pose__01__src_002.png",
+   "x": 162,
+   "y": 12,
+   "w": 27,
+   "h": 35
+  },
+  {
+   "file": "003.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "guldo_base__movement_or_attack_pose__02__src_003.png",
+   "x": 276,
+   "y": 13,
+   "w": 32,
+   "h": 34
+  },
+  {
+   "file": "011.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "guldo_base__movement_or_attack_pose__03__src_011.png",
+   "x": 279,
+   "y": 72,
+   "w": 26,
+   "h": 36
+  },
+  {
+   "file": "012.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "guldo_base__movement_or_attack_pose__04__src_012.png",
+   "x": 394,
+   "y": 73,
+   "w": 31,
+   "h": 33
+  },
+  {
+   "file": "013.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "guldo_base__movement_or_attack_pose__05__src_013.png",
+   "x": 514,
+   "y": 72,
+   "w": 25,
+   "h": 35
+  },
+  {
+   "file": "015.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "guldo_base__movement_or_attack_pose__06__src_015.png",
+   "x": 746,
+   "y": 77,
+   "w": 29,
+   "h": 26
+  },
+  {
+   "file": "016.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "guldo_base__movement_or_attack_pose__07__src_016.png",
+   "x": 865,
+   "y": 70,
+   "w": 24,
+   "h": 40
+  },
+  {
+   "file": "017.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "guldo_base__movement_or_attack_pose__08__src_017.png",
+   "x": 46,
+   "y": 131,
+   "w": 24,
+   "h": 38
+  },
+  {
+   "file": "020.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "guldo_base__movement_or_attack_pose__09__src_020.png",
+   "x": 394,
+   "y": 133,
+   "w": 30,
+   "h": 34
+  },
+  {
+   "file": "021.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "guldo_base__movement_or_attack_pose__10__src_021.png",
+   "x": 509,
+   "y": 133,
+   "w": 35,
+   "h": 34
+  },
+  {
+   "file": "022.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "guldo_base__movement_or_attack_pose__11__src_022.png",
+   "x": 630,
+   "y": 131,
+   "w": 26,
+   "h": 37
+  },
+  {
+   "file": "023.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "guldo_base__movement_or_attack_pose__12__src_023.png",
+   "x": 746,
+   "y": 132,
+   "w": 28,
+   "h": 36
+  },
+  {
+   "file": "024.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "guldo_base__movement_or_attack_pose__13__src_024.png",
+   "x": 863,
+   "y": 134,
+   "w": 28,
+   "h": 32
+  },
+  {
+   "file": "026.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "guldo_base__movement_or_attack_pose__14__src_026.png",
+   "x": 162,
+   "y": 197,
+   "w": 27,
+   "h": 25
+  },
+  {
+   "file": "027.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "guldo_base__movement_or_attack_pose__15__src_027.png",
+   "x": 277,
+   "y": 193,
+   "w": 31,
+   "h": 34
+  },
+  {
+   "file": "028.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "guldo_base__movement_or_attack_pose__16__src_028.png",
+   "x": 394,
+   "y": 193,
+   "w": 30,
+   "h": 34
+  },
+  {
+   "file": "030.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "guldo_base__movement_or_attack_pose__17__src_030.png",
+   "x": 627,
+   "y": 194,
+   "w": 33,
+   "h": 32
+  },
+  {
+   "file": "034.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "guldo_base__movement_or_attack_pose__18__src_034.png",
+   "x": 160,
+   "y": 253,
+   "w": 31,
+   "h": 34
+  },
+  {
+   "file": "037.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "guldo_base__movement_or_attack_pose__19__src_037.png",
+   "x": 512,
+   "y": 253,
+   "w": 29,
+   "h": 34
+  },
+  {
+   "file": "038.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "guldo_base__movement_or_attack_pose__20__src_038.png",
+   "x": 629,
+   "y": 253,
+   "w": 29,
+   "h": 34
+  },
+  {
+   "file": "040.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "guldo_base__movement_or_attack_pose__21__src_040.png",
+   "x": 861,
+   "y": 254,
+   "w": 32,
+   "h": 31
+  },
+  {
+   "file": "041.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "guldo_base__movement_or_attack_pose__22__src_041.png",
+   "x": 46,
+   "y": 312,
+   "w": 24,
+   "h": 36
+  },
+  {
+   "file": "043.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "guldo_base__movement_or_attack_pose__23__src_043.png",
+   "x": 269,
+   "y": 314,
+   "w": 46,
+   "h": 31
+  },
+  {
+   "file": "031.png",
+   "bucket": "orbs_rings_bursts",
+   "alias": "guldo_base__orbs_rings_bursts__01__src_031.png",
+   "x": 728,
+   "y": 182,
+   "w": 64,
+   "h": 56
+  },
+  {
+   "file": "032.png",
+   "bucket": "orbs_rings_bursts",
+   "alias": "guldo_base__orbs_rings_bursts__02__src_032.png",
+   "x": 845,
+   "y": 182,
+   "w": 64,
+   "h": 56
+  },
+  {
+   "file": "033.png",
+   "bucket": "orbs_rings_bursts",
+   "alias": "guldo_base__orbs_rings_bursts__03__src_033.png",
+   "x": 26,
+   "y": 242,
+   "w": 64,
+   "h": 56
+  },
+  {
+   "file": "036.png",
+   "bucket": "projectiles_beams",
+   "alias": "guldo_base__projectiles_beams__01__src_036.png",
+   "x": 353,
+   "y": 253,
+   "w": 113,
+   "h": 34
+  },
+  {
+   "file": "042.png",
+   "bucket": "projectiles_beams",
+   "alias": "guldo_base__projectiles_beams__02__src_042.png",
+   "x": 119,
+   "y": 311,
+   "w": 113,
+   "h": 37
+  },
+  {
+   "file": "035.png",
+   "bucket": "projectile_orb_small",
+   "alias": "guldo_base__projectile_orb_small__01__src_035.png",
+   "x": 284,
+   "y": 264,
+   "w": 16,
+   "h": 12
+  },
+  {
+   "file": "010.png",
+   "bucket": "speedlines",
+   "alias": "guldo_base__speedlines__01__src_010.png",
+   "x": 164,
+   "y": 69,
+   "w": 23,
+   "h": 41
+  },
+  {
+   "file": "009.png",
+   "bucket": "nonbody_misc",
+   "alias": "guldo_base__nonbody_misc__01__src_009.png",
+   "x": 38,
+   "y": 74,
+   "w": 40,
+   "h": 31
+  },
+  {
+   "file": "019.png",
+   "bucket": "beam_or_projectile_horizontal",
+   "alias": "guldo_base__beam_or_projectile_horizontal__01__src_019.png",
+   "x": 273,
+   "y": 141,
+   "w": 38,
+   "h": 17
+  }
+ ]
+}

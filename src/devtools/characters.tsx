@@ -3,7 +3,7 @@
 // Personaje → formas → stats con selector de nivel + assets.
 // Usa las MISMAS funciones del juego (statAtLevel, sheetUrl, etc.)
 // ═══════════════════════════════════════════════════════════
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import {
   CHARACTERS, FORMS, getForm, statAtLevel, sheetUrl, idleSpriteUrl,
 } from '../data/roster';
@@ -181,11 +181,123 @@ export function CharactersModule({ onOpenModule }: {
                 <div className="dev-semantic-pose-row">{COMBAT_POSE_ORDER.join(' · ')}</div>
               </div>
             )}
+            {form.sheet && <AtomicFrames sheet={form.sheet} />}
           </div>
         </div>
       </div>
     </div>
   );
+}
+
+// ─── Frames atómicos V9 (sheet canónico) ───────────────────────────
+// Recorta cada frame del atomic_sheet.png servido (/assets/sheets/<sheet>.png)
+// usando las coordenadas de /assets/sheets/<sheet>.json (generadas desde el
+// catálogo V9) y los agrupa por bucket semántico. Es la visualización del
+// sheet PERFECTO del personaje: los frames atómicos tal cual salen del V9.
+
+interface AtomicFrameMeta { file: string; bucket: string; alias: string; x: number; y: number; w: number; h: number; }
+interface AtomicSheetMeta {
+  sheet: string; dir: string; columns: number; rows: number;
+  cell_width: number; cell_height: number; frame_count: number;
+  buckets: string[]; frames: AtomicFrameMeta[];
+}
+
+const BUCKET_LABELS: Record<string, string> = {
+  overworld_actor_or_pose: 'Overworld (chibi)',
+  battle_aura_tile: 'Aura tile (power)',
+  battle_aura_actor_composite: 'Composite (power-up)',
+  aura_support: 'Aura SUPPORT (azul)',
+  aura: 'Aura (power+support)',
+  character_plus_aura_or_burst: 'Power-up (personaje + aura)',
+  character_plus_effect: 'Power-up (personaje + efecto)',
+  idle_or_stance: 'Idle / stance',
+  movement_or_attack_pose: 'Movement / attack',
+  orbs_rings_bursts: 'Ciclo aura (orbs/burst)',
+  projectiles_beams: 'Beams / proyectiles',
+  projectile_orb_small: 'Orbes (small)',
+  speedlines: 'Speedlines',
+  nonbody_misc: 'FX misc',
+  actor_downed_or_special_pose: 'Downed / special',
+  downed_or_hurt: 'Downed / hurt',
+  fixed_only: 'Fixed-only (bridge)',
+  multi_evidence_projectiles_beams_orbs_rings_bursts_character_plus_aura_or_burst: 'Beam + aura (multi-evidence)',
+  multi_evidence_projectiles_beams_orbs_rings_bursts: 'Beam + orbs (multi-evidence)',
+  multi_evidence_projectiles_beams_character_plus_aura_or_burst: 'Beam + power-up (multi-evidence)',
+  multi_evidence_orbs_rings_bursts_projectiles_beams: 'Orbs + beam (multi-evidence)',
+  multi_evidence_movement_or_attack_pose_orbs_rings_bursts_projectiles_beams: 'Move + orbs + beam',
+  multi_evidence_character_plus_aura_or_burst_movement_or_attack_pose: 'Power-up + move',
+  multi_evidence_character_plus_aura_or_burst_orbs_rings_bursts: 'Power-up + orbs',
+  multi_evidence_movement_or_attack_pose_character_plus_aura_or_burst_projectiles_beams: 'Move + power-up + beam',
+  multi_evidence_projectiles_beams_character_plus_aura_or_burst_movement_or_attack_pose: 'Beam + power-up + move',
+  multi_evidence_projectiles_beams_movement_or_attack_pose_orbs_rings_bursts: 'Beam + move + orbs',
+  multi_evidence_movement_or_attack_pose_projectiles_beams_character_plus_aura_or_burst: 'Move + beam + power-up',
+  multi_evidence_orbs_rings_bursts_movement_or_attack_pose_projectiles_beams: 'Orbs + move + beam',
+  multi_evidence_movement_or_attack_pose_orbs_rings_bursts: 'Move + orbs',
+  multi_evidence_character_plus_aura_or_burst_movement_or_attack_pose_character_plus_effect: 'Power-up + move + FX',
+  multi_evidence_movement_or_attack_pose_character_plus_aura_or_burst: 'Move + power-up',
+};
+
+function AtomicFrames({ sheet }: { sheet: string }) {
+  const [meta, setMeta] = useState<AtomicSheetMeta | null>(null);
+  const [sheetImg, setSheetImg] = useState<HTMLImageElement | null>(null);
+  useEffect(() => {
+    let alive = true;
+    setMeta(null);
+    setSheetImg(null);
+    const jsonUrl = `/assets/sheets/${sheet.replace('.png', '.json')}?t=${Date.now()}`;
+    fetch(jsonUrl).then(r => r.ok ? r.json() : null).then((m: AtomicSheetMeta | null) => {
+      if (!alive || !m) return;
+      setMeta(m);
+      const img = new Image();
+      img.onload = () => { if (alive) setSheetImg(img); };
+      img.src = `/assets/sheets/${sheet}?t=${Date.now()}`;
+    }).catch(() => {});
+    return () => { alive = false; };
+  }, [sheet]);
+  if (!meta) return null;
+  const groups = new Map<string, AtomicFrameMeta[]>();
+  for (const f of meta.frames) {
+    const g = groups.get(f.bucket) ?? [];
+    g.push(f);
+    groups.set(f.bucket, g);
+  }
+  return (
+    <div className="dev-atomic-section">
+      <h3>Frames atómicos V9 <span className="dev-atomic-count">({meta.frame_count} frames · {meta.sheet} · atomic_sheet {meta.cell_width}×{meta.cell_height})</span></h3>
+      {[...groups.entries()].map(([bucket, frames]) => (
+        <div key={bucket} className="dev-atomic-bucket">
+          <div className="dev-atomic-bucket-head">
+            <span className="dev-atomic-bucket-name">{BUCKET_LABELS[bucket] ?? bucket}</span>
+            <span className="dev-atomic-bucket-cat">{frames.length} frames</span>
+          </div>
+          <div className="dev-atomic-grid">
+            {frames.map(f => (
+              <div key={f.file} className="dev-atomic-cell" title={`${f.file} · ${f.alias}`}>
+                {sheetImg && <FrameCanvas img={sheetImg} f={f} />}
+                <span className="dev-atomic-file">{f.file.replace('.png', '')}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function FrameCanvas({ img, f, zoom = 3 }: { img: HTMLImageElement; f: AtomicFrameMeta; zoom?: number }) {
+  const ref = useRef<HTMLCanvasElement>(null);
+  useEffect(() => {
+    const c = ref.current;
+    if (!c) return;
+    c.width = f.w * zoom;
+    c.height = f.h * zoom;
+    const ctx = c.getContext('2d');
+    if (!ctx) return;
+    ctx.imageSmoothingEnabled = false;
+    ctx.clearRect(0, 0, c.width, c.height);
+    ctx.drawImage(img, f.x, f.y, f.w, f.h, 0, 0, f.w * zoom, f.h * zoom);
+  }, [img, f, zoom]);
+  return <canvas ref={ref} className="dev-atomic-canvas" />;
 }
 
 function AssetCell({ label, src, wide, small }: { label: string; src?: string; wide?: boolean; small?: boolean }) {

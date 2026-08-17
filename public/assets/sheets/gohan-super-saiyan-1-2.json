@@ -1,0 +1,497 @@
+{
+ "sheet": "gohan-super-saiyan-1-2.png",
+ "dir": "gohan_super_saiyan_1_2",
+ "columns": 8,
+ "rows": 7,
+ "cell_width": 122,
+ "cell_height": 65,
+ "frame_count": 52,
+ "buckets": [
+  "aura_support",
+  "battle_aura_actor_composite",
+  "battle_aura_tile",
+  "character_plus_aura_or_burst",
+  "character_plus_effect",
+  "character_plus_projectile",
+  "downed_or_hurt",
+  "idle_or_stance",
+  "movement_or_attack_pose",
+  "multi_evidence_character_plus_aura_or_burst_movement_or_attack_pose_character_plus_effect",
+  "multi_evidence_projectiles_beams_character_plus_effect",
+  "nonbody_misc",
+  "orbs_rings_bursts",
+  "overworld_actor_or_pose",
+  "projectiles_beams",
+  "speedlines"
+ ],
+ "frames": [
+  {
+   "file": "027.png",
+   "bucket": "overworld_actor_or_pose",
+   "alias": "gohan_super_saiyan_1_2__overworld_actor_or_pose__01__src_027.png",
+   "x": 299,
+   "y": 219,
+   "w": 12,
+   "h": 16
+  },
+  {
+   "file": "028.png",
+   "bucket": "overworld_actor_or_pose",
+   "alias": "gohan_super_saiyan_1_2__overworld_actor_or_pose__02__src_028.png",
+   "x": 420,
+   "y": 220,
+   "w": 13,
+   "h": 15
+  },
+  {
+   "file": "029.png",
+   "bucket": "battle_aura_tile",
+   "alias": "gohan_super_saiyan_1_2__battle_aura_tile__01__src_029.png",
+   "x": 537,
+   "y": 219,
+   "w": 24,
+   "h": 16
+  },
+  {
+   "file": "030.png",
+   "bucket": "battle_aura_actor_composite",
+   "alias": "gohan_super_saiyan_1_2__battle_aura_actor_composite__01__src_030.png",
+   "x": 659,
+   "y": 219,
+   "w": 24,
+   "h": 16
+  },
+  {
+   "file": "050.png",
+   "bucket": "aura_support",
+   "alias": "gohan_super_saiyan_1_2__aura_support__01__src_033.png",
+   "x": 151,
+   "y": 394,
+   "w": 64,
+   "h": 56
+  },
+  {
+   "file": "051.png",
+   "bucket": "aura_support",
+   "alias": "gohan_super_saiyan_1_2__aura_support__02__src_034.png",
+   "x": 273,
+   "y": 394,
+   "w": 64,
+   "h": 56
+  },
+  {
+   "file": "052.png",
+   "bucket": "aura_support",
+   "alias": "gohan_super_saiyan_1_2__aura_support__03__src_035.png",
+   "x": 395,
+   "y": 394,
+   "w": 64,
+   "h": 56
+  },
+  {
+   "file": "043.png",
+   "bucket": "character_plus_aura_or_burst",
+   "alias": "gohan_super_saiyan_1_2__character_plus_aura_or_burst__01__src_043.png",
+   "x": 282,
+   "y": 336,
+   "w": 46,
+   "h": 42
+  },
+  {
+   "file": "048.png",
+   "bucket": "character_plus_aura_or_burst",
+   "alias": "gohan_super_saiyan_1_2__character_plus_aura_or_burst__02__src_048.png",
+   "x": 895,
+   "y": 334,
+   "w": 40,
+   "h": 46
+  },
+  {
+   "file": "049.png",
+   "bucket": "character_plus_aura_or_burst",
+   "alias": "gohan_super_saiyan_1_2__character_plus_aura_or_burst__03__src_049.png",
+   "x": 41,
+   "y": 399,
+   "w": 40,
+   "h": 46
+  },
+  {
+   "file": "004.png",
+   "bucket": "idle_or_stance",
+   "alias": "gohan_super_saiyan_1_2__idle_or_stance__01__src_004.png",
+   "x": 416,
+   "y": 9,
+   "w": 22,
+   "h": 46
+  },
+  {
+   "file": "014.png",
+   "bucket": "idle_or_stance",
+   "alias": "gohan_super_saiyan_1_2__idle_or_stance__02__src_014.png",
+   "x": 659,
+   "y": 74,
+   "w": 23,
+   "h": 47
+  },
+  {
+   "file": "021.png",
+   "bucket": "idle_or_stance",
+   "alias": "gohan_super_saiyan_1_2__idle_or_stance__03__src_021.png",
+   "x": 537,
+   "y": 139,
+   "w": 23,
+   "h": 46
+  },
+  {
+   "file": "026.png",
+   "bucket": "idle_or_stance",
+   "alias": "gohan_super_saiyan_1_2__idle_or_stance__04__src_026.png",
+   "x": 164,
+   "y": 207,
+   "w": 37,
+   "h": 41
+  },
+  {
+   "file": "041.png",
+   "bucket": "idle_or_stance",
+   "alias": "gohan_super_saiyan_1_2__idle_or_stance__05__src_041.png",
+   "x": 49,
+   "y": 334,
+   "w": 23,
+   "h": 47
+  },
+  {
+   "file": "001.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "gohan_super_saiyan_1_2__movement_or_attack_pose__01__src_001.png",
+   "x": 47,
+   "y": 9,
+   "w": 27,
+   "h": 46
+  },
+  {
+   "file": "002.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "gohan_super_saiyan_1_2__movement_or_attack_pose__02__src_002.png",
+   "x": 168,
+   "y": 9,
+   "w": 30,
+   "h": 46
+  },
+  {
+   "file": "003.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "gohan_super_saiyan_1_2__movement_or_attack_pose__03__src_003.png",
+   "x": 288,
+   "y": 10,
+   "w": 34,
+   "h": 44
+  },
+  {
+   "file": "007.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "gohan_super_saiyan_1_2__movement_or_attack_pose__04__src_007.png",
+   "x": 779,
+   "y": 9,
+   "w": 28,
+   "h": 46
+  },
+  {
+   "file": "008.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "gohan_super_saiyan_1_2__movement_or_attack_pose__05__src_008.png",
+   "x": 899,
+   "y": 11,
+   "w": 32,
+   "h": 43
+  },
+  {
+   "file": "009.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "gohan_super_saiyan_1_2__movement_or_attack_pose__06__src_009.png",
+   "x": 47,
+   "y": 75,
+   "w": 28,
+   "h": 45
+  },
+  {
+   "file": "010.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "gohan_super_saiyan_1_2__movement_or_attack_pose__07__src_010.png",
+   "x": 168,
+   "y": 76,
+   "w": 29,
+   "h": 42
+  },
+  {
+   "file": "011.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "gohan_super_saiyan_1_2__movement_or_attack_pose__08__src_011.png",
+   "x": 289,
+   "y": 79,
+   "w": 32,
+   "h": 36
+  },
+  {
+   "file": "012.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "gohan_super_saiyan_1_2__movement_or_attack_pose__09__src_012.png",
+   "x": 414,
+   "y": 73,
+   "w": 25,
+   "h": 48
+  },
+  {
+   "file": "013.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "gohan_super_saiyan_1_2__movement_or_attack_pose__10__src_013.png",
+   "x": 537,
+   "y": 74,
+   "w": 24,
+   "h": 46
+  },
+  {
+   "file": "016.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "gohan_super_saiyan_1_2__movement_or_attack_pose__11__src_016.png",
+   "x": 899,
+   "y": 76,
+   "w": 32,
+   "h": 43
+  },
+  {
+   "file": "017.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "gohan_super_saiyan_1_2__movement_or_attack_pose__12__src_017.png",
+   "x": 46,
+   "y": 139,
+   "w": 29,
+   "h": 46
+  },
+  {
+   "file": "018.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "gohan_super_saiyan_1_2__movement_or_attack_pose__13__src_018.png",
+   "x": 164,
+   "y": 139,
+   "w": 37,
+   "h": 47
+  },
+  {
+   "file": "019.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "gohan_super_saiyan_1_2__movement_or_attack_pose__14__src_019.png",
+   "x": 287,
+   "y": 142,
+   "w": 36,
+   "h": 41
+  },
+  {
+   "file": "020.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "gohan_super_saiyan_1_2__movement_or_attack_pose__15__src_020.png",
+   "x": 412,
+   "y": 140,
+   "w": 29,
+   "h": 44
+  },
+  {
+   "file": "022.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "gohan_super_saiyan_1_2__movement_or_attack_pose__16__src_022.png",
+   "x": 655,
+   "y": 146,
+   "w": 32,
+   "h": 32
+  },
+  {
+   "file": "023.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "gohan_super_saiyan_1_2__movement_or_attack_pose__17__src_023.png",
+   "x": 777,
+   "y": 141,
+   "w": 32,
+   "h": 43
+  },
+  {
+   "file": "024.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "gohan_super_saiyan_1_2__movement_or_attack_pose__18__src_024.png",
+   "x": 899,
+   "y": 141,
+   "w": 32,
+   "h": 43
+  },
+  {
+   "file": "025.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "gohan_super_saiyan_1_2__movement_or_attack_pose__19__src_025.png",
+   "x": 43,
+   "y": 207,
+   "w": 36,
+   "h": 41
+  },
+  {
+   "file": "031.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "gohan_super_saiyan_1_2__movement_or_attack_pose__20__src_031.png",
+   "x": 768,
+   "y": 206,
+   "w": 50,
+   "h": 43
+  },
+  {
+   "file": "036.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "gohan_super_saiyan_1_2__movement_or_attack_pose__21__src_036.png",
+   "x": 414,
+   "y": 271,
+   "w": 26,
+   "h": 43
+  },
+  {
+   "file": "033.png",
+   "bucket": "orbs_rings_bursts",
+   "alias": "gohan_super_saiyan_1_2__orbs_rings_bursts__01__src_033.png",
+   "x": 29,
+   "y": 264,
+   "w": 64,
+   "h": 56
+  },
+  {
+   "file": "034.png",
+   "bucket": "orbs_rings_bursts",
+   "alias": "gohan_super_saiyan_1_2__orbs_rings_bursts__02__src_034.png",
+   "x": 151,
+   "y": 264,
+   "w": 64,
+   "h": 56
+  },
+  {
+   "file": "035.png",
+   "bucket": "orbs_rings_bursts",
+   "alias": "gohan_super_saiyan_1_2__orbs_rings_bursts__03__src_035.png",
+   "x": 273,
+   "y": 264,
+   "w": 64,
+   "h": 56
+  },
+  {
+   "file": "032.png",
+   "bucket": "projectiles_beams",
+   "alias": "gohan_super_saiyan_1_2__projectiles_beams__01__src_032.png",
+   "x": 857,
+   "y": 206,
+   "w": 116,
+   "h": 43
+  },
+  {
+   "file": "039.png",
+   "bucket": "projectiles_beams",
+   "alias": "gohan_super_saiyan_1_2__projectiles_beams__02__src_039.png",
+   "x": 734,
+   "y": 262,
+   "w": 118,
+   "h": 61
+  },
+  {
+   "file": "042.png",
+   "bucket": "projectiles_beams",
+   "alias": "gohan_super_saiyan_1_2__projectiles_beams__03__src_042.png",
+   "x": 126,
+   "y": 335,
+   "w": 114,
+   "h": 44
+  },
+  {
+   "file": "006.png",
+   "bucket": "speedlines",
+   "alias": "gohan_super_saiyan_1_2__speedlines__01__src_006.png",
+   "x": 659,
+   "y": 12,
+   "w": 23,
+   "h": 41
+  },
+  {
+   "file": "005.png",
+   "bucket": "nonbody_misc",
+   "alias": "gohan_super_saiyan_1_2__nonbody_misc__01__src_005.png",
+   "x": 529,
+   "y": 17,
+   "w": 40,
+   "h": 31
+  },
+  {
+   "file": "046.png",
+   "bucket": "nonbody_misc",
+   "alias": "gohan_super_saiyan_1_2__nonbody_misc__02__src_046.png",
+   "x": 655,
+   "y": 334,
+   "w": 32,
+   "h": 46
+  },
+  {
+   "file": "015.png",
+   "bucket": "downed_or_hurt",
+   "alias": "gohan_super_saiyan_1_2__downed_or_hurt__01__src_015.png",
+   "x": 770,
+   "y": 86,
+   "w": 46,
+   "h": 22
+  },
+  {
+   "file": "037.png",
+   "bucket": "character_plus_projectile",
+   "alias": "gohan_super_saiyan_1_2__character_plus_projectile__01__src_037.png",
+   "x": 490,
+   "y": 270,
+   "w": 118,
+   "h": 44
+  },
+  {
+   "file": "038.png",
+   "bucket": "multi_evidence_character_plus_aura_or_burst_movement_or_attack_pose_character_plus_effect",
+   "alias": "gohan_super_saiyan_1_2__multi_evidence_character_plus_aura_or_burst_movement_or_attack_pose_character_plus_effect__01__src_038.png",
+   "x": 648,
+   "y": 275,
+   "w": 46,
+   "h": 34
+  },
+  {
+   "file": "040.png",
+   "bucket": "multi_evidence_projectiles_beams_character_plus_effect",
+   "alias": "gohan_super_saiyan_1_2__multi_evidence_projectiles_beams_character_plus_effect__01__src_040.png",
+   "x": 878,
+   "y": 264,
+   "w": 74,
+   "h": 56
+  },
+  {
+   "file": "044.png",
+   "bucket": "character_plus_effect",
+   "alias": "gohan_super_saiyan_1_2__character_plus_effect__01__src_044.png",
+   "x": 411,
+   "y": 335,
+   "w": 32,
+   "h": 44
+  },
+  {
+   "file": "045.png",
+   "bucket": "character_plus_effect",
+   "alias": "gohan_super_saiyan_1_2__character_plus_effect__02__src_045.png",
+   "x": 533,
+   "y": 335,
+   "w": 32,
+   "h": 45
+  },
+  {
+   "file": "047.png",
+   "bucket": "character_plus_effect",
+   "alias": "gohan_super_saiyan_1_2__character_plus_effect__03__src_047.png",
+   "x": 777,
+   "y": 333,
+   "w": 32,
+   "h": 48
+  }
+ ]
+}

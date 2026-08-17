@@ -1,0 +1,514 @@
+{
+ "sheet": "buu.png",
+ "dir": "buu_base",
+ "columns": 8,
+ "rows": 7,
+ "cell_width": 122,
+ "cell_height": 108,
+ "frame_count": 54,
+ "buckets": [
+  "aura_support",
+  "battle_aura_actor_composite",
+  "battle_aura_tile",
+  "beam_or_projectile_horizontal",
+  "downed_or_hurt",
+  "movement_or_attack_pose",
+  "multi_evidence_character_plus_aura_or_burst_movement_or_attack_pose",
+  "multi_evidence_movement_or_attack_pose_orbs_rings_bursts_projectiles_beams",
+  "multi_evidence_nonbody_misc_movement_or_attack_pose",
+  "multi_evidence_orbs_rings_bursts_movement_or_attack_pose_projectiles_beams",
+  "multi_evidence_speedlines_movement_or_attack_pose",
+  "orbs_rings_bursts",
+  "overworld_actor_or_pose",
+  "projectile_orb_small",
+  "projectiles_beams"
+ ],
+ "frames": [
+  {
+   "file": "027.png",
+   "bucket": "overworld_actor_or_pose",
+   "alias": "buu_base__overworld_actor_or_pose__01__src_027.png",
+   "x": 298,
+   "y": 370,
+   "w": 14,
+   "h": 15
+  },
+  {
+   "file": "028.png",
+   "bucket": "overworld_actor_or_pose",
+   "alias": "buu_base__overworld_actor_or_pose__02__src_028.png",
+   "x": 420,
+   "y": 371,
+   "w": 13,
+   "h": 14
+  },
+  {
+   "file": "029.png",
+   "bucket": "battle_aura_tile",
+   "alias": "buu_base__battle_aura_tile__01__src_029.png",
+   "x": 537,
+   "y": 370,
+   "w": 24,
+   "h": 16
+  },
+  {
+   "file": "030.png",
+   "bucket": "battle_aura_actor_composite",
+   "alias": "buu_base__battle_aura_actor_composite__01__src_030.png",
+   "x": 659,
+   "y": 370,
+   "w": 24,
+   "h": 16
+  },
+  {
+   "file": "052.png",
+   "bucket": "aura_support",
+   "alias": "buu_base__aura_support__01__src_033.png",
+   "x": 395,
+   "y": 674,
+   "w": 64,
+   "h": 56
+  },
+  {
+   "file": "053.png",
+   "bucket": "aura_support",
+   "alias": "buu_base__aura_support__02__src_034.png",
+   "x": 517,
+   "y": 674,
+   "w": 64,
+   "h": 56
+  },
+  {
+   "file": "054.png",
+   "bucket": "aura_support",
+   "alias": "buu_base__aura_support__03__src_035.png",
+   "x": 639,
+   "y": 674,
+   "w": 64,
+   "h": 56
+  },
+  {
+   "file": "001.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "buu_base__movement_or_attack_pose__01__src_001.png",
+   "x": 47,
+   "y": 34,
+   "w": 28,
+   "h": 40
+  },
+  {
+   "file": "002.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "buu_base__movement_or_attack_pose__02__src_002.png",
+   "x": 168,
+   "y": 34,
+   "w": 30,
+   "h": 40
+  },
+  {
+   "file": "003.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "buu_base__movement_or_attack_pose__03__src_003.png",
+   "x": 288,
+   "y": 35,
+   "w": 34,
+   "h": 38
+  },
+  {
+   "file": "004.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "buu_base__movement_or_attack_pose__04__src_004.png",
+   "x": 414,
+   "y": 34,
+   "w": 26,
+   "h": 40
+  },
+  {
+   "file": "007.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "buu_base__movement_or_attack_pose__05__src_007.png",
+   "x": 778,
+   "y": 34,
+   "w": 30,
+   "h": 40
+  },
+  {
+   "file": "008.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "buu_base__movement_or_attack_pose__06__src_008.png",
+   "x": 899,
+   "y": 35,
+   "w": 32,
+   "h": 37
+  },
+  {
+   "file": "009.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "buu_base__movement_or_attack_pose__07__src_009.png",
+   "x": 47,
+   "y": 143,
+   "w": 28,
+   "h": 38
+  },
+  {
+   "file": "010.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "buu_base__movement_or_attack_pose__08__src_010.png",
+   "x": 168,
+   "y": 143,
+   "w": 29,
+   "h": 37
+  },
+  {
+   "file": "011.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "buu_base__movement_or_attack_pose__09__src_011.png",
+   "x": 289,
+   "y": 143,
+   "w": 32,
+   "h": 37
+  },
+  {
+   "file": "012.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "buu_base__movement_or_attack_pose__10__src_012.png",
+   "x": 415,
+   "y": 142,
+   "w": 24,
+   "h": 40
+  },
+  {
+   "file": "013.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "buu_base__movement_or_attack_pose__11__src_013.png",
+   "x": 536,
+   "y": 139,
+   "w": 26,
+   "h": 45
+  },
+  {
+   "file": "014.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "buu_base__movement_or_attack_pose__12__src_014.png",
+   "x": 659,
+   "y": 142,
+   "w": 24,
+   "h": 40
+  },
+  {
+   "file": "016.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "buu_base__movement_or_attack_pose__13__src_016.png",
+   "x": 899,
+   "y": 143,
+   "w": 32,
+   "h": 37
+  },
+  {
+   "file": "017.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "buu_base__movement_or_attack_pose__14__src_017.png",
+   "x": 41,
+   "y": 250,
+   "w": 39,
+   "h": 40
+  },
+  {
+   "file": "018.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "buu_base__movement_or_attack_pose__15__src_018.png",
+   "x": 169,
+   "y": 250,
+   "w": 27,
+   "h": 40
+  },
+  {
+   "file": "019.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "buu_base__movement_or_attack_pose__16__src_019.png",
+   "x": 290,
+   "y": 249,
+   "w": 30,
+   "h": 42
+  },
+  {
+   "file": "020.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "buu_base__movement_or_attack_pose__17__src_020.png",
+   "x": 411,
+   "y": 251,
+   "w": 31,
+   "h": 38
+  },
+  {
+   "file": "021.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "buu_base__movement_or_attack_pose__18__src_021.png",
+   "x": 534,
+   "y": 250,
+   "w": 29,
+   "h": 40
+  },
+  {
+   "file": "022.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "buu_base__movement_or_attack_pose__19__src_022.png",
+   "x": 656,
+   "y": 254,
+   "w": 29,
+   "h": 32
+  },
+  {
+   "file": "023.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "buu_base__movement_or_attack_pose__20__src_023.png",
+   "x": 777,
+   "y": 251,
+   "w": 32,
+   "h": 37
+  },
+  {
+   "file": "024.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "buu_base__movement_or_attack_pose__21__src_024.png",
+   "x": 899,
+   "y": 251,
+   "w": 31,
+   "h": 37
+  },
+  {
+   "file": "025.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "buu_base__movement_or_attack_pose__22__src_025.png",
+   "x": 41,
+   "y": 360,
+   "w": 39,
+   "h": 36
+  },
+  {
+   "file": "026.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "buu_base__movement_or_attack_pose__23__src_026.png",
+   "x": 163,
+   "y": 360,
+   "w": 40,
+   "h": 36
+  },
+  {
+   "file": "031.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "buu_base__movement_or_attack_pose__24__src_031.png",
+   "x": 777,
+   "y": 359,
+   "w": 32,
+   "h": 37
+  },
+  {
+   "file": "039.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "buu_base__movement_or_attack_pose__25__src_039.png",
+   "x": 777,
+   "y": 467,
+   "w": 32,
+   "h": 37
+  },
+  {
+   "file": "040.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "buu_base__movement_or_attack_pose__26__src_040.png",
+   "x": 902,
+   "y": 466,
+   "w": 25,
+   "h": 40
+  },
+  {
+   "file": "041.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "buu_base__movement_or_attack_pose__27__src_041.png",
+   "x": 45,
+   "y": 575,
+   "w": 32,
+   "h": 37
+  },
+  {
+   "file": "042.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "buu_base__movement_or_attack_pose__28__src_042.png",
+   "x": 168,
+   "y": 575,
+   "w": 29,
+   "h": 37
+  },
+  {
+   "file": "043.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "buu_base__movement_or_attack_pose__29__src_043.png",
+   "x": 291,
+   "y": 574,
+   "w": 27,
+   "h": 40
+  },
+  {
+   "file": "045.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "buu_base__movement_or_attack_pose__30__src_045.png",
+   "x": 534,
+   "y": 575,
+   "w": 29,
+   "h": 37
+  },
+  {
+   "file": "050.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "buu_base__movement_or_attack_pose__31__src_050.png",
+   "x": 169,
+   "y": 682,
+   "w": 27,
+   "h": 39
+  },
+  {
+   "file": "051.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "buu_base__movement_or_attack_pose__32__src_051.png",
+   "x": 291,
+   "y": 682,
+   "w": 28,
+   "h": 39
+  },
+  {
+   "file": "033.png",
+   "bucket": "orbs_rings_bursts",
+   "alias": "buu_base__orbs_rings_bursts__01__src_033.png",
+   "x": 29,
+   "y": 458,
+   "w": 64,
+   "h": 56
+  },
+  {
+   "file": "034.png",
+   "bucket": "orbs_rings_bursts",
+   "alias": "buu_base__orbs_rings_bursts__02__src_034.png",
+   "x": 151,
+   "y": 458,
+   "w": 64,
+   "h": 56
+  },
+  {
+   "file": "035.png",
+   "bucket": "orbs_rings_bursts",
+   "alias": "buu_base__orbs_rings_bursts__03__src_035.png",
+   "x": 273,
+   "y": 458,
+   "w": 64,
+   "h": 56
+  },
+  {
+   "file": "037.png",
+   "bucket": "orbs_rings_bursts",
+   "alias": "buu_base__orbs_rings_bursts__04__src_037.png",
+   "x": 521,
+   "y": 434,
+   "w": 55,
+   "h": 104
+  },
+  {
+   "file": "032.png",
+   "bucket": "projectiles_beams",
+   "alias": "buu_base__projectiles_beams__01__src_032.png",
+   "x": 857,
+   "y": 359,
+   "w": 115,
+   "h": 37
+  },
+  {
+   "file": "046.png",
+   "bucket": "projectiles_beams",
+   "alias": "buu_base__projectiles_beams__02__src_046.png",
+   "x": 612,
+   "y": 573,
+   "w": 118,
+   "h": 42
+  },
+  {
+   "file": "048.png",
+   "bucket": "projectiles_beams",
+   "alias": "buu_base__projectiles_beams__03__src_048.png",
+   "x": 857,
+   "y": 567,
+   "w": 116,
+   "h": 54
+  },
+  {
+   "file": "036.png",
+   "bucket": "projectile_orb_small",
+   "alias": "buu_base__projectile_orb_small__01__src_036.png",
+   "x": 419,
+   "y": 480,
+   "w": 16,
+   "h": 12
+  },
+  {
+   "file": "005.png",
+   "bucket": "multi_evidence_nonbody_misc_movement_or_attack_pose",
+   "alias": "buu_base__multi_evidence_nonbody_misc_movement_or_attack_pose__01__src_005.png",
+   "x": 529,
+   "y": 38,
+   "w": 40,
+   "h": 31
+  },
+  {
+   "file": "006.png",
+   "bucket": "multi_evidence_speedlines_movement_or_attack_pose",
+   "alias": "buu_base__multi_evidence_speedlines_movement_or_attack_pose__01__src_006.png",
+   "x": 659,
+   "y": 33,
+   "w": 23,
+   "h": 41
+  },
+  {
+   "file": "015.png",
+   "bucket": "downed_or_hurt",
+   "alias": "buu_base__downed_or_hurt__01__src_015.png",
+   "x": 771,
+   "y": 152,
+   "w": 43,
+   "h": 20
+  },
+  {
+   "file": "038.png",
+   "bucket": "multi_evidence_orbs_rings_bursts_movement_or_attack_pose_projectiles_beams",
+   "alias": "buu_base__multi_evidence_orbs_rings_bursts_movement_or_attack_pose_projectiles_beams__01__src_038.png",
+   "x": 643,
+   "y": 454,
+   "w": 55,
+   "h": 64
+  },
+  {
+   "file": "044.png",
+   "bucket": "beam_or_projectile_horizontal",
+   "alias": "buu_base__beam_or_projectile_horizontal__01__src_044.png",
+   "x": 395,
+   "y": 586,
+   "w": 63,
+   "h": 16
+  },
+  {
+   "file": "047.png",
+   "bucket": "multi_evidence_character_plus_aura_or_burst_movement_or_attack_pose",
+   "alias": "buu_base__multi_evidence_character_plus_aura_or_burst_movement_or_attack_pose__01__src_047.png",
+   "x": 770,
+   "y": 577,
+   "w": 46,
+   "h": 34
+  },
+  {
+   "file": "049.png",
+   "bucket": "multi_evidence_movement_or_attack_pose_orbs_rings_bursts_projectiles_beams",
+   "alias": "buu_base__multi_evidence_movement_or_attack_pose_orbs_rings_bursts_projectiles_beams__01__src_049.png",
+   "x": 38,
+   "y": 686,
+   "w": 46,
+   "h": 31
+  }
+ ]
+}

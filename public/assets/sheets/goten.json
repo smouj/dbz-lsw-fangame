@@ -1,0 +1,402 @@
+{
+ "sheet": "goten.png",
+ "dir": "goten_base",
+ "columns": 8,
+ "rows": 6,
+ "cell_width": 123,
+ "cell_height": 60,
+ "frame_count": 42,
+ "buckets": [
+  "aura_support",
+  "battle_aura_actor_composite",
+  "battle_aura_tile",
+  "idle_or_stance",
+  "movement_or_attack_pose",
+  "nonbody_misc",
+  "orbs_rings_bursts",
+  "overworld_actor_or_pose",
+  "projectile_orb_small",
+  "projectiles_beams",
+  "speedlines"
+ ],
+ "frames": [
+  {
+   "file": "027.png",
+   "bucket": "overworld_actor_or_pose",
+   "alias": "goten_base__overworld_actor_or_pose__01__src_027.png",
+   "x": 299,
+   "y": 202,
+   "w": 16,
+   "h": 16
+  },
+  {
+   "file": "028.png",
+   "bucket": "overworld_actor_or_pose",
+   "alias": "goten_base__overworld_actor_or_pose__02__src_028.png",
+   "x": 422,
+   "y": 202,
+   "w": 16,
+   "h": 16
+  },
+  {
+   "file": "029.png",
+   "bucket": "battle_aura_tile",
+   "alias": "goten_base__battle_aura_tile__01__src_029.png",
+   "x": 541,
+   "y": 202,
+   "w": 24,
+   "h": 16
+  },
+  {
+   "file": "030.png",
+   "bucket": "battle_aura_actor_composite",
+   "alias": "goten_base__battle_aura_actor_composite__01__src_030.png",
+   "x": 664,
+   "y": 202,
+   "w": 24,
+   "h": 16
+  },
+  {
+   "file": "040.png",
+   "bucket": "aura_support",
+   "alias": "goten_base__aura_support__01__src_033.png",
+   "x": 890,
+   "y": 242,
+   "w": 64,
+   "h": 56
+  },
+  {
+   "file": "041.png",
+   "bucket": "aura_support",
+   "alias": "goten_base__aura_support__02__src_034.png",
+   "x": 29,
+   "y": 302,
+   "w": 64,
+   "h": 56
+  },
+  {
+   "file": "042.png",
+   "bucket": "aura_support",
+   "alias": "goten_base__aura_support__03__src_035.png",
+   "x": 152,
+   "y": 302,
+   "w": 64,
+   "h": 56
+  },
+  {
+   "file": "010.png",
+   "bucket": "idle_or_stance",
+   "alias": "goten_base__idle_or_stance__01__src_010.png",
+   "x": 173,
+   "y": 69,
+   "w": 22,
+   "h": 41
+  },
+  {
+   "file": "014.png",
+   "bucket": "idle_or_stance",
+   "alias": "goten_base__idle_or_stance__02__src_014.png",
+   "x": 664,
+   "y": 68,
+   "w": 24,
+   "h": 43
+  },
+  {
+   "file": "001.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "goten_base__movement_or_attack_pose__01__src_001.png",
+   "x": 46,
+   "y": 10,
+   "w": 30,
+   "h": 39
+  },
+  {
+   "file": "002.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "goten_base__movement_or_attack_pose__02__src_002.png",
+   "x": 170,
+   "y": 9,
+   "w": 29,
+   "h": 41
+  },
+  {
+   "file": "003.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "goten_base__movement_or_attack_pose__03__src_003.png",
+   "x": 290,
+   "y": 10,
+   "w": 35,
+   "h": 39
+  },
+  {
+   "file": "004.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "goten_base__movement_or_attack_pose__04__src_004.png",
+   "x": 417,
+   "y": 9,
+   "w": 27,
+   "h": 41
+  },
+  {
+   "file": "007.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "goten_base__movement_or_attack_pose__05__src_007.png",
+   "x": 786,
+   "y": 10,
+   "w": 26,
+   "h": 39
+  },
+  {
+   "file": "008.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "goten_base__movement_or_attack_pose__06__src_008.png",
+   "x": 907,
+   "y": 11,
+   "w": 31,
+   "h": 38
+  },
+  {
+   "file": "009.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "goten_base__movement_or_attack_pose__07__src_009.png",
+   "x": 48,
+   "y": 71,
+   "w": 26,
+   "h": 38
+  },
+  {
+   "file": "011.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "goten_base__movement_or_attack_pose__08__src_011.png",
+   "x": 292,
+   "y": 76,
+   "w": 31,
+   "h": 28
+  },
+  {
+   "file": "012.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "goten_base__movement_or_attack_pose__09__src_012.png",
+   "x": 417,
+   "y": 67,
+   "w": 27,
+   "h": 45
+  },
+  {
+   "file": "013.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "goten_base__movement_or_attack_pose__10__src_013.png",
+   "x": 540,
+   "y": 70,
+   "w": 27,
+   "h": 40
+  },
+  {
+   "file": "015.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "goten_base__movement_or_attack_pose__11__src_015.png",
+   "x": 784,
+   "y": 70,
+   "w": 30,
+   "h": 40
+  },
+  {
+   "file": "016.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "goten_base__movement_or_attack_pose__12__src_016.png",
+   "x": 908,
+   "y": 69,
+   "w": 28,
+   "h": 42
+  },
+  {
+   "file": "017.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "goten_base__movement_or_attack_pose__13__src_017.png",
+   "x": 44,
+   "y": 130,
+   "w": 35,
+   "h": 39
+  },
+  {
+   "file": "018.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "goten_base__movement_or_attack_pose__14__src_018.png",
+   "x": 171,
+   "y": 129,
+   "w": 26,
+   "h": 41
+  },
+  {
+   "file": "019.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "goten_base__movement_or_attack_pose__15__src_019.png",
+   "x": 293,
+   "y": 131,
+   "w": 28,
+   "h": 38
+  },
+  {
+   "file": "020.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "goten_base__movement_or_attack_pose__16__src_020.png",
+   "x": 416,
+   "y": 129,
+   "w": 28,
+   "h": 41
+  },
+  {
+   "file": "021.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "goten_base__movement_or_attack_pose__17__src_021.png",
+   "x": 537,
+   "y": 135,
+   "w": 33,
+   "h": 30
+  },
+  {
+   "file": "022.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "goten_base__movement_or_attack_pose__18__src_022.png",
+   "x": 661,
+   "y": 130,
+   "w": 31,
+   "h": 40
+  },
+  {
+   "file": "023.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "goten_base__movement_or_attack_pose__19__src_023.png",
+   "x": 784,
+   "y": 130,
+   "w": 30,
+   "h": 40
+  },
+  {
+   "file": "024.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "goten_base__movement_or_attack_pose__20__src_024.png",
+   "x": 905,
+   "y": 131,
+   "w": 35,
+   "h": 38
+  },
+  {
+   "file": "025.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "goten_base__movement_or_attack_pose__21__src_025.png",
+   "x": 44,
+   "y": 191,
+   "w": 35,
+   "h": 38
+  },
+  {
+   "file": "026.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "goten_base__movement_or_attack_pose__22__src_026.png",
+   "x": 163,
+   "y": 196,
+   "w": 43,
+   "h": 27
+  },
+  {
+   "file": "031.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "goten_base__movement_or_attack_pose__23__src_031.png",
+   "x": 784,
+   "y": 190,
+   "w": 31,
+   "h": 40
+  },
+  {
+   "file": "037.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "goten_base__movement_or_attack_pose__24__src_037.png",
+   "x": 539,
+   "y": 250,
+   "w": 28,
+   "h": 39
+  },
+  {
+   "file": "038.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "goten_base__movement_or_attack_pose__25__src_038.png",
+   "x": 617,
+   "y": 250,
+   "w": 119,
+   "h": 40
+  },
+  {
+   "file": "039.png",
+   "bucket": "movement_or_attack_pose",
+   "alias": "goten_base__movement_or_attack_pose__26__src_039.png",
+   "x": 777,
+   "y": 253,
+   "w": 44,
+   "h": 34
+  },
+  {
+   "file": "033.png",
+   "bucket": "orbs_rings_bursts",
+   "alias": "goten_base__orbs_rings_bursts__01__src_033.png",
+   "x": 29,
+   "y": 242,
+   "w": 64,
+   "h": 56
+  },
+  {
+   "file": "034.png",
+   "bucket": "orbs_rings_bursts",
+   "alias": "goten_base__orbs_rings_bursts__02__src_034.png",
+   "x": 152,
+   "y": 242,
+   "w": 64,
+   "h": 56
+  },
+  {
+   "file": "035.png",
+   "bucket": "orbs_rings_bursts",
+   "alias": "goten_base__orbs_rings_bursts__03__src_035.png",
+   "x": 275,
+   "y": 242,
+   "w": 64,
+   "h": 56
+  },
+  {
+   "file": "032.png",
+   "bucket": "projectiles_beams",
+   "alias": "goten_base__projectiles_beams__01__src_032.png",
+   "x": 866,
+   "y": 190,
+   "w": 113,
+   "h": 40
+  },
+  {
+   "file": "036.png",
+   "bucket": "projectile_orb_small",
+   "alias": "goten_base__projectile_orb_small__01__src_036.png",
+   "x": 422,
+   "y": 264,
+   "w": 16,
+   "h": 12
+  },
+  {
+   "file": "006.png",
+   "bucket": "speedlines",
+   "alias": "goten_base__speedlines__01__src_006.png",
+   "x": 665,
+   "y": 9,
+   "w": 23,
+   "h": 41
+  },
+  {
+   "file": "005.png",
+   "bucket": "nonbody_misc",
+   "alias": "goten_base__nonbody_misc__01__src_005.png",
+   "x": 533,
+   "y": 14,
+   "w": 40,
+   "h": 31
+  }
+ ]
+}

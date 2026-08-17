@@ -1,0 +1,348 @@
+{
+ "sheet": "goku-super-saiyan-2.png",
+ "dir": "goku_super_saiyan_2",
+ "columns": 8,
+ "rows": 5,
+ "cell_width": 56,
+ "cell_height": 56,
+ "frame_count": 37,
+ "buckets": [
+  "aura",
+  "fixed_only"
+ ],
+ "frames": [
+  {
+   "file": "000_attack_fwd.png",
+   "bucket": "fixed_only",
+   "alias": "",
+   "x": 12,
+   "y": 6,
+   "w": 32,
+   "h": 44
+  },
+  {
+   "file": "001_attack_fwd.png",
+   "bucket": "fixed_only",
+   "alias": "",
+   "x": 68,
+   "y": 6,
+   "w": 32,
+   "h": 44
+  },
+  {
+   "file": "002_attack_fwd.png",
+   "bucket": "fixed_only",
+   "alias": "",
+   "x": 120,
+   "y": 5,
+   "w": 40,
+   "h": 45
+  },
+  {
+   "file": "003_attack_fwd.png",
+   "bucket": "fixed_only",
+   "alias": "",
+   "x": 176,
+   "y": 7,
+   "w": 40,
+   "h": 41
+  },
+  {
+   "file": "004_attack_fwd.png",
+   "bucket": "fixed_only",
+   "alias": "",
+   "x": 232,
+   "y": 7,
+   "w": 39,
+   "h": 41
+  },
+  {
+   "file": "005_attack_fwd.png",
+   "bucket": "fixed_only",
+   "alias": "",
+   "x": 296,
+   "y": 4,
+   "w": 24,
+   "h": 47
+  },
+  {
+   "file": "006_attack_fwd.png",
+   "bucket": "fixed_only",
+   "alias": "",
+   "x": 347,
+   "y": 7,
+   "w": 34,
+   "h": 41
+  },
+  {
+   "file": "007_attack_ud.png",
+   "bucket": "fixed_only",
+   "alias": "",
+   "x": 406,
+   "y": 7,
+   "w": 28,
+   "h": 42
+  },
+  {
+   "file": "008_attack_ud.png",
+   "bucket": "fixed_only",
+   "alias": "",
+   "x": 13,
+   "y": 62,
+   "w": 29,
+   "h": 44
+  },
+  {
+   "file": "009_attack_ud.png",
+   "bucket": "fixed_only",
+   "alias": "",
+   "x": 72,
+   "y": 61,
+   "w": 23,
+   "h": 46
+  },
+  {
+   "file": "010_attack_ud.png",
+   "bucket": "fixed_only",
+   "alias": "",
+   "x": 123,
+   "y": 68,
+   "w": 33,
+   "h": 32
+  },
+  {
+   "file": "011_beam_charge.png",
+   "bucket": "fixed_only",
+   "alias": "",
+   "x": 180,
+   "y": 62,
+   "w": 32,
+   "h": 44
+  },
+  {
+   "file": "012_beam_charge.png",
+   "bucket": "fixed_only",
+   "alias": "",
+   "x": 236,
+   "y": 62,
+   "w": 32,
+   "h": 44
+  },
+  {
+   "file": "013_beam_charge.png",
+   "bucket": "fixed_only",
+   "alias": "",
+   "x": 295,
+   "y": 60,
+   "w": 25,
+   "h": 47
+  },
+  {
+   "file": "014_beam_charge.png",
+   "bucket": "fixed_only",
+   "alias": "",
+   "x": 348,
+   "y": 62,
+   "w": 31,
+   "h": 44
+  },
+  {
+   "file": "015_beam_fire.png",
+   "bucket": "fixed_only",
+   "alias": "",
+   "x": 407,
+   "y": 62,
+   "w": 26,
+   "h": 43
+  },
+  {
+   "file": "016_beam_fire.png",
+   "bucket": "fixed_only",
+   "alias": "",
+   "x": 12,
+   "y": 118,
+   "w": 31,
+   "h": 43
+  },
+  {
+   "file": "017_guard.png",
+   "bucket": "fixed_only",
+   "alias": "",
+   "x": 67,
+   "y": 118,
+   "w": 34,
+   "h": 44
+  },
+  {
+   "file": "018_guard.png",
+   "bucket": "fixed_only",
+   "alias": "",
+   "x": 125,
+   "y": 117,
+   "w": 30,
+   "h": 46
+  },
+  {
+   "file": "019_guard.png",
+   "bucket": "fixed_only",
+   "alias": "",
+   "x": 184,
+   "y": 117,
+   "w": 23,
+   "h": 46
+  },
+  {
+   "file": "020_hurt.png",
+   "bucket": "fixed_only",
+   "alias": "",
+   "x": 237,
+   "y": 118,
+   "w": 29,
+   "h": 44
+  },
+  {
+   "file": "021_hurt.png",
+   "bucket": "fixed_only",
+   "alias": "",
+   "x": 293,
+   "y": 118,
+   "w": 30,
+   "h": 43
+  },
+  {
+   "file": "022_hurt.png",
+   "bucket": "fixed_only",
+   "alias": "",
+   "x": 348,
+   "y": 121,
+   "w": 32,
+   "h": 37
+  },
+  {
+   "file": "023_hurt.png",
+   "bucket": "fixed_only",
+   "alias": "",
+   "x": 407,
+   "y": 117,
+   "w": 26,
+   "h": 46
+  },
+  {
+   "file": "024_hurt.png",
+   "bucket": "fixed_only",
+   "alias": "",
+   "x": 15,
+   "y": 172,
+   "w": 26,
+   "h": 48
+  },
+  {
+   "file": "025_hurt.png",
+   "bucket": "fixed_only",
+   "alias": "",
+   "x": 60,
+   "y": 185,
+   "w": 48,
+   "h": 22
+  },
+  {
+   "file": "026_idle.png",
+   "bucket": "fixed_only",
+   "alias": "",
+   "x": 126,
+   "y": 173,
+   "w": 28,
+   "h": 46
+  },
+  {
+   "file": "027_move_back.png",
+   "bucket": "fixed_only",
+   "alias": "",
+   "x": 182,
+   "y": 173,
+   "w": 28,
+   "h": 46
+  },
+  {
+   "file": "028_move_back.png",
+   "bucket": "fixed_only",
+   "alias": "",
+   "x": 236,
+   "y": 174,
+   "w": 32,
+   "h": 43
+  },
+  {
+   "file": "029_move_front.png",
+   "bucket": "fixed_only",
+   "alias": "",
+   "x": 294,
+   "y": 173,
+   "w": 28,
+   "h": 46
+  },
+  {
+   "file": "030_move_front.png",
+   "bucket": "fixed_only",
+   "alias": "",
+   "x": 348,
+   "y": 174,
+   "w": 32,
+   "h": 43
+  },
+  {
+   "file": "aura_power",
+   "bucket": "aura",
+   "alias": "",
+   "x": 388,
+   "y": 168,
+   "w": 64,
+   "h": 56
+  },
+  {
+   "file": "aura_support",
+   "bucket": "aura",
+   "alias": "",
+   "x": -4,
+   "y": 224,
+   "w": 64,
+   "h": 56
+  },
+  {
+   "file": "aura_power",
+   "bucket": "aura",
+   "alias": "",
+   "x": 52,
+   "y": 224,
+   "w": 64,
+   "h": 56
+  },
+  {
+   "file": "aura_support",
+   "bucket": "aura",
+   "alias": "",
+   "x": 108,
+   "y": 224,
+   "w": 64,
+   "h": 56
+  },
+  {
+   "file": "aura_power",
+   "bucket": "aura",
+   "alias": "",
+   "x": 164,
+   "y": 224,
+   "w": 64,
+   "h": 56
+  },
+  {
+   "file": "aura_support",
+   "bucket": "aura",
+   "alias": "",
+   "x": 220,
+   "y": 224,
+   "w": 64,
+   "h": 56
+  }
+ ]
+}
