@@ -6,6 +6,7 @@ import { useMemo, useState } from 'react';
 import { CARDS, cardColor, getCard, type CardType, type CardDef } from '../data/cards';
 import { characterName } from '../data/storyPanels';
 import { cardIconUrl } from '../data/icons';
+import { cardCinematic } from '../data/cardsCinematic';
 
 const TYPES: (CardType | 'all')[] = ['all', 'command', 'damage', 'beam', 'support', 'defense', 'special'];
 
@@ -86,6 +87,30 @@ export function CardsModule() {
   );
 }
 
+
+// ── Ficha cinematográfica (contrato V2): plantilla T01-T12 + asset + directiva ──
+function CinematicCardInfo({ id }: { id: number }) {
+  const c = cardCinematic(id);
+  if (!c) return (
+    <div className="dev-card-compat">
+      <h4>Cinemática (V2)</h4>
+      <span className="dev-tag bad">Sin perfil en cardsCinematic.ts</span>
+    </div>
+  );
+  const color = c.asset.startsWith('UNIQUE') ? '#e0b84c' : c.asset.startsWith('SUPPORT') ? '#7fd48a' : c.asset.startsWith('ITEM') ? '#6cb7e8' : '#8a93a8';
+  return (
+    <div className="dev-card-compat">
+      <h4>Cinemática — contrato V2</h4>
+      <div className="dev-compat-chips">
+        <span className="dev-tag" style={{ background: '#2a2233', color: '#d9b0e8', border: '1px solid #6b4a7a' }}>{c.template}</span>
+        <span className="dev-tag" style={{ background: color + '22', color, border: `1px solid ${color}66` }}>{c.asset}</span>
+        <span className="dev-tag">{c.mechanics}</span>
+      </div>
+      <p className="dev-muted" style={{ marginTop: 6, fontSize: 12 }}>{c.directive}</p>
+    </div>
+  );
+}
+
 function CardDetail({ card }: { card: CardDef }) {
   return (
     <div className="dev-card-detail">
@@ -118,6 +143,7 @@ function CardDetail({ card }: { card: CardDef }) {
       <div className="dev-card-code">
         <code>{JSON.stringify({ id: card.id, type: card.type, effect: card.effect, atk: card.atk, acc: card.acc, cc: card.cc, rarity: card.rarity, compatible: card.compatible ?? null, notCompatible: card.notCompatible ?? null }, null, 2)}</code>
       </div>
+      <CinematicCardInfo id={card.id} />
     </div>
   );
 }
