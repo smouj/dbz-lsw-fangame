@@ -9510,6 +9510,8 @@ button.linklike:hover { text-decoration: underline; }
   align-items: center;
   justify-content: center;
   gap: 14px;
+  padding-left: 12px;
+  padding-right: 12px;
   padding: 6px 10px 10px;
   background: transparent;
   border: 0;
@@ -9554,7 +9556,12 @@ button.linklike:hover { text-decoration: underline; }
   left: auto;
   bottom: auto;
   transform: none;
-  width: var(--gbc-dlg-w, min(880px, 96%));
+  /* El diálogo completa TODO el ancho de la caja donde está (battle-controls):
+     compensa el padding lateral del padre (12px) para tocar los bordes
+     visuales de la franja — se ve hasta el final, sin márgenes laterales. */
+  width: calc(100% + 24px);
+  margin-left: -12px;
+  flex-shrink: 0;
   height: 80px;
   z-index: 40;
   background: #f8f4e4;              /* blanco GBC */
@@ -9701,7 +9708,6 @@ button.linklike:hover { text-decoration: underline; }
    visible (en el juego solo aparece durante acciones). */
 .dev-hud-preview .gbc-dialogue {
   opacity: 1;
-  transform: translateX(-50%) translateY(0);
 }
 
 /* Sprites GBC de movimiento (paquete UI V2 MAPPED) */
