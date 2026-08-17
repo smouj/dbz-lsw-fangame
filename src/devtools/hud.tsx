@@ -303,16 +303,25 @@ export function HudModule() {
                 </div>
               )}
 
-              {/* BASIC: Stage (frame de carta) · Gather · Back */}
+              {/* BASIC: Stage = LA CARTA REAL (igual que en la mano) · Gather · Back */}
               {view === 'BASIC' && (
                 <div className="command-select">
                   <div className="basic-menu">
-                    <button className="basic-btn basic-stage" data-tip="STAGE ATTACK — 3 Stage · secuencia A/B">
-                      <span className="basic-stage-icon">
-                        <strong>3 Stage</strong>
-                        <FitArt src={cardIconUrl(1)!} areaW={64} areaH={48} className="stage-card-icon" centerBy="centroid" />
-                      </span>
-                    </button>
+                    {(() => {
+                      const stageCard = getCard(1);   // "3 stage atk." (id N-2)
+                      return stageCard ? (
+                        <button className="card basic-stage-card"
+                          style={{ '--card-frame': `url('${CARD_FRAME_BY_TYPE[stageCard.type] ?? CARD_FRAME_BY_TYPE.command}')`, '--card-color': CARD_COLORS[stageCard.type] } as React.CSSProperties}
+                          data-tip="STAGE ATTACK — 3 Stage · secuencia de inputs A/B a tiempo.
+Cada acierto +1 CC (más si completas la cadena).">
+                          <div className="card-art">
+                            {cardIconUrl(stageCard.id)
+                              ? <FitArt src={cardIconUrl(stageCard.id)!} areaW={64} areaH={48} className="card-art-img" />
+                              : <span className="card-icon-emoji">?</span>}
+                          </div>
+                        </button>
+                      ) : null;
+                    })()}
                     <button className="basic-btn basic-gather" data-tip="GATHER POWER — sube STR/KI (+8)" />
                     <button className="basic-btn basic-back" data-tip="BACK — volver al menú de comandos" />
                   </div>

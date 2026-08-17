@@ -3166,27 +3166,25 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
         {phase === 'basic' && (
           <div className="command-select">
             <div className="basic-menu">
-              <button className="basic-btn basic-stage" onClick={() => basicAction('stage')}
-                data-tip={`STAGE ATTACK — ${powerState !== 'NORMAL' ? '4' : '3'} Stage · secuencia de inputs A/B a tiempo.\nCada acierto +1 CC (más si completas la cadena).`}>
-                {/* Icono de la carta de stage REAL centrado en el área libre
-                    del marco de carta (como las cards de la mano) */}
-                <span className="basic-stage-icon">
-                  {(() => {
-                    const stages = powerState !== 'NORMAL' ? 4 : 3;
-                    // El id de la carta del stage de N inputs es N-2 (3→1, 4→2,
-                    // 5→3, 6→4). El arte se FILLEA con FitArt (bounding box
-                    // visible centrado/lleno) — igual que las cartas de la mano.
-                    const icon = cardIconUrl(stages - 2);
-                    return (
-                      <>
-                        {/* Fondo provisional: visible mientras el arte carga */}
-                        <strong>{stages} Stage</strong>
-                        {icon && <FitArt src={icon} areaW={64} areaH={48} className="stage-card-icon" centerBy="centroid" />}
-                      </>
-                    );
-                  })()}
-                </span>
-              </button>
+              {(() => {
+                // ═══ STAGE = LA CARTA REAL del catálogo (igual que en la mano):
+                // la carta del stage de N inputs tiene id N-2 (3→1, 4→2, 5→3,
+                // 6→4). Cuando el stage cambia (GATHER → 4), cambia LA CARTA.
+                const stages = powerState !== 'NORMAL' ? 4 : 3;
+                const stageCard = getCard(stages - 2);
+                if (!stageCard) return null;
+                return (
+                  <button className="card basic-stage-card" onClick={() => basicAction('stage')}
+                    style={{ '--card-frame': `url('${CARD_FRAME_BY_TYPE[stageCard.type] ?? CARD_FRAME_BY_TYPE.command}')`, '--card-color': CARD_COLORS[stageCard.type] } as React.CSSProperties}
+                    data-tip={`STAGE ATTACK — ${stages} Stage · secuencia de inputs A/B a tiempo.\nCada acierto +1 CC (más si completas la cadena).`}>
+                    <div className="card-art">
+                      {cardIconUrl(stageCard.id)
+                        ? <FitArt src={cardIconUrl(stageCard.id)!} areaW={64} areaH={48} className="card-art-img" />
+                        : <span className="card-icon-emoji">?</span>}
+                    </div>
+                  </button>
+                );
+              })()}
               <button className="basic-btn basic-gather" onClick={() => basicAction('gather')} disabled={gatherTurns > 0}
                 data-tip="GATHER POWER — sube STR/KI (+8).\nActiva el mazo LIMIT durante 2 turnos." />
               <button className="basic-btn basic-back" data-tip="BACK — volver al menú anterior" onClick={() => { Sfx.cancel(); setPhase('command'); }} />

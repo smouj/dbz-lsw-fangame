@@ -3647,10 +3647,44 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 .basic-btn:disabled { opacity: 0.35; cursor: not-allowed; filter: grayscale(.6); }
 /* BACK: sprite EXIT del paquete GBC (el botón EXIT del phase-bar se eliminó) */
 .basic-btn.basic-back { width: 96px; height: 80px; --btn-frame: url('/assets/ui/hud_buttons/btn_exit.png'); }
-.basic-btn.basic-stage {
-  /* El botón STAGE usa el FRAME DE CARTA real (stage_attack) — como las
-     cartas de la mano: marco GBC + ilustración centrada en el área libre. */
-  --btn-frame: url('/assets/ui/card_frames/card_type_stage_attack_frame.png');
+/* ═══ STAGE = LA CARTA REAL (idéntica a la mano) ═══ */
+.basic-stage-card {
+  /* Mismo CSS que .battle-controls .hand-cards .card: marco GBC 96×80 +
+     arte interior, sin línea de color, sin texto. */
+  width: 96px;
+  height: 80px;
+  min-height: 0;
+  padding: 0;
+  transform: perspective(720px) rotateX(6deg) translateZ(0);
+  transform-origin: center bottom;
+  background-color: transparent;
+  background-image: var(--card-frame,
+    linear-gradient(180deg, rgba(255,255,255,.08), transparent 16%),
+    linear-gradient(180deg, rgba(26,35,52,.96), rgba(8,11,18,.98)));
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  image-rendering: pixelated;
+  border: 0;
+  border-top: 0;
+  box-shadow:
+    0 12px 0 -7px rgba(0,0,0,.86),
+    0 18px 28px rgba(0,0,0,.45);
+}
+.basic-stage-card .card-art {
+  position: absolute;
+  top: 18px;
+  left: 18px;
+  width: 64px;
+  height: 48px;
+  overflow: hidden;
+  background: transparent;
+  border: 0;
+  margin: 0;
+}
+.basic-stage-card .card-art-img { image-rendering: pixelated; }
+.basic-stage-card:hover:not(:disabled) {
+  transform: perspective(720px) rotateX(4deg) translateY(-4px) translateZ(0);
+  filter: brightness(1.14) saturate(1.1);
 }
 
 /* Icono de la carta de stage REAL dentro del botón (3/4/5/6 Stage) */
@@ -3674,11 +3708,9 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   line-height: 1;
 }
 .stage-card-icon {
+  /* EXACTAMENTE como las cartas (.card-art-img): FitArt bbox 64×48 —
+     mismas reglas, mismo resultado visual. Sin centroide ni compensación. */
   image-rendering: pixelated;
-  /* Ajuste pixel-perfect: el fit del icono (centroide) redondea a (1,1) —
-     el arte quedaba 1px abajo y 1px a la derecha del centro del marco. */
-  margin-left: -1px;
-  margin-top: -1px;
 }
 /* Glitch del hover (FIX DEFINITIVO): ni transform ni filter en el STAGE —
    ambos creaban stacking contexts que re-compositan el arte absoluto del
@@ -9532,6 +9564,9 @@ button.linklike:hover { text-decoration: underline; }
   opacity: 0;
   pointer-events: none;
   transition: opacity .12s steps(3, end);
+  /* Anula CUALQUIER transform residual (la regla vieja flotaba el diálogo
+     con translateX(-50%) — dentro de la caja flex NO debe haber ninguno). */
+  transform: none !important;
 }
 /* Cuerpo del diálogo: sprite del hablante + contenido (flex row) */
 .gbc-dialogue-body {
