@@ -142,6 +142,21 @@ def next_frame_num(atomic_dir: Path):
     return max(nums) + 1
 
 
+# Formas cuyo atomic_sheet necesita geometría override (celdas razonables, estilo goku)
+# trunks_base: el frame 034 (beam 169px) forzaba cell_w=173 → sheet 1384px ancha,
+# celdas enormes y sprites diminutos al visualizar. Con 122x67 el beam sobresale sin
+# solapar (verificado: right=267 < next=297) y el sheet queda 976x335 como goku.
+CELL_OVERRIDE = {
+    'trunks_base': (122, 67),
+}
+
+# Frames que se colocan al FINAL del layout del sheet (para que su desbordamiento
+# caiga en espacio vacío y no rompa el grid): trunks_base 034 = beam 169px.
+SHEET_ORDER_OVERRIDE = {
+    'trunks_base': {'move_to_end': ['034.png']},
+}
+
+
 def rebuild_atomic_sheet(form_dir: Path, catalog: list):
     """Rebuild spritesheets/atomic_sheet.png + .json from atomic/ (grid layout)."""
     sheet_dir = form_dir / 'spritesheets'
@@ -149,6 +164,10 @@ def rebuild_atomic_sheet(form_dir: Path, catalog: list):
     frames = sorted(atomic.glob('*.png'))
     if not frames:
         return
+    # orden override: mover ciertos frames al final (efectos grandes que desbordan)
+    order_ov = SHEET_ORDER_OVERRIDE.get(form_dir.name, {}).get('move_to_end', [])
+    if order_ov:
+        frames = [f for f in frames if f.name not in order_ov] + [f for f in frames if f.name in order_ov]
     # cell geometry: keep the SAME as current sheet (cell_width/height from json)
     jpath = sheet_dir / 'atomic_sheet.json'
     if jpath.exists():
@@ -156,6 +175,8 @@ def rebuild_atomic_sheet(form_dir: Path, catalog: list):
         cols = j.get('columns', 8)
         cell_w = j.get('cell_width')
         cell_h = j.get('cell_height')
+        if form_dir.name in CELL_OVERRIDE:
+            cell_w, cell_h = CELL_OVERRIDE[form_dir.name]
     else:
         cols = 8
         cell_w = max(im.width for im in map(Image.open, frames)) + 60
