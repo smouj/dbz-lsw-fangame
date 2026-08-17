@@ -4,26 +4,26 @@
   "cell_width": 68,
   "cell_height": 60,
   "sprites": {
-    "gotenks_super_saiyan_3__aura_support__01__src_029.png": {
+    "gotenks_super_saiyan_3__aura_support__01__src_048.png": {
       "x": 2,
       "y": 2,
       "w": 64,
       "h": 56,
-      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/gotenks_super_saiyan_3/named/aura_support/gotenks_super_saiyan_3__aura_support__01__src_029.png"
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/gotenks_super_saiyan_3/named/aura_support/gotenks_super_saiyan_3__aura_support__01__src_048.png"
     },
-    "gotenks_super_saiyan_3__aura_support__02__src_030.png": {
+    "gotenks_super_saiyan_3__aura_support__02__src_049.png": {
       "x": 68,
       "y": 2,
       "w": 64,
       "h": 56,
-      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/gotenks_super_saiyan_3/named/aura_support/gotenks_super_saiyan_3__aura_support__02__src_030.png"
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/gotenks_super_saiyan_3/named/aura_support/gotenks_super_saiyan_3__aura_support__02__src_049.png"
     },
-    "gotenks_super_saiyan_3__aura_support__03__src_031.png": {
+    "gotenks_super_saiyan_3__aura_support__03__src_050.png": {
       "x": 134,
       "y": 2,
       "w": 64,
       "h": 56,
-      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/gotenks_super_saiyan_3/named/aura_support/gotenks_super_saiyan_3__aura_support__03__src_031.png"
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/gotenks_super_saiyan_3/named/aura_support/gotenks_super_saiyan_3__aura_support__03__src_050.png"
     }
   }
 }

@@ -102,6 +102,28 @@ volver a procesar nada.
 geometría (el GBC mueve las llamas 1px) — cubierta por la pasada 2 del
 script (convierte cualquier píxel con color de la paleta del aura).
 
+### Corrección de numeración canónica + export al runtime (2026-08-17)
+
+- **nappa_base y gotenks_super_saiyan_3 renumerados** (estilo goku, como
+  trunks_base): OW idle → 027, battle_aura_tile → 028, composite → 029; los
+  frames de combate desplazados (027-037/044 → 030-040/047) PRESERVANDO el
+  vínculo source→V9 por contenido (canonical_path al archivo real del
+  source). `scripts/renumber-ow-canonical.py` documenta y aplica en ambos
+  paquetes (tmp + repo).
+- **Aura exportada al runtime** (`scripts/export-aura-to-runtime.py`):
+  poses `aura_power` y `aura_support` (3 frames c/u, fps 10 loop — mismos
+  valores que power_up) añadidas a los 44 manifests con sus PNG
+  `<dir>_aura_power_0N.png` / `<dir>_aura_support_0N.png`. SIN cambio de
+  gameplay (nadie las consume todavía).
+- **Sheets de personaje actualizados**: los 48 `public/assets/sheets/*.png`
+  re-copiados desde el atomic_sheet V9 (ahora incluyen los frames del aura
+  naranja y azul; verificado 48/48 hash idénticos). Las 2 FIXED-only
+  (goku-super-saiyan-2, ginyu-gokus-body) reconstruidas con layout
+  reproducible: fixed_only + 6 frames de aura.
+- Los composites sueltos (android_16 045, frieza 047, ginyu 053, buu_gohan
+  057) NO se recolocan: su posición canónica (tras el tile) está ocupada por
+  frames de combate del V7 — documentado, se mantienen al final.
+
 ## Verificación
 
 ```bash

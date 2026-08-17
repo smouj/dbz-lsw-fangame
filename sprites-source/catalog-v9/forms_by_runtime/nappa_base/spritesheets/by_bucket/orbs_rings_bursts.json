@@ -1,29 +1,29 @@
 {
-  "columns": 6,
+  "columns": 3,
   "rows": 1,
   "cell_width": 68,
   "cell_height": 60,
   "sprites": {
-    "nappa_base__orbs_rings_bursts__01__src_029.png": {
+    "nappa_base__orbs_rings_bursts__01__src_032.png": {
       "x": 2,
       "y": 2,
       "w": 64,
       "h": 56,
-      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/nappa_base/named/orbs_rings_bursts/nappa_base__orbs_rings_bursts__01__src_029.png"
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/nappa_base/named/orbs_rings_bursts/nappa_base__orbs_rings_bursts__01__src_032.png"
     },
-    "nappa_base__orbs_rings_bursts__02__src_030.png": {
-      "x": 70,
+    "nappa_base__orbs_rings_bursts__02__src_033.png": {
+      "x": 68,
       "y": 2,
       "w": 64,
       "h": 56,
-      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/nappa_base/named/orbs_rings_bursts/nappa_base__orbs_rings_bursts__02__src_030.png"
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/nappa_base/named/orbs_rings_bursts/nappa_base__orbs_rings_bursts__02__src_033.png"
     },
-    "nappa_base__orbs_rings_bursts__03__src_031.png": {
-      "x": 138,
+    "nappa_base__orbs_rings_bursts__03__src_034.png": {
+      "x": 134,
       "y": 2,
       "w": 64,
       "h": 56,
-      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/nappa_base/named/orbs_rings_bursts/nappa_base__orbs_rings_bursts__03__src_031.png"
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/nappa_base/named/orbs_rings_bursts/nappa_base__orbs_rings_bursts__03__src_034.png"
     }
   }
 }

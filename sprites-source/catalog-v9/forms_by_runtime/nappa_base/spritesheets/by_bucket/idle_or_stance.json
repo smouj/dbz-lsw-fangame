@@ -1,39 +1,39 @@
 {
-  "columns": 6,
+  "columns": 5,
   "rows": 1,
   "cell_width": 43,
   "cell_height": 49,
   "sprites": {
     "nappa_base__idle_or_stance__01__src_012.png": {
-      "x": 9,
+      "x": 2,
       "y": 2,
       "w": 25,
       "h": 45,
       "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/nappa_base/named/idle_or_stance/nappa_base__idle_or_stance__01__src_012.png"
     },
     "nappa_base__idle_or_stance__02__src_013.png": {
-      "x": 53,
+      "x": 29,
       "y": 4,
       "w": 22,
       "h": 40,
       "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/nappa_base/named/idle_or_stance/nappa_base__idle_or_stance__02__src_013.png"
     },
     "nappa_base__idle_or_stance__03__src_014.png": {
-      "x": 96,
+      "x": 53,
       "y": 4,
       "w": 23,
       "h": 40,
       "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/nappa_base/named/idle_or_stance/nappa_base__idle_or_stance__03__src_014.png"
     },
     "nappa_base__idle_or_stance__04__src_020.png": {
-      "x": 139,
+      "x": 78,
       "y": 5,
       "w": 22,
       "h": 39,
       "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/nappa_base/named/idle_or_stance/nappa_base__idle_or_stance__04__src_020.png"
     },
     "nappa_base__idle_or_stance__05__src_025.png": {
-      "x": 174,
+      "x": 102,
       "y": 7,
       "w": 39,
       "h": 35,

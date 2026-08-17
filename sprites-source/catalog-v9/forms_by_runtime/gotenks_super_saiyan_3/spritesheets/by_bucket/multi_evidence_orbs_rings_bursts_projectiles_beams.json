@@ -1,15 +1,15 @@
 {
-  "columns": 6,
+  "columns": 1,
   "rows": 1,
   "cell_width": 78,
   "cell_height": 60,
   "sprites": {
-    "gotenks_super_saiyan_3__multi_evidence_orbs_rings_bursts_projectiles_beams__01__src_044.png": {
+    "gotenks_super_saiyan_3__multi_evidence_orbs_rings_bursts_projectiles_beams__01__src_047.png": {
       "x": 2,
       "y": 2,
       "w": 74,
       "h": 56,
-      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/gotenks_super_saiyan_3/named/multi_evidence_orbs_rings_bursts_projectiles_beams/gotenks_super_saiyan_3__multi_evidence_orbs_rings_bursts_projectiles_beams__01__src_044.png"
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/gotenks_super_saiyan_3/named/multi_evidence_orbs_rings_bursts_projectiles_beams/gotenks_super_saiyan_3__multi_evidence_orbs_rings_bursts_projectiles_beams__01__src_047.png"
     }
   }
 }

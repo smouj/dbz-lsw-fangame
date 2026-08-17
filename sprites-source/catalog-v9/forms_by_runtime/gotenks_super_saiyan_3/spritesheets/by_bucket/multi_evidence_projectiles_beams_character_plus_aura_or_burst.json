@@ -1,15 +1,15 @@
 {
-  "columns": 6,
+  "columns": 1,
   "rows": 1,
   "cell_width": 50,
   "cell_height": 38,
   "sprites": {
-    "gotenks_super_saiyan_3__multi_evidence_projectiles_beams_character_plus_aura_or_burst__01__src_041.png": {
+    "gotenks_super_saiyan_3__multi_evidence_projectiles_beams_character_plus_aura_or_burst__01__src_044.png": {
       "x": 2,
       "y": 2,
       "w": 46,
       "h": 34,
-      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/gotenks_super_saiyan_3/named/multi_evidence_projectiles_beams_character_plus_aura_or_burst/gotenks_super_saiyan_3__multi_evidence_projectiles_beams_character_plus_aura_or_burst__01__src_041.png"
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/gotenks_super_saiyan_3/named/multi_evidence_projectiles_beams_character_plus_aura_or_burst/gotenks_super_saiyan_3__multi_evidence_projectiles_beams_character_plus_aura_or_burst__01__src_044.png"
     }
   }
 }
