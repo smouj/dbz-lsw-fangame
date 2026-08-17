@@ -1524,18 +1524,18 @@
     "confidence": "HIGH",
     "v5_categories": "sprites/effects",
     "v5_suggested_actions": "powerup_composite",
-    "old_refs": "gen:033.png+028.png",
-    "correction": "added_2026-08-17_canonical_completeness",
-    "source_sheet": "generated",
-    "x0": "0",
-    "y0": "0",
+    "old_refs": "majin_buu.png (307,820)",
+    "correction": "recovered_uncovered_source_component",
+    "source_sheet": "majin_buu.png",
+    "x0": "307",
+    "y0": "820",
     "width": "24",
     "height": "16",
     "opaque_pixels": "316",
-    "unique_rgb": "6",
+    "unique_rgb": "3",
     "occupancy": "0.82292",
     "components": "3",
-    "git_blob_sha1": "5ae6f573d22e52528e144efc90d4ab2ac2fe23a1",
-    "evidence": "V9:added_2026-08-17:composite generado (OW walk sobre tile)"
+    "git_blob_sha1": "c7bc1fe97319153cf64d3c315ef4b70a23a4c7be",
+    "evidence": "V9:recovered 2026-08-17: real composite from sheet"
   }
 ]
