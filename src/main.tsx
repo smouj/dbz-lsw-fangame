@@ -11,6 +11,11 @@ import { BattlePosition, POSITION_DATA, resolveRelativeDistance, isBeamVulnerabl
 import { BATTLE_PORTRAITS } from './data/battlePortraits';
 import { UNLOCK_KEY, STARTER_DAMAGE_DECK, STARTER_BEAM_DECK, STARTER_CHARACTERS, cardsForLevel, pickRewards, VS_UNLOCKS, isFormUnlocked, FORM_UNLOCK_LEVELS } from './data/unlocks';
 import { CARDS, CARD_COLORS, CARD_TYPE_NAMES, CardDef, CardType, DECK_SIZE, MAX_COPIES, getCard, CardEffect } from './data/cards';
+import {
+  createBattleDeck, drawOne, playJoint, discardOne, needsDiscard,
+  registerCardResolver, JointDeckState, HAND_MAX_TRANSITORY,
+} from './battle/state';
+import { CARD_FRAME_BY_TYPE, CARD_FRAME_SELECTED, CARD_FRAME_DISABLED } from './data/cardVisuals';
 import { cardIconUrl, MINI_PORTRAITS, MENU_PORTRAITS, TYPE_ICONS } from './data/icons';
 import { FitArt } from './components/FitArt';
 import { overworldUrl } from './data/overworld';
@@ -58,7 +63,7 @@ type Screen = 'main' | 'story' | 'battle' | 'storyScene' | 'versus' | 'deck' | '
 // Aplicar el tema HUD guardado al arrancar (el HUD Studio lo persiste).
 try { applyHudTheme(loadHudTheme()); } catch { /* SSR / sin DOM */ }
 
-type BattlePhase = 'position' | 'command' | 'basic' | 'limitSelect' | 'cardSelect' | 'stageInput' | 'enemyTurn' | 'defend' | 'win' | 'lose';
+type BattlePhase = 'position' | 'command' | 'basic' | 'limitSelect' | 'cardSelect' | 'stageInput' | 'enemyTurn' | 'defend' | 'discard' | 'win' | 'lose';
 
 type CommandType = 'LIMIT' | 'J' | 'B' | 'C';
 
@@ -443,16 +448,9 @@ function CCDisplay({ cc, maxCc }: { cc: number; maxCc: number }) {
 // Frames GBC por tipo de carta (paquete DBZ_LSW_COMBAT_UI_V2_MAPPED)
 // Marcos GBC por tipo: los frame_card_*_color del paquete diferencian el
 // tipo por el COLOR del marco (como el GBC real).
-const CARD_TYPE_FRAME: Record<string, string> = {
-  command: '/assets/ui/card_frames/card_type_stage_attack_frame.png', // naranja (Stage Attack)
-  damage: '/assets/ui/card_frames/frame_card_red.png',                // rojo
-  beam: '/assets/ui/card_frames/frame_card_blue.png',                 // azul
-  support: '/assets/ui/card_frames/frame_card_green.png',             // verde
-  defense: '/assets/ui/card_frames/frame_card_teal.png',              // teal
-  special: '/assets/ui/card_frames/frame_card_gold.png',              // dorado
-};
-const CARD_FRAME_SELECTED = '/assets/ui/card_frames/card_type_bonus_gold_frame.png';
-const CARD_FRAME_DISABLED = '/assets/ui/card_frames/card_type_blocked_or_invalid_frame.png';
+registerCardResolver(id => getCard(typeof id === 'number' ? id : Number(id)));
+
+const CARD_TYPE_FRAME: Record<string, string> = CARD_FRAME_BY_TYPE;
 
 function CardVisual({ card, selected, onClick, small, disabled }: {
   card: CardDef; selected?: boolean; onClick?: () => void; small?: boolean; disabled?: boolean;
@@ -764,16 +762,15 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
   // solo durante una acción (QTE, animación de ataque/beam/support).
   const [scenario] = useState(() => SCENARIOS[Math.floor(Math.random() * SCENARIOS.length)]);
   const [viewMode, setViewMode] = useState<BattleViewMode>('OVERVIEW');
-  const [hand, setHand] = useState<CardDef[]>(() => {
-    // Mano inicial real: 3 Joint aleatorias. El +1 se roba SOLO al entrar
-    // en cada Attack Phase, no en BATTLE_INIT.
-    // Solo cartas compatibles con el personaje activo (campo `compatible` ROM).
-    const deckIds = loadDeck();
-    const usable = deckIds.map(id => getCard(id))
-      .filter((c): c is CardDef => !!c && cardUsableBy(c, getForm(playerFormId)!.character));
-    const shuffled = [...usable].sort(() => Math.random() - 0.5);
-    return shuffled.slice(0, 3);
-  });
+  // ── ESTADO REAL DEL MAZO (spec GameFAQs) ──
+  // El mazo Joint se baraja UNA vez al iniciar; drawPile (17) + hand (3).
+  // Cada ATTACK PHASE roba 1 del drawPile; las Joint usadas van al
+  // discardPile. Nunca se vuelve a sortear el deck original.
+  const [deckState, setDeckState] = useState<JointDeckState>(() =>
+    createBattleDeck(loadDeck(), {
+      usable: c => cardUsableBy(c, getForm(playerFormId)!.character),
+    }));
+  const { hand, drawPile, discardPile } = deckState;
   const [selectedCard, setSelectedCard] = useState<number | null>(null);
   const [log, setLog] = useState<string[]>([t('battle.start')]);
   // Cuadro de diálogo GBC: mensaje grande blanco/negro durante las acciones
@@ -968,33 +965,44 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
   const [drawFx, setDrawFx] = useState<{ card: CardDef; nonce: number } | null>(null);
   const drawFxTimer = useRef<number | null>(null);
   const drawJointForAttack = () => {
-    // El GBC permite 6 cartas de forma transitoria al robar; después de la
-    // acción hay que volver a un máximo persistente de 5.
-    if (hand.length >= 6) return;
-    const deckIds = loadDeck();
-    if (deckIds.length === 0) return;
-    // Solo cartas compatibles con el personaje activo
-    const usable = deckIds.map(id => getCard(id))
-      .filter((c): c is CardDef => !!c && cardUsableBy(c, getForm(playerFormId)!.character));
-    if (usable.length === 0) return;
-    const card = usable[Math.floor(Math.random() * usable.length)];
-    if (!card) return;
-    // Animar el robo: la carta vuela del mazo a la mano (~420ms) y luego
-    // se añade a la mano de verdad (el GBC muestra la carta entrando).
+    // ATTACK PHASE → roba 1 carta REAL del drawPile (nunca re-sorteo del
+    // deck original). Si el drawPile se agota, se rebaraja el descarte.
+    // El GBC permite 6 cartas transitoriamente; 5 persistente.
+    if (hand.length >= HAND_MAX_TRANSITORY) return;
+    // Consumo VIRTUAL para la animación: mostramos la carta que saldrá
+    // del mazo y aplicamos el robo real (drawOne) al aterrizar.
+    const res = drawOne(deckState);
+    if (!res.card) { setDeckState(res.state); return; }
     if (drawFxTimer.current) window.clearTimeout(drawFxTimer.current);
-    setDrawFx({ card, nonce: nextUid() });
+    setDrawFx({ card: res.card, nonce: nextUid() });
     Sfx.draw();
     drawFxTimer.current = window.setTimeout(() => {
-      setHand(prev => (prev.length >= 6 ? prev : [...prev, card]));
+      setDeckState(prev => drawOne(prev).state);
       setDrawFx(null);
     }, 460);
   };
 
-  const settleAttackHand = () => {
-    setHand(prev => {
-      if (prev.length <= 5) return prev;
-      return prev.slice(0, 5);
-    });
+  // HAND CHECK (manual GBC): si tras la acción quedan >5 cartas, el
+  // jugador DEBE elegir cuál descartar. NUNCA se descarta con slice.
+  const discardNextRef = useRef<(() => void) | null>(null);
+  const settleAttackHand = (next?: () => void) => {
+    if (needsDiscard(deckState)) {
+      discardNextRef.current = next ?? (() => advanceExchange());
+      setPhase('discard');
+      return;
+    }
+    if (next) next();
+    else advanceExchange();
+  };
+
+  // El jugador elige la carta a descartar (DISCARD_REQUIRED)
+  const chooseDiscard = (idx: number) => {
+    Sfx.select();
+    setDeckState(prev => discardOne(prev, idx));
+    setPhase('enemyTurn');
+    const next = discardNextRef.current;
+    discardNextRef.current = null;
+    setTimeout(() => { if (next) next(); }, 300);
   };
 
   const limitsPowered = powerState !== 'NORMAL';
@@ -1496,8 +1504,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
       setViewMode('OVERVIEW');
       // Termina el turno tras Gather (acción completa consumida)
       setSelectedCard(null);
-      settleAttackHand();
-      setTimeout(() => advanceExchange(), gbcMs(36));
+      settleAttackHand(() => setTimeout(() => advanceExchange(), gbcMs(36)));
     }, gbcMs(58));
   };
 
@@ -1522,8 +1529,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
       setPlayer(incoming);
       setPlayerPose('idle');
       addLog(`${incoming.name} entra al combate! (CHARA)`);
-      settleAttackHand();
-      setTimeout(() => advanceExchange(), 600);
+      settleAttackHand(() => setTimeout(() => advanceExchange(), 600));
       return;
     }
     setPhase('cardSelect');
@@ -1821,8 +1827,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
     setViewMode('OVERVIEW');
     setEnemyPose('idle');
     setPlayerPose('idle');
-    settleAttackHand();
-    setTimeout(() => advanceExchange(), 600);
+    settleAttackHand(() => setTimeout(() => advanceExchange(), 600));
   };
 
   const selectCard = (idx: number) => {
@@ -1863,7 +1868,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
     const endTurn = () => {
       setPlayerPose('idle');
       setEnemyPose('idle');
-      if (isLimit) { setSelectedCard(null); settleAttackHand(); setTimeout(() => advanceExchange(), 600); }
+      if (isLimit) { setSelectedCard(null); settleAttackHand(() => setTimeout(() => advanceExchange(), 600)); }
       else finishPlayerTurn(handIdx);
     };
     setTimeout(() => {
@@ -2165,15 +2170,12 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
   };
 
   const finishPlayerTurn = (idx: number) => {
-    const newHand = [...hand];
-    // La carta usada desaparece de la mano (JOINT)
-    newHand.splice(idx, 1);
-    // No hay reposición al terminar acción. El único robo ocurre al entrar
-    // en Attack Phase; aquí solo se fuerza mano persistente max 5.
-    const finalHand = newHand.slice(0, 5);
-    setHand(finalHand);
+    // La Joint usada sale de la mano → discardPile (consumible real)
+    setDeckState(prev => playJoint(prev, idx));
     setSelectedCard(null);
-    setTimeout(() => advanceExchange(), 600);
+    // Hand check: si tras jugar aún hay >5 (improbable pero posible con
+    // robo reciente), el jugador elige el descarte. Si no, avanza.
+    settleAttackHand(() => setTimeout(() => advanceExchange(), 600));
   };
 
   // ═══ ENEMY ATTACK: IA real del GBC (battle.shtml) ═══
@@ -2332,9 +2334,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
     }
     setPhase('enemyTurn');
     setSelectedCard(null);
-    const newHand = [...hand];
-    newHand.splice(handIdx, 1);
-    setHand(newHand);
+    setDeckState(prev => playJoint(prev, handIdx));
     setPlayer(prev => ({ ...prev, cc: Math.max(0, prev.cc - card.cc) }));
     setDefendMenu(null);
     // Cinemática del ataque enemigo tras elegir la carta defensiva (orden GBC)
@@ -2951,6 +2951,24 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
           </div>
         ) : (
           <>
+        {phase === 'discard' && (
+          <div className="command-select">
+            <div className="limit-panel discard-panel">
+              <div className="limit-title">HAND CHECK — {hand.length} JOINT</div>
+              <div className="discard-help">Demasiadas cartas ({hand.length} &gt; 5). Elige cuál descartar:</div>
+              <div className="discard-grid">
+                {hand.map((c, i) => (
+                  <button key={`${c.id}-${i}`} className="discard-card" onClick={() => chooseDiscard(i)}
+                    data-tip={`${c.name} · ${c.cc} CC · ${c.type.toUpperCase()}`}>
+                    <img src={CARD_FRAME_BY_TYPE[c.type] ?? CARD_FRAME_BY_TYPE.command} alt="" className="discard-frame" />
+                    {cardIconUrl(c.id) && <img src={cardIconUrl(c.id)!} alt={c.name} className="discard-art" />}
+                    <span className="discard-name">{c.name}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
         {phase === 'command' && (
           <div className="command-select">
             <div className="command-strip">

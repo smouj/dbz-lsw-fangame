@@ -9601,3 +9601,63 @@ button.linklike:hover { text-decoration: underline; }
   background-image: url('/assets/ui/hud_buttons/btn_move_axis_v.png');
 }
 .move-axis-btn:hover { filter: drop-shadow(2px 2px 0 #000) brightness(1.15); }
+
+/* ═══ DISCARD REQUIRED (HAND CHECK) — selector real de descarte ═══ */
+.discard-panel {
+  max-width: min(560px, 92vw);
+}
+.discard-help {
+  font-size: 11px;
+  color: #f8f4e4;
+  opacity: .85;
+  margin: 2px 0 10px;
+  letter-spacing: .5px;
+}
+.discard-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  padding: 2px;
+}
+.discard-card {
+  position: relative;
+  width: 96px;
+  height: 108px;
+  background: transparent;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  image-rendering: pixelated;
+  transition: transform .1s steps(2, end);
+}
+.discard-card:hover {
+  transform: translateY(-4px) scale(1.04);
+}
+.discard-frame {
+  position: absolute;
+  inset: 0;
+  width: 96px;
+  height: 80px;
+  image-rendering: pixelated;
+}
+.discard-art {
+  position: absolute;
+  top: 18px;
+  left: 18px;
+  width: 60px;
+  height: 44px;
+  object-fit: cover;
+  image-rendering: pixelated;
+}
+.discard-name {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: 9px;
+  color: #f8f4e4;
+  text-shadow: 1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;
+  letter-spacing: .5px;
+}
