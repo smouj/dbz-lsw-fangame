@@ -743,6 +743,12 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   color: #d8d0b8;
   letter-spacing: .5px;
   text-shadow: 1px 1px 0 #000;
+  /* Panel compacto: los badges se integran al HUD (no flotan sobre la
+     escena ni sobre los personajes) */
+  width: fit-content;
+  background: rgba(8, 8, 10, .62);
+  border: 1px solid rgba(255, 255, 255, .07);
+  padding: 3px 7px;
 }
 .fighter-hud.right .hud-stats {
   flex-direction: row-reverse;
@@ -762,8 +768,13 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   display: flex;
   flex-wrap: wrap;
   gap: 3px;
-  margin-top: 0;
+  margin-top: 2px;
   min-height: 0;
+  /* Panel compacto para los chips de estado */
+  width: fit-content;
+  background: rgba(8, 8, 10, .5);
+  border: 1px solid rgba(255, 255, 255, .06);
+  padding: 2px 5px;
 }
 .hud-status.right { justify-content: flex-end; }
 .status-chip {
