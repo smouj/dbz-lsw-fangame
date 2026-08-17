@@ -47,12 +47,16 @@ resolvers apuntan SOLO ahí. Verificado por `audit:sprites`, `audit:sheets` y
    `forms_by_runtime/` (en tmp y en `sprites-source/catalog-v9/`) para que
    TODAS las formas tengan el patrón OW/aura como las bien configuradas:
    `overworld_actor_or_pose` (chibi idle+walk), `battle_aura_tile`,
-   `battle_aura_actor_composite`. trunks_base 035-038 (desde
-   kid_trunks_super_saiyan, mismo arte kid trunks), nappa_base 038-040 y
-   gotenks_ssj3 045-047 (desde chibis runtime + aura), composites generados
-   para android_16 045 / frieza 047 / ginyu 053 / buu_gohan 057, y
+   `battle_aura_actor_composite`. trunks_base 027-030 (desde
+   kid_trunks_super_saiyan 024-027, mismo arte kid trunks — renumerado de
+   035-038 a las posiciones canónicas 027-030 el 2026-08-17; los frames
+   027-034 existentes pasaron a 031-038 preservando su canonical_path de
+   source), nappa_base 038-040 y gotenks_ssj3 045-047 (desde chibis runtime +
+   aura), composites generados para android_16 045 / frieza 047 / ginyu 053 /
+   buu_gohan 057 (éste con el composite REAL de majin_buu.png 307,820), y
    re-clasificados tiles en buu_gohan 028/029 y young_gohan_ssj 029.
-   `scripts/add-canonical-ow-frames.py` regenera todo (idempotente).
+   `scripts/add-canonical-ow-frames.py` regenera todo (idempotente) y
+   `scripts/renumber-trunks-ow.py` documenta la renumeración.
    Conteos verify:v9 actualizados (atomic 1966, named 2358, spritesheets 570).
 7. **`overworld/` solo tiene `battle/` + `panel_sprites/` + manifest** — las
    carpetas `named/` (285) y `aux/` (43) y los `cell_*.png` sueltos (216)

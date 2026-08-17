@@ -4,19 +4,19 @@
   "cell_width": 19,
   "cell_height": 20,
   "sprites": {
-    "trunks_base__overworld_actor_or_pose__01__src_035.png": {
+    "trunks_base__overworld_actor_or_pose__01__src_027.png": {
       "x": 2,
       "y": 2,
       "w": 15,
       "h": 16,
-      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/trunks_base/named/overworld_actor_or_pose/trunks_base__overworld_actor_or_pose__01__src_035.png"
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/trunks_base/named/overworld_actor_or_pose/trunks_base__overworld_actor_or_pose__01__src_027.png"
     },
-    "trunks_base__overworld_actor_or_pose__02__src_036.png": {
+    "trunks_base__overworld_actor_or_pose__02__src_028.png": {
       "x": 19,
       "y": 2,
       "w": 13,
       "h": 16,
-      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/trunks_base/named/overworld_actor_or_pose/trunks_base__overworld_actor_or_pose__02__src_036.png"
+      "source": "/mnt/data/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime/trunks_base/named/overworld_actor_or_pose/trunks_base__overworld_actor_or_pose__02__src_028.png"
     }
   }
 }

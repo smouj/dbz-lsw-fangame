@@ -143,7 +143,7 @@ def next_frame_num(atomic_dir: Path):
 
 
 # Formas cuyo atomic_sheet necesita geometría override (celdas razonables, estilo goku)
-# trunks_base: el frame 034 (beam 169px) forzaba cell_w=173 → sheet 1384px ancha,
+# trunks_base: el frame 038 (beam 169px, renumerado desde 034) forzaba cell_w=173 → sheet 1384px ancha,
 # celdas enormes y sprites diminutos al visualizar. Con 122x67 el beam sobresale sin
 # solapar (verificado: right=267 < next=297) y el sheet queda 976x335 como goku.
 CELL_OVERRIDE = {
@@ -151,9 +151,10 @@ CELL_OVERRIDE = {
 }
 
 # Frames que se colocan al FINAL del layout del sheet (para que su desbordamiento
-# caiga en espacio vacío y no rompa el grid): trunks_base 034 = beam 169px.
+# caiga en espacio vacío y no rompa el grid): trunks_base 038 = beam 169px
+# (renumerado 2026-08-17 desde 034).
 SHEET_ORDER_OVERRIDE = {
-    'trunks_base': {'move_to_end': ['034.png']},
+    'trunks_base': {'move_to_end': ['038.png']},
 }
 
 
