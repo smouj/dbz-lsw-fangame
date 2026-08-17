@@ -748,6 +748,14 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
   });
   const [selectedCard, setSelectedCard] = useState<number | null>(null);
   const [log, setLog] = useState<string[]>([t('battle.start')]);
+  // Cuadro de diálogo GBC: mensaje grande blanco/negro durante las acciones
+  const [gbcMsg, setGbcMsg] = useState<string | null>(null);
+  const gbcTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const showGbc = useCallback((msg: string, durMs = 2800) => {
+    setGbcMsg(msg);
+    if (gbcTimer.current) clearTimeout(gbcTimer.current);
+    gbcTimer.current = setTimeout(() => setGbcMsg(null), durMs);
+  }, []);
   const [damageNums, setDamageNums] = useState<{ value: number; type: 'damage' | 'heal' | 'miss' | 'guard'; x: number; y: number; id: number }[]>([]);
   const [playerPose, setPlayerPose] = useState('idle');
   const [enemyPose, setEnemyPose] = useState('idle');
@@ -900,7 +908,10 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
     setBgId(BATTLE_BGS[Math.floor(Math.random() * BATTLE_BGS.length)].id);
   }, []);
 
-  const addLog = useCallback((msg: string) => setLog(prev => [...prev.slice(-6), msg]), []);
+  const addLog = useCallback((msg: string, opts?: { gbc?: boolean; durMs?: number }) => {
+    setLog(prev => [...prev.slice(-6), msg]);
+    if (opts?.gbc !== false) showGbc(msg, opts?.durMs);
+  }, [showGbc]);
   const limitCards = (limits
     .map(id => getCard(id))
     .filter((c): c is CardDef => !!c));
@@ -1426,6 +1437,10 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
   const startedRef = useRef(false);
   useEffect(() => {
     const tm = setTimeout(() => setIntro(false), 5200);
+    // Cuadro de diálogo GBC al inicio: presentación antes del combate
+    showGbc(`${player.name} ${t('battle.vs')} ${enemy.name} — ${t('battle.fight')}!`, 3400);
+    const introGbc = setTimeout(() => setGbcMsg(null), 4600);
+    return () => { clearTimeout(introGbc); };
     return () => clearTimeout(tm);
   }, []);
   useEffect(() => {
@@ -2585,7 +2600,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
   } : null;
 
   return (
-    <div className={`battle-screen view-${viewMode.toLowerCase()} ${intro ? 'intro-active' : ''} ${cardFx ? 'is-cinematic' : ''} ${pixiPresentationActive ? 'pixi-presentation-active' : ''} ${phase === 'stageInput' ? 'qte-active' : ''} ${qteResolving ? 'qte-resolving' : ''}`}>
+    <div className={`battle-screen view-${viewMode.toLowerCase()} ${intro ? 'intro-active' : ''} ${cardFx ? 'is-cinematic' : ''} ${gbcMsg ? 'gbc-msg' : ''} ${pixiPresentationActive ? 'pixi-presentation-active' : ''} ${phase === 'stageInput' ? 'qte-active' : ''} ${qteResolving ? 'qte-resolving' : ''}`}>
       {/* ═══ Depurador cinematográfico (?debugCinematics=1) ═══ */}
       {isDebugCinematics() && debugCin && (
         <pre className="cinematic-debug-overlay">{renderDebugOverlay(debugCin, debugPaused)}</pre>
@@ -2882,6 +2897,13 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
       </div>
 
       {/* Controles */}
+      {/* Cuadro de diálogo GBC: solo durante acciones (oculta los botones) */}
+      {gbcMsg && (
+        <div className="gbc-dialogue" key={gbcMsg}>
+          <div className="gbc-dialogue-text">{gbcMsg}<span className="gbc-dialogue-cursor">▼</span></div>
+        </div>
+      )}
+
       <div className="battle-controls">
         {drawFx && (
           <div className="draw-fx" key={drawFx.nonce} aria-label="drawing card">
