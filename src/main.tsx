@@ -3158,8 +3158,10 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
                 <span className="basic-stage-icon">
                   {(() => {
                     const stages = powerState !== 'NORMAL' ? 4 : 3;
-                    const icon = cardIconUrl(stages);
-                    return icon ? <img src={icon} alt={`${stages} Stage Atk.`} className="stage-card-icon" /> : <strong>{stages}</strong>;
+                    // El id de la carta del stage de N inputs es N-2 (3→1, 4→2,
+                    // 5→3, 6→4): cardIconUrl(N) devolvía el arte de OTRA carta.
+                    const icon = cardIconUrl(stages - 2);
+                    return icon ? <img src={icon} alt={`${stages} Stage Atk.`} className="stage-card-icon" /> : <strong>{stages} Stage</strong>;
                   })()}
                 </span>
               </button>
