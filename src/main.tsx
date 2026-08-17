@@ -441,13 +441,15 @@ function CCDisplay({ cc, maxCc }: { cc: number; maxCc: number }) {
 
 // ─── Carta visual ─────────────────────────────────────────
 // Frames GBC por tipo de carta (paquete DBZ_LSW_COMBAT_UI_V2_MAPPED)
+// Marcos GBC por tipo: los frame_card_*_color del paquete diferencian el
+// tipo por el COLOR del marco (como el GBC real).
 const CARD_TYPE_FRAME: Record<string, string> = {
-  command: '/assets/ui/card_frames/card_type_stage_attack_frame.png',
-  damage: '/assets/ui/card_frames/card_type_danger_frame.png',
-  beam: '/assets/ui/card_frames/card_type_power_frame.png',
-  support: '/assets/ui/card_frames/card_type_support_frame.png',
-  defense: '/assets/ui/card_frames/card_type_basic_frame.png',
-  special: '/assets/ui/card_frames/card_type_special_frame.png',
+  command: '/assets/ui/card_frames/card_type_stage_attack_frame.png', // naranja (Stage Attack)
+  damage: '/assets/ui/card_frames/frame_card_red.png',                // rojo
+  beam: '/assets/ui/card_frames/frame_card_blue.png',                 // azul
+  support: '/assets/ui/card_frames/frame_card_green.png',             // verde
+  defense: '/assets/ui/card_frames/frame_card_teal.png',              // teal
+  special: '/assets/ui/card_frames/frame_card_gold.png',              // dorado
 };
 const CARD_FRAME_SELECTED = '/assets/ui/card_frames/card_type_bonus_gold_frame.png';
 const CARD_FRAME_DISABLED = '/assets/ui/card_frames/card_type_blocked_or_invalid_frame.png';

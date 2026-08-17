@@ -316,11 +316,11 @@ const MOCK_HAND_IDS = [13, 7, 5, 1]; // Kamehameha, Energy Wave, Cont. Punch, 3 
 
 const MOCK_CARD_TYPE_FRAME: Record<string, string> = {
   command: '/assets/ui/card_frames/card_type_stage_attack_frame.png',
-  damage: '/assets/ui/card_frames/card_type_danger_frame.png',
-  beam: '/assets/ui/card_frames/card_type_power_frame.png',
-  support: '/assets/ui/card_frames/card_type_support_frame.png',
-  defense: '/assets/ui/card_frames/card_type_basic_frame.png',
-  special: '/assets/ui/card_frames/card_type_special_frame.png',
+  damage: '/assets/ui/card_frames/frame_card_red.png',
+  beam: '/assets/ui/card_frames/frame_card_blue.png',
+  support: '/assets/ui/card_frames/frame_card_green.png',
+  defense: '/assets/ui/card_frames/frame_card_teal.png',
+  special: '/assets/ui/card_frames/frame_card_gold.png',
 };
 
 function MockHand({ compact, limit }: { compact?: boolean; limit?: boolean }) {
