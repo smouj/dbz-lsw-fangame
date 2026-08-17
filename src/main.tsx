@@ -1,5 +1,5 @@
 /** @refresh reload */
-import React, { useState, useEffect, useRef, useCallback, lazy, Suspense, memo } from 'react';
+import React, { useState, useEffect, useRef, useCallback, useMemo, lazy, Suspense, memo } from 'react';
 import { createRoot } from 'react-dom/client';
 import { createPortal } from 'react-dom';
 import './styles.css';
@@ -19,7 +19,7 @@ import { storyPortraitUrl } from './data/storyPortraits';
 import { spriteManifestUrl, spriteFrameUrl, spriteDirFor } from './data/spriteManifest';
 import { SCENARIOS, SPECIAL_ACTION_BACKGROUND, type BattleViewMode } from './data/scenarios';
 import { GBC_NATIVE_FPS, type QteState } from './data/actionFidelity';
-import { stageWindowsTicks } from './config/gameplay.config';
+import { stageWindowsTicks, GAMEPLAY_CONFIG } from './config/gameplay.config';
 import { stageInputPose, stageInputFieldPose, stageInputLunges } from './battle/stageInputMap';
 import { nextStageSequence } from './battle/stageSequences';
 import { nextTransformedForm } from './battle/transforms';
@@ -35,7 +35,7 @@ import type { PixiBattlePresentation } from './renderer/pixi/presentation/PixiBa
 // Code-split: pixi.js (~790KB) solo se descarga cuando ?pixiField=1 está activo.
 const BattlePixiStage = lazy(() => import('./battle/BattlePixiStage').then((m) => ({ default: m.BattlePixiStage })));
 import { initAudio, Sfx, setSfxEnabled, setVolume as setVolumeSfx } from './audio/sfx';
-import { playMusic, stopMusic, musicForScreen, setMusicVolume, setMusicEnabled } from './audio/music';
+import { playMusic, playMusicOnce, stopMusic, musicForScreen, setMusicVolume, setMusicEnabled } from './audio/music';
 import { LanguageProvider } from './i18n/LanguageProvider';
 import { useLang } from './i18n/useLang';
 import { LANGUAGES, LangCode, TKey } from './i18n';
@@ -3706,18 +3706,55 @@ function StorySceneScreen({ chapter, phase, onFinish, onNavigate }: {
   const flow = panelsForChapter(chapter);
   const panels: StoryPanel[] = phase === 'intro' ? flow.intro : (flow.outro ?? []);
   const [idx, setIdx] = useState(0);
-  const [textVisible, setTextVisible] = useState(false);
+  const [chars, setChars] = useState(0);       // typewriter: caracteres visibles
   const [exiting, setExiting] = useState(false);
   const panel = panels[Math.min(idx, panels.length - 1)];
+  const fullText = panel.dialogue?.text ?? '';
+  const writing = chars < fullText.length;
 
-  // Texto progresivo por viñeta
+  // Máquina de escribir: revela el texto carácter a carácter (fluido GBC)
   useEffect(() => {
-    setTextVisible(false);
-    const tm = setTimeout(() => setTextVisible(true), 250);
+    setChars(0);
+    if (!fullText) return;
+    const spd = Math.max(14, GAMEPLAY_CONFIG.storyTextSpeedMs);
+    let i = 0;
+    const tm = setInterval(() => {
+      i += 1;
+      setChars(i);
+      if (i >= fullText.length) clearInterval(tm);
+    }, spd);
+    return () => clearInterval(tm);
+  }, [idx, fullText]);
+
+  // Cinemática: jingle de Story Card al entrar en una viñeta CON TÍTULO
+  // (el Prologue de fondo se reanuda solo al terminar el jingle).
+  useEffect(() => {
+    if (panel.title) playMusicOnce('jingle_story_card', 'prologue');
+  }, [idx, panel.id, panel.title]);
+
+  const hasDialogue = !!panel.dialogue;
+
+  // Cinemáticas AUTO: las viñetas sin diálogo (títulos, escenas, impactos)
+  // avanzan solas con duración cinematográfica; solo las de diálogo esperan clic.
+  useEffect(() => {
+    if (hasDialogue || exiting) return;
+    const dur = panel.layout === 'FULL' ? 3600 : panel.layout === 'IMPACT' ? 3000 : 2800;
+    const tm = setTimeout(() => advance(), dur);
     return () => clearTimeout(tm);
-  }, [idx]);
+  }, [idx, panel.id, hasDialogue, exiting]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // Quién habla: el personaje cuyo nombre coincide con el speaker del diálogo
+  const speakingIdx = useMemo(() => {
+    if (!panel.dialogue) return -1;
+    const sp = panel.dialogue.speaker.trim().toLowerCase();
+    return (panel.characters ?? []).findIndex(c =>
+      characterName(c.character).toLowerCase() === sp
+      || c.character.toLowerCase().replace(/[^a-z0-9]/g, '') === sp.replace(/[^a-z0-9]/g, '')
+      || sp.includes(c.character.toLowerCase().split('_')[0]));
+  }, [panel]);
 
   const advance = () => {
+    if (writing) { setChars(fullText.length); return; }  // click = completar texto
     if (idx < panels.length - 1) {
       Sfx.select();
       setExiting(true);
@@ -3738,12 +3775,12 @@ function StorySceneScreen({ chapter, phase, onFinish, onNavigate }: {
 
   return (
     <div className={`page-screen story-scene-screen ${exiting ? 'scene-exiting' : ''}`} onClick={advance}>
-      <div className={`story-panel story-panel-${panel.layout.toLowerCase()} ${fxClass}`}>
+      <div key={panel.id} className={`story-panel story-panel-${panel.layout.toLowerCase()} ${fxClass}`}>
         {/* Fondo del escenario */}
         <div className="story-panel-bg" style={{ backgroundImage: `url(${panel.background})`, backgroundSize: 'cover', backgroundPosition: 'center' }} />
         <div className="story-panel-dim" />
 
-        {/* Título de escena (FULL / IMPACT) */}
+        {/* Título de escena (FULL / IMPACT) — entrada cinematográfica */}
         {panel.title && (
           <div className="story-panel-title">
             <h2>{panel.title}</h2>
@@ -3757,8 +3794,11 @@ function StorySceneScreen({ chapter, phase, onFinish, onNavigate }: {
             {panel.characters.map((c, i) => {
               // Retrato REAL del GBC (story portraits 40×56 por saga/personaje)
               const url = storyPortraitUrl(c.character, c.form, c.emotion) || miniPortraitFor(c.character) || MENU_PORTRAITS[CHAR_PORTRAIT_ALIAS[c.character] ?? c.character];
+              const nChars = panel.characters?.length ?? 0;
+              const side = c.side ?? (nChars === 1 ? 'center' : i === 0 ? 'left' : 'right');
+              const isSpeaker = hasDialogue && speakingIdx === i;
               return (
-                <div key={i} className={`story-character ${c.side ?? (i === 0 ? 'left' : 'right')}`}>
+                <div key={i} className={`story-character ${side}${isSpeaker ? ' speaking' : hasDialogue ? ' muted' : ''}`}>
                   {url
                     ? <img src={url} alt={characterName(c.character)} className="story-portrait" />
                     : <div className="story-portrait story-portrait-none">{characterName(c.character).slice(0, 1)}</div>}
@@ -3773,7 +3813,9 @@ function StorySceneScreen({ chapter, phase, onFinish, onNavigate }: {
         {panel.dialogue && (
           <div className="story-dialogue">
             <div className="story-speaker">{panel.dialogue.speaker}</div>
-            <div className={`story-text ${textVisible ? 'visible' : ''}`}>{panel.dialogue.text}</div>
+            <div className={`story-text ${!writing ? 'visible' : ''}`}>
+              {fullText.slice(0, chars)}{writing && <span className="story-cursor">▌</span>}
+            </div>
           </div>
         )}
       </div>

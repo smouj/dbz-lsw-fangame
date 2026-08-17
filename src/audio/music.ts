@@ -163,3 +163,28 @@ export function stopMusic(): void {
   if (audio) { audio.pause(); audio.src = ''; }
   currentId = null;
 }
+
+/**
+ * Jingle de una sola reproducción que DEVUELVE a la pista de fondo al
+ * terminar (p.ej. Story Card sobre el Prologue de las viñetas).
+ */
+export function playMusicOnce(id: MusicTrackId, returnTo?: MusicTrackId): void {
+  if (!musicEnabled) return;
+  const track = MUSIC_TRACKS[id];
+  const el = ensureAudio();
+  if (!el) return;
+  const was = currentId;
+  const start = () => {
+    el.src = track.file;
+    el.loop = false;
+    el.volume = musicVolume;
+    el.play().catch(() => { /* autoplay */ });
+    currentId = id;
+    el.onended = () => {
+      if (returnTo && returnTo !== id) playMusic(returnTo);
+    };
+  };
+  if (audio && !audio.paused && currentId !== id) start();
+  else start();
+  void was;
+}

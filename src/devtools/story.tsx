@@ -108,9 +108,15 @@ export function StoryModule() {
                 <div className={`story-characters layout-${current.panel.layout.toLowerCase()}`}>
                   {current.panel.characters.map((c, i) => {
                     const url = resolvePortrait(c);
-                    const side = c.side ?? (i === 0 ? 'left' : 'right');
+                    const nChars = current.panel.characters?.length ?? 0;
+                    const side = c.side ?? (nChars === 1 ? 'center' : i === 0 ? 'left' : 'right');
+                    const sp = current.panel.dialogue?.speaker.trim().toLowerCase() ?? '';
+                    const isSpeaker = current.panel.dialogue
+                      ? (characterName(c.character).toLowerCase() === sp
+                        || c.character.toLowerCase().replace(/[^a-z0-9]/g, '') === sp.replace(/[^a-z0-9]/g, ''))
+                      : false;
                     return (
-                      <div key={i} className={`story-character ${side}`}>
+                      <div key={i} className={`story-character ${side}${isSpeaker ? ' speaking' : current.panel.dialogue ? ' muted' : ''}`}>
                         {url
                           ? <img src={url} alt={characterName(c.character)} className="story-portrait" />
                           : <div className="story-portrait story-portrait-none">{characterName(c.character).slice(0, 1)}</div>}

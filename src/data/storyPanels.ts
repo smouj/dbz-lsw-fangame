@@ -25,7 +25,7 @@ export type PanelLayout =
 export interface StoryPortrait {
   character: string;    // id de personaje (goku, piccolo...) para el retrato
   form?: string;        // forma (base, ssj...) — opcional
-  side?: 'left' | 'right';
+  side?: 'left' | 'right' | 'center';
   emotion?: PortraitEmotion;  // normal/smile/surprised/angry/wounded/visor
   flip?: boolean;
 }
@@ -40,7 +40,7 @@ export interface StoryPanel {
   dialogue?: {
     speaker: string;               // nombre del que habla
     text: string;                  // texto (localizable vía i18n si aplica)
-    side?: 'left' | 'right';
+    side?: 'left' | 'right' | 'center';
   };
   effects?: ('flash' | 'zoom' | 'shake' | 'speed')[];
   transition?: 'fade' | 'slash' | 'zoom-in';
@@ -140,7 +140,7 @@ export const STORY_PANELS: Record<number, StoryChapterFlow> = {
     chapter: 2,
     intro: [
       { id: 'c2p1', layout: 'FULL', background: bg(2), title: 'CAPÍTULO 2', subtitle: 'Llegan los Saiyans', effects: ['zoom'] },
-      { id: 'c2p2', layout: 'PORTRAIT_DIALOGUE', background: bg(2), characters: [{ character: 'goku', side: 'left' }], dialogue: { speaker: 'Goku', text: '¡No dejaré que destruyan la Tierra!' } },
+      { id: 'c2p2', layout: 'PORTRAIT_DIALOGUE', background: bg(2), characters: [{ character: 'goku', side: 'center' }], dialogue: { speaker: 'Goku', text: '¡No dejaré que destruyan la Tierra!' } },
       { id: 'c2p3', layout: 'IMPACT', background: bg(2), title: '¡COMBATE!', subtitle: 'Goku vs Nappa', effects: ['flash', 'shake'], transition: 'slash' },
     ],
   },
