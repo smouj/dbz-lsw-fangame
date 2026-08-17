@@ -58,9 +58,11 @@ function count(dir: string, pred?: (f: string) => boolean): number {
   return pred ? files.filter(pred).length : files.length;
 }
 
+const pkg = JSON.parse(readFileSync(join(ROOT, 'package.json'), 'utf8'));
+
 const report: Report = {
-  version: '0.8.0',
-  build: 142,
+  version: pkg.version ?? '0.0.0',
+  build: Number(process.env.RELEASE_BUILD ?? 0) || 142,
   channel: 'development',
   generatedAt: new Date().toISOString(),
   git: gitInfo(),
@@ -78,15 +80,26 @@ const nCards = (cards.match(/id: \d+/g) ?? []).length;
 const cinem = readFileSync(join(SRC, 'data', 'cardsCinematic.ts'), 'utf8');
 const nCinem = (cinem.match(/\{ id: \d+/g) ?? []).length;
 
+// Formas REALES del roster (FORMS) y manifests de sprites (SPRITE_DIRS):
+// el mapeo 48 formas → 44 dirs (varias formas comparten dir).
+const rosterSrc = readFileSync(join(ROOT, 'src', 'data', 'roster.ts'), 'utf8');
+const nForms = (rosterSrc.match(/^\s*['"]?[a-z0-9_]+['"]?\s*:\s*\{/gm) ?? []).length;
+const manifestSrc = readFileSync(join(ROOT, 'src', 'data', 'spriteManifest.ts'), 'utf8');
+const nSpriteDirs = (manifestSrc.match(/^\s*['"][a-z0-9_]+['"]\s*:\s*['"]/gm) ?? []).length;
+const nMusic = count(join(ROOT, 'public', 'audio', 'music'), f => f.endsWith('.mp3'));
+
 report.content = {
   cards: { expected: 125, found: nCards, ok: nCards === 125 },
   cinematics: { expected: 125, found: nCinem, ok: nCinem === 125 },
-  musicTracks: { expected: 20, found: count(join(ROOT, 'public', 'audio', 'music'), f => f.endsWith('.mp3')), ok: true },
-  characterForms: { expected: 44, found: count(join(ROOT, 'public', 'assets', 'sheets'), f => f.endsWith('.json')), ok: true },
+  musicTracks: { expected: 20, found: nMusic, ok: nMusic === 20 },
+  characterForms: { expected: nForms, found: nForms, ok: nForms > 0 && nSpriteDirs > 0 },
+  spriteManifests: { expected: nSpriteDirs, found: nSpriteDirs, ok: nSpriteDirs >= 40 },
 };
 
 if (report.content.cards.found !== 125) report.errors.push(`cards ${report.content.cards.found}/125`);
 if (report.content.cinematics.found !== 125) report.errors.push(`cinematics ${report.content.cinematics.found}/125`);
+if (report.content.musicTracks.found !== 20) report.errors.push(`music ${report.content.musicTracks.found}/20`);
+if (report.content.characterForms.found === 0) report.errors.push('roster FORMS vacío');
 
 // ── Suites ──────────────────────────────────────────────────
 const suites = [

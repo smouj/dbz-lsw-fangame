@@ -12,6 +12,11 @@ import {
   CC_GAIN_PER_ATTACK_PHASE,
   type JointDeckState,
 } from '../src/battle/state';
+import {
+  initialState as engineInit, enterAttackPhase, drawFor, toCommand,
+  selectCommand, playCard, settleAfterAction, chooseDiscard, defendAction,
+  playEnemyCard, settleEnemyAction, type BattleEngineState,
+} from '../src/battle/engine';
 import { getCard } from '../src/data/cards';
 
 registerCardResolver(id => getCard(typeof id === 'number' ? id : Number(id)));
@@ -190,6 +195,75 @@ console.log('\n▸ Secuencia canónica (simulación de 2 Attack Phases)');
   check('6 cartas → HAND CHECK', needsDiscard(s));
   s = discardOne(s, 0);
   check('tras descartar: 5 cartas', s.hand.length === HAND_MAX_PERSISTENT);
+}
+
+// ── 8. BATTLE ENGINE: máquina de fases compartida ──
+console.log('\n▸ BattleEngine (fases/turnos)');
+{
+  // Deck solo de Stage Attacks (cc 0) → siempre hay carta asequible
+  const BARATO = [1, 1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 4, 1, 2, 3, 4, 1, 2, 3, 4];
+  const opts = { seed: 2026, deckIds: BARATO, eDeckIds: BARATO };
+  let s: BattleEngineState = engineInit(opts);
+  check('init: intro, turn 1, exchange 1', s.phase === 'intro' && s.turn === 1 && s.exchange === 1);
+  check('init: mano 3 + drawPile 17 (ambos lados)', s.deck.hand.length === 3 && s.deck.drawPile.length === 17 && s.eDeck.hand.length === 3);
+  // ATTACK_PHASE_ENTER: +3 CC y cue
+  s = enterAttackPhase(s, 'player');
+  check('attackPhase: +3 CC al atacante', s.player.cc === 3, `got ${s.player.cc}`);
+  check('attackPhase: cue ATTACK PHASE', s.cue?.title === 'ATTACK PHASE');
+  check('attackPhase: defensor sin +CC', s.enemy.cc === 0);
+  // JOINT_DRAW: roba 1 del drawPile del atacante
+  s = drawFor(s, 'player');
+  check('draw: carta real del drawPile en pantalla', s.drawCard !== null);
+  check('draw: mano 3 → 4', s.deck.hand.length === 4, `got ${s.deck.hand.length}`);
+  check('draw: eDeck intacto', s.eDeck.hand.length === 3);
+  // COMMAND: JOINT NO roba (abre la mano)
+  s = toCommand(s);
+  check('command: sin carta en vuelo', s.drawCard === null && s.phase === 'command');
+  s = selectCommand(s, 'JOINT');
+  check('JOINT → cardSelect sin robar', s.phase === 'cardSelect' && s.deck.hand.length === 4);
+  // Jugar carta real: hand → discardPile + coste CC
+  const idx = s.deck.hand.findIndex(c => c.cc <= s.player.cc);
+  const before = s.deck.hand.length;
+  if (idx >= 0) {
+    s = playCard(s, idx);
+    check('playCard: cinematic + carta fuera de hand', s.phase === 'cinematic' && s.deck.hand.length === before - 1);
+    check('playCard: carta en discardPile', s.deck.discardPile.length === 1);
+    check('playCard: CC descontado (stage = 0 CC → sin pérdida)', s.player.cc <= 3 && s.player.cc >= 0);
+  } else {
+    check('playCard: carta asequible en la mano (deck 1-20)', false, 'todas > 3 CC');
+  }
+  // HAND CHECK: 4 cartas → defend (sin discard)
+  s = settleAfterAction(s);
+  check('settle: 4 cartas → defend', s.phase === 'defend');
+  // Defensa → Exchange 2 con roles invertidos
+  s = defendAction(s, 'GUARD');
+  check('defend: exchange 2, atacante = enemigo', s.exchange === 2 && s.attacker === 'enemy');
+  check('defend: fase command (turno del rival)', s.phase === 'command');
+  // El enemigo ataca con SU mazo (autopilot): roba + juega
+  s = enterAttackPhase(s, 'enemy');
+  check('enemy attackPhase: +3 CC enemigo', s.enemy.cc === 3, `got ${s.enemy.cc}`);
+  s = drawFor(s, 'enemy');
+  check('enemy draw: eDeck hand 3 → 4', s.eDeck.hand.length === 4, `got ${s.eDeck.hand.length}`);
+  s = toCommand(s);
+  const eIdx = s.eDeck.hand.findIndex(c => c.cc <= s.enemy.cc);
+  if (eIdx >= 0) {
+    s = playEnemyCard(s, eIdx);
+    check('playEnemyCard: cinematic + eHand--', s.phase === 'cinematic' && s.eDeck.hand.length === 3);
+    check('playEnemyCard: carta en eDiscardPile', s.eDeck.discardPile.length === 1);
+    s = settleEnemyAction(s);
+    check('settleEnemy: defend', s.phase === 'defend');
+  } else {
+    check('playEnemyCard: carta asequible', false, 'todas > 3 CC en eHand');
+  }
+  // Defensa → nuevo TURN (exchange 1, turn 2, atacante jugador)
+  s = defendAction(s, 'MOVE');
+  check('defend: turno 2, exchange 1', s.turn === 2 && s.exchange === 1 && s.attacker === 'player');
+  // DISCARD_REQUIRED real: mano 6 → discard → 5
+  let d = { ...s, deck: { ...s.deck, hand: [...s.deck.hand, getCard(11)!, getCard(12)!, getCard(13)!] } };
+  d = settleAfterAction(d);
+  check('settle con 6 → fase discard', d.phase === 'discard');
+  d = chooseDiscard(d, 0);
+  check('chooseDiscard: 5 cartas y defend', d.deck.hand.length === 5 && d.phase === 'defend');
 }
 
 console.log(`\n═══ RESULTADO: ${passed} passed · ${failed} failed ═══`);

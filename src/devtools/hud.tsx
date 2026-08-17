@@ -25,11 +25,19 @@ import { downloadJson } from './spriteEditing';
 import { getCard, CARD_TYPE_NAMES, CARD_COLORS, CardDef } from '../data/cards';
 import { cardIconUrl } from '../data/icons';
 import { FitArt } from '../components/FitArt';
-// ── EL MISMO MOTOR (reglas reales, nada paralelo) ──
+// ── EL MISMO MOTOR (reglas + máquina de fases, nada paralelo) ──
 import {
-  createBattleDeck, drawOne, playJoint, discardOne, needsDiscard,
-  registerCardResolver, seededRng, JointDeckState, HAND_MAX_PERSISTENT,
+  registerCardResolver, HAND_MAX_PERSISTENT,
 } from '../battle/state';
+import {
+  initialState as engInit, enterAttackPhase as engEnterAttackPhase,
+  drawFor as engDrawFor, toCommand as engToCommand,
+  selectCommand as engSelectCommand, playCard as engPlayCard,
+  settleAfterAction as engSettle, chooseDiscard as engChooseDiscard,
+  defendAction as engDefendAction, playEnemyCard as engPlayEnemyCard,
+  settleEnemyAction as engSettleEnemy,
+  type BattleEngineState, type EnginePhase, type AttackerSide,
+} from '../battle/engine';
 import { CARD_FRAME_BY_TYPE, CARD_FRAME_SELECTED, CARD_FRAME_DISABLED } from '../data/cardVisuals';
 import { HUD_ASSET_REGISTRY } from '../data/hudAssets';
 
@@ -44,59 +52,29 @@ const DEMO_HP = 1000;
 
 const GROUPS = ['Colores', 'HUD', 'Cartas', 'Posición', 'Escala', 'Tipografía'];
 
-// ═══ Fases del motor (las mismas del juego real) ═══
-type SimPhase =
-  | 'intro' | 'attackPhase' | 'draw' | 'command' | 'cardSelect'
-  | 'basic' | 'limitSelect' | 'stageInput' | 'defend' | 'moveSelect'
-  | 'discard' | 'cinematic' | 'win';
-
-interface SimSide {
-  cc: number;
-  hp: number;
-}
-
-interface SimState {
-  phase: SimPhase;
-  deck: JointDeckState;      // mazo REAL del jugador
-  eDeck: JointDeckState;     // mazo REAL del enemigo
-  player: SimSide;
-  enemy: SimSide;
-  turn: number;
-  exchange: 1 | 2;
-  attacker: 'player' | 'enemy';
-  cue: { id: number; title: string; sub: string } | null;
-  drawCard: { card: CardDef; nonce: number } | null;  // carta REAL robada
-  played: CardDef | null;    // carta en cinemática
-  selectedIdx: number | null;
-  winner: 'player' | 'enemy' | null;
-  seed: number;
-}
-
-function initialState(seed: number): SimState {
+// ═══ EL MOTOR COMPARTIDO (src/battle/engine.ts): las fases, el robo, el
+// HAND CHECK y la defensa son las MISMAS transiciones que usa el juego
+// real. Este panel solo cambia: personajes demo, seed, velocidad, reset.
+function makeInitialState(seed: number): BattleEngineState {
   const usable = (c: CardDef) => !c.compatible || c.compatible.length === 0 || c.compatible.includes(getForm(P_FORM)?.character ?? 'goku');
-  return {
-    phase: 'intro',
-    deck: createBattleDeck([...Array.from({ length: 20 }, (_, i) => i + 1)], { seed, usable }),
-    eDeck: createBattleDeck([...Array.from({ length: 20 }, (_, i) => i + 21)], { seed: seed + 999, usable }),
-    player: { cc: 4, hp: DEMO_HP },
-    enemy: { cc: 4, hp: DEMO_HP },
-    turn: 1,
-    exchange: 1,
-    attacker: 'player',
-    cue: null,
-    drawCard: null,
-    played: null,
-    selectedIdx: null,
-    winner: null,
+  return engInit({
     seed,
-  };
+    deckIds: Array.from({ length: 20 }, (_, i) => i + 1),
+    eDeckIds: Array.from({ length: 20 }, (_, i) => i + 21),
+    usable,
+    playerHp: DEMO_HP,
+    enemyHp: DEMO_HP,
+    initialCc: 4,
+  });
 }
 
-// ═══ CONTROLADOR: mismo motor (battle/state) + presentación ═══
+// ═══ CONTROLADOR: MISMO motor (engine.ts) + solo presentación (timers) ═══
+// Las transiciones (ATTACK_PHASE, robo, HAND CHECK, defensa, exchange) son
+// las funciones PURAS de src/battle/engine.ts — idénticas a las del juego.
 function useBattleSim() {
   const seedRef = useRef(20260817);
   const speedRef = useRef(1);
-  const [state, setState] = useState<SimState>(() => initialState(seedRef.current));
+  const [state, setState] = useState<BattleEngineState>(() => makeInitialState(seedRef.current));
   const stateRef = useRef(state);
   stateRef.current = state;
   const timers = useRef<Set<number>>(new Set());
@@ -110,86 +88,43 @@ function useBattleSim() {
 
   const reset = () => {
     clearTimers();
-    setState(initialState(seedRef.current));
+    setState(makeInitialState(seedRef.current));
     setRunning(false);
   };
 
   const setSeed = (seed: number) => { seedRef.current = seed; reset(); };
   const setSpeed = (v: number) => { speedRef.current = v; };
 
-  // 1) ATTACK_PHASE_ENTER → +3 CC → robo REAL del drawPile → animación → COMMAND
-  const enterAttackPhase = (attacker: 'player' | 'enemy') => {
-    setState(s => {
-      const side = attacker === 'player' ? s.player : s.enemy;
-      const setSide = (p: SimSide): SimSide => ({ ...p, cc: Math.min(DEMO_MAX_CC, p.cc + 3) });
-      return {
-        ...s, attacker, cue: { id: Date.now(), title: 'ATTACK PHASE', sub: `${attacker === 'player' ? 'GOKU' : 'PICCOLO'} +3 CC` },
-        player: attacker === 'player' ? setSide(side) : s.player,
-        enemy: attacker === 'enemy' ? setSide(side) : s.enemy,
-        phase: 'attackPhase',
-      };
-    });
-    // Robo real: la carta sale del drawPile (nunca re-sorteo del deck original)
-    later(() => {
-      setState(s => {
-        const res = drawOne(attacker === 'player' ? s.deck : s.eDeck);
-        return {
-          ...s,
-          deck: attacker === 'player' ? res.state : s.deck,
-          eDeck: attacker === 'enemy' ? res.state : s.eDeck,
-          drawCard: res.card ? { card: res.card, nonce: Date.now() } : null,
-          phase: 'draw',
-        };
-      });
-    }, 500);
-    // Fin de la animación → COMMAND (sin mano visible todavía)
-    later(() => {
-      setState(s => ({ ...s, drawCard: null, cue: null, phase: 'command' }));
-    }, 1900);
+  // ATTACK_PHASE_ENTER (engine): +3 CC → robo REAL del drawPile → COMMAND
+  const enterAttackPhase = (attacker: AttackerSide) => {
+    setState(s => engEnterAttackPhase(s, attacker));
+    later(() => setState(s => engDrawFor(s, attacker)), 500);
+    later(() => setState(s => engToCommand(s)), 1900);
   };
 
-  // 2) COMMAND: el jugador elige rama (la mano NO se ve aún)
+  // COMMAND → rama (JOINT abre la mano; nunca roba)
   const selectCommand = (cmd: 'JOINT' | 'BASIC' | 'LIMIT') => {
-    setState(s => ({ ...s, phase: cmd === 'JOINT' ? 'cardSelect' : cmd === 'BASIC' ? 'basic' : 'limitSelect' }));
+    setState(s => engSelectCommand(s, cmd));
   };
 
-  // 3) Jugar una JOINT real: sale de hand → discardPile; HAND CHECK real
+  // Jugar JOINT real (engine): hand → discardPile; luego HAND CHECK real
   const playCard = (idx: number) => {
-    setState(s => {
-      const card = s.deck.hand[idx];
-      if (!card || s.player.cc < card.cc) return s;
-      return {
-        ...s,
-        deck: playJoint(s.deck, idx),   // consumible real → discardPile
-        player: { ...s.player, cc: s.player.cc - card.cc },
-        played: card,
-        selectedIdx: idx,
-        phase: 'cinematic',
-      };
-    });
-    later(() => {
-      setState(s => {
-        if (needsDiscard(s.deck)) return { ...s, played: null, selectedIdx: null, phase: 'discard' };
-        return { ...s, played: null, selectedIdx: null, phase: 'defend' };
-      });
-    }, 2000);
+    setState(s => engPlayCard(s, idx));
+    later(() => setState(s => engSettle(s)), 2000);
   };
 
-  // 4) DISCARD_REQUIRED: el jugador ELIGE la carta (nunca automático)
+  // DISCARD_REQUIRED (engine): el jugador ELIGE la carta
   const chooseDiscard = (idx: number) => {
-    setState(s => ({ ...s, deck: discardOne(s.deck, idx), phase: 'defend' }));
+    setState(s => engChooseDiscard(s, idx));
   };
 
-  // 5) Defensa (GUARD demo) → intercambio (roles invertidos) o nuevo TURN
+  // Defensa (engine) → Exchange 2 o nuevo TURN → siguiente ATTACK PHASE
   const defend = (action: 'GUARD' | 'MOVE') => {
-    let nextAttack: 'player' | 'enemy' = 'enemy';
+    let nextAttack: AttackerSide = 'enemy';
     setState(s => {
-      if (s.exchange === 1) {
-        nextAttack = 'enemy';                       // Exchange 2: roles invertidos
-        return { ...s, phase: 'command', exchange: 2, attacker: 'enemy' };
-      }
-      nextAttack = 'player';                        // Nuevo TURN
-      return { ...s, phase: 'command', turn: s.turn + 1, exchange: 1, attacker: 'player' };
+      const n = engDefendAction(s, action);
+      nextAttack = n.attacker;
+      return n;
     });
     later(() => enterAttackPhase(nextAttack), 600);
   };
@@ -202,7 +137,7 @@ function useBattleSim() {
   const runCanonical = () => {
     if (running) { clearTimers(); setRunning(false); setState(s => ({ ...s, drawCard: null, cue: null, phase: 'command' })); return; }
     clearTimers();
-    setState(initialState(seedRef.current));
+    setState(makeInitialState(seedRef.current));
     setRunning(true);
     // Turno 1 — Exchange 1: Goku ataca
     later(() => enterAttackPhase('player'), 2200);              // INTRO → ATTACK PHASE (+3 CC)
@@ -234,23 +169,11 @@ function useBattleSim() {
     later(() => setRunning(false), 18200);
   };
 
-  // El enemigo juega una carta de SU mazo real (autopilot de la demo)
+  // El enemigo juega una carta de SU mazo real (autopilot) — transición
+  // del MISMO engine (playEnemyCard/settleEnemyAction).
   const playEnemyCard = (idx: number) => {
-    setState(s => {
-      const card = s.eDeck.hand[idx];
-      if (!card || s.enemy.cc < card.cc) return s;
-      return {
-        ...s,
-        eDeck: playJoint(s.eDeck, idx),
-        enemy: { ...s.enemy, cc: s.enemy.cc - card.cc },
-        played: card,
-        attacker: 'enemy',
-        phase: 'cinematic',
-      };
-    });
-    later(() => {
-      setState(s => (needsDiscard(s.eDeck) ? s : { ...s, played: null, phase: 'defend' }));
-    }, 2000);
+    setState(s => engPlayEnemyCard(s, idx));
+    later(() => setState(s => engSettleEnemy(s)), 2000);
   };
 
   return { state, running, reset, setSeed, setSpeed, enterAttackPhase, selectCommand, playCard, chooseDiscard, defend, runCanonical };
