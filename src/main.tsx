@@ -3262,9 +3262,9 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
           // Ventana de contraataque: A≈0.4s · B≈0.15s (HYPOTHESIS).
           const counterAOpen = inCounter && q.counterFrames <= COUNTER_A_FRAMES;
           const counterBOpen = inCounter && q.counterFrames <= COUNTER_B_FRAMES;
-          // Iconos del paquete (Controllers & Keyboard + 1-bit): A/B son los
-          // botones del controller (btn_a/btn_b), las direcciones las flechas.
-          const keyIcon = (k: StageKey) => k === 'UP' ? 'arrow_up' : k === 'DOWN' ? 'arrow_down' : k === 'LEFT' ? 'arrow_left' : k === 'RIGHT' ? 'arrow_right' : k === 'A' ? 'btn_a' : 'btn_b';
+          // Iconos del paquete ORGANIZADO (DBZ_LSW_UI_AUX_ASSETS_V1): teclas
+          // reales del teclado para A/B (Q/E) y las direcciones (↑/↓ + flechas).
+          const keyIcon = (k: StageKey) => k === 'UP' ? 'key_up' : k === 'DOWN' ? 'key_down' : k === 'LEFT' ? 'arrow_left' : k === 'RIGHT' ? 'arrow_right' : k === 'A' ? 'key_q' : 'key_e';
           const keyLabel = (k: StageKey) => k === 'UP' ? 'W / ↑' : k === 'DOWN' ? 'S / ↓' : k === 'LEFT' ? 'A / ←' : k === 'RIGHT' ? 'D / →' : k === 'A' ? 'A (Q)' : 'B (E)';
           return (
           <div className={`stage-input-area ${frozen ? 'failed' : ''}`}>
@@ -3306,10 +3306,10 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
                 {inCounter && (
                   <div className="stage-recover-help">
                     <div className={`stage-recover-prompt ${counterAOpen ? 'window-open' : 'window-closed'}`}>
-                      <img src="/assets/ui/qte/btn_a.png" alt="A" className="qte-key-sm" /> PROTEGERSE (A)
+                      <img src="/assets/ui/qte/controller/xbox/xbox_a.png" alt="A" className="qte-key-sm" /> PROTEGERSE (A)
                     </div>
                     <div className={`stage-recover-prompt ${counterBOpen ? 'window-open' : 'window-closed'}`}>
-                      <img src="/assets/ui/qte/btn_b.png" alt="B" className="qte-key-sm" /> REPARAR (B)
+                      <img src="/assets/ui/qte/controller/xbox/xbox_b.png" alt="B" className="qte-key-sm" /> REPARAR (B)
                     </div>
                   </div>
                 )}
