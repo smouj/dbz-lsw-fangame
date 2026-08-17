@@ -39,14 +39,14 @@
       {
         "name": "kid_trunks_super_saiyan_move_back_00",
         "file": "kid_trunks_super_saiyan_move_back_00.png",
-        "w": 31,
-        "h": 40
+        "w": 27,
+        "h": 43
       },
       {
         "name": "kid_trunks_super_saiyan_move_back_01",
         "file": "kid_trunks_super_saiyan_move_back_01.png",
-        "w": 27,
-        "h": 43
+        "w": 31,
+        "h": 40
       }
     ]
   },
@@ -484,8 +484,8 @@
       {
         "name": "kid_trunks_super_saiyan_move_back_00",
         "file": "kid_trunks_super_saiyan_move_back_00.png",
-        "w": 31,
-        "h": 40
+        "w": 27,
+        "h": 43
       },
       {
         "name": "kid_trunks_super_saiyan_guard_01",
@@ -496,8 +496,8 @@
       {
         "name": "kid_trunks_super_saiyan_move_back_00",
         "file": "kid_trunks_super_saiyan_move_back_00.png",
-        "w": 31,
-        "h": 40
+        "w": 27,
+        "h": 43
       }
     ]
   },

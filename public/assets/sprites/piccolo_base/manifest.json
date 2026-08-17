@@ -39,14 +39,14 @@
       {
         "name": "piccolo_base_move_back_00",
         "file": "piccolo_base_move_back_00.png",
-        "w": 32,
-        "h": 37
+        "w": 28,
+        "h": 40
       },
       {
         "name": "piccolo_base_move_back_01",
         "file": "piccolo_base_move_back_01.png",
-        "w": 28,
-        "h": 40
+        "w": 32,
+        "h": 37
       }
     ]
   },
@@ -544,8 +544,8 @@
       {
         "name": "piccolo_base_move_back_00",
         "file": "piccolo_base_move_back_00.png",
-        "w": 32,
-        "h": 37
+        "w": 28,
+        "h": 40
       },
       {
         "name": "piccolo_base_guard_01",
@@ -556,8 +556,8 @@
       {
         "name": "piccolo_base_move_back_00",
         "file": "piccolo_base_move_back_00.png",
-        "w": 32,
-        "h": 37
+        "w": 28,
+        "h": 40
       }
     ]
   },

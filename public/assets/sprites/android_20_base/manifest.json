@@ -20,14 +20,14 @@
       {
         "name": "android_20_base_move_front_00",
         "file": "android_20_base_move_front_00.png",
-        "w": 29,
-        "h": 45
+        "w": 32,
+        "h": 43
       },
       {
         "name": "android_20_base_move_front_01",
         "file": "android_20_base_move_front_01.png",
-        "w": 32,
-        "h": 43
+        "w": 29,
+        "h": 45
       }
     ]
   },

@@ -20,14 +20,14 @@
       {
         "name": "nappa_base_move_front_00",
         "file": "nappa_base_move_front_00.png",
-        "w": 28,
-        "h": 39
+        "w": 32,
+        "h": 36
       },
       {
         "name": "nappa_base_move_front_01",
         "file": "nappa_base_move_front_01.png",
-        "w": 32,
-        "h": 36
+        "w": 28,
+        "h": 39
       }
     ]
   },

@@ -20,14 +20,14 @@
       {
         "name": "vegito_ssj_move_front_00",
         "file": "vegito_ssj_move_front_00.png",
-        "w": 32,
-        "h": 43
+        "w": 28,
+        "h": 46
       },
       {
         "name": "vegito_ssj_move_front_01",
         "file": "vegito_ssj_move_front_01.png",
-        "w": 28,
-        "h": 46
+        "w": 32,
+        "h": 43
       }
     ]
   },

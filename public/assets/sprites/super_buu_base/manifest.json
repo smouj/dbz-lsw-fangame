@@ -39,14 +39,14 @@
       {
         "name": "super_buu_base_move_back_00",
         "file": "super_buu_base_move_back_00.png",
-        "w": 32,
-        "h": 39
+        "w": 28,
+        "h": 42
       },
       {
         "name": "super_buu_base_move_back_01",
         "file": "super_buu_base_move_back_01.png",
-        "w": 28,
-        "h": 42
+        "w": 32,
+        "h": 39
       }
     ]
   },
@@ -508,8 +508,8 @@
       {
         "name": "super_buu_base_move_back_00",
         "file": "super_buu_base_move_back_00.png",
-        "w": 32,
-        "h": 39
+        "w": 28,
+        "h": 42
       },
       {
         "name": "super_buu_base_guard_01",
@@ -520,8 +520,8 @@
       {
         "name": "super_buu_base_move_back_00",
         "file": "super_buu_base_move_back_00.png",
-        "w": 32,
-        "h": 39
+        "w": 28,
+        "h": 42
       }
     ]
   },

@@ -20,14 +20,14 @@
       {
         "name": "jeice_base_move_front_00",
         "file": "jeice_base_move_front_00.png",
-        "w": 28,
-        "h": 42
+        "w": 32,
+        "h": 39
       },
       {
         "name": "jeice_base_move_front_01",
         "file": "jeice_base_move_front_01.png",
-        "w": 32,
-        "h": 39
+        "w": 28,
+        "h": 42
       }
     ]
   },

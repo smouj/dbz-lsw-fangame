@@ -20,14 +20,14 @@
       {
         "name": "cell_semi_perfect_form_move_front_00",
         "file": "cell_semi_perfect_form_move_front_00.png",
-        "w": 29,
-        "h": 45
+        "w": 32,
+        "h": 42
       },
       {
         "name": "cell_semi_perfect_form_move_front_01",
         "file": "cell_semi_perfect_form_move_front_01.png",
-        "w": 32,
-        "h": 42
+        "w": 29,
+        "h": 45
       }
     ]
   },

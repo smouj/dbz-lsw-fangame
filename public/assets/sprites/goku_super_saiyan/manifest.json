@@ -39,14 +39,14 @@
       {
         "name": "goku_super_saiyan_move_back_00",
         "file": "goku_super_saiyan_move_back_00.png",
-        "w": 32,
-        "h": 43
+        "w": 28,
+        "h": 46
       },
       {
         "name": "goku_super_saiyan_move_back_01",
         "file": "goku_super_saiyan_move_back_01.png",
-        "w": 28,
-        "h": 46
+        "w": 32,
+        "h": 43
       }
     ]
   },
@@ -514,8 +514,8 @@
       {
         "name": "goku_super_saiyan_move_back_00",
         "file": "goku_super_saiyan_move_back_00.png",
-        "w": 32,
-        "h": 43
+        "w": 28,
+        "h": 46
       },
       {
         "name": "goku_super_saiyan_guard_01",
@@ -526,8 +526,8 @@
       {
         "name": "goku_super_saiyan_move_back_00",
         "file": "goku_super_saiyan_move_back_00.png",
-        "w": 32,
-        "h": 43
+        "w": 28,
+        "h": 46
       }
     ]
   },

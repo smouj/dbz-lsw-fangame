@@ -20,14 +20,14 @@
       {
         "name": "goten_base_move_front_00",
         "file": "goten_base_move_front_00.png",
-        "w": 26,
-        "h": 39
+        "w": 31,
+        "h": 38
       },
       {
         "name": "goten_base_move_front_01",
         "file": "goten_base_move_front_01.png",
-        "w": 31,
-        "h": 38
+        "w": 26,
+        "h": 39
       }
     ]
   },

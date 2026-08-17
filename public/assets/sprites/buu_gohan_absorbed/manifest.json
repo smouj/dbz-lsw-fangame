@@ -20,14 +20,14 @@
       {
         "name": "buu_gohan_absorbed_move_front_00",
         "file": "buu_gohan_absorbed_move_front_00.png",
-        "w": 28,
-        "h": 42
+        "w": 32,
+        "h": 39
       },
       {
         "name": "buu_gohan_absorbed_move_front_01",
         "file": "buu_gohan_absorbed_move_front_01.png",
-        "w": 32,
-        "h": 39
+        "w": 28,
+        "h": 42
       }
     ]
   },

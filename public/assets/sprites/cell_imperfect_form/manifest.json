@@ -21,13 +21,13 @@
         "name": "cell_imperfect_form_move_front_00",
         "file": "cell_imperfect_form_move_front_00.png",
         "w": 32,
-        "h": 45
+        "h": 44
       },
       {
         "name": "cell_imperfect_form_move_front_01",
         "file": "cell_imperfect_form_move_front_01.png",
         "w": 32,
-        "h": 44
+        "h": 45
       }
     ]
   },

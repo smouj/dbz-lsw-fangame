@@ -20,14 +20,14 @@
       {
         "name": "guldo_base_move_front_00",
         "file": "guldo_base_move_front_00.png",
-        "w": 26,
-        "h": 36
+        "w": 31,
+        "h": 33
       },
       {
         "name": "guldo_base_move_front_01",
         "file": "guldo_base_move_front_01.png",
-        "w": 31,
-        "h": 33
+        "w": 26,
+        "h": 36
       }
     ]
   },

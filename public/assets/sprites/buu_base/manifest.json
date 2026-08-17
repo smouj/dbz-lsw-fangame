@@ -20,14 +20,14 @@
       {
         "name": "buu_base_move_front_00",
         "file": "buu_base_move_front_00.png",
-        "w": 30,
-        "h": 40
+        "w": 32,
+        "h": 37
       },
       {
         "name": "buu_base_move_front_01",
         "file": "buu_base_move_front_01.png",
-        "w": 32,
-        "h": 37
+        "w": 30,
+        "h": 40
       }
     ]
   },

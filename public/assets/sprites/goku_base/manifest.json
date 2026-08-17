@@ -20,14 +20,14 @@
       {
         "name": "goku_base_move_front_00",
         "file": "goku_base_move_front_00.png",
-        "w": 29,
-        "h": 43
+        "w": 32,
+        "h": 41
       },
       {
         "name": "goku_base_move_front_01",
         "file": "goku_base_move_front_01.png",
-        "w": 32,
-        "h": 41
+        "w": 29,
+        "h": 43
       }
     ]
   },

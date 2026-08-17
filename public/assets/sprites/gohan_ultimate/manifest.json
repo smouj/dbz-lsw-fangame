@@ -20,14 +20,14 @@
       {
         "name": "gohan_ultimate_move_front_00",
         "file": "gohan_ultimate_move_front_00.png",
-        "w": 28,
-        "h": 45
+        "w": 32,
+        "h": 42
       },
       {
         "name": "gohan_ultimate_move_front_01",
         "file": "gohan_ultimate_move_front_01.png",
-        "w": 32,
-        "h": 42
+        "w": 28,
+        "h": 45
       }
     ]
   },

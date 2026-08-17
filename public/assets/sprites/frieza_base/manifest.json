@@ -20,14 +20,14 @@
       {
         "name": "frieza_base_move_front_00",
         "file": "frieza_base_move_front_00.png",
-        "w": 30,
-        "h": 39
+        "w": 32,
+        "h": 36
       },
       {
         "name": "frieza_base_move_front_01",
         "file": "frieza_base_move_front_01.png",
-        "w": 32,
-        "h": 36
+        "w": 30,
+        "h": 39
       }
     ]
   },
