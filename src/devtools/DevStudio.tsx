@@ -6,9 +6,9 @@
 // ═══════════════════════════════════════════════════════════
 import { useState, useEffect } from 'react';
 import {
-  Activity, ArrowLeft, Boxes, Brush, CheckCircle2, Clapperboard,
+  Activity, ArrowLeft, Boxes, Brush, CheckCircle2,
   Film, Gamepad2, Gauge, Grid2X2, Images, LayoutDashboard,
-  Search, Sparkles, Swords, TableProperties, Users, type LucideIcon,
+  Search, Swords, TableProperties, Users, type LucideIcon,
 } from 'lucide-react';
 import { DashboardModule } from './dashboard';
 import { CharactersModule } from './characters';
@@ -16,22 +16,19 @@ import { CardsModule } from './cards';
 import { SpritesModule } from './sprites';
 import { PositionsModule } from './positions';
 import { ValidationModule } from './validation';
-import { BattleLabModule } from './battlelab';
 import { StoryModule } from './story';
 import { ResearchModule } from './research';
 import { AnimationModule } from './animation';
+import { LabModule } from './lab';
 import { PixelArtModule } from './pixelart';
 import { HudModule } from './hud';
 import { FacingModule } from './facing';
 import { SheetsModule } from './sheets';
-import { PixiModule } from './pixi';
-import { PixiSequenceModule } from './pixiSequence';
 
 export type DevModuleId =
   | 'dashboard' | 'characters' | 'cards' | 'sprites' | 'animation'
   | 'pixelart' | 'hud' | 'facing' | 'sheets'
-  | 'battlelab' | 'story' | 'validation' | 'research' | 'positions'
-  | 'pixi' | 'pixiSequence';
+  | 'lab' | 'story' | 'validation' | 'research' | 'positions';
 
 interface DevModuleDef {
   id: DevModuleId;
@@ -50,13 +47,11 @@ export const DEV_MODULES: DevModuleDef[] = [
   { id: 'pixelart', label: 'Pixel Art', icon: Brush, desc: 'Editor de píxeles: pinta/borra/corrige frames' },
   { id: 'facing', label: 'Facing', icon: Activity, desc: 'Orientación de chibis overworld: voltea y guarda' },
   { id: 'hud', label: 'HUD', icon: Gauge, desc: 'Visualizador del gameplay + editor del tema HUD' },
-  { id: 'battlelab', label: 'Battle Lab', icon: Swords, desc: 'Combate instantáneo real (Versus/Historia) + depurador' },
+  { id: 'lab', label: 'Combat Lab', icon: Swords, desc: 'Combate real + renderer Pixi en vivo + secuencias deterministas' },
   { id: 'positions', label: 'Positions', icon: Grid2X2, desc: 'Laboratorio de posiciones Air/Ground x Front/Back' },
   { id: 'story', label: 'Story', icon: Gamepad2, desc: 'Capítulos, viñetas y mazos de jefes' },
   { id: 'validation', label: 'Validation', icon: CheckCircle2, desc: 'Integridad de datos y cobertura' },
   { id: 'research', label: 'Research', icon: Search, desc: 'ROM / manual / fuentes' },
-  { id: 'pixi', label: 'Pixi Lab', icon: Clapperboard, desc: 'Renderer PixiJS 8 + reloj GBC único' },
-  { id: 'pixiSequence', label: 'Pixi Seq', icon: Sparkles, desc: 'Pipeline BattleTimeline a presentación determinista' },
 ];
 
 const DEV_MODULE_STORAGE_KEY = 'dbzlsw_dev_module';
@@ -193,13 +188,11 @@ export function DevStudio({ onExit, onLaunchBattle }: {
           {module === 'pixelart' && <PixelArtModule target={pixelTarget} />}
           {module === 'facing' && <FacingModule />}
           {module === 'hud' && <HudModule />}
-          {module === 'battlelab' && <BattleLabModule onLaunchBattle={onLaunchBattle} />}
+          {module === 'lab' && <LabModule onLaunchBattle={onLaunchBattle} />}
           {module === 'positions' && <PositionsModule />}
           {module === 'story' && <StoryModule />}
           {module === 'validation' && <ValidationModule />}
           {module === 'research' && <ResearchModule />}
-          {module === 'pixi' && <PixiModule />}
-          {module === 'pixiSequence' && <PixiSequenceModule />}
         </div>
       </main>
     </div>

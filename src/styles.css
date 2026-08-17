@@ -8882,3 +8882,68 @@ button:focus-visible, .chapter-node:focus-visible {
   max-width: 100%;
 }
 .dev-atomic-file { font-size: 9px; color: #7c8694; font-family: ui-monospace, Menlo, Consolas, monospace; }
+
+/* ── Dev Studio: Combat Lab (tabs internos) ── */
+.dev-lab-tabs {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+  background: #14181e;
+  border: 1px solid #262b33;
+  border-radius: 8px;
+  padding: 8px;
+}
+.dev-lab-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  background: #181c22;
+  border: 1px solid #262b33;
+  border-radius: 6px;
+  color: #aab2bf;
+  font-size: 12px;
+  cursor: pointer;
+  font-family: inherit;
+}
+.dev-lab-tab:hover { border-color: #3a4250; color: #e8edf4; }
+.dev-lab-tab.active {
+  border-color: #d8a830;
+  background: #2a2415;
+  color: #ffe9a8;
+}
+.dev-lab-body { min-width: 0; }
+
+/* ── Dev Studio: secciones colapsables (menos scroll) ── */
+.dev-collapse {
+  margin-top: 14px;
+  border: 1px solid #262b33;
+  border-radius: 8px;
+  background: #151a21;
+  overflow: hidden;
+}
+.dev-collapse > summary {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 700;
+  color: #e8edf4;
+  background: #1c2432;
+  list-style: none;
+  user-select: none;
+}
+.dev-collapse > summary::-webkit-details-marker { display: none; }
+.dev-collapse > summary::before {
+  content: '▸';
+  color: #d8a830;
+  font-size: 11px;
+  transition: transform .15s ease;
+}
+.dev-collapse[open] > summary::before { transform: rotate(90deg); }
+.dev-collapse > summary:hover { background: #212a3a; }
+.dev-collapse > .dev-collapse-body { padding: 10px 12px 12px; }
+.dev-collapse .dev-atomic-section { margin-top: 0; }

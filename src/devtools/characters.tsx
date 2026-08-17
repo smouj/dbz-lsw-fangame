@@ -148,9 +148,10 @@ export function CharactersModule({ onOpenModule }: {
             </div>
           </div>
 
-          {/* Assets */}
-          <div className="dev-assets">
-            <h3>Assets</h3>
+          {/* Assets (colapsable) */}
+          <details className="dev-collapse" open>
+            <summary>Assets — sprites, overworld y sheets</summary>
+            <div className="dev-collapse-body">
             <div className="dev-asset-grid">
               <AssetCell label="Portrait" src={portrait} />
               <AssetCell label="Overworld" src={overworldUrl(form.id)} />
@@ -181,8 +182,16 @@ export function CharactersModule({ onOpenModule }: {
                 <div className="dev-semantic-pose-row">{COMBAT_POSE_ORDER.join(' · ')}</div>
               </div>
             )}
-            {form.sheet && <AtomicFrames sheet={form.sheet} />}
-          </div>
+            </div>
+          </details>
+          {form.sheet && (
+            <details className="dev-collapse">
+              <summary>Frames atómicos V9 (sheet canónico)</summary>
+              <div className="dev-collapse-body">
+                <AtomicFrames sheet={form.sheet} />
+              </div>
+            </details>
+          )}
         </div>
       </div>
     </div>
