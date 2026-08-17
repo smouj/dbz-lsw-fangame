@@ -156,7 +156,9 @@ export default function GameConfigPage() {
         <div className="cfg-grid">
           {Object.entries(GAMEPLAY_CONFIG).map(([k, v]) => (
             <KeyVal key={k} k={k} canon={GAMEPLAY_CANON_FIELDS.has(k as never)}
-              v={typeof v === 'object' ? JSON.stringify(v) : typeof v === 'boolean' ? fmtBool(v) : String(v)} />
+              v={typeof v === 'object'
+                ? Object.entries(v as Record<string, number>).map(([kk, vv]) => `${kk}=${vv}s`).join(' · ')
+                : typeof v === 'boolean' ? fmtBool(v) : String(v)} />
           ))}
         </div>
         <div className="dev-muted" style={{ marginTop: 8 }}>

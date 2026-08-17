@@ -338,6 +338,31 @@ try {
   check('v9:semantic_registry', false, String(e));
 }
 
+// 10c: POSES RUNTIME RESOLUBLES por forma (fallback del motor incluido)
+// ─────────────────────────────────────────────────────────────
+try {
+  const sprites = path.join(process.cwd(), 'public', 'assets', 'sprites');
+  const formDirs2 = fs.readdirSync(sprites).filter(d => d !== 'effects' && fs.existsSync(path.join(sprites, d, 'manifest.json')));
+  const REQ = ['idle', 'move_front', 'move_back', 'guard', 'attack_fwd', 'attack_ud', 'hurt', 'beam_charge', 'beam_fire'];
+  const FALLBACK: Record<string, string[]> = {
+    beam_fire: ['beam_fire', 'beam_charge', 'attack_fwd', 'idle'],
+    attack_ud: ['attack_ud', 'attack_fwd', 'idle'],
+  };
+  let unresolved = 0; const badForms: string[] = [];
+  for (const d of formDirs2) {
+    const m = JSON.parse(fs.readFileSync(path.join(sprites, d, 'manifest.json'), 'utf8'));
+    const poses = Object.keys(m);
+    for (const p of REQ) {
+      const chain = FALLBACK[p] ?? [p];
+      const ok = chain.some(c => poses.includes(c) && (m[c]?.frames?.length ?? 0) > 0);
+      if (!ok) { unresolved++; badForms.push(`${d}:${p}`); }
+    }
+  }
+  check('v9:runtime_poses_resolvable', unresolved === 0, unresolved === 0 ? 'todas las formas con las 9 poses requeridas' : badForms.slice(0, 6).join(', '));
+} catch (e) {
+  check('v9:runtime_poses_resolvable', false, String(e));
+}
+
 // 11: SHA spot-check
 try {
   const sums = fs.readFileSync(path.join(V9, 'SHA256SUMS.txt'), 'utf8');
