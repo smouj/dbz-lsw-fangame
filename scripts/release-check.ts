@@ -38,7 +38,9 @@ function runSuite(name: string, cmd: string): SuiteResult {
 
 function gitInfo() {
   const sh = (cmd: string) => { try { return execSync(cmd, { cwd: ROOT, encoding: 'utf8' }).trim(); } catch { return '?'; } };
-  const dirty = sh('git status --porcelain').length > 0;
+  // Solo archivos TRACKEADOS: los bundles temporales de esbuild (.*.mjs)
+  // son untracked por diseño y no afectan a la reproducibilidad del commit.
+  const dirty = sh('git status --porcelain --untracked-files=no').length > 0;
   return { branch: sh('git rev-parse --abbrev-ref HEAD'), commit: sh('git rev-parse --short HEAD'), dirty };
 }
 
