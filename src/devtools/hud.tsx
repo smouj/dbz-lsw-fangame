@@ -81,6 +81,7 @@ export function HudModule() {
   const [theme, setTheme] = useState<HudTheme>(() => currentHudTheme());
   const [status, setStatus] = useState('');
   const [view, setView] = useState<HudView>('COMMAND');
+  const [dlgSide, setDlgSide] = useState<'left' | 'right'>('left');
 
   const player = useMemo(() => getForm(P_FORM), []);
   const enemy = useMemo(() => getForm(E_FORM), []);
@@ -148,6 +149,13 @@ export function HudModule() {
             {v.label}
           </button>
         ))}
+        {view === 'DIALOGO' && (
+          <button className={`dev-hud-view-chip side-toggle ${dlgSide === 'right' ? 'active' : ''}`}
+            onClick={() => setDlgSide(s => (s === 'left' ? 'right' : 'left'))}
+            title="Alterna el lado del personaje que habla (izquierda/derecha)">
+            Habla: {dlgSide === 'left' ? 'IZQUIERDA (Goku)' : 'DERECHA (Cell)'}
+          </button>
+        )}
       </div>
 
       {/* ═══ CONTRATO VISUAL (baseline V1 congelada) ═══ */}
@@ -310,16 +318,17 @@ export function HudModule() {
               {/* DIÁLOGO (cuadro GBC estructurado) — dentro de la caja,
                   misma altura que los botones */}
               {view === 'DIALOGO' && (
-                <div className="gbc-dialogue speaker-left">
-                  {/* Sprite de STORY del que habla, FUERA de la caja (izquierda),
-                      con máscara y marco negro — la caja no cambia de tamaño */}
-                  <div className="gbc-dialogue-speaker left">
-                    <img src={storyPortraitUrl('goku', P_FORM) || pPortrait || ''} alt="GOKU" className="gbc-dialogue-speaker-img" draggable={false} />
+                <div className={`gbc-dialogue speaker-${dlgSide}`}>
+                  {/* Sprite de STORY del que habla, FUERA de la caja (izquierda
+                      o derecha según el lado), con máscara y marco negro —
+                      la caja no cambia de tamaño */}
+                  <div className={`gbc-dialogue-speaker ${dlgSide}`}>
+                    <img src={(dlgSide === 'left' ? storyPortraitUrl('goku', P_FORM) || pPortrait : storyPortraitUrl('cell', P_FORM)) || ''} alt={dlgSide === 'left' ? 'GOKU' : 'CELL'} className="gbc-dialogue-speaker-img" draggable={false} />
                   </div>
                   <div className="gbc-dialogue-body">
                     <div className="gbc-dialogue-content">
-                      <div className="gbc-dialogue-actor">GOKU</div>
-                      <div className="gbc-dialogue-text">uses KAMEHAMEHA!<span className="gbc-dialogue-cursor">▼</span></div>
+                      <div className="gbc-dialogue-actor">{dlgSide === 'left' ? 'GOKU' : 'CELL'}</div>
+                      <div className="gbc-dialogue-text">uses {dlgSide === 'left' ? 'KAMEHAMEHA!' : 'SPECIAL BEAM CANNON!'}<span className="gbc-dialogue-cursor">▼</span></div>
                     </div>
                   </div>
                 </div>
