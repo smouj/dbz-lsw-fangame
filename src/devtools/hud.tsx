@@ -313,6 +313,16 @@ export function HudModule() {
 // ── Mano del mockup: cartas REALES del catálogo (igual que el build) ──
 const MOCK_HAND_IDS = [13, 7, 5, 1]; // Kamehameha, Energy Wave, Cont. Punch, 3 Stage Attack
 
+// Frames GBC por tipo (paridad con CardVisual del juego)
+const MOCK_CARD_TYPE_FRAME: Record<string, string> = {
+  command: '/assets/ui/card_frames/card_type_stage_attack_frame.png',
+  damage: '/assets/ui/card_frames/card_type_danger_frame.png',
+  beam: '/assets/ui/card_frames/card_type_power_frame.png',
+  support: '/assets/ui/card_frames/card_type_support_frame.png',
+  defense: '/assets/ui/card_frames/card_type_basic_frame.png',
+  special: '/assets/ui/card_frames/card_type_special_frame.png',
+};
+
 function MockHand({ compact, limit }: { compact?: boolean; limit?: boolean }) {
   // LIMIT: cartas exclusivas de personaje (Goku: Kaio Ken); mano: catálogo
   const ids = limit ? [87, 46] : MOCK_HAND_IDS;
@@ -325,9 +335,16 @@ function MockHand({ compact, limit }: { compact?: boolean; limit?: boolean }) {
           const color = CARD_COLORS[card.type];
           const iconUrl = cardIconUrl(card.id);
           const IconCmp = TYPE_ICONS[card.type];
+          const frame = i === 2
+            ? '/assets/ui/card_frames/card_type_blocked_or_invalid_frame.png'
+            : i === 1
+              ? '/assets/ui/card_frames/card_type_bonus_gold_frame.png'
+              : (MOCK_CARD_TYPE_FRAME[card.type] ?? undefined);
+          const tip = `${card.name} — ${CARD_TYPE_NAMES[card.type]}  ★${card.rarity}\nCC ${card.cc} · ATK ${card.atk > 0 ? card.atk : '—'} · ACC ${card.acc}%\n${card.description ?? ''}`;
           return (
             <button key={card.id} className={`card ${card.type} ${i === 1 ? 'selected' : ''}`}
-              style={{ '--card-color': color } as React.CSSProperties} disabled={i === 2}>
+              style={{ '--card-color': color, '--card-frame': frame ? `url('${frame}')` : undefined } as React.CSSProperties}
+              disabled={i === 2} data-tip={tip}>
               <div className="card-header">
                 <span className="card-icon">
                   {iconUrl ? <img className="card-icon-img" src={iconUrl} alt="" /> : <IconCmp size={16} strokeWidth={2.2} />}

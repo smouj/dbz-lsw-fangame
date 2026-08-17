@@ -439,6 +439,18 @@ function CCDisplay({ cc, maxCc }: { cc: number; maxCc: number }) {
 }
 
 // ─── Carta visual ─────────────────────────────────────────
+// Frames GBC por tipo de carta (paquete DBZ_LSW_COMBAT_UI_V2_MAPPED)
+const CARD_TYPE_FRAME: Record<string, string> = {
+  command: '/assets/ui/card_frames/card_type_stage_attack_frame.png',
+  damage: '/assets/ui/card_frames/card_type_danger_frame.png',
+  beam: '/assets/ui/card_frames/card_type_power_frame.png',
+  support: '/assets/ui/card_frames/card_type_support_frame.png',
+  defense: '/assets/ui/card_frames/card_type_basic_frame.png',
+  special: '/assets/ui/card_frames/card_type_special_frame.png',
+};
+const CARD_FRAME_SELECTED = '/assets/ui/card_frames/card_type_bonus_gold_frame.png';
+const CARD_FRAME_DISABLED = '/assets/ui/card_frames/card_type_blocked_or_invalid_frame.png';
+
 function CardVisual({ card, selected, onClick, small, disabled }: {
   card: CardDef; selected?: boolean; onClick?: () => void; small?: boolean; disabled?: boolean;
 }) {
@@ -455,10 +467,20 @@ function CardVisual({ card, selected, onClick, small, disabled }: {
     : card.notCompatible && card.notCompatible.length > 0
       ? `\nNO usable por: ${card.notCompatible.map(id => characterName(id)).join(', ')}`
       : '';
+  const frameUrl = disabled ? CARD_FRAME_DISABLED : selected ? CARD_FRAME_SELECTED : (CARD_TYPE_FRAME[card.type] ?? undefined);
+  // Tooltip ENRIQUECIDO: toda la información de la carta, bien elaborado
+  const richTip = [
+    `${card.name} — ${CARD_TYPE_NAMES[card.type]}  ★${card.rarity}`,
+    `CC ${card.cc} · ATK ${card.atk > 0 ? card.atk : '—'} · ACC ${card.acc}%`,
+    card.description ?? '',
+    `Efecto: ${cardEffectSummary(card.effect)}`,
+    compat.trim(),
+  ].filter(Boolean).join('\n');
   return (
     <button className={`card ${card.type} ${selected ? 'selected' : ''} ${small ? 'small' : ''}`}
-      onClick={onClick} disabled={disabled} style={{ '--card-color': color } as React.CSSProperties}
-      data-tip={tip + compat}>
+      onClick={onClick} disabled={disabled}
+      style={{ '--card-color': color, '--card-frame': frameUrl ? `url('${frameUrl}')` : undefined } as React.CSSProperties}
+      data-tip={richTip}>
       <div className="card-header">
         <span className="card-icon">
           {iconUrl ? <img className="card-icon-img" src={iconUrl} alt="" onError={e => (e.currentTarget.style.display = 'none')} /> : <IconCmp size={16} strokeWidth={2.2} />}

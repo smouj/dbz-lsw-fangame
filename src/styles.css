@@ -1408,9 +1408,12 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   padding: 4px 4px 5px;
   transform: perspective(720px) rotateX(8deg) translateZ(0);
   transform-origin: center bottom;
-  background:
+  background-color: rgba(8,11,18,.96);
+  background-image: var(--card-frame,
     linear-gradient(180deg, rgba(255,255,255,.08), transparent 16%),
-    linear-gradient(180deg, rgba(26,35,52,.96), rgba(8,11,18,.98));
+    linear-gradient(180deg, rgba(26,35,52,.96), rgba(8,11,18,.98)));
+  background-size: 100% 100%, auto, auto;
+  background-repeat: no-repeat;
   border: 1px solid rgba(246,199,68,.18);
   border-top: 3px solid var(--card-color, var(--gold));
   box-shadow:
@@ -1563,12 +1566,17 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   gap: 4px;
   width: 132px;
   height: 92px;
-  background: var(--panel-hi);
-  border: 2px solid var(--border-lo);
+  background-color: transparent;
+  background-image: none;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  image-rendering: pixelated;
+  border: 0;
   color: var(--text);
   font-family: var(--fpx);
   cursor: pointer;
-  box-shadow: var(--shadow-1);
+  box-shadow: none;
+  filter: drop-shadow(2px 2px 0 #000);
   transition: background 80ms, color 80ms, border-color 80ms;
 }
 
@@ -1686,7 +1694,11 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 .card {
   width: var(--card-w);
   min-height: var(--card-h);
-  background: var(--panel);
+  background-color: var(--panel);
+  background-image: var(--card-frame, none);
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  image-rendering: pixelated;
   border: 2px solid var(--border-lo);
   border-top: 3px solid var(--card-color, var(--border));
   padding: 4px 3px;
@@ -1698,6 +1710,8 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   position: relative;
   box-shadow: inset 1px 1px 0 rgba(255,255,255,0.04), inset -1px -1px 0 rgba(0,0,0,0.25);
 }
+/* el contenido de la carta se lee sobre el marco GBC */
+.card > * { position: relative; z-index: 2; }
 
 /* Línea de acento superior */
 .card::before {
@@ -2567,9 +2581,16 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 /* ─── Botón exit battle ─── */
 
 .btn-exit {
-  background: linear-gradient(180deg, #3a1414, #241010);
-  border: 2px solid #5a2020;
-  color: var(--hp-red-lt);
+  background-image: url('/assets/ui/hud_buttons/btn_exit.png');
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  image-rendering: pixelated;
+  background-color: transparent;
+  border: 0;
+  color: transparent;
+  width: 96px;
+  height: 80px;
+  filter: drop-shadow(2px 2px 0 #000);
   font-family: var(--fpx);
   font-size: 8px;
   padding: 5px 10px;
@@ -9526,3 +9547,12 @@ button.linklike:hover { text-decoration: underline; }
   opacity: 1;
   transform: translateX(-50%) translateY(0);
 }
+
+/* Sprites GBC de movimiento (paquete UI V2 MAPPED) */
+.move-axis-btn.axis-h {
+  background-image: url('/assets/ui/hud_buttons/btn_move_axis_h.png');
+}
+.move-axis-btn.axis-v {
+  background-image: url('/assets/ui/hud_buttons/btn_move_axis_v.png');
+}
+.move-axis-btn:hover { filter: drop-shadow(2px 2px 0 #000) brightness(1.15); }
