@@ -7939,7 +7939,7 @@ button:focus-visible, .chapter-node:focus-visible {
 .dev-search { background: #0e1013; border: 1px solid #262b33; color: #cdd6e2; padding: 6px 10px; border-radius: 6px; font-family: inherit; font-size: 12px; }
 .dev-cc-filter { font-size: 12px; color: #8a93a3; }
 .dev-cc-filter input { width: 48px; background: #0e1013; border: 1px solid #262b33; color: #cdd6e2; padding: 4px 6px; border-radius: 4px; margin-left: 4px; font-family: inherit; }
-.dev-cards-layout { display: grid; grid-template-columns: 1fr 340px; gap: 14px; }
+.dev-cards-layout { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 14px; align-items: start; }
 .dev-card-list { max-height: 72vh; overflow-y: auto; display: flex; flex-direction: column; gap: 3px; }
 .dev-card-row {
   display: flex; align-items: center; gap: 8px; padding: 6px 8px; background: #181c22;
@@ -7972,7 +7972,7 @@ button:focus-visible, .chapter-node:focus-visible {
 .dev-card-code code { display: block; background: #0e1013; border: 1px solid #262b33; border-radius: 6px; padding: 10px; font-size: 10px; color: #8ab8d8; white-space: pre-wrap; }
 
 /* Sprites */
-.dev-sprites-layout { display: grid; grid-template-columns: 300px 1fr; gap: 16px; }
+.dev-sprites-layout { display: grid; grid-template-columns: minmax(240px, 300px) minmax(0, 1fr); gap: 16px; align-items: start; }
 .dev-sprite-controls {
   display: flex; flex-direction: column; gap: 10px;
   background: #14181e; border: 1px solid #262b33; border-radius: 8px;
@@ -8052,7 +8052,9 @@ button:focus-visible, .chapter-node:focus-visible {
 .dev-sprite-meta div { display: flex; justify-content: space-between; font-size: 11px; padding: 3px 0; border-bottom: 1px dashed #22262c; }
 .dev-sprite-meta span { color: #6b7484; }
 .dev-sprite-meta code { color: #d8a830; }
-.dev-sprite-preview { display: flex; flex-direction: column; gap: 12px; }
+.dev-sprite-preview {
+  box-shadow: 0 6px 18px rgba(0,0,0,.35);
+  border: 1px solid #262b33; display: flex; flex-direction: column; gap: 12px; }
 .dev-checker-bg { background: repeating-conic-gradient(#1a1d22 0% 25%, #14171b 0% 50%) 0 0/16px 16px; border: 1px solid #262b33; border-radius: 8px; min-height: 320px; display: flex; align-items: center; justify-content: center; overflow: auto; padding: 12px; }
 .dev-sprite-canvas { image-rendering: pixelated; max-width: 100%; }
 .dev-sprite-thumbs { display: flex; gap: 8px; }
@@ -8211,8 +8213,8 @@ button:focus-visible, .chapter-node:focus-visible {
 .dev-toggle.active { border-color: #d8a830; background: #251f13; color: #f0d080; }
 
 /* ─── Dev Studio: Animation Studio (timeline) ─── */
-.dev-anim-layout { display: grid; grid-template-columns: 280px 1fr; gap: 18px; }
-.dev-anim-stage { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+.dev-anim-layout { display: grid; grid-template-columns: minmax(240px, 280px) minmax(0, 1fr); gap: 18px; align-items: start; }
+.dev-anim-stage { display: flex; flex-direction: column; gap: 12px; min-width: 0; position: sticky; top: 12px; align-self: start; max-height: calc(100vh - 24px); overflow-y: auto; }
 .dev-anim-controls { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
 .dev-anim-btn { min-width: 34px; padding: 6px 8px; background: #181c22; border: 1px solid #262b33; border-radius: 6px; cursor: pointer; color: #cdd6e2; font-family: inherit; font-size: 13px; }
 .dev-anim-btn:hover:not(:disabled) { border-color: #d8a830; }
@@ -8297,7 +8299,7 @@ button:focus-visible, .chapter-node:focus-visible {
 .dev-pixel-meta span { color: #5a6270; width: 40px; }
 .dev-pixel-meta code { color: #cdd6e2; font-size: 10px; word-break: break-all; }
 .dev-pixel-actions { display: flex; flex-direction: column; gap: 6px; }
-.dev-pixel-stage { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+.dev-pixel-stage { display: flex; flex-direction: column; gap: 12px; min-width: 0; position: sticky; top: 12px; align-self: start; max-height: calc(100vh - 24px); overflow-y: auto; }
 .dev-pixel-toolbar { display: flex; align-items: center; gap: 8px; }
 .dev-pixel-canvas-wrap { display: flex; align-items: center; justify-content: center; padding: 16px; overflow: auto; }
 .dev-pixel-canvas { image-rendering: pixelated; cursor: crosshair; touch-action: none; max-width: 100%; max-height: 72vh; background: repeating-conic-gradient(#1a1d22 0% 25%, #14171b 0% 50%) 0 0/16px 16px; }
@@ -8329,7 +8331,9 @@ button:focus-visible, .chapter-node:focus-visible {
 }
 
 /* ─── Dev Studio: responsive (apilar layouts de 2 columnas) ─── */
-@media (max-width: 920px) {
+/* Los paneles de 2 columnas se mantienen hasta 760px: a 800px ya caben
+   (lista 300-380px + preview flexible) → menos scroll, mejor posición. */
+@media (max-width: 760px) {
   .dev-cards-layout,
   .dev-sprites-layout,
   .dev-pos-layout,
@@ -8423,7 +8427,8 @@ button:focus-visible, .chapter-node:focus-visible {
 .dev-hud-status { margin: 10px 0 0; padding: 8px 12px; background: rgba(64, 184, 72, .12); border: 1px solid rgba(64, 184, 72, .4); border-radius: 8px; color: #7bd88a; font-size: 12px; }
 
 .dev-hud-grid { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 18px; margin-top: 16px; align-items: start; }
-@media (max-width: 980px) { .dev-hud-grid { grid-template-columns: 1fr; } }
+.dev-hud-grid > :first-child { position: sticky; top: 12px; }
+@media (max-width: 760px) { .dev-hud-grid { grid-template-columns: 1fr; } }
 
 /* ─── Preview / visualizador ─── */
 .dev-hud-preview { background: #0a0d12; border: 1px solid #262b33; border-radius: 8px; padding: 14px; overflow: auto; }
@@ -8581,8 +8586,8 @@ button:focus-visible, .chapter-node:focus-visible {
 .dev-dot-edge { background: #d06050; }
 .dev-dot-speck { background: #40c8c8; }
 .dev-dot-dupe { background: #c8a040; }
-.dev-sheets-layout { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 14px; }
-@media (max-width: 1180px) {
+.dev-sheets-layout { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 14px; align-items: start; }
+@media (max-width: 760px) {
   .dev-sheets-layout { grid-template-columns: 1fr; }
   .dev-sheets-inspector { position: static; }
 }
@@ -8768,12 +8773,11 @@ button:focus-visible, .chapter-node:focus-visible {
 }
 .dev-navigator .dev-char-list {
   flex-direction: row;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
   gap: 5px;
   max-height: none;
   max-width: 100%;
-  overflow-x: auto;
-  overflow-y: visible;
+  overflow: visible;
   position: static;
   padding-right: 0;
   padding-bottom: 3px;
