@@ -407,63 +407,51 @@
     ]
   },
   "gather_power": {
-    "frame_count": 4,
+    "frame_count": 3,
     "fps": 6,
     "loop": true,
     "frames": [
       {
-        "name": "young_gohan_super_saiyan_beam_charge_00",
-        "file": "young_gohan_super_saiyan_beam_charge_00.png",
-        "w": 31,
-        "h": 40
-      },
-      {
-        "name": "young_gohan_super_saiyan_beam_charge_01",
-        "file": "young_gohan_super_saiyan_beam_charge_01.png",
-        "w": 30,
-        "h": 40
-      },
-      {
-        "name": "young_gohan_super_saiyan_beam_charge_02",
-        "file": "young_gohan_super_saiyan_beam_charge_02.png",
+        "name": "young_gohan_super_saiyan_gather_power_00",
+        "file": "young_gohan_super_saiyan_gather_power_00.png",
         "w": 29,
         "h": 39
       },
       {
-        "name": "young_gohan_super_saiyan_beam_charge_03",
-        "file": "young_gohan_super_saiyan_beam_charge_03.png",
-        "w": 29,
+        "name": "young_gohan_super_saiyan_gather_power_01",
+        "file": "young_gohan_super_saiyan_gather_power_01.png",
+        "w": 26,
+        "h": 41
+      },
+      {
+        "name": "young_gohan_super_saiyan_gather_power_02",
+        "file": "young_gohan_super_saiyan_gather_power_02.png",
+        "w": 30,
         "h": 40
       }
     ]
   },
   "power_up": {
-    "frame_count": 4,
+    "frame_count": 3,
     "fps": 10,
     "loop": true,
     "frames": [
       {
-        "name": "young_gohan_super_saiyan_beam_charge_00",
-        "file": "young_gohan_super_saiyan_beam_charge_00.png",
-        "w": 31,
-        "h": 40
-      },
-      {
-        "name": "young_gohan_super_saiyan_beam_charge_01",
-        "file": "young_gohan_super_saiyan_beam_charge_01.png",
-        "w": 30,
-        "h": 40
-      },
-      {
-        "name": "young_gohan_super_saiyan_beam_charge_02",
-        "file": "young_gohan_super_saiyan_beam_charge_02.png",
+        "name": "young_gohan_super_saiyan_power_up_00",
+        "file": "young_gohan_super_saiyan_power_up_00.png",
         "w": 29,
         "h": 39
       },
       {
-        "name": "young_gohan_super_saiyan_beam_charge_03",
-        "file": "young_gohan_super_saiyan_beam_charge_03.png",
-        "w": 29,
+        "name": "young_gohan_super_saiyan_power_up_01",
+        "file": "young_gohan_super_saiyan_power_up_01.png",
+        "w": 26,
+        "h": 41
+      },
+      {
+        "name": "young_gohan_super_saiyan_power_up_02",
+        "file": "young_gohan_super_saiyan_power_up_02.png",
+        "w": 30,
         "h": 40
       }
     ]

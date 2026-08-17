@@ -425,62 +425,50 @@
     ]
   },
   "gather_power": {
-    "frame_count": 4,
+    "frame_count": 3,
     "fps": 6,
     "loop": true,
     "frames": [
       {
-        "name": "android_16_base_beam_charge_00",
-        "file": "android_16_base_beam_charge_00.png",
-        "w": 32,
-        "h": 41
+        "name": "android_16_base_gather_power_00",
+        "file": "android_16_base_gather_power_00.png",
+        "w": 31,
+        "h": 37
       },
       {
-        "name": "android_16_base_beam_charge_01",
-        "file": "android_16_base_beam_charge_01.png",
-        "w": 32,
-        "h": 41
+        "name": "android_16_base_gather_power_01",
+        "file": "android_16_base_gather_power_01.png",
+        "w": 39,
+        "h": 37
       },
       {
-        "name": "android_16_base_beam_charge_02",
-        "file": "android_16_base_beam_charge_02.png",
-        "w": 23,
-        "h": 44
-      },
-      {
-        "name": "android_16_base_beam_charge_03",
-        "file": "android_16_base_beam_charge_03.png",
+        "name": "android_16_base_gather_power_02",
+        "file": "android_16_base_gather_power_02.png",
         "w": 29,
         "h": 44
       }
     ]
   },
   "power_up": {
-    "frame_count": 4,
+    "frame_count": 3,
     "fps": 10,
     "loop": true,
     "frames": [
       {
-        "name": "android_16_base_beam_charge_00",
-        "file": "android_16_base_beam_charge_00.png",
-        "w": 32,
-        "h": 41
+        "name": "android_16_base_power_up_00",
+        "file": "android_16_base_power_up_00.png",
+        "w": 31,
+        "h": 37
       },
       {
-        "name": "android_16_base_beam_charge_01",
-        "file": "android_16_base_beam_charge_01.png",
-        "w": 32,
-        "h": 41
+        "name": "android_16_base_power_up_01",
+        "file": "android_16_base_power_up_01.png",
+        "w": 39,
+        "h": 37
       },
       {
-        "name": "android_16_base_beam_charge_02",
-        "file": "android_16_base_beam_charge_02.png",
-        "w": 23,
-        "h": 44
-      },
-      {
-        "name": "android_16_base_beam_charge_03",
-        "file": "android_16_base_beam_charge_03.png",
+        "name": "android_16_base_power_up_02",
+        "file": "android_16_base_power_up_02.png",
         "w": 29,
         "h": 44
       }

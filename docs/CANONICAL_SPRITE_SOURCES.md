@@ -11,8 +11,8 @@ resolvers apuntan SOLO ahí. Verificado por `audit:sprites`, `audit:sheets` y
 |---|---|---|---|
 | **Sprites de combate** (poses idle/move/attack/hurt/beam...) | `public/assets/sprites/<form_dir>/` | `spriteDirFor` / `spriteFrameUrl` | 44 formas × 19 poses, manifest.json por forma |
 | **Chibi overworld táctico** (idle del campo) | `public/assets/overworld/panel_sprites/` | `overworldUrl` | 48 formas `*_ow.png` — ES el idle del battle overworld también |
-| **Battle overworld pose gather** (brazos arriba) | `public/assets/overworld/battle/<char>/<form>/actor/001_gather_power_pose.png` | `battleOverworldActorUrl(form, 'gather_power_pose')` | Solo lo EXCLUSIVO del power-up |
-| **Battle overworld aura** (FX energía) | `public/assets/overworld/battle/<char>/<form>/effects/000_gather_power_aura.png` | `battleOverworldAuraUrl` | Auras 24×16 validadas (planas = sprite de personaje, descartadas) |
+| **Battle overworld pose gather** (brazos arriba) | `public/assets/overworld/battle/<char>/<form>/actor/001_gather_power_pose.png` | `battleOverworldActorUrl(form, 'gather_power_pose')` | 44/44 formas — generado desde V9 (power pose = 2º frame OW) |
+| **Battle overworld aura** (FX energía) | `public/assets/overworld/battle/<char>/<form>/effects/000_gather_power_aura.png` | `battleOverworldAuraUrl` | 44/44 formas — aura tile V9 (o genérica para FIXED-only) |
 | **Sheets ROM** (referencia de personaje) | `public/assets/sheets/<form.sheet>` | `sheetUrl` | 42 sheets de roster + card-icons + mini-portraits |
 | **Retratos** | `public/assets/portraits/` | `portraitFor` / `BATTLE_PORTRAITS` | 476 PNG recortados |
 | **Iconos de carta** | `public/assets/cards/` | `cardIconUrl` | 246 PNG |
@@ -26,14 +26,25 @@ resolvers apuntan SOLO ahí. Verificado por `audit:sprites`, `audit:sheets` y
 2. **`effects/` NO contiene chibis** — los 28 frames que eran copias de
    `panel_sprites/*_ow.png` fueron eliminados (81 tenían tamaño chibi, 28 eran
    duplicados exactos). Los effects restantes son FX reales (beams, auras).
-3. **`sheets/` solo contiene sheets de roster + card-icons + mini-portraits** —
+3. **Power_up canónico (2026-08-17)** — la pose `power_up`/`gather_power` de
+   cada forma usa el frame de PERSONAJE-con-aura del propio sheet V9
+   (bucket `character_plus_effect`/`character_plus_aura_or_burst` con
+   overlap de piernas ≥0.30 vs idle = personaje real, no anillo de aura).
+   Fallback a `beam_charge` solo cuando el sheet no tiene pose de aura
+   separada (contrato V9: ginyu_gokus_body, gohan_ultimate, goku_ssj2,
+   goten_base, gotenks_ssj, nappa — sus únicos frames libres son auras puras).
+4. **Facing overworld (2026-08-17)** — 43 chibis panel + 44 battle overworld
+   (actor+aura) verificados mirando a la DERECHA (idénticos o composición
+   de frames V9 RIGHTCANONICAL; los 9 restantes espejados con
+   `check-overworld-facing.py --apply`). Los idles de combate == V9 001.
+5. **`sheets/` solo contiene sheets de roster + card-icons + mini-portraits** —
    los sheets base del pipeline (battle-backgrounds, story-*, menu-portraits,
    overworld-sprites) se movieron a `.openclaw/tmp/overworld-dupes/` (no usados
    por runtime; material fuente de recorte).
-4. **`overworld/` solo tiene `battle/` + `panel_sprites/` + manifest** — las
+6. **`overworld/` solo tiene `battle/` + `panel_sprites/` + manifest** — las
    carpetas `named/` (285) y `aux/` (43) y los `cell_*.png` sueltos (216)
    eran copias duplicadas, movidas a trash.
-5. **Cada PNG debe tener RGB=(0,0,0,0) bajo alpha=0** (sin RGB residual que
+7. **Cada PNG debe tener RGB=(0,0,0,0) bajo alpha=0** (sin RGB residual que
    reaparezca como halo al escalar/comprimir). Verificado: 0 PNG con residual.
 
 ## Verificación

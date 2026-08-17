@@ -454,28 +454,28 @@
     "loop": true,
     "frames": [
       {
-        "name": "jeice_base_beam_charge_00",
-        "file": "jeice_base_beam_charge_00.png",
+        "name": "jeice_base_gather_power_00",
+        "file": "jeice_base_gather_power_00.png",
+        "w": 24,
+        "h": 26
+      },
+      {
+        "name": "jeice_base_gather_power_01",
+        "file": "jeice_base_gather_power_01.png",
+        "w": 31,
+        "h": 48
+      },
+      {
+        "name": "jeice_base_gather_power_02",
+        "file": "jeice_base_gather_power_02.png",
         "w": 32,
-        "h": 39
+        "h": 48
       },
       {
-        "name": "jeice_base_beam_charge_01",
-        "file": "jeice_base_beam_charge_01.png",
+        "name": "jeice_base_gather_power_03",
+        "file": "jeice_base_gather_power_03.png",
         "w": 32,
-        "h": 39
-      },
-      {
-        "name": "jeice_base_beam_charge_02",
-        "file": "jeice_base_beam_charge_02.png",
-        "w": 26,
-        "h": 42
-      },
-      {
-        "name": "jeice_base_beam_charge_03",
-        "file": "jeice_base_beam_charge_03.png",
-        "w": 40,
-        "h": 35
+        "h": 48
       }
     ]
   },
@@ -485,28 +485,28 @@
     "loop": true,
     "frames": [
       {
-        "name": "jeice_base_beam_charge_00",
-        "file": "jeice_base_beam_charge_00.png",
+        "name": "jeice_base_power_up_00",
+        "file": "jeice_base_power_up_00.png",
+        "w": 24,
+        "h": 26
+      },
+      {
+        "name": "jeice_base_power_up_01",
+        "file": "jeice_base_power_up_01.png",
+        "w": 31,
+        "h": 48
+      },
+      {
+        "name": "jeice_base_power_up_02",
+        "file": "jeice_base_power_up_02.png",
         "w": 32,
-        "h": 39
+        "h": 48
       },
       {
-        "name": "jeice_base_beam_charge_01",
-        "file": "jeice_base_beam_charge_01.png",
+        "name": "jeice_base_power_up_03",
+        "file": "jeice_base_power_up_03.png",
         "w": 32,
-        "h": 39
-      },
-      {
-        "name": "jeice_base_beam_charge_02",
-        "file": "jeice_base_beam_charge_02.png",
-        "w": 26,
-        "h": 42
-      },
-      {
-        "name": "jeice_base_beam_charge_03",
-        "file": "jeice_base_beam_charge_03.png",
-        "w": 40,
-        "h": 35
+        "h": 48
       }
     ]
   }

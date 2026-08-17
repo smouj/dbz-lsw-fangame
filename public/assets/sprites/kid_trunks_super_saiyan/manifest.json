@@ -399,28 +399,28 @@
     "loop": true,
     "frames": [
       {
-        "name": "kid_trunks_super_saiyan_beam_charge_00",
-        "file": "kid_trunks_super_saiyan_beam_charge_00.png",
-        "w": 31,
-        "h": 41
+        "name": "kid_trunks_super_saiyan_gather_power_00",
+        "file": "kid_trunks_super_saiyan_gather_power_00.png",
+        "w": 27,
+        "h": 42
       },
       {
-        "name": "kid_trunks_super_saiyan_beam_charge_01",
-        "file": "kid_trunks_super_saiyan_beam_charge_01.png",
+        "name": "kid_trunks_super_saiyan_gather_power_01",
+        "file": "kid_trunks_super_saiyan_gather_power_01.png",
         "w": 30,
-        "h": 41
+        "h": 44
       },
       {
-        "name": "kid_trunks_super_saiyan_beam_charge_02",
-        "file": "kid_trunks_super_saiyan_beam_charge_02.png",
+        "name": "kid_trunks_super_saiyan_gather_power_02",
+        "file": "kid_trunks_super_saiyan_gather_power_02.png",
+        "w": 28,
+        "h": 40
+      },
+      {
+        "name": "kid_trunks_super_saiyan_gather_power_03",
+        "file": "kid_trunks_super_saiyan_gather_power_03.png",
         "w": 32,
-        "h": 39
-      },
-      {
-        "name": "kid_trunks_super_saiyan_beam_charge_03",
-        "file": "kid_trunks_super_saiyan_beam_charge_03.png",
-        "w": 35,
-        "h": 39
+        "h": 44
       }
     ]
   },
@@ -430,28 +430,28 @@
     "loop": true,
     "frames": [
       {
-        "name": "kid_trunks_super_saiyan_beam_charge_00",
-        "file": "kid_trunks_super_saiyan_beam_charge_00.png",
-        "w": 31,
-        "h": 41
+        "name": "kid_trunks_super_saiyan_power_up_00",
+        "file": "kid_trunks_super_saiyan_power_up_00.png",
+        "w": 27,
+        "h": 42
       },
       {
-        "name": "kid_trunks_super_saiyan_beam_charge_01",
-        "file": "kid_trunks_super_saiyan_beam_charge_01.png",
+        "name": "kid_trunks_super_saiyan_power_up_01",
+        "file": "kid_trunks_super_saiyan_power_up_01.png",
         "w": 30,
-        "h": 41
+        "h": 44
       },
       {
-        "name": "kid_trunks_super_saiyan_beam_charge_02",
-        "file": "kid_trunks_super_saiyan_beam_charge_02.png",
+        "name": "kid_trunks_super_saiyan_power_up_02",
+        "file": "kid_trunks_super_saiyan_power_up_02.png",
+        "w": 28,
+        "h": 40
+      },
+      {
+        "name": "kid_trunks_super_saiyan_power_up_03",
+        "file": "kid_trunks_super_saiyan_power_up_03.png",
         "w": 32,
-        "h": 39
-      },
-      {
-        "name": "kid_trunks_super_saiyan_beam_charge_03",
-        "file": "kid_trunks_super_saiyan_beam_charge_03.png",
-        "w": 35,
-        "h": 39
+        "h": 44
       }
     ]
   }

@@ -419,52 +419,64 @@
     ]
   },
   "gather_power": {
-    "frame_count": 3,
+    "frame_count": 4,
     "fps": 6,
     "loop": true,
     "frames": [
       {
-        "name": "vegeta_super_saiyan_majin_beam_charge_00",
-        "file": "vegeta_super_saiyan_majin_beam_charge_00.png",
-        "w": 32,
-        "h": 41
+        "name": "vegeta_super_saiyan_majin_gather_power_00",
+        "file": "vegeta_super_saiyan_majin_gather_power_00.png",
+        "w": 40,
+        "h": 40
       },
       {
-        "name": "vegeta_super_saiyan_majin_beam_charge_01",
-        "file": "vegeta_super_saiyan_majin_beam_charge_01.png",
-        "w": 28,
-        "h": 45
+        "name": "vegeta_super_saiyan_majin_gather_power_01",
+        "file": "vegeta_super_saiyan_majin_gather_power_01.png",
+        "w": 31,
+        "h": 38
       },
       {
-        "name": "vegeta_super_saiyan_majin_beam_charge_02",
-        "file": "vegeta_super_saiyan_majin_beam_charge_02.png",
-        "w": 30,
+        "name": "vegeta_super_saiyan_majin_gather_power_02",
+        "file": "vegeta_super_saiyan_majin_gather_power_02.png",
+        "w": 24,
         "h": 44
+      },
+      {
+        "name": "vegeta_super_saiyan_majin_gather_power_03",
+        "file": "vegeta_super_saiyan_majin_gather_power_03.png",
+        "w": 35,
+        "h": 39
       }
     ]
   },
   "power_up": {
-    "frame_count": 3,
+    "frame_count": 4,
     "fps": 10,
     "loop": true,
     "frames": [
       {
-        "name": "vegeta_super_saiyan_majin_beam_charge_00",
-        "file": "vegeta_super_saiyan_majin_beam_charge_00.png",
-        "w": 32,
-        "h": 41
+        "name": "vegeta_super_saiyan_majin_power_up_00",
+        "file": "vegeta_super_saiyan_majin_power_up_00.png",
+        "w": 40,
+        "h": 40
       },
       {
-        "name": "vegeta_super_saiyan_majin_beam_charge_01",
-        "file": "vegeta_super_saiyan_majin_beam_charge_01.png",
-        "w": 28,
-        "h": 45
+        "name": "vegeta_super_saiyan_majin_power_up_01",
+        "file": "vegeta_super_saiyan_majin_power_up_01.png",
+        "w": 31,
+        "h": 38
       },
       {
-        "name": "vegeta_super_saiyan_majin_beam_charge_02",
-        "file": "vegeta_super_saiyan_majin_beam_charge_02.png",
-        "w": 30,
+        "name": "vegeta_super_saiyan_majin_power_up_02",
+        "file": "vegeta_super_saiyan_majin_power_up_02.png",
+        "w": 24,
         "h": 44
+      },
+      {
+        "name": "vegeta_super_saiyan_majin_power_up_03",
+        "file": "vegeta_super_saiyan_majin_power_up_03.png",
+        "w": 35,
+        "h": 39
       }
     ]
   }

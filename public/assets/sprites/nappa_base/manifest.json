@@ -193,7 +193,7 @@
     ]
   },
   "beam_charge": {
-    "frame_count": 4,
+    "frame_count": 3,
     "fps": 7,
     "loop": false,
     "frames": [
@@ -214,12 +214,6 @@
         "file": "nappa_base_beam_charge_02.png",
         "w": 34,
         "h": 37
-      },
-      {
-        "name": "nappa_base_beam_charge_03",
-        "file": "nappa_base_beam_charge_03.png",
-        "w": 32,
-        "h": 36
       }
     ]
   },

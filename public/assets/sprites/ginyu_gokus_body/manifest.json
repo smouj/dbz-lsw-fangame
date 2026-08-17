@@ -496,7 +496,7 @@
     ]
   },
   "evade": {
-    "frame_count": 3,
+    "frame_count": 2,
     "fps": 10,
     "loop": false,
     "frames": [
@@ -510,12 +510,6 @@
         "name": "ginyu_gokus_body_guard_00",
         "file": "ginyu_gokus_body_guard_00.png",
         "w": 36,
-        "h": 43
-      },
-      {
-        "name": "ginyu_gokus_body_move_back_00",
-        "file": "ginyu_gokus_body_move_back_00.png",
-        "w": 29,
         "h": 43
       }
     ]

@@ -74,6 +74,31 @@
           "height": 16
         }
       }
+    },
+    "super_saiyan_2": {
+      "sheet": "goku.png",
+      "actor": {
+        "idle": {
+          "x0": 0,
+          "y0": 0,
+          "width": 1,
+          "height": 1
+        },
+        "gather_power_pose": {
+          "x0": 0,
+          "y0": 0,
+          "width": 1,
+          "height": 1
+        }
+      },
+      "effects": {
+        "gather_power_aura": {
+          "x0": 0,
+          "y0": 0,
+          "width": 1,
+          "height": 1
+        }
+      }
     }
   },
   "vegeta": {
@@ -205,6 +230,31 @@
           "y0": 477,
           "width": 24,
           "height": 16
+        }
+      }
+    },
+    "super_saiyan_3": {
+      "sheet": "goku.png",
+      "actor": {
+        "idle": {
+          "x0": 0,
+          "y0": 0,
+          "width": 1,
+          "height": 1
+        },
+        "gather_power_pose": {
+          "x0": 0,
+          "y0": 0,
+          "width": 1,
+          "height": 1
+        }
+      },
+      "effects": {
+        "gather_power_aura": {
+          "x0": 0,
+          "y0": 0,
+          "width": 1,
+          "height": 1
         }
       }
     }
@@ -606,6 +656,56 @@
           "height": 16
         }
       }
+    },
+    "gohan_absorbed": {
+      "sheet": "majin_buu-gohan_absorbed.png",
+      "actor": {
+        "idle": {
+          "x0": 0,
+          "y0": 0,
+          "width": 1,
+          "height": 1
+        },
+        "gather_power_pose": {
+          "x0": 0,
+          "y0": 0,
+          "width": 1,
+          "height": 1
+        }
+      },
+      "effects": {
+        "gather_power_aura": {
+          "x0": 0,
+          "y0": 0,
+          "width": 1,
+          "height": 1
+        }
+      }
+    },
+    "gotenks_absorbed": {
+      "sheet": "majin_buu-gotenks_absorbed.png",
+      "actor": {
+        "idle": {
+          "x0": 0,
+          "y0": 0,
+          "width": 1,
+          "height": 1
+        },
+        "gather_power_pose": {
+          "x0": 0,
+          "y0": 0,
+          "width": 1,
+          "height": 1
+        }
+      },
+      "effects": {
+        "gather_power_aura": {
+          "x0": 0,
+          "y0": 0,
+          "width": 1,
+          "height": 1
+        }
+      }
     }
   },
   "vegito": {
@@ -631,6 +731,424 @@
           "y0": 5,
           "width": 24,
           "height": 16
+        }
+      }
+    }
+  },
+  "cell": {
+    "imperfect": {
+      "sheet": "cell-imperfect.png",
+      "actor": {
+        "idle": {
+          "x0": 0,
+          "y0": 0,
+          "width": 1,
+          "height": 1
+        },
+        "gather_power_pose": {
+          "x0": 0,
+          "y0": 0,
+          "width": 1,
+          "height": 1
+        }
+      },
+      "effects": {
+        "gather_power_aura": {
+          "x0": 0,
+          "y0": 0,
+          "width": 1,
+          "height": 1
+        }
+      }
+    },
+    "perfect": {
+      "sheet": "cell-perfect.png",
+      "actor": {
+        "idle": {
+          "x0": 0,
+          "y0": 0,
+          "width": 1,
+          "height": 1
+        },
+        "gather_power_pose": {
+          "x0": 0,
+          "y0": 0,
+          "width": 1,
+          "height": 1
+        }
+      },
+      "effects": {
+        "gather_power_aura": {
+          "x0": 0,
+          "y0": 0,
+          "width": 1,
+          "height": 1
+        }
+      }
+    },
+    "semi_perfect": {
+      "sheet": "cell-semi_perfect.png",
+      "actor": {
+        "idle": {
+          "x0": 0,
+          "y0": 0,
+          "width": 1,
+          "height": 1
+        },
+        "gather_power_pose": {
+          "x0": 0,
+          "y0": 0,
+          "width": 1,
+          "height": 1
+        }
+      },
+      "effects": {
+        "gather_power_aura": {
+          "x0": 0,
+          "y0": 0,
+          "width": 1,
+          "height": 1
+        }
+      }
+    }
+  },
+  "future_trunks": {
+    "base": {
+      "sheet": "future_trunks-base.png",
+      "actor": {
+        "idle": {
+          "x0": 0,
+          "y0": 0,
+          "width": 1,
+          "height": 1
+        },
+        "gather_power_pose": {
+          "x0": 0,
+          "y0": 0,
+          "width": 1,
+          "height": 1
+        }
+      },
+      "effects": {
+        "gather_power_aura": {
+          "x0": 0,
+          "y0": 0,
+          "width": 1,
+          "height": 1
+        }
+      }
+    },
+    "super_saiyan": {
+      "sheet": "future_trunks-super_saiyan.png",
+      "actor": {
+        "idle": {
+          "x0": 0,
+          "y0": 0,
+          "width": 1,
+          "height": 1
+        },
+        "gather_power_pose": {
+          "x0": 0,
+          "y0": 0,
+          "width": 1,
+          "height": 1
+        }
+      },
+      "effects": {
+        "gather_power_aura": {
+          "x0": 0,
+          "y0": 0,
+          "width": 1,
+          "height": 1
+        }
+      }
+    }
+  },
+  "ginyu": {
+    "gokus_body": {
+      "sheet": "goku.png",
+      "actor": {
+        "idle": {
+          "x0": 0,
+          "y0": 0,
+          "width": 1,
+          "height": 1
+        },
+        "gather_power_pose": {
+          "x0": 0,
+          "y0": 0,
+          "width": 1,
+          "height": 1
+        }
+      },
+      "effects": {
+        "gather_power_aura": {
+          "x0": 0,
+          "y0": 0,
+          "width": 1,
+          "height": 1
+        }
+      }
+    }
+  },
+  "gohan_adult": {
+    "super_saiyan": {
+      "sheet": "gohan_adult-super_saiyan.png",
+      "actor": {
+        "idle": {
+          "x0": 0,
+          "y0": 0,
+          "width": 1,
+          "height": 1
+        },
+        "gather_power_pose": {
+          "x0": 0,
+          "y0": 0,
+          "width": 1,
+          "height": 1
+        }
+      },
+      "effects": {
+        "gather_power_aura": {
+          "x0": 0,
+          "y0": 0,
+          "width": 1,
+          "height": 1
+        }
+      }
+    },
+    "ultimate": {
+      "sheet": "gohan_adult-ultimate.png",
+      "actor": {
+        "idle": {
+          "x0": 0,
+          "y0": 0,
+          "width": 1,
+          "height": 1
+        },
+        "gather_power_pose": {
+          "x0": 0,
+          "y0": 0,
+          "width": 1,
+          "height": 1
+        }
+      },
+      "effects": {
+        "gather_power_aura": {
+          "x0": 0,
+          "y0": 0,
+          "width": 1,
+          "height": 1
+        }
+      }
+    }
+  },
+  "goten": {
+    "base": {
+      "sheet": "goten-base.png",
+      "actor": {
+        "idle": {
+          "x0": 0,
+          "y0": 0,
+          "width": 1,
+          "height": 1
+        },
+        "gather_power_pose": {
+          "x0": 0,
+          "y0": 0,
+          "width": 1,
+          "height": 1
+        }
+      },
+      "effects": {
+        "gather_power_aura": {
+          "x0": 0,
+          "y0": 0,
+          "width": 1,
+          "height": 1
+        }
+      }
+    },
+    "super_saiyan": {
+      "sheet": "goten-super_saiyan.png",
+      "actor": {
+        "idle": {
+          "x0": 0,
+          "y0": 0,
+          "width": 1,
+          "height": 1
+        },
+        "gather_power_pose": {
+          "x0": 0,
+          "y0": 0,
+          "width": 1,
+          "height": 1
+        }
+      },
+      "effects": {
+        "gather_power_aura": {
+          "x0": 0,
+          "y0": 0,
+          "width": 1,
+          "height": 1
+        }
+      }
+    }
+  },
+  "kid_trunks": {
+    "super_saiyan": {
+      "sheet": "kid_trunks-super_saiyan.png",
+      "actor": {
+        "idle": {
+          "x0": 0,
+          "y0": 0,
+          "width": 1,
+          "height": 1
+        },
+        "gather_power_pose": {
+          "x0": 0,
+          "y0": 0,
+          "width": 1,
+          "height": 1
+        }
+      },
+      "effects": {
+        "gather_power_aura": {
+          "x0": 0,
+          "y0": 0,
+          "width": 1,
+          "height": 1
+        }
+      }
+    }
+  },
+  "nappa": {
+    "base": {
+      "sheet": "goku.png",
+      "actor": {
+        "idle": {
+          "x0": 0,
+          "y0": 0,
+          "width": 1,
+          "height": 1
+        },
+        "gather_power_pose": {
+          "x0": 0,
+          "y0": 0,
+          "width": 1,
+          "height": 1
+        }
+      },
+      "effects": {
+        "gather_power_aura": {
+          "x0": 0,
+          "y0": 0,
+          "width": 1,
+          "height": 1
+        }
+      }
+    }
+  },
+  "trunks_kid": {
+    "base": {
+      "sheet": "goku.png",
+      "actor": {
+        "idle": {
+          "x0": 0,
+          "y0": 0,
+          "width": 1,
+          "height": 1
+        },
+        "gather_power_pose": {
+          "x0": 0,
+          "y0": 0,
+          "width": 1,
+          "height": 1
+        }
+      },
+      "effects": {
+        "gather_power_aura": {
+          "x0": 0,
+          "y0": 0,
+          "width": 1,
+          "height": 1
+        }
+      }
+    }
+  },
+  "young_gohan": {
+    "base": {
+      "sheet": "young_gohan-base.png",
+      "actor": {
+        "idle": {
+          "x0": 0,
+          "y0": 0,
+          "width": 1,
+          "height": 1
+        },
+        "gather_power_pose": {
+          "x0": 0,
+          "y0": 0,
+          "width": 1,
+          "height": 1
+        }
+      },
+      "effects": {
+        "gather_power_aura": {
+          "x0": 0,
+          "y0": 0,
+          "width": 1,
+          "height": 1
+        }
+      }
+    },
+    "super_saiyan": {
+      "sheet": "young_gohan-super_saiyan.png",
+      "actor": {
+        "idle": {
+          "x0": 0,
+          "y0": 0,
+          "width": 1,
+          "height": 1
+        },
+        "gather_power_pose": {
+          "x0": 0,
+          "y0": 0,
+          "width": 1,
+          "height": 1
+        }
+      },
+      "effects": {
+        "gather_power_aura": {
+          "x0": 0,
+          "y0": 0,
+          "width": 1,
+          "height": 1
+        }
+      }
+    },
+    "super_saiyan_2": {
+      "sheet": "young_gohan-super_saiyan_2.png",
+      "actor": {
+        "idle": {
+          "x0": 0,
+          "y0": 0,
+          "width": 1,
+          "height": 1
+        },
+        "gather_power_pose": {
+          "x0": 0,
+          "y0": 0,
+          "width": 1,
+          "height": 1
+        }
+      },
+      "effects": {
+        "gather_power_aura": {
+          "x0": 0,
+          "y0": 0,
+          "width": 1,
+          "height": 1
         }
       }
     }

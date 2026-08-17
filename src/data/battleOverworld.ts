@@ -70,10 +70,33 @@ function formIdToCharFormSync(formId: string): { char: string; form: string } | 
     'buu_kid': ['majin_buu', 'kid_buu'],
     'gotenks_ssj': ['gotenks', 'super_saiyan'],
     'vegito_ssj': ['vegito', 'base'],
+    // Añadidas 2026-08-17: las 20 formas que antes caían al chibi sin aura
+    // ahora tienen battle overworld generado desde el V9 (power pose + aura).
+    'buu_gohan': ['majin_buu', 'gohan_absorbed'],
+    'buu_gotenks': ['majin_buu', 'gotenks_absorbed'],
+    'cell_imperfect': ['cell', 'imperfect'],
+    'cell_perfect': ['cell', 'perfect'],
+    'cell_semi': ['cell', 'semi_perfect'],
+    'trunks_future': ['future_trunks', 'base'],
+    'trunks_ssj': ['future_trunks', 'super_saiyan'],
+    'ginyu_goku': ['ginyu', 'gokus_body'],
+    'gohan_adult_ssj2': ['gohan_adult', 'super_saiyan'],
+    'gohan_adult_ultimate': ['gohan_adult', 'ultimate'],
+    'goku_ssj2': ['goku', 'super_saiyan_2'],
+    'goten_base': ['goten', 'base'],
+    'goten_ssj': ['goten', 'super_saiyan'],
+    'gotenks_ssj3': ['gotenks', 'super_saiyan_3'],
+    'trunks_kid_ssj': ['kid_trunks', 'super_saiyan'],
+    'nappa': ['nappa', 'base'],
+    'trunks_kid': ['trunks_kid', 'base'],
+    'gohan_young': ['young_gohan', 'base'],
+    'gohan_young_ssj': ['young_gohan', 'super_saiyan'],
+    'gohan_young_ssj2': ['young_gohan', 'super_saiyan_2'],
     // NOTA: gohan, trunks, goten, cell, nappa, ginyu_goku, buu_gotenks,
-    // buu_gohan y gotenks_ssj3 NO tienen battle overworld en el manifest
-    // (24 entradas reales). No inventar rutas: devuelven null y el runtime
-    // cae al chibi *_ow.png sin aura (nunca icono roto/cyan).
+    // buu_gohan y gotenks_ssj3 NO tenían battle overworld en el manifest
+    // (24 entradas reales). Ahora las 20 tienen (44 total). No inventar rutas
+    // para las que no existen: devuelven null y el runtime cae al chibi
+    // *_ow.png sin aura (nunca icono roto/cyan).
   };
   const pair = known[formId];
   return pair ? { char: pair[0], form: pair[1] } : null;

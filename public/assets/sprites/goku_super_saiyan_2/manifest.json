@@ -484,7 +484,7 @@
     ]
   },
   "evade": {
-    "frame_count": 3,
+    "frame_count": 2,
     "fps": 10,
     "loop": false,
     "frames": [
@@ -499,12 +499,6 @@
         "file": "goku_super_saiyan_2_guard_00.png",
         "w": 34,
         "h": 44
-      },
-      {
-        "name": "goku_super_saiyan_2_move_back_00",
-        "file": "goku_super_saiyan_2_move_back_00.png",
-        "w": 28,
-        "h": 46
       }
     ]
   },

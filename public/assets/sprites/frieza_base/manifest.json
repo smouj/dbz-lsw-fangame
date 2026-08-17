@@ -199,7 +199,7 @@
     ]
   },
   "beam_charge": {
-    "frame_count": 6,
+    "frame_count": 5,
     "fps": 7,
     "loop": false,
     "frames": [
@@ -232,12 +232,6 @@
         "file": "frieza_base_beam_charge_04.png",
         "w": 30,
         "h": 42
-      },
-      {
-        "name": "frieza_base_beam_charge_05",
-        "file": "frieza_base_beam_charge_05.png",
-        "w": 32,
-        "h": 37
       }
     ]
   },
@@ -449,76 +443,28 @@
     ]
   },
   "gather_power": {
-    "frame_count": 5,
+    "frame_count": 1,
     "fps": 6,
     "loop": true,
     "frames": [
       {
-        "name": "frieza_base_beam_charge_00",
-        "file": "frieza_base_beam_charge_00.png",
+        "name": "frieza_base_gather_power_00",
+        "file": "frieza_base_gather_power_00.png",
         "w": 32,
         "h": 37
-      },
-      {
-        "name": "frieza_base_beam_charge_01",
-        "file": "frieza_base_beam_charge_01.png",
-        "w": 32,
-        "h": 37
-      },
-      {
-        "name": "frieza_base_beam_charge_02",
-        "file": "frieza_base_beam_charge_02.png",
-        "w": 30,
-        "h": 39
-      },
-      {
-        "name": "frieza_base_beam_charge_03",
-        "file": "frieza_base_beam_charge_03.png",
-        "w": 40,
-        "h": 40
-      },
-      {
-        "name": "frieza_base_beam_charge_04",
-        "file": "frieza_base_beam_charge_04.png",
-        "w": 30,
-        "h": 42
       }
     ]
   },
   "power_up": {
-    "frame_count": 5,
+    "frame_count": 1,
     "fps": 10,
     "loop": true,
     "frames": [
       {
-        "name": "frieza_base_beam_charge_00",
-        "file": "frieza_base_beam_charge_00.png",
+        "name": "frieza_base_power_up_00",
+        "file": "frieza_base_power_up_00.png",
         "w": 32,
         "h": 37
-      },
-      {
-        "name": "frieza_base_beam_charge_01",
-        "file": "frieza_base_beam_charge_01.png",
-        "w": 32,
-        "h": 37
-      },
-      {
-        "name": "frieza_base_beam_charge_02",
-        "file": "frieza_base_beam_charge_02.png",
-        "w": 30,
-        "h": 39
-      },
-      {
-        "name": "frieza_base_beam_charge_03",
-        "file": "frieza_base_beam_charge_03.png",
-        "w": 40,
-        "h": 40
-      },
-      {
-        "name": "frieza_base_beam_charge_04",
-        "file": "frieza_base_beam_charge_04.png",
-        "w": 30,
-        "h": 42
       }
     ]
   }
