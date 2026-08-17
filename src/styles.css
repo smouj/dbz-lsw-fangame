@@ -8232,6 +8232,9 @@ button:focus-visible, .chapter-node:focus-visible {
 .dev-palette-frame:hover { border-color: #d8a830; transform: scale(1.15); }
 .dev-palette-frame:active { cursor: grabbing; }
 
+/* El runtime espeja move_back con scaleX(-1) — el panel lo muestra igual */
+.dev-asset-frame img.dev-flip { transform: scaleX(-1); }
+
 .dev-anim-timeline.drag-over { border-color: #d8a830; box-shadow: 0 0 0 1px #d8a830 inset; }
 .dev-anim-thumb-wrap.drop-target .dev-anim-thumb { border-color: #4caf50; box-shadow: 0 0 0 1px #4caf50 inset; }
 .dev-drop-marker { width: 3px; height: 60px; background: #4caf50; border-radius: 2px; flex: 0 0 auto; }

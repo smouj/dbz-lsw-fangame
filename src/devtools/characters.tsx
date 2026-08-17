@@ -188,11 +188,11 @@ export function CharactersModule({ onOpenModule }: {
   );
 }
 
-function AssetCell({ label, src, wide, small }: { label: string; src?: string; wide?: boolean; small?: boolean }) {
+function AssetCell({ label, src, wide, small, flipped }: { label: string; src?: string; wide?: boolean; small?: boolean; flipped?: boolean }) {
   return (
     <div className={`dev-asset-cell ${wide ? 'wide' : ''} ${small ? 'small' : ''}`}>
       <div className="dev-asset-frame">
-        {src ? <img src={src} alt={label} loading="lazy" /> : <span className="dev-asset-missing">—</span>}
+        {src ? <img src={src} alt={label} loading="lazy" className={flipped ? 'dev-flip' : undefined} /> : <span className="dev-asset-missing">—</span>}
       </div>
       <div className="dev-asset-label">{label}</div>
     </div>
@@ -211,7 +211,10 @@ function PoseCell({ formId, pose, small }: { formId: string; pose: string; small
     spritePoseFrameUrl(formId, pose, 0).then(url => { if (!cancelled) setSrc(url); });
     return () => { cancelled = true; };
   }, [formId, pose]);
-  return <AssetCell label={pose} src={src} small={small} />;
+  // El runtime espeja move_back con scaleX(-1) — el panel lo muestra igual para que
+  // se vea como en el juego (move_front vs move_back se distinguen visualmente).
+  const flipped = pose === 'move_back';
+  return <AssetCell label={pose} src={src} small={small} flipped={flipped} />;
 }
 
 function CombatSheetCell({ formId, spriteDir }: { formId: string; spriteDir: string }) {
