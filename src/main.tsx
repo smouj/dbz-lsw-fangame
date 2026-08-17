@@ -3120,7 +3120,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
             || miniPortraitFor(speakerChar)
             || MENU_PORTRAITS[CHAR_PORTRAIT_ALIAS[speakerChar] ?? speakerChar];
           return (
-            <div className="gbc-dialogue" key={gbcMsg}>
+            <div className={`gbc-dialogue speaker-${side ?? 'none'}`} key={gbcMsg}>
               <GbcDialogueText msg={gbcMsg} side={side} spriteUrl={spriteUrl} />
             </div>
           );

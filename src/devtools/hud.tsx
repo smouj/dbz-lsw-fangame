@@ -310,7 +310,7 @@ export function HudModule() {
               {/* DIÁLOGO (cuadro GBC estructurado) — dentro de la caja,
                   misma altura que los botones */}
               {view === 'DIALOGO' && (
-                <div className="gbc-dialogue">
+                <div className="gbc-dialogue speaker-left">
                   {/* Sprite de STORY del que habla, FUERA de la caja (izquierda),
                       con máscara y marco negro — la caja no cambia de tamaño */}
                   <div className="gbc-dialogue-speaker left">

@@ -9555,16 +9555,17 @@ button.linklike:hover { text-decoration: underline; }
   position: relative;
   left: auto;
   bottom: auto;
-  transform: none;
-  width: 100%;
   height: 80px;
   padding: 0;
+  /* El diálogo deja el margen lateral del lado donde está el speaker:
+     el sprite (absolute, fuera) queda DENTRO del preview, sin recortarse */
+  width: calc(100% - 76px);
+  flex-shrink: 0;
   z-index: 40;
   background: #f8f4e4;              /* blanco GBC */
   border: 3px solid #000;
   outline: 2px solid #f8f4e4;
   box-shadow: 4px 4px 0 rgba(0,0,0,.55), inset 0 0 0 1px #000;
-  padding: 6px 14px;
   margin: 0 auto;
   display: flex;
   align-items: center;              /* body centrado verticalmente */
@@ -9582,10 +9583,11 @@ button.linklike:hover { text-decoration: underline; }
      con translateX(-50%) — dentro de la caja flex NO debe haber ninguno). */
   transform: none !important;
 }
+.gbc-dialogue.speaker-left { margin-left: 76px; }
+.gbc-dialogue.speaker-right { margin-right: 76px; }
 /* Cuerpo del diálogo: sprite del hablante + contenido (flex row) */
 .gbc-dialogue-body {
-  flex: 1 1 auto;
-  min-width: 0;
+  width: 100%;
   height: 100%;
   display: flex;
   align-items: center;
@@ -9595,20 +9597,26 @@ button.linklike:hover { text-decoration: underline; }
    personaje, con MÁSCARA (overflow hidden) y MARCO NEGRO como el cuadro.
    La caja del diálogo NO cambia de tamaño (el speaker es absolute). ═══ */
 .gbc-dialogue-speaker {
-  /* Sprite de story DENTRO del diálogo, pegado al lado del personaje (nunca
-     se sale): MISMA altura que la caja (80px), ancho proporcional al retrato
-     (40×56 → 57×80), con marco negro y máscara. */
-  flex: 0 0 auto;
+  /* Sprite de story FUERA del diálogo, en el lado del personaje: MISMA
+     altura que la caja (80px), ancho proporcional al retrato (40×56 →
+     57×80), con MARCO negro, outline y MÁSCARA. El diálogo deja el margen
+     lateral (76px) para que nunca se recorte. */
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
   width: 57px;
   height: 80px;
   background: #f8f4e4;               /* blanco GBC como el diálogo */
   border: 3px solid #000;
+  outline: 2px solid #f8f4e4;
+  box-shadow: 4px 4px 0 rgba(0,0,0,.55);
   overflow: hidden;                  /* máscara: recorta lo que sobresale */
   image-rendering: pixelated;
   box-sizing: border-box;
+  z-index: 41;
 }
-.gbc-dialogue-speaker.left { order: 0; border-right: 0; }
-.gbc-dialogue-speaker.right { order: 2; border-left: 0; }
+.gbc-dialogue-speaker.left { right: calc(100% + 12px); }
+.gbc-dialogue-speaker.right { left: calc(100% + 12px); }
 .gbc-dialogue-speaker-img {
   width: 100%;
   height: 100%;
