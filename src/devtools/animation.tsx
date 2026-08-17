@@ -10,6 +10,7 @@ import { spriteDirFor, spriteManifestUrl, spriteFrameUrl } from '../data/spriteM
 import { CARDS } from '../data/cards';
 import { actionSemanticsForCard } from '../battle/actionProfiles';
 import { COMBAT_REQUIRED_POSES, POSE_FALLBACKS, combatPoseMeta, resolvePoseFrameSequence } from '../battle/spriteConfig';
+import { FormNavigator } from './FormNavigator';
 import {
   type Manifest, type ManifestFrame, type ManifestPose,
   fetchManifest, saveOverride, clearOverride, saveToProject,
@@ -406,15 +407,12 @@ export function AnimationModule({ target }: { target?: DevLinkedTarget | null })
 
       {loadError && <div className="dev-wip-banner">⚠ No se pudo cargar el manifest de esta forma.</div>}
 
+      <div className="dev-navigator-wrap">
+        <FormNavigator formId={formId} onChange={fid => { setFormId(fid); setPose('idle'); setFrame(0); }} />
+      </div>
+
       <div className="dev-anim-layout">
         <div className="dev-sprite-controls">
-          <label>Forma</label>
-          <select value={formId} onChange={e => setFormId(e.target.value)}>
-            {Object.keys(FORMS).map(fid => (
-              <option key={fid} value={fid}>{FORMS[fid].character} / {FORMS[fid].form} ({fid})</option>
-            ))}
-          </select>
-
           <label>Pose (animación/acción)</label>
           <div className="dev-pose-pills">
             {poses.map(p => (

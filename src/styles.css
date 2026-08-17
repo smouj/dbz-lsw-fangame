@@ -8696,3 +8696,31 @@ button:focus-visible, .chapter-node:focus-visible {
   .menu-item-settings { margin-top: 3px; }
   .menu-footer { margin-top: 3px; }
 }
+
+/* ─── FormNavigator compartido (Sheets/Sprites/Animation) ─── */
+.dev-navigator {
+  display: grid;
+  grid-template-columns: minmax(190px, 240px) minmax(0, 1fr);
+  gap: 14px;
+  align-items: start;
+  margin-bottom: 14px;
+}
+.dev-navigator .dev-char-list {
+  max-height: 300px;
+}
+.dev-navigator-main {
+  min-width: 0;
+  background: #181c22;
+  border: 1px solid #262b33;
+  border-radius: 8px;
+  padding: 12px 14px;
+}
+.dev-navigator-main .dev-form-tabs { margin-bottom: 8px; }
+.dev-form-info .dev-form-id-row { margin-bottom: 0; }
+@media (max-width: 900px) {
+  .dev-navigator { grid-template-columns: 1fr; }
+  .dev-navigator .dev-char-list { max-height: 180px; flex-direction: row; flex-wrap: wrap; }
+}
+
+/* Wrapper del FormNavigator dentro de las páginas */
+.dev-navigator-wrap { margin-bottom: 14px; }

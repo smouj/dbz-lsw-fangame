@@ -10,10 +10,10 @@
 // Click en un frame → inspector ampliado (zoom x8, bbox).
 // ═══════════════════════════════════════════════════════════
 import { useEffect, useMemo, useState } from 'react';
-import { FORMS } from '../data/roster';
 import { spriteDirFor, spriteManifestUrl, spriteFrameUrl } from '../data/spriteManifest';
 import { fetchManifest, type ManifestFrame } from './spriteEditing';
 import { poseSemantics, parseFrameName, POSE_ORDER } from './frameSemantics';
+import { FormNavigator } from './FormNavigator';
 import type { DevLinkedTarget } from './DevStudio';
 
 const BG_COLORS = [
@@ -181,13 +181,11 @@ export function SheetsModule({ target, onOpenInPixelArt }: {
         </p>
       </header>
 
+      <div className="dev-navigator-wrap">
+        <FormNavigator formId={formId} onChange={setFormId} />
+      </div>
+
       <div className="dev-sheets-controls">
-        <label>Forma</label>
-        <select value={formId} onChange={e => setFormId(e.target.value)}>
-          {Object.keys(FORMS).map(fid => (
-            <option key={fid} value={fid}>{FORMS[fid].character} / {FORMS[fid].form} ({fid})</option>
-          ))}
-        </select>
         {dir && <span className="dev-sheets-dir">/assets/sprites/{dir}</span>}
         <label>Zoom</label>
         <div className="dev-zoom-row">

@@ -9,6 +9,7 @@ import { spriteDirFor, spriteManifestUrl, spriteFrameUrl } from '../data/spriteM
 import { BATTLE_PORTRAITS } from '../data/battlePortraits';
 import { overworldUrl } from '../data/overworld';
 import { COMBAT_REQUIRED_POSES, COMBAT_POSE_ORDER } from '../battle/spriteConfig';
+import { FormNavigator } from './FormNavigator';
 import type { DevLinkedTarget } from './DevStudio';
 
 interface FrameInfo {
@@ -132,15 +133,12 @@ export function SpritesModule({ target }: { target?: DevLinkedTarget | null }) {
         <p className="dev-sub">Frame real de la Sprite Database con análisis de alpha y bounding box.</p>
       </header>
 
+      <div className="dev-navigator-wrap">
+        <FormNavigator formId={formId} onChange={fid => { setFormId(fid); setPose('idle'); }} />
+      </div>
+
       <div className="dev-sprites-layout">
         <div className="dev-sprite-controls">
-          <label>Forma</label>
-          <select value={formId} onChange={e => { setFormId(e.target.value); setPose('idle'); }}>
-            {Object.keys(FORMS).map(fid => (
-              <option key={fid} value={fid}>{FORMS[fid].character} / {FORMS[fid].form} ({fid})</option>
-            ))}
-          </select>
-
           <label>Pose</label>
           <div className="dev-pose-pills">
             {poses.map(p => (
