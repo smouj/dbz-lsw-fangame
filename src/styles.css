@@ -9591,11 +9591,14 @@ button.linklike:hover { text-decoration: underline; }
    personaje, con MÁSCARA (overflow hidden) y MARCO NEGRO como el cuadro.
    La caja del diálogo NO cambia de tamaño (el speaker es absolute). ═══ */
 .gbc-dialogue-speaker {
+  /* MISMA altura que la caja del diálogo (80px) y ancho proporcional al
+     retrato de story (40×56 → 57×80): queda perfectamente anclado al lado
+     del personaje, sin flotar ni desproporcionarse. */
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  width: 64px;
-  height: 76px;
+  width: 57px;
+  height: 80px;
   background: #f8f4e4;               /* blanco GBC como el diálogo */
   border: 3px solid #000;
   outline: 2px solid #f8f4e4;
@@ -9603,15 +9606,17 @@ button.linklike:hover { text-decoration: underline; }
   overflow: hidden;                  /* máscara: recorta lo que sobresale */
   image-rendering: pixelated;
   z-index: 41;
+  box-sizing: border-box;
 }
-.gbc-dialogue-speaker.left { right: calc(100% + 10px); }
-.gbc-dialogue-speaker.right { left: calc(100% + 10px); }
+.gbc-dialogue-speaker.left { right: calc(100% + 4px); }
+.gbc-dialogue-speaker.right { left: calc(100% + 4px); }
 .gbc-dialogue-speaker-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: center top;
   image-rendering: pixelated;
+  display: block;
 }
 .gbc-dialogue-content {
   flex: 1 1 auto;
