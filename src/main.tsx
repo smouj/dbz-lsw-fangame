@@ -925,6 +925,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
     elapsedFrames: number;
     limitFrames: number;      // ventana GLOBAL de la secuencia (manual)
     counterFrames: number;    // frames transcurridos en la ventana de contraataque
+    covering: boolean;        // el jugador se cubre (eligió A en el contraataque)
     result: 'FULL_SUCCESS' | 'SAFE_ABORT' | 'COUNTER_HIT' | null;
   }
   // ⚠️ Tabla VERIFICADA del manual GBC USA (2026-08-12): ventanas TOTALES del
@@ -942,7 +943,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
   const COUNTER_A_FRAMES = Math.round(0.4 * GBC_NATIVE_FPS);   // ~24f defenderte
   const COUNTER_B_FRAMES = Math.round(0.15 * GBC_NATIVE_FPS);  // ~9f reparar
   const [stageQte, setStageQte] = useState<StageQteState>({
-    state: 'WAITING', seq: [], idx: 0, correct: 0, card: null,
+    state: 'WAITING', seq: [], idx: 0, correct: 0, covering: false, card: null,
     elapsedFrames: 0, limitFrames: 0, counterFrames: 0,
     result: null,
   });
@@ -1608,7 +1609,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
     // fallo → contraataque del rival (COUNTER_WINDOW).
     const sequenceWindow = resolveStageWindow();
     commitQte({
-      state: 'INPUT_WINDOW', seq, idx: 0, correct: 0, card,
+      state: 'INPUT_WINDOW', seq, idx: 0, correct: 0, covering: false, card,
       elapsedFrames: 0, limitFrames: sequenceWindow, counterFrames: 0,
       result: null,
     });
@@ -1726,10 +1727,12 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
     const st = stageQteRef.current;
     if (st.state !== 'COUNTER_WINDOW') return;
     if (pressed === 'A' && st.counterFrames <= COUNTER_A_FRAMES) {
-      // A = BANK/DEFEND: conserva CC, evita el daño del contraataque
+      // A = BANK/DEFEND: conserva CC, evita el daño del contraataque.
+      // covering=true → el luchador ejecuta la animación de CUBRIRSE (guard).
       Sfx.cancel();
+      setPlayerPose('guard');
       addLog(`${player.name} se defiende del contraataque (conserva +${st.correct} CC)`);
-      commitQte({ ...st, state: 'SAFE_ABORT', result: 'SAFE_ABORT' });
+      commitQte({ ...st, state: 'SAFE_ABORT', covering: true, result: 'SAFE_ABORT' });
       resolveStageResult();
     } else if (pressed === 'B' && st.counterFrames <= COUNTER_B_FRAMES) {
       // B = RECOVER: repara y continúa el Stage Attack (el reloj de la
@@ -1826,7 +1829,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
         partialDmg = Math.max(0, Math.floor((card.atk + player.str) * posMult * progress));
       }
       setTimeout(() => {
-        setStageQte({ state: 'WAITING', seq: [], idx: 0, correct: 0, card: null, elapsedFrames: 0, limitFrames: 0, counterFrames: 0, result: null });
+        setStageQte({ state: 'WAITING', seq: [], idx: 0, correct: 0, covering: false, card: null, elapsedFrames: 0, limitFrames: 0, counterFrames: 0, result: null });
         setPhase('cardSelect');
         if (partialDmg > 0) {
           setEnemy(prev => ({ ...prev, hp: Math.max(0, prev.hp - partialDmg) }));
@@ -1852,7 +1855,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
     commitQte({ ...st, state: 'COUNTER_HIT', result: 'COUNTER_HIT' });
     setViewMode('OVERVIEW');
     setTimeout(() => {
-      setStageQte({ state: 'WAITING', seq: [], idx: 0, correct: 0, card: null, elapsedFrames: 0, limitFrames: 0, counterFrames: 0, result: null });
+      setStageQte({ state: 'WAITING', seq: [], idx: 0, correct: 0, covering: false, card: null, elapsedFrames: 0, limitFrames: 0, counterFrames: 0, result: null });
       setPhase('cardSelect');
       setPlayer(prev => ({ ...prev, hp: Math.max(0, prev.hp - counterDmg) }));
       setPlayerPose('hurt');
@@ -1873,7 +1876,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
   // Variante de finishPlayerTurn para stage attacks (no usar carta de la mano)
   const finishPlayerTurnStage = (ccGained: number) => {
     setSelectedCard(null);
-    setStageQte({ state: 'WAITING', seq: [], idx: 0, correct: 0, card: null, elapsedFrames: 0, limitFrames: 0, counterFrames: 0, result: null });
+    setStageQte({ state: 'WAITING', seq: [], idx: 0, correct: 0, covering: false, card: null, elapsedFrames: 0, limitFrames: 0, counterFrames: 0, result: null });
     setViewMode('OVERVIEW');
     setEnemyPose('idle');
     setPlayerPose('idle');
@@ -2762,7 +2765,9 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
   // Cada tecla del Stage Attack tiene SU pose (docs/FRAMES_ACTIONS_SPEC):
   // A=puño der, B=puño izq, UP=ascendente, DOWN=descendente, LEFT=avance, RIGHT=guardia.
   const qtePose: BattleSpritePose = phase === 'stageInput'
-    ? (qteFrozen ? 'attack_fwd' : (stageInputPose(qteCurKey) as BattleSpritePose))
+    ? (stageQte?.covering ? 'guard'
+      : qteFrozen ? 'attack_fwd'
+      : (stageInputPose(qteCurKey) as BattleSpritePose))
     : (playerPose as BattleSpritePose);
   const qteEnemyPose: BattleSpritePose = qteResolving ? 'attack_fwd' : 'idle';
 
@@ -3251,9 +3256,10 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
           // Ventana de contraataque: A≈0.4s · B≈0.15s (HYPOTHESIS).
           const counterAOpen = inCounter && q.counterFrames <= COUNTER_A_FRAMES;
           const counterBOpen = inCounter && q.counterFrames <= COUNTER_B_FRAMES;
-          // La tecla de cada comando: Q/E para A/B, flechas+WASD para direcciones
-          const keyIcon = (k: StageKey) => k === 'UP' ? 'arrow_up' : k === 'DOWN' ? 'arrow_down' : k === 'LEFT' ? 'arrow_left' : k === 'RIGHT' ? 'arrow_right' : k === 'A' ? 'key_q' : 'key_e';
-          const keyLabel = (k: StageKey) => k === 'UP' ? 'W / ↑' : k === 'DOWN' ? 'S / ↓' : k === 'LEFT' ? 'A / ←' : k === 'RIGHT' ? 'D / →' : k === 'A' ? 'Q' : 'E';
+          // Iconos del paquete (Controllers & Keyboard + 1-bit): A/B son los
+          // botones del controller (btn_a/btn_b), las direcciones las flechas.
+          const keyIcon = (k: StageKey) => k === 'UP' ? 'arrow_up' : k === 'DOWN' ? 'arrow_down' : k === 'LEFT' ? 'arrow_left' : k === 'RIGHT' ? 'arrow_right' : k === 'A' ? 'btn_a' : 'btn_b';
+          const keyLabel = (k: StageKey) => k === 'UP' ? 'W / ↑' : k === 'DOWN' ? 'S / ↓' : k === 'LEFT' ? 'A / ←' : k === 'RIGHT' ? 'D / →' : k === 'A' ? 'A (Q)' : 'B (E)';
           return (
           <div className={`stage-input-area ${frozen ? 'failed' : ''}`}>
             <div className="stage-label">
@@ -3294,17 +3300,17 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
                 {inCounter && (
                   <div className="stage-recover-help">
                     <div className={`stage-recover-prompt ${counterAOpen ? 'window-open' : 'window-closed'}`}>
-                      <img src="/assets/ui/qte/key_q.png" alt="Q" className="qte-key-sm" /> DEFENDER (Q)
+                      <img src="/assets/ui/qte/btn_a.png" alt="A" className="qte-key-sm" /> PROTEGERSE (A)
                     </div>
                     <div className={`stage-recover-prompt ${counterBOpen ? 'window-open' : 'window-closed'}`}>
-                      <img src="/assets/ui/qte/key_e.png" alt="E" className="qte-key-sm" /> REPARAR (E)
+                      <img src="/assets/ui/qte/btn_b.png" alt="B" className="qte-key-sm" /> REPARAR (B)
                     </div>
                   </div>
                 )}
                 {failed && (
                   <div className="stage-fail-result">¡El contraataque conecta!</div>
                 )}
-                <div className="stage-help">Q = defenderte del contraataque (conserva CC) · E = reparar la cadena</div>
+                <div className="stage-help">A = cubrirte del contraataque (conserva CC) · B = reparar la cadena</div>
               </>
             )}
           </div>
