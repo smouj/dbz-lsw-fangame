@@ -170,13 +170,18 @@ export function resolvePoseFrameSequence(
       return back.length ? back : [f('idle', 0)].filter(Boolean) as string[];
     }
     case 'gather_power':
-      // Contrato V6.1: gather usa TODOS los beam_charge disponibles (la V6.1
-      // extrajo 4-9 frames de carga por forma; usarlos todos = animación de
-      // carga completa). Si no hay beam_charge, fallback a guard.
-      return allOf('beam_charge').length ? allOf('beam_charge') : allOf('guard');
+      // La pose gather_power del manifest = personaje con aura (verificado
+      // 2026-08-17: idéntica a power_up en todas las formas) — es la
+      // preparación común de energía del GBC, NO la carga del rayo.
+      // Fallback: beam_charge -> guard.
+      return allOf('gather_power').length ? allOf('gather_power')
+        : allOf('beam_charge').length ? allOf('beam_charge') : allOf('guard');
     case 'power_up':
-      // power_up = gather_power (mismos beam_charge, 10fps loop).
-      return allOf('beam_charge').length ? allOf('beam_charge') : allOf('beam_charge');
+      // power_up del manifest = personaje + aura (re-mapeado canónico V9,
+      // ronda 2026-08-17). NO es beam_charge (era el fallback de la V6.1).
+      return allOf('power_up').length ? allOf('power_up')
+        : allOf('gather_power').length ? allOf('gather_power')
+        : allOf('beam_charge').length ? allOf('beam_charge') : allOf('idle');
     default:
       return allOf(pose);
   }

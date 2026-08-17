@@ -238,9 +238,8 @@ function beamSpec(id: string, label: string, match: string[], projectile: Projec
     actor: {
       pose: 'idle',
       beats: [
-        { frame: 12, pose: 'gather_power', note: 'preparación común: abre/cierra energía' },
-        { frame: 28, pose: 'idle', note: 'vuelve a neutral antes de ejecutar' },
-        { frame: 40, pose: 'beam_charge', note: 'carga específica del beam' },
+        { frame: 12, pose: 'gather_power', note: 'preparación común: energía (aura)' },
+        { frame: 28, pose: 'beam_charge', note: 'carga específica del beam (fluye desde gather)' },
         { frame: b.charge, pose: 'beam_fire' },
       ],
     },
@@ -263,7 +262,6 @@ function meleeSpec(id: string, label: string, match: string[], strikePose = 'pun
         // melee es la guardia/neutral, NO gather_power (esa es solo para
         // cargar energía/ki). Un puñetazo no grita con los brazos arriba.
         { frame: 12, pose: 'attack_fwd', note: 'windup de golpe' },
-        { frame: 26, pose: 'idle', note: 'cierra y vuelve a neutral antes del rush' },
         { frame: m.windup, pose: strikePose },
         { frame: m.contact, pose: strikePose },
         { frame: m.recovery, pose: 'idle' },

@@ -90,18 +90,16 @@ export function spriteFrameUrl(formId: string, file: string): string {
 // poses base. Este helper devuelve la URL del frame N de una pose aplicando
 // los MISMOS fallbacks que el runtime (spriteConfig.resolveCombatPose).
 
-const manifestCache = new Map<string, Record<string, unknown>>();
-
+// Cache-bust SIEMPRE: el Dev Studio edita manifests en disco y el SPA no debe
+// quedarse con copias obsoletas (bug 2026-08-17: power_up mostraba idle porque
+// el manifest cacheado era de antes del re-mapeo de poses).
 async function loadManifestFor(formId: string): Promise<Record<string, unknown> | null> {
   const dir = SPRITE_DIRS[formId] || formId;
-  if (manifestCache.has(dir)) return manifestCache.get(dir)!;
-  const url = `/assets/sprites/${dir}/manifest.json`;
+  const url = `/assets/sprites/${dir}/manifest.json?t=${Date.now()}`;
   try {
     const res = await fetch(url);
     if (!res.ok) return null;
-    const m = await res.json() as Record<string, unknown>;
-    manifestCache.set(dir, m);
-    return m;
+    return await res.json() as Record<string, unknown>;
   } catch {
     return null;
   }
