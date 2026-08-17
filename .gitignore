@@ -12,3 +12,6 @@ __pycache__/
 *.pyc
 .openclaw/tmp/
 .openclaw/
+
+# Generado por scripts/git-info.mjs (dev/build)
+public/release/

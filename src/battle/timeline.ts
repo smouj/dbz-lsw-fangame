@@ -19,7 +19,9 @@
 // setState hacer. Así la presentación es 100% reproducible (mismo perfil →
 // misma secuencia de ticks) y el depurador frame a frame es trivial.
 
-export const GBC_FPS = 59.72750056960583;
+// Fuente única: src/config/gameplay.config.ts (CANON LOCKED).
+import { GAMEPLAY_CONFIG } from '../config/gameplay.config';
+export const GBC_FPS = GAMEPLAY_CONFIG.gbcNativeFps;
 
 export type CinematicEventType =
   | 'SHOT'            // cambia el plano (FIELD/SOLO/DUEL/TEAM/PROJECTILE/IMPACT)

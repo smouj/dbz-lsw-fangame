@@ -19,6 +19,7 @@ import { storyPortraitUrl } from './data/storyPortraits';
 import { spriteManifestUrl, spriteFrameUrl, spriteDirFor } from './data/spriteManifest';
 import { SCENARIOS, SPECIAL_ACTION_BACKGROUND, type BattleViewMode } from './data/scenarios';
 import { GBC_NATIVE_FPS, type QteState } from './data/actionFidelity';
+import { stageWindowsTicks } from './config/gameplay.config';
 import { stageInputPose, stageInputFieldPose, stageInputLunges } from './battle/stageInputMap';
 import { nextStageSequence } from './battle/stageSequences';
 import { nextTransformedForm } from './battle/transforms';
@@ -39,7 +40,12 @@ import { LanguageProvider } from './i18n/LanguageProvider';
 import { useLang } from './i18n/useLang';
 import { LANGUAGES, LangCode, TKey } from './i18n';
 import { ArrowLeft, X, Lock, ChevronRight, Languages, Sword, Shield, BookOpen, Swords, Library, Users, Settings, Sparkles, Volume2, Zap, Gauge, Monitor, Keyboard, Music, type LucideIcon } from 'lucide-react';
-import { DevStudio, isDevRoute } from './devtools/DevStudio';
+// El Dev Studio SOLO existe en development/preview: en release (--mode release)
+// esta rama muerta se elimina del bundle (import.meta.env.MODE es constante).
+import type { DevStudioProps } from './devtools/DevStudioTypes';
+const DevStudioLazy = lazy(() => import('./devtools/DevStudio').then(m => ({ default: m.DevStudio })));
+const DevStudio: React.ComponentType<DevStudioProps> | null = import.meta.env.MODE === 'release' ? null : DevStudioLazy;
+import { isDevRoute } from './devtools/route';
 
 // ═══════════════════════════════════════════════════════════
 // DBZ LSW Fangame — Estilo Magazine GBC Auténtico
@@ -870,12 +876,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
   //   atacante FRONT + rival FRONT = 2.9s (~173f)
   // Convertidas a frames GBC (×59.7275). El manual NUNCA da ventana por input:
   // el reloj es el tiempo para COMPLETAR LA SECUENCIA COMPLETA.
-  const STAGE_SEQUENCE_WINDOW: Record<StageDepthPair, number> = {
-    BACK_BACK: Math.round(1.2 * GBC_NATIVE_FPS),   // ~72f
-    BACK_FRONT: Math.round(1.7 * GBC_NATIVE_FPS),  // ~102f
-    FRONT_BACK: Math.round(2.4 * GBC_NATIVE_FPS),  // ~143f
-    FRONT_FRONT: Math.round(2.9 * GBC_NATIVE_FPS), // ~173f
-  };
+  const STAGE_SEQUENCE_WINDOW: Record<StageDepthPair, number> = stageWindowsTicks();
   // Ventana de contraataque (manual GBC §Stage Attack): tras fallar, el rival
   // contraataca y aparece ENTER COMMAND. Ventanas cortas por botón (guía de la
   // comunidad — HYPOTHESIS hasta captura ROM): A ≈ 0.4s · B ≈ 0.15s.
@@ -4506,7 +4507,7 @@ function AppInner() {
     setScreen('main');
   };
 
-  if (inDev) {
+  if (inDev && DevStudio) {
     return <DevStudio
       onExit={() => setInDev(false)}
       onLaunchBattle={(playerFormId, enemyFormId, chapter) => {

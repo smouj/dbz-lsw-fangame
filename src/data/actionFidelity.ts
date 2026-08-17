@@ -20,7 +20,9 @@ export enum FidelityLevel {
 // Los datos canónicos se almacenan en FRAMES GBC (unidad principal);
 // los segundos son SOLO para presentación/runtime.
 // GBC FRAME ≠ VIDEO CAPTURE FRAME (al capturar a 60fps hay deriva).
-export const GBC_NATIVE_FPS = 59.72750056960583;
+// Fuente única: src/config/gameplay.config.ts (CANON LOCKED).
+import { GAMEPLAY_CONFIG } from '../config/gameplay.config';
+export const GBC_NATIVE_FPS = GAMEPLAY_CONFIG.gbcNativeFps;
 export const CAPTURE_FPS = 60;
 
 export interface FrameTiming {

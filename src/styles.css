@@ -9092,3 +9092,46 @@ button.linklike {
   font-size: 12.5px; padding: 0; display: inline-flex; align-items: center; gap: 4px;
 }
 button.linklike:hover { text-decoration: underline; }
+
+/* ── Dev Studio: Game Config & Build ───────────────────── */
+.release-status {
+  border: 1px solid #2a3248;
+  border-radius: 10px;
+  padding: 14px 16px;
+  margin-bottom: 14px;
+  background: #12151f;
+}
+.release-status.ready { border-color: #2f8f5b; box-shadow: 0 0 0 1px #2f8f5b33; }
+.release-status.blocked { border-color: #b03a3a; box-shadow: 0 0 0 1px #b03a3a33; }
+.release-status-head { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; }
+.release-version { font-weight: 700; color: #e8edf7; font-size: 14px; }
+.release-git { display: inline-flex; align-items: center; gap: 5px; color: #8a93a8; font-size: 12px; }
+.release-status-body { display: flex; align-items: center; gap: 12px; margin: 10px 0; flex-wrap: wrap; }
+.release-pill { font-weight: 700; font-size: 15px; letter-spacing: .5px; padding: 4px 12px; border-radius: 999px; }
+.release-pill.ok { background: #16301f; color: #7fd48a; border: 1px solid #2f8f5b; }
+.release-pill.bad { background: #331616; color: #e88f8f; border: 1px solid #b03a3a; }
+.release-counts { color: #8a93a8; font-size: 12.5px; }
+.release-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+.dev-btn-release { background: #2f8f5b; border-color: #3fae6e; color: #fff; font-weight: 600; }
+.dev-btn-release:hover { background: #37a868; }
+.dev-btn-sm { padding: 3px 8px; font-size: 11px; display: inline-flex; align-items: center; gap: 4px; }
+
+.cfg-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 2px 18px; }
+.cfg-row { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 3px 0; border-bottom: 1px dashed #1d2434; font-size: 12.5px; }
+.cfg-key { color: #8a93a8; display: inline-flex; align-items: center; gap: 4px; }
+.cfg-val { color: #d7dfee; font-variant-numeric: tabular-nums; }
+.cfg-val.ok { color: #7fd48a; }
+.cfg-val.bad { color: #e88f8f; }
+.cfg-canon { color: #b03a3a; font-size: 10px; }
+
+.dev-chip {
+  background: #141824; border: 1px solid #232b3d; color: #c8d3e8;
+  padding: 4px 12px; border-radius: 999px; font-size: 12px; cursor: pointer;
+}
+.dev-chip.active { border-color: #b08d2e; color: #e0b84c; background: #1c2231; }
+.dev-tag-row { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 4px; }
+.dev-list { margin: 4px 0 8px 18px; color: #c8d3e8; font-size: 12.5px; }
+.dev-list li { margin: 2px 0; }
+.dev-cmd-row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.dev-cmd-row code { background: #0d1018; padding: 4px 8px; border-radius: 6px; font-size: 12px; border: 1px solid #1d2434; }
+.dev-code-block { background: #0d1018; border: 1px solid #1d2434; border-radius: 8px; padding: 10px 12px; font-size: 12px; color: #a9b4cc; overflow-x: auto; }

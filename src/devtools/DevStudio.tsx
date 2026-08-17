@@ -8,7 +8,7 @@ import { useState, useEffect } from 'react';
 import {
   Activity, ArrowLeft, Boxes, Brush, CheckCircle2,
   Film, Gamepad2, Gauge, Grid2X2, Images, LayoutDashboard,
-  Search, Swords, TableProperties, Users, Music, type LucideIcon,
+  Search, Swords, TableProperties, Users, Music, Rocket, type LucideIcon,
 } from 'lucide-react';
 import { DashboardModule } from './dashboard';
 import { CharactersModule } from './characters';
@@ -19,6 +19,7 @@ import { ValidationModule } from './validation';
 import { StoryModule } from './story';
 import { ResearchModule } from './research';
 import MusicModule from './music';
+import GameConfigModule from './gameconfig';
 import { AnimationModule } from './animation';
 import { LabModule } from './lab';
 import { PixelArtModule } from './pixelart';
@@ -29,7 +30,7 @@ import { SheetsModule } from './sheets';
 export type DevModuleId =
   | 'dashboard' | 'characters' | 'cards' | 'sprites' | 'animation'
   | 'pixelart' | 'hud' | 'facing' | 'sheets'
-  | 'lab' | 'story' | 'validation' | 'research' | 'music' | 'positions';
+  | 'lab' | 'story' | 'validation' | 'research' | 'music' | 'gameconfig' | 'positions';
 
 interface DevModuleDef {
   id: DevModuleId;
@@ -55,6 +56,7 @@ export const DEV_MODULES: DevModuleDef[] = [
   { id: 'validation', label: 'Validation', icon: CheckCircle2, desc: 'Integridad de datos y cobertura', group: 'Mundo' },
   { id: 'research', label: 'Research', icon: Search, desc: 'ROM / manual / fuentes', group: 'Mundo' },
   { id: 'music', label: 'Música', icon: Music, desc: 'BSO del juego: player y mapeo de contexto', group: 'Mundo' },
+  { id: 'gameconfig', label: 'Game Config & Build', icon: Rocket, desc: 'Centro de control: config, validación y release', group: 'Producción' },
 ];
 
 const DEV_MODULE_STORAGE_KEY = 'dbzlsw_dev_module';
@@ -65,13 +67,7 @@ function storedModule(): DevModuleId | null {
   return id && DEV_MODULES.some(d => d.id === id) ? id : null;
 }
 
-export function isDevRoute(): boolean {
-  return typeof window !== 'undefined' && (
-    window.location.hash === '#dev'
-    || window.location.hash.startsWith('#dev/')
-    || new URLSearchParams(window.location.search).has('dev')
-  );
-}
+export { isDevRoute } from './route';
 
 // Módulo desde el hash: '#dev/sheets' → 'sheets'
 function moduleFromHash(): DevModuleId | null {
@@ -106,10 +102,8 @@ export interface DevLinkedTarget {
   nonce: number;
 }
 
-export function DevStudio({ onExit, onLaunchBattle }: {
-  onExit: () => void;
-  onLaunchBattle?: (playerFormId: string, enemyFormId: string, chapter: number | null) => void;
-}) {
+import type { DevStudioProps } from './DevStudioTypes';
+export function DevStudio({ onExit, onLaunchBattle }: DevStudioProps) {
   const [module, setModule] = useState<DevModuleId>(() => initialModule());
   const [pixelTarget, setPixelTarget] = useState<PixelArtTarget | null>(null);
   const [linkedTarget, setLinkedTarget] = useState<DevLinkedTarget | null>(null);
@@ -202,6 +196,7 @@ export function DevStudio({ onExit, onLaunchBattle }: {
           {module === 'validation' && <ValidationModule />}
           {module === 'research' && <ResearchModule />}
           {module === 'music' && <MusicModule />}
+          {module === 'gameconfig' && <GameConfigModule />}
         </div>
       </main>
     </div>
