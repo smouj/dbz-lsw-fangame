@@ -1,56 +1,39 @@
 #!/usr/bin/env python3
-"""Overworld facing v3: orientación NATIVA de cada chibi *_ow.png.
+"""Overworld facing v4: orientación NATIVA de cada chibi *_ow.png contra el V9 RIGHTCANONICAL.
 
 Método (objetivo, sin visión; chibis ≤16px engañan al ojo humano y al modelo):
 
-El RGB entre chibi y sprite de combate es RUIDO (el chibi es arte redibujado
-con paleta GBC reducida). Solo se usa la SILUETA (máscara binaria, IoU).
+El paquete V9 (DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL) es la ÚNICA fuente
+de verdad de orientación: todos sus frames miran a la DERECHA por diseño.
 
-Fuentes de verdad, por orden de fiabilidad:
-  A) git-check (9 dirs de combate espejados hoy): el sprite ORIGINAL de HEAD
-     era 'left'; el normalizado es 'right'. El chibi que coincida mejor con
-     el original (en silueta de cabeza) mira a la izquierda → espejar.
-  B) Multi-corte IoU contra el idle de combate homólogo (normalizado):
-     voto por cortes de cabeza 40/50/60%.
-  C) Intra-personaje: chibis de formas del MISMO personaje comparten pose
-     base → misma orientación. Si uno está verificado, arrastra a los otros.
-  D) goku_base_ow está VERIFICADO en vivo mirando a la derecha (referencia).
+  · Por cada chibi se busca su forma V9 (SPRITE_DIRS → forms_by_runtime).
+  · Comparación de SILUETA (máscara binaria, IoU) contra los frames del bucket
+    `spritesheets/by_bucket/overworld_actor_or_pose.png` (idle+walk).
+  · SAME  = el chibi ya mira a la derecha (V9)  → correcto.
+  · MIRROR = el chibi está espejado (mira a la izquierda) → FLIP.
+  · Formas sin bucket OW: comparar contra los frames `atomic/` (002/004...).
+  · Fallback final: goku_base_ow.png (verificado RIGHTCANONICAL en vivo).
 
-Decisión LEFT (espejar) solo si:
-  · git-check dice left (para los 9 dirs), O
-  · voto B mayoritario LEFT con margen claro, O
-  · consistente con C (mismo personaje).
+IMPORTANTE (lección 2026-08-17): NO comparar chibis contra los idles de
+combate del runtime — el V7/V9 trae 9 formas con combate a la izquierda y
+re-importaciones pueden revertir la normalización; el paquete V9 es la única
+referencia estable.
 
-Uso: python3 scripts/check-overworld-facing.py [--apply] [--git-check]
+Uso: python3 scripts/check-overworld-facing.py [--apply] [--v9 PATH]
 """
 import re
-import subprocess
 import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 OW_DIR = ROOT / 'public/assets/overworld/panel_sprites'
-SPRITES = ROOT / 'public/assets/sprites'
+DEFAULT_V9 = ROOT.parent / '.openclaw/tmp/v9/DBZ_LSW_SPRITES_PACKAGED_V9_RIGHTCANONICAL/forms_by_runtime'
 
-HEAD_CUTS = (0.40, 0.50, 0.60)
-MARGIN = 0.02
-
-MIRRORED_COMBAT_DIRS = {
-    'goku_super_saiyan', 'goku_super_saiyan_3', 'gohan_super_saiyan_1_2',
-    'goten_super_saiyan', 'gotenks_super_saiyan', 'gotenks_super_saiyan_3',
-    'piccolo_base', 'super_buu_base', 'kid_trunks_super_saiyan',
-}
-
-# Chibis verificados en vivo mirando a la DERECHA (Battle Lab, sesión previa)
-KNOWN_RIGHT = {'goku_base_ow.png', 'young_gohan_base_ow.png'}
-
-# Chibis YA normalizados a la derecha en el commit 6c06ffa (personajes cuyo
-# combate se espejó: comparten orientación con su sprite de combate).
-NORMALIZED_RIGHT = {
-    'goku_super_saiyan_ow.png', 'goku_super_saiyan_3_ow.png',
-    'gohan_super_saiyan_1_2_ow.png', 'goten_super_saiyan_ow.png',
-    'gotenks_super_saiyan_ow.png', 'gotenks_super_saiyan_3_ow.png',
-    'piccolo_base_ow.png', 'super_buu_base_ow.png', 'trunks_super_saiyan_ow.png',
+# Formas sin bucket OW en el V9 → comparar contra atomic/ con estos frames
+ATOMIC_FALLBACK = {
+    'trunks_base': '004.png',
+    'nappa_base': '002.png',
+    'gotenks_super_saiyan_3': '010.png',
 }
 
 
@@ -61,11 +44,6 @@ def load_rgba(path):
 
 def bbox_of(img):
     return img.split()[3].getbbox()
-
-
-def crop_head(img, frac):
-    x0, y0, x1, y1 = bbox_of(img)
-    return img.crop((x0, y0, x1, y0 + int((y1 - y0) * frac)))
 
 
 def to_mask(img, size):
@@ -89,6 +67,55 @@ def mask_iou(a, b):
     return 1.0 - (inter / union if union else 1.0)  # 0 = idéntico
 
 
+def v9_frames(v9dir, d):
+    """Frames de referencia de la forma: bucket OW si existe, si no atomic fallback."""
+    bucket = v9dir / d / 'spritesheets/by_bucket/overworld_actor_or_pose.png'
+    if bucket.exists():
+        sheet = load_rgba(bucket)
+        w, h = sheet.size
+        frames = []
+        x = 0
+        while x < w:
+            while x < w and all(sheet.getpixel((x, y))[3] < 40 for y in range(h)):
+                x += 1
+            if x >= w:
+                break
+            x0 = x
+            while x < w and any(sheet.getpixel((x, y))[3] >= 40 for y in range(h)):
+                x += 1
+            frames.append(sheet.crop((x0, 0, x, h)))
+        return frames or None
+    fname = ATOMIC_FALLBACK.get(d)
+    if fname:
+        p = v9dir / d / 'atomic' / fname
+        if p.exists():
+            return [load_rgba(p)]
+    return None
+
+
+def best_rel(chibi, frames):
+    cbb = bbox_of(chibi)
+    if not cbb:
+        return (9, '?')
+    ch = chibi.crop(cbb)
+    best = (9, '?')
+    for fr in frames:
+        bb = bbox_of(fr)
+        if not bb:
+            continue
+        fr2 = fr.crop(bb)
+        size = ch.size
+        mf = to_mask(fr2, size)
+        mm = mf.transpose(__import__('PIL').Image.FLIP_LEFT_RIGHT)
+        mc = to_mask(ch, size)
+        ds = mask_iou(mc, mf)
+        dm = mask_iou(mc, mm)
+        d = min(ds, dm)
+        if d < best[0]:
+            best = (d, 'SAME' if ds < dm else 'MIRROR')
+    return best
+
+
 def parse_ts_map(ts_path: Path, dict_name: str):
     text = ts_path.read_text()
     m = re.search(rf'const {dict_name}: Record<string, string> = \{{(.*?)\n\}};', text, re.S)
@@ -97,153 +124,66 @@ def parse_ts_map(ts_path: Path, dict_name: str):
     return dict(re.findall(r"'([^']+)': '([^']+)'", m.group(1)))
 
 
-def git_head_bytes(rel_path: str):
-    try:
-        out = subprocess.run(
-            ['git', '-C', str(ROOT), 'show', f'HEAD:{rel_path}'],
-            capture_output=True, check=True, timeout=10,
-        ).stdout
-        return out if out else None
-    except Exception:
-        return None
-
-
 def main() -> None:
     apply = '--apply' in sys.argv
-    git_check = '--git-check' in sys.argv
+    v9 = DEFAULT_V9
+    if '--v9' in sys.argv:
+        v9 = Path(sys.argv[sys.argv.index('--v9') + 1])
     from PIL import Image
-    from io import BytesIO
 
     ow_files = parse_ts_map(ROOT / 'src/data/overworld.ts', 'OVERWORLD_FILES')
     sprite_dirs = parse_ts_map(ROOT / 'src/data/spriteManifest.ts', 'SPRITE_DIRS')
 
-    ow_to_forms = {}
+    ow_to_dir = {}
     for form, fname in ow_files.items():
-        ow_to_forms.setdefault(fname, []).append(form)
+        d = sprite_dirs.get(form)
+        if d and fname not in ow_to_dir:
+            ow_to_dir[fname] = d
 
-    combat_ref = {}
-    for fname, forms in ow_to_forms.items():
-        for form in forms:
-            sdir = sprite_dirs.get(form)
-            if not sdir:
-                continue
-            idle = SPRITES / sdir / f'{sdir}_idle_00.png'
-            if idle.exists():
-                combat_ref[fname] = (sdir, idle)
-                break
-
-    # ── A: git-check (solo dirs espejados) — fuente de verdad ──
-    git_verdict = {}
-    if git_check:
-        for fname, (sdir, idle_path) in combat_ref.items():
-            if sdir not in MIRRORED_COMBAT_DIRS:
-                continue
-            orig = git_head_bytes(f'public/assets/sprites/{sdir}/{sdir}_idle_00.png')
-            if not orig:
-                continue
-            try:
-                chibi = load_rgba(OW_DIR / fname)
-                new_img = load_rgba(idle_path)
-                old_img = Image.open(BytesIO(orig)).convert('RGBA')
-                ch = crop_head(chibi, 0.5)
-                size = ch.size
-                m_new = to_mask(crop_head(new_img, 0.5), size)
-                m_old = to_mask(crop_head(old_img, 0.5), size)
-                m_ch = to_mask(ch, size)
-                d_new = mask_iou(m_ch, m_new)
-                d_old = mask_iou(m_ch, m_old)
-                git_verdict[fname] = 'left' if d_old < d_new else 'right'
-            except Exception:
-                git_verdict[fname] = 'error'
-
-    # ── B: voto multi-corte IoU ──
-    votes = {}
-    for fname, (sdir, idle_path) in combat_ref.items():
-        chibi = load_rgba(OW_DIR / fname)
-        combat = load_rgba(idle_path)
-        vr = vl = 0
-        for cut in HEAD_CUTS:
-            ch = crop_head(chibi, cut)
-            cm = crop_head(combat, cut)
-            size = ch.size
-            m_same = to_mask(cm, size)
-            m_mirr = m_same.transpose(Image.FLIP_LEFT_RIGHT)
-            m_ch = to_mask(ch, size)
-            d_same = mask_iou(m_ch, m_same)
-            d_mirr = mask_iou(m_ch, m_mirr)
-            if d_mirr - d_same > MARGIN:
-                vr += 1
-            elif d_same - d_mirr > MARGIN:
-                vl += 1
-        votes[fname] = (vr, vl)
-
-    # ── C: agrupar por personaje (prefijo) ──
-    def person(fname):
-        p = fname.replace('_base_ow.png', '').replace('_ow.png', '')
-        p = p.replace('goku_super_saiyan_2', 'goku').replace('goku_super_saiyan_3', 'goku')
-        p = p.replace('goku_super_saiyan', 'goku').replace('young_gohan_super_saiyan_2', 'young_gohan')
-        p = p.replace('young_gohan_super_saiyan', 'young_gohan').replace('young_gohan_base', 'young_gohan')
-        p = p.replace('gohan_super_saiyan_1_2', 'gohan_teen').replace('gohan_ultimate', 'gohan')
-        p = p.replace('gotenks_super_saiyan_3', 'gotenks').replace('gotenks_super_saiyan', 'gotenks')
-        p = p.replace('goten_super_saiyan', 'goten').replace('super_buu_base', 'buu')
-        p = p.replace('kid_buu_base', 'buu').replace('buu_base', 'buu')
-        p = p.replace('buu_gohan_absorbed', 'buu').replace('buu_gotenks_absorbed', 'buu')
-        p = p.replace('cell_imperfect_form', 'cell').replace('cell_semi_perfect_form', 'cell')
-        p = p.replace('cell_perfect', 'cell').replace('cell_jr_base', 'cell_jr')
-        p = p.replace('trunks_super_saiyan', 'trunks').replace('trunks_base', 'trunks')
-        p = p.replace('future_trunks_base', 'future_trunks')
-        p = p.replace('vegeta_super_saiyan_majin', 'vegeta').replace('vegito_ssj', 'vegito').replace('vegito_base', 'vegito')
-        p = p.replace('android_16_base', 'android_16').replace('android_17_base', 'android_17')
-        p = p.replace('android_18_base', 'android_18').replace('android_19_base', 'android_19').replace('android_20_base', 'android_20')
-        p = p.replace('ginyu_gokus_body', 'ginyu_goku').replace('ginyu_base', 'ginyu')
-        p = p.replace('recoome_base', 'recoome').replace('guldo_base', 'guldo').replace('jeice_base', 'jeice').replace('burter_base', 'burter')
-        return p
-
-    print(f'{"_ow.png":38} {"git":6} {"voto":6} {"personaje":14} decisión')
-    print('-' * 80)
+    print(f'{"_ow.png":38} {"v9dir":30} d_same d_mirr decisión')
+    print('-' * 90)
     lefts = []
-    details = []
-    for fname in sorted(combat_ref):
-        vr, vl = votes.get(fname, (0, 0))
-        gv = git_verdict.get(fname, '-')
-        per = person(fname)
-        # Decisión
-        if gv == 'left':
-            decision = 'LEFT'
-        elif gv == 'right':
-            decision = 'RIGHT'
-        elif vl > vr and (vl - vr) >= 1:
-            decision = 'LEFT'
-        else:
-            decision = 'RIGHT'
-        # C: si algún chibi del mismo personaje es LEFT y este es dudoso → LEFT
-        # (se resuelve tras primera pasada; aquí solo informativo)
-        if fname in KNOWN_RIGHT and decision == 'LEFT':
-            decision = 'RIGHT(known)'
-        if fname in NORMALIZED_RIGHT and decision.startswith('LEFT'):
-            decision = 'RIGHT(norm6c06ffa)'
-        if decision.startswith('LEFT'):
-            lefts.append(fname)
-        details.append((fname, gv, vr, vl, per, decision))
+    rows = []
+    for fname in sorted(OW_DIR.glob('*_ow.png')):
+        d = ow_to_dir.get(fname.name)
+        if not d:
+            rows.append((fname.name, '-', 0, 0, 'NO-DIR'))
+            continue
+        frames = v9_frames(v9, d)
+        if not frames:
+            rows.append((fname.name, d, 0, 0, 'NO-V9-FRAMES'))
+            continue
+        chibi = load_rgba(fname)
+        # probar también contra goku_base (referencia absoluta) si no hay match bueno
+        dmin, rel = best_rel(chibi, frames)
+        # saber d_same/d_mirr del mejor frame
+        cbb = bbox_of(chibi)
+        ch = chibi.crop(cbb)
+        best = (9, None)
+        for fr in frames:
+            bb = bbox_of(fr)
+            if not bb:
+                continue
+            fr2 = fr.crop(bb)
+            size = ch.size
+            mf = to_mask(fr2, size)
+            mm = mf.transpose(Image.FLIP_LEFT_RIGHT)
+            mc = to_mask(ch, size)
+            ds = mask_iou(mc, mf)
+            dm = mask_iou(mc, mm)
+            if min(ds, dm) < best[0]:
+                best = (min(ds, dm), ds, dm)
+        ds, dm = (best[1], best[2]) if best[0] < 9 else (0, 0)
+        decision = rel if rel == 'MIRROR' else 'RIGHT'
+        if decision == 'MIRROR':
+            lefts.append(fname.name)
+        rows.append((fname.name, d, ds, dm, decision))
 
-    # Pasada C: arrastre intra-personaje (si el personaje tiene algún LEFT,
-    # los AMBIGUOUS del mismo personaje con voto 0-0 se marcan como LEFT)
-    person_left = {}
-    for fname, gv, vr, vl, per, decision in details:
-        if decision.startswith('LEFT'):
-            person_left[per] = True
-    final = []
-    for fname, gv, vr, vl, per, decision in details:
-        if decision == 'RIGHT' and vl == 0 and vr == 0 and person_left.get(per):
-            decision = 'LEFT(grp)'
-            lefts.append(fname)
-        final.append((fname, gv, vr, vl, per, decision))
+    for name, d, ds, dm, decision in rows:
+        mark = '  <-- ESPEJAR' if decision == 'MIRROR' else ''
+        print(f'{name:38} {d:30} {ds:.3f} {dm:.3f} {decision}{mark}')
 
-    for fname, gv, vr, vl, per, decision in final:
-        mark = '  <-- ESPEJAR' if decision.startswith('LEFT') else ''
-        print(f'{fname:38} {gv:6} {vr}-{vl:<4} {per:14} {decision}{mark}')
-
-    print(f'\nTotal: {len(final)} | LEFT: {len(lefts)}')
+    print(f'\nTotal: {len(rows)} | LEFT (MIRROR of V9): {len(lefts)}')
 
     if apply:
         for fname in lefts:
@@ -253,7 +193,8 @@ def main() -> None:
             print(f'  ✔ espejado {fname}')
         print('APLICADO')
     else:
-        print('DRY-RUN — pasa --apply para espejar (--git-check añade verificación HEAD)')
+        print('DRY-RUN — pasa --apply para espejar. Referencia: V9 RIGHTCANONICAL.')
+
 
 if __name__ == '__main__':
     main()
