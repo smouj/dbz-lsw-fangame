@@ -43,9 +43,10 @@ export function HudModule() {
   const [theme, setTheme] = useState<HudTheme>(() => currentHudTheme());
   const [status, setStatus] = useState('');
   // Vista del mockup: qué apartado del HUD se muestra (como al pulsar cada botón)
-  const [view, setView] = useState<'INTRO' | 'COMMAND' | 'JOINT' | 'BASIC' | 'LIMIT'>('COMMAND');
+  const [view, setView] = useState<'INTRO' | 'DIALOGO' | 'COMMAND' | 'JOINT' | 'BASIC' | 'LIMIT'>('COMMAND');
   const VIEWS = [
     { id: 'INTRO' as const, label: 'Intro', tip: 'Presentación de inicio (VS + READY/FIGHT)' },
+    { id: 'DIALOGO' as const, label: 'Diálogo', tip: 'Cuadro de mensaje GBC durante acciones' },
     { id: 'COMMAND' as const, label: 'Comando', tip: 'LIMIT / JOINT / BASIC (fase command)' },
     { id: 'JOINT' as const, label: 'JOINT · Mano', tip: 'Cartas de la mano (fase cardSelect)' },
     { id: 'BASIC' as const, label: 'BASIC', tip: 'Stage Attack / Gather Power (acción básica)' },
@@ -214,6 +215,13 @@ export function HudModule() {
               </div>
               <button className="btn-exit" type="button">EXIT</button>
             </div>
+
+            {/* Cuadro de diálogo GBC (mensajes durante acciones) — previsualizable */}
+            {view === 'DIALOGO' && (
+              <div className="gbc-dialogue">
+                <div className="gbc-dialogue-text">GOKU uses KAMEHAMEHA!<span className="gbc-dialogue-cursor">▼</span></div>
+              </div>
+            )}
 
             <div className="battle-controls dev-hud-battle-controls">
               {/* Contenido según la vista: igual que las fases del juego real.
