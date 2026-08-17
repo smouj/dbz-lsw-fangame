@@ -1465,6 +1465,7 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   align-items: flex-end;
   gap: clamp(4px, .8vw, 9px);
   perspective: 900px;
+  flex-wrap: nowrap;   /* una sola línea SIEMPRE (mano y LIMIT) */
 }
 .battle-controls .hand-cards .card:hover:not(:disabled),
 .battle-controls .hand-cards .card.selected {
@@ -3635,6 +3636,10 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   display: flex; flex-direction: column; align-items: center; justify-content: center;
   gap: 4px;
   transition: transform 0.12s, filter 0.12s;
+  /* ANCLA del arte interno (basic-stage-icon es absolute): sin esto el
+     FitArt se posicionaba respecto a otro ancestro — el arte del STAGE
+     salía fuera del botón. */
+  position: relative;
 }
 .basic-btn strong { font-size: 0.92rem; letter-spacing: 0.06em; color: #ffe9a3; }
 .basic-btn span { font-size: 0.7rem; opacity: 0.85; }
@@ -9465,7 +9470,7 @@ button.linklike:hover { text-decoration: underline; }
 }
 .dev-hud-preview .command-strip { gap: 14px; padding: 0; margin: 0; flex: 0 0 auto; }
 .dev-hud-preview .hand-area { gap: 4px; width: auto; max-width: 100%; flex: 0 1 auto; }
-.dev-hud-preview .hand-cards { justify-content: center; flex-wrap: nowrap; }
+.dev-hud-preview .hand-cards { justify-content: center; flex-wrap: nowrap !important; }
 .dev-hud-preview .hand-cards .card {
   width: 96px;   /* frame GBC a 2× (48×40 → 96×80) */
   height: 80px;

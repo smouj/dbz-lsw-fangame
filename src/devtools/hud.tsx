@@ -90,7 +90,7 @@ export function HudModule() {
 
   // Cartas reales del catálogo para la vista Mano (como el build)
   const handCards = [13, 7, 5, 1].map(id => getCard(id)).filter((c): c is CardDef => !!c);
-  const limitCards = [87, 46].map(id => getCard(id)).filter((c): c is CardDef => !!c);
+  const limitCards = [23, 13, 24].map(id => getCard(id)).filter((c): c is CardDef => !!c);
 
   const setVar = (key: string, val: string) => setTheme(prev => ({ ...prev, [key]: val }));
 
