@@ -1408,12 +1408,9 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   padding: 4px 4px 5px;
   transform: perspective(720px) rotateX(8deg) translateZ(0);
   transform-origin: center bottom;
-  background-color: rgba(8,11,18,.96);
-  background-image: var(--card-frame,
+  background:
     linear-gradient(180deg, rgba(255,255,255,.08), transparent 16%),
-    linear-gradient(180deg, rgba(26,35,52,.96), rgba(8,11,18,.98)));
-  background-size: 100% 100%, auto, auto;
-  background-repeat: no-repeat;
+    linear-gradient(180deg, rgba(26,35,52,.96), rgba(8,11,18,.98));
   border: 1px solid rgba(246,199,68,.18);
   border-top: 3px solid var(--card-color, var(--gold));
   box-shadow:
@@ -1694,11 +1691,7 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 .card {
   width: var(--card-w);
   min-height: var(--card-h);
-  background-color: var(--panel);
-  background-image: var(--card-frame, none);
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
-  image-rendering: pixelated;
+  background: var(--panel);
   border: 2px solid var(--border-lo);
   border-top: 3px solid var(--card-color, var(--border));
   padding: 4px 3px;
@@ -1710,8 +1703,6 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   position: relative;
   box-shadow: inset 1px 1px 0 rgba(255,255,255,0.04), inset -1px -1px 0 rgba(0,0,0,0.25);
 }
-/* el contenido de la carta se lee sobre el marco GBC */
-.card > * { position: relative; z-index: 2; }
 
 /* Línea de acento superior */
 .card::before {
