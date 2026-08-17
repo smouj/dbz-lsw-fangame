@@ -33,8 +33,8 @@ const POSE_RUNTIME_DEFAULTS: Record<string, PoseContract> = {
   guard: { fps: 6, loop: false },
   attack_fwd: { fps: 5, loop: false },
   attack_ud: { fps: 5, loop: false },
-  punch_right: { fps: 7, loop: false, startsWith: 'idle_', containsOnlyPrefixes: ['idle_', 'attack_fwd_', 'punch_right_'], forbiddenPrefixes: ['beam_', 'hurt_', 'guard_'] },
-  punch_left: { fps: 7, loop: false, startsWith: 'idle_', containsOnlyPrefixes: ['idle_', 'attack_fwd_', 'punch_left_'], forbiddenPrefixes: ['beam_', 'hurt_', 'guard_'] },
+  punch_right: { fps: 7, loop: false, containsOnlyPrefixes: ['idle_', 'attack_fwd_', 'punch_right_'], forbiddenPrefixes: ['beam_', 'hurt_', 'guard_'] },
+  punch_left: { fps: 7, loop: false, containsOnlyPrefixes: ['idle_', 'attack_fwd_', 'punch_left_'], forbiddenPrefixes: ['beam_', 'hurt_', 'guard_'] },
   // kick_right / knockback_*: frames PROPIOS canónicos del V9 (kick_right_00,
   // knockback_back_00…) o composiciones de frames base (idle+attack_ud / hurt).
   kick_right: { fps: 7, loop: false, containsOnlyPrefixes: ['idle_', 'attack_ud_', 'kick_right_'], forbiddenPrefixes: ['beam_', 'hurt_', 'guard_'] },
@@ -42,7 +42,7 @@ const POSE_RUNTIME_DEFAULTS: Record<string, PoseContract> = {
   knockback_back: { fps: 7, loop: false, containsOnlyPrefixes: ['hurt_', 'knockback_back_'], forbiddenPrefixes: ['beam_', 'attack_', 'guard_'] },
   knockback_up: { fps: 7, loop: false, containsOnlyPrefixes: ['hurt_', 'knockback_up_'], forbiddenPrefixes: ['beam_', 'attack_', 'guard_'] },
   knockback_down: { fps: 7, loop: false, containsOnlyPrefixes: ['hurt_', 'knockback_down_'], forbiddenPrefixes: ['beam_', 'attack_', 'guard_'] },
-  beam_guard: { fps: 6, loop: false, containsOnlyPrefixes: ['guard_'], forbiddenPrefixes: ['beam_ray_', 'attack_', 'hurt_'] },
+  beam_guard: { fps: 6, loop: false, containsOnlyPrefixes: ['guard_', 'beam_guard_'], forbiddenPrefixes: ['beam_ray_', 'attack_', 'hurt_'] },
   // evade: frames propios canónicos (speedlines teletransporte del V9) o
   // composición move_back→guard→move_back (convención V6.1).
   evade: { fps: 10, loop: false, containsOnlyPrefixes: ['idle_', 'guard_', 'move_back_', 'evade_'], forbiddenPrefixes: ['beam_', 'attack_', 'hurt_'] },
