@@ -353,7 +353,7 @@ function MockHand({ compact, limit }: { compact?: boolean; limit?: boolean }) {
               </div>
               <div className="card-art">
                 {iconUrl
-                  ? <FitArt src={iconUrl} areaW={72} areaH={64} className="card-art-img" />
+                  ? <FitArt src={iconUrl} areaW={64} areaH={48} className="card-art-img" />
                   : <IconCmp size={40} strokeWidth={1.8} />}
               </div>
               <div className="card-name">{card.name}</div>

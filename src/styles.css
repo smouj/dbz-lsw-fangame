@@ -1435,12 +1435,14 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 /* La ilustración ENCAJA en el área interior del marco (48×40 → interior
    37×33 → a 2×: 74×66; el arte se centra sin deformarse). */
 .battle-controls .hand-cards .card .card-art {
-  /* interior EXACTO del marco GBC 48×40 → 2×: x14-86, y10-74 (72×64) */
+  /* Área CENTRAL libre del marco GBC (los acentos de las esquinas quedan
+     visibles): interior 72×64, zona sin acentos 64×48 centrada (top 18,
+     left 18). El arte rellena esta área sin tapar el marco. */
   position: absolute;
-  top: 10px;
-  left: 14px;
-  width: 72px;
-  height: 64px;
+  top: 18px;
+  left: 18px;
+  width: 64px;
+  height: 48px;
   overflow: hidden;
   background: transparent;
   border: 0;
