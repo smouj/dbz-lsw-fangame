@@ -397,14 +397,12 @@ Cada acierto +1 CC (más si completas la cadena).">
                   <div className={`gbc-dialogue-speaker ${dlgSide}`}>
                     <img src={(dlgSide === 'left' ? storyPortraitUrl('goku', P_FORM) || pPortrait : storyPortraitUrl('cell', P_FORM)) || ''} alt={dlgSide === 'left' ? 'GOKU' : 'CELL'} className="gbc-dialogue-speaker-img" draggable={false} />
                   </div>
-                  {/* Caja GBC: MISMA altura que los demás paneles (80px). Contiene
-                      la info del stage (nombre + STAGE + PUSH + barra de tiempo) */}
+                  {/* Caja GBC: MISMA altura que los demás paneles (80px). TODO en
+                      UNA línea: nombre + STAGE + PUSH + barra de tiempo */}
                   <div className="stage-panel-box">
-                    <div className="stage-label">
+                    <div className="stage-info-row">
                       <span className="stage-label-name">3 stage atk.</span>
                       <span className="stage-label-progress">STAGE 2/3</span>
-                    </div>
-                    <div className="stage-timer-row">
                       <span className="stage-push">PUSH <strong>0.6</strong> / 1.2s</span>
                       <div className="stage-timer-track">
                         <div className="stage-timer" style={{ width: '38%' }} />
@@ -412,7 +410,7 @@ Cada acierto +1 CC (más si completas la cadena).">
                     </div>
                   </div>
                   {/* INPUTS FUERA a la derecha del cuadro (simétrico al sprite):
-                      secuencia de teclas + prompt grande, con su propio marco */}
+                      MÁS ANCHO y TODO en UNA línea — secuencia + prompt juntos */}
                   <div className="stage-inputs-box">
                     <div className="stage-sequence">
                       <span className="stage-seq-item done"><span className="seq-check">✓</span></span>
