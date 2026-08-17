@@ -8520,7 +8520,7 @@ button:focus-visible, .chapter-node:focus-visible {
 /* ── Dev Studio: Facing (orientación de chibis overworld) ── */
 .dev-facing { padding: 16px; }
 .dev-facing-head { margin-bottom: 14px; }
-.dev-facing-head h2 { margin: 0 0 6px; font-size: 15px; color: #e8edf4; }
+.dev-facing-head h1 { margin: 0 0 6px; font-size: 17px; color: #e8edf4; }
 .dev-facing-help { margin: 0 0 10px; font-size: 12px; color: #9aa4b2; line-height: 1.55; max-width: 900px; }
 .dev-facing-help kbd { background: #222a35; border: 1px solid #3a4452; border-radius: 4px; padding: 1px 6px; font-family: ui-monospace, monospace; font-size: 11px; color: #d5dde8; }
 .dev-facing-suggest { display: inline-block; background: #3a2f12; color: #f0c060; border-radius: 4px; padding: 0 6px; font-weight: 700; }

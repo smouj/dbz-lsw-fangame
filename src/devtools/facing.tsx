@@ -100,7 +100,7 @@ export function FacingModule() {
   return (
     <div className="dev-facing">
       <div className="dev-facing-head">
-        <h2>Facing — orientación de chibis overworld</h2>
+        <h1>Facing — orientación de chibis overworld</h1>
         <p className="dev-facing-help">
           Todos los sprites deben mirar a la <strong>DERECHA</strong> por defecto.
           Click en un chibi = voltear en pantalla. Luego <strong>💾 Guardar</strong> lo
