@@ -590,7 +590,7 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 .battle-screen {
   width: 100%; height: 100vh;
   display: grid;
-  grid-template-rows: auto minmax(0, 1fr) auto var(--controls-h, clamp(104px, 17.5vh, 136px)) auto;
+  grid-template-rows: auto minmax(0, 1fr) auto var(--controls-h, var(--hud-controls-h, clamp(104px, 17.5vh, 136px))) auto;
   background: var(--bg);
   overflow: hidden;
   position: relative;
@@ -633,8 +633,8 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   display: flex;
   justify-content: space-between;
   align-items: stretch;
-  gap: clamp(86px, 14vw, 190px);
-  padding: 5px 10px 3px;
+  gap: var(--hud-gap, clamp(86px, 14vw, 190px));
+  padding: var(--hud-top-pad-y, 5px) 10px 3px;
   background:
     linear-gradient(180deg, rgba(5, 7, 12, .86) 0%, rgba(5, 7, 12, .48) 58%, transparent 100%);
   border-bottom: 0;
@@ -702,7 +702,7 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 }
 
 .hud-portrait {
-  width: 24px; height: 24px;
+  width: var(--hud-portrait-s, 24px); height: var(--hud-portrait-s, 24px);
   border: 1px solid #05070c;
   background: #d8d0b8;
   overflow: hidden;
@@ -784,7 +784,7 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 
 /* ─── HP Bar (estilo GBC) ─── */
 
-.hp-bar { position: relative; height: 16px; margin: 1px 0; }
+.hp-bar { position: relative; height: var(--hp-bar-h, 16px); margin: 1px 0; }
 
 .hp-bar-track {
   width: 100%; height: 12px;
@@ -1634,8 +1634,8 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   image-rendering: pixelated;
   background-color: transparent;
   border: none;
-  width: 96px;   /* 48×40 sprite GBC escalado 2× (múltiplo entero: píxeles nítidos) */
-  height: 80px;
+  width: calc(96px * var(--cmd-scale, 1));   /* 48×40 sprite GBC ×2 (nítido) */
+  height: calc(80px * var(--cmd-scale, 1));
   padding: 0;
   cursor: pointer;
   filter: drop-shadow(2px 2px 0 #000);
@@ -1668,7 +1668,7 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   letter-spacing: 3px;
 }
 
-.hand-cards { display: flex; gap: 5px; justify-content: center; flex-wrap: nowrap; }
+.hand-cards { display: flex; gap: var(--hand-gap, 5px); justify-content: center; flex-wrap: nowrap; }
 
 /* Slot vacío de la mano (sprite GBC auténtico NO CARD) */
 .hand-empty-slot { display: flex; align-items: center; justify-content: center; }
@@ -9445,7 +9445,7 @@ button.linklike:hover { text-decoration: underline; }
   left: 50%;
   bottom: 18px;
   transform: translateX(-50%) translateY(8px);
-  width: min(640px, 88%);
+  width: var(--gbc-dlg-w, min(640px, 88%));
   z-index: 40;
   background: #f8f4e4;              /* blanco GBC */
   border: 3px solid #000;

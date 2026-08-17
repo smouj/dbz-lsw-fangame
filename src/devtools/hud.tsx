@@ -24,7 +24,7 @@ import { cardIconUrl, TYPE_ICONS } from '../data/icons';
 const P_FORM = 'goku_base';
 const E_FORM = 'piccolo_base';
 
-const GROUPS = ['Colores', 'HUD', 'Cartas', 'Escala', 'Tipografía'];
+const GROUPS = ['Colores', 'HUD', 'Cartas', 'Posición', 'Escala', 'Tipografía'];
 
 function PreviewHpBar({ current, max, side }: { current: number; max: number; side: 'left' | 'right' }) {
   const pct = Math.max(0, Math.min(100, (current / max) * 100));

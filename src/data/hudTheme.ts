@@ -45,6 +45,16 @@ export const HUD_THEME_VARS: HudThemeVar[] = [
   { key: '--spr', label: 'Escala sprite', group: 'Escala', type: 'number', default: '8' },
   { key: '--card-w', label: 'Ancho carta', group: 'Escala', type: 'size', default: '128px' },
   { key: '--card-h', label: 'Alto carta', group: 'Escala', type: 'size', default: '174px' },
+  // ─── Posición & Detalles (paridad dev ↔ juego: el mockup y el build
+  // consumen las MISMAS variables CSS) ───
+  { key: '--hud-top-pad-y', label: 'HUD top · padding Y', group: 'Posición', type: 'size', default: '5px' },
+  { key: '--hud-gap', label: 'HUD top · separación', group: 'Posición', type: 'size', default: 'clamp(86px,14vw,190px)' },
+  { key: '--hud-portrait-s', label: 'Retrato · tamaño', group: 'Posición', type: 'size', default: '24px' },
+  { key: '--hp-bar-h', label: 'Barra HP · alto', group: 'Posición', type: 'size', default: '16px' },
+  { key: '--cmd-scale', label: 'Botones comando · escala', group: 'Posición', type: 'number', default: '1' },
+  { key: '--hand-gap', label: 'Mano · separación', group: 'Posición', type: 'size', default: '5px' },
+  { key: '--hud-controls-h', label: 'Zona controles · alto', group: 'Posición', type: 'size', default: 'clamp(104px,17.5vh,136px)' },
+  { key: '--gbc-dlg-w', label: 'Diálogo GBC · ancho', group: 'Posición', type: 'size', default: 'min(640px,88%)' },
   // ─── Tipografía ───
   { key: '--fs-hero', label: 'Hero (VS/FIGHT)', group: 'Tipografía', type: 'size', default: '38px' },
   { key: '--fs-title', label: 'Título', group: 'Tipografía', type: 'size', default: '26px' },
