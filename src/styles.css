@@ -9499,3 +9499,13 @@ button.linklike:hover { text-decoration: underline; }
 .battle-screen.is-cinematic .battle-controls {
   display: none;
 }
+
+/* En el mockup del HUD Studio la intro se previsualiza ESTÁTICA
+   (sin el ciclo de vida que la desvanece a los 5.2s del juego real). */
+.dev-hud-preview .battle-intro {
+  animation: none;
+  position: absolute;
+}
+.dev-hud-preview .battle-intro::before,
+.dev-hud-preview .battle-intro::after { animation: none; }
+.dev-hud-preview .intro-gbc-window { margin-top: 0; }

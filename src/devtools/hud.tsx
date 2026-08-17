@@ -43,8 +43,9 @@ export function HudModule() {
   const [theme, setTheme] = useState<HudTheme>(() => currentHudTheme());
   const [status, setStatus] = useState('');
   // Vista del mockup: qué apartado del HUD se muestra (como al pulsar cada botón)
-  const [view, setView] = useState<'COMMAND' | 'JOINT' | 'BASIC' | 'LIMIT'>('COMMAND');
+  const [view, setView] = useState<'INTRO' | 'COMMAND' | 'JOINT' | 'BASIC' | 'LIMIT'>('COMMAND');
   const VIEWS = [
+    { id: 'INTRO' as const, label: 'Intro', tip: 'Presentación de inicio (VS + READY/FIGHT)' },
     { id: 'COMMAND' as const, label: 'Comando', tip: 'LIMIT / JOINT / BASIC (fase command)' },
     { id: 'JOINT' as const, label: 'JOINT · Mano', tip: 'Cartas de la mano (fase cardSelect)' },
     { id: 'BASIC' as const, label: 'BASIC', tip: 'Stage Attack / Gather Power (acción básica)' },
@@ -118,7 +119,39 @@ export function HudModule() {
         {/* ─── PREVIEW / VISUALIZADOR ─── */}
         <div className="dev-hud-preview" style={mockVars}>
           <div className="battle-screen view-overview dev-hud-real-preview">
-            <div className="hud-top">
+            {/* Presentación de inicio (intro GBC) — previsualizable */}
+            {view === 'INTRO' && (
+              <div className="battle-intro">
+                <div className="intro-gbc-window">
+                  <div className="intro-gbc-round">ROUND 1</div>
+                  <div className="intro-gbc-match">
+                    <div className="intro-gbc-side">
+                      <div className="intro-gbc-portrait">
+                        {pPortrait ? <img src={pPortrait} alt={P_FORM} /> : <span className="dev-hud-mock-ph">?</span>}
+                      </div>
+                      <div className="intro-gbc-name">GOKU</div>
+                      <div className="intro-gbc-form">BASE</div>
+                    </div>
+                    <div className="intro-vs">VS</div>
+                    <div className="intro-gbc-side right">
+                      <div className="intro-gbc-portrait">
+                        {ePortrait ? <img src={ePortrait} alt={E_FORM} /> : <span className="dev-hud-mock-ph">?</span>}
+                      </div>
+                      <div className="intro-gbc-name">PICCOLO</div>
+                      <div className="intro-gbc-form">BASE</div>
+                    </div>
+                  </div>
+                  <div className="intro-gbc-roles">
+                    <span>ATK GOKU</span>
+                    <span>DEF PICCOLO</span>
+                  </div>
+                  <div className="intro-ready">READY</div>
+                  <div className="intro-fight">FIGHT!</div>
+                </div>
+                <div className="intro-flash" />
+              </div>
+            )}
+            {view !== 'INTRO' && <div className="hud-top">
               <div className="fighter-hud left">
                 <div className="hud-name">
                   <span className="hud-portrait">
@@ -157,7 +190,7 @@ export function HudModule() {
                 <span className="hud-center-vs">VS</span>
                 <span className="hud-center-order">GOKU</span>
               </div>
-            </div>
+            </div>}
 
             <div className="battlefield">
               <div className="battle-bg authentic" style={{ backgroundImage: `url(${battleBgUrl})` }} />
