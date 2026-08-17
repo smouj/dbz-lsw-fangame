@@ -771,6 +771,20 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
       usable: c => cardUsableBy(c, getForm(playerFormId)!.character),
     }));
   const { hand, drawPile, discardPile } = deckState;
+
+  // ── MAZO REAL DEL ENEMIGO ──
+  // El rival también baraja su mazo UNA vez y roba de su drawPile en cada
+  // Attack Phase (como el jugador). En story usa el mazo REAL del jefe
+  // (STORY_ENEMY_DECKS); en versus un deck genérico de 20. La IA analiza
+  // SOLO su mano (nunca el pool global infinito) y las Joint usadas van a
+  // su discardPile. Ref para que enemyAttack lea el estado fresco.
+  const [eDeckState, setEDeckState] = useState<JointDeckState>(() => {
+    const ids = storyChapter ? (STORY_ENEMY_DECKS[storyChapter] || []) : STARTER_DAMAGE_DECK;
+    const charId = getForm(enemyFormId)!.character;
+    return createBattleDeck(ids, { usable: c => cardUsableBy(c, charId) });
+  });
+  const eDeckRef = useRef(eDeckState);
+  eDeckRef.current = eDeckState;
   const [selectedCard, setSelectedCard] = useState<number | null>(null);
   const [log, setLog] = useState<string[]>([t('battle.start')]);
   // Cuadro de diálogo GBC: mensaje grande blanco/negro durante las acciones
@@ -923,7 +937,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
   });
   // IA real del GBC (battle.shtml): ataca regularmente → gather power →
   // 5 Stage Attack → Beam/Damage → repite. No usa energy cards sin gather.
-  const aiRef = useRef({ mode: 0, attacks: 0, gathered: false });
+  const aiRef = useRef({ mode: 0, attacks: 0, gathered: false, gatherStreak: 0 });
   const stageTimer = useRef<ReturnType<typeof setInterval> | null>(null);
   const [limits, setLimits] = useState<number[]>(() => {
     const assigned = loadLimits(playerFormId);
@@ -1102,7 +1116,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
     cinematicRef.current = null;
   };
   useEffect(() => clearCinematicTimers, []);
-  const playCardCinematic = (card: CardDef, side: 'player' | 'enemy', onDone: () => void) => {
+  const playCardCinematic = (card: CardDef, side: 'player' | 'enemy', onDone: () => void, onEvent?: (e: CinematicEvent) => void) => {
     clearCinematicTimers();
     let cinematicFinished = false;
     const setActorPose = (pose: BattleSpritePose) => side === 'player' ? setPlayerPose(pose) : setEnemyPose(pose);
@@ -1173,6 +1187,9 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
     };
 
     const applyEvent = (e: CinematicEvent) => {
+      // Hook externo (consumidor): sincronización de gameplay con el timeline
+      // (p.ej. commit del daño en APPLY_DAMAGE — fase 3 de la auditoría).
+      if (onEvent) onEvent(e);
       // Pixi: enrutar el evento a la presentación (además del DOM).
       if (pixiPres) applyCinematicEvent(pixiPres, e);
       // Depurador: actualizar refs + overlay en cada evento
@@ -1869,261 +1886,317 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
     }
 
     Sfx.cardPlay();
+    // Fase 3: el OUTCOME se calcula ANTES de la cinemática (un solo roll) y el
+    // COMMIT ocurre en APPLY_DAMAGE (el impacto visual) — el daño/HP/número
+    // salen EXACTAMENTE cuando golpea, no al final con setTimeout extra.
+    planCardRef.current = card;
+    const plan = computeActionOutcome(card);
+    endTurnRef.current = () => {
+      setPlayerPose('idle');
+      setEnemyPose('idle');
+      finishPlayerTurn(idx);
+    };
     playCardCinematic(card, 'player', () => {
-      resolveCardPlay(card, false, idx);
+      if (!plan.committed) commitActionOutcome(plan);   // fallback (support puro)
+      if (plan.ended) return;
+      setPlayerPose('idle');
+      setEnemyPose('idle');
+      finishPlayerTurn(idx);
+    }, (e) => {
+      if (e.type === 'APPLY_DAMAGE') commitActionOutcome(plan);
     });
   };
 
   // Resolución de una carta JOINT o LIMITED (misma mecánica; solo cambia la mano)
-  const resolveCardPlay = (card: CardDef, isLimit: boolean, handIdx: number) => {
-    const endTurn = () => {
-      setPlayerPose('idle');
-      setEnemyPose('idle');
-      if (isLimit) { setSelectedCard(null); settleAttackHand(() => setTimeout(() => advanceExchange(), 600)); }
-      else finishPlayerTurn(handIdx);
+  // ═══ RESOLUCIÓN DE ACCIÓN: cálculo PURO (plan) + commit sincronizado ═══
+  // Fase 3 (auditoría): el daño ya NO se aplica al final de la cinemática
+  // con setTimeout extra. El OUTCOME se calcula ANTES (un solo roll) y se
+  // COMMITEA en el evento APPLY_DAMAGE del timeline (el impacto visual) —
+  // HP/número/flash/hurt/SFX ocurren EXACTAMENTE cuando golpea. El fallback
+  // en onDone cubre perfiles sin APPLY_DAMAGE (support puro).
+  interface ActionPlan {
+    committed: boolean;
+    ended: boolean;                 // win/lose/enemy2Fall ya gestionado por el commit
+    // soporte/efectos
+    heal: number; drain: number; ccGain: number;
+    guardType: 'avoid_beam' | 'avoid_damage' | 'reduce' | 'absorb' | 'cancel' | null;
+    ohko: boolean;
+    pStageDelta: { str: number; ki: number; spd: number; guard: number };
+    resetPStages: boolean;
+    pAcc: number; pEva: number;     // 0 = no tocar
+    pLockOn: boolean; consumeLockOn: boolean;
+    buffTurns: number;              // -1 = no tocar
+    eBuffTurns: boolean;
+    eStageDelta: { str: number; ki: number; spd: number; guard: number };
+    resetEStages: boolean; endGather: boolean;
+    transformFx: boolean; transformForm: string | null;
+    bombDmg: number;                // gamebomb/candy/naughty/knockdown
+    // ataque
+    hitType: 'damage' | 'miss' | 'guard';
+    damage: number;
+    ePosMove: BattlePosition | null;
+    suicideHp1: boolean;
+    // flujo
+    win: boolean; enemy2Fall: boolean;
+    damageNum: { value: number; type: 'damage' | 'heal' | 'miss' | 'guard' } | null;
+    logs: string[];
+    sfx: string[];
+    endDelayMs: number;
+  }
+
+  const zeroStages = () => ({ str: 0, ki: 0, spd: 0, guard: 0 });
+
+  // ── COMPUTE: calcula el resultado completo SIN mutar estado (un solo roll) ──
+  const computeActionOutcome = (card: CardDef): ActionPlan => {
+    const plan: ActionPlan = {
+      committed: false, ended: false,
+      heal: 0, drain: 0, ccGain: 0, guardType: null, ohko: false,
+      pStageDelta: zeroStages(), resetPStages: false,
+      pAcc: 0, pEva: 0, pLockOn: false, consumeLockOn: false, buffTurns: -1,
+      eBuffTurns: false, eStageDelta: zeroStages(), resetEStages: false, endGather: false,
+      transformFx: false, transformForm: null, bombDmg: 0,
+      hitType: 'damage', damage: 0, ePosMove: null, suicideHp1: false,
+      win: false, enemy2Fall: false, damageNum: null,
+      logs: [], sfx: [], endDelayMs: 700,
     };
-    setTimeout(() => {
-      let damage = 0;
-      let hitType: 'damage' | 'miss' | 'guard' = 'damage';
-      let heal = 0;
-      const acc = card.acc / 100;
-      const roll = Math.random();
+    const acc = card.acc / 100;
+    const roll = Math.random();
 
-      // Support/Defensa: curar, buff, debuff, escudos, cancelar comando, etc.
-      const supEffects = ['heal_25pct','heal_strong','heal_light','buff_kaio','buff_ki8','buff_str8','buff_speed8','buff_guard8','buff_str_ki8','debuff_str8','debuff_ki8','debuff_speed8','debuff_speed8_lowacc','debuff_guard8','attack_power_down','powerup_dispel','support_dispel','powerdown_cleanse','avoid_beam','avoid_damage','avoid_damage_taiyoken','reduce_damage','absorb_beam','command_cancel','accuracy_up','evasion_up','knockdown_dmg','knockdown_min','life_drain','cc_recovery','lock_on','sunglasses','beam_shield','damage_shield','ohko_lowacc','android_kill','special_card','gamebomb','candy','naughty_book'];
-      if (card.type === 'support' || card.type === 'defense' || card.type === 'special' || supEffects.includes(card.effect)) {
-        const eff = card.effect;
-        let supportImpact = false;
-        // Curación
-        if (eff === 'heal_25pct' || eff === 'heal_strong' || eff === 'heal_light') {
-          // Dende = MaxHP/4 + MaxHP/3 en offense (CONFIRMED_MANUAL); Resurrection = 25%
-          const pct = eff === 'heal_strong' ? (1 / 4 + 1 / 3) : eff === 'heal_light' ? 0.3 : 0.25;
-          heal = Math.floor(player.maxHp * pct);
-          setPlayer(prev => ({ ...prev, hp: Math.min(prev.maxHp, prev.hp + heal) }));
-          setDamageNums(prev => [...prev, { value: heal, type: 'heal', ...dmgPos('player'), id: nextUid() }]);
-          addLog(`${player.name} ${t('battle.uses')} ${card.name} — +${heal} ${t('battle.hp')}!`);
-        } else if (eff === 'medical_machine') {
-          // Medical Machine: Power + (Speed/2 * phase). Sin phase en nuestro engine:
-          // HYPOTHESIS — card.atk + floor(SPD/2 * 4). La fase exacta es UNKNOWN.
-          heal = card.atk + Math.floor(player.spd / 2) * 4;
-          setPlayer(prev => ({ ...prev, hp: Math.min(prev.maxHp, prev.hp + heal) }));
-          setDamageNums(prev => [...prev, { value: heal, type: 'heal', ...dmgPos('player'), id: nextUid() }]);
-          addLog(`${player.name} ${t('battle.uses')} ${card.name} — +${heal} ${t('battle.hp')}!`);
-        } else if (eff === 'life_drain') {
-          // roba vida: daño + cura
-          const drain = Math.floor((card.atk + player.str) * 0.5);
-          setEnemy(prev => ({ ...prev, hp: Math.max(0, prev.hp - drain) }));
-          setPlayer(prev => ({ ...prev, hp: Math.min(prev.maxHp, prev.hp + drain) }));
-          if (drain > 0) setEnemyPose('hurt');
-          supportImpact = drain > 0;
-          setDamageNums(prev => [...prev, { value: drain, type: 'damage', ...dmgPos('enemy'), id: nextUid() }]);
-          addLog(`${player.name} ${t('battle.uses')} ${card.name} — ${drain} ${t('battle.dmg')} (+${drain} HP)`);
-        } else if (eff === 'cc_recovery') {
-          const gain = card.id === 97 ? 5 : 3;
-          setPlayer(prev => ({ ...prev, cc: Math.min(prev.maxCc, prev.cc + gain) }));
-          addLog(`${player.name} ${t('battle.uses')} ${card.name} — +${gain} CC!`);
-        } else if (eff === 'avoid_beam' || eff === 'avoid_damage' || eff === 'avoid_damage_taiyoken' || eff === 'reduce_damage' || eff === 'absorb_beam' || eff === 'beam_shield' || eff === 'damage_shield' || eff === 'command_cancel') {
-          // Activar guardia: mitiga el próximo ataque enemigo (persistente hasta usarse)
-          const gType: 'avoid_beam' | 'avoid_damage' | 'reduce' | 'absorb' | 'cancel' =
-            eff === 'avoid_damage' || eff === 'avoid_damage_taiyoken' || eff === 'damage_shield' ? 'avoid_damage'
-            : eff === 'absorb_beam' || eff === 'beam_shield' ? 'absorb'
-            : eff === 'reduce_damage' ? 'reduce'
-            : eff === 'command_cancel' ? 'cancel'
-            : 'avoid_beam';
-          setPlayerGuard({ type: gType });
-          const label = gType === 'avoid_beam' ? 'BEAM GUARD' : gType === 'avoid_damage' ? 'DAMAGE GUARD' : gType === 'absorb' ? 'ABSORB' : 'ENDURANCE';
-          addLog(`${player.name} ${t('battle.uses')} ${card.name} — ${label}!`);
-        } else if (eff === 'ohko_lowacc' || eff === 'android_kill') {
-          // OHKO con baja precisión
-          if (Math.random() < card.acc / 100) {
-            setEnemy(prev => ({ ...prev, hp: 0 }));
-            setDamageNums(prev => [...prev, { value: 999, type: 'damage', ...dmgPos('enemy'), id: nextUid() }]);
-            addLog(`${player.name} ${t('battle.uses')} ${card.name} — OHKO!`);
-            setTimeout(() => { setEnemyPose('hurt'); setPhase('win'); Sfx.victory(); addLog(`${enemy.name} ${t('battle.defeated')}`); }, 500);
-            return;
-          } else {
-            addLog(`${player.name} → ${card.name} — ${t('battle.miss')}!`);
-          }
-        } else if (eff.startsWith('buff_') || eff.startsWith('debuff_') || eff === 'accuracy_up' || eff === 'evasion_up' || eff === 'lock_on' || eff === 'powerup_dispel' || eff === 'support_dispel' || eff === 'powerdown_cleanse' || eff === 'knockdown_dmg' || eff === 'knockdown_min' || eff === 'attack_power_down' || eff === 'sunglasses' || eff === 'gamebomb' || eff === 'candy' || eff === 'naughty_book' || eff === 'special_card') {
-          // Buffs +8, debuffs -8, otros efectos de estado
-          if (eff.startsWith('buff_')) setBuffTurns(3);
-          // Transformación real (Sup.Saiyan-2/3): secuencia cinematográfica
-          if (card.id === 27 || card.id === 28) {
-            Sfx.transform();
-            setBattleTransform(nextUid());
-            addLog(`${player.name} ${t('battle.powerOn')}!`);
-            // El sprite cambia a la forma siguiente (palette/design swap real):
-            // goku_base → goku_super_saiyan → ssj2 → ssj3 (si existe).
-            const nextForm = nextTransformedForm(activePlayerFormId);
-            if (nextForm && nextForm !== activePlayerFormId) {
-              setPlayerTransformedForm(nextForm);
-              addLog(`${player.name} → ${getForm(nextForm)?.form ?? nextForm}!`);
-            }
-          }
-          if (eff === 'buff_ki8' || eff === 'buff_str_ki8') setPStages(s => ({ ...s, ki: clampStage(s.ki + 1) }));
-          if (eff === 'buff_str8' || eff === 'buff_str_ki8') setPStages(s => ({ ...s, str: clampStage(s.str + 1) }));
-          if (eff === 'buff_speed8') setPStages(s => ({ ...s, spd: clampStage(s.spd + 1) }));
-          if (eff === 'buff_guard8') setPStages(s => ({ ...s, guard: clampStage(s.guard + 1) }));
-          if (eff === 'buff_kaio') setPStages(s => ({ ...s, str: clampStage(s.str + 2), ki: clampStage(s.ki + 2) }));
-          // Debuffs específicos (antes restaban STR/KI siempre — BUG): cada stat real
-          if (eff === 'debuff_str8') setEStages(s => ({ ...s, str: clampStage(s.str - 1) }));
-          if (eff === 'debuff_ki8') setEStages(s => ({ ...s, ki: clampStage(s.ki - 1) }));
-          if (eff === 'debuff_speed8' || eff === 'debuff_speed8_lowacc') setEStages(s => ({ ...s, spd: clampStage(s.spd - 1) }));
-          if (eff === 'debuff_guard8') setEStages(s => ({ ...s, guard: clampStage(s.guard - 1) }));
-          // Babidi/Yakon: eliminan TODAS las mejoras enemigas (RESET_BUFFS)
-          if (eff === 'powerup_dispel') {
-            setEStages({ str: 0, ki: 0, spd: 0, guard: 0 });
-            addLog(`${card.name}: mejoras del enemigo eliminadas!`);
-          }
-          // Yakon (95): además TERMINA el Gather Power enemigo (END_GATHER)
-          if (card.id === 95) {
-            aiRef.current.mode = 0; aiRef.current.gathered = false;
-            addLog(`${card.name}: el poder de ${enemy.name} se disipa!`);
-          }
-          // Lock On: el próximo ataque no puede fallar (CONFIRMED_MANUAL)
-          if (eff === 'lock_on') setPLockOn(true);
-          // Reading Ki: +30% precisión 2 turnos · Afterimage: +30% evasión 2 turnos
-          if (eff === 'accuracy_up') setPAcc(2);
-          if (eff === 'evasion_up') setPEva(2);
-          if (eff === 'gamebomb' || eff === 'candy' || eff === 'naughty_book' || eff === 'knockdown_dmg' || eff === 'knockdown_min') {
-            const dmg = Math.floor((card.atk || 20) + player.str);
-            setEnemy(prev => ({ ...prev, hp: Math.max(0, prev.hp - dmg) }));
-            if (dmg > 0) setEnemyPose('hurt');
-            supportImpact = dmg > 0;
-            setDamageNums(prev => [...prev, { value: dmg, type: 'damage', ...dmgPos('enemy'), id: nextUid() }]);
-            addLog(`${player.name} ${t('battle.uses')} ${card.name} — ${dmg} ${t('battle.dmg')}`);
-          } else {
-            addLog(`${player.name} ${t('battle.uses')} ${card.name} — ${t('battle.buff')}`);
-          }
-        }
-        setPlayer(prev => ({ ...prev, cc: Math.max(0, prev.cc - card.cc) }));
-        if (supportImpact) setTimeout(() => endTurn(), 500);
-        else endTurn();
-        return;
-      }
-
-      // Lock On: ataque asegurado (se consume) · Reading Ki: +30% precisión
-      const effAcc = pAcc > 0 ? Math.min(100, acc + 30) : acc;
-      if (roll > effAcc && !pLockOn) {
-        hitType = 'miss';
-        addLog(`${player.name} → ${card.name} — ${t('battle.miss')}!`);
-      } else {
-        if (pLockOn) { setPLockOn(false); addLog('LOCK ON!'); }
-        // Respuesta del defensor (enemigo): 55% DEFEND (block ×0.5) / 45% MOVE
-        // (el defensor del GBC solo puede defenderse o moverse)
-        const eResp = Math.random() < 0.55 ? 'defend' : 'move';
-        let ePos = enemy.battlePos;
-        if (eResp === 'move') {
-          // BASIC → MOVE también conserva la regla GBC de un solo eje:
-          // horizontal o vertical, nunca salto diagonal a cualquiera de las 4.
-          const axis: MoveAxis = Math.random() < 0.5 ? 'HORIZONTAL' : 'VERTICAL';
-          ePos = applyMoveAxis(enemy.battlePos, axis);
-          setEnemy(prev => ({ ...prev, battlePos: ePos }));
-        }
-        // Fórmula REAL del GBC: Damage = (power + move) × positionMultiplier × block
-        // power = STR (damage) o KI (beam) · move = poder de la carta
-        // positionMultiplier real (test ROM): front vulnerable = 0.8, resto = 0.5
-        const power = card.type === 'beam' ? player.ki + pBuffs.ki : player.str + pBuffs.str;
-        const ePd = POSITION_DATA[ePos];
-        const vulnerable = (isBeamVulnerable(ePos) && card.type === 'beam') || (isDamageVulnerable(ePos) && card.type === 'damage');
-        const posMult = (ePd.depth === 'FRONT' && vulnerable) ? 0.8 : 0.5;
-        damage = Math.floor((card.atk + power) * posMult);
-        // Variantes ofensivas reales del GBC (CARD_SYSTEM.md)
-        const isPierce = card.effect === 'damage_pierce';   // Tail: ignora Avoiding/Shockwave
-        const isTeamAtk = card.effect === 'damage_special_team' || card.effect === 'beam_team'; // F.Kamehameha/V-ball/P.Comet Z
-        const isBodyChange = card.effect === 'beam_varhp';  // Body Change: daño ≈ ½ HP restante del rival
-        if (isBodyChange) {
-          // Body Change (62): daño proporcional a la vida restante del enemigo (~½ HP) — CONFIRMED_MANUAL
-          damage = Math.floor(enemy.hp * 0.5);
-        }
-        // Team attacks: solo con compañero (2v2). Sin compañero, daño base (HYPOTHESIS)
-        if (isTeamAtk && !player2) {
-          addLog(`${card.name}: técnica de equipo — daño reducido sin compañero`);
-          damage = Math.floor(damage * 0.6);
-        }
-        if (eResp === 'defend') {
-          // Basic Guard del enemigo: mismo sistema HIT/BLOCK/AVOID
-          // Tail (pierce) IGNORA Avoiding/Shockwave (CARD_SYSTEM.md): sin esquiva, bloqueo parcial sí
-          if (isPierce) {
-            damage = Math.floor(damage * 0.5);
-            hitType = 'guard';
-            addLog(`${enemy.name} BLOCK — ${damage} ${t('battle.dmg')} (Tail atraviesa)`);
-          } else {
-            const spdDef = enemy.spd + eStages.spd * 8;
-            const avoidChance = Math.max(0.05, Math.min(0.35, 0.05 + (spdDef - 25) * 0.004 + (100 - card.acc) * 0.002));
-            const gRoll = Math.random();
-            if (gRoll < avoidChance) {
-              damage = 0; hitType = 'guard';
-              addLog(`${enemy.name} AVOID! (0 ${t('battle.dmg')})`);
-            } else if (gRoll < avoidChance + 0.55) {
-              damage = Math.floor(damage * 0.25);
-              hitType = 'guard';
-              addLog(`${enemy.name} BLOCK — ${damage} ${t('battle.dmg')}`);
-            } else {
-              addLog(`${enemy.name} ${t('battle.defends')} — ${damage} ${t('battle.dmg')}`);
-            }
-          }
+    const supEffects = ['heal_25pct','heal_strong','heal_light','buff_kaio','buff_ki8','buff_str8','buff_speed8','buff_guard8','buff_str_ki8','debuff_str8','debuff_ki8','debuff_speed8','debuff_speed8_lowacc','debuff_guard8','attack_power_down','powerup_dispel','support_dispel','powerdown_cleanse','avoid_beam','avoid_damage','avoid_damage_taiyoken','reduce_damage','absorb_beam','command_cancel','accuracy_up','evasion_up','knockdown_dmg','knockdown_min','life_drain','cc_recovery','lock_on','sunglasses','beam_shield','damage_shield','ohko_lowacc','android_kill','special_card','gamebomb','candy','naughty_book'];
+    if (card.type === 'support' || card.type === 'defense' || card.type === 'special' || supEffects.includes(card.effect)) {
+      const eff = card.effect;
+      let supportImpact = false;
+      if (eff === 'heal_25pct' || eff === 'heal_strong' || eff === 'heal_light') {
+        const pct = eff === 'heal_strong' ? (1 / 4 + 1 / 3) : eff === 'heal_light' ? 0.3 : 0.25;
+        plan.heal = Math.floor(player.maxHp * pct);
+        plan.damageNum = { value: plan.heal, type: 'heal' };
+        plan.logs.push(`${player.name} ${t('battle.uses')} ${card.name} — +${plan.heal} ${t('battle.hp')}!`);
+        supportImpact = true;
+      } else if (eff === 'medical_machine') {
+        plan.heal = card.atk + Math.floor(player.spd / 2) * 4;
+        plan.damageNum = { value: plan.heal, type: 'heal' };
+        plan.logs.push(`${player.name} ${t('battle.uses')} ${card.name} — +${plan.heal} ${t('battle.hp')}!`);
+        supportImpact = true;
+      } else if (eff === 'life_drain') {
+        plan.drain = Math.floor((card.atk + player.str) * 0.5);
+        supportImpact = plan.drain > 0;
+        plan.damageNum = { value: plan.drain, type: 'damage' };
+        plan.logs.push(`${player.name} ${t('battle.uses')} ${card.name} — ${plan.drain} ${t('battle.dmg')} (+${plan.drain} HP)`);
+        plan.endDelayMs = 500;
+      } else if (eff === 'cc_recovery') {
+        plan.ccGain = card.id === 97 ? 5 : 3;
+        plan.logs.push(`${player.name} ${t('battle.uses')} ${card.name} — +${plan.ccGain} CC!`);
+        supportImpact = true;
+      } else if (eff === 'avoid_beam' || eff === 'avoid_damage' || eff === 'avoid_damage_taiyoken' || eff === 'reduce_damage' || eff === 'absorb_beam' || eff === 'beam_shield' || eff === 'damage_shield' || eff === 'command_cancel') {
+        plan.guardType =
+          eff === 'avoid_damage' || eff === 'avoid_damage_taiyoken' || eff === 'damage_shield' ? 'avoid_damage'
+          : eff === 'absorb_beam' || eff === 'beam_shield' ? 'absorb'
+          : eff === 'reduce_damage' ? 'reduce'
+          : eff === 'command_cancel' ? 'cancel'
+          : 'avoid_beam';
+        const label = plan.guardType === 'avoid_beam' ? 'BEAM GUARD' : plan.guardType === 'avoid_damage' ? 'DAMAGE GUARD' : plan.guardType === 'absorb' ? 'ABSORB' : 'ENDURANCE';
+        plan.logs.push(`${player.name} ${t('battle.uses')} ${card.name} — ${label}!`);
+        supportImpact = true;
+      } else if (eff === 'ohko_lowacc' || eff === 'android_kill') {
+        if (Math.random() < card.acc / 100) {
+          plan.ohko = true; plan.damage = 999; plan.win = true;
+          plan.damageNum = { value: 999, type: 'damage' };
+          plan.logs.push(`${player.name} ${t('battle.uses')} ${card.name} — OHKO!`);
         } else {
-          addLog(`${player.name} → ${card.name} — ${damage} ${t('battle.dmg')}`);
+          plan.logs.push(`${player.name} → ${card.name} — ${t('battle.miss')}!`);
+          supportImpact = true;
         }
-        // Suicide (33): deja al USUARIO con 1 HP tras el ataque (CARD_SYSTEM.md)
-        if (card.effect === 'beam_suicide') {
-          setPlayer(prev => ({ ...prev, hp: 1 }));
-          addLog(`${player.name} ${t('battle.uses')} ${card.name} — ¡queda al borde!`);
+      } else if (eff.startsWith('buff_') || eff.startsWith('debuff_') || eff === 'accuracy_up' || eff === 'evasion_up' || eff === 'lock_on' || eff === 'powerup_dispel' || eff === 'support_dispel' || eff === 'powerdown_cleanse' || eff === 'knockdown_dmg' || eff === 'knockdown_min' || eff === 'attack_power_down' || eff === 'sunglasses' || eff === 'gamebomb' || eff === 'candy' || eff === 'naughty_book' || eff === 'special_card') {
+        if (eff.startsWith('buff_')) plan.buffTurns = 3;
+        if (card.id === 27 || card.id === 28) {
+          plan.transformFx = true;
+          plan.logs.push(`${player.name} ${t('battle.powerOn')}!`);
+          const nextForm = nextTransformedForm(activePlayerFormId);
+          if (nextForm && nextForm !== activePlayerFormId) {
+            plan.transformForm = nextForm;
+            plan.logs.push(`${player.name} → ${getForm(nextForm)?.form ?? nextForm}!`);
+          }
         }
+        if (eff === 'buff_ki8' || eff === 'buff_str_ki8') plan.pStageDelta.ki += 1;
+        if (eff === 'buff_str8' || eff === 'buff_str_ki8') plan.pStageDelta.str += 1;
+        if (eff === 'buff_speed8') plan.pStageDelta.spd += 1;
+        if (eff === 'buff_guard8') plan.pStageDelta.guard += 1;
+        if (eff === 'buff_kaio') { plan.pStageDelta.str += 2; plan.pStageDelta.ki += 2; }
+        if (eff.startsWith('debuff_') || eff === 'attack_power_down') plan.eBuffTurns = true;
+        if (eff === 'debuff_str8') plan.eStageDelta.str -= 1;
+        if (eff === 'debuff_ki8') plan.eStageDelta.ki -= 1;
+        if (eff === 'debuff_speed8' || eff === 'debuff_speed8_lowacc') plan.eStageDelta.spd -= 1;
+        if (eff === 'debuff_guard8') plan.eStageDelta.guard -= 1;
+        if (eff === 'powerup_dispel') { plan.resetEStages = true; plan.logs.push(`${card.name}: mejoras del enemigo eliminadas!`); }
+        if (card.id === 95) { plan.endGather = true; plan.logs.push(`${card.name}: el poder de ${enemy.name} se disipa!`); }
+        if (eff === 'lock_on') plan.pLockOn = true;
+        if (eff === 'accuracy_up') plan.pAcc = 2;
+        if (eff === 'evasion_up') plan.pEva = 2;
+        if (eff === 'gamebomb' || eff === 'candy' || eff === 'naughty_book' || eff === 'knockdown_dmg' || eff === 'knockdown_min') {
+          plan.bombDmg = Math.floor((card.atk || 20) + player.str);
+          supportImpact = plan.bombDmg > 0;
+          plan.damageNum = { value: plan.bombDmg, type: 'damage' };
+          plan.logs.push(`${player.name} ${t('battle.uses')} ${card.name} — ${plan.bombDmg} ${t('battle.dmg')}`);
+        } else {
+          plan.logs.push(`${player.name} ${t('battle.uses')} ${card.name} — ${t('battle.buff')}`);
+        }
+        supportImpact = supportImpact || plan.bombDmg > 0;
       }
+      plan.endDelayMs = supportImpact ? 500 : 350;
+      return plan;
+    }
 
-      setEnemy(prev => ({ ...prev, hp: Math.max(0, prev.hp - damage) }));
+    // ── Cartas de ATAQUE (damage/beam/command): la fórmula real del GBC ──
+    const effAcc = pAcc > 0 ? Math.min(100, acc + 30) : acc;
+    if (roll > effAcc && !pLockOn) {
+      plan.hitType = 'miss';
+      plan.logs.push(`${player.name} → ${card.name} — ${t('battle.miss')}!`);
+    } else {
+      if (pLockOn) { plan.consumeLockOn = true; plan.logs.push('LOCK ON!'); }
+      const eResp = Math.random() < 0.55 ? 'defend' : 'move';
+      if (eResp === 'move') {
+        const axis: MoveAxis = Math.random() < 0.5 ? 'HORIZONTAL' : 'VERTICAL';
+        plan.ePosMove = applyMoveAxis(enemy.battlePos, axis);
+      }
+      const power = card.type === 'beam' ? player.ki + pBuffs.ki : player.str + pBuffs.str;
+      const ePd = POSITION_DATA[plan.ePosMove ?? enemy.battlePos];
+      const vulnerable = (isBeamVulnerable(plan.ePosMove ?? enemy.battlePos) && card.type === 'beam') || (isDamageVulnerable(plan.ePosMove ?? enemy.battlePos) && card.type === 'damage');
+      const posMult = (ePd.depth === 'FRONT' && vulnerable) ? 0.8 : 0.5;
+      plan.damage = Math.floor((card.atk + power) * posMult);
+      const isPierce = card.effect === 'damage_pierce';
+      const isTeamAtk = card.effect === 'damage_special_team' || card.effect === 'beam_team';
+      const isBodyChange = card.effect === 'beam_varhp';
+      if (isBodyChange) plan.damage = Math.floor(enemy.hp * 0.5);
+      if (isTeamAtk && !player2) {
+        plan.logs.push(`${card.name}: técnica de equipo — daño reducido sin compañero`);
+        plan.damage = Math.floor(plan.damage * 0.6);
+      }
+      if (eResp === 'defend') {
+        if (isPierce) {
+          plan.damage = Math.floor(plan.damage * 0.5);
+          plan.hitType = 'guard';
+          plan.logs.push(`${enemy.name} BLOCK — ${plan.damage} ${t('battle.dmg')} (Tail atraviesa)`);
+        } else {
+          const spdDef = enemy.spd + eStages.spd * 8;
+          const avoidChance = Math.max(0.05, Math.min(0.35, 0.05 + (spdDef - 25) * 0.004 + (100 - card.acc) * 0.002));
+          const gRoll = Math.random();
+          if (gRoll < avoidChance) {
+            plan.damage = 0; plan.hitType = 'guard';
+            plan.logs.push(`${enemy.name} AVOID! (0 ${t('battle.dmg')})`);
+          } else if (gRoll < avoidChance + 0.55) {
+            plan.damage = Math.floor(plan.damage * 0.25);
+            plan.hitType = 'guard';
+            plan.logs.push(`${enemy.name} BLOCK — ${plan.damage} ${t('battle.dmg')}`);
+          } else {
+            plan.logs.push(`${enemy.name} ${t('battle.defends')} — ${plan.damage} ${t('battle.dmg')}`);
+          }
+        }
+      } else {
+        plan.logs.push(`${player.name} → ${card.name} — ${plan.damage} ${t('battle.dmg')}`);
+      }
+      if (card.effect === 'beam_suicide') {
+        plan.suicideHp1 = true;
+        plan.logs.push(`${player.name} ${t('battle.uses')} ${card.name} — ¡queda al borde!`);
+      }
+    }
+    if (plan.damage > 0) plan.damageNum = { value: plan.damage, type: 'damage' };
+    else if (plan.hitType === 'miss') plan.damageNum = { value: 0, type: 'miss' };
+    if (card.type === 'beam') plan.sfx.push('beam');
+    else if (plan.damage > 0) plan.sfx.push('hit');
+    else if (plan.hitType === 'miss') plan.sfx.push('dodge');
+    return plan;
+  };
+
+  // ── COMMIT: aplica el plan (SOLO en APPLY_DAMAGE o fallback onDone) ──
+  const commitActionOutcome = (plan: ActionPlan) => {
+    if (plan.committed) return;
+    plan.committed = true;
+    // Soporte/efectos
+    if (plan.heal > 0) {
+      setPlayer(prev => ({ ...prev, hp: Math.min(prev.maxHp, prev.hp + plan.heal) }));
+      setDamageNums(prev => [...prev, { value: plan.heal, type: 'heal', ...dmgPos('player'), id: nextUid() }]);
+    }
+    if (plan.drain > 0) {
+      setEnemy(prev => ({ ...prev, hp: Math.max(0, prev.hp - plan.drain) }));
+      setPlayer(prev => ({ ...prev, hp: Math.min(prev.maxHp, prev.hp + plan.drain) }));
+      setEnemyPose('hurt');
+      setDamageNums(prev => [...prev, { value: plan.drain, type: 'damage', ...dmgPos('enemy'), id: nextUid() }]);
+    }
+    if (plan.ccGain > 0) setPlayer(prev => ({ ...prev, cc: Math.min(prev.maxCc, prev.cc + plan.ccGain) }));
+    if (plan.guardType) setPlayerGuard({ type: plan.guardType });
+    if (plan.pLockOn) setPLockOn(true);
+    if (plan.pAcc > 0) setPAcc(plan.pAcc);
+    if (plan.pEva > 0) setPEva(plan.pEva);
+    if (plan.buffTurns >= 0) setBuffTurns(plan.buffTurns);
+    if (plan.pStageDelta.str || plan.pStageDelta.ki || plan.pStageDelta.spd || plan.pStageDelta.guard) {
+      setPStages(s => ({ str: clampStage(s.str + plan.pStageDelta.str), ki: clampStage(s.ki + plan.pStageDelta.ki), spd: clampStage(s.spd + plan.pStageDelta.spd), guard: clampStage(s.guard + plan.pStageDelta.guard) }));
+    }
+    if (plan.resetPStages) setPStages(zeroStages());
+    if (plan.eBuffTurns) setEBuffTurns(3);
+    if (plan.eStageDelta.str || plan.eStageDelta.ki || plan.eStageDelta.spd || plan.eStageDelta.guard) {
+      setEStages(s => ({ str: clampStage(s.str + plan.eStageDelta.str), ki: clampStage(s.ki + plan.eStageDelta.ki), spd: clampStage(s.spd + plan.eStageDelta.spd), guard: clampStage(s.guard + plan.eStageDelta.guard) }));
+    }
+    if (plan.resetEStages) setEStages(zeroStages());
+    if (plan.endGather) { aiRef.current.mode = 0; aiRef.current.gathered = false; }
+    if (plan.transformFx) { Sfx.transform(); setBattleTransform(nextUid()); }
+    if (plan.transformForm) setPlayerTransformedForm(plan.transformForm);
+    if (plan.bombDmg > 0) {
+      setEnemy(prev => ({ ...prev, hp: Math.max(0, prev.hp - plan.bombDmg) }));
+      setEnemyPose('hurt');
+      setDamageNums(prev => [...prev, { value: plan.bombDmg, type: 'damage', ...dmgPos('enemy'), id: nextUid() }]);
+    }
+    // Ataque
+    if (plan.ePosMove) setEnemy(prev => ({ ...prev, battlePos: plan.ePosMove! }));
+    if (plan.consumeLockOn) setPLockOn(false);
+    if (plan.suicideHp1) setPlayer(prev => ({ ...prev, hp: 1 }));
+    if (plan.damage > 0) setEnemy(prev => ({ ...prev, hp: Math.max(0, prev.hp - plan.damage) }));
+    if (plan.damage > 0 || plan.hitType !== 'damage') {
       setFlashEnemy(true);
       hitImpact('enemy');
-      if (card.type === 'beam') Sfx.beam();
-      else if (damage > 0) Sfx.hit();
-      else if (hitType === 'miss') Sfx.dodge();
       setTimeout(() => setFlashEnemy(false), 150);
+    }
+    for (const s of plan.sfx) { if (s === 'beam') Sfx.beam(); else if (s === 'hit') Sfx.hit(); else if (s === 'dodge') Sfx.dodge(); }
+    if (plan.damageNum && plan.damageNum.type !== 'heal') {
+      if (plan.damageNum.value > 0) setEnemyPose('hurt');
+      setDamageNums(prev => [...prev, { value: plan.damageNum!.value, type: plan.damageNum!.type, ...dmgPos('enemy'), id: nextUid() }]);
+    }
+    for (const l of plan.logs) addLog(l);
 
-      if (damage > 0) {
-        setEnemyPose('hurt');
-        setDamageNums(prev => [...prev, { value: damage, type: 'damage', ...dmgPos('enemy'), id: nextUid() }]);
-      }
-      else if (hitType === 'miss') setDamageNums(prev => [...prev, { value: 0, type: 'miss', ...dmgPos('enemy'), id: nextUid() }]);
+    // Coste real de la carta (JOINT)
+    // (el coste se descuenta aquí, en el mismo commit del impacto)
+    if (!plan.ohko) setPlayer(prev => ({ ...prev, cc: Math.max(0, prev.cc - cardOf(plan).cc) }));
 
-      // Coste real de la carta (JOINT)
-      setPlayer(prev => ({ ...prev, cc: Math.max(0, prev.cc - card.cc) }));
-
-      if (enemy.hp - damage <= 0 && enemy2) {
-        // 2v2: cae el primer jefe, entra el segundo (mecánica real del GBC)
+    // 2v2 / win (misma mecánica que antes, ahora en el punto del impacto)
+    if (plan.ohko || (enemy.hp - plan.damage <= 0)) {
+      if (enemy2 && !plan.ohko) {
         const fallen = enemy.name;
         const next = enemy2;
-        setEnemy(next);
-        setEnemy2(null);
-        setEnemyPose('idle');
-        setFlashEnemy(false);
+        setEnemy(next); setEnemy2(null);
+        setEnemyPose('idle'); setFlashEnemy(false);
         addLog(`${fallen} K.O.! ${next.name} entra al combate!`);
-        setTimeout(() => endTurn(), 900);
-        return;
-      }
-      if (enemy.hp - damage <= 0) {
-        // Otorgar EXP al ganar
+        plan.ended = true;
+        setTimeout(() => endTurnRef.current(), 900);
+      } else {
         const prog = loadProgress();
         const gained = 80 + enemy.level * 20;
         let newExp = prog.exp + gained;
         let newLevel = prog.level;
-        while (newExp >= expToNext(newLevel)) {
-          newExp -= expToNext(newLevel);
-          newLevel++;
-        }
+        while (newExp >= expToNext(newLevel)) { newExp -= expToNext(newLevel); newLevel++; }
         saveProgress({ level: newLevel, exp: newExp });
+        plan.ended = true;
         setTimeout(() => {
           setEnemyPose('hurt'); setPhase('win'); Sfx.victory();
           addLog(`${enemy.name} ${t('battle.defeated')}`);
           if (newLevel > prog.level) addLog(`LEVEL UP! ${newLevel} (+HP/STR/KI/SPD)`);
         }, 500);
-        return;
       }
-
-      setTimeout(() => endTurn(), 700);
-    }, 350);
+    }
   };
+  const endTurnRef = useRef<() => void>(() => {});
+  // Referencia de la carta en curso para el coste (el commit no recibe la carta)
+  const cardOf = (plan: ActionPlan): CardDef => planCardRef.current;
+  const planCardRef = useRef<CardDef>(null as unknown as CardDef);
+
 
   // ─── BASIC: acciones gratuitas del GBC (no cuestan CC) ───
   const basicAction = (action: 'gather' | 'stage' | 'guard') => {
@@ -2175,8 +2248,22 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
     }
     Sfx.cardPlay();
     setSelectedCard(null);
+    // Mismo patrón fase 3: commit del outcome en el impacto (APPLY_DAMAGE)
+    planCardRef.current = card;
+    const plan = computeActionOutcome(card);
+    endTurnRef.current = () => {
+      setPlayerPose('idle');
+      setEnemyPose('idle');
+      settleAttackHand(() => setTimeout(() => advanceExchange(), 600));
+    };
     playCardCinematic(card, 'player', () => {
-      resolveCardPlay(card, true, -1);
+      if (!plan.committed) commitActionOutcome(plan);
+      if (plan.ended) return;
+      setPlayerPose('idle');
+      setEnemyPose('idle');
+      settleAttackHand(() => setTimeout(() => advanceExchange(), 600));
+    }, (e) => {
+      if (e.type === 'APPLY_DAMAGE') commitActionOutcome(plan);
     });
   };
 
@@ -2205,33 +2292,37 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
     setEnemyPose('idle');
     const ai = aiRef.current;
     setTimeout(() => {
-      // Mazo REAL del jefe en story mode (spreadsheet oficial); en versus, pool global
-      const storyDeck = storyChapter ? (STORY_ENEMY_DECKS[storyChapter] || []).map(id => getCard(id)).filter((c): c is CardDef => !!c) : [];
-      const allPool = storyDeck.length > 0 ? storyDeck : CARDS;
-      // Cartas de ataque que el ENEMIGO puede usar: las genéricas + las compatibles
-      // con su personaje (fix: antes `!c.compatible` excluía TODAS las cartas firma,
-      // así que Goku nunca usaba Kamehameha en su mazo real).
+      // MAZO REAL del enemigo (battle/state): roba 1 del drawPile al entrar
+      // en su Attack Phase (como el jugador) y decide SOLO con su mano.
+      // Nunca vuelve a sortear el pool original — las Joint usadas van a su
+      // discardPile y el drawPile se rebaraja al agotarse.
+      const draw = drawOne(eDeckRef.current);
+      setEDeckState(draw.state);
+      const eHand = draw.state.hand;
       const enemyCharId = getForm(enemyFormId)!.character;
-      const attackCards = allPool.filter(c => (c.type === 'damage' || c.type === 'beam')
-        && cardUsableBy(c, enemyCharId));
-      // IA a HP bajo: si tiene carta de curación compatible en su mazo, se cura
+      const usableByEnemy = (c: CardDef) => cardUsableBy(c, enemyCharId);
+      // Cartas de ataque que el ENEMIGO PUEDE usar: solo las de SU mano
+      const attackCards = eHand.filter(c => (c.type === 'damage' || c.type === 'beam') && usableByEnemy(c));
+      // IA a HP bajo: si tiene carta de curación en SU mano, se cura
       // (HYPOTHESIS — el algoritmo real de decisión es P0 ROM, pero el manual
       // confirma que la IA puede usar support cards; el deck determina qué puede hacer)
       if (enemy.hp < enemy.maxHp * 0.25) {
-        const heals = allPool.filter(c => c.type === 'support' && (c.effect.startsWith('heal_')) && cardUsableBy(c, enemyCharId));
+        const heals = eHand.filter(c => c.type === 'support' && c.effect.startsWith('heal_') && usableByEnemy(c));
         if (heals.length > 0) {
           const h = heals[0];
           const pct = h.effect === 'heal_strong' ? (1 / 4 + 1 / 3) : h.effect === 'heal_light' ? 0.3 : 0.25;
           const healed = Math.floor(enemy.maxHp * pct);
           setEnemy(prev => ({ ...prev, hp: Math.min(prev.maxHp, prev.hp + healed) }));
+          setEDeckState(prev => playJoint(prev, prev.hand.indexOf(h)));
           setEnemyPose('gather_power');
           addLog(`${enemy.name} ${t('battle.uses')} ${h.name} — +${healed} HP!`);
           setTimeout(() => { setEnemyPose('idle'); advanceExchange(); }, gbcMs(58));
           return;
         }
       }
-      // Stage Attacks GRATIS (cc 0) del pool: la IA los usa cuando no tiene CC
-      const freeStages = allPool.filter(c => c.type === 'command' && c.cc === 0 && c.name.includes('Stage'));
+      // Stage Attacks GRATIS: acción BASIC universal (no consumen mazo) — el
+      // enemigo siempre puede hacerlos, como el jugador (GBC: BASIC menu).
+      const freeStages = CARDS.filter(c => c.type === 'command' && c.cc === 0 && c.name.includes('Stage'));
       let card: CardDef;
       if (ai.mode === 1) {
         // Gather Power: no ataca, sube STR/KI (mecánica real)
@@ -2248,31 +2339,64 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
       if (affordable.length === 0 && freeStages.length > 0) {
         // Sin CC: la IA hace un Stage Attack básico (gratis, +1 CC por input en el GBC)
         card = freeStages[Math.floor(Math.random() * freeStages.length)];
+        // Los Stage Attacks básicos no consumen cartas del mazo (BASIC)
         incomingCard.current = card;
         addLog(`${enemy.name} ${t('battle.uses')} ${card.name}`);
         setTimeout(() => enterDefensePhase(card.name), gbcMs(22));
         return;
       }
+      if (affordable.length === 0 && ai.mode !== 1) {
+        // Sin cartas asequibles en SU mano: la IA reagrupa (gather) en vez de
+        // inventar cartas del pool infinito. gatherStreak limita el bucle:
+        // si tras 2 gathers sigue sin opciones, hace defensa pasiva (el CC
+        // sigue subiendo +3/turno y podrá atacar más adelante).
+        ai.mode = 1;
+        ai.gatherStreak = (ai.gatherStreak ?? 0) + 1;
+        if (ai.gatherStreak >= 2) {
+          ai.gatherStreak = 0; ai.mode = 0;
+          addLog(`${enemy.name} se prepara…`);
+          setTimeout(() => advanceExchange(), gbcMs(30));
+          return;
+        }
+        Sfx.powerUp();
+        setEStages(s => ({ ...s, str: clampStage(s.str + 1), ki: clampStage(s.ki + 1) }));
+        setEBuffTurns(3);
+        setEnemyPose('gather_power');
+        addLog(`${enemy.name} ${t('battle.gathers')}! (+8 STR/KI)`);
+        setTimeout(() => { setEnemyPose('idle'); advanceExchange(); }, gbcMs(58));
+        return;
+      }
       if (ai.mode === 2) {
-        // 5 Stage Attack tras gather (patrón real)
-        const fiveStage = CARDS.filter(c => c.type === 'command' && /5/i.test(c.name) && c.cc <= enemy.cc);
+        // 5 Stage Attack tras gather (patrón real) — SOLO de su mano
+        const fiveStage = eHand.filter(c => c.type === 'command' && /5/i.test(c.name) && c.cc <= enemy.cc);
         card = fiveStage.length > 0 ? fiveStage[Math.floor(Math.random() * fiveStage.length)]
-          : affordable.find(c => c.type === 'beam') || attackCards[Math.floor(Math.random() * attackCards.length)];
+          : affordable.find(c => c.type === 'beam') || affordable[0];
         ai.mode = 3;
       } else if (ai.mode === 3) {
         // Beam/Damage tras el 5-stage → vuelve al inicio del patrón
         const beams = affordable.filter(c => c.type === 'beam');
         card = beams.length > 0 ? beams[Math.floor(Math.random() * beams.length)]
-          : affordable[Math.floor(Math.random() * affordable.length)] || attackCards[Math.floor(Math.random() * attackCards.length)];
+          : affordable[Math.floor(Math.random() * affordable.length)] || affordable[0];
         ai.mode = 0; ai.attacks = 0;
       } else {
         // Modo 0: ataque regular (Damage preciso) — rara vez energy cards
         ai.attacks++;
         const accurate = affordable.filter(c => c.type === 'damage' && c.acc >= 85);
         card = accurate.length > 0 ? accurate[Math.floor(Math.random() * accurate.length)]
-          : affordable[Math.floor(Math.random() * affordable.length)] || attackCards[Math.floor(Math.random() * attackCards.length)];
+          : affordable[Math.floor(Math.random() * affordable.length)] || affordable[0];
         if (ai.attacks >= 2) ai.mode = 1;
       }
+      if (!card) {
+        // Mano vacía sin opciones (extremo): defensa pasiva y avanza
+        ai.gatherStreak = 0;
+        addLog(`${enemy.name} se prepara…`);
+        setTimeout(() => advanceExchange(), gbcMs(30));
+        return;
+      }
+      ai.gatherStreak = 0; // pudo atacar: el ciclo de gather se reinicia
+      // La Joint usada sale de la mano real → discardPile
+      setEDeckState(prev => playJoint(prev, prev.hand.indexOf(card)));
+      setEnemy(prev => ({ ...prev, cc: Math.max(0, prev.cc - card.cc) }));
       incomingCard.current = card;
       addLog(`${enemy.name} ${t('battle.uses')} ${card.name}`);
       // ⚠️ ORDEN GBC: el defensor elige SU defensa ANTES de que se ejecute
