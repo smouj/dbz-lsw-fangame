@@ -25,13 +25,10 @@ const OW_BASE = '/assets/overworld/panel_sprites';
 // chibi NO está ya normalizado (los 9 de personajes con combate espejado
 // ya miran a la derecha desde 6c06ffa).
 // 'left' = probablemente mira a la izquierda (verificar y voltear).
-const SUGGEST_LEFT: Record<string, boolean> = {
-  'burter_base_ow.png': true,
-  'cell_jr_base_ow.png': true,
-  'ginyu_base_ow.png': true,
-  'guldo_base_ow.png': true,
-  'trunks_base_ow.png': true,
-};
+// 2026-08-17: todos los chibis normalizados (check-overworld-facing.py
+// aplicó los 9 pendientes: android_19, burter, buu, cell_imperfect,
+// cell_jr, cell_semi_perfect, ginyu, guldo, trunks_base).
+const SUGGEST_LEFT: Record<string, boolean> = {};
 
 // ─── helpers de imagen ───
 // El flip se hace en el SERVIDOR (POST /__dev/flip, PNG píxel a píxel,
