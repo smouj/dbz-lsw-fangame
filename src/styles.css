@@ -1435,21 +1435,19 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 /* La ilustración ENCAJA en el área interior del marco (48×40 → interior
    37×33 → a 2×: 74×66; el arte se centra sin deformarse). */
 .battle-controls .hand-cards .card .card-art {
+  /* interior EXACTO del marco GBC 48×40 → 2×: x14-86, y10-74 (72×64) */
   position: absolute;
-  top: 12px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 68px;
-  height: 56px;
+  top: 10px;
+  left: 14px;
+  width: 72px;
+  height: 64px;
+  overflow: hidden;
   background: transparent;
   border: 0;
   margin: 0;
 }
 .battle-controls .hand-cards .card .card-art-img {
-  width: 68px;
-  height: 56px;
   image-rendering: pixelated;
-  object-fit: contain;
 }
 .battle-controls .hand-area { width: min(720px, 96vw); padding: 0 10px; gap: 3px; }
 .battle-controls .hand-label { display: none; }
@@ -1475,7 +1473,6 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   filter: grayscale(.75) brightness(.68);
 }
 .battle-controls .hand-cards .card .card-icon { width: 56px; height: clamp(28px, 4.5vh, 38px); }
-.battle-controls .hand-cards .card .card-art { height: clamp(28px, 4.5vh, 38px); }
 .battle-controls .hand-cards .card .card-name { font-size: 7px; }
 .battle-controls .hand-cards .card .card-atk, .battle-controls .hand-cards .card .card-acc { font-size: 6px; }
 
@@ -9466,10 +9463,11 @@ button.linklike:hover { text-decoration: underline; }
 .dev-hud-basic-options { display: flex; gap: 8px; }
 .dev-hud-basic-opt {
   background: linear-gradient(180deg, #1c2231, #141824);
-  border: 1px solid #b08d2e55; color: #e0b84c;
+  border: 2px solid #000; color: #e0b84c;
   font-family: var(--fpx); font-size: 10px; letter-spacing: 1px;
-  padding: 6px 12px; border-radius: 6px; cursor: pointer;
-  box-shadow: 2px 2px 0 #000;
+  padding: 6px 12px; border-radius: 0; cursor: pointer;
+  box-shadow: 3px 3px 0 #000, inset 0 1px 0 rgba(255,255,255,.08);
+  image-rendering: pixelated;
 }
 .dev-hud-basic-opt:hover { border-color: #b08d2e; filter: brightness(1.15); }
 .dev-hud-preview .battlefield-fighters {

@@ -19,6 +19,7 @@ import { BATTLE_PORTRAITS } from '../data/battlePortraits';
 import { downloadJson } from './spriteEditing';
 import { getCard, CARD_TYPE_NAMES, CARD_COLORS } from '../data/cards';
 import { cardIconUrl, TYPE_ICONS } from '../data/icons';
+import { FitArt } from '../components/FitArt';
 
 // Formas de ejemplo para el mockup (Goku vs Piccolo, como el Battle Lab).
 const P_FORM = 'goku_base';
@@ -351,7 +352,9 @@ function MockHand({ compact, limit }: { compact?: boolean; limit?: boolean }) {
                 <span className="card-cc">{card.cc}CC</span>
               </div>
               <div className="card-art">
-                {iconUrl ? <img className="card-art-img" src={iconUrl} alt="" /> : <IconCmp size={40} strokeWidth={1.8} />}
+                {iconUrl
+                  ? <FitArt src={iconUrl} areaW={72} areaH={64} className="card-art-img" />
+                  : <IconCmp size={40} strokeWidth={1.8} />}
               </div>
               <div className="card-name">{card.name}</div>
               <div className="card-type">{CARD_TYPE_NAMES[card.type]}</div>

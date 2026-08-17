@@ -12,6 +12,7 @@ import { BATTLE_PORTRAITS } from './data/battlePortraits';
 import { UNLOCK_KEY, STARTER_DAMAGE_DECK, STARTER_BEAM_DECK, STARTER_CHARACTERS, cardsForLevel, pickRewards, VS_UNLOCKS, isFormUnlocked, FORM_UNLOCK_LEVELS } from './data/unlocks';
 import { CARDS, CARD_COLORS, CARD_TYPE_NAMES, CardDef, CardType, DECK_SIZE, MAX_COPIES, getCard, CardEffect } from './data/cards';
 import { cardIconUrl, MINI_PORTRAITS, MENU_PORTRAITS, TYPE_ICONS } from './data/icons';
+import { FitArt } from './components/FitArt';
 import { overworldUrl } from './data/overworld';
 import { battleOverworldActorUrl, battleOverworldAuraUrl } from './data/battleOverworld';
 import { panelsForChapter, type StoryPanel, characterName } from './data/storyPanels';
@@ -489,7 +490,9 @@ function CardVisual({ card, selected, onClick, small, disabled }: {
         <span className="card-cc">{card.cc}CC</span>
       </div>
       <div className="card-art">
-        {iconUrl ? <img className="card-art-img" src={iconUrl} alt="" onError={e => (e.currentTarget.style.display = 'none')} /> : <IconCmp size={40} strokeWidth={1.8} />}
+        {iconUrl
+          ? <FitArt src={iconUrl} areaW={72} areaH={64} className="card-art-img" />
+          : <IconCmp size={40} strokeWidth={1.8} />}
       </div>
       <div className="card-name">{card.name}</div>
       <div className="card-type">{CARD_TYPE_NAMES[card.type]}</div>
