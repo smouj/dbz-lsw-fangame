@@ -317,7 +317,6 @@ export function HudModule() {
               {/* LIMIT: MISMO layout que la mano (una línea, marco + arte) */}
               {view === 'LIMIT' && (
                 <div className="command-select">
-                  <div className="limit-title">LIMITED — GOKU</div>
                   <div className="limit-cards-row">
                     <div className="hand-cards">
                       {limitCards.map(c => (

@@ -3179,7 +3179,6 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
         )}
         {phase === 'limitSelect' && (
           <div className="command-select">
-            <div className="limit-title">LIMITED — {player.name}</div>
             {limitCards.length === 0 && <div className="limit-empty">{t('battle.limitHelp')}</div>}
             {/* MISMO layout que la mano: cartas 96×80 con marco GBC + arte en
                 UNA línea; nombre/CC van en el tooltip (como las JOINT). El
