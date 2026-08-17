@@ -133,6 +133,40 @@ export function PositionsModule() {
               </div>
             ))}
           </div>
+
+          {/* ═══ PLANOS DE ANCLAJE: cada posición con AMBOS lados, como se
+               verá en el campo (overworld) — sincronizado con anchorFor ═══ */}
+          <div className="dev-pos-planes">
+            <h3>Planos de anclaje (LEFT / RIGHT) — mismos anchors que el juego</h3>
+            <div className="dev-pos-planes-grid">
+              {BATTLE_POSITIONS.map(pos => {
+                const la = anchorFor(pos, 'LEFT');
+                const ra = anchorFor(pos, 'RIGHT');
+                return (
+                  <div key={pos} className={`dev-pos-plane ${pos.toLowerCase()}`}>
+                    <div className="dev-pos-plane-name">{POSITION_NAMES[pos]}</div>
+                    <div
+                      className="dev-pos-plane-field"
+                      style={{ backgroundImage: `url(${scenario.overviewBackground})` }}
+                    >
+                      {overworldUrl(playerFormId) && (
+                        <img src={overworldUrl(playerFormId)} alt="" className="dev-pos-plane-chibi left"
+                          style={{ left: `${la.x}%`, top: `${la.y}%`, transform: `translate(-50%, -100%) scaleX(${facingFlip(playerFormId, 'left')})` }} />
+                      )}
+                      {overworldUrl(enemyFormId) && (
+                        <img src={overworldUrl(enemyFormId)} alt="" className="dev-pos-plane-chibi right"
+                          style={{ left: `${ra.x}%`, top: `${ra.y}%`, transform: `translate(-50%, -100%) scaleX(${facingFlip(enemyFormId, 'right')})` }} />
+                      )}
+                    </div>
+                    <div className="dev-pos-plane-anchors">
+                      <code>L {la.x}/{la.y}</code>
+                      <code>R {ra.x}/{ra.y}</code>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
         </div>
 
         {/* Controles */}

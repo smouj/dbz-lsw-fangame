@@ -19,6 +19,7 @@ import { getForm } from '../data/roster';
 import { spriteDirFor, spriteFrameUrl } from '../data/spriteManifest';
 import { BATTLE_PORTRAITS } from '../data/battlePortraits';
 import { storyPortraitUrl } from '../data/storyPortraits';
+import { anchorFor, BattlePosition } from '../data/positions';
 import { downloadJson } from './spriteEditing';
 import { getCard, CARD_TYPE_NAMES, CARD_COLORS, CardDef } from '../data/cards';
 import { cardIconUrl } from '../data/icons';
@@ -256,12 +257,24 @@ export function HudModule() {
             <div className="battlefield">
               <div className="battle-bg authentic" style={{ backgroundImage: `url(${battleBgUrl})` }} />
               <div className="battlefield-fighters">
-                <div className="fighter-container player down back" style={{ left: '30%', top: '62%' }}>
-                  {pIdle && <img src={pIdle} alt="" className="overworld-sprite dev-hud-fighter-sprite" />}
-                </div>
-                <div className="fighter-container enemy up back" style={{ left: '70%', top: '46%' }}>
-                  {eIdle && <img src={eIdle} alt="" className="overworld-sprite dev-hud-fighter-sprite" style={{ transform: 'scaleX(-1)' }} />}
-                </div>
+                {(() => {
+                  // ANCLAJE REAL (fuente única): los fighters se posicionan con
+                  // anchorFor(pos, side) — los mismos anchors que Position Lab
+                  // edita (localStorage 'dbzlsw:position-anchors'). Si cambias
+                  // una posición en Positions, el preview del HUD la refleja.
+                  const pa = anchorFor(BattlePosition.DOWN_BACK, 'LEFT');
+                  const ea = anchorFor(BattlePosition.DOWN_BACK, 'RIGHT');
+                  return (
+                    <>
+                      <div className="fighter-container player down back" style={{ left: `${pa.x}%`, top: `${pa.y}%` }}>
+                        {pIdle && <img src={pIdle} alt="" className="overworld-sprite dev-hud-fighter-sprite" />}
+                      </div>
+                      <div className="fighter-container enemy up back" style={{ left: `${ea.x}%`, top: `${ea.y}%` }}>
+                        {eIdle && <img src={eIdle} alt="" className="overworld-sprite dev-hud-fighter-sprite" style={{ transform: 'scaleX(-1)' }} />}
+                      </div>
+                    </>
+                  );
+                })()}
               </div>
             </div>
 

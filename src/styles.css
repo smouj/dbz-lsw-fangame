@@ -9913,3 +9913,45 @@ button.linklike:hover { text-decoration: underline; }
   color: rgba(140, 150, 170, .45);
   text-shadow: 1px 1px 0 #000;
 }
+
+/* Planos de anclaje (Position Lab): cada posición con ambos lados */
+.dev-pos-planes { margin-top: 14px; }
+.dev-pos-planes h3 { margin: 0 0 8px; font-size: 12px; letter-spacing: .4px; color: #d8d0b8; text-transform: uppercase; }
+.dev-pos-planes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 10px;
+}
+.dev-pos-plane {
+  border: 1px solid #1d222b;
+  border-radius: 6px;
+  background: rgba(8, 8, 10, .5);
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.dev-pos-plane-name { font-size: 11px; color: #ffe9a3; letter-spacing: .5px; text-align: center; }
+.dev-pos-plane-field {
+  position: relative;
+  height: 120px;
+  border-radius: 4px;
+  overflow: hidden;
+  background-size: cover;
+  background-position: center;
+  border: 1px solid rgba(255, 255, 255, .07);
+}
+.dev-pos-plane-chibi {
+  position: absolute;
+  image-rendering: pixelated;
+  height: 52px;
+  width: auto;
+  filter: drop-shadow(2px 2px 0 rgba(0,0,0,.4));
+}
+.dev-pos-plane-chibi.right { filter: drop-shadow(2px 2px 0 rgba(0,0,0,.4)) brightness(.85); }
+.dev-pos-plane-anchors {
+  display: flex;
+  justify-content: space-between;
+  font-size: 10px;
+}
+.dev-pos-plane-anchors code { color: #7fd4ff; }
