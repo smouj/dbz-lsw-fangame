@@ -1404,7 +1404,8 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 
 .battle-controls .hand-cards .card {
   /* Carta GBC auténtica: el frame del paquete (48×40) a 2× entero (96×80),
-     con la ilustración DENTRO del área interior blanca. */
+     con la ilustración DENTRO del área interior. SIN línea de color: solo
+     el frame GBC y el arte. */
   width: 96px;
   height: 80px;
   min-height: 0;
@@ -1419,9 +1420,14 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   background-repeat: no-repeat;
   image-rendering: pixelated;
   border: 0;
+  border-top: 0;
   box-shadow:
     0 12px 0 -7px rgba(0,0,0,.86),
     0 18px 28px rgba(0,0,0,.45);
+}
+/* Sin línea de acento superior (::before del .card base) en la mano GBC */
+.battle-controls .hand-cards .card::before {
+  display: none;
 }
 /* ── Interior GBC: la ilustración dentro del marco, nombre pixel ── */
 .battle-controls .hand-cards .card .card-header,
