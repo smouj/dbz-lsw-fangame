@@ -8596,7 +8596,13 @@ button:focus-visible, .chapter-node:focus-visible {
 /* ═══════════════════════════════════════════════════════════
    DEV STUDIO — HUD Studio (visualizador + editor de tema HUD)
    ═══════════════════════════════════════════════════════════ */
-.dev-hud-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+.dev-hud-head {
+  display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+  position: sticky; top: 0; z-index: 30;
+  background: linear-gradient(180deg, #0b0b0d 82%, rgba(11, 11, 13, 0));
+  padding: 8px 4px 12px;
+  backdrop-filter: blur(2px);
+}
 .dev-hud-head h1 { margin: 0 0 3px; font-family: var(--fui); font-size: 19px; letter-spacing: .4px; color: #fff; display: flex; align-items: center; gap: 10px; }
 .dev-hud-sub { margin: 0; max-width: 640px; font-size: 12px; line-height: 1.55; color: #8a93a3; }
 .dev-hud-sub strong { color: #cdd6e2; }
@@ -9807,3 +9813,52 @@ button.linklike:hover { text-decoration: underline; }
   gap: 12px;
 }
 .limit-cards-row .hand-cards { flex-wrap: nowrap; }
+
+/* ═══ DEV STUDIO — mejoras de visualización estratégica (v2) ═══ */
+.dev-main .dev-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-width: 0;
+}
+/* Header sticky: el título y las acciones quedan accesibles en páginas largas */
+.dev-header {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  background: linear-gradient(180deg, #0b0b0d 82%, rgba(11, 11, 13, 0));
+  padding: 10px 10px 12px;
+  margin-bottom: 6px;
+  backdrop-filter: blur(2px);
+}
+/* Cajas/secciones uniformes para paneles y previews */
+.dev-section {
+  background: #0e1013;
+  border: 1px solid #1d222b;
+  border-radius: 6px;
+  padding: 12px 14px;
+  min-width: 0;
+}
+.dev-section > h2,
+.dev-section > h3 {
+  margin: 0 0 8px;
+  font-size: 13px;
+  letter-spacing: .4px;
+  color: #d8d0b8;
+  text-transform: uppercase;
+}
+
+/* Headers h1 directos (Música, Facing, Game Config) → sticky, igual que
+   el resto del Dev Studio */
+.dev-panel > h1:first-child {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  background: linear-gradient(180deg, #0b0b0d 82%, rgba(11, 11, 13, 0));
+  padding: 8px 2px 10px;
+  margin: 0 0 4px;
+  backdrop-filter: blur(2px);
+}
+.dev-panel > h1:first-child + p {
+  margin-top: 0;
+}
