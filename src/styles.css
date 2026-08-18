@@ -699,8 +699,8 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 
 .hud-name {
   display: flex; align-items: center; gap: 6px;
-  font-family: var(--fpx);
-  font-size: 11px;               /* más legible (antes 9px) */
+  font-family: var(--fui);   /* VT323 pixel (unificado con los números) */
+  font-size: 12px;
   letter-spacing: .5px;
   color: var(--hud-text);
   line-height: 1;
@@ -810,8 +810,8 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   box-shadow: 1px 1px 0 #000;
   padding: 1px 6px;
   color: #9fd4ff;                   /* texto claro */
-  font-family: var(--fpx);
-  font-size: 10px;
+  font-family: var(--fui);   /* VT323 pixel (unificado) */
+  font-size: 11px;
   letter-spacing: 1px;
   margin-left: 2px;
 }
@@ -846,8 +846,8 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 .hud-status:empty { display: none; }
 .status-chip {
   /* Geometría ÚNICA para todos los chips (misma altura/typo/padding/borde) */
-  font-family: var(--fpx);
-  font-size: 8px;
+  font-family: var(--fui);   /* VT323 pixel (unificado con el HUD) */
+  font-size: 9px;
   letter-spacing: .5px;
   padding: 2px 4px;
   line-height: 1;
