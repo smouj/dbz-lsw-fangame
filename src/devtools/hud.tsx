@@ -7,7 +7,7 @@
 // el Combat Lab. "Aplicar al juego" inyecta las variables en :root y
 // persiste en localStorage.
 // ═══════════════════════════════════════════════════════════════════════
-import { Check, Download, RotateCcw, Lock } from 'lucide-react';
+import { Check, Download, RotateCcw, Lock, BookOpen, Swords, Library, Users, Sparkles, Settings as SettingsIcon, ChevronRight } from 'lucide-react';
 import { useMemo, useState } from 'react';
 import {
   HUD_THEME_VARS, HudTheme, currentHudTheme, defaultHudTheme,
@@ -36,7 +36,7 @@ const E_FORM = 'piccolo_base';
 const GROUPS = ['Colores', 'HUD', 'Cartas', 'Posición', 'Escala', 'Tipografía'];
 
 // Vista del preview: cómo se ve el HUD en cada estado (sin motor — visual).
-type HudView = 'COMMAND' | 'MANO' | 'BASIC' | 'MOVE' | 'STAGE' | 'LIMIT' | 'DIALOGO' | 'INTRO' | 'DISCARD' | 'DEFENSA' | 'RESULTADO';
+type HudView = 'COMMAND' | 'MANO' | 'BASIC' | 'MOVE' | 'STAGE' | 'LIMIT' | 'DIALOGO' | 'INTRO' | 'DISCARD' | 'DEFENSA' | 'RESULTADO' | 'MENU';
 
 const VIEWS: { id: HudView; label: string; tip: string }[] = [
   { id: 'COMMAND', label: 'Comando', tip: 'Command strip: LIMIT · JOINT · BASIC' },
@@ -49,6 +49,7 @@ const VIEWS: { id: HudView; label: string; tip: string }[] = [
   { id: 'DISCARD', label: 'Descarte', tip: 'HAND CHECK — demasiadas cartas, elige cuál descartar' },
   { id: 'DEFENSA', label: 'Defensa', tip: 'Menú de defensa: LIMITED · JOINT · BASIC DEFENSE' },
   { id: 'RESULTADO', label: 'Resultado', tip: 'Pantalla final: VICTORIA / DERROTA' },
+  { id: 'MENU', label: 'Menú', tip: 'Pantalla principal: logo, continuar, navegación y footer' },
   { id: 'INTRO', label: 'Intro', tip: 'Presentación de inicio (VS + READY/FIGHT)' },
 ];
 
@@ -276,6 +277,57 @@ export function HudModule() {
                 </div>
                 <div className="intro-fight">FIGHT!</div>
                 <div className="intro-flash" />
+              </div>
+            )}
+
+            {/* MENU PRINCIPAL: logo, continuar, navegación y footer — MISMO
+                markup que el juego (main.tsx), escalado al preview */}
+            {view === 'MENU' && (
+              <div className="dev-menu-screen">
+                <div className="menu-content">
+                  <img className="menu-logo-mark" src="/logo-128.png" alt="" />
+                  <h1 className="menu-title">DBZ LSW</h1>
+                  <h2 className="menu-subtitle">LEGENDARY SUPER WARRIORS</h2>
+                  <button className="menu-continue-card" data-tip={tipBlock('CONTINUAR', [['desc', 'Sigue la historia en el capítulo actual.']])}>
+                    <span className="mc-play">▶</span>
+                    <span className="mc-body">
+                      <span className="mc-kicker">SAGA SAIYAN · CAPÍTULO 1</span>
+                      <span className="mc-title">CONTINUAR</span>
+                      <span className="mc-chapter">EL REGRESO DE RADITZ</span>
+                      <span className="mc-progress-line">
+                        <span className="mc-progress-track"><span className="mc-progress-fill" style={{ width: '42%' }} /></span>
+                        <span className="mc-percent">42%</span>
+                      </span>
+                      <span className="mc-meta">GOKU · Nv. 12</span>
+                    </span>
+                    <span className="mc-hero-wrap">
+                      <img className="mc-hero" src={pPortrait ?? ''} alt="" />
+                      <span className="mc-hero-name">GOKU</span>
+                    </span>
+                  </button>
+                  <nav className="menu-nav">
+                    {[
+                      { n: '01', label: 'HISTORIA', desc: 'Campaña por capítulos', Icon: BookOpen },
+                      { n: '02', label: 'BATALLA', desc: 'Combate libre / versus', Icon: Swords, tone: 'hot', selected: true },
+                      { n: '03', label: 'MAZO', desc: 'Edita tu deck de 20 cartas', Icon: Library },
+                      { n: '04', label: 'PERSONAJES', desc: 'Formas y estadísticas', Icon: Users },
+                      { n: '05', label: 'CARTAS', desc: 'Colección completa', Icon: Sparkles },
+                      { n: '06', label: 'AJUSTES', desc: 'Opciones del juego', Icon: SettingsIcon, secondary: true },
+                    ].map(item => (
+                      <button key={item.n} className={`menu-item ${item.tone ?? ''} ${item.secondary ? 'menu-item-settings' : ''} ${item.selected ? 'selected' : ''}`}
+                        data-tip={tipBlock(item.label, [['desc', item.desc]])}>
+                        <span className="mi-num">{item.n}</span>
+                        <span className="mi-icon"><item.Icon size={18} strokeWidth={2.4} /></span>
+                        <span className="mi-copy">
+                          <span className="mi-label">{item.label}</span>
+                          <span className="mi-desc">{item.desc}</span>
+                        </span>
+                        <ChevronRight className="mi-arrow" size={18} strokeWidth={2.8} />
+                      </button>
+                    ))}
+                  </nav>
+                  <div className="menu-footer">© 2026 DBZ LSW Fangame — REMASTER GBC</div>
+                </div>
               </div>
             )}
 

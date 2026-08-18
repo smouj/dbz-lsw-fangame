@@ -31,7 +31,8 @@
 | **DIALOGO** | Caja GBC blanca `#f8f4e4` + speaker FUERA (57×80, marco negro) + texto negro + actor rojo `#b03030` | `gbc-dialogue` `gbc-dialogue-speaker` `gbc-dialogue-actor` `gbc-dialogue-text` |
 | **DISCARD** | HAND CHECK — panel con discard-grid de cartas (frame + arte + nombre) para elegir descarte | `discard-panel` `discard-grid` `discard-card` `discard-frame` `discard-art` `discard-name` |
 | **DEFENSA** | Fuentes de defensa: `[LIMITED] [JOINT] [BASIC DEFENSE]` (botones basic-btn src-*) | `defense-sources` `src-limit` `src-joint` `src-basic` |
-| **RESULTADO** | Pantalla final: VICTORY (LV/EXP/HP) o DEFEAT (TURN/HP) + botón NEW BATTLE/RETRY (toggle) | `result-screen` `result-title` `result-info` `btn-primary` |
+| **RESULTADO** | Pantalla final: VICTORY (LV/EXP/HP) o DEFEAT (TURN/HP) + botón NEW BATTLE/RETRY (toggle) — panel GBC horizontal compacto (no altera la altura) | `result-screen` `result-title` `result-info` `btn-primary` |
+| **MENU** | Pantalla principal: logo, título, continuar (progreso), 6 items de navegación (1 seleccionado) y footer — escalado al preview | `menu-content` `menu-logo-mark` `menu-title` `menu-subtitle` `menu-continue-card` `menu-nav` `menu-item` `menu-footer` |
 | **INTRO** | VS full-screen: retratos de batalla 160×120 (32×24 ×5) centrados vertical/horizontal, VS VT323 pixel con glow, FIGHT Bangers. Entrada: slide → pop → flash → FIGHT | `battle-intro` `intro-fighter` `intro-portrait` `intro-name` `intro-sub` `intro-vs` `intro-fight` |
 
 ## Invariantes clave (no romper)
@@ -45,6 +46,10 @@
 7. **INTRO**: sin ROUND/READY (spec 2026-08-18), retratos centrados exactos (0px desvío), VS pixel art.
 8. **Colores del texto**: por defecto negro carbón; rojo solo como acento puntual (actor diálogo, timer QTE). Sin azules en tooltips/diálogo.
 9. **GAP UNIFICADO 10px**: separación equidistante entre TODOS los botones/cartas de los paneles (command-strip, mano, basic-menu, move-axis, limit-cards-row, chips STAGE, prompt→tiempo). La única excepción es el ancla del STAGE (secuencia→prompt anclado a la derecha).
+10. **Barras HP estilo lucha**: 24px de alto, relleno anclado al lado CENTRO (drena hacia dentro), hueco central `clamp(84-150px)`, sin número dentro (tooltip HP).
+11. **Badge central**: VS (VT323 38-44px) + ROUND debajo — SIN caja, SIN líneas, SIN badge ATK (la fase ATTACK/DEFEND vive bajo la barra HP).
+12. **Chip CC GBC**: esquina inferior derecha de los paneles con cartas — negro carbón `#1a1a1a`, número blanco VT323 19px, tooltip CC x/y.
+13. **Fase ATTACK/DEFEND**: INLINE en la fila de info (entre nada y los badges — sin fila propia), alineada al centro vertical de los badges.
 
 ## Verificación de paridad
 

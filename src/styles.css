@@ -8805,6 +8805,31 @@ button:focus-visible, .chapter-node:focus-visible {
 .dev-hud-preview .dev-intro-view .battle-intro {
   position: absolute;
 }
+/* ─── Vista MENÚ del HUD Studio ───
+   El menú del juego es 100vh — en el preview se ESCALA para encajar en el
+   área (origin top-left) manteniendo la fidelidad de posiciones. */
+.dev-hud-preview .dev-menu-screen {
+  position: absolute;
+  inset: 0;
+  z-index: 60;
+  background: var(--bg-deep);
+  overflow: hidden;
+}
+.dev-hud-preview .dev-menu-screen .menu-content {
+  height: 100%;
+  width: calc(100% / .66);
+  transform: scale(.66);
+  transform-origin: top left;
+  padding: 14px 0 8px 2.2vw;
+  gap: 7px;
+}
+.dev-hud-preview .dev-menu-screen .menu-title {
+  font-size: clamp(1.1rem, 2.6vw, 1.7rem);
+}
+.dev-hud-preview .dev-menu-screen .menu-subtitle {
+  font-size: clamp(.45rem, 1.1vw, .7rem);
+  letter-spacing: .3em;
+}
 /* FIGHT aparece en el juego DESPUÉS del flash (2.9s), superpuesto al VS
    — en el preview se pisan; se muestra solo el estado VS+READY */
 .dev-hud-preview .dev-intro-view .intro-fight {
