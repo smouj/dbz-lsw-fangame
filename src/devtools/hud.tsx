@@ -36,7 +36,7 @@ const E_FORM = 'piccolo_base';
 const GROUPS = ['Colores', 'HUD', 'Cartas', 'Posición', 'Escala', 'Tipografía'];
 
 // Vista del preview: cómo se ve el HUD en cada estado (sin motor — visual).
-type HudView = 'COMMAND' | 'MANO' | 'BASIC' | 'MOVE' | 'STAGE' | 'LIMIT' | 'DIALOGO' | 'INTRO';
+type HudView = 'COMMAND' | 'MANO' | 'BASIC' | 'MOVE' | 'STAGE' | 'LIMIT' | 'DIALOGO' | 'INTRO' | 'DISCARD' | 'DEFENSA' | 'RESULTADO';
 
 const VIEWS: { id: HudView; label: string; tip: string }[] = [
   { id: 'COMMAND', label: 'Comando', tip: 'Command strip: LIMIT · JOINT · BASIC' },
@@ -46,6 +46,9 @@ const VIEWS: { id: HudView; label: string; tip: string }[] = [
   { id: 'STAGE', label: 'STAGE', tip: 'QTE del Stage Attack: inputs con los sprites del paquete' },
   { id: 'LIMIT', label: 'LIMIT', tip: 'Cartas LIMITED del personaje + huecos' },
   { id: 'DIALOGO', label: 'Diálogo', tip: 'Cuadro de mensaje GBC estructurado' },
+  { id: 'DISCARD', label: 'Descarte', tip: 'HAND CHECK — demasiadas cartas, elige cuál descartar' },
+  { id: 'DEFENSA', label: 'Defensa', tip: 'Menú de defensa: LIMITED · JOINT · BASIC DEFENSE' },
+  { id: 'RESULTADO', label: 'Resultado', tip: 'Pantalla final: VICTORIA / DERROTA' },
   { id: 'INTRO', label: 'Intro', tip: 'Presentación de inicio (VS + READY/FIGHT)' },
 ];
 
@@ -91,6 +94,8 @@ export function HudModule() {
   const [bgMode, setBgMode] = useState<'overview' | 'action'>('overview');
   // Nº de inputs del QTE STAGE en el mockup (3-6 como el juego)
   const [stageLen, setStageLen] = useState(5);
+  // Resultado del mockup: victoria o derrota
+  const [result, setResult] = useState<'victory' | 'defeat'>('victory');
   // Actor de la ACCIÓN: en el plano ACTION solo aparece el character que
   // va a ejecutar la acción (idle del sheet de batalla) — no ambos.
   const [actor, setActor] = useState<'player' | 'enemy'>('player');
@@ -189,6 +194,14 @@ export function HudModule() {
             onClick={() => setDlgSide(s => (s === 'left' ? 'right' : 'left'))}
             title="Alterna el lado del personaje que habla (izquierda/derecha)">
             Habla: {dlgSide === 'left' ? 'IZQUIERDA (Goku)' : 'DERECHA (Cell)'}
+          </button>
+        )}
+        {/* Resultado: toggle VICTORIA / DERROTA */}
+        {view === 'RESULTADO' && (
+          <button className={`dev-hud-view-chip side-toggle ${result === 'defeat' ? 'active' : ''}`}
+            onClick={() => setResult(r => (r === 'victory' ? 'defeat' : 'victory'))}
+            title="Alterna entre VICTORIA y DERROTA">
+            {result === 'victory' ? 'VICTORIA' : 'DERROTA'}
           </button>
         )}
         {/* Nº de inputs del QTE STAGE (3-6) — el mockup se adapta y el
@@ -560,6 +573,61 @@ export function HudModule() {
                     </div>
                     <button className="basic-btn basic-back" data-tip={tipBlock('BACK', [['desc', 'Volver al menú de comandos']])} />
                   </div>
+                </div>
+              )}
+
+              {/* DISCARD: HAND CHECK — demasiadas cartas, elige cuál descartar
+                  (MISMO panel que el juego: discard-grid con cartas reales) */}
+              {view === 'DISCARD' && (
+                <div className="command-select">
+                  <div className="limit-panel discard-panel">
+                    <div className="limit-title">HAND CHECK — {handCards.length} JOINT</div>
+                    <div className="discard-help">Demasiadas cartas ({handCards.length} &gt; 5). Elige cuál descartar:</div>
+                    <div className="discard-grid">
+                      {handCards.map((c, i) => (
+                        <button key={`${c.id}-${i}`} className="discard-card"
+                          data-tip={tipCard(c.name, CARD_TYPE_NAMES[c.type], CARD_COLORS_ON_LIGHT[c.type], c.rarity, [
+                            ['stats', `CC ${c.cc} · ATK ${c.atk > 0 ? c.atk : '—'} · ACC ${c.acc}%`],
+                            c.description ? ['desc', c.description] : null,
+                          ])}>
+                          <img src={CARD_FRAME_BY_TYPE[c.type] ?? CARD_FRAME_BY_TYPE.command} alt="" className="discard-frame" />
+                          {cardIconUrl(c.id) && <img src={cardIconUrl(c.id)!} alt={c.name} className="discard-art" />}
+                          <span className="discard-name">{c.name}</span>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* DEFENSA: fuentes de defensa — LIMITED · JOINT · BASIC DEFENSE
+                  (MISMO panel que el juego: defense-sources con los 3 botones) */}
+              {view === 'DEFENSA' && (
+                <div className="command-select">
+                  <div className="control-label">DEFENSA — ELIGE FUENTE</div>
+                  <div className="defense-sources">
+                    <button className="basic-btn src-limit"
+                      data-tip={tipBlock('LIMITED', [['desc', 'Defensas exclusivas del personaje.'], ['effect', 'Requiere GATHER POWER activo.']])} />
+                    <button className="basic-btn src-joint"
+                      data-tip={tipBlock('JOINT', [['desc', 'Cartas de defensa/soporte de tu mano.']])} />
+                    <button className="basic-btn src-basic"
+                      data-tip={tipBlock('BASIC DEFENSE', [['desc', 'Quedarte y bloquear (−50% dmg) o MOVE.'], ['effect', 'Gratis, sin gastar CC.']])} />
+                  </div>
+                </div>
+              )}
+
+              {/* RESULTADO: pantalla final — VICTORIA / DERROTA (toggle) */}
+              {view === 'RESULTADO' && (
+                <div className={`result-screen ${result === 'victory' ? '' : 'defeat-mode'}`}>
+                  <div className={`result-title ${result}`}>{result === 'victory' ? 'VICTORY' : 'DEFEAT'}</div>
+                  <div className="result-info">
+                    {result === 'victory'
+                      ? (<><div>LV 50</div><div>EXP +180</div><div>HP 720/1000</div></>)
+                      : (<><div>TURN 1</div><div>HP 0/1000</div></>)}
+                  </div>
+                  <button className="btn-primary" data-tip={tipBlock(result === 'victory' ? 'NEW BATTLE' : 'RETRY', [['desc', 'Volver a intentarlo']])}>
+                    {result === 'victory' ? 'NEW BATTLE' : 'RETRY'}
+                  </button>
                 </div>
               )}
             </div>

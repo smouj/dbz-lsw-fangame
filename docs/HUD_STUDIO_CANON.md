@@ -29,6 +29,9 @@
 | **STAGE** | Diálogo GBC con CHIPS oscuros por input: `[✓][Q][E][↑][→]` + prompt relleno + tiempo a la derecha. Layout ESTABLE con 3-6 inputs (flex-shrink 0, prompt anclado) | `gbc-dialogue` `stage-inline` `stage-sequence` `stage-seq-item` `stage-inline-prompt` `stage-inline-time` |
 | **LIMIT** | Cartas LIMITED en UNA línea + hueco candado (no obtenida) + BACK | `limit-cards-row` `limit-card` `limit-slot` |
 | **DIALOGO** | Caja GBC blanca `#f8f4e4` + speaker FUERA (57×80, marco negro) + texto negro + actor rojo `#b03030` | `gbc-dialogue` `gbc-dialogue-speaker` `gbc-dialogue-actor` `gbc-dialogue-text` |
+| **DISCARD** | HAND CHECK — panel con discard-grid de cartas (frame + arte + nombre) para elegir descarte | `discard-panel` `discard-grid` `discard-card` `discard-frame` `discard-art` `discard-name` |
+| **DEFENSA** | Fuentes de defensa: `[LIMITED] [JOINT] [BASIC DEFENSE]` (botones basic-btn src-*) | `defense-sources` `src-limit` `src-joint` `src-basic` |
+| **RESULTADO** | Pantalla final: VICTORY (LV/EXP/HP) o DEFEAT (TURN/HP) + botón NEW BATTLE/RETRY (toggle) | `result-screen` `result-title` `result-info` `btn-primary` |
 | **INTRO** | VS full-screen: retratos de batalla 160×120 (32×24 ×5) centrados vertical/horizontal, VS VT323 pixel con glow, FIGHT Bangers. Entrada: slide → pop → flash → FIGHT | `battle-intro` `intro-fighter` `intro-portrait` `intro-name` `intro-sub` `intro-vs` `intro-fight` |
 
 ## Invariantes clave (no romper)
