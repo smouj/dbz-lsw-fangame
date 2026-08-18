@@ -3335,36 +3335,22 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
               </>
             )}
             {defendMenu === 'move' && (
-              <div className="position-select move-axis-select">
-                <div className="control-label">{t('battle.move')} — {t('battle.chooseAxis')}</div>
+              <div className="move-axis-pad">
                 {/* Movement real del GBC: solo 2 ejes, cada uno transforma UN
-                    eje y conserva el otro (nada de diagonales imposibles). */}
-                <div className="move-axis-pad">
-                  <button
-                    className={`move-axis-btn axis-h ${moveAxisPreview === 'HORIZONTAL' ? 'preview' : ''}`}
-                    onClick={() => confirmMoveAxis('HORIZONTAL')}
-                    onMouseEnter={() => setMoveAxisPreview('HORIZONTAL')}
-                    onMouseLeave={() => setMoveAxisPreview(null)}
-                    data-tip={`HORIZONTAL — ${t('battle.axisHorizontal')}\n${positionLabel(player.battlePos)} → ${positionLabel(applyMoveAxis(player.battlePos, 'HORIZONTAL'))}`}>
-                    <span className="move-axis-label">FRONT/BACK</span>
-                  </button>
-                  <button
-                    className={`move-axis-btn axis-v ${moveAxisPreview === 'VERTICAL' ? 'preview' : ''}`}
-                    onClick={() => confirmMoveAxis('VERTICAL')}
-                    onMouseEnter={() => setMoveAxisPreview('VERTICAL')}
-                    onMouseLeave={() => setMoveAxisPreview(null)}
-                    data-tip={`VERTICAL — ${t('battle.axisVertical')}\n${positionLabel(player.battlePos)} → ${positionLabel(applyMoveAxis(player.battlePos, 'VERTICAL'))}`}>
-                    <span className="move-axis-label">AIR/GROUND</span>
-                  </button>
-                </div>
-                {/* Preview CURRENT → RESULT antes de confirmar */}
-                <div className="move-preview">
-                  <span className="move-preview-cur">{positionLabel(player.battlePos)}</span>
-                  <span className="move-preview-arrow">{moveAxisPreview === null ? '·' : moveAxisPreview === 'HORIZONTAL' ? '↔' : '↕'}</span>
-                  <span className={`move-preview-dst ${moveAxisPreview ? 'active' : ''}`}>
-                    {moveAxisPreview ? positionLabel(applyMoveAxis(player.battlePos, moveAxisPreview)) : '—'}
-                  </span>
-                </div>
+                    eje y conserva el otro (nada de diagonales imposibles).
+                    Sin texto: el tooltip lleva la info (spec UI). */}
+                <button
+                  className={`move-axis-btn axis-h ${moveAxisPreview === 'HORIZONTAL' ? 'preview' : ''}`}
+                  onClick={() => confirmMoveAxis('HORIZONTAL')}
+                  onMouseEnter={() => setMoveAxisPreview('HORIZONTAL')}
+                  onMouseLeave={() => setMoveAxisPreview(null)}
+                  data-tip={`HORIZONTAL — ${t('battle.axisHorizontal')}\n${positionLabel(player.battlePos)} → ${positionLabel(applyMoveAxis(player.battlePos, 'HORIZONTAL'))}`} />
+                <button
+                  className={`move-axis-btn axis-v ${moveAxisPreview === 'VERTICAL' ? 'preview' : ''}`}
+                  onClick={() => confirmMoveAxis('VERTICAL')}
+                  onMouseEnter={() => setMoveAxisPreview('VERTICAL')}
+                  onMouseLeave={() => setMoveAxisPreview(null)}
+                  data-tip={`VERTICAL — ${t('battle.axisVertical')}\n${positionLabel(player.battlePos)} → ${positionLabel(applyMoveAxis(player.battlePos, 'VERTICAL'))}`} />
                 <button className="basic-btn basic-back" data-tip="BACK — volver al menú anterior" onClick={() => { Sfx.cancel(); setDefendMenu(null); }} />
               </div>
             )}

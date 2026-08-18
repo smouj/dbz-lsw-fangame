@@ -35,12 +35,13 @@ const E_FORM = 'piccolo_base';
 const GROUPS = ['Colores', 'HUD', 'Cartas', 'Posición', 'Escala', 'Tipografía'];
 
 // Vista del preview: cómo se ve el HUD en cada estado (sin motor — visual).
-type HudView = 'COMMAND' | 'MANO' | 'BASIC' | 'STAGE' | 'LIMIT' | 'DIALOGO' | 'INTRO';
+type HudView = 'COMMAND' | 'MANO' | 'BASIC' | 'MOVE' | 'STAGE' | 'LIMIT' | 'DIALOGO' | 'INTRO';
 
 const VIEWS: { id: HudView; label: string; tip: string }[] = [
   { id: 'COMMAND', label: 'Comando', tip: 'Command strip: LIMIT · JOINT · BASIC' },
   { id: 'MANO', label: 'JOINT · Mano', tip: 'Cartas de la mano con sus frames GBC + huecos' },
   { id: 'BASIC', label: 'BASIC', tip: 'Stage Attack (frame de carta) · Gather · Back' },
+  { id: 'MOVE', label: 'MOVE', tip: 'Selección de eje: HORIZONTAL ↔ (FRONT/BACK) o VERTICAL ↕ (AIR/GROUND) + preview CURRENT → RESULT' },
   { id: 'STAGE', label: 'STAGE', tip: 'QTE del Stage Attack: inputs con los sprites del paquete' },
   { id: 'LIMIT', label: 'LIMIT', tip: 'Cartas LIMITED del personaje + huecos' },
   { id: 'DIALOGO', label: 'Diálogo', tip: 'Cuadro de mensaje GBC estructurado' },
@@ -450,6 +451,19 @@ Cada acierto +1 CC (más si completas la cadena).">
                     <button className="basic-btn basic-gather" data-tip="GATHER POWER — sube STR/KI (+8)" />
                     <button className="basic-btn basic-back" data-tip="BACK — volver al menú de comandos" />
                   </div>
+                </div>
+              )}
+
+              {/* MOVE: SOLO los 2 botones de eje en una fila — MISMO tamaño que
+                  el command-strip (96×80, sprite ×2 ENTERO). Sin texto: el
+                  data-tip explica HORIZONTAL/VERTICAL. Sprites reales
+                  btn_move_axis_h/v.png vía CSS. */}
+              {view === 'MOVE' && (
+                <div className="move-axis-pad">
+                  <button className="move-axis-btn axis-h preview"
+                    data-tip="HORIZONTAL ↔ — LEFT/RIGHT\nDOWN_BACK → DOWN_FRONT" />
+                  <button className="move-axis-btn axis-v"
+                    data-tip="VERTICAL ↕ — UP/DOWN\nDOWN_BACK → UP_BACK" />
                 </div>
               )}
 
