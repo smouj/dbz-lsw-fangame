@@ -310,7 +310,7 @@ export function HudModule() {
                       <span className="mc-meta">GOKU · Nv. 12</span>
                     </span>
                     <span className="mc-hero-wrap">
-                      <img className="mc-hero" src={pPortrait ?? ''} alt="" />
+                      <img className="mc-hero" src="/assets/portraits/menu_cut/cell_00_00.png" alt="" />
                       <span className="mc-hero-name">GOKU</span>
                     </span>
                   </button>
