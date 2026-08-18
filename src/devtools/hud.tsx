@@ -576,23 +576,14 @@ export function HudModule() {
                 </div>
               )}
 
-              {/* DISCARD: HAND CHECK — SOLO las cartas (sin textos: la info
-                  vive en el tooltip, como el resto de paneles) */}
+              {/* DISCARD: como la MANO JOINT (es la mano donde descartas) —
+                  MISMO layout: fila de cartas 96×80 con gap 10px, sin textos */}
               {view === 'DISCARD' && (
-                <div className="command-select">
-                  <div className="limit-panel discard-panel">
-                    <div className="discard-grid">
-                      {handCards.map((c, i) => (
-                        <button key={`${c.id}-${i}`} className="discard-card"
-                          data-tip={tipCard(c.name, CARD_TYPE_NAMES[c.type], CARD_COLORS_ON_LIGHT[c.type], c.rarity, [
-                            ['stats', `CC ${c.cc} · ATK ${c.atk > 0 ? c.atk : '—'} · ACC ${c.acc}%`],
-                            c.description ? ['desc', c.description] : null,
-                          ])}>
-                          <img src={CARD_FRAME_BY_TYPE[c.type] ?? CARD_FRAME_BY_TYPE.command} alt="" className="discard-frame" />
-                          {cardIconUrl(c.id) && <img src={cardIconUrl(c.id)!} alt={c.name} className="discard-art" />}
-                        </button>
-                      ))}
-                    </div>
+                <div className="hand-area">
+                  <div className="hand-cards">
+                    {handCards.map((card, i) => (
+                      <HudCard key={card.id} card={card} selected={i === 1} disabled={i === 2} />
+                    ))}
                   </div>
                 </div>
               )}
