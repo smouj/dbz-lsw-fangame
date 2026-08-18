@@ -3107,6 +3107,11 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
 
       {/* Controles */}
       <div className="battle-controls">
+        {/* CC estilo GBC: esquina inferior derecha del panel con cartas —
+            fondo negro + número blanco pixel (VT323) */}
+        {(phase === 'command' || phase === 'basic' || phase === 'limitSelect' || phase === 'cardSelect' || phase === 'defend') && (
+          <div className="cc-panel" data-tip={tipBlock('CC', [['stats', `${player.cc} / ${player.maxCc}`]])}>{player.cc}</div>
+        )}
         {/* Cuadro de diálogo GBC: DENTRO de la caja, con la MISMA altura que
             los botones (80px) — el fondo se visualiza igual en todo momento */}
         {gbcMsg && (() => {

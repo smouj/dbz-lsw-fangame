@@ -403,6 +403,8 @@ export function HudModule() {
             </div>
 
             <div className="battle-controls dev-hud-battle-controls">
+              {/* CC estilo GBC: esquina inferior derecha (como el juego) */}
+              <div className="cc-panel" data-tip={tipBlock('CC', [['stats', '6 / 99']])}>06</div>
               {/* DIÁLOGO (cuadro GBC estructurado) — dentro de la caja,
                   misma altura que los botones */}
               {view === 'DIALOGO' && (
