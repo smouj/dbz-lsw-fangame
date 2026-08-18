@@ -1,0 +1,578 @@
+{
+  "package": "DBZ_LSW_BATTLE_BACKGROUNDS_GBC_STORY_CLASSIFIED_V2",
+  "source_image": "3761f617-aea0-4b1e-8709-9425c445c26e.png",
+  "native_size": [
+    160,
+    80
+  ],
+  "story_scope": "Dragon Ball Z: Legendary Super Warriors (GBC), story spans Saiyan Saga through Buu Saga.",
+  "classification_method": [
+    "recorte exacto de la hoja suministrada",
+    "identificación visual del escenario",
+    "asignación por saga y situación de historia del juego",
+    "cuando no existe certeza absoluta, se marca la confianza y se evita afirmar nombres internos de ROM"
+  ],
+  "stages": [
+    {
+      "id": 1,
+      "slug": "earth_grasslands",
+      "location_es": "Llanuras verdes de la Tierra",
+      "location_en": "Earth Grasslands",
+      "source_overview": [
+        1,
+        1
+      ],
+      "source_action": [
+        1,
+        2
+      ],
+      "primary_arc": "saiyan_saga",
+      "secondary_arcs": [
+        "android_cell_saga",
+        "buu_saga"
+      ],
+      "story_usage": [
+        "combates tempranos en campo abierto de la Tierra",
+        "escenas generales de llanura terrestre"
+      ],
+      "example_story_events": [
+        "Raditz / primeros combates en la Tierra (aprox.)",
+        "entornos abiertos genéricos de historia"
+      ],
+      "confidence": "medium",
+      "notes": "Escenario terrestre genérico y reutilizable; encaja mejor como llanura abierta de la Tierra."
+    },
+    {
+      "id": 2,
+      "slug": "earth_desert_wasteland",
+      "location_es": "Yermo desértico de la Tierra",
+      "location_en": "Earth Desert Wasteland",
+      "source_overview": [
+        1,
+        3
+      ],
+      "source_action": [
+        1,
+        4
+      ],
+      "primary_arc": "saiyan_saga",
+      "secondary_arcs": [
+        "android_cell_saga"
+      ],
+      "story_usage": [
+        "batallas en descampado árido",
+        "gran campo desértico tipo Saiyan Saga"
+      ],
+      "example_story_events": [
+        "Nappa / Vegeta (uso recomendado)",
+        "combates de Androids en descampado"
+      ],
+      "confidence": "medium",
+      "notes": "Muy apropiado para el imaginario de Nappa/Vegeta y otros duelos en zonas áridas."
+    },
+    {
+      "id": 3,
+      "slug": "earth_rocky_badlands",
+      "location_es": "Badlands rocosas de la Tierra",
+      "location_en": "Earth Rocky Badlands",
+      "source_overview": [
+        2,
+        1
+      ],
+      "source_action": [
+        2,
+        2
+      ],
+      "primary_arc": "saiyan_saga",
+      "secondary_arcs": [
+        "android_cell_saga"
+      ],
+      "story_usage": [
+        "montañas rocosas / terreno abrupto terrestre",
+        "combates en cañones o mesetas"
+      ],
+      "example_story_events": [
+        "Saibamen / Nappa / Vegeta (alternativa)",
+        "combates Android/Cell en terrenos rocosos"
+      ],
+      "confidence": "medium",
+      "notes": "Complementa al desierto de la Tierra cuando quieres una variante más escarpada."
+    },
+    {
+      "id": 4,
+      "slug": "kamis_lookout",
+      "location_es": "Palacio de Kamisama / Mirador de Kami",
+      "location_en": "Kami's Lookout",
+      "source_overview": [
+        2,
+        3
+      ],
+      "source_action": [
+        2,
+        4
+      ],
+      "primary_arc": "training_and_interludes",
+      "secondary_arcs": [
+        "buu_saga"
+      ],
+      "story_usage": [
+        "interludios",
+        "entrenamiento",
+        "escenas celestiales / del mirador"
+      ],
+      "example_story_events": [
+        "segmentos ligados al Mirador",
+        "eventos de entrenamiento / transición"
+      ],
+      "confidence": "high",
+      "notes": "Identificación visual alta por la plataforma y el edificio central del Mirador."
+    },
+    {
+      "id": 5,
+      "slug": "namek_rocky_field",
+      "location_es": "Llanura rocosa de Namek",
+      "location_en": "Namek Rocky Field",
+      "source_overview": [
+        3,
+        1
+      ],
+      "source_action": [
+        3,
+        2
+      ],
+      "primary_arc": "namek_frieza_saga",
+      "secondary_arcs": [],
+      "story_usage": [
+        "combates terrestres en Namek",
+        "duelos en el terreno abierto del planeta"
+      ],
+      "example_story_events": [
+        "Ginyu Force",
+        "Freeza / Namek en superficie"
+      ],
+      "confidence": "high",
+      "notes": "Paleta y morfología claramente namekianas."
+    },
+    {
+      "id": 6,
+      "slug": "cell_games_ring",
+      "location_es": "Ring de los Cell Games",
+      "location_en": "Cell Games Ring",
+      "source_overview": [
+        3,
+        3
+      ],
+      "source_action": [
+        3,
+        4
+      ],
+      "primary_arc": "android_cell_saga",
+      "secondary_arcs": [],
+      "story_usage": [
+        "Cell Games",
+        "combates en ring exterior"
+      ],
+      "example_story_events": [
+        "Goku vs Cell",
+        "Gohan vs Cell / Cell Games"
+      ],
+      "confidence": "high",
+      "notes": "La tarima con postes y el entorno rocoso encajan con los Cell Games."
+    },
+    {
+      "id": 7,
+      "slug": "namek_coast",
+      "location_es": "Costa / lagunas de Namek",
+      "location_en": "Namek Coast",
+      "source_overview": [
+        4,
+        1
+      ],
+      "source_action": [
+        4,
+        2
+      ],
+      "primary_arc": "namek_frieza_saga",
+      "secondary_arcs": [],
+      "story_usage": [
+        "orillas y zonas acuáticas de Namek",
+        "exploración y combates cerca del agua"
+      ],
+      "example_story_events": [
+        "llegada y exploración de Namek",
+        "duelos cerca de las lagunas"
+      ],
+      "confidence": "high",
+      "notes": "El agua azul y el tono verdoso del cielo son característicos de Namek."
+    },
+    {
+      "id": 8,
+      "slug": "ruined_city",
+      "location_es": "Ciudad en ruinas",
+      "location_en": "Ruined City",
+      "source_overview": [
+        4,
+        3
+      ],
+      "source_action": [
+        4,
+        4
+      ],
+      "primary_arc": "android_cell_saga",
+      "secondary_arcs": [
+        "future_trunks_extra_story",
+        "buu_saga"
+      ],
+      "story_usage": [
+        "combates urbanos destruidos",
+        "ciudad arrasada / evacuada"
+      ],
+      "example_story_events": [
+        "Androids / Cell en zonas urbanas",
+        "combates de Buu en ciudades",
+        "Future Trunks extra story"
+      ],
+      "confidence": "medium_high",
+      "notes": "Útil siempre que el relato pase por una ciudad devastada."
+    },
+    {
+      "id": 9,
+      "slug": "future_ruins_wasteland",
+      "location_es": "Yermo en ruinas del futuro",
+      "location_en": "Future Ruins Wasteland",
+      "source_overview": [
+        5,
+        1
+      ],
+      "source_action": [
+        5,
+        2
+      ],
+      "primary_arc": "future_trunks_extra_story",
+      "secondary_arcs": [
+        "android_cell_saga"
+      ],
+      "story_usage": [
+        "línea temporal futura devastada",
+        "combates del futuro de Trunks"
+      ],
+      "example_story_events": [
+        "Trunks vs Androids (futuro)",
+        "escenarios apocalípticos del futuro"
+      ],
+      "confidence": "medium_high",
+      "notes": "Cielo oscuro/anaranjado y horizonte hostil: mejor encaje con el futuro devastado."
+    },
+    {
+      "id": 10,
+      "slug": "world_tournament_grounds",
+      "location_es": "Recinto del Torneo Mundial",
+      "location_en": "World Tournament Grounds",
+      "source_overview": [
+        5,
+        3
+      ],
+      "source_action": [
+        5,
+        4
+      ],
+      "primary_arc": "buu_saga",
+      "secondary_arcs": [],
+      "story_usage": [
+        "Tenkaichi Budokai",
+        "combates o escenas del torneo mundial"
+      ],
+      "example_story_events": [
+        "inicio de la saga de Buu / torneo",
+        "Goten vs Trunks / combates del torneo"
+      ],
+      "confidence": "high",
+      "notes": "Edificio del torneo claramente identificable."
+    },
+    {
+      "id": 11,
+      "slug": "earth_forest",
+      "location_es": "Bosque de la Tierra",
+      "location_en": "Earth Forest",
+      "source_overview": [
+        6,
+        1
+      ],
+      "source_action": [
+        6,
+        2
+      ],
+      "primary_arc": "saiyan_saga",
+      "secondary_arcs": [
+        "android_cell_saga",
+        "buu_saga"
+      ],
+      "story_usage": [
+        "zonas boscosas terrestres",
+        "entrenamiento y combates en bosque"
+      ],
+      "example_story_events": [
+        "entrenamiento de Gohan",
+        "combates genéricos en bosque"
+      ],
+      "confidence": "medium",
+      "notes": "Escenario terrestre de bosque reutilizable para varias sagas."
+    },
+    {
+      "id": 12,
+      "slug": "supreme_kai_world",
+      "location_es": "Mundo del Kaio Supremo",
+      "location_en": "Supreme Kai's World",
+      "source_overview": [
+        6,
+        3
+      ],
+      "source_action": [
+        6,
+        4
+      ],
+      "primary_arc": "buu_saga",
+      "secondary_arcs": [],
+      "story_usage": [
+        "tramo final de la saga de Buu",
+        "duelos en el Mundo del Kaio Supremo"
+      ],
+      "example_story_events": [
+        "Goku/Vegeta/Kid Buu en el Mundo del Kaio Supremo"
+      ],
+      "confidence": "high",
+      "notes": "Cielo púrpura y paisaje verde, muy reconocible."
+    },
+    {
+      "id": 13,
+      "slug": "earth_lakeside_field",
+      "location_es": "Campo abierto con agua al fondo",
+      "location_en": "Earth Lakeside Field",
+      "source_overview": [
+        7,
+        1
+      ],
+      "source_action": [
+        7,
+        2
+      ],
+      "primary_arc": "saiyan_saga",
+      "secondary_arcs": [
+        "android_cell_saga",
+        "buu_saga"
+      ],
+      "story_usage": [
+        "campos abiertos de la Tierra",
+        "escenario terrestre genérico de apoyo"
+      ],
+      "example_story_events": [
+        "primeros compases en la Tierra",
+        "combates generales en campo abierto"
+      ],
+      "confidence": "medium",
+      "notes": "Buen comodín para historia cuando se necesite otro campo abierto terrestre."
+    }
+  ],
+  "special_action": {
+    "id": 99,
+    "slug": "special_action_generic",
+    "location_es": "Fondo especial genérico de acción",
+    "location_en": "Generic Special Action Background",
+    "source": [
+      7,
+      3
+    ],
+    "story_usage": [
+      "fondo especial desacoplado del escenario",
+      "ataques / secuencias de acción especiales"
+    ],
+    "confidence": "high",
+    "notes": "Asset especial independiente no emparejado con overview."
+  },
+  "story_arcs": [
+    {
+      "id": "training_and_interludes",
+      "order": 1,
+      "name_es": "Entrenamiento e interludios",
+      "story_span": "Prólogo / transiciones",
+      "stage_ids": [
+        4
+      ],
+      "notes": "Usar para escenas del Mirador, transiciones o entrenamiento."
+    },
+    {
+      "id": "saiyan_saga",
+      "order": 2,
+      "name_es": "Saga Saiyan",
+      "story_span": "Raditz → Vegeta",
+      "stage_ids": [
+        1,
+        2,
+        3,
+        11,
+        13
+      ],
+      "notes": "Conjunto principal terrestre para el arranque del juego."
+    },
+    {
+      "id": "namek_frieza_saga",
+      "order": 3,
+      "name_es": "Saga Namek / Freeza",
+      "story_span": "Llegada a Namek → Freeza",
+      "stage_ids": [
+        5,
+        7
+      ],
+      "notes": "Escenarios propios de Namek; alternar entre costa y terreno rocoso."
+    },
+    {
+      "id": "android_cell_saga",
+      "order": 4,
+      "name_es": "Saga Androids / Cell",
+      "story_span": "Android 19/20 → Cell Games",
+      "stage_ids": [
+        2,
+        3,
+        6,
+        8,
+        11,
+        13
+      ],
+      "notes": "Mezcla Tierra abierta + ciudad en ruinas + ring Cell Games."
+    },
+    {
+      "id": "future_trunks_extra_story",
+      "order": 5,
+      "name_es": "Historia extra de Future Trunks",
+      "story_span": "Línea temporal futura",
+      "stage_ids": [
+        8,
+        9
+      ],
+      "notes": "Priorizar 9 para exterior devastado y 8 para ciudad destruida."
+    },
+    {
+      "id": "buu_saga",
+      "order": 6,
+      "name_es": "Saga Buu",
+      "story_span": "Torneo Mundial → Kid Buu",
+      "stage_ids": [
+        10,
+        12,
+        8,
+        11,
+        13
+      ],
+      "notes": "Torneo, destrucción en la Tierra y cierre en el Mundo del Kaio Supremo."
+    }
+  ],
+  "battle_recommendations": [
+    {
+      "story_key": "saiyan_gohan_training",
+      "label_es": "Entrenamiento inicial de Gohan / Gohan vs Piccolo",
+      "preferred_stage_ids": [
+        11,
+        13
+      ],
+      "confidence": "medium"
+    },
+    {
+      "story_key": "saiyan_raditz",
+      "label_es": "Raditz / primeros combates en la Tierra",
+      "preferred_stage_ids": [
+        1,
+        13
+      ],
+      "confidence": "medium_low"
+    },
+    {
+      "story_key": "saiyan_saibamen_nappa_vegeta",
+      "label_es": "Saibamen / Nappa / Vegeta",
+      "preferred_stage_ids": [
+        2,
+        3
+      ],
+      "confidence": "medium"
+    },
+    {
+      "story_key": "namek_arrival_and_exploration",
+      "label_es": "Llegada y exploración de Namek",
+      "preferred_stage_ids": [
+        7,
+        5
+      ],
+      "confidence": "high"
+    },
+    {
+      "story_key": "namek_ginyu_force_freeza",
+      "label_es": "Ginyu Force / Freeza en Namek",
+      "preferred_stage_ids": [
+        5,
+        7
+      ],
+      "confidence": "high"
+    },
+    {
+      "story_key": "androids_open_earth_battles",
+      "label_es": "Androids 19/20 y combates abiertos en la Tierra",
+      "preferred_stage_ids": [
+        2,
+        3,
+        13
+      ],
+      "confidence": "medium"
+    },
+    {
+      "story_key": "androids_city_conflicts",
+      "label_es": "Androids / Cell en ciudad o alrededores urbanos",
+      "preferred_stage_ids": [
+        8,
+        11
+      ],
+      "confidence": "medium_high"
+    },
+    {
+      "story_key": "cell_games",
+      "label_es": "Cell Games",
+      "preferred_stage_ids": [
+        6
+      ],
+      "confidence": "high"
+    },
+    {
+      "story_key": "future_trunks_destroyed_future",
+      "label_es": "Future Trunks / futuro devastado",
+      "preferred_stage_ids": [
+        9,
+        8
+      ],
+      "confidence": "medium_high"
+    },
+    {
+      "story_key": "buu_world_tournament",
+      "label_es": "Torneo Mundial (saga Buu)",
+      "preferred_stage_ids": [
+        10
+      ],
+      "confidence": "high"
+    },
+    {
+      "story_key": "buu_earth_conflicts",
+      "label_es": "Conflictos de Buu en la Tierra",
+      "preferred_stage_ids": [
+        8,
+        11,
+        13
+      ],
+      "confidence": "medium"
+    },
+    {
+      "story_key": "buu_supreme_kai_world",
+      "label_es": "Combates finales en el Mundo del Kaio Supremo",
+      "preferred_stage_ids": [
+        12
+      ],
+      "confidence": "high"
+    }
+  ]
+}

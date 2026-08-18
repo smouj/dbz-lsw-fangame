@@ -28,6 +28,7 @@ import { panelsForChapter, type StoryPanel, characterName } from './data/storyPa
 import { storyPortraitUrl } from './data/storyPortraits';
 import { spriteManifestUrl, spriteFrameUrl, spriteDirFor } from './data/spriteManifest';
 import { SCENARIOS, SPECIAL_ACTION_BACKGROUND, type BattleViewMode } from './data/scenarios';
+import { stageForChapter, BATTLE_STAGES } from './data/battleBackgrounds';
 import { GBC_NATIVE_FPS, type QteState } from './data/actionFidelity';
 import { stageWindowsTicks, GAMEPLAY_CONFIG } from './config/gameplay.config';
 import { stageInputPose, stageInputFieldPose, stageInputLunges } from './battle/stageInputMap';
@@ -753,7 +754,16 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
   // TACTICAL (OVERVIEW): fondo world_overview + sprites pequeños — selección,
   // posición, estado normal. ACTION: fondo battle_action + sprites grandes —
   // solo durante una acción (QTE, animación de ataque/beam/support).
-  const [scenario] = useState(() => SCENARIOS[Math.floor(Math.random() * SCENARIOS.length)]);
+  // ESCENARIO: en MODO HISTORIA el del capítulo (clasificación por arco:
+  // Saiyan → Namek → Androides/Cell → Trunks → Entrenamiento → Buu); en
+  // VERSUS, aleatorio del catálogo completo (mismas imágenes 160×80).
+  const [scenario] = useState(() => {
+    if (storyChapter != null) {
+      const st = stageForChapter(storyChapter);
+      return { id: st.key, overviewBackground: st.overview, actionBackground: st.action };
+    }
+    return SCENARIOS[Math.floor(Math.random() * SCENARIOS.length)];
+  });
   const [viewMode, setViewMode] = useState<BattleViewMode>('OVERVIEW');
   // ── ESTADO REAL DEL MAZO (spec GameFAQs) ──
   // El mazo Joint se baraja UNA vez al iniciar; drawPile (17) + hand (3).

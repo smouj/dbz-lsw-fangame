@@ -1,0 +1,13 @@
+﻿story_key,label_es,preferred_stage_ids,confidence
+saiyan_gohan_training,Entrenamiento inicial de Gohan / Gohan vs Piccolo,11|13,medium
+saiyan_raditz,Raditz / primeros combates en la Tierra,01|13,medium_low
+saiyan_saibamen_nappa_vegeta,Saibamen / Nappa / Vegeta,02|03,medium
+namek_arrival_and_exploration,Llegada y exploración de Namek,07|05,high
+namek_ginyu_force_freeza,Ginyu Force / Freeza en Namek,05|07,high
+androids_open_earth_battles,Androids 19/20 y combates abiertos en la Tierra,02|03|13,medium
+androids_city_conflicts,Androids / Cell en ciudad o alrededores urbanos,08|11,medium_high
+cell_games,Cell Games,06,high
+future_trunks_destroyed_future,Future Trunks / futuro devastado,09|08,medium_high
+buu_world_tournament,Torneo Mundial (saga Buu),10,high
+buu_earth_conflicts,Conflictos de Buu en la Tierra,08|11|13,medium
+buu_supreme_kai_world,Combates finales en el Mundo del Kaio Supremo,12,high

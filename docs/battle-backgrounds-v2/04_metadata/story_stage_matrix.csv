@@ -1,0 +1,15 @@
+﻿stage_id,slug,location_es,primary_arc,secondary_arcs,overview_file,action_file,confidence
+1,earth_grasslands,Llanuras verdes de la Tierra,saiyan_saga,android_cell_saga|buu_saga,03_flat/01_earth_grasslands_overview.png,03_flat/01_earth_grasslands_action.png,medium
+2,earth_desert_wasteland,Yermo desértico de la Tierra,saiyan_saga,android_cell_saga,03_flat/02_earth_desert_wasteland_overview.png,03_flat/02_earth_desert_wasteland_action.png,medium
+3,earth_rocky_badlands,Badlands rocosas de la Tierra,saiyan_saga,android_cell_saga,03_flat/03_earth_rocky_badlands_overview.png,03_flat/03_earth_rocky_badlands_action.png,medium
+4,kamis_lookout,Palacio de Kamisama / Mirador de Kami,training_and_interludes,buu_saga,03_flat/04_kamis_lookout_overview.png,03_flat/04_kamis_lookout_action.png,high
+5,namek_rocky_field,Llanura rocosa de Namek,namek_frieza_saga,,03_flat/05_namek_rocky_field_overview.png,03_flat/05_namek_rocky_field_action.png,high
+6,cell_games_ring,Ring de los Cell Games,android_cell_saga,,03_flat/06_cell_games_ring_overview.png,03_flat/06_cell_games_ring_action.png,high
+7,namek_coast,Costa / lagunas de Namek,namek_frieza_saga,,03_flat/07_namek_coast_overview.png,03_flat/07_namek_coast_action.png,high
+8,ruined_city,Ciudad en ruinas,android_cell_saga,future_trunks_extra_story|buu_saga,03_flat/08_ruined_city_overview.png,03_flat/08_ruined_city_action.png,medium_high
+9,future_ruins_wasteland,Yermo en ruinas del futuro,future_trunks_extra_story,android_cell_saga,03_flat/09_future_ruins_wasteland_overview.png,03_flat/09_future_ruins_wasteland_action.png,medium_high
+10,world_tournament_grounds,Recinto del Torneo Mundial,buu_saga,,03_flat/10_world_tournament_grounds_overview.png,03_flat/10_world_tournament_grounds_action.png,high
+11,earth_forest,Bosque de la Tierra,saiyan_saga,android_cell_saga|buu_saga,03_flat/11_earth_forest_overview.png,03_flat/11_earth_forest_action.png,medium
+12,supreme_kai_world,Mundo del Kaio Supremo,buu_saga,,03_flat/12_supreme_kai_world_overview.png,03_flat/12_supreme_kai_world_action.png,high
+13,earth_lakeside_field,Campo abierto con agua al fondo,saiyan_saga,android_cell_saga|buu_saga,03_flat/13_earth_lakeside_field_overview.png,03_flat/13_earth_lakeside_field_action.png,medium
+99,special_action_generic,Fondo especial genérico de acción,special,,03_flat/99_special_action_generic.png,,high

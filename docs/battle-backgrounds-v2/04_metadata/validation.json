@@ -1,0 +1,11 @@
+{
+  "all_stage_pngs_native_160x80": true,
+  "canonical_stage_count": 13,
+  "special_stage_count": 1,
+  "story_arc_count": 6,
+  "excluded_source_cell": {
+    "row": 7,
+    "column": 4,
+    "reason": "watermark/source signature"
+  }
+}

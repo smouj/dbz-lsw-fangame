@@ -1,0 +1,9 @@
+{
+  "arc_id": "training_and_interludes",
+  "name_es": "Entrenamiento e interludios",
+  "story_span": "Prólogo / transiciones",
+  "recommended_stage_ids": [
+    4
+  ],
+  "notes": "Usar para escenas del Mirador, transiciones o entrenamiento."
+}

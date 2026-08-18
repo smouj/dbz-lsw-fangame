@@ -974,7 +974,9 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   background: linear-gradient(180deg, transparent 60%, rgba(10,14,24,.55) 100%);
 }
 
-/* Fondo auténtico de la ROM: expandir sin mosaico y escalar nítido */
+/* Fondo auténtico de la ROM (160×80): RELLENA la escena de personajes
+   (cover — como el GBC, el fondo ocupa todo el ancho del campo) con
+   image-rendering pixelated para mantener el look pixel GBC. */
 .battle-bg.authentic {
   background-size: cover !important;
   background-repeat: no-repeat !important;

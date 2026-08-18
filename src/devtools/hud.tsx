@@ -14,7 +14,8 @@ import {
   saveHudTheme, applyHudTheme, resetHudTheme,
 } from '../data/hudTheme';
 import { battleOverworldActorUrl } from '../data/battleOverworld';
-import { SCENARIOS } from '../data/scenarios';
+import { SCENARIOS, SPECIAL_ACTION_BACKGROUND } from '../data/scenarios';
+import { BATTLE_STAGES } from '../data/battleBackgrounds';
 import { getForm } from '../data/roster';
 import { spriteDirFor, spriteFrameUrl } from '../data/spriteManifest';
 import { BATTLE_PORTRAITS } from '../data/battlePortraits';
@@ -95,6 +96,9 @@ export function HudModule() {
   // el combate real — los 13 escenarios del catálogo.
   const [scenarioIdx, setScenarioIdx] = useState(0);
   const [bgMode, setBgMode] = useState<'overview' | 'action'>('overview');
+  // Plano de ACCIÓN ESPECIAL (transición): fondo blanco con bandas azules
+  // (special_action.png — transformaciones / Beam Ultimate)
+  const [actionSpecial, setActionSpecial] = useState(false);
   // Nº de inputs del QTE STAGE en el mockup (3-6 como el juego)
   const [stageLen, setStageLen] = useState(5);
   // Resultado del mockup: victoria o derrota
@@ -115,8 +119,10 @@ export function HudModule() {
   const eAction = eDir ? spriteFrameUrl(E_FORM, `${eDir}_idle_00.png`) : undefined;
   const pPortrait = BATTLE_PORTRAITS[P_FORM];
   const ePortrait = BATTLE_PORTRAITS[E_FORM];
-  const battleBgUrl = SCENARIOS[scenarioIdx]?.[bgMode === 'overview' ? 'overviewBackground' : 'actionBackground']
-    ?? '/assets/backgrounds/scenarios/01_world.png';
+  const battleBgUrl = actionSpecial
+    ? SPECIAL_ACTION_BACKGROUND
+    : SCENARIOS[scenarioIdx]?.[bgMode === 'overview' ? 'overviewBackground' : 'actionBackground']
+      ?? '/assets/backgrounds/scenarios/01_world.png';
 
   // Cartas reales del catálogo para la vista Mano (como el build)
   const handCards = [13, 7, 5, 1].map(id => getCard(id)).filter((c): c is CardDef => !!c);
@@ -178,7 +184,7 @@ export function HudModule() {
         <div className="dev-hud-scenario" title="Escenario del battlefield — fondo overview (táctico) o action (animación)">
           <label>FONDO</label>
           <select value={scenarioIdx} onChange={e => setScenarioIdx(Number(e.target.value))}>
-            {SCENARIOS.map((s, i) => <option key={s.id} value={i}>{s.id.replace('scenario_', 'SC ')}</option>)}
+            {SCENARIOS.map((s, i) => <option key={s.id} value={i}>{BATTLE_STAGES[i] ? `SC ${String(i + 1).padStart(2, '0')} — ${BATTLE_STAGES[i].locationEs}` : s.id.replace('scenario_', 'SC ')}</option>)}
           </select>
           <div className="dev-hud-bgmode">
             <button className={`bgmode-btn ${bgMode === 'overview' ? 'active' : ''}`} onClick={() => setBgMode('overview')}>OVERVIEW</button>
@@ -189,6 +195,13 @@ export function HudModule() {
               <label>ACTÚA</label>
               <button className={`actor-btn ${actor === 'player' ? 'active' : ''}`} onClick={() => setActor('player')}>PLAYER</button>
               <button className={`actor-btn ${actor === 'enemy' ? 'active' : ''}`} onClick={() => setActor('enemy')}>ENEMY</button>
+            </div>
+          )}
+          {bgMode === 'action' && (
+            <div className="dev-hud-actor" title="Plano de acción: escenario normal o ESPECIAL (transición — fondo blanco con bandas azules, transformaciones/Beam Ultimate)">
+              <label>PLANO</label>
+              <button className={`actor-btn ${!actionSpecial ? 'active' : ''}`} onClick={() => setActionSpecial(false)}>ESCENARIO</button>
+              <button className={`actor-btn ${actionSpecial ? 'active' : ''}`} onClick={() => setActionSpecial(true)}>ESPECIAL</button>
             </div>
           )}
         </div>

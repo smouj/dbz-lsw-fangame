@@ -96,10 +96,12 @@ npm run verify:battle       # 71/71 lógica
 - Sprite grande 192px (studio) / FighterSprite del sheet en el juego — pies anclados igual que los chibis.
 - El QTE del juego (stageInput) ejecuta la secuencia con el luchador en SU anchor táctico (no en el centro): el contenedor usa `anchorFor` siempre; `.field-action` funde los fighters salvo `qte-active`.
 
-### Fondos por situación (fuente: `src/data/scenarios.ts` + `main.tsx` battleBgUrl)
+### Fondos por situación (fuente: `src/data/scenarios.ts` + `src/data/battleBackgrounds.ts`)
 | Situación | Fondo |
 |---|---|
 | OVERVIEW (táctico, selección) | `NN_world.png` del escenario |
 | ACTION (QTE, ataque/beam/support) | `NN_action.png` del escenario |
-| SPECIAL_ACTION (transformaciones, Beam Ultimate) | `special_action.png` |
-- 13 escenarios en el catálogo; el selector `FONDO [SC NN] [OVERVIEW|ACTION]` del studio previsualiza ambos modos en vivo.
+| SPECIAL_ACTION (transformaciones, Beam Ultimate — plano de TRANSICIÓN: fondo blanco con bandas azules) | `special_action.png` |
+- 13 escenarios en el catálogo; el selector `FONDO [SC NN] [OVERVIEW|ACTION]` del studio previsualiza ambos modos en vivo + fila `PLANO [ESCENARIO|ESPECIAL]` en ACTION (el especial = transición).
+- **MODO HISTORIA**: el escenario se elige POR CAPÍTULO según la clasificación del paquete `DBZ_LSW_BATTLE_BACKGROUNDS_GBC_STORY_CLASSIFIED_V2` (`battleBackgrounds.ts`: Saiyan → Namek → Androides/Cell → Trunks → Entrenamiento → Buu). Versus = aleatorio.
+- El fondo RELLENA la escena (cover + pixelated, como el GBC que ocupa todo el ancho del campo).
