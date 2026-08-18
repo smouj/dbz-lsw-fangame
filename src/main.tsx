@@ -1494,13 +1494,13 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
   }, [phase]);
 
   // Arranque: primer ROUND del combate tras la intro cinematográfica (~3s)
+  // INTRO SIN TEXTO: sin diálogo GBC de presentación (era invisible: los
+  // controles están ocultos durante intro-active y se borraba antes de
+  // desmontar). La intro dura 3s — la última animación (flash) acaba a los
+  // 1.9s → 1.1s de respiro y arranca el combate (fluido, sin vacíos).
   const startedRef = useRef(false);
   useEffect(() => {
-    const tm = setTimeout(() => setIntro(false), 5200);
-    // Cuadro de diálogo GBC al inicio: presentación antes del combate
-    showGbc(`${player.name} ${t('battle.vs')} ${enemy.name} — ${t('battle.fight')}!`, 3400);
-    const introGbc = setTimeout(() => setGbcMsg(null), 4600);
-    return () => { clearTimeout(introGbc); };
+    const tm = setTimeout(() => setIntro(false), 3000);
     return () => clearTimeout(tm);
   }, []);
   useEffect(() => {

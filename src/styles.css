@@ -9787,6 +9787,9 @@ button.linklike:hover { text-decoration: underline; }
   transform-origin: bottom center;
   image-rendering: pixelated;
   z-index: 3;
+  /* Transición fluida OVERVIEW ↔ ACTION en el studio (fade + escala),
+     igual que el fade .34s del juego (.battlefield-fighters) */
+  transition: opacity .28s ease, height .28s ease, filter .28s ease;
 }
 /* Chibi OVERWORLD (OVERVIEW): escala GBC — 16×16 a ×3 (48px) sobre el
    campo de 392px = 12.2% (GBC: 11.1% del 144) — antes 80px (20%) */

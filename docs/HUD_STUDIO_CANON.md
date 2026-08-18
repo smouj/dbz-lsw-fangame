@@ -43,7 +43,7 @@
 4. **Tooltips**: estructura canónica `tipBlock`/`tipCard` (título negro carbón `#1a1a1a`, tipo coloreado `CARD_COLORS_ON_LIGHT`, stats/desc negro, compat verde). Cero azules `#005a8c`.
 5. **Chips STAGE**: 52×52 oscuros `#141414`, done ✓ verde, current borde DORADO `#f0d060` sin escala (sin azul), prompt 76×76 (cabe en 80px).
 6. **Ventana del preview**: estable en TODAS las vistas (1056×570, ratio ≈1.85) — la fila de controles tiene `min-height: 96px`.
-7. **INTRO**: SIN texto (no ROUND/READY/FIGHT/nombres/formas — spec 2026-08-18), entrada única: sprites desde ±42vw + VS pop + flash. `hud-in` desactivado durante la intro.
+7. **INTRO**: SIN texto (no ROUND/READY/FIGHT/nombres/formas — spec 2026-08-18), entrada única: sprites desde ±42vw + VS pop + flash. Duración **3s** (la última animación acaba a los 1.9s → 1.1s de respiro → arranca el combate; sin diálogo GBC de presentación — era invisible). `hud-in` desactivado durante la intro.
 8. **Colores del texto**: por defecto negro carbón; rojo solo como acento puntual (actor diálogo, timer QTE). Sin azules en tooltips/diálogo — tampoco en fondos/bordes de cajas o elementos (el chip 'input actual' del STAGE usa borde DORADO #f0d060, no azul).
 9. **GAP UNIFICADO 10px**: separación equidistante entre TODOS los botones/cartas de los paneles (command-strip, mano, basic-menu, move-axis, limit-cards-row, chips STAGE, prompt→tiempo). La única excepción es el ancla del STAGE (secuencia→prompt anclado a la derecha).
 10. **Barras HP estilo lucha**: 24px de alto, relleno anclado al lado CENTRO (drena hacia dentro), hueco central `clamp(84-150px)`, sin número dentro (tooltip HP).
