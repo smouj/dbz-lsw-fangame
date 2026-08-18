@@ -454,16 +454,18 @@ Cada acierto +1 CC (más si completas la cadena).">
                 </div>
               )}
 
-              {/* MOVE: SOLO los 2 botones de eje en una fila — MISMO tamaño que
-                  el command-strip (96×80, sprite ×2 ENTERO). Sin texto: el
+              {/* MOVE: los 2 botones de eje + BACK en UNA fila — MISMO tamaño
+                  que command-strip (96×80, sprite ×2 ENTERO). Sin texto: el
                   data-tip explica HORIZONTAL/VERTICAL. Sprites reales
-                  btn_move_axis_h/v.png vía CSS. */}
+                  btn_move_axis_h/v.png + btn_exit.png vía CSS. */}
               {view === 'MOVE' && (
                 <div className="move-axis-pad">
-                  <button className="move-axis-btn axis-h preview"
+                  <button className="move-axis-btn axis-h"
                     data-tip="HORIZONTAL ↔ — LEFT/RIGHT\nDOWN_BACK → DOWN_FRONT" />
                   <button className="move-axis-btn axis-v"
                     data-tip="VERTICAL ↕ — UP/DOWN\nDOWN_BACK → UP_BACK" />
+                  <button className="basic-btn basic-back"
+                    data-tip="BACK — volver al menú anterior" />
                 </div>
               )}
 
