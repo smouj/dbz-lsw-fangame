@@ -83,6 +83,9 @@ export function HudModule() {
   // el combate real — los 13 escenarios del catálogo.
   const [scenarioIdx, setScenarioIdx] = useState(0);
   const [bgMode, setBgMode] = useState<'overview' | 'action'>('overview');
+  // Actor de la ACCIÓN: en el plano ACTION solo aparece el character que
+  // va a ejecutar la acción (idle del sheet de batalla) — no ambos.
+  const [actor, setActor] = useState<'player' | 'enemy'>('player');
 
   const player = useMemo(() => getForm(P_FORM), []);
   const enemy = useMemo(() => getForm(E_FORM), []);
@@ -90,6 +93,10 @@ export function HudModule() {
   const eDir = enemy ? spriteDirFor(enemy.id) : undefined;
   const pIdle = battleOverworldActorUrl(P_FORM, 'idle') ?? (pDir ? spriteFrameUrl(player!.id, `${pDir}_idle_00.png`) : undefined);
   const eIdle = battleOverworldActorUrl(E_FORM, 'idle') ?? (eDir ? spriteFrameUrl(enemy!.id, `${eDir}_idle_00.png`) : undefined);
+  // Sprites de ACCIÓN (grandes, del sheet de batalla) — el character correcto
+  // para el plano ACTION, como el juego (FighterSprite idle).
+  const pAction = pDir ? spriteFrameUrl(P_FORM, `${pDir}_idle_00.png`) : undefined;
+  const eAction = eDir ? spriteFrameUrl(E_FORM, `${eDir}_idle_00.png`) : undefined;
   const pPortrait = BATTLE_PORTRAITS[P_FORM];
   const ePortrait = BATTLE_PORTRAITS[E_FORM];
   const battleBgUrl = SCENARIOS[scenarioIdx]?.[bgMode === 'overview' ? 'overviewBackground' : 'actionBackground']
@@ -161,6 +168,13 @@ export function HudModule() {
             <button className={`bgmode-btn ${bgMode === 'overview' ? 'active' : ''}`} onClick={() => setBgMode('overview')}>OVERVIEW</button>
             <button className={`bgmode-btn ${bgMode === 'action' ? 'active' : ''}`} onClick={() => setBgMode('action')}>ACTION</button>
           </div>
+          {bgMode === 'action' && (
+            <div className="dev-hud-actor" title="Quién ejecuta la acción (idle del sheet de batalla)">
+              <label>ACTÚA</label>
+              <button className={`actor-btn ${actor === 'player' ? 'active' : ''}`} onClick={() => setActor('player')}>PLAYER</button>
+              <button className={`actor-btn ${actor === 'enemy' ? 'active' : ''}`} onClick={() => setActor('enemy')}>ENEMY</button>
+            </div>
+          )}
         </div>
         {view === 'DIALOGO' && (
           <button className={`dev-hud-view-chip side-toggle ${dlgSide === 'right' ? 'active' : ''}`}
@@ -295,34 +309,46 @@ export function HudModule() {
                       {/* ANCLA del sprite: el punto EXACTO donde aparece el
                           luchador (mismo anchorFor que el juego y Position Lab) —
                           visible como cruz, para saber dónde se ancla y dónde
-                          realiza las animaciones */}
-                      <div className="dev-fighter-anchor player" style={{ left: `${pa.x}%`, top: `${pa.y}%` }}>
-                        <span className="dev-anchor-cross" />
-                        <span className="dev-anchor-label">P · {pa.x},{pa.y}</span>
-                      </div>
-                      <div className="dev-fighter-anchor enemy" style={{ left: `${ea.x}%`, top: `${ea.y}%` }}>
-                        <span className="dev-anchor-cross" />
-                        <span className="dev-anchor-label">E · {ea.x},{ea.y}</span>
-                      </div>
-                      {/* ZONA DE ANIMACIÓN: el área donde el luchador se mueve
-                          (escala del sprite overworld, como el juego) */}
-                      <div className="dev-anim-zone player" style={{ left: `${pa.x}%`, top: `${pa.y}%` }}>
-                        <span className="dev-anim-zone-label">ANIM</span>
-                      </div>
-                      <div className="dev-anim-zone enemy" style={{ left: `${ea.x}%`, top: `${ea.y}%` }}>
-                        <span className="dev-anim-zone-label">ANIM</span>
-                      </div>
-                      {/* Sprite OVERWORLD anclado igual que Position Lab:
-                          translate(-50%,-100%) → los PIES tocan el anchor exacto.
-                          Sin flex container: el punto del anchor es el suelo del
-                          luchador, no el fondo del campo. */}
-                      {pIdle && (
-                        <img src={pIdle} alt="" className="overworld-sprite dev-hud-fighter-sprite dev-hud-anchored player"
-                          style={{ left: `${pa.x}%`, top: `${pa.y}%` }} />
+                          realiza las animaciones. En ACTION se ocultan: el
+                          actor va centrado en la escena. */}
+                      {bgMode === 'overview' && (
+                        <>
+                          <div className="dev-fighter-anchor player" style={{ left: `${pa.x}%`, top: `${pa.y}%` }}>
+                            <span className="dev-anchor-cross" />
+                            <span className="dev-anchor-label">P · {pa.x},{pa.y}</span>
+                          </div>
+                          <div className="dev-fighter-anchor enemy" style={{ left: `${ea.x}%`, top: `${ea.y}%` }}>
+                            <span className="dev-anchor-cross" />
+                            <span className="dev-anchor-label">E · {ea.x},{ea.y}</span>
+                          </div>
+                          {/* ZONA DE ANIMACIÓN: el área donde el luchador se mueve
+                              (escala del sprite overworld, como el juego) */}
+                          <div className="dev-anim-zone player" style={{ left: `${pa.x}%`, top: `${pa.y}%` }}>
+                            <span className="dev-anim-zone-label">ANIM</span>
+                          </div>
+                          <div className="dev-anim-zone enemy" style={{ left: `${ea.x}%`, top: `${ea.y}%` }}>
+                            <span className="dev-anim-zone-label">ANIM</span>
+                          </div>
+                        </>
                       )}
-                      {eIdle && (
-                        <img src={eIdle} alt="" className="overworld-sprite dev-hud-fighter-sprite dev-hud-anchored enemy"
-                          style={{ left: `${ea.x}%`, top: `${ea.y}%` }} />
+                      {/* Character correcto por plano:
+                          OVERVIEW → chibi overworld (16×16 del GBC) — AMBOS
+                          ACTION   → sprite de acción grande (idle del sheet)
+                                     SOLO el actor (el que ejecuta la acción)
+                          Ambos anclados igual que Position Lab:
+                          translate(-50%,-100%) → los PIES tocan el anchor exacto. */}
+                      {/* ACTION: el actor se centra en la ESCENA (x=50, y=62)
+                          — en el medio, no a un lado (el plano de acción es
+                          de uno solo, en primer plano) */}
+                      {(bgMode === 'overview' ? pIdle : (actor === 'player' ? pAction : undefined)) && (
+                        <img src={bgMode === 'overview' ? pIdle : pAction} alt=""
+                          className={`dev-hud-ow dev-hud-fighter-sprite dev-hud-anchored player ${bgMode === 'action' ? 'action-mode' : ''}`}
+                          style={bgMode === 'action' ? { left: '50%', top: '62%' } : { left: `${pa.x}%`, top: `${pa.y}%` }} />
+                      )}
+                      {(bgMode === 'overview' ? eIdle : (actor === 'enemy' ? eAction : undefined)) && (
+                        <img src={bgMode === 'overview' ? eIdle : eAction} alt=""
+                          className={`dev-hud-ow dev-hud-fighter-sprite dev-hud-anchored enemy ${bgMode === 'action' ? 'action-mode' : ''}`}
+                          style={bgMode === 'action' ? { left: '50%', top: '62%' } : { left: `${ea.x}%`, top: `${ea.y}%` }} />
                       )}
                     </>
                   );

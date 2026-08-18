@@ -10049,17 +10049,38 @@ button.linklike:hover { text-decoration: underline; }
 /* Mockup HUD: sprites OVERWORLD anclados en su punto real (pies en el
    anchor, igual que Position Lab: translate(-50%,-100%)). El anchor es el
    suelo del luchador — no el fondo del campo. */
-.dev-hud-preview .dev-hud-fighter-sprite.dev-hud-anchored {
+.dev-hud-preview .dev-hud-fighter-sprite.dev-hud-anchored.dev-hud-ow {
   position: absolute;
-  height: 96px;               /* escala overworld del juego */
   width: auto;
   transform: translate(-50%, -100%);
   transform-origin: bottom center;
   image-rendering: pixelated;
   z-index: 3;
+}
+/* Chibi OVERWORLD (OVERVIEW): un poco más pequeño que antes (96→80px) */
+.dev-hud-preview .battlefield .dev-hud-fighter-sprite.dev-hud-anchored.dev-hud-ow:not(.action-mode) {
+  height: 80px;
   filter: drop-shadow(0 0 8px rgba(255,190,60,.3)) drop-shadow(0 5px 10px rgba(0,0,0,.45));
 }
 .dev-hud-preview .dev-hud-fighter-sprite.dev-hud-anchored.enemy {
+  transform: translate(-50%, -100%) scaleX(-1);
+}
+/* Modo ACTION: sprites grandes del sheet de batalla (30×46 / 29×39) —
+   escalados a altura 128px, anclados con los PIES en el anchor (igual que
+   los chibis: translate(-50%,-100%)). El scaleX del facing se aplica al
+   final, sobre el translate, sin pisarlo. */
+.dev-hud-preview .battlefield .dev-hud-fighter-sprite.dev-hud-anchored.action-mode {
+  height: 176px;              /* grande: primer plano de la acción */
+  width: auto;
+  filter: drop-shadow(0 0 10px rgba(255,190,60,.28)) drop-shadow(0 6px 12px rgba(0,0,0,.5));
+}
+.dev-hud-preview .battlefield .dev-hud-fighter-sprite.dev-hud-anchored.action-mode.dev-hud-ow {
+  height: 176px;              /* garantizado: sin colisión con .overworld-sprite */
+}
+.dev-hud-preview .battlefield .dev-hud-fighter-sprite.dev-hud-anchored.action-mode.player {
+  transform: translate(-50%, -100%);
+}
+.dev-hud-preview .battlefield .dev-hud-fighter-sprite.dev-hud-anchored.action-mode.enemy {
   transform: translate(-50%, -100%) scaleX(-1);
 }
 
@@ -10722,6 +10743,32 @@ button.linklike:hover { text-decoration: underline; }
 .dev-hud-bgmode {
   display: flex;
   gap: 3px;
+}
+.dev-hud-actor {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-family: var(--fpx);
+}
+.dev-hud-actor label {
+  font-size: 8px;
+  letter-spacing: 1px;
+  color: #9fb7d8;
+}
+.actor-btn {
+  background: #12151c;
+  color: #9fb7d8;
+  border: 1px solid rgba(255, 255, 255, .14);
+  font-family: var(--fpx);
+  font-size: 7px;
+  letter-spacing: .5px;
+  padding: 2px 5px;
+  cursor: pointer;
+}
+.actor-btn.active {
+  color: #ffe9a3;
+  border-color: #f6c744;
+  background: rgba(246, 199, 68, .12);
 }
 .bgmode-btn {
   background: #12151c;
