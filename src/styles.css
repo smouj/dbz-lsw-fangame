@@ -1415,9 +1415,10 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 }
 
 .battle-controls .hand-cards .card {
-  /* Carta GBC auténtica: el frame del paquete (48×40) a 2× entero (96×80),
-     con la ilustración DENTRO del área interior. SIN línea de color: solo
-     el frame GBC y el arte. */
+  /* Carta GBC auténtica: el arte va DETRÁS (z-index 1) y el frame se
+     superpone ENCIMA como MÁSCARA (z-index 3, ::after) — el hueco del
+     frame es transparente (ver scripts) así el arte se ve a través y el
+     marco SIEMPRE queda por encima, sin bordes ni desplazamientos. */
   width: 96px;
   height: 80px;
   min-height: 0;
@@ -1425,17 +1426,26 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   transform: perspective(720px) rotateX(6deg) translateZ(0);
   transform-origin: center bottom;
   background-color: transparent;
-  background-image: var(--card-frame,
-    linear-gradient(180deg, rgba(255,255,255,.08), transparent 16%),
-    linear-gradient(180deg, rgba(26,35,52,.96), rgba(8,11,18,.98)));
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
+  background-image: none;
   image-rendering: pixelated;
   border: 0;
   border-top: 0;
   box-shadow:
     0 12px 0 -7px rgba(0,0,0,.86),
     0 18px 28px rgba(0,0,0,.45);
+}
+/* El FRAME como MÁSCARA por encima del arte: hueco transparente + marco
+   opaco. pointer-events none para que el botón siga siendo clickeable. */
+.battle-controls .hand-cards .card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: var(--card-frame);
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  image-rendering: pixelated;
+  pointer-events: none;
+  z-index: 3;
 }
 /* Sin línea de acento superior (::before del .card base) en la mano GBC */
 .battle-controls .hand-cards .card::before {
@@ -1477,6 +1487,7 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   box-sizing: border-box;
   display: block;
   overflow: hidden;
+  z-index: 1;              /* DETRÁS del frame-máscara (z-index 3) */
 }
 .battle-controls .hand-cards .card .card-art-img,
 .basic-stage-card .card-art-img,
@@ -3821,8 +3832,8 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 .basic-btn.basic-back { width: 96px; height: 80px; --btn-frame: url('/assets/ui/hud_buttons/btn_exit.png'); }
 /* ═══ STAGE = LA CARTA REAL (idéntica a la mano) ═══ */
 .basic-stage-card {
-  /* Mismo CSS que .battle-controls .hand-cards .card: marco GBC 96×80 +
-     arte interior, sin línea de color, sin texto. */
+  /* Mismo CSS que .battle-controls .hand-cards .card: el frame se
+     superpone ENCIMA como MÁSCARA (::after, z-index 3). */
   width: 96px;
   height: 80px;
   min-height: 0;
@@ -3830,11 +3841,7 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   transform: perspective(720px) rotateX(6deg) translateZ(0);
   transform-origin: center bottom;
   background-color: transparent;
-  background-image: var(--card-frame,
-    linear-gradient(180deg, rgba(255,255,255,.08), transparent 16%),
-    linear-gradient(180deg, rgba(26,35,52,.96), rgba(8,11,18,.98)));
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
+  background-image: none;
   image-rendering: pixelated;
   border: 0;
   border-top: 0;
@@ -3842,6 +3849,17 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
     0 12px 0 -7px rgba(0,0,0,.86),
     0 18px 28px rgba(0,0,0,.45);
   transition: transform 120ms ease, box-shadow 120ms ease, filter 120ms ease;
+}
+.basic-stage-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: var(--card-frame);
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  image-rendering: pixelated;
+  pointer-events: none;
+  z-index: 3;
 }
 
 .basic-stage-card .card-art-img { image-rendering: pixelated; }
@@ -9963,21 +9981,30 @@ button.linklike:hover { text-decoration: underline; }
 
 /* ═══ LIMIT: MISMA geometría que las cartas de la mano (96×80) ═══ */
 .limit-card {
-  /* Idéntica a una carta de la mano: marco GBC 96×80 + arte interior.
-     Nombre/CC van en el tooltip (como las JOINT) — nada debajo. */
+  /* Idéntica a una carta de la mano: el frame se superpone ENCIMA como
+     MÁSCARA (::after, z-index 3). */
   position: relative;
   width: 96px;
   height: 80px;
   min-height: 0;
   padding: 0;
   background-color: transparent;
-  background-image: var(--card-frame);
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
+  background-image: none;
   image-rendering: pixelated;
   border: 0;
   cursor: pointer;
   transition: transform 120ms ease, box-shadow 120ms ease, filter 120ms ease;
+}
+.limit-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: var(--card-frame);
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  image-rendering: pixelated;
+  pointer-events: none;
+  z-index: 3;
 }
 .limit-card:hover:not(:disabled) {
   /* HOVER CANÓNICO: MISMO que la mano (JOINT) y STAGE — elevación 3D +
