@@ -43,7 +43,7 @@ export const HUD_LAYOUT = {
   /** Altura mínima de los chips de estado (status-chip). */
   statusChipHeight: 16,
   /** Ancho visual del centro VS (ROUND/VS/orden). */
-  centerBadgeWidth: 78,
+  centerBadgeWidth: 118,
   /** Espaciado entre cartas de la mano (--hand-gap). */
   handGap: 5,
   /** Ancho del diálogo (--gbc-dlg-w). */
