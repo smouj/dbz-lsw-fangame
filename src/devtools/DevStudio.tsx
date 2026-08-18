@@ -26,11 +26,13 @@ import { PixelArtModule } from './pixelart';
 import { HudModule } from './hud';
 import { FacingModule } from './facing';
 import { SheetsModule } from './sheets';
+import { TimelineModule } from './timeline';
 
 export type DevModuleId =
   | 'dashboard' | 'characters' | 'cards' | 'sprites' | 'animation'
   | 'pixelart' | 'hud' | 'facing' | 'sheets'
-  | 'lab' | 'story' | 'validation' | 'research' | 'music' | 'gameconfig' | 'positions';
+  | 'lab' | 'story' | 'validation' | 'research' | 'music' | 'gameconfig' | 'positions'
+  | 'timeline';
 
 interface DevModuleDef {
   id: DevModuleId;
@@ -52,6 +54,7 @@ export const DEV_MODULES: DevModuleDef[] = [
   { id: 'hud', label: 'HUD', icon: Gauge, desc: 'Visualizador del gameplay + editor del tema HUD', group: 'Combate' },
   { id: 'lab', label: 'Combat Lab', icon: Swords, desc: 'Combate real + renderer Pixi en vivo + secuencias deterministas', group: 'Combate' },
   { id: 'positions', label: 'Positions', icon: Grid2X2, desc: 'Laboratorio de posiciones Air/Ground x Front/Back', group: 'Combate' },
+  { id: 'timeline', label: 'Timeline (M7)', icon: Film, desc: 'Presentation Adapter: EventLog → cues visuales en ticks GBC', group: 'Combate' },
   { id: 'story', label: 'Story', icon: Gamepad2, desc: 'Capítulos, viñetas y mazos de jefes', group: 'Mundo' },
   { id: 'validation', label: 'Validation', icon: CheckCircle2, desc: 'Integridad de datos y cobertura', group: 'Mundo' },
   { id: 'research', label: 'Research', icon: Search, desc: 'ROM / manual / fuentes', group: 'Mundo' },
@@ -192,6 +195,7 @@ export function DevStudio({ onExit, onLaunchBattle }: DevStudioProps) {
           {module === 'hud' && <HudModule />}
           {module === 'lab' && <LabModule onLaunchBattle={onLaunchBattle} />}
           {module === 'positions' && <PositionsModule />}
+          {module === 'timeline' && <TimelineModule />}
           {module === 'story' && <StoryModule />}
           {module === 'validation' && <ValidationModule />}
           {module === 'research' && <ResearchModule />}

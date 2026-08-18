@@ -1,0 +1,305 @@
+{
+ "scenario": "m7_qte_timeout",
+ "seed": 4244,
+ "timeline": [
+  {
+   "tick": 0,
+   "type": "HUD",
+   "kind": "phase",
+   "value": "basic",
+   "logicalTick": 0,
+   "source": "PHASE_CHANGED",
+   "fidelity": "NONE"
+  },
+  {
+   "tick": 0,
+   "type": "SCENE",
+   "mode": "PLAYER_ACTION",
+   "background": "/assets/backgrounds/scenarios/01_action.png",
+   "durationTicks": 132,
+   "logicalTick": 0,
+   "source": "ACTION_STARTED",
+   "fidelity": "INFERRED",
+   "profile": "stage_3"
+  },
+  {
+   "tick": 0,
+   "type": "CAMERA",
+   "action": "CUT",
+   "logicalTick": 0,
+   "source": "ACTION_STARTED",
+   "fidelity": "INFERRED",
+   "profile": "stage_3"
+  },
+  {
+   "tick": 0,
+   "type": "FIGHTER_VISIBILITY",
+   "role": "ACTOR",
+   "side": "player",
+   "visible": true,
+   "logicalTick": 0,
+   "source": "ACTION_STARTED",
+   "fidelity": "INFERRED",
+   "profile": "stage_3"
+  },
+  {
+   "tick": 0,
+   "type": "FIGHTER_VISIBILITY",
+   "role": "TARGET",
+   "side": "enemy",
+   "visible": false,
+   "logicalTick": 0,
+   "source": "ACTION_STARTED",
+   "fidelity": "INFERRED",
+   "profile": "stage_3"
+  },
+  {
+   "tick": 0,
+   "type": "FIGHTER_POSE",
+   "durationTicks": 8,
+   "role": "ACTOR",
+   "side": "player",
+   "pose": "idle",
+   "logicalTick": 0,
+   "source": "ACTION_STARTED",
+   "fidelity": "INFERRED",
+   "profile": "stage_3"
+  },
+  {
+   "tick": 0,
+   "type": "FIGHTER_POSE",
+   "durationTicks": 12,
+   "role": "ACTOR",
+   "side": "player",
+   "pose": "idle",
+   "logicalTick": 0,
+   "source": "ACTION_STARTED",
+   "fidelity": "INFERRED",
+   "profile": "stage_3"
+  },
+  {
+   "tick": 0,
+   "type": "HUD",
+   "kind": "qte",
+   "value": "level 3",
+   "logicalTick": 0,
+   "source": "QTE_STARTED",
+   "fidelity": "NONE"
+  },
+  {
+   "tick": 0,
+   "type": "AUDIO",
+   "cue": "cardPlay",
+   "logicalTick": 0,
+   "source": "QTE_STARTED",
+   "fidelity": "NONE"
+  },
+  {
+   "tick": 0,
+   "type": "HUD",
+   "kind": "phase",
+   "value": "stageInput",
+   "logicalTick": 0,
+   "source": "PHASE_CHANGED",
+   "fidelity": "NONE"
+  },
+  {
+   "tick": 12,
+   "type": "FIGHTER_POSE",
+   "durationTicks": 14,
+   "role": "ACTOR",
+   "side": "player",
+   "pose": "attack_fwd",
+   "logicalTick": 0,
+   "source": "ACTION_STARTED",
+   "fidelity": "INFERRED",
+   "profile": "stage_3"
+  },
+  {
+   "tick": 26,
+   "type": "FIGHTER_POSE",
+   "durationTicks": 12,
+   "role": "ACTOR",
+   "side": "player",
+   "pose": "idle",
+   "logicalTick": 0,
+   "source": "ACTION_STARTED",
+   "fidelity": "INFERRED",
+   "profile": "stage_3"
+  },
+  {
+   "tick": 38,
+   "type": "FIGHTER_POSE",
+   "durationTicks": 56,
+   "role": "ACTOR",
+   "side": "player",
+   "pose": "attack_fwd",
+   "logicalTick": 0,
+   "source": "ACTION_STARTED",
+   "fidelity": "INFERRED",
+   "profile": "stage_3"
+  },
+  {
+   "tick": 94,
+   "type": "FIGHTER_POSE",
+   "durationTicks": 12,
+   "role": "ACTOR",
+   "side": "player",
+   "pose": "attack_fwd",
+   "logicalTick": 0,
+   "source": "ACTION_STARTED",
+   "fidelity": "INFERRED",
+   "profile": "stage_3"
+  },
+  {
+   "tick": 106,
+   "type": "FIGHTER_POSE",
+   "durationTicks": 8,
+   "role": "ACTOR",
+   "side": "player",
+   "pose": "idle",
+   "logicalTick": 0,
+   "source": "ACTION_STARTED",
+   "fidelity": "INFERRED",
+   "profile": "stage_3"
+  },
+  {
+   "tick": 132,
+   "type": "SCENE",
+   "mode": "OVERVIEW",
+   "background": "/assets/backgrounds/scenarios/01_world.png",
+   "durationTicks": 1,
+   "logicalTick": 0,
+   "source": "ACTION_STARTED",
+   "fidelity": "INFERRED",
+   "profile": "stage_3"
+  },
+  {
+   "tick": 132,
+   "type": "FIGHTER_VISIBILITY",
+   "role": "TARGET",
+   "side": "enemy",
+   "visible": true,
+   "logicalTick": 0,
+   "source": "ACTION_STARTED",
+   "fidelity": "INFERRED",
+   "profile": "stage_3"
+  },
+  {
+   "tick": 132,
+   "type": "FIGHTER_POSE",
+   "durationTicks": 8,
+   "role": "ACTOR",
+   "side": "player",
+   "pose": "idle",
+   "logicalTick": 0,
+   "source": "ACTION_STARTED",
+   "fidelity": "INFERRED",
+   "profile": "stage_3"
+  },
+  {
+   "tick": 132,
+   "type": "CAMERA",
+   "action": "RESET",
+   "logicalTick": 0,
+   "source": "ACTION_STARTED",
+   "fidelity": "INFERRED",
+   "profile": "stage_3"
+  },
+  {
+   "tick": 143,
+   "type": "HUD",
+   "kind": "qte",
+   "value": "timeout INPUT",
+   "logicalTick": 143,
+   "source": "QTE_TIMEOUT",
+   "fidelity": "NONE"
+  },
+  {
+   "tick": 143,
+   "type": "AUDIO",
+   "cue": "qteFail",
+   "logicalTick": 143,
+   "source": "QTE_TIMEOUT",
+   "fidelity": "NONE"
+  },
+  {
+   "tick": 143,
+   "type": "HUD",
+   "kind": "qte",
+   "value": "counter",
+   "logicalTick": 143,
+   "source": "QTE_COUNTER_STARTED",
+   "fidelity": "NONE"
+  },
+  {
+   "tick": 143,
+   "type": "AUDIO",
+   "cue": "counter",
+   "logicalTick": 143,
+   "source": "QTE_COUNTER_STARTED",
+   "fidelity": "NONE"
+  },
+  {
+   "tick": 167,
+   "type": "IMPACT",
+   "side": "player",
+   "outcome": "hit",
+   "logicalTick": 167,
+   "source": "ATTACK_HIT",
+   "fidelity": "INFERRED",
+   "profile": "stage_3"
+  },
+  {
+   "tick": 167,
+   "type": "FIGHTER_VISIBILITY",
+   "role": "TARGET",
+   "side": "player",
+   "visible": true,
+   "logicalTick": 167,
+   "source": "ATTACK_HIT",
+   "fidelity": "INFERRED",
+   "profile": "stage_3"
+  },
+  {
+   "tick": 167,
+   "type": "FIGHTER_POSE",
+   "durationTicks": 10,
+   "role": "TARGET",
+   "side": "player",
+   "pose": "knockback_back",
+   "logicalTick": 167,
+   "source": "ATTACK_HIT",
+   "fidelity": "INFERRED",
+   "profile": "stage_3"
+  },
+  {
+   "tick": 167,
+   "type": "CAMERA",
+   "action": "IMPACT",
+   "logicalTick": 167,
+   "source": "ATTACK_HIT",
+   "fidelity": "INFERRED",
+   "profile": "stage_3"
+  },
+  {
+   "tick": 167,
+   "type": "AUDIO",
+   "cue": "hit",
+   "logicalTick": 167,
+   "source": "ATTACK_HIT",
+   "fidelity": "INFERRED",
+   "profile": "stage_3"
+  },
+  {
+   "tick": 167,
+   "type": "HUD",
+   "side": "player",
+   "kind": "damage_number",
+   "value": 4,
+   "logicalTick": 167,
+   "source": "DAMAGE_APPLIED",
+   "fidelity": "NONE"
+  }
+ ]
+}

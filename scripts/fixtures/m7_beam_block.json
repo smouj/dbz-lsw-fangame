@@ -1,0 +1,408 @@
+{
+ "scenario": "m7_beam_block",
+ "seed": 1,
+ "timeline": [
+  {
+   "tick": 0,
+   "type": "HUD",
+   "kind": "phase",
+   "value": "cardSelect",
+   "logicalTick": 0,
+   "source": "PHASE_CHANGED",
+   "fidelity": "NONE"
+  },
+  {
+   "tick": 0,
+   "type": "HUD",
+   "side": "player",
+   "kind": "cc",
+   "value": 14,
+   "logicalTick": 0,
+   "source": "CC_SPENT",
+   "fidelity": "NONE"
+  },
+  {
+   "tick": 0,
+   "type": "AUDIO",
+   "cue": "cardPlay",
+   "logicalTick": 0,
+   "source": "CARD_PLAYED",
+   "fidelity": "NONE"
+  },
+  {
+   "tick": 0,
+   "type": "SCENE",
+   "mode": "PLAYER_ACTION",
+   "background": "/assets/backgrounds/scenarios/01_action.png",
+   "durationTicks": 152,
+   "logicalTick": 0,
+   "source": "ACTION_STARTED",
+   "fidelity": "INFERRED",
+   "profile": "kamehameha"
+  },
+  {
+   "tick": 0,
+   "type": "CAMERA",
+   "action": "CUT",
+   "logicalTick": 0,
+   "source": "ACTION_STARTED",
+   "fidelity": "INFERRED",
+   "profile": "kamehameha"
+  },
+  {
+   "tick": 0,
+   "type": "FIGHTER_VISIBILITY",
+   "role": "ACTOR",
+   "side": "player",
+   "visible": true,
+   "logicalTick": 0,
+   "source": "ACTION_STARTED",
+   "fidelity": "INFERRED",
+   "profile": "kamehameha"
+  },
+  {
+   "tick": 0,
+   "type": "FIGHTER_VISIBILITY",
+   "role": "TARGET",
+   "side": "enemy",
+   "visible": false,
+   "logicalTick": 0,
+   "source": "ACTION_STARTED",
+   "fidelity": "INFERRED",
+   "profile": "kamehameha"
+  },
+  {
+   "tick": 0,
+   "type": "FIGHTER_POSE",
+   "durationTicks": 8,
+   "role": "ACTOR",
+   "side": "player",
+   "pose": "idle",
+   "logicalTick": 0,
+   "source": "ACTION_STARTED",
+   "fidelity": "INFERRED",
+   "profile": "kamehameha"
+  },
+  {
+   "tick": 0,
+   "type": "FIGHTER_POSE",
+   "durationTicks": 12,
+   "role": "ACTOR",
+   "side": "player",
+   "pose": "idle",
+   "logicalTick": 0,
+   "source": "ACTION_STARTED",
+   "fidelity": "INFERRED",
+   "profile": "kamehameha"
+  },
+  {
+   "tick": 0,
+   "type": "HUD",
+   "kind": "qte",
+   "value": "level 3",
+   "logicalTick": 0,
+   "source": "QTE_STARTED",
+   "fidelity": "NONE"
+  },
+  {
+   "tick": 0,
+   "type": "AUDIO",
+   "cue": "cardPlay",
+   "logicalTick": 0,
+   "source": "QTE_STARTED",
+   "fidelity": "NONE"
+  },
+  {
+   "tick": 0,
+   "type": "HUD",
+   "kind": "phase",
+   "value": "stageInput",
+   "logicalTick": 0,
+   "source": "PHASE_CHANGED",
+   "fidelity": "NONE"
+  },
+  {
+   "tick": 0,
+   "type": "HUD",
+   "side": "player",
+   "kind": "cc",
+   "value": 15,
+   "logicalTick": 0,
+   "source": "CC_GAINED",
+   "fidelity": "NONE"
+  },
+  {
+   "tick": 0,
+   "type": "HUD",
+   "kind": "qte",
+   "value": "ok 1",
+   "logicalTick": 0,
+   "source": "QTE_INPUT_RESOLVED",
+   "fidelity": "NONE"
+  },
+  {
+   "tick": 0,
+   "type": "AUDIO",
+   "cue": "qteOk",
+   "logicalTick": 0,
+   "source": "QTE_INPUT_RESOLVED",
+   "fidelity": "NONE"
+  },
+  {
+   "tick": 0,
+   "type": "HUD",
+   "side": "player",
+   "kind": "cc",
+   "value": 16,
+   "logicalTick": 0,
+   "source": "CC_GAINED",
+   "fidelity": "NONE"
+  },
+  {
+   "tick": 0,
+   "type": "HUD",
+   "kind": "qte",
+   "value": "ok 2",
+   "logicalTick": 0,
+   "source": "QTE_INPUT_RESOLVED",
+   "fidelity": "NONE"
+  },
+  {
+   "tick": 0,
+   "type": "AUDIO",
+   "cue": "qteOk",
+   "logicalTick": 0,
+   "source": "QTE_INPUT_RESOLVED",
+   "fidelity": "NONE"
+  },
+  {
+   "tick": 0,
+   "type": "HUD",
+   "side": "player",
+   "kind": "cc",
+   "value": 17,
+   "logicalTick": 0,
+   "source": "CC_GAINED",
+   "fidelity": "NONE"
+  },
+  {
+   "tick": 0,
+   "type": "HUD",
+   "kind": "qte",
+   "value": "ok 3",
+   "logicalTick": 0,
+   "source": "QTE_INPUT_RESOLVED",
+   "fidelity": "NONE"
+  },
+  {
+   "tick": 0,
+   "type": "AUDIO",
+   "cue": "qteOk",
+   "logicalTick": 0,
+   "source": "QTE_INPUT_RESOLVED",
+   "fidelity": "NONE"
+  },
+  {
+   "tick": 0,
+   "type": "HUD",
+   "side": "enemy",
+   "kind": "damage_number",
+   "value": 3,
+   "logicalTick": 0,
+   "source": "DAMAGE_APPLIED",
+   "fidelity": "NONE"
+  },
+  {
+   "tick": 12,
+   "type": "FIGHTER_POSE",
+   "durationTicks": 16,
+   "role": "ACTOR",
+   "side": "player",
+   "pose": "gather_power",
+   "logicalTick": 0,
+   "source": "ACTION_STARTED",
+   "fidelity": "INFERRED",
+   "profile": "kamehameha"
+  },
+  {
+   "tick": 12,
+   "type": "AURA",
+   "durationTicks": 96,
+   "role": "ACTOR",
+   "side": "player",
+   "visible": true,
+   "variant": "power",
+   "logicalTick": 0,
+   "source": "ACTION_STARTED",
+   "fidelity": "INFERRED",
+   "profile": "kamehameha"
+  },
+  {
+   "tick": 28,
+   "type": "FIGHTER_POSE",
+   "durationTicks": 26,
+   "role": "ACTOR",
+   "side": "player",
+   "pose": "beam_charge",
+   "logicalTick": 0,
+   "source": "ACTION_STARTED",
+   "fidelity": "INFERRED",
+   "profile": "kamehameha"
+  },
+  {
+   "tick": 54,
+   "type": "FIGHTER_POSE",
+   "durationTicks": 8,
+   "role": "ACTOR",
+   "side": "player",
+   "pose": "beam_fire",
+   "logicalTick": 0,
+   "source": "ACTION_STARTED",
+   "fidelity": "INFERRED",
+   "profile": "kamehameha"
+  },
+  {
+   "tick": 54,
+   "type": "PROJECTILE",
+   "kind": "ray",
+   "action": "spawn",
+   "from": "player",
+   "to": "enemy",
+   "logicalTick": 0,
+   "source": "ACTION_STARTED",
+   "fidelity": "INFERRED",
+   "profile": "kamehameha"
+  },
+  {
+   "tick": 81,
+   "type": "PROJECTILE",
+   "kind": "ray",
+   "action": "travel",
+   "from": "player",
+   "to": "enemy",
+   "logicalTick": 0,
+   "source": "ACTION_STARTED",
+   "fidelity": "INFERRED",
+   "profile": "kamehameha"
+  },
+  {
+   "tick": 108,
+   "type": "AURA",
+   "durationTicks": 1,
+   "role": "ACTOR",
+   "side": "player",
+   "visible": false,
+   "variant": "power",
+   "logicalTick": 0,
+   "source": "ACTION_STARTED",
+   "fidelity": "INFERRED",
+   "profile": "kamehameha"
+  },
+  {
+   "tick": 108,
+   "type": "PROJECTILE",
+   "kind": "ray",
+   "action": "impact",
+   "from": "player",
+   "to": "enemy",
+   "logicalTick": 0,
+   "source": "ACTION_STARTED",
+   "fidelity": "INFERRED",
+   "profile": "kamehameha"
+  },
+  {
+   "tick": 108,
+   "type": "IMPACT",
+   "side": "enemy",
+   "outcome": "block",
+   "logicalTick": 0,
+   "source": "ATTACK_HIT",
+   "fidelity": "INFERRED",
+   "profile": "kamehameha"
+  },
+  {
+   "tick": 108,
+   "type": "FIGHTER_VISIBILITY",
+   "role": "TARGET",
+   "side": "enemy",
+   "visible": true,
+   "logicalTick": 0,
+   "source": "ATTACK_HIT",
+   "fidelity": "INFERRED",
+   "profile": "kamehameha"
+  },
+  {
+   "tick": 108,
+   "type": "FIGHTER_POSE",
+   "durationTicks": 10,
+   "role": "TARGET",
+   "side": "enemy",
+   "pose": "guard",
+   "logicalTick": 0,
+   "source": "ATTACK_HIT",
+   "fidelity": "INFERRED",
+   "profile": "kamehameha"
+  },
+  {
+   "tick": 108,
+   "type": "CAMERA",
+   "action": "IMPACT",
+   "logicalTick": 0,
+   "source": "ATTACK_HIT",
+   "fidelity": "INFERRED",
+   "profile": "kamehameha"
+  },
+  {
+   "tick": 108,
+   "type": "AUDIO",
+   "cue": "block",
+   "logicalTick": 0,
+   "source": "ATTACK_HIT",
+   "fidelity": "INFERRED",
+   "profile": "kamehameha"
+  },
+  {
+   "tick": 152,
+   "type": "SCENE",
+   "mode": "OVERVIEW",
+   "background": "/assets/backgrounds/scenarios/01_world.png",
+   "durationTicks": 1,
+   "logicalTick": 0,
+   "source": "ACTION_STARTED",
+   "fidelity": "INFERRED",
+   "profile": "kamehameha"
+  },
+  {
+   "tick": 152,
+   "type": "FIGHTER_VISIBILITY",
+   "role": "TARGET",
+   "side": "enemy",
+   "visible": true,
+   "logicalTick": 0,
+   "source": "ACTION_STARTED",
+   "fidelity": "INFERRED",
+   "profile": "kamehameha"
+  },
+  {
+   "tick": 152,
+   "type": "FIGHTER_POSE",
+   "durationTicks": 8,
+   "role": "ACTOR",
+   "side": "player",
+   "pose": "idle",
+   "logicalTick": 0,
+   "source": "ACTION_STARTED",
+   "fidelity": "INFERRED",
+   "profile": "kamehameha"
+  },
+  {
+   "tick": 152,
+   "type": "CAMERA",
+   "action": "RESET",
+   "logicalTick": 0,
+   "source": "ACTION_STARTED",
+   "fidelity": "INFERRED",
+   "profile": "kamehameha"
+  }
+ ]
+}

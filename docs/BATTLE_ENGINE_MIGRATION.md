@@ -201,6 +201,34 @@ attacker/defender/CC/HP/position/pending action/seed/tick) · **Battle Events**
     state + EventLog (tick incluido) + rngState.
   - verify:battle-engine: 149 → **170 checks** · suites completas verdes ·
     tsc · build OK.
-- **M7 (siguiente)** — Presentation Adapter (consume canon + perfiles
-  firma + eventos + reloj → BattleTimeline) · **M8** integración/cutover ·
-  **M9** Replay.
+- **M7 ✅ — Presentation Adapter** (`src/battle/engine/presentation/` +
+  `src/devtools/timeline.tsx` + `scripts/verify-presentation.ts`):
+  - `buildPresentationTimeline({ events, context })` PURO (0 React/DOM/
+    Pixi/timers) — EventLog → BattleTimeline de cues en ticks GBC.
+  - PresentationCue: unión discriminada (SCENE/FIGHTER_POSE/FIGHTER_VISIBILITY/
+    FIGHTER_POSITION/AURA/PROJECTILE/CAMERA/IMPACT/HUD/AUDIO) con ticks
+    absolutos y durationTicks — nunca delayMs. Poses SEMÁNTICAS (sin paths).
+  - Dos tiempos: logicalTick (del evento, NUNCA modificado) + cue.tick
+    (presentación — secuencias ancladas a ACTION_STARTED + frames del canon).
+  - Escenas canonizadas: OVERVIEW / PLAYER_ACTION / ENEMY_ACTION /
+    SPECIAL_ACTION. ACTOR/TARGET relativos; facing V9 por transformación
+    (resolveFacing: player→1 · enemy→−1, sin assets duplicados).
+  - animationCanon = fuente semántica (kind/visual → familia → beats);
+    perfiles firma aplicados con profileId + fidelity conservados por cue
+    (jerarquía FRAME_VERIFIED > firma > familia > fallback).
+  - aura_power/aura_support como CAPAS (AURA cue) — nunca poses.
+  - Resultados event-driven: ATTACK_HIT/MISSED → IMPACT (hit/block/guard/
+    miss) + poses; FIGHTER_DEFEATED → K.O.; jamás se deduce mirando HP.
+  - QTE/counter con timeline propio (QTE_STARTED/INPUT/FAILED/TIMEOUT /
+    COUNTER_STARTED/RESOLVED → HUD/AUDIO cues; la UI consulta deadlines).
+  - 11 escenarios headless compartidos (Dev Studio + fixtures) + golden
+    fixtures scripts/fixtures/m7_*.json (11). Propiedad central: mismo
+    EventLog ⇒ mismo Timeline (independiente de FPS — M6 ya lo probó).
+  - Dev Studio: vista #dev/timeline — tabla Evento/Tick lógico/Tick cue/Δ/
+    Cue/Actor/Pose/FX/Fondo/Fidelidad/Perfil (base de la pasada
+    FRAME_VERIFIED). Legacy runtime intacto (M7 coexiste; M8 hará el cutover).
+  - verify:presentation: 64 checks · battle-engine 170 · suites verdes ·
+    tsc · build OK.
+- **M8 (siguiente)** — integración/cutover (main.tsx consume el engine:
+  EventLog → Timeline → Presenter Pixi; soporte completo, OHKO, equipo,
+  defensa con carta entrante) · **M9** Replay.

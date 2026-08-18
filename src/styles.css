@@ -10630,3 +10630,23 @@ button.linklike:hover { text-decoration: underline; }
   color: #7fd48a; font-size: 11px;
 }
 .dev-facing-canon-badge strong { letter-spacing: .5px; }
+
+/* ─── Dev Studio: Timeline M7 ─── */
+.dev-tl-summary { display: flex; flex-wrap: wrap; gap: 14px; margin: 10px 0; padding: 8px 12px; background: #0e1013; border: 1px solid #262b33; border-radius: 8px; font-size: 11px; color: #aab2bf; }
+.dev-tl-summary b { color: #ffe9a3; }
+.dev-tl-table { display: flex; flex-direction: column; gap: 2px; max-height: 60vh; overflow-y: auto; }
+.dev-tl-row { display: grid; grid-template-columns: 130px 64px 64px 44px 120px 64px minmax(120px, 1fr) 44px 90px 84px 110px; gap: 4px; align-items: center; padding: 3px 6px; background: #14171b; border: 1px solid #1d2229; border-radius: 4px; font-size: 10px; }
+.dev-tl-row:hover { border-color: #2a3342; }
+.dev-tl-head { background: #0e1013; position: sticky; top: 0; font-weight: 700; color: #8a93a3; letter-spacing: .4px; text-transform: uppercase; font-size: 9px; }
+.dev-tl-col { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.dev-tl-col.evt { color: #8ab8d8; }
+.dev-tl-col.tick { color: #cdd6e2; font-variant-numeric: tabular-nums; }
+.dev-tl-col.delta { color: #6b7484; font-variant-numeric: tabular-nums; }
+.dev-tl-col.delta.shift { color: #e0b84c; }
+.dev-tl-col.pose { color: #ffe9a3; }
+.dev-tl-col.fid { font-size: 9px; }
+.dev-tl-col.fid.FRAME_VERIFIED { color: #7fd4ff; }
+.dev-tl-col.fid.VERIFIED { color: #7fd48a; }
+.dev-tl-col.fid.INFERRED { color: #e0c060; }
+.dev-tl-col.fid.NONE { color: #6b7484; }
+.dev-tl-col.prof { color: #8a93a3; }

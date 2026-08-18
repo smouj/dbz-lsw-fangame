@@ -1,0 +1,53 @@
+{
+ "scenario": "m7_move",
+ "seed": 7,
+ "timeline": [
+  {
+   "tick": 0,
+   "type": "FIGHTER_POSITION",
+   "role": "TARGET",
+   "side": "player",
+   "position": "DOWN_FRONT",
+   "logicalTick": 0,
+   "source": "POSITION_CHANGED",
+   "fidelity": "NONE"
+  },
+  {
+   "tick": 0,
+   "type": "FIGHTER_POSE",
+   "durationTicks": 8,
+   "role": "TARGET",
+   "side": "player",
+   "pose": "move_front",
+   "logicalTick": 0,
+   "source": "POSITION_CHANGED",
+   "fidelity": "NONE"
+  },
+  {
+   "tick": 0,
+   "type": "AUDIO",
+   "cue": "step",
+   "logicalTick": 0,
+   "source": "POSITION_CHANGED",
+   "fidelity": "NONE"
+  },
+  {
+   "tick": 0,
+   "type": "FIGHTER_POSITION",
+   "role": "TARGET",
+   "side": "player",
+   "position": "UP_FRONT",
+   "logicalTick": 0,
+   "source": "POSITION_CHANGED",
+   "fidelity": "NONE"
+  },
+  {
+   "tick": 0,
+   "type": "AUDIO",
+   "cue": "step",
+   "logicalTick": 0,
+   "source": "POSITION_CHANGED",
+   "fidelity": "NONE"
+  }
+ ]
+}

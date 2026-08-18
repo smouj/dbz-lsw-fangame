@@ -1,0 +1,25 @@
+{
+ "scenario": "m7_guard",
+ "seed": 5,
+ "timeline": [
+  {
+   "tick": 0,
+   "type": "FIGHTER_POSE",
+   "durationTicks": 8,
+   "role": "TARGET",
+   "side": "player",
+   "pose": "guard",
+   "logicalTick": 0,
+   "source": "GUARD_STARTED",
+   "fidelity": "NONE"
+  },
+  {
+   "tick": 0,
+   "type": "AUDIO",
+   "cue": "guard",
+   "logicalTick": 0,
+   "source": "GUARD_STARTED",
+   "fidelity": "NONE"
+  }
+ ]
+}

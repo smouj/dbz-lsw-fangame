@@ -1,0 +1,66 @@
+{
+ "scenario": "m7_gather",
+ "seed": 9,
+ "timeline": [
+  {
+   "tick": 0,
+   "type": "HUD",
+   "kind": "phase",
+   "value": "basic",
+   "logicalTick": 0,
+   "source": "PHASE_CHANGED",
+   "fidelity": "NONE"
+  },
+  {
+   "tick": 0,
+   "type": "SCENE",
+   "mode": "PLAYER_ACTION",
+   "background": "/assets/backgrounds/scenarios/01_action.png",
+   "durationTicks": 90,
+   "logicalTick": 0,
+   "source": "GATHER_STARTED",
+   "fidelity": "NONE"
+  },
+  {
+   "tick": 0,
+   "type": "FIGHTER_POSE",
+   "durationTicks": 78,
+   "role": "ACTOR",
+   "side": "player",
+   "pose": "gather_power",
+   "logicalTick": 0,
+   "source": "GATHER_STARTED",
+   "fidelity": "NONE"
+  },
+  {
+   "tick": 0,
+   "type": "AURA",
+   "durationTicks": 78,
+   "role": "ACTOR",
+   "side": "player",
+   "visible": true,
+   "variant": "power",
+   "logicalTick": 0,
+   "source": "GATHER_STARTED",
+   "fidelity": "NONE"
+  },
+  {
+   "tick": 0,
+   "type": "AUDIO",
+   "cue": "powerUp",
+   "logicalTick": 0,
+   "source": "GATHER_STARTED",
+   "fidelity": "NONE"
+  },
+  {
+   "tick": 90,
+   "type": "SCENE",
+   "mode": "OVERVIEW",
+   "background": "/assets/backgrounds/scenarios/01_world.png",
+   "durationTicks": 1,
+   "logicalTick": 0,
+   "source": "GATHER_STARTED",
+   "fidelity": "NONE"
+  }
+ ]
+}
