@@ -150,3 +150,9 @@ export async function resolveBundlePoses(
     };
   }));
 }
+/**
+ * M8.P0 — RETRATO CANÓNICO del hablante. Vive en ./speakerPortraits (módulo
+ * ligero, sin battleOverworld) para que los verify headless lo importen;
+ * aquí se re-exporta por compatibilidad con consumidores del bundle.
+ */
+export { resolveSpeakerPortrait } from './speakerPortraits';

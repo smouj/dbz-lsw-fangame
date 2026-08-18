@@ -21,6 +21,7 @@ import {
 import { resolveHitBlockAvoid, attackDamage } from './battle/combat';
 import { CARD_FRAME_BY_TYPE, CARD_FRAME_SELECTED, CARD_FRAME_DISABLED } from './data/cardVisuals';
 import { cardIconUrl, MINI_PORTRAITS, MENU_PORTRAITS, TYPE_ICONS } from './data/icons';
+import { resolveSpeakerPortrait } from './data/speakerPortraits';
 import { FitArt } from './components/FitArt';
 import { CardArtHole } from './components/CardArtHole';
 import { StageHudPanel } from './components/StageHudPanel';
@@ -3230,9 +3231,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
             ? getForm(enemyFormId)?.character ?? 'goku'
             : getForm(activePlayerFormId)?.character ?? 'goku';
           const speakerForm = isEnemy ? enemyFormId : activePlayerFormId;
-          const spriteUrl = storyPortraitUrl(speakerChar, speakerForm)
-            || miniPortraitFor(speakerChar)
-            || MENU_PORTRAITS[CHAR_PORTRAIT_ALIAS[speakerChar] ?? speakerChar];
+          const spriteUrl = resolveSpeakerPortrait(speakerChar, speakerForm);
           return (
             <div className={`gbc-dialogue speaker-${side ?? 'none'}`} key={gbcMsg}>
               <GbcDialogueText msg={gbcMsg} side={side} spriteUrl={spriteUrl} />
@@ -3396,7 +3395,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
              componente, misma geometría (portrait fijo · track centrado ·
              timer fijo). NUNCA volver a componer el QTE a mano en main.tsx. */
           <StageHudPanel
-            portraitUrl={storyPortraitUrl(player.id, activePlayerFormId) || portraitFor(player.id, activePlayerFormId) || ''}
+            portraitUrl={resolveSpeakerPortrait(player.id, activePlayerFormId) ?? ''}
             seq={q.seq}
             idx={q.idx}
             state={q.state}

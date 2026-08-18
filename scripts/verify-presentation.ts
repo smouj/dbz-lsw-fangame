@@ -12,6 +12,7 @@ import {
   type PresentationScenario,
 } from '../src/devtools/presentationScenarios';
 import { buildPresentationTimeline, resolveFacing, type BattleTimeline } from '../src/battle/engine/presentation';
+import { resolveSpeakerPortrait } from '../src/data/speakerPortraits';
 import { SCENARIOS } from '../src/data/scenarios';
 
 let passed = 0;
@@ -172,6 +173,25 @@ check('M7: facing — actor player → scaleX 1 · actor enemy → scaleX −1',
   const tlA = buildPresentationTimeline({ events: logA.entries, context: CONTEXT });
   const tlB = buildPresentationTimeline({ events: logB.entries, context: CONTEXT });
   check('M7: mismo seed+comandos ⇒ mismo EventLog ⇒ mismo Timeline (independiente de FPS)', JSON.stringify(tlA) === JSON.stringify(tlB));
+}
+
+// ── M8.P0: PARIDAD DE RETRATO Stage ↔ Diálogo ──
+// El Stage/QTE y el Diálogo deben resolver el retrato con la MISMA cadena
+// canónica (resolveSpeakerPortrait) → mismo asset para el mismo personaje.
+{
+  const goku = resolveSpeakerPortrait('goku', 'goku_base');
+  const cell = resolveSpeakerPortrait('cell', 'cell_base');
+  const gokuNoForm = resolveSpeakerPortrait('goku');
+  check('M8.P0: retrato Goku base → story portrait de la viñeta GBC (no battle 32×24)',
+    !!goku && goku.includes('portraits/story') && goku.includes('Goku_Normal'));
+  check('M8.P0: retrato Cell base → story portrait de la viñeta GBC',
+    !!cell && cell.includes('portraits/story') && cell.includes('Cell_Perfect'));
+  check('M8.P0: retrato Goku sin forma → mismo asset base (fallback por personaje)',
+    !!gokuNoForm && gokuNoForm === goku);
+  // La cadena canónica NUNCA devuelve un BATTLE_PORTRAITS (32×24 GBC): esos
+  // retratos son para el HUD de batalla, no para el marco 57×80 del speaker.
+  check('M8.P0: la cadena canónica no cae en battlePortraits',
+    !goku?.includes('/battle/') && !cell?.includes('/battle/'));
 }
 
 console.log(`\n═══ RESULTADO: ${passed} passed · ${failed} failed ═══`);

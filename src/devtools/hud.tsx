@@ -20,6 +20,7 @@ import { getForm } from '../data/roster';
 import { spriteDirFor, spriteFrameUrl } from '../data/spriteManifest';
 import { BATTLE_PORTRAITS } from '../data/battlePortraits';
 import { storyPortraitUrl } from '../data/storyPortraits';
+import { resolveSpeakerPortrait } from '../data/speakerPortraits';
 import { anchorFor, BattlePosition, actionAnchorFor } from '../data/positions';
 import { downloadJson } from './spriteEditing';
 import { getCard, CARD_TYPE_NAMES, CARD_COLORS, CARD_COLORS_ON_LIGHT, CardDef } from '../data/cards';
@@ -584,7 +585,7 @@ export function HudModule() {
                       o derecha según el lado), con máscara y marco negro —
                       la caja no cambia de tamaño */}
                   <div className={`gbc-dialogue-speaker ${dlgSide}`}>
-                    <img src={(dlgSide === 'left' ? storyPortraitUrl('goku', P_FORM) || pPortrait : storyPortraitUrl('cell', P_FORM)) || ''} alt={dlgSide === 'left' ? 'GOKU' : 'CELL'} className="gbc-dialogue-speaker-img" draggable={false} />
+                    <img src={(dlgSide === 'left' ? resolveSpeakerPortrait('goku', P_FORM) : resolveSpeakerPortrait('cell', P_FORM)) ?? ''} alt={dlgSide === 'left' ? 'GOKU' : 'CELL'} className="gbc-dialogue-speaker-img" draggable={false} />
                   </div>
                   <div className="gbc-dialogue-body">
                     <div className="gbc-dialogue-content">
@@ -679,7 +680,7 @@ export function HudModule() {
                    BattleScreen. El Dev Studio solo lo envuelve en el preview;
                    nunca más composiciones divergentes del QTE. */
                 <StageHudPanel
-                  portraitUrl={(dlgSide === 'left' ? storyPortraitUrl('goku', P_FORM) || pPortrait : storyPortraitUrl('cell', P_FORM)) || ''}
+                  portraitUrl={(dlgSide === 'left' ? resolveSpeakerPortrait('goku', P_FORM) : resolveSpeakerPortrait('cell', P_FORM)) ?? ''}
                   seq={['A', 'B', 'UP', 'RIGHT', 'A', 'B'].slice(0, stageLen) as never}
                   idx={1}
                   state="INPUT_WINDOW"
