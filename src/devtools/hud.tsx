@@ -312,12 +312,18 @@ export function HudModule() {
                       <div className="dev-anim-zone enemy" style={{ left: `${ea.x}%`, top: `${ea.y}%` }}>
                         <span className="dev-anim-zone-label">ANIM</span>
                       </div>
-                      <div className="fighter-container player down back" style={{ left: `${pa.x}%`, top: `${pa.y}%` }}>
-                        {pIdle && <img src={pIdle} alt="" className="overworld-sprite dev-hud-fighter-sprite" />}
-                      </div>
-                      <div className="fighter-container enemy up back" style={{ left: `${ea.x}%`, top: `${ea.y}%` }}>
-                        {eIdle && <img src={eIdle} alt="" className="overworld-sprite dev-hud-fighter-sprite" style={{ transform: 'scaleX(-1)' }} />}
-                      </div>
+                      {/* Sprite OVERWORLD anclado igual que Position Lab:
+                          translate(-50%,-100%) → los PIES tocan el anchor exacto.
+                          Sin flex container: el punto del anchor es el suelo del
+                          luchador, no el fondo del campo. */}
+                      {pIdle && (
+                        <img src={pIdle} alt="" className="overworld-sprite dev-hud-fighter-sprite dev-hud-anchored player"
+                          style={{ left: `${pa.x}%`, top: `${pa.y}%` }} />
+                      )}
+                      {eIdle && (
+                        <img src={eIdle} alt="" className="overworld-sprite dev-hud-fighter-sprite dev-hud-anchored enemy"
+                          style={{ left: `${ea.x}%`, top: `${ea.y}%` }} />
+                      )}
                     </>
                   );
                 })()}

@@ -10046,17 +10046,21 @@ button.linklike:hover { text-decoration: underline; }
 .dev-hud-preview .battle-intro::after { animation: none; }
 .dev-hud-preview .intro-gbc-window { margin-top: 0; }
 
-/* Mockup HUD: los chibis se ven a mayor escala y anclados al suelo del campo */
-.dev-hud-preview .dev-hud-fighter-sprite {
-  transform: scale(1.7);
+/* Mockup HUD: sprites OVERWORLD anclados en su punto real (pies en el
+   anchor, igual que Position Lab: translate(-50%,-100%)). El anchor es el
+   suelo del luchador — no el fondo del campo. */
+.dev-hud-preview .dev-hud-fighter-sprite.dev-hud-anchored {
+  position: absolute;
+  height: 96px;               /* escala overworld del juego */
+  width: auto;
+  transform: translate(-50%, -100%);
   transform-origin: bottom center;
   image-rendering: pixelated;
+  z-index: 3;
+  filter: drop-shadow(0 0 8px rgba(255,190,60,.3)) drop-shadow(0 5px 10px rgba(0,0,0,.45));
 }
-/* El chibi del rival (Piccolo) es más bajo que Goku: escala compensada para
-   que ambos luchadores se vean proporcionados en el mockup (paridad visual). */
-.dev-hud-preview .fighter-container.enemy .dev-hud-fighter-sprite {
-  transform: scaleX(-1) scale(2.35);
-  transform-origin: bottom center;
+.dev-hud-preview .dev-hud-fighter-sprite.dev-hud-anchored.enemy {
+  transform: translate(-50%, -100%) scaleX(-1);
 }
 
 /* En el mockup del HUD Studio el cuadro de diálogo se previsualiza
@@ -10308,7 +10312,8 @@ button.linklike:hover { text-decoration: underline; }
 .dev-pos-plane-name { font-size: 11px; color: #ffe9a3; letter-spacing: .5px; text-align: center; }
 .dev-pos-plane-field {
   position: relative;
-  height: 120px;
+  height: 150px;   /* aire arriba: anchors UP (26%) + chibi 36px caben */
+  min-height: 150px;
   border-radius: 4px;
   overflow: hidden;
   background-size: cover;
@@ -10318,7 +10323,7 @@ button.linklike:hover { text-decoration: underline; }
 .dev-pos-plane-chibi {
   position: absolute;
   image-rendering: pixelated;
-  height: 52px;
+  height: 36px;     /* cabe en los 4 planos: top UP = 39px (26% de 150) */
   width: auto;
   filter: drop-shadow(2px 2px 0 rgba(0,0,0,.4));
 }
