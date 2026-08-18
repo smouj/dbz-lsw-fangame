@@ -1481,12 +1481,18 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 .battle-controls .hand-cards .card .card-art-img,
 .basic-stage-card .card-art-img,
 .limit-card .card-art-img {
-  /* Imagen del arte: CERO residuos (display block, sin margin) — el FitArt
-     la posiciona absoluta dentro de la caja canónica. */
+  /* Imagen del arte: CENTRADA PERFECTA por el navegador (object-fit cover +
+     object-position center) — rellena el recuadro blanco interior del frame
+     SIN bordes alrededor y SIN redondeos a mano (el FitArt calculaba
+     left/top y dejaba 1px de error). CERO residuos. */
   display: block;
+  width: 100%;
+  height: 100%;
   margin: 0;
   padding: 0;
   border: 0;
+  object-fit: cover;
+  object-position: center;
   image-rendering: pixelated;
 }
 .battle-controls .hand-area { width: min(720px, 96vw); padding: 0 10px; gap: 3px; }
