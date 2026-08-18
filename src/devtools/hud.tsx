@@ -37,7 +37,7 @@ const E_FORM = 'piccolo_base';
 const GROUPS = ['Colores', 'HUD', 'Cartas', 'Posición', 'Escala', 'Tipografía'];
 
 // Vista del preview: cómo se ve el HUD en cada estado (sin motor — visual).
-type HudView = 'COMMAND' | 'MANO' | 'BASIC' | 'MOVE' | 'STAGE' | 'LIMIT' | 'DIALOGO' | 'INTRO' | 'DISCARD' | 'DEFENSA' | 'RESULTADO' | 'MENU';
+type HudView = 'COMMAND' | 'MANO' | 'BASIC' | 'MOVE' | 'STAGE' | 'LIMIT' | 'DIALOGO' | 'STORY_DIALOGO' | 'INTRO' | 'DISCARD' | 'DEFENSA' | 'RESULTADO' | 'MENU';
 
 const VIEWS: { id: HudView; label: string; tip: string }[] = [
   // Flujo de batalla: comandos → cartas → fases → flujo global
@@ -50,6 +50,7 @@ const VIEWS: { id: HudView; label: string; tip: string }[] = [
   { id: 'DEFENSA', label: 'Defensa', tip: 'Menú de defensa: LIMITED · JOINT · BASIC DEFENSE' },
   { id: 'DISCARD', label: 'Descarte', tip: 'HAND CHECK — demasiadas cartas, elige cuál descartar' },
   { id: 'DIALOGO', label: 'Diálogo', tip: 'Cuadro de mensaje GBC estructurado' },
+  { id: 'STORY_DIALOGO', label: 'Story Diálogo', tip: 'Diálogo del modo historia: retrato + caja GBC (blanco/negro)' },
   { id: 'RESULTADO', label: 'Resultado', tip: 'Pantalla final: VICTORIA / DERROTA' },
   { id: 'MENU', label: 'Menú', tip: 'Pantalla principal: logo, continuar, navegación y footer' },
   { id: 'INTRO', label: 'Intro', tip: 'Presentación VS: sprites entran desde fuera + VS + flash (sin texto)' },
@@ -205,7 +206,7 @@ export function HudModule() {
             </div>
           )}
         </div>
-        {view === 'DIALOGO' && (
+        {(view === 'DIALOGO' || view === 'STORY_DIALOGO') && (
           <button className={`dev-hud-view-chip side-toggle ${dlgSide === 'right' ? 'active' : ''}`}
             onClick={() => setDlgSide(s => (s === 'left' ? 'right' : 'left'))}
             title="Alterna el lado del personaje que habla (izquierda/derecha)">
@@ -293,6 +294,32 @@ export function HudModule() {
                   </div>
                 </div>
                 <div className="intro-flash" />
+              </div>
+            )}
+
+            {/* STORY DIÁLOGO: escena del modo historia — cutscene + retrato del
+                hablante (lado según quien habla) + caja GBC blanco/negro.
+                MISMO markup que StorySceneScreen del juego. */}
+            {view === 'STORY_DIALOGO' && (
+              <div className="dev-story-scene">
+                <div className="story-panel story-panel-portrait_dialogue">
+                  <div className="story-panel-bg" style={{ backgroundImage: `url('/assets/cutscenes/005_grassy_valley_battlefield.png')` }} />
+                  <div className="story-panel-dim" />
+                  <div className="story-characters layout-portrait_dialogue">
+                    <div className={`story-character ${dlgSide === 'left' ? 'left' : 'right'} speaking`}>
+                      <img src={dlgSide === 'left'
+                        ? (storyPortraitUrl('piccolo') ?? '')
+                        : (storyPortraitUrl('gohan', undefined, 'surprised') ?? '')}
+                        alt={dlgSide === 'left' ? 'PICCOLO' : 'GOHAN'} className="story-portrait" draggable={false} />
+                    </div>
+                  </div>
+                  <div className="story-dialogue">
+                    <div className="story-speaker">{dlgSide === 'left' ? 'PICCOLO' : 'GOHAN'}</div>
+                    <div className="story-text visible">{dlgSide === 'left'
+                      ? 'No esperes que te trate como a un niño. Los Saiyan llegarán y tendrás que sobrevivir.'
+                      : 'Lo intentaré… pero todavía no sé pelear como tú.'}</div>
+                  </div>
+                </div>
               </div>
             )}
 

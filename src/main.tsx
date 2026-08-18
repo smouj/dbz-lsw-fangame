@@ -4066,7 +4066,8 @@ function StorySceneScreen({ chapter, phase, onFinish, onNavigate }: {
                   {url
                     ? <img src={url} alt={characterName(c.character)} className="story-portrait" />
                     : <div className="story-portrait story-portrait-none">{characterName(c.character).slice(0, 1)}</div>}
-                  <span className="story-character-name">{characterName(c.character)}</span>
+                  {/* SIN badge de nombre bajo el sprite: el nombre ya vive en
+                      el cuadro de diálogo (story-speaker) — canon GBC */}
                 </div>
               );
             })}

@@ -4842,21 +4842,8 @@ button:focus-visible, .chapter-node:focus-visible {
   font-size: 48px;
 }
 
-.story-character .story-portrait { margin-bottom: 24px; } /* suelo reservado del nombre */
-.story-character-name {
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  white-space: nowrap;
-  font-family: var(--fpx);
-  font-size: 10px;
-  letter-spacing: 2px;
-  color: var(--text-hi);
-  background: rgba(0,0,0,.7);
-  padding: 3px 10px;
-  border: 1px solid var(--border);
-}
+.story-character .story-portrait { margin-bottom: 0; } /* sin suelo de nombre: el retrato ancla en su base */
+/* (story-character-name eliminado: el nombre vive en el cuadro de diálogo) */
 
 /* (el posicionamiento left/right/center es absoluto por personaje) */
 
@@ -4864,36 +4851,39 @@ button:focus-visible, .chapter-node:focus-visible {
 .story-dialogue {
   position: absolute;
   z-index: 5;
-  bottom: 54px;
+  bottom: 40px;
   left: 50%;
   transform: translateX(-50%);
   width: min(680px, 92vw);
-  background: rgba(10, 14, 22, .92);
-  border: 3px solid var(--gold);
+  /* MISMO estilo que el cuadro GBC del juego (gbc-dialogue): blanco GBC +
+     marco negro + outline — fuente NEGRA (canon diálogo) */
+  background: #f8f4e4;
+  border: 3px solid #000;
+  outline: 2px solid #f8f4e4;
   border-radius: 0;
-  box-shadow: 4px 4px 0 #000, inset 0 0 0 2px var(--panel-hi);
+  box-shadow: 4px 4px 0 rgba(0,0,0,.55), inset 0 0 0 1px #000;
   padding: 12px 18px;
-  font-family: var(--fpx);
+  font-family: var(--fui);
 }
 
 .story-speaker {
-  color: #fff;
+  color: #b03030;                  /* actor del diálogo en ROJO (canon GBC) */
   font-family: var(--fui);
   font-size: 14px;
   letter-spacing: 1.5px;
   margin-bottom: 6px;
   font-weight: bold;
-  text-shadow: 2px 2px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;
+  text-shadow: none;
 }
 
 .story-text {
-  color: #fff;
+  color: #1a1a1a;                  /* texto NEGRO carbón (canon) */
   font-family: var(--fui);
   font-size: 16px;
   line-height: 1.5;
   min-height: 44px;
   letter-spacing: .5px;
-  text-shadow: 2px 2px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;
+  text-shadow: none;
   opacity: 0;
   transform: translateY(6px);
   transition: opacity .35s ease-out, transform .35s ease-out;
@@ -4902,7 +4892,7 @@ button:focus-visible, .chapter-node:focus-visible {
 .story-text.visible { opacity: 1; transform: translateY(0); }
 .story-cursor {
   display: inline-block;
-  color: #ffd76a;
+  color: #b03030;
   animation: storyCursorBlink .55s steps(2, start) infinite;
   margin-left: 1px;
 }
@@ -8523,6 +8513,27 @@ button:focus-visible, .chapter-node:focus-visible {
    fuerza absolute para que llene el battle-screen, no la página. */
 .dev-hud-preview .dev-intro-view .battle-intro {
   position: absolute;
+}
+/* Vista STORY DIÁLOGO del studio: escena completa como en el juego
+   (cutscene + retrato + caja GBC) cubriendo el preview */
+.dev-hud-preview .dev-story-scene {
+  position: absolute;
+  inset: 0;
+  z-index: 55;
+  overflow: hidden;
+  background: #000;
+}
+.dev-hud-preview .dev-story-scene .story-panel {
+  position: absolute;
+  inset: 0;
+  animation: none;
+}
+.dev-hud-preview .dev-story-scene .story-portrait {
+  width: 100px;
+  height: 140px;
+}
+.dev-hud-preview .dev-story-scene .story-dialogue {
+  bottom: 26px;
 }
 /* ─── Vista MENÚ del HUD Studio ───
    Reutiliza el markup REAL del juego (.menu-screen + .menu-bg + rayos).
