@@ -2004,14 +2004,23 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 
 /* ─── Pantalla de resultado ─── */
 
-.result-screen { display: flex; flex-direction: column; align-items: center; gap: 12px; padding: 16px; }
+.result-screen {
+  display: flex; flex-direction: column; align-items: center; gap: 10px;
+  padding: 14px 22px;
+  /* panel GBC como los demás: oscuro + marco beige + sombra pixel */
+  background: rgba(8, 8, 10, .85);
+  border: 3px solid #d8d0b8;
+  box-shadow: 4px 4px 0 #000;
+  min-width: 300px;
+}
 
 .result-title {
-  font-family: var(--fepic);
-  font-size: 56px;
-  letter-spacing: .06em;
-  text-shadow: 0 0 30px currentColor, 4px 4px 0 rgba(0,0,0,.85);
-  transform: rotate(-2deg);
+  font-family: var(--fui);   /* VT323 pixel */
+  font-size: 34px;
+  letter-spacing: .14em;
+  text-shadow: 3px 3px 0 #000, -2px 2px 0 #000, 2px -2px 0 #000, -2px -2px 0 #000;
+  transform: none;
+  line-height: 1.1;
 }
 
 .result-title.victory { color: var(--gold); }
@@ -2019,11 +2028,12 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 
 .result-info {
   text-align: center;
-  color: var(--muted);
-  font-family: var(--fpx);
-  font-size: 8px;
-  line-height: 2;
+  color: #d8d0b8;
+  font-family: var(--fui);
+  font-size: 14px;
+  line-height: 1.6;
   letter-spacing: 1px;
+  text-shadow: 1px 1px 0 #000;
 }
 
 .btn-primary {
@@ -4894,9 +4904,9 @@ button:focus-visible, .chapter-node:focus-visible {
 }
 
 .defense-sources .basic-btn {
-  min-width: 72px;
-  width: 72px;
-  height: 60px;
+  min-width: 96px;   /* GAP/tamaño unificado con el resto de paneles (96×80) */
+  width: 96px;
+  height: 80px;
   flex: 0 0 auto;
   text-align: center;
   padding: 0;
