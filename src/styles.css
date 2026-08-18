@@ -1502,21 +1502,23 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   text-align: left;                 /* alineado (mejor lectura) */
   text-shadow: none;
 }
-/* Primera línea del tooltip = TÍTULO (nombre — tipo): destacado y centrado */
+/* Primera línea del tooltip = TÍTULO (nombre — tipo): destacado y centrado
+   ROJO GBC como el actor del diálogo (antes azul #005a8c — fuera de la
+   paleta diálogo: negro + rojo). */
 .global-tooltip .tt-title {
   display: block;
   font-size: 13px;
   font-weight: bold;
-  color: #005a8c;
+  color: #b03030;
   letter-spacing: 1px;
   text-align: center;
   margin-bottom: 5px;
   text-transform: uppercase;
 }
-/* Líneas de datos (CC · ATK · ACC) */
+/* Líneas de datos (CC · ATK · ACC) — negro del diálogo */
 .global-tooltip .tt-stats {
   display: block;
-  color: #7a5c00;
+  color: #000;
   font-size: 11px;
   text-align: center;
   margin-bottom: 4px;
@@ -1529,7 +1531,7 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 }
 .global-tooltip .tt-effect {
   display: block;
-  color: #7a2a2a;
+  color: #b03030;
   font-size: 10.5px;
   margin-top: 3px;
 }
@@ -1827,6 +1829,7 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
      el sprite se TESELA (mosaico 2×2) — bug detectado en HUD Studio. */
   background-color: var(--orange);
   border-color: var(--orange-lt);
+  transform: translateY(-2px);   /* MISMO lift que command-strip/basic-btn */
 }
 
 
@@ -1879,7 +1882,7 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 
 .command-strip button:hover:not(:disabled) {
   transform: translateY(-2px);
-  filter: drop-shadow(4px 4px 0 #000) brightness(1.12);
+  filter: drop-shadow(2px 2px 0 #000) brightness(1.15);
 }
 
 .command-strip button:active:not(:disabled) { transform: translateY(1px) scale(0.97); }
@@ -3675,7 +3678,7 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 }
 .gbc-dialogue .stage-inline-time strong {
   font-size: 22px;
-  color: #005a8c;
+  color: #b03030;   /* rojo GBC (antes azul #005a8c) */
 }
 .stage-inputs-box .stage-sequence {
   background: rgba(0, 0, 0, .12);
@@ -4104,7 +4107,7 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 .limit-row:hover:not(:disabled) { transform: translateY(-1px); border-color: var(--gold); }
 .limit-row.locked, .limit-row:disabled { opacity: 0.4; cursor: not-allowed; }
 .limit-name { font-size: 0.85rem; font-weight: 600; }
-.limit-cost { font-size: 0.72rem; color: #7fd4ff; background: rgba(0,120,200,.18); padding: 2px 8px; border-radius: 0; }
+.limit-cost { font-size: 0.72rem; color: var(--gold); background: rgba(216,168,48,.14); padding: 2px 8px; border-radius: 0; }
 .limit-lock { font-size: 0.62rem; color: #ff9a8a; }
 .limit-empty { color: var(--muted); font-size: 0.8rem; text-align: center; padding: 12px; }
 .btn-defend {
@@ -9801,9 +9804,8 @@ button.linklike:hover { text-decoration: underline; }
   padding: 0;
   box-shadow: none;
 }
-.command-strip button:hover:not(:disabled) {
-  filter: drop-shadow(2px 2px 0 #000) brightness(1.15);
-}
+/* hover del command-strip definido UNA sola vez (sección botones GBC) —
+   no duplicar aquí: regla única evita deriva entre secciones. */
 
 /* Cartas de la mano: entrada escalonada + coste destacado */
 .battle-controls .hand-cards .card {
@@ -10485,9 +10487,9 @@ button.linklike:hover { text-decoration: underline; }
   width: 100%;
 }
 .dev-hud-preview .stage-panel .stage-label { color: #000; }
-.dev-hud-preview .stage-panel .stage-label-progress { color: #005a8c; }
+.dev-hud-preview .stage-panel .stage-label-progress { color: #b03030; }
 .dev-hud-preview .stage-panel .stage-push { color: #7a5c00; }
-.dev-hud-preview .stage-panel .stage-push strong { color: #005a8c; }
+.dev-hud-preview .stage-panel .stage-push strong { color: #b03030; }
 .dev-hud-preview .stage-panel .stage-timer-track {
   flex: 1;
   min-width: 80px;
