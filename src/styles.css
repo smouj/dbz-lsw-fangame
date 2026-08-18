@@ -634,7 +634,8 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   justify-content: space-between;
   align-items: stretch;
   gap: var(--hud-gap, clamp(88px, 14vw, 190px));
-  padding: var(--hud-top-pad-y, 6px) 10px 2px;
+  padding: var(--hud-top-pad-y, 6px) 10px 4px;   /* 4px abajo: 2px extra de
+     respiro entre los badges de estado y el límite inferior del HUD */
   background:
     linear-gradient(180deg, rgba(8, 8, 10, .92) 0%, rgba(8, 8, 10, .55) 62%, transparent 100%);
   border-bottom: 0;
