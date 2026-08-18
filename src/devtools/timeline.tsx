@@ -10,6 +10,7 @@ import { PRESENTATION_SCENARIOS, runPresentationScenario, type PresentationScena
 import { buildPresentationTimeline, resolveFacing } from '../battle/engine/presentation';
 import { SCENARIOS, SPECIAL_ACTION_BACKGROUND } from '../data/scenarios';
 import type { TimelineEntry } from '../battle/engine/presentation/PresentationCue';
+import { EnginePlayground } from './runtimePlayground';
 
 const CUE_COLORS: Record<string, string> = {
   SCENE: '#d9b0e8', FIGHTER_POSE: '#7fd4ff', FIGHTER_VISIBILITY: '#8a93a3',
@@ -39,6 +40,7 @@ function EntryRow({ en, logTicks }: { en: TimelineEntry; logTicks: Map<number, s
 }
 
 export function TimelineModule() {
+  const [mode, setMode] = useState<'scenarios' | 'live'>('scenarios');
   const [scenarioId, setScenarioId] = useState(PRESENTATION_SCENARIOS[0].id);
   const [showMeta, setShowMeta] = useState(true);
 
@@ -70,13 +72,23 @@ export function TimelineModule() {
   return (
     <div className="dev-panel">
       <header className="dev-header">
-        <h1>Timeline (M7) — Presentation Adapter</h1>
+        <h1>Timeline (M7/M8) — Presentation Adapter + Runtime</h1>
         <p className="dev-sub">
           BattleEvent → BattleTimeline (cues puras en ticks GBC). Mismo EventLog ⇒ mismo
-          Timeline, independiente de FPS. El logicalTick del hecho NUNCA se modifica.
+          Timeline, independiente de FPS. <strong>En vivo</strong> = primer slice vertical M8
+          (UI → Engine → EventLog → Timeline → Presenter).
         </p>
       </header>
 
+      <div className="dev-hud-view-select">
+        <button className={`dev-hud-view-chip ${mode === 'scenarios' ? 'active' : ''}`}
+          onClick={() => setMode('scenarios')}>Escenarios (headless)</button>
+        <button className={`dev-hud-view-chip ${mode === 'live' ? 'active' : ''}`}
+          onClick={() => setMode('live')}>En vivo (Engine Runtime)</button>
+      </div>
+
+      {mode === 'live' ? <EnginePlayground /> : (
+      <>
       <div className="dev-hud-view-select">
         {PRESENTATION_SCENARIOS.map(s => (
           <button key={s.id} className={`dev-hud-view-chip ${s.id === scenarioId ? 'active' : ''}`}
@@ -118,6 +130,8 @@ export function TimelineModule() {
         Δ = presentación − lógico (las secuencias de acción se anclan a ACTION_STARTED + frames del canon).
         Fidelidad: INFERRED hoy — la pasada FRAME_VERIFIED sobre la ROM ajustará los ticks sin cambiar la arquitectura.
       </p>
+      </>
+      )}
     </div>
   );
 }

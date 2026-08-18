@@ -229,6 +229,31 @@ attacker/defender/CC/HP/position/pending action/seed/tick) · **Battle Events**
     FRAME_VERIFIED). Legacy runtime intacto (M7 coexiste; M8 hará el cutover).
   - verify:presentation: 64 checks · battle-engine 170 · suites verdes ·
     tsc · build OK.
-- **M8 (siguiente)** — integración/cutover (main.tsx consume el engine:
-  EventLog → Timeline → Presenter Pixi; soporte completo, OHKO, equipo,
-  defensa con carta entrante) · **M9** Replay.
+- **M8 🔄 EN CURSO — Runtime Cutover (fundación + slice 1: GATHER)**
+  (`src/battle/runtime/` + `scripts/audit-runtime.ts` + playground):
+  - **BattleRuntime**: frontera ÚNICA — UI/IA → dispatch(BattleCommand) ·
+    Clock → advance(ticks) → Engine (M1-M6) → EventLog → M7 Timeline →
+    Presenter. Una sola snapshot autoritativa (state); React/Pixi/HUD leen
+    selectores, nunca duplican. Verificado: runtime.dispatch/advance ≡
+    llamadas directas (state + log + timeline + eventTicks idénticos).
+  - **BattlePresenter**: interfaz + createCuePresenter (callbacks por tipo
+    de cue) + resolvePoseSrc (pose semántica → frame del manifest V9).
+  - **useBattleRuntime**: hook React con input gate de PRESENTACIÓN
+    (orquestación — la legalidad sigue siendo exclusivamente canExecute).
+  - **audit:runtime**: escanea main.tsx → **157 gaps legacy cuantificados**
+    (setHp 14 · setCc 14 · setPhase 23 · setPosition 4 · setDeck 2 ·
+    setQte 6 · setPower 4 · setGuard 4 · setStages 7 · setSelectedCard 13 ·
+    Math.random 15 · setTimeout 50 · Date.now 1) — BattleScreen ~3307
+    líneas (68% de main.tsx). Objetivo M8: 0 gaps.
+  - **Engine Playground** (#dev/timeline → "En vivo"): primer slice
+    vertical E2E en navegador — GATHER/BASIC/MOVE/GUARD/STAGE/QTE/counter
+    con RAF → GbcClockAdapter → advance() (solo tiempo); Presenter DOM
+    pinta poses reales del manifest según los cues. Verificado en browser:
+    GATHER → FULL_POWER + pose gather_power_00.png + cues.
+  - verify:battle-engine 170 → **177 checks** · suites verdes · tsc · build.
+  - **Pendiente M8 (siguientes slices)**: migrar main.tsx por slices
+    (Gather→Move→Guard→Stage→QTE→melee→beam→support→Limit→IA→fin) con
+    shadow parity; sustituir el Presenter DOM por el renderer Pixi
+    (FighterActor) como consumidor de cues; HUD/cards/posiciones/QTE
+    derivados del Engine; runtime audit → 0 gaps.
+- **M9 (siguiente)** — Replay (EventLog + timelineHistory ya listos).

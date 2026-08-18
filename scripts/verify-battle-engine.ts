@@ -477,6 +477,7 @@ console.log('\n── M5 · RNG determinista + daño ──\n');
 import { initRng, nextRng, rollPercent, rollRange } from '../src/battle/engine/random';
 import type { RngState } from '../src/battle/engine/random';
 import { advanceBattleClock, COUNTER_WINDOW_TICKS } from '../src/battle/engine/clock';
+import { buildPresentationTimeline } from '../src/battle/engine/presentation';
 import {
   effectiveAttackAccuracy, effectiveDefenseAccuracy, accuracyHits,
   hitBlockAvoidFromRoll, attackDamage, counterDamage, stageAttackDamage,
@@ -825,6 +826,67 @@ check('M6: QTE_TIMEOUT y QTE_COUNTER_STARTED comparten tick',
   toEvents.eventTicks.length === 2 && toEvents.eventTicks[0] === toEvents.eventTicks[1]);
 check('M6: el tiempo NO es un comando (getAvailableCommands sin TICK/WAIT/TIMEOUT)',
   !getAvailableCommands(sim6).some(c => (c as { type: string }).type.includes('TIMEOUT') || (c as { type: string }).type.includes('TICK') || (c as { type: string }).type === 'WAIT'));
+
+
+// ═══════════════════════════════════════════════════════════════════════
+// M8 — BattleRuntime: frontera única (UI/IA → Engine → EventLog → Timeline)
+// ═══════════════════════════════════════════════════════════════════════
+
+console.log('\n── M8 · BattleRuntime ──\n');
+
+import { BattleRuntime } from '../src/battle/runtime/BattleRuntime';
+import { createCuePresenter } from '../src/battle/runtime/BattlePresenter';
+
+// El Runtime produce EXACTAMENTE lo mismo que las llamadas directas al Engine
+const rtCfg = { ...m5cfg, seed: 60601, playerPos: BattlePosition.DOWN_FRONT, enemyPos: BattlePosition.DOWN_BACK, playerCc: 0 };
+const rtState0 = { ...createInitialBattleState(rtCfg), phase: 'command' as never };
+const EMPTY_CTX = { playerFormId: 'goku_base', enemyFormId: 'piccolo_base', overviewBackground: '', actionBackground: '', specialActionBackground: '' };
+const rt = new BattleRuntime({ state: rtState0, context: EMPTY_CTX });
+const direct = createInitialBattleState(rtCfg);
+const directState0 = { ...direct, phase: 'command' as never };
+// referencia: mismas llamadas directas
+let d = directState0;
+const dLog = emptyEventLog();
+const dRun = (cmd: BattleCommand) => {
+  const r = executeCommand(d, cmd, { side: 'player' });
+  if (!r.ok) throw new Error(`direct: ${JSON.stringify(cmd)}: ${r.reason}`);
+  dLog.entries.push(...r.events.map((e, i) => ({ sequence: dLog.entries.length + i, tick: r.state.tick, event: e })));
+  d = r.state;
+};
+dRun({ type: 'BASIC' });
+dRun({ type: 'GATHER_POWER' });
+const dTl = buildPresentationTimeline({ events: dLog.entries, context: EMPTY_CTX });
+rt.dispatch({ type: 'BASIC' }, { side: 'player' });
+rt.dispatch({ type: 'GATHER_POWER' }, { side: 'player' });
+check('M8: runtime.dispatch produce mismo state que llamadas directas', JSON.stringify(rt.state) === JSON.stringify(d));
+check('M8: runtime.dispatch produce mismo EventLog que appendOutcomeToEventLog', JSON.stringify(rt.log.entries) === JSON.stringify(dLog.entries));
+check('M8: runtime.dispatch produce mismo Timeline que buildPresentationTimeline', JSON.stringify(rt.timeline) === JSON.stringify(dTl));
+check('M8: runtime.can == canExecute (una sola regla)',
+  rt.can({ type: 'GUARD' }).ok === false && rt.can({ type: 'GATHER_POWER' }).ok === false && rt.can({ type: 'BASIC_STAGE_ATTACK' }).ok === true);
+// avance de reloj por el runtime (paridad con advanceBattleClock directo)
+const rtA = rt.advance(10);
+const dA = advanceBattleClock(d, 10);
+check('M8: runtime.advance == advanceBattleClock directo (state + events + ticks)',
+  JSON.stringify(rtA.outcome.state) === JSON.stringify(dA.state) &&
+  JSON.stringify(rtA.outcome.events) === JSON.stringify(dA.events) &&
+  JSON.stringify(rtA.outcome.eventTicks) === JSON.stringify(dA.eventTicks));
+// presenter: consume timelines (cues reenviadas por tipo)
+let consumed = 0;
+const rt2 = new BattleRuntime({
+  state: rtState0,
+  presenter: createCuePresenter({
+    onScene: () => consumed++,
+    onPose: () => consumed++,
+    onHud: () => consumed++,
+  }),
+});
+rt2.dispatch({ type: 'BASIC' }, { side: 'player' });
+rt2.dispatch({ type: 'GATHER_POWER' }, { side: 'player' });
+check('M8: presenter consume los cues del timeline (SCENE/POSE/HUD)', consumed >= 3);
+// el runtime NO muta el estado fuera de dispatch/advance
+const frozen = JSON.stringify(rt2.state);
+rt2.available({ side: 'player' });
+check('M8: consultar available()/can() no muta el estado', JSON.stringify(rt2.state) === frozen);
 
 
 console.log(`\n═══ RESULTADO: ${passed} passed · ${failed} failed ═══`);

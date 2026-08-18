@@ -30,7 +30,8 @@
   "verify:hud-layout": "esbuild --bundle --format=esm --platform=node scripts/verify-hud-layout.ts --outfile=.vhud.mjs && node .vhud.mjs; rm -f .vhud.mjs",
   "verify:battle-engine": "esbuild --bundle --format=esm --platform=node scripts/verify-battle-engine.ts --outfile=.vbe.mjs && node .vbe.mjs; rm -f .vbe.mjs",
   "verify:presentation": "esbuild --bundle --format=esm --platform=node scripts/verify-presentation.ts --outfile=.vp.mjs && node .vp.mjs; rm -f .vp.mjs",
-  "gen:presentation-fixtures": "esbuild --bundle --format=esm --platform=node scripts/verify-presentation.ts --outfile=.vp.mjs && node .vp.mjs --write; rm -f .vp.mjs"
+  "gen:presentation-fixtures": "esbuild --bundle --format=esm --platform=node scripts/verify-presentation.ts --outfile=.vp.mjs && node .vp.mjs --write; rm -f .vp.mjs",
+  "audit:runtime": "esbuild --bundle --format=esm --platform=node scripts/audit-runtime.ts --outfile=.ar.mjs && node .ar.mjs; rm -f .ar.mjs"
  },
  "dependencies": {
   "@vitejs/plugin-react": "^4.3.4",
