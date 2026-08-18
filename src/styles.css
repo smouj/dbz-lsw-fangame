@@ -3629,39 +3629,64 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   font-family: var(--fpx);
   color: #000;
 }
-/* Secuencia SIN marco alrededor: solo los iconos alineados */
+/* Secuencia: cada input en su CHIP OSCURO — las teclas claras son
+   invisibles sobre el blanco del diálogo; el chip las hace destacar y
+   nada sobresale (spec UI 2026-08-18). flex-shrink:0 → los chips NUNCA
+   se comprimen aunque cambie el nº de inputs (3-6 Stage). */
 .gbc-dialogue .stage-sequence {
   display: flex;
   align-items: center;
   gap: 10px;
+  flex-shrink: 0;
+}
+.gbc-dialogue .stage-seq-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  background: #141414;          /* chip oscuro GBC */
+  border: 2px solid #000;
+  box-shadow: 2px 2px 0 rgba(0,0,0,.4);
+  box-sizing: border-box;
 }
 .gbc-dialogue .stage-seq-item img {
-  width: 48px;
-  height: 48px;
+  width: 44px;
+  height: 44px;
   image-rendering: pixelated;
   display: block;
   object-fit: contain;
 }
-.gbc-dialogue .stage-seq-item.done .seq-check {
-  font-size: 16px;
-  color: #0a7a2a;
+.gbc-dialogue .stage-seq-item.done {
+  background: #101810;          /* chip completado: check verde visible */
 }
-.gbc-dialogue .stage-seq-item.current img {
-  transform: scale(1.15);
-  filter: drop-shadow(0 0 6px rgba(0, 90, 140, .9));
+.gbc-dialogue .stage-seq-item.done .seq-check {
+  font-size: 18px;
+  color: #2ed05a;
+  line-height: 1;
+}
+.gbc-dialogue .stage-seq-item.current {
+  border-color: #1f6fa3;        /* input actual: borde azul + glow, sin
+                                   escala (nada sobresale del chip) */
+  box-shadow: 0 0 8px rgba(31,111,163,.75), 2px 2px 0 rgba(0,0,0,.4);
+  transform: none;              /* neutraliza scale(1.15) de la regla
+                                   vieja sin scope (línea ~5095) */
 }
 .gbc-dialogue .stage-seq-item.future { opacity: .5; }
-/* Prompt actual CON RELLENO: caja oscura detrás de la tecla grande — el
-   input que toca se ve lleno y destacado (antes flotaba sin fondo) */
+/* Prompt actual CON RELLENO: caja oscura con la tecla grande — el input
+   que toca se ve lleno y destacado. SIN outline blanco (sobre el blanco
+   del diálogo creaba una ilusión de solape) y 76px de alto (cabe en la
+   caja de 80px — nada sobresale). */
 .gbc-dialogue .stage-inline-prompt {
   display: flex;
   align-items: center;
   flex-shrink: 0;
-  margin-left: auto;          /* empuja prompt + tiempo a la DERECHA */
-  padding: 8px;
+  margin-left: auto;          /* empuja prompt + tiempo a la DERECHA
+                                 (anclados: no se mueven al cambiar el
+                                 nº de inputs) */
+  padding: 4px;
   background: #141414;        /* relleno */
   border: 2px solid #000;
-  outline: 2px solid #f8f4e4;
   box-shadow: 2px 2px 0 rgba(0,0,0,.5);
 }
 .gbc-dialogue .stage-inline-prompt img {
@@ -3671,13 +3696,15 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   display: block;
   object-fit: contain;
 }
-/* Tiempo NUMÉRICO: contando hacia arriba / máximo — sin barra */
+/* Tiempo NUMÉRICO: contando hacia arriba / máximo — sin barra.
+   flex-shrink:0 → anclado a la derecha, nunca se mueve. */
 .gbc-dialogue .stage-inline-time {
   font-size: 16px;
   color: #000;
   letter-spacing: 1px;
   white-space: nowrap;
-  margin-left: 6px;
+  margin-left: 10px;
+  flex-shrink: 0;
 }
 .gbc-dialogue .stage-inline-time strong {
   font-size: 22px;
@@ -10304,7 +10331,7 @@ button.linklike:hover { text-decoration: underline; }
   gap: 6px;
   align-items: center;
 }
-.dev-hud-preview .stage-seq-item.current img {
+.dev-hud-preview .stage-qte-row .stage-seq-item.current img {
   transform: scale(1.15);
   filter: drop-shadow(0 0 6px rgba(127, 212, 255, .8));
 }
@@ -10402,7 +10429,7 @@ button.linklike:hover { text-decoration: underline; }
   border-radius: 6px;
   border: 1px solid rgba(255, 255, 255, .07);
 }
-.dev-hud-preview .stage-seq-item.current img {
+.dev-hud-preview .stage-qte-row .stage-seq-item.current img {
   transform: scale(1.2);
   filter: drop-shadow(0 0 6px rgba(127, 212, 255, .9));
 }
@@ -10583,27 +10610,52 @@ button.linklike:hover { text-decoration: underline; }
   display: flex;
   align-items: center;
   gap: 10px;
+  flex-shrink: 0;             /* chips nunca se comprimen (3-6 inputs) */
   padding: 0;
   background: transparent;
   border: 0;
   border-radius: 0;
   box-shadow: none;
 }
+/* Chip oscuro de cada input (paridad con la sección del juego) */
+.dev-hud-preview .gbc-dialogue .stage-seq-item,
+.gbc-dialogue .stage-seq-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  background: #141414;
+  border: 2px solid #000;
+  box-shadow: 2px 2px 0 rgba(0,0,0,.4);
+  box-sizing: border-box;
+}
+.dev-hud-preview .gbc-dialogue .stage-seq-item.done,
+.gbc-dialogue .stage-seq-item.done {
+  background: #101810;
+}
+.dev-hud-preview .gbc-dialogue .stage-seq-item.done .seq-check,
+.gbc-dialogue .stage-seq-item.done .seq-check {
+  font-size: 18px;
+  color: #2ed05a;
+  line-height: 1;
+}
+.dev-hud-preview .gbc-dialogue .stage-seq-item.current,
+.gbc-dialogue .stage-seq-item.current {
+  border-color: #1f6fa3;
+  box-shadow: 0 0 8px rgba(31,111,163,.75), 2px 2px 0 rgba(0,0,0,.4);
+  transform: none;              /* neutraliza scale(1.15) viejo */
+}
 .dev-hud-preview .gbc-dialogue .stage-seq-item img,
 .gbc-dialogue .stage-seq-item img {
-  width: 48px;
-  height: 48px;
+  width: 44px;
+  height: 44px;
   image-rendering: pixelated;
   display: block;
   object-fit: contain;
   transform: none;
   filter: none;
   margin: 0;
-}
-.dev-hud-preview .gbc-dialogue .stage-seq-item.current img,
-.gbc-dialogue .stage-seq-item.current img {
-  transform: scale(1.15);
-  filter: drop-shadow(0 0 5px rgba(0, 90, 140, .85));
 }
 .dev-hud-preview .gbc-dialogue .stage-inline-prompt,
 .gbc-dialogue .stage-inline-prompt {
@@ -10614,14 +10666,19 @@ button.linklike:hover { text-decoration: underline; }
   flex-shrink: 0;
   /* RELLENO + grupo a la DERECHA (spec UI 2026-08-18): caja oscura
      detrás de la tecla actual + margin-left auto empuja prompt y
-     tiempo al borde derecho del cuadro. */
+     tiempo al borde derecho del cuadro. 76px de alto: cabe en la caja
+     de 80px (nada sobresale). SIN outline blanco (ilusión de solape
+     sobre el blanco del diálogo). */
   margin-left: auto;
-  padding: 8px;
+  padding: 4px;
   background: #141414;
   border: 2px solid #000;
-  outline: 2px solid #f8f4e4;
   box-shadow: 2px 2px 0 rgba(0,0,0,.5);
   animation: none;
+}
+.dev-hud-preview .gbc-dialogue .stage-inline-time,
+.gbc-dialogue .stage-inline-time {
+  flex-shrink: 0;             /* anclado a la derecha, nunca se mueve */
 }
 .dev-hud-preview .gbc-dialogue .stage-inline-prompt img,
 .gbc-dialogue .stage-inline-prompt img {
