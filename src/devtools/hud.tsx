@@ -250,9 +250,6 @@ export function HudModule() {
                   <div className="intro-portrait">
                     {pPortrait ? <img src={pPortrait} alt={P_FORM} /> : <span className="dev-hud-mock-ph">?</span>}
                   </div>
-                  <div className="intro-sprite-wrap">
-                    <img src={battleOverworldActorUrl(P_FORM, 'idle')} alt="" draggable={false} />
-                  </div>
                   <div className="intro-name">GOKU</div>
                   <div className="intro-sub">BASE</div>
                 </div>
@@ -261,9 +258,6 @@ export function HudModule() {
                 <div className="intro-fighter intro-right">
                   <div className="intro-portrait">
                     {ePortrait ? <img src={ePortrait} alt={E_FORM} /> : <span className="dev-hud-mock-ph">?</span>}
-                  </div>
-                  <div className="intro-sprite-wrap">
-                    <img src={battleOverworldActorUrl(E_FORM, 'idle')} alt="" draggable={false} />
                   </div>
                   <div className="intro-name">PICCOLO</div>
                   <div className="intro-sub">BASE</div>

@@ -2849,9 +2849,6 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
               <img src={portraitFor(player.id, activePlayerFormId) || ''} alt={player.name}
                 onError={e => (e.currentTarget.style.display = 'none')} />
             </div>
-            <div className="intro-sprite-wrap">
-              <img src={battleOverworldActorUrl(activePlayerFormId, 'idle')} alt="" draggable={false} />
-            </div>
             <div className="intro-name">{player.name}</div>
             <div className="intro-sub">{player.form}</div>
           </div>
@@ -2861,9 +2858,6 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
             <div className="intro-portrait">
               <img src={portraitFor(enemy.id, enemyFormId) || ''} alt={enemy.name}
                 onError={e => (e.currentTarget.style.display = 'none')} />
-            </div>
-            <div className="intro-sprite-wrap">
-              <img src={battleOverworldActorUrl(enemyFormId, 'idle')} alt="" draggable={false} />
             </div>
             <div className="intro-name">{enemy.name}</div>
             <div className="intro-sub">{enemy.form}</div>
