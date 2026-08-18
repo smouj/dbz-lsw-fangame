@@ -33,7 +33,7 @@
 | **DEFENSA** | Fuentes de defensa: `[LIMITED] [JOINT] [BASIC DEFENSE]` (botones basic-btn src-*) | `defense-sources` `src-limit` `src-joint` `src-basic` |
 | **RESULTADO** | Pantalla final: VICTORY (LV/EXP/HP) o DEFEAT (TURN/HP) + botón NEW BATTLE/RETRY (toggle) — panel GBC horizontal compacto (no altera la altura) | `result-screen` `result-title` `result-info` `btn-primary` |
 | **MENU** | Pantalla principal: `.menu-bg` (arte + Ken Burns), 3 rayos eléctricos SVG pixelados animados, logo, título VT323 dorado, continuar (progreso), 6 items de navegación (1 seleccionado) y footer — reutiliza el markup real del juego, compacto en px para el preview | `menu-screen` `menu-bg` `menu-bolts` `menu-content` `menu-logo-mark` `menu-title` `menu-subtitle` `menu-continue-card` `menu-nav` `menu-item` `menu-footer` |
-| **INTRO** | VS full-screen: retratos de batalla 160×120 (32×24 ×5) centrados vertical/horizontal, VS VT323 pixel con glow, FIGHT Bangers. Entrada: slide → pop → flash → FIGHT | `battle-intro` `intro-fighter` `intro-portrait` `intro-name` `intro-sub` `intro-vs` `intro-fight` |
+| **INTRO** | VS full-screen SIN texto: los 2 sprites entran DESDE FUERA (±42vw) hasta su posición (entrada cinematográfica ÚNICA), VS VT323 pixel pop central + glow, flash blanco 1.5s, banda de energía. NO hay READY/FIGHT/nombres/formas. `hud-in` del hud-top desactivado durante la intro (intro-active) — una sola animación de entrada | `battle-intro` `intro-fighter` `intro-portrait` `intro-vs` `intro-flash` |
 
 ## Invariantes clave (no romper)
 
@@ -41,21 +41,22 @@
 2. **Cartas**: 96×80 (48×40 ×2 entero); el frame es MÁSCARA (`::after` z-3 sobre el arte z-1); sin línea de color superior en mano/STAGE.
 3. **Botones GBC**: 96×80, sprite ×2 entero, sin texto superpuesto (todo en tooltip), hover canónico `translateY(-2px) + brightness(1.15)`.
 4. **Tooltips**: estructura canónica `tipBlock`/`tipCard` (título negro carbón `#1a1a1a`, tipo coloreado `CARD_COLORS_ON_LIGHT`, stats/desc negro, compat verde). Cero azules `#005a8c`.
-5. **Chips STAGE**: 52×52 oscuros `#141414`, done ✓ verde, current borde `#1f6fa3` sin escala, prompt 76×76 (cabe en 80px).
+5. **Chips STAGE**: 52×52 oscuros `#141414`, done ✓ verde, current borde DORADO `#f0d060` sin escala (sin azul), prompt 76×76 (cabe en 80px).
 6. **Ventana del preview**: estable en TODAS las vistas (1056×570, ratio ≈1.85) — la fila de controles tiene `min-height: 96px`.
-7. **INTRO**: sin ROUND/READY (spec 2026-08-18), retratos centrados exactos (0px desvío), VS pixel art.
+7. **INTRO**: SIN texto (no ROUND/READY/FIGHT/nombres/formas — spec 2026-08-18), entrada única: sprites desde ±42vw + VS pop + flash. `hud-in` desactivado durante la intro.
 8. **Colores del texto**: por defecto negro carbón; rojo solo como acento puntual (actor diálogo, timer QTE). Sin azules en tooltips/diálogo — tampoco en fondos/bordes de cajas o elementos (el chip 'input actual' del STAGE usa borde DORADO #f0d060, no azul).
 9. **GAP UNIFICADO 10px**: separación equidistante entre TODOS los botones/cartas de los paneles (command-strip, mano, basic-menu, move-axis, limit-cards-row, chips STAGE, prompt→tiempo). La única excepción es el ancla del STAGE (secuencia→prompt anclado a la derecha).
 10. **Barras HP estilo lucha**: 24px de alto, relleno anclado al lado CENTRO (drena hacia dentro), hueco central `clamp(84-150px)`, sin número dentro (tooltip HP).
 11. **Badge central**: VS (VT323 38-44px) + ROUND debajo — SIN caja, SIN líneas, SIN badge ATK (la fase ATTACK/DEFEND vive bajo la barra HP).
-12. **Chip CC GBC**: esquina inferior derecha de los paneles con cartas — negro carbón `#1a1a1a`, número blanco VT323 19px, tooltip CC x/y.
+12. **Chip CC GBC**: esquina inferior derecha de los paneles con cartas — negro carbón `#1a1a1a`, número blanco VT323 19px, tooltip CC x/y. OCULTO cuando hay diálogo GBC activo o en STAGE (igual que el chip FASE).
 13. **Fase ATTACK/DEFEND**: inline en la fila de info, SIEMPRE en el lado INTERIOR (junto al VS) — los badges de estado quedan en el borde EXTERIOR (fase `[ATTACK]` izquierda → x≈406, `[DEFEND]` derecha → x≈628). La reserva del 2º miembro del equipo vive en la FILA DEL NOMBRE (hud-top de 3 filas: nombre+reserva · HP · info).
-14. **Info de fase en chips estilo CC**: `X STRIKES FIRST` + `FASE n/2` viven como chips GBC (negro carbón `#1a1a1a` + VT323 blanco 19px + outline `#d8d0b8`, MISMO lenguaje que el chip 06 de CC) en la ESQUINA INFERIOR IZQUIERDA del panel con cartas — espejo del cc-panel a la derecha. NO hay fila phase-bar (eliminada) ni `TURN n` (ya está como ROUND en el badge central).
+14. **Info de fase en chip estilo CC**: `FASE n/2` (exchange del turno) vive como chip GBC (negro carbón `#1a1a1a` + VT323 blanco 19px + outline `#d8d0b8`, MISMO lenguaje que el chip 06 de CC) en la ESQUINA INFERIOR IZQUIERDA del panel con cartas — espejo del cc-panel a la derecha. OCULTO con diálogo GBC activo y en STAGE/DIÁLOGO/RESULTADO/INTRO/MENÚ. NO hay fase-bar, ni `TURN n` (ROUND central), ni `X STRIKES FIRST` (la fase bajo HP ya indica quién ataca).
+15. **Elementos eliminados del HUD (no duplicar)**: phase-bar (fila sobre los controles), battle-log (barra de mensajes — `addLog` sigue vivo porque dispara `showGbc`), cc-dock (P/E — el CC vive en el chip del panel), fila de stats del hud-top (STR/KI/SPD/CC bajo la HP — la fase + badges viven en `.hud-info-row`), `CCDisplay` y su CSS (muerto).
 
 ## Verificación de paridad
 
 ```bash
-# Clases compartidas studio ↔ juego (deben mantenerse altas, ~69)
+# Clases compartidas studio ↔ juego (deben mantenerse altas — 90)
 comm -12 <(grep -oE 'className="[a-z-]+' src/devtools/hud.tsx | sort -u) \
          <(grep -oE 'className="[a-z-]+' src/main.tsx | sort -u) | wc -l
 

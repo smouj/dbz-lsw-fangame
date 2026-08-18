@@ -446,16 +446,7 @@ function HPBar({ current, max, side, introFill = false }: { current: number; max
 }
 
 // ─── CC ───────────────────────────────────────────────────
-function CCDisplay({ cc, maxCc }: { cc: number; maxCc: number }) {
-  const pct = Math.max(0, Math.min(100, (cc / maxCc) * 100));
-  return (
-    <div className="cc-display">
-      <span className="cc-label">CC</span>
-      <div className="cc-bar-track"><div className="cc-bar-fill" style={{ width: `${pct}%` }} /></div>
-      <span className="cc-value">{cc}<span className="cc-max">/{maxCc}</span></span>
-    </div>
-  );
-}
+// (CCDisplay eliminado: el CC vive en el chip cc-panel del panel inferior)
 
 // ─── Carta visual ─────────────────────────────────────────
 // Frames GBC por tipo de carta (paquete DBZ_LSW_COMBAT_UI_V2_MAPPED)

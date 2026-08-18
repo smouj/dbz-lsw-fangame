@@ -263,3 +263,14 @@ audit:sprite-canon (P1).
 | `5767114` | **FRAME = MÁSCARA** por encima del arte (hueco transparente) + iconos limpios |
 | `47c8779` | Iconos restaurados (colores originales) + recorte sin tocar colores |
 | `86467e2` | Tooltip estilo diálogo GBC (HTML estructurado) + pulso canónico sin haz de luz |
+| `c560ae8`→`c0f55ad8` | Vista MENU en el studio (pantalla principal) + tabs por flujo de batalla |
+| `3c4bce84`→`188d9c72` | MENU: markup real `.menu-screen` + arte + **rayos eléctricos SVG pixelados** + título VT323 dorado + panel 470px |
+| `12a2df0c` | MENU: héroe recortado menu_cut 38×46 + overlay opaco + glow + rayos más visibles |
+| `f9cd6fab` | Studio: TODOS los elementos del HUD visibles (phase-bar, battle-log, team-reserve) — cc-dock muerto fuera |
+| `3dcca7b8` | Phase-bar mínima: fuera TURN (duplicado ROUND) y ATK/DEF (duplicado chips bajo HP) |
+| `0ea84303` | Battle-log ELIMINADO (addLog vive: dispara showGbc) + azules fuera (speed-order, chip current STAGE → dorado) |
+| `2f44ba31` | hud-top 3 filas: fase ATTACK/DEFEND al INTERIOR (junto VS), estado al EXTERIOR, reserva 2º miembro en la fila del nombre |
+| `6436d395` | Chips de fase estilo CC en esquina inferior IZQUIERDA (`FASE n/2`) — fuera la phase-bar; STRIKES FIRST eliminado |
+| `5463482e` | Chips CC + FASE ocultos con diálogo GBC activo y en vistas STAGE/DIÁLOGO/RESULTADO/INTRO/MENÚ |
+| `bd23f60b` | INTRO canónico SIN texto: sprites entran desde ±42vw + VS pop + flash (fuera FIGHT/nombres) |
+| *(este turno)* | **Auditoría canónica**: CSS muerto eliminado (`.hud-stats`/`.cc-stat`, `.cc-dock`/`.cc-pocket`, `CCDisplay`, `.cc-max`, refs intro/qte) — z-index coherente (intro 120 → transform 110 → diálogo/cue 60 → hud 10 → card-fx 9) — CANON actualizado (invariantes 5/7/12/14/15, INTRO sin texto) |
