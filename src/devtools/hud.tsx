@@ -360,6 +360,14 @@ export function HudModule() {
                     <span className="status-chip buff">STR+</span>
                   </div>
                 </div>
+                {/* Reserva de equipo (2v2): mismo markup que el juego */}
+                <div className="team-reserve left">
+                  <span className="team-reserve-portrait">
+                    <img src="/assets/portraits/battle/gohan_teen_ssj.png" alt="" />
+                  </span>
+                  <span className="team-reserve-name">GOHAN</span>
+                  <span className="team-reserve-hp">620/700</span>
+                </div>
               </div>
 
               <div className="fighter-hud right">
@@ -458,24 +466,8 @@ export function HudModule() {
             </div>
 
             {/* CC dock real (igual que el juego: P/E con barra y valor) */}
-            <div className="cc-dock" aria-label="Card Cost">
-              <div className="cc-pocket player">
-                <span className="cc-pocket-label">P</span>
-                <div className="cc-display">
-                  <span className="cc-label">CC</span>
-                  <div className="cc-bar-track"><div className="cc-bar-fill" style={{ width: '6%' }} /></div>
-                  <span className="cc-value">6<span className="cc-max">/99</span></span>
-                </div>
-              </div>
-              <div className="cc-pocket enemy">
-                <span className="cc-pocket-label">E</span>
-                <div className="cc-display">
-                  <span className="cc-label">CC</span>
-                  <div className="cc-bar-track"><div className="cc-bar-fill" style={{ width: '3%' }} /></div>
-                  <span className="cc-value">3<span className="cc-max">/99</span></span>
-                </div>
-              </div>
-            </div>
+            {/* cc-dock: NO es elemento del juego (display:none en main.tsx —
+                el CC vive en hud-top cc-stat + chip de panel) → no se pinta */}
 
             <div className="battle-controls dev-hud-battle-controls">
               {/* CC estilo GBC: esquina inferior derecha (como el juego) */}
@@ -678,6 +670,13 @@ export function HudModule() {
                   </button>
                 </div>
               )}
+            </div>
+
+            {/* Log de batalla (últimos 3 mensajes) — mismo markup que el juego */}
+            <div className="battle-log">
+              <div className="log-entry">GOKU STRIKES FIRST (+3 CC)</div>
+              <div className="log-entry">KAMEHAMEHA — 12 DMG</div>
+              <div className="log-entry">PICCOLO JOINT</div>
             </div>
           </div>
         </div>

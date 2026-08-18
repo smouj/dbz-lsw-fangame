@@ -9771,13 +9771,33 @@ button.linklike:hover { text-decoration: underline; }
   max-width: 100% !important;
   overflow: hidden;
   position: relative;
-  grid-template-rows: auto minmax(0, 1fr) auto auto 0;
+  /* MISMO orden de filas que el juego: hud-top · campo · phase-bar ·
+     controles · battle-log (el cc-dock no existe en el juego) */
+  grid-template-rows: auto 330px auto 96px auto;
 }
-/* En el mockup el phase-bar (TURN/EXIT) es redundante. */
-.dev-hud-preview .phase-bar { display: none; }
+/* Phase-bar CANÓNICA visible (STRIKES FIRST + FASE n/2) — compacta */
+.dev-hud-preview .phase-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 24px;
+  padding: 2px 12px;
+  background: linear-gradient(90deg, rgba(9,13,22,.55), rgba(9,13,22,.25) 50%, rgba(9,13,22,.55));
+}
+/* Log de batalla compacto (3 mensajes reales del juego) */
+.dev-hud-preview .battle-log {
+  min-height: 18px;
+  gap: 12px;
+  font-size: 10px;
+  padding: 3px 12px;
+  background: var(--panel-lo);
+  border-top: 1px solid var(--border-lo);
+  justify-content: center;
+  overflow: hidden;
+}
 /* Campo amplio: el escenario domina el preview (como en el juego). */
 .dev-hud-preview .battlefield {
-  height: 380px;
+  height: 330px;
   min-height: 0;
   position: relative;
   width: 100%;
