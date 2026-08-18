@@ -647,23 +647,6 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 .battle-screen.intro-active .hud-top { animation: none; z-index: 70; }
 /* Separación HUD↔BATTLEFIELD: línea dorada apagada de 2px con extremos
    pixel (ornamento tipo sello) — sin glow ancho */
-.hud-top::after {
-  content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 2px;
-  background:
-    linear-gradient(90deg, #05070c 0 2px, rgba(240,208,96,.5) 2px 4px, transparent 4px 10px,
-      rgba(240,208,96,.5) 10px 12px, transparent 12px 18px,
-      rgba(240,208,96,.5) 18px 20px, transparent 20px calc(50% - 44px),
-      rgba(240,208,96,.6) calc(50% - 44px) calc(50% + 44px),
-      transparent calc(50% + 44px) calc(100% - 20px),
-      rgba(240,208,96,.5) calc(100% - 20px) calc(100% - 18px),
-      transparent calc(100% - 18px) calc(100% - 12px),
-      rgba(240,208,96,.5) calc(100% - 12px) calc(100% - 10px),
-      transparent calc(100% - 10px) calc(100% - 4px),
-      rgba(240,208,96,.5) calc(100% - 4px) 100%);
-  opacity: .8;
-  pointer-events: none;
-}
-
 .fighter-hud {
   display: flex; flex-direction: column; gap: 2px;
   flex: 1 1 0;
@@ -1462,25 +1445,26 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 }
 
 /* CC estilo GBC: esquina inferior derecha del panel con cartas — fondo
-   NEGRO, número BLANCO pixel (VT323), como el contador del GBC */
+   NEGRO CARBÓN, número BLANCO pixel (VT323), como el contador del GBC.
+   SIN pointer-events:none: el ratón debe poder activar el tooltip. */
 .cc-panel {
   position: absolute;
   right: 14px;
   bottom: 10px;
   z-index: 30;
   font-family: var(--fui);
-  font-size: 16px;
+  font-size: 19px;
   line-height: 1.2;
   color: #fff;
-  background: #000;
+  background: #1a1a1a;          /* negro carbón */
   border: 2px solid #05070c;
   outline: 1px solid #d8d0b8;
-  padding: 2px 10px;
+  padding: 3px 12px;
   box-shadow: 2px 2px 0 rgba(0,0,0,.65);
-  letter-spacing: 1px;
+  letter-spacing: 1.5px;
   text-shadow: none;
-  pointer-events: none;
   white-space: nowrap;
+  cursor: default;
 }
 
 /* Tooltip GLOBAL (portal, position:fixed) — nunca se corta por overflow.
@@ -9564,14 +9548,6 @@ button.linklike:hover { text-decoration: underline; }
     linear-gradient(180deg, rgba(8, 8, 10, .94) 0%, rgba(8, 8, 10, .62) 55%, rgba(8, 8, 10, .18) 100%);
   box-shadow: 0 6px 18px rgba(0,0,0,.38);
 }
-.hud-top::after {
-  height: 3px;
-  background:
-    linear-gradient(90deg, transparent, rgba(240,208,96,.95) 12%, rgba(240,208,96,.95) 88%, transparent),
-    repeating-linear-gradient(90deg, rgba(240,208,96,.9) 0 4px, rgba(20,24,34,.85) 4px 6px, transparent 6px 12px);
-  opacity: .8;
-}
-
 /* Nombre del luchador: más legible, con placa sutil */
 .hud-name {
   font-size: 13px;
