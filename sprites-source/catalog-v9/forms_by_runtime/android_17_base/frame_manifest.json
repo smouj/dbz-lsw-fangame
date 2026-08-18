@@ -4,7 +4,7 @@
  "frames": [
   {
    "sourceId": "android_17_base/001.png",
-   "canonicalId": "android_17_base.idle.idle.00",
+   "canonicalId": "android_17_base.melee.strike.punch_right.00.001.png",
    "characterId": "android_17",
    "formId": "android_17_base",
    "assetType": "actor_frame",
@@ -28,20 +28,19 @@
     "x": "12",
     "y": "5"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "android_17_base/002.png",
-   "canonicalId": "android_17_base.defense.start.02",
+   "canonicalId": "android_17_base.defense.hold.guard.01.002",
    "characterId": "android_17",
    "formId": "android_17_base",
    "assetType": "actor_frame",
    "view": "FIELD",
    "family": "defense",
-   "role": "start",
+   "role": "hold",
    "variant": "guard",
-   "sequenceIndex": 0,
+   "sequenceIndex": 1,
    "runtimePoses": [
     "guard",
     "beam_guard"
@@ -54,20 +53,19 @@
     "x": "49",
     "y": "6"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "android_17_base/003.png",
-   "canonicalId": "android_17_base.defense.start.04",
+   "canonicalId": "android_17_base.defense.recover.guard.02.003",
    "characterId": "android_17",
    "formId": "android_17_base",
    "assetType": "actor_frame",
    "view": "FIELD",
    "family": "defense",
-   "role": "start",
+   "role": "recover",
    "variant": "guard",
-   "sequenceIndex": 0,
+   "sequenceIndex": 2,
    "runtimePoses": [
     "guard",
     "beam_guard"
@@ -80,8 +78,7 @@
     "x": "86",
     "y": "8"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "android_17_base/004.png",
@@ -200,15 +197,15 @@
   },
   {
    "sourceId": "android_17_base/009.png",
-   "canonicalId": "android_17_base.defense.start.06",
+   "canonicalId": "android_17_base.defense.recover.evade.01.009",
    "characterId": "android_17",
    "formId": "android_17_base",
    "assetType": "actor_frame",
    "view": "FIELD",
    "family": "defense",
-   "role": "start",
+   "role": "recover",
    "variant": "evade",
-   "sequenceIndex": 0,
+   "sequenceIndex": 1,
    "runtimePoses": [
     "evade"
    ],
@@ -224,7 +221,7 @@
   },
   {
    "sourceId": "android_17_base/010.png",
-   "canonicalId": "android_17_base.defense.start.07",
+   "canonicalId": "android_17_base.defense.start.evade.00.010",
    "characterId": "android_17",
    "formId": "android_17_base",
    "assetType": "actor_frame",
@@ -248,15 +245,15 @@
   },
   {
    "sourceId": "android_17_base/011.png",
-   "canonicalId": "android_17_base.movement.start.00",
+   "canonicalId": "android_17_base.movement.end.move_front.01.011",
    "characterId": "android_17",
    "formId": "android_17_base",
    "assetType": "actor_frame",
    "view": "FIELD",
    "family": "movement",
-   "role": "start",
+   "role": "end",
    "variant": "move_front",
-   "sequenceIndex": 0,
+   "sequenceIndex": 1,
    "runtimePoses": [
     "move_front",
     "move_back"
@@ -269,12 +266,11 @@
     "x": "93",
     "y": "55"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "android_17_base/012.png",
-   "canonicalId": "android_17_base.movement.start.02",
+   "canonicalId": "android_17_base.movement.start.move_front.00.012",
    "characterId": "android_17",
    "formId": "android_17_base",
    "assetType": "actor_frame",
@@ -295,12 +291,11 @@
     "x": "130",
     "y": "57"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "android_17_base/013.png",
-   "canonicalId": "android_17_base.reaction.hurt_light.00",
+   "canonicalId": "android_17_base.reaction.hurt_light.hurt.00.013",
    "characterId": "android_17",
    "formId": "android_17_base",
    "assetType": "actor_frame",
@@ -324,15 +319,15 @@
   },
   {
    "sourceId": "android_17_base/014.png",
-   "canonicalId": "android_17_base.reaction.hurt_light.01",
+   "canonicalId": "android_17_base.reaction.hurt_heavy.hurt.01.014",
    "characterId": "android_17",
    "formId": "android_17_base",
    "assetType": "actor_frame",
    "view": "FIELD",
    "family": "reaction",
-   "role": "hurt_light",
+   "role": "hurt_heavy",
    "variant": "hurt",
-   "sequenceIndex": 0,
+   "sequenceIndex": 1,
    "runtimePoses": [
     "hurt"
    ],
@@ -348,15 +343,15 @@
   },
   {
    "sourceId": "android_17_base/015.png",
-   "canonicalId": "android_17_base.reaction.hurt_light.02",
+   "canonicalId": "android_17_base.reaction.hurt_heavy.hurt.02.015",
    "characterId": "android_17",
    "formId": "android_17_base",
    "assetType": "actor_frame",
    "view": "FIELD",
    "family": "reaction",
-   "role": "hurt_light",
+   "role": "hurt_heavy",
    "variant": "hurt",
-   "sequenceIndex": 0,
+   "sequenceIndex": 2,
    "runtimePoses": [
     "hurt"
    ],
@@ -372,15 +367,15 @@
   },
   {
    "sourceId": "android_17_base/016.png",
-   "canonicalId": "android_17_base.reaction.hurt_light.03",
+   "canonicalId": "android_17_base.reaction.hurt_heavy.hurt.03.016",
    "characterId": "android_17",
    "formId": "android_17_base",
    "assetType": "actor_frame",
    "view": "FIELD",
    "family": "reaction",
-   "role": "hurt_light",
+   "role": "hurt_heavy",
    "variant": "hurt",
-   "sequenceIndex": 0,
+   "sequenceIndex": 3,
    "runtimePoses": [
     "hurt"
    ],
@@ -396,15 +391,15 @@
   },
   {
    "sourceId": "android_17_base/017.png",
-   "canonicalId": "android_17_base.reaction.hurt_light.04",
+   "canonicalId": "android_17_base.reaction.hurt_heavy.hurt.04.017",
    "characterId": "android_17",
    "formId": "android_17_base",
    "assetType": "actor_frame",
    "view": "FIELD",
    "family": "reaction",
-   "role": "hurt_light",
+   "role": "hurt_heavy",
    "variant": "hurt",
-   "sequenceIndex": 0,
+   "sequenceIndex": 4,
    "runtimePoses": [
     "hurt"
    ],
@@ -420,15 +415,15 @@
   },
   {
    "sourceId": "android_17_base/018.png",
-   "canonicalId": "android_17_base.melee.ready.02",
+   "canonicalId": "android_17_base.melee.follow_through.attack_forward.06.018",
    "characterId": "android_17",
    "formId": "android_17_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "ready",
+   "role": "follow_through",
    "variant": "attack_forward",
-   "sequenceIndex": 0,
+   "sequenceIndex": 6,
    "runtimePoses": [
     "attack_fwd",
     "punch_left"
@@ -441,20 +436,19 @@
     "x": "206",
     "y": "109"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "android_17_base/019.png",
-   "canonicalId": "android_17_base.melee.ready.04",
+   "canonicalId": "android_17_base.melee.travel.attack_forward.02.019",
    "characterId": "android_17",
    "formId": "android_17_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "ready",
+   "role": "travel",
    "variant": "attack_forward",
-   "sequenceIndex": 0,
+   "sequenceIndex": 2,
    "runtimePoses": [
     "attack_fwd",
     "punch_right"
@@ -467,20 +461,19 @@
     "x": "9",
     "y": "161"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "android_17_base/020.png",
-   "canonicalId": "android_17_base.melee.ready.06",
+   "canonicalId": "android_17_base.melee.strike.attack_forward.03.020",
    "characterId": "android_17",
    "formId": "android_17_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "ready",
+   "role": "strike",
    "variant": "attack_forward",
-   "sequenceIndex": 0,
+   "sequenceIndex": 3,
    "runtimePoses": [
     "attack_fwd",
     "punch_left"
@@ -493,20 +486,19 @@
     "x": "54",
     "y": "158"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "android_17_base/021.png",
-   "canonicalId": "android_17_base.melee.ready.08",
+   "canonicalId": "android_17_base.melee.recover.attack_forward.07.021",
    "characterId": "android_17",
    "formId": "android_17_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "ready",
+   "role": "recover",
    "variant": "attack_forward",
-   "sequenceIndex": 0,
+   "sequenceIndex": 7,
    "runtimePoses": [
     "attack_fwd",
     "knockback_up"
@@ -519,12 +511,11 @@
     "x": "100",
     "y": "163"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "android_17_base/022.png",
-   "canonicalId": "android_17_base.melee.ready.09",
+   "canonicalId": "android_17_base.melee.ready.attack_vertical.00.022",
    "characterId": "android_17",
    "formId": "android_17_base",
    "assetType": "actor_frame",
@@ -545,20 +536,19 @@
     "x": "153",
     "y": "165"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "android_17_base/023.png",
-   "canonicalId": "android_17_base.melee.ready.10",
+   "canonicalId": "android_17_base.melee.windup.attack_vertical.01.023",
    "characterId": "android_17",
    "formId": "android_17_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "ready",
+   "role": "windup",
    "variant": "attack_vertical",
-   "sequenceIndex": 0,
+   "sequenceIndex": 1,
    "runtimePoses": [
     "attack_ud"
    ],
@@ -574,15 +564,15 @@
   },
   {
    "sourceId": "android_17_base/024.png",
-   "canonicalId": "android_17_base.melee.ready.11",
+   "canonicalId": "android_17_base.melee.contact.attack_vertical.02.024",
    "characterId": "android_17",
    "formId": "android_17_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "ready",
+   "role": "contact",
    "variant": "attack_vertical",
-   "sequenceIndex": 0,
+   "sequenceIndex": 2,
    "runtimePoses": [
     "attack_ud"
    ],
@@ -598,15 +588,15 @@
   },
   {
    "sourceId": "android_17_base/025.png",
-   "canonicalId": "android_17_base.melee.ready.12",
+   "canonicalId": "android_17_base.melee.recover.attack_vertical.03.025",
    "characterId": "android_17",
    "formId": "android_17_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "ready",
+   "role": "recover",
    "variant": "attack_vertical",
-   "sequenceIndex": 0,
+   "sequenceIndex": 3,
    "runtimePoses": [
     "attack_ud",
     "knockback_down"
@@ -619,12 +609,11 @@
     "x": "271",
     "y": "170"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "android_17_base/026.png",
-   "canonicalId": "android_17_base.melee.ready.13",
+   "canonicalId": "android_17_base.melee.ready.attack_forward.00.026",
    "characterId": "android_17",
    "formId": "android_17_base",
    "assetType": "actor_frame",
@@ -645,20 +634,19 @@
     "x": "14",
     "y": "217"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "android_17_base/027.png",
-   "canonicalId": "android_17_base.melee.ready.15",
+   "canonicalId": "android_17_base.melee.windup.attack_forward.01.027",
    "characterId": "android_17",
    "formId": "android_17_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "ready",
+   "role": "windup",
    "variant": "attack_forward",
-   "sequenceIndex": 0,
+   "sequenceIndex": 1,
    "runtimePoses": [
     "attack_fwd",
     "punch_right"
@@ -671,20 +659,19 @@
     "x": "53",
     "y": "217"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "android_17_base/028.png",
-   "canonicalId": "android_17_base.melee.ready.17",
+   "canonicalId": "android_17_base.melee.contact.attack_forward.05.028",
    "characterId": "android_17",
    "formId": "android_17_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "ready",
+   "role": "contact",
    "variant": "attack_forward",
-   "sequenceIndex": 0,
+   "sequenceIndex": 5,
    "runtimePoses": [
     "attack_fwd",
     "punch_left",
@@ -698,20 +685,19 @@
     "x": "92",
     "y": "218"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "android_17_base/029.png",
-   "canonicalId": "android_17_base.melee.ready.20",
+   "canonicalId": "android_17_base.melee.strike.attack_forward.04.029",
    "characterId": "android_17",
    "formId": "android_17_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "ready",
+   "role": "strike",
    "variant": "attack_forward",
-   "sequenceIndex": 0,
+   "sequenceIndex": 4,
    "runtimePoses": [
     "attack_fwd",
     "punch_left",
@@ -725,12 +711,11 @@
     "x": "136",
     "y": "218"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "android_17_base/030.png",
-   "canonicalId": "android_17_base.melee.strike.23",
+   "canonicalId": "android_17_base.melee.strike.kick_right.02.030",
    "characterId": "android_17",
    "formId": "android_17_base",
    "assetType": "actor_frame",
@@ -738,7 +723,7 @@
    "family": "melee",
    "role": "strike",
    "variant": "kick_right",
-   "sequenceIndex": 0,
+   "sequenceIndex": 2,
    "runtimePoses": [
     "kick_right"
    ],
@@ -754,7 +739,7 @@
   },
   {
    "sourceId": "android_17_base/031.png",
-   "canonicalId": "android_17_base.beam.charge_start.00",
+   "canonicalId": "android_17_base.beam.charge_start.charge.00.031",
    "characterId": "android_17",
    "formId": "android_17_base",
    "assetType": "actor_frame",
@@ -801,7 +786,7 @@
   },
   {
    "sourceId": "android_17_base/033.png",
-   "canonicalId": "android_17_base.effect.aura.00",
+   "canonicalId": "android_17_base.effect.aura.aura_power.00.033",
    "characterId": "android_17",
    "formId": "android_17_base",
    "assetType": "effect",
@@ -825,7 +810,7 @@
   },
   {
    "sourceId": "android_17_base/034.png",
-   "canonicalId": "android_17_base.effect.aura.01",
+   "canonicalId": "android_17_base.effect.aura.aura_power.01.034",
    "characterId": "android_17",
    "formId": "android_17_base",
    "assetType": "effect",
@@ -833,7 +818,7 @@
    "family": "effect",
    "role": "aura",
    "variant": "aura_power",
-   "sequenceIndex": 0,
+   "sequenceIndex": 1,
    "runtimePoses": [
     "aura_power"
    ],
@@ -849,7 +834,7 @@
   },
   {
    "sourceId": "android_17_base/035.png",
-   "canonicalId": "android_17_base.effect.aura.02",
+   "canonicalId": "android_17_base.effect.aura.aura_power.02.035",
    "characterId": "android_17",
    "formId": "android_17_base",
    "assetType": "effect",
@@ -857,7 +842,7 @@
    "family": "effect",
    "role": "aura",
    "variant": "aura_power",
-   "sequenceIndex": 0,
+   "sequenceIndex": 2,
    "runtimePoses": [
     "aura_power"
    ],
@@ -942,7 +927,7 @@
   },
   {
    "sourceId": "android_17_base/039.png",
-   "canonicalId": "android_17_base.beam.charge_start.01",
+   "canonicalId": "android_17_base.beam.charge_start.charge.01.039",
    "characterId": "android_17",
    "formId": "android_17_base",
    "assetType": "actor_frame",
@@ -950,7 +935,7 @@
    "family": "beam",
    "role": "charge_start",
    "variant": "charge",
-   "sequenceIndex": 0,
+   "sequenceIndex": 1,
    "runtimePoses": [
     "beam_charge"
    ],
@@ -966,7 +951,7 @@
   },
   {
    "sourceId": "android_17_base/040.png",
-   "canonicalId": "android_17_base.beam.release.02",
+   "canonicalId": "android_17_base.beam.release.fire.00.040",
    "characterId": "android_17",
    "formId": "android_17_base",
    "assetType": "actor_frame",
@@ -990,7 +975,7 @@
   },
   {
    "sourceId": "android_17_base/041.png",
-   "canonicalId": "android_17_base.beam.release.03",
+   "canonicalId": "android_17_base.beam.release.fire.01.041",
    "characterId": "android_17",
    "formId": "android_17_base",
    "assetType": "actor_frame",
@@ -998,7 +983,7 @@
    "family": "beam",
    "role": "release",
    "variant": "fire",
-   "sequenceIndex": 0,
+   "sequenceIndex": 1,
    "runtimePoses": [
     "beam_fire"
    ],
@@ -1014,7 +999,7 @@
   },
   {
    "sourceId": "android_17_base/042.png",
-   "canonicalId": "android_17_base.beam.release.04",
+   "canonicalId": "android_17_base.beam.release.fire.02.042",
    "characterId": "android_17",
    "formId": "android_17_base",
    "assetType": "actor_frame",
@@ -1022,7 +1007,7 @@
    "family": "beam",
    "role": "release",
    "variant": "fire",
-   "sequenceIndex": 0,
+   "sequenceIndex": 2,
    "runtimePoses": [
     "beam_fire"
    ],
@@ -1061,7 +1046,7 @@
   },
   {
    "sourceId": "android_17_base/044.png",
-   "canonicalId": "android_17_base.power.gather_power.00",
+   "canonicalId": "android_17_base.power.gather_power.gather_power.00.044",
    "characterId": "android_17",
    "formId": "android_17_base",
    "assetType": "composite",
@@ -1082,12 +1067,11 @@
     "x": "439",
     "y": "396"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "android_17_base/045.png",
-   "canonicalId": "android_17_base.effect.aura.03",
+   "canonicalId": "android_17_base.effect.aura.aura_support.00.045",
    "characterId": "android_17",
    "formId": "android_17_base",
    "assetType": "effect",
@@ -1111,7 +1095,7 @@
   },
   {
    "sourceId": "android_17_base/046.png",
-   "canonicalId": "android_17_base.effect.aura.04",
+   "canonicalId": "android_17_base.effect.aura.aura_support.01.046",
    "characterId": "android_17",
    "formId": "android_17_base",
    "assetType": "effect",
@@ -1119,7 +1103,7 @@
    "family": "effect",
    "role": "aura",
    "variant": "aura_support",
-   "sequenceIndex": 0,
+   "sequenceIndex": 1,
    "runtimePoses": [
     "aura_support"
    ],
@@ -1135,7 +1119,7 @@
   },
   {
    "sourceId": "android_17_base/047.png",
-   "canonicalId": "android_17_base.effect.aura.05",
+   "canonicalId": "android_17_base.effect.aura.aura_support.02.047",
    "characterId": "android_17",
    "formId": "android_17_base",
    "assetType": "effect",
@@ -1143,7 +1127,7 @@
    "family": "effect",
    "role": "aura",
    "variant": "aura_support",
-   "sequenceIndex": 0,
+   "sequenceIndex": 2,
    "runtimePoses": [
     "aura_support"
    ],
@@ -1159,15 +1143,15 @@
   },
   {
    "sourceId": "android_17_base/000_beam_charge.png",
-   "canonicalId": "android_17_base.beam.charge_start.05",
+   "canonicalId": "android_17_base.beam.charge_hold.charge.02.000_beam_charge",
    "characterId": "android_17",
    "formId": "android_17_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "beam",
-   "role": "charge_start",
+   "role": "charge_hold",
    "variant": "charge",
-   "sequenceIndex": 0,
+   "sequenceIndex": 2,
    "runtimePoses": [
     "beam_charge"
    ],

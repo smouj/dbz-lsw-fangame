@@ -4,7 +4,7 @@
  "frames": [
   {
    "sourceId": "goku_base/001.png",
-   "canonicalId": "goku_base.idle.idle.00",
+   "canonicalId": "goku_base.melee.strike.punch_right.00.001.png",
    "characterId": "goku",
    "formId": "goku_base",
    "assetType": "actor_frame",
@@ -28,12 +28,11 @@
     "x": "18",
     "y": "28"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "goku_base/002.png",
-   "canonicalId": "goku_base.power.gather_power.00",
+   "canonicalId": "goku_base.power.gather_power.gather_power.00.002",
    "characterId": "goku",
    "formId": "goku_base",
    "assetType": "composite",
@@ -54,20 +53,19 @@
     "x": "60",
     "y": "28"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "goku_base/003.png",
-   "canonicalId": "goku_base.defense.start.02",
+   "canonicalId": "goku_base.defense.hold.guard.01.003",
    "characterId": "goku",
    "formId": "goku_base",
    "assetType": "actor_frame",
    "view": "FIELD",
    "family": "defense",
-   "role": "start",
+   "role": "hold",
    "variant": "guard",
-   "sequenceIndex": 0,
+   "sequenceIndex": 1,
    "runtimePoses": [
     "guard",
     "beam_guard"
@@ -80,20 +78,19 @@
     "x": "99",
     "y": "31"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "goku_base/004.png",
-   "canonicalId": "goku_base.defense.start.04",
+   "canonicalId": "goku_base.defense.recover.guard.02.004",
    "characterId": "goku",
    "formId": "goku_base",
    "assetType": "actor_frame",
    "view": "FIELD",
    "family": "defense",
-   "role": "start",
+   "role": "recover",
    "variant": "guard",
-   "sequenceIndex": 0,
+   "sequenceIndex": 2,
    "runtimePoses": [
     "guard",
     "beam_guard"
@@ -106,20 +103,19 @@
     "x": "144",
     "y": "28"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "goku_base/005.png",
-   "canonicalId": "goku_base.defense.start.06",
+   "canonicalId": "goku_base.defense.recover.evade.01.005",
    "characterId": "goku",
    "formId": "goku_base",
    "assetType": "actor_frame",
    "view": "FIELD",
    "family": "defense",
-   "role": "start",
+   "role": "recover",
    "variant": "evade",
-   "sequenceIndex": 0,
+   "sequenceIndex": 1,
    "runtimePoses": [
     "evade"
    ],
@@ -135,7 +131,7 @@
   },
   {
    "sourceId": "goku_base/006.png",
-   "canonicalId": "goku_base.defense.start.07",
+   "canonicalId": "goku_base.defense.start.evade.00.006",
    "characterId": "goku",
    "formId": "goku_base",
    "assetType": "actor_frame",
@@ -159,15 +155,15 @@
   },
   {
    "sourceId": "goku_base/007.png",
-   "canonicalId": "goku_base.movement.start.00",
+   "canonicalId": "goku_base.movement.end.move_front.01.007",
    "characterId": "goku",
    "formId": "goku_base",
    "assetType": "actor_frame",
    "view": "FIELD",
    "family": "movement",
-   "role": "start",
+   "role": "end",
    "variant": "move_front",
-   "sequenceIndex": 0,
+   "sequenceIndex": 1,
    "runtimePoses": [
     "move_front",
     "move_back"
@@ -180,12 +176,11 @@
     "x": "98",
     "y": "83"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "goku_base/008.png",
-   "canonicalId": "goku_base.movement.start.02",
+   "canonicalId": "goku_base.movement.start.move_front.00.008",
    "characterId": "goku",
    "formId": "goku_base",
    "assetType": "actor_frame",
@@ -206,12 +201,11 @@
     "x": "144",
     "y": "85"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "goku_base/009.png",
-   "canonicalId": "goku_base.reaction.hurt_light.00",
+   "canonicalId": "goku_base.reaction.hurt_light.hurt.00.009",
    "characterId": "goku",
    "formId": "goku_base",
    "assetType": "actor_frame",
@@ -235,15 +229,15 @@
   },
   {
    "sourceId": "goku_base/010.png",
-   "canonicalId": "goku_base.reaction.hurt_light.01",
+   "canonicalId": "goku_base.reaction.hurt_heavy.hurt.01.010",
    "characterId": "goku",
    "formId": "goku_base",
    "assetType": "actor_frame",
    "view": "FIELD",
    "family": "reaction",
-   "role": "hurt_light",
+   "role": "hurt_heavy",
    "variant": "hurt",
-   "sequenceIndex": 0,
+   "sequenceIndex": 1,
    "runtimePoses": [
     "hurt"
    ],
@@ -259,15 +253,15 @@
   },
   {
    "sourceId": "goku_base/011.png",
-   "canonicalId": "goku_base.reaction.hurt_light.02",
+   "canonicalId": "goku_base.reaction.hurt_heavy.hurt.02.011",
    "characterId": "goku",
    "formId": "goku_base",
    "assetType": "actor_frame",
    "view": "FIELD",
    "family": "reaction",
-   "role": "hurt_light",
+   "role": "hurt_heavy",
    "variant": "hurt",
-   "sequenceIndex": 0,
+   "sequenceIndex": 2,
    "runtimePoses": [
     "hurt"
    ],
@@ -283,15 +277,15 @@
   },
   {
    "sourceId": "goku_base/012.png",
-   "canonicalId": "goku_base.reaction.hurt_light.03",
+   "canonicalId": "goku_base.reaction.hurt_heavy.hurt.03.012",
    "characterId": "goku",
    "formId": "goku_base",
    "assetType": "actor_frame",
    "view": "FIELD",
    "family": "reaction",
-   "role": "hurt_light",
+   "role": "hurt_heavy",
    "variant": "hurt",
-   "sequenceIndex": 0,
+   "sequenceIndex": 3,
    "runtimePoses": [
     "hurt",
     "hurt"
@@ -304,20 +298,19 @@
     "x": "145",
     "y": "133"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "goku_base/013.png",
-   "canonicalId": "goku_base.reaction.hurt_light.05",
+   "canonicalId": "goku_base.reaction.hurt_heavy.hurt.03.013",
    "characterId": "goku",
    "formId": "goku_base",
    "assetType": "actor_frame",
    "view": "FIELD",
    "family": "reaction",
-   "role": "hurt_light",
+   "role": "hurt_heavy",
    "variant": "hurt",
-   "sequenceIndex": 0,
+   "sequenceIndex": 3,
    "runtimePoses": [
     "hurt",
     "hurt"
@@ -330,20 +323,19 @@
     "x": "187",
     "y": "133"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "goku_base/014.png",
-   "canonicalId": "goku_base.melee.ready.02",
+   "canonicalId": "goku_base.melee.follow_through.attack_forward.05.014",
    "characterId": "goku",
    "formId": "goku_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "ready",
+   "role": "follow_through",
    "variant": "attack_forward",
-   "sequenceIndex": 0,
+   "sequenceIndex": 5,
    "runtimePoses": [
     "attack_fwd",
     "punch_left"
@@ -356,8 +348,7 @@
     "x": "228",
     "y": "130"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "goku_base/015.png",
@@ -384,15 +375,15 @@
   },
   {
    "sourceId": "goku_base/016.png",
-   "canonicalId": "goku_base.melee.ready.04",
+   "canonicalId": "goku_base.melee.windup.attack_forward.01.016",
    "characterId": "goku",
    "formId": "goku_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "ready",
+   "role": "windup",
    "variant": "attack_forward",
-   "sequenceIndex": 0,
+   "sequenceIndex": 1,
    "runtimePoses": [
     "attack_fwd",
     "punch_right"
@@ -405,20 +396,19 @@
     "x": "29",
     "y": "186"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "goku_base/017.png",
-   "canonicalId": "goku_base.melee.ready.06",
+   "canonicalId": "goku_base.melee.travel.attack_forward.02.017",
    "characterId": "goku",
    "formId": "goku_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "ready",
+   "role": "travel",
    "variant": "attack_forward",
-   "sequenceIndex": 0,
+   "sequenceIndex": 2,
    "runtimePoses": [
     "attack_fwd",
     "punch_right"
@@ -431,20 +421,19 @@
     "x": "69",
     "y": "185"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "goku_base/018.png",
-   "canonicalId": "goku_base.melee.ready.08",
+   "canonicalId": "goku_base.melee.recover.attack_forward.06.018",
    "characterId": "goku",
    "formId": "goku_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "ready",
+   "role": "recover",
    "variant": "attack_forward",
-   "sequenceIndex": 0,
+   "sequenceIndex": 6,
    "runtimePoses": [
     "attack_fwd",
     "punch_left",
@@ -458,12 +447,11 @@
     "x": "121",
     "y": "189"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "goku_base/019.png",
-   "canonicalId": "goku_base.melee.ready.10",
+   "canonicalId": "goku_base.melee.ready.attack_vertical.00.019",
    "characterId": "goku",
    "formId": "goku_base",
    "assetType": "actor_frame",
@@ -484,20 +472,19 @@
     "x": "165",
     "y": "188"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "goku_base/020.png",
-   "canonicalId": "goku_base.melee.ready.11",
+   "canonicalId": "goku_base.melee.windup.attack_vertical.01.020",
    "characterId": "goku",
    "formId": "goku_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "ready",
+   "role": "windup",
    "variant": "attack_vertical",
-   "sequenceIndex": 0,
+   "sequenceIndex": 1,
    "runtimePoses": [
     "attack_ud"
    ],
@@ -513,15 +500,15 @@
   },
   {
    "sourceId": "goku_base/021.png",
-   "canonicalId": "goku_base.melee.ready.12",
+   "canonicalId": "goku_base.melee.contact.attack_vertical.02.021",
    "characterId": "goku",
    "formId": "goku_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "ready",
+   "role": "contact",
    "variant": "attack_vertical",
-   "sequenceIndex": 0,
+   "sequenceIndex": 2,
    "runtimePoses": [
     "attack_ud"
    ],
@@ -537,15 +524,15 @@
   },
   {
    "sourceId": "goku_base/022.png",
-   "canonicalId": "goku_base.melee.ready.13",
+   "canonicalId": "goku_base.melee.recover.attack_vertical.03.022",
    "characterId": "goku",
    "formId": "goku_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "ready",
+   "role": "recover",
    "variant": "attack_vertical",
-   "sequenceIndex": 0,
+   "sequenceIndex": 3,
    "runtimePoses": [
     "attack_ud",
     "knockback_down"
@@ -558,12 +545,11 @@
     "x": "281",
     "y": "193"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "goku_base/023.png",
-   "canonicalId": "goku_base.melee.ready.14",
+   "canonicalId": "goku_base.melee.ready.attack_forward.00.023",
    "characterId": "goku",
    "formId": "goku_base",
    "assetType": "actor_frame",
@@ -584,20 +570,19 @@
     "x": "24",
     "y": "238"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "goku_base/024.png",
-   "canonicalId": "goku_base.melee.ready.16",
+   "canonicalId": "goku_base.melee.windup.attack_forward.01.024",
    "characterId": "goku",
    "formId": "goku_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "ready",
+   "role": "windup",
    "variant": "attack_forward",
-   "sequenceIndex": 0,
+   "sequenceIndex": 1,
    "runtimePoses": [
     "attack_fwd",
     "punch_right"
@@ -610,20 +595,19 @@
     "x": "67",
     "y": "238"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "goku_base/025.png",
-   "canonicalId": "goku_base.melee.ready.18",
+   "canonicalId": "goku_base.melee.contact.attack_forward.04.025",
    "characterId": "goku",
    "formId": "goku_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "ready",
+   "role": "contact",
    "variant": "attack_forward",
-   "sequenceIndex": 0,
+   "sequenceIndex": 4,
    "runtimePoses": [
     "attack_fwd",
     "punch_left",
@@ -637,20 +621,19 @@
     "x": "118",
     "y": "240"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "goku_base/026.png",
-   "canonicalId": "goku_base.melee.ready.21",
+   "canonicalId": "goku_base.melee.strike.attack_forward.03.026",
    "characterId": "goku",
    "formId": "goku_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "ready",
+   "role": "strike",
    "variant": "attack_forward",
-   "sequenceIndex": 0,
+   "sequenceIndex": 3,
    "runtimePoses": [
     "attack_fwd",
     "punch_left",
@@ -664,8 +647,7 @@
     "x": "166",
     "y": "240"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "goku_base/027.png",
@@ -761,7 +743,7 @@
   },
   {
    "sourceId": "goku_base/031.png",
-   "canonicalId": "goku_base.beam.charge_start.00",
+   "canonicalId": "goku_base.beam.charge_start.charge.00.031",
    "characterId": "goku",
    "formId": "goku_base",
    "assetType": "actor_frame",
@@ -808,7 +790,7 @@
   },
   {
    "sourceId": "goku_base/033.png",
-   "canonicalId": "goku_base.effect.aura.00",
+   "canonicalId": "goku_base.effect.aura.aura_power.00.033",
    "characterId": "goku",
    "formId": "goku_base",
    "assetType": "effect",
@@ -832,7 +814,7 @@
   },
   {
    "sourceId": "goku_base/034.png",
-   "canonicalId": "goku_base.effect.aura.01",
+   "canonicalId": "goku_base.effect.aura.aura_power.01.034",
    "characterId": "goku",
    "formId": "goku_base",
    "assetType": "effect",
@@ -840,7 +822,7 @@
    "family": "effect",
    "role": "aura",
    "variant": "aura_power",
-   "sequenceIndex": 0,
+   "sequenceIndex": 1,
    "runtimePoses": [
     "aura_power"
    ],
@@ -856,7 +838,7 @@
   },
   {
    "sourceId": "goku_base/035.png",
-   "canonicalId": "goku_base.effect.aura.02",
+   "canonicalId": "goku_base.effect.aura.aura_power.02.035",
    "characterId": "goku",
    "formId": "goku_base",
    "assetType": "effect",
@@ -864,7 +846,7 @@
    "family": "effect",
    "role": "aura",
    "variant": "aura_power",
-   "sequenceIndex": 0,
+   "sequenceIndex": 2,
    "runtimePoses": [
     "aura_power"
    ],
@@ -903,7 +885,7 @@
   },
   {
    "sourceId": "goku_base/037.png",
-   "canonicalId": "goku_base.beam.release.01",
+   "canonicalId": "goku_base.beam.release.fire.00.037",
    "characterId": "goku",
    "formId": "goku_base",
    "assetType": "actor_frame",
@@ -973,7 +955,7 @@
   },
   {
    "sourceId": "goku_base/040.png",
-   "canonicalId": "goku_base.beam.release.02",
+   "canonicalId": "goku_base.beam.release.fire.00.040",
    "characterId": "goku",
    "formId": "goku_base",
    "assetType": "actor_frame",
@@ -1066,15 +1048,15 @@
   },
   {
    "sourceId": "goku_base/044.png",
-   "canonicalId": "goku_base.beam.charge_start.03",
+   "canonicalId": "goku_base.beam.charge_hold.charge.02.044",
    "characterId": "goku",
    "formId": "goku_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "beam",
-   "role": "charge_start",
+   "role": "charge_hold",
    "variant": "charge",
-   "sequenceIndex": 0,
+   "sequenceIndex": 2,
    "runtimePoses": [
     "beam_charge"
    ],
@@ -1090,15 +1072,15 @@
   },
   {
    "sourceId": "goku_base/045.png",
-   "canonicalId": "goku_base.beam.charge_start.04",
+   "canonicalId": "goku_base.beam.charge_hold.charge.03.045",
    "characterId": "goku",
    "formId": "goku_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "beam",
-   "role": "charge_start",
+   "role": "charge_hold",
    "variant": "charge",
-   "sequenceIndex": 0,
+   "sequenceIndex": 3,
    "runtimePoses": [
     "beam_charge"
    ],
@@ -1114,7 +1096,7 @@
   },
   {
    "sourceId": "goku_base/046.png",
-   "canonicalId": "goku_base.beam.release.05",
+   "canonicalId": "goku_base.beam.release.fire.02.046",
    "characterId": "goku",
    "formId": "goku_base",
    "assetType": "actor_frame",
@@ -1122,7 +1104,7 @@
    "family": "beam",
    "role": "release",
    "variant": "fire",
-   "sequenceIndex": 0,
+   "sequenceIndex": 2,
    "runtimePoses": [
     "beam_fire"
    ],
@@ -1138,7 +1120,7 @@
   },
   {
    "sourceId": "goku_base/047.png",
-   "canonicalId": "goku_base.effect.aura.03",
+   "canonicalId": "goku_base.effect.aura.aura_support.00.047",
    "characterId": "goku",
    "formId": "goku_base",
    "assetType": "effect",
@@ -1162,7 +1144,7 @@
   },
   {
    "sourceId": "goku_base/048.png",
-   "canonicalId": "goku_base.effect.aura.04",
+   "canonicalId": "goku_base.effect.aura.aura_support.01.048",
    "characterId": "goku",
    "formId": "goku_base",
    "assetType": "effect",
@@ -1170,7 +1152,7 @@
    "family": "effect",
    "role": "aura",
    "variant": "aura_support",
-   "sequenceIndex": 0,
+   "sequenceIndex": 1,
    "runtimePoses": [
     "aura_support"
    ],
@@ -1186,7 +1168,7 @@
   },
   {
    "sourceId": "goku_base/049.png",
-   "canonicalId": "goku_base.effect.aura.05",
+   "canonicalId": "goku_base.effect.aura.aura_support.02.049",
    "characterId": "goku",
    "formId": "goku_base",
    "assetType": "effect",
@@ -1194,7 +1176,7 @@
    "family": "effect",
    "role": "aura",
    "variant": "aura_support",
-   "sequenceIndex": 0,
+   "sequenceIndex": 2,
    "runtimePoses": [
     "aura_support"
    ],
@@ -1210,7 +1192,7 @@
   },
   {
    "sourceId": "goku_base/050.png",
-   "canonicalId": "goku_base.effect.aura.06",
+   "canonicalId": "goku_base.effect.aura.aura_support.00.050",
    "characterId": "goku",
    "formId": "goku_base",
    "assetType": "effect",
@@ -1234,7 +1216,7 @@
   },
   {
    "sourceId": "goku_base/051.png",
-   "canonicalId": "goku_base.effect.aura.07",
+   "canonicalId": "goku_base.effect.aura.aura_support.01.051",
    "characterId": "goku",
    "formId": "goku_base",
    "assetType": "effect",
@@ -1242,7 +1224,7 @@
    "family": "effect",
    "role": "aura",
    "variant": "aura_support",
-   "sequenceIndex": 0,
+   "sequenceIndex": 1,
    "runtimePoses": [
     "aura_support"
    ],
@@ -1258,7 +1240,7 @@
   },
   {
    "sourceId": "goku_base/052.png",
-   "canonicalId": "goku_base.effect.aura.08",
+   "canonicalId": "goku_base.effect.aura.aura_support.02.052",
    "characterId": "goku",
    "formId": "goku_base",
    "assetType": "effect",
@@ -1266,7 +1248,7 @@
    "family": "effect",
    "role": "aura",
    "variant": "aura_support",
-   "sequenceIndex": 0,
+   "sequenceIndex": 2,
    "runtimePoses": [
     "aura_support"
    ],
@@ -1282,7 +1264,7 @@
   },
   {
    "sourceId": "goku_base/000_beam_charge.png",
-   "canonicalId": "goku_base.beam.charge_start.06",
+   "canonicalId": "goku_base.beam.charge_start.charge.01.000_beam_charge",
    "characterId": "goku",
    "formId": "goku_base",
    "assetType": "actor_frame",
@@ -1290,7 +1272,7 @@
    "family": "beam",
    "role": "charge_start",
    "variant": "charge",
-   "sequenceIndex": 0,
+   "sequenceIndex": 1,
    "runtimePoses": [
     "beam_charge"
    ],
@@ -1306,7 +1288,7 @@
   },
   {
    "sourceId": "goku_base/001_beam_fire.png",
-   "canonicalId": "goku_base.beam.release.07",
+   "canonicalId": "goku_base.beam.release.fire.01.001_beam_fire",
    "characterId": "goku",
    "formId": "goku_base",
    "assetType": "actor_frame",
@@ -1314,7 +1296,7 @@
    "family": "beam",
    "role": "release",
    "variant": "fire",
-   "sequenceIndex": 0,
+   "sequenceIndex": 1,
    "runtimePoses": [
     "beam_fire"
    ],

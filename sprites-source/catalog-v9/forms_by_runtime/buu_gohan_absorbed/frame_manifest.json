@@ -4,7 +4,7 @@
  "frames": [
   {
    "sourceId": "buu_gohan_absorbed/001.png",
-   "canonicalId": "buu_gohan_absorbed.idle.idle.00",
+   "canonicalId": "buu_gohan_absorbed.melee.strike.punch_right.00.001.png",
    "characterId": "buu_gohan",
    "formId": "buu_gohan_absorbed",
    "assetType": "actor_frame",
@@ -28,20 +28,19 @@
     "x": "13",
     "y": "1701"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "buu_gohan_absorbed/002.png",
-   "canonicalId": "buu_gohan_absorbed.defense.start.02",
+   "canonicalId": "buu_gohan_absorbed.defense.hold.guard.01.002",
    "characterId": "buu_gohan",
    "formId": "buu_gohan_absorbed",
    "assetType": "actor_frame",
    "view": "FIELD",
    "family": "defense",
-   "role": "start",
+   "role": "hold",
    "variant": "guard",
-   "sequenceIndex": 0,
+   "sequenceIndex": 1,
    "runtimePoses": [
     "guard",
     "beam_guard"
@@ -54,20 +53,19 @@
     "x": "53",
     "y": "1701"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "buu_gohan_absorbed/003.png",
-   "canonicalId": "buu_gohan_absorbed.defense.start.04",
+   "canonicalId": "buu_gohan_absorbed.defense.recover.guard.02.003",
    "characterId": "buu_gohan",
    "formId": "buu_gohan_absorbed",
    "assetType": "actor_frame",
    "view": "FIELD",
    "family": "defense",
-   "role": "start",
+   "role": "recover",
    "variant": "guard",
-   "sequenceIndex": 0,
+   "sequenceIndex": 2,
    "runtimePoses": [
     "guard",
     "beam_guard"
@@ -80,20 +78,19 @@
     "x": "91",
     "y": "1703"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "buu_gohan_absorbed/004.png",
-   "canonicalId": "buu_gohan_absorbed.movement.start.00",
+   "canonicalId": "buu_gohan_absorbed.movement.end.move_front.01.004",
    "characterId": "buu_gohan",
    "formId": "buu_gohan_absorbed",
    "assetType": "actor_frame",
    "view": "FIELD",
    "family": "movement",
-   "role": "start",
+   "role": "end",
    "variant": "move_front",
-   "sequenceIndex": 0,
+   "sequenceIndex": 1,
    "runtimePoses": [
     "move_front",
     "move_back"
@@ -106,8 +103,7 @@
     "x": "133",
     "y": "1701"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "buu_gohan_absorbed/005.png",
@@ -157,7 +153,7 @@
   },
   {
    "sourceId": "buu_gohan_absorbed/007.png",
-   "canonicalId": "buu_gohan_absorbed.power.gather_power.00",
+   "canonicalId": "buu_gohan_absorbed.power.gather_power.gather_power.00.007",
    "characterId": "buu_gohan",
    "formId": "buu_gohan_absorbed",
    "assetType": "composite",
@@ -178,12 +174,11 @@
     "x": "102",
     "y": "1753"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "buu_gohan_absorbed/008.png",
-   "canonicalId": "buu_gohan_absorbed.movement.start.02",
+   "canonicalId": "buu_gohan_absorbed.movement.start.move_front.00.008",
    "characterId": "buu_gohan",
    "formId": "buu_gohan_absorbed",
    "assetType": "actor_frame",
@@ -204,12 +199,11 @@
     "x": "138",
     "y": "1756"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "buu_gohan_absorbed/009.png",
-   "canonicalId": "buu_gohan_absorbed.reaction.hurt_light.00",
+   "canonicalId": "buu_gohan_absorbed.reaction.hurt_light.hurt.00.009",
    "characterId": "buu_gohan",
    "formId": "buu_gohan_absorbed",
    "assetType": "actor_frame",
@@ -233,15 +227,15 @@
   },
   {
    "sourceId": "buu_gohan_absorbed/010.png",
-   "canonicalId": "buu_gohan_absorbed.reaction.hurt_light.01",
+   "canonicalId": "buu_gohan_absorbed.reaction.hurt_heavy.hurt.01.010",
    "characterId": "buu_gohan",
    "formId": "buu_gohan_absorbed",
    "assetType": "actor_frame",
    "view": "FIELD",
    "family": "reaction",
-   "role": "hurt_light",
+   "role": "hurt_heavy",
    "variant": "hurt",
-   "sequenceIndex": 0,
+   "sequenceIndex": 1,
    "runtimePoses": [
     "hurt"
    ],
@@ -257,15 +251,15 @@
   },
   {
    "sourceId": "buu_gohan_absorbed/011.png",
-   "canonicalId": "buu_gohan_absorbed.reaction.hurt_light.02",
+   "canonicalId": "buu_gohan_absorbed.reaction.hurt_heavy.hurt.02.011",
    "characterId": "buu_gohan",
    "formId": "buu_gohan_absorbed",
    "assetType": "actor_frame",
    "view": "FIELD",
    "family": "reaction",
-   "role": "hurt_light",
+   "role": "hurt_heavy",
    "variant": "hurt",
-   "sequenceIndex": 0,
+   "sequenceIndex": 2,
    "runtimePoses": [
     "hurt"
    ],
@@ -281,15 +275,15 @@
   },
   {
    "sourceId": "buu_gohan_absorbed/012.png",
-   "canonicalId": "buu_gohan_absorbed.reaction.hurt_light.03",
+   "canonicalId": "buu_gohan_absorbed.reaction.hurt_heavy.hurt.03.012",
    "characterId": "buu_gohan",
    "formId": "buu_gohan_absorbed",
    "assetType": "actor_frame",
    "view": "FIELD",
    "family": "reaction",
-   "role": "hurt_light",
+   "role": "hurt_heavy",
    "variant": "hurt",
-   "sequenceIndex": 0,
+   "sequenceIndex": 3,
    "runtimePoses": [
     "hurt"
    ],
@@ -305,15 +299,15 @@
   },
   {
    "sourceId": "buu_gohan_absorbed/013.png",
-   "canonicalId": "buu_gohan_absorbed.reaction.hurt_light.04",
+   "canonicalId": "buu_gohan_absorbed.reaction.hurt_heavy.hurt.04.013",
    "characterId": "buu_gohan",
    "formId": "buu_gohan_absorbed",
    "assetType": "actor_frame",
    "view": "FIELD",
    "family": "reaction",
-   "role": "hurt_light",
+   "role": "hurt_heavy",
    "variant": "hurt",
-   "sequenceIndex": 0,
+   "sequenceIndex": 4,
    "runtimePoses": [
     "hurt"
    ],
@@ -329,15 +323,15 @@
   },
   {
    "sourceId": "buu_gohan_absorbed/014.png",
-   "canonicalId": "buu_gohan_absorbed.melee.ready.02",
+   "canonicalId": "buu_gohan_absorbed.melee.follow_through.attack_forward.05.014",
    "characterId": "buu_gohan",
    "formId": "buu_gohan_absorbed",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "ready",
+   "role": "follow_through",
    "variant": "attack_forward",
-   "sequenceIndex": 0,
+   "sequenceIndex": 5,
    "runtimePoses": [
     "attack_fwd",
     "punch_left"
@@ -350,8 +344,7 @@
     "x": "192",
     "y": "1804"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "buu_gohan_absorbed/015.png",
@@ -378,15 +371,15 @@
   },
   {
    "sourceId": "buu_gohan_absorbed/016.png",
-   "canonicalId": "buu_gohan_absorbed.melee.ready.04",
+   "canonicalId": "buu_gohan_absorbed.melee.windup.attack_forward.01.016",
    "characterId": "buu_gohan",
    "formId": "buu_gohan_absorbed",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "ready",
+   "role": "windup",
    "variant": "attack_forward",
-   "sequenceIndex": 0,
+   "sequenceIndex": 1,
    "runtimePoses": [
     "attack_fwd",
     "punch_right",
@@ -401,20 +394,19 @@
     "x": "16",
     "y": "1858"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "buu_gohan_absorbed/017.png",
-   "canonicalId": "buu_gohan_absorbed.melee.ready.06",
+   "canonicalId": "buu_gohan_absorbed.melee.travel.attack_forward.02.017",
    "characterId": "buu_gohan",
    "formId": "buu_gohan_absorbed",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "ready",
+   "role": "travel",
    "variant": "attack_forward",
-   "sequenceIndex": 0,
+   "sequenceIndex": 2,
    "runtimePoses": [
     "attack_fwd",
     "punch_right"
@@ -427,20 +419,19 @@
     "x": "55",
     "y": "1856"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "buu_gohan_absorbed/018.png",
-   "canonicalId": "buu_gohan_absorbed.melee.ready.08",
+   "canonicalId": "buu_gohan_absorbed.melee.recover.attack_forward.06.018",
    "characterId": "buu_gohan",
    "formId": "buu_gohan_absorbed",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "ready",
+   "role": "recover",
    "variant": "attack_forward",
-   "sequenceIndex": 0,
+   "sequenceIndex": 6,
    "runtimePoses": [
     "attack_fwd",
     "punch_left",
@@ -454,12 +445,11 @@
     "x": "105",
     "y": "1859"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "buu_gohan_absorbed/019.png",
-   "canonicalId": "buu_gohan_absorbed.melee.ready.10",
+   "canonicalId": "buu_gohan_absorbed.melee.ready.attack_vertical.00.019",
    "characterId": "buu_gohan",
    "formId": "buu_gohan_absorbed",
    "assetType": "actor_frame",
@@ -483,15 +473,15 @@
   },
   {
    "sourceId": "buu_gohan_absorbed/020.png",
-   "canonicalId": "buu_gohan_absorbed.melee.ready.11",
+   "canonicalId": "buu_gohan_absorbed.melee.windup.attack_vertical.01.020",
    "characterId": "buu_gohan",
    "formId": "buu_gohan_absorbed",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "ready",
+   "role": "windup",
    "variant": "attack_vertical",
-   "sequenceIndex": 0,
+   "sequenceIndex": 1,
    "runtimePoses": [
     "attack_ud",
     "knockback_back"
@@ -504,20 +494,19 @@
     "x": "185",
     "y": "1859"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "buu_gohan_absorbed/021.png",
-   "canonicalId": "buu_gohan_absorbed.melee.ready.12",
+   "canonicalId": "buu_gohan_absorbed.melee.contact.attack_vertical.02.021",
    "characterId": "buu_gohan",
    "formId": "buu_gohan_absorbed",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "ready",
+   "role": "contact",
    "variant": "attack_vertical",
-   "sequenceIndex": 0,
+   "sequenceIndex": 2,
    "runtimePoses": [
     "attack_ud"
    ],
@@ -533,15 +522,15 @@
   },
   {
    "sourceId": "buu_gohan_absorbed/022.png",
-   "canonicalId": "buu_gohan_absorbed.melee.ready.13",
+   "canonicalId": "buu_gohan_absorbed.melee.recover.attack_vertical.03.022",
    "characterId": "buu_gohan",
    "formId": "buu_gohan_absorbed",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "ready",
+   "role": "recover",
    "variant": "attack_vertical",
-   "sequenceIndex": 0,
+   "sequenceIndex": 3,
    "runtimePoses": [
     "attack_ud",
     "knockback_down"
@@ -554,20 +543,19 @@
     "x": "266",
     "y": "1867"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "buu_gohan_absorbed/023.png",
-   "canonicalId": "buu_gohan_absorbed.melee.ready.14",
+   "canonicalId": "buu_gohan_absorbed.melee.windup.attack_forward.01.023",
    "characterId": "buu_gohan",
    "formId": "buu_gohan_absorbed",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "ready",
+   "role": "windup",
    "variant": "attack_forward",
-   "sequenceIndex": 0,
+   "sequenceIndex": 1,
    "runtimePoses": [
     "attack_fwd",
     "punch_right",
@@ -582,12 +570,11 @@
     "x": "16",
     "y": "1910"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "buu_gohan_absorbed/024.png",
-   "canonicalId": "buu_gohan_absorbed.melee.ready.16",
+   "canonicalId": "buu_gohan_absorbed.melee.ready.attack_forward.00.024",
    "characterId": "buu_gohan",
    "formId": "buu_gohan_absorbed",
    "assetType": "actor_frame",
@@ -608,20 +595,19 @@
     "x": "56",
     "y": "1912"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "buu_gohan_absorbed/025.png",
-   "canonicalId": "buu_gohan_absorbed.melee.ready.18",
+   "canonicalId": "buu_gohan_absorbed.melee.strike.attack_forward.03.025",
    "characterId": "buu_gohan",
    "formId": "buu_gohan_absorbed",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "ready",
+   "role": "strike",
    "variant": "attack_forward",
-   "sequenceIndex": 0,
+   "sequenceIndex": 3,
    "runtimePoses": [
     "attack_fwd",
     "punch_left",
@@ -635,20 +621,19 @@
     "x": "97",
     "y": "1913"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "buu_gohan_absorbed/026.png",
-   "canonicalId": "buu_gohan_absorbed.melee.ready.21",
+   "canonicalId": "buu_gohan_absorbed.melee.contact.attack_forward.04.026",
    "characterId": "buu_gohan",
    "formId": "buu_gohan_absorbed",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "ready",
+   "role": "contact",
    "variant": "attack_forward",
-   "sequenceIndex": 0,
+   "sequenceIndex": 4,
    "runtimePoses": [
     "attack_fwd",
     "punch_left",
@@ -662,8 +647,7 @@
     "x": "146",
     "y": "1913"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "buu_gohan_absorbed/027.png",
@@ -736,7 +720,7 @@
   },
   {
    "sourceId": "buu_gohan_absorbed/030.png",
-   "canonicalId": "buu_gohan_absorbed.beam.charge_start.00",
+   "canonicalId": "buu_gohan_absorbed.beam.charge_start.charge.00.030",
    "characterId": "buu_gohan",
    "formId": "buu_gohan_absorbed",
    "assetType": "actor_frame",
@@ -783,7 +767,7 @@
   },
   {
    "sourceId": "buu_gohan_absorbed/032.png",
-   "canonicalId": "buu_gohan_absorbed.effect.aura.00",
+   "canonicalId": "buu_gohan_absorbed.effect.aura.aura_power.00.032",
    "characterId": "buu_gohan",
    "formId": "buu_gohan_absorbed",
    "assetType": "effect",
@@ -830,7 +814,7 @@
   },
   {
    "sourceId": "buu_gohan_absorbed/034.png",
-   "canonicalId": "buu_gohan_absorbed.effect.aura.01",
+   "canonicalId": "buu_gohan_absorbed.effect.aura.aura_power.01.034",
    "characterId": "buu_gohan",
    "formId": "buu_gohan_absorbed",
    "assetType": "effect",
@@ -838,7 +822,7 @@
    "family": "effect",
    "role": "aura",
    "variant": "aura_power",
-   "sequenceIndex": 0,
+   "sequenceIndex": 1,
    "runtimePoses": [
     "aura_power"
    ],
@@ -854,7 +838,7 @@
   },
   {
    "sourceId": "buu_gohan_absorbed/035.png",
-   "canonicalId": "buu_gohan_absorbed.effect.aura.02",
+   "canonicalId": "buu_gohan_absorbed.effect.aura.aura_power.02.035",
    "characterId": "buu_gohan",
    "formId": "buu_gohan_absorbed",
    "assetType": "effect",
@@ -862,7 +846,7 @@
    "family": "effect",
    "role": "aura",
    "variant": "aura_power",
-   "sequenceIndex": 0,
+   "sequenceIndex": 2,
    "runtimePoses": [
     "aura_power"
    ],
@@ -947,7 +931,7 @@
   },
   {
    "sourceId": "buu_gohan_absorbed/039.png",
-   "canonicalId": "buu_gohan_absorbed.beam.charge_start.01",
+   "canonicalId": "buu_gohan_absorbed.beam.charge_start.charge.02.039",
    "characterId": "buu_gohan",
    "formId": "buu_gohan_absorbed",
    "assetType": "actor_frame",
@@ -955,7 +939,7 @@
    "family": "beam",
    "role": "charge_start",
    "variant": "charge",
-   "sequenceIndex": 0,
+   "sequenceIndex": 2,
    "runtimePoses": [
     "beam_charge"
    ],
@@ -1109,7 +1093,7 @@
   },
   {
    "sourceId": "buu_gohan_absorbed/046.png",
-   "canonicalId": "buu_gohan_absorbed.beam.charge_start.02",
+   "canonicalId": "buu_gohan_absorbed.beam.charge_start.charge.01.046",
    "characterId": "buu_gohan",
    "formId": "buu_gohan_absorbed",
    "assetType": "actor_frame",
@@ -1117,7 +1101,7 @@
    "family": "beam",
    "role": "charge_start",
    "variant": "charge",
-   "sequenceIndex": 0,
+   "sequenceIndex": 1,
    "runtimePoses": [
     "beam_charge",
     "beam_fire"
@@ -1130,8 +1114,7 @@
     "x": "79",
     "y": "2188"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "buu_gohan_absorbed/047.png",
@@ -1158,7 +1141,7 @@
   },
   {
    "sourceId": "buu_gohan_absorbed/048.png",
-   "canonicalId": "buu_gohan_absorbed.beam.release.04",
+   "canonicalId": "buu_gohan_absorbed.beam.release.fire.04.048",
    "characterId": "buu_gohan",
    "formId": "buu_gohan_absorbed",
    "assetType": "actor_frame",
@@ -1166,7 +1149,7 @@
    "family": "beam",
    "role": "release",
    "variant": "fire",
-   "sequenceIndex": 0,
+   "sequenceIndex": 4,
    "runtimePoses": [
     "beam_fire"
    ],
@@ -1182,7 +1165,7 @@
   },
   {
    "sourceId": "buu_gohan_absorbed/049.png",
-   "canonicalId": "buu_gohan_absorbed.beam.release.05",
+   "canonicalId": "buu_gohan_absorbed.beam.release.fire.05.049",
    "characterId": "buu_gohan",
    "formId": "buu_gohan_absorbed",
    "assetType": "actor_frame",
@@ -1190,7 +1173,7 @@
    "family": "beam",
    "role": "release",
    "variant": "fire",
-   "sequenceIndex": 0,
+   "sequenceIndex": 5,
    "runtimePoses": [
     "beam_fire",
     "evade"
@@ -1203,8 +1186,7 @@
     "x": "67",
     "y": "2312"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "buu_gohan_absorbed/050.png",
@@ -1231,7 +1213,7 @@
   },
   {
    "sourceId": "buu_gohan_absorbed/051.png",
-   "canonicalId": "buu_gohan_absorbed.beam.release.06",
+   "canonicalId": "buu_gohan_absorbed.beam.release.fire.02.051",
    "characterId": "buu_gohan",
    "formId": "buu_gohan_absorbed",
    "assetType": "actor_frame",
@@ -1239,7 +1221,7 @@
    "family": "beam",
    "role": "release",
    "variant": "fire",
-   "sequenceIndex": 0,
+   "sequenceIndex": 2,
    "runtimePoses": [
     "beam_fire"
    ],
@@ -1255,7 +1237,7 @@
   },
   {
    "sourceId": "buu_gohan_absorbed/052.png",
-   "canonicalId": "buu_gohan_absorbed.beam.release.07",
+   "canonicalId": "buu_gohan_absorbed.beam.release.fire.03.052",
    "characterId": "buu_gohan",
    "formId": "buu_gohan_absorbed",
    "assetType": "actor_frame",
@@ -1263,7 +1245,7 @@
    "family": "beam",
    "role": "release",
    "variant": "fire",
-   "sequenceIndex": 0,
+   "sequenceIndex": 3,
    "runtimePoses": [
     "beam_fire"
    ],
@@ -1279,7 +1261,7 @@
   },
   {
    "sourceId": "buu_gohan_absorbed/053.png",
-   "canonicalId": "buu_gohan_absorbed.power.gather_power.06",
+   "canonicalId": "buu_gohan_absorbed.power.gather_power.gather_power.01.053",
    "characterId": "buu_gohan",
    "formId": "buu_gohan_absorbed",
    "assetType": "composite",
@@ -1287,7 +1269,7 @@
    "family": "power",
    "role": "gather_power",
    "variant": "gather_power",
-   "sequenceIndex": 0,
+   "sequenceIndex": 1,
    "runtimePoses": [
     "gather_power",
     "power_up"
@@ -1300,12 +1282,11 @@
     "x": "343",
     "y": "2304"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "buu_gohan_absorbed/054.png",
-   "canonicalId": "buu_gohan_absorbed.beam.charge_start.08",
+   "canonicalId": "buu_gohan_absorbed.beam.charge_start.charge.01.054",
    "characterId": "buu_gohan",
    "formId": "buu_gohan_absorbed",
    "assetType": "actor_frame",
@@ -1313,7 +1294,7 @@
    "family": "beam",
    "role": "charge_start",
    "variant": "charge",
-   "sequenceIndex": 0,
+   "sequenceIndex": 1,
    "runtimePoses": [
     "beam_charge",
     "beam_fire"
@@ -1326,8 +1307,7 @@
     "x": "393",
     "y": "2312"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "buu_gohan_absorbed/055.png",
@@ -1400,7 +1380,7 @@
   },
   {
    "sourceId": "buu_gohan_absorbed/058.png",
-   "canonicalId": "buu_gohan_absorbed.effect.aura.03",
+   "canonicalId": "buu_gohan_absorbed.effect.aura.aura_support.00.058",
    "characterId": "buu_gohan",
    "formId": "buu_gohan_absorbed",
    "assetType": "effect",
@@ -1424,7 +1404,7 @@
   },
   {
    "sourceId": "buu_gohan_absorbed/059.png",
-   "canonicalId": "buu_gohan_absorbed.effect.aura.04",
+   "canonicalId": "buu_gohan_absorbed.effect.aura.aura_support.01.059",
    "characterId": "buu_gohan",
    "formId": "buu_gohan_absorbed",
    "assetType": "effect",
@@ -1432,7 +1412,7 @@
    "family": "effect",
    "role": "aura",
    "variant": "aura_support",
-   "sequenceIndex": 0,
+   "sequenceIndex": 1,
    "runtimePoses": [
     "aura_support"
    ],
@@ -1448,7 +1428,7 @@
   },
   {
    "sourceId": "buu_gohan_absorbed/060.png",
-   "canonicalId": "buu_gohan_absorbed.effect.aura.05",
+   "canonicalId": "buu_gohan_absorbed.effect.aura.aura_support.02.060",
    "characterId": "buu_gohan",
    "formId": "buu_gohan_absorbed",
    "assetType": "effect",
@@ -1456,7 +1436,7 @@
    "family": "effect",
    "role": "aura",
    "variant": "aura_support",
-   "sequenceIndex": 0,
+   "sequenceIndex": 2,
    "runtimePoses": [
     "aura_support"
    ],
@@ -1472,15 +1452,15 @@
   },
   {
    "sourceId": "buu_gohan_absorbed/000_beam_charge.png",
-   "canonicalId": "buu_gohan_absorbed.beam.charge_start.10",
+   "canonicalId": "buu_gohan_absorbed.beam.charge_hold.charge.03.000_beam_charge",
    "characterId": "buu_gohan",
    "formId": "buu_gohan_absorbed",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "beam",
-   "role": "charge_start",
+   "role": "charge_hold",
    "variant": "charge",
-   "sequenceIndex": 0,
+   "sequenceIndex": 3,
    "runtimePoses": [
     "beam_charge"
    ],
@@ -1496,15 +1476,15 @@
   },
   {
    "sourceId": "buu_gohan_absorbed/001_beam_charge.png",
-   "canonicalId": "buu_gohan_absorbed.beam.charge_start.11",
+   "canonicalId": "buu_gohan_absorbed.beam.charge_hold.charge.04.001_beam_charge",
    "characterId": "buu_gohan",
    "formId": "buu_gohan_absorbed",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "beam",
-   "role": "charge_start",
+   "role": "charge_hold",
    "variant": "charge",
-   "sequenceIndex": 0,
+   "sequenceIndex": 4,
    "runtimePoses": [
     "beam_charge"
    ],
@@ -1520,7 +1500,7 @@
   },
   {
    "sourceId": "buu_gohan_absorbed/002_beam_fire.png",
-   "canonicalId": "buu_gohan_absorbed.beam.release.12",
+   "canonicalId": "buu_gohan_absorbed.beam.release.fire.00.002_beam_fire",
    "characterId": "buu_gohan",
    "formId": "buu_gohan_absorbed",
    "assetType": "actor_frame",

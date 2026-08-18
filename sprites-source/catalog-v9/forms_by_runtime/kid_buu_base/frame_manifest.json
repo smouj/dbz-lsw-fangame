@@ -4,7 +4,7 @@
  "frames": [
   {
    "sourceId": "kid_buu_base/001.png",
-   "canonicalId": "kid_buu_base.idle.idle.00",
+   "canonicalId": "kid_buu_base.melee.strike.punch_right.00.001.png",
    "characterId": "kid_buu",
    "formId": "kid_buu_base",
    "assetType": "actor_frame",
@@ -29,20 +29,19 @@
     "x": "17",
     "y": "2385"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "kid_buu_base/002.png",
-   "canonicalId": "kid_buu_base.defense.start.03",
+   "canonicalId": "kid_buu_base.defense.hold.guard.01.002",
    "characterId": "kid_buu",
    "formId": "kid_buu_base",
    "assetType": "actor_frame",
    "view": "FIELD",
    "family": "defense",
-   "role": "start",
+   "role": "hold",
    "variant": "guard",
-   "sequenceIndex": 0,
+   "sequenceIndex": 1,
    "runtimePoses": [
     "guard",
     "beam_guard"
@@ -55,20 +54,19 @@
     "x": "49",
     "y": "2384"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "kid_buu_base/003.png",
-   "canonicalId": "kid_buu_base.defense.start.05",
+   "canonicalId": "kid_buu_base.defense.recover.guard.02.003",
    "characterId": "kid_buu",
    "formId": "kid_buu_base",
    "assetType": "actor_frame",
    "view": "FIELD",
    "family": "defense",
-   "role": "start",
+   "role": "recover",
    "variant": "guard",
-   "sequenceIndex": 0,
+   "sequenceIndex": 2,
    "runtimePoses": [
     "guard",
     "beam_guard"
@@ -81,8 +79,7 @@
     "x": "83",
     "y": "2385"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "kid_buu_base/004.png",
@@ -155,13 +152,13 @@
   },
   {
    "sourceId": "kid_buu_base/007.png",
-   "canonicalId": "kid_buu_base.movement.start.00",
+   "canonicalId": "kid_buu_base.defense.start.evade.00.007.png",
    "characterId": "kid_buu",
    "formId": "kid_buu_base",
    "assetType": "actor_frame",
    "view": "FIELD",
    "family": "defense",
-   "role": "recover",
+   "role": "start",
    "variant": "evade",
    "sequenceIndex": 0,
    "runtimePoses": [
@@ -177,12 +174,11 @@
     "x": "95",
     "y": "2436"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "kid_buu_base/008.png",
-   "canonicalId": "kid_buu_base.movement.start.02",
+   "canonicalId": "kid_buu_base.movement.start.move_front.00.008",
    "characterId": "kid_buu",
    "formId": "kid_buu_base",
    "assetType": "actor_frame",
@@ -203,12 +199,11 @@
     "x": "125",
     "y": "2439"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "kid_buu_base/009.png",
-   "canonicalId": "kid_buu_base.power.gather_power.00",
+   "canonicalId": "kid_buu_base.power.gather_power.gather_power.01.009",
    "characterId": "kid_buu",
    "formId": "kid_buu_base",
    "assetType": "composite",
@@ -216,7 +211,7 @@
    "family": "power",
    "role": "gather_power",
    "variant": "gather_power",
-   "sequenceIndex": 0,
+   "sequenceIndex": 1,
    "runtimePoses": [
     "gather_power",
     "power_up"
@@ -229,8 +224,7 @@
     "x": "15",
     "y": "2489"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "kid_buu_base/010.png",
@@ -257,7 +251,7 @@
   },
   {
    "sourceId": "kid_buu_base/011.png",
-   "canonicalId": "kid_buu_base.reaction.hurt_light.00",
+   "canonicalId": "kid_buu_base.reaction.hurt_light.hurt.00.011",
    "characterId": "kid_buu",
    "formId": "kid_buu_base",
    "assetType": "actor_frame",
@@ -327,15 +321,15 @@
   },
   {
    "sourceId": "kid_buu_base/014.png",
-   "canonicalId": "kid_buu_base.melee.ready.02",
+   "canonicalId": "kid_buu_base.melee.follow_through.attack_forward.05.014",
    "characterId": "kid_buu",
    "formId": "kid_buu_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "ready",
+   "role": "follow_through",
    "variant": "attack_forward",
-   "sequenceIndex": 0,
+   "sequenceIndex": 5,
    "runtimePoses": [
     "attack_fwd",
     "punch_left"
@@ -348,8 +342,7 @@
     "x": "185",
     "y": "2486"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "kid_buu_base/015.png",
@@ -376,15 +369,15 @@
   },
   {
    "sourceId": "kid_buu_base/016.png",
-   "canonicalId": "kid_buu_base.melee.ready.04",
+   "canonicalId": "kid_buu_base.melee.windup.attack_forward.01.016",
    "characterId": "kid_buu",
    "formId": "kid_buu_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "ready",
+   "role": "windup",
    "variant": "attack_forward",
-   "sequenceIndex": 0,
+   "sequenceIndex": 1,
    "runtimePoses": [
     "attack_fwd",
     "punch_right"
@@ -397,20 +390,19 @@
     "x": "15",
     "y": "2542"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "kid_buu_base/017.png",
-   "canonicalId": "kid_buu_base.melee.ready.06",
+   "canonicalId": "kid_buu_base.melee.travel.attack_forward.02.017",
    "characterId": "kid_buu",
    "formId": "kid_buu_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "ready",
+   "role": "travel",
    "variant": "attack_forward",
-   "sequenceIndex": 0,
+   "sequenceIndex": 2,
    "runtimePoses": [
     "attack_fwd",
     "punch_right",
@@ -424,20 +416,19 @@
     "x": "50",
     "y": "2542"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "kid_buu_base/018.png",
-   "canonicalId": "kid_buu_base.melee.ready.08",
+   "canonicalId": "kid_buu_base.melee.recover.attack_forward.06.018",
    "characterId": "kid_buu",
    "formId": "kid_buu_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "ready",
+   "role": "recover",
    "variant": "attack_forward",
-   "sequenceIndex": 0,
+   "sequenceIndex": 6,
    "runtimePoses": [
     "attack_fwd",
     "punch_left"
@@ -450,12 +441,11 @@
     "x": "93",
     "y": "2541"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "kid_buu_base/019.png",
-   "canonicalId": "kid_buu_base.melee.ready.10",
+   "canonicalId": "kid_buu_base.melee.ready.attack_vertical.00.019",
    "characterId": "kid_buu",
    "formId": "kid_buu_base",
    "assetType": "actor_frame",
@@ -479,15 +469,15 @@
   },
   {
    "sourceId": "kid_buu_base/020.png",
-   "canonicalId": "kid_buu_base.melee.ready.11",
+   "canonicalId": "kid_buu_base.melee.windup.attack_vertical.01.020",
    "characterId": "kid_buu",
    "formId": "kid_buu_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "ready",
+   "role": "windup",
    "variant": "attack_vertical",
-   "sequenceIndex": 0,
+   "sequenceIndex": 1,
    "runtimePoses": [
     "attack_ud",
     "knockback_back"
@@ -500,20 +490,19 @@
     "x": "172",
     "y": "2542"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "kid_buu_base/021.png",
-   "canonicalId": "kid_buu_base.melee.ready.12",
+   "canonicalId": "kid_buu_base.melee.contact.attack_vertical.02.021",
    "characterId": "kid_buu",
    "formId": "kid_buu_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "ready",
+   "role": "contact",
    "variant": "attack_vertical",
-   "sequenceIndex": 0,
+   "sequenceIndex": 2,
    "runtimePoses": [
     "attack_ud"
    ],
@@ -529,15 +518,15 @@
   },
   {
    "sourceId": "kid_buu_base/022.png",
-   "canonicalId": "kid_buu_base.melee.ready.13",
+   "canonicalId": "kid_buu_base.melee.recover.attack_vertical.03.022",
    "characterId": "kid_buu",
    "formId": "kid_buu_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "ready",
+   "role": "recover",
    "variant": "attack_vertical",
-   "sequenceIndex": 0,
+   "sequenceIndex": 3,
    "runtimePoses": [
     "attack_ud",
     "knockback_down"
@@ -550,20 +539,19 @@
     "x": "244",
     "y": "2549"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "kid_buu_base/023.png",
-   "canonicalId": "kid_buu_base.melee.ready.14",
+   "canonicalId": "kid_buu_base.melee.windup.attack_forward.01.023",
    "characterId": "kid_buu",
    "formId": "kid_buu_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "ready",
+   "role": "windup",
    "variant": "attack_forward",
-   "sequenceIndex": 0,
+   "sequenceIndex": 1,
    "runtimePoses": [
     "attack_fwd",
     "punch_right"
@@ -576,12 +564,11 @@
     "x": "23",
     "y": "2594"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "kid_buu_base/024.png",
-   "canonicalId": "kid_buu_base.power.gather_power.02",
+   "canonicalId": "kid_buu_base.power.gather_power.gather_power.00.024",
    "characterId": "kid_buu",
    "formId": "kid_buu_base",
    "assetType": "composite",
@@ -602,20 +589,19 @@
     "x": "63",
     "y": "2594"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "kid_buu_base/025.png",
-   "canonicalId": "kid_buu_base.melee.ready.16",
+   "canonicalId": "kid_buu_base.melee.contact.attack_forward.04.025",
    "characterId": "kid_buu",
    "formId": "kid_buu_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "ready",
+   "role": "contact",
    "variant": "attack_forward",
-   "sequenceIndex": 0,
+   "sequenceIndex": 4,
    "runtimePoses": [
     "attack_fwd",
     "punch_left",
@@ -629,20 +615,19 @@
     "x": "103",
     "y": "2596"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "kid_buu_base/026.png",
-   "canonicalId": "kid_buu_base.melee.ready.19",
+   "canonicalId": "kid_buu_base.melee.strike.attack_forward.03.026",
    "characterId": "kid_buu",
    "formId": "kid_buu_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "ready",
+   "role": "strike",
    "variant": "attack_forward",
-   "sequenceIndex": 0,
+   "sequenceIndex": 3,
    "runtimePoses": [
     "attack_fwd",
     "punch_left",
@@ -656,8 +641,7 @@
     "x": "144",
     "y": "2596"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "kid_buu_base/027.png",
@@ -753,7 +737,7 @@
   },
   {
    "sourceId": "kid_buu_base/031.png",
-   "canonicalId": "kid_buu_base.beam.charge_start.00",
+   "canonicalId": "kid_buu_base.beam.charge_start.charge.00.031",
    "characterId": "kid_buu",
    "formId": "kid_buu_base",
    "assetType": "actor_frame",
@@ -800,7 +784,7 @@
   },
   {
    "sourceId": "kid_buu_base/033.png",
-   "canonicalId": "kid_buu_base.effect.aura.00",
+   "canonicalId": "kid_buu_base.effect.aura.aura_power.00.033",
    "characterId": "kid_buu",
    "formId": "kid_buu_base",
    "assetType": "effect",
@@ -824,7 +808,7 @@
   },
   {
    "sourceId": "kid_buu_base/034.png",
-   "canonicalId": "kid_buu_base.effect.aura.01",
+   "canonicalId": "kid_buu_base.effect.aura.aura_power.01.034",
    "characterId": "kid_buu",
    "formId": "kid_buu_base",
    "assetType": "effect",
@@ -832,7 +816,7 @@
    "family": "effect",
    "role": "aura",
    "variant": "aura_power",
-   "sequenceIndex": 0,
+   "sequenceIndex": 1,
    "runtimePoses": [
     "aura_power"
    ],
@@ -848,7 +832,7 @@
   },
   {
    "sourceId": "kid_buu_base/035.png",
-   "canonicalId": "kid_buu_base.effect.aura.02",
+   "canonicalId": "kid_buu_base.effect.aura.aura_power.02.035",
    "characterId": "kid_buu",
    "formId": "kid_buu_base",
    "assetType": "effect",
@@ -856,7 +840,7 @@
    "family": "effect",
    "role": "aura",
    "variant": "aura_power",
-   "sequenceIndex": 0,
+   "sequenceIndex": 2,
    "runtimePoses": [
     "aura_power"
    ],
@@ -941,7 +925,7 @@
   },
   {
    "sourceId": "kid_buu_base/039.png",
-   "canonicalId": "kid_buu_base.beam.release.01",
+   "canonicalId": "kid_buu_base.beam.release.fire.02.039",
    "characterId": "kid_buu",
    "formId": "kid_buu_base",
    "assetType": "actor_frame",
@@ -949,7 +933,7 @@
    "family": "beam",
    "role": "release",
    "variant": "fire",
-   "sequenceIndex": 0,
+   "sequenceIndex": 2,
    "runtimePoses": [
     "beam_fire"
    ],
@@ -965,7 +949,7 @@
   },
   {
    "sourceId": "kid_buu_base/040.png",
-   "canonicalId": "kid_buu_base.beam.release.02",
+   "canonicalId": "kid_buu_base.beam.release.fire.03.040",
    "characterId": "kid_buu",
    "formId": "kid_buu_base",
    "assetType": "actor_frame",
@@ -973,7 +957,7 @@
    "family": "beam",
    "role": "release",
    "variant": "fire",
-   "sequenceIndex": 0,
+   "sequenceIndex": 3,
    "runtimePoses": [
     "beam_fire"
    ],
@@ -989,7 +973,7 @@
   },
   {
    "sourceId": "kid_buu_base/041.png",
-   "canonicalId": "kid_buu_base.beam.charge_start.03",
+   "canonicalId": "kid_buu_base.beam.charge_start.charge.02.041",
    "characterId": "kid_buu",
    "formId": "kid_buu_base",
    "assetType": "actor_frame",
@@ -997,7 +981,7 @@
    "family": "beam",
    "role": "charge_start",
    "variant": "charge",
-   "sequenceIndex": 0,
+   "sequenceIndex": 2,
    "runtimePoses": [
     "beam_charge"
    ],
@@ -1082,7 +1066,7 @@
   },
   {
    "sourceId": "kid_buu_base/045.png",
-   "canonicalId": "kid_buu_base.beam.charge_start.04",
+   "canonicalId": "kid_buu_base.beam.charge_start.charge.02.045",
    "characterId": "kid_buu",
    "formId": "kid_buu_base",
    "assetType": "actor_frame",
@@ -1090,7 +1074,7 @@
    "family": "beam",
    "role": "charge_start",
    "variant": "charge",
-   "sequenceIndex": 0,
+   "sequenceIndex": 2,
    "runtimePoses": [
     "beam_charge"
    ],
@@ -1175,7 +1159,7 @@
   },
   {
    "sourceId": "kid_buu_base/049.png",
-   "canonicalId": "kid_buu_base.beam.charge_start.05",
+   "canonicalId": "kid_buu_base.beam.charge_start.charge.01.049",
    "characterId": "kid_buu",
    "formId": "kid_buu_base",
    "assetType": "actor_frame",
@@ -1183,7 +1167,7 @@
    "family": "beam",
    "role": "charge_start",
    "variant": "charge",
-   "sequenceIndex": 0,
+   "sequenceIndex": 1,
    "runtimePoses": [
     "beam_charge",
     "beam_fire"
@@ -1196,12 +1180,11 @@
     "x": "363",
     "y": "2871"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "kid_buu_base/050.png",
-   "canonicalId": "kid_buu_base.effect.aura.03",
+   "canonicalId": "kid_buu_base.effect.aura.aura_support.00.050",
    "characterId": "kid_buu",
    "formId": "kid_buu_base",
    "assetType": "effect",
@@ -1225,7 +1208,7 @@
   },
   {
    "sourceId": "kid_buu_base/051.png",
-   "canonicalId": "kid_buu_base.effect.aura.04",
+   "canonicalId": "kid_buu_base.effect.aura.aura_support.01.051",
    "characterId": "kid_buu",
    "formId": "kid_buu_base",
    "assetType": "effect",
@@ -1233,7 +1216,7 @@
    "family": "effect",
    "role": "aura",
    "variant": "aura_support",
-   "sequenceIndex": 0,
+   "sequenceIndex": 1,
    "runtimePoses": [
     "aura_support"
    ],
@@ -1249,7 +1232,7 @@
   },
   {
    "sourceId": "kid_buu_base/052.png",
-   "canonicalId": "kid_buu_base.effect.aura.05",
+   "canonicalId": "kid_buu_base.effect.aura.aura_support.02.052",
    "characterId": "kid_buu",
    "formId": "kid_buu_base",
    "assetType": "effect",
@@ -1257,7 +1240,7 @@
    "family": "effect",
    "role": "aura",
    "variant": "aura_support",
-   "sequenceIndex": 0,
+   "sequenceIndex": 2,
    "runtimePoses": [
     "aura_support"
    ],
@@ -1273,7 +1256,7 @@
   },
   {
    "sourceId": "kid_buu_base/000_attack_fwd.png",
-   "canonicalId": "kid_buu_base.melee.ready.22",
+   "canonicalId": "kid_buu_base.melee.ready.attack_forward.00.000_attack_fwd",
    "characterId": "kid_buu",
    "formId": "kid_buu_base",
    "assetType": "actor_frame",
@@ -1294,20 +1277,19 @@
     "x": null,
     "y": null
    },
-   "frameKind": "fixed_only",
-   "usedPoses": 1
+   "frameKind": "fixed_only"
   },
   {
    "sourceId": "kid_buu_base/001_beam_charge.png",
-   "canonicalId": "kid_buu_base.beam.charge_start.07",
+   "canonicalId": "kid_buu_base.beam.charge_hold.charge.03.001_beam_charge",
    "characterId": "kid_buu",
    "formId": "kid_buu_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "beam",
-   "role": "charge_start",
+   "role": "charge_hold",
    "variant": "charge",
-   "sequenceIndex": 0,
+   "sequenceIndex": 3,
    "runtimePoses": [
     "beam_charge"
    ],
@@ -1323,15 +1305,15 @@
   },
   {
    "sourceId": "kid_buu_base/002_beam_charge.png",
-   "canonicalId": "kid_buu_base.beam.charge_start.08",
+   "canonicalId": "kid_buu_base.beam.charge_hold.charge.04.002_beam_charge",
    "characterId": "kid_buu",
    "formId": "kid_buu_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "beam",
-   "role": "charge_start",
+   "role": "charge_hold",
    "variant": "charge",
-   "sequenceIndex": 0,
+   "sequenceIndex": 4,
    "runtimePoses": [
     "beam_charge"
    ],
@@ -1347,7 +1329,7 @@
   },
   {
    "sourceId": "kid_buu_base/003_beam_fire.png",
-   "canonicalId": "kid_buu_base.beam.release.09",
+   "canonicalId": "kid_buu_base.beam.release.fire.00.003_beam_fire",
    "characterId": "kid_buu",
    "formId": "kid_buu_base",
    "assetType": "actor_frame",

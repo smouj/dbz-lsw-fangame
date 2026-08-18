@@ -4,7 +4,7 @@
  "frames": [
   {
    "sourceId": "buu_gotenks_absorbed/001.png",
-   "canonicalId": "buu_gotenks_absorbed.idle.idle.00",
+   "canonicalId": "buu_gotenks_absorbed.melee.strike.punch_right.00.001.png",
    "characterId": "buu_gotenks",
    "formId": "buu_gotenks_absorbed",
    "assetType": "actor_frame",
@@ -29,20 +29,19 @@
     "x": "4",
     "y": "1139"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "buu_gotenks_absorbed/002.png",
-   "canonicalId": "buu_gotenks_absorbed.defense.start.03",
+   "canonicalId": "buu_gotenks_absorbed.defense.hold.guard.01.002",
    "characterId": "buu_gotenks",
    "formId": "buu_gotenks_absorbed",
    "assetType": "actor_frame",
    "view": "FIELD",
    "family": "defense",
-   "role": "start",
+   "role": "hold",
    "variant": "guard",
-   "sequenceIndex": 0,
+   "sequenceIndex": 1,
    "runtimePoses": [
     "guard",
     "beam_guard"
@@ -55,20 +54,19 @@
     "x": "44",
     "y": "1139"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "buu_gotenks_absorbed/003.png",
-   "canonicalId": "buu_gotenks_absorbed.defense.start.05",
+   "canonicalId": "buu_gotenks_absorbed.defense.recover.guard.02.003",
    "characterId": "buu_gotenks",
    "formId": "buu_gotenks_absorbed",
    "assetType": "actor_frame",
    "view": "FIELD",
    "family": "defense",
-   "role": "start",
+   "role": "recover",
    "variant": "guard",
-   "sequenceIndex": 0,
+   "sequenceIndex": 2,
    "runtimePoses": [
     "guard",
     "beam_guard"
@@ -81,18 +79,17 @@
     "x": "82",
     "y": "1141"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "buu_gotenks_absorbed/004.png",
-   "canonicalId": "buu_gotenks_absorbed.movement.start.00",
+   "canonicalId": "buu_gotenks_absorbed.defense.start.evade.00.004.png",
    "characterId": "buu_gotenks",
    "formId": "buu_gotenks_absorbed",
    "assetType": "actor_frame",
    "view": "FIELD",
    "family": "defense",
-   "role": "recover",
+   "role": "start",
    "variant": "evade",
    "sequenceIndex": 0,
    "runtimePoses": [
@@ -108,8 +105,7 @@
     "x": "125",
     "y": "1139"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "buu_gotenks_absorbed/005.png",
@@ -159,7 +155,7 @@
   },
   {
    "sourceId": "buu_gotenks_absorbed/007.png",
-   "canonicalId": "buu_gotenks_absorbed.power.gather_power.00",
+   "canonicalId": "buu_gotenks_absorbed.power.gather_power.gather_power.00.007",
    "characterId": "buu_gotenks",
    "formId": "buu_gotenks_absorbed",
    "assetType": "composite",
@@ -180,12 +176,11 @@
     "x": "106",
     "y": "1191"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "buu_gotenks_absorbed/008.png",
-   "canonicalId": "buu_gotenks_absorbed.movement.start.02",
+   "canonicalId": "buu_gotenks_absorbed.movement.start.move_front.00.008",
    "characterId": "buu_gotenks",
    "formId": "buu_gotenks_absorbed",
    "assetType": "actor_frame",
@@ -206,8 +201,7 @@
     "x": "143",
     "y": "1194"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "buu_gotenks_absorbed/009.png",
@@ -234,7 +228,7 @@
   },
   {
    "sourceId": "buu_gotenks_absorbed/010.png",
-   "canonicalId": "buu_gotenks_absorbed.power.gather_power.02",
+   "canonicalId": "buu_gotenks_absorbed.power.gather_power.gather_power.01.010",
    "characterId": "buu_gotenks",
    "formId": "buu_gotenks_absorbed",
    "assetType": "composite",
@@ -242,7 +236,7 @@
    "family": "power",
    "role": "gather_power",
    "variant": "gather_power",
-   "sequenceIndex": 0,
+   "sequenceIndex": 1,
    "runtimePoses": [
     "gather_power",
     "power_up"
@@ -255,12 +249,11 @@
     "x": "42",
     "y": "1248"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "buu_gotenks_absorbed/011.png",
-   "canonicalId": "buu_gotenks_absorbed.reaction.hurt_light.00",
+   "canonicalId": "buu_gotenks_absorbed.reaction.hurt_light.hurt.00.011",
    "characterId": "buu_gotenks",
    "formId": "buu_gotenks_absorbed",
    "assetType": "actor_frame",
@@ -284,7 +277,7 @@
   },
   {
    "sourceId": "buu_gotenks_absorbed/012.png",
-   "canonicalId": "buu_gotenks_absorbed.power.gather_power.04",
+   "canonicalId": "buu_gotenks_absorbed.power.gather_power.gather_power.03.012",
    "characterId": "buu_gotenks",
    "formId": "buu_gotenks_absorbed",
    "assetType": "composite",
@@ -292,7 +285,7 @@
    "family": "power",
    "role": "gather_power",
    "variant": "gather_power",
-   "sequenceIndex": 0,
+   "sequenceIndex": 3,
    "runtimePoses": [
     "gather_power",
     "power_up"
@@ -305,12 +298,11 @@
     "x": "123",
     "y": "1245"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "buu_gotenks_absorbed/013.png",
-   "canonicalId": "buu_gotenks_absorbed.power.gather_power.06",
+   "canonicalId": "buu_gotenks_absorbed.power.gather_power.gather_power.02.013",
    "characterId": "buu_gotenks",
    "formId": "buu_gotenks_absorbed",
    "assetType": "composite",
@@ -318,7 +310,7 @@
    "family": "power",
    "role": "gather_power",
    "variant": "gather_power",
-   "sequenceIndex": 0,
+   "sequenceIndex": 2,
    "runtimePoses": [
     "gather_power",
     "power_up"
@@ -331,20 +323,19 @@
     "x": "161",
     "y": "1240"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "buu_gotenks_absorbed/014.png",
-   "canonicalId": "buu_gotenks_absorbed.melee.ready.02",
+   "canonicalId": "buu_gotenks_absorbed.melee.follow_through.attack_forward.05.014",
    "characterId": "buu_gotenks",
    "formId": "buu_gotenks_absorbed",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "ready",
+   "role": "follow_through",
    "variant": "attack_forward",
-   "sequenceIndex": 0,
+   "sequenceIndex": 5,
    "runtimePoses": [
     "attack_fwd",
     "punch_left"
@@ -357,8 +348,7 @@
     "x": "203",
     "y": "1242"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "buu_gotenks_absorbed/015.png",
@@ -385,15 +375,15 @@
   },
   {
    "sourceId": "buu_gotenks_absorbed/016.png",
-   "canonicalId": "buu_gotenks_absorbed.melee.ready.04",
+   "canonicalId": "buu_gotenks_absorbed.melee.windup.attack_forward.01.016",
    "characterId": "buu_gotenks",
    "formId": "buu_gotenks_absorbed",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "ready",
+   "role": "windup",
    "variant": "attack_forward",
-   "sequenceIndex": 0,
+   "sequenceIndex": 1,
    "runtimePoses": [
     "attack_fwd",
     "punch_right"
@@ -406,20 +396,19 @@
     "x": "11",
     "y": "1297"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "buu_gotenks_absorbed/017.png",
-   "canonicalId": "buu_gotenks_absorbed.melee.ready.06",
+   "canonicalId": "buu_gotenks_absorbed.melee.travel.attack_forward.02.017",
    "characterId": "buu_gotenks",
    "formId": "buu_gotenks_absorbed",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "ready",
+   "role": "travel",
    "variant": "attack_forward",
-   "sequenceIndex": 0,
+   "sequenceIndex": 2,
    "runtimePoses": [
     "attack_fwd",
     "punch_right"
@@ -432,20 +421,19 @@
     "x": "52",
     "y": "1294"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "buu_gotenks_absorbed/018.png",
-   "canonicalId": "buu_gotenks_absorbed.melee.ready.08",
+   "canonicalId": "buu_gotenks_absorbed.melee.recover.attack_forward.06.018",
    "characterId": "buu_gotenks",
    "formId": "buu_gotenks_absorbed",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "ready",
+   "role": "recover",
    "variant": "attack_forward",
-   "sequenceIndex": 0,
+   "sequenceIndex": 6,
    "runtimePoses": [
     "attack_fwd",
     "punch_left",
@@ -459,12 +447,11 @@
     "x": "103",
     "y": "1297"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "buu_gotenks_absorbed/019.png",
-   "canonicalId": "buu_gotenks_absorbed.melee.ready.10",
+   "canonicalId": "buu_gotenks_absorbed.melee.ready.attack_vertical.00.019",
    "characterId": "buu_gotenks",
    "formId": "buu_gotenks_absorbed",
    "assetType": "actor_frame",
@@ -488,15 +475,15 @@
   },
   {
    "sourceId": "buu_gotenks_absorbed/020.png",
-   "canonicalId": "buu_gotenks_absorbed.melee.ready.11",
+   "canonicalId": "buu_gotenks_absorbed.melee.windup.attack_vertical.01.020",
    "characterId": "buu_gotenks",
    "formId": "buu_gotenks_absorbed",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "ready",
+   "role": "windup",
    "variant": "attack_vertical",
-   "sequenceIndex": 0,
+   "sequenceIndex": 1,
    "runtimePoses": [
     "attack_ud",
     "knockback_back"
@@ -509,20 +496,19 @@
     "x": "183",
     "y": "1297"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "buu_gotenks_absorbed/021.png",
-   "canonicalId": "buu_gotenks_absorbed.melee.ready.12",
+   "canonicalId": "buu_gotenks_absorbed.melee.contact.attack_vertical.02.021",
    "characterId": "buu_gotenks",
    "formId": "buu_gotenks_absorbed",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "ready",
+   "role": "contact",
    "variant": "attack_vertical",
-   "sequenceIndex": 0,
+   "sequenceIndex": 2,
    "runtimePoses": [
     "attack_ud"
    ],
@@ -538,15 +524,15 @@
   },
   {
    "sourceId": "buu_gotenks_absorbed/022.png",
-   "canonicalId": "buu_gotenks_absorbed.melee.ready.13",
+   "canonicalId": "buu_gotenks_absorbed.melee.recover.attack_vertical.03.022",
    "characterId": "buu_gotenks",
    "formId": "buu_gotenks_absorbed",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "ready",
+   "role": "recover",
    "variant": "attack_vertical",
-   "sequenceIndex": 0,
+   "sequenceIndex": 3,
    "runtimePoses": [
     "attack_ud",
     "knockback_down"
@@ -559,20 +545,19 @@
     "x": "264",
     "y": "1305"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "buu_gotenks_absorbed/023.png",
-   "canonicalId": "buu_gotenks_absorbed.melee.ready.14",
+   "canonicalId": "buu_gotenks_absorbed.melee.windup.attack_forward.01.023",
    "characterId": "buu_gotenks",
    "formId": "buu_gotenks_absorbed",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "ready",
+   "role": "windup",
    "variant": "attack_forward",
-   "sequenceIndex": 0,
+   "sequenceIndex": 1,
    "runtimePoses": [
     "attack_fwd",
     "punch_right"
@@ -585,12 +570,11 @@
     "x": "5",
     "y": "1349"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "buu_gotenks_absorbed/024.png",
-   "canonicalId": "buu_gotenks_absorbed.melee.ready.16",
+   "canonicalId": "buu_gotenks_absorbed.melee.ready.attack_forward.00.024",
    "characterId": "buu_gotenks",
    "formId": "buu_gotenks_absorbed",
    "assetType": "actor_frame",
@@ -611,20 +595,19 @@
     "x": "47",
     "y": "1349"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "buu_gotenks_absorbed/025.png",
-   "canonicalId": "buu_gotenks_absorbed.melee.ready.18",
+   "canonicalId": "buu_gotenks_absorbed.melee.strike.attack_forward.03.025",
    "characterId": "buu_gotenks",
    "formId": "buu_gotenks_absorbed",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "ready",
+   "role": "strike",
    "variant": "attack_forward",
-   "sequenceIndex": 0,
+   "sequenceIndex": 3,
    "runtimePoses": [
     "attack_fwd",
     "punch_left",
@@ -638,20 +621,19 @@
     "x": "88",
     "y": "1351"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "buu_gotenks_absorbed/026.png",
-   "canonicalId": "buu_gotenks_absorbed.melee.ready.21",
+   "canonicalId": "buu_gotenks_absorbed.melee.contact.attack_forward.04.026",
    "characterId": "buu_gotenks",
    "formId": "buu_gotenks_absorbed",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "ready",
+   "role": "contact",
    "variant": "attack_forward",
-   "sequenceIndex": 0,
+   "sequenceIndex": 4,
    "runtimePoses": [
     "attack_fwd",
     "punch_left",
@@ -665,8 +647,7 @@
     "x": "140",
     "y": "1351"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "buu_gotenks_absorbed/027.png",
@@ -762,7 +743,7 @@
   },
   {
    "sourceId": "buu_gotenks_absorbed/031.png",
-   "canonicalId": "buu_gotenks_absorbed.beam.charge_start.00",
+   "canonicalId": "buu_gotenks_absorbed.beam.charge_start.charge.00.031",
    "characterId": "buu_gotenks",
    "formId": "buu_gotenks_absorbed",
    "assetType": "actor_frame",
@@ -809,7 +790,7 @@
   },
   {
    "sourceId": "buu_gotenks_absorbed/033.png",
-   "canonicalId": "buu_gotenks_absorbed.effect.aura.00",
+   "canonicalId": "buu_gotenks_absorbed.effect.aura.aura_power.00.033",
    "characterId": "buu_gotenks",
    "formId": "buu_gotenks_absorbed",
    "assetType": "effect",
@@ -833,7 +814,7 @@
   },
   {
    "sourceId": "buu_gotenks_absorbed/034.png",
-   "canonicalId": "buu_gotenks_absorbed.effect.aura.01",
+   "canonicalId": "buu_gotenks_absorbed.effect.aura.aura_power.01.034",
    "characterId": "buu_gotenks",
    "formId": "buu_gotenks_absorbed",
    "assetType": "effect",
@@ -841,7 +822,7 @@
    "family": "effect",
    "role": "aura",
    "variant": "aura_power",
-   "sequenceIndex": 0,
+   "sequenceIndex": 1,
    "runtimePoses": [
     "aura_power"
    ],
@@ -857,7 +838,7 @@
   },
   {
    "sourceId": "buu_gotenks_absorbed/035.png",
-   "canonicalId": "buu_gotenks_absorbed.effect.aura.02",
+   "canonicalId": "buu_gotenks_absorbed.effect.aura.aura_power.02.035",
    "characterId": "buu_gotenks",
    "formId": "buu_gotenks_absorbed",
    "assetType": "effect",
@@ -865,7 +846,7 @@
    "family": "effect",
    "role": "aura",
    "variant": "aura_power",
-   "sequenceIndex": 0,
+   "sequenceIndex": 2,
    "runtimePoses": [
     "aura_power"
    ],
@@ -950,7 +931,7 @@
   },
   {
    "sourceId": "buu_gotenks_absorbed/039.png",
-   "canonicalId": "buu_gotenks_absorbed.beam.charge_start.01",
+   "canonicalId": "buu_gotenks_absorbed.beam.charge_start.charge.02.039",
    "characterId": "buu_gotenks",
    "formId": "buu_gotenks_absorbed",
    "assetType": "actor_frame",
@@ -958,7 +939,7 @@
    "family": "beam",
    "role": "charge_start",
    "variant": "charge",
-   "sequenceIndex": 0,
+   "sequenceIndex": 2,
    "runtimePoses": [
     "beam_charge"
    ],
@@ -1020,7 +1001,7 @@
   },
   {
    "sourceId": "buu_gotenks_absorbed/042.png",
-   "canonicalId": "buu_gotenks_absorbed.beam.release.02",
+   "canonicalId": "buu_gotenks_absorbed.beam.release.fire.02.042",
    "characterId": "buu_gotenks",
    "formId": "buu_gotenks_absorbed",
    "assetType": "actor_frame",
@@ -1028,7 +1009,7 @@
    "family": "beam",
    "role": "release",
    "variant": "fire",
-   "sequenceIndex": 0,
+   "sequenceIndex": 2,
    "runtimePoses": [
     "beam_fire"
    ],
@@ -1044,7 +1025,7 @@
   },
   {
    "sourceId": "buu_gotenks_absorbed/043.png",
-   "canonicalId": "buu_gotenks_absorbed.beam.release.03",
+   "canonicalId": "buu_gotenks_absorbed.beam.release.fire.03.043",
    "characterId": "buu_gotenks",
    "formId": "buu_gotenks_absorbed",
    "assetType": "actor_frame",
@@ -1052,7 +1033,7 @@
    "family": "beam",
    "role": "release",
    "variant": "fire",
-   "sequenceIndex": 0,
+   "sequenceIndex": 3,
    "runtimePoses": [
     "beam_fire"
    ],
@@ -1114,7 +1095,7 @@
   },
   {
    "sourceId": "buu_gotenks_absorbed/046.png",
-   "canonicalId": "buu_gotenks_absorbed.beam.release.04",
+   "canonicalId": "buu_gotenks_absorbed.beam.release.fire.04.046",
    "characterId": "buu_gotenks",
    "formId": "buu_gotenks_absorbed",
    "assetType": "actor_frame",
@@ -1122,7 +1103,7 @@
    "family": "beam",
    "role": "release",
    "variant": "fire",
-   "sequenceIndex": 0,
+   "sequenceIndex": 4,
    "runtimePoses": [
     "beam_fire"
    ],
@@ -1138,7 +1119,7 @@
   },
   {
    "sourceId": "buu_gotenks_absorbed/047.png",
-   "canonicalId": "buu_gotenks_absorbed.beam.charge_start.05",
+   "canonicalId": "buu_gotenks_absorbed.beam.charge_start.charge.01.047",
    "characterId": "buu_gotenks",
    "formId": "buu_gotenks_absorbed",
    "assetType": "actor_frame",
@@ -1146,7 +1127,7 @@
    "family": "beam",
    "role": "charge_start",
    "variant": "charge",
-   "sequenceIndex": 0,
+   "sequenceIndex": 1,
    "runtimePoses": [
     "beam_charge",
     "beam_fire"
@@ -1159,8 +1140,7 @@
     "x": "71",
     "y": "1623"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "buu_gotenks_absorbed/048.png",
@@ -1187,7 +1167,7 @@
   },
   {
    "sourceId": "buu_gotenks_absorbed/049.png",
-   "canonicalId": "buu_gotenks_absorbed.beam.release.07",
+   "canonicalId": "buu_gotenks_absorbed.beam.release.fire.05.049",
    "characterId": "buu_gotenks",
    "formId": "buu_gotenks_absorbed",
    "assetType": "actor_frame",
@@ -1195,7 +1175,7 @@
    "family": "beam",
    "role": "release",
    "variant": "fire",
-   "sequenceIndex": 0,
+   "sequenceIndex": 5,
    "runtimePoses": [
     "beam_fire"
    ],
@@ -1211,7 +1191,7 @@
   },
   {
    "sourceId": "buu_gotenks_absorbed/050.png",
-   "canonicalId": "buu_gotenks_absorbed.beam.release.08",
+   "canonicalId": "buu_gotenks_absorbed.beam.release.fire.06.050",
    "characterId": "buu_gotenks",
    "formId": "buu_gotenks_absorbed",
    "assetType": "actor_frame",
@@ -1219,7 +1199,7 @@
    "family": "beam",
    "role": "release",
    "variant": "fire",
-   "sequenceIndex": 0,
+   "sequenceIndex": 6,
    "runtimePoses": [
     "beam_fire"
    ],
@@ -1258,7 +1238,7 @@
   },
   {
    "sourceId": "buu_gotenks_absorbed/052.png",
-   "canonicalId": "buu_gotenks_absorbed.beam.charge_start.09",
+   "canonicalId": "buu_gotenks_absorbed.beam.charge_start.charge.01.052",
    "characterId": "buu_gotenks",
    "formId": "buu_gotenks_absorbed",
    "assetType": "actor_frame",
@@ -1266,7 +1246,7 @@
    "family": "beam",
    "role": "charge_start",
    "variant": "charge",
-   "sequenceIndex": 0,
+   "sequenceIndex": 1,
    "runtimePoses": [
     "beam_charge",
     "beam_fire"
@@ -1279,8 +1259,7 @@
     "x": "397",
     "y": "1634"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "buu_gotenks_absorbed/053.png",
@@ -1307,7 +1286,7 @@
   },
   {
    "sourceId": "buu_gotenks_absorbed/054.png",
-   "canonicalId": "buu_gotenks_absorbed.effect.aura.03",
+   "canonicalId": "buu_gotenks_absorbed.effect.aura.aura_support.00.054",
    "characterId": "buu_gotenks",
    "formId": "buu_gotenks_absorbed",
    "assetType": "effect",
@@ -1331,7 +1310,7 @@
   },
   {
    "sourceId": "buu_gotenks_absorbed/055.png",
-   "canonicalId": "buu_gotenks_absorbed.effect.aura.04",
+   "canonicalId": "buu_gotenks_absorbed.effect.aura.aura_support.01.055",
    "characterId": "buu_gotenks",
    "formId": "buu_gotenks_absorbed",
    "assetType": "effect",
@@ -1339,7 +1318,7 @@
    "family": "effect",
    "role": "aura",
    "variant": "aura_support",
-   "sequenceIndex": 0,
+   "sequenceIndex": 1,
    "runtimePoses": [
     "aura_support"
    ],
@@ -1355,7 +1334,7 @@
   },
   {
    "sourceId": "buu_gotenks_absorbed/056.png",
-   "canonicalId": "buu_gotenks_absorbed.effect.aura.05",
+   "canonicalId": "buu_gotenks_absorbed.effect.aura.aura_support.02.056",
    "characterId": "buu_gotenks",
    "formId": "buu_gotenks_absorbed",
    "assetType": "effect",
@@ -1363,7 +1342,7 @@
    "family": "effect",
    "role": "aura",
    "variant": "aura_support",
-   "sequenceIndex": 0,
+   "sequenceIndex": 2,
    "runtimePoses": [
     "aura_support"
    ],
@@ -1379,15 +1358,15 @@
   },
   {
    "sourceId": "buu_gotenks_absorbed/000_beam_charge.png",
-   "canonicalId": "buu_gotenks_absorbed.beam.charge_start.11",
+   "canonicalId": "buu_gotenks_absorbed.beam.charge_hold.charge.03.000_beam_charge",
    "characterId": "buu_gotenks",
    "formId": "buu_gotenks_absorbed",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "beam",
-   "role": "charge_start",
+   "role": "charge_hold",
    "variant": "charge",
-   "sequenceIndex": 0,
+   "sequenceIndex": 3,
    "runtimePoses": [
     "beam_charge"
    ],
@@ -1403,15 +1382,15 @@
   },
   {
    "sourceId": "buu_gotenks_absorbed/001_beam_charge.png",
-   "canonicalId": "buu_gotenks_absorbed.beam.charge_start.12",
+   "canonicalId": "buu_gotenks_absorbed.beam.charge_hold.charge.04.001_beam_charge",
    "characterId": "buu_gotenks",
    "formId": "buu_gotenks_absorbed",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "beam",
-   "role": "charge_start",
+   "role": "charge_hold",
    "variant": "charge",
-   "sequenceIndex": 0,
+   "sequenceIndex": 4,
    "runtimePoses": [
     "beam_charge"
    ],
@@ -1427,7 +1406,7 @@
   },
   {
    "sourceId": "buu_gotenks_absorbed/002_beam_fire.png",
-   "canonicalId": "buu_gotenks_absorbed.beam.release.13",
+   "canonicalId": "buu_gotenks_absorbed.beam.release.fire.00.002_beam_fire",
    "characterId": "buu_gotenks",
    "formId": "buu_gotenks_absorbed",
    "assetType": "actor_frame",

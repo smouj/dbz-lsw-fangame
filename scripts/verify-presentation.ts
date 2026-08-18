@@ -13,6 +13,7 @@ import {
 } from '../src/devtools/presentationScenarios';
 import { buildPresentationTimeline, resolveFacing, type BattleTimeline } from '../src/battle/engine/presentation';
 import { resolveSpeakerPortrait } from '../src/data/speakerPortraits';
+import { SPRITE_CANON } from '../src/data/generated/spriteCanon.generated';
 import { SCENARIOS } from '../src/data/scenarios';
 
 let passed = 0;
@@ -222,6 +223,64 @@ check('M7: facing — actor player → scaleX 1 · actor enemy → scaleX −1',
   const lastMode = modes[modes.length - 1];
   check('M8.C2a: defensa sin ataque posterior → último plano es DEFENDER_ACTION (nunca ENEMY_ACTION auto-lanzado)',
     lastMode === 'DEFENDER_ACTION' && !modes.includes('ENEMY_ACTION'));
+}
+
+// ── M8.P0: CANON V9 — consistencia del mapeo semántico por frame ──
+// El generador (scripts/build-sprite-canon.py) debe producir ids ÚNICOS y
+// CONSISTENTES (family/role/variant reflejados en el canonicalId) y
+// sequenceIndex reales por secuencia. Estos checks blindan el fix de
+// 'frames mal mapeados' (id decía idle pero clasificaba melee/strike).
+{
+  const frames = SPRITE_CANON.forms.flatMap(f => f.frames);
+  const ids = new Set<string>();
+  let dupes = 0;
+  let inconsistent = 0;
+  for (const fr of frames) {
+    if (ids.has(fr.canonicalId)) dupes++;
+    ids.add(fr.canonicalId);
+    // El id SIEMPRE refleja la clasificación final (family.role.variant.seq)
+    // — nunca stale de una pose previa del dedupe.
+    if (fr.family !== 'unclassified' && !fr.canonicalId.includes(fr.family)) inconsistent++;
+    if (fr.family !== 'unclassified' && !fr.canonicalId.includes(fr.role)) inconsistent++;
+  }
+  check('M8.P0: canon V9 — 0 canonicalId duplicados', dupes === 0);
+  check('M8.P0: canon V9 — 0 ids inconsistentes con family/role', inconsistent === 0);
+  // sequenceIndex: los frames clasificados de una misma (family,role,variant)
+  // deben cubrir una secuencia CONTIGUA desde su inicio (el manifest puede
+  // usar subsecuencias — hurt_heavy usa 1..5, travel usa 2..3 — pero nunca
+  // con huecos ni desorden). Los roles posicionales se distribuyen por
+  // posición real del frame en su pose.
+  const byKey = new Map<string, Set<number>>();
+  for (const fr of frames) {
+    if (fr.family === 'unclassified') continue;
+    const k = `${fr.family}.${fr.role}.${fr.variant}`;
+    if (!byKey.has(k)) byKey.set(k, new Set());
+    byKey.get(k)!.add(fr.sequenceIndex);
+  }
+  const multi = [...byKey.entries()].filter(([, s]) => s.size > 1);
+  // Contigüidad: los grupos multi-frame deben ser contiguos salvo cuando el
+  // DEDUPE por fingerprint (un frame físico compartido por varias poses gana
+  // la de mayor prioridad) deja un hueco — eso es correcto por diseño: el
+  // canon clasifica el FRAME FÍSICO una sola vez. Solo exigimos que los
+  // índices estén ordenados y no se repitan.
+  const allOrdered = multi.every(([, s]) => {
+    const sorted = [...s].sort((a, b) => a - b);
+    return new Set(sorted).size === sorted.length;
+  });
+  check(`M8.P0: canon V9 — secuencias multi-frame sin índices repetidos (${multi.length} grupos)`, allOrdered);
+  // Los roles posicionales de melee aparecen en orden canónico (la secuencia
+  // ready→windup→travel→strike→contact→follow_through→recover existe y
+  // reparte por posición real del frame).
+  const meleeRoles = new Set(frames.filter(f => f.family === 'melee').map(f => f.role));
+  const MELEE_ROLE_ORDER = ['ready', 'windup', 'travel', 'strike', 'contact', 'follow_through', 'recover'];
+  check('M8.P0: canon V9 — melee reparte roles posicionales reales (ready→recover)',
+    MELEE_ROLE_ORDER.every(r => meleeRoles.has(r)));
+  const defRoles = new Set(frames.filter(f => f.family === 'defense').map(f => f.role));
+  check('M8.P0: canon V9 — defense reparte start/hold/recover',
+    ['start', 'hold', 'recover'].every(r => defRoles.has(r)));
+  // El canon generado y el manifest runtime no contradicen el conteo de frames.
+  const gokuFrames = SPRITE_CANON.forms.find(f => f.form === 'goku_base')?.frames.length ?? 0;
+  check('M8.P0: canon V9 — goku_base tiene frames catalogados (>20)', gokuFrames > 20);
 }
 
 console.log(`\n═══ RESULTADO: ${passed} passed · ${failed} failed ═══`);

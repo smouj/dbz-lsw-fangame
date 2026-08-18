@@ -172,18 +172,23 @@ def load_frames_by_fp(form_dir, sub):
     return out
 
 def load_runtime_fp(form_dir):
-    """Mapea fingerprint → nombre de frame del manifest runtime."""
+    """Mapea fingerprint → (pose, nombre, índice-en-secuencia) del manifest runtime.
+
+    El índice (idx) es la posición REAL del frame dentro de la secuencia de
+    su pose (frames[0], frames[1], ...) — no un índice global ni el orden de
+    las poses que comparten el frame físico. Sin esto, roles_for_sequence
+    distribuía roles mal (guard_00/01/02 → todos 'start')."""
     mp = os.path.join(SPRITES, form_dir, 'manifest.json')
     if not os.path.exists(mp): return {}
     manifest = json.load(open(mp))
     out = {}
     for pose, pv in manifest.items():
         if not isinstance(pv, dict): continue
-        for fr in pv.get('frames', []):
+        for idx, fr in enumerate(pv.get('frames', [])):
             p = os.path.join(SPRITES, form_dir, fr['file'])
             if not os.path.exists(p): continue
             fp = visible_fp(p)
-            if fp: out.setdefault(fp, []).append((pose, fr.get('name', fr['file'])))
+            if fp: out.setdefault(fp, []).append((pose, fr.get('name', fr['file']), idx))
     return out
 
 registry = []      # entradas por frame físico (source frame)
@@ -203,8 +208,18 @@ for form_dir in form_dirs:
     atomic_fp = load_frames_by_fp(form_dir, 'atomic')
     fixed_fp = load_frames_by_fp(form_dir, 'fixed_only')
     rt_fp = load_runtime_fp(form_dir)
-    # inverso: frame físico → poses runtime (por fingerprint)
-    frame_poses = {}   # archivo atómico/fixed → [(pose, name)]
+    # Longitud REAL de la secuencia de cada pose (frames del manifest) — el
+    # numerador de roles_for_sequence: guard con 3 frames reparte
+    # start/hold/recover por POSICIÓN, no por nº de poses que comparten frame.
+    mp = os.path.join(SPRITES, form_dir, 'manifest.json')
+    pose_len = {}
+    if os.path.exists(mp):
+        m = json.load(open(mp))
+        for pose, pv in m.items():
+            if isinstance(pv, dict) and isinstance(pv.get('frames'), list):
+                pose_len[pose] = len(pv['frames'])
+    # inverso: frame físico → [(pose, name, idx-en-secuencia)] (por fingerprint)
+    frame_poses = {}   # archivo atómico/fixed → [(pose, name, idx)]
     for fp, entries in rt_fp.items():
         targets = []
         for f in atomic_fp.get(fp, []): targets.append(('atomic', f))
@@ -214,14 +229,6 @@ for form_dir in form_dirs:
 
     form_stats = collections.Counter()
     frames_out = []
-    _fam_counter: dict = {}
-    def _canon_id(form, fam, role, src_name):
-        if fam == 'unclassified':
-            return f"{form}.unclassified.{src_name}"
-        key = (form, fam)
-        n = _fam_counter.get(key, 0)
-        _fam_counter[key] = n + 1
-        return f"{form}.{fam}.{role}.{n:02d}"
     # dedupe por frame físico: un frame puede usarse en varias poses runtime
     # (p.ej. punch_right y attack_fwd comparten frames) — se unifica SIN
     # borrar provenance: runtimePoses acumula todas; family/role = el uso
@@ -229,6 +236,16 @@ for form_dir in form_dirs:
     _by_src: dict = {}
     _PRIO = {'melee': 5, 'beam': 5, 'reaction': 5, 'power': 5, 'defense': 4,
              'movement': 3, 'effect': 2, 'idle': 1, 'ready': 1, 'unclassified': 0}
+    def _canon_id(form, fam, role, var, seq, src_name):
+        if fam == 'unclassified':
+            return f"{form}.unclassified.{src_name}"
+        # canonicalId CONSISTENTE con la clasificación final: family.role.
+        # variant.seq — generado SIEMPRE con la entrada ganadora del dedupe
+        # (antes se generaba con la 1ª pose y el dedupe lo dejaba stale).
+        # El sufijo src_name garantiza UNICIDAD por frame físico (dos frames
+        # pueden compartir role+variant+seq en la misma secuencia: p.ej. dos
+        # windup.01 de attack_fwd en manifests con frames duplicados).
+        return f"{form}.{fam}.{role}.{var}.{seq:02d}.{src_name}"
     def _add_dedup(entry):
         sid = entry['sourceId']
         if sid not in _by_src:
@@ -241,7 +258,12 @@ for form_dir in form_dirs:
             ex['family'] = entry['family']; ex['role'] = entry['role']
             ex['variant'] = entry['variant']; ex['assetType'] = entry['assetType']
             ex['canonStatus'] = entry['canonStatus']; ex['evidence'] = entry['evidence']
-        ex['usedPoses'] = ex.get('usedPoses', 1) + 0
+            # M8.P0 fix: canonicalId y sequenceIndex se regeneran con la pose
+            # GANADORA (family/role/variant finales) — nunca stale.
+            ex['canonicalId'] = _canon_id(entry['formId'], entry['family'],
+                                          entry['role'], entry['variant'], entry['sequenceIndex'],
+                                          entry['sourceId'].split('/')[-1])
+            ex['sequenceIndex'] = entry['sequenceIndex']
         return False
     for kind, files in (('atomic', atomic_files), ('fixed_only', fixed_files)):
         for f in files:
@@ -252,11 +274,15 @@ for form_dir in form_dirs:
             bucket = cat.get('semantic_bucket', '')
             evidence = cat.get('evidence', '') or ''
             if poses:
-                # evidencia runtime: la pose manda
-                for idx, (pose, name) in enumerate(poses):
-                    fam, role, var, atype, status = pose_semantics(pose, idx, len(poses))
+                # evidencia runtime: la pose manda. La POSICIÓN en la
+                # secuencia real (pose_idx, del manifest) alimenta
+                # roles_for_sequence — el canon reparte start/hold/recover
+                # por frame real, no por nº de poses que comparten el frame.
+                for idx, (pose, name, pose_idx) in enumerate(poses):
+                    n_seq = pose_len.get(pose, len(poses))
+                    fam, role, var, atype, status = pose_semantics(pose, pose_idx, n_seq)
                     # variantes dedicadas (punch_right...) mejoran el variant
-                    canonical_id = _canon_id(form_dir, fam, role, f[:-4])
+                    canonical_id = _canon_id(form_dir, fam, role, var, pose_idx, f[:-4])
                     entry = {
                         'sourceId': f"{form_dir}/{f}",
                         'canonicalId': canonical_id,
@@ -265,8 +291,8 @@ for form_dir in form_dirs:
                         'assetType': atype,
                         'view': 'ACTION_DUEL' if fam in ('melee', 'beam', 'power') else 'FIELD',
                         'family': fam, 'role': role, 'variant': var,
-                        'sequenceIndex': idx,
-                        'runtimePoses': [p for p, _ in poses],
+                        'sequenceIndex': pose_idx,
+                        'runtimePoses': [p for p, _, _ in poses],
                         'evidence': 'CANONICAL' if status == 'CANONICAL' else 'RUNTIME_VERIFIED',
                         'canonStatus': status,
                         'source': {'sheet': cat.get('source_sheet', ''), 'frame': f,
@@ -285,7 +311,9 @@ for form_dir in form_dirs:
                     atype, role, status = 'unclassified', 'unclassified', 'UNCLASSIFIED'
                 entry = {
                     'sourceId': f"{form_dir}/{f}",
-                    'canonicalId': _canon_id(form_dir, 'unclassified', 'unclassified', f[:-4]),
+                    # unclassified: el id usa el NOMBRE del archivo (único),
+                    # no un contador global — cada frame tiene su identidad.
+                    'canonicalId': f"{form_dir}.unclassified.{f[:-4]}",
                     'characterId': form_dir.rsplit('_', 1)[0] if form_dir.count('_') else form_dir,
                     'formId': form_dir,
                     'assetType': atype,

@@ -4,7 +4,7 @@
  "frames": [
   {
    "sourceId": "vegeta_super_saiyan_majin/001.png",
-   "canonicalId": "vegeta_super_saiyan_majin.idle.idle.00",
+   "canonicalId": "vegeta_super_saiyan_majin.melee.strike.punch_right.00.001.png",
    "characterId": "vegeta_super_saiyan",
    "formId": "vegeta_super_saiyan_majin",
    "assetType": "actor_frame",
@@ -28,20 +28,19 @@
     "x": "14",
     "y": "448"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "vegeta_super_saiyan_majin/002.png",
-   "canonicalId": "vegeta_super_saiyan_majin.defense.start.02",
+   "canonicalId": "vegeta_super_saiyan_majin.defense.hold.guard.01.002",
    "characterId": "vegeta_super_saiyan",
    "formId": "vegeta_super_saiyan_majin",
    "assetType": "actor_frame",
    "view": "FIELD",
    "family": "defense",
-   "role": "start",
+   "role": "hold",
    "variant": "guard",
-   "sequenceIndex": 0,
+   "sequenceIndex": 1,
    "runtimePoses": [
     "guard",
     "beam_guard"
@@ -54,20 +53,19 @@
     "x": "53",
     "y": "447"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "vegeta_super_saiyan_majin/003.png",
-   "canonicalId": "vegeta_super_saiyan_majin.defense.start.04",
+   "canonicalId": "vegeta_super_saiyan_majin.defense.recover.guard.02.003",
    "characterId": "vegeta_super_saiyan",
    "formId": "vegeta_super_saiyan_majin",
    "assetType": "actor_frame",
    "view": "FIELD",
    "family": "defense",
-   "role": "start",
+   "role": "recover",
    "variant": "guard",
-   "sequenceIndex": 0,
+   "sequenceIndex": 2,
    "runtimePoses": [
     "guard",
     "beam_guard"
@@ -80,12 +78,11 @@
     "x": "93",
     "y": "448"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "vegeta_super_saiyan_majin/004.png",
-   "canonicalId": "vegeta_super_saiyan_majin.power.gather_power.00",
+   "canonicalId": "vegeta_super_saiyan_majin.power.gather_power.gather_power.02.004",
    "characterId": "vegeta_super_saiyan",
    "formId": "vegeta_super_saiyan_majin",
    "assetType": "composite",
@@ -93,7 +90,7 @@
    "family": "power",
    "role": "gather_power",
    "variant": "gather_power",
-   "sequenceIndex": 0,
+   "sequenceIndex": 2,
    "runtimePoses": [
     "gather_power",
     "power_up"
@@ -106,20 +103,19 @@
     "x": "139",
     "y": "446"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "vegeta_super_saiyan_majin/005.png",
-   "canonicalId": "vegeta_super_saiyan_majin.defense.start.06",
+   "canonicalId": "vegeta_super_saiyan_majin.defense.recover.evade.01.005",
    "characterId": "vegeta_super_saiyan",
    "formId": "vegeta_super_saiyan_majin",
    "assetType": "actor_frame",
    "view": "FIELD",
    "family": "defense",
-   "role": "start",
+   "role": "recover",
    "variant": "evade",
-   "sequenceIndex": 0,
+   "sequenceIndex": 1,
    "runtimePoses": [
     "evade"
    ],
@@ -135,7 +131,7 @@
   },
   {
    "sourceId": "vegeta_super_saiyan_majin/006.png",
-   "canonicalId": "vegeta_super_saiyan_majin.defense.start.07",
+   "canonicalId": "vegeta_super_saiyan_majin.defense.start.evade.00.006",
    "characterId": "vegeta_super_saiyan",
    "formId": "vegeta_super_saiyan_majin",
    "assetType": "actor_frame",
@@ -159,15 +155,15 @@
   },
   {
    "sourceId": "vegeta_super_saiyan_majin/007.png",
-   "canonicalId": "vegeta_super_saiyan_majin.movement.start.00",
+   "canonicalId": "vegeta_super_saiyan_majin.movement.end.move_front.01.007",
    "characterId": "vegeta_super_saiyan",
    "formId": "vegeta_super_saiyan_majin",
    "assetType": "actor_frame",
    "view": "FIELD",
    "family": "movement",
-   "role": "start",
+   "role": "end",
    "variant": "move_front",
-   "sequenceIndex": 0,
+   "sequenceIndex": 1,
    "runtimePoses": [
     "move_front",
     "move_back"
@@ -180,12 +176,11 @@
     "x": "95",
     "y": "497"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "vegeta_super_saiyan_majin/008.png",
-   "canonicalId": "vegeta_super_saiyan_majin.movement.start.02",
+   "canonicalId": "vegeta_super_saiyan_majin.movement.start.move_front.00.008",
    "characterId": "vegeta_super_saiyan",
    "formId": "vegeta_super_saiyan_majin",
    "assetType": "actor_frame",
@@ -206,12 +201,11 @@
     "x": "135",
     "y": "501"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "vegeta_super_saiyan_majin/009.png",
-   "canonicalId": "vegeta_super_saiyan_majin.reaction.hurt_light.00",
+   "canonicalId": "vegeta_super_saiyan_majin.reaction.hurt_light.hurt.00.009",
    "characterId": "vegeta_super_saiyan",
    "formId": "vegeta_super_saiyan_majin",
    "assetType": "actor_frame",
@@ -235,15 +229,15 @@
   },
   {
    "sourceId": "vegeta_super_saiyan_majin/010.png",
-   "canonicalId": "vegeta_super_saiyan_majin.reaction.hurt_light.01",
+   "canonicalId": "vegeta_super_saiyan_majin.reaction.hurt_heavy.hurt.01.010",
    "characterId": "vegeta_super_saiyan",
    "formId": "vegeta_super_saiyan_majin",
    "assetType": "actor_frame",
    "view": "FIELD",
    "family": "reaction",
-   "role": "hurt_light",
+   "role": "hurt_heavy",
    "variant": "hurt",
-   "sequenceIndex": 0,
+   "sequenceIndex": 1,
    "runtimePoses": [
     "hurt"
    ],
@@ -259,15 +253,15 @@
   },
   {
    "sourceId": "vegeta_super_saiyan_majin/011.png",
-   "canonicalId": "vegeta_super_saiyan_majin.reaction.hurt_light.02",
+   "canonicalId": "vegeta_super_saiyan_majin.reaction.hurt_heavy.hurt.02.011",
    "characterId": "vegeta_super_saiyan",
    "formId": "vegeta_super_saiyan_majin",
    "assetType": "actor_frame",
    "view": "FIELD",
    "family": "reaction",
-   "role": "hurt_light",
+   "role": "hurt_heavy",
    "variant": "hurt",
-   "sequenceIndex": 0,
+   "sequenceIndex": 2,
    "runtimePoses": [
     "hurt"
    ],
@@ -283,15 +277,15 @@
   },
   {
    "sourceId": "vegeta_super_saiyan_majin/012.png",
-   "canonicalId": "vegeta_super_saiyan_majin.reaction.hurt_light.03",
+   "canonicalId": "vegeta_super_saiyan_majin.reaction.hurt_heavy.hurt.03.012",
    "characterId": "vegeta_super_saiyan",
    "formId": "vegeta_super_saiyan_majin",
    "assetType": "actor_frame",
    "view": "FIELD",
    "family": "reaction",
-   "role": "hurt_light",
+   "role": "hurt_heavy",
    "variant": "hurt",
-   "sequenceIndex": 0,
+   "sequenceIndex": 3,
    "runtimePoses": [
     "hurt"
    ],
@@ -307,15 +301,15 @@
   },
   {
    "sourceId": "vegeta_super_saiyan_majin/013.png",
-   "canonicalId": "vegeta_super_saiyan_majin.reaction.hurt_light.04",
+   "canonicalId": "vegeta_super_saiyan_majin.reaction.hurt_heavy.hurt.04.013",
    "characterId": "vegeta_super_saiyan",
    "formId": "vegeta_super_saiyan_majin",
    "assetType": "actor_frame",
    "view": "FIELD",
    "family": "reaction",
-   "role": "hurt_light",
+   "role": "hurt_heavy",
    "variant": "hurt",
-   "sequenceIndex": 0,
+   "sequenceIndex": 4,
    "runtimePoses": [
     "hurt"
    ],
@@ -331,15 +325,15 @@
   },
   {
    "sourceId": "vegeta_super_saiyan_majin/014.png",
-   "canonicalId": "vegeta_super_saiyan_majin.melee.ready.02",
+   "canonicalId": "vegeta_super_saiyan_majin.melee.follow_through.attack_forward.05.014",
    "characterId": "vegeta_super_saiyan",
    "formId": "vegeta_super_saiyan_majin",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "ready",
+   "role": "follow_through",
    "variant": "attack_forward",
-   "sequenceIndex": 0,
+   "sequenceIndex": 5,
    "runtimePoses": [
     "attack_fwd",
     "punch_left"
@@ -352,8 +346,7 @@
     "x": "209",
     "y": "549"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "vegeta_super_saiyan_majin/015.png",
@@ -380,15 +373,15 @@
   },
   {
    "sourceId": "vegeta_super_saiyan_majin/016.png",
-   "canonicalId": "vegeta_super_saiyan_majin.melee.ready.04",
+   "canonicalId": "vegeta_super_saiyan_majin.melee.windup.attack_forward.01.016",
    "characterId": "vegeta_super_saiyan",
    "formId": "vegeta_super_saiyan_majin",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "ready",
+   "role": "windup",
    "variant": "attack_forward",
-   "sequenceIndex": 0,
+   "sequenceIndex": 1,
    "runtimePoses": [
     "attack_fwd",
     "punch_right"
@@ -401,20 +394,19 @@
     "x": "15",
     "y": "605"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "vegeta_super_saiyan_majin/017.png",
-   "canonicalId": "vegeta_super_saiyan_majin.melee.ready.06",
+   "canonicalId": "vegeta_super_saiyan_majin.melee.travel.attack_forward.02.017",
    "characterId": "vegeta_super_saiyan",
    "formId": "vegeta_super_saiyan_majin",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "ready",
+   "role": "travel",
    "variant": "attack_forward",
-   "sequenceIndex": 0,
+   "sequenceIndex": 2,
    "runtimePoses": [
     "attack_fwd",
     "punch_right"
@@ -427,12 +419,11 @@
     "x": "57",
     "y": "602"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "vegeta_super_saiyan_majin/018.png",
-   "canonicalId": "vegeta_super_saiyan_majin.reaction.knockback_back.05",
+   "canonicalId": "vegeta_super_saiyan_majin.reaction.knockback_back.back.00.018",
    "characterId": "vegeta_super_saiyan",
    "formId": "vegeta_super_saiyan_majin",
    "assetType": "actor_frame",
@@ -454,12 +445,11 @@
     "x": "96",
     "y": "607"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "vegeta_super_saiyan_majin/019.png",
-   "canonicalId": "vegeta_super_saiyan_majin.reaction.knockback_up.06",
+   "canonicalId": "vegeta_super_saiyan_majin.reaction.knockback_up.up.00.019",
    "characterId": "vegeta_super_saiyan",
    "formId": "vegeta_super_saiyan_majin",
    "assetType": "actor_frame",
@@ -481,20 +471,19 @@
     "x": "141",
     "y": "606"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "vegeta_super_saiyan_majin/020.png",
-   "canonicalId": "vegeta_super_saiyan_majin.melee.ready.08",
+   "canonicalId": "vegeta_super_saiyan_majin.melee.windup.attack_vertical.01.020",
    "characterId": "vegeta_super_saiyan",
    "formId": "vegeta_super_saiyan_majin",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "ready",
+   "role": "windup",
    "variant": "attack_vertical",
-   "sequenceIndex": 0,
+   "sequenceIndex": 1,
    "runtimePoses": [
     "attack_ud"
    ],
@@ -510,15 +499,15 @@
   },
   {
    "sourceId": "vegeta_super_saiyan_majin/021.png",
-   "canonicalId": "vegeta_super_saiyan_majin.melee.ready.09",
+   "canonicalId": "vegeta_super_saiyan_majin.melee.contact.attack_vertical.02.021",
    "characterId": "vegeta_super_saiyan",
    "formId": "vegeta_super_saiyan_majin",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "ready",
+   "role": "contact",
    "variant": "attack_vertical",
-   "sequenceIndex": 0,
+   "sequenceIndex": 2,
    "runtimePoses": [
     "attack_ud"
    ],
@@ -534,7 +523,7 @@
   },
   {
    "sourceId": "vegeta_super_saiyan_majin/022.png",
-   "canonicalId": "vegeta_super_saiyan_majin.reaction.knockback_down.07",
+   "canonicalId": "vegeta_super_saiyan_majin.reaction.knockback_down.down.00.022",
    "characterId": "vegeta_super_saiyan",
    "formId": "vegeta_super_saiyan_majin",
    "assetType": "actor_frame",
@@ -581,7 +570,7 @@
   },
   {
    "sourceId": "vegeta_super_saiyan_majin/024.png",
-   "canonicalId": "vegeta_super_saiyan_majin.melee.ready.10",
+   "canonicalId": "vegeta_super_saiyan_majin.melee.ready.attack_forward.00.024",
    "characterId": "vegeta_super_saiyan",
    "formId": "vegeta_super_saiyan_majin",
    "assetType": "actor_frame",
@@ -603,12 +592,11 @@
     "x": "54",
     "y": "657"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "vegeta_super_saiyan_majin/025.png",
-   "canonicalId": "vegeta_super_saiyan_majin.melee.strike.12",
+   "canonicalId": "vegeta_super_saiyan_majin.melee.strike.kick_right.00.025",
    "characterId": "vegeta_super_saiyan",
    "formId": "vegeta_super_saiyan_majin",
    "assetType": "actor_frame",
@@ -632,7 +620,7 @@
   },
   {
    "sourceId": "vegeta_super_saiyan_majin/026.png",
-   "canonicalId": "vegeta_super_saiyan_majin.melee.strike.13",
+   "canonicalId": "vegeta_super_saiyan_majin.melee.strike.kick_right.01.026",
    "characterId": "vegeta_super_saiyan",
    "formId": "vegeta_super_saiyan_majin",
    "assetType": "actor_frame",
@@ -640,7 +628,7 @@
    "family": "melee",
    "role": "strike",
    "variant": "kick_right",
-   "sequenceIndex": 0,
+   "sequenceIndex": 1,
    "runtimePoses": [
     "kick_right"
    ],
@@ -748,7 +736,7 @@
   },
   {
    "sourceId": "vegeta_super_saiyan_majin/031.png",
-   "canonicalId": "vegeta_super_saiyan_majin.melee.ready.14",
+   "canonicalId": "vegeta_super_saiyan_majin.melee.ready.attack_forward.00.031",
    "characterId": "vegeta_super_saiyan",
    "formId": "vegeta_super_saiyan_majin",
    "assetType": "actor_frame",
@@ -770,8 +758,7 @@
     "x": "17",
     "y": "716"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "vegeta_super_saiyan_majin/032.png",
@@ -798,7 +785,7 @@
   },
   {
    "sourceId": "vegeta_super_saiyan_majin/033.png",
-   "canonicalId": "vegeta_super_saiyan_majin.effect.aura.00",
+   "canonicalId": "vegeta_super_saiyan_majin.effect.aura.aura_power.00.033",
    "characterId": "vegeta_super_saiyan",
    "formId": "vegeta_super_saiyan_majin",
    "assetType": "effect",
@@ -822,7 +809,7 @@
   },
   {
    "sourceId": "vegeta_super_saiyan_majin/034.png",
-   "canonicalId": "vegeta_super_saiyan_majin.effect.aura.01",
+   "canonicalId": "vegeta_super_saiyan_majin.effect.aura.aura_power.01.034",
    "characterId": "vegeta_super_saiyan",
    "formId": "vegeta_super_saiyan_majin",
    "assetType": "effect",
@@ -830,7 +817,7 @@
    "family": "effect",
    "role": "aura",
    "variant": "aura_power",
-   "sequenceIndex": 0,
+   "sequenceIndex": 1,
    "runtimePoses": [
     "aura_power"
    ],
@@ -846,7 +833,7 @@
   },
   {
    "sourceId": "vegeta_super_saiyan_majin/035.png",
-   "canonicalId": "vegeta_super_saiyan_majin.effect.aura.02",
+   "canonicalId": "vegeta_super_saiyan_majin.effect.aura.aura_power.02.035",
    "characterId": "vegeta_super_saiyan",
    "formId": "vegeta_super_saiyan_majin",
    "assetType": "effect",
@@ -854,7 +841,7 @@
    "family": "effect",
    "role": "aura",
    "variant": "aura_power",
-   "sequenceIndex": 0,
+   "sequenceIndex": 2,
    "runtimePoses": [
     "aura_power"
    ],
@@ -916,7 +903,7 @@
   },
   {
    "sourceId": "vegeta_super_saiyan_majin/038.png",
-   "canonicalId": "vegeta_super_saiyan_majin.beam.charge_start.02",
+   "canonicalId": "vegeta_super_saiyan_majin.beam.charge_start.charge.01.038",
    "characterId": "vegeta_super_saiyan",
    "formId": "vegeta_super_saiyan_majin",
    "assetType": "actor_frame",
@@ -924,7 +911,7 @@
    "family": "beam",
    "role": "charge_start",
    "variant": "charge",
-   "sequenceIndex": 0,
+   "sequenceIndex": 1,
    "runtimePoses": [
     "beam_charge"
    ],
@@ -940,7 +927,7 @@
   },
   {
    "sourceId": "vegeta_super_saiyan_majin/039.png",
-   "canonicalId": "vegeta_super_saiyan_majin.beam.release.03",
+   "canonicalId": "vegeta_super_saiyan_majin.beam.release.fire.03.039",
    "characterId": "vegeta_super_saiyan",
    "formId": "vegeta_super_saiyan_majin",
    "assetType": "actor_frame",
@@ -948,7 +935,7 @@
    "family": "beam",
    "role": "release",
    "variant": "fire",
-   "sequenceIndex": 0,
+   "sequenceIndex": 3,
    "runtimePoses": [
     "beam_fire"
    ],
@@ -964,7 +951,7 @@
   },
   {
    "sourceId": "vegeta_super_saiyan_majin/040.png",
-   "canonicalId": "vegeta_super_saiyan_majin.beam.release.04",
+   "canonicalId": "vegeta_super_saiyan_majin.beam.release.fire.02.040",
    "characterId": "vegeta_super_saiyan",
    "formId": "vegeta_super_saiyan_majin",
    "assetType": "actor_frame",
@@ -972,7 +959,7 @@
    "family": "beam",
    "role": "release",
    "variant": "fire",
-   "sequenceIndex": 0,
+   "sequenceIndex": 2,
    "runtimePoses": [
     "beam_fire"
    ],
@@ -1011,15 +998,15 @@
   },
   {
    "sourceId": "vegeta_super_saiyan_majin/042.png",
-   "canonicalId": "vegeta_super_saiyan_majin.beam.charge_start.05",
+   "canonicalId": "vegeta_super_saiyan_majin.beam.charge_hold.charge.02.042",
    "characterId": "vegeta_super_saiyan",
    "formId": "vegeta_super_saiyan_majin",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "beam",
-   "role": "charge_start",
+   "role": "charge_hold",
    "variant": "charge",
-   "sequenceIndex": 0,
+   "sequenceIndex": 2,
    "runtimePoses": [
     "beam_charge"
    ],
@@ -1081,7 +1068,7 @@
   },
   {
    "sourceId": "vegeta_super_saiyan_majin/045.png",
-   "canonicalId": "vegeta_super_saiyan_majin.beam.release.06",
+   "canonicalId": "vegeta_super_saiyan_majin.beam.release.fire.00.045",
    "characterId": "vegeta_super_saiyan",
    "formId": "vegeta_super_saiyan_majin",
    "assetType": "actor_frame",
@@ -1105,7 +1092,7 @@
   },
   {
    "sourceId": "vegeta_super_saiyan_majin/046.png",
-   "canonicalId": "vegeta_super_saiyan_majin.beam.release.07",
+   "canonicalId": "vegeta_super_saiyan_majin.beam.release.fire.01.046",
    "characterId": "vegeta_super_saiyan",
    "formId": "vegeta_super_saiyan_majin",
    "assetType": "actor_frame",
@@ -1113,7 +1100,7 @@
    "family": "beam",
    "role": "release",
    "variant": "fire",
-   "sequenceIndex": 0,
+   "sequenceIndex": 1,
    "runtimePoses": [
     "beam_fire"
    ],
@@ -1175,7 +1162,7 @@
   },
   {
    "sourceId": "vegeta_super_saiyan_majin/049.png",
-   "canonicalId": "vegeta_super_saiyan_majin.power.gather_power.06",
+   "canonicalId": "vegeta_super_saiyan_majin.power.gather_power.gather_power.01.049",
    "characterId": "vegeta_super_saiyan",
    "formId": "vegeta_super_saiyan_majin",
    "assetType": "composite",
@@ -1183,7 +1170,7 @@
    "family": "power",
    "role": "gather_power",
    "variant": "gather_power",
-   "sequenceIndex": 0,
+   "sequenceIndex": 1,
    "runtimePoses": [
     "gather_power",
     "power_up"
@@ -1196,8 +1183,7 @@
     "x": "307",
     "y": "868"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "vegeta_super_saiyan_majin/050.png",
@@ -1224,7 +1210,7 @@
   },
   {
    "sourceId": "vegeta_super_saiyan_majin/051.png",
-   "canonicalId": "vegeta_super_saiyan_majin.effect.aura.03",
+   "canonicalId": "vegeta_super_saiyan_majin.effect.aura.aura_support.00.051",
    "characterId": "vegeta_super_saiyan",
    "formId": "vegeta_super_saiyan_majin",
    "assetType": "effect",
@@ -1248,7 +1234,7 @@
   },
   {
    "sourceId": "vegeta_super_saiyan_majin/052.png",
-   "canonicalId": "vegeta_super_saiyan_majin.effect.aura.04",
+   "canonicalId": "vegeta_super_saiyan_majin.effect.aura.aura_support.01.052",
    "characterId": "vegeta_super_saiyan",
    "formId": "vegeta_super_saiyan_majin",
    "assetType": "effect",
@@ -1256,7 +1242,7 @@
    "family": "effect",
    "role": "aura",
    "variant": "aura_support",
-   "sequenceIndex": 0,
+   "sequenceIndex": 1,
    "runtimePoses": [
     "aura_support"
    ],
@@ -1272,7 +1258,7 @@
   },
   {
    "sourceId": "vegeta_super_saiyan_majin/053.png",
-   "canonicalId": "vegeta_super_saiyan_majin.effect.aura.05",
+   "canonicalId": "vegeta_super_saiyan_majin.effect.aura.aura_support.02.053",
    "characterId": "vegeta_super_saiyan",
    "formId": "vegeta_super_saiyan_majin",
    "assetType": "effect",
@@ -1280,7 +1266,7 @@
    "family": "effect",
    "role": "aura",
    "variant": "aura_support",
-   "sequenceIndex": 0,
+   "sequenceIndex": 2,
    "runtimePoses": [
     "aura_support"
    ],
@@ -1296,15 +1282,15 @@
   },
   {
    "sourceId": "vegeta_super_saiyan_majin/000_attack_fwd.png",
-   "canonicalId": "vegeta_super_saiyan_majin.melee.ready.16",
+   "canonicalId": "vegeta_super_saiyan_majin.melee.strike.attack_forward.03.000_attack_fwd",
    "characterId": "vegeta_super_saiyan",
    "formId": "vegeta_super_saiyan_majin",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "ready",
+   "role": "strike",
    "variant": "attack_forward",
-   "sequenceIndex": 0,
+   "sequenceIndex": 3,
    "runtimePoses": [
     "attack_fwd",
     "punch_left"
@@ -1317,20 +1303,19 @@
     "x": null,
     "y": null
    },
-   "frameKind": "fixed_only",
-   "usedPoses": 1
+   "frameKind": "fixed_only"
   },
   {
    "sourceId": "vegeta_super_saiyan_majin/001_attack_fwd.png",
-   "canonicalId": "vegeta_super_saiyan_majin.melee.ready.18",
+   "canonicalId": "vegeta_super_saiyan_majin.melee.contact.attack_forward.04.001_attack_fwd",
    "characterId": "vegeta_super_saiyan",
    "formId": "vegeta_super_saiyan_majin",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "ready",
+   "role": "contact",
    "variant": "attack_forward",
-   "sequenceIndex": 0,
+   "sequenceIndex": 4,
    "runtimePoses": [
     "attack_fwd",
     "punch_left"
@@ -1343,20 +1328,19 @@
     "x": null,
     "y": null
    },
-   "frameKind": "fixed_only",
-   "usedPoses": 1
+   "frameKind": "fixed_only"
   },
   {
    "sourceId": "vegeta_super_saiyan_majin/002_attack_fwd.png",
-   "canonicalId": "vegeta_super_saiyan_majin.melee.ready.20",
+   "canonicalId": "vegeta_super_saiyan_majin.melee.recover.attack_forward.06.002_attack_fwd",
    "characterId": "vegeta_super_saiyan",
    "formId": "vegeta_super_saiyan_majin",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "ready",
+   "role": "recover",
    "variant": "attack_forward",
-   "sequenceIndex": 0,
+   "sequenceIndex": 6,
    "runtimePoses": [
     "attack_fwd",
     "punch_left"
@@ -1369,12 +1353,11 @@
     "x": null,
     "y": null
    },
-   "frameKind": "fixed_only",
-   "usedPoses": 1
+   "frameKind": "fixed_only"
   },
   {
    "sourceId": "vegeta_super_saiyan_majin/003_attack_ud.png",
-   "canonicalId": "vegeta_super_saiyan_majin.melee.ready.22",
+   "canonicalId": "vegeta_super_saiyan_majin.melee.ready.attack_vertical.00.003_attack_ud",
    "characterId": "vegeta_super_saiyan",
    "formId": "vegeta_super_saiyan_majin",
    "assetType": "actor_frame",
@@ -1398,15 +1381,15 @@
   },
   {
    "sourceId": "vegeta_super_saiyan_majin/004_attack_ud.png",
-   "canonicalId": "vegeta_super_saiyan_majin.melee.ready.23",
+   "canonicalId": "vegeta_super_saiyan_majin.melee.recover.attack_vertical.03.004_attack_ud",
    "characterId": "vegeta_super_saiyan",
    "formId": "vegeta_super_saiyan_majin",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "ready",
+   "role": "recover",
    "variant": "attack_vertical",
-   "sequenceIndex": 0,
+   "sequenceIndex": 3,
    "runtimePoses": [
     "attack_ud"
    ],

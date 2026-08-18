@@ -4,7 +4,7 @@
  "frames": [
   {
    "sourceId": "ginyu_base/001.png",
-   "canonicalId": "ginyu_base.idle.idle.00",
+   "canonicalId": "ginyu_base.melee.strike.punch_right.00.001.png",
    "characterId": "ginyu",
    "formId": "ginyu_base",
    "assetType": "actor_frame",
@@ -28,20 +28,19 @@
     "x": "9",
     "y": "20"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "ginyu_base/002.png",
-   "canonicalId": "ginyu_base.defense.start.02",
+   "canonicalId": "ginyu_base.defense.hold.guard.01.002",
    "characterId": "ginyu",
    "formId": "ginyu_base",
    "assetType": "actor_frame",
    "view": "FIELD",
    "family": "defense",
-   "role": "start",
+   "role": "hold",
    "variant": "guard",
-   "sequenceIndex": 0,
+   "sequenceIndex": 1,
    "runtimePoses": [
     "guard",
     "beam_guard"
@@ -54,20 +53,19 @@
     "x": "48",
     "y": "20"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "ginyu_base/003.png",
-   "canonicalId": "ginyu_base.defense.start.04",
+   "canonicalId": "ginyu_base.defense.recover.guard.02.003",
    "characterId": "ginyu",
    "formId": "ginyu_base",
    "assetType": "actor_frame",
    "view": "FIELD",
    "family": "defense",
-   "role": "start",
+   "role": "recover",
    "variant": "guard",
-   "sequenceIndex": 0,
+   "sequenceIndex": 2,
    "runtimePoses": [
     "guard",
     "beam_guard"
@@ -80,8 +78,7 @@
     "x": "89",
     "y": "21"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "ginyu_base/004.png",
@@ -108,15 +105,15 @@
   },
   {
    "sourceId": "ginyu_base/005.png",
-   "canonicalId": "ginyu_base.defense.start.06",
+   "canonicalId": "ginyu_base.defense.recover.evade.01.005",
    "characterId": "ginyu",
    "formId": "ginyu_base",
    "assetType": "actor_frame",
    "view": "FIELD",
    "family": "defense",
-   "role": "start",
+   "role": "recover",
    "variant": "evade",
-   "sequenceIndex": 0,
+   "sequenceIndex": 1,
    "runtimePoses": [
     "evade"
    ],
@@ -132,7 +129,7 @@
   },
   {
    "sourceId": "ginyu_base/006.png",
-   "canonicalId": "ginyu_base.defense.start.07",
+   "canonicalId": "ginyu_base.defense.start.evade.00.006",
    "characterId": "ginyu",
    "formId": "ginyu_base",
    "assetType": "actor_frame",
@@ -156,15 +153,15 @@
   },
   {
    "sourceId": "ginyu_base/007.png",
-   "canonicalId": "ginyu_base.movement.start.00",
+   "canonicalId": "ginyu_base.movement.end.move_front.01.007",
    "characterId": "ginyu",
    "formId": "ginyu_base",
    "assetType": "actor_frame",
    "view": "FIELD",
    "family": "movement",
-   "role": "start",
+   "role": "end",
    "variant": "move_front",
-   "sequenceIndex": 0,
+   "sequenceIndex": 1,
    "runtimePoses": [
     "move_front",
     "move_back"
@@ -177,12 +174,11 @@
     "x": "92",
     "y": "71"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "ginyu_base/008.png",
-   "canonicalId": "ginyu_base.movement.start.02",
+   "canonicalId": "ginyu_base.movement.start.move_front.00.008",
    "characterId": "ginyu",
    "formId": "ginyu_base",
    "assetType": "actor_frame",
@@ -203,12 +199,11 @@
     "x": "131",
     "y": "73"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "ginyu_base/009.png",
-   "canonicalId": "ginyu_base.reaction.hurt_light.00",
+   "canonicalId": "ginyu_base.reaction.hurt_light.hurt.00.009",
    "characterId": "ginyu",
    "formId": "ginyu_base",
    "assetType": "actor_frame",
@@ -232,15 +227,15 @@
   },
   {
    "sourceId": "ginyu_base/010.png",
-   "canonicalId": "ginyu_base.reaction.hurt_light.01",
+   "canonicalId": "ginyu_base.reaction.hurt_heavy.hurt.01.010",
    "characterId": "ginyu",
    "formId": "ginyu_base",
    "assetType": "actor_frame",
    "view": "FIELD",
    "family": "reaction",
-   "role": "hurt_light",
+   "role": "hurt_heavy",
    "variant": "hurt",
-   "sequenceIndex": 0,
+   "sequenceIndex": 1,
    "runtimePoses": [
     "hurt"
    ],
@@ -256,15 +251,15 @@
   },
   {
    "sourceId": "ginyu_base/011.png",
-   "canonicalId": "ginyu_base.reaction.hurt_light.02",
+   "canonicalId": "ginyu_base.reaction.hurt_heavy.hurt.02.011",
    "characterId": "ginyu",
    "formId": "ginyu_base",
    "assetType": "actor_frame",
    "view": "FIELD",
    "family": "reaction",
-   "role": "hurt_light",
+   "role": "hurt_heavy",
    "variant": "hurt",
-   "sequenceIndex": 0,
+   "sequenceIndex": 2,
    "runtimePoses": [
     "hurt"
    ],
@@ -280,15 +275,15 @@
   },
   {
    "sourceId": "ginyu_base/012.png",
-   "canonicalId": "ginyu_base.reaction.hurt_light.03",
+   "canonicalId": "ginyu_base.reaction.hurt_heavy.hurt.03.012",
    "characterId": "ginyu",
    "formId": "ginyu_base",
    "assetType": "actor_frame",
    "view": "FIELD",
    "family": "reaction",
-   "role": "hurt_light",
+   "role": "hurt_heavy",
    "variant": "hurt",
-   "sequenceIndex": 0,
+   "sequenceIndex": 3,
    "runtimePoses": [
     "hurt"
    ],
@@ -304,15 +299,15 @@
   },
   {
    "sourceId": "ginyu_base/013.png",
-   "canonicalId": "ginyu_base.reaction.hurt_light.04",
+   "canonicalId": "ginyu_base.reaction.hurt_heavy.hurt.04.013",
    "characterId": "ginyu",
    "formId": "ginyu_base",
    "assetType": "actor_frame",
    "view": "FIELD",
    "family": "reaction",
-   "role": "hurt_light",
+   "role": "hurt_heavy",
    "variant": "hurt",
-   "sequenceIndex": 0,
+   "sequenceIndex": 4,
    "runtimePoses": [
     "hurt"
    ],
@@ -328,15 +323,15 @@
   },
   {
    "sourceId": "ginyu_base/014.png",
-   "canonicalId": "ginyu_base.melee.ready.02",
+   "canonicalId": "ginyu_base.melee.follow_through.attack_forward.05.014",
    "characterId": "ginyu",
    "formId": "ginyu_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "ready",
+   "role": "follow_through",
    "variant": "attack_forward",
-   "sequenceIndex": 0,
+   "sequenceIndex": 5,
    "runtimePoses": [
     "attack_fwd",
     "punch_left"
@@ -349,8 +344,7 @@
     "x": "207",
     "y": "117"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "ginyu_base/015.png",
@@ -400,15 +394,15 @@
   },
   {
    "sourceId": "ginyu_base/017.png",
-   "canonicalId": "ginyu_base.melee.ready.04",
+   "canonicalId": "ginyu_base.melee.travel.attack_forward.02.017",
    "characterId": "ginyu",
    "formId": "ginyu_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "ready",
+   "role": "travel",
    "variant": "attack_forward",
-   "sequenceIndex": 0,
+   "sequenceIndex": 2,
    "runtimePoses": [
     "attack_fwd",
     "punch_right"
@@ -421,20 +415,19 @@
     "x": "47",
     "y": "177"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "ginyu_base/018.png",
-   "canonicalId": "ginyu_base.melee.ready.06",
+   "canonicalId": "ginyu_base.melee.recover.attack_forward.06.018",
    "characterId": "ginyu",
    "formId": "ginyu_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "ready",
+   "role": "recover",
    "variant": "attack_forward",
-   "sequenceIndex": 0,
+   "sequenceIndex": 6,
    "runtimePoses": [
     "attack_fwd",
     "punch_left",
@@ -448,12 +441,11 @@
     "x": "93",
     "y": "181"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "ginyu_base/019.png",
-   "canonicalId": "ginyu_base.melee.ready.08",
+   "canonicalId": "ginyu_base.melee.ready.attack_vertical.00.019",
    "characterId": "ginyu",
    "formId": "ginyu_base",
    "assetType": "actor_frame",
@@ -477,15 +469,15 @@
   },
   {
    "sourceId": "ginyu_base/020.png",
-   "canonicalId": "ginyu_base.melee.ready.09",
+   "canonicalId": "ginyu_base.melee.windup.attack_vertical.01.020",
    "characterId": "ginyu",
    "formId": "ginyu_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "ready",
+   "role": "windup",
    "variant": "attack_vertical",
-   "sequenceIndex": 0,
+   "sequenceIndex": 1,
    "runtimePoses": [
     "attack_ud",
     "knockback_up"
@@ -498,20 +490,19 @@
     "x": "174",
     "y": "177"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "ginyu_base/021.png",
-   "canonicalId": "ginyu_base.melee.ready.10",
+   "canonicalId": "ginyu_base.melee.contact.attack_vertical.02.021",
    "characterId": "ginyu",
    "formId": "ginyu_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "ready",
+   "role": "contact",
    "variant": "attack_vertical",
-   "sequenceIndex": 0,
+   "sequenceIndex": 2,
    "runtimePoses": [
     "attack_ud"
    ],
@@ -527,15 +518,15 @@
   },
   {
    "sourceId": "ginyu_base/022.png",
-   "canonicalId": "ginyu_base.melee.ready.11",
+   "canonicalId": "ginyu_base.melee.recover.attack_vertical.03.022",
    "characterId": "ginyu",
    "formId": "ginyu_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "ready",
+   "role": "recover",
    "variant": "attack_vertical",
-   "sequenceIndex": 0,
+   "sequenceIndex": 3,
    "runtimePoses": [
     "attack_ud",
     "knockback_down"
@@ -548,8 +539,7 @@
     "x": "251",
     "y": "187"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "ginyu_base/023.png",
@@ -622,7 +612,7 @@
   },
   {
    "sourceId": "ginyu_base/026.png",
-   "canonicalId": "ginyu_base.melee.ready.12",
+   "canonicalId": "ginyu_base.melee.ready.attack_forward.00.026",
    "characterId": "ginyu",
    "formId": "ginyu_base",
    "assetType": "actor_frame",
@@ -644,20 +634,19 @@
     "x": "9",
     "y": "229"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "ginyu_base/027.png",
-   "canonicalId": "ginyu_base.melee.ready.14",
+   "canonicalId": "ginyu_base.melee.windup.attack_forward.01.027",
    "characterId": "ginyu",
    "formId": "ginyu_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "ready",
+   "role": "windup",
    "variant": "attack_forward",
-   "sequenceIndex": 0,
+   "sequenceIndex": 1,
    "runtimePoses": [
     "attack_fwd",
     "punch_right"
@@ -670,20 +659,19 @@
     "x": "49",
     "y": "229"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "ginyu_base/028.png",
-   "canonicalId": "ginyu_base.melee.ready.16",
+   "canonicalId": "ginyu_base.melee.strike.attack_forward.03.028",
    "characterId": "ginyu",
    "formId": "ginyu_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "ready",
+   "role": "strike",
    "variant": "attack_forward",
-   "sequenceIndex": 0,
+   "sequenceIndex": 3,
    "runtimePoses": [
     "attack_fwd",
     "punch_left",
@@ -697,20 +685,19 @@
     "x": "91",
     "y": "229"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "ginyu_base/029.png",
-   "canonicalId": "ginyu_base.melee.ready.19",
+   "canonicalId": "ginyu_base.melee.contact.attack_forward.04.029",
    "characterId": "ginyu",
    "formId": "ginyu_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "ready",
+   "role": "contact",
    "variant": "attack_forward",
-   "sequenceIndex": 0,
+   "sequenceIndex": 4,
    "runtimePoses": [
     "attack_fwd",
     "punch_left",
@@ -724,8 +711,7 @@
     "x": "143",
     "y": "229"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "ginyu_base/030.png",
@@ -798,7 +784,7 @@
   },
   {
    "sourceId": "ginyu_base/033.png",
-   "canonicalId": "ginyu_base.melee.ready.22",
+   "canonicalId": "ginyu_base.melee.ready.attack_forward.00.033",
    "characterId": "ginyu",
    "formId": "ginyu_base",
    "assetType": "actor_frame",
@@ -820,8 +806,7 @@
     "x": "6",
     "y": "288"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "ginyu_base/034.png",
@@ -848,7 +833,7 @@
   },
   {
    "sourceId": "ginyu_base/035.png",
-   "canonicalId": "ginyu_base.effect.aura.00",
+   "canonicalId": "ginyu_base.effect.aura.aura_power.00.035",
    "characterId": "ginyu",
    "formId": "ginyu_base",
    "assetType": "effect",
@@ -872,7 +857,7 @@
   },
   {
    "sourceId": "ginyu_base/036.png",
-   "canonicalId": "ginyu_base.effect.aura.01",
+   "canonicalId": "ginyu_base.effect.aura.aura_power.01.036",
    "characterId": "ginyu",
    "formId": "ginyu_base",
    "assetType": "effect",
@@ -880,7 +865,7 @@
    "family": "effect",
    "role": "aura",
    "variant": "aura_power",
-   "sequenceIndex": 0,
+   "sequenceIndex": 1,
    "runtimePoses": [
     "aura_power"
    ],
@@ -896,7 +881,7 @@
   },
   {
    "sourceId": "ginyu_base/037.png",
-   "canonicalId": "ginyu_base.effect.aura.02",
+   "canonicalId": "ginyu_base.effect.aura.aura_power.02.037",
    "characterId": "ginyu",
    "formId": "ginyu_base",
    "assetType": "effect",
@@ -904,7 +889,7 @@
    "family": "effect",
    "role": "aura",
    "variant": "aura_power",
-   "sequenceIndex": 0,
+   "sequenceIndex": 2,
    "runtimePoses": [
     "aura_power"
    ],
@@ -943,7 +928,7 @@
   },
   {
    "sourceId": "ginyu_base/039.png",
-   "canonicalId": "ginyu_base.beam.release.02",
+   "canonicalId": "ginyu_base.beam.release.fire.01.039",
    "characterId": "ginyu",
    "formId": "ginyu_base",
    "assetType": "actor_frame",
@@ -951,7 +936,7 @@
    "family": "beam",
    "role": "release",
    "variant": "fire",
-   "sequenceIndex": 0,
+   "sequenceIndex": 1,
    "runtimePoses": [
     "beam_fire"
    ],
@@ -967,7 +952,7 @@
   },
   {
    "sourceId": "ginyu_base/040.png",
-   "canonicalId": "ginyu_base.beam.release.03",
+   "canonicalId": "ginyu_base.beam.release.fire.00.040",
    "characterId": "ginyu",
    "formId": "ginyu_base",
    "assetType": "actor_frame",
@@ -991,7 +976,7 @@
   },
   {
    "sourceId": "ginyu_base/041.png",
-   "canonicalId": "ginyu_base.beam.release.04",
+   "canonicalId": "ginyu_base.beam.release.fire.02.041",
    "characterId": "ginyu",
    "formId": "ginyu_base",
    "assetType": "actor_frame",
@@ -999,7 +984,7 @@
    "family": "beam",
    "role": "release",
    "variant": "fire",
-   "sequenceIndex": 0,
+   "sequenceIndex": 2,
    "runtimePoses": [
     "beam_fire"
    ],
@@ -1015,7 +1000,7 @@
   },
   {
    "sourceId": "ginyu_base/042.png",
-   "canonicalId": "ginyu_base.beam.release.05",
+   "canonicalId": "ginyu_base.beam.release.fire.03.042",
    "characterId": "ginyu",
    "formId": "ginyu_base",
    "assetType": "actor_frame",
@@ -1023,7 +1008,7 @@
    "family": "beam",
    "role": "release",
    "variant": "fire",
-   "sequenceIndex": 0,
+   "sequenceIndex": 3,
    "runtimePoses": [
     "beam_fire"
    ],
@@ -1039,7 +1024,7 @@
   },
   {
    "sourceId": "ginyu_base/043.png",
-   "canonicalId": "ginyu_base.beam.charge_start.06",
+   "canonicalId": "ginyu_base.beam.charge_start.charge.02.043",
    "characterId": "ginyu",
    "formId": "ginyu_base",
    "assetType": "actor_frame",
@@ -1047,7 +1032,7 @@
    "family": "beam",
    "role": "charge_start",
    "variant": "charge",
-   "sequenceIndex": 0,
+   "sequenceIndex": 2,
    "runtimePoses": [
     "beam_charge"
    ],
@@ -1063,15 +1048,15 @@
   },
   {
    "sourceId": "ginyu_base/044.png",
-   "canonicalId": "ginyu_base.beam.charge_start.07",
+   "canonicalId": "ginyu_base.beam.charge_hold.charge.03.044",
    "characterId": "ginyu",
    "formId": "ginyu_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "beam",
-   "role": "charge_start",
+   "role": "charge_hold",
    "variant": "charge",
-   "sequenceIndex": 0,
+   "sequenceIndex": 3,
    "runtimePoses": [
     "beam_charge"
    ],
@@ -1087,15 +1072,15 @@
   },
   {
    "sourceId": "ginyu_base/045.png",
-   "canonicalId": "ginyu_base.beam.charge_start.08",
+   "canonicalId": "ginyu_base.beam.charge_hold.charge.04.045",
    "characterId": "ginyu",
    "formId": "ginyu_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "beam",
-   "role": "charge_start",
+   "role": "charge_hold",
    "variant": "charge",
-   "sequenceIndex": 0,
+   "sequenceIndex": 4,
    "runtimePoses": [
     "beam_charge"
    ],
@@ -1157,7 +1142,7 @@
   },
   {
    "sourceId": "ginyu_base/048.png",
-   "canonicalId": "ginyu_base.power.gather_power.00",
+   "canonicalId": "ginyu_base.power.gather_power.gather_power.02.048",
    "characterId": "ginyu",
    "formId": "ginyu_base",
    "assetType": "composite",
@@ -1165,7 +1150,7 @@
    "family": "power",
    "role": "gather_power",
    "variant": "gather_power",
-   "sequenceIndex": 0,
+   "sequenceIndex": 2,
    "runtimePoses": [
     "gather_power",
     "power_up"
@@ -1178,12 +1163,11 @@
     "x": "7",
     "y": "434"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "ginyu_base/049.png",
-   "canonicalId": "ginyu_base.power.gather_power.02",
+   "canonicalId": "ginyu_base.power.gather_power.gather_power.01.049",
    "characterId": "ginyu",
    "formId": "ginyu_base",
    "assetType": "composite",
@@ -1191,7 +1175,7 @@
    "family": "power",
    "role": "gather_power",
    "variant": "gather_power",
-   "sequenceIndex": 0,
+   "sequenceIndex": 1,
    "runtimePoses": [
     "gather_power",
     "power_up"
@@ -1204,8 +1188,7 @@
     "x": "49",
     "y": "434"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "ginyu_base/050.png",
@@ -1255,7 +1238,7 @@
   },
   {
    "sourceId": "ginyu_base/052.png",
-   "canonicalId": "ginyu_base.power.gather_power.04",
+   "canonicalId": "ginyu_base.power.gather_power.gather_power.00.052",
    "characterId": "ginyu",
    "formId": "ginyu_base",
    "assetType": "composite",
@@ -1276,8 +1259,7 @@
     "x": "189",
     "y": "432"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "ginyu_base/053.png",
@@ -1304,7 +1286,7 @@
   },
   {
    "sourceId": "ginyu_base/054.png",
-   "canonicalId": "ginyu_base.effect.aura.03",
+   "canonicalId": "ginyu_base.effect.aura.aura_support.00.054",
    "characterId": "ginyu",
    "formId": "ginyu_base",
    "assetType": "effect",
@@ -1328,7 +1310,7 @@
   },
   {
    "sourceId": "ginyu_base/055.png",
-   "canonicalId": "ginyu_base.effect.aura.04",
+   "canonicalId": "ginyu_base.effect.aura.aura_support.01.055",
    "characterId": "ginyu",
    "formId": "ginyu_base",
    "assetType": "effect",
@@ -1336,7 +1318,7 @@
    "family": "effect",
    "role": "aura",
    "variant": "aura_support",
-   "sequenceIndex": 0,
+   "sequenceIndex": 1,
    "runtimePoses": [
     "aura_support"
    ],
@@ -1352,7 +1334,7 @@
   },
   {
    "sourceId": "ginyu_base/056.png",
-   "canonicalId": "ginyu_base.effect.aura.05",
+   "canonicalId": "ginyu_base.effect.aura.aura_support.02.056",
    "characterId": "ginyu",
    "formId": "ginyu_base",
    "assetType": "effect",
@@ -1360,7 +1342,7 @@
    "family": "effect",
    "role": "aura",
    "variant": "aura_support",
-   "sequenceIndex": 0,
+   "sequenceIndex": 2,
    "runtimePoses": [
     "aura_support"
    ],
@@ -1376,7 +1358,7 @@
   },
   {
    "sourceId": "ginyu_base/000_beam_charge.png",
-   "canonicalId": "ginyu_base.beam.charge_start.09",
+   "canonicalId": "ginyu_base.beam.charge_start.charge.01.000_beam_charge",
    "characterId": "ginyu",
    "formId": "ginyu_base",
    "assetType": "actor_frame",
@@ -1384,7 +1366,7 @@
    "family": "beam",
    "role": "charge_start",
    "variant": "charge",
-   "sequenceIndex": 0,
+   "sequenceIndex": 1,
    "runtimePoses": [
     "beam_charge"
    ],

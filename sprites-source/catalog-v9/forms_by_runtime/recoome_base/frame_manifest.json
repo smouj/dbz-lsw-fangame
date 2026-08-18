@@ -4,7 +4,7 @@
  "frames": [
   {
    "sourceId": "recoome_base/001.png",
-   "canonicalId": "recoome_base.idle.idle.00",
+   "canonicalId": "recoome_base.melee.strike.punch_right.00.001.png",
    "characterId": "recoome",
    "formId": "recoome_base",
    "assetType": "actor_frame",
@@ -28,20 +28,19 @@
     "x": "11",
     "y": "14"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "recoome_base/002.png",
-   "canonicalId": "recoome_base.defense.start.02",
+   "canonicalId": "recoome_base.defense.hold.guard.01.002",
    "characterId": "recoome",
    "formId": "recoome_base",
    "assetType": "actor_frame",
    "view": "FIELD",
    "family": "defense",
-   "role": "start",
+   "role": "hold",
    "variant": "guard",
-   "sequenceIndex": 0,
+   "sequenceIndex": 1,
    "runtimePoses": [
     "guard",
     "beam_guard"
@@ -54,20 +53,19 @@
     "x": "46",
     "y": "14"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "recoome_base/003.png",
-   "canonicalId": "recoome_base.defense.start.04",
+   "canonicalId": "recoome_base.defense.recover.guard.02.003",
    "characterId": "recoome",
    "formId": "recoome_base",
    "assetType": "actor_frame",
    "view": "FIELD",
    "family": "defense",
-   "role": "start",
+   "role": "recover",
    "variant": "guard",
-   "sequenceIndex": 0,
+   "sequenceIndex": 2,
    "runtimePoses": [
     "guard",
     "beam_guard"
@@ -80,8 +78,7 @@
     "x": "85",
     "y": "16"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "recoome_base/004.png",
@@ -200,15 +197,15 @@
   },
   {
    "sourceId": "recoome_base/009.png",
-   "canonicalId": "recoome_base.defense.start.06",
+   "canonicalId": "recoome_base.defense.recover.evade.01.009",
    "characterId": "recoome",
    "formId": "recoome_base",
    "assetType": "actor_frame",
    "view": "FIELD",
    "family": "defense",
-   "role": "start",
+   "role": "recover",
    "variant": "evade",
-   "sequenceIndex": 0,
+   "sequenceIndex": 1,
    "runtimePoses": [
     "evade"
    ],
@@ -224,7 +221,7 @@
   },
   {
    "sourceId": "recoome_base/010.png",
-   "canonicalId": "recoome_base.defense.start.07",
+   "canonicalId": "recoome_base.defense.start.evade.00.010",
    "characterId": "recoome",
    "formId": "recoome_base",
    "assetType": "actor_frame",
@@ -248,15 +245,15 @@
   },
   {
    "sourceId": "recoome_base/011.png",
-   "canonicalId": "recoome_base.movement.start.00",
+   "canonicalId": "recoome_base.movement.end.move_front.01.011",
    "characterId": "recoome",
    "formId": "recoome_base",
    "assetType": "actor_frame",
    "view": "FIELD",
    "family": "movement",
-   "role": "start",
+   "role": "end",
    "variant": "move_front",
-   "sequenceIndex": 0,
+   "sequenceIndex": 1,
    "runtimePoses": [
     "move_front",
     "move_back"
@@ -269,12 +266,11 @@
     "x": "94",
     "y": "66"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "recoome_base/012.png",
-   "canonicalId": "recoome_base.movement.start.02",
+   "canonicalId": "recoome_base.movement.start.move_front.00.012",
    "characterId": "recoome",
    "formId": "recoome_base",
    "assetType": "actor_frame",
@@ -295,12 +291,11 @@
     "x": "135",
     "y": "69"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "recoome_base/013.png",
-   "canonicalId": "recoome_base.reaction.hurt_light.00",
+   "canonicalId": "recoome_base.reaction.hurt_light.hurt.00.013",
    "characterId": "recoome",
    "formId": "recoome_base",
    "assetType": "actor_frame",
@@ -324,15 +319,15 @@
   },
   {
    "sourceId": "recoome_base/014.png",
-   "canonicalId": "recoome_base.reaction.hurt_light.01",
+   "canonicalId": "recoome_base.reaction.hurt_heavy.hurt.01.014",
    "characterId": "recoome",
    "formId": "recoome_base",
    "assetType": "actor_frame",
    "view": "FIELD",
    "family": "reaction",
-   "role": "hurt_light",
+   "role": "hurt_heavy",
    "variant": "hurt",
-   "sequenceIndex": 0,
+   "sequenceIndex": 1,
    "runtimePoses": [
     "hurt"
    ],
@@ -348,15 +343,15 @@
   },
   {
    "sourceId": "recoome_base/015.png",
-   "canonicalId": "recoome_base.reaction.hurt_light.02",
+   "canonicalId": "recoome_base.reaction.hurt_heavy.hurt.02.015",
    "characterId": "recoome",
    "formId": "recoome_base",
    "assetType": "actor_frame",
    "view": "FIELD",
    "family": "reaction",
-   "role": "hurt_light",
+   "role": "hurt_heavy",
    "variant": "hurt",
-   "sequenceIndex": 0,
+   "sequenceIndex": 2,
    "runtimePoses": [
     "hurt"
    ],
@@ -372,15 +367,15 @@
   },
   {
    "sourceId": "recoome_base/016.png",
-   "canonicalId": "recoome_base.reaction.hurt_light.03",
+   "canonicalId": "recoome_base.reaction.hurt_heavy.hurt.03.016",
    "characterId": "recoome",
    "formId": "recoome_base",
    "assetType": "actor_frame",
    "view": "FIELD",
    "family": "reaction",
-   "role": "hurt_light",
+   "role": "hurt_heavy",
    "variant": "hurt",
-   "sequenceIndex": 0,
+   "sequenceIndex": 3,
    "runtimePoses": [
     "hurt"
    ],
@@ -396,15 +391,15 @@
   },
   {
    "sourceId": "recoome_base/017.png",
-   "canonicalId": "recoome_base.reaction.hurt_light.04",
+   "canonicalId": "recoome_base.reaction.hurt_heavy.hurt.04.017",
    "characterId": "recoome",
    "formId": "recoome_base",
    "assetType": "actor_frame",
    "view": "FIELD",
    "family": "reaction",
-   "role": "hurt_light",
+   "role": "hurt_heavy",
    "variant": "hurt",
-   "sequenceIndex": 0,
+   "sequenceIndex": 4,
    "runtimePoses": [
     "hurt"
    ],
@@ -420,15 +415,15 @@
   },
   {
    "sourceId": "recoome_base/018.png",
-   "canonicalId": "recoome_base.melee.ready.02",
+   "canonicalId": "recoome_base.melee.follow_through.attack_forward.05.018",
    "characterId": "recoome",
    "formId": "recoome_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "ready",
+   "role": "follow_through",
    "variant": "attack_forward",
-   "sequenceIndex": 0,
+   "sequenceIndex": 5,
    "runtimePoses": [
     "attack_fwd",
     "punch_left"
@@ -441,20 +436,19 @@
     "x": "198",
     "y": "114"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "recoome_base/019.png",
-   "canonicalId": "recoome_base.melee.ready.04",
+   "canonicalId": "recoome_base.melee.windup.attack_forward.01.019",
    "characterId": "recoome",
    "formId": "recoome_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "ready",
+   "role": "windup",
    "variant": "attack_forward",
-   "sequenceIndex": 0,
+   "sequenceIndex": 1,
    "runtimePoses": [
     "attack_fwd",
     "punch_right",
@@ -468,20 +462,19 @@
     "x": "15",
     "y": "174"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "recoome_base/020.png",
-   "canonicalId": "recoome_base.melee.ready.06",
+   "canonicalId": "recoome_base.melee.travel.attack_forward.02.020",
    "characterId": "recoome",
    "formId": "recoome_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "ready",
+   "role": "travel",
    "variant": "attack_forward",
-   "sequenceIndex": 0,
+   "sequenceIndex": 2,
    "runtimePoses": [
     "attack_fwd",
     "punch_right"
@@ -494,20 +487,19 @@
     "x": "57",
     "y": "173"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "recoome_base/021.png",
-   "canonicalId": "recoome_base.melee.ready.08",
+   "canonicalId": "recoome_base.melee.contact.attack_vertical.04.021",
    "characterId": "recoome",
    "formId": "recoome_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "ready",
+   "role": "contact",
    "variant": "attack_vertical",
-   "sequenceIndex": 0,
+   "sequenceIndex": 4,
    "runtimePoses": [
     "attack_ud",
     "knockback_down"
@@ -520,20 +512,19 @@
     "x": "104",
     "y": "183"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "recoome_base/022.png",
-   "canonicalId": "recoome_base.melee.ready.09",
+   "canonicalId": "recoome_base.melee.recover.attack_forward.06.022",
    "characterId": "recoome",
    "formId": "recoome_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "ready",
+   "role": "recover",
    "variant": "attack_forward",
-   "sequenceIndex": 0,
+   "sequenceIndex": 6,
    "runtimePoses": [
     "attack_fwd",
     "attack_ud",
@@ -548,12 +539,11 @@
     "x": "139",
     "y": "175"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "recoome_base/023.png",
-   "canonicalId": "recoome_base.melee.ready.12",
+   "canonicalId": "recoome_base.melee.ready.attack_vertical.00.023",
    "characterId": "recoome",
    "formId": "recoome_base",
    "assetType": "actor_frame",
@@ -577,15 +567,15 @@
   },
   {
    "sourceId": "recoome_base/024.png",
-   "canonicalId": "recoome_base.melee.ready.13",
+   "canonicalId": "recoome_base.melee.windup.attack_vertical.01.024",
    "characterId": "recoome",
    "formId": "recoome_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "ready",
+   "role": "windup",
    "variant": "attack_vertical",
-   "sequenceIndex": 0,
+   "sequenceIndex": 1,
    "runtimePoses": [
     "attack_ud"
    ],
@@ -601,15 +591,15 @@
   },
   {
    "sourceId": "recoome_base/025.png",
-   "canonicalId": "recoome_base.melee.ready.14",
+   "canonicalId": "recoome_base.melee.strike.attack_vertical.02.025",
    "characterId": "recoome",
    "formId": "recoome_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "ready",
+   "role": "strike",
    "variant": "attack_vertical",
-   "sequenceIndex": 0,
+   "sequenceIndex": 2,
    "runtimePoses": [
     "attack_ud"
    ],
@@ -625,15 +615,15 @@
   },
   {
    "sourceId": "recoome_base/026.png",
-   "canonicalId": "recoome_base.melee.ready.15",
+   "canonicalId": "recoome_base.melee.strike.attack_vertical.03.026",
    "characterId": "recoome",
    "formId": "recoome_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "ready",
+   "role": "strike",
    "variant": "attack_vertical",
-   "sequenceIndex": 0,
+   "sequenceIndex": 3,
    "runtimePoses": [
     "attack_ud",
     "knockback_down"
@@ -646,12 +636,11 @@
     "x": "279",
     "y": "176"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "recoome_base/027.png",
-   "canonicalId": "recoome_base.melee.ready.16",
+   "canonicalId": "recoome_base.melee.ready.attack_forward.00.027",
    "characterId": "recoome",
    "formId": "recoome_base",
    "assetType": "actor_frame",
@@ -672,20 +661,19 @@
     "x": "10",
     "y": "226"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "recoome_base/028.png",
-   "canonicalId": "recoome_base.melee.ready.18",
+   "canonicalId": "recoome_base.melee.windup.attack_forward.01.028",
    "characterId": "recoome",
    "formId": "recoome_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "ready",
+   "role": "windup",
    "variant": "attack_forward",
-   "sequenceIndex": 0,
+   "sequenceIndex": 1,
    "runtimePoses": [
     "attack_fwd",
     "punch_right",
@@ -699,20 +687,19 @@
     "x": "53",
     "y": "226"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "recoome_base/029.png",
-   "canonicalId": "recoome_base.melee.ready.20",
+   "canonicalId": "recoome_base.melee.contact.attack_forward.04.029",
    "characterId": "recoome",
    "formId": "recoome_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "ready",
+   "role": "contact",
    "variant": "attack_forward",
-   "sequenceIndex": 0,
+   "sequenceIndex": 4,
    "runtimePoses": [
     "attack_fwd",
     "punch_left",
@@ -726,20 +713,19 @@
     "x": "99",
     "y": "227"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "recoome_base/030.png",
-   "canonicalId": "recoome_base.melee.ready.23",
+   "canonicalId": "recoome_base.melee.strike.attack_forward.03.030",
    "characterId": "recoome",
    "formId": "recoome_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "ready",
+   "role": "strike",
    "variant": "attack_forward",
-   "sequenceIndex": 0,
+   "sequenceIndex": 3,
    "runtimePoses": [
     "attack_fwd",
     "punch_left",
@@ -753,12 +739,11 @@
     "x": "145",
     "y": "227"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "recoome_base/031.png",
-   "canonicalId": "recoome_base.melee.strike.26",
+   "canonicalId": "recoome_base.melee.strike.kick_right.02.031",
    "characterId": "recoome",
    "formId": "recoome_base",
    "assetType": "actor_frame",
@@ -766,7 +751,7 @@
    "family": "melee",
    "role": "strike",
    "variant": "kick_right",
-   "sequenceIndex": 0,
+   "sequenceIndex": 2,
    "runtimePoses": [
     "kick_right"
    ],
@@ -805,7 +790,7 @@
   },
   {
    "sourceId": "recoome_base/033.png",
-   "canonicalId": "recoome_base.beam.charge_start.00",
+   "canonicalId": "recoome_base.beam.charge_start.charge.01.033",
    "characterId": "recoome",
    "formId": "recoome_base",
    "assetType": "actor_frame",
@@ -813,7 +798,7 @@
    "family": "beam",
    "role": "charge_start",
    "variant": "charge",
-   "sequenceIndex": 0,
+   "sequenceIndex": 1,
    "runtimePoses": [
     "beam_charge"
    ],
@@ -829,7 +814,7 @@
   },
   {
    "sourceId": "recoome_base/034.png",
-   "canonicalId": "recoome_base.effect.aura.00",
+   "canonicalId": "recoome_base.effect.aura.aura_power.00.034",
    "characterId": "recoome",
    "formId": "recoome_base",
    "assetType": "effect",
@@ -853,7 +838,7 @@
   },
   {
    "sourceId": "recoome_base/035.png",
-   "canonicalId": "recoome_base.effect.aura.01",
+   "canonicalId": "recoome_base.effect.aura.aura_power.01.035",
    "characterId": "recoome",
    "formId": "recoome_base",
    "assetType": "effect",
@@ -861,7 +846,7 @@
    "family": "effect",
    "role": "aura",
    "variant": "aura_power",
-   "sequenceIndex": 0,
+   "sequenceIndex": 1,
    "runtimePoses": [
     "aura_power"
    ],
@@ -877,7 +862,7 @@
   },
   {
    "sourceId": "recoome_base/036.png",
-   "canonicalId": "recoome_base.effect.aura.02",
+   "canonicalId": "recoome_base.effect.aura.aura_power.02.036",
    "characterId": "recoome",
    "formId": "recoome_base",
    "assetType": "effect",
@@ -885,7 +870,7 @@
    "family": "effect",
    "role": "aura",
    "variant": "aura_power",
-   "sequenceIndex": 0,
+   "sequenceIndex": 2,
    "runtimePoses": [
     "aura_power"
    ],
@@ -924,7 +909,7 @@
   },
   {
    "sourceId": "recoome_base/038.png",
-   "canonicalId": "recoome_base.beam.release.01",
+   "canonicalId": "recoome_base.beam.release.fire.00.038",
    "characterId": "recoome",
    "formId": "recoome_base",
    "assetType": "actor_frame",
@@ -946,12 +931,11 @@
     "x": "9",
     "y": "363"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "recoome_base/039.png",
-   "canonicalId": "recoome_base.beam.release.02",
+   "canonicalId": "recoome_base.beam.release.fire.01.039",
    "characterId": "recoome",
    "formId": "recoome_base",
    "assetType": "actor_frame",
@@ -959,7 +943,7 @@
    "family": "beam",
    "role": "release",
    "variant": "fire",
-   "sequenceIndex": 0,
+   "sequenceIndex": 1,
    "runtimePoses": [
     "beam_fire"
    ],
@@ -975,7 +959,7 @@
   },
   {
    "sourceId": "recoome_base/040.png",
-   "canonicalId": "recoome_base.beam.release.03",
+   "canonicalId": "recoome_base.beam.release.fire.02.040",
    "characterId": "recoome",
    "formId": "recoome_base",
    "assetType": "actor_frame",
@@ -983,7 +967,7 @@
    "family": "beam",
    "role": "release",
    "variant": "fire",
-   "sequenceIndex": 0,
+   "sequenceIndex": 2,
    "runtimePoses": [
     "beam_fire",
     "gather_power",
@@ -997,12 +981,11 @@
     "x": "101",
     "y": "357"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "recoome_base/041.png",
-   "canonicalId": "recoome_base.beam.release.04",
+   "canonicalId": "recoome_base.beam.release.fire.03.041",
    "characterId": "recoome",
    "formId": "recoome_base",
    "assetType": "actor_frame",
@@ -1010,7 +993,7 @@
    "family": "beam",
    "role": "release",
    "variant": "fire",
-   "sequenceIndex": 0,
+   "sequenceIndex": 3,
    "runtimePoses": [
     "beam_fire"
    ],
@@ -1072,15 +1055,15 @@
   },
   {
    "sourceId": "recoome_base/044.png",
-   "canonicalId": "recoome_base.beam.charge_start.05",
+   "canonicalId": "recoome_base.beam.charge_hold.charge.02.044",
    "characterId": "recoome",
    "formId": "recoome_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "beam",
-   "role": "charge_start",
+   "role": "charge_hold",
    "variant": "charge",
-   "sequenceIndex": 0,
+   "sequenceIndex": 2,
    "runtimePoses": [
     "beam_charge",
     "beam_fire"
@@ -1093,20 +1076,19 @@
     "x": "375",
     "y": "369"
    },
-   "frameKind": "atomic",
-   "usedPoses": 1
+   "frameKind": "atomic"
   },
   {
    "sourceId": "recoome_base/045.png",
-   "canonicalId": "recoome_base.beam.charge_start.07",
+   "canonicalId": "recoome_base.beam.charge_hold.charge.03.045",
    "characterId": "recoome",
    "formId": "recoome_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "beam",
-   "role": "charge_start",
+   "role": "charge_hold",
    "variant": "charge",
-   "sequenceIndex": 0,
+   "sequenceIndex": 3,
    "runtimePoses": [
     "beam_charge"
    ],
@@ -1122,7 +1104,7 @@
   },
   {
    "sourceId": "recoome_base/046.png",
-   "canonicalId": "recoome_base.effect.aura.03",
+   "canonicalId": "recoome_base.effect.aura.aura_support.00.046",
    "characterId": "recoome",
    "formId": "recoome_base",
    "assetType": "effect",
@@ -1146,7 +1128,7 @@
   },
   {
    "sourceId": "recoome_base/047.png",
-   "canonicalId": "recoome_base.effect.aura.04",
+   "canonicalId": "recoome_base.effect.aura.aura_support.01.047",
    "characterId": "recoome",
    "formId": "recoome_base",
    "assetType": "effect",
@@ -1154,7 +1136,7 @@
    "family": "effect",
    "role": "aura",
    "variant": "aura_support",
-   "sequenceIndex": 0,
+   "sequenceIndex": 1,
    "runtimePoses": [
     "aura_support"
    ],
@@ -1170,7 +1152,7 @@
   },
   {
    "sourceId": "recoome_base/048.png",
-   "canonicalId": "recoome_base.effect.aura.05",
+   "canonicalId": "recoome_base.effect.aura.aura_support.02.048",
    "characterId": "recoome",
    "formId": "recoome_base",
    "assetType": "effect",
@@ -1178,7 +1160,7 @@
    "family": "effect",
    "role": "aura",
    "variant": "aura_support",
-   "sequenceIndex": 0,
+   "sequenceIndex": 2,
    "runtimePoses": [
     "aura_support"
    ],
@@ -1194,7 +1176,7 @@
   },
   {
    "sourceId": "recoome_base/000_beam_charge.png",
-   "canonicalId": "recoome_base.beam.charge_start.08",
+   "canonicalId": "recoome_base.beam.charge_start.charge.00.000_beam_charge",
    "characterId": "recoome",
    "formId": "recoome_base",
    "assetType": "actor_frame",
