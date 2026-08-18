@@ -9721,11 +9721,15 @@ button.linklike:hover { text-decoration: underline; }
   width: 100%;
 }
 /* Controles como fila del grid DEBAJO del campo (como el build):
-   botones y cartas en la misma línea, SIN tapar el escenario. */
+   botones y cartas en la misma línea, SIN tapar el escenario.
+   min-height 96px: la fila es auto → colapsaba a 16px cuando la vista
+   no pinta botones (INTRO) y la ventana se comprimía 570→490px. Con
+   min-height fijo la ventana del preview tiene SIEMPRE la misma forma
+   (la del juego). */
 .dev-hud-preview .battle-controls {
   position: static;
   height: auto;
-  min-height: 0;
+  min-height: 96px;
   flex-direction: row;
   flex-wrap: wrap;
   align-items: center;

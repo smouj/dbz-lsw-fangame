@@ -233,7 +233,13 @@ export function HudModule() {
       <div className="dev-hud-grid">
         {/* ─── PREVIEW: el HUD con el tema actual (estático, paridad real) ─── */}
         <div className="dev-hud-preview" style={mockVars}>
-          <div className={`battle-screen view-overview dev-hud-real-preview ${view === 'INTRO' ? 'intro-active dev-intro-view' : ''}`}>
+          {/* OJO: en el studio NO se aplica intro-active (colapsaría la fila
+              de controles → la ventana del preview se comprime 570→474px).
+              El overlay .battle-intro (absolute inset-0, z-120) cubre TODA
+              la ventana igual — misma forma que el resto de vistas y que la
+              ventana del juego. dev-intro-view solo congela animaciones y
+              oculta debug. */}
+          <div className={`battle-screen view-overview dev-hud-real-preview ${view === 'INTRO' ? 'dev-intro-view' : ''}`}>
             {/* INTRO */}
             {view === 'INTRO' && (
               /* VS FULL-SCREEN: personaje a cada lado, VS en el centro,
