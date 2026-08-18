@@ -72,9 +72,10 @@ function emptyQte(): BattleQteState {
     idx: 0,
     correct: 0,
     card: null,
-    elapsedFrames: 0,
-    limitFrames: 0,
-    counterFrames: 0,
+    startedTick: 0,
+    deadlineTick: 0,
+    windowTicks: 0,
+    counterDeadlineTick: 0,
     result: null,
   };
 }

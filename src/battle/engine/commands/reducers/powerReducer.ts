@@ -13,6 +13,7 @@ import type { StageKey } from '../../../stageInputMap';
 import type { BattleEvent } from '../../events/BattleEvent';
 import type { BattleSide, BattleState } from '../../state/BattleState';
 import { gainCc } from './resourceReducer';
+import { COUNTER_WINDOW_TICKS } from '../../clock/clock';
 
 // ─── powerReducer (GATHER) ───────────────────────────────────────────────
 /** GATHER POWER (determinista): NORMAL → FULL_POWER, gatherTurns = 2. */
@@ -75,7 +76,11 @@ export function qteCorrectInput(state: BattleState, side: BattleSide, input: Sta
 /** QTE_INPUT fallido: → COUNTER_WINDOW (el contraataque del rival). */
 export function qteWrongInput(state: BattleState, side: BattleSide, input: StageKey): QteStepOutcome {
   const q = state.stageQte;
-  const nextQte = { ...q, state: 'COUNTER_WINDOW' as const, counterFrames: 0 };
+  const nextQte = {
+    ...q,
+    state: 'COUNTER_WINDOW' as const,
+    counterDeadlineTick: state.tick + COUNTER_WINDOW_TICKS,
+  };
   return {
     state: { ...state, stageQte: nextQte },
     events: [
@@ -94,7 +99,7 @@ export function qteCounterDefend(state: BattleState, side: BattleSide): { state:
     state: {
       ...state,
       playerGuard: side === 'player' ? 'reduce' : state.playerGuard,
-      stageQte: { ...state.stageQte, state: 'WAITING' as const, counterFrames: 0 },
+      stageQte: { ...state.stageQte, state: 'WAITING' as const, counterDeadlineTick: 0 },
     },
     events: [
       { type: 'QTE_COUNTER_RESOLVED', side, action: 'DEFEND' },
@@ -103,12 +108,21 @@ export function qteCounterDefend(state: BattleState, side: BattleSide): { state:
   };
 }
 
-/** QTE_COUNTER_CONTINUE: reparar y continuar la secuencia (idx sin retroceder). */
+/** QTE_COUNTER_CONTINUE: reparar y continuar la secuencia (reabre la ventana). */
 export function qteCounterContinue(state: BattleState, side: BattleSide): { state: BattleState; events: BattleEvent[] } {
+  const q = state.stageQte;
   return {
     state: {
       ...state,
-      stageQte: { ...state.stageQte, state: 'INPUT_WINDOW' as const, counterFrames: 0 },
+      stageQte: {
+        ...q,
+        state: 'INPUT_WINDOW' as const,
+        // legacy: "el reloj de la secuencia se reinicia para los inputs
+        // restantes" → se reabre la ventana completa desde el tick actual.
+        startedTick: state.tick,
+        deadlineTick: state.tick + (q.windowTicks || 1),
+        counterDeadlineTick: 0,
+      },
     },
     events: [{ type: 'QTE_COUNTER_RESOLVED', side, action: 'CONTINUE' }],
   };

@@ -176,7 +176,31 @@ attacker/defender/CC/HP/position/pending action/seed/tick) · **Battle Events**
   - Golden determinista: mismo seed+comandos ⇒ mismo state+events+rngState.
   - verify:battle-engine: 110 → **149 checks** · suite completa verde ·
     tsc · build OK.
-- **M6 (siguiente)** — reloj GBC (ticks como autoridad, timers del QTE) ·
-  **M7** Presentation Adapter (consume canon + perfiles firma + eventos) ·
-  **M8** integración/cutover (soporte completo, OHKO, equipo, defensa con
-  carta entrante) · **M9** Replay.
+- **M6 ✅ — GBC Clock** (`src/battle/engine/clock/clock.ts` +
+  `src/battle/GbcClockAdapter.ts`):
+  - `advanceBattleClock(state, ticks)` puro y separado de executeCommand
+    (tiempo ≠ intención; sin comandos TICK/WAIT/TIMEOUT). tick entero,
+    monotónico y autoritativo; BattleState sin fracciones.
+  - QTE/COUNTER con startedTick/deadlineTick/counterDeadlineTick ABSOLUTOS.
+    Regla de borde contractual: currentTick < deadline → abierta; >=
+    deadline → timeout UNA vez (cubiertos deadline−1/deadline/deadline+1).
+    advance(N) ≡ advance(1)×N (bucle interno tick a tick — ningún timeout
+    se pierde aunque el render vaya lento).
+  - El timeout del QTE (INPUT → COUNTER_WINDOW) y del contraataque
+    (counter daño real) los dispara el RELOJ, no un comando: eliminado
+    QTE_COUNTER_TIMEOUT; nuevo evento QTE_TIMEOUT + action 'TIMEOUT' en
+    QTE_COUNTER_RESOLVED.
+  - BattleEventEnvelope = { sequence, tick, event } (varios eventos
+    comparten tick; sequence = orden causal). appendOutcomeToEventLog con
+    eventTicks por hecho.
+  - GbcClockAdapter (FUERA del Engine): deltaMs reales → 0..N ticks
+    enteros; la fracción sobrante vive en el adaptador, nunca en el
+    estado. ticksFromDeltaMs puro + clase con estado.
+  - Paridad demostrada: la MISMA batalla (seed + comandos + 6s de reloj)
+    a 30/60/144 FPS, deltas irregulares y headless produce el MISMO
+    state + EventLog (tick incluido) + rngState.
+  - verify:battle-engine: 149 → **170 checks** · suites completas verdes ·
+    tsc · build OK.
+- **M7 (siguiente)** — Presentation Adapter (consume canon + perfiles
+  firma + eventos + reloj → BattleTimeline) · **M8** integración/cutover ·
+  **M9** Replay.

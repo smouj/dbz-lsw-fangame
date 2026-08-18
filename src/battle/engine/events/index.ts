@@ -18,6 +18,7 @@ export {
   emptyEventLog,
   sequenceEvents,
   appendToEventLog,
+  appendOutcomeToEventLog,
   eventTypeSequence,
 } from './EventLog';
 export type { BattleEventEnvelope, BattleEventLog } from './EventLog';

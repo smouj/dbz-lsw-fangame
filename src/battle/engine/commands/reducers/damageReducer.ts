@@ -13,7 +13,7 @@
 // M5 no rebalancea.
 // ═══════════════════════════════════════════════════════════════════════
 
-import type { CardDef } from '../../../../data/cards';
+import { getCard, type CardDef } from '../../../../data/cards';
 import type { BattleEvent, DamageCause } from '../../events/BattleEvent';
 import type { RngState } from '../../random/prng';
 import { nextRng } from '../../random/prng';
@@ -287,4 +287,13 @@ export function resolvePartialStageDamage(state: BattleState, side: BattleSide, 
   const events: BattleEvent[] = [{ type: 'ATTACK_HIT', source: side, target, outcome: 'guard' }];
   const applied = applyDamage(state, target, dmg, { type: 'CARD', cardId: card.id }, side);
   return { state: applied.state, events: [...events, ...applied.events] };
+}
+
+/**
+ * Carta del Stage Attack básico (paridad legacy: getCard(stages − 2)).
+ * 3 Stage → carta 1 · 4 Stage → carta 2 (command, atk 0).
+ */
+export function resolveStageCard(state: BattleState, seqLen: number): CardDef {
+  const stages = seqLen >= 4 ? 4 : 3;
+  return getCard(stages - 2) as CardDef;
 }

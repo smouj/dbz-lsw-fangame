@@ -24,7 +24,7 @@ import type { BattleState } from '../state/BattleState';
 import { moveFighter } from './reducers/movementReducer';
 import { playCard, playDefenseCard, playLimitCard } from './reducers/cardReducer';
 import { gatherPower, guard, qteCorrectInput, qteWrongInput, qteCounterContinue, qteCounterDefend } from './reducers/powerReducer';
-import { resolveCardAction, resolveCounterDamage, resolvePartialStageDamage } from './reducers/damageReducer';
+import { resolveCardAction, resolveCounterDamage, resolvePartialStageDamage, resolveStageCard } from './reducers/damageReducer';
 import { actionDescriptorForCard, actionDescriptorForStage } from './buildActionDescriptor';
 import { stageProgress } from '../combat/resolution';
 
@@ -50,9 +50,11 @@ function qteForCard(state: BattleState, card: CardDef): BattleState['stageQte'] 
   const level = stageLevelOfCardName(card.name);
   const pool = STAGE_SEQUENCE_POOL[level];
   const seq = pool[state.tick % pool.length];
+  const windowTicks = stageWindowTicksFor(state);
   return {
     state: 'INPUT_WINDOW', seq, idx: 0, correct: 0, card,
-    elapsedFrames: 0, limitFrames: stageWindowTicksFor(state), counterFrames: 0, result: null,
+    startedTick: state.tick, deadlineTick: state.tick + windowTicks, windowTicks,
+    counterDeadlineTick: 0, result: null,
   };
 }
 
@@ -96,7 +98,7 @@ export function reduceAcceptedCommand(state: BattleState, command: BattleCommand
       events = [
         ...r.events,
         { type: 'ACTION_STARTED', side: 'player', action: actionDescriptorForCard(card) },
-        ...(card ? [{ type: 'QTE_STARTED' as const, side: 'player' as const, level: stageLevelOfCardName(card.name), seq: qte.seq, limitFrames: qte.limitFrames }] : []),
+        ...(card ? [{ type: 'QTE_STARTED' as const, side: 'player' as const, level: stageLevelOfCardName(card.name), seq: qte.seq, limitFrames: qte.windowTicks }] : []),
       ];
       break;
     }
@@ -116,17 +118,19 @@ export function reduceAcceptedCommand(state: BattleState, command: BattleCommand
       // Nivel del stage: 3 base · 4 con GATHER (regla del juego)
       const level: 3 | 4 = state.powerState !== 'NORMAL' ? 4 : 3;
       const seq = STAGE_SEQUENCE_POOL[level][state.tick % STAGE_SEQUENCE_POOL[level].length];
+      const windowTicks = stageWindowTicksFor(state);
       next = {
         ...state,
         phase: 'stageInput',
         stageQte: {
           state: 'INPUT_WINDOW', seq, idx: 0, correct: 0, card: null,
-          elapsedFrames: 0, limitFrames: stageWindowTicksFor(state), counterFrames: 0, result: null,
+          startedTick: state.tick, deadlineTick: state.tick + windowTicks, windowTicks,
+          counterDeadlineTick: 0, result: null,
         },
       };
       events = [
         { type: 'ACTION_STARTED', side: 'player', action: actionDescriptorForStage(level) },
-        { type: 'QTE_STARTED', side: 'player', level, seq, limitFrames: stageWindowTicksFor(state) },
+        { type: 'QTE_STARTED', side: 'player', level, seq, limitFrames: windowTicks },
       ];
       break;
     }
@@ -214,19 +218,6 @@ export function reduceAcceptedCommand(state: BattleState, command: BattleCommand
       events = r.events;
       break;
     }
-    case 'QTE_COUNTER_TIMEOUT': {
-      // El timing del contraataque expira → el counter del rival conecta
-      // sobre el jugador (fórmula legacy determinista).
-      const q = state.stageQte;
-      const card = q.card ?? resolveStageCard(state, q.seq.length);
-      const counter = resolveCounterDamage(state, card.type);
-      next = {
-        ...counter.state,
-        stageQte: { ...counter.state.stageQte, state: 'WAITING' as const, counterFrames: 0 },
-      };
-      events = [...counter.events, { type: 'QTE_COUNTER_RESOLVED', side: 'enemy', action: 'CONTINUE' }];
-      break;
-    }
     default:
       next = state;
       break;
@@ -239,13 +230,4 @@ export function reduceAcceptedCommand(state: BattleState, command: BattleCommand
   }
 
   return { state: next, events };
-}
-
-/**
- * Carta del Stage Attack básico (paridad legacy: getCard(stages − 2)).
- * 3 Stage → carta 1 · 4 Stage → carta 2 (command, atk 0).
- */
-function resolveStageCard(state: BattleState, seqLen: number): CardDef {
-  const stages = seqLen >= 4 ? 4 : 3;
-  return getCard(stages - 2) as CardDef;
 }

@@ -67,16 +67,25 @@ export interface StageStages {
 // ─── Guardia activa (cartas Taiyoken/Avoid/Endurance/Absorb/Foresight) ───
 export type GuardType = 'avoid_beam' | 'avoid_damage' | 'reduce' | 'absorb' | 'cancel';
 
-// ─── Estado del QTE / Stage Attack (autoritativo, en ticks) ───
+// ─── Estado del QTE / Stage Attack (autoritativo, en ticks GBC absolutos) ───
+// M6: el reloj manda — las ventanas usan startedTick/deadlineTick (nunca
+// fracciones ni contadores por frame). Regla de borde (contractual):
+//   currentTick <  deadlineTick → ventana abierta
+//   currentTick >= deadlineTick → timeout (exactamente UNA vez)
 export interface BattleQteState {
   state: QteState;
   seq: StageKey[];
   idx: number;
   correct: number;
   card: CardDef | null;
-  elapsedFrames: number;   // ticks GBC
-  limitFrames: number;     // ticks GBC
-  counterFrames: number;   // ticks GBC
+  /** Tick GBC absoluto en que se abrió la ventana actual (INPUT_WINDOW). */
+  startedTick: number;
+  /** Tick GBC absoluto de expiración de la ventana de inputs. */
+  deadlineTick: number;
+  /** Duración de la ventana de inputs en ticks (para RECOVER/reabrir). */
+  windowTicks: number;
+  /** Tick GBC absoluto de expiración de la ventana COUNTER_WINDOW. */
+  counterDeadlineTick: number;
   result: 'FULL_SUCCESS' | 'SAFE_ABORT' | 'COUNTER_HIT' | null;
 }
 

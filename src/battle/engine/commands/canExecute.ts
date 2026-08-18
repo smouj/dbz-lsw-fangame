@@ -35,7 +35,6 @@ const PHASE_REQUIREMENTS: Partial<Record<BattleCommand['type'], BattlePhase[]>> 
   QTE_INPUT: ['stageInput'],
   QTE_COUNTER_DEFEND: ['stageInput'],
   QTE_COUNTER_CONTINUE: ['stageInput'],
-  QTE_COUNTER_TIMEOUT: ['stageInput'],
 };
 
 /** El lado activo del exchange (atacante) — para comandos ofensivos. */
@@ -103,8 +102,7 @@ export function canExecute(state: BattleState, command: BattleCommand, opts?: { 
       return ok();
     }
     case 'QTE_COUNTER_DEFEND':
-    case 'QTE_COUNTER_CONTINUE':
-    case 'QTE_COUNTER_TIMEOUT': {
+    case 'QTE_COUNTER_CONTINUE': {
       return state.stageQte.state === 'COUNTER_WINDOW' ? ok() : reject('QTE_NOT_ACTIVE');
     }
     default:
@@ -120,7 +118,7 @@ export function getAvailableCommands(state: BattleState, opts?: Parameters<typeo
     { type: 'BASIC_STAGE_ATTACK' }, { type: 'GATHER_POWER' },
     { type: 'DEFENSE_LIMIT' }, { type: 'DEFENSE_JOINT' }, { type: 'DEFENSE_BASIC' },
     { type: 'GUARD' }, { type: 'MOVE', axis: 'HORIZONTAL' }, { type: 'MOVE', axis: 'VERTICAL' },
-    { type: 'QTE_COUNTER_DEFEND' }, { type: 'QTE_COUNTER_CONTINUE' }, { type: 'QTE_COUNTER_TIMEOUT' },
+    { type: 'QTE_COUNTER_DEFEND' }, { type: 'QTE_COUNTER_CONTINUE' },
   ];
   return candidates.filter(c => canExecute(state, c, opts).ok);
 }

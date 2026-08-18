@@ -102,11 +102,12 @@ export type BattleEvent =
 
   // ── QTE / Stage Attack ──
   | { type: 'QTE_STARTED'; side: BattleSide; level: 3 | 4 | 5 | 6; seq: StageKey[]; limitFrames: number }
+  | { type: 'QTE_TIMEOUT'; side: BattleSide; window: 'INPUT' | 'COUNTER' }
   | { type: 'QTE_INPUT_RESOLVED'; side: BattleSide; input: StageKey; success: boolean; indexBefore: number; indexAfter: number }
   | { type: 'QTE_COMPLETED'; side: BattleSide; correct: number; total: number; result: 'FULL_SUCCESS' }
   | { type: 'QTE_FAILED'; side: BattleSide; input: StageKey }
   | { type: 'QTE_COUNTER_STARTED'; side: BattleSide }
-  | { type: 'QTE_COUNTER_RESOLVED'; side: BattleSide; action: 'DEFEND' | 'CONTINUE' }
+  | { type: 'QTE_COUNTER_RESOLVED'; side: BattleSide; action: 'DEFEND' | 'CONTINUE' | 'TIMEOUT' }
 
   // ── acciones ──
   | { type: 'ACTION_STARTED'; side: BattleSide; action: BattleActionDescriptor }
