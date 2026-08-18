@@ -201,14 +201,17 @@ export const STORY_PORTRAITS: Record<string, PortraitEntry> = {
   },
   cell_jr: { base: `${P}/03_Saga_Androides_Cell/Cell_Jr/R09_C07__Cell_Jr.png` },
   trunks: {
+    // TRUNKS DEL FUTURO (saga Cell): el paquete solo contiene retratos base
+    // (pelo morado). NO existe retrato SSJ en la fuente de 137 — si llega una
+    // forma ssj se cae al base (no se inventa un alias falso).
     base: `${P}/03_Saga_Androides_Cell/Future_Trunks/R07_C05__Future_Trunks.png`,
     emotions: {
       surprised: `${P}/03_Saga_Androides_Cell/Future_Trunks/R08_C01__Future_Trunks_Sorprendido.png`,
       smile: `${P}/03_Saga_Androides_Cell/Future_Trunks/R10_C04__Future_Trunks_Sonriendo.png`,
     },
     forms: {
-      ssj: `${P}/03_Saga_Androides_Cell/Future_Trunks/R07_C05__Future_Trunks.png`,
       kid: `${P}/04_Saga_Majin_Buu/Kid_Trunks/R11_C03__Kid_Trunks.png`,
+      kid_surprised: `${P}/04_Saga_Majin_Buu/Kid_Trunks/R13_C03__Kid_Trunks_Sorprendido.png`,
       baby: `${P}/03_Saga_Androides_Cell/Trunks_Baby/R08_C01__Trunks_Bebe.png`,
       baby_cry: `${P}/03_Saga_Androides_Cell/Trunks_Baby/R08_C02__Trunks_Bebe_Cry.png`,
     },
@@ -279,6 +282,30 @@ export const STORY_PORTRAITS: Record<string, PortraitEntry> = {
   spectator: { base: `${P}/04_Saga_Majin_Buu/Chica_Del_Publico/R11_C09__Publico.png` },
 };
 
+// Normaliza ids de forma del roster ('goku_ssj', 'future_trunks_super_saiyan',
+// 'trunks_kid_ssj', 'young_gohan_super_saiyan_2', 'super'...) a la clave del
+// mapa forms del personaje. Va recortando prefijos hasta encontrar un alias.
+const FORM_ALIAS: Record<string, string> = {
+  base: 'base', normal: 'base', ssj: 'ssj', super: 'ssj', super_saiyan: 'ssj',
+  ssj2: 'ssj2', super2: 'ssj2', super_saiyan_2: 'ssj2',
+  ssj3: 'ssj3', super3: 'ssj3', super_saiyan_3: 'ssj3',
+  ultimate: 'ultimate', kami: 'kami', majin: 'majin', kid: 'kid', adult: 'adult',
+  final: 'final', first: 'first', second: 'second', third: 'third',
+  goku_body: 'goku_body', young: 'young', older: 'older', no_helmet: 'no_helmet',
+  baby: 'baby', baby_cry: 'baby_cry', great_ape: 'great_ape', gohan_form: 'gohan_form',
+  hair: 'hair', serious: 'serious',
+};
+
+function normalizeStoryForm(formId: string): string | undefined {
+  const f = formId.toLowerCase().replace(/[\s-]+/g, '_');
+  const tokens = f.split('_');
+  for (let i = 0; i < tokens.length; i++) {
+    const cand = tokens.slice(i).join('_');
+    if (FORM_ALIAS[cand]) return FORM_ALIAS[cand];
+  }
+  return undefined;
+}
+
 // Resolver el retrato de historia para (personaje, forma, emoción)
 export function storyPortraitUrl(
   character: string,
@@ -295,17 +322,12 @@ export function storyPortraitUrl(
   if (!entry) return undefined;
   // 1) Variante por FORMA si existe (ssj/ssj2/ultimate/majin/kid/kami/final...)
   if (formId) {
-    const formKey = formId.replace(`${character}_`, '').replace('_', '');
-    const formAliases: Record<string, string> = {
-      ssj: 'ssj', ssj2: 'ssj2', ssj3: 'ssj3', ultimate: 'ultimate',
-      kami: 'kami', majin: 'majin', kid: 'kid', base: 'base', super: 'ssj',
-      final: 'final', first: 'first', second: 'second', third: 'third',
-      adult: 'adult', hair: 'hair', serious: 'serious', goku_body: 'goku_body',
-      young: 'young', older: 'older', no_helmet: 'no_helmet', baby: 'baby',
-      baby_cry: 'baby_cry', great_ape: 'great_ape', gohan_form: 'gohan_form',
-    };
-    const alias = formAliases[formKey] ?? formKey;
-    if (entry.forms && entry.forms[alias]) return entry.forms[alias];
+    const alias = normalizeStoryForm(formId);
+    if (alias && entry.forms) {
+      // forma + emoción (ej. kid + surprised → kid_surprised) si existe
+      if (emotion && entry.forms[`${alias}_${emotion}`]) return entry.forms[`${alias}_${emotion}`];
+      if (entry.forms[alias]) return entry.forms[alias];
+    }
   }
   // 2) Variante por EMOCIÓN si existe
   if (emotion && entry.emotions && entry.emotions[emotion]) return entry.emotions[emotion];

@@ -13,6 +13,8 @@ import type { PortraitEmotion } from './storyPortraits';
 export interface StoryScriptLine {
   speaker: string;            // nombre visible (NARRADOR = caja neutra)
   character: string | null;   // id de retrato (null = narrador)
+  /** Forma del retrato (kid/ssj/majin...) — opcional; resuelve variantes. */
+  form?: string;
   emotion: PortraitEmotion;
   text: string;
 }
@@ -337,14 +339,14 @@ export const STORY_SCRIPT: Record<number, StoryScriptEntry> = {
       { speaker: 'GOKU', character: 'goku', emotion: 'smile', text: '¡Gohan! ¡Goten! Ha pasado mucho tiempo.' },
       { speaker: 'GOTEN', character: 'goten', emotion: 'surprised', text: '¿Tú eres mi papá?' },
       { speaker: 'GOKU', character: 'goku', emotion: 'smile', text: 'Sí. Y te pareces muchísimo a mí.' },
-      { speaker: 'TRUNKS NIÑO', character: 'trunks', emotion: 'serious', text: 'Goten, no te distraigas. Tenemos una final que pelear.' },
+      { speaker: 'TRUNKS NIÑO', character: 'trunks', form: 'kid', emotion: 'serious', text: 'Goten, no te distraigas. Tenemos una final que pelear.' },
       { speaker: 'GOTEN', character: 'goten', emotion: 'smile', text: '¡No voy a perder!' },
       { speaker: 'VIDEL', character: 'videl', emotion: 'surprised', text: '¿Estos niños siempre son así?' },
       { speaker: 'GOHAN', character: 'gohan', emotion: 'normal', text: 'Más o menos.' },
       { speaker: 'HERCULE', character: 'hercule', emotion: 'angry', text: '¡El campeón infantil será digno de mi torneo!' },
-      { speaker: 'TRUNKS NIÑO', character: 'trunks', emotion: 'normal', text: 'Soy un año mayor. Eso me hace más fuerte.' },
+      { speaker: 'TRUNKS NIÑO', character: 'trunks', form: 'kid', emotion: 'normal', text: 'Soy un año mayor. Eso me hace más fuerte.' },
       { speaker: 'GOTEN', character: 'goten', emotion: 'smile', text: 'Eso no significa que vayas a ganar.' },
-      { speaker: 'TRUNKS NIÑO', character: 'trunks', emotion: 'serious', text: 'Entonces demuéstralo.' },
+      { speaker: 'TRUNKS NIÑO', character: 'trunks', form: 'kid', emotion: 'serious', text: 'Entonces demuéstralo.' },
       { speaker: 'NARRADOR', character: null, emotion: 'normal', text: 'Goten y Trunks disputan la final infantil con toda la fuerza que pueden ocultar al público.' },
     ],
   },
@@ -392,10 +394,10 @@ export const STORY_SCRIPT: Record<number, StoryScriptEntry> = {
       { speaker: 'BABIDI', character: 'babidi', emotion: 'angry', text: '¡No lo provoques!' },
       { speaker: 'NARRADOR', character: null, emotion: 'normal', text: 'Buu derrota a Gohan y Shin y termina volviéndose contra Dabura.' },
       { speaker: 'GOTEN', character: 'goten', emotion: 'scared', text: '¿Dónde están Piccolo y Krillin?' },
-      { speaker: 'TRUNKS NIÑO', character: 'trunks', emotion: 'surprised', text: '¡Se convirtieron en piedra!' },
+      { speaker: 'TRUNKS NIÑO', character: 'trunks', form: 'kid', emotion: 'surprised', text: '¡Se convirtieron en piedra!' },
       { speaker: 'NARRADOR', character: null, emotion: 'normal', text: 'Tras la muerte de Dabura, los petrificados recuperan su forma.' },
       { speaker: 'VEGETA', character: 'vegeta', emotion: 'normal', text: 'Buu.' },
-      { speaker: 'TRUNKS NIÑO', character: 'trunks', emotion: 'smile', text: '¡Papá!' },
+      { speaker: 'TRUNKS NIÑO', character: 'trunks', form: 'kid', emotion: 'smile', text: '¡Papá!' },
       { speaker: 'VEGETA', character: 'vegeta', emotion: 'serious', text: 'Aléjate, Trunks. Yo me encargo de esto.' },
       { speaker: 'MAJIN BUU', character: 'fat_buu', emotion: 'surprised', text: '¿Tú quieres pelear con Buu?' },
       { speaker: 'VEGETA', character: 'vegeta', emotion: 'serious', text: 'Voy a borrarte de este mundo.' },
@@ -409,7 +411,7 @@ export const STORY_SCRIPT: Record<number, StoryScriptEntry> = {
     scene: 'Mundo de los Kai y Habitacion del Tiempo, presentados',
     dialogue: [
       { speaker: 'VEGETA', character: 'vegeta', emotion: 'serious', text: 'Trunks... nunca te había abrazado así, ¿verdad?' },
-      { speaker: 'TRUNKS NIÑO', character: 'trunks', emotion: 'surprised', text: 'Papá...' },
+      { speaker: 'TRUNKS NIÑO', character: 'trunks', form: 'kid', emotion: 'surprised', text: 'Papá...' },
       { speaker: 'VEGETA', character: 'vegeta', emotion: 'smile', text: 'Estoy orgulloso de ti.' },
       { speaker: 'NARRADOR', character: null, emotion: 'normal', text: 'Vegeta deja inconsciente a Trunks y a Goten para apartarlos del peligro.' },
       { speaker: 'VEGETA', character: 'vegeta', emotion: 'serious', text: 'Esto es por Bulma, por Trunks... y también por ti, Kakarot.' },
@@ -419,11 +421,11 @@ export const STORY_SCRIPT: Record<number, StoryScriptEntry> = {
       { speaker: 'GOHAN', character: 'gohan', emotion: 'serious', text: 'La sacaré.' },
       { speaker: 'GOTEN', character: 'goten', emotion: 'crying', text: 'Buu mató a mamá...' },
       { speaker: 'PICCOLO', character: 'piccolo', emotion: 'serious', text: 'Precisamente por eso debéis dominar la Fusión.' },
-      { speaker: 'TRUNKS NIÑO', character: 'trunks', emotion: 'smile', text: 'Lo haremos. Seremos más fuertes que Buu.' },
+      { speaker: 'TRUNKS NIÑO', character: 'trunks', form: 'kid', emotion: 'smile', text: 'Lo haremos. Seremos más fuertes que Buu.' },
       { speaker: 'TRUNKS DEL FUTURO', character: 'trunks', emotion: 'normal', text: '¿Qué...? Este lugar no pertenece a mi tiempo.' },
-      { speaker: 'TRUNKS NIÑO', character: 'trunks', emotion: 'surprised', text: '¡Eres yo!' },
+      { speaker: 'TRUNKS NIÑO', character: 'trunks', form: 'kid', emotion: 'surprised', text: '¡Eres yo!' },
       { speaker: 'TRUNKS DEL FUTURO', character: 'trunks', emotion: 'surprised', text: 'Las líneas temporales deben haberse superpuesto.' },
-      { speaker: 'TRUNKS NIÑO', character: 'trunks', emotion: 'serious', text: 'Entonces quiero saber cuál de los dos es más fuerte.' },
+      { speaker: 'TRUNKS NIÑO', character: 'trunks', form: 'kid', emotion: 'serious', text: 'Entonces quiero saber cuál de los dos es más fuerte.' },
       { speaker: 'GOTEN', character: 'goten', emotion: 'smile', text: '¡Yo también quiero verlo!' },
       { speaker: 'NARRADOR', character: null, emotion: 'normal', text: 'El capítulo termina con el combate entre el joven Trunks y su versión futura.' },
     ],
@@ -437,7 +439,7 @@ export const STORY_SCRIPT: Record<number, StoryScriptEntry> = {
     dialogue: [
       { speaker: 'PICCOLO', character: 'piccolo', emotion: 'surprised', text: 'Buu ha entrado en la Habitación del Tiempo. Ya no podemos ganar tiempo.' },
       { speaker: 'GOTEN', character: 'goten', emotion: 'serious', text: 'Trunks, hagámoslo.' },
-      { speaker: 'TRUNKS NIÑO', character: 'trunks', emotion: 'serious', text: 'Fusión.' },
+      { speaker: 'TRUNKS NIÑO', character: 'trunks', form: 'kid', emotion: 'serious', text: 'Fusión.' },
       { speaker: 'GOTENKS', character: 'gotenks', emotion: 'angry', text: '¡Ha nacido el guerrero definitivo!' },
       { speaker: 'MAJIN BUU', character: 'fat_buu', emotion: 'angry', text: 'Buu te comerá también.' },
       { speaker: 'NARRADOR', character: null, emotion: 'normal', text: 'En el Mundo de los Kai, la Espada Z se rompe y libera al Anciano Kaioshin.' },
@@ -492,7 +494,7 @@ export const STORY_SCRIPT: Record<number, StoryScriptEntry> = {
       { speaker: 'NARRADOR', character: null, emotion: 'normal', text: 'La energía de Buu reaparece de repente.' },
       { speaker: 'MAJIN BUU', character: 'fat_buu', emotion: 'angry', text: '¡Goten! ¡Trunks! ¡Fusionaos otra vez!' },
       { speaker: 'GOTEN', character: 'goten', emotion: 'surprised', text: '¿Qué está planeando?' },
-      { speaker: 'TRUNKS NIÑO', character: 'trunks', emotion: 'serious', text: 'No importa. Gotenks puede derrotarlo.' },
+      { speaker: 'TRUNKS NIÑO', character: 'trunks', form: 'kid', emotion: 'serious', text: 'No importa. Gotenks puede derrotarlo.' },
       { speaker: 'PICCOLO', character: 'piccolo', emotion: 'surprised', text: '¡Esperad!' },
       { speaker: 'NARRADOR', character: null, emotion: 'normal', text: 'Buu absorbe a Gotenks y después a Piccolo.' },
       { speaker: 'GOHAN', character: 'gohan', emotion: 'surprised', text: 'Así que ése era tu plan.' },
