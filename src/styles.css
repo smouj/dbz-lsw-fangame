@@ -8229,6 +8229,49 @@ button:focus-visible, .chapter-node:focus-visible {
 .dev-pos-anchor-editor input[type="range"] { width: 100%; }
 .dev-pos-anchor-editor code { color: #d8a830; font-size: 10px; white-space: normal; }
 
+/* ─── Positions v2 (estilo HUD Studio) ─── */
+.dev-pos-chip-group { display: inline-flex; align-items: center; gap: 4px; }
+.dev-pos-chip-label { font-size: 9px; font-weight: 700; letter-spacing: .6px; color: #8a93a3; margin-right: 2px; }
+.dev-pos-chip-p.active { border-color: #3fae5a; color: #7fd48a; background: #12241a; }
+.dev-pos-chip-e.active { border-color: #c04040; color: #e07a7a; background: #241212; }
+.dev-pos-dist-chip {
+  display: inline-flex; align-items: center; gap: 6px; padding: 5px 12px;
+  background: #141824; border: 1px solid #232b3d; border-radius: 999px;
+  font-size: 12px; color: #c8d3e8; cursor: help;
+}
+.dev-pos-dist-chip strong { color: #e0b84c; font-variant-numeric: tabular-nums; }
+.dev-pos-field-marker {
+  position: absolute; z-index: 6; transform: translate(-50%, -50%);
+  min-width: 26px; height: 16px; padding: 0 5px; border-radius: 4px;
+  border: 1px solid rgba(255,255,255,.28);
+  background: rgba(10,13,18,.78); color: #cdd6e2;
+  font-family: inherit; font-size: 9px; font-weight: 700; cursor: pointer;
+  letter-spacing: .5px;
+}
+.dev-pos-field-marker.left { color: #7fd48a; border-color: rgba(127,212,138,.45); }
+.dev-pos-field-marker.right { color: #e07a7a; border-color: rgba(224,122,122,.45); }
+.dev-pos-field-marker:hover { border-color: #d8a830; }
+.dev-pos-field-marker.active { border-color: #d8a830; background: #d8a830; color: #101318; box-shadow: 0 0 0 2px rgba(216,168,48,.35); }
+.dev-pos-readout { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; justify-content: center; }
+.dev-pos-readout-chip {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 4px 9px; background: rgba(12,15,20,.85); border: 1px solid #2a3342;
+  border-radius: 999px; font-size: 10px; color: #aab2bf; white-space: nowrap; cursor: help;
+}
+.dev-pos-readout-chip b { color: #ffe9a3; font-size: 9px; letter-spacing: .5px; }
+.dev-pos-readout-chip em { font-style: normal; color: #6b7484; }
+.dev-pos-readout-chip.p { border-color: rgba(127,212,138,.4); }
+.dev-pos-readout-chip.p b { color: #7fd48a; }
+.dev-pos-readout-chip.e { border-color: rgba(224,122,122,.4); }
+.dev-pos-readout-chip.e b { color: #e07a7a; }
+.dev-pos-readout-chip.vuln { border-color: #c04040; color: #f0a0a0; }
+.dev-pos-select-label { font-size: 10px; color: #8a93a3; margin-bottom: 2px; }
+.dev-pos-select-row { display: flex; flex-direction: column; gap: 2px; margin-bottom: 6px; }
+.dev-pos-select-row select { width: 100%; background: #0e1013; border: 1px solid #262b33; color: #cdd6e2; padding: 6px 8px; border-radius: 6px; font-family: inherit; font-size: 12px; }
+.dev-hud-controls .dev-pos-preview { margin-top: 8px; }
+.dev-hud-controls .dev-pos-rules { margin-bottom: 10px; }
+.dev-hud-controls .dev-pos-board { margin-top: 10px; }
+
 /* Validation / Research */
 .dev-checks { display: flex; flex-direction: column; gap: 6px; }
 .dev-check-row { display: flex; gap: 10px; align-items: flex-start; padding: 10px 12px; background: #181c22; border: 1px solid #262b33; border-radius: 6px; }
