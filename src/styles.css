@@ -124,6 +124,46 @@
 * { margin: 0; padding: 0; box-sizing: border-box; }
 html, body, #root { width: 100%; height: 100%; background: var(--bg); color: var(--text); overflow: hidden; }
 
+/* ═══ GAME VIEWPORT CANÓNICO 16:9 (R1-R5) ═══
+   El navegador solo aporta espacio; el juego vive en un rectángulo 16:9.
+   · legacy (canonicalViewport=false): viewport = toda la ventana →
+     cqw/cqh ≡ vw/vh (mismo resultado que antes, migración sin riesgo).
+   · canonical: viewport centrado con letterbox (barras arriba/abajo o
+     laterales) y las unidades cq* pasan a ser relativas AL JUEGO. */
+.game-shell {
+  width: 100vw;
+  height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: #000;
+}
+.game-shell.canonical .game-viewport {
+  /* 16:9 — el más pequeño de los dos encajes, centrado (0 deformación) */
+  width: min(100vw, calc(100dvh * 16 / 9));
+  height: min(100dvh, calc(100vw * 9 / 16));
+}
+.game-shell.legacy .game-viewport {
+  width: 100vw;
+  height: 100dvh;
+}
+/* Container SIEMPRE: cqw = 1% del ancho del juego, cqh = 1% del alto.
+   En legacy coinciden con vw/vh; en canonical son relativos al rectángulo. */
+.game-viewport {
+  position: relative;
+  overflow: hidden;
+  container-type: size;
+  container-name: game;
+}
+/* Tokens canónicos (R2): las unidades de geometría runtime se expresan en
+   cq* — NUNCA vw/vh/vmin dentro de .game-viewport. */
+.game-viewport {
+  --battle-chibi-size: 10cqw;
+  --battle-controls-h: clamp(104px, 17.5cqh, 136px);
+  --hud-top-gap: clamp(48px, 8cqw, 150px);
+}
+
 img { image-rendering: pixelated; image-rendering: crisp-edges; }
 
 /* ─── Utilidades ─── */
@@ -143,7 +183,7 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 }
 
 .menu-screen {
-  width: 100%; height: 100vh;
+  width: 100%; height: 100cqh;
   display: flex; align-items: stretch; justify-content: flex-start;
   position: relative; overflow: hidden;
   background: var(--bg);
@@ -248,7 +288,7 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   content: '';
   position: absolute;
   left: 0; top: 0; bottom: 0;
-  width: 48vw;
+  width: 48cqw;
   background:
     linear-gradient(90deg, rgba(9,13,22,.99) 0%, rgba(9,13,22,.94) 46%, rgba(9,13,22,.52) 76%, transparent 100%),
     radial-gradient(ellipse 70% 60% at 20% 52%, rgba(247,147,30,.09), transparent 64%);
@@ -259,7 +299,7 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 .menu-screen::after {
   content: '';
   position: absolute;
-  left: 5.5vw; top: 0; bottom: 0;
+  left: 5.5cqw; top: 0; bottom: 0;
   width: 2px;
   background: linear-gradient(180deg, transparent, rgba(246,199,68,.38), transparent);
   box-shadow: 0 0 18px rgba(247,147,30,.22);
@@ -271,9 +311,9 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   position: relative; z-index: 1;
   display: flex; flex-direction: column; align-items: flex-start;
   gap: 10px;
-  width: clamp(500px, 39vw, 760px);
-  padding: 24px 0 14px 5.5vw;
-  height: 100vh;
+  width: clamp(500px, 39cqw, 760px);
+  padding: 24px 0 14px 5.5cqw;
+  height: 100cqh;
   box-sizing: border-box;
   outline: none;
 }
@@ -293,7 +333,7 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 .menu-title {
   position: relative;
   font-family: var(--fui);
-  font-size: clamp(30px, 6vh, 58px);
+  font-size: clamp(30px, 6cqh, 58px);
   letter-spacing: .02em;
   background: linear-gradient(180deg, #fff7d6 0%, #ffd76a 38%, #ff9a2a 100%);
   -webkit-background-clip: text;
@@ -307,8 +347,8 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 }
 
 .menu-logo-mark {
-  width: clamp(40px, 6.5vh, 64px);
-  height: clamp(40px, 6.5vh, 64px);
+  width: clamp(40px, 6.5cqh, 64px);
+  height: clamp(40px, 6.5cqh, 64px);
   object-fit: contain;
   image-rendering: pixelated;
   flex-shrink: 0;
@@ -332,7 +372,7 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 .menu-continue-card {
   display: flex; align-items: center; gap: 12px;
   width: 100%;
-  min-height: clamp(72px, 14vh, 142px);
+  min-height: clamp(72px, 14cqh, 142px);
   text-align: left;
   background:
     linear-gradient(90deg, rgba(247,147,30,.25), rgba(247,147,30,.07) 54%, rgba(9,13,22,.02) 100%),
@@ -499,7 +539,7 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 }
 
 .menu-item {
-  min-height: clamp(30px, 5.2vh, 46px);
+  min-height: clamp(30px, 5.2cqh, 46px);
   display: grid;
   grid-template-columns: 34px 36px 1fr 22px;
   align-items: center;
@@ -646,7 +686,7 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
    ═══════════════════════════════════════════════════════════ */
 
 .battle-screen {
-  width: 100%; height: 100vh;
+  width: 100%; height: 100cqh;
   display: grid;
   /* ⚠️ 3 filas EXACTAS para los 3 hijos del DOM (hud-top / battlefield /
      battle-controls). Antes había 5 filas (auto 1fr auto var(--controls-h)
@@ -654,7 +694,7 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
      y el panel inferior efectivo era 104px (controles) + 104px (fantasma)
      = 208px (~45% de la ventana). Con 3 filas el battlefield recupera su
      altura real (minmax(0,1fr) reparte el hueco restante). */
-  grid-template-rows: auto minmax(0, 1fr) var(--controls-h, var(--hud-controls-h, clamp(104px, 17.5vh, 136px)));
+  grid-template-rows: auto minmax(0, 1fr) var(--controls-h, var(--hud-controls-h, var(--battle-controls-h, clamp(104px, 17.5cqh, 136px))));
   background: var(--bg);
   overflow: hidden;
   position: relative;
@@ -693,7 +733,7 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   display: flex;
   justify-content: space-between;
   align-items: stretch;
-  gap: var(--hud-gap, clamp(84px, 11vw, 150px));   /* hueco central menor: barras más anchas (estilo lucha) */
+  gap: var(--hud-gap, clamp(84px, 11cqw, 150px));   /* hueco central menor: barras más anchas (estilo lucha) */
   padding: var(--hud-top-pad-y, 6px) 10px 4px;   /* 4px abajo: 2px extra de
      respiro entre los badges de estado y el límite inferior del HUD */
   background:
@@ -1172,11 +1212,11 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 }
 .battle-loading .bl-title {
   font-family: var(--fdisplay, Bangers, sans-serif);
-  font-size: clamp(1.6rem, 5vw, 3rem); letter-spacing: .12em;
+  font-size: clamp(1.6rem, 5cqw, 3rem); letter-spacing: .12em;
   color: #f5c542; text-shadow: 3px 3px 0 #000, 0 0 18px rgba(245, 197, 66, .35);
 }
 .battle-loading .bl-sub {
-  font-family: var(--fpx); font-size: clamp(.6rem, 1.6vw, .8rem);
+  font-family: var(--fpx); font-size: clamp(.6rem, 1.6cqw, .8rem);
   color: #8fc7ff; letter-spacing: .35em; text-shadow: 1px 1px 0 #000;
 }
 .battle-loading .bl-stage {
@@ -1195,7 +1235,7 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 }
 @keyframes bl-shimmer { from { background-position: 120% 0; } to { background-position: -80% 0; } }
 .battle-loading .bl-bar {
-  width: min(320px, 60vw); height: 12px; margin-top: 14px;
+  width: min(320px, 60cqw); height: 12px; margin-top: 14px;
   border: 3px solid #173a5e; background: #0b1f36; box-shadow: 3px 3px 0 #000;
   overflow: hidden;
 }
@@ -1227,7 +1267,7 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   left: 50%;
   top: 42%;
   z-index: 60;
-  width: min(420px, 72vw);
+  width: min(420px, 72cqw);
   transform: translate(-50%, -50%);
   padding: 14px 18px 12px;
   text-align: center;
@@ -1254,7 +1294,7 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 .phase-cue-title {
   position: relative;
   font-family: var(--fepic);
-  font-size: clamp(24px, 4vw, 42px);
+  font-size: clamp(24px, 4cqw, 42px);
   letter-spacing: .08em;
   color: #ffe9a3;
   text-shadow: 3px 3px 0 #000, 0 0 16px rgba(247,147,30,.72);
@@ -1340,7 +1380,7 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 /* ─── Controles de batalla ─── */
 
 .battle-controls {
-  height: var(--controls-h, var(--hud-controls-h, var(--hud-layout-controls-h, clamp(104px, 17.5vh, 136px))));
+  height: var(--controls-h, var(--hud-controls-h, var(--hud-layout-controls-h, var(--battle-controls-h, clamp(104px, 17.5cqh, 136px)))));
   min-height: 0;
   padding: 4px 12px 8px;
   display: flex;
@@ -1404,7 +1444,7 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   padding: 9px 13px;
   white-space: pre-wrap;
   overflow-wrap: anywhere;
-  max-width: min(360px, 70vw);
+  max-width: min(360px, 70cqw);
   box-shadow: 4px 4px 0 rgba(0,0,0,.55);
   image-rendering: pixelated;
   text-align: left;                 /* alineado (mejor lectura) */
@@ -1574,7 +1614,7 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   object-position: center;
   image-rendering: pixelated;
 }
-.battle-controls .hand-area { width: min(720px, 96vw); padding: 0 10px; gap: 3px; }
+.battle-controls .hand-area { width: min(720px, 96cqw); padding: 0 10px; gap: 3px; }
 .battle-controls .hand-label { display: none; }
 .battle-controls .hand-cards {
   min-height: 64px;
@@ -1598,7 +1638,7 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   opacity: .42;
   filter: grayscale(.75) brightness(.68);
 }
-.battle-controls .hand-cards .card .card-icon { width: 56px; height: clamp(28px, 4.5vh, 38px); }
+.battle-controls .hand-cards .card .card-icon { width: 56px; height: clamp(28px, 4.5cqh, 38px); }
 .battle-controls .hand-cards .card .card-name { font-size: 7px; }
 .battle-controls .hand-cards .card .card-atk, .battle-controls .hand-cards .card .card-acc { font-size: 6px; }
 
@@ -1633,7 +1673,7 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 }
 
 .action-caption {
-  width: min(520px, 72vw);
+  width: min(520px, 72cqw);
   min-height: 58px;
   display: grid;
   align-content: center;
@@ -1664,7 +1704,7 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   align-items: baseline;
   gap: 10px;
   font-family: var(--fepic);
-  font-size: clamp(18px, 2.3vw, 26px);
+  font-size: clamp(18px, 2.3cqw, 26px);
   letter-spacing: .04em;
   line-height: 1;
 }
@@ -2030,9 +2070,9 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   .card-name { font-size: 5px; }
   .card-art { width: 46px; height: 30px; font-size: 18px; }
   .menu-screen::before { width: 100vw; }
-  .menu-screen::after { left: 5vw; }
+  .menu-screen::after { left: 5cqw; }
   .menu-content { width: 500px; padding: 24px 5vw 16px 8vw; max-width: 94vw; }
-  .menu-content::before { left: 5vw; right: 4vw; top: 86px; bottom: 38px; }
+  .menu-content::before { left: 5cqw; right: 4cqw; top: 86px; bottom: 38px; }
   .menu-title { font-size: 34px; }
   .menu-subtitle { font-size: 9px; margin-bottom: 8px; }
   .menu-continue-card { min-height: 112px; padding: 12px; }
@@ -2074,7 +2114,7 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 
 @media (max-height: 560px) and (min-width: 700px) {
   .menu-content { padding: 12px 0 10px 7vw; gap: 6px; width: 440px; max-width: 58vw; }
-  .menu-content::before { left: 5vw; right: -12px; top: 58px; bottom: 24px; }
+  .menu-content::before { left: 5cqw; right: -12px; top: 58px; bottom: 24px; }
   .menu-title { font-size: 36px; }
   .menu-subtitle { font-size: 8px; margin-bottom: 2px; padding-bottom: 3px; }
   .menu-continue-card { min-height: 78px; padding: 8px 10px; gap: 8px; flex-shrink: 0; }
@@ -2103,7 +2143,7 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 
 .page-screen {
   animation: page-in 0.2s ease-out both;
-  width: 100%; height: 100vh;
+  width: 100%; height: 100cqh;
   display: flex; flex-direction: column;
   background: var(--bg);
   overflow: hidden;
@@ -3059,7 +3099,7 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 
 .starter-screen {
   position: relative;
-  width: 100%; height: 100vh;
+  width: 100%; height: 100cqh;
   display: flex; align-items: center; justify-content: center;
   overflow: hidden;
 }
@@ -3599,6 +3639,111 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   font-size: 22px;
   color: #b03030;   /* rojo GBC (antes azul #005a8c) */
 }
+
+/* ═══ STAGE HUD PANEL CANÓNICO (M8.C2a) ═══
+   Geometría ÚNICA compartida entre BattleScreen y #dev/hud (StageHudPanel):
+   ┌ PORTRAIT (fijo) ─ INPUT TRACK (centrado) ─ TIMER (fijo) ┐
+   Sin la mitad izquierda vacía que producía la composición legacy
+   (gbc-dialogue con margin-left 88px + retrato absolute fuera). */
+.stage-hud-panel {
+  display: grid;
+  /* portrait fijo · track central (1fr) · timer fijo */
+  grid-template-columns: 80px minmax(0, 1fr) 120px;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  height: 80px;
+  padding: 0 16px;
+  box-sizing: border-box;
+  background: #f8f4e4;            /* blanco GBC */
+  border: 3px solid #000;
+  outline: 2px solid #f8f4e4;
+  box-shadow: 4px 4px 0 rgba(0,0,0,.55), inset 0 0 0 1px #000;
+  font-family: var(--fpx);
+  color: #000;
+}
+/* PORTRAIT: columna fija — retrato con marco GBC (como el speaker del diálogo) */
+.stage-hud-portrait {
+  width: 57px;
+  height: 80px;
+  background: #f8f4e4;
+  border: 3px solid #000;
+  outline: 2px solid #f8f4e4;
+  box-shadow: 4px 4px 0 rgba(0,0,0,.55);
+  overflow: hidden;
+  image-rendering: pixelated;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.stage-hud-portrait-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  image-rendering: pixelated;
+  display: block;
+}
+.stage-hud-portrait-ph { color: #999; font-size: 18px; }
+/* INPUT TRACK: columna central — secuencia + prompt, centrados */
+.stage-hud-track {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  min-width: 0;
+}
+.stage-hud-sequence {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+.stage-hud-cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  background: #141414;
+  border: 2px solid #000;
+  box-shadow: 2px 2px 0 rgba(0,0,0,.4);
+  box-sizing: border-box;
+}
+.stage-hud-cell img { width: 44px; height: 44px; image-rendering: pixelated; display: block; object-fit: contain; }
+.stage-hud-cell.done { background: #101810; }
+.stage-hud-cell.done .stage-hud-check { font-size: 18px; color: #2ed05a; line-height: 1; }
+.stage-hud-cell.current { border-color: #f0d060; box-shadow: 0 0 8px rgba(240,208,96,.7), 2px 2px 0 rgba(0,0,0,.4); }
+.stage-hud-cell.future { opacity: .5; }
+.stage-hud-prompt {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  padding: 4px;
+  background: #141414;
+  border: 2px solid #000;
+  box-shadow: 2px 2px 0 rgba(0,0,0,.5);
+}
+.stage-hud-prompt img { width: 64px; height: 64px; image-rendering: pixelated; display: block; object-fit: contain; }
+.stage-hud-prompt.correct { border-color: #2ed05a; box-shadow: 0 0 10px rgba(46,208,90,.6), 2px 2px 0 rgba(0,0,0,.5); }
+.stage-hud-prompt.wrong { border-color: #d03030; box-shadow: 0 0 10px rgba(208,48,48,.6), 2px 2px 0 rgba(0,0,0,.5); }
+/* PREPARING: panel vacío (sin inputs ni timer) — solo la caja presente */
+.stage-hud-prep {
+  font-size: 16px;
+  color: #888;
+  letter-spacing: 2px;
+}
+/* TIMER: columna fija — numérico, anclado a la derecha */
+.stage-hud-timer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  white-space: nowrap;
+}
+.stage-hud-time { font-size: 16px; color: #000; letter-spacing: 1px; }
+.stage-hud-time strong { font-size: 22px; color: #b03030; }
+
 .stage-inputs-box .stage-sequence {
   background: rgba(0, 0, 0, .12);
   border: 1px solid rgba(0, 0, 0, .25);
@@ -3875,7 +4020,7 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   justify-content: center;
   align-items: center;
   gap: 10px;
-  width: min(460px, 92vw);
+  width: min(460px, 92cqw);
 }
 .basic-btn {
   /* Marco GBC auténtico (48×40) escalado 2× = 96×80 — proporción nativa,
@@ -4009,7 +4154,7 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   display: flex;
   flex-direction: column;
   gap: 6px;
-  width: min(460px, 92vw);
+  width: min(460px, 92cqw);
   max-height: none;
   overflow: visible;
   background: transparent;
@@ -4080,7 +4225,7 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 .hud-phase.phase-def { color: #9fb7d8; border-color: rgba(82,98,122,.6); }
 .hud-center-vs {
   font-family: var(--fui);   /* VT323 PIXEL ART */
-  font-size: clamp(38px, 4.2vw, 44px);   /* un pelín más grande */
+  font-size: clamp(38px, 4.2cqw, 44px);   /* un pelín más grande */
   color: #f8f4e4;
   letter-spacing: .04em;
   text-shadow:
@@ -4139,8 +4284,8 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   transform: translateY(-50%);
   display: flex; flex-direction: column; align-items: center; gap: 12px;
 }
-.intro-left { left: clamp(64px, 10vw, 170px); animation: intro-slide-left .55s cubic-bezier(.2,.8,.3,1) .25s both; }
-.intro-right { right: clamp(64px, 10vw, 170px); animation: intro-slide-right .55s cubic-bezier(.2,.8,.3,1) .25s both; }
+.intro-left { left: clamp(64px, 10cqw, 170px); animation: intro-slide-left .55s cubic-bezier(.2,.8,.3,1) .25s both; }
+.intro-right { right: clamp(64px, 10cqw, 170px); animation: intro-slide-right .55s cubic-bezier(.2,.8,.3,1) .25s both; }
 /* ENTRADA CINEMATOGRÁFICA ÚNICA: los sprites vienen DESDE FUERA de la
    pantalla (±42vw) hasta su posición — no hay otra animación de entrada
    en la partida (sin READY/FIGHT ni nombres) */
@@ -4164,7 +4309,7 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 }
 .intro-vs {
   font-family: var(--fui);    /* VT323: VS PIXEL ART (spec UI) */
-  font-size: clamp(4.5rem, 13vw, 8.5rem);
+  font-size: clamp(4.5rem, 13cqw, 8.5rem);
   color: #f8f4e4;
   text-shadow: 4px 4px 0 #000, -2px 2px 0 #000, 2px -2px 0 #000, -2px -2px 0 #000, 3px 3px 0 #8a3030;
   letter-spacing: .04em;
@@ -4262,9 +4407,9 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
    1.4s impacto · 1.9s vuelve al campo */
 .card-fx {
   position: absolute;
-  top: clamp(86px, 13vh, 112px);
+  top: clamp(86px, 13cqh, 112px);
   right: 0;
-  bottom: calc(clamp(62px, 10vh, 94px) + 42px);
+  bottom: calc(clamp(62px, 10cqh, 94px) + 42px);
   left: 0;
   z-index: 9;
   pointer-events: none;
@@ -4315,7 +4460,7 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 
 .fx-scene-label {
   position: absolute;
-  top: 7vh;
+  top: 7cqh;
   left: 50%;
   transform: translateX(-50%);
   font-family: var(--fpx);
@@ -4327,7 +4472,7 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 
 /* La carta con su icono (pop-in) */
 .fx-card {
-  position: absolute; top: 18vh; left: 50%; transform: translateX(-50%);
+  position: absolute; top: 18cqh; left: 50%; transform: translateX(-50%);
   display: flex; flex-direction: column; align-items: center; gap: 8px;
   animation: fx-card-pop .48s steps(7, end) .46s both;
 }
@@ -4362,7 +4507,7 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 .fx-beam-travel {
   position: absolute;
   top: 46%;
-  width: min(58vw, 720px);
+  width: min(58cqw, 720px);
   height: clamp(18px, 4vmin, 34px);
   image-rendering: pixelated;
   opacity: 0;
@@ -4429,8 +4574,8 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 .fx-beam-travel.visual-sword {
   clip-path: polygon(0 34%, 74% 34%, 100% 50%, 74% 66%, 0 66%);
 }
-.card-fx.player .fx-beam-travel { left: 14vw; animation: fx-beam-travel-player .86s steps(10, end) both; }
-.card-fx.enemy .fx-beam-travel { right: 14vw; animation: fx-beam-travel-enemy .86s steps(10, end) both; }
+.card-fx.player .fx-beam-travel { left: 14cqw; animation: fx-beam-travel-player .86s steps(10, end) both; }
+.card-fx.enemy .fx-beam-travel { right: 14cqw; animation: fx-beam-travel-enemy .86s steps(10, end) both; }
 @keyframes fx-beam-travel-player {
   0% { transform: translateX(-38vw); opacity: 0; }
   18% { opacity: 1; }
@@ -4445,14 +4590,14 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 .fx-rush-trail {
   position: absolute;
   top: 46%;
-  width: 42vw;
-  height: 5vh;
+  width: 42cqw;
+  height: 5cqh;
   background: repeating-linear-gradient(90deg, rgba(255,255,255,.9) 0 12px, rgba(255,190,60,.55) 12px 20px, transparent 20px 34px);
   filter: drop-shadow(0 0 18px rgba(255,210,80,.7));
   opacity: 0;
 }
-.card-fx.player .fx-rush-trail { left: 22vw; animation: fx-rush-player .62s steps(8, end) both; }
-.card-fx.enemy .fx-rush-trail { right: 22vw; animation: fx-rush-enemy .62s steps(8, end) both; }
+.card-fx.player .fx-rush-trail { left: 22cqw; animation: fx-rush-player .62s steps(8, end) both; }
+.card-fx.enemy .fx-rush-trail { right: 22cqw; animation: fx-rush-enemy .62s steps(8, end) both; }
 @keyframes fx-rush-player { 0% { transform: translateX(-20vw); opacity: 0; } 25% { opacity: 1; } 100% { transform: translateX(20vw); opacity: 0; } }
 @keyframes fx-rush-enemy { 0% { transform: translateX(20vw) scaleX(-1); opacity: 0; } 25% { opacity: 1; } 100% { transform: translateX(-20vw) scaleX(-1); opacity: 0; } }
 
@@ -4528,7 +4673,7 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 
 /* Impacto final */
 .fx-impact {
-  position: absolute; top: 44%; left: 50%; width: 18vh; height: 18vh; margin-left: -9vh; margin-top: -9vh;
+  position: absolute; top: 44%; left: 50%; width: 18cqh; height: 18cqh; margin-left: -9cqh; margin-top: -9cqh;
   background: radial-gradient(circle, #fff 0%, rgba(255,255,255,.4) 40%, transparent 70%);
   opacity: 0; animation: fx-impact-anim .56s steps(7, end) 1.24s both;
 }
@@ -4551,7 +4696,7 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
      así el sprite escala igual: 10vw ≈ 80px en 800px / 96px en 960+
      (antes 9vmin ≈ 41px → sprite ~2.5x mientras el fondo 5x → personajes
      diminutos sobre árboles enormes y “flotando en el cielo”). */
-  height: clamp(40px, 10vw, 96px);
+  height: clamp(40px, var(--battle-chibi-size, 10cqw), 96px);
   width: auto;
   transform-origin: bottom center;
   filter: drop-shadow(0 0 8px rgba(255,190,60,.3)) drop-shadow(0 5px 10px rgba(0,0,0,.45));
@@ -4627,7 +4772,7 @@ button:focus-visible, .chapter-node:focus-visible {
 }
 
 .stage-timer-row {
-  width: min(380px, 78vw);
+  width: min(380px, 78cqw);
   height: 6px;
   margin: 2px auto 0;
   background: var(--panel);
@@ -4645,7 +4790,7 @@ button:focus-visible, .chapter-node:focus-visible {
 .defense-menu {
   display: flex; flex-direction: column;
   gap: 8px; align-items: center;
-  width: min(520px, 92vw);
+  width: min(520px, 92cqw);
   padding: 4px 0 2px;
 }
 
@@ -5392,7 +5537,7 @@ button:focus-visible, .chapter-node:focus-visible {
 
 .menu-content {
   gap: 10px;
-  width: clamp(500px, 40vw, 680px);
+  width: clamp(500px, 40cqw, 680px);
   padding-top: 32px;
   padding-bottom: 18px;
   overflow-x: clip;
@@ -5725,8 +5870,8 @@ button:focus-visible, .chapter-node:focus-visible {
   }
 
   .menu-content::before {
-    left: 5vw;
-    right: 4vw;
+    left: 5cqw;
+    right: 4cqw;
     top: 84px;
     bottom: 34px;
   }
@@ -5759,7 +5904,7 @@ button:focus-visible, .chapter-node:focus-visible {
   }
 
   .menu-content::before {
-    left: 5vw;
+    left: 5cqw;
     right: 0;
     top: 56px;
     bottom: 22px;
@@ -5869,7 +6014,7 @@ button:focus-visible, .chapter-node:focus-visible {
 
 .settings-list {
   margin-top: 16px;
-  max-height: calc(100vh - 86px);
+  max-height: calc(100cqh - 86px);
 }
 
 .settings-list .setting-row {
@@ -6549,7 +6694,7 @@ button:focus-visible, .chapter-node:focus-visible {
 
   .settings-list {
     max-height: none;
-    height: calc(100vh - 52px);
+    height: calc(100cqh - 52px);
     margin-top: 0;
     padding: 8px 10px;
     gap: 6px;
@@ -6632,16 +6777,16 @@ button:focus-visible, .chapter-node:focus-visible {
 }
 
 .story-layout {
-  grid-template-columns: minmax(0, 1fr) clamp(320px, 29vw, 390px);
+  grid-template-columns: minmax(0, 1fr) clamp(320px, 29cqw, 390px);
 }
 
 .characters-layout,
 .versus-layout {
-  grid-template-columns: minmax(0, 1fr) clamp(320px, 28vw, 380px);
+  grid-template-columns: minmax(0, 1fr) clamp(320px, 28cqw, 380px);
 }
 
 .deck-layout {
-  grid-template-columns: minmax(0, 1fr) clamp(300px, 25vw, 340px);
+  grid-template-columns: minmax(0, 1fr) clamp(300px, 25cqw, 340px);
 }
 
 .story-map,
@@ -6808,8 +6953,8 @@ button:focus-visible, .chapter-node:focus-visible {
   flex-direction: column;
   align-items: stretch;
   justify-content: flex-start;
-  gap: clamp(7px, 1.1vh, 12px);
-  padding: clamp(10px, 1.45vh, 18px);
+  gap: clamp(7px, 1.1cqh, 12px);
+  padding: clamp(10px, 1.45cqh, 18px);
 }
 
 .char-detail .btn-primary,
@@ -6820,7 +6965,7 @@ button:focus-visible, .chapter-node:focus-visible {
 }
 
 .characters-screen .char-detail .btn-primary {
-  margin-top: clamp(4px, .9vh, 10px);
+  margin-top: clamp(4px, .9cqh, 10px);
 }
 
 .char-detail-header {
@@ -6830,7 +6975,7 @@ button:focus-visible, .chapter-node:focus-visible {
   align-items: center;
   justify-content: stretch;
   min-height: 0;
-  gap: clamp(8px, 1vw, 14px);
+  gap: clamp(8px, 1cqw, 14px);
 }
 
 .char-detail-info {
@@ -6855,8 +7000,8 @@ button:focus-visible, .chapter-node:focus-visible {
 }
 
 .char-detail-sprite-wrap {
-  width: clamp(96px, 9.5vw, 132px);
-  height: clamp(94px, 17vh, 150px);
+  width: clamp(96px, 9.5cqw, 132px);
+  height: clamp(94px, 17cqh, 150px);
   max-width: none;
   max-height: none;
   display: flex;
@@ -6916,8 +7061,8 @@ button:focus-visible, .chapter-node:focus-visible {
 .versus-screen .char-detail > .char-detail-sprite {
   align-self: center;
   width: auto;
-  height: clamp(88px, 20vh, 150px);
-  max-height: 22vh;
+  height: clamp(88px, 20cqh, 150px);
+  max-height: 22cqh;
   object-fit: contain;
 }
 
@@ -6927,7 +7072,7 @@ button:focus-visible, .chapter-node:focus-visible {
 
 .cdp-visual {
   flex: 0 0 auto;
-  height: clamp(86px, 22vh, 180px);
+  height: clamp(86px, 22cqh, 180px);
 }
 
 .cdp-body {
@@ -6945,7 +7090,7 @@ button:focus-visible, .chapter-node:focus-visible {
 .cdp-start {
   flex: 0 0 auto;
   min-height: 42px;
-  margin-top: clamp(4px, 1vh, 12px);
+  margin-top: clamp(4px, 1cqh, 12px);
 }
 
 .deck-current {
@@ -7032,7 +7177,7 @@ button:focus-visible, .chapter-node:focus-visible {
   flex: 1 1 auto;
   min-height: 0;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) clamp(300px, 25vw, 350px);
+  grid-template-columns: minmax(0, 1fr) clamp(300px, 25cqw, 350px);
   gap: 10px;
   overflow: hidden;
 }
@@ -7071,8 +7216,8 @@ button:focus-visible, .chapter-node:focus-visible {
   min-height: 0;
   display: flex;
   flex-direction: column;
-  gap: clamp(7px, 1.1vh, 11px);
-  padding: clamp(10px, 1.45vh, 16px);
+  gap: clamp(7px, 1.1cqh, 11px);
+  padding: clamp(10px, 1.45cqh, 16px);
   animation: card-panel-in 140ms ease-out both;
 }
 
@@ -7259,7 +7404,7 @@ button:focus-visible, .chapter-node:focus-visible {
   }
 
   .cdp-visual {
-    height: clamp(76px, 18vh, 118px);
+    height: clamp(76px, 18cqh, 118px);
   }
 
   .cdp-body {
@@ -7311,7 +7456,7 @@ button:focus-visible, .chapter-node:focus-visible {
   }
 
   .versus-screen .char-detail > .char-detail-sprite {
-    height: clamp(58px, 15vh, 82px) !important;
+    height: clamp(58px, 15cqh, 82px) !important;
     width: auto !important;
     max-height: none;
   }
@@ -7869,7 +8014,7 @@ button:focus-visible, .chapter-node:focus-visible {
   display: flex;
   flex-direction: column;
   gap: 4px;
-  max-height: calc(100vh - 132px);
+  max-height: calc(100cqh - 132px);
   overflow-y: auto;
   position: sticky;
   top: 0;
@@ -9039,7 +9184,7 @@ button:focus-visible, .chapter-node:focus-visible {
    El aura es una capa separada, NO otro frame del personaje. */
 .battle-overworld { position: relative; display: inline-flex; }
 .battle-overworld .overworld-sprite {
-  height: clamp(40px, 10vw, 96px); width: auto; image-rendering: pixelated;
+  height: clamp(40px, var(--battle-chibi-size, 10cqw), 96px); width: auto; image-rendering: pixelated;
   filter: drop-shadow(0 0 8px rgba(255,190,60,.3)) drop-shadow(0 5px 10px rgba(0,0,0,.45));
 }
 .battle-overworld.gathering .overworld-sprite {
@@ -9112,10 +9257,10 @@ button:focus-visible, .chapter-node:focus-visible {
 @media (max-height: 720px) and (min-height: 641px) {
   .menu-content { padding-top: 18px; gap: 8px; }
   .menu-content::before { top: 88px; bottom: 38px; }
-  .menu-logo-mark { width: clamp(40px, 6vh, 52px); height: clamp(40px, 6vh, 52px); }
-  .menu-title { font-size: clamp(28px, 5.2vh, 46px); margin-bottom: -4px; }
+  .menu-logo-mark { width: clamp(40px, 6cqh, 52px); height: clamp(40px, 6cqh, 52px); }
+  .menu-title { font-size: clamp(28px, 5.2cqh, 46px); margin-bottom: -4px; }
   .menu-subtitle { margin-bottom: 6px; padding-bottom: 4px; }
-  .menu-continue-card { min-height: clamp(72px, 13vh, 112px); padding: 10px 12px; }
+  .menu-continue-card { min-height: clamp(72px, 13cqh, 112px); padding: 10px 12px; }
   .mc-play { font-size: 24px; }
   .mc-title { font-size: 22px; }
   .mc-chapter { font-size: 14px; }

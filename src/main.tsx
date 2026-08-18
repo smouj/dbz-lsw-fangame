@@ -23,6 +23,8 @@ import { CARD_FRAME_BY_TYPE, CARD_FRAME_SELECTED, CARD_FRAME_DISABLED } from './
 import { cardIconUrl, MINI_PORTRAITS, MENU_PORTRAITS, TYPE_ICONS } from './data/icons';
 import { FitArt } from './components/FitArt';
 import { CardArtHole } from './components/CardArtHole';
+import { StageHudPanel } from './components/StageHudPanel';
+import { GameViewport } from './components/GameViewport';
 import { overworldUrl } from './data/overworld';
 import { battleOverworldActorUrl, battleOverworldAuraUrl } from './data/battleOverworld';
 import { panelsForChapter, type StoryPanel, characterName } from './data/storyPanels';
@@ -3371,58 +3373,23 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
           const q = stageQte;
           if (q.state !== 'INPUT_WINDOW' && q.state !== 'PREPARING') return null;
           const preparing = q.state === 'PREPARING';
-          const curKey = q.seq[q.idx];
-          const isDirPrompt = curKey === 'UP' || curKey === 'DOWN' || curKey === 'LEFT' || curKey === 'RIGHT';
           // Tiempo GLOBAL de la secuencia en SEGUNDOS GBC (ventana total del manual).
-          const elapsedSec = (q.elapsedFrames / GBC_NATIVE_FPS).toFixed(1);
-          const limitSec = (q.limitFrames / GBC_NATIVE_FPS).toFixed(1);
-          const inCounter = false;
-          const failed = false;
-          const frozen = false;
-          // Ventana de contraataque: A≈0.4s · B≈0.15s (HYPOTHESIS).
-          const counterAOpen = inCounter && q.counterFrames <= COUNTER_A_FRAMES;
-          const counterBOpen = inCounter && q.counterFrames <= COUNTER_B_FRAMES;
-          // Iconos del paquete ORGANIZADO (DBZ_LSW_UI_AUX_ASSETS_V1): teclas
-          // reales del teclado para A/B (Q/E) y las direcciones (↑/↓ + flechas).
-          const keyIcon = (k: StageKey) => k === 'UP' ? 'arrow_up' : k === 'DOWN' ? 'arrow_down' : k === 'LEFT' ? 'arrow_left' : k === 'RIGHT' ? 'arrow_right' : k === 'A' ? 'key_q' : 'key_e';
-          const keyLabel = (k: StageKey) => k === 'UP' ? 'W / ↑' : k === 'DOWN' ? 'S / ↓' : k === 'LEFT' ? 'A / ←' : k === 'RIGHT' ? 'D / →' : k === 'A' ? 'A (Q)' : 'B (E)';
+          const elapsedSec = q.elapsedFrames / GBC_NATIVE_FPS;
+          const limitSec = q.limitFrames / GBC_NATIVE_FPS;
           return (
-          /* MISMO formato EXACTO que el diálogo: caja GBC (mismo ancho),
-             sprite del personaje FUERA a la izquierda y los inputs DENTRO
-             del cuadro, todo en UNA sola fila — nada superpuesto ni fuera */
-          <div className={`gbc-dialogue speaker-left ${frozen ? 'stage-frozen' : ''}`} key={`stage-${q.idx}`}>
-            <div className="gbc-dialogue-speaker left">
-              <img src={storyPortraitUrl(player.id, activePlayerFormId) || portraitFor(player.id, activePlayerFormId) || ''} alt={player.name} className="gbc-dialogue-speaker-img" draggable={false} />
-            </div>
-            <div className="gbc-dialogue-body">
-              <div className="stage-inline">
-                {preparing ? (
-                  /* PREPARACIÓN: el panel se ve VACÍO (caja GBC presente,
-                     sin inputs ni cronómetro) hasta el último idle */
-                  <span className="stage-inline-prep">…</span>
-                ) : (
-                <>
-                {!frozen && (
-                  <div className="stage-sequence">
-                    {q.seq.map((k, i) => (
-                      <span key={i} className={`stage-seq-item ${i < q.idx ? 'done' : i === q.idx ? 'current' : 'future'}`}>
-                        {i < q.idx ? <span className="seq-check">✓</span> : <img src={`/assets/ui/qte/${keyIcon(k)}.png`} alt={keyLabel(k)} className="qte-key-sm" />}
-                      </span>
-                    ))}
-                  </div>
-                )}
-                {!frozen && q.state === 'INPUT_WINDOW' && (
-                  <div key={q.idx} className={`stage-inline-prompt ${stageFeedback ?? ''} ${curKey}`}>
-                    <img src={`/assets/ui/qte/${keyIcon(curKey)}.png`} alt={curKey} className="qte-key-big" />
-                  </div>
-                )}
-                {/* Tiempo NUMÉRICO: contando hacia arriba / máximo — sin barra */}
-                <span className="stage-inline-time"><strong>{elapsedSec}</strong> / {limitSec}s</span>
-                </>
-                )}
-              </div>
-            </div>
-          </div>
+          /* M8.C2a — StageHudPanel CANÓNICO compartido con #dev/hud: mismo
+             componente, misma geometría (portrait fijo · track centrado ·
+             timer fijo). NUNCA volver a componer el QTE a mano en main.tsx. */
+          <StageHudPanel
+            portraitUrl={storyPortraitUrl(player.id, activePlayerFormId) || portraitFor(player.id, activePlayerFormId) || ''}
+            seq={q.seq}
+            idx={q.idx}
+            state={q.state}
+            feedback={stageFeedback}
+            elapsedSec={elapsedSec}
+            limitSec={limitSec}
+            side="left"
+          />
           );
         })()}
         {phase === 'enemyTurn' && (
@@ -4983,7 +4950,12 @@ function AppInner() {
 export default function App() {
   return (
     <LanguageProvider>
-      <AppInner />
+      {/* R1 — GameViewport canónico: todas las pantallas runtime viven en
+          el rectángulo 16:9 (container cq*). Flag canonicalViewport=false
+          por ahora → mismo resultado visual que el legacy (cq ≡ vw/vh). */}
+      <GameViewport>
+        <AppInner />
+      </GameViewport>
       <GlobalTooltip />
     </LanguageProvider>
   );

@@ -92,8 +92,9 @@ export const PRESENTATION_SCENARIOS: PresentationScenario[] = [
     deck: [5], playerCc: 30, playerPos: 'DOWN_FRONT', enemyPos: 'DOWN_BACK',
     steps: [
       { kind: 'cmd', command: { type: 'JOINT' } },
+      // M8.C2: damage/beam resuelven INMEDIATO (sin QTE) — el PRNG canónico
+      // decide la precisión en el mismo PLAY_CARD.
       { kind: 'cmd', command: { type: 'PLAY_CARD', handIndex: 0 }, opts: { side: 'player', characterId: 'goku' } },
-      { kind: 'qte_complete' },
     ],
   },
   {
@@ -102,7 +103,6 @@ export const PRESENTATION_SCENARIOS: PresentationScenario[] = [
     steps: [
       { kind: 'cmd', command: { type: 'JOINT' } },
       { kind: 'cmd', command: { type: 'PLAY_CARD', handIndex: 0 }, opts: { side: 'player', characterId: 'goku' } },
-      { kind: 'qte_complete' },
     ],
   },
   {
@@ -111,7 +111,6 @@ export const PRESENTATION_SCENARIOS: PresentationScenario[] = [
     steps: [
       { kind: 'cmd', command: { type: 'JOINT' } },
       { kind: 'cmd', command: { type: 'PLAY_CARD', handIndex: 0 }, opts: { side: 'player', characterId: 'goku' } },
-      { kind: 'qte_complete' },
     ],
   },
   {
@@ -120,7 +119,6 @@ export const PRESENTATION_SCENARIOS: PresentationScenario[] = [
     steps: [
       { kind: 'cmd', command: { type: 'JOINT' } },
       { kind: 'cmd', command: { type: 'PLAY_CARD', handIndex: 0 }, opts: { side: 'player', characterId: 'goku' } },
-      { kind: 'qte_complete' },
     ],
   },
   {

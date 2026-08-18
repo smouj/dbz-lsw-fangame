@@ -7,16 +7,30 @@
 export interface RendererConfig {
   /** [CANON] Resolución lógica del pixel-art (cuadrícula). Neo-GBC PC 16:9. */
   logicalResolution: [number, number];
+  /** [CANON] Resolución de DISEÑO (referencia de layout DOM 16:9).
+   * 1280×720 = la autoridad de diseño; la fuente de coordenadas gameplay
+   * sigue siendo logicalResolution (320×180). */
+  designResolution: [number, number];
+  /** [CANON] Relación de aspecto obligatoria del GameViewport. */
+  aspectRatio: '16:9' | '4:3' | 'free';
   /** [TUNABLE] Escala entera por defecto (render = logical * scale). */
   renderScale: number;
-  /** [CANON] Escalado entero (nunca fracciones: destroza el pixel art). */
+  /** [TUNABLE] Política de escala del render: integer-preferred (nunca
+   * fracciones: destroza el pixel art). 320×180 × {2,3,4,5,6,8} =
+   * {640×360, 960×540, 1280×720, 1600×900, 1920×1080, 2560×1440}. */
+  pixelScalePolicy: 'integer-preferred';
+  /** [CANON] Escalado entero (nunca fracciones). */
   integerScaling: boolean;
   /** [CANON] Nearest-neighbor (nunca bilinear en el arte). */
   nearestNeighbor: boolean;
-  /** [TUNABLE] Aspect ratio forzado o 'free'. */
-  aspectRatio: '16:9' | '4:3' | 'free';
   /** [TUNABLE] Letterboxing cuando el viewport no coincide. */
   letterboxing: boolean;
+  /** [TUNABLE] GameViewport canónico 16:9 (R1-R5): cuando false, el
+   * viewport ocupa toda la ventana (comportamiento legacy idéntico —
+   * .game-viewport sigue siendo container, así que cqw/cqh ≡ vw/vh);
+   * cuando true, se centra con barras y las unidades cq* son relativas
+   * al juego, no al navegador. */
+  canonicalViewport: boolean;
   /** [TUNABLE] Comportamiento HiDPI (1 = nativo, 2 = force). */
   hiDpi: number;
   /** [TUNABLE] Pantalla completa al arrancar. */
@@ -31,11 +45,15 @@ export interface RendererConfig {
 
 export const RENDERER_CONFIG: RendererConfig = {
   logicalResolution: [320, 180],
+  designResolution: [1280, 720],
+  aspectRatio: '16:9',
   renderScale: 4,
+  pixelScalePolicy: 'integer-preferred',
   integerScaling: true,
   nearestNeighbor: true,
-  aspectRatio: '16:9',
-  letterboxing: true,
+  // ⚠️ R5: activar SOLO tras migrar las unidades internas a cq*.
+  letterboxing: false,
+  canonicalViewport: false,
   hiDpi: 1,
   fullscreen: false,
   vsync: true,
@@ -44,7 +62,7 @@ export const RENDERER_CONFIG: RendererConfig = {
 };
 
 export const RENDERER_CANON_FIELDS = new Set<keyof RendererConfig>([
-  'logicalResolution', 'integerScaling', 'nearestNeighbor',
+  'logicalResolution', 'designResolution', 'aspectRatio', 'integerScaling', 'nearestNeighbor', 'pixelScalePolicy',
 ]);
 
 export function validateRendererConfig(c: RendererConfig): string[] {

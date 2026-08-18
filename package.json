@@ -32,7 +32,8 @@
   "verify:presentation": "esbuild --bundle --format=esm --platform=node scripts/verify-presentation.ts --outfile=.vp.mjs && node .vp.mjs; rm -f .vp.mjs",
   "gen:presentation-fixtures": "esbuild --bundle --format=esm --platform=node scripts/verify-presentation.ts --outfile=.vp.mjs && node .vp.mjs --write; rm -f .vp.mjs",
   "audit:runtime": "esbuild --bundle --format=esm --platform=node scripts/audit-runtime.ts --outfile=.ar.mjs && node .ar.mjs; rm -f .ar.mjs",
-  "canon:sfx": "python3 scripts/build-sfx-catalog.py"
+  "canon:sfx": "python3 scripts/build-sfx-catalog.py",
+  "verify:viewport": "esbuild --bundle --format=esm --platform=node scripts/verify-viewport.ts --outfile=.vp2.mjs && node .vp2.mjs; rm -f .vp2.mjs"
  },
  "dependencies": {
   "@vitejs/plugin-react": "^4.3.4",

@@ -29,6 +29,7 @@ import { FitArt } from '../components/FitArt';
 import { CardArtHole } from '../components/CardArtHole';
 import { CARD_FRAME_BY_TYPE, CARD_FRAME_SELECTED, CARD_FRAME_DISABLED } from '../data/cardVisuals';
 import { HUD_LAYOUT, validateHudLayout } from '../data/hudLayout';
+import { StageHudPanel } from '../components/StageHudPanel';
 
 // Formas de ejemplo del mockup (Goku vs Piccolo, como el Battle Lab).
 const P_FORM = 'goku_base';
@@ -674,39 +675,19 @@ export function HudModule() {
                   paquete ORGANIZADO (key_q/key_e/↑↓/flechas) + prompt + el
                   TIEMPO de reacción destacado + recovery */}
               {view === 'STAGE' && (
-                /* MISMO formato EXACTO que el diálogo: caja GBC (mismo ancho),
-                   sprite del personaje FUERA a su lado y los inputs DENTRO
-                   del cuadro, todo en UNA sola fila */
-                <div className={`gbc-dialogue speaker-${dlgSide}`}>
-                  <div className={`gbc-dialogue-speaker ${dlgSide}`}>
-                    <img src={(dlgSide === 'left' ? storyPortraitUrl('goku', P_FORM) || pPortrait : storyPortraitUrl('cell', P_FORM)) || ''} alt={dlgSide === 'left' ? 'GOKU' : 'CELL'} className="gbc-dialogue-speaker-img" draggable={false} />
-                  </div>
-                  <div className="gbc-dialogue-body">
-                    <div className="stage-inline">
-                      <div className="stage-sequence">
-                        {/* Secuencia dinámica: N inputs (3-6). El 1º es ✓
-                            (done), el 2º el actual (Q, borde azul) y el
-                            resto futuros ciclando A/B + direcciones. */}
-                        {Array.from({ length: stageLen }).map((_, i) => {
-                          if (i === 0) {
-                            return <span key={i} className="stage-seq-item done"><span className="seq-check">✓</span></span>;
-                          }
-                          const futureKeys = ['key_e', 'arrow_up', 'arrow_right', 'key_q', 'key_e'];
-                          return (
-                            <span key={i} className={`stage-seq-item ${i === 1 ? 'current' : 'future'}`}>
-                              <img src={`/assets/ui/qte/${i === 1 ? 'key_q' : futureKeys[(i - 2) % futureKeys.length]}.png`}
-                                alt="" className="qte-key-sm" />
-                            </span>
-                          );
-                        })}
-                      </div>
-                      <div className="stage-inline-prompt A">
-                        <img src="/assets/ui/qte/key_q.png" alt="Q" className="qte-key-big" />
-                      </div>
-                      <span className="stage-inline-time"><strong>0.6</strong> / 1.2s</span>
-                    </div>
-                  </div>
-                </div>
+                /* M8.C2a — StageHudPanel CANÓNICO: el MISMO componente que
+                   BattleScreen. El Dev Studio solo lo envuelve en el preview;
+                   nunca más composiciones divergentes del QTE. */
+                <StageHudPanel
+                  portraitUrl={(dlgSide === 'left' ? storyPortraitUrl('goku', P_FORM) || pPortrait : storyPortraitUrl('cell', P_FORM)) || ''}
+                  seq={['A', 'B', 'UP', 'RIGHT', 'A', 'B'].slice(0, stageLen) as never}
+                  idx={1}
+                  state="INPUT_WINDOW"
+                  feedback="correct"
+                  elapsedSec={0.6}
+                  limitSec={1.2}
+                  side={dlgSide}
+                />
               )}
 
               {/* LIMIT: MISMO layout que la mano (una línea, marco + arte) */}
