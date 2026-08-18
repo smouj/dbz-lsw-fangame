@@ -279,6 +279,8 @@ export function HudModule() {
                   <span className="hud-level">LV50</span>
                 </div>
                 <PreviewHpBar current={720} max={1000} side="left" />
+                {/* Fase GBC: ATTACK bajo la barra del personaje atacante */}
+                <span className="hud-phase phase-atk">ATTACK</span>
                 <div className="hud-info-row">
                   <div className="hud-stats"><span>STR60</span><span>KI55</span><span>SPD50</span><span className="cc-stat"><b>06</b></span></div>
                   <div className="hud-status">
@@ -298,6 +300,7 @@ export function HudModule() {
                   <span className="hud-level">LV50</span>
                 </div>
                 <PreviewHpBar current={880} max={1000} side="right" />
+                <span className="hud-phase phase-def">DEFEND</span>
                 <div className="hud-info-row">
                   <div className="hud-stats"><span className="cc-stat"><b>03</b></span><span>STR58</span><span>KI60</span><span>SPD48</span></div>
                   <div className="hud-status right">
@@ -306,7 +309,6 @@ export function HudModule() {
                 </div>
               </div>
               <div className="hud-center-badge">
-                <span className="hud-center-atk">ATK GOKU</span>
                 <span className="hud-center-vs">VS</span>
                 <span className="hud-center-round">ROUND 1</span>
               </div>
