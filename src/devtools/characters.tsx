@@ -392,9 +392,9 @@ function AtomicFrames({ sheet }: { sheet: string }) {
   // Canon semántico V9 (spriteCanon.generated.ts): agrupar por FAMILIA/ROL,
   // no por bucket forense. El alias <dir>__<bucket>__NN__src_XXX.png → sourceId.
   const formDir = meta.dir;
-  const canon = new Map<string, { family: string; role: string; variant: string; status: CanonStatus }>();
+  const canon = new Map<string, { family: string; role: string; variant: string; sequenceIndex: number; canonicalId: string; status: CanonStatus }>();
   for (const fr of SPRITE_CANON.forms.flatMap(x => x.frames)) {
-    canon.set(fr.sourceId, { family: fr.family, role: fr.role, variant: fr.variant, status: fr.canonStatus });
+    canon.set(fr.sourceId, { family: fr.family, role: fr.role, variant: fr.variant, sequenceIndex: fr.sequenceIndex, canonicalId: fr.canonicalId, status: fr.canonStatus });
   }
   const srcIdOf = (f: AtomicFrameMeta) => {
     const m = f.alias.match(/src_(\d+)/) ?? f.file.match(/src_(\d+)/);
@@ -441,12 +441,23 @@ function AtomicFrames({ sheet }: { sheet: string }) {
                 <span className="dev-atomic-bucket-cat">{rg.frames.length}</span>
               </div>
               <div className="dev-atomic-grid">
-                {rg.frames.map(f => (
-                  <div key={f.file} className="dev-atomic-cell" title={`${f.file} · ${f.alias}`}>
-                    {sheetImg && <FrameCanvas img={sheetImg} f={f} />}
-                    <span className="dev-atomic-file">{f.file.replace('.png', '')}</span>
-                  </div>
-                ))}
+                {rg.frames.map(f => {
+                  const sid = srcIdOf(f);
+                  const c = sid ? canon.get(sid) : null;
+                  // Nombrado canónico: variante semántica + índice de secuencia
+                  // (p.ej. punch_right00) — el número de archivo queda en el
+                  // tooltip con el canonicalId completo.
+                  const label = c
+                    ? `${c.variant}${String(c.sequenceIndex).padStart(2, '0')}`
+                    : f.file.replace('.png', '');
+                  return (
+                    <div key={f.file} className="dev-atomic-cell"
+                      title={`${f.file} · ${f.alias}${c ? ` · ${c.canonicalId}` : ''}`}>
+                      {sheetImg && <FrameCanvas img={sheetImg} f={f} />}
+                      <span className="dev-atomic-file">{label}</span>
+                    </div>
+                  );
+                })}
               </div>
             </div>
           ))}
