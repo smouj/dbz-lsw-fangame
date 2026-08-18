@@ -64,6 +64,14 @@ export const POSE_FALLBACKS: Record<string, string[]> = {
   // FX independiente del actor — el runtime las superpone en gather/beam/support.
   aura_power: ['aura_power', 'power_up', 'gather_power', 'idle'],
   aura_support: ['aura_support', 'aura_power', 'power_up', 'gather_power', 'idle'],
+  // Stage READY — poses SEMÁNTICAS de la preparación del Stage (M8.B).
+  // NO son poses de combate del vocabulario general: existen SOLO como beats
+  // de preparación (stage_ready_open/close). La RESOLUCIÓN DE ASSET es
+  // provisional e INFERRED (gather_power / beam_charge) hasta la pasada
+  // FRAME_VERIFIED — el significado no se confunde con el frame físico.
+  stage_ready_idle: ['stage_ready_idle', 'idle'],
+  stage_ready_open: ['stage_ready_open', 'gather_power', 'beam_charge', 'guard', 'idle'],
+  stage_ready_close: ['stage_ready_close', 'beam_charge', 'gather_power', 'guard', 'idle'],
 };
 
 export function resolveCombatPose(pose: string, hasPose: (pose: string) => boolean): string | null {
@@ -189,6 +197,19 @@ export function resolvePoseFrameSequence(
       return allOf('power_up').length ? allOf('power_up')
         : allOf('gather_power').length ? allOf('gather_power')
         : allOf('beam_charge').length ? allOf('beam_charge') : allOf('idle');
+    // Stage READY (M8.B): resolución de ASSET provisional e INFERRED —
+    // stage_ready_open usa los frames físicos de gather_power (brazos
+    // arriba) y stage_ready_close los de beam_charge (manos juntas).
+    // El significado semántico (preparación del Stage) NO es el mismo que
+    // el de esas poses de combate; esto es SOLO el frame físico provisional.
+    case 'stage_ready_open':
+      return allOf('gather_power').length ? allOf('gather_power')
+        : allOf('beam_charge').length ? allOf('beam_charge') : allOf('guard');
+    case 'stage_ready_close':
+      return allOf('beam_charge').length ? allOf('beam_charge')
+        : allOf('gather_power').length ? allOf('gather_power') : allOf('guard');
+    case 'stage_ready_idle':
+      return allOf('idle');
     default:
       return allOf(pose);
   }
@@ -218,6 +239,11 @@ export const COMBAT_POSE_META: Record<string, { label: string; group: string; ga
   power_up: { label: 'Power up', group: 'shared', gameplay: 'aura / transformacion' },
   aura_power: { label: 'Aura power', group: 'effect', gameplay: 'FX de aura dorada (ki) — superpuesto en gather/beam/support power' },
   aura_support: { label: 'Aura support', group: 'effect', gameplay: 'FX de aura azul (objetos/tecnologia) — superpuesto en support item' },
+  // Stage READY (M8.B) — poses SEMÁNTICAS de la preparación del Stage.
+  // Asset provisional INFERRED: open → gather_power · close → beam_charge.
+  stage_ready_idle: { label: 'Stage ready idle', group: 'stage', gameplay: 'preparacion stage: espera (antes de abrir inputs)' },
+  stage_ready_open: { label: 'Stage ready open', group: 'stage', gameplay: 'preparacion stage: estira brazos (asset INFERRED: gather_power)' },
+  stage_ready_close: { label: 'Stage ready close', group: 'stage', gameplay: 'preparacion stage: encoge brazos (asset INFERRED: beam_charge)' },
 };
 
 export function combatPoseMeta(pose: string): { label: string; group: string; gameplay: string } {

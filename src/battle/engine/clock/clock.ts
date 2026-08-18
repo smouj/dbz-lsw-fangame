@@ -35,14 +35,21 @@ export const COUNTER_WINDOW_TICKS = Math.round(0.4 * GBC_FPS);
 // brazos → idle. En el ÚLTIMO idle (inputOpenTick) el Engine abre la
 // ventana de inputs. Los ticks son INFERRED (perfil provisional hasta la
 // pasada FRAME_VERIFIED sobre la ROM) — nunca setTimeout.
+//
+// SEMÁNTICA vs ASSET: los beats usan poses SEMÁNTICAS propias del Stage
+// (stage_ready_*) que NO reutilizan el vocabulario de combate
+// (gather_power/beam_charge) como significado. La RESOLUCIÓN DE ASSET
+// (qué frames V9 se muestran) es provisional e INFERRED: stage_ready_open
+// → frames de gather_power (brazos arriba), stage_ready_close → frames de
+// beam_charge (manos juntas). Ver spriteConfig.resolvePoseFrameSequence.
 export const STAGE_PREP_TICKS = 60;
 
-/** Beats de la preparación (frame relativo → pose canónica V9). */
+/** Beats de la preparación (frame relativo → pose SEMÁNTICA Stage). */
 export const STAGE_PREP_BEATS: Array<{ frame: number; pose: string }> = [
-  { frame: 0, pose: 'idle' },          // idle inicial
-  { frame: 12, pose: 'gather_power' }, // estira brazos (brazos arriba)
-  { frame: 30, pose: 'beam_charge' },  // encoge brazos (manos juntas)
-  { frame: 48, pose: 'idle' },         // último idle → INPUT_OPEN (60)
+  { frame: 0, pose: 'stage_ready_idle' },  // espera inicial
+  { frame: 12, pose: 'stage_ready_open' },  // estira brazos (asset INFERRED: gather_power)
+  { frame: 30, pose: 'stage_ready_close' }, // encoge brazos (asset INFERRED: beam_charge)
+  { frame: 48, pose: 'stage_ready_idle' },  // último idle → INPUT_OPEN (60)
 ];
 
 export const STAGE_PREP_FIDELITY = 'INFERRED' as const;

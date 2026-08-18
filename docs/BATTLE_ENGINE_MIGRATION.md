@@ -227,8 +227,22 @@ attacker/defender/CC/HP/position/pending action/seed/tick) · **Battle Events**
   - Dev Studio: vista #dev/timeline — tabla Evento/Tick lógico/Tick cue/Δ/
     Cue/Actor/Pose/FX/Fondo/Fidelidad/Perfil (base de la pasada
     FRAME_VERIFIED). Legacy runtime intacto (M7 coexiste; M8 hará el cutover).
-  - verify:presentation: 64 checks · battle-engine 170 · suites verdes ·
-    tsc · build OK.
+  - verify:presentation: 64 → **82 checks** · battle-engine 178 · suites
+    verdes · tsc · build OK.
+  - **Contrato Stage 3 bloques (M8.C)** — precinemática fija → interacción
+    variable → resolución cinematográfica anclada al RESULTADO del QTE:
+    A. PREPARACIÓN fija (idle → stage_ready_open → stage_ready_close →
+    idle → inputOpenTick → QTE_STARTED). B. QTE interactivo de duración
+    VARIABLE (actor idle, inputs, timer). C. RESOLUCIÓN anclada a
+    QTE_COMPLETED / QTE_FAILED / QTE_COUNTER_RESOLVED (nunca a
+    ACTION_STARTED): ACTION_DUEL >= resultado · APPROACH > ACTION_DUEL ·
+    STRIKE > APPROACH · IMPACT > STRIKE · OVERVIEW > IMPACT. Escenarios
+    m7_stage_attack + slow103 + slow145 prueban el desplazamiento de la
+    resolución (61/103/145) con preparación IDÉNTICA.
+  - **stage_ready_* SEMÁNTICAS**: la preparación del Stage usa poses propias
+    (stage_ready_idle/open/close) — gather_power/beam_charge quedan SOLO
+    como resolución de asset provisional INFERRED (spriteConfig
+    resolvePoseFrameSequence), nunca como significado.
 - **M8 🔄 EN CURSO — Runtime Cutover (fundación + slice 1: GATHER)**
   (`src/battle/runtime/` + `scripts/audit-runtime.ts` + playground):
   - **BattleRuntime**: frontera ÚNICA — UI/IA → dispatch(BattleCommand) ·

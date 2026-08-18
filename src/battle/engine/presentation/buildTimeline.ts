@@ -20,7 +20,7 @@
 // ═══════════════════════════════════════════════════════════════════════
 
 import { canonForAction } from '../../animationCanon';
-import { STAGE_PREP_BEATS } from '../clock/clock';
+import { STAGE_PREP_BEATS, STAGE_PREP_TICKS } from '../clock/clock';
 import type { ProjectileVisualKind } from '../../actionProfiles';
 import type { BattleEvent, BattleActionDescriptor } from '../events/BattleEvent';
 import type { BattleEventEnvelope } from '../events/EventLog';
@@ -55,6 +55,15 @@ interface ActionState {
   startTick: number;
   /** Stage (kind command): ticks de preparación antes del QTE interactivo. */
   prepTicks: number | null;
+  /**
+   * Stage — tick del evento que TERMINÓ la ventana interactiva
+   * (QTE_COMPLETED / QTE_FAILED / QTE_TIMEOUT / QTE_COUNTER_RESOLVED).
+   * La resolución cinematográfica se ANCLA aquí (nunca a ACTION_STARTED):
+   * la duración real del QTE es variable y no puede derivarse del inicio.
+   */
+  stageResolvedTick: number | null;
+  /** Stage — anchor real usado por la resolución (para HUD de daño). */
+  stageResolveAnchor: number | null;
 }
 
 /** Duración por defecto de una pose (ticks GBC) hasta el siguiente beat. */
@@ -77,12 +86,18 @@ export function buildPresentationTimeline(input: PresentationInput): BattleTimel
       // ── ACCIÓN: entra la vista ACTION, secuencia del canon, vuelta ──
       case 'ACTION_STARTED': {
         const canon = canonForAction(e.action);
-        activeAction = { side: e.side, action: e.action, canon, startTick: env.tick, prepTicks: null };
+        activeAction = { side: e.side, action: e.action, canon, startTick: env.tick, prepTicks: null, stageResolvedTick: null, stageResolveAnchor: null };
         const target = other(e.side);
         const mode: BattleSceneMode = e.side === 'player' ? 'PLAYER_ACTION' : 'ENEMY_ACTION';
         const special = e.action.visual === 'special' || e.action.kind === 'support';
         const bg = special && context.specialActionBackground ? context.specialActionBackground : context.actionBackground;
-        add({ type: 'SCENE', tick: env.tick, durationTicks: canon.totalFrames, mode: special ? 'SPECIAL_ACTION' : mode, background: bg }, env, e.action.id, e.action.fidelity);
+        // Stage: la escena dura hasta la RESOLUCIÓN (variable), no totalFrames.
+        // durationTicks es informativo: la SCENE ACTION_DUEL de la resolución
+        // corta antes si el QTE termina pronto (el renderer sigue el orden).
+        const sceneDuration = e.action.kind === 'command'
+          ? STAGE_PREP_TICKS + 240
+          : canon.totalFrames;
+        add({ type: 'SCENE', tick: env.tick, durationTicks: sceneDuration, mode: special ? 'SPECIAL_ACTION' : mode, background: bg }, env, e.action.id, e.action.fidelity);
         add({ type: 'CAMERA', tick: env.tick, action: 'CUT' }, env, e.action.id, e.action.fidelity);
         add({ type: 'FIGHTER_VISIBILITY', tick: env.tick, role: 'ACTOR', side: e.side, visible: true }, env, e.action.id, e.action.fidelity);
         add({ type: 'FIGHTER_VISIBILITY', tick: env.tick, role: 'TARGET', side: target, visible: false }, env, e.action.id, e.action.fidelity);
@@ -123,11 +138,16 @@ export function buildPresentationTimeline(input: PresentationInput): BattleTimel
           add({ type: 'PROJECTILE', tick: spawnTick + Math.floor((contactTick - spawnTick) / 2), kind: e.action.visual as ProjectileVisualKind, action: 'travel', from: e.side, to: target }, env, e.action.id, e.action.fidelity);
           add({ type: 'PROJECTILE', tick: contactTick, kind: e.action.visual as ProjectileVisualKind, action: 'impact', from: e.side, to: target }, env, e.action.id, e.action.fidelity);
         }
-        // Vuelta al plano táctico
-        add({ type: 'SCENE', tick: env.tick + canon.totalFrames, durationTicks: 1, mode: 'OVERVIEW', background: context.overviewBackground }, env, e.action.id, e.action.fidelity);
-        add({ type: 'FIGHTER_VISIBILITY', tick: env.tick + canon.totalFrames, role: 'TARGET', side: target, visible: true }, env, e.action.id, e.action.fidelity);
-        add({ type: 'FIGHTER_POSE', tick: env.tick + canon.totalFrames, durationTicks: POSE_HOLD, role: 'ACTOR', side: e.side, pose: 'idle' }, env, e.action.id, e.action.fidelity);
-        add({ type: 'CAMERA', tick: env.tick + canon.totalFrames, action: 'RESET' }, env, e.action.id, e.action.fidelity);
+        // Vuelta al plano táctico — SOLO para acciones sin QTE interactivo.
+        // Para STAGE (kind command) el retorno lo emite la RESOLUCIÓN
+        // (anclada a QTE_COMPLETED/FAILED/TIMEOUT/COUNTER_RESOLVED), porque
+        // la duración del QTE es variable y no se conoce en ACTION_STARTED.
+        if (e.action.kind !== 'command') {
+          add({ type: 'SCENE', tick: env.tick + canon.totalFrames, durationTicks: 1, mode: 'OVERVIEW', background: context.overviewBackground }, env, e.action.id, e.action.fidelity);
+          add({ type: 'FIGHTER_VISIBILITY', tick: env.tick + canon.totalFrames, role: 'TARGET', side: target, visible: true }, env, e.action.id, e.action.fidelity);
+          add({ type: 'FIGHTER_POSE', tick: env.tick + canon.totalFrames, durationTicks: POSE_HOLD, role: 'ACTOR', side: e.side, pose: 'idle' }, env, e.action.id, e.action.fidelity);
+          add({ type: 'CAMERA', tick: env.tick + canon.totalFrames, action: 'RESET' }, env, e.action.id, e.action.fidelity);
+        }
         break;
       }
       case 'ACTION_RESOLVED': {
@@ -142,11 +162,46 @@ export function buildPresentationTimeline(input: PresentationInput): BattleTimel
 
       // ── RESULTADO DEL ATAQUE: event-driven, nunca mirar HP ──
       case 'ATTACK_HIT': {
-        // El impacto del ACTOR se ancla al beat de contacto del canon de su
-        // acción (para beam/melee); para STAGE (QTE interactivo en medio) se
-        // ancla al tick LÓGICO del evento (cuando se completó el QTE).
-        const isStage = activeAction?.action.kind === 'command' && e.source === activeAction.side;
-        const contactTick = activeAction && e.source === activeAction.side && !isStage
+        const stage = activeAction && activeAction.action.kind === 'command' ? activeAction : null;
+        // Stage: cualquier golpe mientras una acción command está activa
+        // (el acierto del actor tras QTE_COMPLETED, o el contraataque del
+        // rival tras QTE_FAILED/TIMEOUT). La resolución se ANCLA al evento
+        // que cerró la ventana interactiva y avanza HACIA DELANTE — nunca
+        // antes del QTE.
+        const isStageHit = !!stage;
+        if (isStageHit) {
+          // anchor: para el acierto del ACTOR, el tick en que terminó la
+          // ventana interactiva (QTE_COMPLETED); para el contraataque, el
+          // tick real del golpe (QTE_COUNTER_RESOLVED).
+          const anchor = e.source === stage.side
+            ? (stage.stageResolvedTick ?? env.tick)
+            : env.tick;
+          stage.stageResolveAnchor = anchor;
+          const r = (off: number) => anchor + off;
+          const { action, fidelity } = profileOf(stage);
+          // BLOQUE C (RESOLUCIÓN) — precinemática fija → interacción variable
+          // → resolución cinematográfica: ACTION_DUEL >= resultado del QTE,
+          // APPROACH > ACTION_DUEL, STRIKE > APPROACH, IMPACT > STRIKE,
+          // OVERVIEW > IMPACT.
+          add({ type: 'SCENE', tick: r(0), durationTicks: 40, mode: 'ACTION_DUEL', background: context.actionBackground }, env, action, fidelity);
+          add({ type: 'FIGHTER_VISIBILITY', tick: r(0), role: 'TARGET', side: e.target, visible: true }, env, action, fidelity);
+          add({ type: 'FIGHTER_POSE', tick: r(8), durationTicks: 6, role: 'ACTOR', side: e.source, pose: 'move_front' }, env, action, fidelity);   // approach
+          add({ type: 'CAMERA', tick: r(8), action: 'TRACK' }, env, action, fidelity);
+          add({ type: 'FIGHTER_POSE', tick: r(14), durationTicks: 6, role: 'ACTOR', side: e.source, pose: 'idle' }, env, action, fidelity);        // stop + idle
+          add({ type: 'FIGHTER_POSE', tick: r(20), durationTicks: 6, role: 'ACTOR', side: e.source, pose: 'attack_fwd' }, env, action, fidelity);  // strike
+          add({ type: 'IMPACT', tick: r(26), side: e.target, outcome: e.outcome }, env, action, fidelity);
+          add({ type: 'FIGHTER_POSE', tick: r(26), durationTicks: 10, role: 'TARGET', side: e.target, pose: e.outcome === 'block' ? 'guard' : e.outcome === 'guard' ? 'evade' : 'knockback_back' }, env, action, fidelity);
+          add({ type: 'CAMERA', tick: r(26), action: 'IMPACT' }, env, action, fidelity);
+          add({ type: 'AUDIO', tick: r(26), cue: e.outcome === 'hit' ? 'hit' : e.outcome === 'block' ? 'block' : 'guard' }, env, action, fidelity);
+          add({ type: 'FIGHTER_POSE', tick: r(34), durationTicks: 6, role: 'ACTOR', side: e.source, pose: 'idle' }, env, action, fidelity);        // recovery
+          add({ type: 'SCENE', tick: r(40), durationTicks: 1, mode: 'OVERVIEW', background: context.overviewBackground }, env, action, fidelity);
+          add({ type: 'FIGHTER_VISIBILITY', tick: r(40), role: 'TARGET', side: e.target, visible: true }, env, action, fidelity);
+          add({ type: 'CAMERA', tick: r(40), action: 'RESET' }, env, action, fidelity);
+          break;
+        }
+        // Resto de acciones (melee/beam sin QTE): el impacto se ancla al beat
+        // de contacto del canon (secuencia fija desde ACTION_STARTED).
+        const contactTick = activeAction && e.source === activeAction.side
           ? activeAction.startTick + activeAction.canon.contactFrame
           : env.tick;
         const { action, fidelity } = profileOf(activeAction);
@@ -154,15 +209,7 @@ export function buildPresentationTimeline(input: PresentationInput): BattleTimel
         add({ type: 'FIGHTER_VISIBILITY', tick: contactTick, role: 'TARGET', side: e.target, visible: true }, env, action, fidelity);
         const pose = e.outcome === 'block' ? 'guard' : e.outcome === 'guard' ? 'evade' : 'knockback_back';
         add({ type: 'FIGHTER_POSE', tick: contactTick, durationTicks: 10, role: 'TARGET', side: e.target, pose }, env, action, fidelity);
-        // Stage: la RESOLUTION CINEMATIC — el actor AVANZA al plano del rival
-        // (fade → ACTION_DUEL), se para enfrente y golpea en el tick real.
-        if (isStage) {
-          add({ type: 'SCENE', tick: contactTick - 20, durationTicks: 30, mode: 'ACTION_DUEL', background: context.actionBackground }, env, action, fidelity);
-          add({ type: 'FIGHTER_VISIBILITY', tick: contactTick - 20, role: 'TARGET', side: e.target, visible: true }, env, action, fidelity);
-          add({ type: 'FIGHTER_POSE', tick: contactTick - 14, durationTicks: 6, role: 'ACTOR', side: e.source, pose: 'move_front' }, env, action, fidelity); // approach animado
-          add({ type: 'FIGHTER_POSE', tick: contactTick - 6, durationTicks: 6, role: 'ACTOR', side: e.source, pose: 'idle' }, env, action, fidelity);   // stop + idle
-          add({ type: 'FIGHTER_POSE', tick: contactTick, durationTicks: 10, role: 'ACTOR', side: e.source, pose: 'attack_fwd' }, env, action, fidelity); // golpe
-        }
+        add({ type: 'FIGHTER_POSE', tick: contactTick, durationTicks: 10, role: 'ACTOR', side: e.source, pose: 'attack_fwd' }, env, action, fidelity);
         add({ type: 'CAMERA', tick: contactTick, action: 'IMPACT' }, env, action, fidelity);
         add({ type: 'AUDIO', tick: contactTick, cue: e.outcome === 'hit' ? 'hit' : e.outcome === 'block' ? 'block' : 'guard' }, env, action, fidelity);
         break;
@@ -175,7 +222,13 @@ export function buildPresentationTimeline(input: PresentationInput): BattleTimel
       }
       case 'DAMAGE_APPLIED': {
         if (e.amount > 0) {
-          add({ type: 'HUD', tick: env.tick, kind: 'damage_number', side: e.target, value: e.amount }, env);
+          // Stage: el número de daño se ancla al IMPACTO visual de la
+          // resolución (anchor + 26), no al tick lógico del evento — el HP
+          // ya mutó en el Engine, pero la presentación lo muestra al golpear.
+          const stageAnchor = activeAction?.action.kind === 'command' && activeAction.stageResolveAnchor != null
+            ? activeAction.stageResolveAnchor + 26
+            : env.tick;
+          add({ type: 'HUD', tick: stageAnchor, kind: 'damage_number', side: e.target, value: e.amount }, env);
         }
         break;
       }
@@ -208,11 +261,21 @@ export function buildPresentationTimeline(input: PresentationInput): BattleTimel
         add({ type: 'AUDIO', tick: env.tick, cue: e.success ? 'qteOk' : 'qteFail' }, env);
         break;
       }
+      case 'QTE_COMPLETED': {
+        // La ventana interactiva TERMINÓ: la resolución se ancla aquí.
+        if (activeAction) activeAction.stageResolvedTick = env.tick;
+        add({ type: 'HUD', tick: env.tick, kind: 'qte', value: 'completed' }, env);
+        break;
+      }
       case 'QTE_FAILED': {
+        // La ventana interactiva TERMINÓ (fallo → contraataque del rival).
+        if (activeAction) activeAction.stageResolvedTick = env.tick;
         add({ type: 'HUD', tick: env.tick, kind: 'qte', value: 'failed' }, env);
         break;
       }
       case 'QTE_TIMEOUT': {
+        // La ventana de inputs expiró → termina la interacción (counter).
+        if (activeAction) activeAction.stageResolvedTick = env.tick;
         add({ type: 'HUD', tick: env.tick, kind: 'qte', value: `timeout ${e.window}` }, env);
         add({ type: 'AUDIO', tick: env.tick, cue: 'qteFail' }, env);
         break;
@@ -223,12 +286,22 @@ export function buildPresentationTimeline(input: PresentationInput): BattleTimel
         break;
       }
       case 'QTE_COUNTER_RESOLVED': {
+        if (activeAction) activeAction.stageResolvedTick = env.tick;
         if (e.action === 'DEFEND') {
+          // Defensa contra el contraataque → guardia activa y retorno al
+          // plano táctico (resolución anclada aquí, no en ACTION_STARTED).
           add({ type: 'FIGHTER_POSE', tick: env.tick, durationTicks: POSE_HOLD, role: 'ACTOR', side: 'player', pose: 'guard' }, env);
           add({ type: 'AUDIO', tick: env.tick, cue: 'guard' }, env);
+          add({ type: 'SCENE', tick: env.tick + 12, durationTicks: 1, mode: 'OVERVIEW', background: context.overviewBackground }, env);
+          add({ type: 'FIGHTER_POSE', tick: env.tick + 12, durationTicks: POSE_HOLD, role: 'ACTOR', side: 'player', pose: 'idle' }, env);
+          add({ type: 'CAMERA', tick: env.tick + 12, action: 'RESET' }, env);
         } else if (e.action === 'CONTINUE') {
+          // Reparar y continuar: la ventana interactiva se REABRE (la
+          // resolución vendrá al terminar de verdad). Actor vuelve a idle.
           add({ type: 'FIGHTER_POSE', tick: env.tick, durationTicks: POSE_HOLD, role: 'ACTOR', side: 'player', pose: 'idle' }, env);
         }
+        // TIMEOUT: el contraataque conectó — la resolución la emite el
+        // ATTACK_HIT del rival (anclado al tick de este evento).
         break;
       }
 
@@ -251,7 +324,7 @@ export function buildPresentationTimeline(input: PresentationInput): BattleTimel
       }
       case 'GATHER_STARTED': {
         const canon = canonForAction({ id: 'gather_power', label: 'Gather Power', kind: 'gather', visual: 'power', fidelity: 'INFERRED' });
-        activeAction = { side: e.side, action: { id: 'gather_power', label: 'Gather Power', kind: 'gather', visual: 'power', fidelity: 'INFERRED' }, canon, startTick: env.tick, prepTicks: null };
+        activeAction = { side: e.side, action: { id: 'gather_power', label: 'Gather Power', kind: 'gather', visual: 'power', fidelity: 'INFERRED' }, canon, startTick: env.tick, prepTicks: null, stageResolvedTick: null, stageResolveAnchor: null };
         add({ type: 'SCENE', tick: env.tick, durationTicks: canon.totalFrames, mode: e.side === 'player' ? 'PLAYER_ACTION' : 'ENEMY_ACTION', background: context.actionBackground }, env);
         add({ type: 'FIGHTER_POSE', tick: env.tick, durationTicks: canon.totalFrames - 12, role: 'ACTOR', side: e.side, pose: 'gather_power' }, env);
         add({ type: 'AURA', tick: env.tick, durationTicks: canon.totalFrames - 12, role: 'ACTOR', side: e.side, variant: 'power', visible: true }, env);

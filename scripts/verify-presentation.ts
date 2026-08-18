@@ -94,6 +94,49 @@ for (const sc of PRESENTATION_SCENARIOS) {
   }
 }
 
+// ── Contrato Stage (M8.C): tres bloques temporales independientes ──
+// A. PREPARACIÓN fija (idle → stage_ready_open → stage_ready_close → idle →
+//    inputOpenTick → QTE_STARTED). B. QTE interactivo de duración VARIABLE.
+// C. RESOLUCIÓN anclada al evento que cierra la ventana (QTE_COMPLETED /
+//    QTE_FAILED / QTE_COUNTER_RESOLVED), nunca a ACTION_STARTED:
+//    ACTION_DUEL >= resultado · APPROACH > ACTION_DUEL · STRIKE > APPROACH
+//    · IMPACT > STRIKE · OVERVIEW > IMPACT.
+{
+  const stageIds = ['m7_stage_attack', 'm7_stage_attack_slow103', 'm7_stage_attack_slow145'];
+  const runs = stageIds.map(id => ({ sc: PRESENTATION_SCENARIOS.find(s => s.id === id)!, run: null as unknown }));
+  const results: Array<{ id: string; qteTick: number; duel: number; approach: number; strike: number; impact: number; overview: number }> = [];
+  for (const { sc } of runs) {
+    const run = runPresentationScenario(sc);
+    const tl = buildPresentationTimeline({ events: run.log.entries, context: CONTEXT });
+    const qteDone = run.log.entries.find(en => en.event.type === 'QTE_COMPLETED');
+    const qteTick = qteDone?.tick ?? -1;
+    const duel = tl.entries.find(en => en.cue.type === 'SCENE' && (en.cue as { mode?: string }).mode === 'ACTION_DUEL');
+    const poseAt = (pose: string) => tl.entries.find(en => en.cue.type === 'FIGHTER_POSE' && (en.cue as { pose?: string }).pose === pose);
+    const approach = poseAt('move_front');
+    const strike = poseAt('attack_fwd');
+    const impact = tl.entries.find(en => en.cue.type === 'IMPACT');
+    const overview = tl.entries.find(en => en.cue.type === 'SCENE' && (en.cue as { mode?: string }).mode === 'OVERVIEW');
+    const d = duel?.cue.tick ?? -1, ap = approach?.cue.tick ?? -1, st = strike?.cue.tick ?? -1, im = impact?.cue.tick ?? -1, ov = overview?.cue.tick ?? -1;
+    results.push({ id: sc.id, qteTick, duel: d, approach: ap, strike: st, impact: im, overview: ov });
+    check(`M8.C: ${sc.id} — ACTION_DUEL >= QTE result (${d} >= ${qteTick})`, qteTick >= 0 && d >= qteTick);
+    check(`M8.C: ${sc.id} — APPROACH > ACTION_DUEL (${ap} > ${d})`, ap > d);
+    check(`M8.C: ${sc.id} — STRIKE > APPROACH (${st} > ${ap})`, st > ap);
+    check(`M8.C: ${sc.id} — IMPACT > STRIKE (${im} > ${st})`, im > st);
+    check(`M8.C: ${sc.id} — OVERVIEW > IMPACT (${ov} > ${im})`, ov > im);
+    // Preparación invariante: stage_ready_* SEMÁNTICAS (nunca gather_power/beam_charge)
+    const prepPoses = tl.entries.filter(en => en.profileId === 'stage_prep' && en.cue.type === 'FIGHTER_POSE').map(en => (en.cue as { pose?: string }).pose ?? '');
+    check(`M8.C: ${sc.id} — prep con poses stage_ready_*`, prepPoses.length > 0 && prepPoses.every(p => p.startsWith('stage_ready_') || p === 'idle'));
+  }
+  // La resolución se DESPLAZA con el QTE; la preparación NO cambia.
+  const fast = results[0], slow = results[2];
+  check(`M8.C: resolución desplazada — duel slow145 (${slow.duel}) > duel fast (${fast.duel})`, slow.duel > fast.duel);
+  check(`M8.C: QTE lento completa después (${slow.qteTick} > ${fast.qteTick})`, slow.qteTick > fast.qteTick);
+  // Preparación idéntica entre runs: mismos beats en los mismos ticks.
+  const prepFast = (() => { const r = runPresentationScenario(PRESENTATION_SCENARIOS.find(s => s.id === 'm7_stage_attack')!); const tl = buildPresentationTimeline({ events: r.log.entries, context: CONTEXT }); return tl.entries.filter(en => en.profileId === 'stage_prep').map(en => `${en.cue.tick}:${(en.cue as { pose?: string }).pose ?? ''}`).join('|'); })();
+  const prepSlow = (() => { const r = runPresentationScenario(PRESENTATION_SCENARIOS.find(s => s.id === 'm7_stage_attack_slow145')!); const tl = buildPresentationTimeline({ events: r.log.entries, context: CONTEXT }); return tl.entries.filter(en => en.profileId === 'stage_prep').map(en => `${en.cue.tick}:${(en.cue as { pose?: string }).pose ?? ''}`).join('|'); })();
+  check('M8.C: preparación idéntica con QTE rápido y lento', prepFast === prepSlow && prepFast.length > 0);
+}
+
 // ── Resultados derivados de EVENTOS, no de HP ──
 {
   const miss = PRESENTATION_SCENARIOS.find(s => s.id === 'm7_melee_miss')!;

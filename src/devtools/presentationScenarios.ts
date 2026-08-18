@@ -19,6 +19,8 @@ export type ScenarioStep =
   | { kind: 'ticks'; ticks: number }
   /** Completa el QTE con las teclas correctas de la secuencia actual. */
   | { kind: 'qte_complete' }
+  /** Un solo input correcto (simula jugador lento intercalando ticks). */
+  | { kind: 'qte_step' }
   /** Pulsa una tecla EQUIVOCADA (→ COUNTER_WINDOW). */
   | { kind: 'qte_wrong' };
 
@@ -57,6 +59,32 @@ export const PRESENTATION_SCENARIOS: PresentationScenario[] = [
       { kind: 'cmd', command: { type: 'BASIC' } },
       { kind: 'cmd', command: { type: 'BASIC_STAGE_ATTACK' }, opts: { side: 'player' } },
       { kind: 'qte_complete' },
+    ],
+  },
+  {
+    // M8.C test del contrato Stage: QTE lento (completa en tick 103) — la
+    // resolución se ancla al resultado del QTE y NO a ACTION_STARTED.
+    id: 'm7_stage_attack_slow103', label: 'Stage Attack QTE lento (completa @103)', seed: 4242,
+    deck: [1, 5], playerCc: 0, playerPos: 'DOWN_FRONT', enemyPos: 'DOWN_BACK',
+    steps: [
+      { kind: 'cmd', command: { type: 'BASIC' } },
+      { kind: 'cmd', command: { type: 'BASIC_STAGE_ATTACK' }, opts: { side: 'player' } },
+      { kind: 'qte_step' }, { kind: 'ticks', ticks: 21 },
+      { kind: 'qte_step' }, { kind: 'ticks', ticks: 21 },
+      { kind: 'qte_step' },
+    ],
+  },
+  {
+    // M8.C: QTE aún más lento (completa en tick 145) — toda la resolución
+    // se desplaza; la preparación NO cambia.
+    id: 'm7_stage_attack_slow145', label: 'Stage Attack QTE muy lento (completa @145)', seed: 4242,
+    deck: [1, 5], playerCc: 0, playerPos: 'DOWN_FRONT', enemyPos: 'DOWN_BACK',
+    steps: [
+      { kind: 'cmd', command: { type: 'BASIC' } },
+      { kind: 'cmd', command: { type: 'BASIC_STAGE_ATTACK' }, opts: { side: 'player' } },
+      { kind: 'qte_step' }, { kind: 'ticks', ticks: 42 },
+      { kind: 'qte_step' }, { kind: 'ticks', ticks: 42 },
+      { kind: 'qte_step' },
     ],
   },
   {
@@ -198,6 +226,12 @@ export function runPresentationScenario(sc: PresentationScenario): ScenarioRun {
       for (const key of [...state.stageQte.seq]) {
         runCmd({ type: 'QTE_INPUT', input: key }, { side: 'player' });
       }
+    } else if (step.kind === 'qte_step') {
+      // Un solo input correcto (para simular jugador LENTO: intercalar
+      // { kind: 'ticks' } entre qte_step → QTE_COMPLETED en tick variable).
+      openInputWindow();
+      const key = state.stageQte.seq[state.stageQte.idx];
+      runCmd({ type: 'QTE_INPUT', input: key }, { side: 'player' });
     } else if (step.kind === 'qte_wrong') {
       openInputWindow();
       const wrong = state.stageQte.seq[0] === 'A' ? 'B' : 'A';
