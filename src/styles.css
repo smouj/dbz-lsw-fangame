@@ -648,21 +648,27 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 .battle-screen {
   width: 100%; height: 100vh;
   display: grid;
-  grid-template-rows: auto minmax(0, 1fr) auto var(--controls-h, var(--hud-controls-h, clamp(104px, 17.5vh, 136px))) auto;
+  /* ⚠️ 3 filas EXACTAS para los 3 hijos del DOM (hud-top / battlefield /
+     battle-controls). Antes había 5 filas (auto 1fr auto var(--controls-h)
+     auto) pero solo 3 hijos → la fila 4 (var(--controls-h)) quedaba VACÍA
+     y el panel inferior efectivo era 104px (controles) + 104px (fantasma)
+     = 208px (~45% de la ventana). Con 3 filas el battlefield recupera su
+     altura real (minmax(0,1fr) reparte el hueco restante). */
+  grid-template-rows: auto minmax(0, 1fr) var(--controls-h, var(--hud-controls-h, clamp(104px, 17.5vh, 136px)));
   background: var(--bg);
   overflow: hidden;
   position: relative;
 }
 .battle-screen.intro-active {
   --controls-h: 0px;
-  grid-template-rows: auto minmax(0, 1fr) auto auto 0;
+  grid-template-rows: auto minmax(0, 1fr) 0;
 }
 .battle-screen.intro-active .battle-controls {
   display: none;
 }
 .battle-screen.qte-resolving {
   --controls-h: 0px;
-  grid-template-rows: auto minmax(0, 1fr) auto auto 0;
+  grid-template-rows: auto minmax(0, 1fr) 0;
 }
 .battle-screen.qte-resolving .battle-controls {
   display: none;
@@ -976,11 +982,16 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 
 /* Fondo auténtico de la ROM (160×80): RELLENA la escena de personajes
    (cover — como el GBC, el fondo ocupa todo el ancho del campo) con
-   image-rendering pixelated para mantener el look pixel GBC. */
+   image-rendering pixelated para mantener el look pixel GBC.
+   ⚠️ ANCLAJE: center BOTTOM — la línea del suelo del fondo coincide con
+   el borde inferior del battlefield, donde están anclados los fighters
+   (.battlefield-fighters align-items: stretch → flex-end). Con center
+   CENTER (antes) en un battlefield ancho/bajo, el suelo quedaba recortado
+   y los sprites parecían flotar en el cielo. */
 .battle-bg.authentic {
   background-size: cover !important;
   background-repeat: no-repeat !important;
-  background-position: center center !important;
+  background-position: center bottom !important;
   image-rendering: pixelated;
 }
 /* Plano ESPECIAL/transición (special_action.png — blanco con bandas azules
@@ -1070,7 +1081,11 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   display: flex;
   align-items: stretch;
   justify-content: space-around;
-  padding: 2% 8% 4%;
+  /* ⚠️ padding bottom 2% (antes 4%): con el fondo anclado a center bottom,
+     la línea de suelo del fondo coincide con el borde inferior del campo —
+     los pies de los fighters deben quedar PEGADOS a esa línea (un colchón
+     mínimo de sombra), no flotando 32px por encima. */
+  padding: 2% 8% 2%;
   z-index: 2;
   /* Transición suave OVERVIEW ↔ ACTION: los sprites de campo (overworld o
      animados) se desvanecen con fade + leve scale cuando entra la vista ACTION
@@ -4531,8 +4546,12 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 /* Sprites de OVERWORLD en el campo (vista sin ataque, como el GBC) */
 .overworld-sprite {
   image-rendering: pixelated;
-  height: clamp(32px, 9vmin, 96px);   /* chibi 16×16: ×2 en ventanas pequeñas
-                                           (ratio GBC 11% del 144) hasta ×6 en grandes */
+  /* chibi 16×16 → proporción GBC REAL: en el GBC el personaje ocupa ~10%
+     del ancho de pantalla (16/160). El fondo va a cover (ancho del campo),
+     así el sprite escala igual: 10vw ≈ 80px en 800px / 96px en 960+
+     (antes 9vmin ≈ 41px → sprite ~2.5x mientras el fondo 5x → personajes
+     diminutos sobre árboles enormes y “flotando en el cielo”). */
+  height: clamp(40px, 10vw, 96px);
   width: auto;
   transform-origin: bottom center;
   filter: drop-shadow(0 0 8px rgba(255,190,60,.3)) drop-shadow(0 5px 10px rgba(0,0,0,.45));
@@ -9020,7 +9039,7 @@ button:focus-visible, .chapter-node:focus-visible {
    El aura es una capa separada, NO otro frame del personaje. */
 .battle-overworld { position: relative; display: inline-flex; }
 .battle-overworld .overworld-sprite {
-  height: clamp(32px, 9vmin, 96px); width: auto; image-rendering: pixelated;
+  height: clamp(40px, 10vw, 96px); width: auto; image-rendering: pixelated;
   filter: drop-shadow(0 0 8px rgba(255,190,60,.3)) drop-shadow(0 5px 10px rgba(0,0,0,.45));
 }
 .battle-overworld.gathering .overworld-sprite {
