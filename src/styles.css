@@ -633,7 +633,7 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   display: flex;
   justify-content: space-between;
   align-items: stretch;
-  gap: var(--hud-gap, clamp(88px, 14vw, 190px));
+  gap: var(--hud-gap, clamp(84px, 11vw, 150px));   /* hueco central menor: barras más anchas (estilo lucha) */
   padding: var(--hud-top-pad-y, 6px) 10px 4px;   /* 4px abajo: 2px extra de
      respiro entre los badges de estado y el límite inferior del HUD */
   background:
@@ -853,10 +853,10 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 
 /* ─── HP Bar (estilo GBC) ─── */
 
-.hp-bar { position: relative; height: var(--hp-bar-h, 18px); margin: 1px 0; }
+.hp-bar { position: relative; height: var(--hp-bar-h, 24px); margin: 1px 0; }
 
 .hp-bar-track {
-  width: 100%; height: calc(var(--hp-bar-h, 18px) - 4px);
+  width: 100%; height: calc(var(--hp-bar-h, 24px) - 4px);
   min-height: 10px;
   background:
     linear-gradient(180deg, #05060a, #010203);
@@ -2117,8 +2117,8 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   .hud-phase { font-size: 7px; padding: 0 4px; }
   .hud-stats { font-size: 7px; }
   .cc-display { font-size: 7px; }
-  .hp-bar { height: 13px; }
-  .hp-bar-track { height: 9px; }
+  .hp-bar { height: 18px; }
+  .hp-bar-track { height: 14px; }
   .battlefield-fighters { padding: 0 6% 8%; }
   .hand-cards { gap: 3px; }
   .card { padding: 2px; gap: 0; }
@@ -9595,7 +9595,7 @@ button.linklike:hover { text-decoration: underline; }
 
 /* Barras HP: brillo superior animado + glow del relleno */
 .hp-bar-track {
-  height: 13px;
+  height: calc(var(--hp-bar-h, 24px) - 4px);   /* usa el var (antes 13px fijo) */
   border-width: 2px;
 }
 .hp-bar-current {
