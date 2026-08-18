@@ -68,7 +68,7 @@ function HudCard({ card, selected, disabled }: { card: CardDef; selected?: boole
   return (
     <button className={`card ${card.type} ${selected ? 'selected' : ''}`} disabled={disabled}
       style={{ '--card-color': color, '--card-frame': frame ? `url('${frame}')` : undefined } as React.CSSProperties}
-      data-tip={`${card.name} — ${CARD_TYPE_NAMES[card.type]}\nCC ${card.cc} · ATK ${card.atk > 0 ? card.atk : '—'} · ACC ${card.acc}%\n${card.description ?? ''}`}>
+      data-tip={`<span class="tt-title">${card.name} — ${CARD_TYPE_NAMES[card.type]} ★${card.rarity}</span><span class="tt-sep"></span><span class="tt-stats">CC ${card.cc} · ATK ${card.atk > 0 ? card.atk : '—'} · ACC ${card.acc}%</span>${card.description ? `<span class="tt-desc">${card.description}</span>` : ''}`}>
       <CardArtHole frameUrl={frame} iconUrl={iconUrl} />
     </button>
   );

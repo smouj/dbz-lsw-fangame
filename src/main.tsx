@@ -476,14 +476,18 @@ function CardVisual({ card, selected, onClick, small, disabled }: {
       : '';
   // Frame GBC por tipo (la carta SE VE como el GBC: marco + arte interior)
   const frameUrl = disabled ? CARD_FRAME_DISABLED : selected ? CARD_FRAME_SELECTED : (CARD_TYPE_FRAME[card.type] ?? undefined);
-  // Tooltip ENRIQUECIDO: toda la información de la carta, bien elaborado
+  // Tooltip ENRIQUECIDO y ESTRUCTURADO (HTML): título + stats + descripción
+  // + efecto + compatibilidad — con el estilo del diálogo GBC (fuente pixel,
+  // fondo blanco, texto negro). Se renderiza con dangerouslySetInnerHTML.
+  const esc = (s: string) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
   const richTip = [
-    `${card.name} — ${CARD_TYPE_NAMES[card.type]}  ★${card.rarity}`,
-    `CC ${card.cc} · ATK ${card.atk > 0 ? card.atk : '—'} · ACC ${card.acc}%`,
-    card.description ?? '',
-    `Efecto: ${cardEffectSummary(card.effect)}`,
-    compat.trim(),
-  ].filter(Boolean).join('\n');
+    `<span class="tt-title">${esc(card.name)} — ${esc(CARD_TYPE_NAMES[card.type])} ★${card.rarity}</span>`,
+    `<span class="tt-sep"></span>`,
+    `<span class="tt-stats">CC ${card.cc} · ATK ${card.atk > 0 ? card.atk : '—'} · ACC ${card.acc}%</span>`,
+    card.description ? `<span class="tt-desc">${esc(card.description)}</span>` : '',
+    `<span class="tt-effect">Efecto: ${esc(cardEffectSummary(card.effect))}</span>`,
+    compat.trim() ? `<span class="tt-compat">${esc(compat.trim())}</span>` : '',
+  ].filter(Boolean).join('');
   return (
     <button className={`card ${card.type} ${selected ? 'selected' : ''} ${small ? 'small' : ''}`}
       onClick={onClick} disabled={disabled}
@@ -611,8 +615,14 @@ function GlobalTooltip() {
   const MAX_W = 300;
   const half = MAX_W / 2;
   const left = Math.max(half + 8, Math.min(tip.x, window.innerWidth - half - 8));
+  // El tooltip de las cartas lleva HTML estructurado (tt-title/stats/desc);
+  // el resto de tooltips son texto plano (los nombres/HP del HUD, botones).
+  const isHtml = tip.text.includes('tt-title');
   return createPortal(
-    <div className={`global-tooltip dir-${tip.dir}`} style={{ left, top: tip.y }}>{tip.text}</div>,
+    <div className={`global-tooltip dir-${tip.dir}`} style={{ left, top: tip.y }}
+      dangerouslySetInnerHTML={isHtml ? { __html: tip.text } : undefined}>
+      {isHtml ? null : tip.text}
+    </div>,
     document.body
   );
 }

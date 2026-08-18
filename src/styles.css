@@ -1373,27 +1373,74 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* Tooltip GLOBAL (portal, position:fixed) — nunca se corta por overflow */
+/* Tooltip GLOBAL (portal, position:fixed) — nunca se corta por overflow.
+   MISMO estilo que el diálogo GBC: fondo blanco #f8f4e4, texto NEGRO,
+   marco negro + outline, fuente pixel MÁS GRANDE, texto bien estructurado
+   con el nombre destacado y las líneas separadas. */
 .global-tooltip {
   position: fixed;
   z-index: 10000;
   pointer-events: none;
-  background: #111827;
-  border: 2px solid #05070c;
-  outline: 1px solid #d8d0b8;
-  color: #f0d060;
+  background: #f8f4e4;              /* blanco GBC como el diálogo */
+  border: 3px solid #000;
+  outline: 2px solid #f8f4e4;
+  color: #000;                      /* texto NEGRO sobre blanco GBC */
   font-family: var(--fpx);
-  font-size: 8px;
-  letter-spacing: 0;
-  line-height: 1.55;
-  padding: 7px 10px;
+  font-size: 11px;                  /* MÁS GRANDE (antes 8px) */
+  letter-spacing: .5px;
+  line-height: 1.6;
+  padding: 9px 13px;
   white-space: pre-wrap;
   overflow-wrap: anywhere;
-  max-width: min(300px, 64vw);
-  box-shadow: 3px 3px 0 #000;
+  max-width: min(360px, 70vw);
+  box-shadow: 4px 4px 0 rgba(0,0,0,.55);
   image-rendering: pixelated;
+  text-align: left;                 /* alineado (mejor lectura) */
+  text-shadow: none;
+}
+/* Primera línea del tooltip = TÍTULO (nombre — tipo): destacado y centrado */
+.global-tooltip .tt-title {
+  display: block;
+  font-size: 13px;
+  font-weight: bold;
+  color: #005a8c;
+  letter-spacing: 1px;
   text-align: center;
-  text-shadow: 1px 1px 0 #000;
+  margin-bottom: 5px;
+  text-transform: uppercase;
+}
+/* Líneas de datos (CC · ATK · ACC) */
+.global-tooltip .tt-stats {
+  display: block;
+  color: #7a5c00;
+  font-size: 11px;
+  text-align: center;
+  margin-bottom: 4px;
+}
+/* Descripción y efecto */
+.global-tooltip .tt-desc {
+  display: block;
+  color: #000;
+  font-size: 10.5px;
+}
+.global-tooltip .tt-effect {
+  display: block;
+  color: #7a2a2a;
+  font-size: 10.5px;
+  margin-top: 3px;
+}
+.global-tooltip .tt-compat {
+  display: block;
+  color: #2a6a2a;
+  font-size: 10px;
+  margin-top: 4px;
+}
+/* Separador entre título y cuerpo */
+.global-tooltip .tt-sep {
+  display: block;
+  height: 0;
+  border-top: 1px solid rgba(0,0,0,.35);
+  margin: 5px 0;
 }
 .global-tooltip.dir-top { transform: translate(-50%, calc(-100% - 9px)); }
 .global-tooltip.dir-bottom { transform: translate(-50%, 9px); }
@@ -1403,15 +1450,15 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
-  border: 5px solid transparent;
+  border: 6px solid transparent;
 }
 .global-tooltip.dir-top::before {
   top: 100%;
-  border-top-color: #d8d0b8;
+  border-top-color: #000;
 }
 .global-tooltip.dir-bottom::before {
   bottom: 100%;
-  border-bottom-color: #d8d0b8;
+  border-bottom-color: #000;
 }
 
 .battle-controls .hand-cards .card {
@@ -1433,6 +1480,7 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   box-shadow:
     0 12px 0 -7px rgba(0,0,0,.86),
     0 18px 28px rgba(0,0,0,.45);
+  transition: transform 120ms ease, box-shadow 120ms ease, filter 120ms ease;
 }
 /* El FRAME como MÁSCARA por encima del arte: hueco transparente + marco
    opaco. pointer-events none para que el botón siga siendo clickeable. */
@@ -1517,13 +1565,13 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 }
 .battle-controls .hand-cards .card:hover:not(:disabled),
 .battle-controls .hand-cards .card.selected {
+  /* PULSO CANÓNICO (sin haz de luz): elevación 3D + brillo suave. La sombra
+     solo da profundidad (negro) — SIN resplandor dorado. */
   transform: perspective(720px) rotateX(4deg) translateY(-4px) translateZ(0);
-  filter: brightness(1.14) saturate(1.1);
+  filter: brightness(1.1) saturate(1.08);
   box-shadow:
-    0 16px 0 -8px rgba(0,0,0,.9),
-    0 22px 34px rgba(0,0,0,.58),
-    0 0 0 1px rgba(246,199,68,.35),
-    0 0 18px rgba(247,147,30,.3);
+    0 14px 0 -7px rgba(0,0,0,.9),
+    0 20px 30px rgba(0,0,0,.5);
 }
 .battle-controls .hand-cards .card:disabled {
   transform: perspective(720px) rotateX(8deg) translateZ(0);
@@ -3869,13 +3917,12 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 /* HOVER CANÓNICO: MISMO que la mano (JOINT) — elevación 3D + brillo +
    resplandor dorado. NO discrepancias entre botones. */
 .basic-stage-card:hover:not(:disabled) {
+  /* PULSO CANÓNICO: MISMO que la mano (JOINT) y LIMIT — sin haz de luz */
   transform: perspective(720px) rotateX(4deg) translateY(-4px) translateZ(0);
-  filter: brightness(1.14) saturate(1.1);
+  filter: brightness(1.1) saturate(1.08);
   box-shadow:
-    0 16px 0 -8px rgba(0,0,0,.9),
-    0 22px 34px rgba(0,0,0,.58),
-    0 0 0 1px rgba(246,199,68,.35),
-    0 0 18px rgba(247,147,30,.3);
+    0 14px 0 -7px rgba(0,0,0,.9),
+    0 20px 30px rgba(0,0,0,.5);
 }
 
 /* Icono de la carta de stage REAL dentro del botón (3/4/5/6 Stage) */
@@ -10007,15 +10054,12 @@ button.linklike:hover { text-decoration: underline; }
   z-index: 3;
 }
 .limit-card:hover:not(:disabled) {
-  /* HOVER CANÓNICO: MISMO que la mano (JOINT) y STAGE — elevación 3D +
-     brillo + resplandor dorado */
+  /* PULSO CANÓNICO: MISMO que la mano (JOINT) y STAGE — sin haz de luz */
   transform: perspective(720px) rotateX(4deg) translateY(-4px) translateZ(0);
-  filter: brightness(1.14) saturate(1.1);
+  filter: brightness(1.1) saturate(1.08);
   box-shadow:
-    0 16px 0 -8px rgba(0,0,0,.9),
-    0 22px 34px rgba(0,0,0,.58),
-    0 0 0 1px rgba(246,199,68,.35),
-    0 0 18px rgba(247,147,30,.3);
+    0 14px 0 -7px rgba(0,0,0,.9),
+    0 20px 30px rgba(0,0,0,.5);
 }
 .limit-card:disabled {
   cursor: not-allowed;
