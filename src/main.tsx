@@ -2768,9 +2768,6 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
   const activeAttackerSide: 'player' | 'enemy' = exchangeIndex === 0
     ? turnOwner
     : turnOwner === 'player' ? 'enemy' : 'player';
-  const activeDefenderSide: 'player' | 'enemy' = activeAttackerSide === 'player' ? 'enemy' : 'player';
-  const activeAttackerName = activeAttackerSide === 'player' ? player.name : enemy.name;
-  const activeDefenderName = activeDefenderSide === 'player' ? player.name : enemy.name;
   // Estado del QTE para el luchador del CAMPO (el panel inferior solo lleva
   // la secuencia; el luchador ejecuta en el campo como en el GBC).
   const qteCurKey = phase === 'stageInput' && stageQte ? stageQte.seq[stageQte.idx] : null;
@@ -3092,10 +3089,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
       {/* Barra de fase */}
       <div className="phase-bar">
         <div className="phase-info">
-          <span className="turn-label">{t('battle.turn')} {turn}</span>
           <span className="speed-order-label">{speedOrderLabel}</span>
-          <span className="role-label role-atk">ATK {activeAttackerName.toUpperCase()}</span>
-          <span className="role-label role-def">DEF {activeDefenderName.toUpperCase()}</span>
           <span className="phase-label">
             {phaseShortLabel}
             {phase !== 'win' && phase !== 'lose' && phase !== 'position' ? ` ${exchangeIndex + 1}/2` : ''}

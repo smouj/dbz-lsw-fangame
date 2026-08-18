@@ -449,8 +449,10 @@ export function HudModule() {
 
             <div className="phase-bar">
               <div className="phase-info">
-                <span className="turn-label">TURN 1</span>
-                <span className="speed-order-label">GOKU FIRST</span>
+                {/* Phase-bar CANÓNICA: solo info única — el TURN vive en el
+                    badge central (ROUND), la fase ATK/DEF bajo las barras HP
+                    (chips). Orden de ataque + exchange son únicos. */}
+                <span className="speed-order-label">GOKU STRIKES FIRST</span>
                 <span className="phase-label">ATTACK 1/2</span>
               </div>
             </div>

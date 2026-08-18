@@ -1441,26 +1441,6 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 
 .phase-info { display: flex; gap: 12px; align-items: center; }
 
-.turn-label {
-  color: #f0d060;
-  font-family: var(--fpx);
-  font-size: 8px;
-  letter-spacing: 1px;
-  text-shadow: 1px 1px 0 #000;
-}
-.role-label {
-  font-family: var(--fpx);
-  font-size: 7px;
-  letter-spacing: 1px;
-  padding: 2px 6px;
-  border: 1px solid #05070c;
-  color: #05070c;
-  text-shadow: none;
-  box-shadow: 1px 1px 0 #000;
-}
-.role-atk { background: #f0d060; }
-.role-def { background: #9fb7d8; }
-
 .phase-label {
   color: #d8d0b8;
   font-family: var(--fpx);
@@ -3151,12 +3131,6 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 /* Fase: separar turno/fase con divisor */
 .phase-info {
   gap: 12px;
-}
-
-.turn-label {
-  background: var(--panel-hi);
-  border: 1px solid var(--border-lo);
-  padding: 2px 8px;
 }
 
 /* Log: fondo sutil */

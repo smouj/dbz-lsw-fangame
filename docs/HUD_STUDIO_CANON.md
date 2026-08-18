@@ -50,6 +50,7 @@
 11. **Badge central**: VS (VT323 38-44px) + ROUND debajo — SIN caja, SIN líneas, SIN badge ATK (la fase ATTACK/DEFEND vive bajo la barra HP).
 12. **Chip CC GBC**: esquina inferior derecha de los paneles con cartas — negro carbón `#1a1a1a`, número blanco VT323 19px, tooltip CC x/y.
 13. **Fase ATTACK/DEFEND**: INLINE en la fila de info (entre nada y los badges — sin fila propia), alineada al centro vertical de los badges.
+14. **Phase-bar mínima (sin duplicados)**: la barra inferior solo lleva `X STRIKES FIRST` + `FASE n/2` (exchange). NO lleva `TURN n` (ya está como ROUND en el badge central) ni `ATK X / DEF Y` (la fase ATK/DEF ya vive en los chips bajo las barras HP).
 
 ## Verificación de paridad
 
