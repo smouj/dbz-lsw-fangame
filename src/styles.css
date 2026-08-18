@@ -2091,8 +2091,8 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   .fighter-hud { width: auto; min-width: 0; padding: 0; }
   .hud-name { font-size: 7px; }
   .hud-portrait { width: 26px; height: 26px; }
-  .hud-center-badge { width: 96px; padding: 3px 8px 4px; }
-  .hud-center-vs { font-size: 26px; }
+  .hud-center-badge { padding: 0; }
+  .hud-center-vs { font-size: 24px; }
   .hud-center-round { font-size: 9px; }
   .hud-center-order { font-size: 7px; }
   .hud-stats { font-size: 7px; }
@@ -4158,37 +4158,20 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   transform: translate(-50%, -50%);
   display: flex; flex-direction: column; align-items: center; justify-content: center;
   gap: 1px;
-  width: var(--hud-layout-center-badge-width, 118px);
-  min-width: 0;
   max-width: calc(100% - 40px);
-  /* panel GBC: oscuro con marco beige + sombra pixel */
-  background: linear-gradient(180deg, #0d1322 0%, #080c16 100%);
-  border: 2px solid #d8d0b8;
-  box-shadow: 3px 3px 0 #000, inset 0 0 0 1px #05070c;
-  padding: 5px 10px 6px;
+  padding: 0;                 /* SIN caja: solo los textos, adaptados al hueco */
   box-sizing: border-box;
   text-shadow: 1px 1px 0 #000;
   pointer-events: none;
+  background: transparent;
+  border: 0;
+  outline: 0;
+  box-shadow: none;
 }
-/* marco/separador pixel alrededor del sello: ---- VS ---- */
+/* SIN líneas discontinuas laterales (spec UI 2026-08-18) */
 .hud-center-badge::before,
 .hud-center-badge::after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  width: clamp(18px, 3vw, 34px);
-  height: 3px;
-  background: repeating-linear-gradient(90deg, #f0d060 0 4px, #05070c 4px 6px);
-  box-shadow: 1px 1px 0 #000;
-  opacity: .95;
-}
-.hud-center-badge::before {
-  left: 50%;
-  transform: translate(calc(-100% - 26px), -50%);
-}
-.hud-center-badge::after {
-  right: 50%;
-  transform: translate(calc(100% + 26px), -50%);
+  display: none;
 }
 .hud-center-round {
   font-family: var(--fui);   /* VT323 */
@@ -4200,7 +4183,7 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 }
 .hud-center-vs {
   font-family: var(--fui);   /* VT323 PIXEL ART */
-  font-size: clamp(32px, 3.6vw, 38px);
+  font-size: clamp(30px, 3.4vw, 36px);
   color: #f8f4e4;
   letter-spacing: .04em;
   text-shadow:
@@ -4217,7 +4200,7 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   color: #9fb7d8;
   letter-spacing: 1.5px;
   text-shadow: 1px 1px 0 #000;
-  max-width: 100%;                   /* cabe dentro del badge */
+  max-width: 100%;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
