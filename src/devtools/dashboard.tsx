@@ -9,6 +9,7 @@ import { SCENARIOS } from '../data/scenarios';
 import { spriteDirFor } from '../data/spriteManifest';
 import { ACTION_FIDELITY_REGISTRY, FidelityLevel } from '../data/actionFidelity';
 import { listActionProfiles } from '../battle/actionProfiles';
+import { listAnimationCanon } from '../battle/animationCanon';
 import type { DevModuleId } from './DevStudio';
 
 interface StatCard { label: string; value: number; total: number; ok: boolean; hint?: string; }
@@ -96,6 +97,7 @@ export function DashboardModule({ onNavigate }: { onNavigate: (m: DevModuleId) =
             <div className="dev-stat-bar"><div style={{ width: `${Math.min(100, (s.value / Math.max(1, s.total)) * 100)}%` }} /></div>
           </div>
         ))}
+        <EngineMilestoneCard />
       </div>
 
       <div className="dev-section">
@@ -139,6 +141,40 @@ export function DashboardModule({ onNavigate }: { onNavigate: (m: DevModuleId) =
           <button className="dev-btn" onClick={() => onNavigate('positions')}>Position Lab</button>
           <button className="dev-btn" onClick={() => onNavigate('validation')}>Validación</button>
         </div>
+      </div>
+    </div>
+  );
+}
+
+// ── Estado del BattleEngine (M1-M5) — milestones del plan de migración ──
+const ENGINE_MILESTONES = [
+  { id: 'M1', label: 'State', desc: 'BattleState puro', done: true },
+  { id: 'M2', label: 'Rules', desc: 'BattleCommand + canExecute', done: true },
+  { id: 'M3', label: 'Resolution', desc: 'executeCommand puro + reducers', done: true },
+  { id: 'M4', label: 'Events', desc: 'BattleEvent + EventLog + canon animación', done: true },
+  { id: 'M5', label: 'RNG + Damage', desc: 'PRNG canónico + daño real + counter', done: true },
+  { id: 'M6', label: 'GBC Clock', desc: 'ticks como autoridad', done: false },
+  { id: 'M7', label: 'Presentation', desc: 'Adapter canon→BattleTimeline', done: false },
+  { id: 'M8', label: 'Cutover', desc: 'main.tsx consume el engine', done: false },
+  { id: 'M9', label: 'Replay', desc: 'EventLog → repetición', done: false },
+];
+
+function EngineMilestoneCard() {
+  const canon = listAnimationCanon();
+  const eventTypes = 25; // tipos en BattleEvent (M4)
+  return (
+    <div className="dev-stat-card ok dev-engine-card">
+      <div className="dev-stat-value" style={{ fontSize: 15 }}>M5<span className="dev-stat-total" style={{ fontSize: 11 }}>/M9</span></div>
+      <div className="dev-stat-label">BattleEngine (migración)</div>
+      <div className="dev-engine-miles">
+        {ENGINE_MILESTONES.map(m => (
+          <span key={m.id} className={`dev-engine-mile ${m.done ? 'done' : ''}`} title={`${m.id} ${m.label} — ${m.desc}`}>
+            {m.id}{m.done ? ' ✓' : ''}
+          </span>
+        ))}
+      </div>
+      <div className="dev-stat-hint">
+        {eventTypes} tipos de evento · canon: {canon.length} familias de animación · 149 checks verify:battle-engine
       </div>
     </div>
   );

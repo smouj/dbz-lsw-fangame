@@ -27,6 +27,8 @@ export const COMBAT_OPTIONAL_POSES = [
   'knockback_down',
   'beam_guard',
   'evade',
+  'aura_power',
+  'aura_support',
 ] as const;
 
 export const COMBAT_POSE_ORDER = [
@@ -58,6 +60,10 @@ export const POSE_FALLBACKS: Record<string, string[]> = {
   power_up: ['power_up', 'gather_power', 'beam_charge', 'guard', 'idle'],
   beam_ray: ['beam_ray'],
   beam_ray_tip: ['beam_ray_tip'],
+  // Auras V9 (variante POWER dorada = ki · SUPPORT azul = objetos/tecnología):
+  // FX independiente del actor — el runtime las superpone en gather/beam/support.
+  aura_power: ['aura_power', 'power_up', 'gather_power', 'idle'],
+  aura_support: ['aura_support', 'aura_power', 'power_up', 'gather_power', 'idle'],
 };
 
 export function resolveCombatPose(pose: string, hasPose: (pose: string) => boolean): string | null {
@@ -210,6 +216,8 @@ export const COMBAT_POSE_META: Record<string, { label: string; group: string; ga
   beam_ray_tip: { label: 'Beam tip ref', group: 'beam/fx-reference', gameplay: 'referencia de punta/impacto; usar solo si es FX puro' },
   gather_power: { label: 'Action prep', group: 'shared', gameplay: 'preparacion comun antes de ejecutar accion' },
   power_up: { label: 'Power up', group: 'shared', gameplay: 'aura / transformacion' },
+  aura_power: { label: 'Aura power', group: 'effect', gameplay: 'FX de aura dorada (ki) — superpuesto en gather/beam/support power' },
+  aura_support: { label: 'Aura support', group: 'effect', gameplay: 'FX de aura azul (objetos/tecnologia) — superpuesto en support item' },
 };
 
 export function combatPoseMeta(pose: string): { label: string; group: string; gameplay: string } {

@@ -7,6 +7,8 @@ import { CARDS, cardColor, getCard, type CardType, type CardDef } from '../data/
 import { characterName } from '../data/storyPanels';
 import { cardIconUrl } from '../data/icons';
 import { cardCinematic } from '../data/cardsCinematic';
+import { actionSemanticsForCard, resolveActionProfile } from '../battle/actionProfiles';
+import { canonForAction } from '../battle/animationCanon';
 
 const TYPES: (CardType | 'all')[] = ['all', 'command', 'damage', 'beam', 'support', 'defense', 'special'];
 
@@ -143,7 +145,43 @@ function CardDetail({ card }: { card: CardDef }) {
       <div className="dev-card-code">
         <code>{JSON.stringify({ id: card.id, type: card.type, effect: card.effect, atk: card.atk, acc: card.acc, cc: card.cc, rarity: card.rarity, compatible: card.compatible ?? null, notCompatible: card.notCompatible ?? null }, null, 2)}</code>
       </div>
+      <ActionCanonInfo card={card} />
       <CinematicCardInfo id={card.id} />
+    </div>
+  );
+}
+
+// ── Canon de acción (M4/M5 + animationCanon): qué animación canónica
+// dispara la carta y qué poses consume — misma fuente que la presentación.
+function ActionCanonInfo({ card }: { card: CardDef }) {
+  const sem = actionSemanticsForCard(card);
+  const profile = resolveActionProfile(card.name);
+  const canon = canonForAction({
+    id: profile?.id ?? `generic_${sem.animation}`,
+    label: card.name,
+    kind: sem.animation === 'stage' ? 'command' : sem.animation === 'melee' ? 'damage' : sem.animation === 'beam' ? 'beam' : 'support',
+    visual: sem.visual,
+    fidelity: profile?.fidelity ?? 'INFERRED',
+  });
+  const kindColor: Record<string, string> = {
+    command: '#d9b0e8', damage: '#e08a6a', beam: '#6cb7e8', support: '#7fd48a', gather: '#e0c060', guard: '#aab2bf', move: '#aab2bf',
+  };
+  return (
+    <div className="dev-card-compat">
+      <h4>Canon de animación — M4/M5</h4>
+      <div className="dev-compat-chips">
+        <span className="dev-tag" style={{ background: '#1a2730', color: kindColor[canon.kind] ?? '#fff', border: '1px solid #2a4a5a' }}>kind: {canon.kind}</span>
+        <span className="dev-tag" style={{ background: '#1a2730', color: '#7fd4ff', border: '1px solid #2a4a5a' }}>visual: {canon.visual}</span>
+        <span className="dev-tag" style={{ background: '#1a2730', color: '#ffe9a3', border: '1px solid #5a4a20' }}>profile: {profile?.id ?? `generic_${sem.animation}`}</span>
+        <span className={`dev-tag ${profile?.fidelity === 'VERIFIED' || profile?.fidelity === 'FRAME_VERIFIED' ? 'ok' : ''}`}>fidelity: {profile?.fidelity ?? 'INFERRED'}</span>
+        <span className="dev-tag" style={{ background: canon.aura === 'support' ? '#122433' : canon.aura === 'power' ? '#2a2414' : '#14171b', color: canon.aura === 'support' ? '#6cb7e8' : canon.aura === 'power' ? '#e0c060' : '#8a93a3', border: '1px solid #262b33' }}>aura: {canon.aura}</span>
+      </div>
+      <div className="dev-canon-beats">
+        <span className="dev-canon-beat-label">ACTOR</span>
+        {canon.actor.map(b => <code key={`${b.frame}-${b.pose}`}>{b.frame}:{b.pose}</code>)}
+        {canon.target.length > 0 && <><span className="dev-canon-beat-label">TARGET</span>{canon.target.map(b => <code key={`t-${b.frame}-${b.pose}`}>{b.frame}:{b.pose}</code>)}</>}
+        {canon.contactFrame > 0 && <span className="dev-canon-beat-label">HIT@{canon.contactFrame}</span>}
+      </div>
     </div>
   );
 }

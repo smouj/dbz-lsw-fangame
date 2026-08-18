@@ -142,6 +142,18 @@ export const POSE_SEMANTICS: Record<string, PoseSemantics> = {
     usedBy: ['Transformación', 'Support buffs', 'Kaio Ken'],
     frames: '1+',
   },
+  aura_power: {
+    pose: 'aura_power', category: 'FX', meaning: 'Aura DORADA (ki) — FX independiente superpuesto al actor',
+    usedBy: ['Gather Power', 'Beam (charge/release)', 'Support power (buffs de ki)'],
+    frames: '2-3',
+    notes: 'V9: variante POWER del aura; el runtime la superpone sin estirar PNGs (docs/ANIMATION_CANON.md).',
+  },
+  aura_support: {
+    pose: 'aura_support', category: 'FX', meaning: 'Aura AZUL (objetos/tecnología) — FX independiente superpuesto al actor',
+    usedBy: ['Support item (Caps.Fridge, Stop Device, Life Preser...)', 'Efectos de tecnología'],
+    frames: '2-3',
+    notes: 'V9: variante SUPPORT del aura; coincide con animationCanon auraForAction(visual=item).',
+  },
 };
 
 /** Orden canónico de poses para mostrar en el grid. */

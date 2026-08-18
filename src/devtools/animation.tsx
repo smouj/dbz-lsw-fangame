@@ -11,6 +11,7 @@ import { spriteDirFor, spriteManifestUrl, spriteFrameUrl } from '../data/spriteM
 import { CARDS } from '../data/cards';
 import { actionSemanticsForCard } from '../battle/actionProfiles';
 import { COMBAT_REQUIRED_POSES, POSE_FALLBACKS, combatPoseMeta, resolvePoseFrameSequence } from '../battle/spriteConfig';
+import { listAnimationCanon } from '../battle/animationCanon';
 import { SPRITE_CANON, type CanonStatus } from '../data/generated/spriteCanon.generated';
 import { GBC_FPS } from '../battle/timeline';
 import { FormNavigator } from './FormNavigator';
@@ -58,6 +59,8 @@ const POSE_RUNTIME_DEFAULTS: Record<string, { fps: number; loop: boolean; note: 
   beam_ray_tip: { fps: 7, loop: false, note: 'punta/impacto del rayo' },
   gather_power: { fps: 6, loop: true, note: 'preparación/aura compartida' },
   power_up: { fps: 10, loop: true, note: 'aura/transformación (parpadeo rápido — haz emergiendo)' },
+  aura_power: { fps: 6, loop: true, note: 'FX de aura DORADA (ki) — se superpone al actor en gather/beam/support power' },
+  aura_support: { fps: 6, loop: true, note: 'FX de aura AZUL (objetos/tecnología) — se superpone en support item' },
 };
 
 function frameOrderKey(file: string): number {
@@ -484,6 +487,7 @@ export function AnimationModule({ target }: { target?: DevLinkedTarget | null })
             <span>Action prep: {runtimePrepFallback.join(' -> ')}</span>
             <code>{dir ? `public/assets/sprites/${dir}/manifest.json` : 'sin manifest de build'}</code>
           </div>
+          <AnimationCanonPanel />
           <div className="dev-action-card-map">
             <ActionCardGroup title="Stage" cards={stageCards} />
             <ActionCardGroup title="Melee" cards={meleeCards} />
@@ -738,6 +742,37 @@ function CanonClipInfo({ formId, pose, fps, frames }: {
       <span>
         durationTicks ≈ <code>{tick} ticks/frame</code> (GBC {GBC_FPS.toFixed(4)}fps ÷ {fps}fps preview) × {Math.max(frames, 1)} frames
       </span>
+    </div>
+  );
+}
+
+// ── CANON DE ANIMACIÓN (M4/M5): BattleEvent → familia de poses ──
+// Tabla declarativa de animationCanon.ts: qué secuencia canónica reproduce
+// cada familia de acción (stage/damage/beam/support/gather/guard/move).
+function AnimationCanonPanel() {
+  const canon = listAnimationCanon();
+  const kindColor: Record<string, string> = {
+    command: '#d9b0e8', damage: '#e08a6a', beam: '#6cb7e8', support: '#7fd48a',
+    gather: '#e0c060', guard: '#aab2bf', move: '#aab2bf',
+  };
+  return (
+    <div className="dev-action-map dev-canon-panel">
+      <strong>Canon de animación (M4/M5)</strong>
+      <span className="dev-muted" style={{ fontSize: 11 }}>
+        BattleEvent → poses canónicas (docs/ANIMATION_CANON.md). El manifest de
+        la forma resuelve los frames reales con fallbacks.
+      </span>
+      <div className="dev-canon-rows">
+        {canon.map(c => (
+          <div key={c.id} className="dev-canon-row">
+            <span className="dev-canon-kind" style={{ color: kindColor[c.kind] ?? '#fff' }}>{c.kind}</span>
+            <span className="dev-canon-visual">{c.visual}</span>
+            <code className="dev-canon-seq">{c.actor}</code>
+            {c.target !== '—' && <code className="dev-canon-seq target">{c.target}</code>}
+            <span className={`dev-canon-aura ${c.aura}`}>{c.aura}</span>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
