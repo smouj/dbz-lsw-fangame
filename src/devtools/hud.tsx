@@ -246,8 +246,6 @@ export function HudModule() {
                  READY → FIGHT — cubre toda la ventana (no un panel).
                  MISMO markup que el juego (main.tsx). */
               <div className="battle-intro">
-                <div className="intro-burst-left" />
-                <div className="intro-burst-right" />
                 <div className="intro-fighter intro-left">
                   <div className="intro-portrait">
                     {pPortrait ? <img src={pPortrait} alt={P_FORM} /> : <span className="dev-hud-mock-ph">?</span>}

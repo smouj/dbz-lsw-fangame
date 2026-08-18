@@ -2844,8 +2844,6 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
           de 5.2s (setIntro(false)) — sin fade-out propio. ═══ */}
       {intro && (
         <div className="battle-intro">
-          <div className="intro-burst-left" />
-          <div className="intro-burst-right" />
           <div className="intro-fighter intro-left">
             <div className="intro-portrait">
               <img src={portraitFor(player.id, activePlayerFormId) || ''} alt={player.name}
