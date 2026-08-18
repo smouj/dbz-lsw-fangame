@@ -32,6 +32,9 @@ jobs:
       - name: HUD layout canónico (10 invariantes)
         run: npm run verify:hud-layout
 
+      - name: BattleState puro M1 (30 invariantes)
+        run: npm run verify:battle-engine
+
       - name: Combate real (71 invariantes)
         run: npm run verify:battle
 

@@ -232,8 +232,10 @@ audit:sprite-canon (P1).
    fórmula del daño parcial del Stage fail · fórmula exacta de IA.
 
 ### P1 (código, sin bloqueo)
-3. Migración COMPLETA de `main.tsx` al `BattleEngine` (hoy alineado pero con
-   su propio flujo de timers).
+3. Migración COMPLETA de `main.tsx` al `BattleEngine` — **M1 HECHO** (BattleState puro, 2026-08-18):
+   `src/battle/engine/state/` (BattleState.ts · createInitialBattleState.ts ·
+   battleStateSelectors.ts · index.ts) + suite `verify:battle-engine` 30/30.
+   Siguiente: **M2 — Commands + canExecute()** (docs/BATTLE_ENGINE_MIGRATION.md).
 4. Ramas cinematográficas HIT/BLOCK/AVOID/ABSORB (la defensa cambia la película).
 5. SFX del juego final: recibir carta, turn change, A/B feedback, estrella HUD,
    movimiento defensivo.
