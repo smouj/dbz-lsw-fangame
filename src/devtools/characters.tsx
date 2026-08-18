@@ -6,7 +6,7 @@
 // inspección de frames (el manifest V9 de la forma), sin pipelines
 // paralelos que puedan quedar obsoletos o descanonizados.
 // ═══════════════════════════════════════════════════════════════════════
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 import {
   CHARACTERS, FORMS, getForm, statAtLevel, sheetUrl, idleSpriteUrl, LIMIT_DEFAULTS,
 } from '../data/roster';
@@ -15,6 +15,8 @@ import { CARDS, getCard, CARD_COLORS, CARD_TYPE_NAMES } from '../data/cards';
 import { cardBattlePose, cardUsableBy } from '../battle/cardPoses';
 import { resolveCombatPose } from '../battle/spriteConfig';
 import { BATTLE_PORTRAITS } from '../data/battlePortraits';
+import { MINI_PORTRAITS, MENU_PORTRAITS } from '../data/icons';
+import { STORY_PORTRAITS, storyPortraitUrl } from '../data/storyPortraits';
 import { overworldUrl } from '../data/overworld';
 import { battleOverworldActorUrl, battleOverworldAuraUrlAsync } from '../data/battleOverworld';
 import { characterName } from '../data/storyPanels';
@@ -168,6 +170,15 @@ export function CharactersModule({ onOpenModule }: {
                 <AssetCell label="Battle OW idle" src={battleOwIdle} />
                 <PowerUpCell poseSrc={battleOwPower} auraSrc={battleOwAura} />
                 {form.sheet && <AssetCell label="ROM sheet ref" src={sheetUrl(form)} wide />}
+              </div>
+              <div className="dev-poses-section dev-retratos">
+                <h3>Retratos del personaje</h3>
+                <div className="dev-retratos-grid">
+                  <AssetCell label="Battle (forma)" src={BATTLE_PORTRAITS[form.id]} small />
+                  <AssetCell label="Mini (personaje)" src={MINI_PORTRAITS[char.id]} small />
+                  <AssetCell label="Menú (personaje)" src={MENU_PORTRAITS[char.id]} small />
+                  <StoryPortraitsGrid charId={form.character} formId={form.id} />
+                </div>
               </div>
               {spriteDir && (
                 <div className="dev-poses-section">
@@ -657,6 +668,37 @@ function PowerUpCell({ poseSrc, auraSrc }: { poseSrc?: string; auraSrc?: string 
         ) : <span className="dev-asset-missing">—</span>}
       </div>
       <div className="dev-asset-label">Battle OW power</div>
+    </div>
+  );
+}
+
+// ═══ Retratos de story del personaje (todas las variantes canónicas) ═══
+function StoryPortraitsGrid({ charId, formId }: { charId: string; formId: string }) {
+  // El retrato de story se indexa por el character del ROSTER (goku,
+  // trunks_future...) — el mismo mapeo que storyPortraitUrl.
+  const entry = STORY_PORTRAITS[charId];
+  const urls = useMemo(() => {
+    const seen = new Set<string>();
+    const out: Array<{ src: string; label: string }> = [];
+    const push = (url: string | undefined, label: string) => {
+      if (!url || seen.has(url)) return;
+      seen.add(url);
+      out.push({ src: url, label });
+    };
+    if (entry) {
+      push(entry.base, 'story base');
+      for (const [k, v] of Object.entries(entry.emotions ?? {})) push(v, `story ${k}`);
+      for (const [k, v] of Object.entries(entry.forms ?? {})) push(v, `story ${k}`);
+    }
+    // la resolución del juego para ESTA forma (storyPortraitUrl)
+    push(storyPortraitUrl(charId, formId), 'story forma actual');
+    return out;
+  }, [entry, charId, formId]);
+
+  if (urls.length === 0) return <span className="dev-hint">Sin retratos de story mapeados para {charId}</span>;
+  return (
+    <div className="dev-story-portraits">
+      {urls.map((u: { src: string; label: string }) => <AssetCell key={u.label} label={u.label} src={u.src} small />)}
     </div>
   );
 }

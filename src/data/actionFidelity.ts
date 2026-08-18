@@ -58,6 +58,7 @@ export interface FidelityEvidence {
 
 // ═══ Estados intermedios del QTE (Stage Attacks) — manual GBC USA ═══
 // Flujo canónico (2026-08-12, verificado contra el manual original):
+//   PREPARING ──animación de preparación──▶ INPUT_WINDOW (aparecen inputs + cronómetro)
 //   INPUT_WINDOW ──todos correctos──▶ COMPLETED   (la acción se anima)
 //        │
 //        └─ error/timeout ──▶ COUNTER_WINDOW  (el rival contraataca, ENTER COMMAND)
@@ -66,6 +67,7 @@ export interface FidelityEvidence {
 //                                 └─ timeout ───────▶ COUNTER_HIT (el counter conecta)
 export type QteState =
   | 'WAITING'
+  | 'PREPARING'      // M8: fade → plano ACTION + animación de preparación (sin inputs)
   | 'INPUT_WINDOW'
   | 'COUNTER_WINDOW'
   | 'COMPLETED'

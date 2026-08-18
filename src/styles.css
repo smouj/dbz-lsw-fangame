@@ -10702,3 +10702,13 @@ button.linklike:hover { text-decoration: underline; }
 .dev-rt-state b { color: #ffe9a3; }
 .dev-rt-log { display: flex; flex-wrap: wrap; gap: 4px; }
 .dev-rt-log code { background: #0e1013; border: 1px solid #1d2229; border-radius: 4px; padding: 2px 6px; font-size: 9px; color: #7fd48a; }
+
+/* ─── Stage: panel VACÍO durante la preparación (M8) ─── */
+.stage-inline-prep { color: #6b7484; font-size: 16px; letter-spacing: 2px; }
+.battle-screen .stage-inline-prep { color: #9aa3b0; }
+
+/* ─── Characters: retratos completos del personaje ─── */
+.dev-retratos { border-top: 1px solid #262b33; padding-top: 8px; }
+.dev-retratos-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(74px, 1fr)); gap: 6px; }
+.dev-story-portraits { display: contents; }
+.dev-story-portraits .dev-asset-cell .dev-asset-frame img { width: 40px; height: 56px; object-fit: contain; }

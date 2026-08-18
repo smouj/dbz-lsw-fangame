@@ -906,6 +906,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
     elapsedFrames: number;
     limitFrames: number;      // ventana GLOBAL de la secuencia (manual)
     counterFrames: number;    // frames transcurridos en la ventana de contraataque
+    prepFrames: number;       // frames transcurridos de la PREPARACIÓN (idle→estira→encoge→idle)
     covering: boolean;        // el jugador se cubre (eligió A en el contraataque)
     result: 'FULL_SUCCESS' | 'SAFE_ABORT' | 'COUNTER_HIT' | null;
   }
@@ -925,7 +926,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
   const COUNTER_B_FRAMES = Math.round(0.15 * GBC_NATIVE_FPS);  // ~9f reparar
   const [stageQte, setStageQte] = useState<StageQteState>({
     state: 'WAITING', seq: [], idx: 0, correct: 0, covering: false, card: null,
-    elapsedFrames: 0, limitFrames: 0, counterFrames: 0,
+    elapsedFrames: 0, limitFrames: 0, counterFrames: 0, prepFrames: 0,
     result: null,
   });
   // IA real del GBC (battle.shtml): ataca regularmente → gather power →
@@ -1569,6 +1570,22 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
   };
 
   // ═══ Inicio del Stage Attack: TACTICAL → CUT → ACTION VIEW (spec §2/§28) ═══
+  // ═══ PREPARACIÓN del Stage (M8, canon GBC) ═══
+  // Al usar la carta: fade → plano ACTION → animación de preparación
+  //   idle (12t) → gather_power / estira brazos (18t) → beam_charge /
+  //   encoge brazos (18t) → idle (12t)  [60 ticks ≈ 1s]
+  // En el ÚLTIMO idle aparecen los inputs y arranca el cronómetro.
+  // Mientras tanto el panel inferior se ve VACÍO (caja GBC sin inputs).
+  const STAGE_PREP_TICKS = 60;
+  const PREP_PHASES: Array<{ until: number; pose: BattleSpritePose }> = [
+    { until: 12, pose: 'idle' },
+    { until: 30, pose: 'gather_power' },   // estira brazos
+    { until: 48, pose: 'beam_charge' },    // encoge brazos (manos juntas)
+    { until: STAGE_PREP_TICKS, pose: 'idle' }, // último idle → inputs
+  ];
+  const stagePrepPose = (pf: number): BattleSpritePose =>
+    (PREP_PHASES.find(ph => pf < ph.until) ?? PREP_PHASES[PREP_PHASES.length - 1]).pose;
+
   const startStageAttack = (card: CardDef) => {
     // Etapas según la carta (3/4/5/6 Stage)
     let stages: 3 | 4 | 5 | 6 = 3;
@@ -1589,13 +1606,14 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
     // fallo → contraataque del rival (COUNTER_WINDOW).
     const sequenceWindow = resolveStageWindow();
     commitQte({
-      state: 'INPUT_WINDOW', seq, idx: 0, correct: 0, covering: false, card,
+      state: 'PREPARING', seq, idx: 0, correct: 0, covering: false, card,
       elapsedFrames: 0, limitFrames: sequenceWindow, counterFrames: 0,
-      result: null,
+      prepFrames: 0, result: null,
     });
     setViewMode('ACTION');
     setPhase('stageInput');
     Sfx.cardPlay();
+    addLog('Stage Attack — preparación…');
   };
 
   // ═══ Reloj del QTE: monotónico, en FRAMES GBC (manual GBC) ═══
@@ -1622,7 +1640,18 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
       const delta = dbg.frozen ? dbg.stepFrames : realDelta;
       if (dbg.frozen) dbg.stepFrames = 0;
       acc += delta;
-      if (st.state === 'INPUT_WINDOW') {
+      if (st.state === 'PREPARING') {
+        // Animación de preparación: idle → estira → encoge → idle.
+        // En el ÚLTIMO idle aparecen los inputs y arranca el cronómetro.
+        const pf = Math.floor(acc);
+        setStageQte(prev => ({ ...prev, prepFrames: pf }));
+        if (pf >= STAGE_PREP_TICKS) {
+          acc = 0;
+          setStageQte(prev => ({ ...prev, state: 'INPUT_WINDOW', prepFrames: STAGE_PREP_TICKS, elapsedFrames: 0 }));
+          Sfx.confirm();
+          addLog('Stage Attack — ¡inputs!');
+        }
+      } else if (st.state === 'INPUT_WINDOW') {
         const elapsed = Math.floor(acc);
         setStageQte(prev => ({ ...prev, elapsedFrames: Math.max(prev.elapsedFrames, elapsed) }));
         // Timeout de la secuencia → el rival contraataca (manual GBC)
@@ -1809,7 +1838,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
         partialDmg = Math.max(0, Math.floor((card.atk + player.str) * posMult * progress));
       }
       setTimeout(() => {
-        setStageQte({ state: 'WAITING', seq: [], idx: 0, correct: 0, covering: false, card: null, elapsedFrames: 0, limitFrames: 0, counterFrames: 0, result: null });
+        setStageQte({ state: 'WAITING', seq: [], idx: 0, correct: 0, covering: false, card: null, elapsedFrames: 0, limitFrames: 0, counterFrames: 0, prepFrames: 0, result: null });
         setPhase('cardSelect');
         if (partialDmg > 0) {
           setEnemy(prev => ({ ...prev, hp: Math.max(0, prev.hp - partialDmg) }));
@@ -1835,7 +1864,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
     commitQte({ ...st, state: 'COUNTER_HIT', result: 'COUNTER_HIT' });
     setViewMode('OVERVIEW');
     setTimeout(() => {
-      setStageQte({ state: 'WAITING', seq: [], idx: 0, correct: 0, covering: false, card: null, elapsedFrames: 0, limitFrames: 0, counterFrames: 0, result: null });
+      setStageQte({ state: 'WAITING', seq: [], idx: 0, correct: 0, covering: false, card: null, elapsedFrames: 0, limitFrames: 0, counterFrames: 0, prepFrames: 0, result: null });
       setPhase('cardSelect');
       setPlayer(prev => ({ ...prev, hp: Math.max(0, prev.hp - counterDmg) }));
       setPlayerPose('hurt');
@@ -1856,7 +1885,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
   // Variante de finishPlayerTurn para stage attacks (no usar carta de la mano)
   const finishPlayerTurnStage = (ccGained: number) => {
     setSelectedCard(null);
-    setStageQte({ state: 'WAITING', seq: [], idx: 0, correct: 0, covering: false, card: null, elapsedFrames: 0, limitFrames: 0, counterFrames: 0, result: null });
+    setStageQte({ state: 'WAITING', seq: [], idx: 0, correct: 0, covering: false, card: null, elapsedFrames: 0, limitFrames: 0, counterFrames: 0, prepFrames: 0, result: null });
     setViewMode('OVERVIEW');
     setEnemyPose('idle');
     setPlayerPose('idle');
@@ -2737,12 +2766,14 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
   const qteFrozen = phase === 'stageInput' && stageQte
     ? (stageQte.state === 'COUNTER_HIT' || stageQte.state === 'COUNTER_WINDOW')
     : false;
-  const qteResolving = phase === 'stageInput' && stageQte.state !== 'INPUT_WINDOW';
+  const qteResolving = phase === 'stageInput'
+    && stageQte.state !== 'INPUT_WINDOW' && stageQte.state !== 'PREPARING';
   // Cada tecla del Stage Attack tiene SU pose (docs/FRAMES_ACTIONS_SPEC):
   // A=puño der, B=puño izq, UP=ascendente, DOWN=descendente, LEFT=avance, RIGHT=guardia.
   const qtePose: BattleSpritePose = phase === 'stageInput'
     ? (stageQte?.covering ? 'guard'
       : qteFrozen ? 'attack_fwd'
+      : stageQte?.state === 'PREPARING' ? stagePrepPose(stageQte.prepFrames)
       : (stageInputPose(qteCurKey) as BattleSpritePose))
     : (playerPose as BattleSpritePose);
   const qteEnemyPose: BattleSpritePose = qteResolving ? 'attack_fwd' : 'idle';
@@ -3239,7 +3270,8 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
         )}
         {phase === 'stageInput' && (() => {
           const q = stageQte;
-          if (q.state !== 'INPUT_WINDOW') return null;
+          if (q.state !== 'INPUT_WINDOW' && q.state !== 'PREPARING') return null;
+          const preparing = q.state === 'PREPARING';
           const curKey = q.seq[q.idx];
           const isDirPrompt = curKey === 'UP' || curKey === 'DOWN' || curKey === 'LEFT' || curKey === 'RIGHT';
           // Tiempo GLOBAL de la secuencia en SEGUNDOS GBC (ventana total del manual).
@@ -3265,6 +3297,12 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
             </div>
             <div className="gbc-dialogue-body">
               <div className="stage-inline">
+                {preparing ? (
+                  /* PREPARACIÓN: el panel se ve VACÍO (caja GBC presente,
+                     sin inputs ni cronómetro) hasta el último idle */
+                  <span className="stage-inline-prep">…</span>
+                ) : (
+                <>
                 {!frozen && (
                   <div className="stage-sequence">
                     {q.seq.map((k, i) => (
@@ -3281,6 +3319,8 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
                 )}
                 {/* Tiempo NUMÉRICO: contando hacia arriba / máximo — sin barra */}
                 <span className="stage-inline-time"><strong>{elapsedSec}</strong> / {limitSec}s</span>
+                </>
+                )}
               </div>
             </div>
           </div>
