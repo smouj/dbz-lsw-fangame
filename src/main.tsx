@@ -2948,11 +2948,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
           </div>
           <HPBar current={player.hp} max={player.maxHp} side="left" introFill={intro} />
           <div className="hud-info-row">
-            <div className="hud-stats">
-              <span>STR{player.str + pBuffs.str}</span><span>KI{player.ki + pBuffs.ki}</span><span>SPD{player.spd + pStages.spd * 8}</span>
-              <span className="cc-stat"><b>{player.cc}</b></span>
-            </div>
-            {/* Fase GBC: ATTACK/DEFEND ENTRE las stats y los badges (sin fila propia) */}
+            {/* Fase GBC: ATTACK/DEFEND + badges de estado — SIN stats (spec) */}
             <span className={`hud-phase ${activeAttackerSide === 'player' ? 'phase-atk' : 'phase-def'}`}>
               {activeAttackerSide === 'player' ? 'ATTACK' : 'DEFEND'}
             </span>
@@ -2999,9 +2995,6 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
           </div>
           <HPBar current={enemy.hp} max={enemy.maxHp} side="right" introFill={intro} />
           <div className="hud-info-row">
-            <div className="hud-stats">
-              <span className="cc-stat"><b>{enemy.cc}</b></span><span>STR{enemy.str + eBuffs.str}</span><span>KI{enemy.ki + eBuffs.ki}</span><span>SPD{enemy.spd + eStages.spd * 8}</span>
-            </div>
             <span className={`hud-phase ${activeAttackerSide === 'enemy' ? 'phase-atk' : 'phase-def'}`}>
               {activeAttackerSide === 'enemy' ? 'ATTACK' : 'DEFEND'}
             </span>
