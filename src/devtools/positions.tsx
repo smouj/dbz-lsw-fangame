@@ -167,7 +167,11 @@ export function PositionsModule() {
               })}
             </div>
             {/* PLANO ACTION (cinemático): composición de primer plano — el
-                actor se centra con los PIES en ACTION_CENTER_ANCHOR (50,68),
+                actor se compone a la IZQUIERDA con los PIES en
+                ACTION_CENTER_ANCHOR (50,68) — centrado (plano escenario);
+                el ESPECIAL usa espejo 20/80 según actor
+                efectos der.), sobre el fondo _action del escenario (los
+                4 planos tácticos usan los anchors de anchorFor en overview)
                 sobre el fondo _action del escenario (los 4 planos tácticos
                 de arriba usan los anchors de anchorFor en overview) */}
             <div className="dev-pos-plane action-plane">
@@ -182,7 +186,7 @@ export function PositionsModule() {
                 )}
               </div>
               <div className="dev-pos-plane-anchors">
-                <code>ACTION {ACTION_CENTER_ANCHOR.x}/{ACTION_CENTER_ANCHOR.y}</code>
+                <code>ACTION {ACTION_CENTER_ANCHOR.x}/{ACTION_CENTER_ANCHOR.y} (escenario centrado · especial espejo 20/80)</code>
               </div>
             </div>
           </div>

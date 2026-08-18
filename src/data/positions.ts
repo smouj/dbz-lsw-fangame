@@ -115,11 +115,21 @@ export const LEFT_ANCHORS = DEFAULT_LEFT_ANCHORS;
 export const RIGHT_ANCHORS = DEFAULT_RIGHT_ANCHORS;
 
 // ─── PLANO ACTION (cinemático) ───
-// Cuando la cámara pasa a ACTION (QTE, animaciones de ataque/beam/support)
-// el actor se compone en el CENTRO de la escena con los PIES en este
-// anchor — es la composición de "primer plano" de los fondos _action.png.
-// El campo OVERVIEW, en cambio, usa SIEMPRE anchorFor(pos, side) (chibi).
-export const ACTION_CENTER_ANCHOR = { x: 50, y: 68 } as const;
+// ESCENARIO (NN_action.png): el actor se compone CENTRADO con los pies en
+// ACTION_CENTER_ANCHOR (50,68) — composición de primer plano, como estaba.
+// Plano ESPECIAL/transición (special_action.png — transformaciones, Beam
+// Ultimate): el actor se compone según QUIÉN ejecuta (espejo, como el GBC):
+//   JUGADOR → IZQUIERDA (x 20) mirando a la derecha
+//   ENEMIGO → DERECHA (x 80, espejo 100−20) mirando a la izquierda
+//   y 1-2px MÁS ABAJO (y 70 — ajuste fino de composición).
+export const ACTION_CENTER_ANCHOR = { x: 50, y: 68 } as const;          // escenario: centrado
+export const ACTION_SPECIAL_ANCHOR = { x: 20, y: 70 } as const;        // especial: player izquierda
+
+export function actionAnchorFor(side: 'player' | 'enemy', special = false): PositionAnchor {
+  if (!special) return { x: ACTION_CENTER_ANCHOR.x, y: ACTION_CENTER_ANCHOR.y };  // centrado siempre
+  const base = ACTION_SPECIAL_ANCHOR;
+  return side === 'enemy' ? { x: 100 - base.x, y: base.y } : { x: base.x, y: base.y };
+}
 
 export function actionAnchor(): PositionAnchor {
   return { x: ACTION_CENTER_ANCHOR.x, y: ACTION_CENTER_ANCHOR.y };

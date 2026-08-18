@@ -9809,6 +9809,10 @@ button.linklike:hover { text-decoration: underline; }
 .dev-hud-preview .battlefield .dev-hud-fighter-sprite.dev-hud-anchored.action-mode.dev-hud-ow {
   height: 192px;              /* garantizado: sin colisión con .overworld-sprite */
 }
+/* Plano ESPECIAL: el actor 1-2px MÁS PEQUEÑO (190px) — ajuste fino */
+.dev-hud-preview .battlefield .dev-hud-fighter-sprite.dev-hud-anchored.action-mode.special-actor {
+  height: 190px;
+}
 .dev-hud-preview .battlefield .dev-hud-fighter-sprite.dev-hud-anchored.action-mode.player {
   transform: translate(-50%, -100%);
 }

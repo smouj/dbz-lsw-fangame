@@ -20,7 +20,7 @@ import { getForm } from '../data/roster';
 import { spriteDirFor, spriteFrameUrl } from '../data/spriteManifest';
 import { BATTLE_PORTRAITS } from '../data/battlePortraits';
 import { storyPortraitUrl } from '../data/storyPortraits';
-import { anchorFor, BattlePosition, ACTION_CENTER_ANCHOR } from '../data/positions';
+import { anchorFor, BattlePosition, actionAnchorFor } from '../data/positions';
 import { downloadJson } from './spriteEditing';
 import { getCard, CARD_TYPE_NAMES, CARD_COLORS, CARD_COLORS_ON_LIGHT, CardDef } from '../data/cards';
 import { tipBlock, tipCard, TipPart } from '../data/tooltips';
@@ -452,19 +452,21 @@ export function HudModule() {
                                      SOLO el actor (el que ejecuta la acción)
                           Ambos anclados igual que Position Lab:
                           translate(-50%,-100%) → los PIES tocan el anchor exacto. */}
-                      {/* ACTION: el actor se compone en el CENTRO de la escena
-                          (ACTION_CENTER_ANCHOR canónico 50,68 — pies anclados):
-                          los fondos _action.png están compuestos en primer
-                          plano; el plano OVERVIEW usa SIEMPRE anchorFor */}
+                      {/* ACTION: el actor se compone según QUIÉN EJECUTA
+                          (actionAnchorFor — espejo GBC): JUGADOR a la
+                          izquierda (x 20) mirando a la derecha, ENEMIGO a
+                          la derecha (x 80) mirando a la izquierda; en el
+                          plano ESPECIAL 2px más abajo (y 70) + 2px menor
+                          (190px, CSS .special-actor) */}
                       {(bgMode === 'overview' ? pIdle : (actor === 'player' ? pAction : undefined)) && (
                         <img src={bgMode === 'overview' ? pIdle : pAction} alt=""
-                          className={`dev-hud-ow dev-hud-fighter-sprite dev-hud-anchored player ${bgMode === 'action' ? 'action-mode' : ''}`}
-                          style={bgMode === 'action' ? { left: `${ACTION_CENTER_ANCHOR.x}%`, top: `${ACTION_CENTER_ANCHOR.y}%` } : { left: `${pa.x}%`, top: `${pa.y}%` }} />
+                          className={`dev-hud-ow dev-hud-fighter-sprite dev-hud-anchored player ${bgMode === 'action' ? 'action-mode' : ''} ${bgMode === 'action' && actionSpecial ? 'special-actor' : ''}`}
+                          style={bgMode === 'action' ? (() => { const aa = actionAnchorFor(actor, actionSpecial); return { left: `${aa.x}%`, top: `${aa.y}%` }; })() : { left: `${pa.x}%`, top: `${pa.y}%` }} />
                       )}
                       {(bgMode === 'overview' ? eIdle : (actor === 'enemy' ? eAction : undefined)) && (
                         <img src={bgMode === 'overview' ? eIdle : eAction} alt=""
-                          className={`dev-hud-ow dev-hud-fighter-sprite dev-hud-anchored enemy ${bgMode === 'action' ? 'action-mode' : ''}`}
-                          style={bgMode === 'action' ? { left: `${ACTION_CENTER_ANCHOR.x}%`, top: `${ACTION_CENTER_ANCHOR.y}%` } : { left: `${ea.x}%`, top: `${ea.y}%` }} />
+                          className={`dev-hud-ow dev-hud-fighter-sprite dev-hud-anchored enemy ${bgMode === 'action' ? 'action-mode' : ''} ${bgMode === 'action' && actionSpecial ? 'special-actor' : ''}`}
+                          style={bgMode === 'action' ? (() => { const aa = actionAnchorFor(actor, actionSpecial); return { left: `${aa.x}%`, top: `${aa.y}%` }; })() : { left: `${ea.x}%`, top: `${ea.y}%` }} />
                       )}
                     </>
                   );
