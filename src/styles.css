@@ -957,28 +957,7 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 .hp-bar.low .hp-bar-track { border-color: #7a4a10; }
 .hp-bar.critical .hp-bar-track { border-color: #d83828; }
 
-.hp-bar-text {
-  position: absolute; top: 50%; left: 0; right: 0;
-  transform: translateY(-50%);
-  text-align: center;
-  font-family: var(--fui);   /* VT323: pixel grueso más legible */
-  font-size: 13px;
-  line-height: 1;
-  color: #fff;
-  /* sombra negra PIXEL dura (sin blur) — legible sobre cualquier relleno */
-  text-shadow:
-    1px 1px 0 #000,
-    -1px 1px 0 #000,
-    1px -1px 0 #000,
-    -1px -1px 0 #000,
-    0 2px 0 #000,
-    0 -2px 0 #000,
-    2px 2px 0 #000;
-  z-index: 6;
-  letter-spacing: 1px;
-  white-space: nowrap;
-  pointer-events: none;
-}
+
 
 /* ─── CC ─── */
 
@@ -9610,13 +9589,6 @@ button.linklike:hover { text-decoration: underline; }
   pointer-events: none;
 }
 .hp-bar.low .hp-bar-current { box-shadow: inset 0 1px 0 rgba(255,255,255,.3), 0 0 10px rgba(216,56,40,.5); }
-.hp-bar-text {
-  font-family: var(--fui);
-  font-size: 13px;
-  letter-spacing: 1px;
-  text-shadow: 1px 1px 0 #000, 0 0 4px rgba(0,0,0,.8);
-}
-
 /* Barra de comandos: panel inferior con glow dorado en los botones */
 .command-strip {
   background: transparent;

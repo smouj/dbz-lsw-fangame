@@ -52,11 +52,11 @@ const VIEWS: { id: HudView; label: string; tip: string }[] = [
 function PreviewHpBar({ current, max, side }: { current: number; max: number; side: 'left' | 'right' }) {
   const pct = Math.max(0, Math.min(100, (current / max) * 100));
   return (
-    <div className={`hp-bar ${side} ${pct < 12 ? 'critical' : pct <= 25 ? 'low' : pct <= 50 ? 'mid' : ''}`}>
+    <div className={`hp-bar ${side} ${pct < 12 ? 'critical' : pct <= 25 ? 'low' : pct <= 50 ? 'mid' : ''}`}
+      data-tip={tipBlock('HP', [['stats', `${current} / ${max}`]])}>
       <div className="hp-bar-track">
         <div className="hp-bar-recent" style={{ width: `${pct + 8}%` }} />
         <div className="hp-bar-current" style={{ width: `${pct}%` }} />
-        <div className="hp-bar-text">{current}/{max}</div>
       </div>
     </div>
   );

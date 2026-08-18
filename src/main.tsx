@@ -435,11 +435,11 @@ function HPBar({ current, max, side, introFill = false }: { current: number; max
   // <12% rojo crítico (critical, parpadeo steps)
   const level = pct < 12 ? 'critical' : pct <= 25 ? 'low' : pct <= 50 ? 'mid' : '';
   return (
-    <div className={`hp-bar ${side} ${level} ${introFill ? 'intro-fill' : ''}`}>
+    <div className={`hp-bar ${side} ${level} ${introFill ? 'intro-fill' : ''}`}
+      data-tip={tipBlock('HP', [['stats', `${current} / ${max}`]])}>
       <div className="hp-bar-track">
         <div className="hp-bar-recent" style={{ width: `${pct}%` }} />
         <div className="hp-bar-current" style={{ width: `${pct}%` }} />
-        <div className="hp-bar-text">{current}/{max}</div>
       </div>
     </div>
   );
