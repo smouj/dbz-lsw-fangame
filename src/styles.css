@@ -4513,7 +4513,8 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 /* Sprites de OVERWORLD en el campo (vista sin ataque, como el GBC) */
 .overworld-sprite {
   image-rendering: pixelated;
-  height: 96px;
+  height: clamp(48px, 9vmin, 96px);   /* chibi 16×16: ×3 en ventanas pequeñas
+                                           (ratio GBC 11%) hasta ×6 en grandes */
   width: auto;
   transform-origin: bottom center;
   filter: drop-shadow(0 0 8px rgba(255,190,60,.3)) drop-shadow(0 5px 10px rgba(0,0,0,.45));
@@ -8941,7 +8942,7 @@ button:focus-visible, .chapter-node:focus-visible {
    El aura es una capa separada, NO otro frame del personaje. */
 .battle-overworld { position: relative; display: inline-flex; }
 .battle-overworld .overworld-sprite {
-  height: 96px; width: auto; image-rendering: pixelated;
+  height: clamp(48px, 9vmin, 96px); width: auto; image-rendering: pixelated;
   filter: drop-shadow(0 0 8px rgba(255,190,60,.3)) drop-shadow(0 5px 10px rgba(0,0,0,.45));
 }
 .battle-overworld.gathering .overworld-sprite {
@@ -9769,9 +9770,10 @@ button.linklike:hover { text-decoration: underline; }
   image-rendering: pixelated;
   z-index: 3;
 }
-/* Chibi OVERWORLD (OVERVIEW): un poco más pequeño que antes (96→80px) */
+/* Chibi OVERWORLD (OVERVIEW): escala GBC — 16×16 a ×3 (48px) sobre el
+   campo de 392px = 12.2% (GBC: 11.1% del 144) — antes 80px (20%) */
 .dev-hud-preview .battlefield .dev-hud-fighter-sprite.dev-hud-anchored.dev-hud-ow:not(.action-mode) {
-  height: 80px;
+  height: 48px;
   filter: drop-shadow(0 0 8px rgba(255,190,60,.3)) drop-shadow(0 5px 10px rgba(0,0,0,.45));
 }
 .dev-hud-preview .dev-hud-fighter-sprite.dev-hud-anchored.enemy {
@@ -10051,7 +10053,7 @@ button.linklike:hover { text-decoration: underline; }
 .dev-pos-plane-chibi {
   position: absolute;
   image-rendering: pixelated;
-  height: 36px;     /* cabe en los 4 planos: top UP = 39px (26% de 150) */
+  height: 32px;     /* 16×16 a ×2 (escala GBC sobre el plano de 150px) */
   width: auto;
   filter: drop-shadow(2px 2px 0 rgba(0,0,0,.4));
 }

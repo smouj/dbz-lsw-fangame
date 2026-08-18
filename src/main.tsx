@@ -195,26 +195,6 @@ function miniPortraitFor(charId: string): string | undefined {
   return MINI_PORTRAITS[CHAR_PORTRAIT_ALIAS[charId] ?? charId];
 }
 
-// ─── Fondos de batalla (extraídos) ────────────────────────
-// Fondos REALES del GBC (ZIP del usuario, pixel-perfect 160x80):
-// 13 escenarios + 1 fondo especial de acción
-const BATTLE_BGS: { id: string; name: string; file: string }[] = [
-  { id: 'bg1', name: 'Scenario 1', file: '/assets/backgrounds/01_battle.png' },
-  { id: 'bg2', name: 'Scenario 2', file: '/assets/backgrounds/02_battle.png' },
-  { id: 'bg3', name: 'Scenario 3', file: '/assets/backgrounds/03_battle.png' },
-  { id: 'bg4', name: 'Scenario 4', file: '/assets/backgrounds/04_battle.png' },
-  { id: 'bg5', name: 'Scenario 5', file: '/assets/backgrounds/05_battle.png' },
-  { id: 'bg6', name: 'Scenario 6', file: '/assets/backgrounds/06_battle.png' },
-  { id: 'bg7', name: 'Scenario 7', file: '/assets/backgrounds/07_battle.png' },
-  { id: 'bg8', name: 'Scenario 8', file: '/assets/backgrounds/08_battle.png' },
-  { id: 'bg9', name: 'Scenario 9', file: '/assets/backgrounds/09_battle.png' },
-  { id: 'bg10', name: 'Scenario 10', file: '/assets/backgrounds/10_battle.png' },
-  { id: 'bg11', name: 'Scenario 11', file: '/assets/backgrounds/11_battle.png' },
-  { id: 'bg12', name: 'Scenario 12', file: '/assets/backgrounds/12_battle.png' },
-  { id: 'bg13', name: 'Scenario 13', file: '/assets/backgrounds/13_battle.png' },
-  { id: 'bg14', name: 'Special', file: '/assets/backgrounds/14_special_action.png' },
-];
-
 // ─── Sistema de cartas para batalla ───────────────────────
 const BATTLE_DECK: CardDef[] = [
   getCard(1)!, getCard(1)!, getCard(2)!, getCard(2)!, getCard(4)!,
@@ -767,7 +747,8 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
   // se aplican al recalcular en el TURN siguiente (spec §1: partida Chiaotzu).
   // (speedOrderLabel eliminado: quién ataca ya se sabe por la fase ATTACK/
   // DEFEND del hud superior — el chip STRIKES FIRST era redundante)
-  const [bgId, setBgId] = useState('bg1');
+  // (bgId/BATTLE_BGS eliminados: los fondos viven en SCENARIOS — el
+  // escenario random fija world/action/special según la situación)
   // ═══ DOS REPRESENTACIONES (estructura real del GBC) ═══
   // TACTICAL (OVERVIEW): fondo world_overview + sprites pequeños — selección,
   // posición, estado normal. ACTION: fondo battle_action + sprites grandes —
@@ -962,10 +943,6 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
     const assigned = loadLimits(playerFormId);
     return assigned.length > 0 ? assigned : LIMIT_DEFAULTS[getForm(playerFormId)?.character || ''] || [];
   });
-
-  useEffect(() => {
-    setBgId(BATTLE_BGS[Math.floor(Math.random() * BATTLE_BGS.length)].id);
-  }, []);
 
   const addLog = useCallback((msg: string, opts?: { gbc?: boolean; durMs?: number }) => {
     setLog(prev => [...prev.slice(-6), msg]);
@@ -2742,7 +2719,6 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
     }
   }, [damageNums]);
 
-  const bg = BATTLE_BGS.find(b => b.id === bgId)!;
   const battleBgUrl = viewMode === 'ACTION' ? scenario.actionBackground
     : viewMode === 'SPECIAL_ACTION' ? SPECIAL_ACTION_BACKGROUND
     : scenario.overviewBackground;

@@ -88,7 +88,7 @@ npm run verify:battle       # 71/71 lógica
 | DOWN_BACK (suelo/lejos) | 16, 72 | 84, 72 |
 | DOWN_FRONT (suelo/cerca) | 32, 72 | 68, 72 |
 
-- Regla de colocación: los PIES del sprite tocan el anchor exacto (`translate(-50%,-100%)`); chibi overworld 80px (studio) / 96px (juego); facing con `scaleX(±1)` aplicado DESPUÉS del translate (nunca transform inline que pise el anclaje).
+- Regla de colocación: los PIES del sprite tocan el anchor exacto (`translate(-50%,-100%)`); chibi overworld 16×16 a **×3 = 48px en el preview** (12.2% del campo de 392px ≈ ratio GBC 11.1% del 144 — antes 80px era el doble) y `clamp(48px, 9vmin, 96px)` en el juego (×3 en ventanas pequeñas → ×6 en grandes); Position Lab a ×2 = 32px; facing con `scaleX(±1)` aplicado DESPUÉS del translate (nunca transform inline que pise el anclaje).
 - Position Lab muestra los 4 planos + **plano ACTION** (quinto): el actor centrado con los pies en `ACTION_CENTER_ANCHOR` (50, 68) sobre el fondo `_action`.
 
 ### Plano ACTION (cinemático / QTE / animaciones)
