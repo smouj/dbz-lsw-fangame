@@ -351,22 +351,23 @@ export function HudModule() {
                   <strong>GOKU</strong>
                   <span className="hud-form">Base</span>
                   <span className="hud-level">LV50</span>
+                  <span className="team-reserve left in-name" data-tip={tipBlock('GOHAN', [['stats', 'HP 620 / 700']])}>
+                    <span className="team-reserve-portrait">
+                      <img src="/assets/portraits/battle/gohan_teen_ssj.png" alt="" />
+                    </span>
+                    <span className="team-reserve-name">GOHAN</span>
+                    <span className="team-reserve-hp">620/700</span>
+                  </span>
                 </div>
                 <PreviewHpBar current={720} max={1000} side="left" />
                 <div className="hud-info-row">
-                  {/* Fase GBC + badges de estado — SIN stats (spec) */}
-                  <span className="hud-phase phase-atk">ATTACK</span>
+                  {/* Fase GBC: badges de estado HACIA AFUERA (borde), fase
+                      ATTACK/DEFEND HACIA DENTRO (junto al VS); reserva en la
+                      fila superior — MISMO layout que el juego */}
                   <div className="hud-status">
                     <span className="status-chip buff">STR+</span>
                   </div>
-                </div>
-                {/* Reserva de equipo (2v2): mismo markup que el juego */}
-                <div className="team-reserve left">
-                  <span className="team-reserve-portrait">
-                    <img src="/assets/portraits/battle/gohan_teen_ssj.png" alt="" />
-                  </span>
-                  <span className="team-reserve-name">GOHAN</span>
-                  <span className="team-reserve-hp">620/700</span>
+                  <span className="hud-phase phase-atk">ATTACK</span>
                 </div>
               </div>
 
@@ -381,10 +382,10 @@ export function HudModule() {
                 </div>
                 <PreviewHpBar current={880} max={1000} side="right" />
                 <div className="hud-info-row">
-                  <span className="hud-phase phase-def">DEFEND</span>
                   <div className="hud-status right">
                     <span className="status-chip debuff">SPD−</span>
                   </div>
+                  <span className="hud-phase phase-def">DEFEND</span>
                 </div>
               </div>
               <div className="hud-center-badge">

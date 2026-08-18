@@ -2952,13 +2952,21 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
             <strong>{player.name}</strong>
             <span className="hud-form">{player.form}</span>
             <span className="hud-level">LV{player.level}</span>
+            {player2 && (
+              <span className="team-reserve left in-name" data-tip={tipBlock(`${player2.name}`, [['stats', `HP ${player2.hp}/${player2.maxHp}`]])}>
+                <span className="team-reserve-portrait">
+                  <img src={portraitFor(player2.id) || ''} alt="" onError={e => (e.currentTarget.style.display = 'none')} />
+                </span>
+                <span className="team-reserve-name">{player2.name}</span>
+                <span className="team-reserve-hp">{player2.hp}/{player2.maxHp}</span>
+              </span>
+            )}
           </div>
           <HPBar current={player.hp} max={player.maxHp} side="left" introFill={intro} />
           <div className="hud-info-row">
-            {/* Fase GBC: ATTACK/DEFEND + badges de estado — SIN stats (spec) */}
-            <span className={`hud-phase ${activeAttackerSide === 'player' ? 'phase-atk' : 'phase-def'}`}>
-              {activeAttackerSide === 'player' ? 'ATTACK' : 'DEFEND'}
-            </span>
+            {/* Fase GBC: badges de estado HACIA AFUERA (borde), fase
+                ATTACK/DEFEND HACIA DENTRO (junto al VS) — lado opuesto al
+                anterior; la reserva del 2º miembro vive en la fila superior */}
             <div className="hud-status">
               {pStages.str > 0 && <span className="status-chip buff">STR+</span>}
               {pStages.str < 0 && <span className="status-chip debuff">STR−</span>}
@@ -2975,16 +2983,10 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
               {gatherTurns > 0 && <span className="status-chip power">{powerState.replace('_', ' ')}</span>}
               {pStages.str === 0 && pStages.ki === 0 && pStages.spd === 0 && pStages.guard === 0 && !playerGuard && pAcc === 0 && pEva === 0 && !pLockOn && gatherTurns === 0 && <span className="status-chip none">—</span>}
             </div>
+            <span className={`hud-phase ${activeAttackerSide === 'player' ? 'phase-atk' : 'phase-def'}`}>
+              {activeAttackerSide === 'player' ? 'ATTACK' : 'DEFEND'}
+            </span>
           </div>
-          {player2 && (
-            <div className="team-reserve left">
-              <span className="team-reserve-portrait">
-                <img src={portraitFor(player2.id) || ''} alt="" onError={e => (e.currentTarget.style.display = 'none')} />
-              </span>
-              <span className="team-reserve-name">{player2.name}</span>
-              <span className="team-reserve-hp">{player2.hp}/{player2.maxHp}</span>
-            </div>
-          )}
         </div>
         <div className="fighter-hud right">
           <div className="hud-name" data-tip={tipBlock(`${enemy.name} — ${enemy.form} LV${enemy.level}`, [
@@ -2999,12 +3001,18 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
             <strong>{enemy.name}</strong>
             <span className="hud-form">{enemy.form}</span>
             <span className="hud-level">LV{enemy.level}</span>
+            {enemy2 && (
+              <span className="team-reserve right in-name" data-tip={tipBlock(`${enemy2.name}`, [['stats', `HP ${enemy2.hp}/${enemy2.maxHp}`]])}>
+                <span className="team-reserve-portrait">
+                  <img src={portraitFor(enemy2.id) || ''} alt="" onError={e => (e.currentTarget.style.display = 'none')} />
+                </span>
+                <span className="team-reserve-name">{enemy2.name}</span>
+                <span className="team-reserve-hp">{enemy2.hp}/{enemy2.maxHp}</span>
+              </span>
+            )}
           </div>
           <HPBar current={enemy.hp} max={enemy.maxHp} side="right" introFill={intro} />
           <div className="hud-info-row">
-            <span className={`hud-phase ${activeAttackerSide === 'enemy' ? 'phase-atk' : 'phase-def'}`}>
-              {activeAttackerSide === 'enemy' ? 'ATTACK' : 'DEFEND'}
-            </span>
             <div className="hud-status right">
               {eStages.str > 0 && <span className="status-chip buff">STR+</span>}
               {eStages.str < 0 && <span className="status-chip debuff">STR−</span>}
@@ -3016,16 +3024,10 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
               {eStages.guard < 0 && <span className="status-chip debuff">G−</span>}
               {eStages.str === 0 && eStages.ki === 0 && eStages.spd === 0 && eStages.guard === 0 && <span className="status-chip none">—</span>}
             </div>
+            <span className={`hud-phase ${activeAttackerSide === 'enemy' ? 'phase-atk' : 'phase-def'}`}>
+              {activeAttackerSide === 'enemy' ? 'ATTACK' : 'DEFEND'}
+            </span>
           </div>
-          {enemy2 && (
-            <div className="team-reserve right">
-              <span className="team-reserve-portrait">
-                <img src={portraitFor(enemy2.id) || ''} alt="" onError={e => (e.currentTarget.style.display = 'none')} />
-              </span>
-              <span className="team-reserve-name">{enemy2.name}</span>
-              <span className="team-reserve-hp">{enemy2.hp}/{enemy2.maxHp}</span>
-            </div>
-          )}
         </div>
         {/* Insignia central: ATK (quién ataca) · VS · ROUND (debajo) */}
         <div className="hud-center-badge">

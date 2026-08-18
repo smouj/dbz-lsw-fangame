@@ -4404,6 +4404,22 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 }
 .team-reserve.left { align-self: flex-start; }
 .team-reserve.right { align-self: flex-end; }
+/* Reserva del 2º miembro DENTRO de la fila del nombre (hud-top de 3 filas:
+   nombre+reserva · HP · info) — chip compacto con separador */
+.hud-name .team-reserve {
+  align-self: center;
+  margin: 0 0 0 10px;
+  padding-left: 10px;
+  border-left: 1px solid rgba(255, 255, 255, .1);
+  gap: 4px;
+}
+.fighter-hud.right .hud-name .team-reserve {
+  margin: 0 10px 0 0;
+  padding-left: 0;
+  padding-right: 10px;
+  border-left: 0;
+  border-right: 1px solid rgba(255, 255, 255, .1);
+}
 .team-reserve-portrait img { height: 16px; width: auto; image-rendering: pixelated; }
 .team-reserve-name { font-size: 0.62rem; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .team-reserve-hp { font-size: 0.58rem; color: #f0d060; margin-left: auto; }
@@ -9754,7 +9770,7 @@ button.linklike:hover { text-decoration: underline; }
   position: relative;
   /* MISMO orden de filas que el juego: hud-top · campo · phase-bar ·
      controles (el battle-log y el cc-dock ya no existen) */
-  grid-template-rows: auto 348px auto 96px;
+  grid-template-rows: auto 368px auto 96px;
 }
 /* Phase-bar CANÓNICA visible (STRIKES FIRST + FASE n/2) — compacta */
 .dev-hud-preview .phase-bar {
@@ -9767,7 +9783,7 @@ button.linklike:hover { text-decoration: underline; }
 }
 /* Campo amplio: el escenario domina el preview (como en el juego). */
 .dev-hud-preview .battlefield {
-  height: 348px;
+  height: 368px;
   min-height: 0;
   position: relative;
   width: 100%;
