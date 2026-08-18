@@ -319,7 +319,10 @@ export function HudModule() {
                 </div>
               </div>
               <div className="hud-center-badge">
-                <span className="hud-center-vs">VS</span>
+                <div className="hud-center-vs-wrap">
+                  <span className="hud-center-vs-tri">▼</span>
+                  <span className="hud-center-vs">VS</span>
+                </div>
                 <span className="hud-center-round">ROUND 1</span>
               </div>
             </div>

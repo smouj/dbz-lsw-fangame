@@ -4224,6 +4224,33 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   text-shadow: 1px 1px 0 #000;
   line-height: 1.2;
   white-space: nowrap;
+  margin-top: 6px;           /* despeja el pico del triángulo ▼ */
+}
+/* Triángulo invertido ▼ DETRÁS del VS: arte de fondo negro carbón — el
+   VS se lee encima y el PICO asoma por debajo (separación estilo lucha) */
+.hud-center-vs-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+.hud-center-vs-tri {
+  position: absolute;
+  top: 60%;                     /* el pico asoma bajo el texto VS */
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: var(--fui);
+  font-size: 46px;
+  line-height: 1;
+  color: #1a1a1a;              /* negro carbón */
+  text-shadow: 1px 1px 0 #000;
+  z-index: 0;
+  pointer-events: none;
+}
+.hud-center-vs {
+  position: relative;
+  z-index: 1;
 }
 
 /* ═══ INTRO VS — pantalla de presentación estilo GBC ═══
