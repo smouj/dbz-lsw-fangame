@@ -700,7 +700,7 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 .hud-name {
   display: flex; align-items: center; gap: 6px;
   font-family: var(--fui);   /* VT323 pixel (unificado con los números) */
-  font-size: 12px;
+  font-size: 13px;           /* un pelín más grande (antes 12px) */
   letter-spacing: .5px;
   color: var(--hud-text);
   line-height: 1;
@@ -4174,7 +4174,7 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 .hud-phase.phase-def { color: #9fb7d8; border-color: rgba(82,98,122,.6); }
 .hud-center-vs {
   font-family: var(--fui);   /* VT323 PIXEL ART */
-  font-size: clamp(34px, 3.8vw, 40px);   /* +4px vs antes (30-36px) */
+  font-size: clamp(38px, 4.2vw, 44px);   /* un pelín más grande */
   color: #f8f4e4;
   letter-spacing: .04em;
   text-shadow:
@@ -9552,7 +9552,7 @@ button.linklike:hover { text-decoration: underline; }
 
 /* Nombre del luchador: más legible, con placa sutil */
 .hud-name {
-  font-size: 10px;
+  font-size: 13px;
   letter-spacing: .4px;
   text-shadow: 1px 1px 0 #000, 0 0 6px rgba(0,0,0,.6);
 }
