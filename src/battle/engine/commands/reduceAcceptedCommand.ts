@@ -95,16 +95,40 @@ export function reduceAcceptedCommand(state: BattleState, command: BattleCommand
     case 'PLAY_CARD': {
       const card = state.deck.hand[command.handIndex] ?? null;
       const r = playCard(state, 'player', command.handIndex);
-      // M5-P1: PLAY_CARD inicializa REALMENTE su QTE (stageQte + ventana +
-      // secuencia determinista) — la transición a stageInput ya no queda
-      // incompleta.
-      const qte = card ? qteForCard(r.state, card) : r.state.stageQte;
-      next = { ...r.state, phase: 'stageInput', selectedCard: null, stageQte: qte };
-      events = [
-        ...r.events,
-        { type: 'ACTION_STARTED', side: 'player', action: actionDescriptorForCard(card) },
-        ...(card ? [{ type: 'STAGE_PREP_STARTED' as const, side: 'player' as const, level: stageLevelOfCardName(card.name), seq: qte.seq, prepTicks: STAGE_PREP_TICKS }] : []),
-      ];
+      if (card && card.type === 'command') {
+        // M8.C2 — SOLO las cartas command (Stage Attack) llevan QTE:
+        // preparación de 60t (stage_ready_*) + ventana de inputs. Las
+        // cartas damage/beam/support se resuelven INMEDIATAMENTE (la
+        // precisión con el PRNG canónico — ver abajo).
+        const qte = qteForCard(r.state, card);
+        next = { ...r.state, phase: 'stageInput', selectedCard: null, stageQte: qte };
+        events = [
+          ...r.events,
+          { type: 'ACTION_STARTED', side: 'player', action: actionDescriptorForCard(card) },
+          { type: 'STAGE_PREP_STARTED', side: 'player', level: stageLevelOfCardName(card.name), seq: qte.seq, prepTicks: STAGE_PREP_TICKS },
+        ];
+      } else if (card) {
+        // M8.C2 — Melee/beam/support: resolución INMEDIATA (sin QTE).
+        // El daño/precisión los resuelve el Engine (PRNG canónico M5);
+        // la presentación solo recibe el EventLog.
+        const resolution = resolveCardAction(r.state, 'player', card);
+        next = {
+          ...resolution.state,
+          rngState: resolution.rngState,
+          selectedCard: null,
+          // El QTE queda limpio: estas cartas no abren ventana.
+          stageQte: { ...r.state.stageQte, state: 'WAITING' as const },
+        };
+        events = [
+          ...r.events,
+          { type: 'ACTION_STARTED', side: 'player', action: actionDescriptorForCard(card) },
+          ...resolution.events,
+          { type: 'ACTION_RESOLVED', side: 'player', action: actionDescriptorForCard(card) },
+        ];
+      } else {
+        next = r.state;
+        events = r.events;
+      }
       break;
     }
     case 'PLAY_LIMIT_CARD': {

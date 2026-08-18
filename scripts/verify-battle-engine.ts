@@ -300,21 +300,23 @@ const invState = mustExecute(m3Command, { type: 'PLAY_CARD', handIndex: 1 }, { s
 check('M3: invariantes tras PLAY_CARD (HP/CC/posición/mazo/serializable)', invariantCheck(invState));
 
 // ── Secuencias headless (simulador) ──
+// M8.C2: SOLO las cartas command abren QTE (stageInput + PREPARING). Las
+// cartas damage/beam resuelven INMEDIATAMENTE (precisión con PRNG).
 let sim = createInitialBattleState(makeConfig({
   playerDeck: m2Deck([4, 25]), enemyDeck: m2Deck([1]), playerCc: 30,
   playerPos: BattlePosition.DOWN_BACK, enemyPos: BattlePosition.DOWN_BACK,
 }));
 sim = { ...sim, phase: 'command' as never };
 sim = mustExecute(sim, { type: 'JOINT' });
-sim = mustExecute(sim, { type: 'PLAY_CARD', handIndex: 1 }, { side: 'player', characterId: 'goku' }); // card 25, cc 30→11
-check('M3: secuencia JOINT→PLAY_CARD: fase stageInput y CC 11', sim.phase === 'stageInput' && sim.player.cc === 11);
+sim = mustExecute(sim, { type: 'PLAY_CARD', handIndex: 0 }, { side: 'player', characterId: 'goku' }); // card 4 (command), cc 30→30
+check('M3: secuencia JOINT→PLAY_CARD(command): fase stageInput y CC intacto (cc 0)', sim.phase === 'stageInput' && sim.player.cc === 30);
 // QTE: input correcto (la secuencia del stage 3 empieza por 'A').
 // M8.B: el reloj abre INPUT_WINDOW al final de la preparación.
 sim = advanceBattleClock(sim, sim.stageQte.inputOpenTick - sim.tick).state;
 const seq = sim.stageQte.seq;
 if (seq.length > 0) {
   const q1 = mustExecute(sim, { type: 'QTE_INPUT', input: seq[0] });
-  check('M3: QTE_INPUT correcto → idx avanza y +1 CC', q1.stageQte.idx === 1 && q1.player.cc === 12);
+  check('M3: QTE_INPUT correcto → idx avanza y +1 CC', q1.stageQte.idx === 1 && q1.player.cc === 31);
   const qBad = executeCommand(sim, { type: 'QTE_INPUT', input: 'B' });
   check('M5: QTE_INPUT equivocado → accepted y COUNTER_WINDOW (el GBC no rechaza inputs)', qBad.ok && qBad.state.stageQte.state === 'COUNTER_WINDOW');
 }
@@ -343,17 +345,32 @@ const m4Base = createInitialBattleState(makeConfig({
   playerPos: BattlePosition.DOWN_BACK, enemyPos: BattlePosition.DOWN_BACK,
 }));
 const m4Cmd: typeof m4Base = { ...m4Base, phase: 'cardSelect' };
-const m4Play = executeCommand(m4Cmd, { type: 'PLAY_CARD', handIndex: 1 }, { side: 'player', characterId: 'goku' }); // carta 25, cc 19
+// M8.C2: carta command (4) → QTE con prep. La secuencia contractual cambió:
+// damage/beam resuelven directo; command mantiene el QTE.
+const m4Play = executeCommand(m4Cmd, { type: 'PLAY_CARD', handIndex: 0 }, { side: 'player', characterId: 'goku' }); // carta 4 (command), cc 0
 check('M4: PLAY_CARD aceptado devuelve events', m4Play.ok && m4Play.events.length > 0);
 if (m4Play.ok) {
   const ccSpent = m4Play.events.find(e => e.type === 'CC_SPENT');
-  check('M4: CC 30→11 produce CC_SPENT amount=19 before=30 after=11',
-    ccSpent?.type === 'CC_SPENT' && ccSpent.amount === 19 && ccSpent.before === 30 && ccSpent.after === 11 && ccSpent.side === 'player');
+  check('M4: PLAY_CARD(command) no gasta CC (carta 4 cc 0 → CC_SPENT NO emitido, cc 30 intacto)',
+    !m4Play.events.some(e => e.type === 'CC_SPENT') && m4Play.state.player.cc === 30);
   check('M4: CARD_PLAYED + CARD_DISCARDED con cardId 25',
-    m4Play.events.some(e => e.type === 'CARD_PLAYED' && e.cardId === 25) &&
-    m4Play.events.some(e => e.type === 'CARD_DISCARDED' && e.cardId === 25));
-  check('M4: los eventos reflejan el estado (cc 11, descarte con 25)',
-    m4Play.state.player.cc === 11 && m4Play.state.deck.discardPile[0]?.id === 25);
+    m4Play.events.some(e => e.type === 'CARD_PLAYED' && e.cardId === 4) &&
+    m4Play.events.some(e => e.type === 'CARD_DISCARDED' && e.cardId === 4));
+  check('M4: los eventos reflejan el estado (cc 30 intacto, descarte con 4)',
+    m4Play.state.player.cc === 30 && m4Play.state.deck.discardPile[0]?.id === 4);
+}
+// M8.C2: carta DAMAGE (25) resuelve INMEDIATA — sin QTE, con daño y
+// ACTION_STARTED → resolución → ACTION_RESOLVED (fase no stageInput).
+const m4DmgPlay = executeCommand(m4Cmd, { type: 'PLAY_CARD', handIndex: 1 }, { side: 'player', characterId: 'goku' }); // carta 25 (damage), cc 19
+if (m4DmgPlay.ok) {
+  const types = eventTypeSequence(m4DmgPlay.events);
+  check('M8.C2: PLAY_CARD(damage) resuelve directo — sin STAGE_PREP ni stageInput',
+    m4DmgPlay.state.phase !== 'stageInput' &&
+    !types.includes('STAGE_PREP_STARTED') &&
+    types.includes('ACTION_STARTED') && types.includes('ATTACK_HIT') &&
+    types.includes('DAMAGE_APPLIED') && types.includes('ACTION_RESOLVED'));
+  check('M8.C2: damage card cobra CC real y descarta (cc 30−19=11, discard 25)',
+    m4DmgPlay.state.player.cc === 11 && m4DmgPlay.state.deck.discardPile[0]?.id === 25);
 }
 const m4Move = executeCommand({ ...m4Cmd, phase: 'defend' }, { type: 'MOVE', axis: 'HORIZONTAL' }, { side: 'player' });
 if (m4Move.ok) {
@@ -377,8 +394,8 @@ check('M4: rechazo devuelve el MISMO objeto state (cero mutaciones)', !m4Bad.ok 
 
 // ── Orden contractual ──
 if (m4Play.ok) {
-  check('M4: PLAY_CARD orden = ACCEPTED,CC_SPENT,CARD_PLAYED,CARD_DISCARDED,ACTION_STARTED,STAGE_PREP_STARTED,PHASE_CHANGED',
-    JSON.stringify(eventTypeSequence(m4Play.events)) === JSON.stringify(['COMMAND_ACCEPTED', 'CC_SPENT', 'CARD_PLAYED', 'CARD_DISCARDED', 'ACTION_STARTED', 'STAGE_PREP_STARTED', 'PHASE_CHANGED']));
+  check('M4: PLAY_CARD(command) orden = ACCEPTED,CARD_PLAYED,CARD_DISCARDED,ACTION_STARTED,STAGE_PREP_STARTED,PHASE_CHANGED (cc 0 → sin CC_SPENT)',
+    JSON.stringify(eventTypeSequence(m4Play.events)) === JSON.stringify(['COMMAND_ACCEPTED', 'CARD_PLAYED', 'CARD_DISCARDED', 'ACTION_STARTED', 'STAGE_PREP_STARTED', 'PHASE_CHANGED']));
   const idxAcc = m4Play.events.findIndex(e => e.type === 'COMMAND_ACCEPTED');
   const idxPos = m4Play.events.findIndex(e => e.type === 'PHASE_CHANGED');
   check('M4: PHASE_CHANGED es el ÚLTIMO evento (tras la resolución)', idxPos === m4Play.events.length - 1 && idxAcc < idxPos);
@@ -527,14 +544,22 @@ check('M5: acción determinista (JOINT) NO avanza rngState', m5Join.ok && m5Join
 const m5Gather = executeCommand({ ...m5cmd, phase: 'basic' }, { type: 'GATHER_POWER' }, { side: 'player' });
 check('M5: acción determinista (GATHER) NO avanza rngState', m5Gather.ok && m5Gather.state.rngState === rngBeforeJoin);
 
-// ── P1: PLAY_CARD inicializa su QTE de verdad ──
-const m5Play = executeCommand({ ...m5cmd, phase: 'cardSelect' }, { type: 'PLAY_CARD', handIndex: 2 }, { side: 'player', characterId: 'goku' }); // carta 25 (damage)
+// ── P1: PLAY_CARD(command) inicializa su QTE de verdad ──
+const m5Play = executeCommand({ ...m5cmd, phase: 'cardSelect' }, { type: 'PLAY_CARD', handIndex: 0 }, { side: 'player', characterId: 'goku' }); // carta 4 (command)
 if (m5Play.ok) {
   const q = m5Play.state.stageQte;
-  check('M8.B: PLAY_CARD inicializa stageQte PREPARING con secuencia no vacía', q.state === 'PREPARING' && q.seq.length > 0 && q.idx === 0);
+  check('M8.B: PLAY_CARD(command) inicializa stageQte PREPARING con secuencia no vacía', q.state === 'PREPARING' && q.seq.length > 0 && q.idx === 0);
   check('M8.B: NO emite QTE_STARTED al confirmar — emite STAGE_PREP_STARTED', m5Play.events.some(e => e.type === 'STAGE_PREP_STARTED') && !m5Play.events.some(e => e.type === 'QTE_STARTED'));
   check('M8.B: inputOpenTick = started + prep · deadline = inputOpen + window', q.inputOpenTick === q.startedTick + STAGE_PREP_TICKS && q.deadlineTick === q.inputOpenTick + q.windowTicks && q.windowTicks > 0);
   check('M5-P1: PLAY_CARD determinista NO avanza rngState (stage de command, 0 tiradas)', m5Play.state.rngState === m5cmd.rngState);
+}
+// M8.C2: PLAY_CARD(damage) resuelve directo (sin QTE) y consume RNG
+const m5DmgPlay = executeCommand({ ...m5cmd, phase: 'cardSelect' }, { type: 'PLAY_CARD', handIndex: 1 }, { side: 'player', characterId: 'goku' }); // carta 25 (damage)
+if (m5DmgPlay.ok) {
+  const types = eventTypeSequence(m5DmgPlay.events);
+  check('M8.C2: damage card sin STAGE_PREP y resuelta en el mismo comando',
+    !types.includes('STAGE_PREP_STARTED') && types.includes('ACTION_STARTED') &&
+    types.includes('ATTACK_HIT') && types.includes('ACTION_RESOLVED'));
 }
 
 // ── P2: LIMIT cobra el CC real del catálogo ──
@@ -600,15 +625,18 @@ const simTo = advanceBattleClock(simF2.state, m6CounterDeadline - simF2.state.ti
 }
 
 // ── Carta damage/beam: precisión determinista desde seed (RNG consumido) ──
+// M8.C2: damage resuelve INMEDIATO al jugar (sin QTE) — el PRNG canónico
+// decide la precisión en el MISMO comando.
 const m5Dmg = createInitialBattleState({ ...m5cfg, seed: 999, playerPos: BattlePosition.DOWN_FRONT, enemyPos: BattlePosition.DOWN_BACK, playerCc: 30 });
 const m5DmgCmd: typeof m5Dmg = { ...m5Dmg, phase: 'cardSelect' };
 const playDmg = executeCommand(m5DmgCmd, { type: 'PLAY_CARD', handIndex: 1 }, { side: 'player', characterId: 'goku' }); // carta 5 Cont.Punch acc 100
 if (playDmg.ok) {
-  let s = advanceBattleClock(playDmg.state, playDmg.state.stageQte.inputOpenTick - playDmg.state.tick).state;
-  for (const k of [...s.stageQte.seq]) s = mustExecute(s, { type: 'QTE_INPUT', input: k }, { side: 'player' });
-  const hit = s.enemy.hp < m5Dmg.enemy.hp;
+  const hit = playDmg.state.enemy.hp < m5Dmg.enemy.hp;
   check('M5: damage card (acc 100) → siempre conecta (hits) y daña', hit);
-  check('M5: damage card consume RNG (rngState avanzó con las tiradas)', s.rngState !== m5DmgCmd.rngState);
+  check('M5: damage card consume RNG (rngState avanzó con las tiradas)', playDmg.state.rngState !== m5DmgCmd.rngState);
+  check('M8.C2: damage card resuelta sin QTE (no stageInput, no STAGE_PREP)',
+    playDmg.state.phase !== 'stageInput' &&
+    !eventTypeSequence(playDmg.events).includes('STAGE_PREP_STARTED'));
 }
 
 // ── Golden determinista completo (seed + comandos → mismo state/events/rngState) ──

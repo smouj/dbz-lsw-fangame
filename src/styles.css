@@ -8744,6 +8744,54 @@ button:focus-visible, .chapter-node:focus-visible {
 .dev-hud-preview .dev-intro-view .intro-flash {
   display: none;
 }
+/* ▶ PLAY (vista INTRO activa): el preview reproduce la secuencia COMPLETA
+   de entrada — flash visible, ayudas dev ocultas, posición absoluta. */
+.dev-hud-preview .dev-intro-playing .battle-intro {
+  position: absolute;
+}
+.dev-hud-preview .dev-intro-playing .intro-flash {
+  display: block;
+}
+.dev-hud-preview .dev-intro-playing .dev-fighter-anchor,
+.dev-hud-preview .dev-intro-playing .dev-anim-zone {
+  display: none;
+}
+/* Botón ▶ y chips de fases de la entrada (slide → VS → flash) */
+.dev-hud-intro-play {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-left: auto;
+}
+.dev-intro-phases {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+.dev-intro-phase {
+  font-family: var(--fmono);
+  font-size: 10px;
+  color: var(--dev-muted, #9aa3ad);
+  border: 1px solid transparent;
+  padding: 3px 8px;
+  border-radius: 4px;
+  white-space: nowrap;
+  opacity: .75;
+  transition: all .15s ease;
+}
+.dev-intro-phase b {
+  color: var(--dev-accent, #ffe9a3);
+  margin-right: 3px;
+}
+.dev-intro-phase.active {
+  opacity: 1;
+  border-color: var(--dev-accent, #ffe9a3);
+  background: rgba(255, 233, 163, .12);
+}
+.dev-intro-phase.done {
+  border-color: #7ddfa3;
+  color: #7ddfa3;
+}
 .dev-hud-preview .dev-intro-view .dev-fighter-anchor,
 .dev-hud-preview .dev-intro-view .dev-anim-zone {
   display: none;

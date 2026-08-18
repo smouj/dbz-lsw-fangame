@@ -392,6 +392,11 @@ export function resolveActionProfile(cardName: string): ActionProfileSpec | null
   return SLUG_INDEX.get(slugifyCardName(cardName)) ?? null;
 }
 
+/** Resuelve un perfil firma por su id canónico (p.ej. 'cont_punch'). */
+export function resolveActionProfileById(id: string): ActionProfileSpec | null {
+  return ACTION_PROFILE_REGISTRY.find(s => s.id === id) ?? null;
+}
+
 /** Lista plana de perfiles firma (para auditoría / Dev Studio). */
 export function listActionProfiles(): Array<{ id: string; label: string; kind: string; fidelity: Fidelity }> {
   return ACTION_PROFILE_REGISTRY.map(s => ({ id: s.id, label: s.label, kind: s.kind, fidelity: s.fidelity }));

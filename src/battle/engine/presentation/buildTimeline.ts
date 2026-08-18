@@ -20,6 +20,7 @@
 // ═══════════════════════════════════════════════════════════════════════
 
 import { canonForAction } from '../../animationCanon';
+import { resolveActionProfileById, type ActionProfileSpec } from '../../actionProfiles';
 import { STAGE_PREP_BEATS, STAGE_PREP_TICKS } from '../clock/clock';
 import type { ProjectileVisualKind } from '../../actionProfiles';
 import type { BattleEvent, BattleActionDescriptor } from '../events/BattleEvent';
@@ -52,6 +53,8 @@ interface ActionState {
   side: BattleSide;
   action: BattleActionDescriptor;
   canon: ReturnType<typeof canonForAction>;
+  /** Perfil firma de la acción (p.ej. cont_punch → punch_right/knockback_back). */
+  profile: ActionProfileSpec | null;
   startTick: number;
   /** Stage (kind command): ticks de preparación antes del QTE interactivo. */
   prepTicks: number | null;
@@ -86,7 +89,8 @@ export function buildPresentationTimeline(input: PresentationInput): BattleTimel
       // ── ACCIÓN: entra la vista ACTION, secuencia del canon, vuelta ──
       case 'ACTION_STARTED': {
         const canon = canonForAction(e.action);
-        activeAction = { side: e.side, action: e.action, canon, startTick: env.tick, prepTicks: null, stageResolvedTick: null, stageResolveAnchor: null };
+        const profile = resolveActionProfileById(e.action.id);
+        activeAction = { side: e.side, action: e.action, canon, profile, startTick: env.tick, prepTicks: null, stageResolvedTick: null, stageResolveAnchor: null };
         const target = other(e.side);
         const mode: BattleSceneMode = e.side === 'player' ? 'PLAYER_ACTION' : 'ENEMY_ACTION';
         const special = e.action.visual === 'special' || e.action.kind === 'support';
@@ -106,9 +110,15 @@ export function buildPresentationTimeline(input: PresentationInput): BattleTimel
         // las poses las controlan STAGE_PREP_STARTED (preparación) y la
         // resolución al completar el QTE (ATTACK_HIT con tick lógico real).
         if (e.action.kind !== 'command') {
-          for (let i = 0; i < canon.actor.length; i++) {
-            const b = canon.actor[i];
-            const next = canon.actor[i + 1];
+          // M8.C2 — GRAMÁTICA MELEE por PERFIL FIRMA (no canon genérico):
+          // la firma (p.ej. cont_punch → punch_right · rising_kick →
+          // kick_right · dunk_shot → punch_left) gobierna las poses de
+          // ataque; el canon solo aporta el armazón temporal. Así el
+          // timeline distingue knockback_back/up/down sin hardcodes.
+          const beats = profile?.actor?.beats?.length ? profile.actor.beats : canon.actor;
+          for (let i = 0; i < beats.length; i++) {
+            const b = beats[i];
+            const next = beats[i + 1];
             const dur = next ? Math.max(1, next.frame - b.frame) : POSE_HOLD;
             add({ type: 'FIGHTER_POSE', tick: env.tick + b.frame, durationTicks: dur, role: 'ACTOR', side: e.side, pose: b.pose }, env, e.action.id, e.action.fidelity);
             // CANON DE PLANOS: el APPROACH (pose move_front) cambia al plano
@@ -118,6 +128,18 @@ export function buildPresentationTimeline(input: PresentationInput): BattleTimel
               add({ type: 'SCENE', tick: env.tick + b.frame, durationTicks: Math.max(1, canon.totalFrames - b.frame), mode: 'ACTION_DUEL', background: context.actionBackground }, env, e.action.id, e.action.fidelity);
               add({ type: 'FIGHTER_VISIBILITY', tick: env.tick + b.frame, role: 'TARGET', side: target, visible: true }, env, e.action.id, e.action.fidelity);
               add({ type: 'CAMERA', tick: env.tick + b.frame, action: 'TRACK' }, env, e.action.id, e.action.fidelity);
+            }
+          }
+          // APPROACH (rush) del perfil: si la firma declara un rush con
+          // startFrame propio, emite el approach explícito (ACTION_DUEL +
+          // move_front) en ese frame — el plano cambia cuando el actor corre.
+          if (profile?.rush) {
+            const rushFrame = profile.rush.startFrame;
+            if (rushFrame > 0 && !beats.some(b => b.pose === 'move_front')) {
+              add({ type: 'SCENE', tick: env.tick + rushFrame, durationTicks: Math.max(1, canon.totalFrames - rushFrame), mode: 'ACTION_DUEL', background: context.actionBackground }, env, e.action.id, e.action.fidelity);
+              add({ type: 'FIGHTER_VISIBILITY', tick: env.tick + rushFrame, role: 'TARGET', side: target, visible: true }, env, e.action.id, e.action.fidelity);
+              add({ type: 'CAMERA', tick: env.tick + rushFrame, action: 'TRACK' }, env, e.action.id, e.action.fidelity);
+              add({ type: 'FIGHTER_POSE', tick: env.tick + rushFrame, durationTicks: Math.min(6, profile.rush.duration), role: 'ACTOR', side: e.side, pose: 'move_front' }, env, e.action.id, e.action.fidelity);
             }
           }
         }
@@ -207,9 +229,20 @@ export function buildPresentationTimeline(input: PresentationInput): BattleTimel
         const { action, fidelity } = profileOf(activeAction);
         add({ type: 'IMPACT', tick: contactTick, side: e.target, outcome: e.outcome }, env, action, fidelity);
         add({ type: 'FIGHTER_VISIBILITY', tick: contactTick, role: 'TARGET', side: e.target, visible: true }, env, action, fidelity);
-        const pose = e.outcome === 'block' ? 'guard' : e.outcome === 'guard' ? 'evade' : 'knockback_back';
-        add({ type: 'FIGHTER_POSE', tick: contactTick, durationTicks: 10, role: 'TARGET', side: e.target, pose }, env, action, fidelity);
-        add({ type: 'FIGHTER_POSE', tick: contactTick, durationTicks: 10, role: 'ACTOR', side: e.source, pose: 'attack_fwd' }, env, action, fidelity);
+        // M8.C2 — REACCIÓN por PERFIL FIRMA: hit → targetPose del perfil
+        // (cont_punch→knockback_back · rising_kick→knockback_up ·
+        // dunk_shot→knockback_down); block → guard; guard → evade. El
+        // strike del ACTOR usa el strikePose del perfil (no attack_fwd
+        // genérico) para conservar la fidelidad de la familia.
+        const profileTargetPose = activeAction?.profile?.impact?.targetPose;
+        const reactionPose = e.outcome === 'block' ? 'guard'
+          : e.outcome === 'guard' ? 'evade'
+          : (profileTargetPose ?? 'knockback_back');
+        const strikePose = e.outcome === 'hit'
+          ? (activeAction?.profile?.actor?.beats?.find(b => b.pose !== 'idle' && b.pose !== 'move_front')?.pose ?? 'attack_fwd')
+          : 'attack_fwd';
+        add({ type: 'FIGHTER_POSE', tick: contactTick, durationTicks: 10, role: 'TARGET', side: e.target, pose: reactionPose }, env, action, fidelity);
+        add({ type: 'FIGHTER_POSE', tick: contactTick, durationTicks: 10, role: 'ACTOR', side: e.source, pose: strikePose }, env, action, fidelity);
         add({ type: 'CAMERA', tick: contactTick, action: 'IMPACT' }, env, action, fidelity);
         add({ type: 'AUDIO', tick: contactTick, cue: e.outcome === 'hit' ? 'hit' : e.outcome === 'block' ? 'block' : 'guard' }, env, action, fidelity);
         break;
@@ -324,7 +357,7 @@ export function buildPresentationTimeline(input: PresentationInput): BattleTimel
       }
       case 'GATHER_STARTED': {
         const canon = canonForAction({ id: 'gather_power', label: 'Gather Power', kind: 'gather', visual: 'power', fidelity: 'INFERRED' });
-        activeAction = { side: e.side, action: { id: 'gather_power', label: 'Gather Power', kind: 'gather', visual: 'power', fidelity: 'INFERRED' }, canon, startTick: env.tick, prepTicks: null, stageResolvedTick: null, stageResolveAnchor: null };
+        activeAction = { side: e.side, action: { id: 'gather_power', label: 'Gather Power', kind: 'gather', visual: 'power', fidelity: 'INFERRED' }, canon, profile: null, startTick: env.tick, prepTicks: null, stageResolvedTick: null, stageResolveAnchor: null };
         add({ type: 'SCENE', tick: env.tick, durationTicks: canon.totalFrames, mode: e.side === 'player' ? 'PLAYER_ACTION' : 'ENEMY_ACTION', background: context.actionBackground }, env);
         add({ type: 'FIGHTER_POSE', tick: env.tick, durationTicks: canon.totalFrames - 12, role: 'ACTOR', side: e.side, pose: 'gather_power' }, env);
         add({ type: 'AURA', tick: env.tick, durationTicks: canon.totalFrames - 12, role: 'ACTOR', side: e.side, variant: 'power', visible: true }, env);

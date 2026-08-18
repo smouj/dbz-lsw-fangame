@@ -7,7 +7,7 @@
 // el Combat Lab. "Aplicar al juego" inyecta las variables en :root y
 // persiste en localStorage.
 // ═══════════════════════════════════════════════════════════════════════
-import { Check, Download, RotateCcw, Lock, BookOpen, Swords, Library, Users, Sparkles, Settings as SettingsIcon, ChevronRight } from 'lucide-react';
+import { Check, Download, RotateCcw, Lock, BookOpen, Swords, Library, Users, Sparkles, Settings as SettingsIcon, ChevronRight, Play } from 'lucide-react';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import {
   HUD_THEME_VARS, HudTheme, currentHudTheme, defaultHudTheme,
@@ -120,6 +120,27 @@ export function HudModule() {
   const [stageLen, setStageLen] = useState(5);
   // Resultado del mockup: victoria o derrota
   const [result, setResult] = useState<'victory' | 'defeat'>('victory');
+  // INTRO ▶ PLAY: reproducir la secuencia de entrada completa (slide-in →
+  // VS pop → flash). El remount (key) reinicia las CSS animations; los
+  // chips de fase muestran los tiempos de la secuencia (para canonizar).
+  const [introPlayKey, setIntroPlayKey] = useState(0);
+  const [introPhase, setIntroPhase] = useState<'idle' | 'slide' | 'vs' | 'flash' | 'done'>('idle');
+  const INTRO_TIMING = [
+    { phase: 'slide' as const, label: 'SLIDE-IN', at: '0.00s', note: 'sprites desde ±42vw (.25s delay, .55s ease)' },
+    { phase: 'vs' as const, label: 'VS POP', at: '0.70s', note: 'VS escala 3.2→1 + glow (.55s)' },
+    { phase: 'flash' as const, label: 'FLASH', at: '1.50s', note: 'blanco total .4s (clímax)' },
+  ];
+  const introTimers = useRef<ReturnType<typeof setTimeout>[]>([]);
+  const playIntro = () => {
+    introTimers.current.forEach(clearTimeout);
+    introTimers.current = [];
+    setIntroPlayKey(k => k + 1);
+    setIntroPhase('slide');
+    introTimers.current.push(setTimeout(() => setIntroPhase('vs'), 700));
+    introTimers.current.push(setTimeout(() => setIntroPhase('flash'), 1500));
+    introTimers.current.push(setTimeout(() => setIntroPhase('done'), 2000));
+  };
+  useEffect(() => () => introTimers.current.forEach(clearTimeout), []);
   // Actor de la ACCIÓN: en el plano ACTION solo aparece el character que
   // va a ejecutar la acción (idle del sheet de batalla) — no ambos.
   const [actor, setActor] = useState<'player' | 'enemy'>('player');
@@ -254,6 +275,25 @@ export function HudModule() {
             ))}
           </div>
         )}
+        {/* INTRO ▶ PLAY: reproducir la secuencia de entrada completa y
+            ver/actualizar/canonizar las transiciones (slide → VS → flash) */}
+        {view === 'INTRO' && (
+          <div className="dev-hud-intro-play" title="Reproduce la entrada de combate: slide-in → VS pop → flash (reinicia en cada click)">
+            <button className="dev-btn dev-btn-primary" onClick={playIntro}>
+              <Play size={14} /> {introPhase === 'idle' ? 'Reproducir entrada' : '↺ Replay'}
+            </button>
+            <div className="dev-intro-phases">
+              {INTRO_TIMING.map(t => (
+                <span key={t.phase}
+                  className={`dev-intro-phase ${introPhase === t.phase ? 'active' : ''}`}
+                  title={`${t.note}`}>
+                  <b>{t.at}</b> {t.label}
+                </span>
+              ))}
+              {introPhase === 'done' && <span className="dev-intro-phase done">✓ FIN</span>}
+            </div>
+          </div>
+        )}
       </div>
 
       {/* ═══ CONTRATO VISUAL (baseline V1 congelada) ═══ */}
@@ -291,13 +331,15 @@ export function HudModule() {
               la ventana igual — misma forma que el resto de vistas y que la
               ventana del juego. dev-intro-view solo congela animaciones y
               oculta debug. */}
-          <div className={`battle-screen view-overview dev-hud-real-preview ${view === 'INTRO' ? 'dev-intro-view' : ''}`}>
+          <div className={`battle-screen view-overview dev-hud-real-preview ${view === 'INTRO' ? (introPhase === 'idle' ? 'dev-intro-view' : 'dev-intro-playing') : ''}`}>
             {/* INTRO */}
             {view === 'INTRO' && (
               /* VS FULL-SCREEN: los 2 sprites entran desde FUERA hacia su
                  posición (cinemática), VS en el centro, flash — SIN texto
-                 (nada de READY/FIGHT ni nombres). MISMO markup que el juego. */
-              <div className="battle-intro">
+                 (nada de READY/FIGHT ni nombres). MISMO markup que el juego.
+                 key={introPlayKey} remonta el bloque: las CSS animations se
+                 reinician en cada ▶ Play. */
+              <div className="battle-intro" key={introPlayKey}>
                 <div className="intro-fighter intro-left">
                   <div className="intro-portrait">
                     {pPortrait ? <img src={pPortrait} alt={P_FORM} /> : <span className="dev-hud-mock-ph">?</span>}
