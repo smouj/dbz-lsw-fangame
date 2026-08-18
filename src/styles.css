@@ -1752,7 +1752,7 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 
 .command-strip button {
   /* Botón GBC completo (48×40 de la ROM, texto del nombre incluido) escalado 1.5× */
-  --btn-frame: url('/assets/ui/hud_buttons/btn_basic.png');
+  --btn-frame: var(--btn-basic);
   background-image: var(--btn-frame);
   background-size: 100% 100%;
   background-repeat: no-repeat;
@@ -1776,10 +1776,10 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 .command-strip button:disabled { opacity: 0.35; cursor: not-allowed; filter: grayscale(.7); }
 
 /* Botones GBC con nombre incluido (especificidad 0,2,1 para ganar la cascada) */
-.command-strip button.cmd-limit { --btn-frame: url('/assets/ui/hud_buttons/btn_limit.png'); }
-.command-strip button.cmd-b { --btn-frame: url('/assets/ui/hud_buttons/btn_basic.png'); }
-.command-strip button.cmd-j { --btn-frame: url('/assets/ui/hud_buttons/btn_joint.png'); }
-.command-strip button.cmd-c { --btn-frame: url('/assets/ui/hud_buttons/btn_chara.png'); }
+.command-strip button.cmd-limit { --btn-frame: var(--btn-limit); }
+.command-strip button.cmd-b { --btn-frame: var(--btn-basic); }
+.command-strip button.cmd-j { --btn-frame: var(--btn-joint); }
+.command-strip button.cmd-c { --btn-frame: var(--btn-chara); }
 .command-strip button.cmd-c.has-ally { animation: sel-blink 1.2s infinite alternate; }
 
 /* ─── Mano de cartas ─── */
@@ -2711,7 +2711,7 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 /* ─── Botón exit battle ─── */
 
 .btn-exit {
-  background-image: url('/assets/ui/hud_buttons/btn_exit.png');
+  background-image: var(--btn-exit);
   background-size: 100% 100%;
   background-repeat: no-repeat;
   image-rendering: pixelated;
@@ -3890,7 +3890,7 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 .basic-btn:hover:not(:disabled) { transform: translateY(-2px); filter: brightness(1.15); }
 .basic-btn:disabled { opacity: 0.35; cursor: not-allowed; filter: grayscale(.6); }
 /* BACK: sprite EXIT del paquete GBC (el botón EXIT del phase-bar se eliminó) */
-.basic-btn.basic-back { width: 96px; height: 80px; --btn-frame: url('/assets/ui/hud_buttons/btn_exit.png'); }
+.basic-btn.basic-back { width: 96px; height: 80px; --btn-frame: var(--btn-exit); }
 /* ═══ STAGE = LA CARTA REAL (idéntica a la mano) ═══ */
 .basic-stage-card {
   /* Mismo CSS que .battle-controls .hand-cards .card: el frame se
@@ -3987,7 +3987,7 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   padding: 0 10px;
   line-height: 1.4;
 }
-.basic-btn.basic-gather { --btn-frame: url('/assets/ui/hud_buttons/btn_power.png'); }
+.basic-btn.basic-gather { --btn-frame: var(--btn-power); }
 .limit-panel {
   /* Mismo lenguaje visual que los demás paneles (BASIC/COMMAND): sin fondo
      oscuro de panel — el grid de cartas flota sobre el campo con sus marcos */
@@ -4779,13 +4779,13 @@ button:focus-visible, .chapter-node:focus-visible {
   padding: 0;
 }
 
-.defense-sources .basic-btn.src-basic { --btn-frame: url('/assets/ui/hud_buttons/btn_basic.png'); }
-.defense-sources .basic-btn.src-joint { --btn-frame: url('/assets/ui/hud_buttons/btn_joint.png'); }
-.defense-sources .basic-btn.src-limit { --btn-frame: url('/assets/ui/hud_buttons/btn_limit.png'); }
+.defense-sources .basic-btn.src-basic { --btn-frame: var(--btn-basic); }
+.defense-sources .basic-btn.src-joint { --btn-frame: var(--btn-joint); }
+.defense-sources .basic-btn.src-limit { --btn-frame: var(--btn-limit); }
 
 /* Botones de acción con sprite GBC completo (GUARD / MOVE) */
-.basic-btn.act-guard { --btn-frame: url('/assets/ui/hud_buttons/btn_guard.png'); }
-.basic-btn.act-move { --btn-frame: url('/assets/ui/hud_buttons/btn_move.png'); }
+.basic-btn.act-guard { --btn-frame: var(--btn-guard); }
+.basic-btn.act-move { --btn-frame: var(--btn-move); }
 
 .defense-menu .basic-btn[disabled] {
   opacity: .45;
@@ -9831,10 +9831,10 @@ button.linklike:hover { text-decoration: underline; }
 
 /* Sprites GBC de movimiento (paquete UI V2 MAPPED) */
 .move-axis-btn.axis-h {
-  background-image: url('/assets/ui/hud_buttons/btn_move_axis_h.png');
+  background-image: var(--btn-move-h);
 }
 .move-axis-btn.axis-v {
-  background-image: url('/assets/ui/hud_buttons/btn_move_axis_v.png');
+  background-image: var(--btn-move-v);
 }
 /* hover del move-axis definido UNA sola vez (sección botones GBC, línea
    1831) — no duplicar aquí: regla única evita deriva entre secciones. */

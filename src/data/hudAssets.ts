@@ -39,3 +39,26 @@ export function hudLabel(action: HudAction): string {
 
 /** Acciones que pinta el command-strip en COMMAND (con CHARA opcional). */
 export const COMMAND_ACTIONS: HudAction[] = ['LIMIT', 'JOINT', 'BASIC'];
+
+// ─── Variables CSS de botones (fuente ÚNICA — P1 #6) ───
+// El CSS NO hardcodea URLs: estas variables se inyectan en :root desde el
+// registro (applyHudButtonVars) y las reglas usan var(--btn-*).
+export const HUD_BUTTON_CSS_VARS: Record<string, string> = {
+  '--btn-limit': HUD_ASSET_REGISTRY.LIMIT.sprite,
+  '--btn-joint': HUD_ASSET_REGISTRY.JOINT.sprite,
+  '--btn-basic': HUD_ASSET_REGISTRY.BASIC.sprite,
+  '--btn-chara': HUD_ASSET_REGISTRY.CHARA.sprite,
+  '--btn-exit': HUD_ASSET_REGISTRY.EXIT.sprite,
+  '--btn-power': HUD_ASSET_REGISTRY.POWER.sprite,
+  '--btn-guard': HUD_ASSET_REGISTRY.GUARD.sprite,
+  '--btn-move': HUD_ASSET_REGISTRY.MOVE.sprite,
+  '--btn-move-h': HUD_ASSET_REGISTRY.MOVE_H.sprite,
+  '--btn-move-v': HUD_ASSET_REGISTRY.MOVE_V.sprite,
+};
+
+/** Inyecta las variables de botones en :root (formato url('...')). */
+export function applyHudButtonVars(root: HTMLElement = document.documentElement): void {
+  for (const [key, value] of Object.entries(HUD_BUTTON_CSS_VARS)) {
+    root.style.setProperty(key, `url('${value}')`);
+  }
+}

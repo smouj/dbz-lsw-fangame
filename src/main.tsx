@@ -5,6 +5,7 @@ import { createPortal } from 'react-dom';
 import './styles.css';
 import { applyHudTheme, loadHudTheme } from './data/hudTheme';
 import { applyHudLayout } from './data/hudLayout';
+import { applyHudButtonVars } from './data/hudAssets';
 import { FORMS, CHARACTERS, getCharacter, getForm, idleSpriteUrl, statAtLevel, LIMIT_DEFAULTS, loadLimits, saveLimits } from './data/roster';
 import { STORY_ENEMY_DECKS, STORY_AI_BOOSTS, TEAM_BATTLES } from './data/enemy_decks';
 import { facingFlip, needsFlip } from './data/facing';
@@ -70,6 +71,9 @@ try { applyHudTheme(loadHudTheme()); } catch { /* SSR / sin DOM */ }
 // Contrato visual canónico (baseline V1): geometría estructural del HUD
 // en :root — juego, preview del dev y Combat Lab consumen las mismas vars.
 try { applyHudLayout(); } catch { /* SSR / sin DOM */ }
+// Botones GBC: las URLs de los sprites viven SOLO en HUD_ASSET_REGISTRY
+// (P1 #6) — el CSS usa var(--btn-*).
+try { applyHudButtonVars(); } catch { /* SSR / sin DOM */ }
 
 type BattlePhase = 'position' | 'command' | 'basic' | 'limitSelect' | 'cardSelect' | 'stageInput' | 'enemyTurn' | 'defend' | 'discard' | 'win' | 'lose';
 

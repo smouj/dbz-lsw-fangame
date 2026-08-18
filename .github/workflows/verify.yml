@@ -26,8 +26,27 @@ jobs:
       - name: Signature action profiles (42) + canonical stage sequences
         run: npm run verify:profiles
 
+      - name: Cinematic sequences (42 perfiles auditados)
+        run: npm run verify:sequences
+
+      - name: HUD layout canónico (10 invariantes)
+        run: npm run verify:hud-layout
+
+      - name: Combate real (71 invariantes)
+        run: npm run verify:battle
+
+      - name: Catálogos V8/V9 (assets canónicos)
+        run: |
+          npm run verify:v8
+          npm run verify:v9
+
       - name: Sprite manifests / physical frame sizes / beam-ray sets
         run: npm run audit:sprites
+
+      - name: Sheets sin fondo cyan + canon de sprites
+        run: |
+          npm run audit:sheets
+          npm run audit:sprite-canon
 
       - name: GBC canon invariants (positions, deck, sequences, coverage)
         run: npm run verify:gbc
