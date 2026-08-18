@@ -89,6 +89,7 @@ export function HudModule() {
   const [theme, setTheme] = useState<HudTheme>(() => currentHudTheme());
   const [status, setStatus] = useState('');
   const [view, setView] = useState<HudView>('COMMAND');
+  const [devAids, setDevAids] = useState(true);   // anclas + zonas ANIM (preview limpio cuando OFF)
   const [dlgSide, setDlgSide] = useState<'left' | 'right'>('left');
   // Escenario del preview: se puede elegir fondo (overview/action) como en
   // el combate real — los 13 escenarios del catálogo.
@@ -198,6 +199,12 @@ export function HudModule() {
             Habla: {dlgSide === 'left' ? 'IZQUIERDA (Goku)' : 'DERECHA (Cell)'}
           </button>
         )}
+        {/* AYUDAS dev: anclas P/E + zonas ANIM — OFF para capturas limpias */}
+        <button className={`dev-hud-view-chip side-toggle ${devAids ? 'active' : ''}`}
+          onClick={() => setDevAids(a => !a)}
+          title="Muestra/oculta las ayudas dev del battlefield: anclas P/E (cruces + coordenadas) y zonas ANIM — desactívalas para ver el preview limpio">
+          {devAids ? 'AYUDAS: ON' : 'AYUDAS: OFF'}
+        </button>
         {/* Resultado: toggle VICTORIA / DERROTA */}
         {view === 'RESULTADO' && (
           <button className={`dev-hud-view-chip side-toggle ${result === 'defeat' ? 'active' : ''}`}
@@ -406,7 +413,7 @@ export function HudModule() {
                           visible como cruz, para saber dónde se ancla y dónde
                           realiza las animaciones. En ACTION se ocultan: el
                           actor va centrado en la escena. */}
-                      {bgMode === 'overview' && (
+                      {bgMode === 'overview' && devAids && (
                         <>
                           <div className="dev-fighter-anchor player" style={{ left: `${pa.x}%`, top: `${pa.y}%` }}>
                             <span className="dev-anchor-cross" />

@@ -9491,8 +9491,7 @@ button.linklike:hover { text-decoration: underline; }
 .hp-bar-current {
   box-shadow:
     inset 0 1px 0 rgba(255,255,255,.34),
-    inset 0 -2px 0 rgba(0,0,0,.18),
-    0 0 8px rgba(80,200,88,.28);
+    inset 0 -2px 0 rgba(0,0,0,.18);   /* sin glow exterior: GBC plano */
 }
 .hp-bar-track::before {
   content: '';
@@ -10414,13 +10413,15 @@ button.linklike:hover { text-decoration: underline; }
   left: 8px;
   top: -14px;
   font-family: var(--fpx);
-  font-size: 7px;
+  font-size: 6px;              /* más sutil: no domina la captura */
   color: #ffe9a3;
   background: rgba(5, 7, 12, .85);
   border: 1px solid #f6c744;
-  padding: 1px 4px;
+  padding: 1px 3px;
   white-space: nowrap;
   text-shadow: 1px 1px 0 #000;
+  opacity: .85;
+  letter-spacing: .5px;
   letter-spacing: .5px;
 }
 .dev-fighter-anchor.enemy .dev-anchor-cross {
