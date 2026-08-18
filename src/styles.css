@@ -10650,3 +10650,26 @@ button.linklike:hover { text-decoration: underline; }
 .dev-tl-col.fid.INFERRED { color: #e0c060; }
 .dev-tl-col.fid.NONE { color: #6b7484; }
 .dev-tl-col.prof { color: #8a93a3; }
+
+/* ─── Character Studio: layout 3 columnas (forma · assets · frames) ─── */
+.dev-form-main { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr) minmax(0, 1.4fr); gap: 12px; margin-top: 12px; align-items: start; }
+@media (max-width: 1200px) { .dev-form-main { grid-template-columns: 1fr; } }
+.dev-form-col { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.dev-form-col-title {
+  margin: 0; font-size: 12px; letter-spacing: .5px; color: #ffe9a3; text-transform: uppercase;
+  display: flex; align-items: center; justify-content: space-between; gap: 8px;
+  padding-bottom: 6px; border-bottom: 1px solid #262b33;
+}
+.dev-form-col-frames { background: #10131a; border: 1px solid #262b33; border-radius: 10px; padding: 10px; }
+.dev-form-col-frames .dev-form-col-title { border-bottom-color: #2a3342; }
+.dev-frames { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.dev-frames-pills { flex-wrap: wrap; max-height: 96px; overflow-y: auto; }
+.dev-frames-pills .dev-pose-pill em { font-style: normal; opacity: .6; margin-left: 3px; font-size: 9px; }
+.dev-frames-inspector { margin-top: 2px; }
+.dev-sheets-zoom { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+.dev-sheets-zoom label { font-size: 10px; color: #8a93a3; }
+.dev-sheets-inspector h3 { margin: 6px 0 4px; font-size: 12px; color: #fff; word-break: break-all; }
+.dev-sheets-inspector h3 small { color: #8a93a3; font-weight: 400; }
+.dev-manifest-link { display: inline-block; font-size: 10px; color: #7fd4ff; text-decoration: none; }
+.dev-manifest-link:hover { text-decoration: underline; }
+.dev-linked-actions { margin-top: 6px; }

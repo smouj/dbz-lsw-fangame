@@ -1,8 +1,11 @@
-// ═══════════════════════════════════════════════════════════
-// DEV STUDIO — Character Studio
-// Personaje → formas → stats con selector de nivel + assets.
-// Usa las MISMAS funciones del juego (statAtLevel, sheetUrl, etc.)
-// ═══════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════════════════════
+// DEV STUDIO — Character Studio (integra Sprites + Sheets)
+// Personaje → formas → stats · assets · poses de combate · browser de
+// frames con inspección (bbox/alpha/specks/duplicados/usos semánticos).
+// Las antiguas vistas Sprites/Sheets se fusionaron AQUÍ: hay UNA sola
+// inspección de frames (el manifest V9 de la forma), sin pipelines
+// paralelos que puedan quedar obsoletos o descanonizados.
+// ═══════════════════════════════════════════════════════════════════════
 import { useState, useEffect, useRef } from 'react';
 import {
   CHARACTERS, FORMS, getForm, statAtLevel, sheetUrl, idleSpriteUrl, LIMIT_DEFAULTS,
@@ -17,6 +20,8 @@ import { battleOverworldActorUrl, battleOverworldAuraUrlAsync } from '../data/ba
 import { characterName } from '../data/storyPanels';
 import { SPRITE_CANON, type CanonStatus } from '../data/generated/spriteCanon.generated';
 import { COMBAT_POSE_ORDER, COMBAT_REQUIRED_POSES } from '../battle/spriteConfig';
+import { useSheetAnalysis, groupFramesByPose, type FrameAnalysis } from './frameAnalysis';
+import { poseSemantics, parseFrameName } from './frameSemantics';
 import type { DevLinkedTarget, DevModuleId } from './DevStudio';
 
 const STATS: { key: 'hp' | 'str' | 'ki' | 'spd'; label: string; color: string }[] = [
@@ -38,15 +43,9 @@ export function CharactersModule({ onOpenModule }: {
   const spriteDir = spriteDirFor(form.id);
   const manifestUrl = spriteManifestUrl(form.id);
   const idleUrl = spriteDir ? spriteFrameUrl(form.id, `${spriteDir}_idle_00.png`) : idleSpriteUrl(form);
-  // Battle overworld: si no hay extraído (solo 24 formas), fallback al chibi
-  // *_ow.png del overworld táctico (existe para los 48) — así Gohan/Trunks/
-  // Goten/Cell... muestran su overworld en vez de celda vacía.
   const owFallback = overworldUrl(form.id);
   const battleOwIdle = battleOverworldActorUrl(form.id, 'idle') ?? owFallback;
   const battleOwPower = battleOverworldActorUrl(form.id, 'gather_power_pose') ?? owFallback;
-  // Aura: SOLO si el manifest real tiene la entrada (verificación HEAD).
-  // Si no existe, undefined → PowerUpCell muestra la pose sin aura (nunca
-  // icono roto/cyan).
   const [battleOwAura, setBattleOwAura] = useState<string | undefined>(undefined);
   useEffect(() => {
     let cancelled = false;
@@ -55,17 +54,23 @@ export function CharactersModule({ onOpenModule }: {
   }, [form.id]);
   const portrait = BATTLE_PORTRAITS[form.id];
 
+  const analysis = useSheetAnalysis(form.id, spriteDir);
+
   const selectChar = (id: string) => {
     setCharId(id);
     const c = CHARACTERS.find(x => x.id === id);
-    if (c) { setFormId(c.forms[0]); }
+    if (c) setFormId(c.forms[0]);
   };
 
   return (
     <div className="dev-panel">
       <header className="dev-header">
         <h1>Character Studio</h1>
-        <p className="dev-sub">Ficha por forma con estadísticas reales a cualquier nivel (curvas ROM).</p>
+        <p className="dev-sub">
+          Ficha por forma: stats ROM · assets · poses de combate · <strong>browser de frames</strong>{' '}
+          (inspector con bbox/alpha/specks/duplicados — antes en Sprites/Sheets). Todo desde el
+          manifest V9 de la forma, una sola fuente.
+        </p>
       </header>
 
       <div className="dev-chars-layout">
@@ -92,6 +97,10 @@ export function CharactersModule({ onOpenModule }: {
                 <span className="dev-tag">Saga {char.saga}</span>
                 <span className="dev-tag">Tier {char.tier}/5</span>
                 <span className="dev-tag">{char.forms.length} formas</span>
+                <span className="dev-tag ok">{spriteDir ? `sprite: ${spriteDir}` : 'sin dir animado'}</span>
+              </div>
+              <div className="dev-linked-actions">
+                <button className="dev-btn" disabled={!spriteDir} onClick={() => onOpenModule?.('animation', { formId: form.id, pose: 'idle' })}>Abrir Animation →</button>
               </div>
             </div>
           </div>
@@ -109,46 +118,92 @@ export function CharactersModule({ onOpenModule }: {
             })}
           </div>
 
-          <div className="dev-form-info">
-            <div className="dev-form-id-row">
-              <code>{form.id}</code>
-              {form.tier && <span className="dev-tag">tier {form.tier}</span>}
-              {form.sheet && <span className="dev-tag">{form.sheet}</span>}
-              {spriteDir && <span className="dev-tag ok">sprite dir: {spriteDir}</span>}
-              {!spriteDir && <span className="dev-tag bad">sin dir animado</span>}
-            </div>
-            <div className="dev-linked-actions">
-              <button className="dev-btn" disabled={!spriteDir} onClick={() => onOpenModule?.('animation', { formId: form.id, pose: 'idle' })}>Abrir Animation</button>
-              <button className="dev-btn" disabled={!spriteDir} onClick={() => onOpenModule?.('sprites', { formId: form.id, pose: 'idle' })}>Abrir Sprites</button>
-              <button className="dev-btn" disabled={!spriteDir} onClick={() => onOpenModule?.('sheets', { formId: form.id })}>Abrir Sheets</button>
-            </div>
-
-            {/* Selector de nivel + stats */}
-            <div className="dev-level-row">
-              <span className="dev-level-label">Level</span>
-              <input type="range" min={1} max={100} value={level}
-                onChange={e => setLevel(Number(e.target.value))} className="dev-range" />
-              <span className="dev-level-value">{level}</span>
-            </div>
-
-            <div className="dev-stats-grid">
-              {STATS.map(s => {
-                const base = form[s.key];
-                const val = statAtLevel(form, level, s.key);
-                const growth = form.curves ? (form.curves[s.key][3] - base) : 0;
-                const pct = Math.min(100, (val / Math.max(1, form.curves ? form.curves[s.key][3] : val)) * 100);
-                return (
-                  <div key={s.key} className="dev-stat">
-                    <div className="dev-stat-head">
-                      <span style={{ color: s.color }}>{s.label}</span>
-                      <strong>{val}</strong>
-                      <small>base {base}</small>
+          {/* ═══ MAIN: 3 columnas (forma · assets · frames) ═══ */}
+          <div className="dev-form-main">
+            {/* Col 1 — Forma + stats */}
+            <div className="dev-form-col">
+              <h3 className="dev-form-col-title">Forma</h3>
+              <div className="dev-form-id-row">
+                <code>{form.id}</code>
+                {form.tier && <span className="dev-tag">tier {form.tier}</span>}
+                {form.sheet && <span className="dev-tag">{form.sheet}</span>}
+              </div>
+              <div className="dev-level-row">
+                <span className="dev-level-label">Level</span>
+                <input type="range" min={1} max={100} value={level}
+                  onChange={e => setLevel(Number(e.target.value))} className="dev-range" />
+                <span className="dev-level-value">{level}</span>
+              </div>
+              <div className="dev-stats-grid">
+                {STATS.map(s => {
+                  const base = form[s.key];
+                  const val = statAtLevel(form, level, s.key);
+                  const growth = form.curves ? (form.curves[s.key][3] - base) : 0;
+                  const pct = Math.min(100, (val / Math.max(1, form.curves ? form.curves[s.key][3] : val)) * 100);
+                  return (
+                    <div key={s.key} className="dev-stat">
+                      <div className="dev-stat-head">
+                        <span style={{ color: s.color }}>{s.label}</span>
+                        <strong>{val}</strong>
+                        <small>base {base}</small>
+                      </div>
+                      <div className="dev-stat-bar"><div style={{ width: `${pct}%`, background: s.color }} /></div>
+                      <div className="dev-stat-growth">+{growth} @100</div>
                     </div>
-                    <div className="dev-stat-bar"><div style={{ width: `${pct}%`, background: s.color }} /></div>
-                    <div className="dev-stat-growth">+{growth} @100</div>
+                  );
+                })}
+              </div>
+              {manifestUrl && (
+                <a className="dev-manifest-link" href={manifestUrl} target="_blank" rel="noreferrer">manifest.json ↗</a>
+              )}
+            </div>
+
+            {/* Col 2 — Assets */}
+            <div className="dev-form-col">
+              <h3 className="dev-form-col-title">Assets</h3>
+              <div className="dev-asset-grid">
+                <AssetCell label="Portrait" src={portrait} />
+                <AssetCell label="Overworld" src={overworldUrl(form.id)} />
+                <AssetCell label="Idle (combate)" src={idleUrl} />
+                <AssetCell label="Battle OW idle" src={battleOwIdle} />
+                <PowerUpCell poseSrc={battleOwPower} auraSrc={battleOwAura} />
+                {form.sheet && <AssetCell label="ROM sheet ref" src={sheetUrl(form)} wide />}
+              </div>
+              {spriteDir && (
+                <div className="dev-poses-section">
+                  <h3>Poses de combate (canon)</h3>
+                  <div className="dev-pose-grid">
+                    {COMBAT_REQUIRED_POSES.map(p => (
+                      <PoseCell key={p} formId={form.id} pose={p} small />
+                    ))}
                   </div>
-                );
-              })}
+                  <div className="dev-semantic-pose-row">{COMBAT_POSE_ORDER.join(' · ')}</div>
+                  <div className="dev-pose-legend">
+                    <span className="dev-pose-legend-title">Qué dispara cada pose (canon cartas):</span>
+                    <span><b>beam_charge / beam_fire</b> ← cartas beam (Kamehameha, Masenko…)</span>
+                    <span><b>attack_fwd / punch / kick</b> ← cartas damage y command</span>
+                    <span><b>guard / evade / beam_guard</b> ← cartas defense</span>
+                    <span><b>gather_power / power_up / aura_*</b> ← soporte y GATHER (aura overlay)</span>
+                    <span><b>move_front / move_back</b> ← comando MOVE</span>
+                    <span><b>hurt / knockback</b> ← recibir daño (defensor)</span>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Col 3 — Frame browser (Sprites + Sheets integrados) */}
+            <div className="dev-form-col dev-form-col-frames">
+              <h3 className="dev-form-col-title">
+                Frames del manifest
+                <span className="dev-sheets-count">{analysis.frames.length} · {analysis.problemCount} avisos</span>
+              </h3>
+              {analysis.overridden && (
+                <div className="dev-wip-banner">
+                  Overrides locales activos — los frames pueden diferir del canon V9.{' '}
+                  <button className="dev-btn" onClick={analysis.clearOverrideLocal}>Limpiar override</button>
+                </div>
+              )}
+              <FrameBrowser formId={form.id} analysis={analysis} dir={spriteDir} />
             </div>
           </div>
 
@@ -160,51 +215,7 @@ export function CharactersModule({ onOpenModule }: {
             </div>
           </details>
 
-          {/* Assets (colapsable) */}
-          <details className="dev-collapse" open>
-            <summary>Assets — sprites, overworld y sheets</summary>
-            <div className="dev-collapse-body">
-            <div className="dev-asset-grid">
-              <AssetCell label="Portrait" src={portrait} />
-              <AssetCell label="Overworld" src={overworldUrl(form.id)} />
-              <AssetCell label="Idle (combat)" src={idleUrl} />
-              <AssetCell label="Battle OW idle" src={battleOwIdle} />
-              <PowerUpCell poseSrc={battleOwPower} auraSrc={battleOwAura} />
-              {spriteDir
-                ? <CombatSheetCell formId={form.id} spriteDir={spriteDir} />
-                : <AssetCell label="Combat sheet" src={undefined} wide />}
-              {form.sheet && <AssetCell label="ROM sheet ref" src={sheetUrl(form)} wide />}
-              {manifestUrl && (
-                <div className="dev-asset-cell">
-                  <div className="dev-asset-frame">
-                    <a className="dev-manifest-link" href={manifestUrl} target="_blank" rel="noreferrer">manifest.json ↗</a>
-                  </div>
-                  <div className="dev-asset-label">Manifest (combate)</div>
-                </div>
-              )}
-            </div>
-            {spriteDir && (
-              <div className="dev-poses-section">
-                <h3>Poses (combate)</h3>
-                <div className="dev-pose-grid">
-                  {COMBAT_REQUIRED_POSES.map(p => (
-                    <PoseCell key={p} formId={form.id} pose={p} small />
-                  ))}
-                </div>
-                <div className="dev-semantic-pose-row">{COMBAT_POSE_ORDER.join(' · ')}</div>
-                <div className="dev-pose-legend">
-                  <span className="dev-pose-legend-title">Qué dispara cada pose (canon cartas):</span>
-                  <span><b>beam_charge / beam_fire</b> ← cartas beam (Kamehameha, Masenko…)</span>
-                  <span><b>attack_fwd / punch / kick</b> ← cartas damage y command (golpe físico)</span>
-                  <span><b>guard / evade / beam_guard</b> ← cartas defense y efectos defensivos</span>
-                  <span><b>gather_power / power_up</b> ← soporte y carga de ki (GATHER)</span>
-                  <span><b>move_front / move_back</b> ← comando MOVE (desplazamiento)</span>
-                  <span><b>hurt / knockback</b> ← recibir daño (defensor)</span>
-                </div>
-              </div>
-            )}
-            </div>
-          </details>
+          {/* Assets / frames atómicos V9 */}
           {form.sheet && (
             <details className="dev-collapse">
               <summary>Frames atómicos V9 (sheet canónico)</summary>
@@ -219,12 +230,151 @@ export function CharactersModule({ onOpenModule }: {
   );
 }
 
-// ─── Ataques disponibles: cartas del personaje → pose canónica ───────
-// Para CADA carta usable por el personaje (compatible ROM + límites),
-// muestra la pose cinematográfica que dispara (cardBattlePose del módulo
-// compartido con main.tsx) y cuántos frames reales tiene esa pose en el
-// manifest de la forma. Es la referencia directa para las animaciones y
-// la cinematografía de las acciones de cartas.
+// ═══ FRAME BROWSER (antiguas Sprites + Sheets) ═════════════════════════
+// Pose → grid de frames con indicadores (borde/specks/duplicado) → click
+// → inspector (zoom + bbox + alpha + usos semánticos reales del manifest).
+function FrameBrowser({ formId, analysis, dir }: {
+  formId: string;
+  analysis: ReturnType<typeof useSheetAnalysis>;
+  dir: string | undefined;
+}) {
+  const [pose, setPose] = useState('idle');
+  const [selected, setSelected] = useState<string | null>(null);
+  const [zoom, setZoom] = useState(6);
+
+  const groups = groupFramesByPose(analysis.frames, dir);
+  const activeGroup = groups.find(g => g.pose === pose) ?? groups[0];
+
+  // mantener la pose seleccionada si existe, si no caer a idle
+  useEffect(() => {
+    if (groups.length > 0 && !groups.some(g => g.pose === pose)) setPose('idle');
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [analysis.frames]);
+
+  const selFrame = analysis.frames.find(f => f.file === selected) ?? null;
+  const selUsages = selFrame ? (analysis.usages[selFrame.file] ?? []) : [];
+
+  return (
+    <div className="dev-frames">
+      {/* Pose pills con conteo */}
+      <div className="dev-pose-pills dev-frames-pills">
+        {groups.map(g => (
+          <button key={g.pose} className={`dev-pose-pill ${g.pose === pose ? 'active' : ''}`}
+            onClick={() => { setPose(g.pose); setSelected(g.frames[0]?.file ?? null); }}
+            title={`${g.sem.meaning} — ${g.frames.length} frames`}>
+            {g.pose} <em>{g.frames.length}</em>
+          </button>
+        ))}
+        {groups.length === 0 && <span className="dev-hint">Sin frames en el manifest (carga…)</span>}
+      </div>
+
+      {/* Grid de frames de la pose activa */}
+      {activeGroup && (
+        <div className="dev-pose-group">
+          <div className={`dev-pose-group-head cat-${activeGroup.sem.category.toLowerCase()}`}>
+            <span className="dev-pose-group-name">{activeGroup.pose}</span>
+            <span className="dev-pose-group-cat">{activeGroup.sem.category}</span>
+            <span className="dev-pose-group-meaning">{activeGroup.sem.meaning}</span>
+          </div>
+          <div className="dev-sheets-grid" role="list" aria-label={`${activeGroup.pose} sprite frames`}>
+            {activeGroup.frames.map(f => (
+              <button key={f.file}
+                className={`dev-sheet-cell ${selected === f.file ? 'active' : ''} ${f.touchesEdge && f.touchTop > 3 ? 'edge' : ''} ${f.bgSpecks > 0 ? 'speck' : ''} ${f.dupeOf ? 'dupe' : ''}`}
+                onClick={() => setSelected(f.file)}
+                title={`${f.file}\n${f.w}×${f.h} · ${activeGroup.sem.meaning}\n${f.touchesEdge ? '⚠ toca borde' : ''}${f.bgSpecks ? `\n${f.bgSpecks} specks` : ''}${f.dupeOf ? `\n⧉ duplicado de ${f.dupeOf}` : ''}`}>
+                <span className="dev-sheet-thumb">
+                  <img src={spriteFrameUrl(formId, f.file)} alt={f.file}
+                    width={f.w} height={f.h} style={{ width: f.w * 2, height: f.h * 2 }} />
+                </span>
+                <span className="dev-sheet-name">{f.file.replace(`${dir ?? ''}_`, '').replace('.png', '')}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Inspector */}
+      {selFrame ? (() => {
+        const { pose: fpose } = parseFrameName(selFrame.file, dir ?? '');
+        const sem = poseSemantics(fpose);
+        return (
+          <div className="dev-sheets-inspector dev-frames-inspector">
+            <div className="dev-sheets-zoom">
+              <label>Zoom</label>
+              <div className="dev-zoom-row">
+                {[2, 4, 6, 8, 12].map(z => (
+                  <button key={z} className={`dev-zoom-btn ${zoom === z ? 'active' : ''}`} onClick={() => setZoom(z)}>x{z}</button>
+                ))}
+              </div>
+            </div>
+            <h3>{selFrame.file} <small>{selFrame.w}×{selFrame.h}px · {selFrame.alphaPct}% alpha</small></h3>
+            <div className={`dev-pose-group-head cat-${sem.category.toLowerCase()}`}>
+              <span className="dev-pose-group-name">{fpose}</span>
+              <span className="dev-pose-group-cat">{sem.category}</span>
+            </div>
+            <p className="dev-sheet-sem-meaning">{sem.meaning}</p>
+            <div className="dev-checker-bg">
+              <FrameZoom imgSrc={spriteFrameUrl(formId, selFrame.file)} w={selFrame.w} h={selFrame.h} zoom={zoom} bbox={selFrame.opaque} />
+            </div>
+            <div className="dev-sheet-details">
+              <div className={selFrame.touchesEdge && selFrame.touchTop > 3 ? 'warn' : 'ok'}>
+                {selFrame.touchesEdge && selFrame.touchTop > 3
+                  ? `⚠ Contenido tocando el borde superior (${selFrame.touchTop} px) — posible cabeza cortada`
+                  : '✓ Sin contenido pegado al borde superior'}
+              </div>
+              <div className={selFrame.bgSpecks > 0 ? 'warn' : 'ok'}>
+                {selFrame.bgSpecks > 0 ? `${selFrame.bgSpecks} specks de color de fondo` : '✓ Sin specks'}
+              </div>
+              <div className={selFrame.dupeOf ? 'info' : 'ok'}>
+                {selFrame.dupeOf ? `⧉ Contenido idéntico a ${selFrame.dupeOf}` : '✓ Frame único'}
+              </div>
+            </div>
+            {selUsages.length > 0 && (
+              <div className="dev-sheet-sem-used">
+                <strong>Usos reales en manifest:</strong>
+                <ul>
+                  {selUsages.map(u => (
+                    <li key={`${u.pose}-${u.index}`}><code>{u.pose}[{u.index}]</code> · {u.semantic}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
+            <code className="dev-manifest-path">{spriteFrameUrl(formId, selFrame.file)}</code>
+          </div>
+        );
+      })() : (
+        <div className="dev-empty">Selecciona un frame para inspeccionarlo</div>
+      )}
+    </div>
+  );
+}
+
+/** Frame ampliado con bbox dorado (inspector). */
+function FrameZoom({ imgSrc, w, h, zoom, bbox }: { imgSrc: string; w: number; h: number; zoom: number; bbox: FrameAnalysis['opaque'] }) {
+  const ref = useRef<HTMLCanvasElement>(null);
+  useEffect(() => {
+    const cv = ref.current;
+    if (!cv) return;
+    const img = new Image();
+    img.onload = () => {
+      cv.width = w * zoom;
+      cv.height = h * zoom;
+      const ctx = cv.getContext('2d');
+      if (!ctx) return;
+      ctx.imageSmoothingEnabled = false;
+      ctx.drawImage(img, 0, 0, cv.width, cv.height);
+      if (bbox) {
+        ctx.strokeStyle = '#ffd700';
+        ctx.lineWidth = 1;
+        ctx.strokeRect(bbox.x * zoom, bbox.y * zoom, bbox.w * zoom, bbox.h * zoom);
+      }
+    };
+    img.src = imgSrc;
+  }, [imgSrc, w, h, zoom, bbox]);
+  return <canvas ref={ref} className="dev-sprite-canvas" />;
+}
+
+// ═══ ATAQUES (canon cartas → pose) ═════════════════════════════════════
 const EFFECT_LABELS: Record<string, string> = {
   damage: 'Daño', damage_pierce: 'Daño perforante', damage_special: 'Daño especial',
   damage_support: 'Daño + soporte', beam: 'Rayo', beam_team: 'Rayo equipo', beam_suicide: 'Rayo sacrificio',
@@ -322,12 +472,7 @@ function CharacterAttacks({ charId, formId }: { charId: string; formId: string }
   );
 }
 
-// ─── Frames atómicos V9 (sheet canónico) ───────────────────────────
-// Recorta cada frame del atomic_sheet.png servido (/assets/sheets/<sheet>.png)
-// usando las coordenadas de /assets/sheets/<sheet>.json (generadas desde el
-// catálogo V9) y los agrupa por bucket semántico. Es la visualización del
-// sheet PERFECTO del personaje: los frames atómicos tal cual salen del V9.
-
+// ═══ FRAMES ATÓMICOS V9 ════════════════════════════════════════════════
 interface AtomicFrameMeta { file: string; bucket: string; alias: string; x: number; y: number; w: number; h: number; }
 interface AtomicSheetMeta {
   sheet: string; dir: string; columns: number; rows: number;
@@ -353,21 +498,15 @@ const BUCKET_LABELS: Record<string, string> = {
   actor_downed_or_special_pose: 'Downed / special',
   downed_or_hurt: 'Downed / hurt',
   fixed_only: 'Fixed-only (bridge)',
-  multi_evidence_projectiles_beams_orbs_rings_bursts_character_plus_aura_or_burst: 'Beam + aura (multi-evidence)',
-  multi_evidence_projectiles_beams_orbs_rings_bursts: 'Beam + orbs (multi-evidence)',
-  multi_evidence_projectiles_beams_character_plus_aura_or_burst: 'Beam + power-up (multi-evidence)',
-  multi_evidence_orbs_rings_bursts_projectiles_beams: 'Orbs + beam (multi-evidence)',
-  multi_evidence_movement_or_attack_pose_orbs_rings_bursts_projectiles_beams: 'Move + orbs + beam',
-  multi_evidence_character_plus_aura_or_burst_movement_or_attack_pose: 'Power-up + move',
-  multi_evidence_character_plus_aura_or_burst_orbs_rings_bursts: 'Power-up + orbs',
-  multi_evidence_movement_or_attack_pose_character_plus_aura_or_burst_projectiles_beams: 'Move + power-up + beam',
-  multi_evidence_projectiles_beams_character_plus_aura_or_burst_movement_or_attack_pose: 'Beam + power-up + move',
-  multi_evidence_projectiles_beams_movement_or_attack_pose_orbs_rings_bursts: 'Beam + move + orbs',
-  multi_evidence_movement_or_attack_pose_projectiles_beams_character_plus_aura_or_burst: 'Move + beam + power-up',
-  multi_evidence_orbs_rings_bursts_movement_or_attack_pose_projectiles_beams: 'Orbs + move + beam',
-  multi_evidence_movement_or_attack_pose_orbs_rings_bursts: 'Move + orbs',
-  multi_evidence_character_plus_aura_or_burst_movement_or_attack_pose_character_plus_effect: 'Power-up + move + FX',
-  multi_evidence_movement_or_attack_pose_character_plus_aura_or_burst: 'Move + power-up',
+};
+
+const FAMILY_LABELS: Record<string, string> = {
+  idle: 'Base', ready: 'Base', movement: 'Movement', defense: 'Defense',
+  melee: 'Melee', beam: 'Beam', power: 'Power', reaction: 'Reaction',
+  effect: 'Effects', projectile: 'Projectiles', overworld: 'Overworld',
+};
+const STATUS_TAG: Record<string, string> = {
+  CANONICAL: 'ok', RUNTIME_VERIFIED: 'ok', ASSET_VERIFIED: '', UNCLASSIFIED: 'bad', INFERRED: '',
 };
 
 function AtomicFrames({ sheet }: { sheet: string }) {
@@ -389,8 +528,6 @@ function AtomicFrames({ sheet }: { sheet: string }) {
   }, [sheet]);
   if (!meta) return null;
 
-  // Canon semántico V9 (spriteCanon.generated.ts): agrupar por FAMILIA/ROL,
-  // no por bucket forense. El alias <dir>__<bucket>__NN__src_XXX.png → sourceId.
   const formDir = meta.dir;
   const canon = new Map<string, { family: string; role: string; variant: string; sequenceIndex: number; canonicalId: string; status: CanonStatus }>();
   for (const fr of SPRITE_CANON.forms.flatMap(x => x.frames)) {
@@ -415,15 +552,6 @@ function AtomicFrames({ sheet }: { sheet: string }) {
     rg.frames.push(f);
   }
 
-  const FAMILY_LABELS: Record<string, string> = {
-    idle: 'Base', ready: 'Base', movement: 'Movement', defense: 'Defense',
-    melee: 'Melee', beam: 'Beam', power: 'Power', reaction: 'Reaction',
-    effect: 'Effects', projectile: 'Projectiles', overworld: 'Overworld',
-  };
-  const STATUS_TAG: Record<string, string> = {
-    CANONICAL: 'ok', RUNTIME_VERIFIED: 'ok', ASSET_VERIFIED: '', UNCLASSIFIED: 'bad', INFERRED: '',
-  };
-
   return (
     <div className="dev-atomic-section">
       <h3>Frames atómicos V9 — canon semántico <span className="dev-atomic-count">({meta.frame_count} frames · {meta.sheet})</span></h3>
@@ -444,12 +572,7 @@ function AtomicFrames({ sheet }: { sheet: string }) {
                 {rg.frames.map(f => {
                   const sid = srcIdOf(f);
                   const c = sid ? canon.get(sid) : null;
-                  // Nombrado canónico: variante semántica + índice de secuencia
-                  // (p.ej. punch_right00) — el número de archivo queda en el
-                  // tooltip con el canonicalId completo.
-                  const label = c
-                    ? `${c.variant}${String(c.sequenceIndex).padStart(2, '0')}`
-                    : f.file.replace('.png', '');
+                  const label = c ? `${c.variant}${String(c.sequenceIndex).padStart(2, '0')}` : f.file.replace('.png', '');
                   return (
                     <div key={f.file} className="dev-atomic-cell"
                       title={`${f.file} · ${f.alias}${c ? ` · ${c.canonicalId}` : ''}`}>
@@ -500,6 +623,7 @@ function FrameCanvas({ img, f, zoom = 3 }: { img: HTMLImageElement; f: AtomicFra
   return <canvas ref={ref} className="dev-atomic-canvas" />;
 }
 
+// ═══ ASSETS ════════════════════════════════════════════════════════════
 function AssetCell({ label, src, wide, small }: { label: string; src?: string; wide?: boolean; small?: boolean }) {
   return (
     <div className={`dev-asset-cell ${wide ? 'wide' : ''} ${small ? 'small' : ''}`}>
@@ -511,11 +635,6 @@ function AssetCell({ label, src, wide, small }: { label: string; src?: string; w
   );
 }
 
-/**
- * Celda de pose resuelta contra el manifest REAL (igual que el runtime).
- * Evita URLs rotas: beam_fire sin PNG físico cae a beam_charge (fallback),
- * y las poses compuestas muestran su primer frame real.
- */
 function PoseCell({ formId, pose, small }: { formId: string; pose: string; small?: boolean }) {
   const [src, setSrc] = useState<string | undefined>(undefined);
   useEffect(() => {
@@ -524,39 +643,6 @@ function PoseCell({ formId, pose, small }: { formId: string; pose: string; small
     return () => { cancelled = true; };
   }, [formId, pose]);
   return <AssetCell label={pose} src={src} small={small} />;
-}
-
-function CombatSheetCell({ formId, spriteDir }: { formId: string; spriteDir: string }) {
-  const [manifestPoses, setManifestPoses] = useState<string[] | null>(null);
-  useEffect(() => {
-    let alive = true;
-    spriteManifestUrl(formId)
-      ? fetch(spriteManifestUrl(formId)!).then(r => r.ok ? r.json() : null).then((m: Record<string, { frames?: unknown[] }> | null) => {
-        if (alive && m) {
-          const poses = Object.entries(m)
-            .filter(([, spec]) => Array.isArray(spec?.frames) && spec.frames!.length > 0)
-            .map(([pid]) => pid);
-          setManifestPoses(poses);
-        }
-      }).catch(() => {})
-      : undefined;
-    return () => { alive = false; };
-  }, [formId]);
-  const poses = manifestPoses && manifestPoses.length > 0 ? manifestPoses : COMBAT_REQUIRED_POSES;
-  return (
-    <div className="dev-asset-cell wide combat-sheet">
-      <div className="dev-asset-frame">
-        <div className="dev-combat-sheet-grid">
-          {poses.map(pose => (
-            <div key={pose} className="dev-combat-sheet-frame" title={pose}>
-              <PoseCell formId={formId} pose={pose} />
-            </div>
-          ))}
-        </div>
-      </div>
-      <div className="dev-asset-label">Combat sheet ({spriteDir}) — {poses.length} poses</div>
-    </div>
-  );
 }
 
 function PowerUpCell({ poseSrc, auraSrc }: { poseSrc?: string; auraSrc?: string }) {
@@ -574,3 +660,5 @@ function PowerUpCell({ poseSrc, auraSrc }: { poseSrc?: string; auraSrc?: string 
     </div>
   );
 }
+
+export { characterName };

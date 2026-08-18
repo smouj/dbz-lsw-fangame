@@ -137,7 +137,6 @@ export function DashboardModule({ onNavigate }: { onNavigate: (m: DevModuleId) =
         <div className="dev-shortcuts">
           <button className="dev-btn" onClick={() => onNavigate('characters')}>Character Studio</button>
           <button className="dev-btn" onClick={() => onNavigate('cards')}>Card Database</button>
-          <button className="dev-btn" onClick={() => onNavigate('sprites')}>Sprite Inspector</button>
           <button className="dev-btn" onClick={() => onNavigate('positions')}>Position Lab</button>
           <button className="dev-btn" onClick={() => onNavigate('validation')}>Validación</button>
         </div>

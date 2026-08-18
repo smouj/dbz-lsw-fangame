@@ -6,14 +6,13 @@
 // ═══════════════════════════════════════════════════════════
 import { useState, useEffect } from 'react';
 import {
-  Activity, ArrowLeft, Boxes, Brush, CheckCircle2,
-  Film, Gamepad2, Gauge, Grid2X2, Images, LayoutDashboard,
+  Activity, ArrowLeft, Brush, CheckCircle2,
+  Film, Gamepad2, Gauge, Grid2X2, LayoutDashboard,
   Search, Swords, TableProperties, Users, Music, Rocket, type LucideIcon,
 } from 'lucide-react';
 import { DashboardModule } from './dashboard';
 import { CharactersModule } from './characters';
 import { CardsModule } from './cards';
-import { SpritesModule } from './sprites';
 import { PositionsModule } from './positions';
 import { ValidationModule } from './validation';
 import { StoryModule } from './story';
@@ -25,12 +24,11 @@ import { LabModule } from './lab';
 import { PixelArtModule } from './pixelart';
 import { HudModule } from './hud';
 import { FacingModule } from './facing';
-import { SheetsModule } from './sheets';
 import { TimelineModule } from './timeline';
 
 export type DevModuleId =
-  | 'dashboard' | 'characters' | 'cards' | 'sprites' | 'animation'
-  | 'pixelart' | 'hud' | 'facing' | 'sheets'
+  | 'dashboard' | 'characters' | 'cards' | 'animation'
+  | 'pixelart' | 'hud' | 'facing'
   | 'lab' | 'story' | 'validation' | 'research' | 'music' | 'gameconfig' | 'positions'
   | 'timeline';
 
@@ -46,8 +44,6 @@ export const DEV_MODULES: DevModuleDef[] = [
   { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard, desc: 'Estado de producción y contadores', group: 'Visor' },
   { id: 'characters', label: 'Characters', icon: Users, desc: 'Personajes, formas, stats y crecimiento', group: 'Personajes' },
   { id: 'cards', label: 'Cards', icon: TableProperties, desc: 'Base de datos de las 125 cartas', group: 'Personajes' },
-  { id: 'sprites', label: 'Sprites', icon: Images, desc: 'Inspector de sprites (frame, bbox, alpha)', group: 'Personajes' },
-  { id: 'sheets', label: 'Sheets', icon: Boxes, desc: 'Revisión de sheets: todos los frames con detección de problemas', group: 'Personajes' },
   { id: 'animation', label: 'Animation', icon: Film, desc: 'Timeline real + editor de frames/animaciones', group: 'Personajes' },
   { id: 'pixelart', label: 'Pixel Art', icon: Brush, desc: 'Editor de píxeles: pinta/borra/corrige frames', group: 'Personajes' },
   { id: 'facing', label: 'Facing', icon: Activity, desc: 'Orientación de chibis overworld: voltea y guarda', group: 'Personajes' },
@@ -187,8 +183,6 @@ export function DevStudio({ onExit, onLaunchBattle }: DevStudioProps) {
           {module === 'dashboard' && <DashboardModule onNavigate={navigate} />}
           {module === 'characters' && <CharactersModule onOpenModule={openLinkedModule} />}
           {module === 'cards' && <CardsModule />}
-          {module === 'sprites' && <SpritesModule target={linkedTarget} />}
-          {module === 'sheets' && <SheetsModule target={linkedTarget} onOpenInPixelArt={openInPixelArt} />}
           {module === 'animation' && <AnimationModule target={linkedTarget} />}
           {module === 'pixelart' && <PixelArtModule target={pixelTarget} />}
           {module === 'facing' && <FacingModule />}
