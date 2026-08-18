@@ -284,7 +284,15 @@ export function HudModule() {
             {/* MENU PRINCIPAL: logo, continuar, navegación y footer — MISMO
                 markup que el juego (main.tsx), escalado al preview */}
             {view === 'MENU' && (
-              <div className="dev-menu-screen">
+              <div className="menu-screen dev-menu-screen">
+                <div className="menu-bg" />
+                <div className="menu-bolts" aria-hidden="true">
+                  <svg viewBox="0 0 320 180" preserveAspectRatio="none">
+                    <polyline className="bolt bolt-1" points="300,8 178,82 232,86 96,158 128,160 44,176" />
+                    <polyline className="bolt bolt-2" points="306,64 244,116 262,118 196,164" />
+                    <polyline className="bolt bolt-3" points="252,18 196,64 214,66 150,118" />
+                  </svg>
+                </div>
                 <div className="menu-content">
                   <img className="menu-logo-mark" src="/logo-128.png" alt="" />
                   <h1 className="menu-title">DBZ LSW</h1>

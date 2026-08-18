@@ -32,7 +32,7 @@
 | **DISCARD** | HAND CHECK — panel con discard-grid de cartas (frame + arte + nombre) para elegir descarte | `discard-panel` `discard-grid` `discard-card` `discard-frame` `discard-art` `discard-name` |
 | **DEFENSA** | Fuentes de defensa: `[LIMITED] [JOINT] [BASIC DEFENSE]` (botones basic-btn src-*) | `defense-sources` `src-limit` `src-joint` `src-basic` |
 | **RESULTADO** | Pantalla final: VICTORY (LV/EXP/HP) o DEFEAT (TURN/HP) + botón NEW BATTLE/RETRY (toggle) — panel GBC horizontal compacto (no altera la altura) | `result-screen` `result-title` `result-info` `btn-primary` |
-| **MENU** | Pantalla principal: logo, título, continuar (progreso), 6 items de navegación (1 seleccionado) y footer — escalado al preview | `menu-content` `menu-logo-mark` `menu-title` `menu-subtitle` `menu-continue-card` `menu-nav` `menu-item` `menu-footer` |
+| **MENU** | Pantalla principal: `.menu-bg` (arte + Ken Burns), 3 rayos eléctricos SVG pixelados animados, logo, título VT323 dorado, continuar (progreso), 6 items de navegación (1 seleccionado) y footer — reutiliza el markup real del juego, compacto en px para el preview | `menu-screen` `menu-bg` `menu-bolts` `menu-content` `menu-logo-mark` `menu-title` `menu-subtitle` `menu-continue-card` `menu-nav` `menu-item` `menu-footer` |
 | **INTRO** | VS full-screen: retratos de batalla 160×120 (32×24 ×5) centrados vertical/horizontal, VS VT323 pixel con glow, FIGHT Bangers. Entrada: slide → pop → flash → FIGHT | `battle-intro` `intro-fighter` `intro-portrait` `intro-name` `intro-sub` `intro-vs` `intro-fight` |
 
 ## Invariantes clave (no romper)

@@ -3585,6 +3585,13 @@ function MainMenu({ onNavigate }: { onNavigate: (s: Screen) => void }) {
   return (
     <div className="menu-screen">
       <div className="menu-bg" />
+      <div className="menu-bolts" aria-hidden="true">
+        <svg viewBox="0 0 320 180" preserveAspectRatio="none">
+          <polyline className="bolt bolt-1" points="300,8 178,82 232,86 96,158 128,160 44,176" />
+          <polyline className="bolt bolt-2" points="306,64 244,116 262,118 196,164" />
+          <polyline className="bolt bolt-3" points="252,18 196,64 214,66 150,118" />
+        </svg>
+      </div>
       {/* Recompensa post-batalla */}
       {reward && reward.length > 0 && (
         <div className="reward-overlay">
