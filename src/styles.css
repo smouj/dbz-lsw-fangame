@@ -1503,40 +1503,41 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   text-shadow: none;
 }
 /* Primera línea del tooltip = TÍTULO (nombre — tipo): destacado y centrado
-   ROJO GBC como el actor del diálogo (antes azul #005a8c — fuera de la
-   paleta diálogo: negro + rojo). */
+   NEGRO CARBÓN por defecto (el usuario: 'no todos los títulos deberían
+   salir en rojo, sino negro/negro carbón') — el TIPO lleva su color. */
 .global-tooltip .tt-title {
   display: block;
   font-size: 13px;
   font-weight: bold;
-  color: #b03030;
+  color: #1a1a1a;
   letter-spacing: 1px;
   text-align: center;
   margin-bottom: 5px;
   text-transform: uppercase;
 }
 /* Tipo de carta: color propio (CARD_COLORS_ON_LIGHT inline) — el nombre
-   queda rojo GBC, el tipo se distingue por su color legible sobre blanco */
+   queda negro carbón, el tipo se distingue por su color legible sobre
+   blanco */
 .global-tooltip .tt-type {
   font-weight: bold;
 }
-/* Líneas de datos (CC · ATK · ACC) — negro del diálogo */
+/* Líneas de datos (CC · ATK · ACC) — negro carbón del diálogo */
 .global-tooltip .tt-stats {
   display: block;
-  color: #000;
+  color: #1a1a1a;
   font-size: 11px;
   text-align: center;
   margin-bottom: 4px;
 }
-/* Descripción y efecto */
+/* Descripción y efecto — negro carbón (solo el TIPO lleva color) */
 .global-tooltip .tt-desc {
   display: block;
-  color: #000;
+  color: #1a1a1a;
   font-size: 10.5px;
 }
 .global-tooltip .tt-effect {
   display: block;
-  color: #b03030;
+  color: #1a1a1a;
   font-size: 10.5px;
   margin-top: 3px;
 }
