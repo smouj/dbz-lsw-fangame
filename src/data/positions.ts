@@ -114,6 +114,17 @@ export const DEFAULT_RIGHT_ANCHORS: Record<BattlePosition, PositionAnchor> = {
 export const LEFT_ANCHORS = DEFAULT_LEFT_ANCHORS;
 export const RIGHT_ANCHORS = DEFAULT_RIGHT_ANCHORS;
 
+// ─── PLANO ACTION (cinemático) ───
+// Cuando la cámara pasa a ACTION (QTE, animaciones de ataque/beam/support)
+// el actor se compone en el CENTRO de la escena con los PIES en este
+// anchor — es la composición de "primer plano" de los fondos _action.png.
+// El campo OVERVIEW, en cambio, usa SIEMPRE anchorFor(pos, side) (chibi).
+export const ACTION_CENTER_ANCHOR = { x: 50, y: 68 } as const;
+
+export function actionAnchor(): PositionAnchor {
+  return { x: ACTION_CENTER_ANCHOR.x, y: ACTION_CENTER_ANCHOR.y };
+}
+
 const ANCHOR_OVERRIDE_KEY = 'dbzlsw:position-anchors';
 
 export type PositionAnchorOverrides = Partial<Record<PositionSide, Partial<Record<BattlePosition, PositionAnchor>>>>;

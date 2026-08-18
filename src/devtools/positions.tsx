@@ -8,7 +8,7 @@ import {
   isBeamVulnerable, isDamageVulnerable, attackModifier, defenseModifier,
   resolveRelativeDistance, BattlePosition, type MoveAxis, anchorFor, defaultAnchorFor,
   setPositionAnchorOverride, clearPositionAnchorOverrides, loadPositionAnchorOverrides,
-  type PositionSide,
+  type PositionSide, ACTION_CENTER_ANCHOR,
 } from '../data/positions';
 import { FORMS } from '../data/roster';
 import { SCENARIOS } from '../data/scenarios';
@@ -165,6 +165,25 @@ export function PositionsModule() {
                   </div>
                 );
               })}
+            </div>
+            {/* PLANO ACTION (cinemático): composición de primer plano — el
+                actor se centra con los PIES en ACTION_CENTER_ANCHOR (50,68),
+                sobre el fondo _action del escenario (los 4 planos tácticos
+                de arriba usan los anchors de anchorFor en overview) */}
+            <div className="dev-pos-plane action-plane">
+              <div className="dev-pos-plane-name">ACTION (primer plano)</div>
+              <div
+                className="dev-pos-plane-field"
+                style={{ backgroundImage: `url(${scenario.actionBackground})` }}
+              >
+                {overworldUrl(playerFormId) && (
+                  <img src={overworldUrl(playerFormId)} alt="" className="dev-pos-plane-chibi left action"
+                    style={{ left: `${ACTION_CENTER_ANCHOR.x}%`, top: `${ACTION_CENTER_ANCHOR.y}%`, transform: `translate(-50%, -100%) scaleX(${facingFlip(playerFormId, 'left')})` }} />
+                )}
+              </div>
+              <div className="dev-pos-plane-anchors">
+                <code>ACTION {ACTION_CENTER_ANCHOR.x}/{ACTION_CENTER_ANCHOR.y}</code>
+              </div>
             </div>
           </div>
         </div>

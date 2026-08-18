@@ -68,5 +68,38 @@ npm run verify:battle       # 71/71 lógica
 
 - **2026-08-18**: auditoría completa — alineados MANO (huecos `no_card_red.png`),
   MOVE (3 botones, sin texto), STAGE (chips + layout estable 3-6), INTRO
-  (full-screen GBC, retratos 160×120 centrados, VS pixel), tooltips
+  (full-screen GBC, sprites desde ±42vw + VS, sin texto), tooltips
   estructurados (`tipBlock`/`tipCard`), hovers únicos, ventana estable.
+- **2026-08-18 (2ª)**: canónica de POSICIONES y FONDOS — `ACTION_CENTER_ANCHOR`
+  (50,68) como constante única; Position Lab con 4 planos tácticos + plano
+  ACTION; fondos por situación (OVERVIEW→`NN_world`, ACTION→`NN_action`,
+  SPECIAL_ACTION→`special_action`); anchors simétricos documentados.
+
+## Canónica de POSICIONES y FONDOS (planos)
+
+### Anclas tácticas (OVERVIEW — los 4 planos por combatiente)
+- **Fuente única**: `anchorFor(pos, side)` en `src/data/positions.ts` (editables desde el Position Lab `#dev/positions`, persisten en localStorage `dbzlsw:position-anchors`).
+- Defaults simétricos (L x=16/32 · R x=84/68, espejo 100−x):
+
+| Posición | LEFT | RIGHT |
+|---|---|---|
+| UP_BACK (aire/lejos) | 16, 26 | 84, 26 |
+| UP_FRONT (aire/cerca) | 32, 26 | 68, 26 |
+| DOWN_BACK (suelo/lejos) | 16, 72 | 84, 72 |
+| DOWN_FRONT (suelo/cerca) | 32, 72 | 68, 72 |
+
+- Regla de colocación: los PIES del sprite tocan el anchor exacto (`translate(-50%,-100%)`); chibi overworld 80px (studio) / 96px (juego); facing con `scaleX(±1)` aplicado DESPUÉS del translate (nunca transform inline que pise el anclaje).
+- Position Lab muestra los 4 planos + **plano ACTION** (quinto): el actor centrado con los pies en `ACTION_CENTER_ANCHOR` (50, 68) sobre el fondo `_action`.
+
+### Plano ACTION (cinemático / QTE / animaciones)
+- **Composición canónica**: actor en `ACTION_CENTER_ANCHOR = {x: 50, y: 68}` (constante única en positions.ts) — los fondos `NN_action.png` están compuestos para primer plano centrado.
+- Sprite grande 192px (studio) / FighterSprite del sheet en el juego — pies anclados igual que los chibis.
+- El QTE del juego (stageInput) ejecuta la secuencia con el luchador en SU anchor táctico (no en el centro): el contenedor usa `anchorFor` siempre; `.field-action` funde los fighters salvo `qte-active`.
+
+### Fondos por situación (fuente: `src/data/scenarios.ts` + `main.tsx` battleBgUrl)
+| Situación | Fondo |
+|---|---|
+| OVERVIEW (táctico, selección) | `NN_world.png` del escenario |
+| ACTION (QTE, ataque/beam/support) | `NN_action.png` del escenario |
+| SPECIAL_ACTION (transformaciones, Beam Ultimate) | `special_action.png` |
+- 13 escenarios en el catálogo; el selector `FONDO [SC NN] [OVERVIEW|ACTION]` del studio previsualiza ambos modos en vivo.
