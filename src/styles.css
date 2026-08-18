@@ -8002,7 +8002,7 @@ button:focus-visible, .chapter-node:focus-visible {
   cursor: pointer; color: #aab2bf; font-family: inherit; font-size: 11px;
 }
 .dev-form-tab.active { border-color: #d8a830; color: #fff; background: #1b2129; }
-.dev-form-id-row { margin-bottom: 10px; font-size: 11px; color: #8a93a3; }
+.dev-form-id-row { margin-bottom: 10px; font-size: 11px; color: #8a93a3; display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
 .dev-form-id-row code { background: #0e1013; padding: 2px 6px; border-radius: 4px; color: #d8a830; }
 .dev-linked-actions { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0 12px; }
 .dev-semantic-pose-row {
@@ -8110,15 +8110,21 @@ button:focus-visible, .chapter-node:focus-visible {
 .dev-cc-filter { font-size: 12px; color: #8a93a3; }
 .dev-cc-filter input { width: 48px; background: #0e1013; border: 1px solid #262b33; color: #cdd6e2; padding: 4px 6px; border-radius: 4px; margin-left: 4px; font-family: inherit; }
 .dev-cards-layout { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 14px; align-items: start; }
-.dev-card-list { max-height: 72vh; overflow-y: auto; display: flex; flex-direction: column; gap: 3px; }
+.dev-card-list { max-height: 72vh; overflow-y: auto; display: grid; grid-template-columns: repeat(auto-fill, minmax(132px, 1fr)); gap: 4px; }
 .dev-card-row {
-  display: flex; align-items: center; gap: 8px; padding: 6px 8px; background: #181c22;
-  border: 1px solid #262b33; border-radius: 6px; cursor: pointer; color: #cdd6e2; font-family: inherit; font-size: 12px;
+  position: relative;
+  display: flex; flex-direction: column; align-items: center; justify-content: flex-start;
+  gap: 3px; padding: 8px 4px 6px; background: #181c22;
+  border: 1px solid #262b33; border-radius: 6px; cursor: pointer; color: #cdd6e2; font-family: inherit; font-size: 11px;
+  text-align: center;
 }
-.dev-card-row.active { border-color: #d8a830; background: #1b2129; }
-.dev-card-id { font-size: 10px; color: #6b7484; width: 28px; }
-.dev-card-type { width: 18px; height: 18px; border-radius: 3px; display: inline-flex; align-items: center; justify-content: center; font-size: 11px; color: #fff; flex-shrink: 0; }
-.dev-card-name { flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.dev-card-row.active { border-color: #d8a830; background: #1b2129; box-shadow: inset 0 0 0 1px rgba(216,168,48,.3); }
+.dev-card-row .dev-card-sprite { display: flex; align-items: center; justify-content: center; height: 44px; width: 100%; }
+.dev-card-row .dev-card-sprite img { height: 44px; width: auto; image-rendering: pixelated; }
+.dev-card-id { position: absolute; top: 4px; left: 6px; font-size: 10px; color: #6b7484; }
+.dev-card-type { position: absolute; top: 4px; right: 6px; width: 16px; height: 16px; border-radius: 3px; display: inline-flex; align-items: center; justify-content: center; font-size: 10px; color: #fff; }
+.dev-card-name { flex: none; width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.dev-card-stats { font-size: 10px; color: #6b7484; white-space: nowrap; }
 .dev-card-stats { font-size: 10px; color: #8a93a3; }
 .dev-card-cc { font-size: 10px; color: #d8a830; width: 36px; text-align: right; }
 .dev-card-rarity { font-size: 9px; color: #e0a25a; width: 46px; text-align: right; }
@@ -10000,7 +10006,7 @@ button.linklike:hover { text-decoration: underline; }
 }
 .dev-pipeline-row {
   display: grid;
-  grid-template-columns: minmax(0, 320px) minmax(0, 1fr) auto;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr) auto;
   gap: 10px;
   align-items: center;
   padding: 6px 10px;
@@ -10009,8 +10015,16 @@ button.linklike:hover { text-decoration: underline; }
   border-radius: 4px;
   font-size: 11px;
 }
-.dev-pipeline-file code { color: #7fd4ff; font-size: 11px; }
-.dev-pipeline-rol { color: #9aa4b2; }
+.dev-pipeline-file code {
+  color: #7fd4ff;
+  font-size: 11px;
+  white-space: normal;
+  overflow-wrap: anywhere;   /* rutas largas: rompen sin cortar */
+}
+.dev-pipeline-rol {
+  color: #9aa4b2;
+  white-space: normal;        /* descripciones: NUNCA se cortan */
+}
 .dev-pipeline-ok { color: #7bd88a; font-weight: 700; }
 
 /* Vista STAGE en el preview del HUD Studio: sprites del paquete a la misma
