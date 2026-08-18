@@ -1,0 +1,597 @@
+[
+  {
+    "sfx_id": 0,
+    "wav": "sfx_000.wav",
+    "duration_seconds": 0.585986,
+    "pre_normalize_peak": 0.44999998807907104,
+    "post_normalize_rms": 0.3490545684198601
+  },
+  {
+    "sfx_id": 1,
+    "wav": "sfx_001.wav",
+    "duration_seconds": 0.619478,
+    "pre_normalize_peak": 0.44999998807907104,
+    "post_normalize_rms": 0.5107993317295716
+  },
+  {
+    "sfx_id": 2,
+    "wav": "sfx_002.wav",
+    "duration_seconds": 1.171995,
+    "pre_normalize_peak": 0.44999998807907104,
+    "post_normalize_rms": 0.4205935341450554
+  },
+  {
+    "sfx_id": 3,
+    "wav": "sfx_003.wav",
+    "duration_seconds": 0.267891,
+    "pre_normalize_peak": 0.44999998807907104,
+    "post_normalize_rms": 0.4532318683203114
+  },
+  {
+    "sfx_id": 4,
+    "wav": "sfx_004.wav",
+    "duration_seconds": 1.72449,
+    "pre_normalize_peak": 0.44999998807907104,
+    "post_normalize_rms": 0.28606433305598733
+  },
+  {
+    "sfx_id": 5,
+    "wav": "sfx_005.wav",
+    "duration_seconds": 2.461179,
+    "pre_normalize_peak": 0.44999998807907104,
+    "post_normalize_rms": 0.23945417551863457
+  },
+  {
+    "sfx_id": 6,
+    "wav": "sfx_006.wav",
+    "duration_seconds": 0.251134,
+    "pre_normalize_peak": 0.44999998807907104,
+    "post_normalize_rms": 0.6871876045431405
+  },
+  {
+    "sfx_id": 7,
+    "wav": "sfx_007.wav",
+    "duration_seconds": 0.251134,
+    "pre_normalize_peak": 0.44999998807907104,
+    "post_normalize_rms": 0.6871876045431405
+  },
+  {
+    "sfx_id": 8,
+    "wav": "sfx_008.wav",
+    "duration_seconds": 1.406395,
+    "pre_normalize_peak": 0.44999998807907104,
+    "post_normalize_rms": 0.7705718780129046
+  },
+  {
+    "sfx_id": 9,
+    "wav": "sfx_009.wav",
+    "duration_seconds": 0.619478,
+    "pre_normalize_peak": 0.44999998807907104,
+    "post_normalize_rms": 0.44657752843511556
+  },
+  {
+    "sfx_id": 10,
+    "wav": "sfx_010.wav",
+    "duration_seconds": 0.485533,
+    "pre_normalize_peak": 0.44999998807907104,
+    "post_normalize_rms": 0.3834668007150156
+  },
+  {
+    "sfx_id": 11,
+    "wav": "sfx_011.wav",
+    "duration_seconds": 10.09585,
+    "pre_normalize_peak": 0.44999998807907104,
+    "post_normalize_rms": 0.8799999952316283
+  },
+  {
+    "sfx_id": 12,
+    "wav": "sfx_012.wav",
+    "duration_seconds": 0.803651,
+    "pre_normalize_peak": 0.44999998807907104,
+    "post_normalize_rms": 0.4485472000270409
+  },
+  {
+    "sfx_id": 13,
+    "wav": "sfx_013.wav",
+    "duration_seconds": 2.477914,
+    "pre_normalize_peak": 0.44999998807907104,
+    "post_normalize_rms": 0.8680283031492128
+  },
+  {
+    "sfx_id": 14,
+    "wav": "sfx_014.wav",
+    "duration_seconds": 2.645351,
+    "pre_normalize_peak": 0.44999998807907104,
+    "post_normalize_rms": 0.5850838419007895
+  },
+  {
+    "sfx_id": 15,
+    "wav": "sfx_015.wav",
+    "duration_seconds": 0.619478,
+    "pre_normalize_peak": 0.44999998807907104,
+    "post_normalize_rms": 0.5810826567094104
+  },
+  {
+    "sfx_id": 16,
+    "wav": "sfx_016.wav",
+    "duration_seconds": 5.424626,
+    "pre_normalize_peak": 0.44999998807907104,
+    "post_normalize_rms": 0.8745517804596817
+  },
+  {
+    "sfx_id": 17,
+    "wav": "sfx_017.wav",
+    "duration_seconds": 3.750363,
+    "pre_normalize_peak": 0.44999998807907104,
+    "post_normalize_rms": 0.31880640598340954
+  },
+  {
+    "sfx_id": 18,
+    "wav": "sfx_018.wav",
+    "duration_seconds": 5.223719,
+    "pre_normalize_peak": 0.44999998807907104,
+    "post_normalize_rms": 0.8743415612379037
+  },
+  {
+    "sfx_id": 19,
+    "wav": "sfx_019.wav",
+    "duration_seconds": 4.487052,
+    "pre_normalize_peak": 0.44999998807907104,
+    "post_normalize_rms": 0.32500613042681953
+  },
+  {
+    "sfx_id": 20,
+    "wav": "sfx_020.wav",
+    "duration_seconds": 4.487052,
+    "pre_normalize_peak": 0.44999998807907104,
+    "post_normalize_rms": 0.24659444759383697
+  },
+  {
+    "sfx_id": 21,
+    "wav": "sfx_021.wav",
+    "duration_seconds": 0.987823,
+    "pre_normalize_peak": 0.44999998807907104,
+    "post_normalize_rms": 0.4817810283906028
+  },
+  {
+    "sfx_id": 22,
+    "wav": "sfx_022.wav",
+    "duration_seconds": 2.277007,
+    "pre_normalize_peak": 0.44999998807907104,
+    "post_normalize_rms": 0.17707405334877255
+  },
+  {
+    "sfx_id": 23,
+    "wav": "sfx_023.wav",
+    "duration_seconds": 5.960408,
+    "pre_normalize_peak": 0.44999998807907104,
+    "post_normalize_rms": 0.28199026213784223
+  },
+  {
+    "sfx_id": 24,
+    "wav": "sfx_024.wav",
+    "duration_seconds": 9.64381,
+    "pre_normalize_peak": 0.44999998807907104,
+    "post_normalize_rms": 0.26090178048431956
+  },
+  {
+    "sfx_id": 25,
+    "wav": "sfx_025.wav",
+    "duration_seconds": 9.091293,
+    "pre_normalize_peak": 0.44999998807907104,
+    "post_normalize_rms": 0.3562959012220441
+  },
+  {
+    "sfx_id": 26,
+    "wav": "sfx_026.wav",
+    "duration_seconds": 3.331791,
+    "pre_normalize_peak": 0.30000001192092896,
+    "post_normalize_rms": 0.8711121098316531
+  },
+  {
+    "sfx_id": 27,
+    "wav": "sfx_027.wav",
+    "duration_seconds": 8.990839,
+    "pre_normalize_peak": 0.44999998807907104,
+    "post_normalize_rms": 0.5373963881218604
+  },
+  {
+    "sfx_id": 28,
+    "wav": "sfx_028.wav",
+    "duration_seconds": 2.779297,
+    "pre_normalize_peak": 0.44999998807907104,
+    "post_normalize_rms": 0.7811469609237586
+  },
+  {
+    "sfx_id": 29,
+    "wav": "sfx_029.wav",
+    "duration_seconds": 3.750363,
+    "pre_normalize_peak": 0.24000000953674316,
+    "post_normalize_rms": 0.8721085617002682
+  },
+  {
+    "sfx_id": 30,
+    "wav": "sfx_030.wav",
+    "duration_seconds": 5.223719,
+    "pre_normalize_peak": 0.44999998807907104,
+    "post_normalize_rms": 0.2508185956110838
+  },
+  {
+    "sfx_id": 31,
+    "wav": "sfx_031.wav",
+    "duration_seconds": 6.328753,
+    "pre_normalize_peak": 0.44999998807907104,
+    "post_normalize_rms": 0.4221143901250143
+  },
+  {
+    "sfx_id": 32,
+    "wav": "sfx_032.wav",
+    "duration_seconds": 7.617937,
+    "pre_normalize_peak": 0.44999998807907104,
+    "post_normalize_rms": 0.8120754482552217
+  },
+  {
+    "sfx_id": 33,
+    "wav": "sfx_033.wav",
+    "duration_seconds": 0.803651,
+    "pre_normalize_peak": 0.44999998807907104,
+    "post_normalize_rms": 0.5714392957707759
+  },
+  {
+    "sfx_id": 34,
+    "wav": "sfx_034.wav",
+    "duration_seconds": 0.803651,
+    "pre_normalize_peak": 0.44999998807907104,
+    "post_normalize_rms": 0.4984541344689906
+  },
+  {
+    "sfx_id": 35,
+    "wav": "sfx_035.wav",
+    "duration_seconds": 5.960408,
+    "pre_normalize_peak": 0.44999998807907104,
+    "post_normalize_rms": 0.7054807892352886
+  },
+  {
+    "sfx_id": 36,
+    "wav": "sfx_036.wav",
+    "duration_seconds": 0.703197,
+    "pre_normalize_peak": 0.44999998807907104,
+    "post_normalize_rms": 0.6567805007355881
+  },
+  {
+    "sfx_id": 37,
+    "wav": "sfx_037.wav",
+    "duration_seconds": 1.54034,
+    "pre_normalize_peak": 0.44999998807907104,
+    "post_normalize_rms": 0.43058217061234105
+  },
+  {
+    "sfx_id": 38,
+    "wav": "sfx_038.wav",
+    "duration_seconds": 1.171995,
+    "pre_normalize_peak": 0.44999998807907104,
+    "post_normalize_rms": 0.4562078166035905
+  },
+  {
+    "sfx_id": 39,
+    "wav": "sfx_039.wav",
+    "duration_seconds": 5.223719,
+    "pre_normalize_peak": 0.44999998807907104,
+    "post_normalize_rms": 0.3796319926954425
+  },
+  {
+    "sfx_id": 40,
+    "wav": "sfx_040.wav",
+    "duration_seconds": 0.619478,
+    "pre_normalize_peak": 0.44999998807907104,
+    "post_normalize_rms": 0.5108005649393994
+  },
+  {
+    "sfx_id": 41,
+    "wav": "sfx_041.wav",
+    "duration_seconds": 1.54034,
+    "pre_normalize_peak": 0.44999998807907104,
+    "post_normalize_rms": 0.43058217061234105
+  },
+  {
+    "sfx_id": 42,
+    "wav": "sfx_042.wav",
+    "duration_seconds": 0.435306,
+    "pre_normalize_peak": 0.44999998807907104,
+    "post_normalize_rms": 0.4594977635473569
+  },
+  {
+    "sfx_id": 43,
+    "wav": "sfx_043.wav",
+    "duration_seconds": 5.223719,
+    "pre_normalize_peak": 0.35999998450279236,
+    "post_normalize_rms": 0.33771703727675106
+  },
+  {
+    "sfx_id": 44,
+    "wav": "sfx_044.wav",
+    "duration_seconds": 8.371361,
+    "pre_normalize_peak": 0.44999998807907104,
+    "post_normalize_rms": 0.23794363299787893
+  },
+  {
+    "sfx_id": 45,
+    "wav": "sfx_045.wav",
+    "duration_seconds": 0.435306,
+    "pre_normalize_peak": 0.44999998807907104,
+    "post_normalize_rms": 0.4594977635473569
+  },
+  {
+    "sfx_id": 46,
+    "wav": "sfx_046.wav",
+    "duration_seconds": 3.197846,
+    "pre_normalize_peak": 0.44999998807907104,
+    "post_normalize_rms": 0.6402460194115628
+  },
+  {
+    "sfx_id": 47,
+    "wav": "sfx_047.wav",
+    "duration_seconds": 5.223719,
+    "pre_normalize_peak": 0.44999998807907104,
+    "post_normalize_rms": 0.3543881688026602
+  },
+  {
+    "sfx_id": 48,
+    "wav": "sfx_048.wav",
+    "duration_seconds": 0.987823,
+    "pre_normalize_peak": 0.44999998807907104,
+    "post_normalize_rms": 0.321957918139863
+  },
+  {
+    "sfx_id": 49,
+    "wav": "sfx_049.wav",
+    "duration_seconds": 1.356168,
+    "pre_normalize_peak": 0.44999998807907104,
+    "post_normalize_rms": 0.3864020273405848
+  },
+  {
+    "sfx_id": 50,
+    "wav": "sfx_050.wav",
+    "duration_seconds": 8.90712,
+    "pre_normalize_peak": 0.38999998569488525,
+    "post_normalize_rms": 0.7267013973245948
+  },
+  {
+    "sfx_id": 51,
+    "wav": "sfx_051.wav",
+    "duration_seconds": 1.356168,
+    "pre_normalize_peak": 0.44999998807907104,
+    "post_normalize_rms": 0.22944594056337708
+  },
+  {
+    "sfx_id": 52,
+    "wav": "sfx_052.wav",
+    "duration_seconds": 3.013696,
+    "pre_normalize_peak": 0.44999998807907104,
+    "post_normalize_rms": 0.6836314001734813
+  },
+  {
+    "sfx_id": 53,
+    "wav": "sfx_053.wav",
+    "duration_seconds": 1.356168,
+    "pre_normalize_peak": 0.44999998807907104,
+    "post_normalize_rms": 0.5616927106176433
+  },
+  {
+    "sfx_id": 54,
+    "wav": "sfx_054.wav",
+    "duration_seconds": 1.171995,
+    "pre_normalize_peak": 0.44999998807907104,
+    "post_normalize_rms": 0.4274881422356949
+  },
+  {
+    "sfx_id": 55,
+    "wav": "sfx_055.wav",
+    "duration_seconds": 1.071542,
+    "pre_normalize_peak": 0.44999998807907104,
+    "post_normalize_rms": 0.4579584507177423
+  },
+  {
+    "sfx_id": 56,
+    "wav": "sfx_056.wav",
+    "duration_seconds": 1.439864,
+    "pre_normalize_peak": 0.44999998807907104,
+    "post_normalize_rms": 0.37956201936381173
+  },
+  {
+    "sfx_id": 57,
+    "wav": "sfx_057.wav",
+    "duration_seconds": 1.171995,
+    "pre_normalize_peak": 0.44999998807907104,
+    "post_normalize_rms": 0.4367084201305457
+  },
+  {
+    "sfx_id": 58,
+    "wav": "sfx_058.wav",
+    "duration_seconds": 2.277007,
+    "pre_normalize_peak": 0.44999998807907104,
+    "post_normalize_rms": 0.41263591617857026
+  },
+  {
+    "sfx_id": 59,
+    "wav": "sfx_059.wav",
+    "duration_seconds": 2.092834,
+    "pre_normalize_peak": 0.44999998807907104,
+    "post_normalize_rms": 0.4476564711308251
+  },
+  {
+    "sfx_id": 60,
+    "wav": "sfx_060.wav",
+    "duration_seconds": 3.013696,
+    "pre_normalize_peak": 0.44999998807907104,
+    "post_normalize_rms": 0.870165349994821
+  },
+  {
+    "sfx_id": 61,
+    "wav": "sfx_061.wav",
+    "duration_seconds": 1.356168,
+    "pre_normalize_peak": 0.44999998807907104,
+    "post_normalize_rms": 0.45582913797027413
+  },
+  {
+    "sfx_id": 62,
+    "wav": "sfx_062.wav",
+    "duration_seconds": 1.171995,
+    "pre_normalize_peak": 0.44999998807907104,
+    "post_normalize_rms": 0.649925217267398
+  },
+  {
+    "sfx_id": 63,
+    "wav": "sfx_063.wav",
+    "duration_seconds": 3.197846,
+    "pre_normalize_peak": 0.44999998807907104,
+    "post_normalize_rms": 0.46885140820805554
+  },
+  {
+    "sfx_id": 64,
+    "wav": "sfx_064.wav",
+    "duration_seconds": 5.223719,
+    "pre_normalize_peak": 0.44999998807907104,
+    "post_normalize_rms": 0.6596531401445658
+  },
+  {
+    "sfx_id": 65,
+    "wav": "sfx_065.wav",
+    "duration_seconds": 1.908662,
+    "pre_normalize_peak": 0.44999998807907104,
+    "post_normalize_rms": 0.702260528443255
+  },
+  {
+    "sfx_id": 66,
+    "wav": "sfx_066.wav",
+    "duration_seconds": 3.934535,
+    "pre_normalize_peak": 0.44999998807907104,
+    "post_normalize_rms": 0.40057584163870286
+  },
+  {
+    "sfx_id": 67,
+    "wav": "sfx_067.wav",
+    "duration_seconds": 1.908662,
+    "pre_normalize_peak": 0.44999998807907104,
+    "post_normalize_rms": 0.3384404666213614
+  },
+  {
+    "sfx_id": 68,
+    "wav": "sfx_068.wav",
+    "duration_seconds": 0.987823,
+    "pre_normalize_peak": 0.44999998807907104,
+    "post_normalize_rms": 0.6042525086678331
+  },
+  {
+    "sfx_id": 69,
+    "wav": "sfx_069.wav",
+    "duration_seconds": 8.90712,
+    "pre_normalize_peak": 0.44999998807907104,
+    "post_normalize_rms": 0.2517435075243846
+  },
+  {
+    "sfx_id": 70,
+    "wav": "sfx_070.wav",
+    "duration_seconds": 0.435306,
+    "pre_normalize_peak": 0.44999998807907104,
+    "post_normalize_rms": 0.5305005409278244
+  },
+  {
+    "sfx_id": 71,
+    "wav": "sfx_071.wav",
+    "duration_seconds": 4.118707,
+    "pre_normalize_peak": 0.44999998807907104,
+    "post_normalize_rms": 0.3059631625711436
+  },
+  {
+    "sfx_id": 72,
+    "wav": "sfx_072.wav",
+    "duration_seconds": 1.54034,
+    "pre_normalize_peak": 0.44999998807907104,
+    "post_normalize_rms": 0.289867253158425
+  },
+  {
+    "sfx_id": 73,
+    "wav": "sfx_073.wav",
+    "duration_seconds": 2.277007,
+    "pre_normalize_peak": 0.44999998807907104,
+    "post_normalize_rms": 0.6150766173522202
+  },
+  {
+    "sfx_id": 74,
+    "wav": "sfx_074.wav",
+    "duration_seconds": 2.277007,
+    "pre_normalize_peak": 0.44999998807907104,
+    "post_normalize_rms": 0.7613072439642876
+  },
+  {
+    "sfx_id": 75,
+    "wav": "sfx_075.wav",
+    "duration_seconds": 1.171995,
+    "pre_normalize_peak": 0.44999998807907104,
+    "post_normalize_rms": 0.6368987352389889
+  },
+  {
+    "sfx_id": 76,
+    "wav": "sfx_076.wav",
+    "duration_seconds": 0.435306,
+    "pre_normalize_peak": 0.44999998807907104,
+    "post_normalize_rms": 0.7330260419767133
+  },
+  {
+    "sfx_id": 77,
+    "wav": "sfx_077.wav",
+    "duration_seconds": 0.435306,
+    "pre_normalize_peak": 0.44999998807907104,
+    "post_normalize_rms": 0.6487168017958617
+  },
+  {
+    "sfx_id": 78,
+    "wav": "sfx_078.wav",
+    "duration_seconds": 0.435306,
+    "pre_normalize_peak": 0.44999998807907104,
+    "post_normalize_rms": 0.8094918446809298
+  },
+  {
+    "sfx_id": 79,
+    "wav": "sfx_079.wav",
+    "duration_seconds": 3.382018,
+    "pre_normalize_peak": 0.44999998807907104,
+    "post_normalize_rms": 0.14388041204572288
+  },
+  {
+    "sfx_id": 80,
+    "wav": "sfx_080.wav",
+    "duration_seconds": 4.487052,
+    "pre_normalize_peak": 0.44999998807907104,
+    "post_normalize_rms": 0.6877223054430642
+  },
+  {
+    "sfx_id": 81,
+    "wav": "sfx_081.wav",
+    "duration_seconds": 5.960408,
+    "pre_normalize_peak": 0.44999998807907104,
+    "post_normalize_rms": 0.28199026213784223
+  },
+  {
+    "sfx_id": 82,
+    "wav": "sfx_082.wav",
+    "duration_seconds": 1.908662,
+    "pre_normalize_peak": 0.44999998807907104,
+    "post_normalize_rms": 0.7003699818207034
+  },
+  {
+    "sfx_id": 83,
+    "wav": "sfx_083.wav",
+    "duration_seconds": 1.54034,
+    "pre_normalize_peak": 0.44999998807907104,
+    "post_normalize_rms": 0.46921339079991015
+  },
+  {
+    "sfx_id": 84,
+    "wav": "sfx_084.wav",
+    "duration_seconds": 3.013696,
+    "pre_normalize_peak": 0.44999998807907104,
+    "post_normalize_rms": 0.5356233494185172
+  }
+]

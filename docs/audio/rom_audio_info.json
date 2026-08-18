@@ -1,0 +1,28 @@
+{
+  "source_rom": "Dragon Ball Z - Legendary Super Warriors (USA)(1).gbc",
+  "rom_size": 2097152,
+  "sha256": "8dab48cc81d14bcee7c73274df09cf5c4dd44c3b93d10a5a3175e04fead25dee",
+  "md5": "ac46bc779e1e844674de1d4c13d06f96",
+  "header_title": "I-DBZ-US\u0000\u0000\u0000BBZE\u00c0",
+  "cartridge_type": "0x1B",
+  "cgb_flag": "0xC0",
+  "audio_driver": {
+    "banks_with_common_driver": [
+      "0x75",
+      "0x76",
+      "0x77",
+      "0x78",
+      "0x79"
+    ],
+    "driver_init": "bank 0x75:0x4015 / 0x4067",
+    "frame_update": "banked 0x41B0 via bank0:0x0319",
+    "sfx_bank": "0x79",
+    "sfx_header_cpu": "0x5000",
+    "sfx_pointer_table_cpu": "0x5004",
+    "sfx_request_ram": "0xC878",
+    "sfx_start_routine": "bank 0x79:0x4120",
+    "sfx_count": 85
+  },
+  "gbc_fps_used": 59.7275005696,
+  "max_probe_frames_per_sfx": 600
+}
