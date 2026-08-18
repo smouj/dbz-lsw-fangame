@@ -10907,7 +10907,19 @@ button.linklike:hover { text-decoration: underline; }
 
 /* ─── Character Studio: layout 3 columnas (forma · assets · frames) ─── */
 .dev-form-main { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr) minmax(0, 1.4fr); gap: 12px; margin-top: 12px; align-items: start; }
-@media (max-width: 1200px) { .dev-form-main { grid-template-columns: 1fr; } }
+/* M8.C2a — responsive: en ventanas medianas (800-1200px) el FrameBrowser
+   sube ARRIBA a ancho completo (es la herramienta principal: ver frames,
+   nombres, mapeos y canon) y Forma+Assets quedan debajo en 2 columnas.
+   Antes colapsaba a 1 columna en orden Forma→Assets→Frames: el browser
+   quedaba enterrado bajo 1400px de assets → parecía desordenado. */
+@media (max-width: 1200px) {
+  .dev-form-main { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  .dev-form-col-frames { grid-column: 1 / -1; order: -1; }
+}
+@media (max-width: 760px) {
+  .dev-form-main { grid-template-columns: 1fr; }
+  .dev-form-col-frames { grid-column: auto; order: 0; }
+}
 .dev-form-col { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
 .dev-form-col-title {
   margin: 0; font-size: 12px; letter-spacing: .5px; color: #ffe9a3; text-transform: uppercase;

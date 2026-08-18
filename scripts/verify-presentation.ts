@@ -194,6 +194,36 @@ check('M7: facing — actor player → scaleX 1 · actor enemy → scaleX −1',
     !goku?.includes('/battle/') && !cell?.includes('/battle/'));
 }
 
+// ── M8.C2a: EXCHANGE CINEMATIC CONTRACT (timeline) ──
+{
+  // DEFENSE_COMMITTED → preparación DEFENDER_ACTION (idle/move) + el
+  // GUARD_STARTED NO emite pose guard inmediata (la guardia va al contacto).
+  const guardSc = PRESENTATION_SCENARIOS.find(s => s.id === 'm7_guard')!;
+  const guardTl = buildPresentationTimeline({ events: runPresentationScenario(guardSc).log.entries, context: CONTEXT });
+  const guardPrep = guardTl.entries.filter(en => en.cue.type === 'SCENE' && (en.cue as { mode?: string }).mode === 'DEFENDER_ACTION');
+  const guardImmediatePose = guardTl.entries.some(en => en.cue.type === 'FIGHTER_POSE' && (en.cue as { pose?: string }).pose === 'guard' && en.cue.tick === guardPrep[0]?.cue.tick);
+  check('M8.C2a: GUARD comprometido → DEFENDER_ACTION con preparación (pose guard NO inmediata)',
+    guardPrep.length > 0 && !guardImmediatePose);
+
+  // MOVE defensivo: BattlePosition cambia SOLO por POSITION_CHANGED (el
+  // Engine lo emite; la presentación nunca añade mutaciones). m7_move =
+  // GUARD + reset_defense + MOVE HORIZONTAL → 1 POSITION_CHANGED (o 2 si
+  // el empuje GBC §9 dispara el segundo).
+  const moveSc = PRESENTATION_SCENARIOS.find(s => s.id === 'm7_move')!;
+  const moveLog = runPresentationScenario(moveSc).log;
+  const movePosChanges = moveLog.entries.filter(en => en.event.type === 'POSITION_CHANGED');
+  check('M8.C2a: MOVE defensivo → mutación táctica SOLO por POSITION_CHANGED (1 por comando + empuje)',
+    movePosChanges.length === 1 || movePosChanges.length === 2);
+
+  // Defensa sin atacante posterior → el timeline termina en la preparación
+  // defensiva; NO inventa una acción enemiga (sin auto-start).
+  const moveTl = buildPresentationTimeline({ events: moveLog.entries, context: CONTEXT });
+  const modes = moveTl.entries.filter(en => en.cue.type === 'SCENE').map(en => (en.cue as { mode?: string }).mode);
+  const lastMode = modes[modes.length - 1];
+  check('M8.C2a: defensa sin ataque posterior → último plano es DEFENDER_ACTION (nunca ENEMY_ACTION auto-lanzado)',
+    lastMode === 'DEFENDER_ACTION' && !modes.includes('ENEMY_ACTION'));
+}
+
 console.log(`\n═══ RESULTADO: ${passed} passed · ${failed} failed ═══`);
 if (failed > 0) {
   console.log('\nFallos:');

@@ -4,22 +4,35 @@
  "timeline": [
   {
    "tick": 0,
+   "type": "SCENE",
+   "mode": "DEFENDER_ACTION",
+   "background": "/assets/backgrounds/scenarios/01_action.png",
+   "durationTicks": 12,
+   "logicalTick": 0,
+   "source": "DEFENSE_COMMITTED",
+   "fidelity": "INFERRED",
+   "profile": "defense_prep"
+  },
+  {
+   "tick": 0,
    "type": "FIGHTER_POSE",
-   "durationTicks": 8,
+   "durationTicks": 10,
    "role": "TARGET",
    "side": "player",
-   "pose": "guard",
+   "pose": "idle",
    "logicalTick": 0,
-   "source": "GUARD_STARTED",
-   "fidelity": "NONE"
+   "source": "DEFENSE_COMMITTED",
+   "fidelity": "INFERRED",
+   "profile": "defense_prep"
   },
   {
    "tick": 0,
    "type": "AUDIO",
    "cue": "guard",
    "logicalTick": 0,
-   "source": "GUARD_STARTED",
-   "fidelity": "NONE"
+   "source": "DEFENSE_COMMITTED",
+   "fidelity": "INFERRED",
+   "profile": "defense_prep"
   }
  ]
 }

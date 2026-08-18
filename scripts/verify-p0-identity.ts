@@ -87,6 +87,20 @@ scene.setScene('ACTION_DUEL');
 check('I5: vuelta a ACTION_DUEL → ambos visibles',
   player.visible === true && enemy.visible === true);
 
+// ── M8.C2a: DEFENDER_ACTION — cámara en el defensor ──
+scene.setRoles('left');
+scene.setScene('DEFENDER_ACTION');
+check('C2a: DEFENDER_ACTION (attacker=left) → defensor right visible · actor left oculto',
+  enemy.visible === true && player.visible === false);
+scene.setRoles('right');
+scene.setScene('DEFENDER_ACTION');
+check('C2a: DEFENDER_ACTION (attacker=right) → defensor left visible · actor right oculto',
+  player.visible === true && enemy.visible === false);
+scene.setScene('ACTION_DUEL');
+check('C2a: DEFENDER_ACTION → ACTION_DUEL → ambos visibles',
+  player.visible === true && enemy.visible === true);
+check('C2a: DEFENDER_ACTION no crea actores (fighterCount === 2)', scene.fighterCount === 2);
+
 // ── Invariante 1b: 1000 swaps de roles no crean actores ──
 for (let i = 0; i < 1000; i++) {
   scene.setRoles(i % 2 === 0 ? 'left' : 'right');

@@ -4,6 +4,70 @@
  "timeline": [
   {
    "tick": 0,
+   "type": "SCENE",
+   "mode": "DEFENDER_ACTION",
+   "background": "/assets/backgrounds/scenarios/01_action.png",
+   "durationTicks": 12,
+   "logicalTick": 0,
+   "source": "DEFENSE_COMMITTED",
+   "fidelity": "INFERRED",
+   "profile": "defense_prep"
+  },
+  {
+   "tick": 0,
+   "type": "FIGHTER_POSE",
+   "durationTicks": 10,
+   "role": "TARGET",
+   "side": "player",
+   "pose": "idle",
+   "logicalTick": 0,
+   "source": "DEFENSE_COMMITTED",
+   "fidelity": "INFERRED",
+   "profile": "defense_prep"
+  },
+  {
+   "tick": 0,
+   "type": "AUDIO",
+   "cue": "guard",
+   "logicalTick": 0,
+   "source": "DEFENSE_COMMITTED",
+   "fidelity": "INFERRED",
+   "profile": "defense_prep"
+  },
+  {
+   "tick": 0,
+   "type": "SCENE",
+   "mode": "DEFENDER_ACTION",
+   "background": "/assets/backgrounds/scenarios/01_action.png",
+   "durationTicks": 12,
+   "logicalTick": 0,
+   "source": "DEFENSE_COMMITTED",
+   "fidelity": "INFERRED",
+   "profile": "defense_prep"
+  },
+  {
+   "tick": 0,
+   "type": "FIGHTER_POSE",
+   "durationTicks": 10,
+   "role": "TARGET",
+   "side": "player",
+   "pose": "move_front",
+   "logicalTick": 0,
+   "source": "DEFENSE_COMMITTED",
+   "fidelity": "INFERRED",
+   "profile": "defense_prep"
+  },
+  {
+   "tick": 0,
+   "type": "AUDIO",
+   "cue": "step",
+   "logicalTick": 0,
+   "source": "DEFENSE_COMMITTED",
+   "fidelity": "INFERRED",
+   "profile": "defense_prep"
+  },
+  {
+   "tick": 0,
    "type": "FIGHTER_POSITION",
    "role": "TARGET",
    "side": "player",
@@ -48,24 +112,6 @@
    "role": "TARGET",
    "side": "enemy",
    "pose": "move_front",
-   "logicalTick": 0,
-   "source": "POSITION_CHANGED",
-   "fidelity": "NONE"
-  },
-  {
-   "tick": 0,
-   "type": "AUDIO",
-   "cue": "step",
-   "logicalTick": 0,
-   "source": "POSITION_CHANGED",
-   "fidelity": "NONE"
-  },
-  {
-   "tick": 0,
-   "type": "FIGHTER_POSITION",
-   "role": "TARGET",
-   "side": "player",
-   "position": "UP_FRONT",
    "logicalTick": 0,
    "source": "POSITION_CHANGED",
    "fidelity": "NONE"

@@ -30,7 +30,7 @@ export const ACTION_RIGHT_X = 224;
 export const ACTION_ACTOR_X = ACTION_LEFT_X;
 export const ACTION_TARGET_X = ACTION_RIGHT_X;
 
-export type ActionSceneMode = 'ACTION_SOLO' | 'ACTION_DUEL' | 'ACTION_TEAM' | 'PROJECTILE' | 'IMPACT';
+export type ActionSceneMode = 'ACTION_SOLO' | 'ACTION_DUEL' | 'ACTION_TEAM' | 'PROJECTILE' | 'IMPACT' | 'DEFENDER_ACTION';
 
 export class ActionScene extends Container {
   private bg: Sprite | null = null;
@@ -139,13 +139,15 @@ export class ActionScene extends Container {
 
   /** M8.P0 — Matriz de visibilidad canónica:
    *  ACTION_SOLO → solo el ACTOR grande visible (target oculto)
+   *  DEFENDER_ACTION → solo el DEFENSOR (target) visible — cámara en él
    *  ACTION_DUEL/PROJECTILE/IMPACT → ambos grandes visibles
    *  (el SceneDirector controla FIELD ↔ ACTION; aquí solo lo interno). */
   private applySceneVisibility(): void {
     const solo = this.scene === 'ACTION_SOLO';
+    const defenderShot = this.scene === 'DEFENDER_ACTION';
     const actor = this.getActor();
     const target = this.getTarget();
-    if (actor) actor.visible = true;
+    if (actor) actor.visible = !defenderShot;
     if (target) target.visible = !solo;
   }
 }

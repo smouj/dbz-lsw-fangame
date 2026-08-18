@@ -306,6 +306,17 @@ export class PixiBattlePresentation implements BattlePresentation {
       return;
     }
 
+    if (scene === 'DEFENDER_ACTION') {
+      // M8.C2a — cámara en el DEFENSOR: sin proyectil ni rush residual;
+      // ambos actores vuelven a su anchor cinematográfico local (la
+      // preparación defensiva es local — NUNCA muta la posición táctica).
+      this.clearProjectile();
+      this.cancelRush();
+      this.leftActor?.setPos(ACTION_LEFT_X, ACTION_GROUND_Y);
+      this.rightActor?.setPos(ACTION_RIGHT_X, ACTION_GROUND_Y);
+      return;
+    }
+
     if (scene === 'ACTION_DUEL') {
       this.clearProjectile();
       return;

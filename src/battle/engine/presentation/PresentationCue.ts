@@ -17,8 +17,17 @@ import type { ProjectileVisualKind } from '../../actionProfiles';
 import type { BattleSide } from '../state/BattleState';
 import type { CanonPose } from '../../animationCanon';
 
-/** Las tres vistas canónicas del contrato visual + la especial. */
-export type BattleSceneMode = 'OVERVIEW' | 'PLAYER_ACTION' | 'ENEMY_ACTION' | 'SPECIAL_ACTION' | 'ACTION_DUEL';
+/** Las vistas canónicas del contrato visual + la especial. */
+export type BattleSceneMode =
+  | 'OVERVIEW'
+  | 'PLAYER_ACTION'
+  | 'ENEMY_ACTION'
+  | 'SPECIAL_ACTION'
+  | 'ACTION_DUEL'
+  // M8.C2a — plano DEFENSIVO: cámara en el DEFENSOR (su preparación visual:
+  // guard idle → guard en contacto · move local sin mutar posición táctica ·
+  // support con FX antes del ataque). Mismos FighterActor — nunca reparent.
+  | 'DEFENDER_ACTION';
 
 /** Rol relativo en la cinematografía (actor/target) — resuelto por el Presenter. */
 export type FighterRole = 'ACTOR' | 'TARGET';

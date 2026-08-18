@@ -24,6 +24,7 @@ export type CommandRejectionReason =
   | 'QTE_NOT_ACTIVE'          // no hay ventana QTE activa
   | 'INVALID_QTE_INPUT'       // input fuera de la secuencia esperada
   | 'ACTION_LOCKED'           // acción bloqueada por estado temporal
+  | 'DEFENSE_ALREADY_COMMITTED' // M8.C2a: una elección defensiva por ventana
 
 export type CommandCheck =
   | { ok: true }

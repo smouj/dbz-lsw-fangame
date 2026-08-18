@@ -21,6 +21,11 @@ export type ScenarioStep =
   | { kind: 'qte_complete' }
   /** Un solo input correcto (simula jugador lento intercalando ticks). */
   | { kind: 'qte_step' }
+  /** M8.C2a — abre una ventana defensiva NUEVA (defenseChoice = null):
+   *  simula el reset del orquestador entre exchanges. Sin esto, un segundo
+   *  comando defensivo en la misma ventana es ilegal (UNA elección). */
+  | { kind: 'reset_defense' }
+  | { kind: 'qte_step' }
   /** Pulsa una tecla EQUIVOCADA (→ COUNTER_WINDOW). */
   | { kind: 'qte_wrong' };
 
@@ -129,11 +134,12 @@ export const PRESENTATION_SCENARIOS: PresentationScenario[] = [
     ],
   },
   {
-    id: 'm7_move', label: 'MOVE táctico (HORIZONTAL → VERTICAL)', seed: 7,
+    id: 'm7_move', label: 'MOVE táctico (GUARD → ventana fresh → HORIZONTAL)', seed: 7,
     deck: [1], playerCc: 0, playerPos: 'DOWN_BACK', enemyPos: 'DOWN_BACK', phase: 'defend',
     steps: [
+      { kind: 'cmd', command: { type: 'GUARD' }, opts: { side: 'player' } },
+      { kind: 'reset_defense' },
       { kind: 'cmd', command: { type: 'MOVE', axis: 'HORIZONTAL' }, opts: { side: 'player' } },
-      { kind: 'cmd', command: { type: 'MOVE', axis: 'VERTICAL' }, opts: { side: 'player' } },
     ],
   },
   {
@@ -219,6 +225,10 @@ export function runPresentationScenario(sc: PresentationScenario): ScenarioRun {
       runCmd(step.command, step.opts);
     } else if (step.kind === 'ticks') {
       runTicks(step.ticks);
+    } else if (step.kind === 'reset_defense') {
+      // M8.C2a — el orquestador abre una ventana defensiva nueva entre
+      // exchanges (esto es lo que hace el Runtime al entrar en fase defend).
+      state = { ...state, defenseChoice: null };
     } else if (step.kind === 'qte_complete') {
       openInputWindow();
       for (const key of [...state.stageQte.seq]) {

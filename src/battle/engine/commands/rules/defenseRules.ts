@@ -14,8 +14,11 @@ export function canUseDefenseLimit(state: BattleState, limitCount: number): Comm
   return ok();
 }
 
-/** GUARD (bloqueo básico) — legal en cualquier ventana defensiva. */
-export function canGuard(): CommandCheck {
+/** GUARD (bloqueo básico) — legal en cualquier ventana defensiva.
+ *  M8.C2a: SOLO UNA elección por ventana — si la defensa ya está
+ *  comprometida (defenseChoice !== null), GUARD queda bloqueado. */
+export function canGuard(state: BattleState): CommandCheck {
+  if (state.defenseChoice !== null) return reject('DEFENSE_ALREADY_COMMITTED');
   return ok();
 }
 

@@ -181,20 +181,39 @@ export function reduceAcceptedCommand(state: BattleState, command: BattleCommand
       break;
     case 'GUARD': {
       const r = guard(state, 'player');
-      next = r.state;
-      events = r.events;
+      // M8.C2a — GUARD compromete la elección defensiva (autoritativa).
+      // defenseChoice !== null → DEFENSE_COMMITTED → el atacante puede
+      // abrir su resolución. La fase 'defend' sin elección espera input
+      // indefinidamente (contrato C2a: sin timers que autolancen al enemigo).
+      // Orden del batch: DEFENSE_COMMITTED PRIMERO — la frontera defensiva
+      // precede a los hechos derivados (GUARD_STARTED) en el timeline.
+      next = { ...r.state, defenseChoice: { type: 'GUARD' } };
+      events = [
+        { type: 'DEFENSE_COMMITTED', side: 'player', choice: { type: 'GUARD' } },
+        ...r.events,
+      ];
       break;
     }
     case 'PLAY_DEFENSE_CARD': {
       const r = playDefenseCard(state, 'player', command.handIndex);
-      next = r.state;
-      events = r.events;
+      // M8.C2a — la carta defensiva compromete la elección (CARD).
+      next = { ...r.state, defenseChoice: { type: 'CARD', cardId: r.cardId } };
+      events = [
+        { type: 'DEFENSE_COMMITTED', side: 'player', choice: { type: 'CARD', cardId: r.cardId } },
+        ...r.events,
+      ];
       break;
     }
     case 'MOVE': {
       const r = moveFighter(state, 'player', command.axis);
-      next = r.state;
-      events = r.events;
+      // M8.C2a — MOVE compromete la elección defensiva (MOVE + eje).
+      // El Engine muta la posición táctica (autoridad); la presentación
+      // NUNCA deriva BattlePosition de la animación (ver C2a §8).
+      next = { ...r.state, defenseChoice: { type: 'MOVE', axis: command.axis } };
+      events = [
+        { type: 'DEFENSE_COMMITTED', side: 'player', choice: { type: 'MOVE', axis: command.axis } },
+        ...r.events,
+      ];
       break;
     }
 

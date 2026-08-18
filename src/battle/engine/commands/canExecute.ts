@@ -89,7 +89,7 @@ export function canExecute(state: BattleState, command: BattleCommand, opts?: { 
     case 'DEFENSE_BASIC':
       return ok();
     case 'GUARD':
-      return canGuard();
+      return canGuard(state);
     case 'PLAY_DEFENSE_CARD':
       return canPlayDefenseCard(state, opts?.side ?? 'player', command.handIndex, opts?.characterId ?? '');
     case 'MOVE':

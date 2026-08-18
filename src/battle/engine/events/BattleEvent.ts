@@ -30,6 +30,7 @@ import type { StageKey } from '../../stageInputMap';
 import type {
   BattlePhase,
   BattleSide,
+  DefenseChoice,
   GuardType,
   PowerState,
 } from '../state/BattleState';
@@ -94,6 +95,12 @@ export type BattleEvent =
 
   // ── posición táctica ──
   | { type: 'POSITION_CHANGED'; side: BattleSide; from: BattlePosition; to: BattlePosition; axis: MoveAxis }
+
+  // ── defensa (M8.C2a): el jugador compromete UNA elección defensiva
+  // tipada (GUARD | MOVE | carta). DEFENSE_COMMITTED es el ÚNICO evento que
+  // autoriza abrir la resolución del atacante (enemy/IA). Hasta entonces la
+  // fase 'defend' espera input real, indefinidamente (sin timers ocultos).
+  | { type: 'DEFENSE_COMMITTED'; side: BattleSide; choice: DefenseChoice }
 
   // ── guardia / gather / poder ──
   | { type: 'GUARD_STARTED'; side: BattleSide; guard: GuardType }

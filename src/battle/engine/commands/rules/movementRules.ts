@@ -19,11 +19,13 @@ export function destinationFor(pos: BattlePosition, axis: MoveAxis): BattlePosit
 }
 
 /** ¿El eje es legal para la posición actual? (siempre legal: 4 posiciones
-    válidas × 2 ejes — el destino nunca es la misma posición). */
+    válidas × 2 ejes — el destino nunca es la misma posición).
+    M8.C2a: SOLO UNA elección por ventana defensiva (jugador). */
 export function canMove(state: BattleState, side: BattleSide, axis: MoveAxis): CommandCheck {
   const pos = (side === 'player' ? state.player : state.enemy).battlePos;
   const dest = destinationFor(pos, axis);
   if (dest === pos) return reject('INVALID_POSITION');
+  if (side === 'player' && state.defenseChoice !== null) return reject('DEFENSE_ALREADY_COMMITTED');
   return ok();
 }
 

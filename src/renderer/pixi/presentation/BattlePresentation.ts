@@ -15,6 +15,9 @@
 export type BattleScene =
   | 'FIELD'        // vista táctica: overworld sprites + posiciones
   | 'ACTION_SOLO'  // un personaje grande (Gather/support)
+  | 'DEFENDER_ACTION' // M8.C2a: cámara en el DEFENSOR (preparación defensiva
+                     // visual: guard idle · move local · support FX). Los
+                     // mismos FighterActor — nunca reparent ni nuevos nodos.
   | 'ACTION_DUEL'  // ambos grandes (melee/guard/counter/stage)
   | 'ACTION_TEAM'  // dos actores aliados / secuencia conjunta (spec V2 §2)
   | 'PROJECTILE'   // beam/proyectil: release → travel → contact

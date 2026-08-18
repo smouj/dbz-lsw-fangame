@@ -2414,128 +2414,193 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
     }
   };
 
-  // ═══ ENEMY ATTACK: IA real del GBC (battle.shtml) ═══
-  // Patrón: ataca regularmente → gather power → 5 Stage Attack → Beam/Damage → repite.
-  // Rara vez usa energy cards sin haber gathered power.
+  // ═══ ENEMY INTENT (M8.C2a): la IA decide SU ataque — SIN presentarlo ═══
+  // Carta entrante del enemigo (la consume la fase de defensa al resolver).
   const incomingCard = useRef<CardDef | null>(null);
 
+  // La IA puede elegir su ataque antes (enemyIntent), pero NO lo presenta ni
+  // lo encadena: la cinemática enemiga espera a DEFENSE_COMMITTED (el jugador
+  // eligió Guard/Move/Support). Contrato C2a §16 — la IA no tiene rutas
+  // especiales: intent primero, playback solo tras defensa comprometida.
+  // Devuelve el plan decidido; los efectos (draw/heal/gather/CC) se aplican
+  // AQUÍ (gameplay real), la presentación ocurre después.
+  const enemyIntent = (): { kind: 'attack' | 'gather' | 'heal' | 'passive'; card: CardDef | null } => {
+    const ai = aiRef.current;
+    // MAZO REAL del enemigo (battle/state): roba 1 del drawPile al entrar
+    // en su Attack Phase (como el jugador) y decide SOLO con su mano.
+    // Nunca vuelve a sortear el pool original — las Joint usadas van a su
+    // discardPile y el drawPile se rebaraja al agotarse.
+    const draw = drawOne(eDeckRef.current);
+    setEDeckState(draw.state);
+    const eHand = draw.state.hand;
+    const enemyCharId = getForm(enemyFormId)!.character;
+    const usableByEnemy = (c: CardDef) => cardUsableBy(c, enemyCharId);
+    // Cartas de ataque que el ENEMIGO PUEDE usar: solo las de SU mano
+    const attackCards = eHand.filter(c => (c.type === 'damage' || c.type === 'beam') && usableByEnemy(c));
+    // IA a HP bajo: si tiene carta de curación en SU mano, se cura
+    // (HYPOTHESIS — el algoritmo real de decisión es P0 ROM, pero el manual
+    // confirma que la IA puede usar support cards; el deck determina qué puede hacer)
+    if (enemy.hp < enemy.maxHp * 0.25) {
+      const heals = eHand.filter(c => c.type === 'support' && c.effect.startsWith('heal_') && usableByEnemy(c));
+      if (heals.length > 0) {
+        const h = heals[0];
+        const pct = h.effect === 'heal_strong' ? (1 / 4 + 1 / 3) : h.effect === 'heal_light' ? 0.3 : 0.25;
+        const healed = Math.floor(enemy.maxHp * pct);
+        setEnemy(prev => ({ ...prev, hp: Math.min(prev.maxHp, prev.hp + healed) }));
+        setEDeckState(prev => playJoint(prev, prev.hand.indexOf(h)));
+        addLog(`${enemy.name} ${t('battle.uses')} ${h.name} — +${healed} HP!`);
+        return { kind: 'heal', card: h };
+      }
+    }
+    // Stage Attacks GRATIS: acción BASIC universal (no consumen mazo) — el
+    // enemigo siempre puede hacerlos, como el jugador (GBC: BASIC menu).
+    const freeStages = CARDS.filter(c => c.type === 'command' && c.cc === 0 && c.name.includes('Stage'));
+    if (ai.mode === 1) {
+      // Gather Power: no ataca, sube STR/KI (mecánica real)
+      setEStages(s => ({ ...s, str: clampStage(s.str + 1), ki: clampStage(s.ki + 1) }));
+      setEBuffTurns(3); // Gather del enemigo dura 2 turnos completos (GBC)
+      ai.mode = 2;
+      return { kind: 'gather', card: null };
+    }
+    const affordable = attackCards.filter(c => c.cc <= enemy.cc);
+    if (affordable.length === 0 && freeStages.length > 0) {
+      // Sin CC: la IA hace un Stage Attack básico (gratis, +1 CC por input en el GBC)
+      const card = freeStages[Math.floor(Math.random() * freeStages.length)];
+      // Los Stage Attacks básicos no consumen cartas del mazo (BASIC)
+      return { kind: 'attack', card };
+    }
+    if (affordable.length === 0 && ai.mode !== 1) {
+      // Sin cartas asequibles en SU mano: la IA reagrupa (gather) en vez de
+      // inventar cartas del pool infinito. gatherStreak limita el bucle:
+      // si tras 2 gathers sigue sin opciones, hace defensa pasiva (el CC
+      // sigue subiendo +3/turno y podrá atacar más adelante).
+      ai.mode = 1;
+      ai.gatherStreak = (ai.gatherStreak ?? 0) + 1;
+      if (ai.gatherStreak >= 2) {
+        ai.gatherStreak = 0; ai.mode = 0;
+        return { kind: 'passive', card: null };
+      }
+      setEStages(s => ({ ...s, str: clampStage(s.str + 1), ki: clampStage(s.ki + 1) }));
+      setEBuffTurns(3);
+      ai.mode = 2;
+      return { kind: 'gather', card: null };
+    }
+    let card: CardDef | null = null;
+    if (ai.mode === 2) {
+      // 5 Stage Attack tras gather (patrón real) — SOLO de su mano
+      const fiveStage = eHand.filter(c => c.type === 'command' && /5/i.test(c.name) && c.cc <= enemy.cc);
+      card = fiveStage.length > 0 ? fiveStage[Math.floor(Math.random() * fiveStage.length)]
+        : affordable.find(c => c.type === 'beam') || affordable[0];
+      ai.mode = 3;
+    } else if (ai.mode === 3) {
+      // Beam/Damage tras el 5-stage → vuelve al inicio del patrón
+      const beams = affordable.filter(c => c.type === 'beam');
+      card = beams.length > 0 ? beams[Math.floor(Math.random() * beams.length)]
+        : affordable[Math.floor(Math.random() * affordable.length)] || affordable[0];
+      ai.mode = 0; ai.attacks = 0;
+    } else {
+      // Modo 0: ataque regular (Damage preciso) — rara vez energy cards
+      ai.attacks++;
+      const accurate = affordable.filter(c => c.type === 'damage' && c.acc >= 85);
+      card = accurate.length > 0 ? accurate[Math.floor(Math.random() * accurate.length)]
+        : affordable[Math.floor(Math.random() * affordable.length)] || affordable[0];
+      if (ai.attacks >= 2) ai.mode = 1;
+    }
+    if (!card) {
+      // Mano vacía sin opciones (extremo): defensa pasiva y avanza
+      ai.gatherStreak = 0;
+      return { kind: 'passive', card: null };
+    }
+    ai.gatherStreak = 0; // pudo atacar: el ciclo de gather se reinicia
+    // La Joint usada sale de la mano real → discardPile
+    setEDeckState(prev => playJoint(prev, prev.hand.indexOf(card)));
+    setEnemy(prev => ({ ...prev, cc: Math.max(0, prev.cc - card!.cc) }));
+    return { kind: 'attack', card };
+  };
+
+  /** M8.C2a — arranca el ataque del enemigo (como atacante del exchange):
+   *  la IA decide su intent (gameplay real) y el juego entra en DEFENSE
+   *  esperando input REAL del jugador. La cinemática enemiga se dispara
+   *  SOLO al comprometer la defensa (defendBasic/defendJoint/defendLimit).
+   *  NUNCA un timer/animación del jugador lanza esto de forma indirecta. */
   const enemyAttack = () => {
     setPhase('enemyTurn');
     setEnemyPose('idle');
-    const ai = aiRef.current;
-    setTimeout(() => {
-      // MAZO REAL del enemigo (battle/state): roba 1 del drawPile al entrar
-      // en su Attack Phase (como el jugador) y decide SOLO con su mano.
-      // Nunca vuelve a sortear el pool original — las Joint usadas van a su
-      // discardPile y el drawPile se rebaraja al agotarse.
-      const draw = drawOne(eDeckRef.current);
-      setEDeckState(draw.state);
-      const eHand = draw.state.hand;
-      const enemyCharId = getForm(enemyFormId)!.character;
-      const usableByEnemy = (c: CardDef) => cardUsableBy(c, enemyCharId);
-      // Cartas de ataque que el ENEMIGO PUEDE usar: solo las de SU mano
-      const attackCards = eHand.filter(c => (c.type === 'damage' || c.type === 'beam') && usableByEnemy(c));
-      // IA a HP bajo: si tiene carta de curación en SU mano, se cura
-      // (HYPOTHESIS — el algoritmo real de decisión es P0 ROM, pero el manual
-      // confirma que la IA puede usar support cards; el deck determina qué puede hacer)
-      if (enemy.hp < enemy.maxHp * 0.25) {
-        const heals = eHand.filter(c => c.type === 'support' && c.effect.startsWith('heal_') && usableByEnemy(c));
-        if (heals.length > 0) {
-          const h = heals[0];
-          const pct = h.effect === 'heal_strong' ? (1 / 4 + 1 / 3) : h.effect === 'heal_light' ? 0.3 : 0.25;
-          const healed = Math.floor(enemy.maxHp * pct);
-          setEnemy(prev => ({ ...prev, hp: Math.min(prev.maxHp, prev.hp + healed) }));
-          setEDeckState(prev => playJoint(prev, prev.hand.indexOf(h)));
-          setEnemyPose('gather_power');
-          addLog(`${enemy.name} ${t('battle.uses')} ${h.name} — +${healed} HP!`);
-          setTimeout(() => { setEnemyPose('idle'); advanceExchange(); }, gbcMs(58));
-          return;
-        }
-      }
-      // Stage Attacks GRATIS: acción BASIC universal (no consumen mazo) — el
-      // enemigo siempre puede hacerlos, como el jugador (GBC: BASIC menu).
-      const freeStages = CARDS.filter(c => c.type === 'command' && c.cc === 0 && c.name.includes('Stage'));
-      let card: CardDef;
-      if (ai.mode === 1) {
-        // Gather Power: no ataca, sube STR/KI (mecánica real)
-        Sfx.powerUp();
-        setEStages(s => ({ ...s, str: clampStage(s.str + 1), ki: clampStage(s.ki + 1) }));
-        setEBuffTurns(3); // Gather del enemigo dura 2 turnos completos (GBC)
-        setEnemyPose('gather_power');
-        addLog(`${enemy.name} ${t('battle.gathers')}! (+8 STR/KI)`);
-        ai.mode = 2;
-        setTimeout(() => { setEnemyPose('idle'); advanceExchange(); }, gbcMs(58));
-        return;
-      }
-      const affordable = attackCards.filter(c => c.cc <= enemy.cc);
-      if (affordable.length === 0 && freeStages.length > 0) {
-        // Sin CC: la IA hace un Stage Attack básico (gratis, +1 CC por input en el GBC)
-        card = freeStages[Math.floor(Math.random() * freeStages.length)];
-        // Los Stage Attacks básicos no consumen cartas del mazo (BASIC)
-        incomingCard.current = card;
-        addLog(`${enemy.name} ${t('battle.uses')} ${card.name}`);
-        setTimeout(() => enterDefensePhase(card.name), gbcMs(22));
-        return;
-      }
-      if (affordable.length === 0 && ai.mode !== 1) {
-        // Sin cartas asequibles en SU mano: la IA reagrupa (gather) en vez de
-        // inventar cartas del pool infinito. gatherStreak limita el bucle:
-        // si tras 2 gathers sigue sin opciones, hace defensa pasiva (el CC
-        // sigue subiendo +3/turno y podrá atacar más adelante).
-        ai.mode = 1;
-        ai.gatherStreak = (ai.gatherStreak ?? 0) + 1;
-        if (ai.gatherStreak >= 2) {
-          ai.gatherStreak = 0; ai.mode = 0;
-          addLog(`${enemy.name} se prepara…`);
-          setTimeout(() => advanceExchange(), gbcMs(30));
-          return;
-        }
-        Sfx.powerUp();
-        setEStages(s => ({ ...s, str: clampStage(s.str + 1), ki: clampStage(s.ki + 1) }));
-        setEBuffTurns(3);
-        setEnemyPose('gather_power');
-        addLog(`${enemy.name} ${t('battle.gathers')}! (+8 STR/KI)`);
-        setTimeout(() => { setEnemyPose('idle'); advanceExchange(); }, gbcMs(58));
-        return;
-      }
-      if (ai.mode === 2) {
-        // 5 Stage Attack tras gather (patrón real) — SOLO de su mano
-        const fiveStage = eHand.filter(c => c.type === 'command' && /5/i.test(c.name) && c.cc <= enemy.cc);
-        card = fiveStage.length > 0 ? fiveStage[Math.floor(Math.random() * fiveStage.length)]
-          : affordable.find(c => c.type === 'beam') || affordable[0];
-        ai.mode = 3;
-      } else if (ai.mode === 3) {
-        // Beam/Damage tras el 5-stage → vuelve al inicio del patrón
-        const beams = affordable.filter(c => c.type === 'beam');
-        card = beams.length > 0 ? beams[Math.floor(Math.random() * beams.length)]
-          : affordable[Math.floor(Math.random() * affordable.length)] || affordable[0];
-        ai.mode = 0; ai.attacks = 0;
-      } else {
-        // Modo 0: ataque regular (Damage preciso) — rara vez energy cards
-        ai.attacks++;
-        const accurate = affordable.filter(c => c.type === 'damage' && c.acc >= 85);
-        card = accurate.length > 0 ? accurate[Math.floor(Math.random() * accurate.length)]
-          : affordable[Math.floor(Math.random() * affordable.length)] || affordable[0];
-        if (ai.attacks >= 2) ai.mode = 1;
-      }
-      if (!card) {
-        // Mano vacía sin opciones (extremo): defensa pasiva y avanza
-        ai.gatherStreak = 0;
-        addLog(`${enemy.name} se prepara…`);
-        setTimeout(() => advanceExchange(), gbcMs(30));
-        return;
-      }
-      ai.gatherStreak = 0; // pudo atacar: el ciclo de gather se reinicia
-      // La Joint usada sale de la mano real → discardPile
-      setEDeckState(prev => playJoint(prev, prev.hand.indexOf(card)));
-      setEnemy(prev => ({ ...prev, cc: Math.max(0, prev.cc - card.cc) }));
-      incomingCard.current = card;
-      addLog(`${enemy.name} ${t('battle.uses')} ${card.name}`);
-      // ⚠️ ORDEN GBC: el defensor elige SU defensa ANTES de que se ejecute
-      // la animación del ataque. La cinemática del enemigo se dispara al
-      // elegir (defendBasic/defendJoint/defendLimit), no aquí.
-      enterDefensePhase(card.name);
-    }, 450);
+    const intent = enemyIntent();
+    if (intent.kind === 'gather') {
+      Sfx.powerUp();
+      setEnemyPose('gather_power');
+      addLog(`${enemy.name} ${t('battle.gathers')}! (+8 STR/KI)`);
+      setTimeout(() => { setEnemyPose('idle'); advanceExchange(); }, gbcMs(58));
+      return;
+    }
+    if (intent.kind === 'heal') {
+      Sfx.powerUp();
+      setEnemyPose('gather_power');
+      setTimeout(() => { setEnemyPose('idle'); advanceExchange(); }, gbcMs(58));
+      return;
+    }
+    if (intent.kind === 'passive') {
+      addLog(`${enemy.name} se prepara…`);
+      setTimeout(() => advanceExchange(), gbcMs(30));
+      return;
+    }
+    // Ataque real: la IA elige SU carta (intent) y el juego espera la
+    // defensa del jugador ANTES de presentar la cinemática (orden GBC).
+    const card = intent.card!;
+    incomingCard.current = card;
+    addLog(`${enemy.name} ${t('battle.uses')} ${card.name}`);
+    // ⚠️ ORDEN GBC: el defensor elige SU defensa ANTES de que se ejecute
+    // la animación del ataque. La cinemática del enemigo se dispara al
+    // elegir (defendBasic/defendJoint/defendLimit), no aquí.
+    enterDefensePhase(card.name);
+  };
+
+  /** M8.C2a — FRONTERA DEFENSIVA tras la acción del JUGADOR: el juego
+   *  regresa a OVERVIEW y entra en DEFENSE esperando input REAL. El enemigo
+   *  decide su intent (legal — la IA elige antes) pero su CINEMÁTICA espera
+   *  a DEFENSE_COMMITTED. Contrato: terminar tu ataque NO inicia al enemigo. */
+  const beginDefenseAfterPlayer = () => {
+    // Exchange 1: el enemigo contraataca — +3 CC (spec) y decisión de intent.
+    setExchangeIndex(1);
+    const actor = getForm(enemyFormId)!.character.toUpperCase();
+    setEnemy(prev => ({ ...prev, cc: Math.min(prev.maxCc, prev.cc + 3) }));
+    addLog(`${actor} ${t('battle.strikesFirst')} (+3 CC)`);
+    const intent = enemyIntent();
+    if (intent.kind === 'gather' || intent.kind === 'heal') {
+      Sfx.powerUp();
+      setEnemyPose('gather_power');
+      addLog(intent.kind === 'gather'
+        ? `${enemy.name} ${t('battle.gathers')}! (+8 STR/KI)`
+        : `${enemy.name} se recupera…`);
+      setTimeout(() => { setEnemyPose('idle'); advanceExchange(); }, gbcMs(58));
+      return;
+    }
+    if (intent.kind === 'passive') {
+      addLog(`${enemy.name} se prepara…`);
+      setTimeout(() => advanceExchange(), gbcMs(30));
+      return;
+    }
+    const card = intent.card!;
+    incomingCard.current = card;
+    addLog(`${enemy.name} ${t('battle.uses')} ${card.name}`);
+    // DEFENSE real: espera input indefinidamente (sin timers que auto-lancen
+    // la cinemática enemiga). El gate de presentación abre cuando el jugador
+    // compromete Guard/Move/Support.
+    enterDefensePhase(card.name);
+  };
+
+  /** M8.C2a — continuación tras la acción del JUGADOR (fin de su ataque/
+   *  gather/chara): SIN auto-start enemigo. Si el enemigo contraataca
+   *  (exchange 0 → 1), entra en DEFENSE esperando input real; si el turno
+   *  termina (exchange 1), avanza al siguiente turno. NUNCA setTimeout que
+   *  encadene la presentación enemiga tras la animación del jugador. */
+  const afterPlayerAction = () => {
+    if (exchangeIndex === 0) {
+      beginDefenseAfterPlayer();
+    } else {
+      advanceExchange(); // exchange 1 → turn end → beginTurn
+    }
   };
 
   // ═══ DEFENSE PHASE (spec corregida): el defensor NO está limitado a

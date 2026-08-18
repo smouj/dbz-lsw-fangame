@@ -1,6 +1,6 @@
 {
  "name": "m4_guard_move",
- "description": "GUARD \u2192 MOVE horizontal en fase defend: guardia y posici\u00f3n con sus eventos",
+ "description": "M8.C2a — GUARD compromete la defensa (DEFENSE_COMMITTED + GUARD_STARTED). El MOVE defensivo ya no se encadena en la misma ventana (una sola elección — ver tests M8.C2a y golden m7_move)",
  "setup": {
   "phase": "defend",
   "playerCc": 0,
@@ -14,17 +14,11 @@
  "commands": [
   {
    "type": "GUARD"
-  },
-  {
-   "type": "MOVE",
-   "axis": "HORIZONTAL"
   }
  ],
  "expectedEvents": [
   "COMMAND_ACCEPTED",
-  "GUARD_STARTED",
-  "COMMAND_ACCEPTED",
-  "POSITION_CHANGED",
-  "POSITION_CHANGED"
+  "DEFENSE_COMMITTED",
+  "GUARD_STARTED"
  ]
 }

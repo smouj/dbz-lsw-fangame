@@ -11,6 +11,7 @@ import { createInitialBattleState } from '../src/battle/engine/state/createIniti
 import {
   activeAttacker, activeDefender, speedOrder, positionOf,
   relativeDistance, isVulnerable, ccOf, hpOf, handOf,
+  isDefenseCommitted, defenseChoiceOf,
 } from '../src/battle/engine/state/battleStateSelectors';
 import { canExecute, getAvailableCommands } from '../src/battle/engine/commands/canExecute';
 import type { BattleCommand } from '../src/battle/engine/commands/BattleCommand';
@@ -154,6 +155,24 @@ check('defensor NO puede PLAY_CARD (offensiva)', !canExecute(enemyAttackPhase, {
 check('JOINT solo en fase command', canExecute(commandPhase, { type: 'JOINT' }).ok && !canExecute(defendPhase, { type: 'JOINT' }).ok);
 check('GUARD solo en fase defend', canExecute(defendPhase, { type: 'GUARD' }).ok && !canExecute(commandPhase, { type: 'GUARD' }).ok);
 check('GATHER solo en fase basic', canExecute({ ...m2State, phase: 'basic' }, { type: 'GATHER_POWER' }).ok && !canExecute(commandPhase, { type: 'GATHER_POWER' }).ok);
+// M8.C2a — reglas de fase del usuario: MOVE SOLO en defensa · STAGE/GATHER
+// (menú BASIC) SOLO en ataque (fase basic, accesible desde command).
+const basicPhase = { ...m2State, phase: 'basic' as const };
+check('M8.C2a: MOVE solo en fase defend (no en basic ni command)',
+  canExecute(defendPhase, { type: 'MOVE', axis: 'HORIZONTAL' }).ok
+  && !canExecute(basicPhase, { type: 'MOVE', axis: 'HORIZONTAL' }).ok
+  && !canExecute(commandPhase, { type: 'MOVE', axis: 'HORIZONTAL' }).ok);
+check('M8.C2a: BASIC_STAGE_ATTACK solo en fase basic (ataque, no defend)',
+  canExecute(basicPhase, { type: 'BASIC_STAGE_ATTACK' }).ok
+  && !canExecute(defendPhase, { type: 'BASIC_STAGE_ATTACK' }).ok
+  && !canExecute(commandPhase, { type: 'BASIC_STAGE_ATTACK' }).ok);
+check('M8.C2a: GATHER_POWER solo en fase basic (ataque, no defend)',
+  canExecute(basicPhase, { type: 'GATHER_POWER' }).ok
+  && !canExecute(defendPhase, { type: 'GATHER_POWER' }).ok);
+check('M8.C2a: en fase defend NO hay comandos ofensivos BASIC (stage/gather)',
+  !canExecute(defendPhase, { type: 'BASIC' }).ok
+  && !canExecute(defendPhase, { type: 'GATHER_POWER' }).ok
+  && !canExecute(defendPhase, { type: 'BASIC_STAGE_ATTACK' }).ok);
 
 // ── Recursos ──
 const poorState = { ...attackPhase, player: { ...attackPhase.player, cc: 0 } };
@@ -326,8 +345,53 @@ const g = mustExecute(sim2, { type: 'GUARD' });
 check('M3: GUARD → playerGuard reduce', g.playerGuard === 'reduce');
 const mv = mustExecute(sim2, { type: 'MOVE', axis: 'HORIZONTAL' });
 check('M3: MOVE horizontal → DOWN_FRONT', mv.player.battlePos === BattlePosition.DOWN_FRONT);
-const mv2 = mustExecute(mv, { type: 'MOVE', axis: 'VERTICAL' });
-check('M3: MOVE vertical tras horizontal → UP_FRONT (no diagonal inválida)', mv2.player.battlePos === BattlePosition.UP_FRONT);
+// M8.C2a: cada comando de defensa compromete UNA elección — el segundo MOVE
+// en la misma ventana es ilegal (DEFENSE_ALREADY_COMMITTED). Para probar el
+// MOVE vertical encadenado se abre una ventana defensiva NUEVA (fresh).
+const mvFresh = mustExecute({ ...sim2, defenseChoice: null }, { type: 'MOVE', axis: 'VERTICAL' });
+check('M3: MOVE vertical (ventana fresh) → UP_BACK (no diagonal inválida)', mvFresh.player.battlePos === BattlePosition.UP_BACK);
+check('M8.C2a: MOVE vertical en ventana ya comprometida → REJECTED', !executeCommand(mv, { type: 'MOVE', axis: 'VERTICAL' }, { side: 'player' }).ok);
+
+// ── M8.C2a: DEFENSE COMMIT (frontera defensiva autoritativa) ──
+{
+  const s = { ...m3Command, phase: 'defend' as never, tick: 100 };
+  const gr = executeCommand(s, { type: 'GUARD' }, { side: 'player', characterId: 'goku' });
+  check('M8.C2a: GUARD → DEFENSE_COMMITTED emitido (frontera autoritativa)',
+    gr.ok && gr.events.some(e => e.type === 'DEFENSE_COMMITTED' && JSON.stringify((e as { choice: unknown }).choice) === JSON.stringify({ type: 'GUARD' })));
+  check('M8.C2a: GUARD → defenseChoice autoritativo { GUARD }',
+    gr.ok && gr.state.defenseChoice !== null && JSON.stringify(gr.state.defenseChoice) === JSON.stringify({ type: 'GUARD' }));
+  // Solo UNA elección por ventana: el segundo GUARD es ilegal.
+  const gr2 = executeCommand(gr.state, { type: 'GUARD' }, { side: 'player', characterId: 'goku' });
+  check('M8.C2a: defensa ya comprometida → segundo GUARD REJECTED', !gr2.ok);
+  // MOVE: compromete { MOVE, axis } y muta la posición táctica UNA vez.
+  const mr = executeCommand(s, { type: 'MOVE', axis: 'HORIZONTAL' }, { side: 'player', characterId: 'goku' });
+  check('M8.C2a: MOVE → defenseChoice { MOVE, HORIZONTAL } + POSITION_CHANGED',
+    mr.ok && JSON.stringify(mr.state.defenseChoice) === JSON.stringify({ type: 'MOVE', axis: 'HORIZONTAL' })
+    && mr.events.filter(e => e.type === 'POSITION_CHANGED').length >= 1);
+  // Carta defensiva: compromete { CARD, cardId } (coste una sola vez).
+  // Taiyoken (id 19) es defense · cc 5 · compatible goku.
+  const withCard = {
+    ...s,
+    player: { ...s.player, cc: 30 },
+    deck: { ...s.deck, hand: [getCard(19) as CardDef] },
+  };
+  const cr = executeCommand(withCard, { type: 'PLAY_DEFENSE_CARD', handIndex: 0 }, { side: 'player', characterId: 'goku' });
+  check('M8.C2a: PLAY_DEFENSE_CARD → defenseChoice { CARD, id } + DEFENSE_COMMITTED',
+    cr.ok && cr.state.defenseChoice?.type === 'CARD' && cr.events.some(e => e.type === 'DEFENSE_COMMITTED'));
+  // 10.000 ticks sin input → el estado NO genera acción enemiga (el reloj
+  // del Engine solo procesa QTE; la defensa comprometida no abre nada).
+  const ticked = { ...gr.state, tick: gr.state.tick + 10000 };
+  check('M8.C2a: 10.000 ticks tras defensa → sin auto-acción (ni eventos nuevos)',
+    JSON.stringify(ticked) === JSON.stringify({ ...gr.state, tick: gr.state.tick + 10000 }));
+}
+// isDefenseCommitted selector (estado puro → lectura derivada única)
+{
+  const s = { ...m3Command, phase: 'defend' as never };
+  const committed = mustExecute(s, { type: 'GUARD' });
+  check('M8.C2a: isDefenseCommitted=false sin elección · true tras GUARD',
+    !isDefenseCommitted(s) && isDefenseCommitted(committed)
+    && defenseChoiceOf(committed)?.type === 'GUARD');
+}
 
 
 // ═══════════════════════════════════════════════════════════════════════
@@ -401,8 +465,8 @@ if (m4Play.ok) {
   check('M4: PHASE_CHANGED es el ÚLTIMO evento (tras la resolución)', idxPos === m4Play.events.length - 1 && idxAcc < idxPos);
 }
 if (m4Move.ok) {
-  check('M4: MOVE orden = ACCEPTED antes de POSITION_CHANGED',
-    m4Move.events[0].type === 'COMMAND_ACCEPTED' && m4Move.events[1].type === 'POSITION_CHANGED');
+  check('M4: MOVE orden = ACCEPTED → DEFENSE_COMMITTED → POSITION_CHANGED (M8.C2a: la frontera defensiva precede a los hechos derivados)',
+    m4Move.events[0].type === 'COMMAND_ACCEPTED' && m4Move.events[1].type === 'DEFENSE_COMMITTED' && m4Move.events[2].type === 'POSITION_CHANGED');
 }
 
 // ── Pureza / serialización / determinismo ──

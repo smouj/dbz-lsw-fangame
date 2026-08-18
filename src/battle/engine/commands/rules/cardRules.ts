@@ -41,12 +41,14 @@ export function canPlayCard(state: BattleState, side: BattleSide, handIndex: num
   return hasCc(state, side, card.cc);
 }
 
-/** Regla completa de carta defensiva: mano + CC + compatible + defensiva. */
+/** Regla completa de carta defensiva: mano + CC + compatible + defensiva.
+ *  M8.C2a: SOLO UNA elección por ventana defensiva. */
 export function canPlayDefenseCard(state: BattleState, side: BattleSide, handIndex: number, characterId: string): CommandCheck {
   const card = cardInHand(state, side, handIndex);
   if (!card) return reject('CARD_NOT_IN_HAND');
   if (!isDefensiveCard(card)) return reject('WRONG_PHASE');
   if (!isCardCompatible(card, characterId)) return reject('CARD_NOT_COMPATIBLE');
+  if (side === 'player' && state.defenseChoice !== null) return reject('DEFENSE_ALREADY_COMMITTED');
   return hasCc(state, side, card.cc);
 }
 

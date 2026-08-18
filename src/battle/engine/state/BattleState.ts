@@ -28,6 +28,7 @@ import type { BattlePosition } from '../../../data/positions';
 import type { CardDef } from '../../../data/cards';
 import type { StageKey } from '../../stageInputMap';
 import type { QteState } from '../../../data/actionFidelity';
+import type { MoveAxis } from '../../../data/positions';
 
 // ─── Fase de batalla (las mismas del juego real — main.tsx) ───
 export type BattlePhase =
@@ -63,6 +64,21 @@ export interface StageStages {
   spd: number;
   guard: number;
 }
+
+// ─── Elección defensiva del jugador (M8.C2a — autoritativa, en el Engine) ───
+// El jugador compromete GUARD / MOVE / carta defensiva como UNA elección
+// tipada. El Runtime/presentación NUNCA deduce "como guard=true, supongo
+// que eligió guard": la elección queda explícita en el estado y la
+// cinematografía enemiga sabe qué preparación defensiva representar.
+// Semántica de estados:
+//   defenseChoice === null  → DEFENSE_AWAITING_INPUT (solo la fase 'defend'
+//                             hace legal el comando; el enemigo NO actúa)
+//   defenseChoice !== null  → DEFENSE_COMMITTED (la resolución enemiga
+//                             puede abrirse; ya no hay ventana interactiva)
+export type DefenseChoice =
+  | { type: 'GUARD' }
+  | { type: 'MOVE'; axis: MoveAxis }
+  | { type: 'CARD'; cardId: number };
 
 // ─── Guardia activa (cartas Taiyoken/Avoid/Endurance/Absorb/Foresight) ───
 export type GuardType = 'avoid_beam' | 'avoid_damage' | 'reduce' | 'absorb' | 'cancel';
@@ -137,6 +153,8 @@ export interface BattleState {
   pAcc: number;                       // turnos de +30% precisión
   pEva: number;                       // turnos de +30% evasión
   playerGuard: GuardType | null;
+  /** M8.C2a — elección defensiva comprometida (null = esperando input). */
+  defenseChoice: DefenseChoice | null;
   pLockOn: boolean;
 
   // ── power (GATHER) ──

@@ -85,3 +85,16 @@ export function handOf(state: BattleState, side: BattleSide): CardDef[] {
 export function qteOf(state: BattleState) {
   return state.stageQte;
 }
+
+/** M8.C2a — ¿defensa comprometida? (choice !== null). Solo esto abre la
+ *  resolución del atacante: la fase 'defend' sin choice espera input real,
+ *  indefinidamente. La presentación consulta este selector — nunca deduce
+ *  la elección de flags sueltos (guard=true ⇒ GUARD, etc.). */
+export function isDefenseCommitted(state: BattleState): boolean {
+  return state.defenseChoice !== null;
+}
+
+/** M8.C2a — elección defensiva actual (null = AWAITING_INPUT). */
+export function defenseChoiceOf(state: BattleState): BattleState['defenseChoice'] {
+  return state.defenseChoice;
+}

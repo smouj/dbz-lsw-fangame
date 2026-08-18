@@ -76,6 +76,11 @@ export function buildPresentationTimeline(input: PresentationInput): BattleTimel
   const { events, context } = input;
   const out: TimelineEntry[] = [];
   let activeAction: ActionState | null = null;
+  /** M8.C2a — lado que comprometió defensa (DEFENSE_COMMITTED). Mientras esté
+   *  activo, GUARD_STARTED NO emite pose inmediata: la guardia visual ocurre
+   *  en el CONTACTO del ataque (ATTACK_HIT) — contrato C2a §7 (guard idle →
+   *  block en contacto). Se limpia al retornar a OVERVIEW. */
+  let defenseSide: BattleSide | null = null;
 
   const other = (side: BattleSide): BattleSide => (side === 'player' ? 'enemy' : 'player');
 
@@ -169,6 +174,8 @@ export function buildPresentationTimeline(input: PresentationInput): BattleTimel
           add({ type: 'FIGHTER_VISIBILITY', tick: env.tick + canon.totalFrames, role: 'TARGET', side: target, visible: true }, env, e.action.id, e.action.fidelity);
           add({ type: 'FIGHTER_POSE', tick: env.tick + canon.totalFrames, durationTicks: POSE_HOLD, role: 'ACTOR', side: e.side, pose: 'idle' }, env, e.action.id, e.action.fidelity);
           add({ type: 'CAMERA', tick: env.tick + canon.totalFrames, action: 'RESET' }, env, e.action.id, e.action.fidelity);
+          // M8.C2a — el exchange cerró: la frontera defensiva expira.
+          defenseSide = null;
         }
         break;
       }
@@ -219,6 +226,7 @@ export function buildPresentationTimeline(input: PresentationInput): BattleTimel
           add({ type: 'SCENE', tick: r(40), durationTicks: 1, mode: 'OVERVIEW', background: context.overviewBackground }, env, action, fidelity);
           add({ type: 'FIGHTER_VISIBILITY', tick: r(40), role: 'TARGET', side: e.target, visible: true }, env, action, fidelity);
           add({ type: 'CAMERA', tick: r(40), action: 'RESET' }, env, action, fidelity);
+          defenseSide = null; // M8.C2a — el exchange cerró (frontera defensiva expira)
           break;
         }
         // Resto de acciones (melee/beam sin QTE): el impacto se ancla al beat
@@ -235,7 +243,15 @@ export function buildPresentationTimeline(input: PresentationInput): BattleTimel
         // strike del ACTOR usa el strikePose del perfil (no attack_fwd
         // genérico) para conservar la fidelidad de la familia.
         const profileTargetPose = activeAction?.profile?.impact?.targetPose;
-        const reactionPose = e.outcome === 'block' ? 'guard'
+        // M8.C2a — con defensa comprometida, la reacción del defensor es
+        // guard (melee) o beam_guard (beam) — la guardia se presenta AQUÍ,
+        // en el contacto (contrato §7). Sin defensa: reacción legacy por
+        // perfil/outcome.
+        const defending = defenseSide === e.target;
+        const isBeamAttack = !!activeAction && ['ray', 'wave', 'ball', 'disk', 'sword', 'special'].includes(activeAction.action.visual);
+        const reactionPose = defending
+          ? (isBeamAttack ? 'beam_guard' : 'guard')
+          : e.outcome === 'block' ? 'guard'
           : e.outcome === 'guard' ? 'evade'
           : (profileTargetPose ?? 'knockback_back');
         const strikePose = e.outcome === 'hit'
@@ -339,9 +355,38 @@ export function buildPresentationTimeline(input: PresentationInput): BattleTimel
       }
 
       // ── DEFENSAS / MOVIMIENTO / GATHER (overview) ──
+      case 'DEFENSE_COMMITTED': {
+        // M8.C2a — frontera defensiva: el jugador comprometió UNA elección
+        // (GUARD | MOVE | CARD). La presentación entra en DEFENDER_ACTION
+        // (cámara en el defensor) con la PREPARACIÓN defensiva; la defensa
+        // visual efectiva (guard/beam_guard) ocurre en el CONTACTO con el
+        // ataque enemigo (ATTACK_HIT), NO al elegir. El plano NO crea ni
+        // reparenta actores: los mismos FighterActor cambian de visibilidad.
+        const defender = e.side;
+        defenseSide = defender;
+        const prepPose =
+          e.choice.type === 'GUARD' ? 'idle'
+          : e.choice.type === 'MOVE' ? (e.choice.axis === 'HORIZONTAL' ? 'move_front' : 'move_back')
+          : 'idle';
+        // Prep breve (12 ticks) antes de que el atacante pueda entrar.
+        add({ type: 'SCENE', tick: env.tick, durationTicks: 12, mode: 'DEFENDER_ACTION', background: context.actionBackground }, env, 'defense_prep', 'INFERRED');
+        add({ type: 'FIGHTER_POSE', tick: env.tick, durationTicks: 10, role: 'TARGET', side: defender, pose: prepPose }, env, 'defense_prep', 'INFERRED');
+        // Carta defensiva/support: FX visible ANTES del contacto (C2a §9).
+        if (e.choice.type === 'CARD') {
+          add({ type: 'AURA', tick: env.tick, durationTicks: 10, role: 'TARGET', side: defender, variant: 'support', visible: true }, env, 'defense_prep', 'INFERRED');
+        }
+        add({ type: 'AUDIO', tick: env.tick, cue: e.choice.type === 'MOVE' ? 'step' : 'guard' }, env, 'defense_prep', 'INFERRED');
+        break;
+      }
       case 'GUARD_STARTED': {
-        add({ type: 'FIGHTER_POSE', tick: env.tick, durationTicks: POSE_HOLD, role: 'TARGET', side: e.side, pose: e.guard === 'avoid_beam' ? 'beam_guard' : 'guard' }, env);
-        add({ type: 'AUDIO', tick: env.tick, cue: 'guard' }, env);
+        // M8.C2a — con defensa comprometida, la pose guard NO se emite aquí:
+        // la guardia se presenta en el contacto del ataque (ATTACK_HIT).
+        // Sin defensa comprometida (p.ej. cartas defensivas en medio de un
+        // ataque enemigo), se mantiene la pose inmediata legacy.
+        if (defenseSide !== e.side) {
+          add({ type: 'FIGHTER_POSE', tick: env.tick, durationTicks: POSE_HOLD, role: 'TARGET', side: e.side, pose: e.guard === 'avoid_beam' ? 'beam_guard' : 'guard' }, env);
+          add({ type: 'AUDIO', tick: env.tick, cue: 'guard' }, env);
+        }
         break;
       }
       case 'POSITION_CHANGED': {

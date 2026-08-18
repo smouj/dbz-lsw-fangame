@@ -11,6 +11,7 @@ export type {
   BattleSide,
   BattleFighterState,
   StageStages,
+  DefenseChoice,
   GuardType,
   BattleQteState,
   EnemyAiState,
@@ -35,4 +36,6 @@ export {
   hpOf,
   handOf,
   qteOf,
+  isDefenseCommitted,
+  defenseChoiceOf,
 } from './battleStateSelectors';
