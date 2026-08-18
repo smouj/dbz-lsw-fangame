@@ -810,7 +810,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
   const eDeckRef = useRef(eDeckState);
   eDeckRef.current = eDeckState;
   const [selectedCard, setSelectedCard] = useState<number | null>(null);
-  const [log, setLog] = useState<string[]>([t('battle.start')]);
+  const [, setLog] = useState<string[]>([t('battle.start')]);
   // Cuadro de diálogo GBC: mensaje grande blanco/negro durante las acciones
   const [gbcMsg, setGbcMsg] = useState<string | null>(null);
   const gbcTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -3478,11 +3478,6 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
         )}
           </>
         )}
-      </div>
-
-      {/* Log */}
-      <div className="battle-log">
-        {log.slice(-3).map((msg, i) => <div key={i} className="log-entry">{msg}</div>)}
       </div>
     </div>
   );

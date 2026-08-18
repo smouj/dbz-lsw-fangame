@@ -671,13 +671,6 @@ export function HudModule() {
                 </div>
               )}
             </div>
-
-            {/* Log de batalla (últimos 3 mensajes) — mismo markup que el juego */}
-            <div className="battle-log">
-              <div className="log-entry">GOKU STRIKES FIRST (+3 CC)</div>
-              <div className="log-entry">KAMEHAMEHA — 12 DMG</div>
-              <div className="log-entry">PICCOLO JOINT</div>
-            </div>
           </div>
         </div>
 

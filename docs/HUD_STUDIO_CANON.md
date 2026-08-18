@@ -44,7 +44,7 @@
 5. **Chips STAGE**: 52×52 oscuros `#141414`, done ✓ verde, current borde `#1f6fa3` sin escala, prompt 76×76 (cabe en 80px).
 6. **Ventana del preview**: estable en TODAS las vistas (1056×570, ratio ≈1.85) — la fila de controles tiene `min-height: 96px`.
 7. **INTRO**: sin ROUND/READY (spec 2026-08-18), retratos centrados exactos (0px desvío), VS pixel art.
-8. **Colores del texto**: por defecto negro carbón; rojo solo como acento puntual (actor diálogo, timer QTE). Sin azules en tooltips/diálogo.
+8. **Colores del texto**: por defecto negro carbón; rojo solo como acento puntual (actor diálogo, timer QTE). Sin azules en tooltips/diálogo — tampoco en fondos/bordes de cajas o elementos (el chip 'input actual' del STAGE usa borde DORADO #f0d060, no azul).
 9. **GAP UNIFICADO 10px**: separación equidistante entre TODOS los botones/cartas de los paneles (command-strip, mano, basic-menu, move-axis, limit-cards-row, chips STAGE, prompt→tiempo). La única excepción es el ancla del STAGE (secuencia→prompt anclado a la derecha).
 10. **Barras HP estilo lucha**: 24px de alto, relleno anclado al lado CENTRO (drena hacia dentro), hueco central `clamp(84-150px)`, sin número dentro (tooltip HP).
 11. **Badge central**: VS (VT323 38-44px) + ROUND debajo — SIN caja, SIN líneas, SIN badge ATK (la fase ATTACK/DEFEND vive bajo la barra HP).
