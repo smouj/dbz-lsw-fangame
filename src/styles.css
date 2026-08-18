@@ -9016,6 +9016,33 @@ button:focus-visible, .chapter-node:focus-visible {
   overflow: hidden;
   width: 100%;
 }
+
+/* ─── Vista INTRO del HUD Studio = preview ESTÁTICO ───
+   En el juego la intro se ANIMA y se desvanece (window-out 5.2s,
+   READY/FIGHT con delays). En el mockup debe verse SIEMPRE completa:
+   animaciones congeladas en el estado visible + anclas/zona de debug
+   ocultas (se colaban a través del overlay translúcido).
+   OJO: dev-intro-view vive en el battle-screen (descendiente del
+   wrapper .dev-hud-preview) — selector con espacio, no encadenado. */
+.dev-hud-preview .dev-intro-view .battle-intro,
+.dev-hud-preview .dev-intro-view .intro-gbc-window,
+.dev-hud-preview .dev-intro-view .intro-vs,
+.dev-hud-preview .dev-intro-view .intro-gbc-name,
+.dev-hud-preview .dev-intro-view .intro-gbc-form {
+  animation: none;
+}
+.dev-hud-preview .dev-intro-view .intro-ready,
+.dev-hud-preview .dev-intro-view .intro-fight {
+  animation: none;
+  opacity: 1;
+}
+.dev-hud-preview .dev-intro-view .intro-flash {
+  display: none;
+}
+.dev-hud-preview .dev-intro-view .dev-fighter-anchor,
+.dev-hud-preview .dev-intro-view .dev-anim-zone {
+  display: none;
+}
 .dev-hud-real-preview {
   width: 100%;
   min-width: 0;

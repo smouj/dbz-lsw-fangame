@@ -233,7 +233,7 @@ export function HudModule() {
       <div className="dev-hud-grid">
         {/* ─── PREVIEW: el HUD con el tema actual (estático, paridad real) ─── */}
         <div className="dev-hud-preview" style={mockVars}>
-          <div className="battle-screen view-overview dev-hud-real-preview">
+          <div className={`battle-screen view-overview dev-hud-real-preview ${view === 'INTRO' ? 'intro-active dev-intro-view' : ''}`}>
             {/* INTRO */}
             {view === 'INTRO' && (
               <div className="battle-intro">
