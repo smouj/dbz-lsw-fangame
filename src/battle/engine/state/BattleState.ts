@@ -143,5 +143,8 @@ export interface BattleState {
 
   // ── deterministic ──
   tick: number;                       // reloj GBC en ticks (59.7275 fps)
-  rngState: unknown;                  // M2+: RNG determinista (seed/contador)
+  /** Seed explícito (entra desde fuera — nunca Date.now/crypto). */
+  seed: number;
+  /** Estado del PRNG canónico (M5) — avanza SOLO con tiradas de gameplay. */
+  rngState: number;
 }

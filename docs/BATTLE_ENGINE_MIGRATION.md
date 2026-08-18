@@ -155,7 +155,28 @@ attacker/defender/CC/HP/position/pending action/seed/tick) · **Battle Events**
   BattleEvent → poses canónicas de los sheets perfectos por familia
   (stage/damage/beam/support/gather/guard/move), con aura power/support y
   fallbacks de manifest (V9). 6 checks en verify:battle-engine.
-- **M5 (siguiente)** — RNG determinista (daño/acc) y emisión real de
-  DAMAGE_APPLIED/FIGHTER_DEFEATED · **M6** ticks · **M7** Presentation Adapter
-  (consume el canon + perfiles firma) · **M8** integración/cutover ·
-  **M9** Replay.
+- **M5 ✅ — RNG determinista + daño** (`src/battle/engine/random/prng.ts` +
+  `combat/resolution.ts` + `reducers/damageReducer.ts`):
+  - PRNG canónico mulberry32 puro (initRng/nextRng/rollPercent/rollRange);
+    `seed` explícito + `rngState` en BattleState (default canónico 1; nunca
+    Date.now/Math.random — verificado por escaneo de TODO el engine).
+  - RNG SOLO cuando hace falta: rechazado → 0 avances · determinista → 0
+    avances · damage/beam card → 1 (accuracy) + 1 (respuesta) + 1 (eje o
+    hit/block/avoid), miss → solo 1.
+  - P1: PLAY_CARD inicializa REALMENTE su QTE (stageQte + secuencia pool
+    determinista por tick + ventana GBC por profundidades + QTE_STARTED).
+  - P2: PLAY_LIMIT_CARD cobra el CC REAL del catálogo (+ INSUFFICIENT_CC).
+  - applyDamage = única ruta de HP: DAMAGE_APPLIED (amount = hpBefore −
+    hpAfter) → FIGHTER_DEFEATED en orden causal · ATTACK_HIT/ATTACK_MISSED
+    (miss observable, sin amount=0).
+  - QTE fallo → COUNTER_WINDOW (el GBC no rechaza inputs) · DEFEND = daño
+    parcial por progreso · TIMEOUT = daño real del counter (fórmula legacy).
+  - Shadow parity: HIT/BLOCK/AVOID (90 combos), accuracy ±30, attackDamage,
+    stage/counter/partial, powerFor/spdFor — mismos inputs → mismos veredictos.
+  - Golden determinista: mismo seed+comandos ⇒ mismo state+events+rngState.
+  - verify:battle-engine: 110 → **149 checks** · suite completa verde ·
+    tsc · build OK.
+- **M6 (siguiente)** — reloj GBC (ticks como autoridad, timers del QTE) ·
+  **M7** Presentation Adapter (consume canon + perfiles firma + eventos) ·
+  **M8** integración/cutover (soporte completo, OHKO, equipo, defensa con
+  carta entrante) · **M9** Replay.

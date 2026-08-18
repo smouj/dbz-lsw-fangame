@@ -1,6 +1,6 @@
 {
   "name": "m4_card_attack",
-  "description": "JOINT → PLAY_CARD (carta 25, cc 19): orden contractual completo del stream",
+  "description": "JOINT → PLAY_CARD (carta 25, cc 19): orden contractual completo del stream (M5: QTE_STARTED tras ACTION_STARTED)",
   "setup": { "phase": "command", "playerCc": 30 },
   "deck": [4, 25],
   "commands": [
@@ -9,6 +9,6 @@
   ],
   "expectedEvents": [
     "COMMAND_ACCEPTED", "PHASE_CHANGED",
-    "COMMAND_ACCEPTED", "CC_SPENT", "CARD_PLAYED", "CARD_DISCARDED", "ACTION_STARTED", "PHASE_CHANGED"
+    "COMMAND_ACCEPTED", "CC_SPENT", "CARD_PLAYED", "CARD_DISCARDED", "ACTION_STARTED", "QTE_STARTED", "PHASE_CHANGED"
   ]
 }

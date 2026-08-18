@@ -101,7 +101,7 @@ export type BattleEvent =
   | { type: 'POWER_CHANGED'; from: PowerState; to: PowerState }
 
   // ── QTE / Stage Attack ──
-  | { type: 'QTE_STARTED'; side: BattleSide; level: 3 | 4; seq: StageKey[]; limitFrames: number }
+  | { type: 'QTE_STARTED'; side: BattleSide; level: 3 | 4 | 5 | 6; seq: StageKey[]; limitFrames: number }
   | { type: 'QTE_INPUT_RESOLVED'; side: BattleSide; input: StageKey; success: boolean; indexBefore: number; indexAfter: number }
   | { type: 'QTE_COMPLETED'; side: BattleSide; correct: number; total: number; result: 'FULL_SUCCESS' }
   | { type: 'QTE_FAILED'; side: BattleSide; input: StageKey }
@@ -111,6 +111,10 @@ export type BattleEvent =
   // ── acciones ──
   | { type: 'ACTION_STARTED'; side: BattleSide; action: BattleActionDescriptor }
   | { type: 'ACTION_RESOLVED'; side: BattleSide; action: BattleActionDescriptor }
+
+  // ── resolución de ataque (precisión/evasión — M5) ──
+  | { type: 'ATTACK_HIT'; source: BattleSide; target: BattleSide; outcome: 'hit' | 'block' | 'guard' }
+  | { type: 'ATTACK_MISSED'; source: BattleSide; target: BattleSide }
 
   // ── daño / derrota (tipos listos en M4; el Engine los emite en M5) ──
   | { type: 'DAMAGE_APPLIED'; source: BattleSide; target: BattleSide; amount: number; hpBefore: number; hpAfter: number; cause: DamageCause }

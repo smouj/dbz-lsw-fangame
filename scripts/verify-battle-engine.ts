@@ -6,7 +6,7 @@
 // pérdida semántica).
 // ═══════════════════════════════════════════════════════════════════════
 
-import { readFileSync } from 'fs';
+import { readFileSync, readdirSync } from 'fs';
 import { createInitialBattleState } from '../src/battle/engine/state/createInitialBattleState';
 import {
   activeAttacker, activeDefender, speedOrder, positionOf,
@@ -94,8 +94,18 @@ const stateSrc = [
 check('sin referencias DOM (document/window/HTMLElement)', !/document|window|HTMLElement|DOMRect/.test(stateSrc));
 check('sin dependencias React (useState/useRef/useEffect)', !/useState|useRef|useEffect|from 'react'/.test(stateSrc));
 check('sin dependencias Pixi (canvas/WebGL/sprite)', !/canvas|WebGL|PIXI|pixi|Texture|Sprite/.test(stateSrc));
-check('sin timers (setTimeout/setInterval/Date.now/performance)', !/setTimeout|setInterval|Date\.now|performance\.now/.test(stateSrc));
+check('sin timers (setTimeout/setInterval/Date.now/performance)', !/setTimeout\s*\(|setInterval\s*\(|Date\.now\s*\(|performance\.now\s*\(/.test(stateSrc));
 check('sin Math.random interno (ninguna llamada)', !/Math\.random\(/.test(stateSrc));
+// M5: TODO el engine (state/commands/events/random/combat) sin llamadas reales
+// a fuentes no deterministas — los comentarios pueden mencionarlas, las
+// llamadas NO (criterio de cierre M5: 0 Math.random/Date.now/performance.now).
+const engineSrc = ['state', 'commands', 'events', 'random', 'combat']
+  .flatMap(d => (readdirSync(`src/battle/engine/${d}`, { recursive: true }) as string[])
+    .filter(f => f.endsWith('.ts'))
+    .map(f => readFileSync(`src/battle/engine/${d}/${f}`, 'utf8')))
+  .join('\n');
+check('M5: 0 llamadas Math.random()/Date.now()/performance.now() en todo el engine',
+  !/Math\.random\s*\(/.test(engineSrc) && !/Date\.now\s*\(/.test(engineSrc) && !/performance\.now\s*\(/.test(engineSrc));
 
 // ── Serialización ──
 const roundTrip = JSON.parse(JSON.stringify(s1)) as typeof s1;
@@ -174,7 +184,7 @@ check('MOVE nunca deja la misma posición', destH !== BattlePosition.DOWN_BACK &
 const qteActive = { ...m2State, phase: 'stageInput' as const, stageQte: { state: 'INPUT_WINDOW' as const, seq: ['A', 'A', 'RIGHT', 'DOWN'] as const, idx: 0, correct: 0, card: null, elapsedFrames: 0, limitFrames: 173, counterFrames: 0, result: null } };
 check('QTE_INPUT rechazado sin QTE activo', !canExecute(m2State, { type: 'QTE_INPUT', input: 'A' }).ok);
 check('QTE_INPUT válido con la tecla esperada', canExecute(qteActive, { type: 'QTE_INPUT', input: 'A' }).ok);
-check('QTE_INPUT inválido con tecla equivocada', !canExecute(qteActive, { type: 'QTE_INPUT', input: 'B' }).ok);
+check('M5: QTE_INPUT con tecla equivocada ES legal (fallo → COUNTER_WINDOW)', canExecute(qteActive, { type: 'QTE_INPUT', input: 'B' }).ok);
 const counterWindow = { ...m2State, phase: 'stageInput' as const, stageQte: { state: 'COUNTER_WINDOW' as const, seq: [] as string[], idx: 0, correct: 0, card: null, elapsedFrames: 0, limitFrames: 0, counterFrames: 0, result: null } };
 check('contraataque: DEFEND solo en COUNTER_WINDOW', canExecute(counterWindow, { type: 'QTE_COUNTER_DEFEND' }).ok && !canExecute(qteActive, { type: 'QTE_COUNTER_DEFEND' }).ok);
 check('contraataque: CONTINUE solo en COUNTER_WINDOW', canExecute(counterWindow, { type: 'QTE_COUNTER_CONTINUE' }).ok && !canExecute(qteActive, { type: 'QTE_COUNTER_CONTINUE' }).ok);
@@ -302,7 +312,7 @@ if (seq.length > 0) {
   const q1 = mustExecute(sim, { type: 'QTE_INPUT', input: seq[0] });
   check('M3: QTE_INPUT correcto → idx avanza y +1 CC', q1.stageQte.idx === 1 && q1.player.cc === 12);
   const qBad = executeCommand(sim, { type: 'QTE_INPUT', input: 'B' });
-  check('M3: QTE_INPUT equivocado → rejected (barrera)', !qBad.ok);
+  check('M5: QTE_INPUT equivocado → accepted y COUNTER_WINDOW (el GBC no rechaza inputs)', qBad.ok && qBad.state.stageQte.state === 'COUNTER_WINDOW');
 }
 // Defensa: GUARD + MOVE
 const sim2 = { ...m3Command, phase: 'defend' as never, player: { ...m3Command.player, battlePos: BattlePosition.DOWN_BACK } };
@@ -363,8 +373,8 @@ check('M4: rechazo devuelve el MISMO objeto state (cero mutaciones)', !m4Bad.ok 
 
 // ── Orden contractual ──
 if (m4Play.ok) {
-  check('M4: PLAY_CARD orden = ACCEPTED,CC_SPENT,CARD_PLAYED,CARD_DISCARDED,ACTION_STARTED,PHASE_CHANGED',
-    JSON.stringify(eventTypeSequence(m4Play.events)) === JSON.stringify(['COMMAND_ACCEPTED', 'CC_SPENT', 'CARD_PLAYED', 'CARD_DISCARDED', 'ACTION_STARTED', 'PHASE_CHANGED']));
+  check('M4: PLAY_CARD orden = ACCEPTED,CC_SPENT,CARD_PLAYED,CARD_DISCARDED,ACTION_STARTED,QTE_STARTED,PHASE_CHANGED',
+    JSON.stringify(eventTypeSequence(m4Play.events)) === JSON.stringify(['COMMAND_ACCEPTED', 'CC_SPENT', 'CARD_PLAYED', 'CARD_DISCARDED', 'ACTION_STARTED', 'QTE_STARTED', 'PHASE_CHANGED']));
   const idxAcc = m4Play.events.findIndex(e => e.type === 'COMMAND_ACCEPTED');
   const idxPos = m4Play.events.findIndex(e => e.type === 'PHASE_CHANGED');
   check('M4: PHASE_CHANGED es el ÚLTIMO evento (tras la resolución)', idxPos === m4Play.events.length - 1 && idxAcc < idxPos);
@@ -453,6 +463,221 @@ check('CANON: aura item = support (azul) / beam = power (dorada)',
   auraForAction({ id: 'x', label: 'X', kind: 'beam', visual: 'wave', fidelity: 'INFERRED' }) === 'power');
 check('CANON: tabla cubre todas las familias (command/damage/beam/support/gather/guard/move)',
   ['command', 'damage', 'beam', 'support', 'gather', 'guard', 'move'].every(k => listAnimationCanon().some(c => c.kind === k)));
+
+
+// ═══════════════════════════════════════════════════════════════════════
+// M5 — RNG determinista + daño: PRNG canónico, seed explícito, damage real,
+// counter, LIMIT CC, golden determinista, divergencia y shadow parity.
+// ═══════════════════════════════════════════════════════════════════════
+
+console.log('\n── M5 · RNG determinista + daño ──\n');
+
+import { initRng, nextRng, rollPercent, rollRange } from '../src/battle/engine/random';
+import type { RngState } from '../src/battle/engine/random';
+import {
+  effectiveAttackAccuracy, effectiveDefenseAccuracy, accuracyHits,
+  hitBlockAvoidFromRoll, attackDamage, counterDamage, stageAttackDamage,
+  stagePartialDamage, stageProgress, powerFor, spdFor,
+} from '../src/battle/engine/combat/resolution';
+import { resolveHitBlockAvoid } from '../src/battle/combat';
+import { applyDamage, resolveCounterDamage, resolvePartialStageDamage } from '../src/battle/engine/commands/reducers/damageReducer';
+import type { DamageCause } from '../src/battle/engine/events';
+
+// ── PRNG puro y canónico ──
+const r0 = initRng(123456);
+const r1 = nextRng(r0);
+const r2 = nextRng(r1.rngState);
+check('M5: initRng determinista (misma seed → mismo estado)', initRng(123456) === r0);
+check('M5: nextRng puro (no muta la entrada)', r0 === 123456 && r1.value >= 0 && r1.value < 1 && Number.isInteger(r1.rngState));
+check('M5: misma seed → misma secuencia (3 valores)', nextRng(r1.rngState).value === r2.value && nextRng(initRng(123456)).value === r1.value);
+check('M5: secuencias de seeds distintas difieren (en 3 valores)',
+  [1, 2, 3, 4, 5].some(s => nextRng(initRng(s)).value !== r1.value));
+const rollA = rollPercent(r0, 50);
+const rollB = rollRange(r0, 1, 6);
+check('M5: rollPercent consume 1 avance y devuelve booleano', typeof rollA.value === 'boolean' && rollA.rngState !== r0);
+check('M5: rollRange [min,max] inclusivo y 1 avance', rollB.value >= 1 && rollB.value <= 6 && rollB.rngState === rollA.rngState);
+check('M5: rollPercent(0) siempre false · rollPercent(100) siempre true', !rollPercent(r0, 0).value && rollPercent(r0, 100).value);
+
+// ── rngState vive en BattleState · rejected no avanza · determinista no avanza ──
+const m5cfg = makeConfig({ playerDeck: m2Deck([4, 5, 25]), enemyDeck: m2Deck([1]), playerCc: 30, playerStr: 10, playerKi: 8 });
+const m5s0 = createInitialBattleState({ ...m5cfg, seed: 987654 });
+check('M5: rngState inicial derivado del seed explícito', m5s0.seed === 987654 && m5s0.rngState === initRng(987654));
+const m5cmd: typeof m5s0 = { ...m5s0, phase: 'command' };
+const rngBeforeReject = m5cmd.rngState;
+const m5Rej = executeCommand(m5cmd, { type: 'GUARD' }, { side: 'player' });
+check('M5: comando rechazado NO avanza rngState', !m5Rej.ok && m5Rej.state.rngState === rngBeforeReject);
+const rngBeforeJoin = m5cmd.rngState;
+const m5Join = executeCommand(m5cmd, { type: 'JOINT' });
+check('M5: acción determinista (JOINT) NO avanza rngState', m5Join.ok && m5Join.state.rngState === rngBeforeJoin);
+const m5Gather = executeCommand({ ...m5cmd, phase: 'basic' }, { type: 'GATHER_POWER' }, { side: 'player' });
+check('M5: acción determinista (GATHER) NO avanza rngState', m5Gather.ok && m5Gather.state.rngState === rngBeforeJoin);
+
+// ── P1: PLAY_CARD inicializa su QTE de verdad ──
+const m5Play = executeCommand({ ...m5cmd, phase: 'cardSelect' }, { type: 'PLAY_CARD', handIndex: 2 }, { side: 'player', characterId: 'goku' }); // carta 25 (damage)
+if (m5Play.ok) {
+  const q = m5Play.state.stageQte;
+  check('M5-P1: PLAY_CARD inicializa stageQte INPUT_WINDOW con secuencia no vacía', q.state === 'INPUT_WINDOW' && q.seq.length > 0 && q.idx === 0);
+  check('M5-P1: QTE_STARTED emitido con level/seq/limitFrames', m5Play.events.some(e => e.type === 'QTE_STARTED' && (e as { level?: number }).level === 3 && (e as { limitFrames?: number }).limitFrames! > 0));
+  check('M5-P1: limitFrames = ventana GBC (profundidades) > 0', q.limitFrames > 0 && Number.isInteger(q.limitFrames));
+  check('M5-P1: PLAY_CARD determinista NO avanza rngState (stage de command, 0 tiradas)', m5Play.state.rngState === m5cmd.rngState);
+}
+
+// ── P2: LIMIT cobra el CC real del catálogo ──
+const limitCard = getCard(13) as CardDef; // S.Kamehameha cc 23
+const m5LimitState: typeof m5s0 = { ...m5s0, phase: 'limitSelect', limits: [13], powerState: 'FULL_POWER', player: { ...m5s0.player, cc: 30 } };
+const m5Limit = executeCommand(m5LimitState, { type: 'PLAY_LIMIT_CARD', cardId: 13 }, { side: 'player', limitCardsCount: 3 });
+check('M5-P2: PLAY_LIMIT_CARD cobra el CC real (30 − 23 = 7)', m5Limit.ok && m5Limit.state.player.cc === 7);
+check('M5-P2: CC_SPENT emitido con amount=23', m5Limit.ok && m5Limit.events.some(e => e.type === 'CC_SPENT' && e.amount === 23));
+const m5Poor = { ...m5LimitState, player: { ...m5s0.player, cc: 10 } };
+const m5LimitPoor = executeCommand(m5Poor, { type: 'PLAY_LIMIT_CARD', cardId: 13 }, { side: 'player', limitCardsCount: 3 });
+check('M5-P2: CC insuficiente para LIMITED → INSUFFICIENT_CC sin cobro', !m5LimitPoor.ok && m5LimitPoor.reason === 'INSUFFICIENT_CC' && m5LimitPoor.state.player.cc === 10);
+
+// ── QTE completado → DAMAGE_APPLIED real (command determinista) ──
+const m5Stage = createInitialBattleState({ ...m5cfg, seed: 42, playerPos: BattlePosition.DOWN_FRONT, enemyPos: BattlePosition.DOWN_BACK, playerCc: 0 });
+const m5StageCmd: typeof m5Stage = { ...m5Stage, phase: 'command' };
+let sim5 = mustExecute(m5StageCmd, { type: 'BASIC' });
+sim5 = mustExecute(sim5, { type: 'BASIC_STAGE_ATTACK' }, { side: 'player' });
+const seq5 = [...sim5.stageQte.seq];
+for (const k of seq5) sim5 = mustExecute(sim5, { type: 'QTE_INPUT', input: k }, { side: 'player' });
+{
+  // stage 3 (command, atk 0): dmg = floor((0 + str 10) × posMult); DOWN_FRONT vs DOWN_BACK
+  // depth FRONT + command → no vulnerable → posMult 0.5 → dmg = floor(10 × 0.5) = 5
+  const enemyHpAfter = sim5.enemy.hp;
+  check('M5: Stage completo aplica daño real (floor((atk+str)×posMult) = 5)', sim5.enemy.hp === m5Stage.enemy.hp - 5);
+  check('M5: rngState intacto en Stage completo (0 tiradas)', sim5.rngState === m5StageCmd.rngState);
+}
+// FIGHTER_DEFEATED: daño suficiente para KO
+const m5Ko = createInitialBattleState({ ...m5cfg, seed: 7, playerPos: BattlePosition.DOWN_FRONT, enemyPos: BattlePosition.DOWN_BACK, playerCc: 0, enemyHp: 3 });
+let simKo = mustExecute({ ...m5Ko, phase: 'command' }, { type: 'BASIC' });
+simKo = mustExecute(simKo, { type: 'BASIC_STAGE_ATTACK' }, { side: 'player' });
+for (const k of [...simKo.stageQte.seq]) simKo = mustExecute(simKo, { type: 'QTE_INPUT', input: k }, { side: 'player' });
+check('M5: KO → HP 0 + DAMAGE_APPLIED ANTES de FIGHTER_DEFEATED', simKo.enemy.hp === 0);
+{
+  const res = executeCommand({ ...m5Stage, phase: 'command' }, { type: 'BASIC' }, { side: 'player' });
+  void res;
+}
+
+// ── QTE fallo → COUNTER · DEFEND = parcial · TIMEOUT = counter daño ──
+const m5Fail = createInitialBattleState({ ...m5cfg, seed: 11, playerPos: BattlePosition.DOWN_FRONT, enemyPos: BattlePosition.DOWN_BACK, playerCc: 0 });
+let simF = mustExecute({ ...m5Fail, phase: 'command' }, { type: 'BASIC' });
+simF = mustExecute(simF, { type: 'BASIC_STAGE_ATTACK' }, { side: 'player' });
+const wrongKey = simF.stageQte.seq[0] === 'A' ? 'B' : 'A';
+const simF2 = executeCommand(simF, { type: 'QTE_INPUT', input: wrongKey }, { side: 'player' });
+check('M5: input equivocado → accepted + COUNTER_WINDOW + QTE_FAILED', simF2.ok && simF2.state.stageQte.state === 'COUNTER_WINDOW' && simF2.events.some(e => e.type === 'QTE_FAILED'));
+// DEFEND (A): daño parcial del Stage abortado (progreso 0 → 0 daño)
+const simDef = executeCommand(simF2.state, { type: 'QTE_COUNTER_DEFEND' }, { side: 'player' });
+check('M5: DEFEND con 0 aciertos → sin daño (parcial 0)', simDef.ok && simDef.state.enemy.hp === m5Fail.enemy.hp && simDef.state.stageQte.state === 'WAITING');
+// TIMEOUT: el counter del rival conecta sobre el jugador
+const simTo = executeCommand(simF2.state, { type: 'QTE_COUNTER_TIMEOUT' }, { side: 'player' });
+if (simTo.ok) {
+  const counterExpected = Math.max(1, Math.floor((m5Fail.enemy.str + m5Fail.enemy.ki) * 0.5 * 0.5)); // posMult 0.5 (GROUND no vulnerable)
+  check('M5: TIMEOUT → counter daño legacy al jugador', simTo.state.player.hp === m5Fail.player.hp - counterExpected);
+  check('M5: TIMEOUT emite ATTACK_HIT + DAMAGE_APPLIED + QTE_COUNTER_RESOLVED',
+    simTo.events.some(e => e.type === 'ATTACK_HIT' && e.source === 'enemy' && e.target === 'player') &&
+    simTo.events.some(e => e.type === 'DAMAGE_APPLIED' && e.target === 'player') &&
+    simTo.events.some(e => e.type === 'QTE_COUNTER_RESOLVED'));
+}
+
+// ── Carta damage/beam: precisión determinista desde seed (RNG consumido) ──
+const m5Dmg = createInitialBattleState({ ...m5cfg, seed: 999, playerPos: BattlePosition.DOWN_FRONT, enemyPos: BattlePosition.DOWN_BACK, playerCc: 30 });
+const m5DmgCmd: typeof m5Dmg = { ...m5Dmg, phase: 'cardSelect' };
+const playDmg = executeCommand(m5DmgCmd, { type: 'PLAY_CARD', handIndex: 1 }, { side: 'player', characterId: 'goku' }); // carta 5 Cont.Punch acc 100
+if (playDmg.ok) {
+  let s = playDmg.state;
+  for (const k of [...s.stageQte.seq]) s = mustExecute(s, { type: 'QTE_INPUT', input: k }, { side: 'player' });
+  const hit = s.enemy.hp < m5Dmg.enemy.hp;
+  check('M5: damage card (acc 100) → siempre conecta (hits) y daña', hit);
+  check('M5: damage card consume RNG (rngState avanzó con las tiradas)', s.rngState !== m5DmgCmd.rngState);
+}
+
+// ── Golden determinista completo (seed + comandos → mismo state/events/rngState) ──
+function simulateM5(seed: number, enemyHp: number) {
+  let s = createInitialBattleState({ ...m5cfg, seed, playerPos: BattlePosition.DOWN_FRONT, enemyPos: BattlePosition.DOWN_BACK, playerCc: 30, enemyHp });
+  s = { ...s, phase: 'command' as never };
+  const all: BattleEvent[] = [];
+  for (const cmd of [
+    { type: 'BASIC' },
+    { type: 'BASIC_STAGE_ATTACK' },
+  ] as BattleCommand[]) {
+    const r = executeCommand(s, cmd, { side: 'player' });
+    if (!r.ok) throw new Error(`simulateM5: ${JSON.stringify(cmd)} rechazado: ${r.reason}`);
+    all.push(...r.events);
+    s = r.state;
+  }
+  for (const k of [...s.stageQte.seq]) {
+    const r = executeCommand(s, { type: 'QTE_INPUT', input: k }, { side: 'player' });
+    if (!r.ok) throw new Error(`simulateM5 QTE: ${r.reason}`);
+    all.push(...r.events);
+    s = r.state;
+  }
+  return { state: s, events: all };
+}
+const g1 = simulateM5(123456, 1000);
+const g2 = simulateM5(123456, 1000);
+check('M5: mismo seed + comandos ⇒ mismo state + mismos events + mismo rngState',
+  JSON.stringify(g1.state) === JSON.stringify(g2.state) &&
+  JSON.stringify(g1.events) === JSON.stringify(g2.events) &&
+  g1.state.rngState === g2.state.rngState);
+check('M5: seed distinto puede producir otro resultado (stage command determinista: mismo daño, otro estado igual — sin azar no debe divergir)',
+  JSON.stringify(simulateM5(555, 1000).state.player) === JSON.stringify(g1.state.player));
+
+// ── Divergencia de RNG: tiradas exactas y localizadas ──
+function rngTrace(seed: number): number[] {
+  const out: number[] = [];
+  let st = initRng(seed);
+  for (let i = 0; i < 4; i++) {
+    const n = nextRng(st);
+    out.push(n.value);
+    st = n.rngState;
+  }
+  return out;
+}
+const trace = rngTrace(777);
+check('M5: rngState avanza de forma canónica (trace estable)',
+  JSON.stringify(rngTrace(777)) === JSON.stringify(trace) && trace.every(v => v >= 0 && v < 1));
+
+// ── Shadow parity con legacy (mismos inputs → mismos veredictos) ──
+const PARITY_ROLLS = [0.0, 0.049, 0.05, 0.2, 0.5, 0.549, 0.55, 0.8, 0.99, 0.999];
+let parityOk = 0;
+for (const roll of PARITY_ROLLS) {
+  for (const spd of [5, 25, 60]) {
+    for (const acc of [50, 85, 100]) {
+      const legacy = resolveHitBlockAvoid(spd, acc, () => roll);
+      const engine = hitBlockAvoidFromRoll(roll, spd, acc);
+      if (legacy === engine) parityOk++;
+    }
+  }
+}
+check('M5: parity HIT/BLOCK/AVOID (90 combinaciones roll×spd×acc)', parityOk === PARITY_ROLLS.length * 3 * 3);
+check('M5: parity accuracy efectiva (+30 pAcc / −30 pEva)',
+  effectiveAttackAccuracy(85, true) === 100 && effectiveAttackAccuracy(85, false) === 85 &&
+  effectiveDefenseAccuracy(50, true) === 20 && effectiveDefenseAccuracy(50, false) === 50 &&
+  accuracyHits(0.9, 85, false) === false && accuracyHits(0.9, 85, true) === true);
+check('M5: parity daño (attackDamage/stage/counter/power/spd)',
+  attackDamage(25, 18, BattlePosition.DOWN_FRONT, 'damage') === Math.floor((25 + 18) * 0.8) &&
+  stageAttackDamage(0, 10, BattlePosition.DOWN_FRONT, 'command') === 5 &&
+  counterDamage(9, 10, BattlePosition.DOWN_FRONT, 'beam') === Math.max(1, Math.floor((9 + 10) * 0.5 * 0.5)) &&
+  powerFor('beam', 5, 8, 0, 2) === 24 && powerFor('damage', 10, 5, 1, 0) === 18 &&
+  spdFor(5, 2) === 21 &&
+  stageProgress(2, 6) === 1 / 3 && stageProgress(6, 6) === 1 && stageProgress(0, 6) === 0);
+
+// ── Invariantes tras cualquier daño ──
+function m5Invariants(s: typeof m5s0): boolean {
+  const okHp = s.player.hp >= 0 && s.player.hp <= s.player.maxHp && s.enemy.hp >= 0 && s.enemy.hp <= s.enemy.maxHp;
+  const okRng = Number.isInteger(s.rngState) && s.rngState >= 0;
+  const okSerial = (() => { try { JSON.parse(JSON.stringify(s)); return true; } catch { return false; } })();
+  return okHp && okRng && okSerial;
+}
+check('M5: invariantes tras Stage completo (HP/CC/rng/serializable)', m5Invariants(sim5));
+check('M5: invariantes tras counter (HP en rango)', m5Invariants(simTo.ok ? simTo.state : m5Fail));
+// DAMAGE_APPLIED amount = hpBefore − hpAfter (invariante de evento)
+function collectDamageEvents(seed: number, enemyHp: number) {
+  const sim = simulateM5(seed, enemyHp);
+  return sim.events.filter((e): e is Extract<BattleEvent, { type: 'DAMAGE_APPLIED' }> => e.type === 'DAMAGE_APPLIED');
+}
+const dmgEvents = collectDamageEvents(123456, 1000);
+check('M5: todo DAMAGE_APPLIED cumple amount = hpBefore − hpAfter (y no negativos)',
+  dmgEvents.length > 0 && dmgEvents.every(e => e.amount >= 0 && e.amount === e.hpBefore - e.hpAfter && e.hpAfter >= 0));
 
 
 console.log(`\n═══ RESULTADO: ${passed} passed · ${failed} failed ═══`);

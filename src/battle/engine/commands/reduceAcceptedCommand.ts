@@ -1,26 +1,60 @@
 // ═══════════════════════════════════════════════════════════════════════
-// M3/M4 — reduceAcceptedCommand: resuelve un comando YA validado.
+// M3/M4/M5 — reduceAcceptedCommand: resuelve un comando YA validado.
 // ═══════════════════════════════════════════════════════════════════════
 // Asume legalidad (executeCommand llama a canExecute antes). Cada dominio
 // resuelve su semántica en su reducer — el dispatcher solo enruta.
-// PURA: devuelve un NUEVO estado; jamás muta el input. Sin RNG (M5), sin
-// reloj de pared, sin presentación.
+// PURA: devuelve un NUEVO estado; jamás muta el input. Sin reloj de pared,
+// sin presentación. El RNG (M5) avanza SOLO donde hay tirada real y se
+// devuelve en el estado (state.rngState) — nunca por efectos laterales.
 //
 // M4 — devuelve también los EVENTOS de la resolución, en orden contractual:
 //   1) eventos de dominio en orden de mutación (CC → carta → acción)
 //   2) ACTION_STARTED cuando una acción comienza
-//   3) PHASE_CHANGED AL FINAL, solo si la fase cambió de verdad
+//   3) resolución de daño (ATTACK_HIT/MISSED → DAMAGE_APPLIED → FIGHTER_DEFEATED)
+//   4) PHASE_CHANGED AL FINAL, solo si la fase cambió de verdad
 // ═══════════════════════════════════════════════════════════════════════
 
-import { getCard } from '../../../data/cards';
-import { STAGE_SEQUENCE_POOL } from '../../stageSequences';
+import { getCard, type CardDef } from '../../../data/cards';
+import { STAGE_SEQUENCE_POOL, type StageLevel } from '../../stageSequences';
+import { stageWindowsTicks } from '../../../config/gameplay.config';
+import { POSITION_DATA } from '../../../data/positions';
 import type { BattleCommand } from './BattleCommand';
 import type { BattleEvent } from '../events/BattleEvent';
 import type { BattleState } from '../state/BattleState';
 import { moveFighter } from './reducers/movementReducer';
 import { playCard, playDefenseCard, playLimitCard } from './reducers/cardReducer';
-import { gatherPower, guard, qteCorrectInput, qteCounterContinue, qteCounterDefend } from './reducers/powerReducer';
+import { gatherPower, guard, qteCorrectInput, qteWrongInput, qteCounterContinue, qteCounterDefend } from './reducers/powerReducer';
+import { resolveCardAction, resolveCounterDamage, resolvePartialStageDamage } from './reducers/damageReducer';
 import { actionDescriptorForCard, actionDescriptorForStage } from './buildActionDescriptor';
+import { stageProgress } from '../combat/resolution';
+
+/** Nivel de Stage de una carta command (3/4/5/6) según su nombre (paridad legacy). */
+function stageLevelOfCardName(name: string): StageLevel {
+  if (name.includes('6')) return 6;
+  if (name.includes('5')) return 5;
+  if (name.includes('4')) return 4;
+  return 3;
+}
+
+/** Ventana del QTE según profundidades (paridad legacy STAGE_SEQUENCE_WINDOW). */
+function stageWindowTicksFor(state: BattleState): number {
+  const aDepth = POSITION_DATA[state.player.battlePos].depth;
+  const bDepth = POSITION_DATA[state.enemy.battlePos].depth;
+  const w = stageWindowsTicks();
+  const pair = `${aDepth}_${bDepth}` as 'BACK_BACK' | 'BACK_FRONT' | 'FRONT_BACK' | 'FRONT_FRONT';
+  return w[pair];
+}
+
+/** Crea el QTE de una carta: seq del pool (determinista por tick) + ventana. */
+function qteForCard(state: BattleState, card: CardDef): BattleState['stageQte'] {
+  const level = stageLevelOfCardName(card.name);
+  const pool = STAGE_SEQUENCE_POOL[level];
+  const seq = pool[state.tick % pool.length];
+  return {
+    state: 'INPUT_WINDOW', seq, idx: 0, correct: 0, card,
+    elapsedFrames: 0, limitFrames: stageWindowTicksFor(state), counterFrames: 0, result: null,
+  };
+}
 
 export interface ReductionOutcome {
   state: BattleState;
@@ -54,10 +88,15 @@ export function reduceAcceptedCommand(state: BattleState, command: BattleCommand
     case 'PLAY_CARD': {
       const card = state.deck.hand[command.handIndex] ?? null;
       const r = playCard(state, 'player', command.handIndex);
-      next = { ...r.state, phase: 'stageInput', selectedCard: null };
+      // M5-P1: PLAY_CARD inicializa REALMENTE su QTE (stageQte + ventana +
+      // secuencia determinista) — la transición a stageInput ya no queda
+      // incompleta.
+      const qte = card ? qteForCard(r.state, card) : r.state.stageQte;
+      next = { ...r.state, phase: 'stageInput', selectedCard: null, stageQte: qte };
       events = [
         ...r.events,
         { type: 'ACTION_STARTED', side: 'player', action: actionDescriptorForCard(card) },
+        ...(card ? [{ type: 'QTE_STARTED' as const, side: 'player' as const, level: stageLevelOfCardName(card.name), seq: qte.seq, limitFrames: qte.limitFrames }] : []),
       ];
       break;
     }
@@ -67,7 +106,7 @@ export function reduceAcceptedCommand(state: BattleState, command: BattleCommand
       next = { ...r.state, phase: 'stageInput' };
       events = [
         ...r.events,
-        { type: 'ACTION_STARTED', side: 'player', action: actionDescriptorForCard(card) },
+        ...(card ? [{ type: 'ACTION_STARTED' as const, side: 'player' as const, action: actionDescriptorForCard(card) }] : []),
       ];
       break;
     }
@@ -82,12 +121,12 @@ export function reduceAcceptedCommand(state: BattleState, command: BattleCommand
         phase: 'stageInput',
         stageQte: {
           state: 'INPUT_WINDOW', seq, idx: 0, correct: 0, card: null,
-          elapsedFrames: 0, limitFrames: 173, counterFrames: 0, result: null,
+          elapsedFrames: 0, limitFrames: stageWindowTicksFor(state), counterFrames: 0, result: null,
         },
       };
       events = [
         { type: 'ACTION_STARTED', side: 'player', action: actionDescriptorForStage(level) },
-        { type: 'QTE_STARTED', side: 'player', level, seq, limitFrames: 173 },
+        { type: 'QTE_STARTED', side: 'player', level, seq, limitFrames: stageWindowTicksFor(state) },
       ];
       break;
     }
@@ -125,29 +164,67 @@ export function reduceAcceptedCommand(state: BattleState, command: BattleCommand
 
     // ── QTE / Stage Attack ──
     case 'QTE_INPUT': {
-      // canExecute ya validó que input === seq[idx] → siempre acierto aquí
-      const r = qteCorrectInput(state, 'player', command.input);
-      next = r.state;
-      events = r.events;
-      if (r.completed) {
-        const level: 3 | 4 = state.stageQte.seq.length === 4 ? 4 : 3;
-        events = [
-          ...events,
-          { type: 'ACTION_RESOLVED', side: 'player', action: actionDescriptorForStage(level) },
-        ];
+      const q = state.stageQte;
+      const expected = q.seq[q.idx];
+      if (expected === undefined || command.input === expected) {
+        // Acierto (o secuencia vacía): avanza / completa
+        const r = qteCorrectInput(state, 'player', command.input);
+        next = r.state;
+        events = r.events;
+        if (r.completed) {
+          const level: 3 | 4 = state.stageQte.seq.length === 4 ? 4 : 3;
+          // M5: al completar el Stage, la acción de la carta se RESUELVE
+          // (command → daño determinista · damage/beam → precisión/evasión
+          // con el PRNG canónico · support → efectos deterministas).
+          const cardResolved = q.card ?? resolveStageCard(state, q.seq.length);
+          const resolution = resolveCardAction(r.state, 'player', cardResolved);
+          next = { ...resolution.state, rngState: resolution.rngState };
+          events = [
+            ...events,
+            ...resolution.events,
+            { type: 'ACTION_RESOLVED', side: 'player', action: actionDescriptorForStage(level) },
+          ];
+        }
+      } else {
+        // M5: input equivocado → COUNTER_WINDOW (el GBC no rechaza: el
+        // rival contraataca). Daño del counter en QTE_COUNTER_TIMEOUT.
+        const r = qteWrongInput(state, 'player', command.input);
+        next = r.state;
+        events = r.events;
       }
       break;
     }
     case 'QTE_COUNTER_DEFEND': {
+      // A = SAFE_ABORT: conserva CC, daño parcial del Stage según progreso
+      const q = state.stageQte;
       const r = qteCounterDefend(state, 'player');
+      next = r.state;
+      events = r.events;
+      const card = q.card ?? resolveStageCard(state, q.seq.length);
+      const progress = stageProgress(q.correct, q.seq.length);
+      const partial = resolvePartialStageDamage(next, 'player', card, progress);
+      next = partial.state;
+      events = [...events, ...partial.events];
+      break;
+    }
+    case 'QTE_COUNTER_CONTINUE': {
+      // B = RECOVER: repara y continúa el Stage (sin daño, sin tiradas)
+      const r = qteCounterContinue(state, 'player');
       next = r.state;
       events = r.events;
       break;
     }
-    case 'QTE_COUNTER_CONTINUE': {
-      const r = qteCounterContinue(state, 'player');
-      next = r.state;
-      events = r.events;
+    case 'QTE_COUNTER_TIMEOUT': {
+      // El timing del contraataque expira → el counter del rival conecta
+      // sobre el jugador (fórmula legacy determinista).
+      const q = state.stageQte;
+      const card = q.card ?? resolveStageCard(state, q.seq.length);
+      const counter = resolveCounterDamage(state, card.type);
+      next = {
+        ...counter.state,
+        stageQte: { ...counter.state.stageQte, state: 'WAITING' as const, counterFrames: 0 },
+      };
+      events = [...counter.events, { type: 'QTE_COUNTER_RESOLVED', side: 'enemy', action: 'CONTINUE' }];
       break;
     }
     default:
@@ -162,4 +239,13 @@ export function reduceAcceptedCommand(state: BattleState, command: BattleCommand
   }
 
   return { state: next, events };
+}
+
+/**
+ * Carta del Stage Attack básico (paridad legacy: getCard(stages − 2)).
+ * 3 Stage → carta 1 · 4 Stage → carta 2 (command, atk 0).
+ */
+function resolveStageCard(state: BattleState, seqLen: number): CardDef {
+  const stages = seqLen >= 4 ? 4 : 3;
+  return getCard(stages - 2) as CardDef;
 }

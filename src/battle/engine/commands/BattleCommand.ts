@@ -32,4 +32,5 @@ export type BattleCommand =
   // ── QTE / Stage Attack ──
   | { type: 'QTE_INPUT'; input: StageKey }
   | { type: 'QTE_COUNTER_DEFEND' }
-  | { type: 'QTE_COUNTER_CONTINUE' };
+  | { type: 'QTE_COUNTER_CONTINUE' }
+  | { type: 'QTE_COUNTER_TIMEOUT' };

@@ -13,8 +13,8 @@
 
 import type { BattleEvent } from '../../events/BattleEvent';
 import type { BattleSide, BattleState } from '../../state/BattleState';
+import { getCard } from '../../../../data/cards';
 import { payCc, type ResourceOutcome } from './resourceReducer';
-
 export interface PlayCardOutcome {
   state: BattleState;
   events: BattleEvent[];
@@ -62,11 +62,12 @@ export function playCard(state: BattleState, side: BattleSide, handIndex: number
   return { state: moved.state, events, cardId };
 }
 
-/** PLAY_LIMIT_CARD: coste CC + marca la LIMITED seleccionada (sin mano). */
+/** PLAY_LIMIT_CARD: coste CC REAL de la carta del catálogo + marca la LIMITED. */
 export function playLimitCard(state: BattleState, side: BattleSide, cardId: number): PlayCardOutcome {
-  // El coste de la LIMITED se cobra en el juego al pulsarla (player.cc < c.cc
-  // bloquea); aquí cobramos el mismo CC que la carta del catálogo.
-  const card = state.limits.includes(cardId) ? { id: cardId, cc: 0 } : null;
+  // La LIMITED se cobra el CC de su carta del catálogo (mismo coste que la
+  // Joint equivalente — el juego bloquea con player.cc < c.cc).
+  const catalog = getCard(cardId);
+  const card = state.limits.includes(cardId) && catalog ? { id: cardId, cc: catalog.cc } : null;
   const cost = card?.cc ?? 0;
   const paid = payCc(state, side, cost);
   const events: BattleEvent[] = [

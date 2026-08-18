@@ -10,6 +10,7 @@ import type { BattleCommand } from './BattleCommand';
 import type { CommandCheck } from './CommandResult';
 import { ok, reject } from './CommandResult';
 import type { BattlePhase, BattleSide, BattleState } from '../state/BattleState';
+import { getCard } from '../../../data/cards';
 import { canPlayCard, canPlayDefenseCard } from './rules/cardRules';
 import { canMove } from './rules/movementRules';
 import { canGuard, canGatherPower, canOpenLimit, canStageAttack, canUseDefenseLimit } from './rules/defenseRules';
@@ -34,6 +35,7 @@ const PHASE_REQUIREMENTS: Partial<Record<BattleCommand['type'], BattlePhase[]>> 
   QTE_INPUT: ['stageInput'],
   QTE_COUNTER_DEFEND: ['stageInput'],
   QTE_COUNTER_CONTINUE: ['stageInput'],
+  QTE_COUNTER_TIMEOUT: ['stageInput'],
 };
 
 /** El lado activo del exchange (atacante) — para comandos ofensivos. */
@@ -69,8 +71,15 @@ export function canExecute(state: BattleState, command: BattleCommand, opts?: { 
       return ok();
     case 'PLAY_CARD':
       return canPlayCard(state, opts?.side ?? activeAttackSide(state), command.handIndex, opts?.characterId ?? '');
-    case 'PLAY_LIMIT_CARD':
+    case 'PLAY_LIMIT_CARD': {
+      // Coste CC REAL de la LIMITED (carta del catálogo) + disponibilidad
+      const card = getCard(command.cardId);
+      const side = opts?.side ?? activeAttackSide(state);
+      const fighter = side === 'player' ? state.player : state.enemy;
+      if (!state.limits.includes(command.cardId) || !card) return reject('LIMIT_UNAVAILABLE');
+      if (fighter.cc < (card.cc ?? 0)) return reject('INSUFFICIENT_CC');
       return canOpenLimit(state, opts?.limitCardsCount ?? 0);
+    }
     case 'BASIC_STAGE_ATTACK':
       return canStageAttack();
     case 'GATHER_POWER':
@@ -89,12 +98,13 @@ export function canExecute(state: BattleState, command: BattleCommand, opts?: { 
     case 'QTE_INPUT': {
       const q = state.stageQte;
       if (q.state !== 'INPUT_WINDOW') return reject('QTE_NOT_ACTIVE');
-      const expected = q.seq[q.idx];
-      if (expected && command.input !== expected) return reject('INVALID_QTE_INPUT');
+      // M5: cualquier input es legal — el fallo entra en COUNTER_WINDOW
+      // (el GBC no rechaza inputs: el rival contraataca).
       return ok();
     }
     case 'QTE_COUNTER_DEFEND':
-    case 'QTE_COUNTER_CONTINUE': {
+    case 'QTE_COUNTER_CONTINUE':
+    case 'QTE_COUNTER_TIMEOUT': {
       return state.stageQte.state === 'COUNTER_WINDOW' ? ok() : reject('QTE_NOT_ACTIVE');
     }
     default:
@@ -110,7 +120,7 @@ export function getAvailableCommands(state: BattleState, opts?: Parameters<typeo
     { type: 'BASIC_STAGE_ATTACK' }, { type: 'GATHER_POWER' },
     { type: 'DEFENSE_LIMIT' }, { type: 'DEFENSE_JOINT' }, { type: 'DEFENSE_BASIC' },
     { type: 'GUARD' }, { type: 'MOVE', axis: 'HORIZONTAL' }, { type: 'MOVE', axis: 'VERTICAL' },
-    { type: 'QTE_COUNTER_DEFEND' }, { type: 'QTE_COUNTER_CONTINUE' },
+    { type: 'QTE_COUNTER_DEFEND' }, { type: 'QTE_COUNTER_CONTINUE' }, { type: 'QTE_COUNTER_TIMEOUT' },
   ];
   return candidates.filter(c => canExecute(state, c, opts).ok);
 }

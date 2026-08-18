@@ -10,6 +10,7 @@
 // ═══════════════════════════════════════════════════════════════════════
 
 import { BattlePosition } from '../../../data/positions';
+import { initRng, DEFAULT_RNG_SEED } from '../random/prng';
 import type { CardDef } from '../../../data/cards';
 import type {
   BattleDeckState,
@@ -57,6 +58,8 @@ export interface InitialBattleConfig {
   firstAttacker: BattleSide;
   /** RNG determinista opcional (M2+): semilla/estado del PRNG. */
   rngState?: unknown;
+  /** Seed explícito del PRNG canónico (M5) — default canónico 1. */
+  seed?: number;
 }
 
 const ZERO_STAGES: StageStages = { str: 0, ki: 0, spd: 0, guard: 0 };
@@ -101,6 +104,7 @@ function fighterFromConfig(cfg: InitialBattleConfig, side: BattleSide): BattleFi
  * de main.tsx. Mismo estado observable, sin efectos.
  */
 export function createInitialBattleState(cfg: InitialBattleConfig): BattleState {
+  const seed = cfg.seed ?? DEFAULT_RNG_SEED;
   return {
     turn: 1,
     phase: 'position',
@@ -128,6 +132,7 @@ export function createInitialBattleState(cfg: InitialBattleConfig): BattleState 
     stageQte: emptyQte(),
     ai: { ...ZERO_AI },
     tick: 0,
-    rngState: cfg.rngState ?? null,
+    seed,
+    rngState: cfg.rngState as number | undefined ?? initRng(seed),
   };
 }
