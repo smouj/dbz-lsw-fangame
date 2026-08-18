@@ -717,7 +717,8 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
   });
   const [phase, setPhase] = useState<BattlePhase>('position');
   const [turn, setTurn] = useState(1);
-  // Secuencia cinematográfica de presentación (como el GBC): VS screen + READY/FIGHT
+  // Secuencia cinematográfica de presentación (como el GBC): VS screen sin
+  // texto — sprites desde ±42vw + VS + flash (3s hasta beginTurn)
   const [intro, setIntro] = useState(true);
 
   // BSO de resultado: victoria/derrota al resolver el combate (jingle → BGM)
@@ -2824,7 +2825,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
       {/* ═══ INTRO FULL-SCREEN: VS de presentación — los 2 sprites entran
           desde FUERA hacia su posición (cinemática), VS en el centro, flash.
           SIN texto (nada de READY/FIGHT ni nombres). Cubre TODA la ventana.
-          La cierra el timeout de 5.2s (setIntro(false)). ═══ */}
+          La cierra el timeout de 3s (setIntro(false)). ═══ */}
       {intro && (
         <div className="battle-intro">
           <div className="intro-fighter intro-left">
