@@ -39,15 +39,16 @@ const GROUPS = ['Colores', 'HUD', 'Cartas', 'Posición', 'Escala', 'Tipografía'
 type HudView = 'COMMAND' | 'MANO' | 'BASIC' | 'MOVE' | 'STAGE' | 'LIMIT' | 'DIALOGO' | 'INTRO' | 'DISCARD' | 'DEFENSA' | 'RESULTADO' | 'MENU';
 
 const VIEWS: { id: HudView; label: string; tip: string }[] = [
+  // Flujo de batalla: comandos → cartas → fases → flujo global
   { id: 'COMMAND', label: 'Comando', tip: 'Command strip: LIMIT · JOINT · BASIC' },
-  { id: 'MANO', label: 'JOINT · Mano', tip: 'Cartas de la mano con sus frames GBC + huecos' },
+  { id: 'MANO', label: 'Mano', tip: 'JOINT — cartas de la mano con sus frames GBC + huecos' },
   { id: 'BASIC', label: 'BASIC', tip: 'Stage Attack (frame de carta) · Gather · Back' },
-  { id: 'MOVE', label: 'MOVE', tip: 'Selección de eje: HORIZONTAL ↔ (FRONT/BACK) o VERTICAL ↕ (AIR/GROUND) + preview CURRENT → RESULT' },
+  { id: 'MOVE', label: 'MOVE', tip: 'Selección de eje: HORIZONTAL ↔ o VERTICAL ↕' },
   { id: 'STAGE', label: 'STAGE', tip: 'QTE del Stage Attack: inputs con los sprites del paquete' },
   { id: 'LIMIT', label: 'LIMIT', tip: 'Cartas LIMITED del personaje + huecos' },
-  { id: 'DIALOGO', label: 'Diálogo', tip: 'Cuadro de mensaje GBC estructurado' },
-  { id: 'DISCARD', label: 'Descarte', tip: 'HAND CHECK — demasiadas cartas, elige cuál descartar' },
   { id: 'DEFENSA', label: 'Defensa', tip: 'Menú de defensa: LIMITED · JOINT · BASIC DEFENSE' },
+  { id: 'DISCARD', label: 'Descarte', tip: 'HAND CHECK — demasiadas cartas, elige cuál descartar' },
+  { id: 'DIALOGO', label: 'Diálogo', tip: 'Cuadro de mensaje GBC estructurado' },
   { id: 'RESULTADO', label: 'Resultado', tip: 'Pantalla final: VICTORIA / DERROTA' },
   { id: 'MENU', label: 'Menú', tip: 'Pantalla principal: logo, continuar, navegación y footer' },
   { id: 'INTRO', label: 'Intro', tip: 'Presentación de inicio (VS + READY/FIGHT)' },
