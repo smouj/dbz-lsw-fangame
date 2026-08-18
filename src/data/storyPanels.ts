@@ -15,6 +15,7 @@
 // El motor SOLO interpreta datos: editar la historia no toca código.
 
 import type { PortraitEmotion } from './storyPortraits';
+import { STORY_SCRIPT } from './storyScript';
 
 export type PanelLayout =
   | 'FULL'              // ilustración a pantalla completa
@@ -41,6 +42,7 @@ export interface StoryPanel {
     speaker: string;               // nombre del que habla
     text: string;                  // texto (localizable vía i18n si aplica)
     side?: 'left' | 'right' | 'center';
+    emotion?: PortraitEmotion;     // expresión del HABLANTE (guion V2)
   };
   effects?: ('flash' | 'zoom' | 'shake' | 'speed')[];
   transition?: 'fade' | 'slash' | 'zoom-in';
@@ -275,20 +277,54 @@ export const STORY_PANELS: Record<number, StoryChapterFlow> = {
 };
 
 // Generador por defecto para caps 14-32 (escenario según la saga)
+// ═══ GUION CANÓNICO (V2 SIN RPG): el guion construye la intro de TODOS los
+// capítulos — título de escena → UNA viñeta de diálogo por línea (retrato +
+// emoción del hablante) → viñeta ¡COMBATE!. Los outros específicos se
+// conservan (resolución post-batalla). NARRADOR → caja neutra sobre fondo.
 export function panelsForChapter(chapter: number): StoryChapterFlow {
   const specific = STORY_PANELS[chapter];
-  if (specific) {
-    // El cap 1 arranca con la recapitulación del GBC (cutscenes de introducción)
-    if (chapter === 1) {
-      return { chapter, intro: [...INTRO_CUTSCENES, ...specific.intro], outro: specific.outro };
-    }
-    return specific;
-  }
-  return {
-    chapter,
-    intro: [
+  const outro = specific?.outro;
+  const script = STORY_SCRIPT[chapter];
+  const bgUrl = specific?.intro[0]?.background ?? CS(chapter);
+
+  const intro: StoryPanel[] = [];
+  if (chapter === 1) intro.push(...INTRO_CUTSCENES);
+
+  if (script) {
+    // 1) Título de escena (FULL) — saga + título del guion
+    intro.push({
+      id: `s${chapter}t`, layout: 'FULL', background: bgUrl,
+      title: `CAPÍTULO ${chapter}`, subtitle: script.title, effects: ['zoom'], transition: 'zoom-in',
+    });
+    // 2) Una viñeta por línea de diálogo (retrato del hablante + emoción)
+    script.dialogue.forEach((line, i) => {
+      if (line.character) {
+        intro.push({
+          id: `s${chapter}d${i}`, layout: 'PORTRAIT_DIALOGUE', background: bgUrl,
+          characters: [{ character: line.character, side: 'left' }],
+          dialogue: { speaker: line.speaker, text: line.text, emotion: line.emotion },
+        });
+      } else {
+        // NARRADOR: caja neutra sobre el fondo (sin retrato)
+        intro.push({
+          id: `s${chapter}n${i}`, layout: 'FULL', background: bgUrl,
+          subtitle: line.text, effects: [], transition: 'fade',
+        });
+      }
+    });
+    // 3) Cierre: ¡COMBATE! (el guion fija el enfrentamiento)
+    intro.push({
+      id: `s${chapter}f`, layout: 'IMPACT', background: bgUrl,
+      title: '¡COMBATE!', subtitle: script.battle ?? undefined,
+      effects: ['flash', 'shake'], transition: 'slash',
+    });
+  } else {
+    // Fallback genérico (sin guion): título + combate
+    intro.push(
       { id: `c${chapter}p1`, layout: 'FULL', background: CS(chapter), title: `CAPÍTULO ${chapter}`, subtitle: 'La saga continúa…', effects: ['zoom'] },
       { id: `c${chapter}p2`, layout: 'IMPACT', background: CS(chapter), title: '¡COMBATE!', subtitle: '¡Enfréntate al enemigo!', effects: ['flash', 'shake'], transition: 'slash' },
-    ],
-  };
+    );
+  }
+
+  return { chapter, intro, outro };
 }

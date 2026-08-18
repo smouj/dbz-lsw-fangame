@@ -4055,10 +4055,12 @@ function StorySceneScreen({ chapter, phase, onFinish, onNavigate }: {
           <div className={`story-characters layout-${panel.layout.toLowerCase()}`}>
             {panel.characters.map((c, i) => {
               // Retrato REAL del GBC (story portraits 40×56 por saga/personaje)
-              const url = storyPortraitUrl(c.character, c.form, c.emotion) || miniPortraitFor(c.character) || MENU_PORTRAITS[CHAR_PORTRAIT_ALIAS[c.character] ?? c.character];
+              // — la emoción del DIÁLOGO (guion V2) manda sobre la del personaje
+              const isSpeaker = hasDialogue && speakingIdx === i;
+              const emo = isSpeaker && panel.dialogue?.emotion ? panel.dialogue.emotion : c.emotion;
+              const url = storyPortraitUrl(c.character, c.form, emo) || miniPortraitFor(c.character) || MENU_PORTRAITS[CHAR_PORTRAIT_ALIAS[c.character] ?? c.character];
               const nChars = panel.characters?.length ?? 0;
               const side = c.side ?? (nChars === 1 ? 'center' : i === 0 ? 'left' : 'right');
-              const isSpeaker = hasDialogue && speakingIdx === i;
               return (
                 <div key={i} className={`story-character ${side}${isSpeaker ? ' speaking' : hasDialogue ? ' muted' : ''}`}>
                   {url
