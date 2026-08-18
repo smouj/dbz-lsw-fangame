@@ -52,7 +52,7 @@ export const HUD_THEME_VARS: HudThemeVar[] = [
   { key: '--hud-portrait-s', label: 'Retrato · tamaño', group: 'Posición', type: 'size', default: '28px' },
   { key: '--hp-bar-h', label: 'Barra HP · alto', group: 'Posición', type: 'size', default: '18px' },
   { key: '--cmd-scale', label: 'Botones comando · escala', group: 'Posición', type: 'number', default: '1' },
-  { key: '--hand-gap', label: 'Mano · separación', group: 'Posición', type: 'size', default: '5px' },
+  { key: '--hand-gap', label: 'Mano · separación', group: 'Posición', type: 'size', default: '10px' },
   { key: '--hud-controls-h', label: 'Zona controles · alto', group: 'Posición', type: 'size', default: 'clamp(104px,17.5vh,136px)' },
   { key: '--gbc-dlg-w', label: 'Diálogo GBC · ancho', group: 'Posición', type: 'size', default: 'min(640px,88%)' },
   // ─── Tipografía ───

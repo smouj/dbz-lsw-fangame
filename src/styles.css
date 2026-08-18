@@ -1671,7 +1671,7 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 .battle-controls .hand-cards {
   min-height: 64px;
   align-items: flex-end;
-  gap: clamp(4px, .8vw, 9px);
+  gap: 10px;                  /* GAP UNIFICADO (spec: 10px en todos los paneles) */
   perspective: 900px;
   flex-wrap: nowrap;   /* una sola línea SIEMPRE (mano y LIMIT) */
 }
@@ -1799,7 +1799,7 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 
 .move-axis-pad {
   display: flex;
-  gap: 8px;
+  gap: 10px;                  /* GAP UNIFICADO (spec: 10px) */
   justify-content: center;
 }
 
@@ -1855,7 +1855,7 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 
 .command-select { display: flex; flex-direction: column; align-items: center; gap: 8px; }
 
-.command-strip { display: flex; gap: 8px; justify-content: center; align-items: stretch; background: transparent; border: 0; box-shadow: none; }
+.command-strip { display: flex; gap: 10px; justify-content: center; align-items: stretch; background: transparent; border: 0; box-shadow: none; }
 
 .command-strip button {
   /* Botón GBC completo (48×40 de la ROM, texto del nombre incluido) escalado 1.5× */
@@ -1900,7 +1900,7 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   letter-spacing: 3px;
 }
 
-.hand-cards { display: flex; gap: var(--hand-gap, 5px); justify-content: center; flex-wrap: nowrap; }
+.hand-cards { display: flex; gap: var(--hand-gap, 10px); justify-content: center; flex-wrap: nowrap; }
 
 /* Slot vacío de la mano (sprite GBC auténtico NO CARD) */
 .hand-empty-slot { display: flex; align-items: center; justify-content: center; }
@@ -3622,7 +3622,7 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  gap: 12px;
+  gap: 10px;                  /* GAP UNIFICADO (spec: 10px) */
   width: 100%;
   padding: 0 14px;
   box-sizing: border-box;
@@ -3703,8 +3703,7 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   color: #000;
   letter-spacing: 1px;
   white-space: nowrap;
-  margin-left: 10px;
-  flex-shrink: 0;
+  flex-shrink: 0;             /* el gap 10px del contenedor separa del prompt */
 }
 .gbc-dialogue .stage-inline-time strong {
   font-size: 22px;
@@ -9716,7 +9715,7 @@ button.linklike:hover { text-decoration: underline; }
   border: 0;
   box-shadow: none;
 }
-.dev-hud-preview .command-strip { gap: 14px; padding: 0; margin: 0; flex: 0 0 auto; }
+.dev-hud-preview .command-strip { gap: 10px; padding: 0; margin: 0; flex: 0 0 auto; }
 .dev-hud-preview .hand-area { gap: 4px; width: auto; max-width: 100%; flex: 0 1 auto; }
 .dev-hud-preview .hand-cards { justify-content: center; flex-wrap: nowrap !important; }
 .dev-hud-preview .hand-cards .card {
@@ -10065,7 +10064,7 @@ button.linklike:hover { text-decoration: underline; }
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 12px;
+  gap: 10px;                  /* GAP UNIFICADO (spec: 10px) */
 }
 .limit-cards-row .hand-cards { flex-wrap: nowrap; }
 
@@ -10401,7 +10400,7 @@ button.linklike:hover { text-decoration: underline; }
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  gap: 12px;
+  gap: 10px;                  /* GAP UNIFICADO (spec: 10px) */
   width: 100%;
   padding: 0 14px;
   box-sizing: border-box;
@@ -10481,7 +10480,7 @@ button.linklike:hover { text-decoration: underline; }
 }
 .dev-hud-preview .gbc-dialogue .stage-inline-time,
 .gbc-dialogue .stage-inline-time {
-  flex-shrink: 0;             /* anclado a la derecha, nunca se mueve */
+  flex-shrink: 0;             /* gap 10px del contenedor (spec unificado) */
 }
 .dev-hud-preview .gbc-dialogue .stage-inline-prompt img,
 .gbc-dialogue .stage-inline-prompt img {

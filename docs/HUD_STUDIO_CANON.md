@@ -41,6 +41,7 @@
 6. **Ventana del preview**: estable en TODAS las vistas (1056×570, ratio ≈1.85) — la fila de controles tiene `min-height: 96px`.
 7. **INTRO**: sin ROUND/READY (spec 2026-08-18), retratos centrados exactos (0px desvío), VS pixel art.
 8. **Colores del texto**: por defecto negro carbón; rojo solo como acento puntual (actor diálogo, timer QTE). Sin azules en tooltips/diálogo.
+9. **GAP UNIFICADO 10px**: separación equidistante entre TODOS los botones/cartas de los paneles (command-strip, mano, basic-menu, move-axis, limit-cards-row, chips STAGE, prompt→tiempo). La única excepción es el ancla del STAGE (secuencia→prompt anclado a la derecha).
 
 ## Verificación de paridad
 
