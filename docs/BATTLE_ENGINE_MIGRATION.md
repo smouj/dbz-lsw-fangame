@@ -1,0 +1,122 @@
+# BATTLE ENGINE MIGRATION — P1 #3 (plan de trabajo)
+
+> **Baseline contractual**: `PRE_BATTLE_ENGINE_MIGRATION_BASELINE` (commit `711c2ee7`).
+> Todo el gameplay observable de ese commit es el CONTRATO a preservar. La
+> migración NO reescribe el combate: encapsula el comportamiento verde dentro
+> de una máquina determinista. Al terminar, el gameplay debe ser IDÉNTICO —
+> solo cambia quién posee el estado y quién decide las transiciones.
+
+## Arquitectura objetivo
+
+```text
+UI / React / Dev Studio
+ │  commands
+ ▼
+┌──────────────────────────┐
+│ BattleEngine             │  authoritative state · phases/turns · actions
+│                          │  validation · resolution · RNG · battle events
+└─────────────┬────────────┘
+ │  events
+ ▼
+┌──────────────────────────┐
+│ Battle Presentation      │  cinematics · animation sequences
+│                          │  camera/background · SFX · QTE presentation
+└─────────────┬────────────┘
+ ▼
+PixiJS Renderer
+```
+
+**Regla principal**: React/Pixi NO deciden reglas de combate. BattleEngine NO
+decide cómo se dibuja una cinemática.
+
+## Contrato de estado (sin DOM)
+
+`BattleState` puro: tick · phase (intro/attack/defense/resolution/finished) ·
+exchange (index/attackerId/defenderId) · fighters · positions · commandCounters ·
+hand/deck/discard · pendingAction · outcome · rng. NADA de HTMLElement/Sprite/
+Texture/setTimeout/Audio/React setters/CSS/DOMRect dentro del estado.
+
+## Comandos (la UI no muta estado directo)
+
+```ts
+type BattleCommand =
+  | { type: 'START_BATTLE' }
+  | { type: 'SELECT_BASIC' }
+  | { type: 'USE_STAGE_ATTACK'; stage: 3 | 4 | 5 }
+  | { type: 'GATHER_POWER' }
+  | { type: 'USE_CARD'; cardId: string }
+  | { type: 'GUARD' }
+  | { type: 'MOVE'; axis: 'horizontal' | 'vertical' }
+  | { type: 'USE_DEFENSE_CARD'; cardId: string }
+  | { type: 'QTE_INPUT'; input: CommandInput }
+  | { type: 'QTE_TIMEOUT' }
+  | { type: 'DEFENSIVE_RESPONSE'; choice: 'defend' | 'continue' };
+```
+
+`canExecute(command)` = ÚNICA autoridad de legalidad (la UI lo consulta para
+deshabilitar botones, pero `dispatch` vuelve a validar — nunca confiar en el
+frontend).
+
+## Eventos (resolución ≠ presentación)
+
+```ts
+{ type: 'ACTION_STARTED', actionId, attacker, defender }
+{ type: 'QTE_STARTED', sequence, durationTicks }
+{ type: 'QTE_INPUT_RESULT', index, success }
+{ type: 'DAMAGE_APPLIED', target, amount }
+```
+
+La capa visual interpreta los eventos (TACTICAL→ACTION→QTE→impacto→damage→
+ACTION→TACTICAL) pero la cinemática NO decide el daño.
+
+## Reloj único GBC
+
+`GBC_NATIVE_FPS = 59.7275005696`. Eliminar progresivamente setTimeout/
+setInterval/Date.now/performance.now como fuentes de verdad del combate.
+El motor trabaja en TICKS (`durationTicks: 72`); la conversión a ms es
+presentación/debug.
+
+## Orden de migración por dominios
+
+- **M1 State** — HP/CC/turn/phase/attacker/defender/positions/cards (sin gameplay)
+- **M2 Legality** — qué puede usarse, fases, costes, requisitos, posición, CC
+- **M3 Phase machine** — ATTACK/DEFENSE/exchange/next exchange/turn completion
+- **M4 BASIC** — Gather Power + Stage Attack 3/4/5 (lo más comprobable)
+- **M5 Defense** — Guard + MOVE h/v + support cards
+- **M6 Cards** — Damage/Beam/Support/Guard/Joint/Character/Limit
+- **M7 QTE** — sequence/timer/success/failure/partial/counterattack al engine
+- **M8 Damage/resolution** — UNA ruta `resolveAction()` (nada de cálculos en componentes)
+- **M9 Battle end** — KO/victory/defeat/rewards/story continuation
+
+## Posiciones canónicas (en el engine, no en el HUD)
+
+`ground_far ↔ ground_near` · `air_far ↔ air_near` (MOVE horizontal).
+`ground_far ↔ air_far` · `ground_near ↔ air_near` (MOVE vertical).
+Nunca ground_far → air_near en una acción. El motor impide estados imposibles.
+
+## BattleEventLog + RNG determinista
+
+- Cada partida produce un log de eventos con tick (tests, reproducciones,
+  Dev Studio, comparación GBC, futuro PvP, replays, desync detection).
+- Toda aleatoriedad entra por `engine.rng` (nunca Math.random): seed + inputs =
+  misma batalla.
+
+## Nuevas vistas Dev Studio (tras el núcleo)
+
+COMBATE: HUD · Combat Lab · Positions · **Battle Engine** (phase/exchange/
+attacker/defender/CC/HP/position/pending action/seed/tick) · **Battle Events**
+(timeline con tick) · Sequence Lab · **Replay** (seed + command log = batalla).
+
+## Criterio de aceptación
+
+- BattleEngine dueño del BattleState · React sin reglas · Pixi sin reglas
+- Todas las acciones como BattleCommand · transiciones → BattleEvent
+- RNG determinista · reloj único GBC · posiciones validadas
+- QTE/damage/defense gobernados por el engine
+- Sin setTimeout autoritativos ni Math.random autoritativos
+- Replay determinista posible · TODOS los tests previos verdes
+- Nueva suite `verify:battle-engine` (transiciones e invariantes, no UI)
+
+## Orden de pendientes actualizado
+
+1. BattleEngine (P1 #3) → 2. BattleEngine Dev Studio → 3. Story E2E → 4. responsive
