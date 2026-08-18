@@ -8806,8 +8806,9 @@ button:focus-visible, .chapter-node:focus-visible {
   position: absolute;
 }
 /* ─── Vista MENÚ del HUD Studio ───
-   El menú del juego es 100vh — en el preview se ESCALA para encajar en el
-   área (origin top-left) manteniendo la fidelidad de posiciones. */
+   El menú del juego usa unidades vh (viewport real) — en el preview eso
+   desborda. Aquí se fuerza un layout COMPACTO con tamaños fijos (px)
+   para que encaje en el área de preview sin transform ni recortes. */
 .dev-hud-preview .dev-menu-screen {
   position: absolute;
   inset: 0;
@@ -8817,18 +8818,59 @@ button:focus-visible, .chapter-node:focus-visible {
 }
 .dev-hud-preview .dev-menu-screen .menu-content {
   height: 100%;
-  width: calc(100% / .66);
-  transform: scale(.66);
-  transform-origin: top left;
-  padding: 14px 0 8px 2.2vw;
-  gap: 7px;
+  width: 100%;
+  transform: none;
+  padding: 12px 0 8px 1.8vw;
+  gap: 5px;
+}
+.dev-hud-preview .dev-menu-screen .menu-logo-mark {
+  width: 34px;
+  height: 34px;
 }
 .dev-hud-preview .dev-menu-screen .menu-title {
-  font-size: clamp(1.1rem, 2.6vw, 1.7rem);
+  font-size: 26px;
 }
 .dev-hud-preview .dev-menu-screen .menu-subtitle {
-  font-size: clamp(.45rem, 1.1vw, .7rem);
-  letter-spacing: .3em;
+  font-size: 10px;
+  margin-bottom: 0;
+}
+.dev-hud-preview .dev-menu-screen .menu-continue-card {
+  min-height: 62px;
+  padding: 6px 10px;
+  gap: 8px;
+}
+.dev-hud-preview .dev-menu-screen .mc-hero {
+  height: 50px;
+  width: auto;
+}
+.dev-hud-preview .dev-menu-screen .mc-title {
+  font-size: 15px;
+}
+.dev-hud-preview .dev-menu-screen .mc-kicker {
+  font-size: 8px;
+}
+.dev-hud-preview .dev-menu-screen .mc-progress-line {
+  margin-top: 2px;
+}
+.dev-hud-preview .dev-menu-screen .menu-item {
+  min-height: 33px;
+  grid-template-columns: 26px 28px 1fr 18px;
+  gap: 6px;
+  padding: 0 8px;
+}
+.dev-hud-preview .dev-menu-screen .mi-icon svg {
+  width: 14px;
+  height: 14px;
+}
+.dev-hud-preview .dev-menu-screen .mi-label {
+  font-size: 12px;
+}
+.dev-hud-preview .dev-menu-screen .mi-desc {
+  font-size: 9px;
+}
+.dev-hud-preview .dev-menu-screen .menu-footer {
+  font-size: 10px;
+  margin-top: auto;
 }
 /* FIGHT aparece en el juego DESPUÉS del flash (2.9s), superpuesto al VS
    — en el preview se pisan; se muestra solo el estado VS+READY */
