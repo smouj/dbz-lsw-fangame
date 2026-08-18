@@ -92,8 +92,8 @@ npm run verify:battle       # 71/71 lógica
 - Position Lab muestra los 4 planos + **plano ACTION** (quinto): el actor centrado con los pies en `ACTION_CENTER_ANCHOR` (50, 68) sobre el fondo `_action`.
 
 ### Plano ACTION (cinemático / QTE / animaciones)
-- **Composición canónica**: actor en `ACTION_CENTER_ANCHOR = {x: 50, y: 68}` (constante única en positions.ts) — los fondos `NN_action.png` están compuestos para primer plano centrado.
-- Sprite grande 192px (studio) / FighterSprite del sheet en el juego — pies anclados igual que los chibis.
+- **ESCENARIO (`NN_action.png`)**: actor CENTRADO — `ACTION_CENTER_ANCHOR = {x: 50, y: 68}` (constante única en positions.ts) — composición de primer plano, sprite 192px, pies anclados igual que los chibis.
+- **ESPECIAL/transición (`special_action.png` — blanco con bandas azules)**: actor en ESPEJO según quién ejecuta — `actionAnchorFor(side, special)`: JUGADOR a la IZQUIERDA (x 20) mirando a la derecha · ENEMIGO a la DERECHA (x 80 = 100−20) mirando a la izquierda · y 70 (2px más abajo) · 190px (2px menor, CSS `.special-actor`). El fondo especial se escala `auto 100%` + `repeat-x` (bandas siempre visibles, sin recorte ni líneas negras) con atmósfera al 25%.
 - El QTE del juego (stageInput) ejecuta la secuencia con el luchador en SU anchor táctico (no en el centro): el contenedor usa `anchorFor` siempre; `.field-action` funde los fighters salvo `qte-active`.
 
 ### Fondos por situación (fuente: `src/data/scenarios.ts` + `src/data/battleBackgrounds.ts`)

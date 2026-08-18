@@ -274,3 +274,8 @@ audit:sprite-canon (P1).
 | `5463482e` | Chips CC + FASE ocultos con diálogo GBC activo y en vistas STAGE/DIÁLOGO/RESULTADO/INTRO/MENÚ |
 | `bd23f60b` | INTRO canónico SIN texto: sprites entran desde ±42vw + VS pop + flash (fuera FIGHT/nombres) |
 | *(este turno)* | **Auditoría canónica**: CSS muerto eliminado (`.hud-stats`/`.cc-stat`, `.cc-dock`/`.cc-pocket`, `CCDisplay`, `.cc-max`, refs intro/qte) — z-index coherente (intro 120 → transform 110 → diálogo/cue 60 → hud 10 → card-fx 9) — CANON actualizado (invariantes 5/7/12/14/15, INTRO sin texto) |
+| `e374057a` | **Planos canónicos**: `ACTION_CENTER_ANCHOR` en positions.ts + Position Lab con 5º plano ACTION + fondos por situación documentados |
+| `6eb0440b` | Fondos por situación confirmados (STAGE/ataques/Gather = `NN_action`) + overworld a escala GBC (×3 = 48px preview) + `BATTLE_BGS` muerto fuera |
+| `fc078cbe` | **Paquete backgrounds V2 integrado**: `battleBackgrounds.ts` (13 escenarios con nombre/arco) — modo HISTORIA elige escenario por capítulo · studio FONDO con localizaciones · plano ESPECIAL (transición) previsualizable · fondo RELLENA (cover) |
+| `4d18922f` | Fondo especial: bandas azules visibles (`auto 100%` + repeat-x + atmósfera 25%) |
+| `8bd30ed3` | **Canónica ACTION final**: ESCENARIO centrado (50,68) · ESPECIAL espejo por actor (player izq 20 / enemy der 80, y 70, 190px) |
