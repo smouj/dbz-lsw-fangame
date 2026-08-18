@@ -11,7 +11,7 @@ import { facingFlip, needsFlip } from './data/facing';
 import { BattlePosition, POSITION_DATA, resolveRelativeDistance, isBeamVulnerable, isDamageVulnerable, anchorFor, applyMoveAxis, positionLabel, type MoveAxis } from './data/positions';
 import { BATTLE_PORTRAITS } from './data/battlePortraits';
 import { UNLOCK_KEY, STARTER_DAMAGE_DECK, STARTER_BEAM_DECK, STARTER_CHARACTERS, cardsForLevel, pickRewards, VS_UNLOCKS, isFormUnlocked, FORM_UNLOCK_LEVELS } from './data/unlocks';
-import { CARDS, CARD_COLORS, CARD_TYPE_NAMES, CardDef, CardType, DECK_SIZE, MAX_COPIES, getCard, CardEffect } from './data/cards';
+import { CARDS, CARD_COLORS, CARD_COLORS_ON_LIGHT, CARD_TYPE_NAMES, CardDef, CardType, DECK_SIZE, MAX_COPIES, getCard, CardEffect } from './data/cards';
 import {
   createBattleDeck, drawOne, playJoint, discardOne, needsDiscard,
   registerCardResolver, JointDeckState, HAND_MAX_TRANSITORY,
@@ -484,7 +484,10 @@ function CardVisual({ card, selected, onClick, small, disabled }: {
   // fondo blanco, texto negro). Se renderiza con dangerouslySetInnerHTML.
   const esc = (s: string) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
   const richTip = [
-    `<span class="tt-title">${esc(card.name)} — ${esc(CARD_TYPE_NAMES[card.type])} ★${card.rarity}</span>`,
+    // Título: nombre en ROJO GBC (como el actor del diálogo) + TIPO con su
+    // color oscurecido para fondo claro (CARD_COLORS_ON_LIGHT: el especial
+    // es dorado apagado, legible sobre blanco).
+    `<span class="tt-title">${esc(card.name)} — <span class="tt-type" style="color:${CARD_COLORS_ON_LIGHT[card.type]}">${esc(CARD_TYPE_NAMES[card.type])}</span> ★${card.rarity}</span>`,
     `<span class="tt-sep"></span>`,
     `<span class="tt-stats">CC ${card.cc} · ATK ${card.atk > 0 ? card.atk : '—'} · ACC ${card.acc}%</span>`,
     card.description ? `<span class="tt-desc">${esc(card.description)}</span>` : '',

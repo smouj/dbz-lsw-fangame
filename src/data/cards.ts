@@ -41,6 +41,18 @@ export const CARD_COLORS: Record<CardType, string> = {
   special: '#d8a830',
 };
 
+/** Versiones OSCURECIDAS de CARD_COLORS para fondo claro (tooltip GBC
+ *  blanco): el color de tipo debe leerse bien sobre #f8f4e4 (contraste
+ *  AA ≥4.5). Especial = dorado apagado (#8f6400) — legible, sin brillar. */
+export const CARD_COLORS_ON_LIGHT: Record<CardType, string> = {
+  command: '#575e6b',
+  damage: '#a03030',
+  beam: '#1f6fa3',
+  support: '#2c7a35',
+  defense: '#54429b',
+  special: '#8f6400',
+};
+
 export const CARD_ICONS: Record<CardType, string> = {
   command: '⚡',
   damage: '👊',

@@ -1515,6 +1515,11 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   margin-bottom: 5px;
   text-transform: uppercase;
 }
+/* Tipo de carta: color propio (CARD_COLORS_ON_LIGHT inline) — el nombre
+   queda rojo GBC, el tipo se distingue por su color legible sobre blanco */
+.global-tooltip .tt-type {
+  font-weight: bold;
+}
 /* Líneas de datos (CC · ATK · ACC) — negro del diálogo */
 .global-tooltip .tt-stats {
   display: block;
@@ -1813,14 +1818,7 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   cursor: pointer;
   box-shadow: none;
   filter: drop-shadow(2px 2px 0 #000);
-  transition: background 80ms, color 80ms, border-color 80ms;
-}
-
-
-.move-axis-label {
-  font-size: 8px;
-  letter-spacing: 2px;
-  color: var(--text-dim);
+  transition: background-color 80ms, border-color 80ms, transform 90ms steps(2, end), filter 90ms steps(2, end);
 }
 
 .move-axis-btn:hover,
@@ -1830,12 +1828,7 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   background-color: var(--orange);
   border-color: var(--orange-lt);
   transform: translateY(-2px);   /* MISMO lift que command-strip/basic-btn */
-}
-
-
-.move-axis-btn:hover .move-axis-label,
-.move-axis-btn.preview .move-axis-label {
-  color: #000;
+  filter: drop-shadow(2px 2px 0 #000) brightness(1.15);
 }
 
 /* Preview CURRENT → RESULT antes de confirmar */
@@ -10101,7 +10094,8 @@ button.linklike:hover { text-decoration: underline; }
 .move-axis-btn.axis-v {
   background-image: url('/assets/ui/hud_buttons/btn_move_axis_v.png');
 }
-.move-axis-btn:hover { filter: drop-shadow(2px 2px 0 #000) brightness(1.15); }
+/* hover del move-axis definido UNA sola vez (sección botones GBC, línea
+   1831) — no duplicar aquí: regla única evita deriva entre secciones. */
 
 /* ═══ DISCARD REQUIRED (HAND CHECK) — selector real de descarte ═══ */
 .discard-panel {

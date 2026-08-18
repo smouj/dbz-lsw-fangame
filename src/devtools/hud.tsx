@@ -21,7 +21,7 @@ import { BATTLE_PORTRAITS } from '../data/battlePortraits';
 import { storyPortraitUrl } from '../data/storyPortraits';
 import { anchorFor, BattlePosition } from '../data/positions';
 import { downloadJson } from './spriteEditing';
-import { getCard, CARD_TYPE_NAMES, CARD_COLORS, CardDef } from '../data/cards';
+import { getCard, CARD_TYPE_NAMES, CARD_COLORS, CARD_COLORS_ON_LIGHT, CardDef } from '../data/cards';
 import { cardIconUrl } from '../data/icons';
 import { FitArt } from '../components/FitArt';
 import { CardArtHole } from '../components/CardArtHole';
@@ -69,7 +69,7 @@ function HudCard({ card, selected, disabled }: { card: CardDef; selected?: boole
   return (
     <button className={`card ${card.type} ${selected ? 'selected' : ''}`} disabled={disabled}
       style={{ '--card-color': color, '--card-frame': frame ? `url('${frame}')` : undefined } as React.CSSProperties}
-      data-tip={`<span class="tt-title">${card.name} — ${CARD_TYPE_NAMES[card.type]} ★${card.rarity}</span><span class="tt-sep"></span><span class="tt-stats">CC ${card.cc} · ATK ${card.atk > 0 ? card.atk : '—'} · ACC ${card.acc}%</span>${card.description ? `<span class="tt-desc">${card.description}</span>` : ''}`}>
+      data-tip={`<span class="tt-title">${card.name} — <span class="tt-type" style="color:${CARD_COLORS_ON_LIGHT[card.type]}">${CARD_TYPE_NAMES[card.type]}</span> ★${card.rarity}</span><span class="tt-sep"></span><span class="tt-stats">CC ${card.cc} · ATK ${card.atk > 0 ? card.atk : '—'} · ACC ${card.acc}%</span>${card.description ? `<span class="tt-desc">${card.description}</span>` : ''}`}>
       <CardArtHole frameUrl={frame} iconUrl={iconUrl} />
     </button>
   );
