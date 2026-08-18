@@ -284,7 +284,6 @@ export function HudModule() {
                   <span className="hud-phase phase-atk">ATTACK</span>
                   <div className="hud-status">
                     <span className="status-chip buff">STR+</span>
-                    <span className="status-chip guard">ATK</span>
                   </div>
                 </div>
               </div>

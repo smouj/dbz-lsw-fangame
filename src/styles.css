@@ -762,7 +762,7 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 .hud-info-row {
   display: flex;
   align-items: center;
-  justify-content: space-between;   /* stats a la izquierda, badges a la derecha */
+  justify-content: space-between;   /* fase a la izquierda, badges a la derecha */
   gap: 6px;
   width: 100%;
   min-width: 0;
