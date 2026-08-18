@@ -681,7 +681,7 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 }
 
 .hud-name {
-  display: flex; align-items: center; gap: 6px;
+  display: flex; align-items: center; gap: 8px;   /* respiro retrato↔nombre */
   font-family: var(--fui);   /* VT323 pixel (unificado con los números) */
   font-size: 13px;           /* un pelín más grande (antes 12px) */
   letter-spacing: .5px;
@@ -712,6 +712,7 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 .hud-portrait img {
   width: 100%; height: 100%;
   object-fit: cover;
+  object-position: center top;   /* busto: prioriza la cara */
   image-rendering: pixelated;
 }
 /* sin hover que cambie bordes/sombras del retrato (geometría estable) */
@@ -727,7 +728,7 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 .hud-level {
   color: #1a1200;
   font-size: 9px;
-  margin-left: 4px;
+  margin-left: 6px;
   letter-spacing: .5px;
   background: #d8c070;
   border: 1px solid #05070c;
@@ -739,7 +740,7 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 }
 .fighter-hud.right .hud-level {
   margin-left: 0;
-  margin-right: 4px;
+  margin-right: 6px;
 }
 
 .hud-info-row {
@@ -3032,15 +3033,8 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
    ═══════════════════════════════════════════════════════════ */
 
 /* Retrato más visible con marco GBC */
-.hud-portrait {
-  width: 30px; height: 34px;
-  border: 2px solid var(--border);
-  background: var(--panel-lo);
-  overflow: hidden;
-  flex-shrink: 0;
-  box-shadow: inset 1px 1px 0 rgba(0,0,0,0.5);
-}
-
+/* retrato canónico: el de la sección HUD (línea ~699) — 28×28 bevel GBC.
+   Este bloque duplicado (30×34 oscuro) eliminado para no pisar el canon */
 .hud-portrait img {
   width: 100%; height: 100%;
   object-fit: cover;
