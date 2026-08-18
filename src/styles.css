@@ -10070,12 +10070,12 @@ button.linklike:hover { text-decoration: underline; }
    los chibis: translate(-50%,-100%)). El scaleX del facing se aplica al
    final, sobre el translate, sin pisarlo. */
 .dev-hud-preview .battlefield .dev-hud-fighter-sprite.dev-hud-anchored.action-mode {
-  height: 176px;              /* grande: primer plano de la acción */
+  height: 192px;              /* grande: primer plano de la acción */
   width: auto;
   filter: drop-shadow(0 0 10px rgba(255,190,60,.28)) drop-shadow(0 6px 12px rgba(0,0,0,.5));
 }
 .dev-hud-preview .battlefield .dev-hud-fighter-sprite.dev-hud-anchored.action-mode.dev-hud-ow {
-  height: 176px;              /* garantizado: sin colisión con .overworld-sprite */
+  height: 192px;              /* garantizado: sin colisión con .overworld-sprite */
 }
 .dev-hud-preview .battlefield .dev-hud-fighter-sprite.dev-hud-anchored.action-mode.player {
   transform: translate(-50%, -100%);

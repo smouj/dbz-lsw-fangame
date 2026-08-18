@@ -343,12 +343,12 @@ export function HudModule() {
                       {(bgMode === 'overview' ? pIdle : (actor === 'player' ? pAction : undefined)) && (
                         <img src={bgMode === 'overview' ? pIdle : pAction} alt=""
                           className={`dev-hud-ow dev-hud-fighter-sprite dev-hud-anchored player ${bgMode === 'action' ? 'action-mode' : ''}`}
-                          style={bgMode === 'action' ? { left: '50%', top: '62%' } : { left: `${pa.x}%`, top: `${pa.y}%` }} />
+                          style={bgMode === 'action' ? { left: '50%', top: '66%' } : { left: `${pa.x}%`, top: `${pa.y}%` }} />
                       )}
                       {(bgMode === 'overview' ? eIdle : (actor === 'enemy' ? eAction : undefined)) && (
                         <img src={bgMode === 'overview' ? eIdle : eAction} alt=""
                           className={`dev-hud-ow dev-hud-fighter-sprite dev-hud-anchored enemy ${bgMode === 'action' ? 'action-mode' : ''}`}
-                          style={bgMode === 'action' ? { left: '50%', top: '62%' } : { left: `${ea.x}%`, top: `${ea.y}%` }} />
+                          style={bgMode === 'action' ? { left: '50%', top: '66%' } : { left: `${ea.x}%`, top: `${ea.y}%` }} />
                       )}
                     </>
                   );
