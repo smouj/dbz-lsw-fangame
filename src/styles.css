@@ -3616,14 +3616,16 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 }
 /* Textos y chips del QTE adaptados al fondo BLANCO de las cajas GBC */
 .gbc-dialogue .stage-inline {
-  /* Inputs del STAGE DENTRO del cuadro de diálogo: UNA sola fila, SOLO los
-     iconos de teclas + el tiempo numérico — sin marcos, sin texto extra,
-     sin barra de tiempo */
+  /* Inputs del STAGE DENTRO del cuadro de diálogo: UNA sola fila — la
+     SECUENCIA a la izquierda y el prompt+tiempo a la derecha (spec UI
+     2026-08-18). Iconos de teclas grandes y nítidos (×3/×4 entero). */
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 18px;
+  justify-content: flex-start;
+  gap: 12px;
   width: 100%;
+  padding: 0 14px;
+  box-sizing: border-box;
   font-family: var(--fpx);
   color: #000;
 }
@@ -3634,30 +3636,37 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   gap: 10px;
 }
 .gbc-dialogue .stage-seq-item img {
-  width: 34px;
-  height: 34px;
+  width: 48px;
+  height: 48px;
   image-rendering: pixelated;
   display: block;
   object-fit: contain;
 }
 .gbc-dialogue .stage-seq-item.done .seq-check {
-  font-size: 14px;
+  font-size: 16px;
   color: #0a7a2a;
 }
 .gbc-dialogue .stage-seq-item.current img {
-  transform: scale(1.25);
+  transform: scale(1.15);
   filter: drop-shadow(0 0 6px rgba(0, 90, 140, .9));
 }
 .gbc-dialogue .stage-seq-item.future { opacity: .5; }
-/* Prompt actual SIN marco: solo el icono grande */
+/* Prompt actual CON RELLENO: caja oscura detrás de la tecla grande — el
+   input que toca se ve lleno y destacado (antes flotaba sin fondo) */
 .gbc-dialogue .stage-inline-prompt {
   display: flex;
   align-items: center;
   flex-shrink: 0;
+  margin-left: auto;          /* empuja prompt + tiempo a la DERECHA */
+  padding: 8px;
+  background: #141414;        /* relleno */
+  border: 2px solid #000;
+  outline: 2px solid #f8f4e4;
+  box-shadow: 2px 2px 0 rgba(0,0,0,.5);
 }
 .gbc-dialogue .stage-inline-prompt img {
-  width: 56px;
-  height: 56px;
+  width: 64px;
+  height: 64px;
   image-rendering: pixelated;
   display: block;
   object-fit: contain;
@@ -10561,8 +10570,11 @@ button.linklike:hover { text-decoration: underline; }
 .gbc-dialogue .stage-inline {
   display: flex;
   align-items: center;
+  justify-content: flex-start;
   gap: 12px;
   width: 100%;
+  padding: 0 14px;
+  box-sizing: border-box;
   font-family: var(--fpx);
   color: #000;
 }
@@ -10579,8 +10591,8 @@ button.linklike:hover { text-decoration: underline; }
 }
 .dev-hud-preview .gbc-dialogue .stage-seq-item img,
 .gbc-dialogue .stage-seq-item img {
-  width: 34px;
-  height: 34px;
+  width: 48px;
+  height: 48px;
   image-rendering: pixelated;
   display: block;
   object-fit: contain;
@@ -10600,10 +10612,15 @@ button.linklike:hover { text-decoration: underline; }
   align-items: center;
   gap: 6px;
   flex-shrink: 0;
-  padding: 0;
-  border: 0;
-  background: transparent;
-  box-shadow: none;
+  /* RELLENO + grupo a la DERECHA (spec UI 2026-08-18): caja oscura
+     detrás de la tecla actual + margin-left auto empuja prompt y
+     tiempo al borde derecho del cuadro. */
+  margin-left: auto;
+  padding: 8px;
+  background: #141414;
+  border: 2px solid #000;
+  outline: 2px solid #f8f4e4;
+  box-shadow: 2px 2px 0 rgba(0,0,0,.5);
   animation: none;
 }
 .dev-hud-preview .gbc-dialogue .stage-inline-prompt img,
