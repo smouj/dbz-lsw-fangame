@@ -14,7 +14,7 @@ import { overworldUrl } from '../../../data/overworld';
 import type { BattlePosition } from '../../../data/positions';
 import type { BattleRenderer } from '../BattleRenderer';
 import type { FighterActor } from '../actors/FighterActor';
-import { ACTION_ACTOR_X, ACTION_TARGET_X } from '../scenes/ActionScene';
+import { ACTION_LEFT_X, ACTION_RIGHT_X } from '../scenes/ActionScene';
 import { ACTION_GROUND_Y, rushX, easeOutCubic } from '../systems/MotionSystem';
 import type { BattlePresentation, BattleScene } from './BattlePresentation';
 import { resolveProjectileVisualMode, type ProjectileVisualMode } from './projectileVisual';
@@ -74,19 +74,19 @@ export class PixiBattlePresentation implements BattlePresentation {
 
     this.leftActor = await this.renderer.addFighter(this.cfg.playerFormId, 'left', this.scale);
     this.rightActor = await this.renderer.addFighter(this.cfg.enemyFormId, 'right', this.scale);
-    if (this.leftActor) this.renderer.sceneDirector.action.setActor(this.leftActor);
-    if (this.rightActor) this.renderer.sceneDirector.action.setTarget(this.rightActor);
+    // M8.P0 — los dos actores se registran UNA sola vez (addChild una única
+    // vez). A partir de aquí los roles cambian por setRoles, sin reparent.
+    this.renderer.sceneDirector.action.setFighters(this.leftActor, this.rightActor);
 
     this.renderer.sceneDirector.setScene('FIELD');
   }
 
-  /** Fija quién ataca en este exchange (player → 'left', enemy → 'right'). */
+  /** Fija quién ataca en este exchange (player → 'left', enemy → 'right').
+   *  M8.P0 — SOLO cambia el ROL (setRoles): los nodos ya cuelgan de
+   *  ActionScene; nunca removeChild/addChild (los parents son estables). */
   setAttacker(side: BattleSide): void {
     this.attacker = side;
-    const a = side === 'left' ? this.leftActor : this.rightActor;
-    const t = side === 'left' ? this.rightActor : this.leftActor;
-    this.renderer.sceneDirector.action.setActor(a);
-    this.renderer.sceneDirector.action.setTarget(t);
+    this.renderer.sceneDirector.action.setRoles(side);
   }
 
   private get actor(): FighterActor | null {
@@ -121,8 +121,8 @@ export class PixiBattlePresentation implements BattlePresentation {
   moveActor(durationTicks: number): void {
     const a = this.actor;
     if (!a) return;
-    const fromX = this.attacker === 'left' ? ACTION_ACTOR_X : ACTION_TARGET_X;
-    const toX = this.attacker === 'left' ? ACTION_TARGET_X : ACTION_ACTOR_X;
+    const fromX = this.renderer.sceneDirector.action.actorHomeX();
+    const toX = this.renderer.sceneDirector.action.targetHomeX();
     const dir = toX > fromX ? 1 : -1;
     const endX = toX - dir * 34; // se detiene antes de solaparse con el rival
     this.rushActive = true;
@@ -152,8 +152,8 @@ export class PixiBattlePresentation implements BattlePresentation {
 
   setProjectileProgress(progress: number): void {
     if (!this.projectile) return;
-    const fromX = this.attacker === 'left' ? ACTION_ACTOR_X : ACTION_TARGET_X;
-    const toX = this.attacker === 'left' ? ACTION_TARGET_X : ACTION_ACTOR_X;
+    const fromX = this.renderer.sceneDirector.action.actorHomeX();
+    const toX = this.renderer.sceneDirector.action.targetHomeX();
     const p = Math.max(0, Math.min(1, progress));
     this.drawProceduralProjectile(this.projectile, p, fromX, toX);
   }
@@ -205,8 +205,8 @@ export class PixiBattlePresentation implements BattlePresentation {
     this.rightActor?.setFlash(0);
     this.leftActor?.setPose('idle', this.renderer.currentTick);
     this.rightActor?.setPose('idle', this.renderer.currentTick);
-    this.leftActor?.setPos(ACTION_ACTOR_X, ACTION_GROUND_Y);
-    this.rightActor?.setPos(ACTION_TARGET_X, ACTION_GROUND_Y);
+    this.leftActor?.setPos(ACTION_LEFT_X, ACTION_GROUND_Y);
+    this.rightActor?.setPos(ACTION_RIGHT_X, ACTION_GROUND_Y);
   }
 
   sync(tick: number): void {
@@ -242,8 +242,8 @@ export class PixiBattlePresentation implements BattlePresentation {
     this.rightActor?.setFlash(0);
     this.leftActor?.setPose('idle', 0);
     this.rightActor?.setPose('idle', 0);
-    this.leftActor?.setPos(ACTION_ACTOR_X, ACTION_GROUND_Y);
-    this.rightActor?.setPos(ACTION_TARGET_X, ACTION_GROUND_Y);
+    this.leftActor?.setPos(ACTION_LEFT_X, ACTION_GROUND_Y);
+    this.rightActor?.setPos(ACTION_RIGHT_X, ACTION_GROUND_Y);
     this.setAttacker(this.attacker);
     this.renderer.sceneDirector.setScene('FIELD');
   }
@@ -293,16 +293,16 @@ export class PixiBattlePresentation implements BattlePresentation {
     if (scene === 'FIELD') {
       this.clearProjectile();
       this.cancelRush();
-      this.leftActor?.setPos(ACTION_ACTOR_X, ACTION_GROUND_Y);
-      this.rightActor?.setPos(ACTION_TARGET_X, ACTION_GROUND_Y);
+      this.leftActor?.setPos(ACTION_LEFT_X, ACTION_GROUND_Y);
+      this.rightActor?.setPos(ACTION_RIGHT_X, ACTION_GROUND_Y);
       return;
     }
 
     if (scene === 'ACTION_SOLO') {
       this.clearProjectile();
       this.cancelRush();
-      this.actor?.setPos(ACTION_ACTOR_X, ACTION_GROUND_Y);
-      this.target?.setPos(ACTION_TARGET_X, ACTION_GROUND_Y);
+      this.actor?.setPos(this.renderer.sceneDirector.action.actorHomeX(), ACTION_GROUND_Y);
+      this.target?.setPos(this.renderer.sceneDirector.action.targetHomeX(), ACTION_GROUND_Y);
       return;
     }
 
@@ -313,8 +313,8 @@ export class PixiBattlePresentation implements BattlePresentation {
 
     if (scene === 'PROJECTILE') {
       this.cancelRush();
-      this.actor?.setPos(ACTION_ACTOR_X, ACTION_GROUND_Y);
-      this.target?.setPos(ACTION_TARGET_X, ACTION_GROUND_Y);
+      this.actor?.setPos(this.renderer.sceneDirector.action.actorHomeX(), ACTION_GROUND_Y);
+      this.target?.setPos(this.renderer.sceneDirector.action.targetHomeX(), ACTION_GROUND_Y);
     }
   }
 }

@@ -4439,6 +4439,18 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 .battle-screen.pixi-presentation-active .card-fx {
   display: none;
 }
+/* M8.P0 — exclusión mutua DOM/Pixi: cuando la presentación Pixi (FighterActor)
+   está activa, los fighters DOM del campo se retiran — NUNCA chibi DOM +
+   FighterActor simultáneos (duplicados visuales). El campo DOM solo aporta
+   fondos; los luchadores los pinta Pixi. */
+.battle-screen.pixi-presentation-active .battlefield-fighters {
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+}
+.battle-screen.pixi-presentation-active .battlefield .battle-bg {
+  opacity: 0;
+}
 .fx-vignette { position: absolute; inset: 0; background: radial-gradient(ellipse at center, rgba(5,8,14,.20) 0%, rgba(2,3,6,.76) 100%); animation: fx-vignette-in .3s ease-out both; }
 @keyframes fx-vignette-in { from { opacity: 0; } to { opacity: 1; } }
 .fx-fighter { position: absolute; bottom: clamp(16px, 5vh, 44px); filter: drop-shadow(0 0 24px rgba(255,190,60,.45)); }

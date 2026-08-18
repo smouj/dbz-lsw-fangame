@@ -79,6 +79,39 @@ export class BattleRenderer {
     this.sync(this.tickCount + ticks);
   }
 
+  /**
+   * M8.P0 — Auditor de identidad de luchadores: verifica que el scene graph
+   * tiene EXACTAMENTE 2 FighterActor con parents estables (nunca creados en
+   * cambios de plano, nunca reparentados por setRoles). Devuelve el estado
+   * para Dev overlay / tests de invariante.
+   */
+  debugActorRegistry(): {
+    fighters: number;
+    playerActionInstances: number;
+    enemyActionInstances: number;
+    actionFighterCount: number;
+    parentsStable: boolean;
+    detail: Array<{ formId: string; parent: string | null; visible: boolean }>;
+  } {
+    const action = this.sceneDirector.action;
+    const fighters = this.fighters;
+    const left = fighters[0] ?? null;
+    const right = fighters[1] ?? null;
+    const parentsStable = fighters.every(f => f.parent !== null && (f.parent === action || f.parent === this.sceneDirector.tactical));
+    return {
+      fighters: fighters.length,
+      playerActionInstances: fighters.filter(f => f.formId === left?.formId && f.parent === action).length,
+      enemyActionInstances: fighters.filter(f => f.formId === right?.formId && f.parent === action).length,
+      actionFighterCount: action.fighterCount,
+      parentsStable,
+      detail: fighters.map(f => ({
+        formId: f.formId,
+        parent: f.parent ? (f.parent === action ? 'ActionScene' : f.parent === this.sceneDirector.tactical ? 'TacticalScene' : 'other') : null,
+        visible: f.visible,
+      })),
+    };
+  }
+
   /** Sincroniza TODO el renderer al tick GBC absoluto `tick` (reloj ÚNICO). */
   sync(tick: number): void {
     this.tickCount = tick;
