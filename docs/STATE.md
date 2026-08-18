@@ -1,6 +1,6 @@
 # DBZ LSW — STATE.md (Estado actual del proyecto)
 
-> **Última actualización**: 2026-08-17 · HEAD `b59e433` · origin/main sincronizado.
+> **Última actualización**: 2026-08-18 · HEAD `86467e2` · origin/main sincronizado.
 > Este documento es LA referencia del estado real del motor. Si un doc antiguo
 > contradice esto, ESTE gana (los obsoletos se archivan en `docs/archive/`).
 
@@ -90,6 +90,59 @@ BATTLE_ENTRY → TACTICAL_FIELD → ROUND_START (SPD) → EXCHANGE 1
 El commit del daño ocurre en `APPLY_DAMAGE` (impacto), no al final de la
 película (fase 3 de la auditoría, implementada en `d86fdf1`).
 
+## 3b. Canon visual de cartas y diálogo (sesión 2026-08-18)
+
+### Cartas compactas — UNA fuente de verdad (JOINT = STAGE = LIMIT)
+- **Componente único `CardArtHole`** (`src/components/CardArtHole.tsx` +
+  `FrameHole.tsx`): mide el recuadro BLANCO interior de cada frame GBC y
+  posiciona el arte exactamente ahí. Usado en los 6 sitios (juego: mano,
+  STAGE, LIMIT · mockup: HudCard, STAGE, LIMIT).
+- **Frame = MÁSCARA por encima del arte**: los 19 frames GBC tienen el
+  recuadro blanco interior TRANSPARENTE (flood fill) y se superponen al arte
+  vía `::after` (z-index 3, pointer-events none) con el arte detrás
+  (z-index 1) — el marco SIEMPRE se ve por encima, imposible que el arte
+  cree bordes o se desplace.
+- **Iconos card_XXX**: recortados al contenido real (30×22 aprox, sin el
+  margen de 1px del canvas) SIN tocar colores — el rayo/arte se ve sobre el
+  hueco del frame.
+- **Caja de arte canónica** (regla agrupada única, sin duplicados):
+  top/left 18 · 60×44 · padding/margin/border/outline 0 · background
+  transparent · box-shadow none · box-sizing border-box · display block ·
+  overflow hidden. `object-fit: cover` + `object-position: center` (el
+  navegador centra, sin redondeos a mano).
+- **Pulso canónico de hover** (MANO = STAGE = LIMIT, sin haz de luz):
+  `rotateX(4deg) translateY(-4px)` + `brightness(1.1) saturate(1.08)` +
+  sombra SOLO negra de profundidad (sin resplandor dorado). Transiciones
+  `transform/box-shadow/filter 120ms ease` en los 3.
+- Sin línea de color superior (`::before` none) en STAGE (como la mano).
+
+### Diálogo GBC
+- Caja 80px (misma altura que los botones) · sprite de STORY FUERA a su lado
+  (57×80, marco negro 3px + outline + máscara) según quién habla
+  (left/right) · el diálogo deja el margen lateral (88px) en el lado del
+  speaker para que el sprite nunca se recorte.
+- Texto: actor rojo GBC (11px, mayúsculas) + mensaje negro (15px), fuente
+  `--fpx` (DotGothic16).
+
+### Panel STAGE (BASIC)
+- STAGE = EXACTAMENTE el diálogo (`.gbc-dialogue`): misma caja, mismo ancho,
+  sprite del personaje fuera a la izquierda.
+- Inputs DENTRO del cuadro en UNA fila: secuencia de teclas + prompt grande
+  + tiempo NUMÉRICO (`elapsed / max`, sin barra) — sin marcos alrededor de
+  los iconos.
+- Iconos del paquete **DBZ_LSW_INPUT_PROMPTS_V2** (game_ready): key_q/key_e
+  (A/B), arrow_up/down/left/right (direcciones con icono de flecha), xbox_a/b
+  (recovery PROTEGERSE/REPARAR) — variante filled_white/engraved_white para
+  el fondo claro.
+
+### Tooltip (estilo diálogo GBC)
+- Fondo `#f8f4e4` (blanco GBC) + marco negro 3px + outline + sombra · texto
+  NEGRO · fuente DotGothic16 11px (antes 8px) · alineado a la izquierda.
+- HTML estructurado: `tt-title` (nombre + tipo + ★, azul, 13px, mayúsculas)
+  · `tt-sep` · `tt-stats` (CC/ATK/ACC dorado) · `tt-desc` (negro) ·
+  `tt-effect` (rojo) · `tt-compat` (verde). Aplicado al juego (CardVisual
+  con esc()) y al mockup (HudCard) vía dangerouslySetInnerHTML.
+
 ## 4. Suites de verificación (todas verdes)
 
 ```bash
@@ -150,3 +203,10 @@ audit:sprite-canon (P1).
 | `ae86f40` | **GBC FIDELITY V10**: no-reshuffle · stats persistentes · stage A/B parcial · deck 20 sin filtrar · reloj en ticks · corte duro · evidence.ts |
 | `5c7e6c0` | Icono del stage (id N-2) + legibilidad del HUD superior |
 | `b59e433` | Stage rellenado con FitArt (como las cartas) + glitch hover corregido |
+| `97a6ac9`→`a0eb7be` | Positions sincronizado (anchorFor) + vista STAGE del HUD Studio rediseñada |
+| `bb259ad` | STAGE = diálogo exacto: inputs DENTRO del cuadro en una fila |
+| `30192a0` | Paquete DBZ_LSW_INPUT_PROMPTS_V2 integrado (iconos mapeados) |
+| `25bfb96`→`e7f1148` | Caja de arte canónica unificada → centrado con object-fit cover |
+| `5767114` | **FRAME = MÁSCARA** por encima del arte (hueco transparente) + iconos limpios |
+| `47c8779` | Iconos restaurados (colores originales) + recorte sin tocar colores |
+| `86467e2` | Tooltip estilo diálogo GBC (HTML estructurado) + pulso canónico sin haz de luz |
