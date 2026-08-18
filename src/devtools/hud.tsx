@@ -253,7 +253,6 @@ export function HudModule() {
                   <div className="intro-name">GOKU</div>
                   <div className="intro-sub">BASE</div>
                 </div>
-                <div className="intro-round">ROUND 1</div>
                 <div className="intro-vs">VS</div>
                 <div className="intro-fighter intro-right">
                   <div className="intro-portrait">
@@ -262,7 +261,6 @@ export function HudModule() {
                   <div className="intro-name">PICCOLO</div>
                   <div className="intro-sub">BASE</div>
                 </div>
-                <div className="intro-ready">READY</div>
                 <div className="intro-fight">FIGHT!</div>
                 <div className="intro-flash" />
               </div>

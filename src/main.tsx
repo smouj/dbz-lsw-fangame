@@ -2852,7 +2852,6 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
             <div className="intro-name">{player.name}</div>
             <div className="intro-sub">{player.form}</div>
           </div>
-          <div className="intro-round">ROUND {turn}</div>
           <div className="intro-vs">{t('battle.vs')}</div>
           <div className="intro-fighter intro-right">
             <div className="intro-portrait">
@@ -2862,7 +2861,6 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
             <div className="intro-name">{enemy.name}</div>
             <div className="intro-sub">{enemy.form}</div>
           </div>
-          <div className="intro-ready">{t('battle.ready')}</div>
           <div className="intro-fight">{t('battle.fight')}</div>
           <div className="intro-flash" />
         </div>
