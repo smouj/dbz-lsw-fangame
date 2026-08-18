@@ -79,6 +79,10 @@ export function HudModule() {
   const [status, setStatus] = useState('');
   const [view, setView] = useState<HudView>('COMMAND');
   const [dlgSide, setDlgSide] = useState<'left' | 'right'>('left');
+  // Escenario del preview: se puede elegir fondo (overview/action) como en
+  // el combate real — los 13 escenarios del catálogo.
+  const [scenarioIdx, setScenarioIdx] = useState(0);
+  const [bgMode, setBgMode] = useState<'overview' | 'action'>('overview');
 
   const player = useMemo(() => getForm(P_FORM), []);
   const enemy = useMemo(() => getForm(E_FORM), []);
@@ -88,7 +92,8 @@ export function HudModule() {
   const eIdle = battleOverworldActorUrl(E_FORM, 'idle') ?? (eDir ? spriteFrameUrl(enemy!.id, `${eDir}_idle_00.png`) : undefined);
   const pPortrait = BATTLE_PORTRAITS[P_FORM];
   const ePortrait = BATTLE_PORTRAITS[E_FORM];
-  const battleBgUrl = SCENARIOS[0]?.overviewBackground ?? '/assets/backgrounds/scenarios/01_world.png';
+  const battleBgUrl = SCENARIOS[scenarioIdx]?.[bgMode === 'overview' ? 'overviewBackground' : 'actionBackground']
+    ?? '/assets/backgrounds/scenarios/01_world.png';
 
   // Cartas reales del catálogo para la vista Mano (como el build)
   const handCards = [13, 7, 5, 1].map(id => getCard(id)).filter((c): c is CardDef => !!c);
@@ -146,6 +151,17 @@ export function HudModule() {
             {v.label}
           </button>
         ))}
+        {/* Escenario del battlefield (fondo overview/action) — los 13 del catálogo */}
+        <div className="dev-hud-scenario" title="Escenario del battlefield — fondo overview (táctico) o action (animación)">
+          <label>FONDO</label>
+          <select value={scenarioIdx} onChange={e => setScenarioIdx(Number(e.target.value))}>
+            {SCENARIOS.map((s, i) => <option key={s.id} value={i}>{s.id.replace('scenario_', 'SC ')}</option>)}
+          </select>
+          <div className="dev-hud-bgmode">
+            <button className={`bgmode-btn ${bgMode === 'overview' ? 'active' : ''}`} onClick={() => setBgMode('overview')}>OVERVIEW</button>
+            <button className={`bgmode-btn ${bgMode === 'action' ? 'active' : ''}`} onClick={() => setBgMode('action')}>ACTION</button>
+          </div>
+        </div>
         {view === 'DIALOGO' && (
           <button className={`dev-hud-view-chip side-toggle ${dlgSide === 'right' ? 'active' : ''}`}
             onClick={() => setDlgSide(s => (s === 'left' ? 'right' : 'left'))}
@@ -276,6 +292,26 @@ export function HudModule() {
                   const ea = anchorFor(BattlePosition.DOWN_BACK, 'RIGHT');
                   return (
                     <>
+                      {/* ANCLA del sprite: el punto EXACTO donde aparece el
+                          luchador (mismo anchorFor que el juego y Position Lab) —
+                          visible como cruz, para saber dónde se ancla y dónde
+                          realiza las animaciones */}
+                      <div className="dev-fighter-anchor player" style={{ left: `${pa.x}%`, top: `${pa.y}%` }}>
+                        <span className="dev-anchor-cross" />
+                        <span className="dev-anchor-label">P · {pa.x},{pa.y}</span>
+                      </div>
+                      <div className="dev-fighter-anchor enemy" style={{ left: `${ea.x}%`, top: `${ea.y}%` }}>
+                        <span className="dev-anchor-cross" />
+                        <span className="dev-anchor-label">E · {ea.x},{ea.y}</span>
+                      </div>
+                      {/* ZONA DE ANIMACIÓN: el área donde el luchador se mueve
+                          (escala del sprite overworld, como el juego) */}
+                      <div className="dev-anim-zone player" style={{ left: `${pa.x}%`, top: `${pa.y}%` }}>
+                        <span className="dev-anim-zone-label">ANIM</span>
+                      </div>
+                      <div className="dev-anim-zone enemy" style={{ left: `${ea.x}%`, top: `${ea.y}%` }}>
+                        <span className="dev-anim-zone-label">ANIM</span>
+                      </div>
                       <div className="fighter-container player down back" style={{ left: `${pa.x}%`, top: `${pa.y}%` }}>
                         {pIdle && <img src={pIdle} alt="" className="overworld-sprite dev-hud-fighter-sprite" />}
                       </div>

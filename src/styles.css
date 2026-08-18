@@ -10614,3 +10614,122 @@ button.linklike:hover { text-decoration: underline; }
   background: linear-gradient(90deg, #f6c744, #ff9d2e);
   box-shadow: none;
 }
+
+/* ═══ HUD STUDIO — anclas de sprites y zona de animación (dev only) ═══ */
+.dev-fighter-anchor {
+  position: absolute;
+  width: 0;
+  height: 0;
+  z-index: 5;
+  pointer-events: none;
+}
+.dev-anchor-cross {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 14px;
+  height: 14px;
+  transform: translate(-50%, -50%);
+  border: 1px solid #f6c744;
+  background:
+    linear-gradient(90deg, #f6c744 0 2px, transparent 2px 6px, #f6c744 6px 8px, transparent 8px 12px, #f6c744 12px 14px),
+    linear-gradient(0deg, #f6c744 0 2px, transparent 2px 6px, #f6c744 6px 8px, transparent 8px 12px, #f6c744 12px 14px);
+  box-shadow: 1px 1px 0 #000;
+  image-rendering: pixelated;
+}
+.dev-anchor-label {
+  position: absolute;
+  left: 8px;
+  top: -14px;
+  font-family: var(--fpx);
+  font-size: 7px;
+  color: #ffe9a3;
+  background: rgba(5, 7, 12, .85);
+  border: 1px solid #f6c744;
+  padding: 1px 4px;
+  white-space: nowrap;
+  text-shadow: 1px 1px 0 #000;
+  letter-spacing: .5px;
+}
+.dev-fighter-anchor.enemy .dev-anchor-cross {
+  border-color: #7fd4ff;
+  background:
+    linear-gradient(90deg, #7fd4ff 0 2px, transparent 2px 6px, #7fd4ff 6px 8px, transparent 8px 12px, #7fd4ff 12px 14px),
+    linear-gradient(0deg, #7fd4ff 0 2px, transparent 2px 6px, #7fd4ff 6px 8px, transparent 8px 12px, #7fd4ff 12px 14px);
+}
+.dev-fighter-anchor.enemy .dev-anchor-label {
+  color: #d8f0ff;
+  border-color: #7fd4ff;
+}
+/* Zona de animación: el área donde el luchador se mueve (escala overworld) */
+.dev-anim-zone {
+  position: absolute;
+  width: 96px;
+  height: 96px;
+  transform: translate(-50%, -50%);
+  z-index: 4;
+  pointer-events: none;
+  border: 1px dashed rgba(246, 199, 68, .55);
+  background: rgba(246, 199, 68, .05);
+  box-sizing: border-box;
+}
+.dev-anim-zone.enemy {
+  border-color: rgba(127, 212, 255, .55);
+  background: rgba(127, 212, 255, .05);
+}
+.dev-anim-zone-label {
+  position: absolute;
+  right: 3px;
+  bottom: 2px;
+  font-family: var(--fpx);
+  font-size: 6px;
+  letter-spacing: 1px;
+  color: rgba(246, 199, 68, .8);
+  background: rgba(5, 7, 12, .7);
+  padding: 1px 3px;
+}
+.dev-anim-zone.enemy .dev-anim-zone-label { color: rgba(127, 212, 255, .8); }
+
+/* ═══ HUD STUDIO — selector de escenario/fondo ═══ */
+.dev-hud-scenario {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: 10px;
+  padding-left: 10px;
+  border-left: 1px solid rgba(255, 255, 255, .1);
+  font-family: var(--fpx);
+}
+.dev-hud-scenario label {
+  font-size: 8px;
+  letter-spacing: 1px;
+  color: #9fb7d8;
+}
+.dev-hud-scenario select {
+  background: #0b0d12;
+  color: #ffe9a3;
+  border: 1px solid rgba(255, 255, 255, .18);
+  font-family: var(--fpx);
+  font-size: 9px;
+  padding: 2px 4px;
+  cursor: pointer;
+}
+.dev-hud-bgmode {
+  display: flex;
+  gap: 3px;
+}
+.bgmode-btn {
+  background: #12151c;
+  color: #9fb7d8;
+  border: 1px solid rgba(255, 255, 255, .14);
+  font-family: var(--fpx);
+  font-size: 7px;
+  letter-spacing: .5px;
+  padding: 2px 5px;
+  cursor: pointer;
+}
+.bgmode-btn.active {
+  color: #ffe9a3;
+  border-color: #f6c744;
+  background: rgba(246, 199, 68, .12);
+}

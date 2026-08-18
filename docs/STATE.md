@@ -143,6 +143,49 @@ película (fase 3 de la auditoría, implementada en `d86fdf1`).
   `tt-effect` (rojo) · `tt-compat` (verde). Aplicado al juego (CardVisual
   con esc()) y al mockup (HudCard) vía dangerouslySetInnerHTML.
 
+## 3c. HUD superior refinado (sesión 2026-08-18, continuación)
+
+### Jerarquía del fighter-hud (jugador y rival, espejo exacto)
+```
+[RETRATO 28×28]  GOKU · BASE · LV50          (hud-name, 11px, bevel pixel)
+███████████████████████  720/1000             (hp-bar 18px DOMINANTE)
+[STR60][KI55][SPD50][CC 06]  ──  [STR+][ATK] (hud-info-row: stats izq,
+                                              badges DERECHA — misma línea)
+```
+- **HP = elemento dominante**: 18px (hudLayout.hpBarHeight) · marco negro 2px
+  + bevel pixel · umbrales VISUALES por clase (sin gameplay nuevo):
+  `mid` 25-50% verde/amarillo · `low` 12-25% naranja · `critical` <12% rojo
+  + parpadeo `steps(2,end)` sin glow · texto 12px con sombra negra pixel
+  4 direcciones (legible sobre cualquier relleno).
+- **Retrato 28×28** (portraitSize) con bevel GBC · nombre 11px · LV etiqueta
+  9px · forma secundaria. Sin hover que cambie la geometría.
+- **CC con tratamiento PROPIO**: caja `.cc-stat` azul oscuro + borde azul +
+  texto claro, dentro de stats: `[CC 06]`. El `cc-dock` del battlefield
+  quedó OCULTO (display none) — UNA representación principal en el HUD
+  superior (CSS conservado por si se rehabilita).
+- **Stats**: panel carbón .72 + borde sutil · STR/KI/SPD legibles.
+- **Badges en la MISMA línea que stats** (`.hud-info-row` flex space-between):
+  jugador → stats izquierda + badges DERECHA · enemigo → espejo (badges
+  izquierda). Misma geometría todos los chips (min-height 16, padding 2px 4px,
+  borde 1px, sin radius). Estados vacíos → `:empty { display: none }`.
+- **Centro VS**: badge 78px (centerBadgeWidth) · ROUND 9px + VS 22-24px +
+  order 7px con max-width 100% (sin desbordar).
+- **Separación HUD↔BATTLEFIELD**: línea dorada apagada 2px con ornamentos
+  pixel en los extremos (sin glow).
+- Tokens en `hudLayout.ts`: hpBarHeight 18 · portraitSize 28 ·
+  fighterHeaderHeight 28 · hudTopPadY 6 · statusChipHeight 16 ·
+  centerBadgeWidth 78 (+ validación retrato 28 / HP ≥16).
+
+### HUD Studio — battlefield inspeccionable
+- **Selector de escenario/fondo**: los 13 escenarios del catálogo con modo
+  OVERVIEW (táctico) / ACTION (animación) — cambia `battleBgUrl` en vivo.
+- **Anclas de sprites visibles**: cruces pixel P (dorada) / E (azul) en el
+  punto EXACTO `anchorFor(pos, side)` con etiqueta de coordenadas — el mismo
+  anchor que el juego y Position Lab usan (fuente única).
+- **Zonas de animación**: rectángulo 96×96 punteado donde el luchador se
+  mueve/escala (overworld) — indica el sitio de las animaciones.
+- Todo dev-only (`.dev-*`), sin afectar al juego real.
+
 ## 4. Suites de verificación (todas verdes)
 
 ```bash
