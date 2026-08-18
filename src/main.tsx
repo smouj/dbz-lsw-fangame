@@ -1403,6 +1403,8 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
 
   // TURN_START: recalcular SPD → fijar firstAttacker → Exchange 1 (spec §1-2)
   const beginTurn = () => {
+    // Cambio de turno: campanilla GBC al arrancar el round
+    if (turn > 1) Sfx.turnChange();
     // Decay de precisión/evasión (Reading Ki/Afterimage: 2 turnos)
     setPAcc(prev => (prev > 0 ? prev - 1 : 0));
     setPEva(prev => (prev > 0 ? prev - 1 : 0));
@@ -1514,6 +1516,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
 
   const gatherPower = () => {
     Sfx.powerUp();
+    Sfx.star();
     setViewMode('ACTION');
     setPowerState('FULL_POWER');
     setGatherTurns(2);
@@ -1670,7 +1673,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
     const expected = st.seq[st.idx];
     if (pressed === expected) {
       // Acierto: +1 CC, avanza el cursor y la animación; NADA de daño aún.
-      Sfx.confirm();
+      Sfx.qteCorrect();
       const newCorrect = st.correct + 1;
       setPlayer(prev => ({ ...prev, cc: Math.min(prev.maxCc, prev.cc + 1) }));
       flashFeedback('correct');
@@ -1691,7 +1694,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
       // COMMAND: A = defenderte del contraataque (conserva CC, evita su daño)
       // · B = reparar y continuar el Stage Attack.
       flashFeedback('wrong');
-      Sfx.cancel();
+      Sfx.qteFail();
       addLog(`${player.name} falla un input — ¡${enemy.name} contraataca!`);
       enterStageFailure('WRONG_INPUT');
     }
@@ -2450,7 +2453,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
       // (Air/Back → Ground/Front es imposible en una sola acción).
       const axis = posOrAxis as MoveAxis;
       const target = applyMoveAxis(player.battlePos, axis);
-      Sfx.position();
+      Sfx.move();
       // Dirección del dash (GBC): mover al FRENTE = mirar al rival (move_front),
       // retroceder al BACK = dar la espalda (move_back, espejo). El eje vertical
       // conserva la profundidad, así que la pose sigue al depth resultante.

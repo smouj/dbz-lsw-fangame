@@ -98,4 +98,13 @@ export const Sfx = {
     }
   },
   position: () => beep(660, 0.06, 'square', 0.15),
+  // Cambio de turno: campanilla corta de dos tonos (inicio de round)
+  turnChange: () => { beep(880, 0.07, 'square', 0.18); setTimeout(() => beep(1175, 0.09, 'square', 0.18), 90); },
+  // Feedback QTE A/B: acierto = blip agudo corto · fallo = buzz grave
+  qteCorrect: () => beep(1560, 0.06, 'square', 0.2),
+  qteFail: () => { beep(220, 0.16, 'square', 0.22, 110); noise(0.08, 0.2, 600); },
+  // Estrella HUD (Gather FULL POWER): chispa ascendente
+  star: () => { beep(1760, 0.05, 'square', 0.18); setTimeout(() => beep(2200, 0.07, 'square', 0.16), 60); },
+  // Movimiento defensivo (MOVE): whoosh de dash + paso
+  move: () => { noise(0.14, 0.25, 2200); setTimeout(() => beep(500, 0.1, 'square', 0.16, 750), 40); },
 };
