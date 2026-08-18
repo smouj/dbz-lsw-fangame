@@ -4679,6 +4679,7 @@ button:focus-visible, .chapter-node:focus-visible {
   align-items: center;
   justify-content: center;
   animation: page-in .3s ease-out both;
+  container-type: inline-size;   /* consultas de contenedor para layouts adaptativos */
 }
 
 .story-panel-bg {
@@ -4806,6 +4807,27 @@ button:focus-visible, .chapter-node:focus-visible {
 /* Personaje único sin side explícito → centro (momento relevante) */
 .story-character.center { text-align: center; }
 
+/* LAYOUT DIÁLOGO: el retrato se posiciona COMO EN EL DIÁLOGO DE GAMEPLAY
+   (.gbc-dialogue-speaker) — junto a la caja (gap 24px), con el centro
+   vertical alineado con el centro de la caja. La caja está centrada (50%)
+   con ancho min(680px, 92%) → su borde queda a 50% − min(340px, 46%).
+   El retrato (120px) + gap (24px) se descuentan de ese borde. */
+.story-characters.layout-portrait_dialogue .story-character {
+  bottom: 40px;   /* base del retrato = base de la caja (misma altura abajo) */
+}
+.story-characters.layout-portrait_dialogue .story-character.left {
+  left: calc(50% - min(340px, 46%) - 160px);   /* marco 136 + gap 24 */
+}
+.story-characters.layout-portrait_dialogue .story-character.right {
+  right: calc(50% - min(340px, 46%) - 160px);
+}
+/* Escenas estrechas (<900px): sin espacio junto a la caja → el retrato
+   vuelve al borde de la escena (no se recorta) */
+@container (max-width: 899px) {
+  .story-characters.layout-portrait_dialogue .story-character.left { left: 5%; }
+  .story-characters.layout-portrait_dialogue .story-character.right { right: 5%; }
+}
+
 .story-character.speaking {
   scale: 1.12;
   filter: drop-shadow(0 0 12px rgba(255, 215, 100, .6)) brightness(1.1);
@@ -4826,10 +4848,14 @@ button:focus-visible, .chapter-node:focus-visible {
 .story-portrait {
   width: 120px; height: 168px;
   image-rendering: pixelated;
-  border: 4px solid var(--gold);
-  box-shadow: 6px 6px 0 #000, 0 0 24px rgba(255, 215, 0, .35);
-  background: #000;
+  /* MARCO = cuadro de diálogo GBC (blanco + borde negro + outline), igual
+     que el marco del retrato en el diálogo de gameplay (.gbc-dialogue-speaker) */
+  background: #f8f4e4;
+  border: 3px solid #000;
+  outline: 2px solid #f8f4e4;
+  box-shadow: 4px 4px 0 rgba(0,0,0,.55);
   object-fit: contain;
+  padding: 2px;
 }
 
 .story-portrait-none {
@@ -4854,7 +4880,7 @@ button:focus-visible, .chapter-node:focus-visible {
   bottom: 40px;
   left: 50%;
   transform: translateX(-50%);
-  width: min(680px, 92vw);
+  width: min(680px, 92%);
   /* MISMO estilo que el cuadro GBC del juego (gbc-dialogue): blanco GBC +
      marco negro + outline — fuente NEGRA (canon diálogo) */
   background: #f8f4e4;
@@ -8525,16 +8551,16 @@ button:focus-visible, .chapter-node:focus-visible {
 }
 .dev-hud-preview .dev-story-scene .story-panel {
   position: absolute;
-  inset: 0;
+  top: 50%;
+  left: 50%;
+  width: 1082px;
+  height: 605px;
+  margin: -302.5px 0 0 -541px;
+  transform-origin: center center;
   animation: none;
 }
-.dev-hud-preview .dev-story-scene .story-portrait {
-  width: 100px;
-  height: 140px;
-}
-.dev-hud-preview .dev-story-scene .story-dialogue {
-  bottom: 26px;
-}
+/* retrato a tamaño canónico (120×168) y caja a bottom canónico (40px) —
+   el retrato queda centrado con la caja como en el diálogo de gameplay */
 /* ─── Vista MENÚ del HUD Studio ───
    Reutiliza el markup REAL del juego (.menu-screen + .menu-bg + rayos).
    El menú usa vh/vw del viewport → en el preview se fuerza un layout
@@ -9349,16 +9375,29 @@ button.linklike:hover { text-decoration: underline; }
 .dev-story-inspector h3 { margin: 0 0 6px; font-size: 12px; color: #cdd6e2; }
 .dev-story-inspector .cfg-row { font-size: 11.5px; }
 
-/* Preview: contenedor 16:9 fijo con el diálogo del juego */
-.dev-story-preview-wrap .story-panel {
+/* Preview: ESCENARIO del juego 16:9 fijo (1082×605) escalado para caber en
+   la columna — SIEMPRE se ve como en el juego a cualquier tamaño */
+.dev-story-stage {
+  position: relative;
   width: 100%;
   aspect-ratio: 16 / 9;
   min-height: 240px;
-  position: relative;
   overflow: hidden;
   border-radius: 8px;
   border: 1px solid #262b33;
   background: #0d1018;
+}
+.dev-story-stage .story-panel {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 1082px;
+  height: 605px;
+  margin: -302.5px 0 0 -541px;
+  transform-origin: center center;
+  border-radius: 0;
+  border: none;
+  animation: none;
 }
 
 /* ── Dev Studio: canon semántico (agrupación familia/rol) ── */

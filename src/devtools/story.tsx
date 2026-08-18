@@ -5,7 +5,7 @@
 // personajes (retrato real GBC, side left/right, emoción, fallback)
 // exactamente como los renderiza StorySceneScreen.
 // ═══════════════════════════════════════════════════════════
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { STORY_ENEMY_DECKS, STORY_AI_BOOSTS, TEAM_BATTLES } from '../data/enemy_decks';
 import { panelsForChapter, characterName, type StoryPanel } from '../data/storyPanels';
 import { storyPortraitUrl } from '../data/storyPortraits';
@@ -34,6 +34,21 @@ function resolvePortrait(c: { character: string; form?: string; emotion?: string
 export function StoryModule() {
   const [chapter, setChapter] = useState(1);
   const [selected, setSelected] = useState<{ phase: 'intro' | 'outro'; id: string } | null>(null);
+  // Preview = viewport fijo del juego (1082×605) escalado para caber en la
+  // columna → SIEMPRE se ve exactamente como en el juego, a cualquier tamaño.
+  const stageRef = useRef<HTMLDivElement>(null);
+  const [stageScale, setStageScale] = useState(1);
+  useEffect(() => {
+    const el = stageRef.current;
+    if (!el) return;
+    const ro = new ResizeObserver(() => {
+      const w = el.clientWidth;
+      const h = el.clientHeight;
+      setStageScale(Math.min(1, w / 1082, h / 605));
+    });
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
 
   const deck = STORY_ENEMY_DECKS[chapter] ?? [];
   const boost = STORY_AI_BOOSTS[chapter];
@@ -92,10 +107,11 @@ export function StoryModule() {
         <section className="dev-story-card dev-story-preview-wrap">
           <h2>Preview de diálogo — {current.panel.id} ({current.phase})</h2>
           <p className="dev-muted" style={{ margin: '-4px 0 10px', fontSize: 12 }}>
-            Render idéntico a <code>StorySceneScreen</code>: retrato real GBC → mini → menú; posición por <code>side</code>; nombre bajo el retrato; caja de diálogo con speaker.
+            Render idéntico a <code>StorySceneScreen</code> en viewport fijo del juego (1082×605 escalado): retrato real GBC → mini → menú; posición por <code>side</code> (junto a la caja, como en el diálogo de gameplay); caja GBC blanco/negro.
           </p>
           <div className="dev-story-preview-layout">
-            <div className={`story-panel story-panel-${current.panel.layout.toLowerCase()} fx-zoom`}>
+            <div className="dev-story-stage" ref={stageRef}>
+            <div className={`story-panel story-panel-${current.panel.layout.toLowerCase()}`} style={{ transform: `scale(${stageScale})`, transformOrigin: 'center center' }}>
               <div className="story-panel-bg" style={{ backgroundImage: `url(${current.panel.background})`, backgroundSize: 'cover', backgroundPosition: 'center' }} />
               <div className="story-panel-dim" />
               {current.panel.title && (
@@ -120,7 +136,6 @@ export function StoryModule() {
                         {url
                           ? <img src={url} alt={characterName(c.character)} className="story-portrait" />
                           : <div className="story-portrait story-portrait-none">{characterName(c.character).slice(0, 1)}</div>}
-                        <span className="story-character-name">{characterName(c.character)}</span>
                       </div>
                     );
                   })}
@@ -132,6 +147,7 @@ export function StoryModule() {
                   <div className="story-text visible">{current.panel.dialogue.text}</div>
                 </div>
               )}
+            </div>
             </div>
 
             {/* Datos canónicos de la viñeta */}

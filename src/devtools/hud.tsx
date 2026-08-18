@@ -8,7 +8,7 @@
 // persiste en localStorage.
 // ═══════════════════════════════════════════════════════════════════════
 import { Check, Download, RotateCcw, Lock, BookOpen, Swords, Library, Users, Sparkles, Settings as SettingsIcon, ChevronRight } from 'lucide-react';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import {
   HUD_THEME_VARS, HudTheme, currentHudTheme, defaultHudTheme,
   saveHudTheme, applyHudTheme, resetHudTheme,
@@ -93,6 +93,22 @@ export function HudModule() {
   const [view, setView] = useState<HudView>('COMMAND');
   const [devAids, setDevAids] = useState(true);   // anclas + zonas ANIM (preview limpio cuando OFF)
   const [dlgSide, setDlgSide] = useState<'left' | 'right'>('left');
+  // Vista STORY DIÁLOGO: viewport fijo del juego (1082×605) escalado →
+  // SIEMPRE se ve exactamente como en el juego, a cualquier ancho del preview.
+  const storyStageRef = useRef<HTMLDivElement>(null);
+  const [storyScale, setStoryScale] = useState(1);
+  useEffect(() => {
+    if (view !== 'STORY_DIALOGO') return;
+    const el = storyStageRef.current;
+    if (!el) return;
+    const ro = new ResizeObserver(() => {
+      const w = el.clientWidth;
+      const h = el.clientHeight;
+      setStoryScale(Math.min(1, w / 1082, h / 605));
+    });
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, [view]);
   // Escenario del preview: se puede elegir fondo (overview/action) como en
   // el combate real — los 13 escenarios del catálogo.
   const [scenarioIdx, setScenarioIdx] = useState(0);
@@ -301,8 +317,8 @@ export function HudModule() {
                 hablante (lado según quien habla) + caja GBC blanco/negro.
                 MISMO markup que StorySceneScreen del juego. */}
             {view === 'STORY_DIALOGO' && (
-              <div className="dev-story-scene">
-                <div className="story-panel story-panel-portrait_dialogue">
+              <div className="dev-story-scene" ref={storyStageRef}>
+                <div className="story-panel story-panel-portrait_dialogue" style={{ transform: `scale(${storyScale})`, transformOrigin: 'center center' }}>
                   <div className="story-panel-bg" style={{ backgroundImage: `url('/assets/cutscenes/005_grassy_valley_battlefield.png')` }} />
                   <div className="story-panel-dim" />
                   <div className="story-characters layout-portrait_dialogue">
