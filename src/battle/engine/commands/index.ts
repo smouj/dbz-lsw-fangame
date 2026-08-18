@@ -12,3 +12,7 @@ export * as resourceRules from './rules/resourceRules';
 export * as cardRules from './rules/cardRules';
 export * as movementRules from './rules/movementRules';
 export * as defenseRules from './rules/defenseRules';
+
+// M3 — executeCommand / reducer puro
+export { executeCommand, mustExecute } from './executeCommand';
+export { reduceAcceptedCommand } from './reduceAcceptedCommand';

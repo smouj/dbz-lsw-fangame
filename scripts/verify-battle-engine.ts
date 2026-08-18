@@ -207,6 +207,113 @@ function applyMoveAxisLocal(pos: BattlePosition, axis: 'HORIZONTAL' | 'VERTICAL'
     : (depth === 'BACK' ? BattlePosition.DOWN_BACK : BattlePosition.DOWN_FRONT);
 }
 
+
+// ═══════════════════════════════════════════════════════════════════════
+// M3 — executeCommand: pureza, recursos, cartas, movimiento, invariantes,
+// secuencias headless (simulador)
+// ═══════════════════════════════════════════════════════════════════════
+
+console.log('\n── M3 · executeCommand ──\n');
+
+import { executeCommand, mustExecute } from '../src/battle/engine/commands/executeCommand';
+import { BattlePosition } from '../src/data/positions';
+
+// ── Ejecución / pureza ──
+const m3State = createInitialBattleState(makeConfig({
+  playerDeck: m2Deck([25, 4]), playerCc: 30,
+  playerPos: BattlePosition.DOWN_BACK, enemyPos: BattlePosition.DOWN_BACK,
+  phase: 'cardSelect' as never, // fase inicial position → la ajustamos
+}));
+const m3Command: typeof m3State = { ...m3State, phase: 'cardSelect' };
+const frozenBefore = JSON.stringify(m3Command);
+const rejectedRes = executeCommand(m3Command, { type: 'PLAY_CARD', handIndex: 5 }, { side: 'player', characterId: 'goku' }); // handIndex fuera
+check('M3: comando ilegal → rejected', !rejectedRes.ok);
+check('M3: rechazo devuelve el MISMO objeto state (cero mutación)', rejectedRes.ok === false && (rejectedRes as { state: typeof m3State }).state === m3Command);
+check('M3: estado original nunca se muta', JSON.stringify(m3Command) === frozenBefore);
+const acceptedRes = executeCommand(m3Command, { type: 'PLAY_CARD', handIndex: 0 }, { side: 'player', characterId: 'goku' });
+check('M3: comando legal → accepted con nuevo estado', acceptedRes.ok && acceptedRes.state !== m3Command);
+check('M3: determinismo (misma pareja → mismo resultado)', JSON.stringify(executeCommand(m3Command, { type: 'MOVE', axis: 'HORIZONTAL' }, { side: 'player' })) === JSON.stringify(executeCommand(m3Command, { type: 'MOVE', axis: 'HORIZONTAL' }, { side: 'player' })));
+
+// ── Recursos: coste exacto UNA vez ──
+// handIndex 0 = card 25 (cc 19) → 30 - 19 = 11
+if (acceptedRes.ok) {
+  check('M3: coste CC exacto (30 − 19 = 11)', acceptedRes.state.player.cc === 11);
+}
+const rejectNoCost = executeCommand(m3Command, { type: 'PLAY_CARD', handIndex: 9 }, { side: 'player', characterId: 'goku' });
+check('M3: rechazo no cobra nada', !rejectNoCost.ok && (rejectNoCost as { state: typeof m3State }).state.player.cc === 30);
+const poor2 = { ...m3Command, player: { ...m3Command.player, cc: 5 } };
+const poorRes = executeCommand(poor2, { type: 'PLAY_CARD', handIndex: 0 }, { side: 'player', characterId: 'goku' });
+check('M3: CC insuficiente → rechazo (no negativo)', !poorRes.ok && (poorRes as { state: typeof m3State }).state.player.cc === 5);
+
+// ── Cartas: elimina la carta EXACTA, va al descarte, vecinas intactas ──
+if (acceptedRes.ok) {
+  const hand = acceptedRes.state.deck.hand;
+  check('M3: la carta jugada sale de la mano', hand.length === 1 && hand[0].id === 4);
+  check('M3: la carta va al discardPile', acceptedRes.state.deck.discardPile.length === 1 && acceptedRes.state.deck.discardPile[0].id === 25);
+  check('M3: cartas vecinas intactas (drawPile sin tocar, otra carta en mano)', acceptedRes.state.deck.drawPile.length === 2 && acceptedRes.state.deck.hand[0].id === 4);
+  check('M3: mazo serializable tras jugar', JSON.parse(JSON.stringify(acceptedRes.state.deck)).hand.length === 1);
+}
+
+// ── Movimiento: 4 posiciones × 2 ejes, nunca quinta posición ──
+const POSITIONS4 = [BattlePosition.UP_BACK, BattlePosition.UP_FRONT, BattlePosition.DOWN_BACK, BattlePosition.DOWN_FRONT];
+let mvOk = 0;
+for (const pos of POSITIONS4) {
+  const s = { ...m3Command, phase: 'defend' as never, player: { ...m3Command.player, battlePos: pos } };
+  const h = executeCommand(s, { type: 'MOVE', axis: 'HORIZONTAL' }, { side: 'player' });
+  const v = executeCommand(s, { type: 'MOVE', axis: 'VERTICAL' }, { side: 'player' });
+  if (h.ok && v.ok) {
+    const hp = (h as { state: typeof s }).state.player.battlePos;
+    const vp = (v as { state: typeof s }).state.player.battlePos;
+    const hDepthChanged = (hp === BattlePosition.UP_FRONT || hp === BattlePosition.DOWN_FRONT) !== (pos === BattlePosition.UP_FRONT || pos === BattlePosition.DOWN_FRONT);
+    const vAltChanged = (vp === BattlePosition.UP_BACK || vp === BattlePosition.UP_FRONT) !== (pos === BattlePosition.UP_BACK || pos === BattlePosition.UP_FRONT);
+    const hKeepsAlt = (hp === BattlePosition.UP_BACK || hp === BattlePosition.UP_FRONT) === (pos === BattlePosition.UP_BACK || pos === BattlePosition.UP_FRONT);
+    const vKeepsDepth = (vp === BattlePosition.UP_BACK || vp === BattlePosition.DOWN_BACK) === (pos === BattlePosition.UP_BACK || pos === BattlePosition.DOWN_BACK);
+    if (hDepthChanged && hKeepsAlt && vAltChanged && vKeepsDepth && POSITIONS4.includes(hp) && POSITIONS4.includes(vp)) mvOk++;
+  }
+}
+check('M3: movimiento correcto en las 4 posiciones × 2 ejes (8/8)', mvOk === 4);
+check('M3: horizontal no cambia altitud · vertical no cambia depth (incluido arriba)', mvOk === 4);
+
+// ── Invariantes tras cada comando ──
+function invariantCheck(s: typeof m3State): boolean {
+  const okHp = s.player.hp >= 0 && s.player.hp <= s.player.maxHp && s.enemy.hp >= 0 && s.enemy.hp <= s.enemy.maxHp;
+  const okCc = s.player.cc >= 0 && s.player.cc <= s.player.maxCc;
+  const okPos = POSITIONS4.includes(s.player.battlePos) && POSITIONS4.includes(s.enemy.battlePos);
+  const okDeck = s.deck.hand.length + s.deck.drawPile.length + s.deck.discardPile.length === TOTAL_DECK;
+  const okSerial = (() => { try { JSON.parse(JSON.stringify(s)); return true; } catch { return false; } })();
+  return okHp && okCc && okPos && okDeck && okSerial;
+}
+const TOTAL_DECK = m3Command.deck.hand.length + m3Command.deck.drawPile.length + m3Command.deck.discardPile.length;
+const invState = mustExecute(m3Command, { type: 'PLAY_CARD', handIndex: 1 }, { side: 'player', characterId: 'goku' }); // card 4 cc 0
+check('M3: invariantes tras PLAY_CARD (HP/CC/posición/mazo/serializable)', invariantCheck(invState));
+
+// ── Secuencias headless (simulador) ──
+let sim = createInitialBattleState(makeConfig({
+  playerDeck: m2Deck([4, 25]), enemyDeck: m2Deck([1]), playerCc: 30,
+  playerPos: BattlePosition.DOWN_BACK, enemyPos: BattlePosition.DOWN_BACK,
+}));
+sim = { ...sim, phase: 'command' as never };
+sim = mustExecute(sim, { type: 'JOINT' });
+sim = mustExecute(sim, { type: 'PLAY_CARD', handIndex: 1 }, { side: 'player', characterId: 'goku' }); // card 25, cc 30→11
+check('M3: secuencia JOINT→PLAY_CARD: fase stageInput y CC 11', sim.phase === 'stageInput' && sim.player.cc === 11);
+// QTE: input correcto (la secuencia del stage 3 empieza por 'A')
+const seq = sim.stageQte.seq;
+if (seq.length > 0) {
+  const q1 = mustExecute(sim, { type: 'QTE_INPUT', input: seq[0] });
+  check('M3: QTE_INPUT correcto → idx avanza y +1 CC', q1.stageQte.idx === 1 && q1.player.cc === 12);
+  const qBad = executeCommand(sim, { type: 'QTE_INPUT', input: 'B' });
+  check('M3: QTE_INPUT equivocado → rejected (barrera)', !qBad.ok);
+}
+// Defensa: GUARD + MOVE
+const sim2 = { ...m3Command, phase: 'defend' as never, player: { ...m3Command.player, battlePos: BattlePosition.DOWN_BACK } };
+const g = mustExecute(sim2, { type: 'GUARD' });
+check('M3: GUARD → playerGuard reduce', g.playerGuard === 'reduce');
+const mv = mustExecute(sim2, { type: 'MOVE', axis: 'HORIZONTAL' });
+check('M3: MOVE horizontal → DOWN_FRONT', mv.player.battlePos === BattlePosition.DOWN_FRONT);
+const mv2 = mustExecute(mv, { type: 'MOVE', axis: 'VERTICAL' });
+check('M3: MOVE vertical tras horizontal → UP_FRONT (no diagonal inválida)', mv2.player.battlePos === BattlePosition.UP_FRONT);
+
+
 console.log(`\n═══ RESULTADO: ${passed} passed · ${failed} failed ═══`);
 if (failed > 0) {
   console.log('\nFallos:');

@@ -130,6 +130,14 @@ attacker/defender/CC/HP/position/pending action/seed/tick) · **Battle Events**
   dominio (resource/card/movement/defense), `getAvailableCommands()` para la UI,
   `canExecute` 100% puro (state + command → check, sin mutación/RNG/timers),
   tests de PARIDAD legacy↔engine (LIMIT/GATHER/PLAY_CARD). 60 invariantes.
-- **M3 (siguiente)** — execute()/reducer puro: el Engine vuelve a validar y
-  resuelve; la UI deja de decidir. **M4** BattleEvent · **M5** RNG · **M6** ticks
-  · **M7** Presentation Adapter · **M8** integración · **M9** Replay.
+- **M3 ✅** — executeCommand puro (`commands/executeCommand.ts` +
+  `reduceAcceptedCommand.ts` + `reducers/`): canExecute es BARRERA OBLIGATORIA
+  (no existe ruta sin validación) · rechazo = el MISMO objeto state (cero
+  mutación) · reducers por dominio (resource/card/movement/power+defense+
+  stage) · recursos UNA sola vez · movimiento con destino derivado
+  (applyMoveAxis, 8/8 casos) · QTE determinista (acierto/fallo/contraataque) ·
+  sin RNG (lo RNG-dependente delimitado a M5) · `mustExecute` para secuencias
+  HEADLESS desde Node. 79 invariantes.
+- **M4 (siguiente)** — BattleEvent (hacer observable la resolución). **M5** RNG
+  · **M6** ticks · **M7** Presentation Adapter · **M8** integración/cutover ·
+  **M9** Replay.

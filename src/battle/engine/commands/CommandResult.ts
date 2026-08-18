@@ -4,6 +4,8 @@
 // La UI decide cómo traducir/mostrar el rechazo. Razones tipadas.
 // ═══════════════════════════════════════════════════════════════════════
 
+import type { BattleState } from '../state/BattleState';
+
 export type CommandRejectionReason =
   | 'WRONG_PHASE'             // el comando no pertenece a la fase actual
   | 'NOT_ACTIVE_SIDE'         // no es el turno/exchange de quien envía
@@ -31,7 +33,15 @@ export function reject(reason: CommandRejectionReason): CommandCheck {
   return { ok: false, reason };
 }
 
-/** Resultado de execute() (M3) — ya tipado para no cambiar el contrato. */
+/** Resultado de execute() (M3): transporta el estado — nunca muta el input. */
 export type CommandExecutionResult =
-  | { status: 'accepted' }
-  | { status: 'rejected'; reason: CommandRejectionReason };
+  | { ok: true; state: BattleState }
+  | { ok: false; state: BattleState; reason: CommandRejectionReason };
+
+export function accepted(next: BattleState): CommandExecutionResult {
+  return { ok: true, state: next };
+}
+
+export function rejected(state: BattleState, reason: CommandRejectionReason): CommandExecutionResult {
+  return { ok: false, state, reason };
+}

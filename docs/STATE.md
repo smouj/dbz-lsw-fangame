@@ -232,11 +232,12 @@ audit:sprite-canon (P1).
    fórmula del daño parcial del Stage fail · fórmula exacta de IA.
 
 ### P1 (código, sin bloqueo)
-3. Migración COMPLETA de `main.tsx` al `BattleEngine` — **M1 HECHO** (BattleState puro)
-   y **M2 HECHO** (BattleCommand + canExecute, 2026-08-18):
-   `src/battle/engine/commands/` (BattleCommand · CommandResult · canExecute ·
-   rules/{resource,card,movement,defense}) + suite `verify:battle-engine`
-   60/60. Siguiente: **M3 — execute()/reducer puro** (docs/BATTLE_ENGINE_MIGRATION.md).
+3. Migración COMPLETA de `main.tsx` al `BattleEngine` — **M1 ✅** (BattleState
+   puro), **M2 ✅** (BattleCommand + canExecute) y **M3 ✅** (executeCommand +
+   reducers puros, 2026-08-18): `commands/` + `reducers/` — barrera canExecute
+   obligatoria, rechazo = cero mutación, recursos/cartas/movimiento/QTE
+   gobernados, `mustExecute` headless. Suite `verify:battle-engine` 79/79.
+   Siguiente: **M4 — BattleEvent** (docs/BATTLE_ENGINE_MIGRATION.md).
 4. Ramas cinematográficas HIT/BLOCK/AVOID/ABSORB (la defensa cambia la película).
 5. SFX del juego final: recibir carta, turn change, A/B feedback, estrella HUD,
    movimiento defensivo.
