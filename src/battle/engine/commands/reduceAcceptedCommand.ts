@@ -17,6 +17,7 @@
 import { getCard, type CardDef } from '../../../data/cards';
 import { STAGE_SEQUENCE_POOL, type StageLevel } from '../../stageSequences';
 import { stageWindowsTicks } from '../../../config/gameplay.config';
+import { STAGE_PREP_TICKS } from '../clock/clock';
 import { POSITION_DATA } from '../../../data/positions';
 import type { BattleCommand } from './BattleCommand';
 import type { BattleEvent } from '../events/BattleEvent';
@@ -51,9 +52,13 @@ function qteForCard(state: BattleState, card: CardDef): BattleState['stageQte'] 
   const pool = STAGE_SEQUENCE_POOL[level];
   const seq = pool[state.tick % pool.length];
   const windowTicks = stageWindowTicksFor(state);
+  // M8.B: el QTE nace en PREPARING; el reloj abre INPUT_WINDOW en
+  // inputOpenTick (= último idle de la preparación). El cronómetro de la
+  // secuencia NO corre durante la preparación (deadline = inputOpen + ventana).
   return {
-    state: 'INPUT_WINDOW', seq, idx: 0, correct: 0, card,
-    startedTick: state.tick, deadlineTick: state.tick + windowTicks, windowTicks,
+    state: 'PREPARING', seq, idx: 0, correct: 0, card,
+    startedTick: state.tick, inputOpenTick: state.tick + STAGE_PREP_TICKS,
+    deadlineTick: state.tick + STAGE_PREP_TICKS + windowTicks, windowTicks,
     counterDeadlineTick: 0, result: null,
   };
 }
@@ -98,7 +103,7 @@ export function reduceAcceptedCommand(state: BattleState, command: BattleCommand
       events = [
         ...r.events,
         { type: 'ACTION_STARTED', side: 'player', action: actionDescriptorForCard(card) },
-        ...(card ? [{ type: 'QTE_STARTED' as const, side: 'player' as const, level: stageLevelOfCardName(card.name), seq: qte.seq, limitFrames: qte.windowTicks }] : []),
+        ...(card ? [{ type: 'STAGE_PREP_STARTED' as const, side: 'player' as const, level: stageLevelOfCardName(card.name), seq: qte.seq, prepTicks: STAGE_PREP_TICKS }] : []),
       ];
       break;
     }
@@ -119,18 +124,21 @@ export function reduceAcceptedCommand(state: BattleState, command: BattleCommand
       const level: 3 | 4 = state.powerState !== 'NORMAL' ? 4 : 3;
       const seq = STAGE_SEQUENCE_POOL[level][state.tick % STAGE_SEQUENCE_POOL[level].length];
       const windowTicks = stageWindowTicksFor(state);
+      // M8.B: el Stage nace en PREPARING — QTE_STARTED lo emite el RELOJ al
+      // alcanzar inputOpenTick (nunca al confirmar la acción).
       next = {
         ...state,
         phase: 'stageInput',
         stageQte: {
-          state: 'INPUT_WINDOW', seq, idx: 0, correct: 0, card: null,
-          startedTick: state.tick, deadlineTick: state.tick + windowTicks, windowTicks,
+          state: 'PREPARING', seq, idx: 0, correct: 0, card: null,
+          startedTick: state.tick, inputOpenTick: state.tick + STAGE_PREP_TICKS,
+          deadlineTick: state.tick + STAGE_PREP_TICKS + windowTicks, windowTicks,
           counterDeadlineTick: 0, result: null,
         },
       };
       events = [
         { type: 'ACTION_STARTED', side: 'player', action: actionDescriptorForStage(level) },
-        { type: 'QTE_STARTED', side: 'player', level, seq, limitFrames: windowTicks },
+        { type: 'STAGE_PREP_STARTED', side: 'player', level, seq, prepTicks: STAGE_PREP_TICKS },
       ];
       break;
     }

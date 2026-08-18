@@ -18,7 +18,7 @@ import type { BattleSide } from '../state/BattleState';
 import type { CanonPose } from '../../animationCanon';
 
 /** Las tres vistas canónicas del contrato visual + la especial. */
-export type BattleSceneMode = 'OVERVIEW' | 'PLAYER_ACTION' | 'ENEMY_ACTION' | 'SPECIAL_ACTION';
+export type BattleSceneMode = 'OVERVIEW' | 'PLAYER_ACTION' | 'ENEMY_ACTION' | 'SPECIAL_ACTION' | 'ACTION_DUEL';
 
 /** Rol relativo en la cinematografía (actor/target) — resuelto por el Presenter. */
 export type FighterRole = 'ACTOR' | 'TARGET';

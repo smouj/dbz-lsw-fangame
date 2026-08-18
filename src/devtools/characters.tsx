@@ -23,6 +23,7 @@ import { characterName } from '../data/storyPanels';
 import { SPRITE_CANON, type CanonStatus } from '../data/generated/spriteCanon.generated';
 import { COMBAT_POSE_ORDER, COMBAT_REQUIRED_POSES } from '../battle/spriteConfig';
 import { useSheetAnalysis, groupFramesByPose, type FrameAnalysis } from './frameAnalysis';
+import { getCharacterAssetBundle, resolveBundlePoses, type CombatPoseAsset } from '../data/characterAssets';
 import { poseSemantics, parseFrameName } from './frameSemantics';
 import type { DevLinkedTarget, DevModuleId } from './DevStudio';
 
@@ -180,26 +181,7 @@ export function CharactersModule({ onOpenModule }: {
                   <StoryPortraitsGrid charId={form.character} formId={form.id} />
                 </div>
               </div>
-              {spriteDir && (
-                <div className="dev-poses-section">
-                  <h3>Poses de combate (canon)</h3>
-                  <div className="dev-pose-grid">
-                    {COMBAT_REQUIRED_POSES.map(p => (
-                      <PoseCell key={p} formId={form.id} pose={p} small />
-                    ))}
-                  </div>
-                  <div className="dev-semantic-pose-row">{COMBAT_POSE_ORDER.join(' · ')}</div>
-                  <div className="dev-pose-legend">
-                    <span className="dev-pose-legend-title">Qué dispara cada pose (canon cartas):</span>
-                    <span><b>beam_charge / beam_fire</b> ← cartas beam (Kamehameha, Masenko…)</span>
-                    <span><b>attack_fwd / punch / kick</b> ← cartas damage y command</span>
-                    <span><b>guard / evade / beam_guard</b> ← cartas defense</span>
-                    <span><b>gather_power / power_up / aura_*</b> ← soporte y GATHER (aura overlay)</span>
-                    <span><b>move_front / move_back</b> ← comando MOVE</span>
-                    <span><b>hurt / knockback</b> ← recibir daño (defensor)</span>
-                  </div>
-                </div>
-              )}
+              <AllPosesGrid formId={form.id} />
             </div>
 
             {/* Col 3 — Frame browser (Sprites + Sheets integrados) */}
@@ -668,6 +650,55 @@ function PowerUpCell({ poseSrc, auraSrc }: { poseSrc?: string; auraSrc?: string 
         ) : <span className="dev-asset-missing">—</span>}
       </div>
       <div className="dev-asset-label">Battle OW power</div>
+    </div>
+  );
+}
+
+// ═══ TODAS las poses del canon (COMBAT_POSE_ORDER) con fallback trazable ═══
+// Resuelve cada pose contra el manifest con la MISMA fuente de fallbacks que
+// el runtime (resolveCombatPose) — nunca una tabla local.
+function AllPosesGrid({ formId }: { formId: string }) {
+  const [poses, setPoses] = useState<CombatPoseAsset[] | null>(null);
+  useEffect(() => {
+    let alive = true;
+    const bundle = getCharacterAssetBundle(getForm(formId)?.character ?? 'goku', formId);
+    resolveBundlePoses(bundle).then(ps => { if (alive) setPoses(ps); });
+    return () => { alive = false; };
+  }, [formId]);
+
+  if (!poses) return <div className="dev-hint">Resolviendo poses del canon…</div>;
+  const resolved = poses.filter(p => p.url);
+  const missing = poses.filter(p => !p.url);
+  return (
+    <div className="dev-poses-section">
+      <h3>Poses de combate — canon completo ({resolved.length}/{poses.length} con frame físico)</h3>
+      <div className="dev-pose-grid">
+        {poses.map(p => (
+          <div key={p.pose} className={`dev-pose-cell ${p.url ? '' : 'no-frame'}`}
+            title={`${p.pose}${p.fallback.length > 0 ? ` → ${p.fallback.join(' → ')}` : ''} · ${p.group}`}>
+            <div className="dev-asset-frame">
+              {p.url ? <img src={p.url} alt={p.pose} loading="lazy" /> : <span className="dev-asset-missing">—</span>}
+            </div>
+            <div className="dev-asset-label">
+              {p.pose}
+              {p.fallback.length > 0 && <em className="dev-pose-fallback">→ {p.resolvedPose}</em>}
+            </div>
+          </div>
+        ))}
+      </div>
+      <div className="dev-semantic-pose-row">{COMBAT_POSE_ORDER.join(' · ')}</div>
+      <div className="dev-pose-legend">
+        <span className="dev-pose-legend-title">Qué dispara cada pose (canon cartas):</span>
+        <span><b>beam_charge / beam_fire</b> ← cartas beam (Kamehameha, Masenko…)</span>
+        <span><b>attack_fwd / punch / kick</b> ← cartas damage y command</span>
+        <span><b>guard / evade / beam_guard</b> ← cartas defense</span>
+        <span><b>gather_power / power_up / aura_*</b> ← soporte y GATHER (aura overlay)</span>
+        <span><b>move_front / move_back</b> ← comando MOVE</span>
+        <span><b>hurt / knockback</b> ← recibir daño (defensor)</span>
+      </div>
+      {missing.length > 0 && (
+        <p className="dev-hint">Sin frame físico (el runtime usa fallback o no existe en esta forma): {missing.map(m => m.pose).join(', ')}</p>
+      )}
     </div>
   );
 }

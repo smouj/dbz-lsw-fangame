@@ -101,6 +101,7 @@ export type BattleEvent =
   | { type: 'POWER_CHANGED'; from: PowerState; to: PowerState }
 
   // ── QTE / Stage Attack ──
+  | { type: 'STAGE_PREP_STARTED'; side: BattleSide; level: 3 | 4 | 5 | 6; seq: StageKey[]; prepTicks: number }
   | { type: 'QTE_STARTED'; side: BattleSide; level: 3 | 4 | 5 | 6; seq: StageKey[]; limitFrames: number }
   | { type: 'QTE_TIMEOUT'; side: BattleSide; window: 'INPUT' | 'COUNTER' }
   | { type: 'QTE_INPUT_RESOLVED'; side: BattleSide; input: StageKey; success: boolean; indexBefore: number; indexAfter: number }

@@ -1,20 +1,57 @@
 {
-  "name": "m4_stage_attack",
-  "description": "BASIC → Stage Attack (pool 3S, tick 0 → A,B,A) → QTE completo: al completar se RESUELVE la carta (ATTACK_HIT → DAMAGE_APPLIED → ACTION_RESOLVED) — M5",
-  "setup": { "phase": "command", "playerCc": 0 },
-  "deck": [4, 25],
-  "commands": [
-    { "type": "BASIC" },
-    { "type": "BASIC_STAGE_ATTACK" },
-    { "type": "QTE_INPUT", "input": "A" },
-    { "type": "QTE_INPUT", "input": "B" },
-    { "type": "QTE_INPUT", "input": "A" }
-  ],
-  "expectedEvents": [
-    "COMMAND_ACCEPTED", "PHASE_CHANGED",
-    "COMMAND_ACCEPTED", "ACTION_STARTED", "QTE_STARTED", "PHASE_CHANGED",
-    "COMMAND_ACCEPTED", "CC_GAINED", "QTE_INPUT_RESOLVED",
-    "COMMAND_ACCEPTED", "CC_GAINED", "QTE_INPUT_RESOLVED",
-    "COMMAND_ACCEPTED", "CC_GAINED", "QTE_INPUT_RESOLVED", "QTE_COMPLETED", "ATTACK_HIT", "DAMAGE_APPLIED", "ACTION_RESOLVED"
-  ]
+ "name": "m4_stage_attack",
+ "description": "BASIC \u2192 Stage Attack (pool 3S) \u2192 preparaci\u00f3n (reloj abre INPUT_WINDOW) \u2192 QTE completo: STAGE_PREP_STARTED al confirmar, QTE_STARTED por el reloj (M8.B)",
+ "setup": {
+  "phase": "command",
+  "playerCc": 0
+ },
+ "deck": [
+  4,
+  25
+ ],
+ "commands": [
+  {
+   "type": "BASIC"
+  },
+  {
+   "type": "BASIC_STAGE_ATTACK"
+  },
+  {
+   "$advance": 60
+  },
+  {
+   "type": "QTE_INPUT",
+   "input": "A"
+  },
+  {
+   "type": "QTE_INPUT",
+   "input": "B"
+  },
+  {
+   "type": "QTE_INPUT",
+   "input": "A"
+  }
+ ],
+ "expectedEvents": [
+  "COMMAND_ACCEPTED",
+  "PHASE_CHANGED",
+  "COMMAND_ACCEPTED",
+  "ACTION_STARTED",
+  "STAGE_PREP_STARTED",
+  "PHASE_CHANGED",
+  "QTE_STARTED",
+  "COMMAND_ACCEPTED",
+  "CC_GAINED",
+  "QTE_INPUT_RESOLVED",
+  "COMMAND_ACCEPTED",
+  "CC_GAINED",
+  "QTE_INPUT_RESOLVED",
+  "COMMAND_ACCEPTED",
+  "CC_GAINED",
+  "QTE_INPUT_RESOLVED",
+  "QTE_COMPLETED",
+  "ATTACK_HIT",
+  "DAMAGE_APPLIED",
+  "ACTION_RESOLVED"
+ ]
 }

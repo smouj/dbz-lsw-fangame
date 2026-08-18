@@ -308,7 +308,9 @@ sim = { ...sim, phase: 'command' as never };
 sim = mustExecute(sim, { type: 'JOINT' });
 sim = mustExecute(sim, { type: 'PLAY_CARD', handIndex: 1 }, { side: 'player', characterId: 'goku' }); // card 25, cc 30→11
 check('M3: secuencia JOINT→PLAY_CARD: fase stageInput y CC 11', sim.phase === 'stageInput' && sim.player.cc === 11);
-// QTE: input correcto (la secuencia del stage 3 empieza por 'A')
+// QTE: input correcto (la secuencia del stage 3 empieza por 'A').
+// M8.B: el reloj abre INPUT_WINDOW al final de la preparación.
+sim = advanceBattleClock(sim, sim.stageQte.inputOpenTick - sim.tick).state;
 const seq = sim.stageQte.seq;
 if (seq.length > 0) {
   const q1 = mustExecute(sim, { type: 'QTE_INPUT', input: seq[0] });
@@ -375,8 +377,8 @@ check('M4: rechazo devuelve el MISMO objeto state (cero mutaciones)', !m4Bad.ok 
 
 // ── Orden contractual ──
 if (m4Play.ok) {
-  check('M4: PLAY_CARD orden = ACCEPTED,CC_SPENT,CARD_PLAYED,CARD_DISCARDED,ACTION_STARTED,QTE_STARTED,PHASE_CHANGED',
-    JSON.stringify(eventTypeSequence(m4Play.events)) === JSON.stringify(['COMMAND_ACCEPTED', 'CC_SPENT', 'CARD_PLAYED', 'CARD_DISCARDED', 'ACTION_STARTED', 'QTE_STARTED', 'PHASE_CHANGED']));
+  check('M4: PLAY_CARD orden = ACCEPTED,CC_SPENT,CARD_PLAYED,CARD_DISCARDED,ACTION_STARTED,STAGE_PREP_STARTED,PHASE_CHANGED',
+    JSON.stringify(eventTypeSequence(m4Play.events)) === JSON.stringify(['COMMAND_ACCEPTED', 'CC_SPENT', 'CARD_PLAYED', 'CARD_DISCARDED', 'ACTION_STARTED', 'STAGE_PREP_STARTED', 'PHASE_CHANGED']));
   const idxAcc = m4Play.events.findIndex(e => e.type === 'COMMAND_ACCEPTED');
   const idxPos = m4Play.events.findIndex(e => e.type === 'PHASE_CHANGED');
   check('M4: PHASE_CHANGED es el ÚLTIMO evento (tras la resolución)', idxPos === m4Play.events.length - 1 && idxAcc < idxPos);
@@ -414,6 +416,15 @@ function runGolden(path: string): { expected: string[]; actual: string[]; events
   if (fx.setup.phase) s = { ...s, phase: fx.setup.phase as never };
   const all: BattleEvent[] = [];
   for (const cmd of fx.commands) {
+    // M8.B: el golden puede avanzar el reloj ({"$advance": N}) para abrir la
+    // ventana de inputs al final de la preparación del Stage.
+    const adv = (cmd as { $advance?: number }).$advance;
+    if (adv !== undefined) {
+      const c = advanceBattleClock(s, adv);
+      all.push(...c.events);
+      s = c.state;
+      continue;
+    }
     const res = executeCommand(s, cmd as BattleCommand, { side: 'player', characterId: 'goku' });
     if (!res.ok) {
       if (fx.expectRejected) {
@@ -476,7 +487,7 @@ console.log('\n── M5 · RNG determinista + daño ──\n');
 
 import { initRng, nextRng, rollPercent, rollRange } from '../src/battle/engine/random';
 import type { RngState } from '../src/battle/engine/random';
-import { advanceBattleClock, COUNTER_WINDOW_TICKS } from '../src/battle/engine/clock';
+import { advanceBattleClock, COUNTER_WINDOW_TICKS, STAGE_PREP_TICKS } from '../src/battle/engine/clock';
 import { buildPresentationTimeline } from '../src/battle/engine/presentation';
 import {
   effectiveAttackAccuracy, effectiveDefenseAccuracy, accuracyHits,
@@ -520,9 +531,9 @@ check('M5: acción determinista (GATHER) NO avanza rngState', m5Gather.ok && m5G
 const m5Play = executeCommand({ ...m5cmd, phase: 'cardSelect' }, { type: 'PLAY_CARD', handIndex: 2 }, { side: 'player', characterId: 'goku' }); // carta 25 (damage)
 if (m5Play.ok) {
   const q = m5Play.state.stageQte;
-  check('M5-P1: PLAY_CARD inicializa stageQte INPUT_WINDOW con secuencia no vacía', q.state === 'INPUT_WINDOW' && q.seq.length > 0 && q.idx === 0);
-  check('M5-P1: QTE_STARTED emitido con level/seq/limitFrames', m5Play.events.some(e => e.type === 'QTE_STARTED' && (e as { level?: number }).level === 3 && (e as { limitFrames?: number }).limitFrames! > 0));
-  check('M5-P1: windowTicks = ventana GBC (profundidades) > 0', q.windowTicks > 0 && Number.isInteger(q.windowTicks) && q.deadlineTick === q.startedTick + q.windowTicks);
+  check('M8.B: PLAY_CARD inicializa stageQte PREPARING con secuencia no vacía', q.state === 'PREPARING' && q.seq.length > 0 && q.idx === 0);
+  check('M8.B: NO emite QTE_STARTED al confirmar — emite STAGE_PREP_STARTED', m5Play.events.some(e => e.type === 'STAGE_PREP_STARTED') && !m5Play.events.some(e => e.type === 'QTE_STARTED'));
+  check('M8.B: inputOpenTick = started + prep · deadline = inputOpen + window', q.inputOpenTick === q.startedTick + STAGE_PREP_TICKS && q.deadlineTick === q.inputOpenTick + q.windowTicks && q.windowTicks > 0);
   check('M5-P1: PLAY_CARD determinista NO avanza rngState (stage de command, 0 tiradas)', m5Play.state.rngState === m5cmd.rngState);
 }
 
@@ -541,6 +552,8 @@ const m5Stage = createInitialBattleState({ ...m5cfg, seed: 42, playerPos: Battle
 const m5StageCmd: typeof m5Stage = { ...m5Stage, phase: 'command' };
 let sim5 = mustExecute(m5StageCmd, { type: 'BASIC' });
 sim5 = mustExecute(sim5, { type: 'BASIC_STAGE_ATTACK' }, { side: 'player' });
+// M8.B: el reloj abre INPUT_WINDOW al final de la preparación
+sim5 = advanceBattleClock(sim5, sim5.stageQte.inputOpenTick - sim5.tick).state;
 const seq5 = [...sim5.stageQte.seq];
 for (const k of seq5) sim5 = mustExecute(sim5, { type: 'QTE_INPUT', input: k }, { side: 'player' });
 {
@@ -554,6 +567,7 @@ for (const k of seq5) sim5 = mustExecute(sim5, { type: 'QTE_INPUT', input: k }, 
 const m5Ko = createInitialBattleState({ ...m5cfg, seed: 7, playerPos: BattlePosition.DOWN_FRONT, enemyPos: BattlePosition.DOWN_BACK, playerCc: 0, enemyHp: 3 });
 let simKo = mustExecute({ ...m5Ko, phase: 'command' }, { type: 'BASIC' });
 simKo = mustExecute(simKo, { type: 'BASIC_STAGE_ATTACK' }, { side: 'player' });
+simKo = advanceBattleClock(simKo, simKo.stageQte.inputOpenTick - simKo.tick).state;
 for (const k of [...simKo.stageQte.seq]) simKo = mustExecute(simKo, { type: 'QTE_INPUT', input: k }, { side: 'player' });
 check('M5: KO → HP 0 + DAMAGE_APPLIED ANTES de FIGHTER_DEFEATED', simKo.enemy.hp === 0);
 {
@@ -565,6 +579,7 @@ check('M5: KO → HP 0 + DAMAGE_APPLIED ANTES de FIGHTER_DEFEATED', simKo.enemy.
 const m5Fail = createInitialBattleState({ ...m5cfg, seed: 11, playerPos: BattlePosition.DOWN_FRONT, enemyPos: BattlePosition.DOWN_BACK, playerCc: 0 });
 let simF = mustExecute({ ...m5Fail, phase: 'command' }, { type: 'BASIC' });
 simF = mustExecute(simF, { type: 'BASIC_STAGE_ATTACK' }, { side: 'player' });
+simF = advanceBattleClock(simF, simF.stageQte.inputOpenTick - simF.tick).state;
 const wrongKey = simF.stageQte.seq[0] === 'A' ? 'B' : 'A';
 const simF2 = executeCommand(simF, { type: 'QTE_INPUT', input: wrongKey }, { side: 'player' });
 check('M5: input equivocado → accepted + COUNTER_WINDOW + QTE_FAILED', simF2.ok && simF2.state.stageQte.state === 'COUNTER_WINDOW' && simF2.events.some(e => e.type === 'QTE_FAILED'));
@@ -589,7 +604,7 @@ const m5Dmg = createInitialBattleState({ ...m5cfg, seed: 999, playerPos: BattleP
 const m5DmgCmd: typeof m5Dmg = { ...m5Dmg, phase: 'cardSelect' };
 const playDmg = executeCommand(m5DmgCmd, { type: 'PLAY_CARD', handIndex: 1 }, { side: 'player', characterId: 'goku' }); // carta 5 Cont.Punch acc 100
 if (playDmg.ok) {
-  let s = playDmg.state;
+  let s = advanceBattleClock(playDmg.state, playDmg.state.stageQte.inputOpenTick - playDmg.state.tick).state;
   for (const k of [...s.stageQte.seq]) s = mustExecute(s, { type: 'QTE_INPUT', input: k }, { side: 'player' });
   const hit = s.enemy.hp < m5Dmg.enemy.hp;
   check('M5: damage card (acc 100) → siempre conecta (hits) y daña', hit);
@@ -610,6 +625,7 @@ function simulateM5(seed: number, enemyHp: number) {
     all.push(...r.events);
     s = r.state;
   }
+  s = advanceBattleClock(s, s.stageQte.inputOpenTick - s.tick).state;
   for (const k of [...s.stageQte.seq]) {
     const r = executeCommand(s, { type: 'QTE_INPUT', input: k }, { side: 'player' });
     if (!r.ok) throw new Error(`simulateM5 QTE: ${r.reason}`);
@@ -720,11 +736,16 @@ const m6Stage = createInitialBattleState({ ...m5cfg, seed: 4242, playerPos: Batt
 let sim6 = mustExecute({ ...m6Stage, phase: 'command' }, { type: 'BASIC' });
 sim6 = mustExecute(sim6, { type: 'BASIC_STAGE_ATTACK' }, { side: 'player' });
 const q6 = sim6.stageQte;
-check('M6: QTE_STARTED fija startedTick/deadlineTick (deadline = start + window)',
-  q6.state === 'INPUT_WINDOW' && q6.startedTick === sim6.tick && q6.deadlineTick === q6.startedTick + q6.windowTicks && q6.windowTicks > 0);
+check('M8.B: el Stage nace en PREPARING con inputOpenTick (NO QTE_STARTED aún)',
+  q6.state === 'PREPARING' && q6.inputOpenTick === q6.startedTick + STAGE_PREP_TICKS && q6.deadlineTick === q6.inputOpenTick + q6.windowTicks);
+// El reloj abre INPUT_WINDOW exactamente en inputOpenTick (último idle)
+const open = advanceBattleClock(sim6, q6.inputOpenTick - sim6.tick);
+check('M8.B: el reloj abre INPUT_WINDOW en inputOpenTick y emite QTE_STARTED AQUÍ',
+  open.state.stageQte.state === 'INPUT_WINDOW' && open.state.tick === q6.inputOpenTick &&
+  open.events.filter(e => e.type === 'QTE_STARTED').length === 1);
 // Regla de borde CONTRACTUAL: deadline−1 abierta · deadline timeout · deadline+1 sin segundo timeout
-const deadline = q6.deadlineTick;
-const preDeadline = advanceBattleClock(sim6, Math.max(0, deadline - sim6.tick - 1));
+const deadline = open.state.stageQte.deadlineTick;
+const preDeadline = advanceBattleClock(open.state, Math.max(0, deadline - open.state.tick - 1));
 check('M6: deadline−1 → ventana aún abierta (sin QTE_TIMEOUT)', preDeadline.state.stageQte.state === 'INPUT_WINDOW' && preDeadline.events.every(e => e.type !== 'QTE_TIMEOUT'));
 const at = advanceBattleClock(preDeadline.state, 1);
 check('M6: deadline → QTE_TIMEOUT (INPUT) + COUNTER_WINDOW, exactamente una vez',
@@ -765,6 +786,10 @@ function simulateWithSchedule(seed: number, deltasMs: number[]): string {
   };
   run({ type: 'BASIC' });
   run({ type: 'BASIC_STAGE_ATTACK' });
+  // M8.B: el reloj abre la ventana al final de la preparación
+  const cOpen = advanceBattleClock(s, s.stageQte.inputOpenTick - s.tick);
+  log.entries.push(...cOpen.events.map((e, i) => ({ sequence: log.entries.length + i, tick: cOpen.eventTicks[i] ?? cOpen.state.tick, event: e })));
+  s = cOpen.state;
   // un input correcto antes del deadline (ejercita mezcla input+clock)
   const firstKey = s.stageQte.seq[0];
   run({ type: 'QTE_INPUT', input: firstKey });
@@ -821,7 +846,8 @@ check('M6: envelope con sequence+tick; eventos del mismo tick comparten tick y c
   env.entries[0].tick === 7 && env.entries[1].tick === 7 &&
   env.entries[0].event.type === 'CC_GAINED' && env.entries[1].event.type === 'QTE_INPUT_RESOLVED');
 // QTE_TIMEOUT + QTE_COUNTER_STARTED comparten tick (mismo instante)
-const toEvents = advanceBattleClock(sim6, (sim6.stageQte.deadlineTick - sim6.tick) + 1);
+const sim6Open = advanceBattleClock(sim6, sim6.stageQte.inputOpenTick - sim6.tick).state;
+const toEvents = advanceBattleClock(sim6Open, (sim6Open.stageQte.deadlineTick - sim6Open.tick));
 check('M6: QTE_TIMEOUT y QTE_COUNTER_STARTED comparten tick',
   toEvents.eventTicks.length === 2 && toEvents.eventTicks[0] === toEvents.eventTicks[1]);
 check('M6: el tiempo NO es un comando (getAvailableCommands sin TICK/WAIT/TIMEOUT)',

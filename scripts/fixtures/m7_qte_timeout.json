@@ -68,31 +68,24 @@
   {
    "tick": 0,
    "type": "FIGHTER_POSE",
-   "durationTicks": 12,
+   "durationTicks": 6,
    "role": "ACTOR",
    "side": "player",
    "pose": "idle",
    "logicalTick": 0,
-   "source": "ACTION_STARTED",
+   "source": "STAGE_PREP_STARTED",
    "fidelity": "INFERRED",
-   "profile": "stage_3"
+   "profile": "stage_prep"
   },
   {
    "tick": 0,
    "type": "HUD",
    "kind": "qte",
-   "value": "level 3",
+   "value": "preparing",
    "logicalTick": 0,
-   "source": "QTE_STARTED",
-   "fidelity": "NONE"
-  },
-  {
-   "tick": 0,
-   "type": "AUDIO",
-   "cue": "cardPlay",
-   "logicalTick": 0,
-   "source": "QTE_STARTED",
-   "fidelity": "NONE"
+   "source": "STAGE_PREP_STARTED",
+   "fidelity": "INFERRED",
+   "profile": "stage_prep"
   },
   {
    "tick": 0,
@@ -106,62 +99,55 @@
   {
    "tick": 12,
    "type": "FIGHTER_POSE",
-   "durationTicks": 14,
+   "durationTicks": 6,
    "role": "ACTOR",
    "side": "player",
-   "pose": "attack_fwd",
+   "pose": "gather_power",
    "logicalTick": 0,
-   "source": "ACTION_STARTED",
+   "source": "STAGE_PREP_STARTED",
    "fidelity": "INFERRED",
-   "profile": "stage_3"
+   "profile": "stage_prep"
   },
   {
-   "tick": 26,
+   "tick": 30,
    "type": "FIGHTER_POSE",
-   "durationTicks": 12,
+   "durationTicks": 6,
+   "role": "ACTOR",
+   "side": "player",
+   "pose": "beam_charge",
+   "logicalTick": 0,
+   "source": "STAGE_PREP_STARTED",
+   "fidelity": "INFERRED",
+   "profile": "stage_prep"
+  },
+  {
+   "tick": 48,
+   "type": "FIGHTER_POSE",
+   "durationTicks": 6,
    "role": "ACTOR",
    "side": "player",
    "pose": "idle",
    "logicalTick": 0,
-   "source": "ACTION_STARTED",
+   "source": "STAGE_PREP_STARTED",
    "fidelity": "INFERRED",
-   "profile": "stage_3"
+   "profile": "stage_prep"
   },
   {
-   "tick": 38,
-   "type": "FIGHTER_POSE",
-   "durationTicks": 56,
-   "role": "ACTOR",
-   "side": "player",
-   "pose": "attack_fwd",
-   "logicalTick": 0,
-   "source": "ACTION_STARTED",
-   "fidelity": "INFERRED",
-   "profile": "stage_3"
+   "tick": 60,
+   "type": "HUD",
+   "kind": "qte",
+   "value": "level 3 inputs",
+   "logicalTick": 60,
+   "source": "QTE_STARTED",
+   "fidelity": "NONE"
   },
   {
-   "tick": 94,
-   "type": "FIGHTER_POSE",
-   "durationTicks": 12,
-   "role": "ACTOR",
-   "side": "player",
-   "pose": "attack_fwd",
-   "logicalTick": 0,
-   "source": "ACTION_STARTED",
-   "fidelity": "INFERRED",
-   "profile": "stage_3"
-  },
-  {
-   "tick": 106,
-   "type": "FIGHTER_POSE",
-   "durationTicks": 8,
-   "role": "ACTOR",
-   "side": "player",
-   "pose": "idle",
-   "logicalTick": 0,
-   "source": "ACTION_STARTED",
-   "fidelity": "INFERRED",
-   "profile": "stage_3"
+   "tick": 60,
+   "type": "AUDIO",
+   "cue": "cardPlay",
+   "logicalTick": 60,
+   "source": "QTE_STARTED",
+   "fidelity": "NONE"
   },
   {
    "tick": 132,
@@ -207,97 +193,97 @@
    "profile": "stage_3"
   },
   {
-   "tick": 143,
+   "tick": 203,
    "type": "HUD",
    "kind": "qte",
    "value": "timeout INPUT",
-   "logicalTick": 143,
+   "logicalTick": 203,
    "source": "QTE_TIMEOUT",
    "fidelity": "NONE"
   },
   {
-   "tick": 143,
+   "tick": 203,
    "type": "AUDIO",
    "cue": "qteFail",
-   "logicalTick": 143,
+   "logicalTick": 203,
    "source": "QTE_TIMEOUT",
    "fidelity": "NONE"
   },
   {
-   "tick": 143,
+   "tick": 203,
    "type": "HUD",
    "kind": "qte",
    "value": "counter",
-   "logicalTick": 143,
+   "logicalTick": 203,
    "source": "QTE_COUNTER_STARTED",
    "fidelity": "NONE"
   },
   {
-   "tick": 143,
+   "tick": 203,
    "type": "AUDIO",
    "cue": "counter",
-   "logicalTick": 143,
+   "logicalTick": 203,
    "source": "QTE_COUNTER_STARTED",
    "fidelity": "NONE"
   },
   {
-   "tick": 167,
+   "tick": 227,
    "type": "IMPACT",
    "side": "player",
    "outcome": "hit",
-   "logicalTick": 167,
+   "logicalTick": 227,
    "source": "ATTACK_HIT",
    "fidelity": "INFERRED",
    "profile": "stage_3"
   },
   {
-   "tick": 167,
+   "tick": 227,
    "type": "FIGHTER_VISIBILITY",
    "role": "TARGET",
    "side": "player",
    "visible": true,
-   "logicalTick": 167,
+   "logicalTick": 227,
    "source": "ATTACK_HIT",
    "fidelity": "INFERRED",
    "profile": "stage_3"
   },
   {
-   "tick": 167,
+   "tick": 227,
    "type": "FIGHTER_POSE",
    "durationTicks": 10,
    "role": "TARGET",
    "side": "player",
    "pose": "knockback_back",
-   "logicalTick": 167,
+   "logicalTick": 227,
    "source": "ATTACK_HIT",
    "fidelity": "INFERRED",
    "profile": "stage_3"
   },
   {
-   "tick": 167,
+   "tick": 227,
    "type": "CAMERA",
    "action": "IMPACT",
-   "logicalTick": 167,
+   "logicalTick": 227,
    "source": "ATTACK_HIT",
    "fidelity": "INFERRED",
    "profile": "stage_3"
   },
   {
-   "tick": 167,
+   "tick": 227,
    "type": "AUDIO",
    "cue": "hit",
-   "logicalTick": 167,
+   "logicalTick": 227,
    "source": "ATTACK_HIT",
    "fidelity": "INFERRED",
    "profile": "stage_3"
   },
   {
-   "tick": 167,
+   "tick": 227,
    "type": "HUD",
    "side": "player",
    "kind": "damage_number",
    "value": 4,
-   "logicalTick": 167,
+   "logicalTick": 227,
    "source": "DAMAGE_APPLIED",
    "fidelity": "NONE"
   }

@@ -72,14 +72,20 @@ export type GuardType = 'avoid_beam' | 'avoid_damage' | 'reduce' | 'absorb' | 'c
 // fracciones ni contadores por frame). Regla de borde (contractual):
 //   currentTick <  deadlineTick → ventana abierta
 //   currentTick >= deadlineTick → timeout (exactamente UNA vez)
+// M8.B: PREPARING — tras confirmar la acción, el Engine abre la ventana de
+// inputs SOLO cuando currentTick >= inputOpenTick (el último idle de la
+// preparación). El reloj del Engine abre INPUT_WINDOW: Presentation jamás
+// llama a "startQte" — solo representa los mismos ticks.
 export interface BattleQteState {
   state: QteState;
   seq: StageKey[];
   idx: number;
   correct: number;
   card: CardDef | null;
-  /** Tick GBC absoluto en que se abrió la ventana actual (INPUT_WINDOW). */
+  /** Tick GBC absoluto en que se abrió la ventana actual. */
   startedTick: number;
+  /** Tick GBC absoluto en que PREPARING → INPUT_WINDOW (frontera QTE). */
+  inputOpenTick: number;
   /** Tick GBC absoluto de expiración de la ventana de inputs. */
   deadlineTick: number;
   /** Duración de la ventana de inputs en ticks (para RECOVER/reabrir). */

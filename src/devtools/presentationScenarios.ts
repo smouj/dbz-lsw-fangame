@@ -180,6 +180,13 @@ export function runPresentationScenario(sc: PresentationScenario): ScenarioRun {
     log.entries.push(...c.events.map((e, i) => ({ sequence: log.entries.length + i, tick: c.eventTicks[i] ?? c.state.tick, event: e })));
     state = c.state;
   };
+  // M8.B: si el QTE está en PREPARING, avanzar hasta que el reloj abra
+  // INPUT_WINDOW (el último idle de la preparación) antes de los inputs.
+  const openInputWindow = () => {
+    if (state.stageQte.state === 'PREPARING') {
+      runTicks(state.stageQte.inputOpenTick - state.tick + 1);
+    }
+  };
 
   for (const step of sc.steps) {
     if (step.kind === 'cmd') {
@@ -187,10 +194,12 @@ export function runPresentationScenario(sc: PresentationScenario): ScenarioRun {
     } else if (step.kind === 'ticks') {
       runTicks(step.ticks);
     } else if (step.kind === 'qte_complete') {
+      openInputWindow();
       for (const key of [...state.stageQte.seq]) {
         runCmd({ type: 'QTE_INPUT', input: key }, { side: 'player' });
       }
     } else if (step.kind === 'qte_wrong') {
+      openInputWindow();
       const wrong = state.stageQte.seq[0] === 'A' ? 'B' : 'A';
       runCmd({ type: 'QTE_INPUT', input: wrong }, { side: 'player' });
     }

@@ -114,37 +114,57 @@ interface ManifestPose {
  * fallbacks runtime. Devuelve undefined si la pose no existe en absoluto
  * (p.ej. beam_ray sin PNG).
  */
+import { resolveCombatPose } from '../battle/spriteConfig';
+import type { BattleSpritePose } from '../battle/spriteConfig';
+
+/**
+ * URL del frame `index` de una pose, resuelto contra el manifest REAL con
+ * los MISMOS fallbacks del runtime (spriteConfig.resolveCombatPose — fuente
+ * ÚNICA; no hay tabla de fallbacks local aquí).
+ */
 export async function spritePoseFrameUrl(
   formId: string,
   pose: string,
   index = 0,
 ): Promise<string | undefined> {
+  const info = await resolvePoseInfo(formId, pose, index);
+  return info?.url;
+}
+
+/**
+ * Resolución completa de una pose (URL + pose resuelta + cadena de fallback)
+ * — usada por Dev Studio para mostrar QUÉ se resuelve y TRAZAR el fallback.
+ */
+export async function resolvePoseInfo(
+  formId: string,
+  pose: string,
+  index = 0,
+): Promise<{ url: string; pose: string; fallback: string[] } | null> {
   const dir = SPRITE_DIRS[formId] || formId;
   const m = await loadManifestFor(formId);
-  if (!m) return undefined;
-  const poseSpec = m[pose] as ManifestPose | undefined;
-  if (poseSpec?.frames?.length) {
-    const fr = poseSpec.frames[index] ?? poseSpec.frames[0];
-    const file = typeof fr === 'string' ? fr : fr?.file;
-    return file ? spriteFrameUrl(formId, file) : undefined;
-  }
-  // Fallbacks runtime (spriteConfig.POSE_FALLBACKS)
-  const FALLBACKS: Record<string, string[]> = {
-    beam_fire: ['beam_fire', 'beam_charge', 'attack_fwd', 'idle'],
-    gather_power: ['gather_power', 'beam_charge', 'guard', 'idle'],
-    power_up: ['power_up', 'gather_power', 'beam_charge', 'guard', 'idle'],
-    beam_charge: ['beam_charge', 'gather_power', 'guard', 'idle'],
+  if (!m) return null;
+  const hasPose = (p: string) => {
+    const spec = m[p] as ManifestPose | undefined;
+    return (spec?.frames?.length ?? 0) > 0;
   };
-  for (const alt of FALLBACKS[pose] ?? []) {
-    if (alt === pose) continue;
-    const altSpec = m[alt] as ManifestPose | undefined;
-    if (altSpec?.frames?.length) {
-      const fr = altSpec.frames[0];
-      const file = typeof fr === 'string' ? fr : fr?.file;
-      if (file) return spriteFrameUrl(formId, file);
-    }
+  const resolved = resolveCombatPose(pose as BattleSpritePose, hasPose);
+  if (!resolved) return null;
+  const spec = m[resolved] as ManifestPose | undefined;
+  const fr = spec?.frames?.[index] ?? spec?.frames?.[0];
+  const file = typeof fr === 'string' ? fr : fr?.file;
+  if (!file) return null;
+  // cadena de fallback real (desde la pose pedida hasta la resuelta)
+  const fallback: string[] = [];
+  let cur: string | null = pose;
+  const guard = new Set<string>();
+  while (cur && cur !== resolved && !guard.has(cur)) {
+    guard.add(cur);
+    fallback.push(cur);
+    const next = resolveCombatPose(cur as BattleSpritePose, hasPose);
+    if (!next || next === cur) break;
+    cur = next;
   }
-  return undefined;
+  return { url: spriteFrameUrl(formId, file), pose: resolved, fallback };
 }
 
 export const _spriteManifestInternals = { loadManifestFor };

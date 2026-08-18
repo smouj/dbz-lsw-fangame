@@ -97,20 +97,25 @@
   },
   {
    "tick": 0,
-   "type": "HUD",
-   "kind": "qte",
-   "value": "level 3",
+   "type": "FIGHTER_POSE",
+   "durationTicks": 6,
+   "role": "ACTOR",
+   "side": "player",
+   "pose": "idle",
    "logicalTick": 0,
-   "source": "QTE_STARTED",
-   "fidelity": "NONE"
+   "source": "STAGE_PREP_STARTED",
+   "fidelity": "INFERRED",
+   "profile": "stage_prep"
   },
   {
    "tick": 0,
-   "type": "AUDIO",
-   "cue": "cardPlay",
+   "type": "HUD",
+   "kind": "qte",
+   "value": "preparing",
    "logicalTick": 0,
-   "source": "QTE_STARTED",
-   "fidelity": "NONE"
+   "source": "STAGE_PREP_STARTED",
+   "fidelity": "INFERRED",
+   "profile": "stage_prep"
   },
   {
    "tick": 0,
@@ -119,126 +124,6 @@
    "value": "stageInput",
    "logicalTick": 0,
    "source": "PHASE_CHANGED",
-   "fidelity": "NONE"
-  },
-  {
-   "tick": 0,
-   "type": "HUD",
-   "side": "player",
-   "kind": "cc",
-   "value": 15,
-   "logicalTick": 0,
-   "source": "CC_GAINED",
-   "fidelity": "NONE"
-  },
-  {
-   "tick": 0,
-   "type": "HUD",
-   "kind": "qte",
-   "value": "ok 1",
-   "logicalTick": 0,
-   "source": "QTE_INPUT_RESOLVED",
-   "fidelity": "NONE"
-  },
-  {
-   "tick": 0,
-   "type": "AUDIO",
-   "cue": "qteOk",
-   "logicalTick": 0,
-   "source": "QTE_INPUT_RESOLVED",
-   "fidelity": "NONE"
-  },
-  {
-   "tick": 0,
-   "type": "HUD",
-   "side": "player",
-   "kind": "cc",
-   "value": 16,
-   "logicalTick": 0,
-   "source": "CC_GAINED",
-   "fidelity": "NONE"
-  },
-  {
-   "tick": 0,
-   "type": "HUD",
-   "kind": "qte",
-   "value": "ok 2",
-   "logicalTick": 0,
-   "source": "QTE_INPUT_RESOLVED",
-   "fidelity": "NONE"
-  },
-  {
-   "tick": 0,
-   "type": "AUDIO",
-   "cue": "qteOk",
-   "logicalTick": 0,
-   "source": "QTE_INPUT_RESOLVED",
-   "fidelity": "NONE"
-  },
-  {
-   "tick": 0,
-   "type": "HUD",
-   "side": "player",
-   "kind": "cc",
-   "value": 17,
-   "logicalTick": 0,
-   "source": "CC_GAINED",
-   "fidelity": "NONE"
-  },
-  {
-   "tick": 0,
-   "type": "HUD",
-   "kind": "qte",
-   "value": "ok 3",
-   "logicalTick": 0,
-   "source": "QTE_INPUT_RESOLVED",
-   "fidelity": "NONE"
-  },
-  {
-   "tick": 0,
-   "type": "AUDIO",
-   "cue": "qteOk",
-   "logicalTick": 0,
-   "source": "QTE_INPUT_RESOLVED",
-   "fidelity": "NONE"
-  },
-  {
-   "tick": 0,
-   "type": "FIGHTER_POSITION",
-   "role": "TARGET",
-   "side": "enemy",
-   "position": "DOWN_FRONT",
-   "logicalTick": 0,
-   "source": "POSITION_CHANGED",
-   "fidelity": "NONE"
-  },
-  {
-   "tick": 0,
-   "type": "FIGHTER_POSE",
-   "durationTicks": 8,
-   "role": "TARGET",
-   "side": "enemy",
-   "pose": "move_front",
-   "logicalTick": 0,
-   "source": "POSITION_CHANGED",
-   "fidelity": "NONE"
-  },
-  {
-   "tick": 0,
-   "type": "AUDIO",
-   "cue": "step",
-   "logicalTick": 0,
-   "source": "POSITION_CHANGED",
-   "fidelity": "NONE"
-  },
-  {
-   "tick": 0,
-   "type": "HUD",
-   "side": "enemy",
-   "kind": "damage_number",
-   "value": 14,
-   "logicalTick": 0,
-   "source": "DAMAGE_APPLIED",
    "fidelity": "NONE"
   },
   {
@@ -267,6 +152,18 @@
    "profile": "kamehameha"
   },
   {
+   "tick": 12,
+   "type": "FIGHTER_POSE",
+   "durationTicks": 6,
+   "role": "ACTOR",
+   "side": "player",
+   "pose": "gather_power",
+   "logicalTick": 0,
+   "source": "STAGE_PREP_STARTED",
+   "fidelity": "INFERRED",
+   "profile": "stage_prep"
+  },
+  {
    "tick": 28,
    "type": "FIGHTER_POSE",
    "durationTicks": 26,
@@ -277,6 +174,30 @@
    "source": "ACTION_STARTED",
    "fidelity": "INFERRED",
    "profile": "kamehameha"
+  },
+  {
+   "tick": 30,
+   "type": "FIGHTER_POSE",
+   "durationTicks": 6,
+   "role": "ACTOR",
+   "side": "player",
+   "pose": "beam_charge",
+   "logicalTick": 0,
+   "source": "STAGE_PREP_STARTED",
+   "fidelity": "INFERRED",
+   "profile": "stage_prep"
+  },
+  {
+   "tick": 48,
+   "type": "FIGHTER_POSE",
+   "durationTicks": 6,
+   "role": "ACTOR",
+   "side": "player",
+   "pose": "idle",
+   "logicalTick": 0,
+   "source": "STAGE_PREP_STARTED",
+   "fidelity": "INFERRED",
+   "profile": "stage_prep"
   },
   {
    "tick": 54,
@@ -301,6 +222,143 @@
    "source": "ACTION_STARTED",
    "fidelity": "INFERRED",
    "profile": "kamehameha"
+  },
+  {
+   "tick": 60,
+   "type": "HUD",
+   "kind": "qte",
+   "value": "level 3 inputs",
+   "logicalTick": 60,
+   "source": "QTE_STARTED",
+   "fidelity": "NONE"
+  },
+  {
+   "tick": 60,
+   "type": "AUDIO",
+   "cue": "cardPlay",
+   "logicalTick": 60,
+   "source": "QTE_STARTED",
+   "fidelity": "NONE"
+  },
+  {
+   "tick": 61,
+   "type": "HUD",
+   "side": "player",
+   "kind": "cc",
+   "value": 15,
+   "logicalTick": 61,
+   "source": "CC_GAINED",
+   "fidelity": "NONE"
+  },
+  {
+   "tick": 61,
+   "type": "HUD",
+   "kind": "qte",
+   "value": "ok 1",
+   "logicalTick": 61,
+   "source": "QTE_INPUT_RESOLVED",
+   "fidelity": "NONE"
+  },
+  {
+   "tick": 61,
+   "type": "AUDIO",
+   "cue": "qteOk",
+   "logicalTick": 61,
+   "source": "QTE_INPUT_RESOLVED",
+   "fidelity": "NONE"
+  },
+  {
+   "tick": 61,
+   "type": "HUD",
+   "side": "player",
+   "kind": "cc",
+   "value": 16,
+   "logicalTick": 61,
+   "source": "CC_GAINED",
+   "fidelity": "NONE"
+  },
+  {
+   "tick": 61,
+   "type": "HUD",
+   "kind": "qte",
+   "value": "ok 2",
+   "logicalTick": 61,
+   "source": "QTE_INPUT_RESOLVED",
+   "fidelity": "NONE"
+  },
+  {
+   "tick": 61,
+   "type": "AUDIO",
+   "cue": "qteOk",
+   "logicalTick": 61,
+   "source": "QTE_INPUT_RESOLVED",
+   "fidelity": "NONE"
+  },
+  {
+   "tick": 61,
+   "type": "HUD",
+   "side": "player",
+   "kind": "cc",
+   "value": 17,
+   "logicalTick": 61,
+   "source": "CC_GAINED",
+   "fidelity": "NONE"
+  },
+  {
+   "tick": 61,
+   "type": "HUD",
+   "kind": "qte",
+   "value": "ok 3",
+   "logicalTick": 61,
+   "source": "QTE_INPUT_RESOLVED",
+   "fidelity": "NONE"
+  },
+  {
+   "tick": 61,
+   "type": "AUDIO",
+   "cue": "qteOk",
+   "logicalTick": 61,
+   "source": "QTE_INPUT_RESOLVED",
+   "fidelity": "NONE"
+  },
+  {
+   "tick": 61,
+   "type": "FIGHTER_POSITION",
+   "role": "TARGET",
+   "side": "enemy",
+   "position": "DOWN_FRONT",
+   "logicalTick": 61,
+   "source": "POSITION_CHANGED",
+   "fidelity": "NONE"
+  },
+  {
+   "tick": 61,
+   "type": "FIGHTER_POSE",
+   "durationTicks": 8,
+   "role": "TARGET",
+   "side": "enemy",
+   "pose": "move_front",
+   "logicalTick": 61,
+   "source": "POSITION_CHANGED",
+   "fidelity": "NONE"
+  },
+  {
+   "tick": 61,
+   "type": "AUDIO",
+   "cue": "step",
+   "logicalTick": 61,
+   "source": "POSITION_CHANGED",
+   "fidelity": "NONE"
+  },
+  {
+   "tick": 61,
+   "type": "HUD",
+   "side": "enemy",
+   "kind": "damage_number",
+   "value": 14,
+   "logicalTick": 61,
+   "source": "DAMAGE_APPLIED",
+   "fidelity": "NONE"
   },
   {
    "tick": 81,
@@ -344,7 +402,7 @@
    "type": "IMPACT",
    "side": "enemy",
    "outcome": "hit",
-   "logicalTick": 0,
+   "logicalTick": 61,
    "source": "ATTACK_HIT",
    "fidelity": "INFERRED",
    "profile": "kamehameha"
@@ -355,7 +413,7 @@
    "role": "TARGET",
    "side": "enemy",
    "visible": true,
-   "logicalTick": 0,
+   "logicalTick": 61,
    "source": "ATTACK_HIT",
    "fidelity": "INFERRED",
    "profile": "kamehameha"
@@ -367,7 +425,7 @@
    "role": "TARGET",
    "side": "enemy",
    "pose": "knockback_back",
-   "logicalTick": 0,
+   "logicalTick": 61,
    "source": "ATTACK_HIT",
    "fidelity": "INFERRED",
    "profile": "kamehameha"
@@ -376,7 +434,7 @@
    "tick": 108,
    "type": "CAMERA",
    "action": "IMPACT",
-   "logicalTick": 0,
+   "logicalTick": 61,
    "source": "ATTACK_HIT",
    "fidelity": "INFERRED",
    "profile": "kamehameha"
@@ -385,7 +443,7 @@
    "tick": 108,
    "type": "AUDIO",
    "cue": "hit",
-   "logicalTick": 0,
+   "logicalTick": 61,
    "source": "ATTACK_HIT",
    "fidelity": "INFERRED",
    "profile": "kamehameha"

@@ -73,6 +73,7 @@ function emptyQte(): BattleQteState {
     correct: 0,
     card: null,
     startedTick: 0,
+    inputOpenTick: 0,
     deadlineTick: 0,
     windowTicks: 0,
     counterDeadlineTick: 0,

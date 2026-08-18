@@ -74,7 +74,7 @@ for (const sc of PRESENTATION_SCENARIOS) {
   const poses = tl.entries.filter(en => en.cue.type === 'FIGHTER_POSE').map(en => (en.cue as { pose?: string }).pose ?? '');
   check(`M7: ${sc.id} — sin delayMs y poses SEMÁNTICAS (nunca paths PNG)`, !json.includes('delayMs') && poses.every(p => p && !p.includes('/') && !p.includes('.png') && !p.startsWith('assets')));
   check(`M7: ${sc.id} — logicalTick preservado y ≤ cue.tick en secuencias de acción`,
-    tl.entries.every(en => en.logicalTick <= en.cue.tick || ['QTE_INPUT_RESOLVED', 'GUARD_STARTED', 'POSITION_CHANGED', 'CC_GAINED', 'CC_SPENT', 'DAMAGE_APPLIED', 'ATTACK_MISSED', 'PHASE_CHANGED', 'FIGHTER_DEFEATED', 'QTE_COUNTER_RESOLVED'].includes(en.sourceEvent)));
+    tl.entries.every(en => en.logicalTick <= en.cue.tick || ['QTE_INPUT_RESOLVED', 'GUARD_STARTED', 'POSITION_CHANGED', 'CC_GAINED', 'CC_SPENT', 'DAMAGE_APPLIED', 'ATTACK_MISSED', 'PHASE_CHANGED', 'FIGHTER_DEFEATED', 'QTE_COUNTER_RESOLVED', 'ATTACK_HIT'].includes(en.sourceEvent)));
   const fixturePath = `${FIXTURE_DIR}/m7_${sc.id.replace('m7_', '')}.json`;
   const fixture = { scenario: sc.id, seed: sc.seed, timeline: reduced(tl) };
   if (WRITE) {

@@ -81,6 +81,8 @@ const MELEE: ActionAnimationCanon = {
     { frame: 0, pose: 'idle' },
     { frame: 12, pose: 'attack_fwd' },      // windup del golpe
     { frame: 38, pose: 'attack_fwd' },      // strike pose (punch/kick según perfil)
+    { frame: 52, pose: 'move_front' },      // APPROACH: avanza al plano del rival
+    { frame: 66, pose: 'attack_fwd' },      // prepara el golpe enfrente del rival
     { frame: 94, pose: 'attack_fwd' },      // contacto
     { frame: 106, pose: 'idle' },           // recover
   ],
@@ -97,6 +99,8 @@ const STAGE: ActionAnimationCanon = {
     { frame: 12, pose: 'attack_fwd' },      // windup del combo
     { frame: 26, pose: 'idle' },
     { frame: 38, pose: 'attack_fwd' },      // golpe final del stage
+    { frame: 52, pose: 'move_front' },      // APPROACH: avanza al plano del rival
+    { frame: 66, pose: 'idle' },            // se para enfrente (stop + idle)
     { frame: 94, pose: 'attack_fwd' },
     { frame: 106, pose: 'idle' },
   ],

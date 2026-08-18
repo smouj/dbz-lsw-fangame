@@ -30,6 +30,23 @@ import { resolveCounterDamage, resolveStageCard } from '../commands/reducers/dam
 /** Ventana del contraataque (paridad legacy COUNTER_A_FRAMES ≈ 0.4s). */
 export const COUNTER_WINDOW_TICKS = Math.round(0.4 * GBC_FPS);
 
+// ═══ PREPARACIÓN del Stage (M8.B — contrato canónico) ═══
+// Tras confirmar la acción: fade → ACTION → idle → estira brazos → encoge
+// brazos → idle. En el ÚLTIMO idle (inputOpenTick) el Engine abre la
+// ventana de inputs. Los ticks son INFERRED (perfil provisional hasta la
+// pasada FRAME_VERIFIED sobre la ROM) — nunca setTimeout.
+export const STAGE_PREP_TICKS = 60;
+
+/** Beats de la preparación (frame relativo → pose canónica V9). */
+export const STAGE_PREP_BEATS: Array<{ frame: number; pose: string }> = [
+  { frame: 0, pose: 'idle' },          // idle inicial
+  { frame: 12, pose: 'gather_power' }, // estira brazos (brazos arriba)
+  { frame: 30, pose: 'beam_charge' },  // encoge brazos (manos juntas)
+  { frame: 48, pose: 'idle' },         // último idle → INPUT_OPEN (60)
+];
+
+export const STAGE_PREP_FIDELITY = 'INFERRED' as const;
+
 export interface ClockAdvanceOutcome {
   state: BattleState;
   events: BattleEvent[];
@@ -54,7 +71,8 @@ export function advanceBattleClock(state: BattleState, ticks: number): ClockAdva
   while (remaining > 0) {
     const q = s.stageQte;
     const activeDeadline =
-      q.state === 'INPUT_WINDOW' ? q.deadlineTick
+      q.state === 'PREPARING' ? q.inputOpenTick
+      : q.state === 'INPUT_WINDOW' ? q.deadlineTick
       : q.state === 'COUNTER_WINDOW' ? q.counterDeadlineTick
       : 0;
 
@@ -70,7 +88,22 @@ export function advanceBattleClock(state: BattleState, ticks: number): ClockAdva
     remaining -= 1;
     const q2 = s.stageQte;
 
-    if (q2.state === 'INPUT_WINDOW' && nextTick >= q2.deadlineTick) {
+    if (q2.state === 'PREPARING' && nextTick >= q2.inputOpenTick) {
+      // ⏱ Fin de la preparación (último idle): el Engine abre la ventana de
+      // inputs — AQUÍ se emite QTE_STARTED (nunca al confirmar la acción).
+      // El cronómetro GLOBAL de la secuencia empieza en este instante.
+      const level = q2.seq.length >= 4 ? (q2.seq.length >= 5 ? 5 : 4) : 3;
+      s = {
+        ...s,
+        stageQte: {
+          ...q2, state: 'INPUT_WINDOW' as const,
+          startedTick: nextTick,
+          deadlineTick: nextTick + q2.windowTicks,
+        },
+      };
+      events.push({ type: 'QTE_STARTED', side: 'player', level, seq: q2.seq, limitFrames: q2.windowTicks });
+      eventTicks.push(nextTick);
+    } else if (q2.state === 'INPUT_WINDOW' && nextTick >= q2.deadlineTick) {
       // ⏱ La ventana de inputs expiró → el rival contraataca (una vez).
       s = {
         ...s,

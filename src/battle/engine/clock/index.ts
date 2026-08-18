@@ -5,6 +5,9 @@
 export {
   advanceBattleClock,
   COUNTER_WINDOW_TICKS,
+  STAGE_PREP_TICKS,
+  STAGE_PREP_BEATS,
+  STAGE_PREP_FIDELITY,
   GBC_FPS,
 } from './clock';
 export type { ClockAdvanceOutcome } from './clock';
