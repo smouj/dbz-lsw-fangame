@@ -50,7 +50,7 @@ const VIEWS: { id: HudView; label: string; tip: string }[] = [
 function PreviewHpBar({ current, max, side }: { current: number; max: number; side: 'left' | 'right' }) {
   const pct = Math.max(0, Math.min(100, (current / max) * 100));
   return (
-    <div className={`hp-bar ${side}`}>
+    <div className={`hp-bar ${side} ${pct < 12 ? 'critical' : pct <= 25 ? 'low' : pct <= 50 ? 'mid' : ''}`}>
       <div className="hp-bar-track">
         <div className="hp-bar-recent" style={{ width: `${pct + 8}%` }} />
         <div className="hp-bar-current" style={{ width: `${pct}%` }} />
@@ -231,10 +231,12 @@ export function HudModule() {
                   <span className="hud-level">LV50</span>
                 </div>
                 <PreviewHpBar current={720} max={1000} side="left" />
-                <div className="hud-stats"><span>STR60</span><span>KI55</span><span>SPD50</span><span>CC 6</span></div>
-                <div className="hud-status">
-                  <span className="status-chip buff">STR+</span>
-                  <span className="status-chip guard">ATK</span>
+                <div className="hud-info-row">
+                  <div className="hud-stats"><span>STR60</span><span>KI55</span><span>SPD50</span><span className="cc-stat"><b>06</b></span></div>
+                  <div className="hud-status">
+                    <span className="status-chip buff">STR+</span>
+                    <span className="status-chip guard">ATK</span>
+                  </div>
                 </div>
               </div>
 
@@ -248,10 +250,11 @@ export function HudModule() {
                   <span className="hud-level">LV50</span>
                 </div>
                 <PreviewHpBar current={880} max={1000} side="right" />
-                <div className="hud-stats"><span>STR58</span><span>KI60</span><span>SPD48</span><span>CC 3</span></div>
-                <div className="hud-status right">
-                  <span className="status-chip debuff">SPD−</span>
-                  <span className="status-chip none">—</span>
+                <div className="hud-info-row">
+                  <div className="hud-stats"><span className="cc-stat"><b>03</b></span><span>STR58</span><span>KI60</span><span>SPD48</span></div>
+                  <div className="hud-status right">
+                    <span className="status-chip debuff">SPD−</span>
+                  </div>
                 </div>
               </div>
               <div className="hud-center-badge">

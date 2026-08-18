@@ -32,12 +32,20 @@ export const HUD_LAYOUT = {
   cardArtY: 18,
   /** Cuadro de diálogo GBC: MISMA altura que los botones. */
   dialogueHeight: 80,
-  /** Barra de HP (--hp-bar-h). */
-  hpBarHeight: 16,
+  /** Barra de HP (--hp-bar-h) — elemento DOMINANTE del HUD superior. */
+  hpBarHeight: 18,
+  /** Retrato del luchador (--hud-portrait-s) — cuadrado pixel 28×28. */
+  portraitSize: 28,
+  /** Fila nombre/forma/LV (min-height de .hud-name). */
+  fighterHeaderHeight: 28,
+  /** Padding superior del hud-top (--hud-top-pad-y). */
+  hudTopPadY: 6,
+  /** Altura mínima de los chips de estado (status-chip). */
+  statusChipHeight: 16,
+  /** Ancho visual del centro VS (ROUND/VS/orden). */
+  centerBadgeWidth: 78,
   /** Espaciado entre cartas de la mano (--hand-gap). */
   handGap: 5,
-  /** Padding superior del hud-top (--hud-top-pad-y). */
-  hudTopPadY: 5,
   /** Ancho del diálogo (--gbc-dlg-w). */
   dialogueWidth: 'min(880px, 96%)',
 } as const;
@@ -79,6 +87,12 @@ export function validateHudLayout(): { ok: boolean; errors: string[] } {
   }
   if (L.controlsHeight < L.buttonHeight + 8) {
     errors.push('la caja de controles debe contener los botones con margen');
+  }
+  if (L.portraitSize !== 28) {
+    errors.push('el retrato canónico es 28×28 (baseline refinada)');
+  }
+  if (L.hpBarHeight < 16) {
+    errors.push('la barra de HP debe ser el elemento dominante (≥16px)');
   }
   return { ok: errors.length === 0, errors };
 }

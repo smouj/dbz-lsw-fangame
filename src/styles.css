@@ -633,10 +633,10 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   display: flex;
   justify-content: space-between;
   align-items: stretch;
-  gap: var(--hud-gap, clamp(86px, 14vw, 190px));
-  padding: var(--hud-top-pad-y, 5px) 10px 3px;
+  gap: var(--hud-gap, clamp(88px, 14vw, 190px));
+  padding: var(--hud-top-pad-y, 6px) 10px 2px;
   background:
-    linear-gradient(180deg, rgba(8, 8, 10, .86) 0%, rgba(8, 8, 10, .48) 58%, transparent 100%);
+    linear-gradient(180deg, rgba(8, 8, 10, .92) 0%, rgba(8, 8, 10, .55) 62%, transparent 100%);
   border-bottom: 0;
   box-shadow: none;
   backdrop-filter: none;
@@ -644,16 +644,27 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   position: relative;
 }
 .battle-screen.intro-active .hud-top { animation: none; z-index: 70; }
-/* acento dorado tipo sello en la base */
+/* Separación HUD↔BATTLEFIELD: línea dorada apagada de 2px con extremos
+   pixel (ornamento tipo sello) — sin glow ancho */
 .hud-top::after {
-  content: ''; position: absolute; left: 0; right: 0; bottom: -1px; height: 2px;
-  background: repeating-linear-gradient(90deg, rgba(240,208,96,.84) 0 4px, rgba(20,24,34,.8) 4px 6px, transparent 6px 12px);
-  opacity: .55;
+  content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 2px;
+  background:
+    linear-gradient(90deg, #05070c 0 2px, rgba(240,208,96,.5) 2px 4px, transparent 4px 10px,
+      rgba(240,208,96,.5) 10px 12px, transparent 12px 18px,
+      rgba(240,208,96,.5) 18px 20px, transparent 20px calc(50% - 44px),
+      rgba(240,208,96,.6) calc(50% - 44px) calc(50% + 44px),
+      transparent calc(50% + 44px) calc(100% - 20px),
+      rgba(240,208,96,.5) calc(100% - 20px) calc(100% - 18px),
+      transparent calc(100% - 18px) calc(100% - 12px),
+      rgba(240,208,96,.5) calc(100% - 12px) calc(100% - 10px),
+      transparent calc(100% - 10px) calc(100% - 4px),
+      rgba(240,208,96,.5) calc(100% - 4px) 100%);
+  opacity: .8;
   pointer-events: none;
 }
 
 .fighter-hud {
-  display: flex; flex-direction: column; gap: 1px;
+  display: flex; flex-direction: column; gap: 2px;
   flex: 1 1 0;
   width: auto;
   min-width: 0;
@@ -677,7 +688,6 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 /* CRÍTICO: con flex-end los hijos colapsan a ancho 0 → la barra de vida
    del rival no se veía. Forzar ancho completo en los elementos de barra. */
 .fighter-hud .hp-bar,
-.fighter-hud .hud-stats,
 .fighter-hud .hud-name {
   width: 100%;
 }
@@ -687,30 +697,40 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 }
 
 .hud-name {
-  display: flex; align-items: center; gap: 5px;
+  display: flex; align-items: center; gap: 6px;
   font-family: var(--fpx);
-  font-size: 9px;
-  letter-spacing: 0;
+  font-size: 11px;               /* más legible (antes 9px) */
+  letter-spacing: .5px;
   color: var(--hud-text);
   line-height: 1;
   text-shadow: 1px 1px 0 #000;
-  min-height: 24px;
+  min-height: var(--hud-layout-fighter-header-height, 28px);
   min-width: 0;
+  padding: 0 1px;
 }
 .fighter-hud.right .hud-name {
   flex-direction: row-reverse;
 }
 
 .hud-portrait {
-  width: var(--hud-portrait-s, 24px); height: var(--hud-portrait-s, 24px);
+  width: var(--hud-portrait-s, 28px); height: var(--hud-portrait-s, 28px);
   border: 1px solid #05070c;
   background: #d8d0b8;
   overflow: hidden;
-  box-shadow: 1px 1px 0 #52627a;
+  /* bevel pixel GBC: highlight superior-lateral + sombra inferior */
+  box-shadow:
+    inset 1px 1px 0 rgba(255,255,255,.5),
+    inset -1px -1px 0 rgba(0,0,0,.55),
+    1px 1px 0 #000;
   flex-shrink: 0;
+  image-rendering: pixelated;
 }
-.fighter-hud:hover .hud-portrait { border-color: #000; box-shadow: 1px 1px 0 #f0d060; }
-.hud-portrait img { width: 100%; height: 100%; object-fit: cover; }
+.hud-portrait img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  image-rendering: pixelated;
+}
+/* sin hover que cambie bordes/sombras del retrato (geometría estable) */
 .hud-name strong,
 .hud-form {
   min-width: 0;
@@ -722,33 +742,46 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 
 .hud-level {
   color: #1a1200;
-  font-size: 7px;
-  margin-left: 3px;
-  letter-spacing: 0;
+  font-size: 9px;
+  margin-left: 4px;
+  letter-spacing: .5px;
   background: #d8c070;
   border: 1px solid #05070c;
-  padding: 1px 5px;
+  padding: 2px 6px;
   text-shadow: none;
   box-shadow: 1px 1px 0 #000;
+  flex-shrink: 0;
+  line-height: 1.1;
 }
 .fighter-hud.right .hud-level {
   margin-left: 0;
-  margin-right: 3px;
+  margin-right: 4px;
 }
 
+.hud-info-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;   /* stats a la izquierda, badges a la derecha */
+  gap: 6px;
+  width: 100%;
+  min-width: 0;
+}
+.fighter-hud.right .hud-info-row {
+  flex-direction: row-reverse;      /* espejo: badges a la izquierda, stats derecha */
+}
 .hud-stats {
-  display: flex; gap: 8px;
+  display: flex; gap: 10px;
+  align-items: center;
   font-family: var(--fui);
   font-size: 11px;
   color: #d8d0b8;
   letter-spacing: .5px;
   text-shadow: 1px 1px 0 #000;
-  /* Panel compacto: los badges se integran al HUD (no flotan sobre la
-     escena ni sobre los personajes) */
   width: fit-content;
-  background: rgba(8, 8, 10, .62);
-  border: 1px solid rgba(255, 255, 255, .07);
-  padding: 3px 7px;
+  background: rgba(8, 8, 10, .72);   /* carbón más sólido */
+  border: 1px solid rgba(255, 255, 255, .09);
+  padding: 3px 8px;
+  line-height: 1.4;
 }
 .fighter-hud.right .hud-stats {
   flex-direction: row-reverse;
@@ -762,29 +795,69 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   box-shadow: none;
   white-space: nowrap;
 }
+/* Etiquetas de stats: número destacado, etiqueta ligeramente apagada */
+.hud-stats > span {
+  color: #e8e0c8;
+}
+/* CC DENTRO de stats con tratamiento PROPIO: caja pixel azul */
+.hud-stats .cc-stat {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: #0a1a2e;             /* azul oscuro GBC */
+  border: 1px solid #3890d8;        /* borde azul */
+  box-shadow: 1px 1px 0 #000;
+  padding: 1px 6px;
+  color: #9fd4ff;                   /* texto claro */
+  font-family: var(--fpx);
+  font-size: 10px;
+  letter-spacing: 1px;
+  margin-left: 2px;
+}
+.fighter-hud.right .hud-stats .cc-stat {
+  margin-left: 0;
+  margin-right: 2px;
+}
+.hud-stats .cc-stat b {
+  color: #dff0ff;
+  font-weight: normal;
+  font-size: 11px;
+}
 
 /* ─── Estados activos bajo las stats (buffs/debuffs/guard) ─── */
 .hud-status {
   display: flex;
   flex-wrap: wrap;
   gap: 3px;
-  margin-top: 2px;
+  margin-top: 0;                     /* en la misma línea que stats */
   min-height: 0;
-  /* Panel compacto para los chips de estado */
+  justify-content: flex-end;         /* badges alineados a la derecha */
   width: fit-content;
-  background: rgba(8, 8, 10, .5);
-  border: 1px solid rgba(255, 255, 255, .06);
-  padding: 2px 5px;
+  background: rgba(8, 8, 10, .55);
+  border: 1px solid rgba(255, 255, 255, .07);
+  padding: 2px 4px;
+  flex-shrink: 1;
+  min-width: 0;
 }
-.hud-status.right { justify-content: flex-end; }
+.hud-status.right { justify-content: flex-start; }   /* espejo */
+.hud-status:empty { display: none; }
+/* Estados vacíos: el panel NO deja caja vacía visible (desaparece) */
+.hud-status:empty { display: none; }
 .status-chip {
+  /* Geometría ÚNICA para todos los chips (misma altura/typo/padding/borde) */
   font-family: var(--fpx);
   font-size: 8px;
   letter-spacing: .5px;
-  padding: 2px 5px;
-  line-height: 1.4;
+  padding: 2px 4px;
+  line-height: 1;
+  min-height: var(--hud-layout-status-chip-height, 16px);
+  display: inline-flex;
+  align-items: center;
   border: 1px solid;
   text-shadow: 1px 1px 0 rgba(0,0,0,.85);
+  white-space: nowrap;
+  border-radius: 0;                 /* sin radius moderno */
+  image-rendering: pixelated;
 }
 .status-chip.buff { color: #8dffb0; border-color: rgba(80,220,120,.4); background: rgba(16,90,44,.3); }
 .status-chip.debuff { color: #ff9a8a; border-color: rgba(255,90,70,.4); background: rgba(110,20,14,.3); }
@@ -795,20 +868,22 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 
 /* ─── HP Bar (estilo GBC) ─── */
 
-.hp-bar { position: relative; height: var(--hp-bar-h, 16px); margin: 1px 0; }
+.hp-bar { position: relative; height: var(--hp-bar-h, 18px); margin: 1px 0; }
 
 .hp-bar-track {
-  width: 100%; height: calc(var(--hp-bar-h, 16px) - 4px);
-  min-height: 8px;
+  width: 100%; height: calc(var(--hp-bar-h, 18px) - 4px);
+  min-height: 10px;
   background:
-    linear-gradient(180deg, #070908, #020302);
+    linear-gradient(180deg, #05060a, #010203);
   border: 2px solid #000;
   position: relative;
   overflow: hidden;
   box-shadow:
     1px 1px 0 rgba(0,0,0,.95),
-    inset 1px 1px 0 rgba(216,208,184,.48),
-    inset -1px -1px 0 rgba(0,0,0,.9);
+    inset 1px 1px 0 rgba(216,208,184,.5),
+    inset -1px -1px 0 rgba(0,0,0,.92);
+  border-radius: 0;
+  image-rendering: pixelated;
 }
 /* segmentos de la barra (divisores pixel cada 10px) */
 .hp-bar-track::after {
@@ -827,11 +902,33 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 
 .hp-bar-current {
   position: absolute; top: 0; left: 0; height: 100%;
+  /* Verde GBC alto (relleno por defecto) */
   background:
     linear-gradient(180deg, #b8f088 0 24%, #50c858 24% 58%, #188040 58% 100%);
   box-shadow: inset 0 1px 0 rgba(255,255,255,.28);
   transition: width 0.24s steps(6, end);
   z-index: 2;
+  image-rendering: pixelated;
+}
+/* Umbrales visuales (derivados del HP existente, sin gameplay nuevo):
+   >50% verde · 25–50% verde/amarillo · 12–25% naranja · <12% rojo crítico */
+.hp-bar.mid .hp-bar-current {
+  background:
+    linear-gradient(180deg, #d8e878 0 24%, #a0b838 24% 58%, #708a20 58% 100%);
+}
+.hp-bar.low .hp-bar-current {
+  background:
+    linear-gradient(180deg, #f8c878 0 24%, #e89830 24% 58%, #b86818 58% 100%);
+  animation: none;
+}
+.hp-bar.critical .hp-bar-current {
+  background:
+    linear-gradient(180deg, #f87868 0 24%, #d83828 24% 58%, #901810 58% 100%);
+  animation: hp-critical 0.55s steps(2, end) infinite;
+}
+@keyframes hp-critical {
+  0% { opacity: 1; }
+  100% { opacity: .55; }
 }
 .hp-bar.right .hp-bar-recent,
 .hp-bar.right .hp-bar-current {
@@ -852,20 +949,26 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   to { transform: scaleX(1); }
 }
 
-.hp-bar.low .hp-bar-current { background: linear-gradient(90deg, #982820, #d83828); animation: hp-flash 0.6s steps(2, end) infinite alternate; }
-.hp-bar.low .hp-bar-track { border-color: #d83828; }
-
-@keyframes hp-flash { 0% { opacity: 1; } 100% { opacity: 0.5; } }
+.hp-bar.mid .hp-bar-track { border-color: #000; }
+.hp-bar.low .hp-bar-track { border-color: #7a4a10; }
+.hp-bar.critical .hp-bar-track { border-color: #d83828; }
 
 .hp-bar-text {
   position: absolute; top: 50%; left: 0; right: 0;
   transform: translateY(-50%);
   text-align: center;
   font-family: var(--fpx);
-  font-size: 11px;
+  font-size: 12px;                    /* más legible (antes 11px) */
   line-height: 1;
-  color: var(--hud-text);
-  text-shadow: 1px 1px 0 #000, -1px -1px 0 #000;
+  color: #fff;
+  /* sombra negra PIXEL dura (sin blur) — legible sobre cualquier relleno */
+  text-shadow:
+    1px 1px 0 #000,
+    -1px 1px 0 #000,
+    1px -1px 0 #000,
+    -1px -1px 0 #000,
+    0 2px 0 #000,
+    0 -2px 0 #000;
   z-index: 6;
   letter-spacing: 1px;
   white-space: nowrap;
@@ -914,7 +1017,8 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   right: 14px;
   bottom: calc(var(--controls-h, var(--hud-controls-h, var(--hud-layout-controls-h, clamp(104px, 17.5vh, 136px)))) + 56px);
   z-index: 28;
-  display: flex;
+  display: none;               /* CC principal = HUD superior (cc-stat) —
+                                  el dock del battlefield duplicaba el recurso */
   justify-content: flex-end;
   gap: 6px;
   width: auto;
@@ -4018,16 +4122,19 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   transform: translate(-50%, -50%);
   display: flex; flex-direction: column; align-items: center; justify-content: center;
   gap: 2px;
-  width: clamp(86px, 10vw, 132px);
+  width: var(--hud-layout-center-badge-width, 78px);
   min-width: 0;
-  background: transparent;
+  max-width: calc(100% - 40px);
+  background: rgba(8, 8, 10, .4);    /* sello sutil — sin tarjeta grande */
   border: 0;
   outline: 0;
   box-shadow: none;
-  padding: 0;
+  padding: 3px 0;
+  box-sizing: border-box;
   text-shadow: 1px 1px 0 #000;
   pointer-events: none;
 }
+/* marco/separador pixel alrededor del sello: ---- VS ---- */
 .hud-center-badge::before,
 .hud-center-badge::after {
   content: '';
@@ -4037,31 +4144,31 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   height: 2px;
   background: repeating-linear-gradient(90deg, #f0d060 0 4px, #05070c 4px 6px);
   box-shadow: 1px 1px 0 #000;
-  opacity: .9;
-  z-index: -1;
+  opacity: .95;
 }
 .hud-center-badge::before {
   left: 50%;
-  transform: translate(calc(-100% - 22px), -50%);
+  transform: translate(calc(-100% - 20px), -50%);
 }
 .hud-center-badge::after {
   right: 50%;
-  transform: translate(calc(100% + 22px), -50%);
+  transform: translate(calc(100% + 20px), -50%);
 }
 .hud-center-round {
   font-family: var(--fpx);
-  font-size: 8px;
+  font-size: 9px;
   color: #f0d060;
-  letter-spacing: 0;
+  letter-spacing: 1px;
   text-shadow: 1px 1px 0 #000;
-  background: rgba(8, 8, 10, .66);
-  border: 1px solid rgba(240,208,96,.58);
-  padding: 1px 5px;
+  background: rgba(8, 8, 10, .72);
+  border: 1px solid rgba(240,208,96,.6);
+  padding: 1px 6px;
   box-shadow: 1px 1px 0 #000;
+  line-height: 1.2;
 }
 .hud-center-vs {
   font-family: var(--fpx);
-  font-size: clamp(22px, 3.4vw, 34px);
+  font-size: clamp(22px, 2.6vw, 24px);
   color: #f07070;
   letter-spacing: 0;
   text-shadow:
@@ -4074,11 +4181,11 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 }
 .hud-center-order {
   font-family: var(--fpx);
-  font-size: 6px;
+  font-size: 7px;
   color: #9fb7d8;
-  letter-spacing: 0;
+  letter-spacing: .5px;
   text-shadow: 1px 1px 0 #000;
-  max-width: clamp(92px, 13vw, 170px);
+  max-width: 100%;                   /* cabe dentro del badge de 78px */
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -4086,6 +4193,7 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   border: 1px solid rgba(82,98,122,.54);
   padding: 1px 5px;
   box-shadow: 1px 1px 0 rgba(0,0,0,.74);
+  line-height: 1.3;
 }
 
 /* ═══ INTRO CINEMATOGRÁFICA DE COMBATE (como el GBC) ═══

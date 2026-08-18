@@ -426,9 +426,12 @@ function CharacterSprite({ formId, height = 92, className = '', side }: {
 // ─── Barra de HP ──────────────────────────────────────────
 function HPBar({ current, max, side, introFill = false }: { current: number; max: number; side: 'left' | 'right'; introFill?: boolean }) {
   const pct = Math.max(0, Math.min(100, (current / max) * 100));
-  const low = pct <= 25;
+  // Umbrales VISUALES (derivados del HP existente, sin gameplay nuevo):
+  // >50% verde · 25–50% verde/amarillo (mid) · 12–25% naranja (low) ·
+  // <12% rojo crítico (critical, parpadeo steps)
+  const level = pct < 12 ? 'critical' : pct <= 25 ? 'low' : pct <= 50 ? 'mid' : '';
   return (
-    <div className={`hp-bar ${side} ${low ? 'low' : ''} ${introFill ? 'intro-fill' : ''}`}>
+    <div className={`hp-bar ${side} ${level} ${introFill ? 'intro-fill' : ''}`}>
       <div className="hp-bar-track">
         <div className="hp-bar-recent" style={{ width: `${pct}%` }} />
         <div className="hp-bar-current" style={{ width: `${pct}%` }} />
@@ -2950,25 +2953,27 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
             <span className="hud-level">LV{player.level}</span>
           </div>
           <HPBar current={player.hp} max={player.maxHp} side="left" introFill={intro} />
-          <div className="hud-stats">
-            <span>STR{player.str + pBuffs.str}</span><span>KI{player.ki + pBuffs.ki}</span><span>SPD{player.spd + pStages.spd * 8}</span>
-          </div>
-          <div className="hud-status">
-            {pStages.str > 0 && <span className="status-chip buff">STR+</span>}
-            {pStages.str < 0 && <span className="status-chip debuff">STR−</span>}
-            {pStages.ki > 0 && <span className="status-chip buff">KI+</span>}
-            {pStages.ki < 0 && <span className="status-chip debuff">KI−</span>}
-            {pStages.spd > 0 && <span className="status-chip buff">SPD+</span>}
-            {pStages.spd < 0 && <span className="status-chip debuff">SPD−</span>}
-            {pStages.guard > 0 && <span className="status-chip buff">G+</span>}
-            {pStages.guard < 0 && <span className="status-chip debuff">G−</span>}
-            {playerGuard && <span className="status-chip guard">{playerGuard.type === 'avoid_beam' ? 'BEAM' : playerGuard.type === 'avoid_damage' ? 'DAMAGE' : playerGuard.type === 'absorb' ? 'ABSORB' : playerGuard.type === 'reduce' ? 'GUARD' : 'CANCEL'}</span>}
-            {pAcc > 0 && <span className="status-chip acc">ACC+</span>}
-            {pEva > 0 && <span className="status-chip acc">EVA+</span>}
-            {pLockOn && <span className="status-chip acc">LOCK</span>}
-
-            {gatherTurns > 0 && <span className="status-chip power">{powerState.replace('_', ' ')}</span>}
-            {pStages.str === 0 && pStages.ki === 0 && pStages.spd === 0 && pStages.guard === 0 && !playerGuard && pAcc === 0 && pEva === 0 && !pLockOn && gatherTurns === 0 && <span className="status-chip none">—</span>}
+          <div className="hud-info-row">
+            <div className="hud-stats">
+              <span>STR{player.str + pBuffs.str}</span><span>KI{player.ki + pBuffs.ki}</span><span>SPD{player.spd + pStages.spd * 8}</span>
+              <span className="cc-stat"><b>{player.cc}</b></span>
+            </div>
+            <div className="hud-status">
+              {pStages.str > 0 && <span className="status-chip buff">STR+</span>}
+              {pStages.str < 0 && <span className="status-chip debuff">STR−</span>}
+              {pStages.ki > 0 && <span className="status-chip buff">KI+</span>}
+              {pStages.ki < 0 && <span className="status-chip debuff">KI−</span>}
+              {pStages.spd > 0 && <span className="status-chip buff">SPD+</span>}
+              {pStages.spd < 0 && <span className="status-chip debuff">SPD−</span>}
+              {pStages.guard > 0 && <span className="status-chip buff">G+</span>}
+              {pStages.guard < 0 && <span className="status-chip debuff">G−</span>}
+              {playerGuard && <span className="status-chip guard">{playerGuard.type === 'avoid_beam' ? 'BEAM' : playerGuard.type === 'avoid_damage' ? 'DAMAGE' : playerGuard.type === 'absorb' ? 'ABSORB' : playerGuard.type === 'reduce' ? 'GUARD' : 'CANCEL'}</span>}
+              {pAcc > 0 && <span className="status-chip acc">ACC+</span>}
+              {pEva > 0 && <span className="status-chip acc">EVA+</span>}
+              {pLockOn && <span className="status-chip acc">LOCK</span>}
+              {gatherTurns > 0 && <span className="status-chip power">{powerState.replace('_', ' ')}</span>}
+              {pStages.str === 0 && pStages.ki === 0 && pStages.spd === 0 && pStages.guard === 0 && !playerGuard && pAcc === 0 && pEva === 0 && !pLockOn && gatherTurns === 0 && <span className="status-chip none">—</span>}
+            </div>
           </div>
           {player2 && (
             <div className="team-reserve left">
@@ -2991,19 +2996,21 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
             <span className="hud-level">LV{enemy.level}</span>
           </div>
           <HPBar current={enemy.hp} max={enemy.maxHp} side="right" introFill={intro} />
-          <div className="hud-stats">
-            <span>STR{enemy.str + eBuffs.str}</span><span>KI{enemy.ki + eBuffs.ki}</span><span>SPD{enemy.spd + eStages.spd * 8}</span>
-          </div>
-          <div className="hud-status right">
-            {eStages.str > 0 && <span className="status-chip buff">STR+</span>}
-            {eStages.str < 0 && <span className="status-chip debuff">STR−</span>}
-            {eStages.ki > 0 && <span className="status-chip buff">KI+</span>}
-            {eStages.ki < 0 && <span className="status-chip debuff">KI−</span>}
-            {eStages.spd > 0 && <span className="status-chip buff">SPD+</span>}
-            {eStages.spd < 0 && <span className="status-chip debuff">SPD−</span>}
-            {eStages.guard > 0 && <span className="status-chip buff">G+</span>}
-            {eStages.guard < 0 && <span className="status-chip debuff">G−</span>}
-            {eStages.str === 0 && eStages.ki === 0 && eStages.spd === 0 && eStages.guard === 0 && <span className="status-chip none">—</span>}
+          <div className="hud-info-row">
+            <div className="hud-stats">
+              <span className="cc-stat"><b>{enemy.cc}</b></span><span>STR{enemy.str + eBuffs.str}</span><span>KI{enemy.ki + eBuffs.ki}</span><span>SPD{enemy.spd + eStages.spd * 8}</span>
+            </div>
+            <div className="hud-status right">
+              {eStages.str > 0 && <span className="status-chip buff">STR+</span>}
+              {eStages.str < 0 && <span className="status-chip debuff">STR−</span>}
+              {eStages.ki > 0 && <span className="status-chip buff">KI+</span>}
+              {eStages.ki < 0 && <span className="status-chip debuff">KI−</span>}
+              {eStages.spd > 0 && <span className="status-chip buff">SPD+</span>}
+              {eStages.spd < 0 && <span className="status-chip debuff">SPD−</span>}
+              {eStages.guard > 0 && <span className="status-chip buff">G+</span>}
+              {eStages.guard < 0 && <span className="status-chip debuff">G−</span>}
+              {eStages.str === 0 && eStages.ki === 0 && eStages.spd === 0 && eStages.guard === 0 && <span className="status-chip none">—</span>}
+            </div>
           </div>
           {enemy2 && (
             <div className="team-reserve right">
