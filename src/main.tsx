@@ -12,6 +12,7 @@ import { BattlePosition, POSITION_DATA, resolveRelativeDistance, isBeamVulnerabl
 import { BATTLE_PORTRAITS } from './data/battlePortraits';
 import { UNLOCK_KEY, STARTER_DAMAGE_DECK, STARTER_BEAM_DECK, STARTER_CHARACTERS, cardsForLevel, pickRewards, VS_UNLOCKS, isFormUnlocked, FORM_UNLOCK_LEVELS } from './data/unlocks';
 import { CARDS, CARD_COLORS, CARD_COLORS_ON_LIGHT, CARD_TYPE_NAMES, CardDef, CardType, DECK_SIZE, MAX_COPIES, getCard, CardEffect } from './data/cards';
+import { tipBlock, tipCard, TipPart } from './data/tooltips';
 import {
   createBattleDeck, drawOne, playJoint, discardOne, needsDiscard,
   registerCardResolver, JointDeckState, HAND_MAX_TRANSITORY,
@@ -72,6 +73,9 @@ try { applyHudLayout(); } catch { /* SSR / sin DOM */ }
 type BattlePhase = 'position' | 'command' | 'basic' | 'limitSelect' | 'cardSelect' | 'stageInput' | 'enemyTurn' | 'defend' | 'discard' | 'win' | 'lose';
 
 type CommandType = 'LIMIT' | 'J' | 'B' | 'C';
+
+// Tooltip canónico de BACK (mismo formato estructurado en todos los paneles)
+const TIP_BACK: TipPart[] = [['desc', 'Volver al menú anterior']];
 
 interface CharManifest {
   [pose: string]: { frames: { file: string; w: number; h: number }[]; fps: number; loop: boolean };
@@ -468,10 +472,6 @@ function CardVisual({ card, selected, onClick, small, disabled }: {
   const iconUrl = cardIconUrl(card.id);
   const IconCmp = TYPE_ICONS[card.type];
   const stars = '★'.repeat(card.rarity) + '☆'.repeat(5 - card.rarity);
-  // Tooltip: efecto + compatibilidad (info sin ocupar espacio en la carta)
-  const tip = card.description
-    ? `${card.name} — ${cardEffectSummary(card.effect)}\n${card.description}`
-    : `${card.name} — ${cardEffectSummary(card.effect)}`;
   const compat = card.compatible && card.compatible.length > 0
     ? `\nUsable por: ${card.compatible.map(id => characterName(id)).join(', ')}`
     : card.notCompatible && card.notCompatible.length > 0
@@ -479,21 +479,15 @@ function CardVisual({ card, selected, onClick, small, disabled }: {
       : '';
   // Frame GBC por tipo (la carta SE VE como el GBC: marco + arte interior)
   const frameUrl = disabled ? CARD_FRAME_DISABLED : selected ? CARD_FRAME_SELECTED : (CARD_TYPE_FRAME[card.type] ?? undefined);
-  // Tooltip ENRIQUECIDO y ESTRUCTURADO (HTML): título + stats + descripción
-  // + efecto + compatibilidad — con el estilo del diálogo GBC (fuente pixel,
-  // fondo blanco, texto negro). Se renderiza con dangerouslySetInnerHTML.
-  const esc = (s: string) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-  const richTip = [
-    // Título: nombre en ROJO GBC (como el actor del diálogo) + TIPO con su
-    // color oscurecido para fondo claro (CARD_COLORS_ON_LIGHT: el especial
-    // es dorado apagado, legible sobre blanco).
-    `<span class="tt-title">${esc(card.name)} — <span class="tt-type" style="color:${CARD_COLORS_ON_LIGHT[card.type]}">${esc(CARD_TYPE_NAMES[card.type])}</span> ★${card.rarity}</span>`,
-    `<span class="tt-sep"></span>`,
-    `<span class="tt-stats">CC ${card.cc} · ATK ${card.atk > 0 ? card.atk : '—'} · ACC ${card.acc}%</span>`,
-    card.description ? `<span class="tt-desc">${esc(card.description)}</span>` : '',
-    `<span class="tt-effect">Efecto: ${esc(cardEffectSummary(card.effect))}</span>`,
-    compat.trim() ? `<span class="tt-compat">${esc(compat.trim())}</span>` : '',
-  ].filter(Boolean).join('');
+  // Tooltip ENRIQUECIDO y ESTRUCTURADO (HTML canónico tipCard): título con
+  // tipo coloreado + stats + descripción + efecto + compatibilidad — con el
+  // estilo del diálogo GBC (fuente pixel, fondo blanco, texto negro carbón).
+  const richTip = tipCard(card.name, CARD_TYPE_NAMES[card.type], CARD_COLORS_ON_LIGHT[card.type], card.rarity, [
+    ['stats', `CC ${card.cc} · ATK ${card.atk > 0 ? card.atk : '—'} · ACC ${card.acc}%`],
+    card.description ? ['desc', card.description] : null,
+    ['effect', `Efecto: ${cardEffectSummary(card.effect)}`],
+    compat.trim() ? ['compat', compat.trim()] : null,
+  ]);
   return (
     <button className={`card ${card.type} ${selected ? 'selected' : ''} ${small ? 'small' : ''}`}
       onClick={onClick} disabled={disabled}
@@ -2946,7 +2940,11 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
       {/* HUD */}
       <div className="hud-top">
         <div className="fighter-hud left">
-          <div className="hud-name" data-tip={`${player.name} — ${player.form} LV${player.level}\nHP ${player.hp}/${player.maxHp} · STR${player.str} KI${player.ki} SPD${player.spd}\nPOS: ${player.battlePos.replace('_', ' ')}`}>
+          <div className="hud-name" data-tip={tipBlock(`${player.name} — ${player.form} LV${player.level}`, [
+            ['stats', `HP ${player.hp}/${player.maxHp}`],
+            ['stats', `STR ${player.str} · KI ${player.ki} · SPD ${player.spd}`],
+            ['desc', `POS: ${player.battlePos.replace('_', ' ')}`],
+          ])}>
             <span className="hud-portrait">
               <img src={portraitFor(player.id, activePlayerFormId) || ''} alt="" onError={e => (e.currentTarget.style.display = 'none')} />
               {!portraitFor(player.id) && <Sword size={14} />}
@@ -2989,7 +2987,11 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
           )}
         </div>
         <div className="fighter-hud right">
-          <div className="hud-name" data-tip={`${enemy.name} — ${enemy.form} LV${enemy.level}\nHP ${enemy.hp}/${enemy.maxHp} · STR${enemy.str} KI${enemy.ki} SPD${enemy.spd}\nPOS: ${enemy.battlePos.replace('_', ' ')}`}>
+          <div className="hud-name" data-tip={tipBlock(`${enemy.name} — ${enemy.form} LV${enemy.level}`, [
+            ['stats', `HP ${enemy.hp}/${enemy.maxHp}`],
+            ['stats', `STR ${enemy.str} · KI ${enemy.ki} · SPD ${enemy.spd}`],
+            ['desc', `POS: ${enemy.battlePos.replace('_', ' ')}`],
+          ])}>
             <span className="hud-portrait">
               <img src={portraitFor(enemy.id, enemyFormId) || ''} alt="" onError={e => (e.currentTarget.style.display = 'none')} />
               {!portraitFor(enemy.id) && <Shield size={14} />}
@@ -3168,7 +3170,11 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
               <div className="discard-grid">
                 {hand.map((c, i) => (
                   <button key={`${c.id}-${i}`} className="discard-card" onClick={() => chooseDiscard(i)}
-                    data-tip={`${c.name} · ${c.cc} CC · ${c.type.toUpperCase()}`}>
+                    data-tip={tipBlock(`${c.name} — ${CARD_TYPE_NAMES[c.type]} ★${c.rarity}`, [
+                      ['stats', `CC ${c.cc} · ATK ${c.atk > 0 ? c.atk : '—'} · ACC ${c.acc}%`],
+                      c.description ? ['desc', c.description] : null,
+                      ['effect', `Efecto: ${cardEffectSummary(c.effect)}`],
+                    ])}>
                     <img src={CARD_FRAME_BY_TYPE[c.type] ?? CARD_FRAME_BY_TYPE.command} alt="" className="discard-frame" />
                     {cardIconUrl(c.id) && <img src={cardIconUrl(c.id)!} alt={c.name} className="discard-art" />}
                     <span className="discard-name">{c.name}</span>
@@ -3182,15 +3188,28 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
           <div className="command-select">
             <div className="command-strip">
               <button onClick={() => selectCommand('LIMIT')} className="cmd-limit" disabled={!limitsPowered || limitCards.length === 0}
-                data-tip="LIMITED — cartas exclusivas del personaje.\nReutilizables mientras tengas CC.\nRequiere GATHER POWER activo." />
+                data-tip={tipBlock('LIMITED', [
+                  ['desc', 'Cartas exclusivas del personaje.'],
+                  ['desc', 'Reutilizables mientras tengas CC.'],
+                  ['effect', 'Requiere GATHER POWER activo.'],
+                ])} />
               <button onClick={() => selectCommand('J')} className="cmd-j"
-                data-tip="JOINT — cartas de tu mano.\nCuestan CC y se descartan al usarlas." />
+                data-tip={tipBlock('JOINT', [
+                  ['desc', 'Cartas de tu mano.'],
+                  ['desc', 'Cuestan CC y se descartan al usarlas.'],
+                ])} />
               <button onClick={() => selectCommand('B')} className="cmd-b"
-                data-tip="BASIC — acciones libres sin CC.\nSTAGE ATTACK (secuencia A/B) o GATHER POWER." />
+                data-tip={tipBlock('BASIC', [
+                  ['desc', 'Acciones libres sin CC.'],
+                  ['desc', 'STAGE ATTACK (secuencia A/B) o GATHER POWER.'],
+                ])} />
               {/* CHARA solo aparece en combates de equipo (FAQ: en individuales no existe) */}
               {player2 && (
                 <button onClick={() => selectCommand('C')} className="cmd-c has-ally"
-                  data-tip={`CHARA — cambia a ${player2.name}.\nCuesta la acción del turno.`} />
+                  data-tip={tipBlock('CHARA', [
+                    ['desc', `Cambia a ${player2.name}.`],
+                    ['effect', 'Cuesta la acción del turno.'],
+                  ])} />
               )}
             </div>
           </div>
@@ -3208,14 +3227,20 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
                 return (
                   <button className="card basic-stage-card" onClick={() => basicAction('stage')}
                     style={{ '--card-frame': `url('${CARD_FRAME_BY_TYPE[stageCard.type] ?? CARD_FRAME_BY_TYPE.command}')`, '--card-color': CARD_COLORS[stageCard.type] } as React.CSSProperties}
-                    data-tip={`STAGE ATTACK — ${stages} Stage · secuencia de inputs A/B a tiempo.\nCada acierto +1 CC (más si completas la cadena).`}>
+                    data-tip={tipBlock(`STAGE ATTACK — ${stages} STAGE`, [
+                      ['desc', 'Secuencia de inputs A/B a tiempo.'],
+                      ['effect', 'Cada acierto +1 CC (más si completas la cadena).'],
+                    ])}>
                     <CardArtHole frameUrl={CARD_FRAME_BY_TYPE[stageCard.type] ?? CARD_FRAME_BY_TYPE.command} iconUrl={cardIconUrl(stageCard.id)} />
                   </button>
                 );
               })()}
               <button className="basic-btn basic-gather" onClick={() => basicAction('gather')} disabled={gatherTurns > 0}
-                data-tip="GATHER POWER — sube STR/KI (+8).\nActiva el mazo LIMIT durante 2 turnos." />
-              <button className="basic-btn basic-back" data-tip="BACK — volver al menú anterior" onClick={() => { Sfx.cancel(); setPhase('command'); }} />
+                data-tip={tipBlock('GATHER POWER', [
+                  ['stats', 'STR/KI +8'],
+                  ['effect', 'Activa el mazo LIMIT durante 2 turnos.'],
+                ])} />
+              <button className="basic-btn basic-back" data-tip={tipBlock('BACK', TIP_BACK)} onClick={() => { Sfx.cancel(); setPhase('command'); }} />
             </div>
             <div className="command-help">{t('battle.basicFree')}</div>
           </div>
@@ -3232,7 +3257,11 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
                   <button key={i} className={`limit-card ${player.cc < c.cc ? 'locked' : ''}`}
                     disabled={player.cc < c.cc} onClick={() => playLimit(c)}
                     style={{ '--card-frame': `url('${CARD_FRAME_BY_TYPE[c.type] ?? CARD_FRAME_BY_TYPE.special}')` } as React.CSSProperties}
-                    data-tip={`${c.name} — ${CARD_TYPE_NAMES[c.type]}  ★${c.rarity}\nCC ${c.cc} · ${c.description ?? ''}\nReutilizable mientras tengas CC (GATHER POWER activo)`}>
+                    data-tip={tipBlock(`${c.name} — ${CARD_TYPE_NAMES[c.type]} ★${c.rarity}`, [
+                      ['stats', `CC ${c.cc} · ATK ${c.atk > 0 ? c.atk : '—'} · ACC ${c.acc}%`],
+                      c.description ? ['desc', c.description] : null,
+                      ['effect', 'Reutilizable mientras tengas CC (GATHER POWER activo).'],
+                    ])}>
                     <CardArtHole frameUrl={CARD_FRAME_BY_TYPE[c.type] ?? CARD_FRAME_BY_TYPE.special} iconUrl={cardIconUrl(c.id)} />
                   </button>
                 ))}
@@ -3240,12 +3269,15 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
                 {(LIMIT_DEFAULTS[getForm(activePlayerFormId)?.character || ''] || [])
                   .filter(id => !limits.includes(id))
                   .map(id => (
-                    <div key={`slot-${id}`} className="limit-slot" data-tip="LIMIT no obtenida todavía">
+                    <div key={`slot-${id}`} className="limit-slot" data-tip={tipBlock('LIMIT — NO OBTENIDA', [
+                      ['desc', 'Se desbloquea jugando la historia.'],
+                      ['effect', 'Requiere GATHER POWER para usarse.'],
+                    ])}>
                       <Lock size={16} />
                     </div>
                   ))}
               </div>
-              <button className="basic-btn basic-back" data-tip="BACK — volver al menú anterior" onClick={() => { Sfx.cancel(); setPhase('command'); }} />
+              <button className="basic-btn basic-back" data-tip={tipBlock('BACK', TIP_BACK)} onClick={() => { Sfx.cancel(); setPhase('command'); }} />
             </div>
             <div className="command-help">{t('battle.limitedHelp')}</div>
           </div>
@@ -3254,7 +3286,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
           <>
             <HandComponent cards={hand} selectedIndex={selectedCard} onSelect={selectCard} isPlayable={card => canPlayInAttack(card) && player.cc >= card.cc && cardUsableBy(card, getForm(activePlayerFormId)!.character)} />
             <button className="basic-btn basic-back" onClick={() => { Sfx.cancel(); setSelectedCard(null); setPhase('command'); }}
-              data-tip="BACK — volver al menú de comandos (sin jugar carta)" />
+              data-tip={tipBlock('BACK', [['desc', 'Volver al menú de comandos (sin jugar carta)']])} />
           </>
         )}
         {phase === 'stageInput' && (() => {
@@ -3316,11 +3348,20 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
                 <div className="control-label">{t('battle.defendAction')} — {t('battle.chooseDefense')}</div>
                 <div className="defense-sources">
                   <button className="basic-btn src-limit" onClick={() => { Sfx.select(); setDefendMenu('limit'); }} disabled={powerState === 'NORMAL' || limitCards.length === 0}
-                    data-tip="LIMITED — defensas exclusivas del personaje.\nRequiere GATHER POWER activo." />
+                    data-tip={tipBlock('LIMITED', [
+                      ['desc', 'Defensas exclusivas del personaje.'],
+                      ['effect', 'Requiere GATHER POWER activo.'],
+                    ])} />
                   <button className="basic-btn src-joint" onClick={() => { Sfx.select(); setDefendMenu('joint'); }}
-                    data-tip="JOINT — cartas de defensa/soporte de tu mano.\nCuestan CC y se descartan al usarlas." />
+                    data-tip={tipBlock('JOINT', [
+                      ['desc', 'Cartas de defensa/soporte de tu mano.'],
+                      ['desc', 'Cuestan CC y se descartan al usarlas.'],
+                    ])} />
                   <button className="basic-btn src-basic" onClick={() => { Sfx.select(); setDefendMenu('basic'); }}
-                    data-tip="BASIC DEFENSE — quedarte y bloquear (−50% dmg)\no MOVE para cambiar de posición (persistente).\nGratis, sin gastar CC." />
+                    data-tip={tipBlock('BASIC DEFENSE', [
+                      ['desc', 'Quedarte y bloquear (−50% dmg) o MOVE para cambiar de posición (persistente).'],
+                      ['effect', 'Gratis, sin gastar CC.'],
+                    ])} />
                 </div>
                 <div className="command-help">{t('battle.defenseHelp')}</div>
               </>
@@ -3330,10 +3371,16 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
                 <div className="control-label">{t('battle.basicDefense')}</div>
                 <div className="basic-menu">
                   <button className="basic-btn act-guard" onClick={() => defendBasic('defense')}
-                    data-tip="DEFEND — bloqueas el ataque.\nDaño reducido −50% (sin gastar CC)." />
+                    data-tip={tipBlock('DEFEND', [
+                      ['desc', 'Bloqueas el ataque.'],
+                      ['effect', 'Daño reducido −50% (sin gastar CC).'],
+                    ])} />
                   <button className="basic-btn act-move" onClick={() => { Sfx.select(); setDefendMenu('move'); }}
-                    data-tip="MOVE — cambias de posición táctica.\nLa posición persiste entre fases (spec Move)." />
-                  <button className="basic-btn basic-back" data-tip="BACK — volver al menú anterior" onClick={() => { Sfx.cancel(); setDefendMenu(null); }} />
+                    data-tip={tipBlock('MOVE', [
+                      ['desc', 'Cambias de posición táctica.'],
+                      ['effect', 'La posición persiste entre fases (spec Move).'],
+                    ])} />
+                  <button className="basic-btn basic-back" data-tip={tipBlock('BACK', TIP_BACK)} onClick={() => { Sfx.cancel(); setDefendMenu(null); }} />
                 </div>
               </>
             )}
@@ -3347,14 +3394,20 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
                   onClick={() => confirmMoveAxis('HORIZONTAL')}
                   onMouseEnter={() => setMoveAxisPreview('HORIZONTAL')}
                   onMouseLeave={() => setMoveAxisPreview(null)}
-                  data-tip={`HORIZONTAL — ${t('battle.axisHorizontal')}\n${positionLabel(player.battlePos)} → ${positionLabel(applyMoveAxis(player.battlePos, 'HORIZONTAL'))}`} />
+                  data-tip={tipBlock('HORIZONTAL ↔', [
+                    ['desc', `${t('battle.axisHorizontal')} — movimiento frontal.`],
+                    ['effect', `${positionLabel(player.battlePos)} → ${positionLabel(applyMoveAxis(player.battlePos, 'HORIZONTAL'))}`],
+                  ])} />
                 <button
                   className={`move-axis-btn axis-v ${moveAxisPreview === 'VERTICAL' ? 'preview' : ''}`}
                   onClick={() => confirmMoveAxis('VERTICAL')}
                   onMouseEnter={() => setMoveAxisPreview('VERTICAL')}
                   onMouseLeave={() => setMoveAxisPreview(null)}
-                  data-tip={`VERTICAL — ${t('battle.axisVertical')}\n${positionLabel(player.battlePos)} → ${positionLabel(applyMoveAxis(player.battlePos, 'VERTICAL'))}`} />
-                <button className="basic-btn basic-back" data-tip="BACK — volver al menú anterior" onClick={() => { Sfx.cancel(); setDefendMenu(null); }} />
+                  data-tip={tipBlock('VERTICAL ↕', [
+                    ['desc', `${t('battle.axisVertical')} — movimiento de altura.`],
+                    ['effect', `${positionLabel(player.battlePos)} → ${positionLabel(applyMoveAxis(player.battlePos, 'VERTICAL'))}`],
+                  ])} />
+                <button className="basic-btn basic-back" data-tip={tipBlock('BACK', TIP_BACK)} onClick={() => { Sfx.cancel(); setDefendMenu(null); }} />
               </div>
             )}
             {defendMenu === 'joint' && (
@@ -3375,7 +3428,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
                       );
                     });
                   })()}
-                  <button className="basic-btn basic-back" data-tip="BACK — volver al menú anterior" onClick={() => { Sfx.cancel(); setDefendMenu(null); }} />
+                  <button className="basic-btn basic-back" data-tip={tipBlock('BACK', TIP_BACK)} onClick={() => { Sfx.cancel(); setDefendMenu(null); }} />
                 </div>
               </div>
             )}
@@ -3395,7 +3448,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
                       </button>
                     ));
                   })()}
-                  <button className="basic-btn basic-back" data-tip="BACK — volver al menú anterior" onClick={() => { Sfx.cancel(); setDefendMenu(null); }} />
+                  <button className="basic-btn basic-back" data-tip={tipBlock('BACK', TIP_BACK)} onClick={() => { Sfx.cancel(); setDefendMenu(null); }} />
                 </div>
               </div>
             )}

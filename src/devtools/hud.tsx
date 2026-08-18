@@ -22,6 +22,7 @@ import { storyPortraitUrl } from '../data/storyPortraits';
 import { anchorFor, BattlePosition } from '../data/positions';
 import { downloadJson } from './spriteEditing';
 import { getCard, CARD_TYPE_NAMES, CARD_COLORS, CARD_COLORS_ON_LIGHT, CardDef } from '../data/cards';
+import { tipBlock, tipCard, TipPart } from '../data/tooltips';
 import { cardIconUrl } from '../data/icons';
 import { FitArt } from '../components/FitArt';
 import { CardArtHole } from '../components/CardArtHole';
@@ -66,10 +67,14 @@ function HudCard({ card, selected, disabled }: { card: CardDef; selected?: boole
   const frame = disabled ? CARD_FRAME_DISABLED : selected ? CARD_FRAME_SELECTED : (CARD_FRAME_BY_TYPE[card.type] ?? undefined);
   const iconUrl = cardIconUrl(card.id);
   const color = CARD_COLORS[card.type];
+  const tip: TipPart[] = [
+    ['stats', `CC ${card.cc} · ATK ${card.atk > 0 ? card.atk : '—'} · ACC ${card.acc}%`],
+    card.description ? ['desc', card.description] : null,
+  ];
   return (
     <button className={`card ${card.type} ${selected ? 'selected' : ''}`} disabled={disabled}
       style={{ '--card-color': color, '--card-frame': frame ? `url('${frame}')` : undefined } as React.CSSProperties}
-      data-tip={`<span class="tt-title">${card.name} — <span class="tt-type" style="color:${CARD_COLORS_ON_LIGHT[card.type]}">${CARD_TYPE_NAMES[card.type]}</span> ★${card.rarity}</span><span class="tt-sep"></span><span class="tt-stats">CC ${card.cc} · ATK ${card.atk > 0 ? card.atk : '—'} · ACC ${card.acc}%</span>${card.description ? `<span class="tt-desc">${card.description}</span>` : ''}`}>
+      data-tip={tipCard(card.name, CARD_TYPE_NAMES[card.type], CARD_COLORS_ON_LIGHT[card.type], card.rarity, tip)}>
       <CardArtHole frameUrl={frame} iconUrl={iconUrl} />
     </button>
   );
@@ -408,9 +413,9 @@ export function HudModule() {
               {view === 'COMMAND' && (
                 <div className="command-select">
                   <div className="command-strip">
-                    <button className="cmd-limit" data-tip="LIMITED — cartas exclusivas del personaje" />
-                    <button className="cmd-j" data-tip="JOINT — cartas de tu mano" />
-                    <button className="cmd-b" data-tip="BASIC — acciones libres sin CC" />
+                    <button className="cmd-limit" data-tip={tipBlock('LIMITED', [['desc', 'Cartas exclusivas del personaje.']])} />
+                    <button className="cmd-j" data-tip={tipBlock('JOINT', [['desc', 'Cartas de tu mano.']])} />
+                    <button className="cmd-b" data-tip={tipBlock('BASIC', [['desc', 'Acciones libres sin CC.']])} />
                   </div>
                 </div>
               )}
@@ -425,7 +430,9 @@ export function HudModule() {
                       <HudCard key={card.id} card={card} selected={i === 1} disabled={i === 2} />
                     ))}
                     {Array.from({ length: 6 - handCards.length }).map((_, i) => (
-                      <div key={`slot-${i}`} className="limit-slot" data-tip="Hueco de la mano — máx 6 transitorio (5 persistente)">
+                      <div key={`slot-${i}`} className="limit-slot" data-tip={tipBlock('HUECO DE MANO', [
+                        ['desc', 'Máx 6 transitorio (5 persistente).'],
+                      ])}>
                         <span className="hand-slot-mark">+</span>
                       </div>
                     ))}
@@ -442,14 +449,16 @@ export function HudModule() {
                       return stageCard ? (
                         <button className="card basic-stage-card"
                           style={{ '--card-frame': `url('${CARD_FRAME_BY_TYPE[stageCard.type] ?? CARD_FRAME_BY_TYPE.command}')`, '--card-color': CARD_COLORS[stageCard.type] } as React.CSSProperties}
-                          data-tip="STAGE ATTACK — 3 Stage · secuencia de inputs A/B a tiempo.
-Cada acierto +1 CC (más si completas la cadena).">
+                          data-tip={tipBlock('STAGE ATTACK — 3 STAGE', [
+                            ['desc', 'Secuencia de inputs A/B a tiempo.'],
+                            ['effect', 'Cada acierto +1 CC (más si completas la cadena).'],
+                          ])}>
                           <CardArtHole frameUrl={CARD_FRAME_BY_TYPE[stageCard.type] ?? CARD_FRAME_BY_TYPE.command} iconUrl={cardIconUrl(stageCard.id)} />
                         </button>
                       ) : null;
                     })()}
-                    <button className="basic-btn basic-gather" data-tip="GATHER POWER — sube STR/KI (+8)" />
-                    <button className="basic-btn basic-back" data-tip="BACK — volver al menú de comandos" />
+                    <button className="basic-btn basic-gather" data-tip={tipBlock('GATHER POWER', [['stats', 'STR/KI +8']])} />
+                    <button className="basic-btn basic-back" data-tip={tipBlock('BACK', [['desc', 'Volver al menú anterior']])} />
                   </div>
                 </div>
               )}
@@ -461,11 +470,17 @@ Cada acierto +1 CC (más si completas la cadena).">
               {view === 'MOVE' && (
                 <div className="move-axis-pad">
                   <button className="move-axis-btn axis-h"
-                    data-tip="HORIZONTAL ↔ — LEFT/RIGHT\nDOWN_BACK → DOWN_FRONT" />
+                    data-tip={tipBlock('HORIZONTAL ↔', [
+                      ['desc', 'LEFT/RIGHT — movimiento frontal.'],
+                      ['effect', 'DOWN_BACK → DOWN_FRONT'],
+                    ])} />
                   <button className="move-axis-btn axis-v"
-                    data-tip="VERTICAL ↕ — UP/DOWN\nDOWN_BACK → UP_BACK" />
+                    data-tip={tipBlock('VERTICAL ↕', [
+                      ['desc', 'UP/DOWN — movimiento de altura.'],
+                      ['effect', 'DOWN_BACK → UP_BACK'],
+                    ])} />
                   <button className="basic-btn basic-back"
-                    data-tip="BACK — volver al menú anterior" />
+                    data-tip={tipBlock('BACK', [['desc', 'Volver al menú anterior']])} />
                 </div>
               )}
 
@@ -514,16 +529,19 @@ Cada acierto +1 CC (más si completas la cadena).">
                       {limitCards.map(c => (
                         <button key={c.id} className="limit-card"
                           style={{ '--card-frame': `url('${CARD_FRAME_BY_TYPE[c.type] ?? CARD_FRAME_BY_TYPE.special}')` } as React.CSSProperties}
-                          data-tip={`${c.name} — ${CARD_TYPE_NAMES[c.type]}\nCC ${c.cc} · Reutilizable mientras tengas CC`}>
+                          data-tip={tipCard(c.name, CARD_TYPE_NAMES[c.type], CARD_COLORS_ON_LIGHT[c.type], c.rarity, [
+                            ['stats', `CC ${c.cc} · ATK ${c.atk > 0 ? c.atk : '—'} · ACC ${c.acc}%`],
+                            ['effect', 'Reutilizable mientras tengas CC.'],
+                          ])}>
                           <CardArtHole frameUrl={CARD_FRAME_BY_TYPE[c.type] ?? CARD_FRAME_BY_TYPE.special} iconUrl={cardIconUrl(c.id)} />
                         </button>
                       ))}
                       {/* Hueco de ejemplo: Limit no obtenida */}
-                      <div className="limit-slot" data-tip="LIMIT no obtenida todavía">
+                      <div className="limit-slot" data-tip={tipBlock('LIMIT — NO OBTENIDA', [['desc', 'Se desbloquea jugando la historia.']])}>
                         <Lock size={16} />
                       </div>
                     </div>
-                    <button className="basic-btn basic-back" data-tip="BACK — volver al menú de comandos" />
+                    <button className="basic-btn basic-back" data-tip={tipBlock('BACK', [['desc', 'Volver al menú de comandos']])} />
                   </div>
                 </div>
               )}
