@@ -10858,3 +10858,32 @@ button.linklike:hover { text-decoration: underline; }
   border-color: #f6c744;
   background: rgba(246, 199, 68, .12);
 }
+/* Selector del nº de inputs STAGE (3-6) — mismo estilo que bgmode/actor */
+.dev-hud-stage-len {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-left: 10px;
+}
+.dev-hud-stage-len label {
+  font-family: var(--fpx);
+  font-size: 7px;
+  letter-spacing: 1px;
+  color: #8b96a8;
+  margin-right: 2px;
+}
+.stage-len-btn {
+  background: #12151c;
+  color: #9fb7d8;
+  border: 1px solid rgba(255, 255, 255, .14);
+  font-family: var(--fpx);
+  font-size: 7px;
+  letter-spacing: .5px;
+  padding: 2px 7px;
+  cursor: pointer;
+}
+.stage-len-btn.active {
+  color: #ffe9a3;
+  border-color: #f6c744;
+  background: rgba(246, 199, 68, .12);
+}

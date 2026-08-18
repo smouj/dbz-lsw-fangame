@@ -89,6 +89,8 @@ export function HudModule() {
   // el combate real — los 13 escenarios del catálogo.
   const [scenarioIdx, setScenarioIdx] = useState(0);
   const [bgMode, setBgMode] = useState<'overview' | 'action'>('overview');
+  // Nº de inputs del QTE STAGE en el mockup (3-6 como el juego)
+  const [stageLen, setStageLen] = useState(5);
   // Actor de la ACCIÓN: en el plano ACTION solo aparece el character que
   // va a ejecutar la acción (idle del sheet de batalla) — no ambos.
   const [actor, setActor] = useState<'player' | 'enemy'>('player');
@@ -188,6 +190,17 @@ export function HudModule() {
             title="Alterna el lado del personaje que habla (izquierda/derecha)">
             Habla: {dlgSide === 'left' ? 'IZQUIERDA (Goku)' : 'DERECHA (Cell)'}
           </button>
+        )}
+        {/* Nº de inputs del QTE STAGE (3-6) — el mockup se adapta y el
+            grupo derecha (prompt+tiempo) permanece anclado (layout estable) */}
+        {view === 'STAGE' && (
+          <div className="dev-hud-stage-len" title="Nº de inputs de la secuencia STAGE (3-6, como el juego)">
+            <label>INPUTS</label>
+            {[3, 4, 5, 6].map(n => (
+              <button key={n} className={`stage-len-btn ${stageLen === n ? 'active' : ''}`}
+                onClick={() => setStageLen(n)}>{n}</button>
+            ))}
+          </div>
         )}
       </div>
 
@@ -498,19 +511,21 @@ export function HudModule() {
                   <div className="gbc-dialogue-body">
                     <div className="stage-inline">
                       <div className="stage-sequence">
-                        <span className="stage-seq-item done"><span className="seq-check">✓</span></span>
-                        <span className="stage-seq-item current">
-                          <img src="/assets/ui/qte/key_q.png" alt="Q" className="qte-key-sm" />
-                        </span>
-                        <span className="stage-seq-item future">
-                          <img src="/assets/ui/qte/key_e.png" alt="E" className="qte-key-sm" />
-                        </span>
-                        <span className="stage-seq-item future">
-                          <img src="/assets/ui/qte/arrow_up.png" alt="↑" className="qte-key-sm" />
-                        </span>
-                        <span className="stage-seq-item future">
-                          <img src="/assets/ui/qte/arrow_right.png" alt="→" className="qte-key-sm" />
-                        </span>
+                        {/* Secuencia dinámica: N inputs (3-6). El 1º es ✓
+                            (done), el 2º el actual (Q, borde azul) y el
+                            resto futuros ciclando A/B + direcciones. */}
+                        {Array.from({ length: stageLen }).map((_, i) => {
+                          if (i === 0) {
+                            return <span key={i} className="stage-seq-item done"><span className="seq-check">✓</span></span>;
+                          }
+                          const futureKeys = ['key_e', 'arrow_up', 'arrow_right', 'key_q', 'key_e'];
+                          return (
+                            <span key={i} className={`stage-seq-item ${i === 1 ? 'current' : 'future'}`}>
+                              <img src={`/assets/ui/qte/${i === 1 ? 'key_q' : futureKeys[(i - 2) % futureKeys.length]}.png`}
+                                alt="" className="qte-key-sm" />
+                            </span>
+                          );
+                        })}
                       </div>
                       <div className="stage-inline-prompt A">
                         <img src="/assets/ui/qte/key_q.png" alt="Q" className="qte-key-big" />
