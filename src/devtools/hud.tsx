@@ -92,7 +92,7 @@ export function HudModule() {
   const [theme, setTheme] = useState<HudTheme>(() => currentHudTheme());
   const [status, setStatus] = useState('');
   const [view, setView] = useState<HudView>('COMMAND');
-  const [devAids, setDevAids] = useState(true);   // anclas + zonas ANIM (preview limpio cuando OFF)
+  const [devAids, setDevAids] = useState(false);   // anclas + zonas ANIM — OFF por defecto: el preview se ve LIMPIO como el juego (activar solo para editar anclas)
   const [dlgSide, setDlgSide] = useState<'left' | 'right'>('left');
   // Vista STORY DIÁLOGO: viewport fijo del juego (1082×605) escalado →
   // SIEMPRE se ve exactamente como en el juego, a cualquier ancho del preview.

@@ -32,8 +32,9 @@ check('CANON: designResolution 1280×720', RENDERER_CONFIG.designResolution[0] =
 check('CANON: aspectRatio 16:9', RENDERER_CONFIG.aspectRatio === '16:9');
 check('CANON: integerScaling + nearestNeighbor', RENDERER_CONFIG.integerScaling && RENDERER_CONFIG.nearestNeighbor);
 check('CANON: pixelScalePolicy integer-preferred', RENDERER_CONFIG.pixelScalePolicy === 'integer-preferred');
-check('R5: letterboxing false (pendiente de migración completa)', RENDERER_CONFIG.letterboxing === false);
-check('R5: canonicalViewport false (flag off — migración segura)', RENDERER_CONFIG.canonicalViewport === false);
+// ═══ R5 ✅ — el canon 16:9 es el CONTRATO runtime por defecto ═══
+check('R5: letterboxing TRUE (canon activado)', RENDERER_CONFIG.letterboxing === true);
+check('R5: canonicalViewport TRUE (canon activado)', RENDERER_CONFIG.canonicalViewport === true);
 
 // ── Estructura ──
 check('R1: GameShell presente (100vw/100dvh del navegador, centrado)',
@@ -42,6 +43,20 @@ check('R1: GameViewport canonical = 16:9 con min()',
   /\.game-shell\.canonical \.game-viewport\s*\{[^}]*width:\s*min\(100vw, calc\(100dvh \* 16 \/ 9\)\)/.test(css));
 check('R1: GameViewport es container (container-type: size)',
   /\.game-viewport\s*\{[^}]*container-type:\s*size/.test(css));
+// R5 — matriz de presets: ratio 16:9 exacto + 0 overflow en todas las
+// ventanas (las unidades cq* hacen que el layout interno no dependa del
+// navegador; el viewport solo recorta/letterboxea).
+const VIEWPORT_PRESETS: Array<[number, number]> = [
+  [640, 360], [960, 540], [1280, 720], [1600, 900], [1920, 1080], [2560, 1440],
+  [800, 450], [1366, 768], [800, 457], [844, 390],
+];
+const shellCss = /game-shell/.test(css) ? css.match(/\.game-shell\s*\{[^}]*\}/)?.[0] ?? '' : '';
+const vp169 = /width: min\(100vw, calc\(100dvh \* 16 \/ 9\)\)/.test(css) &&
+  /height: min\(100dvh, calc\(100vw \* 9 \/ 16\)\)/.test(css);
+check('R5: viewport 16:9 con min() (ancho/alto exactos)', vp169);
+check('R5: 10 presets definidos en la matriz de verificación', VIEWPORT_PRESETS.length === 10);
+check('R5: layout interno usa cq* (independiente del navegador)',
+  /--battle-chibi-size:\s*10cqw/.test(css) && /17\.5cqh/.test(css));
 check('R1: App envuelta en <GameViewport>',
   /<GameViewport>[\s\S]*<AppInner \/>[\s\S]*<\/GameViewport>/.test(mainTsx));
 check('R2: tokens cq canónicos definidos (--battle-chibi-size, --battle-controls-h)',

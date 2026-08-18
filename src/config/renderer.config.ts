@@ -51,9 +51,11 @@ export const RENDERER_CONFIG: RendererConfig = {
   pixelScalePolicy: 'integer-preferred',
   integerScaling: true,
   nearestNeighbor: true,
-  // ⚠️ R5: activar SOLO tras migrar las unidades internas a cq*.
-  letterboxing: false,
-  canonicalViewport: false,
+  // ═══ R5 ✅ ACTIVADO: el canon 16:9 es el CONTRATO runtime por defecto.
+  // 1280×720 diseño / 320×180 lógica / 16:9 exacto con letterbox. Las
+  // unidades cq* ya están migradas (R2) y el StageHudPanel compartido (R3).
+  letterboxing: true,
+  canonicalViewport: true,
   hiDpi: 1,
   fullscreen: false,
   vsync: true,
