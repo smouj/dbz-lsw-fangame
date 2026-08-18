@@ -51,7 +51,7 @@ const VIEWS: { id: HudView; label: string; tip: string }[] = [
   { id: 'DIALOGO', label: 'Diálogo', tip: 'Cuadro de mensaje GBC estructurado' },
   { id: 'RESULTADO', label: 'Resultado', tip: 'Pantalla final: VICTORIA / DERROTA' },
   { id: 'MENU', label: 'Menú', tip: 'Pantalla principal: logo, continuar, navegación y footer' },
-  { id: 'INTRO', label: 'Intro', tip: 'Presentación de inicio (VS + READY/FIGHT)' },
+  { id: 'INTRO', label: 'Intro', tip: 'Presentación VS: sprites entran desde fuera + VS + flash (sin texto)' },
 ];
 
 function PreviewHpBar({ current, max, side }: { current: number; max: number; side: 'left' | 'right' }) {
@@ -257,26 +257,21 @@ export function HudModule() {
           <div className={`battle-screen view-overview dev-hud-real-preview ${view === 'INTRO' ? 'dev-intro-view' : ''}`}>
             {/* INTRO */}
             {view === 'INTRO' && (
-              /* VS FULL-SCREEN: personaje a cada lado, VS en el centro,
-                 READY → FIGHT — cubre toda la ventana (no un panel).
-                 MISMO markup que el juego (main.tsx). */
+              /* VS FULL-SCREEN: los 2 sprites entran desde FUERA hacia su
+                 posición (cinemática), VS en el centro, flash — SIN texto
+                 (nada de READY/FIGHT ni nombres). MISMO markup que el juego. */
               <div className="battle-intro">
                 <div className="intro-fighter intro-left">
                   <div className="intro-portrait">
                     {pPortrait ? <img src={pPortrait} alt={P_FORM} /> : <span className="dev-hud-mock-ph">?</span>}
                   </div>
-                  <div className="intro-name">GOKU</div>
-                  <div className="intro-sub">BASE</div>
                 </div>
                 <div className="intro-vs">VS</div>
                 <div className="intro-fighter intro-right">
                   <div className="intro-portrait">
                     {ePortrait ? <img src={ePortrait} alt={E_FORM} /> : <span className="dev-hud-mock-ph">?</span>}
                   </div>
-                  <div className="intro-name">PICCOLO</div>
-                  <div className="intro-sub">BASE</div>
                 </div>
-                <div className="intro-fight">FIGHT!</div>
                 <div className="intro-flash" />
               </div>
             )}
