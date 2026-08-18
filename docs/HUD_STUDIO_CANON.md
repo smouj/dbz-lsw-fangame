@@ -50,7 +50,7 @@
 11. **Badge central**: VS (VT323 38-44px) + ROUND debajo — SIN caja, SIN líneas, SIN badge ATK (la fase ATTACK/DEFEND vive bajo la barra HP).
 12. **Chip CC GBC**: esquina inferior derecha de los paneles con cartas — negro carbón `#1a1a1a`, número blanco VT323 19px, tooltip CC x/y.
 13. **Fase ATTACK/DEFEND**: inline en la fila de info, SIEMPRE en el lado INTERIOR (junto al VS) — los badges de estado quedan en el borde EXTERIOR (fase `[ATTACK]` izquierda → x≈406, `[DEFEND]` derecha → x≈628). La reserva del 2º miembro del equipo vive en la FILA DEL NOMBRE (hud-top de 3 filas: nombre+reserva · HP · info).
-14. **Phase-bar mínima (sin duplicados)**: la barra inferior solo lleva `X STRIKES FIRST` + `FASE n/2` (exchange). NO lleva `TURN n` (ya está como ROUND en el badge central) ni `ATK X / DEF Y` (la fase ATK/DEF ya vive en los chips bajo las barras HP).
+14. **Info de fase en chips estilo CC**: `X STRIKES FIRST` + `FASE n/2` viven como chips GBC (negro carbón `#1a1a1a` + VT323 blanco 19px + outline `#d8d0b8`, MISMO lenguaje que el chip 06 de CC) en la ESQUINA INFERIOR IZQUIERDA del panel con cartas — espejo del cc-panel a la derecha. NO hay fila phase-bar (eliminada) ni `TURN n` (ya está como ROUND en el badge central).
 
 ## Verificación de paridad
 

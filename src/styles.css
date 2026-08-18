@@ -1424,37 +1424,31 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 
 /* ─── Barra de fase ─── */
 
-.phase-bar {
-  padding: 2px 10px 1px;
-  background: transparent;
-  border-top: 0;
-  border-bottom: 0;
+/* Chips de fase estilo CC GBC: esquina inferior IZQUIERDA del panel con
+   cartas — MISMO lenguaje visual que el chip 06 de CC (negro carbón +
+   VT323 blanco + outline GBC), espejo del cc-panel */
+.phase-chip-row {
+  position: absolute;
+  left: 14px;
+  bottom: 10px;
+  z-index: 30;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  min-height: 24px;
-  box-shadow: none;
+  gap: 6px;
   pointer-events: none;
 }
-
-.phase-info { display: flex; gap: 12px; align-items: center; }
-
-.phase-label {
-  color: #d8d0b8;
-  font-family: var(--fpx);
-  font-size: 8px;
-  letter-spacing: 1px;
-  /* Etiqueta de fase con caja sutil para que el cambio de fase se lea mejor */
-  background: rgba(8, 8, 10, .62);
-  border: 1px solid rgba(82, 98, 122, .58);
-  padding: 2px 8px;
-  box-shadow: 1px 1px 0 rgba(0,0,0,.75);
-  animation: phase-label-in .18s steps(2, end) both;
+.phase-chip {
+  font-family: var(--fui);
+  font-size: 19px;
+  line-height: 1.2;
+  color: #fff;
+  background: #1a1a1a;
+  border: 2px solid #05070c;
+  outline: 1px solid #d8d0b8;
+  padding: 3px 12px;
+  white-space: nowrap;
 }
-@keyframes phase-label-in {
-  from { opacity: 0; transform: translateY(3px); }
-  to { opacity: 1; transform: translateY(0); }
-}
+
+/* (phase-info eliminado con la phase-bar) */
 
 /* ─── Controles de batalla ─── */
 
@@ -3116,10 +3110,7 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   gap: 6px;
 }
 
-/* Fase: separar turno/fase con divisor */
-.phase-info {
-  gap: 12px;
-}
+/* Fase: (eliminado con la phase-bar — la fase vive en los phase-chip) */
 
 /* Log: fondo sutil */
 /* (eliminado con .battle-log) */
@@ -3408,10 +3399,6 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 }
 
 /* Panel de fase: integrado pero ligero, sin contenedor pesado */
-.phase-bar {
-  background: transparent;
-}
-
 /* Cartas: sombra de profundidad y hover más suave */
 .card {
   box-shadow:
@@ -3576,15 +3563,7 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 .fighter-sprite.flash { animation: sprite-flash 0.15s ease; }
 
 /* ─── Orden de velocidad (ROUND) ─── */
-.speed-order-label {
-  font-family: var(--fpx);
-  font-size: 6px;
-  color: var(--ki-blue);
-  letter-spacing: 1px;
-  border: 1px solid rgba(246,199,68,.28);
-  padding: 2px 6px;
-  background: rgba(9,13,22,.4);
-}
+/* (eliminado: la fase vive ahora en los chips phase-chip del panel inferior) */
 
 /* ─── Stage Attack: inputs A/B ─── */
 .stage-panel {
@@ -4353,8 +4332,7 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 }
 
 /* Banner de ROUND (X STRIKES FIRST) con entrada animada */
-.speed-order-label { animation: round-banner .28s steps(3, end) both; font-family: var(--fpx); font-size: 7px; color: #d8d0b8; letter-spacing: 1px; }
-@keyframes round-banner { from { transform: translateY(-12px) scale(.9); opacity: 0; } to { transform: none; opacity: 1; } }
+/* (eliminado: la fase vive ahora en los chips phase-chip del panel inferior) */
 
 /* ═══ TRANSFORMACIÓN CINEMATOGRÁFICA (cambio de forma, como el GBC) ═══ */
 .char-detail-sprite-wrap { position: relative; display: inline-flex; }
@@ -9768,22 +9746,13 @@ button.linklike:hover { text-decoration: underline; }
   max-width: 100% !important;
   overflow: hidden;
   position: relative;
-  /* MISMO orden de filas que el juego: hud-top · campo · phase-bar ·
-     controles (el battle-log y el cc-dock ya no existen) */
-  grid-template-rows: auto 368px auto 96px;
-}
-/* Phase-bar CANÓNICA visible (STRIKES FIRST + FASE n/2) — compacta */
-.dev-hud-preview .phase-bar {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 24px;
-  padding: 2px 12px;
-  background: linear-gradient(90deg, rgba(9,13,22,.55), rgba(9,13,22,.25) 50%, rgba(9,13,22,.55));
+  /* MISMO orden de filas que el juego: hud-top · campo · controles
+     (phase-bar, battle-log y cc-dock ya no existen) */
+  grid-template-rows: auto 392px 96px;
 }
 /* Campo amplio: el escenario domina el preview (como en el juego). */
 .dev-hud-preview .battlefield {
-  height: 368px;
+  height: 392px;
   min-height: 0;
   position: relative;
   width: 100%;

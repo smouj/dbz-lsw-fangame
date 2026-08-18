@@ -774,9 +774,8 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
   const [turnOwner, setTurnOwner] = useState<'player' | 'enemy'>(turnOwnerRef.current);
   // El orden del turno queda FIJO al empezar; los cambios de SPD (buffs/debuffs)
   // se aplican al recalcular en el TURN siguiente (spec §1: partida Chiaotzu).
-  const speedOrderLabel = turnOwner === 'player'
-    ? `${getForm(playerFormId)!.character.toUpperCase()} STRIKES FIRST`
-    : `${getForm(enemyFormId)!.character.toUpperCase()} STRIKES FIRST`;
+  // (speedOrderLabel eliminado: quién ataca ya se sabe por la fase ATTACK/
+  // DEFEND del hud superior — el chip STRIKES FIRST era redundante)
   const [bgId, setBgId] = useState('bg1');
   // ═══ DOS REPRESENTACIONES (estructura real del GBC) ═══
   // TACTICAL (OVERVIEW): fondo world_overview + sprites pequeños — selección,
@@ -3088,30 +3087,18 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
         {damageNums.map(dn => <DamageNumber key={dn.id} value={dn.value} type={dn.type} x={dn.x} y={dn.y} />)}
       </div>
 
-      {/* Barra de fase */}
-      <div className="phase-bar">
-        <div className="phase-info">
-          <span className="speed-order-label">{speedOrderLabel}</span>
-          <span className="phase-label">
-            {phaseShortLabel}
-            {phase !== 'win' && phase !== 'lose' && phase !== 'position' ? ` ${exchangeIndex + 1}/2` : ''}
-          </span>
-        </div>
-      </div>
-
-      <div className="cc-dock" aria-label="Card Cost">
-        <div className="cc-pocket player">
-          <span className="cc-pocket-label">P</span>
-          <CCDisplay cc={player.cc} maxCc={player.maxCc} />
-        </div>
-        <div className="cc-pocket enemy">
-          <span className="cc-pocket-label">E</span>
-          <CCDisplay cc={enemy.cc} maxCc={enemy.maxCc} />
-        </div>
-      </div>
-
       {/* Controles */}
       <div className="battle-controls">
+        {/* Chips de fase estilo CC GBC: ESQUINA INFERIOR IZQUIERDA — orden
+            de ataque (STRIKES FIRST) + fase/exchange (ATTACK 1/2), mismo
+            lenguaje visual que el chip 06 de CC (negro + VT323 blanco) */}
+        {(phase === 'command' || phase === 'basic' || phase === 'limitSelect' || phase === 'cardSelect' || phase === 'defend') && (
+          <div className="phase-chip-row">
+            <span className="phase-chip" data-tip={tipBlock('FASE', [['desc', 'Exchange del turno (atacante/defensor)']])}>
+              {phaseShortLabel} {exchangeIndex + 1}/2
+            </span>
+          </div>
+        )}
         {/* CC estilo GBC: esquina inferior derecha del panel con cartas —
             fondo negro + número blanco pixel (VT323) */}
         {(phase === 'command' || phase === 'basic' || phase === 'limitSelect' || phase === 'cardSelect' || phase === 'defend') && (

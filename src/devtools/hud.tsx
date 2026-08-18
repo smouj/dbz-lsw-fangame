@@ -456,21 +456,15 @@ export function HudModule() {
               </div>
             </div>
 
-            <div className="phase-bar">
-              <div className="phase-info">
-                {/* Phase-bar CANÓNICA: solo info única — el TURN vive en el
-                    badge central (ROUND), la fase ATK/DEF bajo las barras HP
-                    (chips). Orden de ataque + exchange son únicos. */}
-                <span className="speed-order-label">GOKU STRIKES FIRST</span>
-                <span className="phase-label">ATTACK 1/2</span>
-              </div>
-            </div>
-
-            {/* CC dock real (igual que el juego: P/E con barra y valor) */}
             {/* cc-dock: NO es elemento del juego (display:none en main.tsx —
                 el CC vive en hud-top cc-stat + chip de panel) → no se pinta */}
 
             <div className="battle-controls dev-hud-battle-controls">
+              {/* Chips de fase estilo CC GBC: esquina inferior IZQUIERDA —
+                  MISMO lenguaje que el chip 06 de CC (negro + VT323) */}
+              <div className="phase-chip-row">
+                <span className="phase-chip" data-tip={tipBlock('FASE', [['desc', 'ATTACK 1/2 — exchange del turno (quién ataca/defiende ya lo dice la fase del hud superior)']])}>ATTACK 1/2</span>
+              </div>
               {/* CC estilo GBC: esquina inferior derecha (como el juego) */}
               <div className="cc-panel" data-tip={tipBlock('CC', [['stats', '6 / 99']])}>06</div>
               {/* DIÁLOGO (cuadro GBC estructurado) — dentro de la caja,
