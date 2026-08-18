@@ -176,15 +176,15 @@ película (fase 3 de la auditoría, implementada en `d86fdf1`).
   fighterHeaderHeight 28 · hudTopPadY 6 · statusChipHeight 16 ·
   centerBadgeWidth 78 (+ validación retrato 28 / HP ≥16).
 
-### Anchors de suelo ajustados (DOWN y: 68 → 70, sesión 2026-08-18)
+### Anchors de suelo ajustados (DOWN y: 68 → 70 → 72, sesión 2026-08-18)
 - Los chibis overworld en el SUELO (DOWN_BACK/DOWN_FRONT, ambos lados)
-  se bajaron un pelín: anchor y 68 → 70 (fuente única en positions.ts).
-  Se refleja automáticamente en: preview HUD (OVERVIEW), Position Lab
-  (campo editable + 4 planos) y el juego (anchorFor).
-- Verificado por DOM: preview feetY 258→266 · planos DOWN feetY=105
-  (70% de 150px) · campo editable feetY=182 (70% de 260px) · 8/8 sin recorte.
-- El plano ACTION (preview HUD): actor más abajo (top 62→66%, pies ≈280)
-  y más grande (176→192px). Sigue centrado (centerX=369).
+  se bajaron un pelín (otra vez): anchor y 68 → 70 → 72 (fuente única en
+  positions.ts). Se refleja automáticamente en: preview HUD (OVERVIEW),
+  Position Lab (campo editable + 4 planos) y el juego (anchorFor).
+- Verificado por DOM: preview feetY=274 (72% del campo) tocando el anchor
+  exacto en player y enemy.
+- El plano ACTION (preview HUD): actor más abajo (top 66→68%, pies en el
+  68% del campo) y más grande (192px). Sigue centrado.
 
 ### HUD Studio — battlefield inspeccionable
 - **Selector de escenario/fondo**: los 13 escenarios del catálogo con modo

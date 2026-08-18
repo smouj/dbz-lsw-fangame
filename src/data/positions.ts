@@ -100,15 +100,15 @@ export type PositionSide = 'LEFT' | 'RIGHT';
 export const DEFAULT_LEFT_ANCHORS: Record<BattlePosition, PositionAnchor> = {
   [BattlePosition.UP_BACK]: { x: 16, y: 26 },
   [BattlePosition.UP_FRONT]: { x: 32, y: 26 },
-  [BattlePosition.DOWN_BACK]: { x: 16, y: 70 },
-  [BattlePosition.DOWN_FRONT]: { x: 32, y: 70 },
+  [BattlePosition.DOWN_BACK]: { x: 16, y: 72 },
+  [BattlePosition.DOWN_FRONT]: { x: 32, y: 72 },
 };
 
 export const DEFAULT_RIGHT_ANCHORS: Record<BattlePosition, PositionAnchor> = {
   [BattlePosition.UP_BACK]: { x: 84, y: 26 },
   [BattlePosition.UP_FRONT]: { x: 68, y: 26 },
-  [BattlePosition.DOWN_BACK]: { x: 84, y: 70 },
-  [BattlePosition.DOWN_FRONT]: { x: 68, y: 70 },
+  [BattlePosition.DOWN_BACK]: { x: 84, y: 72 },
+  [BattlePosition.DOWN_FRONT]: { x: 68, y: 72 },
 };
 
 export const LEFT_ANCHORS = DEFAULT_LEFT_ANCHORS;

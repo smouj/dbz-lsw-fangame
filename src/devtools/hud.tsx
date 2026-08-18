@@ -338,18 +338,18 @@ export function HudModule() {
                                      SOLO el actor (el que ejecuta la acción)
                           Ambos anclados igual que Position Lab:
                           translate(-50%,-100%) → los PIES tocan el anchor exacto. */}
-                      {/* ACTION: el actor se centra en la ESCENA (x=50, y=62)
+                      {/* ACTION: el actor se centra en la ESCENA (x=50, y=68)
                           — en el medio, no a un lado (el plano de acción es
                           de uno solo, en primer plano) */}
                       {(bgMode === 'overview' ? pIdle : (actor === 'player' ? pAction : undefined)) && (
                         <img src={bgMode === 'overview' ? pIdle : pAction} alt=""
                           className={`dev-hud-ow dev-hud-fighter-sprite dev-hud-anchored player ${bgMode === 'action' ? 'action-mode' : ''}`}
-                          style={bgMode === 'action' ? { left: '50%', top: '66%' } : { left: `${pa.x}%`, top: `${pa.y}%` }} />
+                          style={bgMode === 'action' ? { left: '50%', top: '68%' } : { left: `${pa.x}%`, top: `${pa.y}%` }} />
                       )}
                       {(bgMode === 'overview' ? eIdle : (actor === 'enemy' ? eAction : undefined)) && (
                         <img src={bgMode === 'overview' ? eIdle : eAction} alt=""
                           className={`dev-hud-ow dev-hud-fighter-sprite dev-hud-anchored enemy ${bgMode === 'action' ? 'action-mode' : ''}`}
-                          style={bgMode === 'action' ? { left: '50%', top: '66%' } : { left: `${ea.x}%`, top: `${ea.y}%` }} />
+                          style={bgMode === 'action' ? { left: '50%', top: '68%' } : { left: `${ea.x}%`, top: `${ea.y}%` }} />
                       )}
                     </>
                   );
