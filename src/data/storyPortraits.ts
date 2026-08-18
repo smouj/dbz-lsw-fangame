@@ -309,6 +309,21 @@ export function storyPortraitUrl(
   }
   // 2) Variante por EMOCIÓN si existe
   if (emotion && entry.emotions && entry.emotions[emotion]) return entry.emotions[emotion];
+  // 2b) Fallback de emoción CERCANA (misma familia facial) antes de la base:
+  //     scared→surprised (ojos abiertos) · screaming→angry · crying→wounded
+  //     · grinding→angry · final_angry→angry. serious/normal → base (la base
+  //     ES la cara seria/normal del personaje).
+  if (emotion && entry.emotions) {
+    const EMOTION_FALLBACK: Partial<Record<PortraitEmotion, PortraitEmotion>> = {
+      scared: 'surprised',
+      screaming: 'angry',
+      crying: 'wounded',
+      grinding: 'angry',
+      final_angry: 'angry',
+    };
+    const fb = EMOTION_FALLBACK[emotion];
+    if (fb && entry.emotions[fb]) return entry.emotions[fb];
+  }
   // 3) Retrato base
   return entry.base;
 }

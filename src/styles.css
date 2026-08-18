@@ -4753,8 +4753,8 @@ button:focus-visible, .chapter-node:focus-visible {
 }
 
 .story-panel-title h2 {
-  font-family: var(--fpx);
-  font-size: 30px;
+  font-family: var(--fui);
+  font-size: 32px;
   letter-spacing: 3px;
   margin: 0;
   color: #fff;
@@ -4878,8 +4878,8 @@ button:focus-visible, .chapter-node:focus-visible {
 
 .story-speaker {
   color: #fff;
-  font-family: var(--fpx);
-  font-size: 12px;
+  font-family: var(--fui);
+  font-size: 14px;
   letter-spacing: 1.5px;
   margin-bottom: 6px;
   font-weight: bold;

@@ -285,7 +285,7 @@ export function panelsForChapter(chapter: number): StoryChapterFlow {
   const specific = STORY_PANELS[chapter];
   const outro = specific?.outro;
   const script = STORY_SCRIPT[chapter];
-  const bgUrl = specific?.intro[0]?.background ?? CS(chapter);
+  const bgUrl = CS(chapter);   // cutscene REAL del capítulo (arte GBC de la ROM)
 
   const intro: StoryPanel[] = [];
   if (chapter === 1) intro.push(...INTRO_CUTSCENES);
@@ -297,11 +297,19 @@ export function panelsForChapter(chapter: number): StoryChapterFlow {
       title: `CAPÍTULO ${chapter}`, subtitle: script.title, effects: ['zoom'], transition: 'zoom-in',
     });
     // 2) Una viñeta por línea de diálogo (retrato del hablante + emoción)
+    //    LADO por hablante: el 1er personaje a la IZQUIERDA, el 2º distinto a
+    //    la DERECHA, y cada hablante conserva su lado (dinámica de conversación).
+    const speakerSides = new Map<string, 'left' | 'right'>();
     script.dialogue.forEach((line, i) => {
       if (line.character) {
+        let side = speakerSides.get(line.character);
+        if (!side) {
+          side = speakerSides.size === 0 ? 'left' : (speakerSides.size === 1 ? 'right' : (speakerSides.size % 2 === 0 ? 'left' : 'right'));
+          speakerSides.set(line.character, side);
+        }
         intro.push({
           id: `s${chapter}d${i}`, layout: 'PORTRAIT_DIALOGUE', background: bgUrl,
-          characters: [{ character: line.character, side: 'left' }],
+          characters: [{ character: line.character, side }],
           dialogue: { speaker: line.speaker, text: line.text, emotion: line.emotion },
         });
       } else {
