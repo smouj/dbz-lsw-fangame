@@ -1,5 +1,5 @@
 /** @refresh reload */
-import React, { useState, useEffect, useRef, useCallback, useMemo, lazy, Suspense, memo } from 'react';
+import React, { useState, useEffect, useRef, useCallback, useMemo, lazy, Suspense, memo, useLayoutEffect } from 'react';
 import { createRoot } from 'react-dom/client';
 import { createPortal } from 'react-dom';
 import './styles.css';
@@ -612,18 +612,28 @@ function GlobalTooltip() {
   }, []);
 
   if (!tip) return null;
-  const MAX_W = 300;
-  const half = MAX_W / 2;
-  const left = Math.max(half + 8, Math.min(tip.x, window.innerWidth - half - 8));
-  // El tooltip de las cartas lleva HTML estructurado (tt-title/stats/desc);
-  // el resto de tooltips son texto plano (los nombres/HP del HUD, botones).
+  // Centrado REAL: se mide el ancho del tooltip renderizado y se ajusta
+  // para centrarlo en el elemento sin salirse del viewport (el clamp fijo
+  // de 300px descentraba tooltips pequeños como el del CC junto al borde).
   const isHtml = tip.text.includes('tt-title');
   return createPortal(
-    <div className={`global-tooltip dir-${tip.dir}`} style={{ left, top: tip.y }}
+    <TooltipBox tip={tip} isHtml={isHtml} />,
+    document.body
+  );
+}
+
+function TooltipBox({ tip, isHtml }: { tip: { text: string; x: number; y: number; dir: 'top' | 'bottom' }; isHtml: boolean }) {
+  const ref = useRef<HTMLDivElement | null>(null);
+  const [left, setLeft] = useState(tip.x);
+  useLayoutEffect(() => {
+    const w = ref.current?.offsetWidth ?? 0;
+    setLeft(Math.max(w / 2 + 8, Math.min(tip.x, window.innerWidth - w / 2 - 8)));
+  }, [tip.x, tip.text]);
+  return (
+    <div ref={ref} className={`global-tooltip dir-${tip.dir}`} style={{ left, top: tip.y }}
       dangerouslySetInnerHTML={isHtml ? { __html: tip.text } : undefined}>
       {isHtml ? null : tip.text}
-    </div>,
-    document.body
+    </div>
   );
 }
 
