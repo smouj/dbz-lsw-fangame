@@ -96,6 +96,15 @@ check('R3: BattleScreen usa StageHudPanel (no compone el QTE a mano)',
 check('R3: #dev/hud usa el MISMO StageHudPanel',
   /import \{ StageHudPanel \} from '\.\.\/components\/StageHudPanel'/.test(hudTsx) &&
   /<StageHudPanel/.test(hudTsx));
+// M8.C2a — anclaje del retrato por lado (Stage + diálogo de batalla)
+check('R3: StageHudPanel ancla retrato por lado (grid order speaker-right)',
+  /\.stage-hud-panel\.speaker-right \.stage-hud-portrait \{ order: 3; \}/.test(css));
+check('R3: diálogo GBC centrado simétrico (sin hueco fantasma)',
+  /\.gbc-dialogue\.speaker-left \{ margin-left: 88px; margin-right: 88px; \}/.test(css) &&
+  /\.gbc-dialogue\.speaker-right \{ margin-left: 88px; margin-right: 88px; \}/.test(css) &&
+  /\.gbc-dialogue\.speaker-none \{ width: 100%; margin: 0 auto; \}/.test(css));
+check('R3: GbcDialogueText sin retrato cuando side=null (mensaje genérico)',
+  /spriteUrl && side !== null/.test(mainTsx));
 check('R3: sin geometría fantasma (grid battle-screen = 3 filas)',
   /grid-template-rows: auto minmax\(0, 1fr\) var\(--controls-h/.test(css));
 

@@ -3199,17 +3199,32 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
         {gbcMsg && (() => {
           // Lado del hablante: si el actor del mensaje es el ENEMIGO, el
           // sprite se coloca a la derecha; si es el JUGADOR, a la izquierda.
+          // M8.C2a: el actor es SIEMPRE el PREFIJO del mensaje (formato
+          // "ACTOR acción…" — usa / — / ataca primero / strikes first…).
+          // Normaliza guiones bajos (GOHAN_KID ≡ Gohan Kid) y compara por
+          // inclusión con el nombre real de cada luchador.
+          const pName = player.name.toLowerCase().replace(/[^a-z0-9]/g, '');
+          const eName = enemy.name.toLowerCase().replace(/[^a-z0-9]/g, '');
+          const norm = (s: string) => s.toLowerCase().replace(/[^a-z0-9]/g, '');
+          const lower = gbcMsg.toLowerCase();
+          // 1) Actor explícito por prefijo conocido
           const actorRaw = gbcMsg.match(/^(.+?)\s+uses\s/i)?.[1]
             ?? gbcMsg.match(/^(.+?)\s+—\s/)?.[1]
             ?? null;
-          const pName = player.name.toLowerCase();
-          const eName = enemy.name.toLowerCase();
-          const lower = gbcMsg.toLowerCase();
+          // 2) Fallback robusto: normalizado — ¿el mensaje menciona al
+          //    enemigo y NO al jugador? (strikes first / ataca primero /
+          //    contraataca…). El retrato del ENEMIGO va a la DERECHA.
+          const lowerNorm = norm(lower);
+          const mentionsEnemy = lowerNorm.includes(eName);
+          const mentionsPlayer = lowerNorm.includes(pName);
           const isEnemy = actorRaw !== null
-            ? (actorRaw.toLowerCase() === eName
-              || (actorRaw.toLowerCase() !== pName && lower.includes(eName) && !lower.includes(pName)))
-            : (lower.includes(eName) && !lower.includes(pName));
-          const side: 'left' | 'right' | null = actorRaw === null ? null : (isEnemy ? 'right' : 'left');
+            ? (norm(actorRaw) === eName
+              || (norm(actorRaw) !== pName && mentionsEnemy && !mentionsPlayer))
+            : (mentionsEnemy && !mentionsPlayer);
+          // 3) Mensaje sin actor (genérico): retrato a la izquierda del jugador.
+          const side: 'left' | 'right' | null = actorRaw === null
+            ? (mentionsPlayer || mentionsEnemy ? (isEnemy ? 'right' : 'left') : null)
+            : (isEnemy ? 'right' : 'left');
           // Sprite de STORY del personaje que habla (retrato de las viñetas GBC)
           const speakerChar = isEnemy
             ? getForm(enemyFormId)?.character ?? 'goku'
@@ -4987,8 +5002,10 @@ function GbcDialogueText({ msg, side, spriteUrl }: {
     <>
       {/* Sprite de STORY del que habla, FUERA de la caja, en su lado del campo
           (izquierda/derecha) — con máscara (overflow) y marco negro como el
-          cuadro. La caja NO cambia de tamaño. */}
-      {spriteUrl && (
+          cuadro. La caja NO cambia de tamaño. M8.C2a: side=null (mensaje
+          genérico sin actor) → SIN retrato, caja centrada con margen
+          simétrico (speaker-none). */}
+      {spriteUrl && side !== null && (
         <div className={`gbc-dialogue-speaker ${side === 'right' ? 'right' : 'left'}`} aria-hidden>
           <img src={spriteUrl} alt={actor ?? ''} className="gbc-dialogue-speaker-img" draggable={false} />
         </div>

@@ -68,7 +68,10 @@ export function StageHudPanel({ portraitUrl, seq, idx, state, feedback = null, e
   const curKey = seq[idx];
   return (
     <div className={`stage-hud-panel speaker-${side}`} data-stage-state={state}>
-      {/* PORTRAIT — columna fija (retrato del actor, marco GBC) */}
+      {/* PORTRAIT — columna fija. ANCLAJE por lado (M8.C2a): si el actor es
+          el personaje de la IZQUIERDA (player) el retrato va en la columna
+          1; si es el de la DERECHA (enemy) va en la columna 3 (grid-order).
+          El Dev Studio y el juego usan el mismo componente → mismo anclaje. */}
       <div className={`stage-hud-portrait ${side}`}>
         {portraitUrl
           ? <img src={portraitUrl} alt="portrait" className="stage-hud-portrait-img" draggable={false} />

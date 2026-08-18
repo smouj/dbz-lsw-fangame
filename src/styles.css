@@ -3652,6 +3652,12 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   align-items: center;
   gap: 14px;
   width: 100%;
+  /* Ancho canónico: el panel se adapta al ancho disponible pero nunca se
+     solapa con los chips de fase (izquierda) ni el CC (derecha). En el
+     juego real el StageHudPanel convive con phase-chip-row y cc-panel en
+     .battle-controls → max-width + margin auto = centrado sin solape. */
+  max-width: min(100%, 1180px);
+  margin: 0 auto;
   height: 80px;
   padding: 0 16px;
   box-sizing: border-box;
@@ -3662,6 +3668,15 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   font-family: var(--fpx);
   color: #000;
 }
+/* ANCLAJE DEL RETRATO por lado (M8.C2a): speaker-left → columna 1;
+   speaker-right → columna 3 (el timer pasa a la columna 1). El grid es
+   simétrico: portrait | track | timer  ↔  timer | track | portrait. */
+.stage-hud-panel.speaker-right .stage-hud-portrait { order: 3; }
+.stage-hud-panel.speaker-right .stage-hud-track { order: 2; }
+.stage-hud-panel.speaker-right .stage-hud-timer { order: 1; justify-content: flex-start; }
+.stage-hud-panel.speaker-left .stage-hud-portrait { order: 1; }
+.stage-hud-panel.speaker-left .stage-hud-track { order: 2; }
+.stage-hud-panel.speaker-left .stage-hud-timer { order: 3; }
 /* PORTRAIT: columna fija — retrato con marco GBC (como el speaker del diálogo) */
 .stage-hud-portrait {
   width: 57px;
@@ -9881,9 +9896,13 @@ button.linklike:hover { text-decoration: underline; }
   bottom: auto;
   height: 80px;
   padding: 0;
-  /* El diálogo deja el margen lateral del lado donde está el speaker:
-     el sprite (absolute, fuera) queda DENTRO del preview, sin recortarse */
-  width: calc(100% - 88px);
+  /* ⚠️ CENTRADO SIMÉTRICO (M8.C2a): el speaker (absolute, fuera) ocupa
+     88px a un lado → la caja reserva el MISMO margen a AMBOS lados
+     (width: calc(100% - 176px) + margin 88px/88px) → queda centrada como
+     unidad con su retrato fuera, en el lado correcto. Antes speaker-left
+     solo tenía margin-left: 88px → la caja se iba a la derecha y dejaba
+     media franja vacía (el hueco fantasma que se veía en la partida). */
+  width: calc(100% - 176px);
   flex-shrink: 0;
   z-index: 40;
   background: #f8f4e4;              /* blanco GBC */
@@ -9907,8 +9926,16 @@ button.linklike:hover { text-decoration: underline; }
      con translateX(-50%) — dentro de la caja flex NO debe haber ninguno). */
   transform: none !important;
 }
-.gbc-dialogue.speaker-left { margin-left: 88px; }
-.gbc-dialogue.speaker-right { margin-right: 88px; }
+/* Speaker a la IZQUIERDA (jugador): la caja se corre 88px a la derecha y
+   reserva 88px también a la derecha → centrada. El retrato absolute queda
+   pegado al borde izquierdo del panel. */
+.gbc-dialogue.speaker-left { margin-left: 88px; margin-right: 88px; }
+/* Speaker a la DERECHA (enemigo): simétrico — la caja centrada, retrato
+   pegado al borde derecho. */
+.gbc-dialogue.speaker-right { margin-left: 88px; margin-right: 88px; }
+/* Mensaje genérico (sin actor): caja centrada SIN hueco lateral (no hay
+   retrato — los 88px no se reservan). */
+.gbc-dialogue.speaker-none { width: 100%; margin: 0 auto; }
 /* Cuerpo del diálogo: sprite del hablante + contenido (flex row) */
 .gbc-dialogue-body {
   width: 100%;
