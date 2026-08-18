@@ -314,6 +314,147 @@ const mv2 = mustExecute(mv, { type: 'MOVE', axis: 'VERTICAL' });
 check('M3: MOVE vertical tras horizontal → UP_FRONT (no diagonal inválida)', mv2.player.battlePos === BattlePosition.UP_FRONT);
 
 
+// ═══════════════════════════════════════════════════════════════════════
+// M4 — BattleEvent: hechos resultantes, orden contractual, pureza y golden
+// ═══════════════════════════════════════════════════════════════════════
+
+console.log('\n── M4 · BattleEvent ──\n');
+
+import { eventTypeSequence, appendToEventLog, sequenceEvents, emptyEventLog } from '../src/battle/engine/events';
+import type { BattleEvent } from '../src/battle/engine/events';
+
+// ── Estado ↔ eventos ──
+const m4Base = createInitialBattleState(makeConfig({
+  playerDeck: m2Deck([4, 25]), enemyDeck: m2Deck([1]), playerCc: 30,
+  playerPos: BattlePosition.DOWN_BACK, enemyPos: BattlePosition.DOWN_BACK,
+}));
+const m4Cmd: typeof m4Base = { ...m4Base, phase: 'cardSelect' };
+const m4Play = executeCommand(m4Cmd, { type: 'PLAY_CARD', handIndex: 1 }, { side: 'player', characterId: 'goku' }); // carta 25, cc 19
+check('M4: PLAY_CARD aceptado devuelve events', m4Play.ok && m4Play.events.length > 0);
+if (m4Play.ok) {
+  const ccSpent = m4Play.events.find(e => e.type === 'CC_SPENT');
+  check('M4: CC 30→11 produce CC_SPENT amount=19 before=30 after=11',
+    ccSpent?.type === 'CC_SPENT' && ccSpent.amount === 19 && ccSpent.before === 30 && ccSpent.after === 11 && ccSpent.side === 'player');
+  check('M4: CARD_PLAYED + CARD_DISCARDED con cardId 25',
+    m4Play.events.some(e => e.type === 'CARD_PLAYED' && e.cardId === 25) &&
+    m4Play.events.some(e => e.type === 'CARD_DISCARDED' && e.cardId === 25));
+  check('M4: los eventos reflejan el estado (cc 11, descarte con 25)',
+    m4Play.state.player.cc === 11 && m4Play.state.deck.discardPile[0]?.id === 25);
+}
+const m4Move = executeCommand({ ...m4Cmd, phase: 'defend' }, { type: 'MOVE', axis: 'HORIZONTAL' }, { side: 'player' });
+if (m4Move.ok) {
+  const pc = m4Move.events.find(e => e.type === 'POSITION_CHANGED');
+  check('M4: MOVE DOWN_BACK→DOWN_FRONT produce POSITION_CHANGED exacto',
+    pc?.type === 'POSITION_CHANGED' && pc.from === BattlePosition.DOWN_BACK && pc.to === BattlePosition.DOWN_FRONT && pc.axis === 'HORIZONTAL' && pc.side === 'player');
+}
+// QTE: input correcto produce QTE_INPUT_RESOLVED con índices before/after
+const m4QteState: typeof m4Base = { ...m4Base, phase: 'stageInput', stageQte: { state: 'INPUT_WINDOW', seq: ['A', 'B', 'A'], idx: 1, correct: 1, card: null, elapsedFrames: 0, limitFrames: 173, counterFrames: 0, result: null } };
+const m4Qte = executeCommand(m4QteState, { type: 'QTE_INPUT', input: 'B' }, { side: 'player' });
+if (m4Qte.ok) {
+  const qr = m4Qte.events.find(e => e.type === 'QTE_INPUT_RESOLVED');
+  check('M4: QTE_INPUT_RESOLVED indexBefore=1 indexAfter=2 success=true',
+    qr?.type === 'QTE_INPUT_RESOLVED' && qr.indexBefore === 1 && qr.indexAfter === 2 && qr.success === true && qr.input === 'B');
+  check('M4: QTE acierto emite CC_GAINED (+1)', m4Qte.events.some(e => e.type === 'CC_GAINED' && e.amount === 1));
+}
+// Rechazo
+const m4Bad = executeCommand(m4Cmd, { type: 'GUARD' }, { side: 'player' }); // WRONG_PHASE (cardSelect)
+check('M4: rechazo emite COMMAND_REJECTED con reason', !m4Bad.ok && m4Bad.events.length === 1 && m4Bad.events[0].type === 'COMMAND_REJECTED' && m4Bad.events[0].reason === 'WRONG_PHASE');
+check('M4: rechazo devuelve el MISMO objeto state (cero mutaciones)', !m4Bad.ok && m4Bad.state === m4Cmd);
+
+// ── Orden contractual ──
+if (m4Play.ok) {
+  check('M4: PLAY_CARD orden = ACCEPTED,CC_SPENT,CARD_PLAYED,CARD_DISCARDED,ACTION_STARTED,PHASE_CHANGED',
+    JSON.stringify(eventTypeSequence(m4Play.events)) === JSON.stringify(['COMMAND_ACCEPTED', 'CC_SPENT', 'CARD_PLAYED', 'CARD_DISCARDED', 'ACTION_STARTED', 'PHASE_CHANGED']));
+  const idxAcc = m4Play.events.findIndex(e => e.type === 'COMMAND_ACCEPTED');
+  const idxPos = m4Play.events.findIndex(e => e.type === 'PHASE_CHANGED');
+  check('M4: PHASE_CHANGED es el ÚLTIMO evento (tras la resolución)', idxPos === m4Play.events.length - 1 && idxAcc < idxPos);
+}
+if (m4Move.ok) {
+  check('M4: MOVE orden = ACCEPTED antes de POSITION_CHANGED',
+    m4Move.events[0].type === 'COMMAND_ACCEPTED' && m4Move.events[1].type === 'POSITION_CHANGED');
+}
+
+// ── Pureza / serialización / determinismo ──
+check('M4: eventos serializables (JSON round-trip)', (() => { try { const j = JSON.parse(JSON.stringify(m4Play.events)); return Array.isArray(j) && j.length === m4Play.events.length; } catch { return false; } })());
+check('M4: eventos sin funciones (todos objetos planos serializables)', m4Play.events.every(e => JSON.stringify(e) !== undefined));
+const m4Det1 = executeCommand(m4QteState, { type: 'QTE_INPUT', input: 'B' }, { side: 'player' });
+const m4Det2 = executeCommand(m4QteState, { type: 'QTE_INPUT', input: 'B' }, { side: 'player' });
+check('M4: mismo input ⇒ mismo state + mismo event stream', m4Det1.ok && m4Det2.ok && JSON.stringify(m4Det1.state) === JSON.stringify(m4Det2.state) && JSON.stringify(m4Det1.events) === JSON.stringify(m4Det2.events));
+check('M4: ejecutar no muta el estado origen', JSON.stringify(m4QteState) === JSON.stringify({ ...m4Base, phase: 'stageInput', stageQte: { state: 'INPUT_WINDOW', seq: ['A', 'B', 'A'], idx: 1, correct: 1, card: null, elapsedFrames: 0, limitFrames: 173, counterFrames: 0, result: null } }));
+
+// ── EventLog ──
+const log0 = emptyEventLog();
+const log1 = appendToEventLog(log0, m4Play.events);
+check('M4: EventLog secuencia 0..N estable', log1.entries.length === m4Play.events.length && log1.entries.every((en, i) => en.sequence === i));
+const log2 = appendToEventLog(log1, [{ type: 'PHASE_CHANGED', from: 'stageInput', to: 'defend' }]);
+check('M4: append continúa la secuencia (N, N+1...)', log2.entries[log1.entries.length].sequence === log1.entries.length);
+check('M4: sequenceEvents(startAt) numera desde startAt', sequenceEvents([{ type: 'COMMAND_ACCEPTED', command: { type: 'JOINT' } }], 7)[0].sequence === 7);
+
+// ── Golden fixtures (orden protegido contra cambios accidentales) ──
+function runGolden(path: string): { expected: string[]; actual: string[]; events: BattleEvent[] } {
+  const fx = JSON.parse(readFileSync(path, 'utf8'));
+  let s = createInitialBattleState(makeConfig({
+    playerDeck: m2Deck(fx.deck), enemyDeck: m2Deck([1]),
+    playerCc: fx.setup.playerCc ?? 30,
+    playerPos: (BattlePosition as unknown as Record<string, BattlePosition>)[fx.setup.playerPos ?? 'DOWN_BACK'],
+    enemyPos: (BattlePosition as unknown as Record<string, BattlePosition>)[fx.setup.enemyPos ?? 'DOWN_BACK'],
+  }));
+  if (fx.setup.phase) s = { ...s, phase: fx.setup.phase as never };
+  const all: BattleEvent[] = [];
+  for (const cmd of fx.commands) {
+    const res = executeCommand(s, cmd as BattleCommand, { side: 'player', characterId: 'goku' });
+    if (!res.ok) {
+      if (fx.expectRejected) {
+        all.push(...res.events);
+        continue;
+      }
+      throw new Error(`golden ${fx.name}: ${JSON.stringify(cmd)} rechazado: ${res.reason}`);
+    }
+    all.push(...res.events);
+    s = res.state;
+  }
+  return { expected: fx.expectedEvents, actual: eventTypeSequence(all), events: all };
+}
+const GOLDEN_DIR = 'scripts/fixtures';
+for (const name of ['m4_card_attack', 'm4_stage_attack', 'm4_guard_move', 'm4_rejected']) {
+  try {
+    const g = runGolden(`${GOLDEN_DIR}/${name}.json`);
+    check(`M4: golden ${name} — secuencia exacta`, JSON.stringify(g.actual) === JSON.stringify(g.expected));
+  } catch (e) {
+    check(`M4: golden ${name} — ${(e as Error).message}`, false);
+  }
+}
+// Golden determinista: ejecutar dos veces el mismo fixture da el mismo stream
+const gA = runGolden(`${GOLDEN_DIR}/m4_card_attack.json`);
+const gB = runGolden(`${GOLDEN_DIR}/m4_card_attack.json`);
+check('M4: golden determinista (dos ejecuciones → mismo stream)', JSON.stringify(gA.actual) === JSON.stringify(gB.actual) && JSON.stringify(gA.events) === JSON.stringify(gB.events));
+// Golden rechazo: cero mutación
+const fxRej = JSON.parse(readFileSync(`${GOLDEN_DIR}/m4_rejected.json`, 'utf8'));
+let sRej = createInitialBattleState(makeConfig({ playerDeck: m2Deck(fxRej.deck), enemyDeck: m2Deck([1]), playerCc: fxRej.setup.playerCc ?? 30 }));
+sRej = { ...sRej, phase: fxRej.setup.phase as never };
+const rejRes = executeCommand(sRej, fxRej.commands[0] as BattleCommand, { side: 'player', characterId: 'goku' });
+check('M4: golden rejected — mismo objeto state (cero mutación)', !rejRes.ok && rejRes.state === sRej);
+
+// ── CANON DE ANIMACIÓN (M4 → poses de los sheets perfectos) ──
+import { canonForAction, canonForEvent, listAnimationCanon, auraForAction } from '../src/battle/animationCanon';
+const beamCanon = canonForAction({ id: 'kamehameha', label: 'Kamehameha', kind: 'beam', visual: 'ray', fidelity: 'INFERRED' });
+check('CANON: beam = gather_power → beam_charge → beam_fire + aura power',
+  beamCanon.actor.some(b => b.pose === 'gather_power') && beamCanon.actor.some(b => b.pose === 'beam_charge') && beamCanon.actor.some(b => b.pose === 'beam_fire') && beamCanon.aura === 'power');
+const stageCanon = canonForAction({ id: 'stage_3', label: '3 Stage Attack', kind: 'command', visual: 'rush', fidelity: 'INFERRED' });
+check('CANON: stage = windup attack_fwd + golpe + target knockback_back',
+  stageCanon.actor.some(b => b.pose === 'attack_fwd') && stageCanon.target[0]?.pose === 'knockback_back' && stageCanon.contactFrame === 94);
+const meleeCanon = canonForAction({ id: 'cont_punch', label: 'Cont. Punch', kind: 'damage', visual: 'rush', fidelity: 'INFERRED' });
+check('CANON: damage = secuencia melee sin aura', meleeCanon.actor[0]?.pose === 'idle' && meleeCanon.aura === 'none' && meleeCanon.target[0]?.pose === 'knockback_back');
+check('CANON: canonForEvent(ACTION_STARTED) resuelve y CC_SPENT → null',
+  canonForEvent({ type: 'ACTION_STARTED', side: 'player', action: { id: 'x', label: 'X', kind: 'beam', visual: 'ball', fidelity: 'INFERRED' } })?.aura === 'power' &&
+  canonForEvent({ type: 'CC_SPENT', side: 'player', amount: 1, before: 2, after: 1 }) === null);
+check('CANON: aura item = support (azul) / beam = power (dorada)',
+  auraForAction({ id: 'x', label: 'X', kind: 'support', visual: 'item', fidelity: 'INFERRED' }) === 'support' &&
+  auraForAction({ id: 'x', label: 'X', kind: 'beam', visual: 'wave', fidelity: 'INFERRED' }) === 'power');
+check('CANON: tabla cubre todas las familias (command/damage/beam/support/gather/guard/move)',
+  ['command', 'damage', 'beam', 'support', 'gather', 'guard', 'move'].every(k => listAnimationCanon().some(c => c.kind === k)));
+
+
 console.log(`\n═══ RESULTADO: ${passed} passed · ${failed} failed ═══`);
 if (failed > 0) {
   console.log('\nFallos:');

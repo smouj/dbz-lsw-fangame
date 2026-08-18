@@ -138,6 +138,24 @@ attacker/defender/CC/HP/position/pending action/seed/tick) · **Battle Events**
   (applyMoveAxis, 8/8 casos) · QTE determinista (acierto/fallo/contraataque) ·
   sin RNG (lo RNG-dependente delimitado a M5) · `mustExecute` para secuencias
   HEADLESS desde Node. 79 invariantes.
-- **M4 (siguiente)** — BattleEvent (hacer observable la resolución). **M5** RNG
-  · **M6** ticks · **M7** Presentation Adapter · **M8** integración/cutover ·
+- **M4 ✅** — BattleEvent + EventLog (`src/battle/engine/events/`): unión
+  discriminada de HECHOS resultantes (COMMAND_ACCEPTED/REJECTED, CC_SPENT/
+  GAINED, KI_SPENT, CARD_SELECTED/PLAYED/DISCARDED, POSITION_CHANGED,
+  GUARD_STARTED, GATHER_STARTED/POWER_CHANGED, QTE_STARTED/INPUT_RESOLVED/
+  COMPLETED/FAILED/COUNTER_*, ACTION_STARTED/RESOLVED con descriptor
+  serializable, DAMAGE_APPLIED/FIGHTER_DEFEATED listos para M5,
+  PHASE_CHANGED). Los eventos salen de las MUTACIONES REALES de los reducers
+  (nunca de diff de snapshots), son JSON serializables, sin callbacks/DOM/
+  React/Pixi, y el orden es contractual (ACCEPTED primero → dominio en orden
+  de mutación → ACTION_STARTED → PHASE_CHANGED al final). Rechazo = estado
+  idéntico + COMMAND_REJECTED. executeCommand devuelve { state, events };
+  EventLog nace secuenciado (sequence 0..N, tick en M6). 31 checks M4 nuevos +
+  4 golden fixtures (`scripts/fixtures/m4_*.json`) que blindan el orden.
+- **CANON DE ANIMACIÓN ✅** — `src/battle/animationCanon.ts` + `docs/ANIMATION_CANON.md`:
+  BattleEvent → poses canónicas de los sheets perfectos por familia
+  (stage/damage/beam/support/gather/guard/move), con aura power/support y
+  fallbacks de manifest (V9). 6 checks en verify:battle-engine.
+- **M5 (siguiente)** — RNG determinista (daño/acc) y emisión real de
+  DAMAGE_APPLIED/FIGHTER_DEFEATED · **M6** ticks · **M7** Presentation Adapter
+  (consume el canon + perfiles firma) · **M8** integración/cutover ·
   **M9** Replay.

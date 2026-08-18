@@ -1,9 +1,13 @@
 // ═══════════════════════════════════════════════════════════════════════
-// M2 — CommandResult: el Engine devuelve SEMÁNTICA, nunca texto.
+// M2/M4 — CommandResult: el Engine devuelve SEMÁNTICA, nunca texto.
 // ═══════════════════════════════════════════════════════════════════════
 // La UI decide cómo traducir/mostrar el rechazo. Razones tipadas.
+// M4: el resultado transporta también los eventos (hechos ya ocurridos).
+//   { ok: true,  state, events }   — COMMAND_ACCEPTED + hechos de resolución
+//   { ok: false, state, reason, events: [COMMAND_REJECTED] } — cero mutación
 // ═══════════════════════════════════════════════════════════════════════
 
+import type { BattleEvent } from '../events/BattleEvent';
 import type { BattleState } from '../state/BattleState';
 
 export type CommandRejectionReason =
@@ -33,15 +37,15 @@ export function reject(reason: CommandRejectionReason): CommandCheck {
   return { ok: false, reason };
 }
 
-/** Resultado de execute() (M3): transporta el estado — nunca muta el input. */
+/** Resultado de execute() (M3+M4): estado + eventos — nunca muta el input. */
 export type CommandExecutionResult =
-  | { ok: true; state: BattleState }
-  | { ok: false; state: BattleState; reason: CommandRejectionReason };
+  | { ok: true; state: BattleState; events: BattleEvent[] }
+  | { ok: false; state: BattleState; reason: CommandRejectionReason; events: BattleEvent[] };
 
-export function accepted(next: BattleState): CommandExecutionResult {
-  return { ok: true, state: next };
+export function accepted(next: BattleState, events: BattleEvent[] = []): CommandExecutionResult {
+  return { ok: true, state: next, events };
 }
 
-export function rejected(state: BattleState, reason: CommandRejectionReason): CommandExecutionResult {
-  return { ok: false, state, reason };
+export function rejected(state: BattleState, reason: CommandRejectionReason, events: BattleEvent[] = []): CommandExecutionResult {
+  return { ok: false, state, reason, events };
 }

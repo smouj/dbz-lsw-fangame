@@ -1,25 +1,31 @@
 // ═══════════════════════════════════════════════════════════════════════
-// M3 — reducers/cardReducer: jugar carta (mano → descarte + coste + acción).
+// M3/M4 — reducers/cardReducer: jugar carta (mano → descarte + coste + acción).
 // ═══════════════════════════════════════════════════════════════════════
 // Resolución DETERMINISTA de PLAY_CARD / PLAY_DEFENSE_CARD / PLAY_LIMIT_CARD:
 //   1) cobra el CC exacto (una sola vez)  2) saca la carta EXACTA de la mano
 //   3) la mueve al discardPile             4) marca la acción seleccionada.
 // La parte RNG de la resolución (daño/acc) queda DELIMITADA para M5.
+//
+// M4 — contrato de orden (una carta jugada):
+//   CC_SPENT → CARD_PLAYED → CARD_DISCARDED
+// (el coste se cobra antes; la carta se juega y después entra al descarte).
 // ═══════════════════════════════════════════════════════════════════════
 
+import type { BattleEvent } from '../../events/BattleEvent';
 import type { BattleSide, BattleState } from '../../state/BattleState';
-import { payCc } from './resourceReducer';
+import { payCc, type ResourceOutcome } from './resourceReducer';
 
 export interface PlayCardOutcome {
   state: BattleState;
+  events: BattleEvent[];
   cardId: number;
 }
 
 /** Saca la carta del índice dado de la mano y la añade al descarte. */
-function removeFromHand(state: BattleState, side: BattleSide, handIndex: number): BattleState {
+function removeFromHand(state: BattleState, side: BattleSide, handIndex: number): { state: BattleState; card: CardLike | null } {
   const deck = side === 'player' ? state.deck : state.eDeck;
   const card = deck.hand[handIndex];
-  if (!card) return state;
+  if (!card) return { state, card: null };
   const hand = deck.hand.filter((_, i) => i !== handIndex);
   const nextDeck = {
     ...deck,
@@ -27,11 +33,16 @@ function removeFromHand(state: BattleState, side: BattleSide, handIndex: number)
     discardPile: [...deck.discardPile, card],
   };
   return {
-    ...state,
-    deck: side === 'player' ? nextDeck : state.deck,
-    eDeck: side === 'enemy' ? nextDeck : state.eDeck,
+    state: {
+      ...state,
+      deck: side === 'player' ? nextDeck : state.deck,
+      eDeck: side === 'enemy' ? nextDeck : state.eDeck,
+    },
+    card,
   };
 }
+
+type CardLike = { id: number };
 
 /** PLAY_CARD: coste CC + mano→descarte + acción seleccionada (por índice). */
 export function playCard(state: BattleState, side: BattleSide, handIndex: number): PlayCardOutcome {
@@ -39,8 +50,16 @@ export function playCard(state: BattleState, side: BattleSide, handIndex: number
   const card = deck.hand[handIndex];
   const cost = card?.cc ?? 0;
   const paid = payCc(state, side, cost);
-  const moved = removeFromHand(paid, side, handIndex);
-  return { state: moved, cardId: card?.id ?? -1 };
+  const moved = removeFromHand(paid.state, side, handIndex);
+  const cardId = moved.card?.id ?? (card?.id ?? -1);
+  const events: BattleEvent[] = [
+    ...paid.events,
+    ...(cardId >= 0 ? [
+      { type: 'CARD_PLAYED' as const, side, cardId },
+      { type: 'CARD_DISCARDED' as const, side, cardId },
+    ] : []),
+  ];
+  return { state: moved.state, events, cardId };
 }
 
 /** PLAY_LIMIT_CARD: coste CC + marca la LIMITED seleccionada (sin mano). */
@@ -50,7 +69,11 @@ export function playLimitCard(state: BattleState, side: BattleSide, cardId: numb
   const card = state.limits.includes(cardId) ? { id: cardId, cc: 0 } : null;
   const cost = card?.cc ?? 0;
   const paid = payCc(state, side, cost);
-  return { state: paid, cardId };
+  const events: BattleEvent[] = [
+    ...paid.events,
+    ...(cardId >= 0 ? [{ type: 'CARD_PLAYED' as const, side, cardId }] : []),
+  ];
+  return { state: paid.state, events, cardId };
 }
 
 /** PLAY_DEFENSE_CARD: coste CC + mano→descarte + guardia según la carta. */
@@ -59,6 +82,16 @@ export function playDefenseCard(state: BattleState, side: BattleSide, handIndex:
   const card = deck.hand[handIndex];
   const cost = card?.cc ?? 0;
   const paid = payCc(state, side, cost);
-  const moved = removeFromHand(paid, side, handIndex);
-  return { state: moved, cardId: card?.id ?? -1 };
+  const moved = removeFromHand(paid.state, side, handIndex);
+  const cardId = moved.card?.id ?? (card?.id ?? -1);
+  const events: BattleEvent[] = [
+    ...paid.events,
+    ...(cardId >= 0 ? [
+      { type: 'CARD_PLAYED' as const, side, cardId },
+      { type: 'CARD_DISCARDED' as const, side, cardId },
+    ] : []),
+  ];
+  return { state: moved.state, events, cardId };
 }
+
+export type { ResourceOutcome };

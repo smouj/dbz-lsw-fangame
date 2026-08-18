@@ -1,0 +1,14 @@
+{
+  "name": "m4_guard_move",
+  "description": "GUARD → MOVE horizontal en fase defend: guardia y posición con sus eventos",
+  "setup": { "phase": "defend", "playerCc": 0, "playerPos": "DOWN_BACK", "enemyPos": "DOWN_BACK" },
+  "deck": [4, 25],
+  "commands": [
+    { "type": "GUARD" },
+    { "type": "MOVE", "axis": "HORIZONTAL" }
+  ],
+  "expectedEvents": [
+    "COMMAND_ACCEPTED", "GUARD_STARTED",
+    "COMMAND_ACCEPTED", "POSITION_CHANGED"
+  ]
+}

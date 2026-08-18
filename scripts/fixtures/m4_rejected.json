@@ -1,0 +1,13 @@
+{
+  "name": "m4_rejected",
+  "description": "PLAY_CARD en fase command → COMMAND_REJECTED (WRONG_PHASE), cero mutaciones",
+  "expectRejected": true,
+  "setup": { "phase": "command", "playerCc": 30 },
+  "deck": [4, 25],
+  "commands": [
+    { "type": "PLAY_CARD", "handIndex": 0 }
+  ],
+  "expectedEvents": [
+    "COMMAND_REJECTED"
+  ]
+}

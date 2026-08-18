@@ -1,0 +1,20 @@
+{
+  "name": "m4_stage_attack",
+  "description": "BASIC → Stage Attack (pool 3S, tick 0 → A,B,A) → QTE completo: ACCEPTED/ACTION/QTE/fase en orden",
+  "setup": { "phase": "command", "playerCc": 0 },
+  "deck": [4, 25],
+  "commands": [
+    { "type": "BASIC" },
+    { "type": "BASIC_STAGE_ATTACK" },
+    { "type": "QTE_INPUT", "input": "A" },
+    { "type": "QTE_INPUT", "input": "B" },
+    { "type": "QTE_INPUT", "input": "A" }
+  ],
+  "expectedEvents": [
+    "COMMAND_ACCEPTED", "PHASE_CHANGED",
+    "COMMAND_ACCEPTED", "ACTION_STARTED", "QTE_STARTED", "PHASE_CHANGED",
+    "COMMAND_ACCEPTED", "CC_GAINED", "QTE_INPUT_RESOLVED",
+    "COMMAND_ACCEPTED", "CC_GAINED", "QTE_INPUT_RESOLVED",
+    "COMMAND_ACCEPTED", "CC_GAINED", "QTE_INPUT_RESOLVED", "QTE_COMPLETED", "ACTION_RESOLVED"
+  ]
+}
