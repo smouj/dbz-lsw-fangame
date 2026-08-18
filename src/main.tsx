@@ -3020,11 +3020,11 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
             </div>
           )}
         </div>
-        {/* Insignia central: centrada ABSOLUTA (independiente del flujo) */}
+        {/* Insignia central: ATK (quién ataca) · VS · ROUND (debajo) */}
         <div className="hud-center-badge">
-          <span className="hud-center-round">ROUND {turn}</span>
+          <span className="hud-center-atk">ATK {activeAttackerName.toUpperCase()}</span>
           <span className="hud-center-vs">VS</span>
-          <span className="hud-center-order">{intro ? `${activeAttackerName.toUpperCase()} ATK` : `${activeAttackerName.toUpperCase()} > ${activeDefenderName.toUpperCase()}`}</span>
+          <span className="hud-center-round">ROUND {turn}</span>
         </div>
       </div>
 
