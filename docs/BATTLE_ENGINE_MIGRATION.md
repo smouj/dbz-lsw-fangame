@@ -120,3 +120,16 @@ attacker/defender/CC/HP/position/pending action/seed/tick) · **Battle Events**
 ## Orden de pendientes actualizado
 
 1. BattleEngine (P1 #3) → 2. BattleEngine Dev Studio → 3. Story E2E → 4. responsive
+
+## Progreso de la migración
+
+- **M1 ✅** — BattleState puro extraído (`src/battle/engine/state/`) — 30 invariantes.
+- **M2 ✅** — BattleCommand + canExecute (`src/battle/engine/commands/`): unión
+  discriminada de los comandos REALES auditados (command-strip, mano, BASIC,
+  defensa, QTE), `CommandCheck` con razones tipadas (nunca texto), reglas por
+  dominio (resource/card/movement/defense), `getAvailableCommands()` para la UI,
+  `canExecute` 100% puro (state + command → check, sin mutación/RNG/timers),
+  tests de PARIDAD legacy↔engine (LIMIT/GATHER/PLAY_CARD). 60 invariantes.
+- **M3 (siguiente)** — execute()/reducer puro: el Engine vuelve a validar y
+  resuelve; la UI deja de decidir. **M4** BattleEvent · **M5** RNG · **M6** ticks
+  · **M7** Presentation Adapter · **M8** integración · **M9** Replay.
