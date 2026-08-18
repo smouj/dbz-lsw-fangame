@@ -576,13 +576,11 @@ export function HudModule() {
                 </div>
               )}
 
-              {/* DISCARD: HAND CHECK — demasiadas cartas, elige cuál descartar
-                  (MISMO panel que el juego: discard-grid con cartas reales) */}
+              {/* DISCARD: HAND CHECK — SOLO las cartas (sin textos: la info
+                  vive en el tooltip, como el resto de paneles) */}
               {view === 'DISCARD' && (
                 <div className="command-select">
                   <div className="limit-panel discard-panel">
-                    <div className="limit-title">HAND CHECK — {handCards.length} JOINT</div>
-                    <div className="discard-help">Demasiadas cartas ({handCards.length} &gt; 5). Elige cuál descartar:</div>
                     <div className="discard-grid">
                       {handCards.map((c, i) => (
                         <button key={`${c.id}-${i}`} className="discard-card"
@@ -592,7 +590,6 @@ export function HudModule() {
                           ])}>
                           <img src={CARD_FRAME_BY_TYPE[c.type] ?? CARD_FRAME_BY_TYPE.command} alt="" className="discard-frame" />
                           {cardIconUrl(c.id) && <img src={cardIconUrl(c.id)!} alt={c.name} className="discard-art" />}
-                          <span className="discard-name">{c.name}</span>
                         </button>
                       ))}
                     </div>
@@ -600,30 +597,27 @@ export function HudModule() {
                 </div>
               )}
 
-              {/* DEFENSA: fuentes de defensa — LIMITED · JOINT · BASIC DEFENSE
-                  (MISMO panel que el juego: defense-sources con los 3 botones) */}
+              {/* DEFENSA: SOLO los 3 botones de fuente (sin etiqueta) */}
               {view === 'DEFENSA' && (
-                <div className="command-select">
-                  <div className="control-label">DEFENSA — ELIGE FUENTE</div>
-                  <div className="defense-sources">
-                    <button className="basic-btn src-limit"
-                      data-tip={tipBlock('LIMITED', [['desc', 'Defensas exclusivas del personaje.'], ['effect', 'Requiere GATHER POWER activo.']])} />
-                    <button className="basic-btn src-joint"
-                      data-tip={tipBlock('JOINT', [['desc', 'Cartas de defensa/soporte de tu mano.']])} />
-                    <button className="basic-btn src-basic"
-                      data-tip={tipBlock('BASIC DEFENSE', [['desc', 'Quedarte y bloquear (−50% dmg) o MOVE.'], ['effect', 'Gratis, sin gastar CC.']])} />
-                  </div>
+                <div className="defense-sources">
+                  <button className="basic-btn src-limit"
+                    data-tip={tipBlock('LIMITED', [['desc', 'Defensas exclusivas del personaje.'], ['effect', 'Requiere GATHER POWER activo.']])} />
+                  <button className="basic-btn src-joint"
+                    data-tip={tipBlock('JOINT', [['desc', 'Cartas de defensa/soporte de tu mano.']])} />
+                  <button className="basic-btn src-basic"
+                    data-tip={tipBlock('BASIC DEFENSE', [['desc', 'Quedarte y bloquear (−50% dmg) o MOVE.'], ['effect', 'Gratis, sin gastar CC.']])} />
                 </div>
               )}
 
-              {/* RESULTADO: pantalla final — VICTORIA / DERROTA (toggle) */}
+              {/* RESULTADO: panel COMPACTO — no debe alterar la altura del
+                  panel de controles (como los demás: ~96px) */}
               {view === 'RESULTADO' && (
                 <div className={`result-screen ${result === 'victory' ? '' : 'defeat-mode'}`}>
                   <div className={`result-title ${result}`}>{result === 'victory' ? 'VICTORY' : 'DEFEAT'}</div>
                   <div className="result-info">
                     {result === 'victory'
-                      ? (<><div>LV 50</div><div>EXP +180</div><div>HP 720/1000</div></>)
-                      : (<><div>TURN 1</div><div>HP 0/1000</div></>)}
+                      ? (<><span>LV 50</span><span>EXP +180</span><span>HP 720/1000</span></>)
+                      : (<><span>TURN 1</span><span>HP 0/1000</span></>)}
                   </div>
                   <button className="btn-primary" data-tip={tipBlock(result === 'victory' ? 'NEW BATTLE' : 'RETRY', [['desc', 'Volver a intentarlo']])}>
                     {result === 'victory' ? 'NEW BATTLE' : 'RETRY'}
