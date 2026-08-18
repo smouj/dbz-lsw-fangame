@@ -5,9 +5,12 @@
 // ═══════════════════════════════════════════════════════════
 import { useState, useEffect, useRef } from 'react';
 import {
-  CHARACTERS, FORMS, getForm, statAtLevel, sheetUrl, idleSpriteUrl,
+  CHARACTERS, FORMS, getForm, statAtLevel, sheetUrl, idleSpriteUrl, LIMIT_DEFAULTS,
 } from '../data/roster';
-import { spriteDirFor, spriteManifestUrl, spriteFrameUrl, spritePoseFrameUrl } from '../data/spriteManifest';
+import { spriteDirFor, spriteManifestUrl, spriteFrameUrl, spritePoseFrameUrl, _spriteManifestInternals } from '../data/spriteManifest';
+import { CARDS, getCard, CARD_COLORS, CARD_TYPE_NAMES } from '../data/cards';
+import { cardBattlePose, cardUsableBy } from '../battle/cardPoses';
+import { resolveCombatPose } from '../battle/spriteConfig';
 import { BATTLE_PORTRAITS } from '../data/battlePortraits';
 import { overworldUrl } from '../data/overworld';
 import { battleOverworldActorUrl, battleOverworldAuraUrlAsync } from '../data/battleOverworld';
@@ -149,6 +152,14 @@ export function CharactersModule({ onOpenModule }: {
             </div>
           </div>
 
+          {/* Ataques disponibles — cartas del personaje y su pose (canon) */}
+          <details className="dev-collapse" open>
+            <summary>Ataques disponibles — cartas del personaje → pose cinematográfica</summary>
+            <div className="dev-collapse-body">
+              <CharacterAttacks charId={char.id} formId={form.id} />
+            </div>
+          </details>
+
           {/* Assets (colapsable) */}
           <details className="dev-collapse" open>
             <summary>Assets — sprites, overworld y sheets</summary>
@@ -181,6 +192,15 @@ export function CharactersModule({ onOpenModule }: {
                   ))}
                 </div>
                 <div className="dev-semantic-pose-row">{COMBAT_POSE_ORDER.join(' · ')}</div>
+                <div className="dev-pose-legend">
+                  <span className="dev-pose-legend-title">Qué dispara cada pose (canon cartas):</span>
+                  <span><b>beam_charge / beam_fire</b> ← cartas beam (Kamehameha, Masenko…)</span>
+                  <span><b>attack_fwd / punch / kick</b> ← cartas damage y command (golpe físico)</span>
+                  <span><b>guard / evade / beam_guard</b> ← cartas defense y efectos defensivos</span>
+                  <span><b>gather_power / power_up</b> ← soporte y carga de ki (GATHER)</span>
+                  <span><b>move_front / move_back</b> ← comando MOVE (desplazamiento)</span>
+                  <span><b>hurt / knockback</b> ← recibir daño (defensor)</span>
+                </div>
               </div>
             )}
             </div>
@@ -195,6 +215,109 @@ export function CharactersModule({ onOpenModule }: {
           )}
         </div>
       </div>
+    </div>
+  );
+}
+
+// ─── Ataques disponibles: cartas del personaje → pose canónica ───────
+// Para CADA carta usable por el personaje (compatible ROM + límites),
+// muestra la pose cinematográfica que dispara (cardBattlePose del módulo
+// compartido con main.tsx) y cuántos frames reales tiene esa pose en el
+// manifest de la forma. Es la referencia directa para las animaciones y
+// la cinematografía de las acciones de cartas.
+const EFFECT_LABELS: Record<string, string> = {
+  damage: 'Daño', damage_pierce: 'Daño perforante', damage_special: 'Daño especial',
+  damage_support: 'Daño + soporte', beam: 'Rayo', beam_team: 'Rayo equipo', beam_suicide: 'Rayo sacrificio',
+  beam_varhp: 'Rayo vida', heal_25pct: 'Cura 25%', heal_strong: 'Cura fuerte', heal_light: 'Cura leve',
+  life_drain: 'Drenar vida', knockdown_dmg: 'Derribo + daño', knockdown_min: 'Derribo',
+  gamebomb: 'Bomba de juego', candy: 'Convertir en caramelo', naughty_book: 'Libro pervertido',
+  ohko_lowacc: 'OHKO baja acc', android_kill: 'Matar androide',
+  avoid_beam: 'Esquivar rayo', avoid_damage: 'Esquivar daño', avoid_damage_taiyoken: 'Esquivar (Taiyoken)',
+  reduce_damage: 'Reducir daño', absorb_beam: 'Absorber rayo', beam_shield: 'Escudo rayo',
+  damage_shield: 'Escudo daño', command_cancel: 'Cancelar comando',
+};
+
+const CARD_TYPE_ORDER: Array<{ type: string; label: string }> = [
+  { type: 'beam', label: 'Rayo (beam)' },
+  { type: 'damage', label: 'Daño físico' },
+  { type: 'command', label: 'Comando' },
+  { type: 'support', label: 'Soporte' },
+  { type: 'defense', label: 'Defensa' },
+  { type: 'special', label: 'Especial' },
+];
+
+function CharacterAttacks({ charId, formId }: { charId: string; formId: string }) {
+  const [manifest, setManifest] = useState<Record<string, { frames?: unknown[] }> | null>(null);
+  useEffect(() => {
+    let alive = true;
+    _spriteManifestInternals.loadManifestFor(formId).then(m => { if (alive) setManifest(m as Record<string, { frames?: unknown[] }> | null); });
+    return () => { alive = false; };
+  }, [formId]);
+
+  const limitIds = LIMIT_DEFAULTS[charId] ?? [];
+  const limitCards = limitIds.map(id => getCard(id)).filter((c): c is NonNullable<typeof c> => !!c);
+  const usable = CARDS.filter(c => cardUsableBy(c, charId));
+  const usableIds = new Set(usable.map(c => c.id));
+  const deckCards = usable.filter(c => !limitIds.includes(c.id));
+
+  const poseFrames = (pose: string): number => {
+    if (!manifest) return 0;
+    const resolved = resolveCombatPose(pose, p => (manifest[p]?.frames?.length ?? 0) > 0);
+    if (!resolved) return 0;
+    return manifest[resolved]?.frames?.length ?? 0;
+  };
+
+  const CardRow = ({ card, isLimit }: { card: NonNullable<ReturnType<typeof getCard>>; isLimit: boolean }) => {
+    const pose = cardBattlePose(card);
+    const poseFx = card.type === 'beam' ? 'beam_fire' : null;
+    const n = poseFrames(pose);
+    const color = CARD_COLORS[card.type];
+    return (
+      <div className="dev-attack-card" style={{ borderLeftColor: color }}>
+        <span className="dev-attack-id">{String(card.id).padStart(2, '0')}</span>
+        <span className="dev-attack-name" style={{ color }}>{card.name}</span>
+        <span className="dev-attack-type">{CARD_TYPE_NAMES[card.type]}</span>
+        <span className="dev-attack-effect" title={card.description ?? ''}>{EFFECT_LABELS[card.effect] ?? card.effect}</span>
+        <span className="dev-attack-stat">CC {card.cc}</span>
+        <span className="dev-attack-stat">ATK {card.atk}</span>
+        {isLimit && <span className="dev-tag ok">LIMIT</span>}
+        <span className={`dev-attack-pose ${n === 0 ? 'bad' : ''}`} title="Pose que dispara la carta en combate (canon cardBattlePose)">
+          ▶ {pose}{poseFx ? ` → ${poseFx}` : ''}
+          <em>{n > 0 ? `${n} frames` : 'sin frames en manifest'}</em>
+        </span>
+      </div>
+    );
+  };
+
+  return (
+    <div className="dev-attacks">
+      <div className="dev-attacks-summary">
+        <span className="dev-tag ok">{limitCards.length} LIMIT</span>
+        <span className="dev-tag">{usableIds.size} cartas usables</span>
+        <span className="dev-tag">{deckCards.length} en mazo</span>
+      </div>
+      {limitCards.length > 0 && (
+        <div className="dev-attack-group">
+          <div className="dev-attack-group-head">Ataques LIMIT (firma del personaje)</div>
+          {limitCards.map(c => <CardRow key={c.id} card={c} isLimit />)}
+        </div>
+      )}
+      {CARD_TYPE_ORDER.map(({ type, label }) => {
+        const cards = deckCards.filter(c => c.type === type);
+        if (cards.length === 0) return null;
+        return (
+          <div key={type} className="dev-attack-group">
+            <div className="dev-attack-group-head">{label} <em>{cards.length}</em></div>
+            {cards.map(c => <CardRow key={c.id} card={c} isLimit={false} />)}
+          </div>
+        );
+      })}
+      {deckCards.filter(c => !CARD_TYPE_ORDER.some(g => g.type === c.type)).length > 0 && (
+        <div className="dev-attack-group">
+          <div className="dev-attack-group-head">Otras</div>
+          {deckCards.filter(c => !CARD_TYPE_ORDER.some(g => g.type === c.type)).map(c => <CardRow key={c.id} card={c} isLimit={false} />)}
+        </div>
+      )}
     </div>
   );
 }

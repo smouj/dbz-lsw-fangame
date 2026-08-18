@@ -39,6 +39,7 @@ import { BattleTimeline, type CinematicEvent, type CinematicProfile } from './ba
 import { profileFor, type CinematicKind } from './battle/profiles';
 import { actionSemanticsForCard } from './battle/actionProfiles';
 import { resolveCombatPose, type BattleSpritePose } from './battle/spriteConfig';
+import { cardBattlePose, cardUsableBy, OFFENSIVE_SUPPORT_EFFECTS, DEFENSIVE_EFFECTS } from './battle/cardPoses';
 import { isDebugCinematics, bindDebugControls, renderDebugOverlay, type CinematicDebugInfo, type CinematicDebugController } from './battle/debugCinematics';
 import { isDebugState, bindQteDebugControls, renderStateOverlay, type StateDebugSnapshot } from './battle/debugState';
 import { isPixiField } from './renderer/pixi/flag';
@@ -111,26 +112,8 @@ function manifestBounds(manifest: CharManifest): { maxW: number; maxH: number } 
 let __reactUid = 0;
 const nextUid = () => ++__reactUid;
 
-const OFFENSIVE_SUPPORT_EFFECTS = new Set<CardEffect>([
-  'life_drain', 'knockdown_dmg', 'knockdown_min', 'gamebomb', 'candy',
-  'naughty_book', 'ohko_lowacc', 'android_kill', 'damage',
-]);
-
-const DEFENSIVE_EFFECTS = new Set<CardEffect>([
-  'avoid_beam', 'avoid_damage', 'avoid_damage_taiyoken', 'reduce_damage',
-  'absorb_beam', 'beam_shield', 'damage_shield', 'command_cancel',
-]);
-
 function resolveManifestPose(manifest: CharManifest, pose: BattleSpritePose | string): string | null {
   return resolveCombatPose(pose, p => manifest[p]?.frames?.length > 0);
-}
-
-function cardBattlePose(card: CardDef, context: 'field' | 'fx' = 'field'): BattleSpritePose {
-  if (card.type === 'beam') return context === 'fx' ? 'beam_fire' : 'beam_charge';
-  if (card.type === 'damage' || card.type === 'command') return 'attack_fwd';
-  if (card.type === 'defense' || DEFENSIVE_EFFECTS.has(card.effect)) return 'guard';
-  if (OFFENSIVE_SUPPORT_EFFECTS.has(card.effect)) return 'attack_fwd';
-  return 'gather_power';
 }
 
 function cardProjectileClass(card: CardDef): string {
@@ -495,15 +478,10 @@ function canPlayInDefense(card: CardDef): boolean {
   return card.type === 'defense' || card.type === 'support' || card.type === 'special';
 }
 
-// Compatibilidad de carta por personaje (campo `compatible` de la ROM):
-// undefined/[] = todos los luchadores; si lista, solo esos personajes.
-// `notCompatible` = lista EXCLUIDA (el resto puede usarla) — p.ej. Stop Device
-// no lo pueden usar los androides (Users=43/48 de la tabla ROM).
-function cardUsableBy(card: CardDef, charId: string): boolean {
-  if (card.compatible && card.compatible.length > 0 && !card.compatible.includes(charId)) return false;
-  if (card.notCompatible && card.notCompatible.includes(charId)) return false;
-  return true;
-}
+// Compatibilidad de carta por personaje — CANON en ./battle/cardPoses.ts
+// (cardUsableBy importado arriba): undefined/[] = todos los luchadores; si
+// lista, solo esos personajes. `notCompatible` = lista EXCLUIDA (el resto
+// puede usarla) — p.ej. Stop Device no lo pueden usar los androides.
 
 function cardEffectSummary(effect: CardEffect): string {
   switch (effect) {
