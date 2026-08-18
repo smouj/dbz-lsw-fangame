@@ -2007,15 +2007,20 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 .result-screen {
   display: flex; flex-direction: row; align-items: center; gap: 16px;   /* UNA fila: no altera la altura del panel */
   padding: 8px 18px;
-  /* panel GBC como los demás: oscuro + marco beige + sombra pixel */
-  background: rgba(8, 8, 10, .85);
+  /* panel GBC: oscuro + marco beige + sombra + inset pixel */
+  background: rgba(8, 8, 10, .88);
   border: 3px solid #d8d0b8;
-  box-shadow: 4px 4px 0 #000;
+  box-shadow: 4px 4px 0 #000, inset 0 0 0 1px #05070c;
 }
+/* DERROTA: marco y título rojizos (variante diferenciada) */
+.result-screen.defeat-mode {
+  border-color: #b06060;
+}
+.result-screen.defeat-mode .result-title { color: #ff7a68; }
 
 .result-title {
   font-family: var(--fui);   /* VT323 pixel */
-  font-size: 24px;
+  font-size: 26px;
   letter-spacing: .14em;
   text-shadow: 2px 2px 0 #000, -1px 1px 0 #000, 1px -1px 0 #000, -1px -1px 0 #000;
   transform: none;
@@ -2024,38 +2029,52 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 }
 
 .result-title.victory { color: var(--gold); }
-.result-title.defeat { color: var(--hp-red); }
+
+/* separador pixel vertical entre título e info */
+.result-screen .result-title::after {
+  content: '';
+  display: inline-block;
+  width: 3px;
+  height: 26px;
+  margin-left: 14px;
+  vertical-align: middle;
+  background: repeating-linear-gradient(180deg, rgba(216,208,184,.8) 0 3px, transparent 3px 6px);
+}
 
 .result-info {
-  display: flex; flex-direction: row; gap: 14px;   /* UNA línea */
+  display: flex; flex-direction: row; gap: 12px;   /* UNA línea */
   text-align: center;
   color: #d8d0b8;
   font-family: var(--fui);
-  font-size: 12px;
+  font-size: 13px;
   line-height: 1.4;
   letter-spacing: 1px;
   text-shadow: 1px 1px 0 #000;
   white-space: nowrap;
 }
 
-.btn-primary {
+.result-screen .btn-primary {
   background: var(--orange);
-  color: #000;
-  border: 3px solid var(--orange-dk);
+  color: #1a1200;
+  border: 3px solid #05070c;
   border-top-color: var(--orange-lt);
-  padding: 5px 18px;         /* compacto */
-  font-family: var(--fpx);
-  font-size: 9px;
-  letter-spacing: 3px;
+  border-bottom-color: var(--orange-dk);
+  padding: 6px 20px;
+  font-family: var(--fui);   /* VT323 pixel */
+  font-size: 14px;
+  letter-spacing: 2px;
   cursor: pointer;
   transition: background 80ms, transform 80ms, box-shadow 80ms;
-  box-shadow: 3px 3px 0 #000;
-  margin-top: 6px;
-  box-shadow: inset 1px 1px 0 var(--orange-lt), inset -1px -1px 0 var(--orange-dk);
+  box-shadow: 3px 3px 0 #000, inset 1px 1px 0 rgba(255,255,255,.45), inset -1px -1px 0 rgba(0,0,0,.4);
+  image-rendering: pixelated;
+  white-space: nowrap;
+  text-transform: uppercase;
+  text-shadow: none;
+  font-weight: normal;
 }
 
-.btn-primary:hover { background: var(--orange-lt); transform: scale(1.04); }
-.btn-primary:active { background: var(--orange-dk); transform: scale(0.97); }
+.result-screen .btn-primary:hover { background: var(--orange-lt); transform: translateY(-2px); filter: brightness(1.08); }
+.result-screen .btn-primary:active { background: var(--orange-dk); transform: translateY(0) scale(0.98); filter: brightness(.95); }
 
 /* ─── Log de batalla ─── */
 
