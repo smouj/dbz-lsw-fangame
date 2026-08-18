@@ -441,11 +441,13 @@ export function HudModule() {
                     {handCards.map((card, i) => (
                       <HudCard key={card.id} card={card} selected={i === 1} disabled={i === 2} />
                     ))}
+                    {/* Huecos vacíos = MISMO sprite que el juego (NO CARD) */}
                     {Array.from({ length: 6 - handCards.length }).map((_, i) => (
-                      <div key={`slot-${i}`} className="limit-slot" data-tip={tipBlock('HUECO DE MANO', [
-                        ['desc', 'Máx 6 transitorio (5 persistente).'],
-                      ])}>
-                        <span className="hand-slot-mark">+</span>
+                      <div key={`slot-${i}`} className="hand-empty-slot"
+                        data-tip={tipBlock('HUECO DE MANO', [
+                          ['desc', 'Máx 6 transitorio (5 persistente).'],
+                        ])}>
+                        <img src="/assets/ui/hud_buttons/no_card_red.png" alt="NO CARD" className="hand-no-card" />
                       </div>
                     ))}
                   </div>

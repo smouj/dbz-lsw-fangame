@@ -10150,12 +10150,6 @@ button.linklike:hover { text-decoration: underline; }
   image-rendering: pixelated;
 }
 /* Hueco de la mano (JOINT): misma silueta que los slots de LIMIT */
-.hand-slot-mark {
-  font-family: var(--fpx);
-  font-size: 18px;
-  color: rgba(140, 150, 170, .45);
-  text-shadow: 1px 1px 0 #000;
-}
 
 /* Planos de anclaje (Position Lab): cada posición con ambos lados */
 .dev-pos-planes { margin-top: 14px; }
