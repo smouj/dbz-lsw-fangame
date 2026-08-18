@@ -279,10 +279,10 @@ export function HudModule() {
                   <span className="hud-level">LV50</span>
                 </div>
                 <PreviewHpBar current={720} max={1000} side="left" />
-                {/* Fase GBC: ATTACK bajo la barra del personaje atacante */}
-                <span className="hud-phase phase-atk">ATTACK</span>
                 <div className="hud-info-row">
                   <div className="hud-stats"><span>STR60</span><span>KI55</span><span>SPD50</span><span className="cc-stat"><b>06</b></span></div>
+                  {/* Fase GBC: ATTACK ENTRE stats y badges (sin fila propia) */}
+                  <span className="hud-phase phase-atk">ATTACK</span>
                   <div className="hud-status">
                     <span className="status-chip buff">STR+</span>
                     <span className="status-chip guard">ATK</span>
@@ -300,9 +300,9 @@ export function HudModule() {
                   <span className="hud-level">LV50</span>
                 </div>
                 <PreviewHpBar current={880} max={1000} side="right" />
-                <span className="hud-phase phase-def">DEFEND</span>
                 <div className="hud-info-row">
                   <div className="hud-stats"><span className="cc-stat"><b>03</b></span><span>STR58</span><span>KI60</span><span>SPD48</span></div>
+                  <span className="hud-phase phase-def">DEFEND</span>
                   <div className="hud-status right">
                     <span className="status-chip debuff">SPD−</span>
                   </div>

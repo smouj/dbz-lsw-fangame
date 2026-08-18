@@ -2947,15 +2947,15 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
             <span className="hud-level">LV{player.level}</span>
           </div>
           <HPBar current={player.hp} max={player.maxHp} side="left" introFill={intro} />
-          {/* Fase GBC: ATTACK/DEFEND bajo la barra del personaje en su fase */}
-          <span className={`hud-phase ${activeAttackerSide === 'player' ? 'phase-atk' : 'phase-def'}`}>
-            {activeAttackerSide === 'player' ? 'ATTACK' : 'DEFEND'}
-          </span>
           <div className="hud-info-row">
             <div className="hud-stats">
               <span>STR{player.str + pBuffs.str}</span><span>KI{player.ki + pBuffs.ki}</span><span>SPD{player.spd + pStages.spd * 8}</span>
               <span className="cc-stat"><b>{player.cc}</b></span>
             </div>
+            {/* Fase GBC: ATTACK/DEFEND ENTRE las stats y los badges (sin fila propia) */}
+            <span className={`hud-phase ${activeAttackerSide === 'player' ? 'phase-atk' : 'phase-def'}`}>
+              {activeAttackerSide === 'player' ? 'ATTACK' : 'DEFEND'}
+            </span>
             <div className="hud-status">
               {pStages.str > 0 && <span className="status-chip buff">STR+</span>}
               {pStages.str < 0 && <span className="status-chip debuff">STR−</span>}
@@ -2998,13 +2998,13 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
             <span className="hud-level">LV{enemy.level}</span>
           </div>
           <HPBar current={enemy.hp} max={enemy.maxHp} side="right" introFill={intro} />
-          <span className={`hud-phase ${activeAttackerSide === 'enemy' ? 'phase-atk' : 'phase-def'}`}>
-            {activeAttackerSide === 'enemy' ? 'ATTACK' : 'DEFEND'}
-          </span>
           <div className="hud-info-row">
             <div className="hud-stats">
               <span className="cc-stat"><b>{enemy.cc}</b></span><span>STR{enemy.str + eBuffs.str}</span><span>KI{enemy.ki + eBuffs.ki}</span><span>SPD{enemy.spd + eStages.spd * 8}</span>
             </div>
+            <span className={`hud-phase ${activeAttackerSide === 'enemy' ? 'phase-atk' : 'phase-def'}`}>
+              {activeAttackerSide === 'enemy' ? 'ATTACK' : 'DEFEND'}
+            </span>
             <div className="hud-status right">
               {eStages.str > 0 && <span className="status-chip buff">STR+</span>}
               {eStages.str < 0 && <span className="status-chip debuff">STR−</span>}

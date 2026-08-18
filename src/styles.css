@@ -880,9 +880,10 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   position: relative;
   overflow: hidden;
   box-shadow:
-    1px 1px 0 rgba(0,0,0,.95),
-    inset 1px 1px 0 rgba(216,208,184,.5),
-    inset -1px -1px 0 rgba(0,0,0,.92);
+    2px 2px 0 rgba(0,0,0,.95),
+    inset 1px 1px 0 rgba(216,208,184,.55),
+    inset -1px -1px 0 rgba(0,0,0,.92),
+    inset 0 0 0 1px #2a2f3a;
   border-radius: 0;
   image-rendering: pixelated;
 }
@@ -960,8 +961,8 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   position: absolute; top: 50%; left: 0; right: 0;
   transform: translateY(-50%);
   text-align: center;
-  font-family: var(--fpx);
-  font-size: 12px;                    /* más legible (antes 11px) */
+  font-family: var(--fui);   /* VT323: pixel grueso más legible */
+  font-size: 13px;
   line-height: 1;
   color: #fff;
   /* sombra negra PIXEL dura (sin blur) — legible sobre cualquier relleno */
@@ -971,7 +972,8 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
     1px -1px 0 #000,
     -1px -1px 0 #000,
     0 2px 0 #000,
-    0 -2px 0 #000;
+    0 -2px 0 #000,
+    2px 2px 0 #000;
   z-index: 6;
   letter-spacing: 1px;
   white-space: nowrap;
@@ -4174,7 +4176,8 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 .hud-center-badge::after {
   display: none;
 }
-/* Fase GBC: ATTACK/DEFEND bajo la barra de vida del personaje en su fase */
+/* Fase GBC: ATTACK/DEFEND — chip INLINE en la fila de stats (entre stats
+   y badges, sin fila propia) */
 .hud-phase {
   font-family: var(--fui);
   font-size: 9px;
@@ -4185,8 +4188,8 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   text-shadow: 1px 1px 0 #000;
   box-shadow: 1px 1px 0 #000;
   background: rgba(8, 8, 10, .8);
-  align-self: flex-start;
   white-space: nowrap;
+  flex-shrink: 0;
 }
 .hud-phase.phase-atk { color: #f0d060; border-color: rgba(240,208,96,.55); }
 .hud-phase.phase-def { color: #9fb7d8; border-color: rgba(82,98,122,.6); }
@@ -9609,7 +9612,7 @@ button.linklike:hover { text-decoration: underline; }
 .hp-bar.low .hp-bar-current { box-shadow: inset 0 1px 0 rgba(255,255,255,.3), 0 0 10px rgba(216,56,40,.5); }
 .hp-bar-text {
   font-family: var(--fui);
-  font-size: 9px;
+  font-size: 13px;
   letter-spacing: 1px;
   text-shadow: 1px 1px 0 #000, 0 0 4px rgba(0,0,0,.8);
 }
