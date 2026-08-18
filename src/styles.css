@@ -3647,10 +3647,13 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
    (gbc-dialogue con margin-left 88px + retrato absolute fuera). */
 .stage-hud-panel {
   display: grid;
-  /* portrait fijo · track central (1fr) · timer fijo */
-  grid-template-columns: 80px minmax(0, 1fr) 120px;
+  /* portrait fijo · track central (1fr) · timer fijo. Columna portrait
+     88px (retrato 57 + sombra 4 + respiro) y gap 18px → el retrato NUNCA
+     toca visualmente los inputs (antes 80px/14px: la sombra del retrato
+     quedaba a 37px del track y parecía solaparse). */
+  grid-template-columns: 88px minmax(0, 1fr) 120px;
   align-items: center;
-  gap: 14px;
+  gap: 18px;
   width: 100%;
   /* Ancho canónico: el panel se adapta al ancho disponible pero nunca se
      solapa con los chips de fase (izquierda) ni el CC (derecha). En el

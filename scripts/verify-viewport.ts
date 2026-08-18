@@ -99,6 +99,10 @@ check('R3: #dev/hud usa el MISMO StageHudPanel',
 // M8.C2a — anclaje del retrato por lado (Stage + diálogo de batalla)
 check('R3: StageHudPanel ancla retrato por lado (grid order speaker-right)',
   /\.stage-hud-panel\.speaker-right \.stage-hud-portrait \{ order: 3; \}/.test(css));
+// M8.C2a — respiro del retrato: columna 88px + gap 18px → el retrato NUNCA
+// toca visualmente los inputs del track (antes 80px/14px: sombra a 37px).
+check('R3: StageHudPanel portrait con respiro (col 88px + gap 18px)',
+  /\.stage-hud-panel \{[^}]*grid-template-columns: 88px minmax\(0, 1fr\) 120px;[^}]*gap: 18px;/.test(css));
 check('R3: diálogo GBC centrado simétrico (sin hueco fantasma)',
   /\.gbc-dialogue\.speaker-left \{ margin-left: 88px; margin-right: 88px; \}/.test(css) &&
   /\.gbc-dialogue\.speaker-right \{ margin-left: 88px; margin-right: 88px; \}/.test(css) &&

@@ -145,16 +145,17 @@ export function DashboardModule({ onNavigate }: { onNavigate: (m: DevModuleId) =
   );
 }
 
-// ── Estado del BattleEngine (M1-M5) — milestones del plan de migración ──
+// ── Estado del BattleEngine (M1-M9) — milestones del plan de migración ──
+// M8.C en curso: MOVE+GUARD migrados · melee/beam/support pendientes.
 const ENGINE_MILESTONES = [
   { id: 'M1', label: 'State', desc: 'BattleState puro', done: true },
   { id: 'M2', label: 'Rules', desc: 'BattleCommand + canExecute', done: true },
   { id: 'M3', label: 'Resolution', desc: 'executeCommand puro + reducers', done: true },
   { id: 'M4', label: 'Events', desc: 'BattleEvent + EventLog + canon animación', done: true },
   { id: 'M5', label: 'RNG + Damage', desc: 'PRNG canónico + daño real + counter', done: true },
-  { id: 'M6', label: 'GBC Clock', desc: 'ticks como autoridad', done: false },
-  { id: 'M7', label: 'Presentation', desc: 'Adapter canon→BattleTimeline', done: false },
-  { id: 'M8', label: 'Cutover', desc: 'main.tsx consume el engine', done: false },
+  { id: 'M6', label: 'GBC Clock', desc: 'ticks como autoridad (M6 cerrado)', done: true },
+  { id: 'M7', label: 'Presentation', desc: 'Adapter canon→BattleTimeline (M7 cerrado)', done: true },
+  { id: 'M8', label: 'Cutover', desc: 'runtime: MOVE+GUARD migrados (M8.C en curso)', done: false },
   { id: 'M9', label: 'Replay', desc: 'EventLog → repetición', done: false },
 ];
 
@@ -163,7 +164,7 @@ function EngineMilestoneCard() {
   const eventTypes = 25; // tipos en BattleEvent (M4)
   return (
     <div className="dev-stat-card ok dev-engine-card">
-      <div className="dev-stat-value" style={{ fontSize: 15 }}>M5<span className="dev-stat-total" style={{ fontSize: 11 }}>/M9</span></div>
+      <div className="dev-stat-value" style={{ fontSize: 15 }}>M7<span className="dev-stat-total" style={{ fontSize: 11 }}>/M9</span></div>
       <div className="dev-stat-label">BattleEngine (migración)</div>
       <div className="dev-engine-miles">
         {ENGINE_MILESTONES.map(m => (
@@ -173,7 +174,7 @@ function EngineMilestoneCard() {
         ))}
       </div>
       <div className="dev-stat-hint">
-        {eventTypes} tipos de evento · canon: {canon.length} familias de animación · 149 checks verify:battle-engine
+        {eventTypes} tipos de evento · canon: {canon.length} familias de animación · 182 checks verify:battle-engine · 95 verify:presentation · 24 verify:viewport
       </div>
     </div>
   );

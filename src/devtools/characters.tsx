@@ -693,6 +693,7 @@ function AllPosesGrid({ formId }: { formId: string }) {
         <span><b>attack_fwd / punch / kick</b> ← cartas damage y command</span>
         <span><b>guard / evade / beam_guard</b> ← cartas defense</span>
         <span><b>gather_power / power_up / aura_*</b> ← soporte y GATHER (aura overlay)</span>
+        <span className="dev-pose-fx-note"><b>beam_ray / beam_ray_tip</b> ← referencias de sheet del proyectil (FX), no poses de personaje — por eso no tienen frame físico propio</span>
         <span><b>move_front / move_back</b> ← comando MOVE</span>
         <span><b>hurt / knockback</b> ← recibir daño (defensor)</span>
       </div>

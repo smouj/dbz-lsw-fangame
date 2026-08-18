@@ -172,12 +172,15 @@ export default function GameConfigPage() {
       <Section icon={Monitor} title="Display">
         <div className="cfg-grid">
           {Object.entries(RENDERER_CONFIG).map(([k, v]) => (
-            <KeyVal key={k} k={k} canon={['logicalResolution', 'integerScaling', 'nearestNeighbor'].includes(k)}
+            <KeyVal key={k} k={k} canon={['logicalResolution', 'designResolution', 'aspectRatio', 'pixelScalePolicy', 'integerScaling', 'nearestNeighbor'].includes(k)}
               v={Array.isArray(v) ? v.join('×') : typeof v === 'boolean' ? fmtBool(v) : String(v)} />
           ))}
         </div>
         <p className="dev-muted" style={{ marginTop: 6 }}>
-          <code>Logical {RENDERER_CONFIG.logicalResolution.join('×')} · Render {RENDERER_CONFIG.logicalResolution[0] * RENDERER_CONFIG.renderScale}×{RENDERER_CONFIG.logicalResolution[1] * RENDERER_CONFIG.renderScale} (×{RENDERER_CONFIG.renderScale}) · Viewport: el de la ventana</code>
+          <code>Lógica {RENDERER_CONFIG.logicalResolution.join('×')} · Diseño {RENDERER_CONFIG.designResolution.join('×')} (canon 16:9) · Render ×{RENDERER_CONFIG.renderScale} ({RENDERER_CONFIG.logicalResolution[0] * RENDERER_CONFIG.renderScale}×{RENDERER_CONFIG.logicalResolution[1] * RENDERER_CONFIG.renderScale}) · integer-preferred</code>
+          <span style={{ display: 'block', marginTop: 4 }}>
+            GameViewport: {RENDERER_CONFIG.canonicalViewport ? '16:9 con letterbox (R5 ACTIVADO)' : 'legacy = ventana completa (R5 pendiente — cqw/cqh ya migradas)'}
+          </span>
         </p>
       </Section>
 
