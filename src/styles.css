@@ -4287,6 +4287,12 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 .intro-sprite-wrap {
   filter: drop-shadow(0 0 26px rgba(255,190,60,.55)) drop-shadow(0 0 80px rgba(255,120,30,.3));
 }
+.intro-sprite-wrap img {
+  height: 224px;              /* sprite overworld 16×16 → ×14 ENTERO (nítido) */
+  width: auto;
+  image-rendering: pixelated;
+  display: block;
+}
 .intro-name {
   font-family: var(--fepic);
   font-size: clamp(2.2rem, 6vw, 4rem);
@@ -4297,6 +4303,25 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 }
 @keyframes intro-name-in { from { transform: scale(2.4) rotate(-4deg); opacity: 0; } to { transform: scale(1) rotate(0); opacity: 1; } }
 .intro-sub { font-family: var(--fpx); font-size: clamp(.6rem, 1.4vw, .8rem); color: #a8d8ff; opacity: .9; letter-spacing: .3em; text-align: center; text-shadow: 1px 1px 0 #000; }
+/* ROUND n: badge central superior (como el recuadro con el nº de ronda de
+   la VS del GBC) — chip oscuro con marco dorado */
+.intro-round {
+  position: absolute;
+  top: 12%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #0a1628;
+  border: 3px solid #f5c542;
+  box-shadow: 3px 3px 0 #000;
+  padding: 4px 18px;
+  font-family: var(--fpx);
+  font-size: 14px;
+  letter-spacing: 3px;
+  color: #ffd76a;
+  text-shadow: 1px 1px 0 #000;
+  animation: intro-name-in .5s cubic-bezier(.2,1.4,.4,1) .15s both;
+  white-space: nowrap;
+}
 .intro-vs {
   font-family: var(--fepic);
   font-size: clamp(4.5rem, 13vw, 8.5rem);
@@ -4331,234 +4356,6 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   .intro-left { left: 1vw; } .intro-right { right: 1vw; }
   .intro-name { font-size: 1.4rem; } .intro-sub { font-size: .55rem; }
   .intro-sprite-wrap img { height: 150px !important; }
-}
-
-/* Intro integrada estilo GBC: ventanas planas, sin panel inferior moderno. */
-.battle-screen.intro-active .battlefield {
-  filter: saturate(.88) contrast(1.08);
-}
-.battle-intro {
-  position: absolute;
-  inset: 0;
-  z-index: 45;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  pointer-events: none;
-  background:
-    linear-gradient(180deg, rgba(8, 8, 10,.10), rgba(8, 8, 10,.18)),
-    repeating-linear-gradient(0deg, rgba(255,255,255,.05) 0 1px, transparent 1px 4px);
-  animation: intro-gbc-overlay-life 5.2s linear both;
-}
-.battle-intro::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(90deg, rgba(8, 8, 10,.72), transparent 20%, transparent 80%, rgba(8, 8, 10,.72)),
-    repeating-linear-gradient(90deg, transparent 0 6px, rgba(0,0,0,.12) 6px 8px);
-  animation: intro-gbc-scan 1.1s steps(8, end) infinite;
-}
-@keyframes intro-gbc-scan { from { background-position: 0 0, 0 0; } to { background-position: 0 0, 32px 0; } }
-.battle-intro::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  opacity: 0;
-  background:
-    repeating-conic-gradient(from 0deg, rgba(216,208,184,.30) 0 25%, transparent 0 50%) 0 0 / 8px 8px,
-    repeating-linear-gradient(0deg, rgba(8, 8, 10,.18) 0 2px, transparent 2px 4px);
-  mix-blend-mode: screen;
-  image-rendering: pixelated;
-  animation: intro-pixel-dither 5.2s steps(12, end) both;
-}
-@keyframes intro-gbc-overlay-life {
-  0%, 76% { opacity: 1; }
-  86% { opacity: .82; }
-  100% { opacity: 0; }
-}
-@keyframes intro-pixel-dither {
-  0%, 54% { opacity: 0; background-size: 8px 8px, 100% 4px; }
-  62% { opacity: .24; background-size: 8px 8px, 100% 4px; }
-  78% { opacity: .44; background-size: 12px 12px, 100% 4px; }
-  92% { opacity: .18; background-size: 16px 16px, 100% 4px; }
-  100% { opacity: 0; background-size: 20px 20px, 100% 4px; }
-}
-.intro-gbc-window {
-  position: relative;
-  width: min(620px, 78vw);
-  margin-top: 76px;
-  padding: 12px 14px 14px;
-  background: #111827;
-  border: 4px solid #05070c;
-  outline: 2px solid #d8d0b8;
-  box-shadow: 5px 5px 0 #000;
-  display: grid;
-  gap: 10px;
-  image-rendering: pixelated;
-  animation: intro-gbc-window-in .34s steps(4, end) both, intro-gbc-window-out 5.2s steps(12, end) both;
-}
-@keyframes intro-gbc-window-in {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-@keyframes intro-gbc-window-out {
-  0%, 72% { opacity: 1; filter: none; transform: translateY(0); }
-  82% { opacity: .9; filter: contrast(1.25); transform: translateY(-2px); }
-  100% { opacity: 0; filter: contrast(1.4); transform: translateY(-8px); }
-}
-.intro-gbc-round {
-  justify-self: center;
-  background: #d8d0b8;
-  color: #05070c;
-  border: 2px solid #05070c;
-  box-shadow: 2px 2px 0 #000;
-  padding: 3px 14px;
-  font-family: var(--fpx);
-  font-size: 11px;
-  letter-spacing: 1px;
-  text-shadow: none;
-}
-.intro-gbc-match {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) 88px minmax(0, 1fr);
-  align-items: center;
-  gap: 12px;
-}
-.intro-gbc-side {
-  display: grid;
-  grid-template-columns: 58px minmax(0, 1fr);
-  grid-template-areas: "portrait name" "portrait form";
-  align-items: center;
-  column-gap: 8px;
-  min-width: 0;
-}
-.intro-gbc-side.right {
-  grid-template-columns: minmax(0, 1fr) 58px;
-  grid-template-areas: "name portrait" "form portrait";
-  text-align: right;
-}
-.intro-gbc-portrait {
-  grid-area: portrait;
-  width: 58px;
-  height: 58px;
-  background: #d8d0b8;
-  border: 3px solid #05070c;
-  overflow: hidden;
-  box-shadow: 2px 2px 0 #000;
-}
-.intro-gbc-portrait img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  image-rendering: pixelated;
-}
-.intro-gbc-name {
-  grid-area: name;
-  min-width: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  font-family: var(--fpx);
-  font-size: 12px;
-  color: #f0d060;
-  text-shadow: 1px 1px 0 #000;
-}
-.intro-gbc-form {
-  grid-area: form;
-  min-width: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  font-family: var(--fui);
-  font-size: 15px;
-  color: #d8d0b8;
-  text-shadow: 1px 1px 0 #000;
-}
-.intro-vs {
-  position: static;
-  justify-self: center;
-  align-self: center;
-  width: 72px;
-  height: 58px;
-  display: grid;
-  place-items: center;
-  background: #05070c;
-  border: 3px solid #d8c070;
-  font-family: var(--fpx);
-  font-size: 22px;
-  color: #f07070;
-  text-shadow: 2px 2px 0 #000;
-  letter-spacing: 1px;
-  animation: intro-vs-gbc .42s steps(4, end) .44s both;
-}
-@keyframes intro-vs-gbc { from { transform: scale(.2); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-.intro-gbc-roles {
-  display: flex;
-  justify-content: center;
-  gap: 8px;
-  flex-wrap: wrap;
-}
-.intro-gbc-roles span {
-  font-family: var(--fpx);
-  font-size: 9px;
-  letter-spacing: 1px;
-  color: #05070c;
-  background: #9fb7d8;
-  border: 2px solid #05070c;
-  padding: 3px 9px;
-  text-shadow: none;
-}
-.intro-gbc-roles span:first-child { background: #f0d060; }
-.intro-ready {
-  position: static;
-  justify-self: center;
-  font-family: var(--fpx);
-  font-size: 12px;
-  color: #d8d0b8;
-  letter-spacing: 2px;
-  text-shadow: 1px 1px 0 #000;
-  animation: intro-ready-gbc .38s steps(3, end) 1.22s both;
-}
-@keyframes intro-ready-gbc { from { opacity: 0; } to { opacity: 1; } }
-.intro-fight {
-  position: absolute;
-  left: 50%;
-  bottom: -44px;
-  transform: translateX(-50%);
-  background: #d8d0b8;
-  border: 3px solid #05070c;
-  box-shadow: 3px 3px 0 #000;
-  padding: 5px 18px;
-  font-family: var(--fpx);
-  font-size: 14px;
-  color: #05070c;
-  text-shadow: none;
-  letter-spacing: 2px;
-  animation: intro-fight-gbc .46s steps(4, end) 2.16s both;
-}
-@keyframes intro-fight-gbc {
-  0% { opacity: 0; transform: translateX(-50%) translateY(8px); }
-  100% { opacity: 1; transform: translateX(-50%) translateY(0); }
-}
-.intro-flash {
-  position: absolute;
-  inset: 0;
-  background: #d8d0b8;
-  opacity: 0;
-  animation: intro-flash-anim .32s steps(2, end) 2.58s both;
-}
-@media (max-width: 720px) {
-  .intro-gbc-window { width: min(520px, 82vw); margin-top: 54px; padding: 10px; }
-  .intro-gbc-match { grid-template-columns: minmax(0, 1fr); gap: 8px; }
-  .intro-vs { width: 64px; height: 34px; font-size: 16px; }
-  .intro-gbc-side,
-  .intro-gbc-side.right {
-    grid-template-columns: 44px minmax(0, 1fr);
-    grid-template-areas: "portrait name" "portrait form";
-    text-align: left;
-  }
-  .intro-gbc-portrait { width: 44px; height: 44px; }
 }
 
 /* Banner de ROUND (X STRIKES FIRST) con entrada animada */
@@ -9018,23 +8815,31 @@ button:focus-visible, .chapter-node:focus-visible {
 }
 
 /* ─── Vista INTRO del HUD Studio = preview ESTÁTICO ───
-   En el juego la intro se ANIMA y se desvanece (window-out 5.2s,
-   READY/FIGHT con delays). En el mockup debe verse SIEMPRE completa:
-   animaciones congeladas en el estado visible + anclas/zona de debug
-   ocultas (se colaban a través del overlay translúcido).
-   OJO: dev-intro-view vive en el battle-screen (descendiente del
-   wrapper .dev-hud-preview) — selector con espacio, no encadenado. */
-.dev-hud-preview .dev-intro-view .battle-intro,
-.dev-hud-preview .dev-intro-view .intro-gbc-window,
-.dev-hud-preview .dev-intro-view .intro-vs,
-.dev-hud-preview .dev-intro-view .intro-gbc-name,
-.dev-hud-preview .dev-intro-view .intro-gbc-form {
+   En el juego la intro se ANIMA (slides, pop del VS, READY/FIGHT con
+   delays). En el mockup debe verse SIEMPRE completa: animaciones
+   congeladas en el estado visible + anclas/zona de debug ocultas.
+   El juego usa position:fixed (toda la ventana) — en el preview se
+   fuerza absolute para que llene el battle-screen, no la página. */
+.dev-hud-preview .dev-intro-view .battle-intro {
+  position: absolute;
+}
+.dev-hud-preview .dev-intro-view .intro-fighter,
+.dev-hud-preview .dev-intro-view .intro-portrait,
+.dev-hud-preview .dev-intro-view .intro-sprite-wrap,
+.dev-hud-preview .dev-intro-view .intro-name,
+.dev-hud-preview .dev-intro-view .intro-sub,
+.dev-hud-preview .dev-intro-view .intro-round,
+.dev-hud-preview .dev-intro-view .intro-vs {
   animation: none;
 }
-.dev-hud-preview .dev-intro-view .intro-ready,
-.dev-hud-preview .dev-intro-view .intro-fight {
+.dev-hud-preview .dev-intro-view .intro-ready {
   animation: none;
   opacity: 1;
+}
+/* FIGHT aparece en el juego DESPUÉS del flash (2.35s), superpuesto al VS
+   — en el preview estático se pisarían; se muestra solo el estado VS+READY */
+.dev-hud-preview .dev-intro-view .intro-fight {
+  display: none;
 }
 .dev-hud-preview .dev-intro-view .intro-flash {
   display: none;
@@ -10105,7 +9910,6 @@ button.linklike:hover { text-decoration: underline; }
 }
 .dev-hud-preview .battle-intro::before,
 .dev-hud-preview .battle-intro::after { animation: none; }
-.dev-hud-preview .intro-gbc-window { margin-top: 0; }
 
 /* Mockup HUD: sprites OVERWORLD anclados en su punto real (pies en el
    anchor, igual que Position Lab: translate(-50%,-100%)). El anchor es el

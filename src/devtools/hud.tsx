@@ -236,33 +236,36 @@ export function HudModule() {
           <div className={`battle-screen view-overview dev-hud-real-preview ${view === 'INTRO' ? 'intro-active dev-intro-view' : ''}`}>
             {/* INTRO */}
             {view === 'INTRO' && (
+              /* VS FULL-SCREEN: personaje a cada lado, VS en el centro,
+                 READY → FIGHT — cubre toda la ventana (no un panel).
+                 MISMO markup que el juego (main.tsx). */
               <div className="battle-intro">
-                <div className="intro-gbc-window">
-                  <div className="intro-gbc-round">ROUND 1</div>
-                  <div className="intro-gbc-match">
-                    <div className="intro-gbc-side">
-                      <div className="intro-gbc-portrait">
-                        {pPortrait ? <img src={pPortrait} alt={P_FORM} /> : <span className="dev-hud-mock-ph">?</span>}
-                      </div>
-                      <div className="intro-gbc-name">GOKU</div>
-                      <div className="intro-gbc-form">BASE</div>
-                    </div>
-                    <div className="intro-vs">VS</div>
-                    <div className="intro-gbc-side right">
-                      <div className="intro-gbc-portrait">
-                        {ePortrait ? <img src={ePortrait} alt={E_FORM} /> : <span className="dev-hud-mock-ph">?</span>}
-                      </div>
-                      <div className="intro-gbc-name">PICCOLO</div>
-                      <div className="intro-gbc-form">BASE</div>
-                    </div>
+                <div className="intro-burst-left" />
+                <div className="intro-burst-right" />
+                <div className="intro-fighter intro-left">
+                  <div className="intro-portrait">
+                    {pPortrait ? <img src={pPortrait} alt={P_FORM} /> : <span className="dev-hud-mock-ph">?</span>}
                   </div>
-                  <div className="intro-gbc-roles">
-                    <span>ATK GOKU</span>
-                    <span>DEF PICCOLO</span>
+                  <div className="intro-sprite-wrap">
+                    <img src={battleOverworldActorUrl(P_FORM, 'idle')} alt="" draggable={false} />
                   </div>
-                  <div className="intro-ready">READY</div>
-                  <div className="intro-fight">FIGHT!</div>
+                  <div className="intro-name">GOKU</div>
+                  <div className="intro-sub">BASE</div>
                 </div>
+                <div className="intro-round">ROUND 1</div>
+                <div className="intro-vs">VS</div>
+                <div className="intro-fighter intro-right">
+                  <div className="intro-portrait">
+                    {ePortrait ? <img src={ePortrait} alt={E_FORM} /> : <span className="dev-hud-mock-ph">?</span>}
+                  </div>
+                  <div className="intro-sprite-wrap">
+                    <img src={battleOverworldActorUrl(E_FORM, 'idle')} alt="" draggable={false} />
+                  </div>
+                  <div className="intro-name">PICCOLO</div>
+                  <div className="intro-sub">BASE</div>
+                </div>
+                <div className="intro-ready">READY</div>
+                <div className="intro-fight">FIGHT!</div>
                 <div className="intro-flash" />
               </div>
             )}

@@ -2838,37 +2838,40 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
         </div>
       )}
 
-      {/* ═══ INTRO GBC: VS screen integrada, sin panel inferior de comandos ═══ */}
+      {/* ═══ INTRO FULL-SCREEN: VS de presentación — personaje a cada lado,
+          VS en el centro, READY → FIGHT. Cubre TODA la ventana (no un
+          panel en medio de la pantalla de juego). La cierra el timeout
+          de 5.2s (setIntro(false)) — sin fade-out propio. ═══ */}
       {intro && (
         <div className="battle-intro">
-          <div className="intro-gbc-window">
-            <div className="intro-gbc-round">ROUND {turn}</div>
-            <div className="intro-gbc-match">
-              <div className="intro-gbc-side">
-                <div className="intro-gbc-portrait">
-                  <img src={portraitFor(player.id, activePlayerFormId) || ''} alt={player.name}
-                    onError={e => (e.currentTarget.style.display = 'none')} />
-                </div>
-                <div className="intro-gbc-name">{player.name}</div>
-                <div className="intro-gbc-form">{player.form}</div>
-              </div>
-              <div className="intro-vs">{t('battle.vs')}</div>
-              <div className="intro-gbc-side right">
-                <div className="intro-gbc-portrait">
-                  <img src={portraitFor(enemy.id, enemyFormId) || ''} alt={enemy.name}
-                    onError={e => (e.currentTarget.style.display = 'none')} />
-                </div>
-                <div className="intro-gbc-name">{enemy.name}</div>
-                <div className="intro-gbc-form">{enemy.form}</div>
-              </div>
+          <div className="intro-burst-left" />
+          <div className="intro-burst-right" />
+          <div className="intro-fighter intro-left">
+            <div className="intro-portrait">
+              <img src={portraitFor(player.id, activePlayerFormId) || ''} alt={player.name}
+                onError={e => (e.currentTarget.style.display = 'none')} />
             </div>
-            <div className="intro-gbc-roles">
-              <span>ATK {activeAttackerName.toUpperCase()}</span>
-              <span>DEF {activeDefenderName.toUpperCase()}</span>
+            <div className="intro-sprite-wrap">
+              <img src={battleOverworldActorUrl(activePlayerFormId, 'idle')} alt="" draggable={false} />
             </div>
-            <div className="intro-ready">{t('battle.ready')}</div>
-            <div className="intro-fight">{t('battle.fight')}</div>
+            <div className="intro-name">{player.name}</div>
+            <div className="intro-sub">{player.form}</div>
           </div>
+          <div className="intro-round">ROUND {turn}</div>
+          <div className="intro-vs">{t('battle.vs')}</div>
+          <div className="intro-fighter intro-right">
+            <div className="intro-portrait">
+              <img src={portraitFor(enemy.id, enemyFormId) || ''} alt={enemy.name}
+                onError={e => (e.currentTarget.style.display = 'none')} />
+            </div>
+            <div className="intro-sprite-wrap">
+              <img src={battleOverworldActorUrl(enemyFormId, 'idle')} alt="" draggable={false} />
+            </div>
+            <div className="intro-name">{enemy.name}</div>
+            <div className="intro-sub">{enemy.form}</div>
+          </div>
+          <div className="intro-ready">{t('battle.ready')}</div>
+          <div className="intro-fight">{t('battle.fight')}</div>
           <div className="intro-flash" />
         </div>
       )}
