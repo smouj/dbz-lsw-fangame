@@ -3089,10 +3089,10 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
 
       {/* Controles */}
       <div className="battle-controls">
-        {/* Chips de fase estilo CC GBC: ESQUINA INFERIOR IZQUIERDA — orden
-            de ataque (STRIKES FIRST) + fase/exchange (ATTACK 1/2), mismo
-            lenguaje visual que el chip 06 de CC (negro + VT323 blanco) */}
-        {(phase === 'command' || phase === 'basic' || phase === 'limitSelect' || phase === 'cardSelect' || phase === 'defend') && (
+        {/* Chips de fase estilo CC GBC: ESQUINA INFERIOR IZQUIERDA —
+            fase/exchange (ATTACK 1/2), mismo lenguaje que el 06 de CC.
+            Ocultos con diálogo activo (el cuadro GBC los reemplaza) */}
+        {(phase === 'command' || phase === 'basic' || phase === 'limitSelect' || phase === 'cardSelect' || phase === 'defend') && !gbcMsg && (
           <div className="phase-chip-row">
             <span className="phase-chip" data-tip={tipBlock('FASE', [['desc', 'Exchange del turno (atacante/defensor)']])}>
               {phaseShortLabel} {exchangeIndex + 1}/2
@@ -3100,8 +3100,8 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
           </div>
         )}
         {/* CC estilo GBC: esquina inferior derecha del panel con cartas —
-            fondo negro + número blanco pixel (VT323) */}
-        {(phase === 'command' || phase === 'basic' || phase === 'limitSelect' || phase === 'cardSelect' || phase === 'defend') && (
+            fondo negro + número blanco pixel (VT323). Oculto con diálogo */}
+        {(phase === 'command' || phase === 'basic' || phase === 'limitSelect' || phase === 'cardSelect' || phase === 'defend') && !gbcMsg && (
           <div className="cc-panel" data-tip={tipBlock('CC', [['stats', `${player.cc} / ${player.maxCc}`]])}>{player.cc}</div>
         )}
         {/* Cuadro de diálogo GBC: DENTRO de la caja, con la MISMA altura que

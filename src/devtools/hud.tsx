@@ -460,13 +460,18 @@ export function HudModule() {
                 el CC vive en hud-top cc-stat + chip de panel) → no se pinta */}
 
             <div className="battle-controls dev-hud-battle-controls">
-              {/* Chips de fase estilo CC GBC: esquina inferior IZQUIERDA —
-                  MISMO lenguaje que el chip 06 de CC (negro + VT323) */}
-              <div className="phase-chip-row">
-                <span className="phase-chip" data-tip={tipBlock('FASE', [['desc', 'ATTACK 1/2 — exchange del turno (quién ataca/defiende ya lo dice la fase del hud superior)']])}>ATTACK 1/2</span>
-              </div>
-              {/* CC estilo GBC: esquina inferior derecha (como el juego) */}
-              <div className="cc-panel" data-tip={tipBlock('CC', [['stats', '6 / 99']])}>06</div>
+              {/* Chips CC + FASE: solo en vistas de panel con cartas —
+                  ocultos en DIÁLOGO (el cuadro GBC los reemplaza), STAGE
+                  (QTE), RESULTADO, INTRO y MENÚ (igual que el juego) */}
+              {['COMMAND', 'MANO', 'BASIC', 'MOVE', 'LIMIT', 'DEFENSA', 'DISCARD'].includes(view) && (
+                <>
+                  <div className="phase-chip-row">
+                    <span className="phase-chip" data-tip={tipBlock('FASE', [['desc', 'ATTACK 1/2 — exchange del turno (quién ataca/defiende ya lo dice la fase del hud superior)']])}>ATTACK 1/2</span>
+                  </div>
+                  {/* CC estilo GBC: esquina inferior derecha (como el juego) */}
+                  <div className="cc-panel" data-tip={tipBlock('CC', [['stats', '6 / 99']])}>06</div>
+                </>
+              )}
               {/* DIÁLOGO (cuadro GBC estructurado) — dentro de la caja,
                   misma altura que los botones */}
               {view === 'DIALOGO' && (
