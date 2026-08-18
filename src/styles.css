@@ -4269,8 +4269,8 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   transform: translateY(-50%);
   display: flex; flex-direction: column; align-items: center; gap: 12px;
 }
-.intro-left { left: clamp(14px, 4vw, 72px); animation: intro-slide-left .5s cubic-bezier(.2,.8,.3,1) .3s both; }
-.intro-right { right: clamp(14px, 4vw, 72px); animation: intro-slide-right .5s cubic-bezier(.2,.8,.3,1) .3s both; }
+.intro-left { left: clamp(64px, 10vw, 170px); animation: intro-slide-left .5s cubic-bezier(.2,.8,.3,1) .3s both; }
+.intro-right { right: clamp(64px, 10vw, 170px); animation: intro-slide-right .5s cubic-bezier(.2,.8,.3,1) .3s both; }
 @keyframes intro-slide-left { from { transform: translateY(-50%) translateX(-130px); opacity: 0; } to { transform: translateY(-50%) translateX(0); opacity: 1; } }
 @keyframes intro-slide-right { from { transform: translateY(-50%) translateX(130px); opacity: 0; } to { transform: translateY(-50%) translateX(0); opacity: 1; } }
 .intro-portrait {
@@ -4303,8 +4303,8 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   text-shadow: 1px 1px 0 #000;
 }
 .intro-vs {
-  font-family: var(--fepic);  /* Bangers: manga épico */
-  font-size: clamp(4.2rem, 12vw, 7.8rem);
+  font-family: var(--fui);    /* VT323: VS PIXEL ART (spec UI) */
+  font-size: clamp(4.5rem, 13vw, 8.5rem);
   color: #f8f4e4;
   text-shadow: 4px 4px 0 #000, -2px 2px 0 #000, 2px -2px 0 #000, -2px -2px 0 #000, 3px 3px 0 #8a3030;
   letter-spacing: .04em;
