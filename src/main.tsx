@@ -43,6 +43,13 @@ import { cardBattlePose, cardUsableBy, OFFENSIVE_SUPPORT_EFFECTS, DEFENSIVE_EFFE
 import { isDebugCinematics, bindDebugControls, renderDebugOverlay, type CinematicDebugInfo, type CinematicDebugController } from './battle/debugCinematics';
 import { isDebugState, bindQteDebugControls, renderStateOverlay, type StateDebugSnapshot } from './battle/debugState';
 import { isPixiField } from './renderer/pixi/flag';
+// M8 — BattleRuntime: frontera única del combate (Engine → EventLog → M7
+// Timeline → Presenter). M8.C1 migra MOVE + GUARD: la UI despacha al
+// Engine y la posición/guardia finales se PROYECTAN desde la snapshot
+// (runtime.state) — nunca se computan en React.
+import { BattleRuntime, useBattleRuntime, createCuePresenter, type BattlePresenter } from './battle/runtime';
+import { createInitialBattleState } from './battle/engine/state/createInitialBattleState';
+import type { BattleState } from './battle/engine/state/BattleState';
 import { applyCinematicEvent } from './renderer/pixi/presentation/CinematicAdapter';
 import type { PixiBattlePresentation } from './renderer/pixi/presentation/PixiBattlePresentation';
 // Code-split: pixi.js (~790KB) solo se descarga cuando ?pixiField=1 está activo.
@@ -775,6 +782,89 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
   eDeckRef.current = eDeckState;
   const [selectedCard, setSelectedCard] = useState<number | null>(null);
   const [, setLog] = useState<string[]>([t('battle.start')]);
+
+  // ═══ M8.C1 — BattleRuntime: frontera única (Engine → EventLog → Timeline → Presenter) ═══
+  // La UI despacha MOVE/GUARD al Engine; la posición/guardia finales se
+  // PROYECTAN desde runtime.state (snapshot autoritativa) — React NO
+  // computa destinos (sin applyMoveAxis aquí) ni guardias. El resto de
+  // slices (melee/beam/…) seguirán despachando por aquí en M8.C2+.
+  const runtimeRef = useRef<BattleRuntime | null>(null);
+  if (!runtimeRef.current) {
+    runtimeRef.current = new BattleRuntime({
+      state: createInitialBattleState({
+        playerFormId, playerName: player.name, playerForm: player.form, playerLevel: player.level,
+        playerMaxHp: player.maxHp, playerHp: player.hp, playerStr: player.str, playerKi: player.ki, playerSpd: player.spd,
+        playerMaxCc: player.maxCc, playerCc: player.cc,
+        enemyFormId, enemyName: enemy.name, enemyForm: enemy.form, enemyLevel: enemy.level,
+        enemyMaxHp: enemy.maxHp, enemyHp: enemy.hp, enemyStr: enemy.str, enemyKi: enemy.ki, enemySpd: enemy.spd,
+        enemyMaxCc: enemy.maxCc, enemyCc: enemy.cc,
+        playerPos: player.battlePos, enemyPos: enemy.battlePos,
+        playerDeck: { drawPile: deckState.drawPile, hand: deckState.hand, discardPile: deckState.discardPile },
+        enemyDeck: { drawPile: eDeckState.drawPile, hand: eDeckState.hand, discardPile: eDeckState.discardPile },
+        playerLimits: [], playerFighterLimits: player.limits ?? [],
+        firstAttacker: turnOwnerRef.current ?? 'player',
+        seed: 4242,
+      }),
+      context: {
+        playerFormId, enemyFormId,
+        overviewBackground: scenario.overviewBackground,
+        actionBackground: scenario.actionBackground,
+        specialActionBackground: SPECIAL_ACTION_BACKGROUND,
+      },
+    });
+  }
+  // Presenter M8.C1: consume los cues de MOVE/GUARD (poses move_front/
+  // move_back/guard y posiciones) — el Presenter NUNCA muta BattleState.
+  // El timeline es ACUMULATIVO (todo el log) y el resto del gameplay sigue
+  // legacy: solo se aplican los cues migrados del LOTE recién despachado
+  // (sourceEvent POSITION_CHANGED / GUARD_STARTED y logicalTick del lote).
+  const pendingLotStart = useRef(-1);
+  const [engineTick, setEngineTick] = useState(0);
+  const presenter = useMemo<BattlePresenter>(() => ({
+    consume({ timeline }) {
+      const lotStart = pendingLotStart.current;
+      if (lotStart < 0) return;
+      for (const en of timeline.entries) {
+        if (en.logicalTick < lotStart) continue;
+        if (en.sourceEvent !== 'POSITION_CHANGED' && en.sourceEvent !== 'GUARD_STARTED') continue;
+        const cue = en.cue;
+        if (cue.type === 'FIGHTER_POSE') {
+          // La pose va SIEMPRE al fighter de cue.side (MOVE/GUARD afectan a
+          // su propio luchador). role ACTOR/TARGET es relativo a la acción.
+          if (cue.side === 'player') setPlayerPose(cue.pose); else setEnemyPose(cue.pose);
+        }
+      }
+      setEngineTick(v => v + 1);
+    },
+  }), []);
+  const rtApi = useBattleRuntime({ runtime: runtimeRef.current, presenter });
+  const { can: engineCan } = rtApi;
+  // Snapshots proyectadas (selectores sobre runtime.state — autoridad).
+  const enginePlayerPos = rtApi.runtime.state.player.battlePos;
+  const engineEnemyPos = rtApi.runtime.state.enemy.battlePos;
+  const enginePlayerGuard = rtApi.runtime.state.playerGuard;
+  void engineTick;
+
+  /**
+   * M8.C1 — despacha al Engine con la ventana del lote marcada para el
+   * Presenter. PUENTE TEMPORAL de cutover: mientras las fases sigan en
+   * legacy (main.tsx setPhase), el Engine necesita el contexto real para
+   * canExecute — se copia la fase ACTUAL (no se decide aquí; es el estado
+   * observado del combate). Cuando M8 migre las fases, este sync desaparece
+   * (el Engine será la única fuente).
+   */
+  const engineAct = (cmd: Parameters<BattleRuntime['dispatch']>[0], opts?: Parameters<BattleRuntime['dispatch']>[1]) => {
+    const rt = rtApi.runtime;
+    rt.state = { ...rt.state, phase: phase as BattleState['phase'] };
+    pendingLotStart.current = rt.state.tick;
+    const res = rt.dispatch(cmd, opts);
+    pendingLotStart.current = -1;
+    // Refresh manual: el hook useBattleRuntime.devuelve void en dispatch;
+    // aquí necesitamos el DispatchResult (ok/reason) para proyectar.
+    setEngineTick(v => v + 1);
+    return res;
+  };
+  const engineDispatch: (cmd: Parameters<BattleRuntime['dispatch']>[0], opts?: Parameters<BattleRuntime['dispatch']>[1]) => ReturnType<BattleRuntime['dispatch']> = engineAct;
   // Cuadro de diálogo GBC: mensaje grande blanco/negro durante las acciones
   const [gbcMsg, setGbcMsg] = useState<string | null>(null);
   const gbcTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -2239,8 +2329,11 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
     if (action === 'gather') { gatherPower(); return; }
     if (action === 'guard') {
       Sfx.select();
+      // M8.C1 — GUARD a través del Engine (guardia = snapshot del runtime)
+      engineAct({ type: 'GUARD' }, { side: 'player' });
+      const g = rtApi.runtime.state.playerGuard;
+      if (g) setPlayerGuard({ type: g }); // ENGINE-SNAPSHOT (M8.C1)
       setPlayerPose('guard');
-      setPlayerGuard({ type: 'reduce' });
       addLog(`${player.name} ${t('battle.defends')} (ENDURANCE — próximo golpe a la mitad)`);
       setTimeout(() => { setPlayerPose('idle'); advanceExchange(); }, gbcMs(32));
       return;
@@ -2459,33 +2552,39 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
       playCardCinematic(card, 'enemy', onDone);
     };
     if (choice === 'move' && posOrAxis) {
-      // BASIC → MOVE (manual GBC 2026-08-12): SOLO 2 ejes, cada uno modifica
-      // UN único eje y conserva el otro. Nada de teletransporte diagonal
-      // (Air/Back → Ground/Front es imposible en una sola acción).
+      // M8.C1 — MOVE a través del Engine: el destino (y el empuje GBC §9)
+      // los calcula movementReducer (applyMoveAxis). React NO computa
+      // posiciones: proyecta la snapshot autoritativa runtime.state.
       const axis = posOrAxis as MoveAxis;
-      const target = applyMoveAxis(player.battlePos, axis);
-      Sfx.move();
-      // Dirección del dash (GBC): mover al FRENTE = mirar al rival (move_front),
-      // retroceder al BACK = dar la espalda (move_back, espejo). El eje vertical
-      // conserva la profundidad, así que la pose sigue al depth resultante.
-      setPlayerPose(POSITION_DATA[target].depth === 'FRONT' ? 'move_front' : 'move_back');
-      setPlayer(prev => ({ ...prev, battlePos: target }));
-      const pd = POSITION_DATA[target];
       const axisLabel = axis === 'HORIZONTAL' ? '↔' : '↕';
-      addLog(`${player.name} MOVE ${axisLabel} → ${pd.altitude}/${pd.depth} (${positionLabel(target)})`);
-      // Manual GBC §9 (SOLO eje horizontal): si avanzas a FRONT y el rival
-      // está en BACK, el rival pasa a FRONT (el frente empuja al frente).
-      // Vertical jamás modifica Front/Back.
-      if (axis === 'HORIZONTAL' && pd.depth === 'FRONT' && POSITION_DATA[enemy.battlePos].depth === 'BACK') {
-        const pushed: BattlePosition = POSITION_DATA[enemy.battlePos].altitude === 'AIR' ? BattlePosition.UP_FRONT : BattlePosition.DOWN_FRONT;
-        setEnemy(prev => ({ ...prev, battlePos: pushed }));
+      const res = engineAct({ type: 'MOVE', axis }, { side: 'player' });
+      if (!res.ok) { addLog(`${player.name} no puede moverse (${res.reason})`); setPhase('defend'); return; }
+      // ── Proyección de la snapshot (posición final = autoridad Engine) ──
+      const target = rtApi.runtime.state.player.battlePos;
+      const pushed = rtApi.runtime.state.enemy.battlePos;
+      const moved = target !== player.battlePos;
+      const pushHappened = pushed !== enemy.battlePos;
+      Sfx.move();
+      if (moved) {
+        // Pose de dash según la profundidad resultante (semántica del cue
+        // POSITION_CHANGED → move_front/move_back — el Presenter ya la
+        // aplicó vía timeline; aquí solo se refleja la snapshot).
+        setPlayer(prev => ({ ...prev, battlePos: target })); // ENGINE-SNAPSHOT (M8.C1)
+        const pd = POSITION_DATA[target];
+        addLog(`${player.name} MOVE ${axisLabel} → ${pd.altitude}/${pd.depth} (${positionLabel(target)})`);
+      }
+      if (pushHappened) {
+        // Empuje GBC §9 (el Engine lo emitió como POSITION_CHANGED enemigo)
+        setEnemy(prev => ({ ...prev, battlePos: pushed })); // ENGINE-SNAPSHOT (M8.C1)
         addLog(`${enemy.name} retrocede a FRONT (empuje)`);
       }
-      runEnemyCinematic(() => resolveEnemyAttack(true, target, card));
+      runEnemyCinematic(() => resolveEnemyAttack(true, rtApi.runtime.state.player.battlePos, card));
     } else {
-      // BASIC → DEFENSE: quedarse y defender (reduce daño)
+      // M8.C1 — GUARD a través del Engine: guardia = snapshot del runtime.
+      engineAct({ type: 'GUARD' }, { side: 'player' });
+      const g = rtApi.runtime.state.playerGuard;
+      if (g) setPlayerGuard({ type: g }); // ENGINE-SNAPSHOT (M8.C1)
       setPlayerPose('guard');
-      setPlayerGuard({ type: 'reduce' });
       addLog(`${player.name} ${t('battle.defends')} (−50% ${t('battle.dmg')})`);
       runEnemyCinematic(() => resolveEnemyAttack(true, player.battlePos, card));
     }

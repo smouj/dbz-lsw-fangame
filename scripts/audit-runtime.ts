@@ -13,6 +13,9 @@ const SRC = 'src/main.tsx';
 const src = readFileSync(SRC, 'utf8');
 
 // ── Patrones de mutación de gameplay (autoridad legacy) ──
+// Las proyecciones marcadas con `// ENGINE-SNAPSHOT` son la interfaz de
+// presentación (la DECISIÓN la tomó el Engine; React solo refleja la
+// snapshot) — no cuentan como gap.
 const GAMEPLAY_MUTATORS: Array<{ name: string; re: RegExp; note: string }> = [
   { name: 'setHp', re: /\bset(?:Player|Enemy)\([^)]*\bhp\s*:/g, note: 'mutación HP fuera del Engine' },
   { name: 'setCc', re: /\bset(?:Player|Enemy)\([^)]*\bcc\s*:/g, note: 'mutación CC fuera del Engine' },
@@ -37,15 +40,24 @@ function count(re: RegExp, text: string): number {
   return (text.match(re) ?? []).length;
 }
 
+/** Cuenta matches EXCLUYENDO las proyecciones ENGINE-SNAPSHOT (autorizadas). */
+function countAuthoritative(re: RegExp, text: string): number {
+  const lines = text.split('\n');
+  return lines.filter(l => !l.includes('ENGINE-SNAPSHOT') && (l.match(re) ?? []).length > 0).length;
+}
+
 console.log('═══ audit:runtime — restos de autoridad legacy (M8) ═══\n');
 console.log(`Fuente: ${SRC} (${src.split('\n').length} líneas)\n`);
 
 let total = 0;
+let projections = 0;
 console.log('── Mutaciones de gameplay fuera del Engine ──');
 for (const p of GAMEPLAY_MUTATORS) {
-  const n = count(p.re, src);
+  const n = countAuthoritative(p.re, src);
+  const proj = count(p.re, src) - n;
   total += n;
-  console.log(`  ${n > 0 ? '⚠' : '✓'} ${p.name.padEnd(16)} ${String(n).padStart(3)}  ${p.note}`);
+  projections += proj;
+  console.log(`  ${n > 0 ? '⚠' : '✓'} ${p.name.padEnd(16)} ${String(n).padStart(3)}  ${p.note}${proj > 0 ? `  (+${proj} ENGINE-SNAPSHOT autorizadas)` : ''}`);
 }
 console.log('\n── Aleatoriedad / timers en rutas gameplay ──');
 for (const p of GAMEPLAY_RANDOM) {
@@ -64,6 +76,6 @@ console.log(`\n── Dimensión del cutover ──`);
 console.log(`  BattleScreen: ~${battleLineCount} líneas (${Math.round(battleLineCount / src.split('\n').length * 100)}% de main.tsx)`);
 console.log(`  Gaps autoritativos detectados: ${total}`);
 
-console.log(`\n═══ RESULTADO: ${total} gaps legacy ═══`);
+console.log(`\n═══ RESULTADO: ${total} gaps legacy (${projections} proyecciones ENGINE-SNAPSHOT autorizadas) ═══`);
 console.log('Objetivo M8: migrar cada gap a BattleRuntime.dispatch/advance (slices verticales).');
 if (total > 0) process.exitCode = 2; // audit informativo: exit 2 = gaps pendientes (no fallo)

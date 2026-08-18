@@ -35,6 +35,35 @@
    "tick": 0,
    "type": "FIGHTER_POSITION",
    "role": "TARGET",
+   "side": "enemy",
+   "position": "DOWN_FRONT",
+   "logicalTick": 0,
+   "source": "POSITION_CHANGED",
+   "fidelity": "NONE"
+  },
+  {
+   "tick": 0,
+   "type": "FIGHTER_POSE",
+   "durationTicks": 8,
+   "role": "TARGET",
+   "side": "enemy",
+   "pose": "move_front",
+   "logicalTick": 0,
+   "source": "POSITION_CHANGED",
+   "fidelity": "NONE"
+  },
+  {
+   "tick": 0,
+   "type": "AUDIO",
+   "cue": "step",
+   "logicalTick": 0,
+   "source": "POSITION_CHANGED",
+   "fidelity": "NONE"
+  },
+  {
+   "tick": 0,
+   "type": "FIGHTER_POSITION",
+   "role": "TARGET",
    "side": "player",
    "position": "UP_FRONT",
    "logicalTick": 0,
