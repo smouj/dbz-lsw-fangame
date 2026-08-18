@@ -983,6 +983,22 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   background-position: center center !important;
   image-rendering: pixelated;
 }
+/* Plano ESPECIAL/transición (special_action.png — blanco con bandas azules
+   arriba/abajo): el cover RECORTA las bandas. Se escala a la ALTURA exacta
+   del campo (auto 100%) y se TESELA en horizontal — las bandas siempre
+   visibles, sin recorte ni líneas negras laterales (el asset es uniforme
+   en X: bandas sólidas → tesela sin costuras). */
+.battle-bg.authentic.special {
+  background-size: auto 100% !important;
+  background-repeat: repeat-x !important;
+  background-position: center center !important;
+}
+/* En el plano especial (blanco con bandas) la atmósfera oscurece las
+   bandas — se reduce a un 25% para que el blanco/azul se lean claros */
+.battle-bg.authentic.special::after,
+.battle-bg.authentic.special::before {
+  opacity: .25;
+}
 
 /* Master shot Pixi (dev flag ?pixiField=1): contenedor de letterbox centrado.
    El canvas lógico 320×160 (2:1) se escala a un múltiplo ENTERO y se centra;

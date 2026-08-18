@@ -410,7 +410,7 @@ export function HudModule() {
             </div>
 
             <div className="battlefield">
-              <div className="battle-bg authentic" style={{ backgroundImage: `url(${battleBgUrl})` }} />
+              <div className={`battle-bg authentic ${actionSpecial ? 'special' : ''}`} style={{ backgroundImage: `url(${battleBgUrl})` }} />
               <div className="battlefield-fighters">
                 {(() => {
                   // ANCLAJE REAL (fuente única): los fighters se posicionan con

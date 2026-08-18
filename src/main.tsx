@@ -3022,7 +3022,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
             />
           </Suspense>
         )}
-        <div className="battle-bg authentic" style={{ backgroundImage: `url(${battleBgUrl})` }} />
+        <div className={`battle-bg authentic ${viewMode === 'SPECIAL_ACTION' ? 'special' : ''}`} style={{ backgroundImage: `url(${battleBgUrl})` }} />
         {/* Los fighters quedan SIEMPRE en el DOM: la transición OVERVIEW ↔ ACTION
             se hace con fade/scale suave por CSS (clase .field-action), no desmontando
             los sprites de golpe (2026-08-12: antes suppressFieldActors los eliminaba
