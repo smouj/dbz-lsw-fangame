@@ -3,6 +3,7 @@
  "frameCount": 57,
  "frames": [
   {
+   "_manifestName": "krillin_base_idle_00",
    "sourceId": "krillin_base/001.png",
    "canonicalId": "krillin_base.idle.idle.idle.00.001",
    "characterId": "krillin",
@@ -31,6 +32,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "krillin_base_guard_01",
    "sourceId": "krillin_base/002.png",
    "canonicalId": "krillin_base.defense.hold.guard.01.002",
    "characterId": "krillin",
@@ -56,6 +58,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "krillin_base_guard_02",
    "sourceId": "krillin_base/003.png",
    "canonicalId": "krillin_base.defense.recover.guard.02.003",
    "characterId": "krillin",
@@ -104,6 +107,7 @@
    "note": "bucket forense: idle_or_stance"
   },
   {
+   "_manifestName": "krillin_base_evade_01",
    "sourceId": "krillin_base/005.png",
    "canonicalId": "krillin_base.defense.recover.evade.01.005",
    "characterId": "krillin",
@@ -128,6 +132,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "krillin_base_evade_00",
    "sourceId": "krillin_base/006.png",
    "canonicalId": "krillin_base.defense.start.evade.00.006",
    "characterId": "krillin",
@@ -152,16 +157,17 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "krillin_base_move_front_01",
    "sourceId": "krillin_base/007.png",
-   "canonicalId": "krillin_base.movement.end.move_front.01.007",
+   "canonicalId": "krillin_base.movement.start.move_back.00.007.png",
    "characterId": "krillin",
    "formId": "krillin_base",
    "assetType": "actor_frame",
    "view": "FIELD",
    "family": "movement",
-   "role": "end",
-   "variant": "move_front",
-   "sequenceIndex": 1,
+   "role": "start",
+   "variant": "move_back",
+   "sequenceIndex": 0,
    "runtimePoses": [
     "move_front",
     "move_back"
@@ -177,6 +183,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "krillin_base_move_front_00",
    "sourceId": "krillin_base/008.png",
    "canonicalId": "krillin_base.movement.start.move_front.00.008",
    "characterId": "krillin",
@@ -294,6 +301,7 @@
    "note": "bucket forense: battle_aura_actor_composite"
   },
   {
+   "_manifestName": "krillin_base_hurt_00",
    "sourceId": "krillin_base/013.png",
    "canonicalId": "krillin_base.reaction.hurt_light.hurt.00.013",
    "characterId": "krillin",
@@ -318,6 +326,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "krillin_base_hurt_01",
    "sourceId": "krillin_base/014.png",
    "canonicalId": "krillin_base.reaction.hurt_heavy.hurt.01.014",
    "characterId": "krillin",
@@ -342,6 +351,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "krillin_base_hurt_02",
    "sourceId": "krillin_base/015.png",
    "canonicalId": "krillin_base.reaction.hurt_heavy.hurt.02.015",
    "characterId": "krillin",
@@ -366,6 +376,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "krillin_base_hurt_03",
    "sourceId": "krillin_base/016.png",
    "canonicalId": "krillin_base.reaction.hurt_heavy.hurt.03.016",
    "characterId": "krillin",
@@ -390,6 +401,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "krillin_base_hurt_04",
    "sourceId": "krillin_base/017.png",
    "canonicalId": "krillin_base.reaction.hurt_heavy.hurt.04.017",
    "characterId": "krillin",
@@ -414,16 +426,17 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "krillin_base_attack_fwd_04",
    "sourceId": "krillin_base/018.png",
-   "canonicalId": "krillin_base.melee.contact.attack_forward.04.018",
+   "canonicalId": "krillin_base.melee.strike.punch_left.02.018.png",
    "characterId": "krillin",
    "formId": "krillin_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "contact",
-   "variant": "attack_forward",
-   "sequenceIndex": 4,
+   "role": "strike",
+   "variant": "punch_left",
+   "sequenceIndex": 2,
    "runtimePoses": [
     "attack_fwd",
     "punch_left"
@@ -439,16 +452,17 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "krillin_base_attack_fwd_01",
    "sourceId": "krillin_base/019.png",
-   "canonicalId": "krillin_base.melee.windup.attack_forward.01.019",
+   "canonicalId": "krillin_base.reaction.knockback_up.up.00.019.png",
    "characterId": "krillin",
    "formId": "krillin_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "windup",
-   "variant": "attack_forward",
-   "sequenceIndex": 1,
+   "family": "reaction",
+   "role": "knockback_up",
+   "variant": "up",
+   "sequenceIndex": 0,
    "runtimePoses": [
     "attack_fwd",
     "punch_right",
@@ -465,16 +479,17 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "krillin_base_attack_fwd_05",
    "sourceId": "krillin_base/020.png",
-   "canonicalId": "krillin_base.melee.follow_through.attack_forward.05.020",
+   "canonicalId": "krillin_base.melee.strike.punch_left.03.020.png",
    "characterId": "krillin",
    "formId": "krillin_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "follow_through",
-   "variant": "attack_forward",
-   "sequenceIndex": 5,
+   "role": "strike",
+   "variant": "punch_left",
+   "sequenceIndex": 3,
    "runtimePoses": [
     "attack_fwd",
     "punch_left"
@@ -513,16 +528,17 @@
    "note": "bucket forense: movement_or_attack_pose"
   },
   {
+   "_manifestName": "krillin_base_attack_fwd_06",
    "sourceId": "krillin_base/022.png",
-   "canonicalId": "krillin_base.melee.recover.attack_forward.06.022",
+   "canonicalId": "krillin_base.melee.strike.punch_left.04.022.png",
    "characterId": "krillin",
    "formId": "krillin_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "recover",
-   "variant": "attack_forward",
-   "sequenceIndex": 6,
+   "role": "strike",
+   "variant": "punch_left",
+   "sequenceIndex": 4,
    "runtimePoses": [
     "attack_fwd",
     "punch_left"
@@ -538,16 +554,17 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "krillin_base_attack_ud_01",
    "sourceId": "krillin_base/023.png",
-   "canonicalId": "krillin_base.melee.windup.attack_vertical.01.023",
+   "canonicalId": "krillin_base.reaction.knockback_back.back.00.023.png",
    "characterId": "krillin",
    "formId": "krillin_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "windup",
-   "variant": "attack_vertical",
-   "sequenceIndex": 1,
+   "family": "reaction",
+   "role": "knockback_back",
+   "variant": "back",
+   "sequenceIndex": 0,
    "runtimePoses": [
     "attack_ud",
     "knockback_back"
@@ -563,6 +580,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "krillin_base_attack_ud_02",
    "sourceId": "krillin_base/024.png",
    "canonicalId": "krillin_base.melee.contact.attack_vertical.02.024",
    "characterId": "krillin",
@@ -587,16 +605,17 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "krillin_base_attack_ud_03",
    "sourceId": "krillin_base/025.png",
-   "canonicalId": "krillin_base.melee.recover.attack_vertical.03.025",
+   "canonicalId": "krillin_base.reaction.knockback_down.down.00.025.png",
    "characterId": "krillin",
    "formId": "krillin_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "recover",
-   "variant": "attack_vertical",
-   "sequenceIndex": 3,
+   "family": "reaction",
+   "role": "knockback_down",
+   "variant": "down",
+   "sequenceIndex": 0,
    "runtimePoses": [
     "attack_ud",
     "knockback_down"
@@ -612,16 +631,17 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "krillin_base_attack_fwd_01",
    "sourceId": "krillin_base/026.png",
-   "canonicalId": "krillin_base.melee.windup.attack_forward.01.026",
+   "canonicalId": "krillin_base.reaction.knockback_up.up.00.026.png",
    "characterId": "krillin",
    "formId": "krillin_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "windup",
-   "variant": "attack_forward",
-   "sequenceIndex": 1,
+   "family": "reaction",
+   "role": "knockback_up",
+   "variant": "up",
+   "sequenceIndex": 0,
    "runtimePoses": [
     "attack_fwd",
     "punch_right",
@@ -638,6 +658,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "krillin_base_attack_fwd_00",
    "sourceId": "krillin_base/027.png",
    "canonicalId": "krillin_base.melee.ready.attack_forward.00.027",
    "characterId": "krillin",
@@ -663,16 +684,17 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "krillin_base_attack_fwd_03",
    "sourceId": "krillin_base/028.png",
-   "canonicalId": "krillin_base.melee.strike.attack_forward.03.028",
+   "canonicalId": "krillin_base.melee.strike.kick_right.00.028.png",
    "characterId": "krillin",
    "formId": "krillin_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
    "role": "strike",
-   "variant": "attack_forward",
-   "sequenceIndex": 3,
+   "variant": "kick_right",
+   "sequenceIndex": 0,
    "runtimePoses": [
     "attack_fwd",
     "punch_left",
@@ -689,16 +711,17 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "krillin_base_attack_fwd_02",
    "sourceId": "krillin_base/029.png",
-   "canonicalId": "krillin_base.melee.travel.attack_forward.02.029",
+   "canonicalId": "krillin_base.melee.strike.kick_right.01.029.png",
    "characterId": "krillin",
    "formId": "krillin_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "travel",
-   "variant": "attack_forward",
-   "sequenceIndex": 2,
+   "role": "strike",
+   "variant": "kick_right",
+   "sequenceIndex": 1,
    "runtimePoses": [
     "attack_fwd",
     "punch_right",
@@ -738,6 +761,7 @@
    "note": "bucket forense: beam_or_projectile_horizontal"
   },
   {
+   "_manifestName": "krillin_base_aura_power_00",
    "sourceId": "krillin_base/031.png",
    "canonicalId": "krillin_base.effect.aura.aura_power.00.031",
    "characterId": "krillin",
@@ -762,6 +786,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "krillin_base_aura_power_01",
    "sourceId": "krillin_base/032.png",
    "canonicalId": "krillin_base.effect.aura.aura_power.01.032",
    "characterId": "krillin",
@@ -786,6 +811,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "krillin_base_aura_power_02",
    "sourceId": "krillin_base/033.png",
    "canonicalId": "krillin_base.effect.aura.aura_power.02.033",
    "characterId": "krillin",
@@ -810,6 +836,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "krillin_base_beam_charge_00",
    "sourceId": "krillin_base/034.png",
    "canonicalId": "krillin_base.beam.charge_start.charge.00.034",
    "characterId": "krillin",
@@ -903,6 +930,7 @@
    "note": "bucket forense: movement_or_attack_pose"
   },
   {
+   "_manifestName": "krillin_base_beam_charge_02",
    "sourceId": "krillin_base/038.png",
    "canonicalId": "krillin_base.beam.charge_hold.charge.02.038",
    "characterId": "krillin",
@@ -927,6 +955,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "krillin_base_beam_charge_01",
    "sourceId": "krillin_base/039.png",
    "canonicalId": "krillin_base.beam.charge_start.charge.01.039",
    "characterId": "krillin",
@@ -974,6 +1003,7 @@
    "note": "bucket forense: beam_or_projectile_horizontal"
   },
   {
+   "_manifestName": "krillin_base_beam_charge_02",
    "sourceId": "krillin_base/041.png",
    "canonicalId": "krillin_base.beam.charge_hold.charge.02.041",
    "characterId": "krillin",
@@ -998,6 +1028,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "krillin_base_beam_charge_01",
    "sourceId": "krillin_base/042.png",
    "canonicalId": "krillin_base.beam.charge_start.charge.01.042",
    "characterId": "krillin",
@@ -1022,6 +1053,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "krillin_base_beam_fire_01",
    "sourceId": "krillin_base/043.png",
    "canonicalId": "krillin_base.beam.release.fire.01.043",
    "characterId": "krillin",
@@ -1092,15 +1124,16 @@
    "note": "bucket forense: character_plus_aura_or_burst"
   },
   {
+   "_manifestName": "krillin_base_beam_fire_03",
    "sourceId": "krillin_base/046.png",
-   "canonicalId": "krillin_base.power.gather_power.gather_power.00.046.png",
+   "canonicalId": "krillin_base.power.power_up.power_up.00.046.png",
    "characterId": "krillin",
    "formId": "krillin_base",
    "assetType": "composite",
    "view": "ACTION_DUEL",
    "family": "power",
-   "role": "gather_power",
-   "variant": "gather_power",
+   "role": "power_up",
+   "variant": "power_up",
    "sequenceIndex": 0,
    "runtimePoses": [
     "beam_fire",
@@ -1164,6 +1197,7 @@
    "note": "bucket forense: character_plus_aura_or_burst"
   },
   {
+   "_manifestName": "krillin_base_beam_fire_00",
    "sourceId": "krillin_base/049.png",
    "canonicalId": "krillin_base.beam.release.fire.00.049",
    "characterId": "krillin",
@@ -1188,6 +1222,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "krillin_base_aura_support_00",
    "sourceId": "krillin_base/050.png",
    "canonicalId": "krillin_base.effect.aura.aura_support.00.050",
    "characterId": "krillin",
@@ -1212,6 +1247,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "krillin_base_aura_support_01",
    "sourceId": "krillin_base/051.png",
    "canonicalId": "krillin_base.effect.aura.aura_support.01.051",
    "characterId": "krillin",
@@ -1236,6 +1272,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "krillin_base_aura_support_02",
    "sourceId": "krillin_base/052.png",
    "canonicalId": "krillin_base.effect.aura.aura_support.02.052",
    "characterId": "krillin",
@@ -1260,6 +1297,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "krillin_base_attack_ud_00",
    "sourceId": "krillin_base/000_attack_ud.png",
    "canonicalId": "krillin_base.melee.ready.attack_vertical.00.000_attack_ud",
    "characterId": "krillin",
@@ -1284,6 +1322,7 @@
    "frameKind": "fixed_only"
   },
   {
+   "_manifestName": "krillin_base_beam_fire_02",
    "sourceId": "krillin_base/001_beam_fire.png",
    "canonicalId": "krillin_base.beam.release.fire.02.001_beam_fire",
    "characterId": "krillin",
@@ -1308,6 +1347,7 @@
    "frameKind": "fixed_only"
   },
   {
+   "_manifestName": "krillin_base_beam_fire_04",
    "sourceId": "krillin_base/002_beam_fire.png",
    "canonicalId": "krillin_base.beam.release.fire.04.002_beam_fire",
    "characterId": "krillin",

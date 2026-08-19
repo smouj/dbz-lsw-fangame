@@ -3,6 +3,7 @@
  "frameCount": 57,
  "frames": [
   {
+   "_manifestName": "super_buu_base_idle_00",
    "sourceId": "super_buu_base/001.png",
    "canonicalId": "super_buu_base.idle.idle.idle.00.001",
    "characterId": "super_buu",
@@ -32,6 +33,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "super_buu_base_guard_01",
    "sourceId": "super_buu_base/002.png",
    "canonicalId": "super_buu_base.defense.hold.guard.01.002",
    "characterId": "super_buu",
@@ -57,6 +59,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "super_buu_base_guard_02",
    "sourceId": "super_buu_base/003.png",
    "canonicalId": "super_buu_base.defense.recover.guard.02.003",
    "characterId": "super_buu",
@@ -151,6 +154,7 @@
    "note": "bucket forense: multi_evidence_speedlines_idle_or_stance"
   },
   {
+   "_manifestName": "super_buu_base_move_front_01",
    "sourceId": "super_buu_base/007.png",
    "canonicalId": "super_buu_base.defense.start.evade.00.007.png",
    "characterId": "super_buu",
@@ -177,6 +181,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "super_buu_base_move_front_00",
    "sourceId": "super_buu_base/008.png",
    "canonicalId": "super_buu_base.movement.start.move_front.00.008",
    "characterId": "super_buu",
@@ -202,6 +207,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "super_buu_base_gather_power_01",
    "sourceId": "super_buu_base/009.png",
    "canonicalId": "super_buu_base.power.gather_power.gather_power.01.009",
    "characterId": "super_buu",
@@ -227,6 +233,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "super_buu_base_gather_power_00",
    "sourceId": "super_buu_base/010.png",
    "canonicalId": "super_buu_base.power.gather_power.gather_power.00.010",
    "characterId": "super_buu",
@@ -321,16 +328,17 @@
    "note": "bucket forense: idle_or_stance"
   },
   {
+   "_manifestName": "super_buu_base_attack_fwd_05",
    "sourceId": "super_buu_base/014.png",
-   "canonicalId": "super_buu_base.melee.follow_through.attack_forward.05.014",
+   "canonicalId": "super_buu_base.melee.strike.punch_left.03.014.png",
    "characterId": "super_buu",
    "formId": "super_buu_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "follow_through",
-   "variant": "attack_forward",
-   "sequenceIndex": 5,
+   "role": "strike",
+   "variant": "punch_left",
+   "sequenceIndex": 3,
    "runtimePoses": [
     "attack_fwd",
     "punch_left"
@@ -346,6 +354,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "super_buu_base_hurt_00",
    "sourceId": "super_buu_base/015.png",
    "canonicalId": "super_buu_base.reaction.hurt_light.hurt.00.015",
    "characterId": "super_buu",
@@ -370,6 +379,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "super_buu_base_knockback_back_00",
    "sourceId": "super_buu_base/016.png",
    "canonicalId": "super_buu_base.reaction.knockback_back.back.00.016",
    "characterId": "super_buu",
@@ -394,6 +404,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "super_buu_base_attack_fwd_02",
    "sourceId": "super_buu_base/017.png",
    "canonicalId": "super_buu_base.melee.travel.attack_forward.02.017",
    "characterId": "super_buu",
@@ -419,16 +430,17 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "super_buu_base_attack_fwd_06",
    "sourceId": "super_buu_base/018.png",
-   "canonicalId": "super_buu_base.melee.recover.attack_forward.06.018",
+   "canonicalId": "super_buu_base.melee.strike.punch_left.04.018.png",
    "characterId": "super_buu",
    "formId": "super_buu_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "recover",
-   "variant": "attack_forward",
-   "sequenceIndex": 6,
+   "role": "strike",
+   "variant": "punch_left",
+   "sequenceIndex": 4,
    "runtimePoses": [
     "attack_fwd",
     "punch_left"
@@ -444,6 +456,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "super_buu_base_attack_ud_00",
    "sourceId": "super_buu_base/019.png",
    "canonicalId": "super_buu_base.melee.ready.attack_vertical.00.019",
    "characterId": "super_buu",
@@ -468,16 +481,17 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "super_buu_base_attack_ud_01",
    "sourceId": "super_buu_base/020.png",
-   "canonicalId": "super_buu_base.melee.windup.attack_vertical.01.020",
+   "canonicalId": "super_buu_base.reaction.knockback_up.up.00.020.png",
    "characterId": "super_buu",
    "formId": "super_buu_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "windup",
-   "variant": "attack_vertical",
-   "sequenceIndex": 1,
+   "family": "reaction",
+   "role": "knockback_up",
+   "variant": "up",
+   "sequenceIndex": 0,
    "runtimePoses": [
     "attack_ud",
     "knockback_up"
@@ -493,6 +507,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "super_buu_base_attack_ud_02",
    "sourceId": "super_buu_base/021.png",
    "canonicalId": "super_buu_base.melee.contact.attack_vertical.02.021",
    "characterId": "super_buu",
@@ -517,16 +532,17 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "super_buu_base_attack_ud_03",
    "sourceId": "super_buu_base/022.png",
-   "canonicalId": "super_buu_base.melee.recover.attack_vertical.03.022",
+   "canonicalId": "super_buu_base.reaction.knockback_down.down.00.022.png",
    "characterId": "super_buu",
    "formId": "super_buu_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "recover",
-   "variant": "attack_vertical",
-   "sequenceIndex": 3,
+   "family": "reaction",
+   "role": "knockback_down",
+   "variant": "down",
+   "sequenceIndex": 0,
    "runtimePoses": [
     "attack_ud",
     "knockback_down"
@@ -542,6 +558,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "super_buu_base_attack_fwd_00",
    "sourceId": "super_buu_base/023.png",
    "canonicalId": "super_buu_base.melee.ready.attack_forward.00.023",
    "characterId": "super_buu",
@@ -567,6 +584,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "super_buu_base_attack_fwd_01",
    "sourceId": "super_buu_base/024.png",
    "canonicalId": "super_buu_base.melee.windup.attack_forward.01.024",
    "characterId": "super_buu",
@@ -592,6 +610,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "super_buu_base_kick_right_00",
    "sourceId": "super_buu_base/025.png",
    "canonicalId": "super_buu_base.melee.strike.kick_right.00.025",
    "characterId": "super_buu",
@@ -616,16 +635,17 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "super_buu_base_attack_fwd_04",
    "sourceId": "super_buu_base/026.png",
-   "canonicalId": "super_buu_base.melee.contact.attack_forward.04.026",
+   "canonicalId": "super_buu_base.melee.strike.kick_right.01.026.png",
    "characterId": "super_buu",
    "formId": "super_buu_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "contact",
-   "variant": "attack_forward",
-   "sequenceIndex": 4,
+   "role": "strike",
+   "variant": "kick_right",
+   "sequenceIndex": 1,
    "runtimePoses": [
     "attack_fwd",
     "punch_left",
@@ -734,6 +754,7 @@
    "note": "bucket forense: battle_aura_actor_composite"
   },
   {
+   "_manifestName": "super_buu_base_beam_charge_00",
    "sourceId": "super_buu_base/031.png",
    "canonicalId": "super_buu_base.beam.charge_start.charge.00.031",
    "characterId": "super_buu",
@@ -781,6 +802,7 @@
    "note": "bucket forense: projectiles_beams"
   },
   {
+   "_manifestName": "super_buu_base_aura_power_00",
    "sourceId": "super_buu_base/033.png",
    "canonicalId": "super_buu_base.effect.aura.aura_power.00.033",
    "characterId": "super_buu",
@@ -805,6 +827,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "super_buu_base_aura_power_01",
    "sourceId": "super_buu_base/034.png",
    "canonicalId": "super_buu_base.effect.aura.aura_power.01.034",
    "characterId": "super_buu",
@@ -829,6 +852,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "super_buu_base_aura_power_02",
    "sourceId": "super_buu_base/035.png",
    "canonicalId": "super_buu_base.effect.aura.aura_power.02.035",
    "characterId": "super_buu",
@@ -922,6 +946,7 @@
    "note": "bucket forense: multi_evidence_orbs_rings_bursts_movement_or_attack_pose"
   },
   {
+   "_manifestName": "super_buu_base_beam_charge_01",
    "sourceId": "super_buu_base/039.png",
    "canonicalId": "super_buu_base.beam.charge_start.charge.01.039",
    "characterId": "super_buu",
@@ -946,6 +971,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "super_buu_base_beam_charge_02",
    "sourceId": "super_buu_base/040.png",
    "canonicalId": "super_buu_base.beam.charge_start.charge.02.040",
    "characterId": "super_buu",
@@ -1062,6 +1088,7 @@
    "note": "bucket forense: multi_evidence_projectiles_beams_movement_or_attack_pose_orbs_rings_bursts"
   },
   {
+   "_manifestName": "super_buu_base_beam_charge_06",
    "sourceId": "super_buu_base/045.png",
    "canonicalId": "super_buu_base.beam.charge_hold.charge.06.045",
    "characterId": "super_buu",
@@ -1086,6 +1113,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "super_buu_base_beam_charge_07",
    "sourceId": "super_buu_base/046.png",
    "canonicalId": "super_buu_base.beam.charge_hold.charge.07.046",
    "characterId": "super_buu",
@@ -1110,6 +1138,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "super_buu_base_aura_support_00",
    "sourceId": "super_buu_base/047.png",
    "canonicalId": "super_buu_base.effect.aura.aura_support.00.047",
    "characterId": "super_buu",
@@ -1134,6 +1163,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "super_buu_base_aura_support_01",
    "sourceId": "super_buu_base/048.png",
    "canonicalId": "super_buu_base.effect.aura.aura_support.01.048",
    "characterId": "super_buu",
@@ -1158,6 +1188,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "super_buu_base_aura_support_02",
    "sourceId": "super_buu_base/049.png",
    "canonicalId": "super_buu_base.effect.aura.aura_support.02.049",
    "characterId": "super_buu",
@@ -1182,16 +1213,17 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "super_buu_base_attack_fwd_03",
    "sourceId": "super_buu_base/000_attack_fwd.png",
-   "canonicalId": "super_buu_base.melee.strike.attack_forward.03.000_attack_fwd",
+   "canonicalId": "super_buu_base.melee.strike.punch_left.01.000_attack_fwd.png",
    "characterId": "super_buu",
    "formId": "super_buu_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
    "role": "strike",
-   "variant": "attack_forward",
-   "sequenceIndex": 3,
+   "variant": "punch_left",
+   "sequenceIndex": 1,
    "runtimePoses": [
     "attack_fwd",
     "punch_left"
@@ -1207,6 +1239,7 @@
    "frameKind": "fixed_only"
   },
   {
+   "_manifestName": "super_buu_base_beam_charge_03",
    "sourceId": "super_buu_base/001_beam_charge.png",
    "canonicalId": "super_buu_base.beam.charge_start.charge.03.001_beam_charge",
    "characterId": "super_buu",
@@ -1231,6 +1264,7 @@
    "frameKind": "fixed_only"
   },
   {
+   "_manifestName": "super_buu_base_beam_charge_04",
    "sourceId": "super_buu_base/002_beam_charge.png",
    "canonicalId": "super_buu_base.beam.charge_hold.charge.04.002_beam_charge",
    "characterId": "super_buu",
@@ -1255,6 +1289,7 @@
    "frameKind": "fixed_only"
   },
   {
+   "_manifestName": "super_buu_base_beam_charge_05",
    "sourceId": "super_buu_base/003_beam_charge.png",
    "canonicalId": "super_buu_base.beam.charge_hold.charge.05.003_beam_charge",
    "characterId": "super_buu",

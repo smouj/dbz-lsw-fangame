@@ -3,6 +3,7 @@
  "frameCount": 46,
  "frames": [
   {
+   "_manifestName": "vegeta_base_idle_00",
    "sourceId": "vegeta_base/001.png",
    "canonicalId": "vegeta_base.idle.idle.idle.00.001",
    "characterId": "vegeta",
@@ -31,6 +32,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "vegeta_base_guard_01",
    "sourceId": "vegeta_base/002.png",
    "canonicalId": "vegeta_base.defense.hold.guard.01.002",
    "characterId": "vegeta",
@@ -56,6 +58,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "vegeta_base_guard_02",
    "sourceId": "vegeta_base/003.png",
    "canonicalId": "vegeta_base.defense.recover.guard.02.003",
    "characterId": "vegeta",
@@ -104,6 +107,7 @@
    "note": "bucket forense: movement_or_attack_pose"
   },
   {
+   "_manifestName": "vegeta_base_evade_01",
    "sourceId": "vegeta_base/005.png",
    "canonicalId": "vegeta_base.defense.recover.evade.01.005",
    "characterId": "vegeta",
@@ -128,6 +132,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "vegeta_base_evade_00",
    "sourceId": "vegeta_base/006.png",
    "canonicalId": "vegeta_base.defense.start.evade.00.006",
    "characterId": "vegeta",
@@ -152,16 +157,17 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "vegeta_base_move_front_01",
    "sourceId": "vegeta_base/007.png",
-   "canonicalId": "vegeta_base.movement.end.move_front.01.007",
+   "canonicalId": "vegeta_base.movement.start.move_back.00.007.png",
    "characterId": "vegeta",
    "formId": "vegeta_base",
    "assetType": "actor_frame",
    "view": "FIELD",
    "family": "movement",
-   "role": "end",
-   "variant": "move_front",
-   "sequenceIndex": 1,
+   "role": "start",
+   "variant": "move_back",
+   "sequenceIndex": 0,
    "runtimePoses": [
     "move_front",
     "move_back"
@@ -177,6 +183,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "vegeta_base_move_front_00",
    "sourceId": "vegeta_base/008.png",
    "canonicalId": "vegeta_base.movement.start.move_front.00.008",
    "characterId": "vegeta",
@@ -202,6 +209,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "vegeta_base_hurt_00",
    "sourceId": "vegeta_base/009.png",
    "canonicalId": "vegeta_base.reaction.hurt_light.hurt.00.009",
    "characterId": "vegeta",
@@ -226,6 +234,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "vegeta_base_hurt_01",
    "sourceId": "vegeta_base/010.png",
    "canonicalId": "vegeta_base.reaction.hurt_heavy.hurt.01.010",
    "characterId": "vegeta",
@@ -250,6 +259,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "vegeta_base_hurt_02",
    "sourceId": "vegeta_base/011.png",
    "canonicalId": "vegeta_base.reaction.hurt_heavy.hurt.02.011",
    "characterId": "vegeta",
@@ -274,6 +284,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "vegeta_base_hurt_03",
    "sourceId": "vegeta_base/012.png",
    "canonicalId": "vegeta_base.reaction.hurt_heavy.hurt.03.012",
    "characterId": "vegeta",
@@ -298,6 +309,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "vegeta_base_hurt_04",
    "sourceId": "vegeta_base/013.png",
    "canonicalId": "vegeta_base.reaction.hurt_heavy.hurt.04.013",
    "characterId": "vegeta",
@@ -322,16 +334,17 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "vegeta_base_attack_fwd_05",
    "sourceId": "vegeta_base/014.png",
-   "canonicalId": "vegeta_base.melee.follow_through.attack_forward.05.014",
+   "canonicalId": "vegeta_base.melee.strike.punch_left.03.014.png",
    "characterId": "vegeta",
    "formId": "vegeta_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "follow_through",
-   "variant": "attack_forward",
-   "sequenceIndex": 5,
+   "role": "strike",
+   "variant": "punch_left",
+   "sequenceIndex": 3,
    "runtimePoses": [
     "attack_fwd",
     "punch_left"
@@ -370,6 +383,7 @@
    "note": "bucket forense: movement_or_attack_pose"
   },
   {
+   "_manifestName": "vegeta_base_attack_fwd_02",
    "sourceId": "vegeta_base/016.png",
    "canonicalId": "vegeta_base.melee.travel.attack_forward.02.016",
    "characterId": "vegeta",
@@ -395,16 +409,17 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "vegeta_base_attack_fwd_06",
    "sourceId": "vegeta_base/017.png",
-   "canonicalId": "vegeta_base.melee.recover.attack_forward.06.017",
+   "canonicalId": "vegeta_base.reaction.knockback_back.back.00.017.png",
    "characterId": "vegeta",
    "formId": "vegeta_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "recover",
-   "variant": "attack_forward",
-   "sequenceIndex": 6,
+   "family": "reaction",
+   "role": "knockback_back",
+   "variant": "back",
+   "sequenceIndex": 0,
    "runtimePoses": [
     "attack_fwd",
     "punch_left",
@@ -421,15 +436,16 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "vegeta_base_attack_ud_00",
    "sourceId": "vegeta_base/018.png",
-   "canonicalId": "vegeta_base.melee.ready.attack_vertical.00.018",
+   "canonicalId": "vegeta_base.reaction.knockback_up.up.00.018.png",
    "characterId": "vegeta",
    "formId": "vegeta_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "ready",
-   "variant": "attack_vertical",
+   "family": "reaction",
+   "role": "knockback_up",
+   "variant": "up",
    "sequenceIndex": 0,
    "runtimePoses": [
     "attack_ud",
@@ -446,6 +462,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "vegeta_base_attack_ud_01",
    "sourceId": "vegeta_base/019.png",
    "canonicalId": "vegeta_base.melee.windup.attack_vertical.01.019",
    "characterId": "vegeta",
@@ -470,6 +487,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "vegeta_base_attack_ud_02",
    "sourceId": "vegeta_base/020.png",
    "canonicalId": "vegeta_base.melee.contact.attack_vertical.02.020",
    "characterId": "vegeta",
@@ -494,16 +512,17 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "vegeta_base_attack_ud_03",
    "sourceId": "vegeta_base/021.png",
-   "canonicalId": "vegeta_base.melee.recover.attack_vertical.03.021",
+   "canonicalId": "vegeta_base.reaction.knockback_down.down.00.021.png",
    "characterId": "vegeta",
    "formId": "vegeta_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "recover",
-   "variant": "attack_vertical",
-   "sequenceIndex": 3,
+   "family": "reaction",
+   "role": "knockback_down",
+   "variant": "down",
+   "sequenceIndex": 0,
    "runtimePoses": [
     "attack_ud",
     "knockback_down"
@@ -519,6 +538,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "vegeta_base_attack_fwd_00",
    "sourceId": "vegeta_base/022.png",
    "canonicalId": "vegeta_base.melee.ready.attack_forward.00.022",
    "characterId": "vegeta",
@@ -544,6 +564,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "vegeta_base_attack_fwd_01",
    "sourceId": "vegeta_base/023.png",
    "canonicalId": "vegeta_base.melee.windup.attack_forward.01.023",
    "characterId": "vegeta",
@@ -569,16 +590,17 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "vegeta_base_attack_fwd_04",
    "sourceId": "vegeta_base/024.png",
-   "canonicalId": "vegeta_base.melee.contact.attack_forward.04.024",
+   "canonicalId": "vegeta_base.melee.strike.kick_right.00.024.png",
    "characterId": "vegeta",
    "formId": "vegeta_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "contact",
-   "variant": "attack_forward",
-   "sequenceIndex": 4,
+   "role": "strike",
+   "variant": "kick_right",
+   "sequenceIndex": 0,
    "runtimePoses": [
     "attack_fwd",
     "punch_left",
@@ -595,16 +617,17 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "vegeta_base_attack_fwd_03",
    "sourceId": "vegeta_base/025.png",
-   "canonicalId": "vegeta_base.melee.strike.attack_forward.03.025",
+   "canonicalId": "vegeta_base.melee.strike.kick_right.01.025.png",
    "characterId": "vegeta",
    "formId": "vegeta_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
    "role": "strike",
-   "variant": "attack_forward",
-   "sequenceIndex": 3,
+   "variant": "kick_right",
+   "sequenceIndex": 1,
    "runtimePoses": [
     "attack_fwd",
     "punch_left",
@@ -621,6 +644,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "vegeta_base_kick_right_02",
    "sourceId": "vegeta_base/026.png",
    "canonicalId": "vegeta_base.melee.strike.kick_right.02.026",
    "characterId": "vegeta",
@@ -737,6 +761,7 @@
    "note": "bucket forense: battle_aura_actor_composite"
   },
   {
+   "_manifestName": "vegeta_base_beam_charge_00",
    "sourceId": "vegeta_base/031.png",
    "canonicalId": "vegeta_base.beam.charge_start.charge.00.031",
    "characterId": "vegeta",
@@ -784,6 +809,7 @@
    "note": "bucket forense: projectiles_beams"
   },
   {
+   "_manifestName": "vegeta_base_aura_power_00",
    "sourceId": "vegeta_base/033.png",
    "canonicalId": "vegeta_base.effect.aura.aura_power.00.033",
    "characterId": "vegeta",
@@ -808,6 +834,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "vegeta_base_aura_power_01",
    "sourceId": "vegeta_base/034.png",
    "canonicalId": "vegeta_base.effect.aura.aura_power.01.034",
    "characterId": "vegeta",
@@ -832,6 +859,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "vegeta_base_aura_power_02",
    "sourceId": "vegeta_base/035.png",
    "canonicalId": "vegeta_base.effect.aura.aura_power.02.035",
    "characterId": "vegeta",
@@ -902,15 +930,16 @@
    "note": "bucket forense: beam_or_projectile_horizontal"
   },
   {
+   "_manifestName": "vegeta_base_beam_charge_02",
    "sourceId": "vegeta_base/038.png",
-   "canonicalId": "vegeta_base.power.gather_power.gather_power.01.038.png",
+   "canonicalId": "vegeta_base.power.power_up.power_up.01.038.png",
    "characterId": "vegeta",
    "formId": "vegeta_base",
    "assetType": "composite",
    "view": "ACTION_DUEL",
    "family": "power",
-   "role": "gather_power",
-   "variant": "gather_power",
+   "role": "power_up",
+   "variant": "power_up",
    "sequenceIndex": 1,
    "runtimePoses": [
     "beam_charge",
@@ -928,6 +957,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "vegeta_base_beam_charge_01",
    "sourceId": "vegeta_base/039.png",
    "canonicalId": "vegeta_base.beam.charge_start.charge.01.039",
    "characterId": "vegeta",
@@ -952,15 +982,16 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "vegeta_base_beam_fire_00",
    "sourceId": "vegeta_base/040.png",
-   "canonicalId": "vegeta_base.power.gather_power.gather_power.00.040.png",
+   "canonicalId": "vegeta_base.power.power_up.power_up.00.040.png",
    "characterId": "vegeta",
    "formId": "vegeta_base",
    "assetType": "composite",
    "view": "ACTION_DUEL",
    "family": "power",
-   "role": "gather_power",
-   "variant": "gather_power",
+   "role": "power_up",
+   "variant": "power_up",
    "sequenceIndex": 0,
    "runtimePoses": [
     "beam_fire",
@@ -1024,6 +1055,7 @@
    "note": "bucket forense: orbs_rings_bursts"
   },
   {
+   "_manifestName": "vegeta_base_aura_support_00",
    "sourceId": "vegeta_base/043.png",
    "canonicalId": "vegeta_base.effect.aura.aura_support.00.043",
    "characterId": "vegeta",
@@ -1048,6 +1080,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "vegeta_base_aura_support_01",
    "sourceId": "vegeta_base/044.png",
    "canonicalId": "vegeta_base.effect.aura.aura_support.01.044",
    "characterId": "vegeta",
@@ -1072,6 +1105,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "vegeta_base_aura_support_02",
    "sourceId": "vegeta_base/045.png",
    "canonicalId": "vegeta_base.effect.aura.aura_support.02.045",
    "characterId": "vegeta",
@@ -1096,6 +1130,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "vegeta_base_beam_fire_01",
    "sourceId": "vegeta_base/000_beam_fire.png",
    "canonicalId": "vegeta_base.beam.release.fire.01.000_beam_fire",
    "characterId": "vegeta",

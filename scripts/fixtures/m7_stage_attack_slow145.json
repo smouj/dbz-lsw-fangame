@@ -25,7 +25,7 @@
   {
    "tick": 0,
    "type": "CAMERA",
-   "action": "CUT",
+   "action": "FLASH_WHITE",
    "logicalTick": 0,
    "source": "ACTION_STARTED",
    "fidelity": "INFERRED",

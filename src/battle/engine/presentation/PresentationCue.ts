@@ -98,7 +98,8 @@ export interface ProjectileCue {
 export interface CameraCue {
   type: 'CAMERA';
   tick: number;
-  action: 'CUT' | 'TRACK' | 'IMPACT' | 'RESET';
+  /** M8.F0 — FLASH_WHITE: transición de entrada GBC (pantalla blanca). */
+  action: 'CUT' | 'TRACK' | 'IMPACT' | 'RESET' | 'FLASH_WHITE';
 }
 
 /** Resultado del ataque — SIEMPRE derivado del evento (nunca de mirar HP). */

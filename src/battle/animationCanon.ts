@@ -71,57 +71,78 @@ export interface ActionAnimationCanon {
   contactFrame: number;
   /** Frames GBC totales de la secuencia (vuelta al plano táctico). */
   totalFrames: number;
+  /** M8.F0 — transición de ENTRADA verificada (GBC usa BLANCO, no fade negro). */
+  entrance: 'CUT' | 'FLASH_WHITE' | 'FLASH_BLACK';
+  /** M8.F0 — frame en que el DEFENSOR aparece (F0: atacante SOLO primero;
+   *  el defensor entra cuando el ataque viaja). 0 = visible desde el inicio. */
+  defenderIn: number;
 }
 
 // ═══ Canon por familia (kind × visual) ══════════════════════════════════
 
 const MELEE: ActionAnimationCanon = {
   kind: 'damage', visual: 'rush',
+  // M8.F0 — gramática VIDEO_VERIFIED (Purple Comet / Dunk Shot):
+  //   · atacante SOLO al inicio (defensor NO visible)
+  //   · el sprite se anima EN SU SITIO (sin approach/correr hacia el rival)
+  //   · el defensor aparece cuando el ataque viaja (defenderIn ~52%)
+  //   · impacto → reacción del defensor
+  //   · entrada FLASH_WHITE (transición blanca GBC, no fade negro)
   actor: [
     { frame: 0, pose: 'idle' },
-    { frame: 12, pose: 'attack_fwd' },      // windup del golpe
+    { frame: 12, pose: 'attack_fwd' },      // windup del golpe (en su sitio)
     { frame: 38, pose: 'attack_fwd' },      // strike pose (punch/kick según perfil)
-    { frame: 52, pose: 'move_front' },      // APPROACH: avanza al plano del rival
-    { frame: 66, pose: 'attack_fwd' },      // prepara el golpe enfrente del rival
-    { frame: 94, pose: 'attack_fwd' },      // contacto
-    { frame: 106, pose: 'idle' },           // recover
+    { frame: 66, pose: 'attack_fwd' },      // contacto
+    { frame: 80, pose: 'idle' },            // recover
   ],
-  target: [{ frame: 94, pose: 'knockback_back' }],
+  target: [{ frame: 66, pose: 'knockback_back' }],
   aura: 'none',
-  contactFrame: 94,
-  totalFrames: 132,
+  contactFrame: 66,
+  totalFrames: 100,
+  entrance: 'FLASH_WHITE',
+  defenderIn: 40,
 };
 
 const STAGE: ActionAnimationCanon = {
   kind: 'command', visual: 'rush',
+  // M8.F0 — gramática VIDEO_VERIFIED (Stage Attack): atacante SOLO al
+  // inicio, animación en su sitio (el Stage Attack no corre hacia el rival),
+  // defensor aparece cuando el combo viaja, impacto al final.
   actor: [
     { frame: 0, pose: 'idle' },
     { frame: 12, pose: 'attack_fwd' },      // windup del combo
     { frame: 26, pose: 'idle' },
     { frame: 38, pose: 'attack_fwd' },      // golpe final del stage
-    { frame: 52, pose: 'move_front' },      // APPROACH: avanza al plano del rival
-    { frame: 66, pose: 'idle' },            // se para enfrente (stop + idle)
-    { frame: 94, pose: 'attack_fwd' },
-    { frame: 106, pose: 'idle' },
+    { frame: 52, pose: 'attack_fwd' },      // contacto
+    { frame: 66, pose: 'idle' },            // recover
   ],
-  target: [{ frame: 94, pose: 'knockback_back' }],
+  target: [{ frame: 52, pose: 'knockback_back' }],
   aura: 'none',
-  contactFrame: 94,
-  totalFrames: 132,
+  contactFrame: 52,
+  totalFrames: 80,
+  entrance: 'FLASH_WHITE',
+  defenderIn: 34,
 };
 
 const BEAM: ActionAnimationCanon = {
   kind: 'beam', visual: 'ray',
+  // M8.F0 — gramática VIDEO_VERIFIED (V-ball Crash): atacante SOLO carga la
+  // esfera/energía en sus manos (beam_charge), el defensor entra cuando el
+  // proyectil viaja, impacto → reacción. El proyectil viaja en el MISMO
+  // plano (sin cambio de fondo hasta el impacto).
   actor: [
     { frame: 0, pose: 'idle' },
     { frame: 12, pose: 'gather_power' },    // preparación: energía (aura)
-    { frame: 28, pose: 'beam_charge' },     // carga específica
+    { frame: 28, pose: 'beam_charge' },     // carga específica (esfera en manos)
     { frame: 54, pose: 'beam_fire' },       // emisión (release)
+    { frame: 66, pose: 'idle' },            // recover tras soltar
   ],
   target: [{ frame: 108, pose: 'hurt' }],
   aura: 'power',
   contactFrame: 108,
   totalFrames: 152,
+  entrance: 'FLASH_WHITE',
+  defenderIn: 70,
 };
 
 const SUPPORT_POWER: ActionAnimationCanon = {
@@ -131,6 +152,8 @@ const SUPPORT_POWER: ActionAnimationCanon = {
   aura: 'power',
   contactFrame: -1,
   totalFrames: 118,
+  entrance: 'CUT',
+  defenderIn: 0,
 };
 
 const SUPPORT_ITEM: ActionAnimationCanon = {
@@ -140,6 +163,8 @@ const SUPPORT_ITEM: ActionAnimationCanon = {
   aura: 'support',
   contactFrame: -1,
   totalFrames: 118,
+  entrance: 'CUT',
+  defenderIn: 0,
 };
 
 const GATHER: ActionAnimationCanon = {
@@ -152,6 +177,8 @@ const GATHER: ActionAnimationCanon = {
   aura: 'power',
   contactFrame: -1,
   totalFrames: 90,
+  entrance: 'CUT',
+  defenderIn: 0,
 };
 
 const GUARD_CANON: ActionAnimationCanon = {
@@ -161,6 +188,8 @@ const GUARD_CANON: ActionAnimationCanon = {
   aura: 'none',
   contactFrame: -1,
   totalFrames: 30,
+  entrance: 'CUT',
+  defenderIn: 0,
 };
 
 const MOVE_CANON: ActionAnimationCanon = {
@@ -173,6 +202,8 @@ const MOVE_CANON: ActionAnimationCanon = {
   aura: 'none',
   contactFrame: -1,
   totalFrames: 24,
+  entrance: 'CUT',
+  defenderIn: 0,
 };
 
 // ═══ Resolución canónica ════════════════════════════════════════════════

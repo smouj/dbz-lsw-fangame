@@ -34,7 +34,7 @@
    "type": "SCENE",
    "mode": "PLAYER_ACTION",
    "background": "/assets/backgrounds/scenarios/01_action.png",
-   "durationTicks": 132,
+   "durationTicks": 100,
    "logicalTick": 0,
    "source": "ACTION_STARTED",
    "fidelity": "INFERRED",
@@ -43,7 +43,7 @@
   {
    "tick": 0,
    "type": "CAMERA",
-   "action": "CUT",
+   "action": "FLASH_WHITE",
    "logicalTick": 0,
    "source": "ACTION_STARTED",
    "fidelity": "INFERRED",
@@ -136,11 +136,22 @@
    "profile": "cont_kick"
   },
   {
+   "tick": 40,
+   "type": "FIGHTER_VISIBILITY",
+   "role": "TARGET",
+   "side": "enemy",
+   "visible": true,
+   "logicalTick": 0,
+   "source": "ACTION_STARTED",
+   "fidelity": "INFERRED",
+   "profile": "cont_kick"
+  },
+  {
    "tick": 50,
    "type": "SCENE",
    "mode": "ACTION_DUEL",
    "background": "/assets/backgrounds/scenarios/01_action.png",
-   "durationTicks": 82,
+   "durationTicks": 50,
    "logicalTick": 0,
    "source": "ACTION_STARTED",
    "fidelity": "INFERRED",
@@ -191,19 +202,7 @@
    "profile": "cont_kick"
   },
   {
-   "tick": 106,
-   "type": "FIGHTER_POSE",
-   "durationTicks": 8,
-   "role": "ACTOR",
-   "side": "player",
-   "pose": "idle",
-   "logicalTick": 0,
-   "source": "ACTION_STARTED",
-   "fidelity": "INFERRED",
-   "profile": "cont_kick"
-  },
-  {
-   "tick": 132,
+   "tick": 100,
    "type": "SCENE",
    "mode": "OVERVIEW",
    "background": "/assets/backgrounds/scenarios/01_world.png",
@@ -214,7 +213,7 @@
    "profile": "cont_kick"
   },
   {
-   "tick": 132,
+   "tick": 100,
    "type": "FIGHTER_VISIBILITY",
    "role": "TARGET",
    "side": "enemy",
@@ -225,7 +224,7 @@
    "profile": "cont_kick"
   },
   {
-   "tick": 132,
+   "tick": 100,
    "type": "FIGHTER_POSE",
    "durationTicks": 8,
    "role": "ACTOR",
@@ -237,9 +236,21 @@
    "profile": "cont_kick"
   },
   {
-   "tick": 132,
+   "tick": 100,
    "type": "CAMERA",
    "action": "RESET",
+   "logicalTick": 0,
+   "source": "ACTION_STARTED",
+   "fidelity": "INFERRED",
+   "profile": "cont_kick"
+  },
+  {
+   "tick": 106,
+   "type": "FIGHTER_POSE",
+   "durationTicks": 8,
+   "role": "ACTOR",
+   "side": "player",
+   "pose": "idle",
    "logicalTick": 0,
    "source": "ACTION_STARTED",
    "fidelity": "INFERRED",

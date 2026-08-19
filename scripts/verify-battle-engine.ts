@@ -545,8 +545,8 @@ const beamCanon = canonForAction({ id: 'kamehameha', label: 'Kamehameha', kind: 
 check('CANON: beam = gather_power → beam_charge → beam_fire + aura power',
   beamCanon.actor.some(b => b.pose === 'gather_power') && beamCanon.actor.some(b => b.pose === 'beam_charge') && beamCanon.actor.some(b => b.pose === 'beam_fire') && beamCanon.aura === 'power');
 const stageCanon = canonForAction({ id: 'stage_3', label: '3 Stage Attack', kind: 'command', visual: 'rush', fidelity: 'INFERRED' });
-check('CANON: stage = windup attack_fwd + golpe + target knockback_back',
-  stageCanon.actor.some(b => b.pose === 'attack_fwd') && stageCanon.target[0]?.pose === 'knockback_back' && stageCanon.contactFrame === 94);
+check('CANON: stage = windup attack_fwd + golpe + target knockback_back (M8.F0: contacto 52, sin approach)',
+  stageCanon.actor.some(b => b.pose === 'attack_fwd') && stageCanon.target[0]?.pose === 'knockback_back' && stageCanon.contactFrame === 52 && stageCanon.entrance === 'FLASH_WHITE' && stageCanon.defenderIn === 34);
 const meleeCanon = canonForAction({ id: 'cont_punch', label: 'Cont. Punch', kind: 'damage', visual: 'rush', fidelity: 'INFERRED' });
 check('CANON: damage = secuencia melee sin aura', meleeCanon.actor[0]?.pose === 'idle' && meleeCanon.aura === 'none' && meleeCanon.target[0]?.pose === 'knockback_back');
 check('CANON: canonForEvent(ACTION_STARTED) resuelve y CC_SPENT → null',

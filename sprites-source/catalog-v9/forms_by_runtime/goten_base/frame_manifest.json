@@ -3,6 +3,7 @@
  "frameCount": 47,
  "frames": [
   {
+   "_manifestName": "goten_base_idle_00",
    "sourceId": "goten_base/001.png",
    "canonicalId": "goten_base.idle.idle.idle.00.001",
    "characterId": "goten",
@@ -31,6 +32,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "goten_base_guard_01",
    "sourceId": "goten_base/002.png",
    "canonicalId": "goten_base.defense.hold.guard.01.002",
    "characterId": "goten",
@@ -56,6 +58,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "goten_base_guard_02",
    "sourceId": "goten_base/003.png",
    "canonicalId": "goten_base.defense.recover.guard.02.003",
    "characterId": "goten",
@@ -104,6 +107,7 @@
    "note": "bucket forense: movement_or_attack_pose"
   },
   {
+   "_manifestName": "goten_base_evade_01",
    "sourceId": "goten_base/005.png",
    "canonicalId": "goten_base.defense.recover.evade.01.005",
    "characterId": "goten",
@@ -128,6 +132,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "goten_base_evade_00",
    "sourceId": "goten_base/006.png",
    "canonicalId": "goten_base.defense.start.evade.00.006",
    "characterId": "goten",
@@ -152,16 +157,17 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "goten_base_move_front_01",
    "sourceId": "goten_base/007.png",
-   "canonicalId": "goten_base.movement.end.move_front.01.007",
+   "canonicalId": "goten_base.movement.start.move_back.00.007.png",
    "characterId": "goten",
    "formId": "goten_base",
    "assetType": "actor_frame",
    "view": "FIELD",
    "family": "movement",
-   "role": "end",
-   "variant": "move_front",
-   "sequenceIndex": 1,
+   "role": "start",
+   "variant": "move_back",
+   "sequenceIndex": 0,
    "runtimePoses": [
     "move_front",
     "move_back"
@@ -177,6 +183,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "goten_base_move_front_00",
    "sourceId": "goten_base/008.png",
    "canonicalId": "goten_base.movement.start.move_front.00.008",
    "characterId": "goten",
@@ -202,6 +209,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "goten_base_hurt_00",
    "sourceId": "goten_base/009.png",
    "canonicalId": "goten_base.reaction.hurt_light.hurt.00.009",
    "characterId": "goten",
@@ -226,6 +234,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "goten_base_hurt_01",
    "sourceId": "goten_base/010.png",
    "canonicalId": "goten_base.reaction.hurt_heavy.hurt.01.010",
    "characterId": "goten",
@@ -250,6 +259,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "goten_base_hurt_02",
    "sourceId": "goten_base/011.png",
    "canonicalId": "goten_base.reaction.hurt_heavy.hurt.02.011",
    "characterId": "goten",
@@ -274,6 +284,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "goten_base_hurt_03",
    "sourceId": "goten_base/012.png",
    "canonicalId": "goten_base.reaction.hurt_heavy.hurt.03.012",
    "characterId": "goten",
@@ -298,6 +309,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "goten_base_hurt_04",
    "sourceId": "goten_base/013.png",
    "canonicalId": "goten_base.reaction.hurt_heavy.hurt.04.013",
    "characterId": "goten",
@@ -322,16 +334,17 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "goten_base_attack_fwd_05",
    "sourceId": "goten_base/014.png",
-   "canonicalId": "goten_base.melee.follow_through.attack_forward.05.014",
+   "canonicalId": "goten_base.melee.strike.punch_left.03.014.png",
    "characterId": "goten",
    "formId": "goten_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "follow_through",
-   "variant": "attack_forward",
-   "sequenceIndex": 5,
+   "role": "strike",
+   "variant": "punch_left",
+   "sequenceIndex": 3,
    "runtimePoses": [
     "attack_fwd",
     "punch_left"
@@ -347,6 +360,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "goten_base_attack_fwd_01",
    "sourceId": "goten_base/015.png",
    "canonicalId": "goten_base.melee.windup.attack_forward.01.015",
    "characterId": "goten",
@@ -372,6 +386,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "goten_base_attack_fwd_02",
    "sourceId": "goten_base/016.png",
    "canonicalId": "goten_base.melee.travel.attack_forward.02.016",
    "characterId": "goten",
@@ -397,16 +412,17 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "goten_base_attack_fwd_06",
    "sourceId": "goten_base/017.png",
-   "canonicalId": "goten_base.melee.recover.attack_forward.06.017",
+   "canonicalId": "goten_base.reaction.knockback_up.up.00.017.png",
    "characterId": "goten",
    "formId": "goten_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "recover",
-   "variant": "attack_forward",
-   "sequenceIndex": 6,
+   "family": "reaction",
+   "role": "knockback_up",
+   "variant": "up",
+   "sequenceIndex": 0,
    "runtimePoses": [
     "attack_fwd",
     "punch_left",
@@ -423,6 +439,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "goten_base_attack_ud_00",
    "sourceId": "goten_base/018.png",
    "canonicalId": "goten_base.melee.ready.attack_vertical.00.018",
    "characterId": "goten",
@@ -447,16 +464,17 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "goten_base_attack_ud_01",
    "sourceId": "goten_base/019.png",
-   "canonicalId": "goten_base.melee.windup.attack_vertical.01.019",
+   "canonicalId": "goten_base.reaction.knockback_back.back.00.019.png",
    "characterId": "goten",
    "formId": "goten_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "windup",
-   "variant": "attack_vertical",
-   "sequenceIndex": 1,
+   "family": "reaction",
+   "role": "knockback_back",
+   "variant": "back",
+   "sequenceIndex": 0,
    "runtimePoses": [
     "attack_ud",
     "knockback_back"
@@ -472,6 +490,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "goten_base_attack_ud_02",
    "sourceId": "goten_base/020.png",
    "canonicalId": "goten_base.melee.contact.attack_vertical.02.020",
    "characterId": "goten",
@@ -496,16 +515,17 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "goten_base_attack_ud_03",
    "sourceId": "goten_base/021.png",
-   "canonicalId": "goten_base.melee.recover.attack_vertical.03.021",
+   "canonicalId": "goten_base.reaction.knockback_down.down.00.021.png",
    "characterId": "goten",
    "formId": "goten_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "recover",
-   "variant": "attack_vertical",
-   "sequenceIndex": 3,
+   "family": "reaction",
+   "role": "knockback_down",
+   "variant": "down",
+   "sequenceIndex": 0,
    "runtimePoses": [
     "attack_ud",
     "knockback_down"
@@ -521,6 +541,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "goten_base_attack_fwd_00",
    "sourceId": "goten_base/022.png",
    "canonicalId": "goten_base.melee.ready.attack_forward.00.022",
    "characterId": "goten",
@@ -546,6 +567,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "goten_base_attack_fwd_01",
    "sourceId": "goten_base/023.png",
    "canonicalId": "goten_base.melee.windup.attack_forward.01.023",
    "characterId": "goten",
@@ -571,16 +593,17 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "goten_base_attack_fwd_04",
    "sourceId": "goten_base/024.png",
-   "canonicalId": "goten_base.melee.contact.attack_forward.04.024",
+   "canonicalId": "goten_base.melee.strike.kick_right.00.024.png",
    "characterId": "goten",
    "formId": "goten_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "contact",
-   "variant": "attack_forward",
-   "sequenceIndex": 4,
+   "role": "strike",
+   "variant": "kick_right",
+   "sequenceIndex": 0,
    "runtimePoses": [
     "attack_fwd",
     "punch_left",
@@ -597,16 +620,17 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "goten_base_attack_fwd_03",
    "sourceId": "goten_base/025.png",
-   "canonicalId": "goten_base.melee.strike.attack_forward.03.025",
+   "canonicalId": "goten_base.melee.strike.kick_right.02.025.png",
    "characterId": "goten",
    "formId": "goten_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
    "role": "strike",
-   "variant": "attack_forward",
-   "sequenceIndex": 3,
+   "variant": "kick_right",
+   "sequenceIndex": 2,
    "runtimePoses": [
     "attack_fwd",
     "punch_left",
@@ -623,6 +647,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "goten_base_kick_right_01",
    "sourceId": "goten_base/026.png",
    "canonicalId": "goten_base.melee.strike.kick_right.01.026",
    "characterId": "goten",
@@ -739,6 +764,7 @@
    "note": "bucket forense: battle_aura_actor_composite"
   },
   {
+   "_manifestName": "goten_base_beam_charge_00",
    "sourceId": "goten_base/031.png",
    "canonicalId": "goten_base.power.gather_power.gather_power.00.031.png",
    "characterId": "goten",
@@ -788,6 +814,7 @@
    "note": "bucket forense: projectiles_beams"
   },
   {
+   "_manifestName": "goten_base_aura_power_00",
    "sourceId": "goten_base/033.png",
    "canonicalId": "goten_base.effect.aura.aura_power.00.033",
    "characterId": "goten",
@@ -812,6 +839,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "goten_base_aura_power_01",
    "sourceId": "goten_base/034.png",
    "canonicalId": "goten_base.effect.aura.aura_power.01.034",
    "characterId": "goten",
@@ -836,6 +864,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "goten_base_aura_power_02",
    "sourceId": "goten_base/035.png",
    "canonicalId": "goten_base.effect.aura.aura_power.02.035",
    "characterId": "goten",
@@ -883,6 +912,7 @@
    "note": "bucket forense: projectile_orb_small"
   },
   {
+   "_manifestName": "goten_base_beam_charge_02",
    "sourceId": "goten_base/037.png",
    "canonicalId": "goten_base.power.gather_power.gather_power.02.037.png",
    "characterId": "goten",
@@ -955,6 +985,7 @@
    "note": "bucket forense: movement_or_attack_pose"
   },
   {
+   "_manifestName": "goten_base_aura_support_00",
    "sourceId": "goten_base/040.png",
    "canonicalId": "goten_base.effect.aura.aura_support.00.040",
    "characterId": "goten",
@@ -979,6 +1010,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "goten_base_aura_support_01",
    "sourceId": "goten_base/041.png",
    "canonicalId": "goten_base.effect.aura.aura_support.01.041",
    "characterId": "goten",
@@ -1003,6 +1035,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "goten_base_aura_support_02",
    "sourceId": "goten_base/042.png",
    "canonicalId": "goten_base.effect.aura.aura_support.02.042",
    "characterId": "goten",
@@ -1027,6 +1060,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "goten_base_beam_charge_01",
    "sourceId": "goten_base/000_beam_charge.png",
    "canonicalId": "goten_base.power.gather_power.gather_power.01.000_beam_charge.png",
    "characterId": "goten",
@@ -1053,6 +1087,7 @@
    "frameKind": "fixed_only"
   },
   {
+   "_manifestName": "goten_base_beam_charge_03",
    "sourceId": "goten_base/001_beam_charge.png",
    "canonicalId": "goten_base.power.gather_power.gather_power.03.001_beam_charge.png",
    "characterId": "goten",

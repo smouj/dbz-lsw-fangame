@@ -220,6 +220,37 @@ for form_dir in form_dirs:
                 pose_len[pose] = len(pv['frames'])
     # inverso: frame físico → [(pose, name, idx-en-secuencia)] (por fingerprint)
     frame_poses = {}   # archivo atómico/fixed → [(pose, name, idx)]
+    # M8.F0 FIX — índice por ARCHIVO EXACTO del manifest: el manifest
+    # referencia el archivo por nombre (goku_base_move_back_01.png → pose
+    # move_back). Los fingerprints NO distinguen sprites espejados
+    # (move_front_00 ≡ move_back_01: mismos píxeles visibles) y agrupan
+    # poses distintas en el mismo bucket → el variant quedaba 'move_front'
+    # para ambos. Este índice usa la ruta del manifest para desambiguar.
+    frame_poses_by_file = {}  # (kind, archivo) → [(pose, name, idx)]
+    mp = os.path.join(SPRITES, form_dir, 'manifest.json')
+    if os.path.exists(mp):
+        manifest = json.load(open(mp))
+        for pose, pv in manifest.items():
+            if not isinstance(pv, dict): continue
+            for idx, fr in enumerate(pv.get('frames', [])):
+                fname = fr.get('file', '')
+                if not fname: continue
+                # M8.F0 FIX — la fuente física con NOMBRE COMPLETO es
+                # public/assets/sprites/<dir>/ (SPRITES): el manifest
+                # referencia goku_base_move_back_01.png y el archivo existe
+                # ahí con ese nombre. atomic/ usa nombres numéricos (007.png)
+                # que NO coinciden con el manifest — por eso el índice
+                # anterior no desambiguaba espejados (move_front/move_back).
+                if os.path.exists(os.path.join(SPRITES, form_dir, fname)):
+                    # El archivo con nombre vive en SPRITES; lo asociamos al
+                    # sourceId numérico que le corresponda por fingerprint.
+                    fp_named = visible_fp(os.path.join(SPRITES, form_dir, fname))
+                    if not fp_named: continue
+                    targets = []
+                    for af in atomic_fp.get(fp_named, []): targets.append(('atomic', af))
+                    for ff in fixed_fp.get(fp_named, []): targets.append(('fixed_only', ff))
+                    for kind, af in targets:
+                        frame_poses_by_file.setdefault((kind, af), []).append((pose, fr.get('name', fname), idx))
     for fp, entries in rt_fp.items():
         targets = []
         for f in atomic_fp.get(fp, []): targets.append(('atomic', f))
@@ -258,11 +289,43 @@ for form_dir in form_dirs:
         ex = _by_src[sid]
         for p in entry['runtimePoses']:
             if p not in ex['runtimePoses']: ex['runtimePoses'].append(p)
+        # M8.F0 FIX espejados: move_front_00 ≡ move_back_01 (mismo fingerprint
+        # visible). El variant del manifest (nombre de archivo) desambigua:
+        # si la entrada nueva viene de un archivo cuyo nombre contiene la
+        # pose (goku_base_move_back_01.png → variant move_back), gana sobre
+        # la coincidencia de fingerprint sin nombre (variant move_front).
+        # El 'name' del manifest (fr.get('name')) viaja en la entrada.
+        def _name_match(e):
+            nm = e.get('_manifestName', '')
+            return nm
+        cur_name = _name_match(ex)
+        new_name = _name_match(entry)
+        cur_variant = ex.get('variant', '')
+        new_variant = entry.get('variant', '')
+        # M8.F0 espejados (move_front_00 ≡ move_back_01): el nombre del
+        # manifest contiene la pose (goku_base_move_back_00 → move_back).
+        # Coincidencia EXACTA de pose-en-nombre gana sobre la que NO la tiene;
+        # si ambas la tienen (007 = move_front_01 + move_back_00), gana la de
+        # MENOR índice de secuencia (el frame base de su pose: move_back_00
+        # es el frame 0 de move_back, move_front_01 es el paso 1).
+        cur_hit = cur_name and cur_variant and cur_variant in cur_name
+        new_hit = new_name and new_variant and new_variant in new_name
+        cur_seq = ex.get('sequenceIndex', 99)
+        new_seq = entry.get('sequenceIndex', 99)
         # M8.F0: gana el de mayor STATUS canónico (idle/ready CANONICAL >
-        # melee RUNTIME_VERIFIED); a status igual, la familia más específica.
+        # melee RUNTIME_VERIFIED); a status igual, la coincidencia de NOMBRE
+        # del manifest (desambigua espejados); a igual nombre, menor índice
+        # de secuencia (frame base); a igual todo, la familia más específica.
         cur_rank = _STATUS_RANK.get(ex['canonStatus'], 0)
         new_rank = _STATUS_RANK.get(entry['canonStatus'], 0)
-        if new_rank > cur_rank or (new_rank == cur_rank and _PRIO.get(entry['family'], 0) > _PRIO.get(ex['family'], 0)):
+        new_wins = new_rank > cur_rank or (
+            new_rank == cur_rank and (
+                (new_hit and not cur_hit) or
+                (new_hit == cur_hit and new_seq < cur_seq) or
+                (new_hit == cur_hit and new_seq == cur_seq and _PRIO.get(entry['family'], 0) > _PRIO.get(ex['family'], 0))
+            )
+        )
+        if new_wins:
             ex['family'] = entry['family']; ex['role'] = entry['role']
             ex['variant'] = entry['variant']; ex['assetType'] = entry['assetType']
             ex['canonStatus'] = entry['canonStatus']; ex['evidence'] = entry['evidence']
@@ -276,7 +339,11 @@ for form_dir in form_dirs:
     for kind, files in (('atomic', atomic_files), ('fixed_only', fixed_files)):
         for f in files:
             src_id = f[:-4]
-            poses = frame_poses.get((kind, f), [])
+            # M8.F0 FIX — poses del frame: el índice por ARCHIVO EXACTO del
+            # manifest es la fuente PRIMARIA (desambigua espejados
+            # move_front/move_back); el fingerprint es fallback para frames
+            # sin referencia directa en el manifest.
+            poses = frame_poses_by_file.get((kind, f), frame_poses.get((kind, f), []))
             # catálogo forense (bucket/coords)
             cat = catalog.get(f"{form_dir}|{f}") or catalog.get(f"{form_dir}|{src_id}.png") or {}
             bucket = cat.get('semantic_bucket', '')
@@ -292,6 +359,9 @@ for form_dir in form_dirs:
                     # variantes dedicadas (punch_right...) mejoran el variant
                     canonical_id = _canon_id(form_dir, fam, role, var, pose_idx, f[:-4])
                     entry = {
+                        # M8.F0 — nombre del manifest (desambiguador de
+                        # espejados move_front/move_back en el dedupe).
+                        '_manifestName': name or '',
                         'sourceId': f"{form_dir}/{f}",
                         'canonicalId': canonical_id,
                         'characterId': form_dir.rsplit('_', 1)[0] if form_dir.count('_') else form_dir,

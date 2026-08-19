@@ -3,6 +3,7 @@
  "frameCount": 51,
  "frames": [
   {
+   "_manifestName": "guldo_base_idle_00",
    "sourceId": "guldo_base/001.png",
    "canonicalId": "guldo_base.idle.idle.idle.00.001",
    "characterId": "guldo",
@@ -31,6 +32,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "guldo_base_guard_01",
    "sourceId": "guldo_base/002.png",
    "canonicalId": "guldo_base.defense.hold.guard.01.002",
    "characterId": "guldo",
@@ -56,6 +58,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "guldo_base_guard_02",
    "sourceId": "guldo_base/003.png",
    "canonicalId": "guldo_base.defense.recover.guard.02.003",
    "characterId": "guldo",
@@ -196,6 +199,7 @@
    "note": "bucket forense: battle_aura_actor_composite"
   },
   {
+   "_manifestName": "guldo_base_evade_01",
    "sourceId": "guldo_base/009.png",
    "canonicalId": "guldo_base.defense.recover.evade.01.009",
    "characterId": "guldo",
@@ -220,6 +224,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "guldo_base_evade_00",
    "sourceId": "guldo_base/010.png",
    "canonicalId": "guldo_base.defense.start.evade.00.010",
    "characterId": "guldo",
@@ -244,16 +249,17 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "guldo_base_move_front_01",
    "sourceId": "guldo_base/011.png",
-   "canonicalId": "guldo_base.movement.end.move_front.01.011",
+   "canonicalId": "guldo_base.movement.start.move_back.00.011.png",
    "characterId": "guldo",
    "formId": "guldo_base",
    "assetType": "actor_frame",
    "view": "FIELD",
    "family": "movement",
-   "role": "end",
-   "variant": "move_front",
-   "sequenceIndex": 1,
+   "role": "start",
+   "variant": "move_back",
+   "sequenceIndex": 0,
    "runtimePoses": [
     "move_front",
     "move_back"
@@ -269,6 +275,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "guldo_base_move_front_00",
    "sourceId": "guldo_base/012.png",
    "canonicalId": "guldo_base.movement.start.move_front.00.012",
    "characterId": "guldo",
@@ -294,6 +301,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "guldo_base_hurt_00",
    "sourceId": "guldo_base/013.png",
    "canonicalId": "guldo_base.reaction.hurt_light.hurt.00.013",
    "characterId": "guldo",
@@ -318,6 +326,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "guldo_base_hurt_01",
    "sourceId": "guldo_base/014.png",
    "canonicalId": "guldo_base.reaction.hurt_heavy.hurt.01.014",
    "characterId": "guldo",
@@ -342,6 +351,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "guldo_base_hurt_02",
    "sourceId": "guldo_base/015.png",
    "canonicalId": "guldo_base.reaction.hurt_heavy.hurt.02.015",
    "characterId": "guldo",
@@ -366,6 +376,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "guldo_base_hurt_03",
    "sourceId": "guldo_base/016.png",
    "canonicalId": "guldo_base.reaction.hurt_heavy.hurt.03.016",
    "characterId": "guldo",
@@ -390,6 +401,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "guldo_base_hurt_04",
    "sourceId": "guldo_base/017.png",
    "canonicalId": "guldo_base.reaction.hurt_heavy.hurt.04.017",
    "characterId": "guldo",
@@ -414,16 +426,17 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "guldo_base_attack_fwd_06",
    "sourceId": "guldo_base/018.png",
-   "canonicalId": "guldo_base.melee.follow_through.attack_forward.06.018",
+   "canonicalId": "guldo_base.melee.strike.punch_left.04.018.png",
    "characterId": "guldo",
    "formId": "guldo_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "follow_through",
-   "variant": "attack_forward",
-   "sequenceIndex": 6,
+   "role": "strike",
+   "variant": "punch_left",
+   "sequenceIndex": 4,
    "runtimePoses": [
     "attack_fwd",
     "punch_left"
@@ -462,6 +475,7 @@
    "note": "bucket forense: beam_or_projectile_horizontal"
   },
   {
+   "_manifestName": "guldo_base_attack_fwd_02",
    "sourceId": "guldo_base/020.png",
    "canonicalId": "guldo_base.melee.travel.attack_forward.02.020",
    "characterId": "guldo",
@@ -487,16 +501,17 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "guldo_base_attack_fwd_03",
    "sourceId": "guldo_base/021.png",
-   "canonicalId": "guldo_base.melee.strike.attack_forward.03.021",
+   "canonicalId": "guldo_base.reaction.knockback_up.up.00.021.png",
    "characterId": "guldo",
    "formId": "guldo_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "strike",
-   "variant": "attack_forward",
-   "sequenceIndex": 3,
+   "family": "reaction",
+   "role": "knockback_up",
+   "variant": "up",
+   "sequenceIndex": 0,
    "runtimePoses": [
     "attack_fwd",
     "punch_left",
@@ -513,6 +528,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "guldo_base_attack_fwd_07",
    "sourceId": "guldo_base/022.png",
    "canonicalId": "guldo_base.melee.recover.attack_forward.07.022",
    "characterId": "guldo",
@@ -537,6 +553,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "guldo_base_attack_ud_00",
    "sourceId": "guldo_base/023.png",
    "canonicalId": "guldo_base.melee.ready.attack_vertical.00.023",
    "characterId": "guldo",
@@ -561,16 +578,17 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "guldo_base_attack_ud_01",
    "sourceId": "guldo_base/024.png",
-   "canonicalId": "guldo_base.melee.windup.attack_vertical.01.024",
+   "canonicalId": "guldo_base.reaction.knockback_back.back.00.024.png",
    "characterId": "guldo",
    "formId": "guldo_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "windup",
-   "variant": "attack_vertical",
-   "sequenceIndex": 1,
+   "family": "reaction",
+   "role": "knockback_back",
+   "variant": "back",
+   "sequenceIndex": 0,
    "runtimePoses": [
     "attack_ud",
     "knockback_back"
@@ -586,6 +604,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "guldo_base_attack_ud_02",
    "sourceId": "guldo_base/025.png",
    "canonicalId": "guldo_base.melee.contact.attack_vertical.02.025",
    "characterId": "guldo",
@@ -610,16 +629,17 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "guldo_base_attack_ud_03",
    "sourceId": "guldo_base/026.png",
-   "canonicalId": "guldo_base.melee.recover.attack_vertical.03.026",
+   "canonicalId": "guldo_base.reaction.knockback_down.down.00.026.png",
    "characterId": "guldo",
    "formId": "guldo_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "recover",
-   "variant": "attack_vertical",
-   "sequenceIndex": 3,
+   "family": "reaction",
+   "role": "knockback_down",
+   "variant": "down",
+   "sequenceIndex": 0,
    "runtimePoses": [
     "attack_ud",
     "knockback_down"
@@ -635,6 +655,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "guldo_base_attack_fwd_00",
    "sourceId": "guldo_base/027.png",
    "canonicalId": "guldo_base.melee.ready.attack_forward.00.027",
    "characterId": "guldo",
@@ -660,15 +681,16 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "guldo_base_attack_fwd_01",
    "sourceId": "guldo_base/028.png",
-   "canonicalId": "guldo_base.melee.windup.attack_forward.01.028",
+   "canonicalId": "guldo_base.beam.charge_start.charge.01.028.png",
    "characterId": "guldo",
    "formId": "guldo_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "windup",
-   "variant": "attack_forward",
+   "family": "beam",
+   "role": "charge_start",
+   "variant": "charge",
    "sequenceIndex": 1,
    "runtimePoses": [
     "attack_fwd",
@@ -686,16 +708,17 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "guldo_base_attack_fwd_04",
    "sourceId": "guldo_base/029.png",
-   "canonicalId": "guldo_base.melee.strike.attack_forward.04.029",
+   "canonicalId": "guldo_base.melee.strike.kick_right.00.029.png",
    "characterId": "guldo",
    "formId": "guldo_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
    "role": "strike",
-   "variant": "attack_forward",
-   "sequenceIndex": 4,
+   "variant": "kick_right",
+   "sequenceIndex": 0,
    "runtimePoses": [
     "attack_fwd",
     "punch_left",
@@ -712,16 +735,17 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "guldo_base_attack_fwd_05",
    "sourceId": "guldo_base/030.png",
-   "canonicalId": "guldo_base.melee.contact.attack_forward.05.030",
+   "canonicalId": "guldo_base.melee.strike.kick_right.01.030.png",
    "characterId": "guldo",
    "formId": "guldo_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "contact",
-   "variant": "attack_forward",
-   "sequenceIndex": 5,
+   "role": "strike",
+   "variant": "kick_right",
+   "sequenceIndex": 1,
    "runtimePoses": [
     "attack_fwd",
     "punch_left",
@@ -738,6 +762,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "guldo_base_aura_power_00",
    "sourceId": "guldo_base/031.png",
    "canonicalId": "guldo_base.effect.aura.aura_power.00.031",
    "characterId": "guldo",
@@ -762,6 +787,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "guldo_base_aura_power_01",
    "sourceId": "guldo_base/032.png",
    "canonicalId": "guldo_base.effect.aura.aura_power.01.032",
    "characterId": "guldo",
@@ -786,6 +812,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "guldo_base_aura_power_02",
    "sourceId": "guldo_base/033.png",
    "canonicalId": "guldo_base.effect.aura.aura_power.02.033",
    "characterId": "guldo",
@@ -810,6 +837,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "guldo_base_beam_charge_00",
    "sourceId": "guldo_base/034.png",
    "canonicalId": "guldo_base.beam.charge_start.charge.00.034",
    "characterId": "guldo",
@@ -880,6 +908,7 @@
    "note": "bucket forense: projectiles_beams"
   },
   {
+   "_manifestName": "guldo_base_beam_charge_02",
    "sourceId": "guldo_base/037.png",
    "canonicalId": "guldo_base.beam.charge_hold.charge.02.037",
    "characterId": "guldo",
@@ -904,6 +933,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "guldo_base_beam_charge_03",
    "sourceId": "guldo_base/038.png",
    "canonicalId": "guldo_base.beam.charge_hold.charge.03.038",
    "characterId": "guldo",
@@ -951,15 +981,16 @@
    "note": "bucket forense: idle_or_stance"
   },
   {
+   "_manifestName": "guldo_base_beam_fire_00",
    "sourceId": "guldo_base/040.png",
-   "canonicalId": "guldo_base.power.gather_power.gather_power.01.040.png",
+   "canonicalId": "guldo_base.power.power_up.power_up.01.040.png",
    "characterId": "guldo",
    "formId": "guldo_base",
    "assetType": "composite",
    "view": "ACTION_DUEL",
    "family": "power",
-   "role": "gather_power",
-   "variant": "gather_power",
+   "role": "power_up",
+   "variant": "power_up",
    "sequenceIndex": 1,
    "runtimePoses": [
     "beam_fire",
@@ -977,15 +1008,16 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "guldo_base_beam_fire_01",
    "sourceId": "guldo_base/041.png",
-   "canonicalId": "guldo_base.power.gather_power.gather_power.00.041.png",
+   "canonicalId": "guldo_base.power.power_up.power_up.00.041.png",
    "characterId": "guldo",
    "formId": "guldo_base",
    "assetType": "composite",
    "view": "ACTION_DUEL",
    "family": "power",
-   "role": "gather_power",
-   "variant": "gather_power",
+   "role": "power_up",
+   "variant": "power_up",
    "sequenceIndex": 0,
    "runtimePoses": [
     "beam_fire",
@@ -1049,6 +1081,7 @@
    "note": "bucket forense: movement_or_attack_pose"
   },
   {
+   "_manifestName": "guldo_base_aura_support_00",
    "sourceId": "guldo_base/044.png",
    "canonicalId": "guldo_base.effect.aura.aura_support.00.044",
    "characterId": "guldo",
@@ -1073,6 +1106,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "guldo_base_aura_support_01",
    "sourceId": "guldo_base/045.png",
    "canonicalId": "guldo_base.effect.aura.aura_support.01.045",
    "characterId": "guldo",
@@ -1097,6 +1131,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "guldo_base_aura_support_02",
    "sourceId": "guldo_base/046.png",
    "canonicalId": "guldo_base.effect.aura.aura_support.02.046",
    "characterId": "guldo",
@@ -1121,15 +1156,16 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "guldo_base_attack_fwd_01",
    "sourceId": "guldo_base/000_beam_charge.png",
-   "canonicalId": "guldo_base.melee.windup.attack_forward.01.000_beam_charge",
+   "canonicalId": "guldo_base.beam.charge_start.charge.01.000_beam_charge.png",
    "characterId": "guldo",
    "formId": "guldo_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "windup",
-   "variant": "attack_forward",
+   "family": "beam",
+   "role": "charge_start",
+   "variant": "charge",
    "sequenceIndex": 1,
    "runtimePoses": [
     "attack_fwd",
@@ -1147,6 +1183,7 @@
    "frameKind": "fixed_only"
   },
   {
+   "_manifestName": "guldo_base_beam_fire_02",
    "sourceId": "guldo_base/001_beam_fire.png",
    "canonicalId": "guldo_base.beam.release.fire.02.001_beam_fire",
    "characterId": "guldo",

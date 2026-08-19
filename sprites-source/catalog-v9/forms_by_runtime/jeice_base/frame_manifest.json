@@ -3,6 +3,7 @@
  "frameCount": 63,
  "frames": [
   {
+   "_manifestName": "jeice_base_idle_00",
    "sourceId": "jeice_base/001.png",
    "canonicalId": "jeice_base.idle.idle.idle.00.001",
    "characterId": "jeice",
@@ -33,6 +34,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "jeice_base_guard_01",
    "sourceId": "jeice_base/002.png",
    "canonicalId": "jeice_base.defense.hold.guard.01.002",
    "characterId": "jeice",
@@ -58,6 +60,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "jeice_base_guard_02",
    "sourceId": "jeice_base/003.png",
    "canonicalId": "jeice_base.defense.recover.guard.02.003",
    "characterId": "jeice",
@@ -83,6 +86,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "jeice_base_beam_charge_02",
    "sourceId": "jeice_base/004.png",
    "canonicalId": "jeice_base.beam.charge_hold.charge.02.004",
    "characterId": "jeice",
@@ -199,6 +203,7 @@
    "note": "bucket forense: battle_aura_actor_composite"
   },
   {
+   "_manifestName": "jeice_base_evade_01",
    "sourceId": "jeice_base/009.png",
    "canonicalId": "jeice_base.defense.recover.evade.01.009",
    "characterId": "jeice",
@@ -223,6 +228,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "jeice_base_evade_00",
    "sourceId": "jeice_base/010.png",
    "canonicalId": "jeice_base.defense.start.evade.00.010",
    "characterId": "jeice",
@@ -270,6 +276,7 @@
    "note": "bucket forense: movement_or_attack_pose"
   },
   {
+   "_manifestName": "jeice_base_move_front_00",
    "sourceId": "jeice_base/012.png",
    "canonicalId": "jeice_base.movement.start.move_front.00.012",
    "characterId": "jeice",
@@ -295,6 +302,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "jeice_base_hurt_00",
    "sourceId": "jeice_base/013.png",
    "canonicalId": "jeice_base.reaction.hurt_light.hurt.00.013",
    "characterId": "jeice",
@@ -319,6 +327,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "jeice_base_hurt_01",
    "sourceId": "jeice_base/014.png",
    "canonicalId": "jeice_base.reaction.hurt_heavy.hurt.01.014",
    "characterId": "jeice",
@@ -343,6 +352,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "jeice_base_hurt_02",
    "sourceId": "jeice_base/015.png",
    "canonicalId": "jeice_base.reaction.hurt_heavy.hurt.02.015",
    "characterId": "jeice",
@@ -367,6 +377,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "jeice_base_hurt_03",
    "sourceId": "jeice_base/016.png",
    "canonicalId": "jeice_base.reaction.hurt_heavy.hurt.03.016",
    "characterId": "jeice",
@@ -391,6 +402,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "jeice_base_hurt_04",
    "sourceId": "jeice_base/017.png",
    "canonicalId": "jeice_base.reaction.hurt_heavy.hurt.04.017",
    "characterId": "jeice",
@@ -415,16 +427,17 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "jeice_base_attack_fwd_05",
    "sourceId": "jeice_base/018.png",
-   "canonicalId": "jeice_base.melee.follow_through.attack_forward.05.018",
+   "canonicalId": "jeice_base.melee.strike.punch_left.03.018.png",
    "characterId": "jeice",
    "formId": "jeice_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "follow_through",
-   "variant": "attack_forward",
-   "sequenceIndex": 5,
+   "role": "strike",
+   "variant": "punch_left",
+   "sequenceIndex": 3,
    "runtimePoses": [
     "attack_fwd",
     "punch_left"
@@ -463,16 +476,17 @@
    "note": "bucket forense: downed_or_hurt"
   },
   {
+   "_manifestName": "jeice_base_attack_fwd_01",
    "sourceId": "jeice_base/020.png",
-   "canonicalId": "jeice_base.melee.windup.attack_forward.01.020",
+   "canonicalId": "jeice_base.reaction.knockback_back.back.00.020.png",
    "characterId": "jeice",
    "formId": "jeice_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "windup",
-   "variant": "attack_forward",
-   "sequenceIndex": 1,
+   "family": "reaction",
+   "role": "knockback_back",
+   "variant": "back",
+   "sequenceIndex": 0,
    "runtimePoses": [
     "attack_fwd",
     "punch_right",
@@ -489,6 +503,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "jeice_base_attack_fwd_02",
    "sourceId": "jeice_base/021.png",
    "canonicalId": "jeice_base.melee.travel.attack_forward.02.021",
    "characterId": "jeice",
@@ -514,16 +529,17 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "jeice_base_attack_fwd_06",
    "sourceId": "jeice_base/022.png",
-   "canonicalId": "jeice_base.melee.recover.attack_forward.06.022",
+   "canonicalId": "jeice_base.melee.strike.punch_left.04.022.png",
    "characterId": "jeice",
    "formId": "jeice_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "recover",
-   "variant": "attack_forward",
-   "sequenceIndex": 6,
+   "role": "strike",
+   "variant": "punch_left",
+   "sequenceIndex": 4,
    "runtimePoses": [
     "attack_fwd",
     "punch_left"
@@ -539,6 +555,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "jeice_base_attack_ud_00",
    "sourceId": "jeice_base/023.png",
    "canonicalId": "jeice_base.melee.ready.attack_vertical.00.023",
    "characterId": "jeice",
@@ -563,16 +580,17 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "jeice_base_attack_ud_01",
    "sourceId": "jeice_base/024.png",
-   "canonicalId": "jeice_base.melee.windup.attack_vertical.01.024",
+   "canonicalId": "jeice_base.reaction.knockback_up.up.00.024.png",
    "characterId": "jeice",
    "formId": "jeice_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "windup",
-   "variant": "attack_vertical",
-   "sequenceIndex": 1,
+   "family": "reaction",
+   "role": "knockback_up",
+   "variant": "up",
+   "sequenceIndex": 0,
    "runtimePoses": [
     "attack_ud",
     "knockback_up"
@@ -588,6 +606,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "jeice_base_attack_ud_02",
    "sourceId": "jeice_base/025.png",
    "canonicalId": "jeice_base.melee.contact.attack_vertical.02.025",
    "characterId": "jeice",
@@ -612,16 +631,17 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "jeice_base_attack_ud_03",
    "sourceId": "jeice_base/026.png",
-   "canonicalId": "jeice_base.melee.recover.attack_vertical.03.026",
+   "canonicalId": "jeice_base.reaction.knockback_down.down.00.026.png",
    "characterId": "jeice",
    "formId": "jeice_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "recover",
-   "variant": "attack_vertical",
-   "sequenceIndex": 3,
+   "family": "reaction",
+   "role": "knockback_down",
+   "variant": "down",
+   "sequenceIndex": 0,
    "runtimePoses": [
     "attack_ud",
     "knockback_down"
@@ -637,6 +657,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "jeice_base_attack_fwd_00",
    "sourceId": "jeice_base/027.png",
    "canonicalId": "jeice_base.melee.ready.attack_forward.00.027",
    "characterId": "jeice",
@@ -685,16 +706,17 @@
    "note": "bucket forense: movement_or_attack_pose"
   },
   {
+   "_manifestName": "jeice_base_attack_fwd_03",
    "sourceId": "jeice_base/029.png",
-   "canonicalId": "jeice_base.melee.strike.attack_forward.03.029",
+   "canonicalId": "jeice_base.melee.strike.kick_right.00.029.png",
    "characterId": "jeice",
    "formId": "jeice_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
    "role": "strike",
-   "variant": "attack_forward",
-   "sequenceIndex": 3,
+   "variant": "kick_right",
+   "sequenceIndex": 0,
    "runtimePoses": [
     "attack_fwd",
     "punch_left",
@@ -711,16 +733,17 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "jeice_base_attack_fwd_04",
    "sourceId": "jeice_base/030.png",
-   "canonicalId": "jeice_base.melee.contact.attack_forward.04.030",
+   "canonicalId": "jeice_base.melee.strike.kick_right.01.030.png",
    "characterId": "jeice",
    "formId": "jeice_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "contact",
-   "variant": "attack_forward",
-   "sequenceIndex": 4,
+   "role": "strike",
+   "variant": "kick_right",
+   "sequenceIndex": 1,
    "runtimePoses": [
     "attack_fwd",
     "punch_left",
@@ -737,6 +760,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "jeice_base_beam_charge_00",
    "sourceId": "jeice_base/031.png",
    "canonicalId": "jeice_base.beam.charge_start.charge.00.031",
    "characterId": "jeice",
@@ -784,6 +808,7 @@
    "note": "bucket forense: projectiles_beams"
   },
   {
+   "_manifestName": "jeice_base_aura_power_00",
    "sourceId": "jeice_base/033.png",
    "canonicalId": "jeice_base.effect.aura.aura_power.00.033",
    "characterId": "jeice",
@@ -808,6 +833,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "jeice_base_aura_power_01",
    "sourceId": "jeice_base/034.png",
    "canonicalId": "jeice_base.effect.aura.aura_power.01.034",
    "characterId": "jeice",
@@ -832,6 +858,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "jeice_base_aura_power_02",
    "sourceId": "jeice_base/035.png",
    "canonicalId": "jeice_base.effect.aura.aura_power.02.035",
    "characterId": "jeice",
@@ -879,6 +906,7 @@
    "note": "bucket forense: projectile_orb_small"
   },
   {
+   "_manifestName": "jeice_base_gather_power_00",
    "sourceId": "jeice_base/037.png",
    "canonicalId": "jeice_base.power.gather_power.gather_power.00.037",
    "characterId": "jeice",
@@ -904,6 +932,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "jeice_base_beam_fire_00",
    "sourceId": "jeice_base/038.png",
    "canonicalId": "jeice_base.beam.release.fire.00.038",
    "characterId": "jeice",
@@ -928,6 +957,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "jeice_base_beam_fire_01",
    "sourceId": "jeice_base/039.png",
    "canonicalId": "jeice_base.beam.release.fire.01.039",
    "characterId": "jeice",
@@ -952,6 +982,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "jeice_base_beam_fire_02",
    "sourceId": "jeice_base/040.png",
    "canonicalId": "jeice_base.beam.release.fire.02.040",
    "characterId": "jeice",
@@ -976,6 +1007,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "jeice_base_beam_fire_03",
    "sourceId": "jeice_base/041.png",
    "canonicalId": "jeice_base.beam.release.fire.03.041",
    "characterId": "jeice",
@@ -1000,6 +1032,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "jeice_base_beam_fire_04",
    "sourceId": "jeice_base/042.png",
    "canonicalId": "jeice_base.beam.release.fire.04.042",
    "characterId": "jeice",
@@ -1024,6 +1057,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "jeice_base_gather_power_00",
    "sourceId": "jeice_base/043.png",
    "canonicalId": "jeice_base.power.gather_power.gather_power.00.043",
    "characterId": "jeice",
@@ -1049,6 +1083,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "jeice_base_beam_charge_03",
    "sourceId": "jeice_base/044.png",
    "canonicalId": "jeice_base.beam.charge_hold.charge.03.044",
    "characterId": "jeice",
@@ -1119,6 +1154,7 @@
    "note": "bucket forense: nonbody_misc"
   },
   {
+   "_manifestName": "jeice_base_gather_power_01",
    "sourceId": "jeice_base/047.png",
    "canonicalId": "jeice_base.power.gather_power.gather_power.01.047",
    "characterId": "jeice",
@@ -1167,6 +1203,7 @@
    "note": "bucket forense: movement_or_attack_pose"
   },
   {
+   "_manifestName": "jeice_base_gather_power_02",
    "sourceId": "jeice_base/049.png",
    "canonicalId": "jeice_base.power.gather_power.gather_power.02.049",
    "characterId": "jeice",
@@ -1215,6 +1252,7 @@
    "note": "bucket forense: movement_or_attack_pose"
   },
   {
+   "_manifestName": "jeice_base_gather_power_03",
    "sourceId": "jeice_base/051.png",
    "canonicalId": "jeice_base.power.gather_power.gather_power.03.051",
    "characterId": "jeice",
@@ -1286,6 +1324,7 @@
    "note": "bucket forense: movement_or_attack_pose"
   },
   {
+   "_manifestName": "jeice_base_aura_support_00",
    "sourceId": "jeice_base/054.png",
    "canonicalId": "jeice_base.effect.aura.aura_support.00.054",
    "characterId": "jeice",
@@ -1310,6 +1349,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "jeice_base_aura_support_01",
    "sourceId": "jeice_base/055.png",
    "canonicalId": "jeice_base.effect.aura.aura_support.01.055",
    "characterId": "jeice",
@@ -1334,6 +1374,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "jeice_base_aura_support_02",
    "sourceId": "jeice_base/056.png",
    "canonicalId": "jeice_base.effect.aura.aura_support.02.056",
    "characterId": "jeice",
@@ -1358,6 +1399,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "jeice_base_beam_charge_01",
    "sourceId": "jeice_base/000_beam_charge.png",
    "canonicalId": "jeice_base.beam.charge_start.charge.01.000_beam_charge",
    "characterId": "jeice",
@@ -1382,6 +1424,7 @@
    "frameKind": "fixed_only"
   },
   {
+   "_manifestName": "jeice_base_beam_fire_05",
    "sourceId": "jeice_base/001_beam_fire.png",
    "canonicalId": "jeice_base.beam.release.fire.05.001_beam_fire",
    "characterId": "jeice",
@@ -1406,6 +1449,7 @@
    "frameKind": "fixed_only"
   },
   {
+   "_manifestName": "jeice_base_beam_fire_06",
    "sourceId": "jeice_base/002_beam_fire.png",
    "canonicalId": "jeice_base.beam.release.fire.06.002_beam_fire",
    "characterId": "jeice",
@@ -1430,6 +1474,7 @@
    "frameKind": "fixed_only"
   },
   {
+   "_manifestName": "jeice_base_beam_fire_07",
    "sourceId": "jeice_base/003_beam_fire.png",
    "canonicalId": "jeice_base.beam.release.fire.07.003_beam_fire",
    "characterId": "jeice",

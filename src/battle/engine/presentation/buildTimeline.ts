@@ -107,9 +107,18 @@ export function buildPresentationTimeline(input: PresentationInput): BattleTimel
           ? STAGE_PREP_TICKS + 240
           : canon.totalFrames;
         add({ type: 'SCENE', tick: env.tick, durationTicks: sceneDuration, mode: special ? 'SPECIAL_ACTION' : mode, background: bg }, env, e.action.id, e.action.fidelity);
-        add({ type: 'CAMERA', tick: env.tick, action: 'CUT' }, env, e.action.id, e.action.fidelity);
+        // M8.F0 — transición de ENTRADA verificada: el GBC usa FLASH_WHITE
+        // (pantalla blanca) o CUT — NO fade negro (video: Purple Comet).
+        if (canon.entrance === 'FLASH_WHITE') {
+          add({ type: 'CAMERA', tick: env.tick, action: 'FLASH_WHITE' }, env, e.action.id, e.action.fidelity);
+        } else {
+          add({ type: 'CAMERA', tick: env.tick, action: 'CUT' }, env, e.action.id, e.action.fidelity);
+        }
         add({ type: 'FIGHTER_VISIBILITY', tick: env.tick, role: 'ACTOR', side: e.side, visible: true }, env, e.action.id, e.action.fidelity);
-        add({ type: 'FIGHTER_VISIBILITY', tick: env.tick, role: 'TARGET', side: target, visible: false }, env, e.action.id, e.action.fidelity);
+        // M8.F0 — el defensor NO está visible al inicio (atacante SOLO):
+        // entra en canon.defenderIn (verificado en video). Para acciones sin
+        // defensor (support/gather/guard/move) defenderIn=0 → visible.
+        add({ type: 'FIGHTER_VISIBILITY', tick: env.tick, role: 'TARGET', side: target, visible: canon.defenderIn === 0 }, env, e.action.id, e.action.fidelity);
         add({ type: 'FIGHTER_POSE', tick: env.tick, durationTicks: POSE_HOLD, role: 'ACTOR', side: e.side, pose: 'idle' }, env, e.action.id, e.action.fidelity);
         // Beats del canon (actor). Para STAGE (kind command) NO se emiten aquí:
         // las poses las controlan STAGE_PREP_STARTED (preparación) y la
@@ -133,6 +142,15 @@ export function buildPresentationTimeline(input: PresentationInput): BattleTimel
               add({ type: 'SCENE', tick: env.tick + b.frame, durationTicks: Math.max(1, canon.totalFrames - b.frame), mode: 'ACTION_DUEL', background: context.actionBackground }, env, e.action.id, e.action.fidelity);
               add({ type: 'FIGHTER_VISIBILITY', tick: env.tick + b.frame, role: 'TARGET', side: target, visible: true }, env, e.action.id, e.action.fidelity);
               add({ type: 'CAMERA', tick: env.tick + b.frame, action: 'TRACK' }, env, e.action.id, e.action.fidelity);
+            }
+          }
+          // M8.F0 — el defensor entra en canon.defenderIn (verificado en
+          // vídeo: atacante SOLO primero, defensor aparece cuando el ataque
+          // viaja). Se emite una sola vez si no lo hizo ya el move_front.
+          if (canon.defenderIn > 0) {
+            const alreadyShown = beats.some(b => b.pose === 'move_front' && b.frame <= canon.defenderIn);
+            if (!alreadyShown) {
+              add({ type: 'FIGHTER_VISIBILITY', tick: env.tick + canon.defenderIn, role: 'TARGET', side: target, visible: true }, env, e.action.id, e.action.fidelity);
             }
           }
           // APPROACH (rush) del perfil: si la firma declara un rush con

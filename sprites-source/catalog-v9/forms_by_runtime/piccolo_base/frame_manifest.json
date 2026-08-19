@@ -3,6 +3,7 @@
  "frameCount": 65,
  "frames": [
   {
+   "_manifestName": "piccolo_base_idle_00",
    "sourceId": "piccolo_base/001.png",
    "canonicalId": "piccolo_base.idle.idle.idle.00.001",
    "characterId": "piccolo",
@@ -31,6 +32,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "piccolo_base_guard_01",
    "sourceId": "piccolo_base/002.png",
    "canonicalId": "piccolo_base.defense.hold.guard.01.002",
    "characterId": "piccolo",
@@ -56,6 +58,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "piccolo_base_guard_02",
    "sourceId": "piccolo_base/003.png",
    "canonicalId": "piccolo_base.defense.recover.guard.02.003",
    "characterId": "piccolo",
@@ -104,6 +107,7 @@
    "note": "bucket forense: idle_or_stance"
   },
   {
+   "_manifestName": "piccolo_base_evade_01",
    "sourceId": "piccolo_base/005.png",
    "canonicalId": "piccolo_base.defense.recover.evade.01.005",
    "characterId": "piccolo",
@@ -128,6 +132,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "piccolo_base_evade_00",
    "sourceId": "piccolo_base/006.png",
    "canonicalId": "piccolo_base.defense.start.evade.00.006",
    "characterId": "piccolo",
@@ -152,16 +157,17 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "piccolo_base_move_front_01",
    "sourceId": "piccolo_base/007.png",
-   "canonicalId": "piccolo_base.movement.end.move_front.01.007",
+   "canonicalId": "piccolo_base.movement.start.move_back.00.007.png",
    "characterId": "piccolo",
    "formId": "piccolo_base",
    "assetType": "actor_frame",
    "view": "FIELD",
    "family": "movement",
-   "role": "end",
-   "variant": "move_front",
-   "sequenceIndex": 1,
+   "role": "start",
+   "variant": "move_back",
+   "sequenceIndex": 0,
    "runtimePoses": [
     "move_front",
     "move_back"
@@ -177,6 +183,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "piccolo_base_move_front_00",
    "sourceId": "piccolo_base/008.png",
    "canonicalId": "piccolo_base.movement.start.move_front.00.008",
    "characterId": "piccolo",
@@ -202,6 +209,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "piccolo_base_hurt_00",
    "sourceId": "piccolo_base/009.png",
    "canonicalId": "piccolo_base.reaction.hurt_light.hurt.00.009",
    "characterId": "piccolo",
@@ -226,6 +234,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "piccolo_base_hurt_01",
    "sourceId": "piccolo_base/010.png",
    "canonicalId": "piccolo_base.reaction.hurt_heavy.hurt.01.010",
    "characterId": "piccolo",
@@ -250,6 +259,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "piccolo_base_hurt_02",
    "sourceId": "piccolo_base/011.png",
    "canonicalId": "piccolo_base.reaction.hurt_heavy.hurt.02.011",
    "characterId": "piccolo",
@@ -274,6 +284,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "piccolo_base_hurt_03",
    "sourceId": "piccolo_base/012.png",
    "canonicalId": "piccolo_base.reaction.hurt_heavy.hurt.03.012",
    "characterId": "piccolo",
@@ -298,6 +309,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "piccolo_base_hurt_04",
    "sourceId": "piccolo_base/013.png",
    "canonicalId": "piccolo_base.reaction.hurt_heavy.hurt.04.013",
    "characterId": "piccolo",
@@ -322,16 +334,17 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "piccolo_base_attack_fwd_06",
    "sourceId": "piccolo_base/014.png",
-   "canonicalId": "piccolo_base.melee.contact.attack_forward.06.014",
+   "canonicalId": "piccolo_base.melee.strike.punch_left.04.014.png",
    "characterId": "piccolo",
    "formId": "piccolo_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "contact",
-   "variant": "attack_forward",
-   "sequenceIndex": 6,
+   "role": "strike",
+   "variant": "punch_left",
+   "sequenceIndex": 4,
    "runtimePoses": [
     "attack_fwd",
     "punch_left"
@@ -370,16 +383,17 @@
    "note": "bucket forense: downed_or_hurt"
   },
   {
+   "_manifestName": "piccolo_base_attack_fwd_02",
    "sourceId": "piccolo_base/016.png",
-   "canonicalId": "piccolo_base.melee.windup.attack_forward.02.016",
+   "canonicalId": "piccolo_base.reaction.knockback_up.up.00.016.png",
    "characterId": "piccolo",
    "formId": "piccolo_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "windup",
-   "variant": "attack_forward",
-   "sequenceIndex": 2,
+   "family": "reaction",
+   "role": "knockback_up",
+   "variant": "up",
+   "sequenceIndex": 0,
    "runtimePoses": [
     "attack_fwd",
     "punch_right",
@@ -396,6 +410,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "piccolo_base_knockback_back_00",
    "sourceId": "piccolo_base/017.png",
    "canonicalId": "piccolo_base.reaction.knockback_back.back.00.017",
    "characterId": "piccolo",
@@ -443,6 +458,7 @@
    "note": "bucket forense: movement_or_attack_pose"
   },
   {
+   "_manifestName": "piccolo_base_attack_ud_00",
    "sourceId": "piccolo_base/019.png",
    "canonicalId": "piccolo_base.melee.ready.attack_vertical.00.019",
    "characterId": "piccolo",
@@ -467,6 +483,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "piccolo_base_attack_ud_01",
    "sourceId": "piccolo_base/020.png",
    "canonicalId": "piccolo_base.melee.windup.attack_vertical.01.020",
    "characterId": "piccolo",
@@ -491,6 +508,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "piccolo_base_attack_ud_02",
    "sourceId": "piccolo_base/021.png",
    "canonicalId": "piccolo_base.melee.strike.attack_vertical.02.021",
    "characterId": "piccolo",
@@ -515,16 +533,17 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "piccolo_base_attack_ud_03",
    "sourceId": "piccolo_base/022.png",
-   "canonicalId": "piccolo_base.melee.contact.attack_vertical.03.022",
+   "canonicalId": "piccolo_base.reaction.knockback_down.down.00.022.png",
    "characterId": "piccolo",
    "formId": "piccolo_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "contact",
-   "variant": "attack_vertical",
-   "sequenceIndex": 3,
+   "family": "reaction",
+   "role": "knockback_down",
+   "variant": "down",
+   "sequenceIndex": 0,
    "runtimePoses": [
     "attack_ud",
     "knockback_down"
@@ -540,6 +559,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "piccolo_base_attack_fwd_00",
    "sourceId": "piccolo_base/023.png",
    "canonicalId": "piccolo_base.melee.ready.attack_forward.00.023",
    "characterId": "piccolo",
@@ -565,6 +585,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "piccolo_base_attack_fwd_01",
    "sourceId": "piccolo_base/024.png",
    "canonicalId": "piccolo_base.melee.windup.attack_forward.01.024",
    "characterId": "piccolo",
@@ -590,16 +611,17 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "piccolo_base_attack_fwd_05",
    "sourceId": "piccolo_base/025.png",
-   "canonicalId": "piccolo_base.melee.strike.attack_forward.05.025",
+   "canonicalId": "piccolo_base.melee.strike.kick_right.00.025.png",
    "characterId": "piccolo",
    "formId": "piccolo_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
    "role": "strike",
-   "variant": "attack_forward",
-   "sequenceIndex": 5,
+   "variant": "kick_right",
+   "sequenceIndex": 0,
    "runtimePoses": [
     "attack_fwd",
     "punch_left",
@@ -616,16 +638,17 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "piccolo_base_attack_fwd_04",
    "sourceId": "piccolo_base/026.png",
-   "canonicalId": "piccolo_base.melee.strike.attack_forward.04.026",
+   "canonicalId": "piccolo_base.melee.strike.kick_right.01.026.png",
    "characterId": "piccolo",
    "formId": "piccolo_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
    "role": "strike",
-   "variant": "attack_forward",
-   "sequenceIndex": 4,
+   "variant": "kick_right",
+   "sequenceIndex": 1,
    "runtimePoses": [
     "attack_fwd",
     "punch_left",
@@ -803,6 +826,7 @@
    "note": "bucket forense: projectiles_beams"
   },
   {
+   "_manifestName": "piccolo_base_aura_power_00",
    "sourceId": "piccolo_base/034.png",
    "canonicalId": "piccolo_base.effect.aura.aura_power.00.034",
    "characterId": "piccolo",
@@ -827,6 +851,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "piccolo_base_aura_power_01",
    "sourceId": "piccolo_base/035.png",
    "canonicalId": "piccolo_base.effect.aura.aura_power.01.035",
    "characterId": "piccolo",
@@ -851,6 +876,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "piccolo_base_aura_power_02",
    "sourceId": "piccolo_base/036.png",
    "canonicalId": "piccolo_base.effect.aura.aura_power.02.036",
    "characterId": "piccolo",
@@ -898,6 +924,7 @@
    "note": "bucket forense: projectiles_beams"
   },
   {
+   "_manifestName": "piccolo_base_beam_charge_02",
    "sourceId": "piccolo_base/038.png",
    "canonicalId": "piccolo_base.beam.charge_start.charge.02.038",
    "characterId": "piccolo",
@@ -968,6 +995,7 @@
    "note": "bucket forense: projectiles_beams"
   },
   {
+   "_manifestName": "piccolo_base_beam_charge_04",
    "sourceId": "piccolo_base/041.png",
    "canonicalId": "piccolo_base.beam.charge_start.charge.04.041",
    "characterId": "piccolo",
@@ -992,6 +1020,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "piccolo_base_beam_charge_07",
    "sourceId": "piccolo_base/042.png",
    "canonicalId": "piccolo_base.beam.charge_hold.charge.07.042",
    "characterId": "piccolo",
@@ -1016,6 +1045,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "piccolo_base_attack_fwd_08",
    "sourceId": "piccolo_base/043.png",
    "canonicalId": "piccolo_base.melee.follow_through.attack_forward.08.043",
    "characterId": "piccolo",
@@ -1040,6 +1070,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "piccolo_base_attack_fwd_09",
    "sourceId": "piccolo_base/044.png",
    "canonicalId": "piccolo_base.melee.recover.attack_forward.09.044",
    "characterId": "piccolo",
@@ -1064,6 +1095,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "piccolo_base_gather_power_00",
    "sourceId": "piccolo_base/045.png",
    "canonicalId": "piccolo_base.power.gather_power.gather_power.00.045",
    "characterId": "piccolo",
@@ -1089,6 +1121,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "piccolo_base_beam_charge_05",
    "sourceId": "piccolo_base/046.png",
    "canonicalId": "piccolo_base.beam.charge_hold.charge.05.046",
    "characterId": "piccolo",
@@ -1113,6 +1146,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "piccolo_base_beam_charge_06",
    "sourceId": "piccolo_base/047.png",
    "canonicalId": "piccolo_base.beam.charge_hold.charge.06.047",
    "characterId": "piccolo",
@@ -1183,6 +1217,7 @@
    "note": "bucket forense: character_plus_aura_or_burst"
   },
   {
+   "_manifestName": "piccolo_base_aura_support_00",
    "sourceId": "piccolo_base/050.png",
    "canonicalId": "piccolo_base.effect.aura.aura_support.00.050",
    "characterId": "piccolo",
@@ -1207,6 +1242,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "piccolo_base_aura_support_01",
    "sourceId": "piccolo_base/051.png",
    "canonicalId": "piccolo_base.effect.aura.aura_support.01.051",
    "characterId": "piccolo",
@@ -1231,6 +1267,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "piccolo_base_aura_support_02",
    "sourceId": "piccolo_base/052.png",
    "canonicalId": "piccolo_base.effect.aura.aura_support.02.052",
    "characterId": "piccolo",
@@ -1255,16 +1292,17 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "piccolo_base_attack_fwd_02",
    "sourceId": "piccolo_base/000_attack_fwd.png",
-   "canonicalId": "piccolo_base.melee.windup.attack_forward.02.000_attack_fwd",
+   "canonicalId": "piccolo_base.reaction.knockback_up.up.00.000_attack_fwd.png",
    "characterId": "piccolo",
    "formId": "piccolo_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "windup",
-   "variant": "attack_forward",
-   "sequenceIndex": 2,
+   "family": "reaction",
+   "role": "knockback_up",
+   "variant": "up",
+   "sequenceIndex": 0,
    "runtimePoses": [
     "attack_fwd",
     "punch_right",
@@ -1281,16 +1319,17 @@
    "frameKind": "fixed_only"
   },
   {
+   "_manifestName": "piccolo_base_attack_fwd_03",
    "sourceId": "piccolo_base/001_attack_fwd.png",
-   "canonicalId": "piccolo_base.melee.travel.attack_forward.03.001_attack_fwd",
+   "canonicalId": "piccolo_base.melee.strike.punch_left.01.001_attack_fwd.png",
    "characterId": "piccolo",
    "formId": "piccolo_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "travel",
-   "variant": "attack_forward",
-   "sequenceIndex": 3,
+   "role": "strike",
+   "variant": "punch_left",
+   "sequenceIndex": 1,
    "runtimePoses": [
     "attack_fwd",
     "punch_left"
@@ -1306,6 +1345,7 @@
    "frameKind": "fixed_only"
   },
   {
+   "_manifestName": "piccolo_base_attack_fwd_07",
    "sourceId": "piccolo_base/002_attack_fwd.png",
    "canonicalId": "piccolo_base.melee.follow_through.attack_forward.07.002_attack_fwd",
    "characterId": "piccolo",
@@ -1330,6 +1370,7 @@
    "frameKind": "fixed_only"
   },
   {
+   "_manifestName": "piccolo_base_attack_ud_04",
    "sourceId": "piccolo_base/003_attack_ud.png",
    "canonicalId": "piccolo_base.melee.recover.attack_vertical.04.003_attack_ud",
    "characterId": "piccolo",
@@ -1354,6 +1395,7 @@
    "frameKind": "fixed_only"
   },
   {
+   "_manifestName": "piccolo_base_beam_charge_00",
    "sourceId": "piccolo_base/004_beam_charge.png",
    "canonicalId": "piccolo_base.beam.charge_start.charge.00.004_beam_charge",
    "characterId": "piccolo",
@@ -1379,6 +1421,7 @@
    "frameKind": "fixed_only"
   },
   {
+   "_manifestName": "piccolo_base_beam_charge_00",
    "sourceId": "piccolo_base/005_beam_charge.png",
    "canonicalId": "piccolo_base.beam.charge_start.charge.00.005_beam_charge",
    "characterId": "piccolo",
@@ -1404,6 +1447,7 @@
    "frameKind": "fixed_only"
   },
   {
+   "_manifestName": "piccolo_base_beam_charge_03",
    "sourceId": "piccolo_base/006_beam_charge.png",
    "canonicalId": "piccolo_base.beam.charge_start.charge.03.006_beam_charge",
    "characterId": "piccolo",

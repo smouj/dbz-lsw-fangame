@@ -3,6 +3,7 @@
  "frameCount": 57,
  "frames": [
   {
+   "_manifestName": "cell_imperfect_form_idle_00",
    "sourceId": "cell_imperfect_form/001.png",
    "canonicalId": "cell_imperfect_form.idle.idle.idle.00.001",
    "characterId": "cell_imperfect",
@@ -31,6 +32,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "cell_imperfect_form_gather_power_00",
    "sourceId": "cell_imperfect_form/002.png",
    "canonicalId": "cell_imperfect_form.power.gather_power.gather_power.00.002",
    "characterId": "cell_imperfect",
@@ -56,6 +58,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "cell_imperfect_form_guard_01",
    "sourceId": "cell_imperfect_form/003.png",
    "canonicalId": "cell_imperfect_form.defense.hold.guard.01.003",
    "characterId": "cell_imperfect",
@@ -81,6 +84,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "cell_imperfect_form_guard_02",
    "sourceId": "cell_imperfect_form/004.png",
    "canonicalId": "cell_imperfect_form.defense.recover.guard.02.004",
    "characterId": "cell_imperfect",
@@ -198,6 +202,7 @@
    "note": "bucket forense: battle_aura_actor_composite"
   },
   {
+   "_manifestName": "cell_imperfect_form_evade_01",
    "sourceId": "cell_imperfect_form/009.png",
    "canonicalId": "cell_imperfect_form.defense.recover.evade.01.009",
    "characterId": "cell_imperfect",
@@ -222,6 +227,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "cell_imperfect_form_evade_00",
    "sourceId": "cell_imperfect_form/010.png",
    "canonicalId": "cell_imperfect_form.defense.start.evade.00.010",
    "characterId": "cell_imperfect",
@@ -246,16 +252,17 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "cell_imperfect_form_move_front_01",
    "sourceId": "cell_imperfect_form/011.png",
-   "canonicalId": "cell_imperfect_form.movement.end.move_front.01.011",
+   "canonicalId": "cell_imperfect_form.movement.start.move_back.00.011.png",
    "characterId": "cell_imperfect",
    "formId": "cell_imperfect_form",
    "assetType": "actor_frame",
    "view": "FIELD",
    "family": "movement",
-   "role": "end",
-   "variant": "move_front",
-   "sequenceIndex": 1,
+   "role": "start",
+   "variant": "move_back",
+   "sequenceIndex": 0,
    "runtimePoses": [
     "move_front",
     "move_back"
@@ -271,6 +278,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "cell_imperfect_form_move_front_00",
    "sourceId": "cell_imperfect_form/012.png",
    "canonicalId": "cell_imperfect_form.movement.start.move_front.00.012",
    "characterId": "cell_imperfect",
@@ -296,6 +304,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "cell_imperfect_form_hurt_00",
    "sourceId": "cell_imperfect_form/013.png",
    "canonicalId": "cell_imperfect_form.reaction.hurt_light.hurt.00.013",
    "characterId": "cell_imperfect",
@@ -320,6 +329,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "cell_imperfect_form_hurt_01",
    "sourceId": "cell_imperfect_form/014.png",
    "canonicalId": "cell_imperfect_form.reaction.hurt_heavy.hurt.01.014",
    "characterId": "cell_imperfect",
@@ -344,6 +354,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "cell_imperfect_form_hurt_02",
    "sourceId": "cell_imperfect_form/015.png",
    "canonicalId": "cell_imperfect_form.reaction.hurt_heavy.hurt.02.015",
    "characterId": "cell_imperfect",
@@ -368,6 +379,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "cell_imperfect_form_hurt_03",
    "sourceId": "cell_imperfect_form/016.png",
    "canonicalId": "cell_imperfect_form.reaction.hurt_heavy.hurt.03.016",
    "characterId": "cell_imperfect",
@@ -392,6 +404,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "cell_imperfect_form_hurt_04",
    "sourceId": "cell_imperfect_form/017.png",
    "canonicalId": "cell_imperfect_form.reaction.hurt_heavy.hurt.04.017",
    "characterId": "cell_imperfect",
@@ -416,16 +429,17 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "cell_imperfect_form_attack_fwd_06",
    "sourceId": "cell_imperfect_form/018.png",
-   "canonicalId": "cell_imperfect_form.melee.follow_through.attack_forward.06.018",
+   "canonicalId": "cell_imperfect_form.melee.strike.punch_left.04.018.png",
    "characterId": "cell_imperfect",
    "formId": "cell_imperfect_form",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "follow_through",
-   "variant": "attack_forward",
-   "sequenceIndex": 6,
+   "role": "strike",
+   "variant": "punch_left",
+   "sequenceIndex": 4,
    "runtimePoses": [
     "attack_fwd",
     "punch_left"
@@ -441,16 +455,17 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "cell_imperfect_form_attack_fwd_02",
    "sourceId": "cell_imperfect_form/019.png",
-   "canonicalId": "cell_imperfect_form.melee.travel.attack_forward.02.019",
+   "canonicalId": "cell_imperfect_form.reaction.knockback_back.back.00.019.png",
    "characterId": "cell_imperfect",
    "formId": "cell_imperfect_form",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "travel",
-   "variant": "attack_forward",
-   "sequenceIndex": 2,
+   "family": "reaction",
+   "role": "knockback_back",
+   "variant": "back",
+   "sequenceIndex": 0,
    "runtimePoses": [
     "attack_fwd",
     "punch_right",
@@ -467,16 +482,17 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "cell_imperfect_form_attack_fwd_03",
    "sourceId": "cell_imperfect_form/020.png",
-   "canonicalId": "cell_imperfect_form.melee.strike.attack_forward.03.020",
+   "canonicalId": "cell_imperfect_form.melee.strike.punch_left.01.020.png",
    "characterId": "cell_imperfect",
    "formId": "cell_imperfect_form",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
    "role": "strike",
-   "variant": "attack_forward",
-   "sequenceIndex": 3,
+   "variant": "punch_left",
+   "sequenceIndex": 1,
    "runtimePoses": [
     "attack_fwd",
     "punch_left"
@@ -492,16 +508,17 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "cell_imperfect_form_attack_fwd_07",
    "sourceId": "cell_imperfect_form/021.png",
-   "canonicalId": "cell_imperfect_form.melee.recover.attack_forward.07.021",
+   "canonicalId": "cell_imperfect_form.reaction.knockback_up.up.00.021.png",
    "characterId": "cell_imperfect",
    "formId": "cell_imperfect_form",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "recover",
-   "variant": "attack_forward",
-   "sequenceIndex": 7,
+   "family": "reaction",
+   "role": "knockback_up",
+   "variant": "up",
+   "sequenceIndex": 0,
    "runtimePoses": [
     "attack_fwd",
     "knockback_up"
@@ -517,6 +534,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "cell_imperfect_form_attack_ud_00",
    "sourceId": "cell_imperfect_form/022.png",
    "canonicalId": "cell_imperfect_form.melee.ready.attack_vertical.00.022",
    "characterId": "cell_imperfect",
@@ -541,6 +559,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "cell_imperfect_form_attack_ud_01",
    "sourceId": "cell_imperfect_form/023.png",
    "canonicalId": "cell_imperfect_form.melee.windup.attack_vertical.01.023",
    "characterId": "cell_imperfect",
@@ -565,6 +584,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "cell_imperfect_form_attack_ud_02",
    "sourceId": "cell_imperfect_form/024.png",
    "canonicalId": "cell_imperfect_form.melee.contact.attack_vertical.02.024",
    "characterId": "cell_imperfect",
@@ -589,16 +609,17 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "cell_imperfect_form_attack_ud_03",
    "sourceId": "cell_imperfect_form/025.png",
-   "canonicalId": "cell_imperfect_form.melee.recover.attack_vertical.03.025",
+   "canonicalId": "cell_imperfect_form.reaction.knockback_down.down.00.025.png",
    "characterId": "cell_imperfect",
    "formId": "cell_imperfect_form",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "recover",
-   "variant": "attack_vertical",
-   "sequenceIndex": 3,
+   "family": "reaction",
+   "role": "knockback_down",
+   "variant": "down",
+   "sequenceIndex": 0,
    "runtimePoses": [
     "attack_ud",
     "knockback_down"
@@ -614,6 +635,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "cell_imperfect_form_kick_right_00",
    "sourceId": "cell_imperfect_form/026.png",
    "canonicalId": "cell_imperfect_form.melee.strike.kick_right.00.026",
    "characterId": "cell_imperfect",
@@ -638,15 +660,16 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "cell_imperfect_form_attack_fwd_01",
    "sourceId": "cell_imperfect_form/027.png",
-   "canonicalId": "cell_imperfect_form.melee.windup.attack_forward.01.027",
+   "canonicalId": "cell_imperfect_form.melee.strike.kick_right.01.027.png",
    "characterId": "cell_imperfect",
    "formId": "cell_imperfect_form",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "windup",
-   "variant": "attack_forward",
+   "role": "strike",
+   "variant": "kick_right",
    "sequenceIndex": 1,
    "runtimePoses": [
     "attack_fwd",
@@ -664,16 +687,17 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "cell_imperfect_form_attack_fwd_04",
    "sourceId": "cell_imperfect_form/028.png",
-   "canonicalId": "cell_imperfect_form.melee.strike.attack_forward.04.028",
+   "canonicalId": "cell_imperfect_form.melee.strike.punch_left.02.028.png",
    "characterId": "cell_imperfect",
    "formId": "cell_imperfect_form",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
    "role": "strike",
-   "variant": "attack_forward",
-   "sequenceIndex": 4,
+   "variant": "punch_left",
+   "sequenceIndex": 2,
    "runtimePoses": [
     "attack_fwd",
     "punch_left"
@@ -689,16 +713,17 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "cell_imperfect_form_attack_fwd_05",
    "sourceId": "cell_imperfect_form/029.png",
-   "canonicalId": "cell_imperfect_form.melee.contact.attack_forward.05.029",
+   "canonicalId": "cell_imperfect_form.melee.strike.punch_left.03.029.png",
    "characterId": "cell_imperfect",
    "formId": "cell_imperfect_form",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "contact",
-   "variant": "attack_forward",
-   "sequenceIndex": 5,
+   "role": "strike",
+   "variant": "punch_left",
+   "sequenceIndex": 3,
    "runtimePoses": [
     "attack_fwd",
     "punch_left"
@@ -714,6 +739,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "cell_imperfect_form_kick_right_02",
    "sourceId": "cell_imperfect_form/030.png",
    "canonicalId": "cell_imperfect_form.melee.strike.kick_right.02.030",
    "characterId": "cell_imperfect",
@@ -738,6 +764,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "cell_imperfect_form_beam_charge_00",
    "sourceId": "cell_imperfect_form/031.png",
    "canonicalId": "cell_imperfect_form.beam.charge_start.charge.00.031",
    "characterId": "cell_imperfect",
@@ -785,6 +812,7 @@
    "note": "bucket forense: projectiles_beams"
   },
   {
+   "_manifestName": "cell_imperfect_form_aura_power_00",
    "sourceId": "cell_imperfect_form/033.png",
    "canonicalId": "cell_imperfect_form.effect.aura.aura_power.00.033",
    "characterId": "cell_imperfect",
@@ -809,6 +837,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "cell_imperfect_form_aura_power_01",
    "sourceId": "cell_imperfect_form/034.png",
    "canonicalId": "cell_imperfect_form.effect.aura.aura_power.01.034",
    "characterId": "cell_imperfect",
@@ -833,6 +862,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "cell_imperfect_form_aura_power_02",
    "sourceId": "cell_imperfect_form/035.png",
    "canonicalId": "cell_imperfect_form.effect.aura.aura_power.02.035",
    "characterId": "cell_imperfect",
@@ -880,6 +910,7 @@
    "note": "bucket forense: projectile_orb_small"
   },
   {
+   "_manifestName": "cell_imperfect_form_beam_charge_02",
    "sourceId": "cell_imperfect_form/037.png",
    "canonicalId": "cell_imperfect_form.beam.charge_start.charge.02.037",
    "characterId": "cell_imperfect",
@@ -996,6 +1027,7 @@
    "note": "bucket forense: projectile_orb_small"
   },
   {
+   "_manifestName": "cell_imperfect_form_beam_charge_04",
    "sourceId": "cell_imperfect_form/042.png",
    "canonicalId": "cell_imperfect_form.beam.charge_hold.charge.04.042",
    "characterId": "cell_imperfect",
@@ -1020,6 +1052,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "cell_imperfect_form_beam_fire_00",
    "sourceId": "cell_imperfect_form/043.png",
    "canonicalId": "cell_imperfect_form.beam.release.fire.00.043",
    "characterId": "cell_imperfect",
@@ -1090,6 +1123,7 @@
    "note": "bucket forense: multi_evidence_projectiles_beams_movement_or_attack_pose"
   },
   {
+   "_manifestName": "cell_imperfect_form_beam_charge_02",
    "sourceId": "cell_imperfect_form/046.png",
    "canonicalId": "cell_imperfect_form.beam.charge_start.charge.02.046",
    "characterId": "cell_imperfect",
@@ -1160,6 +1194,7 @@
    "note": "bucket forense: multi_evidence_character_plus_aura_or_burst_movement_or_attack_pose"
   },
   {
+   "_manifestName": "cell_imperfect_form_aura_support_00",
    "sourceId": "cell_imperfect_form/049.png",
    "canonicalId": "cell_imperfect_form.effect.aura.aura_support.00.049",
    "characterId": "cell_imperfect",
@@ -1184,6 +1219,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "cell_imperfect_form_aura_support_01",
    "sourceId": "cell_imperfect_form/050.png",
    "canonicalId": "cell_imperfect_form.effect.aura.aura_support.01.050",
    "characterId": "cell_imperfect",
@@ -1208,6 +1244,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "cell_imperfect_form_aura_support_02",
    "sourceId": "cell_imperfect_form/051.png",
    "canonicalId": "cell_imperfect_form.effect.aura.aura_support.02.051",
    "characterId": "cell_imperfect",
@@ -1232,6 +1269,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "cell_imperfect_form_attack_fwd_00",
    "sourceId": "cell_imperfect_form/000_attack_fwd.png",
    "canonicalId": "cell_imperfect_form.melee.ready.attack_forward.00.000_attack_fwd",
    "characterId": "cell_imperfect",
@@ -1257,15 +1295,16 @@
    "frameKind": "fixed_only"
   },
   {
+   "_manifestName": "cell_imperfect_form_attack_fwd_01",
    "sourceId": "cell_imperfect_form/001_attack_fwd.png",
-   "canonicalId": "cell_imperfect_form.melee.windup.attack_forward.01.001_attack_fwd",
+   "canonicalId": "cell_imperfect_form.melee.strike.kick_right.01.001_attack_fwd.png",
    "characterId": "cell_imperfect",
    "formId": "cell_imperfect_form",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "windup",
-   "variant": "attack_forward",
+   "role": "strike",
+   "variant": "kick_right",
    "sequenceIndex": 1,
    "runtimePoses": [
     "attack_fwd",
@@ -1283,6 +1322,7 @@
    "frameKind": "fixed_only"
   },
   {
+   "_manifestName": "cell_imperfect_form_beam_charge_01",
    "sourceId": "cell_imperfect_form/002_beam_charge.png",
    "canonicalId": "cell_imperfect_form.beam.charge_start.charge.01.002_beam_charge",
    "characterId": "cell_imperfect",
@@ -1307,6 +1347,7 @@
    "frameKind": "fixed_only"
   },
   {
+   "_manifestName": "cell_imperfect_form_beam_charge_03",
    "sourceId": "cell_imperfect_form/003_beam_charge.png",
    "canonicalId": "cell_imperfect_form.beam.charge_hold.charge.03.003_beam_charge",
    "characterId": "cell_imperfect",
@@ -1331,6 +1372,7 @@
    "frameKind": "fixed_only"
   },
   {
+   "_manifestName": "cell_imperfect_form_beam_fire_01",
    "sourceId": "cell_imperfect_form/004_beam_fire.png",
    "canonicalId": "cell_imperfect_form.beam.release.fire.01.004_beam_fire",
    "characterId": "cell_imperfect",
@@ -1355,6 +1397,7 @@
    "frameKind": "fixed_only"
   },
   {
+   "_manifestName": "cell_imperfect_form_beam_fire_02",
    "sourceId": "cell_imperfect_form/005_beam_fire.png",
    "canonicalId": "cell_imperfect_form.beam.release.fire.02.005_beam_fire",
    "characterId": "cell_imperfect",

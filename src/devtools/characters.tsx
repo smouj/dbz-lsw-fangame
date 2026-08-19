@@ -745,9 +745,19 @@ function AllPosesGrid({ formId }: { formId: string }) {
           for (const f of canonForPose) famCount.set(f.family, (famCount.get(f.family) ?? 0) + 1);
           const primaryFam = [...famCount.entries()].sort((a, b) => b[1] - a[1])[0]?.[0] ?? null;
           const primaryRole = canonForPose.find(f => f.family === primaryFam)?.role ?? null;
-          const primaryVar = canonForPose.find(f => f.family === primaryFam)?.variant ?? null;
+          // M8.F0 — variant correcto de la pose: los frames espejados
+          // (move_front_00 ≡ move_back_01) comparten frame físico y el canon
+          // solo puede asignar UN variant (move_back). Para la POSE, el
+          // variant correcto es el que coincide con su nombre (move_front →
+          // move_front); si ningún frame lo tiene (espejado), usamos el
+          // nombre de la pose (semántica canónica) en vez del variant del
+          // frame compartido.
+          const variantMatchesPose = canonForPose.some(f => f.variant === p.pose);
+          const primaryVar = variantMatchesPose
+            ? (canonForPose.find(f => f.family === primaryFam && f.variant === p.pose)?.variant ?? p.pose)
+            : p.pose;
           const canonLabel = primaryFam && primaryFam !== 'unclassified'
-            ? `${primaryFam}/${primaryRole ?? '?'}/${primaryVar ?? '?'}`
+            ? `${primaryFam}/${primaryRole ?? '?'}/${primaryVar}`
             : 'unclassified';
           return (
             <div key={p.pose} className={`dev-pose-card ${p.url ? '' : 'no-frame'}`}

@@ -3,6 +3,7 @@
  "frameCount": 58,
  "frames": [
   {
+   "_manifestName": "gotenks_super_saiyan_3_idle_00",
    "sourceId": "gotenks_super_saiyan_3/001.png",
    "canonicalId": "gotenks_super_saiyan_3.idle.idle.idle.00.001",
    "characterId": "gotenks_super_saiyan",
@@ -32,6 +33,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "gotenks_super_saiyan_3_guard_01",
    "sourceId": "gotenks_super_saiyan_3/002.png",
    "canonicalId": "gotenks_super_saiyan_3.defense.hold.guard.01.002",
    "characterId": "gotenks_super_saiyan",
@@ -57,6 +59,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "gotenks_super_saiyan_3_guard_02",
    "sourceId": "gotenks_super_saiyan_3/003.png",
    "canonicalId": "gotenks_super_saiyan_3.defense.recover.guard.02.003",
    "characterId": "gotenks_super_saiyan",
@@ -82,6 +85,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "gotenks_super_saiyan_3_gather_power_00",
    "sourceId": "gotenks_super_saiyan_3/004.png",
    "canonicalId": "gotenks_super_saiyan_3.power.gather_power.gather_power.00.004",
    "characterId": "gotenks_super_saiyan",
@@ -153,6 +157,7 @@
    "note": "bucket forense: multi_evidence_movement_or_attack_pose_speedlines"
   },
   {
+   "_manifestName": "gotenks_super_saiyan_3_move_front_01",
    "sourceId": "gotenks_super_saiyan_3/007.png",
    "canonicalId": "gotenks_super_saiyan_3.defense.start.evade.00.007.png",
    "characterId": "gotenks_super_saiyan",
@@ -179,6 +184,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "gotenks_super_saiyan_3_move_front_00",
    "sourceId": "gotenks_super_saiyan_3/008.png",
    "canonicalId": "gotenks_super_saiyan_3.movement.start.move_front.00.008",
    "characterId": "gotenks_super_saiyan",
@@ -227,6 +233,7 @@
    "note": "bucket forense: movement_or_attack_pose"
   },
   {
+   "_manifestName": "gotenks_super_saiyan_3_gather_power_01",
    "sourceId": "gotenks_super_saiyan_3/010.png",
    "canonicalId": "gotenks_super_saiyan_3.power.gather_power.gather_power.01.010",
    "characterId": "gotenks_super_saiyan",
@@ -321,16 +328,17 @@
    "note": "bucket forense: movement_or_attack_pose"
   },
   {
+   "_manifestName": "gotenks_super_saiyan_3_attack_fwd_05",
    "sourceId": "gotenks_super_saiyan_3/014.png",
-   "canonicalId": "gotenks_super_saiyan_3.melee.follow_through.attack_forward.05.014",
+   "canonicalId": "gotenks_super_saiyan_3.melee.strike.punch_left.03.014.png",
    "characterId": "gotenks_super_saiyan",
    "formId": "gotenks_super_saiyan_3",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "follow_through",
-   "variant": "attack_forward",
-   "sequenceIndex": 5,
+   "role": "strike",
+   "variant": "punch_left",
+   "sequenceIndex": 3,
    "runtimePoses": [
     "attack_fwd",
     "punch_left"
@@ -346,6 +354,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "gotenks_super_saiyan_3_hurt_00",
    "sourceId": "gotenks_super_saiyan_3/015.png",
    "canonicalId": "gotenks_super_saiyan_3.reaction.hurt_light.hurt.00.015",
    "characterId": "gotenks_super_saiyan",
@@ -370,6 +379,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "gotenks_super_saiyan_3_knockback_back_00",
    "sourceId": "gotenks_super_saiyan_3/016.png",
    "canonicalId": "gotenks_super_saiyan_3.reaction.knockback_back.back.00.016",
    "characterId": "gotenks_super_saiyan",
@@ -394,15 +404,16 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "gotenks_super_saiyan_3_attack_fwd_02",
    "sourceId": "gotenks_super_saiyan_3/017.png",
-   "canonicalId": "gotenks_super_saiyan_3.power.gather_power.gather_power.03.017.png",
+   "canonicalId": "gotenks_super_saiyan_3.power.power_up.power_up.03.017.png",
    "characterId": "gotenks_super_saiyan",
    "formId": "gotenks_super_saiyan_3",
    "assetType": "composite",
    "view": "ACTION_DUEL",
    "family": "power",
-   "role": "gather_power",
-   "variant": "gather_power",
+   "role": "power_up",
+   "variant": "power_up",
    "sequenceIndex": 3,
    "runtimePoses": [
     "attack_fwd",
@@ -421,16 +432,17 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "gotenks_super_saiyan_3_attack_fwd_06",
    "sourceId": "gotenks_super_saiyan_3/018.png",
-   "canonicalId": "gotenks_super_saiyan_3.melee.recover.attack_forward.06.018",
+   "canonicalId": "gotenks_super_saiyan_3.reaction.knockback_up.up.00.018.png",
    "characterId": "gotenks_super_saiyan",
    "formId": "gotenks_super_saiyan_3",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "recover",
-   "variant": "attack_forward",
-   "sequenceIndex": 6,
+   "family": "reaction",
+   "role": "knockback_up",
+   "variant": "up",
+   "sequenceIndex": 0,
    "runtimePoses": [
     "attack_fwd",
     "punch_left",
@@ -447,6 +459,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "gotenks_super_saiyan_3_attack_ud_00",
    "sourceId": "gotenks_super_saiyan_3/019.png",
    "canonicalId": "gotenks_super_saiyan_3.melee.ready.attack_vertical.00.019",
    "characterId": "gotenks_super_saiyan",
@@ -471,6 +484,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "gotenks_super_saiyan_3_attack_ud_01",
    "sourceId": "gotenks_super_saiyan_3/020.png",
    "canonicalId": "gotenks_super_saiyan_3.melee.windup.attack_vertical.01.020",
    "characterId": "gotenks_super_saiyan",
@@ -495,6 +509,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "gotenks_super_saiyan_3_attack_ud_02",
    "sourceId": "gotenks_super_saiyan_3/021.png",
    "canonicalId": "gotenks_super_saiyan_3.melee.contact.attack_vertical.02.021",
    "characterId": "gotenks_super_saiyan",
@@ -519,16 +534,17 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "gotenks_super_saiyan_3_attack_ud_03",
    "sourceId": "gotenks_super_saiyan_3/022.png",
-   "canonicalId": "gotenks_super_saiyan_3.melee.recover.attack_vertical.03.022",
+   "canonicalId": "gotenks_super_saiyan_3.reaction.knockback_down.down.00.022.png",
    "characterId": "gotenks_super_saiyan",
    "formId": "gotenks_super_saiyan_3",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "recover",
-   "variant": "attack_vertical",
-   "sequenceIndex": 3,
+   "family": "reaction",
+   "role": "knockback_down",
+   "variant": "down",
+   "sequenceIndex": 0,
    "runtimePoses": [
     "attack_ud",
     "knockback_down"
@@ -544,6 +560,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "gotenks_super_saiyan_3_knockback_back_00",
    "sourceId": "gotenks_super_saiyan_3/023.png",
    "canonicalId": "gotenks_super_saiyan_3.reaction.knockback_back.back.00.023",
    "characterId": "gotenks_super_saiyan",
@@ -568,15 +585,16 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "gotenks_super_saiyan_3_attack_fwd_00",
    "sourceId": "gotenks_super_saiyan_3/024.png",
-   "canonicalId": "gotenks_super_saiyan_3.melee.ready.attack_forward.00.024",
+   "canonicalId": "gotenks_super_saiyan_3.melee.strike.kick_right.00.024.png",
    "characterId": "gotenks_super_saiyan",
    "formId": "gotenks_super_saiyan_3",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "ready",
-   "variant": "attack_forward",
+   "role": "strike",
+   "variant": "kick_right",
    "sequenceIndex": 0,
    "runtimePoses": [
     "attack_fwd",
@@ -594,6 +612,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "gotenks_super_saiyan_3_gather_power_02",
    "sourceId": "gotenks_super_saiyan_3/025.png",
    "canonicalId": "gotenks_super_saiyan_3.power.gather_power.gather_power.02.025",
    "characterId": "gotenks_super_saiyan",
@@ -619,6 +638,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "gotenks_super_saiyan_3_kick_right_01",
    "sourceId": "gotenks_super_saiyan_3/026.png",
    "canonicalId": "gotenks_super_saiyan_3.melee.strike.kick_right.01.026",
    "characterId": "gotenks_super_saiyan",
@@ -712,6 +732,7 @@
    "note": "bucket forense: orbs_rings_bursts"
   },
   {
+   "_manifestName": "gotenks_super_saiyan_3_beam_charge_00",
    "sourceId": "gotenks_super_saiyan_3/030.png",
    "canonicalId": "gotenks_super_saiyan_3.beam.charge_start.charge.00.030",
    "characterId": "gotenks_super_saiyan",
@@ -759,6 +780,7 @@
    "note": "bucket forense: orbs_rings_bursts"
   },
   {
+   "_manifestName": "gotenks_super_saiyan_3_aura_power_00",
    "sourceId": "gotenks_super_saiyan_3/032.png",
    "canonicalId": "gotenks_super_saiyan_3.effect.aura.aura_power.00.032",
    "characterId": "gotenks_super_saiyan",
@@ -783,6 +805,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "gotenks_super_saiyan_3_aura_power_01",
    "sourceId": "gotenks_super_saiyan_3/033.png",
    "canonicalId": "gotenks_super_saiyan_3.effect.aura.aura_power.01.033",
    "characterId": "gotenks_super_saiyan",
@@ -807,6 +830,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "gotenks_super_saiyan_3_aura_power_02",
    "sourceId": "gotenks_super_saiyan_3/034.png",
    "canonicalId": "gotenks_super_saiyan_3.effect.aura.aura_power.02.034",
    "characterId": "gotenks_super_saiyan",
@@ -877,6 +901,7 @@
    "note": "bucket forense: projectiles_beams"
   },
   {
+   "_manifestName": "gotenks_super_saiyan_3_beam_charge_04",
    "sourceId": "gotenks_super_saiyan_3/037.png",
    "canonicalId": "gotenks_super_saiyan_3.beam.charge_hold.charge.04.037",
    "characterId": "gotenks_super_saiyan",
@@ -901,6 +926,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "gotenks_super_saiyan_3_beam_charge_05",
    "sourceId": "gotenks_super_saiyan_3/038.png",
    "canonicalId": "gotenks_super_saiyan_3.beam.charge_hold.charge.05.038",
    "characterId": "gotenks_super_saiyan",
@@ -948,6 +974,7 @@
    "note": "bucket forense: movement_or_attack_pose"
   },
   {
+   "_manifestName": "gotenks_super_saiyan_3_beam_charge_06",
    "sourceId": "gotenks_super_saiyan_3/040.png",
    "canonicalId": "gotenks_super_saiyan_3.beam.charge_hold.charge.06.040",
    "characterId": "gotenks_super_saiyan",
@@ -972,6 +999,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "gotenks_super_saiyan_3_beam_charge_01",
    "sourceId": "gotenks_super_saiyan_3/041.png",
    "canonicalId": "gotenks_super_saiyan_3.beam.charge_start.charge.01.041",
    "characterId": "gotenks_super_saiyan",
@@ -996,6 +1024,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "gotenks_super_saiyan_3_beam_charge_02",
    "sourceId": "gotenks_super_saiyan_3/042.png",
    "canonicalId": "gotenks_super_saiyan_3.beam.charge_start.charge.02.042",
    "characterId": "gotenks_super_saiyan",
@@ -1066,6 +1095,7 @@
    "note": "bucket forense: multi_evidence_orbs_rings_bursts_projectiles_beams"
   },
   {
+   "_manifestName": "gotenks_super_saiyan_3_beam_charge_02",
    "sourceId": "gotenks_super_saiyan_3/045.png",
    "canonicalId": "gotenks_super_saiyan_3.beam.charge_start.charge.02.045",
    "characterId": "gotenks_super_saiyan",
@@ -1136,6 +1166,7 @@
    "note": "sin evidencia runtime ni bucket"
   },
   {
+   "_manifestName": "gotenks_super_saiyan_3_aura_support_00",
    "sourceId": "gotenks_super_saiyan_3/048.png",
    "canonicalId": "gotenks_super_saiyan_3.effect.aura.aura_support.00.048",
    "characterId": "gotenks_super_saiyan",
@@ -1160,6 +1191,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "gotenks_super_saiyan_3_aura_support_01",
    "sourceId": "gotenks_super_saiyan_3/049.png",
    "canonicalId": "gotenks_super_saiyan_3.effect.aura.aura_support.01.049",
    "characterId": "gotenks_super_saiyan",
@@ -1184,6 +1216,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "gotenks_super_saiyan_3_aura_support_02",
    "sourceId": "gotenks_super_saiyan_3/050.png",
    "canonicalId": "gotenks_super_saiyan_3.effect.aura.aura_support.02.050",
    "characterId": "gotenks_super_saiyan",
@@ -1208,6 +1241,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "gotenks_super_saiyan_3_attack_fwd_01",
    "sourceId": "gotenks_super_saiyan_3/000_attack_fwd.png",
    "canonicalId": "gotenks_super_saiyan_3.melee.windup.attack_forward.01.000_attack_fwd",
    "characterId": "gotenks_super_saiyan",
@@ -1233,15 +1267,16 @@
    "frameKind": "fixed_only"
   },
   {
+   "_manifestName": "gotenks_super_saiyan_3_attack_fwd_02",
    "sourceId": "gotenks_super_saiyan_3/001_attack_fwd.png",
-   "canonicalId": "gotenks_super_saiyan_3.power.gather_power.gather_power.03.001_attack_fwd.png",
+   "canonicalId": "gotenks_super_saiyan_3.power.power_up.power_up.03.001_attack_fwd.png",
    "characterId": "gotenks_super_saiyan",
    "formId": "gotenks_super_saiyan_3",
    "assetType": "composite",
    "view": "ACTION_DUEL",
    "family": "power",
-   "role": "gather_power",
-   "variant": "gather_power",
+   "role": "power_up",
+   "variant": "power_up",
    "sequenceIndex": 3,
    "runtimePoses": [
     "attack_fwd",
@@ -1260,16 +1295,17 @@
    "frameKind": "fixed_only"
   },
   {
+   "_manifestName": "gotenks_super_saiyan_3_attack_fwd_03",
    "sourceId": "gotenks_super_saiyan_3/002_attack_fwd.png",
-   "canonicalId": "gotenks_super_saiyan_3.melee.strike.attack_forward.03.002_attack_fwd",
+   "canonicalId": "gotenks_super_saiyan_3.melee.strike.punch_left.01.002_attack_fwd.png",
    "characterId": "gotenks_super_saiyan",
    "formId": "gotenks_super_saiyan_3",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
    "role": "strike",
-   "variant": "attack_forward",
-   "sequenceIndex": 3,
+   "variant": "punch_left",
+   "sequenceIndex": 1,
    "runtimePoses": [
     "attack_fwd",
     "punch_left"
@@ -1285,16 +1321,17 @@
    "frameKind": "fixed_only"
   },
   {
+   "_manifestName": "gotenks_super_saiyan_3_attack_fwd_04",
    "sourceId": "gotenks_super_saiyan_3/003_attack_fwd.png",
-   "canonicalId": "gotenks_super_saiyan_3.melee.contact.attack_forward.04.003_attack_fwd",
+   "canonicalId": "gotenks_super_saiyan_3.melee.strike.punch_left.02.003_attack_fwd.png",
    "characterId": "gotenks_super_saiyan",
    "formId": "gotenks_super_saiyan_3",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "contact",
-   "variant": "attack_forward",
-   "sequenceIndex": 4,
+   "role": "strike",
+   "variant": "punch_left",
+   "sequenceIndex": 2,
    "runtimePoses": [
     "attack_fwd",
     "punch_left"
@@ -1310,6 +1347,7 @@
    "frameKind": "fixed_only"
   },
   {
+   "_manifestName": "gotenks_super_saiyan_3_beam_charge_03",
    "sourceId": "gotenks_super_saiyan_3/004_beam_charge.png",
    "canonicalId": "gotenks_super_saiyan_3.beam.charge_start.charge.03.004_beam_charge",
    "characterId": "gotenks_super_saiyan",

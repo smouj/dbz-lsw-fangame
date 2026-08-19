@@ -3,6 +3,7 @@
  "frameCount": 93,
  "frames": [
   {
+   "_manifestName": "vegito_ssj_idle_00",
    "sourceId": "vegito_ssj/001.png",
    "canonicalId": "vegito_ssj.idle.idle.idle.00.001",
    "characterId": "vegito",
@@ -29,6 +30,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "vegito_ssj_gather_power_00",
    "sourceId": "vegito_ssj/002.png",
    "canonicalId": "vegito_ssj.power.gather_power.gather_power.00.002",
    "characterId": "vegito",
@@ -54,6 +56,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "vegito_ssj_guard_00",
    "sourceId": "vegito_ssj/003.png",
    "canonicalId": "vegito_ssj.defense.start.guard.00.003",
    "characterId": "vegito",
@@ -79,6 +82,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "vegito_ssj_guard_01",
    "sourceId": "vegito_ssj/004.png",
    "canonicalId": "vegito_ssj.defense.recover.guard.01.004",
    "characterId": "vegito",
@@ -196,6 +200,7 @@
    "note": "bucket forense: overworld_actor_or_pose"
   },
   {
+   "_manifestName": "vegito_ssj_evade_00",
    "sourceId": "vegito_ssj/009.png",
    "canonicalId": "vegito_ssj.defense.start.evade.00.009",
    "characterId": "vegito",
@@ -220,6 +225,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "vegito_ssj_evade_01",
    "sourceId": "vegito_ssj/010.png",
    "canonicalId": "vegito_ssj.defense.recover.evade.01.010",
    "characterId": "vegito",
@@ -244,16 +250,17 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "vegito_ssj_move_front_01",
    "sourceId": "vegito_ssj/011.png",
-   "canonicalId": "vegito_ssj.movement.end.move_front.01.011",
+   "canonicalId": "vegito_ssj.movement.start.move_back.00.011.png",
    "characterId": "vegito",
    "formId": "vegito_ssj",
    "assetType": "actor_frame",
    "view": "FIELD",
    "family": "movement",
-   "role": "end",
-   "variant": "move_front",
-   "sequenceIndex": 1,
+   "role": "start",
+   "variant": "move_back",
+   "sequenceIndex": 0,
    "runtimePoses": [
     "move_front",
     "move_back"
@@ -269,6 +276,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "vegito_ssj_move_front_00",
    "sourceId": "vegito_ssj/012.png",
    "canonicalId": "vegito_ssj.movement.start.move_front.00.012",
    "characterId": "vegito",
@@ -294,6 +302,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "vegito_ssj_hurt_00",
    "sourceId": "vegito_ssj/013.png",
    "canonicalId": "vegito_ssj.reaction.hurt_light.hurt.00.013",
    "characterId": "vegito",
@@ -318,6 +327,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "vegito_ssj_hurt_01",
    "sourceId": "vegito_ssj/014.png",
    "canonicalId": "vegito_ssj.reaction.hurt_heavy.hurt.01.014",
    "characterId": "vegito",
@@ -342,6 +352,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "vegito_ssj_hurt_02",
    "sourceId": "vegito_ssj/015.png",
    "canonicalId": "vegito_ssj.reaction.hurt_heavy.hurt.02.015",
    "characterId": "vegito",
@@ -366,6 +377,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "vegito_ssj_hurt_03",
    "sourceId": "vegito_ssj/016.png",
    "canonicalId": "vegito_ssj.reaction.hurt_heavy.hurt.03.016",
    "characterId": "vegito",
@@ -390,6 +402,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "vegito_ssj_hurt_04",
    "sourceId": "vegito_ssj/017.png",
    "canonicalId": "vegito_ssj.reaction.hurt_heavy.hurt.04.017",
    "characterId": "vegito",
@@ -414,6 +427,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "vegito_ssj_hurt_05",
    "sourceId": "vegito_ssj/018.png",
    "canonicalId": "vegito_ssj.reaction.hurt_heavy.hurt.05.018",
    "characterId": "vegito",
@@ -461,16 +475,17 @@
    "note": "bucket forense: downed_or_hurt"
   },
   {
+   "_manifestName": "vegito_ssj_attack_fwd_00",
    "sourceId": "vegito_ssj/020.png",
-   "canonicalId": "vegito_ssj.melee.ready.attack_forward.00.020",
+   "canonicalId": "vegito_ssj.melee.strike.punch_right.01.020.png",
    "characterId": "vegito",
    "formId": "vegito_ssj",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "ready",
-   "variant": "attack_forward",
-   "sequenceIndex": 0,
+   "role": "strike",
+   "variant": "punch_right",
+   "sequenceIndex": 1,
    "runtimePoses": [
     "attack_fwd",
     "punch_right"
@@ -486,16 +501,17 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "vegito_ssj_attack_fwd_01",
    "sourceId": "vegito_ssj/021.png",
-   "canonicalId": "vegito_ssj.melee.windup.attack_forward.01.021",
+   "canonicalId": "vegito_ssj.melee.strike.punch_right.02.021.png",
    "characterId": "vegito",
    "formId": "vegito_ssj",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "windup",
-   "variant": "attack_forward",
-   "sequenceIndex": 1,
+   "role": "strike",
+   "variant": "punch_right",
+   "sequenceIndex": 2,
    "runtimePoses": [
     "attack_fwd",
     "punch_right"
@@ -511,16 +527,17 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "vegito_ssj_attack_fwd_02",
    "sourceId": "vegito_ssj/022.png",
-   "canonicalId": "vegito_ssj.melee.travel.attack_forward.02.022",
+   "canonicalId": "vegito_ssj.reaction.knockback_back.back.00.022.png",
    "characterId": "vegito",
    "formId": "vegito_ssj",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "travel",
-   "variant": "attack_forward",
-   "sequenceIndex": 2,
+   "family": "reaction",
+   "role": "knockback_back",
+   "variant": "back",
+   "sequenceIndex": 0,
    "runtimePoses": [
     "attack_fwd",
     "punch_right",
@@ -537,16 +554,17 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "vegito_ssj_attack_fwd_03",
    "sourceId": "vegito_ssj/023.png",
-   "canonicalId": "vegito_ssj.melee.strike.attack_forward.03.023",
+   "canonicalId": "vegito_ssj.reaction.knockback_up.up.00.023.png",
    "characterId": "vegito",
    "formId": "vegito_ssj",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "strike",
-   "variant": "attack_forward",
-   "sequenceIndex": 3,
+   "family": "reaction",
+   "role": "knockback_up",
+   "variant": "up",
+   "sequenceIndex": 0,
    "runtimePoses": [
     "attack_fwd",
     "punch_left",
@@ -563,16 +581,17 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "vegito_ssj_attack_fwd_04",
    "sourceId": "vegito_ssj/024.png",
-   "canonicalId": "vegito_ssj.melee.contact.attack_forward.04.024",
+   "canonicalId": "vegito_ssj.melee.strike.punch_left.02.024.png",
    "characterId": "vegito",
    "formId": "vegito_ssj",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "contact",
-   "variant": "attack_forward",
-   "sequenceIndex": 4,
+   "role": "strike",
+   "variant": "punch_left",
+   "sequenceIndex": 2,
    "runtimePoses": [
     "attack_fwd",
     "punch_left"
@@ -588,16 +607,17 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "vegito_ssj_attack_fwd_05",
    "sourceId": "vegito_ssj/025.png",
-   "canonicalId": "vegito_ssj.melee.follow_through.attack_forward.05.025",
+   "canonicalId": "vegito_ssj.reaction.knockback_down.down.00.025.png",
    "characterId": "vegito",
    "formId": "vegito_ssj",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "follow_through",
-   "variant": "attack_forward",
-   "sequenceIndex": 5,
+   "family": "reaction",
+   "role": "knockback_down",
+   "variant": "down",
+   "sequenceIndex": 0,
    "runtimePoses": [
     "attack_fwd",
     "punch_left",
@@ -614,16 +634,17 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "vegito_ssj_attack_fwd_06",
    "sourceId": "vegito_ssj/026.png",
-   "canonicalId": "vegito_ssj.melee.recover.attack_forward.06.026",
+   "canonicalId": "vegito_ssj.reaction.knockback_down.down.01.026.png",
    "characterId": "vegito",
    "formId": "vegito_ssj",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "recover",
-   "variant": "attack_forward",
-   "sequenceIndex": 6,
+   "family": "reaction",
+   "role": "knockback_down",
+   "variant": "down",
+   "sequenceIndex": 1,
    "runtimePoses": [
     "attack_fwd",
     "punch_left",
@@ -640,6 +661,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "vegito_ssj_attack_ud_00",
    "sourceId": "vegito_ssj/027.png",
    "canonicalId": "vegito_ssj.melee.ready.attack_vertical.00.027",
    "characterId": "vegito",
@@ -664,6 +686,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "vegito_ssj_attack_ud_01",
    "sourceId": "vegito_ssj/028.png",
    "canonicalId": "vegito_ssj.melee.windup.attack_vertical.01.028",
    "characterId": "vegito",
@@ -688,16 +711,17 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "vegito_ssj_attack_ud_02",
    "sourceId": "vegito_ssj/029.png",
-   "canonicalId": "vegito_ssj.melee.contact.attack_vertical.02.029",
+   "canonicalId": "vegito_ssj.melee.strike.kick_right.00.029.png",
    "characterId": "vegito",
    "formId": "vegito_ssj",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "contact",
-   "variant": "attack_vertical",
-   "sequenceIndex": 2,
+   "role": "strike",
+   "variant": "kick_right",
+   "sequenceIndex": 0,
    "runtimePoses": [
     "attack_ud",
     "kick_right"
@@ -713,16 +737,17 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "vegito_ssj_attack_ud_03",
    "sourceId": "vegito_ssj/030.png",
-   "canonicalId": "vegito_ssj.melee.recover.attack_vertical.03.030",
+   "canonicalId": "vegito_ssj.melee.strike.kick_right.01.030.png",
    "characterId": "vegito",
    "formId": "vegito_ssj",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "recover",
-   "variant": "attack_vertical",
-   "sequenceIndex": 3,
+   "role": "strike",
+   "variant": "kick_right",
+   "sequenceIndex": 1,
    "runtimePoses": [
     "attack_ud",
     "kick_right"
@@ -761,6 +786,7 @@
    "note": "bucket forense: projectiles_beams"
   },
   {
+   "_manifestName": "vegito_ssj_gather_power_01",
    "sourceId": "vegito_ssj/032.png",
    "canonicalId": "vegito_ssj.power.gather_power.gather_power.01.032",
    "characterId": "vegito",
@@ -788,6 +814,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "vegito_ssj_aura_power_00",
    "sourceId": "vegito_ssj/033.png",
    "canonicalId": "vegito_ssj.effect.aura.aura_power.00.033",
    "characterId": "vegito",
@@ -812,6 +839,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "vegito_ssj_aura_power_01",
    "sourceId": "vegito_ssj/034.png",
    "canonicalId": "vegito_ssj.effect.aura.aura_power.01.034",
    "characterId": "vegito",
@@ -836,6 +864,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "vegito_ssj_aura_power_02",
    "sourceId": "vegito_ssj/035.png",
    "canonicalId": "vegito_ssj.effect.aura.aura_power.02.035",
    "characterId": "vegito",
@@ -883,6 +912,7 @@
    "note": "bucket forense: projectile_orb_small"
   },
   {
+   "_manifestName": "vegito_ssj_beam_charge_00",
    "sourceId": "vegito_ssj/037.png",
    "canonicalId": "vegito_ssj.beam.charge_start.charge.00.037",
    "characterId": "vegito",
@@ -953,6 +983,7 @@
    "note": "bucket forense: character_plus_aura_or_burst"
   },
   {
+   "_manifestName": "vegito_ssj_beam_charge_00",
    "sourceId": "vegito_ssj/040.png",
    "canonicalId": "vegito_ssj.beam.charge_start.charge.00.040",
    "characterId": "vegito",
@@ -1023,16 +1054,17 @@
    "note": "bucket forense: projectiles_beams"
   },
   {
+   "_manifestName": "vegito_ssj_beam_charge_02",
    "sourceId": "vegito_ssj/043.png",
-   "canonicalId": "vegito_ssj.beam.charge_start.charge.01.043",
+   "canonicalId": "vegito_ssj.beam.release.fire.00.043.png",
    "characterId": "vegito",
    "formId": "vegito_ssj",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "beam",
-   "role": "charge_start",
-   "variant": "charge",
-   "sequenceIndex": 1,
+   "role": "release",
+   "variant": "fire",
+   "sequenceIndex": 0,
    "runtimePoses": [
     "beam_charge",
     "beam_fire"
@@ -1071,16 +1103,17 @@
    "note": "bucket forense: orbs_rings_bursts"
   },
   {
+   "_manifestName": "vegito_ssj_beam_charge_03",
    "sourceId": "vegito_ssj/045.png",
-   "canonicalId": "vegito_ssj.beam.charge_start.charge.02.045",
+   "canonicalId": "vegito_ssj.beam.release.fire.01.045.png",
    "characterId": "vegito",
    "formId": "vegito_ssj",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "beam",
-   "role": "charge_start",
-   "variant": "charge",
-   "sequenceIndex": 2,
+   "role": "release",
+   "variant": "fire",
+   "sequenceIndex": 1,
    "runtimePoses": [
     "beam_charge",
     "beam_fire"
@@ -1142,16 +1175,17 @@
    "note": "bucket forense: orbs_rings_bursts"
   },
   {
+   "_manifestName": "vegito_ssj_beam_charge_04",
    "sourceId": "vegito_ssj/048.png",
-   "canonicalId": "vegito_ssj.beam.charge_hold.charge.03.048",
+   "canonicalId": "vegito_ssj.beam.release.fire.02.048.png",
    "characterId": "vegito",
    "formId": "vegito_ssj",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "beam",
-   "role": "charge_hold",
-   "variant": "charge",
-   "sequenceIndex": 3,
+   "role": "release",
+   "variant": "fire",
+   "sequenceIndex": 2,
    "runtimePoses": [
     "beam_charge",
     "beam_fire"
@@ -1167,6 +1201,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "vegito_ssj_beam_charge_05",
    "sourceId": "vegito_ssj/049.png",
    "canonicalId": "vegito_ssj.beam.charge_hold.charge.04.049",
    "characterId": "vegito",
@@ -1237,6 +1272,7 @@
    "note": "bucket forense: downed_or_hurt"
   },
   {
+   "_manifestName": "vegito_ssj_gather_power_03",
    "sourceId": "vegito_ssj/052.png",
    "canonicalId": "vegito_ssj.power.gather_power.gather_power.03.052",
    "characterId": "vegito",
@@ -1285,6 +1321,7 @@
    "note": "bucket forense: movement_or_attack_pose"
   },
   {
+   "_manifestName": "vegito_ssj_gather_power_01",
    "sourceId": "vegito_ssj/054.png",
    "canonicalId": "vegito_ssj.power.gather_power.gather_power.01.054",
    "characterId": "vegito",
@@ -1335,6 +1372,7 @@
    "note": "bucket forense: beam_or_projectile_horizontal"
   },
   {
+   "_manifestName": "vegito_ssj_aura_support_00",
    "sourceId": "vegito_ssj/056.png",
    "canonicalId": "vegito_ssj.effect.aura.aura_support.00.056",
    "characterId": "vegito",
@@ -1359,6 +1397,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "vegito_ssj_aura_support_01",
    "sourceId": "vegito_ssj/057.png",
    "canonicalId": "vegito_ssj.effect.aura.aura_support.01.057",
    "characterId": "vegito",
@@ -1383,6 +1422,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "vegito_ssj_aura_support_02",
    "sourceId": "vegito_ssj/058.png",
    "canonicalId": "vegito_ssj.effect.aura.aura_support.02.058",
    "characterId": "vegito",

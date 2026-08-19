@@ -3,6 +3,7 @@
  "frameCount": 51,
  "frames": [
   {
+   "_manifestName": "gohan_ultimate_idle_00",
    "sourceId": "gohan_ultimate/001.png",
    "canonicalId": "gohan_ultimate.idle.idle.idle.00.001",
    "characterId": "gohan",
@@ -31,6 +32,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "gohan_ultimate_guard_01",
    "sourceId": "gohan_ultimate/002.png",
    "canonicalId": "gohan_ultimate.defense.hold.guard.01.002",
    "characterId": "gohan",
@@ -56,6 +58,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "gohan_ultimate_guard_02",
    "sourceId": "gohan_ultimate/003.png",
    "canonicalId": "gohan_ultimate.defense.recover.guard.02.003",
    "characterId": "gohan",
@@ -104,6 +107,7 @@
    "note": "bucket forense: idle_or_stance"
   },
   {
+   "_manifestName": "gohan_ultimate_evade_01",
    "sourceId": "gohan_ultimate/005.png",
    "canonicalId": "gohan_ultimate.defense.recover.evade.01.005",
    "characterId": "gohan",
@@ -128,6 +132,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "gohan_ultimate_evade_00",
    "sourceId": "gohan_ultimate/006.png",
    "canonicalId": "gohan_ultimate.defense.start.evade.00.006",
    "characterId": "gohan",
@@ -152,16 +157,17 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "gohan_ultimate_move_front_01",
    "sourceId": "gohan_ultimate/007.png",
-   "canonicalId": "gohan_ultimate.movement.end.move_front.01.007",
+   "canonicalId": "gohan_ultimate.movement.start.move_back.00.007.png",
    "characterId": "gohan",
    "formId": "gohan_ultimate",
    "assetType": "actor_frame",
    "view": "FIELD",
    "family": "movement",
-   "role": "end",
-   "variant": "move_front",
-   "sequenceIndex": 1,
+   "role": "start",
+   "variant": "move_back",
+   "sequenceIndex": 0,
    "runtimePoses": [
     "move_front",
     "move_back"
@@ -177,6 +183,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "gohan_ultimate_move_front_00",
    "sourceId": "gohan_ultimate/008.png",
    "canonicalId": "gohan_ultimate.movement.start.move_front.00.008",
    "characterId": "gohan",
@@ -202,6 +209,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "gohan_ultimate_hurt_00",
    "sourceId": "gohan_ultimate/009.png",
    "canonicalId": "gohan_ultimate.reaction.hurt_light.hurt.00.009",
    "characterId": "gohan",
@@ -226,6 +234,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "gohan_ultimate_hurt_01",
    "sourceId": "gohan_ultimate/010.png",
    "canonicalId": "gohan_ultimate.reaction.hurt_heavy.hurt.01.010",
    "characterId": "gohan",
@@ -250,6 +259,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "gohan_ultimate_hurt_02",
    "sourceId": "gohan_ultimate/011.png",
    "canonicalId": "gohan_ultimate.reaction.hurt_heavy.hurt.02.011",
    "characterId": "gohan",
@@ -274,6 +284,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "gohan_ultimate_hurt_03",
    "sourceId": "gohan_ultimate/012.png",
    "canonicalId": "gohan_ultimate.reaction.hurt_heavy.hurt.03.012",
    "characterId": "gohan",
@@ -298,6 +309,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "gohan_ultimate_hurt_04",
    "sourceId": "gohan_ultimate/013.png",
    "canonicalId": "gohan_ultimate.reaction.hurt_heavy.hurt.04.013",
    "characterId": "gohan",
@@ -322,16 +334,17 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "gohan_ultimate_attack_fwd_05",
    "sourceId": "gohan_ultimate/014.png",
-   "canonicalId": "gohan_ultimate.melee.contact.attack_forward.05.014",
+   "canonicalId": "gohan_ultimate.melee.strike.punch_left.03.014.png",
    "characterId": "gohan",
    "formId": "gohan_ultimate",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "contact",
-   "variant": "attack_forward",
-   "sequenceIndex": 5,
+   "role": "strike",
+   "variant": "punch_left",
+   "sequenceIndex": 3,
    "runtimePoses": [
     "attack_fwd",
     "punch_left"
@@ -370,6 +383,7 @@
    "note": "bucket forense: downed_or_hurt"
   },
   {
+   "_manifestName": "gohan_ultimate_attack_fwd_02",
    "sourceId": "gohan_ultimate/016.png",
    "canonicalId": "gohan_ultimate.melee.travel.attack_forward.02.016",
    "characterId": "gohan",
@@ -395,16 +409,17 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "gohan_ultimate_attack_fwd_06",
    "sourceId": "gohan_ultimate/017.png",
-   "canonicalId": "gohan_ultimate.melee.follow_through.attack_forward.06.017",
+   "canonicalId": "gohan_ultimate.melee.strike.punch_left.04.017.png",
    "characterId": "gohan",
    "formId": "gohan_ultimate",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "follow_through",
-   "variant": "attack_forward",
-   "sequenceIndex": 6,
+   "role": "strike",
+   "variant": "punch_left",
+   "sequenceIndex": 4,
    "runtimePoses": [
     "attack_fwd",
     "punch_left"
@@ -420,16 +435,17 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "gohan_ultimate_attack_fwd_07",
    "sourceId": "gohan_ultimate/018.png",
-   "canonicalId": "gohan_ultimate.melee.recover.attack_forward.07.018",
+   "canonicalId": "gohan_ultimate.reaction.knockback_up.up.00.018.png",
    "characterId": "gohan",
    "formId": "gohan_ultimate",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "recover",
-   "variant": "attack_forward",
-   "sequenceIndex": 7,
+   "family": "reaction",
+   "role": "knockback_up",
+   "variant": "up",
+   "sequenceIndex": 0,
    "runtimePoses": [
     "attack_fwd",
     "knockback_up"
@@ -445,6 +461,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "gohan_ultimate_attack_ud_00",
    "sourceId": "gohan_ultimate/019.png",
    "canonicalId": "gohan_ultimate.melee.ready.attack_vertical.00.019",
    "characterId": "gohan",
@@ -469,16 +486,17 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "gohan_ultimate_attack_ud_01",
    "sourceId": "gohan_ultimate/020.png",
-   "canonicalId": "gohan_ultimate.melee.windup.attack_vertical.01.020",
+   "canonicalId": "gohan_ultimate.reaction.knockback_back.back.00.020.png",
    "characterId": "gohan",
    "formId": "gohan_ultimate",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "windup",
-   "variant": "attack_vertical",
-   "sequenceIndex": 1,
+   "family": "reaction",
+   "role": "knockback_back",
+   "variant": "back",
+   "sequenceIndex": 0,
    "runtimePoses": [
     "attack_ud",
     "knockback_back"
@@ -494,6 +512,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "gohan_ultimate_attack_ud_02",
    "sourceId": "gohan_ultimate/021.png",
    "canonicalId": "gohan_ultimate.melee.contact.attack_vertical.02.021",
    "characterId": "gohan",
@@ -518,16 +537,17 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "gohan_ultimate_attack_ud_03",
    "sourceId": "gohan_ultimate/022.png",
-   "canonicalId": "gohan_ultimate.melee.recover.attack_vertical.03.022",
+   "canonicalId": "gohan_ultimate.reaction.knockback_down.down.00.022.png",
    "characterId": "gohan",
    "formId": "gohan_ultimate",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "recover",
-   "variant": "attack_vertical",
-   "sequenceIndex": 3,
+   "family": "reaction",
+   "role": "knockback_down",
+   "variant": "down",
+   "sequenceIndex": 0,
    "runtimePoses": [
     "attack_ud",
     "knockback_down"
@@ -543,6 +563,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "gohan_ultimate_attack_fwd_00",
    "sourceId": "gohan_ultimate/023.png",
    "canonicalId": "gohan_ultimate.melee.ready.attack_forward.00.023",
    "characterId": "gohan",
@@ -568,6 +589,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "gohan_ultimate_attack_fwd_01",
    "sourceId": "gohan_ultimate/024.png",
    "canonicalId": "gohan_ultimate.melee.windup.attack_forward.01.024",
    "characterId": "gohan",
@@ -593,16 +615,17 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "gohan_ultimate_attack_fwd_03",
    "sourceId": "gohan_ultimate/025.png",
-   "canonicalId": "gohan_ultimate.melee.strike.attack_forward.03.025",
+   "canonicalId": "gohan_ultimate.melee.strike.kick_right.00.025.png",
    "characterId": "gohan",
    "formId": "gohan_ultimate",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
    "role": "strike",
-   "variant": "attack_forward",
-   "sequenceIndex": 3,
+   "variant": "kick_right",
+   "sequenceIndex": 0,
    "runtimePoses": [
     "attack_fwd",
     "punch_left",
@@ -619,16 +642,17 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "gohan_ultimate_attack_fwd_04",
    "sourceId": "gohan_ultimate/026.png",
-   "canonicalId": "gohan_ultimate.melee.strike.attack_forward.04.026",
+   "canonicalId": "gohan_ultimate.melee.strike.kick_right.01.026.png",
    "characterId": "gohan",
    "formId": "gohan_ultimate",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
    "role": "strike",
-   "variant": "attack_forward",
-   "sequenceIndex": 4,
+   "variant": "kick_right",
+   "sequenceIndex": 1,
    "runtimePoses": [
     "attack_fwd",
     "punch_left",
@@ -737,6 +761,7 @@
    "note": "bucket forense: battle_aura_actor_composite"
   },
   {
+   "_manifestName": "gohan_ultimate_beam_charge_00",
    "sourceId": "gohan_ultimate/031.png",
    "canonicalId": "gohan_ultimate.power.gather_power.gather_power.00.031.png",
    "characterId": "gohan",
@@ -786,6 +811,7 @@
    "note": "bucket forense: projectiles_beams"
   },
   {
+   "_manifestName": "gohan_ultimate_aura_power_00",
    "sourceId": "gohan_ultimate/033.png",
    "canonicalId": "gohan_ultimate.effect.aura.aura_power.00.033",
    "characterId": "gohan",
@@ -810,6 +836,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "gohan_ultimate_aura_power_01",
    "sourceId": "gohan_ultimate/034.png",
    "canonicalId": "gohan_ultimate.effect.aura.aura_power.01.034",
    "characterId": "gohan",
@@ -834,6 +861,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "gohan_ultimate_aura_power_02",
    "sourceId": "gohan_ultimate/035.png",
    "canonicalId": "gohan_ultimate.effect.aura.aura_power.02.035",
    "characterId": "gohan",
@@ -881,6 +909,7 @@
    "note": "bucket forense: projectile_orb_small"
   },
   {
+   "_manifestName": "gohan_ultimate_beam_charge_02",
    "sourceId": "gohan_ultimate/037.png",
    "canonicalId": "gohan_ultimate.power.gather_power.gather_power.02.037.png",
    "characterId": "gohan",
@@ -907,6 +936,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "gohan_ultimate_beam_charge_03",
    "sourceId": "gohan_ultimate/038.png",
    "canonicalId": "gohan_ultimate.power.gather_power.gather_power.03.038.png",
    "characterId": "gohan",
@@ -1025,6 +1055,7 @@
    "note": "bucket forense: multi_evidence_projectiles_beams_orbs_rings_bursts_movement_or_attack_pose"
   },
   {
+   "_manifestName": "gohan_ultimate_beam_fire_00",
    "sourceId": "gohan_ultimate/043.png",
    "canonicalId": "gohan_ultimate.beam.release.fire.00.043",
    "characterId": "gohan",
@@ -1095,6 +1126,7 @@
    "note": "bucket forense: character_plus_aura_or_burst"
   },
   {
+   "_manifestName": "gohan_ultimate_aura_support_00",
    "sourceId": "gohan_ultimate/046.png",
    "canonicalId": "gohan_ultimate.effect.aura.aura_support.00.046",
    "characterId": "gohan",
@@ -1119,6 +1151,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "gohan_ultimate_aura_support_01",
    "sourceId": "gohan_ultimate/047.png",
    "canonicalId": "gohan_ultimate.effect.aura.aura_support.01.047",
    "characterId": "gohan",
@@ -1143,6 +1176,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "gohan_ultimate_aura_support_02",
    "sourceId": "gohan_ultimate/048.png",
    "canonicalId": "gohan_ultimate.effect.aura.aura_support.02.048",
    "characterId": "gohan",
@@ -1167,6 +1201,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "gohan_ultimate_beam_charge_01",
    "sourceId": "gohan_ultimate/000_beam_charge.png",
    "canonicalId": "gohan_ultimate.power.gather_power.gather_power.01.000_beam_charge.png",
    "characterId": "gohan",
@@ -1193,6 +1228,7 @@
    "frameKind": "fixed_only"
   },
   {
+   "_manifestName": "gohan_ultimate_beam_fire_01",
    "sourceId": "gohan_ultimate/001_beam_fire.png",
    "canonicalId": "gohan_ultimate.beam.release.fire.01.001_beam_fire",
    "characterId": "gohan",

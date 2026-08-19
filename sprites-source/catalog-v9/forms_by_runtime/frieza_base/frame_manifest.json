@@ -3,6 +3,7 @@
  "frameCount": 58,
  "frames": [
   {
+   "_manifestName": "frieza_base_idle_00",
    "sourceId": "frieza_base/001.png",
    "canonicalId": "frieza_base.idle.idle.idle.00.001",
    "characterId": "frieza",
@@ -31,6 +32,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "frieza_base_move_front_01",
    "sourceId": "frieza_base/002.png",
    "canonicalId": "frieza_base.defense.hold.guard.01.002.png",
    "characterId": "frieza",
@@ -58,6 +60,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "frieza_base_guard_02",
    "sourceId": "frieza_base/003.png",
    "canonicalId": "frieza_base.defense.recover.guard.02.003",
    "characterId": "frieza",
@@ -175,6 +178,7 @@
    "note": "bucket forense: battle_aura_tile"
   },
   {
+   "_manifestName": "frieza_base_evade_01",
    "sourceId": "frieza_base/008.png",
    "canonicalId": "frieza_base.defense.recover.evade.01.008",
    "characterId": "frieza",
@@ -199,6 +203,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "frieza_base_evade_00",
    "sourceId": "frieza_base/009.png",
    "canonicalId": "frieza_base.defense.start.evade.00.009",
    "characterId": "frieza",
@@ -246,6 +251,7 @@
    "note": "bucket forense: movement_or_attack_pose"
   },
   {
+   "_manifestName": "frieza_base_move_front_00",
    "sourceId": "frieza_base/011.png",
    "canonicalId": "frieza_base.movement.start.move_front.00.011",
    "characterId": "frieza",
@@ -271,6 +277,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "frieza_base_hurt_00",
    "sourceId": "frieza_base/012.png",
    "canonicalId": "frieza_base.reaction.hurt_light.hurt.00.012",
    "characterId": "frieza",
@@ -295,6 +302,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "frieza_base_hurt_01",
    "sourceId": "frieza_base/013.png",
    "canonicalId": "frieza_base.reaction.hurt_heavy.hurt.01.013",
    "characterId": "frieza",
@@ -319,6 +327,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "frieza_base_hurt_02",
    "sourceId": "frieza_base/014.png",
    "canonicalId": "frieza_base.reaction.hurt_heavy.hurt.02.014",
    "characterId": "frieza",
@@ -343,6 +352,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "frieza_base_hurt_03",
    "sourceId": "frieza_base/015.png",
    "canonicalId": "frieza_base.reaction.hurt_heavy.hurt.03.015",
    "characterId": "frieza",
@@ -367,6 +377,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "frieza_base_hurt_04",
    "sourceId": "frieza_base/016.png",
    "canonicalId": "frieza_base.reaction.hurt_heavy.hurt.04.016",
    "characterId": "frieza",
@@ -414,16 +425,17 @@
    "note": "bucket forense: downed_or_hurt"
   },
   {
+   "_manifestName": "frieza_base_attack_fwd_06",
    "sourceId": "frieza_base/018.png",
-   "canonicalId": "frieza_base.melee.follow_through.attack_forward.06.018",
+   "canonicalId": "frieza_base.melee.strike.punch_left.04.018.png",
    "characterId": "frieza",
    "formId": "frieza_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "follow_through",
-   "variant": "attack_forward",
-   "sequenceIndex": 6,
+   "role": "strike",
+   "variant": "punch_left",
+   "sequenceIndex": 4,
    "runtimePoses": [
     "attack_fwd",
     "punch_left"
@@ -439,6 +451,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "frieza_base_knockback_back_00",
    "sourceId": "frieza_base/019.png",
    "canonicalId": "frieza_base.reaction.knockback_back.back.00.019",
    "characterId": "frieza",
@@ -463,16 +476,17 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "frieza_base_attack_fwd_03",
    "sourceId": "frieza_base/020.png",
-   "canonicalId": "frieza_base.melee.strike.attack_forward.03.020",
+   "canonicalId": "frieza_base.melee.strike.punch_left.01.020.png",
    "characterId": "frieza",
    "formId": "frieza_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
    "role": "strike",
-   "variant": "attack_forward",
-   "sequenceIndex": 3,
+   "variant": "punch_left",
+   "sequenceIndex": 1,
    "runtimePoses": [
     "attack_fwd",
     "punch_left"
@@ -488,16 +502,17 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "frieza_base_attack_fwd_07",
    "sourceId": "frieza_base/021.png",
-   "canonicalId": "frieza_base.melee.recover.attack_forward.07.021",
+   "canonicalId": "frieza_base.reaction.knockback_down.down.00.021.png",
    "characterId": "frieza",
    "formId": "frieza_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "recover",
-   "variant": "attack_forward",
-   "sequenceIndex": 7,
+   "family": "reaction",
+   "role": "knockback_down",
+   "variant": "down",
+   "sequenceIndex": 0,
    "runtimePoses": [
     "attack_fwd",
     "knockback_down"
@@ -513,6 +528,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "frieza_base_attack_ud_00",
    "sourceId": "frieza_base/022.png",
    "canonicalId": "frieza_base.melee.ready.attack_vertical.00.022",
    "characterId": "frieza",
@@ -537,6 +553,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "frieza_base_attack_ud_01",
    "sourceId": "frieza_base/023.png",
    "canonicalId": "frieza_base.melee.windup.attack_vertical.01.023",
    "characterId": "frieza",
@@ -561,6 +578,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "frieza_base_attack_ud_02",
    "sourceId": "frieza_base/024.png",
    "canonicalId": "frieza_base.melee.contact.attack_vertical.02.024",
    "characterId": "frieza",
@@ -585,16 +603,17 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "frieza_base_attack_ud_03",
    "sourceId": "frieza_base/025.png",
-   "canonicalId": "frieza_base.melee.recover.attack_vertical.03.025",
+   "canonicalId": "frieza_base.reaction.knockback_up.up.00.025.png",
    "characterId": "frieza",
    "formId": "frieza_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "recover",
-   "variant": "attack_vertical",
-   "sequenceIndex": 3,
+   "family": "reaction",
+   "role": "knockback_up",
+   "variant": "up",
+   "sequenceIndex": 0,
    "runtimePoses": [
     "attack_ud",
     "knockback_up"
@@ -610,6 +629,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "frieza_base_attack_fwd_00",
    "sourceId": "frieza_base/026.png",
    "canonicalId": "frieza_base.melee.ready.attack_forward.00.026",
    "characterId": "frieza",
@@ -635,6 +655,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "frieza_base_attack_fwd_01",
    "sourceId": "frieza_base/027.png",
    "canonicalId": "frieza_base.melee.windup.attack_forward.01.027",
    "characterId": "frieza",
@@ -660,16 +681,17 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "frieza_base_attack_fwd_05",
    "sourceId": "frieza_base/028.png",
-   "canonicalId": "frieza_base.melee.contact.attack_forward.05.028",
+   "canonicalId": "frieza_base.melee.strike.kick_right.00.028.png",
    "characterId": "frieza",
    "formId": "frieza_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "contact",
-   "variant": "attack_forward",
-   "sequenceIndex": 5,
+   "role": "strike",
+   "variant": "kick_right",
+   "sequenceIndex": 0,
    "runtimePoses": [
     "attack_fwd",
     "punch_left",
@@ -686,16 +708,17 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "frieza_base_attack_fwd_04",
    "sourceId": "frieza_base/029.png",
-   "canonicalId": "frieza_base.melee.strike.attack_forward.04.029",
+   "canonicalId": "frieza_base.melee.strike.kick_right.01.029.png",
    "characterId": "frieza",
    "formId": "frieza_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
    "role": "strike",
-   "variant": "attack_forward",
-   "sequenceIndex": 4,
+   "variant": "kick_right",
+   "sequenceIndex": 1,
    "runtimePoses": [
     "attack_fwd",
     "punch_left",
@@ -712,6 +735,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "frieza_base_gather_power_00",
    "sourceId": "frieza_base/030.png",
    "canonicalId": "frieza_base.power.gather_power.gather_power.00.030",
    "characterId": "frieza",
@@ -760,6 +784,7 @@
    "note": "bucket forense: projectiles_beams"
   },
   {
+   "_manifestName": "frieza_base_aura_power_00",
    "sourceId": "frieza_base/032.png",
    "canonicalId": "frieza_base.effect.aura.aura_power.00.032",
    "characterId": "frieza",
@@ -784,6 +809,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "frieza_base_aura_power_01",
    "sourceId": "frieza_base/033.png",
    "canonicalId": "frieza_base.effect.aura.aura_power.01.033",
    "characterId": "frieza",
@@ -808,6 +834,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "frieza_base_aura_power_02",
    "sourceId": "frieza_base/034.png",
    "canonicalId": "frieza_base.effect.aura.aura_power.02.034",
    "characterId": "frieza",
@@ -878,6 +905,7 @@
    "note": "bucket forense: beam_or_projectile_horizontal"
   },
   {
+   "_manifestName": "frieza_base_beam_fire_00",
    "sourceId": "frieza_base/037.png",
    "canonicalId": "frieza_base.beam.release.fire.00.037",
    "characterId": "frieza",
@@ -902,6 +930,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "frieza_base_beam_charge_01",
    "sourceId": "frieza_base/038.png",
    "canonicalId": "frieza_base.beam.charge_start.charge.01.038",
    "characterId": "frieza",
@@ -927,6 +956,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "frieza_base_beam_fire_02",
    "sourceId": "frieza_base/039.png",
    "canonicalId": "frieza_base.beam.release.fire.02.039",
    "characterId": "frieza",
@@ -951,6 +981,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "frieza_base_beam_fire_03",
    "sourceId": "frieza_base/040.png",
    "canonicalId": "frieza_base.beam.release.fire.03.040",
    "characterId": "frieza",
@@ -975,6 +1006,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "frieza_base_beam_fire_04",
    "sourceId": "frieza_base/041.png",
    "canonicalId": "frieza_base.beam.release.fire.04.041",
    "characterId": "frieza",
@@ -1091,6 +1123,7 @@
    "note": "bucket forense: projectiles_beams"
   },
   {
+   "_manifestName": "frieza_base_beam_charge_01",
    "sourceId": "frieza_base/046.png",
    "canonicalId": "frieza_base.beam.charge_start.charge.01.046",
    "characterId": "frieza",
@@ -1139,6 +1172,7 @@
    "note": "sin evidencia runtime ni bucket"
   },
   {
+   "_manifestName": "frieza_base_aura_support_00",
    "sourceId": "frieza_base/048.png",
    "canonicalId": "frieza_base.effect.aura.aura_support.00.048",
    "characterId": "frieza",
@@ -1163,6 +1197,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "frieza_base_aura_support_01",
    "sourceId": "frieza_base/049.png",
    "canonicalId": "frieza_base.effect.aura.aura_support.01.049",
    "characterId": "frieza",
@@ -1187,6 +1222,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "frieza_base_aura_support_02",
    "sourceId": "frieza_base/050.png",
    "canonicalId": "frieza_base.effect.aura.aura_support.02.050",
    "characterId": "frieza",
@@ -1211,6 +1247,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "frieza_base_attack_fwd_02",
    "sourceId": "frieza_base/000_attack_fwd.png",
    "canonicalId": "frieza_base.melee.travel.attack_forward.02.000_attack_fwd",
    "characterId": "frieza",
@@ -1236,6 +1273,7 @@
    "frameKind": "fixed_only"
   },
   {
+   "_manifestName": "frieza_base_beam_charge_00",
    "sourceId": "frieza_base/001_beam_charge.png",
    "canonicalId": "frieza_base.beam.charge_start.charge.00.001_beam_charge",
    "characterId": "frieza",
@@ -1260,6 +1298,7 @@
    "frameKind": "fixed_only"
   },
   {
+   "_manifestName": "frieza_base_beam_charge_02",
    "sourceId": "frieza_base/002_beam_charge.png",
    "canonicalId": "frieza_base.beam.charge_start.charge.02.002_beam_charge",
    "characterId": "frieza",
@@ -1284,6 +1323,7 @@
    "frameKind": "fixed_only"
   },
   {
+   "_manifestName": "frieza_base_beam_charge_03",
    "sourceId": "frieza_base/003_beam_charge.png",
    "canonicalId": "frieza_base.beam.charge_hold.charge.03.003_beam_charge",
    "characterId": "frieza",
@@ -1308,6 +1348,7 @@
    "frameKind": "fixed_only"
   },
   {
+   "_manifestName": "frieza_base_beam_charge_04",
    "sourceId": "frieza_base/004_beam_charge.png",
    "canonicalId": "frieza_base.beam.charge_hold.charge.04.004_beam_charge",
    "characterId": "frieza",

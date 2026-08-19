@@ -3,6 +3,7 @@
  "frameCount": 52,
  "frames": [
   {
+   "_manifestName": "young_gohan_super_saiyan_2_idle_00",
    "sourceId": "young_gohan_super_saiyan_2/001.png",
    "canonicalId": "young_gohan_super_saiyan_2.idle.idle.idle.00.001",
    "characterId": "young_gohan_super_saiyan",
@@ -31,6 +32,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "young_gohan_super_saiyan_2_guard_01",
    "sourceId": "young_gohan_super_saiyan_2/002.png",
    "canonicalId": "young_gohan_super_saiyan_2.defense.hold.guard.01.002",
    "characterId": "young_gohan_super_saiyan",
@@ -56,6 +58,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "young_gohan_super_saiyan_2_guard_02",
    "sourceId": "young_gohan_super_saiyan_2/003.png",
    "canonicalId": "young_gohan_super_saiyan_2.defense.recover.guard.02.003",
    "characterId": "young_gohan_super_saiyan",
@@ -104,6 +107,7 @@
    "note": "bucket forense: idle_or_stance"
   },
   {
+   "_manifestName": "young_gohan_super_saiyan_2_evade_00",
    "sourceId": "young_gohan_super_saiyan_2/005.png",
    "canonicalId": "young_gohan_super_saiyan_2.defense.start.evade.00.005",
    "characterId": "young_gohan_super_saiyan",
@@ -151,15 +155,16 @@
    "note": "bucket forense: multi_evidence_movement_or_attack_pose_speedlines"
   },
   {
+   "_manifestName": "young_gohan_super_saiyan_2_move_front_01",
    "sourceId": "young_gohan_super_saiyan_2/007.png",
-   "canonicalId": "young_gohan_super_saiyan_2.power.gather_power.gather_power.00.007.png",
+   "canonicalId": "young_gohan_super_saiyan_2.power.power_up.power_up.00.007.png",
    "characterId": "young_gohan_super_saiyan",
    "formId": "young_gohan_super_saiyan_2",
    "assetType": "composite",
    "view": "FIELD",
    "family": "power",
-   "role": "gather_power",
-   "variant": "gather_power",
+   "role": "power_up",
+   "variant": "power_up",
    "sequenceIndex": 0,
    "runtimePoses": [
     "move_front",
@@ -178,15 +183,16 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "young_gohan_super_saiyan_2_move_front_00",
    "sourceId": "young_gohan_super_saiyan_2/008.png",
-   "canonicalId": "young_gohan_super_saiyan_2.power.gather_power.gather_power.01.008.png",
+   "canonicalId": "young_gohan_super_saiyan_2.power.power_up.power_up.01.008.png",
    "characterId": "young_gohan_super_saiyan",
    "formId": "young_gohan_super_saiyan_2",
    "assetType": "composite",
    "view": "FIELD",
    "family": "power",
-   "role": "gather_power",
-   "variant": "gather_power",
+   "role": "power_up",
+   "variant": "power_up",
    "sequenceIndex": 1,
    "runtimePoses": [
     "move_front",
@@ -205,6 +211,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "young_gohan_super_saiyan_2_hurt_00",
    "sourceId": "young_gohan_super_saiyan_2/009.png",
    "canonicalId": "young_gohan_super_saiyan_2.reaction.hurt_light.hurt.00.009",
    "characterId": "young_gohan_super_saiyan",
@@ -229,6 +236,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "young_gohan_super_saiyan_2_hurt_01",
    "sourceId": "young_gohan_super_saiyan_2/010.png",
    "canonicalId": "young_gohan_super_saiyan_2.reaction.hurt_heavy.hurt.01.010",
    "characterId": "young_gohan_super_saiyan",
@@ -253,6 +261,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "young_gohan_super_saiyan_2_hurt_02",
    "sourceId": "young_gohan_super_saiyan_2/011.png",
    "canonicalId": "young_gohan_super_saiyan_2.reaction.hurt_heavy.hurt.02.011",
    "characterId": "young_gohan_super_saiyan",
@@ -277,6 +286,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "young_gohan_super_saiyan_2_hurt_03",
    "sourceId": "young_gohan_super_saiyan_2/012.png",
    "canonicalId": "young_gohan_super_saiyan_2.reaction.hurt_heavy.hurt.03.012",
    "characterId": "young_gohan_super_saiyan",
@@ -301,6 +311,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "young_gohan_super_saiyan_2_hurt_04",
    "sourceId": "young_gohan_super_saiyan_2/013.png",
    "canonicalId": "young_gohan_super_saiyan_2.reaction.hurt_heavy.hurt.04.013",
    "characterId": "young_gohan_super_saiyan",
@@ -325,16 +336,17 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "young_gohan_super_saiyan_2_attack_fwd_05",
    "sourceId": "young_gohan_super_saiyan_2/014.png",
-   "canonicalId": "young_gohan_super_saiyan_2.melee.follow_through.attack_forward.05.014",
+   "canonicalId": "young_gohan_super_saiyan_2.melee.strike.punch_left.03.014.png",
    "characterId": "young_gohan_super_saiyan",
    "formId": "young_gohan_super_saiyan_2",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "follow_through",
-   "variant": "attack_forward",
-   "sequenceIndex": 5,
+   "role": "strike",
+   "variant": "punch_left",
+   "sequenceIndex": 3,
    "runtimePoses": [
     "attack_fwd",
     "punch_left"
@@ -373,6 +385,7 @@
    "note": "bucket forense: downed_or_hurt"
   },
   {
+   "_manifestName": "young_gohan_super_saiyan_2_attack_fwd_01",
    "sourceId": "young_gohan_super_saiyan_2/016.png",
    "canonicalId": "young_gohan_super_saiyan_2.melee.windup.attack_forward.01.016",
    "characterId": "young_gohan_super_saiyan",
@@ -398,6 +411,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "young_gohan_super_saiyan_2_attack_fwd_02",
    "sourceId": "young_gohan_super_saiyan_2/017.png",
    "canonicalId": "young_gohan_super_saiyan_2.melee.travel.attack_forward.02.017",
    "characterId": "young_gohan_super_saiyan",
@@ -423,16 +437,17 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "young_gohan_super_saiyan_2_attack_fwd_06",
    "sourceId": "young_gohan_super_saiyan_2/018.png",
-   "canonicalId": "young_gohan_super_saiyan_2.melee.recover.attack_forward.06.018",
+   "canonicalId": "young_gohan_super_saiyan_2.melee.strike.punch_left.04.018.png",
    "characterId": "young_gohan_super_saiyan",
    "formId": "young_gohan_super_saiyan_2",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "recover",
-   "variant": "attack_forward",
-   "sequenceIndex": 6,
+   "role": "strike",
+   "variant": "punch_left",
+   "sequenceIndex": 4,
    "runtimePoses": [
     "attack_fwd",
     "punch_left"
@@ -448,15 +463,16 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "young_gohan_super_saiyan_2_attack_ud_00",
    "sourceId": "young_gohan_super_saiyan_2/019.png",
-   "canonicalId": "young_gohan_super_saiyan_2.melee.ready.attack_vertical.00.019",
+   "canonicalId": "young_gohan_super_saiyan_2.reaction.knockback_back.back.00.019.png",
    "characterId": "young_gohan_super_saiyan",
    "formId": "young_gohan_super_saiyan_2",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "ready",
-   "variant": "attack_vertical",
+   "family": "reaction",
+   "role": "knockback_back",
+   "variant": "back",
    "sequenceIndex": 0,
    "runtimePoses": [
     "attack_ud",
@@ -473,16 +489,17 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "young_gohan_super_saiyan_2_attack_ud_01",
    "sourceId": "young_gohan_super_saiyan_2/020.png",
-   "canonicalId": "young_gohan_super_saiyan_2.melee.windup.attack_vertical.01.020",
+   "canonicalId": "young_gohan_super_saiyan_2.reaction.knockback_up.up.00.020.png",
    "characterId": "young_gohan_super_saiyan",
    "formId": "young_gohan_super_saiyan_2",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "windup",
-   "variant": "attack_vertical",
-   "sequenceIndex": 1,
+   "family": "reaction",
+   "role": "knockback_up",
+   "variant": "up",
+   "sequenceIndex": 0,
    "runtimePoses": [
     "attack_ud",
     "knockback_up"
@@ -498,6 +515,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "young_gohan_super_saiyan_2_attack_ud_02",
    "sourceId": "young_gohan_super_saiyan_2/021.png",
    "canonicalId": "young_gohan_super_saiyan_2.melee.contact.attack_vertical.02.021",
    "characterId": "young_gohan_super_saiyan",
@@ -522,16 +540,17 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "young_gohan_super_saiyan_2_attack_ud_03",
    "sourceId": "young_gohan_super_saiyan_2/022.png",
-   "canonicalId": "young_gohan_super_saiyan_2.melee.recover.attack_vertical.03.022",
+   "canonicalId": "young_gohan_super_saiyan_2.reaction.knockback_down.down.00.022.png",
    "characterId": "young_gohan_super_saiyan",
    "formId": "young_gohan_super_saiyan_2",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "recover",
-   "variant": "attack_vertical",
-   "sequenceIndex": 3,
+   "family": "reaction",
+   "role": "knockback_down",
+   "variant": "down",
+   "sequenceIndex": 0,
    "runtimePoses": [
     "attack_ud",
     "knockback_down"
@@ -547,6 +566,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "young_gohan_super_saiyan_2_attack_fwd_01",
    "sourceId": "young_gohan_super_saiyan_2/023.png",
    "canonicalId": "young_gohan_super_saiyan_2.melee.windup.attack_forward.01.023",
    "characterId": "young_gohan_super_saiyan",
@@ -572,6 +592,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "young_gohan_super_saiyan_2_attack_fwd_00",
    "sourceId": "young_gohan_super_saiyan_2/024.png",
    "canonicalId": "young_gohan_super_saiyan_2.melee.ready.attack_forward.00.024",
    "characterId": "young_gohan_super_saiyan",
@@ -597,16 +618,17 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "young_gohan_super_saiyan_2_attack_fwd_04",
    "sourceId": "young_gohan_super_saiyan_2/025.png",
-   "canonicalId": "young_gohan_super_saiyan_2.melee.contact.attack_forward.04.025",
+   "canonicalId": "young_gohan_super_saiyan_2.melee.strike.kick_right.00.025.png",
    "characterId": "young_gohan_super_saiyan",
    "formId": "young_gohan_super_saiyan_2",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "contact",
-   "variant": "attack_forward",
-   "sequenceIndex": 4,
+   "role": "strike",
+   "variant": "kick_right",
+   "sequenceIndex": 0,
    "runtimePoses": [
     "attack_fwd",
     "punch_left",
@@ -623,16 +645,17 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "young_gohan_super_saiyan_2_attack_fwd_03",
    "sourceId": "young_gohan_super_saiyan_2/026.png",
-   "canonicalId": "young_gohan_super_saiyan_2.melee.strike.attack_forward.03.026",
+   "canonicalId": "young_gohan_super_saiyan_2.melee.strike.kick_right.01.026.png",
    "characterId": "young_gohan_super_saiyan",
    "formId": "young_gohan_super_saiyan_2",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
    "role": "strike",
-   "variant": "attack_forward",
-   "sequenceIndex": 3,
+   "variant": "kick_right",
+   "sequenceIndex": 1,
    "runtimePoses": [
     "attack_fwd",
     "punch_left",
@@ -741,6 +764,7 @@
    "note": "bucket forense: battle_aura_actor_composite"
   },
   {
+   "_manifestName": "young_gohan_super_saiyan_2_beam_charge_00",
    "sourceId": "young_gohan_super_saiyan_2/031.png",
    "canonicalId": "young_gohan_super_saiyan_2.beam.charge_start.charge.00.031",
    "characterId": "young_gohan_super_saiyan",
@@ -788,6 +812,7 @@
    "note": "bucket forense: projectiles_beams"
   },
   {
+   "_manifestName": "young_gohan_super_saiyan_2_aura_power_00",
    "sourceId": "young_gohan_super_saiyan_2/033.png",
    "canonicalId": "young_gohan_super_saiyan_2.effect.aura.aura_power.00.033",
    "characterId": "young_gohan_super_saiyan",
@@ -812,6 +837,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "young_gohan_super_saiyan_2_aura_power_01",
    "sourceId": "young_gohan_super_saiyan_2/034.png",
    "canonicalId": "young_gohan_super_saiyan_2.effect.aura.aura_power.01.034",
    "characterId": "young_gohan_super_saiyan",
@@ -836,6 +862,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "young_gohan_super_saiyan_2_aura_power_02",
    "sourceId": "young_gohan_super_saiyan_2/035.png",
    "canonicalId": "young_gohan_super_saiyan_2.effect.aura.aura_power.02.035",
    "characterId": "young_gohan_super_saiyan",
@@ -883,6 +910,7 @@
    "note": "bucket forense: projectile_orb_small"
   },
   {
+   "_manifestName": "young_gohan_super_saiyan_2_beam_charge_02",
    "sourceId": "young_gohan_super_saiyan_2/037.png",
    "canonicalId": "young_gohan_super_saiyan_2.beam.charge_hold.charge.02.037",
    "characterId": "young_gohan_super_saiyan",
@@ -953,6 +981,7 @@
    "note": "bucket forense: multi_evidence_movement_or_attack_pose_character_plus_aura_or_burst"
   },
   {
+   "_manifestName": "young_gohan_super_saiyan_2_beam_charge_02",
    "sourceId": "young_gohan_super_saiyan_2/040.png",
    "canonicalId": "young_gohan_super_saiyan_2.beam.charge_hold.charge.02.040",
    "characterId": "young_gohan_super_saiyan",
@@ -1000,6 +1029,7 @@
    "note": "bucket forense: projectiles_beams"
   },
   {
+   "_manifestName": "young_gohan_super_saiyan_2_beam_fire_00",
    "sourceId": "young_gohan_super_saiyan_2/042.png",
    "canonicalId": "young_gohan_super_saiyan_2.beam.release.fire.00.042",
    "characterId": "young_gohan_super_saiyan",
@@ -1024,6 +1054,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "young_gohan_super_saiyan_2_beam_fire_01",
    "sourceId": "young_gohan_super_saiyan_2/043.png",
    "canonicalId": "young_gohan_super_saiyan_2.beam.release.fire.01.043",
    "characterId": "young_gohan_super_saiyan",
@@ -1094,6 +1125,7 @@
    "note": "bucket forense: character_plus_aura_or_burst"
   },
   {
+   "_manifestName": "young_gohan_super_saiyan_2_aura_support_00",
    "sourceId": "young_gohan_super_saiyan_2/046.png",
    "canonicalId": "young_gohan_super_saiyan_2.effect.aura.aura_support.00.046",
    "characterId": "young_gohan_super_saiyan",
@@ -1118,6 +1150,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "young_gohan_super_saiyan_2_aura_support_01",
    "sourceId": "young_gohan_super_saiyan_2/047.png",
    "canonicalId": "young_gohan_super_saiyan_2.effect.aura.aura_support.01.047",
    "characterId": "young_gohan_super_saiyan",
@@ -1142,6 +1175,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "young_gohan_super_saiyan_2_aura_support_02",
    "sourceId": "young_gohan_super_saiyan_2/048.png",
    "canonicalId": "young_gohan_super_saiyan_2.effect.aura.aura_support.02.048",
    "characterId": "young_gohan_super_saiyan",
@@ -1166,6 +1200,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "young_gohan_super_saiyan_2_beam_charge_01",
    "sourceId": "young_gohan_super_saiyan_2/000_beam_charge.png",
    "canonicalId": "young_gohan_super_saiyan_2.beam.charge_start.charge.01.000_beam_charge",
    "characterId": "young_gohan_super_saiyan",
@@ -1190,6 +1225,7 @@
    "frameKind": "fixed_only"
   },
   {
+   "_manifestName": "young_gohan_super_saiyan_2_beam_charge_03",
    "sourceId": "young_gohan_super_saiyan_2/001_beam_charge.png",
    "canonicalId": "young_gohan_super_saiyan_2.beam.charge_hold.charge.03.001_beam_charge",
    "characterId": "young_gohan_super_saiyan",

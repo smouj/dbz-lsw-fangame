@@ -14,12 +14,12 @@
  },
  "byFamily": {
   "idle": 43,
-  "defense": 154,
+  "defense": 157,
   "unclassified": 781,
   "movement": 69,
-  "reaction": 194,
-  "melee": 515,
-  "beam": 288,
+  "reaction": 315,
+  "melee": 384,
+  "beam": 295,
   "effect": 258,
   "power": 124
  },

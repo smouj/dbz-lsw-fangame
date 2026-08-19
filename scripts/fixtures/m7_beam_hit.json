@@ -43,7 +43,7 @@
   {
    "tick": 0,
    "type": "CAMERA",
-   "action": "CUT",
+   "action": "FLASH_WHITE",
    "logicalTick": 0,
    "source": "ACTION_STARTED",
    "fidelity": "INFERRED",
@@ -178,6 +178,17 @@
    "action": "spawn",
    "from": "player",
    "to": "enemy",
+   "logicalTick": 0,
+   "source": "ACTION_STARTED",
+   "fidelity": "INFERRED",
+   "profile": "kamehameha"
+  },
+  {
+   "tick": 70,
+   "type": "FIGHTER_VISIBILITY",
+   "role": "TARGET",
+   "side": "enemy",
+   "visible": true,
    "logicalTick": 0,
    "source": "ACTION_STARTED",
    "fidelity": "INFERRED",

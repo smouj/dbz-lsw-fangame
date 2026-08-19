@@ -3,6 +3,7 @@
  "frameCount": 61,
  "frames": [
   {
+   "_manifestName": "buu_gotenks_absorbed_idle_00",
    "sourceId": "buu_gotenks_absorbed/001.png",
    "canonicalId": "buu_gotenks_absorbed.idle.idle.idle.00.001",
    "characterId": "buu_gotenks",
@@ -32,6 +33,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "buu_gotenks_absorbed_guard_01",
    "sourceId": "buu_gotenks_absorbed/002.png",
    "canonicalId": "buu_gotenks_absorbed.defense.hold.guard.01.002",
    "characterId": "buu_gotenks",
@@ -57,6 +59,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "buu_gotenks_absorbed_guard_02",
    "sourceId": "buu_gotenks_absorbed/003.png",
    "canonicalId": "buu_gotenks_absorbed.defense.recover.guard.02.003",
    "characterId": "buu_gotenks",
@@ -82,6 +85,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "buu_gotenks_absorbed_move_front_01",
    "sourceId": "buu_gotenks_absorbed/004.png",
    "canonicalId": "buu_gotenks_absorbed.defense.start.evade.00.004.png",
    "characterId": "buu_gotenks",
@@ -154,6 +158,7 @@
    "note": "bucket forense: multi_evidence_speedlines_movement_or_attack_pose"
   },
   {
+   "_manifestName": "buu_gotenks_absorbed_gather_power_00",
    "sourceId": "buu_gotenks_absorbed/007.png",
    "canonicalId": "buu_gotenks_absorbed.power.gather_power.gather_power.00.007",
    "characterId": "buu_gotenks",
@@ -179,6 +184,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "buu_gotenks_absorbed_move_front_00",
    "sourceId": "buu_gotenks_absorbed/008.png",
    "canonicalId": "buu_gotenks_absorbed.movement.start.move_front.00.008",
    "characterId": "buu_gotenks",
@@ -227,6 +233,7 @@
    "note": "bucket forense: movement_or_attack_pose"
   },
   {
+   "_manifestName": "buu_gotenks_absorbed_gather_power_01",
    "sourceId": "buu_gotenks_absorbed/010.png",
    "canonicalId": "buu_gotenks_absorbed.power.gather_power.gather_power.01.010",
    "characterId": "buu_gotenks",
@@ -252,6 +259,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "buu_gotenks_absorbed_hurt_00",
    "sourceId": "buu_gotenks_absorbed/011.png",
    "canonicalId": "buu_gotenks_absorbed.reaction.hurt_light.hurt.00.011",
    "characterId": "buu_gotenks",
@@ -276,6 +284,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "buu_gotenks_absorbed_gather_power_03",
    "sourceId": "buu_gotenks_absorbed/012.png",
    "canonicalId": "buu_gotenks_absorbed.power.gather_power.gather_power.03.012",
    "characterId": "buu_gotenks",
@@ -301,6 +310,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "buu_gotenks_absorbed_gather_power_02",
    "sourceId": "buu_gotenks_absorbed/013.png",
    "canonicalId": "buu_gotenks_absorbed.power.gather_power.gather_power.02.013",
    "characterId": "buu_gotenks",
@@ -326,16 +336,17 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "buu_gotenks_absorbed_attack_fwd_05",
    "sourceId": "buu_gotenks_absorbed/014.png",
-   "canonicalId": "buu_gotenks_absorbed.melee.follow_through.attack_forward.05.014",
+   "canonicalId": "buu_gotenks_absorbed.melee.strike.punch_left.03.014.png",
    "characterId": "buu_gotenks",
    "formId": "buu_gotenks_absorbed",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "follow_through",
-   "variant": "attack_forward",
-   "sequenceIndex": 5,
+   "role": "strike",
+   "variant": "punch_left",
+   "sequenceIndex": 3,
    "runtimePoses": [
     "attack_fwd",
     "punch_left"
@@ -374,6 +385,7 @@
    "note": "bucket forense: actor_downed_or_special_pose"
   },
   {
+   "_manifestName": "buu_gotenks_absorbed_attack_fwd_01",
    "sourceId": "buu_gotenks_absorbed/016.png",
    "canonicalId": "buu_gotenks_absorbed.melee.windup.attack_forward.01.016",
    "characterId": "buu_gotenks",
@@ -399,6 +411,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "buu_gotenks_absorbed_attack_fwd_02",
    "sourceId": "buu_gotenks_absorbed/017.png",
    "canonicalId": "buu_gotenks_absorbed.melee.travel.attack_forward.02.017",
    "characterId": "buu_gotenks",
@@ -424,16 +437,17 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "buu_gotenks_absorbed_attack_fwd_06",
    "sourceId": "buu_gotenks_absorbed/018.png",
-   "canonicalId": "buu_gotenks_absorbed.melee.recover.attack_forward.06.018",
+   "canonicalId": "buu_gotenks_absorbed.reaction.knockback_up.up.00.018.png",
    "characterId": "buu_gotenks",
    "formId": "buu_gotenks_absorbed",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "recover",
-   "variant": "attack_forward",
-   "sequenceIndex": 6,
+   "family": "reaction",
+   "role": "knockback_up",
+   "variant": "up",
+   "sequenceIndex": 0,
    "runtimePoses": [
     "attack_fwd",
     "punch_left",
@@ -450,6 +464,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "buu_gotenks_absorbed_attack_ud_00",
    "sourceId": "buu_gotenks_absorbed/019.png",
    "canonicalId": "buu_gotenks_absorbed.melee.ready.attack_vertical.00.019",
    "characterId": "buu_gotenks",
@@ -474,16 +489,17 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "buu_gotenks_absorbed_attack_ud_01",
    "sourceId": "buu_gotenks_absorbed/020.png",
-   "canonicalId": "buu_gotenks_absorbed.melee.windup.attack_vertical.01.020",
+   "canonicalId": "buu_gotenks_absorbed.reaction.knockback_back.back.00.020.png",
    "characterId": "buu_gotenks",
    "formId": "buu_gotenks_absorbed",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "windup",
-   "variant": "attack_vertical",
-   "sequenceIndex": 1,
+   "family": "reaction",
+   "role": "knockback_back",
+   "variant": "back",
+   "sequenceIndex": 0,
    "runtimePoses": [
     "attack_ud",
     "knockback_back"
@@ -499,6 +515,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "buu_gotenks_absorbed_attack_ud_02",
    "sourceId": "buu_gotenks_absorbed/021.png",
    "canonicalId": "buu_gotenks_absorbed.melee.contact.attack_vertical.02.021",
    "characterId": "buu_gotenks",
@@ -523,16 +540,17 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "buu_gotenks_absorbed_attack_ud_03",
    "sourceId": "buu_gotenks_absorbed/022.png",
-   "canonicalId": "buu_gotenks_absorbed.melee.recover.attack_vertical.03.022",
+   "canonicalId": "buu_gotenks_absorbed.reaction.knockback_down.down.00.022.png",
    "characterId": "buu_gotenks",
    "formId": "buu_gotenks_absorbed",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "recover",
-   "variant": "attack_vertical",
-   "sequenceIndex": 3,
+   "family": "reaction",
+   "role": "knockback_down",
+   "variant": "down",
+   "sequenceIndex": 0,
    "runtimePoses": [
     "attack_ud",
     "knockback_down"
@@ -548,6 +566,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "buu_gotenks_absorbed_attack_fwd_01",
    "sourceId": "buu_gotenks_absorbed/023.png",
    "canonicalId": "buu_gotenks_absorbed.melee.windup.attack_forward.01.023",
    "characterId": "buu_gotenks",
@@ -573,6 +592,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "buu_gotenks_absorbed_attack_fwd_00",
    "sourceId": "buu_gotenks_absorbed/024.png",
    "canonicalId": "buu_gotenks_absorbed.melee.ready.attack_forward.00.024",
    "characterId": "buu_gotenks",
@@ -598,16 +618,17 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "buu_gotenks_absorbed_attack_fwd_03",
    "sourceId": "buu_gotenks_absorbed/025.png",
-   "canonicalId": "buu_gotenks_absorbed.melee.strike.attack_forward.03.025",
+   "canonicalId": "buu_gotenks_absorbed.melee.strike.kick_right.00.025.png",
    "characterId": "buu_gotenks",
    "formId": "buu_gotenks_absorbed",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
    "role": "strike",
-   "variant": "attack_forward",
-   "sequenceIndex": 3,
+   "variant": "kick_right",
+   "sequenceIndex": 0,
    "runtimePoses": [
     "attack_fwd",
     "punch_left",
@@ -624,16 +645,17 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "buu_gotenks_absorbed_attack_fwd_04",
    "sourceId": "buu_gotenks_absorbed/026.png",
-   "canonicalId": "buu_gotenks_absorbed.melee.contact.attack_forward.04.026",
+   "canonicalId": "buu_gotenks_absorbed.melee.strike.kick_right.01.026.png",
    "characterId": "buu_gotenks",
    "formId": "buu_gotenks_absorbed",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "contact",
-   "variant": "attack_forward",
-   "sequenceIndex": 4,
+   "role": "strike",
+   "variant": "kick_right",
+   "sequenceIndex": 1,
    "runtimePoses": [
     "attack_fwd",
     "punch_left",
@@ -742,6 +764,7 @@
    "note": "bucket forense: battle_aura_actor_composite"
   },
   {
+   "_manifestName": "buu_gotenks_absorbed_beam_charge_00",
    "sourceId": "buu_gotenks_absorbed/031.png",
    "canonicalId": "buu_gotenks_absorbed.beam.charge_start.charge.00.031",
    "characterId": "buu_gotenks",
@@ -789,6 +812,7 @@
    "note": "bucket forense: projectiles_beams"
   },
   {
+   "_manifestName": "buu_gotenks_absorbed_aura_power_00",
    "sourceId": "buu_gotenks_absorbed/033.png",
    "canonicalId": "buu_gotenks_absorbed.effect.aura.aura_power.00.033",
    "characterId": "buu_gotenks",
@@ -813,6 +837,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "buu_gotenks_absorbed_aura_power_01",
    "sourceId": "buu_gotenks_absorbed/034.png",
    "canonicalId": "buu_gotenks_absorbed.effect.aura.aura_power.01.034",
    "characterId": "buu_gotenks",
@@ -837,6 +862,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "buu_gotenks_absorbed_aura_power_02",
    "sourceId": "buu_gotenks_absorbed/035.png",
    "canonicalId": "buu_gotenks_absorbed.effect.aura.aura_power.02.035",
    "characterId": "buu_gotenks",
@@ -930,6 +956,7 @@
    "note": "bucket forense: multi_evidence_movement_or_attack_pose_orbs_rings_bursts"
   },
   {
+   "_manifestName": "buu_gotenks_absorbed_beam_charge_02",
    "sourceId": "buu_gotenks_absorbed/039.png",
    "canonicalId": "buu_gotenks_absorbed.beam.charge_start.charge.02.039",
    "characterId": "buu_gotenks",
@@ -1000,6 +1027,7 @@
    "note": "bucket forense: multi_evidence_movement_or_attack_pose_projectiles_beams_character_plus_aura_or_burst"
   },
   {
+   "_manifestName": "buu_gotenks_absorbed_beam_fire_02",
    "sourceId": "buu_gotenks_absorbed/042.png",
    "canonicalId": "buu_gotenks_absorbed.beam.release.fire.02.042",
    "characterId": "buu_gotenks",
@@ -1024,6 +1052,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "buu_gotenks_absorbed_beam_fire_03",
    "sourceId": "buu_gotenks_absorbed/043.png",
    "canonicalId": "buu_gotenks_absorbed.beam.release.fire.03.043",
    "characterId": "buu_gotenks",
@@ -1094,6 +1123,7 @@
    "note": "bucket forense: movement_or_attack_pose"
   },
   {
+   "_manifestName": "buu_gotenks_absorbed_beam_fire_04",
    "sourceId": "buu_gotenks_absorbed/046.png",
    "canonicalId": "buu_gotenks_absorbed.beam.release.fire.04.046",
    "characterId": "buu_gotenks",
@@ -1118,6 +1148,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "buu_gotenks_absorbed_beam_charge_01",
    "sourceId": "buu_gotenks_absorbed/047.png",
    "canonicalId": "buu_gotenks_absorbed.beam.charge_start.charge.01.047",
    "characterId": "buu_gotenks",
@@ -1166,6 +1197,7 @@
    "note": "bucket forense: downed_or_hurt"
   },
   {
+   "_manifestName": "buu_gotenks_absorbed_beam_fire_06",
    "sourceId": "buu_gotenks_absorbed/049.png",
    "canonicalId": "buu_gotenks_absorbed.beam.release.fire.05.049",
    "characterId": "buu_gotenks",
@@ -1190,6 +1222,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "buu_gotenks_absorbed_beam_fire_07",
    "sourceId": "buu_gotenks_absorbed/050.png",
    "canonicalId": "buu_gotenks_absorbed.beam.release.fire.06.050",
    "characterId": "buu_gotenks",
@@ -1237,6 +1270,7 @@
    "note": "bucket forense: multi_evidence_movement_or_attack_pose_projectiles_beams"
   },
   {
+   "_manifestName": "buu_gotenks_absorbed_beam_charge_01",
    "sourceId": "buu_gotenks_absorbed/052.png",
    "canonicalId": "buu_gotenks_absorbed.beam.charge_start.charge.01.052",
    "characterId": "buu_gotenks",
@@ -1285,6 +1319,7 @@
    "note": "bucket forense: multi_evidence_movement_or_attack_pose_orbs_rings_bursts"
   },
   {
+   "_manifestName": "buu_gotenks_absorbed_aura_support_00",
    "sourceId": "buu_gotenks_absorbed/054.png",
    "canonicalId": "buu_gotenks_absorbed.effect.aura.aura_support.00.054",
    "characterId": "buu_gotenks",
@@ -1309,6 +1344,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "buu_gotenks_absorbed_aura_support_01",
    "sourceId": "buu_gotenks_absorbed/055.png",
    "canonicalId": "buu_gotenks_absorbed.effect.aura.aura_support.01.055",
    "characterId": "buu_gotenks",
@@ -1333,6 +1369,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "buu_gotenks_absorbed_aura_support_02",
    "sourceId": "buu_gotenks_absorbed/056.png",
    "canonicalId": "buu_gotenks_absorbed.effect.aura.aura_support.02.056",
    "characterId": "buu_gotenks",
@@ -1357,6 +1394,7 @@
    "frameKind": "atomic"
   },
   {
+   "_manifestName": "buu_gotenks_absorbed_beam_charge_03",
    "sourceId": "buu_gotenks_absorbed/000_beam_charge.png",
    "canonicalId": "buu_gotenks_absorbed.beam.charge_hold.charge.03.000_beam_charge",
    "characterId": "buu_gotenks",
@@ -1381,6 +1419,7 @@
    "frameKind": "fixed_only"
   },
   {
+   "_manifestName": "buu_gotenks_absorbed_beam_charge_04",
    "sourceId": "buu_gotenks_absorbed/001_beam_charge.png",
    "canonicalId": "buu_gotenks_absorbed.beam.charge_hold.charge.04.001_beam_charge",
    "characterId": "buu_gotenks",
@@ -1405,6 +1444,7 @@
    "frameKind": "fixed_only"
   },
   {
+   "_manifestName": "buu_gotenks_absorbed_beam_fire_00",
    "sourceId": "buu_gotenks_absorbed/002_beam_fire.png",
    "canonicalId": "buu_gotenks_absorbed.beam.release.fire.00.002_beam_fire",
    "characterId": "buu_gotenks",
