@@ -14,7 +14,7 @@
 #   src/data/generated/spriteCanon.generated.ts
 #   sprites-source/catalog-v9/catalog/semantic_audit.json
 # ═══════════════════════════════════════════════════════════
-import json, os, sys, zlib, struct, hashlib, csv, collections
+import json, os, sys, zlib, struct, hashlib, csv, collections, re
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 V9 = os.path.join(ROOT, 'sprites-source', 'catalog-v9')
@@ -135,25 +135,85 @@ def pose_semantics(pose, i, n):
     if P in ('aura_power', 'aura_support'): return ('effect', 'aura', P, 'effect', 'CANONICAL')
     return ('unclassified', 'unclassified', P, 'actor_frame', 'UNCLASSIFIED')
 
-# ── Buckets forenses → assetType (solo buckets CONCRETOS) ──
+# ── Buckets forenses → (family, role, assetType) ──
+# M8.F1: family/role REALES (antes el branch sin pose dejaba family
+# 'unclassified' incluso con bucket → el Dev Studio agrupaba ASSET_VERIFIED
+# como "Unclassified"). Los buckets ambiguos se clasifican con la familia
+# honesta que el bucket SÍ distingue (idle/stance · downed/hurt ·
+# move_or_attack) — ASSET_VERIFIED, nunca CANONICAL.
 BUCKET_ASSET = {
-    'battle_aura_tile': ('effect', 'aura_tile'),
-    'battle_aura_actor_composite': ('composite', 'aura_composite'),
-    'speedlines': ('effect', 'speedlines'),
-    'projectile_orb_small': ('projectile', 'orb'),
-    'orbs_rings_bursts': ('effect', 'orbs_rings_bursts'),
-    'projectiles_beams': ('projectile', 'beam_ray'),
-    'beam_or_projectile_horizontal': ('projectile', 'beam_horizontal'),
-    'character_plus_aura_or_burst': ('composite', 'aura_or_burst'),
-    'character_plus_effect': ('composite', 'character_effect'),
-    'character_plus_projectile': ('composite', 'character_projectile'),
-    'overworld_actor_or_pose': ('overworld', 'actor_pose'),
-    'nonbody_misc': ('effect', 'misc'),
+    'battle_aura_tile': ('effect', 'aura_tile', 'effect'),
+    'battle_aura_actor_composite': ('composite', 'aura_composite', 'composite'),
+    'speedlines': ('effect', 'speedlines', 'effect'),
+    'projectile_orb_small': ('projectile', 'orb', 'projectile'),
+    'orbs_rings_bursts': ('effect', 'orbs_rings_bursts', 'effect'),
+    'projectiles_beams': ('projectile', 'beam_ray', 'projectile'),
+    'beam_or_projectile_horizontal': ('projectile', 'beam_horizontal', 'projectile'),
+    'character_plus_aura_or_burst': ('composite', 'aura_or_burst', 'composite'),
+    'character_plus_effect': ('composite', 'character_effect', 'composite'),
+    'character_plus_projectile': ('composite', 'character_projectile', 'composite'),
+    'overworld_actor_or_pose': ('overworld', 'actor_pose', 'overworld'),
+    'nonbody_misc': ('effect', 'misc', 'effect'),
+    # buckets ambiguos — la familia refleja la evidencia real del bucket
+    'idle_or_stance': ('idle', 'stance', 'actor_frame'),
+    'downed_or_hurt': ('reaction', 'downed', 'actor_frame'),
+    'actor_downed_or_special_pose': ('reaction', 'downed', 'actor_frame'),
+    'movement_or_attack_pose': ('movement', 'move_or_attack', 'actor_frame'),
 }
 AMBIGUOUS_BUCKETS = ['movement_or_attack_pose', 'idle_or_stance', 'downed_or_hurt',
                      'overworld_actor_or_pose', 'projectiles_beams', 'orbs_rings_bursts',
                      'character_plus_effect', 'nonbody_misc', 'actor_downed_or_special_pose',
                      'multi_evidence_']
+
+# ── Clasificación por NOMBRE DE ARCHIVO del sheet ──
+# Los sheets canónicos nombran los frames sin referenciar en el manifest
+# (003_hurt, 008_attack_fwd, 012_beam_charge…): el nombre ES evidencia
+# forense del asset. Patrones verificados en el catálogo V9 (2026-08-19):
+# 112 *_hurt · 23 *_attack_* · 18 *_beam_* · 13 *_guard · 10 *_move_* · 2 *_idle.
+NAME_PATTERNS = [
+    (r'_hurt$', ('reaction', 'hurt', 'hurt', 'actor_frame')),
+    (r'_attack_fwd$', ('melee', 'attack_forward', 'attack_forward', 'actor_frame')),
+    (r'_attack_ud$', ('melee', 'attack_vertical', 'attack_vertical', 'actor_frame')),
+    (r'_beam_charge$', ('beam', 'charge', 'charge', 'actor_frame')),
+    (r'_beam_fire$', ('beam', 'release', 'fire', 'actor_frame')),
+    (r'_guard$', ('defense', 'hold', 'guard', 'actor_frame')),
+    (r'_move_front$', ('movement', 'travel', 'move_front', 'actor_frame')),
+    (r'_move_back$', ('movement', 'travel', 'move_back', 'actor_frame')),
+    (r'_idle$', ('idle', 'idle', 'idle', 'actor_frame')),
+]
+
+def classify_fallback(bucket, frame_name):
+    """Clasificación forense para frames SIN pose runtime (M8.F1).
+    Devuelve (family, role, variant, assetType, canonStatus, note) o None
+    si no hay evidencia (→ UNCLASSIFIED honesto).
+    Orden: nombre de archivo > bucket concreto > multi_evidence."""
+    base = frame_name[:-4].lower() if frame_name.endswith('.png') else frame_name.lower()
+    # 1) Nombre de archivo semántico (el más específico: nombra la pose exacta)
+    for pat, (fam, role, var, atype) in NAME_PATTERNS:
+        if re.search(pat, base):
+            # sequenceIndex real del número del nombre (003_hurt → 3):
+            # la secuencia queda ordenada aunque el manifest no la referencie.
+            return (fam, role, var, atype, 'ASSET_VERIFIED',
+                    f'nombre de archivo del sheet ({base.split("_")[-1]})')
+    # 2) Bucket concreto del catálogo
+    if bucket in BUCKET_ASSET:
+        fam, role, atype = BUCKET_ASSET[bucket]
+        return (fam, role, role, atype, 'ASSET_VERIFIED', f'bucket forense: {bucket}')
+    # 3) multi_evidence → el primer bucket concreto de la cadena
+    #    (el forense lista las hipótesis en orden de evidencia)
+    if bucket.startswith('multi_evidence_'):
+        rest = bucket[len('multi_evidence_'):]
+        best = None
+        for key in BUCKET_ASSET:
+            i = rest.find(key)
+            if i >= 0 and (best is None or i < best[0]):
+                best = (i, key)
+        if best:
+            fam, role, atype = BUCKET_ASSET[best[1]]
+            return (fam, role, role, atype, 'ASSET_VERIFIED',
+                    f'multi_evidence → {best[1]}')
+    # 4) Sin evidencia → UNCLASSIFIED (nunca inventar)
+    return None
 
 # ── Cargar catálogo forense ─────────────────────────────────
 catalog = {}
@@ -381,34 +441,59 @@ for form_dir in form_dirs:
                         registry.append(entry)
                     stats[status] += 1; form_stats[status] += 1
             else:
-                # sin pose runtime → bucket concreto o UNCLASSIFIED
-                if bucket in BUCKET_ASSET:
-                    atype, role = BUCKET_ASSET[bucket]
-                    status = 'ASSET_VERIFIED'
+                # sin pose runtime → clasificación forense (M8.F1):
+                # nombre de archivo > bucket concreto > multi_evidence >
+                # UNCLASSIFIED honesto. family/role/variant REALES (antes
+                # family quedaba 'unclassified' incluso con bucket → el Dev
+                # Studio agrupaba ASSET_VERIFIED como "Unclassified").
+                fb = classify_fallback(bucket, f)
+                if fb is not None:
+                    fam, role, var, atype, status, note = fb
+                    seq = 0
+                    mnum = re.search(r'(\d+)_(?:hurt|attack_fwd|attack_ud|beam_charge|beam_fire|guard|move_front|move_back|idle)$', f[:-4])
+                    if mnum:
+                        seq = int(mnum.group(1))
+                    entry = {
+                        'sourceId': f"{form_dir}/{f}",
+                        'canonicalId': _canon_id(form_dir, fam, role, var, seq, f[:-4]),
+                        'characterId': form_dir.rsplit('_', 1)[0] if form_dir.count('_') else form_dir,
+                        'formId': form_dir,
+                        'assetType': atype,
+                        'view': 'ACTION_DUEL' if fam in ('melee', 'beam', 'power') else 'FIELD',
+                        'family': fam, 'role': role, 'variant': var,
+                        'sequenceIndex': seq,
+                        'runtimePoses': [],
+                        'evidence': 'ASSET_VERIFIED',
+                        'canonStatus': status,
+                        'source': {'sheet': cat.get('source_sheet', ''), 'frame': f,
+                                   'x': cat.get('x0'), 'y': cat.get('y0')},
+                        'frameKind': kind,
+                        'note': note,
+                    }
                 else:
-                    atype, role, status = 'unclassified', 'unclassified', 'UNCLASSIFIED'
-                entry = {
-                    'sourceId': f"{form_dir}/{f}",
                     # unclassified: el id usa el NOMBRE del archivo (único),
                     # no un contador global — cada frame tiene su identidad.
-                    'canonicalId': f"{form_dir}.unclassified.{f[:-4]}",
-                    'characterId': form_dir.rsplit('_', 1)[0] if form_dir.count('_') else form_dir,
-                    'formId': form_dir,
-                    'assetType': atype,
-                    'view': 'FIELD',
-                    'family': 'unclassified', 'role': role, 'variant': bucket or '',
-                    'sequenceIndex': 0,
-                    'runtimePoses': [],
-                    'evidence': 'ASSET_VERIFIED' if status == 'ASSET_VERIFIED' else 'UNKNOWN',
-                    'canonStatus': status,
-                    'source': {'sheet': cat.get('source_sheet', ''), 'frame': f,
-                               'x': cat.get('x0'), 'y': cat.get('y0')},
-                    'frameKind': kind,
-                    'note': f"bucket forense: {bucket}" if bucket else 'sin evidencia runtime ni bucket',
-                }
+                    entry = {
+                        'sourceId': f"{form_dir}/{f}",
+                        'canonicalId': f"{form_dir}.unclassified.{f[:-4]}",
+                        'characterId': form_dir.rsplit('_', 1)[0] if form_dir.count('_') else form_dir,
+                        'formId': form_dir,
+                        'assetType': 'unclassified',
+                        'view': 'FIELD',
+                        'family': 'unclassified', 'role': 'unclassified',
+                        'variant': bucket or '',
+                        'sequenceIndex': 0,
+                        'runtimePoses': [],
+                        'evidence': 'UNKNOWN',
+                        'canonStatus': 'UNCLASSIFIED',
+                        'source': {'sheet': cat.get('source_sheet', ''), 'frame': f,
+                                   'x': cat.get('x0'), 'y': cat.get('y0')},
+                        'frameKind': kind,
+                        'note': f"bucket forense: {bucket}" if bucket else 'sin evidencia runtime ni bucket',
+                    }
                 if _add_dedup(entry):
                     registry.append(entry)
-                stats[status] += 1; form_stats[status] += 1
+                stats[entry['canonStatus']] += 1; form_stats[entry['canonStatus']] += 1
 
     frames_out = list(_by_src.values())
     form_manifests[form_dir] = {

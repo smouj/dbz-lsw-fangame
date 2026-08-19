@@ -9,19 +9,22 @@
  "byStatus": {
   "CANONICAL": 425,
   "RUNTIME_VERIFIED": 1220,
-  "UNCLASSIFIED": 377,
-  "ASSET_VERIFIED": 404
+  "ASSET_VERIFIED": 769,
+  "UNCLASSIFIED": 12
  },
  "byFamily": {
-  "idle": 43,
-  "defense": 157,
-  "unclassified": 781,
-  "movement": 69,
-  "reaction": 315,
-  "melee": 384,
-  "beam": 295,
-  "effect": 258,
-  "power": 124
+  "idle": 68,
+  "defense": 170,
+  "overworld": 81,
+  "effect": 345,
+  "movement": 176,
+  "reaction": 458,
+  "melee": 407,
+  "beam": 313,
+  "projectile": 201,
+  "power": 124,
+  "unclassified": 12,
+  "composite": 71
  },
  "ambiguousLabelsAsCanonical": 0
 }
