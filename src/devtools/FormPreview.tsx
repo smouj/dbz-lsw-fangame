@@ -12,7 +12,7 @@
 
 import { useState, useMemo } from 'react';
 import { spriteFrameUrl } from '../data/spriteManifest';
-import { COMBAT_POSE_ORDER } from '../battle/spriteConfig';
+import { COMBAT_POSE_ORDER, resolvePoseFrameSequence } from '../battle/spriteConfig';
 import { poseSemantics } from './frameSemantics';
 import { SPRITE_CANON } from '../data/generated/spriteCanon.generated';
 import type { FrameAnalysis } from './frameAnalysis';
@@ -31,27 +31,33 @@ export function FormPreview({ formId, dir, analysis }: Props) {
   const [pose, setPose] = useState('idle');
   const [frameIdx, setFrameIdx] = useState(0);
 
-  // Frames reales de la pose activa (por nombre de archivo).
-  const poseFiles = useMemo(() => {
-    const prefix = dir ? `${dir}_` : '';
-    return analysis.frames
-      .filter(f => f.file.startsWith(`${prefix}${pose}_`))
-      .sort((a, b) => a.file.localeCompare(b.file))
-      .map(f => f.file);
-  }, [analysis.frames, dir, pose]);
+  // Set de archivos reales del manifest (para available()).
+  const fileSet = useMemo(() => {
+    const s = new Set<string>();
+    for (const f of analysis.frames) s.add(f.file);
+    return s;
+  }, [analysis.frames]);
 
-  // Conteo por pose (para las pills) — del análisis, no tablas.
+  // Frames de la pose activa con FALLBACKS (resolvePoseFrameSequence — la
+  // MISMA fuente que el runtime y el grid de poses: beam_fire sin PNG propio
+  // cae a beam_charge, knockback_down a hurt…). Antes filtraba por prefijo
+  // del archivo y las poses con fallback salían vacías en el preview.
+  const poseFiles = useMemo(() => {
+    if (!dir) return [];
+    const available = (file: string) => fileSet.has(file);
+    return resolvePoseFrameSequence(pose, dir, available);
+  }, [dir, pose, fileSet]);
+
+  // Conteo por pose (para las pills) — con los MISMOS fallbacks.
   const counts = useMemo(() => {
-    const prefix = dir ? `${dir}_` : '';
+    if (!dir) return new Map<string, number>();
+    const available = (file: string) => fileSet.has(file);
     const m = new Map<string, number>();
-    for (const f of analysis.frames) {
-      if (!f.file.startsWith(prefix)) continue;
-      const rest = f.file.slice(prefix.length);
-      const poseName = rest.replace(/_\d+\.png$/, '');
-      m.set(poseName, (m.get(poseName) ?? 0) + 1);
+    for (const p of COMBAT_POSE_ORDER) {
+      m.set(p, resolvePoseFrameSequence(p, dir, available).length);
     }
     return m;
-  }, [analysis.frames, dir]);
+  }, [dir, fileSet]);
 
   const idx = Math.min(frameIdx, Math.max(0, poseFiles.length - 1));
   const current = poseFiles[idx] ?? null;

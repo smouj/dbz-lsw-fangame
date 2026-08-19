@@ -11048,26 +11048,30 @@ button.linklike:hover { text-decoration: underline; }
 .dev-tl-col.prof { color: #8a93a3; }
 
 /* ─── Character Studio: layout 3 columnas (forma · assets · frames) ─── */
-/* ═══ M8.F0 — PESTAÑAS DE SECCIÓN (Character Studio) ═══
-   Cada vista a ancho COMPLETO — nada de columnas aplastadas en viewports
-   pequeños. Jerarquía: vista → poses → frames → ataques → v9. */
+/* ═══ M8.F0 — PÁGINA ÚNICA ORGANIZADA (Character Studio) ═══
+   Sin pestañas: todo visible de una vez, secciones apiladas con título. */
 .dev-char-sections { margin-top: 12px; }
-.dev-char-section-tabs {
-  display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px;
-  border-bottom: 1px solid #262b33; padding-bottom: 8px;
+.dev-char-block {
+  background: #14181e;
+  border: 1px solid #262b33;
+  border-radius: 10px;
+  padding: 14px;
+  margin-bottom: 14px;
 }
-.dev-char-section-tab {
-  display: inline-flex; align-items: baseline; gap: 6px;
-  padding: 6px 12px; background: #0e1013; border: 1px solid #262b33;
-  border-radius: 6px; cursor: pointer; color: #aab2bf;
-  font-family: inherit; font-size: 12px;
+.dev-char-block-title {
+  margin: 0 0 12px;
+  font-size: 13px;
+  letter-spacing: .5px;
+  color: #ffe9a3;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #262b33;
 }
-.dev-char-section-tab em { font-style: normal; font-size: 10px; color: #6b7484; }
-.dev-char-section-tab.active {
-  border-color: #d8a830; color: #fff; background: #1b2129;
-}
-.dev-char-section-tab.active em { color: #d8a830; }
-.dev-char-section { min-width: 0; }
+.dev-char-block-title .dev-sheets-count { font-size: 11px; color: #6b7484; text-transform: none; letter-spacing: 0; }
 /* Vista: preview grande + 2 columnas de datos */
 .dev-vista-grid {
   display: grid;

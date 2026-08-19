@@ -167,12 +167,26 @@ export function resolvePoseFrameSequence(
       return out;
     }
     case 'knockback_down': {
+      // M8.F0 FIX — derribo: usa los hurt DISPONIBLES. Con ≥2 hurt toma la
+      // subsecuencia de caída (2..5); con solo hurt_00 (future_trunks,
+      // gotenks, buu…) usa el/los hurt que existan — nunca 0 frames.
       const out: string[] = [];
       for (const i of [2, 3, 4, 5]) { const file = f('hurt', i); if (file) out.push(file); }
-      return out;
+      if (out.length > 0) return out;
+      return allOf('hurt');
     }
     case 'beam_guard':
       return allOf('guard');
+    // M8.F0 FIX — fallbacks físicos en resolvePoseFrameSequence:
+    // POSE_FALLBACKS declara la cadena semántica (beam_fire → beam_charge →
+    // attack_fwd → idle) pero este switch NO la aplicaba: beam_fire caía a
+    // allOf('beam_fire') → 0 frames en formas sin PNG dedicado (goku_ssj,
+    // gohan_ssj, piccolo, goten, trunks…). Ahora la secuencia de frames
+    // respeta la MISMA cadena que el runtime (una sola fuente).
+    case 'beam_fire':
+      return allOf('beam_fire').length ? allOf('beam_fire')
+        : allOf('beam_charge').length ? allOf('beam_charge')
+        : allOf('attack_fwd').length ? allOf('attack_fwd') : allOf('idle');
     // Evade (convención V6.1): move_back_00 → guard → move_back_00
     // (parpadeo defensivo). guard_00 = frame canónico (el V9 no duplica guard_01
     // como PNG propio; guard tiene 1-3 frames físicos).
