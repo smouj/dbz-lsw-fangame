@@ -65,27 +65,30 @@ export function stageKeyLabel(key: StageKey): string {
  */
 export function StageHudPanel({ portraitUrl, seq, idx, state, feedback = null, elapsedSec, limitSec, side = 'left' }: StageHudPanelProps) {
   const preparing = state === 'PREPARING';
-  const curKey = seq[idx];
   return (
     <div className={`stage-hud-panel speaker-${side}`} data-stage-state={state}>
-      {/* PORTRAIT — columna fija. ANCLAJE por lado (M8.C2a): si el actor es
-          el personaje de la IZQUIERDA (player) el retrato va en la columna
-          1; si es el de la DERECHA (enemy) va en la columna 3 (grid-order).
-          El Dev Studio y el juego usan el mismo componente → mismo anclaje. */}
+      {/* PORTRAIT — FUERA del cuadro (como el speaker del diálogo GBC), en el
+          lado del personaje. M8.C2a FIX: antes era columna DENTRO del panel
+          blanco y se veía montado encima de los inputs; ahora el cuadro solo
+          contiene la secuencia + timer y el retrato cuelga del borde (left =
+          calc(100% + 24px) / right = calc(100% + 24px), igual que
+          .gbc-dialogue-speaker). */}
       <div className={`stage-hud-portrait ${side}`}>
         {portraitUrl
           ? <img src={portraitUrl} alt="portrait" className="stage-hud-portrait-img" draggable={false} />
           : <span className="stage-hud-portrait-ph">?</span>}
       </div>
 
-      {/* INPUT TRACK — columna central (celdas de igual tamaño/separación) */}
-      <div className="stage-hud-track">
-        {preparing ? (
-          /* PREPARING: panel VACÍO (sin inputs ni cronómetro) — el Engine
-             abre los inputs solo en QTE_STARTED (inputOpenTick). */
-          <span className="stage-hud-prep">…</span>
-        ) : (
-          <>
+      {/* CUADRO — solo la secuencia de inputs del combo (+ timer). El prompt
+          grande de tecla actual se ELIMINÓ (no es parte del GBC: el combo
+          ya muestra qué tecla toca en la celda 'current'). */}
+      <div className="stage-hud-box">
+        <div className="stage-hud-track">
+          {preparing ? (
+            /* PREPARING: panel VACÍO (sin inputs ni cronómetro) — el Engine
+               abre los inputs solo en QTE_STARTED (inputOpenTick). */
+            <span className="stage-hud-prep">…</span>
+          ) : (
             <div className="stage-hud-sequence">
               {seq.map((k, i) => (
                 <span key={i} className={`stage-hud-cell ${i < idx ? 'done' : i === idx ? 'current' : 'future'}`}>
@@ -95,18 +98,15 @@ export function StageHudPanel({ portraitUrl, seq, idx, state, feedback = null, e
                 </span>
               ))}
             </div>
-            <div className={`stage-hud-prompt ${feedback ?? ''} ${curKey ?? ''}`}>
-              {curKey && <img src={`/assets/ui/qte/${stageKeyIcon(curKey)}.png`} alt={curKey} className="stage-hud-key-big" />}
-            </div>
-          </>
-        )}
-      </div>
+          )}
+        </div>
 
-      {/* TIMER — columna fija (tiempo numérico GBC, sin barra) */}
-      <div className="stage-hud-timer">
-        {!preparing && (
-          <span className="stage-hud-time"><strong>{elapsedSec.toFixed(1)}</strong> / {limitSec.toFixed(1)}s</span>
-        )}
+        {/* TIMER — fijo (tiempo numérico GBC, sin barra) */}
+        <div className="stage-hud-timer">
+          {!preparing && (
+            <span className="stage-hud-time"><strong>{elapsedSec.toFixed(1)}</strong> / {limitSec.toFixed(1)}s</span>
+          )}
+        </div>
       </div>
     </div>
   );

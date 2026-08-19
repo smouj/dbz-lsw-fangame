@@ -3646,24 +3646,19 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
    Sin la mitad izquierda vacía que producía la composición legacy
    (gbc-dialogue con margin-left 88px + retrato absolute fuera). */
 .stage-hud-panel {
-  display: grid;
-  /* portrait fijo · track central (1fr) · timer fijo. Columna portrait
-     88px (retrato 57 + sombra 4 + respiro) y gap 18px → el retrato NUNCA
-     toca visualmente los inputs (antes 80px/14px: la sombra del retrato
-     quedaba a 37px del track y parecía solaparse). */
-  grid-template-columns: 88px minmax(0, 1fr) 120px;
-  align-items: center;
-  gap: 18px;
-  width: 100%;
-  /* Ancho canónico: el panel se adapta al ancho disponible pero nunca se
-     solapa con los chips de fase (izquierda) ni el CC (derecha). En el
-     juego real el StageHudPanel convive con phase-chip-row y cc-panel en
-     .battle-controls → max-width + margin auto = centrado sin solape. */
-  max-width: min(100%, 1180px);
+  /* M8.C2a FIX — MISMA geometría que el diálogo GBC (.gbc-dialogue): el
+     PANEL ES LA CAJA (position relative, width calc(100% - 176px), margin
+     auto centrado) y el PORTRAIT cuelga FUERA (absolute, left/right =
+     calc(100% + 24px)) en el lado del personaje. Antes el portrait era
+     columna DENTRO del panel blanco y se veía montado encima de los inputs.
+     El 100% del portrait se refiere a ESTA caja (no al viewport). */
+  position: relative;
+  width: calc(100% - 176px);
+  max-width: 840px;
   margin: 0 auto;
   height: 80px;
-  padding: 0 16px;
   box-sizing: border-box;
+  padding: 0 20px;
   background: #f8f4e4;            /* blanco GBC */
   border: 3px solid #000;
   outline: 2px solid #f8f4e4;
@@ -3671,24 +3666,24 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   font-family: var(--fpx);
   color: #000;
 }
-/* ANCLAJE DEL RETRATO por lado (M8.C2a): speaker-left → columna 1;
-   speaker-right → columna 3 (el timer pasa a la columna 1). El grid es
-   simétrico: portrait | track | timer  ↔  timer | track | portrait. */
-.stage-hud-panel.speaker-right .stage-hud-portrait { order: 3; }
-.stage-hud-panel.speaker-right .stage-hud-track { order: 2; }
-.stage-hud-panel.speaker-right .stage-hud-timer { order: 1; justify-content: flex-start; }
-.stage-hud-panel.speaker-left .stage-hud-portrait { order: 1; }
-.stage-hud-panel.speaker-left .stage-hud-track { order: 2; }
-.stage-hud-panel.speaker-left .stage-hud-timer { order: 3; }
-/* PORTRAIT: columna fija — retrato con marco GBC (como el speaker del diálogo).
-   M8.C2a FIX solapamiento: el panel mide 80px totales (border 3px → interior
-   74px con box-sizing border-box); el portrait debe medir el INTERIOR
-   (74px), no 80px — con height:80px sobresalía 3px arriba y 3px abajo
-   (align-items:center lo centraba en un área menor y se montaba encima del
-   contenedor de diálogo). 74 = 80 − 2×3 (bordes del panel). */
+/* BOX interno: solo el contenido (track + timer) centrado — sin estilos
+   de caja (el panel ya es la caja). */
+.stage-hud-box {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+}
+/* PORTRAIT: FUERA del cuadro, en el lado del personaje (absolute, como
+   .gbc-dialogue-speaker). left/right = calc(100% + 24px) respecto al PANEL
+   (la caja centrada). */
 .stage-hud-portrait {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
   width: 57px;
-  height: 74px;
+  height: 80px;
   background: #f8f4e4;
   border: 3px solid #000;
   outline: 2px solid #f8f4e4;
@@ -3699,7 +3694,10 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 41;
 }
+.stage-hud-portrait.left  { right: calc(100% + 24px); }
+.stage-hud-portrait.right { left: calc(100% + 24px); }
 .stage-hud-portrait-img {
   width: 100%;
   height: 100%;
@@ -3709,7 +3707,7 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   display: block;
 }
 .stage-hud-portrait-ph { color: #999; font-size: 18px; }
-/* INPUT TRACK: columna central — secuencia + prompt, centrados */
+/* INPUT TRACK: secuencia de inputs del combo, centrada en el cuadro */
 .stage-hud-track {
   display: flex;
   align-items: center;
@@ -3739,25 +3737,13 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 .stage-hud-cell.done .stage-hud-check { font-size: 18px; color: #2ed05a; line-height: 1; }
 .stage-hud-cell.current { border-color: #f0d060; box-shadow: 0 0 8px rgba(240,208,96,.7), 2px 2px 0 rgba(0,0,0,.4); }
 .stage-hud-cell.future { opacity: .5; }
-.stage-hud-prompt {
-  display: flex;
-  align-items: center;
-  flex-shrink: 0;
-  padding: 4px;
-  background: #141414;
-  border: 2px solid #000;
-  box-shadow: 2px 2px 0 rgba(0,0,0,.5);
-}
-.stage-hud-prompt img { width: 64px; height: 64px; image-rendering: pixelated; display: block; object-fit: contain; }
-.stage-hud-prompt.correct { border-color: #2ed05a; box-shadow: 0 0 10px rgba(46,208,90,.6), 2px 2px 0 rgba(0,0,0,.5); }
-.stage-hud-prompt.wrong { border-color: #d03030; box-shadow: 0 0 10px rgba(208,48,48,.6), 2px 2px 0 rgba(0,0,0,.5); }
 /* PREPARING: panel vacío (sin inputs ni timer) — solo la caja presente */
 .stage-hud-prep {
   font-size: 16px;
   color: #888;
   letter-spacing: 2px;
 }
-/* TIMER: columna fija — numérico, anclado a la derecha */
+/* TIMER: fijo a la derecha del cuadro — numérico, sin barra */
 .stage-hud-timer {
   display: flex;
   align-items: center;

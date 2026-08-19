@@ -112,12 +112,15 @@ check('R3: #dev/hud usa el MISMO StageHudPanel',
   /import \{ StageHudPanel \} from '\.\.\/components\/StageHudPanel'/.test(hudTsx) &&
   /<StageHudPanel/.test(hudTsx));
 // M8.C2a — anclaje del retrato por lado (Stage + diálogo de batalla)
-check('R3: StageHudPanel ancla retrato por lado (grid order speaker-right)',
-  /\.stage-hud-panel\.speaker-right \.stage-hud-portrait \{ order: 3; \}/.test(css));
-// M8.C2a — respiro del retrato: columna 88px + gap 18px → el retrato NUNCA
-// toca visualmente los inputs del track (antes 80px/14px: sombra a 37px).
-check('R3: StageHudPanel portrait con respiro (col 88px + gap 18px)',
-  /\.stage-hud-panel \{[^}]*grid-template-columns: 88px minmax\(0, 1fr\) 120px;[^}]*gap: 18px;/.test(css));
+check('R3: StageHudPanel ancla retrato FUERA por lado (absolute como el diálogo)',
+  /\.stage-hud-portrait\.left  \{ right: calc\(100% \+ 24px\); \}/.test(css) &&
+  /\.stage-hud-portrait\.right \{ left: calc\(100% \+ 24px\); \}/.test(css));
+// M8.C2a — respiro del retrato: el PANEL es la caja (width calc(100% - 176px)
+// margin auto) y el portrait cuelga FUERA (absolute left/right +24px) —
+// nunca toca los inputs del track (geometría idéntica al diálogo GBC).
+check('R3: StageHudPanel portrait fuera del cuadro (panel = caja centrada)',
+  /\.stage-hud-panel \{[^}]*width: calc\(100% - 176px\);/.test(css) &&
+  /\.stage-hud-portrait \{[^}]*position: absolute;/.test(css));
 check('R3: diálogo GBC centrado simétrico (sin hueco fantasma)',
   /\.gbc-dialogue\.speaker-left \{ margin-left: 88px; margin-right: 88px; \}/.test(css) &&
   /\.gbc-dialogue\.speaker-right \{ margin-left: 88px; margin-right: 88px; \}/.test(css) &&
