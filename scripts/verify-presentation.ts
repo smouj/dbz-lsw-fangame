@@ -14,6 +14,7 @@ import {
 import { buildPresentationTimeline, resolveFacing, type BattleTimeline } from '../src/battle/engine/presentation';
 import { resolveSpeakerPortrait } from '../src/data/speakerPortraits';
 import { SPRITE_CANON } from '../src/data/generated/spriteCanon.generated';
+import { GBC_CINEMATIC_CANON, isGbcCanon, GBC_CINEMATIC_FAMILIES } from '../src/battle/cinematic/GbcCinematicCanon';
 import { SCENARIOS } from '../src/data/scenarios';
 
 let passed = 0;
@@ -281,6 +282,22 @@ check('M7: facing — actor player → scaleX 1 · actor enemy → scaleX −1',
   // El canon generado y el manifest runtime no contradicen el conteo de frames.
   const gokuFrames = SPRITE_CANON.forms.find(f => f.form === 'goku_base')?.frames.length ?? 0;
   check('M8.P0: canon V9 — goku_base tiene frames catalogados (>20)', gokuFrames > 20);
+}
+
+// ── M8.F0: GBC CINEMATIC GROUND TRUTH (guardrail de fidelidad) ──
+{
+  check('F0: el canon cinematográfico GBC está VACÍO hasta verificar vídeo', GBC_CINEMATIC_CANON.length === 0);
+  check('F0: isGbcCanon solo acepta FRAME_VERIFIED / VIDEO_VERIFIED',
+    isGbcCanon('FRAME_VERIFIED') && isGbcCanon('VIDEO_VERIFIED')
+    && !isGbcCanon('ROM_ASSET_VERIFIED') && !isGbcCanon('MANUAL_VERIFIED') && !isGbcCanon('INFERRED'));
+  check('F0: 20 familias cinematográficas declaradas (stage→ko)', GBC_CINEMATIC_FAMILIES.length === 20);
+  // La preparación defensiva actual (DEFENSE_COMMITTED → DEFENDER_ACTION) es
+  // INFERRED — nunca etiquetada como canon GBC hasta observarla en vídeo.
+  const guardSc = PRESENTATION_SCENARIOS.find(s => s.id === 'm7_guard')!;
+  const guardTl = buildPresentationTimeline({ events: runPresentationScenario(guardSc).log.entries, context: CONTEXT });
+  const prepEntries = guardTl.entries.filter(en => en.profileId === 'defense_prep');
+  check('F0: DEFENDER_ACTION/prep defensiva etiquetada INFERRED (jamás CANON)',
+    prepEntries.length > 0 && prepEntries.every(en => en.fidelity === 'INFERRED'));
 }
 
 console.log(`\n═══ RESULTADO: ${passed} passed · ${failed} failed ═══`);
