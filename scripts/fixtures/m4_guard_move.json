@@ -3,6 +3,7 @@
  "description": "M8.C2a — GUARD compromete la defensa (DEFENSE_COMMITTED + GUARD_STARTED). El MOVE defensivo ya no se encadena en la misma ventana (una sola elección — ver tests M8.C2a y golden m7_move)",
  "setup": {
   "phase": "defend",
+  "firstAttacker": "enemy",
   "playerCc": 0,
   "playerPos": "DOWN_BACK",
   "enemyPos": "DOWN_BACK"

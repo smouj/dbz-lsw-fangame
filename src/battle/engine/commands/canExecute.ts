@@ -46,6 +46,12 @@ function activeAttackSide(state: BattleState): BattleSide {
   return state.exchange === 0 ? state.activeSide : (state.activeSide === 'player' ? 'enemy' : 'player');
 }
 
+/** M8.C2a-L — el player es el DEFENSOR del exchange actual (misma fuente
+ *  derivada que activeAttacker: iniciativa + exchange — jamás la fase). */
+function playerIsDefender(state: BattleState): boolean {
+  return activeAttackSide(state) === 'enemy';
+}
+
 export function canExecute(state: BattleState, command: BattleCommand, opts?: { side?: BattleSide; characterId?: string; limitCardsCount?: number; hasAlly?: boolean }): CommandCheck {
   // 1) Fase
   const phases = PHASE_REQUIREMENTS[command.type];
@@ -93,14 +99,23 @@ export function canExecute(state: BattleState, command: BattleCommand, opts?: { 
     case 'DEFENSE_BASIC':
       return ok();
     case 'GUARD':
+      // M8.C2a-L — la defensa del jugador solo existe cuando él es el
+      // defensor del exchange (nunca al atacar: iniciativa + exchange).
+      if (!playerIsDefender(state)) return reject('NOT_DEFENDER');
       return canGuard(state);
     case 'PLAY_DEFENSE_CARD':
+      if (!playerIsDefender(state)) return reject('NOT_DEFENDER');
       return canPlayDefenseCard(state, opts?.side ?? 'player', command.handIndex, opts?.characterId ?? '');
     case 'MOVE':
+      if (!playerIsDefender(state)) return reject('NOT_DEFENDER');
       return canMove(state, opts?.side ?? 'player', command.axis);
     case 'RESET_DEFENSE':
       // M8.C2a — siempre legal: el orquestador abre la ventana defensiva.
       // (No se expone en getAvailableCommands: no es un comando de UI.)
+      return ok();
+    case 'END_EXCHANGE':
+      // M8.C2a-L — siempre legal: primitiva de orquestación del lifecycle
+      // (rollover de exchange/turno). No se expone en getAvailableCommands.
       return ok();
     case 'QTE_INPUT': {
       const q = state.stageQte;

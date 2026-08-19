@@ -15,6 +15,7 @@ import {
 } from '../src/battle/engine/state/battleStateSelectors';
 import { canExecute, getAvailableCommands } from '../src/battle/engine/commands/canExecute';
 import type { BattleCommand } from '../src/battle/engine/commands/BattleCommand';
+import { PRESENTATION_SCENARIOS, runPresentationScenario } from '../src/devtools/presentationScenarios';
 import { BattlePosition } from '../src/data/positions';
 import { getCard, type CardDef } from '../src/data/cards';
 
@@ -134,7 +135,7 @@ const m2Cfg = makeConfig({
 const m2State = createInitialBattleState(m2Cfg);
 const commandPhase: typeof m2State = { ...m2State, phase: 'command' };
 const attackPhase: typeof m2State = { ...m2State, phase: 'cardSelect', exchange: 0, activeSide: 'player' };
-const defendPhase: typeof m2State = { ...m2State, phase: 'defend' };
+const defendPhase: typeof m2State = { ...m2State, phase: 'defend', activeSide: 'enemy', exchange: 0 }; // M8.C2a-L: defend ⇒ player es DEFENSOR
 
 // ── Pureza ──
 const before = JSON.stringify(commandPhase);
@@ -290,7 +291,7 @@ if (acceptedRes.ok) {
 const POSITIONS4 = [BattlePosition.UP_BACK, BattlePosition.UP_FRONT, BattlePosition.DOWN_BACK, BattlePosition.DOWN_FRONT];
 let mvOk = 0;
 for (const pos of POSITIONS4) {
-  const s = { ...m3Command, phase: 'defend' as never, player: { ...m3Command.player, battlePos: pos } };
+  const s = { ...m3Command, phase: 'defend' as never, activeSide: 'enemy' as const, exchange: 0 as const, player: { ...m3Command.player, battlePos: pos } };
   const h = executeCommand(s, { type: 'MOVE', axis: 'HORIZONTAL' }, { side: 'player' });
   const v = executeCommand(s, { type: 'MOVE', axis: 'VERTICAL' }, { side: 'player' });
   if (h.ok && v.ok) {
@@ -340,8 +341,9 @@ if (seq.length > 0) {
   const qBad = executeCommand(sim, { type: 'QTE_INPUT', input: 'B' });
   check('M5: QTE_INPUT equivocado → accepted y COUNTER_WINDOW (el GBC no rechaza inputs)', qBad.ok && qBad.state.stageQte.state === 'COUNTER_WINDOW');
 }
-// Defensa: GUARD + MOVE
-const sim2 = { ...m3Command, phase: 'defend' as never, player: { ...m3Command.player, battlePos: BattlePosition.DOWN_BACK } };
+// Defensa: GUARD + MOVE (M8.C2a-L: solo legales cuando el player es el
+// DEFENSOR del exchange — aquí con iniciativa enemiga: exchange 0).
+const sim2 = { ...m3Command, phase: 'defend' as never, activeSide: 'enemy' as const, exchange: 0 as const, player: { ...m3Command.player, battlePos: BattlePosition.DOWN_BACK } };
 const g = mustExecute(sim2, { type: 'GUARD' });
 check('M3: GUARD → playerGuard reduce', g.playerGuard === 'reduce');
 const mv = mustExecute(sim2, { type: 'MOVE', axis: 'HORIZONTAL' });
@@ -355,9 +357,10 @@ check('M8.C2a: MOVE vertical en ventana ya comprometida → REJECTED', !executeC
 
 // ── M8.C2a: DEFENSE COMMIT (frontera defensiva autoritativa) ──
 // La defensa es una ELECCIÓN TÁCTICA (GUARD/MOVE/carta) — JAMÁS un QTE:
-// no hay Stage, secuencia A/B ni inputOpenTick en este tramo.
+// no hay Stage, secuencia A/B ni inputOpenTick en este tramo. El player
+// es el DEFENSOR (iniciativa enemiga, exchange 0).
 {
-  const s = { ...m3Command, phase: 'defend' as never, tick: 100 };
+  const s = { ...m3Command, phase: 'defend' as never, activeSide: 'enemy' as const, exchange: 0 as const, tick: 100 };
   const gr = executeCommand(s, { type: 'GUARD' }, { side: 'player', characterId: 'goku' });
   check('M8.C2a: GUARD → DEFENSE_COMMITTED emitido (frontera autoritativa)',
     gr.ok && gr.events.some(e => e.type === 'DEFENSE_COMMITTED' && JSON.stringify((e as { choice: unknown }).choice) === JSON.stringify({ type: 'GUARD' })));
@@ -417,7 +420,7 @@ check('M8.C2a: MOVE vertical en ventana ya comprometida → REJECTED', !executeC
 }
 // isDefenseCommitted selector (estado puro → lectura derivada única)
 {
-  const s = { ...m3Command, phase: 'defend' as never };
+  const s = { ...m3Command, phase: 'defend' as never, activeSide: 'enemy' as const, exchange: 0 as const };
   const committed = mustExecute(s, { type: 'GUARD' });
   check('M8.C2a: isDefenseCommitted=false sin elección · true tras GUARD',
     !isDefenseCommitted(s) && isDefenseCommitted(committed)
@@ -431,7 +434,7 @@ check('M8.C2a: MOVE vertical en ventana ya comprometida → REJECTED', !executeC
 // siguiente (DEFENSE_ALREADY_COMMITTED) — bug real detectado en auditoría:
 // defenseChoice solo se inicializaba a null y nunca se reabría en el juego.
 {
-  const s = { ...m3Command, phase: 'defend' as never, tick: 100 };
+  const s = { ...m3Command, phase: 'defend' as never, activeSide: 'enemy' as const, exchange: 0 as const, tick: 100 };
   const committed = mustExecute(s, { type: 'GUARD' });
   check('M8.C2a: GUARD → ventana comprometida (precondición)',
     committed.defenseState === 'COMMITTED' && isDefenseCommitted(committed));
@@ -507,6 +510,99 @@ check('M8.C2a: MOVE vertical en ventana ya comprometida → REJECTED', !executeC
   const phaseLine = stateSrc.split('\n').find(l => l.includes('type BattlePhase'));
   check('M8.C2a: el tipo BattlePhase del Engine no contiene enemyTurn',
     !!phaseLine && !phaseLine.includes('enemyTurn'));
+}
+
+// ── M8.C2a-L: TURN LIFECYCLE LOCK (rollover + iniciativa dinámica) ──
+// La iniciativa es del turno ACTUAL: END_EXCHANGE recorre el ciclo
+//   exchange 0 → 1 (mismo turno) · exchange 1 → turn+1 / exchange 0 /
+//   iniciativa recalculada por SPD efectiva (speedOrder).
+// El GBC reordena si la Speed cambió entre turnos (documentado: Burter
+// pierde velocidad → Goku ataca primero el turno siguiente).
+{
+  // T1 con iniciativa ENEMY (enemigo más rápido)
+  const t1 = createInitialBattleState(makeConfig({
+    firstAttacker: 'enemy' as const,
+    playerSpd: 9, enemySpd: 10,
+  }));
+  check('C2a-L: T1 → initiative ENEMY · exchange 0 ataca ENEMY',
+    t1.activeSide === 'enemy' && initiativeSide(t1) === 'enemy' && activeAttacker(t1) === 'enemy');
+  // Rollover E0 → E1: mismo turno, misma iniciativa, atacante = opuesto
+  const e1 = executeCommand(t1, { type: 'END_EXCHANGE' }, { side: 'player' });
+  check('C2a-L: END_EXCHANGE en E0 → exchange 1 · mismo turno · iniciativa intacta · atacante PLAYER',
+    e1.ok && e1.state.exchange === 1 && e1.state.turn === t1.turn && e1.state.activeSide === 'enemy'
+    && activeAttacker(e1.state) === 'player');
+  // Rollover E1 → TURN 2: turn+1, exchange 0, iniciativa recalculada.
+  // SIN cambio de Speed → la iniciativa se mantiene (enemy más rápido).
+  const t2 = executeCommand(e1.state, { type: 'END_EXCHANGE' }, { side: 'player' });
+  check('C2a-L: END_EXCHANGE en E1 → turn+1 · exchange 0 · iniciativa recalculada (sigue enemy)',
+    t2.ok && t2.state.turn === t1.turn + 1 && t2.state.exchange === 0
+    && t2.state.activeSide === 'enemy' && activeAttacker(t2.state) === 'enemy');
+
+  // SPEED CHANGE enemy→player: sube la SPD del jugador (stages válidos) y
+  // al cerrar el turno la iniciativa se INVIERTE (el GBC reordena).
+  const buffed = { ...e1.state, pStages: { ...e1.state.pStages, spd: 1 } }; // +8 SPD efectiva
+  const t2b = executeCommand(buffed, { type: 'END_EXCHANGE' }, { side: 'player' });
+  check('C2a-L: SPD player > enemy tras E1 → T2 inicia PLAYER (iniciativa dinámica)',
+    t2b.ok && t2b.state.turn === buffed.turn + 1 && t2b.state.exchange === 0
+    && t2b.state.activeSide === 'player' && activeAttacker(t2b.state) === 'player');
+
+  // SPEED CHANGE player→enemy (simétrico): empieza con iniciativa player,
+  // el enemigo se buffea, el siguiente turno inicia ENEMY.
+  const p1 = createInitialBattleState(makeConfig({
+    firstAttacker: 'player' as const,
+    playerSpd: 10, enemySpd: 9,
+  }));
+  const p1e1 = executeCommand(p1, { type: 'END_EXCHANGE' }, { side: 'player' });
+  const buffedE = { ...p1e1.state, eStages: { ...p1e1.state.eStages, spd: 1 } };
+  const p2 = executeCommand(buffedE, { type: 'END_EXCHANGE' }, { side: 'player' });
+  check('C2a-L: SPD enemy > player tras E1 → T2 inicia ENEMY (simétrico)',
+    p2.ok && p2.state.activeSide === 'enemy' && activeAttacker(p2.state) === 'enemy');
+
+  // Empate de SPD → persiste la iniciativa actual (determinista, sin random)
+  const tie = createInitialBattleState(makeConfig({
+    firstAttacker: 'player' as const, playerSpd: 10, enemySpd: 10,
+  }));
+  const tieE1 = executeCommand(tie, { type: 'END_EXCHANGE' }, { side: 'player' });
+  const tieT2 = executeCommand(tieE1.state, { type: 'END_EXCHANGE' }, { side: 'player' });
+  check('C2a-L: empate SPD → la iniciativa persiste (determinista, sin Math.random)',
+    tieT2.ok && tieT2.state.activeSide === 'player' && tieT2.state.turn === tie.turn + 1);
+
+  // END_EXCHANGE es PURO lifecycle: no toca CC/mano/HP/QTE/defensa.
+  const life = executeCommand({ ...t1, phase: 'defend' as never, defenseState: 'AWAITING_CHOICE' as const, player: { ...t1.player, cc: 42 } }, { type: 'END_EXCHANGE' }, { side: 'player' });
+  check('C2a-L: END_EXCHANGE no toca CC/mano/HP/QTE/defenseState (lifecycle puro)',
+    life.ok && life.state.player.cc === 42 && life.state.stageQte.state === 'WAITING'
+    && life.state.defenseState === 'AWAITING_CHOICE'
+    && life.events.filter(e => e.type !== 'COMMAND_ACCEPTED').length === 0);
+  // No expuesto a la UI (solo orquestador).
+  check('C2a-L: END_EXCHANGE NO está en getAvailableCommands (no es input de UI)',
+    !getAvailableCommands(t1).some(c => c.type === 'END_EXCHANGE'));
+
+  // ── MATRIZ DE CIERRE: GUARD/MOVE/carta solo cuando el player es DEFENSOR ──
+  const attackState = { ...m3State, activeSide: 'player' as const, exchange: 0 as const, phase: 'defend' as never };
+  const gAtk = executeCommand(attackState, { type: 'GUARD' }, { side: 'player', characterId: 'goku' });
+  check('C2a-L: GUARD REJECTED cuando el player es ATACANTE (NOT_DEFENDER)',
+    !gAtk.ok && gAtk.reason === 'NOT_DEFENDER');
+  const mAtk = executeCommand(attackState, { type: 'MOVE', axis: 'HORIZONTAL' }, { side: 'player', characterId: 'goku' });
+  check('C2a-L: MOVE REJECTED cuando el player es ATACANTE (NOT_DEFENDER)',
+    !mAtk.ok && mAtk.reason === 'NOT_DEFENDER');
+  const defState = { ...attackState, activeSide: 'enemy' as const };
+  const gDef = executeCommand(defState, { type: 'GUARD' }, { side: 'player', characterId: 'goku' });
+  check('C2a-L: GUARD legal cuando el player es DEFENSOR (misma fase, lado derivado)',
+    gDef.ok && gDef.state.defenseState === 'COMMITTED');
+
+  // STAGE FAILURE ≠ DEFENSE PHASE: la ventana A/B del counter pertenece a la
+  // acción Stage (fase stageInput) — nunca abre 'defend' ni toca la defensa.
+  const sStage = { ...m3Command, phase: 'basic' as never, tick: 500 };
+  const stagePrep = executeCommand(sStage, { type: 'BASIC_STAGE_ATTACK' }, { side: 'player', characterId: 'goku' });
+  const stageOpen = advanceBattleClock(stagePrep.state, stagePrep.state.stageQte.inputOpenTick - stagePrep.state.tick + 1);
+  const wrongKey = stageOpen.state.stageQte.seq[0] === 'A' ? 'B' : 'A';
+  const stageFail = executeCommand(stageOpen.state, { type: 'QTE_INPUT', input: wrongKey }, { side: 'player' });
+  check('C2a-L: fallo de Stage → fase sigue stageInput (counter ≡ submecánica Stage, no Defense)',
+    stageFail.ok && stageFail.state.phase === 'stageInput' && stageFail.state.stageQte.state === 'COUNTER_WINDOW'
+    && stageFail.state.defenseState !== 'COMMITTED');
+  check('C2a-L: QTE_COUNTER_DEFEND requiere COUNTER_WINDOW + fase stageInput (jamás defend)',
+    canExecute(stageFail.state, { type: 'QTE_COUNTER_DEFEND' }, { side: 'player' }).ok
+    && !canExecute({ ...stageFail.state, phase: 'defend' as never }, { type: 'QTE_COUNTER_DEFEND' }, { side: 'player' }).ok);
 }
 
 
@@ -607,6 +703,7 @@ function runGolden(path: string): { expected: string[]; actual: string[]; events
   let s = createInitialBattleState(makeConfig({
     playerDeck: m2Deck(fx.deck), enemyDeck: m2Deck([1]),
     playerCc: fx.setup.playerCc ?? 30,
+    firstAttacker: fx.setup.firstAttacker ?? 'player',
     playerPos: (BattlePosition as unknown as Record<string, BattlePosition>)[fx.setup.playerPos ?? 'DOWN_BACK'],
     enemyPos: (BattlePosition as unknown as Record<string, BattlePosition>)[fx.setup.enemyPos ?? 'DOWN_BACK'],
   }));

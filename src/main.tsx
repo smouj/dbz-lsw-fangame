@@ -1502,14 +1502,11 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
     // una carta específica (powerup_dispel/support_dispel) los anula.
     // El GATHER POWER sí tiene duración, pero es un estado APARTE
     // (powerState FULL→HALF→NORMAL con gatherTurns), no pStages/eStages.
-    // Recalcular orden por SPD EFECTIVA (base + buffs/debuffs). El orden queda
-    // fijado para TODO el turno; si la SPD cambió, el siguiente turno se invierte
-    // (peculiaridad real del GBC: dos Attack Phases consecutivas visualmente).
-    const pSpd = player.spd + pStages.spd * 8;
-    const eSpd = enemy.spd + eStages.spd * 8;
-    const first: 'player' | 'enemy' = pSpd === eSpd
-      ? (Math.random() < 0.5 ? 'player' : 'enemy')  // speedTiePolicy: UNKNOWN (ROM)
-      : pSpd > eSpd ? 'player' : 'enemy';
+    // M8.C2a-L — la INICIATIVA la recalcula el ENGINE en END_EXCHANGE
+    // (speedOrder con SPD efectiva: base + stages × 8; empate → persiste la
+    // iniciativa actual, determinista — el Engine es puro, sin Math.random).
+    // React SOLO proyecta la snapshot: nunca decide el orden (AUTHORITY).
+    const first: 'player' | 'enemy' = rtApi.runtime.state.activeSide;
     turnOwnerRef.current = first;
     setTurnOwner(first);
     setExchangeIndex(0);
@@ -1523,19 +1520,26 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
   // función (fin de cinemática, fin de resolución, QTE, CHARA...). Sin bloqueo,
   // dos llamadas seguidas saltaban exchanges/turnos duplicados y las fases se
   // pisaban. El guard se libera en startExchange (al arrancar el siguiente).
+  // M8.C2a-L — la transición es AUTORITATIVA en el Engine: END_EXCHANGE
+  // (exchange 0→1 mismo turno · exchange 1→turn+1/exchange 0/initiativa
+  // recalculada). React proyecta turn/exchange/turnOwner desde la snapshot.
   const advanceExchange = () => {
     if (exchangeBusy.current) return;
     exchangeBusy.current = true;
+    engineAct({ type: 'END_EXCHANGE' }, { side: 'player' });
+    const st = rtApi.runtime.state;
+    setTurn(st.turn);
+    setTurnOwner(st.activeSide); // ENGINE-SNAPSHOT (M8.C2a-L)
     if (exchangeIndex === 0) {
       // Exchange 2: el otro luchador ataca (spec §1)
       setExchangeIndex(1);
-      const second: 'player' | 'enemy' = turnOwnerRef.current === 'player' ? 'enemy' : 'player';
+      const second: 'player' | 'enemy' = st.activeSide === 'player' ? 'enemy' : 'player';
       startExchange(second);
     } else {
-      // TURN_END → nuevo turno: recalcular SPD y orden
+      // TURN_END → nuevo turno: la iniciativa YA la recalculó el Engine
+      // (END_EXCHANGE → speedOrder) y el turno ya está incrementado.
       advanceGatherPowerRound();
       setExchangeIndex(0);
-      setTurn(t => t + 1);
       beginTurn();
     }
   };

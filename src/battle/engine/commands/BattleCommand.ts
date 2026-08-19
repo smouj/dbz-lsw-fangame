@@ -37,6 +37,13 @@ export type BattleCommand =
    *  espera es de ELECCIÓN TÁCTICA del menú defensivo (GUARD/MOVE/carta),
    *  jamás un QTE. Idempotente: si ya está limpia, no-op. */
   | { type: 'RESET_DEFENSE' }
+  /** M8.C2a-L — avanza el exchange (transición autoritativa ÚNICA del
+   *  lifecycle): exchange 0 → 1 (mismo turno, misma iniciativa) ·
+   *  exchange 1 → turn+1, exchange 0 e iniciativa RECALCULADA por SPD
+   *  efectiva (speedOrder). La iniciativa es del turno ACTUAL, nunca
+   *  firstAttacker fijo. Primitiva de orquestación: sin eventos de
+   *  dominio, no expuesta a la UI. */
+  | { type: 'END_EXCHANGE' }
   // ── QTE / Stage Attack ──
   | { type: 'QTE_INPUT'; input: StageKey }
   | { type: 'QTE_COUNTER_DEFEND' }

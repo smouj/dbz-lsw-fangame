@@ -25,6 +25,7 @@ export type CommandRejectionReason =
   | 'INVALID_QTE_INPUT'       // input fuera de la secuencia esperada
   | 'ACTION_LOCKED'           // acción bloqueada por estado temporal
   | 'DEFENSE_ALREADY_COMMITTED' // M8.C2a: una elección defensiva por ventana
+  | 'NOT_DEFENDER'            // M8.C2a-L: comando defensivo con el player atacando
 
 export type CommandCheck =
   | { ok: true }

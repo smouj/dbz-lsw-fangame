@@ -22,6 +22,7 @@ import { POSITION_DATA } from '../../../data/positions';
 import type { BattleCommand } from './BattleCommand';
 import type { BattleEvent } from '../events/BattleEvent';
 import type { BattleState } from '../state/BattleState';
+import { speedOrder } from '../state/battleStateSelectors';
 import { moveFighter } from './reducers/movementReducer';
 import { playCard, playDefenseCard, playLimitCard } from './reducers/cardReducer';
 import { gatherPower, guard, qteCorrectInput, qteWrongInput, qteCounterContinue, qteCounterDefend } from './reducers/powerReducer';
@@ -222,6 +223,29 @@ export function reduceAcceptedCommand(state: BattleState, command: BattleCommand
       // primitiva de orquestación; la presentación reacciona a
       // DEFENSE_COMMITTED, no al reset. Idempotente.
       next = { ...state, defenseState: 'AWAITING_CHOICE', defenseChoice: null };
+      break;
+    }
+    case 'END_EXCHANGE': {
+      // M8.C2a-L — TURN LIFECYCLE: transición autoritativa ÚNICA.
+      //   exchange 0 → 1: mismo turno, MISMA iniciativa (el atacante del
+      //   exchange 1 es el opuesto — activeAttacker lo deriva).
+      //   exchange 1 → turn+1, exchange 0, iniciativa RECALCULADA por SPD
+      //   efectiva (speedOrder: la iniciativa es del turno ACTUAL, nunca
+      //   firstAttacker fijo — el GBC reordena si Speed cambió).
+      // El empate de SPD mantiene la iniciativa actual (determinista, sin
+      // Math.random: el Engine es puro). La fase NO cambia aquí (la
+      // proyección ATTACK/DEFENSE la hace el orquestador desde el estado).
+      // Solo toca lifecycle: 0 mutaciones de CC/mano/HP/QTE.
+      if (state.exchange === 0) {
+        next = { ...state, exchange: 1 };
+      } else {
+        next = {
+          ...state,
+          turn: state.turn + 1,
+          exchange: 0,
+          activeSide: speedOrder(state),
+        };
+      }
       break;
     }
 

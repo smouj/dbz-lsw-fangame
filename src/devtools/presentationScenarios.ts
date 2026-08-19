@@ -21,7 +21,7 @@ export type ScenarioStep =
   | { kind: 'qte_complete' }
   /** Un solo input correcto (simula jugador lento intercalando ticks). */
   | { kind: 'qte_step' }
-  /** M8.C2a — abre una ventana defensiva NUEVA (defenseChoice = null):
+  /** M8.C2a — abre una ventana defensiva NUEVA (AWAITING_CHOICE):
    *  simula el reset del orquestador entre exchanges. Sin esto, un segundo
    *  comando defensivo en la misma ventana es ilegal (UNA elección). */
   | { kind: 'reset_defense' }
@@ -41,6 +41,8 @@ export interface PresentationScenario {
   enemyPos?: string;
   /** Fase inicial (default 'command'). */
   phase?: string;
+  /** M8.C2a-L — iniciativa del turno 1 (default 'player'). */
+  firstAttacker?: 'player' | 'enemy';
   steps: ScenarioStep[];
 }
 
@@ -129,6 +131,9 @@ export const PRESENTATION_SCENARIOS: PresentationScenario[] = [
   {
     id: 'm7_guard', label: 'Guardia (defensa básica → pose guard)', seed: 5,
     deck: [1], playerCc: 0, playerPos: 'DOWN_BACK', enemyPos: 'DOWN_BACK', phase: 'defend',
+    // M8.C2a-L — la defensa del jugador solo existe como DEFENSOR del
+    // exchange: con iniciativa ENEMIGA el jugador empieza defendiendo.
+    firstAttacker: 'enemy',
     steps: [
       { kind: 'cmd', command: { type: 'GUARD' }, opts: { side: 'player' } },
     ],
@@ -136,6 +141,7 @@ export const PRESENTATION_SCENARIOS: PresentationScenario[] = [
   {
     id: 'm7_move', label: 'MOVE táctico (GUARD → ventana fresh → HORIZONTAL)', seed: 7,
     deck: [1], playerCc: 0, playerPos: 'DOWN_BACK', enemyPos: 'DOWN_BACK', phase: 'defend',
+    firstAttacker: 'enemy',
     steps: [
       { kind: 'cmd', command: { type: 'GUARD' }, opts: { side: 'player' } },
       { kind: 'reset_defense' },
@@ -194,7 +200,9 @@ export function runPresentationScenario(sc: PresentationScenario): ScenarioRun {
     playerDeck: deckOf(sc.deck),
     enemyDeck: deckOf([1]),
     playerLimits: [], playerFighterLimits: [],
-    firstAttacker: 'player' as const,
+    // M8.C2a-L — la iniciativa del escenario (m7_guard/m7_move usan 'enemy'
+    // porque el jugador solo defiende como DEFENSOR del exchange).
+    firstAttacker: (sc.firstAttacker ?? 'player') as 'player' | 'enemy',
     seed: sc.seed,
   };
   let state = createInitialBattleState(cfg);
