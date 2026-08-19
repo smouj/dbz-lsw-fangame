@@ -1,0 +1,55 @@
+{
+  "observation_id": "obs_001",
+  "sequence_id": "showcase01_vball_crash",
+  "clip_id": "showcase01_attack_001",
+  "source_id": "special_showcase_01",
+  "source_url": "https://www.youtube.com/watch?v=7Q8_SrVZ5KA",
+  "source_timestamp_start": "00:00:06",
+  "source_timestamp_end": "00:00:21",
+  "fps_extracted": 30,
+  "attack": "V-ball Crash (Gotenks SSJ vs Vegeta)",
+  "fidelity": "VIDEO_VERIFIED",
+  "beats_observed": [
+    {
+      "sourceFrame": 0,
+      "sourceTimestampMs": 0,
+      "background": "battle_field_light (fondo claro con líneas azules)",
+      "playerLarge_visible": true,
+      "enemyLarge_visible": false,
+      "focus": "actor",
+      "transition": "cut",
+      "observed": "Gotenks SOLO con afterimage (inicio de animación). Caja inferior VACÍA. HUD: Gotenks ATTACK vs Vegeta DEFENSE."
+    },
+    {
+      "sourceFrame": 326,
+      "sourceTimestampMs": 10867,
+      "background": "battle_field_light (sin cambio)",
+      "playerLarge_visible": true,
+      "enemyLarge_visible": false,
+      "focus": "actor",
+      "transition": "none",
+      "observed": "Gotenks sostiene ESFERA AZUL grande (V-ball) con ambas manos. Caja: 'Vegeta's Guard / Squared off'."
+    },
+    {
+      "sourceFrame": 402,
+      "sourceTimestampMs": 13400,
+      "background": "battle_field_light (sin cambio)",
+      "playerLarge_visible": false,
+      "enemyLarge_visible": false,
+      "focus": "none",
+      "transition": "none",
+      "observed": "IMPACTO: efecto de líneas marrones/naranjas en el centro, sin personajes. Mismo texto 'Vegeta's Guard / Squared off'."
+    },
+    {
+      "sourceFrame": 450,
+      "sourceTimestampMs": 15000,
+      "background": "battle_field_light (sin cambio)",
+      "playerLarge_visible": true,
+      "enemyLarge_visible": false,
+      "focus": "actor",
+      "transition": "none",
+      "observed": "Gotenks en pose de REACCIÓN (invertido/cayendo por el choque). Mismo texto."
+    }
+  ],
+  "notes": "El GBC NO cambia de fondo entre beats: mismo plano de acción, el sprite se anima, el proyectil (esfera) aparece en las manos del atacante, el impacto es un efecto de líneas. La caja inferior cambia de 'X's Attack' a 'Y's Guard / Squared off' cuando el defensor se prepara."
+}

@@ -26,6 +26,8 @@ export type GbcShot =
   | 'FIELD'        // overview táctico (overworld sprites + posiciones)
   | 'ACTION'       // plano de acción (fondo action + luchador(es) grandes)
   | 'ACTION_DUEL'  // ambos luchadores grandes visibles
+  | 'IMPACT'       // plano de impacto: explosión/efecto (F0: Dunk Shot cambia
+                   // el fondo en el impacto)
   | 'SPECIAL';     // fondo especial (beam/limit/support)
 
 // ── Foco (FOCUS): quién protagoniza el plano — rol, no nodo físico.
@@ -93,12 +95,69 @@ export interface GbcCinematicSequence {
 // ═══════════════════════════════════════════════════════════════════════
 // REGISTRO — secuencias VERIFICADAS.
 // ═══════════════════════════════════════════════════════════════════════
-// Vacío a propósito (F0.1): todavía NO hay vídeo local. Cada entrada se
-// añade SOLO tras observar gameplay real (longplay 6:23:11 + vídeos GameFAQs).
-// Mientras tanto, todo lo que el Timeline reproduce es INFERRED — así está
-// etiquetado en buildTimeline (fidelity 'INFERRED'), y el Dev Studio lo
-// muestra. Nada aquí puede llamarse "canon GBC" hasta tener evidencia.
-export const GBC_CINEMATIC_CANON: GbcCinematicSequence[] = [];
+// F0-A (2026-08-19): primeras secuencias VIDEO_VERIFIED desde los Special
+// Attack Showcases (vídeo local en tools/gbc-cinematic/videos/). Cada
+// entrada traza clip + timestamps + observación. La gramática observada
+// hasta ahora:
+//   · transición = BLANCO TOTAL (flash_white) o corte, NO fade negro
+//   · atacante SOLO primero (focus ACTOR) · caja 'X's Attack / [nombre]'
+//   · defensor aparece cuando el ataque viaja · caja 'Y's Guard / Squared off'
+//   · el proyectil (esfera/disco/rayo) viaja en el MISMO plano (sin cambio
+//     de fondo) · el impacto puede cambiar el fondo (Dunk Shot) o ser un
+//     efecto de líneas (V-ball)
+//   · tras la defensa: defensor SOLO en pose de guardia
+// Mientras no haya secuencia registrada aquí para una familia, el Timeline
+// reproduce con fidelity INFERRED.
+export const GBC_CINEMATIC_CANON: GbcCinematicSequence[] = [
+  {
+    id: 'special_vball_crash_01',
+    family: 'beam',
+    evidence: {
+      source: 'special_showcase_01 (https://www.youtube.com/watch?v=7Q8_SrVZ5KA)',
+      timestampStart: '00:00:06',
+      timestampEnd: '00:00:21',
+      fidelity: 'VIDEO_VERIFIED',
+    },
+    beats: [
+      { shot: 'ACTION', transition: 'CUT', focus: 'ACTOR', role: 'ACTOR', pose: 'idle', startFrame: 0, endFrame: 60, note: 'Gotenks SOLO con afterimage · caja vacía' },
+      { shot: 'ACTION', transition: 'NONE', focus: 'ACTOR', role: 'ACTOR', pose: 'beam_charge', startFrame: 60, endFrame: 320, note: 'Gotenks sostiene esfera azul (V-ball) · caja: Vegeta Guard / Squared off' },
+      { shot: 'ACTION', transition: 'NONE', focus: 'NONE', startFrame: 320, endFrame: 400, note: 'IMPACTO: líneas de energía, sin personajes' },
+      { shot: 'ACTION', transition: 'NONE', focus: 'ACTOR', role: 'ACTOR', pose: 'knockback_back', startFrame: 400, endFrame: 450, note: 'Gotenks en reacción (empujado)' },
+    ],
+  },
+  {
+    id: 'special_purple_comet_01',
+    family: 'melee',
+    evidence: {
+      source: 'special_showcase_01 (https://www.youtube.com/watch?v=7Q8_SrVZ5KA)',
+      timestampStart: '00:00:24',
+      timestampEnd: '00:00:51',
+      fidelity: 'VIDEO_VERIFIED',
+    },
+    beats: [
+      { shot: 'ACTION', transition: 'FLASH_WHITE', focus: 'NONE', startFrame: 0, endFrame: 10, note: 'PANTALLA EN BLANCO TOTAL (transición GBC real — no fade negro)' },
+      { shot: 'ACTION', transition: 'CUT', focus: 'ACTOR', role: 'ACTOR', pose: 'idle', startFrame: 10, endFrame: 50, note: 'Jeice SOLO · caja: Jeice Attack / Purple Comet' },
+      { shot: 'ACTION', transition: 'NONE', focus: 'ACTOR', role: 'ACTOR', pose: 'attack_fwd', startFrame: 50, endFrame: 130, note: 'Jeice en movimiento + Recoome aparece (defensor)' },
+      { shot: 'ACTION', transition: 'NONE', focus: 'DEFENDER', role: 'TARGET', pose: 'guard', startFrame: 130, endFrame: 170, note: 'Recoome SOLO en guardia · caja: Recoome Guard / Squared off' },
+    ],
+  },
+  {
+    id: 'special_dunk_shot_01',
+    family: 'melee',
+    evidence: {
+      source: 'special_showcase_02 (https://www.youtube.com/watch?v=1jPCvkf_rWY)',
+      timestampStart: '00:00:06',
+      timestampEnd: '00:00:18',
+      fidelity: 'VIDEO_VERIFIED',
+    },
+    beats: [
+      { shot: 'ACTION', transition: 'CUT', focus: 'ACTOR', role: 'ACTOR', pose: 'idle', startFrame: 0, endFrame: 50, note: 'Gohan SSJ SOLO · caja: Gohan Attack / Dunk Shot' },
+      { shot: 'ACTION', transition: 'NONE', focus: 'ACTOR', role: 'ACTOR', pose: 'attack_ud', startFrame: 50, endFrame: 75, note: 'Gohan carga + Buu aparece (defensor) · caja: Buu Guard / Squared off' },
+      { shot: 'ACTION', transition: 'NONE', focus: 'ACTOR', role: 'ACTOR', pose: 'attack_ud', startFrame: 75, endFrame: 100, note: 'Gohan en el AIRE (vertical) + proyectil pequeño' },
+      { shot: 'IMPACT', transition: 'CUT', focus: 'NONE', startFrame: 100, endFrame: 120, note: 'IMPACTO: explosión + FONDO CAMBIA (plano de impacto)' },
+    ],
+  },
+];
 
 // ── Familias a investigar (F0.5) — orden de la gramática del combate ──
 export const GBC_CINEMATIC_FAMILIES: ReadonlyArray<{ id: string; label: string; priority: number }> = [

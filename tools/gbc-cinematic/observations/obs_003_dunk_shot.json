@@ -1,0 +1,55 @@
+{
+  "observation_id": "obs_003",
+  "sequence_id": "showcase02_dunk_shot",
+  "clip_id": "showcase02_attack_001",
+  "source_id": "special_showcase_02",
+  "source_url": "https://www.youtube.com/watch?v=1jPCvkf_rWY",
+  "source_timestamp_start": "00:00:06",
+  "source_timestamp_end": "00:00:18",
+  "fps_extracted": 10,
+  "attack": "Dunk Shot (Gohan SSJ vs Buu)",
+  "fidelity": "VIDEO_VERIFIED",
+  "beats_observed": [
+    {
+      "sourceFrame": 0,
+      "sourceTimestampMs": 0,
+      "background": "battle_field_light (blanco + borde azul punteado + zonas verdes laterales)",
+      "playerLarge_visible": true,
+      "enemyLarge_visible": false,
+      "focus": "actor",
+      "transition": "cut",
+      "observed": "Gohan SSJ SOLO, pose de preparación (brazo adelantado). Caja: 'Gohan's Attack / Dunk Shot'."
+    },
+    {
+      "sourceFrame": 54,
+      "sourceTimestampMs": 5400,
+      "background": "battle_field_light (sin detalles verdes laterales)",
+      "playerLarge_visible": true,
+      "enemyLarge_visible": true,
+      "focus": "actor+target",
+      "transition": "none",
+      "observed": "Gohan en pose dinámica (cargando hacia adelante) + Buu aparece en posición neutral. Caja: 'Buu's Guard / Squared off'."
+    },
+    {
+      "sourceFrame": 79,
+      "sourceTimestampMs": 7900,
+      "background": "blanco casi limpio",
+      "playerLarge_visible": true,
+      "enemyLarge_visible": false,
+      "focus": "actor",
+      "transition": "none",
+      "observed": "Gohan en el AIRE (movimiento vertical), brazo extendido, PEQUEÑO PROYECTIL negro saliendo hacia la derecha. Mismo texto de guardia."
+    },
+    {
+      "sourceFrame": 116,
+      "sourceTimestampMs": 11600,
+      "background": "CAMBIA: tonalidades amarillentas/azules (agua/nubes) — fondo de impacto",
+      "playerLarge_visible": false,
+      "enemyLarge_visible": false,
+      "focus": "none",
+      "transition": "cut",
+      "observed": "IMPACTO: explosión roja/blanca en la parte inferior izquierda + silueta de Buu golpeado/en el suelo. Sin cuadro de texto."
+    }
+  ],
+  "notes": "DUNK SHOT: atacante sube VERTICAL (aire) → proyectil pequeño → IMPACTO con cambio de FONDO (plano de impacto distinto). El defensor aparece en 'Squared off' y el texto cambia de 'X's Attack' a 'Y's Guard' durante el viaje del ataque."
+}

@@ -1,0 +1,65 @@
+{
+  "observation_id": "obs_002",
+  "sequence_id": "showcase01_purple_comet",
+  "clip_id": "showcase01_attack_002",
+  "source_id": "special_showcase_01",
+  "source_url": "https://www.youtube.com/watch?v=7Q8_SrVZ5KA",
+  "source_timestamp_start": "00:00:24",
+  "source_timestamp_end": "00:00:51",
+  "fps_extracted": 10,
+  "attack": "Purple Comet (Jeice vs Recoome)",
+  "fidelity": "VIDEO_VERIFIED",
+  "beats_observed": [
+    {
+      "sourceFrame": 7,
+      "sourceTimestampMs": 700,
+      "background": "BLANCO TOTAL (transición)",
+      "playerLarge_visible": false,
+      "enemyLarge_visible": false,
+      "focus": "none",
+      "transition": "flash_white",
+      "observed": "PANTALLA EN BLANCO TOTAL (transición — NO fade negro). Barras HUD superior/inferior visibles."
+    },
+    {
+      "sourceFrame": 18,
+      "sourceTimestampMs": 1800,
+      "background": "battle_field_light (blanco + suelo marrón pixelado)",
+      "playerLarge_visible": true,
+      "enemyLarge_visible": false,
+      "focus": "actor",
+      "transition": "cut",
+      "observed": "Jeice SOLO, pose estática. Caja: 'Jeice's Attack / Purple Comet'."
+    },
+    {
+      "sourceFrame": 62,
+      "sourceTimestampMs": 6200,
+      "background": "battle_field_light",
+      "playerLarge_visible": true,
+      "enemyLarge_visible": true,
+      "focus": "actor+target",
+      "transition": "none",
+      "observed": "Jeice en movimiento (ataque) + Recoome aparece en pose de contraataque/esquiva. Mismo texto de ataque."
+    },
+    {
+      "sourceFrame": 142,
+      "sourceTimestampMs": 14200,
+      "background": "battle_field_light (líneas azules)",
+      "playerLarge_visible": false,
+      "enemyLarge_visible": true,
+      "focus": "defender",
+      "transition": "none",
+      "observed": "Recoome SOLO en pose defensiva (mano cerca de la cara). Caja: 'Recoome's Guard / Squared off'."
+    },
+    {
+      "sourceFrame": 171,
+      "sourceTimestampMs": 17100,
+      "background": "cambio total (efecto de energía / otro combate)",
+      "playerLarge_visible": false,
+      "enemyLarge_visible": false,
+      "focus": "none",
+      "transition": "cut",
+      "observed": "Corte a otro combate (Vegeta SSJ con aura). Fin del clip del showcase."
+    }
+  ],
+  "notes": "PATRÓN: transición BLANCO TOTAL (no negro) → atacante SOLO → defensor aparece cuando el ataque viaja → defensor SOLO en guardia ('Y's Guard / Squared off'). El ataque Purple Comet es a corta distancia (físico/proyectil cercano)."
+}

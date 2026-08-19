@@ -286,7 +286,8 @@ check('M7: facing — actor player → scaleX 1 · actor enemy → scaleX −1',
 
 // ── M8.F0: GBC CINEMATIC GROUND TRUTH (guardrail de fidelidad) ──
 {
-  check('F0: el canon cinematográfico GBC está VACÍO hasta verificar vídeo', GBC_CINEMATIC_CANON.length === 0);
+  check('F0: el canon cinematográfico GBC solo contiene secuencias con evidencia trazable',
+    GBC_CINEMATIC_CANON.every(s => s.evidence.source.length > 8 && s.evidence.fidelity !== 'INFERRED' && s.beats.length > 0));
   check('F0: isGbcCanon solo acepta FRAME_VERIFIED / VIDEO_VERIFIED',
     isGbcCanon('FRAME_VERIFIED') && isGbcCanon('VIDEO_VERIFIED')
     && !isGbcCanon('ROM_ASSET_VERIFIED') && !isGbcCanon('MANUAL_VERIFIED') && !isGbcCanon('INFERRED'));

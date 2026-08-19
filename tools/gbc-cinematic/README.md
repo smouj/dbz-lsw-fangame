@@ -98,3 +98,31 @@ python3 tools/gbc-cinematic/extract-frames.py exchange_melee_guard_001 --fps 30
 
 Los showcases (247-300s) son la vía rápida para beams/limits: descarga
 `special_showcase_01..05` y recorta con el mismo flujo.
+
+## Estado F0-A (2026-08-19) — PRIMERAS SECUENCIAS VIDEO_VERIFIED
+
+Vídeos locales importados (carpeta videos/):
+- gbc_longplay_xbuster6.mp4 (6:23:10) · special_showcase_01..05.mp4
+
+Observaciones registradas (observations/):
+- obs_001_vball_crash.json — V-ball Crash (Gotenks SSJ): esfera azul en
+  manos del atacante · impacto = líneas de energía · mismo fondo todo el rato
+- obs_002_purple_comet.json — Purple Comet (Jeice): transición BLANCO
+  TOTAL → atacante SOLO → defensor aparece al viajar → defensor SOLO en
+  guardia ('Squared off')
+- obs_003_dunk_shot.json — Dunk Shot (Gohan SSJ): atacante sube VERTICAL →
+  proyectil pequeño → impacto CAMBIA el fondo (plano de impacto)
+
+Secuencias en GBC_CINEMATIC_CANON (src/battle/cinematic/):
+- special_vball_crash_01 · special_purple_comet_01 · special_dunk_shot_01
+  (las 3 VIDEO_VERIFIED con trazabilidad clip+timestamps)
+
+GRAMÁTICA GBC OBSERVADA (contradice la plantilla INFERRED actual):
+- transición = BLANCO total (flash_white) o corte, NO fade negro
+- atacante SOLO primero · defensor aparece cuando el ataque viaja
+- caja inferior: "X's Attack / [nombre]" → "Y's Guard / Squared off"
+- el proyectil viaja en el MISMO plano (sin cambio de fondo hasta impacto)
+- Dunk Shot: el impacto cambia el fondo
+
+Próximo: continuar showcases 3-5 (beams ray/ball), luego longplay para el
+exchange completo (ataque→retorno→defensa→contraataque).
