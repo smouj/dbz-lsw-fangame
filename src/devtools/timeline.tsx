@@ -11,6 +11,9 @@ import { buildPresentationTimeline, resolveFacing } from '../battle/engine/prese
 import { SCENARIOS, SPECIAL_ACTION_BACKGROUND } from '../data/scenarios';
 import type { TimelineEntry } from '../battle/engine/presentation/PresentationCue';
 import { EnginePlayground } from './runtimePlayground';
+import { resolveCinematicProfile, type CinematicProfile } from '../battle/cinematic/cinematicProfile';
+import { resolveActionProfileById } from '../battle/actionProfiles';
+import type { BattleActionDescriptor } from '../battle/engine/events/BattleEvent';
 
 const CUE_COLORS: Record<string, string> = {
   SCENE: '#d9b0e8', FIGHTER_POSE: '#7fd4ff', FIGHTER_VISIBILITY: '#8a93a3',
@@ -39,6 +42,77 @@ function EntryRow({ en, logTicks }: { en: TimelineEntry; logTicks: Map<number, s
   );
 }
 
+// ── INSPECTOR DEL PERFIL CINEMATOGRÁFICO (contrato §32) ──
+// Muestra la resolución por herencia de la acción del escenario: familia,
+// shot flow explícito, transiciones, anclas, movimientos, poses, reacción,
+// proyectil, input y fidelidad por dato. Todo lo INFERRED queda etiquetado.
+function CinematicProfilePanel({ action }: { action: BattleActionDescriptor | null }) {
+  const prof: CinematicProfile | null = useMemo(() => {
+    if (!action) return null;
+    const p = resolveActionProfileById(action.id);
+    return resolveCinematicProfile({
+      id: action.id, label: action.label, kind: action.kind ?? 'damage', visual: action.visual,
+      fidelity: action.fidelity,
+      actorBeats: p?.actor?.beats,
+      impact: p?.impact ? { targetPose: p.impact.targetPose, strikePose: undefined } : undefined,
+      projectile: p?.projectile ? { kind: p.projectile.kind ?? 'ray' } : null,
+      rush: p?.rush ? { startFrame: p.rush.startFrame, duration: p.rush.duration } : null,
+    });
+  }, [action]);
+
+  if (!prof) return <div className="dev-empty">Selecciona un escenario con acción para inspeccionar su perfil.</div>;
+  const fidCls = (f: string) => f === 'INFERRED' ? '' : f === 'ROM_ASSET_VERIFIED' ? 'ok' : '';
+  return (
+    <div className="cc-profile">
+      <div className="cc-profile-head">
+        <span className="dev-tag">family: <b>{prof.family}</b></span>
+        <span className="dev-tag">variant: <b>{prof.variant}</b></span>
+        <span className="dev-tag">input: <b>{prof.input}</b></span>
+        <span className={`dev-tag ${fidCls(prof.fidelity)}`}>fidelity global: <b>{prof.fidelity}</b></span>
+      </div>
+      <div className="cc-profile-grid">
+        <div className="cc-profile-block">
+          <h4>SHOT FLOW (explícito)</h4>
+          <div className="cc-shotflow">{prof.shotFlow.map((s, i) => (
+            <span key={s} className="cc-shot">{i > 0 && <em>→</em>}{s}</span>
+          ))}</div>
+        </div>
+        <div className="cc-profile-block">
+          <h4>TRANSICIONES</h4>
+          <div className="cc-kv"><span>entry</span><code>{prof.entryTransition.type} @{prof.entryTransition.startTick} ({prof.entryTransition.durationTicks}t · swap@{prof.entryTransition.swapShotAt})</code><em className={fidCls(prof.entryTransition.fidelity)}>{prof.entryTransition.fidelity}</em></div>
+          <div className="cc-kv"><span>exit</span><code>{prof.exitTransition.type} @{prof.exitTransition.startTick} ({prof.exitTransition.durationTicks}t · swap@{prof.exitTransition.swapShotAt})</code><em className={fidCls(prof.exitTransition.fidelity)}>{prof.exitTransition.fidelity}</em></div>
+        </div>
+        <div className="cc-profile-block">
+          <h4>ANCLAS (relativas)</h4>
+          <div className="cc-kv"><span>actor</span><code>{prof.actorAnchor}</code></div>
+          <div className="cc-kv"><span>target</span><code>{prof.targetAnchor}</code></div>
+          {prof.projectile && <div className="cc-kv"><span>proyectil</span><code>{prof.projectile.origin} → {prof.projectile.target}</code></div>}
+        </div>
+        <div className="cc-profile-block">
+          <h4>MOVIMIENTO (nunca toca posición táctica)</h4>
+          {prof.actorMovement.length === 0 && <span className="cc-muted">— STATIC (sin desplazamiento declarado)</span>}
+          {prof.actorMovement.map((m, i) => (
+            <div key={i} className="cc-kv"><span>{m.type}</span><code>{m.fromAnchor} → {m.toAnchor}</code><em className={fidCls(m.fidelity)}>{m.fidelity}</em></div>
+          ))}
+        </div>
+        <div className="cc-profile-block">
+          <h4>POSES (actor · ROM_ASSET_VERIFIED del manifest)</h4>
+          {prof.actorBeats.length === 0 && <span className="cc-muted">— perfil firma sin beats (usar canon genérico)</span>}
+          {prof.actorBeats.map((b, i) => (
+            <div key={i} className="cc-kv"><span>@{b.atTick}</span><code>{b.pose}</code><em className={fidCls(b.fidelity)}>{b.fidelity}</em></div>
+          ))}
+        </div>
+        <div className="cc-profile-block">
+          <h4>REACCIÓN / FX</h4>
+          <div className="cc-kv"><span>target</span><code>{prof.reactionPose?.pose ?? '—'}</code>{prof.reactionPose && <em className={fidCls(prof.reactionPose.fidelity)}>{prof.reactionPose.fidelity}</em>}</div>
+          <div className="cc-kv"><span>fx</span><code>{prof.fx.length ? prof.fx.join(', ') : '—'}</code></div>
+        </div>
+      </div>
+      <p className="cc-evidence">{prof.evidence} · holds: {prof.holds.length === 0 ? 'ninguno declarado (INFERRED)' : prof.holds.length}</p>
+    </div>
+  );
+}
+
 export function TimelineModule() {
   const [mode, setMode] = useState<'scenarios' | 'live'>('scenarios');
   const [scenarioId, setScenarioId] = useState(PRESENTATION_SCENARIOS[0].id);
@@ -49,7 +123,7 @@ export function TimelineModule() {
     [scenarioId],
   );
 
-  const { entries, events, state } = useMemo(() => {
+  const { entries, events, state, action } = useMemo(() => {
     const run = runPresentationScenario(sc);
     const ctx = {
       playerFormId: 'goku_base',
@@ -66,7 +140,10 @@ export function TimelineModule() {
       logTicks.set(en.tick, arr);
     }
     const facing = resolveFacing('player');
-    return { entries: tl.entries, events: run.log.entries, state: run.state, logTicks, facing };
+    // Acción del escenario (primer ACTION_STARTED) → perfil cinematográfico.
+    const started = run.log.entries.find(en => en.event.type === 'ACTION_STARTED');
+    const action = started && started.event.type === 'ACTION_STARTED' ? started.event.action : null;
+    return { entries: tl.entries, events: run.log.entries, state: run.state, logTicks, facing, action };
   }, [sc]);
 
   return (
@@ -109,6 +186,9 @@ export function TimelineModule() {
         <span><b>Facing:</b> actor {state.tick >= 0 ? 'player→1 · enemy→−1' : ''} (scaleX)</span>
         <span><b>Estado final:</b> tick {state.tick} · HP {state.player.hp}/{state.enemy.hp}</span>
       </div>
+
+      {/* Contrato §32 — inspector del perfil cinematográfico de la acción */}
+      <CinematicProfilePanel action={action} />
 
       <div className="dev-tl-table">
         <div className="dev-tl-row dev-tl-head">
