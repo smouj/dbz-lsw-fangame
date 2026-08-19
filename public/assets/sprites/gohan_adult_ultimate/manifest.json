@@ -536,32 +536,32 @@
     "loop": false,
     "frames": [
       {
-        "name": "gohan_ultimate_effect_00",
-        "file": "gohan_ultimate_effect_00.png",
+        "name": "gohan_adult_ultimate_effect_00",
+        "file": "gohan_adult_ultimate_effect_00.png",
         "w": 12,
         "h": 16
       },
       {
-        "name": "gohan_ultimate_effect_01",
-        "file": "gohan_ultimate_effect_01.png",
+        "name": "gohan_adult_ultimate_effect_01",
+        "file": "gohan_adult_ultimate_effect_01.png",
         "w": 13,
         "h": 15
       },
       {
-        "name": "gohan_ultimate_effect_02",
-        "file": "gohan_ultimate_effect_02.png",
+        "name": "gohan_adult_ultimate_effect_02",
+        "file": "gohan_adult_ultimate_effect_02.png",
         "w": 24,
         "h": 16
       },
       {
-        "name": "gohan_ultimate_effect_03",
-        "file": "gohan_ultimate_effect_03.png",
+        "name": "gohan_adult_ultimate_effect_03",
+        "file": "gohan_adult_ultimate_effect_03.png",
         "w": 24,
         "h": 16
       },
       {
-        "name": "gohan_ultimate_effect_04",
-        "file": "gohan_ultimate_effect_04.png",
+        "name": "gohan_adult_ultimate_effect_04",
+        "file": "gohan_adult_ultimate_effect_04.png",
         "w": 16,
         "h": 12
       }

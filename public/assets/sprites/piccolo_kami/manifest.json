@@ -5,8 +5,8 @@
     "loop": true,
     "frames": [
       {
-        "name": "piccolo_base_idle_00",
-        "file": "piccolo_base_idle_00.png",
+        "name": "piccolo_kami_idle_00",
+        "file": "piccolo_kami_idle_00.png",
         "w": 29,
         "h": 39
       }
@@ -18,14 +18,14 @@
     "loop": true,
     "frames": [
       {
-        "name": "piccolo_base_move_front_00",
-        "file": "piccolo_base_move_front_00.png",
+        "name": "piccolo_kami_move_front_00",
+        "file": "piccolo_kami_move_front_00.png",
         "w": 32,
         "h": 37
       },
       {
-        "name": "piccolo_base_move_front_01",
-        "file": "piccolo_base_move_front_01.png",
+        "name": "piccolo_kami_move_front_01",
+        "file": "piccolo_kami_move_front_01.png",
         "w": 28,
         "h": 40
       }
@@ -37,14 +37,14 @@
     "loop": true,
     "frames": [
       {
-        "name": "piccolo_base_move_back_00",
-        "file": "piccolo_base_move_back_00.png",
+        "name": "piccolo_kami_move_back_00",
+        "file": "piccolo_kami_move_back_00.png",
         "w": 28,
         "h": 40
       },
       {
-        "name": "piccolo_base_move_back_01",
-        "file": "piccolo_base_move_back_01.png",
+        "name": "piccolo_kami_move_back_01",
+        "file": "piccolo_kami_move_back_01.png",
         "w": 32,
         "h": 37
       }
@@ -56,20 +56,20 @@
     "loop": false,
     "frames": [
       {
-        "name": "piccolo_base_guard_00",
-        "file": "piccolo_base_guard_00.png",
+        "name": "piccolo_kami_guard_00",
+        "file": "piccolo_kami_guard_00.png",
         "w": 29,
         "h": 39
       },
       {
-        "name": "piccolo_base_guard_01",
-        "file": "piccolo_base_guard_01.png",
+        "name": "piccolo_kami_guard_01",
+        "file": "piccolo_kami_guard_01.png",
         "w": 30,
         "h": 40
       },
       {
-        "name": "piccolo_base_guard_02",
-        "file": "piccolo_base_guard_02.png",
+        "name": "piccolo_kami_guard_02",
+        "file": "piccolo_kami_guard_02.png",
         "w": 34,
         "h": 38
       }
@@ -81,62 +81,62 @@
     "loop": false,
     "frames": [
       {
-        "name": "piccolo_base_attack_fwd_00",
-        "file": "piccolo_base_attack_fwd_00.png",
+        "name": "piccolo_kami_attack_fwd_00",
+        "file": "piccolo_kami_attack_fwd_00.png",
         "w": 32,
         "h": 37
       },
       {
-        "name": "piccolo_base_attack_fwd_01",
-        "file": "piccolo_base_attack_fwd_01.png",
+        "name": "piccolo_kami_attack_fwd_01",
+        "file": "piccolo_kami_attack_fwd_01.png",
         "w": 31,
         "h": 37
       },
       {
-        "name": "piccolo_base_attack_fwd_02",
-        "file": "piccolo_base_attack_fwd_02.png",
+        "name": "piccolo_kami_attack_fwd_02",
+        "file": "piccolo_kami_attack_fwd_02.png",
         "w": 29,
         "h": 40
       },
       {
-        "name": "piccolo_base_attack_fwd_03",
-        "file": "piccolo_base_attack_fwd_03.png",
+        "name": "piccolo_kami_attack_fwd_03",
+        "file": "piccolo_kami_attack_fwd_03.png",
         "w": 29,
         "h": 38
       },
       {
-        "name": "piccolo_base_attack_fwd_04",
-        "file": "piccolo_base_attack_fwd_04.png",
+        "name": "piccolo_kami_attack_fwd_04",
+        "file": "piccolo_kami_attack_fwd_04.png",
         "w": 37,
         "h": 36
       },
       {
-        "name": "piccolo_base_attack_fwd_05",
-        "file": "piccolo_base_attack_fwd_05.png",
+        "name": "piccolo_kami_attack_fwd_05",
+        "file": "piccolo_kami_attack_fwd_05.png",
         "w": 36,
         "h": 36
       },
       {
-        "name": "piccolo_base_attack_fwd_06",
-        "file": "piccolo_base_attack_fwd_06.png",
+        "name": "piccolo_kami_attack_fwd_06",
+        "file": "piccolo_kami_attack_fwd_06.png",
         "w": 23,
         "h": 41
       },
       {
-        "name": "piccolo_base_attack_fwd_07",
-        "file": "piccolo_base_attack_fwd_07.png",
+        "name": "piccolo_kami_attack_fwd_07",
+        "file": "piccolo_kami_attack_fwd_07.png",
         "w": 37,
         "h": 42
       },
       {
-        "name": "piccolo_base_attack_fwd_08",
-        "file": "piccolo_base_attack_fwd_08.png",
+        "name": "piccolo_kami_attack_fwd_08",
+        "file": "piccolo_kami_attack_fwd_08.png",
         "w": 32,
         "h": 38
       },
       {
-        "name": "piccolo_base_attack_fwd_09",
-        "file": "piccolo_base_attack_fwd_09.png",
+        "name": "piccolo_kami_attack_fwd_09",
+        "file": "piccolo_kami_attack_fwd_09.png",
         "w": 32,
         "h": 42
       }
@@ -148,32 +148,32 @@
     "loop": false,
     "frames": [
       {
-        "name": "piccolo_base_attack_ud_00",
-        "file": "piccolo_base_attack_ud_00.png",
+        "name": "piccolo_kami_attack_ud_00",
+        "file": "piccolo_kami_attack_ud_00.png",
         "w": 33,
         "h": 41
       },
       {
-        "name": "piccolo_base_attack_ud_01",
-        "file": "piccolo_base_attack_ud_01.png",
+        "name": "piccolo_kami_attack_ud_01",
+        "file": "piccolo_kami_attack_ud_01.png",
         "w": 29,
         "h": 38
       },
       {
-        "name": "piccolo_base_attack_ud_02",
-        "file": "piccolo_base_attack_ud_02.png",
+        "name": "piccolo_kami_attack_ud_02",
+        "file": "piccolo_kami_attack_ud_02.png",
         "w": 23,
         "h": 40
       },
       {
-        "name": "piccolo_base_attack_ud_03",
-        "file": "piccolo_base_attack_ud_03.png",
+        "name": "piccolo_kami_attack_ud_03",
+        "file": "piccolo_kami_attack_ud_03.png",
         "w": 33,
         "h": 27
       },
       {
-        "name": "piccolo_base_attack_ud_04",
-        "file": "piccolo_base_attack_ud_04.png",
+        "name": "piccolo_kami_attack_ud_04",
+        "file": "piccolo_kami_attack_ud_04.png",
         "w": 21,
         "h": 40
       }
@@ -185,32 +185,32 @@
     "loop": false,
     "frames": [
       {
-        "name": "piccolo_base_hurt_00",
-        "file": "piccolo_base_hurt_00.png",
+        "name": "piccolo_kami_hurt_00",
+        "file": "piccolo_kami_hurt_00.png",
         "w": 28,
         "h": 39
       },
       {
-        "name": "piccolo_base_hurt_01",
-        "file": "piccolo_base_hurt_01.png",
+        "name": "piccolo_kami_hurt_01",
+        "file": "piccolo_kami_hurt_01.png",
         "w": 27,
         "h": 39
       },
       {
-        "name": "piccolo_base_hurt_02",
-        "file": "piccolo_base_hurt_02.png",
+        "name": "piccolo_kami_hurt_02",
+        "file": "piccolo_kami_hurt_02.png",
         "w": 31,
         "h": 32
       },
       {
-        "name": "piccolo_base_hurt_03",
-        "file": "piccolo_base_hurt_03.png",
+        "name": "piccolo_kami_hurt_03",
+        "file": "piccolo_kami_hurt_03.png",
         "w": 25,
         "h": 45
       },
       {
-        "name": "piccolo_base_hurt_04",
-        "file": "piccolo_base_hurt_04.png",
+        "name": "piccolo_kami_hurt_04",
+        "file": "piccolo_kami_hurt_04.png",
         "w": 25,
         "h": 40
       }
@@ -222,56 +222,56 @@
     "loop": false,
     "frames": [
       {
-        "name": "piccolo_base_beam_charge_00",
-        "file": "piccolo_base_beam_charge_00.png",
+        "name": "piccolo_kami_beam_charge_00",
+        "file": "piccolo_kami_beam_charge_00.png",
         "w": 32,
         "h": 37
       },
       {
-        "name": "piccolo_base_beam_charge_01",
-        "file": "piccolo_base_beam_charge_01.png",
+        "name": "piccolo_kami_beam_charge_01",
+        "file": "piccolo_kami_beam_charge_01.png",
         "w": 32,
         "h": 37
       },
       {
-        "name": "piccolo_base_beam_charge_02",
-        "file": "piccolo_base_beam_charge_02.png",
+        "name": "piccolo_kami_beam_charge_02",
+        "file": "piccolo_kami_beam_charge_02.png",
         "w": 28,
         "h": 37
       },
       {
-        "name": "piccolo_base_beam_charge_03",
-        "file": "piccolo_base_beam_charge_03.png",
+        "name": "piccolo_kami_beam_charge_03",
+        "file": "piccolo_kami_beam_charge_03.png",
         "w": 40,
         "h": 37
       },
       {
-        "name": "piccolo_base_beam_charge_04",
-        "file": "piccolo_base_beam_charge_04.png",
+        "name": "piccolo_kami_beam_charge_04",
+        "file": "piccolo_kami_beam_charge_04.png",
         "w": 24,
         "h": 37
       },
       {
-        "name": "piccolo_base_beam_charge_05",
-        "file": "piccolo_base_beam_charge_05.png",
+        "name": "piccolo_kami_beam_charge_05",
+        "file": "piccolo_kami_beam_charge_05.png",
         "w": 30,
         "h": 38
       },
       {
-        "name": "piccolo_base_beam_charge_06",
-        "file": "piccolo_base_beam_charge_06.png",
+        "name": "piccolo_kami_beam_charge_06",
+        "file": "piccolo_kami_beam_charge_06.png",
         "w": 20,
         "h": 46
       },
       {
-        "name": "piccolo_base_beam_charge_07",
-        "file": "piccolo_base_beam_charge_07.png",
+        "name": "piccolo_kami_beam_charge_07",
+        "file": "piccolo_kami_beam_charge_07.png",
         "w": 31,
         "h": 37
       },
       {
-        "name": "piccolo_base_beam_charge_08",
-        "file": "piccolo_base_beam_charge_08.png",
+        "name": "piccolo_kami_beam_charge_08",
+        "file": "piccolo_kami_beam_charge_08.png",
         "w": 29,
         "h": 39
       }
@@ -283,26 +283,26 @@
     "loop": false,
     "frames": [
       {
-        "name": "piccolo_base_idle_00",
-        "file": "piccolo_base_idle_00.png",
+        "name": "piccolo_kami_idle_00",
+        "file": "piccolo_kami_idle_00.png",
         "w": 29,
         "h": 39
       },
       {
-        "name": "piccolo_base_attack_fwd_00",
-        "file": "piccolo_base_attack_fwd_00.png",
+        "name": "piccolo_kami_attack_fwd_00",
+        "file": "piccolo_kami_attack_fwd_00.png",
         "w": 32,
         "h": 37
       },
       {
-        "name": "piccolo_base_attack_fwd_01",
-        "file": "piccolo_base_attack_fwd_01.png",
+        "name": "piccolo_kami_attack_fwd_01",
+        "file": "piccolo_kami_attack_fwd_01.png",
         "w": 31,
         "h": 37
       },
       {
-        "name": "piccolo_base_attack_fwd_02",
-        "file": "piccolo_base_attack_fwd_02.png",
+        "name": "piccolo_kami_attack_fwd_02",
+        "file": "piccolo_kami_attack_fwd_02.png",
         "w": 29,
         "h": 40
       }
@@ -314,32 +314,32 @@
     "loop": false,
     "frames": [
       {
-        "name": "piccolo_base_idle_00",
-        "file": "piccolo_base_idle_00.png",
+        "name": "piccolo_kami_idle_00",
+        "file": "piccolo_kami_idle_00.png",
         "w": 29,
         "h": 39
       },
       {
-        "name": "piccolo_base_attack_fwd_03",
-        "file": "piccolo_base_attack_fwd_03.png",
+        "name": "piccolo_kami_attack_fwd_03",
+        "file": "piccolo_kami_attack_fwd_03.png",
         "w": 29,
         "h": 38
       },
       {
-        "name": "piccolo_base_attack_fwd_04",
-        "file": "piccolo_base_attack_fwd_04.png",
+        "name": "piccolo_kami_attack_fwd_04",
+        "file": "piccolo_kami_attack_fwd_04.png",
         "w": 37,
         "h": 36
       },
       {
-        "name": "piccolo_base_attack_fwd_05",
-        "file": "piccolo_base_attack_fwd_05.png",
+        "name": "piccolo_kami_attack_fwd_05",
+        "file": "piccolo_kami_attack_fwd_05.png",
         "w": 36,
         "h": 36
       },
       {
-        "name": "piccolo_base_attack_fwd_06",
-        "file": "piccolo_base_attack_fwd_06.png",
+        "name": "piccolo_kami_attack_fwd_06",
+        "file": "piccolo_kami_attack_fwd_06.png",
         "w": 23,
         "h": 41
       }
@@ -351,14 +351,14 @@
     "loop": false,
     "frames": [
       {
-        "name": "piccolo_base_kick_right_00",
-        "file": "piccolo_base_kick_right_00.png",
+        "name": "piccolo_kami_kick_right_00",
+        "file": "piccolo_kami_kick_right_00.png",
         "w": 36,
         "h": 36
       },
       {
-        "name": "piccolo_base_kick_right_01",
-        "file": "piccolo_base_kick_right_01.png",
+        "name": "piccolo_kami_kick_right_01",
+        "file": "piccolo_kami_kick_right_01.png",
         "w": 37,
         "h": 36
       }
@@ -370,8 +370,8 @@
     "loop": false,
     "frames": [
       {
-        "name": "piccolo_base_knockback_back_00",
-        "file": "piccolo_base_knockback_back_00.png",
+        "name": "piccolo_kami_knockback_back_00",
+        "file": "piccolo_kami_knockback_back_00.png",
         "w": 29,
         "h": 38
       }
@@ -383,8 +383,8 @@
     "loop": false,
     "frames": [
       {
-        "name": "piccolo_base_knockback_up_00",
-        "file": "piccolo_base_knockback_up_00.png",
+        "name": "piccolo_kami_knockback_up_00",
+        "file": "piccolo_kami_knockback_up_00.png",
         "w": 29,
         "h": 40
       }
@@ -396,8 +396,8 @@
     "loop": false,
     "frames": [
       {
-        "name": "piccolo_base_knockback_down_00",
-        "file": "piccolo_base_knockback_down_00.png",
+        "name": "piccolo_kami_knockback_down_00",
+        "file": "piccolo_kami_knockback_down_00.png",
         "w": 33,
         "h": 27
       }
@@ -409,20 +409,20 @@
     "loop": false,
     "frames": [
       {
-        "name": "piccolo_base_guard_00",
-        "file": "piccolo_base_guard_00.png",
+        "name": "piccolo_kami_guard_00",
+        "file": "piccolo_kami_guard_00.png",
         "w": 29,
         "h": 39
       },
       {
-        "name": "piccolo_base_guard_01",
-        "file": "piccolo_base_guard_01.png",
+        "name": "piccolo_kami_guard_01",
+        "file": "piccolo_kami_guard_01.png",
         "w": 30,
         "h": 40
       },
       {
-        "name": "piccolo_base_guard_02",
-        "file": "piccolo_base_guard_02.png",
+        "name": "piccolo_kami_guard_02",
+        "file": "piccolo_kami_guard_02.png",
         "w": 34,
         "h": 38
       }
@@ -434,14 +434,14 @@
     "loop": false,
     "frames": [
       {
-        "name": "piccolo_base_evade_00",
-        "file": "piccolo_base_evade_00.png",
+        "name": "piccolo_kami_evade_00",
+        "file": "piccolo_kami_evade_00.png",
         "w": 23,
         "h": 41
       },
       {
-        "name": "piccolo_base_evade_01",
-        "file": "piccolo_base_evade_01.png",
+        "name": "piccolo_kami_evade_01",
+        "file": "piccolo_kami_evade_01.png",
         "w": 40,
         "h": 31
       }
@@ -453,8 +453,8 @@
     "loop": true,
     "frames": [
       {
-        "name": "piccolo_base_gather_power_00",
-        "file": "piccolo_base_gather_power_00.png",
+        "name": "piccolo_kami_gather_power_00",
+        "file": "piccolo_kami_gather_power_00.png",
         "w": 29,
         "h": 43
       }
@@ -466,8 +466,8 @@
     "loop": true,
     "frames": [
       {
-        "name": "piccolo_base_power_up_00",
-        "file": "piccolo_base_power_up_00.png",
+        "name": "piccolo_kami_power_up_00",
+        "file": "piccolo_kami_power_up_00.png",
         "w": 29,
         "h": 43
       }
@@ -479,20 +479,20 @@
     "loop": true,
     "frames": [
       {
-        "name": "piccolo_base_aura_power_00",
-        "file": "piccolo_base_aura_power_00.png",
+        "name": "piccolo_kami_aura_power_00",
+        "file": "piccolo_kami_aura_power_00.png",
         "w": 64,
         "h": 56
       },
       {
-        "name": "piccolo_base_aura_power_01",
-        "file": "piccolo_base_aura_power_01.png",
+        "name": "piccolo_kami_aura_power_01",
+        "file": "piccolo_kami_aura_power_01.png",
         "w": 64,
         "h": 56
       },
       {
-        "name": "piccolo_base_aura_power_02",
-        "file": "piccolo_base_aura_power_02.png",
+        "name": "piccolo_kami_aura_power_02",
+        "file": "piccolo_kami_aura_power_02.png",
         "w": 64,
         "h": 56
       }
@@ -504,20 +504,20 @@
     "loop": true,
     "frames": [
       {
-        "name": "piccolo_base_aura_support_00",
-        "file": "piccolo_base_aura_support_00.png",
+        "name": "piccolo_kami_aura_support_00",
+        "file": "piccolo_kami_aura_support_00.png",
         "w": 64,
         "h": 56
       },
       {
-        "name": "piccolo_base_aura_support_01",
-        "file": "piccolo_base_aura_support_01.png",
+        "name": "piccolo_kami_aura_support_01",
+        "file": "piccolo_kami_aura_support_01.png",
         "w": 64,
         "h": 56
       },
       {
-        "name": "piccolo_base_aura_support_02",
-        "file": "piccolo_base_aura_support_02.png",
+        "name": "piccolo_kami_aura_support_02",
+        "file": "piccolo_kami_aura_support_02.png",
         "w": 64,
         "h": 56
       }
@@ -529,26 +529,26 @@
     "loop": false,
     "frames": [
       {
-        "name": "piccolo_base_effect_01",
-        "file": "piccolo_base_effect_01.png",
+        "name": "piccolo_kami_effect_01",
+        "file": "piccolo_kami_effect_01.png",
         "w": 12,
         "h": 15
       },
       {
-        "name": "piccolo_base_effect_02",
-        "file": "piccolo_base_effect_02.png",
+        "name": "piccolo_kami_effect_02",
+        "file": "piccolo_kami_effect_02.png",
         "w": 24,
         "h": 16
       },
       {
-        "name": "piccolo_base_effect_03",
-        "file": "piccolo_base_effect_03.png",
+        "name": "piccolo_kami_effect_03",
+        "file": "piccolo_kami_effect_03.png",
         "w": 24,
         "h": 16
       },
       {
-        "name": "piccolo_base_effect_04",
-        "file": "piccolo_base_effect_04.png",
+        "name": "piccolo_kami_effect_04",
+        "file": "piccolo_kami_effect_04.png",
         "w": 12,
         "h": 16
       }

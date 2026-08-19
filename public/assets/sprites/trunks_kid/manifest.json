@@ -493,8 +493,8 @@
     "loop": false,
     "frames": [
       {
-        "name": "trunks_base_effect_00",
-        "file": "trunks_base_effect_00.png",
+        "name": "trunks_kid_effect_00",
+        "file": "trunks_kid_effect_00.png",
         "w": 16,
         "h": 12
       }

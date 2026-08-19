@@ -524,26 +524,26 @@
     "loop": false,
     "frames": [
       {
-        "name": "frieza_base_effect_01",
-        "file": "frieza_base_effect_01.png",
+        "name": "frieza_final_effect_01",
+        "file": "frieza_final_effect_01.png",
         "w": 14,
         "h": 13
       },
       {
-        "name": "frieza_base_effect_02",
-        "file": "frieza_base_effect_02.png",
+        "name": "frieza_final_effect_02",
+        "file": "frieza_final_effect_02.png",
         "w": 24,
         "h": 16
       },
       {
-        "name": "frieza_base_effect_03",
-        "file": "frieza_base_effect_03.png",
+        "name": "frieza_final_effect_03",
+        "file": "frieza_final_effect_03.png",
         "w": 16,
         "h": 12
       },
       {
-        "name": "frieza_base_effect_04",
-        "file": "frieza_base_effect_04.png",
+        "name": "frieza_final_effect_04",
+        "file": "frieza_final_effect_04.png",
         "w": 39,
         "h": 12
       }

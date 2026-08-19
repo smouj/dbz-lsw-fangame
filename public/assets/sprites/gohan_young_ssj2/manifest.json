@@ -500,32 +500,32 @@
     "loop": false,
     "frames": [
       {
-        "name": "young_gohan_super_saiyan_2_effect_00",
-        "file": "young_gohan_super_saiyan_2_effect_00.png",
+        "name": "gohan_young_ssj2_effect_00",
+        "file": "gohan_young_ssj2_effect_00.png",
         "w": 13,
         "h": 16
       },
       {
-        "name": "young_gohan_super_saiyan_2_effect_01",
-        "file": "young_gohan_super_saiyan_2_effect_01.png",
+        "name": "gohan_young_ssj2_effect_01",
+        "file": "gohan_young_ssj2_effect_01.png",
         "w": 13,
         "h": 16
       },
       {
-        "name": "young_gohan_super_saiyan_2_effect_02",
-        "file": "young_gohan_super_saiyan_2_effect_02.png",
+        "name": "gohan_young_ssj2_effect_02",
+        "file": "gohan_young_ssj2_effect_02.png",
         "w": 24,
         "h": 16
       },
       {
-        "name": "young_gohan_super_saiyan_2_effect_03",
-        "file": "young_gohan_super_saiyan_2_effect_03.png",
+        "name": "gohan_young_ssj2_effect_03",
+        "file": "gohan_young_ssj2_effect_03.png",
         "w": 24,
         "h": 16
       },
       {
-        "name": "young_gohan_super_saiyan_2_effect_04",
-        "file": "young_gohan_super_saiyan_2_effect_04.png",
+        "name": "gohan_young_ssj2_effect_04",
+        "file": "gohan_young_ssj2_effect_04.png",
         "w": 16,
         "h": 12
       }

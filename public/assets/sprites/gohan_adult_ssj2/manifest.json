@@ -5,8 +5,8 @@
     "loop": true,
     "frames": [
       {
-        "name": "gohan_adult_ssj_idle_00",
-        "file": "gohan_adult_ssj_idle_00.png",
+        "name": "gohan_adult_ssj2_idle_00",
+        "file": "gohan_adult_ssj2_idle_00.png",
         "w": 27,
         "h": 46
       }
@@ -18,14 +18,14 @@
     "loop": true,
     "frames": [
       {
-        "name": "gohan_adult_ssj_move_front_00",
-        "file": "gohan_adult_ssj_move_front_00.png",
+        "name": "gohan_adult_ssj2_move_front_00",
+        "file": "gohan_adult_ssj2_move_front_00.png",
         "w": 32,
         "h": 43
       },
       {
-        "name": "gohan_adult_ssj_move_front_01",
-        "file": "gohan_adult_ssj_move_front_01.png",
+        "name": "gohan_adult_ssj2_move_front_01",
+        "file": "gohan_adult_ssj2_move_front_01.png",
         "w": 28,
         "h": 46
       }
@@ -37,14 +37,14 @@
     "loop": true,
     "frames": [
       {
-        "name": "gohan_adult_ssj_move_back_00",
-        "file": "gohan_adult_ssj_move_back_00.png",
+        "name": "gohan_adult_ssj2_move_back_00",
+        "file": "gohan_adult_ssj2_move_back_00.png",
         "w": 28,
         "h": 46
       },
       {
-        "name": "gohan_adult_ssj_move_back_01",
-        "file": "gohan_adult_ssj_move_back_01.png",
+        "name": "gohan_adult_ssj2_move_back_01",
+        "file": "gohan_adult_ssj2_move_back_01.png",
         "w": 32,
         "h": 43
       }
@@ -56,20 +56,20 @@
     "loop": false,
     "frames": [
       {
-        "name": "gohan_adult_ssj_guard_00",
-        "file": "gohan_adult_ssj_guard_00.png",
+        "name": "gohan_adult_ssj2_guard_00",
+        "file": "gohan_adult_ssj2_guard_00.png",
         "w": 27,
         "h": 46
       },
       {
-        "name": "gohan_adult_ssj_guard_01",
-        "file": "gohan_adult_ssj_guard_01.png",
+        "name": "gohan_adult_ssj2_guard_01",
+        "file": "gohan_adult_ssj2_guard_01.png",
         "w": 30,
         "h": 46
       },
       {
-        "name": "gohan_adult_ssj_guard_02",
-        "file": "gohan_adult_ssj_guard_02.png",
+        "name": "gohan_adult_ssj2_guard_02",
+        "file": "gohan_adult_ssj2_guard_02.png",
         "w": 34,
         "h": 44
       }
@@ -81,44 +81,44 @@
     "loop": false,
     "frames": [
       {
-        "name": "gohan_adult_ssj_attack_fwd_00",
-        "file": "gohan_adult_ssj_attack_fwd_00.png",
+        "name": "gohan_adult_ssj2_attack_fwd_00",
+        "file": "gohan_adult_ssj2_attack_fwd_00.png",
         "w": 32,
         "h": 43
       },
       {
-        "name": "gohan_adult_ssj_attack_fwd_01",
-        "file": "gohan_adult_ssj_attack_fwd_01.png",
+        "name": "gohan_adult_ssj2_attack_fwd_01",
+        "file": "gohan_adult_ssj2_attack_fwd_01.png",
         "w": 31,
         "h": 43
       },
       {
-        "name": "gohan_adult_ssj_attack_fwd_02",
-        "file": "gohan_adult_ssj_attack_fwd_02.png",
+        "name": "gohan_adult_ssj2_attack_fwd_02",
+        "file": "gohan_adult_ssj2_attack_fwd_02.png",
         "w": 29,
         "h": 46
       },
       {
-        "name": "gohan_adult_ssj_attack_fwd_03",
-        "file": "gohan_adult_ssj_attack_fwd_03.png",
+        "name": "gohan_adult_ssj2_attack_fwd_03",
+        "file": "gohan_adult_ssj2_attack_fwd_03.png",
         "w": 37,
         "h": 41
       },
       {
-        "name": "gohan_adult_ssj_attack_fwd_04",
-        "file": "gohan_adult_ssj_attack_fwd_04.png",
+        "name": "gohan_adult_ssj2_attack_fwd_04",
+        "file": "gohan_adult_ssj2_attack_fwd_04.png",
         "w": 36,
         "h": 41
       },
       {
-        "name": "gohan_adult_ssj_attack_fwd_05",
-        "file": "gohan_adult_ssj_attack_fwd_05.png",
+        "name": "gohan_adult_ssj2_attack_fwd_05",
+        "file": "gohan_adult_ssj2_attack_fwd_05.png",
         "w": 23,
         "h": 47
       },
       {
-        "name": "gohan_adult_ssj_attack_fwd_06",
-        "file": "gohan_adult_ssj_attack_fwd_06.png",
+        "name": "gohan_adult_ssj2_attack_fwd_06",
+        "file": "gohan_adult_ssj2_attack_fwd_06.png",
         "w": 37,
         "h": 47
       }
@@ -130,26 +130,26 @@
     "loop": false,
     "frames": [
       {
-        "name": "gohan_adult_ssj_attack_ud_00",
-        "file": "gohan_adult_ssj_attack_ud_00.png",
+        "name": "gohan_adult_ssj2_attack_ud_00",
+        "file": "gohan_adult_ssj2_attack_ud_00.png",
         "w": 36,
         "h": 41
       },
       {
-        "name": "gohan_adult_ssj_attack_ud_01",
-        "file": "gohan_adult_ssj_attack_ud_01.png",
+        "name": "gohan_adult_ssj2_attack_ud_01",
+        "file": "gohan_adult_ssj2_attack_ud_01.png",
         "w": 29,
         "h": 44
       },
       {
-        "name": "gohan_adult_ssj_attack_ud_02",
-        "file": "gohan_adult_ssj_attack_ud_02.png",
+        "name": "gohan_adult_ssj2_attack_ud_02",
+        "file": "gohan_adult_ssj2_attack_ud_02.png",
         "w": 23,
         "h": 46
       },
       {
-        "name": "gohan_adult_ssj_attack_ud_03",
-        "file": "gohan_adult_ssj_attack_ud_03.png",
+        "name": "gohan_adult_ssj2_attack_ud_03",
+        "file": "gohan_adult_ssj2_attack_ud_03.png",
         "w": 32,
         "h": 32
       }
@@ -161,32 +161,32 @@
     "loop": false,
     "frames": [
       {
-        "name": "gohan_adult_ssj_hurt_00",
-        "file": "gohan_adult_ssj_hurt_00.png",
+        "name": "gohan_adult_ssj2_hurt_00",
+        "file": "gohan_adult_ssj2_hurt_00.png",
         "w": 28,
         "h": 45
       },
       {
-        "name": "gohan_adult_ssj_hurt_01",
-        "file": "gohan_adult_ssj_hurt_01.png",
+        "name": "gohan_adult_ssj2_hurt_01",
+        "file": "gohan_adult_ssj2_hurt_01.png",
         "w": 29,
         "h": 42
       },
       {
-        "name": "gohan_adult_ssj_hurt_02",
-        "file": "gohan_adult_ssj_hurt_02.png",
+        "name": "gohan_adult_ssj2_hurt_02",
+        "file": "gohan_adult_ssj2_hurt_02.png",
         "w": 32,
         "h": 36
       },
       {
-        "name": "gohan_adult_ssj_hurt_03",
-        "file": "gohan_adult_ssj_hurt_03.png",
+        "name": "gohan_adult_ssj2_hurt_03",
+        "file": "gohan_adult_ssj2_hurt_03.png",
         "w": 25,
         "h": 48
       },
       {
-        "name": "gohan_adult_ssj_hurt_04",
-        "file": "gohan_adult_ssj_hurt_04.png",
+        "name": "gohan_adult_ssj2_hurt_04",
+        "file": "gohan_adult_ssj2_hurt_04.png",
         "w": 24,
         "h": 46
       }
@@ -198,38 +198,38 @@
     "loop": false,
     "frames": [
       {
-        "name": "gohan_adult_ssj_beam_charge_00",
-        "file": "gohan_adult_ssj_beam_charge_00.png",
+        "name": "gohan_adult_ssj2_beam_charge_00",
+        "file": "gohan_adult_ssj2_beam_charge_00.png",
         "w": 32,
         "h": 43
       },
       {
-        "name": "gohan_adult_ssj_beam_charge_01",
-        "file": "gohan_adult_ssj_beam_charge_01.png",
+        "name": "gohan_adult_ssj2_beam_charge_01",
+        "file": "gohan_adult_ssj2_beam_charge_01.png",
         "w": 32,
         "h": 43
       },
       {
-        "name": "gohan_adult_ssj_beam_charge_02",
-        "file": "gohan_adult_ssj_beam_charge_02.png",
+        "name": "gohan_adult_ssj2_beam_charge_02",
+        "file": "gohan_adult_ssj2_beam_charge_02.png",
         "w": 26,
         "h": 43
       },
       {
-        "name": "gohan_adult_ssj_beam_charge_03",
-        "file": "gohan_adult_ssj_beam_charge_03.png",
+        "name": "gohan_adult_ssj2_beam_charge_03",
+        "file": "gohan_adult_ssj2_beam_charge_03.png",
         "w": 31,
         "h": 44
       },
       {
-        "name": "gohan_adult_ssj_beam_charge_04",
-        "file": "gohan_adult_ssj_beam_charge_04.png",
+        "name": "gohan_adult_ssj2_beam_charge_04",
+        "file": "gohan_adult_ssj2_beam_charge_04.png",
         "w": 23,
         "h": 48
       },
       {
-        "name": "gohan_adult_ssj_beam_charge_05",
-        "file": "gohan_adult_ssj_beam_charge_05.png",
+        "name": "gohan_adult_ssj2_beam_charge_05",
+        "file": "gohan_adult_ssj2_beam_charge_05.png",
         "w": 31,
         "h": 43
       }
@@ -241,26 +241,26 @@
     "loop": false,
     "frames": [
       {
-        "name": "gohan_adult_ssj_idle_00",
-        "file": "gohan_adult_ssj_idle_00.png",
+        "name": "gohan_adult_ssj2_idle_00",
+        "file": "gohan_adult_ssj2_idle_00.png",
         "w": 27,
         "h": 46
       },
       {
-        "name": "gohan_adult_ssj_attack_fwd_00",
-        "file": "gohan_adult_ssj_attack_fwd_00.png",
+        "name": "gohan_adult_ssj2_attack_fwd_00",
+        "file": "gohan_adult_ssj2_attack_fwd_00.png",
         "w": 32,
         "h": 43
       },
       {
-        "name": "gohan_adult_ssj_attack_fwd_01",
-        "file": "gohan_adult_ssj_attack_fwd_01.png",
+        "name": "gohan_adult_ssj2_attack_fwd_01",
+        "file": "gohan_adult_ssj2_attack_fwd_01.png",
         "w": 31,
         "h": 43
       },
       {
-        "name": "gohan_adult_ssj_attack_fwd_02",
-        "file": "gohan_adult_ssj_attack_fwd_02.png",
+        "name": "gohan_adult_ssj2_attack_fwd_02",
+        "file": "gohan_adult_ssj2_attack_fwd_02.png",
         "w": 29,
         "h": 46
       }
@@ -272,32 +272,32 @@
     "loop": false,
     "frames": [
       {
-        "name": "gohan_adult_ssj_idle_00",
-        "file": "gohan_adult_ssj_idle_00.png",
+        "name": "gohan_adult_ssj2_idle_00",
+        "file": "gohan_adult_ssj2_idle_00.png",
         "w": 27,
         "h": 46
       },
       {
-        "name": "gohan_adult_ssj_attack_fwd_03",
-        "file": "gohan_adult_ssj_attack_fwd_03.png",
+        "name": "gohan_adult_ssj2_attack_fwd_03",
+        "file": "gohan_adult_ssj2_attack_fwd_03.png",
         "w": 37,
         "h": 41
       },
       {
-        "name": "gohan_adult_ssj_attack_fwd_04",
-        "file": "gohan_adult_ssj_attack_fwd_04.png",
+        "name": "gohan_adult_ssj2_attack_fwd_04",
+        "file": "gohan_adult_ssj2_attack_fwd_04.png",
         "w": 36,
         "h": 41
       },
       {
-        "name": "gohan_adult_ssj_attack_fwd_05",
-        "file": "gohan_adult_ssj_attack_fwd_05.png",
+        "name": "gohan_adult_ssj2_attack_fwd_05",
+        "file": "gohan_adult_ssj2_attack_fwd_05.png",
         "w": 23,
         "h": 47
       },
       {
-        "name": "gohan_adult_ssj_attack_fwd_06",
-        "file": "gohan_adult_ssj_attack_fwd_06.png",
+        "name": "gohan_adult_ssj2_attack_fwd_06",
+        "file": "gohan_adult_ssj2_attack_fwd_06.png",
         "w": 37,
         "h": 47
       }
@@ -309,14 +309,14 @@
     "loop": false,
     "frames": [
       {
-        "name": "gohan_adult_ssj_kick_right_00",
-        "file": "gohan_adult_ssj_kick_right_00.png",
+        "name": "gohan_adult_ssj2_kick_right_00",
+        "file": "gohan_adult_ssj2_kick_right_00.png",
         "w": 32,
         "h": 43
       },
       {
-        "name": "gohan_adult_ssj_kick_right_01",
-        "file": "gohan_adult_ssj_kick_right_01.png",
+        "name": "gohan_adult_ssj2_kick_right_01",
+        "file": "gohan_adult_ssj2_kick_right_01.png",
         "w": 36,
         "h": 41
       }
@@ -328,8 +328,8 @@
     "loop": false,
     "frames": [
       {
-        "name": "gohan_adult_ssj_knockback_back_00",
-        "file": "gohan_adult_ssj_knockback_back_00.png",
+        "name": "gohan_adult_ssj2_knockback_back_00",
+        "file": "gohan_adult_ssj2_knockback_back_00.png",
         "w": 36,
         "h": 41
       }
@@ -341,8 +341,8 @@
     "loop": false,
     "frames": [
       {
-        "name": "gohan_adult_ssj_knockback_up_00",
-        "file": "gohan_adult_ssj_knockback_up_00.png",
+        "name": "gohan_adult_ssj2_knockback_up_00",
+        "file": "gohan_adult_ssj2_knockback_up_00.png",
         "w": 32,
         "h": 43
       }
@@ -354,8 +354,8 @@
     "loop": false,
     "frames": [
       {
-        "name": "gohan_adult_ssj_knockback_down_00",
-        "file": "gohan_adult_ssj_knockback_down_00.png",
+        "name": "gohan_adult_ssj2_knockback_down_00",
+        "file": "gohan_adult_ssj2_knockback_down_00.png",
         "w": 32,
         "h": 32
       }
@@ -367,20 +367,20 @@
     "loop": false,
     "frames": [
       {
-        "name": "gohan_adult_ssj_guard_00",
-        "file": "gohan_adult_ssj_guard_00.png",
+        "name": "gohan_adult_ssj2_guard_00",
+        "file": "gohan_adult_ssj2_guard_00.png",
         "w": 27,
         "h": 46
       },
       {
-        "name": "gohan_adult_ssj_guard_01",
-        "file": "gohan_adult_ssj_guard_01.png",
+        "name": "gohan_adult_ssj2_guard_01",
+        "file": "gohan_adult_ssj2_guard_01.png",
         "w": 30,
         "h": 46
       },
       {
-        "name": "gohan_adult_ssj_guard_02",
-        "file": "gohan_adult_ssj_guard_02.png",
+        "name": "gohan_adult_ssj2_guard_02",
+        "file": "gohan_adult_ssj2_guard_02.png",
         "w": 34,
         "h": 44
       }
@@ -392,14 +392,14 @@
     "loop": false,
     "frames": [
       {
-        "name": "gohan_adult_ssj_evade_00",
-        "file": "gohan_adult_ssj_evade_00.png",
+        "name": "gohan_adult_ssj2_evade_00",
+        "file": "gohan_adult_ssj2_evade_00.png",
         "w": 23,
         "h": 41
       },
       {
-        "name": "gohan_adult_ssj_evade_01",
-        "file": "gohan_adult_ssj_evade_01.png",
+        "name": "gohan_adult_ssj2_evade_01",
+        "file": "gohan_adult_ssj2_evade_01.png",
         "w": 40,
         "h": 31
       }
@@ -411,26 +411,26 @@
     "loop": true,
     "frames": [
       {
-        "name": "gohan_adult_ssj_gather_power_00",
-        "file": "gohan_adult_ssj_gather_power_00.png",
+        "name": "gohan_adult_ssj2_gather_power_00",
+        "file": "gohan_adult_ssj2_gather_power_00.png",
         "w": 32,
         "h": 43
       },
       {
-        "name": "gohan_adult_ssj_gather_power_01",
-        "file": "gohan_adult_ssj_gather_power_01.png",
+        "name": "gohan_adult_ssj2_gather_power_01",
+        "file": "gohan_adult_ssj2_gather_power_01.png",
         "w": 32,
         "h": 45
       },
       {
-        "name": "gohan_adult_ssj_gather_power_02",
-        "file": "gohan_adult_ssj_gather_power_02.png",
+        "name": "gohan_adult_ssj2_gather_power_02",
+        "file": "gohan_adult_ssj2_gather_power_02.png",
         "w": 32,
         "h": 48
       },
       {
-        "name": "gohan_adult_ssj_gather_power_03",
-        "file": "gohan_adult_ssj_gather_power_03.png",
+        "name": "gohan_adult_ssj2_gather_power_03",
+        "file": "gohan_adult_ssj2_gather_power_03.png",
         "w": 32,
         "h": 44
       }
@@ -442,26 +442,26 @@
     "loop": true,
     "frames": [
       {
-        "name": "gohan_adult_ssj_power_up_00",
-        "file": "gohan_adult_ssj_power_up_00.png",
+        "name": "gohan_adult_ssj2_power_up_00",
+        "file": "gohan_adult_ssj2_power_up_00.png",
         "w": 32,
         "h": 43
       },
       {
-        "name": "gohan_adult_ssj_power_up_01",
-        "file": "gohan_adult_ssj_power_up_01.png",
+        "name": "gohan_adult_ssj2_power_up_01",
+        "file": "gohan_adult_ssj2_power_up_01.png",
         "w": 32,
         "h": 45
       },
       {
-        "name": "gohan_adult_ssj_power_up_02",
-        "file": "gohan_adult_ssj_power_up_02.png",
+        "name": "gohan_adult_ssj2_power_up_02",
+        "file": "gohan_adult_ssj2_power_up_02.png",
         "w": 32,
         "h": 48
       },
       {
-        "name": "gohan_adult_ssj_power_up_03",
-        "file": "gohan_adult_ssj_power_up_03.png",
+        "name": "gohan_adult_ssj2_power_up_03",
+        "file": "gohan_adult_ssj2_power_up_03.png",
         "w": 32,
         "h": 44
       }
@@ -473,20 +473,20 @@
     "loop": true,
     "frames": [
       {
-        "name": "gohan_adult_ssj_aura_power_00",
-        "file": "gohan_adult_ssj_aura_power_00.png",
+        "name": "gohan_adult_ssj2_aura_power_00",
+        "file": "gohan_adult_ssj2_aura_power_00.png",
         "w": 64,
         "h": 56
       },
       {
-        "name": "gohan_adult_ssj_aura_power_01",
-        "file": "gohan_adult_ssj_aura_power_01.png",
+        "name": "gohan_adult_ssj2_aura_power_01",
+        "file": "gohan_adult_ssj2_aura_power_01.png",
         "w": 64,
         "h": 56
       },
       {
-        "name": "gohan_adult_ssj_aura_power_02",
-        "file": "gohan_adult_ssj_aura_power_02.png",
+        "name": "gohan_adult_ssj2_aura_power_02",
+        "file": "gohan_adult_ssj2_aura_power_02.png",
         "w": 64,
         "h": 56
       }
@@ -498,20 +498,20 @@
     "loop": true,
     "frames": [
       {
-        "name": "gohan_adult_ssj_aura_support_00",
-        "file": "gohan_adult_ssj_aura_support_00.png",
+        "name": "gohan_adult_ssj2_aura_support_00",
+        "file": "gohan_adult_ssj2_aura_support_00.png",
         "w": 64,
         "h": 56
       },
       {
-        "name": "gohan_adult_ssj_aura_support_01",
-        "file": "gohan_adult_ssj_aura_support_01.png",
+        "name": "gohan_adult_ssj2_aura_support_01",
+        "file": "gohan_adult_ssj2_aura_support_01.png",
         "w": 64,
         "h": 56
       },
       {
-        "name": "gohan_adult_ssj_aura_support_02",
-        "file": "gohan_adult_ssj_aura_support_02.png",
+        "name": "gohan_adult_ssj2_aura_support_02",
+        "file": "gohan_adult_ssj2_aura_support_02.png",
         "w": 64,
         "h": 56
       }
@@ -523,26 +523,26 @@
     "loop": false,
     "frames": [
       {
-        "name": "gohan_super_saiyan_1_2_effect_00",
-        "file": "gohan_super_saiyan_1_2_effect_00.png",
+        "name": "gohan_adult_ssj2_effect_00",
+        "file": "gohan_adult_ssj2_effect_00.png",
         "w": 12,
         "h": 16
       },
       {
-        "name": "gohan_super_saiyan_1_2_effect_01",
-        "file": "gohan_super_saiyan_1_2_effect_01.png",
+        "name": "gohan_adult_ssj2_effect_01",
+        "file": "gohan_adult_ssj2_effect_01.png",
         "w": 13,
         "h": 15
       },
       {
-        "name": "gohan_super_saiyan_1_2_effect_02",
-        "file": "gohan_super_saiyan_1_2_effect_02.png",
+        "name": "gohan_adult_ssj2_effect_02",
+        "file": "gohan_adult_ssj2_effect_02.png",
         "w": 24,
         "h": 16
       },
       {
-        "name": "gohan_super_saiyan_1_2_effect_03",
-        "file": "gohan_super_saiyan_1_2_effect_03.png",
+        "name": "gohan_adult_ssj2_effect_03",
+        "file": "gohan_adult_ssj2_effect_03.png",
         "w": 24,
         "h": 16
       }

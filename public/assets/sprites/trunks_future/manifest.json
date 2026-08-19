@@ -500,32 +500,32 @@
     "loop": false,
     "frames": [
       {
-        "name": "future_trunks_base_effect_01",
-        "file": "future_trunks_base_effect_01.png",
+        "name": "trunks_future_effect_01",
+        "file": "trunks_future_effect_01.png",
         "w": 12,
         "h": 15
       },
       {
-        "name": "future_trunks_base_effect_02",
-        "file": "future_trunks_base_effect_02.png",
+        "name": "trunks_future_effect_02",
+        "file": "trunks_future_effect_02.png",
         "w": 24,
         "h": 16
       },
       {
-        "name": "future_trunks_base_effect_03",
-        "file": "future_trunks_base_effect_03.png",
+        "name": "trunks_future_effect_03",
+        "file": "trunks_future_effect_03.png",
         "w": 24,
         "h": 16
       },
       {
-        "name": "future_trunks_base_effect_04",
-        "file": "future_trunks_base_effect_04.png",
+        "name": "trunks_future_effect_04",
+        "file": "trunks_future_effect_04.png",
         "w": 16,
         "h": 12
       },
       {
-        "name": "future_trunks_base_effect_05",
-        "file": "future_trunks_base_effect_05.png",
+        "name": "trunks_future_effect_05",
+        "file": "trunks_future_effect_05.png",
         "w": 16,
         "h": 12
       }

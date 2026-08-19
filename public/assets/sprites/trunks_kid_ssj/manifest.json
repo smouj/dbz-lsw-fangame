@@ -511,32 +511,32 @@
     "loop": false,
     "frames": [
       {
-        "name": "kid_trunks_super_saiyan_effect_00",
-        "file": "kid_trunks_super_saiyan_effect_00.png",
+        "name": "trunks_kid_ssj_effect_00",
+        "file": "trunks_kid_ssj_effect_00.png",
         "w": 15,
         "h": 16
       },
       {
-        "name": "kid_trunks_super_saiyan_effect_01",
-        "file": "kid_trunks_super_saiyan_effect_01.png",
+        "name": "trunks_kid_ssj_effect_01",
+        "file": "trunks_kid_ssj_effect_01.png",
         "w": 13,
         "h": 16
       },
       {
-        "name": "kid_trunks_super_saiyan_effect_02",
-        "file": "kid_trunks_super_saiyan_effect_02.png",
+        "name": "trunks_kid_ssj_effect_02",
+        "file": "trunks_kid_ssj_effect_02.png",
         "w": 24,
         "h": 16
       },
       {
-        "name": "kid_trunks_super_saiyan_effect_03",
-        "file": "kid_trunks_super_saiyan_effect_03.png",
+        "name": "trunks_kid_ssj_effect_03",
+        "file": "trunks_kid_ssj_effect_03.png",
         "w": 24,
         "h": 16
       },
       {
-        "name": "kid_trunks_super_saiyan_effect_04",
-        "file": "kid_trunks_super_saiyan_effect_04.png",
+        "name": "trunks_kid_ssj_effect_04",
+        "file": "trunks_kid_ssj_effect_04.png",
         "w": 16,
         "h": 12
       }

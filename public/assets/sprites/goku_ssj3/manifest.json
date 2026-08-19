@@ -535,26 +535,26 @@
     "loop": false,
     "frames": [
       {
-        "name": "goku_super_saiyan_3_effect_01",
-        "file": "goku_super_saiyan_3_effect_01.png",
+        "name": "goku_ssj3_effect_01",
+        "file": "goku_ssj3_effect_01.png",
         "w": 14,
         "h": 16
       },
       {
-        "name": "goku_super_saiyan_3_effect_02",
-        "file": "goku_super_saiyan_3_effect_02.png",
+        "name": "goku_ssj3_effect_02",
+        "file": "goku_ssj3_effect_02.png",
         "w": 24,
         "h": 16
       },
       {
-        "name": "goku_super_saiyan_3_effect_03",
-        "file": "goku_super_saiyan_3_effect_03.png",
+        "name": "goku_ssj3_effect_03",
+        "file": "goku_ssj3_effect_03.png",
         "w": 24,
         "h": 16
       },
       {
-        "name": "goku_super_saiyan_3_effect_04",
-        "file": "goku_super_saiyan_3_effect_04.png",
+        "name": "goku_ssj3_effect_04",
+        "file": "goku_ssj3_effect_04.png",
         "w": 16,
         "h": 12
       }

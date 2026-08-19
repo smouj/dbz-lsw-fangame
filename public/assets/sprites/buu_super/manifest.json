@@ -487,26 +487,26 @@
     "loop": false,
     "frames": [
       {
-        "name": "super_buu_base_effect_01",
-        "file": "super_buu_base_effect_01.png",
+        "name": "buu_super_effect_01",
+        "file": "buu_super_effect_01.png",
         "w": 12,
         "h": 14
       },
       {
-        "name": "super_buu_base_effect_02",
-        "file": "super_buu_base_effect_02.png",
+        "name": "buu_super_effect_02",
+        "file": "buu_super_effect_02.png",
         "w": 24,
         "h": 16
       },
       {
-        "name": "super_buu_base_effect_03",
-        "file": "super_buu_base_effect_03.png",
+        "name": "buu_super_effect_03",
+        "file": "buu_super_effect_03.png",
         "w": 24,
         "h": 16
       },
       {
-        "name": "super_buu_base_effect_04",
-        "file": "super_buu_base_effect_04.png",
+        "name": "buu_super_effect_04",
+        "file": "buu_super_effect_04.png",
         "w": 16,
         "h": 12
       }

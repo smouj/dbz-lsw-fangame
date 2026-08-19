@@ -559,32 +559,32 @@
     "loop": false,
     "frames": [
       {
-        "name": "gotenks_super_saiyan_effect_00",
-        "file": "gotenks_super_saiyan_effect_00.png",
+        "name": "gotenks_ssj_effect_00",
+        "file": "gotenks_ssj_effect_00.png",
         "w": 16,
         "h": 12
       },
       {
-        "name": "gotenks_super_saiyan_effect_01",
-        "file": "gotenks_super_saiyan_effect_01.png",
+        "name": "gotenks_ssj_effect_01",
+        "file": "gotenks_ssj_effect_01.png",
         "w": 16,
         "h": 12
       },
       {
-        "name": "gotenks_super_saiyan_effect_03",
-        "file": "gotenks_super_saiyan_effect_03.png",
+        "name": "gotenks_ssj_effect_03",
+        "file": "gotenks_ssj_effect_03.png",
         "w": 13,
         "h": 16
       },
       {
-        "name": "gotenks_super_saiyan_effect_04",
-        "file": "gotenks_super_saiyan_effect_04.png",
+        "name": "gotenks_ssj_effect_04",
+        "file": "gotenks_ssj_effect_04.png",
         "w": 24,
         "h": 16
       },
       {
-        "name": "gotenks_super_saiyan_effect_05",
-        "file": "gotenks_super_saiyan_effect_05.png",
+        "name": "gotenks_ssj_effect_05",
+        "file": "gotenks_ssj_effect_05.png",
         "w": 24,
         "h": 16
       }
