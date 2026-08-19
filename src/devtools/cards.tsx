@@ -9,6 +9,7 @@ import { cardIconUrl } from '../data/icons';
 import { cardCinematic } from '../data/cardsCinematic';
 import { actionSemanticsForCard, resolveActionProfile } from '../battle/actionProfiles';
 import { canonForAction } from '../battle/animationCanon';
+import { AttackPreview } from './AttackPreview';
 
 const TYPES: (CardType | 'all')[] = ['all', 'command', 'damage', 'beam', 'support', 'defense', 'special'];
 
@@ -73,6 +74,11 @@ export function CardsModule() {
               <span className="dev-card-sprite">
                 {cardIconUrl(c.id) ? <img src={cardIconUrl(c.id)} alt={c.name} loading="lazy" /> : <span className="dev-card-sprite-empty">—</span>}
               </span>
+              {/* M8.F0 — frame del ataque de la carta (preview estática del
+                  primer frame de su pose canónica) */}
+              <span className="dev-card-attack-frame">
+                <AttackPreview card={c} size={40} />
+              </span>
               <span className="dev-card-type" style={{ background: cardColor(c.type) }}>{c.type[0].toUpperCase()}</span>
               <span className="dev-card-name">{c.name}</span>
               <span className="dev-card-stats">⚔{c.atk} · ◎{c.acc}</span>
@@ -116,6 +122,8 @@ function CinematicCardInfo({ id }: { id: number }) {
 function CardDetail({ card }: { card: CardDef }) {
   return (
     <div className="dev-card-detail">
+      {/* M8.F0 — preview animada del ataque (gif con frames reales del
+          manifest) + ficha */}
       <div className="dev-card-hero">
         <div className="dev-card-hero-id">{String(card.id).padStart(3, '0')}</div>
         <div className="dev-card-hero-sprite">
@@ -127,6 +135,9 @@ function CardDetail({ card }: { card: CardDef }) {
           <span className="dev-tag">effect: {EFFECT_LABEL[card.effect] ?? card.effect}</span>
           <span className="dev-tag">rarity {'★'.repeat(card.rarity)}</span>
         </div>
+      </div>
+      <div className="dev-card-attack-preview-big">
+        <AttackPreview card={card} size={128} />
       </div>
       <div className="dev-card-stats-big">
         <div><label>ATK</label><strong>{card.atk}</strong></div>
