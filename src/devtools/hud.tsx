@@ -49,7 +49,7 @@ const VIEWS: { id: HudView; label: string; tip: string }[] = [
   { id: 'MOVE', label: 'MOVE', tip: 'Selección de eje: HORIZONTAL ↔ o VERTICAL ↕' },
   { id: 'STAGE', label: 'STAGE', tip: 'QTE del Stage Attack: inputs con los sprites del paquete' },
   { id: 'LIMIT', label: 'LIMIT', tip: 'Cartas LIMITED del personaje + huecos' },
-  { id: 'DEFENSA', label: 'Defensa', tip: 'Menú de defensa: LIMITED · JOINT · BASIC DEFENSE' },
+  { id: 'DEFENSA', label: 'Defensa', tip: 'Menú de defensa (contrato): GUARD · MOVE(H|V) · carta defensiva/support — SIN Stage/QTE' },
   { id: 'DISCARD', label: 'Descarte', tip: 'HAND CHECK — demasiadas cartas, elige cuál descartar' },
   { id: 'DIALOGO', label: 'Diálogo', tip: 'Cuadro de mensaje GBC estructurado' },
   { id: 'STORY_DIALOGO', label: 'Story Diálogo', tip: 'Diálogo del modo historia: retrato + caja GBC (blanco/negro)' },

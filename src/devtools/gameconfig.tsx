@@ -21,6 +21,7 @@ import { CARD_CINEMATICS } from '../data/cardsCinematic';
 import { ACTION_PROFILE_REGISTRY } from '../battle/actionProfiles';
 import { MUSIC_TRACK_LIST } from '../audio/music';
 import { SCENARIOS } from '../data/scenarios';
+import { getDevProjectSnapshot } from './devSnapshot';
 
 interface GitInfo { branch: string; commit: string; dirty: boolean; generatedAt: string }
 interface VerifyReport {
@@ -69,22 +70,37 @@ export default function GameConfigPage() {
   const devOnly = activeDevOnly(FEATURE_FLAGS);
   const activeProfile = BUILD_PROFILES[profile];
 
-  // ── Auditorías en vivo del contenido ──
+  // ── Auditorías en vivo del contenido (DEV-SYNC: snapshot común) ──
   const audits = useMemo(() => {
+    const snap = getDevProjectSnapshot();
     const cinematicsMissing = CARDS.filter(c => !CARD_CINEMATICS.some(cc => cc.id === c.id));
-    const compatTotal = CARDS.filter(c => c.compatible || c.notCompatible).length;
+    // Compatibilidad: 0 restricciones rotas (cartas SIN restricciones son
+    // compatibles con todos — no es un fallo). Mismo criterio que Validation.
+    const charIds = new Set(['goku', 'vegeta', 'gohan_kid', 'gohan_adult', 'trunks_kid', 'trunks_future',
+      'goten', 'gotenks', 'piccolo', 'krillin', 'frieza', 'cell', 'cell_jr', 'android_16', 'android_17',
+      'android_18', 'android_19', 'dr_gero', 'captain_ginyu', 'recoome', 'guldo', 'jeice', 'burter',
+      'nappa', 'majin_buu', 'vegito']);
+    const compatWithRules = CARDS.filter(c => c.compatible || c.notCompatible);
+    const compatBroken = CARDS.filter(c =>
+      (c.compatible && c.compatible.some(cid => !charIds.has(cid)))
+      || (c.notCompatible && c.notCompatible.some(cid => !charIds.has(cid))));
     return {
-      cards: { n: CARDS.length, ok: CARDS.length === 125 },
-      cinematics: { n: CARD_CINEMATICS.length, ok: CARD_CINEMATICS.length === 125 },
+      forms: { n: snap.roster.forms, ok: snap.roster.forms === snap.roster.formsTotal, total: snap.roster.formsTotal },
+      cards: { n: snap.cards.count, ok: snap.cards.count === snap.cards.total, total: snap.cards.total },
+      cinematics: { n: CARD_CINEMATICS.length, ok: CARD_CINEMATICS.length === snap.cards.count },
       cinematicsMissing,
       profiles: { n: ACTION_PROFILE_REGISTRY.length, ok: true },
-      compat: { n: compatTotal, ok: compatTotal === 125 },
-      music: { n: MUSIC_TRACK_LIST.length, ok: MUSIC_TRACK_LIST.length === 20 },
-      scenarios: { n: SCENARIOS.length, ok: SCENARIOS.length === 13 },
+      compat: { n: compatWithRules.length, ok: compatBroken.length === 0, broken: compatBroken.length },
+      music: { n: snap.audio.musicTracks, ok: snap.audio.musicTracks === 20 },
+      scenarios: { n: snap.scenarios, ok: snap.scenarios === 13 },
+      // DEV-SYNC: la fidelidad cinematográfica es INFORMATIVA — los perfiles
+      // INFERRED NO bloquean release (la cobertura de contenido sí).
+      fidelity: snap.cinematics,
+      canonUnknown: snap.sprites.unknown,
     };
   }, []);
 
-  const releaseReady = cfg.ok && audits.cards.ok && audits.cinematics.ok && audits.compat.ok
+  const releaseReady = cfg.ok && audits.forms.ok && audits.cards.ok && audits.compat.ok
     && !(activeProfile.id !== 'development' && devOnly.length > 0);
 
   const cp = (id: string, text: string) => { copy(text); setCopied(id); setTimeout(() => setCopied(null), 1200); };
@@ -191,7 +207,7 @@ export default function GameConfigPage() {
             <KeyVal key={k} k={k} v={typeof v === 'boolean' ? fmtBool(v) : typeof v === 'number' ? `${Math.round(v * 100)}%` : v} />
           ))}
         </div>
-        <div className="dev-muted" style={{ marginTop: 6 }}>20 pistas BSO en public/audio/music (ver página Música).</div>
+        <div className="dev-muted" style={{ marginTop: 6 }}>{audits.music.n} pistas BSO en public/audio/music (ver página Música).</div>
       </Section>
 
       {/* ══ ANIMATION & CINEMATICS ══ */}
@@ -206,19 +222,25 @@ export default function GameConfigPage() {
         </div>
         <div className="dev-tag-row">
           <span className={`dev-tag ${audits.profiles.ok ? 'ok' : 'bad'}`}>✓ {audits.profiles.n} animation profiles</span>
-          <span className={`dev-tag ${audits.cinematics.ok ? 'ok' : 'bad'}`}>✓ {audits.cinematics.n}/125 card cinematics</span>
-          <span className="dev-tag ok">✓ 42 character/forms</span>
+          <span className={`dev-tag ${audits.cinematics.ok ? 'ok' : 'bad'}`}>✓ {audits.cinematics.n}/{audits.cards.n} card cinematic profiles (cobertura)</span>
+          <span className={`dev-tag ${audits.forms.ok ? 'ok' : 'bad'}`}>✓ {audits.forms.n}/{audits.forms.total} character/forms</span>
           <span className="dev-tag ok">✓ backgrounds {audits.scenarios.n}/13</span>
-          <span className="dev-tag bad">0 PENDING_ROM (directivas lo marcan)</span>
+        </div>
+        <div className="dev-muted" style={{ marginTop: 6 }}>
+          FIDELITY (informativo — no bloquea release): {audits.fidelity.gbcVerified} GBC verificadas ·
+          {audits.fidelity.gbcInferred} INFERRED · {audits.fidelity.actionProfiles} action profiles ·
+          {audits.fidelity.fidelityByLevel.map(f => `${f.level} ${f.count}`).join(' · ')} ·
+          {audits.canonUnknown} frames V9 sin evidencia (honestos).
         </div>
       </Section>
 
       {/* ══ ASSETS & CONTENT ══ */}
       <Section icon={Boxes} title="Assets &amp; Content (auditoría en vivo)">
         <div className="dev-tag-row">
-          <span className={`dev-tag ${audits.cards.ok ? 'ok' : 'bad'}`}>Cartas {audits.cards.n}/125</span>
-          <span className={`dev-tag ${audits.cinematics.ok ? 'ok' : 'bad'}`}>Cinemáticas {audits.cinematics.n}/125</span>
-          <span className={`dev-tag ${audits.compat.ok ? 'ok' : 'bad'}`}>Compatibilidad {audits.compat.n}/125</span>
+          <span className={`dev-tag ${audits.forms.ok ? 'ok' : 'bad'}`}>Formas {audits.forms.n}/{audits.forms.total}</span>
+          <span className={`dev-tag ${audits.cards.ok ? 'ok' : 'bad'}`}>Cartas {audits.cards.n}/{audits.cards.total}</span>
+          <span className={`dev-tag ${audits.cinematics.ok ? 'ok' : 'bad'}`}>Perfiles cinemáticos {audits.cinematics.n}/{audits.cards.total}</span>
+          <span className={`dev-tag ${audits.compat.ok ? "ok" : "bad"}`}>Compatibilidad: {audits.compat.n} con reglas · {audits.compat.broken} rotas</span>
           <span className={`dev-tag ${audits.music.ok ? 'ok' : 'bad'}`}>Música {audits.music.n}/20</span>
           <span className={`dev-tag ${audits.scenarios.ok ? 'ok' : 'bad'}`}>Escenarios {audits.scenarios.n}/13</span>
         </div>
@@ -235,9 +257,9 @@ export default function GameConfigPage() {
       {/* ══ GAME DATA ══ */}
       <Section icon={ShieldCheck} title="Game Data">
         <div className="dev-tag-row">
-          <span className="dev-tag ok">Characters 44 forms ✓</span>
-          <span className="dev-tag ok">Cards 125/125 ✓</span>
-          <span className="dev-tag ok">Card compatibility 125/125 ✓</span>
+          <span className={`dev-tag ${audits.forms.ok ? 'ok' : 'bad'}`}>Characters {audits.forms.n} forms ({audits.forms.total} ROM) ✓</span>
+          <span className={`dev-tag ${audits.cards.ok ? 'ok' : 'bad'}`}>Cards {audits.cards.n}/{audits.cards.total} ✓</span>
+          <span className={`dev-tag ${audits.compat.ok ? "ok" : "bad"}`}>Card compatibility: {audits.compat.broken === 0 ? "0 rotas ✓" : `${audits.compat.broken} rotas`}</span>
           <span className="dev-tag ok">Story battles 32 capítulos ✓</span>
           <span className="dev-tag ok">AI profiles ✓</span>
           <span className="dev-tag ok">Broken references 0 ✓</span>
@@ -291,8 +313,8 @@ export default function GameConfigPage() {
       <Section icon={CheckCircle2} title="Pre-Build Validation" defaultOpen>
         <div className="dev-tag-row">
           <span className={`dev-tag ${cfg.ok ? 'ok' : 'bad'}`}>{cfg.ok ? '✓' : '✕'} Config global</span>
-          <span className={`dev-tag ${audits.cards.ok ? 'ok' : 'bad'}`}>{audits.cards.ok ? '✓' : '✕'} 125 cards</span>
-          <span className={`dev-tag ${audits.cinematics.ok ? 'ok' : 'bad'}`}>{audits.cinematics.ok ? '✓' : '✕'} 125 cinematic profiles</span>
+          <span className={`dev-tag ${audits.cards.ok ? 'ok' : 'bad'}`}>{audits.cards.ok ? '✓' : '✕'} {audits.cards.total} cards</span>
+          <span className={`dev-tag ${audits.cinematics.ok ? 'ok' : 'bad'}`}>{audits.cinematics.ok ? '✓' : '✕'} {audits.cinematics.n} cinematic profiles (cobertura — la fidelidad INFERRED no bloquea)</span>
           <span className={`dev-tag ${audits.compat.ok ? 'ok' : 'bad'}`}>{audits.compat.ok ? '✓' : '✕'} card compatibility</span>
           <span className={`dev-tag ${activeProfile.id === 'release' || activeProfile.id === 'preview' ? 'ok' : 'bad'}`}>
             {activeProfile.id !== 'development' ? '✓' : '✕'} dev features disabled

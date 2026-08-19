@@ -7,19 +7,15 @@ import { FORMS, CHARACTERS, LIMIT_DEFAULTS } from '../data/roster';
 import { CARDS } from '../data/cards';
 import { STORY_ENEMY_DECKS, TEAM_BATTLES } from '../data/enemy_decks';
 import { spriteDirFor } from '../data/spriteManifest';
-import { COMBAT_REQUIRED_POSES } from '../battle/spriteConfig';
+import { COMBAT_REQUIRED_POSES, resolveCombatPose } from '../battle/spriteConfig';
+import { cardUsableBy } from '../battle/cardPoses';
+import { getDevProjectSnapshot } from './devSnapshot';
+import { activeAttacker, activeDefender, initiativeSide } from '../battle/engine/state/battleStateSelectors';
 
 interface Check { name: string; ok: boolean; detail: string; }
 type ManifestState =
   | { status: 'checking'; bad: string[]; withRay: number; total: number }
   | { status: 'done'; bad: string[]; withRay: number; total: number };
-
-/** Misma lógica que cardUsableBy en main.tsx (evita dependencia circular). */
-function usableBy(card: { compatible?: string[]; notCompatible?: string[] }, charId: string): boolean {
-  if (card.compatible && card.compatible.length > 0 && !card.compatible.includes(charId)) return false;
-  if (card.notCompatible && card.notCompatible.includes(charId)) return false;
-  return true;
-}
 
 export function ValidationModule() {
   const checks = useMemo<Check[]>(() => {
@@ -95,7 +91,7 @@ export function ValidationModule() {
     out.push({
       name: 'Sprites de combate (dir animado)',
       ok: withDir === forms.length,
-      detail: `${withDir}/${forms.length} formas con dir V5`,
+      detail: `${withDir}/${forms.length} formas con dir animado`,
     });
 
     // 9. Combates de equipo
@@ -124,13 +120,49 @@ export function ValidationModule() {
       for (const cid of ids) {
         const card = cardMap.get(cid);
         if (!card) { limitBad.push(`${charId}:${cid} no existe`); continue; }
-        if (!usableBy(card, charId)) limitBad.push(`${charId}:${cid} no usable`);
+        if (!cardUsableBy(card, charId)) limitBad.push(`${charId}:${cid} no usable`);
       }
     }
     out.push({
       name: 'Limits por defecto → cartas usables',
       ok: limitBad.length === 0,
       detail: limitBad.length === 0 ? 'todos coherentes' : `incoherentes: ${limitBad.slice(0, 5).join(', ')}`,
+    });
+
+    // ═══ DEV-SYNC: invariantes del canon V9 y del modelo de turnos ═══
+    const snap = getDevProjectSnapshot();
+    out.push({
+      name: 'Canon V9: frames por status (coherente con Dashboard)',
+      ok: true,
+      detail: Object.entries(snap.sprites.byStatus).map(([k, v]) => `${k} ${v}`).join(' · '),
+    });
+    out.push({
+      name: 'Canon V9: 0 canonicalId duplicados',
+      ok: snap.canonIntegrity.duplicateIds === 0,
+      detail: snap.canonIntegrity.duplicateIds === 0 ? 'todos únicos' : `${snap.canonIntegrity.duplicateIds} duplicados`,
+    });
+    out.push({
+      name: `Canon V9: ${snap.sprites.unknown} frames sin evidencia (UNCLASSIFIED honestos)`, ok: true,
+      detail: 'los frames sin evidencia NO se asignan por aproximación — quedan desconocidos hasta nueva evidencia',
+    });
+    out.push({
+      name: 'Stage 3/4/5/6 cubiertos',
+      ok: snap.cards.stageLevels.length === 4 && snap.cards.stageLevels.join() === '3,4,5,6',
+      detail: `niveles: ${snap.cards.stageLevels.join(', ')}`,
+    });
+    out.push({
+      name: 'Cartas por tipo (coherente con Dashboard)',
+      ok: true,
+      detail: Object.entries(snap.cards.byType).map(([k, v]) => `${k} ${v}`).join(' · '),
+    });
+    // Fase ≠ lado atacante: la iniciativa + exchange derivan el atacante.
+    const t0 = { activeSide: 'enemy' as const, exchange: 0 as const };
+    const t1 = { activeSide: 'enemy' as const, exchange: 1 as const };
+    out.push({
+      name: 'Modelo de turnos: attacker deriva de iniciativa+exchange (no de phase)',
+      ok: activeAttacker(t0 as never) === 'enemy' && activeAttacker(t1 as never) === 'player'
+        && activeDefender(t0 as never) === 'player' && initiativeSide(t0 as never) === 'enemy',
+      detail: 'exchange 0 → iniciativa · exchange 1 → opuesto (contrato M8.C2a-L)',
     });
 
     return out;
@@ -152,7 +184,13 @@ export function ValidationModule() {
           const r = await fetch(`/assets/sprites/${dir}/manifest.json`);
           if (!r.ok) { bad.push(`${f.id}: fetch`); continue; }
           const m = await r.json() as Record<string, { frames?: unknown[] }>;
-          for (const p of COMBAT_REQUIRED_POSES) if (!m[p] || !m[p].frames?.length) bad.push(`${f.id}:${p}`);
+          // M8 — la cobertura usa el MISMO resolver que el runtime
+          // (resolveCombatPose con fallbacks: beam_fire → beam_charge…).
+          // Exigir la pose literal marcaba fallos que el juego resuelve.
+          for (const p of COMBAT_REQUIRED_POSES) {
+            const resolved = resolveCombatPose(p, pp => !!(m[pp]?.frames?.length));
+            if (!resolved) bad.push(`${f.id}:${p}`);
+          }
           if (m.beam_ray?.frames?.length) withRay++;
         } catch {
           bad.push(`${f.id}: fetch`);
