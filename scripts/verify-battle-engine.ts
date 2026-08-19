@@ -9,7 +9,7 @@
 import { readFileSync, readdirSync } from 'fs';
 import { createInitialBattleState } from '../src/battle/engine/state/createInitialBattleState';
 import {
-  activeAttacker, activeDefender, speedOrder, positionOf,
+  activeAttacker, activeDefender, initiativeSide, speedOrder, positionOf,
   relativeDistance, isVulnerable, ccOf, hpOf, handOf,
   isDefenseCommitted, defenseStateOf, defenseChoiceOf,
 } from '../src/battle/engine/state/battleStateSelectors';
@@ -457,6 +457,56 @@ check('M8.C2a: MOVE vertical en ventana ya comprometida → REJECTED', !executeC
   // No expuesto a la UI: getAvailableCommands no lo lista (solo orquestador).
   check('M8.C2a: RESET_DEFENSE NO está en getAvailableCommands (no es input de UI)',
     !getAvailableCommands(s).some(c => c.type === 'RESET_DEFENSE'));
+}
+
+// ── M8.C2a: AUDITORÍA DEL MODELO DE TURNOS — phase ≠ lado atacante ──
+// En LSW cada TURN tiene DOS exchanges: exchange 0 ataca la INICIATIVA
+// (activeSide, marcado con *), exchange 1 el opuesto. Desde el jugador:
+//   initiative=player → ATTACK → DEFENSE · initiative=enemy → DEFENSE → ATTACK
+// La fase describe el gameplay del combatiente controlado; el lado atacante
+// se deriva SIEMPRE de (activeSide, exchange) — jamás de la fase.
+{
+  // Iniciativa del JUGADOR (activeSide=player)
+  const p0 = { ...m3State, activeSide: 'player' as const, exchange: 0 as const };
+  const p1 = { ...m3State, activeSide: 'player' as const, exchange: 1 as const };
+  check('M8.C2a: iniciativa player → exchange 0 ataca PLAYER · exchange 1 ataca ENEMY',
+    activeAttacker(p0) === 'player' && activeDefender(p0) === 'enemy'
+    && activeAttacker(p1) === 'enemy' && activeDefender(p1) === 'player');
+  // Iniciativa del ENEMIGO (activeSide=enemy): el turno empieza defendiendo
+  const e0 = { ...m3State, activeSide: 'enemy' as const, exchange: 0 as const };
+  const e1 = { ...m3State, activeSide: 'enemy' as const, exchange: 1 as const };
+  check('M8.C2a: iniciativa enemy → exchange 0 ataca ENEMY · exchange 1 ataca PLAYER',
+    activeAttacker(e0) === 'enemy' && activeDefender(e0) === 'player'
+    && activeAttacker(e1) === 'player' && activeDefender(e1) === 'enemy');
+  check('M8.C2a: initiativeSide == activeSide (la iniciativa es la única fuente)',
+    initiativeSide(p0) === 'player' && initiativeSide(e0) === 'enemy');
+  // CONTRAEJEMPLO: la MISMA fase (cardSelect) con atacantes DISTINTOS según
+  // el exchange → la fase NO decide quién ataca (fase ≠ lado).
+  check('M8.C2a: fase cardSelect con attacker player Y con attacker enemy (fase ≠ lado)',
+    activeAttacker({ ...p0, phase: 'cardSelect' as never }) === 'player'
+    && activeAttacker({ ...e0, phase: 'cardSelect' as never }) === 'enemy');
+  // canExecute valida el lado ofensivo contra el atacante DERIVADO, no la
+  // fase: misma fase cardSelect, el lado legal cambia con el exchange.
+  const legalP = executeCommand({ ...p0, phase: 'cardSelect' as never }, { type: 'PLAY_CARD', handIndex: 0 }, { side: 'player', characterId: 'goku' });
+  const illegalP = executeCommand({ ...e0, phase: 'cardSelect' as never }, { type: 'PLAY_CARD', handIndex: 0 }, { side: 'player', characterId: 'goku' });
+  check('M8.C2a: PLAY_CARD player legal solo cuando el atacante derivado es player',
+    legalP.ok && !illegalP.ok && illegalP.reason === 'NOT_ACTIVE_SIDE');
+  // Turno con INICIATIVA ENEMIGA: el jugador empieza en DEFENSE (exchange 0)
+  // sin Stage/QTE — GUARD legal desde el primer exchange, QTE intacto.
+  const enemyInit = createInitialBattleState(makeConfig({ firstAttacker: 'enemy' as const, playerCc: 30, playerDeck: m2Deck([25, 4]) }));
+  const eDefend = { ...enemyInit, phase: 'defend' as never, exchange: 0 as const };
+  check('M8.C2a: firstAttacker enemy → activeSide enemy + activeAttacker enemy en exchange 0',
+    eDefend.activeSide === 'enemy' && activeAttacker(eDefend) === 'enemy');
+  const gDef = executeCommand(eDefend, { type: 'GUARD' }, { side: 'player', characterId: 'goku' });
+  check('M8.C2a: defender al inicio del turno (iniciativa enemy) → GUARD legal → COMMITTED',
+    gDef.ok && gDef.state.defenseState === 'COMMITTED');
+  check('M8.C2a: defender al inicio → el QTE Stage NO se abre (stageQte WAITING)',
+    gDef.state.stageQte.state === 'WAITING' && gDef.state.stageQte.seq.length === 0);
+  // Check de fuente: el tipo BattlePhase del Engine ya NO contiene 'enemyTurn'
+  // (fase ≠ lado — el legacy de main.tsx lo mapea a 'defend' en el puente).
+  const phaseLine = stateSrc.split('\n').find(l => l.includes('type BattlePhase'));
+  check('M8.C2a: el tipo BattlePhase del Engine no contiene enemyTurn',
+    !!phaseLine && !phaseLine.includes('enemyTurn'));
 }
 
 

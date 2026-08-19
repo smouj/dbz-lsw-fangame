@@ -15,6 +15,13 @@ import type { BattlePosition } from '../../../data/positions';
 import type { CardDef } from '../../../data/cards';
 import type { BattleSide, BattleState } from './BattleState';
 
+/** Lado con iniciativa del turno (activeSide = turnOwner marcado con *).
+ *  M8.C2a — la iniciativa es la ÚNICA fuente del orden: exchange 0 ataca
+ *  la iniciativa, exchange 1 el opuesto. La fase NUNCA decide el lado. */
+export function initiativeSide(state: BattleState): BattleSide {
+  return state.activeSide;
+}
+
 /** Combatiente que ataca en el exchange actual (spec §1-2: primero el turnOwner). */
 export function activeAttacker(state: BattleState): BattleSide {
   return state.exchange === 0 ? state.activeSide : (state.activeSide === 'player' ? 'enemy' : 'player');

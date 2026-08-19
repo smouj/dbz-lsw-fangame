@@ -30,10 +30,23 @@ import type { StageKey } from '../../stageInputMap';
 import type { QteState } from '../../../data/actionFidelity';
 import type { MoveAxis } from '../../../data/positions';
 
-// ─── Fase de batalla (las mismas del juego real — main.tsx) ───
+// ─── FASE vs LADO ATACANTE (modelo de turnos GBC — M8.C2a) ───
+// En LSW cada TURN tiene DOS exchanges: el atacante del exchange 0 es la
+// INICIATIVA (activeSide, marcado con * por SPD) y el del exchange 1 es el
+// opuesto. Desde el punto de vista del jugador:
+//   initiative=player → ATTACK → DEFENSE
+//   initiative=enemy   → DEFENSE → ATTACK
+// La fase describe el GAMEPLAY del combatiente controlado, NUNCA quién
+// ataca: el lado atacante se deriva SIEMPRE de (activeSide, exchange) —
+// activeAttacker() — jamás de la fase. Por eso NO existe una fase
+// 'enemyTurn' ni 'playerTurn': cuando el enemigo ataca, la fase observable
+// del jugador es 'defend' (elección defensiva). El QTE/Stage vive SOLO en
+// las subfases de ataque ('stageInput'); en defensa jamás hay Stage.
+// (El tipo de fase de main.tsx sigue siendo legacy y contiene 'enemyTurn'
+// como espera presentacional — el puente lo mapea a 'defend'.)
 export type BattlePhase =
   | 'position' | 'command' | 'basic' | 'limitSelect' | 'cardSelect'
-  | 'stageInput' | 'enemyTurn' | 'defend' | 'discard' | 'win' | 'lose';
+  | 'stageInput' | 'defend' | 'discard' | 'win' | 'lose';
 
 export type BattleSide = 'player' | 'enemy';
 

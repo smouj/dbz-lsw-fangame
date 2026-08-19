@@ -858,7 +858,13 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
    */
   const engineAct = (cmd: Parameters<BattleRuntime['dispatch']>[0], opts?: Parameters<BattleRuntime['dispatch']>[1]) => {
     const rt = rtApi.runtime;
-    rt.state = { ...rt.state, phase: phase as BattleState['phase'] };
+    // M8.C2a — la fase del Engine NO tiene 'enemyTurn' (fase ≠ lado
+    // atacante): cuando el enemigo ataca, la fase observable del jugador es
+    // DEFENSE. El legacy usa 'enemyTurn' como espera presentacional → se
+    // mapea a 'defend' (la ventana ya está comprometida si el jugador
+    // eligió; si no, sigue esperando elección — el contrato no cambia).
+    const enginePhase: BattleState['phase'] = phase === 'enemyTurn' ? 'defend' : phase as BattleState['phase'];
+    rt.state = { ...rt.state, phase: enginePhase };
     pendingLotStart.current = rt.state.tick;
     const res = rt.dispatch(cmd, opts);
     pendingLotStart.current = -1;
