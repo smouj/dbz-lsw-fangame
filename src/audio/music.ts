@@ -63,20 +63,23 @@ export const MUSIC_TRACKS: Record<MusicTrackId, MusicTrack> = {
 
 export const MUSIC_TRACK_LIST: MusicTrack[] = Object.values(MUSIC_TRACKS);
 
-/** Pista por pantalla del juego (mapeo de contexto). */
+/** Mapeo pantalla → pista (fuente ÚNICA — musicForScreen y el Dev Studio
+ *  lo visualizan; nunca tablas paralelas). */
+export const SCREEN_MUSIC: Record<string, MusicTrackId> = {
+  main: 'title',
+  story: 'prologue',
+  storyScene: 'prologue',
+  battle: 'battle',
+  versus: 'battle',
+  deck: 'menu',
+  cards: 'menu',
+  characters: 'menu',
+  settings: 'menu',
+};
+
+/** Pista por pantalla del juego (mapeo de contexto — registry único). */
 export function musicForScreen(screen: string): MusicTrackId {
-  switch (screen) {
-    case 'main':        return 'title';
-    case 'story':
-    case 'storyScene':  return 'prologue';
-    case 'battle':      return 'battle';
-    case 'versus':      return 'battle';
-    case 'deck':
-    case 'cards':
-    case 'characters':  return 'menu';
-    case 'settings':    return 'menu';
-    default:            return 'menu';
-  }
+  return SCREEN_MUSIC[screen] ?? 'menu';
 }
 
 // ── Estado interno ──────────────────────────────────────────

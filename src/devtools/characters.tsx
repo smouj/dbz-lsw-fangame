@@ -71,9 +71,7 @@ export function CharactersModule({ onOpenModule }: {
       <header className="dev-header">
         <h1>Character Studio</h1>
         <p className="dev-sub">
-          Ficha por forma: stats ROM · assets · poses de combate · <strong>browser de frames</strong>{' '}
-          (inspector con bbox/alpha/specks/duplicados — antes en Sprites/Sheets). Todo desde el
-          manifest V9 de la forma, una sola fuente.
+          Stats ROM · assets · poses de combate · browser de frames — manifest V9, fuente única.
         </p>
       </header>
 

@@ -8,27 +8,22 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { STORY_ENEMY_DECKS, STORY_AI_BOOSTS, TEAM_BATTLES } from '../data/enemy_decks';
 import { panelsForChapter, characterName, type StoryPanel } from '../data/storyPanels';
-import { storyPortraitUrl } from '../data/storyPortraits';
-import { MENU_PORTRAITS, MINI_PORTRAITS } from '../data/icons';
+import { STORY_PORTRAITS } from '../data/storyPortraits';
+import { resolveSpeakerPortrait } from '../data/speakerPortraits';
 import { getCard, cardColor } from '../data/cards';
 
 const CHAPTER_IDS = Object.keys(STORY_ENEMY_DECKS).map(Number).sort((a, b) => a - b);
 
-// Alias idéntico al del juego (main.tsx CHAR_PORTRAIT_ALIAS)
-const CHAR_PORTRAIT_ALIAS: Record<string, string> = {
-  gohan_kid: 'gohan', gohan_adult: 'gohan',
-  trunks_kid: 'trunks', trunks_future: 'trunks',
-};
-
-function miniPortraitFor(charId: string): string | undefined {
-  return MINI_PORTRAITS[CHAR_PORTRAIT_ALIAS[charId] ?? charId];
-}
-
-/** Resolución canónica del retrato de una viñeta (igual que StorySceneScreen). */
+/** Resolución canónica del retrato de una viñeta — M8.P0: la MISMA cadena
+ *  que el diálogo de la partida y el panel de Stage (resolveSpeakerPortrait).
+ *  Para viñetas con emoción explícita se prioriza el retrato de story con
+ *  emoción; el resto cae en la cadena única (story → mini → menú). */
 function resolvePortrait(c: { character: string; form?: string; emotion?: string }): string | undefined {
-  return storyPortraitUrl(c.character, c.form, c.emotion as never)
-    || miniPortraitFor(c.character)
-    || MENU_PORTRAITS[CHAR_PORTRAIT_ALIAS[c.character] ?? c.character];
+  if (c.emotion) {
+    const emo = STORY_PORTRAITS[c.character]?.emotions?.[c.emotion as never];
+    if (emo) return emo;
+  }
+  return resolveSpeakerPortrait(c.character, c.form);
 }
 
 export function StoryModule() {

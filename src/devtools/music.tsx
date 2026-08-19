@@ -5,19 +5,14 @@
 
 import React, { useState } from 'react';
 import { Play, Square, Music as MusicIcon, MapPin } from 'lucide-react';
-import { MUSIC_TRACK_LIST, MUSIC_TRACKS, musicForScreen, type MusicTrackId } from '../audio/music';
+import { MUSIC_TRACK_LIST, MUSIC_TRACKS, SCREEN_MUSIC, musicForScreen, type MusicTrackId } from '../audio/music';
 
-const SCREEN_MAP: [string, MusicTrackId][] = [
-  ['main (título)', 'title'],
-  ['story / storyScene', 'prologue'],
-  ['battle (normal)', 'battle'],
-  ['battle (jefe, cap ≥15)', 'epic_battle'],
-  ['versus', 'battle'],
-  ['deck / cards / characters', 'menu'],
-  ['settings', 'menu'],
-  ['phase win', 'victory'],
-  ['phase lose', 'game_over'],
-];
+// DEV-SYNC: sin tabla paralela — el mapeo se visualiza desde SCREEN_MUSIC
+// (fuente única que también consume musicForScreen). Etiquetas legibles.
+const SCREEN_LABELS: Record<string, string> = {
+  main: 'main (título)', story: 'story', storyScene: 'storyScene', battle: 'battle (normal)',
+  versus: 'versus', deck: 'deck', cards: 'cards', characters: 'characters', settings: 'settings',
+};
 
 export default function MusicPage() {
   const [current, setCurrent] = useState<MusicTrackId | null>(null);
@@ -77,9 +72,9 @@ export default function MusicPage() {
         <table className="dev-table">
           <thead><tr><th>Contexto</th><th>Pista</th></tr></thead>
           <tbody>
-            {SCREEN_MAP.map(([ctx, id]) => (
-              <tr key={ctx}>
-                <td>{ctx}</td>
+            {Object.entries(SCREEN_MUSIC).map(([screen, id]) => (
+              <tr key={screen}>
+                <td>{SCREEN_LABELS[screen] ?? screen}</td>
                 <td>
                   <button className="linklike" onClick={() => toggle(id)}>
                     <MapPin size={10} /> {MUSIC_TRACKS[id].label}

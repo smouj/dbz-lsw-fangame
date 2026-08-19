@@ -560,7 +560,7 @@ export function AnimationModule({ target }: { target?: DevLinkedTarget | null })
           />
 
           <div className="dev-sprite-meta">
-            <div><span>dir</span><code>{dir ?? '— (sin V5)'}</code></div>
+            <div><span>dir</span><code>{dir ?? '— (sin dir)'}</code></div>
             <div><span>pose</span><code>{poseData ? `${pose} · ${nFrames} frames · ${fps}fps` : '—'}</code></div>
             <div><span>canvas</span><code>{bounds.maxW}×{bounds.maxH} (anclado abajo-centro)</code></div>
           </div>

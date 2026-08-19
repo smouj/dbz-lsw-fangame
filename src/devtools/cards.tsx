@@ -96,25 +96,38 @@ export function CardsModule() {
 }
 
 
-// ── Ficha cinematográfica (contrato V2): plantilla T01-T12 + asset + directiva ──
-function CinematicCardInfo({ id }: { id: number }) {
-  const c = cardCinematic(id);
-  if (!c) return (
-    <div className="dev-card-compat">
-      <h4>Cinemática (V2)</h4>
-      <span className="dev-tag bad">Sin perfil en cardsCinematic.ts</span>
-    </div>
-  );
-  const color = c.asset.startsWith('UNIQUE') ? '#e0b84c' : c.asset.startsWith('SUPPORT') ? '#7fd48a' : c.asset.startsWith('ITEM') ? '#6cb7e8' : '#8a93a8';
+// ── Ficha RUNTIME (DEV-SYNC): separa DATOS ROM / RUNTIME (ActionProfile) /
+// GBC FIDELITY. El contrato V2 (cardsCinematic.ts) se muestra SOLO como
+// referencia legacy etiquetada — nunca como canon cinematográfico.
+function CinematicCardInfo({ card }: { card: CardDef }) {
+  const profile = resolveActionProfile(card.name);
+  const legacy = cardCinematic(card.id);
+  const color = legacy ? (legacy.asset.startsWith('UNIQUE') ? '#e0b84c' : legacy.asset.startsWith('SUPPORT') ? '#7fd48a' : legacy.asset.startsWith('ITEM') ? '#6cb7e8' : '#8a93a8') : '#8a93a8';
+  const fid = profile?.fidelity ?? 'INFERRED';
+  const fidOk = fid === 'FRAME_VERIFIED' || fid === 'VERIFIED';
   return (
     <div className="dev-card-compat">
-      <h4>Cinemática — contrato V2</h4>
+      <h4>RUNTIME — ActionProfile</h4>
       <div className="dev-compat-chips">
-        <span className="dev-tag" style={{ background: '#2a2233', color: '#d9b0e8', border: '1px solid #6b4a7a' }}>{c.template}</span>
-        <span className="dev-tag" style={{ background: color + '22', color, border: `1px solid ${color}66` }}>{c.asset}</span>
-        <span className="dev-tag">{c.mechanics}</span>
+        <span className="dev-tag" style={{ background: '#1a2730', color: '#ffe9a3', border: '1px solid #5a4a20' }}>profile: {profile?.id ?? `generic_${actionSemanticsForCard(card).animation}`}</span>
+        <span className="dev-tag">actor: {profile?.actor?.beats?.map(b => b.pose).join(' → ') ?? '—'}</span>
+        <span className="dev-tag">target: {profile?.impact?.targetPose ?? '—'}</span>
+        <span className="dev-tag">projectile: {profile?.projectile?.kind ?? '—'}</span>
+        <span className={`dev-tag ${fidOk ? 'ok' : ''}`}>fidelity: {fid}</span>
       </div>
-      <p className="dev-muted" style={{ marginTop: 6, fontSize: 12 }}>{c.directive}</p>
+      <div className="dev-card-compat">
+        <h4>GBC FIDELITY</h4>
+        <div className="dev-compat-chips">
+          {profile?.fidelity
+            ? <span className={`dev-tag ${fidOk ? 'ok' : ''}`}>{fid} {fidOk ? '(canon GBC — F0)' : '(RUNTIME SEQUENCE — no canon hasta F0)'}</span>
+            : <span className="dev-tag">INFERRED (sin perfil firma)</span>}
+          {legacy && (
+            <span className="dev-tag" style={{ background: color + '22', color, border: `1px solid ${color}66` }} title="Referencia del contrato V2 — solo informativa, no es canon cinematográfico">
+              legacy V2: {legacy.template} · {legacy.asset}
+            </span>
+          )}
+        </div>
+      </div>
     </div>
   );
 }
@@ -157,7 +170,7 @@ function CardDetail({ card }: { card: CardDef }) {
         <code>{JSON.stringify({ id: card.id, type: card.type, effect: card.effect, atk: card.atk, acc: card.acc, cc: card.cc, rarity: card.rarity, compatible: card.compatible ?? null, notCompatible: card.notCompatible ?? null }, null, 2)}</code>
       </div>
       <ActionCanonInfo card={card} />
-      <CinematicCardInfo id={card.id} />
+      <CinematicCardInfo card={card} />
     </div>
   );
 }

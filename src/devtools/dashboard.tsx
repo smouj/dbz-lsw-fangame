@@ -1,68 +1,67 @@
 // ═══════════════════════════════════════════════════════════
-// DEV STUDIO — Dashboard: estado de producción con contadores
-// reales computados de los datos del juego (nada hardcodeado).
+// DEV STUDIO — Dashboard: estado de producción.
+// DEV-SYNC: TODOS los contadores vienen de getDevProjectSnapshot()
+// (fuente común con Validation/GameConfig/Characters) — nunca
+// hardcodeados. El pipeline mostrado es la arquitectura ACTUAL del
+// motor (BattleCommand → Engine → Runtime → Presentation Adapter),
+// no los módulos M1-M7 sueltos.
 // ═══════════════════════════════════════════════════════════
-import { FORMS, CHARACTERS } from '../data/roster';
-import { CARDS } from '../data/cards';
-import { STORY_ENEMY_DECKS, TEAM_BATTLES } from '../data/enemy_decks';
-import { SCENARIOS } from '../data/scenarios';
-import { spriteDirFor } from '../data/spriteManifest';
-import { ACTION_FIDELITY_REGISTRY, FidelityLevel } from '../data/actionFidelity';
-import { listActionProfiles } from '../battle/actionProfiles';
-import { listAnimationCanon } from '../battle/animationCanon';
+import { useMemo } from 'react';
+import { getDevProjectSnapshot } from './devSnapshot';
+import { GBC_NATIVE_FPS } from '../data/actionFidelity';
 import type { DevModuleId } from './DevStudio';
 
 interface StatCard { label: string; value: number; total: number; ok: boolean; hint?: string; }
 
+const PIPELINE: Array<[string, string]> = [
+  ['src/battle/engine/commands/', 'BattleCommand → canExecute (legalidad ÚNICA)'],
+  ['src/battle/engine/commands/reduceAcceptedCommand.ts', 'reducers puros (M3) — resolución por dominio'],
+  ['src/battle/engine/state/', 'BattleState puro + selectores (M1)'],
+  ['src/battle/engine/events/', 'BattleEvent + EventLog (M4) — hechos, no vista'],
+  ['src/battle/engine/clock/', 'GBC Clock en ticks (M6) — tiempo autoritativo'],
+  ['src/battle/runtime/BattleRuntime.ts', 'orquestador ÚNICO: dispatch/advance → timeline → presenter'],
+  ['src/battle/engine/presentation/buildTimeline.ts', 'Presentation Adapter (M7): EventLog → BattleTimeline'],
+  ['src/battle/cinematic/GbcCinematicCanon.ts', 'F0 Ground Truth: solo FRAME_VERIFIED / VIDEO_VERIFIED'],
+  ['src/data/generated/spriteCanon.generated.ts', 'canon semántico V9 (fuente única de frames)'],
+];
+
 export function DashboardModule({ onNavigate }: { onNavigate: (m: DevModuleId) => void }) {
-  const forms = Object.values(FORMS);
-  const cards = CARDS;
-  const deckCount = Object.keys(STORY_ENEMY_DECKS).length;
-  const teamCount = Object.keys(TEAM_BATTLES).length;
-  const chapterCount = Object.keys(STORY_ENEMY_DECKS).length;
-  const spriteDirs = forms.filter(f => spriteDirFor(f.id)).length;
-  const bgCount = SCENARIOS.length;
-  const fidelityRows = Object.values(FidelityLevel).map(level => {
-    const count = Object.values(ACTION_FIDELITY_REGISTRY).filter(a => a.fidelity === level).length;
-    return { level, count };
-  });
-  const fidelityTotal = Math.max(1, Object.keys(ACTION_FIDELITY_REGISTRY).length);
-  const signatureProfiles = listActionProfiles();
+  const snap = useMemo(() => getDevProjectSnapshot(), []);
+  const { roster, cards, sprites, cinematics, story, audio, scenarios, canonIntegrity } = snap;
 
   const stats: StatCard[] = [
-    { label: 'Formas (ROM 48)', value: forms.length, total: 48, ok: forms.length === 48 },
-    { label: 'Personajes', value: CHARACTERS.length, total: CHARACTERS.length, ok: CHARACTERS.length >= 24, hint: `${CHARACTERS.length} jugables` },
-    { label: 'Cartas (ROM 125)', value: cards.length, total: 125, ok: cards.length === 125 },
-    { label: 'Mazos de jefes', value: deckCount, total: 32, ok: deckCount >= 30 },
-    { label: 'Combates de equipo', value: teamCount, total: teamCount, ok: teamCount > 0, hint: `${teamCount} cap. 2v2` },
-    { label: 'Capítulos', value: chapterCount, total: 32, ok: chapterCount >= 32 },
-    { label: 'Dirs de sprites', value: spriteDirs, total: 48, ok: spriteDirs >= 42 },
-    { label: 'Escenarios', value: bgCount, total: 13, ok: bgCount >= 13 },
-    { label: 'Perfiles firma', value: signatureProfiles.length, total: signatureProfiles.length, ok: signatureProfiles.length >= 12, hint: 'mín. 12' },
+    { label: 'Formas (ROM 48)', value: roster.forms, total: roster.formsTotal, ok: roster.forms === roster.formsTotal },
+    { label: 'Personajes', value: roster.characters, total: roster.characters, ok: roster.characters >= 24, hint: `${roster.characters} jugables` },
+    { label: 'Cartas (ROM 125)', value: cards.count, total: cards.total, ok: cards.count === cards.total },
+    { label: 'Capítulos con mazo', value: story.chapters, total: 32, ok: story.chapters >= 32 },
+    { label: 'Combates de equipo', value: story.teamBattles, total: story.teamBattles, ok: story.teamBattles > 0, hint: `${story.teamBattles} cap. 2v2` },
+    { label: 'Dirs de sprites', value: roster.withSpriteDir, total: roster.forms, ok: roster.withSpriteDir >= 42 },
+    { label: 'Escenarios', value: scenarios, total: 13, ok: scenarios >= 13 },
+    { label: 'Perfiles firma', value: cinematics.actionProfiles, total: cinematics.actionProfiles, ok: cinematics.actionProfiles >= 12, hint: 'mín. 12' },
   ];
 
-  // Cobertura de sprites por forma: cuántas formas tienen dir de combate
-  const withSprite = forms.filter(f => spriteDirFor(f.id)).length;
-  const spritePct = Math.round((withSprite / Math.max(1, forms.length)) * 100);
-
   const alerts: { level: 'warn' | 'info'; text: string }[] = [];
-  if (forms.length !== 48) alerts.push({ level: 'warn', text: `Faltan ${48 - forms.length} formas de la ROM (stats_full.json tiene 48).` });
-  if (cards.length !== 125) alerts.push({ level: 'warn', text: `Faltan ${125 - cards.length} cartas de la tabla ROM.` });
-  if (spritePct < 100) alerts.push({ level: 'info', text: `${forms.length - withSprite} formas sin sprite de combate animado (fallback sheet/procedural).` });
-  if (signatureProfiles.length < 12) alerts.push({ level: 'warn', text: `Solo ${signatureProfiles.length}/12 perfiles firma registrados.` });
+  if (roster.forms !== roster.formsTotal) alerts.push({ level: 'warn', text: `Faltan ${roster.formsTotal - roster.forms} formas de la ROM (stats_full.json tiene 48).` });
+  if (cards.count !== cards.total) alerts.push({ level: 'warn', text: `Faltan ${cards.total - cards.count} cartas de la tabla ROM.` });
+  if (roster.withSpriteDir < roster.forms) alerts.push({ level: 'info', text: `${roster.forms - roster.withSpriteDir} formas sin sprite de combate animado: ${roster.withoutSpriteDir.join(', ')}.` });
+  if (sprites.unknown > 0) alerts.push({ level: 'info', text: `${sprites.unknown} frames físicos sin evidencia (UNCLASSIFIED honestos — no se asignan a buckets por aproximación).` });
+  if (canonIntegrity.duplicateIds > 0) alerts.push({ level: 'warn', text: `${canonIntegrity.duplicateIds} canonicalId duplicados en el canon V9.` });
+  if (cinematics.gbcVerified === 0) alerts.push({ level: 'info', text: 'F0: 0 secuencias GBC verificadas aún — todo lo funcional es INFERRED hasta captura (nunca se etiqueta como canon GBC).' });
+  // RUNTIME vs CANON: las secuencias Stage funcionales son RUNTIME SEQUENCE
+  // (fidelity INFERRED) — no "canon GBC" (eso es F0).
   alerts.push({ level: 'info', text: 'Stage Attack: ventanas BACK_BACK 1.2s · BACK_FRONT 1.7s · FRONT_BACK 2.4s · FRONT_FRONT 2.9s (manual USA).' });
-  alerts.push({ level: 'info', text: 'Stage Attack: secuencias CANÓNICAS por nivel (pool fijo, rotación determinista round-robin): 3S=6 variantes A/B, 4/5/6S añaden direcciones al final (3 golpes + n−3 dirs).' });
+  alerts.push({ level: 'info', text: 'Stage: RUNTIME SEQUENCE por nivel (pool fijo, rotación determinista) — fidelity INFERRED hasta verificación F0.' });
+  alerts.push({ level: 'info', text: 'Iniciativa: SPD efectiva decide cada turno; empate → persiste la iniciativa actual (determinista — el Engine es puro, sin Math.random).' });
   alerts.push({ level: 'info', text: 'Contraataque: A≈0.4s / B≈0.15s — HYPOTHESIS hasta captura ROM.' });
-  alerts.push({ level: 'info', text: 'Desempate de SPD inicial: 50/50 aleatorio — UNKNOWN hasta ROM.' });
 
   return (
     <div className="dev-panel">
       <header className="dev-header">
         <h1>Estado de producción</h1>
-        <p className="dev-sub">Contadores computados de los datos reales — si algo difiere, el dato es la fuente.</p>
+        <p className="dev-sub">Contadores derivados de getDevProjectSnapshot() — la MISMA fuente que Validation, Game Config y Characters. Si algo difiere, el registro es la fuente.</p>
       </header>
 
-      {/* ═══ PIPELINE ÚNICO: las fuentes de verdad del motor (sin paralelos) ═══ */}
+      {/* ═══ PIPELINE ÚNICO (arquitectura actual) ═══ */}
       <div className="dev-section">
         <h2>Pipeline único — fuentes de verdad</h2>
         <p className="dev-muted" style={{ marginTop: -4 }}>
@@ -70,15 +69,7 @@ export function DashboardModule({ onNavigate }: { onNavigate: (m: DevModuleId) =
           pipelines paralelos: un cambio aquí se refleja en todo.
         </p>
         <div className="dev-pipeline">
-          {[
-            ['src/battle/state.ts', 'reglas puras: mazo (drawPile/hand/discard), +3 CC, HAND CHECK'],
-            ['src/battle/engine.ts', 'máquina de fases/turnos — misma para el juego y el HUD Studio'],
-            ['src/battle/combat.ts', 'sistema HIT/BLOCK/AVOID + multiplicador de posición (única fórmula)'],
-            ['src/battle/evidence.ts', 'niveles de evidencia GBC de cada regla (15 etiquetadas)'],
-            ['src/data/cardVisuals.ts', 'registro único: CardDef → frame GBC por tipo + arte'],
-            ['src/data/hudAssets.ts', 'registro único: acción → sprite de botón'],
-            ['src/data/generated/spriteCanon.generated.ts', 'canon semántico V9 (2426 frames, fuente única)'],
-          ].map(([file, rol]) => (
+          {PIPELINE.map(([file, rol]) => (
             <div key={file} className="dev-pipeline-row">
               <span className="dev-pipeline-file"><code>{file}</code></span>
               <span className="dev-pipeline-rol">{rol}</span>
@@ -103,22 +94,29 @@ export function DashboardModule({ onNavigate }: { onNavigate: (m: DevModuleId) =
       <div className="dev-section">
         <h2>Fidelidad</h2>
         <div className="dev-fidelity">
-          {fidelityRows.map(f => {
-            const pct = Math.round((f.count / fidelityTotal) * 100);
-            const color = f.level === FidelityLevel.FRAME_VERIFIED ? '#7fd4ff'
-              : f.level === FidelityLevel.VERIFIED ? '#3fae5a'
-              : f.level === FidelityLevel.INFERRED ? '#d8a830'
+          {cinematics.fidelityByLevel.map(f => {
+            const pct = Math.round((f.count / cinematics.fidelityTotal) * 100);
+            const color = f.level === FidelityColorMap.FRAME_VERIFIED ? '#7fd4ff'
+              : f.level === FidelityColorMap.VERIFIED ? '#3fae5a'
+              : f.level === FidelityColorMap.INFERRED ? '#d8a830'
               : '#c04040';
             return (
-            <div key={f.level} className="dev-fid-row">
-              <span className="dev-fid-label">{f.level}</span>
-              <div className="dev-fid-track"><div style={{ width: `${pct}%`, background: color }} /></div>
-              <span className="dev-fid-pct">{f.count}/{fidelityTotal}</span>
-            </div>
+              <div key={f.level} className="dev-fid-row">
+                <span className="dev-fid-label">{f.level}</span>
+                <div className="dev-fid-track"><div style={{ width: `${pct}%`, background: color }} /></div>
+                <span className="dev-fid-pct">{f.count}/{cinematics.fidelityTotal}</span>
+              </div>
             );
           })}
           <div className="dev-fid-note">
-            Sprites de combate: <strong>{withSprite}/{forms.length}</strong> formas con dir animado ({spritePct}%). Perfiles firma: <strong>{signatureProfiles.length}</strong>.
+            Canon V9: <strong>{sprites.canonFrames}</strong> frames físicos ({Object.entries(sprites.byStatus).map(([k, v]) => `${k} ${v}`).join(' · ')}) ·
+            {sprites.unknown > 0 ? <strong> {sprites.unknown} UNCLASSIFIED honestos</strong> : ' 0 desconocidos'} ·
+            {sprites.runtimePoseCount} poses con frame físico de {sprites.poseOrder} en COMBAT_POSE_ORDER.
+          </div>
+          <div className="dev-fid-note">
+            F0: <strong>{cinematics.gbcVerified}</strong> secuencias verificadas · {cinematics.gbcInferred} INFERRED ·
+            {cinematics.gbcFamilies} familias cinematográficas · {cinematics.animationCanonFamilies} familias runtime ·
+            reloj nativo {GBC_NATIVE_FPS} fps GBC.
           </div>
         </div>
       </div>
@@ -145,36 +143,37 @@ export function DashboardModule({ onNavigate }: { onNavigate: (m: DevModuleId) =
   );
 }
 
-// ── Estado del BattleEngine (M1-M9) — milestones del plan de migración ──
-// M8.C en curso: MOVE+GUARD migrados · melee/beam/support pendientes.
+// Colores por nivel — espejo del enum (evita importar el enum solo para esto)
+const FidelityColorMap: Record<string, string> = { FRAME_VERIFIED: 'FRAME_VERIFIED', VERIFIED: 'VERIFIED', INFERRED: 'INFERRED' };
+
+// ── Estado del BattleEngine — milestones de la migración M1→M9 ──
 const ENGINE_MILESTONES = [
-  { id: 'M1', label: 'State', desc: 'BattleState puro', done: true },
-  { id: 'M2', label: 'Rules', desc: 'BattleCommand + canExecute', done: true },
-  { id: 'M3', label: 'Resolution', desc: 'executeCommand puro + reducers', done: true },
-  { id: 'M4', label: 'Events', desc: 'BattleEvent + EventLog + canon animación', done: true },
-  { id: 'M5', label: 'RNG + Damage', desc: 'PRNG canónico + daño real + counter', done: true },
-  { id: 'M6', label: 'GBC Clock', desc: 'ticks como autoridad (M6 cerrado)', done: true },
-  { id: 'M7', label: 'Presentation', desc: 'Adapter canon→BattleTimeline (M7 cerrado)', done: true },
-  { id: 'M8', label: 'Cutover', desc: 'runtime: MOVE+GUARD migrados (M8.C en curso)', done: false },
-  { id: 'M9', label: 'Replay', desc: 'EventLog → repetición', done: false },
+  { id: 'M1', label: 'State', done: true },
+  { id: 'M2', label: 'Rules', done: true },
+  { id: 'M3', label: 'Resolution', done: true },
+  { id: 'M4', label: 'Events', done: true },
+  { id: 'M5', label: 'RNG+Damage', done: true },
+  { id: 'M6', label: 'Clock', done: true },
+  { id: 'M7', label: 'Presentation', done: true },
+  { id: 'M8', label: 'Cutover', done: false, hint: 'M8.C en curso: MOVE+GUARD+defensa migrados' },
+  { id: 'M9', label: 'Replay', done: false },
 ];
 
 function EngineMilestoneCard() {
-  const canon = listAnimationCanon();
-  const eventTypes = 25; // tipos en BattleEvent (M4)
   return (
     <div className="dev-stat-card ok dev-engine-card">
       <div className="dev-stat-value" style={{ fontSize: 15 }}>M7<span className="dev-stat-total" style={{ fontSize: 11 }}>/M9</span></div>
       <div className="dev-stat-label">BattleEngine (migración)</div>
       <div className="dev-engine-miles">
         {ENGINE_MILESTONES.map(m => (
-          <span key={m.id} className={`dev-engine-mile ${m.done ? 'done' : ''}`} title={`${m.id} ${m.label} — ${m.desc}`}>
+          <span key={m.id} className={`dev-engine-mile ${m.done ? 'done' : ''}`} title={`${m.id} ${m.label}${m.hint ? ` — ${m.hint}` : ''}`}>
             {m.id}{m.done ? ' ✓' : ''}
           </span>
         ))}
       </div>
       <div className="dev-stat-hint">
-        {eventTypes} tipos de evento · canon: {canon.length} familias de animación · 182 checks verify:battle-engine · 95 verify:presentation · 24 verify:viewport
+        M8.C2a-L cerrado: DefenseState (NONE/AWAITING_CHOICE/COMMITTED) · END_EXCHANGE ·
+        fase ≠ lado atacante · iniciativa dinámica por SPD efectiva.
       </div>
     </div>
   );

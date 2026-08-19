@@ -1,0 +1,528 @@
+{
+  "idle": {
+    "frame_count": 1,
+    "fps": 3,
+    "loop": true,
+    "frames": [
+      {
+        "name": "buu_kid_idle_00",
+        "file": "buu_kid_idle_00.png",
+        "w": 26,
+        "h": 38
+      }
+    ]
+  },
+  "move_front": {
+    "frame_count": 2,
+    "fps": 6,
+    "loop": true,
+    "frames": [
+      {
+        "name": "buu_kid_move_front_00",
+        "file": "buu_kid_move_front_00.png",
+        "w": 31,
+        "h": 36
+      },
+      {
+        "name": "buu_kid_move_front_01",
+        "file": "buu_kid_move_front_01.png",
+        "w": 25,
+        "h": 39
+      }
+    ]
+  },
+  "move_back": {
+    "frame_count": 2,
+    "fps": 6,
+    "loop": true,
+    "frames": [
+      {
+        "name": "buu_kid_move_back_00",
+        "file": "buu_kid_move_back_00.png",
+        "w": 25,
+        "h": 39
+      },
+      {
+        "name": "buu_kid_move_back_01",
+        "file": "buu_kid_move_back_01.png",
+        "w": 31,
+        "h": 36
+      }
+    ]
+  },
+  "guard": {
+    "frame_count": 3,
+    "fps": 6,
+    "loop": false,
+    "frames": [
+      {
+        "name": "buu_kid_guard_00",
+        "file": "buu_kid_guard_00.png",
+        "w": 26,
+        "h": 38
+      },
+      {
+        "name": "buu_kid_guard_01",
+        "file": "buu_kid_guard_01.png",
+        "w": 26,
+        "h": 39
+      },
+      {
+        "name": "buu_kid_guard_02",
+        "file": "buu_kid_guard_02.png",
+        "w": 32,
+        "h": 38
+      }
+    ]
+  },
+  "attack_fwd": {
+    "frame_count": 7,
+    "fps": 5,
+    "loop": false,
+    "frames": [
+      {
+        "name": "buu_kid_attack_fwd_00",
+        "file": "buu_kid_attack_fwd_00.png",
+        "w": 32,
+        "h": 37
+      },
+      {
+        "name": "buu_kid_attack_fwd_01",
+        "file": "buu_kid_attack_fwd_01.png",
+        "w": 30,
+        "h": 37
+      },
+      {
+        "name": "buu_kid_attack_fwd_02",
+        "file": "buu_kid_attack_fwd_02.png",
+        "w": 35,
+        "h": 37
+      },
+      {
+        "name": "buu_kid_attack_fwd_03",
+        "file": "buu_kid_attack_fwd_03.png",
+        "w": 34,
+        "h": 35
+      },
+      {
+        "name": "buu_kid_attack_fwd_04",
+        "file": "buu_kid_attack_fwd_04.png",
+        "w": 33,
+        "h": 35
+      },
+      {
+        "name": "buu_kid_attack_fwd_05",
+        "file": "buu_kid_attack_fwd_05.png",
+        "w": 20,
+        "h": 41
+      },
+      {
+        "name": "buu_kid_attack_fwd_06",
+        "file": "buu_kid_attack_fwd_06.png",
+        "w": 36,
+        "h": 38
+      }
+    ]
+  },
+  "attack_ud": {
+    "frame_count": 4,
+    "fps": 5,
+    "loop": false,
+    "frames": [
+      {
+        "name": "buu_kid_attack_ud_00",
+        "file": "buu_kid_attack_ud_00.png",
+        "w": 28,
+        "h": 39
+      },
+      {
+        "name": "buu_kid_attack_ud_01",
+        "file": "buu_kid_attack_ud_01.png",
+        "w": 28,
+        "h": 37
+      },
+      {
+        "name": "buu_kid_attack_ud_02",
+        "file": "buu_kid_attack_ud_02.png",
+        "w": 21,
+        "h": 40
+      },
+      {
+        "name": "buu_kid_attack_ud_03",
+        "file": "buu_kid_attack_ud_03.png",
+        "w": 27,
+        "h": 30
+      }
+    ]
+  },
+  "hurt": {
+    "frame_count": 1,
+    "fps": 6,
+    "loop": false,
+    "frames": [
+      {
+        "name": "buu_kid_hurt_00",
+        "file": "buu_kid_hurt_00.png",
+        "w": 29,
+        "h": 30
+      }
+    ]
+  },
+  "beam_charge": {
+    "frame_count": 5,
+    "fps": 7,
+    "loop": false,
+    "frames": [
+      {
+        "name": "buu_kid_beam_charge_00",
+        "file": "buu_kid_beam_charge_00.png",
+        "w": 31,
+        "h": 37
+      },
+      {
+        "name": "buu_kid_beam_charge_01",
+        "file": "buu_kid_beam_charge_01.png",
+        "w": 30,
+        "h": 37
+      },
+      {
+        "name": "buu_kid_beam_charge_02",
+        "file": "buu_kid_beam_charge_02.png",
+        "w": 23,
+        "h": 38
+      },
+      {
+        "name": "buu_kid_beam_charge_03",
+        "file": "buu_kid_beam_charge_03.png",
+        "w": 29,
+        "h": 37
+      },
+      {
+        "name": "buu_kid_beam_charge_04",
+        "file": "buu_kid_beam_charge_04.png",
+        "w": 27,
+        "h": 42
+      }
+    ]
+  },
+  "beam_fire": {
+    "frame_count": 4,
+    "fps": 8,
+    "loop": false,
+    "frames": [
+      {
+        "name": "buu_kid_beam_fire_00",
+        "file": "buu_kid_beam_fire_00.png",
+        "w": 23,
+        "h": 41
+      },
+      {
+        "name": "buu_kid_beam_fire_01",
+        "file": "buu_kid_beam_fire_01.png",
+        "w": 30,
+        "h": 37
+      },
+      {
+        "name": "buu_kid_beam_fire_02",
+        "file": "buu_kid_beam_fire_02.png",
+        "w": 24,
+        "h": 37
+      },
+      {
+        "name": "buu_kid_beam_fire_03",
+        "file": "buu_kid_beam_fire_03.png",
+        "w": 23,
+        "h": 37
+      }
+    ]
+  },
+  "punch_right": {
+    "frame_count": 4,
+    "fps": 7,
+    "loop": false,
+    "frames": [
+      {
+        "name": "buu_kid_idle_00",
+        "file": "buu_kid_idle_00.png",
+        "w": 26,
+        "h": 38
+      },
+      {
+        "name": "buu_kid_attack_fwd_00",
+        "file": "buu_kid_attack_fwd_00.png",
+        "w": 32,
+        "h": 37
+      },
+      {
+        "name": "buu_kid_attack_fwd_01",
+        "file": "buu_kid_attack_fwd_01.png",
+        "w": 30,
+        "h": 37
+      },
+      {
+        "name": "buu_kid_attack_fwd_02",
+        "file": "buu_kid_attack_fwd_02.png",
+        "w": 35,
+        "h": 37
+      }
+    ]
+  },
+  "punch_left": {
+    "frame_count": 5,
+    "fps": 7,
+    "loop": false,
+    "frames": [
+      {
+        "name": "buu_kid_idle_00",
+        "file": "buu_kid_idle_00.png",
+        "w": 26,
+        "h": 38
+      },
+      {
+        "name": "buu_kid_attack_fwd_03",
+        "file": "buu_kid_attack_fwd_03.png",
+        "w": 34,
+        "h": 35
+      },
+      {
+        "name": "buu_kid_attack_fwd_04",
+        "file": "buu_kid_attack_fwd_04.png",
+        "w": 33,
+        "h": 35
+      },
+      {
+        "name": "buu_kid_attack_fwd_05",
+        "file": "buu_kid_attack_fwd_05.png",
+        "w": 20,
+        "h": 41
+      },
+      {
+        "name": "buu_kid_attack_fwd_06",
+        "file": "buu_kid_attack_fwd_06.png",
+        "w": 36,
+        "h": 38
+      }
+    ]
+  },
+  "kick_right": {
+    "frame_count": 2,
+    "fps": 7,
+    "loop": false,
+    "frames": [
+      {
+        "name": "buu_kid_kick_right_00",
+        "file": "buu_kid_kick_right_00.png",
+        "w": 33,
+        "h": 35
+      },
+      {
+        "name": "buu_kid_kick_right_01",
+        "file": "buu_kid_kick_right_01.png",
+        "w": 34,
+        "h": 35
+      }
+    ]
+  },
+  "knockback_back": {
+    "frame_count": 1,
+    "fps": 7,
+    "loop": false,
+    "frames": [
+      {
+        "name": "buu_kid_knockback_back_00",
+        "file": "buu_kid_knockback_back_00.png",
+        "w": 28,
+        "h": 37
+      }
+    ]
+  },
+  "knockback_up": {
+    "frame_count": 1,
+    "fps": 7,
+    "loop": false,
+    "frames": [
+      {
+        "name": "buu_kid_knockback_up_00",
+        "file": "buu_kid_knockback_up_00.png",
+        "w": 35,
+        "h": 37
+      }
+    ]
+  },
+  "knockback_down": {
+    "frame_count": 1,
+    "fps": 7,
+    "loop": false,
+    "frames": [
+      {
+        "name": "buu_kid_knockback_down_00",
+        "file": "buu_kid_knockback_down_00.png",
+        "w": 27,
+        "h": 30
+      }
+    ]
+  },
+  "beam_guard": {
+    "frame_count": 3,
+    "fps": 6,
+    "loop": false,
+    "frames": [
+      {
+        "name": "buu_kid_guard_00",
+        "file": "buu_kid_guard_00.png",
+        "w": 26,
+        "h": 38
+      },
+      {
+        "name": "buu_kid_guard_01",
+        "file": "buu_kid_guard_01.png",
+        "w": 26,
+        "h": 39
+      },
+      {
+        "name": "buu_kid_guard_02",
+        "file": "buu_kid_guard_02.png",
+        "w": 32,
+        "h": 38
+      }
+    ]
+  },
+  "evade": {
+    "frame_count": 2,
+    "fps": 10,
+    "loop": false,
+    "frames": [
+      {
+        "name": "buu_kid_move_back_00",
+        "file": "buu_kid_move_back_00.png",
+        "w": 25,
+        "h": 39
+      },
+      {
+        "name": "buu_kid_guard_00",
+        "file": "buu_kid_guard_00.png",
+        "w": 26,
+        "h": 38
+      }
+    ]
+  },
+  "gather_power": {
+    "frame_count": 2,
+    "fps": 6,
+    "loop": true,
+    "frames": [
+      {
+        "name": "buu_kid_gather_power_00",
+        "file": "buu_kid_gather_power_00.png",
+        "w": 31,
+        "h": 37
+      },
+      {
+        "name": "buu_kid_gather_power_01",
+        "file": "buu_kid_gather_power_01.png",
+        "w": 24,
+        "h": 38
+      }
+    ]
+  },
+  "power_up": {
+    "frame_count": 2,
+    "fps": 10,
+    "loop": true,
+    "frames": [
+      {
+        "name": "buu_kid_power_up_00",
+        "file": "buu_kid_power_up_00.png",
+        "w": 31,
+        "h": 37
+      },
+      {
+        "name": "buu_kid_power_up_01",
+        "file": "buu_kid_power_up_01.png",
+        "w": 24,
+        "h": 38
+      }
+    ]
+  },
+  "aura_power": {
+    "frame_count": 3,
+    "fps": 10,
+    "loop": true,
+    "frames": [
+      {
+        "name": "buu_kid_aura_power_00",
+        "file": "buu_kid_aura_power_00.png",
+        "w": 64,
+        "h": 56
+      },
+      {
+        "name": "buu_kid_aura_power_01",
+        "file": "buu_kid_aura_power_01.png",
+        "w": 63,
+        "h": 56
+      },
+      {
+        "name": "buu_kid_aura_power_02",
+        "file": "buu_kid_aura_power_02.png",
+        "w": 64,
+        "h": 56
+      }
+    ]
+  },
+  "aura_support": {
+    "frame_count": 3,
+    "fps": 10,
+    "loop": true,
+    "frames": [
+      {
+        "name": "buu_kid_aura_support_00",
+        "file": "buu_kid_aura_support_00.png",
+        "w": 64,
+        "h": 56
+      },
+      {
+        "name": "buu_kid_aura_support_01",
+        "file": "buu_kid_aura_support_01.png",
+        "w": 63,
+        "h": 56
+      },
+      {
+        "name": "buu_kid_aura_support_02",
+        "file": "buu_kid_aura_support_02.png",
+        "w": 64,
+        "h": 56
+      }
+    ]
+  },
+  "effects": {
+    "frame_count": 4,
+    "fps": 10,
+    "loop": false,
+    "frames": [
+      {
+        "name": "kid_buu_base_effect_01",
+        "file": "kid_buu_base_effect_01.png",
+        "w": 12,
+        "h": 14
+      },
+      {
+        "name": "kid_buu_base_effect_02",
+        "file": "kid_buu_base_effect_02.png",
+        "w": 24,
+        "h": 16
+      },
+      {
+        "name": "kid_buu_base_effect_03",
+        "file": "kid_buu_base_effect_03.png",
+        "w": 24,
+        "h": 16
+      },
+      {
+        "name": "kid_buu_base_effect_04",
+        "file": "kid_buu_base_effect_04.png",
+        "w": 16,
+        "h": 12
+      }
+    ]
+  }
+}
