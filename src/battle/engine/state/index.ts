@@ -40,4 +40,5 @@ export {
   defenseStateOf,
   defenseChoiceOf,
   getControlBoundary,
+  getActionExecution,
 } from './battleStateSelectors';

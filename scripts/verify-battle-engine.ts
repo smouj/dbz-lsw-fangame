@@ -12,7 +12,7 @@ import {
   activeAttacker, activeDefender, initiativeSide, speedOrder, positionOf,
   relativeDistance, isVulnerable, ccOf, hpOf, handOf,
   isDefenseCommitted, defenseStateOf, defenseChoiceOf,
-  getControlBoundary,
+  getControlBoundary, getActionExecution,
 } from '../src/battle/engine/state/battleStateSelectors';
 import { canExecute, getAvailableCommands } from '../src/battle/engine/commands/canExecute';
 import type { BattleCommand } from '../src/battle/engine/commands/BattleCommand';
@@ -631,6 +631,7 @@ check('M8.C2a: MOVE vertical en ventana ya comprometida → REJECTED', !executeC
 // Engine NUNCA produce acciones de gameplay (solo QTE timeout).
 {
   const B = getControlBoundary;
+  const E = getActionExecution;
   // TEST 1 — ATTACK no se juega solo: 10.000 ticks en fase command con
   // iniciativa player → 0 cartas/acciones/daño; sigue esperando decisión.
   const atk = { ...m3State, phase: 'command' as never, activeSide: 'player' as const, exchange: 0 as const };
@@ -646,17 +647,17 @@ check('M8.C2a: MOVE vertical en ventana ya comprometida → REJECTED', !executeC
   // NO actúa hasta elegir (ni siquiera tras 10.000 ticks).
   const sSt = { ...m3Command, phase: 'basic' as never, tick: 500 };
   const prep = executeCommand(sSt, { type: 'BASIC_STAGE_ATTACK' }, { side: 'player', characterId: 'goku' });
-  check('P0: T2 — tras elegir Stage, PREPARING → RESOLVING (no STAGE_INPUT aún)',
-    prep.ok && prep.state.stageQte.state === 'PREPARING' && B(prep.state) === 'RESOLVING');
+  check('P0: T2 — tras elegir Stage, ejecución PREPARING → boundary RESOLVING (el input NO aparece aún)',
+    prep.ok && prep.state.stageQte.state === 'PREPARING' && E(prep.state) === 'PREPARING' && B(prep.state) === 'RESOLVING');
   const open = advanceBattleClock(prep.state, prep.state.stageQte.inputOpenTick - prep.state.tick + 1);
-  check('P0: T2 — INPUT_WINDOW abierta → boundary STAGE_INPUT (solo QTE_INPUT)',
-    open.state.stageQte.state === 'INPUT_WINDOW' && B(open.state) === 'STAGE_INPUT');
+  check('P0: T2 — preparación completa → WAITING_INPUT → boundary ACTION_INPUT (solo input de la acción)',
+    open.state.stageQte.state === 'INPUT_WINDOW' && E(open.state) === 'WAITING_INPUT' && B(open.state) === 'ACTION_INPUT');
   let qs = open.state;
   for (const key of [...qs.stageQte.seq]) {
     qs = executeCommand(qs, { type: 'QTE_INPUT', input: key }, { side: 'player' }).state;
   }
   check('P0: T2 — QTE completado → la acción Stage termina (sin encadenar enemigo)',
-    qs.stageQte.state === 'COMPLETED' && B(qs) === 'RESOLVING');
+    qs.stageQte.state === 'COMPLETED' && E(qs) === 'COMPLETE' && B(qs) === 'RESOLVING');
   // El orquestador abre la ventana defensiva (RESET_DEFENSE + fase defend):
   const defWin = { ...qs, phase: 'defend' as never, exchange: 1 as const, defenseState: 'AWAITING_CHOICE' as const };
   check('P0: T2 — tras el Stage → boundary PLAYER_DEFENSE_CHOICE', B(defWin) === 'PLAYER_DEFENSE_CHOICE');
@@ -695,11 +696,27 @@ check('M8.C2a: MOVE vertical en ventana ya comprometida → REJECTED', !executeC
     !t5Clock.events.some(e => e.type === 'ACTION_STARTED' || e.type === 'DAMAGE_APPLIED')
     && B(t5Clock.state) === 'PLAYER_ATTACK_CHOICE');
 
-  // Boundary puro: win/lose → NONE · discard → RESOLVING (subelección).
+  // Boundary puro: win/lose → NONE · defend COMMITTED → RESOLVING.
   check('P0: win/lose → NONE · defend COMMITTED → RESOLVING',
     B({ ...m3State, phase: 'win' as never }) === 'NONE'
     && B({ ...m3State, phase: 'lose' as never }) === 'NONE'
     && B({ ...m3State, phase: 'defend' as never, defenseState: 'COMMITTED' as const }) === 'RESOLVING');
+
+  // ── ACTION EXECUTION (contrato: PREPARING → WAITING_INPUT → COMPLETE) ──
+  // Sin acción en curso → IDLE (acciones sin input resuelven en el Engine
+  // sin ejecución persistente; su cinematografía es presentacional).
+  check('P0: sin acción → ActionExecution IDLE · defend AWAITING → IDLE',
+    E(m3State) === 'IDLE'
+    && E({ ...m3State, phase: 'defend' as never, defenseState: 'AWAITING_CHOICE' as const }) === 'IDLE');
+  // Counter del Stage: la ventana de contraataque también es WAITING_INPUT
+  // (input de la acción Stage — A/B abandonar/reparar — jamás Defense Phase).
+  const cSt = { ...m3Command, phase: 'basic' as never, tick: 900 };
+  const cPrep = executeCommand(cSt, { type: 'BASIC_STAGE_ATTACK' }, { side: 'player', characterId: 'goku' });
+  const cOpen = advanceBattleClock(cPrep.state, cPrep.state.stageQte.inputOpenTick - cPrep.state.tick + 1);
+  const cWrong = cOpen.state.stageQte.seq[0] === 'A' ? 'B' : 'A';
+  const cFail = executeCommand(cOpen.state, { type: 'QTE_INPUT', input: cWrong }, { side: 'player' });
+  check('P0: COUNTER_WINDOW → WAITING_INPUT + ACTION_INPUT (submecánica de la acción)',
+    cFail.ok && E(cFail.state) === 'WAITING_INPUT' && B(cFail.state) === 'ACTION_INPUT');
 }
 
 

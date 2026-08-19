@@ -22,27 +22,55 @@ export function initiativeSide(state: BattleState): BattleSide {
   return state.activeSide;
 }
 
-// ─── P0: FRONTERAS DE CONTROL DEL JUGADOR ───
+// ─── P0: FRONTERAS DE CONTROL DEL JUGADOR (contrato único) ───
 // El combate JAMÁS atraviesa una decisión humana automáticamente. El
 // orquestador consulta getControlBoundary para saber DÓNDE debe pararse:
 //   PLAYER_ATTACK_CHOICE   → espera una decisión de ataque (BattleCommand)
 //   PLAYER_DEFENSE_CHOICE  → espera GUARD/MOVE/carta defensiva
-//   STAGE_INPUT            → solo QTE_INPUT / counter input
+//   ACTION_INPUT           → espera el input de la ACCIÓN en curso (ej.
+//                            QTE Stage / counter) — el input pertenece a
+//                            la acción, no a una fase del turno
 //   RESOLVING              → resolución ya comprometida (automática OK)
 //   NONE                   → sin control del jugador (win/lose/discard)
 // Regla: en las tres primeras, ningún gameplay avanza sin BattleCommand.
 export type ControlBoundary =
   | 'PLAYER_ATTACK_CHOICE'
   | 'PLAYER_DEFENSE_CHOICE'
-  | 'STAGE_INPUT'
+  | 'ACTION_INPUT'
   | 'RESOLVING'
   | 'NONE';
 
-export function getControlBoundary(state: BattleState): ControlBoundary {
-  // STAGE_INPUT: ventana interactiva del QTE abierta (el reloj puede
-  // expirar — timeout es parte del contrato QTE; inputs del jugador mandan).
+// ─── EJECUCIÓN DE UNA ACCIÓN (contrato: toda acción elegida pasa por su
+// ejecución; la preparación es parte de la acción, no una fase del turno) ───
+//   IDLE          → sin acción en ejecución
+//   PREPARING     → cinematografía de preparación (NO inputs, NO timer)
+//   WAITING_INPUT → ventana interactiva de la acción (solo entonces inputs)
+//   RESOLVING     → resolución ya comprometida (golpes/daño/FX)
+//   COMPLETE      → acción terminada (a la espera del fin de exchange)
+// No todas las acciones pasan por todos los estados: una acción sin input
+// va PREPARING → RESOLVING → COMPLETE; el Stage va PREPARING →
+// WAITING_INPUT → RESOLVING → COMPLETE.
+export type ActionExecutionState =
+  | 'IDLE' | 'PREPARING' | 'WAITING_INPUT' | 'RESOLVING' | 'COMPLETE';
+
+/** Estado de ejecución de la acción actual, derivado del reloj QTE (la
+ *  fuente autoritativa: el Engine abre WAITING_INPUT en inputOpenTick, la
+ *  presentación solo representa). El input NUNCA aparece durante PREPARING. */
+export function getActionExecution(state: BattleState): ActionExecutionState {
   const q = state.stageQte;
-  if (q.state === 'INPUT_WINDOW' || q.state === 'COUNTER_WINDOW') return 'STAGE_INPUT';
+  switch (q.state) {
+    case 'PREPARING': return 'PREPARING';
+    case 'INPUT_WINDOW':
+    case 'COUNTER_WINDOW': return 'WAITING_INPUT';
+    case 'COMPLETED': return 'COMPLETE';
+    default: return 'IDLE';
+  }
+}
+
+export function getControlBoundary(state: BattleState): ControlBoundary {
+  // ACTION_INPUT: ventana interactiva de la acción abierta (el reloj puede
+  // expirar — timeout es parte del contrato; los inputs del jugador mandan).
+  if (getActionExecution(state) === 'WAITING_INPUT') return 'ACTION_INPUT';
   // PLAYER_DEFENSE_CHOICE: ventana defensiva abierta esperando elección.
   // (La espera es INDEFINIDA — el reloj no expira la elección: la defensa
   // no tiene QTE; solo el orquestador la cierra con un comando.)

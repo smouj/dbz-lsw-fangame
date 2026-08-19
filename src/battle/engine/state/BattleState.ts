@@ -30,7 +30,23 @@ import type { StageKey } from '../../stageInputMap';
 import type { QteState } from '../../../data/actionFidelity';
 import type { MoveAxis } from '../../../data/positions';
 
-// ─── FASE vs LADO ATACANTE (modelo de turnos GBC — M8.C2a) ───
+// ─── CONTRATO ÚNICO DEL COMBATE (2026-08-19 — P0) ───
+//   TURN N = 2 exchanges: exchange 0 ataca la INICIATIVA, exchange 1 el
+//   opuesto. activeAttacker()/activeDefender() se derivan SOLO de
+//   (activeSide, exchange) — jamás de la fase.
+//   Desde el jugador solo hay ATTACK (si ataca) o DEFENSE (si defiende):
+//   initiative player → exchange 0 ATTACK · exchange 1 DEFENSE
+//   initiative enemy   → exchange 0 DEFENSE · exchange 1 ATTACK
+//   El juego se DETIENE en toda frontera de decisión (getControlBoundary:
+//   PLAYER_ATTACK_CHOICE / PLAYER_DEFENSE_CHOICE / ACTION_INPUT); el resto
+//   es RESOLVING (automático: preparación y resolución de lo YA elegido).
+//   Toda acción elegida pasa por su EJECUCIÓN (getActionExecution):
+//   IDLE → PREPARING → (WAITING_INPUT si requiere input) → RESOLVING →
+//   COMPLETE. La preparación es parte de la acción, no una fase del turno;
+//   el input aparece SOLO al terminar PREPARING (inputOpenTick del reloj —
+//   la presentación jamás abre el QTE). Al completar la acción termina el
+//   exchange actual; la siguiente frontera espera.
+//   EL JUEGO NUNCA TOMA UNA NUEVA DECISIÓN POR EL JUGADOR.
 // En LSW cada TURN tiene DOS exchanges: el atacante del exchange 0 es la
 // INICIATIVA (activeSide, marcado con * por SPD) y el del exchange 1 es el
 // opuesto. Desde el punto de vista del jugador:
