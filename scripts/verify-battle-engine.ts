@@ -12,6 +12,7 @@ import {
   activeAttacker, activeDefender, initiativeSide, speedOrder, positionOf,
   relativeDistance, isVulnerable, ccOf, hpOf, handOf,
   isDefenseCommitted, defenseStateOf, defenseChoiceOf,
+  getControlBoundary,
 } from '../src/battle/engine/state/battleStateSelectors';
 import { canExecute, getAvailableCommands } from '../src/battle/engine/commands/canExecute';
 import type { BattleCommand } from '../src/battle/engine/commands/BattleCommand';
@@ -590,6 +591,26 @@ check('M8.C2a: MOVE vertical en ventana ya comprometida → REJECTED', !executeC
   check('C2a-L: GUARD legal cuando el player es DEFENSOR (misma fase, lado derivado)',
     gDef.ok && gDef.state.defenseState === 'COMMITTED');
 
+  // ── BUG REAL CORREGIDO: secuencia con iniciativa PLAYER ──
+  // El jugador ataca (exchange 0) → el orquestador avanza a exchange 1
+  // (END_EXCHANGE) → el enemigo ataca → GUARD del jugador DEBE ser legal.
+  // Antes del fix, el Engine se quedaba en exchange 0 → GUARD REJECTED
+  // (NOT_DEFENDER) y el flujo legacy resolvía el ataque enemigo SOLO.
+  const initPlayer = createInitialBattleState(makeConfig({
+    firstAttacker: 'player' as const, playerCc: 30, playerDeck: m2Deck([25, 4]),
+  }));
+  const afterPlayerAction = executeCommand(initPlayer, { type: 'END_EXCHANGE' }, { side: 'player' });
+  check('C2a-L: tras la acción del jugador (E0) → END_EXCHANGE → E1 ataca ENEMY',
+    afterPlayerAction.ok && afterPlayerAction.state.exchange === 1
+    && activeAttacker(afterPlayerAction.state) === 'enemy');
+  const defendAfter = { ...afterPlayerAction.state, phase: 'defend' as never, defenseState: 'AWAITING_CHOICE' as const };
+  const gAfter = executeCommand(defendAfter, { type: 'GUARD' }, { side: 'player', characterId: 'goku' });
+  check('C2a-L: GUARD legal tras la acción del jugador con iniciativa player (bug NOT_DEFENDER corregido)',
+    gAfter.ok && gAfter.state.defenseState === 'COMMITTED');
+  const mAfter = executeCommand(defendAfter, { type: 'MOVE', axis: 'HORIZONTAL' }, { side: 'player', characterId: 'goku' });
+  check('C2a-L: MOVE legal tras la acción del jugador con iniciativa player',
+    mAfter.ok && mAfter.state.defenseState === 'COMMITTED');
+
   // STAGE FAILURE ≠ DEFENSE PHASE: la ventana A/B del counter pertenece a la
   // acción Stage (fase stageInput) — nunca abre 'defend' ni toca la defensa.
   const sStage = { ...m3Command, phase: 'basic' as never, tick: 500 };
@@ -603,6 +624,82 @@ check('M8.C2a: MOVE vertical en ventana ya comprometida → REJECTED', !executeC
   check('C2a-L: QTE_COUNTER_DEFEND requiere COUNTER_WINDOW + fase stageInput (jamás defend)',
     canExecute(stageFail.state, { type: 'QTE_COUNTER_DEFEND' }, { side: 'player' }).ok
     && !canExecute({ ...stageFail.state, phase: 'defend' as never }, { type: 'QTE_COUNTER_DEFEND' }, { side: 'player' }).ok);
+}
+
+// ── P0: PLAYER CONTROL BOUNDARIES — el juego jamás atraviesa una decisión
+// humana automáticamente. getControlBoundary() es la barrera; el reloj del
+// Engine NUNCA produce acciones de gameplay (solo QTE timeout).
+{
+  const B = getControlBoundary;
+  // TEST 1 — ATTACK no se juega solo: 10.000 ticks en fase command con
+  // iniciativa player → 0 cartas/acciones/daño; sigue esperando decisión.
+  const atk = { ...m3State, phase: 'command' as never, activeSide: 'player' as const, exchange: 0 as const };
+  check('P0: T1 — boundary PLAYER_ATTACK_CHOICE en fase command (initiative player)',
+    B(atk) === 'PLAYER_ATTACK_CHOICE');
+  const atkClock = advanceBattleClock(atk, 10000);
+  check('P0: T1 — 10.000 ticks en ATTACK → 0 PLAY_CARD / 0 ACTION_STARTED / 0 DAMAGE_APPLIED',
+    !atkClock.events.some(e => e.type === 'PLAY_CARD' || e.type === 'ACTION_STARTED' || e.type === 'DAMAGE_APPLIED')
+    && B(atkClock.state) === 'PLAYER_ATTACK_CHOICE');
+
+  // TEST 2 — STAGE no continúa más allá de su acción: completar el QTE
+  // termina la acción; la siguiente frontera es DEFENSE CHOICE y el enemigo
+  // NO actúa hasta elegir (ni siquiera tras 10.000 ticks).
+  const sSt = { ...m3Command, phase: 'basic' as never, tick: 500 };
+  const prep = executeCommand(sSt, { type: 'BASIC_STAGE_ATTACK' }, { side: 'player', characterId: 'goku' });
+  check('P0: T2 — tras elegir Stage, PREPARING → RESOLVING (no STAGE_INPUT aún)',
+    prep.ok && prep.state.stageQte.state === 'PREPARING' && B(prep.state) === 'RESOLVING');
+  const open = advanceBattleClock(prep.state, prep.state.stageQte.inputOpenTick - prep.state.tick + 1);
+  check('P0: T2 — INPUT_WINDOW abierta → boundary STAGE_INPUT (solo QTE_INPUT)',
+    open.state.stageQte.state === 'INPUT_WINDOW' && B(open.state) === 'STAGE_INPUT');
+  let qs = open.state;
+  for (const key of [...qs.stageQte.seq]) {
+    qs = executeCommand(qs, { type: 'QTE_INPUT', input: key }, { side: 'player' }).state;
+  }
+  check('P0: T2 — QTE completado → la acción Stage termina (sin encadenar enemigo)',
+    qs.stageQte.state === 'COMPLETED' && B(qs) === 'RESOLVING');
+  // El orquestador abre la ventana defensiva (RESET_DEFENSE + fase defend):
+  const defWin = { ...qs, phase: 'defend' as never, exchange: 1 as const, defenseState: 'AWAITING_CHOICE' as const };
+  check('P0: T2 — tras el Stage → boundary PLAYER_DEFENSE_CHOICE', B(defWin) === 'PLAYER_DEFENSE_CHOICE');
+  const defClock = advanceBattleClock(defWin, 10000);
+  check('P0: T2 — 10.000 ticks en DEFENSE_CHOICE → 0 acciones enemigas · 0 daño · sigue esperando',
+    !defClock.events.some(e => e.type === 'ACTION_STARTED' || e.type === 'DAMAGE_APPLIED' || e.type === 'ATTACK_HIT')
+    && B(defClock.state) === 'PLAYER_DEFENSE_CHOICE');
+
+  // TEST 3 — GUARD desbloquea EXACTAMENTE una resolución: el reloj no
+  // genera nada tras COMMITTED (la resolución enemiga la dispara el
+  // orquestador una sola vez, nunca el tiempo).
+  const g3 = executeCommand(defWin, { type: 'GUARD' }, { side: 'player', characterId: 'goku' });
+  check('P0: T3 — GUARD → COMMITTED → boundary RESOLVING (defensa comprometida)',
+    g3.ok && g3.state.defenseState === 'COMMITTED' && B(g3.state) === 'RESOLVING');
+  const g3Clock = advanceBattleClock(g3.state, 10000);
+  check('P0: T3 — 10.000 ticks tras GUARD → 0 acciones (el reloj no resuelve el ataque enemigo)',
+    !g3Clock.events.some(e => e.type === 'ACTION_STARTED' || e.type === 'DAMAGE_APPLIED' || e.type === 'ATTACK_HIT'));
+
+  // TEST 4 — inicia ENEMY: exchange 0 con iniciativa enemy → el jugador
+  // empieza en DEFENSE_CHOICE y el enemigo NO ataca sin elección.
+  const eInit = createInitialBattleState(makeConfig({ firstAttacker: 'enemy' as const, playerCc: 30, playerDeck: m2Deck([25, 4]) }));
+  const eDef = { ...eInit, phase: 'defend' as never, defenseState: 'AWAITING_CHOICE' as const };
+  check('P0: T4 — iniciativa enemy + exchange 0 → PLAYER_DEFENSE_CHOICE (el juego NO ataca solo)',
+    B(eDef) === 'PLAYER_DEFENSE_CHOICE');
+  const eClock = advanceBattleClock(eDef, 10000);
+  check('P0: T4 — 10.000 ticks al inicio con initiative enemy → 0 acciones enemigas',
+    !eClock.events.some(e => e.type === 'ACTION_STARTED' || e.type === 'DAMAGE_APPLIED')
+    && B(eClock.state) === 'PLAYER_DEFENSE_CHOICE');
+
+  // TEST 5 — tras la resolución enemiga, vuelve a PLAYER ATTACK y espera.
+  const t5 = { ...eClock.state, phase: 'command' as never, exchange: 1 as const, defenseState: 'NONE' as const };
+  check('P0: T5 — tras defender (exchange 1, initiative enemy) → PLAYER_ATTACK_CHOICE',
+    activeAttacker(t5) === 'player' && B(t5) === 'PLAYER_ATTACK_CHOICE');
+  const t5Clock = advanceBattleClock(t5, 10000);
+  check('P0: T5 — 10.000 ticks en ATTACK → 0 acciones · sigue esperando decisión',
+    !t5Clock.events.some(e => e.type === 'ACTION_STARTED' || e.type === 'DAMAGE_APPLIED')
+    && B(t5Clock.state) === 'PLAYER_ATTACK_CHOICE');
+
+  // Boundary puro: win/lose → NONE · discard → RESOLVING (subelección).
+  check('P0: win/lose → NONE · defend COMMITTED → RESOLVING',
+    B({ ...m3State, phase: 'win' as never }) === 'NONE'
+    && B({ ...m3State, phase: 'lose' as never }) === 'NONE'
+    && B({ ...m3State, phase: 'defend' as never, defenseState: 'COMMITTED' as const }) === 'RESOLVING');
 }
 
 

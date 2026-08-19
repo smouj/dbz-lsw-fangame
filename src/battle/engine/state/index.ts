@@ -39,4 +39,5 @@ export {
   isDefenseCommitted,
   defenseStateOf,
   defenseChoiceOf,
+  getControlBoundary,
 } from './battleStateSelectors';

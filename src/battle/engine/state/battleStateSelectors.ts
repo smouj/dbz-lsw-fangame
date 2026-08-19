@@ -22,6 +22,38 @@ export function initiativeSide(state: BattleState): BattleSide {
   return state.activeSide;
 }
 
+// ─── P0: FRONTERAS DE CONTROL DEL JUGADOR ───
+// El combate JAMÁS atraviesa una decisión humana automáticamente. El
+// orquestador consulta getControlBoundary para saber DÓNDE debe pararse:
+//   PLAYER_ATTACK_CHOICE   → espera una decisión de ataque (BattleCommand)
+//   PLAYER_DEFENSE_CHOICE  → espera GUARD/MOVE/carta defensiva
+//   STAGE_INPUT            → solo QTE_INPUT / counter input
+//   RESOLVING              → resolución ya comprometida (automática OK)
+//   NONE                   → sin control del jugador (win/lose/discard)
+// Regla: en las tres primeras, ningún gameplay avanza sin BattleCommand.
+export type ControlBoundary =
+  | 'PLAYER_ATTACK_CHOICE'
+  | 'PLAYER_DEFENSE_CHOICE'
+  | 'STAGE_INPUT'
+  | 'RESOLVING'
+  | 'NONE';
+
+export function getControlBoundary(state: BattleState): ControlBoundary {
+  // STAGE_INPUT: ventana interactiva del QTE abierta (el reloj puede
+  // expirar — timeout es parte del contrato QTE; inputs del jugador mandan).
+  const q = state.stageQte;
+  if (q.state === 'INPUT_WINDOW' || q.state === 'COUNTER_WINDOW') return 'STAGE_INPUT';
+  // PLAYER_DEFENSE_CHOICE: ventana defensiva abierta esperando elección.
+  // (La espera es INDEFINIDA — el reloj no expira la elección: la defensa
+  // no tiene QTE; solo el orquestador la cierra con un comando.)
+  if (state.phase === 'defend' && state.defenseState === 'AWAITING_CHOICE') return 'PLAYER_DEFENSE_CHOICE';
+  // PLAYER_ATTACK_CHOICE: subfases de selección de ataque del jugador.
+  if (state.phase === 'command' || state.phase === 'basic'
+    || state.phase === 'cardSelect' || state.phase === 'limitSelect') return 'PLAYER_ATTACK_CHOICE';
+  if (state.phase === 'win' || state.phase === 'lose') return 'NONE';
+  return 'RESOLVING';
+}
+
 /** Combatiente que ataca en el exchange actual (spec §1-2: primero el turnOwner). */
 export function activeAttacker(state: BattleState): BattleSide {
   return state.exchange === 0 ? state.activeSide : (state.activeSide === 'player' ? 'enemy' : 'player');

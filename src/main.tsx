@@ -45,6 +45,7 @@ import { resolveCombatPose, type BattleSpritePose } from './battle/spriteConfig'
 import { cardBattlePose, cardUsableBy, OFFENSIVE_SUPPORT_EFFECTS, DEFENSIVE_EFFECTS } from './battle/cardPoses';
 import { isDebugCinematics, bindDebugControls, renderDebugOverlay, type CinematicDebugInfo, type CinematicDebugController } from './battle/debugCinematics';
 import { isDebugState, bindQteDebugControls, renderStateOverlay, type StateDebugSnapshot } from './battle/debugState';
+import { getControlBoundary } from './battle/engine/state';
 import { isPixiField } from './renderer/pixi/flag';
 // M8 — BattleRuntime: frontera única del combate (Engine → EventLog → M7
 // Timeline → Presenter). M8.C1 migra MOVE + GUARD: la UI despacha al
@@ -2348,21 +2349,11 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
 
 
   // ─── BASIC: acciones gratuitas del GBC (no cuestan CC) ───
-  const basicAction = (action: 'gather' | 'stage' | 'guard') => {
+  // M8.C2a-L — GUARD NO pertenece al menú BASIC de ataque (contrato:
+  // ATTACK = Stage/Gather · DEFENSE = Guard/Move/carta). El guard del
+  // jugador solo existe en la fase defend (defendBasic → engineAct GUARD).
+  const basicAction = (action: 'gather' | 'stage') => {
     if (action === 'gather') { gatherPower(); return; }
-    if (action === 'guard') {
-      Sfx.select();
-      // M8.C1 — GUARD a través del Engine (guardia = snapshot del runtime)
-      engineAct({ type: 'GUARD' }, { side: 'player' });
-      const g = rtApi.runtime.state.playerGuard;
-      if (g) setPlayerGuard({ type: g }); // ENGINE-SNAPSHOT (M8.C1)
-      setPlayerPose('guard');
-      addLog(`${player.name} ${t('battle.defends')} (ENDURANCE — próximo golpe a la mitad)`);
-      // M8.C2a — GUARD como acción consume el exchange; el enemigo entra
-      // por DEFENSE (input real), nunca por un timer encadenado.
-      setTimeout(() => { setPlayerPose('idle'); afterPlayerAction(); }, gbcMs(32));
-      return;
-    }
     // Stage Attack básico: 3 etapas (4 si se ha gathered — mecánica real)
     const stages = powerState !== 'NORMAL' ? 4 : 3;
     const basicCard: CardDef = {
@@ -2587,7 +2578,14 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
    *  a DEFENSE_COMMITTED. Contrato: terminar tu ataque NO inicia al enemigo. */
   const beginDefenseAfterPlayer = () => {
     // Exchange 1: el enemigo contraataca — +3 CC (spec) y decisión de intent.
+    // M8.C2a-L FIX: el ENGINE también avanza a exchange 1 (END_EXCHANGE).
+    // Sin esto, el Engine seguía en exchange 0 con iniciativa player → el
+    // GUARD/MOVE/carta defensiva del jugador era REJECTED (NOT_DEFENDER) y
+    // el flujo legacy continuaba resolviendo el ataque enemigo SOLO — "el
+    // juego se pone a hacer cosas sin mi turno".
+    engineAct({ type: 'END_EXCHANGE' }, { side: 'player' });
     setExchangeIndex(1);
+    setTurnOwner(rtApi.runtime.state.activeSide); // ENGINE-SNAPSHOT (initiativa intacta)
     const actor = getForm(enemyFormId)!.character.toUpperCase();
     setEnemy(prev => ({ ...prev, cc: Math.min(prev.maxCc, prev.cc + 3) }));
     addLog(`${actor} ${t('battle.strikesFirst')} (+3 CC)`);
@@ -2674,7 +2672,11 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
       runEnemyCinematic(() => resolveEnemyAttack(true, rtApi.runtime.state.player.battlePos, card));
     } else {
       // M8.C1 — GUARD a través del Engine: guardia = snapshot del runtime.
-      engineAct({ type: 'GUARD' }, { side: 'player' });
+      // M8.C2a-L — si el Engine RECHAZA (p.ej. NOT_DEFENDER por desfase de
+      // exchange), NO continuar con la cinemática enemiga: volver al menú
+      // de defensa (el juego jamás "sigue solo" tras un rechazo).
+      const res = engineAct({ type: 'GUARD' }, { side: 'player' });
+      if (!res.ok) { addLog(`${player.name} no puede defender (${res.reason})`); setPhase('defend'); return; }
       const g = rtApi.runtime.state.playerGuard;
       if (g) setPlayerGuard({ type: g }); // ENGINE-SNAPSHOT (M8.C1)
       setPlayerPose('guard');
@@ -2972,29 +2974,48 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
 
   // ─── Inspector de estado (?debugState=1): snapshot para el overlay ───
   const fmtStage = (v: number) => (v > 0 ? `+${v}` : `${v}`);
-  const stateDebugSnapshot: StateDebugSnapshot | null = isDebugState() ? {
-    phase: phase.toUpperCase(),
-    round: turn,
-    exchange: `${exchangeIndex + 1}/2`,
-    owner: turnOwner,
-    fighters: [
-      { side: 'P', name: player.name, level: player.level, hp: player.hp, maxHp: player.maxHp, cc: player.cc, maxCc: player.maxCc, pos: positionLabel(player.battlePos), pose: playerPose },
-      ...(player2 ? [{ side: 'P' as const, name: player2.name, level: player2.level, hp: player2.hp, maxHp: player2.maxHp, cc: player2.cc, maxCc: player2.maxCc, pos: positionLabel(player2.battlePos), pose: 'idle' }] : []),
-      { side: 'E', name: enemy.name, level: enemy.level, hp: enemy.hp, maxHp: enemy.maxHp, cc: enemy.cc, maxCc: enemy.maxCc, pos: positionLabel(enemy.battlePos), pose: enemyPose },
-      ...(enemy2 ? [{ side: 'E' as const, name: enemy2.name, level: enemy2.level, hp: enemy2.hp, maxHp: enemy2.maxHp, cc: enemy2.cc, maxCc: enemy2.maxCc, pos: positionLabel(enemy2.battlePos), pose: 'idle' }] : []),
-    ],
-    pStages: `STR ${fmtStage(pStages.str)} · KI ${fmtStage(pStages.ki)} · SPD ${fmtStage(pStages.spd)} · GRD ${fmtStage(pStages.guard)}`,
-    eStages: `STR ${fmtStage(eStages.str)} · KI ${fmtStage(eStages.ki)} · SPD ${fmtStage(eStages.spd)} · GRD ${fmtStage(eStages.guard)}`,
-    power: powerState,
-    gather: gatherTurns,
-    buff: buffTurns,
-    lockOn: pLockOn,
-    acc: pAcc,
-    eva: pEva,
-    handSize: hand.length,
-    selected: selectedCard != null && hand[selectedCard] ? hand[selectedCard].name : null,
-    qte: stageQte.state !== 'WAITING' ? `${stageQte.state} ${stageQte.idx}/${stageQte.seq.length} (+${stageQte.correct}CC) ${stageQte.elapsedFrames}/${stageQte.limitFrames}f [${stageQte.seq.join(' ')}]` : null,
-  } : null;
+  const stateDebugSnapshot: StateDebugSnapshot | null = isDebugState() ? (() => {
+    // M8.C2a-L — el inspector muestra el LIFECYCLE real del Engine
+    // (initiative/exchange/attacker/defender) + fase + defensa + reloj.
+    // NUNCA 'enemyTurn': la fase es gameplay del jugador, el lado atacante
+    // se deriva de (activeSide, exchange).
+    const rt = rtApi.runtime.state;
+    const attacker = rt.exchange === 0 ? rt.activeSide : (rt.activeSide === 'player' ? 'enemy' : 'player');
+    // M8.C2a-L — el boundary se computa con la fase OBSERVADA (la misma que
+    // engineAct sincroniza en el puente): el Engine solo la actualiza en
+    // dispatch y el inspector debe reflejar el estado real del juego.
+    const observed = { ...rt, phase: (phase === 'enemyTurn' ? 'defend' : phase) as BattleState['phase'] };
+    return {
+      phase: phase.toUpperCase(),
+      round: turn,
+      exchange: `${exchangeIndex + 1}/2`,
+      owner: turnOwner,
+      initiative: rt.activeSide.toUpperCase(),
+      attacker: attacker.toUpperCase(),
+      defender: (attacker === 'player' ? 'enemy' : 'player').toUpperCase(),
+      defenseState: rt.defenseState,
+      tick: rt.tick,
+      rng: rt.rngState,
+      control: getControlBoundary(observed),
+      fighters: [
+        { side: 'P', name: player.name, level: player.level, hp: player.hp, maxHp: player.maxHp, cc: player.cc, maxCc: player.maxCc, pos: positionLabel(player.battlePos), pose: playerPose },
+        ...(player2 ? [{ side: 'P' as const, name: player2.name, level: player2.level, hp: player2.hp, maxHp: player2.maxHp, cc: player2.cc, maxCc: player2.maxCc, pos: positionLabel(player2.battlePos), pose: 'idle' }] : []),
+        { side: 'E', name: enemy.name, level: enemy.level, hp: enemy.hp, maxHp: enemy.maxHp, cc: enemy.cc, maxCc: enemy.maxCc, pos: positionLabel(enemy.battlePos), pose: enemyPose },
+        ...(enemy2 ? [{ side: 'E' as const, name: enemy2.name, level: enemy2.level, hp: enemy2.hp, maxHp: enemy2.maxHp, cc: enemy2.cc, maxCc: enemy2.maxCc, pos: positionLabel(enemy2.battlePos), pose: 'idle' }] : []),
+      ],
+      pStages: `STR ${fmtStage(pStages.str)} · KI ${fmtStage(pStages.ki)} · SPD ${fmtStage(pStages.spd)} · GRD ${fmtStage(pStages.guard)}`,
+      eStages: `STR ${fmtStage(eStages.str)} · KI ${fmtStage(eStages.ki)} · SPD ${fmtStage(eStages.spd)} · GRD ${fmtStage(eStages.guard)}`,
+      power: powerState,
+      gather: gatherTurns,
+      buff: buffTurns,
+      lockOn: pLockOn,
+      acc: pAcc,
+      eva: pEva,
+      handSize: hand.length,
+      selected: selectedCard != null && hand[selectedCard] ? hand[selectedCard].name : null,
+      qte: stageQte.state !== 'WAITING' ? `${stageQte.state} ${stageQte.idx}/${stageQte.seq.length} (+${stageQte.correct}CC) ${stageQte.elapsedFrames}/${stageQte.limitFrames}f [${stageQte.seq.join(' ')}]` : null,
+    };
+  })() : null;
 
   return (
     <div className={`battle-screen view-${viewMode.toLowerCase()} ${intro ? 'intro-active' : ''} ${cardFx ? 'is-cinematic' : ''} ${gbcMsg ? 'gbc-msg' : ''} ${pixiPresentationActive ? 'pixi-presentation-active' : ''} ${phase === 'stageInput' ? 'qte-active' : ''} ${qteResolving ? 'qte-resolving' : ''}`}>

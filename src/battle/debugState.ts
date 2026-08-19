@@ -51,6 +51,13 @@ export interface StateDebugSnapshot {
   round: number;
   exchange: string;   // "1/2"
   owner: string;
+  initiative: string;
+  attacker: string;
+  defender: string;
+  defenseState: string;
+  tick: number;
+  rng: number;
+  control: string;
   fighters: FighterDebug[];
   pStages: string;
   eStages: string;
@@ -67,7 +74,11 @@ export interface StateDebugSnapshot {
 
 export function renderStateOverlay(s: StateDebugSnapshot, qteFrozen: boolean): string {
   const lines: string[] = [];
-  lines.push(`PHASE ${s.phase} · ROUND ${s.round} · EXCH ${s.exchange} · OWNER ${s.owner}`);
+  // P0 — la barrera de control es lo PRIMERO: si pone PLAYER_DEFENSE_CHOICE
+  // y el enemigo ataca, alguien se está saltando la frontera.
+  lines.push(`CONTROL ${s.control}`);
+  lines.push(`PHASE ${s.phase} · ROUND ${s.round} · EXCH ${s.exchange} · INITIATIVE ${s.initiative} · ATTACKER ${s.attacker} · DEFENDER ${s.defender}`);
+  lines.push(`DEFENSE ${s.defenseState} · TICK ${s.tick} · RNG ${s.rng}`);
   for (const f of s.fighters) {
     lines.push(`${f.side} ${f.name} Lv${f.level}  HP ${f.hp}/${f.maxHp}  CC ${f.cc}/${f.maxCc}  [${f.pos}]  ${f.pose}`);
   }
