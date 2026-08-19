@@ -65,16 +65,27 @@ export interface StageStages {
   guard: number;
 }
 
+// ─── Estado defensivo (M8.C2a — autoritativo, en el Engine) ───
+// La defensa es una ELECCIÓN TÁCTICA (menú GUARD/MOVE/carta), NUNCA un
+// QTE: no hay secuencia de inputs, contador Stage ni inputOpenTick en
+// este tramo (Stage/QTE pertenece SOLO a la fase de ataque).
+//   NONE            → sin ventana defensiva abierta (estado base)
+//   AWAITING_CHOICE → ventana abierta: el jugador puede elegir una opción
+//                     (GUARD | MOVE(axis) | carta defensiva) — se espera
+//                     INDEFINIDAMENTE; el enemigo NO actúa hasta que se
+//                     comprometa la elección (contrato C2a: sin timers que
+//                     autolancen la resolución enemiga).
+//   COMMITTED       → el jugador eligió; la resolución del ataque enemigo
+//                     puede abrirse (la presentación representa la defensa
+//                     en el CONTACTO: guard idle→block, MOVE por
+//                     POSITION_CHANGED, carta con FX previo).
+export type DefenseState = 'NONE' | 'AWAITING_CHOICE' | 'COMMITTED';
+
 // ─── Elección defensiva del jugador (M8.C2a — autoritativa, en el Engine) ───
 // El jugador compromete GUARD / MOVE / carta defensiva como UNA elección
 // tipada. El Runtime/presentación NUNCA deduce "como guard=true, supongo
 // que eligió guard": la elección queda explícita en el estado y la
 // cinematografía enemiga sabe qué preparación defensiva representar.
-// Semántica de estados:
-//   defenseChoice === null  → DEFENSE_AWAITING_INPUT (solo la fase 'defend'
-//                             hace legal el comando; el enemigo NO actúa)
-//   defenseChoice !== null  → DEFENSE_COMMITTED (la resolución enemiga
-//                             puede abrirse; ya no hay ventana interactiva)
 export type DefenseChoice =
   | { type: 'GUARD' }
   | { type: 'MOVE'; axis: MoveAxis }
@@ -153,7 +164,11 @@ export interface BattleState {
   pAcc: number;                       // turnos de +30% precisión
   pEva: number;                       // turnos de +30% evasión
   playerGuard: GuardType | null;
-  /** M8.C2a — elección defensiva comprometida (null = esperando input). */
+  /** M8.C2a — estado defensivo explícito (NONE/AWAITING_CHOICE/COMMITTED).
+   *  La ventana la abre RESET_DEFENSE (AWAITING_CHOICE); GUARD/MOVE/carta
+   *  la comprometen (COMMITTED). Nunca hay QTE en defensa. */
+  defenseState: DefenseState;
+  /** M8.C2a — elección defensiva comprometida (null mientras AWAITING_CHOICE). */
   defenseChoice: DefenseChoice | null;
   pLockOn: boolean;
 

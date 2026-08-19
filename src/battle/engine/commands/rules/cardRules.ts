@@ -48,7 +48,7 @@ export function canPlayDefenseCard(state: BattleState, side: BattleSide, handInd
   if (!card) return reject('CARD_NOT_IN_HAND');
   if (!isDefensiveCard(card)) return reject('WRONG_PHASE');
   if (!isCardCompatible(card, characterId)) return reject('CARD_NOT_COMPATIBLE');
-  if (side === 'player' && state.defenseChoice !== null) return reject('DEFENSE_ALREADY_COMMITTED');
+  if (side === 'player' && (state.defenseState === 'COMMITTED' || state.defenseChoice !== null)) return reject('DEFENSE_ALREADY_COMMITTED');
   return hasCc(state, side, card.cc);
 }
 

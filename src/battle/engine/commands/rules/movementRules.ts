@@ -25,7 +25,7 @@ export function canMove(state: BattleState, side: BattleSide, axis: MoveAxis): C
   const pos = (side === 'player' ? state.player : state.enemy).battlePos;
   const dest = destinationFor(pos, axis);
   if (dest === pos) return reject('INVALID_POSITION');
-  if (side === 'player' && state.defenseChoice !== null) return reject('DEFENSE_ALREADY_COMMITTED');
+  if (side === 'player' && (state.defenseState === 'COMMITTED' || state.defenseChoice !== null)) return reject('DEFENSE_ALREADY_COMMITTED');
   return ok();
 }
 

@@ -37,5 +37,6 @@ export {
   handOf,
   qteOf,
   isDefenseCommitted,
+  defenseStateOf,
   defenseChoiceOf,
 } from './battleStateSelectors';

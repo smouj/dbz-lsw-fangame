@@ -30,10 +30,12 @@ export type BattleCommand =
   | { type: 'PLAY_DEFENSE_CARD'; handIndex: number }
   | { type: 'MOVE'; axis: 'HORIZONTAL' | 'VERTICAL' }
   // ── orquestación (M8.C2a) ──
-  /** Abre una ventana defensiva NUEVA (defenseChoice = null). Lo llama el
-   *  orquestador al entrar en fase 'defend' — el Engine nunca deja la
-   *  elección comprometida de un exchange anterior (contrato C2a: UNA
-   *  elección por ventana). Idempotente: si ya está limpia, no-op. */
+  /** Abre una ventana defensiva NUEVA (defenseState → AWAITING_CHOICE,
+   *  defenseChoice = null). Lo llama el orquestador al entrar en fase
+   *  'defend' — el Engine nunca deja la elección comprometida de un
+   *  exchange anterior (contrato C2a: UNA elección por ventana). La
+   *  espera es de ELECCIÓN TÁCTICA del menú defensivo (GUARD/MOVE/carta),
+   *  jamás un QTE. Idempotente: si ya está limpia, no-op. */
   | { type: 'RESET_DEFENSE' }
   // ── QTE / Stage Attack ──
   | { type: 'QTE_INPUT'; input: StageKey }

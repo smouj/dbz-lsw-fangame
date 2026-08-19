@@ -91,10 +91,16 @@ export function qteOf(state: BattleState) {
  *  indefinidamente. La presentación consulta este selector — nunca deduce
  *  la elección de flags sueltos (guard=true ⇒ GUARD, etc.). */
 export function isDefenseCommitted(state: BattleState): boolean {
-  return state.defenseChoice !== null;
+  // M8.C2a — COMMITTED explícito (fallback por elección para compat).
+  return state.defenseState === 'COMMITTED' || state.defenseChoice !== null;
 }
 
-/** M8.C2a — elección defensiva actual (null = AWAITING_INPUT). */
+/** M8.C2a — estado defensivo actual (NONE/AWAITING_CHOICE/COMMITTED). */
+export function defenseStateOf(state: BattleState): BattleState['defenseState'] {
+  return state.defenseState;
+}
+
+/** M8.C2a — elección defensiva actual (null = AWAITING_CHOICE). */
 export function defenseChoiceOf(state: BattleState): BattleState['defenseChoice'] {
   return state.defenseChoice;
 }

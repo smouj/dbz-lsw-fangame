@@ -123,6 +123,7 @@ export function createInitialBattleState(cfg: InitialBattleConfig): BattleState 
     pAcc: 0,
     pEva: 0,
     playerGuard: null,
+    defenseState: 'NONE',
     defenseChoice: null,
     pLockOn: false,
     powerState: 'NORMAL' as PowerState,

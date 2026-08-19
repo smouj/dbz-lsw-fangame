@@ -182,12 +182,12 @@ export function reduceAcceptedCommand(state: BattleState, command: BattleCommand
     case 'GUARD': {
       const r = guard(state, 'player');
       // M8.C2a — GUARD compromete la elección defensiva (autoritativa).
-      // defenseChoice !== null → DEFENSE_COMMITTED → el atacante puede
-      // abrir su resolución. La fase 'defend' sin elección espera input
+      // defenseState → COMMITTED → el atacante puede abrir su resolución.
+      // La fase 'defend' sin elección (AWAITING_CHOICE) espera input
       // indefinidamente (contrato C2a: sin timers que autolancen al enemigo).
       // Orden del batch: DEFENSE_COMMITTED PRIMERO — la frontera defensiva
       // precede a los hechos derivados (GUARD_STARTED) en el timeline.
-      next = { ...r.state, defenseChoice: { type: 'GUARD' } };
+      next = { ...r.state, defenseState: 'COMMITTED', defenseChoice: { type: 'GUARD' } };
       events = [
         { type: 'DEFENSE_COMMITTED', side: 'player', choice: { type: 'GUARD' } },
         ...r.events,
@@ -197,7 +197,7 @@ export function reduceAcceptedCommand(state: BattleState, command: BattleCommand
     case 'PLAY_DEFENSE_CARD': {
       const r = playDefenseCard(state, 'player', command.handIndex);
       // M8.C2a — la carta defensiva compromete la elección (CARD).
-      next = { ...r.state, defenseChoice: { type: 'CARD', cardId: r.cardId } };
+      next = { ...r.state, defenseState: 'COMMITTED', defenseChoice: { type: 'CARD', cardId: r.cardId } };
       events = [
         { type: 'DEFENSE_COMMITTED', side: 'player', choice: { type: 'CARD', cardId: r.cardId } },
         ...r.events,
@@ -209,7 +209,7 @@ export function reduceAcceptedCommand(state: BattleState, command: BattleCommand
       // M8.C2a — MOVE compromete la elección defensiva (MOVE + eje).
       // El Engine muta la posición táctica (autoridad); la presentación
       // NUNCA deriva BattlePosition de la animación (ver C2a §8).
-      next = { ...r.state, defenseChoice: { type: 'MOVE', axis: command.axis } };
+      next = { ...r.state, defenseState: 'COMMITTED', defenseChoice: { type: 'MOVE', axis: command.axis } };
       events = [
         { type: 'DEFENSE_COMMITTED', side: 'player', choice: { type: 'MOVE', axis: command.axis } },
         ...r.events,
@@ -217,10 +217,11 @@ export function reduceAcceptedCommand(state: BattleState, command: BattleCommand
       break;
     }
     case 'RESET_DEFENSE': {
-      // M8.C2a — abre ventana defensiva fresh (defenseChoice = null).
-      // Sin eventos: es una primitiva de orquestación; la presentación
-      // reacciona a DEFENSE_COMMITTED, no al reset. Idempotente.
-      next = { ...state, defenseChoice: null };
+      // M8.C2a — abre ventana defensiva fresh: AWAITING_CHOICE (esperando
+      // elección táctica del menú — NUNCA un QTE). Sin eventos: es una
+      // primitiva de orquestación; la presentación reacciona a
+      // DEFENSE_COMMITTED, no al reset. Idempotente.
+      next = { ...state, defenseState: 'AWAITING_CHOICE', defenseChoice: null };
       break;
     }
 

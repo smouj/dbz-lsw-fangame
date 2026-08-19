@@ -11,7 +11,7 @@ import { createInitialBattleState } from '../src/battle/engine/state/createIniti
 import {
   activeAttacker, activeDefender, speedOrder, positionOf,
   relativeDistance, isVulnerable, ccOf, hpOf, handOf,
-  isDefenseCommitted, defenseChoiceOf,
+  isDefenseCommitted, defenseStateOf, defenseChoiceOf,
 } from '../src/battle/engine/state/battleStateSelectors';
 import { canExecute, getAvailableCommands } from '../src/battle/engine/commands/canExecute';
 import type { BattleCommand } from '../src/battle/engine/commands/BattleCommand';
@@ -247,6 +247,7 @@ function applyMoveAxisLocal(pos: BattlePosition, axis: 'HORIZONTAL' | 'VERTICAL'
 console.log('\n── M3 · executeCommand ──\n');
 
 import { executeCommand, mustExecute } from '../src/battle/engine/commands/executeCommand';
+import { advanceBattleClock } from '../src/battle/engine/clock';
 import { BattlePosition } from '../src/data/positions';
 
 // ── Ejecución / pureza ──
@@ -348,25 +349,27 @@ check('M3: MOVE horizontal → DOWN_FRONT', mv.player.battlePos === BattlePositi
 // M8.C2a: cada comando de defensa compromete UNA elección — el segundo MOVE
 // en la misma ventana es ilegal (DEFENSE_ALREADY_COMMITTED). Para probar el
 // MOVE vertical encadenado se abre una ventana defensiva NUEVA (fresh).
-const mvFresh = mustExecute({ ...sim2, defenseChoice: null }, { type: 'MOVE', axis: 'VERTICAL' });
+const mvFresh = mustExecute({ ...sim2, defenseState: 'AWAITING_CHOICE' as const, defenseChoice: null }, { type: 'MOVE', axis: 'VERTICAL' });
 check('M3: MOVE vertical (ventana fresh) → UP_BACK (no diagonal inválida)', mvFresh.player.battlePos === BattlePosition.UP_BACK);
 check('M8.C2a: MOVE vertical en ventana ya comprometida → REJECTED', !executeCommand(mv, { type: 'MOVE', axis: 'VERTICAL' }, { side: 'player' }).ok);
 
 // ── M8.C2a: DEFENSE COMMIT (frontera defensiva autoritativa) ──
+// La defensa es una ELECCIÓN TÁCTICA (GUARD/MOVE/carta) — JAMÁS un QTE:
+// no hay Stage, secuencia A/B ni inputOpenTick en este tramo.
 {
   const s = { ...m3Command, phase: 'defend' as never, tick: 100 };
   const gr = executeCommand(s, { type: 'GUARD' }, { side: 'player', characterId: 'goku' });
   check('M8.C2a: GUARD → DEFENSE_COMMITTED emitido (frontera autoritativa)',
     gr.ok && gr.events.some(e => e.type === 'DEFENSE_COMMITTED' && JSON.stringify((e as { choice: unknown }).choice) === JSON.stringify({ type: 'GUARD' })));
-  check('M8.C2a: GUARD → defenseChoice autoritativo { GUARD }',
-    gr.ok && gr.state.defenseChoice !== null && JSON.stringify(gr.state.defenseChoice) === JSON.stringify({ type: 'GUARD' }));
+  check('M8.C2a: GUARD → defenseState COMMITTED + elección autoritativa { GUARD }',
+    gr.ok && gr.state.defenseState === 'COMMITTED' && gr.state.defenseChoice !== null && JSON.stringify(gr.state.defenseChoice) === JSON.stringify({ type: 'GUARD' }));
   // Solo UNA elección por ventana: el segundo GUARD es ilegal.
   const gr2 = executeCommand(gr.state, { type: 'GUARD' }, { side: 'player', characterId: 'goku' });
   check('M8.C2a: defensa ya comprometida → segundo GUARD REJECTED', !gr2.ok);
   // MOVE: compromete { MOVE, axis } y muta la posición táctica UNA vez.
   const mr = executeCommand(s, { type: 'MOVE', axis: 'HORIZONTAL' }, { side: 'player', characterId: 'goku' });
-  check('M8.C2a: MOVE → defenseChoice { MOVE, HORIZONTAL } + POSITION_CHANGED',
-    mr.ok && JSON.stringify(mr.state.defenseChoice) === JSON.stringify({ type: 'MOVE', axis: 'HORIZONTAL' })
+  check('M8.C2a: MOVE → defenseState COMMITTED + elección { MOVE, HORIZONTAL } + POSITION_CHANGED',
+    mr.ok && mr.state.defenseState === 'COMMITTED' && JSON.stringify(mr.state.defenseChoice) === JSON.stringify({ type: 'MOVE', axis: 'HORIZONTAL' })
     && mr.events.filter(e => e.type === 'POSITION_CHANGED').length >= 1);
   // Carta defensiva: compromete { CARD, cardId } (coste una sola vez).
   // Taiyoken (id 19) es defense · cc 5 · compatible goku.
@@ -376,13 +379,41 @@ check('M8.C2a: MOVE vertical en ventana ya comprometida → REJECTED', !executeC
     deck: { ...s.deck, hand: [getCard(19) as CardDef] },
   };
   const cr = executeCommand(withCard, { type: 'PLAY_DEFENSE_CARD', handIndex: 0 }, { side: 'player', characterId: 'goku' });
-  check('M8.C2a: PLAY_DEFENSE_CARD → defenseChoice { CARD, id } + DEFENSE_COMMITTED',
-    cr.ok && cr.state.defenseChoice?.type === 'CARD' && cr.events.some(e => e.type === 'DEFENSE_COMMITTED'));
-  // 10.000 ticks sin input → el estado NO genera acción enemiga (el reloj
-  // del Engine solo procesa QTE; la defensa comprometida no abre nada).
-  const ticked = { ...gr.state, tick: gr.state.tick + 10000 };
-  check('M8.C2a: 10.000 ticks tras defensa → sin auto-acción (ni eventos nuevos)',
-    JSON.stringify(ticked) === JSON.stringify({ ...gr.state, tick: gr.state.tick + 10000 }));
+  check('M8.C2a: PLAY_DEFENSE_CARD → defenseState COMMITTED + elección { CARD, id } + DEFENSE_COMMITTED',
+    cr.ok && cr.state.defenseState === 'COMMITTED' && cr.state.defenseChoice?.type === 'CARD' && cr.events.some(e => e.type === 'DEFENSE_COMMITTED'));
+  // ═══ CONTRATO C2a (definición del usuario): la espera defensiva es
+  // INDEFINIDA y SIN reloj — 10.000 ticks reales de advanceBattleClock no
+  // producen NI una acción enemiga NI daño NI cambio de estado: el Engine
+  // solo procesa QTE en el reloj y aquí NO hay QTE (la defensa no tiene
+  // Stage). El enemigo solo puede resolverse tras COMMITTED.
+  const awaiting = executeCommand(s, { type: 'RESET_DEFENSE' }, { side: 'player' });
+  check('M8.C2a: RESET_DEFENSE → defenseState AWAITING_CHOICE (esperando elección del menú)',
+    awaiting.ok && awaiting.state.defenseState === 'AWAITING_CHOICE' && awaiting.state.defenseChoice === null);
+  const clock = advanceBattleClock(awaiting.state, 10000);
+  const enemyActions = clock.events.filter(e => e.type === 'ACTION_STARTED' && (e as { side?: string }).side === 'enemy');
+  const enemyDamage = clock.events.filter(e => e.type === 'ATTACK_HIT' || e.type === 'DAMAGE_APPLIED');
+  check('M8.C2a: 10.000 ticks en AWAITING_CHOICE → 0 acciones enemigas',
+    enemyActions.length === 0);
+  check('M8.C2a: 10.000 ticks en AWAITING_CHOICE → 0 daño/impacto enemigo',
+    enemyDamage.length === 0);
+  check('M8.C2a: 10.000 ticks en AWAITING_CHOICE → sigue AWAITING_CHOICE (espera indefinida)',
+    clock.state.defenseState === 'AWAITING_CHOICE' && clock.state.defenseChoice === null);
+  check('M8.C2a: 10.000 ticks en AWAITING_CHOICE → el QTE Stage sigue intacto (WAITING, sin abrir)',
+    clock.state.stageQte.state === 'WAITING' && clock.state.stageQte.seq.length === 0);
+  // GUARD tras la espera → COMMITTED → la resolución enemiga puede abrirse.
+  const gAfter = executeCommand(clock.state, { type: 'GUARD' }, { side: 'player', characterId: 'goku' });
+  check('M8.C2a: tras 10.000 ticks, GUARD sigue legal → COMMITTED',
+    gAfter.ok && gAfter.state.defenseState === 'COMMITTED');
+  // MOVE(HORIZONTAL) / MOVE(VERTICAL) / PLAY_DEFENSE_CARD en ventanas fresh.
+  const mh = executeCommand(awaiting.state, { type: 'MOVE', axis: 'HORIZONTAL' }, { side: 'player', characterId: 'goku' });
+  check('M8.C2a: MOVE(HORIZONTAL) → COMMITTED + { MOVE, HORIZONTAL }',
+    mh.ok && mh.state.defenseState === 'COMMITTED' && JSON.stringify(mh.state.defenseChoice) === JSON.stringify({ type: 'MOVE', axis: 'HORIZONTAL' }));
+  const mv2 = executeCommand(awaiting.state, { type: 'MOVE', axis: 'VERTICAL' }, { side: 'player', characterId: 'goku' });
+  check('M8.C2a: MOVE(VERTICAL) → COMMITTED + { MOVE, VERTICAL }',
+    mv2.ok && mv2.state.defenseState === 'COMMITTED' && JSON.stringify(mv2.state.defenseChoice) === JSON.stringify({ type: 'MOVE', axis: 'VERTICAL' }));
+  const cardAfter = executeCommand({ ...withCard, defenseState: 'AWAITING_CHOICE' as const }, { type: 'PLAY_DEFENSE_CARD', handIndex: 0 }, { side: 'player', characterId: 'goku' });
+  check('M8.C2a: PLAY_DEFENSE_CARD → COMMITTED + { CARD, id }',
+    cardAfter.ok && cardAfter.state.defenseState === 'COMMITTED' && cardAfter.state.defenseChoice?.type === 'CARD');
 }
 // isDefenseCommitted selector (estado puro → lectura derivada única)
 {
@@ -390,6 +421,7 @@ check('M8.C2a: MOVE vertical en ventana ya comprometida → REJECTED', !executeC
   const committed = mustExecute(s, { type: 'GUARD' });
   check('M8.C2a: isDefenseCommitted=false sin elección · true tras GUARD',
     !isDefenseCommitted(s) && isDefenseCommitted(committed)
+    && defenseStateOf(committed) === 'COMMITTED'
     && defenseChoiceOf(committed)?.type === 'GUARD');
 }
 
@@ -402,26 +434,26 @@ check('M8.C2a: MOVE vertical en ventana ya comprometida → REJECTED', !executeC
   const s = { ...m3Command, phase: 'defend' as never, tick: 100 };
   const committed = mustExecute(s, { type: 'GUARD' });
   check('M8.C2a: GUARD → ventana comprometida (precondición)',
-    committed.defenseChoice !== null && isDefenseCommitted(committed));
+    committed.defenseState === 'COMMITTED' && isDefenseCommitted(committed));
   // RESET_DEFENSE limpia la elección…
   const reset = executeCommand(committed, { type: 'RESET_DEFENSE' }, { side: 'player' });
-  check('M8.C2a: RESET_DEFENSE → defenseChoice null + ok',
-    reset.ok && reset.state.defenseChoice === null);
+  check('M8.C2a: RESET_DEFENSE → defenseState AWAITING_CHOICE + elección null + ok',
+    reset.ok && reset.state.defenseState === 'AWAITING_CHOICE' && reset.state.defenseChoice === null);
   check('M8.C2a: RESET_DEFENSE → solo COMMAND_ACCEPTED (0 eventos de dominio)',
     reset.events.length === 1 && reset.events[0].type === 'COMMAND_ACCEPTED');
   // …y la ventana vuelve a aceptar una elección NUEVA (segunda defensa OK).
   const guardAgain = executeCommand(reset.state, { type: 'GUARD' }, { side: 'player', characterId: 'goku' });
   check('M8.C2a: tras RESET_DEFENSE el GUARD vuelve a ser legal (2ª ventana)',
-    guardAgain.ok && guardAgain.state.defenseChoice !== null);
+    guardAgain.ok && guardAgain.state.defenseState === 'COMMITTED');
   // Idempotente: reset sobre ventana ya limpia → no-op ok.
   const reset2 = executeCommand(s, { type: 'RESET_DEFENSE' }, { side: 'player' });
-  check('M8.C2a: RESET_DEFENSE idempotente (null → null, sin eventos de dominio)',
-    reset2.ok && reset2.state.defenseChoice === null && reset2.events.length === 1 && reset2.events[0].type === 'COMMAND_ACCEPTED');
+  check('M8.C2a: RESET_DEFENSE idempotente (AWAITING_CHOICE → AWAITING_CHOICE, sin eventos de dominio)',
+    reset2.ok && reset2.state.defenseState === 'AWAITING_CHOICE' && reset2.state.defenseChoice === null && reset2.events.length === 1 && reset2.events[0].type === 'COMMAND_ACCEPTED');
   // Legal fuera de 'defend': el orquestador puede reabrir la ventana desde
   // cualquier fase (p.ej. al volver a OVERVIEW tras el exchange anterior).
   const resetInCommand = executeCommand(m3Command, { type: 'RESET_DEFENSE' }, { side: 'player' });
   check('M8.C2a: RESET_DEFENSE legal en fase command (sin requisito de fase)',
-    resetInCommand.ok && resetInCommand.state.defenseChoice === null);
+    resetInCommand.ok && resetInCommand.state.defenseState === 'AWAITING_CHOICE');
   // No expuesto a la UI: getAvailableCommands no lo lista (solo orquestador).
   check('M8.C2a: RESET_DEFENSE NO está en getAvailableCommands (no es input de UI)',
     !getAvailableCommands(s).some(c => c.type === 'RESET_DEFENSE'));
