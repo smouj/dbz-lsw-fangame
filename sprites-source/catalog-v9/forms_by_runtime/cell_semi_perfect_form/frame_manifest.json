@@ -4,14 +4,14 @@
  "frames": [
   {
    "sourceId": "cell_semi_perfect_form/001.png",
-   "canonicalId": "cell_semi_perfect_form.melee.strike.punch_right.00.001.png",
+   "canonicalId": "cell_semi_perfect_form.idle.idle.idle.00.001",
    "characterId": "cell_semi_perfect",
    "formId": "cell_semi_perfect_form",
    "assetType": "actor_frame",
    "view": "FIELD",
-   "family": "melee",
-   "role": "strike",
-   "variant": "punch_right",
+   "family": "idle",
+   "role": "idle",
+   "variant": "idle",
    "sequenceIndex": 0,
    "runtimePoses": [
     "idle",
@@ -20,8 +20,8 @@
     "punch_left",
     "beam_guard"
    ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "evidence": "CANONICAL",
+   "canonStatus": "CANONICAL",
    "source": {
     "sheet": "cell.png",
     "frame": "001.png",
@@ -516,22 +516,22 @@
   },
   {
    "sourceId": "cell_semi_perfect_form/022.png",
-   "canonicalId": "cell_semi_perfect_form.reaction.knockback_back.back.00.022",
+   "canonicalId": "cell_semi_perfect_form.power.gather_power.gather_power.02.022.png",
    "characterId": "cell_semi_perfect",
    "formId": "cell_semi_perfect_form",
-   "assetType": "actor_frame",
+   "assetType": "composite",
    "view": "FIELD",
-   "family": "reaction",
-   "role": "knockback_back",
-   "variant": "back",
-   "sequenceIndex": 0,
+   "family": "power",
+   "role": "gather_power",
+   "variant": "gather_power",
+   "sequenceIndex": 2,
    "runtimePoses": [
     "knockback_back",
     "gather_power",
     "power_up"
    ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "evidence": "CANONICAL",
+   "canonStatus": "CANONICAL",
    "source": {
     "sheet": "cell.png",
     "frame": "022.png",

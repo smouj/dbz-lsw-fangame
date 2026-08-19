@@ -4,14 +4,14 @@
  "frames": [
   {
    "sourceId": "android_17_base/001.png",
-   "canonicalId": "android_17_base.melee.strike.punch_right.00.001.png",
+   "canonicalId": "android_17_base.idle.idle.idle.00.001",
    "characterId": "android_17",
    "formId": "android_17_base",
    "assetType": "actor_frame",
    "view": "FIELD",
-   "family": "melee",
-   "role": "strike",
-   "variant": "punch_right",
+   "family": "idle",
+   "role": "idle",
+   "variant": "idle",
    "sequenceIndex": 0,
    "runtimePoses": [
     "idle",
@@ -20,8 +20,8 @@
     "punch_left",
     "beam_guard"
    ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "evidence": "CANONICAL",
+   "canonStatus": "CANONICAL",
    "source": {
     "sheet": "android_17.png",
     "frame": "001.png",

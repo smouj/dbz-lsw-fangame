@@ -4,22 +4,22 @@
  "frames": [
   {
    "sourceId": "vegito_ssj/001.png",
-   "canonicalId": "vegito_ssj.melee.strike.punch_right.00.001.png",
+   "canonicalId": "vegito_ssj.idle.idle.idle.00.001",
    "characterId": "vegito",
    "formId": "vegito_ssj",
    "assetType": "actor_frame",
    "view": "FIELD",
-   "family": "melee",
-   "role": "strike",
-   "variant": "punch_right",
+   "family": "idle",
+   "role": "idle",
+   "variant": "idle",
    "sequenceIndex": 0,
    "runtimePoses": [
     "idle",
     "punch_right",
     "punch_left"
    ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "evidence": "CANONICAL",
+   "canonStatus": "CANONICAL",
    "source": {
     "sheet": "vegito.png",
     "frame": "001.png",

@@ -4,14 +4,14 @@
  "frames": [
   {
    "sourceId": "goku_super_saiyan/001.png",
-   "canonicalId": "goku_super_saiyan.melee.strike.punch_right.00.001.png",
+   "canonicalId": "goku_super_saiyan.idle.idle.idle.00.001",
    "characterId": "goku_super",
    "formId": "goku_super_saiyan",
    "assetType": "actor_frame",
    "view": "FIELD",
-   "family": "melee",
-   "role": "strike",
-   "variant": "punch_right",
+   "family": "idle",
+   "role": "idle",
+   "variant": "idle",
    "sequenceIndex": 0,
    "runtimePoses": [
     "idle",
@@ -22,8 +22,8 @@
     "punch_left",
     "beam_guard"
    ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "evidence": "CANONICAL",
+   "canonStatus": "CANONICAL",
    "source": {
     "sheet": "goku.png",
     "frame": "001.png",

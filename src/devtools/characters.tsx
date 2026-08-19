@@ -41,6 +41,14 @@ export function CharactersModule({ onOpenModule }: {
   const [charId, setCharId] = useState(CHARACTERS[0]?.id ?? 'goku');
   const [formId, setFormId] = useState(CHARACTERS[0]?.forms[0] ?? 'goku_base');
   const [level, setLevel] = useState(50);
+  // M8.F0 — pestañas de sección: cada vista a ancho COMPLETO (nada de
+  // columnas aplastadas en viewports pequeños). Jerarquía canónica:
+  //   vista  → preview + stats + assets clave
+  //   poses  → grid canónico de TODAS las poses con todos sus frames
+  //   frames → browser completo (bbox/alpha/specks/duplicados)
+  //   ataques→ cartas del personaje → pose + beam chain
+  //   v9     → frames atómicos del sheet canónico
+  const [section, setSection] = useState<'vista' | 'poses' | 'frames' | 'ataques' | 'v9'>('vista');
 
   const char = CHARACTERS.find(c => c.id === charId) ?? CHARACTERS[0];
   const form = getForm(formId) ?? getForm(char.forms[0])!;
@@ -122,106 +130,123 @@ export function CharactersModule({ onOpenModule }: {
             })}
           </div>
 
-          {/* ═══ MAIN: 3 columnas (forma · assets · frames) ═══ */}
-          <div className="dev-form-main">
-            {/* Col 1 — Forma + stats */}
-            <div className="dev-form-col">
-              <h3 className="dev-form-col-title">Forma</h3>
-              <div className="dev-form-id-row">
-                <code>{form.id}</code>
-                {form.tier && <span className="dev-tag">tier {form.tier}</span>}
-                {form.sheet && <span className="dev-tag">{form.sheet}</span>}
-              </div>
-              <div className="dev-level-row">
-                <span className="dev-level-label">Level</span>
-                <input type="range" min={1} max={100} value={level}
-                  onChange={e => setLevel(Number(e.target.value))} className="dev-range" />
-                <span className="dev-level-value">{level}</span>
-              </div>
-              <div className="dev-stats-grid">
-                {STATS.map(s => {
-                  const base = form[s.key];
-                  const val = statAtLevel(form, level, s.key);
-                  const growth = form.curves ? (form.curves[s.key][3] - base) : 0;
-                  const pct = Math.min(100, (val / Math.max(1, form.curves ? form.curves[s.key][3] : val)) * 100);
-                  return (
-                    <div key={s.key} className="dev-stat">
-                      <div className="dev-stat-head">
-                        <span style={{ color: s.color }}>{s.label}</span>
-                        <strong>{val}</strong>
-                        <small>base {base}</small>
-                      </div>
-                      <div className="dev-stat-bar"><div style={{ width: `${pct}%`, background: s.color }} /></div>
-                      <div className="dev-stat-growth">+{growth} @100</div>
+          {/* ═══ M8.F0 — PESTAÑAS DE SECCIÓN (cada vista a ancho completo) ═══ */}
+          <div className="dev-char-sections">
+            <div className="dev-char-section-tabs">
+              <button className={`dev-char-section-tab ${section === 'vista' ? 'active' : ''}`} onClick={() => setSection('vista')}>
+                Vista <em>preview+stats</em>
+              </button>
+              <button className={`dev-char-section-tab ${section === 'poses' ? 'active' : ''}`} onClick={() => setSection('poses')}>
+                Poses <em>grid canónico</em>
+              </button>
+              <button className={`dev-char-section-tab ${section === 'frames' ? 'active' : ''}`} onClick={() => setSection('frames')}>
+                Frames <em>{analysis.frames.length} · {analysis.problemCount} avisos</em>
+              </button>
+              <button className={`dev-char-section-tab ${section === 'ataques' ? 'active' : ''}`} onClick={() => setSection('ataques')}>
+                Ataques <em>carta→pose→beam</em>
+              </button>
+              {form.sheet && (
+                <button className={`dev-char-section-tab ${section === 'v9' ? 'active' : ''}`} onClick={() => setSection('v9')}>
+                  V9 <em>frames atómicos</em>
+                </button>
+              )}
+            </div>
+
+            {section === 'vista' && (
+              <div className="dev-char-section">
+                {/* Preview grande + Forma/stats + assets clave en fila */}
+                <div className="dev-vista-grid">
+                  <FormPreview formId={form.id} dir={spriteDir} analysis={analysis} />
+                  <div className="dev-vista-col">
+                    <h3 className="dev-form-col-title">Forma</h3>
+                    <div className="dev-form-id-row">
+                      <code>{form.id}</code>
+                      {form.tier && <span className="dev-tag">tier {form.tier}</span>}
+                      {form.sheet && <span className="dev-tag">{form.sheet}</span>}
                     </div>
-                  );
-                })}
-              </div>
-              {manifestUrl && (
-                <a className="dev-manifest-link" href={manifestUrl} target="_blank" rel="noreferrer">manifest.json ↗</a>
-              )}
-            </div>
-
-            {/* Col 2 — Assets */}
-            <div className="dev-form-col">
-              <h3 className="dev-form-col-title">Assets</h3>
-              <div className="dev-asset-grid">
-                <AssetCell label="Portrait" src={portrait} />
-                <AssetCell label="Overworld" src={overworldUrl(form.id)} />
-                <AssetCell label="Idle (combate)" src={idleUrl} />
-                <AssetCell label="Battle OW idle" src={battleOwIdle} />
-                <PowerUpCell poseSrc={battleOwPower} auraSrc={battleOwAura} />
-                {form.sheet && <AssetCell label="ROM sheet ref" src={sheetUrl(form)} wide />}
-              </div>
-              <div className="dev-poses-section dev-retratos">
-                <h3>Retratos del personaje</h3>
-                <div className="dev-retratos-grid">
-                  <AssetCell label="Battle (forma)" src={BATTLE_PORTRAITS[form.id]} small />
-                  <AssetCell label="Mini (personaje)" src={MINI_PORTRAITS[char.id]} small />
-                  <AssetCell label="Menú (personaje)" src={MENU_PORTRAITS[char.id]} small />
-                  <StoryPortraitsGrid charId={form.character} formId={form.id} />
+                    <div className="dev-level-row">
+                      <span className="dev-level-label">Level</span>
+                      <input type="range" min={1} max={100} value={level}
+                        onChange={e => setLevel(Number(e.target.value))} className="dev-range" />
+                      <span className="dev-level-value">{level}</span>
+                    </div>
+                    <div className="dev-stats-grid dev-stats-compact">
+                      {STATS.map(s => {
+                        const base = form[s.key];
+                        const val = statAtLevel(form, level, s.key);
+                        const growth = form.curves ? (form.curves[s.key][3] - base) : 0;
+                        const pct = Math.min(100, (val / Math.max(1, form.curves ? form.curves[s.key][3] : val)) * 100);
+                        return (
+                          <div key={s.key} className="dev-stat">
+                            <div className="dev-stat-head">
+                              <span style={{ color: s.color }}>{s.label}</span>
+                              <strong>{val}</strong>
+                              <small>base {base}</small>
+                            </div>
+                            <div className="dev-stat-bar"><div style={{ width: `${pct}%`, background: s.color }} /></div>
+                            <div className="dev-stat-growth">+{growth} @100</div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                    {manifestUrl && (
+                      <a className="dev-manifest-link" href={manifestUrl} target="_blank" rel="noreferrer">manifest.json ↗</a>
+                    )}
+                  </div>
+                  <div className="dev-vista-col">
+                    <h3 className="dev-form-col-title">Assets</h3>
+                    <div className="dev-asset-grid">
+                      <AssetCell label="Portrait" src={portrait} />
+                      <AssetCell label="Overworld" src={overworldUrl(form.id)} />
+                      <AssetCell label="Idle (combate)" src={idleUrl} />
+                      <AssetCell label="Battle OW idle" src={battleOwIdle} />
+                      <PowerUpCell poseSrc={battleOwPower} auraSrc={battleOwAura} />
+                      {form.sheet && <AssetCell label="ROM sheet ref" src={sheetUrl(form)} wide />}
+                    </div>
+                    <div className="dev-poses-section dev-retratos">
+                      <h3>Retratos del personaje</h3>
+                      <div className="dev-retratos-grid">
+                        <AssetCell label="Battle (forma)" src={BATTLE_PORTRAITS[form.id]} small />
+                        <AssetCell label="Mini" src={MINI_PORTRAITS[char.id]} small />
+                        <AssetCell label="Menú" src={MENU_PORTRAITS[char.id]} small />
+                        <StoryPortraitsGrid charId={form.character} formId={form.id} />
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
-              <AllPosesGrid formId={form.id} />
-            </div>
+            )}
 
-            {/* Col 3 — PREVIEW central + Frame browser (Sprites + Sheets integrados) */}
-            <div className="dev-form-col dev-form-col-frames">
-              {/* M8.F0 — Preview grande: sprite de la forma + pills de poses
-                  + frames reales + cadena beam. Jerarquía: primero se VE al
-                  personaje, después se exploran sus frames. */}
-              <FormPreview formId={form.id} dir={spriteDir} analysis={analysis} />
-              <h3 className="dev-form-col-title">
-                Frames del manifest
-                <span className="dev-sheets-count">{analysis.frames.length} · {analysis.problemCount} avisos</span>
-              </h3>
-              {analysis.overridden && (
-                <div className="dev-wip-banner">
-                  Overrides locales activos — los frames pueden diferir del canon V9.{' '}
-                  <button className="dev-btn" onClick={analysis.clearOverrideLocal}>Limpiar override</button>
-                </div>
-              )}
-              <FrameBrowser formId={form.id} analysis={analysis} dir={spriteDir} />
-            </div>
-          </div>
+            {section === 'poses' && (
+              <div className="dev-char-section">
+                <AllPosesGrid formId={form.id} />
+              </div>
+            )}
 
-          {/* Ataques disponibles — cartas del personaje y su pose (canon) */}
-          <details className="dev-collapse" open>
-            <summary>Ataques disponibles — cartas del personaje → pose cinematográfica</summary>
-            <div className="dev-collapse-body">
-              <CharacterAttacks charId={char.id} formId={form.id} />
-            </div>
-          </details>
+            {section === 'frames' && (
+              <div className="dev-char-section">
+                {analysis.overridden && (
+                  <div className="dev-wip-banner">
+                    Overrides locales activos — los frames pueden diferir del canon V9.{' '}
+                    <button className="dev-btn" onClick={analysis.clearOverrideLocal}>Limpiar override</button>
+                  </div>
+                )}
+                <FrameBrowser formId={form.id} analysis={analysis} dir={spriteDir} />
+              </div>
+            )}
 
-          {/* Assets / frames atómicos V9 */}
-          {form.sheet && (
-            <details className="dev-collapse">
-              <summary>Frames atómicos V9 (sheet canónico)</summary>
-              <div className="dev-collapse-body">
+            {section === 'ataques' && (
+              <div className="dev-char-section">
+                <CharacterAttacks charId={char.id} formId={form.id} />
+              </div>
+            )}
+
+            {section === 'v9' && form.sheet && (
+              <div className="dev-char-section">
                 <AtomicFrames sheet={form.sheet} />
               </div>
-            </details>
-          )}
+            )}
+          </div>
         </div>
       </div>
     </div>
@@ -689,32 +714,84 @@ function PowerUpCell({ poseSrc, auraSrc }: { poseSrc?: string; auraSrc?: string 
 // el runtime (resolveCombatPose) — nunca una tabla local.
 function AllPosesGrid({ formId }: { formId: string }) {
   const [poses, setPoses] = useState<CombatPoseAsset[] | null>(null);
+  const [manifest, setManifest] = useState<Record<string, { frames?: unknown[] }> | null>(null);
   useEffect(() => {
     let alive = true;
     const bundle = getCharacterAssetBundle(getForm(formId)?.character ?? 'goku', formId);
     resolveBundlePoses(bundle).then(ps => { if (alive) setPoses(ps); });
+    _spriteManifestInternals.loadManifestFor(formId).then(m => {
+      if (alive) setManifest(m as Record<string, { frames?: unknown[] }> | null);
+    });
     return () => { alive = false; };
   }, [formId]);
 
   if (!poses) return <div className="dev-hint">Resolviendo poses del canon…</div>;
   const resolved = poses.filter(p => p.url);
   const missing = poses.filter(p => !p.url);
+
+  // M8.F0 — frames REALES de cada pose (secuencia completa del manifest),
+  // no solo el frame 0. Cada frame se muestra con su nombre de archivo
+  // canónico. El orden sigue COMBAT_POSE_ORDER (canon).
+  const poseFrames = (pose: string): string[] => {
+    const resolvedPose = resolveCombatPose(pose, p => (manifest?.[p]?.frames?.length ?? 0) > 0);
+    if (!resolvedPose || !manifest?.[resolvedPose]?.frames) return [];
+    return (manifest[resolvedPose].frames as unknown[]).map(f => {
+      const file = (f as { file?: string }).file ?? '';
+      return file;
+    }).filter(Boolean);
+  };
+  const prefix = (pose: string): string => {
+    const resolvedPose = resolveCombatPose(pose, p => (manifest?.[p]?.frames?.length ?? 0) > 0);
+    return resolvedPose ?? pose;
+  };
+
   return (
     <div className="dev-poses-section">
       <h3>Poses de combate — canon completo ({resolved.length}/{poses.length} con frame físico)</h3>
-      <div className="dev-pose-grid">
-        {poses.map(p => (
-          <div key={p.pose} className={`dev-pose-cell ${p.url ? '' : 'no-frame'}`}
-            title={`${p.pose}${p.fallback.length > 0 ? ` → ${p.fallback.join(' → ')}` : ''} · ${p.group}`}>
-            <div className="dev-asset-frame">
-              {p.url ? <img src={p.url} alt={p.pose} loading="lazy" /> : <span className="dev-asset-missing">—</span>}
+      <div className="dev-pose-grid dev-pose-grid-frames">
+        {poses.map(p => {
+          const frames = poseFrames(p.pose);
+          const resolvedPose = prefix(p.pose);
+          const canonForm = SPRITE_CANON.forms.find(f => f.form === (spriteDirFor(formId) ?? formId));
+          // Clasificación canónica de la pose: usamos los frames del canon
+          // cuyo runtimePoses incluye la pose (punch_right → frames melee
+          // attack_forward; guard → frames defense; hurt → frames reaction).
+          // El canon clasifica el FRAME FÍSICO con su family PRIMARIA (el
+          // dedupe elige una por frame), así que agrupamos por family de
+          // TODOS los frames que usan la pose y elegimos la predominante.
+          const canonForPose = (canonForm?.frames ?? []).filter(f => f.runtimePoses.includes(p.pose));
+          const famCount = new Map<string, number>();
+          for (const f of canonForPose) famCount.set(f.family, (famCount.get(f.family) ?? 0) + 1);
+          const primaryFam = [...famCount.entries()].sort((a, b) => b[1] - a[1])[0]?.[0] ?? null;
+          const primaryRole = canonForPose.find(f => f.family === primaryFam)?.role ?? null;
+          const primaryVar = canonForPose.find(f => f.family === primaryFam)?.variant ?? null;
+          const canonLabel = primaryFam && primaryFam !== 'unclassified'
+            ? `${primaryFam}/${primaryRole ?? '?'}/${primaryVar ?? '?'}`
+            : 'unclassified';
+          return (
+            <div key={p.pose} className={`dev-pose-card ${p.url ? '' : 'no-frame'}`}
+              title={`${p.pose}${p.fallback.length > 0 ? ` → ${p.fallback.join(' → ')}` : ''} · ${p.group}`}>
+              <div className="dev-pose-card-head">
+                <span className="dev-pose-card-name">{p.pose}</span>
+                <span className={`dev-tag ${primaryFam && primaryFam !== 'unclassified' ? 'ok' : 'bad'}`}>{canonLabel}</span>
+                <span className="dev-pose-card-count">{frames.length} frames</span>
+              </div>
+              <div className="dev-pose-card-frames">
+                {frames.length > 0 ? frames.map((f, i) => (
+                  <div key={f} className="dev-pose-card-frame" title={`${f} · frame ${i} de ${resolvedPose}`}>
+                    <img src={spriteFrameUrl(formId, f)} alt={`${p.pose}_${i}`} loading="lazy" />
+                    <span className="dev-pose-card-frame-name">{f.replace(/^.*?_/, '').replace('.png', '')}</span>
+                  </div>
+                )) : (
+                  <span className="dev-asset-missing">— sin frames físicos —</span>
+                )}
+              </div>
+              {p.fallback.length > 0 && (
+                <div className="dev-pose-fallback-row">fallback: {p.fallback.join(' → ')} → <b>{p.resolvedPose}</b></div>
+              )}
             </div>
-            <div className="dev-asset-label">
-              {p.pose}
-              {p.fallback.length > 0 && <em className="dev-pose-fallback">→ {p.resolvedPose}</em>}
-            </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
       <div className="dev-semantic-pose-row">{COMBAT_POSE_ORDER.join(' · ')}</div>
       <div className="dev-pose-legend">

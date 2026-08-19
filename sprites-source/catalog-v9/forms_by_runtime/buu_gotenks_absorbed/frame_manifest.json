@@ -4,14 +4,14 @@
  "frames": [
   {
    "sourceId": "buu_gotenks_absorbed/001.png",
-   "canonicalId": "buu_gotenks_absorbed.melee.strike.punch_right.00.001.png",
+   "canonicalId": "buu_gotenks_absorbed.idle.idle.idle.00.001",
    "characterId": "buu_gotenks",
    "formId": "buu_gotenks_absorbed",
    "assetType": "actor_frame",
    "view": "FIELD",
-   "family": "melee",
-   "role": "strike",
-   "variant": "punch_right",
+   "family": "idle",
+   "role": "idle",
+   "variant": "idle",
    "sequenceIndex": 0,
    "runtimePoses": [
     "idle",
@@ -21,8 +21,8 @@
     "beam_guard",
     "evade"
    ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "evidence": "CANONICAL",
+   "canonStatus": "CANONICAL",
    "source": {
     "sheet": "majin_buu.png",
     "frame": "001.png",

@@ -7,20 +7,21 @@
   "fixed_only": 328
  },
  "byStatus": {
-  "RUNTIME_VERIFIED": 1319,
+  "CANONICAL": 425,
+  "RUNTIME_VERIFIED": 1220,
   "UNCLASSIFIED": 377,
-  "ASSET_VERIFIED": 404,
-  "CANONICAL": 326
+  "ASSET_VERIFIED": 404
  },
  "byFamily": {
-  "melee": 564,
+  "idle": 43,
   "defense": 154,
   "unclassified": 781,
   "movement": 69,
-  "reaction": 202,
-  "beam": 330,
+  "reaction": 194,
+  "melee": 515,
+  "beam": 288,
   "effect": 258,
-  "power": 68
+  "power": 124
  },
  "ambiguousLabelsAsCanonical": 0
 }

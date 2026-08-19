@@ -4,22 +4,22 @@
  "frames": [
   {
    "sourceId": "future_trunks_super_saiyan/001.png",
-   "canonicalId": "future_trunks_super_saiyan.melee.strike.punch_right.00.001.png",
+   "canonicalId": "future_trunks_super_saiyan.idle.idle.idle.00.001",
    "characterId": "future_trunks_super",
    "formId": "future_trunks_super_saiyan",
    "assetType": "actor_frame",
    "view": "FIELD",
-   "family": "melee",
-   "role": "strike",
-   "variant": "punch_right",
+   "family": "idle",
+   "role": "idle",
+   "variant": "idle",
    "sequenceIndex": 0,
    "runtimePoses": [
     "idle",
     "punch_right",
     "punch_left"
    ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "evidence": "CANONICAL",
+   "canonStatus": "CANONICAL",
    "source": {
     "sheet": "trunks_future.png",
     "frame": "001.png",

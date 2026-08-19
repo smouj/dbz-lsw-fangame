@@ -11013,6 +11013,87 @@ button.linklike:hover { text-decoration: underline; }
 .dev-tl-col.prof { color: #8a93a3; }
 
 /* ─── Character Studio: layout 3 columnas (forma · assets · frames) ─── */
+/* ═══ M8.F0 — PESTAÑAS DE SECCIÓN (Character Studio) ═══
+   Cada vista a ancho COMPLETO — nada de columnas aplastadas en viewports
+   pequeños. Jerarquía: vista → poses → frames → ataques → v9. */
+.dev-char-sections { margin-top: 12px; }
+.dev-char-section-tabs {
+  display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px;
+  border-bottom: 1px solid #262b33; padding-bottom: 8px;
+}
+.dev-char-section-tab {
+  display: inline-flex; align-items: baseline; gap: 6px;
+  padding: 6px 12px; background: #0e1013; border: 1px solid #262b33;
+  border-radius: 6px; cursor: pointer; color: #aab2bf;
+  font-family: inherit; font-size: 12px;
+}
+.dev-char-section-tab em { font-style: normal; font-size: 10px; color: #6b7484; }
+.dev-char-section-tab.active {
+  border-color: #d8a830; color: #fff; background: #1b2129;
+}
+.dev-char-section-tab.active em { color: #d8a830; }
+.dev-char-section { min-width: 0; }
+/* Vista: preview grande + 2 columnas de datos */
+.dev-vista-grid {
+  display: grid;
+  grid-template-columns: minmax(260px, 380px) minmax(0, 1fr) minmax(0, 1fr);
+  gap: 14px; align-items: start;
+}
+@media (max-width: 1100px) {
+  .dev-vista-grid { grid-template-columns: 1fr; }
+  .dev-vista-grid > .dev-form-preview { grid-column: 1 / -1; }
+}
+@media (max-width: 760px) {
+  .dev-vista-grid { grid-template-columns: 1fr; }
+}
+.dev-vista-col {
+  display: flex; flex-direction: column; gap: 10px; min-width: 0;
+  background: #10131a; border: 1px solid #262b33; border-radius: 10px;
+  padding: 10px;
+}
+.dev-stats-compact .dev-stats-grid { grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); margin-bottom: 8px; }
+/* Pose cards: cada pose canónica con TODOS sus frames en secuencia */
+.dev-pose-grid-frames {
+  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  gap: 10px;
+}
+@media (max-width: 1200px) {
+  .dev-pose-grid-frames { grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); }
+}
+.dev-pose-card {
+  background: #10131a; border: 1px solid #262b33; border-radius: 8px;
+  padding: 8px; display: flex; flex-direction: column; gap: 6px;
+}
+.dev-pose-card.no-frame { opacity: .55; }
+.dev-pose-card-head {
+  display: flex; align-items: center; gap: 6px; flex-wrap: wrap;
+}
+.dev-pose-card-name {
+  font-family: var(--fui); font-size: 12px; color: #ffe9a3; font-weight: 600;
+}
+.dev-pose-card-count { font-size: 10px; color: #6b7484; margin-left: auto; }
+.dev-pose-card-frames {
+  display: flex; flex-wrap: wrap; gap: 4px;
+}
+.dev-pose-card-frame {
+  display: flex; flex-direction: column; align-items: center; gap: 2px;
+  background: #0e1117; border: 1px solid #232b3a; border-radius: 4px;
+  padding: 3px;
+}
+.dev-pose-card-frame img {
+  width: 40px; height: 40px; object-fit: contain;
+  image-rendering: pixelated; image-rendering: crisp-edges;
+}
+.dev-pose-card-frame-name {
+  font-family: var(--fui); font-size: 8px; color: #6d7890;
+  max-width: 44px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.dev-pose-fallback-row {
+  font-family: var(--fui); font-size: 10px; color: #8a93a3;
+  background: #0e1117; border: 1px solid #232b3a; border-radius: 4px;
+  padding: 2px 6px;
+}
+.dev-pose-fallback-row b { color: #d8a830; }
 .dev-form-main { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr) minmax(0, 1.6fr); gap: 12px; margin-top: 12px; align-items: start; }
 /* M8.C2a — responsive: en ventanas medianas (800-1200px) el FrameBrowser
    sube ARRIBA a ancho completo (es la herramienta principal: ver frames,

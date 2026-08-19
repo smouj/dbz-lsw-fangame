@@ -232,8 +232,12 @@ for form_dir in form_dirs:
     # dedupe por frame físico: un frame puede usarse en varias poses runtime
     # (p.ej. punch_right y attack_fwd comparten frames) — se unifica SIN
     # borrar provenance: runtimePoses acumula todas; family/role = el uso
-    # más específico (preferencia: melee/beam/reaction > movement > base).
+    # PRIMARIO. Regla de prioridad (M8.F0 fix): el STATUS canónico manda
+    # (CANONICAL > RUNTIME_VERIFIED) — idle/ready (CANONICAL, poses neutrales
+    # del GBC) ganan sobre melee/beam (RUNTIME_VERIFIED) cuando comparten
+    # frame físico. Entre status iguales, gana la familia más específica.
     _by_src: dict = {}
+    _STATUS_RANK = {'CANONICAL': 3, 'RUNTIME_VERIFIED': 2, 'ASSET_VERIFIED': 1, 'INFERRED': 0, 'UNCLASSIFIED': 0}
     _PRIO = {'melee': 5, 'beam': 5, 'reaction': 5, 'power': 5, 'defense': 4,
              'movement': 3, 'effect': 2, 'idle': 1, 'ready': 1, 'unclassified': 0}
     def _canon_id(form, fam, role, var, seq, src_name):
@@ -254,7 +258,11 @@ for form_dir in form_dirs:
         ex = _by_src[sid]
         for p in entry['runtimePoses']:
             if p not in ex['runtimePoses']: ex['runtimePoses'].append(p)
-        if _PRIO.get(entry['family'], 0) > _PRIO.get(ex['family'], 0):
+        # M8.F0: gana el de mayor STATUS canónico (idle/ready CANONICAL >
+        # melee RUNTIME_VERIFIED); a status igual, la familia más específica.
+        cur_rank = _STATUS_RANK.get(ex['canonStatus'], 0)
+        new_rank = _STATUS_RANK.get(entry['canonStatus'], 0)
+        if new_rank > cur_rank or (new_rank == cur_rank and _PRIO.get(entry['family'], 0) > _PRIO.get(ex['family'], 0)):
             ex['family'] = entry['family']; ex['role'] = entry['role']
             ex['variant'] = entry['variant']; ex['assetType'] = entry['assetType']
             ex['canonStatus'] = entry['canonStatus']; ex['evidence'] = entry['evidence']

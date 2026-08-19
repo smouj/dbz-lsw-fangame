@@ -4,14 +4,14 @@
  "frames": [
   {
    "sourceId": "burter_base/001.png",
-   "canonicalId": "burter_base.melee.strike.punch_right.00.001.png",
+   "canonicalId": "burter_base.idle.idle.idle.00.001",
    "characterId": "burter",
    "formId": "burter_base",
    "assetType": "actor_frame",
    "view": "FIELD",
-   "family": "melee",
-   "role": "strike",
-   "variant": "punch_right",
+   "family": "idle",
+   "role": "idle",
+   "variant": "idle",
    "sequenceIndex": 0,
    "runtimePoses": [
     "idle",
@@ -20,8 +20,8 @@
     "punch_left",
     "beam_guard"
    ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "evidence": "CANONICAL",
+   "canonStatus": "CANONICAL",
    "source": {
     "sheet": "jeice_burter.png",
     "frame": "001.png",
@@ -491,22 +491,22 @@
   },
   {
    "sourceId": "burter_base/021.png",
-   "canonicalId": "burter_base.reaction.knockback_up.up.00.021",
+   "canonicalId": "burter_base.power.gather_power.gather_power.01.021.png",
    "characterId": "burter",
    "formId": "burter_base",
-   "assetType": "actor_frame",
+   "assetType": "composite",
    "view": "FIELD",
-   "family": "reaction",
-   "role": "knockback_up",
-   "variant": "up",
-   "sequenceIndex": 0,
+   "family": "power",
+   "role": "gather_power",
+   "variant": "gather_power",
+   "sequenceIndex": 1,
    "runtimePoses": [
     "knockback_up",
     "gather_power",
     "power_up"
    ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "evidence": "CANONICAL",
+   "canonStatus": "CANONICAL",
    "source": {
     "sheet": "jeice_burter.png",
     "frame": "021.png",

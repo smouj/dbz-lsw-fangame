@@ -4,14 +4,14 @@
  "frames": [
   {
    "sourceId": "krillin_base/001.png",
-   "canonicalId": "krillin_base.melee.strike.punch_right.00.001.png",
+   "canonicalId": "krillin_base.idle.idle.idle.00.001",
    "characterId": "krillin",
    "formId": "krillin_base",
    "assetType": "actor_frame",
    "view": "FIELD",
-   "family": "melee",
-   "role": "strike",
-   "variant": "punch_right",
+   "family": "idle",
+   "role": "idle",
+   "variant": "idle",
    "sequenceIndex": 0,
    "runtimePoses": [
     "idle",
@@ -20,8 +20,8 @@
     "punch_left",
     "beam_guard"
    ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "evidence": "CANONICAL",
+   "canonStatus": "CANONICAL",
    "source": {
     "sheet": "krillin.png",
     "frame": "001.png",
@@ -1093,22 +1093,22 @@
   },
   {
    "sourceId": "krillin_base/046.png",
-   "canonicalId": "krillin_base.beam.release.fire.03.046",
+   "canonicalId": "krillin_base.power.gather_power.gather_power.00.046.png",
    "characterId": "krillin",
    "formId": "krillin_base",
-   "assetType": "actor_frame",
+   "assetType": "composite",
    "view": "ACTION_DUEL",
-   "family": "beam",
-   "role": "release",
-   "variant": "fire",
-   "sequenceIndex": 3,
+   "family": "power",
+   "role": "gather_power",
+   "variant": "gather_power",
+   "sequenceIndex": 0,
    "runtimePoses": [
     "beam_fire",
     "gather_power",
     "power_up"
    ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "evidence": "CANONICAL",
+   "canonStatus": "CANONICAL",
    "source": {
     "sheet": "krillin.png",
     "frame": "046.png",

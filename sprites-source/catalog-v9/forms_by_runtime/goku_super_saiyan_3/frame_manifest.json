@@ -4,14 +4,14 @@
  "frames": [
   {
    "sourceId": "goku_super_saiyan_3/001.png",
-   "canonicalId": "goku_super_saiyan_3.melee.strike.punch_right.00.001.png",
+   "canonicalId": "goku_super_saiyan_3.idle.idle.idle.00.001",
    "characterId": "goku_super_saiyan",
    "formId": "goku_super_saiyan_3",
    "assetType": "actor_frame",
    "view": "FIELD",
-   "family": "melee",
-   "role": "strike",
-   "variant": "punch_right",
+   "family": "idle",
+   "role": "idle",
+   "variant": "idle",
    "sequenceIndex": 0,
    "runtimePoses": [
     "idle",
@@ -22,8 +22,8 @@
     "punch_left",
     "beam_guard"
    ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "evidence": "CANONICAL",
+   "canonStatus": "CANONICAL",
    "source": {
     "sheet": "goku.png",
     "frame": "001.png",
@@ -375,22 +375,22 @@
   },
   {
    "sourceId": "goku_super_saiyan_3/016.png",
-   "canonicalId": "goku_super_saiyan_3.reaction.knockback_up.up.00.016",
+   "canonicalId": "goku_super_saiyan_3.power.gather_power.gather_power.03.016.png",
    "characterId": "goku_super_saiyan",
    "formId": "goku_super_saiyan_3",
-   "assetType": "actor_frame",
+   "assetType": "composite",
    "view": "FIELD",
-   "family": "reaction",
-   "role": "knockback_up",
-   "variant": "up",
-   "sequenceIndex": 0,
+   "family": "power",
+   "role": "gather_power",
+   "variant": "gather_power",
+   "sequenceIndex": 3,
    "runtimePoses": [
     "knockback_up",
     "gather_power",
     "power_up"
    ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "evidence": "CANONICAL",
+   "canonStatus": "CANONICAL",
    "source": {
     "sheet": "goku.png",
     "frame": "016.png",
