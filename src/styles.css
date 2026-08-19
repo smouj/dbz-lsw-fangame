@@ -8191,6 +8191,113 @@ button:focus-visible, .chapter-node:focus-visible {
 }
 .dev-attack-pose.bad { color: #e06a6a; border-color: #5a3030; }
 .dev-attack-pose em { font-style: normal; color: #6d7890; font-size: 10px; }
+/* M8.F0 — BEAM CHAIN en las cartas beam: charge→fire→ray→tip con
+   miniaturas reales del manifest. Cada link muestra su frame y su conteo;
+   sin frames → punto (sin inventar assets). */
+.dev-attack-beamchain {
+  display: inline-flex; align-items: center; gap: 4px;
+  background: #10141d; border: 1px solid #232b3a; border-radius: 4px;
+  padding: 2px 6px;
+}
+.dev-attack-beamlink {
+  display: inline-flex; align-items: center; gap: 3px;
+  font-family: var(--fui); font-size: 10px; color: #8fd0ff;
+  background: transparent; border: 0; padding: 0; cursor: default;
+}
+.dev-attack-beamlink img {
+  width: 18px; height: 18px; object-fit: contain; image-rendering: pixelated;
+  border: 1px solid #2a3a55; border-radius: 2px; background: #0a0c10;
+}
+.dev-attack-beamlink.no-frame { color: #5a6478; }
+.dev-attack-beamlink.no-frame img { opacity: .35; border-color: #333a48; }
+.dev-attack-beamdot { font-size: 12px; color: #5a6478; }
+.dev-attack-beamlink em { font-style: normal; opacity: .7; }
+/* ═══ M8.F0 — FORM PREVIEW (Character Studio) ═══
+   Sprite grande + pills de poses + frames reales + cadena beam. */
+.dev-form-preview {
+  display: flex; flex-direction: column; gap: 8px;
+  background: #10131a; border: 1px solid #262b33; border-radius: 10px;
+  padding: 10px; margin-bottom: 12px;
+}
+.dev-form-preview-head {
+  display: flex; align-items: center; justify-content: space-between; gap: 8px;
+  padding-bottom: 6px; border-bottom: 1px solid #262b33;
+}
+.dev-form-preview-head .dev-form-col-title { border: 0; padding: 0; }
+.dev-preview-stage {
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+}
+.dev-preview-stage .dev-checker-bg {
+  width: 100%; min-height: 140px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 8px; overflow: hidden;
+}
+.dev-preview-sprite {
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+  max-height: 170px; max-width: 100%;
+  object-fit: contain;
+}
+.dev-preview-empty { color: #5a6478; font-size: 12px; }
+.dev-preview-caption {
+  display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  font-family: var(--fui); font-size: 11px;
+}
+.dev-preview-caption code {
+  background: #1c2231; border: 1px solid #2a3248; border-radius: 4px;
+  padding: 1px 6px; color: #ffe9a3;
+}
+.dev-preview-caption em { font-style: normal; color: #6d7890; }
+.dev-preview-pills {
+  display: flex; flex-wrap: wrap; gap: 4px;
+  max-height: 84px; overflow-y: auto;
+}
+.dev-preview-pills .dev-pose-pill {
+  font-family: var(--fui); font-size: 10px;
+  background: #1c2231; border: 1px solid #2a3248; border-radius: 4px;
+  color: #aab4c8; padding: 2px 6px; cursor: pointer;
+}
+.dev-preview-pills .dev-pose-pill.active {
+  background: #3a4a6a; border-color: #5a7ab0; color: #fff;
+}
+.dev-preview-pills .dev-pose-pill em { font-style: normal; opacity: .6; font-size: 9px; margin-left: 2px; }
+.dev-preview-frames {
+  display: flex; flex-wrap: wrap; gap: 4px;
+}
+.dev-preview-frame {
+  display: flex; flex-direction: column; align-items: center; gap: 2px;
+  background: #0e1117; border: 1px solid #232b3a; border-radius: 4px;
+  padding: 3px; cursor: pointer;
+}
+.dev-preview-frame.active { border-color: #5a7ab0; background: #1a2333; }
+.dev-preview-frame img {
+  width: 36px; height: 36px; object-fit: contain;
+  image-rendering: pixelated; image-rendering: crisp-edges;
+}
+.dev-preview-frame span { font-family: var(--fui); font-size: 9px; color: #6d7890; }
+.dev-preview-beamchain {
+  display: flex; align-items: center; gap: 4px; flex-wrap: wrap;
+  background: #0e1117; border: 1px solid #232b3a; border-radius: 6px;
+  padding: 4px 6px;
+}
+.dev-preview-beamchain-label {
+  font-family: var(--fui); font-size: 10px; color: #8fd0ff;
+  margin-right: 2px;
+}
+.dev-preview-beamlink {
+  display: inline-flex; align-items: center; gap: 3px;
+  font-family: var(--fui); font-size: 10px; color: #aab4c8;
+  background: #1c2231; border: 1px solid #2a3248; border-radius: 4px;
+  padding: 2px 6px; cursor: pointer;
+}
+.dev-preview-beamlink.active {
+  background: #2a3a55; border-color: #5a7ab0; color: #fff;
+}
+.dev-preview-beamlink em { font-style: normal; opacity: .6; font-size: 9px; }
+.dev-preview-sem {
+  margin: 0; font-family: var(--fui); font-size: 11px; color: #8a93a3;
+  line-height: 1.4;
+}
 .dev-pose-legend {
   margin-top: 10px; display: flex; flex-direction: column; gap: 3px;
   font-size: 11.5px; color: #8b96ab; border-top: 1px dashed #262b33; padding-top: 8px;
@@ -10906,7 +11013,7 @@ button.linklike:hover { text-decoration: underline; }
 .dev-tl-col.prof { color: #8a93a3; }
 
 /* ─── Character Studio: layout 3 columnas (forma · assets · frames) ─── */
-.dev-form-main { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr) minmax(0, 1.4fr); gap: 12px; margin-top: 12px; align-items: start; }
+.dev-form-main { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr) minmax(0, 1.6fr); gap: 12px; margin-top: 12px; align-items: start; }
 /* M8.C2a — responsive: en ventanas medianas (800-1200px) el FrameBrowser
    sube ARRIBA a ancho completo (es la herramienta principal: ver frames,
    nombres, mapeos y canon) y Forma+Assets quedan debajo en 2 columnas.

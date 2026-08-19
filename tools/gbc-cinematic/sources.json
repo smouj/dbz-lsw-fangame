@@ -1,0 +1,45 @@
+{
+  "game": "DBZ_LSW_GBC",
+  "description": "Fuentes de vídeo para M8.F0 — GBC Cinematic Ground Truth. Cada clip de evidencia debe trazar su origen aquí (nunca guardar evidencia sin procedencia).",
+  "updated": "2026-08-19",
+  "sources": {
+    "gbc_longplay_xbuster6": {
+      "url": "https://www.youtube.com/watch?v=Cs48C67I81g",
+      "kind": "LONGPLAY",
+      "game": "DBZ_LSW_GBC",
+      "duration_hms": "6:23:11",
+      "catalogued_by": "GameFAQs (Dragon Ball Z: Legendary Super Warriors — videos/1244810)",
+      "usage": ["exchange", "attack", "defense", "guard", "move", "stage", "beam", "support", "gather", "KO"]
+    },
+    "special_showcase_01": {
+      "url": "https://www.youtube.com/watch?v=7Q8_SrVZ5KA",
+      "kind": "SPECIAL_ATTACK_SHOWCASE",
+      "game": "DBZ_LSW_GBC",
+      "catalogued_by": "legendarysuperwarriors.wordpress.com/youtube-videos (Special Attack Showcase — Part 1)"
+    },
+    "special_showcase_02": {
+      "url": "https://www.youtube.com/watch?v=1jPCvkf_rWY",
+      "kind": "SPECIAL_ATTACK_SHOWCASE",
+      "game": "DBZ_LSW_GBC",
+      "catalogued_by": "legendarysuperwarriors.wordpress.com/youtube-videos (Special Attack Showcase — Part 2)"
+    },
+    "special_showcase_03": {
+      "url": "https://www.youtube.com/watch?v=KZpvUIkz2Sw",
+      "kind": "SPECIAL_ATTACK_SHOWCASE",
+      "game": "DBZ_LSW_GBC",
+      "catalogued_by": "legendarysuperwarriors.wordpress.com/youtube-videos (Special Attack Showcase — Part 3)"
+    },
+    "special_showcase_04": {
+      "url": "https://www.youtube.com/watch?v=Yjp-Kn2BSvs",
+      "kind": "SPECIAL_ATTACK_SHOWCASE",
+      "game": "DBZ_LSW_GBC",
+      "catalogued_by": "legendarysuperwarriors.wordpress.com/youtube-videos (Special Attack Showcase — Part 4)"
+    },
+    "special_showcase_05": {
+      "url": "https://www.youtube.com/watch?v=iUrraQI9ha4",
+      "kind": "SPECIAL_ATTACK_SHOWCASE",
+      "game": "DBZ_LSW_GBC",
+      "catalogued_by": "legendarysuperwarriors.wordpress.com/youtube-videos (Special Attack Showcase — Part 5)"
+    }
+  }
+}

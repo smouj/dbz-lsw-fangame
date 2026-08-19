@@ -1,0 +1,43 @@
+{
+  "observation_id": "obs_000",
+  "sequence_id": "exchange_melee_guard_001",
+  "clip_id": "exchange_melee_guard_001",
+  "source_id": "gbc_longplay_xbuster6",
+  "source_url": "https://www.youtube.com/watch?v=Cs48C67I81g#t=...",
+  "source_timestamp_start": "HH:MM:SS.mmm",
+  "source_timestamp_end": "HH:MM:SS.mmm",
+  "fps_target": 60,
+  "questions_answered": {
+    "q1_overworld": null,
+    "q2_select_attack": null,
+    "q3_transition_field_to_action": null,
+    "q4_background": null,
+    "q5_only_attacker_visible": null,
+    "q6_when_defender_appears": null,
+    "q7_idle_before": null,
+    "q8_movement": null,
+    "q9_contact": null,
+    "q10_target_reaction": null,
+    "q11_transition_back_to_field": null,
+    "q12_defense_phase_start": null,
+    "q13_guard_shot_pose": null,
+    "q14_move_overview_or_action": null,
+    "q15_enemy_attack_start": null,
+    "q16_defender_visible_before": null,
+    "q17_shots_during_response": null,
+    "q18_final_return": null
+  },
+  "beats_observed": [
+    {
+      "sourceFrame_start": 0,
+      "sourceFrame_end": 0,
+      "background": "field_or_action",
+      "playerLarge_visible": null,
+      "enemyLarge_visible": null,
+      "focus": "none|actor|target|defender",
+      "transition": "none|cut|fade_black|flash_white|flash_black",
+      "observed": "descripción SIN nombres de nuestra abstracción"
+    }
+  ],
+  "notes": ""
+}

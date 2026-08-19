@@ -25,6 +25,7 @@ import { COMBAT_POSE_ORDER, COMBAT_REQUIRED_POSES } from '../battle/spriteConfig
 import { useSheetAnalysis, groupFramesByPose, type FrameAnalysis } from './frameAnalysis';
 import { getCharacterAssetBundle, resolveBundlePoses, type CombatPoseAsset } from '../data/characterAssets';
 import { poseSemantics, parseFrameName } from './frameSemantics';
+import { FormPreview } from './FormPreview';
 import type { DevLinkedTarget, DevModuleId } from './DevStudio';
 
 const STATS: { key: 'hp' | 'str' | 'ki' | 'spd'; label: string; color: string }[] = [
@@ -184,8 +185,12 @@ export function CharactersModule({ onOpenModule }: {
               <AllPosesGrid formId={form.id} />
             </div>
 
-            {/* Col 3 — Frame browser (Sprites + Sheets integrados) */}
+            {/* Col 3 — PREVIEW central + Frame browser (Sprites + Sheets integrados) */}
             <div className="dev-form-col dev-form-col-frames">
+              {/* M8.F0 — Preview grande: sprite de la forma + pills de poses
+                  + frames reales + cadena beam. Jerarquía: primero se VE al
+                  personaje, después se exploran sus frames. */}
+              <FormPreview formId={form.id} dir={spriteDir} analysis={analysis} />
               <h3 className="dev-form-col-title">
                 Frames del manifest
                 <span className="dev-sheets-count">{analysis.frames.length} · {analysis.problemCount} avisos</span>
@@ -415,6 +420,11 @@ function CharacterAttacks({ charId, formId }: { charId: string; formId: string }
     const poseFx = card.type === 'beam' ? 'beam_fire' : null;
     const n = poseFrames(pose);
     const color = CARD_COLORS[card.type];
+    // M8.F0 — BEAMS: cada carta beam expone su cadena visual completa
+    // (charge → fire → ray → tip) con los frames REALES del manifest, para
+    // que la asociación ataque↔beam sea visible y verificable (no un nombre
+    // suelto). Las miniaturas salen del canon V9 cuando hay frames.
+    const beamChain = card.type === 'beam' ? ['beam_charge', 'beam_fire', 'beam_ray', 'beam_ray_tip'] : [];
     return (
       <div className="dev-attack-card" style={{ borderLeftColor: color }}>
         <span className="dev-attack-id">{String(card.id).padStart(2, '0')}</span>
@@ -428,6 +438,26 @@ function CharacterAttacks({ charId, formId }: { charId: string; formId: string }
           ▶ {pose}{poseFx ? ` → ${poseFx}` : ''}
           <em>{n > 0 ? `${n} frames` : 'sin frames en manifest'}</em>
         </span>
+        {beamChain.length > 0 && (
+          <span className="dev-attack-beamchain" title="Cadena visual del beam (V9: charge→fire→ray→tip)">
+            {beamChain.map(b => {
+              const bn = poseFrames(b);
+              const resolved = resolveCombatPose(b, p => (manifest?.[p]?.frames?.length ?? 0) > 0);
+              const firstFile = resolved && manifest?.[resolved]?.frames
+                ? (manifest[resolved]?.frames as unknown[])[0]
+                : null;
+              const thumb = resolved && firstFile && typeof firstFile === 'object' && firstFile && 'file' in firstFile
+                ? spriteFrameUrl(formId, String((firstFile as { file: string }).file))
+                : undefined;
+              return (
+                <span key={b} className={`dev-attack-beamlink ${bn === 0 ? 'no-frame' : ''}`} title={`${b} — ${bn} frames`}>
+                  {thumb ? <img src={thumb} alt={b} draggable={false} /> : <span className="dev-attack-beamdot">•</span>}
+                  <em>{b.replace('beam_', '')}</em>
+                </span>
+              );
+            })}
+          </span>
+        )}
       </div>
     );
   };
