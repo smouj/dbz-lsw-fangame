@@ -3680,10 +3680,15 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 .stage-hud-panel.speaker-left .stage-hud-portrait { order: 1; }
 .stage-hud-panel.speaker-left .stage-hud-track { order: 2; }
 .stage-hud-panel.speaker-left .stage-hud-timer { order: 3; }
-/* PORTRAIT: columna fija — retrato con marco GBC (como el speaker del diálogo) */
+/* PORTRAIT: columna fija — retrato con marco GBC (como el speaker del diálogo).
+   M8.C2a FIX solapamiento: el panel mide 80px totales (border 3px → interior
+   74px con box-sizing border-box); el portrait debe medir el INTERIOR
+   (74px), no 80px — con height:80px sobresalía 3px arriba y 3px abajo
+   (align-items:center lo centraba en un área menor y se montaba encima del
+   contenedor de diálogo). 74 = 80 − 2×3 (bordes del panel). */
 .stage-hud-portrait {
   width: 57px;
-  height: 80px;
+  height: 74px;
   background: #f8f4e4;
   border: 3px solid #000;
   outline: 2px solid #f8f4e4;
