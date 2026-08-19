@@ -216,6 +216,13 @@ export function reduceAcceptedCommand(state: BattleState, command: BattleCommand
       ];
       break;
     }
+    case 'RESET_DEFENSE': {
+      // M8.C2a — abre ventana defensiva fresh (defenseChoice = null).
+      // Sin eventos: es una primitiva de orquestación; la presentación
+      // reacciona a DEFENSE_COMMITTED, no al reset. Idempotente.
+      next = { ...state, defenseChoice: null };
+      break;
+    }
 
     // ── QTE / Stage Attack ──
     case 'QTE_INPUT': {

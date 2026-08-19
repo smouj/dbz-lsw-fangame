@@ -32,6 +32,10 @@ const PHASE_REQUIREMENTS: Partial<Record<BattleCommand['type'], BattlePhase[]>> 
   GUARD: ['defend'],
   PLAY_DEFENSE_CARD: ['defend'],
   MOVE: ['defend'],
+  // M8.C2a — RESET_DEFENSE es una primitiva de orquestación: sin requisito
+  // de fase (idempotente, abre ventana fresh). El juego lo llama al entrar
+  // en 'defend'; el harness headless lo usa entre elecciones del escenario.
+  RESET_DEFENSE: undefined,
   QTE_INPUT: ['stageInput'],
   QTE_COUNTER_DEFEND: ['stageInput'],
   QTE_COUNTER_CONTINUE: ['stageInput'],
@@ -94,6 +98,10 @@ export function canExecute(state: BattleState, command: BattleCommand, opts?: { 
       return canPlayDefenseCard(state, opts?.side ?? 'player', command.handIndex, opts?.characterId ?? '');
     case 'MOVE':
       return canMove(state, opts?.side ?? 'player', command.axis);
+    case 'RESET_DEFENSE':
+      // M8.C2a — siempre legal: el orquestador abre la ventana defensiva.
+      // (No se expone en getAvailableCommands: no es un comando de UI.)
+      return ok();
     case 'QTE_INPUT': {
       const q = state.stageQte;
       if (q.state !== 'INPUT_WINDOW') return reject('QTE_NOT_ACTIVE');

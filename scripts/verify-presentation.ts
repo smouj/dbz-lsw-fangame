@@ -224,6 +224,22 @@ check('M7: facing — actor player → scaleX 1 · actor enemy → scaleX −1',
   const lastMode = modes[modes.length - 1];
   check('M8.C2a: defensa sin ataque posterior → último plano es DEFENDER_ACTION (nunca ENEMY_ACTION auto-lanzado)',
     lastMode === 'DEFENDER_ACTION' && !modes.includes('ENEMY_ACTION'));
+
+  // Frontera C2a lado ATACANTE: la acción del jugador (stage attack completo)
+  // cierra en OVERVIEW y el timeline NO inventa un ENEMY_ACTION tras ella —
+  // el contraataque enemigo solo puede entrar por DEFENSE_COMMITTED real.
+  const stageSc = PRESENTATION_SCENARIOS.find(s => s.id === 'm7_stage_attack')!;
+  const stageTl = buildPresentationTimeline({ events: runPresentationScenario(stageSc).log.entries, context: CONTEXT });
+  const stageModes = stageTl.entries.filter(en => en.cue.type === 'SCENE').map(en => (en.cue as { mode?: string }).mode);
+  const stageLast = stageModes[stageModes.length - 1];
+  check('M8.C2a: acción del jugador cierra en OVERVIEW (sin ENEMY_ACTION auto-lanzado)',
+    stageLast === 'OVERVIEW' && !stageModes.includes('ENEMY_ACTION'));
+  // La resolución del stage ancla el OVERVIEW al RESULTADO del QTE (r+40),
+  // nunca antes: el último cue OVERVIEW viene después del IMPACT del golpe.
+  const stageImpacts = stageTl.entries.filter(en => en.cue.type === 'IMPACT');
+  const stageOverview = stageTl.entries.filter(en => en.cue.type === 'SCENE' && (en.cue as { mode?: string }).mode === 'OVERVIEW');
+  check('M8.C2a: OVERVIEW de cierre ocurre DESPUÉS del impacto (resolución anclada al QTE)',
+    stageImpacts.length > 0 && stageOverview.length > 0 && stageOverview[stageOverview.length - 1].cue.tick > stageImpacts[stageImpacts.length - 1].cue.tick);
 }
 
 // ── M8.P0: CANON V9 — consistencia del mapeo semántico por frame ──

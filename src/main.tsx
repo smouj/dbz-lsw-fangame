@@ -1474,6 +1474,12 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
   };
 
   const enterDefensePhase = (incomingName: string) => {
+    // M8.C2a — ventana defensiva NUEVA: el Engine abre la elección
+    // (defenseChoice = null) ANTES de pedir input. Sin esto, la elección
+    // comprometida en un exchange anterior bloquearía GUARD/MOVE/carta
+    // (DEFENSE_ALREADY_COMMITTED) — el juego quedaría atascado en la
+    // segunda defensa del combate.
+    engineAct({ type: 'RESET_DEFENSE' }, { side: 'player' });
     showPhaseCue('DEFENSE PHASE', incomingName.toUpperCase(), () => setPhase('defend'), 34);
   };
 
@@ -1608,7 +1614,9 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
       setViewMode('OVERVIEW');
       // Termina el turno tras Gather (acción completa consumida)
       setSelectedCard(null);
-      settleAttackHand(() => setTimeout(() => advanceExchange(), gbcMs(36)));
+      // M8.C2a — frontera única: sin auto-start enemigo tras la animación
+      // del jugador (el enemigo entra por DEFENSE con input real).
+      settleAttackHand(afterPlayerAction);
     }, gbcMs(58));
   };
 
@@ -1633,7 +1641,8 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
       setPlayer(incoming);
       setPlayerPose('idle');
       addLog(`${incoming.name} entra al combate! (CHARA)`);
-      settleAttackHand(() => setTimeout(() => advanceExchange(), gbcMs(36))); // 36 ticks ≈ 603ms (turn advance, INFERRED)
+      // M8.C2a — frontera única: el enemigo entra por DEFENSE (input real).
+      settleAttackHand(afterPlayerAction);
       return;
     }
     setPhase('cardSelect');
@@ -1982,7 +1991,8 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
     setViewMode('OVERVIEW');
     setEnemyPose('idle');
     setPlayerPose('idle');
-    settleAttackHand(() => setTimeout(() => advanceExchange(), gbcMs(36))); // 36 ticks ≈ 603ms (turn advance, INFERRED)
+    // M8.C2a — frontera única: el contraataque enemigo espera DEFENSE real.
+    settleAttackHand(afterPlayerAction);
   };
 
   const selectCard = (idx: number) => {
@@ -2338,7 +2348,9 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
       if (g) setPlayerGuard({ type: g }); // ENGINE-SNAPSHOT (M8.C1)
       setPlayerPose('guard');
       addLog(`${player.name} ${t('battle.defends')} (ENDURANCE — próximo golpe a la mitad)`);
-      setTimeout(() => { setPlayerPose('idle'); advanceExchange(); }, gbcMs(32));
+      // M8.C2a — GUARD como acción consume el exchange; el enemigo entra
+      // por DEFENSE (input real), nunca por un timer encadenado.
+      setTimeout(() => { setPlayerPose('idle'); afterPlayerAction(); }, gbcMs(32));
       return;
     }
     // Stage Attack básico: 3 etapas (4 si se ha gathered — mecánica real)
@@ -2386,14 +2398,16 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
     endTurnRef.current = () => {
       setPlayerPose('idle');
       setEnemyPose('idle');
-      settleAttackHand(() => setTimeout(() => advanceExchange(), gbcMs(36))); // 36 ticks ≈ 603ms (turn advance, INFERRED)
+      // M8.C2a — frontera única: sin auto-start enemigo tras la carta.
+      settleAttackHand(afterPlayerAction);
     };
     playCardCinematic(card, 'player', () => {
       if (!plan.committed) commitActionOutcome(plan);
       if (plan.ended) return;
       setPlayerPose('idle');
       setEnemyPose('idle');
-      settleAttackHand(() => setTimeout(() => advanceExchange(), gbcMs(36))); // 36 ticks ≈ 603ms (turn advance, INFERRED)
+      // M8.C2a — frontera única: el enemigo entra por DEFENSE (input real).
+      settleAttackHand(afterPlayerAction);
     }, (e) => {
       if (e.type === 'APPLY_DAMAGE') commitActionOutcome(plan);
     });
@@ -2407,10 +2421,11 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
     setDeckState(next);
     setSelectedCard(null);
     if (needsDiscard(next)) {
-      discardNextRef.current = () => setTimeout(() => advanceExchange(), gbcMs(36)); // 36 ticks (turn advance, INFERRED)
+      // M8.C2a — frontera única (el beat de 36t solo da respiro al OVERVIEW).
+      discardNextRef.current = () => setTimeout(() => afterPlayerAction(), gbcMs(36)); // 36 ticks (turn advance, INFERRED)
       setPhase('discard');
     } else {
-      setTimeout(() => advanceExchange(), gbcMs(36)); // 36 ticks (turn advance, INFERRED)
+      setTimeout(() => afterPlayerAction(), gbcMs(36)); // 36 ticks (turn advance, INFERRED)
     }
   };
 

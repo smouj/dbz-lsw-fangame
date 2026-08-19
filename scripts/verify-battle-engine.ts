@@ -393,6 +393,40 @@ check('M8.C2a: MOVE vertical en ventana ya comprometida → REJECTED', !executeC
     && defenseChoiceOf(committed)?.type === 'GUARD');
 }
 
+// ── M8.C2a: RESET_DEFENSE (ventana defensiva fresh entre exchanges) ──
+// El orquestador llama RESET_DEFENSE al entrar en fase 'defend'. Sin él, la
+// elección comprometida en un exchange anterior bloquearía la defensa del
+// siguiente (DEFENSE_ALREADY_COMMITTED) — bug real detectado en auditoría:
+// defenseChoice solo se inicializaba a null y nunca se reabría en el juego.
+{
+  const s = { ...m3Command, phase: 'defend' as never, tick: 100 };
+  const committed = mustExecute(s, { type: 'GUARD' });
+  check('M8.C2a: GUARD → ventana comprometida (precondición)',
+    committed.defenseChoice !== null && isDefenseCommitted(committed));
+  // RESET_DEFENSE limpia la elección…
+  const reset = executeCommand(committed, { type: 'RESET_DEFENSE' }, { side: 'player' });
+  check('M8.C2a: RESET_DEFENSE → defenseChoice null + ok',
+    reset.ok && reset.state.defenseChoice === null);
+  check('M8.C2a: RESET_DEFENSE → solo COMMAND_ACCEPTED (0 eventos de dominio)',
+    reset.events.length === 1 && reset.events[0].type === 'COMMAND_ACCEPTED');
+  // …y la ventana vuelve a aceptar una elección NUEVA (segunda defensa OK).
+  const guardAgain = executeCommand(reset.state, { type: 'GUARD' }, { side: 'player', characterId: 'goku' });
+  check('M8.C2a: tras RESET_DEFENSE el GUARD vuelve a ser legal (2ª ventana)',
+    guardAgain.ok && guardAgain.state.defenseChoice !== null);
+  // Idempotente: reset sobre ventana ya limpia → no-op ok.
+  const reset2 = executeCommand(s, { type: 'RESET_DEFENSE' }, { side: 'player' });
+  check('M8.C2a: RESET_DEFENSE idempotente (null → null, sin eventos de dominio)',
+    reset2.ok && reset2.state.defenseChoice === null && reset2.events.length === 1 && reset2.events[0].type === 'COMMAND_ACCEPTED');
+  // Legal fuera de 'defend': el orquestador puede reabrir la ventana desde
+  // cualquier fase (p.ej. al volver a OVERVIEW tras el exchange anterior).
+  const resetInCommand = executeCommand(m3Command, { type: 'RESET_DEFENSE' }, { side: 'player' });
+  check('M8.C2a: RESET_DEFENSE legal en fase command (sin requisito de fase)',
+    resetInCommand.ok && resetInCommand.state.defenseChoice === null);
+  // No expuesto a la UI: getAvailableCommands no lo lista (solo orquestador).
+  check('M8.C2a: RESET_DEFENSE NO está en getAvailableCommands (no es input de UI)',
+    !getAvailableCommands(s).some(c => c.type === 'RESET_DEFENSE'));
+}
+
 
 // ═══════════════════════════════════════════════════════════════════════
 // M4 — BattleEvent: hechos resultantes, orden contractual, pureza y golden

@@ -227,8 +227,9 @@ export function runPresentationScenario(sc: PresentationScenario): ScenarioRun {
       runTicks(step.ticks);
     } else if (step.kind === 'reset_defense') {
       // M8.C2a — el orquestador abre una ventana defensiva nueva entre
-      // exchanges (esto es lo que hace el Runtime al entrar en fase defend).
-      state = { ...state, defenseChoice: null };
+      // exchanges (lo que hace el Runtime al entrar en fase defend): el
+      // comando REAL RESET_DEFENSE, no una mutación directa del estado.
+      runCmd({ type: 'RESET_DEFENSE' });
     } else if (step.kind === 'qte_complete') {
       openInputWindow();
       for (const key of [...state.stageQte.seq]) {
