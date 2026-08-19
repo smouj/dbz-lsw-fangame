@@ -8035,26 +8035,32 @@ button:focus-visible, .chapter-node:focus-visible {
 
 /* Characters */
 .dev-chars-layout {
-  display: grid;
-  grid-template-columns: minmax(210px, 260px) minmax(0, 1fr);
-  gap: 16px;
-  align-items: start;
+  /* M8.F0 — lista de personajes ARRIBA en horizontal + detalle debajo a
+     ancho COMPLETO. Antes era 2 columnas (lista lateral 210-260px) y en
+     viewports pequeños aplastaba el detalle. */
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: stretch;
 }
 .dev-char-list {
   display: flex;
-  flex-direction: column;
-  gap: 4px;
-  max-height: calc(100cqh - 132px);
-  overflow-y: auto;
-  position: sticky;
-  top: 0;
-  padding-right: 4px;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 5px;
+  padding: 8px;
+  background: #14181e;
+  border: 1px solid #262b33;
+  border-radius: 8px;
+  max-height: none;
+  overflow: visible;
+  position: static;
 }
 .dev-char-chip {
-  display: flex; align-items: center; justify-content: space-between;
-  min-height: 34px;
-  padding: 7px 10px; background: #181c22; border: 1px solid #262b33;
-  border-radius: 6px; cursor: pointer; color: #cdd6e2; font-family: inherit; font-size: 12px;
+  display: inline-flex; align-items: center; gap: 6px;
+  min-height: 28px;
+  padding: 4px 10px; background: #181c22; border: 1px solid #262b33;
+  border-radius: 6px; cursor: pointer; color: #cdd6e2; font-family: inherit; font-size: 11px;
   text-align: left;
 }
 .dev-char-chip.active { border-color: #d8a830; background: #1b2129; color: #fff; }
@@ -11040,8 +11046,11 @@ button.linklike:hover { text-decoration: underline; }
   gap: 14px; align-items: start;
 }
 @media (max-width: 1100px) {
-  .dev-vista-grid { grid-template-columns: 1fr; }
-  .dev-vista-grid > .dev-form-preview { grid-column: 1 / -1; }
+  /* preview a la izquierda (columna estrecha) + datos a la derecha en 2
+     columnas — aprovecha el ancho completo en viewports medianos sin
+     aplastar nada. */
+  .dev-vista-grid { grid-template-columns: minmax(200px, 280px) minmax(0, 1fr); }
+  .dev-vista-grid > .dev-vista-col:last-child { grid-column: 1 / -1; }
 }
 @media (max-width: 760px) {
   .dev-vista-grid { grid-template-columns: 1fr; }
