@@ -30,10 +30,12 @@ import type { StageKey } from '../../stageInputMap';
 import type { QteState } from '../../../data/actionFidelity';
 import type { MoveAxis } from '../../../data/positions';
 
-// ─── CONTRATO ÚNICO DEL COMBATE (2026-08-19 — P0) ───
-//   TURN N = 2 exchanges: exchange 0 ataca la INICIATIVA, exchange 1 el
+// ─── CONTRATO ÚNICO DEL COMBATE (2026-08-19 — P0 · docs/COMBAT_CONTRACT.md) ───
+//   RONDA = 2 exchanges: exchange 0 ataca la INICIATIVA, exchange 1 el
 //   opuesto. activeAttacker()/activeDefender() se derivan SOLO de
-//   (activeSide, exchange) — jamás de la fase.
+//   (activeSide, exchange) — jamás de la fase. Una ronda acaba cuando
+//   ambos lados han tenido su acción (END_EXCHANGE desde exchange 1:
+//   turn++ · exchange 0 · iniciativa recalculada por SPD efectiva).
 //   Desde el jugador solo hay ATTACK (si ataca) o DEFENSE (si defiende):
 //   initiative player → exchange 0 ATTACK · exchange 1 DEFENSE
 //   initiative enemy   → exchange 0 DEFENSE · exchange 1 ATTACK
@@ -44,8 +46,9 @@ import type { MoveAxis } from '../../../data/positions';
 //   IDLE → PREPARING → (WAITING_INPUT si requiere input) → RESOLVING →
 //   COMPLETE. La preparación es parte de la acción, no una fase del turno;
 //   el input aparece SOLO al terminar PREPARING (inputOpenTick del reloj —
-//   la presentación jamás abre el QTE). Al completar la acción termina el
-//   exchange actual; la siguiente frontera espera.
+//   la presentación jamás abre el QTE). La DEFENSA es una INTERACCIÓN con
+//   el ataque enemigo (no un segundo ataque): GUARD/MOVE/carta se
+//   compromete ANTES de que el enemigo actúe (DEFENSE_COMMITTED).
 //   EL JUEGO NUNCA TOMA UNA NUEVA DECISIÓN POR EL JUGADOR.
 // En LSW cada TURN tiene DOS exchanges: el atacante del exchange 0 es la
 // INICIATIVA (activeSide, marcado con * por SPD) y el del exchange 1 es el

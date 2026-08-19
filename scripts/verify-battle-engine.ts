@@ -717,6 +717,43 @@ check('M8.C2a: MOVE vertical en ventana ya comprometida → REJECTED', !executeC
   const cFail = executeCommand(cOpen.state, { type: 'QTE_INPUT', input: cWrong }, { side: 'player' });
   check('P0: COUNTER_WINDOW → WAITING_INPUT + ACTION_INPUT (submecánica de la acción)',
     cFail.ok && E(cFail.state) === 'WAITING_INPUT' && B(cFail.state) === 'ACTION_INPUT');
+
+  // ── RONDA COMPLETA (contrato: ATTACK → cinemática → DEFENSE → cinemática
+  // enemiga → nueva ronda → ATTACK). Verifica el ritmo entero con iniciativa
+  // del jugador, frontera a frontera. ──
+  {
+    const init = createInitialBattleState(makeConfig({
+      firstAttacker: 'player' as const, playerCc: 30, playerDeck: m2Deck([25, 4]),
+    }));
+    // R1 E0: ATTACK espera
+    const r1e0 = { ...init, phase: 'command' as never };
+    check('RONDA: R1 E0 (initiative player) → PLAYER_ATTACK_CHOICE', B(r1e0) === 'PLAYER_ATTACK_CHOICE');
+    // El jugador elige Stage → PREPARING → WAITING_INPUT → COMPLETE
+    const st = { ...r1e0, phase: 'basic' as never, tick: 300 };
+    const p1 = executeCommand(st, { type: 'BASIC_STAGE_ATTACK' }, { side: 'player', characterId: 'goku' });
+    check('RONDA: Stage → PREPARING', p1.ok && E(p1.state) === 'PREPARING');
+    const o1 = advanceBattleClock(p1.state, p1.state.stageQte.inputOpenTick - p1.state.tick + 1);
+    check('RONDA: Stage → WAITING_INPUT (ACTION_INPUT)', E(o1.state) === 'WAITING_INPUT' && B(o1.state) === 'ACTION_INPUT');
+    let q1 = o1.state;
+    for (const key of [...q1.stageQte.seq]) q1 = executeCommand(q1, { type: 'QTE_INPUT', input: key }, { side: 'player' }).state;
+    check('RONDA: Stage → COMPLETE · ACTION COMPLETE no encadena enemigo', E(q1) === 'COMPLETE' && B(q1) === 'RESOLVING');
+    // R1 E1: DEFENSE espera (el orquestador avanza el exchange y abre la
+    // ventana defensiva — como beginDefenseAfterPlayer — el enemigo NO
+    // ataca hasta elegir)
+    const ex1 = executeCommand(q1, { type: 'END_EXCHANGE' }, { side: 'player' });
+    const e1x = executeCommand({ ...ex1.state, phase: 'defend' as never, defenseState: 'AWAITING_CHOICE' as const }, { type: 'RESET_DEFENSE' }, { side: 'player' });
+    check('RONDA: R1 E1 → PLAYER_DEFENSE_CHOICE (el enemigo espera)',
+      e1x.ok && activeAttacker(e1x.state) === 'enemy' && B(e1x.state) === 'PLAYER_DEFENSE_CHOICE');
+    const g1 = executeCommand(e1x.state, { type: 'GUARD' }, { side: 'player', characterId: 'goku' });
+    check('RONDA: GUARD → COMMITTED → RESOLVING (defensa comprometida, interacción)',
+      g1.ok && g1.state.defenseState === 'COMMITTED' && B(g1.state) === 'RESOLVING');
+    // Fin de ronda: R1 E1 → R2 E0 con iniciativa recalculada
+    const r2 = executeCommand(g1.state, { type: 'END_EXCHANGE' }, { side: 'player' });
+    check('RONDA: fin de R1 → R2 E0 · turn+1 · iniciativa recalculada (sigue player sin buffs)',
+      r2.ok && r2.state.turn === init.turn + 1 && r2.state.exchange === 0 && r2.state.activeSide === 'player');
+    const r2atk = { ...r2.state, phase: 'command' as never };
+    check('RONDA: R2 E0 → PLAYER_ATTACK_CHOICE (el juego espera de nuevo)', B(r2atk) === 'PLAYER_ATTACK_CHOICE');
+  }
 }
 
 
