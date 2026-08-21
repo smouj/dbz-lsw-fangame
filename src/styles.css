@@ -124,8 +124,10 @@
 * { margin: 0; padding: 0; box-sizing: border-box; }
 html, body { width: 100%; height: 100%; margin: 0; padding: 0; }
 #root { width: 100%; height: 100%; background: var(--bg); color: var(--text); overflow: hidden; }
-/* Dev Studio: scroll natural en #root para el panel de desarrollo */
-#root:has(> .devstudio) { overflow: auto !important; }
+/* Dev Studio: TODO el scroll vive en .dev-main (el panel); el root NUNCA
+   scrollea — si el root scrolleara, el header sticky (dentro de .dev-main)
+   se desplazaría con la ventana. .devstudio ya limita a 100vh. */
+#root:has(> .devstudio) { overflow: hidden !important; }
 
 /* ═══ GAME VIEWPORT CANÓNICO 16:9 (R1-R5) ═══
    El navegador solo aporta espacio; el juego vive en un rectángulo 16:9.
@@ -9263,6 +9265,38 @@ button:focus-visible, .chapter-node:focus-visible {
   grid-template-rows: auto minmax(0, 1fr) auto var(--controls-h, 112px);
   border: 1px solid color-mix(in srgb, var(--hud-border) 24%, transparent);
   box-shadow: 0 12px 40px rgba(0,0,0,.28);
+}
+/* Engine en vivo (Timeline → En vivo): escala CANÓNICA de los fighters —
+   espejo de .dev-hud-preview. Sin estas reglas los chibis caían al flex
+   stretch (468px, enormes). OVERVIEW: chibi ~48px (×3, GBC 12%) ·
+   ACTION: sprite grande 192px anclado por los pies. */
+.dev-hud-real-preview .dev-hud-fighter-sprite.dev-hud-anchored.dev-hud-ow {
+  position: absolute;
+  width: auto;
+  height: 48px;
+  transform: translate(-50%, -100%);
+  transform-origin: bottom center;
+  image-rendering: pixelated;
+  z-index: 3;
+  filter: drop-shadow(0 0 8px rgba(255,190,60,.3)) drop-shadow(0 5px 10px rgba(0,0,0,.45));
+  transition: opacity .28s ease, height .28s ease, filter .28s ease;
+}
+.dev-hud-real-preview .dev-hud-fighter-sprite.dev-hud-anchored.enemy {
+  transform: translate(-50%, -100%) scaleX(-1);
+}
+.dev-hud-real-preview .battlefield .dev-hud-fighter-sprite.dev-hud-anchored.action-mode {
+  height: 192px;
+  width: auto;
+  filter: drop-shadow(0 0 10px rgba(255,190,60,.28)) drop-shadow(0 6px 12px rgba(0,0,0,.5));
+}
+.dev-hud-real-preview .battlefield .dev-hud-fighter-sprite.dev-hud-anchored.action-mode.special-actor {
+  height: 190px;
+}
+.dev-hud-real-preview .battlefield .dev-hud-fighter-sprite.dev-hud-anchored.action-mode.player {
+  transform: translate(-50%, -100%);
+}
+.dev-hud-real-preview .battlefield .dev-hud-fighter-sprite.dev-hud-anchored.action-mode.enemy {
+  transform: translate(-50%, -100%) scaleX(-1);
 }
 .dev-hud-real-preview .hud-top {
   gap: clamp(48px, 8vw, 120px);
