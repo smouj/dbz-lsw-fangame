@@ -102,6 +102,8 @@ async function build(formId: string): Promise<FormAtlas | null> {
   let maxW = 0;
   let maxH = 0;
 
+  // Primera pasada: recoger (pose:index → url) y metadatos SIN cargar aún.
+  const jobs: Array<{ key: string; url: string }> = [];
   for (const [pose, anim] of Object.entries(manifest)) {
     if (!anim || !Array.isArray(anim.frames) || anim.frames.length === 0) continue;
     anims.set(pose, anim);
@@ -109,13 +111,23 @@ async function build(formId: string): Promise<FormAtlas | null> {
       const f = anim.frames[i];
       if (f.w > maxW) maxW = f.w;
       if (f.h > maxH) maxH = f.h;
-      const url = spriteFrameUrl(formId, f.file);
-      try {
-        textures.set(`${pose}:${i}`, pixelate(await Assets.load(url)));
-      } catch {
-        // frame ausente: no romper el atlas; se saltará ese frame
-      }
+      jobs.push({ key: `${pose}:${i}`, url: spriteFrameUrl(formId, f.file) });
     }
+  }
+
+  // Segunda pasada: cargar en PARALELO (un round-trip por frame, no
+  // secuencial). Assets.load cachea por URL, así que los archivos
+  // reutilizados entre poses solo se descargan una vez.
+  const unique = [...new Set(jobs.map(j => j.url))];
+  const loaded = new Map<string, Texture>();
+  await Promise.all(unique.map(async url => {
+    try {
+      loaded.set(url, pixelate(await Assets.load<Texture>(url)));
+    } catch { /* frame ausente: se saltará */ }
+  }));
+  for (const j of jobs) {
+    const t = loaded.get(j.url);
+    if (t) textures.set(j.key, t);
   }
 
   if (textures.size === 0) return null;

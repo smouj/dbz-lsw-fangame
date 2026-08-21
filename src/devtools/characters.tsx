@@ -6,12 +6,11 @@
 //   · Sidebar: personajes del roster (vertical, sticky)
 //   · Header: retrato + nombre (editable inline) + tags de la forma
 //   · Tabs: formas del personaje (nombres editables inline)
-//   · Primario: Preview (FormPreview controlado) + Stats/nivel (2 col)
+//   · Sheet: Preview (FormPreview controlado) + Stats/nivel (2 col)
 //   · Assets: portrait · overworld · idle · battle OW · power · sheet
-//   · Poses: biblioteca semántica (grupos) — click ⇒ actualiza el preview
+//   · Retratos: battle · menú · story (grid verificada)
 //   · Frames: browser por pose con inspector (bbox/alpha/specks/dupes)
-//   · Ataques: cartas → pose cinematográfica (colapsable, cerrado)
-//   · V9: frames atómicos del sheet (colapsable, cerrado)
+//     + reemplazo de frames (override local o guardar en disco)
 //
 // REGLA DE ORO: todos los hooks ANTES de cualquier return condicional.
 // (Dos bugs de "Rendered more hooks than during the previous render" se
@@ -21,19 +20,14 @@ import { useState, useEffect, useRef, useMemo } from 'react';
 import {
   CHARACTERS, FORMS, getForm, statAtLevel, sheetUrl, idleSpriteUrl, LIMIT_DEFAULTS,
 } from '../data/roster';
-import { spriteDirFor, spriteManifestUrl, spriteFrameUrl, _spriteManifestInternals } from '../data/spriteManifest';
-import { CARDS, getCard, CARD_COLORS, CARD_TYPE_NAMES } from '../data/cards';
-import { cardBattlePose, cardUsableBy } from '../battle/cardPoses';
-import { resolveCombatPose } from '../battle/spriteConfig';
+import { spriteDirFor, spriteManifestUrl, spriteFrameUrl } from '../data/spriteManifest';
 import { BATTLE_PORTRAITS } from '../data/battlePortraits';
 import { MENU_PORTRAITS } from '../data/icons';
 import { STORY_PORTRAITS, storyPortraitUrl } from '../data/storyPortraits';
 import { overworldUrl } from '../data/overworld';
 import { battleOverworldActorUrl, battleOverworldAuraUrlAsync } from '../data/battleOverworld';
 import { characterName } from '../data/storyPanels';
-import { COMBAT_POSE_ORDER, COMBAT_REQUIRED_POSES } from '../battle/spriteConfig';
 import { useSheetAnalysis, groupFramesByPose, type FrameAnalysis } from './frameAnalysis';
-import { getCharacterAssetBundle, resolveBundlePoses, type CombatPoseAsset } from '../data/characterAssets';
 import { poseSemantics, parseFrameName } from './frameSemantics';
 import { FormPreview } from './FormPreview';
 import type { DevLinkedTarget, DevModuleId } from './DevStudio';
@@ -69,7 +63,6 @@ const STATS: { key: 'hp' | 'str' | 'ki' | 'spd'; label: string; color: string }[
 ];
 
 const NAMES_KEY = 'dbzlsw:char-names';
-const FRAME_OVERRIDES_KEY = 'dbzlsw:frame-overrides';
 
 function loadJson<T>(key: string, fallback: T): T {
   try {
@@ -117,22 +110,6 @@ function InlineName({ value, onCommit, className }: {
       {value}
       <span className="dev-inline-edit-icon" aria-hidden>✎</span>
     </span>
-  );
-}
-
-// ═══ CollapsibleSection ─────────────────────────────────────────────────
-function CollapsibleSection({ title, defaultOpen = false, children }: {
-  title: string; defaultOpen?: boolean; children: React.ReactNode;
-}) {
-  const [open, setOpen] = useState(defaultOpen);
-  return (
-    <section className={`dev-char-block dev-collapsible ${open ? 'open' : ''}`}>
-      <button className="dev-collapsible-head" onClick={() => setOpen(o => !o)} aria-expanded={open}>
-        <span className="dev-collapsible-title">{title}</span>
-        <span className="dev-collapsible-caret">{open ? '▾' : '▸'}</span>
-      </button>
-      {open && <div className="dev-collapsible-body">{children}</div>}
-    </section>
   );
 }
 
@@ -292,7 +269,7 @@ export function CharactersModule({ onOpenModule }: {
             </div>
           </section>
 
-          {/* SECCIÓN 2 — Assets de la forma */}
+          {/* SECCIÓN 2 — Assets de la forma + Retratos */}
           <section className="dev-char-block">
             <h3 className="dev-char-block-title">Assets de la forma</h3>
             <div className="dev-asset-grid dev-assets-horizontal">
@@ -313,17 +290,11 @@ export function CharactersModule({ onOpenModule }: {
             </div>
           </section>
 
-          {/* SECCIÓN 3 — Poses de combate (biblioteca semántica) */}
-          <section className="dev-char-block">
-            <h3 className="dev-char-block-title">Poses de combate — canon completo</h3>
-            <AllPosesGrid formId={form.id} activePose={previewPose} onPoseSelect={setPreviewPose} />
-          </section>
-
-          {/* SECCIÓN 4 — Frames del manifest */}
+          {/* SECCIÓN 3 — Frames del manifest (browser por pose + reemplazo) */}
           <section className="dev-char-block">
             <h3 className="dev-char-block-title">
               Frames del manifest
-              <span className="dev-sheets-count">{analysis.frames.length} · {analysis.problemCount} avisos</span>
+              <span className="dev-sheets-count">{analysis.frames.length} frames · {analysis.problemCount} avisos</span>
             </h3>
             {analysis.overridden && (
               <div className="dev-wip-banner">
@@ -333,25 +304,22 @@ export function CharactersModule({ onOpenModule }: {
             )}
             <FrameBrowser formId={form.id} analysis={analysis} dir={spriteDir} />
           </section>
-
-          {/* SECCIÓN 5 — Ataques (colapsable, cerrado) */}
-          <CollapsibleSection title="Ataques disponibles — cartas → pose cinematográfica" defaultOpen={false}>
-            <CharacterAttacks charId={char.id} formId={form.id} />
-          </CollapsibleSection>
-
-          {/* SECCIÓN 6 — Frames por pose (colapsable, cerrado) */}
-          {form.sheet && (
-            <CollapsibleSection title="Frames por pose (OUT_frames)" defaultOpen={false}>
-              <AtomicFrames sheet={form.sheet} formId={form.id} />
-            </CollapsibleSection>
-          )}
         </div>
       </div>
     </div>
   );
 }
 
-// ═══ FrameBrowser — pose → grid de frames → inspector ──────────────────
+// ═══ FrameBrowser — pose → grid de frames → inspector + reemplazo ──────
+const FRAME_OVERRIDES_KEY = 'dbzlsw-frame-overrides-v2';
+
+function loadOverrides(): Record<string, string> {
+  try {
+    const raw = localStorage.getItem(FRAME_OVERRIDES_KEY);
+    return raw ? JSON.parse(raw) as Record<string, string> : {};
+  } catch { return {}; }
+}
+
 function FrameBrowser({ formId, analysis, dir }: {
   formId: string;
   analysis: ReturnType<typeof useSheetAnalysis>;
@@ -360,6 +328,13 @@ function FrameBrowser({ formId, analysis, dir }: {
   const [pose, setPose] = useState('idle');
   const [selected, setSelected] = useState<string | null>(null);
   const [zoom, setZoom] = useState(6);
+  const [overrides, setOverrides] = useState<Record<string, string>>(loadOverrides);
+  const [replacing, setReplacing] = useState<string | null>(null);
+  const [candidate, setCandidate] = useState<string | null>(null);
+
+  useEffect(() => {
+    try { localStorage.setItem(FRAME_OVERRIDES_KEY, JSON.stringify(overrides)); } catch { /* noop */ }
+  }, [overrides]);
 
   const groups = groupFramesByPose(analysis.frames, dir);
   const activeGroup = groups.find(g => g.pose === pose) ?? groups[0];
@@ -371,6 +346,52 @@ function FrameBrowser({ formId, analysis, dir }: {
 
   const selFrame = analysis.frames.find(f => f.file === selected) ?? null;
   const selUsages = selFrame ? (analysis.usages[selFrame.file] ?? []) : [];
+
+  // Todos los archivos del manifest (para el picker de reemplazo)
+  const allFiles = useMemo(() => {
+    const seen = new Set<string>();
+    for (const f of analysis.frames) {
+      if (!seen.has(f.file)) seen.add(f.file);
+    }
+    return [...seen];
+  }, [analysis.frames]);
+
+  const appliedFile = (file: string) => overrides[file] ?? file;
+  const hasOverride = selFrame ? overrides[selFrame.file] !== undefined : false;
+
+  const applyReplacement = () => {
+    if (!selFrame || !candidate) return;
+    setOverrides(o => ({ ...o, [selFrame.file]: candidate }));
+    setReplacing(null);
+    setCandidate(null);
+  };
+
+  const clearReplacement = () => {
+    if (!selFrame) return;
+    setOverrides(o => {
+      const n = { ...o };
+      delete n[selFrame.file];
+      return n;
+    });
+    setReplacing(null);
+    setCandidate(null);
+  };
+
+  const saveToDisk = async () => {
+    if (!selFrame || !dir) return;
+    const original = selFrame.file;
+    const replacement = overrides[original];
+    if (!replacement || replacement === original) return;
+    if (!confirm(`Sobrescribir en disco:\nsprites/${dir}/${original}\ncon el contenido de:\nsprites/${dir}/${replacement}\n\nEsto afecta a TODAS las poses que usan ese frame.`)) return;
+    try {
+      const dataUrl = await frameDataUrl(`sprites/${dir}/${replacement}`);
+      await writeAssetToDisk(`sprites/${dir}/${original}`, dataUrl);
+      clearReplacement();
+      alert('✓ Guardado en disco. Recarga el juego para ver el cambio (el manifest no cambia).');
+    } catch (e) {
+      alert(`Error: ${e}`);
+    }
+  };
 
   return (
     <div className="dev-frames">
@@ -395,18 +416,21 @@ function FrameBrowser({ formId, analysis, dir }: {
             <span className="dev-pose-group-meaning">{activeGroup.sem.meaning}</span>
           </div>
           <div className="dev-sheets-grid" role="list" aria-label={`${activeGroup.pose} sprite frames`}>
-            {activeGroup.frames.map(f => (
-              <button key={f.file}
-                className={`dev-sheet-cell ${selected === f.file ? 'active' : ''} ${f.touchesEdge && f.touchTop > 3 ? 'edge' : ''} ${f.bgSpecks > 0 ? 'speck' : ''} ${f.dupeOf ? 'dupe' : ''}`}
-                onClick={() => setSelected(f.file)}
-                title={`${f.file}\n${f.w}×${f.h} · ${activeGroup.sem.meaning}\n${f.touchesEdge ? '⚠ toca borde' : ''}${f.bgSpecks ? `\n${f.bgSpecks} specks` : ''}${f.dupeOf ? `\n⧉ duplicado de ${f.dupeOf}` : ''}`}>
-                <span className="dev-sheet-thumb">
-                  <img src={spriteFrameUrl(formId, f.file)} alt={f.file}
-                    width={f.w} height={f.h} style={{ width: f.w * 2, height: f.h * 2 }} />
-                </span>
-                <span className="dev-sheet-name">{f.file.replace(`${dir ?? ''}_`, '').replace('.png', '')}</span>
-              </button>
-            ))}
+            {activeGroup.frames.map(f => {
+              const overridden = overrides[f.file] !== undefined;
+              return (
+                <button key={f.file}
+                  className={`dev-sheet-cell ${selected === f.file ? 'active' : ''} ${f.touchesEdge && f.touchTop > 3 ? 'edge' : ''} ${f.bgSpecks > 0 ? 'speck' : ''} ${f.dupeOf ? 'dupe' : ''} ${overridden ? 'has-override' : ''}`}
+                  onClick={() => setSelected(f.file)}
+                  title={`${f.file}${overridden ? `\n⚠ reemplazado por ${overrides[f.file]}` : ''}\n${f.w}×${f.h} · ${activeGroup.sem.meaning}\n${f.touchesEdge ? '⚠ toca borde' : ''}${f.bgSpecks ? `\n${f.bgSpecks} specks` : ''}${f.dupeOf ? `\n⧉ duplicado de ${f.dupeOf}` : ''}`}>
+                  <span className="dev-sheet-thumb">
+                    <img src={spriteFrameUrl(formId, appliedFile(f.file))} alt={f.file} loading="lazy" decoding="async"
+                      width={f.w} height={f.h} style={{ width: f.w * 2, height: f.h * 2, imageRendering: 'pixelated' }} />
+                  </span>
+                  <span className="dev-sheet-name">{f.file.replace(`${dir ?? ''}_`, '').replace('.png', '')}</span>
+                </button>
+              );
+            })}
           </div>
         </div>
       )}
@@ -415,6 +439,7 @@ function FrameBrowser({ formId, analysis, dir }: {
       {selFrame ? (() => {
         const { pose: fpose } = parseFrameName(selFrame.file, dir ?? '');
         const sem = poseSemantics(fpose);
+        const shownFile = appliedFile(selFrame.file);
         return (
           <div className="dev-sheets-inspector dev-frames-inspector">
             <div className="dev-sheets-zoom">
@@ -425,14 +450,14 @@ function FrameBrowser({ formId, analysis, dir }: {
                 ))}
               </div>
             </div>
-            <h3>{selFrame.file} <small>{selFrame.w}×{selFrame.h}px · {selFrame.alphaPct}% alpha</small></h3>
+            <h3>{shownFile} <small>{selFrame.w}×{selFrame.h}px · {selFrame.alphaPct}% alpha</small></h3>
             <div className={`dev-pose-group-head cat-${sem.category.toLowerCase()}`}>
               <span className="dev-pose-group-name">{fpose}</span>
               <span className="dev-pose-group-cat">{sem.category}</span>
             </div>
             <p className="dev-sheet-sem-meaning">{sem.meaning}</p>
             <div className="dev-checker-bg">
-              <FrameZoom imgSrc={spriteFrameUrl(formId, selFrame.file)} w={selFrame.w} h={selFrame.h} zoom={zoom} bbox={selFrame.opaque} />
+              <FrameZoom imgSrc={spriteFrameUrl(formId, shownFile)} w={selFrame.w} h={selFrame.h} zoom={zoom} bbox={selFrame.opaque} />
             </div>
             <div className="dev-sheet-details">
               <div className={selFrame.touchesEdge && selFrame.touchTop > 3 ? 'warn' : 'ok'}>
@@ -457,7 +482,44 @@ function FrameBrowser({ formId, analysis, dir }: {
                 </ul>
               </div>
             )}
-            <code className="dev-manifest-path">{spriteFrameUrl(formId, selFrame.file)}</code>
+            <code className="dev-manifest-path">sprites/{dir}/{shownFile}</code>
+
+            {/* Acciones de reemplazo */}
+            <div className="dev-frame-actions">
+              {hasOverride ? (
+                <>
+                  <button className="dev-btn dev-btn-mini dev-btn-danger" onClick={clearReplacement}>↩ Restaurar original</button>
+                  <button className="dev-btn dev-btn-mini" onClick={saveToDisk}>💾 Guardar en disco</button>
+                </>
+              ) : (
+                <button className="dev-btn dev-btn-mini"
+                  onClick={() => { setReplacing(selFrame.file); setCandidate(null); }}>⇄ Reemplazar frame…</button>
+              )}
+            </div>
+
+            {/* Picker de reemplazo */}
+            {replacing === selFrame.file && (
+              <div className="dev-replace-inline">
+                <div className="dev-replace-picker-title">
+                  Todos los frames del manifest ({allFiles.length})
+                  <span className="dev-hint"> elige uno para {selFrame.file}</span>
+                </div>
+                <div className="dev-replace-grid">
+                  {allFiles.map(file => (
+                    <button key={file} className={`dev-replace-opt ${candidate === file ? 'selected' : ''} ${file === selFrame.file ? 'current' : ''}`}
+                      onClick={() => setCandidate(file)}
+                      title={`${file} (reemplaza a ${selFrame.file})`}>
+                      <img src={spriteFrameUrl(formId, file)} alt={file} loading="lazy" decoding="async" style={{ imageRendering: 'pixelated' }} />
+                      <span>{file.replace(/^.*?_/, '').replace('.png', '')}</span>
+                    </button>
+                  ))}
+                </div>
+                <div className="dev-replace-actions">
+                  <button className="dev-btn dev-btn-mini" disabled={!candidate} onClick={applyReplacement}>✓ Aplicar reemplazo</button>
+                  <button className="dev-btn dev-btn-mini" onClick={() => setReplacing(null)}>Cancelar</button>
+                </div>
+              </div>
+            )}
           </div>
         );
       })() : (
@@ -494,289 +556,6 @@ function FrameZoom({ imgSrc, w, h, zoom, bbox }: {
   return <canvas ref={ref} className="dev-sprite-canvas" />;
 }
 
-// ═══ Ataques — canon cartas → pose → beam chain ────────────────────────
-const EFFECT_LABELS: Record<string, string> = {
-  damage: 'Daño', damage_pierce: 'Daño perforante', damage_special: 'Daño especial',
-  damage_support: 'Daño + soporte', beam: 'Rayo', beam_team: 'Rayo equipo', beam_suicide: 'Rayo sacrificio',
-  beam_varhp: 'Rayo vida', heal_25pct: 'Cura 25%', heal_strong: 'Cura fuerte', heal_light: 'Cura leve',
-  life_drain: 'Drenar vida', knockdown_dmg: 'Derribo + daño', knockdown_min: 'Derribo',
-  gamebomb: 'Bomba de juego', candy: 'Convertir en caramelo', naughty_book: 'Libro pervertido',
-  ohko_lowacc: 'OHKO baja acc', android_kill: 'Matar androide',
-  avoid_beam: 'Esquivar rayo', avoid_damage: 'Esquivar daño', avoid_damage_taiyoken: 'Esquivar (Taiyoken)',
-  reduce_damage: 'Reducir daño', absorb_beam: 'Absorber rayo', beam_shield: 'Escudo rayo',
-  damage_shield: 'Escudo daño', command_cancel: 'Cancelar comando',
-};
-
-const CARD_TYPE_ORDER: Array<{ type: string; label: string }> = [
-  { type: 'beam', label: 'Rayo (beam)' },
-  { type: 'damage', label: 'Daño físico' },
-  { type: 'command', label: 'Comando' },
-  { type: 'support', label: 'Soporte' },
-  { type: 'defense', label: 'Defensa' },
-  { type: 'special', label: 'Especial' },
-];
-
-type ManifestShape = Record<string, { frames?: Array<{ file?: string }> }>;
-
-function CharacterAttacks({ charId, formId }: { charId: string; formId: string }) {
-  const [manifest, setManifest] = useState<ManifestShape | null>(null);
-  useEffect(() => {
-    let alive = true;
-    _spriteManifestInternals.loadManifestFor(formId).then(m => {
-      if (alive) setManifest(m as ManifestShape | null);
-    });
-    return () => { alive = false; };
-  }, [formId]);
-
-  const limitIds = LIMIT_DEFAULTS[charId] ?? [];
-  const limitCards = limitIds.map(id => getCard(id)).filter((c): c is NonNullable<typeof c> => !!c);
-  const usable = CARDS.filter(c => cardUsableBy(c, charId));
-  const usableIds = new Set(usable.map(c => c.id));
-  const deckCards = usable.filter(c => !limitIds.includes(c.id));
-
-  const poseFrames = (pose: string): number => {
-    if (!manifest) return 0;
-    const resolved = resolveCombatPose(pose, p => (manifest[p]?.frames?.length ?? 0) > 0);
-    if (!resolved) return 0;
-    return manifest[resolved]?.frames?.length ?? 0;
-  };
-
-  const CardRow = ({ card, isLimit }: { card: NonNullable<ReturnType<typeof getCard>>; isLimit: boolean }) => {
-    const pose = cardBattlePose(card);
-    const poseFx = card.type === 'beam' ? 'beam_fire' : null;
-    const n = poseFrames(pose);
-    const color = CARD_COLORS[card.type];
-    const beamChain = card.type === 'beam' ? ['beam_charge', 'beam_fire', 'beam_ray', 'beam_ray_tip'] : [];
-    return (
-      <div className="dev-attack-card" style={{ borderLeftColor: color }}>
-        <span className="dev-attack-id">{String(card.id).padStart(2, '0')}</span>
-        <span className="dev-attack-name" style={{ color }}>{card.name}</span>
-        <span className="dev-attack-type">{CARD_TYPE_NAMES[card.type]}</span>
-        <span className="dev-attack-effect" title={card.description ?? ''}>{EFFECT_LABELS[card.effect] ?? card.effect}</span>
-        <span className="dev-attack-stat">CC {card.cc}</span>
-        <span className="dev-attack-stat">ATK {card.atk}</span>
-        {isLimit && <span className="dev-tag ok">LIMIT</span>}
-        <span className={`dev-attack-pose ${n === 0 ? 'bad' : ''}`} title="Pose que dispara la carta en combate (canon cardBattlePose)">
-          ▶ {pose}{poseFx ? ` → ${poseFx}` : ''}
-          <em>{n > 0 ? `${n} frames` : 'sin frames en manifest'}</em>
-        </span>
-        {beamChain.length > 0 && (
-          <span className="dev-attack-beamchain" title="Cadena visual del beam (OUT_frames: charge→fire→ray→tip)">
-            {beamChain.map(b => {
-              const bn = poseFrames(b);
-              const resolved = resolveCombatPose(b, p => (manifest?.[p]?.frames?.length ?? 0) > 0);
-              const firstFile = resolved && manifest?.[resolved]?.frames
-                ? manifest[resolved]?.frames?.[0]
-                : null;
-              const thumb = resolved && firstFile && typeof firstFile === 'object' && firstFile && 'file' in firstFile
-                ? spriteFrameUrl(formId, String((firstFile as { file: string }).file))
-                : undefined;
-              return (
-                <span key={b} className={`dev-attack-beamlink ${bn === 0 ? 'no-frame' : ''}`} title={`${b} — ${bn} frames`}>
-                  {thumb ? <img src={thumb} alt={b} draggable={false} /> : <span className="dev-attack-beamdot">•</span>}
-                  <em>{b.replace('beam_', '')}</em>
-                </span>
-              );
-            })}
-          </span>
-        )}
-      </div>
-    );
-  };
-
-  return (
-    <div className="dev-attacks">
-      <div className="dev-attacks-summary">
-        <span className="dev-tag ok">{limitCards.length} LIMIT</span>
-        <span className="dev-tag">{usableIds.size} cartas usables</span>
-        <span className="dev-tag">{deckCards.length} en mazo</span>
-      </div>
-      {limitCards.length > 0 && (
-        <div className="dev-attack-group">
-          <div className="dev-attack-group-head">Ataques LIMIT (firma del personaje)</div>
-          {limitCards.map(c => <CardRow key={c.id} card={c} isLimit />)}
-        </div>
-      )}
-      {CARD_TYPE_ORDER.map(({ type, label }) => {
-        const cards = deckCards.filter(c => c.type === type);
-        if (cards.length === 0) return null;
-        return (
-          <div key={type} className="dev-attack-group">
-            <div className="dev-attack-group-head">{label} <em>{cards.length}</em></div>
-            {cards.map(c => <CardRow key={c.id} card={c} isLimit={false} />)}
-          </div>
-        );
-      })}
-      {deckCards.filter(c => !CARD_TYPE_ORDER.some(g => g.type === c.type)).length > 0 && (
-        <div className="dev-attack-group">
-          <div className="dev-attack-group-head">Otras</div>
-          {deckCards.filter(c => !CARD_TYPE_ORDER.some(g => g.type === c.type)).map(c => <CardRow key={c.id} card={c} isLimit={false} />)}
-        </div>
-      )}
-    </div>
-  );
-}
-
-// ═══ Frames atómicos V9 (sheet canónico) ───────────────────────────────
-interface AtomicFrameMeta { file: string; bucket: string; alias: string; x: number; y: number; w: number; h: number; }
-interface AtomicSheetMeta {
-  sheet: string; dir: string; columns: number; rows: number;
-  cell_width: number; cell_height: number; frame_count: number;
-  buckets: string[]; frames: AtomicFrameMeta[];
-}
-
-const BUCKET_LABELS: Record<string, string> = {
-  overworld_actor_or_pose: 'Overworld (chibi)',
-  battle_aura_tile: 'Aura tile (power)',
-  battle_aura_actor_composite: 'Composite (power-up)',
-  aura_support: 'Aura SUPPORT (azul)',
-  aura: 'Aura (power+support)',
-  character_plus_aura_or_burst: 'Power-up (personaje + aura)',
-  character_plus_effect: 'Power-up (personaje + efecto)',
-  idle_or_stance: 'Idle / stance',
-  movement_or_attack_pose: 'Movement / attack',
-  orbs_rings_bursts: 'Ciclo aura (orbs/burst)',
-  projectiles_beams: 'Beams / proyectiles',
-  projectile_orb_small: 'Orbes (small)',
-  speedlines: 'Speedlines',
-  nonbody_misc: 'FX misc',
-  actor_downed_or_special_pose: 'Downed / special',
-  downed_or_hurt: 'Downed / hurt',
-  fixed_only: 'Fixed-only (bridge)',
-};
-
-const FAMILY_LABELS: Record<string, string> = {
-  idle: 'Base', ready: 'Base', movement: 'Movement', defense: 'Defense',
-  melee: 'Melee', beam: 'Beam', power: 'Power', reaction: 'Reaction',
-  effect: 'Effects', projectile: 'Projectiles', overworld: 'Overworld',
-};
-const STATUS_TAG: Record<string, string> = {
-  CANONICAL: 'ok', RUNTIME_VERIFIED: 'ok', ASSET_VERIFIED: '', UNCLASSIFIED: 'bad', INFERRED: '',
-};
-
-function AtomicFrames({ sheet, formId }: { sheet: string; formId?: string }) {
-  const [meta, setMeta] = useState<AtomicSheetMeta | null>(null);
-  const [sheetImg, setSheetImg] = useState<HTMLImageElement | null>(null);
-  // Fuente: manifest REAL de OUT_frames (public/assets/sprites/<dir>/manifest.json)
-  const dir = formId ? (spriteDirFor(formId) ?? formId) : null;
-  useEffect(() => {
-    let alive = true;
-    setMeta(null);
-    setSheetImg(null);
-    if (!dir) return;
-    fetch(`/assets/sprites/${dir}/manifest.json?t=${Date.now()}`)
-      .then(r => (r.ok ? r.json() : null))
-      .then((m: Record<string, { frame_count?: number; fps?: number; loop?: boolean; frames?: Array<{ file: string; w: number; h: number }> }> | null) => {
-        if (!alive || !m) return;
-        // construir meta desde el manifest: cada pose es un bucket
-        const frames: AtomicFrameMeta[] = [];
-        const buckets: string[] = [];
-        for (const [pose, spec] of Object.entries(m)) {
-          const fl = spec?.frames ?? [];
-          if (!fl.length) continue;
-          buckets.push(pose);
-          fl.forEach((fm, i) => {
-            frames.push({
-              file: fm.file,
-              bucket: pose,
-              alias: `${pose} ${i}`, x: i, y: 0, w: fm.w, h: fm.h,
-            });
-          });
-        }
-        setMeta({
-          sheet: sheet.replace('.png', ''), dir: dir, columns: 4, rows: 0,
-          cell_width: 32, cell_height: 32, frame_count: frames.length,
-          buckets, frames,
-        });
-      })
-      .catch(() => {});
-    return () => { alive = false; };
-  }, [sheet, dir]);
-  if (!meta) return null;
-
-  const formDir = meta.dir;
-  // agrupar por pose (bucket) directamente del manifest — sin canon V9
-  type RG = { role: string; status: string; frames: AtomicFrameMeta[] };
-  const famGroups = new Map<string, RG[]>();
-  const unclassified: AtomicFrameMeta[] = [];
-  for (const f of meta.frames) {
-    const bucket = f.bucket;
-    if (!bucket) { unclassified.push(f); continue; }
-    let roles = famGroups.get(bucket);
-    if (!roles) { roles = []; famGroups.set(bucket, roles); }
-    let rg = roles.find(r => r.role === bucket);
-    if (!rg) { rg = { role: bucket, status: 'ASSET_VERIFIED', frames: [] }; roles.push(rg); }
-    rg.frames.push(f);
-  }
-
-  return (
-    <div className="dev-atomic-section">
-      <h3>Frames por pose — OUT_frames <span className="dev-atomic-count">({meta.frame_count} frames · {meta.dir})</span></h3>
-      {[...famGroups.entries()].map(([family, roles]) => (
-        <div key={family} className="dev-atomic-bucket">
-          <div className="dev-atomic-bucket-head">
-            <span className="dev-atomic-bucket-name">{BUCKET_LABELS[family] ?? family}</span>
-            <span className="dev-atomic-bucket-cat">{roles.reduce((n, r) => n + r.frames.length, 0)} frames</span>
-          </div>
-          {roles.map(rg => (
-            <div key={rg.role} className="dev-atomic-role">
-              <div className="dev-atomic-role-head">
-                <span className="dev-atomic-role-name">{rg.role}</span>
-                <span className="dev-tag ok">{rg.status}</span>
-                <span className="dev-atomic-bucket-cat">{rg.frames.length}</span>
-              </div>
-              <div className="dev-atomic-grid">
-                {rg.frames.map(f => {
-                  const label = f.file.replace('.png', '');
-                  return (
-                    <div key={f.file} className="dev-atomic-cell" title={`${f.file}`}>
-                      <img src={`/assets/sprites/${formDir}/${f.file}`} alt={f.file} style={{ imageRendering: 'pixelated', width: f.w * 1.5, height: f.h * 1.5 }} />
-                      <span className="dev-atomic-file">{label}</span>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          ))}
-        </div>
-      ))}
-      {unclassified.length > 0 && (
-        <div className="dev-atomic-bucket">
-          <div className="dev-atomic-bucket-head">
-            <span className="dev-atomic-bucket-name">Unclassified</span>
-            <span className="dev-tag bad">UNKNOWN</span>
-            <span className="dev-atomic-bucket-cat">{unclassified.length} frames sin evidencia</span>
-          </div>
-          <div className="dev-atomic-grid">
-            {unclassified.map(f => (
-              <div key={f.file} className="dev-atomic-cell" title={`${f.file} · ${f.alias}`}>
-                {sheetImg && <FrameCanvas img={sheetImg} f={f} />}
-                <span className="dev-atomic-file">{f.file.replace('.png', '')}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
-    </div>
-  );
-}
-
-function FrameCanvas({ img, f, zoom = 3 }: { img: HTMLImageElement; f: AtomicFrameMeta; zoom?: number }) {
-  const ref = useRef<HTMLCanvasElement>(null);
-  useEffect(() => {
-    const c = ref.current;
-    if (!c) return;
-    c.width = f.w * zoom;
-    c.height = f.h * zoom;
-    const ctx = c.getContext('2d');
-    if (!ctx) return;
-    ctx.imageSmoothingEnabled = false;
-    ctx.clearRect(0, 0, c.width, c.height);
-    ctx.drawImage(img, f.x, f.y, f.w, f.h, 0, 0, f.w * zoom, f.h * zoom);
-  }, [img, f, zoom]);
-  return <canvas ref={ref} className="dev-atomic-canvas" />;
-}
-
 // ═══ Assets ════════════════════════════════════════════════════════════
 function AssetCell({ label, src, wide, small }: { label: string; src?: string; wide?: boolean; small?: boolean }) {
   return (
@@ -801,278 +580,6 @@ function PowerUpCell({ poseSrc, auraSrc }: { poseSrc?: string; auraSrc?: string 
         ) : <span className="dev-asset-missing">—</span>}
       </div>
       <div className="dev-asset-label">Battle OW power</div>
-    </div>
-  );
-}
-
-// ═══ Bibliotecas de poses (COMBAT_POSE_ORDER con fallback trazable) ═══
-const POSE_GROUPS: Array<{ key: string; label: string; poses: string[] }> = [
-  { key: 'base', label: 'Base', poses: ['idle'] },
-  { key: 'movement', label: 'Movement', poses: ['move_front', 'move_back'] },
-  { key: 'defense', label: 'Defense', poses: ['guard', 'beam_guard', 'evade'] },
-  { key: 'melee', label: 'Melee', poses: ['attack_fwd', 'attack_ud', 'punch_right', 'punch_left', 'kick_right'] },
-  { key: 'reaction', label: 'Reaction', poses: ['hurt', 'knockback_back', 'knockback_up', 'knockback_down'] },
-  { key: 'beam', label: 'Energy', poses: ['beam_charge', 'beam_fire', 'beam_ray', 'beam_ray_tip'] },
-  { key: 'power', label: 'Power / Support', poses: ['gather_power', 'power_up', 'aura_power', 'aura_support'] },
-];
-
-function AllPosesGrid({ formId, activePose, onPoseSelect }: {
-  formId: string;
-  activePose?: string;
-  onPoseSelect?: (pose: string) => void;
-}) {
-  // ── Hooks: TODOS antes de cualquier return ──
-  const [poses, setPoses] = useState<CombatPoseAsset[] | null>(null);
-  const [manifest, setManifest] = useState<ManifestShape | null>(null);
-  const [selectedFrame, setSelectedFrame] = useState<{ pose: string; index: number; file: string } | null>(null);
-  const [replacing, setReplacing] = useState<{ pose: string; index: number; file: string } | null>(null);
-  const [candidate, setCandidate] = useState<string | null>(null);
-  const [frameOverrides, setFrameOverrides] = useState<Record<string, string>>(() => loadJson(FRAME_OVERRIDES_KEY, {}));
-
-  useEffect(() => {
-    try { localStorage.setItem(FRAME_OVERRIDES_KEY, JSON.stringify(frameOverrides)); } catch { /* noop */ }
-  }, [frameOverrides]);
-
-  useEffect(() => {
-    let alive = true;
-    const bundle = getCharacterAssetBundle(getForm(formId)?.character ?? 'goku', formId);
-    resolveBundlePoses(bundle).then(ps => { if (alive) setPoses(ps); });
-    _spriteManifestInternals.loadManifestFor(formId).then(m => {
-      if (alive) setManifest(m as ManifestShape | null);
-    });
-    return () => { alive = false; };
-  }, [formId]);
-
-  // Todos los archivos físicos del manifest (para el picker de reemplazo)
-  const allFiles = useMemo(() => {
-    const seen = new Set<string>();
-    const out: Array<{ file: string; pose: string }> = [];
-    if (manifest) {
-      for (const [pose, m] of Object.entries(manifest)) {
-        for (const f of (m?.frames ?? [])) {
-          if (f.file && !seen.has(f.file)) { seen.add(f.file); out.push({ file: f.file, pose }); }
-        }
-      }
-    }
-    return out;
-  }, [manifest]);
-
-  if (!poses) return <div className="dev-hint">Resolviendo poses del canon…</div>;
-
-  const resolved = poses.filter(p => p.url);
-  const missing = poses.filter(p => !p.url);
-
-  const poseFrames = (pose: string): string[] => {
-    const resolvedPose = resolveCombatPose(pose, p => (manifest?.[p]?.frames?.length ?? 0) > 0);
-    if (!resolvedPose || !manifest?.[resolvedPose]?.frames) return [];
-    return manifest[resolvedPose].frames.map(f => f.file ?? '').filter(Boolean);
-  };
-  const prefix = (pose: string): string => {
-    const resolvedPose = resolveCombatPose(pose, p => (manifest?.[p]?.frames?.length ?? 0) > 0);
-    return resolvedPose ?? pose;
-  };
-
-  const overrideKey = (pose: string, index: number) => `${pose}:${index}`;
-  const appliedFile = (pose: string, index: number, original: string) =>
-    frameOverrides[overrideKey(pose, index)] ?? original;
-
-  const applyReplacement = () => {
-    if (!replacing || !candidate) return;
-    setFrameOverrides(o => ({ ...o, [overrideKey(replacing.pose, replacing.index)]: candidate }));
-    setReplacing(null);
-    setCandidate(null);
-  };
-  const clearReplacement = (pose: string, index: number) => {
-    setFrameOverrides(o => {
-      const n = { ...o };
-      delete n[overrideKey(pose, index)];
-      return n;
-    });
-    if (replacing && replacing.pose === pose && replacing.index === index) {
-      setReplacing(null); setCandidate(null);
-    }
-  };
-
-  return (
-    <div className="dev-poses-section">
-      <h3>Poses de combate — canon completo ({resolved.length}/{poses.length} con frame físico)
-        {Object.keys(frameOverrides).length > 0 && (
-          <span className="dev-override-count">
-            {Object.keys(frameOverrides).length} frame(s) reemplazado(s)
-            <button className="dev-btn dev-btn-mini" onClick={() => setFrameOverrides({})}>limpiar todos</button>
-          </span>
-        )}
-      </h3>
-
-      <div className="dev-pose-library">
-        {POSE_GROUPS.map(g => {
-          const groupPoses = g.poses
-            .map(pid => poses.find(p => p.pose === pid))
-            .filter((p): p is CombatPoseAsset => !!p);
-          if (groupPoses.length === 0) return null;
-          return (
-            <div key={g.key} className="dev-pose-group-block">
-              <div className="dev-pose-group-label">{g.label}</div>
-              <div className="dev-pose-grid dev-pose-grid-frames">
-                {groupPoses.map(p => {
-                  const frames = poseFrames(p.pose);
-                  const resolvedPose = prefix(p.pose);
-                  // Fuente real: manifest OUT_frames (sin canon V9)
-                  const canonLabel = frames.length > 0 ? `${p.pose}/${frames.length}f` : 'sin frame';
-                  const hasOverride = frames.some((_, i) => frameOverrides[overrideKey(p.pose, i)]);
-                  const isActive = activePose === p.pose;
-                  return (
-                    <div key={p.pose} className={`dev-pose-card ${p.url ? '' : 'no-frame'} ${hasOverride ? 'has-override' : ''} ${isActive ? 'pose-active' : ''}`}
-                      title={`${p.pose}${p.fallback.length > 0 ? ` → ${p.fallback.join(' → ')}` : ''} · ${p.group}${isActive ? '\n(pose activa en el preview)' : ''}`}>
-                      <div className="dev-pose-card-head">
-                        <button className="dev-pose-card-name-btn" onClick={() => onPoseSelect?.(p.pose)} title="Mostrar en el preview">
-                          <span className="dev-pose-card-name">{p.pose}{hasOverride && <em className="dev-override-badge">edit</em>}</span>
-                          <span className="dev-pose-card-preview">▶</span>
-                        </button>
-                        <span className={`dev-tag ${frames.length > 0 ? 'ok' : 'bad'}`}>{canonLabel}</span>
-                        <span className="dev-pose-card-count">{frames.length} frames</span>
-                      </div>
-                      <div className="dev-pose-card-frames">
-                        {frames.length > 0 ? frames.map((f, i) => {
-                          const file = appliedFile(p.pose, i, f);
-                          const overridden = file !== f;
-                          return (
-                            <button key={`${f}-${i}`} className={`dev-pose-card-frame ${selectedFrame?.file === f && selectedFrame.index === i && selectedFrame.pose === p.pose ? 'selected' : ''} ${overridden ? 'overridden' : ''}`}
-                              onClick={() => setSelectedFrame(selectedFrame?.file === f && selectedFrame.index === i && selectedFrame.pose === p.pose ? null : { pose: p.pose, index: i, file: f })}
-                              title={`${f} · frame ${i} de ${resolvedPose}${overridden ? `\n⚠ reemplazado por ${file}` : ''}\nClic para inspeccionar / reemplazar`}>
-                              <img src={spriteFrameUrl(formId, file)} alt={`${p.pose}_${i}`} loading="lazy" />
-                              <span className="dev-pose-card-frame-name">{file.replace(/^.*?_/, '').replace('.png', '')}</span>
-                            </button>
-                          );
-                        }) : (
-                          <span className="dev-asset-missing">— sin frames físicos —</span>
-                        )}
-                      </div>
-
-                      {selectedFrame && selectedFrame.pose === p.pose && (
-                        <div className="dev-frame-inspector">
-                          <div className="dev-frame-inspector-head">
-                            <span className="dev-frame-inspector-file">{appliedFile(selectedFrame.pose, selectedFrame.index, selectedFrame.file)}</span>
-                            <button className="dev-btn dev-btn-mini" onClick={() => setSelectedFrame(null)}>✕</button>
-                          </div>
-                          <div className="dev-frame-inspector-preview">
-                            <div className="dev-checker-bg">
-                              <img src={spriteFrameUrl(formId, appliedFile(selectedFrame.pose, selectedFrame.index, selectedFrame.file))} alt="Frame inspector"
-                                style={{ imageRendering: 'pixelated' }} />
-                            </div>
-                          </div>
-                          <div className="dev-frame-inspector-meta">
-                            <span>Pose: <b>{selectedFrame.pose}</b></span>
-                            <span>Frame #{selectedFrame.index}</span>
-                            <span>Archivo: <code>{appliedFile(selectedFrame.pose, selectedFrame.index, selectedFrame.file)}</code></span>
-                          </div>
-                          <div className="dev-frame-actions">
-                            {frameOverrides[overrideKey(selectedFrame.pose, selectedFrame.index)] ? (
-                              <>
-                                <button className="dev-btn dev-btn-mini dev-btn-danger"
-                                  onClick={() => clearReplacement(selectedFrame.pose, selectedFrame.index)}>↩ Restaurar original</button>
-                                <button className="dev-btn dev-btn-mini"
-                                  title="Sobrescribe el PNG original en disco con el frame reemplazado (afecta a todo el juego)"
-                                  onClick={async () => {
-                                    const original = selectedFrame.file;
-                                    const replacement = frameOverrides[overrideKey(selectedFrame.pose, selectedFrame.index)];
-                                    if (!replacement || replacement === original) return;
-                                    const dir = spriteDirFor(formId);
-                                    if (!dir || !confirm(`Sobrescribir en disco:\nsprites/${dir}/${original}\ncon el contenido de:\nsprites/${dir}/${replacement}\n\nEsto afecta a TODAS las poses que usan ese frame.`)) return;
-                                    try {
-                                      const dataUrl = await frameDataUrl(`sprites/${dir}/${replacement}`);
-                                      await writeAssetToDisk(`sprites/${dir}/${original}`, dataUrl);
-                                      clearReplacement(selectedFrame.pose, selectedFrame.index);
-                                      alert('✓ Guardado en disco. Recarga el juego para ver el cambio (el manifest no cambia).');
-                                    } catch (e) {
-                                      alert(`Error: ${e}`);
-                                    }
-                                  }}>💾 Guardar en disco</button>
-                              </>
-                            ) : (
-                              <button className="dev-btn dev-btn-mini"
-                                onClick={() => { setReplacing(selectedFrame); setCandidate(null); }}>⇄ Reemplazar frame…</button>
-                            )}
-                          </div>
-                        </div>
-                      )}
-
-                      {p.fallback.length > 0 && (
-                        <div className="dev-pose-fallback-row">fallback: {p.fallback.join(' → ')} → <b>{p.resolvedPose}</b></div>
-                      )}
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          );
-        })}
-      </div>
-
-      {/* Picker de reemplazo — comparación antes/después */}
-      {replacing && (
-        <div className="dev-replace-overlay">
-          <div className="dev-replace-panel">
-            <div className="dev-replace-head">
-              <span>Reemplazar frame — <code>{replacing.pose}[{replacing.index}]</code></span>
-              <button className="dev-btn dev-btn-mini" onClick={() => { setReplacing(null); setCandidate(null); }}>✕</button>
-            </div>
-            <div className="dev-replace-compare">
-              <div className="dev-replace-side">
-                <div className="dev-replace-side-label">Actual</div>
-                <div className="dev-checker-bg dev-replace-img">
-                  <img src={spriteFrameUrl(formId, appliedFile(replacing.pose, replacing.index, replacing.file))} alt="Frame actual" style={{ imageRendering: 'pixelated' }} />
-                </div>
-                <code className="dev-replace-file">{appliedFile(replacing.pose, replacing.index, replacing.file)}</code>
-              </div>
-              <div className="dev-replace-arrow">→</div>
-              <div className="dev-replace-side">
-                <div className="dev-replace-side-label">Reemplazo{candidate ? '' : ' (elige abajo)'}</div>
-                <div className="dev-checker-bg dev-replace-img">
-                  {candidate
-                    ? <img src={spriteFrameUrl(formId, candidate)} alt="Frame candidato" style={{ imageRendering: 'pixelated' }} />
-                    : <span className="dev-asset-missing">—</span>}
-                </div>
-                <code className="dev-replace-file">{candidate ?? '—'}</code>
-              </div>
-            </div>
-            <div className="dev-replace-actions">
-              <button className="dev-btn dev-btn-mini" disabled={!candidate} onClick={applyReplacement}>✓ Aplicar reemplazo</button>
-              {candidate && (
-                <button className="dev-btn dev-btn-mini" onClick={() => setCandidate(null)}>Limpiar selección</button>
-              )}
-            </div>
-            <div className="dev-replace-picker">
-              <div className="dev-replace-picker-title">Todos los frames del manifest ({allFiles.length})</div>
-              <div className="dev-replace-grid">
-                {allFiles.map(({ file, pose }) => (
-                  <button key={file} className={`dev-replace-opt ${candidate === file ? 'selected' : ''} ${appliedFile(replacing.pose, replacing.index, replacing.file) === file ? 'current' : ''}`}
-                    onClick={() => setCandidate(file)}
-                    title={`${file} (pose ${pose})`}>
-                    <img src={spriteFrameUrl(formId, file)} alt={file} loading="lazy" style={{ imageRendering: 'pixelated' }} />
-                    <span>{file.replace(/^.*?_/, '').replace('.png', '')}</span>
-                  </button>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-
-      <div className="dev-semantic-pose-row">{COMBAT_POSE_ORDER.join(' · ')}</div>
-      <div className="dev-pose-legend">
-        <span className="dev-pose-legend-title">Qué dispara cada pose (canon cartas):</span>
-        <span><b>beam_charge / beam_fire</b> ← cartas beam (Kamehameha, Masenko…)</span>
-        <span><b>attack_fwd / punch / kick</b> ← cartas damage y command</span>
-        <span><b>guard / evade / beam_guard</b> ← cartas defense</span>
-        <span><b>gather_power / power_up / aura_*</b> ← soporte y GATHER (aura overlay)</span>
-        <span className="dev-pose-fx-note"><b>beam_ray / beam_ray_tip</b> ← referencias de sheet del proyectil (FX), no poses de personaje — por eso no tienen frame físico propio</span>
-        <span><b>move_front / move_back</b> ← comando MOVE</span>
-        <span><b>hurt / knockback</b> ← recibir daño (defensor)</span>
-      </div>
-      {missing.length > 0 && (
-        <p className="dev-hint">Sin frame físico (el runtime usa fallback o no existe en esta forma): {missing.map(m => m.pose).join(', ')}</p>
-      )}
     </div>
   );
 }

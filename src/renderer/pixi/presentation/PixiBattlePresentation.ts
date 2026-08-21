@@ -60,20 +60,26 @@ export class PixiBattlePresentation implements BattlePresentation {
   async init(): Promise<void> {
     const dir = this.renderer.sceneDirector;
 
-    const overview = await this.renderer.loadTexture(this.cfg.overviewBackground);
-    dir.tactical.setBackground(overview);
-    const action = await this.renderer.loadTexture(this.cfg.actionBackground);
-    dir.action.setBackground(action);
-
+    // Fondo, overworld y atlases en PARALELO: todos los fetch parten a la
+    // vez (el navegador satura conexiones) en lugar de encadenarse.
     const pOwUrl = overworldUrl(this.cfg.playerFormId);
     const eOwUrl = overworldUrl(this.cfg.enemyFormId);
-    const pOw = pOwUrl ? await this.renderer.loadTexture(pOwUrl) : null;
-    const eOw = eOwUrl ? await this.renderer.loadTexture(eOwUrl) : null;
+    const [overview, action, pOw, eOw, leftActor, rightActor] = await Promise.all([
+      this.renderer.loadTexture(this.cfg.overviewBackground),
+      this.renderer.loadTexture(this.cfg.actionBackground),
+      pOwUrl ? this.renderer.loadTexture(pOwUrl) : Promise.resolve(null),
+      eOwUrl ? this.renderer.loadTexture(eOwUrl) : Promise.resolve(null),
+      this.renderer.addFighter(this.cfg.playerFormId, 'left', this.scale),
+      this.renderer.addFighter(this.cfg.enemyFormId, 'right', this.scale),
+    ]);
+
+    dir.tactical.setBackground(overview);
+    dir.action.setBackground(action);
     dir.tactical.setOverworld('left', pOw, this.cfg.playerPos, facingFlip(this.cfg.playerFormId, 'left'));
     dir.tactical.setOverworld('right', eOw, this.cfg.enemyPos, facingFlip(this.cfg.enemyFormId, 'right'));
 
-    this.leftActor = await this.renderer.addFighter(this.cfg.playerFormId, 'left', this.scale);
-    this.rightActor = await this.renderer.addFighter(this.cfg.enemyFormId, 'right', this.scale);
+    this.leftActor = leftActor;
+    this.rightActor = rightActor;
     // M8.P0 — los dos actores se registran UNA sola vez (addChild una única
     // vez). A partir de aquí los roles cambian por setRoles, sin reparent.
     this.renderer.sceneDirector.action.setFighters(this.leftActor, this.rightActor);
