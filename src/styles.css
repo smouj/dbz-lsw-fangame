@@ -8033,12 +8033,43 @@ button:focus-visible, .chapter-node:focus-visible {
   box-shadow: 0 6px 14px rgba(0, 0, 0, .35);
   transition: border-radius .15s ease;
 }
-/* Estado fijado por el refuerzo JS (DevStudio): posición calculada en
-   runtime — funciona en CUALQUIER navegador, sin depender de sticky. */
-.dev-header.dev-header-fixed {
-  border-radius: 0 0 var(--dev-r-md) var(--dev-r-md);
-  box-shadow: 0 10px 22px rgba(0, 0, 0, .5);
+/* ═══ HEADER FIJO ABSOLUTO (CSS puro, a prueba de todo) ═══
+   En el Dev Studio el header de cada página es position:fixed con
+   z-index 1000 y fondo sólido: NUNCA se desplaza con el scroll y el
+   contenido NUNCA puede taparlo. El JS de DevStudio.tsx ajusta las
+   coordenadas finas (padding del main); estas reglas son el respaldo
+   universal que funciona incluso sin el JS (HMR de CSS en caliente). */
+.devstudio .dev-header {
+  position: fixed !important;
+  left: 190px;
+  top: 0;
+  right: 0;
+  width: auto !important;
+  z-index: 1000 !important;
+  margin: 0 !important;
+  border-radius: 0 0 var(--dev-r-md) 0;
+  background: var(--dev-bg) !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, .55) !important;
+}
+@media (max-width: 900px) {
+  .devstudio .dev-header {
+    left: 0;
+    top: 101px;
+    border-radius: 0;
+  }
+}
+/* Compensación permanente del contenido (nunca queda oculto bajo el
+   header fijo). El JS lo afina con la altura exacta si está activo. */
+.devstudio .dev-main .dev-panel {
+  padding-top: 96px;
+}
+.devstudio .dev-header.dev-header-fixed {
+  border-radius: 0 0 var(--dev-r-md) 0;
+  box-shadow: 0 10px 26px rgba(0, 0, 0, .6);
   margin-bottom: 0;
+}
+@media (max-width: 900px) {
+  .devstudio .dev-header.dev-header-fixed { border-radius: 0; }
 }
 .dev-header h1 { font-size: 16px; margin: 0 0 2px; color: var(--dev-text-hi); letter-spacing: .3px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
 .dev-sub { margin: 0; color: var(--dev-dim); font-size: 11px; line-height: 1.4; }
