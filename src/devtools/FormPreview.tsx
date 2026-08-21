@@ -23,12 +23,22 @@ interface Props {
   dir: string | undefined;
   /** Análisis del manifest (frames reales con poses) — fuente de conteos. */
   analysis: { frames: FrameAnalysis[]; loading: boolean };
+  /** Pose controlada (opcional — si se pasa, el padre controla la pose activa). */
+  pose?: string;
+  /** Callback al cambiar de pose (pills / beam chain). */
+  onPoseChange?: (pose: string) => void;
 }
 
 const BEAM_CHAIN = ['beam_charge', 'beam_fire', 'beam_ray', 'beam_ray_tip'];
 
-export function FormPreview({ formId, dir, analysis }: Props) {
-  const [pose, setPose] = useState('idle');
+export function FormPreview({ formId, dir, analysis, pose: poseProp, onPoseChange }: Props) {
+  const [poseLocal, setPoseLocal] = useState('idle');
+  const pose = poseProp ?? poseLocal;
+  const setPose = (p: string) => {
+    if (poseProp !== undefined) onPoseChange?.(p);
+    setPoseLocal(p);
+    setFrameIdx(0);
+  };
   const [frameIdx, setFrameIdx] = useState(0);
 
   // Set de archivos reales del manifest (para available()).

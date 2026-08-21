@@ -3781,8 +3781,7 @@ function MainMenu({ onNavigate }: { onNavigate: (s: Screen) => void }) {
       )}
 
       <div className="menu-content" tabIndex={0} onKeyDown={onMenuKeyDown}>
-        <img className="menu-logo-mark" src="/logo-128.png" alt="" />
-        <h1 className="menu-title">{t('menu.title')}</h1>
+        <img className="menu-logo-title" src="/logo-dbz-title.png" alt="DRAGON BALL Z" />
         <h2 className="menu-subtitle">{t('menu.subtitle')}</h2>
 
         {/* Bloque hero integrado en la banda izquierda, sin ventana exterior. */}
@@ -5037,10 +5036,6 @@ function AppInner() {
         setBattleKey(k => k + 1);
         setInDev(false);
         setScreen('battle');
-        // Salir del Dev Studio por completo: limpiar hash Y query (?dev=1)
-        // para que isDevRoute() deje de devolver true (bug: con ?dev=1 en
-        // la URL el hashchange volvía a entrar en el Dev Studio). Conserva
-        // flags de depuración del Battle Lab: debugState/debugCinematics/pixiField.
         try {
           const url = new URL(window.location.href);
           url.searchParams.delete('dev');
@@ -5069,19 +5064,18 @@ function AppInner() {
     }
   })();
   // Transición de entrada por pantalla (fade + slide sutil, estilo GBC)
-  return <div key={screen === 'battle' ? `battle-${battleKey}` : screen} className="screen-enter">{screenEl}</div>;
+  return (
+    <GameViewport>
+      <div key={screen === 'battle' ? `battle-${battleKey}` : screen} className="screen-enter">{screenEl}</div>
+      <GlobalTooltip />
+    </GameViewport>
+  );
 }
 
 export default function App() {
   return (
     <LanguageProvider>
-      {/* R1 — GameViewport canónico: todas las pantallas runtime viven en
-          el rectángulo 16:9 (container cq*). Flag canonicalViewport=false
-          por ahora → mismo resultado visual que el legacy (cq ≡ vw/vh). */}
-      <GameViewport>
-        <AppInner />
-      </GameViewport>
-      <GlobalTooltip />
+      <AppInner />
     </LanguageProvider>
   );
 }

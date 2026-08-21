@@ -42,7 +42,7 @@ export async function loadBattleOverworldManifest(): Promise<Record<string, Reco
  * SOLO las formas confirmadas tienen battle overworld; el resto devuelve
  * null → runtime usa chibi *_ow.png y sin aura (nunca URL rota).
  */
-function formIdToCharFormSync(formId: string): { char: string; form: string } | null {
+export function formIdToCharFormSync(formId: string): { char: string; form: string } | null {
   const known: Record<string, [string, string]> = {
     // Entradas confirmadas en manifest.json (24)
     'goku_base': ['goku', 'base'],

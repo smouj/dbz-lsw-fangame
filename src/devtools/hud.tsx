@@ -396,8 +396,7 @@ export function HudModule() {
                   </svg>
                 </div>
                 <div className="menu-content">
-                  <img className="menu-logo-mark" src="/logo-128.png" alt="" />
-                  <h1 className="menu-title">DBZ LSW</h1>
+                  <img className="menu-logo-title" src="/logo-dbz-title.png" alt="DRAGON BALL Z" />
                   <h2 className="menu-subtitle">LEGENDARY SUPER WARRIORS</h2>
                   <button className="menu-continue-card" data-tip={tipBlock('CONTINUAR', [['desc', 'Sigue la historia en el capítulo actual.']])}>
                     <span className="mc-play">▶</span>

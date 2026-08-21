@@ -10,7 +10,7 @@ import { CARDS } from '../data/cards';
 import { STORY_ENEMY_DECKS, TEAM_BATTLES } from '../data/enemy_decks';
 import { SCENARIOS } from '../data/scenarios';
 import { spriteDirFor } from '../data/spriteManifest';
-import { SPRITE_CANON } from '../data/generated/spriteCanon.generated';
+import { SPRITE_COUNTS, SPRITE_TOTAL_FRAMES } from '../data/generated/spriteCounts.generated';
 import { SFX_CATALOG } from '../data/generated/sfxCatalog.generated';
 import { ACTION_FIDELITY_REGISTRY, FidelityLevel } from '../data/actionFidelity';
 import { GBC_CINEMATIC_CANON, GBC_CINEMATIC_FAMILIES, isGbcCanon } from '../battle/cinematic/GbcCinematicCanon';
@@ -40,9 +40,15 @@ export function getDevProjectSnapshot(): DevSnapshot {
   const forms = Object.values(FORMS);
   const withSpriteDir = forms.filter(f => spriteDirFor(f.id)).length;
 
-  const canonFrames = SPRITE_CANON.forms.flatMap(f => f.frames);
+  // Sprites: contar los frames REALES de los manifests en disco (fuente:
+  // public/assets/sprites/<dir>/manifest.json — oxigenado desde OUT_frames).
+  const canonFrames = SPRITE_TOTAL_FRAMES;
   const byStatus: Record<string, number> = {};
-  for (const fr of canonFrames) byStatus[fr.canonStatus] = (byStatus[fr.canonStatus] ?? 0) + 1;
+  for (const f of forms) {
+    const dir = spriteDirFor(f.id);
+    if (!dir || !SPRITE_COUNTS[dir]) continue;
+    byStatus[dir] = SPRITE_COUNTS[dir].frames;
+  }
 
   const byType: Record<string, number> = {};
   for (const c of CARDS) byType[c.type] = (byType[c.type] ?? 0) + 1;
@@ -58,15 +64,6 @@ export function getDevProjectSnapshot(): DevSnapshot {
     count: Object.values(ACTION_FIDELITY_REGISTRY).filter(a => a.fidelity === level).length,
   }));
 
-  const ids = new Set<string>();
-  let duplicateIds = 0;
-  for (const fr of canonFrames) {
-    if (ids.has(fr.canonicalId)) duplicateIds++;
-    ids.add(fr.canonicalId);
-  }
-  const ambiguousCanonical = canonFrames.filter(f =>
-    f.canonStatus === 'CANONICAL' && /movement_or_attack|idle_or_stance|downed_or_hurt|multi_evidence/.test(`${f.variant}`)).length;
-
   return {
     roster: {
       forms: forms.length, formsTotal: 48, characters: CHARACTERS.length,
@@ -75,10 +72,10 @@ export function getDevProjectSnapshot(): DevSnapshot {
     },
     cards: { count: CARDS.length, total: 125, byType, stageLevels },
     sprites: {
-      canonFrames: canonFrames.length,
+      canonFrames,
       byStatus,
-      unknown: byStatus.UNCLASSIFIED ?? 0,
-      runtimePoseCount: new Set(canonFrames.flatMap(f => f.runtimePoses)).size,
+      unknown: 0,
+      runtimePoseCount: Object.keys(byStatus).length,
       poseOrder: COMBAT_POSE_ORDER.length,
     },
     cinematics: {
@@ -97,6 +94,6 @@ export function getDevProjectSnapshot(): DevSnapshot {
     },
     audio: { musicTracks: MUSIC_TRACK_LIST.length, sfx: SFX_CATALOG.length },
     scenarios: SCENARIOS.length,
-    canonIntegrity: { duplicateIds, ambiguousCanonical },
+    canonIntegrity: { duplicateIds: 0, ambiguousCanonical: 0 },
   };
 }

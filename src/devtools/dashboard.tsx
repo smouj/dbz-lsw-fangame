@@ -22,7 +22,7 @@ const PIPELINE: Array<[string, string]> = [
   ['src/battle/runtime/BattleRuntime.ts', 'orquestador ÚNICO: dispatch/advance → timeline → presenter'],
   ['src/battle/engine/presentation/buildTimeline.ts', 'Presentation Adapter (M7): EventLog → BattleTimeline'],
   ['src/battle/cinematic/GbcCinematicCanon.ts', 'F0 Ground Truth: solo FRAME_VERIFIED / VIDEO_VERIFIED'],
-  ['src/data/generated/spriteCanon.generated.ts', 'canon semántico V9 (fuente única de frames)'],
+  ['src/data/generated/spriteCounts.generated.ts', 'conteos de frames por forma (fuente: OUT_frames)'],
 ];
 
 export function DashboardModule({ onNavigate }: { onNavigate: (m: DevModuleId) => void }) {
@@ -109,8 +109,7 @@ export function DashboardModule({ onNavigate }: { onNavigate: (m: DevModuleId) =
             );
           })}
           <div className="dev-fid-note">
-            Canon V9: <strong>{sprites.canonFrames}</strong> frames físicos ({Object.entries(sprites.byStatus).map(([k, v]) => `${k} ${v}`).join(' · ')}) ·
-            {sprites.unknown > 0 ? <strong> {sprites.unknown} UNCLASSIFIED honestos</strong> : ' 0 desconocidos'} ·
+            Sprites OUT_frames: <strong>{sprites.canonFrames}</strong> frames ({Object.entries(sprites.byStatus).map(([k, v]) => `${k} ${v}`).join(' · ')}) ·
             {sprites.runtimePoseCount} poses con frame físico de {sprites.poseOrder} en COMBAT_POSE_ORDER.
           </div>
           <div className="dev-fid-note">

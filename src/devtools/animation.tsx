@@ -12,7 +12,6 @@ import { CARDS } from '../data/cards';
 import { actionSemanticsForCard } from '../battle/actionProfiles';
 import { COMBAT_REQUIRED_POSES, POSE_FALLBACKS, combatPoseMeta, resolvePoseFrameSequence } from '../battle/spriteConfig';
 import { listAnimationCanon } from '../battle/animationCanon';
-import { SPRITE_CANON, type CanonStatus } from '../data/generated/spriteCanon.generated';
 import { GBC_FPS } from '../battle/timeline';
 import { FormNavigator } from './FormNavigator';
 import {
@@ -714,30 +713,18 @@ function SpritePalette({ formId, activePose, onDragStart, onPickFrame }: {
 }
 
 
-// ── Clip canónico (V9): family/role del canon + durationTicks ──
+// ── Clip por pose (manifest OUT_frames) ──
 function CanonClipInfo({ formId, pose, fps, frames }: {
   formId: string; pose: string; fps: number; frames: number;
 }) {
   const family = POSE_FAMILY[pose] ?? 'unclassified';
-  // el canon está indexado por runtime_dir; el Animation Studio navega con formId del roster
   const canonFormId = spriteDirFor(formId) ?? formId;
-  const form = SPRITE_CANON.forms.find(f => f.form === canonFormId);
-  // Frames del canon VINCULADOS a esta pose (runtimePoses incluye todos los usos:
-  // un frame puede ser idle y punch_right — el canon conserva la provenance completa).
-  const poseFrames = (form?.frames ?? []).filter(f => f.runtimePoses.includes(pose));
-  const primaryFamilies = [...new Set(poseFrames.map(f => f.family))];
-  const statusCount: Record<string, number> = {};
-  for (const f of poseFrames) statusCount[f.canonStatus] = (statusCount[f.canonStatus] ?? 0) + 1;
   const tick = ticksPerFrame(fps);
   return (
     <div className="dev-action-map">
-      <strong>Clip canónico (V9)</strong>
+      <strong>Clip por pose (OUT_frames)</strong>
       <span>
-        Pose <code>{pose}</code> · familia canon <code>{family}</code> · {poseFrames.length} frames vinculados
-        {primaryFamilies.length > 0 ? ` (rol primario: ${primaryFamilies.join(', ')})` : ''}
-      </span>
-      <span>
-        {Object.entries(statusCount).map(([s, n]) => `${s} ${n}`).join(' · ') || 'sin frames en el canon — UNCLASSIFIED'}
+        Pose <code>{pose}</code> · familia <code>{family}</code> · {frames} frames en el manifest de <code>{canonFormId}</code>
       </span>
       <span>
         durationTicks ≈ <code>{tick} ticks/frame</code> (GBC {GBC_FPS.toFixed(4)}fps ÷ {fps}fps preview) × {Math.max(frames, 1)} frames
