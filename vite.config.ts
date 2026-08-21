@@ -1,6 +1,6 @@
 import { defineConfig, type Plugin } from "vite";
 import react from "@vitejs/plugin-react";
-import { mkdirSync, writeFileSync, readFileSync } from "node:fs";
+import { mkdirSync, writeFileSync, readFileSync, readdirSync, statSync, unlinkSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { deflateSync, inflateSync } from "node:zlib";
@@ -116,6 +116,87 @@ function devWritePlugin(): Plugin {
   return {
     name: "dev-write-assets",
     configureServer(server) {
+      // GET /__dev/list?dir=rel → lista carpetas y archivos bajo public/assets (para el Asset Explorer)
+      server.middlewares.use("/__dev/list", (req, res) => {
+        if (req.method !== "GET") {
+          res.statusCode = 405;
+          res.end("GET only");
+          return;
+        }
+        try {
+          const u = new URL(req.url ?? "/", "http://localhost");
+          const rel = (u.searchParams.get("dir") ?? "").replace(/^\/+/, "");
+          const base = resolve(rootDir, "public", "assets");
+          const target = resolve(base, rel);
+          if (target !== base && !target.startsWith(base + "/")) {
+            res.statusCode = 400;
+            res.end("path outside assets");
+            return;
+          }
+          if (!statSync(target).isDirectory()) {
+            res.statusCode = 404;
+            res.end("not a dir");
+            return;
+          }
+          const entries = readdirSync(target, { withFileTypes: true });
+          const dirs = entries
+            .filter((e) => e.isDirectory())
+            .map((e) => e.name)
+            .sort((a, b) => a.localeCompare(b));
+          const files = entries
+            .filter((e) => e.isFile())
+            .map((e) => {
+              const st = statSync(resolve(target, e.name));
+              return { name: e.name, size: st.size, mtime: st.mtimeMs };
+            })
+            .sort((a, b) => a.name.localeCompare(b.name));
+          res.setHeader("content-type", "application/json");
+          res.end(JSON.stringify({ rel: rel || ".", dirs, files }));
+        } catch (e) {
+          res.statusCode = 500;
+          res.end(String(e));
+        }
+      });
+
+      // POST /__dev/delete { rel } → borra un archivo bajo public/assets (solo .png/.json)
+      server.middlewares.use("/__dev/delete", (req, res) => {
+        if (req.method !== "POST") {
+          res.statusCode = 405;
+          res.end("POST only");
+          return;
+        }
+        let body = "";
+        req.on("data", (c) => { body += c; });
+        req.on("end", () => {
+          try {
+            const { rel } = JSON.parse(body);
+            if (typeof rel !== "string") {
+              res.statusCode = 400;
+              res.end("bad payload");
+              return;
+            }
+            const base = resolve(rootDir, "public", "assets");
+            const target = resolve(base, rel);
+            if (!target.startsWith(base + "/")) {
+              res.statusCode = 400;
+              res.end("path outside assets");
+              return;
+            }
+            if (!/\.(json|png)$/.test(target)) {
+              res.statusCode = 400;
+              res.end("extension not allowed");
+              return;
+            }
+            unlinkSync(target);
+            res.statusCode = 200;
+            res.end("ok");
+          } catch (e) {
+            res.statusCode = 500;
+            res.end(String(e));
+          }
+        });
+      });
+
       // POST /__dev/flip { rel } → voltea horizontalmente el PNG en disco
       server.middlewares.use("/__dev/flip", (req, res) => {
         if (req.method !== "POST") {

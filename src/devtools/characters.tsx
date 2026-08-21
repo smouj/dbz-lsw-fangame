@@ -26,7 +26,7 @@ import { CARDS, getCard, CARD_COLORS, CARD_TYPE_NAMES } from '../data/cards';
 import { cardBattlePose, cardUsableBy } from '../battle/cardPoses';
 import { resolveCombatPose } from '../battle/spriteConfig';
 import { BATTLE_PORTRAITS } from '../data/battlePortraits';
-import { MINI_PORTRAITS, MENU_PORTRAITS } from '../data/icons';
+import { MENU_PORTRAITS } from '../data/icons';
 import { STORY_PORTRAITS, storyPortraitUrl } from '../data/storyPortraits';
 import { overworldUrl } from '../data/overworld';
 import { battleOverworldActorUrl, battleOverworldAuraUrlAsync } from '../data/battleOverworld';
@@ -37,6 +37,28 @@ import { getCharacterAssetBundle, resolveBundlePoses, type CombatPoseAsset } fro
 import { poseSemantics, parseFrameName } from './frameSemantics';
 import { FormPreview } from './FormPreview';
 import type { DevLinkedTarget, DevModuleId } from './DevStudio';
+
+// ═══ Escritura real a disco (middleware /__dev/write) ──────────────────
+async function frameDataUrl(rel: string): Promise<string> {
+  const r = await fetch(`/assets/${rel}`, { cache: 'no-store' });
+  if (!r.ok) throw new Error(`lectura ${rel}: HTTP ${r.status}`);
+  const blob = await r.blob();
+  return new Promise((resolve, reject) => {
+    const fr = new FileReader();
+    fr.onload = () => resolve(String(fr.result));
+    fr.onerror = () => reject(fr.error);
+    fr.readAsDataURL(blob);
+  });
+}
+
+async function writeAssetToDisk(rel: string, dataUrl: string): Promise<void> {
+  const r = await fetch('/__dev/write', {
+    method: 'POST',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({ rel, data: dataUrl.split(',')[1] ?? dataUrl }),
+  });
+  if (!r.ok) throw new Error(`escritura ${rel}: HTTP ${r.status} ${await r.text()}`);
+}
 
 // ═══ Constantes ─────────────────────────────────────────────────────────
 const STATS: { key: 'hp' | 'str' | 'ki' | 'spd'; label: string; color: string }[] = [
@@ -235,6 +257,11 @@ export function CharactersModule({ onOpenModule }: {
                   {manifestUrl && (
                     <a className="dev-manifest-link" href={manifestUrl} target="_blank" rel="noreferrer">manifest.json ↗</a>
                   )}
+                  {spriteDir && (
+                    <button className="dev-btn dev-btn-mini"
+                      title="Abrir la carpeta física del sprite en Asset Explorer"
+                      onClick={() => onOpenModule?.('assets', { formId: form.id })}>📁 carpeta</button>
+                  )}
                 </div>
                 <div className="dev-level-row">
                   <span className="dev-level-label">Level</span>
@@ -280,7 +307,6 @@ export function CharactersModule({ onOpenModule }: {
               <h3>Retratos del personaje</h3>
               <div className="dev-retratos-grid">
                 <AssetCell label="Battle (forma)" src={BATTLE_PORTRAITS[form.id]} small />
-                <AssetCell label="Mini" src={MINI_PORTRAITS[char.id]} small />
                 <AssetCell label="Menú" src={MENU_PORTRAITS[char.id]} small />
                 <StoryPortraitsGrid charId={form.character} formId={form.id} />
               </div>
@@ -942,7 +968,27 @@ function AllPosesGrid({ formId, activePose, onPoseSelect }: {
                           </div>
                           <div className="dev-frame-actions">
                             {frameOverrides[overrideKey(selectedFrame.pose, selectedFrame.index)] ? (
-                              <button className="dev-btn dev-btn-mini" onClick={() => clearReplacement(selectedFrame.pose, selectedFrame.index)}>↩ Restaurar original</button>
+                              <>
+                                <button className="dev-btn dev-btn-mini dev-btn-danger"
+                                  onClick={() => clearReplacement(selectedFrame.pose, selectedFrame.index)}>↩ Restaurar original</button>
+                                <button className="dev-btn dev-btn-mini"
+                                  title="Sobrescribe el PNG original en disco con el frame reemplazado (afecta a todo el juego)"
+                                  onClick={async () => {
+                                    const original = selectedFrame.file;
+                                    const replacement = frameOverrides[overrideKey(selectedFrame.pose, selectedFrame.index)];
+                                    if (!replacement || replacement === original) return;
+                                    const dir = spriteDirFor(formId);
+                                    if (!dir || !confirm(`Sobrescribir en disco:\nsprites/${dir}/${original}\ncon el contenido de:\nsprites/${dir}/${replacement}\n\nEsto afecta a TODAS las poses que usan ese frame.`)) return;
+                                    try {
+                                      const dataUrl = await frameDataUrl(`sprites/${dir}/${replacement}`);
+                                      await writeAssetToDisk(`sprites/${dir}/${original}`, dataUrl);
+                                      clearReplacement(selectedFrame.pose, selectedFrame.index);
+                                      alert('✓ Guardado en disco. Recarga el juego para ver el cambio (el manifest no cambia).');
+                                    } catch (e) {
+                                      alert(`Error: ${e}`);
+                                    }
+                                  }}>💾 Guardar en disco</button>
+                              </>
                             ) : (
                               <button className="dev-btn dev-btn-mini"
                                 onClick={() => { setReplacing(selectedFrame); setCandidate(null); }}>⇄ Reemplazar frame…</button>

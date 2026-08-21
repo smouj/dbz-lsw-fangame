@@ -26,10 +26,11 @@ import { HudModule } from './hud';
 import { FacingModule } from './facing';
 import { TimelineModule } from './timeline';
 import { CombatContractModule } from './combat';
+import { AssetsModule } from './assets';
 
 export type DevModuleId =
   | 'dashboard' | 'characters' | 'cards' | 'animation'
-  | 'pixelart' | 'hud' | 'facing'
+  | 'pixelart' | 'hud' | 'facing' | 'assets'
   | 'lab' | 'story' | 'validation' | 'research' | 'music' | 'gameconfig' | 'positions'
   | 'combat' | 'timeline';
 
@@ -48,6 +49,7 @@ export const DEV_MODULES: DevModuleDef[] = [
   { id: 'animation', label: 'Animation', icon: Film, desc: 'Timeline real + editor de frames/animaciones', group: 'Personajes' },
   { id: 'pixelart', label: 'Pixel Art', icon: Brush, desc: 'Editor de píxeles: pinta/borra/corrige frames', group: 'Personajes' },
   { id: 'facing', label: 'Facing', icon: Activity, desc: 'Orientación de chibis overworld: voltea y guarda', group: 'Personajes' },
+  { id: 'assets', label: 'Assets', icon: Search, desc: 'Explorador de carpetas: sprites, frames, mapeo y validación', group: 'Personajes' },
   { id: 'hud', label: 'HUD', icon: Gauge, desc: 'Visualizador del gameplay + editor del tema HUD', group: 'Combate' },
   { id: 'lab', label: 'Combat Lab', icon: Swords, desc: 'Combate real + renderer Pixi en vivo + secuencias deterministas', group: 'Combate' },
   { id: 'positions', label: 'Positions', icon: Grid2X2, desc: 'Laboratorio de posiciones Air/Ground x Front/Back', group: 'Combate' },
@@ -188,6 +190,7 @@ export function DevStudio({ onExit, onLaunchBattle }: DevStudioProps) {
           {module === 'animation' && <AnimationModule target={linkedTarget} />}
           {module === 'pixelart' && <PixelArtModule target={pixelTarget} />}
           {module === 'facing' && <FacingModule />}
+          {module === 'assets' && <AssetsModule target={linkedTarget} onOpenModule={openLinkedModule} />}
           {module === 'hud' && <HudModule />}
           {module === 'lab' && <LabModule onLaunchBattle={onLaunchBattle} />}
           {module === 'positions' && <PositionsModule />}
