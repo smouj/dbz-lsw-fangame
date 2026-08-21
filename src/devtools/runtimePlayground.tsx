@@ -69,14 +69,23 @@ export function EnginePlayground() {
   const { runtime: rt, version, dispatch, advance, can } = useBattleRuntime({ runtime, presenter });
 
   // ── Reloj: RAF → GbcClockAdapter → runtime.advance (solo tiempo) ──
+  // Pausa/step: congelar el RAF permite inspeccionar la secuencia ACTION
+  // frame a frame (el modo ACTION de la cinemática dura cientos de ticks).
   const adapter = useRef(new GbcClockAdapter());
+  const [paused, setPaused] = useState(false);
+  const pausedRef = useRef(false);
+  useEffect(() => { pausedRef.current = paused; }, [paused]);
   useEffect(() => {
     let raf = 0;
     let last = performance.now();
     const loop = (now: number) => {
-      const ticks = adapter.current.push(now - last);
-      last = now;
-      if (ticks > 0) advance(ticks);
+      if (!pausedRef.current) {
+        const ticks = adapter.current.push(now - last);
+        last = now;
+        if (ticks > 0) advance(ticks);
+      } else {
+        last = now; // no acumular tiempo durante la pausa
+      }
       raf = requestAnimationFrame(loop);
     };
     raf = requestAnimationFrame(loop);
@@ -89,7 +98,9 @@ export function EnginePlayground() {
   const inQte = s.stageQte.state === 'INPUT_WINDOW';
   const inCounter = s.stageQte.state === 'COUNTER_WINDOW';
 
-  const sceneModeNorm = sceneMode === 'SPECIAL_ACTION' ? 'SPECIAL_ACTION' : sceneMode === 'ACTION' ? 'ACTION' : 'OVERVIEW';
+  const sceneModeNorm = sceneMode === 'SPECIAL_ACTION' ? 'SPECIAL_ACTION'
+    : (sceneMode === 'ACTION' || sceneMode === 'ACTION_DUEL' || sceneMode === 'DEFENDER_ACTION') ? 'ACTION'
+    : 'OVERVIEW';
   const activeSide: BattleSide = s.exchange === 0 ? s.activeSide : (s.activeSide === 'player' ? 'enemy' : 'player');
 
   const commands: Array<{ label: string; cmd: Parameters<typeof dispatch>[0]; enabled: boolean }> = [
@@ -117,6 +128,17 @@ export function EnginePlayground() {
         <strong>Engine Playground — slice vertical M8</strong>
         <span className="dev-rt-tick">tick {s.tick}</span>
         <span className="dev-rt-cue">último cue: {lastCue}</span>
+        <span className="dev-rt-clock">
+          <button className={`dev-btn dev-btn-mini ${paused ? 'active' : ''}`}
+            onClick={() => setPaused(p => !p)}
+            title={paused ? 'Reanudar el reloj (RAF)' : 'Pausar el reloj para inspeccionar la secuencia'}>
+            {paused ? '▶ Reanudar' : '⏸ Pausa'}
+          </button>
+          <button className="dev-btn dev-btn-mini"
+            disabled={!paused}
+            onClick={() => advance(1)}
+            title="Avanza 1 tick (congelado)">+1 tick</button>
+        </span>
       </div>
 
       {/* BATTLE-SCREEN CANÓNICO — mismo markup que HUD Studio (canon visual) */}
