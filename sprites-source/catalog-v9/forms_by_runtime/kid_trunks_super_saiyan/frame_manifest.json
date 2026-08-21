@@ -3,364 +3,326 @@
  "frameCount": 52,
  "frames": [
   {
-   "_manifestName": "kid_trunks_super_saiyan_idle_00",
    "sourceId": "kid_trunks_super_saiyan/001.png",
-   "canonicalId": "kid_trunks_super_saiyan.idle.idle.idle.00.001",
+   "canonicalId": "kid_trunks_super_saiyan.movement.move_or_attack.move_or_attack.00.001",
    "characterId": "kid_trunks_super",
    "formId": "kid_trunks_super_saiyan",
    "assetType": "actor_frame",
    "view": "FIELD",
-   "family": "idle",
-   "role": "idle",
-   "variant": "idle",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "idle",
-    "guard",
-    "punch_right",
-    "punch_left",
-    "beam_guard"
-   ],
-   "evidence": "CANONICAL",
-   "canonStatus": "CANONICAL",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "trunks_kid.png",
     "frame": "001.png",
     "x": "15",
     "y": "440"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "kid_trunks_super_saiyan_guard_01",
    "sourceId": "kid_trunks_super_saiyan/002.png",
-   "canonicalId": "kid_trunks_super_saiyan.defense.hold.guard.01.002",
+   "canonicalId": "kid_trunks_super_saiyan.movement.move_or_attack.move_or_attack.00.002",
    "characterId": "kid_trunks_super",
    "formId": "kid_trunks_super_saiyan",
    "assetType": "actor_frame",
    "view": "FIELD",
-   "family": "defense",
-   "role": "hold",
-   "variant": "guard",
-   "sequenceIndex": 1,
-   "runtimePoses": [
-    "guard",
-    "beam_guard"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "trunks_kid.png",
     "frame": "002.png",
     "x": "53",
     "y": "438"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "kid_trunks_super_saiyan_guard_02",
    "sourceId": "kid_trunks_super_saiyan/003.png",
-   "canonicalId": "kid_trunks_super_saiyan.defense.recover.guard.02.003",
+   "canonicalId": "kid_trunks_super_saiyan.movement.move_or_attack.move_or_attack.00.003",
    "characterId": "kid_trunks_super",
    "formId": "kid_trunks_super_saiyan",
    "assetType": "actor_frame",
    "view": "FIELD",
-   "family": "defense",
-   "role": "recover",
-   "variant": "guard",
-   "sequenceIndex": 2,
-   "runtimePoses": [
-    "guard",
-    "beam_guard"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "trunks_kid.png",
     "frame": "003.png",
     "x": "94",
     "y": "440"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "kid_trunks_super_saiyan_gather_power_00",
    "sourceId": "kid_trunks_super_saiyan/004.png",
-   "canonicalId": "kid_trunks_super_saiyan.power.gather_power.gather_power.00.004",
+   "canonicalId": "kid_trunks_super_saiyan.movement.move_or_attack.move_or_attack.00.004",
    "characterId": "kid_trunks_super",
    "formId": "kid_trunks_super_saiyan",
-   "assetType": "composite",
-   "view": "ACTION_DUEL",
-   "family": "power",
-   "role": "gather_power",
-   "variant": "gather_power",
+   "assetType": "actor_frame",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "gather_power",
-    "power_up"
-   ],
-   "evidence": "CANONICAL",
-   "canonStatus": "CANONICAL",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "trunks_kid.png",
     "frame": "004.png",
     "x": "143",
     "y": "438"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "kid_trunks_super_saiyan_evade_01",
    "sourceId": "kid_trunks_super_saiyan/005.png",
-   "canonicalId": "kid_trunks_super_saiyan.defense.recover.evade.01.005",
+   "canonicalId": "kid_trunks_super_saiyan.effect.misc.misc.00.005",
    "characterId": "kid_trunks_super",
    "formId": "kid_trunks_super_saiyan",
-   "assetType": "actor_frame",
+   "assetType": "effect",
    "view": "FIELD",
-   "family": "defense",
-   "role": "recover",
-   "variant": "evade",
-   "sequenceIndex": 1,
-   "runtimePoses": [
-    "evade"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "family": "effect",
+   "role": "misc",
+   "variant": "misc",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "trunks_kid.png",
     "frame": "005.png",
     "x": "25",
     "y": "497"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: nonbody_misc"
   },
   {
-   "_manifestName": "kid_trunks_super_saiyan_evade_00",
    "sourceId": "kid_trunks_super_saiyan/006.png",
-   "canonicalId": "kid_trunks_super_saiyan.defense.start.evade.00.006",
+   "canonicalId": "kid_trunks_super_saiyan.effect.speedlines.speedlines.00.006",
    "characterId": "kid_trunks_super",
    "formId": "kid_trunks_super_saiyan",
-   "assetType": "actor_frame",
+   "assetType": "effect",
    "view": "FIELD",
-   "family": "defense",
-   "role": "start",
-   "variant": "evade",
+   "family": "effect",
+   "role": "speedlines",
+   "variant": "speedlines",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "evade"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "trunks_kid.png",
     "frame": "006.png",
     "x": "75",
     "y": "490"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: speedlines"
   },
   {
-   "_manifestName": "kid_trunks_super_saiyan_move_front_01",
    "sourceId": "kid_trunks_super_saiyan/007.png",
-   "canonicalId": "kid_trunks_super_saiyan.movement.start.move_back.00.007.png",
+   "canonicalId": "kid_trunks_super_saiyan.movement.move_or_attack.move_or_attack.00.007",
    "characterId": "kid_trunks_super",
    "formId": "kid_trunks_super_saiyan",
    "assetType": "actor_frame",
    "view": "FIELD",
    "family": "movement",
-   "role": "start",
-   "variant": "move_back",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "move_front",
-    "move_back"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "trunks_kid.png",
     "frame": "007.png",
     "x": "112",
     "y": "489"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "kid_trunks_super_saiyan_move_front_00",
    "sourceId": "kid_trunks_super_saiyan/008.png",
-   "canonicalId": "kid_trunks_super_saiyan.movement.start.move_front.00.008",
+   "canonicalId": "kid_trunks_super_saiyan.movement.move_or_attack.move_or_attack.00.008",
    "characterId": "kid_trunks_super",
    "formId": "kid_trunks_super_saiyan",
    "assetType": "actor_frame",
    "view": "FIELD",
    "family": "movement",
-   "role": "start",
-   "variant": "move_front",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "move_front",
-    "move_back"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "trunks_kid.png",
     "frame": "008.png",
     "x": "150",
     "y": "492"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "kid_trunks_super_saiyan_hurt_00",
    "sourceId": "kid_trunks_super_saiyan/009.png",
-   "canonicalId": "kid_trunks_super_saiyan.reaction.hurt_light.hurt.00.009",
+   "canonicalId": "kid_trunks_super_saiyan.movement.move_or_attack.move_or_attack.00.009",
    "characterId": "kid_trunks_super",
    "formId": "kid_trunks_super_saiyan",
    "assetType": "actor_frame",
    "view": "FIELD",
-   "family": "reaction",
-   "role": "hurt_light",
-   "variant": "hurt",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "hurt"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "trunks_kid.png",
     "frame": "009.png",
     "x": "17",
     "y": "542"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "kid_trunks_super_saiyan_hurt_01",
    "sourceId": "kid_trunks_super_saiyan/010.png",
-   "canonicalId": "kid_trunks_super_saiyan.reaction.hurt_heavy.hurt.01.010",
+   "canonicalId": "kid_trunks_super_saiyan.movement.move_or_attack.move_or_attack.00.010",
    "characterId": "kid_trunks_super",
    "formId": "kid_trunks_super_saiyan",
    "assetType": "actor_frame",
    "view": "FIELD",
-   "family": "reaction",
-   "role": "hurt_heavy",
-   "variant": "hurt",
-   "sequenceIndex": 1,
-   "runtimePoses": [
-    "hurt"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "trunks_kid.png",
     "frame": "010.png",
     "x": "63",
     "y": "543"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "kid_trunks_super_saiyan_hurt_02",
    "sourceId": "kid_trunks_super_saiyan/011.png",
-   "canonicalId": "kid_trunks_super_saiyan.reaction.hurt_heavy.hurt.02.011",
+   "canonicalId": "kid_trunks_super_saiyan.movement.move_or_attack.move_or_attack.00.011",
    "characterId": "kid_trunks_super",
    "formId": "kid_trunks_super_saiyan",
    "assetType": "actor_frame",
    "view": "FIELD",
-   "family": "reaction",
-   "role": "hurt_heavy",
-   "variant": "hurt",
-   "sequenceIndex": 2,
-   "runtimePoses": [
-    "hurt"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "trunks_kid.png",
     "frame": "011.png",
     "x": "104",
     "y": "546"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "kid_trunks_super_saiyan_hurt_03",
    "sourceId": "kid_trunks_super_saiyan/012.png",
-   "canonicalId": "kid_trunks_super_saiyan.reaction.hurt_heavy.hurt.03.012",
+   "canonicalId": "kid_trunks_super_saiyan.movement.move_or_attack.move_or_attack.00.012",
    "characterId": "kid_trunks_super",
    "formId": "kid_trunks_super_saiyan",
    "assetType": "actor_frame",
    "view": "FIELD",
-   "family": "reaction",
-   "role": "hurt_heavy",
-   "variant": "hurt",
-   "sequenceIndex": 3,
-   "runtimePoses": [
-    "hurt"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "trunks_kid.png",
     "frame": "012.png",
     "x": "149",
     "y": "539"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "kid_trunks_super_saiyan_hurt_04",
    "sourceId": "kid_trunks_super_saiyan/013.png",
-   "canonicalId": "kid_trunks_super_saiyan.reaction.hurt_heavy.hurt.04.013",
+   "canonicalId": "kid_trunks_super_saiyan.movement.move_or_attack.move_or_attack.00.013",
    "characterId": "kid_trunks_super",
    "formId": "kid_trunks_super_saiyan",
    "assetType": "actor_frame",
    "view": "FIELD",
-   "family": "reaction",
-   "role": "hurt_heavy",
-   "variant": "hurt",
-   "sequenceIndex": 4,
-   "runtimePoses": [
-    "hurt"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "trunks_kid.png",
     "frame": "013.png",
     "x": "192",
     "y": "539"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "kid_trunks_super_saiyan_attack_fwd_05",
    "sourceId": "kid_trunks_super_saiyan/014.png",
-   "canonicalId": "kid_trunks_super_saiyan.melee.strike.punch_left.03.014.png",
+   "canonicalId": "kid_trunks_super_saiyan.movement.move_or_attack.move_or_attack.00.014",
    "characterId": "kid_trunks_super",
    "formId": "kid_trunks_super_saiyan",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "strike",
-   "variant": "punch_left",
-   "sequenceIndex": 3,
-   "runtimePoses": [
-    "attack_fwd",
-    "punch_left"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "trunks_kid.png",
     "frame": "014.png",
     "x": "236",
     "y": "538"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
    "sourceId": "kid_trunks_super_saiyan/015.png",
@@ -386,218 +348,188 @@
    "note": "bucket forense: downed_or_hurt"
   },
   {
-   "_manifestName": "kid_trunks_super_saiyan_attack_fwd_01",
    "sourceId": "kid_trunks_super_saiyan/016.png",
-   "canonicalId": "kid_trunks_super_saiyan.reaction.knockback_down.down.00.016.png",
+   "canonicalId": "kid_trunks_super_saiyan.movement.move_or_attack.move_or_attack.00.016",
    "characterId": "kid_trunks_super",
    "formId": "kid_trunks_super_saiyan",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "reaction",
-   "role": "knockback_down",
-   "variant": "down",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "attack_fwd",
-    "punch_right",
-    "knockback_back",
-    "knockback_down"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "trunks_kid.png",
     "frame": "016.png",
     "x": "30",
     "y": "595"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "kid_trunks_super_saiyan_attack_fwd_02",
    "sourceId": "kid_trunks_super_saiyan/017.png",
-   "canonicalId": "kid_trunks_super_saiyan.melee.travel.attack_forward.02.017",
+   "canonicalId": "kid_trunks_super_saiyan.movement.move_or_attack.move_or_attack.00.017",
    "characterId": "kid_trunks_super",
    "formId": "kid_trunks_super_saiyan",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "travel",
-   "variant": "attack_forward",
-   "sequenceIndex": 2,
-   "runtimePoses": [
-    "attack_fwd",
-    "punch_right"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "trunks_kid.png",
     "frame": "017.png",
     "x": "75",
     "y": "593"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "kid_trunks_super_saiyan_attack_fwd_06",
    "sourceId": "kid_trunks_super_saiyan/018.png",
-   "canonicalId": "kid_trunks_super_saiyan.melee.strike.punch_left.04.018.png",
+   "canonicalId": "kid_trunks_super_saiyan.movement.move_or_attack.move_or_attack.00.018",
    "characterId": "kid_trunks_super",
    "formId": "kid_trunks_super_saiyan",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "strike",
-   "variant": "punch_left",
-   "sequenceIndex": 4,
-   "runtimePoses": [
-    "attack_fwd",
-    "punch_left"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "trunks_kid.png",
     "frame": "018.png",
     "x": "126",
     "y": "594"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "kid_trunks_super_saiyan_attack_ud_00",
    "sourceId": "kid_trunks_super_saiyan/019.png",
-   "canonicalId": "kid_trunks_super_saiyan.reaction.knockback_up.up.00.019.png",
+   "canonicalId": "kid_trunks_super_saiyan.movement.move_or_attack.move_or_attack.00.019",
    "characterId": "kid_trunks_super",
    "formId": "kid_trunks_super_saiyan",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "reaction",
-   "role": "knockback_up",
-   "variant": "up",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "attack_ud",
-    "knockback_up"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "trunks_kid.png",
     "frame": "019.png",
     "x": "174",
     "y": "591"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "kid_trunks_super_saiyan_attack_fwd_01",
    "sourceId": "kid_trunks_super_saiyan/020.png",
-   "canonicalId": "kid_trunks_super_saiyan.reaction.knockback_down.down.00.020.png",
+   "canonicalId": "kid_trunks_super_saiyan.movement.move_or_attack.move_or_attack.00.020",
    "characterId": "kid_trunks_super",
    "formId": "kid_trunks_super_saiyan",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "reaction",
-   "role": "knockback_down",
-   "variant": "down",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "attack_fwd",
-    "punch_right",
-    "knockback_back",
-    "knockback_down"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "trunks_kid.png",
     "frame": "020.png",
     "x": "20",
     "y": "647"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "kid_trunks_super_saiyan_attack_fwd_00",
    "sourceId": "kid_trunks_super_saiyan/021.png",
-   "canonicalId": "kid_trunks_super_saiyan.melee.ready.attack_forward.00.021",
+   "canonicalId": "kid_trunks_super_saiyan.movement.move_or_attack.move_or_attack.00.021",
    "characterId": "kid_trunks_super",
    "formId": "kid_trunks_super_saiyan",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "ready",
-   "variant": "attack_forward",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "attack_fwd",
-    "punch_right"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "trunks_kid.png",
     "frame": "021.png",
     "x": "61",
     "y": "647"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "kid_trunks_super_saiyan_attack_fwd_04",
    "sourceId": "kid_trunks_super_saiyan/022.png",
-   "canonicalId": "kid_trunks_super_saiyan.melee.strike.kick_right.00.022.png",
+   "canonicalId": "kid_trunks_super_saiyan.movement.move_or_attack.move_or_attack.00.022",
    "characterId": "kid_trunks_super",
    "formId": "kid_trunks_super_saiyan",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "strike",
-   "variant": "kick_right",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "attack_fwd",
-    "punch_left",
-    "kick_right"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "trunks_kid.png",
     "frame": "022.png",
     "x": "108",
     "y": "649"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "kid_trunks_super_saiyan_attack_fwd_03",
    "sourceId": "kid_trunks_super_saiyan/023.png",
-   "canonicalId": "kid_trunks_super_saiyan.melee.strike.kick_right.01.023.png",
+   "canonicalId": "kid_trunks_super_saiyan.movement.move_or_attack.move_or_attack.00.023",
    "characterId": "kid_trunks_super",
    "formId": "kid_trunks_super_saiyan",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "strike",
-   "variant": "kick_right",
-   "sequenceIndex": 1,
-   "runtimePoses": [
-    "attack_fwd",
-    "punch_left",
-    "kick_right"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "trunks_kid.png",
     "frame": "023.png",
     "x": "155",
     "y": "649"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
    "sourceId": "kid_trunks_super_saiyan/024.png",
@@ -692,29 +624,27 @@
    "note": "bucket forense: battle_aura_tile"
   },
   {
-   "_manifestName": "kid_trunks_super_saiyan_beam_charge_00",
    "sourceId": "kid_trunks_super_saiyan/028.png",
-   "canonicalId": "kid_trunks_super_saiyan.beam.charge_start.charge.00.028",
+   "canonicalId": "kid_trunks_super_saiyan.movement.move_or_attack.move_or_attack.00.028",
    "characterId": "kid_trunks_super",
    "formId": "kid_trunks_super_saiyan",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "beam",
-   "role": "charge_start",
-   "variant": "charge",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "beam_charge"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "trunks_kid.png",
     "frame": "028.png",
     "x": "29",
     "y": "706"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
    "sourceId": "kid_trunks_super_saiyan/029.png",
@@ -740,79 +670,73 @@
    "note": "bucket forense: projectiles_beams"
   },
   {
-   "_manifestName": "kid_trunks_super_saiyan_aura_power_00",
    "sourceId": "kid_trunks_super_saiyan/030.png",
-   "canonicalId": "kid_trunks_super_saiyan.effect.aura.aura_power.00.030",
+   "canonicalId": "kid_trunks_super_saiyan.effect.orbs_rings_bursts.orbs_rings_bursts.00.030",
    "characterId": "kid_trunks_super",
    "formId": "kid_trunks_super_saiyan",
    "assetType": "effect",
    "view": "FIELD",
    "family": "effect",
-   "role": "aura",
-   "variant": "aura_power",
+   "role": "orbs_rings_bursts",
+   "variant": "orbs_rings_bursts",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "aura_power"
-   ],
-   "evidence": "CANONICAL",
-   "canonStatus": "CANONICAL",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "trunks_kid.png",
     "frame": "030.png",
     "x": "245",
     "y": "691"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: orbs_rings_bursts"
   },
   {
-   "_manifestName": "kid_trunks_super_saiyan_aura_power_01",
    "sourceId": "kid_trunks_super_saiyan/031.png",
-   "canonicalId": "kid_trunks_super_saiyan.effect.aura.aura_power.01.031",
+   "canonicalId": "kid_trunks_super_saiyan.effect.orbs_rings_bursts.orbs_rings_bursts.00.031",
    "characterId": "kid_trunks_super",
    "formId": "kid_trunks_super_saiyan",
    "assetType": "effect",
    "view": "FIELD",
    "family": "effect",
-   "role": "aura",
-   "variant": "aura_power",
-   "sequenceIndex": 1,
-   "runtimePoses": [
-    "aura_power"
-   ],
-   "evidence": "CANONICAL",
-   "canonStatus": "CANONICAL",
+   "role": "orbs_rings_bursts",
+   "variant": "orbs_rings_bursts",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "trunks_kid.png",
     "frame": "031.png",
     "x": "316",
     "y": "691"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: orbs_rings_bursts"
   },
   {
-   "_manifestName": "kid_trunks_super_saiyan_aura_power_02",
    "sourceId": "kid_trunks_super_saiyan/032.png",
-   "canonicalId": "kid_trunks_super_saiyan.effect.aura.aura_power.02.032",
+   "canonicalId": "kid_trunks_super_saiyan.effect.orbs_rings_bursts.orbs_rings_bursts.00.032",
    "characterId": "kid_trunks_super",
    "formId": "kid_trunks_super_saiyan",
    "assetType": "effect",
    "view": "FIELD",
    "family": "effect",
-   "role": "aura",
-   "variant": "aura_power",
-   "sequenceIndex": 2,
-   "runtimePoses": [
-    "aura_power"
-   ],
-   "evidence": "CANONICAL",
-   "canonStatus": "CANONICAL",
+   "role": "orbs_rings_bursts",
+   "variant": "orbs_rings_bursts",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "trunks_kid.png",
     "frame": "032.png",
     "x": "393",
     "y": "691"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: orbs_rings_bursts"
   },
   {
    "sourceId": "kid_trunks_super_saiyan/033.png",
@@ -838,82 +762,73 @@
    "note": "bucket forense: projectile_orb_small"
   },
   {
-   "_manifestName": "kid_trunks_super_saiyan_gather_power_03",
    "sourceId": "kid_trunks_super_saiyan/034.png",
-   "canonicalId": "kid_trunks_super_saiyan.power.gather_power.gather_power.03.034",
+   "canonicalId": "kid_trunks_super_saiyan.movement.move_or_attack.move_or_attack.00.034",
    "characterId": "kid_trunks_super",
    "formId": "kid_trunks_super_saiyan",
-   "assetType": "composite",
-   "view": "ACTION_DUEL",
-   "family": "power",
-   "role": "gather_power",
-   "variant": "gather_power",
-   "sequenceIndex": 3,
-   "runtimePoses": [
-    "gather_power",
-    "power_up"
-   ],
-   "evidence": "CANONICAL",
-   "canonStatus": "CANONICAL",
+   "assetType": "actor_frame",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "trunks_kid.png",
     "frame": "034.png",
     "x": "13",
     "y": "782"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "kid_trunks_super_saiyan_gather_power_01",
    "sourceId": "kid_trunks_super_saiyan/035.png",
-   "canonicalId": "kid_trunks_super_saiyan.power.gather_power.gather_power.01.035",
+   "canonicalId": "kid_trunks_super_saiyan.movement.move_or_attack.move_or_attack.00.035",
    "characterId": "kid_trunks_super",
    "formId": "kid_trunks_super_saiyan",
-   "assetType": "composite",
-   "view": "ACTION_DUEL",
-   "family": "power",
-   "role": "gather_power",
-   "variant": "gather_power",
-   "sequenceIndex": 1,
-   "runtimePoses": [
-    "gather_power",
-    "power_up"
-   ],
-   "evidence": "CANONICAL",
-   "canonStatus": "CANONICAL",
+   "assetType": "actor_frame",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "trunks_kid.png",
     "frame": "035.png",
     "x": "57",
     "y": "782"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "kid_trunks_super_saiyan_gather_power_02",
    "sourceId": "kid_trunks_super_saiyan/036.png",
-   "canonicalId": "kid_trunks_super_saiyan.power.gather_power.gather_power.02.036",
+   "canonicalId": "kid_trunks_super_saiyan.movement.move_or_attack.move_or_attack.00.036",
    "characterId": "kid_trunks_super",
    "formId": "kid_trunks_super_saiyan",
-   "assetType": "composite",
-   "view": "ACTION_DUEL",
-   "family": "power",
-   "role": "gather_power",
-   "variant": "gather_power",
-   "sequenceIndex": 2,
-   "runtimePoses": [
-    "gather_power",
-    "power_up"
-   ],
-   "evidence": "CANONICAL",
-   "canonStatus": "CANONICAL",
+   "assetType": "actor_frame",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "trunks_kid.png",
     "frame": "036.png",
     "x": "96",
     "y": "786"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
    "sourceId": "kid_trunks_super_saiyan/037.png",
@@ -939,29 +854,27 @@
    "note": "bucket forense: orbs_rings_bursts"
   },
   {
-   "_manifestName": "kid_trunks_super_saiyan_beam_charge_02",
    "sourceId": "kid_trunks_super_saiyan/038.png",
-   "canonicalId": "kid_trunks_super_saiyan.beam.charge_hold.charge.02.038",
+   "canonicalId": "kid_trunks_super_saiyan.movement.move_or_attack.move_or_attack.00.038",
    "characterId": "kid_trunks_super",
    "formId": "kid_trunks_super_saiyan",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "beam",
-   "role": "charge_hold",
-   "variant": "charge",
-   "sequenceIndex": 2,
-   "runtimePoses": [
-    "beam_charge"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "trunks_kid.png",
     "frame": "038.png",
     "x": "246",
     "y": "787"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
    "sourceId": "kid_trunks_super_saiyan/039.png",
@@ -1010,204 +923,188 @@
    "note": "bucket forense: character_plus_aura_or_burst"
   },
   {
-   "_manifestName": "kid_trunks_super_saiyan_aura_support_00",
    "sourceId": "kid_trunks_super_saiyan/041.png",
-   "canonicalId": "kid_trunks_super_saiyan.effect.aura.aura_support.00.041",
+   "canonicalId": "kid_trunks_super_saiyan.unclassified.041",
    "characterId": "kid_trunks_super",
    "formId": "kid_trunks_super_saiyan",
-   "assetType": "effect",
+   "assetType": "unclassified",
    "view": "FIELD",
-   "family": "effect",
-   "role": "aura",
-   "variant": "aura_support",
+   "family": "unclassified",
+   "role": "unclassified",
+   "variant": "",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "aura_support"
-   ],
-   "evidence": "CANONICAL",
-   "canonStatus": "CANONICAL",
+   "runtimePoses": [],
+   "evidence": "UNKNOWN",
+   "canonStatus": "UNCLASSIFIED",
    "source": {
     "sheet": "",
     "frame": "041.png",
     "x": null,
     "y": null
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "sin evidencia runtime ni bucket"
   },
   {
-   "_manifestName": "kid_trunks_super_saiyan_aura_support_01",
    "sourceId": "kid_trunks_super_saiyan/042.png",
-   "canonicalId": "kid_trunks_super_saiyan.effect.aura.aura_support.01.042",
+   "canonicalId": "kid_trunks_super_saiyan.unclassified.042",
    "characterId": "kid_trunks_super",
    "formId": "kid_trunks_super_saiyan",
-   "assetType": "effect",
+   "assetType": "unclassified",
    "view": "FIELD",
-   "family": "effect",
-   "role": "aura",
-   "variant": "aura_support",
-   "sequenceIndex": 1,
-   "runtimePoses": [
-    "aura_support"
-   ],
-   "evidence": "CANONICAL",
-   "canonStatus": "CANONICAL",
+   "family": "unclassified",
+   "role": "unclassified",
+   "variant": "",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "UNKNOWN",
+   "canonStatus": "UNCLASSIFIED",
    "source": {
     "sheet": "",
     "frame": "042.png",
     "x": null,
     "y": null
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "sin evidencia runtime ni bucket"
   },
   {
-   "_manifestName": "kid_trunks_super_saiyan_aura_support_02",
    "sourceId": "kid_trunks_super_saiyan/043.png",
-   "canonicalId": "kid_trunks_super_saiyan.effect.aura.aura_support.02.043",
+   "canonicalId": "kid_trunks_super_saiyan.unclassified.043",
    "characterId": "kid_trunks_super",
    "formId": "kid_trunks_super_saiyan",
-   "assetType": "effect",
+   "assetType": "unclassified",
    "view": "FIELD",
-   "family": "effect",
-   "role": "aura",
-   "variant": "aura_support",
-   "sequenceIndex": 2,
-   "runtimePoses": [
-    "aura_support"
-   ],
-   "evidence": "CANONICAL",
-   "canonStatus": "CANONICAL",
+   "family": "unclassified",
+   "role": "unclassified",
+   "variant": "",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "UNKNOWN",
+   "canonStatus": "UNCLASSIFIED",
    "source": {
     "sheet": "",
     "frame": "043.png",
     "x": null,
     "y": null
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "sin evidencia runtime ni bucket"
   },
   {
-   "_manifestName": "kid_trunks_super_saiyan_attack_ud_01",
    "sourceId": "kid_trunks_super_saiyan/000_attack_ud.png",
-   "canonicalId": "kid_trunks_super_saiyan.melee.windup.attack_vertical.01.000_attack_ud",
+   "canonicalId": "kid_trunks_super_saiyan.melee.attack_vertical.attack_vertical.00.000_attack_ud",
    "characterId": "kid_trunks_super",
    "formId": "kid_trunks_super_saiyan",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "windup",
+   "role": "attack_vertical",
    "variant": "attack_vertical",
-   "sequenceIndex": 1,
-   "runtimePoses": [
-    "attack_ud"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "",
     "frame": "000_attack_ud.png",
     "x": null,
     "y": null
    },
-   "frameKind": "fixed_only"
+   "frameKind": "fixed_only",
+   "note": "nombre de archivo del sheet (ud)"
   },
   {
-   "_manifestName": "kid_trunks_super_saiyan_attack_ud_02",
    "sourceId": "kid_trunks_super_saiyan/001_attack_ud.png",
-   "canonicalId": "kid_trunks_super_saiyan.melee.contact.attack_vertical.02.001_attack_ud",
+   "canonicalId": "kid_trunks_super_saiyan.melee.attack_vertical.attack_vertical.01.001_attack_ud",
    "characterId": "kid_trunks_super",
    "formId": "kid_trunks_super_saiyan",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "contact",
+   "role": "attack_vertical",
    "variant": "attack_vertical",
-   "sequenceIndex": 2,
-   "runtimePoses": [
-    "attack_ud"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "sequenceIndex": 1,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "",
     "frame": "001_attack_ud.png",
     "x": null,
     "y": null
    },
-   "frameKind": "fixed_only"
+   "frameKind": "fixed_only",
+   "note": "nombre de archivo del sheet (ud)"
   },
   {
-   "_manifestName": "kid_trunks_super_saiyan_attack_ud_03",
    "sourceId": "kid_trunks_super_saiyan/002_attack_ud.png",
-   "canonicalId": "kid_trunks_super_saiyan.melee.recover.attack_vertical.03.002_attack_ud",
+   "canonicalId": "kid_trunks_super_saiyan.melee.attack_vertical.attack_vertical.02.002_attack_ud",
    "characterId": "kid_trunks_super",
    "formId": "kid_trunks_super_saiyan",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "recover",
+   "role": "attack_vertical",
    "variant": "attack_vertical",
-   "sequenceIndex": 3,
-   "runtimePoses": [
-    "attack_ud"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "sequenceIndex": 2,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "",
     "frame": "002_attack_ud.png",
     "x": null,
     "y": null
    },
-   "frameKind": "fixed_only"
+   "frameKind": "fixed_only",
+   "note": "nombre de archivo del sheet (ud)"
   },
   {
-   "_manifestName": "kid_trunks_super_saiyan_beam_charge_01",
    "sourceId": "kid_trunks_super_saiyan/003_beam_charge.png",
-   "canonicalId": "kid_trunks_super_saiyan.beam.charge_start.charge.01.003_beam_charge",
+   "canonicalId": "kid_trunks_super_saiyan.beam.charge.charge.03.003_beam_charge",
    "characterId": "kid_trunks_super",
    "formId": "kid_trunks_super_saiyan",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "beam",
-   "role": "charge_start",
+   "role": "charge",
    "variant": "charge",
-   "sequenceIndex": 1,
-   "runtimePoses": [
-    "beam_charge"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "sequenceIndex": 3,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "",
     "frame": "003_beam_charge.png",
     "x": null,
     "y": null
    },
-   "frameKind": "fixed_only"
+   "frameKind": "fixed_only",
+   "note": "nombre de archivo del sheet (charge)"
   },
   {
-   "_manifestName": "kid_trunks_super_saiyan_beam_charge_03",
    "sourceId": "kid_trunks_super_saiyan/004_beam_charge.png",
-   "canonicalId": "kid_trunks_super_saiyan.beam.charge_hold.charge.03.004_beam_charge",
+   "canonicalId": "kid_trunks_super_saiyan.beam.charge.charge.04.004_beam_charge",
    "characterId": "kid_trunks_super",
    "formId": "kid_trunks_super_saiyan",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "beam",
-   "role": "charge_hold",
+   "role": "charge",
    "variant": "charge",
-   "sequenceIndex": 3,
-   "runtimePoses": [
-    "beam_charge"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "sequenceIndex": 4,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "",
     "frame": "004_beam_charge.png",
     "x": null,
     "y": null
    },
-   "frameKind": "fixed_only"
+   "frameKind": "fixed_only",
+   "note": "nombre de archivo del sheet (charge)"
   },
   {
    "sourceId": "kid_trunks_super_saiyan/005_hurt.png",

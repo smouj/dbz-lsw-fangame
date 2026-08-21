@@ -3,85 +3,73 @@
  "frameCount": 54,
  "frames": [
   {
-   "_manifestName": "android_20_base_idle_00",
    "sourceId": "android_20_base/001.png",
-   "canonicalId": "android_20_base.idle.idle.idle.00.001",
+   "canonicalId": "android_20_base.idle.stance.stance.00.001",
    "characterId": "android_20",
    "formId": "android_20_base",
    "assetType": "actor_frame",
    "view": "FIELD",
    "family": "idle",
-   "role": "idle",
-   "variant": "idle",
+   "role": "stance",
+   "variant": "stance",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "idle",
-    "guard",
-    "punch_right",
-    "punch_left",
-    "beam_guard"
-   ],
-   "evidence": "CANONICAL",
-   "canonStatus": "CANONICAL",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "android_20.png",
     "frame": "001.png",
     "x": "5",
     "y": "7"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: idle_or_stance"
   },
   {
-   "_manifestName": "android_20_base_guard_01",
    "sourceId": "android_20_base/002.png",
-   "canonicalId": "android_20_base.defense.hold.guard.01.002",
+   "canonicalId": "android_20_base.movement.move_or_attack.move_or_attack.00.002",
    "characterId": "android_20",
    "formId": "android_20_base",
    "assetType": "actor_frame",
    "view": "FIELD",
-   "family": "defense",
-   "role": "hold",
-   "variant": "guard",
-   "sequenceIndex": 1,
-   "runtimePoses": [
-    "guard",
-    "beam_guard"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "android_20.png",
     "frame": "002.png",
     "x": "38",
     "y": "8"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "android_20_base_guard_02",
    "sourceId": "android_20_base/003.png",
-   "canonicalId": "android_20_base.defense.recover.guard.02.003",
+   "canonicalId": "android_20_base.movement.move_or_attack.move_or_attack.00.003",
    "characterId": "android_20",
    "formId": "android_20_base",
    "assetType": "actor_frame",
    "view": "FIELD",
-   "family": "defense",
-   "role": "recover",
-   "variant": "guard",
-   "sequenceIndex": 2,
-   "runtimePoses": [
-    "guard",
-    "beam_guard"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "android_20.png",
     "frame": "003.png",
     "x": "79",
     "y": "10"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
    "sourceId": "android_20_base/004.png",
@@ -199,568 +187,510 @@
    "note": "bucket forense: battle_aura_actor_composite"
   },
   {
-   "_manifestName": "android_20_base_evade_01",
    "sourceId": "android_20_base/009.png",
-   "canonicalId": "android_20_base.defense.recover.evade.01.009",
+   "canonicalId": "android_20_base.effect.misc.misc.00.009",
    "characterId": "android_20",
    "formId": "android_20_base",
-   "assetType": "actor_frame",
+   "assetType": "effect",
    "view": "FIELD",
-   "family": "defense",
-   "role": "recover",
-   "variant": "evade",
-   "sequenceIndex": 1,
-   "runtimePoses": [
-    "evade"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "family": "effect",
+   "role": "misc",
+   "variant": "misc",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "android_20.png",
     "frame": "009.png",
     "x": "9",
     "y": "66"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: nonbody_misc"
   },
   {
-   "_manifestName": "android_20_base_evade_00",
    "sourceId": "android_20_base/010.png",
-   "canonicalId": "android_20_base.defense.start.evade.00.010",
+   "canonicalId": "android_20_base.effect.speedlines.speedlines.00.010",
    "characterId": "android_20",
    "formId": "android_20_base",
-   "assetType": "actor_frame",
+   "assetType": "effect",
    "view": "FIELD",
-   "family": "defense",
-   "role": "start",
-   "variant": "evade",
+   "family": "effect",
+   "role": "speedlines",
+   "variant": "speedlines",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "evade"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "android_20.png",
     "frame": "010.png",
     "x": "59",
     "y": "59"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: speedlines"
   },
   {
-   "_manifestName": "android_20_base_move_front_01",
    "sourceId": "android_20_base/011.png",
-   "canonicalId": "android_20_base.movement.start.move_back.00.011.png",
+   "canonicalId": "android_20_base.movement.move_or_attack.move_or_attack.00.011",
    "characterId": "android_20",
    "formId": "android_20_base",
    "assetType": "actor_frame",
    "view": "FIELD",
    "family": "movement",
-   "role": "start",
-   "variant": "move_back",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "move_front",
-    "move_back"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "android_20.png",
     "frame": "011.png",
     "x": "93",
     "y": "60"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "android_20_base_move_front_00",
    "sourceId": "android_20_base/012.png",
-   "canonicalId": "android_20_base.movement.start.move_front.00.012",
+   "canonicalId": "android_20_base.movement.move_or_attack.move_or_attack.00.012",
    "characterId": "android_20",
    "formId": "android_20_base",
    "assetType": "actor_frame",
    "view": "FIELD",
    "family": "movement",
-   "role": "start",
-   "variant": "move_front",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "move_front",
-    "move_back"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "android_20.png",
     "frame": "012.png",
     "x": "132",
     "y": "62"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "android_20_base_hurt_00",
    "sourceId": "android_20_base/013.png",
-   "canonicalId": "android_20_base.reaction.hurt_light.hurt.00.013",
+   "canonicalId": "android_20_base.movement.move_or_attack.move_or_attack.00.013",
    "characterId": "android_20",
    "formId": "android_20_base",
    "assetType": "actor_frame",
    "view": "FIELD",
-   "family": "reaction",
-   "role": "hurt_light",
-   "variant": "hurt",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "hurt"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "android_20.png",
     "frame": "013.png",
     "x": "8",
     "y": "112"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "android_20_base_hurt_01",
    "sourceId": "android_20_base/014.png",
-   "canonicalId": "android_20_base.reaction.hurt_heavy.hurt.01.014",
+   "canonicalId": "android_20_base.movement.move_or_attack.move_or_attack.00.014",
    "characterId": "android_20",
    "formId": "android_20_base",
    "assetType": "actor_frame",
    "view": "FIELD",
-   "family": "reaction",
-   "role": "hurt_heavy",
-   "variant": "hurt",
-   "sequenceIndex": 1,
-   "runtimePoses": [
-    "hurt"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "android_20.png",
     "frame": "014.png",
     "x": "43",
     "y": "119"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "android_20_base_hurt_02",
    "sourceId": "android_20_base/015.png",
-   "canonicalId": "android_20_base.reaction.hurt_heavy.hurt.02.015",
+   "canonicalId": "android_20_base.movement.move_or_attack.move_or_attack.00.015",
    "characterId": "android_20",
    "formId": "android_20_base",
    "assetType": "actor_frame",
    "view": "FIELD",
-   "family": "reaction",
-   "role": "hurt_heavy",
-   "variant": "hurt",
-   "sequenceIndex": 2,
-   "runtimePoses": [
-    "hurt"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "android_20.png",
     "frame": "015.png",
     "x": "84",
     "y": "119"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "android_20_base_hurt_03",
    "sourceId": "android_20_base/016.png",
-   "canonicalId": "android_20_base.reaction.hurt_heavy.hurt.03.016",
+   "canonicalId": "android_20_base.movement.move_or_attack.move_or_attack.00.016",
    "characterId": "android_20",
    "formId": "android_20_base",
    "assetType": "actor_frame",
    "view": "FIELD",
-   "family": "reaction",
-   "role": "hurt_heavy",
-   "variant": "hurt",
-   "sequenceIndex": 3,
-   "runtimePoses": [
-    "hurt"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "android_20.png",
     "frame": "016.png",
     "x": "126",
     "y": "112"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "android_20_base_hurt_04",
    "sourceId": "android_20_base/017.png",
-   "canonicalId": "android_20_base.reaction.hurt_heavy.hurt.04.017",
+   "canonicalId": "android_20_base.movement.move_or_attack.move_or_attack.00.017",
    "characterId": "android_20",
    "formId": "android_20_base",
    "assetType": "actor_frame",
    "view": "FIELD",
-   "family": "reaction",
-   "role": "hurt_heavy",
-   "variant": "hurt",
-   "sequenceIndex": 4,
-   "runtimePoses": [
-    "hurt"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "android_20.png",
     "frame": "017.png",
     "x": "166",
     "y": "109"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "android_20_base_attack_fwd_06",
    "sourceId": "android_20_base/018.png",
-   "canonicalId": "android_20_base.melee.strike.punch_left.04.018.png",
+   "canonicalId": "android_20_base.movement.move_or_attack.move_or_attack.00.018",
    "characterId": "android_20",
    "formId": "android_20_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "strike",
-   "variant": "punch_left",
-   "sequenceIndex": 4,
-   "runtimePoses": [
-    "attack_fwd",
-    "punch_left"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "android_20.png",
     "frame": "018.png",
     "x": "204",
     "y": "110"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "android_20_base_attack_fwd_02",
    "sourceId": "android_20_base/019.png",
-   "canonicalId": "android_20_base.reaction.knockback_up.up.00.019.png",
+   "canonicalId": "android_20_base.movement.move_or_attack.move_or_attack.00.019",
    "characterId": "android_20",
    "formId": "android_20_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "reaction",
-   "role": "knockback_up",
-   "variant": "up",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "attack_fwd",
-    "punch_right",
-    "knockback_up"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "android_20.png",
     "frame": "019.png",
     "x": "4",
     "y": "166"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "android_20_base_attack_fwd_03",
    "sourceId": "android_20_base/020.png",
-   "canonicalId": "android_20_base.reaction.knockback_back.back.00.020.png",
+   "canonicalId": "android_20_base.movement.move_or_attack.move_or_attack.00.020",
    "characterId": "android_20",
    "formId": "android_20_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "reaction",
-   "role": "knockback_back",
-   "variant": "back",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "attack_fwd",
-    "punch_left",
-    "knockback_back"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "android_20.png",
     "frame": "020.png",
     "x": "49",
     "y": "166"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "android_20_base_attack_fwd_07",
    "sourceId": "android_20_base/021.png",
-   "canonicalId": "android_20_base.melee.recover.attack_forward.07.021",
+   "canonicalId": "android_20_base.movement.move_or_attack.move_or_attack.00.021",
    "characterId": "android_20",
    "formId": "android_20_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "recover",
-   "variant": "attack_forward",
-   "sequenceIndex": 7,
-   "runtimePoses": [
-    "attack_fwd"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "android_20.png",
     "frame": "021.png",
     "x": "91",
     "y": "163"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "android_20_base_attack_ud_00",
    "sourceId": "android_20_base/022.png",
-   "canonicalId": "android_20_base.melee.ready.attack_vertical.00.022",
+   "canonicalId": "android_20_base.movement.move_or_attack.move_or_attack.00.022",
    "characterId": "android_20",
    "formId": "android_20_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "ready",
-   "variant": "attack_vertical",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "attack_ud"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "android_20.png",
     "frame": "022.png",
     "x": "142",
     "y": "165"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "android_20_base_attack_ud_01",
    "sourceId": "android_20_base/023.png",
-   "canonicalId": "android_20_base.melee.windup.attack_vertical.01.023",
+   "canonicalId": "android_20_base.movement.move_or_attack.move_or_attack.00.023",
    "characterId": "android_20",
    "formId": "android_20_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "windup",
-   "variant": "attack_vertical",
-   "sequenceIndex": 1,
-   "runtimePoses": [
-    "attack_ud"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "android_20.png",
     "frame": "023.png",
     "x": "185",
     "y": "165"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "android_20_base_attack_ud_02",
    "sourceId": "android_20_base/024.png",
-   "canonicalId": "android_20_base.melee.contact.attack_vertical.02.024",
+   "canonicalId": "android_20_base.movement.move_or_attack.move_or_attack.00.024",
    "characterId": "android_20",
    "formId": "android_20_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "contact",
-   "variant": "attack_vertical",
-   "sequenceIndex": 2,
-   "runtimePoses": [
-    "attack_ud"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "android_20.png",
     "frame": "024.png",
     "x": "227",
     "y": "163"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "android_20_base_attack_ud_03",
    "sourceId": "android_20_base/025.png",
-   "canonicalId": "android_20_base.reaction.knockback_down.down.00.025.png",
+   "canonicalId": "android_20_base.movement.move_or_attack.move_or_attack.00.025",
    "characterId": "android_20",
    "formId": "android_20_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "reaction",
-   "role": "knockback_down",
-   "variant": "down",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "attack_ud",
-    "knockback_down"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "android_20.png",
     "frame": "025.png",
     "x": "263",
     "y": "177"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "android_20_base_attack_fwd_00",
    "sourceId": "android_20_base/026.png",
-   "canonicalId": "android_20_base.melee.ready.attack_forward.00.026",
+   "canonicalId": "android_20_base.movement.move_or_attack.move_or_attack.00.026",
    "characterId": "android_20",
    "formId": "android_20_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "ready",
-   "variant": "attack_forward",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "attack_fwd",
-    "punch_right"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "android_20.png",
     "frame": "026.png",
     "x": "13",
     "y": "218"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "android_20_base_attack_fwd_01",
    "sourceId": "android_20_base/027.png",
-   "canonicalId": "android_20_base.melee.windup.attack_forward.01.027",
+   "canonicalId": "android_20_base.movement.move_or_attack.move_or_attack.00.027",
    "characterId": "android_20",
    "formId": "android_20_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "windup",
-   "variant": "attack_forward",
-   "sequenceIndex": 1,
-   "runtimePoses": [
-    "attack_fwd",
-    "punch_right"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "android_20.png",
     "frame": "027.png",
     "x": "54",
     "y": "218"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "android_20_base_attack_fwd_04",
    "sourceId": "android_20_base/028.png",
-   "canonicalId": "android_20_base.melee.strike.kick_right.00.028.png",
+   "canonicalId": "android_20_base.movement.move_or_attack.move_or_attack.00.028",
    "characterId": "android_20",
    "formId": "android_20_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "strike",
-   "variant": "kick_right",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "attack_fwd",
-    "punch_left",
-    "kick_right"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "android_20.png",
     "frame": "028.png",
     "x": "96",
     "y": "220"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "android_20_base_attack_fwd_05",
    "sourceId": "android_20_base/029.png",
-   "canonicalId": "android_20_base.melee.strike.kick_right.01.029.png",
+   "canonicalId": "android_20_base.movement.move_or_attack.move_or_attack.00.029",
    "characterId": "android_20",
    "formId": "android_20_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "strike",
-   "variant": "kick_right",
-   "sequenceIndex": 1,
-   "runtimePoses": [
-    "attack_fwd",
-    "punch_left",
-    "kick_right"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "android_20.png",
     "frame": "029.png",
     "x": "145",
     "y": "220"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "android_20_base_beam_charge_00",
    "sourceId": "android_20_base/030.png",
-   "canonicalId": "android_20_base.beam.charge_start.charge.00.030",
+   "canonicalId": "android_20_base.movement.move_or_attack.move_or_attack.00.030",
    "characterId": "android_20",
    "formId": "android_20_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "beam",
-   "role": "charge_start",
-   "variant": "charge",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "beam_charge"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "android_20.png",
     "frame": "030.png",
     "x": "9",
     "y": "277"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
    "sourceId": "android_20_base/031.png",
@@ -786,79 +716,73 @@
    "note": "bucket forense: projectiles_beams"
   },
   {
-   "_manifestName": "android_20_base_aura_power_00",
    "sourceId": "android_20_base/032.png",
-   "canonicalId": "android_20_base.effect.aura.aura_power.00.032",
+   "canonicalId": "android_20_base.effect.orbs_rings_bursts.orbs_rings_bursts.00.032",
    "characterId": "android_20",
    "formId": "android_20_base",
    "assetType": "effect",
    "view": "FIELD",
    "family": "effect",
-   "role": "aura",
-   "variant": "aura_power",
+   "role": "orbs_rings_bursts",
+   "variant": "orbs_rings_bursts",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "aura_power"
-   ],
-   "evidence": "CANONICAL",
-   "canonStatus": "CANONICAL",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "android_20.png",
     "frame": "032.png",
     "x": "204",
     "y": "264"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: orbs_rings_bursts"
   },
   {
-   "_manifestName": "android_20_base_aura_power_01",
    "sourceId": "android_20_base/033.png",
-   "canonicalId": "android_20_base.effect.aura.aura_power.01.033",
+   "canonicalId": "android_20_base.effect.orbs_rings_bursts.orbs_rings_bursts.00.033",
    "characterId": "android_20",
    "formId": "android_20_base",
    "assetType": "effect",
    "view": "FIELD",
    "family": "effect",
-   "role": "aura",
-   "variant": "aura_power",
-   "sequenceIndex": 1,
-   "runtimePoses": [
-    "aura_power"
-   ],
-   "evidence": "CANONICAL",
-   "canonStatus": "CANONICAL",
+   "role": "orbs_rings_bursts",
+   "variant": "orbs_rings_bursts",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "android_20.png",
     "frame": "033.png",
     "x": "278",
     "y": "264"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: orbs_rings_bursts"
   },
   {
-   "_manifestName": "android_20_base_aura_power_02",
    "sourceId": "android_20_base/034.png",
-   "canonicalId": "android_20_base.effect.aura.aura_power.02.034",
+   "canonicalId": "android_20_base.effect.orbs_rings_bursts.orbs_rings_bursts.00.034",
    "characterId": "android_20",
    "formId": "android_20_base",
    "assetType": "effect",
    "view": "FIELD",
    "family": "effect",
-   "role": "aura",
-   "variant": "aura_power",
-   "sequenceIndex": 2,
-   "runtimePoses": [
-    "aura_power"
-   ],
-   "evidence": "CANONICAL",
-   "canonStatus": "CANONICAL",
+   "role": "orbs_rings_bursts",
+   "variant": "orbs_rings_bursts",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "android_20.png",
     "frame": "034.png",
     "x": "353",
     "y": "264"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: orbs_rings_bursts"
   },
   {
    "sourceId": "android_20_base/035.png",
@@ -884,29 +808,27 @@
    "note": "bucket forense: projectile_orb_small"
   },
   {
-   "_manifestName": "android_20_base_beam_charge_02",
    "sourceId": "android_20_base/036.png",
-   "canonicalId": "android_20_base.beam.charge_hold.charge.02.036",
+   "canonicalId": "android_20_base.movement.move_or_attack.move_or_attack.00.036",
    "characterId": "android_20",
    "formId": "android_20_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "beam",
-   "role": "charge_hold",
-   "variant": "charge",
-   "sequenceIndex": 2,
-   "runtimePoses": [
-    "beam_charge"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "android_20.png",
     "frame": "036.png",
     "x": "16",
     "y": "356"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
    "sourceId": "android_20_base/037.png",
@@ -932,29 +854,27 @@
    "note": "bucket forense: character_plus_aura_or_burst"
   },
   {
-   "_manifestName": "android_20_base_beam_charge_03",
    "sourceId": "android_20_base/038.png",
-   "canonicalId": "android_20_base.beam.charge_hold.charge.03.038",
+   "canonicalId": "android_20_base.movement.move_or_attack.move_or_attack.00.038",
    "characterId": "android_20",
    "formId": "android_20_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "beam",
-   "role": "charge_hold",
-   "variant": "charge",
-   "sequenceIndex": 3,
-   "runtimePoses": [
-    "beam_charge"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "android_20.png",
     "frame": "038.png",
     "x": "110",
     "y": "356"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
    "sourceId": "android_20_base/039.png",
@@ -1026,54 +946,50 @@
    "note": "bucket forense: projectile_orb_small"
   },
   {
-   "_manifestName": "android_20_base_beam_fire_02",
    "sourceId": "android_20_base/042.png",
-   "canonicalId": "android_20_base.beam.release.fire.02.042",
+   "canonicalId": "android_20_base.movement.move_or_attack.move_or_attack.00.042",
    "characterId": "android_20",
    "formId": "android_20_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "beam",
-   "role": "release",
-   "variant": "fire",
-   "sequenceIndex": 2,
-   "runtimePoses": [
-    "beam_fire"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "android_20.png",
     "frame": "042.png",
     "x": "401",
     "y": "356"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "android_20_base_beam_fire_03",
    "sourceId": "android_20_base/043.png",
-   "canonicalId": "android_20_base.beam.release.fire.03.043",
+   "canonicalId": "android_20_base.effect.misc.misc.00.043",
    "characterId": "android_20",
    "formId": "android_20_base",
-   "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "beam",
-   "role": "release",
-   "variant": "fire",
-   "sequenceIndex": 3,
-   "runtimePoses": [
-    "beam_fire"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "assetType": "effect",
+   "view": "FIELD",
+   "family": "effect",
+   "role": "misc",
+   "variant": "misc",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "android_20.png",
     "frame": "043.png",
     "x": "444",
     "y": "356"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: nonbody_misc"
   },
   {
    "sourceId": "android_20_base/044.png",
@@ -1122,106 +1038,96 @@
    "note": "bucket forense: orbs_rings_bursts"
   },
   {
-   "_manifestName": "android_20_base_beam_charge_01",
    "sourceId": "android_20_base/046.png",
-   "canonicalId": "android_20_base.beam.charge_start.charge.01.046",
+   "canonicalId": "android_20_base.movement.move_or_attack.move_or_attack.00.046",
    "characterId": "android_20",
    "formId": "android_20_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "beam",
-   "role": "charge_start",
-   "variant": "charge",
-   "sequenceIndex": 1,
-   "runtimePoses": [
-    "beam_charge",
-    "beam_fire"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "android_20.png",
     "frame": "046.png",
     "x": "84",
     "y": "476"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "android_20_base_beam_fire_00",
    "sourceId": "android_20_base/047.png",
-   "canonicalId": "android_20_base.beam.release.fire.00.047",
+   "canonicalId": "android_20_base.movement.move_or_attack.move_or_attack.00.047",
    "characterId": "android_20",
    "formId": "android_20_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "beam",
-   "role": "release",
-   "variant": "fire",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "beam_fire"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "android_20.png",
     "frame": "047.png",
     "x": "349",
     "y": "474"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "android_20_base_gather_power_00",
    "sourceId": "android_20_base/048.png",
-   "canonicalId": "android_20_base.power.gather_power.gather_power.00.048",
+   "canonicalId": "android_20_base.movement.move_or_attack.move_or_attack.00.048",
    "characterId": "android_20",
    "formId": "android_20_base",
-   "assetType": "composite",
-   "view": "ACTION_DUEL",
-   "family": "power",
-   "role": "gather_power",
-   "variant": "gather_power",
+   "assetType": "actor_frame",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "gather_power",
-    "power_up"
-   ],
-   "evidence": "CANONICAL",
-   "canonStatus": "CANONICAL",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "android_20.png",
     "frame": "048.png",
     "x": "386",
     "y": "475"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "android_20_base_beam_fire_06",
    "sourceId": "android_20_base/049.png",
-   "canonicalId": "android_20_base.beam.release.fire.05.049",
+   "canonicalId": "android_20_base.effect.misc.misc.00.049",
    "characterId": "android_20",
    "formId": "android_20_base",
-   "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "beam",
-   "role": "release",
-   "variant": "fire",
-   "sequenceIndex": 5,
-   "runtimePoses": [
-    "beam_fire"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "assetType": "effect",
+   "view": "FIELD",
+   "family": "effect",
+   "role": "misc",
+   "variant": "misc",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "android_20.png",
     "frame": "049.png",
     "x": "428",
     "y": "475"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: nonbody_misc"
   },
   {
    "sourceId": "android_20_base/050.png",
@@ -1247,79 +1153,73 @@
    "note": "bucket forense: downed_or_hurt"
   },
   {
-   "_manifestName": "android_20_base_aura_support_00",
    "sourceId": "android_20_base/051.png",
-   "canonicalId": "android_20_base.effect.aura.aura_support.00.051",
+   "canonicalId": "android_20_base.unclassified.051",
    "characterId": "android_20",
    "formId": "android_20_base",
-   "assetType": "effect",
+   "assetType": "unclassified",
    "view": "FIELD",
-   "family": "effect",
-   "role": "aura",
-   "variant": "aura_support",
+   "family": "unclassified",
+   "role": "unclassified",
+   "variant": "",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "aura_support"
-   ],
-   "evidence": "CANONICAL",
-   "canonStatus": "CANONICAL",
+   "runtimePoses": [],
+   "evidence": "UNKNOWN",
+   "canonStatus": "UNCLASSIFIED",
    "source": {
     "sheet": "",
     "frame": "051.png",
     "x": null,
     "y": null
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "sin evidencia runtime ni bucket"
   },
   {
-   "_manifestName": "android_20_base_aura_support_01",
    "sourceId": "android_20_base/052.png",
-   "canonicalId": "android_20_base.effect.aura.aura_support.01.052",
+   "canonicalId": "android_20_base.unclassified.052",
    "characterId": "android_20",
    "formId": "android_20_base",
-   "assetType": "effect",
+   "assetType": "unclassified",
    "view": "FIELD",
-   "family": "effect",
-   "role": "aura",
-   "variant": "aura_support",
-   "sequenceIndex": 1,
-   "runtimePoses": [
-    "aura_support"
-   ],
-   "evidence": "CANONICAL",
-   "canonStatus": "CANONICAL",
+   "family": "unclassified",
+   "role": "unclassified",
+   "variant": "",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "UNKNOWN",
+   "canonStatus": "UNCLASSIFIED",
    "source": {
     "sheet": "",
     "frame": "052.png",
     "x": null,
     "y": null
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "sin evidencia runtime ni bucket"
   },
   {
-   "_manifestName": "android_20_base_aura_support_02",
    "sourceId": "android_20_base/053.png",
-   "canonicalId": "android_20_base.effect.aura.aura_support.02.053",
+   "canonicalId": "android_20_base.unclassified.053",
    "characterId": "android_20",
    "formId": "android_20_base",
-   "assetType": "effect",
+   "assetType": "unclassified",
    "view": "FIELD",
-   "family": "effect",
-   "role": "aura",
-   "variant": "aura_support",
-   "sequenceIndex": 2,
-   "runtimePoses": [
-    "aura_support"
-   ],
-   "evidence": "CANONICAL",
-   "canonStatus": "CANONICAL",
+   "family": "unclassified",
+   "role": "unclassified",
+   "variant": "",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "UNKNOWN",
+   "canonStatus": "UNCLASSIFIED",
    "source": {
     "sheet": "",
     "frame": "053.png",
     "x": null,
     "y": null
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "sin evidencia runtime ni bucket"
   },
   {
    "sourceId": "android_20_base/000_hurt.png",

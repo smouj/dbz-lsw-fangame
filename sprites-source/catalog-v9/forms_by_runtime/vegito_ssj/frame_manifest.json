@@ -3,109 +3,96 @@
  "frameCount": 93,
  "frames": [
   {
-   "_manifestName": "vegito_ssj_idle_00",
    "sourceId": "vegito_ssj/001.png",
-   "canonicalId": "vegito_ssj.idle.idle.idle.00.001",
+   "canonicalId": "vegito_ssj.movement.move_or_attack.move_or_attack.00.001",
    "characterId": "vegito",
    "formId": "vegito_ssj",
    "assetType": "actor_frame",
    "view": "FIELD",
-   "family": "idle",
-   "role": "idle",
-   "variant": "idle",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "idle",
-    "punch_right",
-    "punch_left"
-   ],
-   "evidence": "CANONICAL",
-   "canonStatus": "CANONICAL",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "vegito.png",
     "frame": "001.png",
     "x": "6",
     "y": "13"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "vegito_ssj_gather_power_00",
    "sourceId": "vegito_ssj/002.png",
-   "canonicalId": "vegito_ssj.power.gather_power.gather_power.00.002",
+   "canonicalId": "vegito_ssj.composite.character_effect.character_effect.00.002",
    "characterId": "vegito",
    "formId": "vegito_ssj",
    "assetType": "composite",
-   "view": "ACTION_DUEL",
-   "family": "power",
-   "role": "gather_power",
-   "variant": "gather_power",
+   "view": "FIELD",
+   "family": "composite",
+   "role": "character_effect",
+   "variant": "character_effect",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "gather_power",
-    "power_up"
-   ],
-   "evidence": "CANONICAL",
-   "canonStatus": "CANONICAL",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "vegito.png",
     "frame": "002.png",
     "x": "39",
     "y": "14"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: character_plus_effect"
   },
   {
-   "_manifestName": "vegito_ssj_guard_00",
    "sourceId": "vegito_ssj/003.png",
-   "canonicalId": "vegito_ssj.defense.start.guard.00.003",
+   "canonicalId": "vegito_ssj.movement.move_or_attack.move_or_attack.00.003",
    "characterId": "vegito",
    "formId": "vegito_ssj",
    "assetType": "actor_frame",
    "view": "FIELD",
-   "family": "defense",
-   "role": "start",
-   "variant": "guard",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "guard",
-    "beam_guard"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "vegito.png",
     "frame": "003.png",
     "x": "77",
     "y": "16"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "vegito_ssj_guard_01",
    "sourceId": "vegito_ssj/004.png",
-   "canonicalId": "vegito_ssj.defense.recover.guard.01.004",
+   "canonicalId": "vegito_ssj.movement.move_or_attack.move_or_attack.00.004",
    "characterId": "vegito",
    "formId": "vegito_ssj",
    "assetType": "actor_frame",
    "view": "FIELD",
-   "family": "defense",
-   "role": "recover",
-   "variant": "guard",
-   "sequenceIndex": 1,
-   "runtimePoses": [
-    "guard",
-    "beam_guard"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "vegito.png",
     "frame": "004.png",
     "x": "124",
     "y": "14"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
    "sourceId": "vegito_ssj/005.png",
@@ -200,256 +187,234 @@
    "note": "bucket forense: overworld_actor_or_pose"
   },
   {
-   "_manifestName": "vegito_ssj_evade_00",
    "sourceId": "vegito_ssj/009.png",
-   "canonicalId": "vegito_ssj.defense.start.evade.00.009",
+   "canonicalId": "vegito_ssj.effect.misc.misc.00.009",
    "characterId": "vegito",
    "formId": "vegito_ssj",
-   "assetType": "actor_frame",
+   "assetType": "effect",
    "view": "FIELD",
-   "family": "defense",
-   "role": "start",
-   "variant": "evade",
+   "family": "effect",
+   "role": "misc",
+   "variant": "misc",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "evade"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "vegito.png",
     "frame": "009.png",
     "x": "12",
     "y": "76"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: nonbody_misc"
   },
   {
-   "_manifestName": "vegito_ssj_evade_01",
    "sourceId": "vegito_ssj/010.png",
-   "canonicalId": "vegito_ssj.defense.recover.evade.01.010",
+   "canonicalId": "vegito_ssj.effect.speedlines.speedlines.00.010",
    "characterId": "vegito",
    "formId": "vegito_ssj",
-   "assetType": "actor_frame",
+   "assetType": "effect",
    "view": "FIELD",
-   "family": "defense",
-   "role": "recover",
-   "variant": "evade",
-   "sequenceIndex": 1,
-   "runtimePoses": [
-    "evade"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "family": "effect",
+   "role": "speedlines",
+   "variant": "speedlines",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "vegito.png",
     "frame": "010.png",
     "x": "62",
     "y": "69"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: speedlines"
   },
   {
-   "_manifestName": "vegito_ssj_move_front_01",
    "sourceId": "vegito_ssj/011.png",
-   "canonicalId": "vegito_ssj.movement.start.move_back.00.011.png",
+   "canonicalId": "vegito_ssj.movement.move_or_attack.move_or_attack.00.011",
    "characterId": "vegito",
    "formId": "vegito_ssj",
    "assetType": "actor_frame",
    "view": "FIELD",
    "family": "movement",
-   "role": "start",
-   "variant": "move_back",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "move_front",
-    "move_back"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "vegito.png",
     "frame": "011.png",
     "x": "97",
     "y": "65"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "vegito_ssj_move_front_00",
    "sourceId": "vegito_ssj/012.png",
-   "canonicalId": "vegito_ssj.movement.start.move_front.00.012",
+   "canonicalId": "vegito_ssj.movement.move_or_attack.move_or_attack.00.012",
    "characterId": "vegito",
    "formId": "vegito_ssj",
    "assetType": "actor_frame",
    "view": "FIELD",
    "family": "movement",
-   "role": "start",
-   "variant": "move_front",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "move_front",
-    "move_back"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "vegito.png",
     "frame": "012.png",
     "x": "133",
     "y": "71"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "vegito_ssj_hurt_00",
    "sourceId": "vegito_ssj/013.png",
-   "canonicalId": "vegito_ssj.reaction.hurt_light.hurt.00.013",
+   "canonicalId": "vegito_ssj.movement.move_or_attack.move_or_attack.00.013",
    "characterId": "vegito",
    "formId": "vegito_ssj",
    "assetType": "actor_frame",
    "view": "FIELD",
-   "family": "reaction",
-   "role": "hurt_light",
-   "variant": "hurt",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "hurt"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "vegito.png",
     "frame": "013.png",
     "x": "20",
     "y": "118"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "vegito_ssj_hurt_01",
    "sourceId": "vegito_ssj/014.png",
-   "canonicalId": "vegito_ssj.reaction.hurt_heavy.hurt.01.014",
+   "canonicalId": "vegito_ssj.movement.move_or_attack.move_or_attack.00.014",
    "characterId": "vegito",
    "formId": "vegito_ssj",
    "assetType": "actor_frame",
    "view": "FIELD",
-   "family": "reaction",
-   "role": "hurt_heavy",
-   "variant": "hurt",
-   "sequenceIndex": 1,
-   "runtimePoses": [
-    "hurt"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "vegito.png",
     "frame": "014.png",
     "x": "60",
     "y": "120"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "vegito_ssj_hurt_02",
    "sourceId": "vegito_ssj/015.png",
-   "canonicalId": "vegito_ssj.reaction.hurt_heavy.hurt.02.015",
+   "canonicalId": "vegito_ssj.movement.move_or_attack.move_or_attack.00.015",
    "characterId": "vegito",
    "formId": "vegito_ssj",
    "assetType": "actor_frame",
    "view": "FIELD",
-   "family": "reaction",
-   "role": "hurt_heavy",
-   "variant": "hurt",
-   "sequenceIndex": 2,
-   "runtimePoses": [
-    "hurt"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "vegito.png",
     "frame": "015.png",
     "x": "101",
     "y": "122"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "vegito_ssj_hurt_03",
    "sourceId": "vegito_ssj/016.png",
-   "canonicalId": "vegito_ssj.reaction.hurt_heavy.hurt.03.016",
+   "canonicalId": "vegito_ssj.movement.move_or_attack.move_or_attack.00.016",
    "characterId": "vegito",
    "formId": "vegito_ssj",
    "assetType": "actor_frame",
    "view": "FIELD",
-   "family": "reaction",
-   "role": "hurt_heavy",
-   "variant": "hurt",
-   "sequenceIndex": 3,
-   "runtimePoses": [
-    "hurt"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "vegito.png",
     "frame": "016.png",
     "x": "151",
     "y": "114"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "vegito_ssj_hurt_04",
    "sourceId": "vegito_ssj/017.png",
-   "canonicalId": "vegito_ssj.reaction.hurt_heavy.hurt.04.017",
+   "canonicalId": "vegito_ssj.movement.move_or_attack.move_or_attack.00.017",
    "characterId": "vegito",
    "formId": "vegito_ssj",
    "assetType": "actor_frame",
    "view": "FIELD",
-   "family": "reaction",
-   "role": "hurt_heavy",
-   "variant": "hurt",
-   "sequenceIndex": 4,
-   "runtimePoses": [
-    "hurt"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "vegito.png",
     "frame": "017.png",
     "x": "187",
     "y": "117"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "vegito_ssj_hurt_05",
    "sourceId": "vegito_ssj/018.png",
-   "canonicalId": "vegito_ssj.reaction.hurt_heavy.hurt.05.018",
+   "canonicalId": "vegito_ssj.movement.move_or_attack.move_or_attack.00.018",
    "characterId": "vegito",
    "formId": "vegito_ssj",
    "assetType": "actor_frame",
    "view": "FIELD",
-   "family": "reaction",
-   "role": "hurt_heavy",
-   "variant": "hurt",
-   "sequenceIndex": 5,
-   "runtimePoses": [
-    "hurt"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "vegito.png",
     "frame": "018.png",
     "x": "226",
     "y": "116"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
    "sourceId": "vegito_ssj/019.png",
@@ -475,292 +440,257 @@
    "note": "bucket forense: downed_or_hurt"
   },
   {
-   "_manifestName": "vegito_ssj_attack_fwd_00",
    "sourceId": "vegito_ssj/020.png",
-   "canonicalId": "vegito_ssj.melee.strike.punch_right.01.020.png",
+   "canonicalId": "vegito_ssj.movement.move_or_attack.move_or_attack.00.020",
    "characterId": "vegito",
    "formId": "vegito_ssj",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "strike",
-   "variant": "punch_right",
-   "sequenceIndex": 1,
-   "runtimePoses": [
-    "attack_fwd",
-    "punch_right"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "vegito.png",
     "frame": "020.png",
     "x": "18",
     "y": "171"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "vegito_ssj_attack_fwd_01",
    "sourceId": "vegito_ssj/021.png",
-   "canonicalId": "vegito_ssj.melee.strike.punch_right.02.021.png",
+   "canonicalId": "vegito_ssj.movement.move_or_attack.move_or_attack.00.021",
    "characterId": "vegito",
    "formId": "vegito_ssj",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "strike",
-   "variant": "punch_right",
-   "sequenceIndex": 2,
-   "runtimePoses": [
-    "attack_fwd",
-    "punch_right"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "vegito.png",
     "frame": "021.png",
     "x": "64",
     "y": "169"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "vegito_ssj_attack_fwd_02",
    "sourceId": "vegito_ssj/022.png",
-   "canonicalId": "vegito_ssj.reaction.knockback_back.back.00.022.png",
+   "canonicalId": "vegito_ssj.movement.move_or_attack.move_or_attack.00.022",
    "characterId": "vegito",
    "formId": "vegito_ssj",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "reaction",
-   "role": "knockback_back",
-   "variant": "back",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "attack_fwd",
-    "punch_right",
-    "knockback_back"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "vegito.png",
     "frame": "022.png",
     "x": "116",
     "y": "172"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "vegito_ssj_attack_fwd_03",
    "sourceId": "vegito_ssj/023.png",
-   "canonicalId": "vegito_ssj.reaction.knockback_up.up.00.023.png",
+   "canonicalId": "vegito_ssj.movement.move_or_attack.move_or_attack.00.023",
    "characterId": "vegito",
    "formId": "vegito_ssj",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "reaction",
-   "role": "knockback_up",
-   "variant": "up",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "attack_fwd",
-    "punch_left",
-    "knockback_up"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "vegito.png",
     "frame": "023.png",
     "x": "167",
     "y": "172"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "vegito_ssj_attack_fwd_04",
    "sourceId": "vegito_ssj/024.png",
-   "canonicalId": "vegito_ssj.melee.strike.punch_left.02.024.png",
+   "canonicalId": "vegito_ssj.movement.move_or_attack.move_or_attack.00.024",
    "characterId": "vegito",
    "formId": "vegito_ssj",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "strike",
-   "variant": "punch_left",
-   "sequenceIndex": 2,
-   "runtimePoses": [
-    "attack_fwd",
-    "punch_left"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "vegito.png",
     "frame": "024.png",
     "x": "218",
     "y": "167"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "vegito_ssj_attack_fwd_05",
    "sourceId": "vegito_ssj/025.png",
-   "canonicalId": "vegito_ssj.reaction.knockback_down.down.00.025.png",
+   "canonicalId": "vegito_ssj.movement.move_or_attack.move_or_attack.00.025",
    "characterId": "vegito",
    "formId": "vegito_ssj",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "reaction",
-   "role": "knockback_down",
-   "variant": "down",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "attack_fwd",
-    "punch_left",
-    "knockback_down"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "vegito.png",
     "frame": "025.png",
     "x": "253",
     "y": "167"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "vegito_ssj_attack_fwd_06",
    "sourceId": "vegito_ssj/026.png",
-   "canonicalId": "vegito_ssj.reaction.knockback_down.down.01.026.png",
+   "canonicalId": "vegito_ssj.movement.move_or_attack.move_or_attack.00.026",
    "characterId": "vegito",
    "formId": "vegito_ssj",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "reaction",
-   "role": "knockback_down",
-   "variant": "down",
-   "sequenceIndex": 1,
-   "runtimePoses": [
-    "attack_fwd",
-    "punch_left",
-    "knockback_down"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "vegito.png",
     "frame": "026.png",
     "x": "291",
     "y": "174"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "vegito_ssj_attack_ud_00",
    "sourceId": "vegito_ssj/027.png",
-   "canonicalId": "vegito_ssj.melee.ready.attack_vertical.00.027",
+   "canonicalId": "vegito_ssj.movement.move_or_attack.move_or_attack.00.027",
    "characterId": "vegito",
    "formId": "vegito_ssj",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "ready",
-   "variant": "attack_vertical",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "attack_ud"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "vegito.png",
     "frame": "027.png",
     "x": "25",
     "y": "225"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "vegito_ssj_attack_ud_01",
    "sourceId": "vegito_ssj/028.png",
-   "canonicalId": "vegito_ssj.melee.windup.attack_vertical.01.028",
+   "canonicalId": "vegito_ssj.movement.move_or_attack.move_or_attack.00.028",
    "characterId": "vegito",
    "formId": "vegito_ssj",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "windup",
-   "variant": "attack_vertical",
-   "sequenceIndex": 1,
-   "runtimePoses": [
-    "attack_ud"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "vegito.png",
     "frame": "028.png",
     "x": "68",
     "y": "225"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "vegito_ssj_attack_ud_02",
    "sourceId": "vegito_ssj/029.png",
-   "canonicalId": "vegito_ssj.melee.strike.kick_right.00.029.png",
+   "canonicalId": "vegito_ssj.movement.move_or_attack.move_or_attack.00.029",
    "characterId": "vegito",
    "formId": "vegito_ssj",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "strike",
-   "variant": "kick_right",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "attack_ud",
-    "kick_right"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "vegito.png",
     "frame": "029.png",
     "x": "126",
     "y": "224"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "vegito_ssj_attack_ud_03",
    "sourceId": "vegito_ssj/030.png",
-   "canonicalId": "vegito_ssj.melee.strike.kick_right.01.030.png",
+   "canonicalId": "vegito_ssj.movement.move_or_attack.move_or_attack.00.030",
    "characterId": "vegito",
    "formId": "vegito_ssj",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "strike",
-   "variant": "kick_right",
-   "sequenceIndex": 1,
-   "runtimePoses": [
-    "attack_ud",
-    "kick_right"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "vegito.png",
     "frame": "030.png",
     "x": "175",
     "y": "223"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
    "sourceId": "vegito_ssj/031.png",
@@ -786,107 +716,96 @@
    "note": "bucket forense: projectiles_beams"
   },
   {
-   "_manifestName": "vegito_ssj_gather_power_01",
    "sourceId": "vegito_ssj/032.png",
-   "canonicalId": "vegito_ssj.power.gather_power.gather_power.01.032",
+   "canonicalId": "vegito_ssj.movement.move_or_attack.move_or_attack.00.032",
    "characterId": "vegito",
    "formId": "vegito_ssj",
-   "assetType": "composite",
-   "view": "ACTION_DUEL",
-   "family": "power",
-   "role": "gather_power",
-   "variant": "gather_power",
-   "sequenceIndex": 1,
-   "runtimePoses": [
-    "gather_power",
-    "gather_power",
-    "power_up",
-    "power_up"
-   ],
-   "evidence": "CANONICAL",
-   "canonStatus": "CANONICAL",
+   "assetType": "actor_frame",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "vegito.png",
     "frame": "032.png",
     "x": "154",
     "y": "284"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "vegito_ssj_aura_power_00",
    "sourceId": "vegito_ssj/033.png",
-   "canonicalId": "vegito_ssj.effect.aura.aura_power.00.033",
+   "canonicalId": "vegito_ssj.effect.orbs_rings_bursts.orbs_rings_bursts.00.033",
    "characterId": "vegito",
    "formId": "vegito_ssj",
    "assetType": "effect",
    "view": "FIELD",
    "family": "effect",
-   "role": "aura",
-   "variant": "aura_power",
+   "role": "orbs_rings_bursts",
+   "variant": "orbs_rings_bursts",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "aura_power"
-   ],
-   "evidence": "CANONICAL",
-   "canonStatus": "CANONICAL",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "vegito.png",
     "frame": "033.png",
     "x": "242",
     "y": "271"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: orbs_rings_bursts"
   },
   {
-   "_manifestName": "vegito_ssj_aura_power_01",
    "sourceId": "vegito_ssj/034.png",
-   "canonicalId": "vegito_ssj.effect.aura.aura_power.01.034",
+   "canonicalId": "vegito_ssj.effect.orbs_rings_bursts.orbs_rings_bursts.00.034",
    "characterId": "vegito",
    "formId": "vegito_ssj",
    "assetType": "effect",
    "view": "FIELD",
    "family": "effect",
-   "role": "aura",
-   "variant": "aura_power",
-   "sequenceIndex": 1,
-   "runtimePoses": [
-    "aura_power"
-   ],
-   "evidence": "CANONICAL",
-   "canonStatus": "CANONICAL",
+   "role": "orbs_rings_bursts",
+   "variant": "orbs_rings_bursts",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "vegito.png",
     "frame": "034.png",
     "x": "317",
     "y": "271"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: orbs_rings_bursts"
   },
   {
-   "_manifestName": "vegito_ssj_aura_power_02",
    "sourceId": "vegito_ssj/035.png",
-   "canonicalId": "vegito_ssj.effect.aura.aura_power.02.035",
+   "canonicalId": "vegito_ssj.effect.orbs_rings_bursts.orbs_rings_bursts.00.035",
    "characterId": "vegito",
    "formId": "vegito_ssj",
    "assetType": "effect",
    "view": "FIELD",
    "family": "effect",
-   "role": "aura",
-   "variant": "aura_power",
-   "sequenceIndex": 2,
-   "runtimePoses": [
-    "aura_power"
-   ],
-   "evidence": "CANONICAL",
-   "canonStatus": "CANONICAL",
+   "role": "orbs_rings_bursts",
+   "variant": "orbs_rings_bursts",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "vegito.png",
     "frame": "035.png",
     "x": "390",
     "y": "271"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: orbs_rings_bursts"
   },
   {
    "sourceId": "vegito_ssj/036.png",
@@ -912,29 +831,27 @@
    "note": "bucket forense: projectile_orb_small"
   },
   {
-   "_manifestName": "vegito_ssj_beam_charge_00",
    "sourceId": "vegito_ssj/037.png",
-   "canonicalId": "vegito_ssj.beam.charge_start.charge.00.037",
+   "canonicalId": "vegito_ssj.movement.move_or_attack.move_or_attack.00.037",
    "characterId": "vegito",
    "formId": "vegito_ssj",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "beam",
-   "role": "charge_start",
-   "variant": "charge",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "beam_charge"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "vegito.png",
     "frame": "037.png",
     "x": "11",
     "y": "364"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
    "sourceId": "vegito_ssj/038.png",
@@ -983,29 +900,27 @@
    "note": "bucket forense: character_plus_aura_or_burst"
   },
   {
-   "_manifestName": "vegito_ssj_beam_charge_00",
    "sourceId": "vegito_ssj/040.png",
-   "canonicalId": "vegito_ssj.beam.charge_start.charge.00.040",
+   "canonicalId": "vegito_ssj.movement.move_or_attack.move_or_attack.00.040",
    "characterId": "vegito",
    "formId": "vegito_ssj",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "beam",
-   "role": "charge_start",
-   "variant": "charge",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "beam_charge"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "vegito.png",
     "frame": "040.png",
     "x": "254",
     "y": "359"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
    "sourceId": "vegito_ssj/041.png",
@@ -1054,30 +969,27 @@
    "note": "bucket forense: projectiles_beams"
   },
   {
-   "_manifestName": "vegito_ssj_beam_charge_02",
    "sourceId": "vegito_ssj/043.png",
-   "canonicalId": "vegito_ssj.beam.release.fire.00.043.png",
+   "canonicalId": "vegito_ssj.movement.move_or_attack.move_or_attack.00.043",
    "characterId": "vegito",
    "formId": "vegito_ssj",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "beam",
-   "role": "release",
-   "variant": "fire",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "beam_charge",
-    "beam_fire"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "vegito.png",
     "frame": "043.png",
     "x": "12",
     "y": "432"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
    "sourceId": "vegito_ssj/044.png",
@@ -1103,30 +1015,27 @@
    "note": "bucket forense: orbs_rings_bursts"
   },
   {
-   "_manifestName": "vegito_ssj_beam_charge_03",
    "sourceId": "vegito_ssj/045.png",
-   "canonicalId": "vegito_ssj.beam.release.fire.01.045.png",
+   "canonicalId": "vegito_ssj.movement.move_or_attack.move_or_attack.00.045",
    "characterId": "vegito",
    "formId": "vegito_ssj",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "beam",
-   "role": "release",
-   "variant": "fire",
-   "sequenceIndex": 1,
-   "runtimePoses": [
-    "beam_charge",
-    "beam_fire"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "vegito.png",
     "frame": "045.png",
     "x": "147",
     "y": "432"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
    "sourceId": "vegito_ssj/046.png",
@@ -1175,55 +1084,50 @@
    "note": "bucket forense: orbs_rings_bursts"
   },
   {
-   "_manifestName": "vegito_ssj_beam_charge_04",
    "sourceId": "vegito_ssj/048.png",
-   "canonicalId": "vegito_ssj.beam.release.fire.02.048.png",
+   "canonicalId": "vegito_ssj.movement.move_or_attack.move_or_attack.00.048",
    "characterId": "vegito",
    "formId": "vegito_ssj",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "beam",
-   "role": "release",
-   "variant": "fire",
-   "sequenceIndex": 2,
-   "runtimePoses": [
-    "beam_charge",
-    "beam_fire"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "vegito.png",
     "frame": "048.png",
     "x": "419",
     "y": "432"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "vegito_ssj_beam_charge_05",
    "sourceId": "vegito_ssj/049.png",
-   "canonicalId": "vegito_ssj.beam.charge_hold.charge.04.049",
+   "canonicalId": "vegito_ssj.movement.move_or_attack.move_or_attack.00.049",
    "characterId": "vegito",
    "formId": "vegito_ssj",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "beam",
-   "role": "charge_hold",
-   "variant": "charge",
-   "sequenceIndex": 4,
-   "runtimePoses": [
-    "beam_charge"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "vegito.png",
     "frame": "049.png",
     "x": "12",
     "y": "508"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
    "sourceId": "vegito_ssj/050.png",
@@ -1272,30 +1176,27 @@
    "note": "bucket forense: downed_or_hurt"
   },
   {
-   "_manifestName": "vegito_ssj_gather_power_03",
    "sourceId": "vegito_ssj/052.png",
-   "canonicalId": "vegito_ssj.power.gather_power.gather_power.03.052",
+   "canonicalId": "vegito_ssj.movement.move_or_attack.move_or_attack.00.052",
    "characterId": "vegito",
    "formId": "vegito_ssj",
-   "assetType": "composite",
-   "view": "ACTION_DUEL",
-   "family": "power",
-   "role": "gather_power",
-   "variant": "gather_power",
-   "sequenceIndex": 3,
-   "runtimePoses": [
-    "gather_power",
-    "power_up"
-   ],
-   "evidence": "CANONICAL",
-   "canonStatus": "CANONICAL",
+   "assetType": "actor_frame",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "vegito.png",
     "frame": "052.png",
     "x": "266",
     "y": "507"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
    "sourceId": "vegito_ssj/053.png",
@@ -1321,32 +1222,27 @@
    "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "vegito_ssj_gather_power_01",
    "sourceId": "vegito_ssj/054.png",
-   "canonicalId": "vegito_ssj.power.gather_power.gather_power.01.054",
+   "canonicalId": "vegito_ssj.movement.move_or_attack.move_or_attack.00.054",
    "characterId": "vegito",
    "formId": "vegito_ssj",
-   "assetType": "composite",
-   "view": "ACTION_DUEL",
-   "family": "power",
-   "role": "gather_power",
-   "variant": "gather_power",
-   "sequenceIndex": 1,
-   "runtimePoses": [
-    "gather_power",
-    "gather_power",
-    "power_up",
-    "power_up"
-   ],
-   "evidence": "CANONICAL",
-   "canonStatus": "CANONICAL",
+   "assetType": "actor_frame",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "vegito.png",
     "frame": "054.png",
     "x": "396",
     "y": "516"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
    "sourceId": "vegito_ssj/055.png",

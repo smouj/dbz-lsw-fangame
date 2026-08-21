@@ -3,85 +3,73 @@
  "frameCount": 46,
  "frames": [
   {
-   "_manifestName": "vegeta_base_idle_00",
    "sourceId": "vegeta_base/001.png",
-   "canonicalId": "vegeta_base.idle.idle.idle.00.001",
+   "canonicalId": "vegeta_base.movement.move_or_attack.move_or_attack.00.001",
    "characterId": "vegeta",
    "formId": "vegeta_base",
    "assetType": "actor_frame",
    "view": "FIELD",
-   "family": "idle",
-   "role": "idle",
-   "variant": "idle",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "idle",
-    "guard",
-    "punch_right",
-    "punch_left",
-    "beam_guard"
-   ],
-   "evidence": "CANONICAL",
-   "canonStatus": "CANONICAL",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "vegeta.png",
     "frame": "001.png",
     "x": "12",
     "y": "24"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "vegeta_base_guard_01",
    "sourceId": "vegeta_base/002.png",
-   "canonicalId": "vegeta_base.defense.hold.guard.01.002",
+   "canonicalId": "vegeta_base.movement.move_or_attack.move_or_attack.00.002",
    "characterId": "vegeta",
    "formId": "vegeta_base",
    "assetType": "actor_frame",
    "view": "FIELD",
-   "family": "defense",
-   "role": "hold",
-   "variant": "guard",
-   "sequenceIndex": 1,
-   "runtimePoses": [
-    "guard",
-    "beam_guard"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "vegeta.png",
     "frame": "002.png",
     "x": "48",
     "y": "24"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "vegeta_base_guard_02",
    "sourceId": "vegeta_base/003.png",
-   "canonicalId": "vegeta_base.defense.recover.guard.02.003",
+   "canonicalId": "vegeta_base.movement.move_or_attack.move_or_attack.00.003",
    "characterId": "vegeta",
    "formId": "vegeta_base",
    "assetType": "actor_frame",
    "view": "FIELD",
-   "family": "defense",
-   "role": "recover",
-   "variant": "guard",
-   "sequenceIndex": 2,
-   "runtimePoses": [
-    "guard",
-    "beam_guard"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "vegeta.png",
     "frame": "003.png",
     "x": "84",
     "y": "25"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
    "sourceId": "vegeta_base/004.png",
@@ -107,257 +95,234 @@
    "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "vegeta_base_evade_01",
    "sourceId": "vegeta_base/005.png",
-   "canonicalId": "vegeta_base.defense.recover.evade.01.005",
+   "canonicalId": "vegeta_base.effect.misc.misc.00.005",
    "characterId": "vegeta",
    "formId": "vegeta_base",
-   "assetType": "actor_frame",
+   "assetType": "effect",
    "view": "FIELD",
-   "family": "defense",
-   "role": "recover",
-   "variant": "evade",
-   "sequenceIndex": 1,
-   "runtimePoses": [
-    "evade"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "family": "effect",
+   "role": "misc",
+   "variant": "misc",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "vegeta.png",
     "frame": "005.png",
     "x": "9",
     "y": "85"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: nonbody_misc"
   },
   {
-   "_manifestName": "vegeta_base_evade_00",
    "sourceId": "vegeta_base/006.png",
-   "canonicalId": "vegeta_base.defense.start.evade.00.006",
+   "canonicalId": "vegeta_base.effect.speedlines.speedlines.00.006",
    "characterId": "vegeta",
    "formId": "vegeta_base",
-   "assetType": "actor_frame",
+   "assetType": "effect",
    "view": "FIELD",
-   "family": "defense",
-   "role": "start",
-   "variant": "evade",
+   "family": "effect",
+   "role": "speedlines",
+   "variant": "speedlines",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "evade"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "vegeta.png",
     "frame": "006.png",
     "x": "59",
     "y": "78"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: speedlines"
   },
   {
-   "_manifestName": "vegeta_base_move_front_01",
    "sourceId": "vegeta_base/007.png",
-   "canonicalId": "vegeta_base.movement.start.move_back.00.007.png",
+   "canonicalId": "vegeta_base.movement.move_or_attack.move_or_attack.00.007",
    "characterId": "vegeta",
    "formId": "vegeta_base",
    "assetType": "actor_frame",
    "view": "FIELD",
    "family": "movement",
-   "role": "start",
-   "variant": "move_back",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "move_front",
-    "move_back"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "vegeta.png",
     "frame": "007.png",
     "x": "96",
     "y": "75"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "vegeta_base_move_front_00",
    "sourceId": "vegeta_base/008.png",
-   "canonicalId": "vegeta_base.movement.start.move_front.00.008",
+   "canonicalId": "vegeta_base.movement.move_or_attack.move_or_attack.00.008",
    "characterId": "vegeta",
    "formId": "vegeta_base",
    "assetType": "actor_frame",
    "view": "FIELD",
    "family": "movement",
-   "role": "start",
-   "variant": "move_front",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "move_front",
-    "move_back"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "vegeta.png",
     "frame": "008.png",
     "x": "131",
     "y": "78"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "vegeta_base_hurt_00",
    "sourceId": "vegeta_base/009.png",
-   "canonicalId": "vegeta_base.reaction.hurt_light.hurt.00.009",
+   "canonicalId": "vegeta_base.movement.move_or_attack.move_or_attack.00.009",
    "characterId": "vegeta",
    "formId": "vegeta_base",
    "assetType": "actor_frame",
    "view": "FIELD",
-   "family": "reaction",
-   "role": "hurt_light",
-   "variant": "hurt",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "hurt"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "vegeta.png",
     "frame": "009.png",
     "x": "20",
     "y": "128"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "vegeta_base_hurt_01",
    "sourceId": "vegeta_base/010.png",
-   "canonicalId": "vegeta_base.reaction.hurt_heavy.hurt.01.010",
+   "canonicalId": "vegeta_base.movement.move_or_attack.move_or_attack.00.010",
    "characterId": "vegeta",
    "formId": "vegeta_base",
    "assetType": "actor_frame",
    "view": "FIELD",
-   "family": "reaction",
-   "role": "hurt_heavy",
-   "variant": "hurt",
-   "sequenceIndex": 1,
-   "runtimePoses": [
-    "hurt"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "vegeta.png",
     "frame": "010.png",
     "x": "59",
     "y": "133"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "vegeta_base_hurt_02",
    "sourceId": "vegeta_base/011.png",
-   "canonicalId": "vegeta_base.reaction.hurt_heavy.hurt.02.011",
+   "canonicalId": "vegeta_base.movement.move_or_attack.move_or_attack.00.011",
    "characterId": "vegeta",
    "formId": "vegeta_base",
    "assetType": "actor_frame",
    "view": "FIELD",
-   "family": "reaction",
-   "role": "hurt_heavy",
-   "variant": "hurt",
-   "sequenceIndex": 2,
-   "runtimePoses": [
-    "hurt"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "vegeta.png",
     "frame": "011.png",
     "x": "100",
     "y": "133"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "vegeta_base_hurt_03",
    "sourceId": "vegeta_base/012.png",
-   "canonicalId": "vegeta_base.reaction.hurt_heavy.hurt.03.012",
+   "canonicalId": "vegeta_base.idle.stance.stance.00.012",
    "characterId": "vegeta",
    "formId": "vegeta_base",
    "assetType": "actor_frame",
    "view": "FIELD",
-   "family": "reaction",
-   "role": "hurt_heavy",
-   "variant": "hurt",
-   "sequenceIndex": 3,
-   "runtimePoses": [
-    "hurt"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "family": "idle",
+   "role": "stance",
+   "variant": "stance",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "vegeta.png",
     "frame": "012.png",
     "x": "148",
     "y": "125"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: idle_or_stance"
   },
   {
-   "_manifestName": "vegeta_base_hurt_04",
    "sourceId": "vegeta_base/013.png",
-   "canonicalId": "vegeta_base.reaction.hurt_heavy.hurt.04.013",
+   "canonicalId": "vegeta_base.movement.move_or_attack.move_or_attack.00.013",
    "characterId": "vegeta",
    "formId": "vegeta_base",
    "assetType": "actor_frame",
    "view": "FIELD",
-   "family": "reaction",
-   "role": "hurt_heavy",
-   "variant": "hurt",
-   "sequenceIndex": 4,
-   "runtimePoses": [
-    "hurt"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "vegeta.png",
     "frame": "013.png",
     "x": "184",
     "y": "123"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "vegeta_base_attack_fwd_05",
    "sourceId": "vegeta_base/014.png",
-   "canonicalId": "vegeta_base.melee.strike.punch_left.03.014.png",
+   "canonicalId": "vegeta_base.idle.stance.stance.00.014",
    "characterId": "vegeta",
    "formId": "vegeta_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "strike",
-   "variant": "punch_left",
-   "sequenceIndex": 3,
-   "runtimePoses": [
-    "attack_fwd",
-    "punch_left"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "view": "FIELD",
+   "family": "idle",
+   "role": "stance",
+   "variant": "stance",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "vegeta.png",
     "frame": "014.png",
     "x": "225",
     "y": "126"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: idle_or_stance"
   },
   {
    "sourceId": "vegeta_base/015.png",
@@ -383,290 +348,257 @@
    "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "vegeta_base_attack_fwd_02",
    "sourceId": "vegeta_base/016.png",
-   "canonicalId": "vegeta_base.melee.travel.attack_forward.02.016",
+   "canonicalId": "vegeta_base.movement.move_or_attack.move_or_attack.00.016",
    "characterId": "vegeta",
    "formId": "vegeta_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "travel",
-   "variant": "attack_forward",
-   "sequenceIndex": 2,
-   "runtimePoses": [
-    "attack_fwd",
-    "punch_right"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "vegeta.png",
     "frame": "016.png",
     "x": "69",
     "y": "179"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "vegeta_base_attack_fwd_06",
    "sourceId": "vegeta_base/017.png",
-   "canonicalId": "vegeta_base.reaction.knockback_back.back.00.017.png",
+   "canonicalId": "vegeta_base.movement.move_or_attack.move_or_attack.00.017",
    "characterId": "vegeta",
    "formId": "vegeta_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "reaction",
-   "role": "knockback_back",
-   "variant": "back",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "attack_fwd",
-    "punch_left",
-    "knockback_back"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "vegeta.png",
     "frame": "017.png",
     "x": "112",
     "y": "184"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "vegeta_base_attack_ud_00",
    "sourceId": "vegeta_base/018.png",
-   "canonicalId": "vegeta_base.reaction.knockback_up.up.00.018.png",
+   "canonicalId": "vegeta_base.movement.move_or_attack.move_or_attack.00.018",
    "characterId": "vegeta",
    "formId": "vegeta_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "reaction",
-   "role": "knockback_up",
-   "variant": "up",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "attack_ud",
-    "knockback_up"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "vegeta.png",
     "frame": "018.png",
     "x": "160",
     "y": "183"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "vegeta_base_attack_ud_01",
    "sourceId": "vegeta_base/019.png",
-   "canonicalId": "vegeta_base.melee.windup.attack_vertical.01.019",
+   "canonicalId": "vegeta_base.movement.move_or_attack.move_or_attack.00.019",
    "characterId": "vegeta",
    "formId": "vegeta_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "windup",
-   "variant": "attack_vertical",
-   "sequenceIndex": 1,
-   "runtimePoses": [
-    "attack_ud"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "vegeta.png",
     "frame": "019.png",
     "x": "207",
     "y": "181"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "vegeta_base_attack_ud_02",
    "sourceId": "vegeta_base/020.png",
-   "canonicalId": "vegeta_base.melee.contact.attack_vertical.02.020",
+   "canonicalId": "vegeta_base.idle.stance.stance.00.020",
    "characterId": "vegeta",
    "formId": "vegeta_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "contact",
-   "variant": "attack_vertical",
-   "sequenceIndex": 2,
-   "runtimePoses": [
-    "attack_ud"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "view": "FIELD",
+   "family": "idle",
+   "role": "stance",
+   "variant": "stance",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "vegeta.png",
     "frame": "020.png",
     "x": "242",
     "y": "178"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: idle_or_stance"
   },
   {
-   "_manifestName": "vegeta_base_attack_ud_03",
    "sourceId": "vegeta_base/021.png",
-   "canonicalId": "vegeta_base.reaction.knockback_down.down.00.021.png",
+   "canonicalId": "vegeta_base.movement.move_or_attack.move_or_attack.00.021",
    "characterId": "vegeta",
    "formId": "vegeta_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "reaction",
-   "role": "knockback_down",
-   "variant": "down",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "attack_ud",
-    "knockback_down"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "vegeta.png",
     "frame": "021.png",
     "x": "276",
     "y": "187"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "vegeta_base_attack_fwd_00",
    "sourceId": "vegeta_base/022.png",
-   "canonicalId": "vegeta_base.melee.ready.attack_forward.00.022",
+   "canonicalId": "vegeta_base.movement.move_or_attack.move_or_attack.00.022",
    "characterId": "vegeta",
    "formId": "vegeta_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "ready",
-   "variant": "attack_forward",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "attack_fwd",
-    "punch_right"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "vegeta.png",
     "frame": "022.png",
     "x": "20",
     "y": "234"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "vegeta_base_attack_fwd_01",
    "sourceId": "vegeta_base/023.png",
-   "canonicalId": "vegeta_base.melee.windup.attack_forward.01.023",
+   "canonicalId": "vegeta_base.movement.move_or_attack.move_or_attack.00.023",
    "characterId": "vegeta",
    "formId": "vegeta_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "windup",
-   "variant": "attack_forward",
-   "sequenceIndex": 1,
-   "runtimePoses": [
-    "attack_fwd",
-    "punch_right"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "vegeta.png",
     "frame": "023.png",
     "x": "57",
     "y": "234"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "vegeta_base_attack_fwd_04",
    "sourceId": "vegeta_base/024.png",
-   "canonicalId": "vegeta_base.melee.strike.kick_right.00.024.png",
+   "canonicalId": "vegeta_base.movement.move_or_attack.move_or_attack.00.024",
    "characterId": "vegeta",
    "formId": "vegeta_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "strike",
-   "variant": "kick_right",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "attack_fwd",
-    "punch_left",
-    "kick_right"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "vegeta.png",
     "frame": "024.png",
     "x": "93",
     "y": "234"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "vegeta_base_attack_fwd_03",
    "sourceId": "vegeta_base/025.png",
-   "canonicalId": "vegeta_base.melee.strike.kick_right.01.025.png",
+   "canonicalId": "vegeta_base.movement.move_or_attack.move_or_attack.00.025",
    "characterId": "vegeta",
    "formId": "vegeta_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "strike",
-   "variant": "kick_right",
-   "sequenceIndex": 1,
-   "runtimePoses": [
-    "attack_fwd",
-    "punch_left",
-    "kick_right"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "vegeta.png",
     "frame": "025.png",
     "x": "137",
     "y": "234"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "vegeta_base_kick_right_02",
    "sourceId": "vegeta_base/026.png",
-   "canonicalId": "vegeta_base.melee.strike.kick_right.02.026",
+   "canonicalId": "vegeta_base.reaction.downed.downed.00.026",
    "characterId": "vegeta",
    "formId": "vegeta_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "strike",
-   "variant": "kick_right",
-   "sequenceIndex": 2,
-   "runtimePoses": [
-    "kick_right"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "view": "FIELD",
+   "family": "reaction",
+   "role": "downed",
+   "variant": "downed",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "vegeta.png",
     "frame": "026.png",
     "x": "199",
     "y": "245"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: downed_or_hurt"
   },
   {
    "sourceId": "vegeta_base/027.png",
@@ -761,29 +693,27 @@
    "note": "bucket forense: battle_aura_actor_composite"
   },
   {
-   "_manifestName": "vegeta_base_beam_charge_00",
    "sourceId": "vegeta_base/031.png",
-   "canonicalId": "vegeta_base.beam.charge_start.charge.00.031",
+   "canonicalId": "vegeta_base.movement.move_or_attack.move_or_attack.00.031",
    "characterId": "vegeta",
    "formId": "vegeta_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "beam",
-   "role": "charge_start",
-   "variant": "charge",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "beam_charge"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "vegeta.png",
     "frame": "031.png",
     "x": "19",
     "y": "293"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
    "sourceId": "vegeta_base/032.png",
@@ -809,79 +739,73 @@
    "note": "bucket forense: projectiles_beams"
   },
   {
-   "_manifestName": "vegeta_base_aura_power_00",
    "sourceId": "vegeta_base/033.png",
-   "canonicalId": "vegeta_base.effect.aura.aura_power.00.033",
+   "canonicalId": "vegeta_base.effect.orbs_rings_bursts.orbs_rings_bursts.00.033",
    "characterId": "vegeta",
    "formId": "vegeta_base",
    "assetType": "effect",
    "view": "FIELD",
    "family": "effect",
-   "role": "aura",
-   "variant": "aura_power",
+   "role": "orbs_rings_bursts",
+   "variant": "orbs_rings_bursts",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "aura_power"
-   ],
-   "evidence": "CANONICAL",
-   "canonStatus": "CANONICAL",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "vegeta.png",
     "frame": "033.png",
     "x": "206",
     "y": "278"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: orbs_rings_bursts"
   },
   {
-   "_manifestName": "vegeta_base_aura_power_01",
    "sourceId": "vegeta_base/034.png",
-   "canonicalId": "vegeta_base.effect.aura.aura_power.01.034",
+   "canonicalId": "vegeta_base.effect.orbs_rings_bursts.orbs_rings_bursts.00.034",
    "characterId": "vegeta",
    "formId": "vegeta_base",
    "assetType": "effect",
    "view": "FIELD",
    "family": "effect",
-   "role": "aura",
-   "variant": "aura_power",
-   "sequenceIndex": 1,
-   "runtimePoses": [
-    "aura_power"
-   ],
-   "evidence": "CANONICAL",
-   "canonStatus": "CANONICAL",
+   "role": "orbs_rings_bursts",
+   "variant": "orbs_rings_bursts",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "vegeta.png",
     "frame": "034.png",
     "x": "275",
     "y": "278"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: orbs_rings_bursts"
   },
   {
-   "_manifestName": "vegeta_base_aura_power_02",
    "sourceId": "vegeta_base/035.png",
-   "canonicalId": "vegeta_base.effect.aura.aura_power.02.035",
+   "canonicalId": "vegeta_base.effect.orbs_rings_bursts.orbs_rings_bursts.00.035",
    "characterId": "vegeta",
    "formId": "vegeta_base",
    "assetType": "effect",
    "view": "FIELD",
    "family": "effect",
-   "role": "aura",
-   "variant": "aura_power",
-   "sequenceIndex": 2,
-   "runtimePoses": [
-    "aura_power"
-   ],
-   "evidence": "CANONICAL",
-   "canonStatus": "CANONICAL",
+   "role": "orbs_rings_bursts",
+   "variant": "orbs_rings_bursts",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "vegeta.png",
     "frame": "035.png",
     "x": "345",
     "y": "278"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: orbs_rings_bursts"
   },
   {
    "sourceId": "vegeta_base/036.png",
@@ -930,83 +854,73 @@
    "note": "bucket forense: beam_or_projectile_horizontal"
   },
   {
-   "_manifestName": "vegeta_base_beam_charge_02",
    "sourceId": "vegeta_base/038.png",
-   "canonicalId": "vegeta_base.power.power_up.power_up.01.038.png",
+   "canonicalId": "vegeta_base.movement.move_or_attack.move_or_attack.00.038",
    "characterId": "vegeta",
    "formId": "vegeta_base",
-   "assetType": "composite",
-   "view": "ACTION_DUEL",
-   "family": "power",
-   "role": "power_up",
-   "variant": "power_up",
-   "sequenceIndex": 1,
-   "runtimePoses": [
-    "beam_charge",
-    "gather_power",
-    "power_up"
-   ],
-   "evidence": "CANONICAL",
-   "canonStatus": "CANONICAL",
+   "assetType": "actor_frame",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "vegeta.png",
     "frame": "038.png",
     "x": "27",
     "y": "367"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "vegeta_base_beam_charge_01",
    "sourceId": "vegeta_base/039.png",
-   "canonicalId": "vegeta_base.beam.charge_start.charge.01.039",
+   "canonicalId": "vegeta_base.movement.move_or_attack.move_or_attack.00.039",
    "characterId": "vegeta",
    "formId": "vegeta_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "beam",
-   "role": "charge_start",
-   "variant": "charge",
-   "sequenceIndex": 1,
-   "runtimePoses": [
-    "beam_charge"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "vegeta.png",
     "frame": "039.png",
     "x": "73",
     "y": "372"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "vegeta_base_beam_fire_00",
    "sourceId": "vegeta_base/040.png",
-   "canonicalId": "vegeta_base.power.power_up.power_up.00.040.png",
+   "canonicalId": "vegeta_base.movement.move_or_attack.move_or_attack.00.040",
    "characterId": "vegeta",
    "formId": "vegeta_base",
-   "assetType": "composite",
-   "view": "ACTION_DUEL",
-   "family": "power",
-   "role": "power_up",
-   "variant": "power_up",
+   "assetType": "actor_frame",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "beam_fire",
-    "gather_power",
-    "power_up"
-   ],
-   "evidence": "CANONICAL",
-   "canonStatus": "CANONICAL",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "vegeta.png",
     "frame": "040.png",
     "x": "119",
     "y": "370"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
    "sourceId": "vegeta_base/041.png",
@@ -1130,9 +1044,8 @@
    "frameKind": "atomic"
   },
   {
-   "_manifestName": "vegeta_base_beam_fire_01",
    "sourceId": "vegeta_base/000_beam_fire.png",
-   "canonicalId": "vegeta_base.beam.release.fire.01.000_beam_fire",
+   "canonicalId": "vegeta_base.beam.release.fire.00.000_beam_fire",
    "characterId": "vegeta",
    "formId": "vegeta_base",
    "assetType": "actor_frame",
@@ -1140,19 +1053,18 @@
    "family": "beam",
    "role": "release",
    "variant": "fire",
-   "sequenceIndex": 1,
-   "runtimePoses": [
-    "beam_fire"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "",
     "frame": "000_beam_fire.png",
     "x": null,
     "y": null
    },
-   "frameKind": "fixed_only"
+   "frameKind": "fixed_only",
+   "note": "nombre de archivo del sheet (fire)"
   }
  ]
 }

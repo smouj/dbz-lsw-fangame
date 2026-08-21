@@ -3,86 +3,73 @@
  "frameCount": 57,
  "frames": [
   {
-   "_manifestName": "super_buu_base_idle_00",
    "sourceId": "super_buu_base/001.png",
-   "canonicalId": "super_buu_base.idle.idle.idle.00.001",
+   "canonicalId": "super_buu_base.idle.stance.stance.00.001",
    "characterId": "super_buu",
    "formId": "super_buu_base",
    "assetType": "actor_frame",
    "view": "FIELD",
    "family": "idle",
-   "role": "idle",
-   "variant": "idle",
+   "role": "stance",
+   "variant": "stance",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "idle",
-    "guard",
-    "punch_right",
-    "punch_left",
-    "beam_guard",
-    "evade"
-   ],
-   "evidence": "CANONICAL",
-   "canonStatus": "CANONICAL",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "majin_buu.png",
     "frame": "001.png",
     "x": "7",
     "y": "590"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: idle_or_stance"
   },
   {
-   "_manifestName": "super_buu_base_guard_01",
    "sourceId": "super_buu_base/002.png",
-   "canonicalId": "super_buu_base.defense.hold.guard.01.002",
+   "canonicalId": "super_buu_base.movement.move_or_attack.move_or_attack.00.002",
    "characterId": "super_buu",
    "formId": "super_buu_base",
    "assetType": "actor_frame",
    "view": "FIELD",
-   "family": "defense",
-   "role": "hold",
-   "variant": "guard",
-   "sequenceIndex": 1,
-   "runtimePoses": [
-    "guard",
-    "beam_guard"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "majin_buu.png",
     "frame": "002.png",
     "x": "39",
     "y": "591"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "super_buu_base_guard_02",
    "sourceId": "super_buu_base/003.png",
-   "canonicalId": "super_buu_base.defense.recover.guard.02.003",
+   "canonicalId": "super_buu_base.movement.move_or_attack.move_or_attack.00.003",
    "characterId": "super_buu",
    "formId": "super_buu_base",
    "assetType": "actor_frame",
    "view": "FIELD",
-   "family": "defense",
-   "role": "recover",
-   "variant": "guard",
-   "sequenceIndex": 2,
-   "runtimePoses": [
-    "guard",
-    "beam_guard"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "majin_buu.png",
     "frame": "003.png",
     "x": "78",
     "y": "593"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
    "sourceId": "super_buu_base/004.png",
@@ -154,109 +141,96 @@
    "note": "multi_evidence \u2192 speedlines"
   },
   {
-   "_manifestName": "super_buu_base_move_front_01",
    "sourceId": "super_buu_base/007.png",
-   "canonicalId": "super_buu_base.defense.start.evade.00.007.png",
+   "canonicalId": "super_buu_base.movement.move_or_attack.move_or_attack.00.007",
    "characterId": "super_buu",
    "formId": "super_buu_base",
    "assetType": "actor_frame",
    "view": "FIELD",
-   "family": "defense",
-   "role": "start",
-   "variant": "evade",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "move_front",
-    "move_back",
-    "evade"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "majin_buu.png",
     "frame": "007.png",
     "x": "95",
     "y": "643"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "super_buu_base_move_front_00",
    "sourceId": "super_buu_base/008.png",
-   "canonicalId": "super_buu_base.movement.start.move_front.00.008",
+   "canonicalId": "super_buu_base.movement.move_or_attack.move_or_attack.00.008",
    "characterId": "super_buu",
    "formId": "super_buu_base",
    "assetType": "actor_frame",
    "view": "FIELD",
    "family": "movement",
-   "role": "start",
-   "variant": "move_front",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "move_front",
-    "move_back"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "majin_buu.png",
     "frame": "008.png",
     "x": "135",
     "y": "646"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "super_buu_base_gather_power_01",
    "sourceId": "super_buu_base/009.png",
-   "canonicalId": "super_buu_base.power.gather_power.gather_power.01.009",
+   "canonicalId": "super_buu_base.movement.move_or_attack.move_or_attack.00.009",
    "characterId": "super_buu",
    "formId": "super_buu_base",
-   "assetType": "composite",
-   "view": "ACTION_DUEL",
-   "family": "power",
-   "role": "gather_power",
-   "variant": "gather_power",
-   "sequenceIndex": 1,
-   "runtimePoses": [
-    "gather_power",
-    "power_up"
-   ],
-   "evidence": "CANONICAL",
-   "canonStatus": "CANONICAL",
+   "assetType": "actor_frame",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "majin_buu.png",
     "frame": "009.png",
     "x": "2",
     "y": "696"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "super_buu_base_gather_power_00",
    "sourceId": "super_buu_base/010.png",
-   "canonicalId": "super_buu_base.power.gather_power.gather_power.00.010",
+   "canonicalId": "super_buu_base.movement.move_or_attack.move_or_attack.00.010",
    "characterId": "super_buu",
    "formId": "super_buu_base",
-   "assetType": "composite",
-   "view": "ACTION_DUEL",
-   "family": "power",
-   "role": "gather_power",
-   "variant": "gather_power",
+   "assetType": "actor_frame",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "gather_power",
-    "power_up"
-   ],
-   "evidence": "CANONICAL",
-   "canonStatus": "CANONICAL",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "majin_buu.png",
     "frame": "010.png",
     "x": "37",
     "y": "700"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
    "sourceId": "super_buu_base/011.png",
@@ -328,338 +302,303 @@
    "note": "bucket forense: idle_or_stance"
   },
   {
-   "_manifestName": "super_buu_base_attack_fwd_05",
    "sourceId": "super_buu_base/014.png",
-   "canonicalId": "super_buu_base.melee.strike.punch_left.03.014.png",
+   "canonicalId": "super_buu_base.idle.stance.stance.00.014",
    "characterId": "super_buu",
    "formId": "super_buu_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "strike",
-   "variant": "punch_left",
-   "sequenceIndex": 3,
-   "runtimePoses": [
-    "attack_fwd",
-    "punch_left"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "view": "FIELD",
+   "family": "idle",
+   "role": "stance",
+   "variant": "stance",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "majin_buu.png",
     "frame": "014.png",
     "x": "186",
     "y": "694"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: idle_or_stance"
   },
   {
-   "_manifestName": "super_buu_base_hurt_00",
    "sourceId": "super_buu_base/015.png",
-   "canonicalId": "super_buu_base.reaction.hurt_light.hurt.00.015",
+   "canonicalId": "super_buu_base.reaction.downed.downed.00.015",
    "characterId": "super_buu",
    "formId": "super_buu_base",
    "assetType": "actor_frame",
    "view": "FIELD",
    "family": "reaction",
-   "role": "hurt_light",
-   "variant": "hurt",
+   "role": "downed",
+   "variant": "downed",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "hurt"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "majin_buu.png",
     "frame": "015.png",
     "x": "222",
     "y": "709"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: downed_or_hurt"
   },
   {
-   "_manifestName": "super_buu_base_knockback_back_00",
    "sourceId": "super_buu_base/016.png",
-   "canonicalId": "super_buu_base.reaction.knockback_back.back.00.016",
+   "canonicalId": "super_buu_base.movement.move_or_attack.move_or_attack.00.016",
    "characterId": "super_buu",
    "formId": "super_buu_base",
    "assetType": "actor_frame",
    "view": "FIELD",
-   "family": "reaction",
-   "role": "knockback_back",
-   "variant": "back",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "knockback_back"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "majin_buu.png",
     "frame": "016.png",
     "x": "4",
     "y": "750"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "super_buu_base_attack_fwd_02",
    "sourceId": "super_buu_base/017.png",
-   "canonicalId": "super_buu_base.melee.travel.attack_forward.02.017",
+   "canonicalId": "super_buu_base.movement.move_or_attack.move_or_attack.00.017",
    "characterId": "super_buu",
    "formId": "super_buu_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "travel",
-   "variant": "attack_forward",
-   "sequenceIndex": 2,
-   "runtimePoses": [
-    "attack_fwd",
-    "punch_right"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "majin_buu.png",
     "frame": "017.png",
     "x": "46",
     "y": "746"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "super_buu_base_attack_fwd_06",
    "sourceId": "super_buu_base/018.png",
-   "canonicalId": "super_buu_base.melee.strike.punch_left.04.018.png",
+   "canonicalId": "super_buu_base.movement.move_or_attack.move_or_attack.00.018",
    "characterId": "super_buu",
    "formId": "super_buu_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "strike",
-   "variant": "punch_left",
-   "sequenceIndex": 4,
-   "runtimePoses": [
-    "attack_fwd",
-    "punch_left"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "majin_buu.png",
     "frame": "018.png",
     "x": "94",
     "y": "749"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "super_buu_base_attack_ud_00",
    "sourceId": "super_buu_base/019.png",
-   "canonicalId": "super_buu_base.melee.ready.attack_vertical.00.019",
+   "canonicalId": "super_buu_base.movement.move_or_attack.move_or_attack.00.019",
    "characterId": "super_buu",
    "formId": "super_buu_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "ready",
-   "variant": "attack_vertical",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "attack_ud"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "majin_buu.png",
     "frame": "019.png",
     "x": "130",
     "y": "747"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "super_buu_base_attack_ud_01",
    "sourceId": "super_buu_base/020.png",
-   "canonicalId": "super_buu_base.reaction.knockback_up.up.00.020.png",
+   "canonicalId": "super_buu_base.movement.move_or_attack.move_or_attack.00.020",
    "characterId": "super_buu",
    "formId": "super_buu_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "reaction",
-   "role": "knockback_up",
-   "variant": "up",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "attack_ud",
-    "knockback_up"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "majin_buu.png",
     "frame": "020.png",
     "x": "172",
     "y": "749"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "super_buu_base_attack_ud_02",
    "sourceId": "super_buu_base/021.png",
-   "canonicalId": "super_buu_base.melee.contact.attack_vertical.02.021",
+   "canonicalId": "super_buu_base.idle.stance.stance.00.021",
    "characterId": "super_buu",
    "formId": "super_buu_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "contact",
-   "variant": "attack_vertical",
-   "sequenceIndex": 2,
-   "runtimePoses": [
-    "attack_ud"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "view": "FIELD",
+   "family": "idle",
+   "role": "stance",
+   "variant": "stance",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "majin_buu.png",
     "frame": "021.png",
     "x": "214",
     "y": "747"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: idle_or_stance"
   },
   {
-   "_manifestName": "super_buu_base_attack_ud_03",
    "sourceId": "super_buu_base/022.png",
-   "canonicalId": "super_buu_base.reaction.knockback_down.down.00.022.png",
+   "canonicalId": "super_buu_base.movement.move_or_attack.move_or_attack.00.022",
    "characterId": "super_buu",
    "formId": "super_buu_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "reaction",
-   "role": "knockback_down",
-   "variant": "down",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "attack_ud",
-    "knockback_down"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "majin_buu.png",
     "frame": "022.png",
     "x": "247",
     "y": "760"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "super_buu_base_attack_fwd_00",
    "sourceId": "super_buu_base/023.png",
-   "canonicalId": "super_buu_base.melee.ready.attack_forward.00.023",
+   "canonicalId": "super_buu_base.movement.move_or_attack.move_or_attack.00.023",
    "characterId": "super_buu",
    "formId": "super_buu_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "ready",
-   "variant": "attack_forward",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "attack_fwd",
-    "punch_right"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "majin_buu.png",
     "frame": "023.png",
     "x": "4",
     "y": "802"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "super_buu_base_attack_fwd_01",
    "sourceId": "super_buu_base/024.png",
-   "canonicalId": "super_buu_base.melee.windup.attack_forward.01.024",
+   "canonicalId": "super_buu_base.movement.move_or_attack.move_or_attack.00.024",
    "characterId": "super_buu",
    "formId": "super_buu_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "windup",
-   "variant": "attack_forward",
-   "sequenceIndex": 1,
-   "runtimePoses": [
-    "attack_fwd",
-    "punch_right"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "majin_buu.png",
     "frame": "024.png",
     "x": "48",
     "y": "802"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "super_buu_base_kick_right_00",
    "sourceId": "super_buu_base/025.png",
-   "canonicalId": "super_buu_base.melee.strike.kick_right.00.025",
+   "canonicalId": "super_buu_base.idle.stance.stance.00.025",
    "characterId": "super_buu",
    "formId": "super_buu_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "strike",
-   "variant": "kick_right",
+   "view": "FIELD",
+   "family": "idle",
+   "role": "stance",
+   "variant": "stance",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "kick_right"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "majin_buu.png",
     "frame": "025.png",
     "x": "91",
     "y": "803"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: idle_or_stance"
   },
   {
-   "_manifestName": "super_buu_base_attack_fwd_04",
    "sourceId": "super_buu_base/026.png",
-   "canonicalId": "super_buu_base.melee.strike.kick_right.01.026.png",
+   "canonicalId": "super_buu_base.movement.move_or_attack.move_or_attack.00.026",
    "characterId": "super_buu",
    "formId": "super_buu_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "strike",
-   "variant": "kick_right",
-   "sequenceIndex": 1,
-   "runtimePoses": [
-    "attack_fwd",
-    "punch_left",
-    "kick_right"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "majin_buu.png",
     "frame": "026.png",
     "x": "140",
     "y": "803"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
    "sourceId": "super_buu_base/027.png",
@@ -754,29 +693,27 @@
    "note": "bucket forense: battle_aura_actor_composite"
   },
   {
-   "_manifestName": "super_buu_base_beam_charge_00",
    "sourceId": "super_buu_base/031.png",
-   "canonicalId": "super_buu_base.beam.charge_start.charge.00.031",
+   "canonicalId": "super_buu_base.movement.move_or_attack.move_or_attack.00.031",
    "characterId": "super_buu",
    "formId": "super_buu_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "beam",
-   "role": "charge_start",
-   "variant": "charge",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "beam_charge"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "majin_buu.png",
     "frame": "031.png",
     "x": "3",
     "y": "861"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
    "sourceId": "super_buu_base/032.png",
@@ -802,79 +739,73 @@
    "note": "bucket forense: projectiles_beams"
   },
   {
-   "_manifestName": "super_buu_base_aura_power_00",
    "sourceId": "super_buu_base/033.png",
-   "canonicalId": "super_buu_base.effect.aura.aura_power.00.033",
+   "canonicalId": "super_buu_base.effect.orbs_rings_bursts.orbs_rings_bursts.00.033",
    "characterId": "super_buu",
    "formId": "super_buu_base",
    "assetType": "effect",
    "view": "FIELD",
    "family": "effect",
-   "role": "aura",
-   "variant": "aura_power",
+   "role": "orbs_rings_bursts",
+   "variant": "orbs_rings_bursts",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "aura_power"
-   ],
-   "evidence": "CANONICAL",
-   "canonStatus": "CANONICAL",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "majin_buu.png",
     "frame": "033.png",
     "x": "235",
     "y": "844"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: orbs_rings_bursts"
   },
   {
-   "_manifestName": "super_buu_base_aura_power_01",
    "sourceId": "super_buu_base/034.png",
-   "canonicalId": "super_buu_base.effect.aura.aura_power.01.034",
+   "canonicalId": "super_buu_base.effect.orbs_rings_bursts.orbs_rings_bursts.00.034",
    "characterId": "super_buu",
    "formId": "super_buu_base",
    "assetType": "effect",
    "view": "FIELD",
    "family": "effect",
-   "role": "aura",
-   "variant": "aura_power",
-   "sequenceIndex": 1,
-   "runtimePoses": [
-    "aura_power"
-   ],
-   "evidence": "CANONICAL",
-   "canonStatus": "CANONICAL",
+   "role": "orbs_rings_bursts",
+   "variant": "orbs_rings_bursts",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "majin_buu.png",
     "frame": "034.png",
     "x": "305",
     "y": "844"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: orbs_rings_bursts"
   },
   {
-   "_manifestName": "super_buu_base_aura_power_02",
    "sourceId": "super_buu_base/035.png",
-   "canonicalId": "super_buu_base.effect.aura.aura_power.02.035",
+   "canonicalId": "super_buu_base.effect.orbs_rings_bursts.orbs_rings_bursts.00.035",
    "characterId": "super_buu",
    "formId": "super_buu_base",
    "assetType": "effect",
    "view": "FIELD",
    "family": "effect",
-   "role": "aura",
-   "variant": "aura_power",
-   "sequenceIndex": 2,
-   "runtimePoses": [
-    "aura_power"
-   ],
-   "evidence": "CANONICAL",
-   "canonStatus": "CANONICAL",
+   "role": "orbs_rings_bursts",
+   "variant": "orbs_rings_bursts",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "majin_buu.png",
     "frame": "035.png",
     "x": "379",
     "y": "844"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: orbs_rings_bursts"
   },
   {
    "sourceId": "super_buu_base/036.png",
@@ -946,54 +877,50 @@
    "note": "multi_evidence \u2192 orbs_rings_bursts"
   },
   {
-   "_manifestName": "super_buu_base_beam_charge_01",
    "sourceId": "super_buu_base/039.png",
-   "canonicalId": "super_buu_base.beam.charge_start.charge.01.039",
+   "canonicalId": "super_buu_base.movement.move_or_attack.move_or_attack.00.039",
    "characterId": "super_buu",
    "formId": "super_buu_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "beam",
-   "role": "charge_start",
-   "variant": "charge",
-   "sequenceIndex": 1,
-   "runtimePoses": [
-    "beam_charge"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "majin_buu.png",
     "frame": "039.png",
     "x": "92",
     "y": "988"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "super_buu_base_beam_charge_02",
    "sourceId": "super_buu_base/040.png",
-   "canonicalId": "super_buu_base.beam.charge_start.charge.02.040",
+   "canonicalId": "super_buu_base.movement.move_or_attack.move_or_attack.00.040",
    "characterId": "super_buu",
    "formId": "super_buu_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "beam",
-   "role": "charge_start",
-   "variant": "charge",
-   "sequenceIndex": 2,
-   "runtimePoses": [
-    "beam_charge"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "majin_buu.png",
     "frame": "040.png",
     "x": "218",
     "y": "986"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
    "sourceId": "super_buu_base/041.png",
@@ -1088,230 +1015,211 @@
    "note": "multi_evidence \u2192 projectiles_beams"
   },
   {
-   "_manifestName": "super_buu_base_beam_charge_06",
    "sourceId": "super_buu_base/045.png",
-   "canonicalId": "super_buu_base.beam.charge_hold.charge.06.045",
+   "canonicalId": "super_buu_base.movement.move_or_attack.move_or_attack.00.045",
    "characterId": "super_buu",
    "formId": "super_buu_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "beam",
-   "role": "charge_hold",
-   "variant": "charge",
-   "sequenceIndex": 6,
-   "runtimePoses": [
-    "beam_charge"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "majin_buu.png",
     "frame": "045.png",
     "x": "217",
     "y": "1077"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "super_buu_base_beam_charge_07",
    "sourceId": "super_buu_base/046.png",
-   "canonicalId": "super_buu_base.beam.charge_hold.charge.07.046",
+   "canonicalId": "super_buu_base.movement.move_or_attack.move_or_attack.00.046",
    "characterId": "super_buu",
    "formId": "super_buu_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "beam",
-   "role": "charge_hold",
-   "variant": "charge",
-   "sequenceIndex": 7,
-   "runtimePoses": [
-    "beam_charge"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "majin_buu.png",
     "frame": "046.png",
     "x": "258",
     "y": "1077"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "super_buu_base_aura_support_00",
    "sourceId": "super_buu_base/047.png",
-   "canonicalId": "super_buu_base.effect.aura.aura_support.00.047",
+   "canonicalId": "super_buu_base.unclassified.047",
    "characterId": "super_buu",
    "formId": "super_buu_base",
-   "assetType": "effect",
+   "assetType": "unclassified",
    "view": "FIELD",
-   "family": "effect",
-   "role": "aura",
-   "variant": "aura_support",
+   "family": "unclassified",
+   "role": "unclassified",
+   "variant": "",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "aura_support"
-   ],
-   "evidence": "CANONICAL",
-   "canonStatus": "CANONICAL",
+   "runtimePoses": [],
+   "evidence": "UNKNOWN",
+   "canonStatus": "UNCLASSIFIED",
    "source": {
     "sheet": "",
     "frame": "047.png",
     "x": null,
     "y": null
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "sin evidencia runtime ni bucket"
   },
   {
-   "_manifestName": "super_buu_base_aura_support_01",
    "sourceId": "super_buu_base/048.png",
-   "canonicalId": "super_buu_base.effect.aura.aura_support.01.048",
+   "canonicalId": "super_buu_base.unclassified.048",
    "characterId": "super_buu",
    "formId": "super_buu_base",
-   "assetType": "effect",
+   "assetType": "unclassified",
    "view": "FIELD",
-   "family": "effect",
-   "role": "aura",
-   "variant": "aura_support",
-   "sequenceIndex": 1,
-   "runtimePoses": [
-    "aura_support"
-   ],
-   "evidence": "CANONICAL",
-   "canonStatus": "CANONICAL",
+   "family": "unclassified",
+   "role": "unclassified",
+   "variant": "",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "UNKNOWN",
+   "canonStatus": "UNCLASSIFIED",
    "source": {
     "sheet": "",
     "frame": "048.png",
     "x": null,
     "y": null
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "sin evidencia runtime ni bucket"
   },
   {
-   "_manifestName": "super_buu_base_aura_support_02",
    "sourceId": "super_buu_base/049.png",
-   "canonicalId": "super_buu_base.effect.aura.aura_support.02.049",
+   "canonicalId": "super_buu_base.unclassified.049",
    "characterId": "super_buu",
    "formId": "super_buu_base",
-   "assetType": "effect",
+   "assetType": "unclassified",
    "view": "FIELD",
-   "family": "effect",
-   "role": "aura",
-   "variant": "aura_support",
-   "sequenceIndex": 2,
-   "runtimePoses": [
-    "aura_support"
-   ],
-   "evidence": "CANONICAL",
-   "canonStatus": "CANONICAL",
+   "family": "unclassified",
+   "role": "unclassified",
+   "variant": "",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "UNKNOWN",
+   "canonStatus": "UNCLASSIFIED",
    "source": {
     "sheet": "",
     "frame": "049.png",
     "x": null,
     "y": null
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "sin evidencia runtime ni bucket"
   },
   {
-   "_manifestName": "super_buu_base_attack_fwd_03",
    "sourceId": "super_buu_base/000_attack_fwd.png",
-   "canonicalId": "super_buu_base.melee.strike.punch_left.01.000_attack_fwd.png",
+   "canonicalId": "super_buu_base.melee.attack_forward.attack_forward.00.000_attack_fwd",
    "characterId": "super_buu",
    "formId": "super_buu_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "strike",
-   "variant": "punch_left",
-   "sequenceIndex": 1,
-   "runtimePoses": [
-    "attack_fwd",
-    "punch_left"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "role": "attack_forward",
+   "variant": "attack_forward",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "",
     "frame": "000_attack_fwd.png",
     "x": null,
     "y": null
    },
-   "frameKind": "fixed_only"
+   "frameKind": "fixed_only",
+   "note": "nombre de archivo del sheet (fwd)"
   },
   {
-   "_manifestName": "super_buu_base_beam_charge_03",
    "sourceId": "super_buu_base/001_beam_charge.png",
-   "canonicalId": "super_buu_base.beam.charge_start.charge.03.001_beam_charge",
+   "canonicalId": "super_buu_base.beam.charge.charge.01.001_beam_charge",
    "characterId": "super_buu",
    "formId": "super_buu_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "beam",
-   "role": "charge_start",
+   "role": "charge",
    "variant": "charge",
-   "sequenceIndex": 3,
-   "runtimePoses": [
-    "beam_charge"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "sequenceIndex": 1,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "",
     "frame": "001_beam_charge.png",
     "x": null,
     "y": null
    },
-   "frameKind": "fixed_only"
+   "frameKind": "fixed_only",
+   "note": "nombre de archivo del sheet (charge)"
   },
   {
-   "_manifestName": "super_buu_base_beam_charge_04",
    "sourceId": "super_buu_base/002_beam_charge.png",
-   "canonicalId": "super_buu_base.beam.charge_hold.charge.04.002_beam_charge",
+   "canonicalId": "super_buu_base.beam.charge.charge.02.002_beam_charge",
    "characterId": "super_buu",
    "formId": "super_buu_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "beam",
-   "role": "charge_hold",
+   "role": "charge",
    "variant": "charge",
-   "sequenceIndex": 4,
-   "runtimePoses": [
-    "beam_charge"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "sequenceIndex": 2,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "",
     "frame": "002_beam_charge.png",
     "x": null,
     "y": null
    },
-   "frameKind": "fixed_only"
+   "frameKind": "fixed_only",
+   "note": "nombre de archivo del sheet (charge)"
   },
   {
-   "_manifestName": "super_buu_base_beam_charge_05",
    "sourceId": "super_buu_base/003_beam_charge.png",
-   "canonicalId": "super_buu_base.beam.charge_hold.charge.05.003_beam_charge",
+   "canonicalId": "super_buu_base.beam.charge.charge.03.003_beam_charge",
    "characterId": "super_buu",
    "formId": "super_buu_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "beam",
-   "role": "charge_hold",
+   "role": "charge",
    "variant": "charge",
-   "sequenceIndex": 5,
-   "runtimePoses": [
-    "beam_charge"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "sequenceIndex": 3,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "",
     "frame": "003_beam_charge.png",
     "x": null,
     "y": null
    },
-   "frameKind": "fixed_only"
+   "frameKind": "fixed_only",
+   "note": "nombre de archivo del sheet (charge)"
   },
   {
    "sourceId": "super_buu_base/004_hurt.png",

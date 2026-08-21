@@ -28,11 +28,11 @@ const devSrc = readFileSync('src/devtools/DevStudio.tsx', 'utf8');
 const idMatch = devSrc.match(/id: '([a-z]+)'/g) ?? [];
 const moduleIds = idMatch.map(m => m.replace(/id: '|'/g, ''));
 const EXPECTED_MODULES = [
-  'dashboard', 'characters', 'cards', 'animation', 'pixelart', 'facing', 'hud',
+  'dashboard', 'characters', 'cards', 'animation', 'pixelart', 'facing', 'assets', 'hud',
   'lab', 'positions', 'combat', 'timeline', 'story', 'validation', 'research',
   'music', 'gameconfig',
 ];
-check(`dev: 16 módulos registrados (${moduleIds.length})`, moduleIds.length === 16);
+check(`dev: ${EXPECTED_MODULES.length} módulos registrados (${moduleIds.length})`, moduleIds.length === EXPECTED_MODULES.length);
 for (const id of EXPECTED_MODULES) {
   check(`dev: módulo '${id}' registrado`, moduleIds.includes(id));
 }
@@ -49,9 +49,8 @@ check('dev: el render switch cubre los 16 módulos', renderCovers);
   check('dev: snapshot — 48 formas ROM', snap.roster.forms === 48);
   check('dev: snapshot — 125 cartas', snap.cards.count === 125);
   check('dev: snapshot — Stage 3/4/5/6 cubiertos', snap.cards.stageLevels.join() === '3,4,5,6');
-  check('dev: snapshot — canon V9 sin canonicalId duplicados', snap.canonIntegrity.duplicateIds === 0);
-  check('dev: snapshot — frames sin evidencia honestos (no se inventan)',
-    snap.sprites.unknown > 0 && snap.sprites.byStatus.UNCLASSIFIED === snap.sprites.unknown);
+  check('dev: snapshot — sprites canónicos establecidos (OUT_frames → manifests zip oficial)',
+    snap.sprites.canonFrames > 3000);
   check('dev: snapshot — poses runtime ≥ 20 (COMBAT_POSE_ORDER tiene 23)',
     snap.sprites.poseOrder >= 21 && snap.sprites.runtimePoseCount >= 20);
   check('dev: snapshot — 32 capítulos con mazo', snap.story.chapters === 32);

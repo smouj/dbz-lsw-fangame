@@ -3,85 +3,73 @@
  "frameCount": 62,
  "frames": [
   {
-   "_manifestName": "gohan_super_saiyan_1_2_idle_00",
    "sourceId": "gohan_super_saiyan_1_2/001.png",
-   "canonicalId": "gohan_super_saiyan_1_2.idle.idle.idle.00.001",
+   "canonicalId": "gohan_super_saiyan_1_2.movement.move_or_attack.move_or_attack.00.001",
    "characterId": "gohan_super_saiyan_1",
    "formId": "gohan_super_saiyan_1_2",
    "assetType": "actor_frame",
    "view": "FIELD",
-   "family": "idle",
-   "role": "idle",
-   "variant": "idle",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "idle",
-    "guard",
-    "punch_right",
-    "punch_left",
-    "beam_guard"
-   ],
-   "evidence": "CANONICAL",
-   "canonStatus": "CANONICAL",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "gohan.png",
     "frame": "001.png",
     "x": "20",
     "y": "1950"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "gohan_super_saiyan_1_2_guard_01",
    "sourceId": "gohan_super_saiyan_1_2/002.png",
-   "canonicalId": "gohan_super_saiyan_1_2.defense.hold.guard.01.002",
+   "canonicalId": "gohan_super_saiyan_1_2.movement.move_or_attack.move_or_attack.00.002",
    "characterId": "gohan_super_saiyan_1",
    "formId": "gohan_super_saiyan_1_2",
    "assetType": "actor_frame",
    "view": "FIELD",
-   "family": "defense",
-   "role": "hold",
-   "variant": "guard",
-   "sequenceIndex": 1,
-   "runtimePoses": [
-    "guard",
-    "beam_guard"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "gohan.png",
     "frame": "002.png",
     "x": "62",
     "y": "1950"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "gohan_super_saiyan_1_2_guard_02",
    "sourceId": "gohan_super_saiyan_1_2/003.png",
-   "canonicalId": "gohan_super_saiyan_1_2.defense.recover.guard.02.003",
+   "canonicalId": "gohan_super_saiyan_1_2.movement.move_or_attack.move_or_attack.00.003",
    "characterId": "gohan_super_saiyan_1",
    "formId": "gohan_super_saiyan_1_2",
    "assetType": "actor_frame",
    "view": "FIELD",
-   "family": "defense",
-   "role": "recover",
-   "variant": "guard",
-   "sequenceIndex": 2,
-   "runtimePoses": [
-    "guard",
-    "beam_guard"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "gohan.png",
     "frame": "003.png",
     "x": "100",
     "y": "1950"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
    "sourceId": "gohan_super_saiyan_1_2/004.png",
@@ -107,257 +95,234 @@
    "note": "bucket forense: idle_or_stance"
   },
   {
-   "_manifestName": "gohan_super_saiyan_1_2_evade_01",
    "sourceId": "gohan_super_saiyan_1_2/005.png",
-   "canonicalId": "gohan_super_saiyan_1_2.defense.recover.evade.01.005",
+   "canonicalId": "gohan_super_saiyan_1_2.effect.misc.misc.00.005",
    "characterId": "gohan_super_saiyan_1",
    "formId": "gohan_super_saiyan_1_2",
-   "assetType": "actor_frame",
+   "assetType": "effect",
    "view": "FIELD",
-   "family": "defense",
-   "role": "recover",
-   "variant": "evade",
-   "sequenceIndex": 1,
-   "runtimePoses": [
-    "evade"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "family": "effect",
+   "role": "misc",
+   "variant": "misc",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "gohan.png",
     "frame": "005.png",
     "x": "18",
     "y": "2013"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: nonbody_misc"
   },
   {
-   "_manifestName": "gohan_super_saiyan_1_2_evade_00",
    "sourceId": "gohan_super_saiyan_1_2/006.png",
-   "canonicalId": "gohan_super_saiyan_1_2.defense.start.evade.00.006",
+   "canonicalId": "gohan_super_saiyan_1_2.effect.speedlines.speedlines.00.006",
    "characterId": "gohan_super_saiyan_1",
    "formId": "gohan_super_saiyan_1_2",
-   "assetType": "actor_frame",
+   "assetType": "effect",
    "view": "FIELD",
-   "family": "defense",
-   "role": "start",
-   "variant": "evade",
+   "family": "effect",
+   "role": "speedlines",
+   "variant": "speedlines",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "evade"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "gohan.png",
     "frame": "006.png",
     "x": "68",
     "y": "2006"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: speedlines"
   },
   {
-   "_manifestName": "gohan_super_saiyan_1_2_move_front_01",
    "sourceId": "gohan_super_saiyan_1_2/007.png",
-   "canonicalId": "gohan_super_saiyan_1_2.movement.start.move_back.00.007.png",
+   "canonicalId": "gohan_super_saiyan_1_2.movement.move_or_attack.move_or_attack.00.007",
    "characterId": "gohan_super_saiyan_1",
    "formId": "gohan_super_saiyan_1_2",
    "assetType": "actor_frame",
    "view": "FIELD",
    "family": "movement",
-   "role": "start",
-   "variant": "move_back",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "move_front",
-    "move_back"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "gohan.png",
     "frame": "007.png",
     "x": "105",
     "y": "2001"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "gohan_super_saiyan_1_2_move_front_00",
    "sourceId": "gohan_super_saiyan_1_2/008.png",
-   "canonicalId": "gohan_super_saiyan_1_2.movement.start.move_front.00.008",
+   "canonicalId": "gohan_super_saiyan_1_2.movement.move_or_attack.move_or_attack.00.008",
    "characterId": "gohan_super_saiyan_1",
    "formId": "gohan_super_saiyan_1_2",
    "assetType": "actor_frame",
    "view": "FIELD",
    "family": "movement",
-   "role": "start",
-   "variant": "move_front",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "move_front",
-    "move_back"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "gohan.png",
     "frame": "008.png",
     "x": "151",
     "y": "2005"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "gohan_super_saiyan_1_2_hurt_00",
    "sourceId": "gohan_super_saiyan_1_2/009.png",
-   "canonicalId": "gohan_super_saiyan_1_2.reaction.hurt_light.hurt.00.009",
+   "canonicalId": "gohan_super_saiyan_1_2.movement.move_or_attack.move_or_attack.00.009",
    "characterId": "gohan_super_saiyan_1",
    "formId": "gohan_super_saiyan_1_2",
    "assetType": "actor_frame",
    "view": "FIELD",
-   "family": "reaction",
-   "role": "hurt_light",
-   "variant": "hurt",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "hurt"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "gohan.png",
     "frame": "009.png",
     "x": "25",
     "y": "2055"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "gohan_super_saiyan_1_2_hurt_01",
    "sourceId": "gohan_super_saiyan_1_2/010.png",
-   "canonicalId": "gohan_super_saiyan_1_2.reaction.hurt_heavy.hurt.01.010",
+   "canonicalId": "gohan_super_saiyan_1_2.movement.move_or_attack.move_or_attack.00.010",
    "characterId": "gohan_super_saiyan_1",
    "formId": "gohan_super_saiyan_1_2",
    "assetType": "actor_frame",
    "view": "FIELD",
-   "family": "reaction",
-   "role": "hurt_heavy",
-   "variant": "hurt",
-   "sequenceIndex": 1,
-   "runtimePoses": [
-    "hurt"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "gohan.png",
     "frame": "010.png",
     "x": "61",
     "y": "2058"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "gohan_super_saiyan_1_2_hurt_02",
    "sourceId": "gohan_super_saiyan_1_2/011.png",
-   "canonicalId": "gohan_super_saiyan_1_2.reaction.hurt_heavy.hurt.02.011",
+   "canonicalId": "gohan_super_saiyan_1_2.movement.move_or_attack.move_or_attack.00.011",
    "characterId": "gohan_super_saiyan_1",
    "formId": "gohan_super_saiyan_1_2",
    "assetType": "actor_frame",
    "view": "FIELD",
-   "family": "reaction",
-   "role": "hurt_heavy",
-   "variant": "hurt",
-   "sequenceIndex": 2,
-   "runtimePoses": [
-    "hurt"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "gohan.png",
     "frame": "011.png",
     "x": "102",
     "y": "2064"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "gohan_super_saiyan_1_2_hurt_03",
    "sourceId": "gohan_super_saiyan_1_2/012.png",
-   "canonicalId": "gohan_super_saiyan_1_2.reaction.hurt_heavy.hurt.03.012",
+   "canonicalId": "gohan_super_saiyan_1_2.movement.move_or_attack.move_or_attack.00.012",
    "characterId": "gohan_super_saiyan_1",
    "formId": "gohan_super_saiyan_1_2",
    "assetType": "actor_frame",
    "view": "FIELD",
-   "family": "reaction",
-   "role": "hurt_heavy",
-   "variant": "hurt",
-   "sequenceIndex": 3,
-   "runtimePoses": [
-    "hurt"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "gohan.png",
     "frame": "012.png",
     "x": "145",
     "y": "2052"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "gohan_super_saiyan_1_2_hurt_04",
    "sourceId": "gohan_super_saiyan_1_2/013.png",
-   "canonicalId": "gohan_super_saiyan_1_2.reaction.hurt_heavy.hurt.04.013",
+   "canonicalId": "gohan_super_saiyan_1_2.movement.move_or_attack.move_or_attack.00.013",
    "characterId": "gohan_super_saiyan_1",
    "formId": "gohan_super_saiyan_1_2",
    "assetType": "actor_frame",
    "view": "FIELD",
-   "family": "reaction",
-   "role": "hurt_heavy",
-   "variant": "hurt",
-   "sequenceIndex": 4,
-   "runtimePoses": [
-    "hurt"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "gohan.png",
     "frame": "013.png",
     "x": "181",
     "y": "2054"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "gohan_super_saiyan_1_2_attack_fwd_05",
    "sourceId": "gohan_super_saiyan_1_2/014.png",
-   "canonicalId": "gohan_super_saiyan_1_2.melee.strike.punch_left.03.014.png",
+   "canonicalId": "gohan_super_saiyan_1_2.idle.stance.stance.00.014",
    "characterId": "gohan_super_saiyan_1",
    "formId": "gohan_super_saiyan_1_2",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "strike",
-   "variant": "punch_left",
-   "sequenceIndex": 3,
-   "runtimePoses": [
-    "attack_fwd",
-    "punch_left"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "view": "FIELD",
+   "family": "idle",
+   "role": "stance",
+   "variant": "stance",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "gohan.png",
     "frame": "014.png",
     "x": "221",
     "y": "2052"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: idle_or_stance"
   },
   {
    "sourceId": "gohan_super_saiyan_1_2/015.png",
@@ -383,265 +348,234 @@
    "note": "bucket forense: downed_or_hurt"
   },
   {
-   "_manifestName": "gohan_super_saiyan_1_2_knockback_up_00",
    "sourceId": "gohan_super_saiyan_1_2/016.png",
-   "canonicalId": "gohan_super_saiyan_1_2.power.power_up.power_up.00.016.png",
+   "canonicalId": "gohan_super_saiyan_1_2.movement.move_or_attack.move_or_attack.00.016",
    "characterId": "gohan_super_saiyan_1",
    "formId": "gohan_super_saiyan_1_2",
-   "assetType": "composite",
+   "assetType": "actor_frame",
    "view": "FIELD",
-   "family": "power",
-   "role": "power_up",
-   "variant": "power_up",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "knockback_up",
-    "gather_power",
-    "power_up"
-   ],
-   "evidence": "CANONICAL",
-   "canonStatus": "CANONICAL",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "gohan.png",
     "frame": "016.png",
     "x": "27",
     "y": "2109"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "gohan_super_saiyan_1_2_attack_fwd_02",
    "sourceId": "gohan_super_saiyan_1_2/017.png",
-   "canonicalId": "gohan_super_saiyan_1_2.melee.travel.attack_forward.02.017",
+   "canonicalId": "gohan_super_saiyan_1_2.movement.move_or_attack.move_or_attack.00.017",
    "characterId": "gohan_super_saiyan_1",
    "formId": "gohan_super_saiyan_1_2",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "travel",
-   "variant": "attack_forward",
-   "sequenceIndex": 2,
-   "runtimePoses": [
-    "attack_fwd",
-    "punch_right"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "gohan.png",
     "frame": "017.png",
     "x": "64",
     "y": "2106"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "gohan_super_saiyan_1_2_attack_fwd_06",
    "sourceId": "gohan_super_saiyan_1_2/018.png",
-   "canonicalId": "gohan_super_saiyan_1_2.melee.strike.punch_left.04.018.png",
+   "canonicalId": "gohan_super_saiyan_1_2.movement.move_or_attack.move_or_attack.00.018",
    "characterId": "gohan_super_saiyan_1",
    "formId": "gohan_super_saiyan_1_2",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "strike",
-   "variant": "punch_left",
-   "sequenceIndex": 4,
-   "runtimePoses": [
-    "attack_fwd",
-    "punch_left"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "gohan.png",
     "frame": "018.png",
     "x": "106",
     "y": "2103"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "gohan_super_saiyan_1_2_knockback_back_00",
    "sourceId": "gohan_super_saiyan_1_2/019.png",
-   "canonicalId": "gohan_super_saiyan_1_2.reaction.knockback_back.back.00.019",
+   "canonicalId": "gohan_super_saiyan_1_2.movement.move_or_attack.move_or_attack.00.019",
    "characterId": "gohan_super_saiyan_1",
    "formId": "gohan_super_saiyan_1_2",
    "assetType": "actor_frame",
    "view": "FIELD",
-   "family": "reaction",
-   "role": "knockback_back",
-   "variant": "back",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "knockback_back"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "gohan.png",
     "frame": "019.png",
     "x": "151",
     "y": "2109"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "gohan_super_saiyan_1_2_attack_ud_01",
    "sourceId": "gohan_super_saiyan_1_2/020.png",
-   "canonicalId": "gohan_super_saiyan_1_2.melee.windup.attack_vertical.01.020",
+   "canonicalId": "gohan_super_saiyan_1_2.movement.move_or_attack.move_or_attack.00.020",
    "characterId": "gohan_super_saiyan_1",
    "formId": "gohan_super_saiyan_1_2",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "windup",
-   "variant": "attack_vertical",
-   "sequenceIndex": 1,
-   "runtimePoses": [
-    "attack_ud"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "gohan.png",
     "frame": "020.png",
     "x": "199",
     "y": "2107"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "gohan_super_saiyan_1_2_attack_ud_02",
    "sourceId": "gohan_super_saiyan_1_2/021.png",
-   "canonicalId": "gohan_super_saiyan_1_2.melee.contact.attack_vertical.02.021",
+   "canonicalId": "gohan_super_saiyan_1_2.idle.stance.stance.00.021",
    "characterId": "gohan_super_saiyan_1",
    "formId": "gohan_super_saiyan_1_2",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "contact",
-   "variant": "attack_vertical",
-   "sequenceIndex": 2,
-   "runtimePoses": [
-    "attack_ud"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "view": "FIELD",
+   "family": "idle",
+   "role": "stance",
+   "variant": "stance",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "gohan.png",
     "frame": "021.png",
     "x": "235",
     "y": "2105"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: idle_or_stance"
   },
   {
-   "_manifestName": "gohan_super_saiyan_1_2_attack_ud_03",
    "sourceId": "gohan_super_saiyan_1_2/022.png",
-   "canonicalId": "gohan_super_saiyan_1_2.reaction.knockback_down.down.00.022.png",
+   "canonicalId": "gohan_super_saiyan_1_2.movement.move_or_attack.move_or_attack.00.022",
    "characterId": "gohan_super_saiyan_1",
    "formId": "gohan_super_saiyan_1_2",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "reaction",
-   "role": "knockback_down",
-   "variant": "down",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "attack_ud",
-    "knockback_down"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "gohan.png",
     "frame": "022.png",
     "x": "270",
     "y": "2117"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "gohan_super_saiyan_1_2_knockback_up_00",
    "sourceId": "gohan_super_saiyan_1_2/023.png",
-   "canonicalId": "gohan_super_saiyan_1_2.power.power_up.power_up.00.023.png",
+   "canonicalId": "gohan_super_saiyan_1_2.movement.move_or_attack.move_or_attack.00.023",
    "characterId": "gohan_super_saiyan_1",
    "formId": "gohan_super_saiyan_1_2",
-   "assetType": "composite",
+   "assetType": "actor_frame",
    "view": "FIELD",
-   "family": "power",
-   "role": "power_up",
-   "variant": "power_up",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "knockback_up",
-    "gather_power",
-    "power_up"
-   ],
-   "evidence": "CANONICAL",
-   "canonStatus": "CANONICAL",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "gohan.png",
     "frame": "023.png",
     "x": "34",
     "y": "2158"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "gohan_super_saiyan_1_2_attack_fwd_00",
    "sourceId": "gohan_super_saiyan_1_2/024.png",
-   "canonicalId": "gohan_super_saiyan_1_2.melee.strike.kick_right.00.024.png",
+   "canonicalId": "gohan_super_saiyan_1_2.movement.move_or_attack.move_or_attack.00.024",
    "characterId": "gohan_super_saiyan_1",
    "formId": "gohan_super_saiyan_1_2",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "strike",
-   "variant": "kick_right",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "attack_fwd",
-    "punch_right",
-    "kick_right"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "gohan.png",
     "frame": "024.png",
     "x": "76",
     "y": "2159"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "gohan_super_saiyan_1_2_attack_fwd_04",
    "sourceId": "gohan_super_saiyan_1_2/025.png",
-   "canonicalId": "gohan_super_saiyan_1_2.melee.strike.kick_right.01.025.png",
+   "canonicalId": "gohan_super_saiyan_1_2.movement.move_or_attack.move_or_attack.00.025",
    "characterId": "gohan_super_saiyan_1",
    "formId": "gohan_super_saiyan_1_2",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "strike",
-   "variant": "kick_right",
-   "sequenceIndex": 1,
-   "runtimePoses": [
-    "attack_fwd",
-    "punch_left",
-    "kick_right"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "gohan.png",
     "frame": "025.png",
     "x": "119",
     "y": "2160"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
    "sourceId": "gohan_super_saiyan_1_2/026.png",
@@ -805,104 +739,96 @@
    "note": "bucket forense: projectiles_beams"
   },
   {
-   "_manifestName": "gohan_super_saiyan_1_2_aura_power_00",
    "sourceId": "gohan_super_saiyan_1_2/033.png",
-   "canonicalId": "gohan_super_saiyan_1_2.effect.aura.aura_power.00.033",
+   "canonicalId": "gohan_super_saiyan_1_2.effect.orbs_rings_bursts.orbs_rings_bursts.00.033",
    "characterId": "gohan_super_saiyan_1",
    "formId": "gohan_super_saiyan_1_2",
    "assetType": "effect",
    "view": "FIELD",
    "family": "effect",
-   "role": "aura",
-   "variant": "aura_power",
+   "role": "orbs_rings_bursts",
+   "variant": "orbs_rings_bursts",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "aura_power"
-   ],
-   "evidence": "CANONICAL",
-   "canonStatus": "CANONICAL",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "gohan.png",
     "frame": "033.png",
     "x": "228",
     "y": "2206"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: orbs_rings_bursts"
   },
   {
-   "_manifestName": "gohan_super_saiyan_1_2_aura_power_01",
    "sourceId": "gohan_super_saiyan_1_2/034.png",
-   "canonicalId": "gohan_super_saiyan_1_2.effect.aura.aura_power.01.034",
+   "canonicalId": "gohan_super_saiyan_1_2.effect.orbs_rings_bursts.orbs_rings_bursts.00.034",
    "characterId": "gohan_super_saiyan_1",
    "formId": "gohan_super_saiyan_1_2",
    "assetType": "effect",
    "view": "FIELD",
    "family": "effect",
-   "role": "aura",
-   "variant": "aura_power",
-   "sequenceIndex": 1,
-   "runtimePoses": [
-    "aura_power"
-   ],
-   "evidence": "CANONICAL",
-   "canonStatus": "CANONICAL",
+   "role": "orbs_rings_bursts",
+   "variant": "orbs_rings_bursts",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "gohan.png",
     "frame": "034.png",
     "x": "299",
     "y": "2206"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: orbs_rings_bursts"
   },
   {
-   "_manifestName": "gohan_super_saiyan_1_2_aura_power_02",
    "sourceId": "gohan_super_saiyan_1_2/035.png",
-   "canonicalId": "gohan_super_saiyan_1_2.effect.aura.aura_power.02.035",
+   "canonicalId": "gohan_super_saiyan_1_2.effect.orbs_rings_bursts.orbs_rings_bursts.00.035",
    "characterId": "gohan_super_saiyan_1",
    "formId": "gohan_super_saiyan_1_2",
    "assetType": "effect",
    "view": "FIELD",
    "family": "effect",
-   "role": "aura",
-   "variant": "aura_power",
-   "sequenceIndex": 2,
-   "runtimePoses": [
-    "aura_power"
-   ],
-   "evidence": "CANONICAL",
-   "canonStatus": "CANONICAL",
+   "role": "orbs_rings_bursts",
+   "variant": "orbs_rings_bursts",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "gohan.png",
     "frame": "035.png",
     "x": "368",
     "y": "2206"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: orbs_rings_bursts"
   },
   {
-   "_manifestName": "gohan_super_saiyan_1_2_beam_charge_02",
    "sourceId": "gohan_super_saiyan_1_2/036.png",
-   "canonicalId": "gohan_super_saiyan_1_2.beam.charge_start.charge.02.036",
+   "canonicalId": "gohan_super_saiyan_1_2.movement.move_or_attack.move_or_attack.00.036",
    "characterId": "gohan_super_saiyan_1",
    "formId": "gohan_super_saiyan_1_2",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "beam",
-   "role": "charge_start",
-   "variant": "charge",
-   "sequenceIndex": 2,
-   "runtimePoses": [
-    "beam_charge"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "gohan.png",
     "frame": "036.png",
     "x": "26",
     "y": "2299"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
    "sourceId": "gohan_super_saiyan_1_2/037.png",
@@ -1066,56 +992,50 @@
    "note": "bucket forense: character_plus_aura_or_burst"
   },
   {
-   "_manifestName": "gohan_super_saiyan_1_2_gather_power_03",
    "sourceId": "gohan_super_saiyan_1_2/044.png",
-   "canonicalId": "gohan_super_saiyan_1_2.power.gather_power.gather_power.03.044",
+   "canonicalId": "gohan_super_saiyan_1_2.composite.character_effect.character_effect.00.044",
    "characterId": "gohan_super_saiyan_1",
    "formId": "gohan_super_saiyan_1_2",
    "assetType": "composite",
-   "view": "ACTION_DUEL",
-   "family": "power",
-   "role": "gather_power",
-   "variant": "gather_power",
-   "sequenceIndex": 3,
-   "runtimePoses": [
-    "gather_power",
-    "power_up"
-   ],
-   "evidence": "CANONICAL",
-   "canonStatus": "CANONICAL",
+   "view": "FIELD",
+   "family": "composite",
+   "role": "character_effect",
+   "variant": "character_effect",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "gohan.png",
     "frame": "044.png",
     "x": "31",
     "y": "2448"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: character_plus_effect"
   },
   {
-   "_manifestName": "gohan_super_saiyan_1_2_gather_power_01",
    "sourceId": "gohan_super_saiyan_1_2/045.png",
-   "canonicalId": "gohan_super_saiyan_1_2.power.gather_power.gather_power.01.045",
+   "canonicalId": "gohan_super_saiyan_1_2.composite.character_effect.character_effect.00.045",
    "characterId": "gohan_super_saiyan_1",
    "formId": "gohan_super_saiyan_1_2",
    "assetType": "composite",
-   "view": "ACTION_DUEL",
-   "family": "power",
-   "role": "gather_power",
-   "variant": "gather_power",
-   "sequenceIndex": 1,
-   "runtimePoses": [
-    "gather_power",
-    "power_up"
-   ],
-   "evidence": "CANONICAL",
-   "canonStatus": "CANONICAL",
+   "view": "FIELD",
+   "family": "composite",
+   "role": "character_effect",
+   "variant": "character_effect",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "gohan.png",
     "frame": "045.png",
     "x": "73",
     "y": "2447"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: character_plus_effect"
   },
   {
    "sourceId": "gohan_super_saiyan_1_2/046.png",
@@ -1141,30 +1061,27 @@
    "note": "bucket forense: nonbody_misc"
   },
   {
-   "_manifestName": "gohan_super_saiyan_1_2_gather_power_02",
    "sourceId": "gohan_super_saiyan_1_2/047.png",
-   "canonicalId": "gohan_super_saiyan_1_2.power.gather_power.gather_power.02.047",
+   "canonicalId": "gohan_super_saiyan_1_2.composite.character_effect.character_effect.00.047",
    "characterId": "gohan_super_saiyan_1",
    "formId": "gohan_super_saiyan_1_2",
    "assetType": "composite",
-   "view": "ACTION_DUEL",
-   "family": "power",
-   "role": "gather_power",
-   "variant": "gather_power",
-   "sequenceIndex": 2,
-   "runtimePoses": [
-    "gather_power",
-    "power_up"
-   ],
-   "evidence": "CANONICAL",
-   "canonStatus": "CANONICAL",
+   "view": "FIELD",
+   "family": "composite",
+   "role": "character_effect",
+   "variant": "character_effect",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "gohan.png",
     "frame": "047.png",
     "x": "163",
     "y": "2444"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: character_plus_effect"
   },
   {
    "sourceId": "gohan_super_saiyan_1_2/048.png",
@@ -1213,281 +1130,257 @@
    "note": "bucket forense: character_plus_aura_or_burst"
   },
   {
-   "_manifestName": "gohan_super_saiyan_1_2_aura_support_00",
    "sourceId": "gohan_super_saiyan_1_2/050.png",
-   "canonicalId": "gohan_super_saiyan_1_2.effect.aura.aura_support.00.050",
+   "canonicalId": "gohan_super_saiyan_1_2.unclassified.050",
    "characterId": "gohan_super_saiyan_1",
    "formId": "gohan_super_saiyan_1_2",
-   "assetType": "effect",
+   "assetType": "unclassified",
    "view": "FIELD",
-   "family": "effect",
-   "role": "aura",
-   "variant": "aura_support",
+   "family": "unclassified",
+   "role": "unclassified",
+   "variant": "",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "aura_support"
-   ],
-   "evidence": "CANONICAL",
-   "canonStatus": "CANONICAL",
+   "runtimePoses": [],
+   "evidence": "UNKNOWN",
+   "canonStatus": "UNCLASSIFIED",
    "source": {
     "sheet": "",
     "frame": "050.png",
     "x": null,
     "y": null
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "sin evidencia runtime ni bucket"
   },
   {
-   "_manifestName": "gohan_super_saiyan_1_2_aura_support_01",
    "sourceId": "gohan_super_saiyan_1_2/051.png",
-   "canonicalId": "gohan_super_saiyan_1_2.effect.aura.aura_support.01.051",
+   "canonicalId": "gohan_super_saiyan_1_2.unclassified.051",
    "characterId": "gohan_super_saiyan_1",
    "formId": "gohan_super_saiyan_1_2",
-   "assetType": "effect",
+   "assetType": "unclassified",
    "view": "FIELD",
-   "family": "effect",
-   "role": "aura",
-   "variant": "aura_support",
-   "sequenceIndex": 1,
-   "runtimePoses": [
-    "aura_support"
-   ],
-   "evidence": "CANONICAL",
-   "canonStatus": "CANONICAL",
+   "family": "unclassified",
+   "role": "unclassified",
+   "variant": "",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "UNKNOWN",
+   "canonStatus": "UNCLASSIFIED",
    "source": {
     "sheet": "",
     "frame": "051.png",
     "x": null,
     "y": null
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "sin evidencia runtime ni bucket"
   },
   {
-   "_manifestName": "gohan_super_saiyan_1_2_aura_support_02",
    "sourceId": "gohan_super_saiyan_1_2/052.png",
-   "canonicalId": "gohan_super_saiyan_1_2.effect.aura.aura_support.02.052",
+   "canonicalId": "gohan_super_saiyan_1_2.unclassified.052",
    "characterId": "gohan_super_saiyan_1",
    "formId": "gohan_super_saiyan_1_2",
-   "assetType": "effect",
+   "assetType": "unclassified",
    "view": "FIELD",
-   "family": "effect",
-   "role": "aura",
-   "variant": "aura_support",
-   "sequenceIndex": 2,
-   "runtimePoses": [
-    "aura_support"
-   ],
-   "evidence": "CANONICAL",
-   "canonStatus": "CANONICAL",
+   "family": "unclassified",
+   "role": "unclassified",
+   "variant": "",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "UNKNOWN",
+   "canonStatus": "UNCLASSIFIED",
    "source": {
     "sheet": "",
     "frame": "052.png",
     "x": null,
     "y": null
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "sin evidencia runtime ni bucket"
   },
   {
-   "_manifestName": "gohan_super_saiyan_1_2_attack_fwd_01",
    "sourceId": "gohan_super_saiyan_1_2/000_attack_fwd.png",
-   "canonicalId": "gohan_super_saiyan_1_2.melee.windup.attack_forward.01.000_attack_fwd",
+   "canonicalId": "gohan_super_saiyan_1_2.melee.attack_forward.attack_forward.00.000_attack_fwd",
    "characterId": "gohan_super_saiyan_1",
    "formId": "gohan_super_saiyan_1_2",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "windup",
+   "role": "attack_forward",
    "variant": "attack_forward",
-   "sequenceIndex": 1,
-   "runtimePoses": [
-    "attack_fwd",
-    "punch_right"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "",
     "frame": "000_attack_fwd.png",
     "x": null,
     "y": null
    },
-   "frameKind": "fixed_only"
+   "frameKind": "fixed_only",
+   "note": "nombre de archivo del sheet (fwd)"
   },
   {
-   "_manifestName": "gohan_super_saiyan_1_2_attack_fwd_03",
    "sourceId": "gohan_super_saiyan_1_2/001_attack_fwd.png",
-   "canonicalId": "gohan_super_saiyan_1_2.melee.strike.punch_left.01.001_attack_fwd.png",
+   "canonicalId": "gohan_super_saiyan_1_2.melee.attack_forward.attack_forward.01.001_attack_fwd",
    "characterId": "gohan_super_saiyan_1",
    "formId": "gohan_super_saiyan_1_2",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "strike",
-   "variant": "punch_left",
+   "role": "attack_forward",
+   "variant": "attack_forward",
    "sequenceIndex": 1,
-   "runtimePoses": [
-    "attack_fwd",
-    "punch_left"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "",
     "frame": "001_attack_fwd.png",
     "x": null,
     "y": null
    },
-   "frameKind": "fixed_only"
+   "frameKind": "fixed_only",
+   "note": "nombre de archivo del sheet (fwd)"
   },
   {
-   "_manifestName": "gohan_super_saiyan_1_2_attack_ud_00",
    "sourceId": "gohan_super_saiyan_1_2/002_attack_ud.png",
-   "canonicalId": "gohan_super_saiyan_1_2.melee.ready.attack_vertical.00.002_attack_ud",
+   "canonicalId": "gohan_super_saiyan_1_2.melee.attack_vertical.attack_vertical.02.002_attack_ud",
    "characterId": "gohan_super_saiyan_1",
    "formId": "gohan_super_saiyan_1_2",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "ready",
+   "role": "attack_vertical",
    "variant": "attack_vertical",
-   "sequenceIndex": 0,
-   "runtimePoses": [
-    "attack_ud"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "sequenceIndex": 2,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "",
     "frame": "002_attack_ud.png",
     "x": null,
     "y": null
    },
-   "frameKind": "fixed_only"
+   "frameKind": "fixed_only",
+   "note": "nombre de archivo del sheet (ud)"
   },
   {
-   "_manifestName": "gohan_super_saiyan_1_2_beam_charge_00",
    "sourceId": "gohan_super_saiyan_1_2/003_beam_charge.png",
-   "canonicalId": "gohan_super_saiyan_1_2.beam.charge_start.charge.00.003_beam_charge",
+   "canonicalId": "gohan_super_saiyan_1_2.beam.charge.charge.03.003_beam_charge",
    "characterId": "gohan_super_saiyan_1",
    "formId": "gohan_super_saiyan_1_2",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "beam",
-   "role": "charge_start",
+   "role": "charge",
    "variant": "charge",
-   "sequenceIndex": 0,
-   "runtimePoses": [
-    "beam_charge"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "sequenceIndex": 3,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "",
     "frame": "003_beam_charge.png",
     "x": null,
     "y": null
    },
-   "frameKind": "fixed_only"
+   "frameKind": "fixed_only",
+   "note": "nombre de archivo del sheet (charge)"
   },
   {
-   "_manifestName": "gohan_super_saiyan_1_2_beam_charge_01",
    "sourceId": "gohan_super_saiyan_1_2/004_beam_charge.png",
-   "canonicalId": "gohan_super_saiyan_1_2.beam.charge_start.charge.01.004_beam_charge",
+   "canonicalId": "gohan_super_saiyan_1_2.beam.charge.charge.04.004_beam_charge",
    "characterId": "gohan_super_saiyan_1",
    "formId": "gohan_super_saiyan_1_2",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "beam",
-   "role": "charge_start",
+   "role": "charge",
    "variant": "charge",
-   "sequenceIndex": 1,
-   "runtimePoses": [
-    "beam_charge"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "sequenceIndex": 4,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "",
     "frame": "004_beam_charge.png",
     "x": null,
     "y": null
    },
-   "frameKind": "fixed_only"
+   "frameKind": "fixed_only",
+   "note": "nombre de archivo del sheet (charge)"
   },
   {
-   "_manifestName": "gohan_super_saiyan_1_2_beam_charge_03",
    "sourceId": "gohan_super_saiyan_1_2/005_beam_charge.png",
-   "canonicalId": "gohan_super_saiyan_1_2.beam.charge_hold.charge.03.005_beam_charge",
+   "canonicalId": "gohan_super_saiyan_1_2.beam.charge.charge.05.005_beam_charge",
    "characterId": "gohan_super_saiyan_1",
    "formId": "gohan_super_saiyan_1_2",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "beam",
-   "role": "charge_hold",
+   "role": "charge",
    "variant": "charge",
-   "sequenceIndex": 3,
-   "runtimePoses": [
-    "beam_charge"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "sequenceIndex": 5,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "",
     "frame": "005_beam_charge.png",
     "x": null,
     "y": null
    },
-   "frameKind": "fixed_only"
+   "frameKind": "fixed_only",
+   "note": "nombre de archivo del sheet (charge)"
   },
   {
-   "_manifestName": "gohan_super_saiyan_1_2_beam_charge_04",
    "sourceId": "gohan_super_saiyan_1_2/006_beam_charge.png",
-   "canonicalId": "gohan_super_saiyan_1_2.beam.charge_hold.charge.04.006_beam_charge",
+   "canonicalId": "gohan_super_saiyan_1_2.beam.charge.charge.06.006_beam_charge",
    "characterId": "gohan_super_saiyan_1",
    "formId": "gohan_super_saiyan_1_2",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "beam",
-   "role": "charge_hold",
+   "role": "charge",
    "variant": "charge",
-   "sequenceIndex": 4,
-   "runtimePoses": [
-    "beam_charge"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "sequenceIndex": 6,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "",
     "frame": "006_beam_charge.png",
     "x": null,
     "y": null
    },
-   "frameKind": "fixed_only"
+   "frameKind": "fixed_only",
+   "note": "nombre de archivo del sheet (charge)"
   },
   {
-   "_manifestName": "gohan_super_saiyan_1_2_beam_charge_05",
    "sourceId": "gohan_super_saiyan_1_2/007_beam_charge.png",
-   "canonicalId": "gohan_super_saiyan_1_2.beam.charge_hold.charge.05.007_beam_charge",
+   "canonicalId": "gohan_super_saiyan_1_2.beam.charge.charge.07.007_beam_charge",
    "characterId": "gohan_super_saiyan_1",
    "formId": "gohan_super_saiyan_1_2",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "beam",
-   "role": "charge_hold",
+   "role": "charge",
    "variant": "charge",
-   "sequenceIndex": 5,
-   "runtimePoses": [
-    "beam_charge"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "sequenceIndex": 7,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "",
     "frame": "007_beam_charge.png",
     "x": null,
     "y": null
    },
-   "frameKind": "fixed_only"
+   "frameKind": "fixed_only",
+   "note": "nombre de archivo del sheet (charge)"
   },
   {
    "sourceId": "gohan_super_saiyan_1_2/008_hurt.png",

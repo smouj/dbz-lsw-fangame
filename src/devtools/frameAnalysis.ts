@@ -185,13 +185,31 @@ export function useSheetAnalysis(formId: string, dir: string | undefined): Sheet
 }
 
 /** Agrupa los frames por pose (semántica) en orden canónico. */
-export function groupFramesByPose(frames: FrameAnalysis[], dir: string | undefined) {
+/** Agrupa los frames por pose REAL del manifest (usos declarados), no por
+ * el nombre del archivo: un frame compartido (p. ej. idle_00 usado también
+ * en guard/beam_guard) aparece en TODAS las poses que lo declaran. Esto
+ * refleja el runtime — antes solo aparecía en la pose de su nombre. */
+export function groupFramesByPose(frames: FrameAnalysis[], dir: string | undefined, usages?: Record<string, FrameUsage[]>) {
   const byPose = new Map<string, FrameAnalysis[]>();
-  for (const f of frames) {
-    const { pose } = parseFrameName(f.file, dir ?? '');
-    const arr = byPose.get(pose) ?? [];
-    arr.push(f);
-    byPose.set(pose, arr);
+  if (usages) {
+    // Por usos reales: cada pose del manifest con sus frames (compartidos incluidos)
+    for (const [file, uses] of Object.entries(usages)) {
+      const f = frames.find(x => x.file === file);
+      if (!f) continue;
+      const poses = [...new Set(uses.map(u => u.pose))];
+      for (const pose of poses) {
+        const arr = byPose.get(pose) ?? [];
+        arr.push(f);
+        byPose.set(pose, arr);
+      }
+    }
+  } else {
+    for (const f of frames) {
+      const { pose } = parseFrameName(f.file, dir ?? '');
+      const arr = byPose.get(pose) ?? [];
+      arr.push(f);
+      byPose.set(pose, arr);
+    }
   }
   const order = [...POSE_ORDER, ...Array.from(byPose.keys()).filter(p => !(POSE_ORDER as readonly string[]).includes(p))];
   return order.filter(p => byPose.has(p)).map(p => ({ pose: p, sem: poseSemantics(p), frames: byPose.get(p)! }));

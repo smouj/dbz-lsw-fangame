@@ -3,85 +3,73 @@
  "frameCount": 51,
  "frames": [
   {
-   "_manifestName": "guldo_base_idle_00",
    "sourceId": "guldo_base/001.png",
-   "canonicalId": "guldo_base.idle.idle.idle.00.001",
+   "canonicalId": "guldo_base.idle.stance.stance.00.001",
    "characterId": "guldo",
    "formId": "guldo_base",
    "assetType": "actor_frame",
    "view": "FIELD",
    "family": "idle",
-   "role": "idle",
-   "variant": "idle",
+   "role": "stance",
+   "variant": "stance",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "idle",
-    "guard",
-    "punch_right",
-    "punch_left",
-    "beam_guard"
-   ],
-   "evidence": "CANONICAL",
-   "canonStatus": "CANONICAL",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "guldo.png",
     "frame": "001.png",
     "x": "9",
     "y": "7"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: idle_or_stance"
   },
   {
-   "_manifestName": "guldo_base_guard_01",
    "sourceId": "guldo_base/002.png",
-   "canonicalId": "guldo_base.defense.hold.guard.01.002",
+   "canonicalId": "guldo_base.movement.move_or_attack.move_or_attack.00.002",
    "characterId": "guldo",
    "formId": "guldo_base",
    "assetType": "actor_frame",
    "view": "FIELD",
-   "family": "defense",
-   "role": "hold",
-   "variant": "guard",
-   "sequenceIndex": 1,
-   "runtimePoses": [
-    "guard",
-    "beam_guard"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "guldo.png",
     "frame": "002.png",
     "x": "40",
     "y": "7"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "guldo_base_guard_02",
    "sourceId": "guldo_base/003.png",
-   "canonicalId": "guldo_base.defense.recover.guard.02.003",
+   "canonicalId": "guldo_base.movement.move_or_attack.move_or_attack.00.003",
    "characterId": "guldo",
    "formId": "guldo_base",
    "assetType": "actor_frame",
    "view": "FIELD",
-   "family": "defense",
-   "role": "recover",
-   "variant": "guard",
-   "sequenceIndex": 2,
-   "runtimePoses": [
-    "guard",
-    "beam_guard"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "guldo.png",
     "frame": "003.png",
     "x": "83",
     "y": "8"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
    "sourceId": "guldo_base/004.png",
@@ -199,257 +187,234 @@
    "note": "bucket forense: battle_aura_actor_composite"
   },
   {
-   "_manifestName": "guldo_base_evade_01",
    "sourceId": "guldo_base/009.png",
-   "canonicalId": "guldo_base.defense.recover.evade.01.009",
+   "canonicalId": "guldo_base.effect.misc.misc.00.009",
    "characterId": "guldo",
    "formId": "guldo_base",
-   "assetType": "actor_frame",
+   "assetType": "effect",
    "view": "FIELD",
-   "family": "defense",
-   "role": "recover",
-   "variant": "evade",
-   "sequenceIndex": 1,
-   "runtimePoses": [
-    "evade"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "family": "effect",
+   "role": "misc",
+   "variant": "misc",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "guldo.png",
     "frame": "009.png",
     "x": "2",
     "y": "58"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: nonbody_misc"
   },
   {
-   "_manifestName": "guldo_base_evade_00",
    "sourceId": "guldo_base/010.png",
-   "canonicalId": "guldo_base.defense.start.evade.00.010",
+   "canonicalId": "guldo_base.effect.speedlines.speedlines.00.010",
    "characterId": "guldo",
    "formId": "guldo_base",
-   "assetType": "actor_frame",
+   "assetType": "effect",
    "view": "FIELD",
-   "family": "defense",
-   "role": "start",
-   "variant": "evade",
+   "family": "effect",
+   "role": "speedlines",
+   "variant": "speedlines",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "evade"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "guldo.png",
     "frame": "010.png",
     "x": "53",
     "y": "48"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: speedlines"
   },
   {
-   "_manifestName": "guldo_base_move_front_01",
    "sourceId": "guldo_base/011.png",
-   "canonicalId": "guldo_base.movement.start.move_back.00.011.png",
+   "canonicalId": "guldo_base.movement.move_or_attack.move_or_attack.00.011",
    "characterId": "guldo",
    "formId": "guldo_base",
    "assetType": "actor_frame",
    "view": "FIELD",
    "family": "movement",
-   "role": "start",
-   "variant": "move_back",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "move_front",
-    "move_back"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "guldo.png",
     "frame": "011.png",
     "x": "84",
     "y": "58"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "guldo_base_move_front_00",
    "sourceId": "guldo_base/012.png",
-   "canonicalId": "guldo_base.movement.start.move_front.00.012",
+   "canonicalId": "guldo_base.movement.move_or_attack.move_or_attack.00.012",
    "characterId": "guldo",
    "formId": "guldo_base",
    "assetType": "actor_frame",
    "view": "FIELD",
    "family": "movement",
-   "role": "start",
-   "variant": "move_front",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "move_front",
-    "move_back"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "guldo.png",
     "frame": "012.png",
     "x": "116",
     "y": "61"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "guldo_base_hurt_00",
    "sourceId": "guldo_base/013.png",
-   "canonicalId": "guldo_base.reaction.hurt_light.hurt.00.013",
+   "canonicalId": "guldo_base.movement.move_or_attack.move_or_attack.00.013",
    "characterId": "guldo",
    "formId": "guldo_base",
    "assetType": "actor_frame",
    "view": "FIELD",
-   "family": "reaction",
-   "role": "hurt_light",
-   "variant": "hurt",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "hurt"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "guldo.png",
     "frame": "013.png",
     "x": "10",
     "y": "111"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "guldo_base_hurt_01",
    "sourceId": "guldo_base/014.png",
-   "canonicalId": "guldo_base.reaction.hurt_heavy.hurt.01.014",
+   "canonicalId": "guldo_base.idle.stance.stance.00.014",
    "characterId": "guldo",
    "formId": "guldo_base",
    "assetType": "actor_frame",
    "view": "FIELD",
-   "family": "reaction",
-   "role": "hurt_heavy",
-   "variant": "hurt",
-   "sequenceIndex": 1,
-   "runtimePoses": [
-    "hurt"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "family": "idle",
+   "role": "stance",
+   "variant": "stance",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "guldo.png",
     "frame": "014.png",
     "x": "45",
     "y": "111"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: idle_or_stance"
   },
   {
-   "_manifestName": "guldo_base_hurt_02",
    "sourceId": "guldo_base/015.png",
-   "canonicalId": "guldo_base.reaction.hurt_heavy.hurt.02.015",
+   "canonicalId": "guldo_base.movement.move_or_attack.move_or_attack.00.015",
    "characterId": "guldo",
    "formId": "guldo_base",
    "assetType": "actor_frame",
    "view": "FIELD",
-   "family": "reaction",
-   "role": "hurt_heavy",
-   "variant": "hurt",
-   "sequenceIndex": 2,
-   "runtimePoses": [
-    "hurt"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "guldo.png",
     "frame": "015.png",
     "x": "78",
     "y": "120"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "guldo_base_hurt_03",
    "sourceId": "guldo_base/016.png",
-   "canonicalId": "guldo_base.reaction.hurt_heavy.hurt.03.016",
+   "canonicalId": "guldo_base.movement.move_or_attack.move_or_attack.00.016",
    "characterId": "guldo",
    "formId": "guldo_base",
    "assetType": "actor_frame",
    "view": "FIELD",
-   "family": "reaction",
-   "role": "hurt_heavy",
-   "variant": "hurt",
-   "sequenceIndex": 3,
-   "runtimePoses": [
-    "hurt"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "guldo.png",
     "frame": "016.png",
     "x": "116",
     "y": "105"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "guldo_base_hurt_04",
    "sourceId": "guldo_base/017.png",
-   "canonicalId": "guldo_base.reaction.hurt_heavy.hurt.04.017",
+   "canonicalId": "guldo_base.movement.move_or_attack.move_or_attack.00.017",
    "characterId": "guldo",
    "formId": "guldo_base",
    "assetType": "actor_frame",
    "view": "FIELD",
-   "family": "reaction",
-   "role": "hurt_heavy",
-   "variant": "hurt",
-   "sequenceIndex": 4,
-   "runtimePoses": [
-    "hurt"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "guldo.png",
     "frame": "017.png",
     "x": "154",
     "y": "108"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "guldo_base_attack_fwd_06",
    "sourceId": "guldo_base/018.png",
-   "canonicalId": "guldo_base.melee.strike.punch_left.04.018.png",
+   "canonicalId": "guldo_base.idle.stance.stance.00.018",
    "characterId": "guldo",
    "formId": "guldo_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "strike",
-   "variant": "punch_left",
-   "sequenceIndex": 4,
-   "runtimePoses": [
-    "attack_fwd",
-    "punch_left"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "view": "FIELD",
+   "family": "idle",
+   "role": "stance",
+   "variant": "stance",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "guldo.png",
     "frame": "018.png",
     "x": "190",
     "y": "109"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: idle_or_stance"
   },
   {
    "sourceId": "guldo_base/019.png",
@@ -475,391 +440,349 @@
    "note": "bucket forense: beam_or_projectile_horizontal"
   },
   {
-   "_manifestName": "guldo_base_attack_fwd_02",
    "sourceId": "guldo_base/020.png",
-   "canonicalId": "guldo_base.melee.travel.attack_forward.02.020",
+   "canonicalId": "guldo_base.movement.move_or_attack.move_or_attack.00.020",
    "characterId": "guldo",
    "formId": "guldo_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "travel",
-   "variant": "attack_forward",
-   "sequenceIndex": 2,
-   "runtimePoses": [
-    "attack_fwd",
-    "punch_right"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "guldo.png",
     "frame": "020.png",
     "x": "7",
     "y": "164"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "guldo_base_attack_fwd_03",
    "sourceId": "guldo_base/021.png",
-   "canonicalId": "guldo_base.reaction.knockback_up.up.00.021.png",
+   "canonicalId": "guldo_base.movement.move_or_attack.move_or_attack.00.021",
    "characterId": "guldo",
    "formId": "guldo_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "reaction",
-   "role": "knockback_up",
-   "variant": "up",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "attack_fwd",
-    "punch_left",
-    "knockback_up"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "guldo.png",
     "frame": "021.png",
     "x": "42",
     "y": "164"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "guldo_base_attack_fwd_07",
    "sourceId": "guldo_base/022.png",
-   "canonicalId": "guldo_base.melee.recover.attack_forward.07.022",
+   "canonicalId": "guldo_base.movement.move_or_attack.move_or_attack.00.022",
    "characterId": "guldo",
    "formId": "guldo_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "recover",
-   "variant": "attack_forward",
-   "sequenceIndex": 7,
-   "runtimePoses": [
-    "attack_fwd"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "guldo.png",
     "frame": "022.png",
     "x": "82",
     "y": "161"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "guldo_base_attack_ud_00",
    "sourceId": "guldo_base/023.png",
-   "canonicalId": "guldo_base.melee.ready.attack_vertical.00.023",
+   "canonicalId": "guldo_base.movement.move_or_attack.move_or_attack.00.023",
    "characterId": "guldo",
    "formId": "guldo_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "ready",
-   "variant": "attack_vertical",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "attack_ud"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "guldo.png",
     "frame": "023.png",
     "x": "114",
     "y": "162"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "guldo_base_attack_ud_01",
    "sourceId": "guldo_base/024.png",
-   "canonicalId": "guldo_base.reaction.knockback_back.back.00.024.png",
+   "canonicalId": "guldo_base.movement.move_or_attack.move_or_attack.00.024",
    "characterId": "guldo",
    "formId": "guldo_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "reaction",
-   "role": "knockback_back",
-   "variant": "back",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "attack_ud",
-    "knockback_back"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "guldo.png",
     "frame": "024.png",
     "x": "147",
     "y": "166"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "guldo_base_attack_ud_02",
    "sourceId": "guldo_base/025.png",
-   "canonicalId": "guldo_base.melee.contact.attack_vertical.02.025",
+   "canonicalId": "guldo_base.idle.stance.stance.00.025",
    "characterId": "guldo",
    "formId": "guldo_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "contact",
-   "variant": "attack_vertical",
-   "sequenceIndex": 2,
-   "runtimePoses": [
-    "attack_ud"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "view": "FIELD",
+   "family": "idle",
+   "role": "stance",
+   "variant": "stance",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "guldo.png",
     "frame": "025.png",
     "x": "181",
     "y": "163"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: idle_or_stance"
   },
   {
-   "_manifestName": "guldo_base_attack_ud_03",
    "sourceId": "guldo_base/026.png",
-   "canonicalId": "guldo_base.reaction.knockback_down.down.00.026.png",
+   "canonicalId": "guldo_base.movement.move_or_attack.move_or_attack.00.026",
    "characterId": "guldo",
    "formId": "guldo_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "reaction",
-   "role": "knockback_down",
-   "variant": "down",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "attack_ud",
-    "knockback_down"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "guldo.png",
     "frame": "026.png",
     "x": "211",
     "y": "173"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "guldo_base_attack_fwd_00",
    "sourceId": "guldo_base/027.png",
-   "canonicalId": "guldo_base.melee.ready.attack_forward.00.027",
+   "canonicalId": "guldo_base.movement.move_or_attack.move_or_attack.00.027",
    "characterId": "guldo",
    "formId": "guldo_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "ready",
-   "variant": "attack_forward",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "attack_fwd",
-    "punch_right"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "guldo.png",
     "frame": "027.png",
     "x": "9",
     "y": "216"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "guldo_base_attack_fwd_01",
    "sourceId": "guldo_base/028.png",
-   "canonicalId": "guldo_base.beam.charge_start.charge.01.028.png",
+   "canonicalId": "guldo_base.movement.move_or_attack.move_or_attack.00.028",
    "characterId": "guldo",
    "formId": "guldo_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "beam",
-   "role": "charge_start",
-   "variant": "charge",
-   "sequenceIndex": 1,
-   "runtimePoses": [
-    "attack_fwd",
-    "beam_charge",
-    "punch_right"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "guldo.png",
     "frame": "028.png",
     "x": "44",
     "y": "216"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "guldo_base_attack_fwd_04",
    "sourceId": "guldo_base/029.png",
-   "canonicalId": "guldo_base.melee.strike.kick_right.00.029.png",
+   "canonicalId": "guldo_base.idle.stance.stance.00.029",
    "characterId": "guldo",
    "formId": "guldo_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "strike",
-   "variant": "kick_right",
+   "view": "FIELD",
+   "family": "idle",
+   "role": "stance",
+   "variant": "stance",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "attack_fwd",
-    "punch_left",
-    "kick_right"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "guldo.png",
     "frame": "029.png",
     "x": "81",
     "y": "218"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: idle_or_stance"
   },
   {
-   "_manifestName": "guldo_base_attack_fwd_05",
    "sourceId": "guldo_base/030.png",
-   "canonicalId": "guldo_base.melee.strike.kick_right.01.030.png",
+   "canonicalId": "guldo_base.movement.move_or_attack.move_or_attack.00.030",
    "characterId": "guldo",
    "formId": "guldo_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "strike",
-   "variant": "kick_right",
-   "sequenceIndex": 1,
-   "runtimePoses": [
-    "attack_fwd",
-    "punch_left",
-    "kick_right"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "guldo.png",
     "frame": "030.png",
     "x": "126",
     "y": "218"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "guldo_base_aura_power_00",
    "sourceId": "guldo_base/031.png",
-   "canonicalId": "guldo_base.effect.aura.aura_power.00.031",
+   "canonicalId": "guldo_base.effect.orbs_rings_bursts.orbs_rings_bursts.00.031",
    "characterId": "guldo",
    "formId": "guldo_base",
    "assetType": "effect",
    "view": "FIELD",
    "family": "effect",
-   "role": "aura",
-   "variant": "aura_power",
+   "role": "orbs_rings_bursts",
+   "variant": "orbs_rings_bursts",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "aura_power"
-   ],
-   "evidence": "CANONICAL",
-   "canonStatus": "CANONICAL",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "guldo.png",
     "frame": "031.png",
     "x": "193",
     "y": "253"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: orbs_rings_bursts"
   },
   {
-   "_manifestName": "guldo_base_aura_power_01",
    "sourceId": "guldo_base/032.png",
-   "canonicalId": "guldo_base.effect.aura.aura_power.01.032",
+   "canonicalId": "guldo_base.effect.orbs_rings_bursts.orbs_rings_bursts.00.032",
    "characterId": "guldo",
    "formId": "guldo_base",
    "assetType": "effect",
    "view": "FIELD",
    "family": "effect",
-   "role": "aura",
-   "variant": "aura_power",
-   "sequenceIndex": 1,
-   "runtimePoses": [
-    "aura_power"
-   ],
-   "evidence": "CANONICAL",
-   "canonStatus": "CANONICAL",
+   "role": "orbs_rings_bursts",
+   "variant": "orbs_rings_bursts",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "guldo.png",
     "frame": "032.png",
     "x": "264",
     "y": "253"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: orbs_rings_bursts"
   },
   {
-   "_manifestName": "guldo_base_aura_power_02",
    "sourceId": "guldo_base/033.png",
-   "canonicalId": "guldo_base.effect.aura.aura_power.02.033",
+   "canonicalId": "guldo_base.effect.orbs_rings_bursts.orbs_rings_bursts.00.033",
    "characterId": "guldo",
    "formId": "guldo_base",
    "assetType": "effect",
    "view": "FIELD",
    "family": "effect",
-   "role": "aura",
-   "variant": "aura_power",
-   "sequenceIndex": 2,
-   "runtimePoses": [
-    "aura_power"
-   ],
-   "evidence": "CANONICAL",
-   "canonStatus": "CANONICAL",
+   "role": "orbs_rings_bursts",
+   "variant": "orbs_rings_bursts",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "guldo.png",
     "frame": "033.png",
     "x": "336",
     "y": "253"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: orbs_rings_bursts"
   },
   {
-   "_manifestName": "guldo_base_beam_charge_00",
    "sourceId": "guldo_base/034.png",
-   "canonicalId": "guldo_base.beam.charge_start.charge.00.034",
+   "canonicalId": "guldo_base.movement.move_or_attack.move_or_attack.00.034",
    "characterId": "guldo",
    "formId": "guldo_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "beam",
-   "role": "charge_start",
-   "variant": "charge",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "beam_charge"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "guldo.png",
     "frame": "034.png",
     "x": "8",
     "y": "275"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
    "sourceId": "guldo_base/035.png",
@@ -908,54 +831,50 @@
    "note": "bucket forense: projectiles_beams"
   },
   {
-   "_manifestName": "guldo_base_beam_charge_02",
    "sourceId": "guldo_base/037.png",
-   "canonicalId": "guldo_base.beam.charge_hold.charge.02.037",
+   "canonicalId": "guldo_base.movement.move_or_attack.move_or_attack.00.037",
    "characterId": "guldo",
    "formId": "guldo_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "beam",
-   "role": "charge_hold",
-   "variant": "charge",
-   "sequenceIndex": 2,
-   "runtimePoses": [
-    "beam_charge"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "guldo.png",
     "frame": "037.png",
     "x": "7",
     "y": "354"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "guldo_base_beam_charge_03",
    "sourceId": "guldo_base/038.png",
-   "canonicalId": "guldo_base.beam.charge_hold.charge.03.038",
+   "canonicalId": "guldo_base.movement.move_or_attack.move_or_attack.00.038",
    "characterId": "guldo",
    "formId": "guldo_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "beam",
-   "role": "charge_hold",
-   "variant": "charge",
-   "sequenceIndex": 3,
-   "runtimePoses": [
-    "beam_charge"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "guldo.png",
     "frame": "038.png",
     "x": "45",
     "y": "354"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
    "sourceId": "guldo_base/039.png",
@@ -981,58 +900,50 @@
    "note": "bucket forense: idle_or_stance"
   },
   {
-   "_manifestName": "guldo_base_beam_fire_00",
    "sourceId": "guldo_base/040.png",
-   "canonicalId": "guldo_base.power.power_up.power_up.01.040.png",
+   "canonicalId": "guldo_base.movement.move_or_attack.move_or_attack.00.040",
    "characterId": "guldo",
    "formId": "guldo_base",
-   "assetType": "composite",
-   "view": "ACTION_DUEL",
-   "family": "power",
-   "role": "power_up",
-   "variant": "power_up",
-   "sequenceIndex": 1,
-   "runtimePoses": [
-    "beam_fire",
-    "gather_power",
-    "power_up"
-   ],
-   "evidence": "CANONICAL",
-   "canonStatus": "CANONICAL",
+   "assetType": "actor_frame",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "guldo.png",
     "frame": "040.png",
     "x": "139",
     "y": "357"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "guldo_base_beam_fire_01",
    "sourceId": "guldo_base/041.png",
-   "canonicalId": "guldo_base.power.power_up.power_up.00.041.png",
+   "canonicalId": "guldo_base.movement.move_or_attack.move_or_attack.00.041",
    "characterId": "guldo",
    "formId": "guldo_base",
-   "assetType": "composite",
-   "view": "ACTION_DUEL",
-   "family": "power",
-   "role": "power_up",
-   "variant": "power_up",
+   "assetType": "actor_frame",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "beam_fire",
-    "gather_power",
-    "power_up"
-   ],
-   "evidence": "CANONICAL",
-   "canonStatus": "CANONICAL",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "guldo.png",
     "frame": "041.png",
     "x": "177",
     "y": "352"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
    "sourceId": "guldo_base/042.png",
@@ -1081,111 +992,100 @@
    "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "guldo_base_aura_support_00",
    "sourceId": "guldo_base/044.png",
-   "canonicalId": "guldo_base.effect.aura.aura_support.00.044",
+   "canonicalId": "guldo_base.unclassified.044",
    "characterId": "guldo",
    "formId": "guldo_base",
-   "assetType": "effect",
+   "assetType": "unclassified",
    "view": "FIELD",
-   "family": "effect",
-   "role": "aura",
-   "variant": "aura_support",
+   "family": "unclassified",
+   "role": "unclassified",
+   "variant": "",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "aura_support"
-   ],
-   "evidence": "CANONICAL",
-   "canonStatus": "CANONICAL",
+   "runtimePoses": [],
+   "evidence": "UNKNOWN",
+   "canonStatus": "UNCLASSIFIED",
    "source": {
     "sheet": "",
     "frame": "044.png",
     "x": null,
     "y": null
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "sin evidencia runtime ni bucket"
   },
   {
-   "_manifestName": "guldo_base_aura_support_01",
    "sourceId": "guldo_base/045.png",
-   "canonicalId": "guldo_base.effect.aura.aura_support.01.045",
+   "canonicalId": "guldo_base.unclassified.045",
    "characterId": "guldo",
    "formId": "guldo_base",
-   "assetType": "effect",
+   "assetType": "unclassified",
    "view": "FIELD",
-   "family": "effect",
-   "role": "aura",
-   "variant": "aura_support",
-   "sequenceIndex": 1,
-   "runtimePoses": [
-    "aura_support"
-   ],
-   "evidence": "CANONICAL",
-   "canonStatus": "CANONICAL",
+   "family": "unclassified",
+   "role": "unclassified",
+   "variant": "",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "UNKNOWN",
+   "canonStatus": "UNCLASSIFIED",
    "source": {
     "sheet": "",
     "frame": "045.png",
     "x": null,
     "y": null
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "sin evidencia runtime ni bucket"
   },
   {
-   "_manifestName": "guldo_base_aura_support_02",
    "sourceId": "guldo_base/046.png",
-   "canonicalId": "guldo_base.effect.aura.aura_support.02.046",
+   "canonicalId": "guldo_base.unclassified.046",
    "characterId": "guldo",
    "formId": "guldo_base",
-   "assetType": "effect",
+   "assetType": "unclassified",
    "view": "FIELD",
-   "family": "effect",
-   "role": "aura",
-   "variant": "aura_support",
-   "sequenceIndex": 2,
-   "runtimePoses": [
-    "aura_support"
-   ],
-   "evidence": "CANONICAL",
-   "canonStatus": "CANONICAL",
+   "family": "unclassified",
+   "role": "unclassified",
+   "variant": "",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "UNKNOWN",
+   "canonStatus": "UNCLASSIFIED",
    "source": {
     "sheet": "",
     "frame": "046.png",
     "x": null,
     "y": null
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "sin evidencia runtime ni bucket"
   },
   {
-   "_manifestName": "guldo_base_attack_fwd_01",
    "sourceId": "guldo_base/000_beam_charge.png",
-   "canonicalId": "guldo_base.beam.charge_start.charge.01.000_beam_charge.png",
+   "canonicalId": "guldo_base.beam.charge.charge.00.000_beam_charge",
    "characterId": "guldo",
    "formId": "guldo_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "beam",
-   "role": "charge_start",
+   "role": "charge",
    "variant": "charge",
-   "sequenceIndex": 1,
-   "runtimePoses": [
-    "attack_fwd",
-    "beam_charge",
-    "punch_right"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "",
     "frame": "000_beam_charge.png",
     "x": null,
     "y": null
    },
-   "frameKind": "fixed_only"
+   "frameKind": "fixed_only",
+   "note": "nombre de archivo del sheet (charge)"
   },
   {
-   "_manifestName": "guldo_base_beam_fire_02",
    "sourceId": "guldo_base/001_beam_fire.png",
-   "canonicalId": "guldo_base.beam.release.fire.02.001_beam_fire",
+   "canonicalId": "guldo_base.beam.release.fire.01.001_beam_fire",
    "characterId": "guldo",
    "formId": "guldo_base",
    "assetType": "actor_frame",
@@ -1193,19 +1093,18 @@
    "family": "beam",
    "role": "release",
    "variant": "fire",
-   "sequenceIndex": 2,
-   "runtimePoses": [
-    "beam_fire"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "sequenceIndex": 1,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "",
     "frame": "001_beam_fire.png",
     "x": null,
     "y": null
    },
-   "frameKind": "fixed_only"
+   "frameKind": "fixed_only",
+   "note": "nombre de archivo del sheet (fire)"
   },
   {
    "sourceId": "guldo_base/002_hurt.png",

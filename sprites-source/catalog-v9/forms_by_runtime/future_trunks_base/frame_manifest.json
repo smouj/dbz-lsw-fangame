@@ -3,86 +3,73 @@
  "frameCount": 54,
  "frames": [
   {
-   "_manifestName": "future_trunks_base_idle_00",
    "sourceId": "future_trunks_base/001.png",
-   "canonicalId": "future_trunks_base.idle.idle.idle.00.001",
+   "canonicalId": "future_trunks_base.movement.move_or_attack.move_or_attack.00.001",
    "characterId": "future_trunks",
    "formId": "future_trunks_base",
    "assetType": "actor_frame",
    "view": "FIELD",
-   "family": "idle",
-   "role": "idle",
-   "variant": "idle",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "idle",
-    "guard",
-    "punch_right",
-    "punch_left",
-    "beam_guard",
-    "evade"
-   ],
-   "evidence": "CANONICAL",
-   "canonStatus": "CANONICAL",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "trunks_future.png",
     "frame": "001.png",
     "x": "13",
     "y": "26"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "future_trunks_base_guard_01",
    "sourceId": "future_trunks_base/002.png",
-   "canonicalId": "future_trunks_base.defense.hold.guard.01.002",
+   "canonicalId": "future_trunks_base.movement.move_or_attack.move_or_attack.00.002",
    "characterId": "future_trunks",
    "formId": "future_trunks_base",
    "assetType": "actor_frame",
    "view": "FIELD",
-   "family": "defense",
-   "role": "hold",
-   "variant": "guard",
-   "sequenceIndex": 1,
-   "runtimePoses": [
-    "guard",
-    "beam_guard"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "trunks_future.png",
     "frame": "002.png",
     "x": "49",
     "y": "25"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "future_trunks_base_guard_02",
    "sourceId": "future_trunks_base/003.png",
-   "canonicalId": "future_trunks_base.defense.recover.guard.02.003",
+   "canonicalId": "future_trunks_base.movement.move_or_attack.move_or_attack.00.003",
    "characterId": "future_trunks",
    "formId": "future_trunks_base",
    "assetType": "actor_frame",
    "view": "FIELD",
-   "family": "defense",
-   "role": "recover",
-   "variant": "guard",
-   "sequenceIndex": 2,
-   "runtimePoses": [
-    "guard",
-    "beam_guard"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "trunks_future.png",
     "frame": "003.png",
     "x": "86",
     "y": "28"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
    "sourceId": "future_trunks_base/004.png",
@@ -154,57 +141,50 @@
    "note": "multi_evidence \u2192 speedlines"
   },
   {
-   "_manifestName": "future_trunks_base_move_front_01",
    "sourceId": "future_trunks_base/007.png",
-   "canonicalId": "future_trunks_base.defense.start.evade.00.007.png",
+   "canonicalId": "future_trunks_base.movement.move_or_attack.move_or_attack.00.007",
    "characterId": "future_trunks",
    "formId": "future_trunks_base",
    "assetType": "actor_frame",
    "view": "FIELD",
-   "family": "defense",
-   "role": "start",
-   "variant": "evade",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "move_front",
-    "move_back",
-    "evade"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "trunks_future.png",
     "frame": "007.png",
     "x": "105",
     "y": "78"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "future_trunks_base_move_front_00",
    "sourceId": "future_trunks_base/008.png",
-   "canonicalId": "future_trunks_base.movement.start.move_front.00.008",
+   "canonicalId": "future_trunks_base.movement.move_or_attack.move_or_attack.00.008",
    "characterId": "future_trunks",
    "formId": "future_trunks_base",
    "assetType": "actor_frame",
    "view": "FIELD",
    "family": "movement",
-   "role": "start",
-   "variant": "move_front",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "move_front",
-    "move_back"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "trunks_future.png",
     "frame": "008.png",
     "x": "146",
     "y": "79"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
    "sourceId": "future_trunks_base/009.png",
@@ -322,341 +302,303 @@
    "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "future_trunks_base_attack_fwd_05",
    "sourceId": "future_trunks_base/014.png",
-   "canonicalId": "future_trunks_base.melee.strike.punch_left.03.014.png",
+   "canonicalId": "future_trunks_base.idle.stance.stance.00.014",
    "characterId": "future_trunks",
    "formId": "future_trunks_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "strike",
-   "variant": "punch_left",
-   "sequenceIndex": 3,
-   "runtimePoses": [
-    "attack_fwd",
-    "punch_left"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "view": "FIELD",
+   "family": "idle",
+   "role": "stance",
+   "variant": "stance",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "trunks_future.png",
     "frame": "014.png",
     "x": "197",
     "y": "129"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: idle_or_stance"
   },
   {
-   "_manifestName": "future_trunks_base_hurt_00",
    "sourceId": "future_trunks_base/015.png",
-   "canonicalId": "future_trunks_base.reaction.hurt_light.hurt.00.015",
+   "canonicalId": "future_trunks_base.reaction.downed.downed.00.015",
    "characterId": "future_trunks",
    "formId": "future_trunks_base",
    "assetType": "actor_frame",
    "view": "FIELD",
    "family": "reaction",
-   "role": "hurt_light",
-   "variant": "hurt",
+   "role": "downed",
+   "variant": "downed",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "hurt"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "trunks_future.png",
     "frame": "015.png",
     "x": "236",
     "y": "148"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: downed_or_hurt"
   },
   {
-   "_manifestName": "future_trunks_base_attack_fwd_02",
    "sourceId": "future_trunks_base/016.png",
-   "canonicalId": "future_trunks_base.melee.travel.attack_forward.02.016",
+   "canonicalId": "future_trunks_base.movement.move_or_attack.move_or_attack.00.016",
    "characterId": "future_trunks",
    "formId": "future_trunks_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "travel",
-   "variant": "attack_forward",
-   "sequenceIndex": 2,
-   "runtimePoses": [
-    "attack_fwd",
-    "punch_right"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "trunks_future.png",
     "frame": "016.png",
     "x": "18",
     "y": "182"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "future_trunks_base_attack_fwd_07",
    "sourceId": "future_trunks_base/017.png",
-   "canonicalId": "future_trunks_base.reaction.knockback_up.up.00.017.png",
+   "canonicalId": "future_trunks_base.movement.move_or_attack.move_or_attack.00.017",
    "characterId": "future_trunks",
    "formId": "future_trunks_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "reaction",
-   "role": "knockback_up",
-   "variant": "up",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "attack_fwd",
-    "knockback_up"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "trunks_future.png",
     "frame": "017.png",
     "x": "52",
     "y": "183"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "future_trunks_base_attack_fwd_06",
    "sourceId": "future_trunks_base/018.png",
-   "canonicalId": "future_trunks_base.reaction.knockback_back.back.00.018.png",
+   "canonicalId": "future_trunks_base.movement.move_or_attack.move_or_attack.00.018",
    "characterId": "future_trunks",
    "formId": "future_trunks_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "reaction",
-   "role": "knockback_back",
-   "variant": "back",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "attack_fwd",
-    "punch_left",
-    "knockback_back"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "trunks_future.png",
     "frame": "018.png",
     "x": "96",
     "y": "184"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "future_trunks_base_attack_ud_00",
    "sourceId": "future_trunks_base/019.png",
-   "canonicalId": "future_trunks_base.melee.ready.attack_vertical.00.019",
+   "canonicalId": "future_trunks_base.movement.move_or_attack.move_or_attack.00.019",
    "characterId": "future_trunks",
    "formId": "future_trunks_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "ready",
-   "variant": "attack_vertical",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "attack_ud"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "trunks_future.png",
     "frame": "019.png",
     "x": "142",
     "y": "181"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "future_trunks_base_attack_ud_01",
    "sourceId": "future_trunks_base/020.png",
-   "canonicalId": "future_trunks_base.melee.windup.attack_vertical.01.020",
+   "canonicalId": "future_trunks_base.movement.move_or_attack.move_or_attack.00.020",
    "characterId": "future_trunks",
    "formId": "future_trunks_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "windup",
-   "variant": "attack_vertical",
-   "sequenceIndex": 1,
-   "runtimePoses": [
-    "attack_ud"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "trunks_future.png",
     "frame": "020.png",
     "x": "187",
     "y": "180"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "future_trunks_base_attack_ud_02",
    "sourceId": "future_trunks_base/021.png",
-   "canonicalId": "future_trunks_base.melee.contact.attack_vertical.02.021",
+   "canonicalId": "future_trunks_base.idle.stance.stance.00.021",
    "characterId": "future_trunks",
    "formId": "future_trunks_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "contact",
-   "variant": "attack_vertical",
-   "sequenceIndex": 2,
-   "runtimePoses": [
-    "attack_ud"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "view": "FIELD",
+   "family": "idle",
+   "role": "stance",
+   "variant": "stance",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "trunks_future.png",
     "frame": "021.png",
     "x": "226",
     "y": "179"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: idle_or_stance"
   },
   {
-   "_manifestName": "future_trunks_base_attack_ud_03",
    "sourceId": "future_trunks_base/022.png",
-   "canonicalId": "future_trunks_base.reaction.knockback_down.down.00.022.png",
+   "canonicalId": "future_trunks_base.movement.move_or_attack.move_or_attack.00.022",
    "characterId": "future_trunks",
    "formId": "future_trunks_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "reaction",
-   "role": "knockback_down",
-   "variant": "down",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "attack_ud",
-    "knockback_down"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "trunks_future.png",
     "frame": "022.png",
     "x": "258",
     "y": "186"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "future_trunks_base_attack_fwd_01",
    "sourceId": "future_trunks_base/023.png",
-   "canonicalId": "future_trunks_base.melee.windup.attack_forward.01.023",
+   "canonicalId": "future_trunks_base.movement.move_or_attack.move_or_attack.00.023",
    "characterId": "future_trunks",
    "formId": "future_trunks_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "windup",
-   "variant": "attack_forward",
-   "sequenceIndex": 1,
-   "runtimePoses": [
-    "attack_fwd",
-    "punch_right"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "trunks_future.png",
     "frame": "023.png",
     "x": "13",
     "y": "237"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "future_trunks_base_attack_fwd_00",
    "sourceId": "future_trunks_base/024.png",
-   "canonicalId": "future_trunks_base.melee.ready.attack_forward.00.024",
+   "canonicalId": "future_trunks_base.movement.move_or_attack.move_or_attack.00.024",
    "characterId": "future_trunks",
    "formId": "future_trunks_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "ready",
-   "variant": "attack_forward",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "attack_fwd",
-    "punch_right"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "trunks_future.png",
     "frame": "024.png",
     "x": "50",
     "y": "237"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "future_trunks_base_attack_fwd_03",
    "sourceId": "future_trunks_base/025.png",
-   "canonicalId": "future_trunks_base.melee.strike.kick_right.01.025.png",
+   "canonicalId": "future_trunks_base.idle.stance.stance.00.025",
    "characterId": "future_trunks",
    "formId": "future_trunks_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "strike",
-   "variant": "kick_right",
-   "sequenceIndex": 1,
-   "runtimePoses": [
-    "attack_fwd",
-    "punch_left",
-    "kick_right"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "view": "FIELD",
+   "family": "idle",
+   "role": "stance",
+   "variant": "stance",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "trunks_future.png",
     "frame": "025.png",
     "x": "93",
     "y": "238"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: idle_or_stance"
   },
   {
-   "_manifestName": "future_trunks_base_attack_fwd_04",
    "sourceId": "future_trunks_base/026.png",
-   "canonicalId": "future_trunks_base.melee.strike.kick_right.00.026.png",
+   "canonicalId": "future_trunks_base.movement.move_or_attack.move_or_attack.00.026",
    "characterId": "future_trunks",
    "formId": "future_trunks_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "strike",
-   "variant": "kick_right",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "attack_fwd",
-    "punch_left",
-    "kick_right"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "trunks_future.png",
     "frame": "026.png",
     "x": "138",
     "y": "237"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
    "sourceId": "future_trunks_base/027.png",
@@ -751,29 +693,27 @@
    "note": "bucket forense: battle_aura_actor_composite"
   },
   {
-   "_manifestName": "future_trunks_base_beam_charge_00",
    "sourceId": "future_trunks_base/031.png",
-   "canonicalId": "future_trunks_base.beam.charge_start.charge.00.031",
+   "canonicalId": "future_trunks_base.movement.move_or_attack.move_or_attack.00.031",
    "characterId": "future_trunks",
    "formId": "future_trunks_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "beam",
-   "role": "charge_start",
-   "variant": "charge",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "beam_charge"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "trunks_future.png",
     "frame": "031.png",
     "x": "16",
     "y": "296"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
    "sourceId": "future_trunks_base/032.png",
@@ -799,79 +739,73 @@
    "note": "bucket forense: projectiles_beams"
   },
   {
-   "_manifestName": "future_trunks_base_aura_power_00",
    "sourceId": "future_trunks_base/033.png",
-   "canonicalId": "future_trunks_base.effect.aura.aura_power.00.033",
+   "canonicalId": "future_trunks_base.effect.orbs_rings_bursts.orbs_rings_bursts.00.033",
    "characterId": "future_trunks",
    "formId": "future_trunks_base",
    "assetType": "effect",
    "view": "FIELD",
    "family": "effect",
-   "role": "aura",
-   "variant": "aura_power",
+   "role": "orbs_rings_bursts",
+   "variant": "orbs_rings_bursts",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "aura_power"
-   ],
-   "evidence": "CANONICAL",
-   "canonStatus": "CANONICAL",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "trunks_future.png",
     "frame": "033.png",
     "x": "239",
     "y": "278"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: orbs_rings_bursts"
   },
   {
-   "_manifestName": "future_trunks_base_aura_power_01",
    "sourceId": "future_trunks_base/034.png",
-   "canonicalId": "future_trunks_base.effect.aura.aura_power.01.034",
+   "canonicalId": "future_trunks_base.effect.orbs_rings_bursts.orbs_rings_bursts.00.034",
    "characterId": "future_trunks",
    "formId": "future_trunks_base",
    "assetType": "effect",
    "view": "FIELD",
    "family": "effect",
-   "role": "aura",
-   "variant": "aura_power",
-   "sequenceIndex": 1,
-   "runtimePoses": [
-    "aura_power"
-   ],
-   "evidence": "CANONICAL",
-   "canonStatus": "CANONICAL",
+   "role": "orbs_rings_bursts",
+   "variant": "orbs_rings_bursts",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "trunks_future.png",
     "frame": "034.png",
     "x": "309",
     "y": "277"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: orbs_rings_bursts"
   },
   {
-   "_manifestName": "future_trunks_base_aura_power_02",
    "sourceId": "future_trunks_base/035.png",
-   "canonicalId": "future_trunks_base.effect.aura.aura_power.02.035",
+   "canonicalId": "future_trunks_base.effect.orbs_rings_bursts.orbs_rings_bursts.00.035",
    "characterId": "future_trunks",
    "formId": "future_trunks_base",
    "assetType": "effect",
    "view": "FIELD",
    "family": "effect",
-   "role": "aura",
-   "variant": "aura_power",
-   "sequenceIndex": 2,
-   "runtimePoses": [
-    "aura_power"
-   ],
-   "evidence": "CANONICAL",
-   "canonStatus": "CANONICAL",
+   "role": "orbs_rings_bursts",
+   "variant": "orbs_rings_bursts",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "trunks_future.png",
     "frame": "035.png",
     "x": "380",
     "y": "276"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: orbs_rings_bursts"
   },
   {
    "sourceId": "future_trunks_base/036.png",
@@ -920,108 +854,96 @@
    "note": "bucket forense: projectile_orb_small"
   },
   {
-   "_manifestName": "future_trunks_base_beam_fire_00",
    "sourceId": "future_trunks_base/038.png",
-   "canonicalId": "future_trunks_base.power.power_up.power_up.01.038.png",
+   "canonicalId": "future_trunks_base.movement.move_or_attack.move_or_attack.00.038",
    "characterId": "future_trunks",
    "formId": "future_trunks_base",
-   "assetType": "composite",
-   "view": "ACTION_DUEL",
-   "family": "power",
-   "role": "power_up",
-   "variant": "power_up",
-   "sequenceIndex": 1,
-   "runtimePoses": [
-    "beam_fire",
-    "gather_power",
-    "power_up"
-   ],
-   "evidence": "CANONICAL",
-   "canonStatus": "CANONICAL",
+   "assetType": "actor_frame",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "trunks_future.png",
     "frame": "038.png",
     "x": "17",
     "y": "368"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "future_trunks_base_beam_fire_01",
    "sourceId": "future_trunks_base/039.png",
-   "canonicalId": "future_trunks_base.beam.release.fire.01.039",
+   "canonicalId": "future_trunks_base.idle.stance.stance.00.039",
    "characterId": "future_trunks",
    "formId": "future_trunks_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "beam",
-   "role": "release",
-   "variant": "fire",
-   "sequenceIndex": 1,
-   "runtimePoses": [
-    "beam_fire"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "view": "FIELD",
+   "family": "idle",
+   "role": "stance",
+   "variant": "stance",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "trunks_future.png",
     "frame": "039.png",
     "x": "50",
     "y": "368"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: idle_or_stance"
   },
   {
-   "_manifestName": "future_trunks_base_beam_fire_02",
    "sourceId": "future_trunks_base/040.png",
-   "canonicalId": "future_trunks_base.power.power_up.power_up.00.040.png",
+   "canonicalId": "future_trunks_base.movement.move_or_attack.move_or_attack.00.040",
    "characterId": "future_trunks",
    "formId": "future_trunks_base",
-   "assetType": "composite",
-   "view": "ACTION_DUEL",
-   "family": "power",
-   "role": "power_up",
-   "variant": "power_up",
+   "assetType": "actor_frame",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "beam_fire",
-    "gather_power",
-    "power_up"
-   ],
-   "evidence": "CANONICAL",
-   "canonStatus": "CANONICAL",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "trunks_future.png",
     "frame": "040.png",
     "x": "79",
     "y": "368"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "future_trunks_base_beam_fire_03",
    "sourceId": "future_trunks_base/041.png",
-   "canonicalId": "future_trunks_base.beam.release.fire.03.041",
+   "canonicalId": "future_trunks_base.movement.move_or_attack.move_or_attack.00.041",
    "characterId": "future_trunks",
    "formId": "future_trunks_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "beam",
-   "role": "release",
-   "variant": "fire",
-   "sequenceIndex": 3,
-   "runtimePoses": [
-    "beam_fire"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "trunks_future.png",
     "frame": "041.png",
     "x": "108",
     "y": "370"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
    "sourceId": "future_trunks_base/042.png",
@@ -1070,29 +992,27 @@
    "note": "bucket forense: character_plus_aura_or_burst"
   },
   {
-   "_manifestName": "future_trunks_base_beam_charge_02",
    "sourceId": "future_trunks_base/044.png",
-   "canonicalId": "future_trunks_base.beam.charge_hold.charge.02.044",
+   "canonicalId": "future_trunks_base.movement.move_or_attack.move_or_attack.00.044",
    "characterId": "future_trunks",
    "formId": "future_trunks_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "beam",
-   "role": "charge_hold",
-   "variant": "charge",
-   "sequenceIndex": 2,
-   "runtimePoses": [
-    "beam_charge"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "trunks_future.png",
     "frame": "044.png",
     "x": "18",
     "y": "428"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
    "sourceId": "future_trunks_base/045.png",
@@ -1141,129 +1061,119 @@
    "note": "bucket forense: source_reference_unresolved"
   },
   {
-   "_manifestName": "future_trunks_base_aura_support_00",
    "sourceId": "future_trunks_base/047.png",
-   "canonicalId": "future_trunks_base.effect.aura.aura_support.00.047",
+   "canonicalId": "future_trunks_base.unclassified.047",
    "characterId": "future_trunks",
    "formId": "future_trunks_base",
-   "assetType": "effect",
+   "assetType": "unclassified",
    "view": "FIELD",
-   "family": "effect",
-   "role": "aura",
-   "variant": "aura_support",
+   "family": "unclassified",
+   "role": "unclassified",
+   "variant": "",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "aura_support"
-   ],
-   "evidence": "CANONICAL",
-   "canonStatus": "CANONICAL",
+   "runtimePoses": [],
+   "evidence": "UNKNOWN",
+   "canonStatus": "UNCLASSIFIED",
    "source": {
     "sheet": "",
     "frame": "047.png",
     "x": null,
     "y": null
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "sin evidencia runtime ni bucket"
   },
   {
-   "_manifestName": "future_trunks_base_aura_support_01",
    "sourceId": "future_trunks_base/048.png",
-   "canonicalId": "future_trunks_base.effect.aura.aura_support.01.048",
+   "canonicalId": "future_trunks_base.unclassified.048",
    "characterId": "future_trunks",
    "formId": "future_trunks_base",
-   "assetType": "effect",
+   "assetType": "unclassified",
    "view": "FIELD",
-   "family": "effect",
-   "role": "aura",
-   "variant": "aura_support",
-   "sequenceIndex": 1,
-   "runtimePoses": [
-    "aura_support"
-   ],
-   "evidence": "CANONICAL",
-   "canonStatus": "CANONICAL",
+   "family": "unclassified",
+   "role": "unclassified",
+   "variant": "",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "UNKNOWN",
+   "canonStatus": "UNCLASSIFIED",
    "source": {
     "sheet": "",
     "frame": "048.png",
     "x": null,
     "y": null
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "sin evidencia runtime ni bucket"
   },
   {
-   "_manifestName": "future_trunks_base_aura_support_02",
    "sourceId": "future_trunks_base/049.png",
-   "canonicalId": "future_trunks_base.effect.aura.aura_support.02.049",
+   "canonicalId": "future_trunks_base.unclassified.049",
    "characterId": "future_trunks",
    "formId": "future_trunks_base",
-   "assetType": "effect",
+   "assetType": "unclassified",
    "view": "FIELD",
-   "family": "effect",
-   "role": "aura",
-   "variant": "aura_support",
-   "sequenceIndex": 2,
-   "runtimePoses": [
-    "aura_support"
-   ],
-   "evidence": "CANONICAL",
-   "canonStatus": "CANONICAL",
+   "family": "unclassified",
+   "role": "unclassified",
+   "variant": "",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "UNKNOWN",
+   "canonStatus": "UNCLASSIFIED",
    "source": {
     "sheet": "",
     "frame": "049.png",
     "x": null,
     "y": null
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "sin evidencia runtime ni bucket"
   },
   {
-   "_manifestName": "future_trunks_base_beam_charge_01",
    "sourceId": "future_trunks_base/000_beam_charge.png",
-   "canonicalId": "future_trunks_base.beam.charge_start.charge.01.000_beam_charge",
+   "canonicalId": "future_trunks_base.beam.charge.charge.00.000_beam_charge",
    "characterId": "future_trunks",
    "formId": "future_trunks_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "beam",
-   "role": "charge_start",
+   "role": "charge",
    "variant": "charge",
-   "sequenceIndex": 1,
-   "runtimePoses": [
-    "beam_charge"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "",
     "frame": "000_beam_charge.png",
     "x": null,
     "y": null
    },
-   "frameKind": "fixed_only"
+   "frameKind": "fixed_only",
+   "note": "nombre de archivo del sheet (charge)"
   },
   {
-   "_manifestName": "future_trunks_base_beam_charge_03",
    "sourceId": "future_trunks_base/001_beam_charge.png",
-   "canonicalId": "future_trunks_base.beam.charge_hold.charge.03.001_beam_charge",
+   "canonicalId": "future_trunks_base.beam.charge.charge.01.001_beam_charge",
    "characterId": "future_trunks",
    "formId": "future_trunks_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "beam",
-   "role": "charge_hold",
+   "role": "charge",
    "variant": "charge",
-   "sequenceIndex": 3,
-   "runtimePoses": [
-    "beam_charge"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "sequenceIndex": 1,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "",
     "frame": "001_beam_charge.png",
     "x": null,
     "y": null
    },
-   "frameKind": "fixed_only"
+   "frameKind": "fixed_only",
+   "note": "nombre de archivo del sheet (charge)"
   },
   {
    "sourceId": "future_trunks_base/002_hurt.png",

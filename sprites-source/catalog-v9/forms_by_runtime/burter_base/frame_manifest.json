@@ -3,112 +3,96 @@
  "frameCount": 47,
  "frames": [
   {
-   "_manifestName": "burter_base_idle_00",
    "sourceId": "burter_base/001.png",
-   "canonicalId": "burter_base.idle.idle.idle.00.001",
+   "canonicalId": "burter_base.movement.move_or_attack.move_or_attack.00.001",
    "characterId": "burter",
    "formId": "burter_base",
    "assetType": "actor_frame",
    "view": "FIELD",
-   "family": "idle",
-   "role": "idle",
-   "variant": "idle",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "idle",
-    "guard",
-    "punch_right",
-    "punch_left",
-    "beam_guard"
-   ],
-   "evidence": "CANONICAL",
-   "canonStatus": "CANONICAL",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "jeice_burter.png",
     "frame": "001.png",
     "x": "13",
     "y": "513"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "burter_base_move_front_01",
    "sourceId": "burter_base/002.png",
-   "canonicalId": "burter_base.defense.hold.guard.01.002.png",
+   "canonicalId": "burter_base.movement.move_or_attack.move_or_attack.00.002",
    "characterId": "burter",
    "formId": "burter_base",
    "assetType": "actor_frame",
    "view": "FIELD",
-   "family": "defense",
-   "role": "hold",
-   "variant": "guard",
-   "sequenceIndex": 1,
-   "runtimePoses": [
-    "move_front",
-    "move_back",
-    "guard",
-    "beam_guard"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "jeice_burter.png",
     "frame": "002.png",
     "x": "52",
     "y": "513"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "burter_base_guard_02",
    "sourceId": "burter_base/003.png",
-   "canonicalId": "burter_base.defense.recover.guard.02.003",
+   "canonicalId": "burter_base.movement.move_or_attack.move_or_attack.00.003",
    "characterId": "burter",
    "formId": "burter_base",
    "assetType": "actor_frame",
    "view": "FIELD",
-   "family": "defense",
-   "role": "recover",
-   "variant": "guard",
-   "sequenceIndex": 2,
-   "runtimePoses": [
-    "guard",
-    "beam_guard"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "jeice_burter.png",
     "frame": "003.png",
     "x": "91",
     "y": "515"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "burter_base_beam_charge_02",
    "sourceId": "burter_base/004.png",
-   "canonicalId": "burter_base.beam.charge_hold.charge.02.004",
+   "canonicalId": "burter_base.movement.move_or_attack.move_or_attack.00.004",
    "characterId": "burter",
    "formId": "burter_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "beam",
-   "role": "charge_hold",
-   "variant": "charge",
-   "sequenceIndex": 2,
-   "runtimePoses": [
-    "beam_charge"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "jeice_burter.png",
     "frame": "004.png",
     "x": "134",
     "y": "513"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
    "sourceId": "burter_base/005.png",
@@ -203,257 +187,234 @@
    "note": "bucket forense: battle_aura_actor_composite"
   },
   {
-   "_manifestName": "burter_base_evade_01",
    "sourceId": "burter_base/009.png",
-   "canonicalId": "burter_base.defense.recover.evade.01.009",
+   "canonicalId": "burter_base.effect.misc.misc.00.009",
    "characterId": "burter",
    "formId": "burter_base",
-   "assetType": "actor_frame",
+   "assetType": "effect",
    "view": "FIELD",
-   "family": "defense",
-   "role": "recover",
-   "variant": "evade",
-   "sequenceIndex": 1,
-   "runtimePoses": [
-    "evade"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "family": "effect",
+   "role": "misc",
+   "variant": "misc",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "jeice_burter.png",
     "frame": "009.png",
     "x": "10",
     "y": "566"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: nonbody_misc"
   },
   {
-   "_manifestName": "burter_base_evade_00",
    "sourceId": "burter_base/010.png",
-   "canonicalId": "burter_base.defense.start.evade.00.010",
+   "canonicalId": "burter_base.effect.speedlines.speedlines.00.010",
    "characterId": "burter",
    "formId": "burter_base",
-   "assetType": "actor_frame",
+   "assetType": "effect",
    "view": "FIELD",
-   "family": "defense",
-   "role": "start",
-   "variant": "evade",
+   "family": "effect",
+   "role": "speedlines",
+   "variant": "speedlines",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "evade"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "jeice_burter.png",
     "frame": "010.png",
     "x": "60",
     "y": "559"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: speedlines"
   },
   {
-   "_manifestName": "burter_base_gather_power_00",
    "sourceId": "burter_base/011.png",
-   "canonicalId": "burter_base.power.gather_power.gather_power.00.011",
+   "canonicalId": "burter_base.movement.move_or_attack.move_or_attack.00.011",
    "characterId": "burter",
    "formId": "burter_base",
-   "assetType": "composite",
-   "view": "ACTION_DUEL",
-   "family": "power",
-   "role": "gather_power",
-   "variant": "gather_power",
+   "assetType": "actor_frame",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "gather_power",
-    "power_up"
-   ],
-   "evidence": "CANONICAL",
-   "canonStatus": "CANONICAL",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "jeice_burter.png",
     "frame": "011.png",
     "x": "92",
     "y": "565"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "burter_base_move_front_00",
    "sourceId": "burter_base/012.png",
-   "canonicalId": "burter_base.movement.start.move_front.00.012",
+   "canonicalId": "burter_base.movement.move_or_attack.move_or_attack.00.012",
    "characterId": "burter",
    "formId": "burter_base",
    "assetType": "actor_frame",
    "view": "FIELD",
    "family": "movement",
-   "role": "start",
-   "variant": "move_front",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "move_front",
-    "move_back"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "jeice_burter.png",
     "frame": "012.png",
     "x": "129",
     "y": "568"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "burter_base_hurt_00",
    "sourceId": "burter_base/013.png",
-   "canonicalId": "burter_base.reaction.hurt_light.hurt.00.013",
+   "canonicalId": "burter_base.movement.move_or_attack.move_or_attack.00.013",
    "characterId": "burter",
    "formId": "burter_base",
    "assetType": "actor_frame",
    "view": "FIELD",
-   "family": "reaction",
-   "role": "hurt_light",
-   "variant": "hurt",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "hurt"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "jeice_burter.png",
     "frame": "013.png",
     "x": "10",
     "y": "625"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "burter_base_hurt_01",
    "sourceId": "burter_base/014.png",
-   "canonicalId": "burter_base.reaction.hurt_heavy.hurt.01.014",
+   "canonicalId": "burter_base.movement.move_or_attack.move_or_attack.00.014",
    "characterId": "burter",
    "formId": "burter_base",
    "assetType": "actor_frame",
    "view": "FIELD",
-   "family": "reaction",
-   "role": "hurt_heavy",
-   "variant": "hurt",
-   "sequenceIndex": 1,
-   "runtimePoses": [
-    "hurt"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "jeice_burter.png",
     "frame": "014.png",
     "x": "49",
     "y": "626"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "burter_base_hurt_02",
    "sourceId": "burter_base/015.png",
-   "canonicalId": "burter_base.reaction.hurt_heavy.hurt.02.015",
+   "canonicalId": "burter_base.movement.move_or_attack.move_or_attack.00.015",
    "characterId": "burter",
    "formId": "burter_base",
    "assetType": "actor_frame",
    "view": "FIELD",
-   "family": "reaction",
-   "role": "hurt_heavy",
-   "variant": "hurt",
-   "sequenceIndex": 2,
-   "runtimePoses": [
-    "hurt"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "jeice_burter.png",
     "frame": "015.png",
     "x": "83",
     "y": "632"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "burter_base_hurt_03",
    "sourceId": "burter_base/016.png",
-   "canonicalId": "burter_base.reaction.hurt_heavy.hurt.03.016",
+   "canonicalId": "burter_base.movement.move_or_attack.move_or_attack.00.016",
    "characterId": "burter",
    "formId": "burter_base",
    "assetType": "actor_frame",
    "view": "FIELD",
-   "family": "reaction",
-   "role": "hurt_heavy",
-   "variant": "hurt",
-   "sequenceIndex": 3,
-   "runtimePoses": [
-    "hurt"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "jeice_burter.png",
     "frame": "016.png",
     "x": "124",
     "y": "624"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "burter_base_hurt_04",
    "sourceId": "burter_base/017.png",
-   "canonicalId": "burter_base.reaction.hurt_heavy.hurt.04.017",
+   "canonicalId": "burter_base.movement.move_or_attack.move_or_attack.00.017",
    "characterId": "burter",
    "formId": "burter_base",
    "assetType": "actor_frame",
    "view": "FIELD",
-   "family": "reaction",
-   "role": "hurt_heavy",
-   "variant": "hurt",
-   "sequenceIndex": 4,
-   "runtimePoses": [
-    "hurt"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "jeice_burter.png",
     "frame": "017.png",
     "x": "160",
     "y": "619"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "burter_base_attack_fwd_05",
    "sourceId": "burter_base/018.png",
-   "canonicalId": "burter_base.melee.strike.punch_left.03.018.png",
+   "canonicalId": "burter_base.movement.move_or_attack.move_or_attack.00.018",
    "characterId": "burter",
    "formId": "burter_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "strike",
-   "variant": "punch_left",
-   "sequenceIndex": 3,
-   "runtimePoses": [
-    "attack_fwd",
-    "punch_left"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "jeice_burter.png",
     "frame": "018.png",
     "x": "197",
     "y": "623"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
    "sourceId": "burter_base/019.png",
@@ -479,317 +440,280 @@
    "note": "bucket forense: actor_downed_or_special_pose"
   },
   {
-   "_manifestName": "burter_base_attack_fwd_02",
    "sourceId": "burter_base/020.png",
-   "canonicalId": "burter_base.melee.travel.attack_forward.02.020",
+   "canonicalId": "burter_base.movement.move_or_attack.move_or_attack.00.020",
    "characterId": "burter",
    "formId": "burter_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "travel",
-   "variant": "attack_forward",
-   "sequenceIndex": 2,
-   "runtimePoses": [
-    "attack_fwd",
-    "punch_right"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "jeice_burter.png",
     "frame": "020.png",
     "x": "9",
     "y": "675"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "burter_base_knockback_up_00",
    "sourceId": "burter_base/021.png",
-   "canonicalId": "burter_base.power.power_up.power_up.01.021.png",
+   "canonicalId": "burter_base.movement.move_or_attack.move_or_attack.00.021",
    "characterId": "burter",
    "formId": "burter_base",
-   "assetType": "composite",
+   "assetType": "actor_frame",
    "view": "FIELD",
-   "family": "power",
-   "role": "power_up",
-   "variant": "power_up",
-   "sequenceIndex": 1,
-   "runtimePoses": [
-    "knockback_up",
-    "gather_power",
-    "power_up"
-   ],
-   "evidence": "CANONICAL",
-   "canonStatus": "CANONICAL",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "jeice_burter.png",
     "frame": "021.png",
     "x": "57",
     "y": "676"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "burter_base_attack_fwd_06",
    "sourceId": "burter_base/022.png",
-   "canonicalId": "burter_base.reaction.knockback_back.back.00.022.png",
+   "canonicalId": "burter_base.movement.move_or_attack.move_or_attack.00.022",
    "characterId": "burter",
    "formId": "burter_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "reaction",
-   "role": "knockback_back",
-   "variant": "back",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "attack_fwd",
-    "punch_left",
-    "knockback_back"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "jeice_burter.png",
     "frame": "022.png",
     "x": "98",
     "y": "681"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "burter_base_attack_ud_00",
    "sourceId": "burter_base/023.png",
-   "canonicalId": "burter_base.melee.ready.attack_vertical.00.023",
+   "canonicalId": "burter_base.movement.move_or_attack.move_or_attack.00.023",
    "characterId": "burter",
    "formId": "burter_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "ready",
-   "variant": "attack_vertical",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "attack_ud"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "jeice_burter.png",
     "frame": "023.png",
     "x": "149",
     "y": "671"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "burter_base_attack_ud_01",
    "sourceId": "burter_base/024.png",
-   "canonicalId": "burter_base.melee.windup.attack_vertical.01.024",
+   "canonicalId": "burter_base.movement.move_or_attack.move_or_attack.00.024",
    "characterId": "burter",
    "formId": "burter_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "windup",
-   "variant": "attack_vertical",
-   "sequenceIndex": 1,
-   "runtimePoses": [
-    "attack_ud"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "jeice_burter.png",
     "frame": "024.png",
     "x": "186",
     "y": "675"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "burter_base_attack_ud_02",
    "sourceId": "burter_base/025.png",
-   "canonicalId": "burter_base.melee.contact.attack_vertical.02.025",
+   "canonicalId": "burter_base.idle.stance.stance.00.025",
    "characterId": "burter",
    "formId": "burter_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "contact",
-   "variant": "attack_vertical",
-   "sequenceIndex": 2,
-   "runtimePoses": [
-    "attack_ud"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "view": "FIELD",
+   "family": "idle",
+   "role": "stance",
+   "variant": "stance",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "jeice_burter.png",
     "frame": "025.png",
     "x": "226",
     "y": "673"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: idle_or_stance"
   },
   {
-   "_manifestName": "burter_base_attack_ud_03",
    "sourceId": "burter_base/026.png",
-   "canonicalId": "burter_base.reaction.knockback_down.down.00.026.png",
+   "canonicalId": "burter_base.movement.move_or_attack.move_or_attack.00.026",
    "characterId": "burter",
    "formId": "burter_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "reaction",
-   "role": "knockback_down",
-   "variant": "down",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "attack_ud",
-    "knockback_down"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "jeice_burter.png",
     "frame": "026.png",
     "x": "257",
     "y": "687"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "burter_base_attack_fwd_00",
    "sourceId": "burter_base/027.png",
-   "canonicalId": "burter_base.melee.ready.attack_forward.00.027",
+   "canonicalId": "burter_base.movement.move_or_attack.move_or_attack.00.027",
    "characterId": "burter",
    "formId": "burter_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "ready",
-   "variant": "attack_forward",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "attack_fwd",
-    "punch_right"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "jeice_burter.png",
     "frame": "027.png",
     "x": "10",
     "y": "729"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "burter_base_attack_fwd_01",
    "sourceId": "burter_base/028.png",
-   "canonicalId": "burter_base.melee.windup.attack_forward.01.028",
+   "canonicalId": "burter_base.movement.move_or_attack.move_or_attack.00.028",
    "characterId": "burter",
    "formId": "burter_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "windup",
-   "variant": "attack_forward",
-   "sequenceIndex": 1,
-   "runtimePoses": [
-    "attack_fwd",
-    "punch_right"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "jeice_burter.png",
     "frame": "028.png",
     "x": "53",
     "y": "729"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "burter_base_attack_fwd_03",
    "sourceId": "burter_base/029.png",
-   "canonicalId": "burter_base.melee.strike.kick_right.00.029.png",
+   "canonicalId": "burter_base.idle.stance.stance.00.029",
    "characterId": "burter",
    "formId": "burter_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "strike",
-   "variant": "kick_right",
+   "view": "FIELD",
+   "family": "idle",
+   "role": "stance",
+   "variant": "stance",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "attack_fwd",
-    "punch_left",
-    "kick_right"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "jeice_burter.png",
     "frame": "029.png",
     "x": "95",
     "y": "729"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: idle_or_stance"
   },
   {
-   "_manifestName": "burter_base_attack_fwd_04",
    "sourceId": "burter_base/030.png",
-   "canonicalId": "burter_base.melee.strike.kick_right.01.030.png",
+   "canonicalId": "burter_base.movement.move_or_attack.move_or_attack.00.030",
    "characterId": "burter",
    "formId": "burter_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "strike",
-   "variant": "kick_right",
-   "sequenceIndex": 1,
-   "runtimePoses": [
-    "attack_fwd",
-    "punch_left",
-    "kick_right"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "jeice_burter.png",
     "frame": "030.png",
     "x": "141",
     "y": "729"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "burter_base_beam_charge_00",
    "sourceId": "burter_base/031.png",
-   "canonicalId": "burter_base.beam.charge_start.charge.00.031",
+   "canonicalId": "burter_base.movement.move_or_attack.move_or_attack.00.031",
    "characterId": "burter",
    "formId": "burter_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "beam",
-   "role": "charge_start",
-   "variant": "charge",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "beam_charge",
-    "beam_charge"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "jeice_burter.png",
     "frame": "031.png",
     "x": "6",
     "y": "795"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
    "sourceId": "burter_base/032.png",
@@ -815,79 +739,73 @@
    "note": "bucket forense: projectiles_beams"
   },
   {
-   "_manifestName": "burter_base_aura_power_00",
    "sourceId": "burter_base/033.png",
-   "canonicalId": "burter_base.effect.aura.aura_power.00.033",
+   "canonicalId": "burter_base.effect.orbs_rings_bursts.orbs_rings_bursts.00.033",
    "characterId": "burter",
    "formId": "burter_base",
    "assetType": "effect",
    "view": "FIELD",
    "family": "effect",
-   "role": "aura",
-   "variant": "aura_power",
+   "role": "orbs_rings_bursts",
+   "variant": "orbs_rings_bursts",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "aura_power"
-   ],
-   "evidence": "CANONICAL",
-   "canonStatus": "CANONICAL",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "jeice_burter.png",
     "frame": "033.png",
     "x": "204",
     "y": "775"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: orbs_rings_bursts"
   },
   {
-   "_manifestName": "burter_base_aura_power_01",
    "sourceId": "burter_base/034.png",
-   "canonicalId": "burter_base.effect.aura.aura_power.01.034",
+   "canonicalId": "burter_base.effect.orbs_rings_bursts.orbs_rings_bursts.00.034",
    "characterId": "burter",
    "formId": "burter_base",
    "assetType": "effect",
    "view": "FIELD",
    "family": "effect",
-   "role": "aura",
-   "variant": "aura_power",
-   "sequenceIndex": 1,
-   "runtimePoses": [
-    "aura_power"
-   ],
-   "evidence": "CANONICAL",
-   "canonStatus": "CANONICAL",
+   "role": "orbs_rings_bursts",
+   "variant": "orbs_rings_bursts",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "jeice_burter.png",
     "frame": "034.png",
     "x": "277",
     "y": "775"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: orbs_rings_bursts"
   },
   {
-   "_manifestName": "burter_base_aura_power_02",
    "sourceId": "burter_base/035.png",
-   "canonicalId": "burter_base.effect.aura.aura_power.02.035",
+   "canonicalId": "burter_base.effect.orbs_rings_bursts.orbs_rings_bursts.00.035",
    "characterId": "burter",
    "formId": "burter_base",
    "assetType": "effect",
    "view": "FIELD",
    "family": "effect",
-   "role": "aura",
-   "variant": "aura_power",
-   "sequenceIndex": 2,
-   "runtimePoses": [
-    "aura_power"
-   ],
-   "evidence": "CANONICAL",
-   "canonStatus": "CANONICAL",
+   "role": "orbs_rings_bursts",
+   "variant": "orbs_rings_bursts",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "jeice_burter.png",
     "frame": "035.png",
     "x": "351",
     "y": "775"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: orbs_rings_bursts"
   },
   {
    "sourceId": "burter_base/036.png",
@@ -913,185 +831,123 @@
    "note": "bucket forense: projectile_orb_small"
   },
   {
-   "_manifestName": "burter_base_aura_support_00",
    "sourceId": "burter_base/037.png",
-   "canonicalId": "burter_base.effect.aura.aura_support.00.037",
+   "canonicalId": "burter_base.unclassified.037",
    "characterId": "burter",
    "formId": "burter_base",
-   "assetType": "effect",
+   "assetType": "unclassified",
    "view": "FIELD",
-   "family": "effect",
-   "role": "aura",
-   "variant": "aura_support",
+   "family": "unclassified",
+   "role": "unclassified",
+   "variant": "",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "aura_support"
-   ],
-   "evidence": "CANONICAL",
-   "canonStatus": "CANONICAL",
+   "runtimePoses": [],
+   "evidence": "UNKNOWN",
+   "canonStatus": "UNCLASSIFIED",
    "source": {
     "sheet": "",
     "frame": "037.png",
     "x": null,
     "y": null
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "sin evidencia runtime ni bucket"
   },
   {
-   "_manifestName": "burter_base_aura_support_01",
    "sourceId": "burter_base/038.png",
-   "canonicalId": "burter_base.effect.aura.aura_support.01.038",
+   "canonicalId": "burter_base.unclassified.038",
    "characterId": "burter",
    "formId": "burter_base",
-   "assetType": "effect",
+   "assetType": "unclassified",
    "view": "FIELD",
-   "family": "effect",
-   "role": "aura",
-   "variant": "aura_support",
-   "sequenceIndex": 1,
-   "runtimePoses": [
-    "aura_support"
-   ],
-   "evidence": "CANONICAL",
-   "canonStatus": "CANONICAL",
+   "family": "unclassified",
+   "role": "unclassified",
+   "variant": "",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "UNKNOWN",
+   "canonStatus": "UNCLASSIFIED",
    "source": {
     "sheet": "",
     "frame": "038.png",
     "x": null,
     "y": null
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "sin evidencia runtime ni bucket"
   },
   {
-   "_manifestName": "burter_base_aura_support_02",
    "sourceId": "burter_base/039.png",
-   "canonicalId": "burter_base.effect.aura.aura_support.02.039",
+   "canonicalId": "burter_base.unclassified.039",
    "characterId": "burter",
    "formId": "burter_base",
-   "assetType": "effect",
+   "assetType": "unclassified",
    "view": "FIELD",
-   "family": "effect",
-   "role": "aura",
-   "variant": "aura_support",
-   "sequenceIndex": 2,
-   "runtimePoses": [
-    "aura_support"
-   ],
-   "evidence": "CANONICAL",
-   "canonStatus": "CANONICAL",
+   "family": "unclassified",
+   "role": "unclassified",
+   "variant": "",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "UNKNOWN",
+   "canonStatus": "UNCLASSIFIED",
    "source": {
     "sheet": "",
     "frame": "039.png",
     "x": null,
     "y": null
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "sin evidencia runtime ni bucket"
   },
   {
-   "_manifestName": "burter_base_beam_charge_00",
    "sourceId": "burter_base/000_beam_charge.png",
-   "canonicalId": "burter_base.beam.charge_start.charge.00.000_beam_charge",
+   "canonicalId": "burter_base.beam.charge.charge.00.000_beam_charge",
    "characterId": "burter",
    "formId": "burter_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "beam",
-   "role": "charge_start",
+   "role": "charge",
    "variant": "charge",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "beam_charge",
-    "beam_charge"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "",
     "frame": "000_beam_charge.png",
     "x": null,
     "y": null
    },
-   "frameKind": "fixed_only"
+   "frameKind": "fixed_only",
+   "note": "nombre de archivo del sheet (charge)"
   },
   {
-   "_manifestName": "burter_base_beam_charge_03",
    "sourceId": "burter_base/001_beam_charge.png",
-   "canonicalId": "burter_base.beam.charge_hold.charge.03.001_beam_charge",
+   "canonicalId": "burter_base.beam.charge.charge.01.001_beam_charge",
    "characterId": "burter",
    "formId": "burter_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "beam",
-   "role": "charge_hold",
+   "role": "charge",
    "variant": "charge",
-   "sequenceIndex": 3,
-   "runtimePoses": [
-    "beam_charge"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "sequenceIndex": 1,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "",
     "frame": "001_beam_charge.png",
     "x": null,
     "y": null
    },
-   "frameKind": "fixed_only"
+   "frameKind": "fixed_only",
+   "note": "nombre de archivo del sheet (charge)"
   },
   {
-   "_manifestName": "burter_base_beam_fire_00",
    "sourceId": "burter_base/002_beam_fire.png",
-   "canonicalId": "burter_base.beam.release.fire.00.002_beam_fire",
-   "characterId": "burter",
-   "formId": "burter_base",
-   "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "beam",
-   "role": "release",
-   "variant": "fire",
-   "sequenceIndex": 0,
-   "runtimePoses": [
-    "beam_fire"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
-   "source": {
-    "sheet": "",
-    "frame": "002_beam_fire.png",
-    "x": null,
-    "y": null
-   },
-   "frameKind": "fixed_only"
-  },
-  {
-   "_manifestName": "burter_base_beam_fire_01",
-   "sourceId": "burter_base/003_beam_fire.png",
-   "canonicalId": "burter_base.beam.release.fire.01.003_beam_fire",
-   "characterId": "burter",
-   "formId": "burter_base",
-   "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "beam",
-   "role": "release",
-   "variant": "fire",
-   "sequenceIndex": 1,
-   "runtimePoses": [
-    "beam_fire"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
-   "source": {
-    "sheet": "",
-    "frame": "003_beam_fire.png",
-    "x": null,
-    "y": null
-   },
-   "frameKind": "fixed_only"
-  },
-  {
-   "_manifestName": "burter_base_beam_fire_02",
-   "sourceId": "burter_base/004_beam_fire.png",
-   "canonicalId": "burter_base.beam.release.fire.02.004_beam_fire",
+   "canonicalId": "burter_base.beam.release.fire.02.002_beam_fire",
    "characterId": "burter",
    "formId": "burter_base",
    "assetType": "actor_frame",
@@ -1100,18 +956,63 @@
    "role": "release",
    "variant": "fire",
    "sequenceIndex": 2,
-   "runtimePoses": [
-    "beam_fire"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
+   "source": {
+    "sheet": "",
+    "frame": "002_beam_fire.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "fixed_only",
+   "note": "nombre de archivo del sheet (fire)"
+  },
+  {
+   "sourceId": "burter_base/003_beam_fire.png",
+   "canonicalId": "burter_base.beam.release.fire.03.003_beam_fire",
+   "characterId": "burter",
+   "formId": "burter_base",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "beam",
+   "role": "release",
+   "variant": "fire",
+   "sequenceIndex": 3,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
+   "source": {
+    "sheet": "",
+    "frame": "003_beam_fire.png",
+    "x": null,
+    "y": null
+   },
+   "frameKind": "fixed_only",
+   "note": "nombre de archivo del sheet (fire)"
+  },
+  {
+   "sourceId": "burter_base/004_beam_fire.png",
+   "canonicalId": "burter_base.beam.release.fire.04.004_beam_fire",
+   "characterId": "burter",
+   "formId": "burter_base",
+   "assetType": "actor_frame",
+   "view": "ACTION_DUEL",
+   "family": "beam",
+   "role": "release",
+   "variant": "fire",
+   "sequenceIndex": 4,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "",
     "frame": "004_beam_fire.png",
     "x": null,
     "y": null
    },
-   "frameKind": "fixed_only"
+   "frameKind": "fixed_only",
+   "note": "nombre de archivo del sheet (fire)"
   },
   {
    "sourceId": "burter_base/005_hurt.png",

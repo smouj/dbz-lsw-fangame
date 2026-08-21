@@ -3,87 +3,73 @@
  "frameCount": 58,
  "frames": [
   {
-   "_manifestName": "frieza_base_idle_00",
    "sourceId": "frieza_base/001.png",
-   "canonicalId": "frieza_base.idle.idle.idle.00.001",
+   "canonicalId": "frieza_base.movement.move_or_attack.move_or_attack.00.001",
    "characterId": "frieza",
    "formId": "frieza_base",
    "assetType": "actor_frame",
    "view": "FIELD",
-   "family": "idle",
-   "role": "idle",
-   "variant": "idle",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "idle",
-    "guard",
-    "punch_right",
-    "punch_left",
-    "beam_guard"
-   ],
-   "evidence": "CANONICAL",
-   "canonStatus": "CANONICAL",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "frieza.png",
     "frame": "001.png",
     "x": "6",
     "y": "19"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "frieza_base_move_front_01",
    "sourceId": "frieza_base/002.png",
-   "canonicalId": "frieza_base.defense.hold.guard.01.002.png",
+   "canonicalId": "frieza_base.movement.move_or_attack.move_or_attack.00.002",
    "characterId": "frieza",
    "formId": "frieza_base",
    "assetType": "actor_frame",
    "view": "FIELD",
-   "family": "defense",
-   "role": "hold",
-   "variant": "guard",
-   "sequenceIndex": 1,
-   "runtimePoses": [
-    "move_front",
-    "move_back",
-    "guard",
-    "beam_guard"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "frieza.png",
     "frame": "002.png",
     "x": "44",
     "y": "20"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "frieza_base_guard_02",
    "sourceId": "frieza_base/003.png",
-   "canonicalId": "frieza_base.defense.recover.guard.02.003",
+   "canonicalId": "frieza_base.movement.move_or_attack.move_or_attack.00.003",
    "characterId": "frieza",
    "formId": "frieza_base",
    "assetType": "actor_frame",
    "view": "FIELD",
-   "family": "defense",
-   "role": "recover",
-   "variant": "guard",
-   "sequenceIndex": 2,
-   "runtimePoses": [
-    "guard",
-    "beam_guard"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "frieza.png",
     "frame": "003.png",
     "x": "87",
     "y": "22"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
    "sourceId": "frieza_base/004.png",
@@ -178,54 +164,50 @@
    "note": "bucket forense: battle_aura_tile"
   },
   {
-   "_manifestName": "frieza_base_evade_01",
    "sourceId": "frieza_base/008.png",
-   "canonicalId": "frieza_base.defense.recover.evade.01.008",
+   "canonicalId": "frieza_base.effect.misc.misc.00.008",
    "characterId": "frieza",
    "formId": "frieza_base",
-   "assetType": "actor_frame",
+   "assetType": "effect",
    "view": "FIELD",
-   "family": "defense",
-   "role": "recover",
-   "variant": "evade",
-   "sequenceIndex": 1,
-   "runtimePoses": [
-    "evade"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "family": "effect",
+   "role": "misc",
+   "variant": "misc",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "frieza.png",
     "frame": "008.png",
     "x": "6",
     "y": "73"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: nonbody_misc"
   },
   {
-   "_manifestName": "frieza_base_evade_00",
    "sourceId": "frieza_base/009.png",
-   "canonicalId": "frieza_base.defense.start.evade.00.009",
+   "canonicalId": "frieza_base.effect.speedlines.speedlines.00.009",
    "characterId": "frieza",
    "formId": "frieza_base",
-   "assetType": "actor_frame",
+   "assetType": "effect",
    "view": "FIELD",
-   "family": "defense",
-   "role": "start",
-   "variant": "evade",
+   "family": "effect",
+   "role": "speedlines",
+   "variant": "speedlines",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "evade"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "frieza.png",
     "frame": "009.png",
     "x": "52",
     "y": "68"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: speedlines"
   },
   {
    "sourceId": "frieza_base/010.png",
@@ -251,155 +233,142 @@
    "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "frieza_base_move_front_00",
    "sourceId": "frieza_base/011.png",
-   "canonicalId": "frieza_base.movement.start.move_front.00.011",
+   "canonicalId": "frieza_base.movement.move_or_attack.move_or_attack.00.011",
    "characterId": "frieza",
    "formId": "frieza_base",
    "assetType": "actor_frame",
    "view": "FIELD",
    "family": "movement",
-   "role": "start",
-   "variant": "move_front",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "move_front",
-    "move_back"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "frieza.png",
     "frame": "011.png",
     "x": "141",
     "y": "75"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "frieza_base_hurt_00",
    "sourceId": "frieza_base/012.png",
-   "canonicalId": "frieza_base.reaction.hurt_light.hurt.00.012",
+   "canonicalId": "frieza_base.movement.move_or_attack.move_or_attack.00.012",
    "characterId": "frieza",
    "formId": "frieza_base",
    "assetType": "actor_frame",
    "view": "FIELD",
-   "family": "reaction",
-   "role": "hurt_light",
-   "variant": "hurt",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "hurt"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "frieza.png",
     "frame": "012.png",
     "x": "12",
     "y": "125"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "frieza_base_hurt_01",
    "sourceId": "frieza_base/013.png",
-   "canonicalId": "frieza_base.reaction.hurt_heavy.hurt.01.013",
+   "canonicalId": "frieza_base.movement.move_or_attack.move_or_attack.00.013",
    "characterId": "frieza",
    "formId": "frieza_base",
    "assetType": "actor_frame",
    "view": "FIELD",
-   "family": "reaction",
-   "role": "hurt_heavy",
-   "variant": "hurt",
-   "sequenceIndex": 1,
-   "runtimePoses": [
-    "hurt"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "frieza.png",
     "frame": "013.png",
     "x": "56",
     "y": "124"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "frieza_base_hurt_02",
    "sourceId": "frieza_base/014.png",
-   "canonicalId": "frieza_base.reaction.hurt_heavy.hurt.02.014",
+   "canonicalId": "frieza_base.movement.move_or_attack.move_or_attack.00.014",
    "characterId": "frieza",
    "formId": "frieza_base",
    "assetType": "actor_frame",
    "view": "FIELD",
-   "family": "reaction",
-   "role": "hurt_heavy",
-   "variant": "hurt",
-   "sequenceIndex": 2,
-   "runtimePoses": [
-    "hurt"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "frieza.png",
     "frame": "014.png",
     "x": "96",
     "y": "132"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "frieza_base_hurt_03",
    "sourceId": "frieza_base/015.png",
-   "canonicalId": "frieza_base.reaction.hurt_heavy.hurt.03.015",
+   "canonicalId": "frieza_base.movement.move_or_attack.move_or_attack.00.015",
    "characterId": "frieza",
    "formId": "frieza_base",
    "assetType": "actor_frame",
    "view": "FIELD",
-   "family": "reaction",
-   "role": "hurt_heavy",
-   "variant": "hurt",
-   "sequenceIndex": 3,
-   "runtimePoses": [
-    "hurt"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "frieza.png",
     "frame": "015.png",
     "x": "139",
     "y": "123"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "frieza_base_hurt_04",
    "sourceId": "frieza_base/016.png",
-   "canonicalId": "frieza_base.reaction.hurt_heavy.hurt.04.016",
+   "canonicalId": "frieza_base.movement.move_or_attack.move_or_attack.00.016",
    "characterId": "frieza",
    "formId": "frieza_base",
    "assetType": "actor_frame",
    "view": "FIELD",
-   "family": "reaction",
-   "role": "hurt_heavy",
-   "variant": "hurt",
-   "sequenceIndex": 4,
-   "runtimePoses": [
-    "hurt"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "frieza.png",
     "frame": "016.png",
     "x": "179",
     "y": "118"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
    "sourceId": "frieza_base/017.png",
@@ -425,340 +394,303 @@
    "note": "bucket forense: downed_or_hurt"
   },
   {
-   "_manifestName": "frieza_base_attack_fwd_06",
    "sourceId": "frieza_base/018.png",
-   "canonicalId": "frieza_base.melee.strike.punch_left.04.018.png",
+   "canonicalId": "frieza_base.movement.move_or_attack.move_or_attack.00.018",
    "characterId": "frieza",
    "formId": "frieza_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "strike",
-   "variant": "punch_left",
-   "sequenceIndex": 4,
-   "runtimePoses": [
-    "attack_fwd",
-    "punch_left"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "frieza.png",
     "frame": "018.png",
     "x": "275",
     "y": "123"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "frieza_base_knockback_back_00",
    "sourceId": "frieza_base/019.png",
-   "canonicalId": "frieza_base.reaction.knockback_back.back.00.019",
+   "canonicalId": "frieza_base.movement.move_or_attack.move_or_attack.00.019",
    "characterId": "frieza",
    "formId": "frieza_base",
    "assetType": "actor_frame",
    "view": "FIELD",
-   "family": "reaction",
-   "role": "knockback_back",
-   "variant": "back",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "knockback_back"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "frieza.png",
     "frame": "019.png",
     "x": "10",
     "y": "178"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "frieza_base_attack_fwd_03",
    "sourceId": "frieza_base/020.png",
-   "canonicalId": "frieza_base.melee.strike.punch_left.01.020.png",
+   "canonicalId": "frieza_base.movement.move_or_attack.move_or_attack.00.020",
    "characterId": "frieza",
    "formId": "frieza_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "strike",
-   "variant": "punch_left",
-   "sequenceIndex": 1,
-   "runtimePoses": [
-    "attack_fwd",
-    "punch_left"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "frieza.png",
     "frame": "020.png",
     "x": "57",
     "y": "175"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "frieza_base_attack_fwd_07",
    "sourceId": "frieza_base/021.png",
-   "canonicalId": "frieza_base.reaction.knockback_down.down.00.021.png",
+   "canonicalId": "frieza_base.movement.move_or_attack.move_or_attack.00.021",
    "characterId": "frieza",
    "formId": "frieza_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "reaction",
-   "role": "knockback_down",
-   "variant": "down",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "attack_fwd",
-    "knockback_down"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "frieza.png",
     "frame": "021.png",
     "x": "100",
     "y": "178"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "frieza_base_attack_ud_00",
    "sourceId": "frieza_base/022.png",
-   "canonicalId": "frieza_base.melee.ready.attack_vertical.00.022",
+   "canonicalId": "frieza_base.movement.move_or_attack.move_or_attack.00.022",
    "characterId": "frieza",
    "formId": "frieza_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "ready",
-   "variant": "attack_vertical",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "attack_ud"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "frieza.png",
     "frame": "022.png",
     "x": "139",
     "y": "172"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "frieza_base_attack_ud_01",
    "sourceId": "frieza_base/023.png",
-   "canonicalId": "frieza_base.melee.windup.attack_vertical.01.023",
+   "canonicalId": "frieza_base.movement.move_or_attack.move_or_attack.00.023",
    "characterId": "frieza",
    "formId": "frieza_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "windup",
-   "variant": "attack_vertical",
-   "sequenceIndex": 1,
-   "runtimePoses": [
-    "attack_ud"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "frieza.png",
     "frame": "023.png",
     "x": "179",
     "y": "171"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "frieza_base_attack_ud_02",
    "sourceId": "frieza_base/024.png",
-   "canonicalId": "frieza_base.melee.contact.attack_vertical.02.024",
+   "canonicalId": "frieza_base.movement.move_or_attack.move_or_attack.00.024",
    "characterId": "frieza",
    "formId": "frieza_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "contact",
-   "variant": "attack_vertical",
-   "sequenceIndex": 2,
-   "runtimePoses": [
-    "attack_ud"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "frieza.png",
     "frame": "024.png",
     "x": "218",
     "y": "171"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "frieza_base_attack_ud_03",
    "sourceId": "frieza_base/025.png",
-   "canonicalId": "frieza_base.reaction.knockback_up.up.00.025.png",
+   "canonicalId": "frieza_base.movement.move_or_attack.move_or_attack.00.025",
    "characterId": "frieza",
    "formId": "frieza_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "reaction",
-   "role": "knockback_up",
-   "variant": "up",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "attack_ud",
-    "knockback_up"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "frieza.png",
     "frame": "025.png",
     "x": "251",
     "y": "176"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "frieza_base_attack_fwd_00",
    "sourceId": "frieza_base/026.png",
-   "canonicalId": "frieza_base.melee.ready.attack_forward.00.026",
+   "canonicalId": "frieza_base.movement.move_or_attack.move_or_attack.00.026",
    "characterId": "frieza",
    "formId": "frieza_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "ready",
-   "variant": "attack_forward",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "attack_fwd",
-    "punch_right"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "frieza.png",
     "frame": "026.png",
     "x": "18",
     "y": "230"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "frieza_base_attack_fwd_01",
    "sourceId": "frieza_base/027.png",
-   "canonicalId": "frieza_base.melee.windup.attack_forward.01.027",
+   "canonicalId": "frieza_base.movement.move_or_attack.move_or_attack.00.027",
    "characterId": "frieza",
    "formId": "frieza_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "windup",
-   "variant": "attack_forward",
-   "sequenceIndex": 1,
-   "runtimePoses": [
-    "attack_fwd",
-    "punch_right"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "frieza.png",
     "frame": "027.png",
     "x": "62",
     "y": "230"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "frieza_base_attack_fwd_05",
    "sourceId": "frieza_base/028.png",
-   "canonicalId": "frieza_base.melee.strike.kick_right.00.028.png",
+   "canonicalId": "frieza_base.movement.move_or_attack.move_or_attack.00.028",
    "characterId": "frieza",
    "formId": "frieza_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "strike",
-   "variant": "kick_right",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "attack_fwd",
-    "punch_left",
-    "kick_right"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "frieza.png",
     "frame": "028.png",
     "x": "115",
     "y": "232"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "frieza_base_attack_fwd_04",
    "sourceId": "frieza_base/029.png",
-   "canonicalId": "frieza_base.melee.strike.kick_right.01.029.png",
+   "canonicalId": "frieza_base.movement.move_or_attack.move_or_attack.00.029",
    "characterId": "frieza",
    "formId": "frieza_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "strike",
-   "variant": "kick_right",
-   "sequenceIndex": 1,
-   "runtimePoses": [
-    "attack_fwd",
-    "punch_left",
-    "kick_right"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "frieza.png",
     "frame": "029.png",
     "x": "163",
     "y": "232"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "frieza_base_gather_power_00",
    "sourceId": "frieza_base/030.png",
-   "canonicalId": "frieza_base.power.gather_power.gather_power.00.030",
+   "canonicalId": "frieza_base.movement.move_or_attack.move_or_attack.00.030",
    "characterId": "frieza",
    "formId": "frieza_base",
-   "assetType": "composite",
-   "view": "ACTION_DUEL",
-   "family": "power",
-   "role": "gather_power",
-   "variant": "gather_power",
+   "assetType": "actor_frame",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "gather_power",
-    "power_up"
-   ],
-   "evidence": "CANONICAL",
-   "canonStatus": "CANONICAL",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "frieza.png",
     "frame": "030.png",
     "x": "16",
     "y": "289"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
    "sourceId": "frieza_base/031.png",
@@ -784,79 +716,73 @@
    "note": "bucket forense: projectiles_beams"
   },
   {
-   "_manifestName": "frieza_base_aura_power_00",
    "sourceId": "frieza_base/032.png",
-   "canonicalId": "frieza_base.effect.aura.aura_power.00.032",
+   "canonicalId": "frieza_base.effect.orbs_rings_bursts.orbs_rings_bursts.00.032",
    "characterId": "frieza",
    "formId": "frieza_base",
    "assetType": "effect",
    "view": "FIELD",
    "family": "effect",
-   "role": "aura",
-   "variant": "aura_power",
+   "role": "orbs_rings_bursts",
+   "variant": "orbs_rings_bursts",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "aura_power"
-   ],
-   "evidence": "CANONICAL",
-   "canonStatus": "CANONICAL",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "frieza.png",
     "frame": "032.png",
     "x": "216",
     "y": "270"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: orbs_rings_bursts"
   },
   {
-   "_manifestName": "frieza_base_aura_power_01",
    "sourceId": "frieza_base/033.png",
-   "canonicalId": "frieza_base.effect.aura.aura_power.01.033",
+   "canonicalId": "frieza_base.effect.orbs_rings_bursts.orbs_rings_bursts.00.033",
    "characterId": "frieza",
    "formId": "frieza_base",
    "assetType": "effect",
    "view": "FIELD",
    "family": "effect",
-   "role": "aura",
-   "variant": "aura_power",
-   "sequenceIndex": 1,
-   "runtimePoses": [
-    "aura_power"
-   ],
-   "evidence": "CANONICAL",
-   "canonStatus": "CANONICAL",
+   "role": "orbs_rings_bursts",
+   "variant": "orbs_rings_bursts",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "frieza.png",
     "frame": "033.png",
     "x": "285",
     "y": "270"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: orbs_rings_bursts"
   },
   {
-   "_manifestName": "frieza_base_aura_power_02",
    "sourceId": "frieza_base/034.png",
-   "canonicalId": "frieza_base.effect.aura.aura_power.02.034",
+   "canonicalId": "frieza_base.effect.orbs_rings_bursts.orbs_rings_bursts.00.034",
    "characterId": "frieza",
    "formId": "frieza_base",
    "assetType": "effect",
    "view": "FIELD",
    "family": "effect",
-   "role": "aura",
-   "variant": "aura_power",
-   "sequenceIndex": 2,
-   "runtimePoses": [
-    "aura_power"
-   ],
-   "evidence": "CANONICAL",
-   "canonStatus": "CANONICAL",
+   "role": "orbs_rings_bursts",
+   "variant": "orbs_rings_bursts",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "frieza.png",
     "frame": "034.png",
     "x": "354",
     "y": "270"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: orbs_rings_bursts"
   },
   {
    "sourceId": "frieza_base/035.png",
@@ -905,130 +831,119 @@
    "note": "bucket forense: beam_or_projectile_horizontal"
   },
   {
-   "_manifestName": "frieza_base_beam_fire_00",
    "sourceId": "frieza_base/037.png",
-   "canonicalId": "frieza_base.beam.release.fire.00.037",
+   "canonicalId": "frieza_base.movement.move_or_attack.move_or_attack.00.037",
    "characterId": "frieza",
    "formId": "frieza_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "beam",
-   "role": "release",
-   "variant": "fire",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "beam_fire"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "frieza.png",
     "frame": "037.png",
     "x": "15",
     "y": "380"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "frieza_base_beam_charge_01",
    "sourceId": "frieza_base/038.png",
-   "canonicalId": "frieza_base.beam.charge_start.charge.01.038",
+   "canonicalId": "frieza_base.movement.move_or_attack.move_or_attack.00.038",
    "characterId": "frieza",
    "formId": "frieza_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "beam",
-   "role": "charge_start",
-   "variant": "charge",
-   "sequenceIndex": 1,
-   "runtimePoses": [
-    "beam_charge",
-    "beam_fire"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "frieza.png",
     "frame": "038.png",
     "x": "55",
     "y": "386"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "frieza_base_beam_fire_02",
    "sourceId": "frieza_base/039.png",
-   "canonicalId": "frieza_base.beam.release.fire.02.039",
+   "canonicalId": "frieza_base.movement.move_or_attack.move_or_attack.00.039",
    "characterId": "frieza",
    "formId": "frieza_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "beam",
-   "role": "release",
-   "variant": "fire",
-   "sequenceIndex": 2,
-   "runtimePoses": [
-    "beam_fire"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "frieza.png",
     "frame": "039.png",
     "x": "102",
     "y": "386"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "frieza_base_beam_fire_03",
    "sourceId": "frieza_base/040.png",
-   "canonicalId": "frieza_base.beam.release.fire.03.040",
+   "canonicalId": "frieza_base.movement.move_or_attack.move_or_attack.00.040",
    "characterId": "frieza",
    "formId": "frieza_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "beam",
-   "role": "release",
-   "variant": "fire",
-   "sequenceIndex": 3,
-   "runtimePoses": [
-    "beam_fire"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "frieza.png",
     "frame": "040.png",
     "x": "142",
     "y": "380"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "frieza_base_beam_fire_04",
    "sourceId": "frieza_base/041.png",
-   "canonicalId": "frieza_base.beam.release.fire.04.041",
+   "canonicalId": "frieza_base.movement.move_or_attack.move_or_attack.00.041",
    "characterId": "frieza",
    "formId": "frieza_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "beam",
-   "role": "release",
-   "variant": "fire",
-   "sequenceIndex": 4,
-   "runtimePoses": [
-    "beam_fire"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "frieza.png",
     "frame": "041.png",
     "x": "183",
     "y": "380"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
    "sourceId": "frieza_base/042.png",
@@ -1123,30 +1038,27 @@
    "note": "bucket forense: projectiles_beams"
   },
   {
-   "_manifestName": "frieza_base_beam_charge_01",
    "sourceId": "frieza_base/046.png",
-   "canonicalId": "frieza_base.beam.charge_start.charge.01.046",
+   "canonicalId": "frieza_base.movement.move_or_attack.move_or_attack.00.046",
    "characterId": "frieza",
    "formId": "frieza_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "beam",
-   "role": "charge_start",
-   "variant": "charge",
-   "sequenceIndex": 1,
-   "runtimePoses": [
-    "beam_charge",
-    "beam_fire"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "frieza.png",
     "frame": "046.png",
     "x": "378",
     "y": "458"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
    "sourceId": "frieza_base/047.png",
@@ -1172,205 +1084,188 @@
    "note": "sin evidencia runtime ni bucket"
   },
   {
-   "_manifestName": "frieza_base_aura_support_00",
    "sourceId": "frieza_base/048.png",
-   "canonicalId": "frieza_base.effect.aura.aura_support.00.048",
+   "canonicalId": "frieza_base.unclassified.048",
    "characterId": "frieza",
    "formId": "frieza_base",
-   "assetType": "effect",
+   "assetType": "unclassified",
    "view": "FIELD",
-   "family": "effect",
-   "role": "aura",
-   "variant": "aura_support",
+   "family": "unclassified",
+   "role": "unclassified",
+   "variant": "",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "aura_support"
-   ],
-   "evidence": "CANONICAL",
-   "canonStatus": "CANONICAL",
+   "runtimePoses": [],
+   "evidence": "UNKNOWN",
+   "canonStatus": "UNCLASSIFIED",
    "source": {
     "sheet": "",
     "frame": "048.png",
     "x": null,
     "y": null
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "sin evidencia runtime ni bucket"
   },
   {
-   "_manifestName": "frieza_base_aura_support_01",
    "sourceId": "frieza_base/049.png",
-   "canonicalId": "frieza_base.effect.aura.aura_support.01.049",
+   "canonicalId": "frieza_base.unclassified.049",
    "characterId": "frieza",
    "formId": "frieza_base",
-   "assetType": "effect",
+   "assetType": "unclassified",
    "view": "FIELD",
-   "family": "effect",
-   "role": "aura",
-   "variant": "aura_support",
-   "sequenceIndex": 1,
-   "runtimePoses": [
-    "aura_support"
-   ],
-   "evidence": "CANONICAL",
-   "canonStatus": "CANONICAL",
+   "family": "unclassified",
+   "role": "unclassified",
+   "variant": "",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "UNKNOWN",
+   "canonStatus": "UNCLASSIFIED",
    "source": {
     "sheet": "",
     "frame": "049.png",
     "x": null,
     "y": null
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "sin evidencia runtime ni bucket"
   },
   {
-   "_manifestName": "frieza_base_aura_support_02",
    "sourceId": "frieza_base/050.png",
-   "canonicalId": "frieza_base.effect.aura.aura_support.02.050",
+   "canonicalId": "frieza_base.unclassified.050",
    "characterId": "frieza",
    "formId": "frieza_base",
-   "assetType": "effect",
+   "assetType": "unclassified",
    "view": "FIELD",
-   "family": "effect",
-   "role": "aura",
-   "variant": "aura_support",
-   "sequenceIndex": 2,
-   "runtimePoses": [
-    "aura_support"
-   ],
-   "evidence": "CANONICAL",
-   "canonStatus": "CANONICAL",
+   "family": "unclassified",
+   "role": "unclassified",
+   "variant": "",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "UNKNOWN",
+   "canonStatus": "UNCLASSIFIED",
    "source": {
     "sheet": "",
     "frame": "050.png",
     "x": null,
     "y": null
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "sin evidencia runtime ni bucket"
   },
   {
-   "_manifestName": "frieza_base_attack_fwd_02",
    "sourceId": "frieza_base/000_attack_fwd.png",
-   "canonicalId": "frieza_base.melee.travel.attack_forward.02.000_attack_fwd",
+   "canonicalId": "frieza_base.melee.attack_forward.attack_forward.00.000_attack_fwd",
    "characterId": "frieza",
    "formId": "frieza_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "travel",
+   "role": "attack_forward",
    "variant": "attack_forward",
-   "sequenceIndex": 2,
-   "runtimePoses": [
-    "attack_fwd",
-    "punch_right"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "",
     "frame": "000_attack_fwd.png",
     "x": null,
     "y": null
    },
-   "frameKind": "fixed_only"
+   "frameKind": "fixed_only",
+   "note": "nombre de archivo del sheet (fwd)"
   },
   {
-   "_manifestName": "frieza_base_beam_charge_00",
    "sourceId": "frieza_base/001_beam_charge.png",
-   "canonicalId": "frieza_base.beam.charge_start.charge.00.001_beam_charge",
+   "canonicalId": "frieza_base.beam.charge.charge.01.001_beam_charge",
    "characterId": "frieza",
    "formId": "frieza_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "beam",
-   "role": "charge_start",
+   "role": "charge",
    "variant": "charge",
-   "sequenceIndex": 0,
-   "runtimePoses": [
-    "beam_charge"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "sequenceIndex": 1,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "",
     "frame": "001_beam_charge.png",
     "x": null,
     "y": null
    },
-   "frameKind": "fixed_only"
+   "frameKind": "fixed_only",
+   "note": "nombre de archivo del sheet (charge)"
   },
   {
-   "_manifestName": "frieza_base_beam_charge_02",
    "sourceId": "frieza_base/002_beam_charge.png",
-   "canonicalId": "frieza_base.beam.charge_start.charge.02.002_beam_charge",
+   "canonicalId": "frieza_base.beam.charge.charge.02.002_beam_charge",
    "characterId": "frieza",
    "formId": "frieza_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "beam",
-   "role": "charge_start",
+   "role": "charge",
    "variant": "charge",
    "sequenceIndex": 2,
-   "runtimePoses": [
-    "beam_charge"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "",
     "frame": "002_beam_charge.png",
     "x": null,
     "y": null
    },
-   "frameKind": "fixed_only"
+   "frameKind": "fixed_only",
+   "note": "nombre de archivo del sheet (charge)"
   },
   {
-   "_manifestName": "frieza_base_beam_charge_03",
    "sourceId": "frieza_base/003_beam_charge.png",
-   "canonicalId": "frieza_base.beam.charge_hold.charge.03.003_beam_charge",
+   "canonicalId": "frieza_base.beam.charge.charge.03.003_beam_charge",
    "characterId": "frieza",
    "formId": "frieza_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "beam",
-   "role": "charge_hold",
+   "role": "charge",
    "variant": "charge",
    "sequenceIndex": 3,
-   "runtimePoses": [
-    "beam_charge"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "",
     "frame": "003_beam_charge.png",
     "x": null,
     "y": null
    },
-   "frameKind": "fixed_only"
+   "frameKind": "fixed_only",
+   "note": "nombre de archivo del sheet (charge)"
   },
   {
-   "_manifestName": "frieza_base_beam_charge_04",
    "sourceId": "frieza_base/004_beam_charge.png",
-   "canonicalId": "frieza_base.beam.charge_hold.charge.04.004_beam_charge",
+   "canonicalId": "frieza_base.beam.charge.charge.04.004_beam_charge",
    "characterId": "frieza",
    "formId": "frieza_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "beam",
-   "role": "charge_hold",
+   "role": "charge",
    "variant": "charge",
    "sequenceIndex": 4,
-   "runtimePoses": [
-    "beam_charge"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "",
     "frame": "004_beam_charge.png",
     "x": null,
     "y": null
    },
-   "frameKind": "fixed_only"
+   "frameKind": "fixed_only",
+   "note": "nombre de archivo del sheet (charge)"
   },
   {
    "sourceId": "frieza_base/005_hurt.png",

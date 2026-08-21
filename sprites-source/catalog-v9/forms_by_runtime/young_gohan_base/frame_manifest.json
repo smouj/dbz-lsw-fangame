@@ -3,85 +3,73 @@
  "frameCount": 57,
  "frames": [
   {
-   "_manifestName": "young_gohan_base_idle_00",
    "sourceId": "young_gohan_base/001.png",
-   "canonicalId": "young_gohan_base.idle.idle.idle.00.001",
+   "canonicalId": "young_gohan_base.movement.move_or_attack.move_or_attack.00.001",
    "characterId": "young_gohan",
    "formId": "young_gohan_base",
    "assetType": "actor_frame",
    "view": "FIELD",
-   "family": "idle",
-   "role": "idle",
-   "variant": "idle",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "idle",
-    "guard",
-    "punch_right",
-    "punch_left",
-    "beam_guard"
-   ],
-   "evidence": "CANONICAL",
-   "canonStatus": "CANONICAL",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "gohan.png",
     "frame": "001.png",
     "x": "17",
     "y": "59"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "young_gohan_base_guard_01",
    "sourceId": "young_gohan_base/002.png",
-   "canonicalId": "young_gohan_base.defense.hold.guard.01.002",
+   "canonicalId": "young_gohan_base.movement.move_or_attack.move_or_attack.00.002",
    "characterId": "young_gohan",
    "formId": "young_gohan_base",
    "assetType": "actor_frame",
    "view": "FIELD",
-   "family": "defense",
-   "role": "hold",
-   "variant": "guard",
-   "sequenceIndex": 1,
-   "runtimePoses": [
-    "guard",
-    "beam_guard"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "gohan.png",
     "frame": "002.png",
     "x": "52",
     "y": "61"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "young_gohan_base_guard_02",
    "sourceId": "young_gohan_base/003.png",
-   "canonicalId": "young_gohan_base.defense.recover.guard.02.003",
+   "canonicalId": "young_gohan_base.movement.move_or_attack.move_or_attack.00.003",
    "characterId": "young_gohan",
    "formId": "young_gohan_base",
    "assetType": "actor_frame",
    "view": "FIELD",
-   "family": "defense",
-   "role": "recover",
-   "variant": "guard",
-   "sequenceIndex": 2,
-   "runtimePoses": [
-    "guard",
-    "beam_guard"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "gohan.png",
     "frame": "003.png",
     "x": "90",
     "y": "61"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
    "sourceId": "young_gohan_base/004.png",
@@ -107,257 +95,234 @@
    "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "young_gohan_base_evade_01",
    "sourceId": "young_gohan_base/005.png",
-   "canonicalId": "young_gohan_base.defense.recover.evade.01.005",
+   "canonicalId": "young_gohan_base.effect.misc.misc.00.005",
    "characterId": "young_gohan",
    "formId": "young_gohan_base",
-   "assetType": "actor_frame",
+   "assetType": "effect",
    "view": "FIELD",
-   "family": "defense",
-   "role": "recover",
-   "variant": "evade",
-   "sequenceIndex": 1,
-   "runtimePoses": [
-    "evade"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "family": "effect",
+   "role": "misc",
+   "variant": "misc",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "gohan.png",
     "frame": "005.png",
     "x": "16",
     "y": "121"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: nonbody_misc"
   },
   {
-   "_manifestName": "young_gohan_base_evade_00",
    "sourceId": "young_gohan_base/006.png",
-   "canonicalId": "young_gohan_base.defense.start.evade.00.006",
+   "canonicalId": "young_gohan_base.effect.speedlines.speedlines.00.006",
    "characterId": "young_gohan",
    "formId": "young_gohan_base",
-   "assetType": "actor_frame",
+   "assetType": "effect",
    "view": "FIELD",
-   "family": "defense",
-   "role": "start",
-   "variant": "evade",
+   "family": "effect",
+   "role": "speedlines",
+   "variant": "speedlines",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "evade"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "gohan.png",
     "frame": "006.png",
     "x": "67",
     "y": "111"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: speedlines"
   },
   {
-   "_manifestName": "young_gohan_base_move_front_01",
    "sourceId": "young_gohan_base/007.png",
-   "canonicalId": "young_gohan_base.movement.start.move_back.00.007.png",
+   "canonicalId": "young_gohan_base.movement.move_or_attack.move_or_attack.00.007",
    "characterId": "young_gohan",
    "formId": "young_gohan_base",
    "assetType": "actor_frame",
    "view": "FIELD",
    "family": "movement",
-   "role": "start",
-   "variant": "move_back",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "move_front",
-    "move_back"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "gohan.png",
     "frame": "007.png",
     "x": "103",
     "y": "112"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "young_gohan_base_move_front_00",
    "sourceId": "young_gohan_base/008.png",
-   "canonicalId": "young_gohan_base.movement.start.move_front.00.008",
+   "canonicalId": "young_gohan_base.movement.move_or_attack.move_or_attack.00.008",
    "characterId": "young_gohan",
    "formId": "young_gohan_base",
    "assetType": "actor_frame",
    "view": "FIELD",
    "family": "movement",
-   "role": "start",
-   "variant": "move_front",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "move_front",
-    "move_back"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "gohan.png",
     "frame": "008.png",
     "x": "145",
     "y": "115"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "young_gohan_base_hurt_00",
    "sourceId": "young_gohan_base/009.png",
-   "canonicalId": "young_gohan_base.reaction.hurt_light.hurt.00.009",
+   "canonicalId": "young_gohan_base.movement.move_or_attack.move_or_attack.00.009",
    "characterId": "young_gohan",
    "formId": "young_gohan_base",
    "assetType": "actor_frame",
    "view": "FIELD",
-   "family": "reaction",
-   "role": "hurt_light",
-   "variant": "hurt",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "hurt"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "gohan.png",
     "frame": "009.png",
     "x": "17",
     "y": "164"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "young_gohan_base_hurt_01",
    "sourceId": "young_gohan_base/010.png",
-   "canonicalId": "young_gohan_base.reaction.hurt_heavy.hurt.01.010",
+   "canonicalId": "young_gohan_base.movement.move_or_attack.move_or_attack.00.010",
    "characterId": "young_gohan",
    "formId": "young_gohan_base",
    "assetType": "actor_frame",
    "view": "FIELD",
-   "family": "reaction",
-   "role": "hurt_heavy",
-   "variant": "hurt",
-   "sequenceIndex": 1,
-   "runtimePoses": [
-    "hurt"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "gohan.png",
     "frame": "010.png",
     "x": "51",
     "y": "166"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "young_gohan_base_hurt_02",
    "sourceId": "young_gohan_base/011.png",
-   "canonicalId": "young_gohan_base.reaction.hurt_heavy.hurt.02.011",
+   "canonicalId": "young_gohan_base.movement.move_or_attack.move_or_attack.00.011",
    "characterId": "young_gohan",
    "formId": "young_gohan_base",
    "assetType": "actor_frame",
    "view": "FIELD",
-   "family": "reaction",
-   "role": "hurt_heavy",
-   "variant": "hurt",
-   "sequenceIndex": 2,
-   "runtimePoses": [
-    "hurt"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "gohan.png",
     "frame": "011.png",
     "x": "93",
     "y": "173"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "young_gohan_base_hurt_03",
    "sourceId": "young_gohan_base/012.png",
-   "canonicalId": "young_gohan_base.reaction.hurt_heavy.hurt.03.012",
+   "canonicalId": "young_gohan_base.movement.move_or_attack.move_or_attack.00.012",
    "characterId": "young_gohan",
    "formId": "young_gohan_base",
    "assetType": "actor_frame",
    "view": "FIELD",
-   "family": "reaction",
-   "role": "hurt_heavy",
-   "variant": "hurt",
-   "sequenceIndex": 3,
-   "runtimePoses": [
-    "hurt"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "gohan.png",
     "frame": "012.png",
     "x": "134",
     "y": "166"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "young_gohan_base_hurt_04",
    "sourceId": "young_gohan_base/013.png",
-   "canonicalId": "young_gohan_base.reaction.hurt_heavy.hurt.04.013",
+   "canonicalId": "young_gohan_base.movement.move_or_attack.move_or_attack.00.013",
    "characterId": "young_gohan",
    "formId": "young_gohan_base",
    "assetType": "actor_frame",
    "view": "FIELD",
-   "family": "reaction",
-   "role": "hurt_heavy",
-   "variant": "hurt",
-   "sequenceIndex": 4,
-   "runtimePoses": [
-    "hurt"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "gohan.png",
     "frame": "013.png",
     "x": "172",
     "y": "169"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "young_gohan_base_attack_fwd_05",
    "sourceId": "young_gohan_base/014.png",
-   "canonicalId": "young_gohan_base.melee.strike.punch_left.03.014.png",
+   "canonicalId": "young_gohan_base.idle.stance.stance.00.014",
    "characterId": "young_gohan",
    "formId": "young_gohan_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "strike",
-   "variant": "punch_left",
-   "sequenceIndex": 3,
-   "runtimePoses": [
-    "attack_fwd",
-    "punch_left"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "view": "FIELD",
+   "family": "idle",
+   "role": "stance",
+   "variant": "stance",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "gohan.png",
     "frame": "014.png",
     "x": "206",
     "y": "162"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: idle_or_stance"
   },
   {
    "sourceId": "young_gohan_base/015.png",
@@ -406,262 +371,234 @@
    "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "young_gohan_base_gather_power_00",
    "sourceId": "young_gohan_base/017.png",
-   "canonicalId": "young_gohan_base.power.gather_power.gather_power.00.017",
+   "canonicalId": "young_gohan_base.movement.move_or_attack.move_or_attack.00.017",
    "characterId": "young_gohan",
    "formId": "young_gohan_base",
-   "assetType": "composite",
-   "view": "ACTION_DUEL",
-   "family": "power",
-   "role": "gather_power",
-   "variant": "gather_power",
+   "assetType": "actor_frame",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "gather_power",
-    "power_up"
-   ],
-   "evidence": "CANONICAL",
-   "canonStatus": "CANONICAL",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "gohan.png",
     "frame": "017.png",
     "x": "65",
     "y": "216"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "young_gohan_base_attack_fwd_06",
    "sourceId": "young_gohan_base/018.png",
-   "canonicalId": "young_gohan_base.reaction.knockback_up.up.00.018.png",
+   "canonicalId": "young_gohan_base.movement.move_or_attack.move_or_attack.00.018",
    "characterId": "young_gohan",
    "formId": "young_gohan_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "reaction",
-   "role": "knockback_up",
-   "variant": "up",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "attack_fwd",
-    "punch_left",
-    "knockback_up"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "gohan.png",
     "frame": "018.png",
     "x": "108",
     "y": "216"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "young_gohan_base_attack_ud_00",
    "sourceId": "young_gohan_base/019.png",
-   "canonicalId": "young_gohan_base.melee.ready.attack_vertical.00.019",
+   "canonicalId": "young_gohan_base.movement.move_or_attack.move_or_attack.00.019",
    "characterId": "young_gohan",
    "formId": "young_gohan_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "ready",
-   "variant": "attack_vertical",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "attack_ud"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "gohan.png",
     "frame": "019.png",
     "x": "153",
     "y": "215"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "young_gohan_base_attack_ud_01",
    "sourceId": "young_gohan_base/020.png",
-   "canonicalId": "young_gohan_base.reaction.knockback_back.back.00.020.png",
+   "canonicalId": "young_gohan_base.movement.move_or_attack.move_or_attack.00.020",
    "characterId": "young_gohan",
    "formId": "young_gohan_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "reaction",
-   "role": "knockback_back",
-   "variant": "back",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "attack_ud",
-    "knockback_back"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "gohan.png",
     "frame": "020.png",
     "x": "193",
     "y": "217"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "young_gohan_base_attack_ud_02",
    "sourceId": "young_gohan_base/021.png",
-   "canonicalId": "young_gohan_base.melee.contact.attack_vertical.02.021",
+   "canonicalId": "young_gohan_base.movement.move_or_attack.move_or_attack.00.021",
    "characterId": "young_gohan",
    "formId": "young_gohan_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "contact",
-   "variant": "attack_vertical",
-   "sequenceIndex": 2,
-   "runtimePoses": [
-    "attack_ud"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "gohan.png",
     "frame": "021.png",
     "x": "231",
     "y": "214"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "young_gohan_base_attack_ud_03",
    "sourceId": "young_gohan_base/022.png",
-   "canonicalId": "young_gohan_base.reaction.knockback_down.down.00.022.png",
+   "canonicalId": "young_gohan_base.movement.move_or_attack.move_or_attack.00.022",
    "characterId": "young_gohan",
    "formId": "young_gohan_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "reaction",
-   "role": "knockback_down",
-   "variant": "down",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "attack_ud",
-    "knockback_down"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "gohan.png",
     "frame": "022.png",
     "x": "264",
     "y": "225"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "young_gohan_base_gather_power_00",
    "sourceId": "young_gohan_base/023.png",
-   "canonicalId": "young_gohan_base.power.gather_power.gather_power.00.023",
+   "canonicalId": "young_gohan_base.movement.move_or_attack.move_or_attack.00.023",
    "characterId": "young_gohan",
    "formId": "young_gohan_base",
-   "assetType": "composite",
-   "view": "ACTION_DUEL",
-   "family": "power",
-   "role": "gather_power",
-   "variant": "gather_power",
+   "assetType": "actor_frame",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "gather_power",
-    "power_up"
-   ],
-   "evidence": "CANONICAL",
-   "canonStatus": "CANONICAL",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "gohan.png",
     "frame": "023.png",
     "x": "21",
     "y": "268"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "young_gohan_base_beam_charge_00",
    "sourceId": "young_gohan_base/024.png",
-   "canonicalId": "young_gohan_base.beam.charge_start.charge.00.024",
+   "canonicalId": "young_gohan_base.movement.move_or_attack.move_or_attack.00.024",
    "characterId": "young_gohan",
    "formId": "young_gohan_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "beam",
-   "role": "charge_start",
-   "variant": "charge",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "beam_charge",
-    "kick_right"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "gohan.png",
     "frame": "024.png",
     "x": "59",
     "y": "269"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "young_gohan_base_kick_right_01",
    "sourceId": "young_gohan_base/025.png",
-   "canonicalId": "young_gohan_base.melee.strike.kick_right.01.025",
+   "canonicalId": "young_gohan_base.movement.move_or_attack.move_or_attack.00.025",
    "characterId": "young_gohan",
    "formId": "young_gohan_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "strike",
-   "variant": "kick_right",
-   "sequenceIndex": 1,
-   "runtimePoses": [
-    "kick_right"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "gohan.png",
     "frame": "025.png",
     "x": "110",
     "y": "270"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "young_gohan_base_gather_power_01",
    "sourceId": "young_gohan_base/026.png",
-   "canonicalId": "young_gohan_base.power.gather_power.gather_power.01.026",
+   "canonicalId": "young_gohan_base.movement.move_or_attack.move_or_attack.00.026",
    "characterId": "young_gohan",
    "formId": "young_gohan_base",
-   "assetType": "composite",
-   "view": "ACTION_DUEL",
-   "family": "power",
-   "role": "gather_power",
-   "variant": "gather_power",
-   "sequenceIndex": 1,
-   "runtimePoses": [
-    "gather_power",
-    "power_up"
-   ],
-   "evidence": "CANONICAL",
-   "canonStatus": "CANONICAL",
+   "assetType": "actor_frame",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "gohan.png",
     "frame": "026.png",
     "x": "154",
     "y": "268"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
    "sourceId": "young_gohan_base/027.png",
@@ -756,30 +693,27 @@
    "note": "bucket forense: battle_aura_actor_composite"
   },
   {
-   "_manifestName": "young_gohan_base_beam_charge_00",
    "sourceId": "young_gohan_base/031.png",
-   "canonicalId": "young_gohan_base.beam.charge_start.charge.00.031",
+   "canonicalId": "young_gohan_base.movement.move_or_attack.move_or_attack.00.031",
    "characterId": "young_gohan",
    "formId": "young_gohan_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "beam",
-   "role": "charge_start",
-   "variant": "charge",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "beam_charge",
-    "kick_right"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "gohan.png",
     "frame": "031.png",
     "x": "22",
     "y": "327"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
    "sourceId": "young_gohan_base/032.png",
@@ -805,79 +739,73 @@
    "note": "bucket forense: projectiles_beams"
   },
   {
-   "_manifestName": "young_gohan_base_aura_power_00",
    "sourceId": "young_gohan_base/033.png",
-   "canonicalId": "young_gohan_base.effect.aura.aura_power.00.033",
+   "canonicalId": "young_gohan_base.effect.orbs_rings_bursts.orbs_rings_bursts.00.033",
    "characterId": "young_gohan",
    "formId": "young_gohan_base",
    "assetType": "effect",
    "view": "FIELD",
    "family": "effect",
-   "role": "aura",
-   "variant": "aura_power",
+   "role": "orbs_rings_bursts",
+   "variant": "orbs_rings_bursts",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "aura_power"
-   ],
-   "evidence": "CANONICAL",
-   "canonStatus": "CANONICAL",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "gohan.png",
     "frame": "033.png",
     "x": "215",
     "y": "313"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: orbs_rings_bursts"
   },
   {
-   "_manifestName": "young_gohan_base_aura_power_01",
    "sourceId": "young_gohan_base/034.png",
-   "canonicalId": "young_gohan_base.effect.aura.aura_power.01.034",
+   "canonicalId": "young_gohan_base.effect.orbs_rings_bursts.orbs_rings_bursts.00.034",
    "characterId": "young_gohan",
    "formId": "young_gohan_base",
    "assetType": "effect",
    "view": "FIELD",
    "family": "effect",
-   "role": "aura",
-   "variant": "aura_power",
-   "sequenceIndex": 1,
-   "runtimePoses": [
-    "aura_power"
-   ],
-   "evidence": "CANONICAL",
-   "canonStatus": "CANONICAL",
+   "role": "orbs_rings_bursts",
+   "variant": "orbs_rings_bursts",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "gohan.png",
     "frame": "034.png",
     "x": "287",
     "y": "313"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: orbs_rings_bursts"
   },
   {
-   "_manifestName": "young_gohan_base_aura_power_02",
    "sourceId": "young_gohan_base/035.png",
-   "canonicalId": "young_gohan_base.effect.aura.aura_power.02.035",
+   "canonicalId": "young_gohan_base.effect.orbs_rings_bursts.orbs_rings_bursts.00.035",
    "characterId": "young_gohan",
    "formId": "young_gohan_base",
    "assetType": "effect",
    "view": "FIELD",
    "family": "effect",
-   "role": "aura",
-   "variant": "aura_power",
-   "sequenceIndex": 2,
-   "runtimePoses": [
-    "aura_power"
-   ],
-   "evidence": "CANONICAL",
-   "canonStatus": "CANONICAL",
+   "role": "orbs_rings_bursts",
+   "variant": "orbs_rings_bursts",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "gohan.png",
     "frame": "035.png",
     "x": "362",
     "y": "313"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: orbs_rings_bursts"
   },
   {
    "sourceId": "young_gohan_base/036.png",
@@ -903,29 +831,27 @@
    "note": "bucket forense: projectile_orb_small"
   },
   {
-   "_manifestName": "young_gohan_base_beam_charge_02",
    "sourceId": "young_gohan_base/037.png",
-   "canonicalId": "young_gohan_base.beam.charge_hold.charge.02.037",
+   "canonicalId": "young_gohan_base.movement.move_or_attack.move_or_attack.00.037",
    "characterId": "young_gohan",
    "formId": "young_gohan_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "beam",
-   "role": "charge_hold",
-   "variant": "charge",
-   "sequenceIndex": 2,
-   "runtimePoses": [
-    "beam_charge"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "gohan.png",
     "frame": "037.png",
     "x": "17",
     "y": "405"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
    "sourceId": "young_gohan_base/038.png",
@@ -974,29 +900,27 @@
    "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "young_gohan_base_beam_fire_00",
    "sourceId": "young_gohan_base/040.png",
-   "canonicalId": "young_gohan_base.beam.release.fire.00.040",
+   "canonicalId": "young_gohan_base.movement.move_or_attack.move_or_attack.00.040",
    "characterId": "young_gohan",
    "formId": "young_gohan_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "beam",
-   "role": "release",
-   "variant": "fire",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "beam_fire"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "gohan.png",
     "frame": "040.png",
     "x": "246",
     "y": "401"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
    "sourceId": "young_gohan_base/041.png",
@@ -1045,264 +969,238 @@
    "note": "bucket forense: speedlines"
   },
   {
-   "_manifestName": "young_gohan_base_aura_support_00",
    "sourceId": "young_gohan_base/043.png",
-   "canonicalId": "young_gohan_base.effect.aura.aura_support.00.043",
+   "canonicalId": "young_gohan_base.unclassified.043",
    "characterId": "young_gohan",
    "formId": "young_gohan_base",
-   "assetType": "effect",
+   "assetType": "unclassified",
    "view": "FIELD",
-   "family": "effect",
-   "role": "aura",
-   "variant": "aura_support",
+   "family": "unclassified",
+   "role": "unclassified",
+   "variant": "",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "aura_support"
-   ],
-   "evidence": "CANONICAL",
-   "canonStatus": "CANONICAL",
+   "runtimePoses": [],
+   "evidence": "UNKNOWN",
+   "canonStatus": "UNCLASSIFIED",
    "source": {
     "sheet": "",
     "frame": "043.png",
     "x": null,
     "y": null
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "sin evidencia runtime ni bucket"
   },
   {
-   "_manifestName": "young_gohan_base_aura_support_01",
    "sourceId": "young_gohan_base/044.png",
-   "canonicalId": "young_gohan_base.effect.aura.aura_support.01.044",
+   "canonicalId": "young_gohan_base.unclassified.044",
    "characterId": "young_gohan",
    "formId": "young_gohan_base",
-   "assetType": "effect",
+   "assetType": "unclassified",
    "view": "FIELD",
-   "family": "effect",
-   "role": "aura",
-   "variant": "aura_support",
-   "sequenceIndex": 1,
-   "runtimePoses": [
-    "aura_support"
-   ],
-   "evidence": "CANONICAL",
-   "canonStatus": "CANONICAL",
+   "family": "unclassified",
+   "role": "unclassified",
+   "variant": "",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "UNKNOWN",
+   "canonStatus": "UNCLASSIFIED",
    "source": {
     "sheet": "",
     "frame": "044.png",
     "x": null,
     "y": null
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "sin evidencia runtime ni bucket"
   },
   {
-   "_manifestName": "young_gohan_base_aura_support_02",
    "sourceId": "young_gohan_base/045.png",
-   "canonicalId": "young_gohan_base.effect.aura.aura_support.02.045",
+   "canonicalId": "young_gohan_base.unclassified.045",
    "characterId": "young_gohan",
    "formId": "young_gohan_base",
-   "assetType": "effect",
+   "assetType": "unclassified",
    "view": "FIELD",
-   "family": "effect",
-   "role": "aura",
-   "variant": "aura_support",
-   "sequenceIndex": 2,
-   "runtimePoses": [
-    "aura_support"
-   ],
-   "evidence": "CANONICAL",
-   "canonStatus": "CANONICAL",
+   "family": "unclassified",
+   "role": "unclassified",
+   "variant": "",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "UNKNOWN",
+   "canonStatus": "UNCLASSIFIED",
    "source": {
     "sheet": "",
     "frame": "045.png",
     "x": null,
     "y": null
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "sin evidencia runtime ni bucket"
   },
   {
-   "_manifestName": "young_gohan_base_attack_fwd_00",
    "sourceId": "young_gohan_base/000_attack_fwd.png",
-   "canonicalId": "young_gohan_base.melee.ready.attack_forward.00.000_attack_fwd",
+   "canonicalId": "young_gohan_base.melee.attack_forward.attack_forward.00.000_attack_fwd",
    "characterId": "young_gohan",
    "formId": "young_gohan_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "ready",
+   "role": "attack_forward",
    "variant": "attack_forward",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "attack_fwd",
-    "punch_right"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "",
     "frame": "000_attack_fwd.png",
     "x": null,
     "y": null
    },
-   "frameKind": "fixed_only"
+   "frameKind": "fixed_only",
+   "note": "nombre de archivo del sheet (fwd)"
   },
   {
-   "_manifestName": "young_gohan_base_attack_fwd_01",
    "sourceId": "young_gohan_base/001_attack_fwd.png",
-   "canonicalId": "young_gohan_base.melee.windup.attack_forward.01.001_attack_fwd",
+   "canonicalId": "young_gohan_base.melee.attack_forward.attack_forward.01.001_attack_fwd",
    "characterId": "young_gohan",
    "formId": "young_gohan_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "windup",
+   "role": "attack_forward",
    "variant": "attack_forward",
    "sequenceIndex": 1,
-   "runtimePoses": [
-    "attack_fwd",
-    "punch_right"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "",
     "frame": "001_attack_fwd.png",
     "x": null,
     "y": null
    },
-   "frameKind": "fixed_only"
+   "frameKind": "fixed_only",
+   "note": "nombre de archivo del sheet (fwd)"
   },
   {
-   "_manifestName": "young_gohan_base_attack_fwd_02",
    "sourceId": "young_gohan_base/002_attack_fwd.png",
-   "canonicalId": "young_gohan_base.melee.travel.attack_forward.02.002_attack_fwd",
+   "canonicalId": "young_gohan_base.melee.attack_forward.attack_forward.02.002_attack_fwd",
    "characterId": "young_gohan",
    "formId": "young_gohan_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "travel",
+   "role": "attack_forward",
    "variant": "attack_forward",
    "sequenceIndex": 2,
-   "runtimePoses": [
-    "attack_fwd",
-    "punch_right"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "",
     "frame": "002_attack_fwd.png",
     "x": null,
     "y": null
    },
-   "frameKind": "fixed_only"
+   "frameKind": "fixed_only",
+   "note": "nombre de archivo del sheet (fwd)"
   },
   {
-   "_manifestName": "young_gohan_base_attack_fwd_03",
    "sourceId": "young_gohan_base/003_attack_fwd.png",
-   "canonicalId": "young_gohan_base.melee.strike.punch_left.01.003_attack_fwd.png",
+   "canonicalId": "young_gohan_base.melee.attack_forward.attack_forward.03.003_attack_fwd",
    "characterId": "young_gohan",
    "formId": "young_gohan_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "strike",
-   "variant": "punch_left",
-   "sequenceIndex": 1,
-   "runtimePoses": [
-    "attack_fwd",
-    "punch_left"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "role": "attack_forward",
+   "variant": "attack_forward",
+   "sequenceIndex": 3,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "",
     "frame": "003_attack_fwd.png",
     "x": null,
     "y": null
    },
-   "frameKind": "fixed_only"
+   "frameKind": "fixed_only",
+   "note": "nombre de archivo del sheet (fwd)"
   },
   {
-   "_manifestName": "young_gohan_base_attack_fwd_04",
    "sourceId": "young_gohan_base/004_attack_fwd.png",
-   "canonicalId": "young_gohan_base.melee.strike.punch_left.02.004_attack_fwd.png",
+   "canonicalId": "young_gohan_base.melee.attack_forward.attack_forward.04.004_attack_fwd",
    "characterId": "young_gohan",
    "formId": "young_gohan_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "strike",
-   "variant": "punch_left",
-   "sequenceIndex": 2,
-   "runtimePoses": [
-    "attack_fwd",
-    "punch_left"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "role": "attack_forward",
+   "variant": "attack_forward",
+   "sequenceIndex": 4,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "",
     "frame": "004_attack_fwd.png",
     "x": null,
     "y": null
    },
-   "frameKind": "fixed_only"
+   "frameKind": "fixed_only",
+   "note": "nombre de archivo del sheet (fwd)"
   },
   {
-   "_manifestName": "young_gohan_base_beam_charge_01",
    "sourceId": "young_gohan_base/005_beam_charge.png",
-   "canonicalId": "young_gohan_base.beam.charge_start.charge.01.005_beam_charge",
+   "canonicalId": "young_gohan_base.beam.charge.charge.05.005_beam_charge",
    "characterId": "young_gohan",
    "formId": "young_gohan_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "beam",
-   "role": "charge_start",
+   "role": "charge",
    "variant": "charge",
-   "sequenceIndex": 1,
-   "runtimePoses": [
-    "beam_charge"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "sequenceIndex": 5,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "",
     "frame": "005_beam_charge.png",
     "x": null,
     "y": null
    },
-   "frameKind": "fixed_only"
+   "frameKind": "fixed_only",
+   "note": "nombre de archivo del sheet (charge)"
   },
   {
-   "_manifestName": "young_gohan_base_beam_charge_03",
    "sourceId": "young_gohan_base/006_beam_charge.png",
-   "canonicalId": "young_gohan_base.beam.charge_hold.charge.03.006_beam_charge",
+   "canonicalId": "young_gohan_base.beam.charge.charge.06.006_beam_charge",
    "characterId": "young_gohan",
    "formId": "young_gohan_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "beam",
-   "role": "charge_hold",
+   "role": "charge",
    "variant": "charge",
-   "sequenceIndex": 3,
-   "runtimePoses": [
-    "beam_charge"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "sequenceIndex": 6,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "",
     "frame": "006_beam_charge.png",
     "x": null,
     "y": null
    },
-   "frameKind": "fixed_only"
+   "frameKind": "fixed_only",
+   "note": "nombre de archivo del sheet (charge)"
   },
   {
-   "_manifestName": "young_gohan_base_beam_fire_01",
    "sourceId": "young_gohan_base/007_beam_fire.png",
-   "canonicalId": "young_gohan_base.beam.release.fire.01.007_beam_fire",
+   "canonicalId": "young_gohan_base.beam.release.fire.07.007_beam_fire",
    "characterId": "young_gohan",
    "formId": "young_gohan_base",
    "assetType": "actor_frame",
@@ -1310,19 +1208,18 @@
    "family": "beam",
    "role": "release",
    "variant": "fire",
-   "sequenceIndex": 1,
-   "runtimePoses": [
-    "beam_fire"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "sequenceIndex": 7,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "",
     "frame": "007_beam_fire.png",
     "x": null,
     "y": null
    },
-   "frameKind": "fixed_only"
+   "frameKind": "fixed_only",
+   "note": "nombre de archivo del sheet (fire)"
   },
   {
    "sourceId": "young_gohan_base/008_guard.png",

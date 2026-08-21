@@ -336,7 +336,7 @@ function FrameBrowser({ formId, analysis, dir }: {
     try { localStorage.setItem(FRAME_OVERRIDES_KEY, JSON.stringify(overrides)); } catch { /* noop */ }
   }, [overrides]);
 
-  const groups = groupFramesByPose(analysis.frames, dir);
+  const groups = groupFramesByPose(analysis.frames, dir, analysis.usages);
   const activeGroup = groups.find(g => g.pose === pose) ?? groups[0];
 
   useEffect(() => {

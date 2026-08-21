@@ -157,6 +157,8 @@ export function AnimationModule({ target }: { target?: DevLinkedTarget | null })
       saveOverride(dir, next);
       return next;
     });
+    setOverridden(true); // marca el badge de overrides locales (antes solo se
+    // actualizaba al cargar — editar fps/loop/orden dejaba el badge oculto)
     setStatus(null);
   }
 

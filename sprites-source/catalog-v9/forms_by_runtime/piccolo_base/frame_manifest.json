@@ -3,85 +3,73 @@
  "frameCount": 65,
  "frames": [
   {
-   "_manifestName": "piccolo_base_idle_00",
    "sourceId": "piccolo_base/001.png",
-   "canonicalId": "piccolo_base.idle.idle.idle.00.001",
+   "canonicalId": "piccolo_base.movement.move_or_attack.move_or_attack.00.001",
    "characterId": "piccolo",
    "formId": "piccolo_base",
    "assetType": "actor_frame",
    "view": "FIELD",
-   "family": "idle",
-   "role": "idle",
-   "variant": "idle",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "idle",
-    "guard",
-    "punch_right",
-    "punch_left",
-    "beam_guard"
-   ],
-   "evidence": "CANONICAL",
-   "canonStatus": "CANONICAL",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "piccolo.png",
     "frame": "001.png",
     "x": "8",
     "y": "20"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "piccolo_base_guard_01",
    "sourceId": "piccolo_base/002.png",
-   "canonicalId": "piccolo_base.defense.hold.guard.01.002",
+   "canonicalId": "piccolo_base.movement.move_or_attack.move_or_attack.00.002",
    "characterId": "piccolo",
    "formId": "piccolo_base",
    "assetType": "actor_frame",
    "view": "FIELD",
-   "family": "defense",
-   "role": "hold",
-   "variant": "guard",
-   "sequenceIndex": 1,
-   "runtimePoses": [
-    "guard",
-    "beam_guard"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "piccolo.png",
     "frame": "002.png",
     "x": "50",
     "y": "19"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "piccolo_base_guard_02",
    "sourceId": "piccolo_base/003.png",
-   "canonicalId": "piccolo_base.defense.recover.guard.02.003",
+   "canonicalId": "piccolo_base.movement.move_or_attack.move_or_attack.00.003",
    "characterId": "piccolo",
    "formId": "piccolo_base",
    "assetType": "actor_frame",
    "view": "FIELD",
-   "family": "defense",
-   "role": "recover",
-   "variant": "guard",
-   "sequenceIndex": 2,
-   "runtimePoses": [
-    "guard",
-    "beam_guard"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "piccolo.png",
     "frame": "003.png",
     "x": "89",
     "y": "21"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
    "sourceId": "piccolo_base/004.png",
@@ -107,257 +95,234 @@
    "note": "bucket forense: idle_or_stance"
   },
   {
-   "_manifestName": "piccolo_base_evade_01",
    "sourceId": "piccolo_base/005.png",
-   "canonicalId": "piccolo_base.defense.recover.evade.01.005",
+   "canonicalId": "piccolo_base.effect.misc.misc.00.005",
    "characterId": "piccolo",
    "formId": "piccolo_base",
-   "assetType": "actor_frame",
+   "assetType": "effect",
    "view": "FIELD",
-   "family": "defense",
-   "role": "recover",
-   "variant": "evade",
-   "sequenceIndex": 1,
-   "runtimePoses": [
-    "evade"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "family": "effect",
+   "role": "misc",
+   "variant": "misc",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "piccolo.png",
     "frame": "005.png",
     "x": "7",
     "y": "76"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: nonbody_misc"
   },
   {
-   "_manifestName": "piccolo_base_evade_00",
    "sourceId": "piccolo_base/006.png",
-   "canonicalId": "piccolo_base.defense.start.evade.00.006",
+   "canonicalId": "piccolo_base.effect.speedlines.speedlines.00.006",
    "characterId": "piccolo",
    "formId": "piccolo_base",
-   "assetType": "actor_frame",
+   "assetType": "effect",
    "view": "FIELD",
-   "family": "defense",
-   "role": "start",
-   "variant": "evade",
+   "family": "effect",
+   "role": "speedlines",
+   "variant": "speedlines",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "evade"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "piccolo.png",
     "frame": "006.png",
     "x": "58",
     "y": "69"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: speedlines"
   },
   {
-   "_manifestName": "piccolo_base_move_front_01",
    "sourceId": "piccolo_base/007.png",
-   "canonicalId": "piccolo_base.movement.start.move_back.00.007.png",
+   "canonicalId": "piccolo_base.movement.move_or_attack.move_or_attack.00.007",
    "characterId": "piccolo",
    "formId": "piccolo_base",
    "assetType": "actor_frame",
    "view": "FIELD",
    "family": "movement",
-   "role": "start",
-   "variant": "move_back",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "move_front",
-    "move_back"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "piccolo.png",
     "frame": "007.png",
     "x": "90",
     "y": "67"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "piccolo_base_move_front_00",
    "sourceId": "piccolo_base/008.png",
-   "canonicalId": "piccolo_base.movement.start.move_front.00.008",
+   "canonicalId": "piccolo_base.movement.move_or_attack.move_or_attack.00.008",
    "characterId": "piccolo",
    "formId": "piccolo_base",
    "assetType": "actor_frame",
    "view": "FIELD",
    "family": "movement",
-   "role": "start",
-   "variant": "move_front",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "move_front",
-    "move_back"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "piccolo.png",
     "frame": "008.png",
     "x": "129",
     "y": "71"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "piccolo_base_hurt_00",
    "sourceId": "piccolo_base/009.png",
-   "canonicalId": "piccolo_base.reaction.hurt_light.hurt.00.009",
+   "canonicalId": "piccolo_base.movement.move_or_attack.move_or_attack.00.009",
    "characterId": "piccolo",
    "formId": "piccolo_base",
    "assetType": "actor_frame",
    "view": "FIELD",
-   "family": "reaction",
-   "role": "hurt_light",
-   "variant": "hurt",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "hurt"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "piccolo.png",
     "frame": "009.png",
     "x": "3",
     "y": "123"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "piccolo_base_hurt_01",
    "sourceId": "piccolo_base/010.png",
-   "canonicalId": "piccolo_base.reaction.hurt_heavy.hurt.01.010",
+   "canonicalId": "piccolo_base.movement.move_or_attack.move_or_attack.00.010",
    "characterId": "piccolo",
    "formId": "piccolo_base",
    "assetType": "actor_frame",
    "view": "FIELD",
-   "family": "reaction",
-   "role": "hurt_heavy",
-   "variant": "hurt",
-   "sequenceIndex": 1,
-   "runtimePoses": [
-    "hurt"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "piccolo.png",
     "frame": "010.png",
     "x": "40",
     "y": "123"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "piccolo_base_hurt_02",
    "sourceId": "piccolo_base/011.png",
-   "canonicalId": "piccolo_base.reaction.hurt_heavy.hurt.02.011",
+   "canonicalId": "piccolo_base.movement.move_or_attack.move_or_attack.00.011",
    "characterId": "piccolo",
    "formId": "piccolo_base",
    "assetType": "actor_frame",
    "view": "FIELD",
-   "family": "reaction",
-   "role": "hurt_heavy",
-   "variant": "hurt",
-   "sequenceIndex": 2,
-   "runtimePoses": [
-    "hurt"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "piccolo.png",
     "frame": "011.png",
     "x": "73",
     "y": "126"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "piccolo_base_hurt_03",
    "sourceId": "piccolo_base/012.png",
-   "canonicalId": "piccolo_base.reaction.hurt_heavy.hurt.03.012",
+   "canonicalId": "piccolo_base.movement.move_or_attack.move_or_attack.00.012",
    "characterId": "piccolo",
    "formId": "piccolo_base",
    "assetType": "actor_frame",
    "view": "FIELD",
-   "family": "reaction",
-   "role": "hurt_heavy",
-   "variant": "hurt",
-   "sequenceIndex": 3,
-   "runtimePoses": [
-    "hurt"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "piccolo.png",
     "frame": "012.png",
     "x": "113",
     "y": "116"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "piccolo_base_hurt_04",
    "sourceId": "piccolo_base/013.png",
-   "canonicalId": "piccolo_base.reaction.hurt_heavy.hurt.04.013",
+   "canonicalId": "piccolo_base.movement.move_or_attack.move_or_attack.00.013",
    "characterId": "piccolo",
    "formId": "piccolo_base",
    "assetType": "actor_frame",
    "view": "FIELD",
-   "family": "reaction",
-   "role": "hurt_heavy",
-   "variant": "hurt",
-   "sequenceIndex": 4,
-   "runtimePoses": [
-    "hurt"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "piccolo.png",
     "frame": "013.png",
     "x": "153",
     "y": "122"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "piccolo_base_attack_fwd_06",
    "sourceId": "piccolo_base/014.png",
-   "canonicalId": "piccolo_base.melee.strike.punch_left.04.014.png",
+   "canonicalId": "piccolo_base.idle.stance.stance.00.014",
    "characterId": "piccolo",
    "formId": "piccolo_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "strike",
-   "variant": "punch_left",
-   "sequenceIndex": 4,
-   "runtimePoses": [
-    "attack_fwd",
-    "punch_left"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "view": "FIELD",
+   "family": "idle",
+   "role": "stance",
+   "variant": "stance",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "piccolo.png",
     "frame": "014.png",
     "x": "191",
     "y": "119"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: idle_or_stance"
   },
   {
    "sourceId": "piccolo_base/015.png",
@@ -383,56 +348,50 @@
    "note": "bucket forense: downed_or_hurt"
   },
   {
-   "_manifestName": "piccolo_base_attack_fwd_02",
    "sourceId": "piccolo_base/016.png",
-   "canonicalId": "piccolo_base.reaction.knockback_up.up.00.016.png",
+   "canonicalId": "piccolo_base.movement.move_or_attack.move_or_attack.00.016",
    "characterId": "piccolo",
    "formId": "piccolo_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "reaction",
-   "role": "knockback_up",
-   "variant": "up",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "attack_fwd",
-    "punch_right",
-    "knockback_up"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "piccolo.png",
     "frame": "016.png",
     "x": "11",
     "y": "175"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "piccolo_base_knockback_back_00",
    "sourceId": "piccolo_base/017.png",
-   "canonicalId": "piccolo_base.reaction.knockback_back.back.00.017",
+   "canonicalId": "piccolo_base.movement.move_or_attack.move_or_attack.00.017",
    "characterId": "piccolo",
    "formId": "piccolo_base",
    "assetType": "actor_frame",
    "view": "FIELD",
-   "family": "reaction",
-   "role": "knockback_back",
-   "variant": "back",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "knockback_back"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "piccolo.png",
     "frame": "017.png",
     "x": "48",
     "y": "176"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
    "sourceId": "piccolo_base/018.png",
@@ -458,211 +417,188 @@
    "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "piccolo_base_attack_ud_00",
    "sourceId": "piccolo_base/019.png",
-   "canonicalId": "piccolo_base.melee.ready.attack_vertical.00.019",
+   "canonicalId": "piccolo_base.movement.move_or_attack.move_or_attack.00.019",
    "characterId": "piccolo",
    "formId": "piccolo_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "ready",
-   "variant": "attack_vertical",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "attack_ud"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "piccolo.png",
     "frame": "019.png",
     "x": "133",
     "y": "172"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "piccolo_base_attack_ud_01",
    "sourceId": "piccolo_base/020.png",
-   "canonicalId": "piccolo_base.melee.windup.attack_vertical.01.020",
+   "canonicalId": "piccolo_base.movement.move_or_attack.move_or_attack.00.020",
    "characterId": "piccolo",
    "formId": "piccolo_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "windup",
-   "variant": "attack_vertical",
-   "sequenceIndex": 1,
-   "runtimePoses": [
-    "attack_ud"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "piccolo.png",
     "frame": "020.png",
     "x": "177",
     "y": "172"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "piccolo_base_attack_ud_02",
    "sourceId": "piccolo_base/021.png",
-   "canonicalId": "piccolo_base.melee.strike.attack_vertical.02.021",
+   "canonicalId": "piccolo_base.idle.stance.stance.00.021",
    "characterId": "piccolo",
    "formId": "piccolo_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "strike",
-   "variant": "attack_vertical",
-   "sequenceIndex": 2,
-   "runtimePoses": [
-    "attack_ud"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "view": "FIELD",
+   "family": "idle",
+   "role": "stance",
+   "variant": "stance",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "piccolo.png",
     "frame": "021.png",
     "x": "216",
     "y": "170"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: idle_or_stance"
   },
   {
-   "_manifestName": "piccolo_base_attack_ud_03",
    "sourceId": "piccolo_base/022.png",
-   "canonicalId": "piccolo_base.reaction.knockback_down.down.00.022.png",
+   "canonicalId": "piccolo_base.movement.move_or_attack.move_or_attack.00.022",
    "characterId": "piccolo",
    "formId": "piccolo_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "reaction",
-   "role": "knockback_down",
-   "variant": "down",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "attack_ud",
-    "knockback_down"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "piccolo.png",
     "frame": "022.png",
     "x": "247",
     "y": "180"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "piccolo_base_attack_fwd_00",
    "sourceId": "piccolo_base/023.png",
-   "canonicalId": "piccolo_base.melee.ready.attack_forward.00.023",
+   "canonicalId": "piccolo_base.movement.move_or_attack.move_or_attack.00.023",
    "characterId": "piccolo",
    "formId": "piccolo_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "ready",
-   "variant": "attack_forward",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "attack_fwd",
-    "punch_right"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "piccolo.png",
     "frame": "023.png",
     "x": "10",
     "y": "230"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "piccolo_base_attack_fwd_01",
    "sourceId": "piccolo_base/024.png",
-   "canonicalId": "piccolo_base.melee.windup.attack_forward.01.024",
+   "canonicalId": "piccolo_base.movement.move_or_attack.move_or_attack.00.024",
    "characterId": "piccolo",
    "formId": "piccolo_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "windup",
-   "variant": "attack_forward",
-   "sequenceIndex": 1,
-   "runtimePoses": [
-    "attack_fwd",
-    "punch_right"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "piccolo.png",
     "frame": "024.png",
     "x": "48",
     "y": "230"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "piccolo_base_attack_fwd_05",
    "sourceId": "piccolo_base/025.png",
-   "canonicalId": "piccolo_base.melee.strike.kick_right.00.025.png",
+   "canonicalId": "piccolo_base.movement.move_or_attack.move_or_attack.00.025",
    "characterId": "piccolo",
    "formId": "piccolo_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "strike",
-   "variant": "kick_right",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "attack_fwd",
-    "punch_left",
-    "kick_right"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "piccolo.png",
     "frame": "025.png",
     "x": "91",
     "y": "231"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "piccolo_base_attack_fwd_04",
    "sourceId": "piccolo_base/026.png",
-   "canonicalId": "piccolo_base.melee.strike.kick_right.01.026.png",
+   "canonicalId": "piccolo_base.idle.stance.stance.00.026",
    "characterId": "piccolo",
    "formId": "piccolo_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "strike",
-   "variant": "kick_right",
-   "sequenceIndex": 1,
-   "runtimePoses": [
-    "attack_fwd",
-    "punch_left",
-    "kick_right"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "view": "FIELD",
+   "family": "idle",
+   "role": "stance",
+   "variant": "stance",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "piccolo.png",
     "frame": "026.png",
     "x": "139",
     "y": "231"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: idle_or_stance"
   },
   {
    "sourceId": "piccolo_base/027.png",
@@ -826,79 +762,73 @@
    "note": "bucket forense: projectiles_beams"
   },
   {
-   "_manifestName": "piccolo_base_aura_power_00",
    "sourceId": "piccolo_base/034.png",
-   "canonicalId": "piccolo_base.effect.aura.aura_power.00.034",
+   "canonicalId": "piccolo_base.effect.orbs_rings_bursts.orbs_rings_bursts.00.034",
    "characterId": "piccolo",
    "formId": "piccolo_base",
    "assetType": "effect",
    "view": "FIELD",
    "family": "effect",
-   "role": "aura",
-   "variant": "aura_power",
+   "role": "orbs_rings_bursts",
+   "variant": "orbs_rings_bursts",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "aura_power"
-   ],
-   "evidence": "CANONICAL",
-   "canonStatus": "CANONICAL",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "piccolo.png",
     "frame": "034.png",
     "x": "188",
     "y": "269"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: orbs_rings_bursts"
   },
   {
-   "_manifestName": "piccolo_base_aura_power_01",
    "sourceId": "piccolo_base/035.png",
-   "canonicalId": "piccolo_base.effect.aura.aura_power.01.035",
+   "canonicalId": "piccolo_base.effect.orbs_rings_bursts.orbs_rings_bursts.00.035",
    "characterId": "piccolo",
    "formId": "piccolo_base",
    "assetType": "effect",
    "view": "FIELD",
    "family": "effect",
-   "role": "aura",
-   "variant": "aura_power",
-   "sequenceIndex": 1,
-   "runtimePoses": [
-    "aura_power"
-   ],
-   "evidence": "CANONICAL",
-   "canonStatus": "CANONICAL",
+   "role": "orbs_rings_bursts",
+   "variant": "orbs_rings_bursts",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "piccolo.png",
     "frame": "035.png",
     "x": "262",
     "y": "270"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: orbs_rings_bursts"
   },
   {
-   "_manifestName": "piccolo_base_aura_power_02",
    "sourceId": "piccolo_base/036.png",
-   "canonicalId": "piccolo_base.effect.aura.aura_power.02.036",
+   "canonicalId": "piccolo_base.effect.orbs_rings_bursts.orbs_rings_bursts.00.036",
    "characterId": "piccolo",
    "formId": "piccolo_base",
    "assetType": "effect",
    "view": "FIELD",
    "family": "effect",
-   "role": "aura",
-   "variant": "aura_power",
-   "sequenceIndex": 2,
-   "runtimePoses": [
-    "aura_power"
-   ],
-   "evidence": "CANONICAL",
-   "canonStatus": "CANONICAL",
+   "role": "orbs_rings_bursts",
+   "variant": "orbs_rings_bursts",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "piccolo.png",
     "frame": "036.png",
     "x": "332",
     "y": "270"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: orbs_rings_bursts"
   },
   {
    "sourceId": "piccolo_base/037.png",
@@ -924,29 +854,27 @@
    "note": "bucket forense: projectiles_beams"
   },
   {
-   "_manifestName": "piccolo_base_beam_charge_02",
    "sourceId": "piccolo_base/038.png",
-   "canonicalId": "piccolo_base.beam.charge_start.charge.02.038",
+   "canonicalId": "piccolo_base.movement.move_or_attack.move_or_attack.00.038",
    "characterId": "piccolo",
    "formId": "piccolo_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "beam",
-   "role": "charge_start",
-   "variant": "charge",
-   "sequenceIndex": 2,
-   "runtimePoses": [
-    "beam_charge"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "piccolo.png",
     "frame": "038.png",
     "x": "6",
     "y": "364"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
    "sourceId": "piccolo_base/039.png",
@@ -995,180 +923,165 @@
    "note": "bucket forense: projectiles_beams"
   },
   {
-   "_manifestName": "piccolo_base_beam_charge_04",
    "sourceId": "piccolo_base/041.png",
-   "canonicalId": "piccolo_base.beam.charge_start.charge.04.041",
+   "canonicalId": "piccolo_base.movement.move_or_attack.move_or_attack.00.041",
    "characterId": "piccolo",
    "formId": "piccolo_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "beam",
-   "role": "charge_start",
-   "variant": "charge",
-   "sequenceIndex": 4,
-   "runtimePoses": [
-    "beam_charge"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "piccolo.png",
     "frame": "041.png",
     "x": "273",
     "y": "358"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "piccolo_base_beam_charge_07",
    "sourceId": "piccolo_base/042.png",
-   "canonicalId": "piccolo_base.beam.charge_hold.charge.07.042",
+   "canonicalId": "piccolo_base.movement.move_or_attack.move_or_attack.00.042",
    "characterId": "piccolo",
    "formId": "piccolo_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "beam",
-   "role": "charge_hold",
-   "variant": "charge",
-   "sequenceIndex": 7,
-   "runtimePoses": [
-    "beam_charge"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "piccolo.png",
     "frame": "042.png",
     "x": "309",
     "y": "359"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "piccolo_base_attack_fwd_08",
    "sourceId": "piccolo_base/043.png",
-   "canonicalId": "piccolo_base.melee.follow_through.attack_forward.08.043",
+   "canonicalId": "piccolo_base.movement.move_or_attack.move_or_attack.00.043",
    "characterId": "piccolo",
    "formId": "piccolo_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "follow_through",
-   "variant": "attack_forward",
-   "sequenceIndex": 8,
-   "runtimePoses": [
-    "attack_fwd"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "piccolo.png",
     "frame": "043.png",
     "x": "8",
     "y": "430"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "piccolo_base_attack_fwd_09",
    "sourceId": "piccolo_base/044.png",
-   "canonicalId": "piccolo_base.melee.recover.attack_forward.09.044",
+   "canonicalId": "piccolo_base.movement.move_or_attack.move_or_attack.00.044",
    "characterId": "piccolo",
    "formId": "piccolo_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "melee",
-   "role": "recover",
-   "variant": "attack_forward",
-   "sequenceIndex": 9,
-   "runtimePoses": [
-    "attack_fwd"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "piccolo.png",
     "frame": "044.png",
     "x": "53",
     "y": "429"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "piccolo_base_gather_power_00",
    "sourceId": "piccolo_base/045.png",
-   "canonicalId": "piccolo_base.power.gather_power.gather_power.00.045",
+   "canonicalId": "piccolo_base.movement.move_or_attack.move_or_attack.00.045",
    "characterId": "piccolo",
    "formId": "piccolo_base",
-   "assetType": "composite",
-   "view": "ACTION_DUEL",
-   "family": "power",
-   "role": "gather_power",
-   "variant": "gather_power",
+   "assetType": "actor_frame",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "gather_power",
-    "power_up"
-   ],
-   "evidence": "CANONICAL",
-   "canonStatus": "CANONICAL",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "piccolo.png",
     "frame": "045.png",
     "x": "116",
     "y": "426"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "piccolo_base_beam_charge_05",
    "sourceId": "piccolo_base/046.png",
-   "canonicalId": "piccolo_base.beam.charge_hold.charge.05.046",
+   "canonicalId": "piccolo_base.movement.move_or_attack.move_or_attack.00.046",
    "characterId": "piccolo",
    "formId": "piccolo_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "beam",
-   "role": "charge_hold",
-   "variant": "charge",
-   "sequenceIndex": 5,
-   "runtimePoses": [
-    "beam_charge"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "view": "FIELD",
+   "family": "movement",
+   "role": "move_or_attack",
+   "variant": "move_or_attack",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "piccolo.png",
     "frame": "046.png",
     "x": "159",
     "y": "431"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: movement_or_attack_pose"
   },
   {
-   "_manifestName": "piccolo_base_beam_charge_06",
    "sourceId": "piccolo_base/047.png",
-   "canonicalId": "piccolo_base.beam.charge_hold.charge.06.047",
+   "canonicalId": "piccolo_base.idle.stance.stance.00.047",
    "characterId": "piccolo",
    "formId": "piccolo_base",
    "assetType": "actor_frame",
-   "view": "ACTION_DUEL",
-   "family": "beam",
-   "role": "charge_hold",
-   "variant": "charge",
-   "sequenceIndex": 6,
-   "runtimePoses": [
-    "beam_charge"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "view": "FIELD",
+   "family": "idle",
+   "role": "stance",
+   "variant": "stance",
+   "sequenceIndex": 0,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "piccolo.png",
     "frame": "047.png",
     "x": "245",
     "y": "423"
    },
-   "frameKind": "atomic"
+   "frameKind": "atomic",
+   "note": "bucket forense: idle_or_stance"
   },
   {
    "sourceId": "piccolo_base/048.png",
@@ -1292,184 +1205,165 @@
    "frameKind": "atomic"
   },
   {
-   "_manifestName": "piccolo_base_attack_fwd_02",
    "sourceId": "piccolo_base/000_attack_fwd.png",
-   "canonicalId": "piccolo_base.reaction.knockback_up.up.00.000_attack_fwd.png",
+   "canonicalId": "piccolo_base.melee.attack_forward.attack_forward.00.000_attack_fwd",
    "characterId": "piccolo",
    "formId": "piccolo_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
-   "family": "reaction",
-   "role": "knockback_up",
-   "variant": "up",
+   "family": "melee",
+   "role": "attack_forward",
+   "variant": "attack_forward",
    "sequenceIndex": 0,
-   "runtimePoses": [
-    "attack_fwd",
-    "punch_right",
-    "knockback_up"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "",
     "frame": "000_attack_fwd.png",
     "x": null,
     "y": null
    },
-   "frameKind": "fixed_only"
+   "frameKind": "fixed_only",
+   "note": "nombre de archivo del sheet (fwd)"
   },
   {
-   "_manifestName": "piccolo_base_attack_fwd_03",
    "sourceId": "piccolo_base/001_attack_fwd.png",
-   "canonicalId": "piccolo_base.melee.strike.punch_left.01.001_attack_fwd.png",
+   "canonicalId": "piccolo_base.melee.attack_forward.attack_forward.01.001_attack_fwd",
    "characterId": "piccolo",
    "formId": "piccolo_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "strike",
-   "variant": "punch_left",
+   "role": "attack_forward",
+   "variant": "attack_forward",
    "sequenceIndex": 1,
-   "runtimePoses": [
-    "attack_fwd",
-    "punch_left"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "",
     "frame": "001_attack_fwd.png",
     "x": null,
     "y": null
    },
-   "frameKind": "fixed_only"
+   "frameKind": "fixed_only",
+   "note": "nombre de archivo del sheet (fwd)"
   },
   {
-   "_manifestName": "piccolo_base_attack_fwd_07",
    "sourceId": "piccolo_base/002_attack_fwd.png",
-   "canonicalId": "piccolo_base.melee.follow_through.attack_forward.07.002_attack_fwd",
+   "canonicalId": "piccolo_base.melee.attack_forward.attack_forward.02.002_attack_fwd",
    "characterId": "piccolo",
    "formId": "piccolo_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "follow_through",
+   "role": "attack_forward",
    "variant": "attack_forward",
-   "sequenceIndex": 7,
-   "runtimePoses": [
-    "attack_fwd"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "sequenceIndex": 2,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "",
     "frame": "002_attack_fwd.png",
     "x": null,
     "y": null
    },
-   "frameKind": "fixed_only"
+   "frameKind": "fixed_only",
+   "note": "nombre de archivo del sheet (fwd)"
   },
   {
-   "_manifestName": "piccolo_base_attack_ud_04",
    "sourceId": "piccolo_base/003_attack_ud.png",
-   "canonicalId": "piccolo_base.melee.recover.attack_vertical.04.003_attack_ud",
+   "canonicalId": "piccolo_base.melee.attack_vertical.attack_vertical.03.003_attack_ud",
    "characterId": "piccolo",
    "formId": "piccolo_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "melee",
-   "role": "recover",
+   "role": "attack_vertical",
    "variant": "attack_vertical",
-   "sequenceIndex": 4,
-   "runtimePoses": [
-    "attack_ud"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "sequenceIndex": 3,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "",
     "frame": "003_attack_ud.png",
     "x": null,
     "y": null
    },
-   "frameKind": "fixed_only"
+   "frameKind": "fixed_only",
+   "note": "nombre de archivo del sheet (ud)"
   },
   {
-   "_manifestName": "piccolo_base_beam_charge_00",
    "sourceId": "piccolo_base/004_beam_charge.png",
-   "canonicalId": "piccolo_base.beam.charge_start.charge.00.004_beam_charge",
+   "canonicalId": "piccolo_base.beam.charge.charge.04.004_beam_charge",
    "characterId": "piccolo",
    "formId": "piccolo_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "beam",
-   "role": "charge_start",
+   "role": "charge",
    "variant": "charge",
-   "sequenceIndex": 0,
-   "runtimePoses": [
-    "beam_charge",
-    "beam_charge"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "sequenceIndex": 4,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "",
     "frame": "004_beam_charge.png",
     "x": null,
     "y": null
    },
-   "frameKind": "fixed_only"
+   "frameKind": "fixed_only",
+   "note": "nombre de archivo del sheet (charge)"
   },
   {
-   "_manifestName": "piccolo_base_beam_charge_00",
    "sourceId": "piccolo_base/005_beam_charge.png",
-   "canonicalId": "piccolo_base.beam.charge_start.charge.00.005_beam_charge",
+   "canonicalId": "piccolo_base.beam.charge.charge.05.005_beam_charge",
    "characterId": "piccolo",
    "formId": "piccolo_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "beam",
-   "role": "charge_start",
+   "role": "charge",
    "variant": "charge",
-   "sequenceIndex": 0,
-   "runtimePoses": [
-    "beam_charge",
-    "beam_charge"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "sequenceIndex": 5,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "",
     "frame": "005_beam_charge.png",
     "x": null,
     "y": null
    },
-   "frameKind": "fixed_only"
+   "frameKind": "fixed_only",
+   "note": "nombre de archivo del sheet (charge)"
   },
   {
-   "_manifestName": "piccolo_base_beam_charge_03",
    "sourceId": "piccolo_base/006_beam_charge.png",
-   "canonicalId": "piccolo_base.beam.charge_start.charge.03.006_beam_charge",
+   "canonicalId": "piccolo_base.beam.charge.charge.06.006_beam_charge",
    "characterId": "piccolo",
    "formId": "piccolo_base",
    "assetType": "actor_frame",
    "view": "ACTION_DUEL",
    "family": "beam",
-   "role": "charge_start",
+   "role": "charge",
    "variant": "charge",
-   "sequenceIndex": 3,
-   "runtimePoses": [
-    "beam_charge"
-   ],
-   "evidence": "RUNTIME_VERIFIED",
-   "canonStatus": "RUNTIME_VERIFIED",
+   "sequenceIndex": 6,
+   "runtimePoses": [],
+   "evidence": "ASSET_VERIFIED",
+   "canonStatus": "ASSET_VERIFIED",
    "source": {
     "sheet": "",
     "frame": "006_beam_charge.png",
     "x": null,
     "y": null
    },
-   "frameKind": "fixed_only"
+   "frameKind": "fixed_only",
+   "note": "nombre de archivo del sheet (charge)"
   },
   {
    "sourceId": "piccolo_base/007_guard.png",
