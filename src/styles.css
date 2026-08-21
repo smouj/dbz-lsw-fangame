@@ -9671,9 +9671,10 @@ button:focus-visible, .chapter-node:focus-visible {
   flex-direction: row;
   flex-wrap: wrap;
   gap: 4px;
-  max-height: 66px;          /* ~2 filas de chips: la barra de personaje NUNCA tapa la pantalla */
-  overflow-y: auto;
-  overflow-x: hidden;
+  /* SIN scroll interno (decisión del usuario): la lista de personajes se
+     muestra completa en filas — nada se desplaza dentro del selector. */
+  max-height: none;
+  overflow: visible;
   max-width: 100%;
   position: static;
   padding: 4px 6px;
@@ -9757,9 +9758,10 @@ button:focus-visible, .chapter-node:focus-visible {
 /* Wrapper del FormNavigator dentro de las páginas */
 .dev-navigator-wrap {
   margin-bottom: 14px;
-  position: sticky;
-  top: 57px; /* pegado DEBAJO del header sticky (57px) — no se solapan */
-  z-index: 30;
+  /* NO sticky: el selector de personaje se queda ESTÁTICO al inicio de
+     la página (decisión del usuario 2026-08-22: no quiere que se mueva
+     ni se pegue con el scroll). */
+  position: static;
   background: var(--dev-bg);
   padding: 8px 10px;
   border: 1px solid var(--dev-border-soft);
