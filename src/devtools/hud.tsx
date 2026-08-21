@@ -193,18 +193,19 @@ export function HudModule() {
   }, [theme]);
 
   return (
-    <div className="dev-hud">
-      <div className="dev-hud-head">
-        <div>
-          <h1>HUD Studio</h1>
-          <p className="dev-hud-sub">
-            Configurador del tema HUD: 33 variables CSS reales (colores, HUD, cartas,
-            posición, escala, tipografía) con paridad dev↔juego. El preview muestra el
-            HUD con el tema actual; <strong>Aplicar al juego</strong> lo inyecta en{' '}
-            <code>:root</code> y lo persiste. Las demos y batallas viven en el{' '}
-            <strong>Combat Lab</strong>.
-          </p>
-        </div>
+    <div className="dev-panel">
+      <header className="dev-header">
+        <h1>HUD Studio</h1>
+        <p className="dev-sub">
+          Configurador del tema HUD: 33 variables CSS reales (colores, HUD, cartas,
+          posición, escala, tipografía) con paridad dev↔juego. El preview muestra el
+          HUD con el tema actual; <strong>Aplicar al juego</strong> lo inyecta en{' '}
+          <code>:root</code> y lo persiste. Las demos y batallas viven en el{' '}
+          <strong>Combat Lab</strong>.
+        </p>
+      </header>
+      <div className="dev-hud">
+        <div className="dev-hud-head">
         <div className="dev-hud-actions">
           <button className="dev-btn dev-btn-primary" onClick={apply}><Check size={15} /> Aplicar al juego</button>
           <button className="dev-btn" onClick={exportJson}><Download size={15} /> Exportar JSON</button>
@@ -801,6 +802,7 @@ export function HudModule() {
             </div>
           ))}
         </div>
+      </div>
       </div>
     </div>
   );

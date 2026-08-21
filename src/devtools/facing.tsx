@@ -98,18 +98,16 @@ export function FacingModule() {
   }, [saveAll]);
 
   return (
-    <div className="dev-facing">
-      <div className="dev-facing-head">
+    <div className="dev-panel">
+      <header className="dev-header">
         <h1>Facing — orientación de chibis overworld</h1>
+        <p className="dev-sub">Fuente overworld (panel_sprites) — los chibis deben mirar a la DERECHA por defecto. Click = voltear · <kbd>G</kbd> guardar · <kbd>R</kbd> reset.</p>
+      </header>
+      <div className="dev-facing">
+        <div className="dev-facing-head">
         <div className="dev-facing-canon-badge" title="Fuente overworld (panel_sprites): los 9 chibis pendientes se normalizaron a la derecha (check-overworld-facing.py, 2026-08-17). El runtime ya no espeja por defecto.">
           <strong>OVERWORLD</strong> · {files.length} chibis · todos miran a la DERECHA ✓
         </div>
-        <p className="dev-facing-help">
-          Todos los sprites deben mirar a la <strong>DERECHA</strong> por defecto.
-          Click en un chibi = voltear en pantalla. Luego <strong>Guardar</strong> lo
-          persiste al disco. Atajos: <kbd>G</kbd> guardar todos · <kbd>R</kbd> reset visual.
-          Los marcados <span className="dev-facing-suggest">↔</span> probablemente miran a la izquierda (análisis consistente).
-        </p>
         <div className="dev-facing-actions">
           <button className="dev-btn" onClick={saveAll} disabled={!dirty || savingAll}>
             {savingAll ? 'Guardando…' : `Guardar pendientes (${pendingCount})`}
@@ -157,6 +155,7 @@ export function FacingModule() {
             </div>
           );
         })}
+      </div>
       </div>
     </div>
   );

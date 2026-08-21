@@ -113,11 +113,13 @@ export default function GameConfigPage() {
 
   return (
     <div className="dev-panel">
-      <h1><Rocket size={16} /> Game Config &amp; Build</h1>
-      <p className="dev-muted">
-        Centro de control de producción: configuración centralizada (CANON LOCKED vs TUNABLE),
-        auditorías de contenido en vivo y pipeline de release — sin tocar código.
-      </p>
+      <header className="dev-header">
+        <h1><Rocket size={16} /> Game Config &amp; Build</h1>
+        <p className="dev-sub">
+          Centro de control de producción: configuración centralizada (CANON LOCKED vs TUNABLE),
+          auditorías de contenido en vivo y pipeline de release — sin tocar código.
+        </p>
+      </header>
 
       {/* ══ RELEASE STATUS (siempre visible) ══ */}
       <div className={`release-status ${releaseReady ? 'ready' : 'blocked'}`}>

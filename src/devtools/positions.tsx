@@ -101,18 +101,19 @@ export function PositionsModule() {
   }
 
   return (
-    <div className="dev-hud">
-      <div className="dev-hud-head">
-        <div>
-          <h1>Position Lab <Crosshair size={17} style={{ color: 'var(--gold, #d8a830)' }} /></h1>
-          <p className="dev-hud-sub">
-            Canon GBC — <strong>4 posiciones</strong> (AIR/GROUND × FRONT/BACK) · MOVE solo 2 ejes ·
-            vulnerabilidades y modificadores por posición. Preview <strong>idéntico al juego</strong>
-            (mismo markup <code>battle-screen</code> que el HUD Studio): los luchadores se anclan con{' '}
-            <code>anchorFor(pos, side)</code>, la fuente única que editas aquí. Click en un marcador
-            P/E del campo recoloca al luchador.
-          </p>
-        </div>
+    <div className="dev-panel">
+      <header className="dev-header">
+        <h1>Position Lab <Crosshair size={16} style={{ color: 'var(--dev-ki)' }} /></h1>
+        <p className="dev-sub">
+          Canon GBC — <strong>4 posiciones</strong> (AIR/GROUND × FRONT/BACK) · MOVE solo 2 ejes ·
+          vulnerabilidades y modificadores por posición. Preview <strong>idéntico al juego</strong>
+          (mismo markup <code>battle-screen</code> que el HUD Studio): los luchadores se anclan con{' '}
+          <code>anchorFor(pos, side)</code>, la fuente única que editas aquí. Click en un marcador
+          P/E del campo recoloca al luchador.
+        </p>
+      </header>
+      <div className="dev-hud">
+        <div className="dev-hud-head">
         <div className="dev-hud-actions">
           <button className="dev-btn" onClick={exportAnchors}><Download size={15} /> Copiar anchors JSON</button>
           <button className="dev-btn dev-btn-danger" onClick={resetAllAnchors}><RotateCcw size={15} /> Reset anchors</button>
@@ -420,6 +421,7 @@ export function PositionsModule() {
             <code>{editSide}.{editPos}: {editingAnchor.x}, {editingAnchor.y}</code>
           </div>
         </div>
+      </div>
       </div>
     </div>
   );

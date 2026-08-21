@@ -39,11 +39,13 @@ export default function MusicPage() {
 
   return (
     <div className="dev-panel">
-      <h1><MusicIcon size={16} /> Música — BSO del juego</h1>
-      <p className="dev-muted">
-        Rip Zophar's Domain «Dragon Ball Z - Legendary Super Warriors (MP3)» — 20 pistas identificadas por
-        huella espectral contra la tracklist khinsider y recodificadas a MP3 mono 22.05kHz 64kbps (21.5MB).
-      </p>
+      <header className="dev-header">
+        <h1><MusicIcon size={16} /> Música — BSO del juego</h1>
+        <p className="dev-sub">
+          Rip Zophar's Domain «Dragon Ball Z - Legendary Super Warriors (MP3)» — 20 pistas identificadas por
+          huella espectral contra la tracklist khinsider y recodificadas a MP3 mono 22.05kHz 64kbps (21.5MB).
+        </p>
+      </header>
 
       <audio id="dev-music-player" onEnded={() => setPlaying(false)} style={{ display: 'none' }} />
 
