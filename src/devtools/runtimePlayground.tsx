@@ -12,7 +12,6 @@ import { getCard, type CardDef } from '../data/cards';
 import { BattlePosition } from '../data/positions';
 import { GbcClockAdapter } from '../battle/GbcClockAdapter';
 import { SCENARIOS, SPECIAL_ACTION_BACKGROUND } from '../data/scenarios';
-import { BATTLE_PORTRAITS } from '../data/battlePortraits';
 import type { BattleSide } from '../battle/engine/state/BattleState';
 import { CanonBattleField } from './CanonBattleField';
 
@@ -47,10 +46,12 @@ export function EnginePlayground() {
 
   // ── Presenter DOM: consume cues → pinta poses reales + fondo ──
   const [poseSrcs, setPoseSrcs] = useState<Record<string, string | null>>({ player: null, enemy: null });
+  const [poseNames, setPoseNames] = useState<Record<string, string>>({ player: 'idle', enemy: 'idle' });
   const [sceneBg, setSceneBg] = useState<string>(SCENARIOS[0].overviewBackground);
   const [sceneMode, setSceneMode] = useState('OVERVIEW');
   const [lastCue, setLastCue] = useState<string>('—');
   const setPoseFor = (side: BattleSide, pose: string) => {
+    setPoseNames(prev => ({ ...prev, [side]: pose }));
     const formId = side === 'player' ? 'goku_base' : 'piccolo_base';
     resolvePoseSrc(formId, pose).then(src => setPoseSrcs(prev => ({ ...prev, [side]: src })));
   };
@@ -126,22 +127,23 @@ export function EnginePlayground() {
             hp: s.player.hp, maxHp: s.player.maxHp, cc: s.player.cc,
             pos: s.player.battlePos,
             phase: activeSide === 'player' ? 'ATTACK' : 'DEFEND',
-            portrait: BATTLE_PORTRAITS['goku_base'],
           }}
           enemy={{
             formId: 'piccolo_base', name: 'PICCOLO', form: 'Base',
             hp: s.enemy.hp, maxHp: s.enemy.maxHp, cc: s.enemy.cc,
             pos: s.enemy.battlePos,
             phase: activeSide === 'enemy' ? 'ATTACK' : 'DEFEND',
-            portrait: BATTLE_PORTRAITS['piccolo_base'],
           }}
           round={s.turn + 1}
           background={sceneBg}
           mode={sceneModeNorm}
           actor={activeSide}
-          pose={{ player: poseSrcs.player ? undefined : 'idle', enemy: poseSrcs.enemy ? undefined : 'idle' }}
+          pose={{
+            player: sceneModeNorm !== 'OVERVIEW' && activeSide === 'player' ? poseNames.player : 'idle',
+            enemy: sceneModeNorm !== 'OVERVIEW' && activeSide === 'enemy' ? poseNames.enemy : 'idle',
+          }}
           qte={inQte && qteKey ? { label: qteKey, seq } : inCounter ? { label: 'DEFEND o CONTINUE', seq, warn: true } : null}
-          devAids
+          devAids={false}
         />
       </div>
 

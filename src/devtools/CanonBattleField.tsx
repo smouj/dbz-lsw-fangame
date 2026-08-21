@@ -1,20 +1,27 @@
 // ═══════════════════════════════════════════════════════════════════════
 // DEV STUDIO — CanonBattleField
-// El battle-screen CANÓNICO (mismo markup que HUD Studio — la referencia
+// El battle-screen CANÓNICO — MISMO markup que HUD Studio (la referencia
 // visual de producción). Lo consumen el Engine Playground (Timeline en
 // vivo) y el Battle Lab para que el engine se vea EXACTAMENTE como el
 // juego: hud-top (portraits + HP + fase ATTACK/DEFEND + VS ROUND),
 // battlefield con fondo real, fighters anclados con anchorFor (la misma
 // fuente que Position Lab) y sprites overworld/action reales.
 //
+// Fuentes compartidas (cero duplicación):
+//   · BATTLE_PORTRAITS (portraits de combate)
+//   · battleOverworldActorUrl (chibi overworld — mismo lookup que el HUD)
+//   · spriteFrameUrl (sprites de acción del sheet)
+//   · anchorFor / actionAnchorFor (Position Lab)
+//
 // Props: estado del runtime (hp/posiciones/fase) + cues del presenter
 // (fondo/modo/pose) + sprites. Render puro — sin lógica de combate.
 // ═══════════════════════════════════════════════════════════════════════
 import { anchorFor, actionAnchorFor } from '../data/positions';
 import { BattlePosition } from '../data/positions';
-import { overworldUrl } from '../data/overworld';
-import { resolvePoseSrc } from '../battle/runtime';
-import { useEffect, useState } from 'react';
+import { battleOverworldActorUrl } from '../data/battleOverworld';
+import { spriteDirFor, spriteFrameUrl } from '../data/spriteManifest';
+import { BATTLE_PORTRAITS } from '../data/battlePortraits';
+import { useMemo } from 'react';
 import type { BattleSide } from '../battle/engine/state/BattleState';
 
 export interface CanonFighter {
@@ -28,7 +35,6 @@ export interface CanonFighter {
   phase?: 'ATTACK' | 'DEFEND';
   buff?: string;
   debuff?: string;
-  portrait?: string;
 }
 
 export interface CanonBattleFieldProps {
@@ -43,55 +49,42 @@ export interface CanonBattleFieldProps {
   pose?: Partial<Record<BattleSide, string>>;
   qte?: { label: string; seq: string[]; warn?: boolean } | null;
   className?: string;
-  /** anclas dev visibles (marcadores P/E + zonas ANIM) */
+  /** anclas dev visibles (marcadores P/E) — OFF por defecto: preview limpio como el juego */
   devAids?: boolean;
 }
 
+/** HP bar canónico — MISMO markup que el HUD Studio / el juego
+ *  (hp-bar-track > recent + current; estados critical/low/mid). */
 function HpBar({ current, max, side }: { current: number; max: number; side: 'left' | 'right' }) {
   const pct = Math.max(0, Math.min(100, (current / Math.max(1, max)) * 100));
   return (
-    <div className={`hp-bar ${side}`}>
-      <div className="hp-bar-fill" style={{ width: `${pct}%` }} />
+    <div className={`hp-bar ${side} ${pct < 12 ? 'critical' : pct <= 25 ? 'low' : pct <= 50 ? 'mid' : ''}`}>
+      <div className="hp-bar-track">
+        <div className="hp-bar-recent" style={{ width: `${Math.min(100, pct + 8)}%` }} />
+        <div className="hp-bar-current" style={{ width: `${pct}%` }} />
+      </div>
     </div>
   );
 }
 
+/** Resolución de sprites IDÉNTICA al HUD Studio:
+ *  OVERVIEW → chibi overworld (battleOverworldActorUrl + fallback idle del manifest)
+ *  ACTION   → sprite grande del sheet (spriteFrameUrl idle o la pose pedida). */
+function useFighterSprites(playerFormId: string, enemyFormId: string, pose?: Partial<Record<BattleSide, string>>) {
+  return useMemo(() => {
+    const resolve = (formId: string, side: BattleSide) => {
+      const ow = battleOverworldActorUrl(formId, 'idle');
+      const dir = spriteDirFor(formId);
+      const p = pose?.[side] ?? 'idle';
+      const action = dir ? spriteFrameUrl(formId, `${dir}_${p}_00.png`) : undefined;
+      return { ow: ow ?? (dir ? spriteFrameUrl(formId, `${dir}_idle_00.png`) : undefined), action };
+    };
+    return { player: resolve(playerFormId, 'player'), enemy: resolve(enemyFormId, 'enemy') };
+  }, [playerFormId, enemyFormId, pose?.player, pose?.enemy]);
+}
+
 export function CanonBattleField({ player, enemy, round = 1, background, mode = 'OVERVIEW', actor = 'player', pose, qte, className, devAids = false }: CanonBattleFieldProps) {
-  const [owSrcs, setOwSrcs] = useState<Partial<Record<BattleSide, string>>>({});
-  const [idleSrcs, setIdleSrcs] = useState<Partial<Record<BattleSide, string>>>({});
-  const [actionSrcs, setActionSrcs] = useState<Partial<Record<BattleSide, string>>>({});
-
-  // Overworld + idle del manifest (misma resolución que el HUD Studio)
-  useEffect(() => {
-    let alive = true;
-    const load = async () => {
-      const pOw = overworldUrl(player.formId);
-      const eOw = overworldUrl(enemy.formId);
-      if (alive) setOwSrcs({ player: pOw ?? undefined, enemy: eOw ?? undefined });
-      const [pIdle, eIdle] = await Promise.all([
-        resolvePoseSrc(player.formId, pose?.player ?? 'idle'),
-        resolvePoseSrc(enemy.formId, pose?.enemy ?? 'idle'),
-      ]);
-      if (alive) setIdleSrcs({ player: pIdle ?? undefined, enemy: eIdle ?? undefined });
-    };
-    load();
-    return () => { alive = false; };
-  }, [player.formId, enemy.formId, pose?.player, pose?.enemy]);
-
-  // Sprites de acción (sheet grande) para el plano ACTION
-  useEffect(() => {
-    let alive = true;
-    const load = async () => {
-      const [pAct, eAct] = await Promise.all([
-        resolvePoseSrc(player.formId, pose?.player ?? 'idle'),
-        resolvePoseSrc(enemy.formId, pose?.enemy ?? 'idle'),
-      ]);
-      if (alive) setActionSrcs({ player: pAct ?? undefined, enemy: eAct ?? undefined });
-    };
-    load();
-    return () => { alive = false; };
-  }, [player.formId, enemy.formId, pose?.player, pose?.enemy]);
-
+  const sprites = useFighterSprites(player.formId, enemy.formId, pose);
   const pa = anchorFor(player.pos, 'LEFT');
   const ea = anchorFor(enemy.pos, 'RIGHT');
   const isAction = mode !== 'OVERVIEW';
@@ -104,7 +97,7 @@ export function CanonBattleField({ player, enemy, round = 1, background, mode = 
         <div className="fighter-hud left">
           <div className="hud-name">
             <span className="hud-portrait">
-              {player.portrait ? <img src={player.portrait} alt="" /> : <span className="dev-hud-mock-ph">?</span>}
+              {BATTLE_PORTRAITS[player.formId] ? <img src={BATTLE_PORTRAITS[player.formId]} alt="" /> : <span className="dev-hud-mock-ph">?</span>}
             </span>
             <strong>{player.name.toUpperCase()}</strong>
             <span className="hud-form">{player.form}</span>
@@ -124,7 +117,7 @@ export function CanonBattleField({ player, enemy, round = 1, background, mode = 
         <div className="fighter-hud right">
           <div className="hud-name">
             <span className="hud-portrait">
-              {enemy.portrait ? <img src={enemy.portrait} alt="" /> : <span className="dev-hud-mock-ph">?</span>}
+              {BATTLE_PORTRAITS[enemy.formId] ? <img src={BATTLE_PORTRAITS[enemy.formId]} alt="" /> : <span className="dev-hud-mock-ph">?</span>}
             </span>
             <strong>{enemy.name.toUpperCase()}</strong>
             <span className="hud-form">{enemy.form}</span>
@@ -164,19 +157,19 @@ export function CanonBattleField({ player, enemy, round = 1, background, mode = 
             </>
           )}
 
-          {/* Player: OVERVIEW → chibi · ACTION → sprite grande (si es actor) */}
-          {(!isAction ? owSrcs.player : (actor === 'player' ? actionSrcs.player : undefined)) && (
+          {/* Player: OVERVIEW → chibi · ACTION → sprite grande (solo actor) */}
+          {(!isAction ? sprites.player.ow : (actor === 'player' ? sprites.player.action : undefined)) && (
             <img
-              src={!isAction ? owSrcs.player : actionSrcs.player}
+              src={!isAction ? sprites.player.ow : sprites.player.action}
               alt=""
               className={`dev-hud-ow dev-hud-fighter-sprite dev-hud-anchored player ${isAction ? 'action-mode' : ''} ${isAction && special ? 'special-actor' : ''}`}
               style={isAction ? (() => { const aa = actionAnchorFor(actor, special); return { left: `${aa.x}%`, top: `${aa.y}%` }; })() : { left: `${pa.x}%`, top: `${pa.y}%` }}
             />
           )}
           {/* Enemy */}
-          {(!isAction ? owSrcs.enemy : (actor === 'enemy' ? actionSrcs.enemy : undefined)) && (
+          {(!isAction ? sprites.enemy.ow : (actor === 'enemy' ? sprites.enemy.action : undefined)) && (
             <img
-              src={!isAction ? owSrcs.enemy : actionSrcs.enemy}
+              src={!isAction ? sprites.enemy.ow : sprites.enemy.action}
               alt=""
               className={`dev-hud-ow dev-hud-fighter-sprite dev-hud-anchored enemy ${isAction ? 'action-mode' : ''} ${isAction && special ? 'special-actor' : ''}`}
               style={isAction ? (() => { const aa = actionAnchorFor(actor, special); return { left: `${aa.x}%`, top: `${aa.y}%` }; })() : { left: `${ea.x}%`, top: `${ea.y}%` }}
