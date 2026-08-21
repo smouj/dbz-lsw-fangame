@@ -19,7 +19,7 @@ export const SPRITE_COUNTS: Record<string, { frames: number; poses: number }> = 
   "cell_semi": { "frames": 76, "poses": 21 },
   "frieza_final": { "frames": 75, "poses": 21 },
   "ginyu": { "frames": 84, "poses": 21 },
-  "ginyu_goku": { "frames": 76, "poses": 21 },
+  "ginyu_goku": { "frames": 78, "poses": 21 },
   "gohan_adult_ssj": { "frames": 66, "poses": 21 },
   "gohan_adult_ultimate": { "frames": 81, "poses": 21 },
   "gohan_young": { "frames": 57, "poses": 21 },
@@ -27,7 +27,7 @@ export const SPRITE_COUNTS: Record<string, { frames: number; poses: number }> = 
   "gohan_young_ssj2": { "frames": 79, "poses": 21 },
   "goku_base": { "frames": 77, "poses": 21 },
   "goku_ssj": { "frames": 80, "poses": 21 },
-  "goku_ssj2": { "frames": 76, "poses": 21 },
+  "goku_ssj2": { "frames": 80, "poses": 21 },
   "goku_ssj3": { "frames": 83, "poses": 21 },
   "goten_base": { "frames": 79, "poses": 21 },
   "goten_ssj": { "frames": 78, "poses": 21 },
@@ -48,6 +48,6 @@ export const SPRITE_COUNTS: Record<string, { frames: number; poses: number }> = 
   "vegito_ssj": { "frames": 87, "poses": 21 },
 };
 
-export const SPRITE_TOTAL_FRAMES = 3369;
+export const SPRITE_TOTAL_FRAMES = 3375;
 export const SPRITE_FORM_COUNT = 44;
 

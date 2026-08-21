@@ -116,11 +116,13 @@ FOLDER_TO_DIRS = {
     'buu_kid': ['buu_kid'], 'vegito': ['vegito_ssj'],
 }
 
-# formas con mapeo POSICIONAL (sin canon propio): (canon_pose_source, offset)
-POSITIONAL = {
-    'goku_ssj2': ('goku_super_saiyan', 0),
-    'ginyu_goku': ('goku_base', 5),  # sheet ginyu_body_goku = goku_base + 5 al inicio
-}
+# formas sin canon propio que usan el canon de su cuerpo (mismas poses):
+# ginyu_goku → goku_base (cuerpo de Goku), resuelto por silueta/tamaño
+# sobre su folder (ginyu_body_goku). goku_ssj2 no tiene frame_manifest en
+# catalog-v9 (solo named/fixed_only) → usa el canon de SSJ (mismo layout
+# de sheet, siluetas cercanas; el matcher por tamaño desambigua).
+FORM_TO_CANON['ginyu_goku'] = 'goku_base'
+FORM_TO_CANON['goku_ssj2'] = 'goku_super_saiyan'
 
 _SIG_CACHE = {}
 _IMG_CACHE = {}
@@ -257,37 +259,19 @@ def build_dir(folder, dirname, canon_form, dry):
     pose_frames = {}
     used = set()
 
-    pov = POSITIONAL.get(dirname)
-    if pov:
-        canon_pose_source, offset = pov
-        canon_list = canon_pose_frames(canon_pose_source)
-        if canon_list is None:
-            print(f"⚠ {dirname}: canon posicional {canon_pose_source} sin frame_manifest")
-            return None
-        entries = ZIP_INDEX.get(folder, {})
-        for n, ap, poses in sorted(canon_list, key=lambda x: x[0]):
-            target_n = n + offset
-            for (f, w, h) in entries.get(target_n, []):
-                if f in used:
-                    continue
-                used.add(f)
-                for pose in poses:
-                    pose_frames.setdefault(pose, []).append(
-                        (os.path.join(folder, f), w, h))
-                break
-    else:
-        canon_list = canon_pose_frames(canon_form)
-        if canon_list is None:
-            print(f"⚠ {dirname}: canon {canon_form} sin frame_manifest")
-            return None
-        for n, ap, poses in sorted(canon_list, key=lambda x: x[0]):
-            f, w, h = match_frame(ap, folder, used)
-            if not f:
-                continue
-            used.add(f)
-            for pose in poses:
-                pose_frames.setdefault(pose, []).append(
-                    (os.path.join(folder, f), w, h))
+    pov = None  # ya no hay mapeo posicional: todo por silueta/tamaño
+    canon_list = canon_pose_frames(canon_form)
+    if canon_list is None:
+        print(f"⚠ {dirname}: canon {canon_form} sin frame_manifest")
+        return None
+    for n, ap, poses in sorted(canon_list, key=lambda x: x[0]):
+        f, w, h = match_frame(ap, folder, used)
+        if not f:
+            continue
+        used.add(f)
+        for pose in poses:
+            pose_frames.setdefault(pose, []).append(
+                (os.path.join(folder, f), w, h))
 
     # aura_support SIEMPRE desde los 3 archivos sueltos. Las auras de un
     # personaje se llaman <sheet>_aura_support_*; pueden vivir en el folder
