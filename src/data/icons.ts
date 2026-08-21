@@ -187,50 +187,36 @@ export function cardIconUrl(cardId: number): string | undefined {
 }
 
 // Mini retratos de combate (Sprite Database mini-portraits.png)
-// 19 celdas extraídas — asignación por personaje pendiente de verificación
-export const MINI_PORTRAITS: Record<string, string> = {
-  goku: '/assets/portraits/mini/cell_01_00.png',
-  vegeta: '/assets/portraits/mini/cell_01_05.png',
-  gohan: '/assets/portraits/mini/cell_01_10.png',
-  piccolo: '/assets/portraits/mini/cell_01_24.png',
-  krillin: '/assets/portraits/mini/cell_01_29.png',
-  trunks: '/assets/portraits/mini/cell_02_00.png',
-  goten: '/assets/portraits/mini/cell_02_05.png',
-  gotenks: '/assets/portraits/mini/cell_02_10.png',
-  frieza: '/assets/portraits/mini/cell_02_24.png',
-  cell: '/assets/portraits/mini/cell_02_29.png',
-  buu: '/assets/portraits/mini/cell_03_00.png',
-  nappa: '/assets/portraits/mini/cell_03_05.png',
-};
-
-// Retratos de menú (Sprite Database LSW_Portraits.png)
-// 131 celdas 40x56 — fuente primaria de retratos
+// Retratos de menú — fuente VERIFICADA: story portraits píxel-perfect
+// (dbz_lsw_character_portraits, 40×56, celdas del sheet 622×868).
+// Los antiguos cell_00_XX de LSW_Portraits.png estaban mal mapeados
+// (cell_00_01 resultaba ser Goku, no Vegeta) → reemplazados por los
+// story canónicos del personaje (verificado 137/137 contra la fuente).
 export const MENU_PORTRAITS: Record<string, string> = {
-  goku: '/assets/portraits/menu/cell_00_00.png',
-  vegeta: '/assets/portraits/menu/cell_00_01.png',
-  gohan: '/assets/portraits/menu/cell_00_02.png',
-  piccolo: '/assets/portraits/menu/cell_00_03.png',
-  krillin: '/assets/portraits/menu/cell_00_04.png',
-  trunks: '/assets/portraits/menu/cell_00_05.png',
-  goten: '/assets/portraits/menu/cell_00_06.png',
-  gotenks: '/assets/portraits/menu/cell_00_07.png',
-  frieza: '/assets/portraits/menu/cell_01_00.png',
-  cell: '/assets/portraits/menu/cell_01_01.png',
-  buu: '/assets/portraits/menu/cell_01_02.png',
-  nappa: '/assets/portraits/menu/cell_01_03.png',
-  ginyu: '/assets/portraits/menu/cell_01_04.png',
-  recoome: '/assets/portraits/menu/cell_01_05.png',
-  guldo: '/assets/portraits/menu/cell_01_06.png',
-  jeice: '/assets/portraits/menu/cell_01_07.png',
-  burter: '/assets/portraits/menu/cell_01_08.png',
-  android_16: '/assets/portraits/menu/cell_02_00.png',
-  android_17: '/assets/portraits/menu/cell_02_01.png',
-  android_18: '/assets/portraits/menu/cell_03_00.png',
-  android_19: '/assets/portraits/menu/cell_03_01.png',
-  android_20: '/assets/portraits/menu/cell_03_02.png',
-  cell_jr: '/assets/portraits/menu/cell_03_03.png',
-  // Vegito: no hay celda dedicada en LSW_Portraits; se usa el retrato de historia
-  vegito: '/assets/portraits/story/04_Saga_Majin_Buu/Vegito/R14_C03__Vegito.png',
+  goku: '/assets/portraits/story/goku_01.png',
+  vegeta: '/assets/portraits/story/vegeta_01.png',
+  gohan: '/assets/portraits/story/gohan_young_01.png',
+  piccolo: '/assets/portraits/story/piccolo_01.png',
+  krillin: '/assets/portraits/story/krillin_02.png',
+  trunks: '/assets/portraits/story/trunks_future_01.png',
+  goten: '/assets/portraits/story/goten_01.png',
+  gotenks: '/assets/portraits/story/gotenks_ssj3.png',
+  frieza: '/assets/portraits/story/frieza_first_form_01.png',
+  cell: '/assets/portraits/story/cell_perfect_01.png',
+  buu: '/assets/portraits/story/super_buu_01.png',
+  nappa: '/assets/portraits/story/nappa_01.png',
+  ginyu: '/assets/portraits/story/captain_ginyu_01.png',
+  recoome: '/assets/portraits/story/recoome.png',
+  guldo: '/assets/portraits/story/guldo.png',
+  jeice: '/assets/portraits/story/jeice.png',
+  burter: '/assets/portraits/story/burter.png',
+  android_16: '/assets/portraits/story/android_16.png',
+  android_17: '/assets/portraits/story/android_17.png',
+  android_18: '/assets/portraits/story/android_18.png',
+  android_19: '/assets/portraits/story/android_19.png',
+  android_20: '/assets/portraits/story/android_20_dr_gero.png',
+  cell_jr: '/assets/portraits/story/cell_jr.png',
+  vegito: '/assets/portraits/story/vegito.png',
 };
 
 // Fallback: mapa por tipo de carta → icono Lucide (si no hay icono real)

@@ -4,7 +4,7 @@
 // el MISMO bundle — nunca mappings independientes por página.
 //
 //   CHARACTER / FORM
-//   ├─ PORTRAITS  → battle (forma) · mini (personaje) · menú (personaje) ·
+//   ├─ PORTRAITS  → battle (forma) · menú (personaje) ·
 //   │               story: TODAS las variantes reales del catálogo
 //   ├─ OVERWORLD  → táctico/chibi · battle OW idle · power pose · aura
 //   ├─ COMBAT     → manifest · TODAS las poses del canon (COMBAT_POSE_ORDER)
@@ -14,7 +14,7 @@
 
 import { spriteDirFor, spriteManifestUrl, resolvePoseInfo } from './spriteManifest';
 import { BATTLE_PORTRAITS } from './battlePortraits';
-import { MINI_PORTRAITS, MENU_PORTRAITS } from './icons';
+import { MENU_PORTRAITS } from './icons';
 import { STORY_PORTRAITS, storyPortraitUrl } from './storyPortraits';
 import { overworldUrl } from './overworld';
 import { battleOverworldActorUrl, battleOverworldAuraUrlAsync } from './battleOverworld';
@@ -45,7 +45,6 @@ export interface CharacterAssetBundle {
   spriteDir: string | undefined;
   portraits: {
     battle: string | undefined;
-    mini: string | undefined;
     menu: string | undefined;
     story: StoryPortraitAsset[];
   };
@@ -96,7 +95,6 @@ export function getCharacterAssetBundle(characterId: string, formId: string): Ch
     spriteDir,
     portraits: {
       battle: BATTLE_PORTRAITS[formId],
-      mini: MINI_PORTRAITS[characterId],
       menu: MENU_PORTRAITS[characterId],
       story,
     },

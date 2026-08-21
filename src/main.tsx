@@ -20,7 +20,7 @@ import {
 } from './battle/state';
 import { resolveHitBlockAvoid, attackDamage } from './battle/combat';
 import { CARD_FRAME_BY_TYPE, CARD_FRAME_SELECTED, CARD_FRAME_DISABLED } from './data/cardVisuals';
-import { cardIconUrl, MINI_PORTRAITS, MENU_PORTRAITS, TYPE_ICONS } from './data/icons';
+import { cardIconUrl, MENU_PORTRAITS, TYPE_ICONS } from './data/icons';
 import { resolveSpeakerPortrait } from './data/speakerPortraits';
 import { FitArt } from './components/FitArt';
 import { CardArtHole } from './components/CardArtHole';
@@ -148,31 +148,34 @@ interface Fighter {
 // Retratos de menú con fondo recortado (transparente) para integrarse en la
 // tarjeta CONTINUAR del menú principal (2026-08-12: el fondo gris original del
 // asset LSW 40×56 se veía como un recuadro separado; el recorte lo funde con
-// el tema oscuro de la tarjeta). Generados por scripts desde menu/ → menu_cut/.
+// el tema oscuro de la tarjeta). Regenerados desde los story VERIFICADOS
+// (mismo recorte de fondo, nombres por personaje — los cell_00_XX antiguos
+// estaban mal mapeados).
 const MENU_PORTRAITS_CUT: Record<string, string> = {
-  goku: '/assets/portraits/menu_cut/cell_00_00.png',
-  vegeta: '/assets/portraits/menu_cut/cell_00_01.png',
-  gohan: '/assets/portraits/menu_cut/cell_00_02.png',
-  piccolo: '/assets/portraits/menu_cut/cell_00_03.png',
-  krillin: '/assets/portraits/menu_cut/cell_00_04.png',
-  trunks: '/assets/portraits/menu_cut/cell_00_05.png',
-  goten: '/assets/portraits/menu_cut/cell_00_06.png',
-  gotenks: '/assets/portraits/menu_cut/cell_00_07.png',
-  frieza: '/assets/portraits/menu_cut/cell_01_00.png',
-  cell: '/assets/portraits/menu_cut/cell_01_01.png',
-  buu: '/assets/portraits/menu_cut/cell_01_02.png',
-  nappa: '/assets/portraits/menu_cut/cell_01_03.png',
-  ginyu: '/assets/portraits/menu_cut/cell_01_04.png',
-  recoome: '/assets/portraits/menu_cut/cell_01_05.png',
-  guldo: '/assets/portraits/menu_cut/cell_01_06.png',
-  jeice: '/assets/portraits/menu_cut/cell_01_07.png',
-  burter: '/assets/portraits/menu_cut/cell_01_08.png',
-  android_16: '/assets/portraits/menu_cut/cell_02_00.png',
-  android_17: '/assets/portraits/menu_cut/cell_02_01.png',
-  android_18: '/assets/portraits/menu_cut/cell_03_00.png',
-  android_19: '/assets/portraits/menu_cut/cell_03_01.png',
-  android_20: '/assets/portraits/menu_cut/cell_03_02.png',
-  cell_jr: '/assets/portraits/menu_cut/cell_03_03.png',
+  goku: '/assets/portraits/menu_cut/goku.png',
+  vegeta: '/assets/portraits/menu_cut/vegeta.png',
+  gohan: '/assets/portraits/menu_cut/gohan.png',
+  piccolo: '/assets/portraits/menu_cut/piccolo.png',
+  krillin: '/assets/portraits/menu_cut/krillin.png',
+  trunks: '/assets/portraits/menu_cut/trunks.png',
+  goten: '/assets/portraits/menu_cut/goten.png',
+  gotenks: '/assets/portraits/menu_cut/gotenks.png',
+  frieza: '/assets/portraits/menu_cut/frieza.png',
+  cell: '/assets/portraits/menu_cut/cell.png',
+  buu: '/assets/portraits/menu_cut/buu.png',
+  nappa: '/assets/portraits/menu_cut/nappa.png',
+  ginyu: '/assets/portraits/menu_cut/ginyu.png',
+  recoome: '/assets/portraits/menu_cut/recoome.png',
+  guldo: '/assets/portraits/menu_cut/guldo.png',
+  jeice: '/assets/portraits/menu_cut/jeice.png',
+  burter: '/assets/portraits/menu_cut/burter.png',
+  android_16: '/assets/portraits/menu_cut/android_16.png',
+  android_17: '/assets/portraits/menu_cut/android_17.png',
+  android_18: '/assets/portraits/menu_cut/android_18.png',
+  android_19: '/assets/portraits/menu_cut/android_19.png',
+  android_20: '/assets/portraits/menu_cut/android_20.png',
+  cell_jr: '/assets/portraits/menu_cut/cell_jr.png',
+  vegito: '/assets/portraits/menu_cut/vegito.png',
 };
 
 // ─── Retratos (Sprite Database) ────────────────────────────
@@ -188,10 +191,6 @@ function portraitFor(charId: string, formId?: string): string | undefined {
   // Prioridad: retrato de BATALLA pixel-perfect por formId (32×24 del GBC)
   if (formId && BATTLE_PORTRAITS[formId]) return BATTLE_PORTRAITS[formId];
   return PORTRAITS[CHAR_PORTRAIT_ALIAS[charId] ?? charId];
-}
-
-function miniPortraitFor(charId: string): string | undefined {
-  return MINI_PORTRAITS[CHAR_PORTRAIT_ALIAS[charId] ?? charId];
 }
 
 // ─── Sistema de cartas para batalla ───────────────────────
@@ -4266,7 +4265,7 @@ function StorySceneScreen({ chapter, phase, onFinish, onNavigate }: {
               // — la emoción del DIÁLOGO (guion V2) manda sobre la del personaje
               const isSpeaker = hasDialogue && speakingIdx === i;
               const emo = isSpeaker && panel.dialogue?.emotion ? panel.dialogue.emotion : c.emotion;
-              const url = storyPortraitUrl(c.character, c.form, emo) || miniPortraitFor(c.character) || MENU_PORTRAITS[CHAR_PORTRAIT_ALIAS[c.character] ?? c.character];
+              const url = storyPortraitUrl(c.character, c.form, emo) || MENU_PORTRAITS[CHAR_PORTRAIT_ALIAS[c.character] ?? c.character];
               const nChars = panel.characters?.length ?? 0;
               const side = c.side ?? (nChars === 1 ? 'center' : i === 0 ? 'left' : 'right');
               return (
