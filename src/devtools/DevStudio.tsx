@@ -112,60 +112,49 @@ export function DevStudio({ onExit, onLaunchBattle }: DevStudioProps) {
   const [linkedTarget, setLinkedTarget] = useState<DevLinkedTarget | null>(null);
   const mainRef = useRef<HTMLElement | null>(null);
 
-  // ═══ HEADER FIJO GARANTIZADO (refuerzo JS) ═══
-  // El header de cada página (.dev-header) DEBE quedarse pegado arriba al
-  // hacer scroll. El CSS usa position:sticky, pero algunos navegadores /
-  // estados de pestaña lo ignoran (o un ancestro rompe el containing
-  // block). Este refuerzo NO depende de sticky: al scrollear el panel,
-  // fija el header con position:fixed en las coordenadas reales del main
-  // y compensa el contenido con padding-top. A prueba de todo.
+  // ═══ HEADER FIJO PERMANENTE (JS, sin condiciones) ═══
+  // El header de cada página (.dev-header) NUNCA se desplaza con el
+  // scroll — ni siquiera un píxel. En lugar de sticky (que algunos
+  // navegadores/pestañas ignoran), el header sale del flujo del panel
+  // con position:fixed calculado en runtime (coordenadas reales del
+  // main + padding) y el panel compensa con padding-top permanente.
+  // No hay scroll listener: el header está fijo desde el primer frame.
   useEffect(() => {
     const main = mainRef.current;
     if (!main) return;
     const header = main.querySelector<HTMLElement>('.dev-header');
     if (!header) return;
 
-    let raf = 0;
-    const update = () => {
-      raf = 0;
-      const scrolled = main.scrollTop > 2;
-      const fixed = header.classList.contains('dev-header-fixed');
-      if (scrolled && !fixed) {
-        const mr = main.getBoundingClientRect();
-        const cs = getComputedStyle(main);
-        const padTop = parseFloat(cs.paddingTop) || 0;
-        const hh = header.offsetHeight;
-        header.style.position = 'fixed';
-        header.style.left = `${mr.left}px`;
-        header.style.top = `${mr.top + padTop}px`;
-        header.style.width = `${mr.width}px`;
-        header.style.zIndex = '60';
-        header.classList.add('dev-header-fixed');
-        // Compensar el contenido para que no quede oculto bajo el header
-        header.style.setProperty('--dev-header-comp', `${hh}px`);
-        const panel = main.querySelector<HTMLElement>('.dev-panel');
-        if (panel) panel.style.paddingTop = `calc(${hh}px + 8px)`;
-      } else if (!scrolled && fixed) {
-        header.style.position = '';
-        header.style.left = '';
-        header.style.top = '';
-        header.style.width = '';
-        header.style.zIndex = '';
-        header.classList.remove('dev-header-fixed');
-        const panel = main.querySelector<HTMLElement>('.dev-panel');
-        if (panel) panel.style.paddingTop = '';
-      }
+    const apply = () => {
+      const mr = main.getBoundingClientRect();
+      const cs = getComputedStyle(main);
+      const padTop = parseFloat(cs.paddingTop) || 0;
+      const padLeft = parseFloat(cs.paddingLeft) || 0;
+      const padRight = parseFloat(cs.paddingRight) || 0;
+      const hh = header.offsetHeight;
+      header.style.position = 'fixed';
+      header.style.left = `${mr.left + padLeft}px`;
+      header.style.top = `${mr.top + padTop}px`;
+      header.style.width = `${mr.width - padLeft - padRight}px`;
+      header.style.zIndex = '60';
+      header.classList.add('dev-header-fixed');
+      // Compensación PERMANENTE: el contenido del panel nunca queda oculto
+      const panel = main.querySelector<HTMLElement>('.dev-panel');
+      if (panel) panel.style.paddingTop = `${hh + 8}px`;
     };
-    const onScroll = () => { if (!raf) raf = requestAnimationFrame(update); };
-    const onResize = () => { if (!raf) raf = requestAnimationFrame(update); };
-    main.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', onResize);
+
+    apply();
+    // Re-aplicar tras layout (imágenes) y resize
+    const t1 = setTimeout(apply, 120);
+    const t2 = setTimeout(apply, 500);
+    window.addEventListener('resize', apply);
     return () => {
-      main.removeEventListener('scroll', onScroll);
-      window.removeEventListener('resize', onResize);
+      clearTimeout(t1);
+      clearTimeout(t2);
+      window.removeEventListener('resize', apply);
       const panel = main.querySelector<HTMLElement>('.dev-panel');
       if (panel) panel.style.paddingTop = '';
-      if (header) header.classList.remove('dev-header-fixed');
+      header.classList.remove('dev-header-fixed');
     };
   }, [module]);
 
