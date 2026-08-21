@@ -8858,6 +8858,16 @@ button:focus-visible, .chapter-node:focus-visible {
   .dev-main { padding: 12px; }
   .dev-chars-layout { grid-template-columns: 1fr; }
   .dev-char-list { position: static; flex-direction: row; flex-wrap: wrap; max-height: none; overflow-y: visible; }
+  /* Animation Studio: el stage no se queda sticky (columnas apiladas) */
+  .dev-anim-stage {
+    position: static;
+    max-height: none;
+    overflow-y: visible;
+  }
+  .dev-anim-layout { align-items: stretch; }
+  /* El navegador mantiene su barra de personaje compacta en móvil */
+  .dev-navigator .dev-char-list { max-height: 88px; }
+  .dev-navigator-sheet { display: none; }
 }
 
 @media (max-width: 720px) {
@@ -9465,21 +9475,26 @@ button:focus-visible, .chapter-node:focus-visible {
 .dev-navigator .dev-char-list {
   flex-direction: row;
   flex-wrap: wrap;
-  gap: 5px;
-  max-height: none;
+  gap: 4px;
+  max-height: 66px;          /* ~2 filas de chips: la barra de personaje NUNCA tapa la pantalla */
+  overflow-y: auto;
+  overflow-x: hidden;
   max-width: 100%;
-  overflow: visible;
   position: static;
+  padding: 4px 6px;
   padding-right: 0;
-  padding-bottom: 3px;
   scrollbar-width: thin;
+  border: none;
+  background: transparent;
+  border-radius: 0;
 }
 .dev-navigator .dev-char-chip {
-  min-height: 24px;
-  padding: 3px 9px;
+  min-height: 22px;
+  padding: 2px 8px;
   font-size: 11px;
   border-radius: 5px;
   line-height: 1.2;
+  flex: 0 0 auto;
 }
 .dev-navigator .dev-char-forms {
   padding: 0 5px;
@@ -9532,7 +9547,7 @@ button:focus-visible, .chapter-node:focus-visible {
   border-top: 1px dashed #22272f;
 }
 .dev-sheet-canonic {
-  max-height: 92px;
+  max-height: 64px;
   width: auto;
   image-rendering: pixelated;
   border: 1px solid #262b33;
@@ -9545,7 +9560,17 @@ button:focus-visible, .chapter-node:focus-visible {
 }
 
 /* Wrapper del FormNavigator dentro de las páginas */
-.dev-navigator-wrap { margin-bottom: 14px; }
+.dev-navigator-wrap {
+  margin-bottom: 14px;
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  background: #111419;
+  padding: 8px 10px;
+  border: 1px solid #1e2430;
+  border-radius: 10px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, .45);
+}
 
 /* Override-badge mini (Animation Studio) */
 .dev-btn-mini { padding: 2px 8px; font-size: 10px; margin-left: 6px; }

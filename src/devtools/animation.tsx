@@ -434,7 +434,7 @@ export function AnimationModule({ target }: { target?: DevLinkedTarget | null })
       {loadError && <div className="dev-wip-banner">No se pudo cargar el manifest de esta forma.</div>}
 
       <div className="dev-navigator-wrap">
-        <FormNavigator formId={formId} onChange={fid => { setFormId(fid); setPose('idle'); setFrame(0); }} />
+        <FormNavigator formId={formId} onChange={fid => { setFormId(fid); setPose('idle'); setFrame(0); }} showSheet={false} />
       </div>
 
       <div className="dev-anim-layout">
