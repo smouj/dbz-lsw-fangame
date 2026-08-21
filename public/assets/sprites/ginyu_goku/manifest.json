@@ -7,78 +7,8 @@
       {
         "name": "ginyu_goku_idle_00",
         "file": "ginyu_goku_idle_00.png",
-        "w": 30,
-        "h": 46
-      }
-    ]
-  },
-  "guard": {
-    "frame_count": 3,
-    "fps": 6,
-    "loop": false,
-    "frames": [
-      {
-        "name": "ginyu_goku_guard_00",
-        "file": "ginyu_goku_guard_00.png",
-        "w": 30,
-        "h": 46
-      },
-      {
-        "name": "ginyu_goku_guard_01",
-        "file": "ginyu_goku_guard_01.png",
-        "w": 30,
-        "h": 46
-      },
-      {
-        "name": "ginyu_goku_guard_02",
-        "file": "ginyu_goku_guard_02.png",
-        "w": 36,
-        "h": 43
-      }
-    ]
-  },
-  "gather_power": {
-    "frame_count": 1,
-    "fps": 6,
-    "loop": false,
-    "frames": [
-      {
-        "name": "ginyu_goku_gather_power_00",
-        "file": "ginyu_goku_gather_power_00.png",
-        "w": 30,
-        "h": 46
-      }
-    ]
-  },
-  "power_up": {
-    "frame_count": 1,
-    "fps": 8,
-    "loop": true,
-    "frames": [
-      {
-        "name": "ginyu_goku_power_up_00",
-        "file": "ginyu_goku_power_up_00.png",
-        "w": 30,
-        "h": 46
-      }
-    ]
-  },
-  "evade": {
-    "frame_count": 2,
-    "fps": 6,
-    "loop": false,
-    "frames": [
-      {
-        "name": "ginyu_goku_evade_00",
-        "file": "ginyu_goku_evade_00.png",
-        "w": 29,
-        "h": 43
-      },
-      {
-        "name": "ginyu_goku_evade_01",
-        "file": "ginyu_goku_evade_01.png",
-        "w": 27,
-        "h": 46
+        "w": 32,
+        "h": 48
       }
     ]
   },
@@ -90,14 +20,14 @@
       {
         "name": "ginyu_goku_move_front_00",
         "file": "ginyu_goku_move_front_00.png",
-        "w": 32,
-        "h": 41
+        "w": 34,
+        "h": 43
       },
       {
         "name": "ginyu_goku_move_front_01",
         "file": "ginyu_goku_move_front_01.png",
-        "w": 24,
-        "h": 48
+        "w": 32,
+        "h": 50
       }
     ]
   },
@@ -107,16 +37,41 @@
     "loop": true,
     "frames": [
       {
-        "name": "ginyu_goku_move_back_00",
-        "file": "ginyu_goku_move_back_00.png",
-        "w": 32,
-        "h": 41
+        "name": "ginyu_goku_move_front_00",
+        "file": "ginyu_goku_move_front_00.png",
+        "w": 34,
+        "h": 43
       },
       {
-        "name": "ginyu_goku_move_back_01",
-        "file": "ginyu_goku_move_back_01.png",
-        "w": 24,
+        "name": "ginyu_goku_move_front_01",
+        "file": "ginyu_goku_move_front_01.png",
+        "w": 32,
+        "h": 50
+      }
+    ]
+  },
+  "guard": {
+    "frame_count": 3,
+    "fps": 6,
+    "loop": false,
+    "frames": [
+      {
+        "name": "ginyu_goku_idle_00",
+        "file": "ginyu_goku_idle_00.png",
+        "w": 32,
         "h": 48
+      },
+      {
+        "name": "ginyu_goku_guard_01",
+        "file": "ginyu_goku_guard_01.png",
+        "w": 32,
+        "h": 48
+      },
+      {
+        "name": "ginyu_goku_guard_02",
+        "file": "ginyu_goku_guard_02.png",
+        "w": 38,
+        "h": 45
       }
     ]
   },
@@ -128,87 +83,50 @@
       {
         "name": "ginyu_goku_attack_fwd_00",
         "file": "ginyu_goku_attack_fwd_00.png",
-        "w": 30,
-        "h": 44
+        "w": 49,
+        "h": 29
       },
       {
         "name": "ginyu_goku_attack_fwd_01",
         "file": "ginyu_goku_attack_fwd_01.png",
-        "w": 30,
-        "h": 42
+        "w": 42,
+        "h": 47
       },
       {
         "name": "ginyu_goku_attack_fwd_02",
         "file": "ginyu_goku_attack_fwd_02.png",
-        "w": 37,
-        "h": 32
+        "w": 32,
+        "h": 46
       },
       {
         "name": "ginyu_goku_attack_fwd_03",
         "file": "ginyu_goku_attack_fwd_03.png",
-        "w": 31,
-        "h": 44
+        "w": 33,
+        "h": 46
       },
       {
         "name": "ginyu_goku_attack_fwd_04",
         "file": "ginyu_goku_attack_fwd_04.png",
-        "w": 40,
-        "h": 42
+        "w": 33,
+        "h": 46
       },
       {
         "name": "ginyu_goku_attack_fwd_05",
         "file": "ginyu_goku_attack_fwd_05.png",
-        "w": 29,
-        "h": 58
+        "w": 41,
+        "h": 44
       },
       {
         "name": "ginyu_goku_attack_fwd_06",
         "file": "ginyu_goku_attack_fwd_06.png",
-        "w": 64,
-        "h": 56
+        "w": 42,
+        "h": 44
       },
       {
         "name": "ginyu_goku_attack_fwd_07",
         "file": "ginyu_goku_attack_fwd_07.png",
-        "w": 64,
-        "h": 56
-      }
-    ]
-  },
-  "hurt": {
-    "frame_count": 5,
-    "fps": 6,
-    "loop": false,
-    "frames": [
-      {
-        "name": "ginyu_goku_hurt_00",
-        "file": "ginyu_goku_hurt_00.png",
-        "w": 30,
-        "h": 44
-      },
-      {
-        "name": "ginyu_goku_hurt_01",
-        "file": "ginyu_goku_hurt_01.png",
-        "w": 31,
-        "h": 42
-      },
-      {
-        "name": "ginyu_goku_hurt_02",
-        "file": "ginyu_goku_hurt_02.png",
-        "w": 32,
-        "h": 34
-      },
-      {
-        "name": "ginyu_goku_hurt_03",
-        "file": "ginyu_goku_hurt_03.png",
-        "w": 30,
-        "h": 46
-      },
-      {
-        "name": "ginyu_goku_hurt_04",
-        "file": "ginyu_goku_hurt_04.png",
-        "w": 40,
-        "h": 45
+        "w": 18,
+        "h": 18
       }
     ]
   },
@@ -220,45 +138,165 @@
       {
         "name": "ginyu_goku_attack_ud_00",
         "file": "ginyu_goku_attack_ud_00.png",
-        "w": 31,
+        "w": 32,
         "h": 44
       },
       {
         "name": "ginyu_goku_attack_ud_01",
         "file": "ginyu_goku_attack_ud_01.png",
-        "w": 36,
-        "h": 41
+        "w": 38,
+        "h": 43
       },
       {
         "name": "ginyu_goku_attack_ud_02",
         "file": "ginyu_goku_attack_ud_02.png",
-        "w": 32,
-        "h": 44
+        "w": 39,
+        "h": 34
       },
       {
         "name": "ginyu_goku_attack_ud_03",
         "file": "ginyu_goku_attack_ud_03.png",
-        "w": 39,
-        "h": 42
+        "w": 34,
+        "h": 46
+      }
+    ]
+  },
+  "hurt": {
+    "frame_count": 5,
+    "fps": 6,
+    "loop": false,
+    "frames": [
+      {
+        "name": "ginyu_goku_hurt_00",
+        "file": "ginyu_goku_hurt_00.png",
+        "w": 26,
+        "h": 50
+      },
+      {
+        "name": "ginyu_goku_hurt_01",
+        "file": "ginyu_goku_hurt_01.png",
+        "w": 29,
+        "h": 48
+      },
+      {
+        "name": "ginyu_goku_hurt_02",
+        "file": "ginyu_goku_hurt_02.png",
+        "w": 32,
+        "h": 48
+      },
+      {
+        "name": "ginyu_goku_hurt_03",
+        "file": "ginyu_goku_hurt_03.png",
+        "w": 33,
+        "h": 44
+      },
+      {
+        "name": "ginyu_goku_hurt_04",
+        "file": "ginyu_goku_hurt_04.png",
+        "w": 34,
+        "h": 36
+      }
+    ]
+  },
+  "beam_charge": {
+    "frame_count": 1,
+    "fps": 7,
+    "loop": false,
+    "frames": [
+      {
+        "name": "ginyu_goku_beam_charge_00",
+        "file": "ginyu_goku_beam_charge_00.png",
+        "w": 66,
+        "h": 58
+      }
+    ]
+  },
+  "beam_fire": {
+    "frame_count": 2,
+    "fps": 7,
+    "loop": false,
+    "frames": [
+      {
+        "name": "ginyu_goku_beam_fire_00",
+        "file": "ginyu_goku_beam_fire_00.png",
+        "w": 119,
+        "h": 46
+      },
+      {
+        "name": "ginyu_goku_beam_fire_01",
+        "file": "ginyu_goku_beam_fire_01.png",
+        "w": 46,
+        "h": 36
+      }
+    ]
+  },
+  "evade": {
+    "frame_count": 2,
+    "fps": 6,
+    "loop": false,
+    "frames": [
+      {
+        "name": "ginyu_goku_evade_00",
+        "file": "ginyu_goku_evade_00.png",
+        "w": 42,
+        "h": 33
+      },
+      {
+        "name": "ginyu_goku_evade_01",
+        "file": "ginyu_goku_evade_01.png",
+        "w": 31,
+        "h": 45
+      }
+    ]
+  },
+  "gather_power": {
+    "frame_count": 1,
+    "fps": 6,
+    "loop": false,
+    "frames": [
+      {
+        "name": "ginyu_goku_gather_power_00",
+        "file": "ginyu_goku_gather_power_00.png",
+        "w": 32,
+        "h": 48
+      }
+    ]
+  },
+  "power_up": {
+    "frame_count": 1,
+    "fps": 8,
+    "loop": true,
+    "frames": [
+      {
+        "name": "ginyu_goku_gather_power_00",
+        "file": "ginyu_goku_gather_power_00.png",
+        "w": 32,
+        "h": 48
       }
     ]
   },
   "aura_power": {
-    "frame_count": 2,
+    "frame_count": 3,
     "fps": 6,
     "loop": true,
     "frames": [
       {
         "name": "ginyu_goku_aura_power_00",
         "file": "ginyu_goku_aura_power_00.png",
-        "w": 30,
-        "h": 47
+        "w": 53,
+        "h": 46
       },
       {
         "name": "ginyu_goku_aura_power_01",
         "file": "ginyu_goku_aura_power_01.png",
-        "w": 31,
-        "h": 44
+        "w": 117,
+        "h": 46
+      },
+      {
+        "name": "ginyu_goku_aura_power_02",
+        "file": "ginyu_goku_aura_power_02.png",
+        "w": 120,
+        "h": 64
       }
     ]
   },
@@ -295,50 +333,50 @@
       {
         "name": "ginyu_goku_attack_fwd_00",
         "file": "ginyu_goku_attack_fwd_00.png",
-        "w": 30,
-        "h": 44
+        "w": 49,
+        "h": 29
       },
       {
         "name": "ginyu_goku_attack_fwd_01",
         "file": "ginyu_goku_attack_fwd_01.png",
-        "w": 30,
-        "h": 42
+        "w": 42,
+        "h": 47
       },
       {
         "name": "ginyu_goku_attack_fwd_02",
         "file": "ginyu_goku_attack_fwd_02.png",
-        "w": 37,
-        "h": 32
+        "w": 32,
+        "h": 46
       },
       {
         "name": "ginyu_goku_attack_fwd_03",
         "file": "ginyu_goku_attack_fwd_03.png",
-        "w": 31,
-        "h": 44
+        "w": 33,
+        "h": 46
       },
       {
         "name": "ginyu_goku_attack_fwd_04",
         "file": "ginyu_goku_attack_fwd_04.png",
-        "w": 40,
-        "h": 42
+        "w": 33,
+        "h": 46
       },
       {
         "name": "ginyu_goku_attack_fwd_05",
         "file": "ginyu_goku_attack_fwd_05.png",
-        "w": 29,
-        "h": 58
+        "w": 41,
+        "h": 44
       },
       {
         "name": "ginyu_goku_attack_fwd_06",
         "file": "ginyu_goku_attack_fwd_06.png",
-        "w": 64,
-        "h": 56
+        "w": 42,
+        "h": 44
       },
       {
         "name": "ginyu_goku_attack_fwd_07",
         "file": "ginyu_goku_attack_fwd_07.png",
-        "w": 64,
-        "h": 56
+        "w": 18,
+        "h": 18
       }
     ]
   },
@@ -350,50 +388,50 @@
       {
         "name": "ginyu_goku_attack_fwd_00",
         "file": "ginyu_goku_attack_fwd_00.png",
-        "w": 30,
-        "h": 44
+        "w": 49,
+        "h": 29
       },
       {
         "name": "ginyu_goku_attack_fwd_01",
         "file": "ginyu_goku_attack_fwd_01.png",
-        "w": 30,
-        "h": 42
+        "w": 42,
+        "h": 47
       },
       {
         "name": "ginyu_goku_attack_fwd_02",
         "file": "ginyu_goku_attack_fwd_02.png",
-        "w": 37,
-        "h": 32
+        "w": 32,
+        "h": 46
       },
       {
         "name": "ginyu_goku_attack_fwd_03",
         "file": "ginyu_goku_attack_fwd_03.png",
-        "w": 31,
-        "h": 44
+        "w": 33,
+        "h": 46
       },
       {
         "name": "ginyu_goku_attack_fwd_04",
         "file": "ginyu_goku_attack_fwd_04.png",
-        "w": 40,
-        "h": 42
+        "w": 33,
+        "h": 46
       },
       {
         "name": "ginyu_goku_attack_fwd_05",
         "file": "ginyu_goku_attack_fwd_05.png",
-        "w": 29,
-        "h": 58
+        "w": 41,
+        "h": 44
       },
       {
         "name": "ginyu_goku_attack_fwd_06",
         "file": "ginyu_goku_attack_fwd_06.png",
-        "w": 64,
-        "h": 56
+        "w": 42,
+        "h": 44
       },
       {
         "name": "ginyu_goku_attack_fwd_07",
         "file": "ginyu_goku_attack_fwd_07.png",
-        "w": 64,
-        "h": 56
+        "w": 18,
+        "h": 18
       }
     ]
   },
@@ -405,26 +443,26 @@
       {
         "name": "ginyu_goku_attack_ud_00",
         "file": "ginyu_goku_attack_ud_00.png",
-        "w": 31,
+        "w": 32,
         "h": 44
       },
       {
         "name": "ginyu_goku_attack_ud_01",
         "file": "ginyu_goku_attack_ud_01.png",
-        "w": 36,
-        "h": 41
+        "w": 38,
+        "h": 43
       },
       {
         "name": "ginyu_goku_attack_ud_02",
         "file": "ginyu_goku_attack_ud_02.png",
-        "w": 32,
-        "h": 44
+        "w": 39,
+        "h": 34
       },
       {
         "name": "ginyu_goku_attack_ud_03",
         "file": "ginyu_goku_attack_ud_03.png",
-        "w": 39,
-        "h": 42
+        "w": 34,
+        "h": 46
       }
     ]
   },
@@ -436,32 +474,32 @@
       {
         "name": "ginyu_goku_hurt_00",
         "file": "ginyu_goku_hurt_00.png",
-        "w": 30,
-        "h": 44
+        "w": 26,
+        "h": 50
       },
       {
         "name": "ginyu_goku_hurt_01",
         "file": "ginyu_goku_hurt_01.png",
-        "w": 31,
-        "h": 42
+        "w": 29,
+        "h": 48
       },
       {
         "name": "ginyu_goku_hurt_02",
         "file": "ginyu_goku_hurt_02.png",
         "w": 32,
-        "h": 34
+        "h": 48
       },
       {
         "name": "ginyu_goku_hurt_03",
         "file": "ginyu_goku_hurt_03.png",
-        "w": 30,
-        "h": 46
+        "w": 33,
+        "h": 44
       },
       {
         "name": "ginyu_goku_hurt_04",
         "file": "ginyu_goku_hurt_04.png",
-        "w": 40,
-        "h": 45
+        "w": 34,
+        "h": 36
       }
     ]
   },
@@ -473,32 +511,32 @@
       {
         "name": "ginyu_goku_hurt_00",
         "file": "ginyu_goku_hurt_00.png",
-        "w": 30,
-        "h": 44
+        "w": 26,
+        "h": 50
       },
       {
         "name": "ginyu_goku_hurt_01",
         "file": "ginyu_goku_hurt_01.png",
-        "w": 31,
-        "h": 42
+        "w": 29,
+        "h": 48
       },
       {
         "name": "ginyu_goku_hurt_02",
         "file": "ginyu_goku_hurt_02.png",
         "w": 32,
-        "h": 34
+        "h": 48
       },
       {
         "name": "ginyu_goku_hurt_03",
         "file": "ginyu_goku_hurt_03.png",
-        "w": 30,
-        "h": 46
+        "w": 33,
+        "h": 44
       },
       {
         "name": "ginyu_goku_hurt_04",
         "file": "ginyu_goku_hurt_04.png",
-        "w": 40,
-        "h": 45
+        "w": 34,
+        "h": 36
       }
     ]
   },
@@ -510,32 +548,32 @@
       {
         "name": "ginyu_goku_hurt_00",
         "file": "ginyu_goku_hurt_00.png",
-        "w": 30,
-        "h": 44
+        "w": 26,
+        "h": 50
       },
       {
         "name": "ginyu_goku_hurt_01",
         "file": "ginyu_goku_hurt_01.png",
-        "w": 31,
-        "h": 42
+        "w": 29,
+        "h": 48
       },
       {
         "name": "ginyu_goku_hurt_02",
         "file": "ginyu_goku_hurt_02.png",
         "w": 32,
-        "h": 34
+        "h": 48
       },
       {
         "name": "ginyu_goku_hurt_03",
         "file": "ginyu_goku_hurt_03.png",
-        "w": 30,
-        "h": 46
+        "w": 33,
+        "h": 44
       },
       {
         "name": "ginyu_goku_hurt_04",
         "file": "ginyu_goku_hurt_04.png",
-        "w": 40,
-        "h": 45
+        "w": 34,
+        "h": 36
       }
     ]
   },
@@ -545,48 +583,22 @@
     "loop": false,
     "frames": [
       {
-        "name": "ginyu_goku_guard_00",
-        "file": "ginyu_goku_guard_00.png",
-        "w": 30,
-        "h": 46
+        "name": "ginyu_goku_idle_00",
+        "file": "ginyu_goku_idle_00.png",
+        "w": 32,
+        "h": 48
       },
       {
         "name": "ginyu_goku_guard_01",
         "file": "ginyu_goku_guard_01.png",
-        "w": 30,
-        "h": 46
+        "w": 32,
+        "h": 48
       },
       {
         "name": "ginyu_goku_guard_02",
         "file": "ginyu_goku_guard_02.png",
-        "w": 36,
-        "h": 43
-      }
-    ]
-  },
-  "beam_fire": {
-    "frame_count": 1,
-    "fps": 6,
-    "loop": false,
-    "frames": [
-      {
-        "name": "ginyu_goku_gather_power_00",
-        "file": "ginyu_goku_gather_power_00.png",
-        "w": 30,
-        "h": 46
-      }
-    ]
-  },
-  "beam_charge": {
-    "frame_count": 1,
-    "fps": 6,
-    "loop": false,
-    "frames": [
-      {
-        "name": "ginyu_goku_gather_power_00",
-        "file": "ginyu_goku_gather_power_00.png",
-        "w": 30,
-        "h": 46
+        "w": 38,
+        "h": 45
       }
     ]
   }

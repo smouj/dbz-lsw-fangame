@@ -7,8 +7,8 @@
       {
         "name": "nappa_idle_00",
         "file": "nappa_idle_00.png",
-        "w": 26,
-        "h": 39
+        "w": 28,
+        "h": 41
       }
     ]
   },
@@ -20,14 +20,14 @@
       {
         "name": "nappa_move_front_00",
         "file": "nappa_move_front_00.png",
-        "w": 28,
-        "h": 39
+        "w": 30,
+        "h": 41
       },
       {
         "name": "nappa_move_front_01",
         "file": "nappa_move_front_01.png",
-        "w": 32,
-        "h": 36
+        "w": 34,
+        "h": 38
       }
     ]
   },
@@ -37,16 +37,16 @@
     "loop": true,
     "frames": [
       {
-        "name": "nappa_move_back_00",
-        "file": "nappa_move_back_00.png",
-        "w": 28,
-        "h": 39
+        "name": "nappa_move_front_00",
+        "file": "nappa_move_front_00.png",
+        "w": 30,
+        "h": 41
       },
       {
-        "name": "nappa_move_back_01",
-        "file": "nappa_move_back_01.png",
-        "w": 32,
-        "h": 36
+        "name": "nappa_move_front_01",
+        "file": "nappa_move_front_01.png",
+        "w": 34,
+        "h": 38
       }
     ]
   },
@@ -56,22 +56,22 @@
     "loop": false,
     "frames": [
       {
-        "name": "nappa_guard_00",
-        "file": "nappa_guard_00.png",
-        "w": 26,
-        "h": 39
+        "name": "nappa_idle_00",
+        "file": "nappa_idle_00.png",
+        "w": 28,
+        "h": 41
       },
       {
         "name": "nappa_guard_01",
         "file": "nappa_guard_01.png",
-        "w": 30,
-        "h": 39
+        "w": 32,
+        "h": 41
       },
       {
         "name": "nappa_guard_02",
         "file": "nappa_guard_02.png",
-        "w": 34,
-        "h": 37
+        "w": 36,
+        "h": 39
       }
     ]
   },
@@ -83,55 +83,55 @@
       {
         "name": "nappa_attack_fwd_00",
         "file": "nappa_attack_fwd_00.png",
-        "w": 23,
-        "h": 40
+        "w": 39,
+        "h": 42
       },
       {
         "name": "nappa_attack_fwd_01",
         "file": "nappa_attack_fwd_01.png",
-        "w": 37,
-        "h": 40
+        "w": 24,
+        "h": 41
       },
       {
         "name": "nappa_attack_fwd_02",
         "file": "nappa_attack_fwd_02.png",
-        "w": 32,
-        "h": 36
+        "w": 34,
+        "h": 38
       },
       {
         "name": "nappa_attack_fwd_03",
         "file": "nappa_attack_fwd_03.png",
-        "w": 40,
-        "h": 36
+        "w": 42,
+        "h": 38
       },
       {
         "name": "nappa_attack_fwd_04",
         "file": "nappa_attack_fwd_04.png",
-        "w": 32,
-        "h": 36
+        "w": 34,
+        "h": 38
       },
       {
         "name": "nappa_attack_fwd_05",
         "file": "nappa_attack_fwd_05.png",
-        "w": 32,
-        "h": 36
+        "w": 34,
+        "h": 38
       },
       {
         "name": "nappa_attack_fwd_06",
         "file": "nappa_attack_fwd_06.png",
-        "w": 36,
-        "h": 35
+        "w": 38,
+        "h": 37
       },
       {
         "name": "nappa_attack_fwd_07",
         "file": "nappa_attack_fwd_07.png",
-        "w": 39,
-        "h": 35
+        "w": 41,
+        "h": 37
       }
     ]
   },
   "attack_ud": {
-    "frame_count": 4,
+    "frame_count": 3,
     "fps": 7,
     "loop": false,
     "frames": [
@@ -139,50 +139,56 @@
         "name": "nappa_attack_ud_00",
         "file": "nappa_attack_ud_00.png",
         "w": 29,
-        "h": 26
+        "h": 43
       },
       {
         "name": "nappa_attack_ud_01",
         "file": "nappa_attack_ud_01.png",
-        "w": 27,
-        "h": 41
+        "w": 31,
+        "h": 40
       },
       {
         "name": "nappa_attack_ud_02",
         "file": "nappa_attack_ud_02.png",
-        "w": 22,
-        "h": 39
-      },
-      {
-        "name": "nappa_attack_ud_03",
-        "file": "nappa_attack_ud_03.png",
-        "w": 29,
-        "h": 38
+        "w": 31,
+        "h": 28
       }
     ]
   },
   "hurt": {
-    "frame_count": 3,
+    "frame_count": 5,
     "fps": 6,
     "loop": false,
     "frames": [
       {
         "name": "nappa_hurt_00",
         "file": "nappa_hurt_00.png",
-        "w": 28,
-        "h": 38
+        "w": 26,
+        "h": 48
       },
       {
         "name": "nappa_hurt_01",
         "file": "nappa_hurt_01.png",
-        "w": 27,
-        "h": 38
+        "w": 25,
+        "h": 42
       },
       {
         "name": "nappa_hurt_02",
         "file": "nappa_hurt_02.png",
-        "w": 32,
-        "h": 31
+        "w": 30,
+        "h": 40
+      },
+      {
+        "name": "nappa_hurt_03",
+        "file": "nappa_hurt_03.png",
+        "w": 29,
+        "h": 40
+      },
+      {
+        "name": "nappa_hurt_04",
+        "file": "nappa_hurt_04.png",
+        "w": 34,
+        "h": 33
       }
     ]
   },
@@ -194,20 +200,20 @@
       {
         "name": "nappa_beam_charge_00",
         "file": "nappa_beam_charge_00.png",
-        "w": 32,
-        "h": 36
+        "w": 34,
+        "h": 38
       },
       {
         "name": "nappa_beam_charge_01",
         "file": "nappa_beam_charge_01.png",
-        "w": 34,
-        "h": 37
+        "w": 36,
+        "h": 39
       },
       {
         "name": "nappa_beam_charge_02",
         "file": "nappa_beam_charge_02.png",
-        "w": 32,
-        "h": 36
+        "w": 34,
+        "h": 38
       }
     ]
   },
@@ -219,8 +225,8 @@
       {
         "name": "nappa_beam_fire_00",
         "file": "nappa_beam_fire_00.png",
-        "w": 24,
-        "h": 39
+        "w": 26,
+        "h": 41
       }
     ]
   },
@@ -232,14 +238,14 @@
       {
         "name": "nappa_evade_00",
         "file": "nappa_evade_00.png",
-        "w": 23,
-        "h": 41
+        "w": 42,
+        "h": 33
       },
       {
         "name": "nappa_evade_01",
         "file": "nappa_evade_01.png",
-        "w": 40,
-        "h": 31
+        "w": 25,
+        "h": 43
       }
     ]
   },
@@ -249,22 +255,22 @@
     "loop": false,
     "frames": [
       {
-        "name": "nappa_gather_power_00",
-        "file": "nappa_gather_power_00.png",
-        "w": 32,
-        "h": 36
-      },
-      {
-        "name": "nappa_gather_power_01",
-        "file": "nappa_gather_power_01.png",
+        "name": "nappa_beam_charge_00",
+        "file": "nappa_beam_charge_00.png",
         "w": 34,
-        "h": 37
+        "h": 38
       },
       {
-        "name": "nappa_gather_power_02",
-        "file": "nappa_gather_power_02.png",
-        "w": 32,
-        "h": 36
+        "name": "nappa_beam_charge_01",
+        "file": "nappa_beam_charge_01.png",
+        "w": 36,
+        "h": 39
+      },
+      {
+        "name": "nappa_beam_charge_02",
+        "file": "nappa_beam_charge_02.png",
+        "w": 34,
+        "h": 38
       }
     ]
   },
@@ -274,22 +280,22 @@
     "loop": true,
     "frames": [
       {
-        "name": "nappa_power_up_00",
-        "file": "nappa_power_up_00.png",
-        "w": 32,
-        "h": 36
-      },
-      {
-        "name": "nappa_power_up_01",
-        "file": "nappa_power_up_01.png",
+        "name": "nappa_beam_charge_00",
+        "file": "nappa_beam_charge_00.png",
         "w": 34,
-        "h": 37
+        "h": 38
       },
       {
-        "name": "nappa_power_up_02",
-        "file": "nappa_power_up_02.png",
-        "w": 32,
-        "h": 36
+        "name": "nappa_beam_charge_01",
+        "file": "nappa_beam_charge_01.png",
+        "w": 36,
+        "h": 39
+      },
+      {
+        "name": "nappa_beam_charge_02",
+        "file": "nappa_beam_charge_02.png",
+        "w": 34,
+        "h": 38
       }
     ]
   },
@@ -301,20 +307,20 @@
       {
         "name": "nappa_aura_power_00",
         "file": "nappa_aura_power_00.png",
-        "w": 64,
-        "h": 56
+        "w": 66,
+        "h": 58
       },
       {
         "name": "nappa_aura_power_01",
         "file": "nappa_aura_power_01.png",
-        "w": 64,
-        "h": 56
+        "w": 66,
+        "h": 58
       },
       {
         "name": "nappa_aura_power_02",
         "file": "nappa_aura_power_02.png",
-        "w": 64,
-        "h": 56
+        "w": 66,
+        "h": 58
       }
     ]
   },
@@ -351,50 +357,50 @@
       {
         "name": "nappa_attack_fwd_00",
         "file": "nappa_attack_fwd_00.png",
-        "w": 23,
-        "h": 40
+        "w": 39,
+        "h": 42
       },
       {
         "name": "nappa_attack_fwd_01",
         "file": "nappa_attack_fwd_01.png",
-        "w": 37,
-        "h": 40
+        "w": 24,
+        "h": 41
       },
       {
         "name": "nappa_attack_fwd_02",
         "file": "nappa_attack_fwd_02.png",
-        "w": 32,
-        "h": 36
+        "w": 34,
+        "h": 38
       },
       {
         "name": "nappa_attack_fwd_03",
         "file": "nappa_attack_fwd_03.png",
-        "w": 40,
-        "h": 36
+        "w": 42,
+        "h": 38
       },
       {
         "name": "nappa_attack_fwd_04",
         "file": "nappa_attack_fwd_04.png",
-        "w": 32,
-        "h": 36
+        "w": 34,
+        "h": 38
       },
       {
         "name": "nappa_attack_fwd_05",
         "file": "nappa_attack_fwd_05.png",
-        "w": 32,
-        "h": 36
+        "w": 34,
+        "h": 38
       },
       {
         "name": "nappa_attack_fwd_06",
         "file": "nappa_attack_fwd_06.png",
-        "w": 36,
-        "h": 35
+        "w": 38,
+        "h": 37
       },
       {
         "name": "nappa_attack_fwd_07",
         "file": "nappa_attack_fwd_07.png",
-        "w": 39,
-        "h": 35
+        "w": 41,
+        "h": 37
       }
     ]
   },
@@ -406,55 +412,55 @@
       {
         "name": "nappa_attack_fwd_00",
         "file": "nappa_attack_fwd_00.png",
-        "w": 23,
-        "h": 40
+        "w": 39,
+        "h": 42
       },
       {
         "name": "nappa_attack_fwd_01",
         "file": "nappa_attack_fwd_01.png",
-        "w": 37,
-        "h": 40
+        "w": 24,
+        "h": 41
       },
       {
         "name": "nappa_attack_fwd_02",
         "file": "nappa_attack_fwd_02.png",
-        "w": 32,
-        "h": 36
+        "w": 34,
+        "h": 38
       },
       {
         "name": "nappa_attack_fwd_03",
         "file": "nappa_attack_fwd_03.png",
-        "w": 40,
-        "h": 36
+        "w": 42,
+        "h": 38
       },
       {
         "name": "nappa_attack_fwd_04",
         "file": "nappa_attack_fwd_04.png",
-        "w": 32,
-        "h": 36
+        "w": 34,
+        "h": 38
       },
       {
         "name": "nappa_attack_fwd_05",
         "file": "nappa_attack_fwd_05.png",
-        "w": 32,
-        "h": 36
+        "w": 34,
+        "h": 38
       },
       {
         "name": "nappa_attack_fwd_06",
         "file": "nappa_attack_fwd_06.png",
-        "w": 36,
-        "h": 35
+        "w": 38,
+        "h": 37
       },
       {
         "name": "nappa_attack_fwd_07",
         "file": "nappa_attack_fwd_07.png",
-        "w": 39,
-        "h": 35
+        "w": 41,
+        "h": 37
       }
     ]
   },
   "kick_right": {
-    "frame_count": 4,
+    "frame_count": 3,
     "fps": 7,
     "loop": false,
     "frames": [
@@ -462,100 +468,130 @@
         "name": "nappa_attack_ud_00",
         "file": "nappa_attack_ud_00.png",
         "w": 29,
-        "h": 26
+        "h": 43
       },
       {
         "name": "nappa_attack_ud_01",
         "file": "nappa_attack_ud_01.png",
-        "w": 27,
-        "h": 41
+        "w": 31,
+        "h": 40
       },
       {
         "name": "nappa_attack_ud_02",
         "file": "nappa_attack_ud_02.png",
-        "w": 22,
-        "h": 39
-      },
-      {
-        "name": "nappa_attack_ud_03",
-        "file": "nappa_attack_ud_03.png",
-        "w": 29,
-        "h": 38
+        "w": 31,
+        "h": 28
       }
     ]
   },
   "knockback_back": {
-    "frame_count": 3,
+    "frame_count": 5,
     "fps": 6,
     "loop": false,
     "frames": [
       {
         "name": "nappa_hurt_00",
         "file": "nappa_hurt_00.png",
-        "w": 28,
-        "h": 38
+        "w": 26,
+        "h": 48
       },
       {
         "name": "nappa_hurt_01",
         "file": "nappa_hurt_01.png",
-        "w": 27,
-        "h": 38
+        "w": 25,
+        "h": 42
       },
       {
         "name": "nappa_hurt_02",
         "file": "nappa_hurt_02.png",
-        "w": 32,
-        "h": 31
+        "w": 30,
+        "h": 40
+      },
+      {
+        "name": "nappa_hurt_03",
+        "file": "nappa_hurt_03.png",
+        "w": 29,
+        "h": 40
+      },
+      {
+        "name": "nappa_hurt_04",
+        "file": "nappa_hurt_04.png",
+        "w": 34,
+        "h": 33
       }
     ]
   },
   "knockback_up": {
-    "frame_count": 3,
+    "frame_count": 5,
     "fps": 6,
     "loop": false,
     "frames": [
       {
         "name": "nappa_hurt_00",
         "file": "nappa_hurt_00.png",
-        "w": 28,
-        "h": 38
+        "w": 26,
+        "h": 48
       },
       {
         "name": "nappa_hurt_01",
         "file": "nappa_hurt_01.png",
-        "w": 27,
-        "h": 38
+        "w": 25,
+        "h": 42
       },
       {
         "name": "nappa_hurt_02",
         "file": "nappa_hurt_02.png",
-        "w": 32,
-        "h": 31
+        "w": 30,
+        "h": 40
+      },
+      {
+        "name": "nappa_hurt_03",
+        "file": "nappa_hurt_03.png",
+        "w": 29,
+        "h": 40
+      },
+      {
+        "name": "nappa_hurt_04",
+        "file": "nappa_hurt_04.png",
+        "w": 34,
+        "h": 33
       }
     ]
   },
   "knockback_down": {
-    "frame_count": 3,
+    "frame_count": 5,
     "fps": 6,
     "loop": false,
     "frames": [
       {
         "name": "nappa_hurt_00",
         "file": "nappa_hurt_00.png",
-        "w": 28,
-        "h": 38
+        "w": 26,
+        "h": 48
       },
       {
         "name": "nappa_hurt_01",
         "file": "nappa_hurt_01.png",
-        "w": 27,
-        "h": 38
+        "w": 25,
+        "h": 42
       },
       {
         "name": "nappa_hurt_02",
         "file": "nappa_hurt_02.png",
-        "w": 32,
-        "h": 31
+        "w": 30,
+        "h": 40
+      },
+      {
+        "name": "nappa_hurt_03",
+        "file": "nappa_hurt_03.png",
+        "w": 29,
+        "h": 40
+      },
+      {
+        "name": "nappa_hurt_04",
+        "file": "nappa_hurt_04.png",
+        "w": 34,
+        "h": 33
       }
     ]
   },
@@ -565,22 +601,22 @@
     "loop": false,
     "frames": [
       {
-        "name": "nappa_guard_00",
-        "file": "nappa_guard_00.png",
-        "w": 26,
-        "h": 39
+        "name": "nappa_idle_00",
+        "file": "nappa_idle_00.png",
+        "w": 28,
+        "h": 41
       },
       {
         "name": "nappa_guard_01",
         "file": "nappa_guard_01.png",
-        "w": 30,
-        "h": 39
+        "w": 32,
+        "h": 41
       },
       {
         "name": "nappa_guard_02",
         "file": "nappa_guard_02.png",
-        "w": 34,
-        "h": 37
+        "w": 36,
+        "h": 39
       }
     ]
   }

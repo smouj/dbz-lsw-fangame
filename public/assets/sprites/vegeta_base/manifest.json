@@ -7,8 +7,8 @@
       {
         "name": "vegeta_base_idle_00",
         "file": "vegeta_base_idle_00.png",
-        "w": 30,
-        "h": 42
+        "w": 32,
+        "h": 44
       }
     ]
   },
@@ -20,14 +20,14 @@
       {
         "name": "vegeta_base_move_front_00",
         "file": "vegeta_base_move_front_00.png",
-        "w": 28,
-        "h": 44
+        "w": 30,
+        "h": 46
       },
       {
         "name": "vegeta_base_move_front_01",
         "file": "vegeta_base_move_front_01.png",
-        "w": 32,
-        "h": 41
+        "w": 34,
+        "h": 43
       }
     ]
   },
@@ -37,16 +37,16 @@
     "loop": true,
     "frames": [
       {
-        "name": "vegeta_base_move_back_00",
-        "file": "vegeta_base_move_back_00.png",
-        "w": 28,
-        "h": 44
+        "name": "vegeta_base_move_front_00",
+        "file": "vegeta_base_move_front_00.png",
+        "w": 30,
+        "h": 46
       },
       {
-        "name": "vegeta_base_move_back_01",
-        "file": "vegeta_base_move_back_01.png",
-        "w": 32,
-        "h": 41
+        "name": "vegeta_base_move_front_01",
+        "file": "vegeta_base_move_front_01.png",
+        "w": 34,
+        "h": 43
       }
     ]
   },
@@ -56,22 +56,22 @@
     "loop": false,
     "frames": [
       {
-        "name": "vegeta_base_guard_00",
-        "file": "vegeta_base_guard_00.png",
-        "w": 30,
-        "h": 42
+        "name": "vegeta_base_idle_00",
+        "file": "vegeta_base_idle_00.png",
+        "w": 32,
+        "h": 44
       },
       {
         "name": "vegeta_base_guard_01",
         "file": "vegeta_base_guard_01.png",
-        "w": 30,
-        "h": 43
+        "w": 32,
+        "h": 45
       },
       {
         "name": "vegeta_base_guard_02",
         "file": "vegeta_base_guard_02.png",
-        "w": 34,
-        "h": 42
+        "w": 36,
+        "h": 44
       }
     ]
   },
@@ -83,44 +83,44 @@
       {
         "name": "vegeta_base_attack_fwd_00",
         "file": "vegeta_base_attack_fwd_00.png",
-        "w": 23,
-        "h": 45
+        "w": 25,
+        "h": 47
       },
       {
         "name": "vegeta_base_attack_fwd_01",
         "file": "vegeta_base_attack_fwd_01.png",
-        "w": 30,
-        "h": 44
+        "w": 32,
+        "h": 46
       },
       {
         "name": "vegeta_base_attack_fwd_02",
         "file": "vegeta_base_attack_fwd_02.png",
-        "w": 35,
-        "h": 39
+        "w": 37,
+        "h": 41
       },
       {
         "name": "vegeta_base_attack_fwd_03",
         "file": "vegeta_base_attack_fwd_03.png",
-        "w": 32,
-        "h": 41
+        "w": 34,
+        "h": 43
       },
       {
         "name": "vegeta_base_attack_fwd_04",
         "file": "vegeta_base_attack_fwd_04.png",
-        "w": 31,
-        "h": 41
+        "w": 33,
+        "h": 43
       },
       {
         "name": "vegeta_base_attack_fwd_05",
         "file": "vegeta_base_attack_fwd_05.png",
-        "w": 38,
-        "h": 40
+        "w": 40,
+        "h": 42
       },
       {
         "name": "vegeta_base_attack_fwd_06",
         "file": "vegeta_base_attack_fwd_06.png",
-        "w": 39,
-        "h": 40
+        "w": 41,
+        "h": 42
       }
     ]
   },
@@ -132,57 +132,63 @@
       {
         "name": "vegeta_base_attack_ud_00",
         "file": "vegeta_base_attack_ud_00.png",
-        "w": 23,
-        "h": 45
+        "w": 25,
+        "h": 47
       },
       {
         "name": "vegeta_base_attack_ud_01",
         "file": "vegeta_base_attack_ud_01.png",
-        "w": 29,
-        "h": 42
+        "w": 31,
+        "h": 44
       },
       {
         "name": "vegeta_base_attack_ud_02",
         "file": "vegeta_base_attack_ud_02.png",
-        "w": 40,
-        "h": 40
+        "w": 42,
+        "h": 42
       },
       {
         "name": "vegeta_base_attack_ud_03",
         "file": "vegeta_base_attack_ud_03.png",
-        "w": 29,
-        "h": 31
+        "w": 31,
+        "h": 33
       }
     ]
   },
   "hurt": {
-    "frame_count": 4,
+    "frame_count": 5,
     "fps": 6,
     "loop": false,
     "frames": [
       {
         "name": "vegeta_base_hurt_00",
         "file": "vegeta_base_hurt_00.png",
-        "w": 25,
-        "h": 48
+        "w": 27,
+        "h": 50
       },
       {
         "name": "vegeta_base_hurt_01",
         "file": "vegeta_base_hurt_01.png",
-        "w": 28,
-        "h": 43
+        "w": 26,
+        "h": 48
       },
       {
         "name": "vegeta_base_hurt_02",
         "file": "vegeta_base_hurt_02.png",
-        "w": 27,
-        "h": 38
+        "w": 30,
+        "h": 45
       },
       {
         "name": "vegeta_base_hurt_03",
         "file": "vegeta_base_hurt_03.png",
-        "w": 32,
-        "h": 38
+        "w": 29,
+        "h": 40
+      },
+      {
+        "name": "vegeta_base_hurt_04",
+        "file": "vegeta_base_hurt_04.png",
+        "w": 34,
+        "h": 40
       }
     ]
   },
@@ -194,20 +200,20 @@
       {
         "name": "vegeta_base_beam_charge_00",
         "file": "vegeta_base_beam_charge_00.png",
-        "w": 32,
-        "h": 41
+        "w": 34,
+        "h": 43
       },
       {
         "name": "vegeta_base_beam_charge_01",
         "file": "vegeta_base_beam_charge_01.png",
-        "w": 28,
-        "h": 45
+        "w": 30,
+        "h": 47
       },
       {
         "name": "vegeta_base_beam_charge_02",
         "file": "vegeta_base_beam_charge_02.png",
-        "w": 32,
-        "h": 41
+        "w": 34,
+        "h": 43
       }
     ]
   },
@@ -219,8 +225,8 @@
       {
         "name": "vegeta_base_beam_fire_00",
         "file": "vegeta_base_beam_fire_00.png",
-        "w": 27,
-        "h": 43
+        "w": 29,
+        "h": 45
       }
     ]
   },
@@ -232,14 +238,14 @@
       {
         "name": "vegeta_base_evade_00",
         "file": "vegeta_base_evade_00.png",
-        "w": 23,
-        "h": 41
+        "w": 42,
+        "h": 33
       },
       {
         "name": "vegeta_base_evade_01",
         "file": "vegeta_base_evade_01.png",
-        "w": 40,
-        "h": 31
+        "w": 25,
+        "h": 43
       }
     ]
   },
@@ -249,16 +255,16 @@
     "loop": false,
     "frames": [
       {
-        "name": "vegeta_base_gather_power_00",
-        "file": "vegeta_base_gather_power_00.png",
-        "w": 28,
-        "h": 45
+        "name": "vegeta_base_beam_charge_01",
+        "file": "vegeta_base_beam_charge_01.png",
+        "w": 30,
+        "h": 47
       },
       {
-        "name": "vegeta_base_gather_power_01",
-        "file": "vegeta_base_gather_power_01.png",
-        "w": 27,
-        "h": 43
+        "name": "vegeta_base_beam_fire_00",
+        "file": "vegeta_base_beam_fire_00.png",
+        "w": 29,
+        "h": 45
       }
     ]
   },
@@ -268,16 +274,16 @@
     "loop": true,
     "frames": [
       {
-        "name": "vegeta_base_power_up_00",
-        "file": "vegeta_base_power_up_00.png",
-        "w": 28,
-        "h": 45
+        "name": "vegeta_base_beam_charge_01",
+        "file": "vegeta_base_beam_charge_01.png",
+        "w": 30,
+        "h": 47
       },
       {
-        "name": "vegeta_base_power_up_01",
-        "file": "vegeta_base_power_up_01.png",
-        "w": 27,
-        "h": 43
+        "name": "vegeta_base_beam_fire_00",
+        "file": "vegeta_base_beam_fire_00.png",
+        "w": 29,
+        "h": 45
       }
     ]
   },
@@ -289,20 +295,20 @@
       {
         "name": "vegeta_base_aura_power_00",
         "file": "vegeta_base_aura_power_00.png",
-        "w": 64,
-        "h": 56
+        "w": 66,
+        "h": 58
       },
       {
         "name": "vegeta_base_aura_power_01",
         "file": "vegeta_base_aura_power_01.png",
-        "w": 64,
-        "h": 56
+        "w": 66,
+        "h": 58
       },
       {
         "name": "vegeta_base_aura_power_02",
         "file": "vegeta_base_aura_power_02.png",
-        "w": 64,
-        "h": 56
+        "w": 66,
+        "h": 58
       }
     ]
   },
@@ -339,44 +345,44 @@
       {
         "name": "vegeta_base_attack_fwd_00",
         "file": "vegeta_base_attack_fwd_00.png",
-        "w": 23,
-        "h": 45
+        "w": 25,
+        "h": 47
       },
       {
         "name": "vegeta_base_attack_fwd_01",
         "file": "vegeta_base_attack_fwd_01.png",
-        "w": 30,
-        "h": 44
+        "w": 32,
+        "h": 46
       },
       {
         "name": "vegeta_base_attack_fwd_02",
         "file": "vegeta_base_attack_fwd_02.png",
-        "w": 35,
-        "h": 39
+        "w": 37,
+        "h": 41
       },
       {
         "name": "vegeta_base_attack_fwd_03",
         "file": "vegeta_base_attack_fwd_03.png",
-        "w": 32,
-        "h": 41
+        "w": 34,
+        "h": 43
       },
       {
         "name": "vegeta_base_attack_fwd_04",
         "file": "vegeta_base_attack_fwd_04.png",
-        "w": 31,
-        "h": 41
+        "w": 33,
+        "h": 43
       },
       {
         "name": "vegeta_base_attack_fwd_05",
         "file": "vegeta_base_attack_fwd_05.png",
-        "w": 38,
-        "h": 40
+        "w": 40,
+        "h": 42
       },
       {
         "name": "vegeta_base_attack_fwd_06",
         "file": "vegeta_base_attack_fwd_06.png",
-        "w": 39,
-        "h": 40
+        "w": 41,
+        "h": 42
       }
     ]
   },
@@ -388,44 +394,44 @@
       {
         "name": "vegeta_base_attack_fwd_00",
         "file": "vegeta_base_attack_fwd_00.png",
-        "w": 23,
-        "h": 45
+        "w": 25,
+        "h": 47
       },
       {
         "name": "vegeta_base_attack_fwd_01",
         "file": "vegeta_base_attack_fwd_01.png",
-        "w": 30,
-        "h": 44
+        "w": 32,
+        "h": 46
       },
       {
         "name": "vegeta_base_attack_fwd_02",
         "file": "vegeta_base_attack_fwd_02.png",
-        "w": 35,
-        "h": 39
+        "w": 37,
+        "h": 41
       },
       {
         "name": "vegeta_base_attack_fwd_03",
         "file": "vegeta_base_attack_fwd_03.png",
-        "w": 32,
-        "h": 41
+        "w": 34,
+        "h": 43
       },
       {
         "name": "vegeta_base_attack_fwd_04",
         "file": "vegeta_base_attack_fwd_04.png",
-        "w": 31,
-        "h": 41
+        "w": 33,
+        "h": 43
       },
       {
         "name": "vegeta_base_attack_fwd_05",
         "file": "vegeta_base_attack_fwd_05.png",
-        "w": 38,
-        "h": 40
+        "w": 40,
+        "h": 42
       },
       {
         "name": "vegeta_base_attack_fwd_06",
         "file": "vegeta_base_attack_fwd_06.png",
-        "w": 39,
-        "h": 40
+        "w": 41,
+        "h": 42
       }
     ]
   },
@@ -437,119 +443,137 @@
       {
         "name": "vegeta_base_attack_ud_00",
         "file": "vegeta_base_attack_ud_00.png",
-        "w": 23,
-        "h": 45
+        "w": 25,
+        "h": 47
       },
       {
         "name": "vegeta_base_attack_ud_01",
         "file": "vegeta_base_attack_ud_01.png",
-        "w": 29,
-        "h": 42
+        "w": 31,
+        "h": 44
       },
       {
         "name": "vegeta_base_attack_ud_02",
         "file": "vegeta_base_attack_ud_02.png",
-        "w": 40,
-        "h": 40
+        "w": 42,
+        "h": 42
       },
       {
         "name": "vegeta_base_attack_ud_03",
         "file": "vegeta_base_attack_ud_03.png",
-        "w": 29,
-        "h": 31
+        "w": 31,
+        "h": 33
       }
     ]
   },
   "knockback_back": {
-    "frame_count": 4,
+    "frame_count": 5,
     "fps": 6,
     "loop": false,
     "frames": [
       {
         "name": "vegeta_base_hurt_00",
         "file": "vegeta_base_hurt_00.png",
-        "w": 25,
-        "h": 48
+        "w": 27,
+        "h": 50
       },
       {
         "name": "vegeta_base_hurt_01",
         "file": "vegeta_base_hurt_01.png",
-        "w": 28,
-        "h": 43
+        "w": 26,
+        "h": 48
       },
       {
         "name": "vegeta_base_hurt_02",
         "file": "vegeta_base_hurt_02.png",
-        "w": 27,
-        "h": 38
+        "w": 30,
+        "h": 45
       },
       {
         "name": "vegeta_base_hurt_03",
         "file": "vegeta_base_hurt_03.png",
-        "w": 32,
-        "h": 38
+        "w": 29,
+        "h": 40
+      },
+      {
+        "name": "vegeta_base_hurt_04",
+        "file": "vegeta_base_hurt_04.png",
+        "w": 34,
+        "h": 40
       }
     ]
   },
   "knockback_up": {
-    "frame_count": 4,
+    "frame_count": 5,
     "fps": 6,
     "loop": false,
     "frames": [
       {
         "name": "vegeta_base_hurt_00",
         "file": "vegeta_base_hurt_00.png",
-        "w": 25,
-        "h": 48
+        "w": 27,
+        "h": 50
       },
       {
         "name": "vegeta_base_hurt_01",
         "file": "vegeta_base_hurt_01.png",
-        "w": 28,
-        "h": 43
+        "w": 26,
+        "h": 48
       },
       {
         "name": "vegeta_base_hurt_02",
         "file": "vegeta_base_hurt_02.png",
-        "w": 27,
-        "h": 38
+        "w": 30,
+        "h": 45
       },
       {
         "name": "vegeta_base_hurt_03",
         "file": "vegeta_base_hurt_03.png",
-        "w": 32,
-        "h": 38
+        "w": 29,
+        "h": 40
+      },
+      {
+        "name": "vegeta_base_hurt_04",
+        "file": "vegeta_base_hurt_04.png",
+        "w": 34,
+        "h": 40
       }
     ]
   },
   "knockback_down": {
-    "frame_count": 4,
+    "frame_count": 5,
     "fps": 6,
     "loop": false,
     "frames": [
       {
         "name": "vegeta_base_hurt_00",
         "file": "vegeta_base_hurt_00.png",
-        "w": 25,
-        "h": 48
+        "w": 27,
+        "h": 50
       },
       {
         "name": "vegeta_base_hurt_01",
         "file": "vegeta_base_hurt_01.png",
-        "w": 28,
-        "h": 43
+        "w": 26,
+        "h": 48
       },
       {
         "name": "vegeta_base_hurt_02",
         "file": "vegeta_base_hurt_02.png",
-        "w": 27,
-        "h": 38
+        "w": 30,
+        "h": 45
       },
       {
         "name": "vegeta_base_hurt_03",
         "file": "vegeta_base_hurt_03.png",
-        "w": 32,
-        "h": 38
+        "w": 29,
+        "h": 40
+      },
+      {
+        "name": "vegeta_base_hurt_04",
+        "file": "vegeta_base_hurt_04.png",
+        "w": 34,
+        "h": 40
       }
     ]
   },
@@ -559,22 +583,22 @@
     "loop": false,
     "frames": [
       {
-        "name": "vegeta_base_guard_00",
-        "file": "vegeta_base_guard_00.png",
-        "w": 30,
-        "h": 42
+        "name": "vegeta_base_idle_00",
+        "file": "vegeta_base_idle_00.png",
+        "w": 32,
+        "h": 44
       },
       {
         "name": "vegeta_base_guard_01",
         "file": "vegeta_base_guard_01.png",
-        "w": 30,
-        "h": 43
+        "w": 32,
+        "h": 45
       },
       {
         "name": "vegeta_base_guard_02",
         "file": "vegeta_base_guard_02.png",
-        "w": 34,
-        "h": 42
+        "w": 36,
+        "h": 44
       }
     ]
   }

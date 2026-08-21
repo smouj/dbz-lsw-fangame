@@ -7,8 +7,8 @@
       {
         "name": "trunks_future_idle_00",
         "file": "trunks_future_idle_00.png",
-        "w": 27,
-        "h": 41
+        "w": 29,
+        "h": 43
       }
     ]
   },
@@ -20,14 +20,14 @@
       {
         "name": "trunks_future_move_front_00",
         "file": "trunks_future_move_front_00.png",
-        "w": 28,
-        "h": 41
+        "w": 30,
+        "h": 43
       },
       {
         "name": "trunks_future_move_front_01",
         "file": "trunks_future_move_front_01.png",
-        "w": 32,
-        "h": 40
+        "w": 34,
+        "h": 42
       }
     ]
   },
@@ -37,16 +37,16 @@
     "loop": true,
     "frames": [
       {
-        "name": "trunks_future_move_back_00",
-        "file": "trunks_future_move_back_00.png",
-        "w": 28,
-        "h": 41
+        "name": "trunks_future_move_front_00",
+        "file": "trunks_future_move_front_00.png",
+        "w": 30,
+        "h": 43
       },
       {
-        "name": "trunks_future_move_back_01",
-        "file": "trunks_future_move_back_01.png",
-        "w": 32,
-        "h": 40
+        "name": "trunks_future_move_front_01",
+        "file": "trunks_future_move_front_01.png",
+        "w": 34,
+        "h": 42
       }
     ]
   },
@@ -58,20 +58,20 @@
       {
         "name": "trunks_future_guard_00",
         "file": "trunks_future_guard_00.png",
-        "w": 30,
-        "h": 41
+        "w": 32,
+        "h": 43
       },
       {
-        "name": "trunks_future_guard_01",
-        "file": "trunks_future_guard_01.png",
-        "w": 27,
-        "h": 41
+        "name": "trunks_future_idle_00",
+        "file": "trunks_future_idle_00.png",
+        "w": 29,
+        "h": 43
       },
       {
         "name": "trunks_future_guard_02",
         "file": "trunks_future_guard_02.png",
-        "w": 34,
-        "h": 39
+        "w": 36,
+        "h": 41
       }
     ]
   },
@@ -83,50 +83,50 @@
       {
         "name": "trunks_future_attack_fwd_00",
         "file": "trunks_future_attack_fwd_00.png",
-        "w": 23,
-        "h": 42
+        "w": 25,
+        "h": 44
       },
       {
         "name": "trunks_future_attack_fwd_01",
         "file": "trunks_future_attack_fwd_01.png",
-        "w": 29,
-        "h": 41
+        "w": 31,
+        "h": 43
       },
       {
         "name": "trunks_future_attack_fwd_02",
         "file": "trunks_future_attack_fwd_02.png",
-        "w": 37,
-        "h": 39
+        "w": 39,
+        "h": 41
       },
       {
         "name": "trunks_future_attack_fwd_03",
         "file": "trunks_future_attack_fwd_03.png",
-        "w": 35,
-        "h": 36
+        "w": 37,
+        "h": 38
       },
       {
         "name": "trunks_future_attack_fwd_04",
         "file": "trunks_future_attack_fwd_04.png",
-        "w": 31,
-        "h": 38
+        "w": 33,
+        "h": 40
       },
       {
         "name": "trunks_future_attack_fwd_05",
         "file": "trunks_future_attack_fwd_05.png",
-        "w": 32,
-        "h": 38
+        "w": 34,
+        "h": 40
       },
       {
         "name": "trunks_future_attack_fwd_06",
         "file": "trunks_future_attack_fwd_06.png",
-        "w": 36,
-        "h": 37
+        "w": 38,
+        "h": 39
       },
       {
         "name": "trunks_future_attack_fwd_07",
         "file": "trunks_future_attack_fwd_07.png",
-        "w": 37,
-        "h": 37
+        "w": 39,
+        "h": 39
       }
     ]
   },
@@ -138,26 +138,26 @@
       {
         "name": "trunks_future_attack_ud_00",
         "file": "trunks_future_attack_ud_00.png",
-        "w": 23,
-        "h": 41
+        "w": 25,
+        "h": 43
       },
       {
         "name": "trunks_future_attack_ud_01",
         "file": "trunks_future_attack_ud_01.png",
-        "w": 29,
-        "h": 39
+        "w": 31,
+        "h": 41
       },
       {
         "name": "trunks_future_attack_ud_02",
         "file": "trunks_future_attack_ud_02.png",
-        "w": 36,
-        "h": 41
+        "w": 38,
+        "h": 43
       },
       {
         "name": "trunks_future_attack_ud_03",
         "file": "trunks_future_attack_ud_03.png",
-        "w": 33,
-        "h": 28
+        "w": 35,
+        "h": 30
       }
     ]
   },
@@ -169,8 +169,8 @@
       {
         "name": "trunks_future_hurt_00",
         "file": "trunks_future_hurt_00.png",
-        "w": 43,
-        "h": 21
+        "w": 45,
+        "h": 23
       }
     ]
   },
@@ -182,14 +182,14 @@
       {
         "name": "trunks_future_beam_charge_00",
         "file": "trunks_future_beam_charge_00.png",
-        "w": 32,
-        "h": 38
+        "w": 34,
+        "h": 40
       },
       {
         "name": "trunks_future_beam_charge_01",
         "file": "trunks_future_beam_charge_01.png",
-        "w": 22,
-        "h": 48
+        "w": 24,
+        "h": 50
       }
     ]
   },
@@ -201,26 +201,26 @@
       {
         "name": "trunks_future_beam_fire_00",
         "file": "trunks_future_beam_fire_00.png",
-        "w": 27,
-        "h": 42
+        "w": 25,
+        "h": 43
       },
       {
         "name": "trunks_future_beam_fire_01",
         "file": "trunks_future_beam_fire_01.png",
-        "w": 22,
-        "h": 42
+        "w": 29,
+        "h": 44
       },
       {
         "name": "trunks_future_beam_fire_02",
         "file": "trunks_future_beam_fire_02.png",
         "w": 24,
-        "h": 42
+        "h": 44
       },
       {
         "name": "trunks_future_beam_fire_03",
         "file": "trunks_future_beam_fire_03.png",
-        "w": 27,
-        "h": 42
+        "w": 26,
+        "h": 44
       }
     ]
   },
@@ -230,16 +230,16 @@
     "loop": false,
     "frames": [
       {
-        "name": "trunks_future_evade_00",
-        "file": "trunks_future_evade_00.png",
-        "w": 27,
-        "h": 41
+        "name": "trunks_future_idle_00",
+        "file": "trunks_future_idle_00.png",
+        "w": 29,
+        "h": 43
       },
       {
-        "name": "trunks_future_evade_01",
-        "file": "trunks_future_evade_01.png",
-        "w": 28,
-        "h": 41
+        "name": "trunks_future_move_front_00",
+        "file": "trunks_future_move_front_00.png",
+        "w": 30,
+        "h": 43
       }
     ]
   },
@@ -249,16 +249,16 @@
     "loop": false,
     "frames": [
       {
-        "name": "trunks_future_gather_power_00",
-        "file": "trunks_future_gather_power_00.png",
-        "w": 27,
-        "h": 42
+        "name": "trunks_future_beam_fire_01",
+        "file": "trunks_future_beam_fire_01.png",
+        "w": 29,
+        "h": 44
       },
       {
-        "name": "trunks_future_gather_power_01",
-        "file": "trunks_future_gather_power_01.png",
-        "w": 24,
-        "h": 42
+        "name": "trunks_future_beam_fire_03",
+        "file": "trunks_future_beam_fire_03.png",
+        "w": 26,
+        "h": 44
       }
     ]
   },
@@ -268,16 +268,16 @@
     "loop": true,
     "frames": [
       {
-        "name": "trunks_future_power_up_00",
-        "file": "trunks_future_power_up_00.png",
-        "w": 27,
-        "h": 42
+        "name": "trunks_future_beam_fire_01",
+        "file": "trunks_future_beam_fire_01.png",
+        "w": 29,
+        "h": 44
       },
       {
-        "name": "trunks_future_power_up_01",
-        "file": "trunks_future_power_up_01.png",
-        "w": 24,
-        "h": 42
+        "name": "trunks_future_beam_fire_03",
+        "file": "trunks_future_beam_fire_03.png",
+        "w": 26,
+        "h": 44
       }
     ]
   },
@@ -289,20 +289,20 @@
       {
         "name": "trunks_future_aura_power_00",
         "file": "trunks_future_aura_power_00.png",
-        "w": 64,
-        "h": 56
+        "w": 66,
+        "h": 58
       },
       {
         "name": "trunks_future_aura_power_01",
         "file": "trunks_future_aura_power_01.png",
-        "w": 64,
-        "h": 56
+        "w": 66,
+        "h": 58
       },
       {
         "name": "trunks_future_aura_power_02",
         "file": "trunks_future_aura_power_02.png",
-        "w": 64,
-        "h": 56
+        "w": 66,
+        "h": 58
       }
     ]
   },
@@ -339,50 +339,50 @@
       {
         "name": "trunks_future_attack_fwd_00",
         "file": "trunks_future_attack_fwd_00.png",
-        "w": 23,
-        "h": 42
+        "w": 25,
+        "h": 44
       },
       {
         "name": "trunks_future_attack_fwd_01",
         "file": "trunks_future_attack_fwd_01.png",
-        "w": 29,
-        "h": 41
+        "w": 31,
+        "h": 43
       },
       {
         "name": "trunks_future_attack_fwd_02",
         "file": "trunks_future_attack_fwd_02.png",
-        "w": 37,
-        "h": 39
+        "w": 39,
+        "h": 41
       },
       {
         "name": "trunks_future_attack_fwd_03",
         "file": "trunks_future_attack_fwd_03.png",
-        "w": 35,
-        "h": 36
+        "w": 37,
+        "h": 38
       },
       {
         "name": "trunks_future_attack_fwd_04",
         "file": "trunks_future_attack_fwd_04.png",
-        "w": 31,
-        "h": 38
+        "w": 33,
+        "h": 40
       },
       {
         "name": "trunks_future_attack_fwd_05",
         "file": "trunks_future_attack_fwd_05.png",
-        "w": 32,
-        "h": 38
+        "w": 34,
+        "h": 40
       },
       {
         "name": "trunks_future_attack_fwd_06",
         "file": "trunks_future_attack_fwd_06.png",
-        "w": 36,
-        "h": 37
+        "w": 38,
+        "h": 39
       },
       {
         "name": "trunks_future_attack_fwd_07",
         "file": "trunks_future_attack_fwd_07.png",
-        "w": 37,
-        "h": 37
+        "w": 39,
+        "h": 39
       }
     ]
   },
@@ -394,50 +394,50 @@
       {
         "name": "trunks_future_attack_fwd_00",
         "file": "trunks_future_attack_fwd_00.png",
-        "w": 23,
-        "h": 42
+        "w": 25,
+        "h": 44
       },
       {
         "name": "trunks_future_attack_fwd_01",
         "file": "trunks_future_attack_fwd_01.png",
-        "w": 29,
-        "h": 41
+        "w": 31,
+        "h": 43
       },
       {
         "name": "trunks_future_attack_fwd_02",
         "file": "trunks_future_attack_fwd_02.png",
-        "w": 37,
-        "h": 39
+        "w": 39,
+        "h": 41
       },
       {
         "name": "trunks_future_attack_fwd_03",
         "file": "trunks_future_attack_fwd_03.png",
-        "w": 35,
-        "h": 36
+        "w": 37,
+        "h": 38
       },
       {
         "name": "trunks_future_attack_fwd_04",
         "file": "trunks_future_attack_fwd_04.png",
-        "w": 31,
-        "h": 38
+        "w": 33,
+        "h": 40
       },
       {
         "name": "trunks_future_attack_fwd_05",
         "file": "trunks_future_attack_fwd_05.png",
-        "w": 32,
-        "h": 38
+        "w": 34,
+        "h": 40
       },
       {
         "name": "trunks_future_attack_fwd_06",
         "file": "trunks_future_attack_fwd_06.png",
-        "w": 36,
-        "h": 37
+        "w": 38,
+        "h": 39
       },
       {
         "name": "trunks_future_attack_fwd_07",
         "file": "trunks_future_attack_fwd_07.png",
-        "w": 37,
-        "h": 37
+        "w": 39,
+        "h": 39
       }
     ]
   },
@@ -449,26 +449,26 @@
       {
         "name": "trunks_future_attack_ud_00",
         "file": "trunks_future_attack_ud_00.png",
-        "w": 23,
-        "h": 41
+        "w": 25,
+        "h": 43
       },
       {
         "name": "trunks_future_attack_ud_01",
         "file": "trunks_future_attack_ud_01.png",
-        "w": 29,
-        "h": 39
+        "w": 31,
+        "h": 41
       },
       {
         "name": "trunks_future_attack_ud_02",
         "file": "trunks_future_attack_ud_02.png",
-        "w": 36,
-        "h": 41
+        "w": 38,
+        "h": 43
       },
       {
         "name": "trunks_future_attack_ud_03",
         "file": "trunks_future_attack_ud_03.png",
-        "w": 33,
-        "h": 28
+        "w": 35,
+        "h": 30
       }
     ]
   },
@@ -480,8 +480,8 @@
       {
         "name": "trunks_future_hurt_00",
         "file": "trunks_future_hurt_00.png",
-        "w": 43,
-        "h": 21
+        "w": 45,
+        "h": 23
       }
     ]
   },
@@ -493,8 +493,8 @@
       {
         "name": "trunks_future_hurt_00",
         "file": "trunks_future_hurt_00.png",
-        "w": 43,
-        "h": 21
+        "w": 45,
+        "h": 23
       }
     ]
   },
@@ -506,8 +506,8 @@
       {
         "name": "trunks_future_hurt_00",
         "file": "trunks_future_hurt_00.png",
-        "w": 43,
-        "h": 21
+        "w": 45,
+        "h": 23
       }
     ]
   },
@@ -519,20 +519,20 @@
       {
         "name": "trunks_future_guard_00",
         "file": "trunks_future_guard_00.png",
-        "w": 30,
-        "h": 41
+        "w": 32,
+        "h": 43
       },
       {
-        "name": "trunks_future_guard_01",
-        "file": "trunks_future_guard_01.png",
-        "w": 27,
-        "h": 41
+        "name": "trunks_future_idle_00",
+        "file": "trunks_future_idle_00.png",
+        "w": 29,
+        "h": 43
       },
       {
         "name": "trunks_future_guard_02",
         "file": "trunks_future_guard_02.png",
-        "w": 34,
-        "h": 39
+        "w": 36,
+        "h": 41
       }
     ]
   }

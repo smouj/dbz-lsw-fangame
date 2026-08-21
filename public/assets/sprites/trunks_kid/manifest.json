@@ -7,8 +7,8 @@
       {
         "name": "trunks_kid_idle_00",
         "file": "trunks_kid_idle_00.png",
-        "w": 30,
-        "h": 37
+        "w": 32,
+        "h": 39
       }
     ]
   },
@@ -20,14 +20,14 @@
       {
         "name": "trunks_kid_move_front_00",
         "file": "trunks_kid_move_front_00.png",
-        "w": 25,
-        "h": 39
+        "w": 27,
+        "h": 41
       },
       {
         "name": "trunks_kid_move_front_01",
         "file": "trunks_kid_move_front_01.png",
-        "w": 31,
-        "h": 36
+        "w": 33,
+        "h": 38
       }
     ]
   },
@@ -37,16 +37,16 @@
     "loop": true,
     "frames": [
       {
-        "name": "trunks_kid_move_back_00",
-        "file": "trunks_kid_move_back_00.png",
-        "w": 25,
-        "h": 39
+        "name": "trunks_kid_move_front_00",
+        "file": "trunks_kid_move_front_00.png",
+        "w": 27,
+        "h": 41
       },
       {
-        "name": "trunks_kid_move_back_01",
-        "file": "trunks_kid_move_back_01.png",
-        "w": 31,
-        "h": 36
+        "name": "trunks_kid_move_front_01",
+        "file": "trunks_kid_move_front_01.png",
+        "w": 33,
+        "h": 38
       }
     ]
   },
@@ -58,20 +58,20 @@
       {
         "name": "trunks_kid_guard_00",
         "file": "trunks_kid_guard_00.png",
-        "w": 28,
-        "h": 38
+        "w": 30,
+        "h": 40
       },
       {
-        "name": "trunks_kid_guard_01",
-        "file": "trunks_kid_guard_01.png",
-        "w": 30,
-        "h": 37
+        "name": "trunks_kid_idle_00",
+        "file": "trunks_kid_idle_00.png",
+        "w": 32,
+        "h": 39
       },
       {
         "name": "trunks_kid_guard_02",
         "file": "trunks_kid_guard_02.png",
-        "w": 34,
-        "h": 37
+        "w": 36,
+        "h": 39
       }
     ]
   },
@@ -83,106 +83,112 @@
       {
         "name": "trunks_kid_attack_fwd_00",
         "file": "trunks_kid_attack_fwd_00.png",
-        "w": 22,
-        "h": 39
+        "w": 24,
+        "h": 41
       },
       {
         "name": "trunks_kid_attack_fwd_01",
         "file": "trunks_kid_attack_fwd_01.png",
-        "w": 29,
-        "h": 39
+        "w": 30,
+        "h": 36
       },
       {
         "name": "trunks_kid_attack_fwd_02",
         "file": "trunks_kid_attack_fwd_02.png",
-        "w": 30,
-        "h": 37
+        "w": 32,
+        "h": 39
       },
       {
         "name": "trunks_kid_attack_fwd_03",
         "file": "trunks_kid_attack_fwd_03.png",
-        "w": 35,
-        "h": 37
+        "w": 37,
+        "h": 39
       },
       {
         "name": "trunks_kid_attack_fwd_04",
         "file": "trunks_kid_attack_fwd_04.png",
-        "w": 31,
-        "h": 37
+        "w": 33,
+        "h": 39
       },
       {
         "name": "trunks_kid_attack_fwd_05",
         "file": "trunks_kid_attack_fwd_05.png",
-        "w": 30,
-        "h": 37
+        "w": 32,
+        "h": 39
       },
       {
         "name": "trunks_kid_attack_fwd_06",
         "file": "trunks_kid_attack_fwd_06.png",
-        "w": 33,
-        "h": 35
+        "w": 35,
+        "h": 37
       },
       {
         "name": "trunks_kid_attack_fwd_07",
         "file": "trunks_kid_attack_fwd_07.png",
-        "w": 34,
-        "h": 35
+        "w": 36,
+        "h": 37
       }
     ]
   },
   "attack_ud": {
-    "frame_count": 4,
+    "frame_count": 3,
     "fps": 7,
     "loop": false,
     "frames": [
       {
         "name": "trunks_kid_attack_ud_00",
         "file": "trunks_kid_attack_ud_00.png",
-        "w": 31,
-        "h": 27
+        "w": 24,
+        "h": 41
       },
       {
         "name": "trunks_kid_attack_ud_01",
         "file": "trunks_kid_attack_ud_01.png",
-        "w": 22,
-        "h": 39
+        "w": 31,
+        "h": 41
       },
       {
         "name": "trunks_kid_attack_ud_02",
         "file": "trunks_kid_attack_ud_02.png",
-        "w": 28,
-        "h": 34
-      },
-      {
-        "name": "trunks_kid_attack_ud_03",
-        "file": "trunks_kid_attack_ud_03.png",
-        "w": 29,
-        "h": 39
+        "w": 33,
+        "h": 29
       }
     ]
   },
   "hurt": {
-    "frame_count": 3,
+    "frame_count": 5,
     "fps": 6,
     "loop": false,
     "frames": [
       {
         "name": "trunks_kid_hurt_00",
         "file": "trunks_kid_hurt_00.png",
-        "w": 23,
-        "h": 39
+        "w": 30,
+        "h": 48
       },
       {
         "name": "trunks_kid_hurt_01",
         "file": "trunks_kid_hurt_01.png",
-        "w": 27,
-        "h": 37
+        "w": 25,
+        "h": 41
       },
       {
         "name": "trunks_kid_hurt_02",
         "file": "trunks_kid_hurt_02.png",
         "w": 29,
-        "h": 30
+        "h": 39
+      },
+      {
+        "name": "trunks_kid_hurt_03",
+        "file": "trunks_kid_hurt_03.png",
+        "w": 31,
+        "h": 32
+      },
+      {
+        "name": "trunks_kid_hurt_04",
+        "file": "trunks_kid_hurt_04.png",
+        "w": 31,
+        "h": 41
       }
     ]
   },
@@ -194,14 +200,14 @@
       {
         "name": "trunks_kid_beam_charge_00",
         "file": "trunks_kid_beam_charge_00.png",
-        "w": 31,
-        "h": 37
+        "w": 33,
+        "h": 39
       },
       {
         "name": "trunks_kid_beam_charge_01",
         "file": "trunks_kid_beam_charge_01.png",
-        "w": 30,
-        "h": 35
+        "w": 32,
+        "h": 37
       }
     ]
   },
@@ -213,14 +219,14 @@
       {
         "name": "trunks_kid_evade_00",
         "file": "trunks_kid_evade_00.png",
-        "w": 23,
-        "h": 41
+        "w": 42,
+        "h": 33
       },
       {
         "name": "trunks_kid_evade_01",
         "file": "trunks_kid_evade_01.png",
-        "w": 40,
-        "h": 31
+        "w": 25,
+        "h": 43
       }
     ]
   },
@@ -230,16 +236,16 @@
     "loop": false,
     "frames": [
       {
-        "name": "trunks_kid_gather_power_00",
-        "file": "trunks_kid_gather_power_00.png",
-        "w": 31,
-        "h": 37
+        "name": "trunks_kid_beam_charge_00",
+        "file": "trunks_kid_beam_charge_00.png",
+        "w": 33,
+        "h": 39
       },
       {
-        "name": "trunks_kid_gather_power_01",
-        "file": "trunks_kid_gather_power_01.png",
-        "w": 30,
-        "h": 35
+        "name": "trunks_kid_beam_charge_01",
+        "file": "trunks_kid_beam_charge_01.png",
+        "w": 32,
+        "h": 37
       }
     ]
   },
@@ -249,16 +255,16 @@
     "loop": true,
     "frames": [
       {
-        "name": "trunks_kid_power_up_00",
-        "file": "trunks_kid_power_up_00.png",
-        "w": 31,
-        "h": 37
+        "name": "trunks_kid_beam_charge_00",
+        "file": "trunks_kid_beam_charge_00.png",
+        "w": 33,
+        "h": 39
       },
       {
-        "name": "trunks_kid_power_up_01",
-        "file": "trunks_kid_power_up_01.png",
-        "w": 30,
-        "h": 35
+        "name": "trunks_kid_beam_charge_01",
+        "file": "trunks_kid_beam_charge_01.png",
+        "w": 32,
+        "h": 37
       }
     ]
   },
@@ -270,20 +276,20 @@
       {
         "name": "trunks_kid_aura_power_00",
         "file": "trunks_kid_aura_power_00.png",
-        "w": 64,
-        "h": 56
+        "w": 66,
+        "h": 58
       },
       {
         "name": "trunks_kid_aura_power_01",
         "file": "trunks_kid_aura_power_01.png",
-        "w": 64,
-        "h": 56
+        "w": 66,
+        "h": 58
       },
       {
         "name": "trunks_kid_aura_power_02",
         "file": "trunks_kid_aura_power_02.png",
-        "w": 64,
-        "h": 56
+        "w": 66,
+        "h": 58
       }
     ]
   },
@@ -320,50 +326,50 @@
       {
         "name": "trunks_kid_attack_fwd_00",
         "file": "trunks_kid_attack_fwd_00.png",
-        "w": 22,
-        "h": 39
+        "w": 24,
+        "h": 41
       },
       {
         "name": "trunks_kid_attack_fwd_01",
         "file": "trunks_kid_attack_fwd_01.png",
-        "w": 29,
-        "h": 39
+        "w": 30,
+        "h": 36
       },
       {
         "name": "trunks_kid_attack_fwd_02",
         "file": "trunks_kid_attack_fwd_02.png",
-        "w": 30,
-        "h": 37
+        "w": 32,
+        "h": 39
       },
       {
         "name": "trunks_kid_attack_fwd_03",
         "file": "trunks_kid_attack_fwd_03.png",
-        "w": 35,
-        "h": 37
+        "w": 37,
+        "h": 39
       },
       {
         "name": "trunks_kid_attack_fwd_04",
         "file": "trunks_kid_attack_fwd_04.png",
-        "w": 31,
-        "h": 37
+        "w": 33,
+        "h": 39
       },
       {
         "name": "trunks_kid_attack_fwd_05",
         "file": "trunks_kid_attack_fwd_05.png",
-        "w": 30,
-        "h": 37
+        "w": 32,
+        "h": 39
       },
       {
         "name": "trunks_kid_attack_fwd_06",
         "file": "trunks_kid_attack_fwd_06.png",
-        "w": 33,
-        "h": 35
+        "w": 35,
+        "h": 37
       },
       {
         "name": "trunks_kid_attack_fwd_07",
         "file": "trunks_kid_attack_fwd_07.png",
-        "w": 34,
-        "h": 35
+        "w": 36,
+        "h": 37
       }
     ]
   },
@@ -375,156 +381,186 @@
       {
         "name": "trunks_kid_attack_fwd_00",
         "file": "trunks_kid_attack_fwd_00.png",
-        "w": 22,
-        "h": 39
+        "w": 24,
+        "h": 41
       },
       {
         "name": "trunks_kid_attack_fwd_01",
         "file": "trunks_kid_attack_fwd_01.png",
-        "w": 29,
-        "h": 39
+        "w": 30,
+        "h": 36
       },
       {
         "name": "trunks_kid_attack_fwd_02",
         "file": "trunks_kid_attack_fwd_02.png",
-        "w": 30,
-        "h": 37
+        "w": 32,
+        "h": 39
       },
       {
         "name": "trunks_kid_attack_fwd_03",
         "file": "trunks_kid_attack_fwd_03.png",
-        "w": 35,
-        "h": 37
+        "w": 37,
+        "h": 39
       },
       {
         "name": "trunks_kid_attack_fwd_04",
         "file": "trunks_kid_attack_fwd_04.png",
-        "w": 31,
-        "h": 37
+        "w": 33,
+        "h": 39
       },
       {
         "name": "trunks_kid_attack_fwd_05",
         "file": "trunks_kid_attack_fwd_05.png",
-        "w": 30,
-        "h": 37
+        "w": 32,
+        "h": 39
       },
       {
         "name": "trunks_kid_attack_fwd_06",
         "file": "trunks_kid_attack_fwd_06.png",
-        "w": 33,
-        "h": 35
+        "w": 35,
+        "h": 37
       },
       {
         "name": "trunks_kid_attack_fwd_07",
         "file": "trunks_kid_attack_fwd_07.png",
-        "w": 34,
-        "h": 35
+        "w": 36,
+        "h": 37
       }
     ]
   },
   "kick_right": {
-    "frame_count": 4,
+    "frame_count": 3,
     "fps": 7,
     "loop": false,
     "frames": [
       {
         "name": "trunks_kid_attack_ud_00",
         "file": "trunks_kid_attack_ud_00.png",
-        "w": 31,
-        "h": 27
+        "w": 24,
+        "h": 41
       },
       {
         "name": "trunks_kid_attack_ud_01",
         "file": "trunks_kid_attack_ud_01.png",
-        "w": 22,
-        "h": 39
+        "w": 31,
+        "h": 41
       },
       {
         "name": "trunks_kid_attack_ud_02",
         "file": "trunks_kid_attack_ud_02.png",
-        "w": 28,
-        "h": 34
-      },
-      {
-        "name": "trunks_kid_attack_ud_03",
-        "file": "trunks_kid_attack_ud_03.png",
-        "w": 29,
-        "h": 39
+        "w": 33,
+        "h": 29
       }
     ]
   },
   "knockback_back": {
-    "frame_count": 3,
+    "frame_count": 5,
     "fps": 6,
     "loop": false,
     "frames": [
       {
         "name": "trunks_kid_hurt_00",
         "file": "trunks_kid_hurt_00.png",
-        "w": 23,
-        "h": 39
+        "w": 30,
+        "h": 48
       },
       {
         "name": "trunks_kid_hurt_01",
         "file": "trunks_kid_hurt_01.png",
-        "w": 27,
-        "h": 37
+        "w": 25,
+        "h": 41
       },
       {
         "name": "trunks_kid_hurt_02",
         "file": "trunks_kid_hurt_02.png",
         "w": 29,
-        "h": 30
+        "h": 39
+      },
+      {
+        "name": "trunks_kid_hurt_03",
+        "file": "trunks_kid_hurt_03.png",
+        "w": 31,
+        "h": 32
+      },
+      {
+        "name": "trunks_kid_hurt_04",
+        "file": "trunks_kid_hurt_04.png",
+        "w": 31,
+        "h": 41
       }
     ]
   },
   "knockback_up": {
-    "frame_count": 3,
+    "frame_count": 5,
     "fps": 6,
     "loop": false,
     "frames": [
       {
         "name": "trunks_kid_hurt_00",
         "file": "trunks_kid_hurt_00.png",
-        "w": 23,
-        "h": 39
+        "w": 30,
+        "h": 48
       },
       {
         "name": "trunks_kid_hurt_01",
         "file": "trunks_kid_hurt_01.png",
-        "w": 27,
-        "h": 37
+        "w": 25,
+        "h": 41
       },
       {
         "name": "trunks_kid_hurt_02",
         "file": "trunks_kid_hurt_02.png",
         "w": 29,
-        "h": 30
+        "h": 39
+      },
+      {
+        "name": "trunks_kid_hurt_03",
+        "file": "trunks_kid_hurt_03.png",
+        "w": 31,
+        "h": 32
+      },
+      {
+        "name": "trunks_kid_hurt_04",
+        "file": "trunks_kid_hurt_04.png",
+        "w": 31,
+        "h": 41
       }
     ]
   },
   "knockback_down": {
-    "frame_count": 3,
+    "frame_count": 5,
     "fps": 6,
     "loop": false,
     "frames": [
       {
         "name": "trunks_kid_hurt_00",
         "file": "trunks_kid_hurt_00.png",
-        "w": 23,
-        "h": 39
+        "w": 30,
+        "h": 48
       },
       {
         "name": "trunks_kid_hurt_01",
         "file": "trunks_kid_hurt_01.png",
-        "w": 27,
-        "h": 37
+        "w": 25,
+        "h": 41
       },
       {
         "name": "trunks_kid_hurt_02",
         "file": "trunks_kid_hurt_02.png",
         "w": 29,
-        "h": 30
+        "h": 39
+      },
+      {
+        "name": "trunks_kid_hurt_03",
+        "file": "trunks_kid_hurt_03.png",
+        "w": 31,
+        "h": 32
+      },
+      {
+        "name": "trunks_kid_hurt_04",
+        "file": "trunks_kid_hurt_04.png",
+        "w": 31,
+        "h": 41
       }
     ]
   },
@@ -536,20 +572,20 @@
       {
         "name": "trunks_kid_guard_00",
         "file": "trunks_kid_guard_00.png",
-        "w": 28,
-        "h": 38
+        "w": 30,
+        "h": 40
       },
       {
-        "name": "trunks_kid_guard_01",
-        "file": "trunks_kid_guard_01.png",
-        "w": 30,
-        "h": 37
+        "name": "trunks_kid_idle_00",
+        "file": "trunks_kid_idle_00.png",
+        "w": 32,
+        "h": 39
       },
       {
         "name": "trunks_kid_guard_02",
         "file": "trunks_kid_guard_02.png",
-        "w": 34,
-        "h": 37
+        "w": 36,
+        "h": 39
       }
     ]
   },
@@ -561,14 +597,14 @@
       {
         "name": "trunks_kid_beam_charge_00",
         "file": "trunks_kid_beam_charge_00.png",
-        "w": 31,
-        "h": 37
+        "w": 33,
+        "h": 39
       },
       {
         "name": "trunks_kid_beam_charge_01",
         "file": "trunks_kid_beam_charge_01.png",
-        "w": 30,
-        "h": 35
+        "w": 32,
+        "h": 37
       }
     ]
   }

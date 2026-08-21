@@ -7,8 +7,8 @@
       {
         "name": "buu_super_idle_00",
         "file": "buu_super_idle_00.png",
-        "w": 20,
-        "h": 43
+        "w": 22,
+        "h": 45
       }
     ]
   },
@@ -20,14 +20,14 @@
       {
         "name": "buu_super_move_front_00",
         "file": "buu_super_move_front_00.png",
-        "w": 28,
-        "h": 42
+        "w": 30,
+        "h": 44
       },
       {
         "name": "buu_super_move_front_01",
         "file": "buu_super_move_front_01.png",
-        "w": 32,
-        "h": 39
+        "w": 34,
+        "h": 41
       }
     ]
   },
@@ -37,16 +37,16 @@
     "loop": true,
     "frames": [
       {
-        "name": "buu_super_move_back_00",
-        "file": "buu_super_move_back_00.png",
-        "w": 28,
-        "h": 42
+        "name": "buu_super_move_front_00",
+        "file": "buu_super_move_front_00.png",
+        "w": 30,
+        "h": 44
       },
       {
-        "name": "buu_super_move_back_01",
-        "file": "buu_super_move_back_01.png",
-        "w": 32,
-        "h": 39
+        "name": "buu_super_move_front_01",
+        "file": "buu_super_move_front_01.png",
+        "w": 34,
+        "h": 41
       }
     ]
   },
@@ -56,22 +56,22 @@
     "loop": false,
     "frames": [
       {
-        "name": "buu_super_guard_00",
-        "file": "buu_super_guard_00.png",
-        "w": 20,
-        "h": 43
+        "name": "buu_super_idle_00",
+        "file": "buu_super_idle_00.png",
+        "w": 22,
+        "h": 45
       },
       {
         "name": "buu_super_guard_01",
         "file": "buu_super_guard_01.png",
-        "w": 30,
-        "h": 42
+        "w": 32,
+        "h": 44
       },
       {
         "name": "buu_super_guard_02",
         "file": "buu_super_guard_02.png",
-        "w": 34,
-        "h": 40
+        "w": 36,
+        "h": 42
       }
     ]
   },
@@ -83,38 +83,38 @@
       {
         "name": "buu_super_attack_fwd_00",
         "file": "buu_super_attack_fwd_00.png",
-        "w": 23,
-        "h": 43
+        "w": 25,
+        "h": 45
       },
       {
         "name": "buu_super_attack_fwd_01",
         "file": "buu_super_attack_fwd_01.png",
-        "w": 37,
-        "h": 43
+        "w": 39,
+        "h": 45
       },
       {
         "name": "buu_super_attack_fwd_02",
         "file": "buu_super_attack_fwd_02.png",
-        "w": 25,
-        "h": 40
+        "w": 27,
+        "h": 42
       },
       {
         "name": "buu_super_attack_fwd_03",
         "file": "buu_super_attack_fwd_03.png",
-        "w": 32,
-        "h": 39
+        "w": 34,
+        "h": 41
       },
       {
         "name": "buu_super_attack_fwd_04",
         "file": "buu_super_attack_fwd_04.png",
-        "w": 31,
-        "h": 39
+        "w": 33,
+        "h": 41
       },
       {
         "name": "buu_super_attack_fwd_05",
         "file": "buu_super_attack_fwd_05.png",
-        "w": 36,
-        "h": 38
+        "w": 38,
+        "h": 40
       }
     ]
   },
@@ -126,26 +126,26 @@
       {
         "name": "buu_super_attack_ud_00",
         "file": "buu_super_attack_ud_00.png",
-        "w": 29,
-        "h": 42
+        "w": 31,
+        "h": 44
       },
       {
         "name": "buu_super_attack_ud_01",
         "file": "buu_super_attack_ud_01.png",
-        "w": 23,
-        "h": 42
+        "w": 25,
+        "h": 44
       },
       {
         "name": "buu_super_attack_ud_02",
         "file": "buu_super_attack_ud_02.png",
-        "w": 29,
-        "h": 40
+        "w": 31,
+        "h": 42
       },
       {
         "name": "buu_super_attack_ud_03",
         "file": "buu_super_attack_ud_03.png",
-        "w": 30,
-        "h": 29
+        "w": 32,
+        "h": 31
       }
     ]
   },
@@ -157,8 +157,8 @@
       {
         "name": "buu_super_hurt_00",
         "file": "buu_super_hurt_00.png",
-        "w": 44,
-        "h": 19
+        "w": 46,
+        "h": 21
       }
     ]
   },
@@ -170,32 +170,32 @@
       {
         "name": "buu_super_beam_charge_00",
         "file": "buu_super_beam_charge_00.png",
-        "w": 32,
-        "h": 39
+        "w": 34,
+        "h": 41
       },
       {
         "name": "buu_super_beam_charge_01",
         "file": "buu_super_beam_charge_01.png",
-        "w": 26,
-        "h": 39
+        "w": 28,
+        "h": 41
       },
       {
         "name": "buu_super_beam_charge_02",
         "file": "buu_super_beam_charge_02.png",
-        "w": 32,
-        "h": 39
+        "w": 34,
+        "h": 41
       },
       {
         "name": "buu_super_beam_charge_03",
         "file": "buu_super_beam_charge_03.png",
-        "w": 25,
-        "h": 39
+        "w": 27,
+        "h": 41
       },
       {
         "name": "buu_super_beam_charge_04",
         "file": "buu_super_beam_charge_04.png",
-        "w": 24,
-        "h": 39
+        "w": 26,
+        "h": 41
       }
     ]
   },
@@ -205,16 +205,16 @@
     "loop": false,
     "frames": [
       {
-        "name": "buu_super_evade_00",
-        "file": "buu_super_evade_00.png",
-        "w": 20,
-        "h": 43
+        "name": "buu_super_idle_00",
+        "file": "buu_super_idle_00.png",
+        "w": 22,
+        "h": 45
       },
       {
-        "name": "buu_super_evade_01",
-        "file": "buu_super_evade_01.png",
-        "w": 28,
-        "h": 42
+        "name": "buu_super_move_front_00",
+        "file": "buu_super_move_front_00.png",
+        "w": 30,
+        "h": 44
       }
     ]
   },
@@ -226,14 +226,14 @@
       {
         "name": "buu_super_gather_power_00",
         "file": "buu_super_gather_power_00.png",
-        "w": 27,
-        "h": 41
+        "w": 29,
+        "h": 43
       },
       {
         "name": "buu_super_gather_power_01",
         "file": "buu_super_gather_power_01.png",
-        "w": 27,
-        "h": 37
+        "w": 29,
+        "h": 39
       }
     ]
   },
@@ -243,16 +243,16 @@
     "loop": true,
     "frames": [
       {
-        "name": "buu_super_power_up_00",
-        "file": "buu_super_power_up_00.png",
-        "w": 27,
-        "h": 41
+        "name": "buu_super_gather_power_00",
+        "file": "buu_super_gather_power_00.png",
+        "w": 29,
+        "h": 43
       },
       {
-        "name": "buu_super_power_up_01",
-        "file": "buu_super_power_up_01.png",
-        "w": 27,
-        "h": 37
+        "name": "buu_super_gather_power_01",
+        "file": "buu_super_gather_power_01.png",
+        "w": 29,
+        "h": 39
       }
     ]
   },
@@ -264,20 +264,20 @@
       {
         "name": "buu_super_aura_power_00",
         "file": "buu_super_aura_power_00.png",
-        "w": 64,
-        "h": 56
+        "w": 66,
+        "h": 58
       },
       {
         "name": "buu_super_aura_power_01",
         "file": "buu_super_aura_power_01.png",
-        "w": 64,
-        "h": 56
+        "w": 66,
+        "h": 58
       },
       {
         "name": "buu_super_aura_power_02",
         "file": "buu_super_aura_power_02.png",
-        "w": 64,
-        "h": 56
+        "w": 66,
+        "h": 58
       }
     ]
   },
@@ -314,38 +314,38 @@
       {
         "name": "buu_super_attack_fwd_00",
         "file": "buu_super_attack_fwd_00.png",
-        "w": 23,
-        "h": 43
+        "w": 25,
+        "h": 45
       },
       {
         "name": "buu_super_attack_fwd_01",
         "file": "buu_super_attack_fwd_01.png",
-        "w": 37,
-        "h": 43
+        "w": 39,
+        "h": 45
       },
       {
         "name": "buu_super_attack_fwd_02",
         "file": "buu_super_attack_fwd_02.png",
-        "w": 25,
-        "h": 40
+        "w": 27,
+        "h": 42
       },
       {
         "name": "buu_super_attack_fwd_03",
         "file": "buu_super_attack_fwd_03.png",
-        "w": 32,
-        "h": 39
+        "w": 34,
+        "h": 41
       },
       {
         "name": "buu_super_attack_fwd_04",
         "file": "buu_super_attack_fwd_04.png",
-        "w": 31,
-        "h": 39
+        "w": 33,
+        "h": 41
       },
       {
         "name": "buu_super_attack_fwd_05",
         "file": "buu_super_attack_fwd_05.png",
-        "w": 36,
-        "h": 38
+        "w": 38,
+        "h": 40
       }
     ]
   },
@@ -357,38 +357,38 @@
       {
         "name": "buu_super_attack_fwd_00",
         "file": "buu_super_attack_fwd_00.png",
-        "w": 23,
-        "h": 43
+        "w": 25,
+        "h": 45
       },
       {
         "name": "buu_super_attack_fwd_01",
         "file": "buu_super_attack_fwd_01.png",
-        "w": 37,
-        "h": 43
+        "w": 39,
+        "h": 45
       },
       {
         "name": "buu_super_attack_fwd_02",
         "file": "buu_super_attack_fwd_02.png",
-        "w": 25,
-        "h": 40
+        "w": 27,
+        "h": 42
       },
       {
         "name": "buu_super_attack_fwd_03",
         "file": "buu_super_attack_fwd_03.png",
-        "w": 32,
-        "h": 39
+        "w": 34,
+        "h": 41
       },
       {
         "name": "buu_super_attack_fwd_04",
         "file": "buu_super_attack_fwd_04.png",
-        "w": 31,
-        "h": 39
+        "w": 33,
+        "h": 41
       },
       {
         "name": "buu_super_attack_fwd_05",
         "file": "buu_super_attack_fwd_05.png",
-        "w": 36,
-        "h": 38
+        "w": 38,
+        "h": 40
       }
     ]
   },
@@ -400,26 +400,26 @@
       {
         "name": "buu_super_attack_ud_00",
         "file": "buu_super_attack_ud_00.png",
-        "w": 29,
-        "h": 42
+        "w": 31,
+        "h": 44
       },
       {
         "name": "buu_super_attack_ud_01",
         "file": "buu_super_attack_ud_01.png",
-        "w": 23,
-        "h": 42
+        "w": 25,
+        "h": 44
       },
       {
         "name": "buu_super_attack_ud_02",
         "file": "buu_super_attack_ud_02.png",
-        "w": 29,
-        "h": 40
+        "w": 31,
+        "h": 42
       },
       {
         "name": "buu_super_attack_ud_03",
         "file": "buu_super_attack_ud_03.png",
-        "w": 30,
-        "h": 29
+        "w": 32,
+        "h": 31
       }
     ]
   },
@@ -431,8 +431,8 @@
       {
         "name": "buu_super_hurt_00",
         "file": "buu_super_hurt_00.png",
-        "w": 44,
-        "h": 19
+        "w": 46,
+        "h": 21
       }
     ]
   },
@@ -444,8 +444,8 @@
       {
         "name": "buu_super_hurt_00",
         "file": "buu_super_hurt_00.png",
-        "w": 44,
-        "h": 19
+        "w": 46,
+        "h": 21
       }
     ]
   },
@@ -457,8 +457,8 @@
       {
         "name": "buu_super_hurt_00",
         "file": "buu_super_hurt_00.png",
-        "w": 44,
-        "h": 19
+        "w": 46,
+        "h": 21
       }
     ]
   },
@@ -468,22 +468,22 @@
     "loop": false,
     "frames": [
       {
-        "name": "buu_super_guard_00",
-        "file": "buu_super_guard_00.png",
-        "w": 20,
-        "h": 43
+        "name": "buu_super_idle_00",
+        "file": "buu_super_idle_00.png",
+        "w": 22,
+        "h": 45
       },
       {
         "name": "buu_super_guard_01",
         "file": "buu_super_guard_01.png",
-        "w": 30,
-        "h": 42
+        "w": 32,
+        "h": 44
       },
       {
         "name": "buu_super_guard_02",
         "file": "buu_super_guard_02.png",
-        "w": 34,
-        "h": 40
+        "w": 36,
+        "h": 42
       }
     ]
   },
@@ -495,32 +495,32 @@
       {
         "name": "buu_super_beam_charge_00",
         "file": "buu_super_beam_charge_00.png",
-        "w": 32,
-        "h": 39
+        "w": 34,
+        "h": 41
       },
       {
         "name": "buu_super_beam_charge_01",
         "file": "buu_super_beam_charge_01.png",
-        "w": 26,
-        "h": 39
+        "w": 28,
+        "h": 41
       },
       {
         "name": "buu_super_beam_charge_02",
         "file": "buu_super_beam_charge_02.png",
-        "w": 32,
-        "h": 39
+        "w": 34,
+        "h": 41
       },
       {
         "name": "buu_super_beam_charge_03",
         "file": "buu_super_beam_charge_03.png",
-        "w": 25,
-        "h": 39
+        "w": 27,
+        "h": 41
       },
       {
         "name": "buu_super_beam_charge_04",
         "file": "buu_super_beam_charge_04.png",
-        "w": 24,
-        "h": 39
+        "w": 26,
+        "h": 41
       }
     ]
   }

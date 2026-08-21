@@ -7,8 +7,8 @@
       {
         "name": "cell_semi_idle_00",
         "file": "cell_semi_idle_00.png",
-        "w": 30,
-        "h": 45
+        "w": 32,
+        "h": 47
       }
     ]
   },
@@ -20,14 +20,14 @@
       {
         "name": "cell_semi_move_front_00",
         "file": "cell_semi_move_front_00.png",
-        "w": 29,
-        "h": 45
+        "w": 31,
+        "h": 47
       },
       {
         "name": "cell_semi_move_front_01",
         "file": "cell_semi_move_front_01.png",
-        "w": 32,
-        "h": 42
+        "w": 34,
+        "h": 44
       }
     ]
   },
@@ -37,16 +37,16 @@
     "loop": true,
     "frames": [
       {
-        "name": "cell_semi_move_back_00",
-        "file": "cell_semi_move_back_00.png",
-        "w": 29,
-        "h": 45
+        "name": "cell_semi_move_front_00",
+        "file": "cell_semi_move_front_00.png",
+        "w": 31,
+        "h": 47
       },
       {
-        "name": "cell_semi_move_back_01",
-        "file": "cell_semi_move_back_01.png",
-        "w": 32,
-        "h": 42
+        "name": "cell_semi_move_front_01",
+        "file": "cell_semi_move_front_01.png",
+        "w": 34,
+        "h": 44
       }
     ]
   },
@@ -56,22 +56,22 @@
     "loop": false,
     "frames": [
       {
-        "name": "cell_semi_guard_00",
-        "file": "cell_semi_guard_00.png",
-        "w": 30,
-        "h": 45
+        "name": "cell_semi_idle_00",
+        "file": "cell_semi_idle_00.png",
+        "w": 32,
+        "h": 47
       },
       {
         "name": "cell_semi_guard_01",
         "file": "cell_semi_guard_01.png",
-        "w": 28,
-        "h": 45
+        "w": 30,
+        "h": 47
       },
       {
         "name": "cell_semi_guard_02",
         "file": "cell_semi_guard_02.png",
-        "w": 34,
-        "h": 43
+        "w": 36,
+        "h": 45
       }
     ]
   },
@@ -83,38 +83,38 @@
       {
         "name": "cell_semi_attack_fwd_00",
         "file": "cell_semi_attack_fwd_00.png",
-        "w": 40,
-        "h": 43
+        "w": 42,
+        "h": 45
       },
       {
         "name": "cell_semi_attack_fwd_01",
         "file": "cell_semi_attack_fwd_01.png",
-        "w": 40,
-        "h": 43
+        "w": 42,
+        "h": 45
       },
       {
         "name": "cell_semi_attack_fwd_02",
         "file": "cell_semi_attack_fwd_02.png",
-        "w": 40,
-        "h": 45
+        "w": 42,
+        "h": 47
       },
       {
         "name": "cell_semi_attack_fwd_03",
         "file": "cell_semi_attack_fwd_03.png",
-        "w": 39,
-        "h": 45
+        "w": 41,
+        "h": 47
       },
       {
         "name": "cell_semi_attack_fwd_04",
         "file": "cell_semi_attack_fwd_04.png",
-        "w": 32,
-        "h": 43
+        "w": 34,
+        "h": 45
       },
       {
         "name": "cell_semi_attack_fwd_05",
         "file": "cell_semi_attack_fwd_05.png",
-        "w": 32,
-        "h": 43
+        "w": 34,
+        "h": 45
       }
     ]
   },
@@ -126,31 +126,31 @@
       {
         "name": "cell_semi_attack_ud_00",
         "file": "cell_semi_attack_ud_00.png",
-        "w": 35,
-        "h": 45
+        "w": 37,
+        "h": 47
       },
       {
         "name": "cell_semi_attack_ud_01",
         "file": "cell_semi_attack_ud_01.png",
-        "w": 29,
-        "h": 45
+        "w": 31,
+        "h": 47
       },
       {
         "name": "cell_semi_attack_ud_02",
         "file": "cell_semi_attack_ud_02.png",
-        "w": 30,
-        "h": 44
+        "w": 32,
+        "h": 46
       },
       {
         "name": "cell_semi_attack_ud_03",
         "file": "cell_semi_attack_ud_03.png",
-        "w": 34,
-        "h": 32
+        "w": 36,
+        "h": 34
       }
     ]
   },
   "hurt": {
-    "frame_count": 3,
+    "frame_count": 5,
     "fps": 6,
     "loop": false,
     "frames": [
@@ -158,19 +158,31 @@
         "name": "cell_semi_hurt_00",
         "file": "cell_semi_hurt_00.png",
         "w": 30,
-        "h": 44
+        "h": 48
       },
       {
         "name": "cell_semi_hurt_01",
         "file": "cell_semi_hurt_01.png",
-        "w": 30,
-        "h": 38
+        "w": 26,
+        "h": 48
       },
       {
         "name": "cell_semi_hurt_02",
         "file": "cell_semi_hurt_02.png",
         "w": 32,
-        "h": 37
+        "h": 46
+      },
+      {
+        "name": "cell_semi_hurt_03",
+        "file": "cell_semi_hurt_03.png",
+        "w": 32,
+        "h": 40
+      },
+      {
+        "name": "cell_semi_hurt_04",
+        "file": "cell_semi_hurt_04.png",
+        "w": 34,
+        "h": 39
       }
     ]
   },
@@ -182,14 +194,14 @@
       {
         "name": "cell_semi_beam_charge_00",
         "file": "cell_semi_beam_charge_00.png",
-        "w": 29,
-        "h": 42
+        "w": 31,
+        "h": 44
       },
       {
         "name": "cell_semi_beam_charge_01",
         "file": "cell_semi_beam_charge_01.png",
-        "w": 29,
-        "h": 42
+        "w": 31,
+        "h": 44
       }
     ]
   },
@@ -201,20 +213,20 @@
       {
         "name": "cell_semi_beam_fire_00",
         "file": "cell_semi_beam_fire_00.png",
-        "w": 29,
-        "h": 42
+        "w": 31,
+        "h": 44
       },
       {
         "name": "cell_semi_beam_fire_01",
         "file": "cell_semi_beam_fire_01.png",
-        "w": 34,
-        "h": 46
+        "w": 36,
+        "h": 48
       },
       {
         "name": "cell_semi_beam_fire_02",
         "file": "cell_semi_beam_fire_02.png",
-        "w": 30,
-        "h": 45
+        "w": 32,
+        "h": 47
       }
     ]
   },
@@ -226,14 +238,14 @@
       {
         "name": "cell_semi_evade_00",
         "file": "cell_semi_evade_00.png",
-        "w": 23,
-        "h": 41
+        "w": 42,
+        "h": 33
       },
       {
         "name": "cell_semi_evade_01",
         "file": "cell_semi_evade_01.png",
-        "w": 40,
-        "h": 31
+        "w": 25,
+        "h": 43
       }
     ]
   },
@@ -245,20 +257,20 @@
       {
         "name": "cell_semi_gather_power_00",
         "file": "cell_semi_gather_power_00.png",
-        "w": 30,
-        "h": 45
+        "w": 32,
+        "h": 47
       },
       {
         "name": "cell_semi_gather_power_01",
         "file": "cell_semi_gather_power_01.png",
-        "w": 31,
-        "h": 40
+        "w": 33,
+        "h": 42
       },
       {
         "name": "cell_semi_gather_power_02",
         "file": "cell_semi_gather_power_02.png",
-        "w": 32,
-        "h": 43
+        "w": 34,
+        "h": 45
       }
     ]
   },
@@ -268,22 +280,22 @@
     "loop": true,
     "frames": [
       {
-        "name": "cell_semi_power_up_00",
-        "file": "cell_semi_power_up_00.png",
-        "w": 30,
-        "h": 45
-      },
-      {
-        "name": "cell_semi_power_up_01",
-        "file": "cell_semi_power_up_01.png",
-        "w": 31,
-        "h": 40
-      },
-      {
-        "name": "cell_semi_power_up_02",
-        "file": "cell_semi_power_up_02.png",
+        "name": "cell_semi_gather_power_00",
+        "file": "cell_semi_gather_power_00.png",
         "w": 32,
-        "h": 43
+        "h": 47
+      },
+      {
+        "name": "cell_semi_gather_power_01",
+        "file": "cell_semi_gather_power_01.png",
+        "w": 33,
+        "h": 42
+      },
+      {
+        "name": "cell_semi_gather_power_02",
+        "file": "cell_semi_gather_power_02.png",
+        "w": 34,
+        "h": 45
       }
     ]
   },
@@ -295,20 +307,20 @@
       {
         "name": "cell_semi_aura_power_00",
         "file": "cell_semi_aura_power_00.png",
-        "w": 64,
-        "h": 56
+        "w": 66,
+        "h": 58
       },
       {
         "name": "cell_semi_aura_power_01",
         "file": "cell_semi_aura_power_01.png",
-        "w": 64,
-        "h": 56
+        "w": 66,
+        "h": 58
       },
       {
         "name": "cell_semi_aura_power_02",
         "file": "cell_semi_aura_power_02.png",
-        "w": 64,
-        "h": 56
+        "w": 66,
+        "h": 58
       }
     ]
   },
@@ -345,38 +357,38 @@
       {
         "name": "cell_semi_attack_fwd_00",
         "file": "cell_semi_attack_fwd_00.png",
-        "w": 40,
-        "h": 43
+        "w": 42,
+        "h": 45
       },
       {
         "name": "cell_semi_attack_fwd_01",
         "file": "cell_semi_attack_fwd_01.png",
-        "w": 40,
-        "h": 43
+        "w": 42,
+        "h": 45
       },
       {
         "name": "cell_semi_attack_fwd_02",
         "file": "cell_semi_attack_fwd_02.png",
-        "w": 40,
-        "h": 45
+        "w": 42,
+        "h": 47
       },
       {
         "name": "cell_semi_attack_fwd_03",
         "file": "cell_semi_attack_fwd_03.png",
-        "w": 39,
-        "h": 45
+        "w": 41,
+        "h": 47
       },
       {
         "name": "cell_semi_attack_fwd_04",
         "file": "cell_semi_attack_fwd_04.png",
-        "w": 32,
-        "h": 43
+        "w": 34,
+        "h": 45
       },
       {
         "name": "cell_semi_attack_fwd_05",
         "file": "cell_semi_attack_fwd_05.png",
-        "w": 32,
-        "h": 43
+        "w": 34,
+        "h": 45
       }
     ]
   },
@@ -388,38 +400,38 @@
       {
         "name": "cell_semi_attack_fwd_00",
         "file": "cell_semi_attack_fwd_00.png",
-        "w": 40,
-        "h": 43
+        "w": 42,
+        "h": 45
       },
       {
         "name": "cell_semi_attack_fwd_01",
         "file": "cell_semi_attack_fwd_01.png",
-        "w": 40,
-        "h": 43
+        "w": 42,
+        "h": 45
       },
       {
         "name": "cell_semi_attack_fwd_02",
         "file": "cell_semi_attack_fwd_02.png",
-        "w": 40,
-        "h": 45
+        "w": 42,
+        "h": 47
       },
       {
         "name": "cell_semi_attack_fwd_03",
         "file": "cell_semi_attack_fwd_03.png",
-        "w": 39,
-        "h": 45
+        "w": 41,
+        "h": 47
       },
       {
         "name": "cell_semi_attack_fwd_04",
         "file": "cell_semi_attack_fwd_04.png",
-        "w": 32,
-        "h": 43
+        "w": 34,
+        "h": 45
       },
       {
         "name": "cell_semi_attack_fwd_05",
         "file": "cell_semi_attack_fwd_05.png",
-        "w": 32,
-        "h": 43
+        "w": 34,
+        "h": 45
       }
     ]
   },
@@ -431,31 +443,31 @@
       {
         "name": "cell_semi_attack_ud_00",
         "file": "cell_semi_attack_ud_00.png",
-        "w": 35,
-        "h": 45
+        "w": 37,
+        "h": 47
       },
       {
         "name": "cell_semi_attack_ud_01",
         "file": "cell_semi_attack_ud_01.png",
-        "w": 29,
-        "h": 45
+        "w": 31,
+        "h": 47
       },
       {
         "name": "cell_semi_attack_ud_02",
         "file": "cell_semi_attack_ud_02.png",
-        "w": 30,
-        "h": 44
+        "w": 32,
+        "h": 46
       },
       {
         "name": "cell_semi_attack_ud_03",
         "file": "cell_semi_attack_ud_03.png",
-        "w": 34,
-        "h": 32
+        "w": 36,
+        "h": 34
       }
     ]
   },
   "knockback_back": {
-    "frame_count": 3,
+    "frame_count": 5,
     "fps": 6,
     "loop": false,
     "frames": [
@@ -463,24 +475,36 @@
         "name": "cell_semi_hurt_00",
         "file": "cell_semi_hurt_00.png",
         "w": 30,
-        "h": 44
+        "h": 48
       },
       {
         "name": "cell_semi_hurt_01",
         "file": "cell_semi_hurt_01.png",
-        "w": 30,
-        "h": 38
+        "w": 26,
+        "h": 48
       },
       {
         "name": "cell_semi_hurt_02",
         "file": "cell_semi_hurt_02.png",
         "w": 32,
-        "h": 37
+        "h": 46
+      },
+      {
+        "name": "cell_semi_hurt_03",
+        "file": "cell_semi_hurt_03.png",
+        "w": 32,
+        "h": 40
+      },
+      {
+        "name": "cell_semi_hurt_04",
+        "file": "cell_semi_hurt_04.png",
+        "w": 34,
+        "h": 39
       }
     ]
   },
   "knockback_up": {
-    "frame_count": 3,
+    "frame_count": 5,
     "fps": 6,
     "loop": false,
     "frames": [
@@ -488,24 +512,36 @@
         "name": "cell_semi_hurt_00",
         "file": "cell_semi_hurt_00.png",
         "w": 30,
-        "h": 44
+        "h": 48
       },
       {
         "name": "cell_semi_hurt_01",
         "file": "cell_semi_hurt_01.png",
-        "w": 30,
-        "h": 38
+        "w": 26,
+        "h": 48
       },
       {
         "name": "cell_semi_hurt_02",
         "file": "cell_semi_hurt_02.png",
         "w": 32,
-        "h": 37
+        "h": 46
+      },
+      {
+        "name": "cell_semi_hurt_03",
+        "file": "cell_semi_hurt_03.png",
+        "w": 32,
+        "h": 40
+      },
+      {
+        "name": "cell_semi_hurt_04",
+        "file": "cell_semi_hurt_04.png",
+        "w": 34,
+        "h": 39
       }
     ]
   },
   "knockback_down": {
-    "frame_count": 3,
+    "frame_count": 5,
     "fps": 6,
     "loop": false,
     "frames": [
@@ -513,19 +549,31 @@
         "name": "cell_semi_hurt_00",
         "file": "cell_semi_hurt_00.png",
         "w": 30,
-        "h": 44
+        "h": 48
       },
       {
         "name": "cell_semi_hurt_01",
         "file": "cell_semi_hurt_01.png",
-        "w": 30,
-        "h": 38
+        "w": 26,
+        "h": 48
       },
       {
         "name": "cell_semi_hurt_02",
         "file": "cell_semi_hurt_02.png",
         "w": 32,
-        "h": 37
+        "h": 46
+      },
+      {
+        "name": "cell_semi_hurt_03",
+        "file": "cell_semi_hurt_03.png",
+        "w": 32,
+        "h": 40
+      },
+      {
+        "name": "cell_semi_hurt_04",
+        "file": "cell_semi_hurt_04.png",
+        "w": 34,
+        "h": 39
       }
     ]
   },
@@ -535,22 +583,22 @@
     "loop": false,
     "frames": [
       {
-        "name": "cell_semi_guard_00",
-        "file": "cell_semi_guard_00.png",
-        "w": 30,
-        "h": 45
+        "name": "cell_semi_idle_00",
+        "file": "cell_semi_idle_00.png",
+        "w": 32,
+        "h": 47
       },
       {
         "name": "cell_semi_guard_01",
         "file": "cell_semi_guard_01.png",
-        "w": 28,
-        "h": 45
+        "w": 30,
+        "h": 47
       },
       {
         "name": "cell_semi_guard_02",
         "file": "cell_semi_guard_02.png",
-        "w": 34,
-        "h": 43
+        "w": 36,
+        "h": 45
       }
     ]
   }

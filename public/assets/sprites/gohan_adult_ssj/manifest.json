@@ -7,8 +7,8 @@
       {
         "name": "gohan_adult_ssj_idle_00",
         "file": "gohan_adult_ssj_idle_00.png",
-        "w": 27,
-        "h": 46
+        "w": 29,
+        "h": 48
       }
     ]
   },
@@ -20,14 +20,14 @@
       {
         "name": "gohan_adult_ssj_move_front_00",
         "file": "gohan_adult_ssj_move_front_00.png",
-        "w": 28,
-        "h": 46
+        "w": 30,
+        "h": 48
       },
       {
         "name": "gohan_adult_ssj_move_front_01",
         "file": "gohan_adult_ssj_move_front_01.png",
-        "w": 32,
-        "h": 43
+        "w": 34,
+        "h": 45
       }
     ]
   },
@@ -37,16 +37,16 @@
     "loop": true,
     "frames": [
       {
-        "name": "gohan_adult_ssj_move_back_00",
-        "file": "gohan_adult_ssj_move_back_00.png",
-        "w": 28,
-        "h": 46
+        "name": "gohan_adult_ssj_move_front_00",
+        "file": "gohan_adult_ssj_move_front_00.png",
+        "w": 30,
+        "h": 48
       },
       {
-        "name": "gohan_adult_ssj_move_back_01",
-        "file": "gohan_adult_ssj_move_back_01.png",
-        "w": 32,
-        "h": 43
+        "name": "gohan_adult_ssj_move_front_01",
+        "file": "gohan_adult_ssj_move_front_01.png",
+        "w": 34,
+        "h": 45
       }
     ]
   },
@@ -56,22 +56,22 @@
     "loop": false,
     "frames": [
       {
-        "name": "gohan_adult_ssj_guard_00",
-        "file": "gohan_adult_ssj_guard_00.png",
-        "w": 27,
-        "h": 46
+        "name": "gohan_adult_ssj_idle_00",
+        "file": "gohan_adult_ssj_idle_00.png",
+        "w": 29,
+        "h": 48
       },
       {
         "name": "gohan_adult_ssj_guard_01",
         "file": "gohan_adult_ssj_guard_01.png",
-        "w": 30,
-        "h": 46
+        "w": 32,
+        "h": 48
       },
       {
         "name": "gohan_adult_ssj_guard_02",
         "file": "gohan_adult_ssj_guard_02.png",
-        "w": 34,
-        "h": 44
+        "w": 36,
+        "h": 46
       }
     ]
   },
@@ -83,32 +83,32 @@
       {
         "name": "gohan_adult_ssj_attack_fwd_00",
         "file": "gohan_adult_ssj_attack_fwd_00.png",
-        "w": 23,
-        "h": 47
+        "w": 25,
+        "h": 49
       },
       {
         "name": "gohan_adult_ssj_attack_fwd_01",
         "file": "gohan_adult_ssj_attack_fwd_01.png",
-        "w": 37,
-        "h": 47
+        "w": 39,
+        "h": 49
       },
       {
         "name": "gohan_adult_ssj_attack_fwd_02",
         "file": "gohan_adult_ssj_attack_fwd_02.png",
-        "w": 29,
-        "h": 46
+        "w": 31,
+        "h": 48
       },
       {
         "name": "gohan_adult_ssj_attack_fwd_03",
         "file": "gohan_adult_ssj_attack_fwd_03.png",
-        "w": 32,
-        "h": 43
+        "w": 34,
+        "h": 45
       },
       {
         "name": "gohan_adult_ssj_attack_fwd_04",
         "file": "gohan_adult_ssj_attack_fwd_04.png",
-        "w": 36,
-        "h": 41
+        "w": 38,
+        "h": 43
       }
     ]
   },
@@ -120,45 +120,57 @@
       {
         "name": "gohan_adult_ssj_attack_ud_00",
         "file": "gohan_adult_ssj_attack_ud_00.png",
-        "w": 23,
-        "h": 46
+        "w": 25,
+        "h": 48
       },
       {
         "name": "gohan_adult_ssj_attack_ud_01",
         "file": "gohan_adult_ssj_attack_ud_01.png",
-        "w": 29,
-        "h": 44
+        "w": 31,
+        "h": 46
       },
       {
         "name": "gohan_adult_ssj_attack_ud_02",
         "file": "gohan_adult_ssj_attack_ud_02.png",
-        "w": 32,
-        "h": 32
+        "w": 34,
+        "h": 34
       }
     ]
   },
   "hurt": {
-    "frame_count": 3,
+    "frame_count": 5,
     "fps": 6,
     "loop": false,
     "frames": [
       {
         "name": "gohan_adult_ssj_hurt_00",
         "file": "gohan_adult_ssj_hurt_00.png",
-        "w": 28,
-        "h": 45
+        "w": 27,
+        "h": 50
       },
       {
         "name": "gohan_adult_ssj_hurt_01",
         "file": "gohan_adult_ssj_hurt_01.png",
-        "w": 29,
-        "h": 42
+        "w": 26,
+        "h": 48
       },
       {
         "name": "gohan_adult_ssj_hurt_02",
         "file": "gohan_adult_ssj_hurt_02.png",
-        "w": 32,
-        "h": 36
+        "w": 30,
+        "h": 47
+      },
+      {
+        "name": "gohan_adult_ssj_hurt_03",
+        "file": "gohan_adult_ssj_hurt_03.png",
+        "w": 31,
+        "h": 44
+      },
+      {
+        "name": "gohan_adult_ssj_hurt_04",
+        "file": "gohan_adult_ssj_hurt_04.png",
+        "w": 34,
+        "h": 38
       }
     ]
   },
@@ -170,8 +182,8 @@
       {
         "name": "gohan_adult_ssj_beam_charge_00",
         "file": "gohan_adult_ssj_beam_charge_00.png",
-        "w": 26,
-        "h": 43
+        "w": 28,
+        "h": 45
       }
     ]
   },
@@ -183,88 +195,52 @@
       {
         "name": "gohan_adult_ssj_evade_00",
         "file": "gohan_adult_ssj_evade_00.png",
-        "w": 23,
-        "h": 41
+        "w": 42,
+        "h": 33
       },
       {
         "name": "gohan_adult_ssj_evade_01",
         "file": "gohan_adult_ssj_evade_01.png",
-        "w": 40,
-        "h": 31
+        "w": 25,
+        "h": 43
       }
     ]
   },
   "gather_power": {
-    "frame_count": 5,
+    "frame_count": 2,
     "fps": 6,
     "loop": false,
     "frames": [
       {
         "name": "gohan_adult_ssj_gather_power_00",
         "file": "gohan_adult_ssj_gather_power_00.png",
-        "w": 32,
-        "h": 48
+        "w": 34,
+        "h": 45
       },
       {
         "name": "gohan_adult_ssj_gather_power_01",
         "file": "gohan_adult_ssj_gather_power_01.png",
-        "w": 32,
+        "w": 34,
         "h": 45
-      },
-      {
-        "name": "gohan_adult_ssj_gather_power_02",
-        "file": "gohan_adult_ssj_gather_power_02.png",
-        "w": 32,
-        "h": 44
-      },
-      {
-        "name": "gohan_adult_ssj_gather_power_03",
-        "file": "gohan_adult_ssj_gather_power_03.png",
-        "w": 32,
-        "h": 43
-      },
-      {
-        "name": "gohan_adult_ssj_gather_power_04",
-        "file": "gohan_adult_ssj_gather_power_04.png",
-        "w": 32,
-        "h": 43
       }
     ]
   },
   "power_up": {
-    "frame_count": 5,
+    "frame_count": 2,
     "fps": 8,
     "loop": true,
     "frames": [
       {
-        "name": "gohan_adult_ssj_power_up_00",
-        "file": "gohan_adult_ssj_power_up_00.png",
-        "w": 32,
-        "h": 48
-      },
-      {
-        "name": "gohan_adult_ssj_power_up_01",
-        "file": "gohan_adult_ssj_power_up_01.png",
-        "w": 32,
+        "name": "gohan_adult_ssj_gather_power_00",
+        "file": "gohan_adult_ssj_gather_power_00.png",
+        "w": 34,
         "h": 45
       },
       {
-        "name": "gohan_adult_ssj_power_up_02",
-        "file": "gohan_adult_ssj_power_up_02.png",
-        "w": 32,
-        "h": 44
-      },
-      {
-        "name": "gohan_adult_ssj_power_up_03",
-        "file": "gohan_adult_ssj_power_up_03.png",
-        "w": 32,
-        "h": 43
-      },
-      {
-        "name": "gohan_adult_ssj_power_up_04",
-        "file": "gohan_adult_ssj_power_up_04.png",
-        "w": 32,
-        "h": 43
+        "name": "gohan_adult_ssj_gather_power_01",
+        "file": "gohan_adult_ssj_gather_power_01.png",
+        "w": 34,
+        "h": 45
       }
     ]
   },
@@ -276,20 +252,20 @@
       {
         "name": "gohan_adult_ssj_aura_power_00",
         "file": "gohan_adult_ssj_aura_power_00.png",
-        "w": 64,
-        "h": 56
+        "w": 66,
+        "h": 58
       },
       {
         "name": "gohan_adult_ssj_aura_power_01",
         "file": "gohan_adult_ssj_aura_power_01.png",
-        "w": 64,
-        "h": 56
+        "w": 66,
+        "h": 58
       },
       {
         "name": "gohan_adult_ssj_aura_power_02",
         "file": "gohan_adult_ssj_aura_power_02.png",
-        "w": 64,
-        "h": 56
+        "w": 66,
+        "h": 58
       }
     ]
   },
@@ -326,32 +302,32 @@
       {
         "name": "gohan_adult_ssj_attack_fwd_00",
         "file": "gohan_adult_ssj_attack_fwd_00.png",
-        "w": 23,
-        "h": 47
+        "w": 25,
+        "h": 49
       },
       {
         "name": "gohan_adult_ssj_attack_fwd_01",
         "file": "gohan_adult_ssj_attack_fwd_01.png",
-        "w": 37,
-        "h": 47
+        "w": 39,
+        "h": 49
       },
       {
         "name": "gohan_adult_ssj_attack_fwd_02",
         "file": "gohan_adult_ssj_attack_fwd_02.png",
-        "w": 29,
-        "h": 46
+        "w": 31,
+        "h": 48
       },
       {
         "name": "gohan_adult_ssj_attack_fwd_03",
         "file": "gohan_adult_ssj_attack_fwd_03.png",
-        "w": 32,
-        "h": 43
+        "w": 34,
+        "h": 45
       },
       {
         "name": "gohan_adult_ssj_attack_fwd_04",
         "file": "gohan_adult_ssj_attack_fwd_04.png",
-        "w": 36,
-        "h": 41
+        "w": 38,
+        "h": 43
       }
     ]
   },
@@ -363,32 +339,32 @@
       {
         "name": "gohan_adult_ssj_attack_fwd_00",
         "file": "gohan_adult_ssj_attack_fwd_00.png",
-        "w": 23,
-        "h": 47
+        "w": 25,
+        "h": 49
       },
       {
         "name": "gohan_adult_ssj_attack_fwd_01",
         "file": "gohan_adult_ssj_attack_fwd_01.png",
-        "w": 37,
-        "h": 47
+        "w": 39,
+        "h": 49
       },
       {
         "name": "gohan_adult_ssj_attack_fwd_02",
         "file": "gohan_adult_ssj_attack_fwd_02.png",
-        "w": 29,
-        "h": 46
+        "w": 31,
+        "h": 48
       },
       {
         "name": "gohan_adult_ssj_attack_fwd_03",
         "file": "gohan_adult_ssj_attack_fwd_03.png",
-        "w": 32,
-        "h": 43
+        "w": 34,
+        "h": 45
       },
       {
         "name": "gohan_adult_ssj_attack_fwd_04",
         "file": "gohan_adult_ssj_attack_fwd_04.png",
-        "w": 36,
-        "h": 41
+        "w": 38,
+        "h": 43
       }
     ]
   },
@@ -400,95 +376,131 @@
       {
         "name": "gohan_adult_ssj_attack_ud_00",
         "file": "gohan_adult_ssj_attack_ud_00.png",
-        "w": 23,
-        "h": 46
+        "w": 25,
+        "h": 48
       },
       {
         "name": "gohan_adult_ssj_attack_ud_01",
         "file": "gohan_adult_ssj_attack_ud_01.png",
-        "w": 29,
-        "h": 44
+        "w": 31,
+        "h": 46
       },
       {
         "name": "gohan_adult_ssj_attack_ud_02",
         "file": "gohan_adult_ssj_attack_ud_02.png",
-        "w": 32,
-        "h": 32
+        "w": 34,
+        "h": 34
       }
     ]
   },
   "knockback_back": {
-    "frame_count": 3,
+    "frame_count": 5,
     "fps": 6,
     "loop": false,
     "frames": [
       {
         "name": "gohan_adult_ssj_hurt_00",
         "file": "gohan_adult_ssj_hurt_00.png",
-        "w": 28,
-        "h": 45
+        "w": 27,
+        "h": 50
       },
       {
         "name": "gohan_adult_ssj_hurt_01",
         "file": "gohan_adult_ssj_hurt_01.png",
-        "w": 29,
-        "h": 42
+        "w": 26,
+        "h": 48
       },
       {
         "name": "gohan_adult_ssj_hurt_02",
         "file": "gohan_adult_ssj_hurt_02.png",
-        "w": 32,
-        "h": 36
+        "w": 30,
+        "h": 47
+      },
+      {
+        "name": "gohan_adult_ssj_hurt_03",
+        "file": "gohan_adult_ssj_hurt_03.png",
+        "w": 31,
+        "h": 44
+      },
+      {
+        "name": "gohan_adult_ssj_hurt_04",
+        "file": "gohan_adult_ssj_hurt_04.png",
+        "w": 34,
+        "h": 38
       }
     ]
   },
   "knockback_up": {
-    "frame_count": 3,
+    "frame_count": 5,
     "fps": 6,
     "loop": false,
     "frames": [
       {
         "name": "gohan_adult_ssj_hurt_00",
         "file": "gohan_adult_ssj_hurt_00.png",
-        "w": 28,
-        "h": 45
+        "w": 27,
+        "h": 50
       },
       {
         "name": "gohan_adult_ssj_hurt_01",
         "file": "gohan_adult_ssj_hurt_01.png",
-        "w": 29,
-        "h": 42
+        "w": 26,
+        "h": 48
       },
       {
         "name": "gohan_adult_ssj_hurt_02",
         "file": "gohan_adult_ssj_hurt_02.png",
-        "w": 32,
-        "h": 36
+        "w": 30,
+        "h": 47
+      },
+      {
+        "name": "gohan_adult_ssj_hurt_03",
+        "file": "gohan_adult_ssj_hurt_03.png",
+        "w": 31,
+        "h": 44
+      },
+      {
+        "name": "gohan_adult_ssj_hurt_04",
+        "file": "gohan_adult_ssj_hurt_04.png",
+        "w": 34,
+        "h": 38
       }
     ]
   },
   "knockback_down": {
-    "frame_count": 3,
+    "frame_count": 5,
     "fps": 6,
     "loop": false,
     "frames": [
       {
         "name": "gohan_adult_ssj_hurt_00",
         "file": "gohan_adult_ssj_hurt_00.png",
-        "w": 28,
-        "h": 45
+        "w": 27,
+        "h": 50
       },
       {
         "name": "gohan_adult_ssj_hurt_01",
         "file": "gohan_adult_ssj_hurt_01.png",
-        "w": 29,
-        "h": 42
+        "w": 26,
+        "h": 48
       },
       {
         "name": "gohan_adult_ssj_hurt_02",
         "file": "gohan_adult_ssj_hurt_02.png",
-        "w": 32,
-        "h": 36
+        "w": 30,
+        "h": 47
+      },
+      {
+        "name": "gohan_adult_ssj_hurt_03",
+        "file": "gohan_adult_ssj_hurt_03.png",
+        "w": 31,
+        "h": 44
+      },
+      {
+        "name": "gohan_adult_ssj_hurt_04",
+        "file": "gohan_adult_ssj_hurt_04.png",
+        "w": 34,
+        "h": 38
       }
     ]
   },
@@ -498,22 +510,22 @@
     "loop": false,
     "frames": [
       {
-        "name": "gohan_adult_ssj_guard_00",
-        "file": "gohan_adult_ssj_guard_00.png",
-        "w": 27,
-        "h": 46
+        "name": "gohan_adult_ssj_idle_00",
+        "file": "gohan_adult_ssj_idle_00.png",
+        "w": 29,
+        "h": 48
       },
       {
         "name": "gohan_adult_ssj_guard_01",
         "file": "gohan_adult_ssj_guard_01.png",
-        "w": 30,
-        "h": 46
+        "w": 32,
+        "h": 48
       },
       {
         "name": "gohan_adult_ssj_guard_02",
         "file": "gohan_adult_ssj_guard_02.png",
-        "w": 34,
-        "h": 44
+        "w": 36,
+        "h": 46
       }
     ]
   },
@@ -525,8 +537,8 @@
       {
         "name": "gohan_adult_ssj_beam_charge_00",
         "file": "gohan_adult_ssj_beam_charge_00.png",
-        "w": 26,
-        "h": 43
+        "w": 28,
+        "h": 45
       }
     ]
   }

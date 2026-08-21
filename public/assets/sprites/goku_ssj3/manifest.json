@@ -7,8 +7,8 @@
       {
         "name": "goku_ssj3_idle_00",
         "file": "goku_ssj3_idle_00.png",
-        "w": 30,
-        "h": 45
+        "w": 32,
+        "h": 47
       }
     ]
   },
@@ -18,16 +18,16 @@
     "loop": true,
     "frames": [
       {
-        "name": "goku_ssj3_move_front_00",
-        "file": "goku_ssj3_move_front_00.png",
-        "w": 30,
-        "h": 45
+        "name": "goku_ssj3_idle_00",
+        "file": "goku_ssj3_idle_00.png",
+        "w": 32,
+        "h": 47
       },
       {
         "name": "goku_ssj3_move_front_01",
         "file": "goku_ssj3_move_front_01.png",
-        "w": 32,
-        "h": 41
+        "w": 34,
+        "h": 43
       }
     ]
   },
@@ -37,16 +37,16 @@
     "loop": true,
     "frames": [
       {
-        "name": "goku_ssj3_move_back_00",
-        "file": "goku_ssj3_move_back_00.png",
-        "w": 30,
-        "h": 45
+        "name": "goku_ssj3_idle_00",
+        "file": "goku_ssj3_idle_00.png",
+        "w": 32,
+        "h": 47
       },
       {
-        "name": "goku_ssj3_move_back_01",
-        "file": "goku_ssj3_move_back_01.png",
-        "w": 32,
-        "h": 41
+        "name": "goku_ssj3_move_front_01",
+        "file": "goku_ssj3_move_front_01.png",
+        "w": 34,
+        "h": 43
       }
     ]
   },
@@ -56,22 +56,22 @@
     "loop": false,
     "frames": [
       {
-        "name": "goku_ssj3_guard_00",
-        "file": "goku_ssj3_guard_00.png",
-        "w": 30,
-        "h": 45
+        "name": "goku_ssj3_idle_00",
+        "file": "goku_ssj3_idle_00.png",
+        "w": 32,
+        "h": 47
       },
       {
         "name": "goku_ssj3_guard_01",
         "file": "goku_ssj3_guard_01.png",
-        "w": 28,
-        "h": 45
+        "w": 30,
+        "h": 47
       },
       {
         "name": "goku_ssj3_guard_02",
         "file": "goku_ssj3_guard_02.png",
-        "w": 35,
-        "h": 43
+        "w": 37,
+        "h": 45
       }
     ]
   },
@@ -83,38 +83,38 @@
       {
         "name": "goku_ssj3_attack_fwd_00",
         "file": "goku_ssj3_attack_fwd_00.png",
-        "w": 24,
-        "h": 46
+        "w": 26,
+        "h": 48
       },
       {
         "name": "goku_ssj3_attack_fwd_01",
         "file": "goku_ssj3_attack_fwd_01.png",
-        "w": 40,
-        "h": 38
+        "w": 42,
+        "h": 40
       },
       {
         "name": "goku_ssj3_attack_fwd_02",
         "file": "goku_ssj3_attack_fwd_02.png",
-        "w": 31,
-        "h": 42
+        "w": 33,
+        "h": 44
       },
       {
         "name": "goku_ssj3_attack_fwd_03",
         "file": "goku_ssj3_attack_fwd_03.png",
-        "w": 32,
-        "h": 42
+        "w": 34,
+        "h": 44
       },
       {
         "name": "goku_ssj3_attack_fwd_04",
         "file": "goku_ssj3_attack_fwd_04.png",
-        "w": 39,
-        "h": 41
+        "w": 41,
+        "h": 43
       },
       {
         "name": "goku_ssj3_attack_fwd_05",
         "file": "goku_ssj3_attack_fwd_05.png",
-        "w": 40,
-        "h": 41
+        "w": 42,
+        "h": 43
       }
     ]
   },
@@ -126,57 +126,63 @@
       {
         "name": "goku_ssj3_attack_ud_00",
         "file": "goku_ssj3_attack_ud_00.png",
-        "w": 29,
-        "h": 45
+        "w": 31,
+        "h": 47
       },
       {
         "name": "goku_ssj3_attack_ud_01",
         "file": "goku_ssj3_attack_ud_01.png",
-        "w": 27,
-        "h": 43
+        "w": 29,
+        "h": 45
       },
       {
         "name": "goku_ssj3_attack_ud_02",
         "file": "goku_ssj3_attack_ud_02.png",
-        "w": 31,
-        "h": 43
+        "w": 33,
+        "h": 45
       },
       {
         "name": "goku_ssj3_attack_ud_03",
         "file": "goku_ssj3_attack_ud_03.png",
-        "w": 33,
-        "h": 32
+        "w": 35,
+        "h": 34
       }
     ]
   },
   "hurt": {
-    "frame_count": 4,
+    "frame_count": 5,
     "fps": 6,
     "loop": false,
     "frames": [
       {
         "name": "goku_ssj3_hurt_00",
         "file": "goku_ssj3_hurt_00.png",
-        "w": 28,
-        "h": 48
+        "w": 30,
+        "h": 50
       },
       {
         "name": "goku_ssj3_hurt_01",
         "file": "goku_ssj3_hurt_01.png",
-        "w": 27,
-        "h": 43
+        "w": 30,
+        "h": 48
       },
       {
         "name": "goku_ssj3_hurt_02",
         "file": "goku_ssj3_hurt_02.png",
-        "w": 31,
-        "h": 41
+        "w": 29,
+        "h": 45
       },
       {
         "name": "goku_ssj3_hurt_03",
         "file": "goku_ssj3_hurt_03.png",
-        "w": 32,
-        "h": 37
+        "w": 33,
+        "h": 43
+      },
+      {
+        "name": "goku_ssj3_hurt_04",
+        "file": "goku_ssj3_hurt_04.png",
+        "w": 34,
+        "h": 39
       }
     ]
   },
@@ -188,32 +194,32 @@
       {
         "name": "goku_ssj3_beam_charge_00",
         "file": "goku_ssj3_beam_charge_00.png",
-        "w": 32,
-        "h": 42
+        "w": 34,
+        "h": 44
       },
       {
         "name": "goku_ssj3_beam_charge_01",
         "file": "goku_ssj3_beam_charge_01.png",
-        "w": 29,
-        "h": 42
+        "w": 31,
+        "h": 44
       },
       {
         "name": "goku_ssj3_beam_charge_02",
         "file": "goku_ssj3_beam_charge_02.png",
-        "w": 27,
-        "h": 45
+        "w": 31,
+        "h": 44
       },
       {
         "name": "goku_ssj3_beam_charge_03",
         "file": "goku_ssj3_beam_charge_03.png",
-        "w": 30,
-        "h": 45
+        "w": 32,
+        "h": 47
       },
       {
         "name": "goku_ssj3_beam_charge_04",
         "file": "goku_ssj3_beam_charge_04.png",
-        "w": 31,
-        "h": 42
+        "w": 33,
+        "h": 44
       }
     ]
   },
@@ -225,14 +231,14 @@
       {
         "name": "goku_ssj3_evade_00",
         "file": "goku_ssj3_evade_00.png",
-        "w": 23,
-        "h": 41
+        "w": 25,
+        "h": 43
       },
       {
         "name": "goku_ssj3_evade_01",
         "file": "goku_ssj3_evade_01.png",
-        "w": 40,
-        "h": 31
+        "w": 42,
+        "h": 33
       }
     ]
   },
@@ -244,26 +250,26 @@
       {
         "name": "goku_ssj3_gather_power_00",
         "file": "goku_ssj3_gather_power_00.png",
-        "w": 30,
-        "h": 45
+        "w": 32,
+        "h": 47
       },
       {
         "name": "goku_ssj3_gather_power_01",
         "file": "goku_ssj3_gather_power_01.png",
-        "w": 30,
-        "h": 45
+        "w": 32,
+        "h": 47
       },
       {
         "name": "goku_ssj3_gather_power_02",
         "file": "goku_ssj3_gather_power_02.png",
-        "w": 32,
-        "h": 45
+        "w": 34,
+        "h": 47
       },
       {
         "name": "goku_ssj3_gather_power_03",
         "file": "goku_ssj3_gather_power_03.png",
-        "w": 32,
-        "h": 42
+        "w": 34,
+        "h": 44
       }
     ]
   },
@@ -273,28 +279,28 @@
     "loop": true,
     "frames": [
       {
-        "name": "goku_ssj3_power_up_00",
-        "file": "goku_ssj3_power_up_00.png",
-        "w": 30,
-        "h": 45
-      },
-      {
-        "name": "goku_ssj3_power_up_01",
-        "file": "goku_ssj3_power_up_01.png",
-        "w": 30,
-        "h": 45
-      },
-      {
-        "name": "goku_ssj3_power_up_02",
-        "file": "goku_ssj3_power_up_02.png",
+        "name": "goku_ssj3_gather_power_00",
+        "file": "goku_ssj3_gather_power_00.png",
         "w": 32,
-        "h": 45
+        "h": 47
       },
       {
-        "name": "goku_ssj3_power_up_03",
-        "file": "goku_ssj3_power_up_03.png",
+        "name": "goku_ssj3_gather_power_01",
+        "file": "goku_ssj3_gather_power_01.png",
         "w": 32,
-        "h": 42
+        "h": 47
+      },
+      {
+        "name": "goku_ssj3_gather_power_02",
+        "file": "goku_ssj3_gather_power_02.png",
+        "w": 34,
+        "h": 47
+      },
+      {
+        "name": "goku_ssj3_gather_power_03",
+        "file": "goku_ssj3_gather_power_03.png",
+        "w": 34,
+        "h": 44
       }
     ]
   },
@@ -306,20 +312,20 @@
       {
         "name": "goku_ssj3_aura_power_00",
         "file": "goku_ssj3_aura_power_00.png",
-        "w": 64,
-        "h": 56
+        "w": 66,
+        "h": 58
       },
       {
         "name": "goku_ssj3_aura_power_01",
         "file": "goku_ssj3_aura_power_01.png",
-        "w": 64,
-        "h": 56
+        "w": 66,
+        "h": 58
       },
       {
         "name": "goku_ssj3_aura_power_02",
         "file": "goku_ssj3_aura_power_02.png",
-        "w": 64,
-        "h": 56
+        "w": 66,
+        "h": 58
       }
     ]
   },
@@ -356,38 +362,38 @@
       {
         "name": "goku_ssj3_attack_fwd_00",
         "file": "goku_ssj3_attack_fwd_00.png",
-        "w": 24,
-        "h": 46
+        "w": 26,
+        "h": 48
       },
       {
         "name": "goku_ssj3_attack_fwd_01",
         "file": "goku_ssj3_attack_fwd_01.png",
-        "w": 40,
-        "h": 38
+        "w": 42,
+        "h": 40
       },
       {
         "name": "goku_ssj3_attack_fwd_02",
         "file": "goku_ssj3_attack_fwd_02.png",
-        "w": 31,
-        "h": 42
+        "w": 33,
+        "h": 44
       },
       {
         "name": "goku_ssj3_attack_fwd_03",
         "file": "goku_ssj3_attack_fwd_03.png",
-        "w": 32,
-        "h": 42
+        "w": 34,
+        "h": 44
       },
       {
         "name": "goku_ssj3_attack_fwd_04",
         "file": "goku_ssj3_attack_fwd_04.png",
-        "w": 39,
-        "h": 41
+        "w": 41,
+        "h": 43
       },
       {
         "name": "goku_ssj3_attack_fwd_05",
         "file": "goku_ssj3_attack_fwd_05.png",
-        "w": 40,
-        "h": 41
+        "w": 42,
+        "h": 43
       }
     ]
   },
@@ -399,38 +405,38 @@
       {
         "name": "goku_ssj3_attack_fwd_00",
         "file": "goku_ssj3_attack_fwd_00.png",
-        "w": 24,
-        "h": 46
+        "w": 26,
+        "h": 48
       },
       {
         "name": "goku_ssj3_attack_fwd_01",
         "file": "goku_ssj3_attack_fwd_01.png",
-        "w": 40,
-        "h": 38
+        "w": 42,
+        "h": 40
       },
       {
         "name": "goku_ssj3_attack_fwd_02",
         "file": "goku_ssj3_attack_fwd_02.png",
-        "w": 31,
-        "h": 42
+        "w": 33,
+        "h": 44
       },
       {
         "name": "goku_ssj3_attack_fwd_03",
         "file": "goku_ssj3_attack_fwd_03.png",
-        "w": 32,
-        "h": 42
+        "w": 34,
+        "h": 44
       },
       {
         "name": "goku_ssj3_attack_fwd_04",
         "file": "goku_ssj3_attack_fwd_04.png",
-        "w": 39,
-        "h": 41
+        "w": 41,
+        "h": 43
       },
       {
         "name": "goku_ssj3_attack_fwd_05",
         "file": "goku_ssj3_attack_fwd_05.png",
-        "w": 40,
-        "h": 41
+        "w": 42,
+        "h": 43
       }
     ]
   },
@@ -442,119 +448,137 @@
       {
         "name": "goku_ssj3_attack_ud_00",
         "file": "goku_ssj3_attack_ud_00.png",
-        "w": 29,
-        "h": 45
+        "w": 31,
+        "h": 47
       },
       {
         "name": "goku_ssj3_attack_ud_01",
         "file": "goku_ssj3_attack_ud_01.png",
-        "w": 27,
-        "h": 43
+        "w": 29,
+        "h": 45
       },
       {
         "name": "goku_ssj3_attack_ud_02",
         "file": "goku_ssj3_attack_ud_02.png",
-        "w": 31,
-        "h": 43
+        "w": 33,
+        "h": 45
       },
       {
         "name": "goku_ssj3_attack_ud_03",
         "file": "goku_ssj3_attack_ud_03.png",
-        "w": 33,
-        "h": 32
+        "w": 35,
+        "h": 34
       }
     ]
   },
   "knockback_back": {
-    "frame_count": 4,
+    "frame_count": 5,
     "fps": 6,
     "loop": false,
     "frames": [
       {
         "name": "goku_ssj3_hurt_00",
         "file": "goku_ssj3_hurt_00.png",
-        "w": 28,
-        "h": 48
+        "w": 30,
+        "h": 50
       },
       {
         "name": "goku_ssj3_hurt_01",
         "file": "goku_ssj3_hurt_01.png",
-        "w": 27,
-        "h": 43
+        "w": 30,
+        "h": 48
       },
       {
         "name": "goku_ssj3_hurt_02",
         "file": "goku_ssj3_hurt_02.png",
-        "w": 31,
-        "h": 41
+        "w": 29,
+        "h": 45
       },
       {
         "name": "goku_ssj3_hurt_03",
         "file": "goku_ssj3_hurt_03.png",
-        "w": 32,
-        "h": 37
+        "w": 33,
+        "h": 43
+      },
+      {
+        "name": "goku_ssj3_hurt_04",
+        "file": "goku_ssj3_hurt_04.png",
+        "w": 34,
+        "h": 39
       }
     ]
   },
   "knockback_up": {
-    "frame_count": 4,
+    "frame_count": 5,
     "fps": 6,
     "loop": false,
     "frames": [
       {
         "name": "goku_ssj3_hurt_00",
         "file": "goku_ssj3_hurt_00.png",
-        "w": 28,
-        "h": 48
+        "w": 30,
+        "h": 50
       },
       {
         "name": "goku_ssj3_hurt_01",
         "file": "goku_ssj3_hurt_01.png",
-        "w": 27,
-        "h": 43
+        "w": 30,
+        "h": 48
       },
       {
         "name": "goku_ssj3_hurt_02",
         "file": "goku_ssj3_hurt_02.png",
-        "w": 31,
-        "h": 41
+        "w": 29,
+        "h": 45
       },
       {
         "name": "goku_ssj3_hurt_03",
         "file": "goku_ssj3_hurt_03.png",
-        "w": 32,
-        "h": 37
+        "w": 33,
+        "h": 43
+      },
+      {
+        "name": "goku_ssj3_hurt_04",
+        "file": "goku_ssj3_hurt_04.png",
+        "w": 34,
+        "h": 39
       }
     ]
   },
   "knockback_down": {
-    "frame_count": 4,
+    "frame_count": 5,
     "fps": 6,
     "loop": false,
     "frames": [
       {
         "name": "goku_ssj3_hurt_00",
         "file": "goku_ssj3_hurt_00.png",
-        "w": 28,
-        "h": 48
+        "w": 30,
+        "h": 50
       },
       {
         "name": "goku_ssj3_hurt_01",
         "file": "goku_ssj3_hurt_01.png",
-        "w": 27,
-        "h": 43
+        "w": 30,
+        "h": 48
       },
       {
         "name": "goku_ssj3_hurt_02",
         "file": "goku_ssj3_hurt_02.png",
-        "w": 31,
-        "h": 41
+        "w": 29,
+        "h": 45
       },
       {
         "name": "goku_ssj3_hurt_03",
         "file": "goku_ssj3_hurt_03.png",
-        "w": 32,
-        "h": 37
+        "w": 33,
+        "h": 43
+      },
+      {
+        "name": "goku_ssj3_hurt_04",
+        "file": "goku_ssj3_hurt_04.png",
+        "w": 34,
+        "h": 39
       }
     ]
   },
@@ -564,22 +588,22 @@
     "loop": false,
     "frames": [
       {
-        "name": "goku_ssj3_guard_00",
-        "file": "goku_ssj3_guard_00.png",
-        "w": 30,
-        "h": 45
+        "name": "goku_ssj3_idle_00",
+        "file": "goku_ssj3_idle_00.png",
+        "w": 32,
+        "h": 47
       },
       {
         "name": "goku_ssj3_guard_01",
         "file": "goku_ssj3_guard_01.png",
-        "w": 28,
-        "h": 45
+        "w": 30,
+        "h": 47
       },
       {
         "name": "goku_ssj3_guard_02",
         "file": "goku_ssj3_guard_02.png",
-        "w": 35,
-        "h": 43
+        "w": 37,
+        "h": 45
       }
     ]
   },
@@ -591,32 +615,32 @@
       {
         "name": "goku_ssj3_beam_charge_00",
         "file": "goku_ssj3_beam_charge_00.png",
-        "w": 32,
-        "h": 42
+        "w": 34,
+        "h": 44
       },
       {
         "name": "goku_ssj3_beam_charge_01",
         "file": "goku_ssj3_beam_charge_01.png",
-        "w": 29,
-        "h": 42
+        "w": 31,
+        "h": 44
       },
       {
         "name": "goku_ssj3_beam_charge_02",
         "file": "goku_ssj3_beam_charge_02.png",
-        "w": 27,
-        "h": 45
+        "w": 31,
+        "h": 44
       },
       {
         "name": "goku_ssj3_beam_charge_03",
         "file": "goku_ssj3_beam_charge_03.png",
-        "w": 30,
-        "h": 45
+        "w": 32,
+        "h": 47
       },
       {
         "name": "goku_ssj3_beam_charge_04",
         "file": "goku_ssj3_beam_charge_04.png",
-        "w": 31,
-        "h": 42
+        "w": 33,
+        "h": 44
       }
     ]
   }
