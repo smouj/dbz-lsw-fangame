@@ -11,6 +11,11 @@ import { useState } from 'react';
 import { Bug, Clapperboard, Cpu, Play } from 'lucide-react';
 import { FORMS, CHARACTERS } from '../data/roster';
 import { STORY_ENEMY_DECKS } from '../data/enemy_decks';
+import { BattlePosition } from '../data/positions';
+import { BATTLE_PORTRAITS } from '../data/battlePortraits';
+import { SCENARIOS } from '../data/scenarios';
+import { overworldUrl } from '../data/overworld';
+import { CanonBattleField } from './CanonBattleField';
 
 const CHAPTERS = Object.keys(STORY_ENEMY_DECKS).map(Number).sort((a, b) => a - b);
 
@@ -115,6 +120,31 @@ export function BattleLabModule({ onLaunchBattle, embedded }: Props) {
             pixiField ? 'pixi' : null,
           ].filter(Boolean).join(' · ') || 'off'}</strong></div>
           <div><label>Motor</label><strong className="dev-ok">conectado — lanza BattleScreen real</strong></div>
+
+          {/* PREVIEW CANÓNICO del matchup seleccionado — mismo battle-screen
+              que HUD Studio (canon visual). El estado es estático (LV50,
+              HP lleno) hasta lanzar; sirve para VER el enfrentamiento antes
+              de entrar al motor. */}
+          <div className="dev-lab-preview">
+            <CanonBattleField
+              player={{
+                formId: player, name: FORMS[player]?.character ?? 'PLAYER',
+                form: FORMS[player]?.form ?? 'Base', hp: 1000, maxHp: 1000, cc: 0,
+                pos: BattlePosition.DOWN_FRONT, phase: 'ATTACK',
+                portrait: BATTLE_PORTRAITS[player],
+              }}
+              enemy={{
+                formId: enemy, name: FORMS[enemy]?.character ?? 'ENEMY',
+                form: FORMS[enemy]?.form ?? 'Base', hp: 1000, maxHp: 1000, cc: 0,
+                pos: BattlePosition.DOWN_BACK, phase: 'DEFEND',
+                portrait: BATTLE_PORTRAITS[enemy],
+              }}
+              round={1}
+              background={SCENARIOS[0]?.overviewBackground ?? ''}
+              mode="OVERVIEW"
+              devAids
+            />
+          </div>
         </div>
       </div>
     </div>

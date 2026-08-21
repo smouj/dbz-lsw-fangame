@@ -8739,6 +8739,21 @@ button:focus-visible, .chapter-node:focus-visible {
 .dev-battlelab-readout div { margin-bottom: 8px; font-size: 12px; }
 .dev-battlelab-readout label { display: block; font-size: 10px; color: var(--dev-muted); }
 .dev-battlelab-readout strong { color: var(--dev-text-hi); }
+
+/* Preview canónico del Battle Lab (mismo battle-screen que HUD Studio) */
+.dev-lab-preview {
+  margin-top: 12px;
+  border-top: 1px dashed var(--dev-border);
+  padding-top: 12px;
+}
+.dev-lab-preview .dev-hud-real-preview {
+  width: 100%;
+  aspect-ratio: 16/9;
+  border-radius: var(--dev-r-lg);
+  overflow: hidden;
+  border: 1px solid var(--dev-border-hi);
+}
+
 .dev-debug-toggles { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; }
 .dev-toggle {
   min-height: 34px;
@@ -11398,6 +11413,22 @@ button.linklike:hover { text-decoration: underline; }
 .dev-rt-fighter img { image-rendering: pixelated; width: 120px; height: auto; filter: drop-shadow(0 4px 0 rgba(0,0,0,.45)); }
 .dev-rt-fighter code { background: rgba(10,13,18,.72); border: 1px solid var(--dev-border-hi); border-radius: var(--dev-r-md); padding: 2px 8px; font-size: 10px; color: var(--dev-ki-lt); }
 .dev-rt-role { position: absolute; top: 8px; left: 8px; z-index: 3; background: rgba(10,13,18,.78); border: 1px solid var(--dev-ki); color: var(--dev-ki); font-size: 9px; letter-spacing: .6px; padding: 2px 8px; border-radius: 999px; }
+
+/* Variante canónica: el battle-screen real ocupa el stage completo */
+.dev-rt-stage-canon {
+  display: block;
+  padding: 0;
+  background: none;
+  border: 1px solid var(--dev-border-hi);
+  aspect-ratio: 16/9;
+  max-height: none;
+}
+.dev-rt-stage-canon .dev-hud-real-preview {
+  width: 100%;
+  height: 100%;
+  border-radius: 0;
+}
+
 .dev-rt-qte {
   position: absolute; top: 8px; right: 8px; z-index: 3;
   background: rgba(10,13,18,.82); border: 1px solid #4a9ae0; color: #9ec8ff;

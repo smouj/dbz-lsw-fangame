@@ -12,7 +12,9 @@ import { getCard, type CardDef } from '../data/cards';
 import { BattlePosition } from '../data/positions';
 import { GbcClockAdapter } from '../battle/GbcClockAdapter';
 import { SCENARIOS, SPECIAL_ACTION_BACKGROUND } from '../data/scenarios';
+import { BATTLE_PORTRAITS } from '../data/battlePortraits';
 import type { BattleSide } from '../battle/engine/state/BattleState';
+import { CanonBattleField } from './CanonBattleField';
 
 function deckOf(ids: number[]): { drawPile: CardDef[]; hand: CardDef[]; discardPile: CardDef[] } {
   return { drawPile: [], hand: ids.map(id => getCard(id)).filter((c): c is CardDef => !!c), discardPile: [] };
@@ -86,6 +88,9 @@ export function EnginePlayground() {
   const inQte = s.stageQte.state === 'INPUT_WINDOW';
   const inCounter = s.stageQte.state === 'COUNTER_WINDOW';
 
+  const sceneModeNorm = sceneMode === 'SPECIAL_ACTION' ? 'SPECIAL_ACTION' : sceneMode === 'ACTION' ? 'ACTION' : 'OVERVIEW';
+  const activeSide: BattleSide = s.exchange === 0 ? s.activeSide : (s.activeSide === 'player' ? 'enemy' : 'player');
+
   const commands: Array<{ label: string; cmd: Parameters<typeof dispatch>[0]; enabled: boolean }> = [
     { label: 'GATHER', cmd: { type: 'GATHER_POWER' }, enabled: can({ type: 'GATHER_POWER' }) },
     { label: 'BASIC', cmd: { type: 'BASIC' }, enabled: can({ type: 'BASIC' }) },
@@ -113,18 +118,31 @@ export function EnginePlayground() {
         <span className="dev-rt-cue">último cue: {lastCue}</span>
       </div>
 
-      <div className="dev-rt-stage" style={{ backgroundImage: `url(${sceneBg})` }}>
-        <div className="dev-rt-fighter left">
-          <span className="dev-rt-role">{sceneMode}</span>
-          {poseSrcs.player && <img src={poseSrcs.player} alt="player" />}
-          <code>GOKU</code>
-        </div>
-        <div className="dev-rt-fighter right">
-          {poseSrcs.enemy && <img src={poseSrcs.enemy} alt="enemy" />}
-          <code>PICCOLO</code>
-        </div>
-        {inQte && <div className="dev-rt-qte">QTE {seq.join(' · ')} <b>{qteKey}</b></div>}
-        {inCounter && <div className="dev-rt-qte warn">COUNTER — DEFEND o CONTINUE</div>}
+      {/* BATTLE-SCREEN CANÓNICO — mismo markup que HUD Studio (canon visual) */}
+      <div className="dev-rt-stage dev-rt-stage-canon">
+        <CanonBattleField
+          player={{
+            formId: 'goku_base', name: 'GOKU', form: 'Base',
+            hp: s.player.hp, maxHp: s.player.maxHp, cc: s.player.cc,
+            pos: s.player.battlePos,
+            phase: activeSide === 'player' ? 'ATTACK' : 'DEFEND',
+            portrait: BATTLE_PORTRAITS['goku_base'],
+          }}
+          enemy={{
+            formId: 'piccolo_base', name: 'PICCOLO', form: 'Base',
+            hp: s.enemy.hp, maxHp: s.enemy.maxHp, cc: s.enemy.cc,
+            pos: s.enemy.battlePos,
+            phase: activeSide === 'enemy' ? 'ATTACK' : 'DEFEND',
+            portrait: BATTLE_PORTRAITS['piccolo_base'],
+          }}
+          round={s.turn + 1}
+          background={sceneBg}
+          mode={sceneModeNorm}
+          actor={activeSide}
+          pose={{ player: poseSrcs.player ? undefined : 'idle', enemy: poseSrcs.enemy ? undefined : 'idle' }}
+          qte={inQte && qteKey ? { label: qteKey, seq } : inCounter ? { label: 'DEFEND o CONTINUE', seq, warn: true } : null}
+          devAids
+        />
       </div>
 
       <div className="dev-rt-commands">
