@@ -20,14 +20,14 @@
       {
         "name": "buu_super_move_front_00",
         "file": "buu_super_move_front_00.png",
-        "w": 32,
-        "h": 39
+        "w": 28,
+        "h": 42
       },
       {
         "name": "buu_super_move_front_01",
         "file": "buu_super_move_front_01.png",
-        "w": 28,
-        "h": 42
+        "w": 32,
+        "h": 39
       }
     ]
   },
@@ -76,57 +76,51 @@
     ]
   },
   "attack_fwd": {
-    "frame_count": 7,
-    "fps": 5,
+    "frame_count": 6,
+    "fps": 7,
     "loop": false,
     "frames": [
       {
         "name": "buu_super_attack_fwd_00",
         "file": "buu_super_attack_fwd_00.png",
-        "w": 32,
-        "h": 39
-      },
-      {
-        "name": "buu_super_attack_fwd_01",
-        "file": "buu_super_attack_fwd_01.png",
-        "w": 31,
-        "h": 39
-      },
-      {
-        "name": "buu_super_attack_fwd_02",
-        "file": "buu_super_attack_fwd_02.png",
-        "w": 37,
-        "h": 43
-      },
-      {
-        "name": "buu_super_attack_fwd_03",
-        "file": "buu_super_attack_fwd_03.png",
-        "w": 37,
-        "h": 38
-      },
-      {
-        "name": "buu_super_attack_fwd_04",
-        "file": "buu_super_attack_fwd_04.png",
-        "w": 36,
-        "h": 38
-      },
-      {
-        "name": "buu_super_attack_fwd_05",
-        "file": "buu_super_attack_fwd_05.png",
         "w": 23,
         "h": 43
       },
       {
-        "name": "buu_super_attack_fwd_06",
-        "file": "buu_super_attack_fwd_06.png",
+        "name": "buu_super_attack_fwd_01",
+        "file": "buu_super_attack_fwd_01.png",
+        "w": 37,
+        "h": 43
+      },
+      {
+        "name": "buu_super_attack_fwd_02",
+        "file": "buu_super_attack_fwd_02.png",
         "w": 25,
         "h": 40
+      },
+      {
+        "name": "buu_super_attack_fwd_03",
+        "file": "buu_super_attack_fwd_03.png",
+        "w": 32,
+        "h": 39
+      },
+      {
+        "name": "buu_super_attack_fwd_04",
+        "file": "buu_super_attack_fwd_04.png",
+        "w": 31,
+        "h": 39
+      },
+      {
+        "name": "buu_super_attack_fwd_05",
+        "file": "buu_super_attack_fwd_05.png",
+        "w": 36,
+        "h": 38
       }
     ]
   },
   "attack_ud": {
     "frame_count": 4,
-    "fps": 5,
+    "fps": 7,
     "loop": false,
     "frames": [
       {
@@ -138,14 +132,14 @@
       {
         "name": "buu_super_attack_ud_01",
         "file": "buu_super_attack_ud_01.png",
-        "w": 29,
-        "h": 40
+        "w": 23,
+        "h": 42
       },
       {
         "name": "buu_super_attack_ud_02",
         "file": "buu_super_attack_ud_02.png",
-        "w": 23,
-        "h": 42
+        "w": 29,
+        "h": 40
       },
       {
         "name": "buu_super_attack_ud_03",
@@ -169,7 +163,7 @@
     ]
   },
   "beam_charge": {
-    "frame_count": 8,
+    "frame_count": 5,
     "fps": 7,
     "loop": false,
     "frames": [
@@ -182,170 +176,289 @@
       {
         "name": "buu_super_beam_charge_01",
         "file": "buu_super_beam_charge_01.png",
-        "w": 32,
+        "w": 26,
         "h": 39
       },
       {
         "name": "buu_super_beam_charge_02",
         "file": "buu_super_beam_charge_02.png",
-        "w": 26,
+        "w": 32,
         "h": 39
       },
       {
         "name": "buu_super_beam_charge_03",
         "file": "buu_super_beam_charge_03.png",
-        "w": 31,
-        "h": 40
-      },
-      {
-        "name": "buu_super_beam_charge_04",
-        "file": "buu_super_beam_charge_04.png",
-        "w": 26,
-        "h": 44
-      },
-      {
-        "name": "buu_super_beam_charge_05",
-        "file": "buu_super_beam_charge_05.png",
-        "w": 28,
-        "h": 42
-      },
-      {
-        "name": "buu_super_beam_charge_06",
-        "file": "buu_super_beam_charge_06.png",
         "w": 25,
         "h": 39
       },
       {
-        "name": "buu_super_beam_charge_07",
-        "file": "buu_super_beam_charge_07.png",
+        "name": "buu_super_beam_charge_04",
+        "file": "buu_super_beam_charge_04.png",
         "w": 24,
         "h": 39
       }
     ]
   },
+  "evade": {
+    "frame_count": 2,
+    "fps": 6,
+    "loop": false,
+    "frames": [
+      {
+        "name": "buu_super_evade_00",
+        "file": "buu_super_evade_00.png",
+        "w": 20,
+        "h": 43
+      },
+      {
+        "name": "buu_super_evade_01",
+        "file": "buu_super_evade_01.png",
+        "w": 28,
+        "h": 42
+      }
+    ]
+  },
+  "gather_power": {
+    "frame_count": 2,
+    "fps": 6,
+    "loop": false,
+    "frames": [
+      {
+        "name": "buu_super_gather_power_00",
+        "file": "buu_super_gather_power_00.png",
+        "w": 27,
+        "h": 41
+      },
+      {
+        "name": "buu_super_gather_power_01",
+        "file": "buu_super_gather_power_01.png",
+        "w": 27,
+        "h": 37
+      }
+    ]
+  },
+  "power_up": {
+    "frame_count": 2,
+    "fps": 8,
+    "loop": true,
+    "frames": [
+      {
+        "name": "buu_super_power_up_00",
+        "file": "buu_super_power_up_00.png",
+        "w": 27,
+        "h": 41
+      },
+      {
+        "name": "buu_super_power_up_01",
+        "file": "buu_super_power_up_01.png",
+        "w": 27,
+        "h": 37
+      }
+    ]
+  },
+  "aura_power": {
+    "frame_count": 3,
+    "fps": 6,
+    "loop": true,
+    "frames": [
+      {
+        "name": "buu_super_aura_power_00",
+        "file": "buu_super_aura_power_00.png",
+        "w": 64,
+        "h": 56
+      },
+      {
+        "name": "buu_super_aura_power_01",
+        "file": "buu_super_aura_power_01.png",
+        "w": 64,
+        "h": 56
+      },
+      {
+        "name": "buu_super_aura_power_02",
+        "file": "buu_super_aura_power_02.png",
+        "w": 64,
+        "h": 56
+      }
+    ]
+  },
+  "aura_support": {
+    "frame_count": 3,
+    "fps": 6,
+    "loop": true,
+    "frames": [
+      {
+        "name": "buu_super_aura_support_00",
+        "file": "buu_super_aura_support_00.png",
+        "w": 64,
+        "h": 56
+      },
+      {
+        "name": "buu_super_aura_support_01",
+        "file": "buu_super_aura_support_01.png",
+        "w": 64,
+        "h": 56
+      },
+      {
+        "name": "buu_super_aura_support_02",
+        "file": "buu_super_aura_support_02.png",
+        "w": 64,
+        "h": 56
+      }
+    ]
+  },
   "punch_right": {
+    "frame_count": 6,
+    "fps": 7,
+    "loop": false,
+    "frames": [
+      {
+        "name": "buu_super_attack_fwd_00",
+        "file": "buu_super_attack_fwd_00.png",
+        "w": 23,
+        "h": 43
+      },
+      {
+        "name": "buu_super_attack_fwd_01",
+        "file": "buu_super_attack_fwd_01.png",
+        "w": 37,
+        "h": 43
+      },
+      {
+        "name": "buu_super_attack_fwd_02",
+        "file": "buu_super_attack_fwd_02.png",
+        "w": 25,
+        "h": 40
+      },
+      {
+        "name": "buu_super_attack_fwd_03",
+        "file": "buu_super_attack_fwd_03.png",
+        "w": 32,
+        "h": 39
+      },
+      {
+        "name": "buu_super_attack_fwd_04",
+        "file": "buu_super_attack_fwd_04.png",
+        "w": 31,
+        "h": 39
+      },
+      {
+        "name": "buu_super_attack_fwd_05",
+        "file": "buu_super_attack_fwd_05.png",
+        "w": 36,
+        "h": 38
+      }
+    ]
+  },
+  "punch_left": {
+    "frame_count": 6,
+    "fps": 7,
+    "loop": false,
+    "frames": [
+      {
+        "name": "buu_super_attack_fwd_00",
+        "file": "buu_super_attack_fwd_00.png",
+        "w": 23,
+        "h": 43
+      },
+      {
+        "name": "buu_super_attack_fwd_01",
+        "file": "buu_super_attack_fwd_01.png",
+        "w": 37,
+        "h": 43
+      },
+      {
+        "name": "buu_super_attack_fwd_02",
+        "file": "buu_super_attack_fwd_02.png",
+        "w": 25,
+        "h": 40
+      },
+      {
+        "name": "buu_super_attack_fwd_03",
+        "file": "buu_super_attack_fwd_03.png",
+        "w": 32,
+        "h": 39
+      },
+      {
+        "name": "buu_super_attack_fwd_04",
+        "file": "buu_super_attack_fwd_04.png",
+        "w": 31,
+        "h": 39
+      },
+      {
+        "name": "buu_super_attack_fwd_05",
+        "file": "buu_super_attack_fwd_05.png",
+        "w": 36,
+        "h": 38
+      }
+    ]
+  },
+  "kick_right": {
     "frame_count": 4,
     "fps": 7,
     "loop": false,
     "frames": [
       {
-        "name": "buu_super_idle_00",
-        "file": "buu_super_idle_00.png",
-        "w": 20,
-        "h": 43
+        "name": "buu_super_attack_ud_00",
+        "file": "buu_super_attack_ud_00.png",
+        "w": 29,
+        "h": 42
       },
       {
-        "name": "buu_super_attack_fwd_00",
-        "file": "buu_super_attack_fwd_00.png",
-        "w": 32,
-        "h": 39
-      },
-      {
-        "name": "buu_super_attack_fwd_01",
-        "file": "buu_super_attack_fwd_01.png",
-        "w": 31,
-        "h": 39
-      },
-      {
-        "name": "buu_super_attack_fwd_02",
-        "file": "buu_super_attack_fwd_02.png",
-        "w": 37,
-        "h": 43
-      }
-    ]
-  },
-  "punch_left": {
-    "frame_count": 5,
-    "fps": 7,
-    "loop": false,
-    "frames": [
-      {
-        "name": "buu_super_idle_00",
-        "file": "buu_super_idle_00.png",
-        "w": 20,
-        "h": 43
-      },
-      {
-        "name": "buu_super_attack_fwd_03",
-        "file": "buu_super_attack_fwd_03.png",
-        "w": 37,
-        "h": 38
-      },
-      {
-        "name": "buu_super_attack_fwd_04",
-        "file": "buu_super_attack_fwd_04.png",
-        "w": 36,
-        "h": 38
-      },
-      {
-        "name": "buu_super_attack_fwd_05",
-        "file": "buu_super_attack_fwd_05.png",
+        "name": "buu_super_attack_ud_01",
+        "file": "buu_super_attack_ud_01.png",
         "w": 23,
-        "h": 43
+        "h": 42
       },
       {
-        "name": "buu_super_attack_fwd_06",
-        "file": "buu_super_attack_fwd_06.png",
-        "w": 25,
+        "name": "buu_super_attack_ud_02",
+        "file": "buu_super_attack_ud_02.png",
+        "w": 29,
         "h": 40
-      }
-    ]
-  },
-  "kick_right": {
-    "frame_count": 2,
-    "fps": 7,
-    "loop": false,
-    "frames": [
-      {
-        "name": "buu_super_kick_right_00",
-        "file": "buu_super_kick_right_00.png",
-        "w": 38,
-        "h": 38
       },
       {
-        "name": "buu_super_kick_right_01",
-        "file": "buu_super_kick_right_01.png",
-        "w": 36,
-        "h": 38
+        "name": "buu_super_attack_ud_03",
+        "file": "buu_super_attack_ud_03.png",
+        "w": 30,
+        "h": 29
       }
     ]
   },
   "knockback_back": {
     "frame_count": 1,
-    "fps": 7,
+    "fps": 6,
     "loop": false,
     "frames": [
       {
-        "name": "buu_super_knockback_back_00",
-        "file": "buu_super_knockback_back_00.png",
-        "w": 32,
-        "h": 39
+        "name": "buu_super_hurt_00",
+        "file": "buu_super_hurt_00.png",
+        "w": 44,
+        "h": 19
       }
     ]
   },
   "knockback_up": {
     "frame_count": 1,
-    "fps": 7,
+    "fps": 6,
     "loop": false,
     "frames": [
       {
-        "name": "buu_super_knockback_up_00",
-        "file": "buu_super_knockback_up_00.png",
-        "w": 29,
-        "h": 40
+        "name": "buu_super_hurt_00",
+        "file": "buu_super_hurt_00.png",
+        "w": 44,
+        "h": 19
       }
     ]
   },
   "knockback_down": {
     "frame_count": 1,
-    "fps": 7,
+    "fps": 6,
     "loop": false,
     "frames": [
       {
-        "name": "buu_super_knockback_down_00",
-        "file": "buu_super_knockback_down_00.png",
-        "w": 30,
-        "h": 29
+        "name": "buu_super_hurt_00",
+        "file": "buu_super_hurt_00.png",
+        "w": 44,
+        "h": 19
       }
     ]
   },
@@ -374,141 +487,40 @@
       }
     ]
   },
-  "evade": {
-    "frame_count": 2,
-    "fps": 10,
+  "beam_fire": {
+    "frame_count": 5,
+    "fps": 7,
     "loop": false,
     "frames": [
       {
-        "name": "buu_super_move_back_00",
-        "file": "buu_super_move_back_00.png",
-        "w": 28,
-        "h": 42
+        "name": "buu_super_beam_charge_00",
+        "file": "buu_super_beam_charge_00.png",
+        "w": 32,
+        "h": 39
       },
       {
-        "name": "buu_super_guard_00",
-        "file": "buu_super_guard_00.png",
-        "w": 20,
-        "h": 43
-      }
-    ]
-  },
-  "gather_power": {
-    "frame_count": 2,
-    "fps": 6,
-    "loop": true,
-    "frames": [
-      {
-        "name": "buu_super_gather_power_00",
-        "file": "buu_super_gather_power_00.png",
-        "w": 27,
-        "h": 37
+        "name": "buu_super_beam_charge_01",
+        "file": "buu_super_beam_charge_01.png",
+        "w": 26,
+        "h": 39
       },
       {
-        "name": "buu_super_gather_power_01",
-        "file": "buu_super_gather_power_01.png",
-        "w": 27,
-        "h": 41
-      }
-    ]
-  },
-  "power_up": {
-    "frame_count": 2,
-    "fps": 10,
-    "loop": true,
-    "frames": [
-      {
-        "name": "buu_super_power_up_00",
-        "file": "buu_super_power_up_00.png",
-        "w": 27,
-        "h": 37
+        "name": "buu_super_beam_charge_02",
+        "file": "buu_super_beam_charge_02.png",
+        "w": 32,
+        "h": 39
       },
       {
-        "name": "buu_super_power_up_01",
-        "file": "buu_super_power_up_01.png",
-        "w": 27,
-        "h": 41
-      }
-    ]
-  },
-  "aura_power": {
-    "frame_count": 3,
-    "fps": 10,
-    "loop": true,
-    "frames": [
-      {
-        "name": "buu_super_aura_power_00",
-        "file": "buu_super_aura_power_00.png",
-        "w": 64,
-        "h": 56
+        "name": "buu_super_beam_charge_03",
+        "file": "buu_super_beam_charge_03.png",
+        "w": 25,
+        "h": 39
       },
       {
-        "name": "buu_super_aura_power_01",
-        "file": "buu_super_aura_power_01.png",
-        "w": 64,
-        "h": 56
-      },
-      {
-        "name": "buu_super_aura_power_02",
-        "file": "buu_super_aura_power_02.png",
-        "w": 64,
-        "h": 56
-      }
-    ]
-  },
-  "aura_support": {
-    "frame_count": 3,
-    "fps": 10,
-    "loop": true,
-    "frames": [
-      {
-        "name": "buu_super_aura_support_00",
-        "file": "buu_super_aura_support_00.png",
-        "w": 64,
-        "h": 56
-      },
-      {
-        "name": "buu_super_aura_support_01",
-        "file": "buu_super_aura_support_01.png",
-        "w": 64,
-        "h": 56
-      },
-      {
-        "name": "buu_super_aura_support_02",
-        "file": "buu_super_aura_support_02.png",
-        "w": 64,
-        "h": 56
-      }
-    ]
-  },
-  "effects": {
-    "frame_count": 4,
-    "fps": 10,
-    "loop": false,
-    "frames": [
-      {
-        "name": "buu_super_effect_01",
-        "file": "buu_super_effect_01.png",
-        "w": 12,
-        "h": 14
-      },
-      {
-        "name": "buu_super_effect_02",
-        "file": "buu_super_effect_02.png",
+        "name": "buu_super_beam_charge_04",
+        "file": "buu_super_beam_charge_04.png",
         "w": 24,
-        "h": 16
-      },
-      {
-        "name": "buu_super_effect_03",
-        "file": "buu_super_effect_03.png",
-        "w": 24,
-        "h": 16
-      },
-      {
-        "name": "buu_super_effect_04",
-        "file": "buu_super_effect_04.png",
-        "w": 16,
-        "h": 12
+        "h": 39
       }
     ]
   }

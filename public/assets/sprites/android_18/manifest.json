@@ -20,14 +20,14 @@
       {
         "name": "android_18_move_front_00",
         "file": "android_18_move_front_00.png",
-        "w": 32,
-        "h": 37
+        "w": 27,
+        "h": 40
       },
       {
         "name": "android_18_move_front_01",
         "file": "android_18_move_front_01.png",
-        "w": 27,
-        "h": 40
+        "w": 32,
+        "h": 37
       }
     ]
   },
@@ -76,15 +76,15 @@
     ]
   },
   "attack_fwd": {
-    "frame_count": 8,
-    "fps": 5,
+    "frame_count": 7,
+    "fps": 7,
     "loop": false,
     "frames": [
       {
         "name": "android_18_attack_fwd_00",
         "file": "android_18_attack_fwd_00.png",
-        "w": 32,
-        "h": 38
+        "w": 28,
+        "h": 40
       },
       {
         "name": "android_18_attack_fwd_01",
@@ -95,44 +95,38 @@
       {
         "name": "android_18_attack_fwd_02",
         "file": "android_18_attack_fwd_02.png",
-        "w": 28,
-        "h": 40
+        "w": 34,
+        "h": 36
       },
       {
         "name": "android_18_attack_fwd_03",
         "file": "android_18_attack_fwd_03.png",
-        "w": 31,
+        "w": 32,
         "h": 38
       },
       {
         "name": "android_18_attack_fwd_04",
         "file": "android_18_attack_fwd_04.png",
-        "w": 36,
-        "h": 35
+        "w": 31,
+        "h": 38
       },
       {
         "name": "android_18_attack_fwd_05",
         "file": "android_18_attack_fwd_05.png",
-        "w": 34,
+        "w": 36,
         "h": 35
       },
       {
         "name": "android_18_attack_fwd_06",
         "file": "android_18_attack_fwd_06.png",
-        "w": 22,
-        "h": 41
-      },
-      {
-        "name": "android_18_attack_fwd_07",
-        "file": "android_18_attack_fwd_07.png",
         "w": 34,
-        "h": 36
+        "h": 35
       }
     ]
   },
   "attack_ud": {
-    "frame_count": 4,
-    "fps": 5,
+    "frame_count": 3,
+    "fps": 7,
     "loop": false,
     "frames": [
       {
@@ -150,19 +144,13 @@
       {
         "name": "android_18_attack_ud_02",
         "file": "android_18_attack_ud_02.png",
-        "w": 21,
-        "h": 40
-      },
-      {
-        "name": "android_18_attack_ud_03",
-        "file": "android_18_attack_ud_03.png",
         "w": 27,
         "h": 29
       }
     ]
   },
   "hurt": {
-    "frame_count": 5,
+    "frame_count": 3,
     "fps": 6,
     "loop": false,
     "frames": [
@@ -183,23 +171,11 @@
         "file": "android_18_hurt_02.png",
         "w": 31,
         "h": 33
-      },
-      {
-        "name": "android_18_hurt_03",
-        "file": "android_18_hurt_03.png",
-        "w": 24,
-        "h": 45
-      },
-      {
-        "name": "android_18_hurt_04",
-        "file": "android_18_hurt_04.png",
-        "w": 24,
-        "h": 45
       }
     ]
   },
   "beam_charge": {
-    "frame_count": 3,
+    "frame_count": 4,
     "fps": 7,
     "loop": false,
     "frames": [
@@ -212,45 +188,51 @@
       {
         "name": "android_18_beam_charge_01",
         "file": "android_18_beam_charge_01.png",
-        "w": 31,
-        "h": 38
+        "w": 27,
+        "h": 41
       },
       {
         "name": "android_18_beam_charge_02",
         "file": "android_18_beam_charge_02.png",
-        "w": 27,
-        "h": 41
+        "w": 31,
+        "h": 38
+      },
+      {
+        "name": "android_18_beam_charge_03",
+        "file": "android_18_beam_charge_03.png",
+        "w": 31,
+        "h": 38
       }
     ]
   },
   "beam_fire": {
     "frame_count": 5,
-    "fps": 8,
+    "fps": 7,
     "loop": false,
     "frames": [
       {
         "name": "android_18_beam_fire_00",
         "file": "android_18_beam_fire_00.png",
         "w": 29,
-        "h": 38
+        "h": 40
       },
       {
         "name": "android_18_beam_fire_01",
         "file": "android_18_beam_fire_01.png",
-        "w": 29,
+        "w": 22,
         "h": 40
       },
       {
         "name": "android_18_beam_fire_02",
         "file": "android_18_beam_fire_02.png",
-        "w": 22,
-        "h": 40
+        "w": 29,
+        "h": 38
       },
       {
         "name": "android_18_beam_fire_03",
         "file": "android_18_beam_fire_03.png",
-        "w": 25,
-        "h": 41
+        "w": 31,
+        "h": 38
       },
       {
         "name": "android_18_beam_fire_04",
@@ -260,22 +242,123 @@
       }
     ]
   },
+  "evade": {
+    "frame_count": 2,
+    "fps": 6,
+    "loop": false,
+    "frames": [
+      {
+        "name": "android_18_evade_00",
+        "file": "android_18_evade_00.png",
+        "w": 23,
+        "h": 41
+      },
+      {
+        "name": "android_18_evade_01",
+        "file": "android_18_evade_01.png",
+        "w": 40,
+        "h": 31
+      }
+    ]
+  },
+  "gather_power": {
+    "frame_count": 2,
+    "fps": 6,
+    "loop": false,
+    "frames": [
+      {
+        "name": "android_18_gather_power_00",
+        "file": "android_18_gather_power_00.png",
+        "w": 29,
+        "h": 40
+      },
+      {
+        "name": "android_18_gather_power_01",
+        "file": "android_18_gather_power_01.png",
+        "w": 29,
+        "h": 38
+      }
+    ]
+  },
+  "power_up": {
+    "frame_count": 2,
+    "fps": 8,
+    "loop": true,
+    "frames": [
+      {
+        "name": "android_18_power_up_00",
+        "file": "android_18_power_up_00.png",
+        "w": 29,
+        "h": 40
+      },
+      {
+        "name": "android_18_power_up_01",
+        "file": "android_18_power_up_01.png",
+        "w": 29,
+        "h": 38
+      }
+    ]
+  },
+  "aura_power": {
+    "frame_count": 3,
+    "fps": 6,
+    "loop": true,
+    "frames": [
+      {
+        "name": "android_18_aura_power_00",
+        "file": "android_18_aura_power_00.png",
+        "w": 64,
+        "h": 56
+      },
+      {
+        "name": "android_18_aura_power_01",
+        "file": "android_18_aura_power_01.png",
+        "w": 64,
+        "h": 56
+      },
+      {
+        "name": "android_18_aura_power_02",
+        "file": "android_18_aura_power_02.png",
+        "w": 64,
+        "h": 56
+      }
+    ]
+  },
+  "aura_support": {
+    "frame_count": 3,
+    "fps": 6,
+    "loop": true,
+    "frames": [
+      {
+        "name": "android_18_aura_support_00",
+        "file": "android_18_aura_support_00.png",
+        "w": 64,
+        "h": 56
+      },
+      {
+        "name": "android_18_aura_support_01",
+        "file": "android_18_aura_support_01.png",
+        "w": 64,
+        "h": 56
+      },
+      {
+        "name": "android_18_aura_support_02",
+        "file": "android_18_aura_support_02.png",
+        "w": 64,
+        "h": 56
+      }
+    ]
+  },
   "punch_right": {
-    "frame_count": 4,
+    "frame_count": 7,
     "fps": 7,
     "loop": false,
     "frames": [
       {
-        "name": "android_18_idle_00",
-        "file": "android_18_idle_00.png",
-        "w": 22,
-        "h": 40
-      },
-      {
         "name": "android_18_attack_fwd_00",
         "file": "android_18_attack_fwd_00.png",
-        "w": 32,
-        "h": 38
+        "w": 28,
+        "h": 40
       },
       {
         "name": "android_18_attack_fwd_01",
@@ -286,45 +369,81 @@
       {
         "name": "android_18_attack_fwd_02",
         "file": "android_18_attack_fwd_02.png",
-        "w": 28,
-        "h": 40
-      }
-    ]
-  },
-  "punch_left": {
-    "frame_count": 5,
-    "fps": 7,
-    "loop": false,
-    "frames": [
-      {
-        "name": "android_18_idle_00",
-        "file": "android_18_idle_00.png",
-        "w": 22,
-        "h": 40
+        "w": 34,
+        "h": 36
       },
       {
         "name": "android_18_attack_fwd_03",
         "file": "android_18_attack_fwd_03.png",
-        "w": 31,
+        "w": 32,
         "h": 38
       },
       {
         "name": "android_18_attack_fwd_04",
         "file": "android_18_attack_fwd_04.png",
-        "w": 36,
-        "h": 35
+        "w": 31,
+        "h": 38
       },
       {
         "name": "android_18_attack_fwd_05",
         "file": "android_18_attack_fwd_05.png",
-        "w": 34,
+        "w": 36,
         "h": 35
       },
       {
         "name": "android_18_attack_fwd_06",
         "file": "android_18_attack_fwd_06.png",
-        "w": 22,
-        "h": 41
+        "w": 34,
+        "h": 35
+      }
+    ]
+  },
+  "punch_left": {
+    "frame_count": 7,
+    "fps": 7,
+    "loop": false,
+    "frames": [
+      {
+        "name": "android_18_attack_fwd_00",
+        "file": "android_18_attack_fwd_00.png",
+        "w": 28,
+        "h": 40
+      },
+      {
+        "name": "android_18_attack_fwd_01",
+        "file": "android_18_attack_fwd_01.png",
+        "w": 31,
+        "h": 38
+      },
+      {
+        "name": "android_18_attack_fwd_02",
+        "file": "android_18_attack_fwd_02.png",
+        "w": 34,
+        "h": 36
+      },
+      {
+        "name": "android_18_attack_fwd_03",
+        "file": "android_18_attack_fwd_03.png",
+        "w": 32,
+        "h": 38
+      },
+      {
+        "name": "android_18_attack_fwd_04",
+        "file": "android_18_attack_fwd_04.png",
+        "w": 31,
+        "h": 38
+      },
+      {
+        "name": "android_18_attack_fwd_05",
+        "file": "android_18_attack_fwd_05.png",
+        "w": 36,
+        "h": 35
+      },
+      {
+        "name": "android_18_attack_fwd_06",
+        "file": "android_18_attack_fwd_06.png",
+        "w": 34,
+        "h": 35
       }
     ]
   },
@@ -334,61 +453,97 @@
     "loop": false,
     "frames": [
       {
-        "name": "android_18_kick_right_00",
-        "file": "android_18_kick_right_00.png",
-        "w": 31,
-        "h": 38
+        "name": "android_18_attack_ud_00",
+        "file": "android_18_attack_ud_00.png",
+        "w": 32,
+        "h": 37
       },
       {
-        "name": "android_18_kick_right_01",
-        "file": "android_18_kick_right_01.png",
-        "w": 36,
-        "h": 35
+        "name": "android_18_attack_ud_01",
+        "file": "android_18_attack_ud_01.png",
+        "w": 28,
+        "h": 36
       },
       {
-        "name": "android_18_kick_right_02",
-        "file": "android_18_kick_right_02.png",
-        "w": 34,
-        "h": 35
+        "name": "android_18_attack_ud_02",
+        "file": "android_18_attack_ud_02.png",
+        "w": 27,
+        "h": 29
       }
     ]
   },
   "knockback_back": {
-    "frame_count": 1,
-    "fps": 7,
+    "frame_count": 3,
+    "fps": 6,
     "loop": false,
     "frames": [
       {
-        "name": "android_18_knockback_back_00",
-        "file": "android_18_knockback_back_00.png",
-        "w": 28,
-        "h": 36
+        "name": "android_18_hurt_00",
+        "file": "android_18_hurt_00.png",
+        "w": 27,
+        "h": 40
+      },
+      {
+        "name": "android_18_hurt_01",
+        "file": "android_18_hurt_01.png",
+        "w": 26,
+        "h": 37
+      },
+      {
+        "name": "android_18_hurt_02",
+        "file": "android_18_hurt_02.png",
+        "w": 31,
+        "h": 33
       }
     ]
   },
   "knockback_up": {
-    "frame_count": 1,
-    "fps": 7,
+    "frame_count": 3,
+    "fps": 6,
     "loop": false,
     "frames": [
       {
-        "name": "android_18_knockback_up_00",
-        "file": "android_18_knockback_up_00.png",
-        "w": 34,
-        "h": 36
+        "name": "android_18_hurt_00",
+        "file": "android_18_hurt_00.png",
+        "w": 27,
+        "h": 40
+      },
+      {
+        "name": "android_18_hurt_01",
+        "file": "android_18_hurt_01.png",
+        "w": 26,
+        "h": 37
+      },
+      {
+        "name": "android_18_hurt_02",
+        "file": "android_18_hurt_02.png",
+        "w": 31,
+        "h": 33
       }
     ]
   },
   "knockback_down": {
-    "frame_count": 1,
-    "fps": 7,
+    "frame_count": 3,
+    "fps": 6,
     "loop": false,
     "frames": [
       {
-        "name": "android_18_knockback_down_00",
-        "file": "android_18_knockback_down_00.png",
+        "name": "android_18_hurt_00",
+        "file": "android_18_hurt_00.png",
         "w": 27,
-        "h": 29
+        "h": 40
+      },
+      {
+        "name": "android_18_hurt_01",
+        "file": "android_18_hurt_01.png",
+        "w": 26,
+        "h": 37
+      },
+      {
+        "name": "android_18_hurt_02",
+        "file": "android_18_hurt_02.png",
+        "w": 31,
+        "h": 33
       }
     ]
   },
@@ -414,156 +569,6 @@
         "file": "android_18_guard_02.png",
         "w": 33,
         "h": 38
-      }
-    ]
-  },
-  "evade": {
-    "frame_count": 2,
-    "fps": 10,
-    "loop": false,
-    "frames": [
-      {
-        "name": "android_18_evade_00",
-        "file": "android_18_evade_00.png",
-        "w": 23,
-        "h": 41
-      },
-      {
-        "name": "android_18_evade_01",
-        "file": "android_18_evade_01.png",
-        "w": 40,
-        "h": 31
-      }
-    ]
-  },
-  "gather_power": {
-    "frame_count": 2,
-    "fps": 6,
-    "loop": true,
-    "frames": [
-      {
-        "name": "android_18_gather_power_00",
-        "file": "android_18_gather_power_00.png",
-        "w": 29,
-        "h": 40
-      },
-      {
-        "name": "android_18_gather_power_01",
-        "file": "android_18_gather_power_01.png",
-        "w": 29,
-        "h": 38
-      }
-    ]
-  },
-  "power_up": {
-    "frame_count": 2,
-    "fps": 10,
-    "loop": true,
-    "frames": [
-      {
-        "name": "android_18_power_up_00",
-        "file": "android_18_power_up_00.png",
-        "w": 29,
-        "h": 40
-      },
-      {
-        "name": "android_18_power_up_01",
-        "file": "android_18_power_up_01.png",
-        "w": 29,
-        "h": 38
-      }
-    ]
-  },
-  "aura_power": {
-    "frame_count": 3,
-    "fps": 10,
-    "loop": true,
-    "frames": [
-      {
-        "name": "android_18_aura_power_00",
-        "file": "android_18_aura_power_00.png",
-        "w": 64,
-        "h": 56
-      },
-      {
-        "name": "android_18_aura_power_01",
-        "file": "android_18_aura_power_01.png",
-        "w": 64,
-        "h": 56
-      },
-      {
-        "name": "android_18_aura_power_02",
-        "file": "android_18_aura_power_02.png",
-        "w": 64,
-        "h": 56
-      }
-    ]
-  },
-  "aura_support": {
-    "frame_count": 3,
-    "fps": 10,
-    "loop": true,
-    "frames": [
-      {
-        "name": "android_18_aura_support_00",
-        "file": "android_18_aura_support_00.png",
-        "w": 64,
-        "h": 56
-      },
-      {
-        "name": "android_18_aura_support_01",
-        "file": "android_18_aura_support_01.png",
-        "w": 64,
-        "h": 56
-      },
-      {
-        "name": "android_18_aura_support_02",
-        "file": "android_18_aura_support_02.png",
-        "w": 64,
-        "h": 56
-      }
-    ]
-  },
-  "effects": {
-    "frame_count": 6,
-    "fps": 10,
-    "loop": false,
-    "frames": [
-      {
-        "name": "android_18_base_effect_01",
-        "file": "android_18_base_effect_01.png",
-        "w": 12,
-        "h": 15
-      },
-      {
-        "name": "android_18_base_effect_02",
-        "file": "android_18_base_effect_02.png",
-        "w": 24,
-        "h": 16
-      },
-      {
-        "name": "android_18_base_effect_03",
-        "file": "android_18_base_effect_03.png",
-        "w": 24,
-        "h": 16
-      },
-      {
-        "name": "android_18_base_effect_04",
-        "file": "android_18_base_effect_04.png",
-        "w": 16,
-        "h": 12
-      },
-      {
-        "name": "android_18_base_effect_05",
-        "file": "android_18_base_effect_05.png",
-        "w": 39,
-        "h": 12
-      },
-      {
-        "name": "android_18_base_effect_06",
-        "file": "android_18_base_effect_06.png",
-        "w": 39,
-        "h": 12
       }
     ]
   }

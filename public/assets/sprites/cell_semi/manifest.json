@@ -20,14 +20,14 @@
       {
         "name": "cell_semi_move_front_00",
         "file": "cell_semi_move_front_00.png",
-        "w": 32,
-        "h": 42
+        "w": 29,
+        "h": 45
       },
       {
         "name": "cell_semi_move_front_01",
         "file": "cell_semi_move_front_01.png",
-        "w": 29,
-        "h": 45
+        "w": 32,
+        "h": 42
       }
     ]
   },
@@ -64,75 +64,63 @@
       {
         "name": "cell_semi_guard_01",
         "file": "cell_semi_guard_01.png",
-        "w": 34,
-        "h": 43
+        "w": 28,
+        "h": 45
       },
       {
         "name": "cell_semi_guard_02",
         "file": "cell_semi_guard_02.png",
-        "w": 28,
-        "h": 45
+        "w": 34,
+        "h": 43
       }
     ]
   },
   "attack_fwd": {
-    "frame_count": 8,
-    "fps": 5,
+    "frame_count": 6,
+    "fps": 7,
     "loop": false,
     "frames": [
       {
         "name": "cell_semi_attack_fwd_00",
         "file": "cell_semi_attack_fwd_00.png",
-        "w": 32,
+        "w": 40,
         "h": 43
       },
       {
         "name": "cell_semi_attack_fwd_01",
         "file": "cell_semi_attack_fwd_01.png",
-        "w": 32,
+        "w": 40,
         "h": 43
       },
       {
         "name": "cell_semi_attack_fwd_02",
         "file": "cell_semi_attack_fwd_02.png",
         "w": 40,
-        "h": 43
+        "h": 45
       },
       {
         "name": "cell_semi_attack_fwd_03",
         "file": "cell_semi_attack_fwd_03.png",
-        "w": 40,
-        "h": 43
-      },
-      {
-        "name": "cell_semi_attack_fwd_04",
-        "file": "cell_semi_attack_fwd_04.png",
-        "w": 40,
-        "h": 45
-      },
-      {
-        "name": "cell_semi_attack_fwd_05",
-        "file": "cell_semi_attack_fwd_05.png",
         "w": 39,
         "h": 45
       },
       {
-        "name": "cell_semi_attack_fwd_06",
-        "file": "cell_semi_attack_fwd_06.png",
-        "w": 24,
-        "h": 46
+        "name": "cell_semi_attack_fwd_04",
+        "file": "cell_semi_attack_fwd_04.png",
+        "w": 32,
+        "h": 43
       },
       {
-        "name": "cell_semi_attack_fwd_07",
-        "file": "cell_semi_attack_fwd_07.png",
-        "w": 30,
-        "h": 40
+        "name": "cell_semi_attack_fwd_05",
+        "file": "cell_semi_attack_fwd_05.png",
+        "w": 32,
+        "h": 43
       }
     ]
   },
   "attack_ud": {
     "frame_count": 4,
-    "fps": 5,
+    "fps": 7,
     "loop": false,
     "frames": [
       {
@@ -144,14 +132,14 @@
       {
         "name": "cell_semi_attack_ud_01",
         "file": "cell_semi_attack_ud_01.png",
-        "w": 30,
-        "h": 44
+        "w": 29,
+        "h": 45
       },
       {
         "name": "cell_semi_attack_ud_02",
         "file": "cell_semi_attack_ud_02.png",
-        "w": 29,
-        "h": 45
+        "w": 30,
+        "h": 44
       },
       {
         "name": "cell_semi_attack_ud_03",
@@ -162,7 +150,7 @@
     ]
   },
   "hurt": {
-    "frame_count": 5,
+    "frame_count": 3,
     "fps": 6,
     "loop": false,
     "frames": [
@@ -183,55 +171,31 @@
         "file": "cell_semi_hurt_02.png",
         "w": 32,
         "h": 37
-      },
-      {
-        "name": "cell_semi_hurt_03",
-        "file": "cell_semi_hurt_03.png",
-        "w": 28,
-        "h": 45
-      },
-      {
-        "name": "cell_semi_hurt_04",
-        "file": "cell_semi_hurt_04.png",
-        "w": 28,
-        "h": 45
       }
     ]
   },
   "beam_charge": {
-    "frame_count": 4,
+    "frame_count": 2,
     "fps": 7,
     "loop": false,
     "frames": [
       {
         "name": "cell_semi_beam_charge_00",
         "file": "cell_semi_beam_charge_00.png",
-        "w": 32,
-        "h": 43
-      },
-      {
-        "name": "cell_semi_beam_charge_01",
-        "file": "cell_semi_beam_charge_01.png",
-        "w": 32,
-        "h": 43
-      },
-      {
-        "name": "cell_semi_beam_charge_02",
-        "file": "cell_semi_beam_charge_02.png",
         "w": 29,
         "h": 42
       },
       {
-        "name": "cell_semi_beam_charge_03",
-        "file": "cell_semi_beam_charge_03.png",
-        "w": 32,
-        "h": 43
+        "name": "cell_semi_beam_charge_01",
+        "file": "cell_semi_beam_charge_01.png",
+        "w": 29,
+        "h": 42
       }
     ]
   },
   "beam_fire": {
-    "frame_count": 5,
-    "fps": 8,
+    "frame_count": 3,
+    "fps": 7,
     "loop": false,
     "frames": [
       {
@@ -243,183 +207,20 @@
       {
         "name": "cell_semi_beam_fire_01",
         "file": "cell_semi_beam_fire_01.png",
-        "w": 40,
-        "h": 42
+        "w": 34,
+        "h": 46
       },
       {
         "name": "cell_semi_beam_fire_02",
         "file": "cell_semi_beam_fire_02.png",
-        "w": 40,
-        "h": 46
-      },
-      {
-        "name": "cell_semi_beam_fire_03",
-        "file": "cell_semi_beam_fire_03.png",
         "w": 30,
-        "h": 45
-      },
-      {
-        "name": "cell_semi_beam_fire_04",
-        "file": "cell_semi_beam_fire_04.png",
-        "w": 34,
-        "h": 46
-      }
-    ]
-  },
-  "punch_right": {
-    "frame_count": 4,
-    "fps": 7,
-    "loop": false,
-    "frames": [
-      {
-        "name": "cell_semi_idle_00",
-        "file": "cell_semi_idle_00.png",
-        "w": 30,
-        "h": 45
-      },
-      {
-        "name": "cell_semi_attack_fwd_00",
-        "file": "cell_semi_attack_fwd_00.png",
-        "w": 32,
-        "h": 43
-      },
-      {
-        "name": "cell_semi_attack_fwd_01",
-        "file": "cell_semi_attack_fwd_01.png",
-        "w": 32,
-        "h": 43
-      },
-      {
-        "name": "cell_semi_attack_fwd_02",
-        "file": "cell_semi_attack_fwd_02.png",
-        "w": 40,
-        "h": 43
-      }
-    ]
-  },
-  "punch_left": {
-    "frame_count": 5,
-    "fps": 7,
-    "loop": false,
-    "frames": [
-      {
-        "name": "cell_semi_idle_00",
-        "file": "cell_semi_idle_00.png",
-        "w": 30,
-        "h": 45
-      },
-      {
-        "name": "cell_semi_attack_fwd_03",
-        "file": "cell_semi_attack_fwd_03.png",
-        "w": 40,
-        "h": 43
-      },
-      {
-        "name": "cell_semi_attack_fwd_04",
-        "file": "cell_semi_attack_fwd_04.png",
-        "w": 40,
-        "h": 45
-      },
-      {
-        "name": "cell_semi_attack_fwd_05",
-        "file": "cell_semi_attack_fwd_05.png",
-        "w": 39,
-        "h": 45
-      },
-      {
-        "name": "cell_semi_attack_fwd_06",
-        "file": "cell_semi_attack_fwd_06.png",
-        "w": 24,
-        "h": 46
-      }
-    ]
-  },
-  "kick_right": {
-    "frame_count": 2,
-    "fps": 7,
-    "loop": false,
-    "frames": [
-      {
-        "name": "cell_semi_kick_right_00",
-        "file": "cell_semi_kick_right_00.png",
-        "w": 32,
-        "h": 43
-      },
-      {
-        "name": "cell_semi_kick_right_01",
-        "file": "cell_semi_kick_right_01.png",
-        "w": 32,
-        "h": 43
-      }
-    ]
-  },
-  "knockback_back": {
-    "frame_count": 1,
-    "fps": 7,
-    "loop": false,
-    "frames": [
-      {
-        "name": "cell_semi_knockback_back_00",
-        "file": "cell_semi_knockback_back_00.png",
-        "w": 31,
-        "h": 40
-      }
-    ]
-  },
-  "knockback_up": {
-    "frame_count": 1,
-    "fps": 7,
-    "loop": false,
-    "frames": [
-      {
-        "name": "cell_semi_knockback_up_00",
-        "file": "cell_semi_knockback_up_00.png",
-        "w": 40,
-        "h": 43
-      }
-    ]
-  },
-  "knockback_down": {
-    "frame_count": 1,
-    "fps": 7,
-    "loop": false,
-    "frames": [
-      {
-        "name": "cell_semi_knockback_down_00",
-        "file": "cell_semi_knockback_down_00.png",
-        "w": 34,
-        "h": 32
-      }
-    ]
-  },
-  "beam_guard": {
-    "frame_count": 3,
-    "fps": 6,
-    "loop": false,
-    "frames": [
-      {
-        "name": "cell_semi_guard_00",
-        "file": "cell_semi_guard_00.png",
-        "w": 30,
-        "h": 45
-      },
-      {
-        "name": "cell_semi_guard_01",
-        "file": "cell_semi_guard_01.png",
-        "w": 34,
-        "h": 43
-      },
-      {
-        "name": "cell_semi_guard_02",
-        "file": "cell_semi_guard_02.png",
-        "w": 28,
         "h": 45
       }
     ]
   },
   "evade": {
     "frame_count": 2,
-    "fps": 10,
+    "fps": 6,
     "loop": false,
     "frames": [
       {
@@ -439,7 +240,7 @@
   "gather_power": {
     "frame_count": 3,
     "fps": 6,
-    "loop": true,
+    "loop": false,
     "frames": [
       {
         "name": "cell_semi_gather_power_00",
@@ -450,20 +251,20 @@
       {
         "name": "cell_semi_gather_power_01",
         "file": "cell_semi_gather_power_01.png",
-        "w": 32,
-        "h": 43
+        "w": 31,
+        "h": 40
       },
       {
         "name": "cell_semi_gather_power_02",
         "file": "cell_semi_gather_power_02.png",
-        "w": 31,
-        "h": 40
+        "w": 32,
+        "h": 43
       }
     ]
   },
   "power_up": {
     "frame_count": 3,
-    "fps": 10,
+    "fps": 8,
     "loop": true,
     "frames": [
       {
@@ -475,20 +276,20 @@
       {
         "name": "cell_semi_power_up_01",
         "file": "cell_semi_power_up_01.png",
-        "w": 32,
-        "h": 43
+        "w": 31,
+        "h": 40
       },
       {
         "name": "cell_semi_power_up_02",
         "file": "cell_semi_power_up_02.png",
-        "w": 31,
-        "h": 40
+        "w": 32,
+        "h": 43
       }
     ]
   },
   "aura_power": {
     "frame_count": 3,
-    "fps": 10,
+    "fps": 6,
     "loop": true,
     "frames": [
       {
@@ -513,7 +314,7 @@
   },
   "aura_support": {
     "frame_count": 3,
-    "fps": 10,
+    "fps": 6,
     "loop": true,
     "frames": [
       {
@@ -536,40 +337,220 @@
       }
     ]
   },
-  "effects": {
-    "frame_count": 5,
-    "fps": 10,
+  "punch_right": {
+    "frame_count": 6,
+    "fps": 7,
     "loop": false,
     "frames": [
       {
-        "name": "cell_semi_perfect_form_effect_01",
-        "file": "cell_semi_perfect_form_effect_01.png",
-        "w": 12,
-        "h": 16
+        "name": "cell_semi_attack_fwd_00",
+        "file": "cell_semi_attack_fwd_00.png",
+        "w": 40,
+        "h": 43
       },
       {
-        "name": "cell_semi_perfect_form_effect_02",
-        "file": "cell_semi_perfect_form_effect_02.png",
-        "w": 24,
-        "h": 16
+        "name": "cell_semi_attack_fwd_01",
+        "file": "cell_semi_attack_fwd_01.png",
+        "w": 40,
+        "h": 43
       },
       {
-        "name": "cell_semi_perfect_form_effect_03",
-        "file": "cell_semi_perfect_form_effect_03.png",
-        "w": 24,
-        "h": 16
+        "name": "cell_semi_attack_fwd_02",
+        "file": "cell_semi_attack_fwd_02.png",
+        "w": 40,
+        "h": 45
       },
       {
-        "name": "cell_semi_perfect_form_effect_04",
-        "file": "cell_semi_perfect_form_effect_04.png",
-        "w": 16,
-        "h": 12
+        "name": "cell_semi_attack_fwd_03",
+        "file": "cell_semi_attack_fwd_03.png",
+        "w": 39,
+        "h": 45
       },
       {
-        "name": "cell_semi_perfect_form_effect_05",
-        "file": "cell_semi_perfect_form_effect_05.png",
-        "w": 16,
-        "h": 12
+        "name": "cell_semi_attack_fwd_04",
+        "file": "cell_semi_attack_fwd_04.png",
+        "w": 32,
+        "h": 43
+      },
+      {
+        "name": "cell_semi_attack_fwd_05",
+        "file": "cell_semi_attack_fwd_05.png",
+        "w": 32,
+        "h": 43
+      }
+    ]
+  },
+  "punch_left": {
+    "frame_count": 6,
+    "fps": 7,
+    "loop": false,
+    "frames": [
+      {
+        "name": "cell_semi_attack_fwd_00",
+        "file": "cell_semi_attack_fwd_00.png",
+        "w": 40,
+        "h": 43
+      },
+      {
+        "name": "cell_semi_attack_fwd_01",
+        "file": "cell_semi_attack_fwd_01.png",
+        "w": 40,
+        "h": 43
+      },
+      {
+        "name": "cell_semi_attack_fwd_02",
+        "file": "cell_semi_attack_fwd_02.png",
+        "w": 40,
+        "h": 45
+      },
+      {
+        "name": "cell_semi_attack_fwd_03",
+        "file": "cell_semi_attack_fwd_03.png",
+        "w": 39,
+        "h": 45
+      },
+      {
+        "name": "cell_semi_attack_fwd_04",
+        "file": "cell_semi_attack_fwd_04.png",
+        "w": 32,
+        "h": 43
+      },
+      {
+        "name": "cell_semi_attack_fwd_05",
+        "file": "cell_semi_attack_fwd_05.png",
+        "w": 32,
+        "h": 43
+      }
+    ]
+  },
+  "kick_right": {
+    "frame_count": 4,
+    "fps": 7,
+    "loop": false,
+    "frames": [
+      {
+        "name": "cell_semi_attack_ud_00",
+        "file": "cell_semi_attack_ud_00.png",
+        "w": 35,
+        "h": 45
+      },
+      {
+        "name": "cell_semi_attack_ud_01",
+        "file": "cell_semi_attack_ud_01.png",
+        "w": 29,
+        "h": 45
+      },
+      {
+        "name": "cell_semi_attack_ud_02",
+        "file": "cell_semi_attack_ud_02.png",
+        "w": 30,
+        "h": 44
+      },
+      {
+        "name": "cell_semi_attack_ud_03",
+        "file": "cell_semi_attack_ud_03.png",
+        "w": 34,
+        "h": 32
+      }
+    ]
+  },
+  "knockback_back": {
+    "frame_count": 3,
+    "fps": 6,
+    "loop": false,
+    "frames": [
+      {
+        "name": "cell_semi_hurt_00",
+        "file": "cell_semi_hurt_00.png",
+        "w": 30,
+        "h": 44
+      },
+      {
+        "name": "cell_semi_hurt_01",
+        "file": "cell_semi_hurt_01.png",
+        "w": 30,
+        "h": 38
+      },
+      {
+        "name": "cell_semi_hurt_02",
+        "file": "cell_semi_hurt_02.png",
+        "w": 32,
+        "h": 37
+      }
+    ]
+  },
+  "knockback_up": {
+    "frame_count": 3,
+    "fps": 6,
+    "loop": false,
+    "frames": [
+      {
+        "name": "cell_semi_hurt_00",
+        "file": "cell_semi_hurt_00.png",
+        "w": 30,
+        "h": 44
+      },
+      {
+        "name": "cell_semi_hurt_01",
+        "file": "cell_semi_hurt_01.png",
+        "w": 30,
+        "h": 38
+      },
+      {
+        "name": "cell_semi_hurt_02",
+        "file": "cell_semi_hurt_02.png",
+        "w": 32,
+        "h": 37
+      }
+    ]
+  },
+  "knockback_down": {
+    "frame_count": 3,
+    "fps": 6,
+    "loop": false,
+    "frames": [
+      {
+        "name": "cell_semi_hurt_00",
+        "file": "cell_semi_hurt_00.png",
+        "w": 30,
+        "h": 44
+      },
+      {
+        "name": "cell_semi_hurt_01",
+        "file": "cell_semi_hurt_01.png",
+        "w": 30,
+        "h": 38
+      },
+      {
+        "name": "cell_semi_hurt_02",
+        "file": "cell_semi_hurt_02.png",
+        "w": 32,
+        "h": 37
+      }
+    ]
+  },
+  "beam_guard": {
+    "frame_count": 3,
+    "fps": 6,
+    "loop": false,
+    "frames": [
+      {
+        "name": "cell_semi_guard_00",
+        "file": "cell_semi_guard_00.png",
+        "w": 30,
+        "h": 45
+      },
+      {
+        "name": "cell_semi_guard_01",
+        "file": "cell_semi_guard_01.png",
+        "w": 28,
+        "h": 45
+      },
+      {
+        "name": "cell_semi_guard_02",
+        "file": "cell_semi_guard_02.png",
+        "w": 34,
+        "h": 43
       }
     ]
   }

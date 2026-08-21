@@ -20,14 +20,14 @@
       {
         "name": "gotenks_ssj_move_front_00",
         "file": "gotenks_ssj_move_front_00.png",
-        "w": 31,
-        "h": 37
+        "w": 26,
+        "h": 42
       },
       {
         "name": "gotenks_ssj_move_front_01",
         "file": "gotenks_ssj_move_front_01.png",
-        "w": 26,
-        "h": 42
+        "w": 31,
+        "h": 37
       }
     ]
   },
@@ -77,44 +77,44 @@
   },
   "attack_fwd": {
     "frame_count": 7,
-    "fps": 5,
+    "fps": 7,
     "loop": false,
     "frames": [
       {
         "name": "gotenks_ssj_attack_fwd_00",
         "file": "gotenks_ssj_attack_fwd_00.png",
-        "w": 32,
-        "h": 40
+        "w": 24,
+        "h": 43
       },
       {
         "name": "gotenks_ssj_attack_fwd_01",
         "file": "gotenks_ssj_attack_fwd_01.png",
-        "w": 31,
-        "h": 40
-      },
-      {
-        "name": "gotenks_ssj_attack_fwd_02",
-        "file": "gotenks_ssj_attack_fwd_02.png",
-        "w": 35,
-        "h": 40
-      },
-      {
-        "name": "gotenks_ssj_attack_fwd_03",
-        "file": "gotenks_ssj_attack_fwd_03.png",
         "w": 37,
         "h": 38
       },
       {
-        "name": "gotenks_ssj_attack_fwd_04",
-        "file": "gotenks_ssj_attack_fwd_04.png",
+        "name": "gotenks_ssj_attack_fwd_02",
+        "file": "gotenks_ssj_attack_fwd_02.png",
         "w": 36,
         "h": 38
       },
       {
+        "name": "gotenks_ssj_attack_fwd_03",
+        "file": "gotenks_ssj_attack_fwd_03.png",
+        "w": 31,
+        "h": 40
+      },
+      {
+        "name": "gotenks_ssj_attack_fwd_04",
+        "file": "gotenks_ssj_attack_fwd_04.png",
+        "w": 32,
+        "h": 40
+      },
+      {
         "name": "gotenks_ssj_attack_fwd_05",
         "file": "gotenks_ssj_attack_fwd_05.png",
-        "w": 24,
-        "h": 43
+        "w": 35,
+        "h": 40
       },
       {
         "name": "gotenks_ssj_attack_fwd_06",
@@ -126,26 +126,26 @@
   },
   "attack_ud": {
     "frame_count": 4,
-    "fps": 5,
+    "fps": 7,
     "loop": false,
     "frames": [
       {
         "name": "gotenks_ssj_attack_ud_00",
         "file": "gotenks_ssj_attack_ud_00.png",
-        "w": 28,
-        "h": 42
+        "w": 25,
+        "h": 41
       },
       {
         "name": "gotenks_ssj_attack_ud_01",
         "file": "gotenks_ssj_attack_ud_01.png",
         "w": 28,
-        "h": 38
+        "h": 42
       },
       {
         "name": "gotenks_ssj_attack_ud_02",
         "file": "gotenks_ssj_attack_ud_02.png",
-        "w": 25,
-        "h": 41
+        "w": 28,
+        "h": 38
       },
       {
         "name": "gotenks_ssj_attack_ud_03",
@@ -182,8 +182,8 @@
       {
         "name": "gotenks_ssj_beam_charge_01",
         "file": "gotenks_ssj_beam_charge_01.png",
-        "w": 31,
-        "h": 40
+        "w": 23,
+        "h": 41
       },
       {
         "name": "gotenks_ssj_beam_charge_02",
@@ -194,8 +194,8 @@
       {
         "name": "gotenks_ssj_beam_charge_03",
         "file": "gotenks_ssj_beam_charge_03.png",
-        "w": 30,
-        "h": 40
+        "w": 24,
+        "h": 44
       },
       {
         "name": "gotenks_ssj_beam_charge_04",
@@ -212,70 +212,267 @@
       {
         "name": "gotenks_ssj_beam_charge_06",
         "file": "gotenks_ssj_beam_charge_06.png",
-        "w": 24,
-        "h": 44
+        "w": 31,
+        "h": 40
       }
     ]
   },
-  "punch_right": {
-    "frame_count": 4,
-    "fps": 7,
+  "evade": {
+    "frame_count": 2,
+    "fps": 6,
     "loop": false,
     "frames": [
       {
-        "name": "gotenks_ssj_idle_00",
-        "file": "gotenks_ssj_idle_00.png",
+        "name": "gotenks_ssj_evade_00",
+        "file": "gotenks_ssj_evade_00.png",
         "w": 29,
         "h": 43
       },
       {
-        "name": "gotenks_ssj_attack_fwd_00",
-        "file": "gotenks_ssj_attack_fwd_00.png",
+        "name": "gotenks_ssj_evade_01",
+        "file": "gotenks_ssj_evade_01.png",
+        "w": 26,
+        "h": 42
+      }
+    ]
+  },
+  "gather_power": {
+    "frame_count": 7,
+    "fps": 6,
+    "loop": false,
+    "frames": [
+      {
+        "name": "gotenks_ssj_gather_power_00",
+        "file": "gotenks_ssj_gather_power_00.png",
         "w": 32,
         "h": 40
       },
       {
-        "name": "gotenks_ssj_attack_fwd_01",
-        "file": "gotenks_ssj_attack_fwd_01.png",
-        "w": 31,
+        "name": "gotenks_ssj_gather_power_01",
+        "file": "gotenks_ssj_gather_power_01.png",
+        "w": 23,
+        "h": 41
+      },
+      {
+        "name": "gotenks_ssj_gather_power_02",
+        "file": "gotenks_ssj_gather_power_02.png",
+        "w": 23,
+        "h": 41
+      },
+      {
+        "name": "gotenks_ssj_gather_power_03",
+        "file": "gotenks_ssj_gather_power_03.png",
+        "w": 24,
+        "h": 44
+      },
+      {
+        "name": "gotenks_ssj_gather_power_04",
+        "file": "gotenks_ssj_gather_power_04.png",
+        "w": 24,
+        "h": 44
+      },
+      {
+        "name": "gotenks_ssj_gather_power_05",
+        "file": "gotenks_ssj_gather_power_05.png",
+        "w": 32,
         "h": 40
       },
       {
-        "name": "gotenks_ssj_attack_fwd_02",
-        "file": "gotenks_ssj_attack_fwd_02.png",
-        "w": 35,
+        "name": "gotenks_ssj_gather_power_06",
+        "file": "gotenks_ssj_gather_power_06.png",
+        "w": 31,
         "h": 40
       }
     ]
   },
-  "punch_left": {
-    "frame_count": 5,
+  "power_up": {
+    "frame_count": 7,
+    "fps": 8,
+    "loop": true,
+    "frames": [
+      {
+        "name": "gotenks_ssj_power_up_00",
+        "file": "gotenks_ssj_power_up_00.png",
+        "w": 32,
+        "h": 40
+      },
+      {
+        "name": "gotenks_ssj_power_up_01",
+        "file": "gotenks_ssj_power_up_01.png",
+        "w": 23,
+        "h": 41
+      },
+      {
+        "name": "gotenks_ssj_power_up_02",
+        "file": "gotenks_ssj_power_up_02.png",
+        "w": 23,
+        "h": 41
+      },
+      {
+        "name": "gotenks_ssj_power_up_03",
+        "file": "gotenks_ssj_power_up_03.png",
+        "w": 24,
+        "h": 44
+      },
+      {
+        "name": "gotenks_ssj_power_up_04",
+        "file": "gotenks_ssj_power_up_04.png",
+        "w": 24,
+        "h": 44
+      },
+      {
+        "name": "gotenks_ssj_power_up_05",
+        "file": "gotenks_ssj_power_up_05.png",
+        "w": 32,
+        "h": 40
+      },
+      {
+        "name": "gotenks_ssj_power_up_06",
+        "file": "gotenks_ssj_power_up_06.png",
+        "w": 31,
+        "h": 40
+      }
+    ]
+  },
+  "aura_power": {
+    "frame_count": 3,
+    "fps": 6,
+    "loop": true,
+    "frames": [
+      {
+        "name": "gotenks_ssj_aura_power_00",
+        "file": "gotenks_ssj_aura_power_00.png",
+        "w": 64,
+        "h": 56
+      },
+      {
+        "name": "gotenks_ssj_aura_power_01",
+        "file": "gotenks_ssj_aura_power_01.png",
+        "w": 64,
+        "h": 56
+      },
+      {
+        "name": "gotenks_ssj_aura_power_02",
+        "file": "gotenks_ssj_aura_power_02.png",
+        "w": 64,
+        "h": 56
+      }
+    ]
+  },
+  "aura_support": {
+    "frame_count": 3,
+    "fps": 6,
+    "loop": true,
+    "frames": [
+      {
+        "name": "gotenks_ssj_aura_support_00",
+        "file": "gotenks_ssj_aura_support_00.png",
+        "w": 64,
+        "h": 56
+      },
+      {
+        "name": "gotenks_ssj_aura_support_01",
+        "file": "gotenks_ssj_aura_support_01.png",
+        "w": 64,
+        "h": 56
+      },
+      {
+        "name": "gotenks_ssj_aura_support_02",
+        "file": "gotenks_ssj_aura_support_02.png",
+        "w": 64,
+        "h": 56
+      }
+    ]
+  },
+  "punch_right": {
+    "frame_count": 7,
     "fps": 7,
     "loop": false,
     "frames": [
       {
-        "name": "gotenks_ssj_idle_00",
-        "file": "gotenks_ssj_idle_00.png",
-        "w": 29,
+        "name": "gotenks_ssj_attack_fwd_00",
+        "file": "gotenks_ssj_attack_fwd_00.png",
+        "w": 24,
         "h": 43
       },
       {
-        "name": "gotenks_ssj_attack_fwd_03",
-        "file": "gotenks_ssj_attack_fwd_03.png",
+        "name": "gotenks_ssj_attack_fwd_01",
+        "file": "gotenks_ssj_attack_fwd_01.png",
         "w": 37,
         "h": 38
       },
       {
-        "name": "gotenks_ssj_attack_fwd_04",
-        "file": "gotenks_ssj_attack_fwd_04.png",
+        "name": "gotenks_ssj_attack_fwd_02",
+        "file": "gotenks_ssj_attack_fwd_02.png",
         "w": 36,
         "h": 38
       },
       {
+        "name": "gotenks_ssj_attack_fwd_03",
+        "file": "gotenks_ssj_attack_fwd_03.png",
+        "w": 31,
+        "h": 40
+      },
+      {
+        "name": "gotenks_ssj_attack_fwd_04",
+        "file": "gotenks_ssj_attack_fwd_04.png",
+        "w": 32,
+        "h": 40
+      },
+      {
         "name": "gotenks_ssj_attack_fwd_05",
         "file": "gotenks_ssj_attack_fwd_05.png",
+        "w": 35,
+        "h": 40
+      },
+      {
+        "name": "gotenks_ssj_attack_fwd_06",
+        "file": "gotenks_ssj_attack_fwd_06.png",
+        "w": 38,
+        "h": 41
+      }
+    ]
+  },
+  "punch_left": {
+    "frame_count": 7,
+    "fps": 7,
+    "loop": false,
+    "frames": [
+      {
+        "name": "gotenks_ssj_attack_fwd_00",
+        "file": "gotenks_ssj_attack_fwd_00.png",
         "w": 24,
         "h": 43
+      },
+      {
+        "name": "gotenks_ssj_attack_fwd_01",
+        "file": "gotenks_ssj_attack_fwd_01.png",
+        "w": 37,
+        "h": 38
+      },
+      {
+        "name": "gotenks_ssj_attack_fwd_02",
+        "file": "gotenks_ssj_attack_fwd_02.png",
+        "w": 36,
+        "h": 38
+      },
+      {
+        "name": "gotenks_ssj_attack_fwd_03",
+        "file": "gotenks_ssj_attack_fwd_03.png",
+        "w": 31,
+        "h": 40
+      },
+      {
+        "name": "gotenks_ssj_attack_fwd_04",
+        "file": "gotenks_ssj_attack_fwd_04.png",
+        "w": 32,
+        "h": 40
+      },
+      {
+        "name": "gotenks_ssj_attack_fwd_05",
+        "file": "gotenks_ssj_attack_fwd_05.png",
+        "w": 35,
+        "h": 40
       },
       {
         "name": "gotenks_ssj_attack_fwd_06",
@@ -286,37 +483,31 @@
     ]
   },
   "kick_right": {
-    "frame_count": 5,
+    "frame_count": 4,
     "fps": 7,
     "loop": false,
     "frames": [
       {
-        "name": "gotenks_ssj_kick_right_00",
-        "file": "gotenks_ssj_kick_right_00.png",
-        "w": 35,
-        "h": 40
-      },
-      {
-        "name": "gotenks_ssj_kick_right_01",
-        "file": "gotenks_ssj_kick_right_01.png",
-        "w": 38,
+        "name": "gotenks_ssj_attack_ud_00",
+        "file": "gotenks_ssj_attack_ud_00.png",
+        "w": 25,
         "h": 41
       },
       {
-        "name": "gotenks_ssj_kick_right_02",
-        "file": "gotenks_ssj_kick_right_02.png",
+        "name": "gotenks_ssj_attack_ud_01",
+        "file": "gotenks_ssj_attack_ud_01.png",
         "w": 28,
         "h": 42
       },
       {
-        "name": "gotenks_ssj_kick_right_03",
-        "file": "gotenks_ssj_kick_right_03.png",
+        "name": "gotenks_ssj_attack_ud_02",
+        "file": "gotenks_ssj_attack_ud_02.png",
         "w": 28,
         "h": 38
       },
       {
-        "name": "gotenks_ssj_kick_right_04",
-        "file": "gotenks_ssj_kick_right_04.png",
+        "name": "gotenks_ssj_attack_ud_03",
+        "file": "gotenks_ssj_attack_ud_03.png",
         "w": 28,
         "h": 31
       }
@@ -324,40 +515,40 @@
   },
   "knockback_back": {
     "frame_count": 1,
-    "fps": 7,
+    "fps": 6,
     "loop": false,
     "frames": [
       {
-        "name": "gotenks_ssj_knockback_back_00",
-        "file": "gotenks_ssj_knockback_back_00.png",
-        "w": 32,
-        "h": 40
+        "name": "gotenks_ssj_hurt_00",
+        "file": "gotenks_ssj_hurt_00.png",
+        "w": 29,
+        "h": 32
       }
     ]
   },
   "knockback_up": {
     "frame_count": 1,
-    "fps": 7,
+    "fps": 6,
     "loop": false,
     "frames": [
       {
-        "name": "gotenks_ssj_knockback_up_00",
-        "file": "gotenks_ssj_knockback_up_00.png",
-        "w": 37,
-        "h": 38
+        "name": "gotenks_ssj_hurt_00",
+        "file": "gotenks_ssj_hurt_00.png",
+        "w": 29,
+        "h": 32
       }
     ]
   },
   "knockback_down": {
     "frame_count": 1,
-    "fps": 7,
+    "fps": 6,
     "loop": false,
     "frames": [
       {
-        "name": "gotenks_ssj_knockback_down_00",
-        "file": "gotenks_ssj_knockback_down_00.png",
-        "w": 32,
-        "h": 40
+        "name": "gotenks_ssj_hurt_00",
+        "file": "gotenks_ssj_hurt_00.png",
+        "w": 29,
+        "h": 32
       }
     ]
   },
@@ -386,29 +577,10 @@
       }
     ]
   },
-  "evade": {
-    "frame_count": 2,
-    "fps": 10,
-    "loop": false,
-    "frames": [
-      {
-        "name": "gotenks_ssj_move_back_00",
-        "file": "gotenks_ssj_move_back_00.png",
-        "w": 26,
-        "h": 42
-      },
-      {
-        "name": "gotenks_ssj_guard_00",
-        "file": "gotenks_ssj_guard_00.png",
-        "w": 29,
-        "h": 43
-      }
-    ]
-  },
-  "gather_power": {
+  "beam_fire": {
     "frame_count": 7,
-    "fps": 6,
-    "loop": true,
+    "fps": 7,
+    "loop": false,
     "frames": [
       {
         "name": "gotenks_ssj_beam_charge_00",
@@ -419,8 +591,8 @@
       {
         "name": "gotenks_ssj_beam_charge_01",
         "file": "gotenks_ssj_beam_charge_01.png",
-        "w": 31,
-        "h": 40
+        "w": 23,
+        "h": 41
       },
       {
         "name": "gotenks_ssj_beam_charge_02",
@@ -431,8 +603,8 @@
       {
         "name": "gotenks_ssj_beam_charge_03",
         "file": "gotenks_ssj_beam_charge_03.png",
-        "w": 30,
-        "h": 40
+        "w": 24,
+        "h": 44
       },
       {
         "name": "gotenks_ssj_beam_charge_04",
@@ -449,144 +621,8 @@
       {
         "name": "gotenks_ssj_beam_charge_06",
         "file": "gotenks_ssj_beam_charge_06.png",
-        "w": 24,
-        "h": 44
-      }
-    ]
-  },
-  "power_up": {
-    "frame_count": 7,
-    "fps": 10,
-    "loop": true,
-    "frames": [
-      {
-        "name": "gotenks_ssj_beam_charge_00",
-        "file": "gotenks_ssj_beam_charge_00.png",
-        "w": 32,
-        "h": 40
-      },
-      {
-        "name": "gotenks_ssj_beam_charge_01",
-        "file": "gotenks_ssj_beam_charge_01.png",
         "w": 31,
         "h": 40
-      },
-      {
-        "name": "gotenks_ssj_beam_charge_02",
-        "file": "gotenks_ssj_beam_charge_02.png",
-        "w": 23,
-        "h": 41
-      },
-      {
-        "name": "gotenks_ssj_beam_charge_03",
-        "file": "gotenks_ssj_beam_charge_03.png",
-        "w": 30,
-        "h": 40
-      },
-      {
-        "name": "gotenks_ssj_beam_charge_04",
-        "file": "gotenks_ssj_beam_charge_04.png",
-        "w": 24,
-        "h": 44
-      },
-      {
-        "name": "gotenks_ssj_beam_charge_05",
-        "file": "gotenks_ssj_beam_charge_05.png",
-        "w": 32,
-        "h": 40
-      },
-      {
-        "name": "gotenks_ssj_beam_charge_06",
-        "file": "gotenks_ssj_beam_charge_06.png",
-        "w": 24,
-        "h": 44
-      }
-    ]
-  },
-  "aura_power": {
-    "frame_count": 3,
-    "fps": 10,
-    "loop": true,
-    "frames": [
-      {
-        "name": "gotenks_ssj_aura_power_00",
-        "file": "gotenks_ssj_aura_power_00.png",
-        "w": 64,
-        "h": 56
-      },
-      {
-        "name": "gotenks_ssj_aura_power_01",
-        "file": "gotenks_ssj_aura_power_01.png",
-        "w": 64,
-        "h": 56
-      },
-      {
-        "name": "gotenks_ssj_aura_power_02",
-        "file": "gotenks_ssj_aura_power_02.png",
-        "w": 64,
-        "h": 56
-      }
-    ]
-  },
-  "aura_support": {
-    "frame_count": 3,
-    "fps": 10,
-    "loop": true,
-    "frames": [
-      {
-        "name": "gotenks_ssj_aura_support_00",
-        "file": "gotenks_ssj_aura_support_00.png",
-        "w": 64,
-        "h": 56
-      },
-      {
-        "name": "gotenks_ssj_aura_support_01",
-        "file": "gotenks_ssj_aura_support_01.png",
-        "w": 64,
-        "h": 56
-      },
-      {
-        "name": "gotenks_ssj_aura_support_02",
-        "file": "gotenks_ssj_aura_support_02.png",
-        "w": 64,
-        "h": 56
-      }
-    ]
-  },
-  "effects": {
-    "frame_count": 5,
-    "fps": 10,
-    "loop": false,
-    "frames": [
-      {
-        "name": "gotenks_ssj_effect_00",
-        "file": "gotenks_ssj_effect_00.png",
-        "w": 16,
-        "h": 12
-      },
-      {
-        "name": "gotenks_ssj_effect_01",
-        "file": "gotenks_ssj_effect_01.png",
-        "w": 16,
-        "h": 12
-      },
-      {
-        "name": "gotenks_ssj_effect_03",
-        "file": "gotenks_ssj_effect_03.png",
-        "w": 13,
-        "h": 16
-      },
-      {
-        "name": "gotenks_ssj_effect_04",
-        "file": "gotenks_ssj_effect_04.png",
-        "w": 24,
-        "h": 16
-      },
-      {
-        "name": "gotenks_ssj_effect_05",
-        "file": "gotenks_ssj_effect_05.png",
-        "w": 24,
-        "h": 16
       }
     ]
   }

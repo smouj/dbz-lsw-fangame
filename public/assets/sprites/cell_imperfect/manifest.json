@@ -21,13 +21,13 @@
         "name": "cell_imperfect_move_front_00",
         "file": "cell_imperfect_move_front_00.png",
         "w": 32,
-        "h": 44
+        "h": 45
       },
       {
         "name": "cell_imperfect_move_front_01",
         "file": "cell_imperfect_move_front_01.png",
         "w": 32,
-        "h": 45
+        "h": 44
       }
     ]
   },
@@ -64,33 +64,33 @@
       {
         "name": "cell_imperfect_guard_01",
         "file": "cell_imperfect_guard_01.png",
-        "w": 34,
-        "h": 43
+        "w": 29,
+        "h": 44
       },
       {
         "name": "cell_imperfect_guard_02",
         "file": "cell_imperfect_guard_02.png",
-        "w": 29,
-        "h": 44
+        "w": 34,
+        "h": 43
       }
     ]
   },
   "attack_fwd": {
-    "frame_count": 8,
-    "fps": 5,
+    "frame_count": 6,
+    "fps": 7,
     "loop": false,
     "frames": [
       {
         "name": "cell_imperfect_attack_fwd_00",
         "file": "cell_imperfect_attack_fwd_00.png",
-        "w": 32,
-        "h": 45
+        "w": 31,
+        "h": 44
       },
       {
         "name": "cell_imperfect_attack_fwd_01",
         "file": "cell_imperfect_attack_fwd_01.png",
-        "w": 31,
-        "h": 45
+        "w": 32,
+        "h": 44
       },
       {
         "name": "cell_imperfect_attack_fwd_02",
@@ -101,68 +101,50 @@
       {
         "name": "cell_imperfect_attack_fwd_03",
         "file": "cell_imperfect_attack_fwd_03.png",
-        "w": 31,
-        "h": 44
+        "w": 40,
+        "h": 46
       },
       {
         "name": "cell_imperfect_attack_fwd_04",
         "file": "cell_imperfect_attack_fwd_04.png",
-        "w": 40,
+        "w": 38,
         "h": 46
       },
       {
         "name": "cell_imperfect_attack_fwd_05",
         "file": "cell_imperfect_attack_fwd_05.png",
-        "w": 38,
-        "h": 46
-      },
-      {
-        "name": "cell_imperfect_attack_fwd_06",
-        "file": "cell_imperfect_attack_fwd_06.png",
-        "w": 24,
-        "h": 46
-      },
-      {
-        "name": "cell_imperfect_attack_fwd_07",
-        "file": "cell_imperfect_attack_fwd_07.png",
-        "w": 32,
-        "h": 44
+        "w": 31,
+        "h": 45
       }
     ]
   },
   "attack_ud": {
-    "frame_count": 4,
-    "fps": 5,
+    "frame_count": 3,
+    "fps": 7,
     "loop": false,
     "frames": [
       {
         "name": "cell_imperfect_attack_ud_00",
         "file": "cell_imperfect_attack_ud_00.png",
         "w": 29,
-        "h": 45
+        "h": 46
       },
       {
         "name": "cell_imperfect_attack_ud_01",
         "file": "cell_imperfect_attack_ud_01.png",
         "w": 29,
-        "h": 46
+        "h": 45
       },
       {
         "name": "cell_imperfect_attack_ud_02",
         "file": "cell_imperfect_attack_ud_02.png",
-        "w": 29,
-        "h": 45
-      },
-      {
-        "name": "cell_imperfect_attack_ud_03",
-        "file": "cell_imperfect_attack_ud_03.png",
         "w": 34,
         "h": 32
       }
     ]
   },
   "hurt": {
-    "frame_count": 5,
+    "frame_count": 3,
     "fps": 6,
     "loop": false,
     "frames": [
@@ -183,23 +165,11 @@
         "file": "cell_imperfect_hurt_02.png",
         "w": 32,
         "h": 38
-      },
-      {
-        "name": "cell_imperfect_hurt_03",
-        "file": "cell_imperfect_hurt_03.png",
-        "w": 31,
-        "h": 46
-      },
-      {
-        "name": "cell_imperfect_hurt_04",
-        "file": "cell_imperfect_hurt_04.png",
-        "w": 31,
-        "h": 48
       }
     ]
   },
   "beam_charge": {
-    "frame_count": 5,
+    "frame_count": 4,
     "fps": 7,
     "loop": false,
     "frames": [
@@ -212,8 +182,8 @@
       {
         "name": "cell_imperfect_beam_charge_01",
         "file": "cell_imperfect_beam_charge_01.png",
-        "w": 32,
-        "h": 45
+        "w": 30,
+        "h": 44
       },
       {
         "name": "cell_imperfect_beam_charge_02",
@@ -224,20 +194,14 @@
       {
         "name": "cell_imperfect_beam_charge_03",
         "file": "cell_imperfect_beam_charge_03.png",
-        "w": 32,
-        "h": 42
-      },
-      {
-        "name": "cell_imperfect_beam_charge_04",
-        "file": "cell_imperfect_beam_charge_04.png",
         "w": 30,
         "h": 44
       }
     ]
   },
   "beam_fire": {
-    "frame_count": 3,
-    "fps": 8,
+    "frame_count": 1,
+    "fps": 7,
     "loop": false,
     "frames": [
       {
@@ -245,181 +209,12 @@
         "file": "cell_imperfect_beam_fire_00.png",
         "w": 29,
         "h": 42
-      },
-      {
-        "name": "cell_imperfect_beam_fire_01",
-        "file": "cell_imperfect_beam_fire_01.png",
-        "w": 40,
-        "h": 42
-      },
-      {
-        "name": "cell_imperfect_beam_fire_02",
-        "file": "cell_imperfect_beam_fire_02.png",
-        "w": 40,
-        "h": 46
-      }
-    ]
-  },
-  "punch_right": {
-    "frame_count": 4,
-    "fps": 7,
-    "loop": false,
-    "frames": [
-      {
-        "name": "cell_imperfect_idle_00",
-        "file": "cell_imperfect_idle_00.png",
-        "w": 30,
-        "h": 44
-      },
-      {
-        "name": "cell_imperfect_attack_fwd_00",
-        "file": "cell_imperfect_attack_fwd_00.png",
-        "w": 32,
-        "h": 45
-      },
-      {
-        "name": "cell_imperfect_attack_fwd_01",
-        "file": "cell_imperfect_attack_fwd_01.png",
-        "w": 31,
-        "h": 45
-      },
-      {
-        "name": "cell_imperfect_attack_fwd_02",
-        "file": "cell_imperfect_attack_fwd_02.png",
-        "w": 40,
-        "h": 42
-      }
-    ]
-  },
-  "punch_left": {
-    "frame_count": 5,
-    "fps": 7,
-    "loop": false,
-    "frames": [
-      {
-        "name": "cell_imperfect_idle_00",
-        "file": "cell_imperfect_idle_00.png",
-        "w": 30,
-        "h": 44
-      },
-      {
-        "name": "cell_imperfect_attack_fwd_03",
-        "file": "cell_imperfect_attack_fwd_03.png",
-        "w": 31,
-        "h": 44
-      },
-      {
-        "name": "cell_imperfect_attack_fwd_04",
-        "file": "cell_imperfect_attack_fwd_04.png",
-        "w": 40,
-        "h": 46
-      },
-      {
-        "name": "cell_imperfect_attack_fwd_05",
-        "file": "cell_imperfect_attack_fwd_05.png",
-        "w": 38,
-        "h": 46
-      },
-      {
-        "name": "cell_imperfect_attack_fwd_06",
-        "file": "cell_imperfect_attack_fwd_06.png",
-        "w": 24,
-        "h": 46
-      }
-    ]
-  },
-  "kick_right": {
-    "frame_count": 3,
-    "fps": 7,
-    "loop": false,
-    "frames": [
-      {
-        "name": "cell_imperfect_kick_right_00",
-        "file": "cell_imperfect_kick_right_00.png",
-        "w": 32,
-        "h": 45
-      },
-      {
-        "name": "cell_imperfect_kick_right_01",
-        "file": "cell_imperfect_kick_right_01.png",
-        "w": 31,
-        "h": 45
-      },
-      {
-        "name": "cell_imperfect_kick_right_02",
-        "file": "cell_imperfect_kick_right_02.png",
-        "w": 47,
-        "h": 22
-      }
-    ]
-  },
-  "knockback_back": {
-    "frame_count": 1,
-    "fps": 7,
-    "loop": false,
-    "frames": [
-      {
-        "name": "cell_imperfect_knockback_back_00",
-        "file": "cell_imperfect_knockback_back_00.png",
-        "w": 40,
-        "h": 42
-      }
-    ]
-  },
-  "knockback_up": {
-    "frame_count": 1,
-    "fps": 7,
-    "loop": false,
-    "frames": [
-      {
-        "name": "cell_imperfect_knockback_up_00",
-        "file": "cell_imperfect_knockback_up_00.png",
-        "w": 32,
-        "h": 44
-      }
-    ]
-  },
-  "knockback_down": {
-    "frame_count": 1,
-    "fps": 7,
-    "loop": false,
-    "frames": [
-      {
-        "name": "cell_imperfect_knockback_down_00",
-        "file": "cell_imperfect_knockback_down_00.png",
-        "w": 34,
-        "h": 32
-      }
-    ]
-  },
-  "beam_guard": {
-    "frame_count": 3,
-    "fps": 6,
-    "loop": false,
-    "frames": [
-      {
-        "name": "cell_imperfect_guard_00",
-        "file": "cell_imperfect_guard_00.png",
-        "w": 30,
-        "h": 44
-      },
-      {
-        "name": "cell_imperfect_guard_01",
-        "file": "cell_imperfect_guard_01.png",
-        "w": 34,
-        "h": 43
-      },
-      {
-        "name": "cell_imperfect_guard_02",
-        "file": "cell_imperfect_guard_02.png",
-        "w": 29,
-        "h": 44
       }
     ]
   },
   "evade": {
     "frame_count": 2,
-    "fps": 10,
+    "fps": 6,
     "loop": false,
     "frames": [
       {
@@ -439,7 +234,7 @@
   "gather_power": {
     "frame_count": 1,
     "fps": 6,
-    "loop": true,
+    "loop": false,
     "frames": [
       {
         "name": "cell_imperfect_gather_power_00",
@@ -451,7 +246,7 @@
   },
   "power_up": {
     "frame_count": 1,
-    "fps": 10,
+    "fps": 8,
     "loop": true,
     "frames": [
       {
@@ -464,7 +259,7 @@
   },
   "aura_power": {
     "frame_count": 3,
-    "fps": 10,
+    "fps": 6,
     "loop": true,
     "frames": [
       {
@@ -489,7 +284,7 @@
   },
   "aura_support": {
     "frame_count": 3,
-    "fps": 10,
+    "fps": 6,
     "loop": true,
     "frames": [
       {
@@ -512,40 +307,214 @@
       }
     ]
   },
-  "effects": {
-    "frame_count": 5,
-    "fps": 10,
+  "punch_right": {
+    "frame_count": 6,
+    "fps": 7,
     "loop": false,
     "frames": [
       {
-        "name": "cell_imperfect_form_effect_01",
-        "file": "cell_imperfect_form_effect_01.png",
-        "w": 13,
-        "h": 15
+        "name": "cell_imperfect_attack_fwd_00",
+        "file": "cell_imperfect_attack_fwd_00.png",
+        "w": 31,
+        "h": 44
       },
       {
-        "name": "cell_imperfect_form_effect_02",
-        "file": "cell_imperfect_form_effect_02.png",
-        "w": 24,
-        "h": 16
+        "name": "cell_imperfect_attack_fwd_01",
+        "file": "cell_imperfect_attack_fwd_01.png",
+        "w": 32,
+        "h": 44
       },
       {
-        "name": "cell_imperfect_form_effect_03",
-        "file": "cell_imperfect_form_effect_03.png",
-        "w": 24,
-        "h": 16
+        "name": "cell_imperfect_attack_fwd_02",
+        "file": "cell_imperfect_attack_fwd_02.png",
+        "w": 40,
+        "h": 42
       },
       {
-        "name": "cell_imperfect_form_effect_04",
-        "file": "cell_imperfect_form_effect_04.png",
-        "w": 16,
-        "h": 12
+        "name": "cell_imperfect_attack_fwd_03",
+        "file": "cell_imperfect_attack_fwd_03.png",
+        "w": 40,
+        "h": 46
       },
       {
-        "name": "cell_imperfect_form_effect_05",
-        "file": "cell_imperfect_form_effect_05.png",
-        "w": 16,
-        "h": 12
+        "name": "cell_imperfect_attack_fwd_04",
+        "file": "cell_imperfect_attack_fwd_04.png",
+        "w": 38,
+        "h": 46
+      },
+      {
+        "name": "cell_imperfect_attack_fwd_05",
+        "file": "cell_imperfect_attack_fwd_05.png",
+        "w": 31,
+        "h": 45
+      }
+    ]
+  },
+  "punch_left": {
+    "frame_count": 6,
+    "fps": 7,
+    "loop": false,
+    "frames": [
+      {
+        "name": "cell_imperfect_attack_fwd_00",
+        "file": "cell_imperfect_attack_fwd_00.png",
+        "w": 31,
+        "h": 44
+      },
+      {
+        "name": "cell_imperfect_attack_fwd_01",
+        "file": "cell_imperfect_attack_fwd_01.png",
+        "w": 32,
+        "h": 44
+      },
+      {
+        "name": "cell_imperfect_attack_fwd_02",
+        "file": "cell_imperfect_attack_fwd_02.png",
+        "w": 40,
+        "h": 42
+      },
+      {
+        "name": "cell_imperfect_attack_fwd_03",
+        "file": "cell_imperfect_attack_fwd_03.png",
+        "w": 40,
+        "h": 46
+      },
+      {
+        "name": "cell_imperfect_attack_fwd_04",
+        "file": "cell_imperfect_attack_fwd_04.png",
+        "w": 38,
+        "h": 46
+      },
+      {
+        "name": "cell_imperfect_attack_fwd_05",
+        "file": "cell_imperfect_attack_fwd_05.png",
+        "w": 31,
+        "h": 45
+      }
+    ]
+  },
+  "kick_right": {
+    "frame_count": 3,
+    "fps": 7,
+    "loop": false,
+    "frames": [
+      {
+        "name": "cell_imperfect_attack_ud_00",
+        "file": "cell_imperfect_attack_ud_00.png",
+        "w": 29,
+        "h": 46
+      },
+      {
+        "name": "cell_imperfect_attack_ud_01",
+        "file": "cell_imperfect_attack_ud_01.png",
+        "w": 29,
+        "h": 45
+      },
+      {
+        "name": "cell_imperfect_attack_ud_02",
+        "file": "cell_imperfect_attack_ud_02.png",
+        "w": 34,
+        "h": 32
+      }
+    ]
+  },
+  "knockback_back": {
+    "frame_count": 3,
+    "fps": 6,
+    "loop": false,
+    "frames": [
+      {
+        "name": "cell_imperfect_hurt_00",
+        "file": "cell_imperfect_hurt_00.png",
+        "w": 30,
+        "h": 44
+      },
+      {
+        "name": "cell_imperfect_hurt_01",
+        "file": "cell_imperfect_hurt_01.png",
+        "w": 31,
+        "h": 38
+      },
+      {
+        "name": "cell_imperfect_hurt_02",
+        "file": "cell_imperfect_hurt_02.png",
+        "w": 32,
+        "h": 38
+      }
+    ]
+  },
+  "knockback_up": {
+    "frame_count": 3,
+    "fps": 6,
+    "loop": false,
+    "frames": [
+      {
+        "name": "cell_imperfect_hurt_00",
+        "file": "cell_imperfect_hurt_00.png",
+        "w": 30,
+        "h": 44
+      },
+      {
+        "name": "cell_imperfect_hurt_01",
+        "file": "cell_imperfect_hurt_01.png",
+        "w": 31,
+        "h": 38
+      },
+      {
+        "name": "cell_imperfect_hurt_02",
+        "file": "cell_imperfect_hurt_02.png",
+        "w": 32,
+        "h": 38
+      }
+    ]
+  },
+  "knockback_down": {
+    "frame_count": 3,
+    "fps": 6,
+    "loop": false,
+    "frames": [
+      {
+        "name": "cell_imperfect_hurt_00",
+        "file": "cell_imperfect_hurt_00.png",
+        "w": 30,
+        "h": 44
+      },
+      {
+        "name": "cell_imperfect_hurt_01",
+        "file": "cell_imperfect_hurt_01.png",
+        "w": 31,
+        "h": 38
+      },
+      {
+        "name": "cell_imperfect_hurt_02",
+        "file": "cell_imperfect_hurt_02.png",
+        "w": 32,
+        "h": 38
+      }
+    ]
+  },
+  "beam_guard": {
+    "frame_count": 3,
+    "fps": 6,
+    "loop": false,
+    "frames": [
+      {
+        "name": "cell_imperfect_guard_00",
+        "file": "cell_imperfect_guard_00.png",
+        "w": 30,
+        "h": 44
+      },
+      {
+        "name": "cell_imperfect_guard_01",
+        "file": "cell_imperfect_guard_01.png",
+        "w": 29,
+        "h": 44
+      },
+      {
+        "name": "cell_imperfect_guard_02",
+        "file": "cell_imperfect_guard_02.png",
+        "w": 34,
+        "h": 43
       }
     ]
   }

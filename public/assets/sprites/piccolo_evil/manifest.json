@@ -20,14 +20,14 @@
       {
         "name": "piccolo_evil_move_front_00",
         "file": "piccolo_evil_move_front_00.png",
-        "w": 32,
-        "h": 37
+        "w": 28,
+        "h": 40
       },
       {
         "name": "piccolo_evil_move_front_01",
         "file": "piccolo_evil_move_front_01.png",
-        "w": 28,
-        "h": 40
+        "w": 32,
+        "h": 37
       }
     ]
   },
@@ -58,14 +58,14 @@
       {
         "name": "piccolo_evil_guard_00",
         "file": "piccolo_evil_guard_00.png",
-        "w": 29,
-        "h": 39
+        "w": 30,
+        "h": 40
       },
       {
         "name": "piccolo_evil_guard_01",
         "file": "piccolo_evil_guard_01.png",
-        "w": 30,
-        "h": 40
+        "w": 29,
+        "h": 39
       },
       {
         "name": "piccolo_evil_guard_02",
@@ -76,111 +76,87 @@
     ]
   },
   "attack_fwd": {
-    "frame_count": 10,
-    "fps": 5,
+    "frame_count": 7,
+    "fps": 7,
     "loop": false,
     "frames": [
       {
         "name": "piccolo_evil_attack_fwd_00",
         "file": "piccolo_evil_attack_fwd_00.png",
-        "w": 32,
-        "h": 37
+        "w": 23,
+        "h": 41
       },
       {
         "name": "piccolo_evil_attack_fwd_01",
         "file": "piccolo_evil_attack_fwd_01.png",
-        "w": 31,
-        "h": 37
-      },
-      {
-        "name": "piccolo_evil_attack_fwd_02",
-        "file": "piccolo_evil_attack_fwd_02.png",
         "w": 29,
         "h": 40
       },
       {
+        "name": "piccolo_evil_attack_fwd_02",
+        "file": "piccolo_evil_attack_fwd_02.png",
+        "w": 32,
+        "h": 37
+      },
+      {
         "name": "piccolo_evil_attack_fwd_03",
         "file": "piccolo_evil_attack_fwd_03.png",
-        "w": 29,
-        "h": 38
+        "w": 31,
+        "h": 37
       },
       {
         "name": "piccolo_evil_attack_fwd_04",
         "file": "piccolo_evil_attack_fwd_04.png",
-        "w": 37,
+        "w": 36,
         "h": 36
       },
       {
         "name": "piccolo_evil_attack_fwd_05",
         "file": "piccolo_evil_attack_fwd_05.png",
-        "w": 36,
+        "w": 37,
         "h": 36
       },
       {
         "name": "piccolo_evil_attack_fwd_06",
         "file": "piccolo_evil_attack_fwd_06.png",
-        "w": 23,
-        "h": 41
-      },
-      {
-        "name": "piccolo_evil_attack_fwd_07",
-        "file": "piccolo_evil_attack_fwd_07.png",
-        "w": 37,
-        "h": 42
-      },
-      {
-        "name": "piccolo_evil_attack_fwd_08",
-        "file": "piccolo_evil_attack_fwd_08.png",
-        "w": 32,
-        "h": 38
-      },
-      {
-        "name": "piccolo_evil_attack_fwd_09",
-        "file": "piccolo_evil_attack_fwd_09.png",
         "w": 32,
         "h": 42
       }
     ]
   },
   "attack_ud": {
-    "frame_count": 5,
-    "fps": 5,
+    "frame_count": 4,
+    "fps": 7,
     "loop": false,
     "frames": [
       {
         "name": "piccolo_evil_attack_ud_00",
         "file": "piccolo_evil_attack_ud_00.png",
         "w": 33,
-        "h": 41
+        "h": 27
       },
       {
         "name": "piccolo_evil_attack_ud_01",
         "file": "piccolo_evil_attack_ud_01.png",
-        "w": 29,
-        "h": 38
-      },
-      {
-        "name": "piccolo_evil_attack_ud_02",
-        "file": "piccolo_evil_attack_ud_02.png",
         "w": 23,
         "h": 40
       },
       {
-        "name": "piccolo_evil_attack_ud_03",
-        "file": "piccolo_evil_attack_ud_03.png",
+        "name": "piccolo_evil_attack_ud_02",
+        "file": "piccolo_evil_attack_ud_02.png",
         "w": 33,
-        "h": 27
+        "h": 41
       },
       {
-        "name": "piccolo_evil_attack_ud_04",
-        "file": "piccolo_evil_attack_ud_04.png",
-        "w": 21,
-        "h": 40
+        "name": "piccolo_evil_attack_ud_03",
+        "file": "piccolo_evil_attack_ud_03.png",
+        "w": 29,
+        "h": 38
       }
     ]
   },
   "hurt": {
-    "frame_count": 5,
+    "frame_count": 3,
     "fps": 6,
     "loop": false,
     "frames": [
@@ -201,36 +177,24 @@
         "file": "piccolo_evil_hurt_02.png",
         "w": 31,
         "h": 32
-      },
-      {
-        "name": "piccolo_evil_hurt_03",
-        "file": "piccolo_evil_hurt_03.png",
-        "w": 25,
-        "h": 45
-      },
-      {
-        "name": "piccolo_evil_hurt_04",
-        "file": "piccolo_evil_hurt_04.png",
-        "w": 25,
-        "h": 40
       }
     ]
   },
   "beam_charge": {
-    "frame_count": 9,
+    "frame_count": 5,
     "fps": 7,
     "loop": false,
     "frames": [
       {
         "name": "piccolo_evil_beam_charge_00",
         "file": "piccolo_evil_beam_charge_00.png",
-        "w": 32,
+        "w": 24,
         "h": 37
       },
       {
         "name": "piccolo_evil_beam_charge_01",
         "file": "piccolo_evil_beam_charge_01.png",
-        "w": 32,
+        "w": 31,
         "h": 37
       },
       {
@@ -242,195 +206,20 @@
       {
         "name": "piccolo_evil_beam_charge_03",
         "file": "piccolo_evil_beam_charge_03.png",
-        "w": 40,
-        "h": 37
-      },
-      {
-        "name": "piccolo_evil_beam_charge_04",
-        "file": "piccolo_evil_beam_charge_04.png",
-        "w": 24,
-        "h": 37
-      },
-      {
-        "name": "piccolo_evil_beam_charge_05",
-        "file": "piccolo_evil_beam_charge_05.png",
-        "w": 30,
-        "h": 38
-      },
-      {
-        "name": "piccolo_evil_beam_charge_06",
-        "file": "piccolo_evil_beam_charge_06.png",
         "w": 20,
         "h": 46
       },
       {
-        "name": "piccolo_evil_beam_charge_07",
-        "file": "piccolo_evil_beam_charge_07.png",
-        "w": 31,
-        "h": 37
-      },
-      {
-        "name": "piccolo_evil_beam_charge_08",
-        "file": "piccolo_evil_beam_charge_08.png",
-        "w": 29,
-        "h": 39
-      }
-    ]
-  },
-  "punch_right": {
-    "frame_count": 4,
-    "fps": 7,
-    "loop": false,
-    "frames": [
-      {
-        "name": "piccolo_evil_idle_00",
-        "file": "piccolo_evil_idle_00.png",
-        "w": 29,
-        "h": 39
-      },
-      {
-        "name": "piccolo_evil_attack_fwd_00",
-        "file": "piccolo_evil_attack_fwd_00.png",
-        "w": 32,
-        "h": 37
-      },
-      {
-        "name": "piccolo_evil_attack_fwd_01",
-        "file": "piccolo_evil_attack_fwd_01.png",
-        "w": 31,
-        "h": 37
-      },
-      {
-        "name": "piccolo_evil_attack_fwd_02",
-        "file": "piccolo_evil_attack_fwd_02.png",
-        "w": 29,
-        "h": 40
-      }
-    ]
-  },
-  "punch_left": {
-    "frame_count": 5,
-    "fps": 7,
-    "loop": false,
-    "frames": [
-      {
-        "name": "piccolo_evil_idle_00",
-        "file": "piccolo_evil_idle_00.png",
-        "w": 29,
-        "h": 39
-      },
-      {
-        "name": "piccolo_evil_attack_fwd_03",
-        "file": "piccolo_evil_attack_fwd_03.png",
-        "w": 29,
-        "h": 38
-      },
-      {
-        "name": "piccolo_evil_attack_fwd_04",
-        "file": "piccolo_evil_attack_fwd_04.png",
-        "w": 37,
-        "h": 36
-      },
-      {
-        "name": "piccolo_evil_attack_fwd_05",
-        "file": "piccolo_evil_attack_fwd_05.png",
-        "w": 36,
-        "h": 36
-      },
-      {
-        "name": "piccolo_evil_attack_fwd_06",
-        "file": "piccolo_evil_attack_fwd_06.png",
-        "w": 23,
-        "h": 41
-      }
-    ]
-  },
-  "kick_right": {
-    "frame_count": 2,
-    "fps": 7,
-    "loop": false,
-    "frames": [
-      {
-        "name": "piccolo_evil_kick_right_00",
-        "file": "piccolo_evil_kick_right_00.png",
-        "w": 36,
-        "h": 36
-      },
-      {
-        "name": "piccolo_evil_kick_right_01",
-        "file": "piccolo_evil_kick_right_01.png",
-        "w": 37,
-        "h": 36
-      }
-    ]
-  },
-  "knockback_back": {
-    "frame_count": 1,
-    "fps": 7,
-    "loop": false,
-    "frames": [
-      {
-        "name": "piccolo_evil_knockback_back_00",
-        "file": "piccolo_evil_knockback_back_00.png",
-        "w": 29,
-        "h": 38
-      }
-    ]
-  },
-  "knockback_up": {
-    "frame_count": 1,
-    "fps": 7,
-    "loop": false,
-    "frames": [
-      {
-        "name": "piccolo_evil_knockback_up_00",
-        "file": "piccolo_evil_knockback_up_00.png",
-        "w": 29,
-        "h": 40
-      }
-    ]
-  },
-  "knockback_down": {
-    "frame_count": 1,
-    "fps": 7,
-    "loop": false,
-    "frames": [
-      {
-        "name": "piccolo_evil_knockback_down_00",
-        "file": "piccolo_evil_knockback_down_00.png",
-        "w": 33,
-        "h": 27
-      }
-    ]
-  },
-  "beam_guard": {
-    "frame_count": 3,
-    "fps": 6,
-    "loop": false,
-    "frames": [
-      {
-        "name": "piccolo_evil_guard_00",
-        "file": "piccolo_evil_guard_00.png",
-        "w": 29,
-        "h": 39
-      },
-      {
-        "name": "piccolo_evil_guard_01",
-        "file": "piccolo_evil_guard_01.png",
+        "name": "piccolo_evil_beam_charge_04",
+        "file": "piccolo_evil_beam_charge_04.png",
         "w": 30,
-        "h": 40
-      },
-      {
-        "name": "piccolo_evil_guard_02",
-        "file": "piccolo_evil_guard_02.png",
-        "w": 34,
         "h": 38
       }
     ]
   },
   "evade": {
     "frame_count": 2,
-    "fps": 10,
+    "fps": 6,
     "loop": false,
     "frames": [
       {
@@ -450,7 +239,7 @@
   "gather_power": {
     "frame_count": 1,
     "fps": 6,
-    "loop": true,
+    "loop": false,
     "frames": [
       {
         "name": "piccolo_evil_gather_power_00",
@@ -462,7 +251,7 @@
   },
   "power_up": {
     "frame_count": 1,
-    "fps": 10,
+    "fps": 8,
     "loop": true,
     "frames": [
       {
@@ -475,7 +264,7 @@
   },
   "aura_power": {
     "frame_count": 3,
-    "fps": 10,
+    "fps": 6,
     "loop": true,
     "frames": [
       {
@@ -500,7 +289,7 @@
   },
   "aura_support": {
     "frame_count": 3,
-    "fps": 10,
+    "fps": 6,
     "loop": true,
     "frames": [
       {
@@ -523,34 +312,269 @@
       }
     ]
   },
-  "effects": {
-    "frame_count": 4,
-    "fps": 10,
+  "punch_right": {
+    "frame_count": 7,
+    "fps": 7,
     "loop": false,
     "frames": [
       {
-        "name": "piccolo_evil_effect_01",
-        "file": "piccolo_evil_effect_01.png",
-        "w": 12,
-        "h": 15
+        "name": "piccolo_evil_attack_fwd_00",
+        "file": "piccolo_evil_attack_fwd_00.png",
+        "w": 23,
+        "h": 41
       },
       {
-        "name": "piccolo_evil_effect_02",
-        "file": "piccolo_evil_effect_02.png",
+        "name": "piccolo_evil_attack_fwd_01",
+        "file": "piccolo_evil_attack_fwd_01.png",
+        "w": 29,
+        "h": 40
+      },
+      {
+        "name": "piccolo_evil_attack_fwd_02",
+        "file": "piccolo_evil_attack_fwd_02.png",
+        "w": 32,
+        "h": 37
+      },
+      {
+        "name": "piccolo_evil_attack_fwd_03",
+        "file": "piccolo_evil_attack_fwd_03.png",
+        "w": 31,
+        "h": 37
+      },
+      {
+        "name": "piccolo_evil_attack_fwd_04",
+        "file": "piccolo_evil_attack_fwd_04.png",
+        "w": 36,
+        "h": 36
+      },
+      {
+        "name": "piccolo_evil_attack_fwd_05",
+        "file": "piccolo_evil_attack_fwd_05.png",
+        "w": 37,
+        "h": 36
+      },
+      {
+        "name": "piccolo_evil_attack_fwd_06",
+        "file": "piccolo_evil_attack_fwd_06.png",
+        "w": 32,
+        "h": 42
+      }
+    ]
+  },
+  "punch_left": {
+    "frame_count": 7,
+    "fps": 7,
+    "loop": false,
+    "frames": [
+      {
+        "name": "piccolo_evil_attack_fwd_00",
+        "file": "piccolo_evil_attack_fwd_00.png",
+        "w": 23,
+        "h": 41
+      },
+      {
+        "name": "piccolo_evil_attack_fwd_01",
+        "file": "piccolo_evil_attack_fwd_01.png",
+        "w": 29,
+        "h": 40
+      },
+      {
+        "name": "piccolo_evil_attack_fwd_02",
+        "file": "piccolo_evil_attack_fwd_02.png",
+        "w": 32,
+        "h": 37
+      },
+      {
+        "name": "piccolo_evil_attack_fwd_03",
+        "file": "piccolo_evil_attack_fwd_03.png",
+        "w": 31,
+        "h": 37
+      },
+      {
+        "name": "piccolo_evil_attack_fwd_04",
+        "file": "piccolo_evil_attack_fwd_04.png",
+        "w": 36,
+        "h": 36
+      },
+      {
+        "name": "piccolo_evil_attack_fwd_05",
+        "file": "piccolo_evil_attack_fwd_05.png",
+        "w": 37,
+        "h": 36
+      },
+      {
+        "name": "piccolo_evil_attack_fwd_06",
+        "file": "piccolo_evil_attack_fwd_06.png",
+        "w": 32,
+        "h": 42
+      }
+    ]
+  },
+  "kick_right": {
+    "frame_count": 4,
+    "fps": 7,
+    "loop": false,
+    "frames": [
+      {
+        "name": "piccolo_evil_attack_ud_00",
+        "file": "piccolo_evil_attack_ud_00.png",
+        "w": 33,
+        "h": 27
+      },
+      {
+        "name": "piccolo_evil_attack_ud_01",
+        "file": "piccolo_evil_attack_ud_01.png",
+        "w": 23,
+        "h": 40
+      },
+      {
+        "name": "piccolo_evil_attack_ud_02",
+        "file": "piccolo_evil_attack_ud_02.png",
+        "w": 33,
+        "h": 41
+      },
+      {
+        "name": "piccolo_evil_attack_ud_03",
+        "file": "piccolo_evil_attack_ud_03.png",
+        "w": 29,
+        "h": 38
+      }
+    ]
+  },
+  "knockback_back": {
+    "frame_count": 3,
+    "fps": 6,
+    "loop": false,
+    "frames": [
+      {
+        "name": "piccolo_evil_hurt_00",
+        "file": "piccolo_evil_hurt_00.png",
+        "w": 28,
+        "h": 39
+      },
+      {
+        "name": "piccolo_evil_hurt_01",
+        "file": "piccolo_evil_hurt_01.png",
+        "w": 27,
+        "h": 39
+      },
+      {
+        "name": "piccolo_evil_hurt_02",
+        "file": "piccolo_evil_hurt_02.png",
+        "w": 31,
+        "h": 32
+      }
+    ]
+  },
+  "knockback_up": {
+    "frame_count": 3,
+    "fps": 6,
+    "loop": false,
+    "frames": [
+      {
+        "name": "piccolo_evil_hurt_00",
+        "file": "piccolo_evil_hurt_00.png",
+        "w": 28,
+        "h": 39
+      },
+      {
+        "name": "piccolo_evil_hurt_01",
+        "file": "piccolo_evil_hurt_01.png",
+        "w": 27,
+        "h": 39
+      },
+      {
+        "name": "piccolo_evil_hurt_02",
+        "file": "piccolo_evil_hurt_02.png",
+        "w": 31,
+        "h": 32
+      }
+    ]
+  },
+  "knockback_down": {
+    "frame_count": 3,
+    "fps": 6,
+    "loop": false,
+    "frames": [
+      {
+        "name": "piccolo_evil_hurt_00",
+        "file": "piccolo_evil_hurt_00.png",
+        "w": 28,
+        "h": 39
+      },
+      {
+        "name": "piccolo_evil_hurt_01",
+        "file": "piccolo_evil_hurt_01.png",
+        "w": 27,
+        "h": 39
+      },
+      {
+        "name": "piccolo_evil_hurt_02",
+        "file": "piccolo_evil_hurt_02.png",
+        "w": 31,
+        "h": 32
+      }
+    ]
+  },
+  "beam_guard": {
+    "frame_count": 3,
+    "fps": 6,
+    "loop": false,
+    "frames": [
+      {
+        "name": "piccolo_evil_guard_00",
+        "file": "piccolo_evil_guard_00.png",
+        "w": 30,
+        "h": 40
+      },
+      {
+        "name": "piccolo_evil_guard_01",
+        "file": "piccolo_evil_guard_01.png",
+        "w": 29,
+        "h": 39
+      },
+      {
+        "name": "piccolo_evil_guard_02",
+        "file": "piccolo_evil_guard_02.png",
+        "w": 34,
+        "h": 38
+      }
+    ]
+  },
+  "beam_fire": {
+    "frame_count": 5,
+    "fps": 7,
+    "loop": false,
+    "frames": [
+      {
+        "name": "piccolo_evil_beam_charge_00",
+        "file": "piccolo_evil_beam_charge_00.png",
         "w": 24,
-        "h": 16
+        "h": 37
       },
       {
-        "name": "piccolo_evil_effect_03",
-        "file": "piccolo_evil_effect_03.png",
-        "w": 24,
-        "h": 16
+        "name": "piccolo_evil_beam_charge_01",
+        "file": "piccolo_evil_beam_charge_01.png",
+        "w": 31,
+        "h": 37
       },
       {
-        "name": "piccolo_evil_effect_04",
-        "file": "piccolo_evil_effect_04.png",
-        "w": 12,
-        "h": 16
+        "name": "piccolo_evil_beam_charge_02",
+        "file": "piccolo_evil_beam_charge_02.png",
+        "w": 28,
+        "h": 37
+      },
+      {
+        "name": "piccolo_evil_beam_charge_03",
+        "file": "piccolo_evil_beam_charge_03.png",
+        "w": 20,
+        "h": 46
+      },
+      {
+        "name": "piccolo_evil_beam_charge_04",
+        "file": "piccolo_evil_beam_charge_04.png",
+        "w": 30,
+        "h": 38
       }
     ]
   }

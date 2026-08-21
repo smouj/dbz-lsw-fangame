@@ -20,14 +20,14 @@
       {
         "name": "frieza_final_move_front_00",
         "file": "frieza_final_move_front_00.png",
-        "w": 32,
-        "h": 36
+        "w": 30,
+        "h": 39
       },
       {
         "name": "frieza_final_move_front_01",
         "file": "frieza_final_move_front_01.png",
-        "w": 30,
-        "h": 39
+        "w": 32,
+        "h": 36
       }
     ]
   },
@@ -76,39 +76,39 @@
     ]
   },
   "attack_fwd": {
-    "frame_count": 8,
-    "fps": 5,
+    "frame_count": 7,
+    "fps": 7,
     "loop": false,
     "frames": [
       {
         "name": "frieza_final_attack_fwd_00",
         "file": "frieza_final_attack_fwd_00.png",
-        "w": 32,
-        "h": 37
+        "w": 24,
+        "h": 40
       },
       {
         "name": "frieza_final_attack_fwd_01",
         "file": "frieza_final_attack_fwd_01.png",
-        "w": 31,
-        "h": 37
-      },
-      {
-        "name": "frieza_final_attack_fwd_02",
-        "file": "frieza_final_attack_fwd_02.png",
-        "w": 39,
-        "h": 37
-      },
-      {
-        "name": "frieza_final_attack_fwd_03",
-        "file": "frieza_final_attack_fwd_03.png",
         "w": 38,
         "h": 40
       },
       {
+        "name": "frieza_final_attack_fwd_02",
+        "file": "frieza_final_attack_fwd_02.png",
+        "w": 36,
+        "h": 34
+      },
+      {
+        "name": "frieza_final_attack_fwd_03",
+        "file": "frieza_final_attack_fwd_03.png",
+        "w": 32,
+        "h": 37
+      },
+      {
         "name": "frieza_final_attack_fwd_04",
         "file": "frieza_final_attack_fwd_04.png",
-        "w": 41,
-        "h": 35
+        "w": 31,
+        "h": 37
       },
       {
         "name": "frieza_final_attack_fwd_05",
@@ -119,39 +119,33 @@
       {
         "name": "frieza_final_attack_fwd_06",
         "file": "frieza_final_attack_fwd_06.png",
-        "w": 24,
-        "h": 40
-      },
-      {
-        "name": "frieza_final_attack_fwd_07",
-        "file": "frieza_final_attack_fwd_07.png",
-        "w": 36,
-        "h": 34
+        "w": 41,
+        "h": 35
       }
     ]
   },
   "attack_ud": {
     "frame_count": 4,
-    "fps": 5,
+    "fps": 7,
     "loop": false,
     "frames": [
       {
         "name": "frieza_final_attack_ud_00",
         "file": "frieza_final_attack_ud_00.png",
-        "w": 34,
-        "h": 40
-      },
-      {
-        "name": "frieza_final_attack_ud_01",
-        "file": "frieza_final_attack_ud_01.png",
         "w": 30,
         "h": 41
       },
       {
-        "name": "frieza_final_attack_ud_02",
-        "file": "frieza_final_attack_ud_02.png",
+        "name": "frieza_final_attack_ud_01",
+        "file": "frieza_final_attack_ud_01.png",
         "w": 26,
         "h": 39
+      },
+      {
+        "name": "frieza_final_attack_ud_02",
+        "file": "frieza_final_attack_ud_02.png",
+        "w": 34,
+        "h": 40
       },
       {
         "name": "frieza_final_attack_ud_03",
@@ -162,7 +156,7 @@
     ]
   },
   "hurt": {
-    "frame_count": 5,
+    "frame_count": 3,
     "fps": 6,
     "loop": false,
     "frames": [
@@ -183,23 +177,11 @@
         "file": "frieza_final_hurt_02.png",
         "w": 32,
         "h": 31
-      },
-      {
-        "name": "frieza_final_hurt_03",
-        "file": "frieza_final_hurt_03.png",
-        "w": 25,
-        "h": 40
-      },
-      {
-        "name": "frieza_final_hurt_04",
-        "file": "frieza_final_hurt_04.png",
-        "w": 27,
-        "h": 45
       }
     ]
   },
   "beam_charge": {
-    "frame_count": 5,
+    "frame_count": 2,
     "fps": 7,
     "loop": false,
     "frames": [
@@ -214,30 +196,12 @@
         "file": "frieza_final_beam_charge_01.png",
         "w": 32,
         "h": 37
-      },
-      {
-        "name": "frieza_final_beam_charge_02",
-        "file": "frieza_final_beam_charge_02.png",
-        "w": 30,
-        "h": 39
-      },
-      {
-        "name": "frieza_final_beam_charge_03",
-        "file": "frieza_final_beam_charge_03.png",
-        "w": 40,
-        "h": 40
-      },
-      {
-        "name": "frieza_final_beam_charge_04",
-        "file": "frieza_final_beam_charge_04.png",
-        "w": 30,
-        "h": 42
       }
     ]
   },
   "beam_fire": {
-    "frame_count": 5,
-    "fps": 8,
+    "frame_count": 6,
+    "fps": 7,
     "loop": false,
     "frames": [
       {
@@ -250,81 +214,163 @@
         "name": "frieza_final_beam_fire_01",
         "file": "frieza_final_beam_fire_01.png",
         "w": 32,
-        "h": 37
+        "h": 43
       },
       {
         "name": "frieza_final_beam_fire_02",
         "file": "frieza_final_beam_fire_02.png",
-        "w": 32,
-        "h": 37
+        "w": 26,
+        "h": 43
       },
       {
         "name": "frieza_final_beam_fire_03",
         "file": "frieza_final_beam_fire_03.png",
         "w": 32,
-        "h": 43
+        "h": 37
       },
       {
         "name": "frieza_final_beam_fire_04",
         "file": "frieza_final_beam_fire_04.png",
-        "w": 26,
-        "h": 43
-      }
-    ]
-  },
-  "punch_right": {
-    "frame_count": 4,
-    "fps": 7,
-    "loop": false,
-    "frames": [
-      {
-        "name": "frieza_final_idle_00",
-        "file": "frieza_final_idle_00.png",
-        "w": 28,
-        "h": 40
-      },
-      {
-        "name": "frieza_final_attack_fwd_00",
-        "file": "frieza_final_attack_fwd_00.png",
         "w": 32,
         "h": 37
       },
       {
-        "name": "frieza_final_attack_fwd_01",
-        "file": "frieza_final_attack_fwd_01.png",
-        "w": 31,
-        "h": 37
-      },
-      {
-        "name": "frieza_final_attack_fwd_02",
-        "file": "frieza_final_attack_fwd_02.png",
-        "w": 39,
+        "name": "frieza_final_beam_fire_05",
+        "file": "frieza_final_beam_fire_05.png",
+        "w": 32,
         "h": 37
       }
     ]
   },
-  "punch_left": {
-    "frame_count": 5,
+  "evade": {
+    "frame_count": 2,
+    "fps": 6,
+    "loop": false,
+    "frames": [
+      {
+        "name": "frieza_final_evade_00",
+        "file": "frieza_final_evade_00.png",
+        "w": 23,
+        "h": 41
+      },
+      {
+        "name": "frieza_final_evade_01",
+        "file": "frieza_final_evade_01.png",
+        "w": 40,
+        "h": 31
+      }
+    ]
+  },
+  "gather_power": {
+    "frame_count": 1,
+    "fps": 6,
+    "loop": false,
+    "frames": [
+      {
+        "name": "frieza_final_gather_power_00",
+        "file": "frieza_final_gather_power_00.png",
+        "w": 32,
+        "h": 37
+      }
+    ]
+  },
+  "power_up": {
+    "frame_count": 1,
+    "fps": 8,
+    "loop": true,
+    "frames": [
+      {
+        "name": "frieza_final_power_up_00",
+        "file": "frieza_final_power_up_00.png",
+        "w": 32,
+        "h": 37
+      }
+    ]
+  },
+  "aura_power": {
+    "frame_count": 3,
+    "fps": 6,
+    "loop": true,
+    "frames": [
+      {
+        "name": "frieza_final_aura_power_00",
+        "file": "frieza_final_aura_power_00.png",
+        "w": 64,
+        "h": 56
+      },
+      {
+        "name": "frieza_final_aura_power_01",
+        "file": "frieza_final_aura_power_01.png",
+        "w": 64,
+        "h": 56
+      },
+      {
+        "name": "frieza_final_aura_power_02",
+        "file": "frieza_final_aura_power_02.png",
+        "w": 64,
+        "h": 56
+      }
+    ]
+  },
+  "aura_support": {
+    "frame_count": 3,
+    "fps": 6,
+    "loop": true,
+    "frames": [
+      {
+        "name": "frieza_final_aura_support_00",
+        "file": "frieza_final_aura_support_00.png",
+        "w": 64,
+        "h": 56
+      },
+      {
+        "name": "frieza_final_aura_support_01",
+        "file": "frieza_final_aura_support_01.png",
+        "w": 64,
+        "h": 56
+      },
+      {
+        "name": "frieza_final_aura_support_02",
+        "file": "frieza_final_aura_support_02.png",
+        "w": 64,
+        "h": 56
+      }
+    ]
+  },
+  "punch_right": {
+    "frame_count": 7,
     "fps": 7,
     "loop": false,
     "frames": [
       {
-        "name": "frieza_final_idle_00",
-        "file": "frieza_final_idle_00.png",
-        "w": 28,
+        "name": "frieza_final_attack_fwd_00",
+        "file": "frieza_final_attack_fwd_00.png",
+        "w": 24,
         "h": 40
       },
       {
-        "name": "frieza_final_attack_fwd_03",
-        "file": "frieza_final_attack_fwd_03.png",
+        "name": "frieza_final_attack_fwd_01",
+        "file": "frieza_final_attack_fwd_01.png",
         "w": 38,
         "h": 40
       },
       {
+        "name": "frieza_final_attack_fwd_02",
+        "file": "frieza_final_attack_fwd_02.png",
+        "w": 36,
+        "h": 34
+      },
+      {
+        "name": "frieza_final_attack_fwd_03",
+        "file": "frieza_final_attack_fwd_03.png",
+        "w": 32,
+        "h": 37
+      },
+      {
         "name": "frieza_final_attack_fwd_04",
         "file": "frieza_final_attack_fwd_04.png",
-        "w": 41,
-        "h": 35
+        "w": 31,
+        "h": 37
       },
       {
         "name": "frieza_final_attack_fwd_05",
@@ -335,66 +381,163 @@
       {
         "name": "frieza_final_attack_fwd_06",
         "file": "frieza_final_attack_fwd_06.png",
-        "w": 24,
-        "h": 40
-      }
-    ]
-  },
-  "kick_right": {
-    "frame_count": 2,
-    "fps": 7,
-    "loop": false,
-    "frames": [
-      {
-        "name": "frieza_final_kick_right_00",
-        "file": "frieza_final_kick_right_00.png",
-        "w": 39,
-        "h": 35
-      },
-      {
-        "name": "frieza_final_kick_right_01",
-        "file": "frieza_final_kick_right_01.png",
         "w": 41,
         "h": 35
       }
     ]
   },
-  "knockback_back": {
-    "frame_count": 1,
+  "punch_left": {
+    "frame_count": 7,
     "fps": 7,
     "loop": false,
     "frames": [
       {
-        "name": "frieza_final_knockback_back_00",
-        "file": "frieza_final_knockback_back_00.png",
-        "w": 39,
+        "name": "frieza_final_attack_fwd_00",
+        "file": "frieza_final_attack_fwd_00.png",
+        "w": 24,
+        "h": 40
+      },
+      {
+        "name": "frieza_final_attack_fwd_01",
+        "file": "frieza_final_attack_fwd_01.png",
+        "w": 38,
+        "h": 40
+      },
+      {
+        "name": "frieza_final_attack_fwd_02",
+        "file": "frieza_final_attack_fwd_02.png",
+        "w": 36,
+        "h": 34
+      },
+      {
+        "name": "frieza_final_attack_fwd_03",
+        "file": "frieza_final_attack_fwd_03.png",
+        "w": 32,
         "h": 37
+      },
+      {
+        "name": "frieza_final_attack_fwd_04",
+        "file": "frieza_final_attack_fwd_04.png",
+        "w": 31,
+        "h": 37
+      },
+      {
+        "name": "frieza_final_attack_fwd_05",
+        "file": "frieza_final_attack_fwd_05.png",
+        "w": 39,
+        "h": 35
+      },
+      {
+        "name": "frieza_final_attack_fwd_06",
+        "file": "frieza_final_attack_fwd_06.png",
+        "w": 41,
+        "h": 35
       }
     ]
   },
-  "knockback_up": {
-    "frame_count": 1,
+  "kick_right": {
+    "frame_count": 4,
     "fps": 7,
     "loop": false,
     "frames": [
       {
-        "name": "frieza_final_knockback_up_00",
-        "file": "frieza_final_knockback_up_00.png",
+        "name": "frieza_final_attack_ud_00",
+        "file": "frieza_final_attack_ud_00.png",
+        "w": 30,
+        "h": 41
+      },
+      {
+        "name": "frieza_final_attack_ud_01",
+        "file": "frieza_final_attack_ud_01.png",
+        "w": 26,
+        "h": 39
+      },
+      {
+        "name": "frieza_final_attack_ud_02",
+        "file": "frieza_final_attack_ud_02.png",
+        "w": 34,
+        "h": 40
+      },
+      {
+        "name": "frieza_final_attack_ud_03",
+        "file": "frieza_final_attack_ud_03.png",
         "w": 30,
         "h": 32
       }
     ]
   },
-  "knockback_down": {
-    "frame_count": 1,
-    "fps": 7,
+  "knockback_back": {
+    "frame_count": 3,
+    "fps": 6,
     "loop": false,
     "frames": [
       {
-        "name": "frieza_final_knockback_down_00",
-        "file": "frieza_final_knockback_down_00.png",
-        "w": 36,
-        "h": 34
+        "name": "frieza_final_hurt_00",
+        "file": "frieza_final_hurt_00.png",
+        "w": 31,
+        "h": 38
+      },
+      {
+        "name": "frieza_final_hurt_01",
+        "file": "frieza_final_hurt_01.png",
+        "w": 31,
+        "h": 38
+      },
+      {
+        "name": "frieza_final_hurt_02",
+        "file": "frieza_final_hurt_02.png",
+        "w": 32,
+        "h": 31
+      }
+    ]
+  },
+  "knockback_up": {
+    "frame_count": 3,
+    "fps": 6,
+    "loop": false,
+    "frames": [
+      {
+        "name": "frieza_final_hurt_00",
+        "file": "frieza_final_hurt_00.png",
+        "w": 31,
+        "h": 38
+      },
+      {
+        "name": "frieza_final_hurt_01",
+        "file": "frieza_final_hurt_01.png",
+        "w": 31,
+        "h": 38
+      },
+      {
+        "name": "frieza_final_hurt_02",
+        "file": "frieza_final_hurt_02.png",
+        "w": 32,
+        "h": 31
+      }
+    ]
+  },
+  "knockback_down": {
+    "frame_count": 3,
+    "fps": 6,
+    "loop": false,
+    "frames": [
+      {
+        "name": "frieza_final_hurt_00",
+        "file": "frieza_final_hurt_00.png",
+        "w": 31,
+        "h": 38
+      },
+      {
+        "name": "frieza_final_hurt_01",
+        "file": "frieza_final_hurt_01.png",
+        "w": 31,
+        "h": 38
+      },
+      {
+        "name": "frieza_final_hurt_02",
+        "file": "frieza_final_hurt_02.png",
+        "w": 32,
+        "h": 31
       }
     ]
   },
@@ -420,132 +563,6 @@
         "file": "frieza_final_guard_02.png",
         "w": 34,
         "h": 37
-      }
-    ]
-  },
-  "evade": {
-    "frame_count": 2,
-    "fps": 10,
-    "loop": false,
-    "frames": [
-      {
-        "name": "frieza_final_evade_00",
-        "file": "frieza_final_evade_00.png",
-        "w": 23,
-        "h": 41
-      },
-      {
-        "name": "frieza_final_evade_01",
-        "file": "frieza_final_evade_01.png",
-        "w": 40,
-        "h": 31
-      }
-    ]
-  },
-  "gather_power": {
-    "frame_count": 1,
-    "fps": 6,
-    "loop": true,
-    "frames": [
-      {
-        "name": "frieza_final_gather_power_00",
-        "file": "frieza_final_gather_power_00.png",
-        "w": 32,
-        "h": 37
-      }
-    ]
-  },
-  "power_up": {
-    "frame_count": 1,
-    "fps": 10,
-    "loop": true,
-    "frames": [
-      {
-        "name": "frieza_final_power_up_00",
-        "file": "frieza_final_power_up_00.png",
-        "w": 32,
-        "h": 37
-      }
-    ]
-  },
-  "aura_power": {
-    "frame_count": 3,
-    "fps": 10,
-    "loop": true,
-    "frames": [
-      {
-        "name": "frieza_final_aura_power_00",
-        "file": "frieza_final_aura_power_00.png",
-        "w": 64,
-        "h": 56
-      },
-      {
-        "name": "frieza_final_aura_power_01",
-        "file": "frieza_final_aura_power_01.png",
-        "w": 64,
-        "h": 56
-      },
-      {
-        "name": "frieza_final_aura_power_02",
-        "file": "frieza_final_aura_power_02.png",
-        "w": 64,
-        "h": 56
-      }
-    ]
-  },
-  "aura_support": {
-    "frame_count": 3,
-    "fps": 10,
-    "loop": true,
-    "frames": [
-      {
-        "name": "frieza_final_aura_support_00",
-        "file": "frieza_final_aura_support_00.png",
-        "w": 64,
-        "h": 56
-      },
-      {
-        "name": "frieza_final_aura_support_01",
-        "file": "frieza_final_aura_support_01.png",
-        "w": 64,
-        "h": 56
-      },
-      {
-        "name": "frieza_final_aura_support_02",
-        "file": "frieza_final_aura_support_02.png",
-        "w": 64,
-        "h": 56
-      }
-    ]
-  },
-  "effects": {
-    "frame_count": 4,
-    "fps": 10,
-    "loop": false,
-    "frames": [
-      {
-        "name": "frieza_final_effect_01",
-        "file": "frieza_final_effect_01.png",
-        "w": 14,
-        "h": 13
-      },
-      {
-        "name": "frieza_final_effect_02",
-        "file": "frieza_final_effect_02.png",
-        "w": 24,
-        "h": 16
-      },
-      {
-        "name": "frieza_final_effect_03",
-        "file": "frieza_final_effect_03.png",
-        "w": 16,
-        "h": 12
-      },
-      {
-        "name": "frieza_final_effect_04",
-        "file": "frieza_final_effect_04.png",
-        "w": 39,
-        "h": 12
       }
     ]
   }

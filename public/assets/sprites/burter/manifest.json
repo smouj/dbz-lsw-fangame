@@ -20,14 +20,14 @@
       {
         "name": "burter_move_front_00",
         "file": "burter_move_front_00.png",
-        "w": 32,
-        "h": 37
+        "w": 30,
+        "h": 40
       },
       {
         "name": "burter_move_front_01",
         "file": "burter_move_front_01.png",
-        "w": 30,
-        "h": 40
+        "w": 32,
+        "h": 37
       }
     ]
   },
@@ -77,69 +77,69 @@
   },
   "attack_fwd": {
     "frame_count": 7,
-    "fps": 5,
+    "fps": 7,
     "loop": false,
     "frames": [
       {
         "name": "burter_attack_fwd_00",
         "file": "burter_attack_fwd_00.png",
-        "w": 32,
-        "h": 36
+        "w": 24,
+        "h": 41
       },
       {
         "name": "burter_attack_fwd_01",
         "file": "burter_attack_fwd_01.png",
-        "w": 31,
-        "h": 36
-      },
-      {
-        "name": "burter_attack_fwd_02",
-        "file": "burter_attack_fwd_02.png",
         "w": 38,
         "h": 38
       },
       {
+        "name": "burter_attack_fwd_02",
+        "file": "burter_attack_fwd_02.png",
+        "w": 40,
+        "h": 32
+      },
+      {
         "name": "burter_attack_fwd_03",
         "file": "burter_attack_fwd_03.png",
-        "w": 37,
+        "w": 32,
         "h": 36
       },
       {
         "name": "burter_attack_fwd_04",
         "file": "burter_attack_fwd_04.png",
-        "w": 36,
+        "w": 31,
         "h": 36
       },
       {
         "name": "burter_attack_fwd_05",
         "file": "burter_attack_fwd_05.png",
-        "w": 24,
-        "h": 41
+        "w": 37,
+        "h": 36
       },
       {
         "name": "burter_attack_fwd_06",
         "file": "burter_attack_fwd_06.png",
-        "w": 40,
-        "h": 32
+        "w": 36,
+        "h": 36
       }
     ]
   },
   "attack_ud": {
     "frame_count": 4,
-    "fps": 5,
+    "fps": 7,
     "loop": false,
     "frames": [
       {
         "name": "burter_attack_ud_00",
         "file": "burter_attack_ud_00.png",
-        "w": 29,
-        "h": 42
+        "w": 32,
+        "h": 26
       },
       {
         "name": "burter_attack_ud_01",
         "file": "burter_attack_ud_01.png",
         "w": 29,
-        "h": 38
+        "h": 42
       },
       {
         "name": "burter_attack_ud_02",
@@ -150,13 +150,13 @@
       {
         "name": "burter_attack_ud_03",
         "file": "burter_attack_ud_03.png",
-        "w": 32,
-        "h": 26
+        "w": 29,
+        "h": 38
       }
     ]
   },
   "hurt": {
-    "frame_count": 5,
+    "frame_count": 3,
     "fps": 6,
     "loop": false,
     "frames": [
@@ -177,31 +177,19 @@
         "file": "burter_hurt_02.png",
         "w": 32,
         "h": 32
-      },
-      {
-        "name": "burter_hurt_03",
-        "file": "burter_hurt_03.png",
-        "w": 24,
-        "h": 40
-      },
-      {
-        "name": "burter_hurt_04",
-        "file": "burter_hurt_04.png",
-        "w": 26,
-        "h": 45
       }
     ]
   },
   "beam_charge": {
-    "frame_count": 4,
+    "frame_count": 3,
     "fps": 7,
     "loop": false,
     "frames": [
       {
         "name": "burter_beam_charge_00",
         "file": "burter_beam_charge_00.png",
-        "w": 32,
-        "h": 36
+        "w": 27,
+        "h": 40
       },
       {
         "name": "burter_beam_charge_01",
@@ -212,165 +200,319 @@
       {
         "name": "burter_beam_charge_02",
         "file": "burter_beam_charge_02.png",
-        "w": 27,
-        "h": 40
-      },
-      {
-        "name": "burter_beam_charge_03",
-        "file": "burter_beam_charge_03.png",
-        "w": 38,
-        "h": 35
+        "w": 32,
+        "h": 36
       }
     ]
   },
-  "beam_fire": {
-    "frame_count": 3,
-    "fps": 8,
+  "evade": {
+    "frame_count": 2,
+    "fps": 6,
     "loop": false,
     "frames": [
       {
-        "name": "burter_beam_fire_00",
-        "file": "burter_beam_fire_00.png",
-        "w": 32,
-        "h": 48
-      },
-      {
-        "name": "burter_beam_fire_01",
-        "file": "burter_beam_fire_01.png",
-        "w": 32,
-        "h": 48
-      },
-      {
-        "name": "burter_beam_fire_02",
-        "file": "burter_beam_fire_02.png",
-        "w": 31,
-        "h": 48
-      }
-    ]
-  },
-  "punch_right": {
-    "frame_count": 4,
-    "fps": 7,
-    "loop": false,
-    "frames": [
-      {
-        "name": "burter_idle_00",
-        "file": "burter_idle_00.png",
-        "w": 29,
-        "h": 40
-      },
-      {
-        "name": "burter_attack_fwd_00",
-        "file": "burter_attack_fwd_00.png",
-        "w": 32,
-        "h": 36
-      },
-      {
-        "name": "burter_attack_fwd_01",
-        "file": "burter_attack_fwd_01.png",
-        "w": 31,
-        "h": 36
-      },
-      {
-        "name": "burter_attack_fwd_02",
-        "file": "burter_attack_fwd_02.png",
-        "w": 38,
-        "h": 38
-      }
-    ]
-  },
-  "punch_left": {
-    "frame_count": 5,
-    "fps": 7,
-    "loop": false,
-    "frames": [
-      {
-        "name": "burter_idle_00",
-        "file": "burter_idle_00.png",
-        "w": 29,
-        "h": 40
-      },
-      {
-        "name": "burter_attack_fwd_03",
-        "file": "burter_attack_fwd_03.png",
-        "w": 37,
-        "h": 36
-      },
-      {
-        "name": "burter_attack_fwd_04",
-        "file": "burter_attack_fwd_04.png",
-        "w": 36,
-        "h": 36
-      },
-      {
-        "name": "burter_attack_fwd_05",
-        "file": "burter_attack_fwd_05.png",
-        "w": 24,
+        "name": "burter_evade_00",
+        "file": "burter_evade_00.png",
+        "w": 23,
         "h": 41
       },
       {
-        "name": "burter_attack_fwd_06",
-        "file": "burter_attack_fwd_06.png",
+        "name": "burter_evade_01",
+        "file": "burter_evade_01.png",
         "w": 40,
-        "h": 32
+        "h": 31
       }
     ]
   },
-  "kick_right": {
+  "gather_power": {
     "frame_count": 2,
-    "fps": 7,
+    "fps": 6,
     "loop": false,
     "frames": [
       {
-        "name": "burter_kick_right_00",
-        "file": "burter_kick_right_00.png",
-        "w": 37,
-        "h": 36
+        "name": "burter_gather_power_00",
+        "file": "burter_gather_power_00.png",
+        "w": 30,
+        "h": 40
       },
       {
-        "name": "burter_kick_right_01",
-        "file": "burter_kick_right_01.png",
-        "w": 36,
-        "h": 36
-      }
-    ]
-  },
-  "knockback_back": {
-    "frame_count": 1,
-    "fps": 7,
-    "loop": false,
-    "frames": [
-      {
-        "name": "burter_knockback_back_00",
-        "file": "burter_knockback_back_00.png",
-        "w": 40,
-        "h": 32
-      }
-    ]
-  },
-  "knockback_up": {
-    "frame_count": 1,
-    "fps": 7,
-    "loop": false,
-    "frames": [
-      {
-        "name": "burter_knockback_up_00",
-        "file": "burter_knockback_up_00.png",
+        "name": "burter_gather_power_01",
+        "file": "burter_gather_power_01.png",
         "w": 32,
         "h": 37
       }
     ]
   },
-  "knockback_down": {
-    "frame_count": 1,
+  "power_up": {
+    "frame_count": 2,
+    "fps": 8,
+    "loop": true,
+    "frames": [
+      {
+        "name": "burter_power_up_00",
+        "file": "burter_power_up_00.png",
+        "w": 30,
+        "h": 40
+      },
+      {
+        "name": "burter_power_up_01",
+        "file": "burter_power_up_01.png",
+        "w": 32,
+        "h": 37
+      }
+    ]
+  },
+  "aura_power": {
+    "frame_count": 3,
+    "fps": 6,
+    "loop": true,
+    "frames": [
+      {
+        "name": "burter_aura_power_00",
+        "file": "burter_aura_power_00.png",
+        "w": 64,
+        "h": 56
+      },
+      {
+        "name": "burter_aura_power_01",
+        "file": "burter_aura_power_01.png",
+        "w": 64,
+        "h": 56
+      },
+      {
+        "name": "burter_aura_power_02",
+        "file": "burter_aura_power_02.png",
+        "w": 64,
+        "h": 56
+      }
+    ]
+  },
+  "aura_support": {
+    "frame_count": 3,
+    "fps": 6,
+    "loop": true,
+    "frames": [
+      {
+        "name": "burter_aura_support_00",
+        "file": "burter_aura_support_00.png",
+        "w": 64,
+        "h": 56
+      },
+      {
+        "name": "burter_aura_support_01",
+        "file": "burter_aura_support_01.png",
+        "w": 64,
+        "h": 56
+      },
+      {
+        "name": "burter_aura_support_02",
+        "file": "burter_aura_support_02.png",
+        "w": 64,
+        "h": 56
+      }
+    ]
+  },
+  "punch_right": {
+    "frame_count": 7,
     "fps": 7,
     "loop": false,
     "frames": [
       {
-        "name": "burter_knockback_down_00",
-        "file": "burter_knockback_down_00.png",
+        "name": "burter_attack_fwd_00",
+        "file": "burter_attack_fwd_00.png",
+        "w": 24,
+        "h": 41
+      },
+      {
+        "name": "burter_attack_fwd_01",
+        "file": "burter_attack_fwd_01.png",
+        "w": 38,
+        "h": 38
+      },
+      {
+        "name": "burter_attack_fwd_02",
+        "file": "burter_attack_fwd_02.png",
+        "w": 40,
+        "h": 32
+      },
+      {
+        "name": "burter_attack_fwd_03",
+        "file": "burter_attack_fwd_03.png",
+        "w": 32,
+        "h": 36
+      },
+      {
+        "name": "burter_attack_fwd_04",
+        "file": "burter_attack_fwd_04.png",
+        "w": 31,
+        "h": 36
+      },
+      {
+        "name": "burter_attack_fwd_05",
+        "file": "burter_attack_fwd_05.png",
+        "w": 37,
+        "h": 36
+      },
+      {
+        "name": "burter_attack_fwd_06",
+        "file": "burter_attack_fwd_06.png",
+        "w": 36,
+        "h": 36
+      }
+    ]
+  },
+  "punch_left": {
+    "frame_count": 7,
+    "fps": 7,
+    "loop": false,
+    "frames": [
+      {
+        "name": "burter_attack_fwd_00",
+        "file": "burter_attack_fwd_00.png",
+        "w": 24,
+        "h": 41
+      },
+      {
+        "name": "burter_attack_fwd_01",
+        "file": "burter_attack_fwd_01.png",
+        "w": 38,
+        "h": 38
+      },
+      {
+        "name": "burter_attack_fwd_02",
+        "file": "burter_attack_fwd_02.png",
+        "w": 40,
+        "h": 32
+      },
+      {
+        "name": "burter_attack_fwd_03",
+        "file": "burter_attack_fwd_03.png",
+        "w": 32,
+        "h": 36
+      },
+      {
+        "name": "burter_attack_fwd_04",
+        "file": "burter_attack_fwd_04.png",
+        "w": 31,
+        "h": 36
+      },
+      {
+        "name": "burter_attack_fwd_05",
+        "file": "burter_attack_fwd_05.png",
+        "w": 37,
+        "h": 36
+      },
+      {
+        "name": "burter_attack_fwd_06",
+        "file": "burter_attack_fwd_06.png",
+        "w": 36,
+        "h": 36
+      }
+    ]
+  },
+  "kick_right": {
+    "frame_count": 4,
+    "fps": 7,
+    "loop": false,
+    "frames": [
+      {
+        "name": "burter_attack_ud_00",
+        "file": "burter_attack_ud_00.png",
         "w": 32,
         "h": 26
+      },
+      {
+        "name": "burter_attack_ud_01",
+        "file": "burter_attack_ud_01.png",
+        "w": 29,
+        "h": 42
+      },
+      {
+        "name": "burter_attack_ud_02",
+        "file": "burter_attack_ud_02.png",
+        "w": 22,
+        "h": 40
+      },
+      {
+        "name": "burter_attack_ud_03",
+        "file": "burter_attack_ud_03.png",
+        "w": 29,
+        "h": 38
+      }
+    ]
+  },
+  "knockback_back": {
+    "frame_count": 3,
+    "fps": 6,
+    "loop": false,
+    "frames": [
+      {
+        "name": "burter_hurt_00",
+        "file": "burter_hurt_00.png",
+        "w": 31,
+        "h": 39
+      },
+      {
+        "name": "burter_hurt_01",
+        "file": "burter_hurt_01.png",
+        "w": 27,
+        "h": 38
+      },
+      {
+        "name": "burter_hurt_02",
+        "file": "burter_hurt_02.png",
+        "w": 32,
+        "h": 32
+      }
+    ]
+  },
+  "knockback_up": {
+    "frame_count": 3,
+    "fps": 6,
+    "loop": false,
+    "frames": [
+      {
+        "name": "burter_hurt_00",
+        "file": "burter_hurt_00.png",
+        "w": 31,
+        "h": 39
+      },
+      {
+        "name": "burter_hurt_01",
+        "file": "burter_hurt_01.png",
+        "w": 27,
+        "h": 38
+      },
+      {
+        "name": "burter_hurt_02",
+        "file": "burter_hurt_02.png",
+        "w": 32,
+        "h": 32
+      }
+    ]
+  },
+  "knockback_down": {
+    "frame_count": 3,
+    "fps": 6,
+    "loop": false,
+    "frames": [
+      {
+        "name": "burter_hurt_00",
+        "file": "burter_hurt_00.png",
+        "w": 31,
+        "h": 39
+      },
+      {
+        "name": "burter_hurt_01",
+        "file": "burter_hurt_01.png",
+        "w": 27,
+        "h": 38
+      },
+      {
+        "name": "burter_hurt_02",
+        "file": "burter_hurt_02.png",
+        "w": 32,
+        "h": 32
       }
     ]
   },
@@ -399,141 +541,28 @@
       }
     ]
   },
-  "evade": {
-    "frame_count": 2,
-    "fps": 10,
+  "beam_fire": {
+    "frame_count": 3,
+    "fps": 7,
     "loop": false,
     "frames": [
       {
-        "name": "burter_evade_00",
-        "file": "burter_evade_00.png",
-        "w": 23,
-        "h": 41
-      },
-      {
-        "name": "burter_evade_01",
-        "file": "burter_evade_01.png",
-        "w": 40,
-        "h": 31
-      }
-    ]
-  },
-  "gather_power": {
-    "frame_count": 2,
-    "fps": 6,
-    "loop": true,
-    "frames": [
-      {
-        "name": "burter_gather_power_00",
-        "file": "burter_gather_power_00.png",
-        "w": 30,
+        "name": "burter_beam_charge_00",
+        "file": "burter_beam_charge_00.png",
+        "w": 27,
         "h": 40
       },
       {
-        "name": "burter_gather_power_01",
-        "file": "burter_gather_power_01.png",
+        "name": "burter_beam_charge_01",
+        "file": "burter_beam_charge_01.png",
         "w": 32,
-        "h": 37
-      }
-    ]
-  },
-  "power_up": {
-    "frame_count": 2,
-    "fps": 10,
-    "loop": true,
-    "frames": [
-      {
-        "name": "burter_power_up_00",
-        "file": "burter_power_up_00.png",
-        "w": 30,
-        "h": 40
+        "h": 36
       },
       {
-        "name": "burter_power_up_01",
-        "file": "burter_power_up_01.png",
+        "name": "burter_beam_charge_02",
+        "file": "burter_beam_charge_02.png",
         "w": 32,
-        "h": 37
-      }
-    ]
-  },
-  "aura_power": {
-    "frame_count": 3,
-    "fps": 10,
-    "loop": true,
-    "frames": [
-      {
-        "name": "burter_aura_power_00",
-        "file": "burter_aura_power_00.png",
-        "w": 64,
-        "h": 56
-      },
-      {
-        "name": "burter_aura_power_01",
-        "file": "burter_aura_power_01.png",
-        "w": 64,
-        "h": 56
-      },
-      {
-        "name": "burter_aura_power_02",
-        "file": "burter_aura_power_02.png",
-        "w": 64,
-        "h": 56
-      }
-    ]
-  },
-  "aura_support": {
-    "frame_count": 3,
-    "fps": 10,
-    "loop": true,
-    "frames": [
-      {
-        "name": "burter_aura_support_00",
-        "file": "burter_aura_support_00.png",
-        "w": 64,
-        "h": 56
-      },
-      {
-        "name": "burter_aura_support_01",
-        "file": "burter_aura_support_01.png",
-        "w": 64,
-        "h": 56
-      },
-      {
-        "name": "burter_aura_support_02",
-        "file": "burter_aura_support_02.png",
-        "w": 64,
-        "h": 56
-      }
-    ]
-  },
-  "effects": {
-    "frame_count": 4,
-    "fps": 10,
-    "loop": false,
-    "frames": [
-      {
-        "name": "burter_base_effect_01",
-        "file": "burter_base_effect_01.png",
-        "w": 13,
-        "h": 14
-      },
-      {
-        "name": "burter_base_effect_02",
-        "file": "burter_base_effect_02.png",
-        "w": 24,
-        "h": 16
-      },
-      {
-        "name": "burter_base_effect_03",
-        "file": "burter_base_effect_03.png",
-        "w": 24,
-        "h": 16
-      },
-      {
-        "name": "burter_base_effect_04",
-        "file": "burter_base_effect_04.png",
-        "w": 16,
-        "h": 12
+        "h": 36
       }
     ]
   }
