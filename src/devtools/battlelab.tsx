@@ -11,10 +11,6 @@ import { useState } from 'react';
 import { Bug, Clapperboard, Cpu, Play } from 'lucide-react';
 import { FORMS, CHARACTERS } from '../data/roster';
 import { STORY_ENEMY_DECKS } from '../data/enemy_decks';
-import { BattlePosition } from '../data/positions';
-import { SCENARIOS } from '../data/scenarios';
-import { overworldUrl } from '../data/overworld';
-import { CanonBattleField } from './CanonBattleField';
 const CHAPTERS = Object.keys(STORY_ENEMY_DECKS).map(Number).sort((a, b) => a - b);
 
 interface Props {
@@ -118,29 +114,11 @@ export function BattleLabModule({ onLaunchBattle, embedded }: Props) {
             pixiField ? 'pixi' : null,
           ].filter(Boolean).join(' · ') || 'off'}</strong></div>
           <div><label>Motor</label><strong className="dev-ok">conectado — lanza BattleScreen real</strong></div>
-
-          {/* PREVIEW CANÓNICO del matchup seleccionado — mismo battle-screen
-              que HUD Studio (canon visual). El estado es estático (LV50,
-              HP lleno) hasta lanzar; sirve para VER el enfrentamiento antes
-              de entrar al motor. */}
-          <div className="dev-lab-preview">
-            <CanonBattleField
-              player={{
-                formId: player, name: FORMS[player]?.character ?? 'PLAYER',
-                form: FORMS[player]?.form ?? 'Base', hp: 1000, maxHp: 1000, cc: 0,
-                pos: BattlePosition.DOWN_FRONT, phase: 'ATTACK',
-              }}
-              enemy={{
-                formId: enemy, name: FORMS[enemy]?.character ?? 'ENEMY',
-                form: FORMS[enemy]?.form ?? 'Base', hp: 1000, maxHp: 1000, cc: 0,
-                pos: BattlePosition.DOWN_BACK, phase: 'DEFEND',
-              }}
-              round={1}
-              background={SCENARIOS[0]?.overviewBackground ?? ''}
-              mode="OVERVIEW"
-              devAids={false}
-            />
-          </div>
+          <p className="dev-hint" style={{ marginTop: 12 }}>
+            Este panel LANZA la batalla real. Para ver el engine en vivo con el
+            battle-screen canónico (pausa/step frame a frame) usa{' '}
+            <strong>Timeline → En vivo</strong>.
+          </p>
         </div>
       </div>
     </div>

@@ -103,6 +103,13 @@ export function EnginePlayground() {
     : 'OVERVIEW';
   const activeSide: BattleSide = s.exchange === 0 ? s.activeSide : (s.activeSide === 'player' ? 'enemy' : 'player');
 
+  // ── Vista manual: sobreescribe el mode del engine (OVERVIEW/ACTION/SPECIAL)
+  // para inspeccionar cada plano sin esperar a que la cinemática lo dispare.
+  const [viewOverride, setViewOverride] = useState<'auto' | 'OVERVIEW' | 'ACTION' | 'SPECIAL_ACTION'>('auto');
+  const effectiveMode = viewOverride === 'auto' ? sceneModeNorm : viewOverride;
+  const effectiveAction = viewOverride !== 'auto' && viewOverride !== 'OVERVIEW'
+    ? 'player' as BattleSide : activeSide;
+
   const commands: Array<{ label: string; cmd: Parameters<typeof dispatch>[0]; enabled: boolean }> = [
     { label: 'GATHER', cmd: { type: 'GATHER_POWER' }, enabled: can({ type: 'GATHER_POWER' }) },
     { label: 'BASIC', cmd: { type: 'BASIC' }, enabled: can({ type: 'BASIC' }) },
@@ -129,6 +136,15 @@ export function EnginePlayground() {
         <span className="dev-rt-tick">tick {s.tick}</span>
         <span className="dev-rt-cue">último cue: {lastCue}</span>
         <span className="dev-rt-clock">
+          <span className="dev-rt-view">
+            {(['auto', 'OVERVIEW', 'ACTION', 'SPECIAL_ACTION'] as const).map(v => (
+              <button key={v} className={`dev-btn dev-btn-mini ${viewOverride === v ? 'active' : ''}`}
+                onClick={() => setViewOverride(v)}
+                title={v === 'auto' ? 'Vista automática (sigue los cues del engine)' : `Forzar vista ${v}`}>
+                {v === 'auto' ? 'Auto' : v === 'SPECIAL_ACTION' ? 'Special' : v === 'OVERVIEW' ? 'Overview' : 'Action'}
+              </button>
+            ))}
+          </span>
           <button className={`dev-btn dev-btn-mini ${paused ? 'active' : ''}`}
             onClick={() => setPaused(p => !p)}
             title={paused ? 'Reanudar el reloj (RAF)' : 'Pausar el reloj para inspeccionar la secuencia'}>
@@ -158,11 +174,11 @@ export function EnginePlayground() {
           }}
           round={s.turn + 1}
           background={sceneBg}
-          mode={sceneModeNorm}
-          actor={activeSide}
+          mode={effectiveMode}
+          actor={effectiveAction}
           pose={{
-            player: sceneModeNorm !== 'OVERVIEW' && activeSide === 'player' ? poseNames.player : 'idle',
-            enemy: sceneModeNorm !== 'OVERVIEW' && activeSide === 'enemy' ? poseNames.enemy : 'idle',
+            player: effectiveMode !== 'OVERVIEW' && effectiveAction === 'player' ? poseNames.player : 'idle',
+            enemy: effectiveMode !== 'OVERVIEW' && effectiveAction === 'enemy' ? poseNames.enemy : 'idle',
           }}
           qte={inQte && qteKey ? { label: qteKey, seq } : inCounter ? { label: 'DEFEND o CONTINUE', seq, warn: true } : null}
           devAids={false}

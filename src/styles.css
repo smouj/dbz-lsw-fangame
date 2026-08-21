@@ -8013,7 +8013,20 @@ button:focus-visible, .chapter-node:focus-visible {
 }
 .pixi-flow-strip strong { color: var(--dev-ki); font-weight: 700; }
 
-.dev-header { margin-bottom: 10px; padding-left: 10px; border-left: 3px solid var(--dev-ki); border-radius: var(--dev-r-sm); }
+.dev-header {
+  margin-bottom: 10px;
+  padding: 8px 10px;
+  padding-left: 10px;
+  border-left: 3px solid var(--dev-ki);
+  border-radius: var(--dev-r-sm);
+  /* STICKY GLOBAL: el encabezado NO se desplaza con el scroll del panel */
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  background: var(--dev-bg);
+  border-left: 3px solid var(--dev-ki);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, .35);
+}
 .dev-header h1 { font-size: 16px; margin: 0 0 2px; color: var(--dev-text-hi); letter-spacing: .3px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
 .dev-sub { margin: 0; color: var(--dev-dim); font-size: 11px; line-height: 1.4; }
 
@@ -8739,20 +8752,6 @@ button:focus-visible, .chapter-node:focus-visible {
 .dev-battlelab-readout div { margin-bottom: 8px; font-size: 12px; }
 .dev-battlelab-readout label { display: block; font-size: 10px; color: var(--dev-muted); }
 .dev-battlelab-readout strong { color: var(--dev-text-hi); }
-
-/* Preview canónico del Battle Lab (mismo battle-screen que HUD Studio) */
-.dev-lab-preview {
-  margin-top: 12px;
-  border-top: 1px dashed var(--dev-border);
-  padding-top: 12px;
-}
-.dev-lab-preview .dev-hud-real-preview {
-  width: 100%;
-  aspect-ratio: 16/9;
-  border-radius: var(--dev-r-lg);
-  overflow: hidden;
-  border: 1px solid var(--dev-border-hi);
-}
 
 .dev-debug-toggles { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; }
 .dev-toggle {
@@ -9673,7 +9672,7 @@ button:focus-visible, .chapter-node:focus-visible {
 .dev-navigator-wrap {
   margin-bottom: 14px;
   position: sticky;
-  top: 0;
+  top: 57px; /* pegado DEBAJO del header sticky (57px) — no se solapan */
   z-index: 30;
   background: var(--dev-bg);
   padding: 8px 10px;
@@ -11564,7 +11563,7 @@ button.linklike:hover { text-decoration: underline; }
 /* ── Sidebar de personajes ──────────────────────────────────────────── */
 .dev-char-list {
   position: sticky;
-  top: 12px;
+  top: 69px; /* debajo del header sticky (57px + gap) — no se solapa */
   display: flex;
   flex-direction: column;
   gap: 4px;
@@ -11572,7 +11571,7 @@ button.linklike:hover { text-decoration: underline; }
   background: #12161f;
   border: 1px solid #2a3242;
   border-radius: var(--dev-r-xl);
-  max-height: calc(100vh - 40px);
+  max-height: calc(100vh - 100px);
   overflow-y: auto;
 }
 .dev-char-list::-webkit-scrollbar { width: 6px; }
