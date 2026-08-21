@@ -9006,7 +9006,24 @@ button:focus-visible, .chapter-node:focus-visible {
 .dev-hud-actions { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
 .dev-hud-status { margin: 10px 0 0; padding: 8px 12px; background: rgba(64, 184, 72, .12); border: 1px solid rgba(64, 184, 72, .4); border-radius: var(--dev-r-lg); color: var(--dev-ok); font-size: 12px; }
 
-.dev-hud-grid { display: grid; grid-template-columns: 1fr; gap: 18px; margin-top: 12px; align-items: start; }
+.dev-hud-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 18px;
+  margin-top: 12px;
+  align-items: start;
+}
+/* Layout estratégico: preview grande a la izquierda, controles a la derecha
+   (solo pantallas anchas — reduce scroll y mantiene el campo visible). */
+@media (min-width: 1400px) {
+  .dev-hud-grid {
+    grid-template-columns: minmax(0, 1.8fr) minmax(340px, 1fr);
+  }
+  .dev-hud-grid > .dev-hud-preview {
+    position: sticky;
+    top: 8px;
+  }
+}
 .dev-hud-geo {
   margin: 4px 0 10px;
   padding: 8px 12px;
