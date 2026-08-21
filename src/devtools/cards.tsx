@@ -90,6 +90,11 @@ export function CardsModule() {
         </div>
 
         {selected && <CardDetail card={selected} />}
+        {!selected && (
+          <div className="dev-card-detail dev-card-detail-empty">
+            <div className="dev-empty">Selecciona una carta para ver su ficha RUNTIME + canon de animación</div>
+          </div>
+        )}
       </div>
     </div>
   );

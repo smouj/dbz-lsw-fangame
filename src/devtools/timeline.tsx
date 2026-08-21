@@ -166,7 +166,7 @@ export function TimelineModule() {
 
       {mode === 'live' ? <EnginePlayground /> : (
       <>
-      <div className="dev-hud-view-select">
+      <div className="dev-hud-view-select nowrap">
         {PRESENTATION_SCENARIOS.map(s => (
           <button key={s.id} className={`dev-hud-view-chip ${s.id === scenarioId ? 'active' : ''}`}
             onClick={() => setScenarioId(s.id)} title={`seed ${s.seed}`}>
