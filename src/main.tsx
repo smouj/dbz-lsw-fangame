@@ -4904,6 +4904,15 @@ function AppInner() {
     return () => window.removeEventListener('hashchange', onHash);
   }, []);
 
+  // Dev Studio: bloqueo el scroll del WINDOW mientras el dev panel está
+  // montado (body.dev-mode). TODO el scroll vive en .dev-main — si el
+  // window scrolleara, el header sticky se desplazaría con la ventana.
+  // (Refuerzo JS: no depende de :has() ni de recargas — aplica al momento.)
+  useEffect(() => {
+    document.body.classList.toggle('dev-mode', inDev);
+    return () => document.body.classList.remove('dev-mode');
+  }, [inDev]);
+
   // Inicializar audio con el primer gesto del usuario (autoplay) y arrancar la BSO
   // (nunca en el Dev Studio: allí la música la controla su página 'Música')
   useEffect(() => {

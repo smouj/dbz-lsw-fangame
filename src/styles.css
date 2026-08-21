@@ -124,9 +124,11 @@
 * { margin: 0; padding: 0; box-sizing: border-box; }
 html, body { width: 100%; height: 100%; margin: 0; padding: 0; }
 #root { width: 100%; height: 100%; background: var(--bg); color: var(--text); overflow: hidden; }
-/* Dev Studio: TODO el scroll vive en .dev-main (el panel); el root NUNCA
-   scrollea — si el root scrolleara, el header sticky (dentro de .dev-main)
-   se desplazaría con la ventana. .devstudio ya limita a 100vh. */
+/* Dev Studio: TODO el scroll vive en .dev-main (el panel); el window NUNCA
+   scrollea — si el window scrolleara, el header sticky (dentro de .dev-main)
+   se desplazaría con la ventana. Clase JS en body (refuerzo a prueba de
+   navegadores sin :has()) + :has() como respaldo. */
+body.dev-mode { overflow: hidden !important; height: 100%; }
 #root:has(> .devstudio) { overflow: hidden !important; }
 
 /* ═══ GAME VIEWPORT CANÓNICO 16:9 (R1-R5) ═══
