@@ -56,7 +56,7 @@ export function DashboardModule({ onNavigate }: { onNavigate: (m: DevModuleId) =
   return (
     <div className="dev-panel">
       <header className="dev-header">
-        <h1>Estado de producción</h1>
+        <h1>Estado de producción <span className="dev-header-fixed-badge" title="Header fijo estructural — si NO ves este badge, recarga con Ctrl+Shift+R">v4-fijo</span></h1>
         <p className="dev-sub">Contadores derivados de getDevProjectSnapshot() — la MISMA fuente que Validation, Game Config y Characters. Si algo difiere, el registro es la fuente.</p>
       </header>
 

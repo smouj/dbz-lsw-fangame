@@ -8033,45 +8033,59 @@ button:focus-visible, .chapter-node:focus-visible {
   box-shadow: 0 6px 14px rgba(0, 0, 0, .35);
   transition: border-radius .15s ease;
 }
-/* ═══ HEADER FIJO ABSOLUTO (CSS puro, a prueba de todo) ═══
-   En el Dev Studio el header de cada página es position:fixed con
-   z-index 1000 y fondo sólido: NUNCA se desplaza con el scroll y el
-   contenido NUNCA puede taparlo. El JS de DevStudio.tsx ajusta las
-   coordenadas finas (padding del main); estas reglas son el respaldo
-   universal que funciona incluso sin el JS (HMR de CSS en caliente). */
-.devstudio .dev-header {
-  position: fixed !important;
-  left: 190px;
-  top: 0;
-  right: 0;
-  width: auto !important;
-  z-index: 1000 !important;
-  margin: 0 !important;
-  border-radius: 0 0 var(--dev-r-md) 0;
-  background: var(--dev-bg) !important;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, .55) !important;
-}
-@media (max-width: 900px) {
-  .devstudio .dev-header {
-    left: 0;
-    top: 101px;
-    border-radius: 0;
-  }
-}
-/* Compensación permanente del contenido (nunca queda oculto bajo el
-   header fijo). El JS lo afina con la altura exacta si está activo. */
+/* (El fix estructural del header está más abajo: .devstudio .dev-header —
+   scroll en .dev-module + header fila fija del panel flex. Sin JS.) */
 .devstudio .dev-main .dev-panel {
-  padding-top: 96px;
+  padding-top: 0;
+}
+/* ═══ HEADER FIJO ESTRUCTURAL (definitivo, sin JS ni sticky) ═══
+   El scroll vive en .dev-module; el panel es flex-column con el header
+   como fila FIJA (flex 0 0 auto) y el resto del contenido como fila
+   scrolleable. El header NO puede desplazarse por construcción:
+   está fuera del flujo de scroll. */
+.devstudio .dev-main {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+.devstudio .dev-module {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+}
+.devstudio .dev-panel {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
+.devstudio .dev-header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  margin: 0 0 10px;
+  background: var(--dev-bg);
+  border-left: 3px solid var(--dev-ki);
+  border-radius: 0;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, .35);
+  flex: 0 0 auto;
 }
 .devstudio .dev-header.dev-header-fixed {
-  border-radius: 0 0 var(--dev-r-md) 0;
+  border-radius: 0;
   box-shadow: 0 10px 26px rgba(0, 0, 0, .6);
-  margin-bottom: 0;
+  margin-bottom: 10px;
 }
 @media (max-width: 900px) {
+  .devstudio .dev-header { border-radius: 0; }
   .devstudio .dev-header.dev-header-fixed { border-radius: 0; }
 }
 .dev-header h1 { font-size: 16px; margin: 0 0 2px; color: var(--dev-text-hi); letter-spacing: .3px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.dev-header-fixed-badge {
+  display: inline-flex; align-items: center; gap: 4px;
+  font-size: 8px; font-weight: 700; letter-spacing: .6px; text-transform: uppercase;
+  color: #7fd48a; background: rgba(64,184,72,.12);
+  border: 1px solid rgba(64,184,72,.4); border-radius: 999px;
+  padding: 1px 7px; margin-left: 4px;
+}
 .dev-sub { margin: 0; color: var(--dev-dim); font-size: 11px; line-height: 1.4; }
 
 .dev-grid { display: grid; gap: 12px; }

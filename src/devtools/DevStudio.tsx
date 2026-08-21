@@ -110,53 +110,12 @@ export function DevStudio({ onExit, onLaunchBattle }: DevStudioProps) {
   const [module, setModule] = useState<DevModuleId>(() => initialModule());
   const [pixelTarget, setPixelTarget] = useState<PixelArtTarget | null>(null);
   const [linkedTarget, setLinkedTarget] = useState<DevLinkedTarget | null>(null);
+
+  // ═══ HEADER FIJO — CSS ESTRUCTURAL ═══
+  // El scroll vive en .dev-module y el header es fila fija del panel
+  // (sticky top:0 dentro del scroll container). Sin JS: el CSS lo
+  // garantiza por construcción. Ver styles.css (.devstudio .dev-header).
   const mainRef = useRef<HTMLElement | null>(null);
-
-  // ═══ HEADER FIJO PERMANENTE (JS, sin condiciones) ═══
-  // El header de cada página (.dev-header) NUNCA se desplaza con el
-  // scroll — ni siquiera un píxel. En lugar de sticky (que algunos
-  // navegadores/pestañas ignoran), el header sale del flujo del panel
-  // con position:fixed calculado en runtime (coordenadas reales del
-  // main + padding) y el panel compensa con padding-top permanente.
-  // No hay scroll listener: el header está fijo desde el primer frame.
-  useEffect(() => {
-    const main = mainRef.current;
-    if (!main) return;
-    const header = main.querySelector<HTMLElement>('.dev-header');
-    if (!header) return;
-
-    const apply = () => {
-      const mr = main.getBoundingClientRect();
-      const cs = getComputedStyle(main);
-      const padTop = parseFloat(cs.paddingTop) || 0;
-      const padLeft = parseFloat(cs.paddingLeft) || 0;
-      const padRight = parseFloat(cs.paddingRight) || 0;
-      const hh = header.offsetHeight;
-      header.style.position = 'fixed';
-      header.style.left = `${mr.left + padLeft}px`;
-      header.style.top = `${mr.top + padTop}px`;
-      header.style.width = `${mr.width - padLeft - padRight}px`;
-      header.style.zIndex = '60';
-      header.classList.add('dev-header-fixed');
-      // Compensación PERMANENTE: el contenido del panel nunca queda oculto
-      const panel = main.querySelector<HTMLElement>('.dev-panel');
-      if (panel) panel.style.paddingTop = `${hh + 8}px`;
-    };
-
-    apply();
-    // Re-aplicar tras layout (imágenes) y resize
-    const t1 = setTimeout(apply, 120);
-    const t2 = setTimeout(apply, 500);
-    window.addEventListener('resize', apply);
-    return () => {
-      clearTimeout(t1);
-      clearTimeout(t2);
-      window.removeEventListener('resize', apply);
-      const panel = main.querySelector<HTMLElement>('.dev-panel');
-      if (panel) panel.style.paddingTop = '';
-      header.classList.remove('dev-header-fixed');
-    };
-  }, [module]);
 
   // Sincronizar hash ↔ módulo (navegación profunda + botones del sidebar)
   useEffect(() => {
