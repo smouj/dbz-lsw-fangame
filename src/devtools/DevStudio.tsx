@@ -4,7 +4,7 @@
 // Inspeccionar / validar / previsualizar el juego sin tocar código.
 // NO forma parte del flujo público de producción.
 // ═══════════════════════════════════════════════════════════
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import {
   Activity, ArrowLeft, Brush, CheckCircle2,
   Film, Gamepad2, Gauge, Grid2X2, LayoutDashboard,
@@ -110,6 +110,64 @@ export function DevStudio({ onExit, onLaunchBattle }: DevStudioProps) {
   const [module, setModule] = useState<DevModuleId>(() => initialModule());
   const [pixelTarget, setPixelTarget] = useState<PixelArtTarget | null>(null);
   const [linkedTarget, setLinkedTarget] = useState<DevLinkedTarget | null>(null);
+  const mainRef = useRef<HTMLElement | null>(null);
+
+  // ═══ HEADER FIJO GARANTIZADO (refuerzo JS) ═══
+  // El header de cada página (.dev-header) DEBE quedarse pegado arriba al
+  // hacer scroll. El CSS usa position:sticky, pero algunos navegadores /
+  // estados de pestaña lo ignoran (o un ancestro rompe el containing
+  // block). Este refuerzo NO depende de sticky: al scrollear el panel,
+  // fija el header con position:fixed en las coordenadas reales del main
+  // y compensa el contenido con padding-top. A prueba de todo.
+  useEffect(() => {
+    const main = mainRef.current;
+    if (!main) return;
+    const header = main.querySelector<HTMLElement>('.dev-header');
+    if (!header) return;
+
+    let raf = 0;
+    const update = () => {
+      raf = 0;
+      const scrolled = main.scrollTop > 2;
+      const fixed = header.classList.contains('dev-header-fixed');
+      if (scrolled && !fixed) {
+        const mr = main.getBoundingClientRect();
+        const cs = getComputedStyle(main);
+        const padTop = parseFloat(cs.paddingTop) || 0;
+        const hh = header.offsetHeight;
+        header.style.position = 'fixed';
+        header.style.left = `${mr.left}px`;
+        header.style.top = `${mr.top + padTop}px`;
+        header.style.width = `${mr.width}px`;
+        header.style.zIndex = '60';
+        header.classList.add('dev-header-fixed');
+        // Compensar el contenido para que no quede oculto bajo el header
+        header.style.setProperty('--dev-header-comp', `${hh}px`);
+        const panel = main.querySelector<HTMLElement>('.dev-panel');
+        if (panel) panel.style.paddingTop = `calc(${hh}px + 8px)`;
+      } else if (!scrolled && fixed) {
+        header.style.position = '';
+        header.style.left = '';
+        header.style.top = '';
+        header.style.width = '';
+        header.style.zIndex = '';
+        header.classList.remove('dev-header-fixed');
+        const panel = main.querySelector<HTMLElement>('.dev-panel');
+        if (panel) panel.style.paddingTop = '';
+      }
+    };
+    const onScroll = () => { if (!raf) raf = requestAnimationFrame(update); };
+    const onResize = () => { if (!raf) raf = requestAnimationFrame(update); };
+    main.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onResize);
+    return () => {
+      main.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', onResize);
+      const panel = main.querySelector<HTMLElement>('.dev-panel');
+      if (panel) panel.style.paddingTop = '';
+      if (header) header.classList.remove('dev-header-fixed');
+    };
+  }, [module]);
 
   // Sincronizar hash ↔ módulo (navegación profunda + botones del sidebar)
   useEffect(() => {
@@ -182,7 +240,7 @@ export function DevStudio({ onExit, onLaunchBattle }: DevStudioProps) {
           <button className="dev-exit" onClick={goHome}><ArrowLeft size={15} /> Volver al juego</button>
         </div>
       </aside>
-      <main className="dev-main">
+      <main className="dev-main" ref={mainRef}>
         <div className="dev-module">
           {module === 'dashboard' && <DashboardModule onNavigate={navigate} />}
           {module === 'characters' && <CharactersModule onOpenModule={openLinkedModule} />}

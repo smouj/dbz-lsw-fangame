@@ -8031,6 +8031,14 @@ button:focus-visible, .chapter-node:focus-visible {
   background: var(--dev-bg);
   border-left: 3px solid var(--dev-ki);
   box-shadow: 0 6px 14px rgba(0, 0, 0, .35);
+  transition: border-radius .15s ease;
+}
+/* Estado fijado por el refuerzo JS (DevStudio): posición calculada en
+   runtime — funciona en CUALQUIER navegador, sin depender de sticky. */
+.dev-header.dev-header-fixed {
+  border-radius: 0 0 var(--dev-r-md) var(--dev-r-md);
+  box-shadow: 0 10px 22px rgba(0, 0, 0, .5);
+  margin-bottom: 0;
 }
 .dev-header h1 { font-size: 16px; margin: 0 0 2px; color: var(--dev-text-hi); letter-spacing: .3px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
 .dev-sub { margin: 0; color: var(--dev-dim); font-size: 11px; line-height: 1.4; }
