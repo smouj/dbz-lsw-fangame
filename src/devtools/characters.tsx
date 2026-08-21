@@ -159,7 +159,7 @@ export function CharactersModule({ onOpenModule }: {
       <header className="dev-header">
         <h1>Character Studio</h1>
         <p className="dev-sub">
-          Stats ROM · assets · poses de combate · browser de frames — manifest V9, fuente única.
+          Stats ROM · assets · poses de combate · browser de frames — manifests OUT_frames, fuente única.
         </p>
       </header>
 
@@ -301,7 +301,7 @@ export function CharactersModule({ onOpenModule }: {
             </h3>
             {analysis.overridden && (
               <div className="dev-wip-banner">
-                Overrides locales activos — los frames pueden diferir del canon V9.{' '}
+                Overrides locales activos — los frames pueden diferir de los manifests OUT_frames.{' '}
                 <button className="dev-btn" onClick={analysis.clearOverrideLocal}>Limpiar override</button>
               </div>
             )}
@@ -313,7 +313,7 @@ export function CharactersModule({ onOpenModule }: {
             <CharacterAttacks charId={char.id} formId={form.id} />
           </CollapsibleSection>
 
-          {/* SECCIÓN 6 — Frames atómicos V9 (colapsable, cerrado) */}
+          {/* SECCIÓN 6 — Frames por pose (colapsable, cerrado) */}
           {form.sheet && (
             <CollapsibleSection title="Frames por pose (OUT_frames)" defaultOpen={false}>
               <AtomicFrames sheet={form.sheet} formId={form.id} />
@@ -535,7 +535,7 @@ function CharacterAttacks({ charId, formId }: { charId: string; formId: string }
           <em>{n > 0 ? `${n} frames` : 'sin frames en manifest'}</em>
         </span>
         {beamChain.length > 0 && (
-          <span className="dev-attack-beamchain" title="Cadena visual del beam (V9: charge→fire→ray→tip)">
+          <span className="dev-attack-beamchain" title="Cadena visual del beam (OUT_frames: charge→fire→ray→tip)">
             {beamChain.map(b => {
               const bn = poseFrames(b);
               const resolved = resolveCombatPose(b, p => (manifest?.[p]?.frames?.length ?? 0) > 0);

@@ -46,7 +46,7 @@ export function LabModule({ onLaunchBattle }: {
       </div>
 
       <div className="dev-lab-body">
-        {tab === 'battle' && <BattleLabModule onLaunchBattle={onLaunchBattle} />}
+        {tab === 'battle' && <BattleLabModule embedded onLaunchBattle={onLaunchBattle} />}
         {tab === 'renderer' && <PixiModule />}
         {tab === 'sequence' && <PixiSequenceModule />}
       </div>

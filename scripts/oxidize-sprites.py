@@ -428,6 +428,49 @@ def main():
 
     print(f"\nTotal frames oxidizados: {total_ok}")
 
+    # Regenerar src/data/generated/spriteCounts.generated.ts (conteos reales
+    # de los manifests recién escritos — fuente única OUT_frames).
+    write_sprite_counts(SPRITES)
+
+
+def write_sprite_counts(sprites_root):
+    """Genera src/data/generated/spriteCounts.generated.ts con los conteos
+    reales (frames + poses) de cada manifest en public/assets/sprites/."""
+    import os
+    root = Path(sprites_root)
+    forms = sorted([d.name for d in root.iterdir() if d.is_dir()])
+    lines = [
+        '// AUTO-GENERADO por scripts/oxidize-sprites.py (oxigenación OUT_frames).',
+        '// Conteos REALES de los manifests en public/assets/sprites/<dir>/manifest.json.',
+        '// Fuente única: OUT_frames (extracción canónica del usuario).',
+        'export const SPRITE_COUNTS: Record<string, { frames: number; poses: number }> = {',
+    ]
+    for form in forms:
+        mp = root / form / 'manifest.json'
+        if not mp.exists():
+            continue
+        m = json.loads(mp.read_text())
+        frames = sum(len(v.get('frames', [])) for v in m.values() if isinstance(v, dict))
+        lines.append(f'  "{form}": {{ "frames": {frames}, "poses": {len(m)} }},')
+    lines.append('};')
+    total = 0
+    for form in forms:
+        mp = root / form / 'manifest.json'
+        if not mp.exists():
+            continue
+        m = json.loads(mp.read_text())
+        total += sum(len(v.get('frames', [])) for v in m.values() if isinstance(v, dict))
+    lines += [
+        '',
+        f'export const SPRITE_TOTAL_FRAMES = {total};',
+        f'export const SPRITE_FORM_COUNT = {len(forms)};',
+        '',
+    ]
+    out = Path('src/data/generated/spriteCounts.generated.ts')
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text('\n'.join(lines))
+    print(f"✓ spriteCounts.generated.ts: {len(forms)} formas, {total} frames totales")
+
 
 if __name__ == '__main__':
     main()

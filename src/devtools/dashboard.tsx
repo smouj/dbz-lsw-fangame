@@ -27,7 +27,7 @@ const PIPELINE: Array<[string, string]> = [
 
 export function DashboardModule({ onNavigate }: { onNavigate: (m: DevModuleId) => void }) {
   const snap = useMemo(() => getDevProjectSnapshot(), []);
-  const { roster, cards, sprites, cinematics, story, audio, scenarios, canonIntegrity } = snap;
+  const { roster, cards, sprites, cinematics, story, audio, scenarios } = snap;
 
   const stats: StatCard[] = [
     { label: 'Formas (ROM 48)', value: roster.forms, total: roster.formsTotal, ok: roster.forms === roster.formsTotal },
@@ -45,7 +45,6 @@ export function DashboardModule({ onNavigate }: { onNavigate: (m: DevModuleId) =
   if (cards.count !== cards.total) alerts.push({ level: 'warn', text: `Faltan ${cards.total - cards.count} cartas de la tabla ROM.` });
   if (roster.withSpriteDir < roster.forms) alerts.push({ level: 'info', text: `${roster.forms - roster.withSpriteDir} formas sin sprite de combate animado: ${roster.withoutSpriteDir.join(', ')}.` });
   if (sprites.unknown > 0) alerts.push({ level: 'info', text: `${sprites.unknown} frames físicos sin evidencia (UNCLASSIFIED honestos — no se asignan a buckets por aproximación).` });
-  if (canonIntegrity.duplicateIds > 0) alerts.push({ level: 'warn', text: `${canonIntegrity.duplicateIds} canonicalId duplicados en el canon V9.` });
   if (cinematics.gbcVerified === 0) alerts.push({ level: 'info', text: 'F0: 0 secuencias GBC verificadas aún — todo lo funcional es INFERRED hasta captura (nunca se etiqueta como canon GBC).' });
   // RUNTIME vs CANON: las secuencias Stage funcionales son RUNTIME SEQUENCE
   // (fidelity INFERRED) — no "canon GBC" (eso es F0).

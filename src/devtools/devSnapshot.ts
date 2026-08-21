@@ -32,7 +32,6 @@ export interface DevSnapshot {
   story: { chapters: number; teamBattles: number; portraitsResolved: number };
   audio: { musicTracks: number; sfx: number };
   scenarios: number;
-  canonIntegrity: { duplicateIds: number; ambiguousCanonical: number };
 }
 
 /** Agregado único de métricas (DEV-SYNC) — todas las páginas lo consumen. */
@@ -94,6 +93,5 @@ export function getDevProjectSnapshot(): DevSnapshot {
     },
     audio: { musicTracks: MUSIC_TRACK_LIST.length, sfx: SFX_CATALOG.length },
     scenarios: SCENARIOS.length,
-    canonIntegrity: { duplicateIds: 0, ambiguousCanonical: 0 },
   };
 }

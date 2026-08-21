@@ -16,9 +16,11 @@ const CHAPTERS = Object.keys(STORY_ENEMY_DECKS).map(Number).sort((a, b) => a - b
 
 interface Props {
   onLaunchBattle?: (playerFormId: string, enemyFormId: string, chapter: number | null) => void;
+  /** true cuando se renderiza dentro de un contenedor con header propio (Combat Lab) */
+  embedded?: boolean;
 }
 
-export function BattleLabModule({ onLaunchBattle }: Props) {
+export function BattleLabModule({ onLaunchBattle, embedded }: Props) {
   const [player, setPlayer] = useState('gohan_young');
   const [enemy, setEnemy] = useState('piccolo_base');
   const [mode, setMode] = useState<'versus' | 'story'>('versus');
@@ -47,10 +49,12 @@ export function BattleLabModule({ onLaunchBattle }: Props) {
 
   return (
     <div className="dev-panel">
-      <header className="dev-header">
-        <h1>Battle Lab</h1>
-        <p className="dev-sub">Combate instantáneo real + depurador — elige matchup y lanza el motor de batalla.</p>
-      </header>
+      {!embedded && (
+        <header className="dev-header">
+          <h1>Battle Lab</h1>
+          <p className="dev-sub">Combate instantáneo real + depurador — elige matchup y lanza el motor de batalla.</p>
+        </header>
+      )}
 
       <div className="dev-battlelab-layout">
         <div className="dev-sprite-controls">

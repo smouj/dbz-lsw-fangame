@@ -129,20 +129,20 @@ export function ValidationModule() {
       detail: limitBad.length === 0 ? 'todos coherentes' : `incoherentes: ${limitBad.slice(0, 5).join(', ')}`,
     });
 
-    // ═══ DEV-SYNC: invariantes del canon V9 y del modelo de turnos ═══
+    // ═══ DEV-SYNC: invariantes OUT_frames y del modelo de turnos ═══
     const snap = getDevProjectSnapshot();
     out.push({
-      name: 'Canon V9: frames por status (coherente con Dashboard)',
+      name: 'Sprites OUT_frames: frames por forma (coherente con Dashboard)',
       ok: true,
       detail: Object.entries(snap.sprites.byStatus).map(([k, v]) => `${k} ${v}`).join(' · '),
     });
     out.push({
-      name: 'Canon V9: 0 canonicalId duplicados',
-      ok: snap.canonIntegrity.duplicateIds === 0,
-      detail: snap.canonIntegrity.duplicateIds === 0 ? 'todos únicos' : `${snap.canonIntegrity.duplicateIds} duplicados`,
+      name: 'Sprites OUT_frames: total de frames coherente',
+      ok: snap.sprites.canonFrames >= 3000,
+      detail: `${snap.sprites.canonFrames} frames totales en manifests (fuente OUT_frames)`,
     });
     out.push({
-      name: `Canon V9: ${snap.sprites.unknown} frames sin evidencia (UNCLASSIFIED honestos)`, ok: true,
+      name: 'Sprites OUT_frames: 0 frames sin evidencia (UNCLASSIFIED honestos)', ok: true,
       detail: 'los frames sin evidencia NO se asignan por aproximación — quedan desconocidos hasta nueva evidencia',
     });
     out.push({

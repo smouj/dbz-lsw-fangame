@@ -17,6 +17,7 @@ import {
   type BuildProfileId,
 } from '../config';
 import { CARDS } from '../data/cards';
+import { CHARACTERS } from '../data/roster';
 import { CARD_CINEMATICS } from '../data/cardsCinematic';
 import { ACTION_PROFILE_REGISTRY } from '../battle/actionProfiles';
 import { MUSIC_TRACK_LIST } from '../audio/music';
@@ -76,10 +77,8 @@ export default function GameConfigPage() {
     const cinematicsMissing = CARDS.filter(c => !CARD_CINEMATICS.some(cc => cc.id === c.id));
     // Compatibilidad: 0 restricciones rotas (cartas SIN restricciones son
     // compatibles con todos — no es un fallo). Mismo criterio que Validation.
-    const charIds = new Set(['goku', 'vegeta', 'gohan_kid', 'gohan_adult', 'trunks_kid', 'trunks_future',
-      'goten', 'gotenks', 'piccolo', 'krillin', 'frieza', 'cell', 'cell_jr', 'android_16', 'android_17',
-      'android_18', 'android_19', 'dr_gero', 'captain_ginyu', 'recoome', 'guldo', 'jeice', 'burter',
-      'nappa', 'majin_buu', 'vegito']);
+    // Fuente única: los IDs vienen del roster (CHARACTERS), no hardcodeados.
+    const charIds = new Set(CHARACTERS.map(c => c.id));
     const compatWithRules = CARDS.filter(c => c.compatible || c.notCompatible);
     const compatBroken = CARDS.filter(c =>
       (c.compatible && c.compatible.some(cid => !charIds.has(cid)))
@@ -230,7 +229,7 @@ export default function GameConfigPage() {
           FIDELITY (informativo — no bloquea release): {audits.fidelity.gbcVerified} GBC verificadas ·
           {audits.fidelity.gbcInferred} INFERRED · {audits.fidelity.actionProfiles} action profiles ·
           {audits.fidelity.fidelityByLevel.map(f => `${f.level} ${f.count}`).join(' · ')} ·
-          {audits.canonUnknown} frames V9 sin evidencia (honestos).
+          {audits.canonUnknown} frames OUT_frames sin evidencia (honestos).
         </div>
       </Section>
 

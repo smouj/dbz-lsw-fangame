@@ -63,9 +63,9 @@ export interface FighterPoseView {
 }
 
 /**
- * Resuelve la pose SEMÁNTICA de un fighter al frame físico del manifest V9.
+ * Resuelve la pose SEMÁNTICA de un fighter al frame físico del manifest OUT_frames.
  * (capa fina — el renderer Pixi real usará FighterActor; esto sirve para
- * DOM/Dev Studio/tests y para la resolución de fallbacks V9.)
+ * DOM/Dev Studio/tests y para la resolución de fallbacks de poses.)
  */
 export async function resolvePoseSrc(formId: string, pose: string): Promise<string | null> {
   const { spriteDirFor, spriteFrameUrl, spritePoseFrameUrl } = await import('../../data/spriteManifest');

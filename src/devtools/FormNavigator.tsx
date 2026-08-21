@@ -63,10 +63,10 @@ export function FormNavigator({ formId, onChange, showInfo = true, showSheet = t
           </div>
         )}
         {showSheet && form.sheet && (
-          <div className="dev-navigator-sheet" title="Sheet canónico V9 (atomic_sheet): incluye OW · tile · composite · aura power + support">
-            <span className="dev-navigator-label">Sheet V9</span>
+          <div className="dev-navigator-sheet" title="Sheet fuente (catalog-v9 / atomic_sheet) → OUT_frames: OW · tile · composite · aura power + support">
+            <span className="dev-navigator-label">Sheet fuente</span>
             <img className="dev-sheet-canonic" src={`/assets/sheets/${form.sheet}?t=${Date.now()}`} alt={form.sheet} loading="lazy" />
-            <span className="dev-sheet-note">atomic_sheet V9 — incluye OW · tile · composite · aura power+support</span>
+            <span className="dev-sheet-note">catalog-v9 → OUT_frames · OW · tile · composite · aura power+support</span>
           </div>
         )}
       </div>

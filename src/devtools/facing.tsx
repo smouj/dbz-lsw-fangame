@@ -101,8 +101,8 @@ export function FacingModule() {
     <div className="dev-facing">
       <div className="dev-facing-head">
         <h1>Facing — orientación de chibis overworld</h1>
-        <div className="dev-facing-canon-badge" title="Canon V9: los 9 chibis pendientes se normalizaron a la derecha (check-overworld-facing.py, 2026-08-17). El runtime ya no espeja por defecto.">
-          <strong>CANON V9</strong> · {files.length} chibis · todos miran a la DERECHA ✓
+        <div className="dev-facing-canon-badge" title="Fuente overworld (panel_sprites): los 9 chibis pendientes se normalizaron a la derecha (check-overworld-facing.py, 2026-08-17). El runtime ya no espeja por defecto.">
+          <strong>OVERWORLD</strong> · {files.length} chibis · todos miran a la DERECHA ✓
         </div>
         <p className="dev-facing-help">
           Todos los sprites deben mirar a la <strong>DERECHA</strong> por defecto.
