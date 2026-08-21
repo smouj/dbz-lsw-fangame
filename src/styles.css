@@ -8038,11 +8038,14 @@ button:focus-visible, .chapter-node:focus-visible {
 .devstudio .dev-main .dev-panel {
   padding-top: 0;
 }
-/* ═══ HEADER FIJO ESTRUCTURAL (definitivo, sin JS ni sticky) ═══
-   El scroll vive en .dev-module; el panel es flex-column con el header
-   como fila FIJA (flex 0 0 auto) y el resto del contenido como fila
-   scrolleable. El header NO puede desplazarse por construcción:
-   está fuera del flujo de scroll. */
+/* ═══ HEADERS ELIMINADOS (decisión del usuario 2026-08-22) ═══
+   El usuario pidió quitar los encabezados del panel dev por completo:
+   "quita los headers, encabezados del panel dev. no quiero nada de eso".
+   display:none — no se renderizan, no ocupan espacio, nada que scrollear. */
+.devstudio .dev-header,
+.devstudio .dev-header-slot {
+  display: none !important;
+}
 .devstudio .dev-main {
   overflow: hidden;
   display: flex;
@@ -8052,31 +8055,6 @@ button:focus-visible, .chapter-node:focus-visible {
   flex: 1;
   min-height: 0;
   overflow-y: auto;
-}
-.devstudio .dev-panel {
-  display: flex;
-  flex-direction: column;
-  min-height: 100%;
-}
-.devstudio .dev-header {
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-  margin: 0 0 10px;
-  background: var(--dev-bg);
-  border-left: 3px solid var(--dev-ki);
-  border-radius: 0;
-  box-shadow: 0 6px 14px rgba(0, 0, 0, .35);
-  flex: 0 0 auto;
-}
-.devstudio .dev-header.dev-header-fixed {
-  border-radius: 0;
-  box-shadow: 0 10px 26px rgba(0, 0, 0, .6);
-  margin-bottom: 10px;
-}
-@media (max-width: 900px) {
-  .devstudio .dev-header { border-radius: 0; }
-  .devstudio .dev-header.dev-header-fixed { border-radius: 0; }
 }
 .dev-header h1 { font-size: 16px; margin: 0 0 2px; color: var(--dev-text-hi); letter-spacing: .3px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
 .dev-header-fixed-badge {

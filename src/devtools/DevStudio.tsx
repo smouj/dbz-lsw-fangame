@@ -111,10 +111,9 @@ export function DevStudio({ onExit, onLaunchBattle }: DevStudioProps) {
   const [pixelTarget, setPixelTarget] = useState<PixelArtTarget | null>(null);
   const [linkedTarget, setLinkedTarget] = useState<DevLinkedTarget | null>(null);
 
-  // ═══ HEADER FIJO — CSS ESTRUCTURAL ═══
-  // El scroll vive en .dev-module y el header es fila fija del panel
-  // (sticky top:0 dentro del scroll container). Sin JS: el CSS lo
-  // garantiza por construcción. Ver styles.css (.devstudio .dev-header).
+  // ═══ HEADERS ELIMINADOS (decisión del usuario) ═══
+  // Los .dev-header están ocultos con display:none (ver styles.css).
+  // Nada que fijar, nada que scrollear — el panel arranca directo.
   const mainRef = useRef<HTMLElement | null>(null);
 
   // Sincronizar hash ↔ módulo (navegación profunda + botones del sidebar)
@@ -189,6 +188,11 @@ export function DevStudio({ onExit, onLaunchBattle }: DevStudioProps) {
         </div>
       </aside>
       <main className="dev-main" ref={mainRef}>
+        {/* Slot FIJO del header: fuera del flujo de scroll. El useEffect
+            mueve aquí el .dev-header de cada módulo (que vive dentro del
+            panel scrolleable). El header NO puede desplazarse porque NO
+            está dentro del contenedor que scrollea. */}
+        <div className="dev-header-slot" />
         <div className="dev-module">
           {module === 'dashboard' && <DashboardModule onNavigate={navigate} />}
           {module === 'characters' && <CharactersModule onOpenModule={openLinkedModule} />}
