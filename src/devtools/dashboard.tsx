@@ -60,21 +60,52 @@ export function DashboardModule({ onNavigate }: { onNavigate: (m: DevModuleId) =
         <p className="dev-sub">Contadores derivados de getDevProjectSnapshot() — la MISMA fuente que Validation, Game Config y Characters. Si algo difiere, el registro es la fuente.</p>
       </header>
 
-      {/* ═══ PIPELINE ÚNICO (arquitectura actual) ═══ */}
-      <div className="dev-section">
-        <h2>Pipeline único — fuentes de verdad</h2>
-        <p className="dev-muted" style={{ marginTop: -4 }}>
-          Todas las páginas del Dev Studio y el juego consumen ESTAS fuentes. No hay
-          pipelines paralelos: un cambio aquí se refleja en todo.
-        </p>
-        <div className="dev-pipeline">
-          {PIPELINE.map(([file, rol]) => (
-            <div key={file} className="dev-pipeline-row">
-              <span className="dev-pipeline-file"><code>{file}</code></span>
-              <span className="dev-pipeline-rol">{rol}</span>
-              <span className="dev-pipeline-ok">✓</span>
+      {/* ═══ PIPELINE ÚNICO + FIDELIDAD (2 col, contenido denso arriba) ═══ */}
+      <div className="dev-dash-grid">
+        <div className="dev-section">
+          <h2>Pipeline único — fuentes de verdad</h2>
+          <p className="dev-muted" style={{ marginTop: -4 }}>
+            Todas las páginas del Dev Studio y el juego consumen ESTAS fuentes. No hay
+            pipelines paralelos: un cambio aquí se refleja en todo.
+          </p>
+          <div className="dev-pipeline">
+            {PIPELINE.map(([file, rol]) => (
+              <div key={file} className="dev-pipeline-row">
+                <span className="dev-pipeline-file"><code>{file}</code></span>
+                <span className="dev-pipeline-rol">{rol}</span>
+                <span className="dev-pipeline-ok">✓</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="dev-section">
+          <h2>Fidelidad</h2>
+          <div className="dev-fidelity">
+            {cinematics.fidelityByLevel.map(f => {
+              const pct = Math.round((f.count / cinematics.fidelityTotal) * 100);
+              const color = f.level === FidelityColorMap.FRAME_VERIFIED ? '#7fd4ff'
+                : f.level === FidelityColorMap.VERIFIED ? '#3fae5a'
+                : f.level === FidelityColorMap.INFERRED ? '#d8a830'
+                : '#c04040';
+              return (
+                <div key={f.level} className="dev-fid-row">
+                  <span className="dev-fid-label">{f.level}</span>
+                  <div className="dev-fid-track"><div style={{ width: `${pct}%`, background: color }} /></div>
+                  <span className="dev-fid-pct">{f.count}/{cinematics.fidelityTotal}</span>
+                </div>
+              );
+            })}
+            <div className="dev-fid-note">
+              Sprites OUT_frames: <strong>{sprites.canonFrames}</strong> frames ({Object.entries(sprites.byStatus).map(([k, v]) => `${k} ${v}`).join(' · ')}) ·
+              {sprites.runtimePoseCount} poses con frame físico de {sprites.poseOrder} en COMBAT_POSE_ORDER.
             </div>
-          ))}
+            <div className="dev-fid-note">
+              F0: <strong>{cinematics.gbcVerified}</strong> secuencias verificadas · {cinematics.gbcInferred} INFERRED ·
+              {cinematics.gbcFamilies} familias cinematográficas · {cinematics.animationCanonFamilies} familias runtime ·
+              reloj nativo {GBC_NATIVE_FPS} fps GBC.
+            </div>
+          </div>
         </div>
       </div>
 
@@ -90,51 +121,24 @@ export function DashboardModule({ onNavigate }: { onNavigate: (m: DevModuleId) =
         <EngineMilestoneCard />
       </div>
 
-      <div className="dev-section">
-        <h2>Fidelidad</h2>
-        <div className="dev-fidelity">
-          {cinematics.fidelityByLevel.map(f => {
-            const pct = Math.round((f.count / cinematics.fidelityTotal) * 100);
-            const color = f.level === FidelityColorMap.FRAME_VERIFIED ? '#7fd4ff'
-              : f.level === FidelityColorMap.VERIFIED ? '#3fae5a'
-              : f.level === FidelityColorMap.INFERRED ? '#d8a830'
-              : '#c04040';
-            return (
-              <div key={f.level} className="dev-fid-row">
-                <span className="dev-fid-label">{f.level}</span>
-                <div className="dev-fid-track"><div style={{ width: `${pct}%`, background: color }} /></div>
-                <span className="dev-fid-pct">{f.count}/{cinematics.fidelityTotal}</span>
-              </div>
-            );
-          })}
-          <div className="dev-fid-note">
-            Sprites OUT_frames: <strong>{sprites.canonFrames}</strong> frames ({Object.entries(sprites.byStatus).map(([k, v]) => `${k} ${v}`).join(' · ')}) ·
-            {sprites.runtimePoseCount} poses con frame físico de {sprites.poseOrder} en COMBAT_POSE_ORDER.
-          </div>
-          <div className="dev-fid-note">
-            F0: <strong>{cinematics.gbcVerified}</strong> secuencias verificadas · {cinematics.gbcInferred} INFERRED ·
-            {cinematics.gbcFamilies} familias cinematográficas · {cinematics.animationCanonFamilies} familias runtime ·
-            reloj nativo {GBC_NATIVE_FPS} fps GBC.
-          </div>
+      <div className="dev-dash-grid">
+        <div className="dev-section">
+          <h2>Alertas</h2>
+          <ul className="dev-alerts">
+            {alerts.map((a, i) => (
+              <li key={i} className={`dev-alert ${a.level}`}><strong>{a.level.toUpperCase()}</strong> {a.text}</li>
+            ))}
+          </ul>
         </div>
-      </div>
 
-      <div className="dev-section">
-        <h2>Alertas</h2>
-        <ul className="dev-alerts">
-          {alerts.map((a, i) => (
-            <li key={i} className={`dev-alert ${a.level}`}><strong>{a.level.toUpperCase()}</strong> {a.text}</li>
-          ))}
-        </ul>
-      </div>
-
-      <div className="dev-section">
-        <h2>Atajos</h2>
-        <div className="dev-shortcuts">
-          <button className="dev-btn" onClick={() => onNavigate('characters')}>Character Studio</button>
-          <button className="dev-btn" onClick={() => onNavigate('cards')}>Card Database</button>
-          <button className="dev-btn" onClick={() => onNavigate('positions')}>Position Lab</button>
-          <button className="dev-btn" onClick={() => onNavigate('validation')}>Validación</button>
+        <div className="dev-section">
+          <h2>Atajos</h2>
+          <div className="dev-shortcuts">
+            <button className="dev-btn" onClick={() => onNavigate('characters')}>Character Studio</button>
+            <button className="dev-btn" onClick={() => onNavigate('cards')}>Card Database</button>
+            <button className="dev-btn" onClick={() => onNavigate('positions')}>Position Lab</button>
+            <button className="dev-btn" onClick={() => onNavigate('validation')}>Validación</button>
+          </div>
         </div>
       </div>
     </div>

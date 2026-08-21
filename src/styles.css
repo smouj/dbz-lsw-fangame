@@ -7803,6 +7803,13 @@ button:focus-visible, .chapter-node:focus-visible {
 /* ═══════════════════════════════════════════════════════════
    DEV STUDIO (#dev) — herramienta interna de producción
    ═══════════════════════════════════════════════════════════ */
+/* Contenido principal: ancho útil máximo + centrado (pantallas anchas) */
+.dev-main .dev-panel {
+  width: 100%;
+  max-width: 1480px;
+  margin: 0 auto;
+}
+
 /* ─── Tokens del Dev Studio (escala propia, aislada del juego) ─── */
 :root {
   /* Superficies: 4 niveles claros */
@@ -8010,8 +8017,19 @@ button:focus-visible, .chapter-node:focus-visible {
 .dev-header h1 { font-size: 16px; margin: 0 0 2px; color: var(--dev-text-hi); letter-spacing: .3px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
 .dev-sub { margin: 0; color: var(--dev-dim); font-size: 11px; line-height: 1.4; }
 
-.dev-grid { display: grid; gap: 10px; }
-.dev-grid-cards { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
+.dev-grid { display: grid; gap: 12px; }
+.dev-grid-cards { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
+/* Dashboard: layout estratégico en 2 columnas (contenido denso arriba) */
+.dev-dash-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+  gap: 12px;
+  align-items: start;
+}
+.dev-dash-grid .dev-section { margin-top: 0; }
+@media (max-width: 1100px) {
+  .dev-dash-grid { grid-template-columns: 1fr; }
+}
 .dev-stat-card {
   background: var(--dev-bg);
   border: 1px solid var(--dev-border-soft);
@@ -10532,7 +10550,7 @@ button.linklike:hover { text-decoration: underline; }
   background: var(--dev-panel-input);
   border: 1px solid var(--dev-border-soft);
   border-radius: var(--dev-r-md);
-  padding: 10px 12px;
+  padding: 12px 14px;
   min-width: 0;
 }
 .dev-section > h2,
@@ -12067,6 +12085,15 @@ button.linklike:hover { text-decoration: underline; }
 }
 .dev-primary-block { min-width: 0; }
 .dev-primary-stats { min-width: 0; }
+/* El preview se mantiene visible al scrollear la página (solo 2 col) */
+@media (min-width: 1101px) {
+  .dev-primary-grid > .dev-form-preview {
+    position: sticky;
+    top: 8px;
+    max-height: calc(100vh - 16px);
+    overflow-y: auto;
+  }
+}
 
 /* Preview: zona de sprite con aspect-ratio controlado */
 .dev-form-preview { min-width: 0; }
