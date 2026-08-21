@@ -7872,6 +7872,7 @@ button:focus-visible, .chapter-node:focus-visible {
 .devstudio {
   display: grid;
   grid-template-columns: 190px 1fr;
+  grid-template-rows: minmax(0, 1fr);
   height: 100vh;
   overflow: hidden;
   background: var(--dev-bg);
@@ -7968,7 +7969,7 @@ button:focus-visible, .chapter-node:focus-visible {
 .dev-exit:hover { background: #2b3542; color: var(--dev-text-hi); }
 .dev-main .dev-panel { animation: devFade .18s ease; }
 .dev-module { animation: devFade .18s ease; min-height: 0; }
-@keyframes devFade { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+@keyframes devFade { from { opacity: 0; } to { opacity: 1; } }
 
 /* ─── Pixi Lab (renderer PixiJS 8) ─── */
 .pixi-module h1 { font-size: 20px; margin: 0 0 6px; color: var(--dev-text-hi); letter-spacing: .5px; }
@@ -8894,7 +8895,8 @@ button:focus-visible, .chapter-node:focus-visible {
 .dev-char-list::-webkit-scrollbar,
 .dev-anim-timeline::-webkit-scrollbar,
 .dev-card-list::-webkit-scrollbar,
-.dev-main::-webkit-scrollbar {
+.dev-main::-webkit-scrollbar,
+.dev-main .dev-panel::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
@@ -8902,14 +8904,16 @@ button:focus-visible, .chapter-node:focus-visible {
 .dev-char-list::-webkit-scrollbar-thumb,
 .dev-anim-timeline::-webkit-scrollbar-thumb,
 .dev-card-list::-webkit-scrollbar-thumb,
-.dev-main::-webkit-scrollbar-thumb {
+.dev-main::-webkit-scrollbar-thumb,
+.dev-main .dev-panel::-webkit-scrollbar-thumb {
   background: var(--dev-border);
   border-radius: var(--dev-r-sm);
 }
 .dev-nav::-webkit-scrollbar-thumb:hover,
 .dev-char-list::-webkit-scrollbar-thumb:hover,
 .dev-anim-timeline::-webkit-scrollbar-thumb:hover,
-.dev-main::-webkit-scrollbar-thumb:hover {
+.dev-main::-webkit-scrollbar-thumb:hover,
+.dev-main .dev-panel::-webkit-scrollbar-thumb:hover {
   background: var(--dev-border-hi);
 }
 
