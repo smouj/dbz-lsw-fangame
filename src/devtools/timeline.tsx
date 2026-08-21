@@ -74,7 +74,7 @@ function CinematicProfilePanel({ action }: { action: BattleActionDescriptor | nu
         <div className="cc-profile-block">
           <h4>SHOT FLOW (explícito)</h4>
           <div className="cc-shotflow">{prof.shotFlow.map((s, i) => (
-            <span key={s} className="cc-shot">{i > 0 && <em>→</em>}{s}</span>
+            <span key={`${s}-${i}`} className="cc-shot">{i > 0 && <em>→</em>}{s}</span>
           ))}</div>
         </div>
         <div className="cc-profile-block">
