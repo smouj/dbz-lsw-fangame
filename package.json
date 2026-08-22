@@ -37,7 +37,8 @@
     "verify:p0-identity": "esbuild --bundle --format=esm --platform=node scripts/verify-p0-identity.ts --outfile=.vp0.mjs && node .vp0.mjs; rm -f .vp0.mjs",
     "verify:dev-studio": "esbuild --bundle --format=esm --platform=node scripts/verify-dev-studio.ts --outfile=.vds.mjs && node .vds.mjs; rm -f .vds.mjs",
     "verify:canon": "esbuild --bundle --format=esm --platform=node scripts/verify-sprite-canon.ts --outfile=.vcanon.mjs && node .vcanon.mjs; rm -f .vcanon.mjs",
-    "verify:rom-cards": "esbuild --bundle --format=esm --platform=node scripts/verify-rom-cards.ts --outfile=.vrc.mjs && node .vrc.mjs; rm -f .vrc.mjs"
+    "verify:rom-cards": "esbuild --bundle --format=esm --platform=node scripts/verify-rom-cards.ts --outfile=.vrc.mjs && node .vrc.mjs; rm -f .vrc.mjs",
+    "verify:execution": "esbuild --bundle --format=esm --platform=node scripts/verify-execution-plans.ts --outfile=.vex.mjs && node .vex.mjs; rm -f .vex.mjs"
   },
   "dependencies": {
     "@vitejs/plugin-react": "^4.3.4",

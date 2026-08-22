@@ -57,6 +57,9 @@ jobs:
       - name: ROM card table (125 cartas idénticas a la ROM — fuente de verdad)
         run: npm run verify:rom-cards
 
+      - name: Handler execution plans (12 técnicas ROM_CONFIRMED → trazas)
+        run: npm run verify:execution
+
       - name: GBC canon invariants (positions, deck, sequences, coverage)
         run: npm run verify:gbc
 
