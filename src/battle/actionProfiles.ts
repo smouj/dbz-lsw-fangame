@@ -25,6 +25,7 @@ import {
   type CinematicProfilePresentation,
   type CinematicTrack,
 } from './timeline';
+import { romCardData } from '../data/romCardData';
 
 export type Fidelity = 'PLACEHOLDER' | 'INFERRED' | 'VERIFIED' | 'FRAME_VERIFIED';
 
@@ -405,7 +406,23 @@ export function listActionProfiles(): Array<{ id: string; label: string; kind: s
 export function actionSemanticsForCard(card: { name: string; type: string; compatible?: string[]; effect?: string }): ActionCardSemantics {
   const specific = resolveActionProfile(card.name);
   const isItem = card.type === 'support' && card.effect != null && ITEM_SUPPORT_EFFECTS.has(card.effect);
-  const projectile = specific?.projectile?.kind ?? (card.type === 'beam' ? 'ray' : card.type === 'support' ? (isItem ? 'item' : 'power') : 'rush');
+  // Taxonomía REAL de la ROM (selector de ejecución, byte 5 de la tabla de 125
+  // cartas): RAY 0x02 · BALL 0x05 · DISC 0x07 · MELEE 0x0A · SUMMON 0x0B ·
+  // SUPPORT 0x0D · sin ejecución 0x00 (command/defensa). Si la carta está en
+  // la ROM, su familia visual deriva de ahí (no del tipo genérico).
+  const rom = romCardData(card.name);
+  const romExec = rom?.exec;
+  const visualFromRom =
+    romExec === 0x02 ? 'ray'
+    : romExec === 0x05 ? 'ball'
+    : romExec === 0x07 ? 'disk'
+    : romExec === 0x0A ? 'rush'
+    : romExec === 0x0B ? 'special'   // SUMMON (Tien/Yajirobe/ítems) → singular
+    : romExec === 0x0D ? 'power'
+    : undefined;
+  const projectile = specific?.projectile?.kind
+    ?? visualFromRom
+    ?? (card.type === 'beam' ? 'ray' : card.type === 'support' ? (isItem ? 'item' : 'power') : 'rush');
   const animation = card.type === 'command' ? 'stage'
     : card.type === 'damage' ? 'melee'
     : card.type === 'beam' ? 'beam'
