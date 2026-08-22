@@ -41,6 +41,8 @@ export function EnginePlayground() {
         actionBackground: SCENARIOS[0].actionBackground,
         specialActionBackground: SPECIAL_ACTION_BACKGROUND,
       },
+      // M9 — Replay: acumula timelines para reproducirlos.
+      keepHistory: true,
     });
   });
 

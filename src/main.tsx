@@ -816,6 +816,8 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
         actionBackground: scenario.actionBackground,
         specialActionBackground: SPECIAL_ACTION_BACKGROUND,
       },
+      // M9 — Replay: el runtime acumula TODOS los timelines (historia).
+      keepHistory: true,
     });
   }
   // Presenter M8.C1: consume los cues de MOVE/GUARD (poses move_front/
