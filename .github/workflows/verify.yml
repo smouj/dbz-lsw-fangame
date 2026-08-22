@@ -54,6 +54,9 @@ jobs:
       - name: Presentation Adapter M7 (82 invariantes de cues)
         run: npm run verify:presentation
 
+      - name: ROM card table (125 cartas idénticas a la ROM — fuente de verdad)
+        run: npm run verify:rom-cards
+
       - name: GBC canon invariants (positions, deck, sequences, coverage)
         run: npm run verify:gbc
 
