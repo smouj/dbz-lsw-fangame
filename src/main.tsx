@@ -1607,6 +1607,12 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
   }, [intro]);
 
   const gatherPower = () => {
+    // M8.C2 — el ENGINE decide el gather (GATHER_POWER → powerState
+    // FULL_POWER + gatherTurns 2, autoritativo). El legacy proyecta para
+    // la UI (pStages +0.5 STR/KI es presentación de stat stages, que el
+    // modelo del engine aún no cubre — pendiente del slice de stats).
+    const res = engineDispatch({ type: 'GATHER_POWER' });
+    void res;
     Sfx.powerUp();
     Sfx.star();
     setViewMode('ACTION');
