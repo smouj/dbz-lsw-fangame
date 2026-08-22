@@ -60,26 +60,38 @@ export function ExecutionModule() {
             {plan.variants.length > 0 && (
               <span><b>Variantes:</b> {plan.variants.map(v => `${v.totalTicks}t`).join(' · ')}</span>
             )}
+            <span><b>FX:</b> {plan.fxTrack.length} eventos ({plan.fxTrack[0] ? `spawn T+${plan.fxTrack[0].tick}` : '—'})</span>
           </div>
 
-          <div className="dev-tl-table" style={{ maxHeight: '52vh' }}>
+          <div className="dev-tl-table" style={{ maxHeight: '45vh' }}>
             <div className="dev-tl-row dev-tl-head">
-              <span className="dev-tl-col tick" style={{ width: 70 }}>T+</span>
-              <span className="dev-tl-col cue" style={{ width: 150 }}>Fase</span>
+              <span className="dev-tl-col tick" style={{ width: 60 }}>T+</span>
+              <span className="dev-tl-col cue" style={{ width: 110 }}>Fase</span>
               <span className="dev-tl-col actor" style={{ width: 150 }}>Provenance</span>
-              <span className="dev-tl-col pose" style={{ flex: 1 }}>Evento</span>
+              <span className="dev-tl-col pose" style={{ width: 120 }}>Kind</span>
+              <span className="dev-tl-col fx" style={{ flex: 1 }}>Evento</span>
             </div>
             {plan.events.map((e, i) => (
               <div key={i} className="dev-tl-row">
-                <span className="dev-tl-col tick" style={{ width: 70, color: '#e0c060' }}>+{e.tick}</span>
-                <span className="dev-tl-col cue" style={{ width: 150, color: PHASE_COLORS[e.phase] ?? '#fff' }}>{e.phase}</span>
+                <span className="dev-tl-col tick" style={{ width: 60, color: '#e0c060' }}>+{e.tick}</span>
+                <span className="dev-tl-col cue" style={{ width: 110, color: PHASE_COLORS[e.phase] ?? '#fff' }}>{e.phase}</span>
                 <span className="dev-tl-col actor" style={{ width: 150, color: PROV_COLORS[e.provenance] ?? '#fff' }}>{e.provenance}</span>
-                <span className="dev-tl-col pose" style={{ flex: 1, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                  {e.label}{e.detail ? ` — ${e.detail}` : ''}
+                <span className="dev-tl-col pose" style={{ width: 120, color: e.kind === 'HANDLER_SIGNAL' ? '#e0c060' : '#7fd4ff' }}>{e.kind}</span>
+                <span className="dev-tl-col fx" style={{ flex: 1, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                  {e.signal ? `⚡ ${e.signal} · ` : ''}{e.label}{e.detail ? ` — ${e.detail}` : ''}
                 </span>
               </div>
             ))}
           </div>
+
+          {plan.fxTrack.length > 0 && (
+            <div className="dev-rt-state" style={{ marginTop: 8 }}>
+              <span style={{ color: '#e0c060' }}><b>FX track:</b></span>
+              {plan.fxTrack.map((fx, i) => (
+                <span key={i}>T+{fx.tick} {fx.kind} [{fx.provenance}]</span>
+              ))}
+            </div>
+          )}
         </>
       )}
       {!plan && <div className="dev-empty">Sin plan — selecciona una técnica.</div>}

@@ -26,6 +26,13 @@ export type Provenance =
   | 'PRESENTATION_DERIVED'
   | 'REMAKE_FALLBACK';
 
+/** Tipo de evento: señal del handler vs frame del actor vs FX. */
+export type ExecutionEventKind =
+  | 'HANDLER_SIGNAL'   // transición de estado del handler (RELEASE_TRIGGER…)
+  | 'ACTOR_FRAME'      // un frame del AnimationResource del actor
+  | 'FX_EVENT'         // spawn/frame/terminación de un FX (pista separada)
+  | 'PRESENTATION';    // evento derivado de presentación (return, camera…)
+
 /** Fases del contrato común de ejecución (orden canónico). */
 export type ExecutionPhase =
   | 'ACTION_BEGIN'          // entrada: el engine acepta la técnica
@@ -45,6 +52,13 @@ export interface ExecutionEvent {
   /** Tick GBC absoluto desde ACTION_BEGIN (59.7275 fps). */
   tick: number;
   phase: ExecutionPhase;
+  /** Tipo de evento — separa señales del handler de frames del actor. */
+  kind: ExecutionEventKind;
+  /** Para HANDLER_SIGNAL: nombre de la señal (RELEASE_TRIGGER, FX_SPAWN…). */
+  signal?: string;
+  /** Para ACTOR_FRAME: índice de metasprite y duración del frame. */
+  metaspriteIndex?: number;
+  durationTicks?: number;
   /** Descripción legible del paso (para trazas y auditoría). */
   label: string;
   provenance: Provenance;
@@ -68,6 +82,16 @@ export interface MappedFrame {
   endTick: number;
 }
 
+/** Pista de presentación: actor o FX sobre el MISMO tick absoluto. */
+export interface TrackEvent {
+  tick: number;
+  /** Actor: frame del AnimationResource · FX: spawn/frame/end. */
+  kind: 'ACTOR_FRAME' | 'FX_SPAWN' | 'FX_FRAME' | 'FX_END';
+  /** Detalle legible (meta, dx/dy o id de FX). */
+  label: string;
+  provenance: Provenance;
+}
+
 /** Plan de ejecución completo de una técnica (compilado del profile ROM). */
 export interface ExecutionPlan {
   /** Técnica ('Kamehameha'). */
@@ -86,6 +110,10 @@ export interface ExecutionPlan {
   frames: MappedFrame[];
   /** Eventos de ejecución en orden cronológico. */
   events: ExecutionEvent[];
+  /** Pista del ACTOR: frames del AnimationResource (ROM_CONFIRMED). */
+  actorTrack: TrackEvent[];
+  /** Pista del FX: ciclo de vida del efecto (spawn→frames→end). */
+  fxTrack: TrackEvent[];
   /** Duración en ms a 59.7275 fps (solo presentación). */
   durationMs: number;
   /** Secuencias ALTERNATIVAS del recurso (variantes facing/posición). */
