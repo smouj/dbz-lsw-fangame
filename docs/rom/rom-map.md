@@ -1,0 +1,169 @@
+# ROM Map — Dragon Ball Z: Legendary Super Warriors
+
+> **Fuente de verdad**: la ROM pasa a ser la referencia principal del proyecto.
+> La documentación anterior (Kanzenshuu/GameFAQs/vídeos) queda como hipótesis
+> y diseño del remake, marcada explícitamente cuando no está confirmada.
+>
+> **Marcadores**:
+> - ✅ **ROM_CONFIRMED** — extraído directamente de la ROM
+> - 🟡 **ROM_INFERRED** — deducido de datos ROM sin trazar la rutina
+> - 🔵 **REMAKE_CANON** — decisión de diseño del remake (no del juego)
+> - ❌ **OBSOLETE** — contradicho por la ROM
+
+## ROMs (referencia, no versionadas — `*.gbc` en .gitignore)
+
+| ROM | SHA-256 | Header | Tamaño |
+|---|---|---|---|
+| USA (`dbz-lsw-usa.gbc`) | `8dab48cc81d14bcee7c73274df09cf5c4dd44c3b93d10a5a3175e04fead25dee` | `I-DBZ-US` / `BBZE` | 2 MiB |
+| Spain (`dbz-lsw-spain.gbc`) | `bd1df5d6653be9e262f96db3bcdd7bb8ae0cad6186c16f8c1e8eba3f091c8804` | `DRAGONBALL:BBZS` | 2 MiB |
+
+Plataforma: **Game Boy Color exclusivo** · Mapper **MBC5 + RAM + Battery** ·
+128 bancos ROM de 16 KiB · 8 KiB RAM externa · checksums de cabecera y global OK.
+
+Ubicación: `dbz-lsw-decomp/13_raw_rom/` (bancos separados en `banks/bank_XX.bin`).
+
+---
+
+## 📊 CARD TABLE — ✅ ROM_CONFIRMED
+
+- **Banco**: `$11` · **Rango**: `RO11:$4320–$4AEF` · **125 registros × 16 bytes**
+- Físico: `0x44000 + 0x320` (la ventana conmutable 0x4000–0x7FFF mapea al
+  offset `banco*0x4000`; dirección de ventana `$4320` → `+0x320`).
+- Termina con 16 bytes `00` en `RO11:$4AF0` (firma del fin de tabla).
+
+### Estructura del registro (16 bytes)
+
+| Byte | Campo | Ejemplo Cont.Punch (`02 0A 64 33 0A 0A 2C FF…`) |
+|---|---|---|
+| 0 | Categoría | `02` = DAMAGE |
+| 1 | Power | `0A` = 10 |
+| 2 | Accuracy | `64` = 100 |
+| 3 | ID interna | `33` = 51 (= índice + 46) |
+| 4 | CC Cost | `0A` = 10 |
+| 5 | **Selector de ejecución** | `0A` = melee |
+| 6 | Flags (por trazar) | `2C` |
+| 7–8 | Flags de carta (por trazar) | `FF FF` |
+| 9–14 | **Máscara compatibilidad 48-bit** (6 bytes) | `FF FF FF FF FF FF` = universal |
+| 15 | Terminador/flag | `00` |
+
+### Categorías — ✅ ROM_CONFIRMED
+
+| Valor | Categoría | Cantidad |
+|---:|---|---:|
+| `01` | Command / Stage | 4 |
+| `02` | Damage | 24 |
+| `03` | Beam | 38 |
+| `04` | Support / Item | 48 |
+| `05` | Defense | 11 |
+| | **TOTAL** | **125** |
+
+### Verificación contra el catálogo del remake
+
+`scripts/compare-cards.ts` → **0/125 discrepancias** en type/atk/acc/cc.
+El catálogo de `src/data/cards.ts` coincide exactamente con la ROM.
+
+### Selector de ejecución (byte 5) — ✅ ROM_CONFIRMED (taxonomía interna)
+
+La ROM agrupa las técnicas por **rutina de ejecución**, no por categoría visible:
+
+| Sel | Familia | Nº | Cartas |
+|---|---|---|---|
+| `00` | Sin ejecución (command/defensa/soporte pasivo) | 19 | 3-6 stage, Special Card, Resurrection, Taiyoken, Teleport., Barrier, Time Freeze… |
+| `02` | **RAY/BEAM** (proyectil ki) | 38 | Energy Wave, Masenko, Kamehameha, S./F.Kamehameha, S.Beam Can., Galick-Ho, Final Flash, Flash.Sword, Lightning C., Finger/Eye Beam, Hell Flash… |
+| `03` | Beam especial | 3 | Telekinesis, Eraser Can., Body Change |
+| `04` | Beam único | 1 | Burning Atk. |
+| `05` | **BOMB/BALL** | 10 | Energy Bomb, F.Lightbomb, Big Bang Atk, Fin.Buster, S.G.K.Atk., KiBlast Bomb, M.Soundwave, Grand Wave, Rocket Punch, Energy Slash |
+| `06` | Damage único | 1 | Potbelly Atk |
+| `07` | **DISC/ORB** | 7 | Destruct-Disk, S.Destruc-D., Spirit Bomb, Galactica D., Crasher Ball, Super E-Ball, Energy Slice |
+| `08` | Beam único | 1 | Suicide |
+| `0A` | **MELEE físico** | 19 | Cont.Punch, Cont.Kick, Dunk Shot, Sonic Kick, Solid Shot, Rising Kick, Flash Punch, Atomic Break, N.Slasher, R.F.B.Atk., Mach Attack, Dynami.Punch, S.Dash Elbow, Crazy Rush, Attack No. 18, Life Absorb, Cell Combo, Step Up Atk., Crasher Buu |
+| `0B` | **SUMMON/ITEM** | 9 | Tail, Tien, Yajirobe, Hercule, Dabura, Stop Device, Gamebomb, H's Choco., Naughty Book |
+| `0C` | Damage único | 1 | V-ball Crash |
+| `0D` | **SUPPORT/CALL** | 14 | Kiai, Paralysis, Purple Comet, Bulma, Chaiotzu, Kaio, Supreme Kai, Babidi, Yakon, Scouter, Gravity Dev., Sealed Ball, Heart Virus, Sandglass |
+| `0E` | Damage único | 1 | P.Comet Z |
+| `0F` | Support único | 1 | Ene.Absorber |
+
+**Implicación para el remake**: nuestros `ActionProfile` deben modelar estas
+familias (`RAY`, `BALL`, `DISC`, `MELEE`, `SUPPORT`, `SUMMON`, `SPECIAL`) en vez
+de inventar taxonomías propias.
+
+### Máscara de compatibilidad (bytes 9–14) — ✅ ROM_CONFIRMED
+
+48 bits = **48 formas jugables** (personaje + transformación). Ejemplos:
+
+| Carta | Máscara (6 bytes) | Wiki |
+|---|---|---|
+| Cont.Punch (universal) | `FF FF FF FF FF FF` | todos |
+| Kamehameha | `C7 C7 81 03 C0 7F` | goku, cell, buu, goten… |
+| F.Kamehameha | `07 00 00 00 00 00` | goku |
+| Masenko | `3F C0 07 00 00 00` | gohan_kid, gohan_adult, piccolo, trunks_future |
+| Tail | `07 00 00 00 00 00` | gohan_kid |
+
+**Anclas resueltas** (cartas exclusivas de 1 personaje → bit directo):
+
+| Bit | Personaje | Evidencia |
+|---|---|---|
+| 0–2 | Gohan Kid | Tail `07` |
+| 3–5 | Piccolo | Sonic Kick `38`, F.Lightbomb `28` |
+| 6 | Krillin | Misty KiWave `40`, S.Destruc-D. `40` |
+| 7–10 | Goku | Kaio Ken `80`, Spirit Bomb/Solid Shot `8007` |
+| 11–13 | Vegeta | Galick-Ho `3800`, Final Flash `3000`, Suicide `2000` |
+| 14–16 | (gohan_adult/rango) | intersección gohan_kid+adult |
+| 17–18 | Trunks Future | Rising Kick `60000`, Fin.Buster `400000` |
+| 19–20 | Goten | Kamekameha `300000` |
+| 21–22 | Trunks Kid | Flash Punch `200000` |
+| 23–24 | Buu | V-ball Crash `1000000`, S.G.K.Atk. |
+| 25 | Vegito **o** Trunks | ⚠️ **conflicto** — Atomic Break `2000000` vs Flash.Sword `2000000` |
+| 26 | Nappa | N.Slasher/KiBlast/Lightning `4000000` |
+| 27 | Guldo | Telekinesis/Soundwave/Paralysis/TimeFreeze `8000000` |
+| 28 | Recoome | Eraser Can./R.F.B.Atk. `10000000` |
+| 29–30 | Jeice | Crasher Ball `20000000`, Speed Up/Mach `40000000` |
+| 31 | Ginyu | Body Change `80000000` |
+| 32 | Freeza | Grand Wave `100000000` |
+| 33 | Androide 16 | Rocket Punch/Hell Flash `200000000` |
+| 34 | Androide 17 | Crazy Rush `400000000` |
+| 35 | Androide 18 | Energy Slice/Attack No.18 `800000000` |
+| 36–37 | (androides) | rango 18+ |
+| 38–40 | Cell | Cell Combo `7000000000` |
+| 41 | Cell Jr. | Step Up Atk. |
+| 42–47 | Buu/ginyu/rango | Flesh Guard/Potbelly `40000000000` |
+
+> ⚠️ **Conflicto pendiente de resolver**: bit 25 lo reclaman Atomic Break
+> (wiki: Vegito) y Flash.Sword (wiki: Trunks Future). La tabla de formas
+> definitiva (siguiente tarea) dirá quién es. Si la wiki se equivocó, corregir.
+
+`scripts/solve-compat.ts` resuelve el mapeo por restricciones.
+`scripts/decode-compat.ts` lista cartas restringidas vs universales.
+
+---
+
+## 📊 CHARACTER / FORM TABLE — 🟡 ROM_INFERRED (en curso)
+
+- Tabla de offsets de 16 bits en `RO11:$4B00` (49 entradas, idéntica USA/Spain
+  → estructural). Los offsets (0x62…0x16B) apuntan a nombres cortos.
+- Listas de IDs de forma 0x00-terminadas en `RO11:$4B60+` (idénticas entre
+  ROMs → estructura): coinciden con los bits de la máscara (0x00–0x30 ≈ 48).
+- El inicio del banco 11 contiene registros de datos por forma (level-ups).
+
+**Pendiente**: localizar la tabla de nombres (charset del juego), confirmar el
+orden de las 48 formas y resolver el conflicto del bit 25.
+
+---
+
+## 📊 OTRAS TABLAS LOCALIZADAS
+
+- `RO11:$4AF0` — 16×`00` (firma fin de card table)
+- `RO11:$4B00` — tabla offsets formas (49×2 bytes)
+
+---
+
+## Estado del remake vs ROM
+
+| Área | Estado | Marca |
+|---|---|---|
+| Stats de cartas (125) | idénticas a la ROM | ✅ ROM_CONFIRMED |
+| Taxonomía de técnicas | familias reales extraídas | ✅ ROM_CONFIRMED |
+| Compatibilidad cartas | 90% anclas resueltas, 1 conflicto | 🟡 ROM_INFERRED |
+| Timings cinematográficos | basados en vídeo/hipótesis | 🔵 REMAKE_CANON (pendiente frame trace) |
+| Stage QTE / Gather / IA | modelo propio | 🔵 REMAKE_CANON (pendiente trazar rutinas) |
+| Fórmula de daño | hipótesis auditada | 🟡 ROM_INFERRED (pendiente rutina ROM) |
