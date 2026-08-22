@@ -12,6 +12,7 @@ import { SCENARIOS, SPECIAL_ACTION_BACKGROUND } from '../data/scenarios';
 import type { TimelineEntry } from '../battle/engine/presentation/PresentationCue';
 import { EnginePlayground } from './runtimePlayground';
 import { ReplayModule } from './replay';
+import { ExecutionModule } from './execution';
 import { resolveCinematicProfile, type CinematicProfile } from '../battle/cinematic/cinematicProfile';
 import { resolveActionProfileById } from '../battle/actionProfiles';
 import type { BattleActionDescriptor } from '../battle/engine/events/BattleEvent';
@@ -115,7 +116,7 @@ function CinematicProfilePanel({ action }: { action: BattleActionDescriptor | nu
 }
 
 export function TimelineModule() {
-  const [mode, setMode] = useState<'scenarios' | 'live' | 'replay'>('scenarios');
+  const [mode, setMode] = useState<'scenarios' | 'live' | 'replay' | 'execution'>('scenarios');
   const [scenarioId, setScenarioId] = useState(PRESENTATION_SCENARIOS[0].id);
   const [showMeta, setShowMeta] = useState(true);
 
@@ -165,10 +166,13 @@ export function TimelineModule() {
           onClick={() => setMode('live')}>En vivo (Engine Runtime)</button>
         <button className={`dev-hud-view-chip ${mode === 'replay' ? 'active' : ''}`}
           onClick={() => setMode('replay')}>Replay (M9)</button>
+        <button className={`dev-hud-view-chip ${mode === 'execution' ? 'active' : ''}`}
+          onClick={() => setMode('execution')}>Execution (ROM)</button>
       </div>
 
       {mode === 'live' && <EnginePlayground />}
       {mode === 'replay' && <ReplayModule />}
+      {mode === 'execution' && <ExecutionModule />}
       {mode === 'scenarios' && (
       <>
       <div className="dev-hud-view-select nowrap">
