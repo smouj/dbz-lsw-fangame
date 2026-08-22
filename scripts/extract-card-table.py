@@ -9,10 +9,12 @@
 #   byte 2  → Accuracy
 #   byte 3  → ID/referencia interna
 #   byte 4  → CC Cost
-#   byte 5  → selector de ejecución/efecto (taxonomía de técnicas)
-#   byte 6  → (por confirmar: ¿targeting/alcance?)
-#   bytes 7–14 → máscara de compatibilidad personaje/forma (48–64 bits)
-#   byte 15 → (por confirmar: ¿fin de registro?)
+#   byte 5  → execution handler (dispatcher → Bank03 rutinas: $02→$5776, $03→$5A6B...)
+#   byte 6  → actor animation resource (paquete de secuencias/metasprites, bancos $62-$64)
+#   byte 7  → effect graphics resource (bancos $65+, VRAM $8800)
+#   byte 8  → effect palette ID (tabla Bank $30:$6E00, 8 bytes/entrada = paleta CGB)
+#   bytes 9–14 → máscara de compatibilidad 48-bit (bit N = forma N)
+#   byte 15 → extra metadata
 #
 # Salida: JSON con los 125 registros crudos + resumen de categorías/selectores.
 # ═══════════════════════════════════════════════════════════════════════
@@ -52,8 +54,10 @@ def main():
             'internal_id': rec[3],
             'cc_cost': rec[4],
             'exec_selector': rec[5],
-            'b6': rec[6],
-            'compat_mask': rec[7:15].hex(),
+            'actor_anim': rec[6],
+            'fx_graphics': rec[7],
+            'fx_palette': rec[8],
+            'compat_mask': rec[9:15].hex(),
             'b15': rec[15],
         })
         # sanity: el byte 15 de los últimos registros debe ser 00 (terminador)
