@@ -46,6 +46,8 @@ import { cardBattlePose, cardUsableBy, OFFENSIVE_SUPPORT_EFFECTS, DEFENSIVE_EFFE
 import { isDebugCinematics, bindDebugControls, renderDebugOverlay, type CinematicDebugInfo, type CinematicDebugController } from './battle/debugCinematics';
 import { isDebugState, bindQteDebugControls, renderStateOverlay, type StateDebugSnapshot } from './battle/debugState';
 import { getControlBoundary } from './battle/engine/state';
+import { applyDamage } from './battle/engine/commands/reducers/damageReducer';
+import { stagePartialDamage } from './battle/engine/combat/resolution';
 import { isPixiField } from './renderer/pixi/flag';
 // M8 — BattleRuntime: frontera única del combate (Engine → EventLog → M7
 // Timeline → Presenter). M8.C1 migra MOVE + GUARD: la UI despacha al
@@ -1970,20 +1972,23 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
       setViewMode('OVERVIEW');
       // Daño parcial del Stage abortado: proporcional a los aciertos
       // (HYPOTHESIS — misma fórmula de daño que el stage completo × progreso).
+      // M8.C2 — el monto lo calcula el ENGINE (stagePartialDamage, misma
+      // fórmula) y se aplica por applyDamage (única ruta de mutación HP).
       const totalSeq = st.seq.length || 1;
       const progress = Math.min(1, st.correct / totalSeq);
       let partialDmg = 0;
       if (progress > 0) {
-        const ePos = enemy.battlePos;
-        const vulnerable = (isBeamVulnerable(ePos) && card.type === 'beam') || (isDamageVulnerable(ePos) && card.type === 'damage');
-        const posMult = (POSITION_DATA[ePos].depth === 'FRONT' && vulnerable) ? 0.8 : 0.5;
-        partialDmg = Math.max(0, Math.floor((card.atk + player.str) * posMult * progress));
+        const rt = rtApi.runtime;
+        const pd = stagePartialDamage(card.atk, rt.state.player.str, rt.state.enemy.battlePos, card.type, progress);
+        partialDmg = pd;
+        const outcome = applyDamage(rt.state, 'enemy', pd, { type: 'CARD', cardId: card.id }, 'player');
+        rt.state = outcome.state;
+        setEnemy(prev => ({ ...prev, hp: rt.state.enemy.hp }));
       }
       setTimeout(() => {
         setStageQte({ state: 'WAITING', seq: [], idx: 0, correct: 0, covering: false, card: null, elapsedFrames: 0, limitFrames: 0, counterFrames: 0, prepFrames: 0, result: null });
         setPhase('cardSelect');
         if (partialDmg > 0) {
-          setEnemy(prev => ({ ...prev, hp: Math.max(0, prev.hp - partialDmg) }));
           setEnemyPose('hurt');
           setFlashEnemy(true);
           hitImpact('enemy');
@@ -1999,6 +2004,8 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
     // COUNTER_HIT: el contraataque del rival conecta sobre el jugador.
     // Fórmula HYPOTHESIS (hasta captura ROM): golpe del rival basado en su
     // STR/KI y la posición del jugador (misma estructura que el daño ofensivo).
+    // M8.C2 — el monto lo calcula el ENGINE (counterDamage, misma fórmula)
+    // y se aplica por applyDamage (única ruta de mutación HP).
     const pPos = player.battlePos;
     const pVuln = (isBeamVulnerable(pPos) && card.type === 'beam') || (isDamageVulnerable(pPos) && card.type === 'damage');
     const pPosMult = (POSITION_DATA[pPos].depth === 'FRONT' && pVuln) ? 0.8 : 0.5;
@@ -2006,9 +2013,13 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
     commitQte({ ...st, state: 'COUNTER_HIT', result: 'COUNTER_HIT' });
     setViewMode('OVERVIEW');
     setTimeout(() => {
+      // Aplicar por el Engine (misma fórmula — el valor ya es el calculado).
+      const rt = rtApi.runtime;
+      const outcome = applyDamage(rt.state, 'player', counterDmg, { type: 'COUNTER' }, 'enemy');
+      rt.state = outcome.state;
       setStageQte({ state: 'WAITING', seq: [], idx: 0, correct: 0, covering: false, card: null, elapsedFrames: 0, limitFrames: 0, counterFrames: 0, prepFrames: 0, result: null });
       setPhase('cardSelect');
-      setPlayer(prev => ({ ...prev, hp: Math.max(0, prev.hp - counterDmg) }));
+      setPlayer(prev => ({ ...prev, hp: rt.state.player.hp }));
       setPlayerPose('hurt');
       setFlashPlayer(true);
       hitImpact('player');
@@ -2016,7 +2027,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
       addLog(`${enemy.name} ${t('battle.counterHit')} — ${counterDmg} ${t('battle.dmg')} (conservas ${ccGained} CC)`);
       Sfx.hit();
       setTimeout(() => setFlashPlayer(false), gbcMs(9)); // 9 ticks (hit flash, HYPOTHESIS)
-      if (player.hp - counterDmg <= 0) {
+      if (rt.state.player.hp <= 0) {
         setTimeout(() => { setPlayerPose('hurt'); setPhase('lose'); Sfx.defeat(); addLog(`${player.name} ${t('battle.defeated')}`); }, 500);
         return;
       }
