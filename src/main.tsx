@@ -1923,12 +1923,14 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
       commitQte({ ...st, state: 'COMPLETED', result: 'FULL_SUCCESS' });
       setPhase('cardSelect'); // desmonta el overlay del QTE
       playCardCinematic(card, 'player', () => {
-        // Daño completo al terminar la cinemática
-        const ePos = enemy.battlePos;
-        const vulnerable = (isBeamVulnerable(ePos) && card.type === 'beam') || (isDamageVulnerable(ePos) && card.type === 'damage');
-        const posMult = (POSITION_DATA[ePos].depth === 'FRONT' && vulnerable) ? 0.8 : 0.5;
-        const dmg = Math.floor((card.atk + player.str) * posMult);
-        setEnemy(prev => ({ ...prev, hp: Math.max(0, prev.hp - dmg) }));
+        // M8.C2 — el daño lo resuelve el ENGINE (resolveCard →
+        // stageAttackDamage, la MISMA fórmula auditada — shadow parity).
+        // React solo proyecta el HP resultante + efectos visuales.
+        const rt = rtApi.runtime;
+        const hpBefore = rt.state.enemy.hp;
+        rt.resolveCard('player', card);
+        const dmg = hpBefore - rt.state.enemy.hp;
+        setEnemy(prev => ({ ...prev, hp: rt.state.enemy.hp }));
         if (dmg > 0) setEnemyPose('hurt');
         setFlashEnemy(true);
         hitImpact('enemy');

@@ -14,9 +14,11 @@
 // ═══════════════════════════════════════════════════════════════════════
 
 import { executeCommand, canExecute, getAvailableCommands } from '../engine/commands';
+import { resolveCardAction } from '../engine/commands/reducers/damageReducer';
 import type { BattleCommand, CommandCheck, CommandExecutionResult } from '../engine/commands';
 import { advanceBattleClock, type ClockAdvanceOutcome } from '../engine/clock';
-import type { BattleState } from '../engine/state/BattleState';
+import type { BattleSide, BattleState } from '../engine/state/BattleState';
+import type { CardDef } from '../../data/cards';
 import {
   appendOutcomeToEventLog,
   emptyEventLog,
@@ -126,6 +128,24 @@ export class BattleRuntime {
   /** Acceso a la historia de timelines (Replay M9 / auditoría). */
   timelineHistory(): BattleTimeline[] {
     return this.history;
+  }
+
+  /**
+   * Resuelve UNA carta de acción al Engine (M5 resolveCardAction — daño /
+   * precisión / evasión / stage). Puente de cutover: mientras la mano y la
+   * cinemática sigan legacy, la RESOLUCIÓN (HP/events) pasa por el Engine
+   * (única ruta de mutación) y la UI proyecta. Mismo flujo que dispatch:
+   * state → log → timeline → presenter.
+   */
+  resolveCard(side: BattleSide, card: CardDef): DispatchResult {
+    const outcome = resolveCardAction(this.state, side, card);
+    this.state = outcome.state;
+    const ticks = outcome.events.map(() => this.state.tick);
+    this.log = appendOutcomeToEventLog(this.log, outcome.events, ticks);
+    this.timeline = buildPresentationTimeline({ events: this.log.entries, context: this.context });
+    if (this.presenter) this.presenter.consume({ timeline: this.timeline, state: this.state });
+    if (this.history) this.history.push(this.timeline);
+    return { ok: true, state: this.state, events: outcome.events, log: this.log, timeline: this.timeline };
   }
 
   /** Reconstruye el input de presentación (para inspección headless). */
