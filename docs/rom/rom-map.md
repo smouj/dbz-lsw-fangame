@@ -141,19 +141,24 @@ de inventar taxonomías propias.
 
 - Tabla de offsets de 16 bits en `RO11:$4B00` (49 entradas, idéntica USA/Spain
   → estructural). Los offsets (0x62…0x16B) apuntan a nombres cortos.
-- Listas de IDs de forma 0x00-terminadas en `RO11:$4B60+` (idénticas entre
-  ROMs → estructura): coinciden con los bits de la máscara (0x00–0x30 ≈ 48).
-- El inicio del banco 11 contiene registros de datos por forma (level-ups).
+- Listas de IDs de forma 0x00-terminadas en `RO11:$4B62+` (idénticas entre
+  ROMs → estructura): son el **roster del modo historia** — cada batalla
+  lista las formas disponibles (IDs 0x01–0x30 = 48 formas). Los IDs
+  coinciden con los bits de la máscara de compatibilidad (bit N = forma N).
+  Ejemplos: `01,02,03,0F,10,11,2E` ×3 (batallas del capítulo), `04,05,06,2D,2E` ×3…
+- El inicio del banco 11 contiene registros de 16 bytes por forma (level-ups).
+- `RO11:$4D00+`: tiles de la fuente del juego (por eso los nombres no son
+  buscables en ASCII — el charset es de tiles).
 
-**Pendiente**: localizar la tabla de nombres (charset del juego), confirmar el
-orden de las 48 formas y resolver el conflicto del bit 25.
-
----
+**Pendiente**: mapear la fuente de tiles → nombres, confirmar el orden de las
+48 formas y resolver el conflicto del bit 25.
 
 ## 📊 OTRAS TABLAS LOCALIZADAS
 
 - `RO11:$4AF0` — 16×`00` (firma fin de card table)
 - `RO11:$4B00` — tabla offsets formas (49×2 bytes)
+- `RO11:$4B62` — roster modo historia (listas 0x00-terminadas de formas)
+- `RO11:$4D00` — tiles de fuente (charset)
 
 ---
 
