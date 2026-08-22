@@ -170,16 +170,44 @@ AMBIGUOUS_BUCKETS = ['movement_or_attack_pose', 'idle_or_stance', 'downed_or_hur
 # (003_hurt, 008_attack_fwd, 012_beam_charge…): el nombre ES evidencia
 # forense del asset. Patrones verificados en el catálogo V9 (2026-08-19):
 # 112 *_hurt · 23 *_attack_* · 18 *_beam_* · 13 *_guard · 10 *_move_* · 2 *_idle.
+# M8.P0: los frames de sheet SIN pose runtime (nombre) reciben el MISMO
+# rol posicional que la secuencia runtime (ready→recover en melee,
+# start/hold/recover en defense) — nunca el variant plano como role.
+def _named_roles(kind, idx):
+    """(family, role, variant) para frames de sheet por índice del nombre.
+    El prefijo numérico (000_attack_fwd → 0) es posición en la secuencia
+    canónica. Los sheets numeran frames con huecos (012_guard, 021_guard…):
+    el rol sale del ORDEN dentro de la lista canónica (módulo de la
+    longitud) para que los 3 roles de defense/guard SIEMPRE aparezcan
+    cuando hay ≥3 frames del patrón."""
+    if kind == 'attack_fwd':
+        return ('melee', ATTACK_FWD_ROLES[idx % len(ATTACK_FWD_ROLES)], 'attack_forward')
+    if kind == 'attack_ud':
+        return ('melee', ATTACK_UD_ROLES[idx % len(ATTACK_UD_ROLES)], 'attack_vertical')
+    if kind in ('guard', 'beam_guard'):
+        return ('defense', GUARD_ROLES[idx % len(GUARD_ROLES)], kind)
+    if kind in ('move_front', 'move_back'):
+        return ('movement', MOVEMENT_ROLES[idx % len(MOVEMENT_ROLES)], kind)
+    if kind == 'beam_charge':
+        return ('beam', BEAM_CHARGE_ROLES[idx % len(BEAM_CHARGE_ROLES)], 'charge')
+    if kind == 'beam_fire':
+        return ('beam', 'release', 'fire')
+    if kind == 'hurt':
+        return ('reaction', HURT_ROLES[min(idx, 1)], 'hurt')
+    if kind == 'idle':
+        return ('idle', 'idle', 'idle')
+    return ('unclassified', kind, kind)
+
 NAME_PATTERNS = [
-    (r'_hurt$', ('reaction', 'hurt', 'hurt', 'actor_frame')),
-    (r'_attack_fwd$', ('melee', 'attack_forward', 'attack_forward', 'actor_frame')),
-    (r'_attack_ud$', ('melee', 'attack_vertical', 'attack_vertical', 'actor_frame')),
-    (r'_beam_charge$', ('beam', 'charge', 'charge', 'actor_frame')),
-    (r'_beam_fire$', ('beam', 'release', 'fire', 'actor_frame')),
-    (r'_guard$', ('defense', 'hold', 'guard', 'actor_frame')),
-    (r'_move_front$', ('movement', 'travel', 'move_front', 'actor_frame')),
-    (r'_move_back$', ('movement', 'travel', 'move_back', 'actor_frame')),
-    (r'_idle$', ('idle', 'idle', 'idle', 'actor_frame')),
+    (r'_hurt(?:\d*)$', lambda i: _named_roles('hurt', i)),
+    (r'_attack_fwd$', lambda i: _named_roles('attack_fwd', i)),
+    (r'_attack_ud$', lambda i: _named_roles('attack_ud', i)),
+    (r'_beam_charge$', lambda i: _named_roles('beam_charge', i)),
+    (r'_beam_fire$', lambda i: _named_roles('beam_fire', i)),
+    (r'_guard$', lambda i: _named_roles('guard', i)),
+    (r'_move_front$', lambda i: _named_roles('move_front', i)),
+    (r'_move_back$', lambda i: _named_roles('move_back', i)),
+    (r'_idle$', lambda i: _named_roles('idle', i)),
 ]
 
 def classify_fallback(bucket, frame_name):
@@ -189,11 +217,16 @@ def classify_fallback(bucket, frame_name):
     Orden: nombre de archivo > bucket concreto > multi_evidence."""
     base = frame_name[:-4].lower() if frame_name.endswith('.png') else frame_name.lower()
     # 1) Nombre de archivo semántico (el más específico: nombra la pose exacta)
-    for pat, (fam, role, var, atype) in NAME_PATTERNS:
+    for pat, named_fn in NAME_PATTERNS:
         if re.search(pat, base):
-            # sequenceIndex real del número del nombre (003_hurt → 3):
-            # la secuencia queda ordenada aunque el manifest no la referencie.
-            return (fam, role, var, atype, 'ASSET_VERIFIED',
+            # sequenceIndex real del número del nombre (000_attack_fwd → 0,
+            # 003_hurt → 3): el prefijo numérico del archivo ES la posición
+            # en la secuencia canónica.
+            idx = 0
+            mnum = re.match(r'(\d+)', base)
+            if mnum: idx = int(mnum.group(1))
+            fam, role, var = named_fn(idx)
+            return (fam, role, var, 'actor_frame', 'ASSET_VERIFIED',
                     f'nombre de archivo del sheet ({base.split("_")[-1]})')
     # 2) Bucket concreto del catálogo
     if bucket in BUCKET_ASSET:

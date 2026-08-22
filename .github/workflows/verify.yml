@@ -51,8 +51,14 @@ jobs:
           npm run audit:sheets
           npm run audit:sprite-canon
 
+      - name: Presentation Adapter M7 (82 invariantes de cues)
+        run: npm run verify:presentation
+
       - name: GBC canon invariants (positions, deck, sequences, coverage)
         run: npm run verify:gbc
+
+      - name: Runtime cutover M8 (gaps legacy cuantificados — objetivo 0)
+        run: npm run audit:runtime
 
       - name: Production build
         run: npm run build
