@@ -1699,24 +1699,32 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
     (PREP_PHASES.find(ph => pf < ph.until) ?? PREP_PHASES[PREP_PHASES.length - 1]).pose;
 
   const startStageAttack = (card: CardDef) => {
-    // Etapas según la carta (3/4/5/6 Stage)
-    let stages: 3 | 4 | 5 | 6 = 3;
-    if (card.name.includes('4')) stages = 4;
-    else if (card.name.includes('5')) stages = 5;
-    else if (card.name.includes('6')) stages = 6;
-    // Gather Power convierte Basic 3 Stage → 4 Stage (ya manejado en BASIC).
-    // Secuencia CANÓNICA predeterminada (pool fijo por nivel, round-robin):
-    // NO aleatoria — el GBC tiene patrones de inputs que se repiten y el
-    // jugador los aprende; la rotación garantiza variación sin repetir hasta
-    // agotar el pool (6 variantes por nivel). docs: stageSequences.ts
+    // M8.C2 — el QTE vive en el ENGINE (estado autoritativo). El legacy
+    // genera la secuencia con la MISMA fuente (stageSequences.ts, pool por
+    // nivel + ventana por profundidad) y la SINCRONIZA al engine: los
+    // QTE_INPUT posteriores validan contra runtime.state.stageQte y las
+    // mutaciones (CC/correct/COMPLETED) salen de ahí (shadow parity).
+    // (El deck de la mano sigue legacy en este slice — PLAY_CARD del engine
+    //  requiere mano sincronizada, pendiente del slice de cartas.)
+    const stages: 3 | 4 | 5 | 6 = card.name.includes('6') ? 6
+      : card.name.includes('5') ? 5
+      : card.name.includes('4') ? 4 : 3;
     const seq = nextStageSequence(stages);
-    // ⚠️ pool de inputs y generación: HYPOTHESIS (spec §21) — el original puede
-    // usar un generador propio; pendiente de verificar en ROM.
-    // Ventana TOTAL de la secuencia según posición relativa (manual GBC):
-    // REAR+REAR=1.2s · REAR+FRONT=1.7s · FRONT+REAR=2.4s · FRONT+FRONT=2.9s.
-    // El reloj corre GLOBAL hasta completar todos los inputs; si se agota →
-    // fallo → contraataque del rival (COUNTER_WINDOW).
     const sequenceWindow = resolveStageWindow();
+    const rt = rtApi.runtime;
+    // Sincronizar CC del engine con el legacy (el coste se pagó en legacy;
+    // el engine suma la ganancia del QTE sobre este valor).
+    rt.state = {
+      ...rt.state,
+      phase: 'stageInput',
+      player: { ...rt.state.player, cc: player.cc },
+      stageQte: {
+        state: 'PREPARING', seq, idx: 0, correct: 0, card: null,
+        startedTick: rt.state.tick, inputOpenTick: rt.state.tick + STAGE_PREP_TICKS,
+        deadlineTick: rt.state.tick + STAGE_PREP_TICKS + sequenceWindow, windowTicks: sequenceWindow,
+        counterDeadlineTick: 0, result: null,
+      },
+    };
     commitQte({
       state: 'PREPARING', seq, idx: 0, correct: 0, covering: false, card,
       elapsedFrames: 0, limitFrames: sequenceWindow, counterFrames: 0,
@@ -1790,32 +1798,37 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
   }, [phase]);
 
   // ═══ Input correcto/incorrecto (spec §7-8: NO aplica HP por input) ═══
+  // M8.C2 — la decisión del input la toma el ENGINE (qteCorrectInput /
+  // qteWrongInput): CC/correct/COMPLETED/COUNTER_WINDOW salen de
+  // runtime.state — React solo proyecta (shadow parity: mismo resultado
+  // observable, estado autoritativo en el Engine).
   const submitStageInput = (pressed: StageKey) => {
     const st = stageQteRef.current;
     if (st.state !== 'INPUT_WINDOW') return;
-    const expected = st.seq[st.idx];
-    if (pressed === expected) {
+    const res = engineDispatch({ type: 'QTE_INPUT', input: pressed });
+    if (!res.ok) return;
+    const q = rtApi.runtime.state.stageQte;
+    const newCorrect = q.correct;
+    const completed = q.state === 'COMPLETED';
+    if (pressed === st.seq[st.idx]) {
       // Acierto: +1 CC, avanza el cursor y la animación; NADA de daño aún.
       Sfx.qteCorrect();
-      const newCorrect = st.correct + 1;
-      setPlayer(prev => ({ ...prev, cc: Math.min(prev.maxCc, prev.cc + 1) }));
+      // CC proyectado del Engine (el reducer ya lo sumó).
+      setPlayer(prev => ({ ...prev, cc: Math.min(prev.maxCc, rtApi.runtime.state.player.cc) }));
       flashFeedback('correct');
-      const next = st.idx + 1;
-      if (next >= st.seq.length) {
+      if (completed) {
         // Secuencia completa → COMPLETED → se ejecuta la ANIMACIÓN de la acción
         // (GBC: el QTE solo es la introducción; la acción se ve al completarlo).
-        commitQte({ ...st, state: 'COMPLETED', idx: next, correct: newCorrect, result: 'FULL_SUCCESS' });
+        commitQte({ ...st, state: 'COMPLETED', idx: q.idx, correct: newCorrect, result: 'FULL_SUCCESS' });
         addLog(`${player.name} completa el Stage Attack! (+${newCorrect} CC)`);
         resolveStageResult();
       } else {
         // Avanza el cursor; el reloj de la secuencia SIGUE corriendo (global)
-        commitQte({ ...st, idx: next, correct: newCorrect });
+        commitQte({ ...st, idx: q.idx, correct: newCorrect });
       }
     } else {
       // Fallo: input equivocado → el RIVAL CONTRAATACA (manual GBC).
-      // El luchador se congela en la pose del golpe fallido y aparece ENTER
-      // COMMAND: A = defenderte del contraataque (conserva CC, evita su daño)
-      // · B = reparar y continuar el Stage Attack.
+      // El engine ya pasó a COUNTER_WINDOW (qteWrongInput).
       flashFeedback('wrong');
       Sfx.qteFail();
       addLog(`${player.name} falla un input — ¡${enemy.name} contraataca!`);
@@ -1827,9 +1840,13 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
   // El rival obtiene una oportunidad de contraataque (manual GBC). El luchador
   // se queda QUIETO en la pose del golpe fallido mientras aparece ENTER COMMAND
   // (ventana corta de timing: A≈0.4s / B≈0.15s — HYPOTHESIS).
+  // M8.C2 — el engine ya pasó a COUNTER_WINDOW (qteWrongInput / timeout);
+  // aquí solo se refleja en el estado de presentación legacy.
   const enterStageFailure = (reason: 'WRONG_INPUT' | 'TIMEOUT' | 'DEFENSE_CARD') => {
     const st = stageQteRef.current;
     if (st.state !== 'INPUT_WINDOW') return;
+    // El engine ya está en COUNTER_WINDOW (despachado en submitStageInput o
+    // por el timeout del reloj); el legacy solo refleja el estado para la UI.
     commitQte({
       ...st,
       state: 'COUNTER_WINDOW',
@@ -1844,10 +1861,13 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
   // B: reparas la cadena y continúas el Stage Attack desde el input fallido —
   //    ventana ≈0.15s (más estricta; la comunidad la cuantifica así).
   // Si el timing no se cumple → el contraataque del rival conecta (COUNTER_HIT).
+  // M8.C2 — la decisión la toma el ENGINE (QTE_COUNTER_DEFEND / CONTINUE).
   const stageRecoverInput = (pressed: StageKey) => {
     const st = stageQteRef.current;
     if (st.state !== 'COUNTER_WINDOW') return;
     if (pressed === 'A' && st.counterFrames <= COUNTER_A_FRAMES) {
+      const res = engineDispatch({ type: 'QTE_COUNTER_DEFEND' });
+      void res;
       // A = BANK/DEFEND: conserva CC, evita el daño del contraataque.
       // covering=true → el luchador ejecuta la animación de CUBRIRSE (guard).
       Sfx.cancel();
@@ -1856,6 +1876,8 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit }: {
       commitQte({ ...st, state: 'SAFE_ABORT', covering: true, result: 'SAFE_ABORT' });
       resolveStageResult();
     } else if (pressed === 'B' && st.counterFrames <= COUNTER_B_FRAMES) {
+      const res = engineDispatch({ type: 'QTE_COUNTER_CONTINUE' });
+      void res;
       // B = RECOVER: repara y continúa el Stage Attack (el reloj de la
       // secuencia se reinicia para los inputs restantes — HYPOTHESIS)
       Sfx.confirm();
