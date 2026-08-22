@@ -153,6 +153,40 @@ de inventar taxonomías propias.
 **Pendiente**: mapear la fuente de tiles → nombres, confirmar el orden de las
 48 formas y resolver el conflicto del bit 25.
 
+## 📊 ANIMATION RESOURCES — ✅ ROM_CONFIRMED (12 técnicas extraídas)
+
+- Bancos $62/$63/$64: tabla global de recursos (u16 count + pares offset/size acumulativos).
+- Formato de frame del reproductor GBC (confirmado byte a byte):
+  `[u8 metaspriteIndex, u8 durationTicks, s8 deltaY, s8 deltaX]`
+- `scripts/extract-anim-seq.py` escanea secuencias y cruza contra ground truth;
+  `src/data/romAnimationData.ts` (generado) expone `ROM_TECHNIQUES`.
+
+### Técnicas ROM_CONFIRMED (ticks por secuencia)
+
+| Técnica | Handler | Anim res | FX res | Pal | Secuencias (ticks) |
+|---|---:|---:|---:|---:|---|
+| Kamehameha | 02 | 03 | 05 | 2C | 75×6 (hold 60t en frame 3) |
+| Masenko | 02 | — | — | — | 74×2 |
+| Galick-Ho | 02 | — | — | — | 76×2 |
+| Final Flash | 02 | — | — | — | 78×2 |
+| Energy Wave | 02 | — | — | — | 15×2 |
+| Finger Beam | 02 | — | — | — | 13×2 |
+| Big Bang Attack | 05 | — | — | — | 75×2 |
+| Destructo Disk | 07 | — | — | — | 79×4 |
+| Special Beam Cannon | 02 | — | — | — | 78×2 |
+| Misty KiWave | 07 | — | — | — | 77 |
+| Spirit Bomb | 07 | — | — | — | 85 |
+| Tail | 0B | — | — | — | 31/225 |
+
+> **El hold de carga (60 ticks) está programado en la ROM** — respalda no interpolar
+> constantemente al personaje. Kamehameha: meta1 dx +2/+3/+3/+2, meta2 dx -2/-4/-5/-4.
+
+### Estructura del AnimationResource (análisis, por confirmar fina)
+
+- 3 punteros relativos → Sequence Section / Metasprite Section / Tile Mapping.
+- Metasprites GBC: u8 pieceCount + piezas `[ΔY, ΔX, tile, attr]` (ej. 0C = 12 piezas OAM).
+- Tile mapping: tabla paralela `[tile, attr]` por pieza (pendiente semántica fina).
+
 ## 📊 OTRAS TABLAS LOCALIZADAS
 
 - `RO11:$4AF0` — 16×`00` (firma fin de card table)
