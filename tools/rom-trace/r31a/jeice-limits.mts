@@ -1,0 +1,14 @@
+import { RomDriver } from '../nav.ts';
+const [rom, sav] = process.argv.slice(2);
+const d = new RomDriver(rom, sav);
+await d.loadstate('r31a/jeice-battle-base.ss0');
+await d.frames(30, 0);
+const lims = await d.read(0xCB1D, 15);
+const deck = await d.read(0xCB2C, 20);
+const hand = await d.read(0xCB41, 6);
+const roster = await d.read(0xCB1A, 3);
+console.log(`roster=[${roster.map(v=>v.toString(16)).join(' ')}]`);
+console.log(`limits=[${lims.map(v=>v.toString(16).padStart(2,'0')).join(' ')}]`);
+console.log(`deck=[${deck.map(v=>v.toString(16).padStart(2,'0')).join(' ')}]`);
+console.log(`hand=[${hand.map(v=>v.toString(16).padStart(2,'0')).join(' ')}]`);
+await d.quit();

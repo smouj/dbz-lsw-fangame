@@ -1,0 +1,11 @@
+import { RomDriver } from '../nav.ts';
+const [rom, sav] = process.argv.slice(2);
+const d = new RomDriver(rom, sav);
+await d.loadstate('r31a/battle-base.ss0');
+await d.frames(30, 0);
+await d.shot('r31a/ba-start.ppm');
+await d.frames(8, 0x01); await d.frames(60, 0);
+await d.shot('r31a/ba-a.ppm');
+const s = await d.state();
+console.log(`after A: C0A0=${(s.C0A0??0).toString(16)} CA06=${(s.CA06??0).toString(16)}`);
+await d.quit();

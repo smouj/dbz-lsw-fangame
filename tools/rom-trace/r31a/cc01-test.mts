@@ -1,0 +1,21 @@
+import { RomDriver } from '../nav.ts';
+const [rom, sav] = process.argv.slice(2);
+const d = new RomDriver(rom, sav);
+await d.loadstate('r31a/battle-base.ss0');
+await d.frames(30, 0);
+await d.frames(8, 0x20); await d.frames(40, 0);
+await d.frames(6, 0x01); await d.frames(50, 0);
+const before = await d.read(0xCBF8, 16);
+console.log('0xCBF8 pre-patch:', before.map(v=>v.toString(16).padStart(2,'0')).join(' '));
+await d.shot('r31a/cc01-base.ppm');
+await d.write(0xCC01, 99);
+await d.frames(30, 0);
+await d.shot('r31a/cc01-99.ppm');
+const mid = await d.read(0xCBF8, 16);
+console.log('0xCBF8 patched:', mid.map(v=>v.toString(16).padStart(2,'0')).join(' '));
+await d.write(0xCC01, 29); // Tail!
+await d.frames(30, 0);
+await d.shot('r31a/cc01-29.ppm');
+const post = await d.read(0xCBF8, 16);
+console.log('0xCBF8 tail:', post.map(v=>v.toString(16).padStart(2,'0')).join(' '));
+await d.quit();

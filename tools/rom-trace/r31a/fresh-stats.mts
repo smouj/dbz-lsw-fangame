@@ -1,0 +1,12 @@
+import { RomDriver } from '../nav.ts';
+const [rom, sav] = process.argv.slice(2);
+const d = new RomDriver(rom, sav);
+await d.loadstate('r31a/gohan-battle-base.ss0');
+await d.frames(30, 0);
+let r = await d.read(0xC170, 0x40);
+console.log('GOHAN-battle 0xC170:', r.map(v=>v.toString(16).padStart(2,'0')).join(' '));
+await d.loadstate('r31a/jeice-battle-base.ss0');
+await d.frames(30, 0);
+r = await d.read(0xC170, 0x40);
+console.log('JEICE-battle 0xC170:', r.map(v=>v.toString(16).padStart(2,'0')).join(' '));
+await d.quit();

@@ -1,0 +1,10 @@
+import { RomDriver } from '../nav.ts';
+const [rom, sav] = process.argv.slice(2);
+const d = new RomDriver(rom, sav);
+await d.loadstate('r31a/offense-base.ss0');
+await d.frames(10, 0);
+const cc = await d.read(0xCA3E, 1);
+const di = await d.read(0xCB40, 1);
+const s = await d.state();
+console.log(`CC=0xCA3E=${cc[0]} (0x${cc[0].toString(16)}) drawIndex=0xCB40=${di[0]} (0x${di[0].toString(16)}) C0A0=${(s.C0A0??0).toString(16)}`);
+await d.quit();

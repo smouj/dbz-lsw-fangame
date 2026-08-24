@@ -1,0 +1,12 @@
+import { RomDriver } from '../nav.ts';
+const [rom, sav] = process.argv.slice(2);
+const d = new RomDriver(rom, sav);
+await d.loadstate('r31a/gohan-offense-base.ss0');
+await d.frames(5, 0);
+let r = await d.read(0xCA3C, 0x18);
+console.log('GOHAN CA3C:', r.map(v=>v.toString(16).padStart(2,'0')).join(' '));
+await d.loadstate('r31a/jeice-offense-base.ss0');
+await d.frames(5, 0);
+r = await d.read(0xCA3C, 0x18);
+console.log('JEICE CA3C:', r.map(v=>v.toString(16).padStart(2,'0')).join(' '));
+await d.quit();

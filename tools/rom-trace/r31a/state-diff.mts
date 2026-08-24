@@ -1,0 +1,10 @@
+import { RomDriver } from '../nav.ts';
+const [rom, sav] = process.argv.slice(2);
+const d = new RomDriver(rom, sav);
+await d.loadstate('r31a/gohan-offense-base.ss0');
+await d.frames(5, 0);
+await d.memdump('r31a/sd-gohan.json', 0xC0A0, 0x360);
+await d.loadstate('r31a/jeice-offense-base.ss0');
+await d.frames(5, 0);
+await d.memdump('r31a/sd-jeice.json', 0xC0A0, 0x360);
+await d.quit();

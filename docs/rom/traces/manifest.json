@@ -1,0 +1,27 @@
+{
+ "captures": [
+  {
+   "id": "tail_left_defended_01",
+   "campaign": "r31a-tail",
+   "action": "tail-29-handler-0b",
+   "cardId": 29,
+   "side": "LEFT",
+   "outcome": "DEFENDED_GUARD_CA53_1",
+   "savestate": "tools/rom-trace/r31a/artifacts/tail_left_base.ss0",
+   "savestateSha256": "c739369651fc0f2292a7950252ce507ed1e7b3800d9f21d6e52d6212988289dd",
+   "trace": "tools/rom-trace/r31a/artifacts/tail-trace-01.json",
+   "traceSha256": "0cc54483c0c782a9067cedc4a0f11f3902c767b954b660babda0f266a49e8522",
+   "frames": 620,
+   "gatePass": true,
+   "unknownActivePhysicalFrames": 0,
+   "resourcesResolved": {
+    "66": 483,
+    "68": 156,
+    "67": 349
+   },
+   "notes": "enemigo (Piccolo) defiende con Guard determinista; HIT variant bloqueada (ver R31A_TAIL_BOOTSTRAP.md \u00a74)"
+  }
+ ],
+ "campaignReady": false,
+ "updatedAt": "2026-08-24T12:00:00Z"
+}

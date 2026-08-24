@@ -1,0 +1,10 @@
+-- mGBA scripting smoke test v2 — escribe a archivo para confirmar ejecución
+local f = assert(io.open("/tmp/mgba-smoke-result.txt", "w"))
+f:write("mgba scripting OK\n")
+f:write("frame=" .. tostring(emu:frameCount()) .. "\n")
+f:write("C0A0=" .. string.format("%02X", emu:read8(0xC0A0)) .. "\n")
+f:write("C3A0=" .. string.format("%02X", emu:read8(0xC3A0)) .. "\n")
+f:write("SCX=" .. string.format("%02X", emu:read8(0xFF43)) .. "\n")
+f:write("magic=" .. string.format("%02X%02X", emu:read8(0x104), emu:read8(0x105)) .. "\n")
+f:close()
+print("SMOKE_WROTE_FILE")

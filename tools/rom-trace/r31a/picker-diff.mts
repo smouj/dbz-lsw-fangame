@@ -1,0 +1,10 @@
+import { RomDriver } from '../nav.ts';
+const [rom, sav] = process.argv.slice(2);
+const d = new RomDriver(rom, sav);
+await d.loadstate('r31a/tail_left_base.ss0');
+await d.frames(5, 0);
+await d.memdump('r31a/pd-tail.json', 0xC000, 0x1000);
+await d.loadstate('r31a/pc_left_base.ss0');
+await d.frames(5, 0);
+await d.memdump('r31a/pd-pc.json', 0xC000, 0x1000);
+await d.quit();
