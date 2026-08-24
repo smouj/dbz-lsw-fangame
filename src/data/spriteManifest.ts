@@ -73,6 +73,10 @@ export function spriteDirFor(formId: string): string | undefined {
   return SPRITE_DIRS[formId];
 }
 
+export function spriteDirs(): Record<string, string> {
+  return { ...SPRITE_DIRS };
+}
+
 export function spriteManifestUrl(formId: string): string | undefined {
   const dir = SPRITE_DIRS[formId];
   return dir ? `/assets/sprites/${dir}/manifest.json` : undefined;
