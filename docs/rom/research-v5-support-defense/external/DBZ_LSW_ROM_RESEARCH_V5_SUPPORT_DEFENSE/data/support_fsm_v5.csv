@@ -1,0 +1,21 @@
+handler,ca06,address,ops,evidence
+$00/$02 common,$01,03:$63FA,select card/context | CC01=card | CALL $2C30 with C=$6B B=$03 DE=$8800,ROM_HANDLER_VERIFIED
+$00/$02 common,$02,03:$640D,poll $2CDE(C=1) | trigger $1CC4(C=$28),ROM_HANDLER_VERIFIED
+$00/$02 common,$03,03:$641A,CALL $3269 | WAIT helper BC=3 | set CA06=$0A,ROM_HANDLER_VERIFIED
+$00/$02 common,$0A,03:$642A,palette transition start $07F4 A=1 BC=$0038 E=$20 D=1,ROM_HANDLER_VERIFIED
+$00/$02 common,$0B,03:$643B,poll $080C | scene $3764 C=0 DE=0 | macro $19,ROM_HANDLER_VERIFIED
+$00/$02 common,$0C,03:$6459,CALL fixed BG helper $66D1 -> Bank68:$19 | when helper complete start palette transition $07F4 A=0 BC=$0360 E=$20 D=1 | trigger $39CF DE=$0080,ROM_HANDLER_VERIFIED
+$00/$02 common,$0D,03:$6477,delay helper $0821 DE=$28 | poll palette transition | CB77=0,ROM_HANDLER_VERIFIED
+$00/$02 common,$0E,03:$6487,delay helper | CB77++ until $78 (120 ticks) | palette transition start $07F4 A=1 BC=$0020 E=$10 D=2,ROM_HANDLER_VERIFIED
+$00/$02 common,$0F,03:$64A3,delay helper | poll palette transition,ROM_HANDLER_VERIFIED
+$00 common,$10-$12,03:$64AF-$64D7,gameplay maintenance/tail | reset CA06 at $12,ROM_STATIC_VERIFIED
+$02,$10,03:$64D8,reset CA06 immediately instead of common tail,ROM_HANDLER_VERIFIED
+$0B,$0B,03:$6526,poll palette transition | scene $3764 C=1 DE=1 | macro $1A,ROM_HANDLER_VERIFIED
+$0B,$0C,03:$6547,palette transition start $07F4 A=0 BC=$0340 E=$10 D=2,ROM_HANDLER_VERIFIED
+$0B,$0D,03:$6555,branch CA53: 0->$14; nonzero->$1E,ROM_HANDLER_VERIFIED
+$0B,$14,03:$656C,aux FX wrapper $3F60 B=0 | macro $2C,ROM_HANDLER_VERIFIED
+$0B,$1E,03:$65DF,CA7F=0 | macro $34,ROM_HANDLER_VERIFIED
+$0B,$21,03:$661E,macro $35 | ROM_WAIT 60,ROM_HANDLER_VERIFIED
+$0D,$14,03:$665C,macro $2B | trigger $1CC6 C=$42 B=$05,ROM_HANDLER_VERIFIED
+$0D,$15,03:$6678,wait macro | reset CA06,ROM_HANDLER_VERIFIED
+$0F,$17-$19,03:$669A-$66D0,custom late maintenance states; otherwise inherit handler $0B,ROM_HANDLER_VERIFIED

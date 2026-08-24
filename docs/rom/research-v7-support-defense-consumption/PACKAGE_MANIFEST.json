@@ -1,0 +1,29 @@
+{
+  "package": "dbz-lsw-rom-research-v7",
+  "status": "V7_CLOSED",
+  "source": "handoff de smouj (2026-08-23 18:06) + análisis estático propio",
+  "artifacts": {
+    "README": "README.md",
+    "LEDGER": "LEDGER.md",
+    "OPEN_ITEMS": "OPEN_ITEMS_V7.md",
+    "v7_1_fsm": "LEDGER.md#v71",
+    "v7_2_profile": "src/battle/romSupportPresentationProfile.ts (supportCommonProfile)",
+    "v7_3_compiler": "src/battle/romSupportPresentationCompiler.ts",
+    "v7_4_verifier": "scripts/verify-rom-support-presentation-compiler.ts (verify:rom-support-presentation-compiler)",
+    "v7_5_cutover": "src/battle/supportRomCutover.ts + scripts/verify-support-rom-cutover.ts",
+    "v7_6_defense": "src/battle/romDefensePresentationProfile.ts + scripts/verify-rom-defense-presentation.ts",
+    "v7_7_consolidation": "scripts/verify-rom-ca53-consolidation.ts",
+    "v7_8_presenter": "src/battle/runtime/BattlePresenter.ts (cues nuevos -> onRomCue)",
+    "v7_8_presenter_layer": "src/battle/romDisplay/RomDisplayPresenter.ts",
+    "v7_8_dev_lab": "src/devtools/romDisplayLab.tsx (#dev/romdisplay)",
+    "v7_8_verifier": "scripts/verify-v7-presenter-display.ts (verify:v7-presenter-display)",
+    "handoff_playable_alpha": "AGENT_HANDOFF_PLAYABLE_ALPHA.md"
+  },
+  "verifiers": [
+    "verify:rom-support-presentation-compiler"
+  ],
+  "frozen": [
+    "V5 CLOSED/FROZEN",
+    "V6 CLOSED/STATIC_PHYSICAL_VERIFIED"
+  ]
+}

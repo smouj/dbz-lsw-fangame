@@ -1,0 +1,52 @@
+{
+  "packageId": "dbz-lsw-rom-research-v4-fx-local",
+  "date": "2026-08-23",
+  "status": "V4_FX_STATIC_PACKAGE_COMPLETE",
+  "source": "V4 FX/Beam report from smouj",
+  "externalArtifact": {
+    "availableInThisWorkspace": true,
+    "reportedPath": "sandbox:/mnt/data/DBZ_LSW_ROM_RESEARCH_V4_FX.zip",
+    "localZipPath": "docs/rom/packages/DBZ_LSW_ROM_RESEARCH_V4_FX.zip",
+    "localExtractedPath": "docs/rom/research-v4-fx/external/DBZ_LSW_ROM_RESEARCH_V4_FX",
+    "reportedSha256": "03cb152ad05a6f9aa50a4d236a73ed3392a29a9db292b179cbb2049d4c34d055",
+    "reportedFileCount": 254,
+    "importedFileCount": 254,
+    "generatedFxPngCount": 152,
+    "reportedVerification": [
+      "sha256sum -c SHA256SUMS.txt",
+      "unzip -t"
+    ],
+    "localVerification": [
+      "sha256sum docs/rom/packages/DBZ_LSW_ROM_RESEARCH_V4_FX.zip",
+      "unzip -t docs/rom/packages/DBZ_LSW_ROM_RESEARCH_V4_FX.zip",
+      "sha256sum -c docs/rom/research-v4-fx/external/DBZ_LSW_ROM_RESEARCH_V4_FX/SHA256SUMS.txt"
+    ]
+  },
+  "scope": [
+    "FXResource loader",
+    "28 offensive FX bundles",
+    "BG tilemap Beam render domain",
+    "opcode $0C FX windows",
+    "handler $07 rows 3-10 geometry",
+    "CGB attribute mirroring",
+    "Beam screen offsets",
+    "Support/Defense non-inheritance guardrails",
+    "V5 supersedes next Support/Defense visual grammar research"
+  ],
+  "files": [
+    "README.md",
+    "LEDGER.md",
+    "AGENT_HANDOFF_V4.md",
+    "OPEN_ITEMS_V4.md",
+    "PACKAGE_MANIFEST.json",
+    "SHA256SUMS.txt"
+  ],
+  "relatedRepositoryDocs": [
+    "docs/BEAM_BASE_RUNTIME_CUTOVER.md",
+    "docs/ROM_PRESENTATION_COMPILER.md",
+    "docs/ROM_DERIVED_PRESENTATION_PROFILES.md",
+    "docs/ROM_ACTION_EXECUTION_DESCRIPTORS.md",
+    "docs/rom/COMBAT_MECHANICS_ROM_CONFIRMED.md"
+  ],
+  "nextFront": "V5 completed Support/Defense visual grammar; remaining front is typed runtime import for ROM_FX_WINDOW plus V5 ROM_BG_ASSEMBLY/card-indexed Support assets"
+}

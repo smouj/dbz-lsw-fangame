@@ -1,0 +1,226 @@
+{
+  "bank_60": {
+    "bank": 96,
+    "header_hex": "0000000000000000",
+    "nonzero_bytes": 0,
+    "rom_offset_hex": "0x180000",
+    "sha256": "4fe7b59af6de3b665b67788cc2f99892ab827efae3a467342b3bb4e3bc8e5bfe"
+  },
+  "bank_61": {
+    "bank": 97,
+    "header_hex": "0a00000002000000",
+    "nonzero_bytes": 10184,
+    "rom_offset_hex": "0x184000",
+    "sha256": "1269f69efa3d87ba9e4e21e676aa6f254e8de2811ba8410e4481effb6069625d"
+  },
+  "bank_62": {
+    "bank": 98,
+    "header_hex": "1900000002000000",
+    "nonzero_bytes": 9449,
+    "rom_offset_hex": "0x188000",
+    "sha256": "ee217391a71f17653fb33a4cc4119d99bef7ee55cc83a0730664cddc3e613b29"
+  },
+  "bank_63": {
+    "bank": 99,
+    "header_hex": "1900000002000000",
+    "nonzero_bytes": 11996,
+    "rom_offset_hex": "0x18c000",
+    "sha256": "7ae2ba8d613d55aea0863245f5d74ce79149b17697821bc27fab03ac7afe7898"
+  },
+  "bank_64": {
+    "bank": 100,
+    "header_hex": "1000000002000000",
+    "nonzero_bytes": 12232,
+    "rom_offset_hex": "0x190000",
+    "sha256": "8e4dbd0ca93f985435530551d0454badadf44a537e7fb7dded2ec52858f0f5ff"
+  },
+  "bank_65": {
+    "bank": 101,
+    "header_hex": "1a00000002000000",
+    "nonzero_bytes": 13877,
+    "rom_offset_hex": "0x194000",
+    "sha256": "f65ae00f4d95c7f32b78a6123b7e107e8eb78354eebcbc62c240a4b332c9f623"
+  },
+  "bank_66": {
+    "bank": 102,
+    "header_hex": "1e00000002000000",
+    "nonzero_bytes": 14764,
+    "rom_offset_hex": "0x198000",
+    "sha256": "3a0f0541ee01e3a63ab80a07c13f0134ad14877613950061c17d77debae9cef6"
+  },
+  "bank_67": {
+    "bank": 103,
+    "header_hex": "1b00000002000000",
+    "nonzero_bytes": 13867,
+    "rom_offset_hex": "0x19c000",
+    "sha256": "1765c2224b455736ce3bbebed09f4743e5230f861f4c73dc24ef00d9a17089d7"
+  },
+  "bank_68": {
+    "bank": 104,
+    "header_hex": "1c00000002000000",
+    "nonzero_bytes": 14348,
+    "rom_offset_hex": "0x1a0000",
+    "sha256": "f2dd931ad09d821f0ec2d819659f933876a88bb4da9e45caa56e356662fccbad"
+  },
+  "bank_69": {
+    "bank": 105,
+    "header_hex": "2000000002000000",
+    "nonzero_bytes": 11960,
+    "rom_offset_hex": "0x1a4000",
+    "sha256": "19aecdf43d5e33176d48932200223040b2e2a4924f488d26451496d7702732b7"
+  },
+  "bank_6a": {
+    "bank": 106,
+    "header_hex": "2000000002000000",
+    "nonzero_bytes": 11260,
+    "rom_offset_hex": "0x1a8000",
+    "sha256": "b8732b101a11852dbe3ab585914df0ebea503c5e9aec708a413e4f7c3022189a"
+  },
+  "bank_6b": {
+    "bank": 107,
+    "header_hex": "2000000002000000",
+    "nonzero_bytes": 12035,
+    "rom_offset_hex": "0x1ac000",
+    "sha256": "81803eaecac1be47b85812c97485f1c66c204ecf3ed0cafddd2d31e880b842c1"
+  },
+  "bank_6c": {
+    "bank": 108,
+    "header_hex": "2000000002000000",
+    "nonzero_bytes": 12170,
+    "rom_offset_hex": "0x1b0000",
+    "sha256": "474103c1240f3b52ff7f128b42bfa0d32f0ac690941b62371506d36211bf1870"
+  },
+  "bank_6d": {
+    "bank": 109,
+    "header_hex": "2000000002000000",
+    "nonzero_bytes": 12000,
+    "rom_offset_hex": "0x1b4000",
+    "sha256": "f3118b4aceb97045e5308ead74e759f4a1da8d72044fd1182cf775ed4389a82a"
+  },
+  "bank_6e": {
+    "bank": 110,
+    "header_hex": "2000000002000000",
+    "nonzero_bytes": 11346,
+    "rom_offset_hex": "0x1b8000",
+    "sha256": "b9e6ff956d43dbbc3c894a318ec4b2982583d73e5cbd63a31cad18101ae3a410"
+  },
+  "bank_6f": {
+    "bank": 111,
+    "header_hex": "0800000002000000",
+    "nonzero_bytes": 10440,
+    "rom_offset_hex": "0x1bc000",
+    "sha256": "a9736ee750caa9e70d22df26bac751c54ec462ef7255fea0e9f138fdd9a81266"
+  },
+  "bank_70": {
+    "bank": 112,
+    "header_hex": "1c00000002000000",
+    "nonzero_bytes": 12065,
+    "rom_offset_hex": "0x1c0000",
+    "sha256": "62aa19f5c15905a861f86715492dac420f7a1448a716ea86923df6306efb7e39"
+  },
+  "bank_71": {
+    "bank": 113,
+    "header_hex": "1c00000002000000",
+    "nonzero_bytes": 11321,
+    "rom_offset_hex": "0x1c4000",
+    "sha256": "a3d86bd76b499cd6a01e0dc21fce811e2110f3c44bd8db4c7447390d09427bc1"
+  },
+  "bank_72": {
+    "bank": 114,
+    "header_hex": "1c00000002000000",
+    "nonzero_bytes": 12442,
+    "rom_offset_hex": "0x1c8000",
+    "sha256": "f7e13b846fa8c27d355f6b27f4446993b97b067d17ecfb0e460b5fb6d4d09039"
+  },
+  "bank_73": {
+    "bank": 115,
+    "header_hex": "1c00000002000000",
+    "nonzero_bytes": 11880,
+    "rom_offset_hex": "0x1cc000",
+    "sha256": "ebbd53dc93f021a1b24ed7c2d87a6c6b739772245b0a86591756ec7f881cc942"
+  },
+  "bank_74": {
+    "bank": 116,
+    "header_hex": "1a00000002000000",
+    "nonzero_bytes": 11448,
+    "rom_offset_hex": "0x1d0000",
+    "sha256": "a157ee012b1bbf8c980176d51adc81a4abeaa37152005556d11aa9ec1963ab7f"
+  },
+  "bank_75": {
+    "bank": 117,
+    "header_hex": "534f442a02032a02",
+    "nonzero_bytes": 12933,
+    "rom_offset_hex": "0x1d4000",
+    "sha256": "6dc7607a135db8488aace0227adfaae70428d33410c23fd8ab8c0c2ce1371a12"
+  },
+  "bank_76": {
+    "bank": 118,
+    "header_hex": "534f442a02032a02",
+    "nonzero_bytes": 14904,
+    "rom_offset_hex": "0x1d8000",
+    "sha256": "96cc5be045143500560d7db4af167a5c92ecfe4d8c3a2574c53eca0dd4796f29"
+  },
+  "bank_77": {
+    "bank": 119,
+    "header_hex": "534f442a02032a02",
+    "nonzero_bytes": 11421,
+    "rom_offset_hex": "0x1dc000",
+    "sha256": "7c59202d6779f5bec711d76e02e775b7beb29fe0004422bcff76272d528fed15"
+  },
+  "bank_78": {
+    "bank": 120,
+    "header_hex": "534f442a02032a02",
+    "nonzero_bytes": 13531,
+    "rom_offset_hex": "0x1e0000",
+    "sha256": "5cae63e8e1b82a21a2fe2ec53c1004a5f7ddac67dc8d7793e034b0efae72780e"
+  },
+  "bank_79": {
+    "bank": 121,
+    "header_hex": "534f442a02032a02",
+    "nonzero_bytes": 6566,
+    "rom_offset_hex": "0x1e4000",
+    "sha256": "fb8fc20ef99ed6566416eb435346efbf6d339be6cdc995c605972be2cc7347c8"
+  },
+  "bank_7a": {
+    "bank": 122,
+    "header_hex": "534f442a02032a02",
+    "nonzero_bytes": 2972,
+    "rom_offset_hex": "0x1e8000",
+    "sha256": "3585d3ace58e990b2680e5c90ed7f65a1f417551902856ec140e11181503ed40"
+  },
+  "bank_7b": {
+    "bank": 123,
+    "header_hex": "0a00000002000000",
+    "nonzero_bytes": 10771,
+    "rom_offset_hex": "0x1ec000",
+    "sha256": "9da5f3a95c9b54ad1b84725f102bbf0e6918db033fd2afec633a2ce6fb8ac9a7"
+  },
+  "bank_7c": {
+    "bank": 124,
+    "header_hex": "0600000002000000",
+    "nonzero_bytes": 10125,
+    "rom_offset_hex": "0x1f0000",
+    "sha256": "8db4355a7d1d1908806c9e6280e201a5c06ba88a8c668ec29c18bd51d5808688"
+  },
+  "bank_7d": {
+    "bank": 125,
+    "header_hex": "0900000002000000",
+    "nonzero_bytes": 10543,
+    "rom_offset_hex": "0x1f4000",
+    "sha256": "4d45f469f9fd358165c680343235b316e970dc05118da354888c87d314992cbf"
+  },
+  "bank_7e": {
+    "bank": 126,
+    "header_hex": "fa12c0e69028053e",
+    "nonzero_bytes": 12732,
+    "rom_offset_hex": "0x1f8000",
+    "sha256": "07ebb0988f0a9d89bd36dc7d664fc3b1bc12b39edfbeb5a521fd975dfc0816e7"
+  },
+  "bank_7f": {
+    "bank": 127,
+    "header_hex": "0000000000000000",
+    "nonzero_bytes": 0,
+    "rom_offset_hex": "0x1fc000",
+    "sha256": "4fe7b59af6de3b665b67788cc2f99892ab827efae3a467342b3bb4e3bc8e5bfe"
+  }
+}

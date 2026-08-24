@@ -1,0 +1,23 @@
+[
+  {
+    "site": "01:$76E8",
+    "kind": "LOAD",
+    "condition": "Defense card selected and AnimationResource != $FF",
+    "action": "resolve card AnimationResource and install AnimationSlot8",
+    "evidence": "ROM_HANDLER_VERIFIED"
+  },
+  {
+    "site": "03:$60B2",
+    "kind": "START",
+    "condition": "STANDARD_DAMAGE route CA83&$01 and selected Defense card != $7C Shockwave",
+    "action": "start ActionObject with AnimationSlot8",
+    "evidence": "ROM_HANDLER_VERIFIED"
+  },
+  {
+    "site": "03:$59FD",
+    "kind": "START",
+    "condition": "BEAM result branch CA53 not 0/1/2 (known CA53=3 nullification or 4 absorption)",
+    "action": "start ActionObject with AnimationSlot8",
+    "evidence": "ROM_HANDLER_VERIFIED"
+  }
+]

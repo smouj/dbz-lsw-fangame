@@ -198,11 +198,26 @@ de inventar taxonomías propias.
 
 ## Estado del remake vs ROM
 
+> Tabla de detalle completa: `docs/rom/COMBAT_MECHANICS_ROM_CONFIRMED.md`
+> (lote 2 §1–46 + lote 3 §47–84 + lote 4 §85–131, 2026-08-22).
+
 | Área | Estado | Marca |
 |---|---|---|
 | Stats de cartas (125) | idénticas a la ROM | ✅ ROM_CONFIRMED |
 | Taxonomía de técnicas | familias reales extraídas | ✅ ROM_CONFIRMED |
 | Compatibilidad cartas | 90% anclas resueltas, 1 conflicto | 🟡 ROM_INFERRED |
-| Timings cinematográficos | basados en vídeo/hipótesis | 🔵 REMAKE_CANON (pendiente frame trace) |
-| Stage QTE / Gather / IA | modelo propio | 🔵 REMAKE_CANON (pendiente trazar rutinas) |
-| Fórmula de daño | hipótesis auditada | 🟡 ROM_INFERRED (pendiente rutina ROM) |
+| Timings cinematográficos | traza de handlers/macros/opcodes | ✅ ROM_CONFIRMED |
+| Stage QTE | ventana única + matriz FRONT/BACK + A/B recovery + fórmula cerrada + CC + reposition | ✅ ROM_CONFIRMED |
+| Gather Power | contador 5, FX Bank68:$1A, paleta $33, core 90 ticks | ✅ ROM_CONFIRMED |
+| Power window (fighterState+4) | powerWindowCounter: Gather=5 · CHARA=2 · LIMIT gate · Stage 3→4 · +4 offense | ✅ ROM_CONFIRMED |
+| Tirada de impacto | contador cíclico 0–99 ($C231→$CA5D), sin PRNG | ✅ ROM_CONFIRMED |
+| FRONT/BACK | bit1: 0=FRONT, 1=BACK; ±8 posicional; afecta Stage (tiempo y daño) | ✅ ROM_CONFIRMED |
+| Battle block / deck 20 / mano 6 / CC | roster, limits loadout, draw index, descarte 6→5, 10 CC + draw 3, +3 CC + draw 1 | ✅ ROM_CONFIRMED |
+| LIMIT / CHARA | LIMIT: reusable, consume CC, gate powerWindow, ataque+defensa · CHARA: commit en cinematografía, fuerza BACK, counter=2 | ✅ ROM_CONFIRMED |
+| Stats de combate | Max/Current Life, Str/Ki/Speed, buffs/debuffs bitfield, HP→CC 8 tramos | ✅ ROM_CONFIRMED |
+| Resolución | CA53: FULL/ZERO_AVOID/PARTIAL/SPECIAL_NULLIFY/ENERGY_ABSORB; Basic Guard +4 | ✅ ROM_CONFIRMED |
+| Defense bitfield (CA83) | 11 Defense Cards = reglas distintas; Energy Absorb cura; command suppression | ✅ ROM_CONFIRMED |
+| Support | tabla de efectos numéricos localizada (29 cartas) | 🟢 avanzado |
+| Fórmula Damage/Beam | estructura real (Kaio Ken ×2, ±8/tier), excepciones/orden pendientes | 🟡 ROM_INFERRED |
+| Fórmula final Stage / battleStat +11/+12 / LIMIT·CHARA | ✅ cerrado (Stage $6Cxx–$6Fxx 🟢) · +11/+12 reserved · LIMIT/CHARA ✅ | ✅/🟡 |
+| AI / KO / deck lifecycle | KO + auto replacement ✅ · AI 🟡 | 🟡/✅ |

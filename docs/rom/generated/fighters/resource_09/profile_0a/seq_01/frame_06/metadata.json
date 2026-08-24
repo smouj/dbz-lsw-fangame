@@ -1,0 +1,84 @@
+{
+  "key": 10,
+  "resource": 9,
+  "bank": 98,
+  "base": 2398,
+  "sequence": 1,
+  "frameIndex": 6,
+  "frameRecord": {
+    "visualFrameId": 4,
+    "durationTicks": 2,
+    "offsetY": 0,
+    "offsetX": 248,
+    "raw": [
+      4,
+      2,
+      0,
+      248
+    ],
+    "provenance": {
+      "bank": 98,
+      "base": 2398,
+      "sequenceTable": 4958,
+      "sequenceAddress": 4996,
+      "frameAddress": 5021,
+      "selector": 1,
+      "sequenceCount": 2
+    }
+  },
+  "metasprite": {
+    "pieces": [],
+    "provenance": {
+      "tableAddress": 61792,
+      "entryAddress": 61800,
+      "pieceAddress": 62034,
+      "count": 0
+    }
+  },
+  "graphics": {
+    "blockCount": 0,
+    "relativeOffsets": [],
+    "provenance": {
+      "tableAddress": 5722,
+      "entryAddress": 5730,
+      "layoutAddress": 8026
+    }
+  },
+  "source": {
+    "bank": 59,
+    "baseAddress": 0
+  },
+  "palette": {
+    "bgr555": [
+      "ff3f",
+      "ffff",
+      "fcfc",
+      "fcfc"
+    ],
+    "colors": [
+      "#FFCEFF",
+      "#FFFFFF",
+      "#E63AFF",
+      "#E63AFF"
+    ]
+  },
+  "bounds": {
+    "minX": null,
+    "minY": null,
+    "maxX": null,
+    "maxY": null
+  },
+  "hashes": {
+    "rawPixelHash": "8a39d2abd3999ab7",
+    "trimmedPixelHash": "8a39d2abd3999ab7",
+    "metaspriteHash": "4f53cda18c2baa0c",
+    "graphicsHash": "4f53cda18c2baa0c",
+    "paletteHash": "cbf06b11e7d3d522"
+  },
+  "romVram": {
+    "buffer": null,
+    "tileBase": null,
+    "doubleBuffered": true
+  },
+  "evidence": "ROM_PHYSICAL (sin assets externos)"
+}

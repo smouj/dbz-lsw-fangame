@@ -1,0 +1,194 @@
+{
+  "key": 11,
+  "resource": 4,
+  "bank": 98,
+  "base": 2248,
+  "sequence": 0,
+  "frameIndex": 1,
+  "frameRecord": {
+    "visualFrameId": 2,
+    "durationTicks": 2,
+    "offsetY": 0,
+    "offsetX": 2,
+    "raw": [
+      2,
+      2,
+      0,
+      2
+    ],
+    "provenance": {
+      "bank": 98,
+      "base": 2248,
+      "sequenceTable": 2254,
+      "sequenceAddress": 2259,
+      "frameAddress": 2264,
+      "selector": 0,
+      "sequenceCount": 2
+    }
+  },
+  "metasprite": {
+    "pieces": [
+      {
+        "rawY": 248,
+        "rawX": 8,
+        "tileDelta": 0,
+        "attr": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      {
+        "rawY": 248,
+        "rawX": 0,
+        "tileDelta": 2,
+        "attr": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      {
+        "rawY": 248,
+        "rawX": 248,
+        "tileDelta": 4,
+        "attr": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      {
+        "rawY": 248,
+        "rawX": 240,
+        "tileDelta": 6,
+        "attr": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      {
+        "rawY": 232,
+        "rawX": 8,
+        "tileDelta": 8,
+        "attr": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      {
+        "rawY": 232,
+        "rawX": 0,
+        "tileDelta": 10,
+        "attr": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      {
+        "rawY": 232,
+        "rawX": 248,
+        "tileDelta": 12,
+        "attr": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      {
+        "rawY": 232,
+        "rawX": 240,
+        "tileDelta": 14,
+        "attr": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      {
+        "rawY": 216,
+        "rawX": 8,
+        "tileDelta": 16,
+        "attr": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      {
+        "rawY": 216,
+        "rawX": 0,
+        "tileDelta": 18,
+        "attr": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      {
+        "rawY": 216,
+        "rawX": 248,
+        "tileDelta": 20,
+        "attr": 0,
+        "flipX": false,
+        "flipY": false
+      },
+      {
+        "rawY": 216,
+        "rawX": 240,
+        "tileDelta": 22,
+        "attr": 0,
+        "flipX": false,
+        "flipY": false
+      }
+    ],
+    "provenance": {
+      "tableAddress": 2317,
+      "entryAddress": 2321,
+      "pieceAddress": 2425,
+      "count": 12
+    }
+  },
+  "graphics": {
+    "blockCount": 12,
+    "relativeOffsets": [
+      28288,
+      28256,
+      28224,
+      28192,
+      27264,
+      27232,
+      27200,
+      27168,
+      26240,
+      26208,
+      26176,
+      26144
+    ],
+    "provenance": {
+      "tableAddress": 2572,
+      "entryAddress": 2576,
+      "layoutAddress": 2632
+    }
+  },
+  "source": {
+    "bank": 60,
+    "baseAddress": 0
+  },
+  "palette": {
+    "bgr555": [
+      "fc1c",
+      "f808",
+      "f0f0",
+      "0000"
+    ],
+    "colors": [
+      "#E600FF",
+      "#4200F7",
+      "#843AE6",
+      "#000000"
+    ]
+  },
+  "bounds": {
+    "minX": 130,
+    "minY": 88,
+    "maxX": 140,
+    "maxY": 135
+  },
+  "hashes": {
+    "rawPixelHash": "c3ee3b80de6cdad1",
+    "trimmedPixelHash": "ddb6b7b8fa30bd1a",
+    "metaspriteHash": "96504745435d7d4f",
+    "graphicsHash": "34edf4a19060fa6f",
+    "paletteHash": "e8924276dd48c9e1"
+  },
+  "romVram": {
+    "buffer": null,
+    "tileBase": null,
+    "doubleBuffered": true
+  },
+  "evidence": "ROM_PHYSICAL (sin assets externos)"
+}

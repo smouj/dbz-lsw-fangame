@@ -1,0 +1,64 @@
+{
+  "positionBits": {
+    "bit0": "0=GROUND, 1=AIR",
+    "bit1": "0=FRONT, 1=BACK"
+  },
+  "selector": {
+    "address": "Bank00:$313C",
+    "workingByte": "$CAA6",
+    "confirm": "$C012 == $10",
+    "committedByte": "$CA57"
+  },
+  "defenseChoice": {
+    "CA55": {
+      "0": "Guard/default",
+      "1": "Defense card",
+      "2": "Move"
+    }
+  },
+  "execution": {
+    "address": "Bank01:$759D",
+    "persist": "CA57/58 -> FighterState byte0",
+    "macroSelection": "(newPosition >> 1): 0 -> $29, 1 -> $2A",
+    "note": "bit0 does not select a different macro ID at this site"
+  },
+  "macro29": {
+    "address": "Bank30:$609C",
+    "waitTicks": 40,
+    "motion": [
+      {
+        "dxPerTick": 2,
+        "ticks": 3
+      },
+      {
+        "dxPerTick": 1,
+        "ticks": 2
+      },
+      {
+        "dxPerTick": -1,
+        "ticks": 8
+      }
+    ],
+    "netDx": 0
+  },
+  "macro2A": {
+    "address": "Bank30:$60C5",
+    "waitTicks": 40,
+    "motion": [
+      {
+        "dxPerTick": -2,
+        "ticks": 2
+      },
+      {
+        "dxPerTick": -1,
+        "ticks": 1
+      },
+      {
+        "dxPerTick": 1,
+        "ticks": 5
+      }
+    ],
+    "netDx": 0
+  },
+  "evidence": "ROM_HANDLER_VERIFIED"
+}

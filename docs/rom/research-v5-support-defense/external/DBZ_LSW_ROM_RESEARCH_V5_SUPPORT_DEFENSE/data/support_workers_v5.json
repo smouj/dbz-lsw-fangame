@@ -1,0 +1,100 @@
+[
+  {
+    "handler": "$00",
+    "worker": "Bank03:$63BF",
+    "cardCount": 4,
+    "cardIds": [
+      9,
+      16,
+      88,
+      99
+    ],
+    "usesCommonResource19": true,
+    "startsCardAnimationSlot6": false,
+    "notes": "Full common Support FSM."
+  },
+  {
+    "handler": "$02",
+    "worker": "Bank03:$64D8",
+    "cardCount": 22,
+    "cardIds": [
+      23,
+      27,
+      28,
+      59,
+      68,
+      79,
+      89,
+      92,
+      97,
+      100,
+      104,
+      105,
+      106,
+      107,
+      108,
+      109,
+      111,
+      114,
+      117,
+      118,
+      119,
+      120
+    ],
+    "usesCommonResource19": true,
+    "startsCardAnimationSlot6": false,
+    "notes": "Uses common visual FSM including resource $19; resets at CA06=$10."
+  },
+  {
+    "handler": "$0B",
+    "worker": "Bank03:$64E7",
+    "cardCount": 8,
+    "cardIds": [
+      85,
+      86,
+      90,
+      94,
+      98,
+      110,
+      112,
+      116
+    ],
+    "usesCommonResource19": false,
+    "startsCardAnimationSlot6": false,
+    "notes": "Overrides common states $0B/$0C/$0D and branches via CA53; does not use resource $19."
+  },
+  {
+    "handler": "$0D",
+    "worker": "Bank03:$664E",
+    "cardCount": 13,
+    "cardIds": [
+      42,
+      51,
+      83,
+      84,
+      87,
+      91,
+      93,
+      95,
+      96,
+      101,
+      103,
+      113,
+      115
+    ],
+    "usesCommonResource19": false,
+    "startsCardAnimationSlot6": false,
+    "notes": "Inherits $0B family; state $14 queues macro $2B; no card AnimationSlot6 start."
+  },
+  {
+    "handler": "$0F",
+    "worker": "Bank03:$6685",
+    "cardCount": 1,
+    "cardIds": [
+      102
+    ],
+    "usesCommonResource19": false,
+    "startsCardAnimationSlot6": false,
+    "notes": "Inherits $0B family with custom late states $17/$18/$19."
+  }
+]

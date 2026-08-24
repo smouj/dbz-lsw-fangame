@@ -1,0 +1,4052 @@
+{
+  "sourceRomSha256": "8dab48cc81d14bcee7c73274df09cf5c4dd44c3b93d10a5a3175e04fead25dee",
+  "assetSemantics": "BG_TILEMAP_WINDOW_RENDER_WITH_COLOR0_TRANSPARENT_FOR_REVIEW",
+  "pairs": [
+    {
+      "fxResource": 2,
+      "fxHex": "0x02",
+      "palette": 44,
+      "paletteHex": "0x2C",
+      "prefixOperand": 0,
+      "prefixRows": [
+        1,
+        8
+      ],
+      "resultOperand": 10,
+      "resultRows": [
+        11,
+        18
+      ],
+      "cards": [
+        {
+          "cardId": 7,
+          "name": "Energy Wave",
+          "category": "BEAM",
+          "handler": "0x02"
+        },
+        {
+          "cardId": 63,
+          "name": "Finger Beam",
+          "category": "BEAM",
+          "handler": "0x02"
+        }
+      ],
+      "images": [
+        {
+          "side": 1,
+          "phase": "prefix",
+          "file": "fx_02/palette_2C/side1_prefix_map256x64.png",
+          "bbox": [
+            161,
+            26,
+            256,
+            38
+          ],
+          "sha256": "2f54d40782b42c716d85e07976474c58be1873796833185ab42755f9bbafb387",
+          "sourceRows": [
+            1,
+            8
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        },
+        {
+          "side": 1,
+          "phase": "result",
+          "file": "fx_02/palette_2C/side1_result_map256x64.png",
+          "bbox": [
+            240,
+            26,
+            256,
+            38
+          ],
+          "sha256": "20e3cadbe1af2a371f3156094c314857c9e00fc86dce2f6b8fc39bad1d6d5c2f",
+          "sourceRows": [
+            11,
+            18
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        },
+        {
+          "side": 2,
+          "phase": "prefix",
+          "file": "fx_02/palette_2C/side2_prefix_map256x64.png",
+          "bbox": [
+            160,
+            26,
+            255,
+            38
+          ],
+          "sha256": "586689f468a9fbba5a5ece98e40eb18190418567e4dd5fd8180f5ded3126c3d8",
+          "sourceRows": [
+            1,
+            8
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        },
+        {
+          "side": 2,
+          "phase": "result",
+          "file": "fx_02/palette_2C/side2_result_map256x64.png",
+          "bbox": [
+            160,
+            26,
+            176,
+            38
+          ],
+          "sha256": "722134ae0c076450f13ff2e98543e0c75416952d2916bc7c4375ab7882e19725",
+          "sourceRows": [
+            11,
+            18
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        }
+      ]
+    },
+    {
+      "fxResource": 2,
+      "fxHex": "0x02",
+      "palette": 45,
+      "paletteHex": "0x2D",
+      "prefixOperand": 0,
+      "prefixRows": [
+        1,
+        8
+      ],
+      "resultOperand": 10,
+      "resultRows": [
+        11,
+        18
+      ],
+      "cards": [
+        {
+          "cardId": 67,
+          "name": "Eye Beam",
+          "category": "BEAM",
+          "handler": "0x02"
+        }
+      ],
+      "images": [
+        {
+          "side": 1,
+          "phase": "prefix",
+          "file": "fx_02/palette_2D/side1_prefix_map256x64.png",
+          "bbox": [
+            161,
+            26,
+            256,
+            38
+          ],
+          "sha256": "977088c5ef81f002b8524673166b47d251ef5209c5c5008eef25fffa012a1be1",
+          "sourceRows": [
+            1,
+            8
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        },
+        {
+          "side": 1,
+          "phase": "result",
+          "file": "fx_02/palette_2D/side1_result_map256x64.png",
+          "bbox": [
+            240,
+            26,
+            256,
+            38
+          ],
+          "sha256": "02fda44a57e480f5d219118ae933a0f735fb6782229c92588247325bf0c9fc5c",
+          "sourceRows": [
+            11,
+            18
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        },
+        {
+          "side": 2,
+          "phase": "prefix",
+          "file": "fx_02/palette_2D/side2_prefix_map256x64.png",
+          "bbox": [
+            160,
+            26,
+            255,
+            38
+          ],
+          "sha256": "194d463f8eefdfa7d61cede6cce2f47e6d4bdb8bc28c0f23940e556ec3e0e761",
+          "sourceRows": [
+            1,
+            8
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        },
+        {
+          "side": 2,
+          "phase": "result",
+          "file": "fx_02/palette_2D/side2_result_map256x64.png",
+          "bbox": [
+            160,
+            26,
+            176,
+            38
+          ],
+          "sha256": "9582cb52637795ffe45b39750f3523e2ff0ee48968ee7693d698adeced14de22",
+          "sourceRows": [
+            11,
+            18
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        }
+      ]
+    },
+    {
+      "fxResource": 5,
+      "fxHex": "0x05",
+      "palette": 44,
+      "paletteHex": "0x2C",
+      "prefixOperand": 0,
+      "prefixRows": [
+        1,
+        8
+      ],
+      "resultOperand": 10,
+      "resultRows": [
+        11,
+        18
+      ],
+      "cards": [
+        {
+          "cardId": 12,
+          "name": "Kamehameha",
+          "category": "BEAM",
+          "handler": "0x02"
+        },
+        {
+          "cardId": 38,
+          "name": "Kamekameha",
+          "category": "BEAM",
+          "handler": "0x02"
+        }
+      ],
+      "images": [
+        {
+          "side": 1,
+          "phase": "prefix",
+          "file": "fx_05/palette_2C/side1_prefix_map256x64.png",
+          "bbox": [
+            161,
+            12,
+            256,
+            52
+          ],
+          "sha256": "ae33695c91ce6efe93442c1b0cf0ee53f299f0f9ad0646cc66ca2bacfb3fe260",
+          "sourceRows": [
+            1,
+            8
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        },
+        {
+          "side": 1,
+          "phase": "result",
+          "file": "fx_05/palette_2C/side1_result_map256x64.png",
+          "bbox": [
+            209,
+            15,
+            255,
+            49
+          ],
+          "sha256": "01a237cb19758ae7be36c937f360048e8562fbb18213695dcd8f97e9df48b479",
+          "sourceRows": [
+            11,
+            18
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        },
+        {
+          "side": 2,
+          "phase": "prefix",
+          "file": "fx_05/palette_2C/side2_prefix_map256x64.png",
+          "bbox": [
+            160,
+            12,
+            255,
+            52
+          ],
+          "sha256": "a33d7f2fb913f645b33279927a9c02f112db6d07fb73a34b22f4dd5d0bf03c0f",
+          "sourceRows": [
+            1,
+            8
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        },
+        {
+          "side": 2,
+          "phase": "result",
+          "file": "fx_05/palette_2C/side2_result_map256x64.png",
+          "bbox": [
+            161,
+            15,
+            207,
+            49
+          ],
+          "sha256": "31823507e0ad2513b6cf58cc2ff54de5a0a204ab3497b626c3fcfd1a769bd015",
+          "sourceRows": [
+            11,
+            18
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        }
+      ]
+    },
+    {
+      "fxResource": 5,
+      "fxHex": "0x05",
+      "palette": 45,
+      "paletteHex": "0x2D",
+      "prefixOperand": 0,
+      "prefixRows": [
+        1,
+        8
+      ],
+      "resultOperand": 10,
+      "resultRows": [
+        11,
+        18
+      ],
+      "cards": [
+        {
+          "cardId": 20,
+          "name": "Misty KiWave",
+          "category": "BEAM",
+          "handler": "0x02"
+        }
+      ],
+      "images": [
+        {
+          "side": 1,
+          "phase": "prefix",
+          "file": "fx_05/palette_2D/side1_prefix_map256x64.png",
+          "bbox": [
+            161,
+            12,
+            256,
+            52
+          ],
+          "sha256": "e4f5a4cd3a29762934b8c175b5669ac08f527ddd61735a502660d73eb68658d8",
+          "sourceRows": [
+            1,
+            8
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        },
+        {
+          "side": 1,
+          "phase": "result",
+          "file": "fx_05/palette_2D/side1_result_map256x64.png",
+          "bbox": [
+            209,
+            15,
+            255,
+            49
+          ],
+          "sha256": "170820d5ab72027a78c16d44118790dd285c6e5fc4efc4b928ca64e58a11b307",
+          "sourceRows": [
+            11,
+            18
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        },
+        {
+          "side": 2,
+          "phase": "prefix",
+          "file": "fx_05/palette_2D/side2_prefix_map256x64.png",
+          "bbox": [
+            160,
+            12,
+            255,
+            52
+          ],
+          "sha256": "20186626fb1fc32a834259fa59194248dd5e62bd914c2e5d36f182149c38f7d7",
+          "sourceRows": [
+            1,
+            8
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        },
+        {
+          "side": 2,
+          "phase": "result",
+          "file": "fx_05/palette_2D/side2_result_map256x64.png",
+          "bbox": [
+            161,
+            15,
+            207,
+            49
+          ],
+          "sha256": "ef0dd11abb774f2c83f7f25ec2048d1f8b80729a542f637e5ebff1bc3cf074d3",
+          "sourceRows": [
+            11,
+            18
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        }
+      ]
+    },
+    {
+      "fxResource": 8,
+      "fxHex": "0x08",
+      "palette": 44,
+      "paletteHex": "0x2C",
+      "prefixOperand": 0,
+      "prefixRows": [
+        1,
+        8
+      ],
+      "resultOperand": 10,
+      "resultRows": [
+        11,
+        18
+      ],
+      "cards": [
+        {
+          "cardId": 35,
+          "name": "Burning Atk.",
+          "category": "BEAM",
+          "handler": "0x04"
+        }
+      ],
+      "images": [
+        {
+          "side": 1,
+          "phase": "prefix",
+          "file": "fx_08/palette_2C/side1_prefix_map256x64.png",
+          "bbox": [
+            161,
+            11,
+            256,
+            53
+          ],
+          "sha256": "bf4097c2272dcb54d6b23a444ca2969e55c3578069bf470524ebb89f1932a6a6",
+          "sourceRows": [
+            1,
+            8
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        },
+        {
+          "side": 1,
+          "phase": "result",
+          "file": "fx_08/palette_2C/side1_result_map256x64.png",
+          "bbox": [
+            209,
+            11,
+            255,
+            53
+          ],
+          "sha256": "e3b8c37892c25fe9c516e09db5fdadc929fd1e615b3faf5f22bca393bb758ebb",
+          "sourceRows": [
+            11,
+            18
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        },
+        {
+          "side": 2,
+          "phase": "prefix",
+          "file": "fx_08/palette_2C/side2_prefix_map256x64.png",
+          "bbox": [
+            160,
+            11,
+            255,
+            53
+          ],
+          "sha256": "54aa6a19335d7a9c8d26ed2ae6a1f6390b556cc0ab88a3ba1b7f0f2ef23834c7",
+          "sourceRows": [
+            1,
+            8
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        },
+        {
+          "side": 2,
+          "phase": "result",
+          "file": "fx_08/palette_2C/side2_result_map256x64.png",
+          "bbox": [
+            161,
+            11,
+            207,
+            53
+          ],
+          "sha256": "b7405747104cbf231244c0cfabbac79d8ca37d33f960d7ad81229725d7aa80ed",
+          "sourceRows": [
+            11,
+            18
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        }
+      ]
+    },
+    {
+      "fxResource": 8,
+      "fxHex": "0x08",
+      "palette": 45,
+      "paletteHex": "0x2D",
+      "prefixOperand": 0,
+      "prefixRows": [
+        1,
+        8
+      ],
+      "resultOperand": 10,
+      "resultRows": [
+        11,
+        18
+      ],
+      "cards": [
+        {
+          "cardId": 10,
+          "name": "Masenko",
+          "category": "BEAM",
+          "handler": "0x02"
+        }
+      ],
+      "images": [
+        {
+          "side": 1,
+          "phase": "prefix",
+          "file": "fx_08/palette_2D/side1_prefix_map256x64.png",
+          "bbox": [
+            161,
+            11,
+            256,
+            53
+          ],
+          "sha256": "91f4a3ecd99561dbcf2b398937fe00c9ded1387afea650531c4b243e9df5dc15",
+          "sourceRows": [
+            1,
+            8
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        },
+        {
+          "side": 1,
+          "phase": "result",
+          "file": "fx_08/palette_2D/side1_result_map256x64.png",
+          "bbox": [
+            209,
+            11,
+            255,
+            53
+          ],
+          "sha256": "d14ebc04f8e4d9e651510bb9d6c7337e6ab1817cc67d289a7bf314c6f2617d07",
+          "sourceRows": [
+            11,
+            18
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        },
+        {
+          "side": 2,
+          "phase": "prefix",
+          "file": "fx_08/palette_2D/side2_prefix_map256x64.png",
+          "bbox": [
+            160,
+            11,
+            255,
+            53
+          ],
+          "sha256": "c1d518eb84fb2191dade9ec99a761fd7f3dd6f100c905aafbc15ab77e40abf9c",
+          "sourceRows": [
+            1,
+            8
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        },
+        {
+          "side": 2,
+          "phase": "result",
+          "file": "fx_08/palette_2D/side2_result_map256x64.png",
+          "bbox": [
+            161,
+            11,
+            207,
+            53
+          ],
+          "sha256": "17c2bdd0dc2bafd7ad7ec7fc47f715b911d4d19ce3f784a781ee9393fcaf23ba",
+          "sourceRows": [
+            11,
+            18
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        }
+      ]
+    },
+    {
+      "fxResource": 14,
+      "fxHex": "0x0E",
+      "palette": 45,
+      "paletteHex": "0x2D",
+      "prefixOperand": 0,
+      "prefixRows": [
+        1,
+        8
+      ],
+      "resultOperand": 10,
+      "resultRows": [
+        11,
+        18
+      ],
+      "cards": [
+        {
+          "cardId": 48,
+          "name": "Lightning C.",
+          "category": "BEAM",
+          "handler": "0x02"
+        }
+      ],
+      "images": [
+        {
+          "side": 1,
+          "phase": "prefix",
+          "file": "fx_0E/palette_2D/side1_prefix_map256x64.png",
+          "bbox": [
+            161,
+            5,
+            256,
+            59
+          ],
+          "sha256": "da7195a82bf7379cdc45a7e01d590a84f7afde9baa9f3b01dab046f849737b17",
+          "sourceRows": [
+            1,
+            8
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        },
+        {
+          "side": 1,
+          "phase": "result",
+          "file": "fx_0E/palette_2D/side1_result_map256x64.png",
+          "bbox": [
+            186,
+            4,
+            255,
+            60
+          ],
+          "sha256": "343c7fa068e6ffdcce4fec8f78838d88d580e5853aaec24be6d2858bcc0b05a2",
+          "sourceRows": [
+            11,
+            18
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        },
+        {
+          "side": 2,
+          "phase": "prefix",
+          "file": "fx_0E/palette_2D/side2_prefix_map256x64.png",
+          "bbox": [
+            160,
+            5,
+            255,
+            59
+          ],
+          "sha256": "f3fb7f0122bbb523abbe32ea3ad883108c016e2c2633acc23dfd4d1f8c83da79",
+          "sourceRows": [
+            1,
+            8
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        },
+        {
+          "side": 2,
+          "phase": "result",
+          "file": "fx_0E/palette_2D/side2_result_map256x64.png",
+          "bbox": [
+            161,
+            4,
+            230,
+            60
+          ],
+          "sha256": "704add358ca2400858ff79bb8310a0ed3224755c2c63ae583e53130ef9bd4424",
+          "sourceRows": [
+            11,
+            18
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        }
+      ]
+    },
+    {
+      "fxResource": 14,
+      "fxHex": "0x0E",
+      "palette": 46,
+      "paletteHex": "0x2E",
+      "prefixOperand": 0,
+      "prefixRows": [
+        1,
+        8
+      ],
+      "resultOperand": 10,
+      "resultRows": [
+        11,
+        18
+      ],
+      "cards": [
+        {
+          "cardId": 30,
+          "name": "Galick-Ho",
+          "category": "BEAM",
+          "handler": "0x02"
+        }
+      ],
+      "images": [
+        {
+          "side": 1,
+          "phase": "prefix",
+          "file": "fx_0E/palette_2E/side1_prefix_map256x64.png",
+          "bbox": [
+            161,
+            5,
+            256,
+            59
+          ],
+          "sha256": "d7347b9648a25e8a28b0ac46ac78e8c890a6492b6765d6509dee1ef45f2db3cd",
+          "sourceRows": [
+            1,
+            8
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        },
+        {
+          "side": 1,
+          "phase": "result",
+          "file": "fx_0E/palette_2E/side1_result_map256x64.png",
+          "bbox": [
+            186,
+            4,
+            255,
+            60
+          ],
+          "sha256": "4043a1684cdb2a1c6f3dca640691fb32082212ace3643f4226e269c008e5f620",
+          "sourceRows": [
+            11,
+            18
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        },
+        {
+          "side": 2,
+          "phase": "prefix",
+          "file": "fx_0E/palette_2E/side2_prefix_map256x64.png",
+          "bbox": [
+            160,
+            5,
+            255,
+            59
+          ],
+          "sha256": "85fb17ded18c271d83804e1d8f461fcbcb72145a4a009cbc5ae10f3e9bd8ae41",
+          "sourceRows": [
+            1,
+            8
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        },
+        {
+          "side": 2,
+          "phase": "result",
+          "file": "fx_0E/palette_2E/side2_result_map256x64.png",
+          "bbox": [
+            161,
+            4,
+            230,
+            60
+          ],
+          "sha256": "1ca8987655657d18171d4e34950d3836dfe5519250c13cf4714866b76bb66760",
+          "sourceRows": [
+            11,
+            18
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        }
+      ]
+    },
+    {
+      "fxResource": 17,
+      "fxHex": "0x11",
+      "palette": 44,
+      "paletteHex": "0x2C",
+      "prefixOperand": 0,
+      "prefixRows": [
+        1,
+        8
+      ],
+      "resultOperand": 10,
+      "resultRows": [
+        11,
+        18
+      ],
+      "cards": [
+        {
+          "cardId": 13,
+          "name": "S.Kamehameha",
+          "category": "BEAM",
+          "handler": "0x02"
+        }
+      ],
+      "images": [
+        {
+          "side": 1,
+          "phase": "prefix",
+          "file": "fx_11/palette_2C/side1_prefix_map256x64.png",
+          "bbox": [
+            160,
+            0,
+            256,
+            64
+          ],
+          "sha256": "892d6fea085e06757c4f8c47abfa7fb9618ec991baa9a057e86e0951cf0171f2",
+          "sourceRows": [
+            1,
+            8
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        },
+        {
+          "side": 1,
+          "phase": "result",
+          "file": "fx_11/palette_2C/side1_result_map256x64.png",
+          "bbox": [
+            181,
+            4,
+            255,
+            60
+          ],
+          "sha256": "d4b33534c87402076f45b53781d710aac143b7494f3bed81f50bba9b9df76b4b",
+          "sourceRows": [
+            11,
+            18
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        },
+        {
+          "side": 2,
+          "phase": "prefix",
+          "file": "fx_11/palette_2C/side2_prefix_map256x64.png",
+          "bbox": [
+            160,
+            0,
+            256,
+            64
+          ],
+          "sha256": "dfc8f8b5e0df2eb5136bb6c4bb69e8652fce356608d1a79dc123d5eecf32e009",
+          "sourceRows": [
+            1,
+            8
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        },
+        {
+          "side": 2,
+          "phase": "result",
+          "file": "fx_11/palette_2C/side2_result_map256x64.png",
+          "bbox": [
+            161,
+            4,
+            235,
+            60
+          ],
+          "sha256": "ca829419e39994aeb009e358af1583140e957ab56012374985f0f67d8c74bfa6",
+          "sourceRows": [
+            11,
+            18
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        }
+      ]
+    },
+    {
+      "fxResource": 17,
+      "fxHex": "0x11",
+      "palette": 45,
+      "paletteHex": "0x2D",
+      "prefixOperand": 0,
+      "prefixRows": [
+        1,
+        8
+      ],
+      "resultOperand": 10,
+      "resultRows": [
+        11,
+        18
+      ],
+      "cards": [
+        {
+          "cardId": 14,
+          "name": "F.Kamehameha",
+          "category": "BEAM",
+          "handler": "0x02"
+        },
+        {
+          "cardId": 70,
+          "name": "Hell Flash",
+          "category": "BEAM",
+          "handler": "0x02"
+        }
+      ],
+      "images": [
+        {
+          "side": 1,
+          "phase": "prefix",
+          "file": "fx_11/palette_2D/side1_prefix_map256x64.png",
+          "bbox": [
+            160,
+            0,
+            256,
+            64
+          ],
+          "sha256": "a4ccb3a99bc5ef334b44b70c481ff7610d255d77bdfaa9e9d35bcf87f14c3700",
+          "sourceRows": [
+            1,
+            8
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        },
+        {
+          "side": 1,
+          "phase": "result",
+          "file": "fx_11/palette_2D/side1_result_map256x64.png",
+          "bbox": [
+            181,
+            4,
+            255,
+            60
+          ],
+          "sha256": "bb8ad7c9159bc30a665c2edbe5d66bb1a61e0ff17663d7d0ce4d8bd810b95e46",
+          "sourceRows": [
+            11,
+            18
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        },
+        {
+          "side": 2,
+          "phase": "prefix",
+          "file": "fx_11/palette_2D/side2_prefix_map256x64.png",
+          "bbox": [
+            160,
+            0,
+            256,
+            64
+          ],
+          "sha256": "80cbb23c0f0066f586679ba480e32a8956cc226f4d8293be221b909d4e534e55",
+          "sourceRows": [
+            1,
+            8
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        },
+        {
+          "side": 2,
+          "phase": "result",
+          "file": "fx_11/palette_2D/side2_result_map256x64.png",
+          "bbox": [
+            161,
+            4,
+            235,
+            60
+          ],
+          "sha256": "1cc68a06f63de0aa2a9abda470eff1d5a41d17161a789a0dea43faf5e84063dd",
+          "sourceRows": [
+            11,
+            18
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        }
+      ]
+    },
+    {
+      "fxResource": 20,
+      "fxHex": "0x14",
+      "palette": 44,
+      "paletteHex": "0x2C",
+      "prefixOperand": 0,
+      "prefixRows": [
+        1,
+        8
+      ],
+      "resultOperand": 10,
+      "resultRows": [
+        11,
+        18
+      ],
+      "cards": [
+        {
+          "cardId": 32,
+          "name": "Final Flash",
+          "category": "BEAM",
+          "handler": "0x02"
+        }
+      ],
+      "images": [
+        {
+          "side": 1,
+          "phase": "prefix",
+          "file": "fx_14/palette_2C/side1_prefix_map256x64.png",
+          "bbox": [
+            161,
+            0,
+            256,
+            64
+          ],
+          "sha256": "9adeb6153a54e1896e22660f89a234b9325a96209b4c741e9662a4580d434b9b",
+          "sourceRows": [
+            1,
+            8
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        },
+        {
+          "side": 1,
+          "phase": "result",
+          "file": "fx_14/palette_2C/side1_result_map256x64.png",
+          "bbox": [
+            179,
+            0,
+            255,
+            64
+          ],
+          "sha256": "7ff7b28dee612cde4f43460ec7bc1300a7bd3e8a809e8a9f327cf78a6735d5a5",
+          "sourceRows": [
+            11,
+            18
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        },
+        {
+          "side": 2,
+          "phase": "prefix",
+          "file": "fx_14/palette_2C/side2_prefix_map256x64.png",
+          "bbox": [
+            160,
+            0,
+            255,
+            64
+          ],
+          "sha256": "19e76ae76d71c907f657f9ca9770986ff3f0aead3511088e153c0fa563290519",
+          "sourceRows": [
+            1,
+            8
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        },
+        {
+          "side": 2,
+          "phase": "result",
+          "file": "fx_14/palette_2C/side2_result_map256x64.png",
+          "bbox": [
+            161,
+            0,
+            237,
+            64
+          ],
+          "sha256": "cd3e559894cc1eda318148873ffd1fb0d73153b01b6d76fdd4f0407338dd2dca",
+          "sourceRows": [
+            11,
+            18
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        }
+      ]
+    },
+    {
+      "fxResource": 20,
+      "fxHex": "0x14",
+      "palette": 45,
+      "paletteHex": "0x2D",
+      "prefixOperand": 0,
+      "prefixRows": [
+        1,
+        8
+      ],
+      "resultOperand": 10,
+      "resultRows": [
+        11,
+        18
+      ],
+      "cards": [
+        {
+          "cardId": 54,
+          "name": "Eraser Can.",
+          "category": "BEAM",
+          "handler": "0x03"
+        }
+      ],
+      "images": [
+        {
+          "side": 1,
+          "phase": "prefix",
+          "file": "fx_14/palette_2D/side1_prefix_map256x64.png",
+          "bbox": [
+            161,
+            0,
+            256,
+            64
+          ],
+          "sha256": "d3092212936916f5cc65738c58c4207d28d6f016f90059d6391c74e36d4ed2b8",
+          "sourceRows": [
+            1,
+            8
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        },
+        {
+          "side": 1,
+          "phase": "result",
+          "file": "fx_14/palette_2D/side1_result_map256x64.png",
+          "bbox": [
+            179,
+            0,
+            255,
+            64
+          ],
+          "sha256": "d9a28552d9cc885f39b04285371420f2fb90e559604d8b5c84456b94049861ef",
+          "sourceRows": [
+            11,
+            18
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        },
+        {
+          "side": 2,
+          "phase": "prefix",
+          "file": "fx_14/palette_2D/side2_prefix_map256x64.png",
+          "bbox": [
+            160,
+            0,
+            255,
+            64
+          ],
+          "sha256": "0df110d14874fcc6dca1c53e2aa5884419d45e206cdc9fabbf1bebb5b5ac50fe",
+          "sourceRows": [
+            1,
+            8
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        },
+        {
+          "side": 2,
+          "phase": "result",
+          "file": "fx_14/palette_2D/side2_result_map256x64.png",
+          "bbox": [
+            161,
+            0,
+            237,
+            64
+          ],
+          "sha256": "792f17d29396ce611621c84910ced3dbd27a648103cd3a6bbaa474fee8a1a181",
+          "sourceRows": [
+            11,
+            18
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        }
+      ]
+    },
+    {
+      "fxResource": 23,
+      "fxHex": "0x17",
+      "palette": 44,
+      "paletteHex": "0x2C",
+      "prefixOperand": 0,
+      "prefixRows": [
+        1,
+        8
+      ],
+      "resultOperand": 10,
+      "resultRows": [
+        11,
+        18
+      ],
+      "cards": [
+        {
+          "cardId": 8,
+          "name": "Energy Bomb",
+          "category": "BEAM",
+          "handler": "0x05"
+        }
+      ],
+      "images": [
+        {
+          "side": 1,
+          "phase": "prefix",
+          "file": "fx_17/palette_2C/side1_prefix_map256x64.png",
+          "bbox": [
+            160,
+            26,
+            176,
+            38
+          ],
+          "sha256": "d0ea080d817cf7fcf243cc3c4d8d81a8bdcd41b8ea60653e18fa3e6afc105317",
+          "sourceRows": [
+            1,
+            8
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        },
+        {
+          "side": 1,
+          "phase": "result",
+          "file": "fx_17/palette_2C/side1_result_map256x64.png",
+          "bbox": [
+            240,
+            26,
+            256,
+            38
+          ],
+          "sha256": "20e3cadbe1af2a371f3156094c314857c9e00fc86dce2f6b8fc39bad1d6d5c2f",
+          "sourceRows": [
+            11,
+            18
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        },
+        {
+          "side": 2,
+          "phase": "prefix",
+          "file": "fx_17/palette_2C/side2_prefix_map256x64.png",
+          "bbox": [
+            240,
+            26,
+            256,
+            38
+          ],
+          "sha256": "9fc50ca20c3ff83d0cf9cd4c8787686a439e803749c816303e6f5cdd00a6fa96",
+          "sourceRows": [
+            1,
+            8
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        },
+        {
+          "side": 2,
+          "phase": "result",
+          "file": "fx_17/palette_2C/side2_result_map256x64.png",
+          "bbox": [
+            160,
+            26,
+            176,
+            38
+          ],
+          "sha256": "722134ae0c076450f13ff2e98543e0c75416952d2916bc7c4375ab7882e19725",
+          "sourceRows": [
+            11,
+            18
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        }
+      ]
+    },
+    {
+      "fxResource": 33,
+      "fxHex": "0x21",
+      "palette": 45,
+      "paletteHex": "0x2D",
+      "prefixOperand": 0,
+      "prefixRows": [
+        1,
+        8
+      ],
+      "resultOperand": 10,
+      "resultRows": [
+        11,
+        18
+      ],
+      "cards": [
+        {
+          "cardId": 47,
+          "name": "KiBlast Bomb",
+          "category": "BEAM",
+          "handler": "0x05"
+        }
+      ],
+      "images": [
+        {
+          "side": 1,
+          "phase": "prefix",
+          "file": "fx_21/palette_2D/side1_prefix_map256x64.png",
+          "bbox": [
+            161,
+            11,
+            207,
+            53
+          ],
+          "sha256": "71212b1372efd6de9a2e75ac0e6ddd9a1eefdfdedd5e8505438baa20faa5d7bd",
+          "sourceRows": [
+            1,
+            8
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        },
+        {
+          "side": 1,
+          "phase": "result",
+          "file": "fx_21/palette_2D/side1_result_map256x64.png",
+          "bbox": [
+            209,
+            11,
+            255,
+            53
+          ],
+          "sha256": "d14ebc04f8e4d9e651510bb9d6c7337e6ab1817cc67d289a7bf314c6f2617d07",
+          "sourceRows": [
+            11,
+            18
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        },
+        {
+          "side": 2,
+          "phase": "prefix",
+          "file": "fx_21/palette_2D/side2_prefix_map256x64.png",
+          "bbox": [
+            209,
+            11,
+            255,
+            53
+          ],
+          "sha256": "0fad3d4030320e3e635fb85f8b1114206d0ee644082dfbbd14fe90360c544717",
+          "sourceRows": [
+            1,
+            8
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        },
+        {
+          "side": 2,
+          "phase": "result",
+          "file": "fx_21/palette_2D/side2_result_map256x64.png",
+          "bbox": [
+            161,
+            11,
+            207,
+            53
+          ],
+          "sha256": "17c2bdd0dc2bafd7ad7ec7fc47f715b911d4d19ce3f784a781ee9393fcaf23ba",
+          "sourceRows": [
+            11,
+            18
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        }
+      ]
+    },
+    {
+      "fxResource": 36,
+      "fxHex": "0x24",
+      "palette": 44,
+      "paletteHex": "0x2C",
+      "prefixOperand": 0,
+      "prefixRows": [
+        1,
+        8
+      ],
+      "resultOperand": 10,
+      "resultRows": [
+        11,
+        18
+      ],
+      "cards": [
+        {
+          "cardId": 36,
+          "name": "Fin.Buster",
+          "category": "BEAM",
+          "handler": "0x05"
+        }
+      ],
+      "images": [
+        {
+          "side": 1,
+          "phase": "prefix",
+          "file": "fx_24/palette_2C/side1_prefix_map256x64.png",
+          "bbox": [
+            162,
+            11,
+            224,
+            53
+          ],
+          "sha256": "09bef9020f1d51f8ee53b5443a45a7c926f9c434c51b85162fdb52b22fac444e",
+          "sourceRows": [
+            1,
+            8
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        },
+        {
+          "side": 1,
+          "phase": "result",
+          "file": "fx_24/palette_2C/side1_result_map256x64.png",
+          "bbox": [
+            194,
+            11,
+            256,
+            53
+          ],
+          "sha256": "7ff7966102a88df947f3b0bf576a2b34c7a6ab9a5ed06d07105c6285ddace957",
+          "sourceRows": [
+            11,
+            18
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        },
+        {
+          "side": 2,
+          "phase": "prefix",
+          "file": "fx_24/palette_2C/side2_prefix_map256x64.png",
+          "bbox": [
+            192,
+            11,
+            254,
+            53
+          ],
+          "sha256": "ef66bd46e7c6ad812e6ec6acde3243feb05b992d2d41d80075f2bcf4120a5ce0",
+          "sourceRows": [
+            1,
+            8
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        },
+        {
+          "side": 2,
+          "phase": "result",
+          "file": "fx_24/palette_2C/side2_result_map256x64.png",
+          "bbox": [
+            160,
+            11,
+            222,
+            53
+          ],
+          "sha256": "f1116bef67240e7af9a3c418505260053529d85a9d1206f2a5b768627d7f8256",
+          "sourceRows": [
+            11,
+            18
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        }
+      ]
+    },
+    {
+      "fxResource": 39,
+      "fxHex": "0x27",
+      "palette": 44,
+      "paletteHex": "0x2C",
+      "prefixOperand": 0,
+      "prefixRows": [
+        1,
+        8
+      ],
+      "resultOperand": 10,
+      "resultRows": [
+        11,
+        18
+      ],
+      "cards": [
+        {
+          "cardId": 57,
+          "name": "Purple Comet",
+          "category": "BEAM",
+          "handler": "0x0D"
+        }
+      ],
+      "images": [
+        {
+          "side": 1,
+          "phase": "prefix",
+          "file": "fx_27/palette_2C/side1_prefix_map256x64.png",
+          "bbox": [
+            162,
+            4,
+            231,
+            60
+          ],
+          "sha256": "682fadf1c6c3519f327d71e3ad6c006213ca524c03562c5ed109cbc1c6de9c2e",
+          "sourceRows": [
+            1,
+            8
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        },
+        {
+          "side": 1,
+          "phase": "result",
+          "file": "fx_27/palette_2C/side1_result_map256x64.png",
+          "bbox": [
+            186,
+            4,
+            255,
+            60
+          ],
+          "sha256": "a660ec0f9ef18d0c5d7bea165f00dfb0b6f39b3a45004a84ecbfd8845d08d0c9",
+          "sourceRows": [
+            11,
+            18
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        },
+        {
+          "side": 2,
+          "phase": "prefix",
+          "file": "fx_27/palette_2C/side2_prefix_map256x64.png",
+          "bbox": [
+            185,
+            4,
+            254,
+            60
+          ],
+          "sha256": "e3c3faca2a9aade45b61a52518211bbb03d3b24edbca5e8a68c949945ccded61",
+          "sourceRows": [
+            1,
+            8
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        },
+        {
+          "side": 2,
+          "phase": "result",
+          "file": "fx_27/palette_2C/side2_result_map256x64.png",
+          "bbox": [
+            161,
+            4,
+            230,
+            60
+          ],
+          "sha256": "6f76e98ec54fc10eb57259a3c2b5e2020a4ef0d20de2a4dd6a2d8284a200d40d",
+          "sourceRows": [
+            11,
+            18
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        }
+      ]
+    },
+    {
+      "fxResource": 39,
+      "fxHex": "0x27",
+      "palette": 45,
+      "paletteHex": "0x2D",
+      "prefixOperand": 0,
+      "prefixRows": [
+        1,
+        8
+      ],
+      "resultOperand": 10,
+      "resultRows": [
+        11,
+        18
+      ],
+      "cards": [
+        {
+          "cardId": 31,
+          "name": "Big Bang Atk",
+          "category": "BEAM",
+          "handler": "0x05"
+        }
+      ],
+      "images": [
+        {
+          "side": 1,
+          "phase": "prefix",
+          "file": "fx_27/palette_2D/side1_prefix_map256x64.png",
+          "bbox": [
+            162,
+            4,
+            231,
+            60
+          ],
+          "sha256": "a2fc06cfd4474bbea7b131bb73e691be811c1a49cda95ad26efd1f7e9c57580c",
+          "sourceRows": [
+            1,
+            8
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        },
+        {
+          "side": 1,
+          "phase": "result",
+          "file": "fx_27/palette_2D/side1_result_map256x64.png",
+          "bbox": [
+            186,
+            4,
+            255,
+            60
+          ],
+          "sha256": "6b9f04e35d431ef4cb33f9f2cba6a982e04f55f61908392f0d0151e05d61e32a",
+          "sourceRows": [
+            11,
+            18
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        },
+        {
+          "side": 2,
+          "phase": "prefix",
+          "file": "fx_27/palette_2D/side2_prefix_map256x64.png",
+          "bbox": [
+            185,
+            4,
+            254,
+            60
+          ],
+          "sha256": "1a789425b8cb283a0c2b0f0d41c42365dbaea10bd25d6270b128e49400672e40",
+          "sourceRows": [
+            1,
+            8
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        },
+        {
+          "side": 2,
+          "phase": "result",
+          "file": "fx_27/palette_2D/side2_result_map256x64.png",
+          "bbox": [
+            161,
+            4,
+            230,
+            60
+          ],
+          "sha256": "0bd2a3e401a9409b055a275c0ee4313a51ae6f32d6697ab789c4aa9e7a0ee5af",
+          "sourceRows": [
+            11,
+            18
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        }
+      ]
+    },
+    {
+      "fxResource": 45,
+      "fxHex": "0x2D",
+      "palette": 45,
+      "paletteHex": "0x2D",
+      "prefixOperand": 0,
+      "prefixRows": [
+        1,
+        8
+      ],
+      "resultOperand": 10,
+      "resultRows": [
+        11,
+        18
+      ],
+      "cards": [
+        {
+          "cardId": 18,
+          "name": "F.Lightbomb",
+          "category": "BEAM",
+          "handler": "0x05"
+        }
+      ],
+      "images": [
+        {
+          "side": 1,
+          "phase": "prefix",
+          "file": "fx_2D/palette_2D/side1_prefix_map256x64.png",
+          "bbox": [
+            163,
+            0,
+            239,
+            64
+          ],
+          "sha256": "2348c6540f6f79638c90d4bb3bf970397b90cca1fa9a79c6257536ed4e2372d9",
+          "sourceRows": [
+            1,
+            8
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        },
+        {
+          "side": 1,
+          "phase": "result",
+          "file": "fx_2D/palette_2D/side1_result_map256x64.png",
+          "bbox": [
+            179,
+            0,
+            255,
+            64
+          ],
+          "sha256": "7307b03557c058c7ead803e5ec46db1d407faacb5cf4bc0e90a02ebdcd4e32b2",
+          "sourceRows": [
+            11,
+            18
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        },
+        {
+          "side": 2,
+          "phase": "prefix",
+          "file": "fx_2D/palette_2D/side2_prefix_map256x64.png",
+          "bbox": [
+            161,
+            0,
+            237,
+            64
+          ],
+          "sha256": "9d17423ddbcbb38600bb46afd77a4b4bacb0637a62dc790de32060094bd06d37",
+          "sourceRows": [
+            1,
+            8
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        },
+        {
+          "side": 2,
+          "phase": "result",
+          "file": "fx_2D/palette_2D/side2_result_map256x64.png",
+          "bbox": [
+            177,
+            0,
+            253,
+            64
+          ],
+          "sha256": "6de25adac1850073ad7634f2b1515c6688620711fc061174f9c067314dca45c0",
+          "sourceRows": [
+            11,
+            18
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        }
+      ]
+    },
+    {
+      "fxResource": 48,
+      "fxHex": "0x30",
+      "palette": 44,
+      "paletteHex": "0x2C",
+      "prefixOperand": 2,
+      "prefixRows": [
+        3,
+        10
+      ],
+      "resultOperand": 10,
+      "resultRows": [
+        11,
+        18
+      ],
+      "cards": [
+        {
+          "cardId": 21,
+          "name": "Destruct-Disk",
+          "category": "BEAM",
+          "handler": "0x07"
+        }
+      ],
+      "images": [
+        {
+          "side": 1,
+          "phase": "prefix",
+          "file": "fx_30/palette_2C/side1_prefix_map256x64.png",
+          "bbox": [
+            184,
+            10,
+            223,
+            22
+          ],
+          "sha256": "276224732a27c8b81d7288ff1b5522137cce5099107210041d081bc594e3c405",
+          "sourceRows": [
+            3,
+            10
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        },
+        {
+          "side": 1,
+          "phase": "result",
+          "file": "fx_30/palette_2C/side1_result_map256x64.png",
+          "bbox": [
+            216,
+            26,
+            255,
+            38
+          ],
+          "sha256": "a628875f4bb1ba7d635bfdebdc9e4800a9f83aa747dd256f0d2f4783f173dd5b",
+          "sourceRows": [
+            11,
+            18
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        },
+        {
+          "side": 2,
+          "phase": "prefix",
+          "file": "fx_30/palette_2C/side2_prefix_map256x64.png",
+          "bbox": [
+            193,
+            10,
+            232,
+            22
+          ],
+          "sha256": "f4636a04b9f81d79695a42bb6be5a6889d5acb705af7ed6aeb73883f9a6b8fac",
+          "sourceRows": [
+            3,
+            10
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        },
+        {
+          "side": 2,
+          "phase": "result",
+          "file": "fx_30/palette_2C/side2_result_map256x64.png",
+          "bbox": [
+            161,
+            26,
+            200,
+            38
+          ],
+          "sha256": "1f19ed82b284b84d603672c5216283a7678acb140d288cd384df372c92b0cc41",
+          "sourceRows": [
+            11,
+            18
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        }
+      ]
+    },
+    {
+      "fxResource": 48,
+      "fxHex": "0x30",
+      "palette": 45,
+      "paletteHex": "0x2D",
+      "prefixOperand": 2,
+      "prefixRows": [
+        3,
+        10
+      ],
+      "resultOperand": 10,
+      "resultRows": [
+        11,
+        18
+      ],
+      "cards": [
+        {
+          "cardId": 73,
+          "name": "Energy Slice",
+          "category": "BEAM",
+          "handler": "0x07"
+        }
+      ],
+      "images": [
+        {
+          "side": 1,
+          "phase": "prefix",
+          "file": "fx_30/palette_2D/side1_prefix_map256x64.png",
+          "bbox": [
+            184,
+            10,
+            223,
+            22
+          ],
+          "sha256": "6c7bcbd13f5af9ae14d23eaa4342f2ae6efa583cc9ca5730a6ee92e3a07e88fc",
+          "sourceRows": [
+            3,
+            10
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        },
+        {
+          "side": 1,
+          "phase": "result",
+          "file": "fx_30/palette_2D/side1_result_map256x64.png",
+          "bbox": [
+            216,
+            26,
+            255,
+            38
+          ],
+          "sha256": "5d6de545fbf3d9dae83deb667676edaa5e72864949024cd2c23378b6eb3700ae",
+          "sourceRows": [
+            11,
+            18
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        },
+        {
+          "side": 2,
+          "phase": "prefix",
+          "file": "fx_30/palette_2D/side2_prefix_map256x64.png",
+          "bbox": [
+            193,
+            10,
+            232,
+            22
+          ],
+          "sha256": "60e0e391ced557f99ea7fd41dee07a45b60a96e19b78c205769a909b452f2eda",
+          "sourceRows": [
+            3,
+            10
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        },
+        {
+          "side": 2,
+          "phase": "result",
+          "file": "fx_30/palette_2D/side2_result_map256x64.png",
+          "bbox": [
+            161,
+            26,
+            200,
+            38
+          ],
+          "sha256": "c93f99fc68895d9fa458f31b8dbe12320c36be84be79d60542eb821c98ec6a0f",
+          "sourceRows": [
+            11,
+            18
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        }
+      ]
+    },
+    {
+      "fxResource": 51,
+      "fxHex": "0x33",
+      "palette": 46,
+      "paletteHex": "0x2E",
+      "prefixOperand": 2,
+      "prefixRows": [
+        3,
+        10
+      ],
+      "resultOperand": 10,
+      "resultRows": [
+        11,
+        18
+      ],
+      "cards": [
+        {
+          "cardId": 22,
+          "name": "S.Destruc-D.",
+          "category": "BEAM",
+          "handler": "0x07"
+        }
+      ],
+      "images": [
+        {
+          "side": 1,
+          "phase": "prefix",
+          "file": "fx_33/palette_2E/side1_prefix_map256x64.png",
+          "bbox": [
+            177,
+            8,
+            232,
+            24
+          ],
+          "sha256": "d0a9ceab4cdcd2b365b2fc8351eb8e067df559d9c18cdceea22885efe09a9cdd",
+          "sourceRows": [
+            3,
+            10
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        },
+        {
+          "side": 1,
+          "phase": "result",
+          "file": "fx_33/palette_2E/side1_result_map256x64.png",
+          "bbox": [
+            201,
+            24,
+            256,
+            40
+          ],
+          "sha256": "2f0493e6b7ce53d6f09a581a44f24ba00216d90fe8c913ecfa7b94f73bfcfa75",
+          "sourceRows": [
+            11,
+            18
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        },
+        {
+          "side": 2,
+          "phase": "prefix",
+          "file": "fx_33/palette_2E/side2_prefix_map256x64.png",
+          "bbox": [
+            184,
+            8,
+            239,
+            24
+          ],
+          "sha256": "19ef074e9f32a0699dbc4b21b0567b0f4498bb8227ced1ec37c6f7a65639b90e",
+          "sourceRows": [
+            3,
+            10
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        },
+        {
+          "side": 2,
+          "phase": "result",
+          "file": "fx_33/palette_2E/side2_result_map256x64.png",
+          "bbox": [
+            160,
+            24,
+            215,
+            40
+          ],
+          "sha256": "205be09cb16937dae97ea1d5b23529b91700abebe20bc31e6f4ffa6579c80ddc",
+          "sourceRows": [
+            11,
+            18
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        }
+      ]
+    },
+    {
+      "fxResource": 54,
+      "fxHex": "0x36",
+      "palette": 44,
+      "paletteHex": "0x2C",
+      "prefixOperand": 0,
+      "prefixRows": [
+        1,
+        8
+      ],
+      "resultOperand": 10,
+      "resultRows": [
+        11,
+        18
+      ],
+      "cards": [
+        {
+          "cardId": 65,
+          "name": "Grand Wave",
+          "category": "BEAM",
+          "handler": "0x05"
+        }
+      ],
+      "images": [
+        {
+          "side": 1,
+          "phase": "prefix",
+          "file": "fx_36/palette_2C/side1_prefix_map256x64.png",
+          "bbox": [
+            160,
+            24,
+            232,
+            56
+          ],
+          "sha256": "3d01263865ef0376670dced1172c14d9e8c24b7d4f67bf206cd532d67e7d678e",
+          "sourceRows": [
+            1,
+            8
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        },
+        {
+          "side": 1,
+          "phase": "result",
+          "file": "fx_36/palette_2C/side1_result_map256x64.png",
+          "bbox": [
+            184,
+            24,
+            256,
+            56
+          ],
+          "sha256": "d36532e704094c84e6fe98c33f6d555e15ea281fc80c4a3b24748c9dad3bf8bd",
+          "sourceRows": [
+            11,
+            18
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        },
+        {
+          "side": 2,
+          "phase": "prefix",
+          "file": "fx_36/palette_2C/side2_prefix_map256x64.png",
+          "bbox": [
+            184,
+            24,
+            256,
+            56
+          ],
+          "sha256": "bb8a1910a18d1dbcbb6956d1b998d26d8f367bd03255b3a058de891fe4256d43",
+          "sourceRows": [
+            1,
+            8
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        },
+        {
+          "side": 2,
+          "phase": "result",
+          "file": "fx_36/palette_2C/side2_result_map256x64.png",
+          "bbox": [
+            160,
+            24,
+            232,
+            56
+          ],
+          "sha256": "fe85bf2fac3272cc079d617e92e6f5a55e0b44b0075bc164fb79a9fec2ed24a8",
+          "sourceRows": [
+            11,
+            18
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        }
+      ]
+    },
+    {
+      "fxResource": 54,
+      "fxHex": "0x36",
+      "palette": 45,
+      "paletteHex": "0x2D",
+      "prefixOperand": 0,
+      "prefixRows": [
+        1,
+        8
+      ],
+      "resultOperand": 10,
+      "resultRows": [
+        11,
+        18
+      ],
+      "cards": [
+        {
+          "cardId": 72,
+          "name": "Energy Slash",
+          "category": "BEAM",
+          "handler": "0x05"
+        }
+      ],
+      "images": [
+        {
+          "side": 1,
+          "phase": "prefix",
+          "file": "fx_36/palette_2D/side1_prefix_map256x64.png",
+          "bbox": [
+            160,
+            24,
+            232,
+            56
+          ],
+          "sha256": "2b3a89603488920e46cec24d316013d4c061e09ad318ff893f2bf08d32ecd322",
+          "sourceRows": [
+            1,
+            8
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        },
+        {
+          "side": 1,
+          "phase": "result",
+          "file": "fx_36/palette_2D/side1_result_map256x64.png",
+          "bbox": [
+            184,
+            24,
+            256,
+            56
+          ],
+          "sha256": "63a91d7a833b8635292690775e768bb0eea242e1726b99bcc77378ae8b9ac8ee",
+          "sourceRows": [
+            11,
+            18
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        },
+        {
+          "side": 2,
+          "phase": "prefix",
+          "file": "fx_36/palette_2D/side2_prefix_map256x64.png",
+          "bbox": [
+            184,
+            24,
+            256,
+            56
+          ],
+          "sha256": "78b03367653e80aac5e9e82199bfad28e033893fed25f849f308e6f6a75a6790",
+          "sourceRows": [
+            1,
+            8
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        },
+        {
+          "side": 2,
+          "phase": "result",
+          "file": "fx_36/palette_2D/side2_result_map256x64.png",
+          "bbox": [
+            160,
+            24,
+            232,
+            56
+          ],
+          "sha256": "adcb852f16345ad0b533ae0531135173a9ebace6260cf5c7e837a32802a439ce",
+          "sourceRows": [
+            11,
+            18
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        }
+      ]
+    },
+    {
+      "fxResource": 57,
+      "fxHex": "0x39",
+      "palette": 45,
+      "paletteHex": "0x2D",
+      "prefixOperand": 0,
+      "prefixRows": [
+        1,
+        8
+      ],
+      "resultOperand": 10,
+      "resultRows": [
+        11,
+        18
+      ],
+      "cards": [
+        {
+          "cardId": 17,
+          "name": "S.Beam Can.",
+          "category": "BEAM",
+          "handler": "0x02"
+        }
+      ],
+      "images": [
+        {
+          "side": 1,
+          "phase": "prefix",
+          "file": "fx_39/palette_2D/side1_prefix_map256x64.png",
+          "bbox": [
+            161,
+            26,
+            256,
+            38
+          ],
+          "sha256": "4f5a0efe9b554c4c4efe751f780f8487672adda6218bdbbed60d0d3b72ef2280",
+          "sourceRows": [
+            1,
+            8
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        },
+        {
+          "side": 1,
+          "phase": "result",
+          "file": "fx_39/palette_2D/side1_result_map256x64.png",
+          "bbox": [
+            162,
+            26,
+            256,
+            38
+          ],
+          "sha256": "08e83eadf9f0b9c00e2fd8fc0c0f134b0d261070bd92300f0642453060cf06db",
+          "sourceRows": [
+            11,
+            18
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        },
+        {
+          "side": 2,
+          "phase": "prefix",
+          "file": "fx_39/palette_2D/side2_prefix_map256x64.png",
+          "bbox": [
+            160,
+            26,
+            255,
+            38
+          ],
+          "sha256": "aa4d525adb93cae4fb8caf7426060a4e21017792f3d204b5fd4ce7ff46d5dd17",
+          "sourceRows": [
+            1,
+            8
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        },
+        {
+          "side": 2,
+          "phase": "result",
+          "file": "fx_39/palette_2D/side2_result_map256x64.png",
+          "bbox": [
+            160,
+            26,
+            254,
+            38
+          ],
+          "sha256": "f108f259f50b7f46957ec8029e1d8dec7b4455b4c43bd456070e865c24f56bb9",
+          "sourceRows": [
+            11,
+            18
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        }
+      ]
+    },
+    {
+      "fxResource": 60,
+      "fxHex": "0x3C",
+      "palette": 44,
+      "paletteHex": "0x2C",
+      "prefixOperand": 0,
+      "prefixRows": [
+        1,
+        8
+      ],
+      "resultOperand": 10,
+      "resultRows": [
+        11,
+        18
+      ],
+      "cards": [
+        {
+          "cardId": 50,
+          "name": "M.Soundwave",
+          "category": "BEAM",
+          "handler": "0x05"
+        }
+      ],
+      "images": [
+        {
+          "side": 1,
+          "phase": "prefix",
+          "file": "fx_3C/palette_2C/side1_prefix_map256x64.png",
+          "bbox": [
+            160,
+            18,
+            192,
+            46
+          ],
+          "sha256": "c925a37db3e534e73420796fbb08e8ce12847f398a97a2681a42d4744b4a3260",
+          "sourceRows": [
+            1,
+            8
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        },
+        {
+          "side": 1,
+          "phase": "result",
+          "file": "fx_3C/palette_2C/side1_result_map256x64.png",
+          "bbox": [
+            224,
+            18,
+            256,
+            46
+          ],
+          "sha256": "df3494515eb9ddf9f6ccd1e2b4b15fc8c41a29aa7cf54485c8f5ae7e70236bab",
+          "sourceRows": [
+            11,
+            18
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        },
+        {
+          "side": 2,
+          "phase": "prefix",
+          "file": "fx_3C/palette_2C/side2_prefix_map256x64.png",
+          "bbox": [
+            224,
+            18,
+            256,
+            46
+          ],
+          "sha256": "acec1796f6ae4b4dd0ae286ae60a5a9836c5a05ae95df6b8c48ddfdddf85e7a3",
+          "sourceRows": [
+            1,
+            8
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        },
+        {
+          "side": 2,
+          "phase": "result",
+          "file": "fx_3C/palette_2C/side2_result_map256x64.png",
+          "bbox": [
+            160,
+            18,
+            192,
+            46
+          ],
+          "sha256": "4e84b9d77395c0e6931c5a2f6dea11b519fa09c517054d5c6ae8c3b268e418f5",
+          "sourceRows": [
+            11,
+            18
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        }
+      ]
+    },
+    {
+      "fxResource": 63,
+      "fxHex": "0x3F",
+      "palette": 45,
+      "paletteHex": "0x2D",
+      "prefixOperand": 2,
+      "prefixRows": [
+        3,
+        10
+      ],
+      "resultOperand": 10,
+      "resultRows": [
+        11,
+        18
+      ],
+      "cards": [
+        {
+          "cardId": 39,
+          "name": "Galactica D.",
+          "category": "BEAM",
+          "handler": "0x07"
+        }
+      ],
+      "images": [
+        {
+          "side": 1,
+          "phase": "prefix",
+          "file": "fx_3F/palette_2D/side1_prefix_map256x64.png",
+          "bbox": [
+            184,
+            1,
+            224,
+            23
+          ],
+          "sha256": "6b312763af63e45aa34fcd0cf5582853a302071a10968d0ac9458016af895acf",
+          "sourceRows": [
+            3,
+            10
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        },
+        {
+          "side": 1,
+          "phase": "result",
+          "file": "fx_3F/palette_2D/side1_result_map256x64.png",
+          "bbox": [
+            216,
+            17,
+            256,
+            39
+          ],
+          "sha256": "e45d2b787509c28aa820e24c195a35af413e56fc954bc4c67b25c4df37db3c34",
+          "sourceRows": [
+            11,
+            18
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        },
+        {
+          "side": 2,
+          "phase": "prefix",
+          "file": "fx_3F/palette_2D/side2_prefix_map256x64.png",
+          "bbox": [
+            192,
+            1,
+            232,
+            23
+          ],
+          "sha256": "096b01352622f87696359303a4dea3798f7345241d231647a7e4a443324ac9dc",
+          "sourceRows": [
+            3,
+            10
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        },
+        {
+          "side": 2,
+          "phase": "result",
+          "file": "fx_3F/palette_2D/side2_result_map256x64.png",
+          "bbox": [
+            160,
+            17,
+            200,
+            39
+          ],
+          "sha256": "b6b0c104c4105864bdc736bdbc900d1e73f0e343ac95df8211f83d8757c45d20",
+          "sourceRows": [
+            11,
+            18
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        }
+      ]
+    },
+    {
+      "fxResource": 66,
+      "fxHex": "0x42",
+      "palette": 45,
+      "paletteHex": "0x2D",
+      "prefixOperand": 0,
+      "prefixRows": [
+        1,
+        8
+      ],
+      "resultOperand": 10,
+      "resultRows": [
+        11,
+        18
+      ],
+      "cards": [
+        {
+          "cardId": 44,
+          "name": "Flash.Sword",
+          "category": "BEAM",
+          "handler": "0x02"
+        }
+      ],
+      "images": [
+        {
+          "side": 1,
+          "phase": "prefix",
+          "file": "fx_42/palette_2D/side1_prefix_map256x64.png",
+          "bbox": [
+            161,
+            18,
+            256,
+            46
+          ],
+          "sha256": "0658e2e8cb9d68e77419a889f82afe010a6c4f2b904d8e3c042c986b7666f6ca",
+          "sourceRows": [
+            1,
+            8
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        },
+        {
+          "side": 1,
+          "phase": "result",
+          "file": "fx_42/palette_2D/side1_result_map256x64.png",
+          "bbox": [
+            193,
+            18,
+            256,
+            46
+          ],
+          "sha256": "28afa689447b9534183c26b55cf57bf0d13aefebc169cef0e38170866e624e25",
+          "sourceRows": [
+            11,
+            18
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        },
+        {
+          "side": 2,
+          "phase": "prefix",
+          "file": "fx_42/palette_2D/side2_prefix_map256x64.png",
+          "bbox": [
+            160,
+            18,
+            255,
+            46
+          ],
+          "sha256": "c3eb6ea7027f304b553bedf07525f60c6bce523f2eabd5ce0d6252ea3eaf398c",
+          "sourceRows": [
+            1,
+            8
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        },
+        {
+          "side": 2,
+          "phase": "result",
+          "file": "fx_42/palette_2D/side2_result_map256x64.png",
+          "bbox": [
+            160,
+            18,
+            223,
+            46
+          ],
+          "sha256": "a134be52a428e9f5ac3c30d23c9b3957e33fe832b9030d571d445ee469a6568d",
+          "sourceRows": [
+            11,
+            18
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        }
+      ]
+    },
+    {
+      "fxResource": 69,
+      "fxHex": "0x45",
+      "palette": 45,
+      "paletteHex": "0x2D",
+      "prefixOperand": 0,
+      "prefixRows": [
+        1,
+        8
+      ],
+      "resultOperand": 10,
+      "resultRows": [
+        11,
+        18
+      ],
+      "cards": [
+        {
+          "cardId": 49,
+          "name": "Telekinesis",
+          "category": "BEAM",
+          "handler": "0x03"
+        }
+      ],
+      "images": [
+        {
+          "side": 1,
+          "phase": "prefix",
+          "file": "fx_45/palette_2D/side1_prefix_map256x64.png",
+          "bbox": [
+            161,
+            0,
+            256,
+            30
+          ],
+          "sha256": "c72c60469f78e9eed135b594b7dfce1c51b130bc919c7dcfc5a7037de1961387",
+          "sourceRows": [
+            1,
+            8
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        },
+        {
+          "side": 1,
+          "phase": "result",
+          "file": "fx_45/palette_2D/side1_result_map256x64.png",
+          "bbox": [
+            208,
+            16,
+            254,
+            47
+          ],
+          "sha256": "11002718814e95915b1829791260519366cf3793024eacc8d49a245efebd3355",
+          "sourceRows": [
+            11,
+            18
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        },
+        {
+          "side": 2,
+          "phase": "prefix",
+          "file": "fx_45/palette_2D/side2_prefix_map256x64.png",
+          "bbox": [
+            160,
+            0,
+            255,
+            30
+          ],
+          "sha256": "43861f42e3a5f62ef21a530977948d0c44c85cef91165df44992693676092265",
+          "sourceRows": [
+            1,
+            8
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        },
+        {
+          "side": 2,
+          "phase": "result",
+          "file": "fx_45/palette_2D/side2_result_map256x64.png",
+          "bbox": [
+            162,
+            16,
+            208,
+            47
+          ],
+          "sha256": "aeb3b2dc7a32ca9bc15bb54ce0e76c4b3624782bcb7f1c93b261ffb0aec87c5b",
+          "sourceRows": [
+            11,
+            18
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        }
+      ]
+    },
+    {
+      "fxResource": 69,
+      "fxHex": "0x45",
+      "palette": 47,
+      "paletteHex": "0x2F",
+      "prefixOperand": 0,
+      "prefixRows": [
+        1,
+        8
+      ],
+      "resultOperand": 10,
+      "resultRows": [
+        11,
+        18
+      ],
+      "cards": [
+        {
+          "cardId": 82,
+          "name": "Sweet Beam",
+          "category": "BEAM",
+          "handler": "0x02"
+        }
+      ],
+      "images": [
+        {
+          "side": 1,
+          "phase": "prefix",
+          "file": "fx_45/palette_2F/side1_prefix_map256x64.png",
+          "bbox": [
+            161,
+            0,
+            256,
+            30
+          ],
+          "sha256": "83461e34346917c9d78d62a7f585fbe457d0f4666aae48cea7dad396d6bca876",
+          "sourceRows": [
+            1,
+            8
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        },
+        {
+          "side": 1,
+          "phase": "result",
+          "file": "fx_45/palette_2F/side1_result_map256x64.png",
+          "bbox": [
+            208,
+            16,
+            254,
+            47
+          ],
+          "sha256": "5546a8859da81fdb8965b6062d5401bb713d082985a71a83f948064d241f245c",
+          "sourceRows": [
+            11,
+            18
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        },
+        {
+          "side": 2,
+          "phase": "prefix",
+          "file": "fx_45/palette_2F/side2_prefix_map256x64.png",
+          "bbox": [
+            160,
+            0,
+            255,
+            30
+          ],
+          "sha256": "b79fd2cec7ddcd2d2bfe420b462731d750e5488fcc21fb0ccf86484837c7cf6a",
+          "sourceRows": [
+            1,
+            8
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        },
+        {
+          "side": 2,
+          "phase": "result",
+          "file": "fx_45/palette_2F/side2_result_map256x64.png",
+          "bbox": [
+            162,
+            16,
+            208,
+            47
+          ],
+          "sha256": "8606dcc744588d01d2b34a8f83eb8a5a7aa489ae7704be06902944e592333349",
+          "sourceRows": [
+            11,
+            18
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        }
+      ]
+    },
+    {
+      "fxResource": 72,
+      "fxHex": "0x48",
+      "palette": 47,
+      "paletteHex": "0x2F",
+      "prefixOperand": 2,
+      "prefixRows": [
+        3,
+        10
+      ],
+      "resultOperand": 10,
+      "resultRows": [
+        11,
+        18
+      ],
+      "cards": [
+        {
+          "cardId": 56,
+          "name": "Crasher Ball",
+          "category": "BEAM",
+          "handler": "0x07"
+        }
+      ],
+      "images": [
+        {
+          "side": 1,
+          "phase": "prefix",
+          "file": "fx_48/palette_2F/side1_prefix_map256x64.png",
+          "bbox": [
+            200,
+            3,
+            224,
+            29
+          ],
+          "sha256": "3b67da6d17086d308abb072bcbdc79b79dffab11cb8ae27f423c3a5918f580ec",
+          "sourceRows": [
+            3,
+            10
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        },
+        {
+          "side": 1,
+          "phase": "result",
+          "file": "fx_48/palette_2F/side1_result_map256x64.png",
+          "bbox": [
+            232,
+            19,
+            256,
+            45
+          ],
+          "sha256": "203ab90f36a10a5d5b8992eddc23d8f50e2bc65f690d0f3e7aea4f47b5868562",
+          "sourceRows": [
+            11,
+            18
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        },
+        {
+          "side": 2,
+          "phase": "prefix",
+          "file": "fx_48/palette_2F/side2_prefix_map256x64.png",
+          "bbox": [
+            192,
+            3,
+            216,
+            29
+          ],
+          "sha256": "8b11f7af437a1821b2feb6d0e9d9f40c7b97404e398708c8c9f80fd4c49df098",
+          "sourceRows": [
+            3,
+            10
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        },
+        {
+          "side": 2,
+          "phase": "result",
+          "file": "fx_48/palette_2F/side2_result_map256x64.png",
+          "bbox": [
+            160,
+            19,
+            184,
+            45
+          ],
+          "sha256": "5459137a21e0755d0589fa4eb90b67178594dba4a7cbfbc8ee81b86aa2fe11f5",
+          "sourceRows": [
+            11,
+            18
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        }
+      ]
+    },
+    {
+      "fxResource": 75,
+      "fxHex": "0x4B",
+      "palette": 45,
+      "paletteHex": "0x2D",
+      "prefixOperand": 0,
+      "prefixRows": [
+        1,
+        8
+      ],
+      "resultOperand": 10,
+      "resultRows": [
+        11,
+        18
+      ],
+      "cards": [
+        {
+          "cardId": 69,
+          "name": "Rocket Punch",
+          "category": "DAMAGE",
+          "handler": "0x05"
+        }
+      ],
+      "images": [
+        {
+          "side": 1,
+          "phase": "prefix",
+          "file": "fx_4B/palette_2D/side1_prefix_map256x64.png",
+          "bbox": [
+            161,
+            18,
+            199,
+            46
+          ],
+          "sha256": "1369172568243ac6f2802f0d925fba3eef02408e66e99ea5e36712d4172f804b",
+          "sourceRows": [
+            1,
+            8
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        },
+        {
+          "side": 1,
+          "phase": "result",
+          "file": "fx_4B/palette_2D/side1_result_map256x64.png",
+          "bbox": [
+            217,
+            18,
+            255,
+            46
+          ],
+          "sha256": "4ba7b02a0ebec7334216d8773ab455c3fad1b3104cc03c429c655ca30e00edee",
+          "sourceRows": [
+            11,
+            18
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        },
+        {
+          "side": 2,
+          "phase": "prefix",
+          "file": "fx_4B/palette_2D/side2_prefix_map256x64.png",
+          "bbox": [
+            217,
+            18,
+            255,
+            46
+          ],
+          "sha256": "8cc1119e9775975428fc9c3a62cb814661d54e9a601af935f376a51045927992",
+          "sourceRows": [
+            1,
+            8
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        },
+        {
+          "side": 2,
+          "phase": "result",
+          "file": "fx_4B/palette_2D/side2_result_map256x64.png",
+          "bbox": [
+            161,
+            18,
+            199,
+            46
+          ],
+          "sha256": "6645e2c5120e6c870dc5282c78ffba97f93266b436efb2ff32051f3052e68e45",
+          "sourceRows": [
+            11,
+            18
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        }
+      ]
+    },
+    {
+      "fxResource": 78,
+      "fxHex": "0x4E",
+      "palette": 47,
+      "paletteHex": "0x2F",
+      "prefixOperand": 0,
+      "prefixRows": [
+        1,
+        8
+      ],
+      "resultOperand": 10,
+      "resultRows": [
+        11,
+        18
+      ],
+      "cards": [
+        {
+          "cardId": 80,
+          "name": "Potbelly Atk",
+          "category": "DAMAGE",
+          "handler": "0x06"
+        }
+      ],
+      "images": [
+        {
+          "side": 1,
+          "phase": "prefix",
+          "file": "fx_4E/palette_2F/side1_prefix_map256x64.png",
+          "bbox": [
+            160,
+            24,
+            223,
+            40
+          ],
+          "sha256": "29256246dba7dfe37f45e1f757bb0dc6718e127622c23a6dd7d5efde232608bc",
+          "sourceRows": [
+            1,
+            8
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        },
+        {
+          "side": 1,
+          "phase": "result",
+          "file": "fx_4E/palette_2F/side1_result_map256x64.png",
+          "bbox": [
+            192,
+            24,
+            255,
+            40
+          ],
+          "sha256": "6df048271c32c9b15b410789592289574ff62e130d8b9345d43257efa4cc3893",
+          "sourceRows": [
+            11,
+            18
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        },
+        {
+          "side": 2,
+          "phase": "prefix",
+          "file": "fx_4E/palette_2F/side2_prefix_map256x64.png",
+          "bbox": [
+            193,
+            24,
+            256,
+            40
+          ],
+          "sha256": "94613f478584cfe7919e7c83d93772baa6bd5054396a50b622139f008d3fb034",
+          "sourceRows": [
+            1,
+            8
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        },
+        {
+          "side": 2,
+          "phase": "result",
+          "file": "fx_4E/palette_2F/side2_result_map256x64.png",
+          "bbox": [
+            161,
+            24,
+            224,
+            40
+          ],
+          "sha256": "878a65068ee1f6a9dabee5e1d56c50aca9126c299c675aaf11f22e378487984e",
+          "sourceRows": [
+            11,
+            18
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        }
+      ]
+    },
+    {
+      "fxResource": 81,
+      "fxHex": "0x51",
+      "palette": 46,
+      "paletteHex": "0x2E",
+      "prefixOperand": 0,
+      "prefixRows": [
+        1,
+        8
+      ],
+      "resultOperand": 10,
+      "resultRows": [
+        11,
+        18
+      ],
+      "cards": [
+        {
+          "cardId": 62,
+          "name": "Body Change",
+          "category": "BEAM",
+          "handler": "0x03"
+        }
+      ],
+      "images": [
+        {
+          "side": 1,
+          "phase": "prefix",
+          "file": "fx_51/palette_2E/side1_prefix_map256x64.png",
+          "bbox": [
+            161,
+            1,
+            256,
+            63
+          ],
+          "sha256": "4f05815ab3422d789a7c6c855693b4e22b417f2ee476eb417b490d9097aecf3f",
+          "sourceRows": [
+            1,
+            8
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        },
+        {
+          "side": 1,
+          "phase": "result",
+          "file": "fx_51/palette_2E/side1_result_map256x64.png",
+          "bbox": [
+            186,
+            4,
+            255,
+            60
+          ],
+          "sha256": "565a2c8c5b8b472855711c30e25c72d757eab055a8a4ad8171d3ac9650da9bee",
+          "sourceRows": [
+            11,
+            18
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        },
+        {
+          "side": 2,
+          "phase": "prefix",
+          "file": "fx_51/palette_2E/side2_prefix_map256x64.png",
+          "bbox": [
+            160,
+            1,
+            255,
+            63
+          ],
+          "sha256": "8fd9994b20dae06ce684162aa8090c586cf1f63fc4503bd127b8bc872770d99d",
+          "sourceRows": [
+            1,
+            8
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        },
+        {
+          "side": 2,
+          "phase": "result",
+          "file": "fx_51/palette_2E/side2_result_map256x64.png",
+          "bbox": [
+            161,
+            4,
+            230,
+            60
+          ],
+          "sha256": "ec0089626ee00537af50673a845420ef7ff9679bd7bb0cd5ce34353f951decfd",
+          "sourceRows": [
+            11,
+            18
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        }
+      ]
+    },
+    {
+      "fxResource": 84,
+      "fxHex": "0x54",
+      "palette": 45,
+      "paletteHex": "0x2D",
+      "prefixOperand": 2,
+      "prefixRows": [
+        3,
+        10
+      ],
+      "resultOperand": 10,
+      "resultRows": [
+        11,
+        18
+      ],
+      "cards": [
+        {
+          "cardId": 64,
+          "name": "Super E-Ball",
+          "category": "BEAM",
+          "handler": "0x07"
+        }
+      ],
+      "images": [
+        {
+          "side": 1,
+          "phase": "prefix",
+          "file": "fx_54/palette_2D/side1_prefix_map256x64.png",
+          "bbox": [
+            177,
+            0,
+            232,
+            48
+          ],
+          "sha256": "a38502d2007259862a452f161136952e20da71699c41b6df9ab5640288785634",
+          "sourceRows": [
+            3,
+            10
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        },
+        {
+          "side": 1,
+          "phase": "result",
+          "file": "fx_54/palette_2D/side1_result_map256x64.png",
+          "bbox": [
+            201,
+            0,
+            256,
+            64
+          ],
+          "sha256": "f925afe222b4105f7f5ab3d283c5d375ad0424f3a602c5bf04410f5133fb8317",
+          "sourceRows": [
+            11,
+            18
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        },
+        {
+          "side": 2,
+          "phase": "prefix",
+          "file": "fx_54/palette_2D/side2_prefix_map256x64.png",
+          "bbox": [
+            184,
+            0,
+            239,
+            48
+          ],
+          "sha256": "686de2b3a839d8b4bfbcebab14c99efbffe8021724c5341f9c81e3da1fa94f8f",
+          "sourceRows": [
+            3,
+            10
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        },
+        {
+          "side": 2,
+          "phase": "result",
+          "file": "fx_54/palette_2D/side2_result_map256x64.png",
+          "bbox": [
+            160,
+            0,
+            215,
+            64
+          ],
+          "sha256": "ea045c54a21c451c74c65832f5d0dc8cc5445234715d00be7265b9239cbee95f",
+          "sourceRows": [
+            11,
+            18
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        }
+      ]
+    },
+    {
+      "fxResource": 90,
+      "fxHex": "0x5A",
+      "palette": 44,
+      "paletteHex": "0x2C",
+      "prefixOperand": 2,
+      "prefixRows": [
+        3,
+        10
+      ],
+      "resultOperand": 10,
+      "resultRows": [
+        11,
+        18
+      ],
+      "cards": [
+        {
+          "cardId": 24,
+          "name": "Spirit Bomb",
+          "category": "BEAM",
+          "handler": "0x07"
+        }
+      ],
+      "images": [
+        {
+          "side": 1,
+          "phase": "prefix",
+          "file": "fx_5A/palette_2C/side1_prefix_map256x64.png",
+          "bbox": [
+            176,
+            0,
+            239,
+            47
+          ],
+          "sha256": "a781eacb606b3e0fa23d292688552d923b5cdfefa518ec047c8d09c1e2f84bf9",
+          "sourceRows": [
+            3,
+            10
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        },
+        {
+          "side": 1,
+          "phase": "result",
+          "file": "fx_5A/palette_2C/side1_result_map256x64.png",
+          "bbox": [
+            192,
+            0,
+            255,
+            63
+          ],
+          "sha256": "76ce01fd001f8547a80744c69474c394ef573627bf6815ac66c5d137c808bc52",
+          "sourceRows": [
+            11,
+            18
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        },
+        {
+          "side": 2,
+          "phase": "prefix",
+          "file": "fx_5A/palette_2C/side2_prefix_map256x64.png",
+          "bbox": [
+            177,
+            0,
+            240,
+            47
+          ],
+          "sha256": "71948dec987c8eef6f79dabb8c78e1870afc71d1e8a3c0fc4d028989c2753c0e",
+          "sourceRows": [
+            3,
+            10
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        },
+        {
+          "side": 2,
+          "phase": "result",
+          "file": "fx_5A/palette_2C/side2_result_map256x64.png",
+          "bbox": [
+            161,
+            0,
+            224,
+            63
+          ],
+          "sha256": "7de862f6c66d9fa6ab9cd7c2a06529999a9f6bf8736be9e8c3ffadaaf975f424",
+          "sourceRows": [
+            11,
+            18
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        }
+      ]
+    },
+    {
+      "fxResource": 99,
+      "fxHex": "0x63",
+      "palette": 44,
+      "paletteHex": "0x2C",
+      "prefixOperand": 0,
+      "prefixRows": [
+        1,
+        8
+      ],
+      "resultOperand": 10,
+      "resultRows": [
+        11,
+        18
+      ],
+      "cards": [
+        {
+          "cardId": 40,
+          "name": "S.G.K.Atk.",
+          "category": "BEAM",
+          "handler": "0x05"
+        }
+      ],
+      "images": [
+        {
+          "side": 1,
+          "phase": "prefix",
+          "file": "fx_63/palette_2C/side1_prefix_map256x64.png",
+          "bbox": [
+            161,
+            20,
+            215,
+            43
+          ],
+          "sha256": "a50fdaf60ceb66fe2dd4c174f652279ecab536bec1d3a61193da82a9df8f996d",
+          "sourceRows": [
+            1,
+            8
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        },
+        {
+          "side": 1,
+          "phase": "result",
+          "file": "fx_63/palette_2C/side1_result_map256x64.png",
+          "bbox": [
+            201,
+            20,
+            255,
+            43
+          ],
+          "sha256": "3c76f22f2d4439f5e40e845c8ce4058501468d24cd90db4cc89dde899dbabdbe",
+          "sourceRows": [
+            11,
+            18
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        },
+        {
+          "side": 2,
+          "phase": "prefix",
+          "file": "fx_63/palette_2C/side2_prefix_map256x64.png",
+          "bbox": [
+            201,
+            20,
+            255,
+            43
+          ],
+          "sha256": "10364bc95e32b7003cf29ca80d78587c08793fb7ac25c83570c83a0231ce619c",
+          "sourceRows": [
+            1,
+            8
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        },
+        {
+          "side": 2,
+          "phase": "result",
+          "file": "fx_63/palette_2C/side2_result_map256x64.png",
+          "bbox": [
+            161,
+            20,
+            215,
+            43
+          ],
+          "sha256": "f5e479d8f03c7146f49bb2116115b79163f4e57b79e40484489ff0577c6e384d",
+          "sourceRows": [
+            11,
+            18
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        }
+      ]
+    },
+    {
+      "fxResource": 108,
+      "fxHex": "0x6C",
+      "palette": 44,
+      "paletteHex": "0x2C",
+      "prefixOperand": 0,
+      "prefixRows": [
+        1,
+        8
+      ],
+      "resultOperand": 10,
+      "resultRows": [
+        11,
+        18
+      ],
+      "cards": [
+        {
+          "cardId": 41,
+          "name": "V-ball Crash",
+          "category": "DAMAGE",
+          "handler": "0x0C"
+        }
+      ],
+      "images": [
+        {
+          "side": 1,
+          "phase": "prefix",
+          "file": "fx_6C/palette_2C/side1_prefix_map256x64.png",
+          "bbox": [
+            160,
+            17,
+            208,
+            47
+          ],
+          "sha256": "bec1939a88195d503db78a67a352fe17a393614d3f311d7a395afe5e670218ab",
+          "sourceRows": [
+            1,
+            8
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        },
+        {
+          "side": 1,
+          "phase": "result",
+          "file": "fx_6C/palette_2C/side1_result_map256x64.png",
+          "bbox": [
+            208,
+            17,
+            256,
+            47
+          ],
+          "sha256": "9eb641aa5e1c69bf3a28e70e593251ccf1653999a16aaec16aed7502aa1d2205",
+          "sourceRows": [
+            11,
+            18
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        },
+        {
+          "side": 2,
+          "phase": "prefix",
+          "file": "fx_6C/palette_2C/side2_prefix_map256x64.png",
+          "bbox": [
+            208,
+            17,
+            256,
+            47
+          ],
+          "sha256": "54108b1dc4c85a9501a62bac25a12d2d7086ef6228c0629a9581b23774ab98f2",
+          "sourceRows": [
+            1,
+            8
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        },
+        {
+          "side": 2,
+          "phase": "result",
+          "file": "fx_6C/palette_2C/side2_result_map256x64.png",
+          "bbox": [
+            160,
+            17,
+            208,
+            47
+          ],
+          "sha256": "0f36c0189e80c7a4a76b69319450be65b50f7e1f1b46b9376ef14f180ee90579",
+          "sourceRows": [
+            11,
+            18
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        }
+      ]
+    },
+    {
+      "fxResource": 111,
+      "fxHex": "0x6F",
+      "palette": 46,
+      "paletteHex": "0x2E",
+      "prefixOperand": 0,
+      "prefixRows": [
+        1,
+        8
+      ],
+      "resultOperand": 10,
+      "resultRows": [
+        11,
+        18
+      ],
+      "cards": [
+        {
+          "cardId": 58,
+          "name": "P.Comet Z",
+          "category": "DAMAGE",
+          "handler": "0x0E"
+        }
+      ],
+      "images": [
+        {
+          "side": 1,
+          "phase": "prefix",
+          "file": "fx_6F/palette_2E/side1_prefix_map256x64.png",
+          "bbox": [
+            160,
+            0,
+            223,
+            63
+          ],
+          "sha256": "df23b4bc6657d3cc1010756d2694d3b0a81693cc7b96e79d5ff127a773e4ad0e",
+          "sourceRows": [
+            1,
+            8
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        },
+        {
+          "side": 1,
+          "phase": "result",
+          "file": "fx_6F/palette_2E/side1_result_map256x64.png",
+          "bbox": [
+            192,
+            0,
+            255,
+            63
+          ],
+          "sha256": "82085aa2be4fb349477d04d17998bddcf7b2a3958b4fd009c84f339c53cdcc00",
+          "sourceRows": [
+            11,
+            18
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        },
+        {
+          "side": 2,
+          "phase": "prefix",
+          "file": "fx_6F/palette_2E/side2_prefix_map256x64.png",
+          "bbox": [
+            193,
+            0,
+            256,
+            63
+          ],
+          "sha256": "4fa956ea073e015d74c9b6edbf49801f64e1ffd214d317495483d5a1e2300262",
+          "sourceRows": [
+            1,
+            8
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        },
+        {
+          "side": 2,
+          "phase": "result",
+          "file": "fx_6F/palette_2E/side2_result_map256x64.png",
+          "bbox": [
+            161,
+            0,
+            224,
+            63
+          ],
+          "sha256": "7891ea9d26b517798a33d61e506a4c57110d35ba81e51fc8ba808fcde3b69525",
+          "sourceRows": [
+            11,
+            18
+          ],
+          "mapSize": [
+            256,
+            64
+          ]
+        }
+      ]
+    }
+  ]
+}

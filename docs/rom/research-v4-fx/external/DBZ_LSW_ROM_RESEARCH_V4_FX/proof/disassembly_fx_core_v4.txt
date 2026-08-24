@@ -1,0 +1,461 @@
+=== Bank00:$2B30 FX accessor ===
+2B30  3E 11       LD A,$11
+2B32  CD 9B 0F    CALL $0F9B
+2B35  CD 77 2A    CALL $2A77
+2B38  11 07 00    LD DE,$0007
+2B3B  19          ADD HL,DE
+2B3C  06 65       LD B,$65
+2B3E  2A          LD A,(HL+)
+2B3F  4E          LD C,(HL)
+2B40  FE FF       CP $FF
+2B42  28 04       JR Z,$2B48 (+4)
+2B44  FE 1E       CP $1E
+2B46  30 05       JR NC,$2B4D (+5)
+2B48  5F          LD E,A
+2B49  CD B6 0F    CALL $0FB6
+2B4C  C9          RET
+2B4D  D6 1E       SUB $1E
+2B4F  04          INC B
+2B50  18 F2       JR $2B44 (-14)
+2B52  3E 11       LD A,$11
+2B54  CD 9B 0F    CALL $0F9B
+2B57  CD 77 2A    CALL $2A77
+=== Bank00:$3421 FX setup / $345A window copy ===
+3421  EA 76 CB    LD ($CB76),A
+3424  FE 01       CP $01
+3426  20 07       JR NZ,$342F (+7)
+3428  7B          LD A,E
+3429  3C          INC A
+342A  EA 75 CB    LD ($CB75),A
+342D  18 06       JR $3435 (+6)
+342F  7B          LD A,E
+3430  3C          INC A
+3431  3C          INC A
+3432  EA 75 CB    LD ($CB75),A
+3435  16 00       LD D,$00
+3437  78          LD A,B
+3438  EA 74 CB    LD ($CB74),A
+343B  C5          PUSH BC
+343C  78          LD A,B
+343D  CD 66 12    CALL $1266
+3440  0E 01       LD C,$01
+3442  21 00 88    LD HL,$8800
+3445  CD 1D 05    CALL $051D
+3448  D1          POP DE
+3449  16 00       LD D,$00
+344B  06 04       LD B,$04
+344D  CD CA 36    CALL $36CA
+3450  01 10 00    LD BC,$0010
+3453  11 FF 7F    LD DE,$7FFF
+3456  CD F4 06    CALL $06F4
+3459  C9          RET
+345A  21 F9 C0    LD HL,$C0F9
+345D  3E 04       LD A,$04
+345F  22          LD (HL+),A
+3460  AF          XOR A
+3461  22          LD (HL+),A
+3462  3E 08       LD A,$08
+3464  22          LD (HL+),A
+3465  21 FD C0    LD HL,$C0FD
+3468  34          INC (HL)
+3469  FA 76 CB    LD A,($CB76)
+346C  CB 3F       SRL A
+346E  5F          LD E,A
+346F  16 00       LD D,$00
+3471  3E 65       LD A,$65
+3473  CD 66 12    CALL $1266
+3476  3E 65       LD A,$65
+3478  CD 9B 0F    CALL $0F9B
+347B  CD F2 0E    CALL $0EF2
+347E  CD B6 0F    CALL $0FB6
+3481  FA 75 CB    LD A,($CB75)
+3484  5F          LD E,A
+3485  16 00       LD D,$00
+3487  FA 74 CB    LD A,($CB74)
+348A  CD 66 12    CALL $1266
+348D  FA 74 CB    LD A,($CB74)
+3490  CD 9B 0F    CALL $0F9B
+3493  CD C9 0E    CALL $0EC9
+3496  CD B6 0F    CALL $0FB6
+3499  C9          RET
+349A  CD D5 2F    CALL $2FD5
+=== Bank00:$0EC9/$0EF2 tilemap copy ===
+0EC9  D5          PUSH DE
+0ECA  21 00 98    LD HL,$9800
+0ECD  CD 85 06    CALL $0685
+0ED0  5D          LD E,L
+0ED1  54          LD D,H
+0ED2  06 00       LD B,$00
+0ED4  CD B0 10    CALL $10B0
+0ED7  D1          POP DE
+0ED8  FA FD C0    LD A,($C0FD)
+0EDB  6F          LD L,A
+0EDC  26 00       LD H,$00
+0EDE  29          ADD HL,HL
+0EDF  29          ADD HL,HL
+0EE0  29          ADD HL,HL
+0EE1  29          ADD HL,HL
+0EE2  29          ADD HL,HL
+0EE3  19          ADD HL,DE
+0EE4  FA FB C0    LD A,($C0FB)
+0EE7  CB 27       SLA A
+0EE9  EA 16 C2    LD ($C216),A
+0EEC  5D          LD E,L
+0EED  54          LD D,H
+0EEE  CD CF 10    CALL $10CF
+0EF1  C9          RET
+0EF2  D5          PUSH DE
+0EF3  21 00 98    LD HL,$9800
+0EF6  CD 85 06    CALL $0685
+0EF9  5D          LD E,L
+0EFA  54          LD D,H
+0EFB  06 01       LD B,$01
+0EFD  CD B0 10    CALL $10B0
+0F00  D1          POP DE
+0F01  FA FD C0    LD A,($C0FD)
+0F04  6F          LD L,A
+0F05  26 00       LD H,$00
+0F07  29          ADD HL,HL
+0F08  29          ADD HL,HL
+0F09  29          ADD HL,HL
+0F0A  29          ADD HL,HL
+0F0B  29          ADD HL,HL
+0F0C  19          ADD HL,DE
+0F0D  FA FB C0    LD A,($C0FB)
+0F10  CB 27       SLA A
+0F12  EA 16 C2    LD ($C216),A
+0F15  5D          LD E,L
+0F16  54          LD D,H
+0F17  CD CF 10    CALL $10CF
+0F1A  C9          RET
+0F1B  D5          PUSH DE
+0F1C  21 00 98    LD HL,$9800
+=== Bank00:$36CA BG palette ===
+36CA  3E 30       LD A,$30
+36CC  CD 9B 0F    CALL $0F9B
+36CF  6B          LD L,E
+36D0  62          LD H,D
+36D1  29          ADD HL,HL
+36D2  29          ADD HL,HL
+36D3  29          ADD HL,HL
+36D4  11 00 6E    LD DE,$6E00
+36D7  19          ADD HL,DE
+36D8  5D          LD E,L
+36D9  54          LD D,H
+36DA  0E 01       LD C,$01
+36DC  CD 3B 07    CALL $073B
+36DF  CD 3F 07    CALL $073F
+36E2  CD B6 0F    CALL $0FB6
+36E5  C9          RET
+=== Bank00:$0737/$073B OBJ/BG palette buffers ===
+0737  21 40 C6    LD HL,$C640
+073A  C9          RET
+073B  21 00 C6    LD HL,$C600
+073E  C9          RET
+073F  C5          PUSH BC
+0740  CD 7F 07    CALL $077F
+0743  CB 21       SLA C
+0745  CD E8 0F    CALL $0FE8
+0748  C1          POP BC
+0749  C9          RET
+074A  D5          PUSH DE
+074B  FA 17 C4    LD A,($C417)
+=== Bank7E:$71CA opcode 0C ===
+71CA  7E          LD A,(HL)
+71CB  EA FD C0    LD ($C0FD),A
+71CE  CD 5A 34    CALL $345A
+71D1  CD 6B 72    CALL $726B
+71D4  C9          RET
+=== Bank7E:$733C opcode 0C builder ===
+733C  CD 57 3E    CALL $3E57
+733F  E5          PUSH HL
+7340  CD 64 3E    CALL $3E64
+7343  3E 0C       LD A,$0C
+7345  22          LD (HL+),A
+7346  7B          LD A,E
+7347  22          LD (HL+),A
+7348  E1          POP HL
+7349  34          INC (HL)
+734A  C9          RET
+734B  CD 57 3E    CALL $3E57
+=== Bank00:$3966 selector + screen params ===
+3966  3E 30       LD A,$30
+3968  CD 9B 0F    CALL $0F9B
+396B  CB 23       SLA E
+396D  CB 12       RL D
+396F  21 00 69    LD HL,$6900
+3972  19          ADD HL,DE
+3973  2A          LD A,(HL+)
+3974  5F          LD E,A
+3975  56          LD D,(HL)
+3976  21 00 69    LD HL,$6900
+3979  19          ADD HL,DE
+397A  E5          PUSH HL
+397B  CD 8C 3B    CALL $3B8C
+397E  CD 90 2B    CALL $2B90
+3981  CD 65 2B    CALL $2B65
+3984  E1          POP HL
+3985  2A          LD A,(HL+)
+3986  BB          CP E
+3987  28 05       JR Z,$398E (+5)
+3989  23          INC HL
+398A  23          INC HL
+398B  23          INC HL
+398C  18 F7       JR $3985 (-9)
+398E  2A          LD A,(HL+)
+398F  EA C7 C3    LD ($C3C7),A
+3992  2A          LD A,(HL+)
+3993  EA D0 C2    LD ($C2D0),A
+3996  FA 76 CB    LD A,($CB76)
+3999  FE 01       CP $01
+399B  28 0C       JR Z,$39A9 (+12)
+399D  2A          LD A,(HL+)
+399E  2F          CPL
+399F  3C          INC A
+39A0  C6 80       ADD A $80
+39A2  EA D1 C2    LD ($C2D1),A
+39A5  CD B6 0F    CALL $0FB6
+39A8  C9          RET
+39A9  2A          LD A,(HL+)
+39AA  C6 80       ADD A $80
+39AC  EA D1 C2    LD ($C2D1),A
+39AF  CD B6 0F    CALL $0FB6
+39B2  C9          RET
+=== Bank00:$0DA2 C405/C406 -> SCY/SCX ===
+0DA2  21 07 C4    LD HL,$C407
+0DA5  2A          LD A,(HL+)
+0DA6  47          LD B,A
+0DA7  FA 05 C4    LD A,($C405)
+0DAA  80          ADD A B
+0DAB  E0 42       LDH ($FF42),A
+0DAD  23          INC HL
+0DAE  FA 06 C4    LD A,($C406)
+0DB1  86          ADD A (HL)
+0DB2  E0 43       LDH ($FF43),A
+0DB4  C9          RET
+0DB5  21 0E C4    LD HL,$C40E
+=== Bank03 beam calls ===
+5815  FA 59 CA    LD A,($CA59)
+5818  EA 0A CA    LD ($CA0A),A
+581B  CD A4 34    CALL $34A4
+581E  CD 8C 3B    CALL $3B8C
+5821  CD 90 2B    CALL $2B90
+5824  FA 01 CC    LD A,($CC01)
+5827  EA D8 C7    LD ($C7D8),A
+582A  AF          XOR A
+582B  CD B3 39    CALL $39B3
+582E  EA 01 CC    LD ($CC01),A
+5831  EA D7 C7    LD ($C7D7),A
+5834  3E 6B       LD A,$6B
+5836  EA 02 CC    LD ($CC02),A
+5839  CD 1F 2B    CALL $2B1F
+583C  FA 59 CA    LD A,($CA59)
+583F  EA 0A CA    LD ($CA0A),A
+5842  CD 66 39    CALL $3966
+5845  AF          XOR A
+5846  EA D4 C7    LD ($C7D4),A
+5849  CD 7F 3E    CALL $3E7F
+584C  CD 6C 3F    CALL $3F6C
+584F  AF          XOR A
+5850  EA C6 C3    LD ($C3C6),A
+5853  16 06       LD D,$06
+5855  1E A0       LD E,$A0
+5857  CD BD 3E    CALL $3EBD
+585A  1E 04       LD E,$04
+585C  CD E1 3E    CALL $3EE1
+585F  FA D0 C2    LD A,($C2D0)
+5862  5F          LD E,A
+5863  FA D1 C2    LD A,($C2D1)
+5866  57          LD D,A
+5867  CD 30 3F    CALL $3F30
+586A  1E 00       LD E,$00
+586C  CD 24 3F    CALL $3F24
+586F  0E 3C       LD C,$3C
+5871  CD 18 3F    CALL $3F18
+5874  CD 8B 3E    CALL $3E8B
+5877  C3 D5 57    JP $57D5
+587A  AF          XOR A
+587B  EA D4 C7    LD ($C7D4),A
+587E  CD 5E 3E    CALL $3E5E
+5881  C0          RET NZ
+5882  3E 01       LD A,$01
+5884  01 10 03    LD BC,$0310
+5887  1E 10       LD E,$10
+5889  16 02       LD D,$02
+588B  CD F4 07    CALL $07F4
+588E  C3 D5 57    JP $57D5
+5891  CD 0C 08    CALL $080C
+5894  D8          RET C
+5895  CD 5B 03    CALL $035B
+5898  FA 59 CA    LD A,($CA59)
+589B  CB 3F       SRL A
+589D  EA C6 C3    LD ($C3C6),A
+58A0  CD 38 09    CALL $0938
+58A3  C3 D5 57    JP $57D5
+58A6  CD A5 3A    CALL $3AA5
+58A9  01 02 00    LD BC,$0002
+58AC  CD CE 2F    CALL $2FCE
+58AF  C0          RET NZ
+58B0  CD 16 3B    CALL $3B16
+58B3  AF          XOR A
+58B4  CD B3 39    CALL $39B3
+58B7  FE 3E       CP $3E
+58B9  C2 D5 57    JP NZ,$57D5
+58BC  FA 53 CA    LD A,($CA53)
+58BF  FE 00       CP $00
+58C1  28 0F       JR Z,$58D2 (+15)
+58C3  FE 02       CP $02
+58C5  28 0B       JR Z,$58D2 (+11)
+58C7  FE 04       CP $04
+58C9  28 07       JR Z,$58D2 (+7)
+58CB  AF          XOR A
+58CC  EA 7F CA    LD ($CA7F),A
+58CF  C3 D5 57    JP $57D5
+58D2  FA 5A CA    LD A,($CA5A)
+58D5  EA 0A CA    LD ($CA0A),A
+58D8  CD B8 34    CALL $34B8
+58DB  CB 38       SRL B
+58DD  CB 19       RR C
+58DF  79          LD A,C
+58E0  EA 7F CA    LD ($CA7F),A
+58E3  3E 00       LD A,$00
+58E5  EA 53 CA    LD ($CA53),A
+58E8  C3 D5 57    JP $57D5
+58EB  FA 53 CA    LD A,($CA53)
+58EE  FE 00       CP $00
+58F0  28 0E       JR Z,$5900 (+14)
+58F2  FE 01       CP $01
+58F4  28 10       JR Z,$5906 (+16)
+58F6  FE 02       CP $02
+58F8  28 12       JR Z,$590C (+18)
+58FA  3E 50       LD A,$50
+58FC  EA 06 CA    LD ($CA06),A
+58FF  C9          RET
+5900  3E 32       LD A,$32
+5902  EA 06 CA    LD ($CA06),A
+5905  C9          RET
+5906  3E 3C       LD A,$3C
+5908  EA 06 CA    LD ($CA06),A
+590B  C9          RET
+590C  3E 46       LD A,$46
+590E  EA 06 CA    LD ($CA06),A
+5911  C9          RET
+5912  3E 01       LD A,$01
+5914  EA D4 C7    LD ($C7D4),A
+5917  CD 7F 3E    CALL $3E7F
+591A  11 00 00    LD DE,$0000
+591D  06 01       LD B,$01
+591F  CD 30 3F    CALL $3F30
+5922  1E 0A       LD E,$0A
+5924  CD 24 3F    CALL $3F24
+5927  16 FA       LD D,$FA
+5929  0E 10       LD C,$10
+592B  CD 3C 3F    CALL $3F3C
+592E  CD 48 3F    CALL $3F48
+5931  FA 54 CA    LD A,($CA54)
+5934  47          LD B,A
+5935  CD 60 3F    CALL $3F60
+5938  FA 54 CA    LD A,($CA54)
+593B  C6 2B       ADD A $2B
+593D  4F          LD C,A
+593E  06 00       LD B,$00
+5940  CD 92 3E    CALL $3E92
+5943  CD 8B 3E    CALL $3E8B
+5946  C3 D5 57    JP $57D5
+5949  3E 01       LD A,$01
+594B  EA D4 C7    LD ($C7D4),A
+594E  CD 5E 3E    CALL $3E5E
+5951  C0          RET NZ
+5952  AF          XOR A
+5953  EA 06 CA    LD ($CA06),A
+5956  C9          RET
+5957  3E 01       LD A,$01
+5959  EA D4 C7    LD ($C7D4),A
+595C  CD 7F 3E    CALL $3E7F
+595F  11 00 00    LD DE,$0000
+5962  06 01       LD B,$01
+5964  CD 30 3F    CALL $3F30
+5967  1E 0A       LD E,$0A
+5969  CD 24 3F    CALL $3F24
+596C  16 FA       LD D,$FA
+596E  0E 08       LD C,$08
+5970  CD 3C 3F    CALL $3F3C
+5973  01 34 00    LD BC,$0034
+5976  CD 92 3E    CALL $3E92
+5979  16 FA       LD D,$FA
+597B  0E 1E       LD C,$1E
+597D  CD 3C 3F    CALL $3F3C
+5980  CD 48 3F    CALL $3F48
+5983  01 35 00    LD BC,$0035
+5986  CD 92 3E    CALL $3E92
+5989  CD 8B 3E    CALL $3E8B
+598C  C3 D5 57    JP $57D5
+598F  3E 01       LD A,$01
+5991  EA D4 C7    LD ($C7D4),A
+5994  CD 7F 3E    CALL $3E7F
+5997  11 00 00    LD DE,$0000
+599A  06 01       LD B,$01
+599C  CD 30 3F    CALL $3F30
+599F  1E 0A       LD E,$0A
+59A1  CD 24 3F    CALL $3F24
+59A4  16 FA       LD D,$FA
+59A6  0E 10       LD C,$10
+59A8  CD 3C 3F    CALL $3F3C
+59AB  CD 48 3F    CALL $3F48
+59AE  FA 54 CA    LD A,($CA54)
+59B1  47          LD B,A
+59B2  CD 60 3F    CALL $3F60
+59B5  FA 54 CA    LD A,($CA54)
+59B8  C6 32       ADD A $32
+59BA  4F          LD C,A
+59BB  06 00       LD B,$00
+59BD  CD 92 3E    CALL $3E92
+59C0  CD 8B 3E    CALL $3E8B
+59C3  C3 D5 57    JP $57D5
+=== Bank03 handler07 ===
+5DFE  FA 06 CA    LD A,($CA06)
+5E01  FE 14       CP $14
+5E03  28 03       JR Z,$5E08 (+3)
+5E05  C3 76 57    JP $5776
+5E08  AF          XOR A
+5E09  CD B3 39    CALL $39B3
+5E0C  EA 01 CC    LD ($CC01),A
+5E0F  EA D7 C7    LD ($C7D7),A
+5E12  3E 6B       LD A,$6B
+5E14  EA 02 CC    LD ($CC02),A
+5E17  CD 1F 2B    CALL $2B1F
+5E1A  FA 59 CA    LD A,($CA59)
+5E1D  EA 0A CA    LD ($CA0A),A
+5E20  CD 66 39    CALL $3966
+5E23  AF          XOR A
+5E24  EA D4 C7    LD ($C7D4),A
+5E27  CD 7F 3E    CALL $3E7F
+5E2A  FA D0 C2    LD A,($C2D0)
+5E2D  5F          LD E,A
+5E2E  FA D1 C2    LD A,($C2D1)
+5E31  57          LD D,A
+5E32  06 00       LD B,$00
+5E34  CD 30 3F    CALL $3F30
+5E37  1E 00       LD E,$00
+5E39  CD 6C 3F    CALL $3F6C
+5E3C  AF          XOR A
+5E3D  EA C6 C3    LD ($C3C6),A
+5E40  16 06       LD D,$06
+5E42  1E A0       LD E,$A0
+5E44  CD BD 3E    CALL $3EBD
+5E47  1E 02       LD E,$02
+5E49  CD E1 3E    CALL $3EE1
+5E4C  CD 24 3F    CALL $3F24
+5E4F  1E 04       LD E,$04
+5E51  CD E1 3E    CALL $3EE1
+5E54  CD 54 3F    CALL $3F54
+5E57  CD 48 3F    CALL $3F48
+5E5A  0E 3C       LD C,$3C
+5E5C  CD 18 3F    CALL $3F18
+5E5F  CD 8B 3E    CALL $3E8B
+5E62  21 06 CA    LD HL,$CA06
+5E65  34          INC (HL)
+5E66  C9          RET
+5E67  FA 06 CA    LD A,($CA06)
+5E6A  FE 01       CP $01
+5E6C  28 48       JR Z,$5EB6 (+72)

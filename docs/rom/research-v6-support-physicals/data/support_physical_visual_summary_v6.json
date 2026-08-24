@@ -1,0 +1,29 @@
+{
+  "rom": "/home/local-user/.openclaw/workspace/dbz-lsw-decomp/13_raw_rom/dbz-lsw-usa.gbc",
+  "romSha256": "8dab48cc81d14bcee7c73274df09cf5c4dd44c3b93d10a5a3175e04fead25dee",
+  "supportRows": 48,
+  "uniquePayloads": 48,
+  "uniqueGraphics": 48,
+  "uniqueLayouts": 46,
+  "payloadAliasGroups": [],
+  "graphicsAliasGroups": [],
+  "layoutAliasGroups": [
+    [
+      85,
+      86
+    ],
+    [
+      88,
+      89
+    ]
+  ],
+  "descriptorShapes": [
+    [
+      2,
+      30,
+      498
+    ]
+  ],
+  "loaderFormula": "bank=$6B+floor(CC01/$20), local=CC01%$20, descriptor=$4000+word[$4008+local*4]*4",
+  "cc01Indexing": "1-based card id for normal cards; Call_2A77 maps CC01=1 to Bank11:$4320"
+}

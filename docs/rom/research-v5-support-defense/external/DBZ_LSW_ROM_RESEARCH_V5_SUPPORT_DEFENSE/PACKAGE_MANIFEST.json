@@ -1,0 +1,17 @@
+{
+  "package": "DBZ_LSW_ROM_RESEARCH_V5_SUPPORT_DEFENSE",
+  "version": "V5",
+  "date": "2026-08-23",
+  "romSha256": "8dab48cc81d14bcee7c73274df09cf5c4dd44c3b93d10a5a3175e04fead25dee",
+  "scope": [
+    "Support visual FSM",
+    "Defense visual FSM",
+    "Move",
+    "AnimationSlot8",
+    "CA83/CA53",
+    "Taiyoken/Sunglasses",
+    "Stage suppression",
+    "Bank68 aux BG"
+  ],
+  "fileCountBeforeChecksums": 57
+}

@@ -1,0 +1,204 @@
+[
+  {
+    "handler": "$00/$02 common",
+    "ca06": "$01",
+    "address": "03:$63FA",
+    "ops": [
+      "select card/context",
+      "CC01=card",
+      "CALL $2C30 with C=$6B B=$03 DE=$8800"
+    ],
+    "evidence": "ROM_HANDLER_VERIFIED"
+  },
+  {
+    "handler": "$00/$02 common",
+    "ca06": "$02",
+    "address": "03:$640D",
+    "ops": [
+      "poll $2CDE(C=1)",
+      "trigger $1CC4(C=$28)"
+    ],
+    "evidence": "ROM_HANDLER_VERIFIED"
+  },
+  {
+    "handler": "$00/$02 common",
+    "ca06": "$03",
+    "address": "03:$641A",
+    "ops": [
+      "CALL $3269",
+      "WAIT helper BC=3",
+      "set CA06=$0A"
+    ],
+    "evidence": "ROM_HANDLER_VERIFIED"
+  },
+  {
+    "handler": "$00/$02 common",
+    "ca06": "$0A",
+    "address": "03:$642A",
+    "ops": [
+      "palette transition start $07F4 A=1 BC=$0038 E=$20 D=1"
+    ],
+    "evidence": "ROM_HANDLER_VERIFIED"
+  },
+  {
+    "handler": "$00/$02 common",
+    "ca06": "$0B",
+    "address": "03:$643B",
+    "ops": [
+      "poll $080C",
+      "scene $3764 C=0 DE=0",
+      "macro $19"
+    ],
+    "evidence": "ROM_HANDLER_VERIFIED"
+  },
+  {
+    "handler": "$00/$02 common",
+    "ca06": "$0C",
+    "address": "03:$6459",
+    "ops": [
+      "CALL fixed BG helper $66D1 -> Bank68:$19",
+      "when helper complete start palette transition $07F4 A=0 BC=$0360 E=$20 D=1",
+      "trigger $39CF DE=$0080"
+    ],
+    "evidence": "ROM_HANDLER_VERIFIED"
+  },
+  {
+    "handler": "$00/$02 common",
+    "ca06": "$0D",
+    "address": "03:$6477",
+    "ops": [
+      "delay helper $0821 DE=$28",
+      "poll palette transition",
+      "CB77=0"
+    ],
+    "evidence": "ROM_HANDLER_VERIFIED"
+  },
+  {
+    "handler": "$00/$02 common",
+    "ca06": "$0E",
+    "address": "03:$6487",
+    "ops": [
+      "delay helper",
+      "CB77++ until $78 (120 ticks)",
+      "palette transition start $07F4 A=1 BC=$0020 E=$10 D=2"
+    ],
+    "evidence": "ROM_HANDLER_VERIFIED"
+  },
+  {
+    "handler": "$00/$02 common",
+    "ca06": "$0F",
+    "address": "03:$64A3",
+    "ops": [
+      "delay helper",
+      "poll palette transition"
+    ],
+    "evidence": "ROM_HANDLER_VERIFIED"
+  },
+  {
+    "handler": "$00 common",
+    "ca06": "$10-$12",
+    "address": "03:$64AF-$64D7",
+    "ops": [
+      "gameplay maintenance/tail",
+      "reset CA06 at $12"
+    ],
+    "evidence": "ROM_STATIC_VERIFIED"
+  },
+  {
+    "handler": "$02",
+    "ca06": "$10",
+    "address": "03:$64D8",
+    "ops": [
+      "reset CA06 immediately instead of common tail"
+    ],
+    "evidence": "ROM_HANDLER_VERIFIED"
+  },
+  {
+    "handler": "$0B",
+    "ca06": "$0B",
+    "address": "03:$6526",
+    "ops": [
+      "poll palette transition",
+      "scene $3764 C=1 DE=1",
+      "macro $1A"
+    ],
+    "evidence": "ROM_HANDLER_VERIFIED"
+  },
+  {
+    "handler": "$0B",
+    "ca06": "$0C",
+    "address": "03:$6547",
+    "ops": [
+      "palette transition start $07F4 A=0 BC=$0340 E=$10 D=2"
+    ],
+    "evidence": "ROM_HANDLER_VERIFIED"
+  },
+  {
+    "handler": "$0B",
+    "ca06": "$0D",
+    "address": "03:$6555",
+    "ops": [
+      "branch CA53: 0->$14; nonzero->$1E"
+    ],
+    "evidence": "ROM_HANDLER_VERIFIED"
+  },
+  {
+    "handler": "$0B",
+    "ca06": "$14",
+    "address": "03:$656C",
+    "ops": [
+      "aux FX wrapper $3F60 B=0",
+      "macro $2C"
+    ],
+    "evidence": "ROM_HANDLER_VERIFIED"
+  },
+  {
+    "handler": "$0B",
+    "ca06": "$1E",
+    "address": "03:$65DF",
+    "ops": [
+      "CA7F=0",
+      "macro $34"
+    ],
+    "evidence": "ROM_HANDLER_VERIFIED"
+  },
+  {
+    "handler": "$0B",
+    "ca06": "$21",
+    "address": "03:$661E",
+    "ops": [
+      "macro $35",
+      "ROM_WAIT 60"
+    ],
+    "evidence": "ROM_HANDLER_VERIFIED"
+  },
+  {
+    "handler": "$0D",
+    "ca06": "$14",
+    "address": "03:$665C",
+    "ops": [
+      "macro $2B",
+      "trigger $1CC6 C=$42 B=$05"
+    ],
+    "evidence": "ROM_HANDLER_VERIFIED"
+  },
+  {
+    "handler": "$0D",
+    "ca06": "$15",
+    "address": "03:$6678",
+    "ops": [
+      "wait macro",
+      "reset CA06"
+    ],
+    "evidence": "ROM_HANDLER_VERIFIED"
+  },
+  {
+    "handler": "$0F",
+    "ca06": "$17-$19",
+    "address": "03:$669A-$66D0",
+    "ops": [
+      "custom late maintenance states; otherwise inherit handler $0B"
+    ],
+    "evidence": "ROM_HANDLER_VERIFIED"
+  }
+]

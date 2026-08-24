@@ -1,0 +1,17 @@
+[
+ {
+  "formId": "vegito_base",
+  "status": "SOURCE_ONLY / PROJECT_DERIVED",
+  "note": "Recolor generado por el proyecto; NO es forma física GBC. HEAD solo tiene vegito_ssj (CANONICAL candidate)."
+ },
+ {
+  "formId": "cell_custom_standing",
+  "status": "NOT_PRESENT_IN_HEAD",
+  "note": "Custom Standing Pose de Cell documentada históricamente; sin referencias en HEAD actual."
+ },
+ {
+  "formId": "piccolo_unused_sprites",
+  "status": "NOT_PRESENT_IN_HEAD",
+  "note": "Sprites Piccolo documentados como unused; sin referencias en HEAD actual."
+ }
+]

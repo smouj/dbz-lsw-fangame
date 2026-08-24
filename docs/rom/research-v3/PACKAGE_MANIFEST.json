@@ -1,0 +1,38 @@
+{
+  "packageId": "dbz-lsw-rom-research-v3",
+  "date": "2026-08-23",
+  "status": "V3_STATIC_PACKAGE_COMPLETE",
+  "source": "static ROM investigation pass reported by smouj",
+  "scope": [
+    "ActionObject physical layout",
+    "Card-to-physical-pixels animation pipeline",
+    "actorVisualProfileKey graphics bank and CGB palette role",
+    "fighter tile double buffering",
+    "Presentation VM reachability corrections",
+    "Support/Defense handler and slot semantics",
+    "CA53 result-family correction",
+    "next FXResource research front"
+  ],
+  "evidencePolicy": {
+    "doesPromoteDynamicEvidence": false,
+    "keepsAnchorsPending": true,
+    "keepsSemanticSlotBindingPending": true
+  },
+  "files": [
+    "README.md",
+    "LEDGER.md",
+    "OPEN_ITEMS.md",
+    "PACKAGE_MANIFEST.json",
+    "SHA256SUMS.txt"
+  ],
+  "relatedRepositoryDocs": [
+    "docs/rom/COMBAT_MECHANICS_ROM_CONFIRMED.md",
+    "docs/ANIMATION_RESOURCE_DECODING.md",
+    "docs/CARD_PHYSICAL_ANIMATION_COVERAGE.md",
+    "docs/ROM_DERIVED_PRESENTATION_PROFILES.md",
+    "docs/ROM_PRESENTATION_COMPILER.md",
+    "docs/STANDARD_DAMAGE_RUNTIME_CUTOVER.md",
+    "docs/BEAM_BASE_RUNTIME_CUTOVER.md"
+  ],
+  "nextFront": "FXResource -> descriptor -> graphics -> palette -> movement/lifetime"
+}

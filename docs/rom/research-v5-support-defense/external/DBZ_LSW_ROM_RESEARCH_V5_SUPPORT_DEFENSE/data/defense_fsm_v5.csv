@@ -1,0 +1,9 @@
+ca02,address,ops,evidence
+$00,01:$74FA,CALL $3408 | increment,ROM_HANDLER_VERIFIED
+$01,01:$74FF,wait $0E4D | increment,ROM_HANDLER_VERIFIED
+$02,01:$7505,CA82=0 | CA83=0 | scene $3764 C=1 DE=1 | macro $1A,ROM_HANDLER_VERIFIED
+$03-$04,01:$7526-$754B,wait/setup input panel,ROM_STATIC_VERIFIED
+$05,01:$754C,read side-specific CA55 | CA55=2 -> $1E Move | CA55=1 -> $28 Defense card | else -> $14 Guard,ROM_HANDLER_VERIFIED
+$14,01:$7577,"CA82=2 | emit CAA2 payload [CA5A,$BC,$84,$78]",ROM_HANDLER_VERIFIED
+$1E,01:$759D,CA82=3 | persist selected CA57/58 to FighterState position | select macro $29/$2A from newPosition>>1 | queue WAIT10,ROM_HANDLER_VERIFIED
+$28-$32,01:$760E-$76F0,record selected Defense card | run result/maintenance | state $32 resolves AnimationResource and installs AnimationSlot8 only; then reset,ROM_HANDLER_VERIFIED

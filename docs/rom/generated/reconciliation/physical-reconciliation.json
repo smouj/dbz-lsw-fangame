@@ -1,0 +1,746 @@
+[
+  {
+    "rom": {
+      "actorVisualProfileKey": 2,
+      "resourceId": 3,
+      "visualFrameId": 1,
+      "pixelHash": "d3b249c43afc1c8a",
+      "opaqueMaskHash": "fd3831518bd204f2"
+    },
+    "canonical": null,
+    "status": "UNRESOLVED",
+    "occurrences": [
+      {
+        "sequence": 0,
+        "frameIndex": 0,
+        "durationTicks": 3,
+        "offsetY": 0,
+        "offsetX": 2
+      },
+      {
+        "sequence": 0,
+        "frameIndex": 1,
+        "durationTicks": 2,
+        "offsetY": 0,
+        "offsetX": 3
+      },
+      {
+        "sequence": 0,
+        "frameIndex": 2,
+        "durationTicks": 60,
+        "offsetY": 0,
+        "offsetX": 3
+      },
+      {
+        "sequence": 0,
+        "frameIndex": 3,
+        "durationTicks": 2,
+        "offsetY": 0,
+        "offsetX": 2
+      },
+      {
+        "sequence": 3,
+        "frameIndex": 0,
+        "durationTicks": 3,
+        "offsetY": 0,
+        "offsetX": 4
+      },
+      {
+        "sequence": 3,
+        "frameIndex": 1,
+        "durationTicks": 2,
+        "offsetY": 0,
+        "offsetX": 5
+      },
+      {
+        "sequence": 3,
+        "frameIndex": 2,
+        "durationTicks": 60,
+        "offsetY": 0,
+        "offsetX": 5
+      },
+      {
+        "sequence": 3,
+        "frameIndex": 3,
+        "durationTicks": 2,
+        "offsetY": 0,
+        "offsetX": 4
+      }
+    ],
+    "diagnostics": [
+      "NO_PHYSICAL_MATCH"
+    ]
+  },
+  {
+    "rom": {
+      "actorVisualProfileKey": 2,
+      "resourceId": 3,
+      "visualFrameId": 3,
+      "pixelHash": "957d5c56c0ecbc10",
+      "opaqueMaskHash": "c769a42d6fe3a013"
+    },
+    "canonical": null,
+    "status": "UNRESOLVED",
+    "occurrences": [
+      {
+        "sequence": 1,
+        "frameIndex": 0,
+        "durationTicks": 3,
+        "offsetY": 0,
+        "offsetX": 2
+      },
+      {
+        "sequence": 1,
+        "frameIndex": 1,
+        "durationTicks": 2,
+        "offsetY": 0,
+        "offsetX": 3
+      },
+      {
+        "sequence": 1,
+        "frameIndex": 2,
+        "durationTicks": 60,
+        "offsetY": 0,
+        "offsetX": 3
+      },
+      {
+        "sequence": 1,
+        "frameIndex": 3,
+        "durationTicks": 2,
+        "offsetY": 0,
+        "offsetX": 2
+      }
+    ],
+    "diagnostics": [
+      "NO_PHYSICAL_MATCH"
+    ]
+  },
+  {
+    "rom": {
+      "actorVisualProfileKey": 2,
+      "resourceId": 3,
+      "visualFrameId": 5,
+      "pixelHash": "ff5b18528c1a8759",
+      "opaqueMaskHash": "2541c72152a99d78"
+    },
+    "canonical": null,
+    "status": "UNRESOLVED",
+    "occurrences": [
+      {
+        "sequence": 2,
+        "frameIndex": 0,
+        "durationTicks": 3,
+        "offsetY": 0,
+        "offsetX": 4
+      },
+      {
+        "sequence": 2,
+        "frameIndex": 1,
+        "durationTicks": 2,
+        "offsetY": 0,
+        "offsetX": 5
+      },
+      {
+        "sequence": 2,
+        "frameIndex": 2,
+        "durationTicks": 60,
+        "offsetY": 0,
+        "offsetX": 5
+      },
+      {
+        "sequence": 2,
+        "frameIndex": 3,
+        "durationTicks": 2,
+        "offsetY": 0,
+        "offsetX": 4
+      }
+    ],
+    "diagnostics": [
+      "NO_PHYSICAL_MATCH"
+    ]
+  },
+  {
+    "rom": {
+      "actorVisualProfileKey": 2,
+      "resourceId": 3,
+      "visualFrameId": 7,
+      "pixelHash": "9787ea7c0d6654b0",
+      "opaqueMaskHash": "fb198540453c33d6"
+    },
+    "canonical": null,
+    "status": "UNRESOLVED",
+    "occurrences": [
+      {
+        "sequence": 4,
+        "frameIndex": 0,
+        "durationTicks": 3,
+        "offsetY": 0,
+        "offsetX": 2
+      },
+      {
+        "sequence": 4,
+        "frameIndex": 1,
+        "durationTicks": 2,
+        "offsetY": 0,
+        "offsetX": 3
+      },
+      {
+        "sequence": 4,
+        "frameIndex": 2,
+        "durationTicks": 60,
+        "offsetY": 0,
+        "offsetX": 3
+      },
+      {
+        "sequence": 4,
+        "frameIndex": 3,
+        "durationTicks": 2,
+        "offsetY": 0,
+        "offsetX": 2
+      }
+    ],
+    "diagnostics": [
+      "NO_PHYSICAL_MATCH"
+    ]
+  },
+  {
+    "rom": {
+      "actorVisualProfileKey": 2,
+      "resourceId": 3,
+      "visualFrameId": 9,
+      "pixelHash": "7d5ce6139b5f1d3b",
+      "opaqueMaskHash": "c507b62cc9e0f4b7"
+    },
+    "canonical": null,
+    "status": "UNRESOLVED",
+    "occurrences": [
+      {
+        "sequence": 5,
+        "frameIndex": 0,
+        "durationTicks": 3,
+        "offsetY": 0,
+        "offsetX": 4
+      },
+      {
+        "sequence": 5,
+        "frameIndex": 1,
+        "durationTicks": 2,
+        "offsetY": 0,
+        "offsetX": 5
+      },
+      {
+        "sequence": 5,
+        "frameIndex": 2,
+        "durationTicks": 60,
+        "offsetY": 0,
+        "offsetX": 5
+      },
+      {
+        "sequence": 5,
+        "frameIndex": 3,
+        "durationTicks": 2,
+        "offsetY": 0,
+        "offsetX": 4
+      }
+    ],
+    "diagnostics": [
+      "NO_PHYSICAL_MATCH"
+    ]
+  },
+  {
+    "rom": {
+      "actorVisualProfileKey": 8,
+      "resourceId": 3,
+      "visualFrameId": 1,
+      "pixelHash": "37e5f504bc36e9fb",
+      "opaqueMaskHash": "575c2f0ca475e555"
+    },
+    "canonical": null,
+    "status": "UNRESOLVED",
+    "occurrences": [
+      {
+        "sequence": 0,
+        "frameIndex": 0,
+        "durationTicks": 3,
+        "offsetY": 0,
+        "offsetX": 2
+      },
+      {
+        "sequence": 0,
+        "frameIndex": 1,
+        "durationTicks": 2,
+        "offsetY": 0,
+        "offsetX": 3
+      },
+      {
+        "sequence": 0,
+        "frameIndex": 2,
+        "durationTicks": 60,
+        "offsetY": 0,
+        "offsetX": 3
+      },
+      {
+        "sequence": 0,
+        "frameIndex": 3,
+        "durationTicks": 2,
+        "offsetY": 0,
+        "offsetX": 2
+      },
+      {
+        "sequence": 3,
+        "frameIndex": 0,
+        "durationTicks": 3,
+        "offsetY": 0,
+        "offsetX": 4
+      },
+      {
+        "sequence": 3,
+        "frameIndex": 1,
+        "durationTicks": 2,
+        "offsetY": 0,
+        "offsetX": 5
+      },
+      {
+        "sequence": 3,
+        "frameIndex": 2,
+        "durationTicks": 60,
+        "offsetY": 0,
+        "offsetX": 5
+      },
+      {
+        "sequence": 3,
+        "frameIndex": 3,
+        "durationTicks": 2,
+        "offsetY": 0,
+        "offsetX": 4
+      }
+    ],
+    "diagnostics": [
+      "NO_PHYSICAL_MATCH"
+    ]
+  },
+  {
+    "rom": {
+      "actorVisualProfileKey": 8,
+      "resourceId": 3,
+      "visualFrameId": 3,
+      "pixelHash": "15583a04f7f6e62b",
+      "opaqueMaskHash": "5ef184f001a3c517"
+    },
+    "canonical": null,
+    "status": "UNRESOLVED",
+    "occurrences": [
+      {
+        "sequence": 1,
+        "frameIndex": 0,
+        "durationTicks": 3,
+        "offsetY": 0,
+        "offsetX": 2
+      },
+      {
+        "sequence": 1,
+        "frameIndex": 1,
+        "durationTicks": 2,
+        "offsetY": 0,
+        "offsetX": 3
+      },
+      {
+        "sequence": 1,
+        "frameIndex": 2,
+        "durationTicks": 60,
+        "offsetY": 0,
+        "offsetX": 3
+      },
+      {
+        "sequence": 1,
+        "frameIndex": 3,
+        "durationTicks": 2,
+        "offsetY": 0,
+        "offsetX": 2
+      }
+    ],
+    "diagnostics": [
+      "NO_PHYSICAL_MATCH"
+    ]
+  },
+  {
+    "rom": {
+      "actorVisualProfileKey": 8,
+      "resourceId": 3,
+      "visualFrameId": 5,
+      "pixelHash": "b489cee047e134d0",
+      "opaqueMaskHash": "c769937877042d6e"
+    },
+    "canonical": null,
+    "status": "UNRESOLVED",
+    "occurrences": [
+      {
+        "sequence": 2,
+        "frameIndex": 0,
+        "durationTicks": 3,
+        "offsetY": 0,
+        "offsetX": 4
+      },
+      {
+        "sequence": 2,
+        "frameIndex": 1,
+        "durationTicks": 2,
+        "offsetY": 0,
+        "offsetX": 5
+      },
+      {
+        "sequence": 2,
+        "frameIndex": 2,
+        "durationTicks": 60,
+        "offsetY": 0,
+        "offsetX": 5
+      },
+      {
+        "sequence": 2,
+        "frameIndex": 3,
+        "durationTicks": 2,
+        "offsetY": 0,
+        "offsetX": 4
+      }
+    ],
+    "diagnostics": [
+      "NO_PHYSICAL_MATCH"
+    ]
+  },
+  {
+    "rom": {
+      "actorVisualProfileKey": 8,
+      "resourceId": 3,
+      "visualFrameId": 7,
+      "pixelHash": "60e7a08a8ed3d020",
+      "opaqueMaskHash": "1cd0ef6cb27ebd13"
+    },
+    "canonical": null,
+    "status": "UNRESOLVED",
+    "occurrences": [
+      {
+        "sequence": 4,
+        "frameIndex": 0,
+        "durationTicks": 3,
+        "offsetY": 0,
+        "offsetX": 2
+      },
+      {
+        "sequence": 4,
+        "frameIndex": 1,
+        "durationTicks": 2,
+        "offsetY": 0,
+        "offsetX": 3
+      },
+      {
+        "sequence": 4,
+        "frameIndex": 2,
+        "durationTicks": 60,
+        "offsetY": 0,
+        "offsetX": 3
+      },
+      {
+        "sequence": 4,
+        "frameIndex": 3,
+        "durationTicks": 2,
+        "offsetY": 0,
+        "offsetX": 2
+      }
+    ],
+    "diagnostics": [
+      "NO_PHYSICAL_MATCH"
+    ]
+  },
+  {
+    "rom": {
+      "actorVisualProfileKey": 8,
+      "resourceId": 3,
+      "visualFrameId": 9,
+      "pixelHash": "f81f4da52cf8c21b",
+      "opaqueMaskHash": "3408e6431bc3f230"
+    },
+    "canonical": null,
+    "status": "UNRESOLVED",
+    "occurrences": [
+      {
+        "sequence": 5,
+        "frameIndex": 0,
+        "durationTicks": 3,
+        "offsetY": 0,
+        "offsetX": 4
+      },
+      {
+        "sequence": 5,
+        "frameIndex": 1,
+        "durationTicks": 2,
+        "offsetY": 0,
+        "offsetX": 5
+      },
+      {
+        "sequence": 5,
+        "frameIndex": 2,
+        "durationTicks": 60,
+        "offsetY": 0,
+        "offsetX": 5
+      },
+      {
+        "sequence": 5,
+        "frameIndex": 3,
+        "durationTicks": 2,
+        "offsetY": 0,
+        "offsetX": 4
+      }
+    ],
+    "diagnostics": [
+      "NO_PHYSICAL_MATCH"
+    ]
+  },
+  {
+    "rom": {
+      "actorVisualProfileKey": 13,
+      "resourceId": 3,
+      "visualFrameId": 1,
+      "pixelHash": "6764118b1a7bdcf5",
+      "opaqueMaskHash": "dcd418fb2f2d3beb"
+    },
+    "canonical": null,
+    "status": "UNRESOLVED",
+    "occurrences": [
+      {
+        "sequence": 0,
+        "frameIndex": 0,
+        "durationTicks": 3,
+        "offsetY": 0,
+        "offsetX": 2
+      },
+      {
+        "sequence": 0,
+        "frameIndex": 1,
+        "durationTicks": 2,
+        "offsetY": 0,
+        "offsetX": 3
+      },
+      {
+        "sequence": 0,
+        "frameIndex": 2,
+        "durationTicks": 60,
+        "offsetY": 0,
+        "offsetX": 3
+      },
+      {
+        "sequence": 0,
+        "frameIndex": 3,
+        "durationTicks": 2,
+        "offsetY": 0,
+        "offsetX": 2
+      },
+      {
+        "sequence": 3,
+        "frameIndex": 0,
+        "durationTicks": 3,
+        "offsetY": 0,
+        "offsetX": 4
+      },
+      {
+        "sequence": 3,
+        "frameIndex": 1,
+        "durationTicks": 2,
+        "offsetY": 0,
+        "offsetX": 5
+      },
+      {
+        "sequence": 3,
+        "frameIndex": 2,
+        "durationTicks": 60,
+        "offsetY": 0,
+        "offsetX": 5
+      },
+      {
+        "sequence": 3,
+        "frameIndex": 3,
+        "durationTicks": 2,
+        "offsetY": 0,
+        "offsetX": 4
+      }
+    ],
+    "diagnostics": [
+      "NO_PHYSICAL_MATCH"
+    ]
+  },
+  {
+    "rom": {
+      "actorVisualProfileKey": 13,
+      "resourceId": 3,
+      "visualFrameId": 3,
+      "pixelHash": "732a755a695d9349",
+      "opaqueMaskHash": "9185649414a9d4d4"
+    },
+    "canonical": null,
+    "status": "UNRESOLVED",
+    "occurrences": [
+      {
+        "sequence": 1,
+        "frameIndex": 0,
+        "durationTicks": 3,
+        "offsetY": 0,
+        "offsetX": 2
+      },
+      {
+        "sequence": 1,
+        "frameIndex": 1,
+        "durationTicks": 2,
+        "offsetY": 0,
+        "offsetX": 3
+      },
+      {
+        "sequence": 1,
+        "frameIndex": 2,
+        "durationTicks": 60,
+        "offsetY": 0,
+        "offsetX": 3
+      },
+      {
+        "sequence": 1,
+        "frameIndex": 3,
+        "durationTicks": 2,
+        "offsetY": 0,
+        "offsetX": 2
+      }
+    ],
+    "diagnostics": [
+      "NO_PHYSICAL_MATCH"
+    ]
+  },
+  {
+    "rom": {
+      "actorVisualProfileKey": 13,
+      "resourceId": 3,
+      "visualFrameId": 5,
+      "pixelHash": "7db3a72a01bcdbdc",
+      "opaqueMaskHash": "6ea3d46985e7c10d"
+    },
+    "canonical": null,
+    "status": "UNRESOLVED",
+    "occurrences": [
+      {
+        "sequence": 2,
+        "frameIndex": 0,
+        "durationTicks": 3,
+        "offsetY": 0,
+        "offsetX": 4
+      },
+      {
+        "sequence": 2,
+        "frameIndex": 1,
+        "durationTicks": 2,
+        "offsetY": 0,
+        "offsetX": 5
+      },
+      {
+        "sequence": 2,
+        "frameIndex": 2,
+        "durationTicks": 60,
+        "offsetY": 0,
+        "offsetX": 5
+      },
+      {
+        "sequence": 2,
+        "frameIndex": 3,
+        "durationTicks": 2,
+        "offsetY": 0,
+        "offsetX": 4
+      }
+    ],
+    "diagnostics": [
+      "NO_PHYSICAL_MATCH"
+    ]
+  },
+  {
+    "rom": {
+      "actorVisualProfileKey": 13,
+      "resourceId": 3,
+      "visualFrameId": 7,
+      "pixelHash": "fdf3e11dac3c5b00",
+      "opaqueMaskHash": "30cdc78464fb107b"
+    },
+    "canonical": null,
+    "status": "UNRESOLVED",
+    "occurrences": [
+      {
+        "sequence": 4,
+        "frameIndex": 0,
+        "durationTicks": 3,
+        "offsetY": 0,
+        "offsetX": 2
+      },
+      {
+        "sequence": 4,
+        "frameIndex": 1,
+        "durationTicks": 2,
+        "offsetY": 0,
+        "offsetX": 3
+      },
+      {
+        "sequence": 4,
+        "frameIndex": 2,
+        "durationTicks": 60,
+        "offsetY": 0,
+        "offsetX": 3
+      },
+      {
+        "sequence": 4,
+        "frameIndex": 3,
+        "durationTicks": 2,
+        "offsetY": 0,
+        "offsetX": 2
+      }
+    ],
+    "diagnostics": [
+      "NO_PHYSICAL_MATCH"
+    ]
+  },
+  {
+    "rom": {
+      "actorVisualProfileKey": 13,
+      "resourceId": 3,
+      "visualFrameId": 9,
+      "pixelHash": "02fbac7958b1fd1f",
+      "opaqueMaskHash": "7e1a84eab0d72fc2"
+    },
+    "canonical": null,
+    "status": "UNRESOLVED",
+    "occurrences": [
+      {
+        "sequence": 5,
+        "frameIndex": 0,
+        "durationTicks": 3,
+        "offsetY": 0,
+        "offsetX": 4
+      },
+      {
+        "sequence": 5,
+        "frameIndex": 1,
+        "durationTicks": 2,
+        "offsetY": 0,
+        "offsetX": 5
+      },
+      {
+        "sequence": 5,
+        "frameIndex": 2,
+        "durationTicks": 60,
+        "offsetY": 0,
+        "offsetX": 5
+      },
+      {
+        "sequence": 5,
+        "frameIndex": 3,
+        "durationTicks": 2,
+        "offsetY": 0,
+        "offsetX": 4
+      }
+    ],
+    "diagnostics": [
+      "NO_PHYSICAL_MATCH"
+    ]
+  }
+]

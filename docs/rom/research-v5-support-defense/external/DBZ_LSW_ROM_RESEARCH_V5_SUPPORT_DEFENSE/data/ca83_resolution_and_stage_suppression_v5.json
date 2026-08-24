@@ -1,0 +1,40 @@
+{
+  "cardIdDispatcher": "Bank7E:$56AA-$597B",
+  "resultResolver": {
+    "bit08": {
+      "CA53": 4,
+      "meaning": "ENERGY_ABSORB",
+      "effect": "CA7F = incoming card power"
+    },
+    "bit04": {
+      "CA53": 3,
+      "meaning": "NULLIFICATION",
+      "effect": "CA7F = 0"
+    },
+    "bit02": {
+      "CA53": 1,
+      "meaning": "AVOID",
+      "effect": "CA7F = 0"
+    },
+    "bit10": {
+      "CA53": 2,
+      "meaning": "ENDURANCE_PARTIAL",
+      "effect": "partial branch; CA53=2 is not universally MISS"
+    },
+    "bit40": {
+      "meaning": "COMMAND_STAGE_SUCCESS_BUFFER_CLEAR",
+      "effect": "for non-Damage/non-Beam resolution, zero 10 bytes $CA6A..$CA73 before downstream command/Stage processing"
+    }
+  },
+  "stageSuccessBuffer": {
+    "address": "$CA6A..$CA73",
+    "length": 10,
+    "proof": [
+      "Bank01:$6A16 initializes 10 bytes to zero",
+      "Bank01:$6AD3 writes 1 at CA6A[currentIndex] for a correct Stage input",
+      "Bank00:$3822 reads CA60[currentIndex] and CA6A[currentIndex] as command + success",
+      "Bank7E:$4EEC clears the same 10 bytes when CA83&$40"
+    ]
+  },
+  "evidence": "ROM_HANDLER_VERIFIED"
+}

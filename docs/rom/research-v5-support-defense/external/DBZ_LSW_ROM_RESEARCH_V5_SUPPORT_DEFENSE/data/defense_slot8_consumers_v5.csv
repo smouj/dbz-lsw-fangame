@@ -1,0 +1,4 @@
+site,kind,condition,action,evidence
+01:$76E8,LOAD,Defense card selected and AnimationResource != $FF,resolve card AnimationResource and install AnimationSlot8,ROM_HANDLER_VERIFIED
+03:$60B2,START,STANDARD_DAMAGE route CA83&$01 and selected Defense card != $7C Shockwave,start ActionObject with AnimationSlot8,ROM_HANDLER_VERIFIED
+03:$59FD,START,BEAM result branch CA53 not 0/1/2 (known CA53=3 nullification or 4 absorption),start ActionObject with AnimationSlot8,ROM_HANDLER_VERIFIED

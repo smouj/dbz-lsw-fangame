@@ -1,0 +1,46 @@
+{
+  "$19": {
+    "bank": "$68",
+    "descriptor": "$7A0C",
+    "tileCount": 16,
+    "tileBytes": 256,
+    "rowTable": "Bank03:$6834",
+    "rows": 7,
+    "tilesPerRow": 6,
+    "assembledSizePx": [
+      48,
+      56
+    ],
+    "bgStart": {
+      "row": 4,
+      "col": 7
+    },
+    "paletteSlot": 5,
+    "consumer": "Support handlers $00/$02 common visual path",
+    "helper": "Bank03:$66D1"
+  },
+  "$1A": {
+    "bank": "$68",
+    "descriptor": "$7B10",
+    "tileCount": 23,
+    "tileBytes": 368,
+    "rowTable": "Bank03:$688F",
+    "rows": 7,
+    "tilesPerRow": 8,
+    "assembledSizePx": [
+      64,
+      56
+    ],
+    "bgStart": {
+      "row": 4,
+      "col": 6
+    },
+    "paletteSlot": 5,
+    "consumers": [
+      "CHARA visual helper with CC15=$31",
+      "Gather Power visual helper with CC15=$33"
+    ],
+    "helper": "Bank03:$6750",
+    "note": "not the common Support resource"
+  }
+}

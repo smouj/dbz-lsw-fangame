@@ -1,0 +1,72 @@
+{
+  "package": "DBZ_LSW_ROM_RESEARCH_V6_SUPPORT_PHYSICALS",
+  "status": "V6_CLOSED / STATIC_PHYSICAL_VERIFIED",
+  "date": "2026-08-23",
+  "baseline": {
+    "v5": "CLOSED_FROZEN",
+    "doNotReopen": [
+      "category+handler",
+      "Support BG $19",
+      "BG $1A CHARA/Gather",
+      "HOLD120",
+      "Move cinematic net0",
+      "Defense slot8 preload boundary",
+      "CA83 mapping",
+      "CA53 numeric result contract"
+    ]
+  },
+  "rom": {
+    "path": "/home/local-user/.openclaw/workspace/dbz-lsw-decomp/13_raw_rom/dbz-lsw-usa.gbc",
+    "sha256": "8dab48cc81d14bcee7c73274df09cf5c4dd44c3b93d10a5a3175e04fead25dee"
+  },
+  "closedInThisSlice": [
+    "$2C30 loader bank/local formula",
+    "$1266 descriptor resolution",
+    "CC01 normal-card indexing as 1-based card id",
+    "48/48 Support descriptor matrix",
+    "descriptor physical shape: 2 layout chunks, 30 tiles, 498-byte payload",
+    "payload/graphics/layout hashes",
+    "payload aliases: none",
+    "graphics aliases: none",
+    "layout aliases: #85/#86 and #88/#89"
+  ],
+  "artifacts": {
+    "renders": "renders/ (48 main + 48 layoutrefs PNG)",
+    "contactSheets": [
+      "contact_sheets/support_all_48.png",
+      "contact_sheets/support_layout_aliases.png"
+    ],
+    "renderValidation": "RENDER_VALIDATION.json",
+    "layoutAliases": "SUPPORT_LAYOUT_ALIASES.csv",
+    "palettePath": "SUPPORT_PALETTE_PATH_48.csv",
+    "macros": "data/support_macros_v6.json",
+    "generatedTs": "src/data/generated/romSupportPhysicalVisuals.generated.ts",
+    "presentationProfile": "src/battle/romSupportPresentationProfile.ts",
+    "verifiers": [
+      "verify:defense-slot8-global",
+      "verify:rom-ca53-contract",
+      "verify:rom-support-presentation-profile"
+    ]
+  },
+  "verification": [
+    "python3 docs/rom/research-v6-support-physicals/scripts/extract_v6_support_physicals.py",
+    "sha256sum -c docs/rom/research-v6-support-physicals/SHA256SUMS.txt",
+    "npm run typecheck",
+    "npm run verify:dev-studio"
+  ],
+  "notClosedYet": [
+    "48 rendered Support physical visuals",
+    "final palette path per Support route",
+    "final visible composition for $0B/$0D/$0F",
+    "literal macro decode for $2B/$2C/$34/$35",
+    "global negative slot8 audit for Teleport $28 and Time Freeze $2A",
+    "romCA53 contextual semantic outcome integration"
+  ],
+  "guardrails": [
+    "Do not infer semantics from card names.",
+    "Do not merge $2C30 card visual with AnimationResource, BG $19, or PresentationMacro.",
+    "Do not translate CA53=2 to MISS without context and EventLog.",
+    "Do not invent ACTOR_HOME, TARGET_HOME, CONTACT_POINT, ActionObject semantic slot binding, or multi-actor absolute binding."
+  ],
+  "handoff": "AGENT_HANDOFF_V7.md -> docs/rom/research-v7-support-defense-consumption/"
+}

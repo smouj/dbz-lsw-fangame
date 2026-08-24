@@ -1,0 +1,1828 @@
+[
+  {
+    "fxResource": 1,
+    "fxHex": "0x01",
+    "bank": 101,
+    "bankHex": "0x65",
+    "localIndex": 1,
+    "baseDescriptor": 17136,
+    "baseDescriptorHex": "0x42F0",
+    "graphicsTileCount": 44,
+    "graphicsBytes": 704,
+    "graphicsSha256": "5c890ad8fcb278baa2ff3ccbf522dce5d6181611a429f31e3daad9243a110b61",
+    "side1Descriptor": 17776,
+    "side1DescriptorHex": "0x4570",
+    "side2Descriptor": 17876,
+    "side2DescriptorHex": "0x45D4",
+    "paletteIds": [
+      44,
+      48
+    ],
+    "cardCount": 17,
+    "cards": [
+      {
+        "cardId": 42,
+        "name": "Kiai",
+        "category": "SUPPORT",
+        "handler": 13,
+        "palette": 44
+      },
+      {
+        "cardId": 51,
+        "name": "Paralysis",
+        "category": "SUPPORT",
+        "handler": 13,
+        "palette": 255
+      },
+      {
+        "cardId": 52,
+        "name": "Time Freeze",
+        "category": "DEFENSE",
+        "handler": 0,
+        "palette": 255
+      },
+      {
+        "cardId": 83,
+        "name": "Bulma",
+        "category": "SUPPORT",
+        "handler": 13,
+        "palette": 48
+      },
+      {
+        "cardId": 84,
+        "name": "Chaiotzu",
+        "category": "SUPPORT",
+        "handler": 13,
+        "palette": 48
+      },
+      {
+        "cardId": 87,
+        "name": "Kaio",
+        "category": "SUPPORT",
+        "handler": 13,
+        "palette": 255
+      },
+      {
+        "cardId": 91,
+        "name": "Supreme Kai",
+        "category": "SUPPORT",
+        "handler": 13,
+        "palette": 255
+      },
+      {
+        "cardId": 93,
+        "name": "Babidi",
+        "category": "SUPPORT",
+        "handler": 13,
+        "palette": 48
+      },
+      {
+        "cardId": 95,
+        "name": "Yakon",
+        "category": "SUPPORT",
+        "handler": 13,
+        "palette": 48
+      },
+      {
+        "cardId": 96,
+        "name": "Scouter",
+        "category": "SUPPORT",
+        "handler": 13,
+        "palette": 48
+      },
+      {
+        "cardId": 101,
+        "name": "Gravity Dev.",
+        "category": "SUPPORT",
+        "handler": 13,
+        "palette": 255
+      },
+      {
+        "cardId": 103,
+        "name": "Sealed Ball",
+        "category": "SUPPORT",
+        "handler": 13,
+        "palette": 48
+      },
+      {
+        "cardId": 113,
+        "name": "Heart Virus",
+        "category": "SUPPORT",
+        "handler": 13,
+        "palette": 48
+      },
+      {
+        "cardId": 114,
+        "name": "Heart Medi.",
+        "category": "SUPPORT",
+        "handler": 2,
+        "palette": 48
+      },
+      {
+        "cardId": 115,
+        "name": "Sandglass",
+        "category": "SUPPORT",
+        "handler": 13,
+        "palette": 48
+      },
+      {
+        "cardId": 122,
+        "name": "Telepathy",
+        "category": "DEFENSE",
+        "handler": 0,
+        "palette": 48
+      },
+      {
+        "cardId": 123,
+        "name": "Foresight",
+        "category": "DEFENSE",
+        "handler": 0,
+        "palette": 48
+      }
+    ],
+    "maps": [
+      {
+        "side": "side1",
+        "descriptor": "0x4570",
+        "first640Sha256": "a0cd43b4246f4eabe0c484542aa35c4c501932c850eec85183ba22d97fc87d58",
+        "firstBytes": "0600000000000000000000000000000000000000000f07131f18270d42060100"
+      },
+      {
+        "side": "side2",
+        "descriptor": "0x45D4",
+        "first640Sha256": "68103086f98c9db2e93623fb69a4f32f2923d4369595aceb15ac6bedcc0d1fcd",
+        "firstBytes": "8080808080808080808080808080808080808080808080808080808080808080"
+      }
+    ]
+  },
+  {
+    "fxResource": 2,
+    "fxHex": "0x02",
+    "bank": 101,
+    "bankHex": "0x65",
+    "localIndex": 2,
+    "baseDescriptor": 17776,
+    "baseDescriptorHex": "0x4570",
+    "graphicsTileCount": 6,
+    "graphicsBytes": 96,
+    "graphicsSha256": "a7f45a4fa1860b237940c00d914adb57888eab4d224e0835bd0e37381cb4cdfe",
+    "side1Descriptor": 17876,
+    "side1DescriptorHex": "0x45D4",
+    "side2Descriptor": 18516,
+    "side2DescriptorHex": "0x4854",
+    "paletteIds": [
+      44,
+      45,
+      48,
+      49,
+      50,
+      51,
+      53
+    ],
+    "cardCount": 26,
+    "cards": [
+      {
+        "cardId": 7,
+        "name": "Energy Wave",
+        "category": "BEAM",
+        "handler": 2,
+        "palette": 44
+      },
+      {
+        "cardId": 19,
+        "name": "Taiyoken",
+        "category": "DEFENSE",
+        "handler": 0,
+        "palette": 255
+      },
+      {
+        "cardId": 23,
+        "name": "Kaio Ken",
+        "category": "SUPPORT",
+        "handler": 2,
+        "palette": 45
+      },
+      {
+        "cardId": 27,
+        "name": "Sup.Saiyan-2",
+        "category": "SUPPORT",
+        "handler": 2,
+        "palette": 53
+      },
+      {
+        "cardId": 28,
+        "name": "Sup.Saiyan-3",
+        "category": "SUPPORT",
+        "handler": 2,
+        "palette": 53
+      },
+      {
+        "cardId": 59,
+        "name": "Speed Up",
+        "category": "SUPPORT",
+        "handler": 2,
+        "palette": 51
+      },
+      {
+        "cardId": 63,
+        "name": "Finger Beam",
+        "category": "BEAM",
+        "handler": 2,
+        "palette": 44
+      },
+      {
+        "cardId": 67,
+        "name": "Eye Beam",
+        "category": "BEAM",
+        "handler": 2,
+        "palette": 45
+      },
+      {
+        "cardId": 68,
+        "name": "Lock On",
+        "category": "SUPPORT",
+        "handler": 2,
+        "palette": 48
+      },
+      {
+        "cardId": 79,
+        "name": "Flesh Guard",
+        "category": "SUPPORT",
+        "handler": 2,
+        "palette": 50
+      },
+      {
+        "cardId": 89,
+        "name": "Guru",
+        "category": "SUPPORT",
+        "handler": 2,
+        "palette": 53
+      },
+      {
+        "cardId": 92,
+        "name": "Kibito",
+        "category": "SUPPORT",
+        "handler": 2,
+        "palette": 53
+      },
+      {
+        "cardId": 97,
+        "name": "Caps. Fridge",
+        "category": "SUPPORT",
+        "handler": 2,
+        "palette": 48
+      },
+      {
+        "cardId": 100,
+        "name": "Medical Mac.",
+        "category": "SUPPORT",
+        "handler": 2,
+        "palette": 48
+      },
+      {
+        "cardId": 104,
+        "name": "Trunks Sword",
+        "category": "SUPPORT",
+        "handler": 2,
+        "palette": 49
+      },
+      {
+        "cardId": 105,
+        "name": "Dabura Spear",
+        "category": "SUPPORT",
+        "handler": 2,
+        "palette": 49
+      },
+      {
+        "cardId": 106,
+        "name": "Light Vest",
+        "category": "SUPPORT",
+        "handler": 2,
+        "palette": 51
+      },
+      {
+        "cardId": 107,
+        "name": "Btl. Jacket",
+        "category": "SUPPORT",
+        "handler": 2,
+        "palette": 50
+      },
+      {
+        "cardId": 108,
+        "name": "New-B Jacket",
+        "category": "SUPPORT",
+        "handler": 2,
+        "palette": 50
+      },
+      {
+        "cardId": 109,
+        "name": "Sunglasses",
+        "category": "SUPPORT",
+        "handler": 2,
+        "palette": 48
+      },
+      {
+        "cardId": 111,
+        "name": "Champ.Belt",
+        "category": "SUPPORT",
+        "handler": 2,
+        "palette": 48
+      },
+      {
+        "cardId": 117,
+        "name": "Full Spirit",
+        "category": "SUPPORT",
+        "handler": 2,
+        "palette": 48
+      },
+      {
+        "cardId": 118,
+        "name": "Afterimage",
+        "category": "SUPPORT",
+        "handler": 2,
+        "palette": 48
+      },
+      {
+        "cardId": 119,
+        "name": "Reading Ki",
+        "category": "SUPPORT",
+        "handler": 2,
+        "palette": 48
+      },
+      {
+        "cardId": 120,
+        "name": "Feint",
+        "category": "SUPPORT",
+        "handler": 2,
+        "palette": 48
+      },
+      {
+        "cardId": 124,
+        "name": "Shockwave",
+        "category": "DEFENSE",
+        "handler": 0,
+        "palette": 48
+      }
+    ],
+    "maps": [
+      {
+        "side": "side1",
+        "descriptor": "0x45D4",
+        "first640Sha256": "68103086f98c9db2e93623fb69a4f32f2923d4369595aceb15ac6bedcc0d1fcd",
+        "firstBytes": "8080808080808080808080808080808080808080808080808080808080808080"
+      },
+      {
+        "side": "side2",
+        "descriptor": "0x4854",
+        "first640Sha256": "b0af1b834ec0e8a9f912b3268172c41c93fe2fd6bdb39b938dcc737b4336fadd",
+        "firstBytes": "8080808080808080808080808080808080808080808080808080808080808080"
+      }
+    ]
+  },
+  {
+    "fxResource": 4,
+    "fxHex": "0x04",
+    "bank": 101,
+    "bankHex": "0x65",
+    "localIndex": 4,
+    "baseDescriptor": 18516,
+    "baseDescriptorHex": "0x4854",
+    "graphicsTileCount": 128,
+    "graphicsBytes": 2048,
+    "graphicsSha256": "f6da1692a3b3632a290d9c1fe6bad97a8741a87c34215eda2eefe24f92f32000",
+    "side1Descriptor": 19156,
+    "side1DescriptorHex": "0x4AD4",
+    "side2Descriptor": 19656,
+    "side2DescriptorHex": "0x4CC8",
+    "paletteIds": [
+      48
+    ],
+    "cardCount": 14,
+    "cards": [
+      {
+        "cardId": 26,
+        "name": "Teleport.",
+        "category": "DEFENSE",
+        "handler": 0,
+        "palette": 255
+      },
+      {
+        "cardId": 45,
+        "name": "Barrier",
+        "category": "DEFENSE",
+        "handler": 0,
+        "palette": 48
+      },
+      {
+        "cardId": 53,
+        "name": "Breath",
+        "category": "DEFENSE",
+        "handler": 0,
+        "palette": 255
+      },
+      {
+        "cardId": 76,
+        "name": "Energy Absorb",
+        "category": "DEFENSE",
+        "handler": 0,
+        "palette": 255
+      },
+      {
+        "cardId": 85,
+        "name": "Tien",
+        "category": "SUPPORT",
+        "handler": 11,
+        "palette": 255
+      },
+      {
+        "cardId": 86,
+        "name": "Yajirobe",
+        "category": "SUPPORT",
+        "handler": 11,
+        "palette": 255
+      },
+      {
+        "cardId": 90,
+        "name": "Hercule",
+        "category": "SUPPORT",
+        "handler": 11,
+        "palette": 255
+      },
+      {
+        "cardId": 94,
+        "name": "Dabura",
+        "category": "SUPPORT",
+        "handler": 11,
+        "palette": 48
+      },
+      {
+        "cardId": 98,
+        "name": "Stop Device",
+        "category": "SUPPORT",
+        "handler": 11,
+        "palette": 48
+      },
+      {
+        "cardId": 102,
+        "name": "Ene.Absorber",
+        "category": "SUPPORT",
+        "handler": 15,
+        "palette": 255
+      },
+      {
+        "cardId": 110,
+        "name": "Gamebomb",
+        "category": "SUPPORT",
+        "handler": 11,
+        "palette": 255
+      },
+      {
+        "cardId": 112,
+        "name": "H's Choco.",
+        "category": "SUPPORT",
+        "handler": 11,
+        "palette": 255
+      },
+      {
+        "cardId": 116,
+        "name": "Naughty Book",
+        "category": "SUPPORT",
+        "handler": 11,
+        "palette": 48
+      },
+      {
+        "cardId": 125,
+        "name": "Avoiding",
+        "category": "DEFENSE",
+        "handler": 0,
+        "palette": 48
+      }
+    ],
+    "maps": [
+      {
+        "side": "side1",
+        "descriptor": "0x4AD4",
+        "first640Sha256": "2f3e8fec2704c271bf2e45fff9275a7846004b6834203fe4dd83bcdc766d9954",
+        "firstBytes": "1f000000000000000000000000000000000000000000000000000003010e0f33"
+      },
+      {
+        "side": "side2",
+        "descriptor": "0x4CC8",
+        "first640Sha256": "2d24a138143f660478b5432effe42cae83e9118d66516c851989303fd95b7e08",
+        "firstBytes": "8080808080808080808080808080808080808080808080808080808080808080"
+      }
+    ]
+  },
+  {
+    "fxResource": 5,
+    "fxHex": "0x05",
+    "bank": 101,
+    "bankHex": "0x65",
+    "localIndex": 5,
+    "baseDescriptor": 19156,
+    "baseDescriptorHex": "0x4AD4",
+    "graphicsTileCount": 31,
+    "graphicsBytes": 496,
+    "graphicsSha256": "8575760edd4acd7ed5f5ef6c0e17cb188b942a38373ed1d2fa9e4e9cce7c1872",
+    "side1Descriptor": 19656,
+    "side1DescriptorHex": "0x4CC8",
+    "side2Descriptor": 20296,
+    "side2DescriptorHex": "0x4F48",
+    "paletteIds": [
+      44,
+      45
+    ],
+    "cardCount": 3,
+    "cards": [
+      {
+        "cardId": 12,
+        "name": "Kamehameha",
+        "category": "BEAM",
+        "handler": 2,
+        "palette": 44
+      },
+      {
+        "cardId": 20,
+        "name": "Misty KiWave",
+        "category": "BEAM",
+        "handler": 2,
+        "palette": 45
+      },
+      {
+        "cardId": 38,
+        "name": "Kamekameha",
+        "category": "BEAM",
+        "handler": 2,
+        "palette": 44
+      }
+    ],
+    "maps": [
+      {
+        "side": "side1",
+        "descriptor": "0x4CC8",
+        "first640Sha256": "2d24a138143f660478b5432effe42cae83e9118d66516c851989303fd95b7e08",
+        "firstBytes": "8080808080808080808080808080808080808080808080808080808080808080"
+      },
+      {
+        "side": "side2",
+        "descriptor": "0x4F48",
+        "first640Sha256": "0abfacd2197e83b5e8189ff81846519052758736b4bad18a209c09d111a50e36",
+        "firstBytes": "8080808080808080808080808080808080808080808080808080808080808080"
+      }
+    ]
+  },
+  {
+    "fxResource": 6,
+    "fxHex": "0x06",
+    "bank": 101,
+    "bankHex": "0x65",
+    "localIndex": 6,
+    "baseDescriptor": 19656,
+    "baseDescriptorHex": "0x4CC8",
+    "graphicsTileCount": 128,
+    "graphicsBytes": 2048,
+    "graphicsSha256": "1000a8861c990ec92bc79217be00d0344254dbd3357535e0763525f4a599c4fc",
+    "side1Descriptor": 20296,
+    "side1DescriptorHex": "0x4F48",
+    "side2Descriptor": 20936,
+    "side2DescriptorHex": "0x51C8",
+    "paletteIds": [
+      48
+    ],
+    "cardCount": 1,
+    "cards": [
+      {
+        "cardId": 121,
+        "name": "Endurance",
+        "category": "DEFENSE",
+        "handler": 0,
+        "palette": 48
+      }
+    ],
+    "maps": [
+      {
+        "side": "side1",
+        "descriptor": "0x4F48",
+        "first640Sha256": "0abfacd2197e83b5e8189ff81846519052758736b4bad18a209c09d111a50e36",
+        "firstBytes": "8080808080808080808080808080808080808080808080808080808080808080"
+      },
+      {
+        "side": "side2",
+        "descriptor": "0x51C8",
+        "first640Sha256": "190708670742657be10f1c033e63bd88e74d32ce36261d13f36150a5b908ec4a",
+        "firstBytes": "2000000000000000000000000000000000000000000000010107071e1e6e7e9d"
+      }
+    ]
+  },
+  {
+    "fxResource": 8,
+    "fxHex": "0x08",
+    "bank": 101,
+    "bankHex": "0x65",
+    "localIndex": 8,
+    "baseDescriptor": 20936,
+    "baseDescriptorHex": "0x51C8",
+    "graphicsTileCount": 32,
+    "graphicsBytes": 512,
+    "graphicsSha256": "df055a146ab965da8561f72a26027b2c4f396df2a22f7a1f964f722a69acfed9",
+    "side1Descriptor": 21452,
+    "side1DescriptorHex": "0x53CC",
+    "side2Descriptor": 22092,
+    "side2DescriptorHex": "0x564C",
+    "paletteIds": [
+      44,
+      45,
+      48
+    ],
+    "cardCount": 5,
+    "cards": [
+      {
+        "cardId": 10,
+        "name": "Masenko",
+        "category": "BEAM",
+        "handler": 2,
+        "palette": 45
+      },
+      {
+        "cardId": 16,
+        "name": "Resurrection",
+        "category": "SUPPORT",
+        "handler": 0,
+        "palette": 48
+      },
+      {
+        "cardId": 35,
+        "name": "Burning Atk.",
+        "category": "BEAM",
+        "handler": 4,
+        "palette": 44
+      },
+      {
+        "cardId": 88,
+        "name": "Dende",
+        "category": "SUPPORT",
+        "handler": 0,
+        "palette": 48
+      },
+      {
+        "cardId": 99,
+        "name": "Life Preser.",
+        "category": "SUPPORT",
+        "handler": 0,
+        "palette": 48
+      }
+    ],
+    "maps": [
+      {
+        "side": "side1",
+        "descriptor": "0x53CC",
+        "first640Sha256": "bafa0b210a0c60b8e49d5bdd90e61daad50cf717cd7c4b232f5a604bd772337b",
+        "firstBytes": "8080808080808080808080808080808080808080808080808080808080808080"
+      },
+      {
+        "side": "side2",
+        "descriptor": "0x564C",
+        "first640Sha256": "142ec72122de3eb07cea2e330cb3c6d4d9e7c67b360c5bd0f8943d203e442626",
+        "firstBytes": "8080808080808080808080808080808080808080808080808080808080808080"
+      }
+    ]
+  },
+  {
+    "fxResource": 14,
+    "fxHex": "0x0E",
+    "bank": 101,
+    "bankHex": "0x65",
+    "localIndex": 14,
+    "baseDescriptor": 24784,
+    "baseDescriptorHex": "0x60D0",
+    "graphicsTileCount": 41,
+    "graphicsBytes": 656,
+    "graphicsSha256": "46914324335a6f41d43686b2e49566f25e37e1bbda9d2139bed1506080f0390f",
+    "side1Descriptor": 25444,
+    "side1DescriptorHex": "0x6364",
+    "side2Descriptor": 26084,
+    "side2DescriptorHex": "0x65E4",
+    "paletteIds": [
+      45,
+      46
+    ],
+    "cardCount": 2,
+    "cards": [
+      {
+        "cardId": 30,
+        "name": "Galick-Ho",
+        "category": "BEAM",
+        "handler": 2,
+        "palette": 46
+      },
+      {
+        "cardId": 48,
+        "name": "Lightning C.",
+        "category": "BEAM",
+        "handler": 2,
+        "palette": 45
+      }
+    ],
+    "maps": [
+      {
+        "side": "side1",
+        "descriptor": "0x6364",
+        "first640Sha256": "ff132dbfecb48a4baf0b2997baa0f439f1ebbea0273ee81d6a239980e6e0e574",
+        "firstBytes": "8080808080808080808080808080808080808080808080808080808080808080"
+      },
+      {
+        "side": "side2",
+        "descriptor": "0x65E4",
+        "first640Sha256": "090189d4ded680471b392136f2cbb62504c9d552be7d61386adc67e5f487ef66",
+        "firstBytes": "8080808080808080808080808080808080808080808080808080808080808080"
+      }
+    ]
+  },
+  {
+    "fxResource": 17,
+    "fxHex": "0x11",
+    "bank": 101,
+    "bankHex": "0x65",
+    "localIndex": 17,
+    "baseDescriptor": 26724,
+    "baseDescriptorHex": "0x6864",
+    "graphicsTileCount": 50,
+    "graphicsBytes": 800,
+    "graphicsSha256": "f0607f192e8e384e28caabedafbf780a3d42a35a2a3792ff17d08e164c004834",
+    "side1Descriptor": 27528,
+    "side1DescriptorHex": "0x6B88",
+    "side2Descriptor": 28168,
+    "side2DescriptorHex": "0x6E08",
+    "paletteIds": [
+      44,
+      45
+    ],
+    "cardCount": 3,
+    "cards": [
+      {
+        "cardId": 13,
+        "name": "S.Kamehameha",
+        "category": "BEAM",
+        "handler": 2,
+        "palette": 44
+      },
+      {
+        "cardId": 14,
+        "name": "F.Kamehameha",
+        "category": "BEAM",
+        "handler": 2,
+        "palette": 45
+      },
+      {
+        "cardId": 70,
+        "name": "Hell Flash",
+        "category": "BEAM",
+        "handler": 2,
+        "palette": 45
+      }
+    ],
+    "maps": [
+      {
+        "side": "side1",
+        "descriptor": "0x6B88",
+        "first640Sha256": "7ae3c97fca7504465c8dd80926989ea82460c8f049156389b3eaa577fa704c17",
+        "firstBytes": "8080808080808080808080808080808080808080808080808080808080808080"
+      },
+      {
+        "side": "side2",
+        "descriptor": "0x6E08",
+        "first640Sha256": "dc3ada130a3df3d5daf5ef6ad33b3d838ea1a47fde28f90cfb115978787c8fa3",
+        "firstBytes": "8080808080808080808080808080808080808080808080808080808080808080"
+      }
+    ]
+  },
+  {
+    "fxResource": 20,
+    "fxHex": "0x14",
+    "bank": 101,
+    "bankHex": "0x65",
+    "localIndex": 20,
+    "baseDescriptor": 28808,
+    "baseDescriptorHex": "0x7088",
+    "graphicsTileCount": 59,
+    "graphicsBytes": 944,
+    "graphicsSha256": "8245731d5bbdf3fdfdc17e1c3043194faf74e32573b6dc36b2336a0132800485",
+    "side1Descriptor": 29756,
+    "side1DescriptorHex": "0x743C",
+    "side2Descriptor": 30396,
+    "side2DescriptorHex": "0x76BC",
+    "paletteIds": [
+      44,
+      45
+    ],
+    "cardCount": 2,
+    "cards": [
+      {
+        "cardId": 32,
+        "name": "Final Flash",
+        "category": "BEAM",
+        "handler": 2,
+        "palette": 44
+      },
+      {
+        "cardId": 54,
+        "name": "Eraser Can.",
+        "category": "BEAM",
+        "handler": 3,
+        "palette": 45
+      }
+    ],
+    "maps": [
+      {
+        "side": "side1",
+        "descriptor": "0x743C",
+        "first640Sha256": "4c952a152e258753cc217320be966f9153345df0a80211c0490a2aae102c67ec",
+        "firstBytes": "8080808080808080808080808080808080808080808080808080808080808080"
+      },
+      {
+        "side": "side2",
+        "descriptor": "0x76BC",
+        "first640Sha256": "b05cdbd363adc621ac2f32e846e9619e85111addc9a5728e3a53c44303f9a7af",
+        "firstBytes": "8080808080808080808080808080808080808080808080808080808080808080"
+      }
+    ]
+  },
+  {
+    "fxResource": 23,
+    "fxHex": "0x17",
+    "bank": 101,
+    "bankHex": "0x65",
+    "localIndex": 23,
+    "baseDescriptor": 31036,
+    "baseDescriptorHex": "0x793C",
+    "graphicsTileCount": 3,
+    "graphicsBytes": 48,
+    "graphicsSha256": "312a9ed0563d78b746542f4ed9d7bec0cd2b402b17b2dd93652ba10ba8765aa2",
+    "side1Descriptor": 31088,
+    "side1DescriptorHex": "0x7970",
+    "side2Descriptor": 31728,
+    "side2DescriptorHex": "0x7BF0",
+    "paletteIds": [
+      44
+    ],
+    "cardCount": 1,
+    "cards": [
+      {
+        "cardId": 8,
+        "name": "Energy Bomb",
+        "category": "BEAM",
+        "handler": 5,
+        "palette": 44
+      }
+    ],
+    "maps": [
+      {
+        "side": "side1",
+        "descriptor": "0x7970",
+        "first640Sha256": "e3b046a79dc1251b2ce7d64bd3c7a5af165db61361a00313f71b761b18ad7302",
+        "firstBytes": "8080808080808080808080808080808080808080808080808080808080808080"
+      },
+      {
+        "side": "side2",
+        "descriptor": "0x7BF0",
+        "first640Sha256": "983a97edc9c554a1d37cad4cc5d36762ffd45539b0d4dbb8e93bcc7c17b7abd5",
+        "firstBytes": "8080808080808080808080808080808080808080808080808080808080808080"
+      }
+    ]
+  },
+  {
+    "fxResource": 33,
+    "fxHex": "0x21",
+    "bank": 102,
+    "bankHex": "0x66",
+    "localIndex": 3,
+    "baseDescriptor": 18052,
+    "baseDescriptorHex": "0x4684",
+    "graphicsTileCount": 16,
+    "graphicsBytes": 256,
+    "graphicsSha256": "94f33f6172a1da0827648134eabf44737412f4ecd40638993d0a9d512159f787",
+    "side1Descriptor": 18312,
+    "side1DescriptorHex": "0x4788",
+    "side2Descriptor": 18952,
+    "side2DescriptorHex": "0x4A08",
+    "paletteIds": [
+      45
+    ],
+    "cardCount": 1,
+    "cards": [
+      {
+        "cardId": 47,
+        "name": "KiBlast Bomb",
+        "category": "BEAM",
+        "handler": 5,
+        "palette": 45
+      }
+    ],
+    "maps": [
+      {
+        "side": "side1",
+        "descriptor": "0x4788",
+        "first640Sha256": "55532f1cc56ac34b86c042a078cba7c7ae55fb2b6fc2d28717fbe5c4a59c19fb",
+        "firstBytes": "8080808080808080808080808080808080808080808080808080808080808080"
+      },
+      {
+        "side": "side2",
+        "descriptor": "0x4A08",
+        "first640Sha256": "1aac4ec55d791add764e5974ba6f7dedb8a27b3ecc649fc125d85e67259f47a8",
+        "firstBytes": "8080808080808080808080808080808080808080808080808080808080808080"
+      }
+    ]
+  },
+  {
+    "fxResource": 36,
+    "fxHex": "0x24",
+    "bank": 102,
+    "bankHex": "0x66",
+    "localIndex": 6,
+    "baseDescriptor": 19592,
+    "baseDescriptorHex": "0x4C88",
+    "graphicsTileCount": 24,
+    "graphicsBytes": 384,
+    "graphicsSha256": "9b691ec0ff8323d6e7f62849c8cee300d3618cb2e110c1127f4667ec7c9da148",
+    "side1Descriptor": 19980,
+    "side1DescriptorHex": "0x4E0C",
+    "side2Descriptor": 20620,
+    "side2DescriptorHex": "0x508C",
+    "paletteIds": [
+      44
+    ],
+    "cardCount": 1,
+    "cards": [
+      {
+        "cardId": 36,
+        "name": "Fin.Buster",
+        "category": "BEAM",
+        "handler": 5,
+        "palette": 44
+      }
+    ],
+    "maps": [
+      {
+        "side": "side1",
+        "descriptor": "0x4E0C",
+        "first640Sha256": "dc589d9fa5bcd537195259d66f6a9a87165de6a799dc8ad8d4194270cacaabd0",
+        "firstBytes": "8080808080808080808080808080808080808080808080808080808080808080"
+      },
+      {
+        "side": "side2",
+        "descriptor": "0x508C",
+        "first640Sha256": "c7a44d69f055d39bdd01bae7c37ad66cf787df089b4e224752f59d6781536c8c",
+        "firstBytes": "8080808080808080808080808080808080808080808080808080808080808080"
+      }
+    ]
+  },
+  {
+    "fxResource": 39,
+    "fxHex": "0x27",
+    "bank": 102,
+    "bankHex": "0x66",
+    "localIndex": 9,
+    "baseDescriptor": 21260,
+    "baseDescriptorHex": "0x530C",
+    "graphicsTileCount": 25,
+    "graphicsBytes": 400,
+    "graphicsSha256": "36ce93458d74222c9d2802506c32f2906e263200f1ea9601e5104e50ddd0d8a3",
+    "side1Descriptor": 21664,
+    "side1DescriptorHex": "0x54A0",
+    "side2Descriptor": 22304,
+    "side2DescriptorHex": "0x5720",
+    "paletteIds": [
+      44,
+      45
+    ],
+    "cardCount": 2,
+    "cards": [
+      {
+        "cardId": 31,
+        "name": "Big Bang Atk",
+        "category": "BEAM",
+        "handler": 5,
+        "palette": 45
+      },
+      {
+        "cardId": 57,
+        "name": "Purple Comet",
+        "category": "BEAM",
+        "handler": 13,
+        "palette": 44
+      }
+    ],
+    "maps": [
+      {
+        "side": "side1",
+        "descriptor": "0x54A0",
+        "first640Sha256": "1b8a38f7630c48dc5ad063dc121a0730e3c3d55d59ce72149b4ae4b14c83ede0",
+        "firstBytes": "8080808080808080808080808080808080808080808080808080808080808080"
+      },
+      {
+        "side": "side2",
+        "descriptor": "0x5720",
+        "first640Sha256": "706fcecd90349a818d5232bd3898d614a83d909ac8841803a741a57520692dd1",
+        "firstBytes": "8080808080808080808080808080808080808080808080808080808080808080"
+      }
+    ]
+  },
+  {
+    "fxResource": 45,
+    "fxHex": "0x2D",
+    "bank": 102,
+    "bankHex": "0x66",
+    "localIndex": 15,
+    "baseDescriptor": 24660,
+    "baseDescriptorHex": "0x6054",
+    "graphicsTileCount": 32,
+    "graphicsBytes": 512,
+    "graphicsSha256": "dc515957c4488fdb77062de90aa22f8bbafc55f293c2f46dcc95380448cd18c1",
+    "side1Descriptor": 25176,
+    "side1DescriptorHex": "0x6258",
+    "side2Descriptor": 25816,
+    "side2DescriptorHex": "0x64D8",
+    "paletteIds": [
+      45
+    ],
+    "cardCount": 1,
+    "cards": [
+      {
+        "cardId": 18,
+        "name": "F.Lightbomb",
+        "category": "BEAM",
+        "handler": 5,
+        "palette": 45
+      }
+    ],
+    "maps": [
+      {
+        "side": "side1",
+        "descriptor": "0x6258",
+        "first640Sha256": "eb90bacbb13bc3294dcda8afdd54f815feb2cf91c6145cbceb9cb10c9c996efe",
+        "firstBytes": "8080808080808080808080808080808080808080808080808080808080808080"
+      },
+      {
+        "side": "side2",
+        "descriptor": "0x64D8",
+        "first640Sha256": "24274599d857fcbfa56a1bba206724fdb3d1ddb57ef0c67df4c39a451ca86678",
+        "firstBytes": "8080808080808080808080808080808080808080808080808080808080808080"
+      }
+    ]
+  },
+  {
+    "fxResource": 48,
+    "fxHex": "0x30",
+    "bank": 102,
+    "bankHex": "0x66",
+    "localIndex": 18,
+    "baseDescriptor": 26456,
+    "baseDescriptorHex": "0x6758",
+    "graphicsTileCount": 6,
+    "graphicsBytes": 96,
+    "graphicsSha256": "6576ddbe9ed26f309eb744d3c09416cd3f6ec6508d9cb7f95f522d5a88717720",
+    "side1Descriptor": 26556,
+    "side1DescriptorHex": "0x67BC",
+    "side2Descriptor": 27196,
+    "side2DescriptorHex": "0x6A3C",
+    "paletteIds": [
+      44,
+      45
+    ],
+    "cardCount": 2,
+    "cards": [
+      {
+        "cardId": 21,
+        "name": "Destruct-Disk",
+        "category": "BEAM",
+        "handler": 7,
+        "palette": 44
+      },
+      {
+        "cardId": 73,
+        "name": "Energy Slice",
+        "category": "BEAM",
+        "handler": 7,
+        "palette": 45
+      }
+    ],
+    "maps": [
+      {
+        "side": "side1",
+        "descriptor": "0x67BC",
+        "first640Sha256": "e96aba3afb627bd874f41199f50df8d72508c69727e6f02c7cc597727349cc78",
+        "firstBytes": "8080808080808080808080808080808080808080808080808080808080808080"
+      },
+      {
+        "side": "side2",
+        "descriptor": "0x6A3C",
+        "first640Sha256": "e265b97c8fb5fad0a3b119f53eacf0ac4b6cca9c8f46e8e0818fc4c98d815ab5",
+        "firstBytes": "8080808080808080808080808080808080808080808080808080808080808080"
+      }
+    ]
+  },
+  {
+    "fxResource": 51,
+    "fxHex": "0x33",
+    "bank": 102,
+    "bankHex": "0x66",
+    "localIndex": 21,
+    "baseDescriptor": 27836,
+    "baseDescriptorHex": "0x6CBC",
+    "graphicsTileCount": 9,
+    "graphicsBytes": 144,
+    "graphicsSha256": "0d17e5c01fd694b844a2619ed1c8ef901744884262629d7b5506b0fd2ab0302e",
+    "side1Descriptor": 27984,
+    "side1DescriptorHex": "0x6D50",
+    "side2Descriptor": 28624,
+    "side2DescriptorHex": "0x6FD0",
+    "paletteIds": [
+      46
+    ],
+    "cardCount": 1,
+    "cards": [
+      {
+        "cardId": 22,
+        "name": "S.Destruc-D.",
+        "category": "BEAM",
+        "handler": 7,
+        "palette": 46
+      }
+    ],
+    "maps": [
+      {
+        "side": "side1",
+        "descriptor": "0x6D50",
+        "first640Sha256": "facd0808a4997fc6e1cb7eecff99be55a66b274b81e97c94e8dcd4144ee70701",
+        "firstBytes": "8080808080808080808080808080808080808080808080808080808080808080"
+      },
+      {
+        "side": "side2",
+        "descriptor": "0x6FD0",
+        "first640Sha256": "33386f68fa421136b3f050e680c64e8fc29b400c8c6bf66e72654b77ab50e5a0",
+        "firstBytes": "8080808080808080808080808080808080808080808080808080808080808080"
+      }
+    ]
+  },
+  {
+    "fxResource": 54,
+    "fxHex": "0x36",
+    "bank": 102,
+    "bankHex": "0x66",
+    "localIndex": 24,
+    "baseDescriptor": 29264,
+    "baseDescriptorHex": "0x7250",
+    "graphicsTileCount": 30,
+    "graphicsBytes": 480,
+    "graphicsSha256": "186d76ae16480919b9ff597d0f686162d2846c969137ef207f6086cc9a71ef1d",
+    "side1Descriptor": 29748,
+    "side1DescriptorHex": "0x7434",
+    "side2Descriptor": 30388,
+    "side2DescriptorHex": "0x76B4",
+    "paletteIds": [
+      44,
+      45
+    ],
+    "cardCount": 2,
+    "cards": [
+      {
+        "cardId": 65,
+        "name": "Grand Wave",
+        "category": "BEAM",
+        "handler": 5,
+        "palette": 44
+      },
+      {
+        "cardId": 72,
+        "name": "Energy Slash",
+        "category": "BEAM",
+        "handler": 5,
+        "palette": 45
+      }
+    ],
+    "maps": [
+      {
+        "side": "side1",
+        "descriptor": "0x7434",
+        "first640Sha256": "f10f33f4951700024867e7eac9d39e502b80db5b3c84fb7491f7ef66085616c4",
+        "firstBytes": "8080808080808080808080808080808080808080808080808080808080808080"
+      },
+      {
+        "side": "side2",
+        "descriptor": "0x76B4",
+        "first640Sha256": "035f17fe4f76761a25017779a0fdf871f36b14ca622d605a5988f7b4aff7089f",
+        "firstBytes": "8080808080808080808080808080808080808080808080808080808080808080"
+      }
+    ]
+  },
+  {
+    "fxResource": 57,
+    "fxHex": "0x39",
+    "bank": 102,
+    "bankHex": "0x66",
+    "localIndex": 27,
+    "baseDescriptor": 31028,
+    "baseDescriptorHex": "0x7934",
+    "graphicsTileCount": 25,
+    "graphicsBytes": 400,
+    "graphicsSha256": "800896ab8d0f7ab032992839588e5648b20131506e5331aa5c0dbe20f6ff23ce",
+    "side1Descriptor": 31432,
+    "side1DescriptorHex": "0x7AC8",
+    "side2Descriptor": 32072,
+    "side2DescriptorHex": "0x7D48",
+    "paletteIds": [
+      45
+    ],
+    "cardCount": 1,
+    "cards": [
+      {
+        "cardId": 17,
+        "name": "S.Beam Can.",
+        "category": "BEAM",
+        "handler": 2,
+        "palette": 45
+      }
+    ],
+    "maps": [
+      {
+        "side": "side1",
+        "descriptor": "0x7AC8",
+        "first640Sha256": "1bf792470ff8d37690e3ecb16896b906b1e8dec2983e2d0dcfe18f9e76c5486f",
+        "firstBytes": "8080808080808080808080808080808080808080808080808080808080808080"
+      },
+      {
+        "side": "side2",
+        "descriptor": "0x7D48",
+        "first640Sha256": "06a2fb8bffefb0eec3655682def769b5d8163e3bdd84a21805ad46aa1a08d1fb",
+        "firstBytes": "8080808080808080808080808080808080808080808080808080808080808080"
+      }
+    ]
+  },
+  {
+    "fxResource": 60,
+    "fxHex": "0x3C",
+    "bank": 103,
+    "bankHex": "0x67",
+    "localIndex": 0,
+    "baseDescriptor": 16500,
+    "baseDescriptorHex": "0x4074",
+    "graphicsTileCount": 10,
+    "graphicsBytes": 160,
+    "graphicsSha256": "3a7ebf98851aaf761da33305979ea204d507aa1083ecc2be1a0cc53ed7f61803",
+    "side1Descriptor": 16664,
+    "side1DescriptorHex": "0x4118",
+    "side2Descriptor": 17304,
+    "side2DescriptorHex": "0x4398",
+    "paletteIds": [
+      44
+    ],
+    "cardCount": 1,
+    "cards": [
+      {
+        "cardId": 50,
+        "name": "M.Soundwave",
+        "category": "BEAM",
+        "handler": 5,
+        "palette": 44
+      }
+    ],
+    "maps": [
+      {
+        "side": "side1",
+        "descriptor": "0x4118",
+        "first640Sha256": "7bfa814239f9c8d079815c6561a4b0b257baf6b05fa092759d3a89d2e3d7ef28",
+        "firstBytes": "8080808080808080808080808080808080808080808080808080808080808080"
+      },
+      {
+        "side": "side2",
+        "descriptor": "0x4398",
+        "first640Sha256": "3031ce6c3ff325a5c84636443fd1fa12c2ce8bfca770cba42bb08bda07ad6e99",
+        "firstBytes": "8080808080808080808080808080808080808080808080808080808080808080"
+      }
+    ]
+  },
+  {
+    "fxResource": 63,
+    "fxHex": "0x3F",
+    "bank": 103,
+    "bankHex": "0x67",
+    "localIndex": 3,
+    "baseDescriptor": 17944,
+    "baseDescriptorHex": "0x4618",
+    "graphicsTileCount": 16,
+    "graphicsBytes": 256,
+    "graphicsSha256": "7ae94a4175010ebeb5e0979b58aacf76b2424f513894a316ef6d04c0340df20d",
+    "side1Descriptor": 18204,
+    "side1DescriptorHex": "0x471C",
+    "side2Descriptor": 18844,
+    "side2DescriptorHex": "0x499C",
+    "paletteIds": [
+      45
+    ],
+    "cardCount": 1,
+    "cards": [
+      {
+        "cardId": 39,
+        "name": "Galactica D.",
+        "category": "BEAM",
+        "handler": 7,
+        "palette": 45
+      }
+    ],
+    "maps": [
+      {
+        "side": "side1",
+        "descriptor": "0x471C",
+        "first640Sha256": "674b38347679db37cc9cc5c7d2c97560aac7acc687c259aee756e36c7cbf43fe",
+        "firstBytes": "8080808080808080808080808080808080808080808080808080808080808080"
+      },
+      {
+        "side": "side2",
+        "descriptor": "0x499C",
+        "first640Sha256": "f8e52c3ef0deb7d5a6d20e8bf4b060e149d807c361d7e2ce8424fe5ed67e73ba",
+        "firstBytes": "8080808080808080808080808080808080808080808080808080808080808080"
+      }
+    ]
+  },
+  {
+    "fxResource": 66,
+    "fxHex": "0x42",
+    "bank": 103,
+    "bankHex": "0x67",
+    "localIndex": 6,
+    "baseDescriptor": 19484,
+    "baseDescriptorHex": "0x4C1C",
+    "graphicsTileCount": 34,
+    "graphicsBytes": 544,
+    "graphicsSha256": "cbaa083c5cdb9542ebdf24234ea7fe395c6f60529dee573737fff5bb5417905f",
+    "side1Descriptor": 20032,
+    "side1DescriptorHex": "0x4E40",
+    "side2Descriptor": 20672,
+    "side2DescriptorHex": "0x50C0",
+    "paletteIds": [
+      45
+    ],
+    "cardCount": 1,
+    "cards": [
+      {
+        "cardId": 44,
+        "name": "Flash.Sword",
+        "category": "BEAM",
+        "handler": 2,
+        "palette": 45
+      }
+    ],
+    "maps": [
+      {
+        "side": "side1",
+        "descriptor": "0x4E40",
+        "first640Sha256": "faf65e368ee1cb66b5112da476761f34fe006173ab75748ceab9c231ed52a6d8",
+        "firstBytes": "8080808080808080808080808080808080808080808080808080808080808080"
+      },
+      {
+        "side": "side2",
+        "descriptor": "0x50C0",
+        "first640Sha256": "ce40829a2c05496ad5b1afb9df557643637d86ecc2c44974a72ae1f50d0b4fa5",
+        "firstBytes": "8080808080808080808080808080808080808080808080808080808080808080"
+      }
+    ]
+  },
+  {
+    "fxResource": 69,
+    "fxHex": "0x45",
+    "bank": 103,
+    "bankHex": "0x67",
+    "localIndex": 9,
+    "baseDescriptor": 21312,
+    "baseDescriptorHex": "0x5340",
+    "graphicsTileCount": 67,
+    "graphicsBytes": 1072,
+    "graphicsSha256": "90c7a280a2e644fe7e7dda170d87caad81cfcfd54b734b6b190ce12b6ef2ab69",
+    "side1Descriptor": 22388,
+    "side1DescriptorHex": "0x5774",
+    "side2Descriptor": 23028,
+    "side2DescriptorHex": "0x59F4",
+    "paletteIds": [
+      45,
+      47
+    ],
+    "cardCount": 2,
+    "cards": [
+      {
+        "cardId": 49,
+        "name": "Telekinesis",
+        "category": "BEAM",
+        "handler": 3,
+        "palette": 45
+      },
+      {
+        "cardId": 82,
+        "name": "Sweet Beam",
+        "category": "BEAM",
+        "handler": 2,
+        "palette": 47
+      }
+    ],
+    "maps": [
+      {
+        "side": "side1",
+        "descriptor": "0x5774",
+        "first640Sha256": "b954152252736103690d2e61e813b87b88873d57a18eaa08250fe830bd4e0e2b",
+        "firstBytes": "8080808080808080808080808080808080808080808080808080808080808080"
+      },
+      {
+        "side": "side2",
+        "descriptor": "0x59F4",
+        "first640Sha256": "b1cf8f47b879fc781b57f5f8aa8aeabc5c4e574c1a7e532a6f8b37887a2ba3ec",
+        "firstBytes": "8080808080808080808080808080808080808080808080808080808080808080"
+      }
+    ]
+  },
+  {
+    "fxResource": 72,
+    "fxHex": "0x48",
+    "bank": 103,
+    "bankHex": "0x67",
+    "localIndex": 12,
+    "baseDescriptor": 23668,
+    "baseDescriptorHex": "0x5C74",
+    "graphicsTileCount": 7,
+    "graphicsBytes": 112,
+    "graphicsSha256": "dbe24dd199436664fec27957fd7002244ca2235324574683611ae694eaf2bc28",
+    "side1Descriptor": 23784,
+    "side1DescriptorHex": "0x5CE8",
+    "side2Descriptor": 24424,
+    "side2DescriptorHex": "0x5F68",
+    "paletteIds": [
+      47
+    ],
+    "cardCount": 1,
+    "cards": [
+      {
+        "cardId": 56,
+        "name": "Crasher Ball",
+        "category": "BEAM",
+        "handler": 7,
+        "palette": 47
+      }
+    ],
+    "maps": [
+      {
+        "side": "side1",
+        "descriptor": "0x5CE8",
+        "first640Sha256": "badbc5bc607932609860d8909d7a19e3e335536cdf854b2086abc86e123a5cff",
+        "firstBytes": "8080808080808080808080808080808080808080808080808080808080808080"
+      },
+      {
+        "side": "side2",
+        "descriptor": "0x5F68",
+        "first640Sha256": "877964a34acebc48c5494d9fda38cea8aa1b310eaa4b407bfb615ae711364910",
+        "firstBytes": "8080808080808080808080808080808080808080808080808080808080808080"
+      }
+    ]
+  },
+  {
+    "fxResource": 75,
+    "fxHex": "0x4B",
+    "bank": 103,
+    "bankHex": "0x67",
+    "localIndex": 15,
+    "baseDescriptor": 25064,
+    "baseDescriptorHex": "0x61E8",
+    "graphicsTileCount": 17,
+    "graphicsBytes": 272,
+    "graphicsSha256": "e1ced0473522435e3c6e32ca633e26307e9bd9621921beaa0c5d3d7eb12e898a",
+    "side1Descriptor": 25340,
+    "side1DescriptorHex": "0x62FC",
+    "side2Descriptor": 25980,
+    "side2DescriptorHex": "0x657C",
+    "paletteIds": [
+      45
+    ],
+    "cardCount": 1,
+    "cards": [
+      {
+        "cardId": 69,
+        "name": "Rocket Punch",
+        "category": "DAMAGE",
+        "handler": 5,
+        "palette": 45
+      }
+    ],
+    "maps": [
+      {
+        "side": "side1",
+        "descriptor": "0x62FC",
+        "first640Sha256": "02fba1fcdb34f69999ef3a655adeba74df7e840e7348112db8265651eae442c2",
+        "firstBytes": "8080808080808080808080808080808080808080808080808080808080808080"
+      },
+      {
+        "side": "side2",
+        "descriptor": "0x657C",
+        "first640Sha256": "98476f3587dcbccbc56ae7ed56df8dee77c3d0283216f8564997b8b018d08ab4",
+        "firstBytes": "8080808080808080808080808080808080808080808080808080808080808080"
+      }
+    ]
+  },
+  {
+    "fxResource": 78,
+    "fxHex": "0x4E",
+    "bank": 103,
+    "bankHex": "0x67",
+    "localIndex": 18,
+    "baseDescriptor": 26620,
+    "baseDescriptorHex": "0x67FC",
+    "graphicsTileCount": 17,
+    "graphicsBytes": 272,
+    "graphicsSha256": "b91812ad3848bee5956a65cb884cad17dc07d23641517ea03b22666760c841ac",
+    "side1Descriptor": 26896,
+    "side1DescriptorHex": "0x6910",
+    "side2Descriptor": 27536,
+    "side2DescriptorHex": "0x6B90",
+    "paletteIds": [
+      47
+    ],
+    "cardCount": 1,
+    "cards": [
+      {
+        "cardId": 80,
+        "name": "Potbelly Atk",
+        "category": "DAMAGE",
+        "handler": 6,
+        "palette": 47
+      }
+    ],
+    "maps": [
+      {
+        "side": "side1",
+        "descriptor": "0x6910",
+        "first640Sha256": "f7444c899e5084606b052440b47bad4465f8dedad99067a4f1270122072b839b",
+        "firstBytes": "8080808080808080808080808080808080808080808080808080808080808080"
+      },
+      {
+        "side": "side2",
+        "descriptor": "0x6B90",
+        "first640Sha256": "5a5eeff6346b3366ab5ef9136fe8766cdc85693a700fe1e7be5148f1cb550621",
+        "firstBytes": "8080808080808080808080808080808080808080808080808080808080808080"
+      }
+    ]
+  },
+  {
+    "fxResource": 81,
+    "fxHex": "0x51",
+    "bank": 103,
+    "bankHex": "0x67",
+    "localIndex": 21,
+    "baseDescriptor": 28176,
+    "baseDescriptorHex": "0x6E10",
+    "graphicsTileCount": 41,
+    "graphicsBytes": 656,
+    "graphicsSha256": "d9cbab280e85af728adfda63c7df2e183f0c30c6f426b6f17e3fa190c5866ebb",
+    "side1Descriptor": 28836,
+    "side1DescriptorHex": "0x70A4",
+    "side2Descriptor": 29476,
+    "side2DescriptorHex": "0x7324",
+    "paletteIds": [
+      46
+    ],
+    "cardCount": 1,
+    "cards": [
+      {
+        "cardId": 62,
+        "name": "Body Change",
+        "category": "BEAM",
+        "handler": 3,
+        "palette": 46
+      }
+    ],
+    "maps": [
+      {
+        "side": "side1",
+        "descriptor": "0x70A4",
+        "first640Sha256": "ac47e1844c7afd273aeefa5430becfdc83e6886ec10747186ff8f4f69f79aa05",
+        "firstBytes": "8080808080808080808080808080808080808080808080808080808080808080"
+      },
+      {
+        "side": "side2",
+        "descriptor": "0x7324",
+        "first640Sha256": "07ef7d556137c772e32806366a22858fe8987bf9f77fa6587ac180879b43036c",
+        "firstBytes": "8080808080808080808080808080808080808080808080808080808080808080"
+      }
+    ]
+  },
+  {
+    "fxResource": 84,
+    "fxHex": "0x54",
+    "bank": 103,
+    "bankHex": "0x67",
+    "localIndex": 24,
+    "baseDescriptor": 30116,
+    "baseDescriptorHex": "0x75A4",
+    "graphicsTileCount": 48,
+    "graphicsBytes": 768,
+    "graphicsSha256": "af6d2fbdaa5810acc349f2a0e6e5ab7028405e8de4718cdc993f624a59e6bc98",
+    "side1Descriptor": 30888,
+    "side1DescriptorHex": "0x78A8",
+    "side2Descriptor": 31528,
+    "side2DescriptorHex": "0x7B28",
+    "paletteIds": [
+      45
+    ],
+    "cardCount": 1,
+    "cards": [
+      {
+        "cardId": 64,
+        "name": "Super E-Ball",
+        "category": "BEAM",
+        "handler": 7,
+        "palette": 45
+      }
+    ],
+    "maps": [
+      {
+        "side": "side1",
+        "descriptor": "0x78A8",
+        "first640Sha256": "bfd5f857b4c5b4bd193b05d3fd9b1c5f0a4e29e589fa5b4caa9621187e387f2c",
+        "firstBytes": "8080808080808080808080808080808080808080808080808080808080808080"
+      },
+      {
+        "side": "side2",
+        "descriptor": "0x7B28",
+        "first640Sha256": "c6fd5c6b9e493e665ba6eb032d897691c2baa3a6dddab8ea2c200925e35652e7",
+        "firstBytes": "8080808080808080808080808080808080808080808080808080808080808080"
+      }
+    ]
+  },
+  {
+    "fxResource": 90,
+    "fxHex": "0x5A",
+    "bank": 104,
+    "bankHex": "0x68",
+    "localIndex": 0,
+    "baseDescriptor": 16504,
+    "baseDescriptorHex": "0x4078",
+    "graphicsTileCount": 46,
+    "graphicsBytes": 736,
+    "graphicsSha256": "6a4c558313534c04f21f8067c0e04dfc0ff6571a07550169007398a8897dc5f5",
+    "side1Descriptor": 17244,
+    "side1DescriptorHex": "0x435C",
+    "side2Descriptor": 17884,
+    "side2DescriptorHex": "0x45DC",
+    "paletteIds": [
+      44
+    ],
+    "cardCount": 1,
+    "cards": [
+      {
+        "cardId": 24,
+        "name": "Spirit Bomb",
+        "category": "BEAM",
+        "handler": 7,
+        "palette": 44
+      }
+    ],
+    "maps": [
+      {
+        "side": "side1",
+        "descriptor": "0x435C",
+        "first640Sha256": "4e8d92f9388b2fcadf588d3bbe31b44832f5e638f9a0b3f4c7396c824c6baa95",
+        "firstBytes": "8080808080808080808080808080808080808080808080808080808080808080"
+      },
+      {
+        "side": "side2",
+        "descriptor": "0x45DC",
+        "first640Sha256": "918efda088d2a3dd95d1ae8c1a58134ad4995c41daa2175cdea756e17716b626",
+        "firstBytes": "8080808080808080808080808080808080808080808080808080808080808080"
+      }
+    ]
+  },
+  {
+    "fxResource": 99,
+    "fxHex": "0x63",
+    "bank": 104,
+    "bankHex": "0x68",
+    "localIndex": 9,
+    "baseDescriptor": 22292,
+    "baseDescriptorHex": "0x5714",
+    "graphicsTileCount": 22,
+    "graphicsBytes": 352,
+    "graphicsSha256": "9504f48ea14e3fb0cbc5b97bcf00d7a78511b5e31be7d18af5448d4c80038b85",
+    "side1Descriptor": 22648,
+    "side1DescriptorHex": "0x5878",
+    "side2Descriptor": 23288,
+    "side2DescriptorHex": "0x5AF8",
+    "paletteIds": [
+      44
+    ],
+    "cardCount": 1,
+    "cards": [
+      {
+        "cardId": 40,
+        "name": "S.G.K.Atk.",
+        "category": "BEAM",
+        "handler": 5,
+        "palette": 44
+      }
+    ],
+    "maps": [
+      {
+        "side": "side1",
+        "descriptor": "0x5878",
+        "first640Sha256": "757b9913217b6574e102eb5f2174bc5339d6ea5431572d4bcf735cb97fd52af9",
+        "firstBytes": "8080808080808080808080808080808080808080808080808080808080808080"
+      },
+      {
+        "side": "side2",
+        "descriptor": "0x5AF8",
+        "first640Sha256": "b3a66acce43d0f54685d23fcf5b6cfec98162b3fdbba6a9752675e0ece459ce1",
+        "firstBytes": "8080808080808080808080808080808080808080808080808080808080808080"
+      }
+    ]
+  },
+  {
+    "fxResource": 108,
+    "fxHex": "0x6C",
+    "bank": 104,
+    "bankHex": "0x68",
+    "localIndex": 18,
+    "baseDescriptor": 27216,
+    "baseDescriptorHex": "0x6A50",
+    "graphicsTileCount": 25,
+    "graphicsBytes": 400,
+    "graphicsSha256": "a74369b05dd7f95d648f5f29216e5f6a6acf7c5c4d2d4fb08d300f8855dfecd8",
+    "side1Descriptor": 27620,
+    "side1DescriptorHex": "0x6BE4",
+    "side2Descriptor": 28260,
+    "side2DescriptorHex": "0x6E64",
+    "paletteIds": [
+      44
+    ],
+    "cardCount": 1,
+    "cards": [
+      {
+        "cardId": 41,
+        "name": "V-ball Crash",
+        "category": "DAMAGE",
+        "handler": 12,
+        "palette": 44
+      }
+    ],
+    "maps": [
+      {
+        "side": "side1",
+        "descriptor": "0x6BE4",
+        "first640Sha256": "7c92a03168526f67ee767b7c73afb45fc409e0158ae4d96e5b7959c042e87018",
+        "firstBytes": "8080808080808080808080808080808080808080808080808080808080808080"
+      },
+      {
+        "side": "side2",
+        "descriptor": "0x6E64",
+        "first640Sha256": "7f015b271fe166e7a4315b650e81a369963725706a728dcd9d84834474d9aabc",
+        "firstBytes": "8080808080808080808080808080808080808080808080808080808080808080"
+      }
+    ]
+  },
+  {
+    "fxResource": 111,
+    "fxHex": "0x6F",
+    "bank": 104,
+    "bankHex": "0x68",
+    "localIndex": 21,
+    "baseDescriptor": 28900,
+    "baseDescriptorHex": "0x70E4",
+    "graphicsTileCount": 62,
+    "graphicsBytes": 992,
+    "graphicsSha256": "55a8dc8a77fe67af5eb832f4545dc9448643b7f9893e7033f6f0f15ffbe26025",
+    "side1Descriptor": 29896,
+    "side1DescriptorHex": "0x74C8",
+    "side2Descriptor": 30536,
+    "side2DescriptorHex": "0x7748",
+    "paletteIds": [
+      46
+    ],
+    "cardCount": 1,
+    "cards": [
+      {
+        "cardId": 58,
+        "name": "P.Comet Z",
+        "category": "DAMAGE",
+        "handler": 14,
+        "palette": 46
+      }
+    ],
+    "maps": [
+      {
+        "side": "side1",
+        "descriptor": "0x74C8",
+        "first640Sha256": "dcf2c00afe53cd0d25b399fb47495fb36540d7962be7ecd76bcb856178dde493",
+        "firstBytes": "8080808080808080808080808080808080808080808080808080808080808080"
+      },
+      {
+        "side": "side2",
+        "descriptor": "0x7748",
+        "first640Sha256": "5ad6f5978ae9aff6fdea944e264dfb5c47afe8122f1a536e962f17c71a68d0a5",
+        "firstBytes": "8080808080808080808080808080808080808080808080808080808080808080"
+      }
+    ]
+  }
+]

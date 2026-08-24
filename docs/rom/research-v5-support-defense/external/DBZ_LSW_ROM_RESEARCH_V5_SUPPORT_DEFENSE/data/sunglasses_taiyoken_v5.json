@@ -1,0 +1,22 @@
+{
+  "sunglasses": {
+    "cardId": 109,
+    "applySite": "Bank7E:$5519",
+    "effect": "fighter status byte +7 |= $08"
+  },
+  "taiyoken": {
+    "cardId": 19,
+    "site": "Bank7E:$5931",
+    "test": "fighter status byte +7 & $08",
+    "ifClear": "CA83=$01",
+    "ifSet": "CA83=$81"
+  },
+  "standardDamage": {
+    "site": "Bank03:$60B5",
+    "test": "CA83 & $80",
+    "ifClear": "queues cancellation/reaction path including macros $1C+$37 and terminates defense sequence",
+    "ifSet": "bypasses that cancellation tail and resumes normal attack execution from $60F7"
+  },
+  "conclusion": "Sunglasses is a ROM-proven counter to Taiyoken. Taiyoken with status bit $08 set is marked $81 and the standard-damage attack continues.",
+  "evidence": "ROM_HANDLER_VERIFIED"
+}

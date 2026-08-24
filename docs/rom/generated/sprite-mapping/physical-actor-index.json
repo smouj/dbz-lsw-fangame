@@ -1,0 +1,5028 @@
+[
+ {
+  "formId": "android_16",
+  "dir": "android_16",
+  "pose": "idle",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "android_16_idle_00.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "android_16",
+  "dir": "android_16",
+  "pose": "move_front",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "android_16_move_front_00.png",
+   "android_16_move_front_01.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "android_16",
+  "dir": "android_16",
+  "pose": "move_back",
+  "classification": "SHARED_PHYSICAL",
+  "ownerPose": "move_front",
+  "files": [
+   "android_16_move_front_00.png",
+   "android_16_move_front_01.png"
+  ],
+  "provenance": "Reutiliza los frames físicos de move_front (2 archivos)"
+ },
+ {
+  "formId": "android_16",
+  "dir": "android_16",
+  "pose": "attack_fwd",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "android_16_attack_fwd_00.png",
+   "android_16_attack_fwd_01.png",
+   "android_16_attack_fwd_02.png",
+   "android_16_attack_fwd_03.png",
+   "android_16_attack_fwd_04.png",
+   "android_16_attack_fwd_05.png",
+   "android_16_attack_fwd_06.png",
+   "android_16_attack_fwd_07.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "android_16",
+  "dir": "android_16",
+  "pose": "attack_ud",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "android_16_attack_ud_00.png",
+   "android_16_attack_ud_01.png",
+   "android_16_attack_ud_02.png",
+   "android_16_attack_ud_03.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "android_16",
+  "dir": "android_16",
+  "pose": "hurt",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "android_16_hurt_00.png",
+   "android_16_hurt_01.png",
+   "android_16_hurt_02.png",
+   "android_16_hurt_03.png",
+   "android_16_hurt_04.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "android_16",
+  "dir": "android_16",
+  "pose": "beam_charge",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "android_16_beam_charge_00.png",
+   "android_16_beam_charge_01.png",
+   "android_16_beam_charge_02.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "android_16",
+  "dir": "android_16",
+  "pose": "beam_fire",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "android_16_beam_fire_00.png",
+   "android_16_beam_fire_01.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "android_17",
+  "dir": "android_17",
+  "pose": "idle",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "android_17_idle_00.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "android_17",
+  "dir": "android_17",
+  "pose": "move_front",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "android_17_move_front_00.png",
+   "android_17_move_front_01.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "android_17",
+  "dir": "android_17",
+  "pose": "move_back",
+  "classification": "SHARED_PHYSICAL",
+  "ownerPose": "move_front",
+  "files": [
+   "android_17_move_front_00.png",
+   "android_17_move_front_01.png"
+  ],
+  "provenance": "Reutiliza los frames físicos de move_front (2 archivos)"
+ },
+ {
+  "formId": "android_17",
+  "dir": "android_17",
+  "pose": "attack_fwd",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "android_17_attack_fwd_00.png",
+   "android_17_attack_fwd_01.png",
+   "android_17_attack_fwd_02.png",
+   "android_17_attack_fwd_03.png",
+   "android_17_attack_fwd_04.png",
+   "android_17_attack_fwd_05.png",
+   "android_17_attack_fwd_06.png",
+   "android_17_attack_fwd_07.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "android_17",
+  "dir": "android_17",
+  "pose": "attack_ud",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "android_17_attack_ud_00.png",
+   "android_17_attack_ud_01.png",
+   "android_17_attack_ud_02.png",
+   "android_17_attack_ud_03.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "android_17",
+  "dir": "android_17",
+  "pose": "hurt",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "android_17_hurt_00.png",
+   "android_17_hurt_01.png",
+   "android_17_hurt_02.png",
+   "android_17_hurt_03.png",
+   "android_17_hurt_04.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "android_17",
+  "dir": "android_17",
+  "pose": "beam_charge",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "android_17_beam_charge_00.png",
+   "android_17_beam_charge_01.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "android_17",
+  "dir": "android_17",
+  "pose": "beam_fire",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "android_17_beam_fire_00.png",
+   "android_17_beam_fire_01.png",
+   "android_17_beam_fire_02.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "android_17",
+  "dir": "android_17",
+  "pose": "gather_power",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "android_17_gather_power_00.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "android_18",
+  "dir": "android_18",
+  "pose": "idle",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "android_18_idle_00.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "android_18",
+  "dir": "android_18",
+  "pose": "move_front",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "android_18_move_front_00.png",
+   "android_18_move_front_01.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "android_18",
+  "dir": "android_18",
+  "pose": "move_back",
+  "classification": "SHARED_PHYSICAL",
+  "ownerPose": "move_front",
+  "files": [
+   "android_18_move_front_00.png",
+   "android_18_move_front_01.png"
+  ],
+  "provenance": "Reutiliza los frames físicos de move_front (2 archivos)"
+ },
+ {
+  "formId": "android_18",
+  "dir": "android_18",
+  "pose": "attack_fwd",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "android_18_attack_fwd_00.png",
+   "android_18_attack_fwd_01.png",
+   "android_18_attack_fwd_02.png",
+   "android_18_attack_fwd_03.png",
+   "android_18_attack_fwd_04.png",
+   "android_18_attack_fwd_05.png",
+   "android_18_attack_fwd_06.png",
+   "android_18_attack_fwd_07.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "android_18",
+  "dir": "android_18",
+  "pose": "attack_ud",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "android_18_attack_ud_00.png",
+   "android_18_attack_ud_01.png",
+   "android_18_attack_ud_02.png",
+   "android_18_attack_ud_03.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "android_18",
+  "dir": "android_18",
+  "pose": "hurt",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "android_18_hurt_00.png",
+   "android_18_hurt_01.png",
+   "android_18_hurt_02.png",
+   "android_18_hurt_03.png",
+   "android_18_hurt_04.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "android_18",
+  "dir": "android_18",
+  "pose": "beam_charge",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "android_18_beam_charge_00.png",
+   "android_18_beam_charge_01.png",
+   "android_18_beam_charge_02.png",
+   "android_18_beam_charge_03.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "android_18",
+  "dir": "android_18",
+  "pose": "gather_power",
+  "classification": "SHARED_PHYSICAL",
+  "ownerPose": "beam_fire",
+  "files": [
+   "android_18_beam_fire_00.png",
+   "android_18_beam_fire_02.png"
+  ],
+  "provenance": "Reutiliza los frames físicos de beam_fire (2 archivos)"
+ },
+ {
+  "formId": "android_19",
+  "dir": "android_19",
+  "pose": "idle",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "android_19_idle_00.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "android_19",
+  "dir": "android_19",
+  "pose": "move_front",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "android_19_move_front_00.png",
+   "android_19_move_front_01.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "android_19",
+  "dir": "android_19",
+  "pose": "move_back",
+  "classification": "SHARED_PHYSICAL",
+  "ownerPose": "move_front",
+  "files": [
+   "android_19_move_front_00.png",
+   "android_19_move_front_01.png"
+  ],
+  "provenance": "Reutiliza los frames físicos de move_front (2 archivos)"
+ },
+ {
+  "formId": "android_19",
+  "dir": "android_19",
+  "pose": "attack_fwd",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "android_19_attack_fwd_00.png",
+   "android_19_attack_fwd_01.png",
+   "android_19_attack_fwd_02.png",
+   "android_19_attack_fwd_03.png",
+   "android_19_attack_fwd_04.png",
+   "android_19_attack_fwd_05.png",
+   "android_19_attack_fwd_06.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "android_19",
+  "dir": "android_19",
+  "pose": "attack_ud",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "android_19_attack_ud_00.png",
+   "android_19_attack_ud_01.png",
+   "android_19_attack_ud_02.png",
+   "android_19_attack_ud_03.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "android_19",
+  "dir": "android_19",
+  "pose": "hurt",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "android_19_hurt_00.png",
+   "android_19_hurt_01.png",
+   "android_19_hurt_02.png",
+   "android_19_hurt_03.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "android_19",
+  "dir": "android_19",
+  "pose": "beam_charge",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "android_19_beam_charge_00.png",
+   "android_19_beam_charge_01.png",
+   "android_19_beam_charge_02.png",
+   "android_19_beam_charge_03.png",
+   "android_19_beam_charge_04.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "android_19",
+  "dir": "android_19",
+  "pose": "gather_power",
+  "classification": "SHARED_PHYSICAL",
+  "ownerPose": "beam_fire",
+  "files": [
+   "android_19_beam_fire_01.png",
+   "android_19_beam_fire_02.png"
+  ],
+  "provenance": "Reutiliza los frames físicos de beam_fire (2 archivos)"
+ },
+ {
+  "formId": "android_20",
+  "dir": "android_20",
+  "pose": "idle",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "android_20_idle_00.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "android_20",
+  "dir": "android_20",
+  "pose": "move_front",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "android_20_move_front_00.png",
+   "android_20_move_front_01.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "android_20",
+  "dir": "android_20",
+  "pose": "move_back",
+  "classification": "SHARED_PHYSICAL",
+  "ownerPose": "move_front",
+  "files": [
+   "android_20_move_front_00.png",
+   "android_20_move_front_01.png"
+  ],
+  "provenance": "Reutiliza los frames físicos de move_front (2 archivos)"
+ },
+ {
+  "formId": "android_20",
+  "dir": "android_20",
+  "pose": "attack_fwd",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "android_20_attack_fwd_00.png",
+   "android_20_attack_fwd_01.png",
+   "android_20_attack_fwd_02.png",
+   "android_20_attack_fwd_03.png",
+   "android_20_attack_fwd_04.png",
+   "android_20_attack_fwd_05.png",
+   "android_20_attack_fwd_06.png",
+   "android_20_attack_fwd_07.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "android_20",
+  "dir": "android_20",
+  "pose": "attack_ud",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "android_20_attack_ud_00.png",
+   "android_20_attack_ud_01.png",
+   "android_20_attack_ud_02.png",
+   "android_20_attack_ud_03.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "android_20",
+  "dir": "android_20",
+  "pose": "hurt",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "android_20_hurt_00.png",
+   "android_20_hurt_01.png",
+   "android_20_hurt_02.png",
+   "android_20_hurt_03.png",
+   "android_20_hurt_04.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "android_20",
+  "dir": "android_20",
+  "pose": "beam_charge",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "android_20_beam_charge_00.png",
+   "android_20_beam_charge_01.png",
+   "android_20_beam_charge_02.png",
+   "android_20_beam_charge_03.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "android_20",
+  "dir": "android_20",
+  "pose": "gather_power",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "android_20_gather_power_00.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "burter",
+  "dir": "burter",
+  "pose": "idle",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "burter_idle_00.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "burter",
+  "dir": "burter",
+  "pose": "move_front",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "burter_move_front_00.png",
+   "burter_move_front_01.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "burter",
+  "dir": "burter",
+  "pose": "move_back",
+  "classification": "SHARED_PHYSICAL",
+  "ownerPose": "move_front",
+  "files": [
+   "burter_move_front_00.png",
+   "burter_move_front_01.png"
+  ],
+  "provenance": "Reutiliza los frames físicos de move_front (2 archivos)"
+ },
+ {
+  "formId": "burter",
+  "dir": "burter",
+  "pose": "attack_fwd",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "burter_attack_fwd_00.png",
+   "burter_attack_fwd_01.png",
+   "burter_attack_fwd_02.png",
+   "burter_attack_fwd_03.png",
+   "burter_attack_fwd_04.png",
+   "burter_attack_fwd_05.png",
+   "burter_attack_fwd_06.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "burter",
+  "dir": "burter",
+  "pose": "attack_ud",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "burter_attack_ud_00.png",
+   "burter_attack_ud_01.png",
+   "burter_attack_ud_02.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "burter",
+  "dir": "burter",
+  "pose": "hurt",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "burter_hurt_00.png",
+   "burter_hurt_01.png",
+   "burter_hurt_02.png",
+   "burter_hurt_03.png",
+   "burter_hurt_04.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "burter",
+  "dir": "burter",
+  "pose": "beam_charge",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "burter_beam_charge_00.png",
+   "burter_beam_charge_01.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "burter",
+  "dir": "burter",
+  "pose": "gather_power",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "burter_gather_power_00.png",
+   "burter_gather_power_01.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "burter",
+  "dir": "burter",
+  "pose": "beam_fire",
+  "classification": "SHARED_PHYSICAL",
+  "ownerPose": "beam_charge",
+  "files": [
+   "burter_beam_charge_00.png",
+   "burter_beam_charge_01.png"
+  ],
+  "provenance": "Reutiliza los frames físicos de beam_charge (2 archivos)"
+ },
+ {
+  "formId": "buu_base",
+  "dir": "buu_base",
+  "pose": "idle",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "buu_base_idle_00.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "buu_base",
+  "dir": "buu_base",
+  "pose": "move_front",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "buu_base_move_front_00.png",
+   "buu_base_move_front_01.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "buu_base",
+  "dir": "buu_base",
+  "pose": "move_back",
+  "classification": "SHARED_PHYSICAL",
+  "ownerPose": "move_front",
+  "files": [
+   "buu_base_move_front_00.png",
+   "buu_base_move_front_01.png"
+  ],
+  "provenance": "Reutiliza los frames físicos de move_front (2 archivos)"
+ },
+ {
+  "formId": "buu_base",
+  "dir": "buu_base",
+  "pose": "attack_fwd",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "buu_base_attack_fwd_00.png",
+   "buu_base_attack_fwd_01.png",
+   "buu_base_attack_fwd_02.png",
+   "buu_base_attack_fwd_03.png",
+   "buu_base_attack_fwd_04.png",
+   "buu_base_attack_fwd_05.png",
+   "buu_base_attack_fwd_06.png",
+   "buu_base_attack_fwd_07.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "buu_base",
+  "dir": "buu_base",
+  "pose": "attack_ud",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "buu_base_attack_ud_00.png",
+   "buu_base_attack_ud_01.png",
+   "buu_base_attack_ud_02.png",
+   "buu_base_attack_ud_03.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "buu_base",
+  "dir": "buu_base",
+  "pose": "hurt",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "buu_base_hurt_00.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "buu_base",
+  "dir": "buu_base",
+  "pose": "beam_charge",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "buu_base_beam_charge_00.png",
+   "buu_base_beam_charge_01.png",
+   "buu_base_beam_charge_02.png",
+   "buu_base_beam_charge_03.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "buu_base",
+  "dir": "buu_base",
+  "pose": "gather_power",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "buu_base_gather_power_00.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "buu_gohan",
+  "dir": "buu_gohan",
+  "pose": "idle",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "buu_gohan_idle_00.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "buu_gohan",
+  "dir": "buu_gohan",
+  "pose": "move_front",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "buu_gohan_move_front_00.png",
+   "buu_gohan_move_front_01.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "buu_gohan",
+  "dir": "buu_gohan",
+  "pose": "move_back",
+  "classification": "SHARED_PHYSICAL",
+  "ownerPose": "move_front",
+  "files": [
+   "buu_gohan_move_front_00.png",
+   "buu_gohan_move_front_01.png"
+  ],
+  "provenance": "Reutiliza los frames físicos de move_front (2 archivos)"
+ },
+ {
+  "formId": "buu_gohan",
+  "dir": "buu_gohan",
+  "pose": "attack_fwd",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "buu_gohan_attack_fwd_00.png",
+   "buu_gohan_attack_fwd_01.png",
+   "buu_gohan_attack_fwd_02.png",
+   "buu_gohan_attack_fwd_03.png",
+   "buu_gohan_attack_fwd_04.png",
+   "buu_gohan_attack_fwd_05.png",
+   "buu_gohan_attack_fwd_06.png",
+   "buu_gohan_attack_fwd_07.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "buu_gohan",
+  "dir": "buu_gohan",
+  "pose": "attack_ud",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "buu_gohan_attack_ud_00.png",
+   "buu_gohan_attack_ud_01.png",
+   "buu_gohan_attack_ud_02.png",
+   "buu_gohan_attack_ud_03.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "buu_gohan",
+  "dir": "buu_gohan",
+  "pose": "hurt",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "buu_gohan_hurt_00.png",
+   "buu_gohan_hurt_01.png",
+   "buu_gohan_hurt_02.png",
+   "buu_gohan_hurt_03.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "buu_gohan",
+  "dir": "buu_gohan",
+  "pose": "beam_charge",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "buu_gohan_beam_charge_00.png",
+   "buu_gohan_beam_charge_01.png",
+   "buu_gohan_beam_charge_02.png",
+   "buu_gohan_beam_charge_03.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "buu_gotenks",
+  "dir": "buu_gotenks",
+  "pose": "idle",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "buu_gotenks_idle_00.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "buu_gotenks",
+  "dir": "buu_gotenks",
+  "pose": "move_front",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "buu_gotenks_move_front_00.png",
+   "buu_gotenks_move_front_01.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "buu_gotenks",
+  "dir": "buu_gotenks",
+  "pose": "move_back",
+  "classification": "SHARED_PHYSICAL",
+  "ownerPose": "move_front",
+  "files": [
+   "buu_gotenks_move_front_00.png",
+   "buu_gotenks_move_front_01.png"
+  ],
+  "provenance": "Reutiliza los frames físicos de move_front (2 archivos)"
+ },
+ {
+  "formId": "buu_gotenks",
+  "dir": "buu_gotenks",
+  "pose": "attack_fwd",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "buu_gotenks_attack_fwd_00.png",
+   "buu_gotenks_attack_fwd_01.png",
+   "buu_gotenks_attack_fwd_02.png",
+   "buu_gotenks_attack_fwd_03.png",
+   "buu_gotenks_attack_fwd_04.png",
+   "buu_gotenks_attack_fwd_05.png",
+   "buu_gotenks_attack_fwd_06.png",
+   "buu_gotenks_attack_fwd_07.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "buu_gotenks",
+  "dir": "buu_gotenks",
+  "pose": "attack_ud",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "buu_gotenks_attack_ud_00.png",
+   "buu_gotenks_attack_ud_01.png",
+   "buu_gotenks_attack_ud_02.png",
+   "buu_gotenks_attack_ud_03.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "buu_gotenks",
+  "dir": "buu_gotenks",
+  "pose": "hurt",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "buu_gotenks_hurt_00.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "buu_gotenks",
+  "dir": "buu_gotenks",
+  "pose": "beam_charge",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "buu_gotenks_beam_charge_00.png",
+   "buu_gotenks_beam_charge_01.png",
+   "buu_gotenks_beam_charge_02.png",
+   "buu_gotenks_beam_charge_03.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "buu_gotenks",
+  "dir": "buu_gotenks",
+  "pose": "gather_power",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "buu_gotenks_gather_power_00.png",
+   "buu_gotenks_gather_power_01.png",
+   "buu_gotenks_gather_power_02.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "buu_kid",
+  "dir": "buu_kid",
+  "pose": "idle",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "buu_kid_idle_00.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "buu_kid",
+  "dir": "buu_kid",
+  "pose": "move_front",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "buu_kid_move_front_00.png",
+   "buu_kid_move_front_01.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "buu_kid",
+  "dir": "buu_kid",
+  "pose": "move_back",
+  "classification": "SHARED_PHYSICAL",
+  "ownerPose": "move_front",
+  "files": [
+   "buu_kid_move_front_00.png",
+   "buu_kid_move_front_01.png"
+  ],
+  "provenance": "Reutiliza los frames físicos de move_front (2 archivos)"
+ },
+ {
+  "formId": "buu_kid",
+  "dir": "buu_kid",
+  "pose": "attack_fwd",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "buu_kid_attack_fwd_00.png",
+   "buu_kid_attack_fwd_01.png",
+   "buu_kid_attack_fwd_02.png",
+   "buu_kid_attack_fwd_03.png",
+   "buu_kid_attack_fwd_04.png",
+   "buu_kid_attack_fwd_05.png",
+   "buu_kid_attack_fwd_06.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "buu_kid",
+  "dir": "buu_kid",
+  "pose": "attack_ud",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "buu_kid_attack_ud_00.png",
+   "buu_kid_attack_ud_01.png",
+   "buu_kid_attack_ud_02.png",
+   "buu_kid_attack_ud_03.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "buu_kid",
+  "dir": "buu_kid",
+  "pose": "hurt",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "buu_kid_hurt_00.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "buu_kid",
+  "dir": "buu_kid",
+  "pose": "beam_charge",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "buu_kid_beam_charge_00.png",
+   "buu_kid_beam_charge_01.png",
+   "buu_kid_beam_charge_02.png",
+   "buu_kid_beam_charge_03.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "buu_kid",
+  "dir": "buu_kid",
+  "pose": "gather_power",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "buu_kid_gather_power_00.png",
+   "buu_kid_gather_power_01.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "buu_super",
+  "dir": "buu_super",
+  "pose": "idle",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "buu_super_idle_00.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "buu_super",
+  "dir": "buu_super",
+  "pose": "move_front",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "buu_super_move_front_00.png",
+   "buu_super_move_front_01.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "buu_super",
+  "dir": "buu_super",
+  "pose": "move_back",
+  "classification": "SHARED_PHYSICAL",
+  "ownerPose": "move_front",
+  "files": [
+   "buu_super_move_front_00.png",
+   "buu_super_move_front_01.png"
+  ],
+  "provenance": "Reutiliza los frames físicos de move_front (2 archivos)"
+ },
+ {
+  "formId": "buu_super",
+  "dir": "buu_super",
+  "pose": "attack_fwd",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "buu_super_attack_fwd_00.png",
+   "buu_super_attack_fwd_01.png",
+   "buu_super_attack_fwd_02.png",
+   "buu_super_attack_fwd_03.png",
+   "buu_super_attack_fwd_04.png",
+   "buu_super_attack_fwd_05.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "buu_super",
+  "dir": "buu_super",
+  "pose": "attack_ud",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "buu_super_attack_ud_00.png",
+   "buu_super_attack_ud_01.png",
+   "buu_super_attack_ud_02.png",
+   "buu_super_attack_ud_03.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "buu_super",
+  "dir": "buu_super",
+  "pose": "hurt",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "buu_super_hurt_00.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "buu_super",
+  "dir": "buu_super",
+  "pose": "beam_charge",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "buu_super_beam_charge_00.png",
+   "buu_super_beam_charge_01.png",
+   "buu_super_beam_charge_02.png",
+   "buu_super_beam_charge_03.png",
+   "buu_super_beam_charge_04.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "buu_super",
+  "dir": "buu_super",
+  "pose": "gather_power",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "buu_super_gather_power_00.png",
+   "buu_super_gather_power_01.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "buu_super",
+  "dir": "buu_super",
+  "pose": "beam_fire",
+  "classification": "SHARED_PHYSICAL",
+  "ownerPose": "beam_charge",
+  "files": [
+   "buu_super_beam_charge_00.png",
+   "buu_super_beam_charge_01.png",
+   "buu_super_beam_charge_02.png",
+   "buu_super_beam_charge_03.png",
+   "buu_super_beam_charge_04.png"
+  ],
+  "provenance": "Reutiliza los frames físicos de beam_charge (5 archivos)"
+ },
+ {
+  "formId": "cell_imperfect",
+  "dir": "cell_imperfect",
+  "pose": "idle",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "cell_imperfect_idle_00.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "cell_imperfect",
+  "dir": "cell_imperfect",
+  "pose": "move_front",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "cell_imperfect_move_front_00.png",
+   "cell_imperfect_move_front_01.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "cell_imperfect",
+  "dir": "cell_imperfect",
+  "pose": "move_back",
+  "classification": "SHARED_PHYSICAL",
+  "ownerPose": "move_front",
+  "files": [
+   "cell_imperfect_move_front_00.png",
+   "cell_imperfect_move_front_01.png"
+  ],
+  "provenance": "Reutiliza los frames físicos de move_front (2 archivos)"
+ },
+ {
+  "formId": "cell_imperfect",
+  "dir": "cell_imperfect",
+  "pose": "attack_fwd",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "cell_imperfect_attack_fwd_00.png",
+   "cell_imperfect_attack_fwd_01.png",
+   "cell_imperfect_attack_fwd_02.png",
+   "cell_imperfect_attack_fwd_03.png",
+   "cell_imperfect_attack_fwd_04.png",
+   "cell_imperfect_attack_fwd_05.png",
+   "cell_imperfect_attack_fwd_06.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "cell_imperfect",
+  "dir": "cell_imperfect",
+  "pose": "attack_ud",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "cell_imperfect_attack_ud_00.png",
+   "cell_imperfect_attack_ud_01.png",
+   "cell_imperfect_attack_ud_02.png",
+   "cell_imperfect_attack_ud_03.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "cell_imperfect",
+  "dir": "cell_imperfect",
+  "pose": "hurt",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "cell_imperfect_hurt_00.png",
+   "cell_imperfect_hurt_01.png",
+   "cell_imperfect_hurt_02.png",
+   "cell_imperfect_hurt_03.png",
+   "cell_imperfect_hurt_04.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "cell_imperfect",
+  "dir": "cell_imperfect",
+  "pose": "beam_charge",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "cell_imperfect_beam_charge_00.png",
+   "cell_imperfect_beam_charge_01.png",
+   "cell_imperfect_beam_charge_02.png",
+   "cell_imperfect_beam_charge_03.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "cell_imperfect",
+  "dir": "cell_imperfect",
+  "pose": "beam_fire",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "cell_imperfect_beam_fire_00.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "cell_imperfect",
+  "dir": "cell_imperfect",
+  "pose": "gather_power",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "cell_imperfect_gather_power_00.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "cell_jr",
+  "dir": "cell_jr",
+  "pose": "idle",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "cell_jr_idle_00.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "cell_jr",
+  "dir": "cell_jr",
+  "pose": "move_front",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "cell_jr_move_front_00.png",
+   "cell_jr_move_front_01.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "cell_jr",
+  "dir": "cell_jr",
+  "pose": "move_back",
+  "classification": "SHARED_PHYSICAL",
+  "ownerPose": "move_front",
+  "files": [
+   "cell_jr_move_front_00.png",
+   "cell_jr_move_front_01.png"
+  ],
+  "provenance": "Reutiliza los frames físicos de move_front (2 archivos)"
+ },
+ {
+  "formId": "cell_jr",
+  "dir": "cell_jr",
+  "pose": "attack_fwd",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "cell_jr_attack_fwd_00.png",
+   "cell_jr_attack_fwd_01.png",
+   "cell_jr_attack_fwd_02.png",
+   "cell_jr_attack_fwd_03.png",
+   "cell_jr_attack_fwd_04.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "cell_jr",
+  "dir": "cell_jr",
+  "pose": "attack_ud",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "cell_jr_attack_ud_00.png",
+   "cell_jr_attack_ud_01.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "cell_jr",
+  "dir": "cell_jr",
+  "pose": "hurt",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "cell_jr_hurt_00.png",
+   "cell_jr_hurt_01.png",
+   "cell_jr_hurt_02.png",
+   "cell_jr_hurt_03.png",
+   "cell_jr_hurt_04.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "cell_jr",
+  "dir": "cell_jr",
+  "pose": "beam_charge",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "cell_jr_beam_charge_00.png",
+   "cell_jr_beam_charge_01.png",
+   "cell_jr_beam_charge_02.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "cell_jr",
+  "dir": "cell_jr",
+  "pose": "beam_fire",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "cell_jr_beam_fire_00.png",
+   "cell_jr_beam_fire_01.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "cell_perfect",
+  "dir": "cell_perfect",
+  "pose": "idle",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "cell_perfect_idle_00.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "cell_perfect",
+  "dir": "cell_perfect",
+  "pose": "move_front",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "cell_perfect_move_front_00.png",
+   "cell_perfect_move_front_01.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "cell_perfect",
+  "dir": "cell_perfect",
+  "pose": "move_back",
+  "classification": "SHARED_PHYSICAL",
+  "ownerPose": "move_front",
+  "files": [
+   "cell_perfect_move_front_00.png",
+   "cell_perfect_move_front_01.png"
+  ],
+  "provenance": "Reutiliza los frames físicos de move_front (2 archivos)"
+ },
+ {
+  "formId": "cell_perfect",
+  "dir": "cell_perfect",
+  "pose": "attack_fwd",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "cell_perfect_attack_fwd_00.png",
+   "cell_perfect_attack_fwd_01.png",
+   "cell_perfect_attack_fwd_02.png",
+   "cell_perfect_attack_fwd_03.png",
+   "cell_perfect_attack_fwd_04.png",
+   "cell_perfect_attack_fwd_05.png",
+   "cell_perfect_attack_fwd_06.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "cell_perfect",
+  "dir": "cell_perfect",
+  "pose": "attack_ud",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "cell_perfect_attack_ud_00.png",
+   "cell_perfect_attack_ud_01.png",
+   "cell_perfect_attack_ud_02.png",
+   "cell_perfect_attack_ud_03.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "cell_perfect",
+  "dir": "cell_perfect",
+  "pose": "hurt",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "cell_perfect_hurt_00.png",
+   "cell_perfect_hurt_01.png",
+   "cell_perfect_hurt_02.png",
+   "cell_perfect_hurt_03.png",
+   "cell_perfect_hurt_04.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "cell_perfect",
+  "dir": "cell_perfect",
+  "pose": "beam_charge",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "cell_perfect_beam_charge_00.png",
+   "cell_perfect_beam_charge_01.png",
+   "cell_perfect_beam_charge_02.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "cell_perfect",
+  "dir": "cell_perfect",
+  "pose": "beam_fire",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "cell_perfect_beam_fire_00.png",
+   "cell_perfect_beam_fire_01.png",
+   "cell_perfect_beam_fire_02.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "cell_semi",
+  "dir": "cell_semi",
+  "pose": "idle",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "cell_semi_idle_00.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "cell_semi",
+  "dir": "cell_semi",
+  "pose": "move_front",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "cell_semi_move_front_00.png",
+   "cell_semi_move_front_01.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "cell_semi",
+  "dir": "cell_semi",
+  "pose": "move_back",
+  "classification": "SHARED_PHYSICAL",
+  "ownerPose": "move_front",
+  "files": [
+   "cell_semi_move_front_00.png",
+   "cell_semi_move_front_01.png"
+  ],
+  "provenance": "Reutiliza los frames físicos de move_front (2 archivos)"
+ },
+ {
+  "formId": "cell_semi",
+  "dir": "cell_semi",
+  "pose": "attack_fwd",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "cell_semi_attack_fwd_00.png",
+   "cell_semi_attack_fwd_01.png",
+   "cell_semi_attack_fwd_02.png",
+   "cell_semi_attack_fwd_03.png",
+   "cell_semi_attack_fwd_04.png",
+   "cell_semi_attack_fwd_05.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "cell_semi",
+  "dir": "cell_semi",
+  "pose": "attack_ud",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "cell_semi_attack_ud_00.png",
+   "cell_semi_attack_ud_01.png",
+   "cell_semi_attack_ud_02.png",
+   "cell_semi_attack_ud_03.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "cell_semi",
+  "dir": "cell_semi",
+  "pose": "hurt",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "cell_semi_hurt_00.png",
+   "cell_semi_hurt_01.png",
+   "cell_semi_hurt_02.png",
+   "cell_semi_hurt_03.png",
+   "cell_semi_hurt_04.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "cell_semi",
+  "dir": "cell_semi",
+  "pose": "beam_charge",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "cell_semi_beam_charge_00.png",
+   "cell_semi_beam_charge_01.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "cell_semi",
+  "dir": "cell_semi",
+  "pose": "beam_fire",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "cell_semi_beam_fire_00.png",
+   "cell_semi_beam_fire_01.png",
+   "cell_semi_beam_fire_02.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "cell_semi",
+  "dir": "cell_semi",
+  "pose": "gather_power",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "cell_semi_gather_power_00.png",
+   "cell_semi_gather_power_01.png",
+   "cell_semi_gather_power_02.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "frieza_final",
+  "dir": "frieza_final",
+  "pose": "idle",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "frieza_final_idle_00.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "frieza_final",
+  "dir": "frieza_final",
+  "pose": "move_front",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "frieza_final_move_front_00.png",
+   "frieza_final_move_front_01.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "frieza_final",
+  "dir": "frieza_final",
+  "pose": "move_back",
+  "classification": "SHARED_PHYSICAL",
+  "ownerPose": "move_front",
+  "files": [
+   "frieza_final_move_front_00.png",
+   "frieza_final_move_front_01.png"
+  ],
+  "provenance": "Reutiliza los frames físicos de move_front (2 archivos)"
+ },
+ {
+  "formId": "frieza_final",
+  "dir": "frieza_final",
+  "pose": "attack_fwd",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "frieza_final_attack_fwd_00.png",
+   "frieza_final_attack_fwd_01.png",
+   "frieza_final_attack_fwd_02.png",
+   "frieza_final_attack_fwd_03.png",
+   "frieza_final_attack_fwd_04.png",
+   "frieza_final_attack_fwd_05.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "frieza_final",
+  "dir": "frieza_final",
+  "pose": "attack_ud",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "frieza_final_attack_ud_00.png",
+   "frieza_final_attack_ud_01.png",
+   "frieza_final_attack_ud_02.png",
+   "frieza_final_attack_ud_03.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "frieza_final",
+  "dir": "frieza_final",
+  "pose": "hurt",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "frieza_final_hurt_00.png",
+   "frieza_final_hurt_01.png",
+   "frieza_final_hurt_02.png",
+   "frieza_final_hurt_03.png",
+   "frieza_final_hurt_04.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "frieza_final",
+  "dir": "frieza_final",
+  "pose": "beam_charge",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "frieza_final_beam_charge_00.png",
+   "frieza_final_beam_charge_01.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "frieza_final",
+  "dir": "frieza_final",
+  "pose": "gather_power",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "frieza_final_gather_power_00.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "ginyu",
+  "dir": "ginyu",
+  "pose": "idle",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "ginyu_idle_00.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "ginyu",
+  "dir": "ginyu",
+  "pose": "move_front",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "ginyu_move_front_00.png",
+   "ginyu_move_front_01.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "ginyu",
+  "dir": "ginyu",
+  "pose": "move_back",
+  "classification": "SHARED_PHYSICAL",
+  "ownerPose": "move_front",
+  "files": [
+   "ginyu_move_front_00.png",
+   "ginyu_move_front_01.png"
+  ],
+  "provenance": "Reutiliza los frames físicos de move_front (2 archivos)"
+ },
+ {
+  "formId": "ginyu",
+  "dir": "ginyu",
+  "pose": "attack_fwd",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "ginyu_attack_fwd_00.png",
+   "ginyu_attack_fwd_01.png",
+   "ginyu_attack_fwd_02.png",
+   "ginyu_attack_fwd_03.png",
+   "ginyu_attack_fwd_04.png",
+   "ginyu_attack_fwd_05.png",
+   "ginyu_attack_fwd_06.png",
+   "ginyu_attack_fwd_07.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "ginyu",
+  "dir": "ginyu",
+  "pose": "attack_ud",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "ginyu_attack_ud_00.png",
+   "ginyu_attack_ud_01.png",
+   "ginyu_attack_ud_02.png",
+   "ginyu_attack_ud_03.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "ginyu",
+  "dir": "ginyu",
+  "pose": "hurt",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "ginyu_hurt_00.png",
+   "ginyu_hurt_01.png",
+   "ginyu_hurt_02.png",
+   "ginyu_hurt_03.png",
+   "ginyu_hurt_04.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "ginyu",
+  "dir": "ginyu",
+  "pose": "beam_fire",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "ginyu_beam_fire_00.png",
+   "ginyu_beam_fire_01.png",
+   "ginyu_beam_fire_02.png",
+   "ginyu_beam_fire_03.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "ginyu",
+  "dir": "ginyu",
+  "pose": "gather_power",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "ginyu_gather_power_00.png",
+   "ginyu_gather_power_01.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "ginyu_goku",
+  "dir": "ginyu_goku",
+  "pose": "idle",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "ginyu_goku_idle_00.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "ginyu_goku",
+  "dir": "ginyu_goku",
+  "pose": "move_front",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "ginyu_goku_move_front_00.png",
+   "ginyu_goku_move_front_01.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "ginyu_goku",
+  "dir": "ginyu_goku",
+  "pose": "move_back",
+  "classification": "SHARED_PHYSICAL",
+  "ownerPose": "move_front",
+  "files": [
+   "ginyu_goku_move_front_00.png",
+   "ginyu_goku_move_front_01.png"
+  ],
+  "provenance": "Reutiliza los frames físicos de move_front (2 archivos)"
+ },
+ {
+  "formId": "ginyu_goku",
+  "dir": "ginyu_goku",
+  "pose": "attack_fwd",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "ginyu_goku_attack_fwd_00.png",
+   "ginyu_goku_attack_fwd_01.png",
+   "ginyu_goku_attack_fwd_02.png",
+   "ginyu_goku_attack_fwd_03.png",
+   "ginyu_goku_attack_fwd_04.png",
+   "ginyu_goku_attack_fwd_05.png",
+   "ginyu_goku_attack_fwd_06.png",
+   "ginyu_goku_attack_fwd_07.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "ginyu_goku",
+  "dir": "ginyu_goku",
+  "pose": "attack_ud",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "ginyu_goku_attack_ud_00.png",
+   "ginyu_goku_attack_ud_01.png",
+   "ginyu_goku_attack_ud_02.png",
+   "ginyu_goku_attack_ud_03.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "ginyu_goku",
+  "dir": "ginyu_goku",
+  "pose": "hurt",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "ginyu_goku_hurt_00.png",
+   "ginyu_goku_hurt_01.png",
+   "ginyu_goku_hurt_02.png",
+   "ginyu_goku_hurt_03.png",
+   "ginyu_goku_hurt_04.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "ginyu_goku",
+  "dir": "ginyu_goku",
+  "pose": "beam_charge",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "ginyu_goku_beam_charge_00.png",
+   "ginyu_goku_beam_charge_01.png",
+   "ginyu_goku_beam_charge_02.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "ginyu_goku",
+  "dir": "ginyu_goku",
+  "pose": "beam_fire",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "ginyu_goku_beam_fire_00.png",
+   "ginyu_goku_beam_fire_01.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "ginyu_goku",
+  "dir": "ginyu_goku",
+  "pose": "gather_power",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "ginyu_goku_gather_power_00.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "gohan_adult_ssj",
+  "dir": "gohan_adult_ssj",
+  "pose": "idle",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "gohan_adult_ssj_idle_00.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "gohan_adult_ssj",
+  "dir": "gohan_adult_ssj",
+  "pose": "move_front",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "gohan_adult_ssj_move_front_00.png",
+   "gohan_adult_ssj_move_front_01.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "gohan_adult_ssj",
+  "dir": "gohan_adult_ssj",
+  "pose": "move_back",
+  "classification": "SHARED_PHYSICAL",
+  "ownerPose": "move_front",
+  "files": [
+   "gohan_adult_ssj_move_front_00.png",
+   "gohan_adult_ssj_move_front_01.png"
+  ],
+  "provenance": "Reutiliza los frames físicos de move_front (2 archivos)"
+ },
+ {
+  "formId": "gohan_adult_ssj",
+  "dir": "gohan_adult_ssj",
+  "pose": "attack_fwd",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "gohan_adult_ssj_attack_fwd_00.png",
+   "gohan_adult_ssj_attack_fwd_01.png",
+   "gohan_adult_ssj_attack_fwd_02.png",
+   "gohan_adult_ssj_attack_fwd_03.png",
+   "gohan_adult_ssj_attack_fwd_04.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "gohan_adult_ssj",
+  "dir": "gohan_adult_ssj",
+  "pose": "attack_ud",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "gohan_adult_ssj_attack_ud_00.png",
+   "gohan_adult_ssj_attack_ud_01.png",
+   "gohan_adult_ssj_attack_ud_02.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "gohan_adult_ssj",
+  "dir": "gohan_adult_ssj",
+  "pose": "hurt",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "gohan_adult_ssj_hurt_00.png",
+   "gohan_adult_ssj_hurt_01.png",
+   "gohan_adult_ssj_hurt_02.png",
+   "gohan_adult_ssj_hurt_03.png",
+   "gohan_adult_ssj_hurt_04.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "gohan_adult_ssj",
+  "dir": "gohan_adult_ssj",
+  "pose": "beam_charge",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "gohan_adult_ssj_beam_charge_00.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "gohan_adult_ssj",
+  "dir": "gohan_adult_ssj",
+  "pose": "gather_power",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "gohan_adult_ssj_gather_power_00.png",
+   "gohan_adult_ssj_gather_power_01.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "gohan_adult_ssj",
+  "dir": "gohan_adult_ssj",
+  "pose": "beam_fire",
+  "classification": "SHARED_PHYSICAL",
+  "ownerPose": "beam_charge",
+  "files": [
+   "gohan_adult_ssj_beam_charge_00.png"
+  ],
+  "provenance": "Reutiliza los frames físicos de beam_charge (1 archivos)"
+ },
+ {
+  "formId": "gohan_adult_ssj2",
+  "dir": "gohan_adult_ssj",
+  "pose": "idle",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "gohan_adult_ssj_idle_00.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "gohan_adult_ssj2",
+  "dir": "gohan_adult_ssj",
+  "pose": "move_front",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "gohan_adult_ssj_move_front_00.png",
+   "gohan_adult_ssj_move_front_01.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "gohan_adult_ssj2",
+  "dir": "gohan_adult_ssj",
+  "pose": "move_back",
+  "classification": "SHARED_PHYSICAL",
+  "ownerPose": "move_front",
+  "files": [
+   "gohan_adult_ssj_move_front_00.png",
+   "gohan_adult_ssj_move_front_01.png"
+  ],
+  "provenance": "Reutiliza los frames físicos de move_front (2 archivos)"
+ },
+ {
+  "formId": "gohan_adult_ssj2",
+  "dir": "gohan_adult_ssj",
+  "pose": "attack_fwd",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "gohan_adult_ssj_attack_fwd_00.png",
+   "gohan_adult_ssj_attack_fwd_01.png",
+   "gohan_adult_ssj_attack_fwd_02.png",
+   "gohan_adult_ssj_attack_fwd_03.png",
+   "gohan_adult_ssj_attack_fwd_04.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "gohan_adult_ssj2",
+  "dir": "gohan_adult_ssj",
+  "pose": "attack_ud",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "gohan_adult_ssj_attack_ud_00.png",
+   "gohan_adult_ssj_attack_ud_01.png",
+   "gohan_adult_ssj_attack_ud_02.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "gohan_adult_ssj2",
+  "dir": "gohan_adult_ssj",
+  "pose": "hurt",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "gohan_adult_ssj_hurt_00.png",
+   "gohan_adult_ssj_hurt_01.png",
+   "gohan_adult_ssj_hurt_02.png",
+   "gohan_adult_ssj_hurt_03.png",
+   "gohan_adult_ssj_hurt_04.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "gohan_adult_ssj2",
+  "dir": "gohan_adult_ssj",
+  "pose": "beam_charge",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "gohan_adult_ssj_beam_charge_00.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "gohan_adult_ssj2",
+  "dir": "gohan_adult_ssj",
+  "pose": "gather_power",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "gohan_adult_ssj_gather_power_00.png",
+   "gohan_adult_ssj_gather_power_01.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "gohan_adult_ssj2",
+  "dir": "gohan_adult_ssj",
+  "pose": "beam_fire",
+  "classification": "SHARED_PHYSICAL",
+  "ownerPose": "beam_charge",
+  "files": [
+   "gohan_adult_ssj_beam_charge_00.png"
+  ],
+  "provenance": "Reutiliza los frames físicos de beam_charge (1 archivos)"
+ },
+ {
+  "formId": "gohan_adult_ultimate",
+  "dir": "gohan_adult_ultimate",
+  "pose": "idle",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "gohan_adult_ultimate_idle_00.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "gohan_adult_ultimate",
+  "dir": "gohan_adult_ultimate",
+  "pose": "move_front",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "gohan_adult_ultimate_move_front_00.png",
+   "gohan_adult_ultimate_move_front_01.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "gohan_adult_ultimate",
+  "dir": "gohan_adult_ultimate",
+  "pose": "move_back",
+  "classification": "SHARED_PHYSICAL",
+  "ownerPose": "move_front",
+  "files": [
+   "gohan_adult_ultimate_move_front_00.png",
+   "gohan_adult_ultimate_move_front_01.png"
+  ],
+  "provenance": "Reutiliza los frames físicos de move_front (2 archivos)"
+ },
+ {
+  "formId": "gohan_adult_ultimate",
+  "dir": "gohan_adult_ultimate",
+  "pose": "attack_fwd",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "gohan_adult_ultimate_attack_fwd_00.png",
+   "gohan_adult_ultimate_attack_fwd_01.png",
+   "gohan_adult_ultimate_attack_fwd_02.png",
+   "gohan_adult_ultimate_attack_fwd_03.png",
+   "gohan_adult_ultimate_attack_fwd_04.png",
+   "gohan_adult_ultimate_attack_fwd_05.png",
+   "gohan_adult_ultimate_attack_fwd_06.png",
+   "gohan_adult_ultimate_attack_fwd_07.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "gohan_adult_ultimate",
+  "dir": "gohan_adult_ultimate",
+  "pose": "attack_ud",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "gohan_adult_ultimate_attack_ud_00.png",
+   "gohan_adult_ultimate_attack_ud_01.png",
+   "gohan_adult_ultimate_attack_ud_02.png",
+   "gohan_adult_ultimate_attack_ud_03.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "gohan_adult_ultimate",
+  "dir": "gohan_adult_ultimate",
+  "pose": "hurt",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "gohan_adult_ultimate_hurt_00.png",
+   "gohan_adult_ultimate_hurt_01.png",
+   "gohan_adult_ultimate_hurt_02.png",
+   "gohan_adult_ultimate_hurt_03.png",
+   "gohan_adult_ultimate_hurt_04.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "gohan_adult_ultimate",
+  "dir": "gohan_adult_ultimate",
+  "pose": "beam_charge",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "gohan_adult_ultimate_beam_charge_00.png",
+   "gohan_adult_ultimate_beam_charge_01.png",
+   "gohan_adult_ultimate_beam_charge_02.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "gohan_adult_ultimate",
+  "dir": "gohan_adult_ultimate",
+  "pose": "beam_fire",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "gohan_adult_ultimate_beam_fire_00.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "gohan_adult_ultimate",
+  "dir": "gohan_adult_ultimate",
+  "pose": "gather_power",
+  "classification": "SHARED_PHYSICAL",
+  "ownerPose": "beam_charge",
+  "files": [
+   "gohan_adult_ultimate_beam_charge_00.png",
+   "gohan_adult_ultimate_beam_charge_01.png",
+   "gohan_adult_ultimate_beam_charge_02.png"
+  ],
+  "provenance": "Reutiliza los frames físicos de beam_charge (3 archivos)"
+ },
+ {
+  "formId": "gohan_young",
+  "dir": "gohan_young",
+  "pose": "idle",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "gohan_young_idle_00.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "gohan_young",
+  "dir": "gohan_young",
+  "pose": "move_front",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "gohan_young_move_front_00.png",
+   "gohan_young_move_front_01.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "gohan_young",
+  "dir": "gohan_young",
+  "pose": "move_back",
+  "classification": "SHARED_PHYSICAL",
+  "ownerPose": "move_front",
+  "files": [
+   "gohan_young_move_front_00.png",
+   "gohan_young_move_front_01.png"
+  ],
+  "provenance": "Reutiliza los frames físicos de move_front (2 archivos)"
+ },
+ {
+  "formId": "gohan_young",
+  "dir": "gohan_young",
+  "pose": "attack_fwd",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "gohan_young_attack_fwd_00.png",
+   "gohan_young_attack_fwd_01.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "gohan_young",
+  "dir": "gohan_young",
+  "pose": "attack_ud",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "gohan_young_attack_ud_00.png",
+   "gohan_young_attack_ud_01.png",
+   "gohan_young_attack_ud_02.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "gohan_young",
+  "dir": "gohan_young",
+  "pose": "hurt",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "gohan_young_hurt_00.png",
+   "gohan_young_hurt_01.png",
+   "gohan_young_hurt_02.png",
+   "gohan_young_hurt_03.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "gohan_young",
+  "dir": "gohan_young",
+  "pose": "beam_charge",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "gohan_young_beam_charge_00.png",
+   "gohan_young_beam_charge_01.png",
+   "gohan_young_beam_charge_02.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "gohan_young",
+  "dir": "gohan_young",
+  "pose": "beam_fire",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "gohan_young_beam_fire_00.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "gohan_young",
+  "dir": "gohan_young",
+  "pose": "gather_power",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "gohan_young_gather_power_00.png",
+   "gohan_young_gather_power_01.png",
+   "gohan_young_gather_power_02.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "gohan_young_ssj",
+  "dir": "gohan_young_ssj",
+  "pose": "idle",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "gohan_young_ssj_idle_00.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "gohan_young_ssj",
+  "dir": "gohan_young_ssj",
+  "pose": "move_front",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "gohan_young_ssj_move_front_00.png",
+   "gohan_young_ssj_move_front_01.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "gohan_young_ssj",
+  "dir": "gohan_young_ssj",
+  "pose": "move_back",
+  "classification": "SHARED_PHYSICAL",
+  "ownerPose": "move_front",
+  "files": [
+   "gohan_young_ssj_move_front_00.png",
+   "gohan_young_ssj_move_front_01.png"
+  ],
+  "provenance": "Reutiliza los frames físicos de move_front (2 archivos)"
+ },
+ {
+  "formId": "gohan_young_ssj",
+  "dir": "gohan_young_ssj",
+  "pose": "attack_fwd",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "gohan_young_ssj_attack_fwd_00.png",
+   "gohan_young_ssj_attack_fwd_01.png",
+   "gohan_young_ssj_attack_fwd_02.png",
+   "gohan_young_ssj_attack_fwd_03.png",
+   "gohan_young_ssj_attack_fwd_04.png",
+   "gohan_young_ssj_attack_fwd_05.png",
+   "gohan_young_ssj_attack_fwd_06.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "gohan_young_ssj",
+  "dir": "gohan_young_ssj",
+  "pose": "attack_ud",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "gohan_young_ssj_attack_ud_00.png",
+   "gohan_young_ssj_attack_ud_01.png",
+   "gohan_young_ssj_attack_ud_02.png",
+   "gohan_young_ssj_attack_ud_03.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "gohan_young_ssj",
+  "dir": "gohan_young_ssj",
+  "pose": "hurt",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "gohan_young_ssj_hurt_00.png",
+   "gohan_young_ssj_hurt_01.png",
+   "gohan_young_ssj_hurt_02.png",
+   "gohan_young_ssj_hurt_03.png",
+   "gohan_young_ssj_hurt_04.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "gohan_young_ssj",
+  "dir": "gohan_young_ssj",
+  "pose": "beam_charge",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "gohan_young_ssj_beam_charge_00.png",
+   "gohan_young_ssj_beam_charge_01.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "gohan_young_ssj",
+  "dir": "gohan_young_ssj",
+  "pose": "beam_fire",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "gohan_young_ssj_beam_fire_00.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "gohan_young_ssj",
+  "dir": "gohan_young_ssj",
+  "pose": "gather_power",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "gohan_young_ssj_gather_power_00.png",
+   "gohan_young_ssj_gather_power_01.png",
+   "gohan_young_ssj_gather_power_02.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "gohan_young_ssj2",
+  "dir": "gohan_young_ssj2",
+  "pose": "idle",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "gohan_young_ssj2_idle_00.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "gohan_young_ssj2",
+  "dir": "gohan_young_ssj2",
+  "pose": "move_front",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "gohan_young_ssj2_move_front_00.png",
+   "gohan_young_ssj2_move_front_01.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "gohan_young_ssj2",
+  "dir": "gohan_young_ssj2",
+  "pose": "move_back",
+  "classification": "SHARED_PHYSICAL",
+  "ownerPose": "move_front",
+  "files": [
+   "gohan_young_ssj2_move_front_00.png",
+   "gohan_young_ssj2_move_front_01.png"
+  ],
+  "provenance": "Reutiliza los frames físicos de move_front (2 archivos)"
+ },
+ {
+  "formId": "gohan_young_ssj2",
+  "dir": "gohan_young_ssj2",
+  "pose": "attack_fwd",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "gohan_young_ssj2_attack_fwd_00.png",
+   "gohan_young_ssj2_attack_fwd_01.png",
+   "gohan_young_ssj2_attack_fwd_02.png",
+   "gohan_young_ssj2_attack_fwd_03.png",
+   "gohan_young_ssj2_attack_fwd_04.png",
+   "gohan_young_ssj2_attack_fwd_05.png",
+   "gohan_young_ssj2_attack_fwd_06.png",
+   "gohan_young_ssj2_attack_fwd_07.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "gohan_young_ssj2",
+  "dir": "gohan_young_ssj2",
+  "pose": "attack_ud",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "gohan_young_ssj2_attack_ud_00.png",
+   "gohan_young_ssj2_attack_ud_01.png",
+   "gohan_young_ssj2_attack_ud_02.png",
+   "gohan_young_ssj2_attack_ud_03.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "gohan_young_ssj2",
+  "dir": "gohan_young_ssj2",
+  "pose": "hurt",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "gohan_young_ssj2_hurt_00.png",
+   "gohan_young_ssj2_hurt_01.png",
+   "gohan_young_ssj2_hurt_02.png",
+   "gohan_young_ssj2_hurt_03.png",
+   "gohan_young_ssj2_hurt_04.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "gohan_young_ssj2",
+  "dir": "gohan_young_ssj2",
+  "pose": "beam_charge",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "gohan_young_ssj2_beam_charge_00.png",
+   "gohan_young_ssj2_beam_charge_01.png",
+   "gohan_young_ssj2_beam_charge_02.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "gohan_young_ssj2",
+  "dir": "gohan_young_ssj2",
+  "pose": "beam_fire",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "gohan_young_ssj2_beam_fire_00.png",
+   "gohan_young_ssj2_beam_fire_01.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "gohan_young_ssj2",
+  "dir": "gohan_young_ssj2",
+  "pose": "gather_power",
+  "classification": "SHARED_PHYSICAL",
+  "ownerPose": "move_front",
+  "files": [
+   "gohan_young_ssj2_move_front_00.png",
+   "gohan_young_ssj2_move_front_01.png"
+  ],
+  "provenance": "Reutiliza los frames físicos de move_front (2 archivos)"
+ },
+ {
+  "formId": "goku_base",
+  "dir": "goku_base",
+  "pose": "idle",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "goku_base_idle_00.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "goku_base",
+  "dir": "goku_base",
+  "pose": "move_front",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "goku_base_move_front_00.png",
+   "goku_base_move_front_01.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "goku_base",
+  "dir": "goku_base",
+  "pose": "move_back",
+  "classification": "SHARED_PHYSICAL",
+  "ownerPose": "move_front",
+  "files": [
+   "goku_base_move_front_00.png",
+   "goku_base_move_front_01.png"
+  ],
+  "provenance": "Reutiliza los frames físicos de move_front (2 archivos)"
+ },
+ {
+  "formId": "goku_base",
+  "dir": "goku_base",
+  "pose": "attack_fwd",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "goku_base_attack_fwd_00.png",
+   "goku_base_attack_fwd_01.png",
+   "goku_base_attack_fwd_02.png",
+   "goku_base_attack_fwd_03.png",
+   "goku_base_attack_fwd_04.png",
+   "goku_base_attack_fwd_05.png",
+   "goku_base_attack_fwd_06.png",
+   "goku_base_attack_fwd_07.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "goku_base",
+  "dir": "goku_base",
+  "pose": "attack_ud",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "goku_base_attack_ud_00.png",
+   "goku_base_attack_ud_01.png",
+   "goku_base_attack_ud_02.png",
+   "goku_base_attack_ud_03.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "goku_base",
+  "dir": "goku_base",
+  "pose": "hurt",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "goku_base_hurt_00.png",
+   "goku_base_hurt_01.png",
+   "goku_base_hurt_02.png",
+   "goku_base_hurt_03.png",
+   "goku_base_hurt_04.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "goku_base",
+  "dir": "goku_base",
+  "pose": "beam_charge",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "goku_base_beam_charge_00.png",
+   "goku_base_beam_charge_01.png",
+   "goku_base_beam_charge_02.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "goku_base",
+  "dir": "goku_base",
+  "pose": "beam_fire",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "goku_base_beam_fire_00.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "goku_base",
+  "dir": "goku_base",
+  "pose": "gather_power",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "goku_base_gather_power_00.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "goku_ssj",
+  "dir": "goku_ssj",
+  "pose": "idle",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "goku_ssj_idle_00.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "goku_ssj",
+  "dir": "goku_ssj",
+  "pose": "attack_fwd",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "goku_ssj_attack_fwd_00.png",
+   "goku_ssj_attack_fwd_01.png",
+   "goku_ssj_attack_fwd_02.png",
+   "goku_ssj_attack_fwd_03.png",
+   "goku_ssj_attack_fwd_04.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "goku_ssj",
+  "dir": "goku_ssj",
+  "pose": "attack_ud",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "goku_ssj_attack_ud_00.png",
+   "goku_ssj_attack_ud_01.png",
+   "goku_ssj_attack_ud_02.png",
+   "goku_ssj_attack_ud_03.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "goku_ssj",
+  "dir": "goku_ssj",
+  "pose": "hurt",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "goku_ssj_hurt_00.png",
+   "goku_ssj_hurt_01.png",
+   "goku_ssj_hurt_02.png",
+   "goku_ssj_hurt_03.png",
+   "goku_ssj_hurt_04.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "goku_ssj",
+  "dir": "goku_ssj",
+  "pose": "beam_charge",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "goku_ssj_beam_charge_00.png",
+   "goku_ssj_beam_charge_01.png",
+   "goku_ssj_beam_charge_02.png",
+   "goku_ssj_beam_charge_03.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "goku_ssj",
+  "dir": "goku_ssj",
+  "pose": "gather_power",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "goku_ssj_gather_power_00.png",
+   "goku_ssj_gather_power_01.png",
+   "goku_ssj_gather_power_02.png",
+   "goku_ssj_gather_power_03.png",
+   "goku_ssj_gather_power_04.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "goku_ssj",
+  "dir": "goku_ssj",
+  "pose": "beam_fire",
+  "classification": "SHARED_PHYSICAL",
+  "ownerPose": "beam_charge",
+  "files": [
+   "goku_ssj_beam_charge_00.png",
+   "goku_ssj_beam_charge_01.png",
+   "goku_ssj_beam_charge_02.png",
+   "goku_ssj_beam_charge_03.png"
+  ],
+  "provenance": "Reutiliza los frames físicos de beam_charge (4 archivos)"
+ },
+ {
+  "formId": "goku_ssj2",
+  "dir": "goku_ssj2",
+  "pose": "idle",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "goku_ssj2_idle_00.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "goku_ssj2",
+  "dir": "goku_ssj2",
+  "pose": "attack_fwd",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "goku_ssj2_attack_fwd_00.png",
+   "goku_ssj2_attack_fwd_01.png",
+   "goku_ssj2_attack_fwd_02.png",
+   "goku_ssj2_attack_fwd_03.png",
+   "goku_ssj2_attack_fwd_04.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "goku_ssj2",
+  "dir": "goku_ssj2",
+  "pose": "attack_ud",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "goku_ssj2_attack_ud_00.png",
+   "goku_ssj2_attack_ud_01.png",
+   "goku_ssj2_attack_ud_02.png",
+   "goku_ssj2_attack_ud_03.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "goku_ssj2",
+  "dir": "goku_ssj2",
+  "pose": "hurt",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "goku_ssj2_hurt_00.png",
+   "goku_ssj2_hurt_01.png",
+   "goku_ssj2_hurt_02.png",
+   "goku_ssj2_hurt_03.png",
+   "goku_ssj2_hurt_04.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "goku_ssj2",
+  "dir": "goku_ssj2",
+  "pose": "beam_charge",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "goku_ssj2_beam_charge_00.png",
+   "goku_ssj2_beam_charge_01.png",
+   "goku_ssj2_beam_charge_02.png",
+   "goku_ssj2_beam_charge_03.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "goku_ssj2",
+  "dir": "goku_ssj2",
+  "pose": "gather_power",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "goku_ssj2_gather_power_00.png",
+   "goku_ssj2_gather_power_01.png",
+   "goku_ssj2_gather_power_02.png",
+   "goku_ssj2_gather_power_03.png",
+   "goku_ssj2_gather_power_04.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "goku_ssj2",
+  "dir": "goku_ssj2",
+  "pose": "beam_fire",
+  "classification": "SHARED_PHYSICAL",
+  "ownerPose": "beam_charge",
+  "files": [
+   "goku_ssj2_beam_charge_00.png",
+   "goku_ssj2_beam_charge_01.png",
+   "goku_ssj2_beam_charge_02.png",
+   "goku_ssj2_beam_charge_03.png"
+  ],
+  "provenance": "Reutiliza los frames físicos de beam_charge (4 archivos)"
+ },
+ {
+  "formId": "goku_ssj3",
+  "dir": "goku_ssj3",
+  "pose": "idle",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "goku_ssj3_idle_00.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "goku_ssj3",
+  "dir": "goku_ssj3",
+  "pose": "attack_fwd",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "goku_ssj3_attack_fwd_00.png",
+   "goku_ssj3_attack_fwd_01.png",
+   "goku_ssj3_attack_fwd_02.png",
+   "goku_ssj3_attack_fwd_03.png",
+   "goku_ssj3_attack_fwd_04.png",
+   "goku_ssj3_attack_fwd_05.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "goku_ssj3",
+  "dir": "goku_ssj3",
+  "pose": "attack_ud",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "goku_ssj3_attack_ud_00.png",
+   "goku_ssj3_attack_ud_01.png",
+   "goku_ssj3_attack_ud_02.png",
+   "goku_ssj3_attack_ud_03.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "goku_ssj3",
+  "dir": "goku_ssj3",
+  "pose": "hurt",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "goku_ssj3_hurt_00.png",
+   "goku_ssj3_hurt_01.png",
+   "goku_ssj3_hurt_02.png",
+   "goku_ssj3_hurt_03.png",
+   "goku_ssj3_hurt_04.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "goku_ssj3",
+  "dir": "goku_ssj3",
+  "pose": "beam_charge",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "goku_ssj3_beam_charge_00.png",
+   "goku_ssj3_beam_charge_01.png",
+   "goku_ssj3_beam_charge_02.png",
+   "goku_ssj3_beam_charge_03.png",
+   "goku_ssj3_beam_charge_04.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "goku_ssj3",
+  "dir": "goku_ssj3",
+  "pose": "gather_power",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "goku_ssj3_gather_power_00.png",
+   "goku_ssj3_gather_power_01.png",
+   "goku_ssj3_gather_power_02.png",
+   "goku_ssj3_gather_power_03.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "goku_ssj3",
+  "dir": "goku_ssj3",
+  "pose": "beam_fire",
+  "classification": "SHARED_PHYSICAL",
+  "ownerPose": "beam_charge",
+  "files": [
+   "goku_ssj3_beam_charge_00.png",
+   "goku_ssj3_beam_charge_01.png",
+   "goku_ssj3_beam_charge_02.png",
+   "goku_ssj3_beam_charge_03.png",
+   "goku_ssj3_beam_charge_04.png"
+  ],
+  "provenance": "Reutiliza los frames físicos de beam_charge (5 archivos)"
+ },
+ {
+  "formId": "goten_base",
+  "dir": "goten_base",
+  "pose": "idle",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "goten_base_idle_00.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "goten_base",
+  "dir": "goten_base",
+  "pose": "move_front",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "goten_base_move_front_00.png",
+   "goten_base_move_front_01.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "goten_base",
+  "dir": "goten_base",
+  "pose": "move_back",
+  "classification": "SHARED_PHYSICAL",
+  "ownerPose": "move_front",
+  "files": [
+   "goten_base_move_front_00.png",
+   "goten_base_move_front_01.png"
+  ],
+  "provenance": "Reutiliza los frames físicos de move_front (2 archivos)"
+ },
+ {
+  "formId": "goten_base",
+  "dir": "goten_base",
+  "pose": "attack_fwd",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "goten_base_attack_fwd_00.png",
+   "goten_base_attack_fwd_01.png",
+   "goten_base_attack_fwd_02.png",
+   "goten_base_attack_fwd_03.png",
+   "goten_base_attack_fwd_04.png",
+   "goten_base_attack_fwd_05.png",
+   "goten_base_attack_fwd_06.png",
+   "goten_base_attack_fwd_07.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "goten_base",
+  "dir": "goten_base",
+  "pose": "attack_ud",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "goten_base_attack_ud_00.png",
+   "goten_base_attack_ud_01.png",
+   "goten_base_attack_ud_02.png",
+   "goten_base_attack_ud_03.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "goten_base",
+  "dir": "goten_base",
+  "pose": "hurt",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "goten_base_hurt_00.png",
+   "goten_base_hurt_01.png",
+   "goten_base_hurt_02.png",
+   "goten_base_hurt_03.png",
+   "goten_base_hurt_04.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "goten_base",
+  "dir": "goten_base",
+  "pose": "beam_charge",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "goten_base_beam_charge_00.png",
+   "goten_base_beam_charge_01.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "goten_base",
+  "dir": "goten_base",
+  "pose": "gather_power",
+  "classification": "SHARED_PHYSICAL",
+  "ownerPose": "beam_charge",
+  "files": [
+   "goten_base_beam_charge_00.png",
+   "goten_base_beam_charge_01.png"
+  ],
+  "provenance": "Reutiliza los frames físicos de beam_charge (2 archivos)"
+ },
+ {
+  "formId": "goten_base",
+  "dir": "goten_base",
+  "pose": "beam_fire",
+  "classification": "SHARED_PHYSICAL",
+  "ownerPose": "beam_charge",
+  "files": [
+   "goten_base_beam_charge_00.png",
+   "goten_base_beam_charge_01.png"
+  ],
+  "provenance": "Reutiliza los frames físicos de beam_charge (2 archivos)"
+ },
+ {
+  "formId": "goten_ssj",
+  "dir": "goten_ssj",
+  "pose": "idle",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "goten_ssj_idle_00.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "goten_ssj",
+  "dir": "goten_ssj",
+  "pose": "move_front",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "goten_ssj_move_front_00.png",
+   "goten_ssj_move_front_01.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "goten_ssj",
+  "dir": "goten_ssj",
+  "pose": "move_back",
+  "classification": "SHARED_PHYSICAL",
+  "ownerPose": "move_front",
+  "files": [
+   "goten_ssj_move_front_00.png",
+   "goten_ssj_move_front_01.png"
+  ],
+  "provenance": "Reutiliza los frames físicos de move_front (2 archivos)"
+ },
+ {
+  "formId": "goten_ssj",
+  "dir": "goten_ssj",
+  "pose": "attack_fwd",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "goten_ssj_attack_fwd_00.png",
+   "goten_ssj_attack_fwd_01.png",
+   "goten_ssj_attack_fwd_02.png",
+   "goten_ssj_attack_fwd_03.png",
+   "goten_ssj_attack_fwd_04.png",
+   "goten_ssj_attack_fwd_05.png",
+   "goten_ssj_attack_fwd_06.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "goten_ssj",
+  "dir": "goten_ssj",
+  "pose": "attack_ud",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "goten_ssj_attack_ud_00.png",
+   "goten_ssj_attack_ud_01.png",
+   "goten_ssj_attack_ud_02.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "goten_ssj",
+  "dir": "goten_ssj",
+  "pose": "hurt",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "goten_ssj_hurt_00.png",
+   "goten_ssj_hurt_01.png",
+   "goten_ssj_hurt_02.png",
+   "goten_ssj_hurt_03.png",
+   "goten_ssj_hurt_04.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "goten_ssj",
+  "dir": "goten_ssj",
+  "pose": "beam_charge",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "goten_ssj_beam_charge_00.png",
+   "goten_ssj_beam_charge_01.png",
+   "goten_ssj_beam_charge_02.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "goten_ssj",
+  "dir": "goten_ssj",
+  "pose": "beam_fire",
+  "classification": "SHARED_PHYSICAL",
+  "ownerPose": "beam_charge",
+  "files": [
+   "goten_ssj_beam_charge_00.png",
+   "goten_ssj_beam_charge_01.png",
+   "goten_ssj_beam_charge_02.png"
+  ],
+  "provenance": "Reutiliza los frames físicos de beam_charge (3 archivos)"
+ },
+ {
+  "formId": "gotenks_ssj",
+  "dir": "gotenks_ssj",
+  "pose": "idle",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "gotenks_ssj_idle_00.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "gotenks_ssj",
+  "dir": "gotenks_ssj",
+  "pose": "move_front",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "gotenks_ssj_move_front_00.png",
+   "gotenks_ssj_move_front_01.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "gotenks_ssj",
+  "dir": "gotenks_ssj",
+  "pose": "move_back",
+  "classification": "SHARED_PHYSICAL",
+  "ownerPose": "move_front",
+  "files": [
+   "gotenks_ssj_move_front_00.png",
+   "gotenks_ssj_move_front_01.png"
+  ],
+  "provenance": "Reutiliza los frames físicos de move_front (2 archivos)"
+ },
+ {
+  "formId": "gotenks_ssj",
+  "dir": "gotenks_ssj",
+  "pose": "attack_fwd",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "gotenks_ssj_attack_fwd_00.png",
+   "gotenks_ssj_attack_fwd_01.png",
+   "gotenks_ssj_attack_fwd_02.png",
+   "gotenks_ssj_attack_fwd_03.png",
+   "gotenks_ssj_attack_fwd_04.png",
+   "gotenks_ssj_attack_fwd_05.png",
+   "gotenks_ssj_attack_fwd_06.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "gotenks_ssj",
+  "dir": "gotenks_ssj",
+  "pose": "attack_ud",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "gotenks_ssj_attack_ud_00.png",
+   "gotenks_ssj_attack_ud_01.png",
+   "gotenks_ssj_attack_ud_02.png",
+   "gotenks_ssj_attack_ud_03.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "gotenks_ssj",
+  "dir": "gotenks_ssj",
+  "pose": "hurt",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "gotenks_ssj_hurt_00.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "gotenks_ssj",
+  "dir": "gotenks_ssj",
+  "pose": "beam_charge",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "gotenks_ssj_beam_charge_00.png",
+   "gotenks_ssj_beam_charge_01.png",
+   "gotenks_ssj_beam_charge_02.png",
+   "gotenks_ssj_beam_charge_03.png",
+   "gotenks_ssj_beam_charge_04.png",
+   "gotenks_ssj_beam_charge_05.png",
+   "gotenks_ssj_beam_charge_06.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "gotenks_ssj",
+  "dir": "gotenks_ssj",
+  "pose": "gather_power",
+  "classification": "SHARED_PHYSICAL",
+  "ownerPose": "beam_charge",
+  "files": [
+   "gotenks_ssj_beam_charge_00.png",
+   "gotenks_ssj_beam_charge_01.png",
+   "gotenks_ssj_beam_charge_02.png",
+   "gotenks_ssj_beam_charge_03.png",
+   "gotenks_ssj_beam_charge_04.png",
+   "gotenks_ssj_beam_charge_05.png",
+   "gotenks_ssj_beam_charge_06.png"
+  ],
+  "provenance": "Reutiliza los frames físicos de beam_charge (7 archivos)"
+ },
+ {
+  "formId": "gotenks_ssj",
+  "dir": "gotenks_ssj",
+  "pose": "beam_fire",
+  "classification": "SHARED_PHYSICAL",
+  "ownerPose": "beam_charge",
+  "files": [
+   "gotenks_ssj_beam_charge_00.png",
+   "gotenks_ssj_beam_charge_01.png",
+   "gotenks_ssj_beam_charge_02.png",
+   "gotenks_ssj_beam_charge_03.png",
+   "gotenks_ssj_beam_charge_04.png",
+   "gotenks_ssj_beam_charge_05.png",
+   "gotenks_ssj_beam_charge_06.png"
+  ],
+  "provenance": "Reutiliza los frames físicos de beam_charge (7 archivos)"
+ },
+ {
+  "formId": "gotenks_ssj3",
+  "dir": "gotenks_ssj3",
+  "pose": "idle",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "gotenks_ssj3_idle_00.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "gotenks_ssj3",
+  "dir": "gotenks_ssj3",
+  "pose": "move_front",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "gotenks_ssj3_move_front_00.png",
+   "gotenks_ssj3_move_front_01.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "gotenks_ssj3",
+  "dir": "gotenks_ssj3",
+  "pose": "move_back",
+  "classification": "SHARED_PHYSICAL",
+  "ownerPose": "move_front",
+  "files": [
+   "gotenks_ssj3_move_front_00.png",
+   "gotenks_ssj3_move_front_01.png"
+  ],
+  "provenance": "Reutiliza los frames físicos de move_front (2 archivos)"
+ },
+ {
+  "formId": "gotenks_ssj3",
+  "dir": "gotenks_ssj3",
+  "pose": "attack_fwd",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "gotenks_ssj3_attack_fwd_00.png",
+   "gotenks_ssj3_attack_fwd_01.png",
+   "gotenks_ssj3_attack_fwd_02.png",
+   "gotenks_ssj3_attack_fwd_03.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "gotenks_ssj3",
+  "dir": "gotenks_ssj3",
+  "pose": "attack_ud",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "gotenks_ssj3_attack_ud_00.png",
+   "gotenks_ssj3_attack_ud_01.png",
+   "gotenks_ssj3_attack_ud_02.png",
+   "gotenks_ssj3_attack_ud_03.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "gotenks_ssj3",
+  "dir": "gotenks_ssj3",
+  "pose": "hurt",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "gotenks_ssj3_hurt_00.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "gotenks_ssj3",
+  "dir": "gotenks_ssj3",
+  "pose": "beam_charge",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "gotenks_ssj3_beam_charge_00.png",
+   "gotenks_ssj3_beam_charge_01.png",
+   "gotenks_ssj3_beam_charge_02.png",
+   "gotenks_ssj3_beam_charge_03.png",
+   "gotenks_ssj3_beam_charge_04.png",
+   "gotenks_ssj3_beam_charge_05.png",
+   "gotenks_ssj3_beam_charge_06.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "gotenks_ssj3",
+  "dir": "gotenks_ssj3",
+  "pose": "beam_fire",
+  "classification": "SHARED_PHYSICAL",
+  "ownerPose": "beam_charge",
+  "files": [
+   "gotenks_ssj3_beam_charge_00.png",
+   "gotenks_ssj3_beam_charge_01.png",
+   "gotenks_ssj3_beam_charge_02.png",
+   "gotenks_ssj3_beam_charge_03.png",
+   "gotenks_ssj3_beam_charge_04.png",
+   "gotenks_ssj3_beam_charge_05.png",
+   "gotenks_ssj3_beam_charge_06.png"
+  ],
+  "provenance": "Reutiliza los frames físicos de beam_charge (7 archivos)"
+ },
+ {
+  "formId": "guldo",
+  "dir": "guldo",
+  "pose": "idle",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "guldo_idle_00.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "guldo",
+  "dir": "guldo",
+  "pose": "move_front",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "guldo_move_front_00.png",
+   "guldo_move_front_01.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "guldo",
+  "dir": "guldo",
+  "pose": "move_back",
+  "classification": "SHARED_PHYSICAL",
+  "ownerPose": "move_front",
+  "files": [
+   "guldo_move_front_00.png",
+   "guldo_move_front_01.png"
+  ],
+  "provenance": "Reutiliza los frames físicos de move_front (2 archivos)"
+ },
+ {
+  "formId": "guldo",
+  "dir": "guldo",
+  "pose": "attack_fwd",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "guldo_attack_fwd_00.png",
+   "guldo_attack_fwd_01.png",
+   "guldo_attack_fwd_02.png",
+   "guldo_attack_fwd_03.png",
+   "guldo_attack_fwd_04.png",
+   "guldo_attack_fwd_05.png",
+   "guldo_attack_fwd_06.png",
+   "guldo_attack_fwd_07.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "guldo",
+  "dir": "guldo",
+  "pose": "attack_ud",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "guldo_attack_ud_00.png",
+   "guldo_attack_ud_01.png",
+   "guldo_attack_ud_02.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "guldo",
+  "dir": "guldo",
+  "pose": "hurt",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "guldo_hurt_00.png",
+   "guldo_hurt_01.png",
+   "guldo_hurt_02.png",
+   "guldo_hurt_03.png",
+   "guldo_hurt_04.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "guldo",
+  "dir": "guldo",
+  "pose": "beam_fire",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "guldo_beam_fire_00.png",
+   "guldo_beam_fire_01.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "guldo",
+  "dir": "guldo",
+  "pose": "gather_power",
+  "classification": "SHARED_PHYSICAL",
+  "ownerPose": "beam_fire",
+  "files": [
+   "guldo_beam_fire_00.png",
+   "guldo_beam_fire_01.png"
+  ],
+  "provenance": "Reutiliza los frames físicos de beam_fire (2 archivos)"
+ },
+ {
+  "formId": "jeice",
+  "dir": "jeice",
+  "pose": "idle",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "jeice_idle_00.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "jeice",
+  "dir": "jeice",
+  "pose": "attack_fwd",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "jeice_attack_fwd_00.png",
+   "jeice_attack_fwd_01.png",
+   "jeice_attack_fwd_02.png",
+   "jeice_attack_fwd_03.png",
+   "jeice_attack_fwd_04.png",
+   "jeice_attack_fwd_05.png",
+   "jeice_attack_fwd_06.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "jeice",
+  "dir": "jeice",
+  "pose": "attack_ud",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "jeice_attack_ud_00.png",
+   "jeice_attack_ud_01.png",
+   "jeice_attack_ud_02.png",
+   "jeice_attack_ud_03.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "jeice",
+  "dir": "jeice",
+  "pose": "hurt",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "jeice_hurt_00.png",
+   "jeice_hurt_01.png",
+   "jeice_hurt_02.png",
+   "jeice_hurt_03.png",
+   "jeice_hurt_04.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "jeice",
+  "dir": "jeice",
+  "pose": "beam_charge",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "jeice_beam_charge_00.png",
+   "jeice_beam_charge_01.png",
+   "jeice_beam_charge_02.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "jeice",
+  "dir": "jeice",
+  "pose": "beam_fire",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "jeice_beam_fire_00.png",
+   "jeice_beam_fire_01.png",
+   "jeice_beam_fire_02.png",
+   "jeice_beam_fire_03.png",
+   "jeice_beam_fire_04.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "jeice",
+  "dir": "jeice",
+  "pose": "gather_power",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "jeice_gather_power_00.png",
+   "jeice_gather_power_01.png",
+   "jeice_gather_power_02.png",
+   "jeice_gather_power_03.png",
+   "jeice_gather_power_04.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "krillin_base",
+  "dir": "krillin_base",
+  "pose": "idle",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "krillin_base_idle_00.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "krillin_base",
+  "dir": "krillin_base",
+  "pose": "move_front",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "krillin_base_move_front_00.png",
+   "krillin_base_move_front_01.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "krillin_base",
+  "dir": "krillin_base",
+  "pose": "move_back",
+  "classification": "SHARED_PHYSICAL",
+  "ownerPose": "move_front",
+  "files": [
+   "krillin_base_move_front_00.png",
+   "krillin_base_move_front_01.png"
+  ],
+  "provenance": "Reutiliza los frames físicos de move_front (2 archivos)"
+ },
+ {
+  "formId": "krillin_base",
+  "dir": "krillin_base",
+  "pose": "attack_fwd",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "krillin_base_attack_fwd_00.png",
+   "krillin_base_attack_fwd_01.png",
+   "krillin_base_attack_fwd_02.png",
+   "krillin_base_attack_fwd_03.png",
+   "krillin_base_attack_fwd_04.png",
+   "krillin_base_attack_fwd_05.png",
+   "krillin_base_attack_fwd_06.png",
+   "krillin_base_attack_fwd_07.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "krillin_base",
+  "dir": "krillin_base",
+  "pose": "attack_ud",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "krillin_base_attack_ud_00.png",
+   "krillin_base_attack_ud_01.png",
+   "krillin_base_attack_ud_02.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "krillin_base",
+  "dir": "krillin_base",
+  "pose": "hurt",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "krillin_base_hurt_00.png",
+   "krillin_base_hurt_01.png",
+   "krillin_base_hurt_02.png",
+   "krillin_base_hurt_03.png",
+   "krillin_base_hurt_04.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "krillin_base",
+  "dir": "krillin_base",
+  "pose": "beam_charge",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "krillin_base_beam_charge_00.png",
+   "krillin_base_beam_charge_01.png",
+   "krillin_base_beam_charge_02.png",
+   "krillin_base_beam_charge_03.png",
+   "krillin_base_beam_charge_04.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "krillin_base",
+  "dir": "krillin_base",
+  "pose": "beam_fire",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "krillin_base_beam_fire_00.png",
+   "krillin_base_beam_fire_01.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "krillin_base",
+  "dir": "krillin_base",
+  "pose": "gather_power",
+  "classification": "SHARED_PHYSICAL",
+  "ownerPose": "beam_fire",
+  "files": [
+   "krillin_base_beam_fire_01.png"
+  ],
+  "provenance": "Reutiliza los frames físicos de beam_fire (1 archivos)"
+ },
+ {
+  "formId": "nappa",
+  "dir": "nappa",
+  "pose": "idle",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "nappa_idle_00.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "nappa",
+  "dir": "nappa",
+  "pose": "move_front",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "nappa_move_front_00.png",
+   "nappa_move_front_01.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "nappa",
+  "dir": "nappa",
+  "pose": "move_back",
+  "classification": "SHARED_PHYSICAL",
+  "ownerPose": "move_front",
+  "files": [
+   "nappa_move_front_00.png",
+   "nappa_move_front_01.png"
+  ],
+  "provenance": "Reutiliza los frames físicos de move_front (2 archivos)"
+ },
+ {
+  "formId": "nappa",
+  "dir": "nappa",
+  "pose": "attack_fwd",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "nappa_attack_fwd_00.png",
+   "nappa_attack_fwd_01.png",
+   "nappa_attack_fwd_02.png",
+   "nappa_attack_fwd_03.png",
+   "nappa_attack_fwd_04.png",
+   "nappa_attack_fwd_05.png",
+   "nappa_attack_fwd_06.png",
+   "nappa_attack_fwd_07.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "nappa",
+  "dir": "nappa",
+  "pose": "attack_ud",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "nappa_attack_ud_00.png",
+   "nappa_attack_ud_01.png",
+   "nappa_attack_ud_02.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "nappa",
+  "dir": "nappa",
+  "pose": "hurt",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "nappa_hurt_00.png",
+   "nappa_hurt_01.png",
+   "nappa_hurt_02.png",
+   "nappa_hurt_03.png",
+   "nappa_hurt_04.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "nappa",
+  "dir": "nappa",
+  "pose": "beam_charge",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "nappa_beam_charge_00.png",
+   "nappa_beam_charge_01.png",
+   "nappa_beam_charge_02.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "nappa",
+  "dir": "nappa",
+  "pose": "beam_fire",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "nappa_beam_fire_00.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "nappa",
+  "dir": "nappa",
+  "pose": "gather_power",
+  "classification": "SHARED_PHYSICAL",
+  "ownerPose": "beam_charge",
+  "files": [
+   "nappa_beam_charge_00.png",
+   "nappa_beam_charge_01.png",
+   "nappa_beam_charge_02.png"
+  ],
+  "provenance": "Reutiliza los frames físicos de beam_charge (3 archivos)"
+ },
+ {
+  "formId": "piccolo_base",
+  "dir": "piccolo_base",
+  "pose": "idle",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "piccolo_base_idle_00.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "piccolo_base",
+  "dir": "piccolo_base",
+  "pose": "move_front",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "piccolo_base_move_front_00.png",
+   "piccolo_base_move_front_01.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "piccolo_base",
+  "dir": "piccolo_base",
+  "pose": "move_back",
+  "classification": "SHARED_PHYSICAL",
+  "ownerPose": "move_front",
+  "files": [
+   "piccolo_base_move_front_00.png",
+   "piccolo_base_move_front_01.png"
+  ],
+  "provenance": "Reutiliza los frames físicos de move_front (2 archivos)"
+ },
+ {
+  "formId": "piccolo_base",
+  "dir": "piccolo_base",
+  "pose": "attack_fwd",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "piccolo_base_attack_fwd_00.png",
+   "piccolo_base_attack_fwd_01.png",
+   "piccolo_base_attack_fwd_02.png",
+   "piccolo_base_attack_fwd_03.png",
+   "piccolo_base_attack_fwd_04.png",
+   "piccolo_base_attack_fwd_05.png",
+   "piccolo_base_attack_fwd_06.png",
+   "piccolo_base_attack_fwd_07.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "piccolo_base",
+  "dir": "piccolo_base",
+  "pose": "attack_ud",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "piccolo_base_attack_ud_00.png",
+   "piccolo_base_attack_ud_01.png",
+   "piccolo_base_attack_ud_02.png",
+   "piccolo_base_attack_ud_03.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "piccolo_base",
+  "dir": "piccolo_base",
+  "pose": "hurt",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "piccolo_base_hurt_00.png",
+   "piccolo_base_hurt_01.png",
+   "piccolo_base_hurt_02.png",
+   "piccolo_base_hurt_03.png",
+   "piccolo_base_hurt_04.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "piccolo_base",
+  "dir": "piccolo_base",
+  "pose": "beam_charge",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "piccolo_base_beam_charge_00.png",
+   "piccolo_base_beam_charge_01.png",
+   "piccolo_base_beam_charge_02.png",
+   "piccolo_base_beam_charge_03.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "piccolo_base",
+  "dir": "piccolo_base",
+  "pose": "gather_power",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "piccolo_base_gather_power_00.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "piccolo_base",
+  "dir": "piccolo_base",
+  "pose": "beam_fire",
+  "classification": "SHARED_PHYSICAL",
+  "ownerPose": "beam_charge",
+  "files": [
+   "piccolo_base_beam_charge_00.png",
+   "piccolo_base_beam_charge_01.png",
+   "piccolo_base_beam_charge_02.png",
+   "piccolo_base_beam_charge_03.png"
+  ],
+  "provenance": "Reutiliza los frames físicos de beam_charge (4 archivos)"
+ },
+ {
+  "formId": "piccolo_evil",
+  "dir": "piccolo_base",
+  "pose": "idle",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "piccolo_base_idle_00.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "piccolo_evil",
+  "dir": "piccolo_base",
+  "pose": "move_front",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "piccolo_base_move_front_00.png",
+   "piccolo_base_move_front_01.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "piccolo_evil",
+  "dir": "piccolo_base",
+  "pose": "move_back",
+  "classification": "SHARED_PHYSICAL",
+  "ownerPose": "move_front",
+  "files": [
+   "piccolo_base_move_front_00.png",
+   "piccolo_base_move_front_01.png"
+  ],
+  "provenance": "Reutiliza los frames físicos de move_front (2 archivos)"
+ },
+ {
+  "formId": "piccolo_evil",
+  "dir": "piccolo_base",
+  "pose": "attack_fwd",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "piccolo_base_attack_fwd_00.png",
+   "piccolo_base_attack_fwd_01.png",
+   "piccolo_base_attack_fwd_02.png",
+   "piccolo_base_attack_fwd_03.png",
+   "piccolo_base_attack_fwd_04.png",
+   "piccolo_base_attack_fwd_05.png",
+   "piccolo_base_attack_fwd_06.png",
+   "piccolo_base_attack_fwd_07.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "piccolo_evil",
+  "dir": "piccolo_base",
+  "pose": "attack_ud",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "piccolo_base_attack_ud_00.png",
+   "piccolo_base_attack_ud_01.png",
+   "piccolo_base_attack_ud_02.png",
+   "piccolo_base_attack_ud_03.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "piccolo_evil",
+  "dir": "piccolo_base",
+  "pose": "hurt",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "piccolo_base_hurt_00.png",
+   "piccolo_base_hurt_01.png",
+   "piccolo_base_hurt_02.png",
+   "piccolo_base_hurt_03.png",
+   "piccolo_base_hurt_04.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "piccolo_evil",
+  "dir": "piccolo_base",
+  "pose": "beam_charge",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "piccolo_base_beam_charge_00.png",
+   "piccolo_base_beam_charge_01.png",
+   "piccolo_base_beam_charge_02.png",
+   "piccolo_base_beam_charge_03.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "piccolo_evil",
+  "dir": "piccolo_base",
+  "pose": "gather_power",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "piccolo_base_gather_power_00.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "piccolo_evil",
+  "dir": "piccolo_base",
+  "pose": "beam_fire",
+  "classification": "SHARED_PHYSICAL",
+  "ownerPose": "beam_charge",
+  "files": [
+   "piccolo_base_beam_charge_00.png",
+   "piccolo_base_beam_charge_01.png",
+   "piccolo_base_beam_charge_02.png",
+   "piccolo_base_beam_charge_03.png"
+  ],
+  "provenance": "Reutiliza los frames físicos de beam_charge (4 archivos)"
+ },
+ {
+  "formId": "piccolo_kami",
+  "dir": "piccolo_base",
+  "pose": "idle",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "piccolo_base_idle_00.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "piccolo_kami",
+  "dir": "piccolo_base",
+  "pose": "move_front",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "piccolo_base_move_front_00.png",
+   "piccolo_base_move_front_01.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "piccolo_kami",
+  "dir": "piccolo_base",
+  "pose": "move_back",
+  "classification": "SHARED_PHYSICAL",
+  "ownerPose": "move_front",
+  "files": [
+   "piccolo_base_move_front_00.png",
+   "piccolo_base_move_front_01.png"
+  ],
+  "provenance": "Reutiliza los frames físicos de move_front (2 archivos)"
+ },
+ {
+  "formId": "piccolo_kami",
+  "dir": "piccolo_base",
+  "pose": "attack_fwd",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "piccolo_base_attack_fwd_00.png",
+   "piccolo_base_attack_fwd_01.png",
+   "piccolo_base_attack_fwd_02.png",
+   "piccolo_base_attack_fwd_03.png",
+   "piccolo_base_attack_fwd_04.png",
+   "piccolo_base_attack_fwd_05.png",
+   "piccolo_base_attack_fwd_06.png",
+   "piccolo_base_attack_fwd_07.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "piccolo_kami",
+  "dir": "piccolo_base",
+  "pose": "attack_ud",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "piccolo_base_attack_ud_00.png",
+   "piccolo_base_attack_ud_01.png",
+   "piccolo_base_attack_ud_02.png",
+   "piccolo_base_attack_ud_03.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "piccolo_kami",
+  "dir": "piccolo_base",
+  "pose": "hurt",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "piccolo_base_hurt_00.png",
+   "piccolo_base_hurt_01.png",
+   "piccolo_base_hurt_02.png",
+   "piccolo_base_hurt_03.png",
+   "piccolo_base_hurt_04.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "piccolo_kami",
+  "dir": "piccolo_base",
+  "pose": "beam_charge",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "piccolo_base_beam_charge_00.png",
+   "piccolo_base_beam_charge_01.png",
+   "piccolo_base_beam_charge_02.png",
+   "piccolo_base_beam_charge_03.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "piccolo_kami",
+  "dir": "piccolo_base",
+  "pose": "gather_power",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "piccolo_base_gather_power_00.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "piccolo_kami",
+  "dir": "piccolo_base",
+  "pose": "beam_fire",
+  "classification": "SHARED_PHYSICAL",
+  "ownerPose": "beam_charge",
+  "files": [
+   "piccolo_base_beam_charge_00.png",
+   "piccolo_base_beam_charge_01.png",
+   "piccolo_base_beam_charge_02.png",
+   "piccolo_base_beam_charge_03.png"
+  ],
+  "provenance": "Reutiliza los frames físicos de beam_charge (4 archivos)"
+ },
+ {
+  "formId": "recoome",
+  "dir": "recoome",
+  "pose": "idle",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "recoome_idle_00.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "recoome",
+  "dir": "recoome",
+  "pose": "move_front",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "recoome_move_front_00.png",
+   "recoome_move_front_01.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "recoome",
+  "dir": "recoome",
+  "pose": "move_back",
+  "classification": "SHARED_PHYSICAL",
+  "ownerPose": "move_front",
+  "files": [
+   "recoome_move_front_00.png",
+   "recoome_move_front_01.png"
+  ],
+  "provenance": "Reutiliza los frames físicos de move_front (2 archivos)"
+ },
+ {
+  "formId": "recoome",
+  "dir": "recoome",
+  "pose": "attack_fwd",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "recoome_attack_fwd_00.png",
+   "recoome_attack_fwd_01.png",
+   "recoome_attack_fwd_02.png",
+   "recoome_attack_fwd_03.png",
+   "recoome_attack_fwd_04.png",
+   "recoome_attack_fwd_05.png",
+   "recoome_attack_fwd_06.png",
+   "recoome_attack_fwd_07.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "recoome",
+  "dir": "recoome",
+  "pose": "hurt",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "recoome_hurt_00.png",
+   "recoome_hurt_01.png",
+   "recoome_hurt_02.png",
+   "recoome_hurt_03.png",
+   "recoome_hurt_04.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "recoome",
+  "dir": "recoome",
+  "pose": "beam_charge",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "recoome_beam_charge_00.png",
+   "recoome_beam_charge_01.png",
+   "recoome_beam_charge_02.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "recoome",
+  "dir": "recoome",
+  "pose": "gather_power",
+  "classification": "SHARED_PHYSICAL",
+  "ownerPose": "beam_fire",
+  "files": [
+   "recoome_beam_fire_00.png",
+   "recoome_beam_fire_02.png"
+  ],
+  "provenance": "Reutiliza los frames físicos de beam_fire (2 archivos)"
+ },
+ {
+  "formId": "trunks_future",
+  "dir": "trunks_future",
+  "pose": "idle",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "trunks_future_idle_00.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "trunks_future",
+  "dir": "trunks_future",
+  "pose": "move_front",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "trunks_future_move_front_00.png",
+   "trunks_future_move_front_01.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "trunks_future",
+  "dir": "trunks_future",
+  "pose": "move_back",
+  "classification": "SHARED_PHYSICAL",
+  "ownerPose": "move_front",
+  "files": [
+   "trunks_future_move_front_00.png",
+   "trunks_future_move_front_01.png"
+  ],
+  "provenance": "Reutiliza los frames físicos de move_front (2 archivos)"
+ },
+ {
+  "formId": "trunks_future",
+  "dir": "trunks_future",
+  "pose": "attack_fwd",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "trunks_future_attack_fwd_00.png",
+   "trunks_future_attack_fwd_01.png",
+   "trunks_future_attack_fwd_02.png",
+   "trunks_future_attack_fwd_03.png",
+   "trunks_future_attack_fwd_04.png",
+   "trunks_future_attack_fwd_05.png",
+   "trunks_future_attack_fwd_06.png",
+   "trunks_future_attack_fwd_07.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "trunks_future",
+  "dir": "trunks_future",
+  "pose": "attack_ud",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "trunks_future_attack_ud_00.png",
+   "trunks_future_attack_ud_01.png",
+   "trunks_future_attack_ud_02.png",
+   "trunks_future_attack_ud_03.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "trunks_future",
+  "dir": "trunks_future",
+  "pose": "hurt",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "trunks_future_hurt_00.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "trunks_future",
+  "dir": "trunks_future",
+  "pose": "beam_charge",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "trunks_future_beam_charge_00.png",
+   "trunks_future_beam_charge_01.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "trunks_future",
+  "dir": "trunks_future",
+  "pose": "beam_fire",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "trunks_future_beam_fire_00.png",
+   "trunks_future_beam_fire_01.png",
+   "trunks_future_beam_fire_02.png",
+   "trunks_future_beam_fire_03.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "trunks_future",
+  "dir": "trunks_future",
+  "pose": "gather_power",
+  "classification": "SHARED_PHYSICAL",
+  "ownerPose": "beam_fire",
+  "files": [
+   "trunks_future_beam_fire_01.png",
+   "trunks_future_beam_fire_03.png"
+  ],
+  "provenance": "Reutiliza los frames físicos de beam_fire (2 archivos)"
+ },
+ {
+  "formId": "trunks_kid",
+  "dir": "trunks_kid",
+  "pose": "idle",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "trunks_kid_idle_00.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "trunks_kid",
+  "dir": "trunks_kid",
+  "pose": "move_front",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "trunks_kid_move_front_00.png",
+   "trunks_kid_move_front_01.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "trunks_kid",
+  "dir": "trunks_kid",
+  "pose": "move_back",
+  "classification": "SHARED_PHYSICAL",
+  "ownerPose": "move_front",
+  "files": [
+   "trunks_kid_move_front_00.png",
+   "trunks_kid_move_front_01.png"
+  ],
+  "provenance": "Reutiliza los frames físicos de move_front (2 archivos)"
+ },
+ {
+  "formId": "trunks_kid",
+  "dir": "trunks_kid",
+  "pose": "attack_fwd",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "trunks_kid_attack_fwd_00.png",
+   "trunks_kid_attack_fwd_01.png",
+   "trunks_kid_attack_fwd_02.png",
+   "trunks_kid_attack_fwd_03.png",
+   "trunks_kid_attack_fwd_04.png",
+   "trunks_kid_attack_fwd_05.png",
+   "trunks_kid_attack_fwd_06.png",
+   "trunks_kid_attack_fwd_07.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "trunks_kid",
+  "dir": "trunks_kid",
+  "pose": "attack_ud",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "trunks_kid_attack_ud_00.png",
+   "trunks_kid_attack_ud_01.png",
+   "trunks_kid_attack_ud_02.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "trunks_kid",
+  "dir": "trunks_kid",
+  "pose": "hurt",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "trunks_kid_hurt_00.png",
+   "trunks_kid_hurt_01.png",
+   "trunks_kid_hurt_02.png",
+   "trunks_kid_hurt_03.png",
+   "trunks_kid_hurt_04.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "trunks_kid",
+  "dir": "trunks_kid",
+  "pose": "beam_charge",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "trunks_kid_beam_charge_00.png",
+   "trunks_kid_beam_charge_01.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "trunks_kid",
+  "dir": "trunks_kid",
+  "pose": "gather_power",
+  "classification": "SHARED_PHYSICAL",
+  "ownerPose": "beam_charge",
+  "files": [
+   "trunks_kid_beam_charge_00.png",
+   "trunks_kid_beam_charge_01.png"
+  ],
+  "provenance": "Reutiliza los frames físicos de beam_charge (2 archivos)"
+ },
+ {
+  "formId": "trunks_kid",
+  "dir": "trunks_kid",
+  "pose": "beam_fire",
+  "classification": "SHARED_PHYSICAL",
+  "ownerPose": "beam_charge",
+  "files": [
+   "trunks_kid_beam_charge_00.png",
+   "trunks_kid_beam_charge_01.png"
+  ],
+  "provenance": "Reutiliza los frames físicos de beam_charge (2 archivos)"
+ },
+ {
+  "formId": "trunks_kid_ssj",
+  "dir": "trunks_kid_ssj",
+  "pose": "idle",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "trunks_kid_ssj_idle_00.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "trunks_kid_ssj",
+  "dir": "trunks_kid_ssj",
+  "pose": "move_front",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "trunks_kid_ssj_move_front_00.png",
+   "trunks_kid_ssj_move_front_01.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "trunks_kid_ssj",
+  "dir": "trunks_kid_ssj",
+  "pose": "move_back",
+  "classification": "SHARED_PHYSICAL",
+  "ownerPose": "move_front",
+  "files": [
+   "trunks_kid_ssj_move_front_00.png",
+   "trunks_kid_ssj_move_front_01.png"
+  ],
+  "provenance": "Reutiliza los frames físicos de move_front (2 archivos)"
+ },
+ {
+  "formId": "trunks_kid_ssj",
+  "dir": "trunks_kid_ssj",
+  "pose": "attack_fwd",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "trunks_kid_ssj_attack_fwd_00.png",
+   "trunks_kid_ssj_attack_fwd_01.png",
+   "trunks_kid_ssj_attack_fwd_02.png",
+   "trunks_kid_ssj_attack_fwd_03.png",
+   "trunks_kid_ssj_attack_fwd_04.png",
+   "trunks_kid_ssj_attack_fwd_05.png",
+   "trunks_kid_ssj_attack_fwd_06.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "trunks_kid_ssj",
+  "dir": "trunks_kid_ssj",
+  "pose": "attack_ud",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "trunks_kid_ssj_attack_ud_00.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "trunks_kid_ssj",
+  "dir": "trunks_kid_ssj",
+  "pose": "hurt",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "trunks_kid_ssj_hurt_00.png",
+   "trunks_kid_ssj_hurt_01.png",
+   "trunks_kid_ssj_hurt_02.png",
+   "trunks_kid_ssj_hurt_03.png",
+   "trunks_kid_ssj_hurt_04.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "trunks_kid_ssj",
+  "dir": "trunks_kid_ssj",
+  "pose": "beam_charge",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "trunks_kid_ssj_beam_charge_00.png",
+   "trunks_kid_ssj_beam_charge_01.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "trunks_kid_ssj",
+  "dir": "trunks_kid_ssj",
+  "pose": "gather_power",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "trunks_kid_ssj_gather_power_00.png",
+   "trunks_kid_ssj_gather_power_01.png",
+   "trunks_kid_ssj_gather_power_02.png",
+   "trunks_kid_ssj_gather_power_03.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "trunks_kid_ssj",
+  "dir": "trunks_kid_ssj",
+  "pose": "beam_fire",
+  "classification": "SHARED_PHYSICAL",
+  "ownerPose": "beam_charge",
+  "files": [
+   "trunks_kid_ssj_beam_charge_00.png",
+   "trunks_kid_ssj_beam_charge_01.png"
+  ],
+  "provenance": "Reutiliza los frames físicos de beam_charge (2 archivos)"
+ },
+ {
+  "formId": "trunks_ssj",
+  "dir": "trunks_ssj",
+  "pose": "idle",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "trunks_ssj_idle_00.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "trunks_ssj",
+  "dir": "trunks_ssj",
+  "pose": "move_front",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "trunks_ssj_move_front_00.png",
+   "trunks_ssj_move_front_01.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "trunks_ssj",
+  "dir": "trunks_ssj",
+  "pose": "move_back",
+  "classification": "SHARED_PHYSICAL",
+  "ownerPose": "move_front",
+  "files": [
+   "trunks_ssj_move_front_00.png",
+   "trunks_ssj_move_front_01.png"
+  ],
+  "provenance": "Reutiliza los frames físicos de move_front (2 archivos)"
+ },
+ {
+  "formId": "trunks_ssj",
+  "dir": "trunks_ssj",
+  "pose": "guard",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "trunks_ssj_guard_00.png",
+   "trunks_ssj_guard_01.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "trunks_ssj",
+  "dir": "trunks_ssj",
+  "pose": "attack_fwd",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "trunks_ssj_attack_fwd_00.png",
+   "trunks_ssj_attack_fwd_01.png",
+   "trunks_ssj_attack_fwd_02.png",
+   "trunks_ssj_attack_fwd_03.png",
+   "trunks_ssj_attack_fwd_04.png",
+   "trunks_ssj_attack_fwd_05.png",
+   "trunks_ssj_attack_fwd_06.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "trunks_ssj",
+  "dir": "trunks_ssj",
+  "pose": "attack_ud",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "trunks_ssj_attack_ud_00.png",
+   "trunks_ssj_attack_ud_01.png",
+   "trunks_ssj_attack_ud_02.png",
+   "trunks_ssj_attack_ud_03.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "trunks_ssj",
+  "dir": "trunks_ssj",
+  "pose": "hurt",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "trunks_ssj_hurt_00.png",
+   "trunks_ssj_hurt_01.png",
+   "trunks_ssj_hurt_02.png",
+   "trunks_ssj_hurt_03.png",
+   "trunks_ssj_hurt_04.png",
+   "trunks_ssj_hurt_05.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "trunks_ssj",
+  "dir": "trunks_ssj",
+  "pose": "beam_charge",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "trunks_ssj_beam_charge_00.png",
+   "trunks_ssj_beam_charge_01.png",
+   "trunks_ssj_beam_charge_02.png",
+   "trunks_ssj_beam_charge_03.png",
+   "trunks_ssj_beam_charge_04.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "trunks_ssj",
+  "dir": "trunks_ssj",
+  "pose": "beam_fire",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "trunks_ssj_beam_fire_00.png",
+   "trunks_ssj_beam_fire_01.png",
+   "trunks_ssj_beam_fire_02.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "trunks_ssj",
+  "dir": "trunks_ssj",
+  "pose": "gather_power",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "trunks_ssj_gather_power_00.png",
+   "trunks_ssj_gather_power_01.png",
+   "trunks_ssj_gather_power_02.png",
+   "trunks_ssj_gather_power_03.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "vegeta_base",
+  "dir": "vegeta_base",
+  "pose": "idle",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "vegeta_base_idle_00.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "vegeta_base",
+  "dir": "vegeta_base",
+  "pose": "move_front",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "vegeta_base_move_front_00.png",
+   "vegeta_base_move_front_01.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "vegeta_base",
+  "dir": "vegeta_base",
+  "pose": "move_back",
+  "classification": "SHARED_PHYSICAL",
+  "ownerPose": "move_front",
+  "files": [
+   "vegeta_base_move_front_00.png",
+   "vegeta_base_move_front_01.png"
+  ],
+  "provenance": "Reutiliza los frames físicos de move_front (2 archivos)"
+ },
+ {
+  "formId": "vegeta_base",
+  "dir": "vegeta_base",
+  "pose": "attack_fwd",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "vegeta_base_attack_fwd_00.png",
+   "vegeta_base_attack_fwd_01.png",
+   "vegeta_base_attack_fwd_02.png",
+   "vegeta_base_attack_fwd_03.png",
+   "vegeta_base_attack_fwd_04.png",
+   "vegeta_base_attack_fwd_05.png",
+   "vegeta_base_attack_fwd_06.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "vegeta_base",
+  "dir": "vegeta_base",
+  "pose": "attack_ud",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "vegeta_base_attack_ud_00.png",
+   "vegeta_base_attack_ud_01.png",
+   "vegeta_base_attack_ud_02.png",
+   "vegeta_base_attack_ud_03.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "vegeta_base",
+  "dir": "vegeta_base",
+  "pose": "hurt",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "vegeta_base_hurt_00.png",
+   "vegeta_base_hurt_01.png",
+   "vegeta_base_hurt_02.png",
+   "vegeta_base_hurt_03.png",
+   "vegeta_base_hurt_04.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "vegeta_base",
+  "dir": "vegeta_base",
+  "pose": "beam_charge",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "vegeta_base_beam_charge_00.png",
+   "vegeta_base_beam_charge_01.png",
+   "vegeta_base_beam_charge_02.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "vegeta_base",
+  "dir": "vegeta_base",
+  "pose": "beam_fire",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "vegeta_base_beam_fire_00.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "vegeta_majin",
+  "dir": "vegeta_ssj",
+  "pose": "idle",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "vegeta_ssj_idle_00.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "vegeta_majin",
+  "dir": "vegeta_ssj",
+  "pose": "move_front",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "vegeta_ssj_move_front_00.png",
+   "vegeta_ssj_move_front_01.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "vegeta_majin",
+  "dir": "vegeta_ssj",
+  "pose": "move_back",
+  "classification": "SHARED_PHYSICAL",
+  "ownerPose": "move_front",
+  "files": [
+   "vegeta_ssj_move_front_00.png",
+   "vegeta_ssj_move_front_01.png"
+  ],
+  "provenance": "Reutiliza los frames físicos de move_front (2 archivos)"
+ },
+ {
+  "formId": "vegeta_majin",
+  "dir": "vegeta_ssj",
+  "pose": "attack_fwd",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "vegeta_ssj_attack_fwd_00.png",
+   "vegeta_ssj_attack_fwd_01.png",
+   "vegeta_ssj_attack_fwd_02.png",
+   "vegeta_ssj_attack_fwd_03.png",
+   "vegeta_ssj_attack_fwd_04.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "vegeta_majin",
+  "dir": "vegeta_ssj",
+  "pose": "attack_ud",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "vegeta_ssj_attack_ud_00.png",
+   "vegeta_ssj_attack_ud_01.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "vegeta_majin",
+  "dir": "vegeta_ssj",
+  "pose": "hurt",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "vegeta_ssj_hurt_00.png",
+   "vegeta_ssj_hurt_01.png",
+   "vegeta_ssj_hurt_02.png",
+   "vegeta_ssj_hurt_03.png",
+   "vegeta_ssj_hurt_04.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "vegeta_majin",
+  "dir": "vegeta_ssj",
+  "pose": "beam_fire",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "vegeta_ssj_beam_fire_00.png",
+   "vegeta_ssj_beam_fire_01.png",
+   "vegeta_ssj_beam_fire_02.png",
+   "vegeta_ssj_beam_fire_03.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "vegeta_majin",
+  "dir": "vegeta_ssj",
+  "pose": "gather_power",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "vegeta_ssj_gather_power_00.png",
+   "vegeta_ssj_gather_power_01.png",
+   "vegeta_ssj_gather_power_02.png",
+   "vegeta_ssj_gather_power_03.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "vegeta_ssj",
+  "dir": "vegeta_ssj",
+  "pose": "idle",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "vegeta_ssj_idle_00.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "vegeta_ssj",
+  "dir": "vegeta_ssj",
+  "pose": "move_front",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "vegeta_ssj_move_front_00.png",
+   "vegeta_ssj_move_front_01.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "vegeta_ssj",
+  "dir": "vegeta_ssj",
+  "pose": "move_back",
+  "classification": "SHARED_PHYSICAL",
+  "ownerPose": "move_front",
+  "files": [
+   "vegeta_ssj_move_front_00.png",
+   "vegeta_ssj_move_front_01.png"
+  ],
+  "provenance": "Reutiliza los frames físicos de move_front (2 archivos)"
+ },
+ {
+  "formId": "vegeta_ssj",
+  "dir": "vegeta_ssj",
+  "pose": "attack_fwd",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "vegeta_ssj_attack_fwd_00.png",
+   "vegeta_ssj_attack_fwd_01.png",
+   "vegeta_ssj_attack_fwd_02.png",
+   "vegeta_ssj_attack_fwd_03.png",
+   "vegeta_ssj_attack_fwd_04.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "vegeta_ssj",
+  "dir": "vegeta_ssj",
+  "pose": "attack_ud",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "vegeta_ssj_attack_ud_00.png",
+   "vegeta_ssj_attack_ud_01.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "vegeta_ssj",
+  "dir": "vegeta_ssj",
+  "pose": "hurt",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "vegeta_ssj_hurt_00.png",
+   "vegeta_ssj_hurt_01.png",
+   "vegeta_ssj_hurt_02.png",
+   "vegeta_ssj_hurt_03.png",
+   "vegeta_ssj_hurt_04.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "vegeta_ssj",
+  "dir": "vegeta_ssj",
+  "pose": "beam_fire",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "vegeta_ssj_beam_fire_00.png",
+   "vegeta_ssj_beam_fire_01.png",
+   "vegeta_ssj_beam_fire_02.png",
+   "vegeta_ssj_beam_fire_03.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "vegeta_ssj",
+  "dir": "vegeta_ssj",
+  "pose": "gather_power",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "vegeta_ssj_gather_power_00.png",
+   "vegeta_ssj_gather_power_01.png",
+   "vegeta_ssj_gather_power_02.png",
+   "vegeta_ssj_gather_power_03.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "vegito_ssj",
+  "dir": "vegito_ssj",
+  "pose": "idle",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "vegito_ssj_idle_00.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "vegito_ssj",
+  "dir": "vegito_ssj",
+  "pose": "move_front",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "vegito_ssj_move_front_00.png",
+   "vegito_ssj_move_front_01.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "vegito_ssj",
+  "dir": "vegito_ssj",
+  "pose": "move_back",
+  "classification": "SHARED_PHYSICAL",
+  "ownerPose": "move_front",
+  "files": [
+   "vegito_ssj_move_front_00.png",
+   "vegito_ssj_move_front_01.png"
+  ],
+  "provenance": "Reutiliza los frames físicos de move_front (2 archivos)"
+ },
+ {
+  "formId": "vegito_ssj",
+  "dir": "vegito_ssj",
+  "pose": "guard",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "vegito_ssj_guard_00.png",
+   "vegito_ssj_guard_01.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "vegito_ssj",
+  "dir": "vegito_ssj",
+  "pose": "attack_fwd",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "vegito_ssj_attack_fwd_00.png",
+   "vegito_ssj_attack_fwd_01.png",
+   "vegito_ssj_attack_fwd_02.png",
+   "vegito_ssj_attack_fwd_03.png",
+   "vegito_ssj_attack_fwd_04.png",
+   "vegito_ssj_attack_fwd_05.png",
+   "vegito_ssj_attack_fwd_06.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "vegito_ssj",
+  "dir": "vegito_ssj",
+  "pose": "attack_ud",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "vegito_ssj_attack_ud_00.png",
+   "vegito_ssj_attack_ud_01.png",
+   "vegito_ssj_attack_ud_02.png",
+   "vegito_ssj_attack_ud_03.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "vegito_ssj",
+  "dir": "vegito_ssj",
+  "pose": "hurt",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "vegito_ssj_hurt_00.png",
+   "vegito_ssj_hurt_01.png",
+   "vegito_ssj_hurt_02.png",
+   "vegito_ssj_hurt_03.png",
+   "vegito_ssj_hurt_04.png",
+   "vegito_ssj_hurt_05.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "vegito_ssj",
+  "dir": "vegito_ssj",
+  "pose": "beam_charge",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "vegito_ssj_beam_charge_00.png",
+   "vegito_ssj_beam_charge_01.png",
+   "vegito_ssj_beam_charge_02.png",
+   "vegito_ssj_beam_charge_03.png",
+   "vegito_ssj_beam_charge_04.png",
+   "vegito_ssj_beam_charge_05.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ },
+ {
+  "formId": "vegito_ssj",
+  "dir": "vegito_ssj",
+  "pose": "beam_fire",
+  "classification": "SHARED_PHYSICAL",
+  "ownerPose": "beam_charge",
+  "files": [
+   "vegito_ssj_beam_charge_02.png",
+   "vegito_ssj_beam_charge_03.png",
+   "vegito_ssj_beam_charge_04.png"
+  ],
+  "provenance": "Reutiliza los frames físicos de beam_charge (3 archivos)"
+ },
+ {
+  "formId": "vegito_ssj",
+  "dir": "vegito_ssj",
+  "pose": "gather_power",
+  "classification": "CANONICAL_PHYSICAL",
+  "files": [
+   "vegito_ssj_gather_power_00.png",
+   "vegito_ssj_gather_power_01.png",
+   "vegito_ssj_gather_power_02.png",
+   "vegito_ssj_gather_power_03.png"
+  ],
+  "provenance": "PNG físico de Canonical_Frames_Official (vía import-canonical-frames) — sin provenance ROM aún"
+ }
+]

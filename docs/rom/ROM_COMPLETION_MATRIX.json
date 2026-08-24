@@ -1,0 +1,570 @@
+{
+  "generatedAt": "2026-08-24T09:58:15.497Z",
+  "scannedFiles": 468,
+  "tokenHits": 1127,
+  "tokens": [
+    "PENDING_ROM_TRACE",
+    "ROM_PENDING",
+    "UNRESOLVED",
+    "UNLINKED",
+    "PARTIAL",
+    "INFERRED",
+    "FUTURE",
+    "LEGACY",
+    "UNKNOWN"
+  ],
+  "byDomain": {
+    "Other": {
+      "PENDING_ROM_TRACE": 59,
+      "INFERRED": 236,
+      "PARTIAL": 89,
+      "UNRESOLVED": 51,
+      "UNKNOWN": 60,
+      "ROM_PENDING": 17,
+      "UNLINKED": 12,
+      "FUTURE": 7,
+      "LEGACY": 6
+    },
+    "Handler": {
+      "PARTIAL": 10,
+      "INFERRED": 26,
+      "PENDING_ROM_TRACE": 15,
+      "LEGACY": 1,
+      "UNKNOWN": 17
+    },
+    "Macros": {
+      "PENDING_ROM_TRACE": 3,
+      "LEGACY": 1,
+      "UNRESOLVED": 14,
+      "UNLINKED": 1,
+      "ROM_PENDING": 3
+    },
+    "ActionObject": {
+      "PENDING_ROM_TRACE": 15
+    },
+    "AI": {
+      "PENDING_ROM_TRACE": 2,
+      "UNKNOWN": 4,
+      "ROM_PENDING": 1,
+      "UNRESOLVED": 5,
+      "UNLINKED": 2,
+      "PARTIAL": 1,
+      "INFERRED": 2,
+      "FUTURE": 2,
+      "LEGACY": 2
+    },
+    "DefenseLIMIT": {
+      "LEGACY": 3
+    },
+    "FighterPhysical": {
+      "UNRESOLVED": 52,
+      "UNLINKED": 6,
+      "PARTIAL": 21,
+      "UNKNOWN": 9,
+      "ROM_PENDING": 2
+    },
+    "Presentation": {
+      "PENDING_ROM_TRACE": 16,
+      "PARTIAL": 16,
+      "UNRESOLVED": 3,
+      "UNLINKED": 5,
+      "ROM_PENDING": 13,
+      "UNKNOWN": 1
+    },
+    "Cinematic": {
+      "ROM_PENDING": 1,
+      "INFERRED": 1
+    },
+    "Engine": {
+      "INFERRED": 44,
+      "UNRESOLVED": 4,
+      "PARTIAL": 12,
+      "ROM_PENDING": 2,
+      "UNKNOWN": 6
+    },
+    "Audio": {
+      "UNKNOWN": 1
+    },
+    "Display": {
+      "ROM_PENDING": 2,
+      "PENDING_ROM_TRACE": 1,
+      "PARTIAL": 1,
+      "UNRESOLVED": 10
+    },
+    "Data": {
+      "INFERRED": 17,
+      "UNKNOWN": 124,
+      "UNLINKED": 49,
+      "UNRESOLVED": 21
+    },
+    "Tracer": {
+      "PENDING_ROM_TRACE": 5,
+      "PARTIAL": 2,
+      "UNKNOWN": 13
+    }
+  },
+  "canonicalDebt": [
+    {
+      "domain": "ActionObject",
+      "item": "slot semantic binding (slot0/slot1 role)",
+      "evidence": "layout 19B estático decodificado (research-v3)",
+      "missing": "identidad actor/target por rol",
+      "method": "TRACE",
+      "impact": "High",
+      "cls": "DYNAMIC"
+    },
+    {
+      "domain": "ActionObject",
+      "item": "ACTOR_HOME / TARGET_HOME",
+      "evidence": "sin coordenadas universales (v3 PENDING)",
+      "missing": "coordenadas absolutas de anclaje",
+      "method": "TRACE",
+      "impact": "High",
+      "cls": "DYNAMIC"
+    },
+    {
+      "domain": "ActionObject",
+      "item": "CONTACT_POINT",
+      "evidence": "sin punto de contacto universal demostrado",
+      "missing": "geometría de contacto",
+      "method": "TRACE",
+      "impact": "High",
+      "cls": "DYNAMIC"
+    },
+    {
+      "domain": "ActionObject",
+      "item": "left/right mirroring",
+      "evidence": "flip documentado, sin dump de confirmación",
+      "missing": "inversión LEFT↔RIGHT observada",
+      "method": "TRACE",
+      "impact": "Medium",
+      "cls": "DYNAMIC"
+    },
+    {
+      "domain": "ActionObject",
+      "item": "multi-actor binding ($0D/$0E)",
+      "evidence": "MULTI_ACTOR_SCRIPT estático",
+      "missing": "binding semántico por slot",
+      "method": "TRACE",
+      "impact": "High",
+      "cls": "DYNAMIC"
+    },
+    {
+      "domain": "FighterPhysical",
+      "item": "fighter sprite re-extraction",
+      "evidence": "cadena 411/411 ROM_STATIC_VERIFIED (v3)",
+      "missing": "direcciones de tabla de metasprites no persistidas + extractor",
+      "method": "REEXTRACT",
+      "impact": "High",
+      "cls": "DYNAMIC"
+    },
+    {
+      "domain": "Handler",
+      "item": "Tail $0B FSM",
+      "evidence": "static partial (worker $61C5)",
+      "missing": "FSM observada (hit/miss, L/R)",
+      "method": "TRACE",
+      "impact": "Medium",
+      "cls": "DYNAMIC"
+    },
+    {
+      "domain": "Handler",
+      "item": "Purple Comet $0D / P.Comet Z $0E",
+      "evidence": "MULTI_ACTOR_SCRIPT estático",
+      "missing": "actividad por slot + cleanup",
+      "method": "TRACE",
+      "impact": "Medium",
+      "cls": "DYNAMIC"
+    },
+    {
+      "domain": "Handler",
+      "item": "Suicide $08 / V-ball Crash $0C",
+      "evidence": "worker $5E67/$62D4 estático",
+      "missing": "FSM observada",
+      "method": "TRACE",
+      "impact": "Medium",
+      "cls": "DYNAMIC"
+    },
+    {
+      "domain": "Handler",
+      "item": "Rocket Punch $05 / Potbelly Atk $06",
+      "evidence": "launch profiles estáticos",
+      "missing": "FSM completa",
+      "method": "TRACE",
+      "impact": "Low",
+      "cls": "DYNAMIC"
+    },
+    {
+      "domain": "DefenseLIMIT",
+      "item": "DEFENSE_LIMIT_LEGACY (runtime debt)",
+      "evidence": "defendLimit → resolveDefenseCard legacy (PA11)",
+      "missing": "contrato ROM real del LIMIT defensivo (CA55/CA02/slot8/CA83)",
+      "method": "STATIC+TRACE",
+      "impact": "Medium",
+      "cls": "RUNTIME_DEBT"
+    },
+    {
+      "domain": "Cinematic",
+      "item": "TACTICAL ↔ ACTION cadence",
+      "evidence": "$07F4/$080C palette interpolation CGB",
+      "missing": "timing exacto: palette/tilemap/visibility/worker start",
+      "method": "TRACE",
+      "impact": "Medium",
+      "cls": "DYNAMIC"
+    },
+    {
+      "domain": "Macros",
+      "item": "semantic macro meaning $2B/$2C/$34/$35",
+      "evidence": "programas literales COMPLETE",
+      "missing": "significado humano (requiere binding actor/objeto)",
+      "method": "STATIC",
+      "impact": "Low",
+      "cls": "STATIC"
+    },
+    {
+      "domain": "AI",
+      "item": "ROM CPU decision model",
+      "evidence": "EnemyController Alpha (PA11)",
+      "missing": "policy original (elección/pesos/RNG/CC)",
+      "method": "STATIC+TRACE",
+      "impact": "Medium",
+      "cls": "NON_BLOCKING"
+    },
+    {
+      "domain": "Audio",
+      "item": "SFX/BGM map completo",
+      "evidence": "opcodes $13/$14 + IDs parciales",
+      "missing": "mapa acción→sonido + BGM por contexto",
+      "method": "STATIC",
+      "impact": "Medium",
+      "cls": "NON_BLOCKING"
+    },
+    {
+      "domain": "Display",
+      "item": "$0B07 exact internal format",
+      "evidence": "parcial (composición tilemap)",
+      "missing": "contrato interno exacto",
+      "method": "STATIC",
+      "impact": "Low",
+      "cls": "NON_BLOCKING"
+    },
+    {
+      "domain": "Display",
+      "item": "$C3CE/$C3CF/$C3D0",
+      "evidence": "en backlog deliberado (V7)",
+      "missing": "significado",
+      "method": "STATIC",
+      "impact": "Low",
+      "cls": "NON_BLOCKING"
+    },
+    {
+      "domain": "Display",
+      "item": "direct BG vs shadow $9800/$DD00-$DE00",
+      "evidence": "ambas rutas vistas",
+      "missing": "cuándo usa cada una",
+      "method": "TRACE",
+      "impact": "Low",
+      "cls": "NON_BLOCKING"
+    },
+    {
+      "domain": "Story",
+      "item": "Story ROM map (order/battles/dialogue)",
+      "evidence": "excluida del remake (RPG layer)",
+      "missing": "mapeo orden/battle configs/portraits/unlocks",
+      "method": "STATIC",
+      "impact": "Low",
+      "cls": "NON_BLOCKING"
+    },
+    {
+      "domain": "Presentation",
+      "item": "UNLINKED_CARD_BYTE8 → CC15",
+      "evidence": "card.byte8 UNLINKED (V7 backlog)",
+      "missing": "enlace byte8→CC15",
+      "method": "STATIC",
+      "impact": "Low",
+      "cls": "NON_BLOCKING"
+    }
+  ],
+  "samples": [
+    {
+      "file": "docs/rom/COMBAT_MECHANICS_ROM_CONFIRMED.md",
+      "line": 6,
+      "token": "PENDING_ROM_TRACE",
+      "domain": "Other",
+      "text": "> `PENDING_ROM_TRACE` los anchors absolutos y bindings semanticos. Tambien"
+    },
+    {
+      "file": "docs/rom/COMBAT_MECHANICS_ROM_CONFIRMED.md",
+      "line": 22,
+      "token": "INFERRED",
+      "domain": "Other",
+      "text": "> Marcadores: ✅ ROM_CONFIRMED · 🟡 ROM_INFERRED · 🔵 REMAKE_CANON · ❌ OBSOLETE"
+    },
+    {
+      "file": "docs/rom/COMBAT_MECHANICS_ROM_CONFIRMED.md",
+      "line": 407,
+      "token": "PARTIAL",
+      "domain": "Other",
+      "text": "simplificado. Taxonomía correcta en §59: 0=FULL, 1=ZERO_AVOID, 2=PARTIAL"
+    },
+    {
+      "file": "docs/rom/COMBAT_MECHANICS_ROM_CONFIRMED.md",
+      "line": 474,
+      "token": "PARTIAL",
+      "domain": "Other",
+      "text": "Nota: \"miss\" aquí = branch de resolución no plena (ver §59: CA53=2 es PARTIAL,"
+    },
+    {
+      "file": "docs/rom/COMBAT_MECHANICS_ROM_CONFIRMED.md",
+      "line": 915,
+      "token": "PARTIAL",
+      "domain": "Other",
+      "text": "CA53 = 2 → PARTIAL / ATTENUATED RESOLUTION  si había efecto preliminar:"
+    },
+    {
+      "file": "docs/rom/COMBAT_MECHANICS_ROM_CONFIRMED.md",
+      "line": 924,
+      "token": "PARTIAL",
+      "domain": "Other",
+      "text": "CA53 = 2 → PARTIAL / ATTENUATED RESOLUTION"
+    },
+    {
+      "file": "docs/rom/COMBAT_MECHANICS_ROM_CONFIRMED.md",
+      "line": 1173,
+      "token": "PARTIAL",
+      "domain": "Handler",
+      "text": "| \"FULL\" | \"ZERO_AVOID\" | \"PARTIAL\" | \"SPECIAL_NULLIFY\" | \"ENERGY_ABSORB\";"
+    },
+    {
+      "file": "docs/rom/COMBAT_MECHANICS_ROM_CONFIRMED.md",
+      "line": 1181,
+      "token": "PARTIAL",
+      "domain": "Other",
+      "text": "| CA53=2 → MISS | CA53=2 → PARTIAL / ATTENUATED |"
+    },
+    {
+      "file": "docs/rom/COMBAT_MECHANICS_ROM_CONFIRMED.md",
+      "line": 1199,
+      "token": "PARTIAL",
+      "domain": "Other",
+      "text": "| FULL/ZERO/PARTIAL | ✅ mucho mejor |"
+    },
+    {
+      "file": "docs/rom/COMBAT_MECHANICS_ROM_CONFIRMED.md",
+      "line": 2428,
+      "token": "PARTIAL",
+      "domain": "Other",
+      "text": "`CA83 = $10` → `CA53 = 2`, `CA7F = incomingCard.ccCost`. Familia `PARTIAL`: `damage = CC cost`. No es `damage / 2`."
+    },
+    {
+      "file": "docs/rom/COMBAT_MECHANICS_ROM_CONFIRMED.md",
+      "line": 2567,
+      "token": "INFERRED",
+      "domain": "Other",
+      "text": "> **Cuatro SUPERSEDES expresos** (§241–244). Retira las timelines INFERRED"
+    },
+    {
+      "file": "docs/rom/COMBAT_MECHANICS_ROM_CONFIRMED.md",
+      "line": 2945,
+      "token": "INFERRED",
+      "domain": "Other",
+      "text": "## 238. Perfiles INFERRED pasan a fallback"
+    },
+    {
+      "file": "docs/rom/COMBAT_MECHANICS_ROM_CONFIRMED.md",
+      "line": 2949,
+      "token": "INFERRED",
+      "domain": "Handler",
+      "text": "ROM handler unknown  → perfil INFERRED queda como fallback"
+    },
+    {
+      "file": "docs/rom/COMBAT_MECHANICS_ROM_CONFIRMED.md",
+      "line": 2987,
+      "token": "INFERRED",
+      "domain": "Other",
+      "text": "SUPERSEDES #2 — Beam genérico INFERRED (gather_power@12 … return@152)"
+    },
+    {
+      "file": "docs/rom/COMBAT_MECHANICS_ROM_CONFIRMED.md",
+      "line": 2988,
+      "token": "INFERRED",
+      "domain": "Handler",
+      "text": "→ perfil INFERRED antiguo; con descriptor ROM gana handler+macros"
+    },
+    {
+      "file": "docs/rom/COMBAT_MECHANICS_ROM_CONFIRMED.md",
+      "line": 3155,
+      "token": "INFERRED",
+      "domain": "Other",
+      "text": "evidence: 'ROM_STATIC_VERIFIED' | 'FRAME_VERIFIED' | 'INFERRED';"
+    },
+    {
+      "file": "docs/rom/COMBAT_MECHANICS_ROM_CONFIRMED.md",
+      "line": 3235,
+      "token": "PENDING_ROM_TRACE",
+      "domain": "Macros",
+      "text": "release frame / movimiento / macros / target reaction / holds = PENDING_ROM_TRACE"
+    },
+    {
+      "file": "docs/rom/COMBAT_MECHANICS_ROM_CONFIRMED.md",
+      "line": 3295,
+      "token": "PARTIAL",
+      "domain": "Other",
+      "text": "## 265. SET_OBJECT_POSITION sigue PARTIAL"
+    },
+    {
+      "file": "docs/rom/COMBAT_MECHANICS_ROM_CONFIRMED.md",
+      "line": 3298,
+      "token": "PARTIAL",
+      "domain": "Other",
+      "text": "campo PARTIAL hasta terminar decodificación:"
+    },
+    {
+      "file": "docs/rom/COMBAT_MECHANICS_ROM_CONFIRMED.md",
+      "line": 3305,
+      "token": "UNRESOLVED",
+      "domain": "Other",
+      "text": "semantics: 'ABSOLUTE_OR_BASE_POSITION_UNRESOLVED';"
+    },
+    {
+      "file": "docs/rom/COMBAT_MECHANICS_ROM_CONFIRMED.md",
+      "line": 3314,
+      "token": "PENDING_ROM_TRACE",
+      "domain": "ActionObject",
+      "text": "PENDING_ROM_TRACE: ACTOR_HOME X/Y · TARGET_HOME X/Y · CONTACT_POINT X/Y"
+    },
+    {
+      "file": "docs/rom/COMBAT_MECHANICS_ROM_CONFIRMED.md",
+      "line": 3357,
+      "token": "PENDING_ROM_TRACE",
+      "domain": "Handler",
+      "text": "evidence: 'ROM_HANDLER_VERIFIED' | 'ROM_SEQUENCE_VERIFIED' | 'PENDING_ROM_TRACE';"
+    },
+    {
+      "file": "docs/rom/COMBAT_MECHANICS_ROM_CONFIRMED.md",
+      "line": 3384,
+      "token": "PENDING_ROM_TRACE",
+      "domain": "Handler",
+      "text": "sequenceEvidence: 'ROM_HANDLER_VERIFIED' | 'ROM_SEQUENCE_VERIFIED' | 'PENDING_ROM_TRACE';"
+    },
+    {
+      "file": "docs/rom/COMBAT_MECHANICS_ROM_CONFIRMED.md",
+      "line": 3401,
+      "token": "PENDING_ROM_TRACE",
+      "domain": "Other",
+      "text": "VARIANT · SEQUENCE (PENDING_ROM_TRACE) — **no mostrar timeline inventada**."
+    },
+    {
+      "file": "docs/rom/COMBAT_MECHANICS_ROM_CONFIRMED.md",
+      "line": 3440,
+      "token": "PENDING_ROM_TRACE",
+      "domain": "ActionObject",
+      "text": "SÍ: $0A manipula posición/offset del ActionObject; los anchors siguen PENDING_ROM_TRACE"
+    },
+    {
+      "file": "docs/rom/COMBAT_MECHANICS_ROM_CONFIRMED.md",
+      "line": 3453,
+      "token": "PENDING_ROM_TRACE",
+      "domain": "Other",
+      "text": "PENDING_ROM_TRACE"
+    },
+    {
+      "file": "docs/rom/COMBAT_MECHANICS_ROM_CONFIRMED.md",
+      "line": 3470,
+      "token": "INFERRED",
+      "domain": "Other",
+      "text": "> **Tres SUPERSEDES** (§309). Regla de oro: el tracer no elimina INFERRED;"
+    },
+    {
+      "file": "docs/rom/COMBAT_MECHANICS_ROM_CONFIRMED.md",
+      "line": 3482,
+      "token": "PENDING_ROM_TRACE",
+      "domain": "Other",
+      "text": "| 'PENDING_ROM_TRACE';"
+    },
+    {
+      "file": "docs/rom/COMBAT_MECHANICS_ROM_CONFIRMED.md",
+      "line": 3564,
+      "token": "UNKNOWN",
+      "domain": "Other",
+      "text": "| 'BASE_X' | 'BASE_Y' | 'FLAGS' | 'UNKNOWN';"
+    },
+    {
+      "file": "docs/rom/COMBAT_MECHANICS_ROM_CONFIRMED.md",
+      "line": 3607,
+      "token": "UNKNOWN",
+      "domain": "Other",
+      "text": "screenXDependency: 'NONE' | 'SCX' | 'UNKNOWN';"
+    },
+    {
+      "file": "docs/rom/COMBAT_MECHANICS_ROM_CONFIRMED.md",
+      "line": 3608,
+      "token": "UNKNOWN",
+      "domain": "Other",
+      "text": "screenYDependency: 'NONE' | 'SCY' | 'UNKNOWN';"
+    },
+    {
+      "file": "docs/rom/COMBAT_MECHANICS_ROM_CONFIRMED.md",
+      "line": 3613,
+      "token": "UNKNOWN",
+      "domain": "Other",
+      "text": "Hasta resolverlo, `UNKNOWN` es resultado válido."
+    },
+    {
+      "file": "docs/rom/COMBAT_MECHANICS_ROM_CONFIRMED.md",
+      "line": 3680,
+      "token": "UNKNOWN",
+      "domain": "Other",
+      "text": "binding: 'PRIMARY' | 'SUPPORT' | 'TARGET' | 'UNKNOWN';"
+    },
+    {
+      "file": "docs/rom/COMBAT_MECHANICS_ROM_CONFIRMED.md",
+      "line": 3711,
+      "token": "PENDING_ROM_TRACE",
+      "domain": "Other",
+      "text": "PENDING_ROM_TRACE → TRACE_CAPTURED → FIELD_CANDIDATE"
+    },
+    {
+      "file": "docs/rom/COMBAT_MECHANICS_ROM_CONFIRMED.md",
+      "line": 3727,
+      "token": "PARTIAL",
+      "domain": "Other",
+      "text": "evidence: 'PARTIAL_ROM_DYNAMIC_VERIFIED' | 'ROM_DYNAMIC_VERIFIED';"
+    },
+    {
+      "file": "docs/rom/COMBAT_MECHANICS_ROM_CONFIRMED.md",
+      "line": 3729,
+      "token": "UNKNOWN",
+      "domain": "Other",
+      "text": "// 12 bytes conocidos + 7 UNKNOWN es mejor que bautizar 19/19 falsamente"
+    },
+    {
+      "file": "docs/rom/COMBAT_MECHANICS_ROM_CONFIRMED.md",
+      "line": 3737,
+      "token": "PENDING_ROM_TRACE",
+      "domain": "ActionObject",
+      "text": "CONTACT_POINT → PENDING_ROM_TRACE"
+    },
+    {
+      "file": "docs/rom/COMBAT_MECHANICS_ROM_CONFIRMED.md",
+      "line": 3747,
+      "token": "PENDING_ROM_TRACE",
+      "domain": "ActionObject",
+      "text": "- Anchors: mostrar `PENDING_ROM_TRACE`, no `ACTOR_HOME = —`; o `x=N y=M"
+    },
+    {
+      "file": "docs/rom/COMBAT_MECHANICS_ROM_CONFIRMED.md",
+      "line": 3760,
+      "token": "UNKNOWN",
+      "domain": "Other",
+      "text": "DECODER: ningún byte UNKNOWN se promociona solo · CANDIDATE ≠"
+    },
+    {
+      "file": "docs/rom/COMBAT_MECHANICS_ROM_CONFIRMED.md",
+      "line": 3803,
+      "token": "INFERRED",
+      "domain": "Other",
+      "text": "> **Lote 9 no elimina los INFERRED por añadir el tracer: los elimina"
+    }
+  ]
+}

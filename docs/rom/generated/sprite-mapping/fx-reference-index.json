@@ -1,0 +1,976 @@
+{
+ "poses": [
+  {
+   "formId": "android_16",
+   "pose": "aura_power",
+   "files": [
+    "android_16_aura_power_00.png",
+    "android_16_aura_power_01.png",
+    "android_16_aura_power_02.png"
+   ],
+   "note": "Dominio FX/BG, no FighterActor"
+  },
+  {
+   "formId": "android_16",
+   "pose": "aura_support",
+   "files": [
+    "android_16_aura_support_00.png",
+    "android_16_aura_support_01.png",
+    "android_16_aura_support_02.png"
+   ],
+   "note": "Dominio FX/BG, no FighterActor"
+  },
+  {
+   "formId": "android_17",
+   "pose": "aura_power",
+   "files": [
+    "android_17_aura_power_00.png",
+    "android_17_aura_power_01.png",
+    "android_17_aura_power_02.png"
+   ],
+   "note": "Dominio FX/BG, no FighterActor"
+  },
+  {
+   "formId": "android_17",
+   "pose": "aura_support",
+   "files": [
+    "android_17_aura_support_00.png",
+    "android_17_aura_support_01.png",
+    "android_17_aura_support_02.png"
+   ],
+   "note": "Dominio FX/BG, no FighterActor"
+  },
+  {
+   "formId": "android_18",
+   "pose": "aura_power",
+   "files": [
+    "android_18_aura_power_00.png",
+    "android_18_aura_power_01.png",
+    "android_18_aura_power_02.png"
+   ],
+   "note": "Dominio FX/BG, no FighterActor"
+  },
+  {
+   "formId": "android_18",
+   "pose": "aura_support",
+   "files": [
+    "android_18_aura_support_00.png",
+    "android_18_aura_support_01.png",
+    "android_18_aura_support_02.png"
+   ],
+   "note": "Dominio FX/BG, no FighterActor"
+  },
+  {
+   "formId": "android_19",
+   "pose": "aura_power",
+   "files": [
+    "android_19_aura_power_00.png",
+    "android_19_aura_power_01.png",
+    "android_19_aura_power_02.png"
+   ],
+   "note": "Dominio FX/BG, no FighterActor"
+  },
+  {
+   "formId": "android_19",
+   "pose": "aura_support",
+   "files": [
+    "android_19_aura_support_00.png",
+    "android_19_aura_support_01.png",
+    "android_19_aura_support_02.png"
+   ],
+   "note": "Dominio FX/BG, no FighterActor"
+  },
+  {
+   "formId": "android_20",
+   "pose": "aura_power",
+   "files": [
+    "android_20_aura_power_00.png",
+    "android_20_aura_power_01.png",
+    "android_20_aura_power_02.png"
+   ],
+   "note": "Dominio FX/BG, no FighterActor"
+  },
+  {
+   "formId": "android_20",
+   "pose": "aura_support",
+   "files": [
+    "android_20_aura_support_00.png",
+    "android_20_aura_support_01.png",
+    "android_20_aura_support_02.png"
+   ],
+   "note": "Dominio FX/BG, no FighterActor"
+  },
+  {
+   "formId": "burter",
+   "pose": "aura_power",
+   "files": [
+    "burter_aura_power_00.png",
+    "burter_aura_power_01.png",
+    "burter_aura_power_02.png"
+   ],
+   "note": "Dominio FX/BG, no FighterActor"
+  },
+  {
+   "formId": "burter",
+   "pose": "aura_support",
+   "files": [
+    "burter_aura_support_00.png",
+    "burter_aura_support_01.png",
+    "burter_aura_support_02.png"
+   ],
+   "note": "Dominio FX/BG, no FighterActor"
+  },
+  {
+   "formId": "buu_base",
+   "pose": "aura_power",
+   "files": [
+    "buu_base_aura_power_00.png",
+    "buu_base_aura_power_01.png",
+    "buu_base_aura_power_02.png"
+   ],
+   "note": "Dominio FX/BG, no FighterActor"
+  },
+  {
+   "formId": "buu_base",
+   "pose": "aura_support",
+   "files": [
+    "buu_base_aura_support_00.png",
+    "buu_base_aura_support_01.png",
+    "buu_base_aura_support_02.png"
+   ],
+   "note": "Dominio FX/BG, no FighterActor"
+  },
+  {
+   "formId": "buu_gohan",
+   "pose": "aura_power",
+   "files": [
+    "buu_gohan_aura_power_00.png",
+    "buu_gohan_aura_power_01.png",
+    "buu_gohan_aura_power_02.png"
+   ],
+   "note": "Dominio FX/BG, no FighterActor"
+  },
+  {
+   "formId": "buu_gohan",
+   "pose": "aura_support",
+   "files": [
+    "buu_gohan_aura_support_00.png",
+    "buu_gohan_aura_support_01.png",
+    "buu_gohan_aura_support_02.png"
+   ],
+   "note": "Dominio FX/BG, no FighterActor"
+  },
+  {
+   "formId": "buu_gotenks",
+   "pose": "aura_power",
+   "files": [
+    "buu_gotenks_aura_power_00.png",
+    "buu_gotenks_aura_power_01.png",
+    "buu_gotenks_aura_power_02.png"
+   ],
+   "note": "Dominio FX/BG, no FighterActor"
+  },
+  {
+   "formId": "buu_gotenks",
+   "pose": "aura_support",
+   "files": [
+    "buu_gotenks_aura_support_00.png",
+    "buu_gotenks_aura_support_01.png",
+    "buu_gotenks_aura_support_02.png"
+   ],
+   "note": "Dominio FX/BG, no FighterActor"
+  },
+  {
+   "formId": "buu_kid",
+   "pose": "aura_power",
+   "files": [
+    "buu_kid_aura_power_00.png",
+    "buu_kid_aura_power_01.png",
+    "buu_kid_aura_power_02.png"
+   ],
+   "note": "Dominio FX/BG, no FighterActor"
+  },
+  {
+   "formId": "buu_kid",
+   "pose": "aura_support",
+   "files": [
+    "buu_kid_aura_support_00.png",
+    "buu_kid_aura_support_01.png",
+    "buu_kid_aura_support_02.png"
+   ],
+   "note": "Dominio FX/BG, no FighterActor"
+  },
+  {
+   "formId": "buu_super",
+   "pose": "aura_power",
+   "files": [
+    "buu_super_aura_power_00.png",
+    "buu_super_aura_power_01.png",
+    "buu_super_aura_power_02.png"
+   ],
+   "note": "Dominio FX/BG, no FighterActor"
+  },
+  {
+   "formId": "buu_super",
+   "pose": "aura_support",
+   "files": [
+    "buu_super_aura_support_00.png",
+    "buu_super_aura_support_01.png",
+    "buu_super_aura_support_02.png"
+   ],
+   "note": "Dominio FX/BG, no FighterActor"
+  },
+  {
+   "formId": "cell_imperfect",
+   "pose": "aura_power",
+   "files": [
+    "cell_imperfect_aura_power_00.png",
+    "cell_imperfect_aura_power_01.png",
+    "cell_imperfect_aura_power_02.png"
+   ],
+   "note": "Dominio FX/BG, no FighterActor"
+  },
+  {
+   "formId": "cell_imperfect",
+   "pose": "aura_support",
+   "files": [
+    "cell_imperfect_aura_support_00.png",
+    "cell_imperfect_aura_support_01.png",
+    "cell_imperfect_aura_support_02.png"
+   ],
+   "note": "Dominio FX/BG, no FighterActor"
+  },
+  {
+   "formId": "cell_jr",
+   "pose": "aura_power",
+   "files": [
+    "cell_jr_aura_power_00.png",
+    "cell_jr_aura_power_01.png",
+    "cell_jr_aura_power_02.png"
+   ],
+   "note": "Dominio FX/BG, no FighterActor"
+  },
+  {
+   "formId": "cell_jr",
+   "pose": "aura_support",
+   "files": [
+    "cell_jr_aura_support_00.png",
+    "cell_jr_aura_support_01.png",
+    "cell_jr_aura_support_02.png"
+   ],
+   "note": "Dominio FX/BG, no FighterActor"
+  },
+  {
+   "formId": "cell_perfect",
+   "pose": "aura_power",
+   "files": [
+    "cell_perfect_aura_power_00.png",
+    "cell_perfect_aura_power_01.png",
+    "cell_perfect_aura_power_02.png"
+   ],
+   "note": "Dominio FX/BG, no FighterActor"
+  },
+  {
+   "formId": "cell_perfect",
+   "pose": "aura_support",
+   "files": [
+    "cell_perfect_aura_support_00.png",
+    "cell_perfect_aura_support_01.png",
+    "cell_perfect_aura_support_02.png"
+   ],
+   "note": "Dominio FX/BG, no FighterActor"
+  },
+  {
+   "formId": "cell_semi",
+   "pose": "aura_power",
+   "files": [
+    "cell_semi_aura_power_00.png",
+    "cell_semi_aura_power_01.png",
+    "cell_semi_aura_power_02.png"
+   ],
+   "note": "Dominio FX/BG, no FighterActor"
+  },
+  {
+   "formId": "cell_semi",
+   "pose": "aura_support",
+   "files": [
+    "cell_semi_aura_support_00.png",
+    "cell_semi_aura_support_01.png",
+    "cell_semi_aura_support_02.png"
+   ],
+   "note": "Dominio FX/BG, no FighterActor"
+  },
+  {
+   "formId": "frieza_final",
+   "pose": "aura_power",
+   "files": [
+    "frieza_final_aura_power_00.png",
+    "frieza_final_aura_power_01.png",
+    "frieza_final_aura_power_02.png"
+   ],
+   "note": "Dominio FX/BG, no FighterActor"
+  },
+  {
+   "formId": "frieza_final",
+   "pose": "aura_support",
+   "files": [
+    "frieza_final_aura_support_00.png",
+    "frieza_final_aura_support_01.png",
+    "frieza_final_aura_support_02.png"
+   ],
+   "note": "Dominio FX/BG, no FighterActor"
+  },
+  {
+   "formId": "ginyu",
+   "pose": "aura_power",
+   "files": [
+    "ginyu_aura_power_00.png",
+    "ginyu_aura_power_01.png",
+    "ginyu_aura_power_02.png"
+   ],
+   "note": "Dominio FX/BG, no FighterActor"
+  },
+  {
+   "formId": "ginyu",
+   "pose": "aura_support",
+   "files": [
+    "ginyu_aura_support_00.png",
+    "ginyu_aura_support_01.png",
+    "ginyu_aura_support_02.png"
+   ],
+   "note": "Dominio FX/BG, no FighterActor"
+  },
+  {
+   "formId": "ginyu_goku",
+   "pose": "aura_power",
+   "files": [
+    "ginyu_goku_aura_power_00.png",
+    "ginyu_goku_aura_power_01.png",
+    "ginyu_goku_aura_power_02.png"
+   ],
+   "note": "Dominio FX/BG, no FighterActor"
+  },
+  {
+   "formId": "ginyu_goku",
+   "pose": "aura_support",
+   "files": [
+    "ginyu_goku_aura_support_00.png",
+    "ginyu_goku_aura_support_01.png",
+    "ginyu_goku_aura_support_02.png"
+   ],
+   "note": "Dominio FX/BG, no FighterActor"
+  },
+  {
+   "formId": "gohan_adult_ssj",
+   "pose": "aura_power",
+   "files": [
+    "gohan_adult_ssj_aura_power_00.png",
+    "gohan_adult_ssj_aura_power_01.png",
+    "gohan_adult_ssj_aura_power_02.png"
+   ],
+   "note": "Dominio FX/BG, no FighterActor"
+  },
+  {
+   "formId": "gohan_adult_ssj",
+   "pose": "aura_support",
+   "files": [
+    "gohan_adult_ssj_aura_support_00.png",
+    "gohan_adult_ssj_aura_support_01.png",
+    "gohan_adult_ssj_aura_support_02.png"
+   ],
+   "note": "Dominio FX/BG, no FighterActor"
+  },
+  {
+   "formId": "gohan_adult_ssj2",
+   "pose": "aura_power",
+   "files": [
+    "gohan_adult_ssj_aura_power_00.png",
+    "gohan_adult_ssj_aura_power_01.png",
+    "gohan_adult_ssj_aura_power_02.png"
+   ],
+   "note": "Dominio FX/BG, no FighterActor"
+  },
+  {
+   "formId": "gohan_adult_ssj2",
+   "pose": "aura_support",
+   "files": [
+    "gohan_adult_ssj_aura_support_00.png",
+    "gohan_adult_ssj_aura_support_01.png",
+    "gohan_adult_ssj_aura_support_02.png"
+   ],
+   "note": "Dominio FX/BG, no FighterActor"
+  },
+  {
+   "formId": "gohan_adult_ultimate",
+   "pose": "aura_power",
+   "files": [
+    "gohan_adult_ultimate_aura_power_00.png",
+    "gohan_adult_ultimate_aura_power_01.png",
+    "gohan_adult_ultimate_aura_power_02.png"
+   ],
+   "note": "Dominio FX/BG, no FighterActor"
+  },
+  {
+   "formId": "gohan_adult_ultimate",
+   "pose": "aura_support",
+   "files": [
+    "gohan_adult_ultimate_aura_support_00.png",
+    "gohan_adult_ultimate_aura_support_01.png",
+    "gohan_adult_ultimate_aura_support_02.png"
+   ],
+   "note": "Dominio FX/BG, no FighterActor"
+  },
+  {
+   "formId": "gohan_young",
+   "pose": "aura_power",
+   "files": [
+    "gohan_young_aura_power_00.png",
+    "gohan_young_aura_power_01.png",
+    "gohan_young_aura_power_02.png"
+   ],
+   "note": "Dominio FX/BG, no FighterActor"
+  },
+  {
+   "formId": "gohan_young",
+   "pose": "aura_support",
+   "files": [
+    "gohan_young_aura_support_00.png",
+    "gohan_young_aura_support_01.png",
+    "gohan_young_aura_support_02.png"
+   ],
+   "note": "Dominio FX/BG, no FighterActor"
+  },
+  {
+   "formId": "gohan_young_ssj",
+   "pose": "aura_power",
+   "files": [
+    "gohan_young_ssj_aura_power_00.png",
+    "gohan_young_ssj_aura_power_01.png",
+    "gohan_young_ssj_aura_power_02.png"
+   ],
+   "note": "Dominio FX/BG, no FighterActor"
+  },
+  {
+   "formId": "gohan_young_ssj",
+   "pose": "aura_support",
+   "files": [
+    "gohan_young_ssj_aura_support_00.png",
+    "gohan_young_ssj_aura_support_01.png",
+    "gohan_young_ssj_aura_support_02.png"
+   ],
+   "note": "Dominio FX/BG, no FighterActor"
+  },
+  {
+   "formId": "gohan_young_ssj2",
+   "pose": "aura_power",
+   "files": [
+    "gohan_young_ssj2_aura_power_00.png",
+    "gohan_young_ssj2_aura_power_01.png",
+    "gohan_young_ssj2_aura_power_02.png"
+   ],
+   "note": "Dominio FX/BG, no FighterActor"
+  },
+  {
+   "formId": "gohan_young_ssj2",
+   "pose": "aura_support",
+   "files": [
+    "gohan_young_ssj2_aura_support_00.png",
+    "gohan_young_ssj2_aura_support_01.png",
+    "gohan_young_ssj2_aura_support_02.png"
+   ],
+   "note": "Dominio FX/BG, no FighterActor"
+  },
+  {
+   "formId": "goku_base",
+   "pose": "aura_power",
+   "files": [
+    "goku_base_aura_power_00.png",
+    "goku_base_aura_power_01.png",
+    "goku_base_aura_power_02.png"
+   ],
+   "note": "Dominio FX/BG, no FighterActor"
+  },
+  {
+   "formId": "goku_base",
+   "pose": "aura_support",
+   "files": [
+    "goku_base_aura_support_00.png",
+    "goku_base_aura_support_01.png",
+    "goku_base_aura_support_02.png"
+   ],
+   "note": "Dominio FX/BG, no FighterActor"
+  },
+  {
+   "formId": "goku_ssj",
+   "pose": "aura_power",
+   "files": [
+    "goku_ssj_aura_power_00.png",
+    "goku_ssj_aura_power_01.png",
+    "goku_ssj_aura_power_02.png"
+   ],
+   "note": "Dominio FX/BG, no FighterActor"
+  },
+  {
+   "formId": "goku_ssj",
+   "pose": "aura_support",
+   "files": [
+    "goku_ssj_aura_support_00.png",
+    "goku_ssj_aura_support_01.png",
+    "goku_ssj_aura_support_02.png"
+   ],
+   "note": "Dominio FX/BG, no FighterActor"
+  },
+  {
+   "formId": "goku_ssj2",
+   "pose": "aura_power",
+   "files": [
+    "goku_ssj2_aura_power_00.png",
+    "goku_ssj2_aura_power_01.png",
+    "goku_ssj2_aura_power_02.png"
+   ],
+   "note": "Dominio FX/BG, no FighterActor"
+  },
+  {
+   "formId": "goku_ssj2",
+   "pose": "aura_support",
+   "files": [
+    "goku_ssj2_aura_support_00.png",
+    "goku_ssj2_aura_support_01.png",
+    "goku_ssj2_aura_support_02.png"
+   ],
+   "note": "Dominio FX/BG, no FighterActor"
+  },
+  {
+   "formId": "goku_ssj3",
+   "pose": "aura_power",
+   "files": [
+    "goku_ssj3_aura_power_00.png",
+    "goku_ssj3_aura_power_01.png",
+    "goku_ssj3_aura_power_02.png"
+   ],
+   "note": "Dominio FX/BG, no FighterActor"
+  },
+  {
+   "formId": "goku_ssj3",
+   "pose": "aura_support",
+   "files": [
+    "goku_ssj3_aura_support_00.png",
+    "goku_ssj3_aura_support_01.png",
+    "goku_ssj3_aura_support_02.png"
+   ],
+   "note": "Dominio FX/BG, no FighterActor"
+  },
+  {
+   "formId": "goten_base",
+   "pose": "aura_power",
+   "files": [
+    "goten_base_aura_power_00.png",
+    "goten_base_aura_power_01.png",
+    "goten_base_aura_power_02.png"
+   ],
+   "note": "Dominio FX/BG, no FighterActor"
+  },
+  {
+   "formId": "goten_base",
+   "pose": "aura_support",
+   "files": [
+    "goten_base_aura_support_00.png",
+    "goten_base_aura_support_01.png",
+    "goten_base_aura_support_02.png"
+   ],
+   "note": "Dominio FX/BG, no FighterActor"
+  },
+  {
+   "formId": "goten_ssj",
+   "pose": "aura_power",
+   "files": [
+    "goten_ssj_aura_power_00.png",
+    "goten_ssj_aura_power_01.png",
+    "goten_ssj_aura_power_02.png"
+   ],
+   "note": "Dominio FX/BG, no FighterActor"
+  },
+  {
+   "formId": "goten_ssj",
+   "pose": "aura_support",
+   "files": [
+    "goten_ssj_aura_support_00.png",
+    "goten_ssj_aura_support_01.png",
+    "goten_ssj_aura_support_02.png"
+   ],
+   "note": "Dominio FX/BG, no FighterActor"
+  },
+  {
+   "formId": "gotenks_ssj",
+   "pose": "aura_power",
+   "files": [
+    "gotenks_ssj_aura_power_00.png",
+    "gotenks_ssj_aura_power_01.png",
+    "gotenks_ssj_aura_power_02.png"
+   ],
+   "note": "Dominio FX/BG, no FighterActor"
+  },
+  {
+   "formId": "gotenks_ssj",
+   "pose": "aura_support",
+   "files": [
+    "gotenks_ssj_aura_support_00.png",
+    "gotenks_ssj_aura_support_01.png",
+    "gotenks_ssj_aura_support_02.png"
+   ],
+   "note": "Dominio FX/BG, no FighterActor"
+  },
+  {
+   "formId": "gotenks_ssj3",
+   "pose": "aura_power",
+   "files": [
+    "gotenks_ssj3_aura_power_00.png",
+    "gotenks_ssj3_aura_power_01.png",
+    "gotenks_ssj3_aura_power_02.png"
+   ],
+   "note": "Dominio FX/BG, no FighterActor"
+  },
+  {
+   "formId": "gotenks_ssj3",
+   "pose": "aura_support",
+   "files": [
+    "gotenks_ssj3_aura_support_00.png",
+    "gotenks_ssj3_aura_support_01.png",
+    "gotenks_ssj3_aura_power_02.png"
+   ],
+   "note": "Dominio FX/BG, no FighterActor"
+  },
+  {
+   "formId": "guldo",
+   "pose": "aura_power",
+   "files": [
+    "guldo_aura_power_00.png",
+    "guldo_aura_power_01.png",
+    "guldo_aura_power_02.png"
+   ],
+   "note": "Dominio FX/BG, no FighterActor"
+  },
+  {
+   "formId": "guldo",
+   "pose": "aura_support",
+   "files": [
+    "guldo_aura_support_00.png",
+    "guldo_aura_support_01.png",
+    "guldo_aura_support_02.png"
+   ],
+   "note": "Dominio FX/BG, no FighterActor"
+  },
+  {
+   "formId": "jeice",
+   "pose": "aura_power",
+   "files": [
+    "jeice_aura_power_00.png",
+    "jeice_aura_power_01.png",
+    "jeice_aura_power_02.png"
+   ],
+   "note": "Dominio FX/BG, no FighterActor"
+  },
+  {
+   "formId": "jeice",
+   "pose": "aura_support",
+   "files": [
+    "jeice_aura_support_00.png",
+    "jeice_aura_support_01.png",
+    "jeice_aura_support_02.png"
+   ],
+   "note": "Dominio FX/BG, no FighterActor"
+  },
+  {
+   "formId": "krillin_base",
+   "pose": "aura_power",
+   "files": [
+    "krillin_base_aura_power_00.png",
+    "krillin_base_aura_power_01.png",
+    "krillin_base_aura_power_02.png"
+   ],
+   "note": "Dominio FX/BG, no FighterActor"
+  },
+  {
+   "formId": "krillin_base",
+   "pose": "aura_support",
+   "files": [
+    "krillin_base_aura_support_00.png",
+    "krillin_base_aura_support_01.png",
+    "krillin_base_aura_support_02.png"
+   ],
+   "note": "Dominio FX/BG, no FighterActor"
+  },
+  {
+   "formId": "nappa",
+   "pose": "aura_power",
+   "files": [
+    "nappa_aura_power_00.png",
+    "nappa_aura_power_01.png",
+    "nappa_aura_power_02.png"
+   ],
+   "note": "Dominio FX/BG, no FighterActor"
+  },
+  {
+   "formId": "nappa",
+   "pose": "aura_support",
+   "files": [
+    "nappa_aura_support_00.png",
+    "nappa_aura_support_01.png",
+    "nappa_aura_support_02.png"
+   ],
+   "note": "Dominio FX/BG, no FighterActor"
+  },
+  {
+   "formId": "piccolo_base",
+   "pose": "aura_power",
+   "files": [
+    "piccolo_base_aura_power_00.png",
+    "piccolo_base_aura_power_01.png",
+    "piccolo_base_aura_power_02.png"
+   ],
+   "note": "Dominio FX/BG, no FighterActor"
+  },
+  {
+   "formId": "piccolo_base",
+   "pose": "aura_support",
+   "files": [
+    "piccolo_base_aura_support_00.png",
+    "piccolo_base_aura_support_01.png",
+    "piccolo_base_aura_support_02.png"
+   ],
+   "note": "Dominio FX/BG, no FighterActor"
+  },
+  {
+   "formId": "piccolo_evil",
+   "pose": "aura_power",
+   "files": [
+    "piccolo_base_aura_power_00.png",
+    "piccolo_base_aura_power_01.png",
+    "piccolo_base_aura_power_02.png"
+   ],
+   "note": "Dominio FX/BG, no FighterActor"
+  },
+  {
+   "formId": "piccolo_evil",
+   "pose": "aura_support",
+   "files": [
+    "piccolo_base_aura_support_00.png",
+    "piccolo_base_aura_support_01.png",
+    "piccolo_base_aura_support_02.png"
+   ],
+   "note": "Dominio FX/BG, no FighterActor"
+  },
+  {
+   "formId": "piccolo_kami",
+   "pose": "aura_power",
+   "files": [
+    "piccolo_base_aura_power_00.png",
+    "piccolo_base_aura_power_01.png",
+    "piccolo_base_aura_power_02.png"
+   ],
+   "note": "Dominio FX/BG, no FighterActor"
+  },
+  {
+   "formId": "piccolo_kami",
+   "pose": "aura_support",
+   "files": [
+    "piccolo_base_aura_support_00.png",
+    "piccolo_base_aura_support_01.png",
+    "piccolo_base_aura_support_02.png"
+   ],
+   "note": "Dominio FX/BG, no FighterActor"
+  },
+  {
+   "formId": "recoome",
+   "pose": "aura_power",
+   "files": [
+    "recoome_aura_power_00.png",
+    "recoome_aura_power_01.png",
+    "recoome_aura_power_02.png"
+   ],
+   "note": "Dominio FX/BG, no FighterActor"
+  },
+  {
+   "formId": "recoome",
+   "pose": "aura_support",
+   "files": [
+    "recoome_aura_support_00.png",
+    "recoome_aura_support_01.png",
+    "recoome_aura_support_02.png"
+   ],
+   "note": "Dominio FX/BG, no FighterActor"
+  },
+  {
+   "formId": "trunks_future",
+   "pose": "aura_power",
+   "files": [
+    "trunks_future_aura_power_00.png",
+    "trunks_future_aura_power_01.png",
+    "trunks_future_aura_power_02.png"
+   ],
+   "note": "Dominio FX/BG, no FighterActor"
+  },
+  {
+   "formId": "trunks_future",
+   "pose": "aura_support",
+   "files": [
+    "trunks_future_aura_support_00.png",
+    "trunks_future_aura_support_01.png",
+    "trunks_future_aura_support_02.png"
+   ],
+   "note": "Dominio FX/BG, no FighterActor"
+  },
+  {
+   "formId": "trunks_kid",
+   "pose": "aura_power",
+   "files": [
+    "trunks_kid_aura_power_00.png",
+    "trunks_kid_aura_power_01.png",
+    "trunks_kid_aura_power_02.png"
+   ],
+   "note": "Dominio FX/BG, no FighterActor"
+  },
+  {
+   "formId": "trunks_kid",
+   "pose": "aura_support",
+   "files": [
+    "trunks_kid_aura_support_00.png",
+    "trunks_kid_aura_support_01.png",
+    "trunks_kid_aura_support_02.png"
+   ],
+   "note": "Dominio FX/BG, no FighterActor"
+  },
+  {
+   "formId": "trunks_kid_ssj",
+   "pose": "aura_power",
+   "files": [
+    "trunks_kid_ssj_aura_power_00.png",
+    "trunks_kid_ssj_aura_power_01.png",
+    "trunks_kid_ssj_aura_power_02.png"
+   ],
+   "note": "Dominio FX/BG, no FighterActor"
+  },
+  {
+   "formId": "trunks_kid_ssj",
+   "pose": "aura_support",
+   "files": [
+    "trunks_kid_ssj_aura_support_00.png",
+    "trunks_kid_ssj_aura_support_01.png",
+    "trunks_kid_ssj_aura_support_02.png"
+   ],
+   "note": "Dominio FX/BG, no FighterActor"
+  },
+  {
+   "formId": "trunks_ssj",
+   "pose": "aura_power",
+   "files": [
+    "trunks_ssj_aura_power_00.png",
+    "trunks_ssj_aura_power_01.png",
+    "trunks_ssj_aura_power_02.png"
+   ],
+   "note": "Dominio FX/BG, no FighterActor"
+  },
+  {
+   "formId": "trunks_ssj",
+   "pose": "aura_support",
+   "files": [
+    "trunks_ssj_aura_support_00.png",
+    "trunks_ssj_aura_support_01.png",
+    "trunks_ssj_aura_support_02.png"
+   ],
+   "note": "Dominio FX/BG, no FighterActor"
+  },
+  {
+   "formId": "vegeta_base",
+   "pose": "aura_power",
+   "files": [
+    "vegeta_base_aura_power_00.png",
+    "vegeta_base_aura_power_01.png",
+    "vegeta_base_aura_power_02.png"
+   ],
+   "note": "Dominio FX/BG, no FighterActor"
+  },
+  {
+   "formId": "vegeta_base",
+   "pose": "aura_support",
+   "files": [
+    "vegeta_base_aura_support_00.png",
+    "vegeta_base_aura_support_01.png",
+    "vegeta_base_aura_support_02.png"
+   ],
+   "note": "Dominio FX/BG, no FighterActor"
+  },
+  {
+   "formId": "vegeta_majin",
+   "pose": "aura_power",
+   "files": [
+    "vegeta_ssj_aura_power_00.png",
+    "vegeta_ssj_aura_power_01.png",
+    "vegeta_ssj_aura_power_02.png"
+   ],
+   "note": "Dominio FX/BG, no FighterActor"
+  },
+  {
+   "formId": "vegeta_majin",
+   "pose": "aura_support",
+   "files": [
+    "vegeta_ssj_aura_support_00.png",
+    "vegeta_ssj_aura_support_01.png",
+    "vegeta_ssj_aura_support_02.png"
+   ],
+   "note": "Dominio FX/BG, no FighterActor"
+  },
+  {
+   "formId": "vegeta_ssj",
+   "pose": "aura_power",
+   "files": [
+    "vegeta_ssj_aura_power_00.png",
+    "vegeta_ssj_aura_power_01.png",
+    "vegeta_ssj_aura_power_02.png"
+   ],
+   "note": "Dominio FX/BG, no FighterActor"
+  },
+  {
+   "formId": "vegeta_ssj",
+   "pose": "aura_support",
+   "files": [
+    "vegeta_ssj_aura_support_00.png",
+    "vegeta_ssj_aura_support_01.png",
+    "vegeta_ssj_aura_support_02.png"
+   ],
+   "note": "Dominio FX/BG, no FighterActor"
+  },
+  {
+   "formId": "vegito_ssj",
+   "pose": "aura_power",
+   "files": [
+    "vegito_ssj_aura_power_00.png",
+    "vegito_ssj_aura_power_01.png",
+    "vegito_ssj_aura_power_02.png"
+   ],
+   "note": "Dominio FX/BG, no FighterActor"
+  },
+  {
+   "formId": "vegito_ssj",
+   "pose": "aura_support",
+   "files": [
+    "vegito_ssj_aura_support_00.png",
+    "vegito_ssj_aura_support_01.png",
+    "vegito_ssj_aura_support_02.png"
+   ],
+   "note": "Dominio FX/BG, no FighterActor"
+  }
+ ],
+ "movementFx": [
+  {
+   "pose": "move_horizontal_fx",
+   "category": "movement",
+   "note": "rallitas horizontales de Basic > Move"
+  },
+  {
+   "pose": "move_vertical_fx",
+   "category": "movement",
+   "note": "rallitas verticales de Basic > Move"
+  }
+ ]
+}

@@ -1,0 +1,358 @@
+[
+ {
+  "dir": "goku_base",
+  "forms": [
+   "goku_base"
+  ],
+  "classification": "EXCLUSIVE_DIR",
+  "note": "Directorio exclusivo"
+ },
+ {
+  "dir": "goku_ssj",
+  "forms": [
+   "goku_ssj"
+  ],
+  "classification": "EXCLUSIVE_DIR",
+  "note": "Directorio exclusivo"
+ },
+ {
+  "dir": "goku_ssj2",
+  "forms": [
+   "goku_ssj2"
+  ],
+  "classification": "EXCLUSIVE_DIR",
+  "note": "Directorio exclusivo"
+ },
+ {
+  "dir": "goku_ssj3",
+  "forms": [
+   "goku_ssj3"
+  ],
+  "classification": "EXCLUSIVE_DIR",
+  "note": "Directorio exclusivo"
+ },
+ {
+  "dir": "vegeta_base",
+  "forms": [
+   "vegeta_base"
+  ],
+  "classification": "EXCLUSIVE_DIR",
+  "note": "Directorio exclusivo"
+ },
+ {
+  "dir": "vegeta_ssj",
+  "forms": [
+   "vegeta_ssj",
+   "vegeta_majin"
+  ],
+  "classification": "SHARED_RUNTIME_DIR",
+  "note": "Mismo directorio runtime — NO implica identidad física ROM (requiere actorVisualProfileKey+graphics bank+palette)"
+ },
+ {
+  "dir": "gohan_young",
+  "forms": [
+   "gohan_young"
+  ],
+  "classification": "EXCLUSIVE_DIR",
+  "note": "Directorio exclusivo"
+ },
+ {
+  "dir": "gohan_young_ssj",
+  "forms": [
+   "gohan_young_ssj"
+  ],
+  "classification": "EXCLUSIVE_DIR",
+  "note": "Directorio exclusivo"
+ },
+ {
+  "dir": "gohan_young_ssj2",
+  "forms": [
+   "gohan_young_ssj2"
+  ],
+  "classification": "EXCLUSIVE_DIR",
+  "note": "Directorio exclusivo"
+ },
+ {
+  "dir": "gohan_adult_ssj",
+  "forms": [
+   "gohan_adult_ssj",
+   "gohan_adult_ssj2"
+  ],
+  "classification": "SHARED_RUNTIME_DIR",
+  "note": "Mismo directorio runtime — NO implica identidad física ROM (requiere actorVisualProfileKey+graphics bank+palette)"
+ },
+ {
+  "dir": "gohan_adult_ultimate",
+  "forms": [
+   "gohan_adult_ultimate"
+  ],
+  "classification": "EXCLUSIVE_DIR",
+  "note": "Directorio exclusivo"
+ },
+ {
+  "dir": "trunks_kid",
+  "forms": [
+   "trunks_kid"
+  ],
+  "classification": "EXCLUSIVE_DIR",
+  "note": "Directorio exclusivo"
+ },
+ {
+  "dir": "trunks_kid_ssj",
+  "forms": [
+   "trunks_kid_ssj"
+  ],
+  "classification": "EXCLUSIVE_DIR",
+  "note": "Directorio exclusivo"
+ },
+ {
+  "dir": "trunks_future",
+  "forms": [
+   "trunks_future"
+  ],
+  "classification": "EXCLUSIVE_DIR",
+  "note": "Directorio exclusivo"
+ },
+ {
+  "dir": "trunks_ssj",
+  "forms": [
+   "trunks_ssj"
+  ],
+  "classification": "EXCLUSIVE_DIR",
+  "note": "Directorio exclusivo"
+ },
+ {
+  "dir": "goten_base",
+  "forms": [
+   "goten_base"
+  ],
+  "classification": "EXCLUSIVE_DIR",
+  "note": "Directorio exclusivo"
+ },
+ {
+  "dir": "goten_ssj",
+  "forms": [
+   "goten_ssj"
+  ],
+  "classification": "EXCLUSIVE_DIR",
+  "note": "Directorio exclusivo"
+ },
+ {
+  "dir": "gotenks_ssj",
+  "forms": [
+   "gotenks_ssj"
+  ],
+  "classification": "EXCLUSIVE_DIR",
+  "note": "Directorio exclusivo"
+ },
+ {
+  "dir": "gotenks_ssj3",
+  "forms": [
+   "gotenks_ssj3"
+  ],
+  "classification": "EXCLUSIVE_DIR",
+  "note": "Directorio exclusivo"
+ },
+ {
+  "dir": "piccolo_base",
+  "forms": [
+   "piccolo_base",
+   "piccolo_kami",
+   "piccolo_evil"
+  ],
+  "classification": "SHARED_RUNTIME_DIR",
+  "note": "Mismo directorio runtime — NO implica identidad física ROM (requiere actorVisualProfileKey+graphics bank+palette)"
+ },
+ {
+  "dir": "krillin_base",
+  "forms": [
+   "krillin_base"
+  ],
+  "classification": "EXCLUSIVE_DIR",
+  "note": "Directorio exclusivo"
+ },
+ {
+  "dir": "frieza_final",
+  "forms": [
+   "frieza_final"
+  ],
+  "classification": "EXCLUSIVE_DIR",
+  "note": "Directorio exclusivo"
+ },
+ {
+  "dir": "cell_imperfect",
+  "forms": [
+   "cell_imperfect"
+  ],
+  "classification": "EXCLUSIVE_DIR",
+  "note": "Directorio exclusivo"
+ },
+ {
+  "dir": "cell_semi",
+  "forms": [
+   "cell_semi"
+  ],
+  "classification": "EXCLUSIVE_DIR",
+  "note": "Directorio exclusivo"
+ },
+ {
+  "dir": "cell_perfect",
+  "forms": [
+   "cell_perfect"
+  ],
+  "classification": "EXCLUSIVE_DIR",
+  "note": "Directorio exclusivo"
+ },
+ {
+  "dir": "cell_jr",
+  "forms": [
+   "cell_jr"
+  ],
+  "classification": "EXCLUSIVE_DIR",
+  "note": "Directorio exclusivo"
+ },
+ {
+  "dir": "android_16",
+  "forms": [
+   "android_16"
+  ],
+  "classification": "EXCLUSIVE_DIR",
+  "note": "Directorio exclusivo"
+ },
+ {
+  "dir": "android_17",
+  "forms": [
+   "android_17"
+  ],
+  "classification": "EXCLUSIVE_DIR",
+  "note": "Directorio exclusivo"
+ },
+ {
+  "dir": "android_18",
+  "forms": [
+   "android_18"
+  ],
+  "classification": "EXCLUSIVE_DIR",
+  "note": "Directorio exclusivo"
+ },
+ {
+  "dir": "android_19",
+  "forms": [
+   "android_19"
+  ],
+  "classification": "EXCLUSIVE_DIR",
+  "note": "Directorio exclusivo"
+ },
+ {
+  "dir": "android_20",
+  "forms": [
+   "android_20"
+  ],
+  "classification": "EXCLUSIVE_DIR",
+  "note": "Directorio exclusivo"
+ },
+ {
+  "dir": "ginyu",
+  "forms": [
+   "ginyu"
+  ],
+  "classification": "EXCLUSIVE_DIR",
+  "note": "Directorio exclusivo"
+ },
+ {
+  "dir": "ginyu_goku",
+  "forms": [
+   "ginyu_goku"
+  ],
+  "classification": "EXCLUSIVE_DIR",
+  "note": "Directorio exclusivo"
+ },
+ {
+  "dir": "recoome",
+  "forms": [
+   "recoome"
+  ],
+  "classification": "EXCLUSIVE_DIR",
+  "note": "Directorio exclusivo"
+ },
+ {
+  "dir": "guldo",
+  "forms": [
+   "guldo"
+  ],
+  "classification": "EXCLUSIVE_DIR",
+  "note": "Directorio exclusivo"
+ },
+ {
+  "dir": "jeice",
+  "forms": [
+   "jeice"
+  ],
+  "classification": "EXCLUSIVE_DIR",
+  "note": "Directorio exclusivo"
+ },
+ {
+  "dir": "burter",
+  "forms": [
+   "burter"
+  ],
+  "classification": "EXCLUSIVE_DIR",
+  "note": "Directorio exclusivo"
+ },
+ {
+  "dir": "nappa",
+  "forms": [
+   "nappa"
+  ],
+  "classification": "EXCLUSIVE_DIR",
+  "note": "Directorio exclusivo"
+ },
+ {
+  "dir": "buu_base",
+  "forms": [
+   "buu_base"
+  ],
+  "classification": "EXCLUSIVE_DIR",
+  "note": "Directorio exclusivo"
+ },
+ {
+  "dir": "buu_super",
+  "forms": [
+   "buu_super"
+  ],
+  "classification": "EXCLUSIVE_DIR",
+  "note": "Directorio exclusivo"
+ },
+ {
+  "dir": "buu_gotenks",
+  "forms": [
+   "buu_gotenks"
+  ],
+  "classification": "EXCLUSIVE_DIR",
+  "note": "Directorio exclusivo"
+ },
+ {
+  "dir": "buu_gohan",
+  "forms": [
+   "buu_gohan"
+  ],
+  "classification": "EXCLUSIVE_DIR",
+  "note": "Directorio exclusivo"
+ },
+ {
+  "dir": "buu_kid",
+  "forms": [
+   "buu_kid"
+  ],
+  "classification": "EXCLUSIVE_DIR",
+  "note": "Directorio exclusivo"
+ },
+ {
+  "dir": "vegito_ssj",
+  "forms": [
+   "vegito_ssj"
+  ],
+  "classification": "EXCLUSIVE_DIR",
+  "note": "Directorio exclusivo"
+ }
+]

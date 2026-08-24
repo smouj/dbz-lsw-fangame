@@ -1,0 +1,230 @@
+[
+  {
+    "macroId": "$2B",
+    "address": "$60E9",
+    "romPointer": "30:5D56 (relative word $03E9 -> $60E9)",
+    "count": 4,
+    "rawBytes": "04 04 01 00 17 a0 05 01 00 00 00 10 01 00 00 00 04 01 00 00 a0",
+    "decodedCommands": [
+      {
+        "opcode": "$04",
+        "bytes": "04 01 00 17 A0",
+        "operands": [
+          "$01",
+          "$00",
+          "$17",
+          "$A0"
+        ]
+      },
+      {
+        "opcode": "$05",
+        "bytes": "05 01 00 00 00",
+        "operands": [
+          "$01",
+          "$00",
+          "$00",
+          "$00"
+        ]
+      },
+      {
+        "opcode": "$10",
+        "bytes": "10 01 00 00 00",
+        "operands": [
+          "$01",
+          "$00",
+          "$00",
+          "$00"
+        ]
+      },
+      {
+        "opcode": "$04",
+        "bytes": "04 01 00 00 A0",
+        "operands": [
+          "$01",
+          "$00",
+          "$00",
+          "$A0"
+        ]
+      }
+    ],
+    "callSites": [
+      {
+        "bank": 3,
+        "address": "03:6663"
+      }
+    ],
+    "vmScriptRefs": [],
+    "literalProgramStatus": "COMPLETE_ROM_VERIFIED",
+    "semanticStatus": "UNRESOLVED (binding not demonstrated)"
+  },
+  {
+    "macroId": "$2C",
+    "address": "$60FE",
+    "romPointer": "30:5D58 (relative word $03FE -> $60FE)",
+    "count": 4,
+    "rawBytes": "04 04 01 00 18 a0 05 01 00 00 00 10 01 00 00 00 04 01 00 00 a0",
+    "decodedCommands": [
+      {
+        "opcode": "$04",
+        "bytes": "04 01 00 18 A0",
+        "operands": [
+          "$01",
+          "$00",
+          "$18",
+          "$A0"
+        ]
+      },
+      {
+        "opcode": "$05",
+        "bytes": "05 01 00 00 00",
+        "operands": [
+          "$01",
+          "$00",
+          "$00",
+          "$00"
+        ]
+      },
+      {
+        "opcode": "$10",
+        "bytes": "10 01 00 00 00",
+        "operands": [
+          "$01",
+          "$00",
+          "$00",
+          "$00"
+        ]
+      },
+      {
+        "opcode": "$04",
+        "bytes": "04 01 00 00 A0",
+        "operands": [
+          "$01",
+          "$00",
+          "$00",
+          "$A0"
+        ]
+      }
+    ],
+    "callSites": [
+      {
+        "bank": 3,
+        "address": "03:6578"
+      }
+    ],
+    "vmScriptRefs": [],
+    "literalProgramStatus": "COMPLETE_ROM_VERIFIED",
+    "semanticStatus": "UNRESOLVED (binding not demonstrated)"
+  },
+  {
+    "macroId": "$34",
+    "address": "$61F1",
+    "romPointer": "30:5D68 (relative word $04F1 -> $61F1)",
+    "count": 2,
+    "rawBytes": "02 04 01 00 13 80 13 0c 01 00 00",
+    "decodedCommands": [
+      {
+        "opcode": "$04",
+        "bytes": "04 01 00 13 80",
+        "operands": [
+          "$01",
+          "$00",
+          "$13",
+          "$80"
+        ]
+      },
+      {
+        "opcode": "$13",
+        "bytes": "13 0C 01 00 00",
+        "operands": [
+          "$0C",
+          "$01",
+          "$00",
+          "$00"
+        ]
+      }
+    ],
+    "callSites": [
+      {
+        "bank": 3,
+        "address": "03:5973"
+      },
+      {
+        "bank": 3,
+        "address": "03:5FAC"
+      },
+      {
+        "bank": 3,
+        "address": "03:65EA"
+      }
+    ],
+    "vmScriptRefs": [],
+    "literalProgramStatus": "COMPLETE_ROM_VERIFIED",
+    "semanticStatus": "UNRESOLVED (binding not demonstrated)"
+  },
+  {
+    "macroId": "$35",
+    "address": "$61FC",
+    "romPointer": "30:5D6A (relative word $04FC -> $61FC)",
+    "count": 4,
+    "rawBytes": "04 04 01 00 13 a0 13 0c 01 00 00 05 01 00 00 00 04 01 00 00 a0",
+    "decodedCommands": [
+      {
+        "opcode": "$04",
+        "bytes": "04 01 00 13 A0",
+        "operands": [
+          "$01",
+          "$00",
+          "$13",
+          "$A0"
+        ]
+      },
+      {
+        "opcode": "$13",
+        "bytes": "13 0C 01 00 00",
+        "operands": [
+          "$0C",
+          "$01",
+          "$00",
+          "$00"
+        ]
+      },
+      {
+        "opcode": "$05",
+        "bytes": "05 01 00 00 00",
+        "operands": [
+          "$01",
+          "$00",
+          "$00",
+          "$00"
+        ]
+      },
+      {
+        "opcode": "$04",
+        "bytes": "04 01 00 00 A0",
+        "operands": [
+          "$01",
+          "$00",
+          "$00",
+          "$A0"
+        ]
+      }
+    ],
+    "callSites": [
+      {
+        "bank": 3,
+        "address": "03:5983"
+      },
+      {
+        "bank": 3,
+        "address": "03:5FB7"
+      },
+      {
+        "bank": 3,
+        "address": "03:662F"
+      }
+    ],
+    "vmScriptRefs": [],
+    "literalProgramStatus": "COMPLETE_ROM_VERIFIED",
+    "semanticStatus": "UNRESOLVED (binding not demonstrated)"
+  }
+]

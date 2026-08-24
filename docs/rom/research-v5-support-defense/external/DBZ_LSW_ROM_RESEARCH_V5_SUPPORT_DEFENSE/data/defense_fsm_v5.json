@@ -1,0 +1,80 @@
+[
+  {
+    "ca02": "$00",
+    "address": "01:$74FA",
+    "ops": [
+      "CALL $3408",
+      "increment"
+    ],
+    "evidence": "ROM_HANDLER_VERIFIED"
+  },
+  {
+    "ca02": "$01",
+    "address": "01:$74FF",
+    "ops": [
+      "wait $0E4D",
+      "increment"
+    ],
+    "evidence": "ROM_HANDLER_VERIFIED"
+  },
+  {
+    "ca02": "$02",
+    "address": "01:$7505",
+    "ops": [
+      "CA82=0",
+      "CA83=0",
+      "scene $3764 C=1 DE=1",
+      "macro $1A"
+    ],
+    "evidence": "ROM_HANDLER_VERIFIED"
+  },
+  {
+    "ca02": "$03-$04",
+    "address": "01:$7526-$754B",
+    "ops": [
+      "wait/setup input panel"
+    ],
+    "evidence": "ROM_STATIC_VERIFIED"
+  },
+  {
+    "ca02": "$05",
+    "address": "01:$754C",
+    "ops": [
+      "read side-specific CA55",
+      "CA55=2 -> $1E Move",
+      "CA55=1 -> $28 Defense card",
+      "else -> $14 Guard"
+    ],
+    "evidence": "ROM_HANDLER_VERIFIED"
+  },
+  {
+    "ca02": "$14",
+    "address": "01:$7577",
+    "ops": [
+      "CA82=2",
+      "emit CAA2 payload [CA5A,$BC,$84,$78]"
+    ],
+    "evidence": "ROM_HANDLER_VERIFIED"
+  },
+  {
+    "ca02": "$1E",
+    "address": "01:$759D",
+    "ops": [
+      "CA82=3",
+      "persist selected CA57/58 to FighterState position",
+      "select macro $29/$2A from newPosition>>1",
+      "queue WAIT10"
+    ],
+    "evidence": "ROM_HANDLER_VERIFIED"
+  },
+  {
+    "ca02": "$28-$32",
+    "address": "01:$760E-$76F0",
+    "ops": [
+      "record selected Defense card",
+      "run result/maintenance",
+      "state $32 resolves AnimationResource and installs AnimationSlot8 only; then reset"
+    ],
+    "evidence": "ROM_HANDLER_VERIFIED"
+  }
+]

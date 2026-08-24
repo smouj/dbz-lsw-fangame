@@ -1,0 +1,1068 @@
+[
+ {
+  "formId": "gohan_young",
+  "romFormId": 1,
+  "actorVisualProfileKey": 0,
+  "graphicsBank": 49,
+  "paletteAddress": "Bank30:$6E00 + 0x0×8",
+  "paletteRaw": [
+   "00",
+   "00",
+   "00",
+   "00",
+   "00",
+   "00",
+   "00",
+   "00"
+  ],
+  "paletteAvailable": false,
+  "paletteNote": "paleta vacía en $6E00 (fuente pendiente)",
+  "mappingUncertain": false,
+  "evidence": [
+   "Bank00:$2B65/$2A77 (registro forma Bank11) + Bank30:$6E00+key×8 (ROM_STATIC_VERIFIED)"
+  ]
+ },
+ {
+  "formId": "gohan_young_ssj",
+  "romFormId": 2,
+  "actorVisualProfileKey": 1,
+  "graphicsBank": 50,
+  "paletteAddress": "Bank30:$6E00 + 0x1×8",
+  "paletteRaw": [
+   "00",
+   "00",
+   "00",
+   "00",
+   "00",
+   "00",
+   "00",
+   "00"
+  ],
+  "paletteAvailable": false,
+  "paletteNote": "paleta vacía en $6E00 (fuente pendiente)",
+  "mappingUncertain": false,
+  "evidence": [
+   "Bank00:$2B65/$2A77 (registro forma Bank11) + Bank30:$6E00+key×8 (ROM_STATIC_VERIFIED)"
+  ]
+ },
+ {
+  "formId": "gohan_young_ssj2",
+  "romFormId": 3,
+  "actorVisualProfileKey": 2,
+  "graphicsBank": 51,
+  "paletteAddress": "Bank30:$6E00 + 0x2×8",
+  "paletteRaw": [
+   "80",
+   "80",
+   "80",
+   "80",
+   "80",
+   "80",
+   "00",
+   "00"
+  ],
+  "paletteAvailable": true,
+  "mappingUncertain": false,
+  "evidence": [
+   "Bank00:$2B65/$2A77 (registro forma Bank11) + Bank30:$6E00+key×8 (ROM_STATIC_VERIFIED)"
+  ]
+ },
+ {
+  "formId": "piccolo_base",
+  "romFormId": 4,
+  "actorVisualProfileKey": 3,
+  "graphicsBank": 52,
+  "paletteAddress": "Bank30:$6E00 + 0x3×8",
+  "paletteRaw": [
+   "00",
+   "00",
+   "80",
+   "80",
+   "80",
+   "80",
+   "80",
+   "80"
+  ],
+  "paletteAvailable": true,
+  "mappingUncertain": false,
+  "evidence": [
+   "Bank00:$2B65/$2A77 (registro forma Bank11) + Bank30:$6E00+key×8 (ROM_STATIC_VERIFIED)"
+  ]
+ },
+ {
+  "formId": "piccolo_kami",
+  "romFormId": 5,
+  "actorVisualProfileKey": 3,
+  "graphicsBank": 52,
+  "paletteAddress": "Bank30:$6E00 + 0x3×8",
+  "paletteRaw": [
+   "00",
+   "00",
+   "80",
+   "80",
+   "80",
+   "80",
+   "80",
+   "80"
+  ],
+  "paletteAvailable": true,
+  "mappingUncertain": false,
+  "evidence": [
+   "Bank00:$2B65/$2A77 (registro forma Bank11) + Bank30:$6E00+key×8 (ROM_STATIC_VERIFIED)"
+  ]
+ },
+ {
+  "formId": "piccolo_evil",
+  "romFormId": 6,
+  "actorVisualProfileKey": 3,
+  "graphicsBank": 52,
+  "paletteAddress": "Bank30:$6E00 + 0x3×8",
+  "paletteRaw": [
+   "00",
+   "00",
+   "80",
+   "80",
+   "80",
+   "80",
+   "80",
+   "80"
+  ],
+  "paletteAvailable": true,
+  "mappingUncertain": false,
+  "evidence": [
+   "Bank00:$2B65/$2A77 (registro forma Bank11) + Bank30:$6E00+key×8 (ROM_STATIC_VERIFIED)"
+  ]
+ },
+ {
+  "formId": "krillin_base",
+  "romFormId": 7,
+  "actorVisualProfileKey": 4,
+  "graphicsBank": 53,
+  "paletteAddress": "Bank30:$6E00 + 0x4×8",
+  "paletteRaw": [
+   "00",
+   "00",
+   "00",
+   "00",
+   "00",
+   "00",
+   "00",
+   "00"
+  ],
+  "paletteAvailable": false,
+  "paletteNote": "paleta vacía en $6E00 (fuente pendiente)",
+  "mappingUncertain": false,
+  "evidence": [
+   "Bank00:$2B65/$2A77 (registro forma Bank11) + Bank30:$6E00+key×8 (ROM_STATIC_VERIFIED)"
+  ]
+ },
+ {
+  "formId": "goku_base",
+  "romFormId": 8,
+  "actorVisualProfileKey": 5,
+  "graphicsBank": 54,
+  "paletteAddress": "Bank30:$6E00 + 0x5×8",
+  "paletteRaw": [
+   "00",
+   "00",
+   "00",
+   "00",
+   "00",
+   "00",
+   "01",
+   "01"
+  ],
+  "paletteAvailable": true,
+  "mappingUncertain": false,
+  "evidence": [
+   "Bank00:$2B65/$2A77 (registro forma Bank11) + Bank30:$6E00+key×8 (ROM_STATIC_VERIFIED)"
+  ]
+ },
+ {
+  "formId": "goku_ssj",
+  "romFormId": 9,
+  "actorVisualProfileKey": 6,
+  "graphicsBank": 55,
+  "paletteAddress": "Bank30:$6E00 + 0x6×8",
+  "paletteRaw": [
+   "01",
+   "01",
+   "01",
+   "01",
+   "00",
+   "00",
+   "00",
+   "00"
+  ],
+  "paletteAvailable": true,
+  "mappingUncertain": false,
+  "evidence": [
+   "Bank00:$2B65/$2A77 (registro forma Bank11) + Bank30:$6E00+key×8 (ROM_STATIC_VERIFIED)"
+  ]
+ },
+ {
+  "formId": "goku_ssj2",
+  "romFormId": 10,
+  "actorVisualProfileKey": 7,
+  "graphicsBank": 56,
+  "paletteAddress": "Bank30:$6E00 + 0x7×8",
+  "paletteRaw": [
+   "01",
+   "01",
+   "02",
+   "03",
+   "03",
+   "03",
+   "00",
+   "00"
+  ],
+  "paletteAvailable": true,
+  "mappingUncertain": false,
+  "evidence": [
+   "Bank00:$2B65/$2A77 (registro forma Bank11) + Bank30:$6E00+key×8 (ROM_STATIC_VERIFIED)"
+  ]
+ },
+ {
+  "formId": "goku_ssj3",
+  "romFormId": 11,
+  "actorVisualProfileKey": 8,
+  "graphicsBank": 57,
+  "paletteAddress": "Bank30:$6E00 + 0x8×8",
+  "paletteRaw": [
+   "7f",
+   "7f",
+   "7f",
+   "7f",
+   "5c",
+   "7f",
+   "5c",
+   "7f"
+  ],
+  "paletteAvailable": true,
+  "mappingUncertain": false,
+  "evidence": [
+   "Bank00:$2B65/$2A77 (registro forma Bank11) + Bank30:$6E00+key×8 (ROM_STATIC_VERIFIED)"
+  ]
+ },
+ {
+  "formId": "vegeta_base",
+  "romFormId": 12,
+  "actorVisualProfileKey": 9,
+  "graphicsBank": 58,
+  "paletteAddress": "Bank30:$6E00 + 0x9×8",
+  "paletteRaw": [
+   "9c",
+   "ff",
+   "9e",
+   "ff",
+   "af",
+   "ff",
+   "1e",
+   "ff"
+  ],
+  "paletteAvailable": true,
+  "mappingUncertain": false,
+  "evidence": [
+   "Bank00:$2B65/$2A77 (registro forma Bank11) + Bank30:$6E00+key×8 (ROM_STATIC_VERIFIED)"
+  ]
+ },
+ {
+  "formId": "vegeta_ssj",
+  "romFormId": 13,
+  "actorVisualProfileKey": 10,
+  "graphicsBank": 59,
+  "paletteAddress": "Bank30:$6E00 + 0xa×8",
+  "paletteRaw": [
+   "3f",
+   "ff",
+   "ff",
+   "ff",
+   "fc",
+   "fc",
+   "fc",
+   "fc"
+  ],
+  "paletteAvailable": true,
+  "mappingUncertain": false,
+  "evidence": [
+   "Bank00:$2B65/$2A77 (registro forma Bank11) + Bank30:$6E00+key×8 (ROM_STATIC_VERIFIED)"
+  ]
+ },
+ {
+  "formId": "vegeta_majin",
+  "romFormId": 14,
+  "actorVisualProfileKey": 10,
+  "graphicsBank": 59,
+  "paletteAddress": "Bank30:$6E00 + 0xa×8",
+  "paletteRaw": [
+   "3f",
+   "ff",
+   "ff",
+   "ff",
+   "fc",
+   "fc",
+   "fc",
+   "fc"
+  ],
+  "paletteAvailable": true,
+  "mappingUncertain": false,
+  "evidence": [
+   "Bank00:$2B65/$2A77 (registro forma Bank11) + Bank30:$6E00+key×8 (ROM_STATIC_VERIFIED)"
+  ]
+ },
+ {
+  "formId": "gohan_adult_ssj",
+  "romFormId": 15,
+  "actorVisualProfileKey": 12,
+  "graphicsBank": 61,
+  "paletteAddress": "Bank30:$6E00 + 0xc×8",
+  "paletteRaw": [
+   "e0",
+   "e0",
+   "f0",
+   "f0",
+   "70",
+   "f0",
+   "38",
+   "f8"
+  ],
+  "paletteAvailable": true,
+  "mappingUncertain": false,
+  "evidence": [
+   "Bank00:$2B65/$2A77 (registro forma Bank11) + Bank30:$6E00+key×8 (ROM_STATIC_VERIFIED)"
+  ]
+ },
+ {
+  "formId": "gohan_adult_ssj2",
+  "romFormId": 16,
+  "actorVisualProfileKey": 12,
+  "graphicsBank": 61,
+  "paletteAddress": "Bank30:$6E00 + 0xc×8",
+  "paletteRaw": [
+   "e0",
+   "e0",
+   "f0",
+   "f0",
+   "70",
+   "f0",
+   "38",
+   "f8"
+  ],
+  "paletteAvailable": true,
+  "mappingUncertain": false,
+  "evidence": [
+   "Bank00:$2B65/$2A77 (registro forma Bank11) + Bank30:$6E00+key×8 (ROM_STATIC_VERIFIED)"
+  ]
+ },
+ {
+  "formId": "gohan_adult_ultimate",
+  "romFormId": 17,
+  "actorVisualProfileKey": 11,
+  "graphicsBank": 60,
+  "paletteAddress": "Bank30:$6E00 + 0xb×8",
+  "paletteRaw": [
+   "1c",
+   "fc",
+   "08",
+   "f8",
+   "f0",
+   "f0",
+   "00",
+   "00"
+  ],
+  "paletteAvailable": true,
+  "mappingUncertain": false,
+  "evidence": [
+   "Bank00:$2B65/$2A77 (registro forma Bank11) + Bank30:$6E00+key×8 (ROM_STATIC_VERIFIED)"
+  ]
+ },
+ {
+  "formId": "trunks_future",
+  "romFormId": 18,
+  "actorVisualProfileKey": 13,
+  "graphicsBank": 62,
+  "paletteAddress": "Bank30:$6E00 + 0xd×8",
+  "paletteRaw": [
+   "18",
+   "f8",
+   "1c",
+   "fc",
+   "0c",
+   "fc",
+   "86",
+   "fe"
+  ],
+  "paletteAvailable": true,
+  "mappingUncertain": false,
+  "evidence": [
+   "Bank00:$2B65/$2A77 (registro forma Bank11) + Bank30:$6E00+key×8 (ROM_STATIC_VERIFIED)"
+  ]
+ },
+ {
+  "formId": "trunks_ssj",
+  "romFormId": 19,
+  "actorVisualProfileKey": 14,
+  "graphicsBank": 63,
+  "paletteAddress": "Bank30:$6E00 + 0xe×8",
+  "paletteRaw": [
+   "07",
+   "ff",
+   "87",
+   "ff",
+   "ff",
+   "ff",
+   "7e",
+   "7e"
+  ],
+  "paletteAvailable": true,
+  "mappingUncertain": false,
+  "evidence": [
+   "Bank00:$2B65/$2A77 (registro forma Bank11) + Bank30:$6E00+key×8 (ROM_STATIC_VERIFIED)"
+  ]
+ },
+ {
+  "formId": "goten_base",
+  "romFormId": 20,
+  "actorVisualProfileKey": 15,
+  "graphicsBank": 64,
+  "paletteAddress": "Bank30:$6E00 + 0xf×8",
+  "paletteRaw": [
+   "7e",
+   "7e",
+   "31",
+   "3f",
+   "21",
+   "3f",
+   "3f",
+   "3f"
+  ],
+  "paletteAvailable": true,
+  "mappingUncertain": false,
+  "evidence": [
+   "Bank00:$2B65/$2A77 (registro forma Bank11) + Bank30:$6E00+key×8 (ROM_STATIC_VERIFIED)"
+  ]
+ },
+ {
+  "formId": "goten_ssj",
+  "romFormId": 21,
+  "actorVisualProfileKey": 16,
+  "graphicsBank": 65,
+  "paletteAddress": "Bank30:$6E00 + 0x10×8",
+  "paletteRaw": [
+   "00",
+   "00",
+   "00",
+   "00",
+   "00",
+   "00",
+   "00",
+   "00"
+  ],
+  "paletteAvailable": false,
+  "paletteNote": "paleta vacía en $6E00 (fuente pendiente)",
+  "mappingUncertain": false,
+  "evidence": [
+   "Bank00:$2B65/$2A77 (registro forma Bank11) + Bank30:$6E00+key×8 (ROM_STATIC_VERIFIED)"
+  ]
+ },
+ {
+  "formId": "trunks_kid",
+  "romFormId": 22,
+  "actorVisualProfileKey": 17,
+  "graphicsBank": 66,
+  "paletteAddress": "Bank30:$6E00 + 0x11×8",
+  "paletteRaw": [
+   "00",
+   "00",
+   "00",
+   "00",
+   "00",
+   "00",
+   "00",
+   "00"
+  ],
+  "paletteAvailable": false,
+  "paletteNote": "paleta vacía en $6E00 (fuente pendiente)",
+  "mappingUncertain": false,
+  "evidence": [
+   "Bank00:$2B65/$2A77 (registro forma Bank11) + Bank30:$6E00+key×8 (ROM_STATIC_VERIFIED)"
+  ]
+ },
+ {
+  "formId": "trunks_kid_ssj",
+  "romFormId": 23,
+  "actorVisualProfileKey": 18,
+  "graphicsBank": 67,
+  "paletteAddress": "Bank30:$6E00 + 0x12×8",
+  "paletteRaw": [
+   "00",
+   "00",
+   "00",
+   "00",
+   "00",
+   "00",
+   "00",
+   "00"
+  ],
+  "paletteAvailable": false,
+  "paletteNote": "paleta vacía en $6E00 (fuente pendiente)",
+  "mappingUncertain": false,
+  "evidence": [
+   "Bank00:$2B65/$2A77 (registro forma Bank11) + Bank30:$6E00+key×8 (ROM_STATIC_VERIFIED)"
+  ]
+ },
+ {
+  "formId": "buu_base",
+  "romFormId": 24,
+  "actorVisualProfileKey": 19,
+  "graphicsBank": 68,
+  "paletteAddress": "Bank30:$6E00 + 0x13×8",
+  "paletteRaw": [
+   "00",
+   "00",
+   "00",
+   "00",
+   "00",
+   "00",
+   "00",
+   "00"
+  ],
+  "paletteAvailable": false,
+  "paletteNote": "paleta vacía en $6E00 (fuente pendiente)",
+  "mappingUncertain": false,
+  "evidence": [
+   "Bank00:$2B65/$2A77 (registro forma Bank11) + Bank30:$6E00+key×8 (ROM_STATIC_VERIFIED)"
+  ]
+ },
+ {
+  "formId": "buu_super",
+  "romFormId": 25,
+  "actorVisualProfileKey": 20,
+  "graphicsBank": 69,
+  "paletteAddress": "Bank30:$6E00 + 0x14×8",
+  "paletteRaw": [
+   "00",
+   "00",
+   "00",
+   "00",
+   "00",
+   "00",
+   "00",
+   "00"
+  ],
+  "paletteAvailable": false,
+  "paletteNote": "paleta vacía en $6E00 (fuente pendiente)",
+  "mappingUncertain": false,
+  "evidence": [
+   "Bank00:$2B65/$2A77 (registro forma Bank11) + Bank30:$6E00+key×8 (ROM_STATIC_VERIFIED)"
+  ]
+ },
+ {
+  "formId": "nappa",
+  "romFormId": 26,
+  "actorVisualProfileKey": 21,
+  "graphicsBank": 70,
+  "paletteAddress": "Bank30:$6E00 + 0x15×8",
+  "paletteRaw": [
+   "00",
+   "00",
+   "00",
+   "00",
+   "01",
+   "01",
+   "01",
+   "01"
+  ],
+  "paletteAvailable": true,
+  "mappingUncertain": false,
+  "evidence": [
+   "Bank00:$2B65/$2A77 (registro forma Bank11) + Bank30:$6E00+key×8 (ROM_STATIC_VERIFIED)"
+  ]
+ },
+ {
+  "formId": "guldo",
+  "romFormId": 27,
+  "actorVisualProfileKey": 22,
+  "graphicsBank": 71,
+  "paletteAddress": "Bank30:$6E00 + 0x16×8",
+  "paletteRaw": [
+   "01",
+   "01",
+   "01",
+   "01",
+   "00",
+   "00",
+   "00",
+   "00"
+  ],
+  "paletteAvailable": true,
+  "mappingUncertain": false,
+  "evidence": [
+   "Bank00:$2B65/$2A77 (registro forma Bank11) + Bank30:$6E00+key×8 (ROM_STATIC_VERIFIED)"
+  ]
+ },
+ {
+  "formId": "recoome",
+  "romFormId": 28,
+  "actorVisualProfileKey": 23,
+  "graphicsBank": 72,
+  "paletteAddress": "Bank30:$6E00 + 0x17×8",
+  "paletteRaw": [
+   "00",
+   "00",
+   "01",
+   "01",
+   "02",
+   "03",
+   "03",
+   "03"
+  ],
+  "paletteAvailable": true,
+  "mappingUncertain": false,
+  "evidence": [
+   "Bank00:$2B65/$2A77 (registro forma Bank11) + Bank30:$6E00+key×8 (ROM_STATIC_VERIFIED)"
+  ]
+ },
+ {
+  "formId": "jeice",
+  "romFormId": 29,
+  "actorVisualProfileKey": 24,
+  "graphicsBank": 73,
+  "paletteAddress": "Bank30:$6E00 + 0x18×8",
+  "paletteRaw": [
+   "11",
+   "1f",
+   "0f",
+   "0f",
+   "0f",
+   "0f",
+   "18",
+   "1f"
+  ],
+  "paletteAvailable": true,
+  "mappingUncertain": false,
+  "evidence": [
+   "Bank00:$2B65/$2A77 (registro forma Bank11) + Bank30:$6E00+key×8 (ROM_STATIC_VERIFIED)"
+  ]
+ },
+ {
+  "formId": "burter",
+  "romFormId": 30,
+  "actorVisualProfileKey": 25,
+  "graphicsBank": 74,
+  "paletteAddress": "Bank30:$6E00 + 0x19×8",
+  "paletteRaw": [
+   "60",
+   "7f",
+   "80",
+   "ff",
+   "00",
+   "ff",
+   "01",
+   "ff"
+  ],
+  "paletteAvailable": true,
+  "mappingUncertain": false,
+  "evidence": [
+   "Bank00:$2B65/$2A77 (registro forma Bank11) + Bank30:$6E00+key×8 (ROM_STATIC_VERIFIED)"
+  ]
+ },
+ {
+  "formId": "ginyu",
+  "romFormId": 31,
+  "actorVisualProfileKey": 26,
+  "graphicsBank": 75,
+  "paletteAddress": "Bank30:$6E00 + 0x1a×8",
+  "paletteRaw": [
+   "2f",
+   "ff",
+   "5e",
+   "fe",
+   "fe",
+   "fe",
+   "fc",
+   "fc"
+  ],
+  "paletteAvailable": true,
+  "mappingUncertain": false,
+  "evidence": [
+   "Bank00:$2B65/$2A77 (registro forma Bank11) + Bank30:$6E00+key×8 (ROM_STATIC_VERIFIED)"
+  ]
+ },
+ {
+  "formId": "frieza_final",
+  "romFormId": 32,
+  "actorVisualProfileKey": 27,
+  "graphicsBank": 76,
+  "paletteAddress": "Bank30:$6E00 + 0x1b×8",
+  "paletteRaw": [
+   "fc",
+   "fc",
+   "0c",
+   "fc",
+   "1c",
+   "fc",
+   "f0",
+   "f0"
+  ],
+  "paletteAvailable": true,
+  "mappingUncertain": false,
+  "evidence": [
+   "Bank00:$2B65/$2A77 (registro forma Bank11) + Bank30:$6E00+key×8 (ROM_STATIC_VERIFIED)"
+  ]
+ },
+ {
+  "formId": "android_16",
+  "romFormId": 33,
+  "actorVisualProfileKey": 28,
+  "graphicsBank": 77,
+  "paletteAddress": "Bank30:$6E00 + 0x1c×8",
+  "paletteRaw": [
+   "ff",
+   "fd",
+   "ff",
+   "fe",
+   "c7",
+   "ff",
+   "43",
+   "ff"
+  ],
+  "paletteAvailable": true,
+  "mappingUncertain": false,
+  "evidence": [
+   "Bank00:$2B65/$2A77 (registro forma Bank11) + Bank30:$6E00+key×8 (ROM_STATIC_VERIFIED)"
+  ]
+ },
+ {
+  "formId": "android_17",
+  "romFormId": 34,
+  "actorVisualProfileKey": 29,
+  "graphicsBank": 78,
+  "paletteAddress": "Bank30:$6E00 + 0x1d×8",
+  "paletteRaw": [
+   "21",
+   "ff",
+   "20",
+   "ff",
+   "23",
+   "ff",
+   "ff",
+   "ff"
+  ],
+  "paletteAvailable": true,
+  "mappingUncertain": false,
+  "evidence": [
+   "Bank00:$2B65/$2A77 (registro forma Bank11) + Bank30:$6E00+key×8 (ROM_STATIC_VERIFIED)"
+  ]
+ },
+ {
+  "formId": "android_18",
+  "romFormId": 35,
+  "actorVisualProfileKey": 30,
+  "graphicsBank": 79,
+  "paletteAddress": "Bank30:$6E00 + 0x1e×8",
+  "paletteRaw": [
+   "8f",
+   "8f",
+   "0f",
+   "0f",
+   "06",
+   "07",
+   "02",
+   "03"
+  ],
+  "paletteAvailable": true,
+  "mappingUncertain": false,
+  "evidence": [
+   "Bank00:$2B65/$2A77 (registro forma Bank11) + Bank30:$6E00+key×8 (ROM_STATIC_VERIFIED)"
+  ]
+ },
+ {
+  "formId": "android_19",
+  "romFormId": 36,
+  "actorVisualProfileKey": 31,
+  "graphicsBank": 80,
+  "paletteAddress": "Bank30:$6E00 + 0x1f×8",
+  "paletteRaw": [
+   "03",
+   "03",
+   "01",
+   "01",
+   "01",
+   "01",
+   "00",
+   "00"
+  ],
+  "paletteAvailable": true,
+  "mappingUncertain": false,
+  "evidence": [
+   "Bank00:$2B65/$2A77 (registro forma Bank11) + Bank30:$6E00+key×8 (ROM_STATIC_VERIFIED)"
+  ]
+ },
+ {
+  "formId": "android_20",
+  "romFormId": 37,
+  "actorVisualProfileKey": 32,
+  "graphicsBank": 81,
+  "paletteAddress": "Bank30:$6E00 + 0x20×8",
+  "paletteRaw": [
+   "50",
+   "50",
+   "80",
+   "80",
+   "00",
+   "00",
+   "80",
+   "80"
+  ],
+  "paletteAvailable": true,
+  "mappingUncertain": false,
+  "evidence": [
+   "Bank00:$2B65/$2A77 (registro forma Bank11) + Bank30:$6E00+key×8 (ROM_STATIC_VERIFIED)"
+  ]
+ },
+ {
+  "formId": "cell_imperfect",
+  "romFormId": 38,
+  "actorVisualProfileKey": 33,
+  "graphicsBank": 82,
+  "paletteAddress": "Bank30:$6E00 + 0x21×8",
+  "paletteRaw": [
+   "c0",
+   "c0",
+   "e0",
+   "e0",
+   "e0",
+   "e0",
+   "f0",
+   "f0"
+  ],
+  "paletteAvailable": true,
+  "mappingUncertain": false,
+  "evidence": [
+   "Bank00:$2B65/$2A77 (registro forma Bank11) + Bank30:$6E00+key×8 (ROM_STATIC_VERIFIED)"
+  ]
+ },
+ {
+  "formId": "cell_semi",
+  "romFormId": 39,
+  "actorVisualProfileKey": 34,
+  "graphicsBank": 83,
+  "paletteAddress": "Bank30:$6E00 + 0x22×8",
+  "paletteRaw": [
+   "10",
+   "f0",
+   "f0",
+   "f0",
+   "10",
+   "f0",
+   "10",
+   "f0"
+  ],
+  "paletteAvailable": true,
+  "mappingUncertain": false,
+  "evidence": [
+   "Bank00:$2B65/$2A77 (registro forma Bank11) + Bank30:$6E00+key×8 (ROM_STATIC_VERIFIED)"
+  ]
+ },
+ {
+  "formId": "cell_perfect",
+  "romFormId": 40,
+  "actorVisualProfileKey": 35,
+  "graphicsBank": 84,
+  "paletteAddress": "Bank30:$6E00 + 0x23×8",
+  "paletteRaw": [
+   "e8",
+   "f8",
+   "f8",
+   "f8",
+   "f8",
+   "f8",
+   "00",
+   "00"
+  ],
+  "paletteAvailable": true,
+  "mappingUncertain": false,
+  "evidence": [
+   "Bank00:$2B65/$2A77 (registro forma Bank11) + Bank30:$6E00+key×8 (ROM_STATIC_VERIFIED)"
+  ]
+ },
+ {
+  "formId": "cell_jr",
+  "romFormId": 41,
+  "actorVisualProfileKey": 36,
+  "graphicsBank": 85,
+  "paletteAddress": "Bank30:$6E00 + 0x24×8",
+  "paletteRaw": [
+   "3f",
+   "33",
+   "3c",
+   "34",
+   "78",
+   "48",
+   "30",
+   "30"
+  ],
+  "paletteAvailable": true,
+  "mappingUncertain": false,
+  "evidence": [
+   "Bank00:$2B65/$2A77 (registro forma Bank11) + Bank30:$6E00+key×8 (ROM_STATIC_VERIFIED)"
+  ]
+ },
+ {
+  "formId": "buu_gotenks",
+  "romFormId": 42,
+  "actorVisualProfileKey": 37,
+  "graphicsBank": 86,
+  "paletteAddress": "Bank30:$6E00 + 0x25×8",
+  "paletteRaw": [
+   "00",
+   "00",
+   "00",
+   "00",
+   "00",
+   "00",
+   "00",
+   "00"
+  ],
+  "paletteAvailable": false,
+  "paletteNote": "paleta vacía en $6E00 (fuente pendiente)",
+  "mappingUncertain": true,
+  "evidence": [
+   "Bank00:$2B65/$2A77 (registro forma Bank11) + Bank30:$6E00+key×8 (ROM_STATIC_VERIFIED)"
+  ]
+ },
+ {
+  "formId": "buu_gohan",
+  "romFormId": 43,
+  "actorVisualProfileKey": 38,
+  "graphicsBank": 87,
+  "paletteAddress": "Bank30:$6E00 + 0x26×8",
+  "paletteRaw": [
+   "00",
+   "00",
+   "00",
+   "00",
+   "00",
+   "00",
+   "00",
+   "00"
+  ],
+  "paletteAvailable": false,
+  "paletteNote": "paleta vacía en $6E00 (fuente pendiente)",
+  "mappingUncertain": true,
+  "evidence": [
+   "Bank00:$2B65/$2A77 (registro forma Bank11) + Bank30:$6E00+key×8 (ROM_STATIC_VERIFIED)"
+  ]
+ },
+ {
+  "formId": "buu_kid",
+  "romFormId": 44,
+  "actorVisualProfileKey": 39,
+  "graphicsBank": 88,
+  "paletteAddress": "Bank30:$6E00 + 0x27×8",
+  "paletteRaw": [
+   "00",
+   "00",
+   "01",
+   "01",
+   "03",
+   "02",
+   "03",
+   "03"
+  ],
+  "paletteAvailable": true,
+  "mappingUncertain": true,
+  "evidence": [
+   "Bank00:$2B65/$2A77 (registro forma Bank11) + Bank30:$6E00+key×8 (ROM_STATIC_VERIFIED)"
+  ]
+ },
+ {
+  "formId": "ginyu_goku",
+  "romFormId": 45,
+  "actorVisualProfileKey": 40,
+  "graphicsBank": 89,
+  "paletteAddress": "Bank30:$6E00 + 0x28×8",
+  "paletteRaw": [
+   "ff",
+   "83",
+   "ff",
+   "87",
+   "79",
+   "79",
+   "07",
+   "07"
+  ],
+  "paletteAvailable": true,
+  "mappingUncertain": true,
+  "evidence": [
+   "Bank00:$2B65/$2A77 (registro forma Bank11) + Bank30:$6E00+key×8 (ROM_STATIC_VERIFIED)"
+  ]
+ },
+ {
+  "formId": "gotenks_ssj",
+  "romFormId": 46,
+  "actorVisualProfileKey": 41,
+  "graphicsBank": 90,
+  "paletteAddress": "Bank30:$6E00 + 0x29×8",
+  "paletteRaw": [
+   "1f",
+   "18",
+   "3f",
+   "20",
+   "6f",
+   "50",
+   "c8",
+   "bf"
+  ],
+  "paletteAvailable": true,
+  "mappingUncertain": true,
+  "evidence": [
+   "Bank00:$2B65/$2A77 (registro forma Bank11) + Bank30:$6E00+key×8 (ROM_STATIC_VERIFIED)"
+  ]
+ },
+ {
+  "formId": "gotenks_ssj3",
+  "romFormId": 47,
+  "actorVisualProfileKey": 42,
+  "graphicsBank": 91,
+  "paletteAddress": "Bank30:$6E00 + 0x2a×8",
+  "paletteRaw": [
+   "ef",
+   "9f",
+   "ff",
+   "ff",
+   "ff",
+   "ff",
+   "7e",
+   "7e"
+  ],
+  "paletteAvailable": true,
+  "mappingUncertain": true,
+  "evidence": [
+   "Bank00:$2B65/$2A77 (registro forma Bank11) + Bank30:$6E00+key×8 (ROM_STATIC_VERIFIED)"
+  ]
+ },
+ {
+  "formId": "vegito_ssj",
+  "romFormId": 48,
+  "actorVisualProfileKey": 43,
+  "graphicsBank": 92,
+  "paletteAddress": "Bank30:$6E00 + 0x2b×8",
+  "paletteRaw": [
+   "fe",
+   "fe",
+   "cc",
+   "3c",
+   "8c",
+   "7c",
+   "f8",
+   "f8"
+  ],
+  "paletteAvailable": true,
+  "mappingUncertain": true,
+  "evidence": [
+   "Bank00:$2B65/$2A77 (registro forma Bank11) + Bank30:$6E00+key×8 (ROM_STATIC_VERIFIED)"
+  ]
+ }
+]

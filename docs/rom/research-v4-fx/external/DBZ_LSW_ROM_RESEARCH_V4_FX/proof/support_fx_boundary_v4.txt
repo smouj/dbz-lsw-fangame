@@ -1,0 +1,47 @@
+=== Global CALL $3F24 sites (all Bank03) ===
+Bank03:$586C pre=d0 c2 5f fa d1 c2 57 cd 30 3f 1e 00
+Bank03:$5924 pre=7f 3e 11 00 00 06 01 cd 30 3f 1e 0a
+Bank03:$5969 pre=7f 3e 11 00 00 06 01 cd 30 3f 1e 0a
+Bank03:$59A1 pre=7f 3e 11 00 00 06 01 cd 30 3f 1e 0a
+Bank03:$59D8 pre=7f 3e 11 00 00 06 01 cd 30 3f 1e 0a
+Bank03:$5AB7 pre=d0 c2 5f fa d1 c2 57 cd 30 3f 1e 00
+Bank03:$5B28 pre=d0 c2 5f fa d1 c2 57 cd 30 3f 1e 00
+Bank03:$5B84 pre=d0 c2 5f fa d1 c2 57 cd 30 3f 1e 00
+Bank03:$5BEA pre=d0 c2 5f fa d1 c2 57 cd 30 3f 1e 00
+Bank03:$5CB8 pre=d0 c2 5f fa d1 c2 57 cd 30 3f 1e 00
+Bank03:$5DAB pre=14 cd 18 3f 11 00 00 cd 30 3f 1e 00
+Bank03:$5E4C pre=16 06 1e a0 cd bd 3e 1e 02 cd e1 3e
+Bank03:$630B pre=7f 3e 11 00 00 06 01 cd 30 3f 1e 0a
+=== Support dispatcher/handler0D ===
+664E  FA 06 CA    LD A,($CA06)
+6651  FE 14       CP $14
+6653  28 07       JR Z,$665C (+7)
+6655  FE 15       CP $15
+6657  28 1F       JR Z,$6678 (+31)
+6659  C3 E7 64    JP $64E7
+665C  AF          XOR A
+665D  EA D4 C7    LD ($C7D4),A
+6660  CD 7F 3E    CALL $3E7F
+6663  01 2B 00    LD BC,$002B
+6666  CD 92 3E    CALL $3E92
+6669  CD 8B 3E    CALL $3E8B
+666C  0E 42       LD C,$42
+666E  06 05       LD B,$05
+6670  CD C6 1C    CALL $1CC6
+6673  21 06 CA    LD HL,$CA06
+6676  34          INC (HL)
+6677  C9          RET
+6678  AF          XOR A
+6679  EA D4 C7    LD ($C7D4),A
+667C  CD 5E 3E    CALL $3E5E
+667F  C0          RET NZ
+6680  AF          XOR A
+6681  EA 06 CA    LD ($CA06),A
+6684  C9          RET
+6685  FA 06 CA    LD A,($CA06)
+=== Macro $2B raw decoded commands ===
+Macro 2B Bank30:$60E9 count=4
+0 04 01 00 17 a0
+1 05 01 00 00 00
+2 10 01 00 00 00
+3 04 01 00 00 a0

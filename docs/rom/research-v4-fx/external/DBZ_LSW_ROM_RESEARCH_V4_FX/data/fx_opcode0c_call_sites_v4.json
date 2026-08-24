@@ -1,0 +1,93 @@
+[
+  {
+    "address": "Bank03:$586C",
+    "context": "BEAM_CORE_STATE14",
+    "operand": "0x00",
+    "effectiveSourceWindow": "rows 1-8",
+    "note": "shared handler $02 prefix"
+  },
+  {
+    "address": "Bank03:$5924",
+    "context": "BEAM_RESULT_STATE32",
+    "operand": "0x0A",
+    "effectiveSourceWindow": "rows 11-18",
+    "note": "RESULT_0 branch"
+  },
+  {
+    "address": "Bank03:$5969",
+    "context": "BEAM_RESULT_STATE3C",
+    "operand": "0x0A",
+    "effectiveSourceWindow": "rows 11-18",
+    "note": "RESULT_1 branch"
+  },
+  {
+    "address": "Bank03:$59A1",
+    "context": "BEAM_RESULT_STATE46",
+    "operand": "0x0A",
+    "effectiveSourceWindow": "rows 11-18",
+    "note": "RESULT_2 branch"
+  },
+  {
+    "address": "Bank03:$59D8",
+    "context": "BEAM_RESULT_STATE50",
+    "operand": "0x0A",
+    "effectiveSourceWindow": "rows 11-18",
+    "note": "RESULT_OTHER/3/4 branch"
+  },
+  {
+    "address": "Bank03:$5AB7",
+    "context": "HANDLER03_STATE14",
+    "operand": "0x00",
+    "effectiveSourceWindow": "rows 1-8",
+    "note": "handler $03 override"
+  },
+  {
+    "address": "Bank03:$5B28",
+    "context": "HANDLER04_STATE14",
+    "operand": "0x00",
+    "effectiveSourceWindow": "rows 1-8",
+    "note": "handler $04 override"
+  },
+  {
+    "address": "Bank03:$5B84",
+    "context": "HANDLER05_STATE14",
+    "operand": "0x00",
+    "effectiveSourceWindow": "rows 1-8",
+    "note": "handler $05 override; V-ball fallback prefix"
+  },
+  {
+    "address": "Bank03:$5BEA",
+    "context": "HANDLER06_STATE14",
+    "operand": "0x00",
+    "effectiveSourceWindow": "rows 1-8",
+    "note": "handler $06 override"
+  },
+  {
+    "address": "Bank03:$5CB8",
+    "context": "HANDLER0D_STATE14",
+    "operand": "0x00",
+    "effectiveSourceWindow": "rows 1-8",
+    "note": "Purple Comet"
+  },
+  {
+    "address": "Bank03:$5DAB",
+    "context": "HANDLER0E_STATE14",
+    "operand": "0x00",
+    "effectiveSourceWindow": "rows 1-8",
+    "note": "P.Comet Z"
+  },
+  {
+    "address": "Bank03:$5E4C",
+    "context": "HANDLER07_STATE14",
+    "operand": "0x02",
+    "effectiveSourceWindow": "rows 3-10",
+    "note": "E=2 is preserved by $3EE1/$72DF and bank-switch wrappers"
+  },
+  {
+    "address": "Bank03:$630B",
+    "context": "VBALL_RESULT_STATE32",
+    "operand": "0x0A",
+    "effectiveSourceWindow": "rows 11-18",
+    "note": "V-ball custom result"
+  }
+]

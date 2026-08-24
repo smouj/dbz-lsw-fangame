@@ -1,0 +1,32 @@
+[
+  {
+    "old": "Palette $FF universally means NONE",
+    "new": "Category/path-scoped. Common Support helper passes CC15 directly to palette index; $FF indexes Bank30:$75F8 and is physically consumed.",
+    "status": "SUPERSEDES"
+  },
+  {
+    "old": "CA53=2 universally means MISS",
+    "new": "CA53=2 is also explicitly assigned by CA83&$10 Endurance/partial; keep numeric ROM result separate from human outcome.",
+    "status": "SUPERSEDES"
+  },
+  {
+    "old": "Defense card AnimationResource means play it when selected",
+    "new": "Selection only preloads AnimationSlot8. Incoming attack worker decides whether slot8 is started.",
+    "status": "SUPERSEDES"
+  },
+  {
+    "old": "Teleport/Time Freeze physical resource necessarily plays",
+    "new": "Both are preloaded, but no static slot8 start occurs on their Avoid/Command-suppression routes.",
+    "status": "SUPERSEDES"
+  },
+  {
+    "old": "Bank68:$1A is unresolved auxiliary Support visual",
+    "new": "Bank68:$1A is statically tied to CHARA (palette $31) and Gather Power (palette $33); common Support uses $19.",
+    "status": "SUPERSEDES"
+  },
+  {
+    "old": "Move cinematic position equals tactical relocation",
+    "new": "Tactical position is persisted separately; macros $29/$2A have net local dx=0.",
+    "status": "SUPERSEDES"
+  }
+]

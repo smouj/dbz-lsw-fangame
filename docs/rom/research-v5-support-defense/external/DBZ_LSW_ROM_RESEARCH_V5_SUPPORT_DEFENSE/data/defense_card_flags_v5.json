@@ -1,0 +1,123 @@
+[
+  {
+    "cardId": 19,
+    "name": "Taiyoken",
+    "handler": "$00",
+    "animationResource": "$26",
+    "fxToken": "$02",
+    "palette": "$FF",
+    "ca83": "$01/$81",
+    "resolutionFamily": "TAIYOKEN_DAMAGE_CANCEL_OR_COUNTERED",
+    "slot8Execution": "STARTED_VS_STANDARD_DAMAGE"
+  },
+  {
+    "cardId": 26,
+    "name": "Teleport.",
+    "handler": "$00",
+    "animationResource": "$28",
+    "fxToken": "$04",
+    "palette": "$FF",
+    "ca83": "$02",
+    "resolutionFamily": "BEAM_AVOID",
+    "slot8Execution": "PRELOADED_NOT_STARTED_ON_AVOID_ROUTE"
+  },
+  {
+    "cardId": 45,
+    "name": "Barrier",
+    "handler": "$00",
+    "animationResource": "$24",
+    "fxToken": "$04",
+    "palette": "$30",
+    "ca83": "$04",
+    "resolutionFamily": "BEAM_NULLIFY",
+    "slot8Execution": "STARTED_VS_BEAM_CA53_3"
+  },
+  {
+    "cardId": 52,
+    "name": "Time Freeze",
+    "handler": "$00",
+    "animationResource": "$2A",
+    "fxToken": "$01",
+    "palette": "$FF",
+    "ca83": "$40",
+    "resolutionFamily": "COMMAND_STAGE_SUCCESS_CLEAR",
+    "slot8Execution": "PRELOADED_NOT_STARTED_ON_COMMAND_SUPPRESSION_ROUTE"
+  },
+  {
+    "cardId": 53,
+    "name": "Breath",
+    "handler": "$00",
+    "animationResource": "$27",
+    "fxToken": "$04",
+    "palette": "$FF",
+    "ca83": "$04",
+    "resolutionFamily": "BEAM_NULLIFY",
+    "slot8Execution": "STARTED_VS_BEAM_CA53_3"
+  },
+  {
+    "cardId": 76,
+    "name": "Energy Absorb",
+    "handler": "$00",
+    "animationResource": "$25",
+    "fxToken": "$04",
+    "palette": "$FF",
+    "ca83": "$08",
+    "resolutionFamily": "BEAM_ENERGY_ABSORB",
+    "slot8Execution": "STARTED_VS_BEAM_CA53_4"
+  },
+  {
+    "cardId": 121,
+    "name": "Endurance",
+    "handler": "$00",
+    "animationResource": "$FF",
+    "fxToken": "$06",
+    "palette": "$30",
+    "ca83": "$10",
+    "resolutionFamily": "ENDURANCE_PARTIAL",
+    "slot8Execution": "NO_ANIMATION_RESOURCE"
+  },
+  {
+    "cardId": 122,
+    "name": "Telepathy",
+    "handler": "$00",
+    "animationResource": "$FF",
+    "fxToken": "$01",
+    "palette": "$30",
+    "ca83": "$40",
+    "resolutionFamily": "COMMAND_STAGE_SUCCESS_CLEAR",
+    "slot8Execution": "NO_ANIMATION_RESOURCE"
+  },
+  {
+    "cardId": 123,
+    "name": "Foresight",
+    "handler": "$00",
+    "animationResource": "$FF",
+    "fxToken": "$01",
+    "palette": "$30",
+    "ca83": "$40",
+    "resolutionFamily": "COMMAND_STAGE_SUCCESS_CLEAR",
+    "slot8Execution": "NO_ANIMATION_RESOURCE"
+  },
+  {
+    "cardId": 124,
+    "name": "Shockwave",
+    "handler": "$00",
+    "animationResource": "$FF",
+    "fxToken": "$02",
+    "palette": "$30",
+    "ca83": "$01",
+    "resolutionFamily": "DAMAGE_CANCEL_SHOCKWAVE",
+    "slot8Execution": "NO_ANIMATION_RESOURCE"
+  },
+  {
+    "cardId": 125,
+    "name": "Avoiding",
+    "handler": "$00",
+    "animationResource": "$FF",
+    "fxToken": "$04",
+    "palette": "$30",
+    "ca83": "$02",
+    "resolutionFamily": "BEAM_AVOID",
+    "slot8Execution": "NO_ANIMATION_RESOURCE"
+  }
+]

@@ -1,0 +1,32 @@
+fxResource,fxHex,bank,localIndex,baseDescriptor,graphicsTileCount,graphicsBytes,side1Descriptor,side2Descriptor,paletteIds,cardCount,cards
+1,0x01,0x65,1,0x42F0,44,704,0x4570,0x45D4,2C 30,17,#42 Kiai; #51 Paralysis; #52 Time Freeze; #83 Bulma; #84 Chaiotzu; #87 Kaio; #91 Supreme Kai; #93 Babidi; #95 Yakon; #96 Scouter; #101 Gravity Dev.; #103 Sealed Ball; #113 Heart Virus; #114 Heart Medi.; #115 Sandglass; #122 Telepathy; #123 Foresight
+2,0x02,0x65,2,0x4570,6,96,0x45D4,0x4854,2C 2D 30 31 32 33 35,26,#7 Energy Wave; #19 Taiyoken; #23 Kaio Ken; #27 Sup.Saiyan-2; #28 Sup.Saiyan-3; #59 Speed Up; #63 Finger Beam; #67 Eye Beam; #68 Lock On; #79 Flesh Guard; #89 Guru; #92 Kibito; #97 Caps. Fridge; #100 Medical Mac.; #104 Trunks Sword; #105 Dabura Spear; #106 Light Vest; #107 Btl. Jacket; #108 New-B Jacket; #109 Sunglasses; #111 Champ.Belt; #117 Full Spirit; #118 Afterimage; #119 Reading Ki; #120 Feint; #124 Shockwave
+4,0x04,0x65,4,0x4854,128,2048,0x4AD4,0x4CC8,30,14,#26 Teleport.; #45 Barrier; #53 Breath; #76 Energy Absorb; #85 Tien; #86 Yajirobe; #90 Hercule; #94 Dabura; #98 Stop Device; #102 Ene.Absorber; #110 Gamebomb; #112 H's Choco.; #116 Naughty Book; #125 Avoiding
+5,0x05,0x65,5,0x4AD4,31,496,0x4CC8,0x4F48,2C 2D,3,#12 Kamehameha; #20 Misty KiWave; #38 Kamekameha
+6,0x06,0x65,6,0x4CC8,128,2048,0x4F48,0x51C8,30,1,#121 Endurance
+8,0x08,0x65,8,0x51C8,32,512,0x53CC,0x564C,2C 2D 30,5,#10 Masenko; #16 Resurrection; #35 Burning Atk.; #88 Dende; #99 Life Preser.
+14,0x0E,0x65,14,0x60D0,41,656,0x6364,0x65E4,2D 2E,2,#30 Galick-Ho; #48 Lightning C.
+17,0x11,0x65,17,0x6864,50,800,0x6B88,0x6E08,2C 2D,3,#13 S.Kamehameha; #14 F.Kamehameha; #70 Hell Flash
+20,0x14,0x65,20,0x7088,59,944,0x743C,0x76BC,2C 2D,2,#32 Final Flash; #54 Eraser Can.
+23,0x17,0x65,23,0x793C,3,48,0x7970,0x7BF0,2C,1,#8 Energy Bomb
+33,0x21,0x66,3,0x4684,16,256,0x4788,0x4A08,2D,1,#47 KiBlast Bomb
+36,0x24,0x66,6,0x4C88,24,384,0x4E0C,0x508C,2C,1,#36 Fin.Buster
+39,0x27,0x66,9,0x530C,25,400,0x54A0,0x5720,2C 2D,2,#31 Big Bang Atk; #57 Purple Comet
+45,0x2D,0x66,15,0x6054,32,512,0x6258,0x64D8,2D,1,#18 F.Lightbomb
+48,0x30,0x66,18,0x6758,6,96,0x67BC,0x6A3C,2C 2D,2,#21 Destruct-Disk; #73 Energy Slice
+51,0x33,0x66,21,0x6CBC,9,144,0x6D50,0x6FD0,2E,1,#22 S.Destruc-D.
+54,0x36,0x66,24,0x7250,30,480,0x7434,0x76B4,2C 2D,2,#65 Grand Wave; #72 Energy Slash
+57,0x39,0x66,27,0x7934,25,400,0x7AC8,0x7D48,2D,1,#17 S.Beam Can.
+60,0x3C,0x67,0,0x4074,10,160,0x4118,0x4398,2C,1,#50 M.Soundwave
+63,0x3F,0x67,3,0x4618,16,256,0x471C,0x499C,2D,1,#39 Galactica D.
+66,0x42,0x67,6,0x4C1C,34,544,0x4E40,0x50C0,2D,1,#44 Flash.Sword
+69,0x45,0x67,9,0x5340,67,1072,0x5774,0x59F4,2D 2F,2,#49 Telekinesis; #82 Sweet Beam
+72,0x48,0x67,12,0x5C74,7,112,0x5CE8,0x5F68,2F,1,#56 Crasher Ball
+75,0x4B,0x67,15,0x61E8,17,272,0x62FC,0x657C,2D,1,#69 Rocket Punch
+78,0x4E,0x67,18,0x67FC,17,272,0x6910,0x6B90,2F,1,#80 Potbelly Atk
+81,0x51,0x67,21,0x6E10,41,656,0x70A4,0x7324,2E,1,#62 Body Change
+84,0x54,0x67,24,0x75A4,48,768,0x78A8,0x7B28,2D,1,#64 Super E-Ball
+90,0x5A,0x68,0,0x4078,46,736,0x435C,0x45DC,2C,1,#24 Spirit Bomb
+99,0x63,0x68,9,0x5714,22,352,0x5878,0x5AF8,2C,1,#40 S.G.K.Atk.
+108,0x6C,0x68,18,0x6A50,25,400,0x6BE4,0x6E64,2C,1,#41 V-ball Crash
+111,0x6F,0x68,21,0x70E4,62,992,0x74C8,0x7748,2E,1,#58 P.Comet Z

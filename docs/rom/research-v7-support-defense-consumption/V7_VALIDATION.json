@@ -1,0 +1,33 @@
+{
+  "package": "dbz-lsw-rom-research-v7",
+  "status": "CLOSED",
+  "closedAt": "2026-08-23",
+  "subblocks": {
+    "V7.1": "CLOSED — display consumption (HDMA $C218+ -> VRAM bank1 $8800; composición $597E/$0B07 -> $9800)",
+    "V7.2": "CLOSED — SUPPORT_COMMON profiles",
+    "V7.3": "CLOSED — Support ROM compiler",
+    "V7.4": "CLOSED — compiler QA (determinismo, 0 muta Engine)",
+    "V7.5": "CLOSED — cutover $0B/$0D/$0F (22/22, branch CA53 numérica, 0 legacy)",
+    "V7.6": "CLOSED — Defense ROM Presentation (11/11, slot8 consumption, fixtures)",
+    "V7.7": "CLOSED — romCA53 consolidación (0 switch->MISS)",
+    "V7.8": "CLOSED — RomDisplayPresenter + ROM Display Lab (0 no-ops silenciosos)"
+  },
+  "gates": {
+    "legacySupportPresentation": 0,
+    "genericDefenseAnimation": 0,
+    "engineMutationsFromPresenter": 0,
+    "rngMutations": 0,
+    "hpCcKiMutations": 0,
+    "silentRomCues": 0
+  },
+  "verifiers": [
+    "verify:defense-slot8-global",
+    "verify:rom-ca53-contract",
+    "verify:rom-ca53-consolidation",
+    "verify:rom-defense-presentation",
+    "verify:rom-support-presentation-compiler",
+    "verify:rom-support-presentation-profile",
+    "verify:support-rom-cutover",
+    "verify:v7-presenter-display"
+  ]
+}

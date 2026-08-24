@@ -1,0 +1,2429 @@
+{
+  "rom": "/home/local-user/.openclaw/workspace/dbz-lsw-decomp/13_raw_rom/dbz-lsw-usa.gbc",
+  "romSha256": "8dab48cc81d14bcee7c73274df09cf5c4dd44c3b93d10a5a3175e04fead25dee",
+  "renderKind": "ROM_INSPECTION_RENDER",
+  "alphaMode": "opaque (color0 = real CGB color, no invented transparency)",
+  "scale": 4,
+  "tileGrid": "6 cols x 5 rows (30 tiles, 8x8 2bpp each)",
+  "layoutInterpretation": "2 chunks x (3 tile-source pointers + $7FFF terminator); pointers resolve as $4000 + (word & $3FFF) inside the loader bank (V7.1 correction \u2014 matches $1266 convention); WRAM/VRAM consumer now V7.1 CLOSED (HDMA job $C218+ -> VRAM bank1 $8800; tilemap composition via Bank7E:$597E/$0B07 -> $9800)",
+  "checks": {
+    "supportCards": 48,
+    "rendered": 48,
+    "renderable": true,
+    "tileReadsOutOfRange": 0,
+    "payloadOverruns": 0,
+    "invalidLayoutRefs": 0,
+    "deterministicPng": true,
+    "pngCount": 96
+  },
+  "renders": [
+    {
+      "cardId": 9,
+      "name": "Special Card",
+      "file": "card_009_special_card.png",
+      "layoutRefsFile": "card_009_special_card_layoutrefs.png",
+      "sha256": "a0c21585bf73fd7c7f546f5601421fa941803cbda59620bc07f16aaf2517a199",
+      "layoutRefsSha256": "c3060172e2c5475601ce917893ccf467e7ea2cfd267fc874a654b0b49c606dc8",
+      "paletteIndex": "$FF",
+      "paletteSource": "Bank30:$6E00+idx*8 (V5)",
+      "tileCount": 30,
+      "layoutRefs": [
+        {
+          "chunk": 0,
+          "word": "$14A5",
+          "address": "6B:$54A5",
+          "status": "OK"
+        },
+        {
+          "chunk": 0,
+          "word": "$01FF",
+          "address": "6B:$41FF",
+          "status": "OK"
+        },
+        {
+          "chunk": 0,
+          "word": "$00B5",
+          "address": "6B:$40B5",
+          "status": "OK"
+        },
+        {
+          "chunk": 0,
+          "word": "$03FF",
+          "address": "6B:$43FF",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$14A5",
+          "address": "6B:$54A5",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$4DEF",
+          "address": "6B:$4DEF",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$02DF",
+          "address": "6B:$42DF",
+          "status": "OK"
+        }
+      ]
+    },
+    {
+      "cardId": 16,
+      "name": "Resurrection",
+      "file": "card_016_resurrection.png",
+      "layoutRefsFile": "card_016_resurrection_layoutrefs.png",
+      "sha256": "1b579ec07416bcd2a1f893e8900d3ad08ab98f8acc5c3784af89d0ad5bf61d04",
+      "layoutRefsSha256": "8b400c108b9ddc6e222c4318555587610da177ffd1dd57729fed0eeecb017773",
+      "paletteIndex": "$30",
+      "paletteSource": "Bank30:$6E00+idx*8 (V5)",
+      "tileCount": 30,
+      "layoutRefs": [
+        {
+          "chunk": 0,
+          "word": "$14A5",
+          "address": "6B:$54A5",
+          "status": "OK"
+        },
+        {
+          "chunk": 0,
+          "word": "$16E5",
+          "address": "6B:$56E5",
+          "status": "OK"
+        },
+        {
+          "chunk": 0,
+          "word": "$19A6",
+          "address": "6B:$59A6",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$14A5",
+          "address": "6B:$54A5",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$30F3",
+          "address": "6B:$70F3",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$5A5D",
+          "address": "6B:$5A5D",
+          "status": "OK"
+        }
+      ]
+    },
+    {
+      "cardId": 23,
+      "name": "Kaio Ken",
+      "file": "card_023_kaio_ken.png",
+      "layoutRefsFile": "card_023_kaio_ken_layoutrefs.png",
+      "sha256": "ef6233f0f8b9271051c39cf1f5dba0fcad2cc87334a74fb49493d3736540fd1d",
+      "layoutRefsSha256": "8151a88f31c1bde89a189f55aae9879f331ebd171e0b9e9dc36ee59ca6672f2b",
+      "paletteIndex": "$2D",
+      "paletteSource": "Bank30:$6E00+idx*8 (V5)",
+      "tileCount": 30,
+      "layoutRefs": [
+        {
+          "chunk": 0,
+          "word": "$14A5",
+          "address": "6B:$54A5",
+          "status": "OK"
+        },
+        {
+          "chunk": 0,
+          "word": "$16E5",
+          "address": "6B:$56E5",
+          "status": "OK"
+        },
+        {
+          "chunk": 0,
+          "word": "$19A6",
+          "address": "6B:$59A6",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$14A5",
+          "address": "6B:$54A5",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$28FA",
+          "address": "6B:$68FA",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$567F",
+          "address": "6B:$567F",
+          "status": "OK"
+        }
+      ]
+    },
+    {
+      "cardId": 27,
+      "name": "S. Saiyan 2nd",
+      "file": "card_027_s_saiyan_2nd.png",
+      "layoutRefsFile": "card_027_s_saiyan_2nd_layoutrefs.png",
+      "sha256": "f777c3379b5656b2fa7b052ed37a5523a2a768119a8862bc1f7d06a59c4de02a",
+      "layoutRefsSha256": "4a46e24cf5c7b2eb89ae70ef9283231557f53175c2edaee5a32a92f581dbe227",
+      "paletteIndex": "$35",
+      "paletteSource": "Bank30:$6E00+idx*8 (V5)",
+      "tileCount": 30,
+      "layoutRefs": [
+        {
+          "chunk": 0,
+          "word": "$14A5",
+          "address": "6B:$54A5",
+          "status": "OK"
+        },
+        {
+          "chunk": 0,
+          "word": "$16E5",
+          "address": "6B:$56E5",
+          "status": "OK"
+        },
+        {
+          "chunk": 0,
+          "word": "$19A6",
+          "address": "6B:$59A6",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$14A5",
+          "address": "6B:$54A5",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$1DD6",
+          "address": "6B:$5DD6",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$0E9F",
+          "address": "6B:$4E9F",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$73FF",
+          "address": "6B:$73FF",
+          "status": "OK"
+        }
+      ]
+    },
+    {
+      "cardId": 28,
+      "name": "S. Saiyan 3rd",
+      "file": "card_028_s_saiyan_3rd.png",
+      "layoutRefsFile": "card_028_s_saiyan_3rd_layoutrefs.png",
+      "sha256": "6768f17b1a3b278e6f5fdf19d23a5a16517ffb02a6617c1ac85ff1da6c09d549",
+      "layoutRefsSha256": "f012d39e84dc5bae134b57c4307bfe273c7379e89fc83379ac653143b8ec91d8",
+      "paletteIndex": "$35",
+      "paletteSource": "Bank30:$6E00+idx*8 (V5)",
+      "tileCount": 30,
+      "layoutRefs": [
+        {
+          "chunk": 0,
+          "word": "$14A5",
+          "address": "6B:$54A5",
+          "status": "OK"
+        },
+        {
+          "chunk": 0,
+          "word": "$16E5",
+          "address": "6B:$56E5",
+          "status": "OK"
+        },
+        {
+          "chunk": 0,
+          "word": "$19A6",
+          "address": "6B:$59A6",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$14A5",
+          "address": "6B:$54A5",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$019C",
+          "address": "6B:$419C",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$069F",
+          "address": "6B:$469F",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$7BFF",
+          "address": "6B:$7BFF",
+          "status": "OK"
+        }
+      ]
+    },
+    {
+      "cardId": 42,
+      "name": "Kiai",
+      "file": "card_042_kiai.png",
+      "layoutRefsFile": "card_042_kiai_layoutrefs.png",
+      "sha256": "74ec192a49c6b4743be3faa6fe494a3aff654903d34c6678073563bf8b29301b",
+      "layoutRefsSha256": "ef84905cc84ab3dc13c2646a9fa09a0fafbf60a131dd3370914447e57918a99f",
+      "paletteIndex": "$2C",
+      "paletteSource": "Bank30:$6E00+idx*8 (V5)",
+      "tileCount": 30,
+      "layoutRefs": [
+        {
+          "chunk": 0,
+          "word": "$14A5",
+          "address": "6C:$54A5",
+          "status": "OK"
+        },
+        {
+          "chunk": 0,
+          "word": "$16E5",
+          "address": "6C:$56E5",
+          "status": "OK"
+        },
+        {
+          "chunk": 0,
+          "word": "$19A6",
+          "address": "6C:$59A6",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$14A5",
+          "address": "6C:$54A5",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$3135",
+          "address": "6C:$7135",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$567F",
+          "address": "6C:$567F",
+          "status": "OK"
+        }
+      ]
+    },
+    {
+      "cardId": 51,
+      "name": "Paralysis",
+      "file": "card_051_paralysis.png",
+      "layoutRefsFile": "card_051_paralysis_layoutrefs.png",
+      "sha256": "8ad304c1dd937df0620f3457c476d0398dc465cc31000afe1a7460612c775b41",
+      "layoutRefsSha256": "86de0b745366f75cfd4a49ab18e40872f0c6167386bac492770ffddb458c4db7",
+      "paletteIndex": "$FF",
+      "paletteSource": "Bank30:$6E00+idx*8 (V5)",
+      "tileCount": 30,
+      "layoutRefs": [
+        {
+          "chunk": 0,
+          "word": "$14A5",
+          "address": "6C:$54A5",
+          "status": "OK"
+        },
+        {
+          "chunk": 0,
+          "word": "$16E5",
+          "address": "6C:$56E5",
+          "status": "OK"
+        },
+        {
+          "chunk": 0,
+          "word": "$19A6",
+          "address": "6C:$59A6",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$14A5",
+          "address": "6C:$54A5",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$19E4",
+          "address": "6C:$59E4",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$3B4A",
+          "address": "6C:$7B4A",
+          "status": "OK"
+        }
+      ]
+    },
+    {
+      "cardId": 59,
+      "name": "Speed Up",
+      "file": "card_059_speed_up.png",
+      "layoutRefsFile": "card_059_speed_up_layoutrefs.png",
+      "sha256": "3b4fcf22768daec422b02c278dbc1a24082b57ce340df3090a33def75e4850a7",
+      "layoutRefsSha256": "508542bf3480e3cddb0b97c9322120b7524cbf1a03fb166fa393de5b3420c241",
+      "paletteIndex": "$33",
+      "paletteSource": "Bank30:$6E00+idx*8 (V5)",
+      "tileCount": 30,
+      "layoutRefs": [
+        {
+          "chunk": 0,
+          "word": "$14A5",
+          "address": "6C:$54A5",
+          "status": "OK"
+        },
+        {
+          "chunk": 0,
+          "word": "$16E5",
+          "address": "6C:$56E5",
+          "status": "OK"
+        },
+        {
+          "chunk": 0,
+          "word": "$19A6",
+          "address": "6C:$59A6",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$14A5",
+          "address": "6C:$54A5",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$498B",
+          "address": "6C:$498B",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$6A94",
+          "address": "6C:$6A94",
+          "status": "OK"
+        }
+      ]
+    },
+    {
+      "cardId": 68,
+      "name": "Lock On",
+      "file": "card_068_lock_on.png",
+      "layoutRefsFile": "card_068_lock_on_layoutrefs.png",
+      "sha256": "23784beeda29f71fc94551a599e83110a7c87f7f7fade302333f2b8fa3e2a077",
+      "layoutRefsSha256": "608bf72eb91e47bfcf829aae9394204e702726cd719937d6e2039f5b244396f4",
+      "paletteIndex": "$30",
+      "paletteSource": "Bank30:$6E00+idx*8 (V5)",
+      "tileCount": 30,
+      "layoutRefs": [
+        {
+          "chunk": 0,
+          "word": "$14A5",
+          "address": "6D:$54A5",
+          "status": "OK"
+        },
+        {
+          "chunk": 0,
+          "word": "$16E5",
+          "address": "6D:$56E5",
+          "status": "OK"
+        },
+        {
+          "chunk": 0,
+          "word": "$19A6",
+          "address": "6D:$59A6",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$14A5",
+          "address": "6D:$54A5",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$223E",
+          "address": "6D:$623E",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$36DE",
+          "address": "6D:$76DE",
+          "status": "OK"
+        }
+      ]
+    },
+    {
+      "cardId": 79,
+      "name": "Flesh Guard",
+      "file": "card_079_flesh_guard.png",
+      "layoutRefsFile": "card_079_flesh_guard_layoutrefs.png",
+      "sha256": "ffb5f9ea0a91090ca4305fa57a44edbc60f4e32dcb37779e13dc585eb394c37a",
+      "layoutRefsSha256": "723831b63b3152db9df4f424b2c4426fd621ce522975038e95ada39f4a78b118",
+      "paletteIndex": "$32",
+      "paletteSource": "Bank30:$6E00+idx*8 (V5)",
+      "tileCount": 30,
+      "layoutRefs": [
+        {
+          "chunk": 0,
+          "word": "$14A5",
+          "address": "6D:$54A5",
+          "status": "OK"
+        },
+        {
+          "chunk": 0,
+          "word": "$16E5",
+          "address": "6D:$56E5",
+          "status": "OK"
+        },
+        {
+          "chunk": 0,
+          "word": "$19A6",
+          "address": "6D:$59A6",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$14A5",
+          "address": "6D:$54A5",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$453A",
+          "address": "6D:$453A",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$567F",
+          "address": "6D:$567F",
+          "status": "OK"
+        }
+      ]
+    },
+    {
+      "cardId": 83,
+      "name": "Bulma",
+      "file": "card_083_bulma.png",
+      "layoutRefsFile": "card_083_bulma_layoutrefs.png",
+      "sha256": "1fbeb33019706206934ebce41957167c538fb45babb789765a818641146642bc",
+      "layoutRefsSha256": "7b2a871e116a077e518eaa9f33c6db1a7e659d7ef5b5c66a9930391204907354",
+      "paletteIndex": "$30",
+      "paletteSource": "Bank30:$6E00+idx*8 (V5)",
+      "tileCount": 30,
+      "layoutRefs": [
+        {
+          "chunk": 0,
+          "word": "$14A5",
+          "address": "6D:$54A5",
+          "status": "OK"
+        },
+        {
+          "chunk": 0,
+          "word": "$16E5",
+          "address": "6D:$56E5",
+          "status": "OK"
+        },
+        {
+          "chunk": 0,
+          "word": "$19A6",
+          "address": "6D:$59A6",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$14A5",
+          "address": "6D:$54A5",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$4F20",
+          "address": "6D:$4F20",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$3AFD",
+          "address": "6D:$7AFD",
+          "status": "OK"
+        }
+      ]
+    },
+    {
+      "cardId": 84,
+      "name": "Chiaotzu",
+      "file": "card_084_chiaotzu.png",
+      "layoutRefsFile": "card_084_chiaotzu_layoutrefs.png",
+      "sha256": "13a7f35350ddfb6c2eed588b250845a08ef9cda32c4b062f6ac2d4be651daf0f",
+      "layoutRefsSha256": "caefc7a338cacb809ef87328cada77d63883e0aa0b11de359930708410f11ea2",
+      "paletteIndex": "$30",
+      "paletteSource": "Bank30:$6E00+idx*8 (V5)",
+      "tileCount": 30,
+      "layoutRefs": [
+        {
+          "chunk": 0,
+          "word": "$14A5",
+          "address": "6D:$54A5",
+          "status": "OK"
+        },
+        {
+          "chunk": 0,
+          "word": "$16E5",
+          "address": "6D:$56E5",
+          "status": "OK"
+        },
+        {
+          "chunk": 0,
+          "word": "$19A6",
+          "address": "6D:$59A6",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$14A5",
+          "address": "6D:$54A5",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$00BF",
+          "address": "6D:$40BF",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$2EDD",
+          "address": "6D:$6EDD",
+          "status": "OK"
+        }
+      ]
+    },
+    {
+      "cardId": 85,
+      "name": "Tien",
+      "file": "card_085_tien.png",
+      "layoutRefsFile": "card_085_tien_layoutrefs.png",
+      "sha256": "ca4bc784f44de10d7d3f5ccb5544abc025ca614249fda2c816883c23584e11ab",
+      "layoutRefsSha256": "37ec3d41fc212a2f046f6177ee8ad90aafd8a57aa363223714d2fb49e1f6768f",
+      "paletteIndex": "$FF",
+      "paletteSource": "Bank30:$6E00+idx*8 (V5)",
+      "tileCount": 30,
+      "layoutRefs": [
+        {
+          "chunk": 0,
+          "word": "$14A5",
+          "address": "6D:$54A5",
+          "status": "OK"
+        },
+        {
+          "chunk": 0,
+          "word": "$16E5",
+          "address": "6D:$56E5",
+          "status": "OK"
+        },
+        {
+          "chunk": 0,
+          "word": "$19A6",
+          "address": "6D:$59A6",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$14A5",
+          "address": "6D:$54A5",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$21F6",
+          "address": "6D:$61F6",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$371F",
+          "address": "6D:$771F",
+          "status": "OK"
+        }
+      ]
+    },
+    {
+      "cardId": 86,
+      "name": "Yajirobe",
+      "file": "card_086_yajirobe.png",
+      "layoutRefsFile": "card_086_yajirobe_layoutrefs.png",
+      "sha256": "f90c62547eb27592b36bd3bba4f8b15b20ad784751aa74f6a27c4bbdb10dda83",
+      "layoutRefsSha256": "37ec3d41fc212a2f046f6177ee8ad90aafd8a57aa363223714d2fb49e1f6768f",
+      "paletteIndex": "$FF",
+      "paletteSource": "Bank30:$6E00+idx*8 (V5)",
+      "tileCount": 30,
+      "layoutRefs": [
+        {
+          "chunk": 0,
+          "word": "$14A5",
+          "address": "6D:$54A5",
+          "status": "OK"
+        },
+        {
+          "chunk": 0,
+          "word": "$16E5",
+          "address": "6D:$56E5",
+          "status": "OK"
+        },
+        {
+          "chunk": 0,
+          "word": "$19A6",
+          "address": "6D:$59A6",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$14A5",
+          "address": "6D:$54A5",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$21F6",
+          "address": "6D:$61F6",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$371F",
+          "address": "6D:$771F",
+          "status": "OK"
+        }
+      ]
+    },
+    {
+      "cardId": 87,
+      "name": "Kaio",
+      "file": "card_087_kaio.png",
+      "layoutRefsFile": "card_087_kaio_layoutrefs.png",
+      "sha256": "ed9795509fe8702578bddc92d137a39b5e441870659e293f6d6f22ab07e9e4a1",
+      "layoutRefsSha256": "b41927ce363055e157c14e58cd7508a0ca12d0a7c77ea6742427a03191f26edf",
+      "paletteIndex": "$FF",
+      "paletteSource": "Bank30:$6E00+idx*8 (V5)",
+      "tileCount": 30,
+      "layoutRefs": [
+        {
+          "chunk": 0,
+          "word": "$14A5",
+          "address": "6D:$54A5",
+          "status": "OK"
+        },
+        {
+          "chunk": 0,
+          "word": "$16E5",
+          "address": "6D:$56E5",
+          "status": "OK"
+        },
+        {
+          "chunk": 0,
+          "word": "$19A6",
+          "address": "6D:$59A6",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$14A5",
+          "address": "6D:$54A5",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$5A0B",
+          "address": "6D:$5A0B",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$7F11",
+          "address": "6D:$7F11",
+          "status": "OK"
+        }
+      ]
+    },
+    {
+      "cardId": 88,
+      "name": "Dende",
+      "file": "card_088_dende.png",
+      "layoutRefsFile": "card_088_dende_layoutrefs.png",
+      "sha256": "d36cec66b7dea9f1db52bd12464589dd45ddf31ea3efb4fec863bd5200307cfe",
+      "layoutRefsSha256": "fa0f79f78b99efa313a29508a69b147574a20ed72f53907956bf9bdd3f308467",
+      "paletteIndex": "$30",
+      "paletteSource": "Bank30:$6E00+idx*8 (V5)",
+      "tileCount": 30,
+      "layoutRefs": [
+        {
+          "chunk": 0,
+          "word": "$14A5",
+          "address": "6D:$54A5",
+          "status": "OK"
+        },
+        {
+          "chunk": 0,
+          "word": "$16E5",
+          "address": "6D:$56E5",
+          "status": "OK"
+        },
+        {
+          "chunk": 0,
+          "word": "$19A6",
+          "address": "6D:$59A6",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$14A5",
+          "address": "6D:$54A5",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$1E49",
+          "address": "6D:$5E49",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$27AE",
+          "address": "6D:$67AE",
+          "status": "OK"
+        }
+      ]
+    },
+    {
+      "cardId": 89,
+      "name": "Guru",
+      "file": "card_089_guru.png",
+      "layoutRefsFile": "card_089_guru_layoutrefs.png",
+      "sha256": "7de7acd568c5a35a14db1145feb2b395ae061f57cd797f4ff8b5d3501dec3c13",
+      "layoutRefsSha256": "7705cf02362c6179c3ac6525d075736f22280ca177255311cbdb6134da7088be",
+      "paletteIndex": "$35",
+      "paletteSource": "Bank30:$6E00+idx*8 (V5)",
+      "tileCount": 30,
+      "layoutRefs": [
+        {
+          "chunk": 0,
+          "word": "$14A5",
+          "address": "6D:$54A5",
+          "status": "OK"
+        },
+        {
+          "chunk": 0,
+          "word": "$16E5",
+          "address": "6D:$56E5",
+          "status": "OK"
+        },
+        {
+          "chunk": 0,
+          "word": "$19A6",
+          "address": "6D:$59A6",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$14A5",
+          "address": "6D:$54A5",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$1E49",
+          "address": "6D:$5E49",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$27AE",
+          "address": "6D:$67AE",
+          "status": "OK"
+        }
+      ]
+    },
+    {
+      "cardId": 90,
+      "name": "Hercule",
+      "file": "card_090_hercule.png",
+      "layoutRefsFile": "card_090_hercule_layoutrefs.png",
+      "sha256": "dad3285a5804d1cc017251a36999d4f5d20336d5d69a66bd03ae9033644fbc1a",
+      "layoutRefsSha256": "4b51ac56f4b535dbeebd737c54fcabdd9f9379b75ffaf365d1221ddcc4a2de6a",
+      "paletteIndex": "$FF",
+      "paletteSource": "Bank30:$6E00+idx*8 (V5)",
+      "tileCount": 30,
+      "layoutRefs": [
+        {
+          "chunk": 0,
+          "word": "$14A5",
+          "address": "6D:$54A5",
+          "status": "OK"
+        },
+        {
+          "chunk": 0,
+          "word": "$16E5",
+          "address": "6D:$56E5",
+          "status": "OK"
+        },
+        {
+          "chunk": 0,
+          "word": "$19A6",
+          "address": "6D:$59A6",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$14A5",
+          "address": "6D:$54A5",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$21F6",
+          "address": "6D:$61F6",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$331F",
+          "address": "6D:$731F",
+          "status": "OK"
+        }
+      ]
+    },
+    {
+      "cardId": 91,
+      "name": "Supreme Kai",
+      "file": "card_091_supreme_kai.png",
+      "layoutRefsFile": "card_091_supreme_kai_layoutrefs.png",
+      "sha256": "9a1cfd2406b1382fb6b80d2f501bd3bc0acd49bfd272479a7e4bfff255705190",
+      "layoutRefsSha256": "51120b548442a126a187c6c00ffdc9a160230ab730f76c58b01565cec22017dd",
+      "paletteIndex": "$FF",
+      "paletteSource": "Bank30:$6E00+idx*8 (V5)",
+      "tileCount": 30,
+      "layoutRefs": [
+        {
+          "chunk": 0,
+          "word": "$14A5",
+          "address": "6D:$54A5",
+          "status": "OK"
+        },
+        {
+          "chunk": 0,
+          "word": "$16E5",
+          "address": "6D:$56E5",
+          "status": "OK"
+        },
+        {
+          "chunk": 0,
+          "word": "$19A6",
+          "address": "6D:$59A6",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$14A5",
+          "address": "6D:$54A5",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$5D75",
+          "address": "6D:$5D75",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$723B",
+          "address": "6D:$723B",
+          "status": "OK"
+        }
+      ]
+    },
+    {
+      "cardId": 92,
+      "name": "Kibito",
+      "file": "card_092_kibito.png",
+      "layoutRefsFile": "card_092_kibito_layoutrefs.png",
+      "sha256": "97111c132ffb7df1ae0d61f33abf4819f789591824e7439492af7cbd19bc6628",
+      "layoutRefsSha256": "c46f9ea34187925d342626eea547d4baf504f79cf96054bc686666b2d37aa0d0",
+      "paletteIndex": "$35",
+      "paletteSource": "Bank30:$6E00+idx*8 (V5)",
+      "tileCount": 30,
+      "layoutRefs": [
+        {
+          "chunk": 0,
+          "word": "$14A5",
+          "address": "6D:$54A5",
+          "status": "OK"
+        },
+        {
+          "chunk": 0,
+          "word": "$16E5",
+          "address": "6D:$56E5",
+          "status": "OK"
+        },
+        {
+          "chunk": 0,
+          "word": "$19A6",
+          "address": "6D:$59A6",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$14A5",
+          "address": "6D:$54A5",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$4538",
+          "address": "6D:$4538",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$567F",
+          "address": "6D:$567F",
+          "status": "OK"
+        }
+      ]
+    },
+    {
+      "cardId": 93,
+      "name": "Babidi",
+      "file": "card_093_babidi.png",
+      "layoutRefsFile": "card_093_babidi_layoutrefs.png",
+      "sha256": "86ae1909e1285526f5b84e3c93720ef87d2c2eed33500731bec8eff50867a6a6",
+      "layoutRefsSha256": "1fd5d4fc08c48b5ffde6c7794fdd7601aec6e660980cacf382f7158e99181627",
+      "paletteIndex": "$30",
+      "paletteSource": "Bank30:$6E00+idx*8 (V5)",
+      "tileCount": 30,
+      "layoutRefs": [
+        {
+          "chunk": 0,
+          "word": "$14A5",
+          "address": "6D:$54A5",
+          "status": "OK"
+        },
+        {
+          "chunk": 0,
+          "word": "$16E5",
+          "address": "6D:$56E5",
+          "status": "OK"
+        },
+        {
+          "chunk": 0,
+          "word": "$19A6",
+          "address": "6D:$59A6",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$14A5",
+          "address": "6D:$54A5",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$11D0",
+          "address": "6D:$51D0",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$02FA",
+          "address": "6D:$42FA",
+          "status": "OK"
+        }
+      ]
+    },
+    {
+      "cardId": 94,
+      "name": "Dabura",
+      "file": "card_094_dabura.png",
+      "layoutRefsFile": "card_094_dabura_layoutrefs.png",
+      "sha256": "ffaa0c319c744227e09836cdf3cd83b6ed3d4ba9358423a9ecf002ec1c897bda",
+      "layoutRefsSha256": "73c98462f469a63f91b9adb223ed8ccaaff0e10df5d104f3faeff5e3c3a959ee",
+      "paletteIndex": "$30",
+      "paletteSource": "Bank30:$6E00+idx*8 (V5)",
+      "tileCount": 30,
+      "layoutRefs": [
+        {
+          "chunk": 0,
+          "word": "$14A5",
+          "address": "6D:$54A5",
+          "status": "OK"
+        },
+        {
+          "chunk": 0,
+          "word": "$16E5",
+          "address": "6D:$56E5",
+          "status": "OK"
+        },
+        {
+          "chunk": 0,
+          "word": "$19A6",
+          "address": "6D:$59A6",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$14A5",
+          "address": "6D:$54A5",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$1138",
+          "address": "6D:$5138",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$3A5F",
+          "address": "6D:$7A5F",
+          "status": "OK"
+        }
+      ]
+    },
+    {
+      "cardId": 95,
+      "name": "Yakon",
+      "file": "card_095_yakon.png",
+      "layoutRefsFile": "card_095_yakon_layoutrefs.png",
+      "sha256": "f8bd39476f7bc3daae1e2ff673043b58403b9560e18e35b3f5e082a5787583e9",
+      "layoutRefsSha256": "e6a7e57026dfc807a3e48ccf9feadc194be34e36d07d287d057503a5c317e1fa",
+      "paletteIndex": "$30",
+      "paletteSource": "Bank30:$6E00+idx*8 (V5)",
+      "tileCount": 30,
+      "layoutRefs": [
+        {
+          "chunk": 0,
+          "word": "$14A5",
+          "address": "6D:$54A5",
+          "status": "OK"
+        },
+        {
+          "chunk": 0,
+          "word": "$16E5",
+          "address": "6D:$56E5",
+          "status": "OK"
+        },
+        {
+          "chunk": 0,
+          "word": "$19A6",
+          "address": "6D:$59A6",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$14A5",
+          "address": "6D:$54A5",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$220B",
+          "address": "6D:$620B",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$2FB0",
+          "address": "6D:$6FB0",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$6FFF",
+          "address": "6D:$6FFF",
+          "status": "OK"
+        }
+      ]
+    },
+    {
+      "cardId": 96,
+      "name": "New Scouter",
+      "file": "card_096_new_scouter.png",
+      "layoutRefsFile": "card_096_new_scouter_layoutrefs.png",
+      "sha256": "4ea0e33713131036c7cf08f5a43784aeb0cc5f2c6fde764f154dbe4dee717152",
+      "layoutRefsSha256": "6311818cbb5f148727254cfa9b71853d7102a361c2f27ae82b283464c2d2adb1",
+      "paletteIndex": "$30",
+      "paletteSource": "Bank30:$6E00+idx*8 (V5)",
+      "tileCount": 30,
+      "layoutRefs": [
+        {
+          "chunk": 0,
+          "word": "$14A5",
+          "address": "6E:$54A5",
+          "status": "OK"
+        },
+        {
+          "chunk": 0,
+          "word": "$16E5",
+          "address": "6E:$56E5",
+          "status": "OK"
+        },
+        {
+          "chunk": 0,
+          "word": "$19A6",
+          "address": "6E:$59A6",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$14A5",
+          "address": "6E:$54A5",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$5294",
+          "address": "6E:$5294",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$5F4F",
+          "address": "6E:$5F4F",
+          "status": "OK"
+        }
+      ]
+    },
+    {
+      "cardId": 97,
+      "name": "C. C. Fridge",
+      "file": "card_097_c_c_fridge.png",
+      "layoutRefsFile": "card_097_c_c_fridge_layoutrefs.png",
+      "sha256": "acb01f587da481dddfde7f3eee4fa173de80327ae7017108690eda79418f9b77",
+      "layoutRefsSha256": "aaaab69f5532ffa92404dd034e4c2d22e2e153d81684b1c7ee40e5fd56b86f0c",
+      "paletteIndex": "$30",
+      "paletteSource": "Bank30:$6E00+idx*8 (V5)",
+      "tileCount": 30,
+      "layoutRefs": [
+        {
+          "chunk": 0,
+          "word": "$14A5",
+          "address": "6E:$54A5",
+          "status": "OK"
+        },
+        {
+          "chunk": 0,
+          "word": "$16E5",
+          "address": "6E:$56E5",
+          "status": "OK"
+        },
+        {
+          "chunk": 0,
+          "word": "$19A6",
+          "address": "6E:$59A6",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$14A5",
+          "address": "6E:$54A5",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$3DCE",
+          "address": "6E:$7DCE",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$66D6",
+          "address": "6E:$66D6",
+          "status": "OK"
+        }
+      ]
+    },
+    {
+      "cardId": 98,
+      "name": "Qwk-Stop Dvc",
+      "file": "card_098_qwk_stop_dvc.png",
+      "layoutRefsFile": "card_098_qwk_stop_dvc_layoutrefs.png",
+      "sha256": "965ae3635a4af313fd382a71f0edfac7ac8680cf5dd46db2a776ea731a9d64cd",
+      "layoutRefsSha256": "5cf1a831204afe9b2ea71434b937fb9774742f087d1f1db225a1dd78c2fafbd8",
+      "paletteIndex": "$30",
+      "paletteSource": "Bank30:$6E00+idx*8 (V5)",
+      "tileCount": 30,
+      "layoutRefs": [
+        {
+          "chunk": 0,
+          "word": "$14A5",
+          "address": "6E:$54A5",
+          "status": "OK"
+        },
+        {
+          "chunk": 0,
+          "word": "$16E5",
+          "address": "6E:$56E5",
+          "status": "OK"
+        },
+        {
+          "chunk": 0,
+          "word": "$19A6",
+          "address": "6E:$59A6",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$14A5",
+          "address": "6E:$54A5",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$3DCE",
+          "address": "6E:$7DCE",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$62B5",
+          "address": "6E:$62B5",
+          "status": "OK"
+        }
+      ]
+    },
+    {
+      "cardId": 99,
+      "name": "Medical Mach",
+      "file": "card_099_medical_mach.png",
+      "layoutRefsFile": "card_099_medical_mach_layoutrefs.png",
+      "sha256": "68788bbf61ff14d46b56ea0d633f191b1c0c6f895a526a40144b3f3522c71a07",
+      "layoutRefsSha256": "e8c0b0fdfd3dd80a6481e6ccbae2fc09854951c75d9f7e3e5c20f63b1c039c11",
+      "paletteIndex": "$30",
+      "paletteSource": "Bank30:$6E00+idx*8 (V5)",
+      "tileCount": 30,
+      "layoutRefs": [
+        {
+          "chunk": 0,
+          "word": "$14A5",
+          "address": "6E:$54A5",
+          "status": "OK"
+        },
+        {
+          "chunk": 0,
+          "word": "$16E5",
+          "address": "6E:$56E5",
+          "status": "OK"
+        },
+        {
+          "chunk": 0,
+          "word": "$19A6",
+          "address": "6E:$59A6",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$14A5",
+          "address": "6E:$54A5",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$65CB",
+          "address": "6E:$65CB",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$7B14",
+          "address": "6E:$7B14",
+          "status": "OK"
+        }
+      ]
+    },
+    {
+      "cardId": 100,
+      "name": "Rejuv Chmbr",
+      "file": "card_100_rejuv_chmbr.png",
+      "layoutRefsFile": "card_100_rejuv_chmbr_layoutrefs.png",
+      "sha256": "3d070b7e9b856954106ea01ed82eee43330cb75ba2677119359105b4266e54a8",
+      "layoutRefsSha256": "eebc1b874f83c5a0abe8310e480b81e10d73e14871dec8685ef5c24e43ca777a",
+      "paletteIndex": "$30",
+      "paletteSource": "Bank30:$6E00+idx*8 (V5)",
+      "tileCount": 30,
+      "layoutRefs": [
+        {
+          "chunk": 0,
+          "word": "$14A5",
+          "address": "6E:$54A5",
+          "status": "OK"
+        },
+        {
+          "chunk": 0,
+          "word": "$16E5",
+          "address": "6E:$56E5",
+          "status": "OK"
+        },
+        {
+          "chunk": 0,
+          "word": "$19A6",
+          "address": "6E:$59A6",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$14A5",
+          "address": "6E:$54A5",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$22DF",
+          "address": "6E:$62DF",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$0DD5",
+          "address": "6E:$4DD5",
+          "status": "OK"
+        }
+      ]
+    },
+    {
+      "cardId": 101,
+      "name": "Gravity Dvc",
+      "file": "card_101_gravity_dvc.png",
+      "layoutRefsFile": "card_101_gravity_dvc_layoutrefs.png",
+      "sha256": "c5fbe465a0735467bec9c15416a839bdf06fb5c8766f22ccb3d20393daa88e6a",
+      "layoutRefsSha256": "233601db5943f0812b9acfdfc5bd37c92fbf366cc9801cba3b455e09639d8888",
+      "paletteIndex": "$FF",
+      "paletteSource": "Bank30:$6E00+idx*8 (V5)",
+      "tileCount": 30,
+      "layoutRefs": [
+        {
+          "chunk": 0,
+          "word": "$14A5",
+          "address": "6E:$54A5",
+          "status": "OK"
+        },
+        {
+          "chunk": 0,
+          "word": "$16E5",
+          "address": "6E:$56E5",
+          "status": "OK"
+        },
+        {
+          "chunk": 0,
+          "word": "$19A6",
+          "address": "6E:$59A6",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$14A5",
+          "address": "6E:$54A5",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$6D87",
+          "address": "6E:$6D87",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$7EC9",
+          "address": "6E:$7EC9",
+          "status": "OK"
+        }
+      ]
+    },
+    {
+      "cardId": 102,
+      "name": "Ki Absorber",
+      "file": "card_102_ki_absorber.png",
+      "layoutRefsFile": "card_102_ki_absorber_layoutrefs.png",
+      "sha256": "2e58510a18da0fb3fa46390b5f3913f48d9772b3417f6c8f80061e1938baf019",
+      "layoutRefsSha256": "44594991dfc2bfe1d78a0e72d6b36ead3a6e783f602315a32c626f3fc4bde4b7",
+      "paletteIndex": "$FF",
+      "paletteSource": "Bank30:$6E00+idx*8 (V5)",
+      "tileCount": 30,
+      "layoutRefs": [
+        {
+          "chunk": 0,
+          "word": "$14A5",
+          "address": "6E:$54A5",
+          "status": "OK"
+        },
+        {
+          "chunk": 0,
+          "word": "$16E5",
+          "address": "6E:$56E5",
+          "status": "OK"
+        },
+        {
+          "chunk": 0,
+          "word": "$19A6",
+          "address": "6E:$59A6",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$14A5",
+          "address": "6E:$54A5",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$418C",
+          "address": "6E:$418C",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$7273",
+          "address": "6E:$7273",
+          "status": "OK"
+        }
+      ]
+    },
+    {
+      "cardId": 103,
+      "name": "Sealed Ball",
+      "file": "card_103_sealed_ball.png",
+      "layoutRefsFile": "card_103_sealed_ball_layoutrefs.png",
+      "sha256": "62e81fe2d54a6779cb324724b0aa776cd4089a7155e7bd2c82702850814b59d5",
+      "layoutRefsSha256": "aa1a650ca50f03a3ba636ccefe0eeb24bfb0b222c4afbc20c24a383480513ccb",
+      "paletteIndex": "$30",
+      "paletteSource": "Bank30:$6E00+idx*8 (V5)",
+      "tileCount": 30,
+      "layoutRefs": [
+        {
+          "chunk": 0,
+          "word": "$14A5",
+          "address": "6E:$54A5",
+          "status": "OK"
+        },
+        {
+          "chunk": 0,
+          "word": "$16E5",
+          "address": "6E:$56E5",
+          "status": "OK"
+        },
+        {
+          "chunk": 0,
+          "word": "$19A6",
+          "address": "6E:$59A6",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$14A5",
+          "address": "6E:$54A5",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$2956",
+          "address": "6E:$6956",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$4A79",
+          "address": "6E:$4A79",
+          "status": "OK"
+        }
+      ]
+    },
+    {
+      "cardId": 104,
+      "name": "Trunks\u2019 Swrd",
+      "file": "card_104_trunks_swrd.png",
+      "layoutRefsFile": "card_104_trunks_swrd_layoutrefs.png",
+      "sha256": "132a91553cf08ce5783859ac5671e52b87e5553f263b7c12cf70c219d82bc330",
+      "layoutRefsSha256": "d66a1687e3e3fe40b26f50f5e3836ab1f8cc124542468282f079e37b0217b856",
+      "paletteIndex": "$31",
+      "paletteSource": "Bank30:$6E00+idx*8 (V5)",
+      "tileCount": 30,
+      "layoutRefs": [
+        {
+          "chunk": 0,
+          "word": "$14A5",
+          "address": "6E:$54A5",
+          "status": "OK"
+        },
+        {
+          "chunk": 0,
+          "word": "$16E5",
+          "address": "6E:$56E5",
+          "status": "OK"
+        },
+        {
+          "chunk": 0,
+          "word": "$19A6",
+          "address": "6E:$59A6",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$14A5",
+          "address": "6E:$54A5",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$11D8",
+          "address": "6E:$51D8",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$2ADF",
+          "address": "6E:$6ADF",
+          "status": "OK"
+        }
+      ]
+    },
+    {
+      "cardId": 105,
+      "name": "Dabura\u2019s Spr",
+      "file": "card_105_dabura_s_spr.png",
+      "layoutRefsFile": "card_105_dabura_s_spr_layoutrefs.png",
+      "sha256": "6408f3bb142cb99985597001c57935888666e93dcd948d0b2cee97b7e99f2cc3",
+      "layoutRefsSha256": "0750db9f1f8e59b752d71f66941e5eda62bda1eaa9d02edcedf9a7542fb4af9f",
+      "paletteIndex": "$31",
+      "paletteSource": "Bank30:$6E00+idx*8 (V5)",
+      "tileCount": 30,
+      "layoutRefs": [
+        {
+          "chunk": 0,
+          "word": "$14A5",
+          "address": "6E:$54A5",
+          "status": "OK"
+        },
+        {
+          "chunk": 0,
+          "word": "$16E5",
+          "address": "6E:$56E5",
+          "status": "OK"
+        },
+        {
+          "chunk": 0,
+          "word": "$19A6",
+          "address": "6E:$59A6",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$14A5",
+          "address": "6E:$54A5",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$2573",
+          "address": "6E:$6573",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$3A7D",
+          "address": "6E:$7A7D",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$7FFE",
+          "address": "6E:$7FFE",
+          "status": "OK"
+        }
+      ]
+    },
+    {
+      "cardId": 106,
+      "name": "Light Vest",
+      "file": "card_106_light_vest.png",
+      "layoutRefsFile": "card_106_light_vest_layoutrefs.png",
+      "sha256": "7a630dec5ac0903e10c8868ba9f15def117b27c00fc76a1541abd50838742739",
+      "layoutRefsSha256": "8e1d01120156bb6d03e4f0db47c1eabfc975ed5236c7db2e2795c0659020ebb2",
+      "paletteIndex": "$33",
+      "paletteSource": "Bank30:$6E00+idx*8 (V5)",
+      "tileCount": 30,
+      "layoutRefs": [
+        {
+          "chunk": 0,
+          "word": "$14A5",
+          "address": "6E:$54A5",
+          "status": "OK"
+        },
+        {
+          "chunk": 0,
+          "word": "$16E5",
+          "address": "6E:$56E5",
+          "status": "OK"
+        },
+        {
+          "chunk": 0,
+          "word": "$19A6",
+          "address": "6E:$59A6",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$14A5",
+          "address": "6E:$54A5",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$1D95",
+          "address": "6E:$5D95",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$1A7F",
+          "address": "6E:$5A7F",
+          "status": "OK"
+        }
+      ]
+    },
+    {
+      "cardId": 107,
+      "name": "Old Armor",
+      "file": "card_107_old_armor.png",
+      "layoutRefsFile": "card_107_old_armor_layoutrefs.png",
+      "sha256": "6647717c5cf4e8643161149b7c62bef83b1ddfce0647749dcd7df99fb0e81084",
+      "layoutRefsSha256": "ef50aa190adf1bd53fcb9c76ae1db774a20ef174eb7317ea9640a777509282c2",
+      "paletteIndex": "$32",
+      "paletteSource": "Bank30:$6E00+idx*8 (V5)",
+      "tileCount": 30,
+      "layoutRefs": [
+        {
+          "chunk": 0,
+          "word": "$14A5",
+          "address": "6E:$54A5",
+          "status": "OK"
+        },
+        {
+          "chunk": 0,
+          "word": "$16E5",
+          "address": "6E:$56E5",
+          "status": "OK"
+        },
+        {
+          "chunk": 0,
+          "word": "$19A6",
+          "address": "6E:$59A6",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$14A5",
+          "address": "6E:$54A5",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$2211",
+          "address": "6E:$6211",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$3ED7",
+          "address": "6E:$7ED7",
+          "status": "OK"
+        }
+      ]
+    },
+    {
+      "cardId": 108,
+      "name": "New Jkt",
+      "file": "card_108_new_jkt.png",
+      "layoutRefsFile": "card_108_new_jkt_layoutrefs.png",
+      "sha256": "56762cbb9a9d6cbb171a112574e5b2ff6ad79c160c6eeaf6e16504e93de16b40",
+      "layoutRefsSha256": "bc7c5854e6c7674a02777f99fa19b834ea14a8a079c02260d4f029272da93351",
+      "paletteIndex": "$32",
+      "paletteSource": "Bank30:$6E00+idx*8 (V5)",
+      "tileCount": 30,
+      "layoutRefs": [
+        {
+          "chunk": 0,
+          "word": "$14A5",
+          "address": "6E:$54A5",
+          "status": "OK"
+        },
+        {
+          "chunk": 0,
+          "word": "$16E5",
+          "address": "6E:$56E5",
+          "status": "OK"
+        },
+        {
+          "chunk": 0,
+          "word": "$19A6",
+          "address": "6E:$59A6",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$14A5",
+          "address": "6E:$54A5",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$1991",
+          "address": "6E:$5991",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$3678",
+          "address": "6E:$7678",
+          "status": "OK"
+        }
+      ]
+    },
+    {
+      "cardId": 109,
+      "name": "Sunglasses",
+      "file": "card_109_sunglasses.png",
+      "layoutRefsFile": "card_109_sunglasses_layoutrefs.png",
+      "sha256": "cc688c1c82da4fb71315f4d68ee2c51f96e513ab1ac0ee72d75f05fe86e74bfc",
+      "layoutRefsSha256": "e70b3727087ad24f54e6b8996a729bcc18e8d8105908b577f9eba88e07c48e0b",
+      "paletteIndex": "$30",
+      "paletteSource": "Bank30:$6E00+idx*8 (V5)",
+      "tileCount": 30,
+      "layoutRefs": [
+        {
+          "chunk": 0,
+          "word": "$14A5",
+          "address": "6E:$54A5",
+          "status": "OK"
+        },
+        {
+          "chunk": 0,
+          "word": "$16E5",
+          "address": "6E:$56E5",
+          "status": "OK"
+        },
+        {
+          "chunk": 0,
+          "word": "$19A6",
+          "address": "6E:$59A6",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$14A5",
+          "address": "6E:$54A5",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$29BF",
+          "address": "6E:$69BF",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$42D0",
+          "address": "6E:$42D0",
+          "status": "OK"
+        }
+      ]
+    },
+    {
+      "cardId": 110,
+      "name": "Gamebomb",
+      "file": "card_110_gamebomb.png",
+      "layoutRefsFile": "card_110_gamebomb_layoutrefs.png",
+      "sha256": "4a7a249d2ccaf6f9ebc646ca565650849107f04c19d6f07a7ae0f6743b60e5f9",
+      "layoutRefsSha256": "e40d167d5603d4d711bc88096424c5a5c9acb26fbd39f7bd4fd5619b48179db3",
+      "paletteIndex": "$FF",
+      "paletteSource": "Bank30:$6E00+idx*8 (V5)",
+      "tileCount": 30,
+      "layoutRefs": [
+        {
+          "chunk": 0,
+          "word": "$14A5",
+          "address": "6E:$54A5",
+          "status": "OK"
+        },
+        {
+          "chunk": 0,
+          "word": "$16E5",
+          "address": "6E:$56E5",
+          "status": "OK"
+        },
+        {
+          "chunk": 0,
+          "word": "$19A6",
+          "address": "6E:$59A6",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$14A5",
+          "address": "6E:$54A5",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$1A34",
+          "address": "6E:$5A34",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$271B",
+          "address": "6E:$671B",
+          "status": "OK"
+        }
+      ]
+    },
+    {
+      "cardId": 111,
+      "name": "Champ. Belt",
+      "file": "card_111_champ_belt.png",
+      "layoutRefsFile": "card_111_champ_belt_layoutrefs.png",
+      "sha256": "e4f6bb10b6cf2487891173e6455bab5a7f1f959a2e2444b3469e470d7a4fbddf",
+      "layoutRefsSha256": "1071e040814d65f2e3495e56518303f322a2b7fef325aad8189d354a35ed8d51",
+      "paletteIndex": "$30",
+      "paletteSource": "Bank30:$6E00+idx*8 (V5)",
+      "tileCount": 30,
+      "layoutRefs": [
+        {
+          "chunk": 0,
+          "word": "$14A5",
+          "address": "6E:$54A5",
+          "status": "OK"
+        },
+        {
+          "chunk": 0,
+          "word": "$16E5",
+          "address": "6E:$56E5",
+          "status": "OK"
+        },
+        {
+          "chunk": 0,
+          "word": "$19A6",
+          "address": "6E:$59A6",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$14A5",
+          "address": "6E:$54A5",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$0132",
+          "address": "6E:$4132",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$16BF",
+          "address": "6E:$56BF",
+          "status": "OK"
+        }
+      ]
+    },
+    {
+      "cardId": 112,
+      "name": "Spcl. Candy",
+      "file": "card_112_spcl_candy.png",
+      "layoutRefsFile": "card_112_spcl_candy_layoutrefs.png",
+      "sha256": "2e28f94d0d6c353395426587392868a7e55169d3aca2d92228cb0d3112ca7ee3",
+      "layoutRefsSha256": "ca04b8af67306ba3ab672f08f232d1c9fc09ff29a4ad98da03c14c6a38d889f7",
+      "paletteIndex": "$FF",
+      "paletteSource": "Bank30:$6E00+idx*8 (V5)",
+      "tileCount": 30,
+      "layoutRefs": [
+        {
+          "chunk": 0,
+          "word": "$14A5",
+          "address": "6E:$54A5",
+          "status": "OK"
+        },
+        {
+          "chunk": 0,
+          "word": "$16E5",
+          "address": "6E:$56E5",
+          "status": "OK"
+        },
+        {
+          "chunk": 0,
+          "word": "$19A6",
+          "address": "6E:$59A6",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$14A5",
+          "address": "6E:$54A5",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$1973",
+          "address": "6E:$5973",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$3218",
+          "address": "6E:$7218",
+          "status": "OK"
+        }
+      ]
+    },
+    {
+      "cardId": 113,
+      "name": "Heart Virus",
+      "file": "card_113_heart_virus.png",
+      "layoutRefsFile": "card_113_heart_virus_layoutrefs.png",
+      "sha256": "1f3ac9672c6151dd9c4193b96e19a018a8e072cdf8fd37e5ed10c28675ae3aa4",
+      "layoutRefsSha256": "d4635b06e358c0faa2dfdd8d8b66b8cc01322c8ebc83f38eebf1a898df08eda3",
+      "paletteIndex": "$30",
+      "paletteSource": "Bank30:$6E00+idx*8 (V5)",
+      "tileCount": 30,
+      "layoutRefs": [
+        {
+          "chunk": 0,
+          "word": "$14A5",
+          "address": "6E:$54A5",
+          "status": "OK"
+        },
+        {
+          "chunk": 0,
+          "word": "$16E5",
+          "address": "6E:$56E5",
+          "status": "OK"
+        },
+        {
+          "chunk": 0,
+          "word": "$19A6",
+          "address": "6E:$59A6",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$14A5",
+          "address": "6E:$54A5",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$5134",
+          "address": "6E:$5134",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$6DFD",
+          "address": "6E:$6DFD",
+          "status": "OK"
+        }
+      ]
+    },
+    {
+      "cardId": 114,
+      "name": "Heart Pills",
+      "file": "card_114_heart_pills.png",
+      "layoutRefsFile": "card_114_heart_pills_layoutrefs.png",
+      "sha256": "c7c410d0de31fe5c0c0be8a0cad8dc97fbfd27bf82f14757e9463847f966909f",
+      "layoutRefsSha256": "abdecdb3ec8cf605a89fd13bc8c49e6a0714c2e1a8e792fcf92ee9e329858853",
+      "paletteIndex": "$30",
+      "paletteSource": "Bank30:$6E00+idx*8 (V5)",
+      "tileCount": 30,
+      "layoutRefs": [
+        {
+          "chunk": 0,
+          "word": "$14A5",
+          "address": "6E:$54A5",
+          "status": "OK"
+        },
+        {
+          "chunk": 0,
+          "word": "$16E5",
+          "address": "6E:$56E5",
+          "status": "OK"
+        },
+        {
+          "chunk": 0,
+          "word": "$19A6",
+          "address": "6E:$59A6",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$14A5",
+          "address": "6E:$54A5",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$61E9",
+          "address": "6E:$61E9",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$7AD0",
+          "address": "6E:$7AD0",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$7FFE",
+          "address": "6E:$7FFE",
+          "status": "OK"
+        }
+      ]
+    },
+    {
+      "cardId": 115,
+      "name": "Hourglass",
+      "file": "card_115_hourglass.png",
+      "layoutRefsFile": "card_115_hourglass_layoutrefs.png",
+      "sha256": "567dc366345966da1a8e686b5b411265eb5fae9a6253b942cee1bc4164635b93",
+      "layoutRefsSha256": "29fff8756db3684ec9dda03f794d4744650d8b4ba34bfc6fe9bd7f8917577cab",
+      "paletteIndex": "$30",
+      "paletteSource": "Bank30:$6E00+idx*8 (V5)",
+      "tileCount": 30,
+      "layoutRefs": [
+        {
+          "chunk": 0,
+          "word": "$14A5",
+          "address": "6E:$54A5",
+          "status": "OK"
+        },
+        {
+          "chunk": 0,
+          "word": "$16E5",
+          "address": "6E:$56E5",
+          "status": "OK"
+        },
+        {
+          "chunk": 0,
+          "word": "$19A6",
+          "address": "6E:$59A6",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$14A5",
+          "address": "6E:$54A5",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$15D6",
+          "address": "6E:$55D6",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$1E97",
+          "address": "6E:$5E97",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$7BDE",
+          "address": "6E:$7BDE",
+          "status": "OK"
+        }
+      ]
+    },
+    {
+      "cardId": 116,
+      "name": "Roshi\u2019s book",
+      "file": "card_116_roshi_s_book.png",
+      "layoutRefsFile": "card_116_roshi_s_book_layoutrefs.png",
+      "sha256": "49ff77fa5ab0f360370cedd6d941daed2a5bf67a6662254b5410b3bd0c4e4279",
+      "layoutRefsSha256": "ef022ddbba02fd8ac4b9199afab76ff9ba0495a67fe1b07f24fa581ae66829e1",
+      "paletteIndex": "$30",
+      "paletteSource": "Bank30:$6E00+idx*8 (V5)",
+      "tileCount": 30,
+      "layoutRefs": [
+        {
+          "chunk": 0,
+          "word": "$14A5",
+          "address": "6E:$54A5",
+          "status": "OK"
+        },
+        {
+          "chunk": 0,
+          "word": "$16E5",
+          "address": "6E:$56E5",
+          "status": "OK"
+        },
+        {
+          "chunk": 0,
+          "word": "$19A6",
+          "address": "6E:$59A6",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$14A5",
+          "address": "6E:$54A5",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$3538",
+          "address": "6E:$7538",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$52DF",
+          "address": "6E:$52DF",
+          "status": "OK"
+        }
+      ]
+    },
+    {
+      "cardId": 117,
+      "name": "Full Spirit",
+      "file": "card_117_full_spirit.png",
+      "layoutRefsFile": "card_117_full_spirit_layoutrefs.png",
+      "sha256": "d3c017571d8f58cd25319db672c08fd64b2f5ade12356b2bb593d56771d06565",
+      "layoutRefsSha256": "a81afbd054e1b9b058199c596c05af44f85b83624a520e06e4d148b59847e9d1",
+      "paletteIndex": "$30",
+      "paletteSource": "Bank30:$6E00+idx*8 (V5)",
+      "tileCount": 30,
+      "layoutRefs": [
+        {
+          "chunk": 0,
+          "word": "$14A5",
+          "address": "6E:$54A5",
+          "status": "OK"
+        },
+        {
+          "chunk": 0,
+          "word": "$16E5",
+          "address": "6E:$56E5",
+          "status": "OK"
+        },
+        {
+          "chunk": 0,
+          "word": "$19A6",
+          "address": "6E:$59A6",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$14A5",
+          "address": "6E:$54A5",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$1977",
+          "address": "6E:$5977",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$2A7F",
+          "address": "6E:$6A7F",
+          "status": "OK"
+        }
+      ]
+    },
+    {
+      "cardId": 118,
+      "name": "Afterimage",
+      "file": "card_118_afterimage.png",
+      "layoutRefsFile": "card_118_afterimage_layoutrefs.png",
+      "sha256": "da2165b0374d0cf083845b7750838f4cb136e98bff3d115b9f5b4a7a7b42256e",
+      "layoutRefsSha256": "ddc27a3e86ff2c6f83be4989ec62b7ee3fc66531c7af56cfaa88e8d6103c129e",
+      "paletteIndex": "$30",
+      "paletteSource": "Bank30:$6E00+idx*8 (V5)",
+      "tileCount": 30,
+      "layoutRefs": [
+        {
+          "chunk": 0,
+          "word": "$14A5",
+          "address": "6E:$54A5",
+          "status": "OK"
+        },
+        {
+          "chunk": 0,
+          "word": "$16E5",
+          "address": "6E:$56E5",
+          "status": "OK"
+        },
+        {
+          "chunk": 0,
+          "word": "$19A6",
+          "address": "6E:$59A6",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$14A5",
+          "address": "6E:$54A5",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$15BA",
+          "address": "6E:$55BA",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$3A9E",
+          "address": "6E:$7A9E",
+          "status": "OK"
+        }
+      ]
+    },
+    {
+      "cardId": 119,
+      "name": "Reading Ki",
+      "file": "card_119_reading_ki.png",
+      "layoutRefsFile": "card_119_reading_ki_layoutrefs.png",
+      "sha256": "bdeb2a691e56872f1f6def17b286ab6b73f51bc74a2fc44c473745112de83042",
+      "layoutRefsSha256": "bea436184ed8bb79b5467586c9a46d37b272c732998c04c744f86615f838797e",
+      "paletteIndex": "$30",
+      "paletteSource": "Bank30:$6E00+idx*8 (V5)",
+      "tileCount": 30,
+      "layoutRefs": [
+        {
+          "chunk": 0,
+          "word": "$14A5",
+          "address": "6E:$54A5",
+          "status": "OK"
+        },
+        {
+          "chunk": 0,
+          "word": "$16E5",
+          "address": "6E:$56E5",
+          "status": "OK"
+        },
+        {
+          "chunk": 0,
+          "word": "$19A6",
+          "address": "6E:$59A6",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$14A5",
+          "address": "6E:$54A5",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$0DB8",
+          "address": "6E:$4DB8",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$433F",
+          "address": "6E:$433F",
+          "status": "OK"
+        }
+      ]
+    },
+    {
+      "cardId": 120,
+      "name": "Feint",
+      "file": "card_120_feint.png",
+      "layoutRefsFile": "card_120_feint_layoutrefs.png",
+      "sha256": "a21cf0ff33dc54180c163edc0d333132e59e874b5226bd70feebefce0f35e931",
+      "layoutRefsSha256": "d1ebf6c275428c2c5b5efc4e800ca9582a104f58ccf33651be5da9fe01307a5a",
+      "paletteIndex": "$30",
+      "paletteSource": "Bank30:$6E00+idx*8 (V5)",
+      "tileCount": 30,
+      "layoutRefs": [
+        {
+          "chunk": 0,
+          "word": "$14A5",
+          "address": "6E:$54A5",
+          "status": "OK"
+        },
+        {
+          "chunk": 0,
+          "word": "$16E5",
+          "address": "6E:$56E5",
+          "status": "OK"
+        },
+        {
+          "chunk": 0,
+          "word": "$19A6",
+          "address": "6E:$59A6",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$14A5",
+          "address": "6E:$54A5",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$25B3",
+          "address": "6E:$65B3",
+          "status": "OK"
+        },
+        {
+          "chunk": 1,
+          "word": "$3F3F",
+          "address": "6E:$7F3F",
+          "status": "OK"
+        }
+      ]
+    }
+  ],
+  "layoutAliasGroups": [
+    [
+      85,
+      86
+    ],
+    [
+      88,
+      89
+    ]
+  ],
+  "contactSheets": {
+    "support_all_48.png": "be8d588aafd151e1c5be8b963bbb323ac929e7a3606a0aff987be3d623a83e90",
+    "support_layout_aliases.png": "26ddc0c4c2ae094af5f011d77d0fb26b9a4ac8c00db8b9a8ce8fbdf56092adb2"
+  }
+}

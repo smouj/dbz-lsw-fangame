@@ -1,0 +1,42 @@
+cardId,name,category,handler,fxResource,palette,prefixOperand,prefixSourceRows,prefixCall,resultOperand,resultSourceRows,resultCall,bundleRelation,mapDeltaXIfPure,note
+7,Energy Wave,BEAM,0x02,0x02,0x2C,0x00,1-8,Bank03:$586C,0x0A,11-18,shared result states $5912/$5957/$598F/$59C6; V-ball $62F9,DISTINCT_RESULT_GRAPHIC,,shared Beam core $02
+8,Energy Bomb,BEAM,0x05,0x17,0x2C,0x00,1-8,Bank03:$5B84,0x0A,11-18,shared result states $5912/$5957/$598F/$59C6; V-ball $62F9,PURE_MAP_TRANSLATION,80,state14 override / shared by Damage handler $05
+10,Masenko,BEAM,0x02,0x08,0x2D,0x00,1-8,Bank03:$586C,0x0A,11-18,shared result states $5912/$5957/$598F/$59C6; V-ball $62F9,DISTINCT_RESULT_GRAPHIC,,shared Beam core $02
+12,Kamehameha,BEAM,0x02,0x05,0x2C,0x00,1-8,Bank03:$586C,0x0A,11-18,shared result states $5912/$5957/$598F/$59C6; V-ball $62F9,DISTINCT_RESULT_GRAPHIC,,shared Beam core $02
+13,S.Kamehameha,BEAM,0x02,0x11,0x2C,0x00,1-8,Bank03:$586C,0x0A,11-18,shared result states $5912/$5957/$598F/$59C6; V-ball $62F9,DISTINCT_RESULT_GRAPHIC,,shared Beam core $02
+14,F.Kamehameha,BEAM,0x02,0x11,0x2D,0x00,1-8,Bank03:$586C,0x0A,11-18,shared result states $5912/$5957/$598F/$59C6; V-ball $62F9,DISTINCT_RESULT_GRAPHIC,,shared Beam core $02
+17,S.Beam Can.,BEAM,0x02,0x39,0x2D,0x00,1-8,Bank03:$586C,0x0A,11-18,shared result states $5912/$5957/$598F/$59C6; V-ball $62F9,DISTINCT_RESULT_GRAPHIC,,shared Beam core $02
+18,F.Lightbomb,BEAM,0x05,0x2D,0x2D,0x00,1-8,Bank03:$5B84,0x0A,11-18,shared result states $5912/$5957/$598F/$59C6; V-ball $62F9,PURE_MAP_TRANSLATION,16,state14 override / shared by Damage handler $05
+20,Misty KiWave,BEAM,0x02,0x05,0x2D,0x00,1-8,Bank03:$586C,0x0A,11-18,shared result states $5912/$5957/$598F/$59C6; V-ball $62F9,DISTINCT_RESULT_GRAPHIC,,shared Beam core $02
+21,Destruct-Disk,BEAM,0x07,0x30,0x2C,0x02,3-10,Bank03:$5E4C,0x0A,11-18,shared result states $5912/$5957/$598F/$59C6; V-ball $62F9,PURE_MAP_TRANSLATION,32,handler $07 preserves E=2 across WAIT_FRAME builder; opcode $0C source rows 3-10
+22,S.Destruc-D.,BEAM,0x07,0x33,0x2E,0x02,3-10,Bank03:$5E4C,0x0A,11-18,shared result states $5912/$5957/$598F/$59C6; V-ball $62F9,PURE_MAP_TRANSLATION,24,handler $07 preserves E=2 across WAIT_FRAME builder; opcode $0C source rows 3-10
+24,Spirit Bomb,BEAM,0x07,0x5A,0x2C,0x02,3-10,Bank03:$5E4C,0x0A,11-18,shared result states $5912/$5957/$598F/$59C6; V-ball $62F9,PURE_MAP_TRANSLATION,16,handler $07 preserves E=2 across WAIT_FRAME builder; opcode $0C source rows 3-10
+30,Galick-Ho,BEAM,0x02,0x0E,0x2E,0x00,1-8,Bank03:$586C,0x0A,11-18,shared result states $5912/$5957/$598F/$59C6; V-ball $62F9,DISTINCT_RESULT_GRAPHIC,,shared Beam core $02
+31,Big Bang Atk,BEAM,0x05,0x27,0x2D,0x00,1-8,Bank03:$5B84,0x0A,11-18,shared result states $5912/$5957/$598F/$59C6; V-ball $62F9,PURE_MAP_TRANSLATION,24,state14 override / shared by Damage handler $05
+32,Final Flash,BEAM,0x02,0x14,0x2C,0x00,1-8,Bank03:$586C,0x0A,11-18,shared result states $5912/$5957/$598F/$59C6; V-ball $62F9,DISTINCT_RESULT_GRAPHIC,,shared Beam core $02
+35,Burning Atk.,BEAM,0x04,0x08,0x2C,0x00,1-8,Bank03:$5B28,0x0A,11-18,shared result states $5912/$5957/$598F/$59C6; V-ball $62F9,DISTINCT_RESULT_GRAPHIC,,state14 override
+36,Fin.Buster,BEAM,0x05,0x24,0x2C,0x00,1-8,Bank03:$5B84,0x0A,11-18,shared result states $5912/$5957/$598F/$59C6; V-ball $62F9,PURE_MAP_TRANSLATION,32,state14 override / shared by Damage handler $05
+38,Kamekameha,BEAM,0x02,0x05,0x2C,0x00,1-8,Bank03:$586C,0x0A,11-18,shared result states $5912/$5957/$598F/$59C6; V-ball $62F9,DISTINCT_RESULT_GRAPHIC,,shared Beam core $02
+39,Galactica D.,BEAM,0x07,0x3F,0x2D,0x02,3-10,Bank03:$5E4C,0x0A,11-18,shared result states $5912/$5957/$598F/$59C6; V-ball $62F9,PURE_MAP_TRANSLATION,32,handler $07 preserves E=2 across WAIT_FRAME builder; opcode $0C source rows 3-10
+40,S.G.K.Atk.,BEAM,0x05,0x63,0x2C,0x00,1-8,Bank03:$5B84,0x0A,11-18,shared result states $5912/$5957/$598F/$59C6; V-ball $62F9,PURE_MAP_TRANSLATION,40,state14 override / shared by Damage handler $05
+41,V-ball Crash,DAMAGE,0x0C,0x6C,0x2C,0x00,1-8,Bank03:$5B84 via fallback,0x0A,11-18,shared result states $5912/$5957/$598F/$59C6; V-ball $62F9,PURE_MAP_TRANSLATION,48,V-ball falls into handler $05 for prefix; custom result at $630B
+44,Flash.Sword,BEAM,0x02,0x42,0x2D,0x00,1-8,Bank03:$586C,0x0A,11-18,shared result states $5912/$5957/$598F/$59C6; V-ball $62F9,DISTINCT_RESULT_GRAPHIC,,shared Beam core $02
+47,KiBlast Bomb,BEAM,0x05,0x21,0x2D,0x00,1-8,Bank03:$5B84,0x0A,11-18,shared result states $5912/$5957/$598F/$59C6; V-ball $62F9,PURE_MAP_TRANSLATION,48,state14 override / shared by Damage handler $05
+48,Lightning C.,BEAM,0x02,0x0E,0x2D,0x00,1-8,Bank03:$586C,0x0A,11-18,shared result states $5912/$5957/$598F/$59C6; V-ball $62F9,DISTINCT_RESULT_GRAPHIC,,shared Beam core $02
+49,Telekinesis,BEAM,0x03,0x45,0x2D,0x00,1-8,Bank03:$5AB7,0x0A,11-18,shared result states $5912/$5957/$598F/$59C6; V-ball $62F9,DISTINCT_RESULT_GRAPHIC,,state14 override
+50,M.Soundwave,BEAM,0x05,0x3C,0x2C,0x00,1-8,Bank03:$5B84,0x0A,11-18,shared result states $5912/$5957/$598F/$59C6; V-ball $62F9,PURE_MAP_TRANSLATION,64,state14 override / shared by Damage handler $05
+54,Eraser Can.,BEAM,0x03,0x14,0x2D,0x00,1-8,Bank03:$5AB7,0x0A,11-18,shared result states $5912/$5957/$598F/$59C6; V-ball $62F9,DISTINCT_RESULT_GRAPHIC,,state14 override
+56,Crasher Ball,BEAM,0x07,0x48,0x2F,0x02,3-10,Bank03:$5E4C,0x0A,11-18,shared result states $5912/$5957/$598F/$59C6; V-ball $62F9,PURE_MAP_TRANSLATION,32,handler $07 preserves E=2 across WAIT_FRAME builder; opcode $0C source rows 3-10
+57,Purple Comet,BEAM,0x0D,0x27,0x2C,0x00,1-8,Bank03:$5CB8,0x0A,11-18,shared result states $5912/$5957/$598F/$59C6; V-ball $62F9,PURE_MAP_TRANSLATION,24,Purple Comet custom state14
+58,P.Comet Z,DAMAGE,0x0E,0x6F,0x2E,0x00,1-8,Bank03:$5DAB,0x0A,11-18,shared result states $5912/$5957/$598F/$59C6; V-ball $62F9,PURE_MAP_TRANSLATION,32,P.Comet Z custom state14
+62,Body Change,BEAM,0x03,0x51,0x2E,0x00,1-8,Bank03:$5AB7,0x0A,11-18,shared result states $5912/$5957/$598F/$59C6; V-ball $62F9,DISTINCT_RESULT_GRAPHIC,,state14 override
+63,Finger Beam,BEAM,0x02,0x02,0x2C,0x00,1-8,Bank03:$586C,0x0A,11-18,shared result states $5912/$5957/$598F/$59C6; V-ball $62F9,DISTINCT_RESULT_GRAPHIC,,shared Beam core $02
+64,Super E-Ball,BEAM,0x07,0x54,0x2D,0x02,3-10,Bank03:$5E4C,0x0A,11-18,shared result states $5912/$5957/$598F/$59C6; V-ball $62F9,PURE_MAP_TRANSLATION,24,handler $07 preserves E=2 across WAIT_FRAME builder; opcode $0C source rows 3-10
+65,Grand Wave,BEAM,0x05,0x36,0x2C,0x00,1-8,Bank03:$5B84,0x0A,11-18,shared result states $5912/$5957/$598F/$59C6; V-ball $62F9,PURE_MAP_TRANSLATION,24,state14 override / shared by Damage handler $05
+67,Eye Beam,BEAM,0x02,0x02,0x2D,0x00,1-8,Bank03:$586C,0x0A,11-18,shared result states $5912/$5957/$598F/$59C6; V-ball $62F9,DISTINCT_RESULT_GRAPHIC,,shared Beam core $02
+69,Rocket Punch,DAMAGE,0x05,0x4B,0x2D,0x00,1-8,Bank03:$5B84,0x0A,11-18,shared result states $5912/$5957/$598F/$59C6; V-ball $62F9,PURE_MAP_TRANSLATION,56,state14 override / shared by Damage handler $05
+70,Hell Flash,BEAM,0x02,0x11,0x2D,0x00,1-8,Bank03:$586C,0x0A,11-18,shared result states $5912/$5957/$598F/$59C6; V-ball $62F9,DISTINCT_RESULT_GRAPHIC,,shared Beam core $02
+72,Energy Slash,BEAM,0x05,0x36,0x2D,0x00,1-8,Bank03:$5B84,0x0A,11-18,shared result states $5912/$5957/$598F/$59C6; V-ball $62F9,PURE_MAP_TRANSLATION,24,state14 override / shared by Damage handler $05
+73,Energy Slice,BEAM,0x07,0x30,0x2D,0x02,3-10,Bank03:$5E4C,0x0A,11-18,shared result states $5912/$5957/$598F/$59C6; V-ball $62F9,PURE_MAP_TRANSLATION,32,handler $07 preserves E=2 across WAIT_FRAME builder; opcode $0C source rows 3-10
+80,Potbelly Atk,DAMAGE,0x06,0x4E,0x2F,0x00,1-8,Bank03:$5BEA,0x0A,11-18,shared result states $5912/$5957/$598F/$59C6; V-ball $62F9,PURE_MAP_TRANSLATION,32,state14 override / shared by Damage handler $06
+82,Sweet Beam,BEAM,0x02,0x45,0x2F,0x00,1-8,Bank03:$586C,0x0A,11-18,shared result states $5912/$5957/$598F/$59C6; V-ball $62F9,DISTINCT_RESULT_GRAPHIC,,shared Beam core $02

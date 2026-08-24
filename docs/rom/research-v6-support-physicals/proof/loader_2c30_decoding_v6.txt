@@ -1,0 +1,33 @@
+Bank00:$2C30 / $1266 static decoding
+
+$2C30:
+- stores a VRAM transfer job via $10B0 with DE=$8800 on Support state $01
+- reads CC01
+- subtracts $20 while incrementing C, starting C=$6B
+- therefore loader bank = $6B + floor(CC01 / $20)
+- local index = CC01 % $20
+
+$1266:
+- switches to loader bank
+- reads table word at $4008 + localIndex * 4
+- descriptor address = $4000 + tableWord * 4
+
+Descriptor format observed for 48/48 Support cards:
+- byte 0: layoutChunkCount
+- next layoutChunkCount * 8 bytes: WRAM layout/control bytes copied through $073F
+- next byte: tileCount stored in C216
+- next tileCount * 16 bytes: 2bpp tile graphics copied through $10CF
+
+Observed shape for all 48 Support cards:
+- layoutChunkCount = 2
+- layout size = 16 bytes
+- tileCount = $1E / 30 tiles
+- graphics size = 480 bytes
+- descriptor payload size = 498 bytes, followed by 2-byte alignment padding
+
+Index proof:
+- Call_2A77 computes card record address as $4000 + (CC01 << 4) + $0310
+- CC01=1 maps to Bank11:$4320, the first normal card record
+- V6 matrix therefore records cc01LoaderIndex = cardId
+
+ROM SHA-256: 8dab48cc81d14bcee7c73274df09cf5c4dd44c3b93d10a5a3175e04fead25dee
