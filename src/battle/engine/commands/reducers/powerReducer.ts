@@ -1,35 +1,111 @@
 // ═══════════════════════════════════════════════════════════════════════
 // M3/M4 — reducers/powerReducer + defenseReducer + stageAttackReducer.
 // ═══════════════════════════════════════════════════════════════════════
-// Partes DETERMINISTAS: GATHER (NORMAL→FULL, 2 turnos), GUARD (reduce),
-// QTE (acierto: +idx/+correct/+1CC · fallo: COUNTER_WINDOW · completado).
+// Partes DETERMINISTAS: GATHER (powerWindowCounter=5 — ROM §102), CHARA
+// (powerWindowCounter=2 — ROM §127), GUARD (reduce), QTE (acierto:
+// +idx/+correct/+1CC · fallo: COUNTER_WINDOW · completado).
 // Lo que depende del PRNG (daño del contraataque, resolución) queda
 // delimitado para M5 — aquí NO hay Math.random.
 //
-// M4: cada mutación real emite su evento en el sitio exacto donde ocurre.
+// M8.POWER: `powerWindowCounter` es la ÚNICA fuente de verdad del estado
+// temporal de potencia (fighterState+4). Gather escribe 5, CHARA escribe 2;
+// NUNCA max() ni suma. El decremento está centralizado en
+// decrementPowerWindow() y marcado ROM_CADENCE_PENDING hasta mapear
+// Bank01:$4B66 contra Turn/Exchange (§103).
 // ═══════════════════════════════════════════════════════════════════════
 
 import type { StageKey } from '../../../stageInputMap';
+import { BattlePosition, POSITION_DATA } from '../../../../data/positions';
 import type { BattleEvent } from '../../events/BattleEvent';
 import type { BattleSide, BattleState } from '../../state/BattleState';
 import { gainCc } from './resourceReducer';
 import { COUNTER_WINDOW_TICKS } from '../../clock/clock';
 
-// ─── powerReducer (GATHER) ───────────────────────────────────────────────
-/** GATHER POWER (determinista): NORMAL → FULL_POWER, gatherTurns = 2. */
+// ─── power window (M8.POWER — SSOT derivado) ─────────────────────────────
+/** View type derivado: el estado NO almacena powerState; se deriva del contador. */
+export function powerStateFromCounter(counter: number): 'NORMAL' | 'FULL_POWER' {
+  return counter > 0 ? 'FULL_POWER' : 'NORMAL';
+}
+
+/** true si la power window del lado está activa (cualquier valor > 0). */
+export function isPowerWindowActive(state: BattleState, side: BattleSide): boolean {
+  return (side === 'player' ? state.player : state.enemy).powerWindowCounter > 0;
+}
+
+/**
+ * Decremento CENTRALIZADO de la power window de UN fighter (fighterState+4).
+ * ROM §132-133: se ejecuta en POST_ACTION_MAINTENANCE — después de cada
+ * ActionExecution completada, para AMBOS combatientes, antes del siguiente
+ * control de juego (C0A0=$02 → Bank01:$4B21/$4B66).
+ */
+export function decrementPowerWindow(state: BattleState, side: BattleSide): { state: BattleState; events: BattleEvent[] } {
+  const fighter = side === 'player' ? state.player : state.enemy;
+  if (fighter.powerWindowCounter <= 0) return { state, events: [] };
+  const to = fighter.powerWindowCounter - 1;
+  const next = { ...fighter, powerWindowCounter: to };
+  return {
+    state: side === 'player' ? { ...state, player: next } : { ...state, enemy: next },
+    events: [
+      { type: 'POWER_CHANGED', from: powerStateFromCounter(fighter.powerWindowCounter), to: powerStateFromCounter(to) },
+    ],
+  };
+}
+
+/**
+ * POST_ACTION_MAINTENANCE (ROM §132-133): decrementa la power window de
+ * AMBOS fighters tras una ActionExecution completada. Una acción rechazada
+ * o los ticks cinematográficos NO pasan por aquí (§138).
+ */
+export function postActionMaintenance(state: BattleState): { state: BattleState; events: BattleEvent[] } {
+  const p = decrementPowerWindow(state, 'player');
+  const e = decrementPowerWindow(p.state, 'enemy');
+  const events: BattleEvent[] = [...p.events, ...e.events];
+  if (events.length === 0) return { state, events: [] };
+  const decremented: BattleSide[] = [];
+  if (p.events.length > 0) decremented.push('player');
+  if (e.events.length > 0) decremented.push('enemy');
+  return {
+    state: e.state,
+    events: [{ type: 'POST_ACTION_MAINTENANCE', decrementedPowerWindows: decremented }, ...events],
+  };
+}
+
+/** GATHER POWER (ROM §102): powerWindowCounter = 5. */
 export function gatherPower(state: BattleState, side: BattleSide): { state: BattleState; events: BattleEvent[] } {
   if (side !== 'player') return { state, events: [] };
-  const from = state.powerState;
-  const to: BattleState['powerState'] = 'FULL_POWER';
+  const from = powerStateFromCounter(state.player.powerWindowCounter);
+  const to: 'FULL_POWER' = 'FULL_POWER';
   return {
     state: {
       ...state,
-      powerState: to,
-      gatherTurns: 2,
-      gatherStartedRound: state.turn,
+      player: { ...state.player, powerWindowCounter: 5 },
     },
     events: [
       { type: 'GATHER_STARTED', side, mode: to },
+      { type: 'POWER_CHANGED', from, to },
+    ],
+  };
+}
+
+/** CHARA (ROM §40/§127/§161): powerWindowCounter = 2 + posición horizontal BACK
+ *  (vertical preservada). El swap de miembro activo y su cinematografía
+ *  siguen siendo M8.CHARA (commit diferido en Bank01:$7320). */
+export function characterSwitchPowerWindow(state: BattleState): { state: BattleState; events: BattleEvent[] } {
+  const from = powerStateFromCounter(state.player.powerWindowCounter);
+  const to: 'FULL_POWER' = 'FULL_POWER';
+  const fighter = state.player;
+  const alt = POSITION_DATA[fighter.battlePos].altitude;
+  const newPos = alt === 'AIR' ? BattlePosition.UP_BACK : BattlePosition.DOWN_BACK;
+  const positionChanged = newPos !== fighter.battlePos;
+  return {
+    state: {
+      ...state,
+      player: { ...fighter, battlePos: newPos, powerWindowCounter: 2 },
+    },
+    events: [
+      ...(positionChanged
+        ? [{ type: 'POSITION_CHANGED' as const, side: 'player' as const, from: fighter.battlePos, to: newPos, axis: 'HORIZONTAL' as const }]
+        : []),
       { type: 'POWER_CHANGED', from, to },
     ],
   };

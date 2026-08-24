@@ -23,6 +23,13 @@ import { ACTION_PROFILE_REGISTRY } from '../battle/actionProfiles';
 import { MUSIC_TRACK_LIST } from '../audio/music';
 import { SCENARIOS } from '../data/scenarios';
 import { getDevProjectSnapshot } from './devSnapshot';
+import { cardPhysicalCoverageSummary } from '../battle/cardPhysicalCoverage';
+import { animationResourceSummary } from '../battle/animationResources';
+import { romActionExecutionSummary } from '../battle/romActionExecutionDescriptors';
+import { romPresentationCompilerSummary } from '../battle/romPresentationCompiler';
+import { romPresentationProfileSummary } from '../battle/romPresentationProfiles';
+import { beamBaseRuntimeCutoverSummary } from '../battle/beamBaseRomCutover';
+import { standardDamageRuntimeCutoverSummary } from '../battle/standardDamageRomCutover';
 
 interface GitInfo { branch: string; commit: string; dirty: boolean; generatedAt: string }
 interface VerifyReport {
@@ -83,6 +90,13 @@ export default function GameConfigPage() {
     const compatBroken = CARDS.filter(c =>
       (c.compatible && c.compatible.some(cid => !charIds.has(cid)))
       || (c.notCompatible && c.notCompatible.some(cid => !charIds.has(cid))));
+    const physical = cardPhysicalCoverageSummary();
+    const resources = animationResourceSummary();
+    const actionExecution = romActionExecutionSummary();
+    const romPresentation = romPresentationProfileSummary();
+    const romCompiler = romPresentationCompilerSummary();
+    const standardDamageCutover = standardDamageRuntimeCutoverSummary();
+    const beamBaseCutover = beamBaseRuntimeCutoverSummary();
     return {
       forms: { n: snap.roster.forms, ok: snap.roster.forms === snap.roster.formsTotal, total: snap.roster.formsTotal },
       cards: { n: snap.cards.count, ok: snap.cards.count === snap.cards.total, total: snap.cards.total },
@@ -96,6 +110,13 @@ export default function GameConfigPage() {
       // INFERRED NO bloquean release (la cobertura de contenido sí).
       fidelity: snap.cinematics,
       canonUnknown: snap.sprites.unknown,
+      physical,
+      resources,
+      actionExecution,
+      romPresentation,
+      romCompiler,
+      standardDamageCutover,
+      beamBaseCutover,
     };
   }, []);
 
@@ -181,7 +202,7 @@ export default function GameConfigPage() {
         </div>
         <div className="dev-muted" style={{ marginTop: 8 }}>
           Ventanas QTE derivadas (ticks): BACK_BACK {w.BACK_BACK} · BACK_FRONT {w.BACK_FRONT} · FRONT_BACK {w.FRONT_BACK} · FRONT_FRONT {w.FRONT_FRONT}
-          <span className="cfg-canon"> <Lock size={10} /> canon ~72/102/143/173</span>
+          <span className="cfg-canon"> <Lock size={10} /> ROM 50/80/120/150</span>
         </div>
       </Section>
 
@@ -224,6 +245,13 @@ export default function GameConfigPage() {
         <div className="dev-tag-row">
           <span className={`dev-tag ${audits.profiles.ok ? 'ok' : 'bad'}`}>✓ {audits.profiles.n} animation profiles</span>
           <span className={`dev-tag ${audits.cinematics.ok ? 'ok' : 'bad'}`}>✓ {audits.cinematics.n}/{audits.cards.n} card cinematic profiles (cobertura)</span>
+          <span className="dev-tag pending">physical cards {audits.physical.complete} complete · {audits.physical.partial} partial · {audits.physical.pendingStatic} pending</span>
+          <span className="dev-tag warn">resources {audits.resources.staticallyClosable} statically closable · {audits.resources.needsDynamicTrace} dynamic</span>
+          <span className={`dev-tag ${audits.actionExecution.cards === 125 && audits.actionExecution.missingResources === 0 ? 'ok' : 'bad'}`}>action descriptors {audits.actionExecution.cards}/125</span>
+          <span className={`dev-tag ${audits.romPresentation.cards === 125 ? 'ok' : 'bad'}`}>ROM presentation {audits.romPresentation.cards}/125 · {audits.romPresentation.standardDamage} damage profiles</span>
+          <span className={`dev-tag ${audits.romCompiler.compilable === 125 && audits.romCompiler.semanticCueLeaks === 0 ? 'ok' : 'bad'}`}>ROM compiler {audits.romCompiler.compilable}/125 · {audits.romCompiler.totalCues} cues</span>
+          <span className={`dev-tag ${audits.standardDamageCutover.romBacked === 19 && audits.standardDamageCutover.nonStandardDamageBacked === 0 ? 'ok' : 'bad'}`}>STANDARD_DAMAGE runtime {audits.standardDamageCutover.romBacked}/19</span>
+          <span className={`dev-tag ${audits.beamBaseCutover.romBacked === 38 && audits.beamBaseCutover.nonBeamBaseBacked === 0 && audits.beamBaseCutover.beamVariantsBacked === 0 ? 'ok' : 'bad'}`}>BEAM_BASE runtime {audits.beamBaseCutover.romBacked}/38</span>
           <span className={`dev-tag ${audits.forms.ok ? 'ok' : 'bad'}`}>✓ {audits.forms.n}/{audits.forms.total} character/forms</span>
           <span className="dev-tag ok">✓ backgrounds {audits.scenarios.n}/13</span>
         </div>
@@ -251,7 +279,7 @@ export default function GameConfigPage() {
           </div>
         )}
         <p className="dev-muted" style={{ marginTop: 6 }}>
-          Auditorías de sprites/sheets completas: <code>npm run audit:sprites</code> · <code>npm run audit:sheets</code> · <code>npm run verify:v9</code>
+          Auditorías de sprites/sheets completas: <code>npm run audit:sprites</code> · <code>npm run audit:sheets</code> · <code>npm run verify:v9</code> · <code>npm run verify:card-physical-coverage</code>
         </p>
       </Section>
 
@@ -316,6 +344,13 @@ export default function GameConfigPage() {
           <span className={`dev-tag ${cfg.ok ? 'ok' : 'bad'}`}>{cfg.ok ? '✓' : '✕'} Config global</span>
           <span className={`dev-tag ${audits.cards.ok ? 'ok' : 'bad'}`}>{audits.cards.ok ? '✓' : '✕'} {audits.cards.total} cards</span>
           <span className={`dev-tag ${audits.cinematics.ok ? 'ok' : 'bad'}`}>{audits.cinematics.ok ? '✓' : '✕'} {audits.cinematics.n} cinematic profiles (cobertura — la fidelidad INFERRED no bloquea)</span>
+          <span className={`dev-tag ${audits.physical.missingResource === 0 ? 'ok' : 'bad'}`}>{audits.physical.missingResource === 0 ? '✓' : '✕'} card physical coverage 125/125</span>
+          <span className={`dev-tag ${audits.resources.partial === audits.resources.staticallyClosable ? 'ok' : 'bad'}`}>{audits.resources.partial} partial resources classified</span>
+          <span className={`dev-tag ${audits.actionExecution.cards === 125 && audits.actionExecution.missingResources === 0 ? 'ok' : 'bad'}`}>{audits.actionExecution.cards}/125 ROM action descriptors</span>
+          <span className={`dev-tag ${audits.romPresentation.cards === 125 ? 'ok' : 'bad'}`}>{audits.romPresentation.cards}/125 ROM presentation profiles</span>
+          <span className={`dev-tag ${audits.romCompiler.compilable === 125 && audits.romCompiler.semanticCueLeaks === 0 ? 'ok' : 'bad'}`}>{audits.romCompiler.compilable}/125 ROM compiler</span>
+          <span className={`dev-tag ${audits.standardDamageCutover.romBacked === 19 && audits.standardDamageCutover.nonStandardDamageBacked === 0 ? 'ok' : 'bad'}`}>{audits.standardDamageCutover.romBacked}/19 $0A ROM runtime</span>
+          <span className={`dev-tag ${audits.beamBaseCutover.romBacked === 38 && audits.beamBaseCutover.nonBeamBaseBacked === 0 && audits.beamBaseCutover.beamVariantsBacked === 0 ? 'ok' : 'bad'}`}>{audits.beamBaseCutover.romBacked}/38 $02 ROM runtime</span>
           <span className={`dev-tag ${audits.compat.ok ? 'ok' : 'bad'}`}>{audits.compat.ok ? '✓' : '✕'} card compatibility</span>
           <span className={`dev-tag ${activeProfile.id === 'release' || activeProfile.id === 'preview' ? 'ok' : 'bad'}`}>
             {activeProfile.id !== 'development' ? '✓' : '✕'} dev features disabled

@@ -21,6 +21,8 @@
 
 import { canonForAction } from '../../animationCanon';
 import { resolveActionProfileById, type ActionProfileSpec } from '../../actionProfiles';
+import { compileBeamBaseRuntimeCutover } from '../../beamBaseRomCutover';
+import { compileStandardDamageRuntimeCutover } from '../../standardDamageRomCutover';
 import { STAGE_PREP_BEATS, STAGE_PREP_TICKS } from '../clock/clock';
 import type { ProjectileVisualKind } from '../../actionProfiles';
 import type { BattleEvent, BattleActionDescriptor } from '../events/BattleEvent';
@@ -67,6 +69,8 @@ interface ActionState {
   stageResolvedTick: number | null;
   /** Stage — anchor real usado por la resolución (para HUD de daño). */
   stageResolveAnchor: number | null;
+  /** Esta acción ya obtuvo su timeline principal desde el compiler ROM. */
+  romBackedProfileFamily?: 'STANDARD_DAMAGE' | 'BEAM_BASE';
 }
 
 /** Duración por defecto de una pose (ticks GBC) hasta el siguiente beat. */
@@ -88,7 +92,8 @@ export function buildPresentationTimeline(input: PresentationInput): BattleTimel
     out.push({ cue, logicalTick: src.tick, sourceEvent: src.event.type, profileId, fidelity });
   };
 
-  for (const env of events) {
+  for (let eventIndex = 0; eventIndex < events.length; eventIndex++) {
+    const env = events[eventIndex];
     const e = env.event;
     switch (e.type) {
       // ── ACCIÓN: entra la vista ACTION, secuencia del canon, vuelta ──
@@ -96,6 +101,18 @@ export function buildPresentationTimeline(input: PresentationInput): BattleTimel
         const canon = canonForAction(e.action);
         const profile = resolveActionProfileById(e.action.id);
         activeAction = { side: e.side, action: e.action, canon, profile, startTick: env.tick, prepTicks: null, stageResolvedTick: null, stageResolveAnchor: null };
+        const romCutover = compileStandardDamageRuntimeCutover(events, eventIndex, env as BattleEventEnvelope & { event: { type: 'ACTION_STARTED' } });
+        if (romCutover) {
+          activeAction.romBackedProfileFamily = 'STANDARD_DAMAGE';
+          out.push(...romCutover.timeline.entries);
+          break;
+        }
+        const beamBaseCutover = compileBeamBaseRuntimeCutover(events, eventIndex, env as BattleEventEnvelope & { event: { type: 'ACTION_STARTED' } });
+        if (beamBaseCutover) {
+          activeAction.romBackedProfileFamily = 'BEAM_BASE';
+          out.push(...beamBaseCutover.timeline.entries);
+          break;
+        }
         const target = other(e.side);
         const mode: BattleSceneMode = e.side === 'player' ? 'PLAYER_ACTION' : 'ENEMY_ACTION';
         const special = e.action.visual === 'special' || e.action.kind === 'support';
@@ -209,6 +226,9 @@ export function buildPresentationTimeline(input: PresentationInput): BattleTimel
 
       // ── RESULTADO DEL ATAQUE: event-driven, nunca mirar HP ──
       case 'ATTACK_HIT': {
+        if (activeAction?.romBackedProfileFamily && e.source === activeAction.side) {
+          break;
+        }
         const stage = activeAction && activeAction.action.kind === 'command' ? activeAction : null;
         // Stage: cualquier golpe mientras una acción command está activa
         // (el acierto del actor tras QTE_COMPLETED, o el contraataque del
@@ -282,6 +302,9 @@ export function buildPresentationTimeline(input: PresentationInput): BattleTimel
         break;
       }
       case 'ATTACK_MISSED': {
+        if (activeAction?.romBackedProfileFamily && e.source === activeAction.side) {
+          break;
+        }
         add({ type: 'IMPACT', tick: env.tick, side: e.target, outcome: 'miss' }, env);
         add({ type: 'FIGHTER_POSE', tick: env.tick, durationTicks: POSE_HOLD, role: 'TARGET', side: e.target, pose: 'evade' }, env);
         add({ type: 'AUDIO', tick: env.tick, cue: 'dodge' }, env);

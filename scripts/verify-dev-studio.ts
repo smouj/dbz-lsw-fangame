@@ -30,7 +30,7 @@ const moduleIds = idMatch.map(m => m.replace(/id: '|'/g, ''));
 const EXPECTED_MODULES = [
   'dashboard', 'characters', 'cards', 'animation', 'pixelart', 'facing', 'assets', 'hud',
   'lab', 'positions', 'combat', 'timeline', 'story', 'validation', 'research',
-  'music', 'gameconfig',
+  'romdisplay', 'music', 'gameconfig',
 ];
 check(`dev: ${EXPECTED_MODULES.length} módulos registrados (${moduleIds.length})`, moduleIds.length === EXPECTED_MODULES.length);
 for (const id of EXPECTED_MODULES) {
@@ -41,7 +41,7 @@ check('dev: sin módulos sprites/sheets (absorbidos por Character Studio)',
   !moduleIds.includes('sprites') && !moduleIds.includes('sheets'));
 // El render switch cubre todos los módulos (chequeo de fuente)
 const renderCovers = EXPECTED_MODULES.every(id => devSrc.includes(`module === '${id}'`));
-check('dev: el render switch cubre los 16 módulos', renderCovers);
+check('dev: el render switch cubre los 18 módulos', renderCovers);
 
 // ── 2. Snapshot común (Dashboard ≡ Validation ≡ GameConfig) ──
 {

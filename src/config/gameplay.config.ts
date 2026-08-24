@@ -34,10 +34,13 @@ export const GAMEPLAY_CONFIG: GameplayConfig = {
   gbcNativeFps: 59.72750056960583,
   battleTickRate: 59.72750056960583,
   stageWindowsSeconds: {
-    BACK_BACK: 1.2,
-    BACK_FRONT: 1.7,
-    FRONT_BACK: 2.4,
-    FRONT_FRONT: 2.9,
+    // ✅ ROM_CONFIRMED (lote 2 §5): BACK_BACK=50t · BACK_FRONT=80t ·
+    // FRONT_BACK=120t · FRONT_FRONT=150t @ 59.7275 Hz (0.837/1.339/2.009/2.511s)
+    // ❌ OBSOLETO 1.2/1.7/2.4/2.9 (manual USA)
+    BACK_BACK: 0.837,
+    BACK_FRONT: 1.339,
+    FRONT_BACK: 2.009,
+    FRONT_FRONT: 2.511,
   },
   // ── TUNABLE ──────────────────────────────────────────────
   inputBuffer: 4,
@@ -71,7 +74,7 @@ export function validateGameplayConfig(c: GameplayConfig): string[] {
   if (c.battleTickRate !== c.gbcNativeFps) issues.push('battleTickRate != gbcNativeFps');
   for (const k of ['BACK_BACK', 'BACK_FRONT', 'FRONT_BACK', 'FRONT_FRONT'] as const) {
     const v = c.stageWindowsSeconds[k];
-    if (!(v >= 1.0 && v <= 3.5)) issues.push(`stageWindow ${k} fuera de rango 1.0-3.5s (${v})`);
+    if (!(v >= 0.8 && v <= 3.0)) issues.push(`stageWindow ${k} fuera de rango 0.8-3.0s (${v})`);
   }
   return issues;
 }

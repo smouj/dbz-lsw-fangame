@@ -51,10 +51,9 @@ qte:
   prompt_delay_frames: UNKNOWN
   # 2026-08-12 (manual USA): la ventana es GLOBAL para TODA la secuencia, NO
   # por input. Cuatro valores según la posición relativa de atacante y rival:
-  #   atacante REAR + rival REAR  = 1.2s (~72f)
-  #   atacante REAR + rival FRONT = 1.7s (~102f)
-  #   atacante FRONT + rival REAR = 2.4s (~143f)
-  #   atacante FRONT + rival FRONT = 2.9s (~173f)
+  # ❌ OBSOLETE (2026-08-22, ROM): ver docs/rom/COMBAT_MECHANICS_ROM_CONFIRMED.md §5
+  #   Ventanas reales: FRONT/FRONT=150t (2.511s) · FRONT/BACK=120t (2.009s)
+  #   BACK/FRONT=80t (1.339s) · BACK/BACK=50t (0.837s) @ ~59.7275 Hz
   # El reloj corre MONOTÓNICO desde que arranca el QTE; nunca se reinicia por
   # input. HYPOTHESIS: conversión frames = s × 59.7275 (GBC_NATIVE_FPS).
   sequence_window_frames: { BACK_BACK: 72, BACK_FRONT: 102, FRONT_BACK: 143, FRONT_FRONT: 173 }

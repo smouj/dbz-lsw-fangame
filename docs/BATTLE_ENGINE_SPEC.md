@@ -63,11 +63,12 @@ NO recalcular el orden a mitad de round (hasta que la ROM demuestre lo contrario
 
 - 3/4/5/6 Stage. Cada input correcto: **CC += 1** y continúa.
 - **Ventana TOTAL de la secuencia según posición relativa (manual GBC USA)**:
-  cuanto MÁS CERCA del rival, MÁS tiempo (manual) — rango observado 1.2–2.9s.
-  `BACK_BACK=1.2s · BACK_FRONT=1.7s · FRONT_BACK=2.4s · FRONT_FRONT=2.9s`
+  cuanto MÁS CERCA del rival, MÁS tiempo (manual) — ❌ OBSOLETE (2026-08-22, ROM).
+  Valores reales en docs/rom/COMBAT_MECHANICS_ROM_CONFIRMED.md §5:
+  `FRONT_FRONT=150t (2.511s) · FRONT_BACK=120t (2.009s) · BACK_FRONT=80t (1.339s) · BACK_BACK=50t (0.837s)`
   (×59.7275 → 72 / 102 / 143 / 173 ticks). ⚠️ Los extremos están confirmados
-  (B/B ≈ 1.2s máx distancia · F/F ≈ 2.9s mín distancia); la asignación de las
-  dos configuraciones MIXTAS (1.7 / 2.4) es HYPOTHESIS hasta captura forense.
+  (B/B ≈ 50t máx distancia · F/F ≈ 150t mín distancia) — matriz completa ya
+  ✅ ROM_CONFIRMED (bit1 de ambos fighters, rutina Bank01:$66E4).
   El reloj corre global para completar TODOS los comandos (no por input).
 - **Durante el QTE el luchador está en pose NEUTRAL (idle)**. La animación de la
   acción SOLO se ejecuta al completar la secuencia (GBC real).
@@ -87,7 +88,7 @@ NO recalcular el orden a mitad de round (hasta que la ROM demuestre lo contrario
     HYPOTHESIS — no denominarlas canon.
 - Interrupción (Foresight/Telepathy/Time Freeze): fuerza el fallo (0 aciertos).
 - Ventana GLOBAL de secuencia (manual GBC, 4 valores por posición relativa):
-  `BACK_BACK=1.2s · BACK_FRONT=1.7s · FRONT_BACK=2.4s · FRONT_FRONT=2.9s`.
+  `FRONT_FRONT=150t · FRONT_BACK=120t · BACK_FRONT=80t · BACK_BACK=50t` ✅ ROM_CONFIRMED.
 - Estados: `INPUT_WINDOW → COMPLETED` (cinemática, daño completo) |
   `COUNTER_WINDOW` (contraataque A/B con timing) → `SAFE_ABORT` | `COUNTER_HIT`
   (el counter conecta sobre el atacante).
@@ -488,6 +489,7 @@ TURN N
 
 ### UNKNOWN (emulación forense pendiente)
 speedTiePolicy · momento exacto draw/discard · orden gasto CC vs animación ·
-duración/decremento Gather Power · probabilidades HIT/BLOCK/EVADE · umbral
-`+2 CC` por pérdida sustancial · fórmula daño/posición · segundo Exchange tras
+duración/decremento Gather Power · probabilidades HIT/BLOCK/EVADE ·
+❌ OBSOLETO (ROM §73–74): umbral `+2 CC` por pérdida sustancial · fórmula
+daño/posición · segundo Exchange tras
 KO · duración/tick de estados.

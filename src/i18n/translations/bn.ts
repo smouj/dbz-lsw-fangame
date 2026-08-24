@@ -16,6 +16,8 @@ export const bn: Dict = {
   'common.fight': "যুদ্ধ!",
   'common.retry': "আবার চেষ্টা",
   'common.exit': "X",
+  'common.rematch': 'REMATCH',
+  'common.mainMenu': 'MAIN MENU',
   'common.newBattle': "নতুন যুদ্ধ",
   'common.notObtained': "অর্জিত নয়",
   'common.unknown': "???",

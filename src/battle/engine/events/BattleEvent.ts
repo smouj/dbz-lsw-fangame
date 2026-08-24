@@ -106,6 +106,9 @@ export type BattleEvent =
   | { type: 'GUARD_STARTED'; side: BattleSide; guard: GuardType }
   | { type: 'GATHER_STARTED'; side: BattleSide; mode: PowerState }
   | { type: 'POWER_CHANGED'; from: PowerState; to: PowerState }
+  /** ROM §132-133/§171 — mantenimiento post-acción: decrementa la power
+   *  window de AMBOS fighters tras una ActionExecution completada. */
+  | { type: 'POST_ACTION_MAINTENANCE'; decrementedPowerWindows: BattleSide[] }
 
   // ── QTE / Stage Attack ──
   | { type: 'STAGE_PREP_STARTED'; side: BattleSide; level: 3 | 4 | 5 | 6; seq: StageKey[]; prepTicks: number }

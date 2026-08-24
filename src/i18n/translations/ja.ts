@@ -16,6 +16,8 @@ export const ja: Dict = {
   'common.fight': "たたかう！",
   'common.retry': "リトライ",
   'common.exit': "X",
+  'common.rematch': 'REMATCH',
+  'common.mainMenu': 'MAIN MENU',
   'common.newBattle': "あらたなバトル",
   'common.notObtained': "未入手",
   'common.unknown': "???",

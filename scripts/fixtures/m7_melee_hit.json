@@ -31,57 +31,23 @@
   },
   {
    "tick": 0,
-   "type": "SCENE",
-   "mode": "PLAYER_ACTION",
-   "background": "/assets/backgrounds/scenarios/01_action.png",
-   "durationTicks": 100,
+   "type": "SCENE_LOAD",
+   "mode": "TACTICAL_TO_ACTION",
+   "vramLoad": "$8E00",
    "logicalTick": 0,
    "source": "ACTION_STARTED",
-   "fidelity": "INFERRED",
-   "profile": "cont_punch"
+   "fidelity": "ROM_STATIC_PARTIAL",
+   "profile": "rom-card-5"
   },
   {
    "tick": 0,
-   "type": "CAMERA",
-   "action": "FLASH_WHITE",
+   "type": "ROM_WAIT",
+   "durationTicks": 20,
+   "reason": "STANDARD_DAMAGE prepare wait",
    "logicalTick": 0,
    "source": "ACTION_STARTED",
-   "fidelity": "INFERRED",
-   "profile": "cont_punch"
-  },
-  {
-   "tick": 0,
-   "type": "FIGHTER_VISIBILITY",
-   "role": "ACTOR",
-   "side": "player",
-   "visible": true,
-   "logicalTick": 0,
-   "source": "ACTION_STARTED",
-   "fidelity": "INFERRED",
-   "profile": "cont_punch"
-  },
-  {
-   "tick": 0,
-   "type": "FIGHTER_VISIBILITY",
-   "role": "TARGET",
-   "side": "enemy",
-   "visible": false,
-   "logicalTick": 0,
-   "source": "ACTION_STARTED",
-   "fidelity": "INFERRED",
-   "profile": "cont_punch"
-  },
-  {
-   "tick": 0,
-   "type": "FIGHTER_POSE",
-   "durationTicks": 8,
-   "role": "ACTOR",
-   "side": "player",
-   "pose": "idle",
-   "logicalTick": 0,
-   "source": "ACTION_STARTED",
-   "fidelity": "INFERRED",
-   "profile": "cont_punch"
+   "fidelity": "ROM_STATIC_PARTIAL",
+   "profile": "rom-card-5"
   },
   {
    "tick": 0,
@@ -94,212 +60,90 @@
    "fidelity": "NONE"
   },
   {
-   "tick": 12,
-   "type": "FIGHTER_POSE",
-   "durationTicks": 26,
-   "role": "ACTOR",
+   "tick": 20,
+   "type": "ROM_MACRO",
+   "macroId": 28,
+   "logicalTick": 0,
+   "source": "ACTION_STARTED",
+   "fidelity": "ROM_STATIC_PARTIAL",
+   "profile": "rom-card-5"
+  },
+  {
+   "tick": 20,
+   "type": "FIGHTER_MOTION",
+   "durationTicks": 25,
    "side": "player",
-   "pose": "attack_fwd",
+   "kind": "RUSH",
+   "deltaPx": 98,
+   "holdTicks": 0,
+   "segments": [
+    {
+     "dxPerTick": 4,
+     "dyPerTick": 0,
+     "ticks": 24
+    },
+    {
+     "dxPerTick": 2,
+     "dyPerTick": 0,
+     "ticks": 1
+    }
+   ],
    "logicalTick": 0,
    "source": "ACTION_STARTED",
-   "fidelity": "INFERRED",
-   "profile": "cont_punch"
+   "fidelity": "ROM_STATIC_PARTIAL",
+   "profile": "rom-card-5"
   },
   {
-   "tick": 38,
-   "type": "FIGHTER_POSE",
-   "durationTicks": 56,
-   "role": "ACTOR",
-   "side": "player",
-   "pose": "punch_right",
+   "tick": 45,
+   "type": "ANIMATION_START",
+   "resource": 44,
+   "slot": 0,
    "logicalTick": 0,
    "source": "ACTION_STARTED",
-   "fidelity": "INFERRED",
-   "profile": "cont_punch"
+   "fidelity": "ROM_STATIC_PARTIAL",
+   "profile": "rom-card-5"
   },
   {
-   "tick": 40,
-   "type": "FIGHTER_VISIBILITY",
-   "role": "TARGET",
-   "side": "enemy",
-   "visible": true,
+   "tick": 45,
+   "type": "WAIT_ANIMATION_FRAME",
+   "slot": 0,
+   "frame": 2,
    "logicalTick": 0,
    "source": "ACTION_STARTED",
-   "fidelity": "INFERRED",
-   "profile": "cont_punch"
+   "fidelity": "ROM_STATIC_PARTIAL",
+   "profile": "rom-card-5"
   },
   {
-   "tick": 50,
-   "type": "SCENE",
-   "mode": "ACTION_DUEL",
-   "background": "/assets/backgrounds/scenarios/01_action.png",
-   "durationTicks": 50,
+   "tick": 45,
+   "type": "ROM_MACRO",
+   "macroId": 46,
    "logicalTick": 0,
    "source": "ACTION_STARTED",
-   "fidelity": "INFERRED",
-   "profile": "cont_punch"
+   "fidelity": "ROM_STATIC_PARTIAL",
+   "profile": "rom-card-5"
   },
   {
-   "tick": 50,
-   "type": "FIGHTER_VISIBILITY",
-   "role": "TARGET",
-   "side": "enemy",
-   "visible": true,
+   "tick": 45,
+   "type": "ROM_RESULT_BRANCH",
+   "family": "CA53 -> HIT/MISS/SPECIAL_DEFENSE",
+   "selectedFamily": "HIT",
+   "selectedSourceEvent": "ATTACK_HIT",
+   "selectedMacroId": 47,
+   "selectedMacroHex": "0x2f",
    "logicalTick": 0,
    "source": "ACTION_STARTED",
-   "fidelity": "INFERRED",
-   "profile": "cont_punch"
+   "fidelity": "ROM_STATIC_PARTIAL",
+   "profile": "rom-card-5"
   },
   {
-   "tick": 50,
-   "type": "CAMERA",
-   "action": "TRACK",
+   "tick": 45,
+   "type": "ROM_PENDING",
+   "reason": "actor AnimationResource frame stream still statically closable",
+   "boundary": "STATIC",
    "logicalTick": 0,
    "source": "ACTION_STARTED",
-   "fidelity": "INFERRED",
-   "profile": "cont_punch"
-  },
-  {
-   "tick": 50,
-   "type": "FIGHTER_POSE",
-   "durationTicks": 6,
-   "role": "ACTOR",
-   "side": "player",
-   "pose": "move_front",
-   "logicalTick": 0,
-   "source": "ACTION_STARTED",
-   "fidelity": "INFERRED",
-   "profile": "cont_punch"
-  },
-  {
-   "tick": 66,
-   "type": "IMPACT",
-   "side": "enemy",
-   "outcome": "hit",
-   "logicalTick": 0,
-   "source": "ATTACK_HIT",
-   "fidelity": "INFERRED",
-   "profile": "cont_punch"
-  },
-  {
-   "tick": 66,
-   "type": "FIGHTER_VISIBILITY",
-   "role": "TARGET",
-   "side": "enemy",
-   "visible": true,
-   "logicalTick": 0,
-   "source": "ATTACK_HIT",
-   "fidelity": "INFERRED",
-   "profile": "cont_punch"
-  },
-  {
-   "tick": 66,
-   "type": "FIGHTER_POSE",
-   "durationTicks": 10,
-   "role": "TARGET",
-   "side": "enemy",
-   "pose": "knockback_back",
-   "logicalTick": 0,
-   "source": "ATTACK_HIT",
-   "fidelity": "INFERRED",
-   "profile": "cont_punch"
-  },
-  {
-   "tick": 66,
-   "type": "FIGHTER_POSE",
-   "durationTicks": 10,
-   "role": "ACTOR",
-   "side": "player",
-   "pose": "attack_fwd",
-   "logicalTick": 0,
-   "source": "ATTACK_HIT",
-   "fidelity": "INFERRED",
-   "profile": "cont_punch"
-  },
-  {
-   "tick": 66,
-   "type": "CAMERA",
-   "action": "IMPACT",
-   "logicalTick": 0,
-   "source": "ATTACK_HIT",
-   "fidelity": "INFERRED",
-   "profile": "cont_punch"
-  },
-  {
-   "tick": 66,
-   "type": "AUDIO",
-   "cue": "hit",
-   "logicalTick": 0,
-   "source": "ATTACK_HIT",
-   "fidelity": "INFERRED",
-   "profile": "cont_punch"
-  },
-  {
-   "tick": 94,
-   "type": "FIGHTER_POSE",
-   "durationTicks": 12,
-   "role": "ACTOR",
-   "side": "player",
-   "pose": "punch_right",
-   "logicalTick": 0,
-   "source": "ACTION_STARTED",
-   "fidelity": "INFERRED",
-   "profile": "cont_punch"
-  },
-  {
-   "tick": 100,
-   "type": "SCENE",
-   "mode": "OVERVIEW",
-   "background": "/assets/backgrounds/scenarios/01_world.png",
-   "durationTicks": 1,
-   "logicalTick": 0,
-   "source": "ACTION_STARTED",
-   "fidelity": "INFERRED",
-   "profile": "cont_punch"
-  },
-  {
-   "tick": 100,
-   "type": "FIGHTER_VISIBILITY",
-   "role": "TARGET",
-   "side": "enemy",
-   "visible": true,
-   "logicalTick": 0,
-   "source": "ACTION_STARTED",
-   "fidelity": "INFERRED",
-   "profile": "cont_punch"
-  },
-  {
-   "tick": 100,
-   "type": "FIGHTER_POSE",
-   "durationTicks": 8,
-   "role": "ACTOR",
-   "side": "player",
-   "pose": "idle",
-   "logicalTick": 0,
-   "source": "ACTION_STARTED",
-   "fidelity": "INFERRED",
-   "profile": "cont_punch"
-  },
-  {
-   "tick": 100,
-   "type": "CAMERA",
-   "action": "RESET",
-   "logicalTick": 0,
-   "source": "ACTION_STARTED",
-   "fidelity": "INFERRED",
-   "profile": "cont_punch"
-  },
-  {
-   "tick": 106,
-   "type": "FIGHTER_POSE",
-   "durationTicks": 8,
-   "role": "ACTOR",
-   "side": "player",
-   "pose": "idle",
-   "logicalTick": 0,
-   "source": "ACTION_STARTED",
-   "fidelity": "INFERRED",
-   "profile": "cont_punch"
+   "fidelity": "ROM_STATIC_PARTIAL",
+   "profile": "rom-card-5"
   }
  ]
 }

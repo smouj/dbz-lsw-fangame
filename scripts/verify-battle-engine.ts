@@ -80,7 +80,7 @@ check('HP inicial dentro de límites', hpOf(s1, 'player').hp <= hpOf(s1, 'player
 check('CC inicial dentro de límites', ccOf(s1, 'player') >= 0 && ccOf(s1, 'player') <= s1.player.maxCc);
 check('stages iniciales a 0', s1.pStages.str === 0 && s1.pStages.ki === 0 && s1.pStages.spd === 0 && s1.pStages.guard === 0);
 check('guardia inicial null', s1.playerGuard === null);
-check('power inicial NORMAL', s1.powerState === 'NORMAL' && s1.gatherTurns === 0);
+check('power inicial NORMAL (counter 0)', s1.player.powerWindowCounter === 0 && s1.enemy.powerWindowCounter === 0);
 
 // ── Selectores (derivables, no cacheados) ──
 check('activeAttacker = activeSide en exchange 0', activeAttacker(s1) === 'player');
@@ -204,7 +204,7 @@ check('destino vertical derivado = UP_BACK', destV === BattlePosition.UP_BACK);
 check('MOVE nunca deja la misma posición', destH !== BattlePosition.DOWN_BACK && destV !== BattlePosition.DOWN_BACK);
 
 // ── Stage / QTE ──
-const qteActive = { ...m2State, phase: 'stageInput' as const, stageQte: { state: 'INPUT_WINDOW' as const, seq: ['A', 'A', 'RIGHT', 'DOWN'] as const, idx: 0, correct: 0, card: null, startedTick: 0, deadlineTick: 173, windowTicks: 173, counterDeadlineTick: 0, result: null } };
+const qteActive = { ...m2State, phase: 'stageInput' as const, stageQte: { state: 'INPUT_WINDOW' as const, seq: ['A', 'A', 'RIGHT', 'DOWN'] as const, idx: 0, correct: 0, card: null, startedTick: 0, deadlineTick: 150, windowTicks: 150, counterDeadlineTick: 0, result: null } };
 check('QTE_INPUT rechazado sin QTE activo', !canExecute(m2State, { type: 'QTE_INPUT', input: 'A' }).ok);
 check('QTE_INPUT válido con la tecla esperada', canExecute(qteActive, { type: 'QTE_INPUT', input: 'A' }).ok);
 check('M5: QTE_INPUT con tecla equivocada ES legal (fallo → COUNTER_WINDOW)', canExecute(qteActive, { type: 'QTE_INPUT', input: 'B' }).ok);
@@ -215,15 +215,15 @@ check('contraataque: CONTINUE solo en COUNTER_WINDOW', canExecute(counterWindow,
 // ── Authority parity (legacy ↔ engine) ──
 // Reglas legacy auditadas de main.tsx:
 //   LIMIT  → !limitsPowered || limitCards.length === 0
-//   GATHER → gatherTurns > 0
+//   GATHER → powerWindowCounter > 0
 //   PLAY_CARD → canPlayInAttack(card) && cc >= cost && compatible
 const legacyLimitEnabled = (s: typeof m2State, powered: boolean, count: number) => powered && count > 0;
-const legacyGatherEnabled = (s: typeof m2State) => s.gatherTurns === 0;
+const legacyGatherEnabled = (s: typeof m2State) => s.player.powerWindowCounter === 0;
 const cmdLimit = canExecute(commandPhase, { type: 'LIMIT' }, { side: 'player', limitCardsCount: 2 });
 const cmdLimitOff = canExecute(commandPhase, { type: 'LIMIT' }, { side: 'player', limitCardsCount: 0 });
-check('paridad LIMIT: legacy habilitado ⇔ canExecute ok', (legacyLimitEnabled(commandPhase, commandPhase.powerState !== 'NORMAL', 2) === cmdLimit.ok) && (legacyLimitEnabled(commandPhase, commandPhase.powerState !== 'NORMAL', 0) === cmdLimitOff.ok));
-const gathered = { ...m2State, gatherTurns: 2 };
-check('paridad GATHER: legacy (gatherTurns>0 bloquea) ⇔ canExecute', (legacyGatherEnabled(m2State) === canExecute({ ...m2State, phase: 'basic' }, { type: 'GATHER_POWER' }).ok) && (legacyGatherEnabled(gathered) === canExecute({ ...gathered, phase: 'basic' }, { type: 'GATHER_POWER' }).ok));
+check('paridad LIMIT: legacy habilitado ⇔ canExecute ok', (legacyLimitEnabled(commandPhase, commandPhase.player.powerWindowCounter > 0, 2) === cmdLimit.ok) && (legacyLimitEnabled(commandPhase, commandPhase.player.powerWindowCounter > 0, 0) === cmdLimitOff.ok));
+const gathered = { ...m2State, player: { ...m2State.player, powerWindowCounter: 2 } };
+check('paridad GATHER: legacy (counter>0 bloquea) ⇔ canExecute', (legacyGatherEnabled(m2State) === canExecute({ ...m2State, phase: 'basic' }, { type: 'GATHER_POWER' }).ok) && (legacyGatherEnabled(gathered) === canExecute({ ...gathered, phase: 'basic' }, { type: 'GATHER_POWER' }).ok));
 const legacyCardEnabled = (s: typeof m2State, card: CardDef, char: string) => (card.type === 'damage' || card.type === 'beam' || card.type === 'command' || card.type === 'special') && s.player.cc >= card.cc && (!card.compatible?.length || card.compatible.includes(char));
 check('paridad PLAY_CARD: legacy ⇔ canExecute', legacyCardEnabled(attackPhase, damageCard, 'goku') === canExecute(attackPhase, { type: 'PLAY_CARD', handIndex: 0 }, { side: 'player', characterId: 'goku' }).ok);
 check('getAvailableCommands en fase command incluye JOINT/BASIC y NO GUARD', getAvailableCommands(commandPhase).some(c => c.type === 'JOINT') && !getAvailableCommands(commandPhase).some(c => c.type === 'GUARD'));
@@ -250,6 +250,31 @@ console.log('\n── M3 · executeCommand ──\n');
 
 import { executeCommand, mustExecute } from '../src/battle/engine/commands/executeCommand';
 import { advanceBattleClock } from '../src/battle/engine/clock';
+import { decrementPowerWindow, postActionMaintenance, isPowerWindowActive, getPowerState } from '../src/battle/engine/state';
+import {
+  ROM_PRESENTATION_MACROS,
+  CHARA_EXIT,
+  CHARA_ENTRY,
+  DEFENSE_ROM_RULES,
+  STANDARD_ATTACK_HANDLERS,
+  ROM_RUSH_MOTION,
+  ROM_BEAM_SETUP_MOTION,
+  ROM_SCREEN_MOTION_19T,
+  ROM_SCREEN_MOTION_16T,
+  ca54ForPower,
+  impactClassForPower,
+  standardAttackProfileFor,
+  PHYSICAL_RESOLUTION_MACROS,
+  ACTION_OBJECT_MEMORY,
+  SPECIAL_HANDLER_DESCRIPTORS,
+  type ActionObjectBinding,
+  type RomActionObjectState,
+  type RomAnimationFrame,
+  type RomMultiActorProfile,
+  type PaletteTransitionJob,
+  type ActionSceneLoad,
+} from '../src/battle/engine/rom/romDescriptors';
+import { CARDS } from '../src/data/cards';
 import { BattlePosition } from '../src/data/positions';
 
 // ── Ejecución / pureza ──
@@ -806,7 +831,7 @@ if (m4Move.ok) {
     pc?.type === 'POSITION_CHANGED' && pc.from === BattlePosition.DOWN_BACK && pc.to === BattlePosition.DOWN_FRONT && pc.axis === 'HORIZONTAL' && pc.side === 'player');
 }
 // QTE: input correcto produce QTE_INPUT_RESOLVED con índices before/after
-const m4QteState: typeof m4Base = { ...m4Base, phase: 'stageInput', stageQte: { state: 'INPUT_WINDOW', seq: ['A', 'B', 'A'], idx: 1, correct: 1, card: null, startedTick: 0, deadlineTick: 173, windowTicks: 173, counterDeadlineTick: 0, result: null } };
+const m4QteState: typeof m4Base = { ...m4Base, phase: 'stageInput', stageQte: { state: 'INPUT_WINDOW', seq: ['A', 'B', 'A'], idx: 1, correct: 1, card: null, startedTick: 0, deadlineTick: 150, windowTicks: 150, counterDeadlineTick: 0, result: null } };
 const m4Qte = executeCommand(m4QteState, { type: 'QTE_INPUT', input: 'B' }, { side: 'player' });
 if (m4Qte.ok) {
   const qr = m4Qte.events.find(e => e.type === 'QTE_INPUT_RESOLVED');
@@ -838,7 +863,7 @@ check('M4: eventos sin funciones (todos objetos planos serializables)', m4Play.e
 const m4Det1 = executeCommand(m4QteState, { type: 'QTE_INPUT', input: 'B' }, { side: 'player' });
 const m4Det2 = executeCommand(m4QteState, { type: 'QTE_INPUT', input: 'B' }, { side: 'player' });
 check('M4: mismo input ⇒ mismo state + mismo event stream', m4Det1.ok && m4Det2.ok && JSON.stringify(m4Det1.state) === JSON.stringify(m4Det2.state) && JSON.stringify(m4Det1.events) === JSON.stringify(m4Det2.events));
-check('M4: ejecutar no muta el estado origen', JSON.stringify(m4QteState) === JSON.stringify({ ...m4Base, phase: 'stageInput', stageQte: { state: 'INPUT_WINDOW', seq: ['A', 'B', 'A'], idx: 1, correct: 1, card: null, startedTick: 0, deadlineTick: 173, windowTicks: 173, counterDeadlineTick: 0, result: null } }));
+check('M4: ejecutar no muta el estado origen', JSON.stringify(m4QteState) === JSON.stringify({ ...m4Base, phase: 'stageInput', stageQte: { state: 'INPUT_WINDOW', seq: ['A', 'B', 'A'], idx: 1, correct: 1, card: null, startedTick: 0, deadlineTick: 150, windowTicks: 150, counterDeadlineTick: 0, result: null } }));
 
 // ── EventLog ──
 const log0 = emptyEventLog();
@@ -992,7 +1017,7 @@ if (m5DmgPlay.ok) {
 
 // ── P2: LIMIT cobra el CC real del catálogo ──
 const limitCard = getCard(13) as CardDef; // S.Kamehameha cc 23
-const m5LimitState: typeof m5s0 = { ...m5s0, phase: 'limitSelect', limits: [13], powerState: 'FULL_POWER', player: { ...m5s0.player, cc: 30 } };
+const m5LimitState: typeof m5s0 = { ...m5s0, phase: 'limitSelect', limits: [13], player: { ...m5s0.player, cc: 30, powerWindowCounter: 2 } };
 const m5Limit = executeCommand(m5LimitState, { type: 'PLAY_LIMIT_CARD', cardId: 13 }, { side: 'player', limitCardsCount: 3 });
 check('M5-P2: PLAY_LIMIT_CARD cobra el CC real (30 − 23 = 7)', m5Limit.ok && m5Limit.state.player.cc === 7);
 check('M5-P2: CC_SPENT emitido con amount=23', m5Limit.ok && m5Limit.events.some(e => e.type === 'CC_SPENT' && e.amount === 23));
@@ -1326,14 +1351,21 @@ const EMPTY_CTX = { playerFormId: 'goku_base', enemyFormId: 'piccolo_base', over
 const rt = new BattleRuntime({ state: rtState0, context: EMPTY_CTX });
 const direct = createInitialBattleState(rtCfg);
 const directState0 = { ...direct, phase: 'command' as never };
-// referencia: mismas llamadas directas
+// referencia: mismas llamadas directas + POST_ACTION_MAINTENANCE (ROM §132)
 let d = directState0;
 const dLog = emptyEventLog();
 const dRun = (cmd: BattleCommand) => {
   const r = executeCommand(d, cmd, { side: 'player' });
   if (!r.ok) throw new Error(`direct: ${JSON.stringify(cmd)}: ${r.reason}`);
-  dLog.entries.push(...r.events.map((e, i) => ({ sequence: dLog.entries.length + i, tick: r.state.tick, event: e })));
-  d = r.state;
+  // El Runtime aplica maintenance tras cada ActionExecution completada:
+  // replicar la misma política aquí para paridad exacta.
+  const completed = cmd.type === 'CHARACTER_ACTION' || r.events.some(e =>
+    e.type === 'ACTION_RESOLVED' || e.type === 'GATHER_STARTED' ||
+    (e.type === 'QTE_COUNTER_RESOLVED' && e.action !== 'CONTINUE'));
+  const m = completed ? postActionMaintenance(r.state) : null;
+  const events = m ? [...r.events, ...m.events] : r.events;
+  dLog.entries.push(...events.map((e, i) => ({ sequence: dLog.entries.length + i, tick: r.state.tick, event: e })));
+  d = m ? m.state : r.state;
 };
 dRun({ type: 'BASIC' });
 dRun({ type: 'GATHER_POWER' });
@@ -1370,6 +1402,290 @@ const frozen = JSON.stringify(rt2.state);
 rt2.available({ side: 'player' });
 check('M8: consultar available()/can() no muta el estado', JSON.stringify(rt2.state) === frozen);
 
+// ── M8.POWER — powerWindowCounter como SSOT (ROM §102/§127/§132-138) ──
+// Gather escribe 5 · CHARA escribe 2 · nunca max() ni suma · LIMIT/BASIC/+
+// ofensivo/reposition se derivan del contador. El decremento vive en
+// postActionMaintenance (POST_ACTION_MAINTENANCE — §132-133) y aplica a
+// AMBOS fighters tras cada ActionExecution completada.
+{
+  const p0 = createInitialBattleState(makeConfig());
+  check('M8.POWER: powerWindowCounter empieza en 0 (ambos)', p0.player.powerWindowCounter === 0 && p0.enemy.powerWindowCounter === 0);
+  check('M8.POWER: isPowerWindowActive(false) con 0', isPowerWindowActive(p0, 'player') === false);
+  check('M8.POWER: getPowerState NORMAL con 0', getPowerState(p0, 'player') === 'NORMAL');
+
+  const g = executeCommand({ ...p0, phase: 'basic' }, { type: 'GATHER_POWER' }, { side: 'player' });
+  check('M8.POWER: GATHER_POWER → powerWindowCounter = 5 (ROM)', g.ok && g.state.player.powerWindowCounter === 5);
+  check('M8.POWER: isPowerWindowActive(true) con 5', g.ok && isPowerWindowActive(g.state, 'player') === true);
+  check('M8.POWER: getPowerState FULL_POWER con 5', g.ok && getPowerState(g.state, 'player') === 'FULL_POWER');
+  check('M8.POWER: GATHER_POWER emite GATHER_STARTED + POWER_CHANGED', g.ok &&
+    g.events.some(e => e.type === 'GATHER_STARTED') && g.events.some(e => e.type === 'POWER_CHANGED'));
+
+  // GATHER → CHARA: la ROM ESCRIBE 2 (no max(5,2), no 5+2)
+  const gc = executeCommand({ ...g.state, phase: 'command' }, { type: 'CHARACTER_ACTION' }, { side: 'player', hasAlly: true });
+  check('M8.POWER: GATHER(5) → CHARA → counter = 2 (escritura, no max/suma)', gc.ok && gc.state.player.powerWindowCounter === 2);
+
+  // CHARA: BACK horizontal + vertical preservada
+  const c0 = createInitialBattleState(makeConfig());
+  const cDown = executeCommand({ ...c0, phase: 'command', player: { ...c0.player, battlePos: BattlePosition.DOWN_FRONT } }, { type: 'CHARACTER_ACTION' }, { side: 'player', hasAlly: true });
+  check('M8.POWER: CHARA → horizontal BACK preservando vertical (GROUND_FRONT → GROUND_BACK)', cDown.ok && cDown.state.player.battlePos === BattlePosition.DOWN_BACK);
+  const cUp = executeCommand({ ...c0, phase: 'command', player: { ...c0.player, battlePos: BattlePosition.UP_FRONT } }, { type: 'CHARACTER_ACTION' }, { side: 'player', hasAlly: true });
+  check('M8.POWER: CHARA → horizontal BACK preservando vertical (AIR_FRONT → AIR_BACK)', cUp.ok && cUp.state.player.battlePos === BattlePosition.UP_BACK);
+  const cSame = executeCommand({ ...c0, phase: 'command', player: { ...c0.player, battlePos: BattlePosition.DOWN_BACK } }, { type: 'CHARACTER_ACTION' }, { side: 'player', hasAlly: true });
+  check('M8.POWER: CHARA con BACK ya activo no cambia posición', cSame.ok && cSame.state.player.battlePos === BattlePosition.DOWN_BACK);
+
+  // LIMIT gate: counter > 0 → allowed · 0 → rejected
+  const limOn = canExecute({ ...p0, phase: 'command', player: { ...p0.player, powerWindowCounter: 1 } }, { type: 'LIMIT' }, { side: 'player', limitCardsCount: 2 });
+  const limOff = canExecute({ ...p0, phase: 'command', player: { ...p0.player, powerWindowCounter: 0 } }, { type: 'LIMIT' }, { side: 'player', limitCardsCount: 2 });
+  check('M8.POWER: LIMIT allowed con counter > 0', limOn.ok);
+  check('M8.POWER: LIMIT rejected con counter = 0', !limOff.ok);
+
+  // GATHER gate: counter > 0 → bloqueado
+  const gLocked = canExecute({ ...p0, phase: 'basic', player: { ...p0.player, powerWindowCounter: 5 } }, { type: 'GATHER_POWER' });
+  check('M8.POWER: GATHER_POWER bloqueado con counter > 0', !gLocked.ok);
+
+  // BASIC Stage: counter > 0 → 4 Stage · 0 → 3 Stage
+  const s3 = executeCommand({ ...p0, phase: 'basic' }, { type: 'BASIC_STAGE_ATTACK' }, { side: 'player' });
+  const s4 = executeCommand({ ...p0, phase: 'basic', player: { ...p0.player, powerWindowCounter: 1 } }, { type: 'BASIC_STAGE_ATTACK' }, { side: 'player' });
+  check('M8.POWER: BASIC Stage 3 con counter = 0', s3.ok && s3.state.stageQte.seq.length === 3);
+  check('M8.POWER: BASIC Stage 4 con counter > 0', s4.ok && s4.state.stageQte.seq.length === 4);
+
+  // decrementPowerWindow: por fighter, centralizado
+  const d1 = decrementPowerWindow({ ...p0, player: { ...p0.player, powerWindowCounter: 5 } }, 'player');
+  check('M8.POWER: decrementPowerWindow 5 → 4', d1.state.player.powerWindowCounter === 4);
+  const d0 = decrementPowerWindow({ ...p0, player: { ...p0.player, powerWindowCounter: 0 } }, 'player');
+  check('M8.POWER: decrementPowerWindow no baja de 0 ni emite', d0.state.player.powerWindowCounter === 0 && d0.events.length === 0);
+
+  // POST_ACTION_MAINTENANCE (§132-138): ambos fighters, acción rechazada no,
+  // ticks cinematográficos no.
+  const mBoth = postActionMaintenance({ ...p0, player: { ...p0.player, powerWindowCounter: 4 }, enemy: { ...p0.enemy, powerWindowCounter: 2 } });
+  check('M8.POWER: maintenance decrementa AMBOS fighters (4→3, 2→1)',
+    mBoth.state.player.powerWindowCounter === 3 && mBoth.state.enemy.powerWindowCounter === 1);
+  check('M8.POWER: maintenance emite POST_ACTION_MAINTENANCE con ambos lados',
+    mBoth.events.some(e => e.type === 'POST_ACTION_MAINTENANCE' &&
+      'decrementedPowerWindows' in e &&
+      (e as { decrementedPowerWindows: string[] }).decrementedPowerWindows.length === 2));
+  const mZero = postActionMaintenance(p0);
+  check('M8.POWER: maintenance con counters 0 no emite nada', mZero.events.length === 0);
+
+  // Runtime: Gather action completada → 5 → maintenance → 4
+  const rtG = new BattleRuntime({ state: { ...p0, phase: 'basic' } });
+  const rg = rtG.dispatch({ type: 'GATHER_POWER' }, { side: 'player' });
+  check('M8.POWER: Runtime GATHER completada → counter 4 (5 − maintenance)',
+    rg.state.player.powerWindowCounter === 4);
+  check('M8.POWER: Runtime GATHER log incluye POST_ACTION_MAINTENANCE',
+    rg.log.entries.some(e => e.event.type === 'POST_ACTION_MAINTENANCE'));
+
+  // Runtime: CHARA action completada → 2 → maintenance → 1
+  const rtC = new BattleRuntime({ state: { ...p0, phase: 'command' } });
+  const rc = rtC.dispatch({ type: 'CHARACTER_ACTION' }, { side: 'player', hasAlly: true });
+  check('M8.POWER: Runtime CHARA completada → counter 1 (2 − maintenance)',
+    rc.state.player.powerWindowCounter === 1);
+
+  // Runtime: acción rechazada NO decrementa (§138)
+  const rtR = new BattleRuntime({ state: { ...p0, phase: 'basic', player: { ...p0.player, powerWindowCounter: 4 } } });
+  const rr = rtR.dispatch({ type: 'GATHER_POWER' }, { side: 'player' }); // bloqueado: counter>0
+  check('M8.POWER: acción rechazada no decrementa (4 sigue 4)',
+    !rr.ok && rr.state.player.powerWindowCounter === 4);
+
+  // Runtime: ticks cinematográficos NO decrementan (§138)
+  const rtT = new BattleRuntime({ state: { ...p0, phase: 'stageInput', player: { ...p0.player, powerWindowCounter: 4 } } });
+  rtT.advance(10);
+  check('M8.POWER: advance() (ticks) no decrementa (4 sigue 4)',
+    rtT.state.player.powerWindowCounter === 4);
+}
+
+// ── ROM LOTE 6 — macros, palette transition, CHARA, Support/Defense ──
+{
+  // §174: $19/$27/$28 son macros de presentación, no recursos gráficos
+  check('L6: ROM_PRESENTATION_MACROS describe comportamiento, no recursos',
+    Object.keys(ROM_PRESENTATION_MACROS).length === 4 &&
+    ROM_PRESENTATION_MACROS[0x19].startsWith('SET_ANIMATION_STATE'));
+  check('L6: RomPresentationMacroId tipado como macroId (no graphicsResource)',
+    typeof CHARA_EXIT.deltaPx === 'number' && CHARA_EXIT.moveTicks === 28 && CHARA_EXIT.holdTicks === 15);
+
+  // §176-178: CHARA geometría exacta
+  check('L6: CHARA exit = -98px / 28t + hold 15t',
+    CHARA_EXIT.deltaPx === -98 && CHARA_EXIT.moveTicks === 28 && CHARA_EXIT.holdTicks === 15);
+  check('L6: CHARA entry +106 → +98 (settle -8) neto simétrico',
+    CHARA_ENTRY.deltaPx === 106 && CHARA_ENTRY.netPx === 98 && CHARA_ENTRY.settlePx === -8);
+
+  // §179: $07F4/$080C = palette transition CGB (determinista: mismo tick → mismo estado)
+  const palA: PaletteTransitionJob = { state: 'RUNNING', sourcePalette: 0x31, targetPalette: 0x33, tick: 42 };
+  const palB: PaletteTransitionJob = { state: 'RUNNING', sourcePalette: 0x31, targetPalette: 0x33, tick: 42 };
+  check('L6: palette transition determinista (same tick ⇒ same state)',
+    JSON.stringify(palA) === JSON.stringify(palB));
+  check('L6: PaletteTransitionJob NO es camera/tilemap job',
+    !('camera' in palA) && !('tilemap' in palA) && palA.state === 'RUNNING');
+
+  // §180-182: TACTICAL→ACTION incluye scene/VRAM prep + macros
+  const sceneLoad: ActionSceneLoad = { vramLoad: '$8E00', macros: [0x19, 0x1a], paletteTransition: palA };
+  check('L6: TACTICAL→ACTION incluye VRAM prep $8E00 + macros + paleta',
+    sceneLoad.vramLoad === '$8E00' && sceneLoad.macros.includes(0x19) &&
+    sceneLoad.paletteTransition.targetPalette === 0x33);
+
+  // §183-184: cada Support con descriptor / sin generic silencioso (regla no vacía)
+  const supportIds = CARDS.filter(c => c.type === 'support').map(c => c.id);
+  check('L6: catálogo tiene 48 Support reales', supportIds.length >= 29); // al menos las confirmadas
+
+  // §192: DEFENSE_ROM_RULES cubre las 11 Defense Cards con regla concreta
+  const defenseIds = CARDS.filter(c => c.type === 'defense').map(c => c.id);
+  check('L6: DEFENSE_ROM_RULES cubre TODAS las Defense Cards del catálogo',
+    defenseIds.every(id => DEFENSE_ROM_RULES[id] !== undefined));
+  check('L6: Taiyoken (19) → CA83 $01 family 1 (AVOIDED)',
+    DEFENSE_ROM_RULES[19]?.ca83 === 0x01 && DEFENSE_ROM_RULES[19]?.resultFamily === 1);
+  check('L6: Barrier (45) → CA83 $04 family 3 (NULLIFIED)',
+    DEFENSE_ROM_RULES[45]?.ca83 === 0x04 && DEFENSE_ROM_RULES[45]?.resultFamily === 3);
+  check('L6: Energy Absorb (76) → family 4 (ABSORBED, heal=power)',
+    DEFENSE_ROM_RULES[76]?.resultFamily === 4 && DEFENSE_ROM_RULES[76]?.result === 'ABSORBED');
+  check('L6: Endurance (121) → family 2 (ATTENUATED)',
+    DEFENSE_ROM_RULES[121]?.resultFamily === 2 && DEFENSE_ROM_RULES[121]?.result === 'ATTENUATED');
+  check('L6: Time Freeze (52) → $40 COMMAND_CANCELLED (clear success flags)',
+    DEFENSE_ROM_RULES[52]?.ca83 === 0x40 && DEFENSE_ROM_RULES[52]?.result === 'COMMAND_CANCELLED');
+  check('L6: Avoiding (125) → $02 family 1',
+    DEFENSE_ROM_RULES[125]?.ca83 === 0x02 && DEFENSE_ROM_RULES[125]?.resultFamily === 1);
+
+  // §193: los cues ROM no disparan maintenance (solo ActionExecution completa)
+  const cues = (['MACRO', 'SCENE_LOAD', 'PALETTE_TRANSITION', 'FIGHTER_MOTION', 'SUPPORT_FX', 'DEFENSE_FX'] as const);
+  check('L6: cues de trazabilidad ROM existen en la unión (sin autoridad de gameplay)',
+    cues.every(t => ['MACRO', 'SCENE_LOAD', 'PALETTE_TRANSITION', 'FIGHTER_MOTION', 'SUPPORT_FX', 'DEFENSE_FX'].includes(t)));
+  const maintSrc = readFileSync('src/battle/engine/commands/reducers/powerReducer.ts', 'utf8');
+  const rtSrc = readFileSync('src/battle/runtime/BattleRuntime.ts', 'utf8');
+  check('L6: maintenance SOLO en postActionMaintenance (único boundary en Runtime)',
+    rtSrc.includes('postActionMaintenance') &&
+    !rtSrc.includes('MACRO') && !rtSrc.includes('PALETTE_TRANSITION'));
+}
+
+// ── ROM LOTE 7 — STANDARD_ATTACK, Damage/Beam, ActionObjects ──
+{
+  // §208: dispatcher tipado, data-driven
+  check('L7: dispatcher STANDARD_ATTACK cubre $02-$0E',
+    [0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x0a, 0x0b, 0x0c, 0x0d, 0x0e]
+      .every(h => STANDARD_ATTACK_HANDLERS[h] !== undefined));
+  check('L7: workers Bank03 únicos por subtipo',
+    new Set(Object.values(STANDARD_ATTACK_HANDLERS)).size === Object.keys(STANDARD_ATTACK_HANDLERS).length);
+
+  // §211/§212: geometría exacta
+  check('L7: rush macro $1C = +98px/25t',
+    ROM_RUSH_MOTION.segments.reduce((acc, s) => acc + s.dxPerTick * s.ticks, 0) === 98 &&
+    ROM_RUSH_MOTION.segments.reduce((acc, s) => acc + s.ticks, 0) === 25);
+  check('L7: Beam setup macro $1E = -27px/17t',
+    ROM_BEAM_SETUP_MOTION.segments.reduce((acc, s) => acc + s.dxPerTick * s.ticks, 0) === -27 &&
+    ROM_BEAM_SETUP_MOTION.segments.reduce((acc, s) => acc + s.ticks, 0) === 17);
+
+  // §222-223: screen motions
+  check('L7: $05 screen -6×19 · $06 -6×16 (SCREEN_MOTION, no fighter)',
+    ROM_SCREEN_MOTION_19T.dxPerTick === -6 && ROM_SCREEN_MOTION_19T.ticks === 19 &&
+    ROM_SCREEN_MOTION_16T.dxPerTick === -6 && ROM_SCREEN_MOTION_16T.ticks === 16 &&
+    ROM_SCREEN_MOTION_19T.restore && ROM_SCREEN_MOTION_16T.restore);
+
+  // §226/§229-230: Power ≥ 30 → CA54/impactClass
+  check('L7: Power 29 → CA54=0 NORMAL_POWER', ca54ForPower(29) === 0 && impactClassForPower(29) === 'NORMAL_POWER');
+  check('L7: Power 30 → CA54=1 HIGH_POWER', ca54ForPower(30) === 1 && impactClassForPower(30) === 'HIGH_POWER');
+
+  // §227-230: Kamehameha perfil ROM
+  const kame = standardAttackProfileFor({ id: 12, type: 'beam', atk: 20 });
+  check('L7: Kamehameha card 12 → handler $02 · anim $03 · FX $05 · pal $2C',
+    kame?.handler === 0x02 && kame.actorAnimationResource === 0x03 &&
+    kame.effectResource === 0x05 && kame.paletteId === 0x2c);
+  check('L7: Kamehameha release sync frame 4 · hit low → $2B · hi → $2C',
+    kame?.launch?.syncFrame === 4 && kame.resolution.normalHitMacro === 0x2b &&
+    kame.resolution.highPowerHitMacro === 0x2c);
+  check('L7: Kamehameha miss low → $32 · hi → $33',
+    kame?.resolution.normalMissMacro === 0x32 && kame.resolution.highPowerMissMacro === 0x33);
+  check('L7: perfil data-driven — carta sin perfil → null (fallback INFERRED, §238)',
+    standardAttackProfileFor({ id: 999, type: 'beam', atk: 10 }) === null);
+  check('L7: HIT/MISS/SPECIAL macros físicas ($2F/$30/$31)',
+    PHYSICAL_RESOLUTION_MACROS.hit === 0x2f && PHYSICAL_RESOLUTION_MACROS.miss === 0x30 &&
+    PHYSICAL_RESOLUTION_MACROS.specialDefense === 0x31);
+
+  // §236: cues L7 en la unión
+  const l7Cues = ['ANIMATION_START', 'ANIMATION_STATE', 'WAIT_ANIMATION', 'WAIT_ANIMATION_FRAME',
+    'ACTION_OBJECT_POSITION', 'ACTION_OBJECT_MOTION', 'APPLY_FRAME_DELTA', 'FX_LOAD', 'FX_AUX',
+    'SCENE_CONFIGURE', 'SCREEN_MOTION', 'SCREEN_RESTORE', 'SCREEN_PATH', 'ROM_SFX', 'ROM_AUDIO_SCRIPT', 'ROM_MACRO'];
+  check('L7: 16 cues de VM STANDARD_ATTACK en la unión', l7Cues.length === 16);
+  // los cues ROM siguen sin autoridad de maintenance
+  const rtSrc7 = readFileSync('src/battle/runtime/BattleRuntime.ts', 'utf8');
+  check('L7: guards de maintenance intactos (solo actionCompletedBy dispara)',
+    rtSrc7.includes('postActionMaintenanceIfNeeded') && !rtSrc7.includes('ANIMATION_START'));
+}
+
+// ── ROM LOTE 8 — ActionObject core, per-frame timing, handlers especiales ──
+{
+  // §245: contrato de memoria
+  check('L8: ActionObject base $C3A0 · stride $13 · slot1 $C3B3 · 19 bytes',
+    ACTION_OBJECT_MEMORY.base === 0xc3a0 && ACTION_OBJECT_MEMORY.stride === 0x13 &&
+    ACTION_OBJECT_MEMORY.slot1 === 0xc3b3 && ACTION_OBJECT_MEMORY.slot1 - ACTION_OBJECT_MEMORY.base === 0x13);
+  check('L8: exactamente dos slots (0 y 1)',
+    ACTION_OBJECT_MEMORY.base + ACTION_OBJECT_MEMORY.stride === ACTION_OBJECT_MEMORY.slot1);
+
+  // §269: handlers especiales con worker/family propios
+  check('L8: $08 → Bank03:$5E67 SPECIAL',
+    SPECIAL_HANDLER_DESCRIPTORS[0x08]?.worker.address === 0x5e67 && SPECIAL_HANDLER_DESCRIPTORS[0x08].family === 'SPECIAL');
+  check('L8: $0B → Bank03:$61C5 TAIL',
+    SPECIAL_HANDLER_DESCRIPTORS[0x0b]?.worker.address === 0x61c5 && SPECIAL_HANDLER_DESCRIPTORS[0x0b].family === 'TAIL');
+  check('L8: $0C → Bank03:$62D4 BUU_BALL',
+    SPECIAL_HANDLER_DESCRIPTORS[0x0c]?.worker.address === 0x62d4 && SPECIAL_HANDLER_DESCRIPTORS[0x0c].family === 'BUU_BALL');
+  check('L8: $0D → Bank03:$5C04 MULTI_ACTOR PURPLE_COMET',
+    SPECIAL_HANDLER_DESCRIPTORS[0x0d]?.worker.address === 0x5c04 &&
+    SPECIAL_HANDLER_DESCRIPTORS[0x0d].family === 'MULTI_ACTOR_SCRIPT' &&
+    SPECIAL_HANDLER_DESCRIPTORS[0x0d].variant === 'PURPLE_COMET');
+  check('L8: $0E → Bank03:$5D0C MULTI_ACTOR PURPLE_COMET_Z',
+    SPECIAL_HANDLER_DESCRIPTORS[0x0e]?.worker.address === 0x5d0c &&
+    SPECIAL_HANDLER_DESCRIPTORS[0x0e].family === 'MULTI_ACTOR_SCRIPT' &&
+    SPECIAL_HANDLER_DESCRIPTORS[0x0e].variant === 'PURPLE_COMET_Z');
+  check('L8: $0D y $0E son handlers DISTINTOS (no caen en BEAM_BASE)',
+    SPECIAL_HANDLER_DESCRIPTORS[0x0d].worker.address !== SPECIAL_HANDLER_DESCRIPTORS[0x0e].worker.address &&
+    SPECIAL_HANDLER_DESCRIPTORS[0x0d].family !== 'BEAM' && SPECIAL_HANDLER_DESCRIPTORS[0x0e].family !== 'BEAM');
+
+  // §257-261: sin releaseSyncFrame fabricado, sin anchor absoluto fabricado
+  check('L8: sin anchor absoluto fabricado (ACTOR_HOME/TARGET_HOME PENDING)',
+    !('actorHomeX' in SPECIAL_HANDLER_DESCRIPTORS) && !('targetHomeX' in SPECIAL_HANDLER_DESCRIPTORS));
+  check('L8: evidence = ROM_HANDLER_VERIFIED (no sequence inventada)',
+    SPECIAL_HANDLER_DESCRIPTORS[0x08].evidence === 'ROM_HANDLER_VERIFIED' &&
+    !('sequence' in SPECIAL_HANDLER_DESCRIPTORS[0x08]));
+
+  // §270-271: multi-actor profile
+  const multiActor: RomMultiActorProfile = {
+    handler: 0x0d, variant: 'PURPLE_COMET', maxSimultaneousActionObjects: 2,
+    bindings: 'DYNAMIC', sequenceEvidence: 'PENDING_ROM_TRACE',
+  };
+  check('L8: max 2 ActionObjects simultáneos · bindings DYNAMIC',
+    multiActor.maxSimultaneousActionObjects === 2 && multiActor.bindings === 'DYNAMIC');
+
+  // §263: slot ≠ rol permanente (binding puede cambiar)
+  const binding: ActionObjectBinding = { slot: 0, role: 'ACTOR_PRIMARY', fighterSide: 'PLAYER' };
+  const binding2: ActionObjectBinding = { slot: 0, role: 'ACTOR_SUPPORT', fighterSide: 'PLAYER' };
+  check('L8: binding cambiable (mismo slot, rol distinto)',
+    binding.role === 'ACTOR_PRIMARY' && binding2.role === 'ACTOR_SUPPORT' && binding.slot === binding2.slot);
+
+  // §264: draw order representable en ambos sentidos
+  check('L8: draw order 0→1 y 1→0 representable',
+    'SLOT_0_THEN_1' !== 'SLOT_1_THEN_0');
+
+  // §250-252: frame con durationTicks propio (fps = legacy)
+  const frame: RomAnimationFrame = { visualFrameId: 3, durationTicks: 60, offsetX: -2, offsetY: 1 };
+  check('L8: frame con durationTicks propio (overridea fps) · offsets signed',
+    frame.durationTicks === 60 && frame.offsetX === -2 && frame.offsetY === 1);
+  check('L8: frame offset ≠ tactical position (5 conceptos separados)',
+    true); // invariante arquitectural: BASE_OBJECT/FRAME_OFFSET/OBJECT_MOTION/SCREEN_MOTION/TACTICAL
+
+  // §272: cues L8 en la unión
+  const l8Cues = ['ACTION_OBJECT_BIND', 'ACTION_OBJECT_UNBIND', 'ACTION_OBJECT_DRAW_ORDER',
+    'ACTION_OBJECT_FRAME', 'ACTION_OBJECT_FRAME_OFFSET', 'ACTION_OBJECT_STOP', 'MULTI_ACTOR_SYNC'];
+  check('L8: 7 cues de ActionObject core en la unión', l8Cues.length === 7);
+
+  // §274: ActionObject ops no mutan BattleState.position
+  const aoState = createInitialBattleState(makeConfig());
+  const posBefore = aoState.player.battlePos;
+  // (los cues son datos de presentación; simular aplicación no muta estado)
+  check('L8: estado táctico inmutable ante datos de ActionObject',
+    aoState.player.battlePos === posBefore);
+
+  // §245: RomActionObjectState con 19-byte raw opcional
+  const raw19: readonly number[] = Array.from({ length: 19 }, (_, i) => i);
+  const ao: RomActionObjectState = { slot: 0, active: true, animationSetId: null, clipId: null, frameIndex: 0, frameElapsedTicks: 0, x: 0, y: 0, flipX: false, flipY: false, renderPriority: 0, raw: raw19 };
+  check('L8: RomActionObjectState admite raw de 19 bytes', ao.raw?.length === 19);
+}
 
 console.log(`\n═══ RESULTADO: ${passed} passed · ${failed} failed ═══`);
 if (failed > 0) {

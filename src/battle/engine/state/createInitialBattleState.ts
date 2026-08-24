@@ -19,7 +19,6 @@ import type {
   BattleSide,
   BattleState,
   EnemyAiState,
-  PowerState,
   StageStages,
 } from './BattleState';
 
@@ -97,6 +96,7 @@ function fighterFromConfig(cfg: InitialBattleConfig, side: BattleSide): BattleFi
     cc: p ? cfg.playerCc : cfg.enemyCc,
     battlePos: p ? cfg.playerPos : cfg.enemyPos,
     battleId: undefined,
+    powerWindowCounter: 0,
     limits: p ? cfg.playerFighterLimits : [],
   };
 }
@@ -126,9 +126,6 @@ export function createInitialBattleState(cfg: InitialBattleConfig): BattleState 
     defenseState: 'NONE',
     defenseChoice: null,
     pLockOn: false,
-    powerState: 'NORMAL' as PowerState,
-    gatherTurns: 0,
-    gatherStartedRound: null,
     deck: cfg.playerDeck,
     eDeck: cfg.enemyDeck,
     selectedCard: null,

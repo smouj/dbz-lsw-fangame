@@ -420,13 +420,16 @@ export function actionSemanticsForCard(card: { name: string; type: string; compa
     : romExec === 0x0B ? 'special'   // SUMMON (Tien/Yajirobe/ítems) → singular
     : romExec === 0x0D ? 'power'
     : undefined;
-  const projectile = specific?.projectile?.kind
-    ?? visualFromRom
-    ?? (card.type === 'beam' ? 'ray' : card.type === 'support' ? (isItem ? 'item' : 'power') : 'rush');
   const animation = card.type === 'command' ? 'stage'
     : card.type === 'damage' ? 'melee'
     : card.type === 'beam' ? 'beam'
     : 'support';
+  const projectile = specific?.projectile?.kind
+    ?? (card.type === 'beam' || card.type === 'damage' ? visualFromRom : undefined)
+    ?? (card.type === 'beam' ? 'ray'
+      : card.type === 'damage' || card.type === 'command' ? 'rush'
+      : card.type === 'special' ? 'special'
+      : isItem ? 'item' : 'power');
   const users = card.compatible ?? [];
   return {
     cardName: card.name,

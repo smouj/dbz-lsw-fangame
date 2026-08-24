@@ -27,12 +27,13 @@ import { FacingModule } from './facing';
 import { TimelineModule } from './timeline';
 import { CombatContractModule } from './combat';
 import { AssetsModule } from './assets';
+import { RomDisplayLab } from './romdisplay2';
 
 export type DevModuleId =
   | 'dashboard' | 'characters' | 'cards' | 'animation'
   | 'pixelart' | 'hud' | 'facing' | 'assets'
   | 'lab' | 'story' | 'validation' | 'research' | 'music' | 'gameconfig' | 'positions'
-  | 'combat' | 'timeline';
+  | 'combat' | 'timeline' | 'romdisplay';
 
 interface DevModuleDef {
   id: DevModuleId;
@@ -58,6 +59,7 @@ export const DEV_MODULES: DevModuleDef[] = [
   { id: 'story', label: 'Story', icon: Gamepad2, desc: 'Capítulos, viñetas y mazos de jefes', group: 'Mundo' },
   { id: 'validation', label: 'Validation', icon: CheckCircle2, desc: 'Integridad de datos y cobertura', group: 'Mundo' },
   { id: 'research', label: 'Research', icon: Search, desc: 'ROM / manual / fuentes', group: 'Mundo' },
+  { id: 'romdisplay', label: 'ROM Display', icon: Grid2X2, desc: 'V7.8: ROM inspection ↔ runtime composite + validación', group: 'Combate' },
   { id: 'music', label: 'Música', icon: Music, desc: 'BSO del juego: player y mapeo de contexto', group: 'Mundo' },
   { id: 'gameconfig', label: 'Game Config & Build', icon: Rocket, desc: 'Centro de control: config, validación y release', group: 'Producción' },
 ];
@@ -125,6 +127,12 @@ export function DevStudio({ onExit, onLaunchBattle }: DevStudioProps) {
     window.addEventListener('hashchange', onHash);
     return () => window.removeEventListener('hashchange', onHash);
   }, []);
+
+  useEffect(() => {
+    const active = document.querySelector('.dev-nav-item.active');
+    active?.scrollIntoView({ block: 'nearest', inline: 'center', behavior: 'smooth' });
+    mainRef.current?.querySelector('.dev-module')?.scrollTo({ top: 0, left: 0 });
+  }, [module]);
 
   const navigate = (id: DevModuleId) => {
     setModule(id);
@@ -209,6 +217,7 @@ export function DevStudio({ onExit, onLaunchBattle }: DevStudioProps) {
           {module === 'story' && <StoryModule />}
           {module === 'validation' && <ValidationModule />}
           {module === 'research' && <ResearchModule />}
+          {module === 'romdisplay' && <RomDisplayLab />}
           {module === 'music' && <MusicModule />}
           {module === 'gameconfig' && <GameConfigModule />}
         </div>

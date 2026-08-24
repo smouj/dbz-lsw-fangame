@@ -15,6 +15,7 @@
 
 import { executeCommand, canExecute, getAvailableCommands } from '../engine/commands';
 import { resolveCardAction } from '../engine/commands/reducers/damageReducer';
+import { postActionMaintenance } from '../engine/commands/reducers/powerReducer';
 import type { BattleCommand, CommandCheck, CommandExecutionResult } from '../engine/commands';
 import { advanceBattleClock, type ClockAdvanceOutcome } from '../engine/clock';
 import type { BattleSide, BattleState } from '../engine/state/BattleState';
@@ -24,6 +25,7 @@ import {
   emptyEventLog,
   type BattleEventLog,
 } from '../engine/events';
+import type { BattleEvent } from '../engine/events';
 import {
   buildPresentationTimeline,
   type BattlePresentationContext,
@@ -105,13 +107,51 @@ export class BattleRuntime {
   /** Intención externa (UI o IA): resuelve, loguea, construye timeline, presenta. */
   dispatch(command: BattleCommand, opts?: Parameters<typeof executeCommand>[2]): DispatchResult {
     const result = executeCommand(this.state, command, opts);
-    this.state = result.state;
-    const ticks = result.events.map(() => result.state.tick);
-    this.log = appendOutcomeToEventLog(this.log, result.events, ticks);
+    const { state, events, ticks } = this.finish(result.ok ? this.postActionMaintenanceIfNeeded(command, result) : result);
+    this.state = state;
+    this.log = appendOutcomeToEventLog(this.log, events, ticks);
     this.timeline = buildPresentationTimeline({ events: this.log.entries, context: this.context });
     if (this.presenter) this.presenter.consume({ timeline: this.timeline, state: this.state });
     if (this.history) this.history.push(this.timeline);
-    return { ...result, log: this.log, timeline: this.timeline };
+    return { ...result, state, events, log: this.log, timeline: this.timeline };
+  }
+
+  /**
+   * POST_ACTION_MAINTENANCE (ROM §132-133): tras una ActionExecution
+   * completada, decrementa la power window de AMBOS fighters antes del
+   * siguiente control. Una acción rechazada o los ticks cinematográficos
+   * NO pasan por aquí (§138). Solo se dispara cuando la resolución
+   * contiene un marcador de fin de ejecución:
+   *   ACTION_RESOLVED (carta o Stage completado) · GATHER_STARTED (Gather)
+   *   QTE_COUNTER_RESOLVED DEFEND/TIMEOUT (Stage fallido/abortado)
+   *   CHARACTER_ACTION aceptado (CHARA escribe 2 al final de su ejecución)
+   * QTE_COUNTER_CONTINUE (B repair) NO cierra la acción → sin maintenance.
+   */
+  private actionCompletedBy(command: BattleCommand, result: CommandExecutionResult): boolean {
+    if (!result.ok) return false;
+    if (command.type === 'CHARACTER_ACTION') return true;
+    return result.events.some((e: BattleEvent) => {
+      switch (e.type) {
+        case 'ACTION_RESOLVED':
+        case 'GATHER_STARTED':
+          return true;
+        case 'QTE_COUNTER_RESOLVED':
+          return e.action !== 'CONTINUE';
+        default:
+          return false;
+      }
+    });
+  }
+
+  private postActionMaintenanceIfNeeded(command: BattleCommand, result: CommandExecutionResult): CommandExecutionResult {
+    if (!this.actionCompletedBy(command, result)) return result;
+    const m = postActionMaintenance(result.state);
+    return { ...result, state: m.state, events: [...result.events, ...m.events] };
+  }
+
+  private finish(result: CommandExecutionResult): { state: BattleState; events: BattleEvent[]; ticks: number[] } {
+    const ticks = result.events.map(() => result.state.tick);
+    return { state: result.state, events: result.events, ticks };
   }
 
   /** Evolución temporal automática (ClockAdapter → ticks enteros). */
@@ -139,13 +179,22 @@ export class BattleRuntime {
    */
   resolveCard(side: BattleSide, card: CardDef): DispatchResult {
     const outcome = resolveCardAction(this.state, side, card);
-    this.state = outcome.state;
-    const ticks = outcome.events.map(() => this.state.tick);
-    this.log = appendOutcomeToEventLog(this.log, outcome.events, ticks);
+    const result: CommandExecutionResult = {
+      ok: true,
+      state: outcome.state,
+      events: outcome.events,
+    };
+    // resolveCard es UNA resolución de carta completada (puente cutover):
+    // maintenance siempre, sin depender de marcadores de evento.
+    const m = postActionMaintenance(result.state);
+    const events = [...result.events, ...m.events];
+    this.state = m.state;
+    const ticks = events.map(() => this.state.tick);
+    this.log = appendOutcomeToEventLog(this.log, events, ticks);
     this.timeline = buildPresentationTimeline({ events: this.log.entries, context: this.context });
     if (this.presenter) this.presenter.consume({ timeline: this.timeline, state: this.state });
     if (this.history) this.history.push(this.timeline);
-    return { ok: true, state: this.state, events: outcome.events, log: this.log, timeline: this.timeline };
+    return { ok: true, state: this.state, events, log: this.log, timeline: this.timeline };
   }
 
   /** Reconstruye el input de presentación (para inspección headless). */

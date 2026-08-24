@@ -11,6 +11,14 @@ import { COMBAT_REQUIRED_POSES, resolveCombatPose } from '../battle/spriteConfig
 import { cardUsableBy } from '../battle/cardPoses';
 import { getDevProjectSnapshot } from './devSnapshot';
 import { activeAttacker, activeDefender, initiativeSide } from '../battle/engine/state/battleStateSelectors';
+import { ANIMATION_RESOURCE_CATALOG, animationResourceSummary } from '../battle/animationResources';
+import { cardPhysicalCoverageSummary } from '../battle/cardPhysicalCoverage';
+import { PHYSICAL_FRAME_RECONCILIATION, physicalFrameReconciliationSummary } from '../battle/physicalFrameReconciliation';
+import { romActionExecutionSummary } from '../battle/romActionExecutionDescriptors';
+import { romPresentationCompilerSummary } from '../battle/romPresentationCompiler';
+import { romPresentationProfileSummary } from '../battle/romPresentationProfiles';
+import { beamBaseRuntimeCutoverSummary } from '../battle/beamBaseRomCutover';
+import { standardDamageRuntimeCutoverSummary } from '../battle/standardDamageRomCutover';
 
 interface Check { name: string; ok: boolean; detail: string; }
 type ManifestState =
@@ -155,6 +163,77 @@ export function ValidationModule() {
       ok: true,
       detail: Object.entries(snap.cards.byType).map(([k, v]) => `${k} ${v}`).join(' · '),
     });
+
+    const physical = physicalFrameReconciliationSummary();
+    const resourceCompletion = animationResourceSummary();
+    const decodedResources = ANIMATION_RESOURCE_CATALOG.filter(resource => resource.status === 'DECODED').length;
+    out.push({
+      name: 'AnimationResources decodificados → reconciliación física',
+      ok: PHYSICAL_FRAME_RECONCILIATION.length === decodedResources,
+      detail: `${PHYSICAL_FRAME_RECONCILIATION.length}/${decodedResources} recursos DECODED · ${physical.romFrames} frames ROM`,
+    });
+    out.push({
+      name: 'Physical map: statuses completos y explícitos',
+      ok: physical.romFrames === physical.exact + physical.shared + physical.composite + physical.unresolved,
+      detail: `${physical.exact} EXACT · ${physical.shared} SHARED · ${physical.composite} COMPOSITE · ${physical.unresolved} UNRESOLVED`,
+    });
+    const cardCoverage = cardPhysicalCoverageSummary();
+    out.push({
+      name: 'Cards → physical coverage 125/125',
+      ok: cardCoverage.cards === CARDS.length && cardCoverage.missingResource === 0,
+      detail: `${cardCoverage.complete} complete · ${cardCoverage.partial} partial · ${cardCoverage.unresolvedDecoded} decoded unresolved · ${cardCoverage.pendingStatic} pending static`,
+    });
+    out.push({
+      name: 'AnimationResource PARTIAL → completion cause explícita',
+      ok: resourceCompletion.partial === 48 && resourceCompletion.staticallyClosable === 48,
+      detail: `${resourceCompletion.staticallyClosable} statically closable · ${resourceCompletion.needsDynamicTrace} needs dynamic trace · ${resourceCompletion.staticLimitReached} static limit`,
+    });
+    const actionExecution = romActionExecutionSummary();
+    out.push({
+      name: 'ROM Action Execution descriptors 125/125',
+      ok: actionExecution.cards === CARDS.length && actionExecution.missingResources === 0,
+      detail: `${actionExecution.cards}/${CARDS.length} descriptors · ${actionExecution.withActorAnimation} actor resources · ${actionExecution.withFx} FX · ${actionExecution.withPalette} palettes`,
+    });
+    out.push({
+      name: 'ROM Action Execution: result branches solo con evidencia',
+      ok: actionExecution.descriptorsWithBranches === actionExecution.standardAttackProfiles + actionExecution.defenseRules,
+      detail: `${actionExecution.descriptorsWithBranches} proven branch descriptors · ${actionExecution.pendingStaticDecode} pending static · ${actionExecution.needsDynamicTrace} dynamic boundary`,
+    });
+    const romPresentation = romPresentationProfileSummary();
+    out.push({
+      name: 'ROM-derived Presentation Profiles 125/125',
+      ok: romPresentation.cards === CARDS.length && romPresentation.none > 0,
+      detail: `${romPresentation.cards}/${CARDS.length} profiles · ${romPresentation.completeStatic} static complete · ${romPresentation.partialStatic} static partial · ${romPresentation.dynamicPending} dynamic pending`,
+    });
+    out.push({
+      name: 'ROM Presentation: STANDARD_DAMAGE y motion discreto',
+      ok: romPresentation.standardDamage === 19 && romPresentation.profilesWithMotion > 0,
+      detail: `${romPresentation.standardDamage} STANDARD_DAMAGE · ${romPresentation.profilesWithMotion} profiles with ROM motion · ${romPresentation.profilesWithBranches} with branches`,
+    });
+    const romCompiler = romPresentationCompilerSummary();
+    out.push({
+      name: 'ROM Presentation Compiler 125/125',
+      ok: romCompiler.compilable === CARDS.length && romCompiler.semanticCueLeaks === 0,
+      detail: `${romCompiler.compilable}/${CARDS.length} compilables · ${romCompiler.totalCues} ROM cues · ${romCompiler.pendingCues} pending`,
+    });
+    out.push({
+      name: 'ROM Compiler: sin semántica visual inventada',
+      ok: romCompiler.timelinesWithMotion > 0 && romCompiler.timelinesWithBranches > 0 && romCompiler.semanticCueLeaks === 0,
+      detail: `${romCompiler.timelinesWithMotion} timelines with ROM motion · ${romCompiler.timelinesWithBranches} with branches · ${romCompiler.semanticCueLeaks} semantic leaks`,
+    });
+    const standardDamageCutover = standardDamageRuntimeCutoverSummary();
+    out.push({
+      name: 'STANDARD_DAMAGE runtime cutover',
+      ok: standardDamageCutover.romBacked === 19 && standardDamageCutover.nonStandardDamageBacked === 0,
+      detail: `${standardDamageCutover.romBacked}/19 ROM-backed · ${standardDamageCutover.nonStandardDamageBacked} non-$0A diverted · ${standardDamageCutover.branchFamilies.join('/')} branches`,
+    });
+    const beamBaseCutover = beamBaseRuntimeCutoverSummary();
+    out.push({
+      name: 'BEAM_BASE runtime cutover',
+      ok: beamBaseCutover.romBacked === 38 && beamBaseCutover.nonBeamBaseBacked === 0 && beamBaseCutover.beamVariantsBacked === 0,
+      detail: `${beamBaseCutover.romBacked}/38 ROM-backed · ${beamBaseCutover.nonBeamBaseBacked} non-$02 diverted · ${beamBaseCutover.beamVariantsBacked} variants diverted · $1E discrete`,
+    });
+
     // Fase ≠ lado atacante: la iniciativa + exchange derivan el atacante.
     const t0 = { activeSide: 'enemy' as const, exchange: 0 as const };
     const t1 = { activeSide: 'enemy' as const, exchange: 1 as const };

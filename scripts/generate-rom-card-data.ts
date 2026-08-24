@@ -29,11 +29,17 @@ function main() {
     process.exit(0);
   }
   const rom = JSON.parse(readFileSync(romPath, 'utf8'));
-  const byName = new Map<string, { exec: number; mask: string; b6: number }>();
+  const byName = new Map<string, { exec: number; actorAnim: number; fxGraphics: number; fxPalette: number; mask: string }>();
   for (const r of rom.records) {
     const c = CARDS[r.index - 1];
     if (!c) continue;
-    byName.set(normalize(c.name), { exec: r.exec_selector, mask: r.compat_mask.slice(4), b6: r.b6 });
+    byName.set(normalize(c.name), {
+      exec: r.exec_selector,
+      actorAnim: r.actor_anim,
+      fxGraphics: r.fx_graphics,
+      fxPalette: r.fx_palette,
+      mask: r.compat_mask,
+    });
   }
   const lines: string[] = [
     '// ═══════════════════════════════════════════════════════════════════════',
@@ -46,6 +52,12 @@ function main() {
     'export interface RomCardData {',
     '  /** Selector de ejecución (byte 5 de la tabla ROM): familia real de la técnica. */',
     '  exec: number;',
+    '  /** Actor AnimationResource (byte 6). 0xff = sin recurso de actor. */',
+    '  actorAnim: number;',
+    '  /** FX graphics resource (byte 7). 0xff = sin recurso FX. */',
+    '  fxGraphics: number;',
+    '  /** CGB palette id (byte 8). 0xff = sin paleta FX. */',
+    '  fxPalette: number;',
     '  /** Máscara de compatibilidad 48-bit (bytes 9-14): bit N = forma N. */',
     '  mask: string;',
     '}',
@@ -59,7 +71,7 @@ function main() {
     'export const ROM_CARD_DATA: Record<string, RomCardData> = {',
   ];
   for (const [name, d] of [...byName.entries()].sort()) {
-    lines.push(`  '${name}': { exec: ${d.exec}, mask: '${d.mask}' },`);
+    lines.push(`  '${name}': { exec: ${d.exec}, actorAnim: ${d.actorAnim}, fxGraphics: ${d.fxGraphics}, fxPalette: ${d.fxPalette}, mask: '${d.mask}' },`);
   }
   lines.push('};');
   lines.push('');

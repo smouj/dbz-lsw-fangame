@@ -48,6 +48,12 @@ export interface CanonBattleFieldProps {
   /** pose actual por lado (ACTION) — si no se pasa, usa idle del manifest */
   pose?: Partial<Record<BattleSide, string>>;
   qte?: { label: string; seq: string[]; warn?: boolean } | null;
+  runtimeFx?: {
+    kind: 'beam' | 'impact';
+    side: BattleSide;
+    visual?: 'ray' | 'wave' | 'ball' | 'disk' | 'sword' | 'special';
+    outcome?: 'hit' | 'miss' | 'special_defense';
+  } | null;
   className?: string;
   /** anclas dev visibles (marcadores P/E) — OFF por defecto: preview limpio como el juego */
   devAids?: boolean;
@@ -83,7 +89,7 @@ function useFighterSprites(playerFormId: string, enemyFormId: string, pose?: Par
   }, [playerFormId, enemyFormId, pose?.player, pose?.enemy]);
 }
 
-export function CanonBattleField({ player, enemy, round = 1, background, mode = 'OVERVIEW', actor = 'player', pose, qte, className, devAids = false }: CanonBattleFieldProps) {
+export function CanonBattleField({ player, enemy, round = 1, background, mode = 'OVERVIEW', actor = 'player', pose, qte, runtimeFx = null, className, devAids = false }: CanonBattleFieldProps) {
   const sprites = useFighterSprites(player.formId, enemy.formId, pose);
   const pa = anchorFor(player.pos, 'LEFT');
   const ea = anchorFor(enemy.pos, 'RIGHT');
@@ -179,6 +185,12 @@ export function CanonBattleField({ player, enemy, round = 1, background, mode = 
           {qte && (
             <div className={`dev-rt-qte ${qte.warn ? 'warn' : ''}`}>
               QTE {qte.seq.join(' · ')} <b>{qte.label}</b>
+            </div>
+          )}
+          {runtimeFx && (
+            <div className={`dev-rt-romfx ${runtimeFx.kind} ${runtimeFx.side} ${runtimeFx.visual ?? 'ray'} ${runtimeFx.outcome ?? ''}`}>
+              {runtimeFx.kind === 'beam' && <span className="dev-rt-romfx-beam" />}
+              {runtimeFx.kind === 'impact' && <span className="dev-rt-romfx-impact" />}
             </div>
           )}
         </div>

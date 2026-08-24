@@ -22,10 +22,10 @@ import { POSITION_DATA } from '../../../data/positions';
 import type { BattleCommand } from './BattleCommand';
 import type { BattleEvent } from '../events/BattleEvent';
 import type { BattleState } from '../state/BattleState';
-import { speedOrder } from '../state/battleStateSelectors';
+import { speedOrder, isBattleTerminal } from '../state/battleStateSelectors';
 import { moveFighter } from './reducers/movementReducer';
 import { playCard, playDefenseCard, playLimitCard } from './reducers/cardReducer';
-import { gatherPower, guard, qteCorrectInput, qteWrongInput, qteCounterContinue, qteCounterDefend } from './reducers/powerReducer';
+import { gatherPower, guard, qteCorrectInput, qteWrongInput, qteCounterContinue, qteCounterDefend, characterSwitchPowerWindow } from './reducers/powerReducer';
 import { resolveCardAction, resolveCounterDamage, resolvePartialStageDamage, resolveStageCard } from './reducers/damageReducer';
 import { actionDescriptorForCard, actionDescriptorForStage } from './buildActionDescriptor';
 import { stageProgress } from '../combat/resolution';
@@ -70,6 +70,11 @@ export interface ReductionOutcome {
 }
 
 export function reduceAcceptedCommand(state: BattleState, command: BattleCommand): ReductionOutcome {
+  // PA8 — combate terminal: ningún reducer acepta comandos post-KO
+  // (defensa en profundidad; canExecute ya rechaza con BATTLE_TERMINAL).
+  if (isBattleTerminal(state)) {
+    return { state, events: [{ type: 'COMMAND_REJECTED', command, reason: 'BATTLE_TERMINAL' }] };
+  }
   let next: BattleState = state;
   let events: BattleEvent[] = [];
 
@@ -84,9 +89,15 @@ export function reduceAcceptedCommand(state: BattleState, command: BattleCommand
     case 'BASIC':
       next = { ...state, phase: 'basic' };
       break;
-    case 'CHARACTER_ACTION':
-      next = state; // la acción CHARA (cambio de aliado) se resuelve en M8
+    case 'CHARACTER_ACTION': {
+      // M8.POWER — CHARA escribe powerWindowCounter=2 + fuerza BACK
+      // (vertical preservada). El commit del miembro activo y su
+      // cinematografía son M8.CHARA (commit diferido Bank01:$7320).
+      const cw = characterSwitchPowerWindow(state);
+      next = cw.state;
+      events = cw.events;
       break;
+    }
 
     // ── mano ──
     case 'SELECT_CARD':
@@ -145,8 +156,8 @@ export function reduceAcceptedCommand(state: BattleState, command: BattleCommand
 
     // ── BASIC ──
     case 'BASIC_STAGE_ATTACK': {
-      // Nivel del stage: 3 base · 4 con GATHER (regla del juego)
-      const level: 3 | 4 = state.powerState !== 'NORMAL' ? 4 : 3;
+      // Nivel del stage: 3 sin power window · 4 con window (ROM §100)
+      const level: 3 | 4 = state.player.powerWindowCounter > 0 ? 4 : 3;
       const seq = STAGE_SEQUENCE_POOL[level][state.tick % STAGE_SEQUENCE_POOL[level].length];
       const windowTicks = stageWindowTicksFor(state);
       // M8.B: el Stage nace en PREPARING — QTE_STARTED lo emite el RELOJ al

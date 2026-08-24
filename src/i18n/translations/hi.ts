@@ -16,6 +16,8 @@ export const hi: Dict = {
   'common.fight': "लड़ो!",
   'common.retry': "पुनः प्रयास",
   'common.exit': "X",
+  'common.rematch': 'REMATCH',
+  'common.mainMenu': 'MAIN MENU',
   'common.newBattle': "नई लड़ाई",
   'common.notObtained': "प्राप्त नहीं",
   'common.unknown': "???",

@@ -7,9 +7,10 @@ import type { CommandCheck } from '../CommandResult';
 import { ok, reject } from '../CommandResult';
 
 // ─── defenseRules ───────────────────────────────────────────────────────
-/** La fuente LIMITED de defensa requiere GATHER activo + cartas disponibles. */
+/** La fuente LIMITED de defensa requiere la ventana de poder activa
+ *  (contador > 0) + cartas disponibles. */
 export function canUseDefenseLimit(state: BattleState, limitCount: number): CommandCheck {
-  if (state.powerState === 'NORMAL') return reject('LIMIT_UNAVAILABLE');
+  if (state.player.powerWindowCounter <= 0) return reject('LIMIT_UNAVAILABLE');
   if (limitCount <= 0) return reject('LIMIT_UNAVAILABLE');
   return ok();
 }
@@ -28,14 +29,15 @@ export function canStageAttack(): CommandCheck {
   return ok();
 }
 
-/** GATHER POWER: bloqueado mientras ya esté activo (gatherTurns > 0). */
+/** GATHER POWER: bloqueado mientras la ventana de poder ya esté activa (counter > 0). */
 export function canGatherPower(state: BattleState): CommandCheck {
-  return state.gatherTurns > 0 ? reject('ACTION_LOCKED') : ok();
+  return state.player.powerWindowCounter > 0 ? reject('ACTION_LOCKED') : ok();
 }
 
-/** LIMIT (command-strip): requiere GATHER activo + cartas LIMITED del roster. */
+/** LIMIT (command-strip): requiere la ventana de poder activa (contador > 0)
+ *  + cartas LIMITED del roster. */
 export function canOpenLimit(state: BattleState, limitCardsCount: number): CommandCheck {
-  if (state.powerState === 'NORMAL') return reject('LIMIT_UNAVAILABLE');
+  if (state.player.powerWindowCounter <= 0) return reject('LIMIT_UNAVAILABLE');
   if (limitCardsCount <= 0) return reject('LIMIT_UNAVAILABLE');
   return ok();
 }

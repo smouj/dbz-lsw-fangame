@@ -50,9 +50,13 @@ function main() {
     '  ticks: number;',
     '  dy: number;',
     '  dx: number;',
+    '  /** Raw 4-byte frame record: [metaspriteIndex, durationTicks, deltaY_u8, deltaX_u8]. */',
+    '  raw: readonly [number, number, number, number];',
     '}',
     '',
     'export interface RomAnimationSequence {',
+    '  /** Bank-local address of the sequence record. */',
+    '  addr: number;',
     '  frames: RomAnimationFrame[];',
     '  totalTicks: number;',
     '}',
@@ -90,9 +94,11 @@ function main() {
     lines.push(`    bank: ${bank},`);
     lines.push(`    sequences: [`);
     for (const s of data.sequences) {
-      lines.push(`      { totalTicks: ${s.totalTicks}, frames: [`);
+      lines.push(`      { addr: ${s.addr ?? 0}, totalTicks: ${s.totalTicks}, frames: [`);
       for (const f of s.frames) {
-        lines.push(`        { meta: ${f.meta}, ticks: ${f.ticks}, dy: ${f.dy}, dx: ${f.dx} },`);
+        const rawDy = f.dy < 0 ? f.dy + 256 : f.dy;
+        const rawDx = f.dx < 0 ? f.dx + 256 : f.dx;
+        lines.push(`        { meta: ${f.meta}, ticks: ${f.ticks}, dy: ${f.dy}, dx: ${f.dx}, raw: [${f.meta}, ${f.ticks}, ${rawDy}, ${rawDx}] },`);
       }
       lines.push(`      ] },`);
     }

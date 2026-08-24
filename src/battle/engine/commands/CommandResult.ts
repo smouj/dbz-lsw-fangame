@@ -11,6 +11,7 @@ import type { BattleEvent } from '../events/BattleEvent';
 import type { BattleState } from '../state/BattleState';
 
 export type CommandRejectionReason =
+  | 'BATTLE_TERMINAL'          // PA8 — combate terminado (KO); 0 comandos
   | 'WRONG_PHASE'             // el comando no pertenece a la fase actual
   | 'NOT_ACTIVE_SIDE'         // no es el turno/exchange de quien envía
   | 'EXCHANGE_BUSY'           // una acción está resolviéndose

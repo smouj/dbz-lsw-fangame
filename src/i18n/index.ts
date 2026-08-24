@@ -42,6 +42,7 @@ export type TKey =
   | 'menu.footer'
   | 'common.back' | 'common.start' | 'common.fight' | 'common.retry' | 'common.exit'
   | 'common.newBattle' | 'common.notObtained' | 'common.unknown' | 'common.useInBattle'
+  | 'common.rematch' | 'common.mainMenu'
   | 'story.title' | 'story.start' | 'story.locked' | 'story.notUnlocked'
   | 'story.ch1' | 'story.ch2' | 'story.ch3' | 'story.ch4' | 'story.ch5' | 'story.ch6' | 'story.ch7' | 'story.ch8'
   | 'story.ch9' | 'story.ch10' | 'story.ch11' | 'story.ch12' | 'story.ch13' | 'story.ch14' | 'story.ch15' | 'story.ch16'

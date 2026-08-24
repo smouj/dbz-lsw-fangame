@@ -31,57 +31,52 @@
   },
   {
    "tick": 0,
-   "type": "SCENE",
-   "mode": "PLAYER_ACTION",
-   "background": "/assets/backgrounds/scenarios/01_action.png",
-   "durationTicks": 152,
+   "type": "SCENE_LOAD",
+   "mode": "TACTICAL_TO_ACTION",
+   "vramLoad": "$8E00",
    "logicalTick": 0,
    "source": "ACTION_STARTED",
-   "fidelity": "INFERRED",
-   "profile": "kamehameha"
+   "fidelity": "ROM_STATIC_COMPLETE",
+   "profile": "rom-card-12"
   },
   {
    "tick": 0,
-   "type": "CAMERA",
-   "action": "FLASH_WHITE",
+   "type": "ROM_MACRO",
+   "macroId": 30,
    "logicalTick": 0,
    "source": "ACTION_STARTED",
-   "fidelity": "INFERRED",
-   "profile": "kamehameha"
+   "fidelity": "ROM_STATIC_COMPLETE",
+   "profile": "rom-card-12"
   },
   {
    "tick": 0,
-   "type": "FIGHTER_VISIBILITY",
-   "role": "ACTOR",
+   "type": "FIGHTER_MOTION",
+   "durationTicks": 17,
    "side": "player",
-   "visible": true,
+   "kind": "BEAM_SETUP",
+   "deltaPx": -27,
+   "holdTicks": 0,
+   "segments": [
+    {
+     "dxPerTick": -1,
+     "dyPerTick": 0,
+     "ticks": 2
+    },
+    {
+     "dxPerTick": -2,
+     "dyPerTick": 0,
+     "ticks": 10
+    },
+    {
+     "dxPerTick": -1,
+     "dyPerTick": 0,
+     "ticks": 5
+    }
+   ],
    "logicalTick": 0,
    "source": "ACTION_STARTED",
-   "fidelity": "INFERRED",
-   "profile": "kamehameha"
-  },
-  {
-   "tick": 0,
-   "type": "FIGHTER_VISIBILITY",
-   "role": "TARGET",
-   "side": "enemy",
-   "visible": false,
-   "logicalTick": 0,
-   "source": "ACTION_STARTED",
-   "fidelity": "INFERRED",
-   "profile": "kamehameha"
-  },
-  {
-   "tick": 0,
-   "type": "FIGHTER_POSE",
-   "durationTicks": 8,
-   "role": "ACTOR",
-   "side": "player",
-   "pose": "idle",
-   "logicalTick": 0,
-   "source": "ACTION_STARTED",
-   "fidelity": "INFERRED",
-   "profile": "kamehameha"
+   "fidelity": "ROM_STATIC_COMPLETE",
+   "profile": "rom-card-12"
   },
   {
    "tick": 0,
@@ -94,219 +89,66 @@
    "fidelity": "NONE"
   },
   {
-   "tick": 12,
-   "type": "FIGHTER_POSE",
-   "durationTicks": 16,
-   "role": "ACTOR",
-   "side": "player",
-   "pose": "gather_power",
+   "tick": 17,
+   "type": "ANIMATION_START",
+   "resource": 3,
+   "slot": 0,
    "logicalTick": 0,
    "source": "ACTION_STARTED",
-   "fidelity": "INFERRED",
-   "profile": "kamehameha"
+   "fidelity": "ROM_STATIC_COMPLETE",
+   "profile": "rom-card-12"
   },
   {
-   "tick": 12,
-   "type": "AURA",
-   "durationTicks": 96,
-   "role": "ACTOR",
-   "side": "player",
-   "visible": true,
-   "variant": "power",
+   "tick": 17,
+   "type": "WAIT_ANIMATION_FRAME",
+   "slot": 0,
+   "frame": 4,
    "logicalTick": 0,
    "source": "ACTION_STARTED",
-   "fidelity": "INFERRED",
-   "profile": "kamehameha"
+   "fidelity": "ROM_STATIC_COMPLETE",
+   "profile": "rom-card-12"
   },
   {
-   "tick": 28,
-   "type": "FIGHTER_POSE",
-   "durationTicks": 26,
-   "role": "ACTOR",
-   "side": "player",
-   "pose": "beam_charge",
-   "logicalTick": 0,
-   "source": "ACTION_STARTED",
-   "fidelity": "INFERRED",
-   "profile": "kamehameha"
-  },
-  {
-   "tick": 54,
-   "type": "FIGHTER_POSE",
-   "durationTicks": 8,
-   "role": "ACTOR",
-   "side": "player",
-   "pose": "beam_fire",
-   "logicalTick": 0,
-   "source": "ACTION_STARTED",
-   "fidelity": "INFERRED",
-   "profile": "kamehameha"
-  },
-  {
-   "tick": 54,
-   "type": "PROJECTILE",
-   "kind": "ray",
-   "action": "spawn",
-   "from": "player",
-   "to": "enemy",
-   "logicalTick": 0,
-   "source": "ACTION_STARTED",
-   "fidelity": "INFERRED",
-   "profile": "kamehameha"
-  },
-  {
-   "tick": 70,
-   "type": "FIGHTER_VISIBILITY",
-   "role": "TARGET",
-   "side": "enemy",
-   "visible": true,
-   "logicalTick": 0,
-   "source": "ACTION_STARTED",
-   "fidelity": "INFERRED",
-   "profile": "kamehameha"
-  },
-  {
-   "tick": 81,
-   "type": "PROJECTILE",
-   "kind": "ray",
-   "action": "travel",
-   "from": "player",
-   "to": "enemy",
-   "logicalTick": 0,
-   "source": "ACTION_STARTED",
-   "fidelity": "INFERRED",
-   "profile": "kamehameha"
-  },
-  {
-   "tick": 108,
-   "type": "AURA",
+   "tick": 17,
+   "type": "FX_LOAD",
    "durationTicks": 1,
-   "role": "ACTOR",
-   "side": "player",
-   "visible": false,
-   "variant": "power",
+   "resource": 5,
+   "palette": 44,
    "logicalTick": 0,
    "source": "ACTION_STARTED",
-   "fidelity": "INFERRED",
-   "profile": "kamehameha"
+   "fidelity": "ROM_STATIC_COMPLETE",
+   "profile": "rom-card-12"
   },
   {
-   "tick": 108,
-   "type": "PROJECTILE",
-   "kind": "ray",
-   "action": "impact",
-   "from": "player",
-   "to": "enemy",
+   "tick": 17,
+   "type": "ROM_AUDIO_SCRIPT",
    "logicalTick": 0,
    "source": "ACTION_STARTED",
-   "fidelity": "INFERRED",
-   "profile": "kamehameha"
+   "fidelity": "ROM_STATIC_COMPLETE",
+   "profile": "rom-card-12"
   },
   {
-   "tick": 108,
-   "type": "IMPACT",
-   "side": "enemy",
-   "outcome": "block",
-   "logicalTick": 0,
-   "source": "ATTACK_HIT",
-   "fidelity": "INFERRED",
-   "profile": "kamehameha"
-  },
-  {
-   "tick": 108,
-   "type": "FIGHTER_VISIBILITY",
-   "role": "TARGET",
-   "side": "enemy",
-   "visible": true,
-   "logicalTick": 0,
-   "source": "ATTACK_HIT",
-   "fidelity": "INFERRED",
-   "profile": "kamehameha"
-  },
-  {
-   "tick": 108,
-   "type": "FIGHTER_POSE",
-   "durationTicks": 10,
-   "role": "TARGET",
-   "side": "enemy",
-   "pose": "guard",
-   "logicalTick": 0,
-   "source": "ATTACK_HIT",
-   "fidelity": "INFERRED",
-   "profile": "kamehameha"
-  },
-  {
-   "tick": 108,
-   "type": "FIGHTER_POSE",
-   "durationTicks": 10,
-   "role": "ACTOR",
-   "side": "player",
-   "pose": "attack_fwd",
-   "logicalTick": 0,
-   "source": "ATTACK_HIT",
-   "fidelity": "INFERRED",
-   "profile": "kamehameha"
-  },
-  {
-   "tick": 108,
-   "type": "CAMERA",
-   "action": "IMPACT",
-   "logicalTick": 0,
-   "source": "ATTACK_HIT",
-   "fidelity": "INFERRED",
-   "profile": "kamehameha"
-  },
-  {
-   "tick": 108,
-   "type": "AUDIO",
-   "cue": "block",
-   "logicalTick": 0,
-   "source": "ATTACK_HIT",
-   "fidelity": "INFERRED",
-   "profile": "kamehameha"
-  },
-  {
-   "tick": 152,
-   "type": "SCENE",
-   "mode": "OVERVIEW",
-   "background": "/assets/backgrounds/scenarios/01_world.png",
-   "durationTicks": 1,
+   "tick": 17,
+   "type": "ROM_WAIT",
+   "durationTicks": 60,
+   "reason": "BEAM hold after FX spawn",
    "logicalTick": 0,
    "source": "ACTION_STARTED",
-   "fidelity": "INFERRED",
-   "profile": "kamehameha"
+   "fidelity": "ROM_STATIC_COMPLETE",
+   "profile": "rom-card-12"
   },
   {
-   "tick": 152,
-   "type": "FIGHTER_VISIBILITY",
-   "role": "TARGET",
-   "side": "enemy",
-   "visible": true,
+   "tick": 77,
+   "type": "ROM_RESULT_BRANCH",
+   "family": "STANDARD_ATTACK result",
+   "selectedFamily": "SPECIAL_DEFENSE",
+   "selectedSourceEvent": "ATTACK_HIT",
+   "selectedMacroId": null,
+   "selectedMacroHex": null,
    "logicalTick": 0,
    "source": "ACTION_STARTED",
-   "fidelity": "INFERRED",
-   "profile": "kamehameha"
-  },
-  {
-   "tick": 152,
-   "type": "FIGHTER_POSE",
-   "durationTicks": 8,
-   "role": "ACTOR",
-   "side": "player",
-   "pose": "idle",
-   "logicalTick": 0,
-   "source": "ACTION_STARTED",
-   "fidelity": "INFERRED",
-   "profile": "kamehameha"
-  },
-  {
-   "tick": 152,
-   "type": "CAMERA",
-   "action": "RESET",
-   "logicalTick": 0,
-   "source": "ACTION_STARTED",
-   "fidelity": "INFERRED",
-   "profile": "kamehameha"
+   "fidelity": "ROM_STATIC_COMPLETE",
+   "profile": "rom-card-12"
   }
  ]
 }

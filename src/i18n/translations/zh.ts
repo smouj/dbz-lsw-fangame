@@ -16,6 +16,8 @@ export const zh: Dict = {
   'common.fight': "战斗！",
   'common.retry': "重试",
   'common.exit': "X",
+  'common.rematch': 'REMATCH',
+  'common.mainMenu': 'MAIN MENU',
   'common.newBattle': "新对战",
   'common.notObtained': "未获得",
   'common.unknown': "???",

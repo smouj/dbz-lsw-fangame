@@ -68,6 +68,9 @@ export function getActionExecution(state: BattleState): ActionExecutionState {
 }
 
 export function getControlBoundary(state: BattleState): ControlBoundary {
+  // PA8 — combate terminal: ninguna frontera de control. El gameplay está
+  // bloqueado; solo la proyección de Results vive después del KO.
+  if (isBattleTerminal(state)) return 'NONE';
   // ACTION_INPUT: ventana interactiva de la acción abierta (el reloj puede
   // expirar — timeout es parte del contrato; los inputs del jugador mandan).
   if (getActionExecution(state) === 'WAITING_INPUT') return 'ACTION_INPUT';
@@ -153,6 +156,17 @@ export function qteOf(state: BattleState) {
   return state.stageQte;
 }
 
+/** M8.POWER — power window activa (contador > 0). Deriva del SSOT
+ *  powerWindowCounter; nunca se almacena powerState en paralelo. */
+export function isPowerWindowActive(state: BattleState, side: BattleSide): boolean {
+  return (side === 'player' ? state.player : state.enemy).powerWindowCounter > 0;
+}
+
+/** M8.POWER — view derivado para consumidores legacy (FULL/NORMAL). */
+export function getPowerState(state: BattleState, side: BattleSide): 'NORMAL' | 'FULL_POWER' {
+  return (side === 'player' ? state.player : state.enemy).powerWindowCounter > 0 ? 'FULL_POWER' : 'NORMAL';
+}
+
 /** M8.C2a — ¿defensa comprometida? (choice !== null). Solo esto abre la
  *  resolución del atacante: la fase 'defend' sin choice espera input real,
  *  indefinidamente. La presentación consulta este selector — nunca deduce
@@ -170,4 +184,31 @@ export function defenseStateOf(state: BattleState): BattleState['defenseState'] 
 /** M8.C2a — elección defensiva actual (null = AWAITING_CHOICE). */
 export function defenseChoiceOf(state: BattleState): BattleState['defenseChoice'] {
   return state.defenseChoice;
+}
+
+// ─── PA8: OUTCOME TERMINAL (autoridad única de victoria/derrota) ───
+// El ganador se DERIVA del BattleState (HP <= 0), nunca de flags React ni
+// de reglas de presentación. La UI/Results solo proyecta este selector.
+// Doble KO (ambos a 0): gana el lado con iniciativa del turno en curso
+// (el que propició el último intercambio) — coherente con la resolución.
+export type BattleOutcome =
+  | { status: 'ACTIVE' }
+  | { status: 'VICTORY'; winner: 'player' }
+  | { status: 'DEFEAT'; winner: 'enemy' };
+
+export function battleOutcome(state: BattleState): BattleOutcome {
+  const pHp = state.player.hp <= 0;
+  const eHp = state.enemy.hp <= 0;
+  if (!pHp && !eHp) return { status: 'ACTIVE' };
+  if (eHp && !pHp) return { status: 'VICTORY', winner: 'player' };
+  if (pHp && !eHp) return { status: 'DEFEAT', winner: 'enemy' };
+  // Doble KO → gana la iniciativa del turno
+  return state.activeSide === 'player'
+    ? { status: 'VICTORY', winner: 'player' }
+    : { status: 'DEFEAT', winner: 'enemy' };
+}
+
+/** PA8 — ¿combate terminal? (autoridad para bloquear BattleCommands). */
+export function isBattleTerminal(state: BattleState): boolean {
+  return battleOutcome(state).status !== 'ACTIVE';
 }

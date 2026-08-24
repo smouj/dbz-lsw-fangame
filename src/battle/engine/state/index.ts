@@ -36,9 +36,13 @@ export {
   hpOf,
   handOf,
   qteOf,
+  isPowerWindowActive,
+  getPowerState,
   isDefenseCommitted,
   defenseStateOf,
   defenseChoiceOf,
   getControlBoundary,
   getActionExecution,
 } from './battleStateSelectors';
+
+export { decrementPowerWindow, postActionMaintenance } from '../commands/reducers/powerReducer';

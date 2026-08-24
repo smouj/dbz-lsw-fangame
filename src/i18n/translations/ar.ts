@@ -16,6 +16,8 @@ export const ar: Dict = {
   'common.fight': "قاتل!",
   'common.retry': "إعادة المحاولة",
   'common.exit': "X",
+  'common.rematch': 'REMATCH',
+  'common.mainMenu': 'MAIN MENU',
   'common.newBattle': "معركة جديدة",
   'common.notObtained': "غير محصل عليها",
   'common.unknown': "???",

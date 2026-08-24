@@ -5,7 +5,7 @@
 // El reloj lo alimenta un GbcClockAdapter (fuera del Engine) vía RAF —
 // el renderer solo aporta tiempo, nunca reglas.
 // ═══════════════════════════════════════════════════════════════════════
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState, type ComponentProps } from 'react';
 import { BattleRuntime, useBattleRuntime, createCuePresenter, resolvePoseSrc } from '../battle/runtime';
 import { createInitialBattleState } from '../battle/engine/state/createInitialBattleState';
 import { getCard, type CardDef } from '../data/cards';
@@ -13,6 +13,8 @@ import { BattlePosition } from '../data/positions';
 import { GbcClockAdapter } from '../battle/GbcClockAdapter';
 import { SCENARIOS, SPECIAL_ACTION_BACKGROUND } from '../data/scenarios';
 import type { BattleSide } from '../battle/engine/state/BattleState';
+import type { PresentationCue } from '../battle/engine/presentation';
+import { getPowerState } from '../battle/engine/state';
 import { CanonBattleField } from './CanonBattleField';
 
 function deckOf(ids: number[]): { drawPile: CardDef[]; hand: CardDef[]; discardPile: CardDef[] } {
@@ -52,11 +54,68 @@ export function EnginePlayground() {
   const [sceneBg, setSceneBg] = useState<string>(SCENARIOS[0].overviewBackground);
   const [sceneMode, setSceneMode] = useState('OVERVIEW');
   const [lastCue, setLastCue] = useState<string>('—');
+  const [runtimeFx, setRuntimeFx] = useState<ComponentProps<typeof CanonBattleField>['runtimeFx']>(null);
+  const romActorSideRef = useRef<BattleSide>('player');
+  const otherSide = (side: BattleSide): BattleSide => (side === 'player' ? 'enemy' : 'player');
   const setPoseFor = (side: BattleSide, pose: string) => {
     setPoseNames(prev => ({ ...prev, [side]: pose }));
     const formId = side === 'player' ? 'goku_base' : 'piccolo_base';
     resolvePoseSrc(formId, pose).then(src => setPoseSrcs(prev => ({ ...prev, [side]: src })));
   };
+  const applyRomScaffoldCue = (cue: PresentationCue) => {
+    switch (cue.type) {
+      case 'SCENE_LOAD':
+        setSceneBg(SCENARIOS[0].actionBackground);
+        setSceneMode('ACTION');
+        setLastCue(`${cue.tick} ROM scene load (${cue.mode})`);
+        break;
+      case 'FIGHTER_MOTION':
+        romActorSideRef.current = cue.side;
+        if (cue.kind === 'BEAM_SETUP') {
+          setPoseFor(cue.side, 'beam_charge');
+          setRuntimeFx(null);
+          setLastCue(`${cue.tick} ROM $1E beam setup ${cue.deltaPx}px/${cue.durationTicks}t`);
+        } else {
+          setPoseFor(cue.side, 'idle');
+          setLastCue(`${cue.tick} ROM motion ${cue.kind} ${cue.deltaPx}px/${cue.durationTicks}t`);
+        }
+        break;
+      case 'ANIMATION_START':
+        setLastCue(`${cue.tick} ROM animation resource $${(cue.resource ?? 0).toString(16).padStart(2, '0')}`);
+        break;
+      case 'WAIT_ANIMATION_FRAME':
+        if (cue.frame >= 4) {
+          setPoseFor(romActorSideRef.current, 'beam_fire');
+          setRuntimeFx({ kind: 'beam', side: romActorSideRef.current, visual: 'ray' });
+        }
+        setLastCue(`${cue.tick} ROM wait animation frame ${cue.frame}`);
+        break;
+      case 'FX_LOAD':
+        setRuntimeFx({ kind: 'beam', side: romActorSideRef.current, visual: 'ray' });
+        setLastCue(`${cue.tick} ROM FX $${(cue.resource ?? 0).toString(16).padStart(2, '0')} pal $${(cue.palette ?? 0).toString(16).padStart(2, '0')}`);
+        break;
+      case 'ROM_RESULT_BRANCH': {
+        const selected = cue.selectedFamily ?? 'PENDING';
+        const targetSide = otherSide(romActorSideRef.current);
+        const outcome = selected.includes('MISS') ? 'miss' : selected === 'SPECIAL_DEFENSE' ? 'special_defense' : 'hit';
+        setRuntimeFx({ kind: 'impact', side: romActorSideRef.current, visual: 'ray', outcome });
+        if (selected.includes('MISS')) setPoseFor(targetSide, 'evade');
+        else if (selected === 'SPECIAL_DEFENSE') setPoseFor(targetSide, 'beam_guard');
+        else setPoseFor(targetSide, 'hurt');
+        setLastCue(`${cue.tick} ROM branch ${selected}`);
+        break;
+      }
+      case 'ROM_PENDING':
+        setLastCue(`${cue.tick} ROM pending ${cue.boundary}: ${cue.reason}`);
+        break;
+      default:
+        if (cue.type.startsWith('ROM_') || cue.type === 'SCREEN_MOTION') {
+          setLastCue(`${cue.tick} ${cue.type}`);
+        }
+        break;
+    }
+  };
+
   const presenter = useMemo(() => createCuePresenter({
     onScene: (cue) => { setSceneBg(cue.background); setSceneMode(cue.mode); },
     onPose: (cue) => { setPoseFor(cue.side, cue.pose); setLastCue(`${cue.tick} pose ${cue.pose} (${cue.side})`); },
@@ -66,6 +125,7 @@ export function EnginePlayground() {
     onCamera: (cue) => { setLastCue(`${cue.tick} camera ${cue.action}`); },
     onHud: (cue) => { setLastCue(`${cue.tick} hud ${cue.kind}`); },
     onAudio: (cue) => { setLastCue(`${cue.tick} audio ${cue.cue}`); },
+    onRomCue: applyRomScaffoldCue,
   }), []);
 
   const { runtime: rt, version, dispatch, advance, can } = useBattleRuntime({ runtime, presenter });
@@ -182,6 +242,7 @@ export function EnginePlayground() {
             player: effectiveMode !== 'OVERVIEW' && effectiveAction === 'player' ? poseNames.player : 'idle',
             enemy: effectiveMode !== 'OVERVIEW' && effectiveAction === 'enemy' ? poseNames.enemy : 'idle',
           }}
+          runtimeFx={runtimeFx}
           qte={inQte && qteKey ? { label: qteKey, seq } : inCounter ? { label: 'DEFEND o CONTINUE', seq, warn: true } : null}
           devAids={false}
         />
@@ -199,7 +260,7 @@ export function EnginePlayground() {
       <div className="dev-rt-state">
         <span><b>JUG</b> HP {s.player.hp}/{s.player.maxHp} · CC {s.player.cc} · {s.player.battlePos}</span>
         <span><b>RIV</b> HP {s.enemy.hp}/{s.enemy.maxHp} · CC {s.enemy.cc} · {s.enemy.battlePos}</span>
-        <span><b>fase</b> {s.phase} · <b>power</b> {s.powerState} · <b>rng</b> {s.rngState}</span>
+        <span><b>fase</b> {s.phase} · <b>power</b> {getPowerState(s, 'player')} (cnt {s.player.powerWindowCounter}) · <b>rng</b> {s.rngState}</span>
         <span><b>eventos</b> {rt.log.entries.length} · <b>cues</b> {rt.timeline.entries.length}</span>
       </div>
 
@@ -212,6 +273,8 @@ export function EnginePlayground() {
         El reloj corre con RAF → GbcClockAdapter → advance() (solo tiempo). Los botones disparan
         BattleCommand; el Engine decide; el Presenter DOM pinta los cues con poses reales del manifest.
         La legalidad de cada botón es canExecute() en vivo.
+        Los cues ROM-backed usan un scaffold visual del runtime actual sobre el mismo battlefield de HUD Studio;
+        no promociona anchors, poses ni FX a ROM-confirmed.
       </p>
     </div>
   );

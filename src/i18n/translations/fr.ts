@@ -16,6 +16,8 @@ export const fr: Dict = {
   'common.fight': "COMBATTRE !",
   'common.retry': "RÉESSAYER",
   'common.exit': "X",
+  'common.rematch': 'REMATCH',
+  'common.mainMenu': 'MAIN MENU',
   'common.newBattle': "NOUVELLE BATAILLE",
   'common.notObtained': "NON OBTENUE",
   'common.unknown': "???",

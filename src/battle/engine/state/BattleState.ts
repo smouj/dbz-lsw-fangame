@@ -12,7 +12,7 @@
 //   ├─ resources  → hp / ki / cc (dentro de fighters) + stages/guard/acc/eva
 //   ├─ cards      → hand / drawPile / discardPile / selected / limits
 //   ├─ action     → stageQte (QTE/Stage Attack)
-//   ├─ power      → powerState / gatherTurns / gatherStartedRound
+//   ├─ power      → powerWindowCounter (SSOT ROM §102/127: Gather=5, CHARA=2)
 //   ├─ ai         → estado de la IA enemiga (autoritativo)
 //   └─ deterministic → tick (reloj GBC en ticks) + rngState (M2+)
 //
@@ -86,6 +86,10 @@ export interface BattleFighterState {
   // táctico
   battlePos: BattlePosition;
   battleId?: 'goku' | 'vegeta';
+  /** M8.POWER — power window (fighterState+4; ROM §102/127: Gather=5,
+   *  CHARA=2). PER FIGHTER: el mantenimiento (§132-133) decrementa ambos
+   *  lados tras cada ActionExecution completada. */
+  powerWindowCounter: number;
   limits: string[];
 }
 
@@ -162,7 +166,8 @@ export interface EnemyAiState {
   gatherStreak: number;
 }
 
-// ─── Nivel de poder GATHER (FULL/HALF/NORMAL) ───
+// ─── Nivel de poder derivado (view type — el estado almacena SOLO powerWindowCounter) ───
+// HALF_POWER es legacy de main.tsx (React); el ROM no lo escribe.
 export type PowerState = 'NORMAL' | 'HALF_POWER' | 'FULL_POWER';
 
 // ─── Mazo real (una instancia por combatiente) ───
@@ -203,11 +208,6 @@ export interface BattleState {
   /** M8.C2a — elección defensiva comprometida (null mientras AWAITING_CHOICE). */
   defenseChoice: DefenseChoice | null;
   pLockOn: boolean;
-
-  // ── power (GATHER) ──
-  powerState: PowerState;
-  gatherTurns: number;
-  gatherStartedRound: number | null;
 
   // ── cards ──
   deck: BattleDeckState;              // mazo real del jugador

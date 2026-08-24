@@ -8,10 +8,45 @@ import { characterName } from '../data/storyPanels';
 import { cardIconUrl } from '../data/icons';
 import { cardCinematic } from '../data/cardsCinematic';
 import { actionSemanticsForCard, resolveActionProfile } from '../battle/actionProfiles';
+import { DEFENSE_ROM_RULES, STANDARD_ATTACK_HANDLERS, impactClassForPower, standardAttackProfileFor, SPECIAL_HANDLER_DESCRIPTORS, specialHandlerForCard, type RomActionHandlerDescriptor } from '../battle/engine/rom/romDescriptors';
 import { canonForAction } from '../battle/animationCanon';
+import { animationTaxonomyForCard } from '../battle/animationTaxonomy';
+import { animationResourceById, type AnimationResourceCompletionDisposition } from '../battle/animationResources';
+import { cardPhysicalCoverageForCard, type CardPhysicalCoverageStatus } from '../battle/cardPhysicalCoverage';
+import { physicalMappingSummaryForCard, staticGapCauseForResourceId } from '../battle/physicalFrameReconciliation';
+import { romActionExecutionDescriptorForCard } from '../battle/romActionExecutionDescriptors';
+import { romPresentationProfileForCard } from '../battle/romPresentationProfiles';
 import { AttackPreview } from './AttackPreview';
+import { PhysicalReconciliationSummary } from './PhysicalReconciliationSummary';
 
 const TYPES: (CardType | 'all')[] = ['all', 'command', 'damage', 'beam', 'support', 'defense', 'special'];
+
+const PHYSICAL_STATUS_LABEL: Record<CardPhysicalCoverageStatus, string> = {
+  NO_ROM_ANIMATION: 'NO ANIM',
+  ROM_RESOURCE_MISSING: 'MISSING',
+  RESOURCE_DECODED_COMPLETE: 'PHYS OK',
+  RESOURCE_DECODED_PARTIAL: 'PHYS PART',
+  RESOURCE_DECODED_UNRESOLVED: 'PHYS TODO',
+  RESOURCE_PARTIAL: 'STATIC PART',
+  RESOURCE_SPECIAL: 'SPECIAL',
+  RESOURCE_UNKNOWN: 'UNKNOWN',
+};
+
+function physicalStatusClass(status: CardPhysicalCoverageStatus): string {
+  if (status === 'RESOURCE_DECODED_COMPLETE') return 'ok';
+  if (status === 'RESOURCE_DECODED_PARTIAL') return 'warn';
+  if (status === 'RESOURCE_DECODED_UNRESOLVED' || status === 'RESOURCE_PARTIAL' || status === 'RESOURCE_SPECIAL') return 'pending';
+  if (status === 'ROM_RESOURCE_MISSING' || status === 'RESOURCE_UNKNOWN') return 'bad';
+  return 'neutral';
+}
+
+function completionDispositionClass(disposition: AnimationResourceCompletionDisposition | undefined): string {
+  if (disposition === 'STATICALLY_CLOSED') return 'ok';
+  if (disposition === 'STATICALLY_CLOSABLE') return 'warn';
+  if (disposition === 'NEEDS_DYNAMIC_TRACE') return 'pending';
+  if (disposition === 'STATIC_LIMIT_REACHED') return 'neutral';
+  return 'neutral';
+}
 
 const EFFECT_LABEL: Record<string, string> = {
   command_3: '3 Stage', command_4: '4 Stage', command_5: '5 Stage', command_6: '6 Stage',
@@ -51,6 +86,8 @@ export function CardsModule() {
         <p className="dev-sub">{CARDS.length} cartas de la tabla ROM 0x044315 · {filtered.length} visibles</p>
       </header>
 
+      <PhysicalReconciliationSummary />
+
       <div className="dev-filters">
         <div className="dev-filter-group">
           {TYPES.map(t => (
@@ -67,25 +104,31 @@ export function CardsModule() {
 
       <div className="dev-cards-layout">
         <div className="dev-card-list">
-          {filtered.map(c => (
-            <button key={c.id} className={`dev-card-row ${selectedId === c.id ? 'active' : ''}`}
-              onClick={() => setSelectedId(c.id)}>
-              <span className="dev-card-id">{String(c.id).padStart(3, '0')}</span>
-              <span className="dev-card-sprite">
-                {cardIconUrl(c.id) ? <img src={cardIconUrl(c.id)} alt={c.name} loading="lazy" /> : <span className="dev-card-sprite-empty">—</span>}
-              </span>
-              {/* M8.F0 — frame del ataque de la carta (preview estática del
-                  primer frame de su pose canónica) */}
-              <span className="dev-card-attack-frame">
-                <AttackPreview card={c} size={40} />
-              </span>
-              <span className="dev-card-type" style={{ background: cardColor(c.type) }}>{c.type[0].toUpperCase()}</span>
-              <span className="dev-card-name">{c.name}</span>
-              <span className="dev-card-stats">⚔{c.atk} · ◎{c.acc}</span>
-              <span className="dev-card-cc">{c.cc}CC</span>
-              <span className="dev-card-rarity">{'★'.repeat(c.rarity)}</span>
-            </button>
-          ))}
+          {filtered.map(c => {
+            const coverage = cardPhysicalCoverageForCard(c);
+            return (
+              <button key={c.id} className={`dev-card-row ${selectedId === c.id ? 'active' : ''}`}
+                onClick={() => setSelectedId(c.id)}>
+                <span className="dev-card-id">{String(c.id).padStart(3, '0')}</span>
+                <span className="dev-card-sprite">
+                  {cardIconUrl(c.id) ? <img src={cardIconUrl(c.id)} alt={c.name} loading="lazy" /> : <span className="dev-card-sprite-empty">—</span>}
+                </span>
+                {/* M8.F0 — frame del ataque de la carta (preview estática del
+                    primer frame de su pose canónica) */}
+                <span className="dev-card-attack-frame">
+                  <AttackPreview card={c} size={40} />
+                </span>
+                <span className="dev-card-type" style={{ background: cardColor(c.type) }}>{c.type[0].toUpperCase()}</span>
+                <span className="dev-card-name">{c.name}</span>
+                <span className="dev-card-stats">⚔{c.atk} · ◎{c.acc}</span>
+                <span className={`dev-card-physical-chip ${physicalStatusClass(coverage.physicalStatus)}`}>
+                  {PHYSICAL_STATUS_LABEL[coverage.physicalStatus]}
+                </span>
+                <span className="dev-card-cc">{c.cc}CC</span>
+                <span className="dev-card-rarity">{'★'.repeat(c.rarity)}</span>
+              </button>
+            );
+          })}
           {filtered.length === 0 && <div className="dev-empty">Sin resultados</div>}
         </div>
 
@@ -107,6 +150,16 @@ export function CardsModule() {
 function CinematicCardInfo({ card }: { card: CardDef }) {
   const profile = resolveActionProfile(card.name);
   const legacy = cardCinematic(card.id);
+  // ROM LOTE 6 (§192/§206) — descriptor ROM por identidad real de carta
+  const defRule = DEFENSE_ROM_RULES[card.id];
+  const isSupport = card.type === 'support';
+  // ROM LOTE 7 (§239) — perfil STANDARD_ATTACK para Damage/Beam
+  const stdProfile = (card.type === 'damage' || card.type === 'beam')
+    ? standardAttackProfileFor(card)
+    : null;
+  const impactClass = stdProfile ? impactClassForPower(card.atk) : null;
+  // ROM LOTE 8 (§273) — handler especial ($08/$0B/$0C/$0D/$0E)
+  const specialHandler = specialHandlerForCard(card);
   const color = legacy ? (legacy.asset.startsWith('UNIQUE') ? '#e0b84c' : legacy.asset.startsWith('SUPPORT') ? '#7fd48a' : legacy.asset.startsWith('ITEM') ? '#6cb7e8' : '#8a93a8') : '#8a93a8';
   const fid = profile?.fidelity ?? 'INFERRED';
   const fidOk = fid === 'FRAME_VERIFIED' || fid === 'VERIFIED';
@@ -133,6 +186,56 @@ function CinematicCardInfo({ card }: { card: CardDef }) {
           )}
         </div>
       </div>
+      {/* ROM V5 — descriptor ROM real (Support/Defense). Runtime provisional
+          ≠ canon: cualquier entrada generic_support_effect es provisional. */}
+      {(isSupport || defRule) && (
+        <div className="dev-card-compat">
+          <h4>ROM V5 — Support/Defense descriptor</h4>
+          <div className="dev-compat-chips">
+            {defRule ? (
+              <>
+                <span className="dev-tag" style={{ background: '#3a2040', color: '#ffb0e0', border: '1px solid #7a4a80' }}>CA83 0x{defRule.ca83.toString(16).padStart(2, '0')}</span>
+                <span className="dev-tag" style={{ background: '#3a2040', color: '#ffb0e0', border: '1px solid #7a4a80' }}>family CA53={defRule.resultFamily}</span>
+                <span className="dev-tag" style={{ background: '#3a2040', color: '#ffd0a0', border: '1px solid #7a5a30' }}>{defRule.result}</span>
+              </>
+            ) : (
+              <span className="dev-tag" style={{ background: '#203a2a', color: '#a0ffc0', border: '1px solid #2a5a3a' }}>SUPPORT: card-indexed visual load $2C30 + category-scoped worker</span>
+            )}
+            <span className="dev-tag">rom operation: {defRule?.rule ?? (isSupport ? 'card-specific (§183-184) — NO generic +stat' : '—')}</span>
+            <span className="dev-tag">guardrail: no auto-play resource field</span>
+            <span className="dev-tag">fidelity: ROM_CONFIRMED</span>
+          </div>
+        </div>
+      )}
+      {/* ROM LOTE 7 — perfil STANDARD_ATTACK (Damage/Beam) */}
+      {stdProfile && (
+        <div className="dev-card-compat">
+          <h4>ROM LOTE 7 — STANDARD_ATTACK</h4>
+          <div className="dev-compat-chips">
+            <span className="dev-tag" style={{ background: '#202a3a', color: '#a0d0ff', border: '1px solid #2a4a6a' }}>handler $0x{stdProfile.handler.toString(16).padStart(2, '0')} → Bank03:$0x{STANDARD_ATTACK_HANDLERS[stdProfile.handler]?.toString(16).toUpperCase() ?? '—'}</span>
+            <span className="dev-tag">anim ${stdProfile.actorAnimationResource?.toString(16).padStart(2, '0') ?? '—'}</span>
+            <span className="dev-tag">FX ${stdProfile.effectResource?.toString(16).padStart(2, '0') ?? '—'}</span>
+            <span className="dev-tag">pal ${stdProfile.paletteId?.toString(16).padStart(2, '0') ?? '—'}</span>
+            <span className="dev-tag">audio ${stdProfile.audioScriptId?.toString(16).padStart(2, '0') ?? '—'}</span>
+            <span className="dev-tag">release frame {stdProfile.launch?.syncFrame ?? '—'}</span>
+            <span className={`dev-tag ${impactClass === 'HIGH_POWER' ? 'ok' : ''}`}>impactClass: {impactClass}</span>
+            <span className="dev-tag">hit ${stdProfile.resolution.normalHitMacro?.toString(16).padStart(2, '0') ?? '—'} · miss ${stdProfile.resolution.normalMissMacro?.toString(16).padStart(2, '0') ?? '—'} · hi ${stdProfile.resolution.highPowerHitMacro?.toString(16).padStart(2, '0') ?? '—'}</span>
+          </div>
+        </div>
+      )}
+      {/* ROM LOTE 8 — handler especial ($08/$0B/$0C/$0D/$0E) */}
+      {specialHandler && (
+        <div className="dev-card-compat">
+          <h4>ROM LOTE 8 — handler especial</h4>
+          <div className="dev-compat-chips">
+            <span className="dev-tag" style={{ background: '#2a203a', color: '#e0b0ff', border: '1px solid #5a3a7a' }}>handler $0x{specialHandler.subtype.toString(16).padStart(2, '0')}</span>
+            <span className="dev-tag">worker Bank{specialHandler.worker.bank}:0x{specialHandler.worker.address.toString(16).toUpperCase()}</span>
+            <span className="dev-tag">family: {specialHandler.family}</span>
+            {specialHandler.variant && <span className="dev-tag">variant: {specialHandler.variant}</span>}
+            <span className="dev-tag">sequence: {specialHandler.evidence}</span>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
@@ -174,8 +277,164 @@ function CardDetail({ card }: { card: CardDef }) {
       <div className="dev-card-code">
         <code>{JSON.stringify({ id: card.id, type: card.type, effect: card.effect, atk: card.atk, acc: card.acc, cc: card.cc, rarity: card.rarity, compatible: card.compatible ?? null, notCompatible: card.notCompatible ?? null }, null, 2)}</code>
       </div>
+      <AnimationTaxonomyInfo card={card} />
+      <RomActionExecutionInfo card={card} />
+      <RomPresentationProfileInfo card={card} />
       <ActionCanonInfo card={card} />
       <CinematicCardInfo card={card} />
+    </div>
+  );
+}
+
+function RomActionExecutionInfo({ card }: { card: CardDef }) {
+  const descriptor = romActionExecutionDescriptorForCard(card);
+  const branches = descriptor.result.branches;
+  return (
+    <div className="dev-card-compat">
+      <h4>ROM Action Execution Descriptor</h4>
+      <div className="dev-compat-chips">
+        <span className="dev-tag" style={{ background: '#1a2730', color: '#ffe9a3', border: '1px solid #5a4a20' }}>
+          handler: {descriptor.execution.handlerHex} · {descriptor.execution.workerFamily}
+        </span>
+        <span className="dev-tag">worker: {descriptor.execution.workerAddress ?? '—'}</span>
+        <span className="dev-tag">actor: {descriptor.actorAnimation.resourceHex ?? '—'} · {descriptor.actorAnimation.resourceStatus}</span>
+        <span className={`dev-tag ${completionDispositionClass(descriptor.actorAnimation.completion?.disposition)}`}>
+          completion: {descriptor.actorAnimation.completion?.disposition ?? 'NO_ROM_ANIMATION'}
+        </span>
+        <span className="dev-tag">seq source: {descriptor.actorAnimation.sequenceSource?.module ?? '—'}</span>
+        <span className="dev-tag">sequences: {descriptor.actorAnimation.sequenceSource?.sequenceCount ?? 0}</span>
+        <span className="dev-tag">frames: {descriptor.actorAnimation.sequenceSource?.physicalFrameCount ?? 0}</span>
+        <span className="dev-tag">FX: {descriptor.visualEffect.resourceHex ?? '—'}</span>
+        <span className="dev-tag">palette: {descriptor.visualEffect.paletteHex ?? '—'}</span>
+        <span className={`dev-tag ${branches.length > 0 ? 'ok' : descriptor.result.pending.length ? 'pending' : 'neutral'}`}>
+          result: {descriptor.result.family} · {branches.length} branches
+        </span>
+      </div>
+      <div className="dev-canon-beats">
+        <span className="dev-canon-beat-label">STEPS</span>
+        {descriptor.handlerScript.steps.map(step => (
+          <code key={step.id}>{step.id}:{step.evidence}</code>
+        ))}
+        {branches.length > 0 && (
+          <>
+            <span className="dev-canon-beat-label">RESULT</span>
+            {branches.map(branch => (
+              <code key={`${branch.family}-${branch.macroHex ?? branch.result}`}>
+                {branch.family}:{branch.macroHex ?? branch.result}
+              </code>
+            ))}
+          </>
+        )}
+        {descriptor.result.pending.length > 0 && (
+          <>
+            <span className="dev-canon-beat-label">PENDING</span>
+            <code>{descriptor.result.pending.join(' · ')}</code>
+          </>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function RomPresentationProfileInfo({ card }: { card: CardDef }) {
+  const profile = romPresentationProfileForCard(card);
+  return (
+    <div className="dev-card-compat">
+      <h4>ROM-derived Presentation Profile</h4>
+      <div className="dev-compat-chips">
+        <span className="dev-tag" style={{ background: '#1a2730', color: '#b9f6ff', border: '1px solid #2a4a5a' }}>
+          kind: {profile.kind}
+        </span>
+        <span className="dev-tag">program: {profile.program.length} steps</span>
+        <span className="dev-tag">branches: {profile.resultBranches.length}</span>
+        <span className={`dev-tag ${profile.completion.static === 'COMPLETE' ? 'ok' : 'pending'}`}>
+          static: {profile.completion.static}
+        </span>
+        <span className={`dev-tag ${profile.completion.dynamic === 'NOT_REQUIRED' ? 'ok' : 'pending'}`}>
+          dynamic: {profile.completion.dynamic}
+        </span>
+        <span className="dev-tag">actor: {profile.dependencies.animationResourceHex ?? '—'}</span>
+        <span className="dev-tag">FX: {profile.dependencies.fxResourceHex ?? '—'}</span>
+        <span className="dev-tag">palette: {profile.dependencies.paletteHex ?? '—'}</span>
+      </div>
+      <div className="dev-canon-beats">
+        <span className="dev-canon-beat-label">ROM PROGRAM</span>
+        {profile.program.slice(0, 12).map(step => (
+          <code key={step.id}>
+            {step.id}:{step.kind}{step.durationTicks ? `/${step.durationTicks}t` : ''}{step.macroHex ? `/${step.macroHex}` : ''}
+          </code>
+        ))}
+        {profile.program.length > 12 && <code>+{profile.program.length - 12} more</code>}
+        {profile.resultBranches.length > 0 && (
+          <>
+            <span className="dev-canon-beat-label">BRANCH</span>
+            {profile.resultBranches.map(branch => (
+              <code key={`${branch.family}-${branch.condition}`}>{branch.condition}:{branch.macroHex ?? branch.result}</code>
+            ))}
+          </>
+        )}
+        {profile.completion.pending.length > 0 && (
+          <>
+            <span className="dev-canon-beat-label">PENDING</span>
+            <code>{profile.completion.pending.slice(0, 3).join(' · ')}</code>
+          </>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function AnimationTaxonomyInfo({ card }: { card: CardDef }) {
+  const row = animationTaxonomyForCard(card);
+  const coverage = cardPhysicalCoverageForCard(card);
+  const resource = coverage.animationResource == null ? null : animationResourceById(coverage.animationResource);
+  const physical = physicalMappingSummaryForCard(card);
+  const gap = row.actorAnimation.animationResource == null ? null : staticGapCauseForResourceId(row.actorAnimation.animationResource);
+  return (
+    <div className="dev-card-compat">
+      <h4>Animation Taxonomy Canon — 125/125</h4>
+      <div className="dev-compat-chips">
+        <span className="dev-tag" style={{ background: '#1a2730', color: '#ffe9a3', border: '1px solid #5a4a20' }}>
+          execution: {row.execution.family} {row.execution.handlerHex}
+        </span>
+        <span className="dev-tag">worker: {row.execution.workerAddress ?? '—'}</span>
+        <span className="dev-tag">AnimationResource: {row.actorAnimation.animationResourceHex ?? '—'}</span>
+        <span className={`dev-tag ${physicalStatusClass(coverage.physicalStatus)}`}>
+          card physical: {PHYSICAL_STATUS_LABEL[coverage.physicalStatus]}
+        </span>
+        {resource && (
+          <span className={`dev-tag ${completionDispositionClass(resource.completion.disposition)}`}>
+            resource completion: {resource.completion.disposition} · {resource.completion.cause}
+          </span>
+        )}
+        <span className={`dev-tag ${row.actorAnimation.evidence === 'ROM_SEQUENCE_VERIFIED' ? 'ok' : ''}`}>
+          resource: {row.actorAnimation.evidence === 'ROM_SEQUENCE_VERIFIED' ? 'DECODED' : gap ?? '—'}
+        </span>
+        <span className="dev-tag">gap: {coverage.gapCause}</span>
+        <span className="dev-tag">profile: {row.actorAnimation.actionProfileId ?? `generic_${row.runtimeMapping.animationKind}`}</span>
+        <span className="dev-tag">frames: {row.actorAnimation.physicalFrameCount || 'pending static decode'}</span>
+        {physical && (
+          <span className={`dev-tag ${physical.unresolved === 0 ? 'ok' : ''}`}>
+            physical map: {physical.exact}/{physical.romFrames} EXACT · {physical.shared}/{physical.romFrames} SHARED · {physical.unresolved}/{physical.romFrames} unresolved
+          </span>
+        )}
+        <span className="dev-tag">FX: {row.visualEffect.fxResourceHex ?? '—'}</span>
+        <span className="dev-tag">palette: {row.visualEffect.paletteHex ?? '—'}</span>
+        <span className="dev-tag">visual: {row.visualEffect.visual}</span>
+        <span className="dev-tag">aura: {row.visualEffect.aura}</span>
+      </div>
+      <div className="dev-canon-beats">
+        <span className="dev-canon-beat-label">ACTOR</span>
+        {row.actorAnimation.actorSequence.map(beat => <code key={beat}>{beat}</code>)}
+        {row.actorAnimation.targetSequence.length > 0 && (
+          <>
+            <span className="dev-canon-beat-label">TARGET</span>
+            {row.actorAnimation.targetSequence.map(beat => <code key={`t-${beat}`}>{beat}</code>)}
+          </>
+        )}
+        <span className="dev-canon-beat-label">DYNAMIC</span>
+        <code>{row.runtimeMapping.traceDynamicNeededFor.join(' · ')}</code>
+      </div>
     </div>
   );
 }

@@ -23,6 +23,11 @@ const PIPELINE: Array<[string, string]> = [
   ['src/battle/engine/presentation/buildTimeline.ts', 'Presentation Adapter (M7): EventLog → BattleTimeline'],
   ['src/battle/cinematic/GbcCinematicCanon.ts', 'F0 Ground Truth: solo FRAME_VERIFIED / VIDEO_VERIFIED'],
   ['src/data/generated/spriteCounts.generated.ts', 'conteos de frames por forma (fuente: OUT_frames)'],
+  ['docs/rom/research-v3/LEDGER.md', 'ROM V3: ActionObject, metasprites, graphics blocks, palettes y Defense slot8'],
+  ['docs/rom/research-v4-fx/README.md', 'ROM V4 FX: FXResource, BG_TILEMAP, opcode $0C, scroll SCX/SCY'],
+  ['docs/rom/research-v5-support-defense/README.md', 'ROM V5: Support/Defense visual grammar, Move, CA83/CA53 y slot8'],
+  ['docs/rom/research-v6-support-physicals/README.md', 'ROM V6 CLOSED: matriz+renders 48/48, palette path, macros literales, slot8 audit, romCA53 contract'],
+  ['docs/rom/research-v7-support-defense-consumption/README.md', 'ROM V7: Support/Defense consumption + runtime cutover (V7.2-V7.4 cerrados)'],
 ];
 
 export function DashboardModule({ onNavigate }: { onNavigate: (m: DevModuleId) => void }) {
@@ -48,10 +53,15 @@ export function DashboardModule({ onNavigate }: { onNavigate: (m: DevModuleId) =
   if (cinematics.gbcVerified === 0) alerts.push({ level: 'info', text: 'F0: 0 secuencias GBC verificadas aún — todo lo funcional es INFERRED hasta captura (nunca se etiqueta como canon GBC).' });
   // RUNTIME vs CANON: las secuencias Stage funcionales son RUNTIME SEQUENCE
   // (fidelity INFERRED) — no "canon GBC" (eso es F0).
-  alerts.push({ level: 'info', text: 'Stage Attack: ventanas BACK_BACK 1.2s · BACK_FRONT 1.7s · FRONT_BACK 2.4s · FRONT_FRONT 2.9s (manual USA).' });
+  alerts.push({ level: 'info', text: 'Stage Attack: ventanas ROM_CONFIRMED BACK_BACK 0.837s · BACK_FRONT 1.339s · FRONT_BACK 2.009s · FRONT_FRONT 2.511s.' });
   alerts.push({ level: 'info', text: 'Stage: RUNTIME SEQUENCE por nivel (pool fijo, rotación determinista) — fidelity INFERRED hasta verificación F0.' });
   alerts.push({ level: 'info', text: 'Iniciativa: SPD efectiva decide cada turno; empate → persiste la iniciativa actual (determinista — el Engine es puro, sin Math.random).' });
   alerts.push({ level: 'info', text: 'Contraataque: A≈0.4s / B≈0.15s — HYPOTHESIS hasta captura ROM.' });
+  alerts.push({ level: 'info', text: 'ROM V3 sincronizado: ActionObject físico cerrado, 411/411 visualFrames validados, Tail/V-ball reachability corregida y Defense slot8 demostrado.' });
+  alerts.push({ level: 'info', text: 'ROM V4 FX sincronizado: 28 bundles ofensivos, 152 renders físicos y Beam como BG_TILEMAP; runtime aún debe cortar a ROM_FX_WINDOW.' });
+  alerts.push({ level: 'info', text: 'ROM V5 sincronizado: Support/Defense grammar cerrada estáticamente; Move separa posición táctica de motion net0; Defense selection solo precarga slot8.' });
+  alerts.push({ level: 'info', text: 'ROM V5 baseline congelado. V6 CLOSED: $2C30/$1266, matriz+renders 48/48, palette path, macros literales, slot8 audit, romCA53 contextual. V7 abierto: consumption + cutover $00/$02 ya compilado y verificado.' });
+  alerts.push({ level: 'warn', text: 'Guardrail V5: palette $FF, handler, AnimationResource y CA53 son semánticas category/path scoped; no normalizar globalmente.' });
 
   return (
     <div className="dev-panel">
@@ -104,6 +114,11 @@ export function DashboardModule({ onNavigate }: { onNavigate: (m: DevModuleId) =
               F0: <strong>{cinematics.gbcVerified}</strong> secuencias verificadas · {cinematics.gbcInferred} INFERRED ·
               {cinematics.gbcFamilies} familias cinematográficas · {cinematics.animationCanonFamilies} familias runtime ·
               reloj nativo {GBC_NATIVE_FPS} fps GBC.
+            </div>
+            <div className="dev-fid-note">
+              ROM V3/V4/V5: ActionObject + fighter graphics pipeline cerrados por estática; Beam FX físico
+              como BG tilemap; Support/Defense grammar física importada. Pendiente visible:
+              <strong> ROM_FX_WINDOW</strong>, <strong>ROM_BG_ASSEMBLY</strong> y recursos Support card-indexed.
             </div>
           </div>
         </div>

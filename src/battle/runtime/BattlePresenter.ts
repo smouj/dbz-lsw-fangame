@@ -30,6 +30,10 @@ export interface CueHandlers {
   onImpact?: (cue: Extract<PresentationCue, { type: 'IMPACT' }>, state: BattleState) => void;
   onHud?: (cue: Extract<PresentationCue, { type: 'HUD' }>, state: BattleState) => void;
   onAudio?: (cue: Extract<PresentationCue, { type: 'AUDIO' }>, state: BattleState) => void;
+  /** ROM-level relative motion. Consumers must preserve cue.segments. */
+  onRomMotion?: (cue: Extract<PresentationCue, { type: 'FIGHTER_MOTION' }>, state: BattleState) => void;
+  /** Generic ROM cue hook for Dev Studio/replay adapters. */
+  onRomCue?: (cue: PresentationCue, state: BattleState) => void;
 }
 
 /** Presenter genérico que reenvía cada cue al handler correspondiente. */
@@ -49,6 +53,46 @@ export function createCuePresenter(handlers: CueHandlers): BattlePresenter {
           case 'IMPACT': handlers.onImpact?.(cue, state); break;
           case 'HUD': handlers.onHud?.(cue, state); break;
           case 'AUDIO': handlers.onAudio?.(cue, state); break;
+          case 'FIGHTER_MOTION': handlers.onRomMotion?.(cue, state); handlers.onRomCue?.(cue, state); break;
+          case 'MACRO':
+          case 'SCENE_LOAD':
+          case 'PALETTE_TRANSITION':
+          case 'SUPPORT_FX':
+          case 'DEFENSE_FX':
+          case 'SUPPORT_VISUAL_LOAD':
+          case 'BG_ASSEMBLY':
+          case 'SUPPORT_MACRO':
+          case 'DISPLAY_COMPOSE':
+          case 'DISPLAY_CLEAR':
+          case 'PALETTE_LOAD':
+          case 'ANIMATION_START':
+          case 'ANIMATION_STATE':
+          case 'WAIT_ANIMATION':
+          case 'WAIT_ANIMATION_FRAME':
+          case 'ACTION_OBJECT_POSITION':
+          case 'ACTION_OBJECT_MOTION':
+          case 'APPLY_FRAME_DELTA':
+          case 'FX_LOAD':
+          case 'FX_AUX':
+          case 'SCENE_CONFIGURE':
+          case 'SCREEN_MOTION':
+          case 'SCREEN_RESTORE':
+          case 'SCREEN_PATH':
+          case 'ROM_SFX':
+          case 'ROM_AUDIO_SCRIPT':
+          case 'ROM_MACRO':
+          case 'ROM_WAIT':
+          case 'ROM_RESULT_BRANCH':
+          case 'ROM_PENDING':
+          case 'ACTION_OBJECT_BIND':
+          case 'ACTION_OBJECT_UNBIND':
+          case 'ACTION_OBJECT_DRAW_ORDER':
+          case 'ACTION_OBJECT_FRAME':
+          case 'ACTION_OBJECT_FRAME_OFFSET':
+          case 'ACTION_OBJECT_STOP':
+          case 'MULTI_ACTOR_SYNC':
+            handlers.onRomCue?.(cue, state);
+            break;
         }
       }
     },

@@ -47,10 +47,10 @@ export function validateAllConfig(): ConfigReport {
     if (!profile.devStudio && k === 'devStudio') errors.push(`features: ${k} activo sin Dev Studio en el perfil`);
   }
 
-  // QTE windows en rango canónico (derivado)
+  // QTE windows en rango canónico (derivado) — ✅ ROM_CONFIRMED: 50/80/120/150t
   const w = stageWindowsTicks();
-  if (w.BACK_BACK !== 72 || w.BACK_FRONT !== 102 || w.FRONT_BACK !== 143 || w.FRONT_FRONT !== 173) {
-    warnings.push(`stageWindowsTicks fuera del rango medido (${w.BACK_BACK}/${w.BACK_FRONT}/${w.FRONT_BACK}/${w.FRONT_FRONT}; canon ~72/102/143/173)`);
+  if (w.BACK_BACK !== 50 || w.BACK_FRONT !== 80 || w.FRONT_BACK !== 120 || w.FRONT_FRONT !== 150) {
+    warnings.push(`stageWindowsTicks fuera del rango medido (${w.BACK_BACK}/${w.BACK_FRONT}/${w.FRONT_BACK}/${w.FRONT_FRONT}; ROM 50/80/120/150)`);
   }
 
   return { ok: errors.length === 0, errors, warnings };

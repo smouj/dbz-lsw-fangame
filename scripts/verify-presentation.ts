@@ -42,7 +42,7 @@ function reduced(tl: BattleTimeline) {
   return tl.entries.map(en => {
     const c = en.cue as Record<string, unknown>;
     const base: Record<string, unknown> = { tick: c.tick, type: c.type };
-    for (const key of ['mode', 'background', 'durationTicks', 'role', 'side', 'pose', 'visible', 'position', 'variant', 'effect', 'kind', 'action', 'outcome', 'value', 'cue', 'from', 'to']) {
+    for (const key of ['mode', 'background', 'durationTicks', 'role', 'side', 'pose', 'visible', 'position', 'variant', 'effect', 'kind', 'action', 'outcome', 'value', 'cue', 'from', 'to', 'vramLoad', 'macroId', 'resource', 'palette', 'slot', 'frame', 'family', 'selectedFamily', 'selectedSourceEvent', 'selectedMacroId', 'selectedMacroHex', 'reason', 'boundary', 'deltaPx', 'holdTicks', 'segments']) {
       if (c[key] !== undefined) base[key] = c[key];
     }
     base.logicalTick = en.logicalTick;
@@ -144,10 +144,14 @@ for (const sc of PRESENTATION_SCENARIOS) {
 {
   const miss = PRESENTATION_SCENARIOS.find(s => s.id === 'm7_melee_miss')!;
   const tl = buildPresentationTimeline({ events: runPresentationScenario(miss).log.entries, context: CONTEXT });
-  check('M7: ATTACK_MISSED → IMPACT outcome=miss (event-driven)', tl.entries.some(en => en.cue.type === 'IMPACT' && (en.cue as { outcome?: string }).outcome === 'miss' && en.sourceEvent === 'ATTACK_MISSED'));
+  check('M7: ATTACK_MISSED → miss event-driven (legacy IMPACT or ROM branch)',
+    tl.entries.some(en => en.cue.type === 'IMPACT' && (en.cue as { outcome?: string }).outcome === 'miss' && en.sourceEvent === 'ATTACK_MISSED')
+    || tl.entries.some(en => en.cue.type === 'ROM_RESULT_BRANCH' && (en.cue as { selectedFamily?: string; selectedSourceEvent?: string }).selectedFamily === 'MISS' && (en.cue as { selectedSourceEvent?: string }).selectedSourceEvent === 'ATTACK_MISSED'));
   const block = PRESENTATION_SCENARIOS.find(s => s.id === 'm7_beam_block')!;
   const tlB = buildPresentationTimeline({ events: runPresentationScenario(block).log.entries, context: CONTEXT });
-  check('M7: ATTACK_HIT(block) → IMPACT outcome=block + TARGET pose guard', tlB.entries.some(en => en.cue.type === 'IMPACT' && (en.cue as { outcome?: string }).outcome === 'block') && tlB.entries.some(en => en.cue.type === 'FIGHTER_POSE' && (en.cue as { pose?: string }).pose === 'guard'));
+  check('M7: ATTACK_HIT(block) → block event-driven (legacy IMPACT or ROM branch)',
+    (tlB.entries.some(en => en.cue.type === 'IMPACT' && (en.cue as { outcome?: string }).outcome === 'block') && tlB.entries.some(en => en.cue.type === 'FIGHTER_POSE' && (en.cue as { pose?: string }).pose === 'guard'))
+    || tlB.entries.some(en => en.cue.type === 'ROM_RESULT_BRANCH' && (en.cue as { selectedFamily?: string; selectedSourceEvent?: string }).selectedFamily === 'SPECIAL_DEFENSE' && (en.cue as { selectedSourceEvent?: string }).selectedSourceEvent === 'ATTACK_HIT'));
   const ko = PRESENTATION_SCENARIOS.find(s => s.id === 'm7_defeat')!;
   const tlK = buildPresentationTimeline({ events: runPresentationScenario(ko).log.entries, context: CONTEXT });
   check('M7: FIGHTER_DEFEATED → cue K.O. (HUD message) + pose hurt', tlK.entries.some(en => en.cue.type === 'HUD' && (en.cue as { value?: string }).value === 'K.O.'));
@@ -161,8 +165,10 @@ check('M7: facing — actor player → scaleX 1 · actor enemy → scaleX −1',
   const beam = PRESENTATION_SCENARIOS.find(s => s.id === 'm7_beam_hit')!;
   const tl = buildPresentationTimeline({ events: runPresentationScenario(beam).log.entries, context: CONTEXT });
   const auraCues = tl.entries.filter(en => en.cue.type === 'AURA');
+  const romFxCues = tl.entries.filter(en => en.cue.type === 'FX_LOAD');
   const poseIsAura = tl.entries.some(en => en.cue.type === 'FIGHTER_POSE' && ((en.cue as { pose?: string }).pose === 'aura_power' || (en.cue as { pose?: string }).pose === 'aura_support'));
-  check('M7: aura_power como capa overlay (AURA cues) y NUNCA como pose', auraCues.length > 0 && auraCues.some(c => (c.cue as { variant?: string }).variant === 'power') && !poseIsAura);
+  check('M7: beam visual como capa/FX y NUNCA como pose',
+    ((auraCues.length > 0 && auraCues.some(c => (c.cue as { variant?: string }).variant === 'power')) || romFxCues.length > 0) && !poseIsAura);
 }
 
 // ── Independencia de FPS: el timeline se construye SOLO desde envelopes ──

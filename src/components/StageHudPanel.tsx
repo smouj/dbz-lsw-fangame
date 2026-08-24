@@ -12,7 +12,7 @@
 //   │  fijo    │  de igual tamaño y separación)   │  fijo    │
 //   └──────────┴──────────────────────────────────┴──────────┘
 // PREPARING  → PORTRAIT + PANEL VACÍO (sin inputs ni timer)
-// QTE_STARTED→ PORTRAIT + [Q][E][↓]… + 0.6 / 1.2s
+// QTE_STARTED→ PORTRAIT + [Q][E][↓]… + 0.837 / 2.511s (ROM_CONFIRMED)
 // ═══════════════════════════════════════════════════════════════════════
 
 import { type StageKey } from '../battle/stageInputMap';

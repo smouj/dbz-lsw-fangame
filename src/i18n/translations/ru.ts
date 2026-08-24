@@ -16,6 +16,8 @@ export const ru: Dict = {
   'common.fight': "В БОЙ!",
   'common.retry': "ПОВТОРИТЬ",
   'common.exit': "X",
+  'common.rematch': 'REMATCH',
+  'common.mainMenu': 'MAIN MENU',
   'common.newBattle': "НОВЫЙ БОЙ",
   'common.notObtained': "НЕ ПОЛУЧЕНО",
   'common.unknown': "???",

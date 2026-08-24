@@ -19,6 +19,7 @@ import {
   fetchManifest, saveOverride, clearOverride, saveToProject,
   downloadJson, moveFrame, removeFrame, addFrame, setFps, setLoop,
 } from './spriteEditing';
+import { PhysicalReconciliationSummary } from './PhysicalReconciliationSummary';
 import type { DevLinkedTarget } from './DevStudio';
 
 const FPS_CHOICES = [1, 3, 6, 7, 8, 10, 12, 15, 24, 30];
@@ -434,6 +435,8 @@ export function AnimationModule({ target }: { target?: DevLinkedTarget | null })
       </header>
 
       {loadError && <div className="dev-wip-banner">No se pudo cargar el manifest de esta forma.</div>}
+
+      <PhysicalReconciliationSummary />
 
       <div className="dev-navigator-wrap">
         <FormNavigator formId={formId} onChange={fid => { setFormId(fid); setPose('idle'); setFrame(0); }} showSheet={false} />

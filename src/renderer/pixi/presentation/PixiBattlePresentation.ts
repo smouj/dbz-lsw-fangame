@@ -18,6 +18,8 @@ import { ACTION_LEFT_X, ACTION_RIGHT_X } from '../scenes/ActionScene';
 import { ACTION_GROUND_Y, rushX, easeOutCubic } from '../systems/MotionSystem';
 import type { BattlePresentation, BattleScene } from './BattlePresentation';
 import { resolveProjectileVisualMode, type ProjectileVisualMode } from './projectileVisual';
+import { RomDisplayPresenter } from '../../../battle/romDisplay/RomDisplayPresenter';
+import { RomDisplayLayer } from '../../../battle/romDisplay/RomDisplayLayer';
 
 export interface PixiPresentationConfig {
   playerFormId: string;
@@ -43,6 +45,10 @@ export class PixiBattlePresentation implements BattlePresentation {
   private projectileSpawnTick: number | null = null;
   private projectileContactTick: number | null = null;
 
+  // V7.8 — ROM display layer (separada de Fighter/FX/HUD).
+  private readonly romDisplayPresenter: RomDisplayPresenter;
+  private readonly romDisplayLayer: RomDisplayLayer;
+
   // Rush: movimiento del atacante calculado como f(tick − rushStartTick).
   private rushActive = false;
   private rushStartTick = 0;
@@ -54,6 +60,8 @@ export class PixiBattlePresentation implements BattlePresentation {
     this.renderer = renderer;
     this.cfg = cfg;
     this.scale = cfg.scale ?? 3;
+    this.romDisplayPresenter = new RomDisplayPresenter();
+    this.romDisplayLayer = new RomDisplayLayer(this.romDisplayPresenter, this.scale);
   }
 
   /** Carga fondos, overworld y luchadores; deja el plano en FIELD. */
@@ -84,6 +92,9 @@ export class PixiBattlePresentation implements BattlePresentation {
     // vez). A partir de aquí los roles cambian por setRoles, sin reparent.
     this.renderer.sceneDirector.action.setFighters(this.leftActor, this.rightActor);
 
+    // V7.8 — ROM display layer: se añade sobre el action scene.
+    this.renderer.sceneDirector.action.addChild(this.romDisplayLayer.view);
+
     this.renderer.sceneDirector.setScene('FIELD');
   }
 
@@ -93,6 +104,11 @@ export class PixiBattlePresentation implements BattlePresentation {
   setAttacker(side: BattleSide): void {
     this.attacker = side;
     this.renderer.sceneDirector.action.setRoles(side);
+  }
+
+  /** V7.8 — ROM display presenter (para alimentar cues desde el handler). */
+  get romPresenter(): RomDisplayPresenter {
+    return this.romDisplayPresenter;
   }
 
   private get actor(): FighterActor | null {
@@ -217,6 +233,10 @@ export class PixiBattlePresentation implements BattlePresentation {
 
   sync(tick: number): void {
     this.renderer.sync(tick);
+
+    // V7.8 — ROM display layer: sincroniza el estado del Presenter con Pixi.
+    this.romDisplayLayer.sync(tick);
+
     if (this.projectile && this.projectileSpawnTick != null && this.projectileContactTick != null) {
       const duration = Math.max(1, this.projectileContactTick - this.projectileSpawnTick);
       this.setProjectileProgress((this.renderer.currentTick - this.projectileSpawnTick) / duration);
@@ -251,6 +271,8 @@ export class PixiBattlePresentation implements BattlePresentation {
     this.leftActor?.setPos(ACTION_LEFT_X, ACTION_GROUND_Y);
     this.rightActor?.setPos(ACTION_RIGHT_X, ACTION_GROUND_Y);
     this.setAttacker(this.attacker);
+    this.romDisplayPresenter.reset();
+    this.romDisplayLayer.clear();
     this.renderer.sceneDirector.setScene('FIELD');
   }
 
@@ -260,6 +282,7 @@ export class PixiBattlePresentation implements BattlePresentation {
     scene: BattleScene;
     actor: { pose: string | null; frame: number; x: number; y: number; visible: boolean } | null;
     target: { pose: string | null; frame: number; x: number; y: number; visible: boolean } | null;
+    romDisplay: RomDisplayPresenter['state'];
   } {
     const a = this.actor;
     const t = this.target;
@@ -268,6 +291,7 @@ export class PixiBattlePresentation implements BattlePresentation {
       scene: this.renderer.sceneDirector.scene,
       actor: a ? { pose: a.pose, frame: a.frameIndex, x: a.position.x, y: a.position.y, visible: a.visible } : null,
       target: t ? { pose: t.pose, frame: t.frameIndex, x: t.position.x, y: t.position.y, visible: t.visible } : null,
+      romDisplay: this.romDisplayPresenter.state,
     };
   }
 

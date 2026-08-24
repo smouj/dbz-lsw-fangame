@@ -14,6 +14,7 @@ import { getCard } from '../../../data/cards';
 import { canPlayCard, canPlayDefenseCard } from './rules/cardRules';
 import { canMove } from './rules/movementRules';
 import { canGuard, canGatherPower, canOpenLimit, canStageAttack, canUseDefenseLimit } from './rules/defenseRules';
+import { isBattleTerminal } from '../state/battleStateSelectors';
 
 /** Fase en la que es legal cada comando (contrato central). */
 const PHASE_REQUIREMENTS: Partial<Record<BattleCommand['type'], BattlePhase[]>> = {
@@ -53,6 +54,9 @@ function playerIsDefender(state: BattleState): boolean {
 }
 
 export function canExecute(state: BattleState, command: BattleCommand, opts?: { side?: BattleSide; characterId?: string; limitCardsCount?: number; hasAlly?: boolean }): CommandCheck {
+  // 0) PA8 — combate terminal: 0 comandos post-KO (autoridad única).
+  if (isBattleTerminal(state)) return reject('BATTLE_TERMINAL');
+
   // 1) Fase
   const phases = PHASE_REQUIREMENTS[command.type];
   if (phases && !phases.includes(state.phase)) return reject('WRONG_PHASE');

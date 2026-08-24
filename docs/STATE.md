@@ -228,7 +228,8 @@ audit:sprite-canon (P1).
 1. **Captura forense frame-a-frame** (BGB/SameBoy): golden corpus de 15 casos
    (3Stage BB/FF/mixtas, fail A/B, MOVE ±push, Gather, Damage hit/block/avoid,
    Beam hit/avoid/absorb) → después medir los 42 perfiles a FRAME_VERIFIED.
-2. Confirmar en ROM: reshuffle sí/no · ventanas mixtas del Stage (1.7/2.4) ·
+2. ✅ ROM_CONFIRMED (2026-08-22): ventanas Stage = FRONT/FRONT 150t · FRONT/BACK 120t ·
+   BACK/FRONT 80t · BACK/BACK 50t (rutina Bank01:$66E4) — sustituyen a 1.7/2.4.
    fórmula del daño parcial del Stage fail · fórmula exacta de IA.
 
 ### P1 (código, sin bloqueo)
