@@ -1,0 +1,142 @@
+{
+  "handler": {
+    "handler": "Bank03:$5B38",
+    "pattern": "CA06 == 0x14 -> init perfil ($5B42); else -> motor base Jump_003_5776",
+    "profile": [
+      {
+        "entry": "[01, c3c6, 06, c3c7, A0]",
+        "helper": "3ebd -> $72A4",
+        "meaning": "posicionar objeto (X=6, Y=160)"
+      },
+      {
+        "entry": "[06, c3c6, 04]",
+        "helper": "3ee1 -> $72DF",
+        "meaning": "releaseSyncFrame = 4"
+      },
+      {
+        "entry": "[0D, C2D0, C2D1, b]",
+        "helper": "3f30 -> $734B",
+        "meaning": "objetivo (coords rival)"
+      },
+      {
+        "entry": "[0C, 00]",
+        "helper": "3f24 -> $733C",
+        "meaning": "parametro 0"
+      },
+      {
+        "entry": "[0E, FA, 13, 00]",
+        "helper": "3f3c -> $735E",
+        "meaning": "SCREEN MOTION -6px x 19t (firma del Rocket)"
+      },
+      {
+        "entry": "[0F]",
+        "helper": "3f48 -> $7371",
+        "meaning": "flag screen-path/impacto"
+      },
+      {
+        "entry": "[07, 3C, 00]",
+        "helper": "3f18 -> $732B",
+        "meaning": "WAIT 60 ticks"
+      }
+    ],
+    "diffVsKamehameha": "Rocket anade [0E:-6x19t] + [0F]; Kamehameha ($5815): [01][06:4][0D][0C:0][07:60]"
+  },
+  "states": [
+    {
+      "CA06": 1,
+      "name": "PREPARE",
+      "handler": "jr_003_57da"
+    },
+    {
+      "CA06": 2,
+      "name": "PALETTE_TRANSITION",
+      "handler": "jr_003_57ec",
+      "detail": "07f4 bc=8 e=0x10 d=2"
+    },
+    {
+      "CA06": 3,
+      "name": "WAIT",
+      "handler": "jr_003_5802"
+    },
+    {
+      "CA06": 4,
+      "name": "RELEASE -> 0x14",
+      "handler": "Jump_003_580b"
+    },
+    {
+      "CA06": "0x14",
+      "name": "INIT (perfil)",
+      "handler": "Jump_003_5815 (base) / $5B42 (Rocket)"
+    },
+    {
+      "CA06": "0x15",
+      "name": "PALETTE_TRANSITION 2",
+      "handler": "Jump_003_587a",
+      "detail": "07f4 bc=0x310"
+    },
+    {
+      "CA06": "0x16",
+      "name": "ACTION_OBJECT draw",
+      "handler": "Jump_003_5891"
+    },
+    {
+      "CA06": "0x17",
+      "name": "RESULTADO (roll/carta)",
+      "handler": "Jump_003_58a6",
+      "detail": "card 62 -> CA7F=34b8(def)>>1, CA53=0 (CA53 1/3 -> CA7F=0)"
+    },
+    {
+      "CA06": "0x18",
+      "name": "BRANCH CA53",
+      "handler": "Jump_003_58eb",
+      "detail": "0->0x32 HIT, 1->0x3C MISS, 2->0x46 PARTIAL, otro->0x50 SPECIAL"
+    },
+    {
+      "CA06": "0x32",
+      "name": "HIT",
+      "handler": "Jump_003_5912",
+      "detail": "screen -6x16t + audio + macro CA54+0x2B"
+    },
+    {
+      "CA06": "0x33/0x3D/0x47",
+      "name": "wait -> CA06=0",
+      "handler": "Jump_003_5949"
+    },
+    {
+      "CA06": "0x3C",
+      "name": "MISS",
+      "handler": "Jump_003_5957",
+      "detail": "screen -6x8t + macro $34 + screen -6x30t + macro $35"
+    },
+    {
+      "CA06": "0x46",
+      "name": "PARTIAL",
+      "handler": "Jump_003_598f",
+      "detail": "screen -6x16t + audio + macro CA54+0x32"
+    },
+    {
+      "CA06": "0x50",
+      "name": "SPECIAL",
+      "handler": "Jump_003_59c6",
+      "detail": "defensor reposicionado + screen -6x16t + roll==0x4B -> skip audio"
+    },
+    {
+      "CA06": "0x51",
+      "name": "wait SPECIAL",
+      "handler": "Jump_003_5a2b",
+      "detail": "CA53==4 (absorb) -> stay"
+    },
+    {
+      "CA06": "0x52",
+      "name": "DAMAGE APPLY",
+      "handler": "Jump_003_5a41",
+      "detail": "CA81=1 + 34b8 + 3239"
+    },
+    {
+      "CA06": "0x53",
+      "name": "CLEANUP",
+      "handler": "Jump_003_5a55",
+      "detail": "3239 + wait CA03 + 34c7 + CA7F=0"
+    }
+  ]
+}

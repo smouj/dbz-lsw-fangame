@@ -1,0 +1,38 @@
+{
+  "02": {
+    "release": 4,
+    "screen": null,
+    "flag0F": false,
+    "init": "5815"
+  },
+  "03": {
+    "release": 5,
+    "screen": null,
+    "flag0F": false,
+    "init": "5A75"
+  },
+  "04": {
+    "release": 17,
+    "screen": "?",
+    "flag0F": "?",
+    "init": "propio"
+  },
+  "05": {
+    "release": 4,
+    "screen": "-6 x 19t",
+    "flag0F": true,
+    "init": "5B42"
+  },
+  "06": {
+    "release": 7,
+    "screen": "-6 x 16t",
+    "flag0F": true,
+    "init": "5BA8"
+  },
+  "07": {
+    "release": "?",
+    "screen": "WAIT2->FX->WAIT4->SCREEN_PATH",
+    "flag0F": false,
+    "init": "5DFE"
+  }
+}
