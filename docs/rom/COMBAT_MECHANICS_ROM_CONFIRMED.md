@@ -3829,6 +3829,7 @@ SÍ: handler × outcome × side/orientation → conjunto de traces → FSM verif
 | Defense selection (CA02) | CA55=2→MOVE CA02=$1E · CA55=1→DEFENSE CARD CA02=$28 · otro→GUARD CA02=$14; Guard→CA82=2 · Move→CA82=3; Move: bit0 GROUND/AIR bit1 FRONT/BACK persistente, ACTION motion $29/$2A neto 0px | estructura VERIFIED |
 | Kiai $40 / Paralysis $29 | cargadas en slot6 sin start estático desde workers Support ni Presentation macros | PRELOADED_SLOT6_NOT_ACTIONOBJECT_STARTED (no forzar) |
 | Lightning C. $06 | seq0 STATICALLY_REACHABLE · seq1 UNOBSERVED_STATIC_FROM_LIGHTNING_C_PATH (casi idénticas, difieren solo en último vfid) — no UNUSED, no bloqueante | no bloquea COMPLETION |
+| **R5 Defense LIMIT (2026-08-24)** | ver `docs/rom/generated/defense-limit/REPORT.md` — menú defensivo C0A0=6 CA03=0x04 → jr_001_4fcc · cursor CA36 0/1/2 (LIMIT/JOIN/BASIC, sin CHARA) · A→C2D0=1→CA03=0x0A→0x0B (Jump_001_5022) · confirm Bank01:0x5036: CA57=carta · validador $7B96 (coste≤CC · máscara 48-bit · categoría vía CA0C) · **gate exclusivo: powerWindowCounter (battleStat+4=CA40) ≠ 0** · commit CA55=1+CA03=0x5A · CC se cobra en la resolución (10→7, coste 3) · límite conservado (reutilizable) · mano intacta · JOIN (Bank01:5095) = mismo flujo SIN gate PW y CON remoción de mano ($45cf) | **ROM_STATIC_VERIFIED** |
 
 ## ❌ Siguen OPEN (deuda real)
 
@@ -3838,7 +3839,7 @@ R3  ActionObject semantic binding (ACTOR/TARGET, ACTOR_HOME, TARGET_HOME,
 R4  Rocket Punch $05 FSM completa · Potbelly $06 FSM completa
     Tail FSM dinámica · V-ball ramas espaciales · Suicide espacial
     Purple Comet multi-object · P.Comet Z multi-object            [TRACE]
-R5  DEFENSE_LIMIT_LEGACY: ruta ROM exacta del LIMIT defensivo      [STATIC+TRACE]
+
 R6  cadencia exacta TACTICAL↔ACTION (ticks por paso)              [TRACE]
 ```
 

@@ -1,0 +1,50 @@
+{
+  "phase": "DEFENSE",
+  "menuState": {
+    "C0A0": 6,
+    "CA03": "0x04",
+    "handler": "Bank01:jr_001_4fcc"
+  },
+  "cursor": {
+    "register": "CA36",
+    "values": {
+      "0": "LIMIT",
+      "1": "JOIN",
+      "2": "BASIC"
+    },
+    "note": "RIGHT/LEFT cicla 0..2; se detiene en BASIC; NO hay CHARA en defensa"
+  },
+  "input": {
+    "reader": "Bank01:Call_001_5960",
+    "shadow": "C012/C013",
+    "C2D0": {
+      "4": "A",
+      "2": "B",
+      "8": "START",
+      "0": "none"
+    }
+  },
+  "aHandler": "Bank01:jr_001_53e0 (CA0A=1, CC0C=CA36, call 2b9c, C2D0=1, CA07=0)",
+  "dispatch": {
+    "CA36_0": "CA03=0x0A (LIMIT select-open)",
+    "CA36_1": "CA03=0x14 (JOIN)",
+    "CA36_2": "CA03=0x1E (BASIC)",
+    "CA36_3": "CA03=0x28 (inalcanzable en defensa)"
+  },
+  "selectOpen": {
+    "CA03": "0x0A",
+    "handler": "Jump_001_500a (5c0f + wait CA05 + CA07=2)"
+  },
+  "selectWait": {
+    "CA03": "0x0B",
+    "handler": "Jump_001_5022"
+  },
+  "chain": [
+    "menu input",
+    "C2D0=1",
+    "CA36 dispatch",
+    "CA03=0x0A",
+    "CA03=0x0B",
+    "confirm"
+  ]
+}

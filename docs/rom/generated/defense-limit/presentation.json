@@ -1,0 +1,19 @@
+{
+  "limitSpecific": "NO hay cinematografia LIMIT-propia; la presentacion = la de la carta",
+  "card83": {
+    "slot8": [
+      5,
+      0,
+      0
+    ],
+    "fx": "0x01",
+    "palette": "0x30",
+    "handler": "0x0D (SUPPORT debuff)"
+  },
+  "screenshots": [
+    "tools/rom-trace/r31a/r5-3-select.ppm",
+    "tools/rom-trace/r31a/r5-9-limit-commit.ppm",
+    "tools/rom-trace/r31a/r5-11-resolve2.ppm"
+  ],
+  "traceLog": "tools/rom-trace/r31a/r5-long.log (1200 frames)"
+}

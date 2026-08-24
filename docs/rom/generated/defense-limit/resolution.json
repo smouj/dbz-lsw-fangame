@@ -1,0 +1,35 @@
+{
+  "postCommitStates": [
+    "CA03=0x5A (5161)",
+    "0x5B (5170)",
+    "0x5C (5178)",
+    "C0A0=8",
+    "C0A0=9",
+    "C0A0=0x1E (rush)",
+    "C0A0=0x14 (presentacion atacante)"
+  ],
+  "ccCharge": {
+    "momento": "durante C0A0=0x14 (resolucion)",
+    "evidencia": "CC 10 -> 7 (coste carta 83 = 3)",
+    "siguienteTurno": "+3 (7 -> 10)"
+  },
+  "defenseResult": {
+    "card83": {
+      "CA53": 1,
+      "CA82": 0,
+      "CA83": 0,
+      "CA7F": 3,
+      "nota": "ZERO_AVOID, daño 0; la carta se resuelve como SUPPORT normal"
+    }
+  },
+  "statesAtCommit": {
+    "CA02": "untouched",
+    "CA82": "untouched",
+    "CA83": "untouched",
+    "CA53": "untouched",
+    "slot8": "inactivo"
+  },
+  "maintenance": {
+    "powerWindowCounter": "5 -> 4 (C0A0=2, post-accion)"
+  }
+}

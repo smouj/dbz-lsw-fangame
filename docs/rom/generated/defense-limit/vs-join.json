@@ -1,0 +1,14 @@
+{
+  "join": {
+    "address": "Bank01:5095",
+    "source": "mano (2bb9)",
+    "gates": "3c88 solo",
+    "consumption": "remocion de mano (3b8c -> 2e51 -> $45cf)"
+  },
+  "limit": {
+    "address": "Bank01:5036",
+    "source": "limites (2b9c)",
+    "gates": "3c88 + powerWindowCounter!=0",
+    "consumption": "ninguna (límite conservado)"
+  }
+}

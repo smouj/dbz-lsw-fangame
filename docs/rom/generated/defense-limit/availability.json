@@ -1,0 +1,40 @@
+{
+  "validator": {
+    "address": "Bank01:$7B96",
+    "wrapper": "Call_000_3c88",
+    "rejectRegister": "C2D0"
+  },
+  "gates": [
+    {
+      "order": 1,
+      "name": "CC cost",
+      "check": "cost(CC0D+4) < CC+1",
+      "cc": "battleStat+2 = CA3E (2fd5: CA3C+(CA0A-1)*8)",
+      "reject": "C2D0=1"
+    },
+    {
+      "order": 2,
+      "name": "compat mask",
+      "check": "bit ((card-1)&7)+1 of mask byte (card-1)>>3, mask at CC0D+9..14 (48-bit)",
+      "reject": "C2D0=2"
+    },
+    {
+      "order": 3,
+      "name": "category",
+      "check": "CA0C: 0=offense -> cat 5 rejected; !=0=defense -> cat <4 rejected",
+      "reject": "C2D0=3"
+    },
+    {
+      "order": 4,
+      "name": "powerWindow (LIMIT-only)",
+      "check": "battleStat+4 = powerWindowCounter (CA40) != 0 (Bank01:0x5048 call 2fd5; +4; and a; ret z)",
+      "reject": "silencioso (sin C2D0)"
+    }
+  ],
+  "verified": {
+    "pw0": "Gohan defensa CA40=0 -> LIMIT rechazado aunque la carta pase todo",
+    "pw5": "CA40=5 (Gather) -> commit en el mismo frame",
+    "incompat": "carta 19 (mask formas 7-11) con Gohan forma 1 -> C2D0=2",
+    "oob": "carta 0x83=131 (>125) -> rechazo por coste basura"
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "source": {
+    "register": "CC01",
+    "read": "Bank01:$2B9C: HL = battleBlock(0xCB1A) + 3 + CC0B*5 + CC0C -> CC01",
+    "block": {
+      "base": "0xCB1A",
+      "limits": "+3..17 (5B x3, id en byte 0)",
+      "deck": "+18..37",
+      "drawIndex": "+38",
+      "hand": "+39..44"
+    }
+  },
+  "cardRecord": {
+    "CC0D": "copia 16B de Bank11:$4320 + mask",
+    "layout": {
+      "+0": "category",
+      "+1": "power",
+      "+2": "accuracy",
+      "+3": "internalId",
+      "+4": "ccCost",
+      "+5": "handler",
+      "+6": "actorAnim",
+      "+7": "fxResource",
+      "+8": "palette",
+      "+9..14": "compatMask48",
+      "+15": "extra"
+    }
+  },
+  "commitWrites": {
+    "CA0A": 1,
+    "CA57": "carta (CC01)",
+    "CA55": 1,
+    "CA03": "0x5A"
+  },
+  "noConsumption": {
+    "hand": "intacta",
+    "limit": "conservado (reutilizable)",
+    "ccAtCommit": "sin cambio"
+  }
+}
