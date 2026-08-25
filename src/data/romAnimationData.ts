@@ -381,7 +381,7 @@ export const ROM_TECHNIQUES: Record<string, RomTechniqueProfile> = {
     animationResource: 34,
     fxResource: 90,
     palette: 44,
-    bank: 98,
+    bank: 99,
     sequences: [
       { addr: 8873, totalTicks: 85, frames: [
         { meta: 2, ticks: 4, dy: 0, dx: -2, raw: [2, 4, 0, 254] },
