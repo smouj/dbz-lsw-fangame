@@ -62,6 +62,21 @@ const COMMAND_ANIMATIONS: Record<string, { side0: number; side1: number }> = {
   DOWN: { side0: 0x04, side1: 0x09 },
 };
 
+// command → pose selector $C3C7 (frame/pose index) escrito por el opcode $04
+// de la VM (Jump_07e_70ab → jr_07e_713f → Call_000_3501).
+//   side0 (member 0): vía tabla Bank01:$4E6D (b=0): $20→$05, $21→$08, $22→$0b,
+//                     $23→$06 · $24→$09 (caso especial en Call_000_3501).
+//   side1 (member 1): directo (c < $20 → $C3C7 = c): $0a/$0b/$0d/$0f/$10.
+// $C3C7 es el selector de pose; su resolución a frame físico (metasprite/GFX
+// → physicalId) queda PENDING (siguiente RE).
+const COMMAND_POSE_SELECTORS: Record<string, { side0: number; side1: number }> = {
+  A: { side0: 0x05, side1: 0x0a },
+  B: { side0: 0x08, side1: 0x0b },
+  RIGHT: { side0: 0x0b, side1: 0x0d },
+  UP: { side0: 0x06, side1: 0x0f },
+  DOWN: { side0: 0x09, side1: 0x10 },
+};
+
 const LEVEL_LABEL: Record<number, string> = {
   1: '3_stage',
   2: '4_stage',
@@ -240,6 +255,14 @@ export const ROM_STAGE_COMMAND_ANIMATIONS: Record<
   RomStageCommand,
   { side0: number; side1: number; lastSide1?: number }
 > = ${JSON.stringify(COMMAND_ANIMATIONS, null, 2)};
+
+/** command → pose selector $C3C7 (VM opcode $04 → Call_000_3501).
+ *  side0 vía Bank01:$4E6D (b=0) + $24→$09 · side1 directo. VERIFICADO.
+ *  $C3C7 → frame físico (metasprite/GFX → physicalId) queda PENDING. */
+export const ROM_STAGE_COMMAND_POSE: Record<
+  RomStageCommand,
+  { side0: number; side1: number }
+> = ${JSON.stringify(COMMAND_POSE_SELECTORS, null, 2)};
 `;
 }
 
@@ -266,6 +289,15 @@ function commandConsumers(): unknown {
     animationProgramTable: {
       address: '$5D00 (Bank00, Call_000_3e92: sla c / rl b → $5D00+bc)',
       resolution: 'PENDING — AnimationSlot → sequenceSelector → AnimationResource → frame → VFID → physicalId',
+    },
+    poseSelector: {
+      register: '$C3C7',
+      meaning: 'frame/pose index',
+      opcode: 'VM $04 (Jump_07e_70ab → jr_07e_713f → Call_000_3501)',
+      side0Table: 'Bank01:$4E6D (b=0): $20→$05, $21→$08, $22→$0b, $23→$06 · $24→$09',
+      side1Direct: 'c < $20 → $C3C7 = c: $0a/$0b/$0d/$0f/$10',
+      values: COMMAND_POSE_SELECTORS,
+      toPhysical: 'PENDING — $C3C7 → sequence → metasprite → GFX → physicalId',
     },
   };
 }
@@ -311,6 +343,17 @@ function genReport(d: ReturnType<typeof JSON.parse>): string {
   }
   lines.push('');
   lines.push('Cada ID indexa la tabla de programas de animación @ `$5D00` (Bank00).');
+  lines.push('');
+  lines.push('## Command → Pose selector $C3C7 (VM opcode $04 → Call_000_3501)');
+  lines.push('');
+  lines.push('| Comando | pose side0 | pose side1 |');
+  lines.push('|---|---|---|');
+  for (const [cmd, pose] of Object.entries(COMMAND_POSE_SELECTORS)) {
+    lines.push(`| \`${cmd}\` | \`$${(pose.side0).toString(16).padStart(2, '0')}\` | \`$${(pose.side1).toString(16).padStart(2, '0')}\` |`);
+  }
+  lines.push('');
+  lines.push('side0 vía tabla `Bank01:$4E6D` (b=0): `$20→$05, $21→$08, $22→$0b, $23→$06` · `$24→$09` (especial).');
+  lines.push('side1 directo (`c < $20`): `$0a/$0b/$0d/$0f/$10`. `$C3C7` → frame físico PENDING.');
   lines.push('');
   lines.push('## Secuencias');
   lines.push('');

@@ -86,6 +86,17 @@ if (existsSync(CONSUMER_JSON)) {
   check('animation side1 = 5..9 contiguo', cmds.every((c) => anims[c]?.side1 === EXPECTED_ANIMS[c].side1));
   check('consumer inputs = $CA60 (expected) + $CA6A (success)', consumers.consumer?.inputs?.expectedCommand?.includes('$CA60') && consumers.consumer?.inputs?.successFlag?.includes('$CA6A'));
   check('side register = $C7D4 member slot', consumers.dispatch?.sideRegister?.register === '$C7D4');
+  const pose = consumers.poseSelector?.values ?? {};
+  const EXPECTED_POSE: Record<string, { side0: number; side1: number }> = {
+    A: { side0: 0x05, side1: 0x0a },
+    B: { side0: 0x08, side1: 0x0b },
+    RIGHT: { side0: 0x0b, side1: 0x0d },
+    UP: { side0: 0x06, side1: 0x0f },
+    DOWN: { side0: 0x09, side1: 0x10 },
+  };
+  check('command→pose selector $C3C7 5/5', cmds.every((c) => pose[c] && pose[c].side0 === EXPECTED_POSE[c].side0 && pose[c].side1 === EXPECTED_POSE[c].side1));
+  check('pose register = $C3C7', consumers.poseSelector?.register === '$C3C7');
+  check('pose side0 table = Bank01:$4E6D', consumers.poseSelector?.side0Table?.includes('$4E6D'));
 } else {
   check('command-consumers.json presente', false, 'falta generated/rom-stage/command-consumers.json — ejecuta build:rom-stage');
 }

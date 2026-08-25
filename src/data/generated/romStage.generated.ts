@@ -605,3 +605,32 @@ export const ROM_STAGE_COMMAND_ANIMATIONS: Record<
     "side1": 9
   }
 };
+
+/** command → pose selector $C3C7 (VM opcode $04 → Call_000_3501).
+ *  side0 vía Bank01:$4E6D (b=0) + $24→$09 · side1 directo. VERIFICADO.
+ *  $C3C7 → frame físico (metasprite/GFX → physicalId) queda PENDING. */
+export const ROM_STAGE_COMMAND_POSE: Record<
+  RomStageCommand,
+  { side0: number; side1: number }
+> = {
+  "A": {
+    "side0": 5,
+    "side1": 10
+  },
+  "B": {
+    "side0": 8,
+    "side1": 11
+  },
+  "RIGHT": {
+    "side0": 11,
+    "side1": 13
+  },
+  "UP": {
+    "side0": 6,
+    "side1": 15
+  },
+  "DOWN": {
+    "side0": 9,
+    "side1": 16
+  }
+};
