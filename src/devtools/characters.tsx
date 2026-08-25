@@ -425,10 +425,14 @@ export function CharactersModule({ onOpenModule }: {
           {/* SECCIÓN 2.5 — ROM Actions: binding card → handler → track → sequence */}
           <RomActionsPanel formId={form.id} />
 
-          {/* SECCIÓN 3 — Frames del manifest (browser por pose + reemplazo) */}
-          <section className="dev-char-block">
+          {/* SECCIÓN 2.7 — ROM Canon Manifest: action → physicalId mapping */}
+          <RomCanonManifestPanel formId={form.id} />
+
+          {/* SECCIÓN 3 — Legacy User Manifest (REFERENCE ONLY, not ROM authority) */}
+          <section className="dev-char-block dev-legacy-section">
             <h3 className="dev-char-block-title">
-              Frames del manifest
+              Legacy User Manifest
+              <span className="dev-tag warn">REFERENCE ONLY · NOT ROM PHYSICAL</span>
               <span className="dev-sheets-count">{analysis.frames.length} frames · {analysis.problemCount} avisos</span>
             </h3>
             {analysis.overridden && (
@@ -516,7 +520,8 @@ function RomPhysicalFighterPanel({ formId, onOpenModule }: {
           </span>
         </h3>
         <div className="dev-fmap-summary">
-          <span className="dev-tag ok">ROM_PHYSICAL_FIGHTERS</span>
+          <span className="dev-tag ok">ROM CANON</span>
+          <span className="dev-tag">SOURCE: ROM BYTES</span>
           {manifest && <span className="dev-tag">schema {manifest.schemaVersion}/{manifest.offsetEncoding}</span>}
           {identity && <span className={`dev-tag ${identityVerified ? 'ok' : 'warn'}`}>{identity.mappingStatus}</span>}
           {manifest && <span className="dev-tag">profile 0x{hex(manifest.actorVisualProfileKey)}</span>}
@@ -876,6 +881,157 @@ function loadOverrides(): Record<string, string> {
     const raw = localStorage.getItem(FRAME_OVERRIDES_KEY);
     return raw ? JSON.parse(raw) as Record<string, string> : {};
   } catch { return {}; }
+}
+
+// ═══ RomCanonManifestPanel — ROM Canon Manifest: action → sequence → frame → physicalId ═══
+// This panel shows the ROM-derived semantic mapping for the selected form.
+// It consumes ONLY RomFighterIdentityRegistry + RomSequenceRegistry + RomActionSequenceBinding.
+// No useSheetAnalysis, no spriteFrameUrl, no legacy manifest.
+
+function RomCanonManifestPanel({ formId }: { formId: string }) {
+  const identity = ROM_FIGHTER_FORM_IDENTITY.find(row => row.formId === formId);
+  const profileKey = identity?.actorVisualProfileKey ?? -1;
+  const graphicsBank = identity?.graphicsBank ?? -1;
+
+  const registry = useMemo(() => getRomSequenceRegistry(), []);
+
+  // Get the rom-physical manifest for this form to map physicalIds to frame details
+  const dir = spriteDirFor(formId);
+  const [physManifest, setPhysManifest] = useState<RomPhysicalManifest | null>(null);
+  useEffect(() => {
+    let cancelled = false;
+    if (!dir) { setPhysManifest(null); return; }
+    fetch(`/assets/sprites/${dir}/rom-physical.manifest.json`, { cache: 'no-store' })
+      .then(r => r.ok ? r.json() : null)
+      .then(data => { if (!cancelled && data) setPhysManifest(data as RomPhysicalManifest); })
+      .catch(() => { if (!cancelled) setPhysManifest(null); });
+    return () => { cancelled = true; };
+  }, [dir]);
+
+  // Build physicalId → frame details lookup from rom-physical manifest
+  const physFrameMap = useMemo(() => {
+    const map = new Map<string, { file: string; visualFrameId: number }>();
+    if (!physManifest) return map;
+    for (const seq of Object.values(physManifest.sequences)) {
+      for (const frame of seq.frames) {
+        if (!map.has(frame.physicalId)) {
+          map.set(frame.physicalId, { file: frame.file, visualFrameId: frame.visualFrameId });
+        }
+      }
+    }
+    return map;
+  }, [physManifest]);
+
+  // Collect unique actions for this form from bindings
+  const actionsForForm = useMemo(() => {
+    const seen = new Map<string, { cardName: string; handlerFamily: string; resourceId: number | null; trackId: string }>();
+    const formCards = CARDS.filter(c => {
+      const compatible = c.compatible ?? c.notCompatible;
+      return compatible?.includes(formId);
+    });
+    for (const card of formCards) {
+      const binding = getBindingForCard(card.id);
+      if (!binding) continue;
+      for (const track of binding.tracks) {
+        const key = `${track.resourceId ?? 'none'}:${track.trackId}`;
+        if (!seen.has(key)) {
+          seen.set(key, {
+            cardName: card.name,
+            handlerFamily: binding.execution.family,
+            resourceId: track.resourceId,
+            trackId: track.trackId,
+          });
+        }
+      }
+    }
+    return [...seen.values()];
+  }, [formId]);
+
+  const [expandedAction, setExpandedAction] = useState<string | null>(null);
+
+  if (!identity) {
+    return <section className="dev-char-block dev-rom-physical-panel">
+      <h3 className="dev-char-block-title">ROM Canon Manifest</h3>
+      <div className="dev-wip-banner">No ROM identity for {formId}</div>
+    </section>;
+  }
+
+  return (
+    <section className="dev-char-block dev-rom-physical-panel">
+      <div className="dev-fmap-head">
+        <h3 className="dev-char-block-title">
+          ROM Canon Manifest
+          <span className="dev-tag ok">ROM_DERIVED</span>
+          <span className="dev-sheets-count">
+            {actionsForForm.length} actions · profile 0x{hex(profileKey)} · bank 0x{hex(graphicsBank)}
+          </span>
+        </h3>
+      </div>
+      <div className="dev-rom-identity-grid">
+        <div><strong>FORM</strong><code>{formId}</code></div>
+        <div><strong>profileKey</strong><code>0x{hex(profileKey)}</code></div>
+        <div><strong>graphicsBank</strong><code>0x{hex(graphicsBank)}</code></div>
+        <div><strong>identity</strong><code>{identity.mappingStatus}</code></div>
+      </div>
+
+      <h4 className="dev-rom-subtitle">Actions → Sequences → Physical Frames</h4>
+      <div className="dev-rom-action-list">
+        {actionsForForm.map(action => {
+          const resourceEntry = registry.find(e => e.resourceId === action.resourceId);
+          const status = resourceEntry?.status ?? 'NO_ANIMATION_RESOURCE';
+          const sequences = resourceEntry?.sequences ?? [];
+          const isExpanded = expandedAction === `${action.resourceId ?? 'none'}:${action.trackId}`;
+
+          return (
+            <div key={`${action.resourceId ?? 'none'}:${action.trackId}`} className="dev-rom-sequence">
+              <button className="dev-rom-sequence-head" onClick={() => setExpandedAction(isExpanded ? null : `${action.resourceId ?? 'none'}:${action.trackId}`)}>
+                <code>{action.cardName}</code>
+                <span>{action.handlerFamily} · {action.trackId} · ${hex(action.resourceId ?? 0xFF)}</span>
+                <span className={`dev-tag ${status === 'PHYSICAL_RESOURCE_FULLY_CLOSED' ? 'ok' : status === 'FRAME_STREAM_CLOSED' ? 'warn' : 'err'}`}>
+                  {status}
+                </span>
+              </button>
+              {isExpanded && (
+                <div className="dev-rom-sequence-frames">
+                  {sequences.map(seq => (
+                    <div key={`seq-${seq.address}`} className="dev-rom-frame-card compact">
+                      <div><strong>Seq {seq.address} ({seq.frames.length} frames, {seq.totalTicks} ticks)</strong></div>
+                      {seq.frames.map(frame => {
+                        const phys = physFrameMap.get(frame.physicalId);
+                        return (
+                          <div key={`f-${frame.frameIndex}`} className="dev-rom-frame-mini">
+                            {phys ? (
+                              <img
+                                src={`/assets/sprites/${dir}/${phys.file}`}
+                                alt={`vf${frame.visualFrameId}`}
+                                loading="lazy"
+                                style={{ imageRendering: 'pixelated', width: 48, height: 48, objectFit: 'contain' }}
+                              />
+                            ) : (
+                              <span className="dev-tag err">UNRESOLVED</span>
+                            )}
+                            <span className="dev-rom-frame-label">
+                              f{frame.frameIndex} · vf${hex(frame.visualFrameId)} · {frame.durationTicks}t
+                              {frame.physicalId && <code className="dev-rom-pid">{frame.physicalId}</code>}
+                            </span>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          );
+        })}
+      </div>
+
+      <div className="dev-rom-physical-actions" style={{ marginTop: 8 }}>
+        <span className="dev-tag">SOURCE: RomFighterIdentityRegistry + RomSequenceRegistry + RomActionSequenceBinding</span>
+        <span className="dev-tag">NO useSheetAnalysis · NO spriteFrameUrl · NO legacy manifest</span>
+      </div>
+    </section>
+  );
 }
 
 function FrameBrowser({ formId, analysis, dir }: {
