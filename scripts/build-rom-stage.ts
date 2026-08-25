@@ -320,6 +320,9 @@ function main() {
   // Clasificación de readers/consumidores de $C3C7 (100%).
   writeFileSync(join(OUT_DIR, 'pose-selector-consumers.json'), JSON.stringify(poseSelectorConsumers(), null, 2));
 
+  // STATIC ENUMERATION: bancos que alimentan $CA0D[c*3].bank.
+  writeFileSync(join(OUT_DIR, 'char-anim-bank-enumeration.json'), JSON.stringify(charAnimBankEnumeration(rom), null, 2));
+
   const report = genReport(stageData, programs);
   writeFileSync(join(OUT_DIR, 'REPORT.md'), report);
 
@@ -416,6 +419,14 @@ export const ROM_STAGE_COMMAND_PROGRAMS: RomStageVmProgram[] = ${JSON.stringify(
  *  bancos ($61 básica/Stage vs $62/$63/$64 técnicas del corpus de 66 recursos). */
 export const ROM_STAGE_CHAR_ANIM_DESCRIPTOR = ${JSON.stringify(
     (poseSelectorConsumers() as any).charAnimDescriptor,
+    null,
+    2,
+  )};
+
+/** STATIC ENUMERATION: bancos/orígenes que alimentan $CA0D[c*3].bank.
+ *  Stage QTE básico → bank $61 (slots 1..4). Técnicas → $62/$63/$64 (slots 6,8). */
+export const ROM_STAGE_CHAR_ANIM_BANKS = ${JSON.stringify(
+    charAnimBankEnumeration(readFileSync(ROM_PATH)),
     null,
     2,
   )};
@@ -536,6 +547,68 @@ function poseSelectorConsumers(): unknown {
       },
       toPhysical: 'VERIFIED hasta resource base (3 raíces) + gramática + writers. JOIN físico PENDIENTE: bank $61 (Stage/básica) está fuera del corpus de 66 recursos → requiere extensión de corpus.',
     },
+  };
+}
+
+// ── STATIC ENUMERATION: bancos/orígenes que alimentan $CA0D[c*3].bank ──
+// Reproduce la aritmética de Call_000_1266 (a=bank, de=index):
+//   de = $4000 + u16($4008 + index*4) * 4
+// y lee el count de secuencias de cada resource base (root +0).
+function call1266Base(rom: Buffer, bank: number, index: number): number {
+  const tblFile = bank * 0x4000 + (0x4008 - 0x4000);
+  const value = rom[tblFile + index * 4] | (rom[tblFile + index * 4 + 1] << 8);
+  return 0x4000 + value * 4;
+}
+
+function resourceSequenceCount(rom: Buffer, bank: number, base: number): number {
+  const file = (addr: number) => bank * 0x4000 + (addr - 0x4000);
+  const w0 = rom[file(base)] | (rom[file(base) + 1] << 8);
+  const T = (base + w0) & 0xffff;
+  return rom[file(T)];
+}
+
+function charAnimBankEnumeration(rom: Buffer): unknown {
+  // Los 7 recursos de pie de bank $61 (Call_000_35ca, de = 0..6 → slots 0..5,7).
+  const bank61 = Array.from({ length: 7 }, (_, i) => {
+    const base = call1266Base(rom, 0x61, i);
+    return { resourceIndex: i, resourceBase: base, sequenceCount: resourceSequenceCount(rom, 0x61, base) };
+  });
+
+  // Catálogo de técnicas: banks $62/$63/$64 (Call_000_2afe: bank=$62+id/25, localId=id%25).
+  const techniqueBanks = [0x62, 0x63, 0x64].map((bank) => ({
+    bank,
+    localIdRange: [0, 24],
+    resourceBases: Array.from({ length: 25 }, (_, i) => call1266Base(rom, bank, i)),
+  }));
+
+  return {
+    descriptorTable: '$CA0D (stride 3, [bank][ptr-lo][ptr-hi])',
+    uniqueWriter: 'Call_000_3702 (= Call_000_2fe7 → hl=$CA0D+c*3 + Call_000_08dd → [b][e][d]) — único escritor de $CA0D (9 call sites totales)',
+    bankResolver: 'Call_000_1266 (a=bank, de=index): de = $4000 + u16($4008 + index*4)*4',
+    slots: [
+      { slot: 0, animationBank: 0x61, resourceIndex: 0, resourceBase: bank61[0].resourceBase, sequenceCount: bank61[0].sequenceCount, loader: 'Call_000_35ca (Bank00:$35CA, desde Bank01:$4A45 estado de pie)', meaning: 'idle/neutral' },
+      { slot: 1, animationBank: 0x61, resourceIndex: 1, resourceBase: bank61[1].resourceBase, sequenceCount: bank61[1].sequenceCount, loader: 'Call_000_35ca', meaning: 'A (pose $05)' },
+      { slot: 2, animationBank: 0x61, resourceIndex: 2, resourceBase: bank61[2].resourceBase, sequenceCount: bank61[2].sequenceCount, loader: 'Call_000_35ca', meaning: 'B (pose $08)' },
+      { slot: 3, animationBank: 0x61, resourceIndex: 3, resourceBase: bank61[3].resourceBase, sequenceCount: bank61[3].sequenceCount, loader: 'Call_000_35ca', meaning: 'RIGHT (pose $0B)' },
+      { slot: 4, animationBank: 0x61, resourceIndex: 4, resourceBase: bank61[4].resourceBase, sequenceCount: bank61[4].sequenceCount, loader: 'Call_000_35ca', meaning: 'UP (pose $06) / DOWN (pose $09)' },
+      { slot: 5, animationBank: 0x61, resourceIndex: 5, resourceBase: bank61[5].resourceBase, sequenceCount: bank61[5].sequenceCount, loader: 'Call_000_35ca', meaning: 'básica 5 (no usada por QTE A/B/RIGHT/UP/DOWN)' },
+      { slot: 6, animationBank: 'var $62/$63/$64', resourceIndex: 'localId = id % 25', resourceBase: 'var', sequenceCount: null, loader: 'Bank01:$7000s (Call_000_2afe + Call_000_1266 + Call_000_3702 c=$06)', meaning: 'técnica (no Stage QTE básico)' },
+      { slot: 7, animationBank: 0x61, resourceIndex: 6, resourceBase: bank61[6].resourceBase, sequenceCount: bank61[6].sequenceCount, loader: 'Call_000_35ca', meaning: 'básica 6 (no usada por QTE A/B/RIGHT/UP/DOWN)' },
+      { slot: 8, animationBank: 'var $62/$63/$64', resourceIndex: 'localId = id % 25', resourceBase: 'var', sequenceCount: null, loader: 'Bank01:$76A6 (Call_000_2afe + Call_000_1266 + Call_000_3702 c=$08)', meaning: 'técnica (no Stage QTE básico)' },
+    ],
+    stageAttacks: {
+      commands: ['A', 'B', 'RIGHT', 'UP', 'DOWN'],
+      poseSelectorsMemberSlot0: { A: 0x05, B: 0x08, RIGHT: 0x0b, UP: 0x06, DOWN: 0x09 },
+      frameGroups: { A: 1, B: 2, RIGHT: 3, UP: 4, DOWN: 4 },
+      slotsUsed: [1, 2, 3, 4],
+      animationBank: 0x61,
+      note: 'Stage QTE básico resuelve SIEMPRE a bank $61 (slots 1..4). Los slots 6 y 8 (técnicas $62-$64) NO participan en el QTE de Stage.',
+    },
+    animationBanksObserved: [0x61, 0x62, 0x63, 0x64],
+    noOtherBanks: 'NO hay $6B/$69/$65/$75 en $CA0D. Esos bancos alimentan OTRAS estructuras: $6B→$cc02 (char data auxiliar), $69→Call_000_2b65/2b7a (char_data+1/+2), $65→Call_000_2b30 (char_data+7/+8), y $CA28 vía Call_000_3685 (bank $31+char_data+1 = graphics bank). Ninguno escribe $CA0D.',
+    bank61: { resourceCount: 7, resources: bank61 },
+    techniqueBanks,
+    evidence: 'mgbdis bank_000.asm Call_000_35ca/$3702/$1266 + bank_001.asm $8384/$9477 + dump $4008 (Call_000_1266)',
   };
 }
 

@@ -1326,3 +1326,277 @@ export const ROM_STAGE_CHAR_ANIM_DESCRIPTOR = {
   },
   "toPhysical": "VERIFIED hasta resource base (3 raíces) + gramática + writers. JOIN físico PENDIENTE: bank $61 (Stage/básica) está fuera del corpus de 66 recursos → requiere extensión de corpus."
 };
+
+/** STATIC ENUMERATION: bancos/orígenes que alimentan $CA0D[c*3].bank.
+ *  Stage QTE básico → bank $61 (slots 1..4). Técnicas → $62/$63/$64 (slots 6,8). */
+export const ROM_STAGE_CHAR_ANIM_BANKS = {
+  "descriptorTable": "$CA0D (stride 3, [bank][ptr-lo][ptr-hi])",
+  "uniqueWriter": "Call_000_3702 (= Call_000_2fe7 → hl=$CA0D+c*3 + Call_000_08dd → [b][e][d]) — único escritor de $CA0D (9 call sites totales)",
+  "bankResolver": "Call_000_1266 (a=bank, de=index): de = $4000 + u16($4008 + index*4)*4",
+  "slots": [
+    {
+      "slot": 0,
+      "animationBank": 97,
+      "resourceIndex": 0,
+      "resourceBase": 16432,
+      "sequenceCount": 32,
+      "loader": "Call_000_35ca (Bank00:$35CA, desde Bank01:$4A45 estado de pie)",
+      "meaning": "idle/neutral"
+    },
+    {
+      "slot": 1,
+      "animationBank": 97,
+      "resourceIndex": 1,
+      "resourceBase": 18800,
+      "sequenceCount": 6,
+      "loader": "Call_000_35ca",
+      "meaning": "A (pose $05)"
+    },
+    {
+      "slot": 2,
+      "animationBank": 97,
+      "resourceIndex": 2,
+      "resourceBase": 19464,
+      "sequenceCount": 12,
+      "loader": "Call_000_35ca",
+      "meaning": "B (pose $08)"
+    },
+    {
+      "slot": 3,
+      "animationBank": 97,
+      "resourceIndex": 3,
+      "resourceBase": 20852,
+      "sequenceCount": 14,
+      "loader": "Call_000_35ca",
+      "meaning": "RIGHT (pose $0B)"
+    },
+    {
+      "slot": 4,
+      "animationBank": 97,
+      "resourceIndex": 4,
+      "resourceBase": 22532,
+      "sequenceCount": 10,
+      "loader": "Call_000_35ca",
+      "meaning": "UP (pose $06) / DOWN (pose $09)"
+    },
+    {
+      "slot": 5,
+      "animationBank": 97,
+      "resourceIndex": 5,
+      "resourceBase": 23932,
+      "sequenceCount": 4,
+      "loader": "Call_000_35ca",
+      "meaning": "básica 5 (no usada por QTE A/B/RIGHT/UP/DOWN)"
+    },
+    {
+      "slot": 6,
+      "animationBank": "var $62/$63/$64",
+      "resourceIndex": "localId = id % 25",
+      "resourceBase": "var",
+      "sequenceCount": null,
+      "loader": "Bank01:$7000s (Call_000_2afe + Call_000_1266 + Call_000_3702 c=$06)",
+      "meaning": "técnica (no Stage QTE básico)"
+    },
+    {
+      "slot": 7,
+      "animationBank": 97,
+      "resourceIndex": 6,
+      "resourceBase": 24096,
+      "sequenceCount": 27,
+      "loader": "Call_000_35ca",
+      "meaning": "básica 6 (no usada por QTE A/B/RIGHT/UP/DOWN)"
+    },
+    {
+      "slot": 8,
+      "animationBank": "var $62/$63/$64",
+      "resourceIndex": "localId = id % 25",
+      "resourceBase": "var",
+      "sequenceCount": null,
+      "loader": "Bank01:$76A6 (Call_000_2afe + Call_000_1266 + Call_000_3702 c=$08)",
+      "meaning": "técnica (no Stage QTE básico)"
+    }
+  ],
+  "stageAttacks": {
+    "commands": [
+      "A",
+      "B",
+      "RIGHT",
+      "UP",
+      "DOWN"
+    ],
+    "poseSelectorsMemberSlot0": {
+      "A": 5,
+      "B": 8,
+      "RIGHT": 11,
+      "UP": 6,
+      "DOWN": 9
+    },
+    "frameGroups": {
+      "A": 1,
+      "B": 2,
+      "RIGHT": 3,
+      "UP": 4,
+      "DOWN": 4
+    },
+    "slotsUsed": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "animationBank": 97,
+    "note": "Stage QTE básico resuelve SIEMPRE a bank $61 (slots 1..4). Los slots 6 y 8 (técnicas $62-$64) NO participan en el QTE de Stage."
+  },
+  "animationBanksObserved": [
+    97,
+    98,
+    99,
+    100
+  ],
+  "noOtherBanks": "NO hay $6B/$69/$65/$75 en $CA0D. Esos bancos alimentan OTRAS estructuras: $6B→$cc02 (char data auxiliar), $69→Call_000_2b65/2b7a (char_data+1/+2), $65→Call_000_2b30 (char_data+7/+8), y $CA28 vía Call_000_3685 (bank $31+char_data+1 = graphics bank). Ninguno escribe $CA0D.",
+  "bank61": {
+    "resourceCount": 7,
+    "resources": [
+      {
+        "resourceIndex": 0,
+        "resourceBase": 16432,
+        "sequenceCount": 32
+      },
+      {
+        "resourceIndex": 1,
+        "resourceBase": 18800,
+        "sequenceCount": 6
+      },
+      {
+        "resourceIndex": 2,
+        "resourceBase": 19464,
+        "sequenceCount": 12
+      },
+      {
+        "resourceIndex": 3,
+        "resourceBase": 20852,
+        "sequenceCount": 14
+      },
+      {
+        "resourceIndex": 4,
+        "resourceBase": 22532,
+        "sequenceCount": 10
+      },
+      {
+        "resourceIndex": 5,
+        "resourceBase": 23932,
+        "sequenceCount": 4
+      },
+      {
+        "resourceIndex": 6,
+        "resourceBase": 24096,
+        "sequenceCount": 27
+      }
+    ]
+  },
+  "techniqueBanks": [
+    {
+      "bank": 98,
+      "localIdRange": [
+        0,
+        24
+      ],
+      "resourceBases": [
+        16492,
+        16796,
+        17172,
+        17556,
+        18632,
+        19092,
+        19640,
+        20100,
+        20980,
+        21336,
+        21804,
+        22400,
+        22908,
+        23212,
+        23796,
+        24228,
+        24628,
+        25248,
+        25612,
+        26168,
+        26528,
+        26960,
+        27740,
+        28280,
+        28728
+      ]
+    },
+    {
+      "bank": 99,
+      "localIdRange": [
+        0,
+        24
+      ],
+      "resourceBases": [
+        16492,
+        16840,
+        17356,
+        17944,
+        19892,
+        20244,
+        20592,
+        21120,
+        21624,
+        22240,
+        22604,
+        23044,
+        24092,
+        24680,
+        25752,
+        26636,
+        26636,
+        26636,
+        26636,
+        27196,
+        27848,
+        28504,
+        29428,
+        30532,
+        31636
+      ]
+    },
+    {
+      "bank": 100,
+      "localIdRange": [
+        0,
+        24
+      ],
+      "resourceBases": [
+        16456,
+        17840,
+        18964,
+        20076,
+        21196,
+        22552,
+        23288,
+        24460,
+        25596,
+        26640,
+        27572,
+        28500,
+        29352,
+        30536,
+        31124,
+        31124,
+        16408,
+        20460,
+        60416,
+        18436,
+        18436,
+        18444,
+        18444,
+        18444,
+        18448
+      ]
+    }
+  ],
+  "evidence": "mgbdis bank_000.asm Call_000_35ca/$3702/$1266 + bank_001.asm $8384/$9477 + dump $4008 (Call_000_1266)"
+};

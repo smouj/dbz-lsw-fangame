@@ -142,5 +142,27 @@ if (existsSync(READERS_JSON)) {
   check('pose-selector-consumers.json presente', false, 'falta generated/rom-stage/pose-selector-consumers.json — ejecuta build:rom-stage');
 }
 
+// Gate 7: STATIC ENUMERATION de bancos que alimentan $CA0D[c*3].bank.
+const BANKS_JSON = join(ROOT, 'generated/rom-stage/char-anim-bank-enumeration.json');
+if (existsSync(BANKS_JSON)) {
+  const en = JSON.parse(readFileSync(BANKS_JSON, 'utf8'));
+  // Re-computar independientemente los 7 bases de bank $61 (Call_000_1266).
+  const call1266 = (bank: number, index: number) => {
+    const tblFile = bank * 0x4000 + (0x4008 - 0x4000);
+    const v = rom[tblFile + index * 4] | (rom[tblFile + index * 4 + 1] << 8);
+    return 0x4000 + v * 4;
+  };
+  const bank61Slots = (en.slots as any[]).filter((s) => s.animationBank === 0x61);
+  check('enumeración: 7 slots bank $61 (Call_000_35ca)', bank61Slots.length === 7);
+  check('enumeración: 2 slots técnica var $62/$63/$64 (Call_000_2afe)', (en.slots as any[]).filter((s) => typeof s.animationBank === 'string').length === 2);
+  check('enumeración: bancos observados = $61/$62/$63/$64 (sin $6B/$69/$65/$75)', JSON.stringify(en.animationBanksObserved) === JSON.stringify([0x61, 0x62, 0x63, 0x64]));
+  check('enumeración: resource bases bank $61 == Call_000_1266 re-cálculo', bank61Slots.every((s) => s.resourceBase === call1266(0x61, s.resourceIndex)));
+  check('enumeración: Stage QTE slots usados = 1..4 (bank $61)', JSON.stringify(en.stageAttacks?.slotsUsed) === JSON.stringify([1, 2, 3, 4]));
+  check('enumeración: Stage attack bank = $61', en.stageAttacks?.animationBank === 0x61);
+  check('enumeración: bank $61 resource count = 7', en.bank61?.resourceCount === 7);
+} else {
+  check('char-anim-bank-enumeration.json presente', false, 'falta generated/rom-stage/char-anim-bank-enumeration.json — ejecuta build:rom-stage');
+}
+
 console.log(`\n═══ RESULTADO: ${pass} ✓ · ${fail} ✗ ═══`);
 if (fail > 0) process.exit(1);
