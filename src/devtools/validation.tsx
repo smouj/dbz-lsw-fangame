@@ -177,7 +177,11 @@ export function ValidationModule() {
     pass('Physical map: statuses completos y explícitos', physical.romFrames === physical.exact + physical.shared + physical.composite + physical.unresolved, `${physical.exact} EXACT · ${physical.shared} SHARED · ${physical.composite} COMPOSITE · ${physical.unresolved} UNRESOLVED`);
     const cardCoverage = cardPhysicalCoverageSummary();
     pass('Cards → physical coverage 125/125', cardCoverage.cards === CARDS.length && cardCoverage.missingResource === 0, `${cardCoverage.complete} complete · ${cardCoverage.partial} partial · ${cardCoverage.unresolvedDecoded} decoded unresolved · ${cardCoverage.pendingStatic} pending static`);
-    pass('AnimationResource PARTIAL → completion cause explícita', resourceCompletion.partial === 48 && resourceCompletion.staticallyClosable === 48, `${resourceCompletion.staticallyClosable} statically closable · ${resourceCompletion.needsDynamicTrace} needs dynamic trace · ${resourceCompletion.staticLimitReached} static limit`);
+    pass('AnimationResource PARTIAL → completion cause explícita',
+      resourceCompletion.decoded === resourceCompletion.staticallyClosed
+        && resourceCompletion.partial === resourceCompletion.staticallyClosable
+        && resourceCompletion.decoded + resourceCompletion.partial + resourceCompletion.special + resourceCompletion.unknown === resourceCompletion.resources,
+      `${resourceCompletion.decoded} decoded · ${resourceCompletion.partial} partial · ${resourceCompletion.special} special · ${resourceCompletion.unknown} unknown · ${resourceCompletion.staticallyClosable} statically closable · ${resourceCompletion.needsDynamicTrace} needs dynamic trace · ${resourceCompletion.staticLimitReached} static limit`);
     const actionExecution = romActionExecutionSummary();
     pass('ROM Action Execution descriptors 125/125', actionExecution.cards === CARDS.length && actionExecution.missingResources === 0, `${actionExecution.cards}/${CARDS.length} descriptors · ${actionExecution.withActorAnimation} actor resources · ${actionExecution.withFx} FX · ${actionExecution.withPalette} palettes`);
     pass('ROM Action Execution: result branches solo con evidencia', actionExecution.descriptorsWithBranches === actionExecution.standardAttackProfiles + actionExecution.defenseRules, `${actionExecution.descriptorsWithBranches} proven branch descriptors · ${actionExecution.pendingStaticDecode} pending static · ${actionExecution.needsDynamicTrace} dynamic boundary`);
