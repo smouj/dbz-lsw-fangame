@@ -7,11 +7,11 @@
 // 3. Binding sequences exist in RomSequenceRegistry when present
 // 4. Sequence frame counts match registry frame counts
 // 5. Duration ticks match registry ticks
-// 6. PHYSICAL_RESOURCE_FULLY_CLOSED bindings have physicalId for every frame
-// 7. FRAME_STREAM_CLOSED bindings may have empty physicalId
+// 6. PHYSICAL_RESOURCE_FULLY_CLOSED bindings have linkageResolved for every frame
+// 7. RomSequenceRegistry never emits physicalId; pixel identity lives in the form corpus
 // 8. No unknown card resources (0xFF means none)
 // 9. No invented sequences (sequences match ROM_TECHNIQUES)
-// 10. No dangling physicalIds
+// 10. No dangling linkage state
 // ═══════════════════════════════════════════════════════════════════════
 
 import { CARDS } from '../src/data/cards';
@@ -89,37 +89,43 @@ function main() {
   }
   results.push(check('Binding sequences match registry', sequenceExistFails === 0, `${sequenceExistFails} mismatches`));
 
-  // 4. Fully closed resources have physicalId for every frame
-  let missingPhysicalId = 0;
+  // 4. Fully closed resources have structural linkage for every frame.
+  let missingLinkage = 0;
+  let registryPhysicalIds = 0;
   for (const entry of registry) {
     if (entry.status === 'PHYSICAL_RESOURCE_FULLY_CLOSED') {
       for (const seq of entry.sequences) {
         for (const frame of seq.frames) {
-          if (!frame.physicalId) {
-            missingPhysicalId++;
-            console.log(`  MISSING physicalId: ${entry.technique} seq=${seq.address} frame=${frame.frameIndex} vfid=${frame.visualFrameId}`);
+          if ('physicalId' in frame && (frame as unknown as { physicalId?: string }).physicalId) {
+            registryPhysicalIds++;
+            console.log(`  FALSE PHYSICAL ID IN SEQUENCE REGISTRY: ${entry.technique} seq=${seq.address} frame=${frame.frameIndex}`);
+          }
+          if (!frame.linkageResolved || frame.metaspritePieceCount <= 0 || frame.graphicsBlockCount <= 0) {
+            missingLinkage++;
+            console.log(`  MISSING linkage: ${entry.technique} seq=${seq.address} frame=${frame.frameIndex} vfid=${frame.visualFrameId}`);
           }
         }
       }
     }
   }
-  results.push(check('PHYSICAL_RESOURCE_FULLY_CLOSED has physicalId for every frame', missingPhysicalId === 0, `${missingPhysicalId} missing physicalIds`));
+  results.push(check('PHYSICAL_RESOURCE_FULLY_CLOSED has linkageResolved for every frame', missingLinkage === 0, `${missingLinkage} missing linkage`));
+  results.push(check('RomSequenceRegistry emits no physicalId', registryPhysicalIds === 0, `${registryPhysicalIds} false physicalIds`));
 
-  // 5. FRAME_STREAM_CLOSED resources have empty physicalId (honest status)
+  // 5. FRAME_STREAM_CLOSED resources have unresolved linkage (honest status)
   let falselyClosed = 0;
   for (const entry of registry) {
     if (entry.status === 'FRAME_STREAM_CLOSED') {
       for (const seq of entry.sequences) {
         for (const frame of seq.frames) {
-          if (frame.physicalId) {
+          if (frame.linkageResolved || ('physicalId' in frame && (frame as unknown as { physicalId?: string }).physicalId)) {
             falselyClosed++;
-            console.log(`  FALSELY CLOSED: ${entry.technique} frame=${frame.frameIndex} has physicalId=${frame.physicalId} but status is FRAME_STREAM_CLOSED`);
+            console.log(`  FALSELY CLOSED: ${entry.technique} frame=${frame.frameIndex} has linkage/physicalId but status is FRAME_STREAM_CLOSED`);
           }
         }
       }
     }
   }
-  results.push(check('FRAME_STREAM_CLOSED has no fake physicalIds', falselyClosed === 0, `${falselyClosed} falsely closed frames`));
+  results.push(check('FRAME_STREAM_CLOSED has no fake physical linkage', falselyClosed === 0, `${falselyClosed} falsely closed frames`));
 
   // 6. Known-but-undecoded resources are fine (0xFF = none, not in registry yet)
   // Only fail for resources that reference something truly impossible

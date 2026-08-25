@@ -11,6 +11,8 @@
 // 7. ROM Physical panel labeled ROM CANON
 // 8. RomSequenceRegistry has no module-level fs import
 // 9. RomActionSequenceBinding does NOT reference spriteManifest
+// 10. Character Studio does not present OUT_frames as source truth
+// 11. RomSequenceRegistry does not expose physicalId
 // ═══════════════════════════════════════════════════════════════════════
 
 import { readFileSync } from 'fs';
@@ -96,11 +98,22 @@ check('ROM Physical panel labeled SOURCE: ROM BYTES',
   CHARACTERS_TSX.includes('SOURCE: ROM BYTES'),
   undefined);
 
+check('Character Studio header does not call OUT_frames source truth',
+  !CHARACTERS_TSX.includes('manifests OUT_frames, fuente única') &&
+  !CHARACTERS_TSX.includes('El manifest es la verdad'),
+  undefined);
+
 // ═══ 8. RomSequenceRegistry has no module-level fs import ═══
 check('RomSequenceRegistry has no module-level fs import',
   !ROM_SEQUENCE_REGISTRY_TS.includes("import { readFileSync } from 'fs'") &&
   !ROM_SEQUENCE_REGISTRY_TS.includes("import * as fs from 'fs'") &&
   !ROM_SEQUENCE_REGISTRY_TS.includes("from 'node:fs'"),
+  undefined);
+
+check('RomSequenceRegistry exposes linkageResolved, not physicalId',
+  ROM_SEQUENCE_REGISTRY_TS.includes('linkageResolved') &&
+  !ROM_SEQUENCE_REGISTRY_TS.includes('physicalId: string') &&
+  !ROM_SEQUENCE_REGISTRY_TS.includes('phys_${bank'),
   undefined);
 
 // ═══ 9. RomActionSequenceBinding does NOT reference spriteManifest ═══

@@ -57,29 +57,29 @@ function hasPalette(key: number): boolean {
   return raw.length === 8 && raw.slice(0, 6).some((b) => b !== 0xff);
 }
 
-// ── 2) Mapping formID → formId (tabla de bits del corpus; inciertos marcados) ──
+// ── 2) Mapping formID → formId ──
+// Source oracle: Char Form Data / stats_gid_1992672511.csv crossed with raw
+// Bank11 records. Keep this in ROM form order, not character-select order.
 const FORM_NAMES: Record<number, { formId: string; uncertain?: boolean }> = {
   1: { formId: 'gohan_young' }, 2: { formId: 'gohan_young_ssj' }, 3: { formId: 'gohan_young_ssj2' },
-  4: { formId: 'piccolo_base' }, 5: { formId: 'piccolo_kami' }, 6: { formId: 'piccolo_evil' },
+  4: { formId: 'piccolo_evil' }, 5: { formId: 'piccolo_base' }, 6: { formId: 'piccolo_kami' },
   7: { formId: 'krillin_base' },
   8: { formId: 'goku_base' }, 9: { formId: 'goku_ssj' }, 10: { formId: 'goku_ssj2' }, 11: { formId: 'goku_ssj3' },
   12: { formId: 'vegeta_base' }, 13: { formId: 'vegeta_ssj' }, 14: { formId: 'vegeta_majin' },
   15: { formId: 'gohan_adult_ssj' }, 16: { formId: 'gohan_adult_ssj2' }, 17: { formId: 'gohan_adult_ultimate' },
-  18: { formId: 'trunks_future' }, 19: { formId: 'trunks_ssj' },
+  18: { formId: 'trunks_kid' }, 19: { formId: 'trunks_kid_ssj' },
   20: { formId: 'goten_base' }, 21: { formId: 'goten_ssj' },
-  22: { formId: 'trunks_kid' }, 23: { formId: 'trunks_kid_ssj' },
-  24: { formId: 'buu_base' }, 25: { formId: 'buu_super' },
-  26: { formId: 'nappa' }, 27: { formId: 'guldo' }, 28: { formId: 'recoome' },
-  29: { formId: 'jeice' }, 30: { formId: 'burter' }, 31: { formId: 'ginyu' },
-  32: { formId: 'frieza_final' },
-  33: { formId: 'android_16' }, 34: { formId: 'android_17' }, 35: { formId: 'android_18' },
-  36: { formId: 'android_19' }, 37: { formId: 'android_20' },
-  38: { formId: 'cell_imperfect' }, 39: { formId: 'cell_semi' }, 40: { formId: 'cell_perfect' },
-  41: { formId: 'cell_jr' },
-  42: { formId: 'buu_gotenks', uncertain: true }, 43: { formId: 'buu_gohan', uncertain: true },
-  44: { formId: 'buu_kid', uncertain: true }, 45: { formId: 'ginyu_goku', uncertain: true },
-  46: { formId: 'gotenks_ssj', uncertain: true }, 47: { formId: 'gotenks_ssj3', uncertain: true },
-  48: { formId: 'vegito_ssj', uncertain: true },
+  22: { formId: 'trunks_future' }, 23: { formId: 'trunks_ssj' },
+  24: { formId: 'gotenks_ssj' }, 25: { formId: 'gotenks_ssj3' }, 26: { formId: 'vegito_ssj' },
+  27: { formId: 'nappa' }, 28: { formId: 'guldo' }, 29: { formId: 'recoome' },
+  30: { formId: 'jeice' }, 31: { formId: 'burter' }, 32: { formId: 'ginyu' },
+  33: { formId: 'frieza_final' },
+  34: { formId: 'android_16' }, 35: { formId: 'android_17' }, 36: { formId: 'android_18' },
+  37: { formId: 'android_19' }, 38: { formId: 'android_20' },
+  39: { formId: 'cell_imperfect' }, 40: { formId: 'cell_semi' }, 41: { formId: 'cell_perfect' },
+  42: { formId: 'cell_jr' },
+  43: { formId: 'buu_base' }, 44: { formId: 'buu_super' }, 45: { formId: 'buu_gotenks' },
+  46: { formId: 'buu_gohan' }, 47: { formId: 'buu_kid' }, 48: { formId: 'ginyu_goku' },
 };
 
 // ── 3) Perfiles de forma ──
@@ -107,7 +107,7 @@ for (let f = 1; f <= 48; f++) {
     paletteAvailable: hasPalette(key),
     paletteNote: hasPalette(key) ? undefined : 'paleta vacía en $6E00 (fuente pendiente)',
     mappingUncertain: name.uncertain ?? false,
-    evidence: ['Bank00:$2B65/$2A77 (registro forma Bank11) + Bank30:$6E00+key×8 (ROM_STATIC_VERIFIED)'],
+    evidence: ['Char Form Data + Bank00:$2B65/$2A77 (registro forma Bank11) + Bank30:$6E00+key×8 (ROM_STATIC_VERIFIED)'],
   });
 }
 

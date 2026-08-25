@@ -82,6 +82,7 @@ const DISPLAY_CUES = new Set<PresentationCue['type']>([
   'DISPLAY_CLEAR',
   'DEFENSE_FX',
   'SUPPORT_FX',
+  'ROM_FX_WINDOW',
 ]);
 
 /** Cues de trazabilidad ROM (macros/waits/animation/screen/audio…). */
@@ -134,6 +135,7 @@ function effectLabel(cue: PresentationCue): string {
     case 'ROM_RESULT_BRANCH': return `result branch ${String(c.selectedFamily ?? 'PENDING')}`;
     case 'FIGHTER_MOTION': return `motion ${String(c.kind ?? '?')} ${String(c.deltaPx ?? 0)}px/${String(c.durationTicks ?? 0)}t`;
     case 'FX_LOAD': return `fx $${String(c.resource ?? '—').toString()} pal $${String(c.palette ?? '—').toString()}`;
+    case 'ROM_FX_WINDOW': return `fx window ${String(c.physicalId ?? '?')} ${String(c.phase ?? '?')} ${String(c.sourceMap ?? '?')}`;
     case 'ROM_PENDING': return `PENDING: ${String(c.reason ?? '?')} (${String(c.boundary ?? 'STATIC')})`;
     default: return `${cue.type}`;
   }

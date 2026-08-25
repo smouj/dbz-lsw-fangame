@@ -74,6 +74,7 @@ export function createCuePresenter(handlers: CueHandlers): BattlePresenter {
           case 'ACTION_OBJECT_MOTION':
           case 'APPLY_FRAME_DELTA':
           case 'FX_LOAD':
+          case 'ROM_FX_WINDOW':
           case 'FX_AUX':
           case 'SCENE_CONFIGURE':
           case 'SCREEN_MOTION':

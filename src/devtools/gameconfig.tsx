@@ -110,6 +110,7 @@ export default function GameConfigPage() {
       // INFERRED NO bloquean release (la cobertura de contenido sí).
       fidelity: snap.cinematics,
       physicalCorpus: snap.physicalCorpus,
+      fxCorpus: snap.fxCorpus,
       canonUnknown: snap.sprites.unknown,
       physical,
       resources,
@@ -253,7 +254,9 @@ export default function GameConfigPage() {
           <span className={`dev-tag ${audits.romCompiler.compilable === 125 && audits.romCompiler.semanticCueLeaks === 0 ? 'ok' : 'bad'}`}>ROM compiler {audits.romCompiler.compilable}/125 · {audits.romCompiler.totalCues} cues</span>
           <span className={`dev-tag ${audits.standardDamageCutover.romBacked === 19 && audits.standardDamageCutover.nonStandardDamageBacked === 0 ? 'ok' : 'bad'}`}>STANDARD_DAMAGE runtime {audits.standardDamageCutover.romBacked}/19</span>
           <span className={`dev-tag ${audits.beamBaseCutover.romBacked === 16 && audits.beamBaseCutover.handlerShared === 38 && audits.beamBaseCutover.nonBeamBaseBacked === 0 && audits.beamBaseCutover.beamVariantsBacked === 0 ? 'ok' : 'bad'}`}>BEAM_BASE runtime {audits.beamBaseCutover.romBacked}/16 · $02 shared {audits.beamBaseCutover.handlerShared}</span>
-          <span className={`dev-tag ${audits.physicalCorpus.schemaVersion === 2 && audits.physicalCorpus.offsetEncoding === 's8' ? 'ok' : 'bad'}`}>ROM physical P0.3B {audits.physicalCorpus.formsRendered}/{audits.physicalCorpus.formsIndexed} · {audits.physicalCorpus.physicalIdentities} IDs</span>
+          <span className={`dev-tag ${audits.fxCorpus.offensiveFxResources === 28 && audits.fxCorpus.errors === 0 && audits.fxCorpus.runtimeSilentFallback === 0 && audits.fxCorpus.runtimeDistributionErrors === 0 ? 'ok' : 'bad'}`}>FX P0.1A {audits.fxCorpus.offensiveFxResources}/28 · P0.1B {audits.fxCorpus.runtimeWindowCues} windows/{audits.fxCorpus.runtimeCards} cards</span>
+          <span className={`dev-tag ${audits.physicalCorpus.schemaVersion === 2 && audits.physicalCorpus.offsetEncoding === 's8' ? 'ok' : 'bad'}`}>ROM physical P0.3B {audits.physicalCorpus.formsRendered}/{audits.physicalCorpus.formsIndexed} · {audits.physicalCorpus.physicalIdentities} promoted IDs</span>
+          <span className={`dev-tag ${audits.physicalCorpus.resourcesRendered === 6 && audits.physicalCorpus.resourcesTotal === 66 ? 'ok' : 'bad'}`}>physical resources {audits.physicalCorpus.resourcesRendered}/{audits.physicalCorpus.resourcesTotal} renderable</span>
           <span className={`dev-tag ${audits.forms.ok ? 'ok' : 'bad'}`}>✓ {audits.forms.n}/{audits.forms.total} character/forms</span>
           <span className="dev-tag ok">✓ backgrounds {audits.scenarios.n}/13</span>
         </div>
@@ -264,8 +267,11 @@ export default function GameConfigPage() {
           {audits.canonUnknown} frames OUT_frames sin evidencia (honestos).
           <span style={{ display: 'block', marginTop: 4 }}>
             ROM_PHYSICAL corpus: schema {audits.physicalCorpus.schemaVersion}/{audits.physicalCorpus.offsetEncoding} ·
-            {audits.physicalCorpus.frameInstances} instances · {audits.physicalCorpus.signedNegativeInstances} signed-negative ·
-            {audits.physicalCorpus.formsPaletteBlocked} palette-blocked · {audits.physicalCorpus.resourcesRendererPending} resources renderer-pending.
+            {audits.physicalCorpus.frameInstances} instances · {audits.physicalCorpus.transparentFrameRecords} EMPTY_NOT_PROMOTED records ({audits.physicalCorpus.transparentPhysicalIds} IDs) · {audits.physicalCorpus.signedNegativeInstances} signed-negative ·
+            {audits.physicalCorpus.formsPaletteBlocked} palette-blocked · {audits.physicalCorpus.resourcesRendererPending} resources renderer-pending ·
+            P0.5 active ({audits.physicalCorpus.resourcesFrameStreamOnly} frame-stream-only, {audits.physicalCorpus.resourcesHandlerDependent} handler-dependent, {audits.physicalCorpus.resourcesDynamicPending} dynamic).
+            <br />
+            ROM FX: P0.1A {audits.fxCorpus.offensiveFxResources}/28 offensive FXResource · {audits.fxCorpus.paletteBundles} FX/palette bundles · {audits.fxCorpus.sideMapsByResource}/56 SIDE maps · {audits.fxCorpus.sidePhaseRenders} renders. P0.1B ROM_FX_WINDOW {audits.fxCorpus.runtimeWindowCues} cues/{audits.fxCorpus.runtimeCards} cards · distribution errors {audits.fxCorpus.runtimeDistributionErrors} · side selection {audits.fxCorpus.runtimeSideSelectionComplete}/{audits.fxCorpus.runtimeSideSelectionPending} estático · STATIC_COMPLETE {audits.fxCorpus.runtimeStaticComplete}/28 · COMPLETE {audits.fxCorpus.runtimeWindowComplete}/28 · silent fallback {audits.fxCorpus.runtimeSilentFallback}. Support/Aura separado.
           </span>
         </div>
       </Section>
@@ -358,6 +364,7 @@ export default function GameConfigPage() {
           <span className={`dev-tag ${audits.romCompiler.compilable === 125 && audits.romCompiler.semanticCueLeaks === 0 ? 'ok' : 'bad'}`}>{audits.romCompiler.compilable}/125 ROM compiler</span>
           <span className={`dev-tag ${audits.standardDamageCutover.romBacked === 19 && audits.standardDamageCutover.nonStandardDamageBacked === 0 ? 'ok' : 'bad'}`}>{audits.standardDamageCutover.romBacked}/19 $0A ROM runtime</span>
           <span className={`dev-tag ${audits.beamBaseCutover.romBacked === 16 && audits.beamBaseCutover.handlerShared === 38 && audits.beamBaseCutover.nonBeamBaseBacked === 0 && audits.beamBaseCutover.beamVariantsBacked === 0 ? 'ok' : 'bad'}`}>{audits.beamBaseCutover.romBacked}/16 BEAM_BASE · {audits.beamBaseCutover.handlerShared} $02 shared</span>
+          <span className={`dev-tag ${audits.fxCorpus.offensiveFxResources === 28 && audits.fxCorpus.errors === 0 && audits.fxCorpus.runtimeSilentFallback === 0 ? 'ok' : 'bad'}`}>FX corpus {audits.fxCorpus.offensiveFxResources}/28 · static-complete {audits.fxCorpus.runtimeStaticComplete}/28</span>
           <span className={`dev-tag ${audits.compat.ok ? 'ok' : 'bad'}`}>{audits.compat.ok ? '✓' : '✕'} card compatibility</span>
           <span className={`dev-tag ${activeProfile.id === 'release' || activeProfile.id === 'preview' ? 'ok' : 'bad'}`}>
             {activeProfile.id !== 'development' ? '✓' : '✕'} dev features disabled

@@ -28,20 +28,22 @@ const PIPELINE: Array<[string, string]> = [
   ['docs/rom/research-v5-support-defense/README.md', 'ROM V5: Support/Defense visual grammar, Move, CA83/CA53 y slot8'],
   ['docs/rom/research-v6-support-physicals/README.md', 'ROM V6 CLOSED: matriz+renders 48/48, palette path, macros literales, slot8 audit, romCA53 contract'],
   ['docs/rom/research-v7-support-defense-consumption/README.md', 'ROM V7: Support/Defense consumption + runtime cutover (V7.2-V7.4 cerrados)'],
-  ['docs/rom/generated/physical-corpus/REPORT.md', 'P0.3B ROM_PHYSICAL: corpus signed s8, provenance por forma, producción sin cutover aún'],
+  ['docs/rom/generated/physical-corpus/REPORT.md', 'P0 Fighter ROM_PHYSICAL: 552 promoted IDs, EMPTY_NOT_PROMOTED preservado, Dev/Production sincronizado'],
   ['docs/rom/AI_ROM_RE_TOOLCHAIN.md', 'Toolchain RE para agentes: ZIPs auditados, mgbdis recomendado, ejecutables no integrados'],
 ];
 
 export function DashboardModule({ onNavigate }: { onNavigate: (m: DevModuleId) => void }) {
   const snap = useMemo(() => getDevProjectSnapshot(), []);
-  const { roster, cards, sprites, cinematics, story, audio, scenarios, production, physicalCorpus, physicalMapping } = snap;
+  const { roster, cards, sprites, cinematics, story, audio, scenarios, production, physicalCorpus, fxCorpus, physicalMapping } = snap;
 
   const stats: StatCard[] = [
     { label: 'ROM visible prod.', value: production.romVisible, total: 125, ok: production.romVisible > 0, hint: `${production.romBackedStrict} ROM-backed estricto · ${production.legacyVisible} legacy` },
     { label: 'Formas (ROM 48)', value: roster.forms, total: roster.formsTotal, ok: roster.forms === roster.formsTotal },
     { label: 'Personajes', value: roster.characters, total: roster.characters, ok: roster.characters >= 24, hint: `${roster.characters} jugables` },
     { label: 'Cartas (ROM 125)', value: cards.count, total: cards.total, ok: cards.count === cards.total },
-    { label: 'ROM physical forms', value: physicalCorpus.formsRendered, total: physicalCorpus.formsIndexed, ok: physicalCorpus.formsRendered + physicalCorpus.formsPaletteBlocked + physicalCorpus.formsResourceBlocked === physicalCorpus.formsIndexed, hint: `${physicalCorpus.physicalIdentities} IDs · ${physicalCorpus.frameInstances} inst.` },
+    { label: 'ROM physical forms', value: physicalCorpus.formsRendered, total: physicalCorpus.formsIndexed, ok: physicalCorpus.formsRendered + physicalCorpus.formsPaletteBlocked + physicalCorpus.formsResourceBlocked === physicalCorpus.formsIndexed, hint: `${physicalCorpus.physicalIdentities} IDs · ${physicalCorpus.frameInstances} inst. · ${physicalCorpus.transparentFrameRecords} empty records` },
+    { label: 'Physical resources', value: physicalCorpus.resourcesRendered, total: physicalCorpus.resourcesTotal, ok: physicalCorpus.resourcesRendered === 6 && physicalCorpus.resourcesTotal === 66, hint: `${physicalCorpus.resourcesFrameStreamOnly} frame-stream · ${physicalCorpus.resourcesHandlerDependent} handler · ${physicalCorpus.resourcesDynamicPending} dynamic` },
+    { label: 'Offensive FX', value: fxCorpus.offensiveFxResources, total: 28, ok: fxCorpus.offensiveFxResources === 28 && fxCorpus.errors === 0 && fxCorpus.runtimeDistributionErrors === 0, hint: `${fxCorpus.paletteBundles} FX/palette · ${fxCorpus.runtimeCards} cards · ${fxCorpus.runtimeWindowCues} windows` },
     { label: 'ROM physical prod.', value: physicalMapping.cards.romPresentationProduction, total: cards.total, ok: physicalMapping.cards.mixed === 0, hint: `${physicalMapping.cards.legacy} legacy · MIXED ${physicalMapping.cards.mixed}` },
     { label: 'Capítulos con mazo', value: story.chapters, total: 32, ok: story.chapters >= 32 },
     { label: 'Combates de equipo', value: story.teamBattles, total: story.teamBattles, ok: story.teamBattles > 0, hint: `${story.teamBattles} cap. 2v2` },
@@ -63,9 +65,10 @@ export function DashboardModule({ onNavigate }: { onNavigate: (m: DevModuleId) =
   alerts.push({ level: 'info', text: 'Iniciativa: SPD efectiva decide cada turno; empate → persiste la iniciativa actual (determinista — el Engine es puro, sin Math.random).' });
   alerts.push({ level: 'info', text: 'Contraataque: A≈0.4s / B≈0.15s — HYPOTHESIS hasta captura ROM.' });
   alerts.push({ level: 'info', text: 'ROM V3 sincronizado: ActionObject físico cerrado, 411/411 visualFrames validados, Tail/V-ball reachability corregida y Defense slot8 demostrado.' });
-  alerts.push({ level: 'info', text: 'ROM V4 FX sincronizado: 28 bundles ofensivos, 152 renders físicos y Beam como BG_TILEMAP; runtime aún debe cortar a ROM_FX_WINDOW.' });
+  alerts.push({ level: 'info', text: `ROM V4 FX: P0.1A congelado (${fxCorpus.offensiveFxResources}/28 FXResource, ${fxCorpus.sidePhaseRenders} renders); P0.1B emite ${fxCorpus.runtimeWindowCues} ROM_FX_WINDOW para ${fxCorpus.runtimeCards} cards, distribución errors ${fxCorpus.runtimeDistributionErrors}, STATIC_COMPLETE ${fxCorpus.runtimeStaticComplete}/28, COMPLETE ${fxCorpus.runtimeWindowComplete}/28 (SCX/SCY/timing pendientes).` });
   alerts.push({ level: 'info', text: 'ROM V5 sincronizado: Support/Defense grammar cerrada estáticamente; Move separa posición táctica de motion net0; Defense selection solo precarga slot8.' });
-  alerts.push({ level: 'info', text: `P0.3C bootstrap: ProductionFrameResolver activo. ROM_PHYSICAL schema ${physicalCorpus.schemaVersion}/${physicalCorpus.offsetEncoding}, ${physicalCorpus.formsRendered}/${physicalCorpus.formsIndexed} formas renderizadas, ${physicalCorpus.formsPaletteBlocked} profiles palette-blocked. manifest.json sigue como fallback explícito.` });
+  alerts.push({ level: 'info', text: `ROM Fighter physical corpus CLOSED: ${physicalCorpus.formsRendered}/${physicalCorpus.formsIndexed} formas, ${physicalCorpus.resourcesRendered}/${physicalCorpus.resourcesTotal} AnimationResources renderizables, ${physicalCorpus.physicalIdentities} promoted IDs, ${physicalCorpus.frameInstances} instances, ${physicalCorpus.transparentFrameRecords} EMPTY_NOT_PROMOTED records (${physicalCorpus.transparentPhysicalIds} IDs únicos), 0 errors.` });
+  alerts.push({ level: 'info', text: `P0.5 expansion ACTIVE: ${physicalCorpus.resourcesFrameStreamOnly} resources con frame stream sin promoción física, ${physicalCorpus.resourcesHandlerDependent} handler-dependent, ${physicalCorpus.resourcesDynamicPending} dynamic-pending, ${physicalCorpus.resourcesUnreferenced} unreferenced.` });
   alerts.push({ level: 'info', text: 'ROM V5 baseline congelado. V6 CLOSED: $2C30/$1266, matriz+renders 48/48, palette path, macros literales, slot8 audit, romCA53 contextual. V7 abierto: consumption + cutover $00/$02 ya compilado y verificado.' });
   alerts.push({ level: 'warn', text: 'Guardrail V5: palette $FF, handler, AnimationResource y CA53 son semánticas category/path scoped; no normalizar globalmente.' });
 
@@ -95,8 +98,9 @@ export function DashboardModule({ onNavigate }: { onNavigate: (m: DevModuleId) =
           </div>
           <div className="dev-fid-note">
             PHYSICAL EXTRACTION <strong>{physicalMapping.physicalExtraction.formsRendered}/{physicalMapping.physicalExtraction.formsIndexed}</strong> formas ·
-            <strong> {physicalMapping.physicalExtraction.physicalIds}</strong> physical IDs ·
-            <strong> {physicalMapping.physicalExtraction.frameInstances}</strong> frame instances.
+            <strong> {physicalMapping.physicalExtraction.physicalIds}</strong> promoted physical IDs ·
+            <strong> {physicalMapping.physicalExtraction.frameInstances}</strong> frame instances ·
+            EMPTY_NOT_PROMOTED <strong>{physicalCorpus.transparentFrameRecords}</strong> records / <strong>{physicalCorpus.transparentPhysicalIds}</strong> IDs.
             PHYSICAL MAPPING <strong>{physicalMapping.physicalMapping.romInstancesMapped}/{physicalMapping.physicalMapping.romInstancesTotal}</strong> instances ·
             shared <strong>{physicalMapping.physicalMapping.sharedPhysical}</strong> · unresolved <strong>{physicalMapping.physicalMapping.unresolved}</strong>.
           </div>
@@ -150,14 +154,16 @@ export function DashboardModule({ onNavigate }: { onNavigate: (m: DevModuleId) =
             </div>
             <div className="dev-fid-note">
               ROM V3/V4/V5: ActionObject + fighter graphics pipeline cerrados por estática; Beam FX físico
-              como BG tilemap; Support/Defense grammar física importada. Pendiente visible:
-              <strong> ROM_FX_WINDOW</strong>, <strong>ROM_BG_ASSEMBLY</strong> y recursos Support card-indexed.
+              como BG tilemap; Support/Defense grammar física importada. Estado visible:
+              <strong> P0.1A FX {fxCorpus.offensiveFxResources}/28</strong>, <strong>P0.1B windows {fxCorpus.runtimeWindowCues} cues / {fxCorpus.runtimeCards} cards</strong> y side selection {fxCorpus.runtimeSideSelectionComplete}/{fxCorpus.runtimeSideSelectionPending} estático.
             </div>
             <div className="dev-fid-note">
-              P0.3B ROM_PHYSICAL: <strong>{physicalCorpus.physicalIdentities}</strong> IDs físicos ·
+              P0 Fighter ROM_PHYSICAL: <strong>{physicalCorpus.physicalIdentities}</strong> promoted IDs físicos ·
               <strong> {physicalCorpus.frameInstances}</strong> frame instances ·
+              <strong> {physicalCorpus.transparentFrameRecords}</strong> EMPTY_NOT_PROMOTED records ({physicalCorpus.transparentPhysicalIds} IDs) ·
               <strong> {physicalCorpus.signedNegativeInstances}</strong> offsets signed-negativos ·
-              dimensiones max {physicalCorpus.maxWidth}×{physicalCorpus.maxHeight}. ProductionFrameResolver gobierna el cutover progresivo; legacy queda como fallback explícito.
+              <strong> {physicalCorpus.resourcesRendered}/{physicalCorpus.resourcesTotal}</strong> AnimationResources renderizables ·
+              dimensiones max {physicalCorpus.maxWidth}×{physicalCorpus.maxHeight}. El corpus Fighter 48/48 está cerrado; la expansión física de recursos sigue activa.
             </div>
           </div>
         </div>

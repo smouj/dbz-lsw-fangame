@@ -221,7 +221,7 @@ export function TimelineModule() {
         <span><b>Estado final:</b> tick {state.tick} · HP {state.player.hp}/{state.enemy.hp}</span>
         <span><b>$0A ROM:</b> {standardDamageCutover.romBacked}/19 · {standardDamageCutover.branchFamilies.join('/')}</span>
         <span><b>$02 ROM:</b> {beamBaseCutover.romBacked}/16 BEAM_BASE · {beamBaseCutover.handlerShared} shared · $1E discrete</span>
-        <span><b>V4 FX:</b> BG_TILEMAP · 28 bundles · 152 PNG · ROM_FX_WINDOW pending</span>
+        <span><b>V4 FX:</b> BG_TILEMAP · 28 FXResource · 38 FX/palette · 152 PNG · ROM_FX_WINDOW pending</span>
         <span><b>$0C:</b> prefix rows1-8 · handler $07 rows3-10 · result rows11-18</span>
         <span><b>V5 S/D:</b> Support BG19 HOLD120 · Move net0 · Defense slot8 deferred</span>
         <span><b>V6:</b> matrix+renders 48/48 · macros $2B/$2C/$34/$35 literal · slot8 audit 1+2+0 · romCA53 contextual</span>

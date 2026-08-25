@@ -6,15 +6,16 @@ Physical renderer schema: `3` (signed piece coordinates, piece-extents trim, col
 Offset encoding: `s8` (raw bytes preserved separately)
 
 Scope: 6 fighter-physical renderable AnimationResources from `docs/rom/generated/animation-resources.json`: `$00`, `$03`, `$04`, `$05`, `$08`, `$12`.
-Renderer-pending decoded resources: `$01`, `$09`, `$0f`, `$16`, `$22`, `$3f`.
+AnimationResource physical promotion: 6/66 renderable; 8 frame-stream-only; 18 handler-dependent; 5 dynamic-pending.
+Renderer-pending decoded resources: `$01`, `$09`, `$0b`, `$0f`, `$16`, `$22`, `$2c`, `$3f`.
 Forms rendered: 48/48. Palette-blocked profiles: 0.
 Resource-blocked palette-ready profiles: 0.
 
 Generated via fresh ROM re-render before runtime promotion. Legacy/canonical PNGs are not a source for this corpus.
 
-Physical identities: 560
-Frame instances: 2410
-Signed-negative frame instances: 1327
+Physical identities: 552
+Frame instances: 2371
+Signed-negative frame instances: 1304
 Resource/profile blocked pairs: 0
 Offset range: -10..5
 Max dimensions: 40×48
@@ -28,9 +29,9 @@ Resource-blocked profiles are not rendered or faked:
 | gohan_young | 0x00 | 18 | 76 | 10 | 40 | — | 32×48 |
 | gohan_young_ssj | 0x01 | 18 | 76 | 10 | 40 | — | 32×48 |
 | gohan_young_ssj2 | 0x02 | 18 | 76 | 10 | 40 | — | 32×48 |
+| piccolo_evil | 0x03 | 8 | 28 | 4 | 16 | — | 32×48 |
 | piccolo_base | 0x03 | 8 | 28 | 4 | 16 | — | 32×48 |
 | piccolo_kami | 0x03 | 8 | 28 | 4 | 16 | — | 32×48 |
-| piccolo_evil | 0x03 | 8 | 28 | 4 | 16 | — | 32×48 |
 | krillin_base | 0x04 | 23 | 106 | 13 | 67 | — | 40×48 |
 | goku_base | 0x05 | 14 | 62 | 8 | 32 | — | 32×48 |
 | goku_ssj | 0x06 | 14 | 62 | 8 | 32 | — | 32×48 |
@@ -41,38 +42,38 @@ Resource-blocked profiles are not rendered or faked:
 | vegeta_majin | 0x0a | 14 | 66 | 8 | 44 | — | 40×48 |
 | gohan_adult_ssj | 0x0c | 18 | 76 | 10 | 40 | — | 32×48 |
 | gohan_adult_ssj2 | 0x0c | 18 | 76 | 10 | 40 | — | 32×48 |
-| gohan_adult_ultimate | 0x0b | 18 | 76 | 10 | 40 | — | 32×48 |
-| trunks_future | 0x0d | 8 | 28 | 4 | 16 | — | 32×48 |
-| trunks_ssj | 0x0e | 8 | 28 | 4 | 16 | — | 32×48 |
-| goten_base | 0x0f | 14 | 62 | 8 | 32 | — | 32×48 |
-| goten_ssj | 0x10 | 14 | 62 | 8 | 32 | — | 32×48 |
-| trunks_kid | 0x11 | 4 | 14 | 2 | 8 | — | 32×48 |
-| trunks_kid_ssj | 0x12 | 4 | 14 | 2 | 8 | — | 32×48 |
-| buu_base | 0x13 | 14 | 62 | 8 | 32 | — | 32×48 |
-| buu_super | 0x14 | 14 | 62 | 8 | 32 | — | 32×48 |
-| nappa | 0x15 | 4 | 14 | 2 | 8 | — | 32×48 |
-| guldo | 0x16 | 4 | 14 | 2 | 8 | — | 32×48 |
-| recoome | 0x17 | 4 | 14 | 2 | 8 | — | 32×48 |
-| jeice | 0x18 | 4 | 14 | 2 | 8 | — | 32×48 |
-| burter | 0x19 | 4 | 14 | 2 | 8 | — | 32×48 |
-| ginyu | 0x1a | 14 | 62 | 8 | 32 | — | 32×48 |
-| frieza_final | 0x1b | 9 | 50 | 6 | 36 | — | 32×48 |
-| android_16 | 0x1c | 4 | 14 | 2 | 8 | — | 32×48 |
-| android_17 | 0x1d | 4 | 14 | 2 | 8 | — | 32×48 |
-| android_18 | 0x1e | 4 | 14 | 2 | 8 | — | 32×48 |
-| android_19 | 0x1f | 4 | 14 | 2 | 8 | — | 32×48 |
-| android_20 | 0x20 | 4 | 14 | 2 | 8 | — | 32×48 |
-| cell_imperfect | 0x21 | 14 | 62 | 8 | 32 | — | 32×48 |
-| cell_semi | 0x22 | 14 | 62 | 8 | 32 | — | 32×48 |
-| cell_perfect | 0x23 | 14 | 62 | 8 | 32 | — | 32×48 |
-| cell_jr | 0x24 | 14 | 62 | 8 | 32 | — | 32×48 |
-| buu_gotenks | 0x25 | 14 | 62 | 8 | 32 | — | 32×48 |
-| buu_gohan | 0x26 | 14 | 62 | 8 | 32 | — | 32×48 |
-| buu_kid | 0x27 | 14 | 62 | 8 | 32 | — | 32×48 |
-| ginyu_goku | 0x28 | 14 | 62 | 8 | 32 | — | 32×48 |
-| gotenks_ssj | 0x29 | 14 | 62 | 8 | 32 | — | 32×48 |
-| gotenks_ssj3 | 0x2a | 14 | 62 | 8 | 32 | — | 32×48 |
-| vegito_ssj | 0x2b | 24 | 114 | 14 | 68 | — | 40×48 |
+| gohan_adult_ultimate | 0x0b | 17 | 72 | 10 | 40 | — | 32×48 |
+| trunks_kid | 0x0d | 4 | 14 | 2 | 8 | — | 32×48 |
+| trunks_kid_ssj | 0x0e | 4 | 14 | 2 | 8 | — | 32×48 |
+| goten_base | 0x0f | 9 | 39 | 7 | 17 | — | 32×48 |
+| goten_ssj | 0x10 | 12 | 50 | 8 | 24 | — | 32×48 |
+| trunks_future | 0x11 | 8 | 28 | 4 | 16 | — | 32×48 |
+| trunks_ssj | 0x12 | 8 | 28 | 4 | 16 | — | 32×48 |
+| gotenks_ssj | 0x13 | 14 | 62 | 8 | 32 | — | 32×48 |
+| gotenks_ssj3 | 0x14 | 14 | 62 | 8 | 32 | — | 32×48 |
+| vegito_ssj | 0x15 | 24 | 114 | 14 | 68 | — | 40×48 |
+| nappa | 0x16 | 4 | 14 | 2 | 8 | — | 32×48 |
+| guldo | 0x17 | 4 | 14 | 2 | 8 | — | 32×48 |
+| recoome | 0x18 | 4 | 14 | 2 | 8 | — | 32×48 |
+| jeice | 0x19 | 4 | 14 | 2 | 8 | — | 32×48 |
+| burter | 0x1a | 4 | 14 | 2 | 8 | — | 32×48 |
+| ginyu | 0x1b | 14 | 62 | 8 | 32 | — | 32×48 |
+| frieza_final | 0x1c | 9 | 50 | 6 | 36 | — | 32×48 |
+| android_16 | 0x1d | 4 | 14 | 2 | 8 | — | 32×48 |
+| android_17 | 0x1e | 4 | 14 | 2 | 8 | — | 32×48 |
+| android_18 | 0x1f | 4 | 14 | 2 | 8 | — | 32×48 |
+| android_19 | 0x20 | 4 | 14 | 2 | 8 | — | 32×48 |
+| android_20 | 0x21 | 4 | 14 | 2 | 8 | — | 32×48 |
+| cell_imperfect | 0x22 | 14 | 62 | 8 | 32 | — | 32×48 |
+| cell_semi | 0x23 | 14 | 62 | 8 | 32 | — | 32×48 |
+| cell_perfect | 0x24 | 14 | 62 | 8 | 32 | — | 32×48 |
+| cell_jr | 0x25 | 14 | 62 | 8 | 32 | — | 32×48 |
+| buu_base | 0x26 | 14 | 62 | 8 | 32 | — | 32×48 |
+| buu_super | 0x27 | 14 | 62 | 8 | 32 | — | 32×48 |
+| buu_gotenks | 0x28 | 14 | 62 | 8 | 32 | — | 32×48 |
+| buu_gohan | 0x29 | 14 | 62 | 8 | 32 | — | 32×48 |
+| buu_kid | 0x2a | 14 | 62 | 8 | 32 | — | 32×48 |
+| ginyu_goku | 0x2b | 14 | 62 | 8 | 32 | — | 32×48 |
 
 Generated assets live in `public/assets/sprites/<form>/physical/`.
 `manifest.json` remains the legacy/remake runtime manifest until P0.3C; `rom-physical.manifest.json` is the physical ROM manifest generated here.

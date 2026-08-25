@@ -83,12 +83,18 @@ for (const card of CARDS) {
 }
 check('ningún ROM cue sin traceId', cuesWithoutId === 0, `${cuesWithoutId} sin id`);
 
-// ═══ 3. SUPPORT misrouting guardrail (0 support en BEAM_BASE) ═══
-section('SUPPORT nunca entra por BEAM_BASE');
+// ═══ 3. SUPPORT misrouting guardrail (0 support en Beam/FX ofensivo) ═══
+section('SUPPORT nunca entra por BEAM/FX ofensivo');
 const misroutedSupport = CARDS.filter(card => card.type === 'support' && (romPresentationProfileForCard(card).kind === 'BEAM_BASE' || romPresentationProfileForCard(card).kind === 'BEAM_VARIANT'));
-const supportWithBeamRoute = CARDS.filter(card => card.type === 'support' && romPresentationTimelineForCard(card, 'player') != null);
+const supportWithOffensiveFxRoute = CARDS.filter(card => {
+  if (card.type !== 'support') return false;
+  const route = romPresentationTimelineForCard(card, 'player');
+  return route != null && ['BEAM_BASE', 'BEAM_VARIANT', 'PROJECTILE_SCROLL'].includes(route.kind);
+});
+const supportSpecialRoutes = CARDS.filter(card => card.type === 'support' && romPresentationTimelineForCard(card, 'player')?.kind === 'SUPPORT_SPECIAL');
 check('0 support cards con profile BEAM_BASE/BEAM_VARIANT', misroutedSupport.length === 0, misroutedSupport.map(c => `#${c.id} ${c.name}`).join(', '));
-check('0 support cards con ruta de puente ROM (beam)', supportWithBeamRoute.length === 0, supportWithBeamRoute.map(c => `#${c.id} ${c.name}`).join(', '));
+check('0 support cards con ruta Beam/FX ofensiva', supportWithOffensiveFxRoute.length === 0, supportWithOffensiveFxRoute.map(c => `#${c.id} ${c.name}`).join(', '));
+check('Support ROM route solo por SUPPORT_SPECIAL', supportSpecialRoutes.length === 22, `${supportSpecialRoutes.length}/22`);
 
 // ═══ 4. generated/consumed correlacionan (ningún cue se pierde) ═══
 section('Correlación generated/consumed');

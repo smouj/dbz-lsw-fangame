@@ -1,6 +1,8 @@
 // ═══════════════════════════════════════════════════════════
-// DBZ LSW — Sprites de COMBATE animados (Sprite Database completa)
-// Mapeo formId → directorio de sprites con manifest.json
+// DBZ LSW — Sprites de COMBATE legacy/remake
+// Mapeo formId → directorio de sprites con manifest.json.
+// Este manifest NO es autoridad física ROM; esa vive en rom-physical.manifest.json
+// + provenance.json por forma.
 // Directorios canonizados: formId = dir name (sin sufijos _base, etc.)
 // Effects integrados dentro de cada dir. Aura frames: tiles GBC 64×56.
 // ═══════════════════════════════════════════════════════════
@@ -87,8 +89,8 @@ export function spriteFrameUrl(formId: string, file: string): string {
   return `/assets/sprites/${dir}/${file}`;
 }
 
-// ─── Resolución de pose REAL (Dev Studio + previews) ───
-// El manifest es la verdad: algunas formas NO tienen beam_fire físico
+// ─── Resolución de pose legacy/remake (Dev Studio + previews) ───
+// El manifest legacy describe poses de remake: algunas formas NO tienen beam_fire físico
 // (beam_fire: {} — alias de beam_charge en 12 formas SSJ) y las poses
 // compuestas (punch_right, knockback_*, gather_power…) reutilizan frames de
 // poses base. Este helper devuelve la URL del frame N de una pose aplicando
@@ -174,4 +176,3 @@ export async function resolvePoseInfo(
 }
 
 export const _spriteManifestInternals = { loadManifestFor };
-

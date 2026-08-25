@@ -24,7 +24,10 @@ import { romPresentationTimelineForCard } from '../battle/romPresentationForCard
 import { ProductionRomPresentationAdapter } from '../renderer/pixi/presentation/ProductionRomPresentationAdapter';
 import type { BattlePresentation, BattleScene } from '../renderer/pixi/presentation/BattlePresentation';
 import { ROM_PHYSICAL_CORPUS_SUMMARY } from '../data/generated/romPhysicalCorpus.generated';
+import { ROM_FX_CORPUS_SUMMARY } from '../data/generated/romFxCorpus.generated';
 import { productionFrameResolverSummary } from '../battle/productionFrameResolver';
+import { romFxWindowRuntimeSummary } from '../battle/romFxWindow';
+import runtimeCutover from '../../generated/rom-fx/runtime_cutover.json';
 
 export interface DevSnapshot {
   roster: { forms: number; formsTotal: number; characters: number; withSpriteDir: number; withoutSpriteDir: string[] };
@@ -61,17 +64,51 @@ export interface DevSnapshot {
     formsIndexed: number;
     formsPaletteBlocked: number;
     formsResourceBlocked: number;
+    resourcesTotal: number;
     resourcesReachable: number;
     resourcesRendered: number;
     resourcesRendererPending: number;
+    resourcesFrameStreamOnly: number;
+    resourcesHandlerDependent: number;
+    resourcesDynamicPending: number;
+    resourcesUnreferenced: number;
     physicalIdentities: number;
     frameInstances: number;
+    transparentFrameRecords: number;
+    transparentPhysicalIds: number;
     signedNegativeInstances: number;
     resourceProfileBlockedPairs: number;
     maxWidth: number;
     maxHeight: number;
     staleUnsigned: number;
     productionManifestCutover: boolean;
+  };
+  fxCorpus: {
+    phase: string;
+    source: string;
+    fxResourcesTotalNonFF: number;
+    offensiveFxResources: number;
+    normalOffensiveBundles: number;
+    paletteBundles: number;
+    sideMapsByResource: number;
+    sidePhaseRenders: number;
+    consumingCards: number;
+    errors: number;
+    supportOrCategorySpecificResources: number;
+    runtimeCutover: string;
+    runtimeCards: number;
+    runtimeWindowCues: number;
+    runtimeDistributionErrors: number;
+    runtimeSideSelectionComplete: number;
+    runtimeSideSelectionPending: number;
+    runtimeStaticComplete: number;
+    runtimeDynamicComplete: number;
+    runtimeWindowComplete: number;
+    runtimeWindowPartial: number;
+    runtimeSilentFallback: number;
+    supportVisuals: string;
+    supportAuraBlue: string;
+    gatherPowerAuraOrange: string;
   };
   physicalMapping: ReturnType<typeof productionFrameResolverSummary>;
 }
@@ -142,6 +179,7 @@ export function getDevProjectSnapshot(): DevSnapshot {
     scenarios: SCENARIOS.length,
     production,
     physicalCorpus: computePhysicalCorpusMetrics(),
+    fxCorpus: computeFxCorpusMetrics(),
     physicalMapping: productionFrameResolverSummary(),
   };
 }
@@ -157,17 +195,56 @@ function computePhysicalCorpusMetrics(): DevSnapshot['physicalCorpus'] {
     formsIndexed: totals.formsIndexed,
     formsPaletteBlocked: totals.formsPaletteBlocked,
     formsResourceBlocked: totals.formsResourceBlocked,
+    resourcesTotal: ROM_PHYSICAL_CORPUS_SUMMARY.resourceCompletionTotals.resources,
     resourcesReachable: totals.resourcesReachable,
     resourcesRendered: totals.resourcesRendered,
     resourcesRendererPending: totals.resourcesRendererPending,
+    resourcesFrameStreamOnly: ROM_PHYSICAL_CORPUS_SUMMARY.resourceCompletionTotals.frameStreamOnly,
+    resourcesHandlerDependent: ROM_PHYSICAL_CORPUS_SUMMARY.resourceCompletionTotals.handlerDependent,
+    resourcesDynamicPending: ROM_PHYSICAL_CORPUS_SUMMARY.resourceCompletionTotals.dynamicPending,
+    resourcesUnreferenced: ROM_PHYSICAL_CORPUS_SUMMARY.resourceCompletionTotals.unreferenced,
     physicalIdentities: totals.physicalIdentities,
     frameInstances: totals.frameInstances,
+    transparentFrameRecords: totals.transparentFrameRecords ?? 0,
+    transparentPhysicalIds: totals.transparentPhysicalIds ?? 0,
     signedNegativeInstances: totals.signedNegativeInstances,
     resourceProfileBlockedPairs: totals.resourceProfileBlockedPairs,
     maxWidth: totals.maxWidth,
     maxHeight: totals.maxHeight,
     staleUnsigned: 0,
     productionManifestCutover: false,
+  };
+}
+
+function computeFxCorpusMetrics(): DevSnapshot['fxCorpus'] {
+  const totals = ROM_FX_CORPUS_SUMMARY.totals;
+  const runtime = romFxWindowRuntimeSummary();
+  return {
+    phase: ROM_FX_CORPUS_SUMMARY.phase,
+    source: ROM_FX_CORPUS_SUMMARY.source,
+    fxResourcesTotalNonFF: totals.fxResourcesTotalNonFF,
+    offensiveFxResources: totals.offensiveFxResources,
+    normalOffensiveBundles: totals.normalOffensiveBundles,
+    paletteBundles: totals.paletteBundles,
+    sideMapsByResource: totals.sideMapsByResource,
+    sidePhaseRenders: totals.sidePhaseRenders,
+    consumingCards: totals.consumingCards,
+    errors: totals.errors,
+    supportOrCategorySpecificResources: totals.supportOrCategorySpecificResources,
+    runtimeCutover: ROM_FX_CORPUS_SUMMARY.statuses.runtimeCutover,
+    runtimeCards: runtimeCutover.totals.runtimeCards,
+    runtimeWindowCues: runtimeCutover.totals.windowCues,
+    runtimeDistributionErrors: runtimeCutover.totals.distributionErrors,
+    runtimeSideSelectionComplete: runtimeCutover.totals.sideSelectionComplete,
+    runtimeSideSelectionPending: runtimeCutover.totals.sideSelectionPending,
+    runtimeStaticComplete: runtime.staticComplete,
+    runtimeDynamicComplete: runtime.dynamicComplete,
+    runtimeWindowComplete: runtime.complete,
+    runtimeWindowPartial: runtime.partial,
+    runtimeSilentFallback: runtime.silentFallback,
+    supportVisuals: ROM_FX_CORPUS_SUMMARY.statuses.supportVisuals,
+    supportAuraBlue: ROM_FX_CORPUS_SUMMARY.statuses.supportAuraBlue,
+    gatherPowerAuraOrange: ROM_FX_CORPUS_SUMMARY.statuses.gatherPowerAuraOrange,
   };
 }
 

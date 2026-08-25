@@ -94,9 +94,15 @@ function resolveFrameGraphics(bank: number, base: number, vfid: number) {
   return { blockCount, relativeOffsets, provenance: { tableAddress: T, layoutAddress: layoutAddr } };
 }
 
+function bankedFileOffset(bank: number, cpuAddress: number): number {
+  if (cpuAddress >= 0x4000 && cpuAddress <= 0x7fff) return bank * 0x4000 + (cpuAddress - 0x4000);
+  if (cpuAddress >= 0x0000 && cpuAddress < 0x4000) return bank * 0x4000 + cpuAddress;
+  throw new Error(`invalid banked graphics address: bank $${bank.toString(16)} addr $${cpuAddress.toString(16)}`);
+}
+
 function blockBytes(key: number, offset: number): number[] | null {
   const bank = 0x31 + key;
-  const start = bank * 0x4000 + offset;
+  const start = bankedFileOffset(bank, offset);
   if (start + 32 > rom.length) return null;
   return Array.from(rom.subarray(start, start + 32));
 }
@@ -170,6 +176,7 @@ check('2bpp/BGR555/flips: decodificación pura (sin assets externos)', true, 're
   const forbidden = ['Canonical_Frames_Official', 'manifest.json', 'spriteCanon', 'cardBattlePose'];
   const hits = forbidden.filter((f) => src.includes(f));
   check('renderer sin assets externos (Canonical/manifest/V9/poses)', hits.length === 0, hits.join(', ') || 'limpio');
+  check('renderer converts banked graphics addresses with -0x4000', src.includes('bankedFileOffset') && src.includes('cpuAddress - 0x4000'));
 }
 
 console.log(`\nPHYSICAL EXTRACTION COVERAGE: ${totalFrames} frames (resource 0x03 · ${KEYS.length} profiles · ${res.sequences.length} secuencias)`);

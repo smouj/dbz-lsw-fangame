@@ -6,7 +6,7 @@
 // ═══════════════════════════════════════════════════════════════════════
 
 import { useCallback, useMemo, useState } from 'react';
-import { CHARACTERS, getCharacter, getForm } from '../../data/roster';
+import { ROM_ORDERED_CHARACTERS, getCharacter, getForm } from '../../data/roster';
 import { getLimitCapacity, normalizeLoadout } from '../../data/limitLoadout';
 import { DECK_SIZE, getCard } from '../../data/cards';
 import { cardUsableByCharacter } from '../../data/cardCompatibility';
@@ -22,7 +22,7 @@ export interface UseTeamSetupStateArgs {
 
 export function useTeamSetupState({ fallbackDeck, initialCharacterId }: UseTeamSetupStateArgs) {  const firstChar = initialCharacterId && getCharacter(initialCharacterId)
     ? initialCharacterId
-    : (CHARACTERS[0]?.id ?? 'goku');
+    : (ROM_ORDERED_CHARACTERS[0]?.id ?? 'gohan_kid');
   const firstForm = getCharacter(firstChar)?.forms[0] ?? 'goku_base';
 
   const [state, setState] = useState<TeamSetupState>(() => ({
@@ -104,7 +104,7 @@ export function useTeamSetupState({ fallbackDeck, initialCharacterId }: UseTeamS
       if (s.members.length >= 3) return s;
       const next = s.members.length;
       const prev = s.members[next - 1];
-      const char = CHARACTERS[next % CHARACTERS.length];
+      const char = ROM_ORDERED_CHARACTERS[next % ROM_ORDERED_CHARACTERS.length];
       const m = makeMember(char.id, char.forms[0], prev.jointDeck);
       return { ...s, members: [...s.members, m], activeMember: next, selectedCharacter: char.id };
     });

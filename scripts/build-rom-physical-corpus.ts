@@ -11,6 +11,7 @@ import { join } from 'path';
 import { CARDS, type CardDef } from '../src/data/cards';
 import { FORMS } from '../src/data/roster';
 import { romCardData } from '../src/data/romCardData';
+import { ANIMATION_RESOURCE_CATALOG } from '../src/battle/animationResources';
 
 const ROOT = process.cwd();
 const FIGHTERS = join(ROOT, 'docs/rom/generated/fighters');
@@ -70,6 +71,19 @@ interface RenderMetadata {
     tile1Address: number | null;
     tile1Hash: string;
   }>;
+  assembly?: {
+    pieceCount: number;
+    graphicsBlockCount: number;
+    renderedPieceCount: number;
+    graphicsBlockAddresses: Array<number | null>;
+    renderedBlockAddresses: Array<number | null>;
+    piecesOutsideRaw: number;
+    pixelsWrittenOutsideRaw: number;
+    assemblyInputHash: string;
+    rawPixelHash: string;
+    trimmedPixelHash: string;
+    errors: string[];
+  };
   source: { bank: number; baseAddress: number };
   palette: { raw?: number[]; bgr555: string[]; colors: string[]; transparentIndex?: number; color0Transparent?: boolean; displayTransform?: string };
   bounds: {
@@ -84,7 +98,8 @@ interface RenderMetadata {
     originInTrimY?: number;
     opaqueBounds?: { minX: number; minY: number; maxX: number; maxY: number } | null;
   };
-  rawCanvas?: { file: string; width: number; height: number; originX: number; originY: number; originVisible: boolean };
+  rawBounds?: { coordinateSpace: string; minX: number; minY: number; maxX: number; maxY: number; width: number; height: number; originX: number; originY: number };
+  rawCanvas?: { rawFile?: string; file: string; width: number; height: number; originX: number; originY: number; pieceBoundsInCanvas?: { x: number; y: number; w: number; h: number }; originVisible: boolean };
   trimmed?: { file: string; x: number; y: number; w: number; h: number; originInTrim: { x: number; y: number } };
   hashes: Record<string, string>;
   sourceProvenance?: {
@@ -103,6 +118,15 @@ interface AnimationResource {
   bank: number;
   sequences: Array<{ frames: unknown[] }>;
 }
+
+type ResourcePhysicalStatus =
+  | 'RENDERABLE'
+  | 'FRAME_STREAM_ONLY'
+  | 'METASPRITE_PENDING'
+  | 'GRAPHICS_PENDING'
+  | 'HANDLER_DEPENDENT'
+  | 'DYNAMIC_PENDING'
+  | 'UNREFERENCED';
 
 interface PhysicalFrame {
   physicalId: string;
@@ -132,12 +156,15 @@ interface PhysicalFrame {
     originInTrim: { x: number; y: number };
   };
   rawCanvasFile?: string;
+  rawImageFile?: string;
   rawCanvas?: RenderMetadata['rawCanvas'];
+  rawBounds?: RenderMetadata['rawBounds'];
   hashes: Record<string, string>;
   palette: RenderMetadata['palette'];
   metasprite: RenderMetadata['metasprite'];
   graphics: RenderMetadata['graphics'];
   pieceGraphics: NonNullable<RenderMetadata['pieceGraphics']>;
+  assembly: NonNullable<RenderMetadata['assembly']>;
   sourceProvenance?: RenderMetadata['sourceProvenance'];
   occurrences: Array<{
     sequence: number;
@@ -205,6 +232,61 @@ function rendererPendingResources(resources: AnimationResource[]): AnimationReso
     .filter(resource => resource.sequences.some(sequence => sequence.frames.length > 0))
     .filter(resource => !FIGHTER_PHYSICAL_RESOURCE_IDS.has(resource.resourceId))
     .sort((a, b) => a.resourceId - b.resourceId);
+}
+
+function resourcePhysicalStatus(entry: (typeof ANIMATION_RESOURCE_CATALOG)[number], decodedResource: AnimationResource | undefined): {
+  status: ResourcePhysicalStatus;
+  physicalLinkage: 'FULL' | 'FRAME_STREAM_ONLY' | 'PARTIAL' | 'NONE';
+  blockingReason: string;
+} {
+  const hasFrameStream = !!decodedResource?.sequences.some(sequence => sequence.frames.length > 0);
+  if (FIGHTER_PHYSICAL_RESOURCE_IDS.has(entry.resourceId) && hasFrameStream) {
+    return {
+      status: 'RENDERABLE',
+      physicalLinkage: 'FULL',
+      blockingReason: '',
+    };
+  }
+  if (entry.cards.length === 0) {
+    return {
+      status: 'UNREFERENCED',
+      physicalLinkage: 'NONE',
+      blockingReason: 'AnimationResource slot exists in the ROM bank layout, but no card in the 125-card table consumes it.',
+    };
+  }
+  if (hasFrameStream) {
+    return {
+      status: 'FRAME_STREAM_ONLY',
+      physicalLinkage: 'FRAME_STREAM_ONLY',
+      blockingReason: 'Frame stream is decoded, but this resource has not been promoted through metasprite/graphics/profile rendering invariants yet.',
+    };
+  }
+  if (entry.completion.disposition === 'NEEDS_DYNAMIC_TRACE') {
+    return {
+      status: 'DYNAMIC_PENDING',
+      physicalLinkage: 'NONE',
+      blockingReason: entry.completion.detail,
+    };
+  }
+  if (entry.completion.cause === 'HANDLER_SELECTED_SEQUENCE' || entry.completion.cause === 'MULTI_SEQUENCE_AMBIGUOUS') {
+    return {
+      status: 'HANDLER_DEPENDENT',
+      physicalLinkage: 'PARTIAL',
+      blockingReason: entry.completion.detail,
+    };
+  }
+  if (entry.completion.cause === 'FRAME_STREAM_PARTIAL' || entry.completion.cause === 'SEQUENCE_BOUNDARY_UNRESOLVED' || entry.completion.cause === 'SEQUENCE_COUNT_UNRESOLVED') {
+    return {
+      status: 'METASPRITE_PENDING',
+      physicalLinkage: 'PARTIAL',
+      blockingReason: entry.completion.detail,
+    };
+  }
+  return {
+    status: 'GRAPHICS_PENDING',
+    physicalLinkage: 'PARTIAL',
+    blockingReason: entry.completion.detail,
+  };
 }
 
 function compatibleFormsForCard(card: CardDef): string[] {
@@ -317,7 +399,7 @@ function clearGeneratedPhysical(formId: string): void {
   }
 }
 
-function buildForForm(profile: RomFormProfile, profilesByResource: Map<number, RomFormProfile[]>): { frames: PhysicalFrame[]; manifest: Record<string, unknown>; provenance: Record<string, unknown>; resourceProfileBlocked: Array<{ resourceId: number; resourceHex: string; reason: string }> } {
+function buildForForm(profile: RomFormProfile, profilesByResource: Map<number, RomFormProfile[]>): { frames: PhysicalFrame[]; manifest: Record<string, unknown>; provenance: Record<string, unknown>; resourceProfileBlocked: Array<{ resourceId: number; resourceHex: string; reason: string }>; transparentFrameRecords: Array<Record<string, unknown>> } {
   const formOut = join(PUBLIC_SPRITES, profile.formId);
   const physicalOut = join(formOut, 'physical');
   const debugOut = join(formOut, 'physical-debug');
@@ -329,6 +411,7 @@ function buildForForm(profile: RomFormProfile, profilesByResource: Map<number, R
   const byId = new Map<string, PhysicalFrame>();
   const sequences: Record<string, unknown> = {};
   const resourceProfileBlocked: Array<{ resourceId: number; resourceHex: string; reason: string }> = [];
+  const transparentFrameRecords: Array<Record<string, unknown>> = [];
 
   for (const resourceDir of readdirSync(FIGHTERS, { withFileTypes: true }).filter(d => d.isDirectory() && d.name.startsWith('resource_'))) {
     const resourceId = parseInt(resourceDir.name.replace('resource_', ''), 16);
@@ -357,7 +440,38 @@ function buildForForm(profile: RomFormProfile, profilesByResource: Map<number, R
       continue;
     }
 
-    for (const { metaPath, meta, b } of prepared) {
+    const transparentPrepared = prepared.filter(({ meta }) => !meta.bounds.opaqueBounds);
+    for (const { metaPath, meta } of transparentPrepared) {
+      transparentFrameRecords.push({
+        resourceId,
+        resourceHex: `0x${hex(resourceId)}`,
+        sequence: meta.sequence,
+        frameIndex: meta.frameIndex,
+        visualFrameId: meta.frameRecord.visualFrameId,
+        durationTicks: meta.frameRecord.durationTicks,
+        rawOffsetX: meta.frameRecord.raw[3],
+        rawOffsetY: meta.frameRecord.raw[2],
+        offsetX: meta.frameRecord.offsetX,
+        offsetY: meta.frameRecord.offsetY,
+        raw: meta.frameRecord.raw,
+        frameAddress: meta.frameRecord.provenance.frameAddress,
+        physicalId: physicalId(meta),
+        physicalRender: 'EMPTY_NOT_PROMOTED',
+        evidence: metaPath.replace(`${ROOT}/`, ''),
+      });
+    }
+
+    const renderablePrepared = prepared.filter(({ meta }) => meta.bounds.opaqueBounds);
+    if (renderablePrepared.length === 0) {
+      resourceProfileBlocked.push({
+        resourceId,
+        resourceHex: `0x${hex(resourceId)}`,
+        reason: `resource/profile produced only transparent physical frames (${prepared.length} candidate frames)`,
+      });
+      continue;
+    }
+
+    for (const { metaPath, meta, b } of renderablePrepared) {
       if (meta.key !== profile.actorVisualProfileKey || meta.source.bank !== profile.graphicsBank) {
         throw new Error(`${profile.formId}: render profile mismatch (form key=${profile.actorVisualProfileKey}/bank=${profile.graphicsBank}, render key=${meta.key}/bank=${meta.source.bank})`);
       }
@@ -368,7 +482,9 @@ function buildForForm(profile: RomFormProfile, profilesByResource: Map<number, R
       const file = `physical/${id}.png`;
       const srcPng = join(metaPath, '..', 'rom_trimmed.png');
       const rawCanvasFile = meta.rawCanvas ? `physical-debug/${id}-raw-canvas.png` : undefined;
+      const rawImageFile = meta.rawCanvas?.rawFile ? `physical-debug/${id}-raw.png` : undefined;
       const srcRawCanvas = meta.rawCanvas ? join(metaPath, '..', meta.rawCanvas.file) : null;
+      const srcRawImage = meta.rawCanvas?.rawFile ? join(metaPath, '..', meta.rawCanvas.rawFile) : null;
       const occurrence = {
         sequence: meta.sequence,
         frameIndex: meta.frameIndex,
@@ -393,6 +509,9 @@ function buildForForm(profile: RomFormProfile, profilesByResource: Map<number, R
         if (rawCanvasFile && srcRawCanvas && existsSync(srcRawCanvas)) {
           copyFileSync(srcRawCanvas, join(formOut, rawCanvasFile));
         }
+        if (rawImageFile && srcRawImage && existsSync(srcRawImage)) {
+          copyFileSync(srcRawImage, join(formOut, rawImageFile));
+        }
         byId.set(id, {
           physicalId: id,
           schemaVersion: SCHEMA_VERSION,
@@ -407,11 +526,26 @@ function buildForForm(profile: RomFormProfile, profilesByResource: Map<number, R
           graphicsBank: profile.graphicsBank,
           ...b,
           rawCanvasFile,
+          rawImageFile,
           hashes: { ...meta.hashes, sourceFileSha256: sha256(srcPng) },
           palette: meta.palette,
           metasprite: meta.metasprite,
           graphics: meta.graphics,
           pieceGraphics: meta.pieceGraphics ?? [],
+          assembly: meta.assembly ?? {
+            pieceCount: meta.metasprite.pieces.length,
+            graphicsBlockCount: meta.graphics.blockCount,
+            renderedPieceCount: meta.pieceGraphics?.length ?? 0,
+            graphicsBlockAddresses: (meta.pieceGraphics ?? []).map(piece => piece.graphicsBlockAddress),
+            renderedBlockAddresses: (meta.pieceGraphics ?? []).map(piece => piece.graphicsBlockAddress),
+            piecesOutsideRaw: 0,
+            pixelsWrittenOutsideRaw: 0,
+            assemblyInputHash: meta.hashes.assemblyInputHash ?? meta.hashes.sourceProvenanceHash,
+            rawPixelHash: meta.hashes.rawPixelHash,
+            trimmedPixelHash: meta.hashes.trimmedPixelHash,
+            errors: [],
+          },
+          rawBounds: meta.rawBounds,
           sourceProvenance: meta.sourceProvenance,
           occurrences: [occurrence],
         });
@@ -443,6 +577,8 @@ function buildForForm(profile: RomFormProfile, profilesByResource: Map<number, R
         originInTrimX: b.originInTrimX,
         originInTrimY: b.originInTrimY,
         rawCanvasFile,
+        rawImageFile,
+        assemblyErrors: meta.assembly?.errors ?? [],
       });
       sequences[sequenceKey] = list;
     }
@@ -468,6 +604,7 @@ function buildForForm(profile: RomFormProfile, profilesByResource: Map<number, R
       note: 'This file maps physical ROM sequences. Semantic roles remain in legacy manifest.json until P0.3C remapping.',
     },
     resourceProfileBlocked,
+    transparentFrameRecords,
   };
   const provenance = {
     version: 'P0.3B_ROM_PHYSICAL_FIGHTER',
@@ -483,17 +620,19 @@ function buildForForm(profile: RomFormProfile, profilesByResource: Map<number, R
     frameIdentity: 'ROM SHA + actorVisualProfileKey + graphicsBank + AnimationResource + visualFrameId + metasprite descriptor hash + graphics source/layout hash',
     identityExcludes: ['sequence', 'semanticRole', 'legacyPoseName'],
     resourceProfileBlocked,
+    transparentFrameRecords,
     frames,
   };
   writeFileSync(join(formOut, 'rom-physical.manifest.json'), `${JSON.stringify(manifest, null, 2)}\n`);
   writeFileSync(join(formOut, 'provenance.json'), `${JSON.stringify(provenance, null, 2)}\n`);
-  return { frames, manifest, provenance, resourceProfileBlocked };
+  return { frames, manifest, provenance, resourceProfileBlocked, transparentFrameRecords };
 }
 
 const profiles = readJson<RomFormProfile[]>(PROFILES);
 const physicalProfiles = profiles.filter(profile => profile.paletteAvailable);
 const paletteBlockedProfiles = profiles.filter(profile => !profile.paletteAvailable);
 const allResources = readJson<AnimationResource[]>(ANIMATION_RESOURCES);
+const allResourcesById = new Map(allResources.map(resource => [resource.resourceId, resource]));
 const resources = reachableResources(allResources);
 const rendererPending = rendererPendingResources(allResources);
 const profilesByResource = new Map(resources.map(resource => [
@@ -513,6 +652,12 @@ const summary = corpusProfiles.map(profile => {
   const widths = built.frames.map(frame => frame.width);
   const heights = built.frames.map(frame => frame.height);
   const offsets = built.frames.flatMap(frame => frame.occurrences.flatMap(occurrence => [occurrence.offsetX, occurrence.offsetY]));
+  const resourceFrameInstances = Object.values((built.manifest as { sequences: Record<string, { resource: number; frames: unknown[] }> }).sequences)
+    .reduce((map, sequence) => {
+      const resourceHex = `0x${hex(sequence.resource)}`;
+      map[resourceHex] = (map[resourceHex] ?? 0) + sequence.frames.length;
+      return map;
+    }, {} as Record<string, number>);
   return {
     formId: profile.formId,
     actorVisualProfileKey: profile.actorVisualProfileKey,
@@ -520,7 +665,9 @@ const summary = corpusProfiles.map(profile => {
     frameInstances: built.frames.reduce((total, frame) => total + frame.occurrences.length, 0),
     sequences: Object.keys((built.manifest as { sequences: Record<string, unknown> }).sequences).length,
     resources: [...new Set(built.frames.map(frame => frame.resourceHex))],
+    resourceFrameInstances,
     resourceProfileBlocked: built.resourceProfileBlocked,
+    transparentFrameRecords: built.transparentFrameRecords,
     physicalFrameIndex: built.frames.map(frame => ({
       physicalId: frame.physicalId,
       file: frame.file,
@@ -560,6 +707,63 @@ const totals = {
   maxWidth: Math.max(...summary.map(row => row.maxWidth)),
   maxHeight: Math.max(...summary.map(row => row.maxHeight)),
   resourceProfileBlockedPairs: summary.reduce((total, row) => total + row.resourceProfileBlocked.length, 0),
+  transparentFrameRecords: summary.reduce((total, row) => total + row.transparentFrameRecords.length, 0),
+  transparentPhysicalIds: new Set(summary.flatMap(row => row.transparentFrameRecords.map(record => String(record.physicalId)))).size,
+};
+
+const physicalIdsByResource = new Map<number, Set<string>>();
+const frameInstancesByResource = new Map<number, number>();
+for (const form of summary) {
+  for (const frame of form.physicalFrameIndex) {
+    const ids = physicalIdsByResource.get(frame.resourceId) ?? new Set<string>();
+    ids.add(frame.physicalId);
+    physicalIdsByResource.set(frame.resourceId, ids);
+  }
+  for (const resource of form.resources) {
+    const resourceId = parseInt(resource.replace('0x', ''), 16);
+    const manifestInstances = form.resourceFrameInstances[resource] ?? 0;
+    frameInstancesByResource.set(resourceId, (frameInstancesByResource.get(resourceId) ?? 0) + manifestInstances);
+  }
+}
+
+const resourcePhysicalCompletion = ANIMATION_RESOURCE_CATALOG.map(entry => {
+  const decodedResource = allResourcesById.get(entry.resourceId);
+  const status = resourcePhysicalStatus(entry, decodedResource);
+  const renderedProfiles = profilesByResource.get(entry.resourceId) ?? [];
+  const sequenceCount = decodedResource?.sequences.length ?? entry.sequenceCount;
+  const frameCount = decodedResource?.sequences.reduce((total, sequence) => total + sequence.frames.length, 0) ?? entry.physicalFrameCount;
+  return {
+    resourceId: entry.resourceId,
+    resourceHex: `0x${hex(entry.resourceId)}`,
+    bankHex: entry.bankHex,
+    consumers: entry.cards.map(card => ({
+      cardId: card.id,
+      name: card.name,
+      handlerHex: card.handlerHex,
+      type: card.type,
+    })),
+    consumerCount: entry.cards.length,
+    handlers: entry.handlers.map(handler => `0x${hex(handler)}`),
+    sequences: sequenceCount,
+    frames: frameCount,
+    physicalLinkage: status.physicalLinkage,
+    profilesRendered: [...new Set(renderedProfiles.map(profile => profile.actorVisualProfileKey))].length,
+    physicalIds: physicalIdsByResource.get(entry.resourceId)?.size ?? 0,
+    frameInstances: frameInstancesByResource.get(entry.resourceId) ?? 0,
+    status: status.status,
+    blockingReason: status.blockingReason || '—',
+  };
+});
+
+const resourceCompletionTotals = {
+  resources: resourcePhysicalCompletion.length,
+  renderable: resourcePhysicalCompletion.filter(row => row.status === 'RENDERABLE').length,
+  frameStreamOnly: resourcePhysicalCompletion.filter(row => row.status === 'FRAME_STREAM_ONLY').length,
+  metaspritePending: resourcePhysicalCompletion.filter(row => row.status === 'METASPRITE_PENDING').length,
+  graphicsPending: resourcePhysicalCompletion.filter(row => row.status === 'GRAPHICS_PENDING').length,
+  handlerDependent: resourcePhysicalCompletion.filter(row => row.status === 'HANDLER_DEPENDENT').length,
+  dynamicPending: resourcePhysicalCompletion.filter(row => row.status === 'DYNAMIC_PENDING').length,
+  unreferenced: resourcePhysicalCompletion.filter(row => row.status === 'UNREFERENCED').length,
 };
 
 mkdirSync(OUT_REPORT, { recursive: true });
@@ -585,14 +789,49 @@ const corpusSummary = {
     actorVisualProfileKey: `0x${hex(profile.actorVisualProfileKey)}`,
     reason: 'Palette is available, but no currently renderer-verified fighter physical resource is compatible with this form yet.',
   })),
+  resourcePhysicalCompletion,
+  resourceCompletionTotals,
   totals,
   forms: summary,
 };
 writeFileSync(join(OUT_REPORT, 'summary.json'), `${JSON.stringify(corpusSummary, null, 2)}\n`);
+writeFileSync(join(OUT_REPORT, 'resource_physical_completion.json'), `${JSON.stringify({
+  source: 'ROM_PHYSICAL_FIGHTERS',
+  scope: 'AnimationResource physical promotion matrix; RENDERABLE means promoted into the certified Fighter corpus, not merely decoded.',
+  totals: resourceCompletionTotals,
+  resources: resourcePhysicalCompletion,
+}, null, 2)}\n`);
 writeFileSync(GENERATED_TS, [
   '// Auto-generated by scripts/build-rom-physical-corpus.ts',
   '// Do not edit by hand.',
   `export const ROM_PHYSICAL_CORPUS_SUMMARY = ${JSON.stringify(corpusSummary, null, 2)} as const;`,
+  '',
+].join('\n'));
+writeFileSync(join(OUT_REPORT, 'resource_physical_completion.md'), [
+  '# AnimationResource Physical Completion',
+  '',
+  'This matrix separates decoded ROM resources from Fighter physical resources promoted into the certified 48-form corpus.',
+  '',
+  `Renderable resources: ${resourceCompletionTotals.renderable}/${resourceCompletionTotals.resources}`,
+  `Frame-stream-only resources: ${resourceCompletionTotals.frameStreamOnly}`,
+  `Handler-dependent resources: ${resourceCompletionTotals.handlerDependent}`,
+  `Dynamic-pending resources: ${resourceCompletionTotals.dynamicPending}`,
+  `Unreferenced resources: ${resourceCompletionTotals.unreferenced}`,
+  '',
+  '| Resource | Consumers | Sequences | Frames | Physical linkage | Profiles rendered | Physical IDs | Frame instances | Status | Blocking reason |',
+  '| -------- | --------: | --------: | -----: | ---------------- | ----------------: | -----------: | --------------: | ------ | --------------- |',
+  ...resourcePhysicalCompletion.map(row => [
+    `\`${row.resourceHex}\``,
+    row.consumerCount,
+    row.sequences,
+    row.frames,
+    `\`${row.physicalLinkage}\``,
+    row.profilesRendered,
+    row.physicalIds,
+    row.frameInstances,
+    `\`${row.status}\``,
+    row.blockingReason === '—' ? '—' : row.blockingReason.replace(/\|/g, '/'),
+  ].join(' | ')).map(row => `| ${row} |`),
   '',
 ].join('\n'));
 writeFileSync(join(OUT_REPORT, 'REPORT.md'), [
@@ -604,6 +843,7 @@ writeFileSync(join(OUT_REPORT, 'REPORT.md'), [
   `Offset encoding: \`${OFFSET_ENCODING}\` (raw bytes preserved separately)`,
   '',
   `Scope: ${resources.length} fighter-physical renderable AnimationResources from \`docs/rom/generated/animation-resources.json\`: ${resources.map(resource => `\`$${hex(resource.resourceId)}\``).join(', ')}.`,
+  `AnimationResource physical promotion: ${resourceCompletionTotals.renderable}/${resourceCompletionTotals.resources} renderable; ${resourceCompletionTotals.frameStreamOnly} frame-stream-only; ${resourceCompletionTotals.handlerDependent} handler-dependent; ${resourceCompletionTotals.dynamicPending} dynamic-pending.`,
   `Renderer-pending decoded resources: ${rendererPending.map(resource => `\`$${hex(resource.resourceId)}\``).join(', ') || 'none'}.`,
   `Forms rendered: ${totals.forms}/${totals.formsIndexed}. Palette-blocked profiles: ${totals.formsPaletteBlocked}.`,
   `Resource-blocked palette-ready profiles: ${totals.formsResourceBlocked}.`,

@@ -1,0 +1,1688 @@
+{
+  "source": "ROM_PHYSICAL_FIGHTERS",
+  "scope": "AnimationResource physical promotion matrix; RENDERABLE means promoted into the certified Fighter corpus, not merely decoded.",
+  "totals": {
+    "resources": 66,
+    "renderable": 6,
+    "frameStreamOnly": 8,
+    "metaspritePending": 24,
+    "graphicsPending": 4,
+    "handlerDependent": 18,
+    "dynamicPending": 5,
+    "unreferenced": 1
+  },
+  "resources": [
+    {
+      "resourceId": 0,
+      "resourceHex": "0x00",
+      "bankHex": "0x62",
+      "consumers": [
+        {
+          "cardId": 7,
+          "name": "Energy Wave",
+          "handlerHex": "0x02",
+          "type": "beam"
+        }
+      ],
+      "consumerCount": 1,
+      "handlers": [
+        "0x02"
+      ],
+      "sequences": 2,
+      "frames": 14,
+      "physicalLinkage": "FULL",
+      "profilesRendered": 44,
+      "physicalIds": 175,
+      "frameInstances": 669,
+      "status": "RENDERABLE",
+      "blockingReason": "—"
+    },
+    {
+      "resourceId": 1,
+      "resourceHex": "0x01",
+      "bankHex": "0x62",
+      "consumers": [
+        {
+          "cardId": 63,
+          "name": "Finger Beam",
+          "handlerHex": "0x02",
+          "type": "beam"
+        }
+      ],
+      "consumerCount": 1,
+      "handlers": [
+        "0x02"
+      ],
+      "sequences": 2,
+      "frames": 12,
+      "physicalLinkage": "FRAME_STREAM_ONLY",
+      "profilesRendered": 0,
+      "physicalIds": 0,
+      "frameInstances": 0,
+      "status": "FRAME_STREAM_ONLY",
+      "blockingReason": "Frame stream is decoded, but this resource has not been promoted through metasprite/graphics/profile rendering invariants yet."
+    },
+    {
+      "resourceId": 2,
+      "resourceHex": "0x02",
+      "bankHex": "0x62",
+      "consumers": [
+        {
+          "cardId": 67,
+          "name": "Eye Beam",
+          "handlerHex": "0x02",
+          "type": "beam"
+        }
+      ],
+      "consumerCount": 1,
+      "handlers": [
+        "0x02"
+      ],
+      "sequences": 0,
+      "frames": 0,
+      "physicalLinkage": "PARTIAL",
+      "profilesRendered": 0,
+      "physicalIds": 0,
+      "frameInstances": 0,
+      "status": "GRAPHICS_PENDING",
+      "blockingReason": "Base beam/support handler uses the known resource id, but the resource pointer table entry has not been resolved to complete sequences yet."
+    },
+    {
+      "resourceId": 3,
+      "resourceHex": "0x03",
+      "bankHex": "0x62",
+      "consumers": [
+        {
+          "cardId": 12,
+          "name": "Kamehameha",
+          "handlerHex": "0x02",
+          "type": "beam"
+        },
+        {
+          "cardId": 13,
+          "name": "S.Kamehameha",
+          "handlerHex": "0x02",
+          "type": "beam"
+        },
+        {
+          "cardId": 14,
+          "name": "F.Kamehameha",
+          "handlerHex": "0x02",
+          "type": "beam"
+        },
+        {
+          "cardId": 38,
+          "name": "Kamekameha",
+          "handlerHex": "0x02",
+          "type": "beam"
+        }
+      ],
+      "consumerCount": 4,
+      "handlers": [
+        "0x02"
+      ],
+      "sequences": 6,
+      "frames": 48,
+      "physicalLinkage": "FULL",
+      "profilesRendered": 26,
+      "physicalIds": 253,
+      "frameInstances": 1260,
+      "status": "RENDERABLE",
+      "blockingReason": "—"
+    },
+    {
+      "resourceId": 4,
+      "resourceHex": "0x04",
+      "bankHex": "0x62",
+      "consumers": [
+        {
+          "cardId": 10,
+          "name": "Masenko",
+          "handlerHex": "0x02",
+          "type": "beam"
+        }
+      ],
+      "consumerCount": 1,
+      "handlers": [
+        "0x02"
+      ],
+      "sequences": 2,
+      "frames": 14,
+      "physicalLinkage": "FULL",
+      "profilesRendered": 8,
+      "physicalIds": 32,
+      "frameInstances": 154,
+      "status": "RENDERABLE",
+      "blockingReason": "—"
+    },
+    {
+      "resourceId": 5,
+      "resourceHex": "0x05",
+      "bankHex": "0x62",
+      "consumers": [
+        {
+          "cardId": 30,
+          "name": "Galick-Ho",
+          "handlerHex": "0x02",
+          "type": "beam"
+        }
+      ],
+      "consumerCount": 1,
+      "handlers": [
+        "0x02"
+      ],
+      "sequences": 2,
+      "frames": 16,
+      "physicalLinkage": "FULL",
+      "profilesRendered": 3,
+      "physicalIds": 15,
+      "frameInstances": 64,
+      "status": "RENDERABLE",
+      "blockingReason": "—"
+    },
+    {
+      "resourceId": 6,
+      "resourceHex": "0x06",
+      "bankHex": "0x62",
+      "consumers": [
+        {
+          "cardId": 48,
+          "name": "Lightning C.",
+          "handlerHex": "0x02",
+          "type": "beam"
+        }
+      ],
+      "consumerCount": 1,
+      "handlers": [
+        "0x02"
+      ],
+      "sequences": 0,
+      "frames": 0,
+      "physicalLinkage": "PARTIAL",
+      "profilesRendered": 0,
+      "physicalIds": 0,
+      "frameInstances": 0,
+      "status": "GRAPHICS_PENDING",
+      "blockingReason": "Base beam/support handler uses the known resource id, but the resource pointer table entry has not been resolved to complete sequences yet."
+    },
+    {
+      "resourceId": 7,
+      "resourceHex": "0x07",
+      "bankHex": "0x62",
+      "consumers": [
+        {
+          "cardId": 35,
+          "name": "Burning Atk.",
+          "handlerHex": "0x04",
+          "type": "beam"
+        }
+      ],
+      "consumerCount": 1,
+      "handlers": [
+        "0x04"
+      ],
+      "sequences": 0,
+      "frames": 0,
+      "physicalLinkage": "PARTIAL",
+      "profilesRendered": 0,
+      "physicalIds": 0,
+      "frameInstances": 0,
+      "status": "HANDLER_DEPENDENT",
+      "blockingReason": "Projectile/beam variant handler selects a resource sequence path; the handler-specific static selector must be mapped before frame extraction can be called complete."
+    },
+    {
+      "resourceId": 8,
+      "resourceHex": "0x08",
+      "bankHex": "0x62",
+      "consumers": [
+        {
+          "cardId": 20,
+          "name": "Misty KiWave",
+          "handlerHex": "0x02",
+          "type": "beam"
+        }
+      ],
+      "consumerCount": 1,
+      "handlers": [
+        "0x02"
+      ],
+      "sequences": 1,
+      "frames": 8,
+      "physicalLinkage": "FULL",
+      "profilesRendered": 1,
+      "physicalIds": 4,
+      "frameInstances": 8,
+      "status": "RENDERABLE",
+      "blockingReason": "—"
+    },
+    {
+      "resourceId": 9,
+      "resourceHex": "0x09",
+      "bankHex": "0x62",
+      "consumers": [
+        {
+          "cardId": 32,
+          "name": "Final Flash",
+          "handlerHex": "0x02",
+          "type": "beam"
+        }
+      ],
+      "consumerCount": 1,
+      "handlers": [
+        "0x02"
+      ],
+      "sequences": 2,
+      "frames": 16,
+      "physicalLinkage": "FRAME_STREAM_ONLY",
+      "profilesRendered": 0,
+      "physicalIds": 0,
+      "frameInstances": 0,
+      "status": "FRAME_STREAM_ONLY",
+      "blockingReason": "Frame stream is decoded, but this resource has not been promoted through metasprite/graphics/profile rendering invariants yet."
+    },
+    {
+      "resourceId": 10,
+      "resourceHex": "0x0a",
+      "bankHex": "0x62",
+      "consumers": [
+        {
+          "cardId": 54,
+          "name": "Eraser Can.",
+          "handlerHex": "0x03",
+          "type": "beam"
+        }
+      ],
+      "consumerCount": 1,
+      "handlers": [
+        "0x03"
+      ],
+      "sequences": 0,
+      "frames": 0,
+      "physicalLinkage": "PARTIAL",
+      "profilesRendered": 0,
+      "physicalIds": 0,
+      "frameInstances": 0,
+      "status": "HANDLER_DEPENDENT",
+      "blockingReason": "Projectile/beam variant handler selects a resource sequence path; the handler-specific static selector must be mapped before frame extraction can be called complete."
+    },
+    {
+      "resourceId": 11,
+      "resourceHex": "0x0b",
+      "bankHex": "0x62",
+      "consumers": [
+        {
+          "cardId": 70,
+          "name": "Hell Flash",
+          "handlerHex": "0x02",
+          "type": "beam"
+        }
+      ],
+      "consumerCount": 1,
+      "handlers": [
+        "0x02"
+      ],
+      "sequences": 1,
+      "frames": 7,
+      "physicalLinkage": "FRAME_STREAM_ONLY",
+      "profilesRendered": 0,
+      "physicalIds": 0,
+      "frameInstances": 0,
+      "status": "FRAME_STREAM_ONLY",
+      "blockingReason": "Frame stream is decoded, but this resource has not been promoted through metasprite/graphics/profile rendering invariants yet."
+    },
+    {
+      "resourceId": 12,
+      "resourceHex": "0x0c",
+      "bankHex": "0x62",
+      "consumers": [
+        {
+          "cardId": 8,
+          "name": "Energy Bomb",
+          "handlerHex": "0x05",
+          "type": "beam"
+        }
+      ],
+      "consumerCount": 1,
+      "handlers": [
+        "0x05"
+      ],
+      "sequences": 0,
+      "frames": 0,
+      "physicalLinkage": "PARTIAL",
+      "profilesRendered": 0,
+      "physicalIds": 0,
+      "frameInstances": 0,
+      "status": "HANDLER_DEPENDENT",
+      "blockingReason": "Projectile/beam variant handler selects a resource sequence path; the handler-specific static selector must be mapped before frame extraction can be called complete."
+    },
+    {
+      "resourceId": 13,
+      "resourceHex": "0x0d",
+      "bankHex": "0x62",
+      "consumers": [],
+      "consumerCount": 0,
+      "handlers": [],
+      "sequences": 0,
+      "frames": 0,
+      "physicalLinkage": "NONE",
+      "profilesRendered": 0,
+      "physicalIds": 0,
+      "frameInstances": 0,
+      "status": "UNREFERENCED",
+      "blockingReason": "AnimationResource slot exists in the ROM bank layout, but no card in the 125-card table consumes it."
+    },
+    {
+      "resourceId": 14,
+      "resourceHex": "0x0e",
+      "bankHex": "0x62",
+      "consumers": [
+        {
+          "cardId": 47,
+          "name": "KiBlast Bomb",
+          "handlerHex": "0x05",
+          "type": "beam"
+        }
+      ],
+      "consumerCount": 1,
+      "handlers": [
+        "0x05"
+      ],
+      "sequences": 0,
+      "frames": 0,
+      "physicalLinkage": "PARTIAL",
+      "profilesRendered": 0,
+      "physicalIds": 0,
+      "frameInstances": 0,
+      "status": "HANDLER_DEPENDENT",
+      "blockingReason": "Projectile/beam variant handler selects a resource sequence path; the handler-specific static selector must be mapped before frame extraction can be called complete."
+    },
+    {
+      "resourceId": 15,
+      "resourceHex": "0x0f",
+      "bankHex": "0x62",
+      "consumers": [
+        {
+          "cardId": 31,
+          "name": "Big Bang Atk",
+          "handlerHex": "0x05",
+          "type": "beam"
+        }
+      ],
+      "consumerCount": 1,
+      "handlers": [
+        "0x05"
+      ],
+      "sequences": 2,
+      "frames": 16,
+      "physicalLinkage": "FRAME_STREAM_ONLY",
+      "profilesRendered": 0,
+      "physicalIds": 0,
+      "frameInstances": 0,
+      "status": "FRAME_STREAM_ONLY",
+      "blockingReason": "Frame stream is decoded, but this resource has not been promoted through metasprite/graphics/profile rendering invariants yet."
+    },
+    {
+      "resourceId": 16,
+      "resourceHex": "0x10",
+      "bankHex": "0x62",
+      "consumers": [
+        {
+          "cardId": 36,
+          "name": "Fin.Buster",
+          "handlerHex": "0x05",
+          "type": "beam"
+        }
+      ],
+      "consumerCount": 1,
+      "handlers": [
+        "0x05"
+      ],
+      "sequences": 0,
+      "frames": 0,
+      "physicalLinkage": "PARTIAL",
+      "profilesRendered": 0,
+      "physicalIds": 0,
+      "frameInstances": 0,
+      "status": "HANDLER_DEPENDENT",
+      "blockingReason": "Projectile/beam variant handler selects a resource sequence path; the handler-specific static selector must be mapped before frame extraction can be called complete."
+    },
+    {
+      "resourceId": 17,
+      "resourceHex": "0x11",
+      "bankHex": "0x62",
+      "consumers": [
+        {
+          "cardId": 18,
+          "name": "F.Lightbomb",
+          "handlerHex": "0x05",
+          "type": "beam"
+        }
+      ],
+      "consumerCount": 1,
+      "handlers": [
+        "0x05"
+      ],
+      "sequences": 0,
+      "frames": 0,
+      "physicalLinkage": "PARTIAL",
+      "profilesRendered": 0,
+      "physicalIds": 0,
+      "frameInstances": 0,
+      "status": "HANDLER_DEPENDENT",
+      "blockingReason": "Projectile/beam variant handler selects a resource sequence path; the handler-specific static selector must be mapped before frame extraction can be called complete."
+    },
+    {
+      "resourceId": 18,
+      "resourceHex": "0x12",
+      "bankHex": "0x62",
+      "consumers": [
+        {
+          "cardId": 21,
+          "name": "Destruct-Disk",
+          "handlerHex": "0x07",
+          "type": "beam"
+        },
+        {
+          "cardId": 22,
+          "name": "S.Destruc-D.",
+          "handlerHex": "0x07",
+          "type": "beam"
+        }
+      ],
+      "consumerCount": 2,
+      "handlers": [
+        "0x07"
+      ],
+      "sequences": 4,
+      "frames": 36,
+      "physicalLinkage": "FULL",
+      "profilesRendered": 5,
+      "physicalIds": 25,
+      "frameInstances": 216,
+      "status": "RENDERABLE",
+      "blockingReason": "—"
+    },
+    {
+      "resourceId": 19,
+      "resourceHex": "0x13",
+      "bankHex": "0x62",
+      "consumers": [
+        {
+          "cardId": 73,
+          "name": "Energy Slice",
+          "handlerHex": "0x07",
+          "type": "beam"
+        }
+      ],
+      "consumerCount": 1,
+      "handlers": [
+        "0x07"
+      ],
+      "sequences": 0,
+      "frames": 0,
+      "physicalLinkage": "PARTIAL",
+      "profilesRendered": 0,
+      "physicalIds": 0,
+      "frameInstances": 0,
+      "status": "HANDLER_DEPENDENT",
+      "blockingReason": "Projectile/beam variant handler selects a resource sequence path; the handler-specific static selector must be mapped before frame extraction can be called complete."
+    },
+    {
+      "resourceId": 20,
+      "resourceHex": "0x14",
+      "bankHex": "0x62",
+      "consumers": [
+        {
+          "cardId": 65,
+          "name": "Grand Wave",
+          "handlerHex": "0x05",
+          "type": "beam"
+        }
+      ],
+      "consumerCount": 1,
+      "handlers": [
+        "0x05"
+      ],
+      "sequences": 0,
+      "frames": 0,
+      "physicalLinkage": "PARTIAL",
+      "profilesRendered": 0,
+      "physicalIds": 0,
+      "frameInstances": 0,
+      "status": "HANDLER_DEPENDENT",
+      "blockingReason": "Projectile/beam variant handler selects a resource sequence path; the handler-specific static selector must be mapped before frame extraction can be called complete."
+    },
+    {
+      "resourceId": 21,
+      "resourceHex": "0x15",
+      "bankHex": "0x62",
+      "consumers": [
+        {
+          "cardId": 72,
+          "name": "Energy Slash",
+          "handlerHex": "0x05",
+          "type": "beam"
+        }
+      ],
+      "consumerCount": 1,
+      "handlers": [
+        "0x05"
+      ],
+      "sequences": 0,
+      "frames": 0,
+      "physicalLinkage": "PARTIAL",
+      "profilesRendered": 0,
+      "physicalIds": 0,
+      "frameInstances": 0,
+      "status": "HANDLER_DEPENDENT",
+      "blockingReason": "Projectile/beam variant handler selects a resource sequence path; the handler-specific static selector must be mapped before frame extraction can be called complete."
+    },
+    {
+      "resourceId": 22,
+      "resourceHex": "0x16",
+      "bankHex": "0x62",
+      "consumers": [
+        {
+          "cardId": 17,
+          "name": "S.Beam Can.",
+          "handlerHex": "0x02",
+          "type": "beam"
+        }
+      ],
+      "consumerCount": 1,
+      "handlers": [
+        "0x02"
+      ],
+      "sequences": 2,
+      "frames": 16,
+      "physicalLinkage": "FRAME_STREAM_ONLY",
+      "profilesRendered": 0,
+      "physicalIds": 0,
+      "frameInstances": 0,
+      "status": "FRAME_STREAM_ONLY",
+      "blockingReason": "Frame stream is decoded, but this resource has not been promoted through metasprite/graphics/profile rendering invariants yet."
+    },
+    {
+      "resourceId": 23,
+      "resourceHex": "0x17",
+      "bankHex": "0x62",
+      "consumers": [
+        {
+          "cardId": 50,
+          "name": "M.Soundwave",
+          "handlerHex": "0x05",
+          "type": "beam"
+        }
+      ],
+      "consumerCount": 1,
+      "handlers": [
+        "0x05"
+      ],
+      "sequences": 0,
+      "frames": 0,
+      "physicalLinkage": "PARTIAL",
+      "profilesRendered": 0,
+      "physicalIds": 0,
+      "frameInstances": 0,
+      "status": "HANDLER_DEPENDENT",
+      "blockingReason": "Projectile/beam variant handler selects a resource sequence path; the handler-specific static selector must be mapped before frame extraction can be called complete."
+    },
+    {
+      "resourceId": 24,
+      "resourceHex": "0x18",
+      "bankHex": "0x62",
+      "consumers": [
+        {
+          "cardId": 39,
+          "name": "Galactica D.",
+          "handlerHex": "0x07",
+          "type": "beam"
+        }
+      ],
+      "consumerCount": 1,
+      "handlers": [
+        "0x07"
+      ],
+      "sequences": 0,
+      "frames": 0,
+      "physicalLinkage": "PARTIAL",
+      "profilesRendered": 0,
+      "physicalIds": 0,
+      "frameInstances": 0,
+      "status": "HANDLER_DEPENDENT",
+      "blockingReason": "Projectile/beam variant handler selects a resource sequence path; the handler-specific static selector must be mapped before frame extraction can be called complete."
+    },
+    {
+      "resourceId": 25,
+      "resourceHex": "0x19",
+      "bankHex": "0x63",
+      "consumers": [
+        {
+          "cardId": 44,
+          "name": "Flash.Sword",
+          "handlerHex": "0x02",
+          "type": "beam"
+        }
+      ],
+      "consumerCount": 1,
+      "handlers": [
+        "0x02"
+      ],
+      "sequences": 0,
+      "frames": 0,
+      "physicalLinkage": "PARTIAL",
+      "profilesRendered": 0,
+      "physicalIds": 0,
+      "frameInstances": 0,
+      "status": "GRAPHICS_PENDING",
+      "blockingReason": "Base beam/support handler uses the known resource id, but the resource pointer table entry has not been resolved to complete sequences yet."
+    },
+    {
+      "resourceId": 26,
+      "resourceHex": "0x1a",
+      "bankHex": "0x63",
+      "consumers": [
+        {
+          "cardId": 49,
+          "name": "Telekinesis",
+          "handlerHex": "0x03",
+          "type": "beam"
+        }
+      ],
+      "consumerCount": 1,
+      "handlers": [
+        "0x03"
+      ],
+      "sequences": 0,
+      "frames": 0,
+      "physicalLinkage": "PARTIAL",
+      "profilesRendered": 0,
+      "physicalIds": 0,
+      "frameInstances": 0,
+      "status": "HANDLER_DEPENDENT",
+      "blockingReason": "Projectile/beam variant handler selects a resource sequence path; the handler-specific static selector must be mapped before frame extraction can be called complete."
+    },
+    {
+      "resourceId": 27,
+      "resourceHex": "0x1b",
+      "bankHex": "0x63",
+      "consumers": [
+        {
+          "cardId": 56,
+          "name": "Crasher Ball",
+          "handlerHex": "0x07",
+          "type": "beam"
+        }
+      ],
+      "consumerCount": 1,
+      "handlers": [
+        "0x07"
+      ],
+      "sequences": 0,
+      "frames": 0,
+      "physicalLinkage": "PARTIAL",
+      "profilesRendered": 0,
+      "physicalIds": 0,
+      "frameInstances": 0,
+      "status": "HANDLER_DEPENDENT",
+      "blockingReason": "Projectile/beam variant handler selects a resource sequence path; the handler-specific static selector must be mapped before frame extraction can be called complete."
+    },
+    {
+      "resourceId": 28,
+      "resourceHex": "0x1c",
+      "bankHex": "0x63",
+      "consumers": [
+        {
+          "cardId": 57,
+          "name": "Purple Comet",
+          "handlerHex": "0x0d",
+          "type": "beam"
+        },
+        {
+          "cardId": 58,
+          "name": "P.Comet Z",
+          "handlerHex": "0x0e",
+          "type": "damage"
+        }
+      ],
+      "consumerCount": 2,
+      "handlers": [
+        "0x0d",
+        "0x0e"
+      ],
+      "sequences": 0,
+      "frames": 0,
+      "physicalLinkage": "NONE",
+      "profilesRendered": 0,
+      "physicalIds": 0,
+      "frameInstances": 0,
+      "status": "DYNAMIC_PENDING",
+      "blockingReason": "Special/multi-actor handler owns sequence and slot selection at runtime; static card fields preserve the resource id but cannot close actor binding alone."
+    },
+    {
+      "resourceId": 29,
+      "resourceHex": "0x1d",
+      "bankHex": "0x63",
+      "consumers": [
+        {
+          "cardId": 69,
+          "name": "Rocket Punch",
+          "handlerHex": "0x05",
+          "type": "damage"
+        }
+      ],
+      "consumerCount": 1,
+      "handlers": [
+        "0x05"
+      ],
+      "sequences": 0,
+      "frames": 0,
+      "physicalLinkage": "PARTIAL",
+      "profilesRendered": 0,
+      "physicalIds": 0,
+      "frameInstances": 0,
+      "status": "HANDLER_DEPENDENT",
+      "blockingReason": "Projectile/beam variant handler selects a resource sequence path; the handler-specific static selector must be mapped before frame extraction can be called complete."
+    },
+    {
+      "resourceId": 30,
+      "resourceHex": "0x1e",
+      "bankHex": "0x63",
+      "consumers": [
+        {
+          "cardId": 82,
+          "name": "Sweet Beam",
+          "handlerHex": "0x02",
+          "type": "beam"
+        }
+      ],
+      "consumerCount": 1,
+      "handlers": [
+        "0x02"
+      ],
+      "sequences": 0,
+      "frames": 0,
+      "physicalLinkage": "PARTIAL",
+      "profilesRendered": 0,
+      "physicalIds": 0,
+      "frameInstances": 0,
+      "status": "GRAPHICS_PENDING",
+      "blockingReason": "Base beam/support handler uses the known resource id, but the resource pointer table entry has not been resolved to complete sequences yet."
+    },
+    {
+      "resourceId": 31,
+      "resourceHex": "0x1f",
+      "bankHex": "0x63",
+      "consumers": [
+        {
+          "cardId": 80,
+          "name": "Potbelly Atk",
+          "handlerHex": "0x06",
+          "type": "damage"
+        }
+      ],
+      "consumerCount": 1,
+      "handlers": [
+        "0x06"
+      ],
+      "sequences": 0,
+      "frames": 0,
+      "physicalLinkage": "PARTIAL",
+      "profilesRendered": 0,
+      "physicalIds": 0,
+      "frameInstances": 0,
+      "status": "HANDLER_DEPENDENT",
+      "blockingReason": "Projectile/beam variant handler selects a resource sequence path; the handler-specific static selector must be mapped before frame extraction can be called complete."
+    },
+    {
+      "resourceId": 32,
+      "resourceHex": "0x20",
+      "bankHex": "0x63",
+      "consumers": [
+        {
+          "cardId": 62,
+          "name": "Body Change",
+          "handlerHex": "0x03",
+          "type": "beam"
+        }
+      ],
+      "consumerCount": 1,
+      "handlers": [
+        "0x03"
+      ],
+      "sequences": 0,
+      "frames": 0,
+      "physicalLinkage": "PARTIAL",
+      "profilesRendered": 0,
+      "physicalIds": 0,
+      "frameInstances": 0,
+      "status": "HANDLER_DEPENDENT",
+      "blockingReason": "Projectile/beam variant handler selects a resource sequence path; the handler-specific static selector must be mapped before frame extraction can be called complete."
+    },
+    {
+      "resourceId": 33,
+      "resourceHex": "0x21",
+      "bankHex": "0x63",
+      "consumers": [
+        {
+          "cardId": 64,
+          "name": "Super E-Ball",
+          "handlerHex": "0x07",
+          "type": "beam"
+        }
+      ],
+      "consumerCount": 1,
+      "handlers": [
+        "0x07"
+      ],
+      "sequences": 0,
+      "frames": 0,
+      "physicalLinkage": "PARTIAL",
+      "profilesRendered": 0,
+      "physicalIds": 0,
+      "frameInstances": 0,
+      "status": "HANDLER_DEPENDENT",
+      "blockingReason": "Projectile/beam variant handler selects a resource sequence path; the handler-specific static selector must be mapped before frame extraction can be called complete."
+    },
+    {
+      "resourceId": 34,
+      "resourceHex": "0x22",
+      "bankHex": "0x63",
+      "consumers": [
+        {
+          "cardId": 24,
+          "name": "Spirit Bomb",
+          "handlerHex": "0x07",
+          "type": "beam"
+        }
+      ],
+      "consumerCount": 1,
+      "handlers": [
+        "0x07"
+      ],
+      "sequences": 1,
+      "frames": 10,
+      "physicalLinkage": "FRAME_STREAM_ONLY",
+      "profilesRendered": 0,
+      "physicalIds": 0,
+      "frameInstances": 0,
+      "status": "FRAME_STREAM_ONLY",
+      "blockingReason": "Frame stream is decoded, but this resource has not been promoted through metasprite/graphics/profile rendering invariants yet."
+    },
+    {
+      "resourceId": 35,
+      "resourceHex": "0x23",
+      "bankHex": "0x63",
+      "consumers": [
+        {
+          "cardId": 40,
+          "name": "S.G.K.Atk.",
+          "handlerHex": "0x05",
+          "type": "beam"
+        }
+      ],
+      "consumerCount": 1,
+      "handlers": [
+        "0x05"
+      ],
+      "sequences": 0,
+      "frames": 0,
+      "physicalLinkage": "PARTIAL",
+      "profilesRendered": 0,
+      "physicalIds": 0,
+      "frameInstances": 0,
+      "status": "HANDLER_DEPENDENT",
+      "blockingReason": "Projectile/beam variant handler selects a resource sequence path; the handler-specific static selector must be mapped before frame extraction can be called complete."
+    },
+    {
+      "resourceId": 36,
+      "resourceHex": "0x24",
+      "bankHex": "0x63",
+      "consumers": [
+        {
+          "cardId": 45,
+          "name": "Barrier",
+          "handlerHex": "0x00",
+          "type": "defense"
+        }
+      ],
+      "consumerCount": 1,
+      "handlers": [
+        "0x00"
+      ],
+      "sequences": 0,
+      "frames": 0,
+      "physicalLinkage": "PARTIAL",
+      "profilesRendered": 0,
+      "physicalIds": 0,
+      "frameInstances": 0,
+      "status": "METASPRITE_PENDING",
+      "blockingReason": "Support/defense card references an actor resource without a standard attack handler; the static pass must resolve sequence count/boundaries from the resource table."
+    },
+    {
+      "resourceId": 37,
+      "resourceHex": "0x25",
+      "bankHex": "0x63",
+      "consumers": [
+        {
+          "cardId": 76,
+          "name": "Energy Absorb",
+          "handlerHex": "0x00",
+          "type": "defense"
+        }
+      ],
+      "consumerCount": 1,
+      "handlers": [
+        "0x00"
+      ],
+      "sequences": 0,
+      "frames": 0,
+      "physicalLinkage": "PARTIAL",
+      "profilesRendered": 0,
+      "physicalIds": 0,
+      "frameInstances": 0,
+      "status": "METASPRITE_PENDING",
+      "blockingReason": "Support/defense card references an actor resource without a standard attack handler; the static pass must resolve sequence count/boundaries from the resource table."
+    },
+    {
+      "resourceId": 38,
+      "resourceHex": "0x26",
+      "bankHex": "0x63",
+      "consumers": [
+        {
+          "cardId": 19,
+          "name": "Taiyoken",
+          "handlerHex": "0x00",
+          "type": "defense"
+        }
+      ],
+      "consumerCount": 1,
+      "handlers": [
+        "0x00"
+      ],
+      "sequences": 0,
+      "frames": 0,
+      "physicalLinkage": "PARTIAL",
+      "profilesRendered": 0,
+      "physicalIds": 0,
+      "frameInstances": 0,
+      "status": "METASPRITE_PENDING",
+      "blockingReason": "Support/defense card references an actor resource without a standard attack handler; the static pass must resolve sequence count/boundaries from the resource table."
+    },
+    {
+      "resourceId": 39,
+      "resourceHex": "0x27",
+      "bankHex": "0x63",
+      "consumers": [
+        {
+          "cardId": 53,
+          "name": "Breath",
+          "handlerHex": "0x00",
+          "type": "defense"
+        }
+      ],
+      "consumerCount": 1,
+      "handlers": [
+        "0x00"
+      ],
+      "sequences": 0,
+      "frames": 0,
+      "physicalLinkage": "PARTIAL",
+      "profilesRendered": 0,
+      "physicalIds": 0,
+      "frameInstances": 0,
+      "status": "METASPRITE_PENDING",
+      "blockingReason": "Support/defense card references an actor resource without a standard attack handler; the static pass must resolve sequence count/boundaries from the resource table."
+    },
+    {
+      "resourceId": 40,
+      "resourceHex": "0x28",
+      "bankHex": "0x63",
+      "consumers": [
+        {
+          "cardId": 26,
+          "name": "Teleport.",
+          "handlerHex": "0x00",
+          "type": "defense"
+        }
+      ],
+      "consumerCount": 1,
+      "handlers": [
+        "0x00"
+      ],
+      "sequences": 0,
+      "frames": 0,
+      "physicalLinkage": "PARTIAL",
+      "profilesRendered": 0,
+      "physicalIds": 0,
+      "frameInstances": 0,
+      "status": "METASPRITE_PENDING",
+      "blockingReason": "Support/defense card references an actor resource without a standard attack handler; the static pass must resolve sequence count/boundaries from the resource table."
+    },
+    {
+      "resourceId": 41,
+      "resourceHex": "0x29",
+      "bankHex": "0x63",
+      "consumers": [
+        {
+          "cardId": 51,
+          "name": "Paralysis",
+          "handlerHex": "0x0d",
+          "type": "support"
+        }
+      ],
+      "consumerCount": 1,
+      "handlers": [
+        "0x0d"
+      ],
+      "sequences": 0,
+      "frames": 0,
+      "physicalLinkage": "NONE",
+      "profilesRendered": 0,
+      "physicalIds": 0,
+      "frameInstances": 0,
+      "status": "DYNAMIC_PENDING",
+      "blockingReason": "Special/multi-actor handler owns sequence and slot selection at runtime; static card fields preserve the resource id but cannot close actor binding alone."
+    },
+    {
+      "resourceId": 42,
+      "resourceHex": "0x2a",
+      "bankHex": "0x63",
+      "consumers": [
+        {
+          "cardId": 52,
+          "name": "Time Freeze",
+          "handlerHex": "0x00",
+          "type": "defense"
+        }
+      ],
+      "consumerCount": 1,
+      "handlers": [
+        "0x00"
+      ],
+      "sequences": 0,
+      "frames": 0,
+      "physicalLinkage": "PARTIAL",
+      "profilesRendered": 0,
+      "physicalIds": 0,
+      "frameInstances": 0,
+      "status": "METASPRITE_PENDING",
+      "blockingReason": "Support/defense card references an actor resource without a standard attack handler; the static pass must resolve sequence count/boundaries from the resource table."
+    },
+    {
+      "resourceId": 43,
+      "resourceHex": "0x2b",
+      "bankHex": "0x63",
+      "consumers": [
+        {
+          "cardId": 33,
+          "name": "Suicide",
+          "handlerHex": "0x08",
+          "type": "beam"
+        }
+      ],
+      "consumerCount": 1,
+      "handlers": [
+        "0x08"
+      ],
+      "sequences": 0,
+      "frames": 0,
+      "physicalLinkage": "NONE",
+      "profilesRendered": 0,
+      "physicalIds": 0,
+      "frameInstances": 0,
+      "status": "DYNAMIC_PENDING",
+      "blockingReason": "Special handler owns the sequence branch at runtime; static card fields preserve the resource id but do not prove the selected sequence."
+    },
+    {
+      "resourceId": 44,
+      "resourceHex": "0x2c",
+      "bankHex": "0x63",
+      "consumers": [
+        {
+          "cardId": 5,
+          "name": "Cont.Punch",
+          "handlerHex": "0x0a",
+          "type": "damage"
+        }
+      ],
+      "consumerCount": 1,
+      "handlers": [
+        "0x0a"
+      ],
+      "sequences": 2,
+      "frames": 62,
+      "physicalLinkage": "FRAME_STREAM_ONLY",
+      "profilesRendered": 0,
+      "physicalIds": 0,
+      "frameInstances": 0,
+      "status": "FRAME_STREAM_ONLY",
+      "blockingReason": "Frame stream is decoded, but this resource has not been promoted through metasprite/graphics/profile rendering invariants yet."
+    },
+    {
+      "resourceId": 45,
+      "resourceHex": "0x2d",
+      "bankHex": "0x63",
+      "consumers": [
+        {
+          "cardId": 6,
+          "name": "Cont.Kick",
+          "handlerHex": "0x0a",
+          "type": "damage"
+        }
+      ],
+      "consumerCount": 1,
+      "handlers": [
+        "0x0a"
+      ],
+      "sequences": 0,
+      "frames": 0,
+      "physicalLinkage": "PARTIAL",
+      "profilesRendered": 0,
+      "physicalIds": 0,
+      "frameInstances": 0,
+      "status": "METASPRITE_PENDING",
+      "blockingReason": "Standard damage handler resources are referenced by the card table, but their frame stream has not been extracted into the static ROM sequence catalog yet."
+    },
+    {
+      "resourceId": 46,
+      "resourceHex": "0x2e",
+      "bankHex": "0x63",
+      "consumers": [
+        {
+          "cardId": 11,
+          "name": "Dunk Shot",
+          "handlerHex": "0x0a",
+          "type": "damage"
+        }
+      ],
+      "consumerCount": 1,
+      "handlers": [
+        "0x0a"
+      ],
+      "sequences": 0,
+      "frames": 0,
+      "physicalLinkage": "PARTIAL",
+      "profilesRendered": 0,
+      "physicalIds": 0,
+      "frameInstances": 0,
+      "status": "METASPRITE_PENDING",
+      "blockingReason": "Standard damage handler resources are referenced by the card table, but their frame stream has not been extracted into the static ROM sequence catalog yet."
+    },
+    {
+      "resourceId": 47,
+      "resourceHex": "0x2f",
+      "bankHex": "0x63",
+      "consumers": [
+        {
+          "cardId": 25,
+          "name": "Solid Shot",
+          "handlerHex": "0x0a",
+          "type": "damage"
+        }
+      ],
+      "consumerCount": 1,
+      "handlers": [
+        "0x0a"
+      ],
+      "sequences": 0,
+      "frames": 0,
+      "physicalLinkage": "PARTIAL",
+      "profilesRendered": 0,
+      "physicalIds": 0,
+      "frameInstances": 0,
+      "status": "METASPRITE_PENDING",
+      "blockingReason": "Standard damage handler resources are referenced by the card table, but their frame stream has not been extracted into the static ROM sequence catalog yet."
+    },
+    {
+      "resourceId": 48,
+      "resourceHex": "0x30",
+      "bankHex": "0x63",
+      "consumers": [
+        {
+          "cardId": 34,
+          "name": "Rising Kick",
+          "handlerHex": "0x0a",
+          "type": "damage"
+        }
+      ],
+      "consumerCount": 1,
+      "handlers": [
+        "0x0a"
+      ],
+      "sequences": 0,
+      "frames": 0,
+      "physicalLinkage": "PARTIAL",
+      "profilesRendered": 0,
+      "physicalIds": 0,
+      "frameInstances": 0,
+      "status": "METASPRITE_PENDING",
+      "blockingReason": "Standard damage handler resources are referenced by the card table, but their frame stream has not been extracted into the static ROM sequence catalog yet."
+    },
+    {
+      "resourceId": 49,
+      "resourceHex": "0x31",
+      "bankHex": "0x63",
+      "consumers": [
+        {
+          "cardId": 37,
+          "name": "Flash Punch",
+          "handlerHex": "0x0a",
+          "type": "damage"
+        }
+      ],
+      "consumerCount": 1,
+      "handlers": [
+        "0x0a"
+      ],
+      "sequences": 0,
+      "frames": 0,
+      "physicalLinkage": "PARTIAL",
+      "profilesRendered": 0,
+      "physicalIds": 0,
+      "frameInstances": 0,
+      "status": "METASPRITE_PENDING",
+      "blockingReason": "Standard damage handler resources are referenced by the card table, but their frame stream has not been extracted into the static ROM sequence catalog yet."
+    },
+    {
+      "resourceId": 50,
+      "resourceHex": "0x32",
+      "bankHex": "0x64",
+      "consumers": [
+        {
+          "cardId": 43,
+          "name": "Atomic Break",
+          "handlerHex": "0x0a",
+          "type": "damage"
+        }
+      ],
+      "consumerCount": 1,
+      "handlers": [
+        "0x0a"
+      ],
+      "sequences": 0,
+      "frames": 0,
+      "physicalLinkage": "PARTIAL",
+      "profilesRendered": 0,
+      "physicalIds": 0,
+      "frameInstances": 0,
+      "status": "METASPRITE_PENDING",
+      "blockingReason": "Standard damage handler resources are referenced by the card table, but their frame stream has not been extracted into the static ROM sequence catalog yet."
+    },
+    {
+      "resourceId": 51,
+      "resourceHex": "0x33",
+      "bankHex": "0x64",
+      "consumers": [
+        {
+          "cardId": 46,
+          "name": "N.Slasher",
+          "handlerHex": "0x0a",
+          "type": "damage"
+        }
+      ],
+      "consumerCount": 1,
+      "handlers": [
+        "0x0a"
+      ],
+      "sequences": 0,
+      "frames": 0,
+      "physicalLinkage": "PARTIAL",
+      "profilesRendered": 0,
+      "physicalIds": 0,
+      "frameInstances": 0,
+      "status": "METASPRITE_PENDING",
+      "blockingReason": "Standard damage handler resources are referenced by the card table, but their frame stream has not been extracted into the static ROM sequence catalog yet."
+    },
+    {
+      "resourceId": 52,
+      "resourceHex": "0x34",
+      "bankHex": "0x64",
+      "consumers": [
+        {
+          "cardId": 55,
+          "name": "R.F.B.Atk.",
+          "handlerHex": "0x0a",
+          "type": "damage"
+        }
+      ],
+      "consumerCount": 1,
+      "handlers": [
+        "0x0a"
+      ],
+      "sequences": 0,
+      "frames": 0,
+      "physicalLinkage": "PARTIAL",
+      "profilesRendered": 0,
+      "physicalIds": 0,
+      "frameInstances": 0,
+      "status": "METASPRITE_PENDING",
+      "blockingReason": "Standard damage handler resources are referenced by the card table, but their frame stream has not been extracted into the static ROM sequence catalog yet."
+    },
+    {
+      "resourceId": 53,
+      "resourceHex": "0x35",
+      "bankHex": "0x64",
+      "consumers": [
+        {
+          "cardId": 60,
+          "name": "Mach Attack",
+          "handlerHex": "0x0a",
+          "type": "damage"
+        }
+      ],
+      "consumerCount": 1,
+      "handlers": [
+        "0x0a"
+      ],
+      "sequences": 0,
+      "frames": 0,
+      "physicalLinkage": "PARTIAL",
+      "profilesRendered": 0,
+      "physicalIds": 0,
+      "frameInstances": 0,
+      "status": "METASPRITE_PENDING",
+      "blockingReason": "Standard damage handler resources are referenced by the card table, but their frame stream has not been extracted into the static ROM sequence catalog yet."
+    },
+    {
+      "resourceId": 54,
+      "resourceHex": "0x36",
+      "bankHex": "0x64",
+      "consumers": [
+        {
+          "cardId": 61,
+          "name": "Dynami.Punch",
+          "handlerHex": "0x0a",
+          "type": "damage"
+        }
+      ],
+      "consumerCount": 1,
+      "handlers": [
+        "0x0a"
+      ],
+      "sequences": 0,
+      "frames": 0,
+      "physicalLinkage": "PARTIAL",
+      "profilesRendered": 0,
+      "physicalIds": 0,
+      "frameInstances": 0,
+      "status": "METASPRITE_PENDING",
+      "blockingReason": "Standard damage handler resources are referenced by the card table, but their frame stream has not been extracted into the static ROM sequence catalog yet."
+    },
+    {
+      "resourceId": 55,
+      "resourceHex": "0x37",
+      "bankHex": "0x64",
+      "consumers": [
+        {
+          "cardId": 66,
+          "name": "S.Dash Elbow",
+          "handlerHex": "0x0a",
+          "type": "damage"
+        }
+      ],
+      "consumerCount": 1,
+      "handlers": [
+        "0x0a"
+      ],
+      "sequences": 0,
+      "frames": 0,
+      "physicalLinkage": "PARTIAL",
+      "profilesRendered": 0,
+      "physicalIds": 0,
+      "frameInstances": 0,
+      "status": "METASPRITE_PENDING",
+      "blockingReason": "Standard damage handler resources are referenced by the card table, but their frame stream has not been extracted into the static ROM sequence catalog yet."
+    },
+    {
+      "resourceId": 56,
+      "resourceHex": "0x38",
+      "bankHex": "0x64",
+      "consumers": [
+        {
+          "cardId": 71,
+          "name": "Crazy Rush",
+          "handlerHex": "0x0a",
+          "type": "damage"
+        }
+      ],
+      "consumerCount": 1,
+      "handlers": [
+        "0x0a"
+      ],
+      "sequences": 0,
+      "frames": 0,
+      "physicalLinkage": "PARTIAL",
+      "profilesRendered": 0,
+      "physicalIds": 0,
+      "frameInstances": 0,
+      "status": "METASPRITE_PENDING",
+      "blockingReason": "Standard damage handler resources are referenced by the card table, but their frame stream has not been extracted into the static ROM sequence catalog yet."
+    },
+    {
+      "resourceId": 57,
+      "resourceHex": "0x39",
+      "bankHex": "0x64",
+      "consumers": [
+        {
+          "cardId": 74,
+          "name": "Attack No. 18",
+          "handlerHex": "0x0a",
+          "type": "damage"
+        }
+      ],
+      "consumerCount": 1,
+      "handlers": [
+        "0x0a"
+      ],
+      "sequences": 0,
+      "frames": 0,
+      "physicalLinkage": "PARTIAL",
+      "profilesRendered": 0,
+      "physicalIds": 0,
+      "frameInstances": 0,
+      "status": "METASPRITE_PENDING",
+      "blockingReason": "Standard damage handler resources are referenced by the card table, but their frame stream has not been extracted into the static ROM sequence catalog yet."
+    },
+    {
+      "resourceId": 58,
+      "resourceHex": "0x3a",
+      "bankHex": "0x64",
+      "consumers": [
+        {
+          "cardId": 77,
+          "name": "Cell Combo",
+          "handlerHex": "0x0a",
+          "type": "damage"
+        }
+      ],
+      "consumerCount": 1,
+      "handlers": [
+        "0x0a"
+      ],
+      "sequences": 0,
+      "frames": 0,
+      "physicalLinkage": "PARTIAL",
+      "profilesRendered": 0,
+      "physicalIds": 0,
+      "frameInstances": 0,
+      "status": "METASPRITE_PENDING",
+      "blockingReason": "Standard damage handler resources are referenced by the card table, but their frame stream has not been extracted into the static ROM sequence catalog yet."
+    },
+    {
+      "resourceId": 59,
+      "resourceHex": "0x3b",
+      "bankHex": "0x64",
+      "consumers": [
+        {
+          "cardId": 78,
+          "name": "Step Up Atk.",
+          "handlerHex": "0x0a",
+          "type": "damage"
+        }
+      ],
+      "consumerCount": 1,
+      "handlers": [
+        "0x0a"
+      ],
+      "sequences": 0,
+      "frames": 0,
+      "physicalLinkage": "PARTIAL",
+      "profilesRendered": 0,
+      "physicalIds": 0,
+      "frameInstances": 0,
+      "status": "METASPRITE_PENDING",
+      "blockingReason": "Standard damage handler resources are referenced by the card table, but their frame stream has not been extracted into the static ROM sequence catalog yet."
+    },
+    {
+      "resourceId": 60,
+      "resourceHex": "0x3c",
+      "bankHex": "0x64",
+      "consumers": [
+        {
+          "cardId": 81,
+          "name": "Crasher Buu",
+          "handlerHex": "0x0a",
+          "type": "damage"
+        }
+      ],
+      "consumerCount": 1,
+      "handlers": [
+        "0x0a"
+      ],
+      "sequences": 0,
+      "frames": 0,
+      "physicalLinkage": "PARTIAL",
+      "profilesRendered": 0,
+      "physicalIds": 0,
+      "frameInstances": 0,
+      "status": "METASPRITE_PENDING",
+      "blockingReason": "Standard damage handler resources are referenced by the card table, but their frame stream has not been extracted into the static ROM sequence catalog yet."
+    },
+    {
+      "resourceId": 61,
+      "resourceHex": "0x3d",
+      "bankHex": "0x64",
+      "consumers": [
+        {
+          "cardId": 15,
+          "name": "Sonic Kick",
+          "handlerHex": "0x0a",
+          "type": "damage"
+        }
+      ],
+      "consumerCount": 1,
+      "handlers": [
+        "0x0a"
+      ],
+      "sequences": 0,
+      "frames": 0,
+      "physicalLinkage": "PARTIAL",
+      "profilesRendered": 0,
+      "physicalIds": 0,
+      "frameInstances": 0,
+      "status": "METASPRITE_PENDING",
+      "blockingReason": "Standard damage handler resources are referenced by the card table, but their frame stream has not been extracted into the static ROM sequence catalog yet."
+    },
+    {
+      "resourceId": 62,
+      "resourceHex": "0x3e",
+      "bankHex": "0x64",
+      "consumers": [
+        {
+          "cardId": 75,
+          "name": "Life Absorb",
+          "handlerHex": "0x0a",
+          "type": "damage"
+        }
+      ],
+      "consumerCount": 1,
+      "handlers": [
+        "0x0a"
+      ],
+      "sequences": 0,
+      "frames": 0,
+      "physicalLinkage": "PARTIAL",
+      "profilesRendered": 0,
+      "physicalIds": 0,
+      "frameInstances": 0,
+      "status": "METASPRITE_PENDING",
+      "blockingReason": "Standard damage handler resources are referenced by the card table, but their frame stream has not been extracted into the static ROM sequence catalog yet."
+    },
+    {
+      "resourceId": 63,
+      "resourceHex": "0x3f",
+      "bankHex": "0x64",
+      "consumers": [
+        {
+          "cardId": 29,
+          "name": "Tail",
+          "handlerHex": "0x0b",
+          "type": "damage"
+        }
+      ],
+      "consumerCount": 1,
+      "handlers": [
+        "0x0b"
+      ],
+      "sequences": 2,
+      "frames": 26,
+      "physicalLinkage": "FRAME_STREAM_ONLY",
+      "profilesRendered": 0,
+      "physicalIds": 0,
+      "frameInstances": 0,
+      "status": "FRAME_STREAM_ONLY",
+      "blockingReason": "Frame stream is decoded, but this resource has not been promoted through metasprite/graphics/profile rendering invariants yet."
+    },
+    {
+      "resourceId": 64,
+      "resourceHex": "0x40",
+      "bankHex": "0x64",
+      "consumers": [
+        {
+          "cardId": 42,
+          "name": "Kiai",
+          "handlerHex": "0x0d",
+          "type": "support"
+        }
+      ],
+      "consumerCount": 1,
+      "handlers": [
+        "0x0d"
+      ],
+      "sequences": 0,
+      "frames": 0,
+      "physicalLinkage": "NONE",
+      "profilesRendered": 0,
+      "physicalIds": 0,
+      "frameInstances": 0,
+      "status": "DYNAMIC_PENDING",
+      "blockingReason": "Special/multi-actor handler owns sequence and slot selection at runtime; static card fields preserve the resource id but cannot close actor binding alone."
+    },
+    {
+      "resourceId": 65,
+      "resourceHex": "0x41",
+      "bankHex": "0x64",
+      "consumers": [
+        {
+          "cardId": 41,
+          "name": "V-ball Crash",
+          "handlerHex": "0x0c",
+          "type": "damage"
+        }
+      ],
+      "consumerCount": 1,
+      "handlers": [
+        "0x0c"
+      ],
+      "sequences": 0,
+      "frames": 0,
+      "physicalLinkage": "NONE",
+      "profilesRendered": 0,
+      "physicalIds": 0,
+      "frameInstances": 0,
+      "status": "DYNAMIC_PENDING",
+      "blockingReason": "Special handler owns the sequence branch at runtime; static card fields preserve the resource id but do not prove the selected sequence."
+    }
+  ]
+}

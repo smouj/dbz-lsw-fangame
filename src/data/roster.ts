@@ -114,6 +114,22 @@ export const CHARACTERS: CharacterDef[] = [
   { id: 'vegito', name: 'Vegito', forms: ['vegito_ssj'], tier: 5, saga: 'Buu' },
 ];
 
+import { ROM_FIGHTER_FORM_IDENTITY } from './generated/romFighterFormIdentity.generated';
+
+const ROM_FORM_ORDER: Map<string, number> = new Map(ROM_FIGHTER_FORM_IDENTITY.map(row => [row.formId, row.romFormId]));
+
+export const ROM_ORDERED_FORM_IDS: string[] = ROM_FIGHTER_FORM_IDENTITY.map(row => row.formId);
+
+export const ROM_ORDERED_CHARACTERS: CharacterDef[] = CHARACTERS
+  .map(character => ({
+    ...character,
+    forms: [...character.forms].sort((a, b) =>
+      (ROM_FORM_ORDER.get(a) ?? 0xff) - (ROM_FORM_ORDER.get(b) ?? 0xff)),
+  }))
+  .sort((a, b) =>
+    Math.min(...a.forms.map(form => ROM_FORM_ORDER.get(form) ?? 0xff)) -
+    Math.min(...b.forms.map(form => ROM_FORM_ORDER.get(form) ?? 0xff)));
+
 // ─── Helpers ──────────────────────────────────────────────
 
 export function getCharacter(id: string): CharacterDef | undefined {

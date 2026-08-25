@@ -46,7 +46,7 @@ const ROM_RESEARCH_PACKAGES = [
     facts: [
       'ZIP externo verificado e importado: SHA-256 03cb152a… · 254 archivos · 152 PNG · 15 tablas data.',
       'FXResource loader: fxBank=$65+floor(id/$1E), fxLocal=id%$1E, palette=card.byte8.',
-      '28 bundles ofensivos completos: graphics + tilemap SIDE1 + tilemap SIDE2; $01/$04/$06 son tokens category-specific.',
+      '28 FXResource ofensivos únicos materializados en P0.1A: 38 bundles FX/paleta, SIDE1/SIDE2 y 152 renders; $01/$04/$06 quedan fuera como category-specific.',
       'Beam FX es BG_TILEMAP en VRAM bank1/$8800 + BG palette slot4, no sprite OBJ ni ProjectileSprite canon.',
       'opcode $0C copia una ventana 8×32 a BG $9800 row4; prefix normal rows1-8, handler $07 rows3-10, result rows11-18.',
     ],

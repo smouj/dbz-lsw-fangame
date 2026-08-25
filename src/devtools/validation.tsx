@@ -120,7 +120,44 @@ export function ValidationModule() {
     pass('P0.3B ROM physical corpus: contrato signed vigente', corpus.schemaVersion === 2 && corpus.offsetEncoding === 's8' && corpus.source === 'ROM_PHYSICAL_FIGHTERS', `${corpus.source} · schema ${corpus.schemaVersion} · ${corpus.offsetEncoding}`);
     pass('P0.3B ROM physical corpus: formas contabilizadas sin falsificar', corpus.formsRendered + corpus.formsPaletteBlocked + corpus.formsResourceBlocked === corpus.formsIndexed && corpus.formsIndexed === 48, `${corpus.formsRendered} rendered · ${corpus.formsPaletteBlocked} palette-blocked · ${corpus.formsResourceBlocked} resource-blocked`);
     pass('P0.3B ROM physical corpus: outputs signed y sanos', corpus.staleUnsigned === 0 && corpus.maxWidth <= 128 && corpus.maxHeight <= 128 && corpus.signedNegativeInstances > 0, `${corpus.physicalIdentities} IDs · ${corpus.frameInstances} instances · ${corpus.signedNegativeInstances} signed-negative · max ${corpus.maxWidth}×${corpus.maxHeight}`);
-    info('P0.3B ROM physical corpus: decoded resources pendientes', `${corpus.resourcesRendered}/${corpus.resourcesReachable} renderables · ${corpus.resourcesRendererPending} renderer-pending hasta resolver base/palette/piece invariants`);
+    pass(
+      'P0 Fighter physical corpus: 48-form sweep cerrado',
+      corpus.formsRendered === 48
+        && corpus.physicalIdentities === 552
+        && corpus.frameInstances === 2371
+        && corpus.transparentFrameRecords === 39
+        && corpus.transparentPhysicalIds === 8,
+      `${corpus.formsRendered}/48 forms · ${corpus.physicalIdentities} promoted IDs · ${corpus.frameInstances} instances · ${corpus.transparentFrameRecords} EMPTY_NOT_PROMOTED records/${corpus.transparentPhysicalIds} IDs`,
+    );
+    pass('P0.5 resource expansion: cobertura renderizable explícita', corpus.resourcesRendered === 6 && corpus.resourcesTotal === 66, `${corpus.resourcesRendered}/${corpus.resourcesTotal} AnimationResources renderizables`);
+    info('P0.5 resource expansion: no confundir decoded con renderable', `${corpus.resourcesFrameStreamOnly} frame-stream-only · ${corpus.resourcesRendererPending} renderer-pending decoded · ${corpus.resourcesHandlerDependent} handler-dependent · ${corpus.resourcesDynamicPending} dynamic · ${corpus.resourcesUnreferenced} unreferenced`);
+    const fxCorpus = snap.fxCorpus;
+    pass(
+      'P0.1A Offensive FX physical corpus',
+      fxCorpus.offensiveFxResources === 28
+        && fxCorpus.normalOffensiveBundles === 28
+        && fxCorpus.paletteBundles === 38
+        && fxCorpus.sideMapsByResource === 56
+        && fxCorpus.sidePhaseRenders === 152
+        && fxCorpus.errors === 0,
+      `${fxCorpus.offensiveFxResources}/28 FXResource · ${fxCorpus.paletteBundles} FX/palette · ${fxCorpus.sideMapsByResource}/56 SIDE maps · ${fxCorpus.sidePhaseRenders} renders · errors ${fxCorpus.errors}`,
+    );
+    pass('P0.1A FX: Support/category-specific resources excluded from offensive promotion', fxCorpus.supportOrCategorySpecificResources === 3 && fxCorpus.supportVisuals === 'SEPARATE_DOMAIN', `${fxCorpus.supportOrCategorySpecificResources} separate · ${fxCorpus.supportVisuals}`);
+    pass(
+      'P0.1B ROM FX window contract is static-complete (dynamic still pending)',
+      fxCorpus.runtimeStaticComplete === 28
+        && fxCorpus.runtimeDynamicComplete === 0
+        && fxCorpus.runtimeWindowComplete === 0
+        && fxCorpus.runtimeWindowPartial === 0
+        && fxCorpus.runtimeWindowCues === 39
+        && fxCorpus.runtimeCards === 38
+        && fxCorpus.runtimeDistributionErrors === 0
+        && fxCorpus.runtimeSideSelectionComplete === 76
+        && fxCorpus.runtimeSideSelectionPending === 0
+        && fxCorpus.runtimeSilentFallback === 0,
+      `STATIC_COMPLETE ${fxCorpus.runtimeStaticComplete}/28 · COMPLETE ${fxCorpus.runtimeWindowComplete}/28 · ${fxCorpus.runtimeWindowCues} windows/${fxCorpus.runtimeCards} cards · distribution errors ${fxCorpus.runtimeDistributionErrors} · side selection ${fxCorpus.runtimeSideSelectionComplete}/${fxCorpus.runtimeSideSelectionPending} static · silent fallback ${fxCorpus.runtimeSilentFallback}`,
+    );
+    info('P0.1C-E Support/Aura state', `support visuals ${fxCorpus.supportVisuals} · support aura ${fxCorpus.supportAuraBlue} · gather aura ${fxCorpus.gatherPowerAuraOrange}`);
     const physicalMapping = snap.physicalMapping;
     pass('P0.3C ProductionFrameResolver: physical mapping explícito', physicalMapping.physicalMapping.romInstancesMapped === physicalMapping.physicalMapping.romInstancesTotal && physicalMapping.physicalMapping.unresolved === 0, `${physicalMapping.physicalMapping.romInstancesMapped}/${physicalMapping.physicalMapping.romInstancesTotal} mapped · unresolved ${physicalMapping.physicalMapping.unresolved}`);
     pass('P0.3C ProductionFrameResolver: consumo físico sin MIXED', physicalMapping.cards.romPresentationProduction === 16 && physicalMapping.cards.legacy === 109 && physicalMapping.cards.mixed === 0, `${physicalMapping.cards.romPresentationProduction}/125 ROM_PHYSICAL · ${physicalMapping.cards.legacy} LEGACY/PENDING · MIXED ${physicalMapping.cards.mixed}`);

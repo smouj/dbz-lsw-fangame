@@ -5,7 +5,7 @@
 // ═══════════════════════════════════════════════════════════════════════
 
 import { useState } from 'react';
-import { CHARACTERS, getCharacter } from '../data/roster';
+import { ROM_ORDERED_CHARACTERS, getCharacter } from '../data/roster';
 import { getCard, DECK_SIZE } from '../data/cards';
 import { cardUsableByCharacter } from '../data/cardCompatibility';
 import { DeckBuilder } from '../components/setup/DeckBuilder';
@@ -15,7 +15,7 @@ import { baseFormIdOf } from '../components/setup/setupLogic';
 export function DeckBuilderModule() {
   const setup = useTeamSetupState({ fallbackDeck: [] });
   const { active } = setup;
-  const [charId, setCharId] = useState('goku');
+  const [charId, setCharId] = useState(ROM_ORDERED_CHARACTERS[0]?.id ?? 'gohan_kid');
 
   const deck = active.jointDeck;
   const invalid = deck.map((id, i) => ({ id, i })).filter(({ id }) => {
@@ -37,7 +37,7 @@ export function DeckBuilderModule() {
       <div className="dev-diag-row">
         <label>Character (para compatibilidad):
           <select value={charId} onChange={e => { setCharId(e.target.value); setup.selectCharacter(e.target.value); }}>
-            {CHARACTERS.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
+            {ROM_ORDERED_CHARACTERS.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
           </select>
         </label>
         <span>formId: <code>{active.formId}</code></span>

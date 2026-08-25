@@ -4,7 +4,7 @@
 // ═══════════════════════════════════════════════════════════
 import { useMemo, useState } from 'react';
 import { CARDS, cardColor, getCard, type CardType, type CardDef } from '../data/cards';
-import { FORMS } from '../data/roster';
+import { FORMS, ROM_ORDERED_FORM_IDS } from '../data/roster';
 import { spriteDirFor } from '../data/spriteManifest';
 import { characterName } from '../data/storyPanels';
 import { cardIconUrl } from '../data/icons';
@@ -341,7 +341,7 @@ function RomActionExecutionInfo({ card }: { card: CardDef }) {
 }
 
 function firstCompatibleForm(card: CardDef): string {
-  const forms = Object.values(FORMS);
+  const forms = ROM_ORDERED_FORM_IDS.map(id => FORMS[id]).filter(Boolean);
   const compatible = forms.find(form => {
     if (card.notCompatible?.includes(form.character)) return false;
     if (card.compatible && !card.compatible.includes(form.character)) return false;
@@ -352,13 +352,14 @@ function firstCompatibleForm(card: CardDef): string {
 
 function RomPhysicalCardProductionInfo({ card }: { card: CardDef }) {
   const [formId, setFormId] = useState(() => firstCompatibleForm(card));
-  const compatibleForms = useMemo(() => Object.values(FORMS)
+  const compatibleForms = useMemo(() => ROM_ORDERED_FORM_IDS
+    .map(id => FORMS[id])
+    .filter(Boolean)
     .filter(form => {
       if (card.notCompatible?.includes(form.character)) return false;
       if (card.compatible && !card.compatible.includes(form.character)) return false;
       return !!spriteDirFor(form.id);
-    })
-    .sort((a, b) => a.id.localeCompare(b.id)), [card]);
+    }), [card]);
 
   const timeline = useMemo(() => romPresentationTimelineForCard(card, 'player', formId), [card, formId]);
   const physicalCues = useMemo(() => timeline?.timeline.entries

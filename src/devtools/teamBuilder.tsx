@@ -5,7 +5,7 @@
 // ═══════════════════════════════════════════════════════════════════════
 
 import { useState } from 'react';
-import { CHARACTERS, getCharacter, getForm } from '../data/roster';
+import { ROM_ORDERED_CHARACTERS, getCharacter, getForm } from '../data/roster';
 import { getLimitCapacity, getLimitLoadoutDefinition } from '../data/limitLoadout';
 import { overworldUrl } from '../data/overworld';
 import { battleOverworldActorUrl } from '../data/battleOverworld';
@@ -21,9 +21,9 @@ export function TeamBuilderModule() {
   const { active } = setup;
   // eslint-disable-next-line no-console
   console.log('[team-builder] active:', active.characterId, active.limits, 'state:', setup.state.members.map(m => m.limits));
-  const [diagChar, setDiagChar] = useState('goku');
+  const [diagChar, setDiagChar] = useState(ROM_ORDERED_CHARACTERS[0]?.id ?? 'gohan_kid');
 
-  const items: RollCharacterAsset[] = CHARACTERS.map(c => {
+  const items: RollCharacterAsset[] = ROM_ORDERED_CHARACTERS.map(c => {
     const fid = baseFormIdOf(c.id);
     return {
       characterId: c.id,
@@ -35,7 +35,7 @@ export function TeamBuilderModule() {
     };
   });
 
-  const idx = Math.max(0, CHARACTERS.findIndex(c => c.id === diagChar));
+  const idx = Math.max(0, ROM_ORDERED_CHARACTERS.findIndex(c => c.id === diagChar));
   const diag = getCharacter(diagChar);
   const diagForm = diag ? getForm(baseFormIdOf(diag.id)) : undefined;
   const cap = getLimitCapacity(diagChar);
@@ -47,7 +47,7 @@ export function TeamBuilderModule() {
       <CharacterRoll
         items={items}
         selectedIndex={idx}
-        onSelect={i => { setDiagChar(CHARACTERS[i].id); setup.selectCharacter(CHARACTERS[i].id); }}
+        onSelect={i => { setDiagChar(ROM_ORDERED_CHARACTERS[i].id); setup.selectCharacter(ROM_ORDERED_CHARACTERS[i].id); }}
       />
       <div className="dev-diag-grid">
         <div className="dev-diag-card">
@@ -62,8 +62,8 @@ export function TeamBuilderModule() {
         </div>
         <div className="dev-diag-card">
           <b>NAVIGATION</b>
-          <div>next: <code>{CHARACTERS[nextRollIndex(idx, CHARACTERS.length)]?.id}</code></div>
-          <div>prev: <code>{CHARACTERS[prevRollIndex(idx, CHARACTERS.length)]?.id}</code></div>
+          <div>next: <code>{ROM_ORDERED_CHARACTERS[nextRollIndex(idx, ROM_ORDERED_CHARACTERS.length)]?.id}</code></div>
+          <div>prev: <code>{ROM_ORDERED_CHARACTERS[prevRollIndex(idx, ROM_ORDERED_CHARACTERS.length)]?.id}</code></div>
           <div>members: <code>{setup.state.members.length}</code></div>
           <div>deckValid: <code>{String(setup.deckValid)}</code> ({active.jointDeck.length}/{DECK_SIZE})</div>
           <div>limits equipped: <code>{active.limits.filter(id => id !== 0).length}/{active.limits.length}</code></div>

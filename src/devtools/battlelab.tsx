@@ -9,7 +9,7 @@
 // ═══════════════════════════════════════════════════════════
 import { useState } from 'react';
 import { Bug, Clapperboard, Cpu, Play } from 'lucide-react';
-import { FORMS, CHARACTERS } from '../data/roster';
+import { FORMS, CHARACTERS, ROM_ORDERED_FORM_IDS } from '../data/roster';
 import { STORY_ENEMY_DECKS } from '../data/enemy_decks';
 const CHAPTERS = Object.keys(STORY_ENEMY_DECKS).map(Number).sort((a, b) => a - b);
 
@@ -59,12 +59,12 @@ export function BattleLabModule({ onLaunchBattle, embedded }: Props) {
         <div className="dev-sprite-controls">
           <label>Player (forma)</label>
           <select value={player} onChange={e => setPlayer(e.target.value)}>
-            {Object.keys(FORMS).map(fid => <option key={fid} value={fid}>{charName(fid)}</option>)}
+            {ROM_ORDERED_FORM_IDS.map(fid => <option key={fid} value={fid}>{charName(fid)}</option>)}
           </select>
 
           <label>Enemy (forma)</label>
           <select value={enemy} onChange={e => setEnemy(e.target.value)}>
-            {Object.keys(FORMS).map(fid => <option key={fid} value={fid}>{charName(fid)}</option>)}
+            {ROM_ORDERED_FORM_IDS.map(fid => <option key={fid} value={fid}>{charName(fid)}</option>)}
           </select>
 
           <label>Modo</label>

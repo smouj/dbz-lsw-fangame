@@ -52,6 +52,8 @@ export interface ProductionRomPresentationStats {
   motions: number;
   /** Cues FX_LOAD registrados (trazabilidad — no proyectil procedural). */
   fxLoads: number;
+  /** Ventanas ROM FX normalizadas enviadas a RomDisplayPresenter. */
+  fxWindows: number;
   impacts: number;
   physicalFrames: number;
   physicalFrameSources: Record<string, number>;
@@ -88,6 +90,7 @@ const DISPLAY_CUES = new Set<PresentationCue['type']>([
   'DISPLAY_CLEAR',
   'DEFENSE_FX',
   'SUPPORT_FX',
+  'ROM_FX_WINDOW',
 ]);
 
 /** Cues de trazabilidad ROM (macros/waits/animation/screen/audio…). */
@@ -149,6 +152,7 @@ export class ProductionRomPresentationAdapter {
       sceneChanges: 0,
       motions: 0,
       fxLoads: 0,
+      fxWindows: 0,
       impacts: 0,
       physicalFrames: 0,
       physicalFrameSources: {},
@@ -265,6 +269,7 @@ export class ProductionRomPresentationAdapter {
           if (this.romDisplay) {
             this.romDisplay.consume(cue);
             this.stats.displayEffects++;
+            if (cue.type === 'ROM_FX_WINDOW') this.stats.fxWindows++;
           }
           break;
         }

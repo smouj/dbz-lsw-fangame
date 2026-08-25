@@ -58,7 +58,7 @@ export const ROM_FIGHTER_PALETTE_BINDINGS = [
     "evidence": "ROM_STATIC_VERIFIED"
   },
   {
-    "formId": "piccolo_base",
+    "formId": "piccolo_evil",
     "characterId": "piccolo",
     "romFormId": 4,
     "actorVisualProfileKey": 3,
@@ -76,7 +76,7 @@ export const ROM_FIGHTER_PALETTE_BINDINGS = [
     "evidence": "ROM_STATIC_VERIFIED"
   },
   {
-    "formId": "piccolo_kami",
+    "formId": "piccolo_base",
     "characterId": "piccolo",
     "romFormId": 5,
     "actorVisualProfileKey": 3,
@@ -94,7 +94,7 @@ export const ROM_FIGHTER_PALETTE_BINDINGS = [
     "evidence": "ROM_STATIC_VERIFIED"
   },
   {
-    "formId": "piccolo_evil",
+    "formId": "piccolo_kami",
     "characterId": "piccolo",
     "romFormId": 6,
     "actorVisualProfileKey": 3,
@@ -310,7 +310,7 @@ export const ROM_FIGHTER_PALETTE_BINDINGS = [
     "evidence": "ROM_STATIC_VERIFIED"
   },
   {
-    "formId": "trunks_future",
+    "formId": "trunks_kid",
     "characterId": "trunks",
     "romFormId": 18,
     "actorVisualProfileKey": 13,
@@ -328,7 +328,7 @@ export const ROM_FIGHTER_PALETTE_BINDINGS = [
     "evidence": "ROM_STATIC_VERIFIED"
   },
   {
-    "formId": "trunks_ssj",
+    "formId": "trunks_kid_ssj",
     "characterId": "trunks",
     "romFormId": 19,
     "actorVisualProfileKey": 14,
@@ -382,7 +382,7 @@ export const ROM_FIGHTER_PALETTE_BINDINGS = [
     "evidence": "ROM_STATIC_VERIFIED"
   },
   {
-    "formId": "trunks_kid",
+    "formId": "trunks_future",
     "characterId": "trunks",
     "romFormId": 22,
     "actorVisualProfileKey": 17,
@@ -400,7 +400,7 @@ export const ROM_FIGHTER_PALETTE_BINDINGS = [
     "evidence": "ROM_STATIC_VERIFIED"
   },
   {
-    "formId": "trunks_kid_ssj",
+    "formId": "trunks_ssj",
     "characterId": "trunks",
     "romFormId": 23,
     "actorVisualProfileKey": 18,
@@ -418,8 +418,8 @@ export const ROM_FIGHTER_PALETTE_BINDINGS = [
     "evidence": "ROM_STATIC_VERIFIED"
   },
   {
-    "formId": "buu_base",
-    "characterId": "buu",
+    "formId": "gotenks_ssj",
+    "characterId": "gotenks",
     "romFormId": 24,
     "actorVisualProfileKey": 19,
     "actorVisualProfileKeyHex": "0x13",
@@ -436,8 +436,8 @@ export const ROM_FIGHTER_PALETTE_BINDINGS = [
     "evidence": "ROM_STATIC_VERIFIED"
   },
   {
-    "formId": "buu_super",
-    "characterId": "buu",
+    "formId": "gotenks_ssj3",
+    "characterId": "gotenks",
     "romFormId": 25,
     "actorVisualProfileKey": 20,
     "actorVisualProfileKeyHex": "0x14",
@@ -454,8 +454,8 @@ export const ROM_FIGHTER_PALETTE_BINDINGS = [
     "evidence": "ROM_STATIC_VERIFIED"
   },
   {
-    "formId": "nappa",
-    "characterId": "nappa",
+    "formId": "vegito_ssj",
+    "characterId": "vegito",
     "romFormId": 26,
     "actorVisualProfileKey": 21,
     "actorVisualProfileKeyHex": "0x15",
@@ -472,8 +472,8 @@ export const ROM_FIGHTER_PALETTE_BINDINGS = [
     "evidence": "ROM_STATIC_VERIFIED"
   },
   {
-    "formId": "guldo",
-    "characterId": "guldo",
+    "formId": "nappa",
+    "characterId": "nappa",
     "romFormId": 27,
     "actorVisualProfileKey": 22,
     "actorVisualProfileKeyHex": "0x16",
@@ -490,8 +490,8 @@ export const ROM_FIGHTER_PALETTE_BINDINGS = [
     "evidence": "ROM_STATIC_VERIFIED"
   },
   {
-    "formId": "recoome",
-    "characterId": "recoome",
+    "formId": "guldo",
+    "characterId": "guldo",
     "romFormId": 28,
     "actorVisualProfileKey": 23,
     "actorVisualProfileKeyHex": "0x17",
@@ -508,8 +508,8 @@ export const ROM_FIGHTER_PALETTE_BINDINGS = [
     "evidence": "ROM_STATIC_VERIFIED"
   },
   {
-    "formId": "jeice",
-    "characterId": "jeice",
+    "formId": "recoome",
+    "characterId": "recoome",
     "romFormId": 29,
     "actorVisualProfileKey": 24,
     "actorVisualProfileKeyHex": "0x18",
@@ -526,8 +526,8 @@ export const ROM_FIGHTER_PALETTE_BINDINGS = [
     "evidence": "ROM_STATIC_VERIFIED"
   },
   {
-    "formId": "burter",
-    "characterId": "burter",
+    "formId": "jeice",
+    "characterId": "jeice",
     "romFormId": 30,
     "actorVisualProfileKey": 25,
     "actorVisualProfileKeyHex": "0x19",
@@ -544,8 +544,8 @@ export const ROM_FIGHTER_PALETTE_BINDINGS = [
     "evidence": "ROM_STATIC_VERIFIED"
   },
   {
-    "formId": "ginyu",
-    "characterId": "ginyu",
+    "formId": "burter",
+    "characterId": "burter",
     "romFormId": 31,
     "actorVisualProfileKey": 26,
     "actorVisualProfileKeyHex": "0x1a",
@@ -562,8 +562,8 @@ export const ROM_FIGHTER_PALETTE_BINDINGS = [
     "evidence": "ROM_STATIC_VERIFIED"
   },
   {
-    "formId": "frieza_final",
-    "characterId": "frieza",
+    "formId": "ginyu",
+    "characterId": "ginyu",
     "romFormId": 32,
     "actorVisualProfileKey": 27,
     "actorVisualProfileKeyHex": "0x1b",
@@ -580,8 +580,8 @@ export const ROM_FIGHTER_PALETTE_BINDINGS = [
     "evidence": "ROM_STATIC_VERIFIED"
   },
   {
-    "formId": "android_16",
-    "characterId": "android",
+    "formId": "frieza_final",
+    "characterId": "frieza",
     "romFormId": 33,
     "actorVisualProfileKey": 28,
     "actorVisualProfileKeyHex": "0x1c",
@@ -598,7 +598,7 @@ export const ROM_FIGHTER_PALETTE_BINDINGS = [
     "evidence": "ROM_STATIC_VERIFIED"
   },
   {
-    "formId": "android_17",
+    "formId": "android_16",
     "characterId": "android",
     "romFormId": 34,
     "actorVisualProfileKey": 29,
@@ -616,7 +616,7 @@ export const ROM_FIGHTER_PALETTE_BINDINGS = [
     "evidence": "ROM_STATIC_VERIFIED"
   },
   {
-    "formId": "android_18",
+    "formId": "android_17",
     "characterId": "android",
     "romFormId": 35,
     "actorVisualProfileKey": 30,
@@ -634,7 +634,7 @@ export const ROM_FIGHTER_PALETTE_BINDINGS = [
     "evidence": "ROM_STATIC_VERIFIED"
   },
   {
-    "formId": "android_19",
+    "formId": "android_18",
     "characterId": "android",
     "romFormId": 36,
     "actorVisualProfileKey": 31,
@@ -652,7 +652,7 @@ export const ROM_FIGHTER_PALETTE_BINDINGS = [
     "evidence": "ROM_STATIC_VERIFIED"
   },
   {
-    "formId": "android_20",
+    "formId": "android_19",
     "characterId": "android",
     "romFormId": 37,
     "actorVisualProfileKey": 32,
@@ -670,8 +670,8 @@ export const ROM_FIGHTER_PALETTE_BINDINGS = [
     "evidence": "ROM_STATIC_VERIFIED"
   },
   {
-    "formId": "cell_imperfect",
-    "characterId": "cell",
+    "formId": "android_20",
+    "characterId": "android",
     "romFormId": 38,
     "actorVisualProfileKey": 33,
     "actorVisualProfileKeyHex": "0x21",
@@ -688,7 +688,7 @@ export const ROM_FIGHTER_PALETTE_BINDINGS = [
     "evidence": "ROM_STATIC_VERIFIED"
   },
   {
-    "formId": "cell_semi",
+    "formId": "cell_imperfect",
     "characterId": "cell",
     "romFormId": 39,
     "actorVisualProfileKey": 34,
@@ -706,7 +706,7 @@ export const ROM_FIGHTER_PALETTE_BINDINGS = [
     "evidence": "ROM_STATIC_VERIFIED"
   },
   {
-    "formId": "cell_perfect",
+    "formId": "cell_semi",
     "characterId": "cell",
     "romFormId": 40,
     "actorVisualProfileKey": 35,
@@ -724,7 +724,7 @@ export const ROM_FIGHTER_PALETTE_BINDINGS = [
     "evidence": "ROM_STATIC_VERIFIED"
   },
   {
-    "formId": "cell_jr",
+    "formId": "cell_perfect",
     "characterId": "cell",
     "romFormId": 41,
     "actorVisualProfileKey": 36,
@@ -742,8 +742,8 @@ export const ROM_FIGHTER_PALETTE_BINDINGS = [
     "evidence": "ROM_STATIC_VERIFIED"
   },
   {
-    "formId": "buu_gotenks",
-    "characterId": "buu",
+    "formId": "cell_jr",
+    "characterId": "cell",
     "romFormId": 42,
     "actorVisualProfileKey": 37,
     "actorVisualProfileKeyHex": "0x25",
@@ -760,7 +760,7 @@ export const ROM_FIGHTER_PALETTE_BINDINGS = [
     "evidence": "ROM_STATIC_VERIFIED"
   },
   {
-    "formId": "buu_gohan",
+    "formId": "buu_base",
     "characterId": "buu",
     "romFormId": 43,
     "actorVisualProfileKey": 38,
@@ -778,7 +778,7 @@ export const ROM_FIGHTER_PALETTE_BINDINGS = [
     "evidence": "ROM_STATIC_VERIFIED"
   },
   {
-    "formId": "buu_kid",
+    "formId": "buu_super",
     "characterId": "buu",
     "romFormId": 44,
     "actorVisualProfileKey": 39,
@@ -796,8 +796,8 @@ export const ROM_FIGHTER_PALETTE_BINDINGS = [
     "evidence": "ROM_STATIC_VERIFIED"
   },
   {
-    "formId": "ginyu_goku",
-    "characterId": "ginyu",
+    "formId": "buu_gotenks",
+    "characterId": "buu",
     "romFormId": 45,
     "actorVisualProfileKey": 40,
     "actorVisualProfileKeyHex": "0x28",
@@ -814,8 +814,8 @@ export const ROM_FIGHTER_PALETTE_BINDINGS = [
     "evidence": "ROM_STATIC_VERIFIED"
   },
   {
-    "formId": "gotenks_ssj",
-    "characterId": "gotenks",
+    "formId": "buu_gohan",
+    "characterId": "buu",
     "romFormId": 46,
     "actorVisualProfileKey": 41,
     "actorVisualProfileKeyHex": "0x29",
@@ -832,8 +832,8 @@ export const ROM_FIGHTER_PALETTE_BINDINGS = [
     "evidence": "ROM_STATIC_VERIFIED"
   },
   {
-    "formId": "gotenks_ssj3",
-    "characterId": "gotenks",
+    "formId": "buu_kid",
+    "characterId": "buu",
     "romFormId": 47,
     "actorVisualProfileKey": 42,
     "actorVisualProfileKeyHex": "0x2a",
@@ -850,8 +850,8 @@ export const ROM_FIGHTER_PALETTE_BINDINGS = [
     "evidence": "ROM_STATIC_VERIFIED"
   },
   {
-    "formId": "vegito_ssj",
-    "characterId": "vegito",
+    "formId": "ginyu_goku",
+    "characterId": "ginyu",
     "romFormId": 48,
     "actorVisualProfileKey": 43,
     "actorVisualProfileKeyHex": "0x2b",

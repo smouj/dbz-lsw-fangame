@@ -1,13 +1,13 @@
 // ═══════════════════════════════════════════════════════════
-// VERIFY: DEV-ROUTES — contrato de las 20 rutas canónicas del Dev Studio.
+// VERIFY: DEV-ROUTES — contrato de las 22 rutas canónicas del Dev Studio.
 // Uso: npm run verify:dev-routes
-//   1. Las 20 rutas #dev/* existen y se derivan de UNA sola fuente
+//   1. Las 22 rutas #dev/* existen y se derivan de UNA sola fuente
 //      (DEV_MODULES en DevStudio.tsx) — no de listas duplicadas.
 //   2. DevModuleId (tipo) ≡ DEV_MODULES (datos): sin ids huérfanos
 //      ni rutas sin registrar.
 //   3. route.ts (módulo ligero) y DevStudio.tsx resuelven el MISMO
 //      módulo desde el hash (paridad de parsing, incluidos guiones).
-//   4. El render switch cubre los 20 módulos.
+//   4. El render switch cubre los 22 módulos.
 //   5. release-guard: isDevRoute() devuelve false en release.
 // ═══════════════════════════════════════════════════════════
 import { readFileSync } from 'fs';

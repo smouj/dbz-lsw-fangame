@@ -353,6 +353,72 @@ export interface RomFxLoadCue {
   palette?: number | null;
 }
 
+/** Ventana física BG de FX ofensivo (opcode $0C), normalizada para runtime. */
+export interface RomFxWindowCue {
+  type: 'ROM_FX_WINDOW';
+  tick: number;
+  durationTicks: number;
+  status: 'ROM_FX_WINDOW_PARTIAL' | 'ROM_FX_WINDOW_STATIC_COMPLETE' | 'ROM_FX_WINDOW_DYNAMIC_COMPLETE' | 'ROM_FX_WINDOW_COMPLETE' | 'REMAKE_FALLBACK';
+  physicalId: string;
+  resource: number;
+  palette: number;
+  handler: number;
+  category: string | null;
+  side: 'LEFT' | 'RIGHT';
+  sideSelection: 'ACTOR_SIDE_STATIC_MAPPING';
+  phase: 'PREFIX' | 'RESULT';
+  sourceMap: 'SIDE_1' | 'SIDE_2';
+  sourceImage: string;
+  viewport: {
+    sourceX: number;
+    sourceY: number;
+    width: number;
+    height: number;
+    sourceRows: string;
+    operand: number;
+  };
+  screen: {
+    x: number;
+    y: number;
+    bgMap: '$9800';
+    bgRow: 4;
+    bgCol: 0;
+  };
+  scroll: {
+    initialScx: number | null;
+    initialScy: number | null;
+    status: 'PENDING_ROM_TRACE';
+  };
+  timing: {
+    startTick: number;
+    holdTicks: number | null;
+    endTick: number | null;
+    status: 'PARTIAL_FROM_PROFILE_WAITS' | 'PENDING_ROM_TRACE';
+  };
+  filmContract: {
+    prefixOperand: number;
+    prefixRows: [number, number];
+    resultOperand: number;
+    resultRows: [number, number];
+    prefixRelation: 'DISTINCT_RESULT_GRAPHIC' | 'PURE_MAP_TRANSLATION';
+    mapDeltaX: number | null;
+    mirrorPrefix: boolean;
+    mirrorResult: boolean;
+    mirrorResultDiffPixels: number;
+    tileCount: number;
+    prefixBBox: { left: number; top: number; right: number; bottom: number } | null;
+    resultBBox: { left: number; top: number; right: number; bottom: number } | null;
+    attributeStrip: {
+      side: 1 | 2;
+      descriptor: string;
+      bgPalette: number;
+      vramBank: number;
+      bands: Array<{ rows: [number, number]; attribute: string; xFlip: boolean; yFlip: boolean }>;
+    } | null;
+  } | null;
+  evidence: string[];
+}
+
 /** FX auxiliar (opcode $12). */
 export interface RomFxAuxCue {
   type: 'FX_AUX';
@@ -541,6 +607,7 @@ export type PresentationCue =
   | RomActionObjectMotionCue
   | RomApplyFrameDeltaCue
   | RomFxLoadCue
+  | RomFxWindowCue
   | RomFxAuxCue
   | RomSceneConfigureCue
   | RomScreenMotionCue

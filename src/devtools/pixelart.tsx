@@ -7,7 +7,7 @@ import { PenLine, Eraser, Droplets, Target, Save } from 'lucide-react';
 // La API de pintura es el propio Canvas 2D (pixel-perfect, sin deps).
 // ═══════════════════════════════════════════════════════════
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { FORMS } from '../data/roster';
+import { FORMS, ROM_ORDERED_FORM_IDS } from '../data/roster';
 import { spriteDirFor, spriteManifestUrl, spriteFrameUrl } from '../data/spriteManifest';
 import {
   type Manifest, type ManifestFrame,
@@ -406,7 +406,7 @@ export function PixelArtModule({ target }: { target?: { formId: string; file: st
         <div className="dev-pixel-controls">
           <label>Forma</label>
           <select value={formId} onChange={e => setFormId(e.target.value)}>
-            {Object.keys(FORMS).map(fid => (
+            {ROM_ORDERED_FORM_IDS.map(fid => (
               <option key={fid} value={fid}>{FORMS[fid].character} / {FORMS[fid].form} ({fid})</option>
             ))}
           </select>

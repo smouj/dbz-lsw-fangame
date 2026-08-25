@@ -1,15 +1,16 @@
 // ═══════════════════════════════════════════════════════════════════════
-// romSequenceRegistry.ts — SSOT for ROM sequence physical data
+// romSequenceRegistry.ts — SSOT for ROM sequence structure/linkage data
 //
 // Each entry is a physical sequence from ROM bytes, fully resolved:
 //   resource → base → sequence table → metasprite table → graphics table
-//   frame → visualFrameId → metasprite → pieces → graphics blocks → physicalId
+//   frame → visualFrameId → metasprite → pieces → graphics blocks → linkageResolved
 //
 // ONLY entries with FULL physical linkage (base+0/+2/+4 resolved) are included.
 // Resources with METASPRITE_LINK_PENDING are excluded until their pointer
 // format is understood.
 //
 // Authority: ROM bytes. No manifest, no heuristic, no semantic guess.
+// Pixel identity lives in the form-aware ROM physical corpus, not here.
 // ═══════════════════════════════════════════════════════════════════════
 
 import { ROM_TECHNIQUES } from './romAnimationData';
@@ -57,8 +58,8 @@ export interface PhysicalFrame {
   metaspritePieceCount: number;
   /** Graphics block count (0 if linkage unresolved). */
   graphicsBlockCount: number;
-  /** Deterministic physical ID (empty if linkage unresolved). */
-  physicalId: string;
+  /** Structural linkage is resolved for this frame. Pixel identity belongs to the form-aware corpus. */
+  linkageResolved: boolean;
   /** Provenance of this frame. */
   provenance: PhysicalLinkageStatus;
 }
@@ -163,7 +164,7 @@ function resolvePhysicalFrame(
   offsetX: number;
   metaspritePieceCount: number;
   graphicsBlockCount: number;
-  physicalId: string;
+  linkageResolved: boolean;
 } | null {
   const u16At = (b: number, a: number) => rom[b * 0x4000 + a] | (rom[b * 0x4000 + a + 1] << 8);
   const u8At = (b: number, a: number) => rom[b * 0x4000 + a];
@@ -204,9 +205,6 @@ function resolvePhysicalFrame(
     const blockCount = u8At(bank, layoutAddr);
     if (blockCount === 0 || blockCount > 40) return null;
 
-    // D. Physical ID (deterministic)
-    const physicalId = `phys_${bank.toString(16)}_${base.toString(16)}_vfid${visualFrameId}`;
-
     return {
       visualFrameId,
       durationTicks,
@@ -214,7 +212,7 @@ function resolvePhysicalFrame(
       offsetX,
       metaspritePieceCount: pieceCount,
       graphicsBlockCount: blockCount,
-      physicalId,
+      linkageResolved: pieceCount > 0 && blockCount > 0,
     };
   } catch {
     return null;
@@ -273,16 +271,16 @@ export function buildRomSequenceRegistry(rom: Buffer): RomSequenceEntry[] {
         const f = seq.frames[fi] as any;
         totalFrameInstances++;
 
-        let physicalId = '';
         let metaspritePieceCount = 0;
         let graphicsBlockCount = 0;
+        let linkageResolved = false;
 
         if (base >= 0 && isFullyClosed) {
           const resolved = resolvePhysicalFrame(rom, bank, base, si, fi);
           if (resolved) {
-            physicalId = resolved.physicalId;
             metaspritePieceCount = resolved.metaspritePieceCount;
             graphicsBlockCount = resolved.graphicsBlockCount;
+            linkageResolved = resolved.linkageResolved;
             vfidSet.add(resolved.visualFrameId);
           }
         }
@@ -296,7 +294,7 @@ export function buildRomSequenceRegistry(rom: Buffer): RomSequenceEntry[] {
           raw: f.raw as [number, number, number, number],
           metaspritePieceCount,
           graphicsBlockCount,
-          physicalId,
+          linkageResolved,
           provenance: status,
         });
       }
@@ -371,7 +369,7 @@ function buildRegistryFromTechniques(): RomSequenceEntry[] {
           raw: f.raw as [number, number, number, number],
           metaspritePieceCount: 0,
           graphicsBlockCount: 0,
-          physicalId: '',
+          linkageResolved: false,
           provenance: isFullyClosed ? 'PHYSICAL_RESOURCE_FULLY_CLOSED' : 'FRAME_STREAM_CLOSED',
         });
       }

@@ -70,6 +70,9 @@ let wrongFormCount = 0;
 let wrongBankCount = 0;
 let wrongProfileCount = 0;
 let wrongPhysicalIdCount = 0;
+let unreferencedPhysicalFiles = 0;
+let wrongDiskPrefixFiles = 0;
+let forensicDebugArtifacts = 0;
 
 for (const identity of formIdentities) {
   const dir = identity.formId;
@@ -119,9 +122,14 @@ for (const identity of formIdentities) {
   // Physical ID format: rom-p{hex2}-g{hex2}-r{hex2}-vf{hex2}-...
   const expectedPrefix = `rom-p${identity.actorVisualProfileKey.toString(16).padStart(2, '0')}-g${identity.graphicsBank.toString(16).padStart(2, '0')}`;
   const allFrames: { physicalId: string; resource: number }[] = [];
+  // Production references live in `physical/` only (via frame.file).
+  // physical-debug/ raw canvases are forensic and do NOT participate in
+  // stale-production detection.
+  const productionFiles = new Set<string>();
   for (const seq of Object.values(manifest.sequences) as any[]) {
     for (const frame of seq.frames) {
       allFrames.push({ physicalId: frame.physicalId, resource: seq.resource });
+      productionFiles.add(frame.file);
     }
   }
 
@@ -136,6 +144,40 @@ for (const identity of formIdentities) {
   } else {
     passes++;
   }
+
+  // Production artifacts (physical/): must be referenced by the manifest.
+  const prodDir = resolve(SPRITES_DIR, dir, 'physical');
+  if (existsSync(prodDir)) {
+    for (const file of readdirSync(prodDir)) {
+      const rel = `physical/${file}`;
+      if (!productionFiles.has(rel)) {
+        unreferencedPhysicalFiles++;
+        fails++;
+        console.log(`  FAIL ${identity.formId}: unreferenced production file ${rel}`);
+      }
+      if (!file.startsWith(expectedPrefix)) {
+        wrongDiskPrefixFiles++;
+        fails++;
+        console.log(`  FAIL ${identity.formId}: production file has wrong profile/bank prefix ${rel}`);
+      }
+    }
+  }
+
+  // Forensic artifacts (physical-debug/): not referenced by production, do
+  // NOT participate in stale-production detection. Only prefix identity is
+  // still enforced (cross-form contamination would be a real error).
+  const debugDir = resolve(SPRITES_DIR, dir, 'physical-debug');
+  if (existsSync(debugDir)) {
+    for (const file of readdirSync(debugDir)) {
+      forensicDebugArtifacts++;
+      const rel = `physical-debug/${file}`;
+      if (!file.startsWith(expectedPrefix)) {
+        wrongDiskPrefixFiles++;
+        fails++;
+        console.log(`  FAIL ${identity.formId}: debug file has wrong profile/bank prefix ${rel}`);
+      }
+    }
+  }
 }
 
 section('Wrong-form summary');
@@ -143,6 +185,9 @@ check('wrong-profileKey count = 0', wrongProfileCount === 0, `${wrongProfileCoun
 check('wrong-graphicsBank count = 0', wrongBankCount === 0, `${wrongBankCount} mismatches`);
 check('wrong-formId in provenance = 0', wrongFormCount === 0, `${wrongFormCount} mismatches`);
 check('wrong-physicalId-prefix count = 0', wrongPhysicalIdCount === 0, `${wrongPhysicalIdCount} wrong-prefix frames`);
+check('unreferenced generated physical PNGs = 0', unreferencedPhysicalFiles === 0, `${unreferencedPhysicalFiles} stale production files`);
+check('wrong-prefix generated physical PNGs on disk = 0', wrongDiskPrefixFiles === 0, `${wrongDiskPrefixFiles} wrong-prefix files`);
+console.log(`  INFO forensic debug artifacts (physical-debug/, not production) = ${forensicDebugArtifacts}`);
 
 // ═══ Summary ═══
 console.log('');

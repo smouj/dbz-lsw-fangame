@@ -156,7 +156,8 @@ What they protect:
 - `verify:profiles`: 42 profiles compile deterministically, unique ids/slugs,
   melee/stage windup uses `attack_fwd` (never `gather_power`), melee impact
   emits the spec-specific knockback pose, canonical Stage Attack pools/rotation,
-  profile resolver cases and **66/66 combat cards covered** (regression guard).
+  profile resolver cases and the legacy combat-card profile set covered
+  (regression guard; this is not ROM physical/FX coverage).
 - `audit:sprites`: all 48 form manifests exist, required poses exist, frame
   names/counts are coherent, **declared w/h matches the physical PNG size**,
   no consecutive duplicate frames, `beam_ray` ratio >= 2 and beam cards have
@@ -171,13 +172,30 @@ What they protect:
 
 ## Dev Studio links
 
+- Game: `http://localhost:5178/`
 - Full studio: `http://localhost:5178/?dev=1`
-- Sheets: `http://localhost:5178/?dev=1#dev/sheets`
+- Dashboard: `http://localhost:5178/?dev=1#dev/dashboard`
+- Validation: `http://localhost:5178/?dev=1#dev/validation`
+- Workspace: `http://localhost:5178/?dev=1#dev/workspace`
+- Characters: `http://localhost:5178/?dev=1#dev/characters`
+- Animation Studio: `http://localhost:5178/?dev=1#dev/animation-studio`
+- ROM Display: `http://localhost:5178/?dev=1#dev/romdisplay`
+- Assets: `http://localhost:5178/?dev=1#dev/assets`
+- Facing: `http://localhost:5178/?dev=1#dev/facing`
+- Combat Lab: `http://localhost:5178/?dev=1#dev/lab`
+- Timeline: `http://localhost:5178/?dev=1#dev/timeline`
+- Combat Contract: `http://localhost:5178/?dev=1#dev/combat`
+- Positions: `http://localhost:5178/?dev=1#dev/positions`
 - HUD: `http://localhost:5178/?dev=1#dev/hud`
-- Battle Lab with overlays: `http://localhost:5178/?dev=1#dev/battlelab`
-- Projectile Matrix: `http://localhost:5178/?dev=1#dev/pixiSequence` and use
-  the "Matriz proyectiles" action group for `ray`, `wave`, `ball`, `disk`,
-  `sword` and `special`.
+- Cards: `http://localhost:5178/?dev=1#dev/cards`
+- Animation: `http://localhost:5178/?dev=1#dev/animation`
+- Story: `http://localhost:5178/?dev=1#dev/story`
+- Music: `http://localhost:5178/?dev=1#dev/music`
+- Pixel Art: `http://localhost:5178/?dev=1#dev/pixelart`
+- Research: `http://localhost:5178/?dev=1#dev/research`
+- Game Config: `http://localhost:5178/?dev=1#dev/gameconfig`
+- Team Builder: `http://localhost:5178/?dev=1#dev/team-builder`
+- Deck Builder: `http://localhost:5178/?dev=1#dev/deck-builder`
 
 When launching a battle from Dev Studio, the app removes only `dev` from the
 query and preserves useful debug flags such as `debugState`, `debugCinematics`

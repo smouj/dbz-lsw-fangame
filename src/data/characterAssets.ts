@@ -7,10 +7,11 @@
 //   ├─ PORTRAITS  → battle (forma) · menú (personaje) ·
 //   │               story: TODAS las variantes reales del catálogo
 //   ├─ OVERWORLD  → táctico/chibi · battle OW idle · power pose · aura
-//   ├─ COMBAT     → manifest · TODAS las poses del canon (COMBAT_POSE_ORDER)
-//   │               con pose resuelta + fallback trazable + frames físicos
+//   ├─ COMBAT     → manifest legacy/remake · TODAS las poses del canon
+//   │               (COMBAT_POSE_ORDER) con pose resuelta + fallback trazable
 //   └─ SHEET      → sheet fuente (referencia HISTÓRICA V9 — NO autoridad
-//                   física; la autoridad es el manifest + ROM trace)
+//                   física; la autoridad P0 es rom-physical.manifest.json
+//                   + provenance.json + ROM trace)
 // ═══════════════════════════════════════════════════════════════════════
 
 import { spriteDirFor, spriteManifestUrl, resolvePoseInfo } from './spriteManifest';
@@ -31,11 +32,11 @@ export interface CombatPoseAsset {
   pose: string;
   label: string;
   group: string;
-  /** ¿Existe en el manifest de la forma? (resolución real, fuente única) */
+  /** ¿Existe en el manifest legacy/remake de la forma? */
   resolvedPose: string | null;
   /** Cadena de fallback (pose pedida → pose resuelta) — vacía si directa. */
   fallback: string[];
-  /** Frames físicos de la pose resuelta (del manifest). */
+  /** Frames legacy/remake de la pose resuelta (del manifest). */
   frameCount: number;
   url: string | null;
 }

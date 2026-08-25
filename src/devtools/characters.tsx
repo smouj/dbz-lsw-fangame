@@ -18,7 +18,7 @@
 // ═══════════════════════════════════════════════════════════════════════
 import { useState, useEffect, useRef, useMemo } from 'react';
 import {
-  CHARACTERS, FORMS, getForm, statAtLevel, sheetUrl, idleSpriteUrl, LIMIT_DEFAULTS,
+  FORMS, ROM_ORDERED_CHARACTERS, getForm, statAtLevel, sheetUrl, idleSpriteUrl, LIMIT_DEFAULTS,
 } from '../data/roster';
 import { spriteDirFor, spriteManifestUrl, spriteFrameUrl } from '../data/spriteManifest';
 import { CARDS, type CardDef, type CardType, CARD_COLORS } from '../data/cards';
@@ -119,6 +119,13 @@ interface RomPhysicalProvenance {
     paletteRaw: string[];
     paletteAddress: string;
   };
+  transparentFrameRecords?: Array<{
+    resourceHex: string;
+    sequence: number;
+    frameIndex: number;
+    visualFrameId: number;
+    physicalRender: 'EMPTY_NOT_PROMOTED';
+  }>;
   frames: RomPhysicalFrame[];
 }
 
@@ -149,6 +156,7 @@ interface RomPhysicalManifest {
   offsetEncoding: string;
   actorVisualProfileKey: number;
   graphicsBank: number;
+  transparentFrameRecords?: RomPhysicalProvenance['transparentFrameRecords'];
   sequences: Record<string, RomPhysicalSequence>;
 }
 
@@ -170,6 +178,12 @@ interface RomFighterIdentityRow {
 function hex(value: number): string {
   return value.toString(16).padStart(2, '0');
 }
+
+type RomFighterIdentity = typeof ROM_FIGHTER_FORM_IDENTITY[number];
+
+const ROM_IDENTITY_BY_FORM: Map<string, RomFighterIdentity> = new Map(
+  ROM_FIGHTER_FORM_IDENTITY.map(row => [row.formId, row]),
+);
 
 // ═══ F-MAP helpers (Character Studio ↔ characterFrameMap) ═══════════════
 const MAPPING_LABEL: Record<FrameMapping, string> = {
@@ -247,8 +261,8 @@ function InlineName({ value, onCommit, className }: {
 export function CharactersModule({ onOpenModule }: {
   onOpenModule?: (id: DevModuleId, target: Omit<DevLinkedTarget, 'nonce'>) => void;
 }) {
-  const [charId, setCharId] = useState(CHARACTERS[0]?.id ?? 'goku');
-  const [formId, setFormId] = useState(CHARACTERS[0]?.forms[0] ?? 'goku_base');
+  const [charId, setCharId] = useState(ROM_ORDERED_CHARACTERS[0]?.id ?? 'gohan_kid');
+  const [formId, setFormId] = useState(ROM_ORDERED_CHARACTERS[0]?.forms[0] ?? 'gohan_young');
   const [level, setLevel] = useState(50);
   const [previewPose, setPreviewPose] = useState('idle');
   const [nameOverrides, setNameOverrides] = useState<Record<string, string>>(() => loadJson(NAMES_KEY, {}));
@@ -258,7 +272,7 @@ export function CharactersModule({ onOpenModule }: {
   }, [nameOverrides]);
 
   const displayName = (id: string, fallback: string) => nameOverrides[id] ?? fallback;
-  const char = CHARACTERS.find(c => c.id === charId) ?? CHARACTERS[0];
+  const char = ROM_ORDERED_CHARACTERS.find(c => c.id === charId) ?? ROM_ORDERED_CHARACTERS[0];
   const form = getForm(formId) ?? getForm(char.forms[0])!;
   const spriteDir = spriteDirFor(form.id);
   const manifestUrl = spriteManifestUrl(form.id);
@@ -279,7 +293,7 @@ export function CharactersModule({ onOpenModule }: {
 
   const selectChar = (id: string) => {
     setCharId(id);
-    const c = CHARACTERS.find(x => x.id === id);
+    const c = ROM_ORDERED_CHARACTERS.find(x => x.id === id);
     if (c) setFormId(c.forms[0]);
   };
 
@@ -288,14 +302,14 @@ export function CharactersModule({ onOpenModule }: {
       <header className="dev-header">
         <h1>Character Studio</h1>
         <p className="dev-sub">
-          Stats ROM · assets · poses de combate · browser de frames — manifests OUT_frames, fuente única.
+          Stats ROM · assets · poses de combate · ROM physical corpus · legacy assets de referencia.
         </p>
       </header>
 
       <div className="dev-chars-layout">
         {/* ── Sidebar: personajes ── */}
         <div className="dev-char-list">
-          {CHARACTERS.map(c => (
+          {ROM_ORDERED_CHARACTERS.map(c => (
             <button key={c.id} className={`dev-char-chip ${c.id === charId ? 'active' : ''}`}
               onClick={() => selectChar(c.id)}>
               <span className="dev-char-name">{displayName(c.id, c.name)}</span>
@@ -526,6 +540,7 @@ function RomPhysicalFighterPanel({ formId, onOpenModule }: {
           {identity && <span className={`dev-tag ${identityVerified ? 'ok' : 'warn'}`}>{identity.mappingStatus}</span>}
           {manifest && <span className="dev-tag">profile 0x{hex(manifest.actorVisualProfileKey)}</span>}
           {manifest && <span className="dev-tag">graphics bank 0x{hex(manifest.graphicsBank)}</span>}
+          {provenance?.transparentFrameRecords?.length ? <span className="dev-tag warn">{provenance.transparentFrameRecords.length} EMPTY_NOT_PROMOTED</span> : null}
           {resources.map(resource => <span key={resource} className="dev-tag">{resource}</span>)}
         </div>
       </div>
@@ -548,6 +563,7 @@ function RomPhysicalFighterPanel({ formId, onOpenModule }: {
             <div><strong>palette</strong><code>{provenance.formProfile.paletteRaw.join(' ')}</code></div>
             <div><strong>source</strong><code>{provenance.source}</code></div>
             <div><strong>display facing</strong><code>ROM raw + right-facing preview</code></div>
+            <div><strong>empty frame records</strong><code>{provenance.transparentFrameRecords?.length ?? 0} PRESENT / NOT_PROMOTED</code></div>
           </div>
 
           <div className="dev-rom-physical-actions">
@@ -556,7 +572,8 @@ function RomPhysicalFighterPanel({ formId, onOpenModule }: {
             <button className="dev-btn" onClick={() => onOpenModule?.('romdisplay', { formId })}>Open ROM Display</button>
           </div>
 
-          <h4 className="dev-rom-subtitle">Deduped Physical Frames</h4>
+          <h4 className="dev-rom-subtitle">Promoted Physical PNGs</h4>
+          <div className="dev-hint">PROMOTED PHYSICAL PNGS are visible render outputs only. Transparent ROM frame records remain tracked as EMPTY_NOT_PROMOTED evidence.</div>
           <div className="dev-rom-physical-grid">
             {frames.map(frame => (
               <div key={frame.physicalId} className="dev-rom-frame-card">
@@ -584,7 +601,7 @@ function RomPhysicalFighterPanel({ formId, onOpenModule }: {
             ))}
           </div>
 
-          <h4 className="dev-rom-subtitle">ROM Selected Sequences (card/profile selector)</h4>
+          <h4 className="dev-rom-subtitle">ROM Selected Sequences — CANONICAL / ACTION-REACHABLE</h4>
           {selectedSequences.length === 0 && (
             <div className="dev-wip-banner">No selected sequence is proven for this form/resource set yet. Frames below are research-only until a ROM selector/consumer proves them.</div>
           )}
@@ -596,7 +613,8 @@ function RomPhysicalFighterPanel({ formId, onOpenModule }: {
             ))}
           </div>
 
-          <h4 className="dev-rom-subtitle">All Resource Sequences (research, not selected unless labeled above)</h4>
+          <h4 className="dev-rom-subtitle">All Resource Sequences — RESEARCH ONLY / NOT RUNTIME CANON</h4>
+          <div className="dev-wip-banner">RESEARCH — NOT RUNTIME CANON. These frames may exist as ROM physical evidence but do not prove that this form/action selects them at runtime.</div>
           <div className="dev-rom-sequence-list">
             {researchSequences.map(([key, seq]) => (
               <RomSequenceBlock key={key} sequenceKey={key} seq={seq} dir={dir ?? ''} open={openSeq === key}
@@ -688,10 +706,10 @@ function statusIcon(status: string): string {
 }
 
 function RomActionsPanel({ formId }: { formId: string }) {
-  // Find form index in the roster (for mask bit lookup)
+  // Card compatibility masks are keyed by ROM form order, not JS object/roster order.
   const formIndex = useMemo(() => {
-    const formIds = Object.keys(FORMS);
-    return formIds.indexOf(formId);
+    const identity = ROM_IDENTITY_BY_FORM.get(formId);
+    return identity ? identity.romFormId - 1 : -1;
   }, [formId]);
   if (formIndex < 0) return null;
 
@@ -818,12 +836,12 @@ function RomActionsPanel({ formId }: { formId: string }) {
                           <div key={fi} style={{
                             padding: '2px 4px',
                             fontSize: '10px',
-                            background: frame.physicalId ? '#1a3a1a' : '#3a1a1a',
+                            background: frame.linkageResolved ? '#1a3a1a' : '#3a1a1a',
                             border: '1px solid #333',
                             borderRadius: '3px',
                           }}>
                             f{fi} vf${hex(frame.visualFrameId)} {frame.durationTicks}t
-                            {frame.physicalId && <span style={{ color: '#8f8' }}> ●</span>}
+                            {frame.linkageResolved && <span style={{ color: '#8f8' }}> ●</span>}
                           </div>
                         ))}
                       </div>
@@ -895,7 +913,7 @@ function RomCanonManifestPanel({ formId }: { formId: string }) {
 
   const registry = useMemo(() => getRomSequenceRegistry(), []);
 
-  // Get the rom-physical manifest for this form to map physicalIds to frame details
+  // Get the rom-physical manifest for this form to map ROM sequence instances to physical frames.
   const dir = spriteDirFor(formId);
   const [physManifest, setPhysManifest] = useState<RomPhysicalManifest | null>(null);
   useEffect(() => {
@@ -908,15 +926,17 @@ function RomCanonManifestPanel({ formId }: { formId: string }) {
     return () => { cancelled = true; };
   }, [dir]);
 
-  // Build physicalId → frame details lookup from rom-physical manifest
+  // Build resource/sequence/frame → frame details lookup from rom-physical manifest.
   const physFrameMap = useMemo(() => {
-    const map = new Map<string, { file: string; visualFrameId: number }>();
+    const map = new Map<string, { physicalId: string; file: string; visualFrameId: number }>();
     if (!physManifest) return map;
     for (const seq of Object.values(physManifest.sequences)) {
       for (const frame of seq.frames) {
-        if (!map.has(frame.physicalId)) {
-          map.set(frame.physicalId, { file: frame.file, visualFrameId: frame.visualFrameId });
-        }
+        map.set(`${seq.resource}:${seq.sequence}:${frame.frameIndex}`, {
+          physicalId: frame.physicalId,
+          file: frame.file,
+          visualFrameId: frame.visualFrameId,
+        });
       }
     }
     return map;
@@ -993,11 +1013,11 @@ function RomCanonManifestPanel({ formId }: { formId: string }) {
               </button>
               {isExpanded && (
                 <div className="dev-rom-sequence-frames">
-                  {sequences.map(seq => (
+                  {sequences.map((seq, seqIndex) => (
                     <div key={`seq-${seq.address}`} className="dev-rom-frame-card compact">
-                      <div><strong>Seq {seq.address} ({seq.frames.length} frames, {seq.totalTicks} ticks)</strong></div>
+                      <div><strong>Seq {seqIndex} · addr 0x{seq.address.toString(16)} ({seq.frames.length} frames, {seq.totalTicks} ticks)</strong></div>
                       {seq.frames.map(frame => {
-                        const phys = physFrameMap.get(frame.physicalId);
+                        const phys = physFrameMap.get(`${action.resourceId}:${seqIndex}:${frame.frameIndex}`);
                         return (
                           <div key={`f-${frame.frameIndex}`} className="dev-rom-frame-mini">
                             {phys ? (
@@ -1012,7 +1032,7 @@ function RomCanonManifestPanel({ formId }: { formId: string }) {
                             )}
                             <span className="dev-rom-frame-label">
                               f{frame.frameIndex} · vf${hex(frame.visualFrameId)} · {frame.durationTicks}t
-                              {frame.physicalId && <code className="dev-rom-pid">{frame.physicalId}</code>}
+                              {phys && <code className="dev-rom-pid">{phys.physicalId}</code>}
                             </span>
                           </div>
                         );

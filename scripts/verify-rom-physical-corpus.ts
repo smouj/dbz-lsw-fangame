@@ -43,6 +43,12 @@ function s8(value: number): number {
   return u8 < 0x80 ? u8 : u8 - 0x100;
 }
 
+function bankedFileOffset(bank: number, cpuAddress: number): number | null {
+  if (cpuAddress >= 0x4000 && cpuAddress <= 0x7fff) return bank * 0x4000 + (cpuAddress - 0x4000);
+  if (cpuAddress >= 0x0000 && cpuAddress < 0x4000) return bank * 0x4000 + cpuAddress;
+  return null;
+}
+
 function sha256(path: string): string {
   return createHash('sha256').update(readFileSync(path)).digest('hex');
 }
@@ -50,6 +56,14 @@ function sha256(path: string): string {
 function pngSize(path: string): { width: number; height: number } {
   const png = PNG.sync.read(readFileSync(path));
   return { width: png.width, height: png.height };
+}
+
+function pngHasOpaquePixel(path: string): boolean {
+  const png = PNG.sync.read(readFileSync(path));
+  for (let index = 3; index < png.data.length; index += 4) {
+    if (png.data[index] > 0) return true;
+  }
+  return false;
 }
 
 const allProfiles = readJson<Array<{ formId: string; actorVisualProfileKey: number; paletteAvailable: boolean }>>(PROFILES);
@@ -102,6 +116,9 @@ if (summary) {
   check('summary reachable resources match catalog', JSON.stringify(summary.reachableResources) === JSON.stringify([...resourceHex].map(id => `0x${id}`)));
   check('summary reports renderer-pending decoded resources', summary.totals.resourcesRendererPending === rendererPendingResources.length, `${summary.totals.resourcesRendererPending}`);
   check('summary reports resource/profile blocked pairs', typeof summary.totals.resourceProfileBlockedPairs === 'number');
+  check('summary resource completion matrix covers 66 AnimationResources', summary.resourceCompletionTotals?.resources === 66 && summary.resourcePhysicalCompletion?.length === 66, `${summary.resourcePhysicalCompletion?.length ?? 0}/66`);
+  check('summary resource completion renderable count matches corpus', summary.resourceCompletionTotals?.renderable === summary.totals.resourcesRendered, `${summary.resourceCompletionTotals?.renderable}/${summary.totals.resourcesRendered}`);
+  check('summary resource completion keeps expansion active', summary.resourceCompletionTotals?.renderable < summary.resourceCompletionTotals?.resources, `${summary.resourceCompletionTotals?.renderable}/${summary.resourceCompletionTotals?.resources}`);
   check('summary has no generatedAt timestamp', !Object.prototype.hasOwnProperty.call(summary, 'generatedAt'));
   check('summary reports palette/resource-blocked profiles', summary.totals.formsIndexed === allProfiles.length && summary.totals.formsPaletteBlocked === paletteBlockedProfiles.length && summary.totals.formsResourceBlocked === resourceBlockedProfiles.length, `palette=${summary.totals.formsPaletteBlocked} resource=${summary.totals.formsResourceBlocked}/${allProfiles.length}`);
 }
@@ -114,6 +131,9 @@ let oversize = 0;
 let stale = 0;
 let missingFiles = 0;
 let badHashes = 0;
+let badGraphicsAddress = 0;
+let emptyPngs = 0;
+let transparentFrameRecords = 0;
 let rawMutated = 0;
 const physicalHashIndex = new Map<string, string>();
 
@@ -138,6 +158,8 @@ for (const profile of corpusProfiles) {
   const manifest = readJson(manifestPath);
   const provenance = readJson(provenancePath);
   const frames = provenance.frames as any[];
+  const transparentRecords = (provenance.transparentFrameRecords ?? []) as Array<{ physicalRender?: string; physicalId?: string; resourceHex?: string; sequence?: number; frameIndex?: number; visualFrameId?: number }>;
+  transparentFrameRecords += transparentRecords.length;
   totalPngs += pngs.length;
   totalFrames += frames.length;
 
@@ -146,6 +168,14 @@ for (const profile of corpusProfiles) {
   check(`${form}: offsetEncoding=s8`, manifest.offsetEncoding === OFFSET_ENCODING && provenance.offsetEncoding === OFFSET_ENCODING);
   check(`${form}: ROM España sha pinned`, provenance.rom.sha256 === ROM_SPAIN_SHA256);
   check(`${form}: source is ROM_PHYSICAL_FIGHTERS`, provenance.source === 'ROM_PHYSICAL_FIGHTERS' && manifest.source === 'ROM_PHYSICAL_FIGHTERS');
+  check(`${form}: transparent ROM frame records are preserved as NOT_PROMOTED evidence`, transparentRecords.every(item =>
+    item.physicalRender === 'EMPTY_NOT_PROMOTED' &&
+    typeof item.physicalId === 'string' &&
+    /^0x[0-9a-f]{2}$/.test(item.resourceHex ?? '') &&
+    Number.isInteger(item.sequence) &&
+    Number.isInteger(item.frameIndex) &&
+    Number.isInteger(item.visualFrameId)
+  ));
   check(`${form}: has physical frames`, pngs.length > 0, `${pngs.length}`);
   const bankHex = (0x31 + profile.actorVisualProfileKey).toString(16).padStart(2, '0');
   check(`${form}: files use strong physical IDs`, pngs.every(name => new RegExp(`^rom-p${keyHex}-g${bankHex}-r[0-9a-f]{2}-vf[0-9a-f]{2}-ms[0-9a-f]{8}-gfx[0-9a-f]{8}\\.png$`).test(name)));
@@ -183,6 +213,18 @@ for (const profile of corpusProfiles) {
       typeof piece.tile1Hash === 'string'
     )
   ));
+  check(`${form}: graphics CPU banked addresses resolve to file offsets`, frames.every(frame =>
+    Array.isArray(frame.pieceGraphics) &&
+    frame.pieceGraphics.every((piece: any) => {
+      const expectedAddress = bankedFileOffset(0x31 + profile.actorVisualProfileKey, piece.graphicsBlockRelativeOffset);
+      const ok = expectedAddress !== null &&
+        piece.graphicsBlockAddress === expectedAddress &&
+        piece.tile0Address === expectedAddress &&
+        piece.tile1Address === expectedAddress + 16;
+      if (!ok) badGraphicsAddress++;
+      return ok;
+    })
+  ));
   check(`${form}: metasprite piece coordinates are signed`, frames.every(frame => frame.metasprite.pieces.every((piece: any) =>
     Number.isInteger(piece.x) &&
     Number.isInteger(piece.y) &&
@@ -213,6 +255,7 @@ for (const profile of corpusProfiles) {
     const size = pngSize(path);
     if (size.width !== frame.width || size.height !== frame.height) badHashes++;
     if (size.width > MAX_REASONABLE_DIMENSION || size.height > MAX_REASONABLE_DIMENSION || size.width === 0 || size.height === 0) oversize++;
+    if (!pngHasOpaquePixel(path)) emptyPngs++;
     if (frame.schemaVersion && frame.schemaVersion !== SCHEMA_VERSION) stale++;
     if (frame.physicalRendererSchema !== PHYSICAL_RENDERER_SCHEMA) stale++;
     if (frame.offsetEncoding && frame.offsetEncoding !== OFFSET_ENCODING) stale++;
@@ -233,7 +276,10 @@ for (const profile of corpusProfiles) {
 check('0 missing physical files', missingFiles === 0, `missing=${missingFiles}`);
 check('0 stale unsigned outputs', stale === 0, `stale=${stale}`);
 check('0 oversized/empty physical PNGs', oversize === 0, `oversize=${oversize}`);
+check('0 transparent-only physical PNGs', emptyPngs === 0, `empty=${emptyPngs}`);
+check('transparent ROM frame records retained outside promoted PNGs', transparentFrameRecords > 0, `records=${transparentFrameRecords}`);
 check('0 hash/dimension mismatches', badHashes === 0, `bad=${badHashes}`);
+check('0 graphics CPU/file-offset mismatches', badGraphicsAddress === 0, `bad=${badGraphicsAddress}`);
 check('raw bytes preserved while signed offsets decode separately', rawMutated === 0, `bad=${rawMutated}`);
 check('real signed-negative ROM instances covered', signedNegativeInstances > 0, `${signedNegativeInstances}`);
 check('all renderable/palette/resource profile categories accounted', totalFrames > 0 && totalPngs > 0 && corpusProfiles.length + resourceBlockedProfiles.length + paletteBlockedProfiles.length === 48, `rendered=${corpusProfiles.length} resourceBlocked=${resourceBlockedProfiles.length} paletteBlocked=${paletteBlockedProfiles.length} frames=${totalFrames} pngs=${totalPngs}`);

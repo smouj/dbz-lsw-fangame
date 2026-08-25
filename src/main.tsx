@@ -6,7 +6,7 @@ import './styles.css';
 import { applyHudTheme, loadHudTheme } from './data/hudTheme';
 import { applyHudLayout } from './data/hudLayout';
 import { applyHudButtonVars } from './data/hudAssets';
-import { FORMS, CHARACTERS, getCharacter, getForm, idleSpriteUrl, statAtLevel, LIMIT_DEFAULTS, loadLimits, saveLimits } from './data/roster';
+import { FORMS, CHARACTERS, ROM_ORDERED_CHARACTERS, getCharacter, getForm, idleSpriteUrl, statAtLevel, LIMIT_DEFAULTS, loadLimits, saveLimits } from './data/roster';
 import { STORY_ENEMY_DECKS, STORY_AI_BOOSTS, TEAM_BATTLES } from './data/enemy_decks';
 import { facingFlip, needsFlip } from './data/facing';
 import { BattlePosition, POSITION_DATA, resolveRelativeDistance, isBeamVulnerable, isDamageVulnerable, anchorFor, applyMoveAxis, positionLabel, type MoveAxis } from './data/positions';
@@ -4352,7 +4352,7 @@ function CharactersScreen({ onNavigate, onSelectFighter }: {
       <div className="characters-layout">
         {/* Grid de personajes: solo desbloqueados; bloqueados con candado */}
         <div className="char-grid">
-          {CHARACTERS.map(c => {
+          {ROM_ORDERED_CHARACTERS.map(c => {
             const baseForm = getForm(c.forms[0])!;
             const active = c.id === sel.character;
             const unlocked = isCharacterUnlocked(c.id);
@@ -4761,7 +4761,7 @@ function TeamSetupScreen({ onNavigate, onStartVersus }: {
           value={enemyForm}
           onChange={e => { Sfx.select(); setEnemyForm(e.target.value); }}
         >
-          {CHARACTERS.map(c => c.forms.map(fid => {
+          {ROM_ORDERED_CHARACTERS.map(c => c.forms.map(fid => {
             const f = getForm(fid);
             return f ? <option key={fid} value={fid}>{c.name} — {f.form}</option> : null;
           }))}

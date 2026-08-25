@@ -9,7 +9,7 @@
 // Forma (tabs) + info técnica a la derecha. No roba protagonismo al
 // contenido de la página.
 // ═══════════════════════════════════════════════════════════
-import { CHARACTERS, getForm } from '../data/roster';
+import { ROM_ORDERED_CHARACTERS, getForm } from '../data/roster';
 import { spriteDirFor } from '../data/spriteManifest';
 
 export function FormNavigator({ formId, onChange, showInfo = true, showSheet = true }: {
@@ -18,13 +18,13 @@ export function FormNavigator({ formId, onChange, showInfo = true, showSheet = t
   showInfo?: boolean;
   showSheet?: boolean;
 }) {
-  const form = getForm(formId) ?? getForm(CHARACTERS[0]?.forms[0] ?? 'goku_base');
+  const form = getForm(formId) ?? getForm(ROM_ORDERED_CHARACTERS[0]?.forms[0] ?? 'gohan_young');
   if (!form) return null;
-  const char = CHARACTERS.find(c => c.forms.includes(form.id)) ?? CHARACTERS[0];
+  const char = ROM_ORDERED_CHARACTERS.find(c => c.forms.includes(form.id)) ?? ROM_ORDERED_CHARACTERS[0];
   const dir = spriteDirFor(form.id);
 
   const selectChar = (id: string) => {
-    const c = CHARACTERS.find(x => x.id === id);
+    const c = ROM_ORDERED_CHARACTERS.find(x => x.id === id);
     if (c) onChange(c.forms[0]);
   };
 
@@ -33,7 +33,7 @@ export function FormNavigator({ formId, onChange, showInfo = true, showSheet = t
       <div className="dev-navigator-row">
         <span className="dev-navigator-label">Personaje</span>
         <div className="dev-char-list" role="list" aria-label="Personajes">
-          {CHARACTERS.map(c => (
+          {ROM_ORDERED_CHARACTERS.map(c => (
             <button key={c.id} className={`dev-char-chip ${c.id === char.id ? 'active' : ''}`}
               onClick={() => selectChar(c.id)}>
               <span className="dev-char-name">{c.name}</span>

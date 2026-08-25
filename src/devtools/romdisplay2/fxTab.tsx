@@ -1,46 +1,44 @@
 // ROM Display Lab 2.0 — tab OFFENSIVE FX.
 // Los Beam usan físicamente BG tiles (no OBJ fighters): graphics + maps
 // SIDE1/SIDE2 (20×32 tiles), el handler selecciona ventanas (prefix/result).
-// Manifest real de research-v4-fx: fx → palette → prefixRows/resultRows →
-// cartas asociadas. Sin paletas/ventanas inventadas: todo sale del manifest.
+// Corpus P0.1A: fx → palette → SIDE1/SIDE2 prefix/result → cartas asociadas.
+// Sin paletas/ventanas inventadas: todo sale del espejo /assets/rom-fx.
 import { useEffect, useMemo, useState } from 'react';
 import { FieldRow, Mono, SectionTitle, useImage } from './common';
+import { ROM_FX_CORPUS_SUMMARY } from '../../data/generated/romFxCorpus.generated';
+import { romFxWindowRuntimeSummary } from '../../battle/romFxWindow';
 
 interface FxPair {
+  physicalId: string;
   fxResource: number;
   fxHex: string;
-  palette: number;
+  paletteIndex: number;
   paletteHex: string;
-  prefixOperand: number;
-  prefixRows: number[];
-  resultOperand: number;
-  resultRows: number[];
+  metadata: string;
+  images: string[];
   cards: { cardId: number; name: string; category: string; handler: string }[];
+  consumingCards: { cardId: number; name: string; category: string; handler: string }[];
+  errors: string[];
 }
 
-const FX_BASE = '/docs/rom/research-v4-fx/external/DBZ_LSW_ROM_RESEARCH_V4_FX/generated_fx_assets';
-const SUFFIXES = ['prefix', 'result'] as const;
-const SIDES = ['side1', 'side2'] as const;
-
-function fxKey(fx: number): string {
-  return `fx_${fx.toString(16).padStart(2, '0')}`;
-}
-function palKey(pal: number): string {
-  return `palette_${pal.toString(16).padStart(2, '0').toUpperCase()}`;
-}
+const FX_BASE = '/assets/rom-fx';
 
 export function OffensiveFxTab() {
   const [pairs, setPairs] = useState<FxPair[]>([]);
   const [fxIdx, setFxIdx] = useState(0);
   const [zoom, setZoom] = useState(1);
+  const runtime = romFxWindowRuntimeSummary();
 
   useEffect(() => {
     let alive = true;
     fetch(`${FX_BASE}/manifest.json`)
       .then((r) => (r.ok ? r.json() : null))
       .then((m) => {
-        if (!alive || !m?.pairs) return;
-        setPairs(m.pairs as FxPair[]);
+        if (!alive || !m?.bundles) return;
+        setPairs((m.bundles as FxPair[]).map(bundle => ({
+          ...bundle,
+          cards: bundle.consumingCards ?? bundle.cards ?? [],
+        })));
       })
       .catch(() => { /* sin manifest */ });
     return () => { alive = false; };
@@ -49,14 +47,12 @@ export function OffensiveFxTab() {
   const pair: FxPair | null = pairs[fxIdx] ?? null;
   const images = useMemo(() => {
     if (!pair) return null;
-    const base = `${FX_BASE}/${fxKey(pair.fxResource)}/${palKey(pair.palette)}`;
-    const out: Record<string, string> = {};
-    for (const side of SIDES) {
-      for (const suf of SUFFIXES) {
-        out[`${side}_${suf}`] = `${base}/${side}_${suf}_map256x64.png`;
-      }
-    }
-    return out;
+    return {
+      side1_prefix: `${FX_BASE}/${pair.images.find(image => image.endsWith('side-1-prefix.png'))}`,
+      side1_result: `${FX_BASE}/${pair.images.find(image => image.endsWith('side-1-result.png'))}`,
+      side2_prefix: `${FX_BASE}/${pair.images.find(image => image.endsWith('side-2-prefix.png'))}`,
+      side2_result: `${FX_BASE}/${pair.images.find(image => image.endsWith('side-2-result.png'))}`,
+    };
   }, [pair]);
 
   return (
@@ -75,19 +71,18 @@ export function OffensiveFxTab() {
       {pair && images && (
         <div style={{ display: 'flex', gap: 24, padding: 12, flexWrap: 'wrap' }}>
           <div style={{ minWidth: 320 }}>
-            <SectionTitle>ROM TILEMAP — ventanas del handler</SectionTitle>
-            {SIDES.map((side) => (
+            <SectionTitle>P0.1A OFFENSIVE FX — ROM BG TILEMAP</SectionTitle>
+            {(['side1', 'side2'] as const).map((side) => (
               <div key={side} style={{ marginBottom: 10 }}>
                 <div style={{ fontSize: 12, opacity: 0.8, marginBottom: 2 }}>{side.toUpperCase()} — full map 256×64 (20×32 tiles)</div>
                 <div style={{ display: 'flex', gap: 8 }}>
-                  {SUFFIXES.map((suf) => {
+                  {(['prefix', 'result'] as const).map((suf) => {
                     const url = images[`${side}_${suf}`];
-                    const rows = suf === 'prefix' ? pair.prefixRows : pair.resultRows;
                     return (
                       <div key={suf}>
                         <img src={url} alt={`${side} ${suf}`} style={{ imageRendering: 'pixelated', border: '1px solid #555', width: 256 * zoom }} />
                         <div style={{ fontSize: 11, opacity: 0.75 }}>
-                          <Mono>{suf}</Mono> · operand {suf === 'prefix' ? pair.prefixOperand : pair.resultOperand} · rows {rows.join('–')}
+                          <Mono>{suf}</Mono> · ROM physical review render
                         </div>
                       </div>
                     );
@@ -102,12 +97,12 @@ export function OffensiveFxTab() {
 
           <div style={{ minWidth: 280 }}>
             <SectionTitle>PERFIL ROM</SectionTitle>
+            <FieldRow label="physicalId" value={<Mono>{pair.physicalId}</Mono>} />
             <FieldRow label="FXResource" value={<Mono>{pair.fxHex}</Mono>} />
             <FieldRow label="palette" value={<Mono>{pair.paletteHex}</Mono>} />
-            <FieldRow label="prefix operand" value={<Mono>{pair.prefixOperand}</Mono>} />
-            <FieldRow label="prefix rows" value={<Mono>{pair.prefixRows.join('–')}</Mono>} />
-            <FieldRow label="result operand" value={<Mono>{pair.resultOperand}</Mono>} />
-            <FieldRow label="result rows" value={<Mono>{pair.resultRows.join('–')}</Mono>} />
+            <FieldRow label="status" value={<Mono>{pair.errors.length ? 'ERROR' : 'ROM_PHYSICAL_REVIEW'}</Mono>} />
+            <FieldRow label="runtime" value={<Mono>ROM_FX_WINDOW STATIC_COMPLETE {runtime.staticComplete}/28 · COMPLETE {runtime.complete}/28</Mono>} />
+            <FieldRow label="corpus" value={<Mono>{ROM_FX_CORPUS_SUMMARY.totals.offensiveFxResources}/28 FX · {ROM_FX_CORPUS_SUMMARY.totals.sidePhaseRenders} renders</Mono>} />
             <div style={{ marginTop: 8 }}>
               <SectionTitle>CARTAS ASOCIADAS ({pair.cards.length})</SectionTitle>
               <div style={{ maxHeight: 220, overflowY: 'auto' }}>
@@ -119,8 +114,7 @@ export function OffensiveFxTab() {
               </div>
             </div>
             <div style={{ marginTop: 8, fontSize: 11, opacity: 0.55 }}>
-              RUNTIME PIXI: los beams se proyectan con ENTITY_PROJECTILE / BEAM_RAY / SCREEN_FX según handler — el tilemap BG es la verdad física; el
-              runtime elige la representación por clase de proyección (no es un OBJ de fighter).
+              RUNTIME PIXI: P0.1B emite ROM_FX_WINDOW static-complete (film ROM probado); SCX/SCY/timing/cleanup siguen pendientes antes de marcar ROM_FX_WINDOW_COMPLETE.
             </div>
           </div>
         </div>

@@ -7,7 +7,7 @@
 // ═══════════════════════════════════════════════════════════════════════
 
 import { useMemo } from 'react';
-import { CHARACTERS, getCharacter, getForm } from '../../data/roster';
+import { ROM_ORDERED_CHARACTERS, getCharacter, getForm } from '../../data/roster';
 import { overworldUrl } from '../../data/overworld';
 import { battleOverworldActorUrl } from '../../data/battleOverworld';
 import { CharacterRoll, type RollCharacterAsset } from './CharacterRoll';
@@ -33,11 +33,11 @@ export function TeamSetup({ useSetup, fallbackDeck, onConfirm, onBack, isFormUnl
   // Assets del roll: chibis OW (forma base para los laterales) + power pose
   // real del battle OW. El CENTRO refleja la forma ACTIVA, no la base —
   // punto de identidad del remake (Base/SSJ cambian chibi + power-up).
-  const selectedIdx = Math.max(0, CHARACTERS.findIndex(c => c.id === state.selectedCharacter));
+  const selectedIdx = Math.max(0, ROM_ORDERED_CHARACTERS.findIndex(c => c.id === state.selectedCharacter));
   const activeFormId = active.formId;
 
   const rollItems = useMemo<RollCharacterAsset[]>(() =>
-    CHARACTERS.map(c => {
+    ROM_ORDERED_CHARACTERS.map(c => {
       const baseFormId = c.forms[0];
       return {
         characterId: c.id,
@@ -107,7 +107,7 @@ export function TeamSetup({ useSetup, fallbackDeck, onConfirm, onBack, isFormUnl
         items={rollItemsWithActiveForm}
         selectedIndex={selectedIdx}
         onSelect={idx => {
-          const c = CHARACTERS[idx];
+          const c = ROM_ORDERED_CHARACTERS[idx];
           if (c) setup.selectCharacter(c.id);
         }}
       />

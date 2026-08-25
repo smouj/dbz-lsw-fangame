@@ -20,6 +20,7 @@ import {
 } from './romPresentationProfiles';
 import { resolveProductionFrame } from './productionFrameResolver';
 import { animationResourceById } from './animationResources';
+import { romFxWindowFor, type RomFxWindowPhase } from './romFxWindow';
 
 export type RomCompiledPresentationCompleteness = 'COMPLETE' | 'PARTIAL';
 
@@ -93,6 +94,54 @@ function motionDuration(step: RomPresentationStep): number {
 function firstHex(label: string): number | null {
   const match = /0x([0-9a-f]+)/i.exec(label);
   return match ? Number.parseInt(match[1], 16) : null;
+}
+
+function fxWindowCue(
+  profile: RomPresentationProfile,
+  cursor: number,
+  actorSide: BattleSide,
+  phase: RomFxWindowPhase,
+  holdTicks: number | null = null,
+): PresentationCue | null {
+  if (!['BEAM_BASE', 'BEAM_VARIANT', 'PROJECTILE_SCROLL'].includes(profile.kind)) return null;
+  const window = romFxWindowFor({
+    fxResource: profile.dependencies.fxResource,
+    palette: profile.dependencies.palette,
+    handler: profile.execution.handler,
+    category: profile.kind,
+    worker: profile.execution.worker?.label ?? null,
+    actorSide,
+    tick: cursor,
+    phase,
+    holdTicks,
+  });
+  if (!window) return null;
+  return {
+    type: 'ROM_FX_WINDOW',
+    tick: cursor,
+    durationTicks: window.timing.holdTicks ?? 1,
+    status: window.status,
+    physicalId: window.physicalId,
+    resource: window.fxResource,
+    palette: window.palette,
+    handler: window.context.handler,
+    category: window.context.category,
+    side: window.side,
+    sideSelection: window.sideSelection,
+    phase: window.phase,
+    sourceMap: window.sourceMap,
+    sourceImage: window.sourceImage,
+    viewport: window.viewport,
+    screen: window.screen,
+    scroll: {
+      initialScx: window.scroll.initialScx,
+      initialScy: window.scroll.initialScy,
+      status: window.scroll.status,
+    },
+    timing: window.timing,
+    filmContract: window.filmContract,
+    evidence: window.evidence.map(item => `${item.status}: ${item.source} — ${item.detail}`),
+  };
 }
 
 function entry(
@@ -244,16 +293,21 @@ function compileStep(
       };
 
     case 'SPAWN_FX':
+    {
+      const cues: PresentationCue[] = [{
+        type: 'FX_LOAD',
+        tick: cursor,
+        durationTicks: 1,
+        resource: step.fxResource,
+        palette: step.palette,
+      }];
+      const windowCue = fxWindowCue(profile, cursor, actorSide, 'PREFIX');
+      if (windowCue) cues.push(windowCue);
       return {
-        cues: [{
-          type: 'FX_LOAD',
-          tick: cursor,
-          durationTicks: 1,
-          resource: step.fxResource,
-          palette: step.palette,
-        }],
+        cues,
         advanceTicks: 0,
       };
+    }
 
     case 'AUDIO_SCRIPT':
       return {
@@ -277,22 +331,25 @@ function compileStep(
       const selectedBranch = selectedResultFamily
         ? profile.resultBranches.find(branch => branch.family === selectedResultFamily)
         : null;
+      const cues: PresentationCue[] = [{
+        type: 'ROM_RESULT_BRANCH',
+        tick: cursor,
+        family: step.branchFamily ?? 'RESULT',
+        selectedFamily: selectedBranch?.family ?? selectedResultFamily,
+        selectedSourceEvent: selectedResultSourceEvent,
+        selectedMacroId: selectedBranch?.macroId ?? null,
+        selectedMacroHex: selectedBranch?.macroHex ?? null,
+        branches: profile.resultBranches.map(branch => ({
+          family: branch.family,
+          condition: branch.condition,
+          macroId: branch.macroId,
+          macroHex: branch.macroHex,
+        })),
+      }];
+      const windowCue = fxWindowCue(profile, cursor, actorSide, 'RESULT');
+      if (windowCue) cues.push(windowCue);
       return {
-        cues: [{
-          type: 'ROM_RESULT_BRANCH',
-          tick: cursor,
-          family: step.branchFamily ?? 'RESULT',
-          selectedFamily: selectedBranch?.family ?? selectedResultFamily,
-          selectedSourceEvent: selectedResultSourceEvent,
-          selectedMacroId: selectedBranch?.macroId ?? null,
-          selectedMacroHex: selectedBranch?.macroHex ?? null,
-          branches: profile.resultBranches.map(branch => ({
-            family: branch.family,
-            condition: branch.condition,
-            macroId: branch.macroId,
-            macroHex: branch.macroHex,
-          })),
-        }],
+        cues,
         advanceTicks: 0,
       };
     }

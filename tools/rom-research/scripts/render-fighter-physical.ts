@@ -134,12 +134,21 @@ function resolveFrameGraphics(bank: number, base: number, visualFrameId: number)
   return { blockCount, relativeOffsets, provenance: { tableAddress: T, entryAddress: entry, layoutAddress: layoutAddr } };
 }
 
-/** D. graphics source + bloque: [bank $31+key, base $0000] + offset → 32B. */
+function bankedFileOffset(bank: number, cpuAddress: number): number {
+  if (cpuAddress >= 0x4000 && cpuAddress <= 0x7fff) {
+    return bank * 0x4000 + (cpuAddress - 0x4000);
+  }
+  if (cpuAddress >= 0x0000 && cpuAddress < 0x4000) {
+    return bank * 0x4000 + cpuAddress;
+  }
+  throw new Error(`invalid graphics CPU/local address: bank $${bank.toString(16)} addr $${cpuAddress.toString(16)}`);
+}
+
+/** D. graphics source + bloque: banked CPU/local address → 32B. */
 function resolveGraphicsBlock(key: number, relativeOffset: number) {
   const bank = 0x31 + key;
-  const addr = relativeOffset; // base $0000
-  const start = bank * 0x4000 + addr;
-  if (start + 32 > rom.length) throw new Error(`block fuera de ROM: bank ${bank} + ${addr}`);
+  const start = bankedFileOffset(bank, relativeOffset);
+  if (start + 32 > rom.length) throw new Error(`block fuera de ROM: bank ${bank} + ${relativeOffset}`);
   return { bank, absoluteAddress: start, relativeOffset, raw32: Array.from(rom.subarray(start, start + 32)) };
 }
 
@@ -220,6 +229,10 @@ function drawPiece(target: Uint8Array, width: number, height: number, x: number,
   }
 }
 
+function pixelDataHash(data: Uint8Array): string {
+  return createHash('sha256').update(Buffer.from(data)).digest('hex').slice(0, 16);
+}
+
 function drawOriginCross(target: Uint8Array, width: number, height: number, originX: number, originY: number) {
   const mark = (x: number, y: number, r: number, g: number, b: number, a = 255) => {
     if (x < 0 || x >= width || y < 0 || y >= height) return;
@@ -261,7 +274,7 @@ for (const key of keys) {
         invariantMismatches++;
         console.log(`⚠ MISMATCH seq${seq} F${f}: pieces=${meta.pieces.length} blocks=${gfx.blockCount} — invariante R2 violado`);
       }
-      // bloques físicos
+      // bloques físicos — cada frame construye sus arrays/canvases de cero.
       const blocks = gfx.relativeOffsets.map((off) => resolveGraphicsBlock(key, off));
       const pieces = blocks.map((b, i) => ({
         pixels: piecePixels(b.raw32, meta.pieces[i]?.flipX ?? false, meta.pieces[i]?.flipY ?? false),
@@ -289,10 +302,28 @@ for (const key of keys) {
       const canvasW = 320, canvasH = 320;
       const rgba = new Uint8Array(canvasW * canvasH * 4); // 0 = transparente
       const trimmed = new Uint8Array(trimW * trimH * 4);
+      const assemblyErrors: string[] = [];
+      let renderedPieceCount = 0;
+      let piecesOutsideRaw = 0;
+      let pixelsWrittenOutsideRaw = 0;
       let opaqueMinX = Infinity, opaqueMinY = Infinity, opaqueMaxX = -Infinity, opaqueMaxY = -Infinity;
       signedPieces.forEach((piece, i) => {
         const rendered = pieces[i]?.pixels;
         if (!rendered) return;
+        renderedPieceCount++;
+        const rawDrawX = ORIGIN + piece.x;
+        const rawDrawY = ORIGIN + piece.y;
+        if (rawDrawX < 0 || rawDrawY < 0 || rawDrawX + piece.width > canvasW || rawDrawY + piece.height > canvasH) {
+          piecesOutsideRaw++;
+        }
+        for (let yy = 0; yy < 16; yy++) {
+          for (let xx = 0; xx < 8; xx++) {
+            if ((rendered[yy]?.[xx] ?? 0) === 0) continue;
+            const X = rawDrawX + xx;
+            const Y = rawDrawY + yy;
+            if (X < 0 || X >= canvasW || Y < 0 || Y >= canvasH) pixelsWrittenOutsideRaw++;
+          }
+        }
         drawPiece(rgba, canvasW, canvasH, ORIGIN + piece.x, ORIGIN + piece.y, rendered, palette.colors);
         drawPiece(trimmed, trimW, trimH, piece.x + originInTrimX, piece.y + originInTrimY, rendered, palette.colors);
         for (let yy = 0; yy < 16; yy++) {
@@ -307,6 +338,10 @@ for (const key of keys) {
           }
         }
       });
+      if (meta.pieces.length !== gfx.blockCount) assemblyErrors.push('ASSEMBLY_BLOCK_COUNT_MISMATCH');
+      if (renderedPieceCount !== meta.pieces.length) assemblyErrors.push('ASSEMBLY_RENDERED_COUNT_MISMATCH');
+      if (piecesOutsideRaw > 0) assemblyErrors.push('RAW_PIECE_OUTSIDE_CANVAS');
+      if (pixelsWrittenOutsideRaw > 0) assemblyErrors.push('RAW_EXTRA_PIECE');
       const rawCanvas = new Uint8Array(rgba);
       drawOriginCross(rawCanvas, canvasW, canvasH, ORIGIN, ORIGIN);
 
@@ -367,6 +402,23 @@ for (const key of keys) {
         graphicsBlockHashes,
         paletteHash,
       })).digest('hex').slice(0, 16);
+      const assemblyInputHash = createHash('sha256').update(JSON.stringify({
+        metaspritePieces: signedPieces.map(piece => ({
+          x: piece.x,
+          y: piece.y,
+          rawX: piece.rawX,
+          rawY: piece.rawY,
+          width: piece.width,
+          height: piece.height,
+          tileDelta: piece.tileDelta,
+          attr: piece.attr,
+          flipX: piece.flipX,
+          flipY: piece.flipY,
+        })),
+        graphicsBlockAddresses: pieceGraphics.map(piece => piece.graphicsBlockAddress),
+        graphicsBlockHashes,
+        paletteHash,
+      })).digest('hex').slice(0, 16);
 
       const metadata = {
         schemaVersion: SCHEMA_VERSION,
@@ -380,6 +432,19 @@ for (const key of keys) {
         },
         graphics: gfx,
         pieceGraphics,
+        assembly: {
+          pieceCount: meta.pieces.length,
+          graphicsBlockCount: gfx.blockCount,
+          renderedPieceCount,
+          graphicsBlockAddresses: pieceGraphics.map(piece => piece.graphicsBlockAddress),
+          renderedBlockAddresses: pieceGraphics.map(piece => piece.graphicsBlockAddress),
+          piecesOutsideRaw,
+          pixelsWrittenOutsideRaw,
+          assemblyInputHash,
+          rawPixelHash: rawHash,
+          trimmedPixelHash: trimmedHash,
+          errors: assemblyErrors,
+        },
         source: { bank: sourceBank, baseAddress: 0x0000 },
         palette: {
           raw: palette.raw,
@@ -412,12 +477,30 @@ for (const key of keys) {
             maxY: opaqueMaxY,
           } : null,
         },
+        rawBounds: {
+          coordinateSpace: 'METASPRITE_ORIGIN',
+          minX: minPieceX,
+          minY: minPieceY,
+          maxX: maxPieceX,
+          maxY: maxPieceY,
+          width: trimW,
+          height: trimH,
+          originX: originInTrimX,
+          originY: originInTrimY,
+        },
         rawCanvas: {
+          rawFile: 'rom_raw.png',
           file: 'rom_raw_canvas.png',
           width: canvasW,
           height: canvasH,
           originX: ORIGIN,
           originY: ORIGIN,
+          pieceBoundsInCanvas: {
+            x: ORIGIN + minPieceX,
+            y: ORIGIN + minPieceY,
+            w: trimW,
+            h: trimH,
+          },
           originVisible: true,
         },
         trimmed: {
@@ -428,7 +511,7 @@ for (const key of keys) {
           h: trimH,
           originInTrim: { x: originInTrimX, y: originInTrimY },
         },
-        hashes: { rawPixelHash: rawHash, trimmedPixelHash: trimmedHash, metaspriteHash, graphicsHash, paletteHash, graphicsTableHash, sourceProvenanceHash },
+        hashes: { rawPixelHash: rawHash, rawCanvasOverlayHash: pixelDataHash(rawCanvas), trimmedPixelHash: trimmedHash, metaspriteHash, graphicsHash, paletteHash, graphicsTableHash, sourceProvenanceHash, assemblyInputHash },
         sourceProvenance: {
           metaspriteHash,
           graphicsTableHash,

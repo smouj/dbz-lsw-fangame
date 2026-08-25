@@ -11,6 +11,7 @@ export type RomDisplayEventKind =
   | 'VISUAL_LOADED'
   | 'PALETTE_APPLIED'
   | 'BG_ASSEMBLED'
+  | 'FX_WINDOW_APPLIED'
   | 'COMPOSED'
   | 'MACRO_RUN'
   | 'CLEARED'
@@ -28,6 +29,7 @@ export interface RomDisplayState {
   paletteIndex: number | null;
   composed: boolean;
   bgAssembled: boolean;
+  fxWindows: number;
   macroRuns: number;
   cleared: boolean;
   pendingReasons: string[];
@@ -41,6 +43,7 @@ const KNOWN_DISPLAY_CUES = new Set<PresentationCue['type']>([
   'DISPLAY_COMPOSE',
   'SUPPORT_MACRO',
   'DISPLAY_CLEAR',
+  'ROM_FX_WINDOW',
   'ROM_WAIT',
   'ROM_SFX',
   'ROM_RESULT_BRANCH',
@@ -57,6 +60,7 @@ export class RomDisplayPresenter {
     paletteIndex: null,
     composed: false,
     bgAssembled: false,
+    fxWindows: 0,
     macroRuns: 0,
     cleared: false,
     pendingReasons: [],
@@ -87,6 +91,16 @@ export class RomDisplayPresenter {
       case 'BG_ASSEMBLY': {
         this.state.bgAssembled = true;
         const ev = this.push('BG_ASSEMBLED', cardId, cue.tick, `BG $19 ${cue.rows}x${cue.cols} @ row${cue.bgRowStart} col${cue.bgCol} slot${cue.paletteSlot}`);
+        return ev;
+      }
+      case 'ROM_FX_WINDOW': {
+        this.state.fxWindows++;
+        const ev = this.push(
+          'FX_WINDOW_APPLIED',
+          cardId,
+          cue.tick,
+          `FX ${cue.physicalId} ${cue.phase} ${cue.sourceMap} rows ${cue.viewport.sourceRows} -> ${cue.screen.bgMap} row${cue.screen.bgRow} col${cue.screen.bgCol} (${cue.status})`,
+        );
         return ev;
       }
       case 'DISPLAY_COMPOSE': {
@@ -135,6 +149,7 @@ export class RomDisplayPresenter {
     this.state.paletteIndex = null;
     this.state.composed = false;
     this.state.bgAssembled = false;
+    this.state.fxWindows = 0;
     this.state.macroRuns = 0;
     this.state.cleared = false;
     this.state.pendingReasons = [];

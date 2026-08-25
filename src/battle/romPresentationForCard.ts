@@ -4,8 +4,9 @@
 // Punto de entrada card-level para el puente de producción: dado un CardDef
 // (sin BattleEventLog — la lógica de batalla ya resolvió el resultado antes),
 // compila el timeline ROM de su presentación. Solo devuelve ruta para las
-// familias con programa ROM maduro (BEAM_BASE $02 · STANDARD_DAMAGE $0A).
-// El resto → null → el llamador cae a LEGACY (fallback honesto).
+// familias con programa ROM maduro (BEAM_BASE $02 · STANDARD_DAMAGE $0A) y
+// Support especial por su propio compilador SUPPORT_SPECIAL. El resto → null
+// → el llamador cae a LEGACY (fallback honesto).
 //
 // NO resuelve el outcome (outcome plumbing pendiente — directiva C1.0 §5):
 // el canary demuestra la secuencia visible (scene/motion/FX), no la rama de
