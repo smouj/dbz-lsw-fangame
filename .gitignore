@@ -18,3 +18,16 @@ public/release/
 .openclaw_tmp_dev.log
 *.mjs
 openclaw-workspace-state.json
+
+# ───────────────────────────────────────────────────────────────────────
+# Assets ROM regenerables (fuente = ROM + extractor + código).
+# Regenerar con: npm run gen:rom-runtime-assets
+# No versionar: son salida de build, no fuente canónica.
+# ───────────────────────────────────────────────────────────────────────
+generated/rom-fighters/
+generated/rom-fx/
+docs/rom/generated/fighters/
+public/assets/rom-fx/
+public/assets/sprites/*/physical/
+public/assets/sprites/*/physical-debug/
+public/assets/sprites/*/rom-physical.manifest.json
