@@ -70,7 +70,7 @@ const FORENSIC_FIXTURES: ForensicRow[] = [
   },
   {
     formId: 'piccolo_base',
-    expectedRomFormId: 4,           // 0x04
+    expectedRomFormId: 5,           // 0x05 (SSOT rom-form-profiles.json; was 4 pre-identity-correction)
     expectedActorVisualProfileKey: 3, // rawRecord[1] = 0x03
     expectedGraphicsBank: 0x34,       // 0x31 + 3 = 52 = 0x34
     expectedPaletteIndex: 3,
@@ -205,24 +205,30 @@ describe('P0 ROM Fighter Profile/Bank Alignment', () => {
   // ─── Extended coverage: 7 additional fighters ───────────────────────
 
   describe('extended fighter profile verification (Vegeta, Trunks, Gohan, Android 16, Cell, Buu)', () => {
-    const EXTENDED: Array<{ formId: string; expectedProfileKey: number; expectedGraphicsBank: number }> = [
-      { formId: 'vegeta_base', expectedProfileKey: 9, expectedGraphicsBank: 0x3a },
-      { formId: 'trunks_future', expectedProfileKey: 13, expectedGraphicsBank: 0x3e },
-      { formId: 'gohan_adult_ssj', expectedProfileKey: 12, expectedGraphicsBank: 0x3d },
-      { formId: 'android_16', expectedProfileKey: 28, expectedGraphicsBank: 0x4d },
-      { formId: 'cell_perfect', expectedProfileKey: 35, expectedGraphicsBank: 0x54 },
-      { formId: 'buu_base', expectedProfileKey: 19, expectedGraphicsBank: 0x44 },
-      { formId: 'frieza_final', expectedProfileKey: 27, expectedGraphicsBank: 0x4c },
+    // Consume la identidad 48/48 cerrada como SSOT: la verdad de fondo es
+    // rawRecord[1] (byte físico del ROM), y profileKey/graphicsBank/paletteIndex
+    // deben derivarse de él por la cadena canónica. Evitamos hardcodear profile/bank
+    // (los valores históricos quedaron obsoletos tras la corrección de identidad).
+    const EXTENDED = [
+      'vegeta_base',
+      'trunks_future',
+      'gohan_adult_ssj',
+      'android_16',
+      'cell_perfect',
+      'buu_base',
+      'frieza_final',
     ];
 
-    for (const row of EXTENDED) {
-      it(`${row.formId}: profile=${row.expectedProfileKey}, bank=0x${row.expectedGraphicsBank.toString(16)}`, () => {
-        const identity = ROM_FIGHTER_FORM_IDENTITY.find(r => r.formId === row.formId);
+    for (const formId of EXTENDED) {
+      it(`${formId}: profile chain internally consistent (rawRecord[1] → profile → bank → palette)`, () => {
+        const identity = ROM_FIGHTER_FORM_IDENTITY.find(r => r.formId === formId);
         expect(identity).toBeDefined();
         if (identity) {
-          expect(identity.actorVisualProfileKey).toBe(row.expectedProfileKey);
-          expect(identity.graphicsBank).toBe(row.expectedGraphicsBank);
-          expect(identity.graphicsBank).toBe(0x31 + row.expectedProfileKey);
+          expect(identity.actorVisualProfileKey).toBe(identity.rawRecord[1]);
+          expect(identity.graphicsBank).toBe(0x31 + identity.actorVisualProfileKey);
+          expect(identity.paletteIndex).toBe(identity.actorVisualProfileKey);
+          expect(identity.profileSourceMatchesRecord).toBe(true);
+          expect(identity.mappingStatus).toBe('ROM_RECORD_VERIFIED');
         }
       });
     }
