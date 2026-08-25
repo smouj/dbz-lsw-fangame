@@ -129,8 +129,9 @@ if (existsSync(READERS_JSON)) {
   const readers = JSON.parse(readFileSync(READERS_JSON, 'utf8'));
   check('$C3C7 readers classified 100%', readers.classification === 'COMPLETE' && readers.readers?.length >= 3);
   check('$C3C7 data false-positives identified (jp $c3c7 / ld bc,$c3c7)', readers.dataFalsePositives?.length === 2);
-  check('pose consumer = Call_000_0b16 (Bank00)', readers.consumerChain?.step2?.includes('Call_000_0b16'));
+  check('pose consumer = Call_000_0b16 (Bank00)', readers.consumerChain?.step4?.includes('Call_000_0b16'));
   check('consumer chain records pose table $C3CE/$C3CF', readers.consumerChain?.step3?.includes('$C3CE') || readers.consumerChain?.step3?.includes('$C3CF'));
+  check('char anim descriptor table = $CA0D (Call_000_2fe7)', readers.charAnimDescriptor?.table?.includes('$CA0D') && readers.charAnimDescriptor?.loader?.includes('Call_000_2fe7'));
 } else {
   check('pose-selector-consumers.json presente', false, 'falta generated/rom-stage/pose-selector-consumers.json — ejecuta build:rom-stage');
 }

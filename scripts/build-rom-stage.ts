@@ -488,12 +488,19 @@ function poseSelectorConsumers(): unknown {
       { address: 'Bank03: varios', note: 'escritores de poses (no Stage)' },
     ],
     consumerChain: {
-      step1: 'opcode VM $04 → Call_000_3501 → escribe $C3C7',
-      step2: 'Call_000_0b16 lee $C3C7 y lo usa como índice de la tabla de poses ($C3CE/$C3CF)',
-      step3: '$C3CE/$C3CF = descriptor de animación del personaje cargado por Call_000_0b8d desde $C3CC/$C3CD',
-      step4: '$C3CC/$C3CD = puntero al descriptor (banco + puntero) fijado por Call_000_0914 (de)',
+      step1: 'opcode VM $04 (jr_07e_713f) → Call_000_3501 escribe $C3C7 (pose) y devuelve c (índice de grupo de frames)',
+      step2: 'Call_000_2fc4 (b=arg4) → Call_000_2fe7 (c) → hl = $CA0D + c*3 = descriptor de animación del personaje [bank][ptr]',
+      step3: 'Call_000_0914 (de=hl) → $C3CC/$C3CD → Call_000_0b8d → $C3CE/$C3CF = tabla de poses',
+      step4: 'Call_000_0b16 lee $C3C7 y lo usa como índice de la tabla de poses ($C3CE/$C3CF)',
       step5: 'descriptor de frame → $C0F9 (byte) + $C3D0 (sub-índice) → render metasprite/GFX (DMA)',
-      step6: 'JOIN al corpus físico (resourceId/sequence/VFID → physicalId) — PENDING',
+      step6: 'JOIN al corpus físico (resourceId/sequence/VFID → physicalId) — PENDING: falta resolver la tabla $CA0D y su puntero a secuencia',
+    },
+    charAnimDescriptor: {
+      table: '$CA0D (stride 3, [bank][ptr-lo][ptr-hi])',
+      index: 'c devuelto por Call_000_3501 (arg3: $20-$23→c=1..4, $24→c=4, <$20→c=0)',
+      loader: 'Call_000_2fe7 (Bank00): hl = $CA0D + c*3',
+      consumer: 'Call_000_0914 → $C3CC/$C3CD → Call_000_0b8d → $C3CE/$C3CF',
+      toPhysical: 'PENDING — el contenido de $CA0D (por personaje) debe mapearse al resourceId/secuencia del corpus físico',
     },
   };
 }
