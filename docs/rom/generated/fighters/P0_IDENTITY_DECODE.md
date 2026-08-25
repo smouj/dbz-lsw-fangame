@@ -100,3 +100,59 @@ in the actual game on GBC hardware is the ROM-accurate rendering.
    profile keys and the palette is what the game provides).
 5. Visual confirmation on actual GBC hardware or emulator still needed for
    definitive "does buu_base look yellow in the game" answer.
+## PASS 2B — Physical Sequence Linkage (2026-08-25)
+
+### Bank table format correction
+
+The AnimationResource bank table (banks $62/$63/$64) format is:
+
+```
+u16 count            (offset 0)
+3 × u16 flags        (offsets 2, 4, 6)
+count × (u16 offset, u16 size)  (starting at offset 8, NOT 2)
+```
+
+The previous interpretation (entries starting at offset 2) was incorrect.
+The corrected format (offset 8) produces:
+- All 66 resource descriptors with valid offsets within bank space
+- Sensible metasprite piece data at each descriptor offset
+- Frame sequence addresses confirmed within descriptor data blocks
+
+### Metasprite linkage verified for $0B and $2C
+
+Full chain resolution confirmed for both resources:
+
+```
+base → +0 → sequence table (selector → seq addr → frames)
+base → +2 → metasprite table (vfid → piece addr → pieces)
+base → +4 → graphics table (vfid → block layout)
+```
+
+- **Hell Flash ($0B)**: base=0x1780, 6 vfids (2-5), 12 pieces each, 12 blocks each
+  - 7/7 frames resolved → physicalId
+  - 4 unique physical IDs (vfids 2, 3, 4, 5)
+- **Cont.Punch ($2C)**: base=0x2A3C, 4 vfids (0-3), 12 pieces each, 12 blocks each
+  - 62/62 frames resolved → physicalId
+  - 4 unique physical IDs (vfids 0, 1, 2, 3)
+
+### Completion taxonomy
+
+The current `STATICALLY_CLOSED` status means:
+
+```
+SEQUENCE_STREAM CLOSED ✓
+TIMINGS CLOSED ✓
+OFFSETS CLOSED ✓
+RESOURCE CONSUMER KNOWN ✓
+METASPRITE LINK PENDING → NOW RESOLVED ✓
+PHYSICAL FRAME LINK PENDING → NOW RESOLVED ✓
+```
+
+For $0B and $2C, the full chain `frame → vfid → metasprite → pieces → graphics → physicalId`
+is byte-exact ROM proven. No heuristics.
+
+### Remaining 12 DECODED resources
+
+Need the same metasprite linkage audit. The `resourceBase()` resolver
+cross-validates against known sequence addresses, so any resource with
+confirmed sequences can be resolved the same way.
