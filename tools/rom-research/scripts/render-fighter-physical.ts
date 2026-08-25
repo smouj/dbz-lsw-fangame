@@ -15,6 +15,7 @@ import { fileURLToPath } from 'url';
 import { createHash } from 'crypto';
 import { PNG } from 'pngjs';
 import { ROM_CGB_PALETTE_TABLE } from '../../../src/data/generated/romCgbPaletteTable.generated';
+import { ROM_CATALOG_RESOURCE_BASES } from '../../../src/data/generated/romAnimationResourceBase.generated';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '../../..');
 const ROM_PATH = resolve(ROOT, '../dbz-lsw-decomp/13_raw_rom/dbz-lsw-spain.gbc');
@@ -26,14 +27,38 @@ const OFFSET_ENCODING = 's8';
 const rom = readFileSync(ROM_PATH);
 const catalog = JSON.parse(readFileSync(CATALOG, 'utf8'));
 
-function parseArgs(): { resource: number; keys: number[]; selector: number | null } {
+function parseArgs(): { animationBank: number; resourceBase: number; resourceId: number | null; keys: number[]; selector: number | null } {
   const args = process.argv.slice(2);
   const get = (name: string): string | undefined => {
     const i = args.indexOf(name);
     return i >= 0 ? args[i + 1] : undefined;
   };
+  const abArg = get('--animation-bank');
+  const rbArg = get('--resource-base');
+  const resourceArg = get('--resource');
+  let animationBank: number;
+  let resourceBase: number;
+  let resourceId: number | null;
+  if (abArg && rbArg) {
+    // Ruta explícita (bank $61 u otro banco de animación).
+    animationBank = parseInt(abArg, 16);
+    resourceBase = parseInt(rbArg, 16);
+    resourceId = null;
+  } else if (resourceArg) {
+    // Backward-compat: catálogo $62-$64.
+    resourceId = parseInt(resourceArg, 16);
+    const entry = ROM_CATALOG_RESOURCE_BASES.find((r) => r.resourceId === resourceId);
+    if (!entry) { console.error(`resource ${resourceId} no en catálogo $62-$64`); process.exit(1); }
+    animationBank = entry.animationBank;
+    resourceBase = entry.resourceBase;
+  } else {
+    console.error('usa --animation-bank <hex> --resource-base <hex>, o --resource <catalogId hex>');
+    process.exit(1);
+  }
   return {
-    resource: parseInt(get('--resource') ?? '3', 16),
+    animationBank,
+    resourceBase,
+    resourceId,
     keys: (get('--keys') ?? '3,5,6,1c').split(',').map((k) => parseInt(k, 16)),
     selector: get('--selector') ? parseInt(get('--selector')!, 10) : null,
   };
@@ -132,6 +157,24 @@ function resolveFrameGraphics(bank: number, base: number, visualFrameId: number)
   const relativeOffsets: number[] = [];
   for (let i = 0; i < blockCount; i++) relativeOffsets.push(u16At(bank, layoutAddr + 1 + i * 2));
   return { blockCount, relativeOffsets, provenance: { tableAddress: T, entryAddress: entry, layoutAddress: layoutAddr } };
+}
+
+/** Decodifica la estructura de secuencias de un resource base (LOCAL offset):
+ *  base → +0 (u16 w0) → tabla de secuencias T = base+w0 → [count u8][entry×2] →
+ *  cada entry → seqAddr → [frameCount u8][frames×4].
+ *  Devuelve sequenceCount + frameCounts por secuencia. Independiente del catálogo. */
+function decodeResourceSequences(bank: number, base: number): { sequenceCount: number; frameCounts: number[] } {
+  const w0 = u16At(bank, base);
+  const T = (base + w0) & 0xffff;
+  const sequenceCount = u8At(bank, T);
+  const frameCounts: number[] = [];
+  for (let sel = 0; sel < sequenceCount; sel++) {
+    const entry = (T + 1 + sel * 2) & 0xffff;
+    const off = u16At(bank, entry);
+    const seqAddr = (T + 1 + sel * 2 + off) & 0xffff;
+    frameCounts.push(u8At(bank, seqAddr));
+  }
+  return { sequenceCount, frameCounts };
 }
 
 function bankedFileOffset(bank: number, cpuAddress: number): number {
@@ -248,12 +291,17 @@ function drawOriginCross(target: Uint8Array, width: number, height: number, orig
 }
 
 // ── Render ──
-const { resource, keys, selector } = parseArgs();
-const res = catalog.find((r: { resourceId: number }) => r.resourceId === resource);
-if (!res) { console.log(`resource ${resource} no en catálogo`); process.exit(1); }
-const bank = res.bank;
-const base = resourceBase(bank, resource);
-console.log(`resource ${resource} (bank $${bank.toString(16)}) base=$${base.toString(16).toUpperCase()}`);
+const { animationBank, resourceBase: cpuBase, resourceId, keys, selector } = parseArgs();
+const bank = animationBank;
+// Call_000_1266 devuelve CPU address ($4000+...); el renderer usa LOCAL offset
+// (file = bank*0x4000 + base). Convertir: local = cpu - 0x4000.
+const base = cpuBase - 0x4000;
+const resource = resourceId; // catalog id (null para bank $61)
+const resourceLabel = resourceId != null
+  ? `resource_${resourceId.toString(16).padStart(2, '0')}`
+  : `ab${animationBank.toString(16)}_b${cpuBase.toString(16)}`;
+const { sequenceCount, frameCounts } = decodeResourceSequences(bank, base);
+console.log(`resource${resourceId != null ? ` ${resourceId}` : ''} (bank $${bank.toString(16)}) base=$${cpuBase.toString(16).toUpperCase()} · seq=${sequenceCount}`);
 
 const index: unknown[] = [];
 let invariantMismatches = 0;
@@ -263,9 +311,9 @@ for (const key of keys) {
   const palette = resolvePalette(key);
   const sourceBank = 0x31 + key;
   const framesRendered: unknown[] = [];
-  for (let seq = 0; seq < res.sequences.length; seq++) {
+  for (let seq = 0; seq < sequenceCount; seq++) {
     if (selector !== null && seq !== selector) continue;
-    for (let f = 0; f < res.sequences[seq].frames.length; f++) {
+    for (let f = 0; f < frameCounts[seq]; f++) {
       const frame = resolveFrameRecord(bank, base, seq, f);
       const meta = resolveMetasprite(bank, base, frame.visualFrameId);
       const gfx = resolveFrameGraphics(bank, base, frame.visualFrameId);
@@ -346,7 +394,7 @@ for (const key of keys) {
       drawOriginCross(rawCanvas, canvasW, canvasH, ORIGIN, ORIGIN);
 
       // PNG raw (sin recortar) + trimmed (bounding box)
-      const outDir = join(OUT, `resource_${resource.toString(16).padStart(2, '0')}`, `profile_${key.toString(16).padStart(2, '0')}`, `seq_${String(seq).padStart(2, '0')}`, `frame_${String(f).padStart(2, '0')}`);
+      const outDir = join(OUT, resourceLabel, `profile_${key.toString(16).padStart(2, '0')}`, `seq_${String(seq).padStart(2, '0')}`, `frame_${String(f).padStart(2, '0')}`);
       mkdirSync(outDir, { recursive: true });
 
       const writePng = (path: string, w: number, h: number, data: Uint8Array) => {
@@ -423,7 +471,7 @@ for (const key of keys) {
       const metadata = {
         schemaVersion: SCHEMA_VERSION,
         offsetEncoding: OFFSET_ENCODING,
-        key, resource, bank, base,
+        key, resource, animationBank, resourceBase: cpuBase, bank, base,
         sequence: seq, frameIndex: f,
         frameRecord: frame,
         metasprite: {
@@ -532,7 +580,7 @@ for (const key of keys) {
   void framesRendered;
 }
 
-writeFileSync(join(OUT, `resource_${resource.toString(16).padStart(2, '0')}`, 'physical-index.json'), JSON.stringify(index, null, 2));
+writeFileSync(join(OUT, resourceLabel, 'physical-index.json'), JSON.stringify(index, null, 2));
 if (invariantMismatches > 0) {
   console.log(`physical-index.json escrito con ${invariantMismatches} invariant mismatches; resource no es promocionable como FIGHTER_PHYSICAL.`);
   process.exit(1);
