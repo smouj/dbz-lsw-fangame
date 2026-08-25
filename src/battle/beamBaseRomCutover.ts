@@ -19,9 +19,17 @@ import {
   romPresentationProfileForCard,
   type RomPresentationProfile,
 } from './romPresentationProfiles';
+import { resolveRomSequenceSelector } from './romSequenceSelectors';
 import { cardForBattleAction } from './standardDamageRomCutover';
 
 export const BEAM_BASE_ROM_HANDLER = 0x02;
+
+/** Handlers que comparten el motor Beam $5776 (§218-224): $02-$07. */
+export const BEAM_ROM_HANDLERS: ReadonlySet<number> = new Set([0x02, 0x03, 0x04, 0x05, 0x06, 0x07]);
+
+export function isBeamRomHandler(handler: number): boolean {
+  return BEAM_ROM_HANDLERS.has(handler);
+}
 
 export type BeamBaseRuntimeBranch =
   | 'HIT'
@@ -44,6 +52,7 @@ export interface BeamBaseRuntimeCutover {
 
 export interface BeamBaseRuntimeCutoverSummary {
   beamBaseProfiles: number;
+  handlerShared: number;
   romBacked: number;
   nonBeamBaseBacked: number;
   beamVariantsBacked: number;
@@ -57,6 +66,20 @@ export function beamBaseProfileForAction(action: BattleActionDescriptor): { card
   if (descriptor.execution.handler !== BEAM_BASE_ROM_HANDLER) return null;
   const profile = romPresentationProfileForCard(card);
   return profile.kind === 'BEAM_BASE' ? { card, profile } : null;
+}
+
+/** Perfil de un miembro de la FAMILIA Beam ($02-$07) — nunca cards support. */
+export function beamFamilyProfileForAction(action: BattleActionDescriptor): { card: CardDef; profile: RomPresentationProfile } | null {
+  const card = cardForBattleAction(action);
+  if (!card) return null;
+  const descriptor = romActionExecutionDescriptorForCard(card);
+  if (!isBeamRomHandler(descriptor.execution.handler)) return null;
+  const profile = romPresentationProfileForCard(card);
+  // GUARDRAIL §218/§447: support cards may SHARE $02/$03/$04 (buff/heal/shield)
+  // but are NOT beams. Only beam-family kinds route through the beam bridge.
+  return profile.kind === 'BEAM_BASE' || profile.kind === 'BEAM_VARIANT' || profile.kind === 'PROJECTILE_SCROLL'
+    ? { card, profile }
+    : null;
 }
 
 function branchExists(profile: RomPresentationProfile, family: BeamBaseRuntimeBranch): boolean {
@@ -101,15 +124,65 @@ export function compileBeamBaseRuntimeCutover(
   events: BattleEventEnvelope[],
   actionStartedIndex: number,
   env: BattleEventEnvelope & { event: { type: 'ACTION_STARTED' } },
+  actorFormId?: string | null,
 ): BeamBaseRuntimeCutover | null {
   const resolved = beamBaseProfileForAction(env.event.action);
   if (!resolved) return null;
 
   const outcome = beamBaseOutcomeFromEvents(events, actionStartedIndex, env.event.side, resolved.profile);
+  const selector = resolveRomSequenceSelector({
+    cardId: resolved.card.id,
+    formId: actorFormId ?? null,
+    animationResource: resolved.profile.dependencies.animationResource,
+  });
   const compiled = compileRomPresentationProfile(resolved.profile, {
     startTick: env.tick,
     logicalTick: env.tick,
     actorSide: env.event.side,
+    actorFormId: actorFormId ?? null,
+    sequenceSelector: selector.sequence,
+    sourceEvent: env.event.type,
+    selectedResultFamily: outcome.family,
+    selectedResultSourceEvent: outcome.sourceEvent,
+  });
+
+  return {
+    card: resolved.card,
+    profile: resolved.profile,
+    outcome,
+    timeline: compiled.timeline,
+  };
+}
+
+/**
+ * Cutover generalizado para TODA la familia Beam ($02-$07): enruta a través
+ * del mismo compilador ROM. Los handlers $03/$04 (BEAM_VARIANT) y $05/$06/$07
+ * (PROJECTILE_SCROLL) comparten el motor $5776 — su gramática de lanzamiento
+ * es concreta (BeamLaunchProfile); el resultado (HIT/MISS) puede quedar
+ * HANDLER_UNPROVEN y se representa con ROM_PENDING honesto, no con Graphics
+ * procedurales del renderer LEGACY.
+ */
+export function compileBeamFamilyRuntimeCutover(
+  events: BattleEventEnvelope[],
+  actionStartedIndex: number,
+  env: BattleEventEnvelope & { event: { type: 'ACTION_STARTED' } },
+  actorFormId?: string | null,
+): BeamBaseRuntimeCutover | null {
+  const resolved = beamFamilyProfileForAction(env.event.action);
+  if (!resolved) return null;
+
+  const outcome = beamBaseOutcomeFromEvents(events, actionStartedIndex, env.event.side, resolved.profile);
+  const selector = resolveRomSequenceSelector({
+    cardId: resolved.card.id,
+    formId: actorFormId ?? null,
+    animationResource: resolved.profile.dependencies.animationResource,
+  });
+  const compiled = compileRomPresentationProfile(resolved.profile, {
+    startTick: env.tick,
+    logicalTick: env.tick,
+    actorSide: env.event.side,
+    actorFormId: actorFormId ?? null,
+    sequenceSelector: selector.sequence,
     sourceEvent: env.event.type,
     selectedResultFamily: outcome.family,
     selectedResultSourceEvent: outcome.sourceEvent,
@@ -125,7 +198,12 @@ export function compileBeamBaseRuntimeCutover(
 
 export function beamBaseRuntimeCutoverSummary(): BeamBaseRuntimeCutoverSummary {
   const beamBaseProfiles = ROM_PRESENTATION_PROFILES.filter(profile => profile.kind === 'BEAM_BASE').length;
-  const romBacked = CARDS.filter(card => romActionExecutionDescriptorForCard(card).execution.handler === BEAM_BASE_ROM_HANDLER).length;
+  // handlerShared: cards sharing ROM handler $02 (incl. support cards that REUSE
+  // $02 for buff/heal/shield presentation — they are NOT beams).
+  const handlerShared = CARDS.filter(card => romActionExecutionDescriptorForCard(card).execution.handler === BEAM_BASE_ROM_HANDLER).length;
+  // romBacked: genuinely BEAM_BASE-profile backed (beam cards only). Support
+  // cards sharing $02 are excluded — they fall to SUPPORT_OR_FIELD_EFFECT.
+  const romBacked = beamBaseProfiles;
   const nonBeamBaseBacked = CARDS.filter(card => {
     const descriptor = romActionExecutionDescriptorForCard(card);
     return descriptor.execution.handler !== BEAM_BASE_ROM_HANDLER
@@ -138,6 +216,7 @@ export function beamBaseRuntimeCutoverSummary(): BeamBaseRuntimeCutoverSummary {
 
   return {
     beamBaseProfiles,
+    handlerShared,
     romBacked,
     nonBeamBaseBacked,
     beamVariantsBacked,

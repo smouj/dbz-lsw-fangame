@@ -1,0 +1,161 @@
+{
+  "formId": "buu_super",
+  "actorVisualProfileKey": 20,
+  "graphicsBank": "0x45",
+  "physicalId": "rom-p14-g45-r03-vf02-ms4d2c5584-gfx05b87bfb",
+  "resource": "0x03",
+  "visualFrameId": "0x02",
+  "width": 32,
+  "height": 48,
+  "originX": -16,
+  "originY": -40,
+  "originInTrimX": 16,
+  "originInTrimY": 40,
+  "trim": {
+    "file": "rom_trimmed.png",
+    "x": -16,
+    "y": -40,
+    "w": 32,
+    "h": 48,
+    "originInTrim": {
+      "x": 16,
+      "y": 40
+    }
+  },
+  "rawCanvas": "all_frames/rom-p14-g45-r03-vf02-ms4d2c5584-gfx05b87bfb.raw-canvas.png",
+  "palette": {
+    "raw": [
+      0,
+      0,
+      255,
+      103,
+      222,
+      1,
+      165,
+      20
+    ],
+    "rawBytes": [
+      0,
+      0,
+      255,
+      103,
+      222,
+      1,
+      165,
+      20
+    ],
+    "rawSha256": "de954edcaaedc1acc5ca95d9c20f55aa44d884d915ad6dc99e3894cff2cef127",
+    "cpuAddress": 28320,
+    "cpuAddressHex": "0x6ea0",
+    "fileOffset": 798368,
+    "fileOffsetHex": "0xc2ea0",
+    "bgr555": [
+      "0000",
+      "67ff",
+      "01de",
+      "14a5"
+    ],
+    "colors": [
+      "#000000",
+      "#FFFFCE",
+      "#F77300",
+      "#292929"
+    ],
+    "transparentIndex": 0,
+    "color0Transparent": true,
+    "displayTransform": "BGR555_TO_SRGB_DIRECT"
+  },
+  "hashes": {
+    "rawPixelHash": "14f88dfa86397e6f",
+    "trimmedPixelHash": "284cafc6224d38ff",
+    "metaspriteHash": "4d2c5584c9862075",
+    "graphicsHash": "05b87bfb7a50db37",
+    "paletteHash": "de954edcaaedc1ac",
+    "graphicsTableHash": "30bfbcfcdb94f4e2",
+    "sourceProvenanceHash": "945f38172d60f627",
+    "sourceFileSha256": "f281fbb810f69b2a1377f562d00ef1639fc5b28def5570262a9b4f49f9639eec"
+  },
+  "uses": [
+    {
+      "resource": "0x03",
+      "sequence": 0,
+      "frameIndex": 4,
+      "durationTicks": 2,
+      "offsetX": -2,
+      "offsetY": 0,
+      "rawOffsetX": 254,
+      "rawOffsetY": 0
+    },
+    {
+      "resource": "0x03",
+      "sequence": 0,
+      "frameIndex": 5,
+      "durationTicks": 2,
+      "offsetX": -4,
+      "offsetY": 0,
+      "rawOffsetX": 252,
+      "rawOffsetY": 0
+    },
+    {
+      "resource": "0x03",
+      "sequence": 0,
+      "frameIndex": 6,
+      "durationTicks": 2,
+      "offsetX": -5,
+      "offsetY": 0,
+      "rawOffsetX": 251,
+      "rawOffsetY": 0
+    },
+    {
+      "resource": "0x03",
+      "sequence": 0,
+      "frameIndex": 7,
+      "durationTicks": 2,
+      "offsetX": -4,
+      "offsetY": 0,
+      "rawOffsetX": 252,
+      "rawOffsetY": 0
+    },
+    {
+      "resource": "0x03",
+      "sequence": 3,
+      "frameIndex": 4,
+      "durationTicks": 2,
+      "offsetX": -2,
+      "offsetY": 0,
+      "rawOffsetX": 254,
+      "rawOffsetY": 0
+    },
+    {
+      "resource": "0x03",
+      "sequence": 3,
+      "frameIndex": 5,
+      "durationTicks": 2,
+      "offsetX": -4,
+      "offsetY": 0,
+      "rawOffsetX": 252,
+      "rawOffsetY": 0
+    },
+    {
+      "resource": "0x03",
+      "sequence": 3,
+      "frameIndex": 6,
+      "durationTicks": 2,
+      "offsetX": -5,
+      "offsetY": 0,
+      "rawOffsetX": 251,
+      "rawOffsetY": 0
+    },
+    {
+      "resource": "0x03",
+      "sequence": 3,
+      "frameIndex": 7,
+      "durationTicks": 2,
+      "offsetX": -4,
+      "offsetY": 0,
+      "rawOffsetX": 252,
+      "rawOffsetY": 0
+    }
+  ],
+  "evidence": "ROM_PHYSICAL"
+}

@@ -1,0 +1,18 @@
+{
+  "formId": "frieza_final",
+  "source": "ROM_PHYSICAL_FIGHTERS",
+  "schemaVersion": 2,
+  "offsetEncoding": "s8",
+  "actorVisualProfileKey": 27,
+  "graphicsBank": 76,
+  "physicalIds": 9,
+  "frameInstances": 50,
+  "resources": [
+    "0x00",
+    "0x12"
+  ],
+  "allFrames": "all_frames/",
+  "contactSheetHtml": "contact_sheet.html",
+  "contactSheetPng": "contact_sheet.png",
+  "note": "Generated package for visual inspection. Production manifest.json remains separate until visible cutover."
+}

@@ -1,7 +1,7 @@
 // ═══════════════════════════════════════════════════════════
 // VERIFY: DEV-STUDIO — contrato del combate + consistencia del Dev Studio.
 // Uso: npm run verify:dev-studio
-//   1. Los 16 módulos del Dev Studio existen (ids canónicos).
+//   1. Los 20 módulos del Dev Studio existen (ids canónicos).
 //   2. El simulador del contrato (combatSim) recorre una ronda completa
 //      con iniciativa PLAYER y ENEMY — readout correcto en cada frontera.
 //   3. El snapshot común (devSnapshot) es consistente: 48 formas · 125
@@ -25,12 +25,12 @@ function check(name: string, cond: boolean, detail?: string) {
 // ── 1. Módulos del Dev Studio (lista real extraída de la fuente — sin
 // importar componentes React que arrastran imports Vite-only) ──
 const devSrc = readFileSync('src/devtools/DevStudio.tsx', 'utf8');
-const idMatch = devSrc.match(/id: '([a-z]+)'/g) ?? [];
+const idMatch = devSrc.match(/id: '([a-z-]+)'/g) ?? [];
 const moduleIds = idMatch.map(m => m.replace(/id: '|'/g, ''));
 const EXPECTED_MODULES = [
-  'dashboard', 'characters', 'cards', 'animation', 'pixelart', 'facing', 'assets', 'hud',
+  'dashboard', 'characters', 'cards', 'animation', 'animation-studio', 'pixelart', 'facing', 'assets', 'hud',
   'lab', 'positions', 'combat', 'timeline', 'story', 'validation', 'research',
-  'romdisplay', 'music', 'gameconfig',
+  'romdisplay', 'music', 'gameconfig', 'team-builder', 'deck-builder', 'workspace',
 ];
 check(`dev: ${EXPECTED_MODULES.length} módulos registrados (${moduleIds.length})`, moduleIds.length === EXPECTED_MODULES.length);
 for (const id of EXPECTED_MODULES) {
@@ -41,7 +41,7 @@ check('dev: sin módulos sprites/sheets (absorbidos por Character Studio)',
   !moduleIds.includes('sprites') && !moduleIds.includes('sheets'));
 // El render switch cubre todos los módulos (chequeo de fuente)
 const renderCovers = EXPECTED_MODULES.every(id => devSrc.includes(`module === '${id}'`));
-check('dev: el render switch cubre los 18 módulos', renderCovers);
+check(`dev: el render switch cubre los ${EXPECTED_MODULES.length} módulos`, renderCovers);
 
 // ── 2. Snapshot común (Dashboard ≡ Validation ≡ GameConfig) ──
 {
@@ -56,6 +56,18 @@ check('dev: el render switch cubre los 18 módulos', renderCovers);
   check('dev: snapshot — 32 capítulos con mazo', snap.story.chapters === 32);
   check('dev: snapshot — SFX canónicos 85 · música 20', snap.audio.sfx === 85 && snap.audio.musicTracks === 20);
   check('dev: snapshot — 20 familias cinematográficas F0', snap.cinematics.gbcFamilies === 20);
+  // C1.0 §8 — producción real (ROM vs LEGACY) presente y honesta.
+  check('dev: snapshot — production metrics presentes', typeof snap.production?.romBackedStrict === 'number');
+  check('dev: snapshot — ROM backed estricto > 0', snap.production.romBackedStrict > 0);
+  check('dev: snapshot — ROM backed estricto dentro del mazo completo', snap.production.romBackedStrict <= snap.cards.count, `${snap.production.romBackedStrict}/${snap.cards.count}`);
+  check('dev: snapshot — ROM backed estricto coincide con cues generadas/consumidas',
+    snap.production.romBackedStrict === snap.production.romCuesGenerated &&
+    snap.production.romBackedStrict === snap.production.romCuesConsumed,
+    `${snap.production.romBackedStrict}/${snap.production.romCuesGenerated}/${snap.production.romCuesConsumed}`);
+  check('dev: snapshot — MIXED físico = 0', snap.production.mixed === 0);
+  check('dev: snapshot — legacy visible = 125 - estricto', snap.production.legacyVisible === 125 - snap.production.romBackedStrict);
+  check('dev: snapshot — ROM_DATA_AVAILABLE >= consumido (gap honesto)',
+    snap.production.romDataAvailable >= snap.production.romCuesConsumed);
 }
 
 // ── 3. Simulador del contrato — ronda completa con iniciativa PLAYER ──

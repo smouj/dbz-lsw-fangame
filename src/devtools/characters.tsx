@@ -21,6 +21,12 @@ import {
   CHARACTERS, FORMS, getForm, statAtLevel, sheetUrl, idleSpriteUrl, LIMIT_DEFAULTS,
 } from '../data/roster';
 import { spriteDirFor, spriteManifestUrl, spriteFrameUrl } from '../data/spriteManifest';
+import { CARDS, type CardDef, type CardType, CARD_COLORS } from '../data/cards';
+import {
+  bindingsForForm,
+  type CharacterFrameBinding,
+  type FrameMapping,
+} from '../battle/characterFrameMap';
 import { BATTLE_PORTRAITS } from '../data/battlePortraits';
 import { MENU_PORTRAITS } from '../data/icons';
 import { STORY_PORTRAITS, storyPortraitUrl } from '../data/storyPortraits';
@@ -31,6 +37,8 @@ import { useSheetAnalysis, groupFramesByPose, type FrameAnalysis } from './frame
 import { poseSemantics, parseFrameName } from './frameSemantics';
 import { FormPreview } from './FormPreview';
 import type { DevLinkedTarget, DevModuleId } from './DevStudio';
+import { romBeamConsumersForFormResource } from '../battle/romSequenceSelectors';
+import { ROM_FIGHTER_FORM_IDENTITY } from '../data/generated/romFighterFormIdentity.generated';
 
 // ═══ Escritura real a disco (middleware /__dev/write) ──────────────────
 async function frameDataUrl(rel: string): Promise<string> {
@@ -69,6 +77,125 @@ function loadJson<T>(key: string, fallback: T): T {
     const raw = localStorage.getItem(key);
     return raw ? JSON.parse(raw) as T : fallback;
   } catch { return fallback; }
+}
+
+interface RomPhysicalFrame {
+  physicalId: string;
+  file: string;
+  rawCanvasFile?: string;
+  resourceId: number;
+  resourceHex: string;
+  visualFrameId: number;
+  width: number;
+  height: number;
+  originX: number;
+  originY: number;
+  originInTrimX?: number;
+  originInTrimY?: number;
+  trim?: { x: number; y: number; w: number; h: number; originInTrim?: { x: number; y: number } };
+  palette: { bgr555: string[]; colors: string[] };
+  metasprite?: { pieces?: unknown[] };
+  occurrences: Array<{
+    sequence: number;
+    frameIndex: number;
+    durationTicks: number;
+    offsetX: number;
+    offsetY: number;
+    rawOffsetX: number;
+    rawOffsetY: number;
+  }>;
+}
+
+interface RomPhysicalProvenance {
+  source: string;
+  schemaVersion: number;
+  offsetEncoding: string;
+  formProfile: {
+    actorVisualProfileKey: number;
+    graphicsBank: number;
+    paletteRaw: string[];
+    paletteAddress: string;
+  };
+  frames: RomPhysicalFrame[];
+}
+
+interface RomPhysicalSequence {
+  resource: number;
+  sequence: number;
+  frames: Array<{
+    file: string;
+    physicalId: string;
+    frameIndex: number;
+    visualFrameId: number;
+    durationTicks: number;
+    offsetX: number;
+    offsetY: number;
+    rawOffsetX: number;
+    rawOffsetY: number;
+    originX: number;
+    originY: number;
+    originInTrimX?: number;
+    originInTrimY?: number;
+    rawCanvasFile?: string;
+  }>;
+}
+
+interface RomPhysicalManifest {
+  source: string;
+  schemaVersion: number;
+  offsetEncoding: string;
+  actorVisualProfileKey: number;
+  graphicsBank: number;
+  sequences: Record<string, RomPhysicalSequence>;
+}
+
+interface RomFighterIdentityRow {
+  formId: string;
+  romFormIdHex: string;
+  romRecordBankHex: string;
+  romRecordCpuAddressHex: string;
+  romRecordFileOffsetHex: string;
+  rawRecordHex: string[];
+  actorVisualProfileKeyHex: string;
+  graphicsBankHex: string;
+  paletteIndexHex: string;
+  paletteCpuAddressHex: string;
+  paletteFileOffsetHex: string;
+  mappingStatus: string;
+}
+
+function hex(value: number): string {
+  return value.toString(16).padStart(2, '0');
+}
+
+// ═══ F-MAP helpers (Character Studio ↔ characterFrameMap) ═══════════════
+const MAPPING_LABEL: Record<FrameMapping, string> = {
+  ROM_EXACT: 'ROM_EXACT',
+  CANONICAL_PHYSICAL: 'CANONICAL_PHYSICAL',
+  SHARED_PHYSICAL: 'SHARED_PHYSICAL',
+  COMPOSITE: 'COMPOSITE',
+  FALLBACK: 'FALLBACK',
+  REFERENCE_FX: 'REFERENCE_FX',
+  UNRESOLVED: 'UNRESOLVED',
+};
+
+const MAPPING_TONE: Record<FrameMapping, string> = {
+  ROM_EXACT: 'ok', CANONICAL_PHYSICAL: 'ok', SHARED_PHYSICAL: 'info',
+  COMPOSITE: 'info', FALLBACK: 'bad', REFERENCE_FX: 'info', UNRESOLVED: 'warn',
+};
+
+const RELATION_LABEL: Record<string, string> = {
+  BYTE_EXACT: 'BYTE_EXACT', PIXEL_EXACT: 'PIXEL_EXACT',
+  VISIBLE_PIXEL_EXACT: 'VISIBLE_PIXEL_EXACT', NO_MATCH: 'NO_MATCH',
+};
+
+/** Cartas usables por un personaje (compatible incluye al personaje, o compatible undefined). */
+function cardsForCharacter(charId: string): CardDef[] {
+  return CARDS.filter(c => {
+    if (c.notCompatible?.includes(charId)) return false;
+    if (c.compatible === undefined) return true;
+    return c.compatible.includes(charId);
+  });
 }
 
 // ═══ InlineName — nombre editable con persistencia ──────────────────────
@@ -290,6 +417,8 @@ export function CharactersModule({ onOpenModule }: {
             </div>
           </section>
 
+          <RomPhysicalFighterPanel formId={form.id} onOpenModule={onOpenModule} />
+
           {/* SECCIÓN 3 — Frames del manifest (browser por pose + reemplazo) */}
           <section className="dev-char-block">
             <h3 className="dev-char-block-title">
@@ -304,8 +433,221 @@ export function CharactersModule({ onOpenModule }: {
             )}
             <FrameBrowser formId={form.id} analysis={analysis} dir={spriteDir} />
           </section>
+
+          {/* SECCIÓN 4 — Physical Map (F-MAP: ROM + canonical + manifest) */}
+          <CharacterPhysicalMap formId={form.id} />
         </div>
       </div>
+    </div>
+  );
+}
+
+function RomPhysicalFighterPanel({ formId, onOpenModule }: {
+  formId: string;
+  onOpenModule?: (id: DevModuleId, target: Omit<DevLinkedTarget, 'nonce'>) => void;
+}) {
+  const dir = spriteDirFor(formId);
+  const [manifest, setManifest] = useState<RomPhysicalManifest | null>(null);
+  const [provenance, setProvenance] = useState<RomPhysicalProvenance | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [openSeq, setOpenSeq] = useState<string | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+    setManifest(null);
+    setProvenance(null);
+    setError(null);
+    if (!dir) {
+      setError('Sin directorio runtime para esta forma.');
+      return () => { cancelled = true; };
+    }
+    Promise.all([
+      fetch(`/assets/sprites/${dir}/rom-physical.manifest.json`, { cache: 'no-store' }),
+      fetch(`/assets/sprites/${dir}/provenance.json`, { cache: 'no-store' }),
+    ]).then(async ([manifestResponse, provenanceResponse]) => {
+      if (!manifestResponse.ok || !provenanceResponse.ok) {
+        throw new Error(`ROM physical no disponible (${manifestResponse.status}/${provenanceResponse.status})`);
+      }
+      const nextManifest = await manifestResponse.json() as RomPhysicalManifest;
+      const nextProvenance = await provenanceResponse.json() as RomPhysicalProvenance;
+      if (!cancelled) {
+        setManifest(nextManifest);
+        setProvenance(nextProvenance);
+        const firstSeq = Object.keys(nextManifest.sequences)[0] ?? null;
+        setOpenSeq(firstSeq);
+      }
+    }).catch(err => {
+      if (!cancelled) setError(err instanceof Error ? err.message : String(err));
+    });
+    return () => { cancelled = true; };
+  }, [dir]);
+
+  const sequences = useMemo(() => manifest
+    ? Object.entries(manifest.sequences).sort(([, a], [, b]) => a.resource - b.resource || a.sequence - b.sequence)
+    : [], [manifest]);
+  const selectedConsumers = useMemo(() => {
+    const map = new Map<string, ReturnType<typeof romBeamConsumersForFormResource>>();
+    for (const [, seq] of sequences) {
+      const consumers = romBeamConsumersForFormResource(formId, seq.resource).filter(consumer => consumer.sequence === seq.sequence);
+      if (consumers.length > 0) map.set(`${seq.resource}:${seq.sequence}`, consumers);
+    }
+    return map;
+  }, [formId, sequences]);
+  const selectedSequences = sequences.filter(([, seq]) => selectedConsumers.has(`${seq.resource}:${seq.sequence}`));
+  const researchSequences = sequences.filter(([, seq]) => !selectedConsumers.has(`${seq.resource}:${seq.sequence}`));
+  const frames = provenance?.frames ?? [];
+  const resources = [...new Set(sequences.map(([, seq]) => `$${hex(seq.resource)}`))];
+  const identity = ROM_FIGHTER_FORM_IDENTITY.find(row => row.formId === formId) as RomFighterIdentityRow | undefined;
+  const identityVerified = identity?.mappingStatus === 'ROM_RECORD_VERIFIED' || identity?.mappingStatus === 'ROM_IDENTITY_VERIFIED';
+
+  return (
+    <section className="dev-char-block dev-rom-physical-panel">
+      <div className="dev-fmap-head">
+        <h3 className="dev-char-block-title">
+          ROM Physical Fighter Frames
+          <span className="dev-sheets-count">
+            {provenance ? `${frames.length} physical IDs · ${frames.reduce((total, frame) => total + frame.occurrences.length, 0)} frame instances` : 'loading'}
+          </span>
+        </h3>
+        <div className="dev-fmap-summary">
+          <span className="dev-tag ok">ROM_PHYSICAL_FIGHTERS</span>
+          {manifest && <span className="dev-tag">schema {manifest.schemaVersion}/{manifest.offsetEncoding}</span>}
+          {identity && <span className={`dev-tag ${identityVerified ? 'ok' : 'warn'}`}>{identity.mappingStatus}</span>}
+          {manifest && <span className="dev-tag">profile 0x{hex(manifest.actorVisualProfileKey)}</span>}
+          {manifest && <span className="dev-tag">graphics bank 0x{hex(manifest.graphicsBank)}</span>}
+          {resources.map(resource => <span key={resource} className="dev-tag">{resource}</span>)}
+        </div>
+      </div>
+
+      {error && <div className="dev-wip-banner">ROM physical: {error}</div>}
+      {!error && !manifest && <div className="dev-hint">Cargando corpus físico ROM…</div>}
+
+      {manifest && provenance && (
+        <>
+          <div className="dev-rom-identity-grid">
+            <div><strong>FORM</strong><code>{formId}</code></div>
+            <div><strong>ROM form record</strong><code>{identity ? `${identity.romRecordBankHex}:${identity.romRecordCpuAddressHex} / ${identity.romRecordFileOffsetHex}` : '—'}</code></div>
+            <div><strong>ROM form id</strong><code>{identity?.romFormIdHex ?? '—'}</code></div>
+            <div><strong>identity status</strong><code>{identity?.mappingStatus ?? 'UNVERIFIED_PHYSICAL'}</code></div>
+            <div><strong>actorVisualProfileKey</strong><code>0x{hex(manifest.actorVisualProfileKey)}</code></div>
+            <div><strong>graphicsBank</strong><code>0x{hex(manifest.graphicsBank)}</code></div>
+            <div><strong>palette index</strong><code>{identity?.paletteIndexHex ?? `0x${hex(manifest.actorVisualProfileKey)}`}</code></div>
+            <div><strong>palette address</strong><code>{identity ? `${identity.paletteCpuAddressHex} / ${identity.paletteFileOffsetHex}` : provenance.formProfile.paletteAddress}</code></div>
+            <div><strong>raw record</strong><code>{identity?.rawRecordHex.join(' ') ?? '—'}</code></div>
+            <div><strong>palette</strong><code>{provenance.formProfile.paletteRaw.join(' ')}</code></div>
+            <div><strong>source</strong><code>{provenance.source}</code></div>
+            <div><strong>display facing</strong><code>ROM raw + right-facing preview</code></div>
+          </div>
+
+          <div className="dev-rom-physical-actions">
+            <button className="dev-btn" onClick={() => onOpenModule?.('animation', { formId })}>Open Animation</button>
+            <button className="dev-btn" onClick={() => onOpenModule?.('assets', { formId })}>Open Assets</button>
+            <button className="dev-btn" onClick={() => onOpenModule?.('romdisplay', { formId })}>Open ROM Display</button>
+          </div>
+
+          <h4 className="dev-rom-subtitle">Deduped Physical Frames</h4>
+          <div className="dev-rom-physical-grid">
+            {frames.map(frame => (
+              <div key={frame.physicalId} className="dev-rom-frame-card">
+                <div className="dev-rom-frame-img-pair">
+                  <div className="dev-rom-frame-img">
+                    <span>TRIMMED ROM</span>
+                    <img src={`/assets/sprites/${dir}/${frame.file}`} alt={`${frame.physicalId} trimmed physical`} loading="lazy" />
+                  </div>
+                  {frame.rawCanvasFile && (
+                    <div className="dev-rom-frame-img raw">
+                      <span>RAW CANVAS</span>
+                      <img src={`/assets/sprites/${dir}/${frame.rawCanvasFile}`} alt={`${frame.physicalId} raw canvas`} loading="lazy" />
+                    </div>
+                  )}
+                  <div className="dev-rom-frame-img canonical">
+                    <span>CANONICAL DISPLAY</span>
+                    <img className="dev-rom-facing-right" src={`/assets/sprites/${dir}/${frame.file}`} alt={`${frame.physicalId} right-facing display`} loading="lazy" />
+                  </div>
+                </div>
+                <code>{frame.physicalId}</code>
+                <span>{frame.resourceHex} · vf ${hex(frame.visualFrameId)} · {frame.width}×{frame.height}</span>
+                <span>uses {frame.occurrences.length} · trim {frame.trim?.x ?? frame.originX},{frame.trim?.y ?? frame.originY} · origin {frame.originInTrimX ?? '—'},{frame.originInTrimY ?? '—'}</span>
+                <span>pieces {frame.metasprite?.pieces?.length ?? '—'} · palette {frame.palette?.bgr555?.join(' ') ?? '—'}</span>
+              </div>
+            ))}
+          </div>
+
+          <h4 className="dev-rom-subtitle">ROM Selected Sequences (card/profile selector)</h4>
+          {selectedSequences.length === 0 && (
+            <div className="dev-wip-banner">No selected sequence is proven for this form/resource set yet. Frames below are research-only until a ROM selector/consumer proves them.</div>
+          )}
+          <div className="dev-rom-sequence-list">
+            {selectedSequences.map(([key, seq]) => (
+              <RomSequenceBlock key={key} sequenceKey={key} seq={seq} dir={dir ?? ''} open={openSeq === key}
+                onToggle={() => setOpenSeq(openSeq === key ? null : key)}
+                consumers={selectedConsumers.get(`${seq.resource}:${seq.sequence}`) ?? []} />
+            ))}
+          </div>
+
+          <h4 className="dev-rom-subtitle">All Resource Sequences (research, not selected unless labeled above)</h4>
+          <div className="dev-rom-sequence-list">
+            {researchSequences.map(([key, seq]) => (
+              <RomSequenceBlock key={key} sequenceKey={key} seq={seq} dir={dir ?? ''} open={openSeq === key}
+                onToggle={() => setOpenSeq(openSeq === key ? null : key)}
+                consumers={[]} />
+            ))}
+          </div>
+        </>
+      )}
+    </section>
+  );
+}
+
+function RomSequenceBlock({ sequenceKey, seq, dir, open, onToggle, consumers }: {
+  sequenceKey: string;
+  seq: RomPhysicalSequence;
+  dir: string;
+  open: boolean;
+  onToggle: () => void;
+  consumers: ReturnType<typeof romBeamConsumersForFormResource>;
+}) {
+  const totalTicks = seq.frames.reduce((total, frame) => total + frame.durationTicks, 0);
+  return (
+    <div className={`dev-rom-sequence ${consumers.length > 0 ? 'selected' : 'research'}`}>
+      <button className="dev-rom-sequence-head" onClick={onToggle}>
+        <code>resource ${hex(seq.resource)} · seq {seq.sequence}</code>
+        <span>{seq.frames.length} frames · {totalTicks} ticks GBC</span>
+        {consumers.length > 0
+          ? <span className="dev-tag ok">ROM SELECTED BY CARD</span>
+          : <span className="dev-tag warn">RESEARCH ONLY</span>}
+      </button>
+      {consumers.length > 0 && (
+        <div className="dev-rom-consumer-row">
+          {consumers.slice(0, 8).map(consumer => (
+            <span key={`${consumer.cardId}-${consumer.sequence}`} className="dev-tag">
+              #{consumer.cardId} {consumer.cardName}
+            </span>
+          ))}
+          {consumers.length > 8 && <span className="dev-tag">+{consumers.length - 8}</span>}
+        </div>
+      )}
+      {open && (
+        <div className="dev-rom-sequence-frames">
+          {seq.frames.map(frame => (
+            <div key={`${sequenceKey}-${frame.frameIndex}`} className="dev-rom-frame-card compact">
+              <div className="dev-rom-frame-img-pair">
+                <div className="dev-rom-frame-img">
+                  <span>TRIMMED</span>
+                  <img src={`/assets/sprites/${dir}/${frame.file}`} alt={`${frame.physicalId} trimmed physical`} loading="lazy" />
+                </div>
+                <div className="dev-rom-frame-img canonical">
+                  <span>DISPLAY</span>
+                  <img className="dev-rom-facing-right" src={`/assets/sprites/${dir}/${frame.file}`} alt={`${frame.physicalId} right-facing display`} loading="lazy" />
+                </div>
+              </div>
+              <code>f{frame.frameIndex} · vf ${hex(frame.visualFrameId)}</code>
+              <span>{frame.durationTicks}t · dx {frame.offsetX} dy {frame.offsetY}</span>
+              <span>{frame.physicalId}</span>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
@@ -613,3 +955,156 @@ function StoryPortraitsGrid({ charId, formId }: { charId: string; formId: string
 }
 
 export { characterName };
+
+// ═══════════════════════════════════════════════════════════════════════
+// CharacterPhysicalMap — F-MAP wiring (P0.2)
+// ─────────────────────────────────────────────────────────────────────────
+// Expone el registry characterFrameMap para UNA forma, organizado como:
+// PHYSICAL (ROM + canonical + manifest + classification) / SEMANTIC (rol +
+// familia física) / CONSUMERS (cartas compatibles) / PROVENANCE (evidence).
+// Sin datos inventados: todo sale de characterFrameMap y CARDS.
+// ═══════════════════════════════════════════════════════════════════════
+
+function romSummary(b: CharacterFrameBinding): string {
+  if (!b.rom) return '—';
+  const r = b.rom;
+  return `res $${r.animationResource.toString(16).padStart(2, '0')} · seq ${r.sequenceIndex} · fr ${r.frameIndex} · vf $${r.visualFrameId.toString(16).padStart(2, '0')}`;
+}
+
+function dominantMapping(arr: CharacterFrameBinding[]): FrameMapping {
+  const order: FrameMapping[] = ['ROM_EXACT', 'CANONICAL_PHYSICAL', 'SHARED_PHYSICAL', 'COMPOSITE', 'REFERENCE_FX', 'FALLBACK', 'UNRESOLVED'];
+  for (const m of order) if (arr.some(b => b.mapping === m)) return m;
+  return 'UNRESOLVED';
+}
+
+function groupBindingsByRole(bindings: CharacterFrameBinding[]): Array<{ role: string; bindings: CharacterFrameBinding[]; classification: FrameMapping }> {
+  const map = new Map<string, CharacterFrameBinding[]>();
+  for (const b of bindings) {
+    const arr = map.get(b.semanticRole) ?? [];
+    arr.push(b);
+    map.set(b.semanticRole, arr);
+  }
+  return [...map.entries()].map(([role, arr]) => ({ role, bindings: arr, classification: dominantMapping(arr) }));
+}
+
+export function CharacterPhysicalMap({ formId }: { formId: string }) {
+  const bindings = useMemo(() => bindingsForForm(formId), [formId]);
+  const form = getForm(formId);
+  const character = form?.character ?? '';
+  const groups = useMemo(() => groupBindingsByRole(bindings), [bindings]);
+  const [open, setOpen] = useState<string | null>(null);
+
+  const byMapping = useMemo(() => {
+    const acc: Record<FrameMapping, number> = { ROM_EXACT: 0, CANONICAL_PHYSICAL: 0, SHARED_PHYSICAL: 0, COMPOSITE: 0, FALLBACK: 0, REFERENCE_FX: 0, UNRESOLVED: 0 };
+    for (const b of bindings) acc[b.mapping]++;
+    return acc;
+  }, [bindings]);
+
+  const consumers = useMemo(() => {
+    const list = cardsForCharacter(character);
+    const byType = new Map<CardType, CardDef[]>();
+    for (const c of list) {
+      const arr = byType.get(c.type) ?? [];
+      arr.push(c);
+      byType.set(c.type, arr);
+    }
+    return { list, byType };
+  }, [character]);
+
+  return (
+    <section className="dev-char-block">
+      <div className="dev-fmap-head">
+        <h3 className="dev-char-block-title">
+          Physical Map
+          <span className="dev-sheets-count">{bindings.length} bindings · {groups.length} roles</span>
+        </h3>
+        <div className="dev-fmap-summary">
+          {(Object.keys(MAPPING_LABEL) as FrameMapping[]).map(m => (
+            <span key={m} className={`dev-tag dev-fmap-${MAPPING_TONE[m]}`}>{MAPPING_LABEL[m]}: {byMapping[m]}</span>
+          ))}
+        </div>
+      </div>
+
+      {bindings.length === 0 ? (
+        <div className="dev-hint">Sin dir animado para {formId} — no hay bindings físicos.</div>
+      ) : (
+        <div className="dev-fmap-table">
+          <div className="dev-fmap-row dev-fmap-thead">
+            <span>Semantic role</span><span>Classification</span><span>ROM identity</span><span>Canonical</span><span>Frames</span>
+          </div>
+          {groups.map(g => {
+            const first = g.bindings[0];
+            const romCount = g.bindings.filter(b => b.rom).length;
+            const canonCount = g.bindings.filter(b => b.canonicalId).length;
+            const isOpen = open === g.role;
+            return (
+              <div key={g.role} className="dev-fmap-group">
+                <button className={`dev-fmap-row ${isOpen ? 'open' : ''}`} onClick={() => setOpen(isOpen ? null : g.role)}>
+                  <span className="dev-fmap-role">
+                    <code>{g.role}</code>
+                    {first?.physicalFamily && first.physicalFamily !== g.role && (
+                      <small className="dev-fmap-family">phys: {first.physicalFamily}</small>
+                    )}
+                  </span>
+                  <span className={`dev-tag dev-fmap-${MAPPING_TONE[g.classification]}`}>{MAPPING_LABEL[g.classification]}</span>
+                  <span className="dev-fmap-rom">
+                    {romCount > 0 ? <code>{romSummary(first)}</code> : <span className="dev-hint">—</span>}
+                    {romCount > 1 && <small>+{romCount - 1}</small>}
+                  </span>
+                  <span className="dev-fmap-canon">
+                    {canonCount > 0 ? <code>{first.canonicalId}</code> : <span className="dev-hint">—</span>}
+                    {canonCount > 1 && <small>+{canonCount - 1}</small>}
+                  </span>
+                  <span className="dev-fmap-count">{g.bindings.length}</span>
+                </button>
+                {isOpen && (
+                  <div className="dev-fmap-detail">
+                    {g.bindings.map(b => (
+                      <div key={`${b.manifestIndex}:${b.file}`} className="dev-fmap-binding">
+                        <div className="dev-fmap-binding-head">
+                          <code className="dev-fmap-file">{b.file}</code>
+                          <span className={`dev-tag dev-fmap-${MAPPING_TONE[b.mapping]}`}>{MAPPING_LABEL[b.mapping]}</span>
+                          {b.sharedForm && <span className="dev-tag">RUNTIME_SHARED</span>}
+                          {b.sharedFile && <span className="dev-tag">file-shared</span>}
+                        </div>
+                        <div className="dev-fmap-binding-grid">
+                          <div><strong>ROM</strong> {romSummary(b)}</div>
+                          <div><strong>duration</strong> {b.rom ? `${b.rom.durationTicks}t` : '—'}</div>
+                          <div><strong>offset</strong> {b.rom ? `x ${b.rom.offsetX} · y ${b.rom.offsetY}` : '—'}</div>
+                          <div><strong>canonical</strong> {b.canonicalId ?? '—'}{b.canonicalRelation ? ` (${RELATION_LABEL[b.canonicalRelation] ?? b.canonicalRelation})` : ''}</div>
+                          <div><strong>phys family</strong> {b.physicalFamily ?? '—'}</div>
+                          <div><strong>size</strong> {b.w}×{b.h}</div>
+                        </div>
+                        {b.evidence.length > 0 && (
+                          <ul className="dev-fmap-evidence">{b.evidence.map((e, i) => <li key={i}>{e}</li>)}</ul>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            );
+          })}
+        </div>
+      )}
+
+      <h3 className="dev-char-block-title">Consumers <span className="dev-sheets-count">{consumers.list.length} cards</span></h3>
+      {consumers.list.length === 0 ? (
+        <div className="dev-hint">Sin cartas compatibles con {character || formId}.</div>
+      ) : (
+        <div className="dev-fmap-consumers">
+          {[...consumers.byType.entries()].map(([type, cards]) => (
+            <div key={type} className="dev-fmap-consumer-group">
+              <span className="dev-fmap-consumer-type" style={{ background: CARD_COLORS[type] }}>{type}</span>
+              <div className="dev-fmap-consumer-cards">
+                {cards.map(c => (
+                  <span key={c.id} className="dev-tag" title={c.effect}>{c.name}</span>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+    </section>
+  );
+}

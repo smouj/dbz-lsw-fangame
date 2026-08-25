@@ -1,0 +1,41 @@
+{
+  "scope": "S-OW1B — micro-audit referencias DIRECTAS a $CA48 en Bank7E",
+  "date": "2026-08-24",
+  "status": "CLOSED",
+  "memory_map": {
+    "fighterState_base": "$CA3C",
+    "stride": 8,
+    "fighter1": "$CA3C-$CA43",
+    "fighter2": "$CA44-$CA4B",
+    "powerWindowCounter_offset": "+4",
+    "fighter1_counter": "$CA40",
+    "fighter2_counter": "$CA48",
+    "proven_by": "Gather finalize (jr_001_7a03): call Call_000_2fd5 (base $CA3C stride 8, idx $CA0A) -> ld bc,$0004 -> add hl,bc -> ld [hl],$05"
+  },
+  "direct_refs_ca48": [
+    { "line": 7158, "enclosing_label": "jr_07e_686a", "instr": "ld a, [$ca48]", "rw": "READ", "check": "and a / jr nz", "classification": "ACTION_PRESENTATION" },
+    { "line": 7281, "enclosing_label": "jr_07e_6921", "instr": "ld a, [$ca48]", "rw": "READ", "check": "and a / jr z", "classification": "ACTION_PRESENTATION" },
+    { "line": 7335, "enclosing_label": "Jump_07e_6971", "instr": "ld a, [$ca48]", "rw": "READ", "check": "cp $01 / jr z", "classification": "ACTION_PRESENTATION" },
+    { "line": 7572, "enclosing_label": "Jump_07e_6abe", "instr": "ld a, [$ca48]", "rw": "READ", "check": "cp $02 / jr nz  (luego lee $CA46 cp $14)", "classification": "ACTION_PRESENTATION" },
+    { "line": 7807, "enclosing_label": "jr_07e_6c08", "instr": "ld a, [$ca48]", "rw": "READ", "check": "and a / jr z  ($cc02=$6b)", "classification": "ACTION_PRESENTATION" },
+    { "line": 7951, "enclosing_label": "Call_07e_6cf7", "instr": "ld a, [$ca48]", "rw": "READ", "check": "and a / ret z  ($cc02=$6b)", "classification": "ACTION_PRESENTATION" },
+    { "line": 8086, "enclosing_label": "(anónimo, tras Call_07e_6df4)", "instr": "ld a, [$ca48]", "rw": "READ", "check": "and a / jr z", "classification": "ACTION_PRESENTATION" },
+    { "line": 8222, "enclosing_label": "Call_07e_6e88", "instr": "ld a, [$ca48]", "rw": "READ", "check": "and a / jr z", "classification": "ACTION_PRESENTATION" },
+    { "line": 8451, "enclosing_label": "Jump_07e_6ff6", "instr": "ld a, [$ca48]", "rw": "READ", "check": "and a / jr z  (luego lee $CA55 cp $04 = GATHER)", "classification": "ACTION_PRESENTATION" }
+  ],
+  "indirect_refs_ca48_in_bank7e": [
+    { "line": 3558, "pattern": "call Call_000_2fd5 / ld bc,$0004 / add hl,bc / xor a / ld [hl],a", "rw": "WRITE=0", "classification": "ACTION_PRESENTATION (clear counter)" },
+    { "line": 4220, "pattern": "call Call_000_2fd5 / ld bc,$0004 / add hl,bc / xor a / ld [hl],a", "rw": "WRITE=0", "classification": "ACTION_PRESENTATION (clear counter)" },
+    { "line": 4455, "pattern": "call Call_000_2fd5 / ld bc,$0004 / add hl,bc / ld a,[hl] / and a / jr z", "rw": "READ", "classification": "ACTION_PRESENTATION (power active?)" },
+    { "line": 8462, "pattern": "call Call_000_2fd5 / ld bc,$0004 / add hl,bc / ld a,[hl] / cp $03 / jp c", "rw": "READ", "classification": "ACTION_PRESENTATION (counter < 3)" }
+  ],
+  "census_fighterState_direct": {
+    "$CA3C_P1+0": 6, "$CA3D_P1+1": 3, "$CA3E_P1+2": 0, "$CA40_P1+4": 0,
+    "$CA44_P2+0": 9, "$CA46_P2+2": 4, "$CA48_P2+4": 9
+  },
+  "conclusion": {
+    "verdict": "BANK7E_CA48_FIELD_RENDER_CONSUMER = NONE_FOUND",
+    "reasoning": "Las 9 lecturas directas + 4 accesos indirectos de $CA48 en Bank7E son todas ACTION_PRESENTATION (presentation VM del plano ACTION): boolean 'power active?', cp $01 / cp $02 / cp $03 (estados del contador), y 2 clear (+4=0). Ninguna escribe OAM/tile de sprite pequeño (FIELD).",
+    "asymmetry_note": "P2 (+2/+4) se lee DIRECTAMENTE ($CA46/$CA48); P1 (+2/+4) SOLO indirecto (Call_000_2fd5). Consistente con que el presentation VM procesa un actor 'activo' vía puntero y el 'target' vía direccionamiento directo."
+  }
+}

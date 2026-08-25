@@ -4,6 +4,8 @@
 // ═══════════════════════════════════════════════════════════
 import { useMemo, useState } from 'react';
 import { CARDS, cardColor, getCard, type CardType, type CardDef } from '../data/cards';
+import { FORMS } from '../data/roster';
+import { spriteDirFor } from '../data/spriteManifest';
 import { characterName } from '../data/storyPanels';
 import { cardIconUrl } from '../data/icons';
 import { cardCinematic } from '../data/cardsCinematic';
@@ -16,6 +18,7 @@ import { cardPhysicalCoverageForCard, type CardPhysicalCoverageStatus } from '..
 import { physicalMappingSummaryForCard, staticGapCauseForResourceId } from '../battle/physicalFrameReconciliation';
 import { romActionExecutionDescriptorForCard } from '../battle/romActionExecutionDescriptors';
 import { romPresentationProfileForCard } from '../battle/romPresentationProfiles';
+import { romPresentationTimelineForCard } from '../battle/romPresentationForCard';
 import { AttackPreview } from './AttackPreview';
 import { PhysicalReconciliationSummary } from './PhysicalReconciliationSummary';
 
@@ -66,7 +69,7 @@ export function CardsModule() {
   const [type, setType] = useState<CardType | 'all'>('all');
   const [q, setQ] = useState('');
   const [ccMax, setCcMax] = useState(99);
-  const [selectedId, setSelectedId] = useState<number | null>(null);
+  const [selectedId, setSelectedId] = useState<number | null>(12);
 
   const filtered = useMemo(() => {
     return CARDS.filter(c => {
@@ -279,6 +282,7 @@ function CardDetail({ card }: { card: CardDef }) {
       </div>
       <AnimationTaxonomyInfo card={card} />
       <RomActionExecutionInfo card={card} />
+      <RomPhysicalCardProductionInfo card={card} />
       <RomPresentationProfileInfo card={card} />
       <ActionCanonInfo card={card} />
       <CinematicCardInfo card={card} />
@@ -332,6 +336,68 @@ function RomActionExecutionInfo({ card }: { card: CardDef }) {
           </>
         )}
       </div>
+    </div>
+  );
+}
+
+function firstCompatibleForm(card: CardDef): string {
+  const forms = Object.values(FORMS);
+  const compatible = forms.find(form => {
+    if (card.notCompatible?.includes(form.character)) return false;
+    if (card.compatible && !card.compatible.includes(form.character)) return false;
+    return !!spriteDirFor(form.id);
+  });
+  return compatible?.id ?? 'goku_base';
+}
+
+function RomPhysicalCardProductionInfo({ card }: { card: CardDef }) {
+  const [formId, setFormId] = useState(() => firstCompatibleForm(card));
+  const compatibleForms = useMemo(() => Object.values(FORMS)
+    .filter(form => {
+      if (card.notCompatible?.includes(form.character)) return false;
+      if (card.compatible && !card.compatible.includes(form.character)) return false;
+      return !!spriteDirFor(form.id);
+    })
+    .sort((a, b) => a.id.localeCompare(b.id)), [card]);
+
+  const timeline = useMemo(() => romPresentationTimelineForCard(card, 'player', formId), [card, formId]);
+  const physicalCues = useMemo(() => timeline?.timeline.entries
+    .map(entry => ({ tick: entry.cue.tick, cue: entry.cue }))
+    .filter(entry => entry.cue.type === 'ROM_PHYSICAL_FRAME') ?? [], [timeline]);
+  const dir = spriteDirFor(formId);
+
+  return (
+    <div className="dev-card-compat dev-card-rom-physical">
+      <h4>Production physical preview</h4>
+      <div className="dev-compat-chips">
+        <span className={`dev-tag ${timeline ? 'ok' : 'pending'}`}>presentation: {timeline ? 'ROM' : 'LEGACY/UNRESOLVED'}</span>
+        <span className="dev-tag">form selector</span>
+        <select className="dev-mini-select" value={formId} onChange={event => setFormId(event.target.value)}>
+          {compatibleForms.map(form => <option key={form.id} value={form.id}>{form.id}</option>)}
+        </select>
+        <span className="dev-tag">physical cues: {physicalCues.length}</span>
+      </div>
+      {physicalCues.length === 0 ? (
+        <div className="dev-hint">Esta carta todavía no emite ROM_PHYSICAL_FRAME para {formId}; si se renderiza, debe quedar como fallback explícito.</div>
+      ) : (
+        <div className="dev-rom-card-frame-strip">
+          {physicalCues.map(({ tick, cue }, index) => {
+            const c = cue as Extract<typeof cue, { type: 'ROM_PHYSICAL_FRAME' }>;
+            return (
+              <div key={`${tick}-${index}-${c.frameInstanceId}`} className="dev-rom-frame-card compact">
+                <div className="dev-rom-frame-img">
+                  {dir && c.file
+                    ? <img src={`/assets/sprites/${dir}/${c.file}`} alt={c.physicalId ?? c.frameInstanceId ?? 'ROM physical frame'} loading="lazy" />
+                    : <span>—</span>}
+                </div>
+                <code>tick {tick} · {c.frameInstanceId}</code>
+                <span>{c.physicalId ?? 'unresolved'} · {c.durationTicks}t</span>
+                <span>dx {c.offsetX} dy {c.offsetY} · {c.source}</span>
+              </div>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 }

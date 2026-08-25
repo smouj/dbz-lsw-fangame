@@ -1,100 +1,118 @@
-// ROM Display Lab 2.1 — tab PALETTES (provenance correction).
-// Tabla física REAL: ROM_FIGHTER_PALETTES (Bank30:$6E00 + visualProfileKey*8,
-// 4 colores CGB × 16 bits BGR555 → RGB, ROM_STATIC_VERIFIED — generado desde
-// la ROM, sin interpolación). Plus: FX palettes del manifest v4 y las 4
-// documentadas en investigación. Nada inventado.
+// ROM Display — PALETTES.
+// Fuente única: ROM_CGB_PALETTE_TABLE, extraída byte a byte de la ROM USA.
+// Las vistas Fighter/Beam son bindings hacia esa tabla, no paletas paralelas.
 import { useMemo, useState } from 'react';
-import { ROM_SUPPORT_PHYSICAL_VISUALS } from '../../data/generated/romSupportPhysicalVisuals.generated';
-import { ROM_FIGHTER_PALETTES } from '../../data/generated/romFighterPalettes.generated';
+import { ROM_CGB_PALETTE_TABLE, ROM_CGB_PALETTE_TABLE_META } from '../../data/generated/romCgbPaletteTable.generated';
+import { ROM_FIGHTER_PALETTE_BINDINGS } from '../../data/generated/romFighterPaletteBindings.generated';
+import { ROM_OFFENSIVE_FX_PALETTE_BINDINGS } from '../../data/generated/romOffensiveFxPaletteBindings.generated';
 import { Mono, SectionTitle } from './common';
 
-const DOCUMENTED: { byte: number; label: string; colors: string[]; source: string }[] = [
-  { byte: 0x33, label: 'Gather Power', colors: ['#FFFFFF', '#F6A452', '#F6CDA4', '#FF8300'], source: 'ROM lote 2 — FX Bank68:$1A → VRAM $8800, paleta $33' },
-  { byte: 0x31, label: 'CHARA / default presentation', colors: ['#FF9090', '#FF6A6A', '#C84A5A', '#801020'], source: 'ROM lote 5 — CHARA paleta $31 (rojo/rosa); default CC15_PRESENTATION_STATE' },
-  { byte: 0x2C, label: 'Kamehameha beam', colors: ['#FFFFFF', '#8AD8FF', '#2070D8', '#002880'], source: 'ROM lote 2/7 — Kamehameha pal $2C, audio $0C' },
-  { byte: 0x2F, label: 'FX común (offensive)', colors: ['#FFFFFF', '#FFD0A0', '#D87830', '#401800'], source: 'research-v4-fx — palettes FX (generated_fx_assets)' },
-];
+type Filter = 'table' | 'fighters' | 'beam';
+
+function paletteAt(index: number) {
+  return ROM_CGB_PALETTE_TABLE[index] ?? null;
+}
+
+function swatches(index: number, transparentZero = false) {
+  const palette = paletteAt(index);
+  if (!palette) return null;
+  return (
+    <div style={{ display: 'flex', gap: 3 }}>
+      {palette.hexRaw.map((color, i) => (
+        <div
+          key={i}
+          title={`${i === 0 && transparentZero ? 'OBJ transparent · ' : ''}${color} · ${palette.bgr555Hex[i]} · raw ${palette.rawBytesHex[i * 2]} ${palette.rawBytesHex[i * 2 + 1]}`}
+          style={{
+            width: 26,
+            height: 26,
+            border: '1px solid #44546a',
+            borderRadius: 3,
+            background: i === 0 && transparentZero
+              ? 'repeating-linear-gradient(45deg, #1a2230 0 4px, #2c3646 4px 8px)'
+              : color,
+            boxShadow: i === 0 && transparentZero ? `inset 0 0 0 2px ${color}` : undefined,
+          }}
+        />
+      ))}
+    </div>
+  );
+}
 
 export function PalettesTab() {
-  const [filter, setFilter] = useState<'all' | 'fighter' | 'support'>('all');
-  const distribution = useMemo(() => {
-    const map = new Map<number, { count: number; cards: number[] }>();
-    for (const [id, v] of Object.entries(ROM_SUPPORT_PHYSICAL_VISUALS)) {
-      const b = v.palette.cardPaletteByte;
-      const e = map.get(b) ?? { count: 0, cards: [] };
-      e.count++;
-      e.cards.push(Number(id));
-      map.set(b, e);
-    }
-    return Array.from(map.entries()).sort((a, b) => b[1].count - a[1].count);
-  }, []);
+  const [filter, setFilter] = useState<Filter>('table');
+  const usedFighterIndices = useMemo<Set<number>>(() => new Set(ROM_FIGHTER_PALETTE_BINDINGS.map(binding => binding.paletteIndex)), []);
+  const usedBeamIndices = useMemo<Set<number>>(() => new Set(ROM_OFFENSIVE_FX_PALETTE_BINDINGS.map(binding => binding.paletteIndex)), []);
 
   return (
     <div style={{ padding: 12 }}>
-      <div style={{ display: 'flex', gap: 8, marginBottom: 8 }}>
-        {(['all', 'fighter', 'support'] as const).map((f) => (
-          <button key={f} onClick={() => setFilter(f)}
-            style={{ background: filter === f ? '#2a4a6a' : '#141c2a', color: '#cfe3ff', border: '1px solid #2a4a6a', borderRadius: 4, padding: '2px 10px', cursor: 'pointer', fontSize: 12 }}>
-            {f === 'all' ? 'TODAS' : f === 'fighter' ? 'FIGHTER (ROM física)' : 'SUPPORT (bytes)'}
+      <div style={{ display: 'flex', gap: 8, marginBottom: 8, flexWrap: 'wrap' }}>
+        {([
+          ['table', 'CGB TABLE 256'],
+          ['fighters', 'FIGHTER BINDINGS'],
+          ['beam', 'BEAM FX BINDINGS'],
+        ] as const).map(([id, label]) => (
+          <button
+            key={id}
+            onClick={() => setFilter(id)}
+            style={{ background: filter === id ? '#2a4a6a' : '#141c2a', color: '#cfe3ff', border: '1px solid #2a4a6a', borderRadius: 4, padding: '2px 10px', cursor: 'pointer', fontSize: 12 }}
+          >
+            {label}
           </button>
         ))}
       </div>
 
-      {(filter === 'all' || filter === 'fighter') && (
+      {filter === 'table' && (
         <div style={{ marginBottom: 18 }}>
-          <SectionTitle>ROM PHYSICAL PALETTE TABLE — fighters (Bank30:$6E00 + visualProfileKey×8, ROM_STATIC_VERIFIED)</SectionTitle>
-          <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
-            {ROM_FIGHTER_PALETTES.map((p) => (
-              <div key={p.key} style={{ border: '1px solid #2a4a6a', borderRadius: 6, padding: 8, background: '#141c2a', minWidth: 150 }}>
-                <div style={{ fontSize: 12, marginBottom: 4 }}>
-                  <Mono>key 0x{p.key.toString(16).padStart(2, '0')}</Mono> <span style={{ opacity: 0.55, fontSize: 10 }}>BGR555</span>
+          <SectionTitle>ROM CGB PALETTE TABLE — Bank30:$6E00, 256×8 bytes</SectionTitle>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(178px, 1fr))', gap: 8 }}>
+            {ROM_CGB_PALETTE_TABLE.map((p) => (
+              <div key={p.index} style={{ border: '1px solid #2a4a6a', borderRadius: 6, padding: 8, background: '#141c2a', minWidth: 0 }}>
+                <div style={{ fontSize: 12, marginBottom: 4, display: 'flex', justifyContent: 'space-between', gap: 8 }}>
+                  <Mono>{p.indexHex}</Mono>
+                  <span style={{ opacity: 0.55, fontSize: 10 }}>{usedFighterIndices.has(p.index) ? 'FIGHTER' : usedBeamIndices.has(p.index) ? 'BEAM' : 'ROM'}</span>
                 </div>
-                <div style={{ display: 'flex', gap: 3 }}>
-                  {p.colors.map((c, i) => (
-                    <div key={i} style={{ width: 26, height: 26, background: c, border: '1px solid #444', borderRadius: 3 }} title={`${c} · ${p.bgr555[i]}`} />
-                  ))}
-                </div>
-                <div style={{ fontSize: 10, opacity: 0.55, marginTop: 4, fontFamily: 'monospace' }}>{p.bgr555.join(' ')}</div>
-                <div style={{ fontSize: 10, opacity: 0.5 }}>consumer: fighter palette profile</div>
+                {swatches(p.index, false)}
+                <div style={{ fontSize: 10, opacity: 0.6, marginTop: 4, fontFamily: 'monospace' }}>{p.rawBytesHex.join(' ')}</div>
+                <div style={{ fontSize: 10, opacity: 0.55, fontFamily: 'monospace' }}>{p.cpuAddressHex} → {p.fileOffsetHex}</div>
               </div>
             ))}
           </div>
-          <div style={{ marginTop: 4, fontSize: 11, opacity: 0.55 }}>
-            {ROM_FIGHTER_PALETTES.length} paletas leídas directamente de la ROM (BGR555 → RGB sin interpolación). El índice del perfil visual del
-            personaje selecciona la entrada; el graphicsBank físico es $31 + key.
+          <div style={{ marginTop: 8, fontSize: 11, opacity: 0.65 }}>
+            {ROM_CGB_PALETTE_TABLE.length} entries · {ROM_CGB_PALETTE_TABLE_META.totalBytes} bytes · offset formula <Mono>{ROM_CGB_PALETTE_TABLE_META.offsetFormula}</Mono> · filtered {ROM_CGB_PALETTE_TABLE_META.filteredEntries}
           </div>
         </div>
       )}
 
-      {(filter === 'all' || filter === 'support') && (
+      {filter === 'fighters' && (
         <div style={{ marginBottom: 18 }}>
-          <SectionTitle>PALETAS DOCUMENTADAS EN INVESTIGACIÓN</SectionTitle>
-          <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap' }}>
-            {DOCUMENTED.map((p) => (
-              <div key={p.byte} style={{ border: '1px solid #2a4a6a', borderRadius: 6, padding: 10, background: '#141c2a' }}>
-                <div style={{ fontSize: 13, marginBottom: 4 }}>
-                  <Mono>${p.byte.toString(16).padStart(2, '0')}</Mono> — {p.label}
+          <SectionTitle>FIGHTER PALETTE BINDINGS — form → actorVisualProfileKey → table[index]</SectionTitle>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))', gap: 8 }}>
+            {ROM_FIGHTER_PALETTE_BINDINGS.map((binding) => (
+              <div key={binding.formId} style={{ border: '1px solid #2a4a6a', borderRadius: 6, padding: 8, background: '#141c2a', minWidth: 0 }}>
+                <div style={{ fontSize: 13, marginBottom: 5 }}>{binding.formId}</div>
+                {swatches(binding.paletteIndex, true)}
+                <div style={{ fontSize: 10, opacity: 0.65, marginTop: 5, fontFamily: 'monospace' }}>
+                  profile {binding.actorVisualProfileKeyHex} · gfx {binding.graphicsBankHex} · palette {binding.paletteIndexHex}
                 </div>
-                <div style={{ display: 'flex', gap: 4 }}>
-                  {p.colors.map((c, i) => (
-                    <div key={i} style={{ width: 34, height: 34, background: c, border: '1px solid #444', borderRadius: 3 }} title={c} />
-                  ))}
-                </div>
-                <div style={{ fontSize: 11, opacity: 0.65, marginTop: 6, maxWidth: 260 }}>{p.source}</div>
+                <div style={{ fontSize: 10, opacity: 0.55, fontFamily: 'monospace' }}>{binding.paletteCpuAddressHex} → {binding.paletteFileOffsetHex}</div>
               </div>
             ))}
           </div>
         </div>
       )}
 
-      {filter !== 'fighter' && (
+      {filter === 'beam' && (
         <div>
-          <SectionTitle>DISTRIBUCIÓN DE BYTES DE PALETA — 48 cartas Support (ROM_STATIC_VERIFIED)</SectionTitle>
-          <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
-            {distribution.map(([byte, e]) => (
-              <div key={byte} style={{ border: '1px solid #2a4a6a', borderRadius: 6, padding: 8, background: '#141c2a', minWidth: 120 }}>
-                <div style={{ fontSize: 14 }}><Mono>${byte.toString(16).padStart(2, '0')}</Mono> <span style={{ opacity: 0.6 }}>×{e.count}</span></div>
-                <div style={{ fontSize: 10, opacity: 0.6, maxHeight: 60, overflowY: 'auto' }}>{e.cards.join(', ')}</div>
+          <SectionTitle>OFFENSIVE FX PALETTE BINDINGS — card ROM table → FX palette index</SectionTitle>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: 8 }}>
+            {ROM_OFFENSIVE_FX_PALETTE_BINDINGS.map((binding) => (
+              <div key={binding.cardId} style={{ border: '1px solid #2a4a6a', borderRadius: 6, padding: 8, background: '#141c2a', minWidth: 0 }}>
+                <div style={{ fontSize: 13, marginBottom: 5 }}>#{binding.cardId} {binding.name}</div>
+                {swatches(binding.paletteIndex, false)}
+                <div style={{ fontSize: 10, opacity: 0.65, marginTop: 5, fontFamily: 'monospace' }}>
+                  handler {binding.handlerHex} · actor {binding.animationResourceHex} · FX {binding.fxResourceHex} · pal {binding.paletteIndexHex}
+                </div>
+                <div style={{ fontSize: 10, opacity: 0.55, fontFamily: 'monospace' }}>{binding.paletteCpuAddressHex} → {binding.paletteFileOffsetHex}</div>
               </div>
             ))}
           </div>

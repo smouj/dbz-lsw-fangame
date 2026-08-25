@@ -1,0 +1,484 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+    :root { color-scheme: dark; background: #111; }
+    body { margin: 0; background: #111; color: #eee; font: 12px/1.35 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    main { padding: 18px; max-width: 1720px; }
+    h1 { margin: 0 0 6px; font-size: 22px; font-weight: 700; letter-spacing: 0; }
+    h2 { margin: 24px 0 8px; font-size: 16px; letter-spacing: 0; }
+    .meta { color: #bdbdbd; margin-bottom: 16px; display: flex; gap: 14px; flex-wrap: wrap; }
+    .palette { display: inline-flex; gap: 3px; vertical-align: middle; }
+    .swatch { width: 14px; height: 14px; border: 1px solid #555; display: inline-block; }
+    .grid { display: grid; grid-template-columns: repeat(12, 128px); gap: 8px; align-items: start; }
+    .cell { width: 128px; min-height: 128px; box-sizing: border-box; border: 1px solid #333; background: #181818; padding: 5px; overflow: hidden; }
+    .sprite { width: 96px; height: 64px; margin: 0 auto 5px; display: grid; place-items: end center; background: repeating-conic-gradient(#202020 0% 25%, #262626 0% 50%) 50% / 12px 12px; }
+    .sprite img { max-width: 96px; max-height: 64px; image-rendering: pixelated; }
+    .label { color: #fafafa; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .sub { color: #9e9e9e; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .seq { margin-bottom: 18px; }
+  </style></head><body><main>
+    <h1>cell_imperfect — ROM PHYSICAL FIGHTERS</h1>
+    <div class="meta">
+      <span>profile 0x21</span>
+      <span>graphics bank 0x52</span>
+      <span>14 physical IDs</span>
+      <span>62 frame instances</span>
+      <span>0x00, 0x03</span>
+      <span class="palette"><i class="swatch" style="background:#000000"></i><i class="swatch" style="background:#FFFFFF"></i><i class="swatch" style="background:#9C7B52"></i><i class="swatch" style="background:#292929"></i></span>
+    </div>
+    <h2>DEDUPED PHYSICAL FRAMES</h2>
+    <div class="grid"><div class="cell">
+    <div class="sprite"><img src="all_frames/rom-p21-g52-r00-vf00-ms0903fcd0-gfx28d79865.png" alt="rom-p21-g52-r00-vf00-ms0903fcd0-gfx28d79865"></div>
+    <div class="label">rom-p21-g52-r00-vf00-ms0903fcd0-gfx28d79865</div>
+    <div class="sub">32x48 · origin 16,40 · uses 6</div>
+    <div class="sub">vf$00 · 0x00</div>
+  </div>
+<div class="cell">
+    <div class="sprite"><img src="all_frames/rom-p21-g52-r00-vf01-msb87a9cfa-gfxce86b0ef.png" alt="rom-p21-g52-r00-vf01-msb87a9cfa-gfxce86b0ef"></div>
+    <div class="label">rom-p21-g52-r00-vf01-msb87a9cfa-gfxce86b0ef</div>
+    <div class="sub">32x48 · origin 16,40 · uses 2</div>
+    <div class="sub">vf$01 · 0x00</div>
+  </div>
+<div class="cell">
+    <div class="sprite"><img src="all_frames/rom-p21-g52-r00-vf02-msb41b70bf-gfxab1d25dc.png" alt="rom-p21-g52-r00-vf02-msb41b70bf-gfxab1d25dc"></div>
+    <div class="label">rom-p21-g52-r00-vf02-msb41b70bf-gfxab1d25dc</div>
+    <div class="sub">32x48 · origin 16,40 · uses 3</div>
+    <div class="sub">vf$02 · 0x00</div>
+  </div>
+<div class="cell">
+    <div class="sprite"><img src="all_frames/rom-p21-g52-r00-vf03-ms21dcfda0-gfxe16bc9f8.png" alt="rom-p21-g52-r00-vf03-ms21dcfda0-gfxe16bc9f8"></div>
+    <div class="label">rom-p21-g52-r00-vf03-ms21dcfda0-gfxe16bc9f8</div>
+    <div class="sub">32x48 · origin 16,40 · uses 3</div>
+    <div class="sub">vf$03 · 0x00</div>
+  </div>
+<div class="cell">
+    <div class="sprite"><img src="all_frames/rom-p21-g52-r03-vf01-ms46655521-gfx3d90ed45.png" alt="rom-p21-g52-r03-vf01-ms46655521-gfx3d90ed45"></div>
+    <div class="label">rom-p21-g52-r03-vf01-ms46655521-gfx3d90ed45</div>
+    <div class="sub">32x48 · origin 16,40 · uses 8</div>
+    <div class="sub">vf$01 · 0x03</div>
+  </div>
+<div class="cell">
+    <div class="sprite"><img src="all_frames/rom-p21-g52-r03-vf02-ms4d2c5584-gfx3cf1ab06.png" alt="rom-p21-g52-r03-vf02-ms4d2c5584-gfx3cf1ab06"></div>
+    <div class="label">rom-p21-g52-r03-vf02-ms4d2c5584-gfx3cf1ab06</div>
+    <div class="sub">32x48 · origin 16,40 · uses 8</div>
+    <div class="sub">vf$02 · 0x03</div>
+  </div>
+<div class="cell">
+    <div class="sprite"><img src="all_frames/rom-p21-g52-r03-vf03-msd744188e-gfx7327a592.png" alt="rom-p21-g52-r03-vf03-msd744188e-gfx7327a592"></div>
+    <div class="label">rom-p21-g52-r03-vf03-msd744188e-gfx7327a592</div>
+    <div class="sub">32x48 · origin 16,40 · uses 4</div>
+    <div class="sub">vf$03 · 0x03</div>
+  </div>
+<div class="cell">
+    <div class="sprite"><img src="all_frames/rom-p21-g52-r03-vf04-ms0be1b7e1-gfxf6d8536e.png" alt="rom-p21-g52-r03-vf04-ms0be1b7e1-gfxf6d8536e"></div>
+    <div class="label">rom-p21-g52-r03-vf04-ms0be1b7e1-gfxf6d8536e</div>
+    <div class="sub">32x48 · origin 16,40 · uses 4</div>
+    <div class="sub">vf$04 · 0x03</div>
+  </div>
+<div class="cell">
+    <div class="sprite"><img src="all_frames/rom-p21-g52-r03-vf05-ms7c058d71-gfxd5628d6c.png" alt="rom-p21-g52-r03-vf05-ms7c058d71-gfxd5628d6c"></div>
+    <div class="label">rom-p21-g52-r03-vf05-ms7c058d71-gfxd5628d6c</div>
+    <div class="sub">32x48 · origin 16,40 · uses 4</div>
+    <div class="sub">vf$05 · 0x03</div>
+  </div>
+<div class="cell">
+    <div class="sprite"><img src="all_frames/rom-p21-g52-r03-vf06-ms538f33be-gfxffec65af.png" alt="rom-p21-g52-r03-vf06-ms538f33be-gfxffec65af"></div>
+    <div class="label">rom-p21-g52-r03-vf06-ms538f33be-gfxffec65af</div>
+    <div class="sub">32x48 · origin 16,40 · uses 4</div>
+    <div class="sub">vf$06 · 0x03</div>
+  </div>
+<div class="cell">
+    <div class="sprite"><img src="all_frames/rom-p21-g52-r03-vf07-ms24d666b9-gfx38c8c56e.png" alt="rom-p21-g52-r03-vf07-ms24d666b9-gfx38c8c56e"></div>
+    <div class="label">rom-p21-g52-r03-vf07-ms24d666b9-gfx38c8c56e</div>
+    <div class="sub">32x48 · origin 16,40 · uses 4</div>
+    <div class="sub">vf$07 · 0x03</div>
+  </div>
+<div class="cell">
+    <div class="sprite"><img src="all_frames/rom-p21-g52-r03-vf08-ms2467e60c-gfxd378f39f.png" alt="rom-p21-g52-r03-vf08-ms2467e60c-gfxd378f39f"></div>
+    <div class="label">rom-p21-g52-r03-vf08-ms2467e60c-gfxd378f39f</div>
+    <div class="sub">32x48 · origin 16,40 · uses 4</div>
+    <div class="sub">vf$08 · 0x03</div>
+  </div>
+<div class="cell">
+    <div class="sprite"><img src="all_frames/rom-p21-g52-r03-vf09-msef8ad7ed-gfx80b6bf3a.png" alt="rom-p21-g52-r03-vf09-msef8ad7ed-gfx80b6bf3a"></div>
+    <div class="label">rom-p21-g52-r03-vf09-msef8ad7ed-gfx80b6bf3a</div>
+    <div class="sub">32x48 · origin 16,40 · uses 4</div>
+    <div class="sub">vf$09 · 0x03</div>
+  </div>
+<div class="cell">
+    <div class="sprite"><img src="all_frames/rom-p21-g52-r03-vf0a-ms34166743-gfxe14582c1.png" alt="rom-p21-g52-r03-vf0a-ms34166743-gfxe14582c1"></div>
+    <div class="label">rom-p21-g52-r03-vf0a-ms34166743-gfxe14582c1</div>
+    <div class="sub">32x48 · origin 16,40 · uses 4</div>
+    <div class="sub">vf$0a · 0x03</div>
+  </div></div>
+    <section class="seq"><h2>RESOURCE $00 · SEQ 0</h2><div class="grid"><div class="cell">
+    <div class="sprite"><img src="resource_00/seq_00/frame_00_vf_00.png" alt="rom-p21-g52-r00-vf00-ms0903fcd0-gfx28d79865"></div>
+    <div class="label">rom-p21-g52-r00-vf00-ms0903fcd0-gfx28d79865</div>
+    <div class="sub">f0 vf$00 3t</div>
+    <div class="sub">dx 0 dy 0</div>
+  </div>
+<div class="cell">
+    <div class="sprite"><img src="resource_00/seq_00/frame_01_vf_00.png" alt="rom-p21-g52-r00-vf00-ms0903fcd0-gfx28d79865"></div>
+    <div class="label">rom-p21-g52-r00-vf00-ms0903fcd0-gfx28d79865</div>
+    <div class="sub">f1 vf$00 2t</div>
+    <div class="sub">dx 0 dy 0</div>
+  </div>
+<div class="cell">
+    <div class="sprite"><img src="resource_00/seq_00/frame_02_vf_00.png" alt="rom-p21-g52-r00-vf00-ms0903fcd0-gfx28d79865"></div>
+    <div class="label">rom-p21-g52-r00-vf00-ms0903fcd0-gfx28d79865</div>
+    <div class="sub">f2 vf$00 2t</div>
+    <div class="sub">dx 0 dy 0</div>
+  </div>
+<div class="cell">
+    <div class="sprite"><img src="resource_00/seq_00/frame_03_vf_01.png" alt="rom-p21-g52-r00-vf01-msb87a9cfa-gfxce86b0ef"></div>
+    <div class="label">rom-p21-g52-r00-vf01-msb87a9cfa-gfxce86b0ef</div>
+    <div class="sub">f3 vf$01 2t</div>
+    <div class="sub">dx -1 dy 0</div>
+  </div>
+<div class="cell">
+    <div class="sprite"><img src="resource_00/seq_00/frame_04_vf_03.png" alt="rom-p21-g52-r00-vf03-ms21dcfda0-gfxe16bc9f8"></div>
+    <div class="label">rom-p21-g52-r00-vf03-ms21dcfda0-gfxe16bc9f8</div>
+    <div class="sub">f4 vf$03 2t</div>
+    <div class="sub">dx -2 dy 0</div>
+  </div>
+<div class="cell">
+    <div class="sprite"><img src="resource_00/seq_00/frame_05_vf_03.png" alt="rom-p21-g52-r00-vf03-ms21dcfda0-gfxe16bc9f8"></div>
+    <div class="label">rom-p21-g52-r00-vf03-ms21dcfda0-gfxe16bc9f8</div>
+    <div class="sub">f5 vf$03 2t</div>
+    <div class="sub">dx -3 dy 0</div>
+  </div>
+<div class="cell">
+    <div class="sprite"><img src="resource_00/seq_00/frame_06_vf_03.png" alt="rom-p21-g52-r00-vf03-ms21dcfda0-gfxe16bc9f8"></div>
+    <div class="label">rom-p21-g52-r00-vf03-ms21dcfda0-gfxe16bc9f8</div>
+    <div class="sub">f6 vf$03 2t</div>
+    <div class="sub">dx -2 dy 0</div>
+  </div></div></section>
+<section class="seq"><h2>RESOURCE $00 · SEQ 1</h2><div class="grid"><div class="cell">
+    <div class="sprite"><img src="resource_00/seq_01/frame_00_vf_00.png" alt="rom-p21-g52-r00-vf00-ms0903fcd0-gfx28d79865"></div>
+    <div class="label">rom-p21-g52-r00-vf00-ms0903fcd0-gfx28d79865</div>
+    <div class="sub">f0 vf$00 3t</div>
+    <div class="sub">dx 0 dy 0</div>
+  </div>
+<div class="cell">
+    <div class="sprite"><img src="resource_00/seq_01/frame_01_vf_00.png" alt="rom-p21-g52-r00-vf00-ms0903fcd0-gfx28d79865"></div>
+    <div class="label">rom-p21-g52-r00-vf00-ms0903fcd0-gfx28d79865</div>
+    <div class="sub">f1 vf$00 2t</div>
+    <div class="sub">dx 0 dy 0</div>
+  </div>
+<div class="cell">
+    <div class="sprite"><img src="resource_00/seq_01/frame_02_vf_00.png" alt="rom-p21-g52-r00-vf00-ms0903fcd0-gfx28d79865"></div>
+    <div class="label">rom-p21-g52-r00-vf00-ms0903fcd0-gfx28d79865</div>
+    <div class="sub">f2 vf$00 2t</div>
+    <div class="sub">dx 0 dy 0</div>
+  </div>
+<div class="cell">
+    <div class="sprite"><img src="resource_00/seq_01/frame_03_vf_01.png" alt="rom-p21-g52-r00-vf01-msb87a9cfa-gfxce86b0ef"></div>
+    <div class="label">rom-p21-g52-r00-vf01-msb87a9cfa-gfxce86b0ef</div>
+    <div class="sub">f3 vf$01 2t</div>
+    <div class="sub">dx -1 dy 0</div>
+  </div>
+<div class="cell">
+    <div class="sprite"><img src="resource_00/seq_01/frame_04_vf_02.png" alt="rom-p21-g52-r00-vf02-msb41b70bf-gfxab1d25dc"></div>
+    <div class="label">rom-p21-g52-r00-vf02-msb41b70bf-gfxab1d25dc</div>
+    <div class="sub">f4 vf$02 2t</div>
+    <div class="sub">dx -2 dy 0</div>
+  </div>
+<div class="cell">
+    <div class="sprite"><img src="resource_00/seq_01/frame_05_vf_02.png" alt="rom-p21-g52-r00-vf02-msb41b70bf-gfxab1d25dc"></div>
+    <div class="label">rom-p21-g52-r00-vf02-msb41b70bf-gfxab1d25dc</div>
+    <div class="sub">f5 vf$02 2t</div>
+    <div class="sub">dx -3 dy 0</div>
+  </div>
+<div class="cell">
+    <div class="sprite"><img src="resource_00/seq_01/frame_06_vf_02.png" alt="rom-p21-g52-r00-vf02-msb41b70bf-gfxab1d25dc"></div>
+    <div class="label">rom-p21-g52-r00-vf02-msb41b70bf-gfxab1d25dc</div>
+    <div class="sub">f6 vf$02 2t</div>
+    <div class="sub">dx -2 dy 0</div>
+  </div></div></section>
+<section class="seq"><h2>RESOURCE $03 · SEQ 0</h2><div class="grid"><div class="cell">
+    <div class="sprite"><img src="resource_03/seq_00/frame_00_vf_01.png" alt="rom-p21-g52-r03-vf01-ms46655521-gfx3d90ed45"></div>
+    <div class="label">rom-p21-g52-r03-vf01-ms46655521-gfx3d90ed45</div>
+    <div class="sub">f0 vf$01 3t</div>
+    <div class="sub">dx 2 dy 0</div>
+  </div>
+<div class="cell">
+    <div class="sprite"><img src="resource_03/seq_00/frame_01_vf_01.png" alt="rom-p21-g52-r03-vf01-ms46655521-gfx3d90ed45"></div>
+    <div class="label">rom-p21-g52-r03-vf01-ms46655521-gfx3d90ed45</div>
+    <div class="sub">f1 vf$01 2t</div>
+    <div class="sub">dx 3 dy 0</div>
+  </div>
+<div class="cell">
+    <div class="sprite"><img src="resource_03/seq_00/frame_02_vf_01.png" alt="rom-p21-g52-r03-vf01-ms46655521-gfx3d90ed45"></div>
+    <div class="label">rom-p21-g52-r03-vf01-ms46655521-gfx3d90ed45</div>
+    <div class="sub">f2 vf$01 60t</div>
+    <div class="sub">dx 3 dy 0</div>
+  </div>
+<div class="cell">
+    <div class="sprite"><img src="resource_03/seq_00/frame_03_vf_01.png" alt="rom-p21-g52-r03-vf01-ms46655521-gfx3d90ed45"></div>
+    <div class="label">rom-p21-g52-r03-vf01-ms46655521-gfx3d90ed45</div>
+    <div class="sub">f3 vf$01 2t</div>
+    <div class="sub">dx 2 dy 0</div>
+  </div>
+<div class="cell">
+    <div class="sprite"><img src="resource_03/seq_00/frame_04_vf_02.png" alt="rom-p21-g52-r03-vf02-ms4d2c5584-gfx3cf1ab06"></div>
+    <div class="label">rom-p21-g52-r03-vf02-ms4d2c5584-gfx3cf1ab06</div>
+    <div class="sub">f4 vf$02 2t</div>
+    <div class="sub">dx -2 dy 0</div>
+  </div>
+<div class="cell">
+    <div class="sprite"><img src="resource_03/seq_00/frame_05_vf_02.png" alt="rom-p21-g52-r03-vf02-ms4d2c5584-gfx3cf1ab06"></div>
+    <div class="label">rom-p21-g52-r03-vf02-ms4d2c5584-gfx3cf1ab06</div>
+    <div class="sub">f5 vf$02 2t</div>
+    <div class="sub">dx -4 dy 0</div>
+  </div>
+<div class="cell">
+    <div class="sprite"><img src="resource_03/seq_00/frame_06_vf_02.png" alt="rom-p21-g52-r03-vf02-ms4d2c5584-gfx3cf1ab06"></div>
+    <div class="label">rom-p21-g52-r03-vf02-ms4d2c5584-gfx3cf1ab06</div>
+    <div class="sub">f6 vf$02 2t</div>
+    <div class="sub">dx -5 dy 0</div>
+  </div>
+<div class="cell">
+    <div class="sprite"><img src="resource_03/seq_00/frame_07_vf_02.png" alt="rom-p21-g52-r03-vf02-ms4d2c5584-gfx3cf1ab06"></div>
+    <div class="label">rom-p21-g52-r03-vf02-ms4d2c5584-gfx3cf1ab06</div>
+    <div class="sub">f7 vf$02 2t</div>
+    <div class="sub">dx -4 dy 0</div>
+  </div></div></section>
+<section class="seq"><h2>RESOURCE $03 · SEQ 1</h2><div class="grid"><div class="cell">
+    <div class="sprite"><img src="resource_03/seq_01/frame_00_vf_03.png" alt="rom-p21-g52-r03-vf03-msd744188e-gfx7327a592"></div>
+    <div class="label">rom-p21-g52-r03-vf03-msd744188e-gfx7327a592</div>
+    <div class="sub">f0 vf$03 3t</div>
+    <div class="sub">dx 2 dy 0</div>
+  </div>
+<div class="cell">
+    <div class="sprite"><img src="resource_03/seq_01/frame_01_vf_03.png" alt="rom-p21-g52-r03-vf03-msd744188e-gfx7327a592"></div>
+    <div class="label">rom-p21-g52-r03-vf03-msd744188e-gfx7327a592</div>
+    <div class="sub">f1 vf$03 2t</div>
+    <div class="sub">dx 3 dy 0</div>
+  </div>
+<div class="cell">
+    <div class="sprite"><img src="resource_03/seq_01/frame_02_vf_03.png" alt="rom-p21-g52-r03-vf03-msd744188e-gfx7327a592"></div>
+    <div class="label">rom-p21-g52-r03-vf03-msd744188e-gfx7327a592</div>
+    <div class="sub">f2 vf$03 60t</div>
+    <div class="sub">dx 3 dy 0</div>
+  </div>
+<div class="cell">
+    <div class="sprite"><img src="resource_03/seq_01/frame_03_vf_03.png" alt="rom-p21-g52-r03-vf03-msd744188e-gfx7327a592"></div>
+    <div class="label">rom-p21-g52-r03-vf03-msd744188e-gfx7327a592</div>
+    <div class="sub">f3 vf$03 2t</div>
+    <div class="sub">dx 2 dy 0</div>
+  </div>
+<div class="cell">
+    <div class="sprite"><img src="resource_03/seq_01/frame_04_vf_04.png" alt="rom-p21-g52-r03-vf04-ms0be1b7e1-gfxf6d8536e"></div>
+    <div class="label">rom-p21-g52-r03-vf04-ms0be1b7e1-gfxf6d8536e</div>
+    <div class="sub">f4 vf$04 2t</div>
+    <div class="sub">dx -2 dy 0</div>
+  </div>
+<div class="cell">
+    <div class="sprite"><img src="resource_03/seq_01/frame_05_vf_04.png" alt="rom-p21-g52-r03-vf04-ms0be1b7e1-gfxf6d8536e"></div>
+    <div class="label">rom-p21-g52-r03-vf04-ms0be1b7e1-gfxf6d8536e</div>
+    <div class="sub">f5 vf$04 2t</div>
+    <div class="sub">dx -4 dy 0</div>
+  </div>
+<div class="cell">
+    <div class="sprite"><img src="resource_03/seq_01/frame_06_vf_04.png" alt="rom-p21-g52-r03-vf04-ms0be1b7e1-gfxf6d8536e"></div>
+    <div class="label">rom-p21-g52-r03-vf04-ms0be1b7e1-gfxf6d8536e</div>
+    <div class="sub">f6 vf$04 2t</div>
+    <div class="sub">dx -5 dy 0</div>
+  </div>
+<div class="cell">
+    <div class="sprite"><img src="resource_03/seq_01/frame_07_vf_04.png" alt="rom-p21-g52-r03-vf04-ms0be1b7e1-gfxf6d8536e"></div>
+    <div class="label">rom-p21-g52-r03-vf04-ms0be1b7e1-gfxf6d8536e</div>
+    <div class="sub">f7 vf$04 2t</div>
+    <div class="sub">dx -4 dy 0</div>
+  </div></div></section>
+<section class="seq"><h2>RESOURCE $03 · SEQ 2</h2><div class="grid"><div class="cell">
+    <div class="sprite"><img src="resource_03/seq_02/frame_00_vf_05.png" alt="rom-p21-g52-r03-vf05-ms7c058d71-gfxd5628d6c"></div>
+    <div class="label">rom-p21-g52-r03-vf05-ms7c058d71-gfxd5628d6c</div>
+    <div class="sub">f0 vf$05 3t</div>
+    <div class="sub">dx 4 dy 0</div>
+  </div>
+<div class="cell">
+    <div class="sprite"><img src="resource_03/seq_02/frame_01_vf_05.png" alt="rom-p21-g52-r03-vf05-ms7c058d71-gfxd5628d6c"></div>
+    <div class="label">rom-p21-g52-r03-vf05-ms7c058d71-gfxd5628d6c</div>
+    <div class="sub">f1 vf$05 2t</div>
+    <div class="sub">dx 5 dy 0</div>
+  </div>
+<div class="cell">
+    <div class="sprite"><img src="resource_03/seq_02/frame_02_vf_05.png" alt="rom-p21-g52-r03-vf05-ms7c058d71-gfxd5628d6c"></div>
+    <div class="label">rom-p21-g52-r03-vf05-ms7c058d71-gfxd5628d6c</div>
+    <div class="sub">f2 vf$05 60t</div>
+    <div class="sub">dx 5 dy 0</div>
+  </div>
+<div class="cell">
+    <div class="sprite"><img src="resource_03/seq_02/frame_03_vf_05.png" alt="rom-p21-g52-r03-vf05-ms7c058d71-gfxd5628d6c"></div>
+    <div class="label">rom-p21-g52-r03-vf05-ms7c058d71-gfxd5628d6c</div>
+    <div class="sub">f3 vf$05 2t</div>
+    <div class="sub">dx 4 dy 0</div>
+  </div>
+<div class="cell">
+    <div class="sprite"><img src="resource_03/seq_02/frame_04_vf_06.png" alt="rom-p21-g52-r03-vf06-ms538f33be-gfxffec65af"></div>
+    <div class="label">rom-p21-g52-r03-vf06-ms538f33be-gfxffec65af</div>
+    <div class="sub">f4 vf$06 2t</div>
+    <div class="sub">dx -2 dy 0</div>
+  </div>
+<div class="cell">
+    <div class="sprite"><img src="resource_03/seq_02/frame_05_vf_06.png" alt="rom-p21-g52-r03-vf06-ms538f33be-gfxffec65af"></div>
+    <div class="label">rom-p21-g52-r03-vf06-ms538f33be-gfxffec65af</div>
+    <div class="sub">f5 vf$06 2t</div>
+    <div class="sub">dx -4 dy 0</div>
+  </div>
+<div class="cell">
+    <div class="sprite"><img src="resource_03/seq_02/frame_06_vf_06.png" alt="rom-p21-g52-r03-vf06-ms538f33be-gfxffec65af"></div>
+    <div class="label">rom-p21-g52-r03-vf06-ms538f33be-gfxffec65af</div>
+    <div class="sub">f6 vf$06 2t</div>
+    <div class="sub">dx -5 dy 0</div>
+  </div>
+<div class="cell">
+    <div class="sprite"><img src="resource_03/seq_02/frame_07_vf_06.png" alt="rom-p21-g52-r03-vf06-ms538f33be-gfxffec65af"></div>
+    <div class="label">rom-p21-g52-r03-vf06-ms538f33be-gfxffec65af</div>
+    <div class="sub">f7 vf$06 2t</div>
+    <div class="sub">dx -4 dy 0</div>
+  </div></div></section>
+<section class="seq"><h2>RESOURCE $03 · SEQ 3</h2><div class="grid"><div class="cell">
+    <div class="sprite"><img src="resource_03/seq_03/frame_00_vf_01.png" alt="rom-p21-g52-r03-vf01-ms46655521-gfx3d90ed45"></div>
+    <div class="label">rom-p21-g52-r03-vf01-ms46655521-gfx3d90ed45</div>
+    <div class="sub">f0 vf$01 3t</div>
+    <div class="sub">dx 4 dy 0</div>
+  </div>
+<div class="cell">
+    <div class="sprite"><img src="resource_03/seq_03/frame_01_vf_01.png" alt="rom-p21-g52-r03-vf01-ms46655521-gfx3d90ed45"></div>
+    <div class="label">rom-p21-g52-r03-vf01-ms46655521-gfx3d90ed45</div>
+    <div class="sub">f1 vf$01 2t</div>
+    <div class="sub">dx 5 dy 0</div>
+  </div>
+<div class="cell">
+    <div class="sprite"><img src="resource_03/seq_03/frame_02_vf_01.png" alt="rom-p21-g52-r03-vf01-ms46655521-gfx3d90ed45"></div>
+    <div class="label">rom-p21-g52-r03-vf01-ms46655521-gfx3d90ed45</div>
+    <div class="sub">f2 vf$01 60t</div>
+    <div class="sub">dx 5 dy 0</div>
+  </div>
+<div class="cell">
+    <div class="sprite"><img src="resource_03/seq_03/frame_03_vf_01.png" alt="rom-p21-g52-r03-vf01-ms46655521-gfx3d90ed45"></div>
+    <div class="label">rom-p21-g52-r03-vf01-ms46655521-gfx3d90ed45</div>
+    <div class="sub">f3 vf$01 2t</div>
+    <div class="sub">dx 4 dy 0</div>
+  </div>
+<div class="cell">
+    <div class="sprite"><img src="resource_03/seq_03/frame_04_vf_02.png" alt="rom-p21-g52-r03-vf02-ms4d2c5584-gfx3cf1ab06"></div>
+    <div class="label">rom-p21-g52-r03-vf02-ms4d2c5584-gfx3cf1ab06</div>
+    <div class="sub">f4 vf$02 2t</div>
+    <div class="sub">dx -2 dy 0</div>
+  </div>
+<div class="cell">
+    <div class="sprite"><img src="resource_03/seq_03/frame_05_vf_02.png" alt="rom-p21-g52-r03-vf02-ms4d2c5584-gfx3cf1ab06"></div>
+    <div class="label">rom-p21-g52-r03-vf02-ms4d2c5584-gfx3cf1ab06</div>
+    <div class="sub">f5 vf$02 2t</div>
+    <div class="sub">dx -4 dy 0</div>
+  </div>
+<div class="cell">
+    <div class="sprite"><img src="resource_03/seq_03/frame_06_vf_02.png" alt="rom-p21-g52-r03-vf02-ms4d2c5584-gfx3cf1ab06"></div>
+    <div class="label">rom-p21-g52-r03-vf02-ms4d2c5584-gfx3cf1ab06</div>
+    <div class="sub">f6 vf$02 2t</div>
+    <div class="sub">dx -5 dy 0</div>
+  </div>
+<div class="cell">
+    <div class="sprite"><img src="resource_03/seq_03/frame_07_vf_02.png" alt="rom-p21-g52-r03-vf02-ms4d2c5584-gfx3cf1ab06"></div>
+    <div class="label">rom-p21-g52-r03-vf02-ms4d2c5584-gfx3cf1ab06</div>
+    <div class="sub">f7 vf$02 2t</div>
+    <div class="sub">dx -4 dy 0</div>
+  </div></div></section>
+<section class="seq"><h2>RESOURCE $03 · SEQ 4</h2><div class="grid"><div class="cell">
+    <div class="sprite"><img src="resource_03/seq_04/frame_00_vf_07.png" alt="rom-p21-g52-r03-vf07-ms24d666b9-gfx38c8c56e"></div>
+    <div class="label">rom-p21-g52-r03-vf07-ms24d666b9-gfx38c8c56e</div>
+    <div class="sub">f0 vf$07 3t</div>
+    <div class="sub">dx 2 dy 0</div>
+  </div>
+<div class="cell">
+    <div class="sprite"><img src="resource_03/seq_04/frame_01_vf_07.png" alt="rom-p21-g52-r03-vf07-ms24d666b9-gfx38c8c56e"></div>
+    <div class="label">rom-p21-g52-r03-vf07-ms24d666b9-gfx38c8c56e</div>
+    <div class="sub">f1 vf$07 2t</div>
+    <div class="sub">dx 3 dy 0</div>
+  </div>
+<div class="cell">
+    <div class="sprite"><img src="resource_03/seq_04/frame_02_vf_07.png" alt="rom-p21-g52-r03-vf07-ms24d666b9-gfx38c8c56e"></div>
+    <div class="label">rom-p21-g52-r03-vf07-ms24d666b9-gfx38c8c56e</div>
+    <div class="sub">f2 vf$07 60t</div>
+    <div class="sub">dx 3 dy 0</div>
+  </div>
+<div class="cell">
+    <div class="sprite"><img src="resource_03/seq_04/frame_03_vf_07.png" alt="rom-p21-g52-r03-vf07-ms24d666b9-gfx38c8c56e"></div>
+    <div class="label">rom-p21-g52-r03-vf07-ms24d666b9-gfx38c8c56e</div>
+    <div class="sub">f3 vf$07 2t</div>
+    <div class="sub">dx 2 dy 0</div>
+  </div>
+<div class="cell">
+    <div class="sprite"><img src="resource_03/seq_04/frame_04_vf_08.png" alt="rom-p21-g52-r03-vf08-ms2467e60c-gfxd378f39f"></div>
+    <div class="label">rom-p21-g52-r03-vf08-ms2467e60c-gfxd378f39f</div>
+    <div class="sub">f4 vf$08 2t</div>
+    <div class="sub">dx -2 dy 0</div>
+  </div>
+<div class="cell">
+    <div class="sprite"><img src="resource_03/seq_04/frame_05_vf_08.png" alt="rom-p21-g52-r03-vf08-ms2467e60c-gfxd378f39f"></div>
+    <div class="label">rom-p21-g52-r03-vf08-ms2467e60c-gfxd378f39f</div>
+    <div class="sub">f5 vf$08 2t</div>
+    <div class="sub">dx -4 dy 0</div>
+  </div>
+<div class="cell">
+    <div class="sprite"><img src="resource_03/seq_04/frame_06_vf_08.png" alt="rom-p21-g52-r03-vf08-ms2467e60c-gfxd378f39f"></div>
+    <div class="label">rom-p21-g52-r03-vf08-ms2467e60c-gfxd378f39f</div>
+    <div class="sub">f6 vf$08 2t</div>
+    <div class="sub">dx -5 dy 0</div>
+  </div>
+<div class="cell">
+    <div class="sprite"><img src="resource_03/seq_04/frame_07_vf_08.png" alt="rom-p21-g52-r03-vf08-ms2467e60c-gfxd378f39f"></div>
+    <div class="label">rom-p21-g52-r03-vf08-ms2467e60c-gfxd378f39f</div>
+    <div class="sub">f7 vf$08 2t</div>
+    <div class="sub">dx -4 dy 0</div>
+  </div></div></section>
+<section class="seq"><h2>RESOURCE $03 · SEQ 5</h2><div class="grid"><div class="cell">
+    <div class="sprite"><img src="resource_03/seq_05/frame_00_vf_09.png" alt="rom-p21-g52-r03-vf09-msef8ad7ed-gfx80b6bf3a"></div>
+    <div class="label">rom-p21-g52-r03-vf09-msef8ad7ed-gfx80b6bf3a</div>
+    <div class="sub">f0 vf$09 3t</div>
+    <div class="sub">dx 4 dy 0</div>
+  </div>
+<div class="cell">
+    <div class="sprite"><img src="resource_03/seq_05/frame_01_vf_09.png" alt="rom-p21-g52-r03-vf09-msef8ad7ed-gfx80b6bf3a"></div>
+    <div class="label">rom-p21-g52-r03-vf09-msef8ad7ed-gfx80b6bf3a</div>
+    <div class="sub">f1 vf$09 2t</div>
+    <div class="sub">dx 5 dy 0</div>
+  </div>
+<div class="cell">
+    <div class="sprite"><img src="resource_03/seq_05/frame_02_vf_09.png" alt="rom-p21-g52-r03-vf09-msef8ad7ed-gfx80b6bf3a"></div>
+    <div class="label">rom-p21-g52-r03-vf09-msef8ad7ed-gfx80b6bf3a</div>
+    <div class="sub">f2 vf$09 60t</div>
+    <div class="sub">dx 5 dy 0</div>
+  </div>
+<div class="cell">
+    <div class="sprite"><img src="resource_03/seq_05/frame_03_vf_09.png" alt="rom-p21-g52-r03-vf09-msef8ad7ed-gfx80b6bf3a"></div>
+    <div class="label">rom-p21-g52-r03-vf09-msef8ad7ed-gfx80b6bf3a</div>
+    <div class="sub">f3 vf$09 2t</div>
+    <div class="sub">dx 4 dy 0</div>
+  </div>
+<div class="cell">
+    <div class="sprite"><img src="resource_03/seq_05/frame_04_vf_0a.png" alt="rom-p21-g52-r03-vf0a-ms34166743-gfxe14582c1"></div>
+    <div class="label">rom-p21-g52-r03-vf0a-ms34166743-gfxe14582c1</div>
+    <div class="sub">f4 vf$0a 2t</div>
+    <div class="sub">dx -2 dy 0</div>
+  </div>
+<div class="cell">
+    <div class="sprite"><img src="resource_03/seq_05/frame_05_vf_0a.png" alt="rom-p21-g52-r03-vf0a-ms34166743-gfxe14582c1"></div>
+    <div class="label">rom-p21-g52-r03-vf0a-ms34166743-gfxe14582c1</div>
+    <div class="sub">f5 vf$0a 2t</div>
+    <div class="sub">dx -4 dy 0</div>
+  </div>
+<div class="cell">
+    <div class="sprite"><img src="resource_03/seq_05/frame_06_vf_0a.png" alt="rom-p21-g52-r03-vf0a-ms34166743-gfxe14582c1"></div>
+    <div class="label">rom-p21-g52-r03-vf0a-ms34166743-gfxe14582c1</div>
+    <div class="sub">f6 vf$0a 2t</div>
+    <div class="sub">dx -5 dy 0</div>
+  </div>
+<div class="cell">
+    <div class="sprite"><img src="resource_03/seq_05/frame_07_vf_0a.png" alt="rom-p21-g52-r03-vf0a-ms34166743-gfxe14582c1"></div>
+    <div class="label">rom-p21-g52-r03-vf0a-ms34166743-gfxe14582c1</div>
+    <div class="sub">f7 vf$0a 2t</div>
+    <div class="sub">dx -4 dy 0</div>
+  </div></div></section>
+  </main></body></html>

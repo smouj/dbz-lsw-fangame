@@ -1,4 +1,6 @@
 {
+  "schemaVersion": 2,
+  "offsetEncoding": "s8",
   "key": 2,
   "resource": 4,
   "bank": 98,
@@ -9,7 +11,7 @@
     "visualFrameId": 3,
     "durationTicks": 2,
     "offsetY": 0,
-    "offsetX": 247,
+    "offsetX": -9,
     "raw": [
       3,
       2,
@@ -34,7 +36,12 @@
         "tileDelta": 0,
         "attr": 0,
         "flipX": false,
-        "flipY": false
+        "flipY": false,
+        "index": 0,
+        "x": 8,
+        "y": -8,
+        "width": 8,
+        "height": 16
       },
       {
         "rawY": 248,
@@ -42,7 +49,12 @@
         "tileDelta": 2,
         "attr": 0,
         "flipX": false,
-        "flipY": false
+        "flipY": false,
+        "index": 1,
+        "x": 0,
+        "y": -8,
+        "width": 8,
+        "height": 16
       },
       {
         "rawY": 248,
@@ -50,7 +62,12 @@
         "tileDelta": 4,
         "attr": 0,
         "flipX": false,
-        "flipY": false
+        "flipY": false,
+        "index": 2,
+        "x": -8,
+        "y": -8,
+        "width": 8,
+        "height": 16
       },
       {
         "rawY": 248,
@@ -58,7 +75,12 @@
         "tileDelta": 6,
         "attr": 0,
         "flipX": false,
-        "flipY": false
+        "flipY": false,
+        "index": 3,
+        "x": -16,
+        "y": -8,
+        "width": 8,
+        "height": 16
       },
       {
         "rawY": 232,
@@ -66,7 +88,12 @@
         "tileDelta": 8,
         "attr": 0,
         "flipX": false,
-        "flipY": false
+        "flipY": false,
+        "index": 4,
+        "x": 8,
+        "y": -24,
+        "width": 8,
+        "height": 16
       },
       {
         "rawY": 232,
@@ -74,7 +101,12 @@
         "tileDelta": 10,
         "attr": 0,
         "flipX": false,
-        "flipY": false
+        "flipY": false,
+        "index": 5,
+        "x": 0,
+        "y": -24,
+        "width": 8,
+        "height": 16
       },
       {
         "rawY": 232,
@@ -82,7 +114,12 @@
         "tileDelta": 12,
         "attr": 0,
         "flipX": false,
-        "flipY": false
+        "flipY": false,
+        "index": 6,
+        "x": -8,
+        "y": -24,
+        "width": 8,
+        "height": 16
       },
       {
         "rawY": 232,
@@ -90,7 +127,12 @@
         "tileDelta": 14,
         "attr": 0,
         "flipX": false,
-        "flipY": false
+        "flipY": false,
+        "index": 7,
+        "x": -16,
+        "y": -24,
+        "width": 8,
+        "height": 16
       },
       {
         "rawY": 216,
@@ -98,7 +140,12 @@
         "tileDelta": 16,
         "attr": 0,
         "flipX": false,
-        "flipY": false
+        "flipY": false,
+        "index": 8,
+        "x": 8,
+        "y": -40,
+        "width": 8,
+        "height": 16
       },
       {
         "rawY": 216,
@@ -106,7 +153,12 @@
         "tileDelta": 18,
         "attr": 0,
         "flipX": false,
-        "flipY": false
+        "flipY": false,
+        "index": 9,
+        "x": 0,
+        "y": -40,
+        "width": 8,
+        "height": 16
       },
       {
         "rawY": 216,
@@ -114,7 +166,12 @@
         "tileDelta": 20,
         "attr": 0,
         "flipX": false,
-        "flipY": false
+        "flipY": false,
+        "index": 10,
+        "x": -8,
+        "y": -40,
+        "width": 8,
+        "height": 16
       },
       {
         "rawY": 216,
@@ -122,7 +179,12 @@
         "tileDelta": 22,
         "attr": 0,
         "flipX": false,
-        "flipY": false
+        "flipY": false,
+        "index": 11,
+        "x": -16,
+        "y": -40,
+        "width": 8,
+        "height": 16
       }
     ],
     "provenance": {
@@ -154,36 +216,347 @@
       "layoutAddress": 2657
     }
   },
+  "pieceGraphics": [
+    {
+      "pieceIndex": 0,
+      "pieceX": 8,
+      "pieceY": -8,
+      "rawX": 8,
+      "rawY": 248,
+      "attributes": 0,
+      "tileDelta": 0,
+      "flipX": false,
+      "flipY": false,
+      "graphicsBank": 51,
+      "graphicsBlockRelativeOffset": 25280,
+      "graphicsBlockAddress": 860864,
+      "graphicsBlockHash": "ff90eb4ad2efd387dc03c8d48480870219767aedc2f948598984457c999f3726",
+      "tile0Address": 860864,
+      "tile0Hash": "18727b4a69499c5ebe90c29fe5b9b58e05a1b4fd9409b8a118e344f421d1f284",
+      "tile1Address": 860880,
+      "tile1Hash": "7e985065bd83c0810f77ad96ed94f541f5893c8ffc25eead9f4c7203a9e8c573"
+    },
+    {
+      "pieceIndex": 1,
+      "pieceX": 0,
+      "pieceY": -8,
+      "rawX": 0,
+      "rawY": 248,
+      "attributes": 0,
+      "tileDelta": 2,
+      "flipX": false,
+      "flipY": false,
+      "graphicsBank": 51,
+      "graphicsBlockRelativeOffset": 25248,
+      "graphicsBlockAddress": 860832,
+      "graphicsBlockHash": "e593858f4edf0f8223640cd16232b05058ffdec5fdc42ea5afb3d4c66c7f16e2",
+      "tile0Address": 860832,
+      "tile0Hash": "3b5b8bdeef3c6fa3720ae8ed8b6eb15a876977399347a14b47d5dbde30237b62",
+      "tile1Address": 860848,
+      "tile1Hash": "d9d75e3a732740e849e8fa8b02de2c6ccc81a6cd15d8119b4a58b63a58b76c32"
+    },
+    {
+      "pieceIndex": 2,
+      "pieceX": -8,
+      "pieceY": -8,
+      "rawX": 248,
+      "rawY": 248,
+      "attributes": 0,
+      "tileDelta": 4,
+      "flipX": false,
+      "flipY": false,
+      "graphicsBank": 51,
+      "graphicsBlockRelativeOffset": 25216,
+      "graphicsBlockAddress": 860800,
+      "graphicsBlockHash": "4f95506cd739151c38d53e6b972e910652155800bfdaffc03e0efa1dc32117f5",
+      "tile0Address": 860800,
+      "tile0Hash": "03d2218fdf108f46fe5bb031693d673dc2b644df1a210c9910746f98870fcb1c",
+      "tile1Address": 860816,
+      "tile1Hash": "feec6633bf7d560d15cbb9c4bdaf6d9f0389f09292c95c1cb7c4053b82a8f4f6"
+    },
+    {
+      "pieceIndex": 3,
+      "pieceX": -16,
+      "pieceY": -8,
+      "rawX": 240,
+      "rawY": 248,
+      "attributes": 0,
+      "tileDelta": 6,
+      "flipX": false,
+      "flipY": false,
+      "graphicsBank": 51,
+      "graphicsBlockRelativeOffset": 25184,
+      "graphicsBlockAddress": 860768,
+      "graphicsBlockHash": "66687aadf862bd776c8fc18b8e9f8e20089714856ee233b3902a591d0d5f2925",
+      "tile0Address": 860768,
+      "tile0Hash": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+      "tile1Address": 860784,
+      "tile1Hash": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+    },
+    {
+      "pieceIndex": 4,
+      "pieceX": 8,
+      "pieceY": -24,
+      "rawX": 8,
+      "rawY": 232,
+      "attributes": 0,
+      "tileDelta": 8,
+      "flipX": false,
+      "flipY": false,
+      "graphicsBank": 51,
+      "graphicsBlockRelativeOffset": 24256,
+      "graphicsBlockAddress": 859840,
+      "graphicsBlockHash": "1e2dad150d08d8123a4151e5ca88e01e7411e3cfaf222b7dbe7aee6b232e1c32",
+      "tile0Address": 859840,
+      "tile0Hash": "4e972baaee2ad54f78153134ef6484cd1a8e383d21582a21a481d4d214161916",
+      "tile1Address": 859856,
+      "tile1Hash": "1a7af2298b1478698a40d0cb82a776c6cdfb3f09c1237035d55729b30b892ae8"
+    },
+    {
+      "pieceIndex": 5,
+      "pieceX": 0,
+      "pieceY": -24,
+      "rawX": 0,
+      "rawY": 232,
+      "attributes": 0,
+      "tileDelta": 10,
+      "flipX": false,
+      "flipY": false,
+      "graphicsBank": 51,
+      "graphicsBlockRelativeOffset": 24224,
+      "graphicsBlockAddress": 859808,
+      "graphicsBlockHash": "550fc15b0b2357ee4aa4b68bc98a7205d4f4c0d35815bc330741c5e84274ec0e",
+      "tile0Address": 859808,
+      "tile0Hash": "bd2c95cf7f6c1fc750dd7b242750fd6dfb387578c7059209b23ff8340d355766",
+      "tile1Address": 859824,
+      "tile1Hash": "64408a318abee1ca24d590d36cad51e5d25a3ab287b966451de9baff4d9ca993"
+    },
+    {
+      "pieceIndex": 6,
+      "pieceX": -8,
+      "pieceY": -24,
+      "rawX": 248,
+      "rawY": 232,
+      "attributes": 0,
+      "tileDelta": 12,
+      "flipX": false,
+      "flipY": false,
+      "graphicsBank": 51,
+      "graphicsBlockRelativeOffset": 24192,
+      "graphicsBlockAddress": 859776,
+      "graphicsBlockHash": "6f19dc5bd69f99e96b5f9de47ffba94f6deeaf82d3241d38070504c7b7c3c507",
+      "tile0Address": 859776,
+      "tile0Hash": "fb792a7503040940685959d8690eac6fca846d3bdec10b38cd504d767b534bdf",
+      "tile1Address": 859792,
+      "tile1Hash": "599d0017ca3c8d31b1a56d569cb51e8853a8c5fa4af38fd3f3de67aa5b3935d9"
+    },
+    {
+      "pieceIndex": 7,
+      "pieceX": -16,
+      "pieceY": -24,
+      "rawX": 240,
+      "rawY": 232,
+      "attributes": 0,
+      "tileDelta": 14,
+      "flipX": false,
+      "flipY": false,
+      "graphicsBank": 51,
+      "graphicsBlockRelativeOffset": 24160,
+      "graphicsBlockAddress": 859744,
+      "graphicsBlockHash": "ee507cc3d5278c767b8ffee88594887977d189cd63f42988c2e3f5411af4918d",
+      "tile0Address": 859744,
+      "tile0Hash": "0e034d473a6b44809e7d4287cedd7890b93e9a4c9021a08ed05e4368bcf1266a",
+      "tile1Address": 859760,
+      "tile1Hash": "f56a17a6eab24a26001771fc8a5ffae15722ef90da2ff4433a66147337b006e9"
+    },
+    {
+      "pieceIndex": 8,
+      "pieceX": 8,
+      "pieceY": -40,
+      "rawX": 8,
+      "rawY": 216,
+      "attributes": 0,
+      "tileDelta": 16,
+      "flipX": false,
+      "flipY": false,
+      "graphicsBank": 51,
+      "graphicsBlockRelativeOffset": 23232,
+      "graphicsBlockAddress": 858816,
+      "graphicsBlockHash": "8a34c81d2beff6e89bef19ff5a965fa74498ee90f2c0775923fe7cc5db5cf53a",
+      "tile0Address": 858816,
+      "tile0Hash": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+      "tile1Address": 858832,
+      "tile1Hash": "7e1503c41351a6440abf7f18e873b0de3c081d4463364d32d57f983cec205b24"
+    },
+    {
+      "pieceIndex": 9,
+      "pieceX": 0,
+      "pieceY": -40,
+      "rawX": 0,
+      "rawY": 216,
+      "attributes": 0,
+      "tileDelta": 18,
+      "flipX": false,
+      "flipY": false,
+      "graphicsBank": 51,
+      "graphicsBlockRelativeOffset": 23200,
+      "graphicsBlockAddress": 858784,
+      "graphicsBlockHash": "527495264e7ca6b6afdfb805387c14ba8b5280d86b8761b763fa87440c0c29ce",
+      "tile0Address": 858784,
+      "tile0Hash": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+      "tile1Address": 858800,
+      "tile1Hash": "4d6fd0f798a7cc82a7e0ea011fd3b3de87d9bb59c5c0e41693b8026b736b9f6b"
+    },
+    {
+      "pieceIndex": 10,
+      "pieceX": -8,
+      "pieceY": -40,
+      "rawX": 248,
+      "rawY": 216,
+      "attributes": 0,
+      "tileDelta": 20,
+      "flipX": false,
+      "flipY": false,
+      "graphicsBank": 51,
+      "graphicsBlockRelativeOffset": 23168,
+      "graphicsBlockAddress": 858752,
+      "graphicsBlockHash": "e5a1aba2ed960b18378f81ef069302427c75ec7940712e899b07e919dc2f3c60",
+      "tile0Address": 858752,
+      "tile0Hash": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+      "tile1Address": 858768,
+      "tile1Hash": "b376d0c09380d5bfbf1afccc15d9dc71ae29f67025770a32ebd21f8238e863de"
+    },
+    {
+      "pieceIndex": 11,
+      "pieceX": -16,
+      "pieceY": -40,
+      "rawX": 240,
+      "rawY": 216,
+      "attributes": 0,
+      "tileDelta": 22,
+      "flipX": false,
+      "flipY": false,
+      "graphicsBank": 51,
+      "graphicsBlockRelativeOffset": 23136,
+      "graphicsBlockAddress": 858720,
+      "graphicsBlockHash": "66687aadf862bd776c8fc18b8e9f8e20089714856ee233b3902a591d0d5f2925",
+      "tile0Address": 858720,
+      "tile0Hash": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+      "tile1Address": 858736,
+      "tile1Hash": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+    }
+  ],
   "source": {
     "bank": 51,
     "baseAddress": 0
   },
   "palette": {
+    "raw": [
+      0,
+      0,
+      255,
+      103,
+      29,
+      124,
+      165,
+      20
+    ],
+    "rawBytes": [
+      0,
+      0,
+      255,
+      103,
+      29,
+      124,
+      165,
+      20
+    ],
+    "rawSha256": "af87ef39cc04601032b3b6f2452d3170ed41d908d543bc08033ddec9eafcd4b1",
+    "cpuAddress": 28176,
+    "cpuAddressHex": "0x6e10",
+    "fileOffset": 798224,
+    "fileOffsetHex": "0xc2e10",
     "bgr555": [
-      "8080",
-      "8080",
-      "8080",
-      "0000"
+      "0000",
+      "67ff",
+      "7c1d",
+      "14a5"
     ],
     "colors": [
-      "#002100",
-      "#002100",
-      "#002100",
-      "#000000"
-    ]
+      "#000000",
+      "#FFFFCE",
+      "#EF00FF",
+      "#292929"
+    ],
+    "transparentIndex": 0,
+    "color0Transparent": true,
+    "displayTransform": "BGR555_TO_SRGB_DIRECT"
   },
   "bounds": {
-    "minX": null,
-    "minY": null,
-    "maxX": null,
-    "maxY": null
+    "coordinateSpace": "METASPRITE_ORIGIN",
+    "minX": -16,
+    "minY": -40,
+    "maxX": 16,
+    "maxY": 8,
+    "width": 32,
+    "height": 48,
+    "originInTrimX": 16,
+    "originInTrimY": 40,
+    "opaqueBounds": {
+      "minX": -15,
+      "minY": -30,
+      "maxX": 16,
+      "maxY": 7
+    }
+  },
+  "rawCanvas": {
+    "file": "rom_raw_canvas.png",
+    "width": 320,
+    "height": 320,
+    "originX": 160,
+    "originY": 160,
+    "originVisible": true
+  },
+  "trimmed": {
+    "file": "rom_trimmed.png",
+    "x": -16,
+    "y": -40,
+    "w": 32,
+    "h": 48,
+    "originInTrim": {
+      "x": 16,
+      "y": 40
+    }
   },
   "hashes": {
-    "rawPixelHash": "8a39d2abd3999ab7",
-    "trimmedPixelHash": "8a39d2abd3999ab7",
-    "metaspriteHash": "96504745435d7d4f",
-    "graphicsHash": "7ea4601130184636",
-    "paletteHash": "de92e7060054242f"
+    "rawPixelHash": "f43ed515e734adaa",
+    "trimmedPixelHash": "e49e801d2894d227",
+    "metaspriteHash": "41c3d27eca1fac0d",
+    "graphicsHash": "bc533eba58c91c68",
+    "paletteHash": "af87ef39cc046010",
+    "graphicsTableHash": "72ecd55e87714de5",
+    "sourceProvenanceHash": "216c7fd75962943f"
+  },
+  "sourceProvenance": {
+    "metaspriteHash": "41c3d27eca1fac0d",
+    "graphicsTableHash": "72ecd55e87714de5",
+    "graphicsHash": "bc533eba58c91c68",
+    "graphicsBlockHashes": [
+      "ff90eb4ad2efd387dc03c8d48480870219767aedc2f948598984457c999f3726",
+      "e593858f4edf0f8223640cd16232b05058ffdec5fdc42ea5afb3d4c66c7f16e2",
+      "4f95506cd739151c38d53e6b972e910652155800bfdaffc03e0efa1dc32117f5",
+      "66687aadf862bd776c8fc18b8e9f8e20089714856ee233b3902a591d0d5f2925",
+      "1e2dad150d08d8123a4151e5ca88e01e7411e3cfaf222b7dbe7aee6b232e1c32",
+      "550fc15b0b2357ee4aa4b68bc98a7205d4f4c0d35815bc330741c5e84274ec0e",
+      "6f19dc5bd69f99e96b5f9de47ffba94f6deeaf82d3241d38070504c7b7c3c507",
+      "ee507cc3d5278c767b8ffee88594887977d189cd63f42988c2e3f5411af4918d",
+      "8a34c81d2beff6e89bef19ff5a965fa74498ee90f2c0775923fe7cc5db5cf53a",
+      "527495264e7ca6b6afdfb805387c14ba8b5280d86b8761b763fa87440c0c29ce",
+      "e5a1aba2ed960b18378f81ef069302427c75ec7940712e899b07e919dc2f3c60",
+      "66687aadf862bd776c8fc18b8e9f8e20089714856ee233b3902a591d0d5f2925"
+    ],
+    "paletteRawHash": "af87ef39cc046010",
+    "sourceProvenanceHash": "216c7fd75962943f"
   },
   "romVram": {
     "buffer": null,

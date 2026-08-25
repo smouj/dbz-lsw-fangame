@@ -1,0 +1,19 @@
+{
+  "formId": "gohan_young",
+  "source": "ROM_PHYSICAL_FIGHTERS",
+  "schemaVersion": 2,
+  "offsetEncoding": "s8",
+  "actorVisualProfileKey": 0,
+  "graphicsBank": 49,
+  "physicalIds": 18,
+  "frameInstances": 76,
+  "resources": [
+    "0x00",
+    "0x03",
+    "0x04"
+  ],
+  "allFrames": "all_frames/",
+  "contactSheetHtml": "contact_sheet.html",
+  "contactSheetPng": "contact_sheet.png",
+  "note": "Generated package for visual inspection. Production manifest.json remains separate until visible cutover."
+}

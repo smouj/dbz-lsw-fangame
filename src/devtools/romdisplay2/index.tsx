@@ -1,8 +1,8 @@
 // ROM Display Lab 2.0 — herramienta central de inspección ROM ↔ assets ↔ runtime.
 // Tabs: FIGHTERS · ACTIONS · OFFENSIVE FX · SUPPORT · DEFENSE · PALETTES.
-// Principio: la ROM identifica QUÉ frame/secuencia/duración/offset/paleta;
-// Canonical_Frames_Official proporciona el PNG limpio; el manifest dice cómo
-// lo consume el runtime. Ningún fallback se etiqueta ROM_PHYSICAL; ningún
+// Principio: ROM_PHYSICAL es la autoridad para Fighter physical frames.
+// Canonical_Frames_Official queda como corpus histórico/remake-source hasta
+// reconciliación P0.3C. Ningún fallback se etiqueta ROM_PHYSICAL; ningún
 // UNRESOLVED se oculta (PENDING explícito siempre).
 import { useState } from 'react';
 import { FightersTab } from './fightersTab';
@@ -11,8 +11,9 @@ import { OffensiveFxTab } from './fxTab';
 import { SupportTab } from './supportTab';
 import { DefenseTab } from './defenseTab';
 import { PalettesTab } from './palettesTab';
+import { ProvenanceTab } from './provenanceTab';
 
-type LabTab = 'fighters' | 'actions' | 'fx' | 'support' | 'defense' | 'palettes';
+type LabTab = 'fighters' | 'actions' | 'fx' | 'support' | 'defense' | 'palettes' | 'provenance';
 
 const TABS: { id: LabTab; label: string }[] = [
   { id: 'fighters', label: 'FIGHTERS' },
@@ -21,6 +22,7 @@ const TABS: { id: LabTab; label: string }[] = [
   { id: 'support', label: 'SUPPORT' },
   { id: 'defense', label: 'DEFENSE' },
   { id: 'palettes', label: 'PALETTES' },
+  { id: 'provenance', label: 'PROVENANCE' },
 ];
 
 export function RomDisplayLab() {
@@ -33,9 +35,9 @@ export function RomDisplayLab() {
       <header className="dev-header">
         <h1>ROM Display Lab 2.0</h1>
         <p className="dev-sub">
-          ROM PHYSICAL TRUTH → CANONICAL ASSET → RUNTIME PIXI. La ROM identifica QUÉ frame / secuencia / duración /
-          offset / paleta; <code>Canonical_Frames_Official</code> da el PNG limpio; el manifest dice cómo lo consume el
-          runtime. Sin fallbacks etiquetados como físicos; sin UNRESOLVED ocultos.
+          ROM PHYSICAL TRUTH → ROM physical corpus → runtime mapping. La ROM identifica QUÉ frame / secuencia / duración /
+          offset / paleta y el corpus <code>rom-physical.manifest.json</code> conserva PNG físico + provenance.
+          <code>Canonical_Frames_Official</code> es histórico/remake-source hasta P0.3C; sin fallbacks etiquetados como físicos.
         </p>
       </header>
 
@@ -60,6 +62,7 @@ export function RomDisplayLab() {
         {tab === 'support' && <SupportTab />}
         {tab === 'defense' && <DefenseTab />}
         {tab === 'palettes' && <PalettesTab />}
+        {tab === 'provenance' && <ProvenanceTab />}
       </div>
     </div>
   );

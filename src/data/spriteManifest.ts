@@ -143,7 +143,7 @@ export async function resolvePoseInfo(
   formId: string,
   pose: string,
   index = 0,
-): Promise<{ url: string; pose: string; fallback: string[] } | null> {
+): Promise<{ url: string; pose: string; fallback: string[]; frameCount: number } | null> {
   const dir = SPRITE_DIRS[formId] || formId;
   const m = await loadManifestFor(formId);
   if (!m) return null;
@@ -168,7 +168,9 @@ export async function resolvePoseInfo(
     if (!next || next === cur) break;
     cur = next;
   }
-  return { url: spriteFrameUrl(formId, file), pose: resolved, fallback };
+  // frameCount real de la pose resuelta (secuencia completa, no solo frame 0).
+  const frameCount = spec?.frames?.length ?? 0;
+  return { url: spriteFrameUrl(formId, file), pose: resolved, fallback, frameCount };
 }
 
 export const _spriteManifestInternals = { loadManifestFor };

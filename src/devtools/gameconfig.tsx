@@ -109,6 +109,7 @@ export default function GameConfigPage() {
       // DEV-SYNC: la fidelidad cinematográfica es INFORMATIVA — los perfiles
       // INFERRED NO bloquean release (la cobertura de contenido sí).
       fidelity: snap.cinematics,
+      physicalCorpus: snap.physicalCorpus,
       canonUnknown: snap.sprites.unknown,
       physical,
       resources,
@@ -251,7 +252,8 @@ export default function GameConfigPage() {
           <span className={`dev-tag ${audits.romPresentation.cards === 125 ? 'ok' : 'bad'}`}>ROM presentation {audits.romPresentation.cards}/125 · {audits.romPresentation.standardDamage} damage profiles</span>
           <span className={`dev-tag ${audits.romCompiler.compilable === 125 && audits.romCompiler.semanticCueLeaks === 0 ? 'ok' : 'bad'}`}>ROM compiler {audits.romCompiler.compilable}/125 · {audits.romCompiler.totalCues} cues</span>
           <span className={`dev-tag ${audits.standardDamageCutover.romBacked === 19 && audits.standardDamageCutover.nonStandardDamageBacked === 0 ? 'ok' : 'bad'}`}>STANDARD_DAMAGE runtime {audits.standardDamageCutover.romBacked}/19</span>
-          <span className={`dev-tag ${audits.beamBaseCutover.romBacked === 38 && audits.beamBaseCutover.nonBeamBaseBacked === 0 && audits.beamBaseCutover.beamVariantsBacked === 0 ? 'ok' : 'bad'}`}>BEAM_BASE runtime {audits.beamBaseCutover.romBacked}/38</span>
+          <span className={`dev-tag ${audits.beamBaseCutover.romBacked === 16 && audits.beamBaseCutover.handlerShared === 38 && audits.beamBaseCutover.nonBeamBaseBacked === 0 && audits.beamBaseCutover.beamVariantsBacked === 0 ? 'ok' : 'bad'}`}>BEAM_BASE runtime {audits.beamBaseCutover.romBacked}/16 · $02 shared {audits.beamBaseCutover.handlerShared}</span>
+          <span className={`dev-tag ${audits.physicalCorpus.schemaVersion === 2 && audits.physicalCorpus.offsetEncoding === 's8' ? 'ok' : 'bad'}`}>ROM physical P0.3B {audits.physicalCorpus.formsRendered}/{audits.physicalCorpus.formsIndexed} · {audits.physicalCorpus.physicalIdentities} IDs</span>
           <span className={`dev-tag ${audits.forms.ok ? 'ok' : 'bad'}`}>✓ {audits.forms.n}/{audits.forms.total} character/forms</span>
           <span className="dev-tag ok">✓ backgrounds {audits.scenarios.n}/13</span>
         </div>
@@ -260,6 +262,11 @@ export default function GameConfigPage() {
           {audits.fidelity.gbcInferred} INFERRED · {audits.fidelity.actionProfiles} action profiles ·
           {audits.fidelity.fidelityByLevel.map(f => `${f.level} ${f.count}`).join(' · ')} ·
           {audits.canonUnknown} frames OUT_frames sin evidencia (honestos).
+          <span style={{ display: 'block', marginTop: 4 }}>
+            ROM_PHYSICAL corpus: schema {audits.physicalCorpus.schemaVersion}/{audits.physicalCorpus.offsetEncoding} ·
+            {audits.physicalCorpus.frameInstances} instances · {audits.physicalCorpus.signedNegativeInstances} signed-negative ·
+            {audits.physicalCorpus.formsPaletteBlocked} palette-blocked · {audits.physicalCorpus.resourcesRendererPending} resources renderer-pending.
+          </span>
         </div>
       </Section>
 
@@ -350,7 +357,7 @@ export default function GameConfigPage() {
           <span className={`dev-tag ${audits.romPresentation.cards === 125 ? 'ok' : 'bad'}`}>{audits.romPresentation.cards}/125 ROM presentation profiles</span>
           <span className={`dev-tag ${audits.romCompiler.compilable === 125 && audits.romCompiler.semanticCueLeaks === 0 ? 'ok' : 'bad'}`}>{audits.romCompiler.compilable}/125 ROM compiler</span>
           <span className={`dev-tag ${audits.standardDamageCutover.romBacked === 19 && audits.standardDamageCutover.nonStandardDamageBacked === 0 ? 'ok' : 'bad'}`}>{audits.standardDamageCutover.romBacked}/19 $0A ROM runtime</span>
-          <span className={`dev-tag ${audits.beamBaseCutover.romBacked === 38 && audits.beamBaseCutover.nonBeamBaseBacked === 0 && audits.beamBaseCutover.beamVariantsBacked === 0 ? 'ok' : 'bad'}`}>{audits.beamBaseCutover.romBacked}/38 $02 ROM runtime</span>
+          <span className={`dev-tag ${audits.beamBaseCutover.romBacked === 16 && audits.beamBaseCutover.handlerShared === 38 && audits.beamBaseCutover.nonBeamBaseBacked === 0 && audits.beamBaseCutover.beamVariantsBacked === 0 ? 'ok' : 'bad'}`}>{audits.beamBaseCutover.romBacked}/16 BEAM_BASE · {audits.beamBaseCutover.handlerShared} $02 shared</span>
           <span className={`dev-tag ${audits.compat.ok ? 'ok' : 'bad'}`}>{audits.compat.ok ? '✓' : '✕'} card compatibility</span>
           <span className={`dev-tag ${activeProfile.id === 'release' || activeProfile.id === 'preview' ? 'ok' : 'bad'}`}>
             {activeProfile.id !== 'development' ? '✓' : '✕'} dev features disabled

@@ -8,6 +8,8 @@
 // (numeric romCA53; semanticOutcome is a separate concern, V7.7).
 // ═══════════════════════════════════════════════════════════════════════
 import type { CardDef } from '../data/cards';
+import type { BattleActionDescriptor } from './engine/events/BattleEvent';
+import type { BattleEventEnvelope } from './engine/events/EventLog';
 import type { BattleTimeline } from './engine/presentation/PresentationCue';
 import type { RomCA53 } from './engine/rom/romDescriptors';
 import {
@@ -48,6 +50,37 @@ export function supportSpecialCards(): CardDef[] {
     .filter((id) => HANDLER_TO_FAMILY[ROM_SUPPORT_PHYSICAL_VISUALS[id].handler] !== undefined)
     .map((id) => CARDS.find((c) => c.id === id))
     .filter((c): c is CardDef => Boolean(c));
+}
+
+/** Resuelve la carta Support especial ($0B/$0D/$0F) para una acción, o null. */
+export function supportSpecialCardForAction(action: BattleActionDescriptor): CardDef | null {
+  const card = CARDS.find((c) => c.name === action.label);
+  if (!card) return null;
+  const visual = ROM_SUPPORT_PHYSICAL_VISUALS[card.id];
+  if (!visual) return null;
+  return HANDLER_TO_FAMILY[visual.handler] ? card : null;
+}
+
+/**
+ * Cutover runtime para Support especial: traduce la acción a su timeline ROM.
+ * romCA53 no está (todavía) en el BattleEventLog — el Engine aún no expone el
+ * resultado autoritativo del soporte; por eso $0B usa la rama por defecto
+ * ($14) dejando selectedSourceEvent sin setear (honesto, análogo a como el
+ * puente de producción no resuelve el outcome de beam). Determinista.
+ */
+export function compileSupportRomRuntimeCutover(
+  events: BattleEventEnvelope[],
+  actionStartedIndex: number,
+  env: BattleEventEnvelope & { event: { type: 'ACTION_STARTED' } },
+): SupportSpecialCutover | null {
+  const card = supportSpecialCardForAction(env.event.action);
+  if (!card) return null;
+  // romCA53 se resolverá cuando el Engine lo exponga; hoy usamos el valor
+  // por defecto ($0B → $14). Nótese que NO miramos events aún (sin evento
+  // de soporte con romCA53 en BattleEvent). Se deja el parámetro por si
+  // pasa a estar disponible más adelante.
+  void events; void actionStartedIndex;
+  return supportSpecialCutover(card.id, {});
 }
 
 /**

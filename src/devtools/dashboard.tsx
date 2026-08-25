@@ -28,16 +28,21 @@ const PIPELINE: Array<[string, string]> = [
   ['docs/rom/research-v5-support-defense/README.md', 'ROM V5: Support/Defense visual grammar, Move, CA83/CA53 y slot8'],
   ['docs/rom/research-v6-support-physicals/README.md', 'ROM V6 CLOSED: matriz+renders 48/48, palette path, macros literales, slot8 audit, romCA53 contract'],
   ['docs/rom/research-v7-support-defense-consumption/README.md', 'ROM V7: Support/Defense consumption + runtime cutover (V7.2-V7.4 cerrados)'],
+  ['docs/rom/generated/physical-corpus/REPORT.md', 'P0.3B ROM_PHYSICAL: corpus signed s8, provenance por forma, producción sin cutover aún'],
+  ['docs/rom/AI_ROM_RE_TOOLCHAIN.md', 'Toolchain RE para agentes: ZIPs auditados, mgbdis recomendado, ejecutables no integrados'],
 ];
 
 export function DashboardModule({ onNavigate }: { onNavigate: (m: DevModuleId) => void }) {
   const snap = useMemo(() => getDevProjectSnapshot(), []);
-  const { roster, cards, sprites, cinematics, story, audio, scenarios } = snap;
+  const { roster, cards, sprites, cinematics, story, audio, scenarios, production, physicalCorpus, physicalMapping } = snap;
 
   const stats: StatCard[] = [
+    { label: 'ROM visible prod.', value: production.romVisible, total: 125, ok: production.romVisible > 0, hint: `${production.romBackedStrict} ROM-backed estricto · ${production.legacyVisible} legacy` },
     { label: 'Formas (ROM 48)', value: roster.forms, total: roster.formsTotal, ok: roster.forms === roster.formsTotal },
     { label: 'Personajes', value: roster.characters, total: roster.characters, ok: roster.characters >= 24, hint: `${roster.characters} jugables` },
     { label: 'Cartas (ROM 125)', value: cards.count, total: cards.total, ok: cards.count === cards.total },
+    { label: 'ROM physical forms', value: physicalCorpus.formsRendered, total: physicalCorpus.formsIndexed, ok: physicalCorpus.formsRendered + physicalCorpus.formsPaletteBlocked + physicalCorpus.formsResourceBlocked === physicalCorpus.formsIndexed, hint: `${physicalCorpus.physicalIdentities} IDs · ${physicalCorpus.frameInstances} inst.` },
+    { label: 'ROM physical prod.', value: physicalMapping.cards.romPresentationProduction, total: cards.total, ok: physicalMapping.cards.mixed === 0, hint: `${physicalMapping.cards.legacy} legacy · MIXED ${physicalMapping.cards.mixed}` },
     { label: 'Capítulos con mazo', value: story.chapters, total: 32, ok: story.chapters >= 32 },
     { label: 'Combates de equipo', value: story.teamBattles, total: story.teamBattles, ok: story.teamBattles > 0, hint: `${story.teamBattles} cap. 2v2` },
     { label: 'Dirs de sprites', value: roster.withSpriteDir, total: roster.forms, ok: roster.withSpriteDir >= 42 },
@@ -60,6 +65,7 @@ export function DashboardModule({ onNavigate }: { onNavigate: (m: DevModuleId) =
   alerts.push({ level: 'info', text: 'ROM V3 sincronizado: ActionObject físico cerrado, 411/411 visualFrames validados, Tail/V-ball reachability corregida y Defense slot8 demostrado.' });
   alerts.push({ level: 'info', text: 'ROM V4 FX sincronizado: 28 bundles ofensivos, 152 renders físicos y Beam como BG_TILEMAP; runtime aún debe cortar a ROM_FX_WINDOW.' });
   alerts.push({ level: 'info', text: 'ROM V5 sincronizado: Support/Defense grammar cerrada estáticamente; Move separa posición táctica de motion net0; Defense selection solo precarga slot8.' });
+  alerts.push({ level: 'info', text: `P0.3C bootstrap: ProductionFrameResolver activo. ROM_PHYSICAL schema ${physicalCorpus.schemaVersion}/${physicalCorpus.offsetEncoding}, ${physicalCorpus.formsRendered}/${physicalCorpus.formsIndexed} formas renderizadas, ${physicalCorpus.formsPaletteBlocked} profiles palette-blocked. manifest.json sigue como fallback explícito.` });
   alerts.push({ level: 'info', text: 'ROM V5 baseline congelado. V6 CLOSED: $2C30/$1266, matriz+renders 48/48, palette path, macros literales, slot8 audit, romCA53 contextual. V7 abierto: consumption + cutover $00/$02 ya compilado y verificado.' });
   alerts.push({ level: 'warn', text: 'Guardrail V5: palette $FF, handler, AnimationResource y CA53 son semánticas category/path scoped; no normalizar globalmente.' });
 
@@ -73,10 +79,37 @@ export function DashboardModule({ onNavigate }: { onNavigate: (m: DevModuleId) =
       {/* ═══ PIPELINE ÚNICO + FIDELIDAD (2 col, contenido denso arriba) ═══ */}
       <div className="dev-dash-grid">
         <div className="dev-section">
-          <h2>Pipeline único — fuentes de verdad</h2>
+          <h2>Producción real — ROM vs LEGACY</h2>
           <p className="dev-muted" style={{ marginTop: -4 }}>
-            Todas las páginas del Dev Studio y el juego consumen ESTAS fuentes. No hay
-            pipelines paralelos: un cambio aquí se refleja en todo.
+            Dos rutas coexisten hoy: <strong>LEGACY</strong> (playCardCinematic → profileFor → CinematicProfile → CinematicAdapter → Pixi)
+            y <strong>ROM</strong> (romCardData → descriptors → profiles → compiler → PresentationCue).
+            <strong>{production.romBackedStrict}</strong>/125 cartas consumen cues ROM gramaticales en producción (canary $02/$0A);
+            solo <strong>{physicalMapping.cards.romPresentationProduction}</strong>/125 consumen Fighter frames ROM_PHYSICAL selector-backed.
+            <strong> {physicalMapping.cards.legacy}</strong> quedan en LEGACY/PENDING físico.
+          </p>
+          <div className="dev-fid-note">
+            ROM_DATA_AVAILABLE <strong>{production.romDataAvailable}</strong> · CUES_GENERATED <strong>{production.romCuesGenerated}</strong> ·
+            CUES_CONSUMED <strong>{production.romCuesConsumed}</strong> · ROM_VISIBLE <strong>{production.romVisible}</strong> ·
+            LEGACY_VISIBLE <strong>{production.legacyVisible}</strong> · ROM_BACKED_STRICT <strong>{production.romBackedStrict}</strong> ·
+            ROM_PHYSICAL_FRAMES <strong>{production.romPhysicalFrames}</strong> · MIXED <strong>{production.mixed}</strong>
+          </div>
+          <div className="dev-fid-note">
+            PHYSICAL EXTRACTION <strong>{physicalMapping.physicalExtraction.formsRendered}/{physicalMapping.physicalExtraction.formsIndexed}</strong> formas ·
+            <strong> {physicalMapping.physicalExtraction.physicalIds}</strong> physical IDs ·
+            <strong> {physicalMapping.physicalExtraction.frameInstances}</strong> frame instances.
+            PHYSICAL MAPPING <strong>{physicalMapping.physicalMapping.romInstancesMapped}/{physicalMapping.physicalMapping.romInstancesTotal}</strong> instances ·
+            shared <strong>{physicalMapping.physicalMapping.sharedPhysical}</strong> · unresolved <strong>{physicalMapping.physicalMapping.unresolved}</strong>.
+          </div>
+          <div className="dev-fid-note">
+            PRODUCTION CONSUMPTION ROM_PHYSICAL <strong>{physicalMapping.productionConsumption.romPhysicalRendered}</strong> ·
+            CANONICAL_PHYSICAL <strong>{physicalMapping.productionConsumption.canonicalPhysicalRendered}</strong> ·
+            MANIFEST_FALLBACK <strong>{physicalMapping.productionConsumption.manifestFallbackRendered}</strong> ·
+            UNRESOLVED <strong>{physicalMapping.productionConsumption.unresolvedRendered}</strong> ·
+            CARDS ROM <strong>{physicalMapping.cards.romPresentationProduction}/{cards.total}</strong> · LEGACY <strong>{physicalMapping.cards.legacy}</strong> · MIXED <strong>{physicalMapping.cards.mixed}</strong>.
+          </div>
+          <p className="dev-muted" style={{ marginTop: 4 }}>
+            La lista inferior es la <strong>arquitectura objetivo del Engine</strong> (referencia), no la ruta que
+            las acciones usan hoy en producción.
           </p>
           <div className="dev-pipeline">
             {PIPELINE.map(([file, rol]) => (
@@ -119,6 +152,12 @@ export function DashboardModule({ onNavigate }: { onNavigate: (m: DevModuleId) =
               ROM V3/V4/V5: ActionObject + fighter graphics pipeline cerrados por estática; Beam FX físico
               como BG tilemap; Support/Defense grammar física importada. Pendiente visible:
               <strong> ROM_FX_WINDOW</strong>, <strong>ROM_BG_ASSEMBLY</strong> y recursos Support card-indexed.
+            </div>
+            <div className="dev-fid-note">
+              P0.3B ROM_PHYSICAL: <strong>{physicalCorpus.physicalIdentities}</strong> IDs físicos ·
+              <strong> {physicalCorpus.frameInstances}</strong> frame instances ·
+              <strong> {physicalCorpus.signedNegativeInstances}</strong> offsets signed-negativos ·
+              dimensiones max {physicalCorpus.maxWidth}×{physicalCorpus.maxHeight}. ProductionFrameResolver gobierna el cutover progresivo; legacy queda como fallback explícito.
             </div>
           </div>
         </div>

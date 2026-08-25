@@ -1,0 +1,41 @@
+{
+  "scope": "S-OW1B — catálogo completo de consumidores de powerWindowCounter (fighterState+4)",
+  "date": "2026-08-24",
+  "status": "COMPLETE",
+  "pointer": "Call_000_2fd5 = base $CA3C stride 8 idx $CA0A (1=P1 $CA3C, 2=P2 $CA44); +4 = powerWindowCounter ($CA40/$CA48)",
+  "access_paths_catalogued": [
+    "directo $CA40 (P1) — 0 refs",
+    "directo $CA48 (P2) — 9 refs (bank_07e, ver bank7e-ca48-consumers.json)",
+    "indirecto Call_000_2fd5 + ld bc,$0004 + add hl,bc — catalogado abajo",
+    "Otras variantes de puntero a fighterState: NINGUNA encontrada (la única vía es Call_000_2fd5 o direccionamiento directo $CA3C-$CA4B)"
+  ],
+  "consumers": [
+    { "bank": "bank_001", "line": 2085, "rw": "READ", "check": "and a / jr z", "role": "GAMEPLAY — maintenance (decremento de ambos fighters)", "category": "GAMEPLAY_COUNTER" },
+    { "bank": "bank_001", "line": 2097, "rw": "READ", "check": "and a / jr z", "role": "GAMEPLAY — maintenance (decremento)", "category": "GAMEPLAY_COUNTER" },
+    { "bank": "bank_001", "line": 2924, "rw": "READ", "check": "and a / ret z", "role": "GAMEPLAY — helper (gate poder)", "category": "GAMEPLAY_COUNTER" },
+    { "bank": "bank_001", "line": 3295, "rw": "READ", "check": "and a / ret z", "role": "GAMEPLAY — helper (gate poder)", "category": "GAMEPLAY_COUNTER" },
+    { "bank": "bank_001", "line": 4810, "rw": "READ", "check": "and a / jr nz", "role": "GAMEPLAY — LIMIT gate (powerWindow!=0)", "category": "GAMEPLAY_COUNTER" },
+    { "bank": "bank_001", "line": 8066, "rw": "READ", "check": "and a / ret z", "role": "GAMEPLAY — helper", "category": "GAMEPLAY_COUNTER" },
+    { "bank": "bank_001", "line": 8666, "rw": "WRITE=0", "check": "pos|=2 luego +4=0", "role": "GAMEPLAY — CHARA path (posicion BACK + reset counter)", "category": "GAMEPLAY_COUNTER" },
+    { "bank": "bank_001", "line": 8676, "rw": "INC", "check": "inc [hl]", "role": "GAMEPLAY — (incremento; contexto por confirmar)", "category": "GAMEPLAY_COUNTER" },
+    { "bank": "bank_001", "line": 8773, "rw": "WRITE=2", "check": "pos|=2 luego +4=2", "role": "GAMEPLAY — CHARA finalize (counter=2)", "category": "GAMEPLAY_COUNTER" },
+    { "bank": "bank_001", "line": 10075, "rw": "WRITE=5", "check": "+4=5", "role": "GAMEPLAY — GATHER finalize (counter=5)", "category": "GAMEPLAY_COUNTER" },
+    { "bank": "bank_000", "line": 10664, "rw": "READ", "check": "and a / jr z", "role": "HELPER — Call_000_3578 area (gate poder)", "category": "GAMEPLAY_COUNTER" },
+    { "bank": "bank_07e", "line": 3558, "rw": "WRITE=0", "check": "clear", "role": "ACTION_PRESENTATION — clear counter", "category": "ACTION_PRESENTATION" },
+    { "bank": "bank_07e", "line": 4220, "rw": "WRITE=0", "check": "clear", "role": "ACTION_PRESENTATION — clear counter", "category": "ACTION_PRESENTATION" },
+    { "bank": "bank_07e", "line": 4455, "rw": "READ", "check": "and a / jr z", "role": "ACTION_PRESENTATION — power active?", "category": "ACTION_PRESENTATION" },
+    { "bank": "bank_07e", "line": 8462, "rw": "READ", "check": "cp $03 / jp c", "role": "ACTION_PRESENTATION — counter < 3", "category": "ACTION_PRESENTATION" }
+  ],
+  "summary_by_category": {
+    "GAMEPLAY_COUNTER": ["maintenance decrement (2085/2097)", "LIMIT gate (4810)", "CHARA finalize=2 (8773)", "GATHER finalize=5 (10075)", "helpers (2924/3295/8066/8666/8676)", "bank_000 helper (10664)"],
+    "ACTION_PRESENTATION": ["bank_07e clear (3558/4220)", "bank_07e read (4455/8462)", "9 lecturas directas $CA48 (bank_07e)"],
+    "FIELD_RENDER": [],
+    "STATE_COPY": [],
+    "UNKNOWN": ["bank_001:8676 'inc [hl]' — incremento de +4, contexto por confirmar (posible otro contador o semántica distinta)"]
+  },
+  "conclusion": {
+    "field_consumer_found": false,
+    "verdict": "powerWindowCounter es consumido SOLO por GAMEPLAY (maintenance/LIMIT/CHARA/GATHER) y ACTION_PRESENTATION (presentation VM). NINGÚN consumidor FIELD (OAM/tile sprite pequeño).",
+    "implication": "TACTICAL_POWER_STATE_VISUAL = NONE (alta confianza): el FIELD táctico no cambia el chibi por el estado de poder."
+  }
+}

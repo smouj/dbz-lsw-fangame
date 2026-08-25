@@ -7,7 +7,7 @@
 import { useState, useEffect, useRef } from 'react';
 import {
   Activity, ArrowLeft, Brush, CheckCircle2,
-  Film, Gamepad2, Gauge, Grid2X2, LayoutDashboard,
+  Film, FolderCode, Gamepad2, Gauge, Grid2X2, LayoutDashboard,
   Search, Swords, TableProperties, Users, Music, Rocket, type LucideIcon,
 } from 'lucide-react';
 import { DashboardModule } from './dashboard';
@@ -20,6 +20,7 @@ import { ResearchModule } from './research';
 import MusicModule from './music';
 import GameConfigModule from './gameconfig';
 import { AnimationModule } from './animation';
+import { AnimationStudioModule } from './animationStudio';
 import { LabModule } from './lab';
 import { PixelArtModule } from './pixelart';
 import { HudModule } from './hud';
@@ -28,14 +29,18 @@ import { TimelineModule } from './timeline';
 import { CombatContractModule } from './combat';
 import { AssetsModule } from './assets';
 import { RomDisplayLab } from './romdisplay2';
+import { TeamBuilderModule } from './teamBuilder';
+import { DeckBuilderModule } from './deckBuilder';
+import { WorkspaceModule } from './workspace';
 
 export type DevModuleId =
   | 'dashboard' | 'characters' | 'cards' | 'animation'
   | 'pixelart' | 'hud' | 'facing' | 'assets'
   | 'lab' | 'story' | 'validation' | 'research' | 'music' | 'gameconfig' | 'positions'
-  | 'combat' | 'timeline' | 'romdisplay';
+  | 'combat' | 'timeline' | 'romdisplay' | 'animation-studio'
+  | 'team-builder' | 'deck-builder' | 'workspace';
 
-interface DevModuleDef {
+export interface DevModuleDef {
   id: DevModuleId;
   label: string;
   icon: LucideIcon;
@@ -44,24 +49,32 @@ interface DevModuleDef {
 }
 
 export const DEV_MODULES: DevModuleDef[] = [
-  { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard, desc: 'Estado de producción y contadores', group: 'Visor' },
-  { id: 'characters', label: 'Characters', icon: Users, desc: 'Personajes, formas, stats y crecimiento', group: 'Personajes' },
-  { id: 'cards', label: 'Cards', icon: TableProperties, desc: 'Base de datos de las 125 cartas', group: 'Personajes' },
-  { id: 'animation', label: 'Animation', icon: Film, desc: 'Timeline real + editor de frames/animaciones', group: 'Personajes' },
-  { id: 'pixelart', label: 'Pixel Art', icon: Brush, desc: 'Editor de píxeles: pinta/borra/corrige frames', group: 'Personajes' },
-  { id: 'facing', label: 'Facing', icon: Activity, desc: 'Orientación de chibis overworld: voltea y guarda', group: 'Personajes' },
-  { id: 'assets', label: 'Assets', icon: Search, desc: 'Explorador de carpetas: sprites, frames, mapeo y validación', group: 'Personajes' },
-  { id: 'hud', label: 'HUD', icon: Gauge, desc: 'Visualizador del gameplay + editor del tema HUD', group: 'Combate' },
-  { id: 'lab', label: 'Combat Lab', icon: Swords, desc: 'Combate real + renderer Pixi en vivo + secuencias deterministas', group: 'Combate' },
-  { id: 'positions', label: 'Positions', icon: Grid2X2, desc: 'Laboratorio de posiciones Air/Ground x Front/Back', group: 'Combate' },
-  { id: 'combat', label: 'Combat Contract', icon: Swords, desc: 'Esquemas del contrato + simulador del combate con el Engine real', group: 'Combate' },
-  { id: 'timeline', label: 'Timeline (M7)', icon: Film, desc: 'Presentation Adapter: EventLog → cues visuales en ticks GBC', group: 'Combate' },
-  { id: 'story', label: 'Story', icon: Gamepad2, desc: 'Capítulos, viñetas y mazos de jefes', group: 'Mundo' },
-  { id: 'validation', label: 'Validation', icon: CheckCircle2, desc: 'Integridad de datos y cobertura', group: 'Mundo' },
-  { id: 'research', label: 'Research', icon: Search, desc: 'ROM / manual / fuentes', group: 'Mundo' },
-  { id: 'romdisplay', label: 'ROM Display', icon: Grid2X2, desc: 'V7.8: ROM inspection ↔ runtime composite + validación', group: 'Combate' },
-  { id: 'music', label: 'Música', icon: Music, desc: 'BSO del juego: player y mapeo de contexto', group: 'Mundo' },
-  { id: 'gameconfig', label: 'Game Config & Build', icon: Rocket, desc: 'Centro de control: config, validación y release', group: 'Producción' },
+  { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard, desc: 'Estado real: ROM physical, producción, legacy y blockers', group: 'Overview' },
+  { id: 'validation', label: 'Validation', icon: CheckCircle2, desc: 'Integridad de datos y cobertura visible', group: 'Overview' },
+  { id: 'workspace', label: 'Workspace', icon: FolderCode, desc: 'Explorador de código, paneles Dev y scratch editor local', group: 'Overview' },
+
+  { id: 'characters', label: 'Characters', icon: Users, desc: 'Formas, assets y frames físicos ROM por personaje', group: 'ROM & Assets' },
+  { id: 'animation-studio', label: 'Animation Studio', icon: Film, desc: 'ROM ↔ current asset ↔ production, ticks GBC', group: 'ROM & Assets' },
+  { id: 'romdisplay', label: 'ROM Display', icon: Grid2X2, desc: 'ROM inspection, palettes, Fighter OBJ, FX y Support', group: 'ROM & Assets' },
+  { id: 'assets', label: 'Assets', icon: Search, desc: 'Explorador de assets, sprites y manifests', group: 'ROM & Assets' },
+  { id: 'facing', label: 'Facing', icon: Activity, desc: 'Orientación de chibis overworld', group: 'ROM & Assets' },
+
+  { id: 'lab', label: 'Combat Lab', icon: Swords, desc: 'Combate real + renderer Pixi en vivo', group: 'Runtime' },
+  { id: 'timeline', label: 'Timeline', icon: Film, desc: 'EventLog → cues visuales en ticks GBC', group: 'Runtime' },
+  { id: 'combat', label: 'Combat Contract', icon: Swords, desc: 'Contrato y simulador del Engine real', group: 'Runtime' },
+  { id: 'positions', label: 'Positions', icon: Grid2X2, desc: 'Laboratorio de posiciones Air/Ground x Front/Back', group: 'Runtime' },
+  { id: 'hud', label: 'HUD', icon: Gauge, desc: 'Visualizador y editor del tema HUD', group: 'Runtime' },
+
+  { id: 'cards', label: 'Cards', icon: TableProperties, desc: 'Base de datos ROM de las 125 cartas', group: 'Data' },
+  { id: 'animation', label: 'Animation', icon: Film, desc: 'Editor de frames/animaciones legacy y runtime', group: 'Data' },
+  { id: 'story', label: 'Story', icon: Gamepad2, desc: 'Capítulos, viñetas y mazos de jefes', group: 'Data' },
+  { id: 'music', label: 'Music', icon: Music, desc: 'BSO del juego y mapeo de contexto', group: 'Data' },
+
+  { id: 'pixelart', label: 'Pixel Art', icon: Brush, desc: 'Editor de píxeles para frames y correcciones', group: 'Tools' },
+  { id: 'research', label: 'Research', icon: Search, desc: 'ROM, manual y fuentes verificadas', group: 'Tools' },
+  { id: 'gameconfig', label: 'Game Config', icon: Rocket, desc: 'Centro de control: config, validación y release', group: 'Tools' },
+  { id: 'team-builder', label: 'Team Builder', icon: Users, desc: 'Character Roll, Details y Limits', group: 'Tools' },
+  { id: 'deck-builder', label: 'Deck Builder', icon: TableProperties, desc: 'Joint Deck workshop', group: 'Tools' },
 ];
 
 const DEV_MODULE_STORAGE_KEY = 'dbzlsw_dev_module';
@@ -77,7 +90,7 @@ export { isDevRoute } from './route';
 // Módulo desde el hash: '#dev/sheets' → 'sheets'
 function moduleFromHash(): DevModuleId | null {
   if (typeof window === 'undefined') return null;
-  const m = /^#dev\/([a-zA-Z]+)/.exec(window.location.hash);
+  const m = /^#dev\/([a-zA-Z-]+)/.exec(window.location.hash);
   if (!m) return null;
   const id = m[1] as DevModuleId;
   return DEV_MODULES.some(d => d.id === id) ? id : null;
@@ -206,6 +219,7 @@ export function DevStudio({ onExit, onLaunchBattle }: DevStudioProps) {
           {module === 'characters' && <CharactersModule onOpenModule={openLinkedModule} />}
           {module === 'cards' && <CardsModule />}
           {module === 'animation' && <AnimationModule target={linkedTarget} />}
+          {module === 'animation-studio' && <AnimationStudioModule />}
           {module === 'pixelart' && <PixelArtModule target={pixelTarget} />}
           {module === 'facing' && <FacingModule />}
           {module === 'assets' && <AssetsModule target={linkedTarget} onOpenModule={openLinkedModule} />}
@@ -220,6 +234,9 @@ export function DevStudio({ onExit, onLaunchBattle }: DevStudioProps) {
           {module === 'romdisplay' && <RomDisplayLab />}
           {module === 'music' && <MusicModule />}
           {module === 'gameconfig' && <GameConfigModule />}
+          {module === 'team-builder' && <TeamBuilderModule />}
+          {module === 'deck-builder' && <DeckBuilderModule />}
+          {module === 'workspace' && <WorkspaceModule modules={DEV_MODULES} />}
         </div>
       </main>
     </div>

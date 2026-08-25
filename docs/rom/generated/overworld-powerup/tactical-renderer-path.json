@@ -1,0 +1,31 @@
+{
+  "scope": "S-OW1B — pipeline físico del renderer FIELD/táctico (progreso)",
+  "date": "2026-08-24",
+  "status": "IN_PROGRESS — shadow OAM + DMA localizados; writer del fighter pequeño y frame selector pendientes",
+  "found": {
+    "shadow_oam_base": "$C300",
+    "shadow_oam_size": "160 bytes ($C300-$C39F = 40 sprites x 4 bytes)",
+    "oam_dma_routine": "bank_000.asm ~$0C34: ld a,$c3 / ldh [rDMA],a / ld a,$28 / wait-loop",
+    "oam_dma_source_high_byte": "$C3",
+    "actionobject_base": "$C3A0 (stride $13=19, slot1 $C3B3, active/index $C3C6) — INMEDIATAMENTE después del shadow OAM",
+    "fighterState_base": "$CA3C stride 8 (P1 $CA3C, P2 $CA44)"
+  },
+  "fighterState_field_map": {
+    "+0": "position flags (bit0=vertical AIR, bit1=horizontal BACK; CHARA hace |=2 -> BACK)",
+    "+1": "parcialmente accedido ($CA3D 3 refs) — pendiente",
+    "+2": "coordenada? (P2 $CA46 leído cp $14=20 en presentation VM) — pendiente confirmar",
+    "+3": "sin acceso directo",
+    "+4": "powerWindowCounter ($CA40/$CA48)",
+    "+5": "sin acceso directo",
+    "+6": "sin acceso directo",
+    "+7": "sin acceso directo"
+  },
+  "pending": [
+    "writer de los sprites pequeños de fighter (Y/X/tile/attr en shadow OAM $C300) — dónde se construye la entrada OAM del chibi FIELD",
+    "tile ID -> graphics source (banco/VRAM) del chibi táctico",
+    "selector form/profile -> tile ID (gráficos pequeños)",
+    "frame selector (idle / movement) — qué estado controla el frame del chibi",
+    "comparación FIELD normal vs FIELD tras Gather (powerWindowCounter>0)"
+  ],
+  "note": "El catálogo de consumidores (power-window-consumers.json) ya demuestra que powerWindowCounter NO tiene consumidor FIELD. El trace del writer OAM es para CERRAR la gramática de frames tácticos (idle/movement), no solo power-up."
+}

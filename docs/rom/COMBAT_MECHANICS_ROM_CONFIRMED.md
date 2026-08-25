@@ -2106,6 +2106,31 @@ Macro $1A
 
 `$19/$1A` son los estados neutros iniciales de actor/defensor dentro del plano ACTION.
 
+### ⚠️ Colisión de nombres: MACRO `$19/$1A` ≠ RESOURCE `$19/$1A` (S-OW1, 2026-08-24)
+
+Existen DOS pares de identificadores `$19`/`$1A` que NO son lo mismo:
+
+| Tipo | `$19` | `$1A` | Fuente |
+|---|---|---|---|
+| **Macro de presentación** | SET_ANIMATION_STATE slot=0 | SET_ANIMATION_STATE slot=1 | `Bank30:$5D00` vía `Bank00:$3E92` (§174/§175) |
+| **Resource de graphics** | recurso índice 25 | recurso índice 26 | `Bank $68` tabla `$4008` vía `Bank00:$1266` |
+
+**Hallazgo S-OW1 (traza desensamblado, 2026-08-24):**
+- **Gather** → `Bank00:$3abd` → `Bank03:$6750` → `Call_000_1266` con `DE=$001A` → **Resource `$1A`** (índice 26) → VRAM `$8800`. Paleta `$33` (escrita en `$cc15`, `Call_001_7b2c` estado 4).
+- **CHARA** → `Call_001_7293` estado 10 → `Bank00:$3abd` → **Resource `$1A`** (mismo). Paleta `$31` (escrita en `$cc15`, estado 9).
+- **Resource `$19`** (índice 25) es un recurso DISTINTO, cargado por `Call_003_66d1` (máquina `$ca04`) desde la resolución de ataque (`$ca06` en Bank03, con apply de daño `$3239/$34b8`). NO lo usa Gather ni CHARA.
+
+**Conclusión** → la afirmación previa "Gather/CHARA shared FX `$1A`" es **CORRECTA** (ambos cargan Resource `$1A`; la diferencia real es la PALETA `$33`/`$31`). Se refina: existe además un Resource `$19` separado (FX de ataque), que antes no estaba documentado y podía confundirse con la Macro `$19`.
+
+**Resultado GATHER ACTION (S-OW1A):**
+```text
+GATHER_ACTION_ACTOR = STATIC  (macro $19 → SET_ANIMATION_STATE slot=0 variant=0 = estado NEUTRO)
+GATHER_VISUAL        = BG_FX (Resource $1A) + PALETTE ($33)
+```
+El actor NO cambia a una pose "brazos arriba" animada: se queda en su estado neutro y el
+power-up es FX + transición de paleta. La pose `gather_power_pose` (brazos arriba) del
+asset actual es un REDRAW V9 (PROJECT_DERIVED), no una secuencia ROM.
+
 ## 176. Macro `$27`: salida exacta de CHARA
 
 ```text

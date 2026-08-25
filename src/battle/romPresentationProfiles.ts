@@ -18,8 +18,7 @@ import {
   PHYSICAL_RESOLUTION_MACROS,
   ROM_BEAM_SETUP_MOTION,
   ROM_RUSH_MOTION,
-  ROM_SCREEN_MOTION_16T,
-  ROM_SCREEN_MOTION_19T,
+  beamLaunchProfileForHandler,
   standardAttackProfileFor,
   type RomDiscreteMotion,
 } from './engine/rom/romDescriptors';
@@ -433,7 +432,7 @@ function completionFor(descriptor: RomActionExecutionDescriptor, program: RomPre
   };
 }
 
-function profileKind(descriptor: RomActionExecutionDescriptor): RomPresentationProfileKind {
+function profileKind(descriptor: RomActionExecutionDescriptor, card: CardDef): RomPresentationProfileKind {
   const handler = descriptor.execution.handler;
   const hasNoPresentationResource = descriptor.actorAnimation.resource == null
     && descriptor.visualEffect.resource == null
@@ -441,8 +440,11 @@ function profileKind(descriptor: RomActionExecutionDescriptor): RomPresentationP
     && descriptor.result.family === 'NO_RESULT_BRANCH';
   if (handler === 0x00 && hasNoPresentationResource) return 'NONE';
   if (handler === 0x0a) return 'STANDARD_DAMAGE';
-  if (handler === 0x02) return 'BEAM_BASE';
-  if ([0x03, 0x04].includes(handler)) return 'BEAM_VARIANT';
+  // GUARDRAIL — support cards may SHARE ROM handler $02/$03/$04 (buff/heal/
+  // shield presentation reuse) but are NOT beams. Never route them through the
+  // beam bridge: a support card playing a beam movie is a production bug.
+  if (handler === 0x02) return card.type === 'support' ? 'SUPPORT_OR_FIELD_EFFECT' : 'BEAM_BASE';
+  if ([0x03, 0x04].includes(handler)) return card.type === 'support' ? 'SUPPORT_OR_FIELD_EFFECT' : 'BEAM_VARIANT';
   if ([0x05, 0x06, 0x07].includes(handler)) return 'PROJECTILE_SCROLL';
   if (descriptor.result.family === 'ROM_DEFENSE') return 'DEFENSE_RULE';
   if (descriptor.execution.workerFamily === 'SPECIAL' || descriptor.execution.workerFamily === 'TAIL' || descriptor.execution.workerFamily === 'BUU_BALL' || descriptor.execution.workerFamily === 'MULTI_ACTOR_SCRIPT') return 'SPECIAL_HANDLER';
@@ -473,6 +475,9 @@ function standardDamageProgram(descriptor: RomActionExecutionDescriptor): RomPre
 
 function beamProgram(card: CardDef, descriptor: RomActionExecutionDescriptor): RomPresentationStep[] {
   const standard = standardAttackProfileFor(card);
+  // §218-224: $02-$07 comparten el motor Beam ($5776); cada handler promueve
+  // su propio LaunchProfile (syncFrame / screen motion / path).
+  const launch = beamLaunchProfileForHandler(descriptor.execution.handler);
   const program = [
     sceneLoad(),
     macroStep('MACRO_BEAM_SETUP_1E', 0x1e, 'beam setup pre-adjustment'),
@@ -480,8 +485,9 @@ function beamProgram(card: CardDef, descriptor: RomActionExecutionDescriptor): R
   ];
   const actor = startAnimation(descriptor);
   if (actor) program.push(actor);
-  if (standard?.launch?.syncFrame != null) {
-    program.push(waitFrame(standard.launch.syncFrame, 'RomStandardAttackProfile.launch.syncFrame'));
+  const syncFrame = standard?.launch?.syncFrame ?? launch?.releaseSyncFrame ?? null;
+  if (syncFrame != null) {
+    program.push(waitFrame(syncFrame, launch ? `BeamLaunchProfile $${descriptor.execution.handlerHex} releaseSyncFrame` : 'RomStandardAttackProfile.launch.syncFrame'));
   } else {
     program.push(pendingStep('PENDING_RELEASE_FRAME', 'PENDING_STATIC_DECODE', 'release/sync frame is not promoted for this beam handler yet', 'standardAttackProfileFor'));
   }
@@ -501,14 +507,19 @@ function projectileProgram(descriptor: RomActionExecutionDescriptor): RomPresent
   const program = [sceneLoad()];
   const actor = startAnimation(descriptor);
   if (actor) program.push(actor);
+  // §222-224: launch screen-motion / path por handler ($05 screen -6×19t,
+  // $06 screen -6×16t, $07 WAIT2→FX→WAIT4→SCREEN_PATH).
+  const launch = beamLaunchProfileForHandler(descriptor.execution.handler);
+  if (launch?.screenMotion) {
+    program.push(screenMotionStep(
+      `SCREEN_MOTION_${launch.screenMotion.ticks}T`,
+      launch.screenMotion.ticks,
+      launch.screenMotion.dxPerTick,
+      launch.screenMotion.restore,
+    ));
+  }
   const fx = spawnFx(descriptor);
   if (fx) program.push(fx);
-  if (descriptor.execution.handler === 0x05) {
-    program.push(screenMotionStep('SCREEN_MOTION_19T', ROM_SCREEN_MOTION_19T.ticks, ROM_SCREEN_MOTION_19T.dxPerTick, ROM_SCREEN_MOTION_19T.restore));
-  }
-  if (descriptor.execution.handler === 0x06) {
-    program.push(screenMotionStep('SCREEN_MOTION_16T', ROM_SCREEN_MOTION_16T.ticks, ROM_SCREEN_MOTION_16T.dxPerTick, ROM_SCREEN_MOTION_16T.restore));
-  }
   if (descriptor.execution.handler === 0x07) {
     program.push(waitStep('WAIT_SPECIAL_PATH_2T', 2, 'SPECIAL_PROJECTILE_PATH wait before FX/path', 'STANDARD_ATTACK_HANDLERS $07'));
     program.push(waitStep('WAIT_SPECIAL_PATH_4T', 4, 'SPECIAL_PROJECTILE_PATH wait after FX', 'STANDARD_ATTACK_HANDLERS $07'));
@@ -576,7 +587,7 @@ function unknownProgram(descriptor: RomActionExecutionDescriptor): RomPresentati
 
 export function romPresentationProfileForCard(card: CardDef): RomPresentationProfile {
   const descriptor = romActionExecutionDescriptorForCard(card);
-  const kind = profileKind(descriptor);
+  const kind = profileKind(descriptor, card);
   let program: RomPresentationStep[];
   let branches = descriptor.result.branches;
 

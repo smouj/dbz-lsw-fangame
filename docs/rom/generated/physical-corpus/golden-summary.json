@@ -1,0 +1,31 @@
+{
+  "generatedAt": "2026-08-24T18:12:13.796Z",
+  "source": "ROM_PHYSICAL_FIGHTERS",
+  "romSha256": "8dab48cc81d14bcee7c73274df09cf5c4dd44c3b93d10a5a3175e04fead25dee",
+  "forms": [
+    {
+      "formId": "piccolo_base",
+      "actorVisualProfileKey": 3,
+      "physicalFrames": 10,
+      "sequences": 6
+    },
+    {
+      "formId": "goku_base",
+      "actorVisualProfileKey": 5,
+      "physicalFrames": 10,
+      "sequences": 6
+    },
+    {
+      "formId": "goku_ssj",
+      "actorVisualProfileKey": 6,
+      "physicalFrames": 10,
+      "sequences": 6
+    },
+    {
+      "formId": "android_16",
+      "actorVisualProfileKey": 28,
+      "physicalFrames": 10,
+      "sequences": 6
+    }
+  ]
+}

@@ -1,674 +1,898 @@
 [
   {
+    "key": 0,
+    "seq": 0,
+    "f": 0,
+    "meta": "e8a19d251363d353",
+    "gfx": "5d0f62551b1460c2",
+    "pal": "f911ef87b2f7eb39"
+  },
+  {
+    "key": 0,
+    "seq": 0,
+    "f": 1,
+    "meta": "e8a19d251363d353",
+    "gfx": "5d0f62551b1460c2",
+    "pal": "f911ef87b2f7eb39"
+  },
+  {
+    "key": 0,
+    "seq": 0,
+    "f": 2,
+    "meta": "e8a19d251363d353",
+    "gfx": "5d0f62551b1460c2",
+    "pal": "f911ef87b2f7eb39"
+  },
+  {
+    "key": 0,
+    "seq": 0,
+    "f": 3,
+    "meta": "ee5b6c166a24ba3e",
+    "gfx": "736a583c568b2d01",
+    "pal": "f911ef87b2f7eb39"
+  },
+  {
+    "key": 0,
+    "seq": 0,
+    "f": 4,
+    "meta": "41c3d27eca1fac0d",
+    "gfx": "e551458c95f79420",
+    "pal": "f911ef87b2f7eb39"
+  },
+  {
+    "key": 0,
+    "seq": 0,
+    "f": 5,
+    "meta": "41c3d27eca1fac0d",
+    "gfx": "e551458c95f79420",
+    "pal": "f911ef87b2f7eb39"
+  },
+  {
+    "key": 0,
+    "seq": 0,
+    "f": 6,
+    "meta": "41c3d27eca1fac0d",
+    "gfx": "e551458c95f79420",
+    "pal": "f911ef87b2f7eb39"
+  },
+  {
+    "key": 0,
+    "seq": 1,
+    "f": 0,
+    "meta": "cefc0de53389bce7",
+    "gfx": "65897e9a8c0443c6",
+    "pal": "f911ef87b2f7eb39"
+  },
+  {
+    "key": 0,
+    "seq": 1,
+    "f": 1,
+    "meta": "cefc0de53389bce7",
+    "gfx": "65897e9a8c0443c6",
+    "pal": "f911ef87b2f7eb39"
+  },
+  {
+    "key": 0,
+    "seq": 1,
+    "f": 2,
+    "meta": "cefc0de53389bce7",
+    "gfx": "65897e9a8c0443c6",
+    "pal": "f911ef87b2f7eb39"
+  },
+  {
+    "key": 0,
+    "seq": 1,
+    "f": 3,
+    "meta": "ee5b6c166a24ba3e",
+    "gfx": "736a583c568b2d01",
+    "pal": "f911ef87b2f7eb39"
+  },
+  {
+    "key": 0,
+    "seq": 1,
+    "f": 4,
+    "meta": "41c3d27eca1fac0d",
+    "gfx": "e551458c95f79420",
+    "pal": "f911ef87b2f7eb39"
+  },
+  {
+    "key": 0,
+    "seq": 1,
+    "f": 5,
+    "meta": "41c3d27eca1fac0d",
+    "gfx": "e551458c95f79420",
+    "pal": "f911ef87b2f7eb39"
+  },
+  {
+    "key": 0,
+    "seq": 1,
+    "f": 6,
+    "meta": "41c3d27eca1fac0d",
+    "gfx": "e551458c95f79420",
+    "pal": "f911ef87b2f7eb39"
+  },
+  {
+    "key": 1,
+    "seq": 0,
+    "f": 0,
+    "meta": "e8a19d251363d353",
+    "gfx": "161c3bd68227b35b",
+    "pal": "af87ef39cc046010"
+  },
+  {
+    "key": 1,
+    "seq": 0,
+    "f": 1,
+    "meta": "e8a19d251363d353",
+    "gfx": "161c3bd68227b35b",
+    "pal": "af87ef39cc046010"
+  },
+  {
+    "key": 1,
+    "seq": 0,
+    "f": 2,
+    "meta": "e8a19d251363d353",
+    "gfx": "161c3bd68227b35b",
+    "pal": "af87ef39cc046010"
+  },
+  {
+    "key": 1,
+    "seq": 0,
+    "f": 3,
+    "meta": "ee5b6c166a24ba3e",
+    "gfx": "1b4c1d29378fb831",
+    "pal": "af87ef39cc046010"
+  },
+  {
+    "key": 1,
+    "seq": 0,
+    "f": 4,
+    "meta": "41c3d27eca1fac0d",
+    "gfx": "6b92e5750690f6b1",
+    "pal": "af87ef39cc046010"
+  },
+  {
+    "key": 1,
+    "seq": 0,
+    "f": 5,
+    "meta": "41c3d27eca1fac0d",
+    "gfx": "6b92e5750690f6b1",
+    "pal": "af87ef39cc046010"
+  },
+  {
+    "key": 1,
+    "seq": 0,
+    "f": 6,
+    "meta": "41c3d27eca1fac0d",
+    "gfx": "6b92e5750690f6b1",
+    "pal": "af87ef39cc046010"
+  },
+  {
+    "key": 1,
+    "seq": 1,
+    "f": 0,
+    "meta": "cefc0de53389bce7",
+    "gfx": "feec1bdb1d6a2b47",
+    "pal": "af87ef39cc046010"
+  },
+  {
+    "key": 1,
+    "seq": 1,
+    "f": 1,
+    "meta": "cefc0de53389bce7",
+    "gfx": "feec1bdb1d6a2b47",
+    "pal": "af87ef39cc046010"
+  },
+  {
+    "key": 1,
+    "seq": 1,
+    "f": 2,
+    "meta": "cefc0de53389bce7",
+    "gfx": "feec1bdb1d6a2b47",
+    "pal": "af87ef39cc046010"
+  },
+  {
+    "key": 1,
+    "seq": 1,
+    "f": 3,
+    "meta": "ee5b6c166a24ba3e",
+    "gfx": "1b4c1d29378fb831",
+    "pal": "af87ef39cc046010"
+  },
+  {
+    "key": 1,
+    "seq": 1,
+    "f": 4,
+    "meta": "41c3d27eca1fac0d",
+    "gfx": "6b92e5750690f6b1",
+    "pal": "af87ef39cc046010"
+  },
+  {
+    "key": 1,
+    "seq": 1,
+    "f": 5,
+    "meta": "41c3d27eca1fac0d",
+    "gfx": "6b92e5750690f6b1",
+    "pal": "af87ef39cc046010"
+  },
+  {
+    "key": 1,
+    "seq": 1,
+    "f": 6,
+    "meta": "41c3d27eca1fac0d",
+    "gfx": "6b92e5750690f6b1",
+    "pal": "af87ef39cc046010"
+  },
+  {
     "key": 2,
     "seq": 0,
     "f": 0,
-    "meta": "96504745435d7d4f",
-    "gfx": "34edf4a19060fa6f",
-    "pal": "de92e7060054242f"
+    "meta": "e8a19d251363d353",
+    "gfx": "9ba1aef505fc7959",
+    "pal": "af87ef39cc046010"
   },
   {
     "key": 2,
     "seq": 0,
     "f": 1,
-    "meta": "96504745435d7d4f",
-    "gfx": "34edf4a19060fa6f",
-    "pal": "de92e7060054242f"
+    "meta": "e8a19d251363d353",
+    "gfx": "9ba1aef505fc7959",
+    "pal": "af87ef39cc046010"
   },
   {
     "key": 2,
     "seq": 0,
     "f": 2,
-    "meta": "96504745435d7d4f",
-    "gfx": "34edf4a19060fa6f",
-    "pal": "de92e7060054242f"
+    "meta": "e8a19d251363d353",
+    "gfx": "9ba1aef505fc7959",
+    "pal": "af87ef39cc046010"
   },
   {
     "key": 2,
     "seq": 0,
     "f": 3,
-    "meta": "96504745435d7d4f",
-    "gfx": "3f793a130f88af58",
-    "pal": "de92e7060054242f"
+    "meta": "ee5b6c166a24ba3e",
+    "gfx": "d23953024123d2d4",
+    "pal": "af87ef39cc046010"
   },
   {
     "key": 2,
     "seq": 0,
     "f": 4,
-    "meta": "96504745435d7d4f",
-    "gfx": "7ea4601130184636",
-    "pal": "de92e7060054242f"
+    "meta": "41c3d27eca1fac0d",
+    "gfx": "bc533eba58c91c68",
+    "pal": "af87ef39cc046010"
   },
   {
     "key": 2,
     "seq": 0,
     "f": 5,
-    "meta": "96504745435d7d4f",
-    "gfx": "7ea4601130184636",
-    "pal": "de92e7060054242f"
+    "meta": "41c3d27eca1fac0d",
+    "gfx": "bc533eba58c91c68",
+    "pal": "af87ef39cc046010"
   },
   {
     "key": 2,
     "seq": 0,
     "f": 6,
-    "meta": "96504745435d7d4f",
-    "gfx": "7ea4601130184636",
-    "pal": "de92e7060054242f"
+    "meta": "41c3d27eca1fac0d",
+    "gfx": "bc533eba58c91c68",
+    "pal": "af87ef39cc046010"
   },
   {
     "key": 2,
     "seq": 1,
     "f": 0,
-    "meta": "96504745435d7d4f",
-    "gfx": "5fd27515ae480dce",
-    "pal": "de92e7060054242f"
+    "meta": "cefc0de53389bce7",
+    "gfx": "09b7a853939f12a2",
+    "pal": "af87ef39cc046010"
   },
   {
     "key": 2,
     "seq": 1,
     "f": 1,
-    "meta": "96504745435d7d4f",
-    "gfx": "5fd27515ae480dce",
-    "pal": "de92e7060054242f"
+    "meta": "cefc0de53389bce7",
+    "gfx": "09b7a853939f12a2",
+    "pal": "af87ef39cc046010"
   },
   {
     "key": 2,
     "seq": 1,
     "f": 2,
-    "meta": "96504745435d7d4f",
-    "gfx": "5fd27515ae480dce",
-    "pal": "de92e7060054242f"
+    "meta": "cefc0de53389bce7",
+    "gfx": "09b7a853939f12a2",
+    "pal": "af87ef39cc046010"
   },
   {
     "key": 2,
     "seq": 1,
     "f": 3,
-    "meta": "96504745435d7d4f",
-    "gfx": "3f793a130f88af58",
-    "pal": "de92e7060054242f"
+    "meta": "ee5b6c166a24ba3e",
+    "gfx": "d23953024123d2d4",
+    "pal": "af87ef39cc046010"
   },
   {
     "key": 2,
     "seq": 1,
     "f": 4,
-    "meta": "96504745435d7d4f",
-    "gfx": "7ea4601130184636",
-    "pal": "de92e7060054242f"
+    "meta": "41c3d27eca1fac0d",
+    "gfx": "bc533eba58c91c68",
+    "pal": "af87ef39cc046010"
   },
   {
     "key": 2,
     "seq": 1,
     "f": 5,
-    "meta": "96504745435d7d4f",
-    "gfx": "7ea4601130184636",
-    "pal": "de92e7060054242f"
+    "meta": "41c3d27eca1fac0d",
+    "gfx": "bc533eba58c91c68",
+    "pal": "af87ef39cc046010"
   },
   {
     "key": 2,
     "seq": 1,
     "f": 6,
-    "meta": "96504745435d7d4f",
-    "gfx": "7ea4601130184636",
-    "pal": "de92e7060054242f"
+    "meta": "41c3d27eca1fac0d",
+    "gfx": "bc533eba58c91c68",
+    "pal": "af87ef39cc046010"
   },
   {
     "key": 3,
     "seq": 0,
     "f": 0,
-    "meta": "96504745435d7d4f",
-    "gfx": "34edf4a19060fa6f",
-    "pal": "f6c618362a28d1e7"
+    "meta": "e8a19d251363d353",
+    "gfx": "13bdf0aa4d05127d",
+    "pal": "f5d8c98299076a15"
   },
   {
     "key": 3,
     "seq": 0,
     "f": 1,
-    "meta": "96504745435d7d4f",
-    "gfx": "34edf4a19060fa6f",
-    "pal": "f6c618362a28d1e7"
+    "meta": "e8a19d251363d353",
+    "gfx": "13bdf0aa4d05127d",
+    "pal": "f5d8c98299076a15"
   },
   {
     "key": 3,
     "seq": 0,
     "f": 2,
-    "meta": "96504745435d7d4f",
-    "gfx": "34edf4a19060fa6f",
-    "pal": "f6c618362a28d1e7"
+    "meta": "e8a19d251363d353",
+    "gfx": "13bdf0aa4d05127d",
+    "pal": "f5d8c98299076a15"
   },
   {
     "key": 3,
     "seq": 0,
     "f": 3,
-    "meta": "96504745435d7d4f",
-    "gfx": "3f793a130f88af58",
-    "pal": "f6c618362a28d1e7"
+    "meta": "ee5b6c166a24ba3e",
+    "gfx": "d9670a6ab342053f",
+    "pal": "f5d8c98299076a15"
   },
   {
     "key": 3,
     "seq": 0,
     "f": 4,
-    "meta": "96504745435d7d4f",
-    "gfx": "7ea4601130184636",
-    "pal": "f6c618362a28d1e7"
+    "meta": "41c3d27eca1fac0d",
+    "gfx": "0e64cafd8f04096c",
+    "pal": "f5d8c98299076a15"
   },
   {
     "key": 3,
     "seq": 0,
     "f": 5,
-    "meta": "96504745435d7d4f",
-    "gfx": "7ea4601130184636",
-    "pal": "f6c618362a28d1e7"
+    "meta": "41c3d27eca1fac0d",
+    "gfx": "0e64cafd8f04096c",
+    "pal": "f5d8c98299076a15"
   },
   {
     "key": 3,
     "seq": 0,
     "f": 6,
-    "meta": "96504745435d7d4f",
-    "gfx": "7ea4601130184636",
-    "pal": "f6c618362a28d1e7"
+    "meta": "41c3d27eca1fac0d",
+    "gfx": "0e64cafd8f04096c",
+    "pal": "f5d8c98299076a15"
   },
   {
     "key": 3,
     "seq": 1,
     "f": 0,
-    "meta": "96504745435d7d4f",
-    "gfx": "5fd27515ae480dce",
-    "pal": "f6c618362a28d1e7"
+    "meta": "cefc0de53389bce7",
+    "gfx": "19543fac71325e6b",
+    "pal": "f5d8c98299076a15"
   },
   {
     "key": 3,
     "seq": 1,
     "f": 1,
-    "meta": "96504745435d7d4f",
-    "gfx": "5fd27515ae480dce",
-    "pal": "f6c618362a28d1e7"
+    "meta": "cefc0de53389bce7",
+    "gfx": "19543fac71325e6b",
+    "pal": "f5d8c98299076a15"
   },
   {
     "key": 3,
     "seq": 1,
     "f": 2,
-    "meta": "96504745435d7d4f",
-    "gfx": "5fd27515ae480dce",
-    "pal": "f6c618362a28d1e7"
+    "meta": "cefc0de53389bce7",
+    "gfx": "19543fac71325e6b",
+    "pal": "f5d8c98299076a15"
   },
   {
     "key": 3,
     "seq": 1,
     "f": 3,
-    "meta": "96504745435d7d4f",
-    "gfx": "3f793a130f88af58",
-    "pal": "f6c618362a28d1e7"
+    "meta": "ee5b6c166a24ba3e",
+    "gfx": "d9670a6ab342053f",
+    "pal": "f5d8c98299076a15"
   },
   {
     "key": 3,
     "seq": 1,
     "f": 4,
-    "meta": "96504745435d7d4f",
-    "gfx": "7ea4601130184636",
-    "pal": "f6c618362a28d1e7"
+    "meta": "41c3d27eca1fac0d",
+    "gfx": "0e64cafd8f04096c",
+    "pal": "f5d8c98299076a15"
   },
   {
     "key": 3,
     "seq": 1,
     "f": 5,
-    "meta": "96504745435d7d4f",
-    "gfx": "7ea4601130184636",
-    "pal": "f6c618362a28d1e7"
+    "meta": "41c3d27eca1fac0d",
+    "gfx": "0e64cafd8f04096c",
+    "pal": "f5d8c98299076a15"
   },
   {
     "key": 3,
     "seq": 1,
     "f": 6,
-    "meta": "96504745435d7d4f",
-    "gfx": "7ea4601130184636",
-    "pal": "f6c618362a28d1e7"
+    "meta": "41c3d27eca1fac0d",
+    "gfx": "0e64cafd8f04096c",
+    "pal": "f5d8c98299076a15"
   },
   {
     "key": 11,
     "seq": 0,
     "f": 0,
-    "meta": "96504745435d7d4f",
-    "gfx": "34edf4a19060fa6f",
-    "pal": "e8924276dd48c9e1"
+    "meta": "e8a19d251363d353",
+    "gfx": "e2b3d9772bca5087",
+    "pal": "6d941dd979d885fc"
   },
   {
     "key": 11,
     "seq": 0,
     "f": 1,
-    "meta": "96504745435d7d4f",
-    "gfx": "34edf4a19060fa6f",
-    "pal": "e8924276dd48c9e1"
+    "meta": "e8a19d251363d353",
+    "gfx": "e2b3d9772bca5087",
+    "pal": "6d941dd979d885fc"
   },
   {
     "key": 11,
     "seq": 0,
     "f": 2,
-    "meta": "96504745435d7d4f",
-    "gfx": "34edf4a19060fa6f",
-    "pal": "e8924276dd48c9e1"
+    "meta": "e8a19d251363d353",
+    "gfx": "e2b3d9772bca5087",
+    "pal": "6d941dd979d885fc"
   },
   {
     "key": 11,
     "seq": 0,
     "f": 3,
-    "meta": "96504745435d7d4f",
-    "gfx": "3f793a130f88af58",
-    "pal": "e8924276dd48c9e1"
+    "meta": "ee5b6c166a24ba3e",
+    "gfx": "50e2946d7d01e734",
+    "pal": "6d941dd979d885fc"
   },
   {
     "key": 11,
     "seq": 0,
     "f": 4,
-    "meta": "96504745435d7d4f",
-    "gfx": "7ea4601130184636",
-    "pal": "e8924276dd48c9e1"
+    "meta": "41c3d27eca1fac0d",
+    "gfx": "7e2738ecea40528e",
+    "pal": "6d941dd979d885fc"
   },
   {
     "key": 11,
     "seq": 0,
     "f": 5,
-    "meta": "96504745435d7d4f",
-    "gfx": "7ea4601130184636",
-    "pal": "e8924276dd48c9e1"
+    "meta": "41c3d27eca1fac0d",
+    "gfx": "7e2738ecea40528e",
+    "pal": "6d941dd979d885fc"
   },
   {
     "key": 11,
     "seq": 0,
     "f": 6,
-    "meta": "96504745435d7d4f",
-    "gfx": "7ea4601130184636",
-    "pal": "e8924276dd48c9e1"
+    "meta": "41c3d27eca1fac0d",
+    "gfx": "7e2738ecea40528e",
+    "pal": "6d941dd979d885fc"
   },
   {
     "key": 11,
     "seq": 1,
     "f": 0,
-    "meta": "96504745435d7d4f",
-    "gfx": "5fd27515ae480dce",
-    "pal": "e8924276dd48c9e1"
+    "meta": "cefc0de53389bce7",
+    "gfx": "22ec94616f988c50",
+    "pal": "6d941dd979d885fc"
   },
   {
     "key": 11,
     "seq": 1,
     "f": 1,
-    "meta": "96504745435d7d4f",
-    "gfx": "5fd27515ae480dce",
-    "pal": "e8924276dd48c9e1"
+    "meta": "cefc0de53389bce7",
+    "gfx": "22ec94616f988c50",
+    "pal": "6d941dd979d885fc"
   },
   {
     "key": 11,
     "seq": 1,
     "f": 2,
-    "meta": "96504745435d7d4f",
-    "gfx": "5fd27515ae480dce",
-    "pal": "e8924276dd48c9e1"
+    "meta": "cefc0de53389bce7",
+    "gfx": "22ec94616f988c50",
+    "pal": "6d941dd979d885fc"
   },
   {
     "key": 11,
     "seq": 1,
     "f": 3,
-    "meta": "96504745435d7d4f",
-    "gfx": "3f793a130f88af58",
-    "pal": "e8924276dd48c9e1"
+    "meta": "ee5b6c166a24ba3e",
+    "gfx": "50e2946d7d01e734",
+    "pal": "6d941dd979d885fc"
   },
   {
     "key": 11,
     "seq": 1,
     "f": 4,
-    "meta": "96504745435d7d4f",
-    "gfx": "7ea4601130184636",
-    "pal": "e8924276dd48c9e1"
+    "meta": "41c3d27eca1fac0d",
+    "gfx": "7e2738ecea40528e",
+    "pal": "6d941dd979d885fc"
   },
   {
     "key": 11,
     "seq": 1,
     "f": 5,
-    "meta": "96504745435d7d4f",
-    "gfx": "7ea4601130184636",
-    "pal": "e8924276dd48c9e1"
+    "meta": "41c3d27eca1fac0d",
+    "gfx": "7e2738ecea40528e",
+    "pal": "6d941dd979d885fc"
   },
   {
     "key": 11,
     "seq": 1,
     "f": 6,
-    "meta": "96504745435d7d4f",
-    "gfx": "7ea4601130184636",
-    "pal": "e8924276dd48c9e1"
+    "meta": "41c3d27eca1fac0d",
+    "gfx": "7e2738ecea40528e",
+    "pal": "6d941dd979d885fc"
   },
   {
     "key": 12,
     "seq": 0,
     "f": 0,
-    "meta": "96504745435d7d4f",
-    "gfx": "34edf4a19060fa6f",
-    "pal": "09a867e64b34beba"
+    "meta": "e8a19d251363d353",
+    "gfx": "bf5e4d05a473fc97",
+    "pal": "45bef2119eafc20d"
   },
   {
     "key": 12,
     "seq": 0,
     "f": 1,
-    "meta": "96504745435d7d4f",
-    "gfx": "34edf4a19060fa6f",
-    "pal": "09a867e64b34beba"
+    "meta": "e8a19d251363d353",
+    "gfx": "bf5e4d05a473fc97",
+    "pal": "45bef2119eafc20d"
   },
   {
     "key": 12,
     "seq": 0,
     "f": 2,
-    "meta": "96504745435d7d4f",
-    "gfx": "34edf4a19060fa6f",
-    "pal": "09a867e64b34beba"
+    "meta": "e8a19d251363d353",
+    "gfx": "bf5e4d05a473fc97",
+    "pal": "45bef2119eafc20d"
   },
   {
     "key": 12,
     "seq": 0,
     "f": 3,
-    "meta": "96504745435d7d4f",
-    "gfx": "3f793a130f88af58",
-    "pal": "09a867e64b34beba"
+    "meta": "ee5b6c166a24ba3e",
+    "gfx": "42aed39b6f400694",
+    "pal": "45bef2119eafc20d"
   },
   {
     "key": 12,
     "seq": 0,
     "f": 4,
-    "meta": "96504745435d7d4f",
-    "gfx": "7ea4601130184636",
-    "pal": "09a867e64b34beba"
+    "meta": "41c3d27eca1fac0d",
+    "gfx": "d34369d3d99acf83",
+    "pal": "45bef2119eafc20d"
   },
   {
     "key": 12,
     "seq": 0,
     "f": 5,
-    "meta": "96504745435d7d4f",
-    "gfx": "7ea4601130184636",
-    "pal": "09a867e64b34beba"
+    "meta": "41c3d27eca1fac0d",
+    "gfx": "d34369d3d99acf83",
+    "pal": "45bef2119eafc20d"
   },
   {
     "key": 12,
     "seq": 0,
     "f": 6,
-    "meta": "96504745435d7d4f",
-    "gfx": "7ea4601130184636",
-    "pal": "09a867e64b34beba"
+    "meta": "41c3d27eca1fac0d",
+    "gfx": "d34369d3d99acf83",
+    "pal": "45bef2119eafc20d"
   },
   {
     "key": 12,
     "seq": 1,
     "f": 0,
-    "meta": "96504745435d7d4f",
-    "gfx": "5fd27515ae480dce",
-    "pal": "09a867e64b34beba"
+    "meta": "cefc0de53389bce7",
+    "gfx": "419cf2b8f9c54ab5",
+    "pal": "45bef2119eafc20d"
   },
   {
     "key": 12,
     "seq": 1,
     "f": 1,
-    "meta": "96504745435d7d4f",
-    "gfx": "5fd27515ae480dce",
-    "pal": "09a867e64b34beba"
+    "meta": "cefc0de53389bce7",
+    "gfx": "419cf2b8f9c54ab5",
+    "pal": "45bef2119eafc20d"
   },
   {
     "key": 12,
     "seq": 1,
     "f": 2,
-    "meta": "96504745435d7d4f",
-    "gfx": "5fd27515ae480dce",
-    "pal": "09a867e64b34beba"
+    "meta": "cefc0de53389bce7",
+    "gfx": "419cf2b8f9c54ab5",
+    "pal": "45bef2119eafc20d"
   },
   {
     "key": 12,
     "seq": 1,
     "f": 3,
-    "meta": "96504745435d7d4f",
-    "gfx": "3f793a130f88af58",
-    "pal": "09a867e64b34beba"
+    "meta": "ee5b6c166a24ba3e",
+    "gfx": "42aed39b6f400694",
+    "pal": "45bef2119eafc20d"
   },
   {
     "key": 12,
     "seq": 1,
     "f": 4,
-    "meta": "96504745435d7d4f",
-    "gfx": "7ea4601130184636",
-    "pal": "09a867e64b34beba"
+    "meta": "41c3d27eca1fac0d",
+    "gfx": "d34369d3d99acf83",
+    "pal": "45bef2119eafc20d"
   },
   {
     "key": 12,
     "seq": 1,
     "f": 5,
-    "meta": "96504745435d7d4f",
-    "gfx": "7ea4601130184636",
-    "pal": "09a867e64b34beba"
+    "meta": "41c3d27eca1fac0d",
+    "gfx": "d34369d3d99acf83",
+    "pal": "45bef2119eafc20d"
   },
   {
     "key": 12,
     "seq": 1,
     "f": 6,
-    "meta": "96504745435d7d4f",
-    "gfx": "7ea4601130184636",
-    "pal": "09a867e64b34beba"
+    "meta": "41c3d27eca1fac0d",
+    "gfx": "d34369d3d99acf83",
+    "pal": "45bef2119eafc20d"
   },
   {
     "key": 13,
     "seq": 0,
     "f": 0,
-    "meta": "96504745435d7d4f",
-    "gfx": "34edf4a19060fa6f",
-    "pal": "8aeb485f85a6648c"
+    "meta": "e8a19d251363d353",
+    "gfx": "c01f6224fe5957d8",
+    "pal": "34f9a7f214753927"
   },
   {
     "key": 13,
     "seq": 0,
     "f": 1,
-    "meta": "96504745435d7d4f",
-    "gfx": "34edf4a19060fa6f",
-    "pal": "8aeb485f85a6648c"
+    "meta": "e8a19d251363d353",
+    "gfx": "c01f6224fe5957d8",
+    "pal": "34f9a7f214753927"
   },
   {
     "key": 13,
     "seq": 0,
     "f": 2,
-    "meta": "96504745435d7d4f",
-    "gfx": "34edf4a19060fa6f",
-    "pal": "8aeb485f85a6648c"
+    "meta": "e8a19d251363d353",
+    "gfx": "c01f6224fe5957d8",
+    "pal": "34f9a7f214753927"
   },
   {
     "key": 13,
     "seq": 0,
     "f": 3,
-    "meta": "96504745435d7d4f",
-    "gfx": "3f793a130f88af58",
-    "pal": "8aeb485f85a6648c"
+    "meta": "ee5b6c166a24ba3e",
+    "gfx": "9b5cac0fc0a00d56",
+    "pal": "34f9a7f214753927"
   },
   {
     "key": 13,
     "seq": 0,
     "f": 4,
-    "meta": "96504745435d7d4f",
-    "gfx": "7ea4601130184636",
-    "pal": "8aeb485f85a6648c"
+    "meta": "41c3d27eca1fac0d",
+    "gfx": "60d650986b22cdd4",
+    "pal": "34f9a7f214753927"
   },
   {
     "key": 13,
     "seq": 0,
     "f": 5,
-    "meta": "96504745435d7d4f",
-    "gfx": "7ea4601130184636",
-    "pal": "8aeb485f85a6648c"
+    "meta": "41c3d27eca1fac0d",
+    "gfx": "60d650986b22cdd4",
+    "pal": "34f9a7f214753927"
   },
   {
     "key": 13,
     "seq": 0,
     "f": 6,
-    "meta": "96504745435d7d4f",
-    "gfx": "7ea4601130184636",
-    "pal": "8aeb485f85a6648c"
+    "meta": "41c3d27eca1fac0d",
+    "gfx": "60d650986b22cdd4",
+    "pal": "34f9a7f214753927"
   },
   {
     "key": 13,
     "seq": 1,
     "f": 0,
-    "meta": "96504745435d7d4f",
-    "gfx": "5fd27515ae480dce",
-    "pal": "8aeb485f85a6648c"
+    "meta": "cefc0de53389bce7",
+    "gfx": "24d328833cc212e5",
+    "pal": "34f9a7f214753927"
   },
   {
     "key": 13,
     "seq": 1,
     "f": 1,
-    "meta": "96504745435d7d4f",
-    "gfx": "5fd27515ae480dce",
-    "pal": "8aeb485f85a6648c"
+    "meta": "cefc0de53389bce7",
+    "gfx": "24d328833cc212e5",
+    "pal": "34f9a7f214753927"
   },
   {
     "key": 13,
     "seq": 1,
     "f": 2,
-    "meta": "96504745435d7d4f",
-    "gfx": "5fd27515ae480dce",
-    "pal": "8aeb485f85a6648c"
+    "meta": "cefc0de53389bce7",
+    "gfx": "24d328833cc212e5",
+    "pal": "34f9a7f214753927"
   },
   {
     "key": 13,
     "seq": 1,
     "f": 3,
-    "meta": "96504745435d7d4f",
-    "gfx": "3f793a130f88af58",
-    "pal": "8aeb485f85a6648c"
+    "meta": "ee5b6c166a24ba3e",
+    "gfx": "9b5cac0fc0a00d56",
+    "pal": "34f9a7f214753927"
   },
   {
     "key": 13,
     "seq": 1,
     "f": 4,
-    "meta": "96504745435d7d4f",
-    "gfx": "7ea4601130184636",
-    "pal": "8aeb485f85a6648c"
+    "meta": "41c3d27eca1fac0d",
+    "gfx": "60d650986b22cdd4",
+    "pal": "34f9a7f214753927"
   },
   {
     "key": 13,
     "seq": 1,
     "f": 5,
-    "meta": "96504745435d7d4f",
-    "gfx": "7ea4601130184636",
-    "pal": "8aeb485f85a6648c"
+    "meta": "41c3d27eca1fac0d",
+    "gfx": "60d650986b22cdd4",
+    "pal": "34f9a7f214753927"
   },
   {
     "key": 13,
     "seq": 1,
     "f": 6,
-    "meta": "96504745435d7d4f",
-    "gfx": "7ea4601130184636",
-    "pal": "8aeb485f85a6648c"
+    "meta": "41c3d27eca1fac0d",
+    "gfx": "60d650986b22cdd4",
+    "pal": "34f9a7f214753927"
   },
   {
     "key": 14,
     "seq": 0,
     "f": 0,
-    "meta": "96504745435d7d4f",
-    "gfx": "34edf4a19060fa6f",
-    "pal": "366a3df0ed5cac42"
+    "meta": "e8a19d251363d353",
+    "gfx": "e664c24050866a46",
+    "pal": "2b61d5e22ea931d5"
   },
   {
     "key": 14,
     "seq": 0,
     "f": 1,
-    "meta": "96504745435d7d4f",
-    "gfx": "34edf4a19060fa6f",
-    "pal": "366a3df0ed5cac42"
+    "meta": "e8a19d251363d353",
+    "gfx": "e664c24050866a46",
+    "pal": "2b61d5e22ea931d5"
   },
   {
     "key": 14,
     "seq": 0,
     "f": 2,
-    "meta": "96504745435d7d4f",
-    "gfx": "34edf4a19060fa6f",
-    "pal": "366a3df0ed5cac42"
+    "meta": "e8a19d251363d353",
+    "gfx": "e664c24050866a46",
+    "pal": "2b61d5e22ea931d5"
   },
   {
     "key": 14,
     "seq": 0,
     "f": 3,
-    "meta": "96504745435d7d4f",
-    "gfx": "3f793a130f88af58",
-    "pal": "366a3df0ed5cac42"
+    "meta": "ee5b6c166a24ba3e",
+    "gfx": "0dcf9a2fc3ea781e",
+    "pal": "2b61d5e22ea931d5"
   },
   {
     "key": 14,
     "seq": 0,
     "f": 4,
-    "meta": "96504745435d7d4f",
-    "gfx": "7ea4601130184636",
-    "pal": "366a3df0ed5cac42"
+    "meta": "41c3d27eca1fac0d",
+    "gfx": "4f47b8673d9d9f52",
+    "pal": "2b61d5e22ea931d5"
   },
   {
     "key": 14,
     "seq": 0,
     "f": 5,
-    "meta": "96504745435d7d4f",
-    "gfx": "7ea4601130184636",
-    "pal": "366a3df0ed5cac42"
+    "meta": "41c3d27eca1fac0d",
+    "gfx": "4f47b8673d9d9f52",
+    "pal": "2b61d5e22ea931d5"
   },
   {
     "key": 14,
     "seq": 0,
     "f": 6,
-    "meta": "96504745435d7d4f",
-    "gfx": "7ea4601130184636",
-    "pal": "366a3df0ed5cac42"
+    "meta": "41c3d27eca1fac0d",
+    "gfx": "4f47b8673d9d9f52",
+    "pal": "2b61d5e22ea931d5"
   },
   {
     "key": 14,
     "seq": 1,
     "f": 0,
-    "meta": "96504745435d7d4f",
-    "gfx": "5fd27515ae480dce",
-    "pal": "366a3df0ed5cac42"
+    "meta": "cefc0de53389bce7",
+    "gfx": "8d1401cdd3914f6a",
+    "pal": "2b61d5e22ea931d5"
   },
   {
     "key": 14,
     "seq": 1,
     "f": 1,
-    "meta": "96504745435d7d4f",
-    "gfx": "5fd27515ae480dce",
-    "pal": "366a3df0ed5cac42"
+    "meta": "cefc0de53389bce7",
+    "gfx": "8d1401cdd3914f6a",
+    "pal": "2b61d5e22ea931d5"
   },
   {
     "key": 14,
     "seq": 1,
     "f": 2,
-    "meta": "96504745435d7d4f",
-    "gfx": "5fd27515ae480dce",
-    "pal": "366a3df0ed5cac42"
+    "meta": "cefc0de53389bce7",
+    "gfx": "8d1401cdd3914f6a",
+    "pal": "2b61d5e22ea931d5"
   },
   {
     "key": 14,
     "seq": 1,
     "f": 3,
-    "meta": "96504745435d7d4f",
-    "gfx": "3f793a130f88af58",
-    "pal": "366a3df0ed5cac42"
+    "meta": "ee5b6c166a24ba3e",
+    "gfx": "0dcf9a2fc3ea781e",
+    "pal": "2b61d5e22ea931d5"
   },
   {
     "key": 14,
     "seq": 1,
     "f": 4,
-    "meta": "96504745435d7d4f",
-    "gfx": "7ea4601130184636",
-    "pal": "366a3df0ed5cac42"
+    "meta": "41c3d27eca1fac0d",
+    "gfx": "4f47b8673d9d9f52",
+    "pal": "2b61d5e22ea931d5"
   },
   {
     "key": 14,
     "seq": 1,
     "f": 5,
-    "meta": "96504745435d7d4f",
-    "gfx": "7ea4601130184636",
-    "pal": "366a3df0ed5cac42"
+    "meta": "41c3d27eca1fac0d",
+    "gfx": "4f47b8673d9d9f52",
+    "pal": "2b61d5e22ea931d5"
   },
   {
     "key": 14,
     "seq": 1,
     "f": 6,
-    "meta": "96504745435d7d4f",
-    "gfx": "7ea4601130184636",
-    "pal": "366a3df0ed5cac42"
+    "meta": "41c3d27eca1fac0d",
+    "gfx": "4f47b8673d9d9f52",
+    "pal": "2b61d5e22ea931d5"
   }
 ]

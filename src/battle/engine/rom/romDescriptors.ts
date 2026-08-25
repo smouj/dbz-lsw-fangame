@@ -289,6 +289,43 @@ export function standardAttackProfileFor(card: { id: number; type: string; atk: 
   return known[card.id] ?? null;
 }
 
+/**
+ * Beam LaunchProfile por handler (§218-224, §3858-3859).
+ *
+ * $03-$07 hacen `if state != $14: jump Handler02` — comparten la máquina
+ * Beam ($5776) y SOLO reemplazan el tramo de lanzamiento. Cada handler tiene
+ * un `releaseSyncFrame` distinto y, según el caso, screen-motion o path:
+ *   $02 release frame 4 (sin screen motion)
+ *   $03 release frame 5
+ *   $04 release frame 17
+ *   $05 release frame 4 + screen -6×19t (restore)
+ *   $06 release frame 7 + screen -6×16t (restore)
+ *   $07 WAIT2 → FX → WAIT4 → SCREEN_PATH (release frame 2)
+ * Evidencia: docs/rom/COMBAT_MECHANICS_ROM_CONFIRMED.md §218-224 y
+ * §3858-3859 (R4 Rocket Punch $05 · R4b Potbelly $06).
+ */
+export interface BeamLaunchProfile {
+  handler: number;
+  releaseSyncFrame: number;
+  screenMotion?: RomScreenMotion;
+  /** $07 usa screen-path opcode $11 en lugar de screen motion. */
+  screenPath?: boolean;
+}
+
+export const BEAM_LAUNCH_PROFILES: readonly BeamLaunchProfile[] = [
+  { handler: 0x02, releaseSyncFrame: 4 },
+  { handler: 0x03, releaseSyncFrame: 5 },
+  { handler: 0x04, releaseSyncFrame: 17 },
+  { handler: 0x05, releaseSyncFrame: 4, screenMotion: ROM_SCREEN_MOTION_19T },
+  { handler: 0x06, releaseSyncFrame: 7, screenMotion: ROM_SCREEN_MOTION_16T },
+  { handler: 0x07, releaseSyncFrame: 2, screenPath: true },
+];
+
+/** Resuelve el LaunchProfile de un handler Beam ($02-$07). */
+export function beamLaunchProfileForHandler(handler: number): BeamLaunchProfile | null {
+  return BEAM_LAUNCH_PROFILES.find(profile => profile.handler === handler) ?? null;
+}
+
 // ═══════════════════════════════════════════════════════════════════════
 // ROM LOTE 8 — ActionObject core, per-frame timing, handlers especiales
 // (§245-276). Fuente: docs/rom/COMBAT_MECHANICS_ROM_CONFIRMED.md §245–276.

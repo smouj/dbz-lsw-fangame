@@ -18,6 +18,8 @@ import {
   type RomPresentationProfile,
   type RomPresentationStep,
 } from './romPresentationProfiles';
+import { resolveProductionFrame } from './productionFrameResolver';
+import { animationResourceById } from './animationResources';
 
 export type RomCompiledPresentationCompleteness = 'COMPLETE' | 'PARTIAL';
 
@@ -25,6 +27,8 @@ export interface RomPresentationCompilerOptions {
   startTick?: number;
   logicalTick?: number;
   actorSide?: BattleSide;
+  actorFormId?: string | null;
+  sequenceSelector?: number | null;
   sourceEvent?: string;
   selectedResultFamily?: string | null;
   selectedResultSourceEvent?: string | null;
@@ -120,6 +124,8 @@ function compileStep(
   profile: RomPresentationProfile,
   cursor: number,
   actorSide: BattleSide,
+  actorFormId: string | null,
+  sequenceSelector: number | null,
   selectedResultFamily: string | null,
   selectedResultSourceEvent: string | null,
 ): { cues: PresentationCue[]; advanceTicks: number } {
@@ -160,11 +166,60 @@ function compileStep(
       };
     }
 
-    case 'START_ANIMATION':
-      return {
-        cues: [{ type: 'ANIMATION_START', tick: cursor, slot: 0, resource: step.resource }],
-        advanceTicks: 0,
-      };
+    case 'START_ANIMATION': {
+      const cues: PresentationCue[] = [{ type: 'ANIMATION_START', tick: cursor, slot: 0, resource: step.resource }];
+      if (step.resource != null && actorFormId && sequenceSelector != null) {
+        const resource = step.resource;
+        const sequence = animationResourceById(resource)?.sequences[sequenceSelector];
+        let tick = cursor;
+        for (let frameIndex = 0; frameIndex < (sequence?.frames.length ?? 0); frameIndex++) {
+          const binding = resolveProductionFrame({
+            formId: actorFormId,
+            animationResource: resource,
+            sequenceSelector,
+            frameIndex,
+          });
+          cues.push({
+            type: 'ROM_PHYSICAL_FRAME',
+            tick,
+            slot: 0,
+            formId: actorFormId,
+            resource,
+            sequence: sequenceSelector,
+            frameIndex,
+            source: binding.source,
+            physicalId: binding.physicalId,
+            frameInstanceId: binding.frameInstanceId,
+            file: binding.file,
+            durationTicks: binding.durationTicks,
+            offsetX: binding.offsetX,
+            offsetY: binding.offsetY,
+            rawOffsetX: binding.rawOffsetX,
+            rawOffsetY: binding.rawOffsetY,
+            visualFrameId: binding.visualFrameId,
+            evidence: binding.evidence,
+            fallbackReason: binding.fallbackReason,
+          });
+          tick += Math.max(1, binding.durationTicks ?? 1);
+        }
+        if (!sequence) {
+          cues.push({
+            type: 'ROM_PENDING',
+            tick: cursor,
+            reason: `${step.id}: sequence ${sequenceSelector} is not decoded for resource 0x${resource.toString(16).padStart(2, '0')}`,
+            boundary: 'STATIC',
+          });
+        }
+      } else if (step.resource != null) {
+        cues.push({
+          type: 'ROM_PENDING',
+          tick: cursor,
+          reason: `${step.id}: ProductionFrameResolver blocked because actorFormId/sequenceSelector is not proven`,
+          boundary: 'STATIC',
+        });
+      }
+      return { cues, advanceTicks: 0 };
+    }
 
     case 'WAIT':
       return {
@@ -274,6 +329,8 @@ export function compileRomPresentationProfile(
   const startTick = options.startTick ?? 0;
   const logicalTick = options.logicalTick ?? startTick;
   const actorSide = options.actorSide ?? 'player';
+  const actorFormId = options.actorFormId ?? null;
+  const sequenceSelector = options.sequenceSelector ?? null;
   const sourceEvent = options.sourceEvent ?? 'ROM_PRESENTATION_PROFILE';
   const selectedResultFamily = options.selectedResultFamily ?? null;
   const selectedResultSourceEvent = options.selectedResultSourceEvent ?? null;
@@ -281,12 +338,12 @@ export function compileRomPresentationProfile(
   let cursor = startTick;
 
   for (const programStep of profile.program) {
-    const compiled = compileStep(programStep, profile, cursor, actorSide, selectedResultFamily, selectedResultSourceEvent);
+    const compiled = compileStep(programStep, profile, cursor, actorSide, actorFormId, sequenceSelector, selectedResultFamily, selectedResultSourceEvent);
     for (const cue of compiled.cues) entries.push(entry(cue, profile, sourceEvent, logicalTick));
     cursor += compiled.advanceTicks;
   }
 
-  const endTick = Math.max(startTick, cursor, ...entries.map(item => item.cue.tick + ('durationTicks' in item.cue ? item.cue.durationTicks : 0)));
+  const endTick = Math.max(startTick, cursor, ...entries.map(item => item.cue.tick + ('durationTicks' in item.cue ? (item.cue.durationTicks ?? 0) : 0)));
   const pendingFromCues = entries
     .map(item => item.cue)
     .filter((cue): cue is Extract<PresentationCue, { type: 'ROM_PENDING' }> => cue.type === 'ROM_PENDING')

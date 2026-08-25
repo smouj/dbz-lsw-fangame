@@ -115,8 +115,8 @@ export function PhysicalReconciliationSummary() {
         </span>
         <span className="dev-tag">HIT/MISS/SPECIAL_DEFENSE event-driven</span>
         <span className="dev-tag">verify:standard-damage-rom-cutover</span>
-        <span className={`dev-tag ${beamBaseCutover.romBacked === 38 && beamBaseCutover.nonBeamBaseBacked === 0 && beamBaseCutover.beamVariantsBacked === 0 ? 'ok' : 'bad'}`}>
-          BEAM_BASE runtime {beamBaseCutover.romBacked}/38 ROM-backed
+        <span className={`dev-tag ${beamBaseCutover.romBacked === 16 && beamBaseCutover.handlerShared === 38 && beamBaseCutover.nonBeamBaseBacked === 0 && beamBaseCutover.beamVariantsBacked === 0 ? 'ok' : 'bad'}`}>
+          BEAM_BASE runtime {beamBaseCutover.romBacked}/16 · $02 shared {beamBaseCutover.handlerShared}
         </span>
         <span className="dev-tag">$1E -27px/17t mirrored · FX/palette preserved</span>
         <span className="dev-tag">verify:beam-base-rom-cutover</span>

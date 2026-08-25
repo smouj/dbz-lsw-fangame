@@ -1,0 +1,19 @@
+{
+  "formId": "vegeta_majin",
+  "source": "ROM_PHYSICAL_FIGHTERS",
+  "schemaVersion": 2,
+  "offsetEncoding": "s8",
+  "actorVisualProfileKey": 10,
+  "graphicsBank": 59,
+  "physicalIds": 14,
+  "frameInstances": 66,
+  "resources": [
+    "0x00",
+    "0x05",
+    "0x12"
+  ],
+  "allFrames": "all_frames/",
+  "contactSheetHtml": "contact_sheet.html",
+  "contactSheetPng": "contact_sheet.png",
+  "note": "Generated package for visual inspection. Production manifest.json remains separate until visible cutover."
+}

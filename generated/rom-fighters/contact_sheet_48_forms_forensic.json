@@ -1,0 +1,3026 @@
+[
+  {
+    "formId": "android_16",
+    "actorVisualProfileKey": 28,
+    "graphicsBank": 77,
+    "mappingStatus": "ROM_RECORD_VERIFIED",
+    "frames": [
+      {
+        "physicalId": "rom-p1c-g4d-r00-vf00-ms0903fcd0-gfx5ab213f7",
+        "file": "physical/rom-p1c-g4d-r00-vf00-ms0903fcd0-gfx5ab213f7.png",
+        "rawCanvasFile": "physical-debug/rom-p1c-g4d-r00-vf00-ms0903fcd0-gfx5ab213f7-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p1c-g4d-r00-vf01-msb87a9cfa-gfx4f1f497b",
+        "file": "physical/rom-p1c-g4d-r00-vf01-msb87a9cfa-gfx4f1f497b.png",
+        "rawCanvasFile": "physical-debug/rom-p1c-g4d-r00-vf01-msb87a9cfa-gfx4f1f497b-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p1c-g4d-r00-vf02-msb41b70bf-gfxee635288",
+        "file": "physical/rom-p1c-g4d-r00-vf02-msb41b70bf-gfxee635288.png",
+        "rawCanvasFile": "physical-debug/rom-p1c-g4d-r00-vf02-msb41b70bf-gfxee635288-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p1c-g4d-r00-vf03-ms21dcfda0-gfx7e9c703c",
+        "file": "physical/rom-p1c-g4d-r00-vf03-ms21dcfda0-gfx7e9c703c.png",
+        "rawCanvasFile": "physical-debug/rom-p1c-g4d-r00-vf03-ms21dcfda0-gfx7e9c703c-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      }
+    ]
+  },
+  {
+    "formId": "android_17",
+    "actorVisualProfileKey": 29,
+    "graphicsBank": 78,
+    "mappingStatus": "ROM_RECORD_VERIFIED",
+    "frames": [
+      {
+        "physicalId": "rom-p1d-g4e-r00-vf00-ms0903fcd0-gfx7bc54e5e",
+        "file": "physical/rom-p1d-g4e-r00-vf00-ms0903fcd0-gfx7bc54e5e.png",
+        "rawCanvasFile": "physical-debug/rom-p1d-g4e-r00-vf00-ms0903fcd0-gfx7bc54e5e-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p1d-g4e-r00-vf01-msb87a9cfa-gfx4eb5c6a2",
+        "file": "physical/rom-p1d-g4e-r00-vf01-msb87a9cfa-gfx4eb5c6a2.png",
+        "rawCanvasFile": "physical-debug/rom-p1d-g4e-r00-vf01-msb87a9cfa-gfx4eb5c6a2-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p1d-g4e-r00-vf02-msb41b70bf-gfx2aefc4b8",
+        "file": "physical/rom-p1d-g4e-r00-vf02-msb41b70bf-gfx2aefc4b8.png",
+        "rawCanvasFile": "physical-debug/rom-p1d-g4e-r00-vf02-msb41b70bf-gfx2aefc4b8-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p1d-g4e-r00-vf03-ms21dcfda0-gfx9979ec7a",
+        "file": "physical/rom-p1d-g4e-r00-vf03-ms21dcfda0-gfx9979ec7a.png",
+        "rawCanvasFile": "physical-debug/rom-p1d-g4e-r00-vf03-ms21dcfda0-gfx9979ec7a-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      }
+    ]
+  },
+  {
+    "formId": "android_18",
+    "actorVisualProfileKey": 30,
+    "graphicsBank": 79,
+    "mappingStatus": "ROM_RECORD_VERIFIED",
+    "frames": [
+      {
+        "physicalId": "rom-p1e-g4f-r00-vf00-ms0903fcd0-gfxeddced99",
+        "file": "physical/rom-p1e-g4f-r00-vf00-ms0903fcd0-gfxeddced99.png",
+        "rawCanvasFile": "physical-debug/rom-p1e-g4f-r00-vf00-ms0903fcd0-gfxeddced99-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p1e-g4f-r00-vf01-msb87a9cfa-gfx04c93cca",
+        "file": "physical/rom-p1e-g4f-r00-vf01-msb87a9cfa-gfx04c93cca.png",
+        "rawCanvasFile": "physical-debug/rom-p1e-g4f-r00-vf01-msb87a9cfa-gfx04c93cca-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p1e-g4f-r00-vf02-msb41b70bf-gfx7f9f70ab",
+        "file": "physical/rom-p1e-g4f-r00-vf02-msb41b70bf-gfx7f9f70ab.png",
+        "rawCanvasFile": "physical-debug/rom-p1e-g4f-r00-vf02-msb41b70bf-gfx7f9f70ab-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p1e-g4f-r00-vf03-ms21dcfda0-gfx2600eb6b",
+        "file": "physical/rom-p1e-g4f-r00-vf03-ms21dcfda0-gfx2600eb6b.png",
+        "rawCanvasFile": "physical-debug/rom-p1e-g4f-r00-vf03-ms21dcfda0-gfx2600eb6b-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      }
+    ]
+  },
+  {
+    "formId": "android_19",
+    "actorVisualProfileKey": 31,
+    "graphicsBank": 80,
+    "mappingStatus": "ROM_RECORD_VERIFIED",
+    "frames": [
+      {
+        "physicalId": "rom-p1f-g50-r00-vf00-ms0903fcd0-gfx3c43b8b0",
+        "file": "physical/rom-p1f-g50-r00-vf00-ms0903fcd0-gfx3c43b8b0.png",
+        "rawCanvasFile": "physical-debug/rom-p1f-g50-r00-vf00-ms0903fcd0-gfx3c43b8b0-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p1f-g50-r00-vf01-msb87a9cfa-gfxcb91f22d",
+        "file": "physical/rom-p1f-g50-r00-vf01-msb87a9cfa-gfxcb91f22d.png",
+        "rawCanvasFile": "physical-debug/rom-p1f-g50-r00-vf01-msb87a9cfa-gfxcb91f22d-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p1f-g50-r00-vf02-msb41b70bf-gfx2dfecbef",
+        "file": "physical/rom-p1f-g50-r00-vf02-msb41b70bf-gfx2dfecbef.png",
+        "rawCanvasFile": "physical-debug/rom-p1f-g50-r00-vf02-msb41b70bf-gfx2dfecbef-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p1f-g50-r00-vf03-ms21dcfda0-gfx602f228d",
+        "file": "physical/rom-p1f-g50-r00-vf03-ms21dcfda0-gfx602f228d.png",
+        "rawCanvasFile": "physical-debug/rom-p1f-g50-r00-vf03-ms21dcfda0-gfx602f228d-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      }
+    ]
+  },
+  {
+    "formId": "android_20",
+    "actorVisualProfileKey": 32,
+    "graphicsBank": 81,
+    "mappingStatus": "ROM_RECORD_VERIFIED",
+    "frames": [
+      {
+        "physicalId": "rom-p20-g51-r00-vf00-ms0903fcd0-gfx573a5d46",
+        "file": "physical/rom-p20-g51-r00-vf00-ms0903fcd0-gfx573a5d46.png",
+        "rawCanvasFile": "physical-debug/rom-p20-g51-r00-vf00-ms0903fcd0-gfx573a5d46-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p20-g51-r00-vf01-msb87a9cfa-gfx6499d910",
+        "file": "physical/rom-p20-g51-r00-vf01-msb87a9cfa-gfx6499d910.png",
+        "rawCanvasFile": "physical-debug/rom-p20-g51-r00-vf01-msb87a9cfa-gfx6499d910-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p20-g51-r00-vf02-msb41b70bf-gfx2dfa7b13",
+        "file": "physical/rom-p20-g51-r00-vf02-msb41b70bf-gfx2dfa7b13.png",
+        "rawCanvasFile": "physical-debug/rom-p20-g51-r00-vf02-msb41b70bf-gfx2dfa7b13-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p20-g51-r00-vf03-ms21dcfda0-gfx109c88a9",
+        "file": "physical/rom-p20-g51-r00-vf03-ms21dcfda0-gfx109c88a9.png",
+        "rawCanvasFile": "physical-debug/rom-p20-g51-r00-vf03-ms21dcfda0-gfx109c88a9-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      }
+    ]
+  },
+  {
+    "formId": "burter",
+    "actorVisualProfileKey": 25,
+    "graphicsBank": 74,
+    "mappingStatus": "ROM_RECORD_VERIFIED",
+    "frames": [
+      {
+        "physicalId": "rom-p19-g4a-r00-vf00-ms0903fcd0-gfx8800c12b",
+        "file": "physical/rom-p19-g4a-r00-vf00-ms0903fcd0-gfx8800c12b.png",
+        "rawCanvasFile": "physical-debug/rom-p19-g4a-r00-vf00-ms0903fcd0-gfx8800c12b-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p19-g4a-r00-vf01-msb87a9cfa-gfx9b5797eb",
+        "file": "physical/rom-p19-g4a-r00-vf01-msb87a9cfa-gfx9b5797eb.png",
+        "rawCanvasFile": "physical-debug/rom-p19-g4a-r00-vf01-msb87a9cfa-gfx9b5797eb-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p19-g4a-r00-vf02-msb41b70bf-gfx8689956e",
+        "file": "physical/rom-p19-g4a-r00-vf02-msb41b70bf-gfx8689956e.png",
+        "rawCanvasFile": "physical-debug/rom-p19-g4a-r00-vf02-msb41b70bf-gfx8689956e-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p19-g4a-r00-vf03-ms21dcfda0-gfx4fd41961",
+        "file": "physical/rom-p19-g4a-r00-vf03-ms21dcfda0-gfx4fd41961.png",
+        "rawCanvasFile": "physical-debug/rom-p19-g4a-r00-vf03-ms21dcfda0-gfx4fd41961-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      }
+    ]
+  },
+  {
+    "formId": "buu_base",
+    "actorVisualProfileKey": 19,
+    "graphicsBank": 68,
+    "mappingStatus": "ROM_RECORD_VERIFIED",
+    "frames": [
+      {
+        "physicalId": "rom-p13-g44-r00-vf00-ms0903fcd0-gfx18226b58",
+        "file": "physical/rom-p13-g44-r00-vf00-ms0903fcd0-gfx18226b58.png",
+        "rawCanvasFile": "physical-debug/rom-p13-g44-r00-vf00-ms0903fcd0-gfx18226b58-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p13-g44-r00-vf01-msb87a9cfa-gfxe489eb0e",
+        "file": "physical/rom-p13-g44-r00-vf01-msb87a9cfa-gfxe489eb0e.png",
+        "rawCanvasFile": "physical-debug/rom-p13-g44-r00-vf01-msb87a9cfa-gfxe489eb0e-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p13-g44-r00-vf02-msb41b70bf-gfxc24eacea",
+        "file": "physical/rom-p13-g44-r00-vf02-msb41b70bf-gfxc24eacea.png",
+        "rawCanvasFile": "physical-debug/rom-p13-g44-r00-vf02-msb41b70bf-gfxc24eacea-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p13-g44-r00-vf03-ms21dcfda0-gfxf8cd3b76",
+        "file": "physical/rom-p13-g44-r00-vf03-ms21dcfda0-gfxf8cd3b76.png",
+        "rawCanvasFile": "physical-debug/rom-p13-g44-r00-vf03-ms21dcfda0-gfxf8cd3b76-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p13-g44-r03-vf01-ms46655521-gfx5196b8c8",
+        "file": "physical/rom-p13-g44-r03-vf01-ms46655521-gfx5196b8c8.png",
+        "rawCanvasFile": "physical-debug/rom-p13-g44-r03-vf01-ms46655521-gfx5196b8c8-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p13-g44-r03-vf02-ms4d2c5584-gfx5cff59df",
+        "file": "physical/rom-p13-g44-r03-vf02-ms4d2c5584-gfx5cff59df.png",
+        "rawCanvasFile": "physical-debug/rom-p13-g44-r03-vf02-ms4d2c5584-gfx5cff59df-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      }
+    ]
+  },
+  {
+    "formId": "buu_gohan",
+    "actorVisualProfileKey": 38,
+    "graphicsBank": 87,
+    "mappingStatus": "ROM_IDENTITY_VERIFIED",
+    "frames": [
+      {
+        "physicalId": "rom-p26-g57-r00-vf00-ms0903fcd0-gfx8f8ab2d1",
+        "file": "physical/rom-p26-g57-r00-vf00-ms0903fcd0-gfx8f8ab2d1.png",
+        "rawCanvasFile": "physical-debug/rom-p26-g57-r00-vf00-ms0903fcd0-gfx8f8ab2d1-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p26-g57-r00-vf01-msb87a9cfa-gfxe9c461ac",
+        "file": "physical/rom-p26-g57-r00-vf01-msb87a9cfa-gfxe9c461ac.png",
+        "rawCanvasFile": "physical-debug/rom-p26-g57-r00-vf01-msb87a9cfa-gfxe9c461ac-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p26-g57-r00-vf02-msb41b70bf-gfx90d666ae",
+        "file": "physical/rom-p26-g57-r00-vf02-msb41b70bf-gfx90d666ae.png",
+        "rawCanvasFile": "physical-debug/rom-p26-g57-r00-vf02-msb41b70bf-gfx90d666ae-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p26-g57-r00-vf03-ms21dcfda0-gfx2f98fa32",
+        "file": "physical/rom-p26-g57-r00-vf03-ms21dcfda0-gfx2f98fa32.png",
+        "rawCanvasFile": "physical-debug/rom-p26-g57-r00-vf03-ms21dcfda0-gfx2f98fa32-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p26-g57-r03-vf01-ms46655521-gfxd2030c66",
+        "file": "physical/rom-p26-g57-r03-vf01-ms46655521-gfxd2030c66.png",
+        "rawCanvasFile": "physical-debug/rom-p26-g57-r03-vf01-ms46655521-gfxd2030c66-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p26-g57-r03-vf02-ms4d2c5584-gfx342f8d25",
+        "file": "physical/rom-p26-g57-r03-vf02-ms4d2c5584-gfx342f8d25.png",
+        "rawCanvasFile": "physical-debug/rom-p26-g57-r03-vf02-ms4d2c5584-gfx342f8d25-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      }
+    ]
+  },
+  {
+    "formId": "buu_gotenks",
+    "actorVisualProfileKey": 37,
+    "graphicsBank": 86,
+    "mappingStatus": "ROM_IDENTITY_VERIFIED",
+    "frames": [
+      {
+        "physicalId": "rom-p25-g56-r00-vf00-ms0903fcd0-gfxfd5b1f92",
+        "file": "physical/rom-p25-g56-r00-vf00-ms0903fcd0-gfxfd5b1f92.png",
+        "rawCanvasFile": "physical-debug/rom-p25-g56-r00-vf00-ms0903fcd0-gfxfd5b1f92-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p25-g56-r00-vf01-msb87a9cfa-gfx137b4091",
+        "file": "physical/rom-p25-g56-r00-vf01-msb87a9cfa-gfx137b4091.png",
+        "rawCanvasFile": "physical-debug/rom-p25-g56-r00-vf01-msb87a9cfa-gfx137b4091-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p25-g56-r00-vf02-msb41b70bf-gfx4bcd4ee5",
+        "file": "physical/rom-p25-g56-r00-vf02-msb41b70bf-gfx4bcd4ee5.png",
+        "rawCanvasFile": "physical-debug/rom-p25-g56-r00-vf02-msb41b70bf-gfx4bcd4ee5-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p25-g56-r00-vf03-ms21dcfda0-gfxc566c861",
+        "file": "physical/rom-p25-g56-r00-vf03-ms21dcfda0-gfxc566c861.png",
+        "rawCanvasFile": "physical-debug/rom-p25-g56-r00-vf03-ms21dcfda0-gfxc566c861-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p25-g56-r03-vf01-ms46655521-gfxca49f989",
+        "file": "physical/rom-p25-g56-r03-vf01-ms46655521-gfxca49f989.png",
+        "rawCanvasFile": "physical-debug/rom-p25-g56-r03-vf01-ms46655521-gfxca49f989-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p25-g56-r03-vf02-ms4d2c5584-gfxed67653a",
+        "file": "physical/rom-p25-g56-r03-vf02-ms4d2c5584-gfxed67653a.png",
+        "rawCanvasFile": "physical-debug/rom-p25-g56-r03-vf02-ms4d2c5584-gfxed67653a-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      }
+    ]
+  },
+  {
+    "formId": "buu_kid",
+    "actorVisualProfileKey": 39,
+    "graphicsBank": 88,
+    "mappingStatus": "ROM_IDENTITY_VERIFIED",
+    "frames": [
+      {
+        "physicalId": "rom-p27-g58-r00-vf00-ms0903fcd0-gfx569a6e24",
+        "file": "physical/rom-p27-g58-r00-vf00-ms0903fcd0-gfx569a6e24.png",
+        "rawCanvasFile": "physical-debug/rom-p27-g58-r00-vf00-ms0903fcd0-gfx569a6e24-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p27-g58-r00-vf01-msb87a9cfa-gfx719687f7",
+        "file": "physical/rom-p27-g58-r00-vf01-msb87a9cfa-gfx719687f7.png",
+        "rawCanvasFile": "physical-debug/rom-p27-g58-r00-vf01-msb87a9cfa-gfx719687f7-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p27-g58-r00-vf02-msb41b70bf-gfxb3361266",
+        "file": "physical/rom-p27-g58-r00-vf02-msb41b70bf-gfxb3361266.png",
+        "rawCanvasFile": "physical-debug/rom-p27-g58-r00-vf02-msb41b70bf-gfxb3361266-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p27-g58-r00-vf03-ms21dcfda0-gfx6c4a33b4",
+        "file": "physical/rom-p27-g58-r00-vf03-ms21dcfda0-gfx6c4a33b4.png",
+        "rawCanvasFile": "physical-debug/rom-p27-g58-r00-vf03-ms21dcfda0-gfx6c4a33b4-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p27-g58-r03-vf01-ms46655521-gfx5affb5fd",
+        "file": "physical/rom-p27-g58-r03-vf01-ms46655521-gfx5affb5fd.png",
+        "rawCanvasFile": "physical-debug/rom-p27-g58-r03-vf01-ms46655521-gfx5affb5fd-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p27-g58-r03-vf02-ms4d2c5584-gfx98e4309a",
+        "file": "physical/rom-p27-g58-r03-vf02-ms4d2c5584-gfx98e4309a.png",
+        "rawCanvasFile": "physical-debug/rom-p27-g58-r03-vf02-ms4d2c5584-gfx98e4309a-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      }
+    ]
+  },
+  {
+    "formId": "buu_super",
+    "actorVisualProfileKey": 20,
+    "graphicsBank": 69,
+    "mappingStatus": "ROM_RECORD_VERIFIED",
+    "frames": [
+      {
+        "physicalId": "rom-p14-g45-r00-vf00-ms0903fcd0-gfx806b4ef9",
+        "file": "physical/rom-p14-g45-r00-vf00-ms0903fcd0-gfx806b4ef9.png",
+        "rawCanvasFile": "physical-debug/rom-p14-g45-r00-vf00-ms0903fcd0-gfx806b4ef9-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p14-g45-r00-vf01-msb87a9cfa-gfxe2d9ec6e",
+        "file": "physical/rom-p14-g45-r00-vf01-msb87a9cfa-gfxe2d9ec6e.png",
+        "rawCanvasFile": "physical-debug/rom-p14-g45-r00-vf01-msb87a9cfa-gfxe2d9ec6e-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p14-g45-r00-vf02-msb41b70bf-gfx174d0a6d",
+        "file": "physical/rom-p14-g45-r00-vf02-msb41b70bf-gfx174d0a6d.png",
+        "rawCanvasFile": "physical-debug/rom-p14-g45-r00-vf02-msb41b70bf-gfx174d0a6d-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p14-g45-r00-vf03-ms21dcfda0-gfx5e5b0e56",
+        "file": "physical/rom-p14-g45-r00-vf03-ms21dcfda0-gfx5e5b0e56.png",
+        "rawCanvasFile": "physical-debug/rom-p14-g45-r00-vf03-ms21dcfda0-gfx5e5b0e56-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p14-g45-r03-vf01-ms46655521-gfxa8ce2d38",
+        "file": "physical/rom-p14-g45-r03-vf01-ms46655521-gfxa8ce2d38.png",
+        "rawCanvasFile": "physical-debug/rom-p14-g45-r03-vf01-ms46655521-gfxa8ce2d38-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p14-g45-r03-vf02-ms4d2c5584-gfx05b87bfb",
+        "file": "physical/rom-p14-g45-r03-vf02-ms4d2c5584-gfx05b87bfb.png",
+        "rawCanvasFile": "physical-debug/rom-p14-g45-r03-vf02-ms4d2c5584-gfx05b87bfb-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      }
+    ]
+  },
+  {
+    "formId": "cell_imperfect",
+    "actorVisualProfileKey": 33,
+    "graphicsBank": 82,
+    "mappingStatus": "ROM_RECORD_VERIFIED",
+    "frames": [
+      {
+        "physicalId": "rom-p21-g52-r00-vf00-ms0903fcd0-gfx28d79865",
+        "file": "physical/rom-p21-g52-r00-vf00-ms0903fcd0-gfx28d79865.png",
+        "rawCanvasFile": "physical-debug/rom-p21-g52-r00-vf00-ms0903fcd0-gfx28d79865-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p21-g52-r00-vf01-msb87a9cfa-gfxce86b0ef",
+        "file": "physical/rom-p21-g52-r00-vf01-msb87a9cfa-gfxce86b0ef.png",
+        "rawCanvasFile": "physical-debug/rom-p21-g52-r00-vf01-msb87a9cfa-gfxce86b0ef-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p21-g52-r00-vf02-msb41b70bf-gfxab1d25dc",
+        "file": "physical/rom-p21-g52-r00-vf02-msb41b70bf-gfxab1d25dc.png",
+        "rawCanvasFile": "physical-debug/rom-p21-g52-r00-vf02-msb41b70bf-gfxab1d25dc-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p21-g52-r00-vf03-ms21dcfda0-gfxe16bc9f8",
+        "file": "physical/rom-p21-g52-r00-vf03-ms21dcfda0-gfxe16bc9f8.png",
+        "rawCanvasFile": "physical-debug/rom-p21-g52-r00-vf03-ms21dcfda0-gfxe16bc9f8-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p21-g52-r03-vf01-ms46655521-gfx3d90ed45",
+        "file": "physical/rom-p21-g52-r03-vf01-ms46655521-gfx3d90ed45.png",
+        "rawCanvasFile": "physical-debug/rom-p21-g52-r03-vf01-ms46655521-gfx3d90ed45-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p21-g52-r03-vf02-ms4d2c5584-gfx3cf1ab06",
+        "file": "physical/rom-p21-g52-r03-vf02-ms4d2c5584-gfx3cf1ab06.png",
+        "rawCanvasFile": "physical-debug/rom-p21-g52-r03-vf02-ms4d2c5584-gfx3cf1ab06-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      }
+    ]
+  },
+  {
+    "formId": "cell_jr",
+    "actorVisualProfileKey": 36,
+    "graphicsBank": 85,
+    "mappingStatus": "ROM_RECORD_VERIFIED",
+    "frames": [
+      {
+        "physicalId": "rom-p24-g55-r00-vf00-ms0903fcd0-gfx7dcc339d",
+        "file": "physical/rom-p24-g55-r00-vf00-ms0903fcd0-gfx7dcc339d.png",
+        "rawCanvasFile": "physical-debug/rom-p24-g55-r00-vf00-ms0903fcd0-gfx7dcc339d-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p24-g55-r00-vf01-msb87a9cfa-gfx75f24da3",
+        "file": "physical/rom-p24-g55-r00-vf01-msb87a9cfa-gfx75f24da3.png",
+        "rawCanvasFile": "physical-debug/rom-p24-g55-r00-vf01-msb87a9cfa-gfx75f24da3-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p24-g55-r00-vf02-msb41b70bf-gfxd4b18f50",
+        "file": "physical/rom-p24-g55-r00-vf02-msb41b70bf-gfxd4b18f50.png",
+        "rawCanvasFile": "physical-debug/rom-p24-g55-r00-vf02-msb41b70bf-gfxd4b18f50-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p24-g55-r00-vf03-ms21dcfda0-gfx1f43a50a",
+        "file": "physical/rom-p24-g55-r00-vf03-ms21dcfda0-gfx1f43a50a.png",
+        "rawCanvasFile": "physical-debug/rom-p24-g55-r00-vf03-ms21dcfda0-gfx1f43a50a-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p24-g55-r03-vf01-ms46655521-gfx23e0ae48",
+        "file": "physical/rom-p24-g55-r03-vf01-ms46655521-gfx23e0ae48.png",
+        "rawCanvasFile": "physical-debug/rom-p24-g55-r03-vf01-ms46655521-gfx23e0ae48-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p24-g55-r03-vf02-ms4d2c5584-gfx9d1c4e30",
+        "file": "physical/rom-p24-g55-r03-vf02-ms4d2c5584-gfx9d1c4e30.png",
+        "rawCanvasFile": "physical-debug/rom-p24-g55-r03-vf02-ms4d2c5584-gfx9d1c4e30-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      }
+    ]
+  },
+  {
+    "formId": "cell_perfect",
+    "actorVisualProfileKey": 35,
+    "graphicsBank": 84,
+    "mappingStatus": "ROM_RECORD_VERIFIED",
+    "frames": [
+      {
+        "physicalId": "rom-p23-g54-r00-vf00-ms0903fcd0-gfx097e8e52",
+        "file": "physical/rom-p23-g54-r00-vf00-ms0903fcd0-gfx097e8e52.png",
+        "rawCanvasFile": "physical-debug/rom-p23-g54-r00-vf00-ms0903fcd0-gfx097e8e52-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p23-g54-r00-vf01-msb87a9cfa-gfxdbb6e0f1",
+        "file": "physical/rom-p23-g54-r00-vf01-msb87a9cfa-gfxdbb6e0f1.png",
+        "rawCanvasFile": "physical-debug/rom-p23-g54-r00-vf01-msb87a9cfa-gfxdbb6e0f1-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p23-g54-r00-vf02-msb41b70bf-gfx621d52a2",
+        "file": "physical/rom-p23-g54-r00-vf02-msb41b70bf-gfx621d52a2.png",
+        "rawCanvasFile": "physical-debug/rom-p23-g54-r00-vf02-msb41b70bf-gfx621d52a2-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p23-g54-r00-vf03-ms21dcfda0-gfxf6323074",
+        "file": "physical/rom-p23-g54-r00-vf03-ms21dcfda0-gfxf6323074.png",
+        "rawCanvasFile": "physical-debug/rom-p23-g54-r00-vf03-ms21dcfda0-gfxf6323074-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p23-g54-r03-vf01-ms46655521-gfx22512202",
+        "file": "physical/rom-p23-g54-r03-vf01-ms46655521-gfx22512202.png",
+        "rawCanvasFile": "physical-debug/rom-p23-g54-r03-vf01-ms46655521-gfx22512202-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p23-g54-r03-vf02-ms4d2c5584-gfx67c3104e",
+        "file": "physical/rom-p23-g54-r03-vf02-ms4d2c5584-gfx67c3104e.png",
+        "rawCanvasFile": "physical-debug/rom-p23-g54-r03-vf02-ms4d2c5584-gfx67c3104e-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      }
+    ]
+  },
+  {
+    "formId": "cell_semi",
+    "actorVisualProfileKey": 34,
+    "graphicsBank": 83,
+    "mappingStatus": "ROM_RECORD_VERIFIED",
+    "frames": [
+      {
+        "physicalId": "rom-p22-g53-r00-vf00-ms0903fcd0-gfx888b7e6a",
+        "file": "physical/rom-p22-g53-r00-vf00-ms0903fcd0-gfx888b7e6a.png",
+        "rawCanvasFile": "physical-debug/rom-p22-g53-r00-vf00-ms0903fcd0-gfx888b7e6a-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p22-g53-r00-vf01-msb87a9cfa-gfx23dd1992",
+        "file": "physical/rom-p22-g53-r00-vf01-msb87a9cfa-gfx23dd1992.png",
+        "rawCanvasFile": "physical-debug/rom-p22-g53-r00-vf01-msb87a9cfa-gfx23dd1992-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p22-g53-r00-vf02-msb41b70bf-gfx1bc02a97",
+        "file": "physical/rom-p22-g53-r00-vf02-msb41b70bf-gfx1bc02a97.png",
+        "rawCanvasFile": "physical-debug/rom-p22-g53-r00-vf02-msb41b70bf-gfx1bc02a97-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p22-g53-r00-vf03-ms21dcfda0-gfx6d0f1612",
+        "file": "physical/rom-p22-g53-r00-vf03-ms21dcfda0-gfx6d0f1612.png",
+        "rawCanvasFile": "physical-debug/rom-p22-g53-r00-vf03-ms21dcfda0-gfx6d0f1612-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p22-g53-r03-vf01-ms46655521-gfx7331499b",
+        "file": "physical/rom-p22-g53-r03-vf01-ms46655521-gfx7331499b.png",
+        "rawCanvasFile": "physical-debug/rom-p22-g53-r03-vf01-ms46655521-gfx7331499b-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p22-g53-r03-vf02-ms4d2c5584-gfx7e9171e5",
+        "file": "physical/rom-p22-g53-r03-vf02-ms4d2c5584-gfx7e9171e5.png",
+        "rawCanvasFile": "physical-debug/rom-p22-g53-r03-vf02-ms4d2c5584-gfx7e9171e5-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      }
+    ]
+  },
+  {
+    "formId": "frieza_final",
+    "actorVisualProfileKey": 27,
+    "graphicsBank": 76,
+    "mappingStatus": "ROM_RECORD_VERIFIED",
+    "frames": [
+      {
+        "physicalId": "rom-p1b-g4c-r00-vf00-ms0903fcd0-gfx85098331",
+        "file": "physical/rom-p1b-g4c-r00-vf00-ms0903fcd0-gfx85098331.png",
+        "rawCanvasFile": "physical-debug/rom-p1b-g4c-r00-vf00-ms0903fcd0-gfx85098331-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p1b-g4c-r00-vf01-msb87a9cfa-gfx1fd5a5aa",
+        "file": "physical/rom-p1b-g4c-r00-vf01-msb87a9cfa-gfx1fd5a5aa.png",
+        "rawCanvasFile": "physical-debug/rom-p1b-g4c-r00-vf01-msb87a9cfa-gfx1fd5a5aa-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p1b-g4c-r00-vf02-msb41b70bf-gfx7e6013a2",
+        "file": "physical/rom-p1b-g4c-r00-vf02-msb41b70bf-gfx7e6013a2.png",
+        "rawCanvasFile": "physical-debug/rom-p1b-g4c-r00-vf02-msb41b70bf-gfx7e6013a2-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p1b-g4c-r00-vf03-ms21dcfda0-gfx77829460",
+        "file": "physical/rom-p1b-g4c-r00-vf03-ms21dcfda0-gfx77829460.png",
+        "rawCanvasFile": "physical-debug/rom-p1b-g4c-r00-vf03-ms21dcfda0-gfx77829460-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p1b-g4c-r12-vf00-ms063daf3e-gfxdc91c14d",
+        "file": "physical/rom-p1b-g4c-r12-vf00-ms063daf3e-gfxdc91c14d.png",
+        "rawCanvasFile": "physical-debug/rom-p1b-g4c-r12-vf00-ms063daf3e-gfxdc91c14d-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p1b-g4c-r12-vf01-msa33ffd2b-gfx3c2dba69",
+        "file": "physical/rom-p1b-g4c-r12-vf01-msa33ffd2b-gfx3c2dba69.png",
+        "rawCanvasFile": "physical-debug/rom-p1b-g4c-r12-vf01-msa33ffd2b-gfx3c2dba69-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      }
+    ]
+  },
+  {
+    "formId": "ginyu",
+    "actorVisualProfileKey": 26,
+    "graphicsBank": 75,
+    "mappingStatus": "ROM_RECORD_VERIFIED",
+    "frames": [
+      {
+        "physicalId": "rom-p1a-g4b-r00-vf00-ms0903fcd0-gfxfece1775",
+        "file": "physical/rom-p1a-g4b-r00-vf00-ms0903fcd0-gfxfece1775.png",
+        "rawCanvasFile": "physical-debug/rom-p1a-g4b-r00-vf00-ms0903fcd0-gfxfece1775-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p1a-g4b-r00-vf01-msb87a9cfa-gfx8ba90d5e",
+        "file": "physical/rom-p1a-g4b-r00-vf01-msb87a9cfa-gfx8ba90d5e.png",
+        "rawCanvasFile": "physical-debug/rom-p1a-g4b-r00-vf01-msb87a9cfa-gfx8ba90d5e-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p1a-g4b-r00-vf02-msb41b70bf-gfxd7440e53",
+        "file": "physical/rom-p1a-g4b-r00-vf02-msb41b70bf-gfxd7440e53.png",
+        "rawCanvasFile": "physical-debug/rom-p1a-g4b-r00-vf02-msb41b70bf-gfxd7440e53-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p1a-g4b-r00-vf03-ms21dcfda0-gfxf5a2c5e9",
+        "file": "physical/rom-p1a-g4b-r00-vf03-ms21dcfda0-gfxf5a2c5e9.png",
+        "rawCanvasFile": "physical-debug/rom-p1a-g4b-r00-vf03-ms21dcfda0-gfxf5a2c5e9-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p1a-g4b-r03-vf01-ms46655521-gfx631efc0b",
+        "file": "physical/rom-p1a-g4b-r03-vf01-ms46655521-gfx631efc0b.png",
+        "rawCanvasFile": "physical-debug/rom-p1a-g4b-r03-vf01-ms46655521-gfx631efc0b-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p1a-g4b-r03-vf02-ms4d2c5584-gfx2c8c808e",
+        "file": "physical/rom-p1a-g4b-r03-vf02-ms4d2c5584-gfx2c8c808e.png",
+        "rawCanvasFile": "physical-debug/rom-p1a-g4b-r03-vf02-ms4d2c5584-gfx2c8c808e-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      }
+    ]
+  },
+  {
+    "formId": "ginyu_goku",
+    "actorVisualProfileKey": 40,
+    "graphicsBank": 89,
+    "mappingStatus": "ROM_IDENTITY_VERIFIED",
+    "frames": [
+      {
+        "physicalId": "rom-p28-g59-r00-vf00-ms0903fcd0-gfx48825a33",
+        "file": "physical/rom-p28-g59-r00-vf00-ms0903fcd0-gfx48825a33.png",
+        "rawCanvasFile": "physical-debug/rom-p28-g59-r00-vf00-ms0903fcd0-gfx48825a33-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p28-g59-r00-vf01-msb87a9cfa-gfx8e8cec3c",
+        "file": "physical/rom-p28-g59-r00-vf01-msb87a9cfa-gfx8e8cec3c.png",
+        "rawCanvasFile": "physical-debug/rom-p28-g59-r00-vf01-msb87a9cfa-gfx8e8cec3c-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p28-g59-r00-vf02-msb41b70bf-gfx8e7ab38f",
+        "file": "physical/rom-p28-g59-r00-vf02-msb41b70bf-gfx8e7ab38f.png",
+        "rawCanvasFile": "physical-debug/rom-p28-g59-r00-vf02-msb41b70bf-gfx8e7ab38f-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p28-g59-r00-vf03-ms21dcfda0-gfx5588b603",
+        "file": "physical/rom-p28-g59-r00-vf03-ms21dcfda0-gfx5588b603.png",
+        "rawCanvasFile": "physical-debug/rom-p28-g59-r00-vf03-ms21dcfda0-gfx5588b603-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p28-g59-r03-vf01-ms46655521-gfxbb717aa0",
+        "file": "physical/rom-p28-g59-r03-vf01-ms46655521-gfxbb717aa0.png",
+        "rawCanvasFile": "physical-debug/rom-p28-g59-r03-vf01-ms46655521-gfxbb717aa0-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p28-g59-r03-vf02-ms4d2c5584-gfxf0ec975b",
+        "file": "physical/rom-p28-g59-r03-vf02-ms4d2c5584-gfxf0ec975b.png",
+        "rawCanvasFile": "physical-debug/rom-p28-g59-r03-vf02-ms4d2c5584-gfxf0ec975b-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      }
+    ]
+  },
+  {
+    "formId": "gohan_adult_ssj",
+    "actorVisualProfileKey": 12,
+    "graphicsBank": 61,
+    "mappingStatus": "ROM_RECORD_VERIFIED",
+    "frames": [
+      {
+        "physicalId": "rom-p0c-g3d-r00-vf00-ms0903fcd0-gfx72c539df",
+        "file": "physical/rom-p0c-g3d-r00-vf00-ms0903fcd0-gfx72c539df.png",
+        "rawCanvasFile": "physical-debug/rom-p0c-g3d-r00-vf00-ms0903fcd0-gfx72c539df-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p0c-g3d-r00-vf01-msb87a9cfa-gfx2a4f4e0e",
+        "file": "physical/rom-p0c-g3d-r00-vf01-msb87a9cfa-gfx2a4f4e0e.png",
+        "rawCanvasFile": "physical-debug/rom-p0c-g3d-r00-vf01-msb87a9cfa-gfx2a4f4e0e-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p0c-g3d-r00-vf02-msb41b70bf-gfx95f4315f",
+        "file": "physical/rom-p0c-g3d-r00-vf02-msb41b70bf-gfx95f4315f.png",
+        "rawCanvasFile": "physical-debug/rom-p0c-g3d-r00-vf02-msb41b70bf-gfx95f4315f-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p0c-g3d-r00-vf03-ms21dcfda0-gfx56646936",
+        "file": "physical/rom-p0c-g3d-r00-vf03-ms21dcfda0-gfx56646936.png",
+        "rawCanvasFile": "physical-debug/rom-p0c-g3d-r00-vf03-ms21dcfda0-gfx56646936-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p0c-g3d-r03-vf01-ms46655521-gfx60ab5e99",
+        "file": "physical/rom-p0c-g3d-r03-vf01-ms46655521-gfx60ab5e99.png",
+        "rawCanvasFile": "physical-debug/rom-p0c-g3d-r03-vf01-ms46655521-gfx60ab5e99-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p0c-g3d-r03-vf02-ms4d2c5584-gfxa0c7d62c",
+        "file": "physical/rom-p0c-g3d-r03-vf02-ms4d2c5584-gfxa0c7d62c.png",
+        "rawCanvasFile": "physical-debug/rom-p0c-g3d-r03-vf02-ms4d2c5584-gfxa0c7d62c-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      }
+    ]
+  },
+  {
+    "formId": "gohan_adult_ssj2",
+    "actorVisualProfileKey": 12,
+    "graphicsBank": 61,
+    "mappingStatus": "ROM_RECORD_VERIFIED",
+    "frames": [
+      {
+        "physicalId": "rom-p0c-g3d-r00-vf00-ms0903fcd0-gfx72c539df",
+        "file": "physical/rom-p0c-g3d-r00-vf00-ms0903fcd0-gfx72c539df.png",
+        "rawCanvasFile": "physical-debug/rom-p0c-g3d-r00-vf00-ms0903fcd0-gfx72c539df-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p0c-g3d-r00-vf01-msb87a9cfa-gfx2a4f4e0e",
+        "file": "physical/rom-p0c-g3d-r00-vf01-msb87a9cfa-gfx2a4f4e0e.png",
+        "rawCanvasFile": "physical-debug/rom-p0c-g3d-r00-vf01-msb87a9cfa-gfx2a4f4e0e-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p0c-g3d-r00-vf02-msb41b70bf-gfx95f4315f",
+        "file": "physical/rom-p0c-g3d-r00-vf02-msb41b70bf-gfx95f4315f.png",
+        "rawCanvasFile": "physical-debug/rom-p0c-g3d-r00-vf02-msb41b70bf-gfx95f4315f-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p0c-g3d-r00-vf03-ms21dcfda0-gfx56646936",
+        "file": "physical/rom-p0c-g3d-r00-vf03-ms21dcfda0-gfx56646936.png",
+        "rawCanvasFile": "physical-debug/rom-p0c-g3d-r00-vf03-ms21dcfda0-gfx56646936-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p0c-g3d-r03-vf01-ms46655521-gfx60ab5e99",
+        "file": "physical/rom-p0c-g3d-r03-vf01-ms46655521-gfx60ab5e99.png",
+        "rawCanvasFile": "physical-debug/rom-p0c-g3d-r03-vf01-ms46655521-gfx60ab5e99-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p0c-g3d-r03-vf02-ms4d2c5584-gfxa0c7d62c",
+        "file": "physical/rom-p0c-g3d-r03-vf02-ms4d2c5584-gfxa0c7d62c.png",
+        "rawCanvasFile": "physical-debug/rom-p0c-g3d-r03-vf02-ms4d2c5584-gfxa0c7d62c-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      }
+    ]
+  },
+  {
+    "formId": "gohan_adult_ultimate",
+    "actorVisualProfileKey": 11,
+    "graphicsBank": 60,
+    "mappingStatus": "ROM_RECORD_VERIFIED",
+    "frames": [
+      {
+        "physicalId": "rom-p0b-g3c-r00-vf00-ms0903fcd0-gfxf82cbdb5",
+        "file": "physical/rom-p0b-g3c-r00-vf00-ms0903fcd0-gfxf82cbdb5.png",
+        "rawCanvasFile": "physical-debug/rom-p0b-g3c-r00-vf00-ms0903fcd0-gfxf82cbdb5-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p0b-g3c-r00-vf01-msb87a9cfa-gfx9a6d7805",
+        "file": "physical/rom-p0b-g3c-r00-vf01-msb87a9cfa-gfx9a6d7805.png",
+        "rawCanvasFile": "physical-debug/rom-p0b-g3c-r00-vf01-msb87a9cfa-gfx9a6d7805-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p0b-g3c-r00-vf02-msb41b70bf-gfxd4947277",
+        "file": "physical/rom-p0b-g3c-r00-vf02-msb41b70bf-gfxd4947277.png",
+        "rawCanvasFile": "physical-debug/rom-p0b-g3c-r00-vf02-msb41b70bf-gfxd4947277-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p0b-g3c-r00-vf03-ms21dcfda0-gfx50f386b5",
+        "file": "physical/rom-p0b-g3c-r00-vf03-ms21dcfda0-gfx50f386b5.png",
+        "rawCanvasFile": "physical-debug/rom-p0b-g3c-r00-vf03-ms21dcfda0-gfx50f386b5-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p0b-g3c-r03-vf01-ms46655521-gfx2913baa2",
+        "file": "physical/rom-p0b-g3c-r03-vf01-ms46655521-gfx2913baa2.png",
+        "rawCanvasFile": "physical-debug/rom-p0b-g3c-r03-vf01-ms46655521-gfx2913baa2-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p0b-g3c-r03-vf02-ms4d2c5584-gfx8fdbc424",
+        "file": "physical/rom-p0b-g3c-r03-vf02-ms4d2c5584-gfx8fdbc424.png",
+        "rawCanvasFile": "physical-debug/rom-p0b-g3c-r03-vf02-ms4d2c5584-gfx8fdbc424-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      }
+    ]
+  },
+  {
+    "formId": "gohan_young",
+    "actorVisualProfileKey": 0,
+    "graphicsBank": 49,
+    "mappingStatus": "ROM_RECORD_VERIFIED",
+    "frames": [
+      {
+        "physicalId": "rom-p00-g31-r00-vf00-ms0903fcd0-gfx992ebaa6",
+        "file": "physical/rom-p00-g31-r00-vf00-ms0903fcd0-gfx992ebaa6.png",
+        "rawCanvasFile": "physical-debug/rom-p00-g31-r00-vf00-ms0903fcd0-gfx992ebaa6-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p00-g31-r00-vf01-msb87a9cfa-gfx60dcd468",
+        "file": "physical/rom-p00-g31-r00-vf01-msb87a9cfa-gfx60dcd468.png",
+        "rawCanvasFile": "physical-debug/rom-p00-g31-r00-vf01-msb87a9cfa-gfx60dcd468-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p00-g31-r00-vf02-msb41b70bf-gfx4174b0e8",
+        "file": "physical/rom-p00-g31-r00-vf02-msb41b70bf-gfx4174b0e8.png",
+        "rawCanvasFile": "physical-debug/rom-p00-g31-r00-vf02-msb41b70bf-gfx4174b0e8-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p00-g31-r00-vf03-ms21dcfda0-gfx45f7e965",
+        "file": "physical/rom-p00-g31-r00-vf03-ms21dcfda0-gfx45f7e965.png",
+        "rawCanvasFile": "physical-debug/rom-p00-g31-r00-vf03-ms21dcfda0-gfx45f7e965-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p00-g31-r03-vf01-ms46655521-gfx561af970",
+        "file": "physical/rom-p00-g31-r03-vf01-ms46655521-gfx561af970.png",
+        "rawCanvasFile": "physical-debug/rom-p00-g31-r03-vf01-ms46655521-gfx561af970-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p00-g31-r03-vf02-ms4d2c5584-gfxe90624af",
+        "file": "physical/rom-p00-g31-r03-vf02-ms4d2c5584-gfxe90624af.png",
+        "rawCanvasFile": "physical-debug/rom-p00-g31-r03-vf02-ms4d2c5584-gfxe90624af-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      }
+    ]
+  },
+  {
+    "formId": "gohan_young_ssj",
+    "actorVisualProfileKey": 1,
+    "graphicsBank": 50,
+    "mappingStatus": "ROM_RECORD_VERIFIED",
+    "frames": [
+      {
+        "physicalId": "rom-p01-g32-r00-vf00-ms0903fcd0-gfx8966e611",
+        "file": "physical/rom-p01-g32-r00-vf00-ms0903fcd0-gfx8966e611.png",
+        "rawCanvasFile": "physical-debug/rom-p01-g32-r00-vf00-ms0903fcd0-gfx8966e611-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p01-g32-r00-vf01-msb87a9cfa-gfx1e350470",
+        "file": "physical/rom-p01-g32-r00-vf01-msb87a9cfa-gfx1e350470.png",
+        "rawCanvasFile": "physical-debug/rom-p01-g32-r00-vf01-msb87a9cfa-gfx1e350470-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p01-g32-r00-vf02-msb41b70bf-gfx436773d3",
+        "file": "physical/rom-p01-g32-r00-vf02-msb41b70bf-gfx436773d3.png",
+        "rawCanvasFile": "physical-debug/rom-p01-g32-r00-vf02-msb41b70bf-gfx436773d3-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p01-g32-r00-vf03-ms21dcfda0-gfxe212b459",
+        "file": "physical/rom-p01-g32-r00-vf03-ms21dcfda0-gfxe212b459.png",
+        "rawCanvasFile": "physical-debug/rom-p01-g32-r00-vf03-ms21dcfda0-gfxe212b459-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p01-g32-r03-vf01-ms46655521-gfx96980834",
+        "file": "physical/rom-p01-g32-r03-vf01-ms46655521-gfx96980834.png",
+        "rawCanvasFile": "physical-debug/rom-p01-g32-r03-vf01-ms46655521-gfx96980834-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p01-g32-r03-vf02-ms4d2c5584-gfxae8ead6d",
+        "file": "physical/rom-p01-g32-r03-vf02-ms4d2c5584-gfxae8ead6d.png",
+        "rawCanvasFile": "physical-debug/rom-p01-g32-r03-vf02-ms4d2c5584-gfxae8ead6d-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      }
+    ]
+  },
+  {
+    "formId": "gohan_young_ssj2",
+    "actorVisualProfileKey": 2,
+    "graphicsBank": 51,
+    "mappingStatus": "ROM_RECORD_VERIFIED",
+    "frames": [
+      {
+        "physicalId": "rom-p02-g33-r00-vf00-ms0903fcd0-gfx258e5fa8",
+        "file": "physical/rom-p02-g33-r00-vf00-ms0903fcd0-gfx258e5fa8.png",
+        "rawCanvasFile": "physical-debug/rom-p02-g33-r00-vf00-ms0903fcd0-gfx258e5fa8-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p02-g33-r00-vf01-msb87a9cfa-gfx2a3e7cf9",
+        "file": "physical/rom-p02-g33-r00-vf01-msb87a9cfa-gfx2a3e7cf9.png",
+        "rawCanvasFile": "physical-debug/rom-p02-g33-r00-vf01-msb87a9cfa-gfx2a3e7cf9-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p02-g33-r00-vf02-msb41b70bf-gfx20fef077",
+        "file": "physical/rom-p02-g33-r00-vf02-msb41b70bf-gfx20fef077.png",
+        "rawCanvasFile": "physical-debug/rom-p02-g33-r00-vf02-msb41b70bf-gfx20fef077-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p02-g33-r00-vf03-ms21dcfda0-gfx6965dde4",
+        "file": "physical/rom-p02-g33-r00-vf03-ms21dcfda0-gfx6965dde4.png",
+        "rawCanvasFile": "physical-debug/rom-p02-g33-r00-vf03-ms21dcfda0-gfx6965dde4-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p02-g33-r03-vf01-ms46655521-gfxc5b738f3",
+        "file": "physical/rom-p02-g33-r03-vf01-ms46655521-gfxc5b738f3.png",
+        "rawCanvasFile": "physical-debug/rom-p02-g33-r03-vf01-ms46655521-gfxc5b738f3-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p02-g33-r03-vf02-ms4d2c5584-gfx1870da46",
+        "file": "physical/rom-p02-g33-r03-vf02-ms4d2c5584-gfx1870da46.png",
+        "rawCanvasFile": "physical-debug/rom-p02-g33-r03-vf02-ms4d2c5584-gfx1870da46-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      }
+    ]
+  },
+  {
+    "formId": "goku_base",
+    "actorVisualProfileKey": 5,
+    "graphicsBank": 54,
+    "mappingStatus": "ROM_RECORD_VERIFIED",
+    "frames": [
+      {
+        "physicalId": "rom-p05-g36-r00-vf00-ms0903fcd0-gfxf5efe740",
+        "file": "physical/rom-p05-g36-r00-vf00-ms0903fcd0-gfxf5efe740.png",
+        "rawCanvasFile": "physical-debug/rom-p05-g36-r00-vf00-ms0903fcd0-gfxf5efe740-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p05-g36-r00-vf01-msb87a9cfa-gfx3d9cda06",
+        "file": "physical/rom-p05-g36-r00-vf01-msb87a9cfa-gfx3d9cda06.png",
+        "rawCanvasFile": "physical-debug/rom-p05-g36-r00-vf01-msb87a9cfa-gfx3d9cda06-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p05-g36-r00-vf02-msb41b70bf-gfxcf8f4931",
+        "file": "physical/rom-p05-g36-r00-vf02-msb41b70bf-gfxcf8f4931.png",
+        "rawCanvasFile": "physical-debug/rom-p05-g36-r00-vf02-msb41b70bf-gfxcf8f4931-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p05-g36-r00-vf03-ms21dcfda0-gfxee49f74b",
+        "file": "physical/rom-p05-g36-r00-vf03-ms21dcfda0-gfxee49f74b.png",
+        "rawCanvasFile": "physical-debug/rom-p05-g36-r00-vf03-ms21dcfda0-gfxee49f74b-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p05-g36-r03-vf01-ms46655521-gfxc9eb3f62",
+        "file": "physical/rom-p05-g36-r03-vf01-ms46655521-gfxc9eb3f62.png",
+        "rawCanvasFile": "physical-debug/rom-p05-g36-r03-vf01-ms46655521-gfxc9eb3f62-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p05-g36-r03-vf02-ms4d2c5584-gfx78e8a29d",
+        "file": "physical/rom-p05-g36-r03-vf02-ms4d2c5584-gfx78e8a29d.png",
+        "rawCanvasFile": "physical-debug/rom-p05-g36-r03-vf02-ms4d2c5584-gfx78e8a29d-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      }
+    ]
+  },
+  {
+    "formId": "goku_ssj",
+    "actorVisualProfileKey": 6,
+    "graphicsBank": 55,
+    "mappingStatus": "ROM_RECORD_VERIFIED",
+    "frames": [
+      {
+        "physicalId": "rom-p06-g37-r00-vf00-ms0903fcd0-gfx24fee319",
+        "file": "physical/rom-p06-g37-r00-vf00-ms0903fcd0-gfx24fee319.png",
+        "rawCanvasFile": "physical-debug/rom-p06-g37-r00-vf00-ms0903fcd0-gfx24fee319-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p06-g37-r00-vf01-msb87a9cfa-gfx7a184573",
+        "file": "physical/rom-p06-g37-r00-vf01-msb87a9cfa-gfx7a184573.png",
+        "rawCanvasFile": "physical-debug/rom-p06-g37-r00-vf01-msb87a9cfa-gfx7a184573-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p06-g37-r00-vf02-msb41b70bf-gfxb0f2de4d",
+        "file": "physical/rom-p06-g37-r00-vf02-msb41b70bf-gfxb0f2de4d.png",
+        "rawCanvasFile": "physical-debug/rom-p06-g37-r00-vf02-msb41b70bf-gfxb0f2de4d-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p06-g37-r00-vf03-ms21dcfda0-gfx95f88c44",
+        "file": "physical/rom-p06-g37-r00-vf03-ms21dcfda0-gfx95f88c44.png",
+        "rawCanvasFile": "physical-debug/rom-p06-g37-r00-vf03-ms21dcfda0-gfx95f88c44-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p06-g37-r03-vf01-ms46655521-gfx19488551",
+        "file": "physical/rom-p06-g37-r03-vf01-ms46655521-gfx19488551.png",
+        "rawCanvasFile": "physical-debug/rom-p06-g37-r03-vf01-ms46655521-gfx19488551-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p06-g37-r03-vf02-ms4d2c5584-gfx1e8badc0",
+        "file": "physical/rom-p06-g37-r03-vf02-ms4d2c5584-gfx1e8badc0.png",
+        "rawCanvasFile": "physical-debug/rom-p06-g37-r03-vf02-ms4d2c5584-gfx1e8badc0-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      }
+    ]
+  },
+  {
+    "formId": "goku_ssj2",
+    "actorVisualProfileKey": 7,
+    "graphicsBank": 56,
+    "mappingStatus": "ROM_RECORD_VERIFIED",
+    "frames": [
+      {
+        "physicalId": "rom-p07-g38-r00-vf00-ms0903fcd0-gfx76827345",
+        "file": "physical/rom-p07-g38-r00-vf00-ms0903fcd0-gfx76827345.png",
+        "rawCanvasFile": "physical-debug/rom-p07-g38-r00-vf00-ms0903fcd0-gfx76827345-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p07-g38-r00-vf01-msb87a9cfa-gfxda914f33",
+        "file": "physical/rom-p07-g38-r00-vf01-msb87a9cfa-gfxda914f33.png",
+        "rawCanvasFile": "physical-debug/rom-p07-g38-r00-vf01-msb87a9cfa-gfxda914f33-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p07-g38-r00-vf02-msb41b70bf-gfx0d498e33",
+        "file": "physical/rom-p07-g38-r00-vf02-msb41b70bf-gfx0d498e33.png",
+        "rawCanvasFile": "physical-debug/rom-p07-g38-r00-vf02-msb41b70bf-gfx0d498e33-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p07-g38-r00-vf03-ms21dcfda0-gfx40db5cd4",
+        "file": "physical/rom-p07-g38-r00-vf03-ms21dcfda0-gfx40db5cd4.png",
+        "rawCanvasFile": "physical-debug/rom-p07-g38-r00-vf03-ms21dcfda0-gfx40db5cd4-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p07-g38-r03-vf01-ms46655521-gfx5edbd891",
+        "file": "physical/rom-p07-g38-r03-vf01-ms46655521-gfx5edbd891.png",
+        "rawCanvasFile": "physical-debug/rom-p07-g38-r03-vf01-ms46655521-gfx5edbd891-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p07-g38-r03-vf02-ms4d2c5584-gfx9c15dabd",
+        "file": "physical/rom-p07-g38-r03-vf02-ms4d2c5584-gfx9c15dabd.png",
+        "rawCanvasFile": "physical-debug/rom-p07-g38-r03-vf02-ms4d2c5584-gfx9c15dabd-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      }
+    ]
+  },
+  {
+    "formId": "goku_ssj3",
+    "actorVisualProfileKey": 8,
+    "graphicsBank": 57,
+    "mappingStatus": "ROM_RECORD_VERIFIED",
+    "frames": [
+      {
+        "physicalId": "rom-p08-g39-r00-vf00-ms0903fcd0-gfxa2e2cbce",
+        "file": "physical/rom-p08-g39-r00-vf00-ms0903fcd0-gfxa2e2cbce.png",
+        "rawCanvasFile": "physical-debug/rom-p08-g39-r00-vf00-ms0903fcd0-gfxa2e2cbce-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p08-g39-r00-vf01-msb87a9cfa-gfx3bf8926b",
+        "file": "physical/rom-p08-g39-r00-vf01-msb87a9cfa-gfx3bf8926b.png",
+        "rawCanvasFile": "physical-debug/rom-p08-g39-r00-vf01-msb87a9cfa-gfx3bf8926b-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p08-g39-r00-vf02-msb41b70bf-gfxa22a3020",
+        "file": "physical/rom-p08-g39-r00-vf02-msb41b70bf-gfxa22a3020.png",
+        "rawCanvasFile": "physical-debug/rom-p08-g39-r00-vf02-msb41b70bf-gfxa22a3020-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p08-g39-r00-vf03-ms21dcfda0-gfxe69f97e7",
+        "file": "physical/rom-p08-g39-r00-vf03-ms21dcfda0-gfxe69f97e7.png",
+        "rawCanvasFile": "physical-debug/rom-p08-g39-r00-vf03-ms21dcfda0-gfxe69f97e7-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p08-g39-r03-vf01-ms46655521-gfxb968da2c",
+        "file": "physical/rom-p08-g39-r03-vf01-ms46655521-gfxb968da2c.png",
+        "rawCanvasFile": "physical-debug/rom-p08-g39-r03-vf01-ms46655521-gfxb968da2c-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p08-g39-r03-vf02-ms4d2c5584-gfxfe2e87d3",
+        "file": "physical/rom-p08-g39-r03-vf02-ms4d2c5584-gfxfe2e87d3.png",
+        "rawCanvasFile": "physical-debug/rom-p08-g39-r03-vf02-ms4d2c5584-gfxfe2e87d3-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      }
+    ]
+  },
+  {
+    "formId": "goten_base",
+    "actorVisualProfileKey": 15,
+    "graphicsBank": 64,
+    "mappingStatus": "ROM_RECORD_VERIFIED",
+    "frames": [
+      {
+        "physicalId": "rom-p0f-g40-r00-vf00-ms0903fcd0-gfxfa00286a",
+        "file": "physical/rom-p0f-g40-r00-vf00-ms0903fcd0-gfxfa00286a.png",
+        "rawCanvasFile": "physical-debug/rom-p0f-g40-r00-vf00-ms0903fcd0-gfxfa00286a-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p0f-g40-r00-vf01-msb87a9cfa-gfx5e2dee00",
+        "file": "physical/rom-p0f-g40-r00-vf01-msb87a9cfa-gfx5e2dee00.png",
+        "rawCanvasFile": "physical-debug/rom-p0f-g40-r00-vf01-msb87a9cfa-gfx5e2dee00-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p0f-g40-r00-vf02-msb41b70bf-gfxf9c28622",
+        "file": "physical/rom-p0f-g40-r00-vf02-msb41b70bf-gfxf9c28622.png",
+        "rawCanvasFile": "physical-debug/rom-p0f-g40-r00-vf02-msb41b70bf-gfxf9c28622-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p0f-g40-r00-vf03-ms21dcfda0-gfx9db30cbf",
+        "file": "physical/rom-p0f-g40-r00-vf03-ms21dcfda0-gfx9db30cbf.png",
+        "rawCanvasFile": "physical-debug/rom-p0f-g40-r00-vf03-ms21dcfda0-gfx9db30cbf-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p0f-g40-r03-vf01-ms46655521-gfx41e77841",
+        "file": "physical/rom-p0f-g40-r03-vf01-ms46655521-gfx41e77841.png",
+        "rawCanvasFile": "physical-debug/rom-p0f-g40-r03-vf01-ms46655521-gfx41e77841-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p0f-g40-r03-vf02-ms4d2c5584-gfxbf129200",
+        "file": "physical/rom-p0f-g40-r03-vf02-ms4d2c5584-gfxbf129200.png",
+        "rawCanvasFile": "physical-debug/rom-p0f-g40-r03-vf02-ms4d2c5584-gfxbf129200-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      }
+    ]
+  },
+  {
+    "formId": "goten_ssj",
+    "actorVisualProfileKey": 16,
+    "graphicsBank": 65,
+    "mappingStatus": "ROM_RECORD_VERIFIED",
+    "frames": [
+      {
+        "physicalId": "rom-p10-g41-r00-vf00-ms0903fcd0-gfx63ea329c",
+        "file": "physical/rom-p10-g41-r00-vf00-ms0903fcd0-gfx63ea329c.png",
+        "rawCanvasFile": "physical-debug/rom-p10-g41-r00-vf00-ms0903fcd0-gfx63ea329c-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p10-g41-r00-vf01-msb87a9cfa-gfx39511c04",
+        "file": "physical/rom-p10-g41-r00-vf01-msb87a9cfa-gfx39511c04.png",
+        "rawCanvasFile": "physical-debug/rom-p10-g41-r00-vf01-msb87a9cfa-gfx39511c04-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p10-g41-r00-vf02-msb41b70bf-gfx3b4be5c9",
+        "file": "physical/rom-p10-g41-r00-vf02-msb41b70bf-gfx3b4be5c9.png",
+        "rawCanvasFile": "physical-debug/rom-p10-g41-r00-vf02-msb41b70bf-gfx3b4be5c9-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p10-g41-r00-vf03-ms21dcfda0-gfx579be5d2",
+        "file": "physical/rom-p10-g41-r00-vf03-ms21dcfda0-gfx579be5d2.png",
+        "rawCanvasFile": "physical-debug/rom-p10-g41-r00-vf03-ms21dcfda0-gfx579be5d2-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p10-g41-r03-vf01-ms46655521-gfxc16fec7a",
+        "file": "physical/rom-p10-g41-r03-vf01-ms46655521-gfxc16fec7a.png",
+        "rawCanvasFile": "physical-debug/rom-p10-g41-r03-vf01-ms46655521-gfxc16fec7a-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p10-g41-r03-vf02-ms4d2c5584-gfxe1ae67a7",
+        "file": "physical/rom-p10-g41-r03-vf02-ms4d2c5584-gfxe1ae67a7.png",
+        "rawCanvasFile": "physical-debug/rom-p10-g41-r03-vf02-ms4d2c5584-gfxe1ae67a7-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      }
+    ]
+  },
+  {
+    "formId": "gotenks_ssj",
+    "actorVisualProfileKey": 41,
+    "graphicsBank": 90,
+    "mappingStatus": "ROM_IDENTITY_VERIFIED",
+    "frames": [
+      {
+        "physicalId": "rom-p29-g5a-r00-vf00-ms0903fcd0-gfxbf89c93b",
+        "file": "physical/rom-p29-g5a-r00-vf00-ms0903fcd0-gfxbf89c93b.png",
+        "rawCanvasFile": "physical-debug/rom-p29-g5a-r00-vf00-ms0903fcd0-gfxbf89c93b-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p29-g5a-r00-vf01-msb87a9cfa-gfx0f2fbc9d",
+        "file": "physical/rom-p29-g5a-r00-vf01-msb87a9cfa-gfx0f2fbc9d.png",
+        "rawCanvasFile": "physical-debug/rom-p29-g5a-r00-vf01-msb87a9cfa-gfx0f2fbc9d-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p29-g5a-r00-vf02-msb41b70bf-gfx3184ad82",
+        "file": "physical/rom-p29-g5a-r00-vf02-msb41b70bf-gfx3184ad82.png",
+        "rawCanvasFile": "physical-debug/rom-p29-g5a-r00-vf02-msb41b70bf-gfx3184ad82-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p29-g5a-r00-vf03-ms21dcfda0-gfx8b1c130a",
+        "file": "physical/rom-p29-g5a-r00-vf03-ms21dcfda0-gfx8b1c130a.png",
+        "rawCanvasFile": "physical-debug/rom-p29-g5a-r00-vf03-ms21dcfda0-gfx8b1c130a-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p29-g5a-r03-vf01-ms46655521-gfx6f428ad7",
+        "file": "physical/rom-p29-g5a-r03-vf01-ms46655521-gfx6f428ad7.png",
+        "rawCanvasFile": "physical-debug/rom-p29-g5a-r03-vf01-ms46655521-gfx6f428ad7-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p29-g5a-r03-vf02-ms4d2c5584-gfx8546d1a5",
+        "file": "physical/rom-p29-g5a-r03-vf02-ms4d2c5584-gfx8546d1a5.png",
+        "rawCanvasFile": "physical-debug/rom-p29-g5a-r03-vf02-ms4d2c5584-gfx8546d1a5-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      }
+    ]
+  },
+  {
+    "formId": "gotenks_ssj3",
+    "actorVisualProfileKey": 42,
+    "graphicsBank": 91,
+    "mappingStatus": "ROM_IDENTITY_VERIFIED",
+    "frames": [
+      {
+        "physicalId": "rom-p2a-g5b-r00-vf00-ms0903fcd0-gfx0db54852",
+        "file": "physical/rom-p2a-g5b-r00-vf00-ms0903fcd0-gfx0db54852.png",
+        "rawCanvasFile": "physical-debug/rom-p2a-g5b-r00-vf00-ms0903fcd0-gfx0db54852-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p2a-g5b-r00-vf01-msb87a9cfa-gfx30f912f2",
+        "file": "physical/rom-p2a-g5b-r00-vf01-msb87a9cfa-gfx30f912f2.png",
+        "rawCanvasFile": "physical-debug/rom-p2a-g5b-r00-vf01-msb87a9cfa-gfx30f912f2-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p2a-g5b-r00-vf02-msb41b70bf-gfx2ca3e35c",
+        "file": "physical/rom-p2a-g5b-r00-vf02-msb41b70bf-gfx2ca3e35c.png",
+        "rawCanvasFile": "physical-debug/rom-p2a-g5b-r00-vf02-msb41b70bf-gfx2ca3e35c-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p2a-g5b-r00-vf03-ms21dcfda0-gfx2066e2dd",
+        "file": "physical/rom-p2a-g5b-r00-vf03-ms21dcfda0-gfx2066e2dd.png",
+        "rawCanvasFile": "physical-debug/rom-p2a-g5b-r00-vf03-ms21dcfda0-gfx2066e2dd-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p2a-g5b-r03-vf01-ms46655521-gfxcf6a311b",
+        "file": "physical/rom-p2a-g5b-r03-vf01-ms46655521-gfxcf6a311b.png",
+        "rawCanvasFile": "physical-debug/rom-p2a-g5b-r03-vf01-ms46655521-gfxcf6a311b-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p2a-g5b-r03-vf02-ms4d2c5584-gfx8902a016",
+        "file": "physical/rom-p2a-g5b-r03-vf02-ms4d2c5584-gfx8902a016.png",
+        "rawCanvasFile": "physical-debug/rom-p2a-g5b-r03-vf02-ms4d2c5584-gfx8902a016-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      }
+    ]
+  },
+  {
+    "formId": "guldo",
+    "actorVisualProfileKey": 22,
+    "graphicsBank": 71,
+    "mappingStatus": "ROM_RECORD_VERIFIED",
+    "frames": [
+      {
+        "physicalId": "rom-p16-g47-r00-vf00-ms0903fcd0-gfx339e28d0",
+        "file": "physical/rom-p16-g47-r00-vf00-ms0903fcd0-gfx339e28d0.png",
+        "rawCanvasFile": "physical-debug/rom-p16-g47-r00-vf00-ms0903fcd0-gfx339e28d0-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p16-g47-r00-vf01-msb87a9cfa-gfxac666d12",
+        "file": "physical/rom-p16-g47-r00-vf01-msb87a9cfa-gfxac666d12.png",
+        "rawCanvasFile": "physical-debug/rom-p16-g47-r00-vf01-msb87a9cfa-gfxac666d12-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p16-g47-r00-vf02-msb41b70bf-gfx2533a65b",
+        "file": "physical/rom-p16-g47-r00-vf02-msb41b70bf-gfx2533a65b.png",
+        "rawCanvasFile": "physical-debug/rom-p16-g47-r00-vf02-msb41b70bf-gfx2533a65b-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p16-g47-r00-vf03-ms21dcfda0-gfx8dc56ad9",
+        "file": "physical/rom-p16-g47-r00-vf03-ms21dcfda0-gfx8dc56ad9.png",
+        "rawCanvasFile": "physical-debug/rom-p16-g47-r00-vf03-ms21dcfda0-gfx8dc56ad9-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      }
+    ]
+  },
+  {
+    "formId": "jeice",
+    "actorVisualProfileKey": 24,
+    "graphicsBank": 73,
+    "mappingStatus": "ROM_RECORD_VERIFIED",
+    "frames": [
+      {
+        "physicalId": "rom-p18-g49-r00-vf00-ms0903fcd0-gfx64a889a0",
+        "file": "physical/rom-p18-g49-r00-vf00-ms0903fcd0-gfx64a889a0.png",
+        "rawCanvasFile": "physical-debug/rom-p18-g49-r00-vf00-ms0903fcd0-gfx64a889a0-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p18-g49-r00-vf01-msb87a9cfa-gfx435d06d4",
+        "file": "physical/rom-p18-g49-r00-vf01-msb87a9cfa-gfx435d06d4.png",
+        "rawCanvasFile": "physical-debug/rom-p18-g49-r00-vf01-msb87a9cfa-gfx435d06d4-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p18-g49-r00-vf02-msb41b70bf-gfx251ac348",
+        "file": "physical/rom-p18-g49-r00-vf02-msb41b70bf-gfx251ac348.png",
+        "rawCanvasFile": "physical-debug/rom-p18-g49-r00-vf02-msb41b70bf-gfx251ac348-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p18-g49-r00-vf03-ms21dcfda0-gfx77b6c4b1",
+        "file": "physical/rom-p18-g49-r00-vf03-ms21dcfda0-gfx77b6c4b1.png",
+        "rawCanvasFile": "physical-debug/rom-p18-g49-r00-vf03-ms21dcfda0-gfx77b6c4b1-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      }
+    ]
+  },
+  {
+    "formId": "krillin_base",
+    "actorVisualProfileKey": 4,
+    "graphicsBank": 53,
+    "mappingStatus": "ROM_RECORD_VERIFIED",
+    "frames": [
+      {
+        "physicalId": "rom-p04-g35-r00-vf00-ms0903fcd0-gfx818499c0",
+        "file": "physical/rom-p04-g35-r00-vf00-ms0903fcd0-gfx818499c0.png",
+        "rawCanvasFile": "physical-debug/rom-p04-g35-r00-vf00-ms0903fcd0-gfx818499c0-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p04-g35-r08-vf03-ms1edd16f0-gfxe45d29e0",
+        "file": "physical/rom-p04-g35-r08-vf03-ms1edd16f0-gfxe45d29e0.png",
+        "rawCanvasFile": "physical-debug/rom-p04-g35-r08-vf03-ms1edd16f0-gfxe45d29e0-raw-canvas.png",
+        "width": 40,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p04-g35-r00-vf01-msb87a9cfa-gfxff38924d",
+        "file": "physical/rom-p04-g35-r00-vf01-msb87a9cfa-gfxff38924d.png",
+        "rawCanvasFile": "physical-debug/rom-p04-g35-r00-vf01-msb87a9cfa-gfxff38924d-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p04-g35-r00-vf02-msb41b70bf-gfx082bceb1",
+        "file": "physical/rom-p04-g35-r00-vf02-msb41b70bf-gfx082bceb1.png",
+        "rawCanvasFile": "physical-debug/rom-p04-g35-r00-vf02-msb41b70bf-gfx082bceb1-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p04-g35-r00-vf03-ms21dcfda0-gfx10a8c8a0",
+        "file": "physical/rom-p04-g35-r00-vf03-ms21dcfda0-gfx10a8c8a0.png",
+        "rawCanvasFile": "physical-debug/rom-p04-g35-r00-vf03-ms21dcfda0-gfx10a8c8a0-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p04-g35-r03-vf01-ms46655521-gfx5dce4edf",
+        "file": "physical/rom-p04-g35-r03-vf01-ms46655521-gfx5dce4edf.png",
+        "rawCanvasFile": "physical-debug/rom-p04-g35-r03-vf01-ms46655521-gfx5dce4edf-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      }
+    ]
+  },
+  {
+    "formId": "nappa",
+    "actorVisualProfileKey": 21,
+    "graphicsBank": 70,
+    "mappingStatus": "ROM_RECORD_VERIFIED",
+    "frames": [
+      {
+        "physicalId": "rom-p15-g46-r00-vf00-ms0903fcd0-gfxf01b91b3",
+        "file": "physical/rom-p15-g46-r00-vf00-ms0903fcd0-gfxf01b91b3.png",
+        "rawCanvasFile": "physical-debug/rom-p15-g46-r00-vf00-ms0903fcd0-gfxf01b91b3-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p15-g46-r00-vf01-msb87a9cfa-gfxa854d288",
+        "file": "physical/rom-p15-g46-r00-vf01-msb87a9cfa-gfxa854d288.png",
+        "rawCanvasFile": "physical-debug/rom-p15-g46-r00-vf01-msb87a9cfa-gfxa854d288-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p15-g46-r00-vf02-msb41b70bf-gfx99ff33b4",
+        "file": "physical/rom-p15-g46-r00-vf02-msb41b70bf-gfx99ff33b4.png",
+        "rawCanvasFile": "physical-debug/rom-p15-g46-r00-vf02-msb41b70bf-gfx99ff33b4-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p15-g46-r00-vf03-ms21dcfda0-gfx445feb44",
+        "file": "physical/rom-p15-g46-r00-vf03-ms21dcfda0-gfx445feb44.png",
+        "rawCanvasFile": "physical-debug/rom-p15-g46-r00-vf03-ms21dcfda0-gfx445feb44-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      }
+    ]
+  },
+  {
+    "formId": "piccolo_base",
+    "actorVisualProfileKey": 3,
+    "graphicsBank": 52,
+    "mappingStatus": "ROM_RECORD_VERIFIED",
+    "frames": [
+      {
+        "physicalId": "rom-p03-g34-r00-vf00-ms0903fcd0-gfx7c0382b4",
+        "file": "physical/rom-p03-g34-r00-vf00-ms0903fcd0-gfx7c0382b4.png",
+        "rawCanvasFile": "physical-debug/rom-p03-g34-r00-vf00-ms0903fcd0-gfx7c0382b4-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p03-g34-r00-vf01-msb87a9cfa-gfx5f9f3c51",
+        "file": "physical/rom-p03-g34-r00-vf01-msb87a9cfa-gfx5f9f3c51.png",
+        "rawCanvasFile": "physical-debug/rom-p03-g34-r00-vf01-msb87a9cfa-gfx5f9f3c51-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p03-g34-r00-vf02-msb41b70bf-gfxe3244ce1",
+        "file": "physical/rom-p03-g34-r00-vf02-msb41b70bf-gfxe3244ce1.png",
+        "rawCanvasFile": "physical-debug/rom-p03-g34-r00-vf02-msb41b70bf-gfxe3244ce1-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p03-g34-r00-vf03-ms21dcfda0-gfx804a824f",
+        "file": "physical/rom-p03-g34-r00-vf03-ms21dcfda0-gfx804a824f.png",
+        "rawCanvasFile": "physical-debug/rom-p03-g34-r00-vf03-ms21dcfda0-gfx804a824f-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p03-g34-r04-vf01-msee5b6c16-gfxd9670a6a",
+        "file": "physical/rom-p03-g34-r04-vf01-msee5b6c16-gfxd9670a6a.png",
+        "rawCanvasFile": "physical-debug/rom-p03-g34-r04-vf01-msee5b6c16-gfxd9670a6a-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p03-g34-r04-vf02-mse8a19d25-gfx13bdf0aa",
+        "file": "physical/rom-p03-g34-r04-vf02-mse8a19d25-gfx13bdf0aa.png",
+        "rawCanvasFile": "physical-debug/rom-p03-g34-r04-vf02-mse8a19d25-gfx13bdf0aa-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      }
+    ]
+  },
+  {
+    "formId": "piccolo_evil",
+    "actorVisualProfileKey": 3,
+    "graphicsBank": 52,
+    "mappingStatus": "ROM_RECORD_VERIFIED",
+    "frames": [
+      {
+        "physicalId": "rom-p03-g34-r00-vf00-ms0903fcd0-gfx7c0382b4",
+        "file": "physical/rom-p03-g34-r00-vf00-ms0903fcd0-gfx7c0382b4.png",
+        "rawCanvasFile": "physical-debug/rom-p03-g34-r00-vf00-ms0903fcd0-gfx7c0382b4-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p03-g34-r00-vf01-msb87a9cfa-gfx5f9f3c51",
+        "file": "physical/rom-p03-g34-r00-vf01-msb87a9cfa-gfx5f9f3c51.png",
+        "rawCanvasFile": "physical-debug/rom-p03-g34-r00-vf01-msb87a9cfa-gfx5f9f3c51-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p03-g34-r00-vf02-msb41b70bf-gfxe3244ce1",
+        "file": "physical/rom-p03-g34-r00-vf02-msb41b70bf-gfxe3244ce1.png",
+        "rawCanvasFile": "physical-debug/rom-p03-g34-r00-vf02-msb41b70bf-gfxe3244ce1-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p03-g34-r00-vf03-ms21dcfda0-gfx804a824f",
+        "file": "physical/rom-p03-g34-r00-vf03-ms21dcfda0-gfx804a824f.png",
+        "rawCanvasFile": "physical-debug/rom-p03-g34-r00-vf03-ms21dcfda0-gfx804a824f-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p03-g34-r04-vf01-msee5b6c16-gfxd9670a6a",
+        "file": "physical/rom-p03-g34-r04-vf01-msee5b6c16-gfxd9670a6a.png",
+        "rawCanvasFile": "physical-debug/rom-p03-g34-r04-vf01-msee5b6c16-gfxd9670a6a-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p03-g34-r04-vf02-mse8a19d25-gfx13bdf0aa",
+        "file": "physical/rom-p03-g34-r04-vf02-mse8a19d25-gfx13bdf0aa.png",
+        "rawCanvasFile": "physical-debug/rom-p03-g34-r04-vf02-mse8a19d25-gfx13bdf0aa-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      }
+    ]
+  },
+  {
+    "formId": "piccolo_kami",
+    "actorVisualProfileKey": 3,
+    "graphicsBank": 52,
+    "mappingStatus": "ROM_RECORD_VERIFIED",
+    "frames": [
+      {
+        "physicalId": "rom-p03-g34-r00-vf00-ms0903fcd0-gfx7c0382b4",
+        "file": "physical/rom-p03-g34-r00-vf00-ms0903fcd0-gfx7c0382b4.png",
+        "rawCanvasFile": "physical-debug/rom-p03-g34-r00-vf00-ms0903fcd0-gfx7c0382b4-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p03-g34-r00-vf01-msb87a9cfa-gfx5f9f3c51",
+        "file": "physical/rom-p03-g34-r00-vf01-msb87a9cfa-gfx5f9f3c51.png",
+        "rawCanvasFile": "physical-debug/rom-p03-g34-r00-vf01-msb87a9cfa-gfx5f9f3c51-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p03-g34-r00-vf02-msb41b70bf-gfxe3244ce1",
+        "file": "physical/rom-p03-g34-r00-vf02-msb41b70bf-gfxe3244ce1.png",
+        "rawCanvasFile": "physical-debug/rom-p03-g34-r00-vf02-msb41b70bf-gfxe3244ce1-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p03-g34-r00-vf03-ms21dcfda0-gfx804a824f",
+        "file": "physical/rom-p03-g34-r00-vf03-ms21dcfda0-gfx804a824f.png",
+        "rawCanvasFile": "physical-debug/rom-p03-g34-r00-vf03-ms21dcfda0-gfx804a824f-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p03-g34-r04-vf01-msee5b6c16-gfxd9670a6a",
+        "file": "physical/rom-p03-g34-r04-vf01-msee5b6c16-gfxd9670a6a.png",
+        "rawCanvasFile": "physical-debug/rom-p03-g34-r04-vf01-msee5b6c16-gfxd9670a6a-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p03-g34-r04-vf02-mse8a19d25-gfx13bdf0aa",
+        "file": "physical/rom-p03-g34-r04-vf02-mse8a19d25-gfx13bdf0aa.png",
+        "rawCanvasFile": "physical-debug/rom-p03-g34-r04-vf02-mse8a19d25-gfx13bdf0aa-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      }
+    ]
+  },
+  {
+    "formId": "recoome",
+    "actorVisualProfileKey": 23,
+    "graphicsBank": 72,
+    "mappingStatus": "ROM_RECORD_VERIFIED",
+    "frames": [
+      {
+        "physicalId": "rom-p17-g48-r00-vf00-ms0903fcd0-gfx062f8b17",
+        "file": "physical/rom-p17-g48-r00-vf00-ms0903fcd0-gfx062f8b17.png",
+        "rawCanvasFile": "physical-debug/rom-p17-g48-r00-vf00-ms0903fcd0-gfx062f8b17-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p17-g48-r00-vf01-msb87a9cfa-gfxae827228",
+        "file": "physical/rom-p17-g48-r00-vf01-msb87a9cfa-gfxae827228.png",
+        "rawCanvasFile": "physical-debug/rom-p17-g48-r00-vf01-msb87a9cfa-gfxae827228-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p17-g48-r00-vf02-msb41b70bf-gfx615474b3",
+        "file": "physical/rom-p17-g48-r00-vf02-msb41b70bf-gfx615474b3.png",
+        "rawCanvasFile": "physical-debug/rom-p17-g48-r00-vf02-msb41b70bf-gfx615474b3-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p17-g48-r00-vf03-ms21dcfda0-gfx295621e5",
+        "file": "physical/rom-p17-g48-r00-vf03-ms21dcfda0-gfx295621e5.png",
+        "rawCanvasFile": "physical-debug/rom-p17-g48-r00-vf03-ms21dcfda0-gfx295621e5-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      }
+    ]
+  },
+  {
+    "formId": "trunks_future",
+    "actorVisualProfileKey": 13,
+    "graphicsBank": 62,
+    "mappingStatus": "ROM_RECORD_VERIFIED",
+    "frames": [
+      {
+        "physicalId": "rom-p0d-g3e-r00-vf00-ms0903fcd0-gfx045a7e48",
+        "file": "physical/rom-p0d-g3e-r00-vf00-ms0903fcd0-gfx045a7e48.png",
+        "rawCanvasFile": "physical-debug/rom-p0d-g3e-r00-vf00-ms0903fcd0-gfx045a7e48-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p0d-g3e-r00-vf01-msb87a9cfa-gfx015bb156",
+        "file": "physical/rom-p0d-g3e-r00-vf01-msb87a9cfa-gfx015bb156.png",
+        "rawCanvasFile": "physical-debug/rom-p0d-g3e-r00-vf01-msb87a9cfa-gfx015bb156-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p0d-g3e-r00-vf02-msb41b70bf-gfx5f843446",
+        "file": "physical/rom-p0d-g3e-r00-vf02-msb41b70bf-gfx5f843446.png",
+        "rawCanvasFile": "physical-debug/rom-p0d-g3e-r00-vf02-msb41b70bf-gfx5f843446-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p0d-g3e-r00-vf03-ms21dcfda0-gfxbffcf926",
+        "file": "physical/rom-p0d-g3e-r00-vf03-ms21dcfda0-gfxbffcf926.png",
+        "rawCanvasFile": "physical-debug/rom-p0d-g3e-r00-vf03-ms21dcfda0-gfxbffcf926-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p0d-g3e-r04-vf01-msee5b6c16-gfx9b5cac0f",
+        "file": "physical/rom-p0d-g3e-r04-vf01-msee5b6c16-gfx9b5cac0f.png",
+        "rawCanvasFile": "physical-debug/rom-p0d-g3e-r04-vf01-msee5b6c16-gfx9b5cac0f-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p0d-g3e-r04-vf02-mse8a19d25-gfxc01f6224",
+        "file": "physical/rom-p0d-g3e-r04-vf02-mse8a19d25-gfxc01f6224.png",
+        "rawCanvasFile": "physical-debug/rom-p0d-g3e-r04-vf02-mse8a19d25-gfxc01f6224-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      }
+    ]
+  },
+  {
+    "formId": "trunks_kid",
+    "actorVisualProfileKey": 17,
+    "graphicsBank": 66,
+    "mappingStatus": "ROM_RECORD_VERIFIED",
+    "frames": [
+      {
+        "physicalId": "rom-p11-g42-r00-vf00-ms0903fcd0-gfx381b7b2d",
+        "file": "physical/rom-p11-g42-r00-vf00-ms0903fcd0-gfx381b7b2d.png",
+        "rawCanvasFile": "physical-debug/rom-p11-g42-r00-vf00-ms0903fcd0-gfx381b7b2d-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p11-g42-r00-vf01-msb87a9cfa-gfxa73c7d11",
+        "file": "physical/rom-p11-g42-r00-vf01-msb87a9cfa-gfxa73c7d11.png",
+        "rawCanvasFile": "physical-debug/rom-p11-g42-r00-vf01-msb87a9cfa-gfxa73c7d11-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p11-g42-r00-vf02-msb41b70bf-gfx5c9bcaa0",
+        "file": "physical/rom-p11-g42-r00-vf02-msb41b70bf-gfx5c9bcaa0.png",
+        "rawCanvasFile": "physical-debug/rom-p11-g42-r00-vf02-msb41b70bf-gfx5c9bcaa0-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p11-g42-r00-vf03-ms21dcfda0-gfx49aecc3e",
+        "file": "physical/rom-p11-g42-r00-vf03-ms21dcfda0-gfx49aecc3e.png",
+        "rawCanvasFile": "physical-debug/rom-p11-g42-r00-vf03-ms21dcfda0-gfx49aecc3e-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      }
+    ]
+  },
+  {
+    "formId": "trunks_kid_ssj",
+    "actorVisualProfileKey": 18,
+    "graphicsBank": 67,
+    "mappingStatus": "ROM_RECORD_VERIFIED",
+    "frames": [
+      {
+        "physicalId": "rom-p12-g43-r00-vf00-ms0903fcd0-gfxdc22713f",
+        "file": "physical/rom-p12-g43-r00-vf00-ms0903fcd0-gfxdc22713f.png",
+        "rawCanvasFile": "physical-debug/rom-p12-g43-r00-vf00-ms0903fcd0-gfxdc22713f-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p12-g43-r00-vf01-msb87a9cfa-gfx45218215",
+        "file": "physical/rom-p12-g43-r00-vf01-msb87a9cfa-gfx45218215.png",
+        "rawCanvasFile": "physical-debug/rom-p12-g43-r00-vf01-msb87a9cfa-gfx45218215-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p12-g43-r00-vf02-msb41b70bf-gfx8f8beb8f",
+        "file": "physical/rom-p12-g43-r00-vf02-msb41b70bf-gfx8f8beb8f.png",
+        "rawCanvasFile": "physical-debug/rom-p12-g43-r00-vf02-msb41b70bf-gfx8f8beb8f-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p12-g43-r00-vf03-ms21dcfda0-gfx229f330c",
+        "file": "physical/rom-p12-g43-r00-vf03-ms21dcfda0-gfx229f330c.png",
+        "rawCanvasFile": "physical-debug/rom-p12-g43-r00-vf03-ms21dcfda0-gfx229f330c-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      }
+    ]
+  },
+  {
+    "formId": "trunks_ssj",
+    "actorVisualProfileKey": 14,
+    "graphicsBank": 63,
+    "mappingStatus": "ROM_RECORD_VERIFIED",
+    "frames": [
+      {
+        "physicalId": "rom-p0e-g3f-r00-vf00-ms0903fcd0-gfx3ecf12a6",
+        "file": "physical/rom-p0e-g3f-r00-vf00-ms0903fcd0-gfx3ecf12a6.png",
+        "rawCanvasFile": "physical-debug/rom-p0e-g3f-r00-vf00-ms0903fcd0-gfx3ecf12a6-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p0e-g3f-r00-vf01-msb87a9cfa-gfx26318eef",
+        "file": "physical/rom-p0e-g3f-r00-vf01-msb87a9cfa-gfx26318eef.png",
+        "rawCanvasFile": "physical-debug/rom-p0e-g3f-r00-vf01-msb87a9cfa-gfx26318eef-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p0e-g3f-r00-vf02-msb41b70bf-gfx0fc4e347",
+        "file": "physical/rom-p0e-g3f-r00-vf02-msb41b70bf-gfx0fc4e347.png",
+        "rawCanvasFile": "physical-debug/rom-p0e-g3f-r00-vf02-msb41b70bf-gfx0fc4e347-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p0e-g3f-r00-vf03-ms21dcfda0-gfx28271561",
+        "file": "physical/rom-p0e-g3f-r00-vf03-ms21dcfda0-gfx28271561.png",
+        "rawCanvasFile": "physical-debug/rom-p0e-g3f-r00-vf03-ms21dcfda0-gfx28271561-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p0e-g3f-r04-vf01-msee5b6c16-gfx0dcf9a2f",
+        "file": "physical/rom-p0e-g3f-r04-vf01-msee5b6c16-gfx0dcf9a2f.png",
+        "rawCanvasFile": "physical-debug/rom-p0e-g3f-r04-vf01-msee5b6c16-gfx0dcf9a2f-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p0e-g3f-r04-vf02-mse8a19d25-gfxe664c240",
+        "file": "physical/rom-p0e-g3f-r04-vf02-mse8a19d25-gfxe664c240.png",
+        "rawCanvasFile": "physical-debug/rom-p0e-g3f-r04-vf02-mse8a19d25-gfxe664c240-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      }
+    ]
+  },
+  {
+    "formId": "vegeta_base",
+    "actorVisualProfileKey": 9,
+    "graphicsBank": 58,
+    "mappingStatus": "ROM_RECORD_VERIFIED",
+    "frames": [
+      {
+        "physicalId": "rom-p09-g3a-r00-vf00-ms0903fcd0-gfx3c049057",
+        "file": "physical/rom-p09-g3a-r00-vf00-ms0903fcd0-gfx3c049057.png",
+        "rawCanvasFile": "physical-debug/rom-p09-g3a-r00-vf00-ms0903fcd0-gfx3c049057-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p09-g3a-r05-vf03-msb05d4110-gfx8d347101",
+        "file": "physical/rom-p09-g3a-r05-vf03-msb05d4110-gfx8d347101.png",
+        "rawCanvasFile": "physical-debug/rom-p09-g3a-r05-vf03-msb05d4110-gfx8d347101-raw-canvas.png",
+        "width": 40,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p09-g3a-r00-vf01-msb87a9cfa-gfx8743d72d",
+        "file": "physical/rom-p09-g3a-r00-vf01-msb87a9cfa-gfx8743d72d.png",
+        "rawCanvasFile": "physical-debug/rom-p09-g3a-r00-vf01-msb87a9cfa-gfx8743d72d-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p09-g3a-r00-vf02-msb41b70bf-gfx559a9e19",
+        "file": "physical/rom-p09-g3a-r00-vf02-msb41b70bf-gfx559a9e19.png",
+        "rawCanvasFile": "physical-debug/rom-p09-g3a-r00-vf02-msb41b70bf-gfx559a9e19-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p09-g3a-r00-vf03-ms21dcfda0-gfx8d211797",
+        "file": "physical/rom-p09-g3a-r00-vf03-ms21dcfda0-gfx8d211797.png",
+        "rawCanvasFile": "physical-debug/rom-p09-g3a-r00-vf03-ms21dcfda0-gfx8d211797-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p09-g3a-r05-vf01-msb99b57ce-gfx37a35224",
+        "file": "physical/rom-p09-g3a-r05-vf01-msb99b57ce-gfx37a35224.png",
+        "rawCanvasFile": "physical-debug/rom-p09-g3a-r05-vf01-msb99b57ce-gfx37a35224-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      }
+    ]
+  },
+  {
+    "formId": "vegeta_majin",
+    "actorVisualProfileKey": 10,
+    "graphicsBank": 59,
+    "mappingStatus": "ROM_RECORD_VERIFIED",
+    "frames": [
+      {
+        "physicalId": "rom-p0a-g3b-r00-vf00-ms0903fcd0-gfx5c96ba6f",
+        "file": "physical/rom-p0a-g3b-r00-vf00-ms0903fcd0-gfx5c96ba6f.png",
+        "rawCanvasFile": "physical-debug/rom-p0a-g3b-r00-vf00-ms0903fcd0-gfx5c96ba6f-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p0a-g3b-r05-vf03-msb05d4110-gfx06a89a06",
+        "file": "physical/rom-p0a-g3b-r05-vf03-msb05d4110-gfx06a89a06.png",
+        "rawCanvasFile": "physical-debug/rom-p0a-g3b-r05-vf03-msb05d4110-gfx06a89a06-raw-canvas.png",
+        "width": 40,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p0a-g3b-r00-vf01-msb87a9cfa-gfx328dabc6",
+        "file": "physical/rom-p0a-g3b-r00-vf01-msb87a9cfa-gfx328dabc6.png",
+        "rawCanvasFile": "physical-debug/rom-p0a-g3b-r00-vf01-msb87a9cfa-gfx328dabc6-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p0a-g3b-r00-vf02-msb41b70bf-gfxe89fdf57",
+        "file": "physical/rom-p0a-g3b-r00-vf02-msb41b70bf-gfxe89fdf57.png",
+        "rawCanvasFile": "physical-debug/rom-p0a-g3b-r00-vf02-msb41b70bf-gfxe89fdf57-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p0a-g3b-r00-vf03-ms21dcfda0-gfx45bb0d54",
+        "file": "physical/rom-p0a-g3b-r00-vf03-ms21dcfda0-gfx45bb0d54.png",
+        "rawCanvasFile": "physical-debug/rom-p0a-g3b-r00-vf03-ms21dcfda0-gfx45bb0d54-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p0a-g3b-r05-vf01-msb99b57ce-gfx6db609a6",
+        "file": "physical/rom-p0a-g3b-r05-vf01-msb99b57ce-gfx6db609a6.png",
+        "rawCanvasFile": "physical-debug/rom-p0a-g3b-r05-vf01-msb99b57ce-gfx6db609a6-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      }
+    ]
+  },
+  {
+    "formId": "vegeta_ssj",
+    "actorVisualProfileKey": 10,
+    "graphicsBank": 59,
+    "mappingStatus": "ROM_RECORD_VERIFIED",
+    "frames": [
+      {
+        "physicalId": "rom-p0a-g3b-r00-vf00-ms0903fcd0-gfx5c96ba6f",
+        "file": "physical/rom-p0a-g3b-r00-vf00-ms0903fcd0-gfx5c96ba6f.png",
+        "rawCanvasFile": "physical-debug/rom-p0a-g3b-r00-vf00-ms0903fcd0-gfx5c96ba6f-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p0a-g3b-r05-vf03-msb05d4110-gfx06a89a06",
+        "file": "physical/rom-p0a-g3b-r05-vf03-msb05d4110-gfx06a89a06.png",
+        "rawCanvasFile": "physical-debug/rom-p0a-g3b-r05-vf03-msb05d4110-gfx06a89a06-raw-canvas.png",
+        "width": 40,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p0a-g3b-r00-vf01-msb87a9cfa-gfx328dabc6",
+        "file": "physical/rom-p0a-g3b-r00-vf01-msb87a9cfa-gfx328dabc6.png",
+        "rawCanvasFile": "physical-debug/rom-p0a-g3b-r00-vf01-msb87a9cfa-gfx328dabc6-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p0a-g3b-r00-vf02-msb41b70bf-gfxe89fdf57",
+        "file": "physical/rom-p0a-g3b-r00-vf02-msb41b70bf-gfxe89fdf57.png",
+        "rawCanvasFile": "physical-debug/rom-p0a-g3b-r00-vf02-msb41b70bf-gfxe89fdf57-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p0a-g3b-r00-vf03-ms21dcfda0-gfx45bb0d54",
+        "file": "physical/rom-p0a-g3b-r00-vf03-ms21dcfda0-gfx45bb0d54.png",
+        "rawCanvasFile": "physical-debug/rom-p0a-g3b-r00-vf03-ms21dcfda0-gfx45bb0d54-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p0a-g3b-r05-vf01-msb99b57ce-gfx6db609a6",
+        "file": "physical/rom-p0a-g3b-r05-vf01-msb99b57ce-gfx6db609a6.png",
+        "rawCanvasFile": "physical-debug/rom-p0a-g3b-r05-vf01-msb99b57ce-gfx6db609a6-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      }
+    ]
+  },
+  {
+    "formId": "vegito_ssj",
+    "actorVisualProfileKey": 43,
+    "graphicsBank": 92,
+    "mappingStatus": "ROM_IDENTITY_VERIFIED",
+    "frames": [
+      {
+        "physicalId": "rom-p2b-g5c-r00-vf00-ms0903fcd0-gfxbf479759",
+        "file": "physical/rom-p2b-g5c-r00-vf00-ms0903fcd0-gfxbf479759.png",
+        "rawCanvasFile": "physical-debug/rom-p2b-g5c-r00-vf00-ms0903fcd0-gfxbf479759-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p2b-g5c-r05-vf03-msb05d4110-gfx5a381c1d",
+        "file": "physical/rom-p2b-g5c-r05-vf03-msb05d4110-gfx5a381c1d.png",
+        "rawCanvasFile": "physical-debug/rom-p2b-g5c-r05-vf03-msb05d4110-gfx5a381c1d-raw-canvas.png",
+        "width": 40,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p2b-g5c-r00-vf01-msb87a9cfa-gfx571fff24",
+        "file": "physical/rom-p2b-g5c-r00-vf01-msb87a9cfa-gfx571fff24.png",
+        "rawCanvasFile": "physical-debug/rom-p2b-g5c-r00-vf01-msb87a9cfa-gfx571fff24-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p2b-g5c-r00-vf02-msb41b70bf-gfx871eebbc",
+        "file": "physical/rom-p2b-g5c-r00-vf02-msb41b70bf-gfx871eebbc.png",
+        "rawCanvasFile": "physical-debug/rom-p2b-g5c-r00-vf02-msb41b70bf-gfx871eebbc-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p2b-g5c-r00-vf03-ms21dcfda0-gfx00055bd5",
+        "file": "physical/rom-p2b-g5c-r00-vf03-ms21dcfda0-gfx00055bd5.png",
+        "rawCanvasFile": "physical-debug/rom-p2b-g5c-r00-vf03-ms21dcfda0-gfx00055bd5-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      },
+      {
+        "physicalId": "rom-p2b-g5c-r03-vf01-ms46655521-gfx66d7045b",
+        "file": "physical/rom-p2b-g5c-r03-vf01-ms46655521-gfx66d7045b.png",
+        "rawCanvasFile": "physical-debug/rom-p2b-g5c-r03-vf01-ms46655521-gfx66d7045b-raw-canvas.png",
+        "width": 32,
+        "height": 48,
+        "pieces": 12,
+        "hasNegativePiece": true,
+        "hasFlipPiece": false
+      }
+    ]
+  }
+]

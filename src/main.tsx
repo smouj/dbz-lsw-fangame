@@ -26,6 +26,9 @@ import { FitArt } from './components/FitArt';
 import { CardArtHole } from './components/CardArtHole';
 import { StageHudPanel } from './components/StageHudPanel';
 import { GameViewport } from './components/GameViewport';
+import { TeamSetup } from './components/setup/TeamSetup';
+import { useTeamSetupState } from './components/setup/useTeamSetupState';
+import type { TeamMember, TeamSetupResult } from './components/setup/teamSetupTypes';
 import { overworldUrl } from './data/overworld';
 import { battleOverworldActorUrl, battleOverworldAuraUrl } from './data/battleOverworld';
 import { panelsForChapter, type StoryPanel, characterName } from './data/storyPanels';
@@ -60,6 +63,9 @@ import { decideEnemyCommand, createEnemySession } from './battle/enemy/enemyCont
 import type { BattleState } from './battle/engine/state/BattleState';
 import { applyCinematicEvent } from './renderer/pixi/presentation/CinematicAdapter';
 import type { PixiBattlePresentation } from './renderer/pixi/presentation/PixiBattlePresentation';
+import { ProductionRomPresentationAdapter } from './renderer/pixi/presentation/ProductionRomPresentationAdapter';
+import { RomPresentationPlayer } from './renderer/pixi/presentation/RomPresentationPlayer';
+import { romPresentationTimelineForCard } from './battle/romPresentationForCard';
 // Code-split: pixi.js (~790KB) solo se descarga cuando ?pixiField=1 está activo.
 const BattlePixiStage = lazy(() => import('./battle/BattlePixiStage').then((m) => ({ default: m.BattlePixiStage })));
 import { initAudio, Sfx, setSfxEnabled, setVolume as setVolumeSfx } from './audio/sfx';
@@ -1040,8 +1046,10 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit, onRemat
   const aiRef = useRef({ mode: 0, attacks: 0, gathered: false, gatherStreak: 0 });
   const stageTimer = useRef<ReturnType<typeof setInterval> | null>(null);
   const [limits, setLimits] = useState<number[]>(() => {
-    const assigned = loadLimits(playerFormId);
-    return assigned.length > 0 ? assigned : LIMIT_DEFAULTS[getForm(playerFormId)?.character || ''] || [];
+    // Los limits se guardan por characterId (contrato setup/ROM §47).
+    const charId = getForm(playerFormId)?.character ?? playerFormId;
+    const assigned = loadLimits(charId);
+    return assigned.length > 0 ? assigned : LIMIT_DEFAULTS[charId] || [];
   });
 
   const addLog = useCallback((msg: string, opts?: { gbc?: boolean; durMs?: number }) => {
@@ -1140,6 +1148,12 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit, onRemat
   //     eventos del timeline en paralelo al DOM (sin reemplazarlo). ───
   const pixiPresRef = useRef<PixiBattlePresentation | null>(null);
   const [pixiPresentationReady, setPixiPresentationReady] = useState(false);
+  // C1.0 — Production ROM Bridge: adaptador (frontera única cue→Pixi) + player
+  // + instrumentación provenance (ROM|LEGACY). El adaptador es el MISMO que (b)
+  // reutilizará (BattleRuntime.timeline → Presenter → este adaptador → Pixi).
+  const romAdapterRef = useRef<ProductionRomPresentationAdapter | null>(null);
+  const romPlayerRef = useRef<RomPresentationPlayer | null>(null);
+  const presentationSourceRef = useRef<'ROM' | 'LEGACY'>('LEGACY');
   // ─── Depurador cinematográfico (?debugCinematics=1) ───
   const [debugCin, setDebugCin] = useState<CinematicDebugInfo | null>(null);
   const [debugPaused, setDebugPaused] = useState(false);
@@ -1210,6 +1224,9 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit, onRemat
     cinematicTimers.current = [];
     cinematicRef.current?.cancel();
     cinematicRef.current = null;
+    romPlayerRef.current?.cancel();
+    romPlayerRef.current = null;
+    romAdapterRef.current = null;
   };
   useEffect(() => clearCinematicTimers, []);
   const playCardCinematic = (card: CardDef, side: 'player' | 'enemy', onDone: () => void, onEvent?: (e: CinematicEvent) => void) => {
@@ -1246,9 +1263,27 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit, onRemat
     // Se enruta en PARALELO al DOM (que sigue siendo la presentación por
     // defecto); si la presentación aún no está lista, el DOM cubre el caso.
     const pixiPres = pixiPresRef.current;
+    // C1.0 — Production ROM Bridge: si la carta tiene ruta ROM madura
+    // (BEAM_BASE $02 / STANDARD_DAMAGE $0A), Pixi se gobierna por cues ROM
+    // (NO por profileFor/applyCinematicEvent). El DOM legacy sigue en paralelo
+    // y es quien dispara onDone (se retirará en (b)).
+    const romRoute = pixiPres ? romPresentationTimelineForCard(card, side) : null;
+    const useRomPixi = !!romRoute;
+    presentationSourceRef.current = useRomPixi ? 'ROM' : 'LEGACY';
     if (pixiPres) {
       pixiPres.reset();
       pixiPres.setAttacker(side === 'player' ? 'left' : 'right');
+    }
+    if (useRomPixi && romRoute && pixiPres) {
+      const adapter = new ProductionRomPresentationAdapter(pixiPres, pixiPres.romPresenter);
+      adapter.reset('ROM');
+      romAdapterRef.current = adapter;
+      romPlayerRef.current?.cancel();
+      const player = new RomPresentationPlayer(romRoute.timeline, adapter, {
+        onComplete: () => { romPlayerRef.current = null; pixiPres.returnToField(); },
+      });
+      romPlayerRef.current = player;
+      player.start();
     }
 
     // Depurador: registrar el contexto cinematográfico actual
@@ -1287,7 +1322,9 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit, onRemat
       // (p.ej. commit del daño en APPLY_DAMAGE — fase 3 de la auditoría).
       if (onEvent) onEvent(e);
       // Pixi: enrutar el evento a la presentación (además del DOM).
-      if (pixiPres) applyCinematicEvent(pixiPres, e);
+      // C1.0 — exclusividad: con ruta ROM, Pixi se gobierna por cues ROM;
+      // nunca aplicar el CinematicProfile legacy al MISMO renderer.
+      if (pixiPres && !useRomPixi) applyCinematicEvent(pixiPres, e);
       // Depurador: actualizar refs + overlay en cada evento
       if (isDebugCinematics()) {
         switch (e.type) {
@@ -1376,7 +1413,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit, onRemat
         onEvent: applyEvent,
         onComplete: finishCinematic,
         onReset: resetCinematicReplay,
-        onTick: (tick) => { pixiPres?.sync(tick); if (isDebugCinematics()) refreshDebugInfo(tick); },
+        onTick: (tick) => { if (!useRomPixi) pixiPres?.sync(tick); if (isDebugCinematics()) refreshDebugInfo(tick); },
       });
       cinematicRef.current = tl;
       tl.start();
@@ -1389,7 +1426,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit, onRemat
       onEvent: applyEvent,
       onComplete: finishCinematic,
       onReset: resetCinematicReplay,
-      onTick: (tick) => { pixiPres?.sync(tick); if (isDebugCinematics()) refreshDebugInfo(tick); },
+      onTick: (tick) => { if (!useRomPixi) pixiPres?.sync(tick); if (isDebugCinematics()) refreshDebugInfo(tick); },
     });
     cinematicRef.current = tl;
     tl.start();
@@ -4703,103 +4740,40 @@ function SettingsScreen({ onNavigate }: { onNavigate: (s: Screen) => void }) {
 // VERSUS — Selección de batalla
 // ═══════════════════════════════════════════════════════════
 
-function VersusScreen({ onNavigate, onStartVersus }: {
-  onNavigate: (s: Screen) => void; onStartVersus: (enemyFormId: string) => void;
+function TeamSetupScreen({ onNavigate, onStartVersus }: {
+  onNavigate: (s: Screen) => void;
+  onStartVersus: (enemyFormId: string, member?: TeamMember) => void;
 }) {
   const { t } = useLang();
-  const [selected, setSelected] = useState('piccolo_base');
-  const [difficulty, setDifficulty] = useState<'normal' | 'hard' | 'lethal'>('normal');
-  const deckSize = loadDeck().length;
-  const deckValid = deckSize === DECK_SIZE;
-  const unlockedChars = loadUnlocks().characters;
-
-  const sel = getForm(selected)!;
-  const selChar = getCharacter(sel.character)!;
-  const profile = statProfile(sel);
-
+  const [enemyForm, setEnemyForm] = useState('piccolo_base');
   return (
-    <div className="page-screen versus-screen">
+    <div className="page-screen versus-screen setup-screen-wrap">
       <div className="page-header">
         <button className="btn-back" onClick={() => onNavigate('main')}><ArrowLeft size={14} /></button>
         <h1 className="page-title">{t('versus.title')}</h1>
         <div className="page-spacer" />
       </div>
-      <div className="versus-layout">
-        <div className="char-grid">
-          {CHARACTERS.map(c => {
-            const baseForm = getForm(c.forms[0])!;
-            const active = c.id === sel.character;
-            const unlocked = unlockedChars.includes(c.id);
-            if (!unlocked) {
-              return (
-                <div key={c.id} className={`char-cell ui-char-card locked char-locked ${active ? 'active' : ''}`}>
-                  <div className="char-locked-icon"><Lock size={14} /></div>
-                  <div className="char-name">{c.name}</div>
-                  <div className="char-forms">???</div>
-                </div>
-              );
-            }
-            return (
-              <button key={c.id} className={`char-cell ui-char-card ${active ? 'active' : ''}`}
-                onClick={() => setSelected(baseForm.id)}>
-                <CharacterSprite formId={baseForm.id} height={64} className="char-thumb" />
-                <div className="char-name">{c.name}</div>
-                <div className="char-forms">{c.forms.length} {t('characters.forms')}</div>
-              </button>
-            );
-          })}
-        </div>
-        <div className="char-detail ui-sidebar">
-          <div className="versus-vs">{t('versus.vs')}</div>
-          <CharacterSprite formId={selected} height={160} className="char-detail-sprite" />
-          <div className="char-detail-name">{selChar.name}</div>
-          <div className="char-detail-form">{sel.form}</div>
-          <div className="stat-block">
-            <div className="ui-statbar"><span className="ui-stat-label">{t('attr.hp')}</span><div className="ui-stat-track"><div className="ui-stat-fill hp" style={{ width: `${sel.hp / 6}%` }} /></div><span className="ui-stat-val">{sel.hp}</span></div>
-            <div className="ui-statbar"><span className="ui-stat-label">{t('attr.str')}</span><div className="ui-stat-track"><div className="ui-stat-fill str" style={{ width: `${sel.str / 1.2}%` }} /></div><span className="ui-stat-val">{sel.str}</span></div>
-            <div className="ui-statbar"><span className="ui-stat-label">{t('attr.ki')}</span><div className="ui-stat-track"><div className="ui-stat-fill ki" style={{ width: `${sel.ki / 1.2}%` }} /></div><span className="ui-stat-val">{sel.ki}</span></div>
-            <div className="ui-statbar"><span className="ui-stat-label">{t('attr.spd')}</span><div className="ui-stat-track"><div className="ui-stat-fill spd" style={{ width: `${sel.spd}%` }} /></div><span className="ui-stat-val">{sel.spd}</span></div>
-          </div>
-          <div className="combat-file">
-            <div className="combat-file-row"><span>THREAT</span><b>{profile.power}</b></div>
-            <div className="combat-file-row"><span>STYLE</span><b>{profile.top.role}</b></div>
-            <div className="combat-file-row"><span>DECK</span><b>{deckSize}/{DECK_SIZE}</b></div>
-          </div>
-          <div className="form-select">
-            {selChar.forms.map(fid => {
-              const f = getForm(fid)!;
-              const unlocked = isFormUnlocked(fid, loadProgress().level);
-              if (!unlocked) {
-                return (
-                  <div key={fid} className="form-chip form-chip-locked" title={`LV ${FORM_UNLOCK_LEVELS[fid] || '?'}+`}>
-                    <Lock size={8} /> {f.form}
-                  </div>
-                );
-              }
-              return (
-                <button key={fid} className={`form-chip ${fid === selected ? 'active' : ''}`}
-                  onClick={() => setSelected(fid)}>{f.form}</button>
-              );
-            })}
-          </div>
-          {/* Dificultad (spec §7: Normal/Difícil/Letal) */}
-          <div className="difficulty-select">
-            <span className="diff-label">{t('settings.difficulty')}</span>
-            <div className="diff-options">
-              {(['normal', 'hard', 'lethal'] as const).map(d => (
-                <button key={d} className={`diff-btn ${difficulty === d ? 'active' : ''}`}
-                  onClick={() => { Sfx.select(); setDifficulty(d); }}>
-                  {d.toUpperCase()}
-                </button>
-              ))}
-            </div>
-          </div>
-          <button className="btn-primary" onClick={() => onStartVersus(selected)} disabled={!deckValid}>
-            {deckValid ? <><Swords size={15} /> {t('common.fight').toUpperCase()}</> : `DECK ${deckSize}/${DECK_SIZE}`}
-          </button>
-          {!deckValid && <div className="deck-warning">DECK MUST HAVE {DECK_SIZE} CARDS</div>}
-        </div>
+      {/* Selector de rival (versus) — compacto; el foco del setup es el equipo */}
+      <div className="setup-enemy-row">
+        <span className="setup-enemy-label">OPPONENT</span>
+        <select
+          className="setup-enemy-select"
+          value={enemyForm}
+          onChange={e => { Sfx.select(); setEnemyForm(e.target.value); }}
+        >
+          {CHARACTERS.map(c => c.forms.map(fid => {
+            const f = getForm(fid);
+            return f ? <option key={fid} value={fid}>{c.name} — {f.form}</option> : null;
+          }))}
+        </select>
       </div>
+      <TeamSetup
+        useSetup={useTeamSetupState}
+        fallbackDeck={loadDeck()}
+        onConfirm={(result: TeamSetupResult) => onStartVersus(enemyForm, result.member)}
+        onBack={() => onNavigate('main')}
+        isFormUnlocked={fid => isFormUnlocked(fid, loadProgress().level)}
+      />
     </div>
   );
 }
@@ -4918,8 +4892,19 @@ function AppInner() {
     setScreen('battle');
   };
 
-  const startVersus = (enemyFormId: string) => {
-    setPlayerForm('gohan_young');
+  const startVersus = (enemyFormId: string, member?: TeamMember) => {
+    if (member) {
+      // Handoff único: el Team Setup produce el miembro listo → BattleConfig.
+      // Se persisten deck y limits con los keys canónicos (deck global,
+      // limits por characterId) para que la batalla los lea sin cambios.
+      setPlayerForm(member.formId);
+      try {
+        localStorage.setItem('dbzlsw_deck', JSON.stringify(member.jointDeck));
+      } catch { /* noop */ }
+      saveLimits(member.characterId, member.limits.filter(id => id !== 0));
+    } else {
+      setPlayerForm('gohan_young');
+    }
     setEnemyForm(enemyFormId);
     setStoryChapter(null);
     setBattleKey(k => k + 1);
@@ -5032,7 +5017,7 @@ function AppInner() {
   const screenEl = (() => {
     switch (screen) {
       case 'story': return <StoryScreen onNavigate={setScreen} onStartChapter={startChapter} />;
-      case 'versus': return <VersusScreen onNavigate={setScreen} onStartVersus={startVersus} />;
+      case 'versus': return <TeamSetupScreen onNavigate={setScreen} onStartVersus={startVersus} />;
       case 'deck': return <DeckScreen onNavigate={setScreen} />;
       case 'characters': return <CharactersScreen onNavigate={setScreen} onSelectFighter={startBattle} />;
       case 'cards': return <CardsScreen onNavigate={setScreen} />;

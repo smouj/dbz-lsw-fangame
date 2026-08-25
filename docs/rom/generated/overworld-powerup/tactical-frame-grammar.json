@@ -1,0 +1,34 @@
+{
+  "scope": "S-OW1C — TACTICAL FRAME GRAMMAR (chibi overworld)",
+  "date": "2026-08-24",
+  "status": "PACKAGE_LEVEL_CONFIRMED · ROM_LEVEL_PENDING",
+  "domain_clarification": {
+    "tactical_field": "OVERWORLD chibi (sprites de mapa/menú), NO el battle field (que usa ACTION fighter sprites)",
+    "evidence": "el asset 'panel_sprites/*_ow.png' viene del sheet 'overworld-sprites.png' (Spriters Resource asset_id 54982) — es la hoja de chibis de mapa, no de combate",
+    "battle_sprite_system": "shadow OAM $C300 + DMA (bank_000 ~$0C33) + Call_000_087c = dominio ACTION/combate (ya localizado en S-OW1B)"
+  },
+  "package_level_findings": {
+    "sheet": "14_reference/sprite_sheets/overworld-sprites.png (543x369)",
+    "source": "Spriters Resource rip (PACKAGE_VERIFIED, NO ROM_EXACT)",
+    "total_frames": 215,
+    "characters_in_sheet": 13 y-bands (agrupación de caracteres)",
+    "frames_per_character": "~8-19 (variaciones de ancho 11-84px)",
+    "grammar": {
+      "down_front": "2 walk frames (alternancia de piernas)",
+      "up_back": "2 walk frames",
+      "left_right_side": "2 walk frames (mirrored)",
+      "idle": "1+ frame(s) front-facing",
+      "special": "frames anchos (w=20, w=84) = poses especiales/efecto/transformación"
+    },
+    "verdict": "El chibi overworld TIENE gramática de marcha 4-direccional (idle + walk ×2 por dirección), NO es idle único.",
+    "implication": "Los 43 _ow.png del proyecto son SOLO el frame idle. La gramática de marcha (walk up/down/left/right) NO está en el proyecto."
+  },
+  "rom_level_pending": [
+    "Localizar el motor del mapa overworld (story mode) en el desensamblado (mgbdis labels genéricos)",
+    "Localizar el loader de tiles del chibi (bank/ROM address/VRAM destination/palette)",
+    "Localizar el frame selector (dirección → tile offset; contador de marcha 2-frame)",
+    "Confirmar idle/move_h/move_v por CONSUMIDOR (no por nombre)",
+    "Verificar si los 43 _ow.png = extracción del recurso ROM (pixel-exact) → PACKAGE_VERIFIED hasta entonces"
+  ],
+  "note": "El sheet rip ES evidencia del contenido ROM (fue extraído del juego), pero su equivalencia pixel-exacta con el recurso ROM no está demostrada sin localizar el banco de gráficos del mapa."
+}

@@ -1,0 +1,63 @@
+{
+  "scope": "S-OW1A — GATHER POWER ACTION path (ROM-first, CERRADO)",
+  "date": "2026-08-24",
+  "status": "CLOSED — actor STATIC + FX BG + paleta; recurso $1A compartido Gather/CHARA; recurso $19 separado (ataque)",
+  "dispatch": {
+    "action_state": "$c0a0",
+    "gather_lado1": "$0E -> Jump_001_48a5 -> Call_001_7993",
+    "gather_lado2": "$18 -> Jump_001_4935 -> Call_001_7a4b -> Call_001_7993",
+    "chara_lado1": "$0D -> Jump_001_48b5 -> Call_001_71f4",
+    "chara_lado2": "$17 -> Jump_001_4945 -> Call_001_727c -> Call_001_71f4",
+    "presentation_id_write": "bank_001.asm jr_001_4d01 (lado1 $0D/$0E) / jr_001_4cd5 (lado2 $17/$18)"
+  },
+  "gather_worker": "Call_001_7993 (bank_001.asm, $ca01 state machine)",
+  "gather_states": [
+    { "state": 1, "op": "Call_001_7422 (ACTION setup) -> AO started + Macro $19 SET_ANIMATION_STATE slot=0", "effect": "ACTOR_STATIC_NEUTRAL" },
+    { "state": 2, "op": "Call_001_7a62 (aura/charge phase: paleta + trigger FX player)", "effect": "aura setup" },
+    { "state": 3, "op": "Call_001_7b2c (paleta $33 + FX load $1A)", "effect": "BG_FX + PALETTE" },
+    { "state": 4, "op": "wait 30 ticks ($cb77=$1e)", "effect": "hold" },
+    { "state": 5, "op": "palette transition $0340", "effect": "transition" },
+    { "state": 6, "op": "AO draw ($0938) + fighterState+4 = 5 (powerWindowCounter write) + Yakon check", "effect": "finalize + counter=5" }
+  ],
+  "actor_table": {
+    "fighter_ao_started": "YES",
+    "ao_setup": "Call_001_7422 (slots 0/1, VRAM $8E00, Macro $19/$1A)",
+    "animation_slot": "slot 0 (Macro $19 SET_ANIMATION_STATE slot=0 variant=0)",
+    "animation_resource": "N/A (actor queda en estado NEUTRO; no se carga animación 'arms up')",
+    "sequence_selector": "N/A (estado 0 neutro)",
+    "visual_frame_ids": "N/A (sin secuencia multi-frame del actor)",
+    "loop": "N/A (actor estático)",
+    "hold_last": "N/A",
+    "actor_coordinates": "sin movimiento (macro $19 no desplaza)",
+    "classification": "GATHER_ACTION_ACTOR = STATIC"
+  },
+  "fx_table": {
+    "fx_resource": "Resource $1A (Bank $68, índice 26)",
+    "fx_palette": "$33 (gather) / $31 (chara)",
+    "fx_load_path": "Call_000_3abd -> Bank03:$6750 -> Call_000_1266(DE=$001A) -> VRAM $8800",
+    "fx_duration": "90 ticks core ($5A) + transiciones (setup ~20 + preFX ~20 + post ~30 = ~160 ticks mín)",
+    "fx_classification": "BG_FX (no es sprite de actor)"
+  },
+  "resource_index_semantics": {
+    "loader": "Call_000_1266 (bank_000.asm)",
+    "meaning": "DE = índice de recurso; pointer = Bank[B]:$4008 + DE*4; data = $4000 + pointer*4",
+    "index_25_$19": "recurso DISTINTO — FX de ataque (Call_003_66d1, máquina $ca04, consumer $ca06 con damage apply)",
+    "index_26_$1A": "FX compartido Gather/CHARA"
+  },
+  "naming_collision": {
+    "macro_$19": "SET_ANIMATION_STATE slot=0 (presentation, Bank30:$5D00)",
+    "macro_$1A": "SET_ANIMATION_STATE slot=1 (presentation)",
+    "resource_$19": "graphics índice 25 (ataque)",
+    "resource_$1A": "graphics índice 26 (gather/chara FX)",
+    "note": "macro $19/$1A != resource $19/$1A"
+  },
+  "ledger": {
+    "old": "Gather/CHARA shared FX Bank68:$1A",
+    "status": "CONFIRMED (no SUPERSEDED) — ambos cargan Resource $1A; diferencia = paleta $33/$31",
+    "refinement": "existe además Resource $19 (índice 25) = FX de ataque, separado y antes no documentado"
+  },
+  "open_questions": [
+    "¿El Resource $19 (ataque) es el 'impact FX' del beam/damage? (confirmar consumer exacto $ca06)",
+    "¿El Resource $1A comparte tiles/layout parcial con $19? (ambos van a VRAM $8800, paletas distintas)"
+  ]
+}

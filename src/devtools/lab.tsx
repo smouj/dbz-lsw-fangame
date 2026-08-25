@@ -8,17 +8,19 @@
 // renderer al cambiar de tab (cleanups de useEffect).
 // ═══════════════════════════════════════════════════════════
 import { useState } from 'react';
-import { Swords, Clapperboard, Sparkles } from 'lucide-react';
+import { Swords, Clapperboard, Sparkles, Activity } from 'lucide-react';
 import { BattleLabModule } from './battlelab';
 import { PixiModule } from './pixi';
 import { PixiSequenceModule } from './pixiSequence';
+import { ActionTraceInspector } from './actionTraceInspector';
 
-type LabTab = 'battle' | 'renderer' | 'sequence';
+type LabTab = 'battle' | 'renderer' | 'sequence' | 'trace';
 
 const TABS: { id: LabTab; label: string; icon: typeof Swords; desc: string }[] = [
   { id: 'battle', label: 'Batalla real', icon: Swords, desc: 'Lanza el motor de combate completo (Versus / Historia) con depurador' },
   { id: 'renderer', label: 'Renderer Pixi', icon: Clapperboard, desc: 'Presentación del combate en vivo: escenas, posiciones, poses, reloj GBC' },
   { id: 'sequence', label: 'Secuencias', icon: Sparkles, desc: 'Pipeline BattleTimeline → presentación determinista' },
+  { id: 'trace', label: 'Trace Inspector', icon: Activity, desc: 'Acción golden → rol → frame → ROM → clasificación → fallback' },
 ];
 
 export function LabModule({ onLaunchBattle }: {
@@ -49,6 +51,7 @@ export function LabModule({ onLaunchBattle }: {
         {tab === 'battle' && <BattleLabModule embedded onLaunchBattle={onLaunchBattle} />}
         {tab === 'renderer' && <PixiModule />}
         {tab === 'sequence' && <PixiSequenceModule />}
+        {tab === 'trace' && <ActionTraceInspector />}
       </div>
     </div>
   );

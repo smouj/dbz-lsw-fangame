@@ -1,0 +1,74 @@
+{
+  "formId": "goten_ssj",
+  "actorVisualProfileKey": 16,
+  "graphicsBank": "0x41",
+  "animationResource": "0x03",
+  "sequence": 3,
+  "frameIndex": 7,
+  "visualFrameId": "0x02",
+  "durationTicks": 2,
+  "rawOffsetX": 252,
+  "rawOffsetY": 0,
+  "offsetX": -4,
+  "offsetY": 0,
+  "originX": -16,
+  "originY": -40,
+  "originInTrimX": 16,
+  "originInTrimY": 40,
+  "rawCanvasFile": "physical-debug/rom-p10-g41-r03-vf02-ms4d2c5584-gfxe1ae67a7-raw-canvas.png",
+  "physicalId": "rom-p10-g41-r03-vf02-ms4d2c5584-gfxe1ae67a7",
+  "sourcePhysicalFile": "physical/rom-p10-g41-r03-vf02-ms4d2c5584-gfxe1ae67a7.png",
+  "palette": {
+    "raw": [
+      0,
+      0,
+      255,
+      103,
+      127,
+      2,
+      165,
+      20
+    ],
+    "rawBytes": [
+      0,
+      0,
+      255,
+      103,
+      127,
+      2,
+      165,
+      20
+    ],
+    "rawSha256": "95ab16c32bf4a17de7fdc0b670312e87141759f55c3715b86196ac1079248668",
+    "cpuAddress": 28288,
+    "cpuAddressHex": "0x6e80",
+    "fileOffset": 798336,
+    "fileOffsetHex": "0xc2e80",
+    "bgr555": [
+      "0000",
+      "67ff",
+      "027f",
+      "14a5"
+    ],
+    "colors": [
+      "#000000",
+      "#FFFFCE",
+      "#FF9C00",
+      "#292929"
+    ],
+    "transparentIndex": 0,
+    "color0Transparent": true,
+    "displayTransform": "BGR555_TO_SRGB_DIRECT"
+  },
+  "hashes": {
+    "rawPixelHash": "631afa1ef8fc8e4a",
+    "trimmedPixelHash": "58e06b29c4ca3d75",
+    "metaspriteHash": "4d2c5584c9862075",
+    "graphicsHash": "e1ae67a783b749fb",
+    "paletteHash": "95ab16c32bf4a17d",
+    "graphicsTableHash": "30bfbcfcdb94f4e2",
+    "sourceProvenanceHash": "6fd18742fbecefe5",
+    "sourceFileSha256": "bf1963b21b702ad1387de2811d326142c180d87253580af8fc9f49eb187b8770"
+  },
+  "evidence": "ROM_PHYSICAL"
+}

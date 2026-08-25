@@ -14,10 +14,63 @@ import { useEffect, useMemo, useState } from 'react';
 import { MANIFEST_FRAME_INDEX, type ManifestFrameRecord } from '../../data/generated/manifestFrameIndex.generated';
 import { ANIMATION_RESOURCE_CATALOG, animationResourceById } from '../../battle/animationResources';
 import { PHYSICAL_FRAME_RECONCILIATION } from '../../battle/physicalFrameReconciliation';
-import { ROM_FIGHTER_PALETTES } from '../../data/generated/romFighterPalettes.generated';
+import { ROM_CGB_PALETTE_TABLE } from '../../data/generated/romCgbPaletteTable.generated';
 import { FieldRow, Hex, MappingPill, Mono, PixelCanvas, SectionTitle, ZoomControls, useImage, type MappingStatus, type SpriteBackground } from './common';
 
 interface PoseInfo { pose: string; frames: ManifestFrameRecord[]; fps: number; loop: boolean; }
+interface PhysicalManifestFrame {
+  file: string;
+  rawCanvasFile?: string;
+  physicalId: string;
+  frameIndex: number;
+  visualFrameId: number;
+  durationTicks: number;
+  rawOffsetX: number;
+  rawOffsetY: number;
+  offsetX: number;
+  offsetY: number;
+  originX: number;
+  originY: number;
+  originInTrimX?: number;
+  originInTrimY?: number;
+}
+
+interface PhysicalManifestSequence {
+  resource: number;
+  sequence: number;
+  frames: PhysicalManifestFrame[];
+}
+
+interface PhysicalManifest {
+  source: string;
+  schemaVersion: number;
+  physicalRendererSchema?: number;
+  offsetEncoding: string;
+  actorVisualProfileKey: number;
+  graphicsBank: number;
+  sequences: Record<string, PhysicalManifestSequence>;
+}
+
+interface PhysicalProvenanceFrame {
+  physicalId: string;
+  rawCanvasFile?: string;
+  width: number;
+  height: number;
+  originX: number;
+  originY: number;
+  originInTrimX?: number;
+  originInTrimY?: number;
+  trim?: { x: number; y: number; w: number; h: number; originInTrim?: { x: number; y: number } };
+  palette?: { raw?: number[]; bgr555: string[]; colors: string[]; transparentIndex?: number; color0Transparent?: boolean; displayTransform?: string };
+  metasprite?: { pieces?: unknown[]; provenance?: Record<string, number> };
+  graphics?: { blockCount?: number; provenance?: Record<string, number> };
+}
+
+interface PhysicalProvenance {
+  source: string;
+  formProfile: { actorVisualProfileKey: number; graphicsBank: number; paletteRaw: string[]; paletteAddress: string };
+  frames: PhysicalProvenanceFrame[];
+}
 
 const FORM_IDS = Array.from(new Set(MANIFEST_FRAME_INDEX.map((r) => r.formId))).sort();
 const RESOURCE_IDS = ANIMATION_RESOURCE_CATALOG.map((e) => e.resourceId).sort((a, b) => a - b);
@@ -39,11 +92,11 @@ function mappingForFile(file: string | null): { status: MappingStatus; detail: s
 }
 
 function paletteForKey(key: number) {
-  return ROM_FIGHTER_PALETTES.find((p) => p.key === key) ?? null;
+  return ROM_CGB_PALETTE_TABLE.find((p) => p.index === key) ?? null;
 }
 
 export function FightersTab({ initialForm, onFormChange }: { initialForm: string | null; onFormChange?: (form: string) => void }) {
-  const [mode, setMode] = useState<SubMode>('manifest');
+  const [mode, setMode] = useState<SubMode>('rom');
   // ── MANIFEST POSE ──
   const [formId, setFormId] = useState<string>(initialForm && FORM_IDS.includes(initialForm) ? initialForm : FORM_IDS[0] ?? '');
   const [poses, setPoses] = useState<PoseInfo[]>([]);
@@ -56,10 +109,13 @@ export function FightersTab({ initialForm, onFormChange }: { initialForm: string
   const [seqIdx, setSeqIdx] = useState(0);
   const [romFrameIdx, setRomFrameIdx] = useState(0);
   const [playingRom, setPlayingRom] = useState(false);
-  const [paletteKey, setPaletteKey] = useState<number>(ROM_FIGHTER_PALETTES[0]?.key ?? 2);
+  const [paletteKey, setPaletteKey] = useState<number>(ROM_CGB_PALETTE_TABLE[0]?.index ?? 0);
   const [zoom, setZoom] = useState(3);
   const [background, setBackground] = useState<SpriteBackground>('checker');
   const [grid, setGrid] = useState(false);
+  const [physicalManifest, setPhysicalManifest] = useState<PhysicalManifest | null>(null);
+  const [physicalProvenance, setPhysicalProvenance] = useState<PhysicalProvenance | null>(null);
+  const [physicalError, setPhysicalError] = useState<string | null>(null);
 
   // carga del manifest del form (poses reales + fps)
   useEffect(() => {
@@ -83,6 +139,35 @@ export function FightersTab({ initialForm, onFormChange }: { initialForm: string
         }
       })
       .catch(() => { /* form sin manifest */ });
+    return () => { alive = false; };
+  }, [formId]);
+
+  useEffect(() => {
+    let alive = true;
+    setPhysicalManifest(null);
+    setPhysicalProvenance(null);
+    setPhysicalError(null);
+    Promise.all([
+      fetch(`/assets/sprites/${formId}/rom-physical.manifest.json`, { cache: 'no-store' }),
+      fetch(`/assets/sprites/${formId}/provenance.json`, { cache: 'no-store' }),
+    ]).then(async ([manifestResponse, provenanceResponse]) => {
+      if (!manifestResponse.ok || !provenanceResponse.ok) {
+        throw new Error(`ROM_PHYSICAL no disponible para ${formId} (${manifestResponse.status}/${provenanceResponse.status})`);
+      }
+      const manifest = await manifestResponse.json() as PhysicalManifest;
+      const provenance = await provenanceResponse.json() as PhysicalProvenance;
+      if (!alive) return;
+      setPhysicalManifest(manifest);
+      setPhysicalProvenance(provenance);
+      const firstSequence = Object.values(manifest.sequences).sort((a, b) => a.resource - b.resource || a.sequence - b.sequence)[0];
+      if (firstSequence) {
+        setResourceId(firstSequence.resource);
+        setSeqIdx(firstSequence.sequence);
+        setRomFrameIdx(0);
+      }
+    }).catch(error => {
+      if (alive) setPhysicalError(error instanceof Error ? error.message : String(error));
+    });
     return () => { alive = false; };
   }, [formId]);
 
@@ -119,36 +204,40 @@ export function FightersTab({ initialForm, onFormChange }: { initialForm: string
   const romResource = useMemo(() => animationResourceById(resourceId), [resourceId]);
   const romSeq = romResource?.sequences[seqIdx] ?? null;
   const romFrame = romSeq?.frames[romFrameIdx] ?? null;
-  const romFrameFile = useMemo(() => {
-    if (!romFrame || !romResource) return null;
-    // mapping demostrado del frame físico → manifest file
-    for (const res of PHYSICAL_FRAME_RECONCILIATION) {
-      if (res.resourceId !== resourceId) continue;
-      const f = res.frames.find((x) => x.sequenceIndex === seqIdx && x.frameIndex === romFrameIdx);
-      if (f?.assetMapping.sampleFiles[0]) return f.assetMapping.sampleFiles[0];
-    }
-    return null;
-  }, [romResource, resourceId, seqIdx, romFrameIdx, romFrame]);
-  const romImg = useImage(romFrameFile ? `/assets/sprites/${romFrameFile.split('/')[0]}/${romFrameFile.split('/').pop()}` : null);
-  const romMapping = romFrameFile ? mappingForFile(romFrameFile) : { status: 'UNRESOLVED' as MappingStatus, detail: 'sin asset mapeado — frame físico sin correspondencia demostrada' };
+  const physicalSequences = useMemo(() => physicalManifest
+    ? Object.values(physicalManifest.sequences).sort((a, b) => a.resource - b.resource || a.sequence - b.sequence)
+    : [], [physicalManifest]);
+  const physicalResourceIds = useMemo(() => [...new Set(physicalSequences.map(seq => seq.resource))], [physicalSequences]);
+  const physicalSeq = useMemo(() => physicalSequences.find(seq => seq.resource === resourceId && seq.sequence === seqIdx) ?? null, [physicalSequences, resourceId, seqIdx]);
+  const physicalFrame = physicalSeq?.frames[romFrameIdx] ?? null;
+  const physicalFrameMeta = useMemo(() => physicalProvenance?.frames.find(frame => frame.physicalId === physicalFrame?.physicalId) ?? null, [physicalProvenance, physicalFrame]);
+  const romFrameFile = physicalFrame?.file ?? null;
+  const rawCanvasFile = physicalFrameMeta?.rawCanvasFile ?? physicalFrame?.rawCanvasFile ?? null;
+  const romImg = useImage(romFrameFile ? `/assets/sprites/${formId}/${romFrameFile}` : null);
+  const rawCanvasImg = useImage(rawCanvasFile ? `/assets/sprites/${formId}/${rawCanvasFile}` : null);
+  const romMapping = physicalFrame
+    ? { status: 'EXACT' as MappingStatus, detail: `${physicalFrame.physicalId} · ${romFrameFile} · ROM_PHYSICAL_FIGHTERS` }
+    : { status: 'UNRESOLVED' as MappingStatus, detail: physicalError ?? 'sin PNG físico ROM para este resource/sequence/frame' };
 
   // playback ROM: durationTicks reales (16.7427 ms/tick)
   useEffect(() => {
-    if (!playingRom || !romSeq || romSeq.frames.length === 0) return;
-    const f = romSeq.frames[romFrameIdx];
+    const playbackFrames = physicalSeq?.frames ?? romSeq?.frames ?? [];
+    if (!playingRom || playbackFrames.length === 0) return;
+    const f = playbackFrames[romFrameIdx];
     const ms = Math.max(16, Math.round((f?.durationTicks ?? 8) * TICK_MS));
     const id = setTimeout(() => {
       setRomFrameIdx((i) => {
-        if (i + 1 < romSeq.frames.length) return i + 1;
+        if (i + 1 < playbackFrames.length) return i + 1;
         setPlayingRom(false);
         return i;
       });
     }, ms);
     return () => clearTimeout(id);
-  }, [playingRom, romSeq, romFrameIdx]);
+  }, [playingRom, romSeq, physicalSeq, romFrameIdx]);
 
   const pal = paletteForKey(paletteKey);
-  const romFrameTotalTicks = romSeq ? romSeq.frames.reduce((s, f) => s + f.durationTicks, 0) : 0;
+  const playbackFrames = physicalSeq?.frames ?? romSeq?.frames ?? [];
+  const romFrameTotalTicks = playbackFrames.reduce((s, f) => s + f.durationTicks, 0);
 
   return (
     <div>
@@ -226,54 +315,82 @@ export function FightersTab({ initialForm, onFormChange }: { initialForm: string
             <label style={{ fontSize: 13, color: '#cfe3ff' }}>ANIMATION RESOURCE</label>
             <select value={resourceId} onChange={(e) => { setResourceId(Number(e.target.value)); setSeqIdx(0); setRomFrameIdx(0); setPlayingRom(false); }}
               style={{ background: '#1a2434', color: '#cfe3ff', border: '1px solid #2a4a6a', borderRadius: 3 }}>
-              {RESOURCE_IDS.map((id) => {
+              {(physicalResourceIds.length ? physicalResourceIds : RESOURCE_IDS).map((id) => {
                 const e = animationResourceById(id);
                 return <option key={id} value={id}>${id.toString(16).padStart(2, '0')} · {e?.sequenceCount} seq · {e?.physicalFrameCount} frames · {e?.totalTicks}t</option>;
               })}
             </select>
-            {romResource && (
+            {(physicalSequences.length > 0 || romResource) && (
               <select value={seqIdx} onChange={(e) => { setSeqIdx(Number(e.target.value)); setRomFrameIdx(0); setPlayingRom(false); }}
                 style={{ background: '#1a2434', color: '#cfe3ff', border: '1px solid #2a4a6a', borderRadius: 3 }}>
-                {romResource.sequences.map((s, i) => <option key={i} value={i}>sequence {i} · {s.frames.length}f · {s.totalTicks}t</option>)}
+                {(physicalSequences.filter(seq => seq.resource === resourceId).length
+                  ? physicalSequences.filter(seq => seq.resource === resourceId)
+                  : romResource?.sequences.map((s, i) => ({ resource: resourceId, sequence: i, frames: s.frames as unknown as PhysicalManifestFrame[] })) ?? []
+                ).map((s) => <option key={s.sequence} value={s.sequence}>sequence {s.sequence} · {s.frames.length}f</option>)}
               </select>
             )}
             <label style={{ fontSize: 13, color: '#cfe3ff' }}>PALETTE KEY</label>
             <select value={paletteKey} onChange={(e) => setPaletteKey(Number(e.target.value))} style={{ background: '#1a2434', color: '#cfe3ff', border: '1px solid #2a4a6a', borderRadius: 3 }}>
-              {ROM_FIGHTER_PALETTES.map((p) => <option key={p.key} value={p.key}>0x{p.key.toString(16).padStart(2, '0')}</option>)}
+              {ROM_CGB_PALETTE_TABLE.map((p) => <option key={p.index} value={p.index}>{p.indexHex} · {p.cpuAddressHex}</option>)}
             </select>
           </div>
 
           <div style={{ display: 'flex', gap: 24, padding: 12, flexWrap: 'wrap' }}>
             <div>
-              <SectionTitle>ROM FRAME (asset mapeado + timing ROM)</SectionTitle>
+              <SectionTitle>TRIMMED PHYSICAL (ROM tiles)</SectionTitle>
               <PixelCanvas img={romImg} zoom={zoom} background={background} grid={grid} showBaseline />
               <ZoomControls zoom={zoom} setZoom={setZoom} background={background} setBackground={setBackground} grid={grid} setGrid={setGrid} />
               <div style={{ fontSize: 12, opacity: 0.75, marginTop: 4 }}>
-                {romFrameFile ? <Mono>{romFrameFile}</Mono> : <Mono dim>sin asset mapeado para este frame físico</Mono>}
+                {romFrameFile ? <Mono>{romFrameFile}</Mono> : <Mono dim>{physicalError ?? 'sin PNG físico para este frame'}</Mono>}
+              </div>
+              {romFrameFile && (
+                <div style={{ marginTop: 12 }}>
+                  <SectionTitle>CANONICAL DISPLAY (right-facing preview)</SectionTitle>
+                  <div className="dev-rom-display-preview">
+                    <img className="dev-rom-facing-right" src={`/assets/sprites/${formId}/${romFrameFile}`} alt="right-facing physical display preview" />
+                  </div>
+                  <div style={{ fontSize: 11, opacity: 0.65, marginTop: 4 }}>
+                    The PNG remains ROM raw/trimmed; this preview applies runtime facing only for display.
+                  </div>
+                </div>
+              )}
+              <div style={{ marginTop: 12 }}>
+                <SectionTitle>RAW CANVAS / ORIGIN</SectionTitle>
+                <PixelCanvas img={rawCanvasImg} zoom={1} background="transparent" grid={false} maxWidth={320} />
+                <div style={{ fontSize: 12, opacity: 0.75, marginTop: 4 }}>
+                  {rawCanvasFile ? <Mono>{rawCanvasFile}</Mono> : <Mono dim>sin raw canvas exportado</Mono>}
+                </div>
               </div>
             </div>
             <div style={{ minWidth: 320 }}>
               <SectionTitle>ROM PHYSICAL (ROM_STATIC_VERIFIED)</SectionTitle>
-              {romFrame && (
+              {(romFrame || physicalFrame) && (
                 <>
-                  <FieldRow label="visualFrameId (metasprite idx)" value={<Mono>{romFrame.visualFrameId} (0x{romFrame.visualFrameId.toString(16).padStart(2, '0')})</Mono>} status="EXACT" />
-                  <FieldRow label="durationTicks" value={<Mono>{romFrame.durationTicks}t ≈ {(romFrame.durationTicks * TICK_MS).toFixed(1)}ms</Mono>} status="EXACT" />
-                  <FieldRow label="offsetY / offsetX" value={<Mono>{romFrame.offsetY} / {romFrame.offsetX}</Mono>} status="EXACT" />
-                  <FieldRow label="raw record" value={<Mono>[{romFrame.raw.join(', ')}]</Mono>} />
+                  <FieldRow label="physicalId" value={<Mono>{physicalFrame?.physicalId ?? '—'}</Mono>} status={physicalFrame ? 'EXACT' : 'UNRESOLVED'} />
+                  <FieldRow label="visualFrameId" value={<Mono>{(physicalFrame?.visualFrameId ?? romFrame?.visualFrameId ?? 0)} (0x{(physicalFrame?.visualFrameId ?? romFrame?.visualFrameId ?? 0).toString(16).padStart(2, '0')})</Mono>} status="EXACT" />
+                  <FieldRow label="durationTicks" value={<Mono>{(physicalFrame?.durationTicks ?? romFrame?.durationTicks ?? 0)}t ≈ {((physicalFrame?.durationTicks ?? romFrame?.durationTicks ?? 0) * TICK_MS).toFixed(1)}ms</Mono>} status="EXACT" />
+                  <FieldRow label="offsetY / offsetX" value={<Mono>{physicalFrame?.offsetY ?? romFrame?.offsetY ?? '—'} / {physicalFrame?.offsetX ?? romFrame?.offsetX ?? '—'}</Mono>} status="EXACT" />
+                  <FieldRow label="raw offsets" value={<Mono>dy {physicalFrame?.rawOffsetY ?? romFrame?.raw?.[2] ?? '—'} · dx {physicalFrame?.rawOffsetX ?? romFrame?.raw?.[3] ?? '—'}</Mono>} />
                 </>
               )}
-              <FieldRow label="sequence" value={<Mono>{romSeq ? `${seqIdx} · ${romSeq.frames.length}f · ${romSeq.totalTicks}t total` : '—'}</Mono>} status="EXACT" />
-              <FieldRow label="graphicsBank" value={<Mono>$31 + visualProfileKey</Mono>} status="EXACT" />
-              <FieldRow label="palette (key)" value={pal ? (
+              <FieldRow label="sequence" value={<Mono>{physicalSeq ? `${physicalSeq.sequence} · ${physicalSeq.frames.length}f · ${physicalSeq.frames.reduce((sum, frame) => sum + frame.durationTicks, 0)}t total` : romSeq ? `${seqIdx} · ${romSeq.frames.length}f · ${romSeq.totalTicks}t total` : '—'}</Mono>} status={physicalSeq ? 'EXACT' : 'UNRESOLVED'} />
+              <FieldRow label="profile / graphics" value={<Mono>{physicalManifest ? `p$${physicalManifest.actorVisualProfileKey.toString(16).padStart(2, '0')} · bank $${physicalManifest.graphicsBank.toString(16).padStart(2, '0')}` : '$31 + visualProfileKey'}</Mono>} status="EXACT" />
+              {physicalFrameMeta && (
+                <>
+                  <FieldRow label="trim bounds" value={<Mono>{physicalFrameMeta.trim ? `x ${physicalFrameMeta.trim.x} y ${physicalFrameMeta.trim.y} w ${physicalFrameMeta.trim.w} h ${physicalFrameMeta.trim.h}` : `${physicalFrameMeta.originX},${physicalFrameMeta.originY} ${physicalFrameMeta.width}x${physicalFrameMeta.height}`}</Mono>} status="EXACT" />
+                  <FieldRow label="originInTrim" value={<Mono>{physicalFrameMeta.originInTrimX ?? physicalFrameMeta.trim?.originInTrim?.x ?? '—'}, {physicalFrameMeta.originInTrimY ?? physicalFrameMeta.trim?.originInTrim?.y ?? '—'}</Mono>} status="EXACT" />
+                  <FieldRow label="pieces / blocks" value={<Mono>{physicalFrameMeta.metasprite?.pieces?.length ?? '—'} pieces · {physicalFrameMeta.graphics?.blockCount ?? '—'} blocks</Mono>} status="EXACT" />
+                </>
+              )}
+              <FieldRow label="palette (fighter)" value={(physicalFrameMeta?.palette ?? pal) ? (
                 <span style={{ display: 'flex', gap: 3, alignItems: 'center' }}>
-                  {pal.colors.map((c, i) => <span key={i} style={{ width: 16, height: 16, background: c, border: '1px solid #444', borderRadius: 2 }} title={c} />)}
-                  <Mono dim>{pal.bgr555.join(' ')}</Mono>
+                  {(physicalFrameMeta?.palette?.colors ?? pal?.hexRaw ?? []).map((c, i) => <span key={i} style={{ width: 16, height: 16, background: i === 0 ? 'transparent' : c, border: '1px solid #444', borderRadius: 2 }} title={i === 0 ? `${c} · OBJ transparent index` : c} />)}
+                  <Mono dim>{(physicalFrameMeta?.palette?.bgr555 ?? pal?.bgr555Hex ?? []).join(' ')} · color0 alpha</Mono>
                 </span>
               ) : <Mono dim>—</Mono>} status="EXACT" />
               <FieldRow label="frame↔manifest" value={<Mono>{romMapping.detail}</Mono>} status={romMapping.status} />
-              <div style={{ marginTop: 8, fontSize: 11, opacity: 0.55 }}>
-                El sprite físico desde tiles (metasprite → 2bpp → BGR555) está pendiente de reextracción del pipeline v3 (datos no presentes en el repo);
-                el frame se muestra con el asset canónico mapeado y el timing/offsets ROM reales.
+              <div style={{ marginTop: 8, fontSize: 11, opacity: 0.65 }}>
+                Esta vista lee ROM_PHYSICAL_FIGHTERS: trimmed PNG para assets y raw canvas para verificar origen/piezas. No usa V9 ni el crop del manifest como geometría ROM.
               </div>
             </div>
             <div style={{ minWidth: 260 }}>
@@ -283,17 +400,17 @@ export function FightersTab({ initialForm, onFormChange }: { initialForm: string
               <div style={{ display: 'flex', gap: 6, alignItems: 'center', marginTop: 8, flexWrap: 'wrap' }}>
                 <button onClick={() => { setRomFrameIdx(0); setPlayingRom(false); }}>|◀</button>
                 <button onClick={() => setPlayingRom((p) => !p)}>{playingRom ? '❚❚' : '▶ PLAY (ROM)'}</button>
-                <span style={{ fontSize: 12 }}><Mono>F{romFrameIdx}/{Math.max(0, (romSeq?.frames.length ?? 1) - 1)}</Mono></span>
+                  <span style={{ fontSize: 12 }}><Mono>F{romFrameIdx}/{Math.max(0, playbackFrames.length - 1)}</Mono></span>
               </div>
               <div style={{ marginTop: 8, display: 'flex', gap: 3, alignItems: 'flex-end', height: 44 }}>
-                {(romSeq?.frames ?? []).map((f, i) => (
+                {playbackFrames.map((f, i) => (
                   <div key={i} title={`F${i}: ${f.durationTicks}t (${(f.durationTicks * TICK_MS).toFixed(0)}ms) dy=${f.offsetY} dx=${f.offsetX}`}
                     onClick={() => { setRomFrameIdx(i); setPlayingRom(false); }}
                     style={{ width: 14, background: i === romFrameIdx ? '#7CFC00' : '#2a4a6a', height: Math.max(6, Math.min(40, f.durationTicks * 2)), cursor: 'pointer', borderRadius: 2 }} />
                 ))}
               </div>
               <div style={{ marginTop: 6, fontSize: 11, opacity: 0.7 }}>
-                {romSeq?.frames.map((f, i) => (
+                {playbackFrames.map((f, i) => (
                   <span key={i} style={{ marginRight: 8 }}><Mono>F{i} {f.durationTicks}t</Mono></span>
                 ))}
               </div>

@@ -5,7 +5,7 @@
 // bloques 32B = 2 tiles 8×8 2bpp = pieza OBJ 8×16 · flips $40/$20 ·
 // paleta $6E00+key×8 (BGR555).
 // Uso: npx tsx tools/rom-research/scripts/render-fighter-physical.ts
-//   --resource 3 --keys 2,8,d [--selector 0..5] [--out docs/rom/generated/fighters]
+//   --resource 3 --keys 3,5,6,1c [--selector 0..5]
 // Salida: profile_<key>/seq_SS/frame_FF/rom_raw.png + rom_trimmed.png +
 // metadata.json + physical-index.json + hashes.
 // ═══════════════════════════════════════════════════════════════════════
@@ -14,12 +14,14 @@ import { resolve, join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 import { createHash } from 'crypto';
 import { PNG } from 'pngjs';
+import { ROM_CGB_PALETTE_TABLE } from '../../../src/data/generated/romCgbPaletteTable.generated';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '../../..');
-const ROM_PATH = resolve(ROOT, '../dbz-lsw-decomp/13_raw_rom/dbz-lsw-usa.gbc');
+const ROM_PATH = resolve(ROOT, '../dbz-lsw-decomp/13_raw_rom/dbz-lsw-spain.gbc');
 const CATALOG = join(ROOT, 'docs/rom/generated/animation-resources.json');
-const PALETTES_TS = join(ROOT, 'src/data/generated/romFighterPalettes.generated.ts');
 const OUT = join(ROOT, 'docs/rom/generated/fighters');
+const SCHEMA_VERSION = 2;
+const OFFSET_ENCODING = 's8';
 
 const rom = readFileSync(ROM_PATH);
 const catalog = JSON.parse(readFileSync(CATALOG, 'utf8'));
@@ -32,7 +34,7 @@ function parseArgs(): { resource: number; keys: number[]; selector: number | nul
   };
   return {
     resource: parseInt(get('--resource') ?? '3', 16),
-    keys: (get('--keys') ?? '2,8,d').split(',').map((k) => parseInt(k, 16)),
+    keys: (get('--keys') ?? '3,5,6,1c').split(',').map((k) => parseInt(k, 16)),
     selector: get('--selector') ? parseInt(get('--selector')!, 10) : null,
   };
 }
@@ -73,6 +75,10 @@ function resourceBase(bank: number, resourceId: number): number {
 
 const u16At = (bank: number, addr: number) => rom[bank * 0x4000 + addr] | (rom[bank * 0x4000 + addr + 1] << 8);
 const u8At = (bank: number, addr: number) => rom[bank * 0x4000 + addr];
+const s8 = (value: number) => {
+  const u8 = value & 0xff;
+  return u8 < 0x80 ? u8 : u8 - 0x100;
+};
 
 /** A. frame record: base → +0 → tabla → selector → frame×4. */
 function resolveFrameRecord(bank: number, base: number, selector: number, frameIndex: number) {
@@ -88,8 +94,8 @@ function resolveFrameRecord(bank: number, base: number, selector: number, frameI
   return {
     visualFrameId: raw[0],
     durationTicks: raw[1],
-    offsetY: raw[2], // byte2 = Y (consumer $096A → drawY)
-    offsetX: raw[3], // byte3 = X
+    offsetY: s8(raw[2]), // byte2 = signed Y delta (consumer $096A → drawY)
+    offsetX: s8(raw[3]), // byte3 = signed X delta
     raw,
     provenance: { bank, base, sequenceTable: T, sequenceAddress: seqAddr, frameAddress: frameAddr, selector: sel, sequenceCount: count },
   };
@@ -139,12 +145,25 @@ function resolveGraphicsBlock(key: number, relativeOffset: number) {
 
 /** Paleta: $6E00 + key×8 → 4 BGR555 → RGB. */
 function resolvePalette(key: number) {
-  const src = readFileSync(PALETTES_TS, 'utf8');
-  const m = src.match(/ROM_FIGHTER_PALETTES:[\s\S]*?= (\[[\s\S]*?\]);/);
-  if (!m) throw new Error('no se pudo leer romFighterPalettes');
-  const pal = JSON.parse(m[1]).find((p: { key: number }) => p.key === key);
-  if (!pal) throw new Error(`sin paleta física para key ${key}`);
-  return pal;
+  const entry = ROM_CGB_PALETTE_TABLE[key];
+  if (!entry) throw new Error(`sin entrada ROM_CGB_PALETTE_TABLE para key ${key}`);
+  return {
+    key,
+    keyHex: entry.indexHex,
+    romBank: entry.romBank,
+    cpuAddress: entry.cpuAddress,
+    cpuAddressHex: entry.cpuAddressHex,
+    fileOffset: entry.fileOffset,
+    fileOffsetHex: entry.fileOffsetHex,
+    raw: entry.rawBytes,
+    rawBytes: entry.rawBytes,
+    bgr555: entry.bgr555Hex,
+    bgr555Words: entry.bgr555,
+    colors: entry.hexRaw,
+    hexRaw: entry.hexRaw,
+    rawSha256: entry.rawSha256,
+    evidence: entry.evidence,
+  };
 }
 
 /** 2bpp: 16 bytes → 8×8 índices 0..3. */
@@ -163,16 +182,56 @@ function decodeTile2bpp(bytes: number[]): number[][] {
   return tile;
 }
 
-/** Bloque 32B → pieza 8×16 (tile superior + inferior). */
-function blockToPiece(raw32: number[]): number[][][] {
-  return [decodeTile2bpp(raw32.slice(0, 16)), decodeTile2bpp(raw32.slice(16, 32))];
+function piecePixels(raw32: number[], flipX: boolean, flipY: boolean): number[][] {
+  const top = decodeTile2bpp(raw32.slice(0, 16));
+  const bottom = decodeTile2bpp(raw32.slice(16, 32));
+  let pixels = [...top, ...bottom];
+  if (flipX) pixels = pixels.map((row) => [...row].reverse());
+  if (flipY) pixels = [...pixels].reverse();
+  return pixels;
 }
 
-function flipTile(tile: number[][], flipX: boolean, flipY: boolean): number[][] {
-  let t = tile;
-  if (flipX) t = t.map((row) => [...row].reverse());
-  if (flipY) t = [...t].reverse();
-  return t;
+function rgbaForPaletteIndex(index: number, colors: string[]): [number, number, number, number] {
+  if (index === 0) return [0, 0, 0, 0];
+  const color = colors[index] ?? '#000000';
+  return [
+    parseInt(color.slice(1, 3), 16),
+    parseInt(color.slice(3, 5), 16),
+    parseInt(color.slice(5, 7), 16),
+    255,
+  ];
+}
+
+function drawPiece(target: Uint8Array, width: number, height: number, x: number, y: number, pixels: number[][], colors: string[]) {
+  for (let yy = 0; yy < 16; yy++) {
+    for (let xx = 0; xx < 8; xx++) {
+      const index = pixels[yy]?.[xx] ?? 0;
+      const [r, g, b, a] = rgbaForPaletteIndex(index, colors);
+      if (a === 0) continue;
+      const X = x + xx;
+      const Y = y + yy;
+      if (X < 0 || X >= width || Y < 0 || Y >= height) continue;
+      const o = (Y * width + X) * 4;
+      target[o] = r;
+      target[o + 1] = g;
+      target[o + 2] = b;
+      target[o + 3] = a;
+    }
+  }
+}
+
+function drawOriginCross(target: Uint8Array, width: number, height: number, originX: number, originY: number) {
+  const mark = (x: number, y: number, r: number, g: number, b: number, a = 255) => {
+    if (x < 0 || x >= width || y < 0 || y >= height) return;
+    const o = (y * width + x) * 4;
+    target[o] = r; target[o + 1] = g; target[o + 2] = b; target[o + 3] = a;
+  };
+  for (let x = 0; x < width; x++) mark(x, originY, 90, 160, 255, 180);
+  for (let y = 0; y < height; y++) mark(originX, y, 90, 160, 255, 180);
+  for (let d = -3; d <= 3; d++) {
+    mark(originX + d, originY, 255, 210, 64);
+    mark(originX, originY + d, 255, 210, 64);
+  }
 }
 
 // ── Render ──
@@ -184,7 +243,8 @@ const base = resourceBase(bank, resource);
 console.log(`resource ${resource} (bank $${bank.toString(16)}) base=$${base.toString(16).toUpperCase()}`);
 
 const index: unknown[] = [];
-const ORIGIN = 128; // raw canvas origin (0,0) técnico constante
+let invariantMismatches = 0;
+const ORIGIN = 160; // raw debug canvas origin (0,0) técnico constante
 
 for (const key of keys) {
   const palette = resolvePalette(key);
@@ -198,52 +258,57 @@ for (const key of keys) {
       const gfx = resolveFrameGraphics(bank, base, frame.visualFrameId);
       // invariant: pieces === blockCount
       if (meta.pieces.length !== gfx.blockCount) {
+        invariantMismatches++;
         console.log(`⚠ MISMATCH seq${seq} F${f}: pieces=${meta.pieces.length} blocks=${gfx.blockCount} — invariante R2 violado`);
       }
       // bloques físicos
       const blocks = gfx.relativeOffsets.map((off) => resolveGraphicsBlock(key, off));
-      const pieces = blocks.map((b, i) => blockToPiece(b.raw32));
+      const pieces = blocks.map((b, i) => ({
+        pixels: piecePixels(b.raw32, meta.pieces[i]?.flipX ?? false, meta.pieces[i]?.flipY ?? false),
+      }));
 
-      // composición: canvas RGBA (raw, origen técnico constante)
-      const canvasW = 256, canvasH = 256;
+      const signedPieces = meta.pieces.map((piece, i) => ({
+        ...piece,
+        index: i,
+        x: s8(piece.rawX),
+        y: s8(piece.rawY),
+        width: 8,
+        height: 16,
+      }));
+      const minPieceX = Math.min(...signedPieces.map(piece => piece.x));
+      const minPieceY = Math.min(...signedPieces.map(piece => piece.y));
+      const maxPieceX = Math.max(...signedPieces.map(piece => piece.x + piece.width));
+      const maxPieceY = Math.max(...signedPieces.map(piece => piece.y + piece.height));
+      const trimW = maxPieceX - minPieceX;
+      const trimH = maxPieceY - minPieceY;
+      const originInTrimX = -minPieceX;
+      const originInTrimY = -minPieceY;
+
+      // composición: canvas RGBA raw/debug en coordenadas metasprite puras.
+      // Los offsets de frame NO se bakean aquí; pertenecen a la ocurrencia temporal.
+      const canvasW = 320, canvasH = 320;
       const rgba = new Uint8Array(canvasW * canvasH * 4); // 0 = transparente
-      let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
-      let cx = ORIGIN + frame.offsetX;
-      let cy = ORIGIN + frame.offsetY;
-      meta.pieces.forEach((piece, i) => {
-        const tileTop = pieces[i]?.[0];
-        const tileBot = pieces[i]?.[1];
-        if (!tileTop || !tileBot) return;
-        const tt = flipTile(tileTop, piece.flipX, piece.flipY);
-        const tb = flipTile(tileBot, piece.flipX, piece.flipY);
-        // pieza OBJ 8×16: y = rawY, x = rawX (s8)
-        const py = cy + (piece.rawY < 128 ? piece.rawY : piece.rawY - 256);
-        const px = cx + piece.rawX;
-        for (let yy = 0; yy < 8; yy++) {
+      const trimmed = new Uint8Array(trimW * trimH * 4);
+      let opaqueMinX = Infinity, opaqueMinY = Infinity, opaqueMaxX = -Infinity, opaqueMaxY = -Infinity;
+      signedPieces.forEach((piece, i) => {
+        const rendered = pieces[i]?.pixels;
+        if (!rendered) return;
+        drawPiece(rgba, canvasW, canvasH, ORIGIN + piece.x, ORIGIN + piece.y, rendered, palette.colors);
+        drawPiece(trimmed, trimW, trimH, piece.x + originInTrimX, piece.y + originInTrimY, rendered, palette.colors);
+        for (let yy = 0; yy < 16; yy++) {
           for (let xx = 0; xx < 8; xx++) {
-            const idxTop = tt[yy][xx];
-            if (idxTop > 0) {
-              const color = palette.colors[idxTop - 1] ?? '#000000';
-              const X = px + xx, Y = py + yy;
-              if (X >= 0 && X < canvasW && Y >= 0 && Y < canvasH) {
-                const o = (Y * canvasW + X) * 4;
-                rgba[o] = parseInt(color.slice(1, 3), 16); rgba[o + 1] = parseInt(color.slice(3, 5), 16); rgba[o + 2] = parseInt(color.slice(5, 7), 16); rgba[o + 3] = 255;
-                minX = Math.min(minX, X); minY = Math.min(minY, Y); maxX = Math.max(maxX, X); maxY = Math.max(maxY, Y);
-              }
-            }
-            const idxBot = tb[yy][xx];
-            if (idxBot > 0) {
-              const color = palette.colors[idxBot - 1] ?? '#000000';
-              const X = px + xx, Y = py + 8 + yy;
-              if (X >= 0 && X < canvasW && Y >= 0 && Y < canvasH) {
-                const o = (Y * canvasW + X) * 4;
-                rgba[o] = parseInt(color.slice(1, 3), 16); rgba[o + 1] = parseInt(color.slice(3, 5), 16); rgba[o + 2] = parseInt(color.slice(5, 7), 16); rgba[o + 3] = 255;
-                minX = Math.min(minX, X); minY = Math.min(minY, Y); maxX = Math.max(maxX, X); maxY = Math.max(maxY, Y);
-              }
-            }
+            if ((rendered[yy]?.[xx] ?? 0) === 0) continue;
+            const x = piece.x + xx;
+            const y = piece.y + yy;
+            opaqueMinX = Math.min(opaqueMinX, x);
+            opaqueMinY = Math.min(opaqueMinY, y);
+            opaqueMaxX = Math.max(opaqueMaxX, x + 1);
+            opaqueMaxY = Math.max(opaqueMaxY, y + 1);
           }
         }
       });
+      const rawCanvas = new Uint8Array(rgba);
+      drawOriginCross(rawCanvas, canvasW, canvasH, ORIGIN, ORIGIN);
 
       // PNG raw (sin recortar) + trimmed (bounding box)
       const outDir = join(OUT, `resource_${resource.toString(16).padStart(2, '0')}`, `profile_${key.toString(16).padStart(2, '0')}`, `seq_${String(seq).padStart(2, '0')}`, `frame_${String(f).padStart(2, '0')}`);
@@ -255,38 +320,123 @@ for (const key of keys) {
         writeFileSync(path, PNG.sync.write(png));
       };
       writePng(join(outDir, 'rom_raw.png'), canvasW, canvasH, rgba);
+      writePng(join(outDir, 'rom_raw_canvas.png'), canvasW, canvasH, rawCanvas);
+      writePng(join(outDir, 'rom_trimmed.png'), trimW, trimH, trimmed);
 
-      let trimmed = rgba;
-      let tw = canvasW, th = canvasH;
-      if (minX <= maxX && minY <= maxY) {
-        tw = maxX - minX + 1; th = maxY - minY + 1;
-        trimmed = new Uint8Array(tw * th * 4);
-        for (let y = minY; y <= maxY; y++) {
-          for (let x = minX; x <= maxX; x++) {
-            const s = (y * canvasW + x) * 4;
-            const d = ((y - minY) * tw + (x - minX)) * 4;
-            trimmed.set(rgba.subarray(s, s + 4), d);
-          }
-        }
-      }
-      writePng(join(outDir, 'rom_trimmed.png'), tw, th, trimmed);
+      const pieceGraphics = signedPieces.map((piece, i) => {
+        const block = blocks[i];
+        const raw32 = block?.raw32 ?? [];
+        const tile0 = raw32.slice(0, 16);
+        const tile1 = raw32.slice(16, 32);
+        return {
+          pieceIndex: i,
+          pieceX: piece.x,
+          pieceY: piece.y,
+          rawX: piece.rawX,
+          rawY: piece.rawY,
+          attributes: piece.attr,
+          tileDelta: piece.tileDelta,
+          flipX: piece.flipX,
+          flipY: piece.flipY,
+          graphicsBank: sourceBank,
+          graphicsBlockRelativeOffset: block?.relativeOffset ?? null,
+          graphicsBlockAddress: block?.absoluteAddress ?? null,
+          graphicsBlockHash: createHash('sha256').update(Buffer.from(raw32)).digest('hex'),
+          tile0Address: block ? block.absoluteAddress : null,
+          tile0Hash: createHash('sha256').update(Buffer.from(tile0)).digest('hex'),
+          tile1Address: block ? block.absoluteAddress + 16 : null,
+          tile1Hash: createHash('sha256').update(Buffer.from(tile1)).digest('hex'),
+        };
+      });
 
       const rawHash = createHash('sha256').update(Buffer.from(rgba)).digest('hex').slice(0, 16);
       const trimmedHash = createHash('sha256').update(Buffer.from(trimmed)).digest('hex').slice(0, 16);
-      const metaspriteHash = createHash('sha256').update(JSON.stringify(meta.pieces)).digest('hex').slice(0, 16);
-      const graphicsHash = createHash('sha256').update(JSON.stringify(gfx.relativeOffsets)).digest('hex').slice(0, 16);
-      const paletteHash = createHash('sha256').update(palette.bgr555.join(',')).digest('hex').slice(0, 16);
+      const metaspriteHash = createHash('sha256').update(JSON.stringify({ resource, bank, base, visualFrameId: frame.visualFrameId, metasprite: meta })).digest('hex').slice(0, 16);
+      const graphicsHash = createHash('sha256').update(JSON.stringify({ actorVisualProfileKey: key, graphicsBank: sourceBank, resource, visualFrameId: frame.visualFrameId, layout: gfx, pieces: pieceGraphics })).digest('hex').slice(0, 16);
+      const paletteHash = createHash('sha256').update(Buffer.from(palette.rawBytes)).digest('hex').slice(0, 16);
+      const graphicsTableHash = createHash('sha256').update(JSON.stringify({ resource, bank, base, visualFrameId: frame.visualFrameId, graphics: gfx })).digest('hex').slice(0, 16);
+      const graphicsBlockHashes = pieceGraphics.map(piece => piece.graphicsBlockHash);
+      const sourceProvenanceHash = createHash('sha256').update(JSON.stringify({
+        rom: createHash('sha256').update(rom).digest('hex'),
+        actorVisualProfileKey: key,
+        graphicsBank: sourceBank,
+        resource,
+        visualFrameId: frame.visualFrameId,
+        metaspriteHash,
+        graphicsTableHash,
+        graphicsBlockHashes,
+        paletteHash,
+      })).digest('hex').slice(0, 16);
 
       const metadata = {
+        schemaVersion: SCHEMA_VERSION,
+        offsetEncoding: OFFSET_ENCODING,
         key, resource, bank, base,
         sequence: seq, frameIndex: f,
         frameRecord: frame,
-        metasprite: meta,
+        metasprite: {
+          ...meta,
+          pieces: signedPieces,
+        },
         graphics: gfx,
+        pieceGraphics,
         source: { bank: sourceBank, baseAddress: 0x0000 },
-        palette: { bgr555: palette.bgr555, colors: palette.colors },
-        bounds: { minX, minY, maxX, maxY },
-        hashes: { rawPixelHash: rawHash, trimmedPixelHash: trimmedHash, metaspriteHash, graphicsHash, paletteHash },
+        palette: {
+          raw: palette.raw,
+          rawBytes: palette.rawBytes,
+          rawSha256: palette.rawSha256,
+          cpuAddress: palette.cpuAddress,
+          cpuAddressHex: palette.cpuAddressHex,
+          fileOffset: palette.fileOffset,
+          fileOffsetHex: palette.fileOffsetHex,
+          bgr555: palette.bgr555,
+          colors: palette.colors,
+          transparentIndex: 0,
+          color0Transparent: true,
+          displayTransform: 'BGR555_TO_SRGB_DIRECT',
+        },
+        bounds: {
+          coordinateSpace: 'METASPRITE_ORIGIN',
+          minX: minPieceX,
+          minY: minPieceY,
+          maxX: maxPieceX,
+          maxY: maxPieceY,
+          width: trimW,
+          height: trimH,
+          originInTrimX,
+          originInTrimY,
+          opaqueBounds: opaqueMinX <= opaqueMaxX ? {
+            minX: opaqueMinX,
+            minY: opaqueMinY,
+            maxX: opaqueMaxX,
+            maxY: opaqueMaxY,
+          } : null,
+        },
+        rawCanvas: {
+          file: 'rom_raw_canvas.png',
+          width: canvasW,
+          height: canvasH,
+          originX: ORIGIN,
+          originY: ORIGIN,
+          originVisible: true,
+        },
+        trimmed: {
+          file: 'rom_trimmed.png',
+          x: minPieceX,
+          y: minPieceY,
+          w: trimW,
+          h: trimH,
+          originInTrim: { x: originInTrimX, y: originInTrimY },
+        },
+        hashes: { rawPixelHash: rawHash, trimmedPixelHash: trimmedHash, metaspriteHash, graphicsHash, paletteHash, graphicsTableHash, sourceProvenanceHash },
+        sourceProvenance: {
+          metaspriteHash,
+          graphicsTableHash,
+          graphicsHash,
+          graphicsBlockHashes,
+          paletteRawHash: paletteHash,
+          sourceProvenanceHash,
+        },
         romVram: { buffer: null, tileBase: null, doubleBuffered: true }, // metadata de fidelidad (no emulado)
         evidence: 'ROM_PHYSICAL (sin assets externos)',
       };
@@ -300,4 +450,8 @@ for (const key of keys) {
 }
 
 writeFileSync(join(OUT, `resource_${resource.toString(16).padStart(2, '0')}`, 'physical-index.json'), JSON.stringify(index, null, 2));
+if (invariantMismatches > 0) {
+  console.log(`physical-index.json escrito con ${invariantMismatches} invariant mismatches; resource no es promocionable como FIGHTER_PHYSICAL.`);
+  process.exit(1);
+}
 console.log('physical-index.json escrito');

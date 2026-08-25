@@ -78,6 +78,10 @@ function manualTimeline(cardId: number, outcome: 'HIT' | 'MISS' | 'SPECIAL_DEFEN
 }
 
 const beamBaseCards = CARDS.filter(card => romActionExecutionDescriptorForCard(card).execution.handler === BEAM_BASE_ROM_HANDLER);
+// Beam cards (type 'beam'|'damage') sharing $02 → genuinely BEAM_BASE backed.
+const beamBackedCards = beamBaseCards.filter(card => card.type !== 'support');
+// Support cards sharing $02 (buff/heal/shield reuse) → MUST NOT be beam-backed.
+const supportHandlerCards = beamBaseCards.filter(card => card.type === 'support');
 const nonBeamBaseBacked = CARDS.filter(card => romActionExecutionDescriptorForCard(card).execution.handler !== BEAM_BASE_ROM_HANDLER && beamBaseProfileForAction(actionDescriptorForCard(card)));
 const beamVariantsBacked = CARDS.filter(card => {
   const descriptor = romActionExecutionDescriptorForCard(card);
@@ -85,13 +89,15 @@ const beamVariantsBacked = CARDS.filter(card => {
   return profile.kind === 'BEAM_VARIANT' && descriptor.execution.handler === BEAM_BASE_ROM_HANDLER;
 });
 
-check('gate:38/38 BEAM_BASE handler $02 cards', beamBaseCards.length === 38, String(beamBaseCards.length));
-check('gate:38/38 ROM-backed by profile family', beamBaseCards.every(card => !!beamBaseProfileForAction(actionDescriptorForCard(card))));
+check('gate:38 cards share handler $02', beamBaseCards.length === 38, String(beamBaseCards.length));
+check('gate:beam cards $02 → BEAM_BASE backed', beamBackedCards.length === 16 && beamBackedCards.every(card => !!beamBaseProfileForAction(actionDescriptorForCard(card))), `beam=${beamBackedCards.length}`);
+check('gate:0 SUPPORT cards routed BEAM_BASE (guardrail)', supportHandlerCards.length === 22 && supportHandlerCards.every(card => !beamBaseProfileForAction(actionDescriptorForCard(card))), `support=${supportHandlerCards.length}: ${supportHandlerCards.map(card => card.name).join(', ')}`);
 check('gate:0 non-BEAM_BASE cards diverted', nonBeamBaseBacked.length === 0, nonBeamBaseBacked.map(card => card.name).join(', '));
 check('gate:0 BEAM_VARIANT diverted', beamVariantsBacked.length === 0, beamVariantsBacked.map(card => card.name).join(', '));
 
 const summary = beamBaseRuntimeCutoverSummary();
-check('summary:ROM backed count', summary.romBacked === 38, String(summary.romBacked));
+check('summary:handler shared count', summary.handlerShared === 38, String(summary.handlerShared));
+check('summary:ROM backed count (beams only)', summary.romBacked === 16, String(summary.romBacked));
 check('summary:no accidental handlers', summary.nonBeamBaseBacked === 0, String(summary.nonBeamBaseBacked));
 check('summary:no beam variants', summary.beamVariantsBacked === 0, String(summary.beamVariantsBacked));
 
@@ -215,7 +221,10 @@ check('adapter:0 damage calculation authority', !/calculateDamage|applyDamage|da
 
 console.log('═══ BEAM_BASE ROM CUTOVER ═══');
 console.log(`handler02=${beamBaseCards.length}`);
+console.log(`beamBacked=${beamBackedCards.length}`);
+console.log(`supportHandlerShared=${supportHandlerCards.length}`);
 console.log(`romBacked=${summary.romBacked}`);
+console.log(`handlerShared=${summary.handlerShared}`);
 console.log(`otherHandlersBacked=${summary.nonBeamBaseBacked}`);
 console.log(`beamVariantsBacked=${summary.beamVariantsBacked}`);
 console.log(failures === 0 ? 'ALL CHECKS PASSED ✅' : `${failures} CHECKS FAILED ❌`);

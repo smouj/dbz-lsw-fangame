@@ -1,0 +1,31 @@
+// ═══════════════════════════════════════════════════════════════════════
+// TEAM SETUP — tipos del estado de preparación de combate
+// ═══════════════════════════════════════════════════════════════════════
+// Capa de CONFIGURACIÓN (nunca BattleState). Produce BattleConfig en el
+// confirm. El Engine decide disponibilidad/CC/power window/resolución.
+// ═══════════════════════════════════════════════════════════════════════
+
+export interface TeamMember {
+  characterId: string;
+  formId: string;
+  /** Limits equipados (ids de carta), normalizados a la capacidad real del
+   *  personaje; 0 = slot vacío VÁLIDO. NUNCA 5 slots (ver limitLoadout). */
+  limits: number[];
+  /** Joint Deck: exactamente DECK_SIZE (20) ids de carta. LOS LIMITS NO
+   *  ENTRAN AQUÍ — sistema separado (corpus §47). */
+  jointDeck: number[];
+}
+
+export interface TeamSetupState {
+  members: TeamMember[];
+  activeMember: number;
+  /** Personaje bajo el cursor del Character Roll (por miembro activo). */
+  selectedCharacter: string;
+}
+
+export interface TeamSetupResult {
+  /** Miembro listo para la batalla (el Engine actual es 1v1). */
+  member: TeamMember;
+  /** Equipo completo configurado (3 slots). */
+  team: TeamMember[];
+}

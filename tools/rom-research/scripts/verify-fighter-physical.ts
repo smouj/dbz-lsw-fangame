@@ -14,11 +14,11 @@ import { readFileSync, existsSync } from 'fs';
 import { resolve, join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 import { createHash } from 'crypto';
+import { ROM_CGB_PALETTE_TABLE } from '../../../src/data/generated/romCgbPaletteTable.generated';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '../../..');
-const ROM_PATH = resolve(ROOT, '../dbz-lsw-decomp/13_raw_rom/dbz-lsw-usa.gbc');
+const ROM_PATH = resolve(ROOT, '../dbz-lsw-decomp/13_raw_rom/dbz-lsw-spain.gbc');
 const CATALOG = join(ROOT, 'docs/rom/generated/animation-resources.json');
-const PALETTES_TS = join(ROOT, 'src/data/generated/romFighterPalettes.generated.ts');
 
 let failures = 0;
 function check(name: string, ok: boolean, detail?: string) {
@@ -28,12 +28,10 @@ function check(name: string, ok: boolean, detail?: string) {
 
 const rom = readFileSync(ROM_PATH);
 const catalog = JSON.parse(readFileSync(CATALOG, 'utf8'));
-const palettesSrc = readFileSync(PALETTES_TS, 'utf8');
-const palettesMatch = palettesSrc.match(/ROM_FIGHTER_PALETTES:[\s\S]*?= (\[[\s\S]*?\]);/);
-const palettes = palettesMatch ? JSON.parse(palettesMatch[1]) : [];
 
 const u16At = (bank: number, addr: number) => rom[bank * 0x4000 + addr] | (rom[bank * 0x4000 + addr + 1] << 8);
 const u8At = (bank: number, addr: number) => rom[bank * 0x4000 + addr];
+const s8 = (value: number) => value >= 0x80 ? value - 0x100 : value;
 
 function resolveResourceBase(bank: number, resourceId: number, seqAddrs: number[]): number | null {
   for (let base = 0x40; base < 0x4000 - 8; base++) {
@@ -63,7 +61,7 @@ function resolveFrameRecord(bank: number, base: number, selector: number, frameI
   const frameAddr = (seqAddr + 1 + frameIndex * 4) & 0xffff;
   return {
     visualFrameId: u8At(bank, frameAddr), durationTicks: u8At(bank, frameAddr + 1),
-    offsetY: u8At(bank, frameAddr + 2), offsetX: u8At(bank, frameAddr + 3),
+    offsetY: s8(u8At(bank, frameAddr + 2)), offsetX: s8(u8At(bank, frameAddr + 3)),
     raw: [u8At(bank, frameAddr), u8At(bank, frameAddr + 1), u8At(bank, frameAddr + 2), u8At(bank, frameAddr + 3)],
     provenance: { bank, base, sequenceTable: T, sequenceAddress: seqAddr, frameAddress: frameAddr, selector: sel },
   };
@@ -112,7 +110,7 @@ const base = resolveResourceBase(bank, resource, seqAddrs);
 check('resource lookup valid (base resuelta)', base !== null, base !== null ? `base=$${base!.toString(16).toUpperCase()}` : 'sin base');
 if (base === null) process.exit(1);
 
-const KEYS = [2, 8, 13];
+const KEYS = [0x03, 0x05, 0x06, 0x1c];
 let totalFrames = 0;
 let mismatches = 0;
 let invalidReads = 0;
@@ -120,8 +118,8 @@ const hashCache = new Map<string, string>();
 let deterministic = true;
 
 for (const key of KEYS) {
-  const pal = palettes.find((p: { key: number }) => p.key === key);
-  check(`palette key ${key} física disponible`, !!pal, pal ? pal.bgr555.join(' ') : '');
+  const pal = ROM_CGB_PALETTE_TABLE.find((p) => p.index === key);
+  check(`palette key ${key} física disponible`, !!pal, pal ? pal.bgr555Hex.join(' ') : '');
   for (let seq = 0; seq < res.sequences.length; seq++) {
     for (let f = 0; f < res.sequences[seq].frames.length; f++) {
       totalFrames++;
@@ -156,7 +154,7 @@ for (const key of KEYS) {
 check(`pieces === blockCount en ${totalFrames} frames (0 mismatches)`, mismatches === 0, `mismatches=${mismatches}`);
 check('0 lecturas fuera de ROM (blocks 32B)', invalidReads === 0, `invalid=${invalidReads}`);
 check('determinismo: mismo input → mismo hash', deterministic);
-check('paletas BGR555 válidas (4 colores)', KEYS.every((k) => palettes.find((p: { key: number }) => p.key === k)?.bgr555.length === 4));
+check('paletas BGR555 válidas (4 colores)', KEYS.every((k) => ROM_CGB_PALETTE_TABLE.find((p) => p.index === k)?.bgr555.length === 4));
 check('2bpp/BGR555/flips: decodificación pura (sin assets externos)', true, 'resolvers solo leen la ROM');
 
 // ── fallback de selector fuera de rango → sequence 0 ──
@@ -174,7 +172,7 @@ check('2bpp/BGR555/flips: decodificación pura (sin assets externos)', true, 're
   check('renderer sin assets externos (Canonical/manifest/V9/poses)', hits.length === 0, hits.join(', ') || 'limpio');
 }
 
-console.log(`\nPHYSICAL EXTRACTION COVERAGE: ${totalFrames} frames (resource 0x03 · 3 profiles · ${res.sequences.length} secuencias)`);
+console.log(`\nPHYSICAL EXTRACTION COVERAGE: ${totalFrames} frames (resource 0x03 · ${KEYS.length} profiles · ${res.sequences.length} secuencias)`);
 if (failures === 0) {
   console.log('✅ rom-fighter-physical: renders reales desde el cartucho, 0 lecturas inválidas, 0 mismatches, determinista, sin assets externos.');
   process.exit(0);

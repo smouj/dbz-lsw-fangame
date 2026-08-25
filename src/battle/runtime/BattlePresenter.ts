@@ -66,6 +66,7 @@ export function createCuePresenter(handlers: CueHandlers): BattlePresenter {
           case 'DISPLAY_CLEAR':
           case 'PALETTE_LOAD':
           case 'ANIMATION_START':
+          case 'ROM_PHYSICAL_FRAME':
           case 'ANIMATION_STATE':
           case 'WAIT_ANIMATION':
           case 'WAIT_ANIMATION_FRAME':

@@ -1,0 +1,74 @@
+{
+  "formId": "android_18",
+  "actorVisualProfileKey": 30,
+  "graphicsBank": "0x4f",
+  "animationResource": "0x00",
+  "sequence": 1,
+  "frameIndex": 2,
+  "visualFrameId": "0x00",
+  "durationTicks": 2,
+  "rawOffsetX": 0,
+  "rawOffsetY": 0,
+  "offsetX": 0,
+  "offsetY": 0,
+  "originX": -16,
+  "originY": -40,
+  "originInTrimX": 16,
+  "originInTrimY": 40,
+  "rawCanvasFile": "physical-debug/rom-p1e-g4f-r00-vf00-ms0903fcd0-gfxeddced99-raw-canvas.png",
+  "physicalId": "rom-p1e-g4f-r00-vf00-ms0903fcd0-gfxeddced99",
+  "sourcePhysicalFile": "physical/rom-p1e-g4f-r00-vf00-ms0903fcd0-gfxeddced99.png",
+  "palette": {
+    "raw": [
+      0,
+      0,
+      127,
+      87,
+      10,
+      106,
+      165,
+      20
+    ],
+    "rawBytes": [
+      0,
+      0,
+      127,
+      87,
+      10,
+      106,
+      165,
+      20
+    ],
+    "rawSha256": "a65ae4629b160bed97e24d7663abdef3c5b4b294e874e414d2e9350ecff0f085",
+    "cpuAddress": 28400,
+    "cpuAddressHex": "0x6ef0",
+    "fileOffset": 798448,
+    "fileOffsetHex": "0xc2ef0",
+    "bgr555": [
+      "0000",
+      "577f",
+      "6a0a",
+      "14a5"
+    ],
+    "colors": [
+      "#000000",
+      "#FFDEAD",
+      "#5284D6",
+      "#292929"
+    ],
+    "transparentIndex": 0,
+    "color0Transparent": true,
+    "displayTransform": "BGR555_TO_SRGB_DIRECT"
+  },
+  "hashes": {
+    "rawPixelHash": "7dbe8742a5a8e137",
+    "trimmedPixelHash": "997a43f554e00674",
+    "metaspriteHash": "0903fcd0312a996d",
+    "graphicsHash": "eddced99706d523a",
+    "paletteHash": "a65ae4629b160bed",
+    "graphicsTableHash": "fc62b8d4541c3f17",
+    "sourceProvenanceHash": "a3b830cf354c0ec8",
+    "sourceFileSha256": "097c3df0ffbfaa369a8bbb59966b4ff63f763dc5d8af7a2f57ec1aa9ed289be0"
+  },
+  "evidence": "ROM_PHYSICAL"
+}

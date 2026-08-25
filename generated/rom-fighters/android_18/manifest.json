@@ -1,0 +1,17 @@
+{
+  "formId": "android_18",
+  "source": "ROM_PHYSICAL_FIGHTERS",
+  "schemaVersion": 2,
+  "offsetEncoding": "s8",
+  "actorVisualProfileKey": 30,
+  "graphicsBank": 79,
+  "physicalIds": 4,
+  "frameInstances": 14,
+  "resources": [
+    "0x00"
+  ],
+  "allFrames": "all_frames/",
+  "contactSheetHtml": "contact_sheet.html",
+  "contactSheetPng": "contact_sheet.png",
+  "note": "Generated package for visual inspection. Production manifest.json remains separate until visible cutover."
+}

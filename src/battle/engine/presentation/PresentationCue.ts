@@ -271,6 +271,29 @@ export interface RomAnimationStartCue {
   resource: number | null;
 }
 
+/** Binding de producción frame-a-frame decidido por ProductionFrameResolver. */
+export interface RomPhysicalFrameCue {
+  type: 'ROM_PHYSICAL_FRAME';
+  tick: number;
+  slot: 0 | 1;
+  formId: string;
+  resource: number;
+  sequence: number;
+  frameIndex: number;
+  source: 'ROM_PHYSICAL' | 'CANONICAL_PHYSICAL' | 'MANIFEST_FALLBACK' | 'UNRESOLVED';
+  physicalId: string | null;
+  frameInstanceId: string | null;
+  file: string | null;
+  durationTicks: number | null;
+  offsetX: number | null;
+  offsetY: number | null;
+  rawOffsetX: number | null;
+  rawOffsetY: number | null;
+  visualFrameId: number | null;
+  evidence: string[];
+  fallbackReason: string | null;
+}
+
 /** Cambiar estado animado (opcode $04). */
 export interface RomAnimationStateCue {
   type: 'ANIMATION_STATE';
@@ -510,6 +533,7 @@ export type PresentationCue =
   | RomPaletteLoadCue
   // ROM LOTE 7 (§236)
   | RomAnimationStartCue
+  | RomPhysicalFrameCue
   | RomAnimationStateCue
   | RomWaitAnimationCue
   | RomWaitAnimationFrameCue

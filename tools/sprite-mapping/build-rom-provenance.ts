@@ -36,14 +36,25 @@ function formKey(f: number): number {
   const rec = 0x4000 + ((f >> 4) << 8) + ((f & 0xf) << 4);
   return u8(0x11 * 0x4000 + ((rec + 1) & 0x3fff));
 }
-const PAL_BASE = 0x30 * 0x4000 + 0x6e00;
+function bankedOffset(bank: number, cpuAddress: number): number {
+  if (cpuAddress < 0x4000 || cpuAddress > 0x7fff) {
+    throw new Error(`banked CPU address out of range: $${cpuAddress.toString(16)}`);
+  }
+  return bank * 0x4000 + (cpuAddress - 0x4000);
+}
+const PAL_BANK = 0x30;
+const PAL_TABLE = 0x6e00;
 function paletteFor(key: number): number[] {
-  const raw = Array.from(rom.subarray(PAL_BASE + key * 8, PAL_BASE + key * 8 + 8));
+  const cpuAddress = PAL_TABLE + key * 8;
+  const off = bankedOffset(PAL_BANK, cpuAddress);
+  const raw = Array.from(rom.subarray(off, off + 8));
   return raw;
 }
 function hasPalette(key: number): boolean {
   const raw = paletteFor(key);
-  return raw.some((b) => b !== 0) && raw.slice(0, 6).some((b) => b !== 0xff);
+  // 0x0000 is a valid BGR555 black color. The ROM copies all 8 bytes from
+  // Bank30:$6E00+key*8, so all-zero entries are physical palette data too.
+  return raw.length === 8 && raw.slice(0, 6).some((b) => b !== 0xff);
 }
 
 // ── 2) Mapping formID → formId (tabla de bits del corpus; inciertos marcados) ──
@@ -79,12 +90,19 @@ for (let f = 1; f <= 48; f++) {
   const name = FORM_NAMES[f]!;
   keyByFormId[name.formId] = key;
   const pal = paletteFor(key);
+  const paletteCpuAddress = PAL_TABLE + key * 8;
+  const paletteFileOffset = bankedOffset(PAL_BANK, paletteCpuAddress);
   formProfiles.push({
     formId: name.formId,
     romFormId: f,
     actorVisualProfileKey: key,
     graphicsBank: 0x31 + key,
     paletteAddress: `Bank30:$6E00 + 0x${key.toString(16)}×8`,
+    paletteRomBank: PAL_BANK,
+    paletteCpuAddress,
+    paletteCpuAddressHex: `0x${paletteCpuAddress.toString(16).padStart(4, '0')}`,
+    paletteFileOffset,
+    paletteFileOffsetHex: `0x${paletteFileOffset.toString(16).padStart(5, '0')}`,
     paletteRaw: pal.map((b) => b.toString(16).padStart(2, '0')),
     paletteAvailable: hasPalette(key),
     paletteNote: hasPalette(key) ? undefined : 'paleta vacía en $6E00 (fuente pendiente)',

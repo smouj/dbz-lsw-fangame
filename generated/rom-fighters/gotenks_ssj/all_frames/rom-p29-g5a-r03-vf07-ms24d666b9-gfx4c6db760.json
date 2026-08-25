@@ -1,0 +1,121 @@
+{
+  "formId": "gotenks_ssj",
+  "actorVisualProfileKey": 41,
+  "graphicsBank": "0x5a",
+  "physicalId": "rom-p29-g5a-r03-vf07-ms24d666b9-gfx4c6db760",
+  "resource": "0x03",
+  "visualFrameId": "0x07",
+  "width": 32,
+  "height": 48,
+  "originX": -16,
+  "originY": -40,
+  "originInTrimX": 16,
+  "originInTrimY": 40,
+  "trim": {
+    "file": "rom_trimmed.png",
+    "x": -16,
+    "y": -40,
+    "w": 32,
+    "h": 48,
+    "originInTrim": {
+      "x": 16,
+      "y": 40
+    }
+  },
+  "rawCanvas": "all_frames/rom-p29-g5a-r03-vf07-ms24d666b9-gfx4c6db760.raw-canvas.png",
+  "palette": {
+    "raw": [
+      0,
+      0,
+      31,
+      82,
+      31,
+      0,
+      165,
+      20
+    ],
+    "rawBytes": [
+      0,
+      0,
+      31,
+      82,
+      31,
+      0,
+      165,
+      20
+    ],
+    "rawSha256": "da5bf6a60deb3f8048603de3c10fcf27cbd7f75cb7f8d13da1db96ff0143a4ba",
+    "cpuAddress": 28488,
+    "cpuAddressHex": "0x6f48",
+    "fileOffset": 798536,
+    "fileOffsetHex": "0xc2f48",
+    "bgr555": [
+      "0000",
+      "521f",
+      "001f",
+      "14a5"
+    ],
+    "colors": [
+      "#000000",
+      "#FF84A5",
+      "#FF0000",
+      "#292929"
+    ],
+    "transparentIndex": 0,
+    "color0Transparent": true,
+    "displayTransform": "BGR555_TO_SRGB_DIRECT"
+  },
+  "hashes": {
+    "rawPixelHash": "518f8bdb3ffb93fc",
+    "trimmedPixelHash": "14b16c5c96c7cfbc",
+    "metaspriteHash": "24d666b90931ac82",
+    "graphicsHash": "4c6db7601e46ab0a",
+    "paletteHash": "da5bf6a60deb3f80",
+    "graphicsTableHash": "91c0c22743f37e41",
+    "sourceProvenanceHash": "add34dc55ac39b1a",
+    "sourceFileSha256": "49903f750dfd2d8d50d02857817b75ee06e553680d7635ddfec2a5fa094b6db5"
+  },
+  "uses": [
+    {
+      "resource": "0x03",
+      "sequence": 4,
+      "frameIndex": 0,
+      "durationTicks": 3,
+      "offsetX": 2,
+      "offsetY": 0,
+      "rawOffsetX": 2,
+      "rawOffsetY": 0
+    },
+    {
+      "resource": "0x03",
+      "sequence": 4,
+      "frameIndex": 1,
+      "durationTicks": 2,
+      "offsetX": 3,
+      "offsetY": 0,
+      "rawOffsetX": 3,
+      "rawOffsetY": 0
+    },
+    {
+      "resource": "0x03",
+      "sequence": 4,
+      "frameIndex": 2,
+      "durationTicks": 60,
+      "offsetX": 3,
+      "offsetY": 0,
+      "rawOffsetX": 3,
+      "rawOffsetY": 0
+    },
+    {
+      "resource": "0x03",
+      "sequence": 4,
+      "frameIndex": 3,
+      "durationTicks": 2,
+      "offsetX": 2,
+      "offsetY": 0,
+      "rawOffsetX": 2,
+      "rawOffsetY": 0
+    }
+  ],
+  "evidence": "ROM_PHYSICAL"
+}

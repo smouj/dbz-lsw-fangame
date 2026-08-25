@@ -1,0 +1,141 @@
+{
+  "formId": "cell_imperfect",
+  "actorVisualProfileKey": 33,
+  "graphicsBank": "0x52",
+  "physicalId": "rom-p21-g52-r00-vf00-ms0903fcd0-gfx28d79865",
+  "resource": "0x00",
+  "visualFrameId": "0x00",
+  "width": 32,
+  "height": 48,
+  "originX": -16,
+  "originY": -40,
+  "originInTrimX": 16,
+  "originInTrimY": 40,
+  "trim": {
+    "file": "rom_trimmed.png",
+    "x": -16,
+    "y": -40,
+    "w": 32,
+    "h": 48,
+    "originInTrim": {
+      "x": 16,
+      "y": 40
+    }
+  },
+  "rawCanvas": "all_frames/rom-p21-g52-r00-vf00-ms0903fcd0-gfx28d79865.raw-canvas.png",
+  "palette": {
+    "raw": [
+      0,
+      0,
+      255,
+      127,
+      243,
+      41,
+      165,
+      20
+    ],
+    "rawBytes": [
+      0,
+      0,
+      255,
+      127,
+      243,
+      41,
+      165,
+      20
+    ],
+    "rawSha256": "7670dff2a33027c1e7fdb718dafe286d43a7f90a417f7127b13b501ee76540c8",
+    "cpuAddress": 28424,
+    "cpuAddressHex": "0x6f08",
+    "fileOffset": 798472,
+    "fileOffsetHex": "0xc2f08",
+    "bgr555": [
+      "0000",
+      "7fff",
+      "29f3",
+      "14a5"
+    ],
+    "colors": [
+      "#000000",
+      "#FFFFFF",
+      "#9C7B52",
+      "#292929"
+    ],
+    "transparentIndex": 0,
+    "color0Transparent": true,
+    "displayTransform": "BGR555_TO_SRGB_DIRECT"
+  },
+  "hashes": {
+    "rawPixelHash": "185b2bbb850c0035",
+    "trimmedPixelHash": "386c938d6c7bc13b",
+    "metaspriteHash": "0903fcd0312a996d",
+    "graphicsHash": "28d79865373a8f25",
+    "paletteHash": "7670dff2a33027c1",
+    "graphicsTableHash": "fc62b8d4541c3f17",
+    "sourceProvenanceHash": "ee9f843b671eec05",
+    "sourceFileSha256": "d52d36f9f081400f413f4e531ca9208a121d631b0b67ee54ce97d92770d409ec"
+  },
+  "uses": [
+    {
+      "resource": "0x00",
+      "sequence": 0,
+      "frameIndex": 0,
+      "durationTicks": 3,
+      "offsetX": 0,
+      "offsetY": 0,
+      "rawOffsetX": 0,
+      "rawOffsetY": 0
+    },
+    {
+      "resource": "0x00",
+      "sequence": 0,
+      "frameIndex": 1,
+      "durationTicks": 2,
+      "offsetX": 0,
+      "offsetY": 0,
+      "rawOffsetX": 0,
+      "rawOffsetY": 0
+    },
+    {
+      "resource": "0x00",
+      "sequence": 0,
+      "frameIndex": 2,
+      "durationTicks": 2,
+      "offsetX": 0,
+      "offsetY": 0,
+      "rawOffsetX": 0,
+      "rawOffsetY": 0
+    },
+    {
+      "resource": "0x00",
+      "sequence": 1,
+      "frameIndex": 0,
+      "durationTicks": 3,
+      "offsetX": 0,
+      "offsetY": 0,
+      "rawOffsetX": 0,
+      "rawOffsetY": 0
+    },
+    {
+      "resource": "0x00",
+      "sequence": 1,
+      "frameIndex": 1,
+      "durationTicks": 2,
+      "offsetX": 0,
+      "offsetY": 0,
+      "rawOffsetX": 0,
+      "rawOffsetY": 0
+    },
+    {
+      "resource": "0x00",
+      "sequence": 1,
+      "frameIndex": 2,
+      "durationTicks": 2,
+      "offsetX": 0,
+      "offsetY": 0,
+      "rawOffsetX": 0,
+      "rawOffsetY": 0
+    }
+  ],
+  "evidence": "ROM_PHYSICAL"
+}

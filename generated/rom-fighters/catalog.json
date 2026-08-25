@@ -1,0 +1,585 @@
+{
+  "source": "ROM_PHYSICAL_FIGHTERS",
+  "forms": 48,
+  "physicalIds": 560,
+  "frameInstances": 2410,
+  "formsCatalog": [
+    {
+      "formId": "android_16",
+      "actorVisualProfileKey": 28,
+      "graphicsBank": 77,
+      "physicalIds": 4,
+      "frameInstances": 14,
+      "resources": [
+        "0x00"
+      ],
+      "contactSheetHtml": "android_16/contact_sheet.html"
+    },
+    {
+      "formId": "android_17",
+      "actorVisualProfileKey": 29,
+      "graphicsBank": 78,
+      "physicalIds": 4,
+      "frameInstances": 14,
+      "resources": [
+        "0x00"
+      ],
+      "contactSheetHtml": "android_17/contact_sheet.html"
+    },
+    {
+      "formId": "android_18",
+      "actorVisualProfileKey": 30,
+      "graphicsBank": 79,
+      "physicalIds": 4,
+      "frameInstances": 14,
+      "resources": [
+        "0x00"
+      ],
+      "contactSheetHtml": "android_18/contact_sheet.html"
+    },
+    {
+      "formId": "android_19",
+      "actorVisualProfileKey": 31,
+      "graphicsBank": 80,
+      "physicalIds": 4,
+      "frameInstances": 14,
+      "resources": [
+        "0x00"
+      ],
+      "contactSheetHtml": "android_19/contact_sheet.html"
+    },
+    {
+      "formId": "android_20",
+      "actorVisualProfileKey": 32,
+      "graphicsBank": 81,
+      "physicalIds": 4,
+      "frameInstances": 14,
+      "resources": [
+        "0x00"
+      ],
+      "contactSheetHtml": "android_20/contact_sheet.html"
+    },
+    {
+      "formId": "burter",
+      "actorVisualProfileKey": 25,
+      "graphicsBank": 74,
+      "physicalIds": 4,
+      "frameInstances": 14,
+      "resources": [
+        "0x00"
+      ],
+      "contactSheetHtml": "burter/contact_sheet.html"
+    },
+    {
+      "formId": "buu_base",
+      "actorVisualProfileKey": 19,
+      "graphicsBank": 68,
+      "physicalIds": 14,
+      "frameInstances": 62,
+      "resources": [
+        "0x00",
+        "0x03"
+      ],
+      "contactSheetHtml": "buu_base/contact_sheet.html"
+    },
+    {
+      "formId": "buu_gohan",
+      "actorVisualProfileKey": 38,
+      "graphicsBank": 87,
+      "physicalIds": 14,
+      "frameInstances": 62,
+      "resources": [
+        "0x00",
+        "0x03"
+      ],
+      "contactSheetHtml": "buu_gohan/contact_sheet.html"
+    },
+    {
+      "formId": "buu_gotenks",
+      "actorVisualProfileKey": 37,
+      "graphicsBank": 86,
+      "physicalIds": 14,
+      "frameInstances": 62,
+      "resources": [
+        "0x00",
+        "0x03"
+      ],
+      "contactSheetHtml": "buu_gotenks/contact_sheet.html"
+    },
+    {
+      "formId": "buu_kid",
+      "actorVisualProfileKey": 39,
+      "graphicsBank": 88,
+      "physicalIds": 14,
+      "frameInstances": 62,
+      "resources": [
+        "0x00",
+        "0x03"
+      ],
+      "contactSheetHtml": "buu_kid/contact_sheet.html"
+    },
+    {
+      "formId": "buu_super",
+      "actorVisualProfileKey": 20,
+      "graphicsBank": 69,
+      "physicalIds": 14,
+      "frameInstances": 62,
+      "resources": [
+        "0x00",
+        "0x03"
+      ],
+      "contactSheetHtml": "buu_super/contact_sheet.html"
+    },
+    {
+      "formId": "cell_imperfect",
+      "actorVisualProfileKey": 33,
+      "graphicsBank": 82,
+      "physicalIds": 14,
+      "frameInstances": 62,
+      "resources": [
+        "0x00",
+        "0x03"
+      ],
+      "contactSheetHtml": "cell_imperfect/contact_sheet.html"
+    },
+    {
+      "formId": "cell_jr",
+      "actorVisualProfileKey": 36,
+      "graphicsBank": 85,
+      "physicalIds": 14,
+      "frameInstances": 62,
+      "resources": [
+        "0x00",
+        "0x03"
+      ],
+      "contactSheetHtml": "cell_jr/contact_sheet.html"
+    },
+    {
+      "formId": "cell_perfect",
+      "actorVisualProfileKey": 35,
+      "graphicsBank": 84,
+      "physicalIds": 14,
+      "frameInstances": 62,
+      "resources": [
+        "0x00",
+        "0x03"
+      ],
+      "contactSheetHtml": "cell_perfect/contact_sheet.html"
+    },
+    {
+      "formId": "cell_semi",
+      "actorVisualProfileKey": 34,
+      "graphicsBank": 83,
+      "physicalIds": 14,
+      "frameInstances": 62,
+      "resources": [
+        "0x00",
+        "0x03"
+      ],
+      "contactSheetHtml": "cell_semi/contact_sheet.html"
+    },
+    {
+      "formId": "frieza_final",
+      "actorVisualProfileKey": 27,
+      "graphicsBank": 76,
+      "physicalIds": 9,
+      "frameInstances": 50,
+      "resources": [
+        "0x00",
+        "0x12"
+      ],
+      "contactSheetHtml": "frieza_final/contact_sheet.html"
+    },
+    {
+      "formId": "ginyu",
+      "actorVisualProfileKey": 26,
+      "graphicsBank": 75,
+      "physicalIds": 14,
+      "frameInstances": 62,
+      "resources": [
+        "0x00",
+        "0x03"
+      ],
+      "contactSheetHtml": "ginyu/contact_sheet.html"
+    },
+    {
+      "formId": "ginyu_goku",
+      "actorVisualProfileKey": 40,
+      "graphicsBank": 89,
+      "physicalIds": 14,
+      "frameInstances": 62,
+      "resources": [
+        "0x00",
+        "0x03"
+      ],
+      "contactSheetHtml": "ginyu_goku/contact_sheet.html"
+    },
+    {
+      "formId": "gohan_adult_ssj",
+      "actorVisualProfileKey": 12,
+      "graphicsBank": 61,
+      "physicalIds": 18,
+      "frameInstances": 76,
+      "resources": [
+        "0x00",
+        "0x03",
+        "0x04"
+      ],
+      "contactSheetHtml": "gohan_adult_ssj/contact_sheet.html"
+    },
+    {
+      "formId": "gohan_adult_ssj2",
+      "actorVisualProfileKey": 12,
+      "graphicsBank": 61,
+      "physicalIds": 18,
+      "frameInstances": 76,
+      "resources": [
+        "0x00",
+        "0x03",
+        "0x04"
+      ],
+      "contactSheetHtml": "gohan_adult_ssj2/contact_sheet.html"
+    },
+    {
+      "formId": "gohan_adult_ultimate",
+      "actorVisualProfileKey": 11,
+      "graphicsBank": 60,
+      "physicalIds": 18,
+      "frameInstances": 76,
+      "resources": [
+        "0x00",
+        "0x03",
+        "0x04"
+      ],
+      "contactSheetHtml": "gohan_adult_ultimate/contact_sheet.html"
+    },
+    {
+      "formId": "gohan_young",
+      "actorVisualProfileKey": 0,
+      "graphicsBank": 49,
+      "physicalIds": 18,
+      "frameInstances": 76,
+      "resources": [
+        "0x00",
+        "0x03",
+        "0x04"
+      ],
+      "contactSheetHtml": "gohan_young/contact_sheet.html"
+    },
+    {
+      "formId": "gohan_young_ssj",
+      "actorVisualProfileKey": 1,
+      "graphicsBank": 50,
+      "physicalIds": 18,
+      "frameInstances": 76,
+      "resources": [
+        "0x00",
+        "0x03",
+        "0x04"
+      ],
+      "contactSheetHtml": "gohan_young_ssj/contact_sheet.html"
+    },
+    {
+      "formId": "gohan_young_ssj2",
+      "actorVisualProfileKey": 2,
+      "graphicsBank": 51,
+      "physicalIds": 18,
+      "frameInstances": 76,
+      "resources": [
+        "0x00",
+        "0x03",
+        "0x04"
+      ],
+      "contactSheetHtml": "gohan_young_ssj2/contact_sheet.html"
+    },
+    {
+      "formId": "goku_base",
+      "actorVisualProfileKey": 5,
+      "graphicsBank": 54,
+      "physicalIds": 14,
+      "frameInstances": 62,
+      "resources": [
+        "0x00",
+        "0x03"
+      ],
+      "contactSheetHtml": "goku_base/contact_sheet.html"
+    },
+    {
+      "formId": "goku_ssj",
+      "actorVisualProfileKey": 6,
+      "graphicsBank": 55,
+      "physicalIds": 14,
+      "frameInstances": 62,
+      "resources": [
+        "0x00",
+        "0x03"
+      ],
+      "contactSheetHtml": "goku_ssj/contact_sheet.html"
+    },
+    {
+      "formId": "goku_ssj2",
+      "actorVisualProfileKey": 7,
+      "graphicsBank": 56,
+      "physicalIds": 14,
+      "frameInstances": 62,
+      "resources": [
+        "0x00",
+        "0x03"
+      ],
+      "contactSheetHtml": "goku_ssj2/contact_sheet.html"
+    },
+    {
+      "formId": "goku_ssj3",
+      "actorVisualProfileKey": 8,
+      "graphicsBank": 57,
+      "physicalIds": 14,
+      "frameInstances": 62,
+      "resources": [
+        "0x00",
+        "0x03"
+      ],
+      "contactSheetHtml": "goku_ssj3/contact_sheet.html"
+    },
+    {
+      "formId": "goten_base",
+      "actorVisualProfileKey": 15,
+      "graphicsBank": 64,
+      "physicalIds": 14,
+      "frameInstances": 62,
+      "resources": [
+        "0x00",
+        "0x03"
+      ],
+      "contactSheetHtml": "goten_base/contact_sheet.html"
+    },
+    {
+      "formId": "goten_ssj",
+      "actorVisualProfileKey": 16,
+      "graphicsBank": 65,
+      "physicalIds": 14,
+      "frameInstances": 62,
+      "resources": [
+        "0x00",
+        "0x03"
+      ],
+      "contactSheetHtml": "goten_ssj/contact_sheet.html"
+    },
+    {
+      "formId": "gotenks_ssj",
+      "actorVisualProfileKey": 41,
+      "graphicsBank": 90,
+      "physicalIds": 14,
+      "frameInstances": 62,
+      "resources": [
+        "0x00",
+        "0x03"
+      ],
+      "contactSheetHtml": "gotenks_ssj/contact_sheet.html"
+    },
+    {
+      "formId": "gotenks_ssj3",
+      "actorVisualProfileKey": 42,
+      "graphicsBank": 91,
+      "physicalIds": 14,
+      "frameInstances": 62,
+      "resources": [
+        "0x00",
+        "0x03"
+      ],
+      "contactSheetHtml": "gotenks_ssj3/contact_sheet.html"
+    },
+    {
+      "formId": "guldo",
+      "actorVisualProfileKey": 22,
+      "graphicsBank": 71,
+      "physicalIds": 4,
+      "frameInstances": 14,
+      "resources": [
+        "0x00"
+      ],
+      "contactSheetHtml": "guldo/contact_sheet.html"
+    },
+    {
+      "formId": "jeice",
+      "actorVisualProfileKey": 24,
+      "graphicsBank": 73,
+      "physicalIds": 4,
+      "frameInstances": 14,
+      "resources": [
+        "0x00"
+      ],
+      "contactSheetHtml": "jeice/contact_sheet.html"
+    },
+    {
+      "formId": "krillin_base",
+      "actorVisualProfileKey": 4,
+      "graphicsBank": 53,
+      "physicalIds": 23,
+      "frameInstances": 106,
+      "resources": [
+        "0x00",
+        "0x03",
+        "0x08",
+        "0x12"
+      ],
+      "contactSheetHtml": "krillin_base/contact_sheet.html"
+    },
+    {
+      "formId": "nappa",
+      "actorVisualProfileKey": 21,
+      "graphicsBank": 70,
+      "physicalIds": 4,
+      "frameInstances": 14,
+      "resources": [
+        "0x00"
+      ],
+      "contactSheetHtml": "nappa/contact_sheet.html"
+    },
+    {
+      "formId": "piccolo_base",
+      "actorVisualProfileKey": 3,
+      "graphicsBank": 52,
+      "physicalIds": 8,
+      "frameInstances": 28,
+      "resources": [
+        "0x00",
+        "0x04"
+      ],
+      "contactSheetHtml": "piccolo_base/contact_sheet.html"
+    },
+    {
+      "formId": "piccolo_evil",
+      "actorVisualProfileKey": 3,
+      "graphicsBank": 52,
+      "physicalIds": 8,
+      "frameInstances": 28,
+      "resources": [
+        "0x00",
+        "0x04"
+      ],
+      "contactSheetHtml": "piccolo_evil/contact_sheet.html"
+    },
+    {
+      "formId": "piccolo_kami",
+      "actorVisualProfileKey": 3,
+      "graphicsBank": 52,
+      "physicalIds": 8,
+      "frameInstances": 28,
+      "resources": [
+        "0x00",
+        "0x04"
+      ],
+      "contactSheetHtml": "piccolo_kami/contact_sheet.html"
+    },
+    {
+      "formId": "recoome",
+      "actorVisualProfileKey": 23,
+      "graphicsBank": 72,
+      "physicalIds": 4,
+      "frameInstances": 14,
+      "resources": [
+        "0x00"
+      ],
+      "contactSheetHtml": "recoome/contact_sheet.html"
+    },
+    {
+      "formId": "trunks_future",
+      "actorVisualProfileKey": 13,
+      "graphicsBank": 62,
+      "physicalIds": 8,
+      "frameInstances": 28,
+      "resources": [
+        "0x00",
+        "0x04"
+      ],
+      "contactSheetHtml": "trunks_future/contact_sheet.html"
+    },
+    {
+      "formId": "trunks_kid",
+      "actorVisualProfileKey": 17,
+      "graphicsBank": 66,
+      "physicalIds": 4,
+      "frameInstances": 14,
+      "resources": [
+        "0x00"
+      ],
+      "contactSheetHtml": "trunks_kid/contact_sheet.html"
+    },
+    {
+      "formId": "trunks_kid_ssj",
+      "actorVisualProfileKey": 18,
+      "graphicsBank": 67,
+      "physicalIds": 4,
+      "frameInstances": 14,
+      "resources": [
+        "0x00"
+      ],
+      "contactSheetHtml": "trunks_kid_ssj/contact_sheet.html"
+    },
+    {
+      "formId": "trunks_ssj",
+      "actorVisualProfileKey": 14,
+      "graphicsBank": 63,
+      "physicalIds": 8,
+      "frameInstances": 28,
+      "resources": [
+        "0x00",
+        "0x04"
+      ],
+      "contactSheetHtml": "trunks_ssj/contact_sheet.html"
+    },
+    {
+      "formId": "vegeta_base",
+      "actorVisualProfileKey": 9,
+      "graphicsBank": 58,
+      "physicalIds": 14,
+      "frameInstances": 66,
+      "resources": [
+        "0x00",
+        "0x05",
+        "0x12"
+      ],
+      "contactSheetHtml": "vegeta_base/contact_sheet.html"
+    },
+    {
+      "formId": "vegeta_majin",
+      "actorVisualProfileKey": 10,
+      "graphicsBank": 59,
+      "physicalIds": 14,
+      "frameInstances": 66,
+      "resources": [
+        "0x00",
+        "0x05",
+        "0x12"
+      ],
+      "contactSheetHtml": "vegeta_majin/contact_sheet.html"
+    },
+    {
+      "formId": "vegeta_ssj",
+      "actorVisualProfileKey": 10,
+      "graphicsBank": 59,
+      "physicalIds": 14,
+      "frameInstances": 66,
+      "resources": [
+        "0x00",
+        "0x05",
+        "0x12"
+      ],
+      "contactSheetHtml": "vegeta_ssj/contact_sheet.html"
+    },
+    {
+      "formId": "vegito_ssj",
+      "actorVisualProfileKey": 43,
+      "graphicsBank": 92,
+      "physicalIds": 24,
+      "frameInstances": 114,
+      "resources": [
+        "0x00",
+        "0x03",
+        "0x05",
+        "0x12"
+      ],
+      "contactSheetHtml": "vegito_ssj/contact_sheet.html"
+    }
+  ]
+}

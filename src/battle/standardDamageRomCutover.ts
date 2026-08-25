@@ -85,6 +85,7 @@ export function compileStandardDamageRuntimeCutover(
   events: BattleEventEnvelope[],
   actionStartedIndex: number,
   env: BattleEventEnvelope & { event: { type: 'ACTION_STARTED' } },
+  actorFormId?: string | null,
 ): StandardDamageRuntimeCutover | null {
   const resolved = standardDamageProfileForAction(env.event.action);
   if (!resolved) return null;
@@ -94,6 +95,8 @@ export function compileStandardDamageRuntimeCutover(
     startTick: env.tick,
     logicalTick: env.tick,
     actorSide: env.event.side,
+    actorFormId: actorFormId ?? null,
+    sequenceSelector: null,
     sourceEvent: env.event.type,
     selectedResultFamily: outcome.family,
     selectedResultSourceEvent: outcome.sourceEvent,

@@ -75,7 +75,7 @@ export function compileRomSupportPresentation(
   });
   const endTick = Math.max(
     startTick,
-    ...entries.map((item) => item.cue.tick + ('durationTicks' in item.cue ? item.cue.durationTicks : 0)),
+    ...entries.map((item) => item.cue.tick + ('durationTicks' in item.cue ? (item.cue.durationTicks ?? 0) : 0)),
   );
   const pending = entries
     .map((item) => item.cue)

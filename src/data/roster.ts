@@ -200,8 +200,8 @@ export const LIMIT_DEFAULTS: Record<string, number[]> = {
   'piccolo': [17, 18],       // S.Beam Can., F.Lightbomb
   'krillin': [22, 21],       // S.Destruc-D., Destruct-Disk
   'trunks_kid': [],          // (sin Limit por defecto)
-  'trunks_future': [35, 44], // Burning Atk., Flash.Sword
-  'frieza': [64, 57],        // Super E-Ball, Purple Comet
+  'trunks_future': [35, 36], // Burning Atk., Fin.Buster
+  'frieza': [64, 65],        // Super E-Ball, Grand Wave
   'cell': [17, 63, 77],      // S.Beam Can., Finger Beam, Cell Combo
   'buu': [80, 64],           // Potbelly Atk, Super E-Ball
   'android_19': [75, 76],    // Life Absorb, Energy Absorb (regla Androids)
@@ -209,7 +209,7 @@ export const LIMIT_DEFAULTS: Record<string, number[]> = {
   'android_16': [69, 70],    // Rocket Punch, Hell Flash
   'android_17': [71, 72],    // Crazy Rush, Energy Slash
   'android_18': [74, 73],    // Attack No. 18, Energy Slice
-  'goten': [12, 38],         // Kamehameha, Kamekameha
+  'goten': [13, 38],          // S.Kamehameha, Kamekameha
   'vegito': [13, 26, 31],    // S.Kamehameha, Teleport., Big Bang Atk (walkthrough)
 };
 

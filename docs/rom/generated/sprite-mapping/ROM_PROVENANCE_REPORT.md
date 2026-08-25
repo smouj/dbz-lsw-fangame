@@ -1,6 +1,6 @@
 # S-MAP2 — ROM PHYSICAL PROVENANCE (REPORT)
 
-Generado: 2026-08-24T11:00:11.433Z · HEAD local.
+Generado: 2026-08-24T20:45:17.004Z · HEAD local.
 
 ## Principio
 
@@ -16,12 +16,12 @@ comparación SOLO por hash físico exacto (R2.4 grammar) — sin fuzzy/resize/re
 | --- | --- |
 | Formas ROM reales (1-48) con perfil | 48/48 (100%) |
 | Keys de perfil únicas | 44 |
-| Keys sin paleta en \$6E00 | 10 (gohan_young, gohan_young_ssj, krillin_base, goten_ssj, trunks_kid, trunks_kid_ssj, buu_base, buu_super, buu_gotenks, buu_gohan) |
-| Identidades ROM renderizadas (occs) | 750 |
-| Identidades ROM únicas | 143 |
+| Keys sin paleta en \$6E00 | 0 () |
+| Identidades ROM renderizadas (occs) | 5134 |
+| Identidades ROM únicas | 1227 |
 | ROM_EXACT únicas | 0 |
 | ROM_SHARED únicas | 0 |
-| ROM_UNRESOLVED únicas | 143 |
+| ROM_UNRESOLVED únicas | 1227 |
 | Relaciones exactas (ROM↔canonical) | 0 |
 | Canonical files indexados | 3677 |
 

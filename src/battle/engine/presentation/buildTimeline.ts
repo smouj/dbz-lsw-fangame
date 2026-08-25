@@ -21,8 +21,9 @@
 
 import { canonForAction } from '../../animationCanon';
 import { resolveActionProfileById, type ActionProfileSpec } from '../../actionProfiles';
-import { compileBeamBaseRuntimeCutover } from '../../beamBaseRomCutover';
+import { compileBeamFamilyRuntimeCutover } from '../../beamBaseRomCutover';
 import { compileStandardDamageRuntimeCutover } from '../../standardDamageRomCutover';
+import { compileSupportRomRuntimeCutover } from '../../supportRomCutover';
 import { STAGE_PREP_BEATS, STAGE_PREP_TICKS } from '../clock/clock';
 import type { ProjectileVisualKind } from '../../actionProfiles';
 import type { BattleEvent, BattleActionDescriptor } from '../events/BattleEvent';
@@ -70,7 +71,7 @@ interface ActionState {
   /** Stage — anchor real usado por la resolución (para HUD de daño). */
   stageResolveAnchor: number | null;
   /** Esta acción ya obtuvo su timeline principal desde el compiler ROM. */
-  romBackedProfileFamily?: 'STANDARD_DAMAGE' | 'BEAM_BASE';
+  romBackedProfileFamily?: 'STANDARD_DAMAGE' | 'BEAM_BASE' | 'BEAM_FAMILY' | 'SUPPORT_SPECIAL';
 }
 
 /** Duración por defecto de una pose (ticks GBC) hasta el siguiente beat. */
@@ -101,16 +102,23 @@ export function buildPresentationTimeline(input: PresentationInput): BattleTimel
         const canon = canonForAction(e.action);
         const profile = resolveActionProfileById(e.action.id);
         activeAction = { side: e.side, action: e.action, canon, profile, startTick: env.tick, prepTicks: null, stageResolvedTick: null, stageResolveAnchor: null };
-        const romCutover = compileStandardDamageRuntimeCutover(events, eventIndex, env as BattleEventEnvelope & { event: { type: 'ACTION_STARTED' } });
+        const actorFormId = e.side === 'player' ? context.playerFormId : context.enemyFormId;
+        const romCutover = compileStandardDamageRuntimeCutover(events, eventIndex, env as BattleEventEnvelope & { event: { type: 'ACTION_STARTED' } }, actorFormId);
         if (romCutover) {
           activeAction.romBackedProfileFamily = 'STANDARD_DAMAGE';
           out.push(...romCutover.timeline.entries);
           break;
         }
-        const beamBaseCutover = compileBeamBaseRuntimeCutover(events, eventIndex, env as BattleEventEnvelope & { event: { type: 'ACTION_STARTED' } });
+        const beamBaseCutover = compileBeamFamilyRuntimeCutover(events, eventIndex, env as BattleEventEnvelope & { event: { type: 'ACTION_STARTED' } }, actorFormId);
         if (beamBaseCutover) {
-          activeAction.romBackedProfileFamily = 'BEAM_BASE';
+          activeAction.romBackedProfileFamily = beamBaseCutover.profile.kind === 'BEAM_BASE' ? 'BEAM_BASE' : 'BEAM_FAMILY';
           out.push(...beamBaseCutover.timeline.entries);
+          break;
+        }
+        const supportCutover = compileSupportRomRuntimeCutover(events, eventIndex, env as BattleEventEnvelope & { event: { type: 'ACTION_STARTED' } });
+        if (supportCutover) {
+          activeAction.romBackedProfileFamily = 'SUPPORT_SPECIAL';
+          out.push(...supportCutover.timeline.entries);
           break;
         }
         const target = other(e.side);

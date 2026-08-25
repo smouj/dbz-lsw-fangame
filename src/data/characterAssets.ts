@@ -9,7 +9,8 @@
 //   ├─ OVERWORLD  → táctico/chibi · battle OW idle · power pose · aura
 //   ├─ COMBAT     → manifest · TODAS las poses del canon (COMBAT_POSE_ORDER)
 //   │               con pose resuelta + fallback trazable + frames físicos
-//   └─ SHEET V9   → sheet fuente · frames atómicos
+//   └─ SHEET      → sheet fuente (referencia HISTÓRICA V9 — NO autoridad
+//                   física; la autoridad es el manifest + ROM trace)
 // ═══════════════════════════════════════════════════════════════════════
 
 import { spriteDirFor, spriteManifestUrl, resolvePoseInfo } from './spriteManifest';
@@ -59,7 +60,7 @@ export interface CharacterAssetBundle {
     poses: CombatPoseAsset[];   // COMBAT_POSE_ORDER completo (requeridas + opcionales)
   };
   sheet: {
-    source: string | undefined; // form.sheet (ROM sheet ref)
+    source: string | undefined; // form.sheet (ROM sheet ref) — HISTÓRICO V9, no autoridad
     atomicJsonUrl: string | undefined;
   };
 }
@@ -142,9 +143,10 @@ export async function resolveBundlePoses(
       resolvedPose: info?.pose ?? null,
       fallback: info?.fallback ?? [],
       url: info?.url ?? null,
-      // frameCount: la pose resuelta puede tener varios frames; la URL es el
-      // frame 0 — el conteo exacto lo da el manifest (vista Sheets).
-      frameCount: info ? 1 : 0,
+      // frameCount REAL: nº de frames físicos de la pose resuelta en el
+      // manifest (no el 1 hardcodeado de la V9). La vista Sheets/Character
+      // usa este conteo para representar secuencias honestas.
+      frameCount: info?.frameCount ?? 0,
     };
   }));
 }
