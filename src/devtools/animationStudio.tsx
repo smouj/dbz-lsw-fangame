@@ -33,6 +33,7 @@ import type { FrameMapping } from '../battle/characterFrameMap';
 
 const MAPPING_BADGE: Record<FrameMapping, { label: string; color: string; bg: string }> = {
   ROM_EXACT: { label: 'ROM_EXACT', color: '#7CFC00', bg: 'rgba(124,252,0,0.10)' },
+  ROM_PHASE: { label: 'ROM_PHASE', color: '#8fe0ff', bg: 'rgba(143,224,255,0.10)' },
   CANONICAL_PHYSICAL: { label: 'CANONICAL_PHYSICAL', color: '#a0d0ff', bg: 'rgba(160,208,255,0.10)' },
   SHARED_PHYSICAL: { label: 'SHARED_PHYSICAL', color: '#ffe08a', bg: 'rgba(255,224,138,0.10)' },
   COMPOSITE: { label: 'COMPOSITE', color: '#d9a0ff', bg: 'rgba(217,160,255,0.10)' },

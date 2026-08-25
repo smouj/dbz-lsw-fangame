@@ -47,15 +47,54 @@
 export type RomFighterIdentityKey = `${number}:${number}:${number}`;
 
 /**
- * Canonical ROM physical frame key.
+ * Canonical ROM physical frame key string (serialized form).
  * Format: `${profileKey}:${graphicsBank}:${resource}:${sequence}:${frameIndex}:${visualFrameId}`
  *
- * This key uniquely identifies a single physical frame in the ROM.
- * Two frames with the same key are the SAME physical frame.
+ * Prefer the structured {@link RomPhysicalFrameKey} + {@link physicalFrameKey}.
+ * Kept for backward compatibility with older consumers.
  *
  * Example: "5:54:0:0:0:0" = goku_base idle frame 0
  */
-export type RomPhysicalFrameKey = `${number}:${number}:${number}:${number}:${number}:${number}`;
+export type RomPhysicalFrameKeyString = `${number}:${number}:${number}:${number}:${number}:${number}`;
+
+/**
+ * Canonical ROM physical frame key — STRUCTURED identity.
+ *
+ * This is the shared physical identity used across ALL consumers:
+ * RomSequenceRegistry, RomActionSequenceBinding, the physical frame index,
+ * Character Studio, Animation Studio, and ProductionFrameResolver.
+ *
+ * The join to the physical corpus (`rom-p...` physicalId) is performed by
+ * (profileKey, graphicsBank, resourceId, visualFrameId) — the content identity.
+ * `sequence` + `frameIndex` locate the occurrence within the resolved sequence
+ * and are part of the logical frame identity, not the content hash.
+ */
+export interface RomPhysicalFrameKey {
+  /** ROM actor visual profile key (Bank11 rawRecord[1]). */
+  profileKey: number;
+  /** Graphics bank (0x31 + profileKey). */
+  graphicsBank: number;
+  /** AnimationResource ID. */
+  resourceId: number;
+  /** Resolved sequence index. */
+  sequence: number;
+  /** Frame index within the sequence. */
+  frameIndex: number;
+  /** Visual frame ID (metasprite index) from ROM frame record byte[0]. */
+  visualFrameId: number;
+}
+
+/**
+ * Content identity for a physical frame (excludes occurrence).
+ * (profileKey, graphicsBank, resourceId, visualFrameId) uniquely determines
+ * the rendered metasprite + graphics content, and therefore the `rom-p...` id.
+ */
+export interface RomPhysicalContentKey {
+  profileKey: number;
+  graphicsBank: number;
+  resourceId: number;
+  visualFrameId: number;
+}
 
 // ─── ROM-Native Identity Structure ────────────────────────────────────
 
@@ -210,7 +249,32 @@ export function makeRomFighterIdentityKey(
   return `${romFormId}:${actorVisualProfileKey}:${graphicsBank}`;
 }
 
-/** Create a canonical ROM physical frame key from raw fields. */
+/**
+ * Create a canonical ROM physical frame key string from a structured key.
+ * This is the SINGLE canonical serialization used by all consumers.
+ */
+export function physicalFrameKey(frame: RomPhysicalFrameKey): RomPhysicalFrameKeyString {
+  return `${frame.profileKey}:${frame.graphicsBank}:${frame.resourceId}:${frame.sequence}:${frame.frameIndex}:${frame.visualFrameId}`;
+}
+
+/** Parse a canonical ROM physical frame key string into a structured key. */
+export function parsePhysicalFrameKey(key: RomPhysicalFrameKeyString): RomPhysicalFrameKey {
+  const [profileKey, graphicsBank, resourceId, sequence, frameIndex, visualFrameId] = key.split(':').map(Number);
+  return { profileKey, graphicsBank, resourceId, sequence, frameIndex, visualFrameId };
+}
+
+/**
+ * Content identity string for the physical corpus join (excludes occurrence).
+ * (profileKey, graphicsBank, resourceId, visualFrameId) → `rom-p...` physicalId.
+ */
+export function physicalContentKey(content: RomPhysicalContentKey): string {
+  return `${content.profileKey}:${content.graphicsBank}:${content.resourceId}:${content.visualFrameId}`;
+}
+
+/**
+ * @deprecated Use {@link physicalFrameKey} + the structured {@link RomPhysicalFrameKey}.
+ * Kept for backward compatibility with existing tests/consumers.
+ */
 export function makeRomPhysicalFrameKey(
   profileKey: number,
   graphicsBank: number,
@@ -218,8 +282,8 @@ export function makeRomPhysicalFrameKey(
   sequence: number,
   frameIndex: number,
   visualFrameId: number,
-): RomPhysicalFrameKey {
-  return `${profileKey}:${graphicsBank}:${animationResource}:${sequence}:${frameIndex}:${visualFrameId}`;
+): RomPhysicalFrameKeyString {
+  return physicalFrameKey({ profileKey, graphicsBank, resourceId: animationResource, sequence, frameIndex, visualFrameId });
 }
 
 /** Parse a ROM fighter identity key back into components. */
@@ -232,8 +296,11 @@ export function parseRomFighterIdentityKey(key: RomFighterIdentityKey): {
   return { romFormId, actorVisualProfileKey, graphicsBank };
 }
 
-/** Parse a ROM physical frame key back into components. */
-export function parseRomPhysicalFrameKey(key: RomPhysicalFrameKey): {
+/**
+ * @deprecated Use {@link parsePhysicalFrameKey}.
+ * Kept for backward compatibility (returns `animationResource`, not `resourceId`).
+ */
+export function parseRomPhysicalFrameKey(key: RomPhysicalFrameKeyString): {
   profileKey: number;
   graphicsBank: number;
   animationResource: number;
@@ -241,8 +308,15 @@ export function parseRomPhysicalFrameKey(key: RomPhysicalFrameKey): {
   frameIndex: number;
   visualFrameId: number;
 } {
-  const [profileKey, graphicsBank, animationResource, sequence, frameIndex, visualFrameId] = key.split(':').map(Number);
-  return { profileKey, graphicsBank, animationResource, sequence, frameIndex, visualFrameId };
+  const parsed = parsePhysicalFrameKey(key);
+  return {
+    profileKey: parsed.profileKey,
+    graphicsBank: parsed.graphicsBank,
+    animationResource: parsed.resourceId,
+    sequence: parsed.sequence,
+    frameIndex: parsed.frameIndex,
+    visualFrameId: parsed.visualFrameId,
+  };
 }
 
 /**

@@ -188,6 +188,7 @@ const ROM_IDENTITY_BY_FORM: Map<string, RomFighterIdentity> = new Map(
 // ═══ F-MAP helpers (Character Studio ↔ characterFrameMap) ═══════════════
 const MAPPING_LABEL: Record<FrameMapping, string> = {
   ROM_EXACT: 'ROM_EXACT',
+  ROM_PHASE: 'ROM_PHASE',
   CANONICAL_PHYSICAL: 'CANONICAL_PHYSICAL',
   SHARED_PHYSICAL: 'SHARED_PHYSICAL',
   COMPOSITE: 'COMPOSITE',
@@ -197,7 +198,7 @@ const MAPPING_LABEL: Record<FrameMapping, string> = {
 };
 
 const MAPPING_TONE: Record<FrameMapping, string> = {
-  ROM_EXACT: 'ok', CANONICAL_PHYSICAL: 'ok', SHARED_PHYSICAL: 'info',
+  ROM_EXACT: 'ok', ROM_PHASE: 'info', CANONICAL_PHYSICAL: 'ok', SHARED_PHYSICAL: 'info',
   COMPOSITE: 'info', FALLBACK: 'bad', REFERENCE_FX: 'info', UNRESOLVED: 'warn',
 };
 
@@ -1363,8 +1364,21 @@ function romSummary(b: CharacterFrameBinding): string {
   return `res $${r.animationResource.toString(16).padStart(2, '0')} · seq ${r.sequenceIndex} · fr ${r.frameIndex} · vf $${r.visualFrameId.toString(16).padStart(2, '0')}`;
 }
 
+function romIdentitySummary(b: CharacterFrameBinding): string {
+  if (b.romIdentity) return b.romIdentity;
+  if (b.rom) return romSummary(b);
+  return '—';
+}
+
+function romCanonicalSummary(b: CharacterFrameBinding): string {
+  if (b.romPhysicalId) return b.romPhysicalId;
+  if (b.romPhysicalSourceIds.length > 0) return `${b.romPhysicalSourceIds.length} physical sources`;
+  if (b.canonicalId) return b.canonicalId;
+  return '—';
+}
+
 function dominantMapping(arr: CharacterFrameBinding[]): FrameMapping {
-  const order: FrameMapping[] = ['ROM_EXACT', 'CANONICAL_PHYSICAL', 'SHARED_PHYSICAL', 'COMPOSITE', 'REFERENCE_FX', 'FALLBACK', 'UNRESOLVED'];
+  const order: FrameMapping[] = ['ROM_EXACT', 'ROM_PHASE', 'CANONICAL_PHYSICAL', 'SHARED_PHYSICAL', 'COMPOSITE', 'REFERENCE_FX', 'FALLBACK', 'UNRESOLVED'];
   for (const m of order) if (arr.some(b => b.mapping === m)) return m;
   return 'UNRESOLVED';
 }
@@ -1387,7 +1401,7 @@ export function CharacterPhysicalMap({ formId }: { formId: string }) {
   const [open, setOpen] = useState<string | null>(null);
 
   const byMapping = useMemo(() => {
-    const acc: Record<FrameMapping, number> = { ROM_EXACT: 0, CANONICAL_PHYSICAL: 0, SHARED_PHYSICAL: 0, COMPOSITE: 0, FALLBACK: 0, REFERENCE_FX: 0, UNRESOLVED: 0 };
+    const acc: Record<FrameMapping, number> = { ROM_EXACT: 0, ROM_PHASE: 0, CANONICAL_PHYSICAL: 0, SHARED_PHYSICAL: 0, COMPOSITE: 0, FALLBACK: 0, REFERENCE_FX: 0, UNRESOLVED: 0 };
     for (const b of bindings) acc[b.mapping]++;
     return acc;
   }, [bindings]);
@@ -1426,8 +1440,8 @@ export function CharacterPhysicalMap({ formId }: { formId: string }) {
           </div>
           {groups.map(g => {
             const first = g.bindings[0];
-            const romCount = g.bindings.filter(b => b.rom).length;
-            const canonCount = g.bindings.filter(b => b.canonicalId).length;
+            const identityCount = g.bindings.filter(b => b.romIdentity).length;
+            const physicalCount = g.bindings.filter(b => b.romPhysicalId || b.romPhysicalSourceIds.length > 0).length;
             const isOpen = open === g.role;
             return (
               <div key={g.role} className="dev-fmap-group">
@@ -1440,12 +1454,12 @@ export function CharacterPhysicalMap({ formId }: { formId: string }) {
                   </span>
                   <span className={`dev-tag dev-fmap-${MAPPING_TONE[g.classification]}`}>{MAPPING_LABEL[g.classification]}</span>
                   <span className="dev-fmap-rom">
-                    {romCount > 0 ? <code>{romSummary(first)}</code> : <span className="dev-hint">—</span>}
-                    {romCount > 1 && <small>+{romCount - 1}</small>}
+                    {identityCount > 0 ? <code>{romIdentitySummary(first)}</code> : <span className="dev-hint">—</span>}
+                    {identityCount > 1 && <small>+{identityCount - 1}</small>}
                   </span>
                   <span className="dev-fmap-canon">
-                    {canonCount > 0 ? <code>{first.canonicalId}</code> : <span className="dev-hint">—</span>}
-                    {canonCount > 1 && <small>+{canonCount - 1}</small>}
+                    {physicalCount > 0 ? <code>{romCanonicalSummary(first)}</code> : <span className="dev-hint">—</span>}
+                    {physicalCount > 1 && <small>+{physicalCount - 1}</small>}
                   </span>
                   <span className="dev-fmap-count">{g.bindings.length}</span>
                 </button>
@@ -1461,8 +1475,11 @@ export function CharacterPhysicalMap({ formId }: { formId: string }) {
                         </div>
                         <div className="dev-fmap-binding-grid">
                           <div><strong>ROM</strong> {romSummary(b)}</div>
+                          <div><strong>ROM identity</strong> {b.romIdentity ?? '—'}</div>
                           <div><strong>duration</strong> {b.rom ? `${b.rom.durationTicks}t` : '—'}</div>
                           <div><strong>offset</strong> {b.rom ? `x ${b.rom.offsetX} · y ${b.rom.offsetY}` : '—'}</div>
+                          <div><strong>physicalId</strong> {b.romPhysicalId ?? '—'}</div>
+                          <div><strong>physical sources</strong> {b.romPhysicalSourceIds.length > 0 ? b.romPhysicalSourceIds.join(', ') : '—'}</div>
                           <div><strong>canonical</strong> {b.canonicalId ?? '—'}{b.canonicalRelation ? ` (${RELATION_LABEL[b.canonicalRelation] ?? b.canonicalRelation})` : ''}</div>
                           <div><strong>phys family</strong> {b.physicalFamily ?? '—'}</div>
                           <div><strong>size</strong> {b.w}×{b.h}</div>

@@ -51,7 +51,7 @@ check('frames de manifest indexados (>0)', summary.manifestFramesIndexed > 0, `$
 
 // ═══ 3. Clasificaciones conocidas (unknown source = 0) ═══
 section('Clasificación (unknown source = 0)');
-const KNOWN: FrameMapping[] = ['ROM_EXACT', 'CANONICAL_PHYSICAL', 'SHARED_PHYSICAL', 'COMPOSITE', 'FALLBACK', 'REFERENCE_FX', 'UNRESOLVED'];
+const KNOWN: FrameMapping[] = ['ROM_EXACT', 'ROM_PHASE', 'CANONICAL_PHYSICAL', 'SHARED_PHYSICAL', 'COMPOSITE', 'FALLBACK', 'REFERENCE_FX', 'UNRESOLVED'];
 const unknown = bindings.filter(b => !KNOWN.includes(b.mapping));
 check('ningún binding con mapping desconocido', unknown.length === 0, `${unknown.length} desconocidos`);
 console.log(`    ROM_EXACT=${summary.byMapping.ROM_EXACT} CANONICAL_PHYSICAL=${summary.byMapping.CANONICAL_PHYSICAL} SHARED_PHYSICAL=${summary.byMapping.SHARED_PHYSICAL}`);

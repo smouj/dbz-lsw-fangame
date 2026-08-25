@@ -38,11 +38,16 @@ import {
 import {
   PHYSICAL_FRAME_RECONCILIATION,
 } from './physicalFrameReconciliation';
+import {
+  physicalIdForFormFrame,
+  profileForForm,
+} from '../data/romPhysicalFrameIndex';
 
 // ─── Taxonomía ──────────────────────────────────────────────────────────
 
 export type FrameMapping =
   | 'ROM_EXACT'          // ROM decoded frame → manifest, byte-exact (EXACT)
+  | 'ROM_PHASE'          // ROM beam phase contract → manifest (charge/hold/release), NOT byte-exact
   | 'CANONICAL_PHYSICAL' // frame físico canónico con canonicalId, sin ROM aún
   | 'SHARED_PHYSICAL'    // frame físico compartido (otro dir o varias poses)
   | 'COMPOSITE'          // pose semántica que reutiliza frames de otra familia
@@ -109,6 +114,15 @@ export interface CharacterFrameBinding {
   canonicalId: string | null;
   canonicalRelation: CanonicalMatchRelation | null;
   rom: RomFrameSource | null;
+  /** `rom-p...` physical corpus id resolved via the structured profile/bank join. */
+  romPhysicalId: string | null;
+  /**
+   * Physical source ids for phase/composite mappings that span multiple
+   * metasprite variants across sequences (never a fabricated single id).
+   */
+  romPhysicalSourceIds: string[];
+  /** Structured ROM identity `rom-p{profile}-g{bank}-r{resource}-vf{vf}`. */
+  romIdentity: string | null;
   mapping: FrameMapping;
   /** dir compartido por >1 forma (RUNTIME_SHARED). */
   sharedForm: boolean;
@@ -207,6 +221,92 @@ function romExact(): Map<string, RomFrameSource> {
   return _romExact;
 }
 
+// ─── ROM PHASE lookup (beam phase contract, NOT byte-exact) ─────────────
+
+function hex2(value: number): string {
+  return value.toString(16).padStart(2, '0');
+}
+
+/**
+ * Structured ROM identity string for a resolved ROM frame: independent of
+ * corpus presence. `rom-p{profile}-g{bank}-r{resource}-vf{vf}`.
+ */
+function romIdentityFor(formId: string, rom: RomFrameSource | null): string | null {
+  if (!rom) return null;
+  const profile = profileForForm(formId);
+  if (!profile) return null;
+  return `rom-p${hex2(profile.actorVisualProfileKey)}-g${hex2(profile.graphicsBank)}-r${hex2(rom.animationResource)}-vf${hex2(rom.visualFrameId)}`;
+}
+
+/**
+ * Physical source ids for a beam phase: every DISTINCT (resource, metasprite)
+ * promoted for this form across ALL compatible beam resources. A phase spans
+ * multiple beam resources × multiple metasprite variants (one per ROM
+ * sequence), so the honest representation is a LIST, never a fabricated
+ * single id.
+ */
+function romPhaseSourceIds(formId: string, phase: 'beam_charge' | 'beam_fire'): string[] {
+  const dir = spriteDirFor(formId);
+  if (!dir) return [];
+  const seen = new Set<string>();
+  const ids: string[] = [];
+  for (const res of PHYSICAL_FRAME_RECONCILIATION) {
+    if (!res.compatibleForms.includes(dir)) continue;
+    for (const fr of res.frames) {
+      if (fr.assetMapping.manifestPose !== phase) continue;
+      const key = `${res.resourceId}:${fr.rom.metasprite}`;
+      if (seen.has(key)) continue;
+      seen.add(key);
+      const id = physicalIdForFormFrame(formId, res.resourceId, fr.rom.metasprite);
+      if (id) ids.push(id);
+    }
+  }
+  return ids;
+}
+
+/**
+ * Maps (dir, pose, index) → representative ROM frame via the beam phase
+ * contract for DECODED beam resources. Unlike romExactLookup, it does NOT
+ * require every compatible form to share the pose — the mapping is per-form
+ * (each form resolves its own physical id by profile/bank).
+ *
+ * The representative is the earliest sequence+frame that maps to the pose
+ * (deterministic); the full metasprite-variant set lives in romPhaseSourceIds.
+ */
+function romPhaseLookup(): Map<string, RomFrameSource> {
+  const map = new Map<string, RomFrameSource>();
+  for (const res of PHYSICAL_FRAME_RECONCILIATION) {
+    for (const fr of res.frames) {
+      if (fr.assetMapping.status === 'EXACT') continue; // already handled by romExact
+      const pose = fr.assetMapping.manifestPose;
+      const index = fr.assetMapping.manifestIndex;
+      if (pose == null || index == null) continue;
+      if (pose !== 'beam_charge' && pose !== 'beam_fire') continue;
+      const src: RomFrameSource = {
+        animationResource: res.resourceId,
+        sequenceIndex: fr.sequenceIndex,
+        frameIndex: fr.frameIndex,
+        visualFrameId: fr.rom.metasprite,
+        durationTicks: fr.rom.durationTicks,
+        offsetX: fr.rom.offsetX,
+        offsetY: fr.rom.offsetY,
+        sourceTechnique: res.sourceTechnique,
+      };
+      for (const dir of res.compatibleForms) {
+        const key = `${dir}:${pose}:${index}`;
+        if (!map.has(key)) map.set(key, src);
+      }
+    }
+  }
+  return map;
+}
+
+let _romPhase: Map<string, RomFrameSource> | null = null;
+function romPhase(): Map<string, RomFrameSource> {
+  if (!_romPhase) _romPhase = romPhaseLookup();
+  return _romPhase;
+}
+
 // ─── Clasificación ──────────────────────────────────────────────────────
 
 function classifyBinding(
@@ -219,6 +319,7 @@ function classifyBinding(
   sharedForm: boolean,
   sharedFile: boolean,
   rom: RomFrameSource | null,
+  romPhase: RomFrameSource | null,
 ): { mapping: FrameMapping; evidence: string[] } {
   const evidence: string[] = [];
 
@@ -230,6 +331,11 @@ function classifyBinding(
   if (rom) {
     evidence.push(`ROM_EXACT: recurso ${rom.animationResource} seq${rom.sequenceIndex} frame${rom.frameIndex} → metasprite ${rom.visualFrameId} (${rom.sourceTechnique ?? 'técnica'})`);
     return { mapping: 'ROM_EXACT', evidence };
+  }
+
+  if (romPhase) {
+    evidence.push(`ROM_PHASE: fase "${pose}" cubierta por contrato de fase beam (charge/hold/release) — sin frame byte-exact único; variantes de recurso/meta en romPhysicalSourceIds`);
+    return { mapping: 'ROM_PHASE', evidence };
   }
 
   // Pose semántica cuyos frames físicos pertenecen a OTRA familia.
@@ -271,6 +377,8 @@ export function bindingsForForm(formId: string): CharacterFrameBinding[] {
   const shared = sharedDirMap().get(dir) ?? [];
   const sharedForm = shared.length > 1;
   const rom = romExact();
+  const phase = romPhase();
+  const profile = profileForForm(formId);
   const out: CharacterFrameBinding[] = [];
 
   for (const pose of manifestPoseNames(dir)) {
@@ -278,9 +386,26 @@ export function bindingsForForm(formId: string): CharacterFrameBinding[] {
     for (const fr of frames) {
       const phys = physicalFamilyFromFile(dir, fr.file);
       const romSrc = rom.get(`${dir}:${pose}:${fr.index}`) ?? null;
+      const romPhaseSrc = phase.get(`${dir}:${pose}:${fr.index}`) ?? null;
       const sharedFile = manifestFileUsage(dir, fr.file).length > 1;
-      const { mapping, evidence } = classifyBinding(formId, dir, pose, fr.index, fr.file, phys, sharedForm, sharedFile, romSrc);
+      const { mapping, evidence } = classifyBinding(formId, dir, pose, fr.index, fr.file, phys, sharedForm, sharedFile, romSrc, romPhaseSrc);
       const canon = canonicalFor(dir, fr.file);
+
+      let romPhysicalId: string | null = null;
+      let romPhysicalSourceIds: string[] = [];
+      if (romSrc) {
+        romPhysicalId = physicalIdForFormFrame(formId, romSrc.animationResource, romSrc.visualFrameId);
+      } else if (romPhaseSrc) {
+        romPhysicalSourceIds = romPhaseSourceIds(formId, pose as 'beam_charge' | 'beam_fire');
+      }
+
+      let romIdentity: string | null = null;
+      if (romSrc) {
+        romIdentity = romIdentityFor(formId, romSrc);
+      } else if (romPhaseSrc && profile) {
+        romIdentity = `rom-p${hex2(profile.actorVisualProfileKey)}-g${hex2(profile.graphicsBank)}`;
+      }
+
       out.push({
         formId,
         dir,
@@ -293,6 +418,9 @@ export function bindingsForForm(formId: string): CharacterFrameBinding[] {
         canonicalId: canon?.canonicalId ?? null,
         canonicalRelation: canon?.relation ?? null,
         rom: romSrc,
+        romPhysicalId,
+        romPhysicalSourceIds,
+        romIdentity,
         mapping,
         sharedForm,
         sharedFile,
@@ -331,21 +459,7 @@ export function resolveCharacterVisualSequence(opts: ResolveSequenceOptions): Re
   const dir = spriteDirFor(opts.formId);
   const frames = dir ? manifestFramesFor(dir, opts.semanticRole) : [];
   const bindings = dir
-    ? frames.map(fr => {
-      const phys = physicalFamilyFromFile(dir, fr.file);
-      const sharedForm = (sharedDirMap().get(dir) ?? []).length > 1;
-      const sharedFile = manifestFileUsage(dir, fr.file).length > 1;
-      const rom = romExact().get(`${dir}:${opts.semanticRole}:${fr.index}`) ?? null;
-      const cls = classifyBinding(opts.formId, dir, opts.semanticRole, fr.index, fr.file, phys, sharedForm, sharedFile, rom);
-      const canon = canonicalFor(dir, fr.file);
-      return {
-        formId: opts.formId, dir, semanticRole: opts.semanticRole, physicalFamily: phys,
-        manifestIndex: fr.index, file: fr.file, w: fr.w, h: fr.h,
-        canonicalId: canon?.canonicalId ?? null, canonicalRelation: canon?.relation ?? null,
-        rom, mapping: cls.mapping,
-        sharedForm, sharedFile, evidence: cls.evidence,
-      };
-    })
+    ? bindingsForForm(opts.formId).filter(b => b.semanticRole === opts.semanticRole)
     : [];
 
   const durationTicks = bindings.map(b => b.rom?.durationTicks ?? null);
@@ -359,6 +473,9 @@ export function resolveCharacterVisualSequence(opts: ResolveSequenceOptions): Re
   } else if (bindings.some(b => b.mapping === 'ROM_EXACT')) {
     source = 'ROM_DERIVED';
     classification = 'ROM_EXACT';
+  } else if (bindings.some(b => b.mapping === 'ROM_PHASE')) {
+    source = 'ROM_DERIVED';
+    classification = 'ROM_PHASE';
   } else if (bindings.some(b => b.mapping === 'REFERENCE_FX')) {
     source = 'REFERENCE_FX';
     classification = 'REFERENCE_FX';
@@ -433,6 +550,8 @@ export interface FrameMapSummary {
   byMapping: Record<FrameMapping, number>;
   byCanonicalRelation: Record<CanonicalMatchRelation, number>;
   romReachableBindings: number;
+  romPhaseBindings: number;
+  romPhysicalBindings: number;
   sharedForms: number;
   compositeBindings: number;
   fallbackRoles: number;
@@ -443,7 +562,7 @@ export interface FrameMapSummary {
 export function frameMapSummary(): FrameMapSummary {
   const bindings = listCharacterFrameBindings();
   const byMapping: Record<FrameMapping, number> = {
-    ROM_EXACT: 0, CANONICAL_PHYSICAL: 0, SHARED_PHYSICAL: 0,
+    ROM_EXACT: 0, ROM_PHASE: 0, CANONICAL_PHYSICAL: 0, SHARED_PHYSICAL: 0,
     COMPOSITE: 0, FALLBACK: 0, REFERENCE_FX: 0, UNRESOLVED: 0,
   };
   const byCanonicalRelation: Record<CanonicalMatchRelation, number> = {
@@ -476,7 +595,9 @@ export function frameMapSummary(): FrameMapSummary {
     manifestFramesIndexed: MANIFEST_FRAME_INDEX.length,
     byMapping,
     byCanonicalRelation,
-    romReachableBindings: byMapping.ROM_EXACT,
+    romReachableBindings: byMapping.ROM_EXACT + byMapping.ROM_PHASE,
+    romPhaseBindings: byMapping.ROM_PHASE,
+    romPhysicalBindings: bindings.filter(b => b.romPhysicalId != null || b.romPhysicalSourceIds.length > 0).length,
     sharedForms,
     compositeBindings: byMapping.COMPOSITE,
     fallbackRoles,

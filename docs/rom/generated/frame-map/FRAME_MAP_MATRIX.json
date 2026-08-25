@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-25T09:08:44.539Z",
+  "generatedAt": "2026-08-25T16:26:01.210Z",
   "summary": {
     "formsTotal": 48,
     "formsPresent": 48,
@@ -7,13 +7,14 @@
     "physicalFramesIndexed": 3677,
     "manifestFramesIndexed": 3375,
     "byMapping": {
-      "ROM_EXACT": 2,
+      "ROM_EXACT": 4,
+      "ROM_PHASE": 175,
       "CANONICAL_PHYSICAL": 0,
-      "SHARED_PHYSICAL": 1157,
-      "COMPOSITE": 2032,
+      "SHARED_PHYSICAL": 1089,
+      "COMPOSITE": 2005,
       "FALLBACK": 0,
       "REFERENCE_FX": 288,
-      "UNRESOLVED": 198
+      "UNRESOLVED": 116
     },
     "byCanonicalRelation": {
       "BYTE_EXACT": 129,
@@ -21,46 +22,16 @@
       "VISIBLE_PIXEL_EXACT": 0,
       "NO_MATCH": 3548
     },
-    "romReachableBindings": 2,
+    "romReachableBindings": 179,
+    "romPhaseBindings": 175,
+    "romPhysicalBindings": 177,
     "sharedForms": 7,
-    "compositeBindings": 2032,
+    "compositeBindings": 2005,
     "fallbackRoles": 0,
-    "unresolvedBindings": 198,
+    "unresolvedBindings": 116,
     "semanticRolesWithZeroFrames": 0
   },
   "unresolved": [
-    {
-      "formId": "goku_base",
-      "dir": "goku_base",
-      "semanticRole": "beam_charge",
-      "physicalFamily": "beam_charge",
-      "index": 0,
-      "file": "goku_base_beam_charge_00.png"
-    },
-    {
-      "formId": "goku_base",
-      "dir": "goku_base",
-      "semanticRole": "beam_charge",
-      "physicalFamily": "beam_charge",
-      "index": 1,
-      "file": "goku_base_beam_charge_01.png"
-    },
-    {
-      "formId": "goku_base",
-      "dir": "goku_base",
-      "semanticRole": "beam_charge",
-      "physicalFamily": "beam_charge",
-      "index": 2,
-      "file": "goku_base_beam_charge_02.png"
-    },
-    {
-      "formId": "goku_base",
-      "dir": "goku_base",
-      "semanticRole": "beam_fire",
-      "physicalFamily": "beam_fire",
-      "index": 0,
-      "file": "goku_base_beam_fire_00.png"
-    },
     {
       "formId": "goku_base",
       "dir": "goku_base",
@@ -128,22 +99,6 @@
     {
       "formId": "vegeta_base",
       "dir": "vegeta_base",
-      "semanticRole": "beam_charge",
-      "physicalFamily": "beam_charge",
-      "index": 0,
-      "file": "vegeta_base_beam_charge_00.png"
-    },
-    {
-      "formId": "vegeta_base",
-      "dir": "vegeta_base",
-      "semanticRole": "beam_charge",
-      "physicalFamily": "beam_charge",
-      "index": 2,
-      "file": "vegeta_base_beam_charge_02.png"
-    },
-    {
-      "formId": "vegeta_base",
-      "dir": "vegeta_base",
       "semanticRole": "evade",
       "physicalFamily": "evade",
       "index": 0,
@@ -156,38 +111,6 @@
       "physicalFamily": "evade",
       "index": 1,
       "file": "vegeta_base_evade_01.png"
-    },
-    {
-      "formId": "gohan_young",
-      "dir": "gohan_young",
-      "semanticRole": "beam_charge",
-      "physicalFamily": "beam_charge",
-      "index": 0,
-      "file": "gohan_young_beam_charge_00.png"
-    },
-    {
-      "formId": "gohan_young",
-      "dir": "gohan_young",
-      "semanticRole": "beam_charge",
-      "physicalFamily": "beam_charge",
-      "index": 1,
-      "file": "gohan_young_beam_charge_01.png"
-    },
-    {
-      "formId": "gohan_young",
-      "dir": "gohan_young",
-      "semanticRole": "beam_charge",
-      "physicalFamily": "beam_charge",
-      "index": 2,
-      "file": "gohan_young_beam_charge_02.png"
-    },
-    {
-      "formId": "gohan_young",
-      "dir": "gohan_young",
-      "semanticRole": "beam_fire",
-      "physicalFamily": "beam_fire",
-      "index": 0,
-      "file": "gohan_young_beam_fire_00.png"
     },
     {
       "formId": "gohan_young",
@@ -208,66 +131,10 @@
     {
       "formId": "gohan_young_ssj",
       "dir": "gohan_young_ssj",
-      "semanticRole": "beam_charge",
-      "physicalFamily": "beam_charge",
-      "index": 0,
-      "file": "gohan_young_ssj_beam_charge_00.png"
-    },
-    {
-      "formId": "gohan_young_ssj",
-      "dir": "gohan_young_ssj",
-      "semanticRole": "beam_charge",
-      "physicalFamily": "beam_charge",
-      "index": 1,
-      "file": "gohan_young_ssj_beam_charge_01.png"
-    },
-    {
-      "formId": "gohan_young_ssj",
-      "dir": "gohan_young_ssj",
-      "semanticRole": "beam_fire",
-      "physicalFamily": "beam_fire",
-      "index": 0,
-      "file": "gohan_young_ssj_beam_fire_00.png"
-    },
-    {
-      "formId": "gohan_young_ssj",
-      "dir": "gohan_young_ssj",
       "semanticRole": "evade",
       "physicalFamily": "evade",
       "index": 0,
       "file": "gohan_young_ssj_evade_00.png"
-    },
-    {
-      "formId": "gohan_young_ssj2",
-      "dir": "gohan_young_ssj2",
-      "semanticRole": "beam_charge",
-      "physicalFamily": "beam_charge",
-      "index": 0,
-      "file": "gohan_young_ssj2_beam_charge_00.png"
-    },
-    {
-      "formId": "gohan_young_ssj2",
-      "dir": "gohan_young_ssj2",
-      "semanticRole": "beam_charge",
-      "physicalFamily": "beam_charge",
-      "index": 1,
-      "file": "gohan_young_ssj2_beam_charge_01.png"
-    },
-    {
-      "formId": "gohan_young_ssj2",
-      "dir": "gohan_young_ssj2",
-      "semanticRole": "beam_charge",
-      "physicalFamily": "beam_charge",
-      "index": 2,
-      "file": "gohan_young_ssj2_beam_charge_02.png"
-    },
-    {
-      "formId": "gohan_young_ssj2",
-      "dir": "gohan_young_ssj2",
-      "semanticRole": "beam_fire",
-      "physicalFamily": "beam_fire",
-      "index": 0,
-      "file": "gohan_young_ssj2_beam_fire_00.png"
     },
     {
       "formId": "gohan_young_ssj2",
@@ -284,14 +151,6 @@
       "physicalFamily": "evade",
       "index": 0,
       "file": "gohan_young_ssj2_evade_00.png"
-    },
-    {
-      "formId": "gohan_adult_ultimate",
-      "dir": "gohan_adult_ultimate",
-      "semanticRole": "beam_fire",
-      "physicalFamily": "beam_fire",
-      "index": 0,
-      "file": "gohan_adult_ultimate_beam_fire_00.png"
     },
     {
       "formId": "gohan_adult_ultimate",
@@ -344,58 +203,10 @@
     {
       "formId": "trunks_future",
       "dir": "trunks_future",
-      "semanticRole": "beam_charge",
-      "physicalFamily": "beam_charge",
-      "index": 0,
-      "file": "trunks_future_beam_charge_00.png"
-    },
-    {
-      "formId": "trunks_future",
-      "dir": "trunks_future",
-      "semanticRole": "beam_charge",
-      "physicalFamily": "beam_charge",
-      "index": 1,
-      "file": "trunks_future_beam_charge_01.png"
-    },
-    {
-      "formId": "trunks_future",
-      "dir": "trunks_future",
-      "semanticRole": "beam_fire",
-      "physicalFamily": "beam_fire",
-      "index": 0,
-      "file": "trunks_future_beam_fire_00.png"
-    },
-    {
-      "formId": "trunks_future",
-      "dir": "trunks_future",
       "semanticRole": "beam_fire",
       "physicalFamily": "beam_fire",
       "index": 2,
       "file": "trunks_future_beam_fire_02.png"
-    },
-    {
-      "formId": "trunks_ssj",
-      "dir": "trunks_ssj",
-      "semanticRole": "beam_charge",
-      "physicalFamily": "beam_charge",
-      "index": 0,
-      "file": "trunks_ssj_beam_charge_00.png"
-    },
-    {
-      "formId": "trunks_ssj",
-      "dir": "trunks_ssj",
-      "semanticRole": "beam_charge",
-      "physicalFamily": "beam_charge",
-      "index": 1,
-      "file": "trunks_ssj_beam_charge_01.png"
-    },
-    {
-      "formId": "trunks_ssj",
-      "dir": "trunks_ssj",
-      "semanticRole": "beam_charge",
-      "physicalFamily": "beam_charge",
-      "index": 2,
-      "file": "trunks_ssj_beam_charge_02.png"
     },
     {
       "formId": "trunks_ssj",
@@ -412,14 +223,6 @@
       "physicalFamily": "beam_charge",
       "index": 4,
       "file": "trunks_ssj_beam_charge_04.png"
-    },
-    {
-      "formId": "trunks_ssj",
-      "dir": "trunks_ssj",
-      "semanticRole": "beam_fire",
-      "physicalFamily": "beam_fire",
-      "index": 0,
-      "file": "trunks_ssj_beam_fire_00.png"
     },
     {
       "formId": "trunks_ssj",
@@ -482,14 +285,6 @@
       "dir": "krillin_base",
       "semanticRole": "beam_charge",
       "physicalFamily": "beam_charge",
-      "index": 1,
-      "file": "krillin_base_beam_charge_01.png"
-    },
-    {
-      "formId": "krillin_base",
-      "dir": "krillin_base",
-      "semanticRole": "beam_charge",
-      "physicalFamily": "beam_charge",
       "index": 3,
       "file": "krillin_base_beam_charge_03.png"
     },
@@ -500,14 +295,6 @@
       "physicalFamily": "beam_charge",
       "index": 4,
       "file": "krillin_base_beam_charge_04.png"
-    },
-    {
-      "formId": "krillin_base",
-      "dir": "krillin_base",
-      "semanticRole": "beam_fire",
-      "physicalFamily": "beam_fire",
-      "index": 0,
-      "file": "krillin_base_beam_fire_00.png"
     },
     {
       "formId": "krillin_base",
@@ -524,14 +311,6 @@
       "physicalFamily": "evade",
       "index": 1,
       "file": "krillin_base_evade_01.png"
-    },
-    {
-      "formId": "frieza_final",
-      "dir": "frieza_final",
-      "semanticRole": "beam_fire",
-      "physicalFamily": "beam_fire",
-      "index": 0,
-      "file": "frieza_final_beam_fire_00.png"
     },
     {
       "formId": "frieza_final",
@@ -578,40 +357,8 @@
       "dir": "cell_imperfect",
       "semanticRole": "beam_charge",
       "physicalFamily": "beam_charge",
-      "index": 0,
-      "file": "cell_imperfect_beam_charge_00.png"
-    },
-    {
-      "formId": "cell_imperfect",
-      "dir": "cell_imperfect",
-      "semanticRole": "beam_charge",
-      "physicalFamily": "beam_charge",
-      "index": 1,
-      "file": "cell_imperfect_beam_charge_01.png"
-    },
-    {
-      "formId": "cell_imperfect",
-      "dir": "cell_imperfect",
-      "semanticRole": "beam_charge",
-      "physicalFamily": "beam_charge",
-      "index": 2,
-      "file": "cell_imperfect_beam_charge_02.png"
-    },
-    {
-      "formId": "cell_imperfect",
-      "dir": "cell_imperfect",
-      "semanticRole": "beam_charge",
-      "physicalFamily": "beam_charge",
       "index": 3,
       "file": "cell_imperfect_beam_charge_03.png"
-    },
-    {
-      "formId": "cell_imperfect",
-      "dir": "cell_imperfect",
-      "semanticRole": "beam_fire",
-      "physicalFamily": "beam_fire",
-      "index": 0,
-      "file": "cell_imperfect_beam_fire_00.png"
     },
     {
       "formId": "cell_imperfect",
@@ -628,30 +375,6 @@
       "physicalFamily": "evade",
       "index": 1,
       "file": "cell_imperfect_evade_01.png"
-    },
-    {
-      "formId": "cell_semi",
-      "dir": "cell_semi",
-      "semanticRole": "beam_charge",
-      "physicalFamily": "beam_charge",
-      "index": 0,
-      "file": "cell_semi_beam_charge_00.png"
-    },
-    {
-      "formId": "cell_semi",
-      "dir": "cell_semi",
-      "semanticRole": "beam_charge",
-      "physicalFamily": "beam_charge",
-      "index": 1,
-      "file": "cell_semi_beam_charge_01.png"
-    },
-    {
-      "formId": "cell_semi",
-      "dir": "cell_semi",
-      "semanticRole": "beam_fire",
-      "physicalFamily": "beam_fire",
-      "index": 0,
-      "file": "cell_semi_beam_fire_00.png"
     },
     {
       "formId": "cell_semi",
@@ -688,30 +411,6 @@
     {
       "formId": "cell_perfect",
       "dir": "cell_perfect",
-      "semanticRole": "beam_charge",
-      "physicalFamily": "beam_charge",
-      "index": 1,
-      "file": "cell_perfect_beam_charge_01.png"
-    },
-    {
-      "formId": "cell_perfect",
-      "dir": "cell_perfect",
-      "semanticRole": "beam_charge",
-      "physicalFamily": "beam_charge",
-      "index": 2,
-      "file": "cell_perfect_beam_charge_02.png"
-    },
-    {
-      "formId": "cell_perfect",
-      "dir": "cell_perfect",
-      "semanticRole": "beam_fire",
-      "physicalFamily": "beam_fire",
-      "index": 0,
-      "file": "cell_perfect_beam_fire_00.png"
-    },
-    {
-      "formId": "cell_perfect",
-      "dir": "cell_perfect",
       "semanticRole": "beam_fire",
       "physicalFamily": "beam_fire",
       "index": 1,
@@ -744,38 +443,6 @@
     {
       "formId": "cell_jr",
       "dir": "cell_jr",
-      "semanticRole": "beam_charge",
-      "physicalFamily": "beam_charge",
-      "index": 0,
-      "file": "cell_jr_beam_charge_00.png"
-    },
-    {
-      "formId": "cell_jr",
-      "dir": "cell_jr",
-      "semanticRole": "beam_charge",
-      "physicalFamily": "beam_charge",
-      "index": 1,
-      "file": "cell_jr_beam_charge_01.png"
-    },
-    {
-      "formId": "cell_jr",
-      "dir": "cell_jr",
-      "semanticRole": "beam_charge",
-      "physicalFamily": "beam_charge",
-      "index": 2,
-      "file": "cell_jr_beam_charge_02.png"
-    },
-    {
-      "formId": "cell_jr",
-      "dir": "cell_jr",
-      "semanticRole": "beam_fire",
-      "physicalFamily": "beam_fire",
-      "index": 0,
-      "file": "cell_jr_beam_fire_00.png"
-    },
-    {
-      "formId": "cell_jr",
-      "dir": "cell_jr",
       "semanticRole": "evade",
       "physicalFamily": "evade",
       "index": 0,
@@ -792,22 +459,6 @@
     {
       "formId": "android_16",
       "dir": "android_16",
-      "semanticRole": "beam_charge",
-      "physicalFamily": "beam_charge",
-      "index": 0,
-      "file": "android_16_beam_charge_00.png"
-    },
-    {
-      "formId": "android_16",
-      "dir": "android_16",
-      "semanticRole": "beam_charge",
-      "physicalFamily": "beam_charge",
-      "index": 1,
-      "file": "android_16_beam_charge_01.png"
-    },
-    {
-      "formId": "android_16",
-      "dir": "android_16",
       "semanticRole": "evade",
       "physicalFamily": "evade",
       "index": 0,
@@ -820,30 +471,6 @@
       "physicalFamily": "evade",
       "index": 1,
       "file": "android_16_evade_01.png"
-    },
-    {
-      "formId": "android_17",
-      "dir": "android_17",
-      "semanticRole": "beam_charge",
-      "physicalFamily": "beam_charge",
-      "index": 0,
-      "file": "android_17_beam_charge_00.png"
-    },
-    {
-      "formId": "android_17",
-      "dir": "android_17",
-      "semanticRole": "beam_charge",
-      "physicalFamily": "beam_charge",
-      "index": 1,
-      "file": "android_17_beam_charge_01.png"
-    },
-    {
-      "formId": "android_17",
-      "dir": "android_17",
-      "semanticRole": "beam_fire",
-      "physicalFamily": "beam_fire",
-      "index": 0,
-      "file": "android_17_beam_fire_00.png"
     },
     {
       "formId": "android_17",
@@ -880,22 +507,6 @@
     {
       "formId": "android_18",
       "dir": "android_18",
-      "semanticRole": "beam_charge",
-      "physicalFamily": "beam_charge",
-      "index": 0,
-      "file": "android_18_beam_charge_00.png"
-    },
-    {
-      "formId": "android_18",
-      "dir": "android_18",
-      "semanticRole": "beam_charge",
-      "physicalFamily": "beam_charge",
-      "index": 1,
-      "file": "android_18_beam_charge_01.png"
-    },
-    {
-      "formId": "android_18",
-      "dir": "android_18",
       "semanticRole": "beam_fire",
       "physicalFamily": "beam_fire",
       "index": 1,
@@ -916,22 +527,6 @@
       "physicalFamily": "evade",
       "index": 1,
       "file": "android_18_evade_01.png"
-    },
-    {
-      "formId": "android_19",
-      "dir": "android_19",
-      "semanticRole": "beam_charge",
-      "physicalFamily": "beam_charge",
-      "index": 0,
-      "file": "android_19_beam_charge_00.png"
-    },
-    {
-      "formId": "android_19",
-      "dir": "android_19",
-      "semanticRole": "beam_charge",
-      "physicalFamily": "beam_charge",
-      "index": 1,
-      "file": "android_19_beam_charge_01.png"
     },
     {
       "formId": "android_19",
@@ -992,38 +587,6 @@
     {
       "formId": "android_20",
       "dir": "android_20",
-      "semanticRole": "beam_charge",
-      "physicalFamily": "beam_charge",
-      "index": 0,
-      "file": "android_20_beam_charge_00.png"
-    },
-    {
-      "formId": "android_20",
-      "dir": "android_20",
-      "semanticRole": "beam_charge",
-      "physicalFamily": "beam_charge",
-      "index": 1,
-      "file": "android_20_beam_charge_01.png"
-    },
-    {
-      "formId": "android_20",
-      "dir": "android_20",
-      "semanticRole": "beam_charge",
-      "physicalFamily": "beam_charge",
-      "index": 2,
-      "file": "android_20_beam_charge_02.png"
-    },
-    {
-      "formId": "android_20",
-      "dir": "android_20",
-      "semanticRole": "beam_fire",
-      "physicalFamily": "beam_fire",
-      "index": 0,
-      "file": "android_20_beam_fire_00.png"
-    },
-    {
-      "formId": "android_20",
-      "dir": "android_20",
       "semanticRole": "beam_fire",
       "physicalFamily": "beam_fire",
       "index": 1,
@@ -1066,14 +629,6 @@
       "dir": "ginyu",
       "semanticRole": "beam_charge",
       "physicalFamily": "beam_charge",
-      "index": 2,
-      "file": "ginyu_beam_charge_02.png"
-    },
-    {
-      "formId": "ginyu",
-      "dir": "ginyu",
-      "semanticRole": "beam_charge",
-      "physicalFamily": "beam_charge",
       "index": 3,
       "file": "ginyu_beam_charge_03.png"
     },
@@ -1084,14 +639,6 @@
       "physicalFamily": "beam_charge",
       "index": 4,
       "file": "ginyu_beam_charge_04.png"
-    },
-    {
-      "formId": "ginyu",
-      "dir": "ginyu",
-      "semanticRole": "beam_fire",
-      "physicalFamily": "beam_fire",
-      "index": 0,
-      "file": "ginyu_beam_fire_00.png"
     },
     {
       "formId": "ginyu",
@@ -1136,38 +683,6 @@
     {
       "formId": "ginyu_goku",
       "dir": "ginyu_goku",
-      "semanticRole": "beam_charge",
-      "physicalFamily": "beam_charge",
-      "index": 0,
-      "file": "ginyu_goku_beam_charge_00.png"
-    },
-    {
-      "formId": "ginyu_goku",
-      "dir": "ginyu_goku",
-      "semanticRole": "beam_charge",
-      "physicalFamily": "beam_charge",
-      "index": 1,
-      "file": "ginyu_goku_beam_charge_01.png"
-    },
-    {
-      "formId": "ginyu_goku",
-      "dir": "ginyu_goku",
-      "semanticRole": "beam_charge",
-      "physicalFamily": "beam_charge",
-      "index": 2,
-      "file": "ginyu_goku_beam_charge_02.png"
-    },
-    {
-      "formId": "ginyu_goku",
-      "dir": "ginyu_goku",
-      "semanticRole": "beam_fire",
-      "physicalFamily": "beam_fire",
-      "index": 0,
-      "file": "ginyu_goku_beam_fire_00.png"
-    },
-    {
-      "formId": "ginyu_goku",
-      "dir": "ginyu_goku",
       "semanticRole": "beam_fire",
       "physicalFamily": "beam_fire",
       "index": 1,
@@ -1188,22 +703,6 @@
       "physicalFamily": "evade",
       "index": 1,
       "file": "ginyu_goku_evade_01.png"
-    },
-    {
-      "formId": "recoome",
-      "dir": "recoome",
-      "semanticRole": "beam_charge",
-      "physicalFamily": "beam_charge",
-      "index": 0,
-      "file": "recoome_beam_charge_00.png"
-    },
-    {
-      "formId": "recoome",
-      "dir": "recoome",
-      "semanticRole": "beam_charge",
-      "physicalFamily": "beam_charge",
-      "index": 2,
-      "file": "recoome_beam_charge_02.png"
     },
     {
       "formId": "recoome",
@@ -1234,22 +733,6 @@
       "dir": "guldo",
       "semanticRole": "beam_charge",
       "physicalFamily": "beam_charge",
-      "index": 1,
-      "file": "guldo_beam_charge_01.png"
-    },
-    {
-      "formId": "guldo",
-      "dir": "guldo",
-      "semanticRole": "beam_charge",
-      "physicalFamily": "beam_charge",
-      "index": 2,
-      "file": "guldo_beam_charge_02.png"
-    },
-    {
-      "formId": "guldo",
-      "dir": "guldo",
-      "semanticRole": "beam_charge",
-      "physicalFamily": "beam_charge",
       "index": 3,
       "file": "guldo_beam_charge_03.png"
     },
@@ -1268,38 +751,6 @@
       "physicalFamily": "evade",
       "index": 1,
       "file": "guldo_evade_01.png"
-    },
-    {
-      "formId": "jeice",
-      "dir": "jeice",
-      "semanticRole": "beam_charge",
-      "physicalFamily": "beam_charge",
-      "index": 0,
-      "file": "jeice_beam_charge_00.png"
-    },
-    {
-      "formId": "jeice",
-      "dir": "jeice",
-      "semanticRole": "beam_charge",
-      "physicalFamily": "beam_charge",
-      "index": 1,
-      "file": "jeice_beam_charge_01.png"
-    },
-    {
-      "formId": "jeice",
-      "dir": "jeice",
-      "semanticRole": "beam_charge",
-      "physicalFamily": "beam_charge",
-      "index": 2,
-      "file": "jeice_beam_charge_02.png"
-    },
-    {
-      "formId": "jeice",
-      "dir": "jeice",
-      "semanticRole": "beam_fire",
-      "physicalFamily": "beam_fire",
-      "index": 0,
-      "file": "jeice_beam_fire_00.png"
     },
     {
       "formId": "jeice",
@@ -1368,14 +819,6 @@
     {
       "formId": "nappa",
       "dir": "nappa",
-      "semanticRole": "beam_fire",
-      "physicalFamily": "beam_fire",
-      "index": 0,
-      "file": "nappa_beam_fire_00.png"
-    },
-    {
-      "formId": "nappa",
-      "dir": "nappa",
       "semanticRole": "evade",
       "physicalFamily": "evade",
       "index": 0,
@@ -1388,14 +831,6 @@
       "physicalFamily": "evade",
       "index": 1,
       "file": "nappa_evade_01.png"
-    },
-    {
-      "formId": "buu_base",
-      "dir": "buu_base",
-      "semanticRole": "beam_charge",
-      "physicalFamily": "beam_charge",
-      "index": 0,
-      "file": "buu_base_beam_charge_00.png"
     },
     {
       "formId": "buu_base",
@@ -1432,30 +867,6 @@
     {
       "formId": "buu_gotenks",
       "dir": "buu_gotenks",
-      "semanticRole": "beam_charge",
-      "physicalFamily": "beam_charge",
-      "index": 0,
-      "file": "buu_gotenks_beam_charge_00.png"
-    },
-    {
-      "formId": "buu_gotenks",
-      "dir": "buu_gotenks",
-      "semanticRole": "beam_charge",
-      "physicalFamily": "beam_charge",
-      "index": 1,
-      "file": "buu_gotenks_beam_charge_01.png"
-    },
-    {
-      "formId": "buu_gotenks",
-      "dir": "buu_gotenks",
-      "semanticRole": "beam_fire",
-      "physicalFamily": "beam_fire",
-      "index": 0,
-      "file": "buu_gotenks_beam_fire_00.png"
-    },
-    {
-      "formId": "buu_gotenks",
-      "dir": "buu_gotenks",
       "semanticRole": "beam_fire",
       "physicalFamily": "beam_fire",
       "index": 1,
@@ -1488,22 +899,6 @@
     {
       "formId": "buu_gohan",
       "dir": "buu_gohan",
-      "semanticRole": "beam_charge",
-      "physicalFamily": "beam_charge",
-      "index": 0,
-      "file": "buu_gohan_beam_charge_00.png"
-    },
-    {
-      "formId": "buu_gohan",
-      "dir": "buu_gohan",
-      "semanticRole": "beam_charge",
-      "physicalFamily": "beam_charge",
-      "index": 1,
-      "file": "buu_gohan_beam_charge_01.png"
-    },
-    {
-      "formId": "buu_gohan",
-      "dir": "buu_gohan",
       "semanticRole": "beam_fire",
       "physicalFamily": "beam_fire",
       "index": 1,
@@ -1528,58 +923,10 @@
     {
       "formId": "buu_kid",
       "dir": "buu_kid",
-      "semanticRole": "beam_charge",
-      "physicalFamily": "beam_charge",
-      "index": 0,
-      "file": "buu_kid_beam_charge_00.png"
-    },
-    {
-      "formId": "buu_kid",
-      "dir": "buu_kid",
-      "semanticRole": "beam_charge",
-      "physicalFamily": "beam_charge",
-      "index": 1,
-      "file": "buu_kid_beam_charge_01.png"
-    },
-    {
-      "formId": "buu_kid",
-      "dir": "buu_kid",
-      "semanticRole": "beam_charge",
-      "physicalFamily": "beam_charge",
-      "index": 2,
-      "file": "buu_kid_beam_charge_02.png"
-    },
-    {
-      "formId": "buu_kid",
-      "dir": "buu_kid",
-      "semanticRole": "beam_fire",
-      "physicalFamily": "beam_fire",
-      "index": 0,
-      "file": "buu_kid_beam_fire_00.png"
-    },
-    {
-      "formId": "buu_kid",
-      "dir": "buu_kid",
       "semanticRole": "beam_fire",
       "physicalFamily": "beam_fire",
       "index": 1,
       "file": "buu_kid_beam_fire_01.png"
-    },
-    {
-      "formId": "vegito_ssj",
-      "dir": "vegito_ssj",
-      "semanticRole": "beam_charge",
-      "physicalFamily": "beam_charge",
-      "index": 0,
-      "file": "vegito_ssj_beam_charge_00.png"
-    },
-    {
-      "formId": "vegito_ssj",
-      "dir": "vegito_ssj",
-      "semanticRole": "beam_charge",
-      "physicalFamily": "beam_charge",
-      "index": 1,
-      "file": "vegito_ssj_beam_charge_01.png"
     },
     {
       "formId": "vegito_ssj",
@@ -1650,16 +997,16 @@
     {
       "formId": "goku_base",
       "semanticRole": "beam_charge",
-      "classification": "UNRESOLVED",
-      "source": "UNRESOLVED",
+      "classification": "ROM_PHASE",
+      "source": "ROM_DERIVED",
       "frameCount": 3,
       "romFrames": 0
     },
     {
       "formId": "goku_base",
       "semanticRole": "beam_fire",
-      "classification": "UNRESOLVED",
-      "source": "UNRESOLVED",
+      "classification": "ROM_PHASE",
+      "source": "ROM_DERIVED",
       "frameCount": 1,
       "romFrames": 0
     },
@@ -1818,16 +1165,16 @@
     {
       "formId": "goku_ssj",
       "semanticRole": "beam_charge",
-      "classification": "SHARED_PHYSICAL",
-      "source": "CANONICAL",
+      "classification": "ROM_PHASE",
+      "source": "ROM_DERIVED",
       "frameCount": 4,
       "romFrames": 0
     },
     {
       "formId": "goku_ssj",
       "semanticRole": "beam_fire",
-      "classification": "COMPOSITE",
-      "source": "COMPOSITE",
+      "classification": "ROM_PHASE",
+      "source": "ROM_DERIVED",
       "frameCount": 4,
       "romFrames": 0
     },
@@ -1986,16 +1333,16 @@
     {
       "formId": "goku_ssj2",
       "semanticRole": "beam_charge",
-      "classification": "SHARED_PHYSICAL",
-      "source": "CANONICAL",
+      "classification": "ROM_PHASE",
+      "source": "ROM_DERIVED",
       "frameCount": 4,
       "romFrames": 0
     },
     {
       "formId": "goku_ssj2",
       "semanticRole": "beam_fire",
-      "classification": "COMPOSITE",
-      "source": "COMPOSITE",
+      "classification": "ROM_PHASE",
+      "source": "ROM_DERIVED",
       "frameCount": 4,
       "romFrames": 0
     },
@@ -2154,16 +1501,16 @@
     {
       "formId": "goku_ssj3",
       "semanticRole": "beam_charge",
-      "classification": "SHARED_PHYSICAL",
-      "source": "CANONICAL",
+      "classification": "ROM_PHASE",
+      "source": "ROM_DERIVED",
       "frameCount": 5,
       "romFrames": 0
     },
     {
       "formId": "goku_ssj3",
       "semanticRole": "beam_fire",
-      "classification": "COMPOSITE",
-      "source": "COMPOSITE",
+      "classification": "ROM_PHASE",
+      "source": "ROM_DERIVED",
       "frameCount": 5,
       "romFrames": 0
     },
@@ -2322,16 +1669,16 @@
     {
       "formId": "vegeta_base",
       "semanticRole": "beam_charge",
-      "classification": "SHARED_PHYSICAL",
-      "source": "CANONICAL",
+      "classification": "ROM_PHASE",
+      "source": "ROM_DERIVED",
       "frameCount": 3,
       "romFrames": 0
     },
     {
       "formId": "vegeta_base",
       "semanticRole": "beam_fire",
-      "classification": "SHARED_PHYSICAL",
-      "source": "CANONICAL",
+      "classification": "ROM_PHASE",
+      "source": "ROM_DERIVED",
       "frameCount": 1,
       "romFrames": 0
     },
@@ -2490,16 +1837,16 @@
     {
       "formId": "vegeta_ssj",
       "semanticRole": "beam_charge",
-      "classification": "COMPOSITE",
-      "source": "COMPOSITE",
+      "classification": "ROM_PHASE",
+      "source": "ROM_DERIVED",
       "frameCount": 4,
       "romFrames": 0
     },
     {
       "formId": "vegeta_ssj",
       "semanticRole": "beam_fire",
-      "classification": "SHARED_PHYSICAL",
-      "source": "CANONICAL",
+      "classification": "ROM_PHASE",
+      "source": "ROM_DERIVED",
       "frameCount": 4,
       "romFrames": 0
     },
@@ -2658,16 +2005,16 @@
     {
       "formId": "vegeta_majin",
       "semanticRole": "beam_charge",
-      "classification": "COMPOSITE",
-      "source": "COMPOSITE",
+      "classification": "ROM_PHASE",
+      "source": "ROM_DERIVED",
       "frameCount": 4,
       "romFrames": 0
     },
     {
       "formId": "vegeta_majin",
       "semanticRole": "beam_fire",
-      "classification": "SHARED_PHYSICAL",
-      "source": "CANONICAL",
+      "classification": "ROM_PHASE",
+      "source": "ROM_DERIVED",
       "frameCount": 4,
       "romFrames": 0
     },
@@ -2826,16 +2173,16 @@
     {
       "formId": "gohan_young",
       "semanticRole": "beam_charge",
-      "classification": "UNRESOLVED",
-      "source": "UNRESOLVED",
+      "classification": "ROM_PHASE",
+      "source": "ROM_DERIVED",
       "frameCount": 3,
       "romFrames": 0
     },
     {
       "formId": "gohan_young",
       "semanticRole": "beam_fire",
-      "classification": "UNRESOLVED",
-      "source": "UNRESOLVED",
+      "classification": "ROM_PHASE",
+      "source": "ROM_DERIVED",
       "frameCount": 1,
       "romFrames": 0
     },
@@ -2961,1014 +2308,6 @@
     },
     {
       "formId": "gohan_young_ssj",
-      "semanticRole": "attack_fwd",
-      "classification": "SHARED_PHYSICAL",
-      "source": "CANONICAL",
-      "frameCount": 7,
-      "romFrames": 0
-    },
-    {
-      "formId": "gohan_young_ssj",
-      "semanticRole": "attack_ud",
-      "classification": "SHARED_PHYSICAL",
-      "source": "CANONICAL",
-      "frameCount": 4,
-      "romFrames": 0
-    },
-    {
-      "formId": "gohan_young_ssj",
-      "semanticRole": "aura_power",
-      "classification": "REFERENCE_FX",
-      "source": "REFERENCE_FX",
-      "frameCount": 3,
-      "romFrames": 0
-    },
-    {
-      "formId": "gohan_young_ssj",
-      "semanticRole": "aura_support",
-      "classification": "REFERENCE_FX",
-      "source": "REFERENCE_FX",
-      "frameCount": 3,
-      "romFrames": 0
-    },
-    {
-      "formId": "gohan_young_ssj",
-      "semanticRole": "beam_charge",
-      "classification": "UNRESOLVED",
-      "source": "UNRESOLVED",
-      "frameCount": 2,
-      "romFrames": 0
-    },
-    {
-      "formId": "gohan_young_ssj",
-      "semanticRole": "beam_fire",
-      "classification": "UNRESOLVED",
-      "source": "UNRESOLVED",
-      "frameCount": 1,
-      "romFrames": 0
-    },
-    {
-      "formId": "gohan_young_ssj",
-      "semanticRole": "beam_guard",
-      "classification": "COMPOSITE",
-      "source": "COMPOSITE",
-      "frameCount": 3,
-      "romFrames": 0
-    },
-    {
-      "formId": "gohan_young_ssj",
-      "semanticRole": "evade",
-      "classification": "UNRESOLVED",
-      "source": "UNRESOLVED",
-      "frameCount": 1,
-      "romFrames": 0
-    },
-    {
-      "formId": "gohan_young_ssj",
-      "semanticRole": "gather_power",
-      "classification": "SHARED_PHYSICAL",
-      "source": "CANONICAL",
-      "frameCount": 3,
-      "romFrames": 0
-    },
-    {
-      "formId": "gohan_young_ssj",
-      "semanticRole": "guard",
-      "classification": "COMPOSITE",
-      "source": "COMPOSITE",
-      "frameCount": 3,
-      "romFrames": 0
-    },
-    {
-      "formId": "gohan_young_ssj",
-      "semanticRole": "hurt",
-      "classification": "SHARED_PHYSICAL",
-      "source": "CANONICAL",
-      "frameCount": 5,
-      "romFrames": 0
-    },
-    {
-      "formId": "gohan_young_ssj",
-      "semanticRole": "idle",
-      "classification": "SHARED_PHYSICAL",
-      "source": "CANONICAL",
-      "frameCount": 1,
-      "romFrames": 0
-    },
-    {
-      "formId": "gohan_young_ssj",
-      "semanticRole": "kick_right",
-      "classification": "COMPOSITE",
-      "source": "COMPOSITE",
-      "frameCount": 4,
-      "romFrames": 0
-    },
-    {
-      "formId": "gohan_young_ssj",
-      "semanticRole": "knockback_back",
-      "classification": "COMPOSITE",
-      "source": "COMPOSITE",
-      "frameCount": 5,
-      "romFrames": 0
-    },
-    {
-      "formId": "gohan_young_ssj",
-      "semanticRole": "knockback_down",
-      "classification": "COMPOSITE",
-      "source": "COMPOSITE",
-      "frameCount": 5,
-      "romFrames": 0
-    },
-    {
-      "formId": "gohan_young_ssj",
-      "semanticRole": "knockback_up",
-      "classification": "COMPOSITE",
-      "source": "COMPOSITE",
-      "frameCount": 5,
-      "romFrames": 0
-    },
-    {
-      "formId": "gohan_young_ssj",
-      "semanticRole": "move_back",
-      "classification": "COMPOSITE",
-      "source": "COMPOSITE",
-      "frameCount": 2,
-      "romFrames": 0
-    },
-    {
-      "formId": "gohan_young_ssj",
-      "semanticRole": "move_front",
-      "classification": "SHARED_PHYSICAL",
-      "source": "CANONICAL",
-      "frameCount": 2,
-      "romFrames": 0
-    },
-    {
-      "formId": "gohan_young_ssj",
-      "semanticRole": "power_up",
-      "classification": "COMPOSITE",
-      "source": "COMPOSITE",
-      "frameCount": 3,
-      "romFrames": 0
-    },
-    {
-      "formId": "gohan_young_ssj",
-      "semanticRole": "punch_left",
-      "classification": "COMPOSITE",
-      "source": "COMPOSITE",
-      "frameCount": 7,
-      "romFrames": 0
-    },
-    {
-      "formId": "gohan_young_ssj",
-      "semanticRole": "punch_right",
-      "classification": "COMPOSITE",
-      "source": "COMPOSITE",
-      "frameCount": 7,
-      "romFrames": 0
-    },
-    {
-      "formId": "gohan_young_ssj2",
-      "semanticRole": "attack_fwd",
-      "classification": "SHARED_PHYSICAL",
-      "source": "CANONICAL",
-      "frameCount": 8,
-      "romFrames": 0
-    },
-    {
-      "formId": "gohan_young_ssj2",
-      "semanticRole": "attack_ud",
-      "classification": "SHARED_PHYSICAL",
-      "source": "CANONICAL",
-      "frameCount": 4,
-      "romFrames": 0
-    },
-    {
-      "formId": "gohan_young_ssj2",
-      "semanticRole": "aura_power",
-      "classification": "REFERENCE_FX",
-      "source": "REFERENCE_FX",
-      "frameCount": 3,
-      "romFrames": 0
-    },
-    {
-      "formId": "gohan_young_ssj2",
-      "semanticRole": "aura_support",
-      "classification": "REFERENCE_FX",
-      "source": "REFERENCE_FX",
-      "frameCount": 3,
-      "romFrames": 0
-    },
-    {
-      "formId": "gohan_young_ssj2",
-      "semanticRole": "beam_charge",
-      "classification": "UNRESOLVED",
-      "source": "UNRESOLVED",
-      "frameCount": 3,
-      "romFrames": 0
-    },
-    {
-      "formId": "gohan_young_ssj2",
-      "semanticRole": "beam_fire",
-      "classification": "UNRESOLVED",
-      "source": "UNRESOLVED",
-      "frameCount": 2,
-      "romFrames": 0
-    },
-    {
-      "formId": "gohan_young_ssj2",
-      "semanticRole": "beam_guard",
-      "classification": "COMPOSITE",
-      "source": "COMPOSITE",
-      "frameCount": 3,
-      "romFrames": 0
-    },
-    {
-      "formId": "gohan_young_ssj2",
-      "semanticRole": "evade",
-      "classification": "UNRESOLVED",
-      "source": "UNRESOLVED",
-      "frameCount": 1,
-      "romFrames": 0
-    },
-    {
-      "formId": "gohan_young_ssj2",
-      "semanticRole": "gather_power",
-      "classification": "COMPOSITE",
-      "source": "COMPOSITE",
-      "frameCount": 2,
-      "romFrames": 0
-    },
-    {
-      "formId": "gohan_young_ssj2",
-      "semanticRole": "guard",
-      "classification": "COMPOSITE",
-      "source": "COMPOSITE",
-      "frameCount": 3,
-      "romFrames": 0
-    },
-    {
-      "formId": "gohan_young_ssj2",
-      "semanticRole": "hurt",
-      "classification": "SHARED_PHYSICAL",
-      "source": "CANONICAL",
-      "frameCount": 5,
-      "romFrames": 0
-    },
-    {
-      "formId": "gohan_young_ssj2",
-      "semanticRole": "idle",
-      "classification": "SHARED_PHYSICAL",
-      "source": "CANONICAL",
-      "frameCount": 1,
-      "romFrames": 0
-    },
-    {
-      "formId": "gohan_young_ssj2",
-      "semanticRole": "kick_right",
-      "classification": "COMPOSITE",
-      "source": "COMPOSITE",
-      "frameCount": 4,
-      "romFrames": 0
-    },
-    {
-      "formId": "gohan_young_ssj2",
-      "semanticRole": "knockback_back",
-      "classification": "COMPOSITE",
-      "source": "COMPOSITE",
-      "frameCount": 5,
-      "romFrames": 0
-    },
-    {
-      "formId": "gohan_young_ssj2",
-      "semanticRole": "knockback_down",
-      "classification": "COMPOSITE",
-      "source": "COMPOSITE",
-      "frameCount": 5,
-      "romFrames": 0
-    },
-    {
-      "formId": "gohan_young_ssj2",
-      "semanticRole": "knockback_up",
-      "classification": "COMPOSITE",
-      "source": "COMPOSITE",
-      "frameCount": 5,
-      "romFrames": 0
-    },
-    {
-      "formId": "gohan_young_ssj2",
-      "semanticRole": "move_back",
-      "classification": "COMPOSITE",
-      "source": "COMPOSITE",
-      "frameCount": 2,
-      "romFrames": 0
-    },
-    {
-      "formId": "gohan_young_ssj2",
-      "semanticRole": "move_front",
-      "classification": "SHARED_PHYSICAL",
-      "source": "CANONICAL",
-      "frameCount": 2,
-      "romFrames": 0
-    },
-    {
-      "formId": "gohan_young_ssj2",
-      "semanticRole": "power_up",
-      "classification": "COMPOSITE",
-      "source": "COMPOSITE",
-      "frameCount": 2,
-      "romFrames": 0
-    },
-    {
-      "formId": "gohan_young_ssj2",
-      "semanticRole": "punch_left",
-      "classification": "COMPOSITE",
-      "source": "COMPOSITE",
-      "frameCount": 8,
-      "romFrames": 0
-    },
-    {
-      "formId": "gohan_young_ssj2",
-      "semanticRole": "punch_right",
-      "classification": "COMPOSITE",
-      "source": "COMPOSITE",
-      "frameCount": 8,
-      "romFrames": 0
-    },
-    {
-      "formId": "gohan_adult_ssj",
-      "semanticRole": "attack_fwd",
-      "classification": "SHARED_PHYSICAL",
-      "source": "CANONICAL",
-      "frameCount": 5,
-      "romFrames": 0
-    },
-    {
-      "formId": "gohan_adult_ssj",
-      "semanticRole": "attack_ud",
-      "classification": "SHARED_PHYSICAL",
-      "source": "CANONICAL",
-      "frameCount": 3,
-      "romFrames": 0
-    },
-    {
-      "formId": "gohan_adult_ssj",
-      "semanticRole": "aura_power",
-      "classification": "REFERENCE_FX",
-      "source": "REFERENCE_FX",
-      "frameCount": 3,
-      "romFrames": 0
-    },
-    {
-      "formId": "gohan_adult_ssj",
-      "semanticRole": "aura_support",
-      "classification": "REFERENCE_FX",
-      "source": "REFERENCE_FX",
-      "frameCount": 3,
-      "romFrames": 0
-    },
-    {
-      "formId": "gohan_adult_ssj",
-      "semanticRole": "beam_charge",
-      "classification": "SHARED_PHYSICAL",
-      "source": "CANONICAL",
-      "frameCount": 1,
-      "romFrames": 0
-    },
-    {
-      "formId": "gohan_adult_ssj",
-      "semanticRole": "beam_fire",
-      "classification": "COMPOSITE",
-      "source": "COMPOSITE",
-      "frameCount": 1,
-      "romFrames": 0
-    },
-    {
-      "formId": "gohan_adult_ssj",
-      "semanticRole": "beam_guard",
-      "classification": "COMPOSITE",
-      "source": "COMPOSITE",
-      "frameCount": 3,
-      "romFrames": 0
-    },
-    {
-      "formId": "gohan_adult_ssj",
-      "semanticRole": "evade",
-      "classification": "SHARED_PHYSICAL",
-      "source": "CANONICAL",
-      "frameCount": 2,
-      "romFrames": 0
-    },
-    {
-      "formId": "gohan_adult_ssj",
-      "semanticRole": "gather_power",
-      "classification": "SHARED_PHYSICAL",
-      "source": "CANONICAL",
-      "frameCount": 2,
-      "romFrames": 0
-    },
-    {
-      "formId": "gohan_adult_ssj",
-      "semanticRole": "guard",
-      "classification": "COMPOSITE",
-      "source": "COMPOSITE",
-      "frameCount": 3,
-      "romFrames": 0
-    },
-    {
-      "formId": "gohan_adult_ssj",
-      "semanticRole": "hurt",
-      "classification": "SHARED_PHYSICAL",
-      "source": "CANONICAL",
-      "frameCount": 5,
-      "romFrames": 0
-    },
-    {
-      "formId": "gohan_adult_ssj",
-      "semanticRole": "idle",
-      "classification": "SHARED_PHYSICAL",
-      "source": "CANONICAL",
-      "frameCount": 1,
-      "romFrames": 0
-    },
-    {
-      "formId": "gohan_adult_ssj",
-      "semanticRole": "kick_right",
-      "classification": "COMPOSITE",
-      "source": "COMPOSITE",
-      "frameCount": 3,
-      "romFrames": 0
-    },
-    {
-      "formId": "gohan_adult_ssj",
-      "semanticRole": "knockback_back",
-      "classification": "COMPOSITE",
-      "source": "COMPOSITE",
-      "frameCount": 5,
-      "romFrames": 0
-    },
-    {
-      "formId": "gohan_adult_ssj",
-      "semanticRole": "knockback_down",
-      "classification": "COMPOSITE",
-      "source": "COMPOSITE",
-      "frameCount": 5,
-      "romFrames": 0
-    },
-    {
-      "formId": "gohan_adult_ssj",
-      "semanticRole": "knockback_up",
-      "classification": "COMPOSITE",
-      "source": "COMPOSITE",
-      "frameCount": 5,
-      "romFrames": 0
-    },
-    {
-      "formId": "gohan_adult_ssj",
-      "semanticRole": "move_back",
-      "classification": "COMPOSITE",
-      "source": "COMPOSITE",
-      "frameCount": 2,
-      "romFrames": 0
-    },
-    {
-      "formId": "gohan_adult_ssj",
-      "semanticRole": "move_front",
-      "classification": "SHARED_PHYSICAL",
-      "source": "CANONICAL",
-      "frameCount": 2,
-      "romFrames": 0
-    },
-    {
-      "formId": "gohan_adult_ssj",
-      "semanticRole": "power_up",
-      "classification": "COMPOSITE",
-      "source": "COMPOSITE",
-      "frameCount": 2,
-      "romFrames": 0
-    },
-    {
-      "formId": "gohan_adult_ssj",
-      "semanticRole": "punch_left",
-      "classification": "COMPOSITE",
-      "source": "COMPOSITE",
-      "frameCount": 5,
-      "romFrames": 0
-    },
-    {
-      "formId": "gohan_adult_ssj",
-      "semanticRole": "punch_right",
-      "classification": "COMPOSITE",
-      "source": "COMPOSITE",
-      "frameCount": 5,
-      "romFrames": 0
-    },
-    {
-      "formId": "gohan_adult_ssj2",
-      "semanticRole": "attack_fwd",
-      "classification": "SHARED_PHYSICAL",
-      "source": "CANONICAL",
-      "frameCount": 5,
-      "romFrames": 0
-    },
-    {
-      "formId": "gohan_adult_ssj2",
-      "semanticRole": "attack_ud",
-      "classification": "SHARED_PHYSICAL",
-      "source": "CANONICAL",
-      "frameCount": 3,
-      "romFrames": 0
-    },
-    {
-      "formId": "gohan_adult_ssj2",
-      "semanticRole": "aura_power",
-      "classification": "REFERENCE_FX",
-      "source": "REFERENCE_FX",
-      "frameCount": 3,
-      "romFrames": 0
-    },
-    {
-      "formId": "gohan_adult_ssj2",
-      "semanticRole": "aura_support",
-      "classification": "REFERENCE_FX",
-      "source": "REFERENCE_FX",
-      "frameCount": 3,
-      "romFrames": 0
-    },
-    {
-      "formId": "gohan_adult_ssj2",
-      "semanticRole": "beam_charge",
-      "classification": "SHARED_PHYSICAL",
-      "source": "CANONICAL",
-      "frameCount": 1,
-      "romFrames": 0
-    },
-    {
-      "formId": "gohan_adult_ssj2",
-      "semanticRole": "beam_fire",
-      "classification": "COMPOSITE",
-      "source": "COMPOSITE",
-      "frameCount": 1,
-      "romFrames": 0
-    },
-    {
-      "formId": "gohan_adult_ssj2",
-      "semanticRole": "beam_guard",
-      "classification": "COMPOSITE",
-      "source": "COMPOSITE",
-      "frameCount": 3,
-      "romFrames": 0
-    },
-    {
-      "formId": "gohan_adult_ssj2",
-      "semanticRole": "evade",
-      "classification": "SHARED_PHYSICAL",
-      "source": "CANONICAL",
-      "frameCount": 2,
-      "romFrames": 0
-    },
-    {
-      "formId": "gohan_adult_ssj2",
-      "semanticRole": "gather_power",
-      "classification": "SHARED_PHYSICAL",
-      "source": "CANONICAL",
-      "frameCount": 2,
-      "romFrames": 0
-    },
-    {
-      "formId": "gohan_adult_ssj2",
-      "semanticRole": "guard",
-      "classification": "COMPOSITE",
-      "source": "COMPOSITE",
-      "frameCount": 3,
-      "romFrames": 0
-    },
-    {
-      "formId": "gohan_adult_ssj2",
-      "semanticRole": "hurt",
-      "classification": "SHARED_PHYSICAL",
-      "source": "CANONICAL",
-      "frameCount": 5,
-      "romFrames": 0
-    },
-    {
-      "formId": "gohan_adult_ssj2",
-      "semanticRole": "idle",
-      "classification": "SHARED_PHYSICAL",
-      "source": "CANONICAL",
-      "frameCount": 1,
-      "romFrames": 0
-    },
-    {
-      "formId": "gohan_adult_ssj2",
-      "semanticRole": "kick_right",
-      "classification": "COMPOSITE",
-      "source": "COMPOSITE",
-      "frameCount": 3,
-      "romFrames": 0
-    },
-    {
-      "formId": "gohan_adult_ssj2",
-      "semanticRole": "knockback_back",
-      "classification": "COMPOSITE",
-      "source": "COMPOSITE",
-      "frameCount": 5,
-      "romFrames": 0
-    },
-    {
-      "formId": "gohan_adult_ssj2",
-      "semanticRole": "knockback_down",
-      "classification": "COMPOSITE",
-      "source": "COMPOSITE",
-      "frameCount": 5,
-      "romFrames": 0
-    },
-    {
-      "formId": "gohan_adult_ssj2",
-      "semanticRole": "knockback_up",
-      "classification": "COMPOSITE",
-      "source": "COMPOSITE",
-      "frameCount": 5,
-      "romFrames": 0
-    },
-    {
-      "formId": "gohan_adult_ssj2",
-      "semanticRole": "move_back",
-      "classification": "COMPOSITE",
-      "source": "COMPOSITE",
-      "frameCount": 2,
-      "romFrames": 0
-    },
-    {
-      "formId": "gohan_adult_ssj2",
-      "semanticRole": "move_front",
-      "classification": "SHARED_PHYSICAL",
-      "source": "CANONICAL",
-      "frameCount": 2,
-      "romFrames": 0
-    },
-    {
-      "formId": "gohan_adult_ssj2",
-      "semanticRole": "power_up",
-      "classification": "COMPOSITE",
-      "source": "COMPOSITE",
-      "frameCount": 2,
-      "romFrames": 0
-    },
-    {
-      "formId": "gohan_adult_ssj2",
-      "semanticRole": "punch_left",
-      "classification": "COMPOSITE",
-      "source": "COMPOSITE",
-      "frameCount": 5,
-      "romFrames": 0
-    },
-    {
-      "formId": "gohan_adult_ssj2",
-      "semanticRole": "punch_right",
-      "classification": "COMPOSITE",
-      "source": "COMPOSITE",
-      "frameCount": 5,
-      "romFrames": 0
-    },
-    {
-      "formId": "gohan_adult_ultimate",
-      "semanticRole": "attack_fwd",
-      "classification": "SHARED_PHYSICAL",
-      "source": "CANONICAL",
-      "frameCount": 8,
-      "romFrames": 0
-    },
-    {
-      "formId": "gohan_adult_ultimate",
-      "semanticRole": "attack_ud",
-      "classification": "SHARED_PHYSICAL",
-      "source": "CANONICAL",
-      "frameCount": 4,
-      "romFrames": 0
-    },
-    {
-      "formId": "gohan_adult_ultimate",
-      "semanticRole": "aura_power",
-      "classification": "REFERENCE_FX",
-      "source": "REFERENCE_FX",
-      "frameCount": 3,
-      "romFrames": 0
-    },
-    {
-      "formId": "gohan_adult_ultimate",
-      "semanticRole": "aura_support",
-      "classification": "REFERENCE_FX",
-      "source": "REFERENCE_FX",
-      "frameCount": 3,
-      "romFrames": 0
-    },
-    {
-      "formId": "gohan_adult_ultimate",
-      "semanticRole": "beam_charge",
-      "classification": "SHARED_PHYSICAL",
-      "source": "CANONICAL",
-      "frameCount": 3,
-      "romFrames": 0
-    },
-    {
-      "formId": "gohan_adult_ultimate",
-      "semanticRole": "beam_fire",
-      "classification": "UNRESOLVED",
-      "source": "UNRESOLVED",
-      "frameCount": 1,
-      "romFrames": 0
-    },
-    {
-      "formId": "gohan_adult_ultimate",
-      "semanticRole": "beam_guard",
-      "classification": "COMPOSITE",
-      "source": "COMPOSITE",
-      "frameCount": 3,
-      "romFrames": 0
-    },
-    {
-      "formId": "gohan_adult_ultimate",
-      "semanticRole": "evade",
-      "classification": "UNRESOLVED",
-      "source": "UNRESOLVED",
-      "frameCount": 2,
-      "romFrames": 0
-    },
-    {
-      "formId": "gohan_adult_ultimate",
-      "semanticRole": "gather_power",
-      "classification": "COMPOSITE",
-      "source": "COMPOSITE",
-      "frameCount": 3,
-      "romFrames": 0
-    },
-    {
-      "formId": "gohan_adult_ultimate",
-      "semanticRole": "guard",
-      "classification": "COMPOSITE",
-      "source": "COMPOSITE",
-      "frameCount": 3,
-      "romFrames": 0
-    },
-    {
-      "formId": "gohan_adult_ultimate",
-      "semanticRole": "hurt",
-      "classification": "SHARED_PHYSICAL",
-      "source": "CANONICAL",
-      "frameCount": 5,
-      "romFrames": 0
-    },
-    {
-      "formId": "gohan_adult_ultimate",
-      "semanticRole": "idle",
-      "classification": "SHARED_PHYSICAL",
-      "source": "CANONICAL",
-      "frameCount": 1,
-      "romFrames": 0
-    },
-    {
-      "formId": "gohan_adult_ultimate",
-      "semanticRole": "kick_right",
-      "classification": "COMPOSITE",
-      "source": "COMPOSITE",
-      "frameCount": 4,
-      "romFrames": 0
-    },
-    {
-      "formId": "gohan_adult_ultimate",
-      "semanticRole": "knockback_back",
-      "classification": "COMPOSITE",
-      "source": "COMPOSITE",
-      "frameCount": 5,
-      "romFrames": 0
-    },
-    {
-      "formId": "gohan_adult_ultimate",
-      "semanticRole": "knockback_down",
-      "classification": "COMPOSITE",
-      "source": "COMPOSITE",
-      "frameCount": 5,
-      "romFrames": 0
-    },
-    {
-      "formId": "gohan_adult_ultimate",
-      "semanticRole": "knockback_up",
-      "classification": "COMPOSITE",
-      "source": "COMPOSITE",
-      "frameCount": 5,
-      "romFrames": 0
-    },
-    {
-      "formId": "gohan_adult_ultimate",
-      "semanticRole": "move_back",
-      "classification": "COMPOSITE",
-      "source": "COMPOSITE",
-      "frameCount": 2,
-      "romFrames": 0
-    },
-    {
-      "formId": "gohan_adult_ultimate",
-      "semanticRole": "move_front",
-      "classification": "SHARED_PHYSICAL",
-      "source": "CANONICAL",
-      "frameCount": 2,
-      "romFrames": 0
-    },
-    {
-      "formId": "gohan_adult_ultimate",
-      "semanticRole": "power_up",
-      "classification": "COMPOSITE",
-      "source": "COMPOSITE",
-      "frameCount": 3,
-      "romFrames": 0
-    },
-    {
-      "formId": "gohan_adult_ultimate",
-      "semanticRole": "punch_left",
-      "classification": "COMPOSITE",
-      "source": "COMPOSITE",
-      "frameCount": 8,
-      "romFrames": 0
-    },
-    {
-      "formId": "gohan_adult_ultimate",
-      "semanticRole": "punch_right",
-      "classification": "COMPOSITE",
-      "source": "COMPOSITE",
-      "frameCount": 8,
-      "romFrames": 0
-    },
-    {
-      "formId": "trunks_kid",
-      "semanticRole": "attack_fwd",
-      "classification": "SHARED_PHYSICAL",
-      "source": "CANONICAL",
-      "frameCount": 8,
-      "romFrames": 0
-    },
-    {
-      "formId": "trunks_kid",
-      "semanticRole": "attack_ud",
-      "classification": "SHARED_PHYSICAL",
-      "source": "CANONICAL",
-      "frameCount": 3,
-      "romFrames": 0
-    },
-    {
-      "formId": "trunks_kid",
-      "semanticRole": "aura_power",
-      "classification": "REFERENCE_FX",
-      "source": "REFERENCE_FX",
-      "frameCount": 3,
-      "romFrames": 0
-    },
-    {
-      "formId": "trunks_kid",
-      "semanticRole": "aura_support",
-      "classification": "REFERENCE_FX",
-      "source": "REFERENCE_FX",
-      "frameCount": 3,
-      "romFrames": 0
-    },
-    {
-      "formId": "trunks_kid",
-      "semanticRole": "beam_charge",
-      "classification": "SHARED_PHYSICAL",
-      "source": "CANONICAL",
-      "frameCount": 2,
-      "romFrames": 0
-    },
-    {
-      "formId": "trunks_kid",
-      "semanticRole": "beam_fire",
-      "classification": "COMPOSITE",
-      "source": "COMPOSITE",
-      "frameCount": 2,
-      "romFrames": 0
-    },
-    {
-      "formId": "trunks_kid",
-      "semanticRole": "beam_guard",
-      "classification": "COMPOSITE",
-      "source": "COMPOSITE",
-      "frameCount": 3,
-      "romFrames": 0
-    },
-    {
-      "formId": "trunks_kid",
-      "semanticRole": "evade",
-      "classification": "UNRESOLVED",
-      "source": "UNRESOLVED",
-      "frameCount": 2,
-      "romFrames": 0
-    },
-    {
-      "formId": "trunks_kid",
-      "semanticRole": "gather_power",
-      "classification": "COMPOSITE",
-      "source": "COMPOSITE",
-      "frameCount": 2,
-      "romFrames": 0
-    },
-    {
-      "formId": "trunks_kid",
-      "semanticRole": "guard",
-      "classification": "COMPOSITE",
-      "source": "COMPOSITE",
-      "frameCount": 3,
-      "romFrames": 0
-    },
-    {
-      "formId": "trunks_kid",
-      "semanticRole": "hurt",
-      "classification": "SHARED_PHYSICAL",
-      "source": "CANONICAL",
-      "frameCount": 5,
-      "romFrames": 0
-    },
-    {
-      "formId": "trunks_kid",
-      "semanticRole": "idle",
-      "classification": "SHARED_PHYSICAL",
-      "source": "CANONICAL",
-      "frameCount": 1,
-      "romFrames": 0
-    },
-    {
-      "formId": "trunks_kid",
-      "semanticRole": "kick_right",
-      "classification": "COMPOSITE",
-      "source": "COMPOSITE",
-      "frameCount": 3,
-      "romFrames": 0
-    },
-    {
-      "formId": "trunks_kid",
-      "semanticRole": "knockback_back",
-      "classification": "COMPOSITE",
-      "source": "COMPOSITE",
-      "frameCount": 5,
-      "romFrames": 0
-    },
-    {
-      "formId": "trunks_kid",
-      "semanticRole": "knockback_down",
-      "classification": "COMPOSITE",
-      "source": "COMPOSITE",
-      "frameCount": 5,
-      "romFrames": 0
-    },
-    {
-      "formId": "trunks_kid",
-      "semanticRole": "knockback_up",
-      "classification": "COMPOSITE",
-      "source": "COMPOSITE",
-      "frameCount": 5,
-      "romFrames": 0
-    },
-    {
-      "formId": "trunks_kid",
-      "semanticRole": "move_back",
-      "classification": "COMPOSITE",
-      "source": "COMPOSITE",
-      "frameCount": 2,
-      "romFrames": 0
-    },
-    {
-      "formId": "trunks_kid",
-      "semanticRole": "move_front",
-      "classification": "SHARED_PHYSICAL",
-      "source": "CANONICAL",
-      "frameCount": 2,
-      "romFrames": 0
-    },
-    {
-      "formId": "trunks_kid",
-      "semanticRole": "power_up",
-      "classification": "COMPOSITE",
-      "source": "COMPOSITE",
-      "frameCount": 2,
-      "romFrames": 0
-    },
-    {
-      "formId": "trunks_kid",
-      "semanticRole": "punch_left",
-      "classification": "COMPOSITE",
-      "source": "COMPOSITE",
-      "frameCount": 8,
-      "romFrames": 0
-    },
-    {
-      "formId": "trunks_kid",
-      "semanticRole": "punch_right",
-      "classification": "COMPOSITE",
-      "source": "COMPOSITE",
-      "frameCount": 8,
-      "romFrames": 0
-    },
-    {
-      "formId": "trunks_kid_ssj",
       "semanticRole": "attack_fwd",
       "classification": "SHARED_PHYSICAL",
       "source": "CANONICAL",
@@ -3976,6 +2315,1014 @@
       "romFrames": 0
     },
     {
+      "formId": "gohan_young_ssj",
+      "semanticRole": "attack_ud",
+      "classification": "SHARED_PHYSICAL",
+      "source": "CANONICAL",
+      "frameCount": 4,
+      "romFrames": 0
+    },
+    {
+      "formId": "gohan_young_ssj",
+      "semanticRole": "aura_power",
+      "classification": "REFERENCE_FX",
+      "source": "REFERENCE_FX",
+      "frameCount": 3,
+      "romFrames": 0
+    },
+    {
+      "formId": "gohan_young_ssj",
+      "semanticRole": "aura_support",
+      "classification": "REFERENCE_FX",
+      "source": "REFERENCE_FX",
+      "frameCount": 3,
+      "romFrames": 0
+    },
+    {
+      "formId": "gohan_young_ssj",
+      "semanticRole": "beam_charge",
+      "classification": "ROM_PHASE",
+      "source": "ROM_DERIVED",
+      "frameCount": 2,
+      "romFrames": 0
+    },
+    {
+      "formId": "gohan_young_ssj",
+      "semanticRole": "beam_fire",
+      "classification": "ROM_PHASE",
+      "source": "ROM_DERIVED",
+      "frameCount": 1,
+      "romFrames": 0
+    },
+    {
+      "formId": "gohan_young_ssj",
+      "semanticRole": "beam_guard",
+      "classification": "COMPOSITE",
+      "source": "COMPOSITE",
+      "frameCount": 3,
+      "romFrames": 0
+    },
+    {
+      "formId": "gohan_young_ssj",
+      "semanticRole": "evade",
+      "classification": "UNRESOLVED",
+      "source": "UNRESOLVED",
+      "frameCount": 1,
+      "romFrames": 0
+    },
+    {
+      "formId": "gohan_young_ssj",
+      "semanticRole": "gather_power",
+      "classification": "SHARED_PHYSICAL",
+      "source": "CANONICAL",
+      "frameCount": 3,
+      "romFrames": 0
+    },
+    {
+      "formId": "gohan_young_ssj",
+      "semanticRole": "guard",
+      "classification": "COMPOSITE",
+      "source": "COMPOSITE",
+      "frameCount": 3,
+      "romFrames": 0
+    },
+    {
+      "formId": "gohan_young_ssj",
+      "semanticRole": "hurt",
+      "classification": "SHARED_PHYSICAL",
+      "source": "CANONICAL",
+      "frameCount": 5,
+      "romFrames": 0
+    },
+    {
+      "formId": "gohan_young_ssj",
+      "semanticRole": "idle",
+      "classification": "SHARED_PHYSICAL",
+      "source": "CANONICAL",
+      "frameCount": 1,
+      "romFrames": 0
+    },
+    {
+      "formId": "gohan_young_ssj",
+      "semanticRole": "kick_right",
+      "classification": "COMPOSITE",
+      "source": "COMPOSITE",
+      "frameCount": 4,
+      "romFrames": 0
+    },
+    {
+      "formId": "gohan_young_ssj",
+      "semanticRole": "knockback_back",
+      "classification": "COMPOSITE",
+      "source": "COMPOSITE",
+      "frameCount": 5,
+      "romFrames": 0
+    },
+    {
+      "formId": "gohan_young_ssj",
+      "semanticRole": "knockback_down",
+      "classification": "COMPOSITE",
+      "source": "COMPOSITE",
+      "frameCount": 5,
+      "romFrames": 0
+    },
+    {
+      "formId": "gohan_young_ssj",
+      "semanticRole": "knockback_up",
+      "classification": "COMPOSITE",
+      "source": "COMPOSITE",
+      "frameCount": 5,
+      "romFrames": 0
+    },
+    {
+      "formId": "gohan_young_ssj",
+      "semanticRole": "move_back",
+      "classification": "COMPOSITE",
+      "source": "COMPOSITE",
+      "frameCount": 2,
+      "romFrames": 0
+    },
+    {
+      "formId": "gohan_young_ssj",
+      "semanticRole": "move_front",
+      "classification": "SHARED_PHYSICAL",
+      "source": "CANONICAL",
+      "frameCount": 2,
+      "romFrames": 0
+    },
+    {
+      "formId": "gohan_young_ssj",
+      "semanticRole": "power_up",
+      "classification": "COMPOSITE",
+      "source": "COMPOSITE",
+      "frameCount": 3,
+      "romFrames": 0
+    },
+    {
+      "formId": "gohan_young_ssj",
+      "semanticRole": "punch_left",
+      "classification": "COMPOSITE",
+      "source": "COMPOSITE",
+      "frameCount": 7,
+      "romFrames": 0
+    },
+    {
+      "formId": "gohan_young_ssj",
+      "semanticRole": "punch_right",
+      "classification": "COMPOSITE",
+      "source": "COMPOSITE",
+      "frameCount": 7,
+      "romFrames": 0
+    },
+    {
+      "formId": "gohan_young_ssj2",
+      "semanticRole": "attack_fwd",
+      "classification": "SHARED_PHYSICAL",
+      "source": "CANONICAL",
+      "frameCount": 8,
+      "romFrames": 0
+    },
+    {
+      "formId": "gohan_young_ssj2",
+      "semanticRole": "attack_ud",
+      "classification": "SHARED_PHYSICAL",
+      "source": "CANONICAL",
+      "frameCount": 4,
+      "romFrames": 0
+    },
+    {
+      "formId": "gohan_young_ssj2",
+      "semanticRole": "aura_power",
+      "classification": "REFERENCE_FX",
+      "source": "REFERENCE_FX",
+      "frameCount": 3,
+      "romFrames": 0
+    },
+    {
+      "formId": "gohan_young_ssj2",
+      "semanticRole": "aura_support",
+      "classification": "REFERENCE_FX",
+      "source": "REFERENCE_FX",
+      "frameCount": 3,
+      "romFrames": 0
+    },
+    {
+      "formId": "gohan_young_ssj2",
+      "semanticRole": "beam_charge",
+      "classification": "ROM_PHASE",
+      "source": "ROM_DERIVED",
+      "frameCount": 3,
+      "romFrames": 0
+    },
+    {
+      "formId": "gohan_young_ssj2",
+      "semanticRole": "beam_fire",
+      "classification": "ROM_PHASE",
+      "source": "ROM_DERIVED",
+      "frameCount": 2,
+      "romFrames": 0
+    },
+    {
+      "formId": "gohan_young_ssj2",
+      "semanticRole": "beam_guard",
+      "classification": "COMPOSITE",
+      "source": "COMPOSITE",
+      "frameCount": 3,
+      "romFrames": 0
+    },
+    {
+      "formId": "gohan_young_ssj2",
+      "semanticRole": "evade",
+      "classification": "UNRESOLVED",
+      "source": "UNRESOLVED",
+      "frameCount": 1,
+      "romFrames": 0
+    },
+    {
+      "formId": "gohan_young_ssj2",
+      "semanticRole": "gather_power",
+      "classification": "COMPOSITE",
+      "source": "COMPOSITE",
+      "frameCount": 2,
+      "romFrames": 0
+    },
+    {
+      "formId": "gohan_young_ssj2",
+      "semanticRole": "guard",
+      "classification": "COMPOSITE",
+      "source": "COMPOSITE",
+      "frameCount": 3,
+      "romFrames": 0
+    },
+    {
+      "formId": "gohan_young_ssj2",
+      "semanticRole": "hurt",
+      "classification": "SHARED_PHYSICAL",
+      "source": "CANONICAL",
+      "frameCount": 5,
+      "romFrames": 0
+    },
+    {
+      "formId": "gohan_young_ssj2",
+      "semanticRole": "idle",
+      "classification": "SHARED_PHYSICAL",
+      "source": "CANONICAL",
+      "frameCount": 1,
+      "romFrames": 0
+    },
+    {
+      "formId": "gohan_young_ssj2",
+      "semanticRole": "kick_right",
+      "classification": "COMPOSITE",
+      "source": "COMPOSITE",
+      "frameCount": 4,
+      "romFrames": 0
+    },
+    {
+      "formId": "gohan_young_ssj2",
+      "semanticRole": "knockback_back",
+      "classification": "COMPOSITE",
+      "source": "COMPOSITE",
+      "frameCount": 5,
+      "romFrames": 0
+    },
+    {
+      "formId": "gohan_young_ssj2",
+      "semanticRole": "knockback_down",
+      "classification": "COMPOSITE",
+      "source": "COMPOSITE",
+      "frameCount": 5,
+      "romFrames": 0
+    },
+    {
+      "formId": "gohan_young_ssj2",
+      "semanticRole": "knockback_up",
+      "classification": "COMPOSITE",
+      "source": "COMPOSITE",
+      "frameCount": 5,
+      "romFrames": 0
+    },
+    {
+      "formId": "gohan_young_ssj2",
+      "semanticRole": "move_back",
+      "classification": "COMPOSITE",
+      "source": "COMPOSITE",
+      "frameCount": 2,
+      "romFrames": 0
+    },
+    {
+      "formId": "gohan_young_ssj2",
+      "semanticRole": "move_front",
+      "classification": "SHARED_PHYSICAL",
+      "source": "CANONICAL",
+      "frameCount": 2,
+      "romFrames": 0
+    },
+    {
+      "formId": "gohan_young_ssj2",
+      "semanticRole": "power_up",
+      "classification": "COMPOSITE",
+      "source": "COMPOSITE",
+      "frameCount": 2,
+      "romFrames": 0
+    },
+    {
+      "formId": "gohan_young_ssj2",
+      "semanticRole": "punch_left",
+      "classification": "COMPOSITE",
+      "source": "COMPOSITE",
+      "frameCount": 8,
+      "romFrames": 0
+    },
+    {
+      "formId": "gohan_young_ssj2",
+      "semanticRole": "punch_right",
+      "classification": "COMPOSITE",
+      "source": "COMPOSITE",
+      "frameCount": 8,
+      "romFrames": 0
+    },
+    {
+      "formId": "gohan_adult_ssj",
+      "semanticRole": "attack_fwd",
+      "classification": "SHARED_PHYSICAL",
+      "source": "CANONICAL",
+      "frameCount": 5,
+      "romFrames": 0
+    },
+    {
+      "formId": "gohan_adult_ssj",
+      "semanticRole": "attack_ud",
+      "classification": "SHARED_PHYSICAL",
+      "source": "CANONICAL",
+      "frameCount": 3,
+      "romFrames": 0
+    },
+    {
+      "formId": "gohan_adult_ssj",
+      "semanticRole": "aura_power",
+      "classification": "REFERENCE_FX",
+      "source": "REFERENCE_FX",
+      "frameCount": 3,
+      "romFrames": 0
+    },
+    {
+      "formId": "gohan_adult_ssj",
+      "semanticRole": "aura_support",
+      "classification": "REFERENCE_FX",
+      "source": "REFERENCE_FX",
+      "frameCount": 3,
+      "romFrames": 0
+    },
+    {
+      "formId": "gohan_adult_ssj",
+      "semanticRole": "beam_charge",
+      "classification": "ROM_PHASE",
+      "source": "ROM_DERIVED",
+      "frameCount": 1,
+      "romFrames": 0
+    },
+    {
+      "formId": "gohan_adult_ssj",
+      "semanticRole": "beam_fire",
+      "classification": "ROM_PHASE",
+      "source": "ROM_DERIVED",
+      "frameCount": 1,
+      "romFrames": 0
+    },
+    {
+      "formId": "gohan_adult_ssj",
+      "semanticRole": "beam_guard",
+      "classification": "COMPOSITE",
+      "source": "COMPOSITE",
+      "frameCount": 3,
+      "romFrames": 0
+    },
+    {
+      "formId": "gohan_adult_ssj",
+      "semanticRole": "evade",
+      "classification": "SHARED_PHYSICAL",
+      "source": "CANONICAL",
+      "frameCount": 2,
+      "romFrames": 0
+    },
+    {
+      "formId": "gohan_adult_ssj",
+      "semanticRole": "gather_power",
+      "classification": "SHARED_PHYSICAL",
+      "source": "CANONICAL",
+      "frameCount": 2,
+      "romFrames": 0
+    },
+    {
+      "formId": "gohan_adult_ssj",
+      "semanticRole": "guard",
+      "classification": "COMPOSITE",
+      "source": "COMPOSITE",
+      "frameCount": 3,
+      "romFrames": 0
+    },
+    {
+      "formId": "gohan_adult_ssj",
+      "semanticRole": "hurt",
+      "classification": "SHARED_PHYSICAL",
+      "source": "CANONICAL",
+      "frameCount": 5,
+      "romFrames": 0
+    },
+    {
+      "formId": "gohan_adult_ssj",
+      "semanticRole": "idle",
+      "classification": "SHARED_PHYSICAL",
+      "source": "CANONICAL",
+      "frameCount": 1,
+      "romFrames": 0
+    },
+    {
+      "formId": "gohan_adult_ssj",
+      "semanticRole": "kick_right",
+      "classification": "COMPOSITE",
+      "source": "COMPOSITE",
+      "frameCount": 3,
+      "romFrames": 0
+    },
+    {
+      "formId": "gohan_adult_ssj",
+      "semanticRole": "knockback_back",
+      "classification": "COMPOSITE",
+      "source": "COMPOSITE",
+      "frameCount": 5,
+      "romFrames": 0
+    },
+    {
+      "formId": "gohan_adult_ssj",
+      "semanticRole": "knockback_down",
+      "classification": "COMPOSITE",
+      "source": "COMPOSITE",
+      "frameCount": 5,
+      "romFrames": 0
+    },
+    {
+      "formId": "gohan_adult_ssj",
+      "semanticRole": "knockback_up",
+      "classification": "COMPOSITE",
+      "source": "COMPOSITE",
+      "frameCount": 5,
+      "romFrames": 0
+    },
+    {
+      "formId": "gohan_adult_ssj",
+      "semanticRole": "move_back",
+      "classification": "COMPOSITE",
+      "source": "COMPOSITE",
+      "frameCount": 2,
+      "romFrames": 0
+    },
+    {
+      "formId": "gohan_adult_ssj",
+      "semanticRole": "move_front",
+      "classification": "SHARED_PHYSICAL",
+      "source": "CANONICAL",
+      "frameCount": 2,
+      "romFrames": 0
+    },
+    {
+      "formId": "gohan_adult_ssj",
+      "semanticRole": "power_up",
+      "classification": "COMPOSITE",
+      "source": "COMPOSITE",
+      "frameCount": 2,
+      "romFrames": 0
+    },
+    {
+      "formId": "gohan_adult_ssj",
+      "semanticRole": "punch_left",
+      "classification": "COMPOSITE",
+      "source": "COMPOSITE",
+      "frameCount": 5,
+      "romFrames": 0
+    },
+    {
+      "formId": "gohan_adult_ssj",
+      "semanticRole": "punch_right",
+      "classification": "COMPOSITE",
+      "source": "COMPOSITE",
+      "frameCount": 5,
+      "romFrames": 0
+    },
+    {
+      "formId": "gohan_adult_ssj2",
+      "semanticRole": "attack_fwd",
+      "classification": "SHARED_PHYSICAL",
+      "source": "CANONICAL",
+      "frameCount": 5,
+      "romFrames": 0
+    },
+    {
+      "formId": "gohan_adult_ssj2",
+      "semanticRole": "attack_ud",
+      "classification": "SHARED_PHYSICAL",
+      "source": "CANONICAL",
+      "frameCount": 3,
+      "romFrames": 0
+    },
+    {
+      "formId": "gohan_adult_ssj2",
+      "semanticRole": "aura_power",
+      "classification": "REFERENCE_FX",
+      "source": "REFERENCE_FX",
+      "frameCount": 3,
+      "romFrames": 0
+    },
+    {
+      "formId": "gohan_adult_ssj2",
+      "semanticRole": "aura_support",
+      "classification": "REFERENCE_FX",
+      "source": "REFERENCE_FX",
+      "frameCount": 3,
+      "romFrames": 0
+    },
+    {
+      "formId": "gohan_adult_ssj2",
+      "semanticRole": "beam_charge",
+      "classification": "ROM_PHASE",
+      "source": "ROM_DERIVED",
+      "frameCount": 1,
+      "romFrames": 0
+    },
+    {
+      "formId": "gohan_adult_ssj2",
+      "semanticRole": "beam_fire",
+      "classification": "ROM_PHASE",
+      "source": "ROM_DERIVED",
+      "frameCount": 1,
+      "romFrames": 0
+    },
+    {
+      "formId": "gohan_adult_ssj2",
+      "semanticRole": "beam_guard",
+      "classification": "COMPOSITE",
+      "source": "COMPOSITE",
+      "frameCount": 3,
+      "romFrames": 0
+    },
+    {
+      "formId": "gohan_adult_ssj2",
+      "semanticRole": "evade",
+      "classification": "SHARED_PHYSICAL",
+      "source": "CANONICAL",
+      "frameCount": 2,
+      "romFrames": 0
+    },
+    {
+      "formId": "gohan_adult_ssj2",
+      "semanticRole": "gather_power",
+      "classification": "SHARED_PHYSICAL",
+      "source": "CANONICAL",
+      "frameCount": 2,
+      "romFrames": 0
+    },
+    {
+      "formId": "gohan_adult_ssj2",
+      "semanticRole": "guard",
+      "classification": "COMPOSITE",
+      "source": "COMPOSITE",
+      "frameCount": 3,
+      "romFrames": 0
+    },
+    {
+      "formId": "gohan_adult_ssj2",
+      "semanticRole": "hurt",
+      "classification": "SHARED_PHYSICAL",
+      "source": "CANONICAL",
+      "frameCount": 5,
+      "romFrames": 0
+    },
+    {
+      "formId": "gohan_adult_ssj2",
+      "semanticRole": "idle",
+      "classification": "SHARED_PHYSICAL",
+      "source": "CANONICAL",
+      "frameCount": 1,
+      "romFrames": 0
+    },
+    {
+      "formId": "gohan_adult_ssj2",
+      "semanticRole": "kick_right",
+      "classification": "COMPOSITE",
+      "source": "COMPOSITE",
+      "frameCount": 3,
+      "romFrames": 0
+    },
+    {
+      "formId": "gohan_adult_ssj2",
+      "semanticRole": "knockback_back",
+      "classification": "COMPOSITE",
+      "source": "COMPOSITE",
+      "frameCount": 5,
+      "romFrames": 0
+    },
+    {
+      "formId": "gohan_adult_ssj2",
+      "semanticRole": "knockback_down",
+      "classification": "COMPOSITE",
+      "source": "COMPOSITE",
+      "frameCount": 5,
+      "romFrames": 0
+    },
+    {
+      "formId": "gohan_adult_ssj2",
+      "semanticRole": "knockback_up",
+      "classification": "COMPOSITE",
+      "source": "COMPOSITE",
+      "frameCount": 5,
+      "romFrames": 0
+    },
+    {
+      "formId": "gohan_adult_ssj2",
+      "semanticRole": "move_back",
+      "classification": "COMPOSITE",
+      "source": "COMPOSITE",
+      "frameCount": 2,
+      "romFrames": 0
+    },
+    {
+      "formId": "gohan_adult_ssj2",
+      "semanticRole": "move_front",
+      "classification": "SHARED_PHYSICAL",
+      "source": "CANONICAL",
+      "frameCount": 2,
+      "romFrames": 0
+    },
+    {
+      "formId": "gohan_adult_ssj2",
+      "semanticRole": "power_up",
+      "classification": "COMPOSITE",
+      "source": "COMPOSITE",
+      "frameCount": 2,
+      "romFrames": 0
+    },
+    {
+      "formId": "gohan_adult_ssj2",
+      "semanticRole": "punch_left",
+      "classification": "COMPOSITE",
+      "source": "COMPOSITE",
+      "frameCount": 5,
+      "romFrames": 0
+    },
+    {
+      "formId": "gohan_adult_ssj2",
+      "semanticRole": "punch_right",
+      "classification": "COMPOSITE",
+      "source": "COMPOSITE",
+      "frameCount": 5,
+      "romFrames": 0
+    },
+    {
+      "formId": "gohan_adult_ultimate",
+      "semanticRole": "attack_fwd",
+      "classification": "SHARED_PHYSICAL",
+      "source": "CANONICAL",
+      "frameCount": 8,
+      "romFrames": 0
+    },
+    {
+      "formId": "gohan_adult_ultimate",
+      "semanticRole": "attack_ud",
+      "classification": "SHARED_PHYSICAL",
+      "source": "CANONICAL",
+      "frameCount": 4,
+      "romFrames": 0
+    },
+    {
+      "formId": "gohan_adult_ultimate",
+      "semanticRole": "aura_power",
+      "classification": "REFERENCE_FX",
+      "source": "REFERENCE_FX",
+      "frameCount": 3,
+      "romFrames": 0
+    },
+    {
+      "formId": "gohan_adult_ultimate",
+      "semanticRole": "aura_support",
+      "classification": "REFERENCE_FX",
+      "source": "REFERENCE_FX",
+      "frameCount": 3,
+      "romFrames": 0
+    },
+    {
+      "formId": "gohan_adult_ultimate",
+      "semanticRole": "beam_charge",
+      "classification": "ROM_PHASE",
+      "source": "ROM_DERIVED",
+      "frameCount": 3,
+      "romFrames": 0
+    },
+    {
+      "formId": "gohan_adult_ultimate",
+      "semanticRole": "beam_fire",
+      "classification": "ROM_PHASE",
+      "source": "ROM_DERIVED",
+      "frameCount": 1,
+      "romFrames": 0
+    },
+    {
+      "formId": "gohan_adult_ultimate",
+      "semanticRole": "beam_guard",
+      "classification": "COMPOSITE",
+      "source": "COMPOSITE",
+      "frameCount": 3,
+      "romFrames": 0
+    },
+    {
+      "formId": "gohan_adult_ultimate",
+      "semanticRole": "evade",
+      "classification": "UNRESOLVED",
+      "source": "UNRESOLVED",
+      "frameCount": 2,
+      "romFrames": 0
+    },
+    {
+      "formId": "gohan_adult_ultimate",
+      "semanticRole": "gather_power",
+      "classification": "COMPOSITE",
+      "source": "COMPOSITE",
+      "frameCount": 3,
+      "romFrames": 0
+    },
+    {
+      "formId": "gohan_adult_ultimate",
+      "semanticRole": "guard",
+      "classification": "COMPOSITE",
+      "source": "COMPOSITE",
+      "frameCount": 3,
+      "romFrames": 0
+    },
+    {
+      "formId": "gohan_adult_ultimate",
+      "semanticRole": "hurt",
+      "classification": "SHARED_PHYSICAL",
+      "source": "CANONICAL",
+      "frameCount": 5,
+      "romFrames": 0
+    },
+    {
+      "formId": "gohan_adult_ultimate",
+      "semanticRole": "idle",
+      "classification": "SHARED_PHYSICAL",
+      "source": "CANONICAL",
+      "frameCount": 1,
+      "romFrames": 0
+    },
+    {
+      "formId": "gohan_adult_ultimate",
+      "semanticRole": "kick_right",
+      "classification": "COMPOSITE",
+      "source": "COMPOSITE",
+      "frameCount": 4,
+      "romFrames": 0
+    },
+    {
+      "formId": "gohan_adult_ultimate",
+      "semanticRole": "knockback_back",
+      "classification": "COMPOSITE",
+      "source": "COMPOSITE",
+      "frameCount": 5,
+      "romFrames": 0
+    },
+    {
+      "formId": "gohan_adult_ultimate",
+      "semanticRole": "knockback_down",
+      "classification": "COMPOSITE",
+      "source": "COMPOSITE",
+      "frameCount": 5,
+      "romFrames": 0
+    },
+    {
+      "formId": "gohan_adult_ultimate",
+      "semanticRole": "knockback_up",
+      "classification": "COMPOSITE",
+      "source": "COMPOSITE",
+      "frameCount": 5,
+      "romFrames": 0
+    },
+    {
+      "formId": "gohan_adult_ultimate",
+      "semanticRole": "move_back",
+      "classification": "COMPOSITE",
+      "source": "COMPOSITE",
+      "frameCount": 2,
+      "romFrames": 0
+    },
+    {
+      "formId": "gohan_adult_ultimate",
+      "semanticRole": "move_front",
+      "classification": "SHARED_PHYSICAL",
+      "source": "CANONICAL",
+      "frameCount": 2,
+      "romFrames": 0
+    },
+    {
+      "formId": "gohan_adult_ultimate",
+      "semanticRole": "power_up",
+      "classification": "COMPOSITE",
+      "source": "COMPOSITE",
+      "frameCount": 3,
+      "romFrames": 0
+    },
+    {
+      "formId": "gohan_adult_ultimate",
+      "semanticRole": "punch_left",
+      "classification": "COMPOSITE",
+      "source": "COMPOSITE",
+      "frameCount": 8,
+      "romFrames": 0
+    },
+    {
+      "formId": "gohan_adult_ultimate",
+      "semanticRole": "punch_right",
+      "classification": "COMPOSITE",
+      "source": "COMPOSITE",
+      "frameCount": 8,
+      "romFrames": 0
+    },
+    {
+      "formId": "trunks_kid",
+      "semanticRole": "attack_fwd",
+      "classification": "SHARED_PHYSICAL",
+      "source": "CANONICAL",
+      "frameCount": 8,
+      "romFrames": 0
+    },
+    {
+      "formId": "trunks_kid",
+      "semanticRole": "attack_ud",
+      "classification": "SHARED_PHYSICAL",
+      "source": "CANONICAL",
+      "frameCount": 3,
+      "romFrames": 0
+    },
+    {
+      "formId": "trunks_kid",
+      "semanticRole": "aura_power",
+      "classification": "REFERENCE_FX",
+      "source": "REFERENCE_FX",
+      "frameCount": 3,
+      "romFrames": 0
+    },
+    {
+      "formId": "trunks_kid",
+      "semanticRole": "aura_support",
+      "classification": "REFERENCE_FX",
+      "source": "REFERENCE_FX",
+      "frameCount": 3,
+      "romFrames": 0
+    },
+    {
+      "formId": "trunks_kid",
+      "semanticRole": "beam_charge",
+      "classification": "ROM_PHASE",
+      "source": "ROM_DERIVED",
+      "frameCount": 2,
+      "romFrames": 0
+    },
+    {
+      "formId": "trunks_kid",
+      "semanticRole": "beam_fire",
+      "classification": "ROM_PHASE",
+      "source": "ROM_DERIVED",
+      "frameCount": 2,
+      "romFrames": 0
+    },
+    {
+      "formId": "trunks_kid",
+      "semanticRole": "beam_guard",
+      "classification": "COMPOSITE",
+      "source": "COMPOSITE",
+      "frameCount": 3,
+      "romFrames": 0
+    },
+    {
+      "formId": "trunks_kid",
+      "semanticRole": "evade",
+      "classification": "UNRESOLVED",
+      "source": "UNRESOLVED",
+      "frameCount": 2,
+      "romFrames": 0
+    },
+    {
+      "formId": "trunks_kid",
+      "semanticRole": "gather_power",
+      "classification": "COMPOSITE",
+      "source": "COMPOSITE",
+      "frameCount": 2,
+      "romFrames": 0
+    },
+    {
+      "formId": "trunks_kid",
+      "semanticRole": "guard",
+      "classification": "COMPOSITE",
+      "source": "COMPOSITE",
+      "frameCount": 3,
+      "romFrames": 0
+    },
+    {
+      "formId": "trunks_kid",
+      "semanticRole": "hurt",
+      "classification": "SHARED_PHYSICAL",
+      "source": "CANONICAL",
+      "frameCount": 5,
+      "romFrames": 0
+    },
+    {
+      "formId": "trunks_kid",
+      "semanticRole": "idle",
+      "classification": "SHARED_PHYSICAL",
+      "source": "CANONICAL",
+      "frameCount": 1,
+      "romFrames": 0
+    },
+    {
+      "formId": "trunks_kid",
+      "semanticRole": "kick_right",
+      "classification": "COMPOSITE",
+      "source": "COMPOSITE",
+      "frameCount": 3,
+      "romFrames": 0
+    },
+    {
+      "formId": "trunks_kid",
+      "semanticRole": "knockback_back",
+      "classification": "COMPOSITE",
+      "source": "COMPOSITE",
+      "frameCount": 5,
+      "romFrames": 0
+    },
+    {
+      "formId": "trunks_kid",
+      "semanticRole": "knockback_down",
+      "classification": "COMPOSITE",
+      "source": "COMPOSITE",
+      "frameCount": 5,
+      "romFrames": 0
+    },
+    {
+      "formId": "trunks_kid",
+      "semanticRole": "knockback_up",
+      "classification": "COMPOSITE",
+      "source": "COMPOSITE",
+      "frameCount": 5,
+      "romFrames": 0
+    },
+    {
+      "formId": "trunks_kid",
+      "semanticRole": "move_back",
+      "classification": "COMPOSITE",
+      "source": "COMPOSITE",
+      "frameCount": 2,
+      "romFrames": 0
+    },
+    {
+      "formId": "trunks_kid",
+      "semanticRole": "move_front",
+      "classification": "SHARED_PHYSICAL",
+      "source": "CANONICAL",
+      "frameCount": 2,
+      "romFrames": 0
+    },
+    {
+      "formId": "trunks_kid",
+      "semanticRole": "power_up",
+      "classification": "COMPOSITE",
+      "source": "COMPOSITE",
+      "frameCount": 2,
+      "romFrames": 0
+    },
+    {
+      "formId": "trunks_kid",
+      "semanticRole": "punch_left",
+      "classification": "COMPOSITE",
+      "source": "COMPOSITE",
+      "frameCount": 8,
+      "romFrames": 0
+    },
+    {
+      "formId": "trunks_kid",
+      "semanticRole": "punch_right",
+      "classification": "COMPOSITE",
+      "source": "COMPOSITE",
+      "frameCount": 8,
+      "romFrames": 0
+    },
+    {
+      "formId": "trunks_kid_ssj",
+      "semanticRole": "attack_fwd",
+      "classification": "SHARED_PHYSICAL",
+      "source": "CANONICAL",
+      "frameCount": 7,
+      "romFrames": 0
+    },
+    {
       "formId": "trunks_kid_ssj",
       "semanticRole": "attack_ud",
       "classification": "SHARED_PHYSICAL",
@@ -4002,16 +3349,16 @@
     {
       "formId": "trunks_kid_ssj",
       "semanticRole": "beam_charge",
-      "classification": "SHARED_PHYSICAL",
-      "source": "CANONICAL",
+      "classification": "ROM_PHASE",
+      "source": "ROM_DERIVED",
       "frameCount": 2,
       "romFrames": 0
     },
     {
       "formId": "trunks_kid_ssj",
       "semanticRole": "beam_fire",
-      "classification": "COMPOSITE",
-      "source": "COMPOSITE",
+      "classification": "ROM_PHASE",
+      "source": "ROM_DERIVED",
       "frameCount": 2,
       "romFrames": 0
     },
@@ -4170,16 +3517,16 @@
     {
       "formId": "trunks_future",
       "semanticRole": "beam_charge",
-      "classification": "UNRESOLVED",
-      "source": "UNRESOLVED",
+      "classification": "ROM_PHASE",
+      "source": "ROM_DERIVED",
       "frameCount": 2,
       "romFrames": 0
     },
     {
       "formId": "trunks_future",
       "semanticRole": "beam_fire",
-      "classification": "SHARED_PHYSICAL",
-      "source": "CANONICAL",
+      "classification": "ROM_PHASE",
+      "source": "ROM_DERIVED",
       "frameCount": 4,
       "romFrames": 0
     },
@@ -4338,16 +3685,16 @@
     {
       "formId": "trunks_ssj",
       "semanticRole": "beam_charge",
-      "classification": "UNRESOLVED",
-      "source": "UNRESOLVED",
+      "classification": "ROM_PHASE",
+      "source": "ROM_DERIVED",
       "frameCount": 5,
       "romFrames": 0
     },
     {
       "formId": "trunks_ssj",
       "semanticRole": "beam_fire",
-      "classification": "UNRESOLVED",
-      "source": "UNRESOLVED",
+      "classification": "ROM_PHASE",
+      "source": "ROM_DERIVED",
       "frameCount": 3,
       "romFrames": 0
     },
@@ -4506,16 +3853,16 @@
     {
       "formId": "goten_base",
       "semanticRole": "beam_charge",
-      "classification": "SHARED_PHYSICAL",
-      "source": "CANONICAL",
+      "classification": "ROM_PHASE",
+      "source": "ROM_DERIVED",
       "frameCount": 2,
       "romFrames": 0
     },
     {
       "formId": "goten_base",
       "semanticRole": "beam_fire",
-      "classification": "COMPOSITE",
-      "source": "COMPOSITE",
+      "classification": "ROM_PHASE",
+      "source": "ROM_DERIVED",
       "frameCount": 2,
       "romFrames": 0
     },
@@ -4674,16 +4021,16 @@
     {
       "formId": "goten_ssj",
       "semanticRole": "beam_charge",
-      "classification": "SHARED_PHYSICAL",
-      "source": "CANONICAL",
+      "classification": "ROM_PHASE",
+      "source": "ROM_DERIVED",
       "frameCount": 3,
       "romFrames": 0
     },
     {
       "formId": "goten_ssj",
       "semanticRole": "beam_fire",
-      "classification": "COMPOSITE",
-      "source": "COMPOSITE",
+      "classification": "ROM_PHASE",
+      "source": "ROM_DERIVED",
       "frameCount": 3,
       "romFrames": 0
     },
@@ -4842,16 +4189,16 @@
     {
       "formId": "gotenks_ssj",
       "semanticRole": "beam_charge",
-      "classification": "SHARED_PHYSICAL",
-      "source": "CANONICAL",
+      "classification": "ROM_PHASE",
+      "source": "ROM_DERIVED",
       "frameCount": 7,
       "romFrames": 0
     },
     {
       "formId": "gotenks_ssj",
       "semanticRole": "beam_fire",
-      "classification": "COMPOSITE",
-      "source": "COMPOSITE",
+      "classification": "ROM_PHASE",
+      "source": "ROM_DERIVED",
       "frameCount": 7,
       "romFrames": 0
     },
@@ -5010,16 +4357,16 @@
     {
       "formId": "gotenks_ssj3",
       "semanticRole": "beam_charge",
-      "classification": "SHARED_PHYSICAL",
-      "source": "CANONICAL",
+      "classification": "ROM_PHASE",
+      "source": "ROM_DERIVED",
       "frameCount": 7,
       "romFrames": 0
     },
     {
       "formId": "gotenks_ssj3",
       "semanticRole": "beam_fire",
-      "classification": "COMPOSITE",
-      "source": "COMPOSITE",
+      "classification": "ROM_PHASE",
+      "source": "ROM_DERIVED",
       "frameCount": 7,
       "romFrames": 0
     },
@@ -5178,16 +4525,16 @@
     {
       "formId": "piccolo_base",
       "semanticRole": "beam_charge",
-      "classification": "SHARED_PHYSICAL",
-      "source": "CANONICAL",
+      "classification": "ROM_PHASE",
+      "source": "ROM_DERIVED",
       "frameCount": 4,
       "romFrames": 0
     },
     {
       "formId": "piccolo_base",
       "semanticRole": "beam_fire",
-      "classification": "COMPOSITE",
-      "source": "COMPOSITE",
+      "classification": "ROM_PHASE",
+      "source": "ROM_DERIVED",
       "frameCount": 4,
       "romFrames": 0
     },
@@ -5346,16 +4693,16 @@
     {
       "formId": "piccolo_kami",
       "semanticRole": "beam_charge",
-      "classification": "SHARED_PHYSICAL",
-      "source": "CANONICAL",
+      "classification": "ROM_PHASE",
+      "source": "ROM_DERIVED",
       "frameCount": 4,
       "romFrames": 0
     },
     {
       "formId": "piccolo_kami",
       "semanticRole": "beam_fire",
-      "classification": "COMPOSITE",
-      "source": "COMPOSITE",
+      "classification": "ROM_PHASE",
+      "source": "ROM_DERIVED",
       "frameCount": 4,
       "romFrames": 0
     },
@@ -5514,16 +4861,16 @@
     {
       "formId": "piccolo_evil",
       "semanticRole": "beam_charge",
-      "classification": "SHARED_PHYSICAL",
-      "source": "CANONICAL",
+      "classification": "ROM_PHASE",
+      "source": "ROM_DERIVED",
       "frameCount": 4,
       "romFrames": 0
     },
     {
       "formId": "piccolo_evil",
       "semanticRole": "beam_fire",
-      "classification": "COMPOSITE",
-      "source": "COMPOSITE",
+      "classification": "ROM_PHASE",
+      "source": "ROM_DERIVED",
       "frameCount": 4,
       "romFrames": 0
     },
@@ -5690,8 +5037,8 @@
     {
       "formId": "krillin_base",
       "semanticRole": "beam_fire",
-      "classification": "SHARED_PHYSICAL",
-      "source": "CANONICAL",
+      "classification": "ROM_PHASE",
+      "source": "ROM_DERIVED",
       "frameCount": 2,
       "romFrames": 0
     },
@@ -5850,16 +5197,16 @@
     {
       "formId": "frieza_final",
       "semanticRole": "beam_charge",
-      "classification": "SHARED_PHYSICAL",
-      "source": "CANONICAL",
+      "classification": "ROM_PHASE",
+      "source": "ROM_DERIVED",
       "frameCount": 2,
       "romFrames": 0
     },
     {
       "formId": "frieza_final",
       "semanticRole": "beam_fire",
-      "classification": "COMPOSITE",
-      "source": "COMPOSITE",
+      "classification": "ROM_PHASE",
+      "source": "ROM_DERIVED",
       "frameCount": 6,
       "romFrames": 0
     },
@@ -6018,16 +5365,16 @@
     {
       "formId": "cell_imperfect",
       "semanticRole": "beam_charge",
-      "classification": "UNRESOLVED",
-      "source": "UNRESOLVED",
+      "classification": "ROM_PHASE",
+      "source": "ROM_DERIVED",
       "frameCount": 4,
       "romFrames": 0
     },
     {
       "formId": "cell_imperfect",
       "semanticRole": "beam_fire",
-      "classification": "UNRESOLVED",
-      "source": "UNRESOLVED",
+      "classification": "ROM_PHASE",
+      "source": "ROM_DERIVED",
       "frameCount": 1,
       "romFrames": 0
     },
@@ -6186,16 +5533,16 @@
     {
       "formId": "cell_semi",
       "semanticRole": "beam_charge",
-      "classification": "UNRESOLVED",
-      "source": "UNRESOLVED",
+      "classification": "ROM_PHASE",
+      "source": "ROM_DERIVED",
       "frameCount": 2,
       "romFrames": 0
     },
     {
       "formId": "cell_semi",
       "semanticRole": "beam_fire",
-      "classification": "UNRESOLVED",
-      "source": "UNRESOLVED",
+      "classification": "ROM_PHASE",
+      "source": "ROM_DERIVED",
       "frameCount": 3,
       "romFrames": 0
     },
@@ -6354,16 +5701,16 @@
     {
       "formId": "cell_perfect",
       "semanticRole": "beam_charge",
-      "classification": "SHARED_PHYSICAL",
-      "source": "CANONICAL",
+      "classification": "ROM_PHASE",
+      "source": "ROM_DERIVED",
       "frameCount": 3,
       "romFrames": 0
     },
     {
       "formId": "cell_perfect",
       "semanticRole": "beam_fire",
-      "classification": "UNRESOLVED",
-      "source": "UNRESOLVED",
+      "classification": "ROM_PHASE",
+      "source": "ROM_DERIVED",
       "frameCount": 3,
       "romFrames": 0
     },
@@ -6522,16 +5869,16 @@
     {
       "formId": "cell_jr",
       "semanticRole": "beam_charge",
-      "classification": "UNRESOLVED",
-      "source": "UNRESOLVED",
+      "classification": "ROM_PHASE",
+      "source": "ROM_DERIVED",
       "frameCount": 3,
       "romFrames": 0
     },
     {
       "formId": "cell_jr",
       "semanticRole": "beam_fire",
-      "classification": "SHARED_PHYSICAL",
-      "source": "CANONICAL",
+      "classification": "ROM_PHASE",
+      "source": "ROM_DERIVED",
       "frameCount": 2,
       "romFrames": 0
     },
@@ -6690,16 +6037,16 @@
     {
       "formId": "android_16",
       "semanticRole": "beam_charge",
-      "classification": "SHARED_PHYSICAL",
-      "source": "CANONICAL",
+      "classification": "ROM_EXACT",
+      "source": "ROM_DERIVED",
       "frameCount": 3,
-      "romFrames": 0
+      "romFrames": 2
     },
     {
       "formId": "android_16",
       "semanticRole": "beam_fire",
-      "classification": "SHARED_PHYSICAL",
-      "source": "CANONICAL",
+      "classification": "ROM_PHASE",
+      "source": "ROM_DERIVED",
       "frameCount": 2,
       "romFrames": 0
     },
@@ -6858,16 +6205,16 @@
     {
       "formId": "android_17",
       "semanticRole": "beam_charge",
-      "classification": "UNRESOLVED",
-      "source": "UNRESOLVED",
+      "classification": "ROM_PHASE",
+      "source": "ROM_DERIVED",
       "frameCount": 2,
       "romFrames": 0
     },
     {
       "formId": "android_17",
       "semanticRole": "beam_fire",
-      "classification": "UNRESOLVED",
-      "source": "UNRESOLVED",
+      "classification": "ROM_PHASE",
+      "source": "ROM_DERIVED",
       "frameCount": 3,
       "romFrames": 0
     },
@@ -7026,16 +6373,16 @@
     {
       "formId": "android_18",
       "semanticRole": "beam_charge",
-      "classification": "SHARED_PHYSICAL",
-      "source": "CANONICAL",
+      "classification": "ROM_PHASE",
+      "source": "ROM_DERIVED",
       "frameCount": 4,
       "romFrames": 0
     },
     {
       "formId": "android_18",
       "semanticRole": "beam_fire",
-      "classification": "COMPOSITE",
-      "source": "COMPOSITE",
+      "classification": "ROM_PHASE",
+      "source": "ROM_DERIVED",
       "frameCount": 5,
       "romFrames": 0
     },
@@ -7194,16 +6541,16 @@
     {
       "formId": "android_19",
       "semanticRole": "beam_charge",
-      "classification": "SHARED_PHYSICAL",
-      "source": "CANONICAL",
+      "classification": "ROM_PHASE",
+      "source": "ROM_DERIVED",
       "frameCount": 5,
       "romFrames": 0
     },
     {
       "formId": "android_19",
       "semanticRole": "beam_fire",
-      "classification": "COMPOSITE",
-      "source": "COMPOSITE",
+      "classification": "ROM_PHASE",
+      "source": "ROM_DERIVED",
       "frameCount": 6,
       "romFrames": 0
     },
@@ -7362,16 +6709,16 @@
     {
       "formId": "android_20",
       "semanticRole": "beam_charge",
-      "classification": "SHARED_PHYSICAL",
-      "source": "CANONICAL",
+      "classification": "ROM_PHASE",
+      "source": "ROM_DERIVED",
       "frameCount": 4,
       "romFrames": 0
     },
     {
       "formId": "android_20",
       "semanticRole": "beam_fire",
-      "classification": "COMPOSITE",
-      "source": "COMPOSITE",
+      "classification": "ROM_PHASE",
+      "source": "ROM_DERIVED",
       "frameCount": 5,
       "romFrames": 0
     },
@@ -7530,16 +6877,16 @@
     {
       "formId": "ginyu",
       "semanticRole": "beam_charge",
-      "classification": "COMPOSITE",
-      "source": "COMPOSITE",
+      "classification": "ROM_PHASE",
+      "source": "ROM_DERIVED",
       "frameCount": 5,
       "romFrames": 0
     },
     {
       "formId": "ginyu",
       "semanticRole": "beam_fire",
-      "classification": "UNRESOLVED",
-      "source": "UNRESOLVED",
+      "classification": "ROM_PHASE",
+      "source": "ROM_DERIVED",
       "frameCount": 4,
       "romFrames": 0
     },
@@ -7698,16 +7045,16 @@
     {
       "formId": "ginyu_goku",
       "semanticRole": "beam_charge",
-      "classification": "UNRESOLVED",
-      "source": "UNRESOLVED",
+      "classification": "ROM_PHASE",
+      "source": "ROM_DERIVED",
       "frameCount": 3,
       "romFrames": 0
     },
     {
       "formId": "ginyu_goku",
       "semanticRole": "beam_fire",
-      "classification": "UNRESOLVED",
-      "source": "UNRESOLVED",
+      "classification": "ROM_PHASE",
+      "source": "ROM_DERIVED",
       "frameCount": 2,
       "romFrames": 0
     },
@@ -7866,16 +7213,16 @@
     {
       "formId": "recoome",
       "semanticRole": "beam_charge",
-      "classification": "SHARED_PHYSICAL",
-      "source": "CANONICAL",
+      "classification": "ROM_PHASE",
+      "source": "ROM_DERIVED",
       "frameCount": 3,
       "romFrames": 0
     },
     {
       "formId": "recoome",
       "semanticRole": "beam_fire",
-      "classification": "COMPOSITE",
-      "source": "COMPOSITE",
+      "classification": "ROM_PHASE",
+      "source": "ROM_DERIVED",
       "frameCount": 4,
       "romFrames": 0
     },
@@ -8034,16 +7381,16 @@
     {
       "formId": "guldo",
       "semanticRole": "beam_charge",
-      "classification": "COMPOSITE",
-      "source": "COMPOSITE",
+      "classification": "ROM_PHASE",
+      "source": "ROM_DERIVED",
       "frameCount": 4,
       "romFrames": 0
     },
     {
       "formId": "guldo",
       "semanticRole": "beam_fire",
-      "classification": "SHARED_PHYSICAL",
-      "source": "CANONICAL",
+      "classification": "ROM_PHASE",
+      "source": "ROM_DERIVED",
       "frameCount": 2,
       "romFrames": 0
     },
@@ -8202,16 +7549,16 @@
     {
       "formId": "jeice",
       "semanticRole": "beam_charge",
-      "classification": "UNRESOLVED",
-      "source": "UNRESOLVED",
+      "classification": "ROM_PHASE",
+      "source": "ROM_DERIVED",
       "frameCount": 3,
       "romFrames": 0
     },
     {
       "formId": "jeice",
       "semanticRole": "beam_fire",
-      "classification": "UNRESOLVED",
-      "source": "UNRESOLVED",
+      "classification": "ROM_PHASE",
+      "source": "ROM_DERIVED",
       "frameCount": 5,
       "romFrames": 0
     },
@@ -8370,16 +7717,16 @@
     {
       "formId": "burter",
       "semanticRole": "beam_charge",
-      "classification": "SHARED_PHYSICAL",
-      "source": "CANONICAL",
+      "classification": "ROM_PHASE",
+      "source": "ROM_DERIVED",
       "frameCount": 2,
       "romFrames": 0
     },
     {
       "formId": "burter",
       "semanticRole": "beam_fire",
-      "classification": "COMPOSITE",
-      "source": "COMPOSITE",
+      "classification": "ROM_PHASE",
+      "source": "ROM_DERIVED",
       "frameCount": 2,
       "romFrames": 0
     },
@@ -8538,16 +7885,16 @@
     {
       "formId": "nappa",
       "semanticRole": "beam_charge",
-      "classification": "SHARED_PHYSICAL",
-      "source": "CANONICAL",
+      "classification": "ROM_PHASE",
+      "source": "ROM_DERIVED",
       "frameCount": 3,
       "romFrames": 0
     },
     {
       "formId": "nappa",
       "semanticRole": "beam_fire",
-      "classification": "UNRESOLVED",
-      "source": "UNRESOLVED",
+      "classification": "ROM_PHASE",
+      "source": "ROM_DERIVED",
       "frameCount": 1,
       "romFrames": 0
     },
@@ -8706,16 +8053,16 @@
     {
       "formId": "buu_base",
       "semanticRole": "beam_charge",
-      "classification": "SHARED_PHYSICAL",
-      "source": "CANONICAL",
+      "classification": "ROM_PHASE",
+      "source": "ROM_DERIVED",
       "frameCount": 4,
       "romFrames": 0
     },
     {
       "formId": "buu_base",
       "semanticRole": "beam_fire",
-      "classification": "COMPOSITE",
-      "source": "COMPOSITE",
+      "classification": "ROM_PHASE",
+      "source": "ROM_DERIVED",
       "frameCount": 9,
       "romFrames": 0
     },
@@ -8874,16 +8221,16 @@
     {
       "formId": "buu_super",
       "semanticRole": "beam_charge",
-      "classification": "SHARED_PHYSICAL",
-      "source": "CANONICAL",
+      "classification": "ROM_PHASE",
+      "source": "ROM_DERIVED",
       "frameCount": 5,
       "romFrames": 0
     },
     {
       "formId": "buu_super",
       "semanticRole": "beam_fire",
-      "classification": "COMPOSITE",
-      "source": "COMPOSITE",
+      "classification": "ROM_PHASE",
+      "source": "ROM_DERIVED",
       "frameCount": 5,
       "romFrames": 0
     },
@@ -9042,16 +8389,16 @@
     {
       "formId": "buu_gotenks",
       "semanticRole": "beam_charge",
-      "classification": "SHARED_PHYSICAL",
-      "source": "CANONICAL",
+      "classification": "ROM_PHASE",
+      "source": "ROM_DERIVED",
       "frameCount": 4,
       "romFrames": 0
     },
     {
       "formId": "buu_gotenks",
       "semanticRole": "beam_fire",
-      "classification": "COMPOSITE",
-      "source": "COMPOSITE",
+      "classification": "ROM_PHASE",
+      "source": "ROM_DERIVED",
       "frameCount": 7,
       "romFrames": 0
     },
@@ -9210,16 +8557,16 @@
     {
       "formId": "buu_gohan",
       "semanticRole": "beam_charge",
-      "classification": "SHARED_PHYSICAL",
-      "source": "CANONICAL",
+      "classification": "ROM_PHASE",
+      "source": "ROM_DERIVED",
       "frameCount": 4,
       "romFrames": 0
     },
     {
       "formId": "buu_gohan",
       "semanticRole": "beam_fire",
-      "classification": "COMPOSITE",
-      "source": "COMPOSITE",
+      "classification": "ROM_PHASE",
+      "source": "ROM_DERIVED",
       "frameCount": 6,
       "romFrames": 0
     },
@@ -9378,16 +8725,16 @@
     {
       "formId": "buu_kid",
       "semanticRole": "beam_charge",
-      "classification": "SHARED_PHYSICAL",
-      "source": "CANONICAL",
+      "classification": "ROM_PHASE",
+      "source": "ROM_DERIVED",
       "frameCount": 4,
       "romFrames": 0
     },
     {
       "formId": "buu_kid",
       "semanticRole": "beam_fire",
-      "classification": "COMPOSITE",
-      "source": "COMPOSITE",
+      "classification": "ROM_PHASE",
+      "source": "ROM_DERIVED",
       "frameCount": 3,
       "romFrames": 0
     },
@@ -9546,16 +8893,16 @@
     {
       "formId": "vegito_ssj",
       "semanticRole": "beam_charge",
-      "classification": "SHARED_PHYSICAL",
-      "source": "CANONICAL",
+      "classification": "ROM_PHASE",
+      "source": "ROM_DERIVED",
       "frameCount": 6,
       "romFrames": 0
     },
     {
       "formId": "vegito_ssj",
       "semanticRole": "beam_fire",
-      "classification": "COMPOSITE",
-      "source": "COMPOSITE",
+      "classification": "ROM_PHASE",
+      "source": "ROM_DERIVED",
       "frameCount": 3,
       "romFrames": 0
     },

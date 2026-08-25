@@ -108,6 +108,7 @@
     "verify:rom-fx-corpus": "npx tsx scripts/verify-rom-fx-corpus.ts",
     "verify:rom-fx-runtime-cutover": "npx tsx scripts/verify-rom-fx-runtime-cutover.ts",
     "verify:rom-fx-film-contract": "npx tsx scripts/verify-rom-fx-film-contract.ts",
+    "verify:rom-physical-key-bridge": "npx tsx scripts/verify-rom-physical-key-bridge.ts",
     "export:rom-fighter-assets": "npx tsx scripts/export-rom-fighter-assets.ts",
     "verify:dev-physical-sync": "npx tsx scripts/verify-dev-physical-sync.ts",
     "verify:production-frame-resolver": "npx tsx scripts/verify-production-frame-resolver.ts",
