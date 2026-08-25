@@ -4,7 +4,7 @@
 
 Remake web fiel de **Dragon Ball Z: Legendary Super Warriors** (Game Boy Color) — sistema de combate por cartas con sprites auténticos extraídos de la ROM USA (CRC32 `025AA88A`), estilo magazine GBC.
 
-> **Repo privado** · Proyecto de desarrollo en curso · 216+ commits · motor verificado con 4 suites de checks automatizados.
+> **Repo privado** · Proyecto de desarrollo en curso · 540+ commits · motor verificado con 70+ suites de checks automatizados (`npm run verify:*`).
 
 ---
 
@@ -27,16 +27,24 @@ npm run typecheck    # TypeScript (tsc --noEmit)
 
 ### ✅ Suites de verificación (CI local)
 
+El proyecto expone **70+ verificadores** (`npm run verify:*`). Los grupos principales:
+
 ```bash
-npm run verify:profiles   # 42 perfiles firma: toda carta de combate tiene animación propia
-npm run audit:sprites     # 48 formas / manifests / beam-ray: integridad + dimensiones físicas
-npm run verify:gbc        # invariantes GBC: posiciones, mazo, secuencias canónicas, cobertura
+npm run verify:profiles       # 42 perfiles firma: toda carta de combate tiene animación propia
+npm run audit:sprites         # 48 formas / manifests / beam-ray: integridad + dimensiones físicas
+npm run verify:gbc            # invariantes GBC: posiciones, mazo, secuencias canónicas, cobertura
+
+# ROM canon (P0 / P0.1B / P0.4R) — identidad física + corpus + puente estructurado
+npm run verify:rom-fighter-identity     # identidad de forma 48/48
+npm run verify:rom-physical-corpus      # 552 físicos / 2371 instancias
+npm run verify:rom-fx-film-contract     # FX ofensivos 28/28 STATIC_COMPLETE
+npm run verify:rom-physical-key-bridge  # puente estructurado profile-specific (16 ✓)
+npm run verify:character-frame-map      # F-MAP honesto (22 ✓)
 ```
 
-Las tres deben pasar en verde antes de cada commit. Ver `docs/` para las especificaciones.
-
-GitHub Actions ejecuta las 4 suites + build automáticamente en cada push a `main`
-(`.github/workflows/verify.yml`, badge en la cabecera).
+Para ver la lista completa: `npm run` y filtrar por `verify:`. Ver `docs/` para las
+especificaciones. GitHub Actions ejecuta typecheck + build + un subconjunto de suites
+en cada push a `main` (`.github/workflows/verify.yml`).
 
 ---
 
@@ -138,6 +146,7 @@ Se cambia en **Settings → Language** y se guarda en `localStorage` (`dbzlsw_la
 - **42 perfiles firma** — las 66 cartas de combate tienen animación propia (verify:profiles exige cobertura total)
 - Cinemática de acción orquestada por **timeline único** (59.7275 fps GBC): attacker → travel → target → return con FX/CSS sincronizados
 - **48 formas** = ROM exacto, todas con 21 poses (idle..power_up) y manifests con dimensiones físicas verificadas
+- **ROM canon físico (P0)**: identidad 48/48, corpus físico 552/2371, puente estructurado profile-specific (`rom-p...` content-addressed)
 - Cartas de objeto con **aura azul** (fx-item) vs buffs de ki con aura dorada; FX Afterimage con estelas de teletransporte
 - Sprites de combate animados con facing por silueta; beams procedurales (sin estiramiento ni duplicados)
 - Sheets de personajes byte-idénticos a la ROM (48/48 verificados)

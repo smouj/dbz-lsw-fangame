@@ -1,6 +1,6 @@
 # DBZ LSW — STATE.md (Estado actual del proyecto)
 
-> **Última actualización**: 2026-08-18 · HEAD `86467e2` · origin/main sincronizado.
+> **Última actualización**: 2026-08-25 · HEAD `2e611492` · origin/main sincronizado.
 > Este documento es LA referencia del estado real del motor. Si un doc antiguo
 > contradice esto, ESTE gana (los obsoletos se archivan en `docs/archive/`).
 
@@ -24,6 +24,35 @@ src/data/
 `state.ts` + reglas de `evidence.ts`) y el HUD Studio (`src/devtools/hud.tsx`,
 que usa `engine.ts` para sus visualizaciones). El HUD Studio es SOLO
 configurador del tema — las demos/batallas viven en el Combat Lab.
+
+## 1b. ROM Canon (P0 / P0.1B / P0.4R) — fuente física
+
+La ROM (`../dbz-lsw-decomp/13_raw_rom/`) es la fuente física de identidad y
+sprites. El canon visual/físico vive en `src/data/generated/` y se verifica con
+suites dedicadas — **separado** del canon SEMÁNTICO (`spriteCanon` V9 /
+`spriteManifest`), que NO es autoridad física.
+
+- **Identidad de forma 48/48 CERRADA** (`romFighterFormIdentity.generated.ts`):
+  formId → `actorVisualProfileKey` → `graphicsBank` (0x31 + profile) → `paletteIndex`.
+  `verify:rom-fighter-identity` · `verify:rom-frame-form-identity` (200 ✓).
+- **Corpus físico de fighters** (`romPhysicalCorpus.generated.ts`): **552 promovidos
+  / 2371 instancias** · 8 transparentes excluidas · 39 `EMPTY_NOT_PROMOTED`.
+  `verify:rom-physical-corpus`.
+- **FX ofensivos P0.1B**: **28/28 `STATIC_COMPLETE`** (contrato de película estático,
+  `romFxFilmContract.generated.ts`); `COMPLETE` real pendiente de prueba dinámica
+  (SCX/SCY + timing/cleanup). `verify:rom-fx-film-contract` · `verify:rom-fx-runtime-cutover`.
+- **Puente físico estructurado (P0.4R-JOIN)**: identidad estructurada
+  `RomPhysicalFrameKey` (profileKey, graphicsBank, resourceId, sequence, frameIndex,
+  visualFrameId) + índice profile-specific `romPhysicalFrameIndex.ts` (504 claves de
+  contenido, 0 colisiones, round-trip 552/552). La F-MAP clasifica `ROM_EXACT` /
+  `ROM_PHASE` / `SHARED_PHYSICAL` / `COMPOSITE` / `REFERENCE_FX` / `UNRESOLVED`;
+  UNRESOLVED 196 → 116 (beam phase por forma; evade = deuda semántica real).
+  `verify:rom-physical-key-bridge` (16 ✓) · `verify:character-frame-map` (22 ✓).
+- **Identidad física = content-addressed**: `rom-p{profile}-g{bank}-r{resource}-vf{vf}-ms{ms}-gfx{gfx}`,
+  NO ordinal de corpus; `RomPhysicalFrameKeyString` es su forma serializada.
+
+Regenerar assets con `npm run gen:rom-runtime-assets` (determinista); los PNG
+ROM regenerables NO se versionan (ver `.gitignore`).
 
 ## 2. Separación de responsabilidades (HUD System / BattleEngine)
 
