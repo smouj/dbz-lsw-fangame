@@ -1,0 +1,294 @@
+#!/usr/bin/env node
+// ═══════════════════════════════════════════════════════════
+// DBZ LSW — Importador de sprites desde la fuente AUTORITATIVA
+// DBZ_LSW_COMPLETE_CHARACTER_SPRITES_FIXED.zip
+//
+// La fuente correcta es `00_manifest/animations.json` (frames por pose
+// verificados + `corrections.json` con 171 fixes). Reemplaza a los dos
+// intentos previos (import-v5-sprites.mjs con tabla hardcodeada, y
+// rebuild-sprites-v6.mjs que usó la clasificación de review del zip
+// ATOMIC V5, más gruesa y sin guard/attack_ud).
+//
+// Mapeo de categorías FIXED → pose del juego:
+//   idle → idle · movement → move · guard → guard ·
+//   attack_forward → attack_fwd · attack_vertical → attack_ud ·
+//   hurt → hurt (recoil completo)
+//   beam → beam_charge (fila superior) + beam_fire (fila inferior),
+//   partido por el salto de source_y en la hoja original.
+// power_up no tiene categoría propia en el zip FIXED; el juego hace fallback
+// a beam_charge vía POSE_FALLBACKS. El proyectil del beam es el efecto
+// `linked_beam` (no un frame de personaje).
+//
+// Uso: node scripts/import-fixed-sprites.mjs /abs/path/FIXED.zip
+// ═══════════════════════════════════════════════════════════
+import { execFileSync } from 'node:child_process';
+import fs from 'node:fs';
+import os from 'node:os';
+import path from 'node:path';
+
+const zipPath = process.argv[2];
+if (!zipPath) {
+  console.error('Usage: node scripts/import-fixed-sprites.mjs /abs/path/DBZ_LSW_COMPLETE_CHARACTER_SPRITES_FIXED.zip');
+  process.exit(1);
+}
+
+const repoRoot = process.cwd();
+const outRoot = path.join(repoRoot, 'public/assets/sprites');
+const tmpRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'dbz-lsw-fixed-'));
+
+// FIXED zip form → directorio de sprites del juego (spriteManifest.ts).
+const FORM_TO_DIR = {
+  '01_android_16/base': 'android_16_base',
+  '02_android_17/base': 'android_17_base',
+  '03_android_18/base': 'android_18_base',
+  '04_android_19/base': 'android_19_base',
+  '05_android_20/base': 'android_20_base',
+  '06_burter/base': 'burter_base',
+  '07_buu/base': 'buu_base',
+  '08_buu/gohan_absorbed': 'buu_gohan_absorbed',
+  '09_buu/gotenks_absorbed': 'buu_gotenks_absorbed',
+  '10_cell/imperfect_form': 'cell_imperfect_form',
+  '11_cell/perfect': 'cell_perfect',
+  '12_cell/semi_perfect_form': 'cell_semi_perfect_form',
+  '13_cell_jr/base': 'cell_jr_base',
+  '14_frieza/base': 'frieza_base',
+  '15_future_trunks/base': 'future_trunks_base',
+  '16_ginyu/base': 'ginyu_base',
+  '17_ginyu/gokus_body': 'ginyu_gokus_body',
+  '18_gohan/super_saiyan_1_2': 'gohan_super_saiyan_1_2',
+  '19_gohan/ultimate': 'gohan_ultimate',
+  '20_goku/base': 'goku_base',
+  '21_goku/super_saiyan_2': 'goku_super_saiyan_2',
+  '22_goku/super_saiyan_3': 'goku_super_saiyan_3',
+  '23_goku/super_saiyan': 'goku_super_saiyan',
+  '24_goten/base': 'goten_base',
+  '25_goten/super_saiyan': 'goten_super_saiyan',
+  '26_gotenks/super_saiyan_3': 'gotenks_super_saiyan_3',
+  '27_gotenks/super_saiyan': 'gotenks_super_saiyan',
+  '28_guldo/base': 'guldo_base',
+  '29_jeice/base': 'jeice_base',
+  '30_kid_buu/base': 'kid_buu_base',
+  '31_krillin/base': 'krillin_base',
+  '32_nappa/base': 'nappa_base',
+  '33_piccolo/base': 'piccolo_base',
+  '34_recoome/base': 'recoome_base',
+  '35_super_buu/base': 'super_buu_base',
+  '36_trunks/base': 'trunks_base',
+  '37_trunks/super_saiyan': 'kid_trunks_super_saiyan',
+  '38_vegeta/base': 'vegeta_base',
+  '39_vegeta/super_saiyan_majin': 'vegeta_super_saiyan_majin',
+  '40_young_gohan/base': 'young_gohan_base',
+  '41_young_gohan/super_saiyan_2': 'young_gohan_super_saiyan_2',
+  '42_young_gohan/super_saiyan': 'young_gohan_super_saiyan',
+};
+
+// Formas del juego que NO están en el zip FIXED → reutilizar la más cercana.
+const COPY_FROM = {
+  'future_trunks_super_saiyan': 'future_trunks_base',
+  // Vegito no está en el FIXED; el V6 (vegito_ssj, pelo dorado) se puentea
+  // contra goku/super_saiyan. vegito_base (pelo negro) = recolor vía
+  // scripts/make-vegito-forms.py.
+  'vegito_ssj': 'goku_super_saiyan',
+};
+
+// Categoría FIXED → pose del juego + metadatos de reproducción.
+// `beam` se PARTE en beam_charge (fila superior = carga) y beam_fire
+// (fila inferior = disparo), detectando el salto de `source_y` en la hoja
+// original. Ver POSE_MAP_BEAM abajo.
+const POSE_MAP = {
+  idle: { pose: 'idle', fps: 3, loop: true },
+  movement: { pose: 'move_front', fps: 6, loop: true },
+  guard: { pose: 'guard', fps: 6, loop: false },
+  attack_forward: { pose: 'attack_fwd', fps: 5, loop: false },
+  attack_vertical: { pose: 'attack_ud', fps: 5, loop: false },
+  hurt: { pose: 'hurt', fps: 6, loop: false },
+};
+const BEAM_CHARGE = { pose: 'beam_charge', fps: 7, loop: false };
+const BEAM_FIRE = { pose: 'beam_fire', fps: 8, loop: false };
+
+// Orden canónico de poses en el manifest (igual que el formato previo).
+const POSE_ORDER = ['idle', 'move_front', 'move_back', 'guard', 'attack_fwd', 'attack_ud', 'hurt', 'beam_charge', 'beam_fire'];
+
+// Mapa path → source_y para los frames de `beam`, leído de sprites.csv.
+// Se usa para detectar el corte de fila (carga → disparo) en la hoja original.
+function buildBeamSourceY(tmpRoot) {
+  const csvPath = path.join(tmpRoot, '00_manifest', 'sprites.csv');
+  if (!fs.existsSync(csvPath)) return null;
+  const csv = fs.readFileSync(csvPath, 'utf8');
+  const lines = csv.split(/\r?\n/);
+  if (lines.length < 2) return null;
+  const header = lines[0].split(',');
+  const idxPath = header.indexOf('path');
+  const idxY = header.indexOf('source_y');
+  const idxKind = header.indexOf('asset_kind');
+  if (idxPath < 0 || idxY < 0) return null;
+  const map = new Map();
+  for (let i = 1; i < lines.length; i++) {
+    const line = lines[i];
+    if (!line.trim()) continue;
+    const cols = line.split(',');
+    if (cols[idxKind] !== 'frame') continue;
+    const y = parseInt(cols[idxY], 10);
+    if (!Number.isFinite(y)) continue;
+    map.set(cols[idxPath], y);
+  }
+  return map;
+}
+
+// Dado el source_y de los frames de beam (en orden de la hoja), devuelve el
+// índice donde cambia de fila (salto > 20px), o -1 si es una sola fila.
+function beamSplitIndex(sourceYs) {
+  for (let i = 1; i < sourceYs.length; i++) {
+    if (sourceYs[i] - sourceYs[i - 1] > 20) return i;
+  }
+  return -1;
+}
+
+function pngSize(filePath) {
+  const buf = fs.readFileSync(filePath);
+  if (buf.toString('ascii', 12, 16) !== 'IHDR') throw new Error(`No es PNG: ${filePath}`);
+  return { w: buf.readUInt32BE(16), h: buf.readUInt32BE(20) };
+}
+
+function cleanDir(dir) {
+  fs.mkdirSync(dir, { recursive: true });
+  for (const f of fs.readdirSync(dir)) {
+    if (f.endsWith('.png') || f === 'manifest.json') {
+      fs.rmSync(path.join(dir, f));
+    }
+  }
+}
+
+function writeManifest(dir, poses) {
+  const manifest = {};
+  for (const poseName of POSE_ORDER) {
+    const entry = poses[poseName];
+    if (!entry) continue;
+    const frames = entry.frames.map((f, i) => {
+      const name = `${dir}_${poseName}_${String(i).padStart(2, '0')}`;
+      return { name, file: `${name}.png`, w: f.w, h: f.h };
+    });
+    manifest[poseName] = {
+      frame_count: frames.length,
+      fps: entry.fps,
+      loop: entry.loop,
+      frames,
+    };
+  }
+  fs.writeFileSync(path.join(outRoot, dir, 'manifest.json'), `${JSON.stringify(manifest, null, 2)}\n`);
+}
+
+try {
+  execFileSync('unzip', ['-q', '-o', zipPath, '-d', tmpRoot], { stdio: 'inherit' });
+
+  const animPath = path.join(tmpRoot, '00_manifest', 'animations.json');
+  if (!fs.existsSync(animPath)) {
+    throw new Error('No se encontró 00_manifest/animations.json en el zip.');
+  }
+  const animations = JSON.parse(fs.readFileSync(animPath, 'utf8')).animations;
+  const sourceYMap = buildBeamSourceY(tmpRoot);
+
+  let imported = 0;
+  const errors = [];
+
+  for (const [fixedForm, gameDir] of Object.entries(FORM_TO_DIR)) {
+    const anim = animations[fixedForm];
+    if (!anim) { errors.push(`FIXED form ${fixedForm} no está en animations.json`); continue; }
+
+    const targetDir = path.join(outRoot, gameDir);
+    cleanDir(targetDir);
+
+    const poses = {};
+    for (const [category, meta] of Object.entries(POSE_MAP)) {
+      const relPaths = anim[category]?.frames || [];
+      if (relPaths.length === 0) continue;
+      const frames = relPaths.map((relPath, i) => {
+        const abs = path.join(tmpRoot, relPath);
+        if (!fs.existsSync(abs)) throw new Error(`Falta frame: ${relPath}`);
+        const { w, h } = pngSize(abs);
+        const dest = `${gameDir}_${meta.pose}_${String(i).padStart(2, '0')}.png`;
+        fs.copyFileSync(abs, path.join(targetDir, dest));
+        return { w, h };
+      });
+      poses[meta.pose] = { ...meta, frames };
+    }
+
+    // beam → beam_charge + beam_fire (partir por fila: carga arriba, disparo abajo).
+    const beamPaths = anim['beam']?.frames || [];
+    if (beamPaths.length > 0) {
+      const srcYs = beamPaths.map(p => sourceYMap?.get(p) ?? 0);
+      const split = beamSplitIndex(srcYs);
+      const chargePaths = split > 0 ? beamPaths.slice(0, split) : beamPaths;
+      const firePaths = split > 0 ? beamPaths.slice(split) : [];
+      const copyBeam = (relPaths, meta) => {
+        const frames = relPaths.map((relPath, i) => {
+          const abs = path.join(tmpRoot, relPath);
+          if (!fs.existsSync(abs)) throw new Error(`Falta frame: ${relPath}`);
+          const { w, h } = pngSize(abs);
+          const dest = `${gameDir}_${meta.pose}_${String(i).padStart(2, '0')}.png`;
+          fs.copyFileSync(abs, path.join(targetDir, dest));
+          return { w, h };
+        });
+        poses[meta.pose] = { ...meta, frames };
+      };
+      copyBeam(chargePaths, BEAM_CHARGE);
+      if (firePaths.length > 0) copyBeam(firePaths, BEAM_FIRE);
+    }
+
+    // move_front → move_back (mismo ciclo de caminar; el juego lo espeja en
+    // render con scaleX(-1). Aquí duplicamos frames y PNGs para que el
+    // manifest tenga la pose direccional y los archivos sigan la convención
+    // `{dir}_move_back_NN.png`).
+    if (poses['move_front']) {
+      const right = poses['move_front'];
+      poses['move_back'] = { ...right, frames: [] };
+      right.frames.forEach((f, i) => {
+        const srcFile = path.join(targetDir, `${gameDir}_move_front_${String(i).padStart(2, '0')}.png`);
+        const dstFile = path.join(targetDir, `${gameDir}_move_back_${String(i).padStart(2, '0')}.png`);
+        if (fs.existsSync(srcFile)) fs.copyFileSync(srcFile, dstFile);
+        poses['move_back'].frames.push({ ...f });
+      });
+    }
+
+    writeManifest(gameDir, poses);
+    imported++;
+    console.log(`${gameDir}: ${Object.values(poses).reduce((s, p) => s + p.frames.length, 0)} frames`);
+  }
+
+  // Formas del juego sin fuente FIXED → copiar directorio de la forma más cercana.
+  for (const [destDir, srcDir] of Object.entries(COPY_FROM)) {
+    const src = path.join(outRoot, srcDir);
+    const dst = path.join(outRoot, destDir);
+    if (!fs.existsSync(src)) { errors.push(`Fuente de copia ${srcDir} no existe para ${destDir}`); continue; }
+    cleanDir(dst);
+    for (const f of fs.readdirSync(src)) {
+      if (f.endsWith('.png') && f.startsWith(`${srcDir}_`)) {
+        fs.copyFileSync(path.join(src, f), path.join(dst, f.replace(`${srcDir}_`, `${destDir}_`)));
+      }
+    }
+    // Reescribir manifest con el prefijo correcto.
+    const srcManifest = JSON.parse(fs.readFileSync(path.join(src, 'manifest.json'), 'utf8'));
+    const dstManifest = {};
+    for (const [pose, entry] of Object.entries(srcManifest)) {
+      dstManifest[pose] = {
+        ...entry,
+        frames: entry.frames.map((fr, i) => {
+          const name = `${destDir}_${pose}_${String(i).padStart(2, '0')}`;
+          return { name, file: `${name}.png`, w: fr.w, h: fr.h };
+        }),
+      };
+    }
+    fs.writeFileSync(path.join(dst, 'manifest.json'), `${JSON.stringify(dstManifest, null, 2)}\n`);
+    console.log(`${destDir}: copiado de ${srcDir}`);
+  }
+
+  if (errors.length) {
+    console.error('\n⚠️  Errores:');
+    for (const e of errors) console.error('  - ' + e);
+    process.exitCode = 1;
+  } else {
+    console.log(`\n✓ Importados ${imported} formas FIXED + ${Object.keys(COPY_FROM).length} copiadas.`);
+  }
+} finally {
+  fs.rmSync(tmpRoot, { recursive: true, force: true });
+}

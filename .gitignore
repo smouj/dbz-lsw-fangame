@@ -16,7 +16,6 @@ __pycache__/
 # Generado por scripts/git-info.mjs (dev/build)
 public/release/
 .openclaw_tmp_dev.log
-*.mjs
 openclaw-workspace-state.json
 
 # ───────────────────────────────────────────────────────────────────────
