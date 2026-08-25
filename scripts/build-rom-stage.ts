@@ -410,6 +410,15 @@ export const ROM_STAGE_COMMAND_PROGRAMS: RomStageVmProgram[] = ${JSON.stringify(
     null,
     2,
   )};
+
+/** Descriptor de animación de personaje $CA0D (stride 3, [bank][ptr-lo][ptr-hi]) —
+ *  writers clasificados 100%, gramática decodificada, y hallazgo de separación de
+ *  bancos ($61 básica/Stage vs $62/$63/$64 técnicas del corpus de 66 recursos). */
+export const ROM_STAGE_CHAR_ANIM_DESCRIPTOR = ${JSON.stringify(
+    (poseSelectorConsumers() as any).charAnimDescriptor,
+    null,
+    2,
+  )};
 `;
 }
 
@@ -493,14 +502,39 @@ function poseSelectorConsumers(): unknown {
       step3: 'Call_000_0914 (de=hl) → $C3CC/$C3CD → Call_000_0b8d → $C3CE/$C3CF = tabla de poses',
       step4: 'Call_000_0b16 lee $C3C7 y lo usa como índice de la tabla de poses ($C3CE/$C3CF)',
       step5: 'descriptor de frame → $C0F9 (byte) + $C3D0 (sub-índice) → render metasprite/GFX (DMA)',
-      step6: 'JOIN al corpus físico (resourceId/sequence/VFID → physicalId) — PENDING: falta resolver la tabla $CA0D y su puntero a secuencia',
+      step6: 'JOIN al corpus físico (resourceId/sequence/VFID → physicalId) — VERIFIED hasta resource base; PENDIENTE: bank $61 (Stage/básica) está FUERA del corpus de 66 recursos (banks $62/$63/$64) → requiere extensión de corpus',
     },
     charAnimDescriptor: {
       table: '$CA0D (stride 3, [bank][ptr-lo][ptr-hi])',
       index: 'c devuelto por Call_000_3501 (arg3: $20-$23→c=1..4, $24→c=4, <$20→c=0)',
       loader: 'Call_000_2fe7 (Bank00): hl = $CA0D + c*3',
       consumer: 'Call_000_0914 → $C3CC/$C3CD → Call_000_0b8d → $C3CE/$C3CF',
-      toPhysical: 'PENDING — el contenido de $CA0D (por personaje) debe mapearse al resourceId/secuencia del corpus físico',
+      grammar: {
+        byte0: 'bank (bankswitch vía Call_000_0f9b → $2000)',
+        byte1: 'ptr-lo → $C3CE',
+        byte2: 'ptr-hi → $C3CF',
+        pointee: 'resource base con 3 raíces relativas: +0 tabla de secuencias (u16), +2 tabla de metasprites (u16), +4 tabla de frame-graphics (u16) — idéntico a render-fighter-physical.ts',
+      },
+      writersClassified: 'COMPLETE (0 desconocidos)',
+      writers: [
+        { address: 'Bank00:$08DD (Call_000_08dd)', role: 'escribe [b][e][d] = [bank][ptr-lo][ptr-hi]', evidence: 'mgbdis bank_000.asm Call_000_08dd' },
+        { address: 'Bank00:$08E3 (Call_000_08e3)', role: 'escribe [b][e][d] (variante de puntero, tabla $CA28)', evidence: 'mgbdis bank_000.asm Call_000_08e3' },
+        { address: 'Bank00:$3702 (Call_000_3702)', role: 'orquestador: Call_000_2fe7 (hl=$CA0D+c*3) + Call_000_08dd', evidence: 'mgbdis bank_000.asm Call_000_3702' },
+        { address: 'Bank00:$3685 (Call_000_3685)', role: 'orquestador: Call_000_2ff8 (hl=$CA28+c*3) + Call_000_08e3', evidence: 'mgbdis bank_000.asm Call_000_3685' },
+      ],
+      descriptorOrigin: {
+        resolver: 'Call_000_1266 (Bank00:$1266): bankswitch a bank A, lee u16 en $4008 + index*4, devuelve de = $4000 + value*4',
+        standingBank: 'Call_000_35ca (Bank00:$35CA, llamado desde Bank01:$4A45) escribe $CA0D[0..7] con bank $61 (animación de pie/básica)',
+        techniqueBank: 'Call_000_2afe (Bank00:$2AFE) lee Bank11 char_data+6 → bank = $62 + (id/25), localId = id%25 (bancos $62/$63/$64 = técnicas)',
+        charData: 'Bank11 (Call_000_2a77 + offset 6) = animation resource id por personaje',
+      },
+      bankSeparation: {
+        finding: 'CRITICAL — bank $61 (animación de pie/básica) es SEPARADO de banks $62/$63/$64 (66 recursos de técnicas del catálogo).',
+        stageAttacks: 'Los comandos Stage (A/B/RIGHT/UP/DOWN) usan $CA0D[1..4] → bank $61, que NO está en el corpus físico de 66 recursos.',
+        physicalCorpusCoverage: 'El corpus físico (552 promovidos / 2371 instancias) cubre banks $62/$63/$64 (técnicas); NO cubre bank $61 (básica/Stage).',
+        implication: 'Cerrar $CA0D → physicalId para Stage requiere EXTENDER el corpus a bank $61 (y los bancos de pie por personaje), no solo mapear a los 66 recursos existentes.',
+      },
+      toPhysical: 'VERIFIED hasta resource base (3 raíces) + gramática + writers. JOIN físico PENDIENTE: bank $61 (Stage/básica) está fuera del corpus de 66 recursos → requiere extensión de corpus.',
     },
   };
 }

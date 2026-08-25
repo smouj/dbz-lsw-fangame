@@ -132,6 +132,12 @@ if (existsSync(READERS_JSON)) {
   check('pose consumer = Call_000_0b16 (Bank00)', readers.consumerChain?.step4?.includes('Call_000_0b16'));
   check('consumer chain records pose table $C3CE/$C3CF', readers.consumerChain?.step3?.includes('$C3CE') || readers.consumerChain?.step3?.includes('$C3CF'));
   check('char anim descriptor table = $CA0D (Call_000_2fe7)', readers.charAnimDescriptor?.table?.includes('$CA0D') && readers.charAnimDescriptor?.loader?.includes('Call_000_2fe7'));
+  check('$CA0D descriptor grammar = [bank][ptr-lo][ptr-hi]', readers.charAnimDescriptor?.grammar?.byte0?.includes('bank') && readers.charAnimDescriptor?.grammar?.pointee?.includes('3 raíces') || readers.charAnimDescriptor?.grammar?.pointee?.includes('resource base'));
+  check('$CA0D writers classified 100% (0 desconocidos)', readers.charAnimDescriptor?.writersClassified?.includes('COMPLETE') && readers.charAnimDescriptor?.writers?.length >= 4);
+  check('$CA0D byte writers = Call_000_08dd / Call_000_08e3', readers.charAnimDescriptor?.writers?.some((w: any) => w.address?.includes('08dd')) && readers.charAnimDescriptor?.writers?.some((w: any) => w.address?.includes('08e3')));
+  check('$CA0D pointer resolver = Call_000_1266 ($4008 → $4000 + value*4)', readers.charAnimDescriptor?.descriptorOrigin?.resolver?.includes('Call_000_1266') && readers.charAnimDescriptor?.descriptorOrigin?.resolver?.includes('$4008'));
+  check('$CA0D bank sources = $61 (standing) + $62/$63/$64 (technique)', readers.charAnimDescriptor?.descriptorOrigin?.standingBank?.includes('$61') && readers.charAnimDescriptor?.descriptorOrigin?.techniqueBank?.includes('$62'));
+  check('bank separation finding recorded (bank $61 FUERA del corpus de 66)', readers.charAnimDescriptor?.bankSeparation?.stageAttacks?.includes('$61') && readers.charAnimDescriptor?.bankSeparation?.implication?.includes('EXTENDER'));
 } else {
   check('pose-selector-consumers.json presente', false, 'falta generated/rom-stage/pose-selector-consumers.json — ejecuta build:rom-stage');
 }
