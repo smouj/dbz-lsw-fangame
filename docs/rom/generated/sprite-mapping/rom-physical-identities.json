@@ -4,8 +4,8 @@
   "resourceId": 0,
   "visualFrameId": 0,
   "sequence": 0,
-  "normalizedPixelHash": "e913b60b95586197",
-  "opaqueMaskHash": "9c0bbdf016db7b53",
+  "normalizedPixelHash": "ab28010c8d374295",
+  "opaqueMaskHash": "e79e4a29e613161f",
   "provenance": "ROM_UNRESOLVED"
  },
  {
@@ -13,8 +13,8 @@
   "resourceId": 0,
   "visualFrameId": 1,
   "sequence": 0,
-  "normalizedPixelHash": "1ac79d646bfed29b",
-  "opaqueMaskHash": "806de24dc10dc6d0",
+  "normalizedPixelHash": "edacdcf54fdf47d0",
+  "opaqueMaskHash": "b84cceafadcfb743",
   "provenance": "ROM_UNRESOLVED"
  },
  {
@@ -31,8 +31,8 @@
   "resourceId": 0,
   "visualFrameId": 2,
   "sequence": 1,
-  "normalizedPixelHash": "cfce1f1f34c16fa3",
-  "opaqueMaskHash": "d87366d5c7b24290",
+  "normalizedPixelHash": "f51f96e30862cd72",
+  "opaqueMaskHash": "6647b894a816fbf3",
   "provenance": "ROM_UNRESOLVED"
  },
  {
@@ -40,8 +40,8 @@
   "resourceId": 0,
   "visualFrameId": 0,
   "sequence": 0,
-  "normalizedPixelHash": "ec38da7b8d899bec",
-  "opaqueMaskHash": "da3985dd8d854846",
+  "normalizedPixelHash": "a884b1689750c34e",
+  "opaqueMaskHash": "9c0bbdf016db7b53",
   "provenance": "ROM_UNRESOLVED"
  },
  {
@@ -49,8 +49,8 @@
   "resourceId": 0,
   "visualFrameId": 1,
   "sequence": 0,
-  "normalizedPixelHash": "455f086b4b28846f",
-  "opaqueMaskHash": "05bdce22ed41ae0d",
+  "normalizedPixelHash": "e2d1db7933dc2c1e",
+  "opaqueMaskHash": "806de24dc10dc6d0",
   "provenance": "ROM_UNRESOLVED"
  },
  {
@@ -67,84 +67,120 @@
   "resourceId": 0,
   "visualFrameId": 2,
   "sequence": 1,
+  "normalizedPixelHash": "c869a81e2d8621b8",
+  "opaqueMaskHash": "d87366d5c7b24290",
+  "provenance": "ROM_UNRESOLVED"
+ },
+ {
+  "actorVisualProfileKey": 2,
+  "resourceId": 0,
+  "visualFrameId": 0,
+  "sequence": 0,
+  "normalizedPixelHash": "ec38da7b8d899bec",
+  "opaqueMaskHash": "da3985dd8d854846",
+  "provenance": "ROM_UNRESOLVED"
+ },
+ {
+  "actorVisualProfileKey": 2,
+  "resourceId": 0,
+  "visualFrameId": 1,
+  "sequence": 0,
+  "normalizedPixelHash": "455f086b4b28846f",
+  "opaqueMaskHash": "05bdce22ed41ae0d",
+  "provenance": "ROM_UNRESOLVED"
+ },
+ {
+  "actorVisualProfileKey": 2,
+  "resourceId": 0,
+  "visualFrameId": 3,
+  "sequence": 0,
+  "normalizedPixelHash": "307b848b6220e9a0",
+  "opaqueMaskHash": "c6e48d25f25b20e7",
+  "provenance": "ROM_UNRESOLVED"
+ },
+ {
+  "actorVisualProfileKey": 2,
+  "resourceId": 0,
+  "visualFrameId": 2,
+  "sequence": 1,
   "normalizedPixelHash": "67c8d0a33b44df5c",
   "opaqueMaskHash": "d5e20c51bab047f0",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 2,
+  "actorVisualProfileKey": 3,
   "resourceId": 0,
   "visualFrameId": 0,
   "sequence": 0,
-  "normalizedPixelHash": "f05ae460bc46cc70",
+  "normalizedPixelHash": "d4a8739060c2b2b6",
   "opaqueMaskHash": "7d91268491d88be7",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 2,
+  "actorVisualProfileKey": 3,
   "resourceId": 0,
   "visualFrameId": 1,
   "sequence": 0,
-  "normalizedPixelHash": "1e4d36ad4b35ae42",
+  "normalizedPixelHash": "b48976bc769ee7e1",
   "opaqueMaskHash": "ef1f98ac28b08439",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 2,
+  "actorVisualProfileKey": 3,
   "resourceId": 0,
   "visualFrameId": 3,
   "sequence": 0,
-  "normalizedPixelHash": "6fa812d80d8ba546",
+  "normalizedPixelHash": "46c758e3476c8d5e",
   "opaqueMaskHash": "94a97f7df77b9438",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 2,
+  "actorVisualProfileKey": 3,
   "resourceId": 0,
   "visualFrameId": 2,
   "sequence": 1,
-  "normalizedPixelHash": "62ebab4f6919ee62",
+  "normalizedPixelHash": "6dc69214d87eea1f",
   "opaqueMaskHash": "acb0b6804cd99dd3",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 3,
+  "actorVisualProfileKey": 4,
   "resourceId": 0,
   "visualFrameId": 0,
   "sequence": 0,
-  "normalizedPixelHash": "09d02fc8910da24a",
+  "normalizedPixelHash": "eb259d55464fda90",
   "opaqueMaskHash": "1d3c3b79368e9867",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 3,
+  "actorVisualProfileKey": 4,
   "resourceId": 0,
   "visualFrameId": 1,
   "sequence": 0,
-  "normalizedPixelHash": "d571e261150a0b22",
+  "normalizedPixelHash": "6f105f5e784cbd93",
   "opaqueMaskHash": "a0551229c12d6237",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 3,
+  "actorVisualProfileKey": 4,
   "resourceId": 0,
   "visualFrameId": 3,
   "sequence": 0,
-  "normalizedPixelHash": "a899ea2ba457269a",
+  "normalizedPixelHash": "c0880f80ae4b5bd1",
   "opaqueMaskHash": "20ea7f7bb9cc9674",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 3,
+  "actorVisualProfileKey": 4,
   "resourceId": 0,
   "visualFrameId": 2,
   "sequence": 1,
-  "normalizedPixelHash": "75f10cf985063ed4",
+  "normalizedPixelHash": "a8d70ee17f081a70",
   "opaqueMaskHash": "442ff4e08078e0f9",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 4,
+  "actorVisualProfileKey": 5,
   "resourceId": 0,
   "visualFrameId": 0,
   "sequence": 0,
@@ -153,7 +189,7 @@
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 4,
+  "actorVisualProfileKey": 5,
   "resourceId": 0,
   "visualFrameId": 1,
   "sequence": 0,
@@ -162,7 +198,7 @@
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 4,
+  "actorVisualProfileKey": 5,
   "resourceId": 0,
   "visualFrameId": 3,
   "sequence": 0,
@@ -171,7 +207,7 @@
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 4,
+  "actorVisualProfileKey": 5,
   "resourceId": 0,
   "visualFrameId": 2,
   "sequence": 1,
@@ -180,43 +216,43 @@
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 5,
+  "actorVisualProfileKey": 6,
   "resourceId": 0,
   "visualFrameId": 0,
   "sequence": 0,
-  "normalizedPixelHash": "0098049f5aa1be57",
+  "normalizedPixelHash": "fcd1d11626d30439",
   "opaqueMaskHash": "9a3fdd731f28732a",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 5,
+  "actorVisualProfileKey": 6,
   "resourceId": 0,
   "visualFrameId": 1,
   "sequence": 0,
-  "normalizedPixelHash": "c0934f6fe94e0bea",
+  "normalizedPixelHash": "9c662920805d67a1",
   "opaqueMaskHash": "41d6bf29ed492c88",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 5,
+  "actorVisualProfileKey": 6,
   "resourceId": 0,
   "visualFrameId": 3,
   "sequence": 0,
-  "normalizedPixelHash": "d738c4cd0ea9aeed",
+  "normalizedPixelHash": "de29be6d6b38e390",
   "opaqueMaskHash": "61cf14d3fee1e921",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 5,
+  "actorVisualProfileKey": 6,
   "resourceId": 0,
   "visualFrameId": 2,
   "sequence": 1,
-  "normalizedPixelHash": "ec100fcbdf64a729",
+  "normalizedPixelHash": "346f2c501cdb39e0",
   "opaqueMaskHash": "729ab55ee7d0e3d7",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 6,
+  "actorVisualProfileKey": 7,
   "resourceId": 0,
   "visualFrameId": 0,
   "sequence": 0,
@@ -225,7 +261,7 @@
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 6,
+  "actorVisualProfileKey": 7,
   "resourceId": 0,
   "visualFrameId": 1,
   "sequence": 0,
@@ -234,7 +270,7 @@
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 6,
+  "actorVisualProfileKey": 7,
   "resourceId": 0,
   "visualFrameId": 3,
   "sequence": 0,
@@ -243,7 +279,7 @@
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 6,
+  "actorVisualProfileKey": 7,
   "resourceId": 0,
   "visualFrameId": 2,
   "sequence": 1,
@@ -252,430 +288,430 @@
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 7,
+  "actorVisualProfileKey": 8,
   "resourceId": 0,
   "visualFrameId": 0,
   "sequence": 0,
-  "normalizedPixelHash": "95ec508615535528",
+  "normalizedPixelHash": "1ec4830cacdf71a9",
   "opaqueMaskHash": "19b29b0353ef7c0c",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 7,
+  "actorVisualProfileKey": 8,
   "resourceId": 0,
   "visualFrameId": 1,
   "sequence": 0,
-  "normalizedPixelHash": "04fe41ff66e5829b",
+  "normalizedPixelHash": "464d07a6f14fc80d",
   "opaqueMaskHash": "779817a5aeac5040",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 7,
+  "actorVisualProfileKey": 8,
   "resourceId": 0,
   "visualFrameId": 3,
   "sequence": 0,
-  "normalizedPixelHash": "f7351bf45c65686e",
+  "normalizedPixelHash": "b62bff558f8b1b10",
   "opaqueMaskHash": "a54715e7cb902b50",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 7,
+  "actorVisualProfileKey": 8,
   "resourceId": 0,
   "visualFrameId": 2,
   "sequence": 1,
-  "normalizedPixelHash": "cdbb84cc5e76d96c",
+  "normalizedPixelHash": "79a7c955f34410e7",
   "opaqueMaskHash": "667ed2200aa2be6e",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 8,
+  "actorVisualProfileKey": 9,
   "resourceId": 0,
   "visualFrameId": 0,
   "sequence": 0,
-  "normalizedPixelHash": "2cb7cec1d2c9a9db",
+  "normalizedPixelHash": "4a5d65b955ba7e95",
   "opaqueMaskHash": "a67c0c2382857bc6",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 8,
+  "actorVisualProfileKey": 9,
   "resourceId": 0,
   "visualFrameId": 1,
   "sequence": 0,
-  "normalizedPixelHash": "33488f9b044b0e5c",
+  "normalizedPixelHash": "7d963c7f63a779ce",
   "opaqueMaskHash": "66c0bc6786395c3e",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 8,
+  "actorVisualProfileKey": 9,
   "resourceId": 0,
   "visualFrameId": 3,
   "sequence": 0,
-  "normalizedPixelHash": "c795873a0019fe1f",
+  "normalizedPixelHash": "d209cba117ccf1eb",
   "opaqueMaskHash": "bc7511c25fbb8b4e",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 8,
+  "actorVisualProfileKey": 9,
   "resourceId": 0,
   "visualFrameId": 2,
   "sequence": 1,
-  "normalizedPixelHash": "2283d114cc4918fd",
+  "normalizedPixelHash": "79df093d8c9460a8",
   "opaqueMaskHash": "f3b2fb471809677d",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 9,
+  "actorVisualProfileKey": 10,
   "resourceId": 0,
   "visualFrameId": 0,
   "sequence": 0,
-  "normalizedPixelHash": "a6b8f391263ff3d6",
+  "normalizedPixelHash": "2192c2105c0511b8",
   "opaqueMaskHash": "bd973cf3a2fcafa1",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 9,
+  "actorVisualProfileKey": 10,
   "resourceId": 0,
   "visualFrameId": 1,
   "sequence": 0,
-  "normalizedPixelHash": "af0928e75854d3fd",
+  "normalizedPixelHash": "8c6cc54bb926dd10",
   "opaqueMaskHash": "87eeda5467facefe",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 9,
+  "actorVisualProfileKey": 10,
   "resourceId": 0,
   "visualFrameId": 3,
   "sequence": 0,
-  "normalizedPixelHash": "4beef81d02d516a6",
+  "normalizedPixelHash": "5fa9a651e5f01439",
   "opaqueMaskHash": "bc7f8aab04312ba9",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 9,
+  "actorVisualProfileKey": 10,
   "resourceId": 0,
   "visualFrameId": 2,
   "sequence": 1,
-  "normalizedPixelHash": "3040b500a470279f",
+  "normalizedPixelHash": "4f4bd7ee7b5544cf",
   "opaqueMaskHash": "5252786a872c5c4e",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 10,
+  "actorVisualProfileKey": 11,
   "resourceId": 0,
   "visualFrameId": 0,
   "sequence": 0,
-  "normalizedPixelHash": "b656959ee7a2e4e9",
+  "normalizedPixelHash": "f3f5352a7e3d95fa",
   "opaqueMaskHash": "3365db322f2b974b",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 10,
+  "actorVisualProfileKey": 11,
   "resourceId": 0,
   "visualFrameId": 1,
   "sequence": 0,
-  "normalizedPixelHash": "7cce6c7b088b1f63",
+  "normalizedPixelHash": "0c72f4b6a756c4d4",
   "opaqueMaskHash": "dbdf6b6af2fd0edd",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 10,
+  "actorVisualProfileKey": 11,
   "resourceId": 0,
   "visualFrameId": 3,
   "sequence": 0,
-  "normalizedPixelHash": "e65fb193ad300a9e",
+  "normalizedPixelHash": "9d8ea90934379939",
   "opaqueMaskHash": "8902f26463391a06",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 10,
+  "actorVisualProfileKey": 11,
   "resourceId": 0,
   "visualFrameId": 2,
   "sequence": 1,
-  "normalizedPixelHash": "160e758b88e3c31a",
+  "normalizedPixelHash": "ab5801dfe945b772",
   "opaqueMaskHash": "f83aef66cf7e04a9",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 11,
+  "actorVisualProfileKey": 12,
   "resourceId": 0,
   "visualFrameId": 0,
   "sequence": 0,
-  "normalizedPixelHash": "1a1136d25030d13a",
+  "normalizedPixelHash": "c681eb03111914f6",
   "opaqueMaskHash": "85e973c78c0cbe15",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 11,
+  "actorVisualProfileKey": 12,
   "resourceId": 0,
   "visualFrameId": 1,
   "sequence": 0,
-  "normalizedPixelHash": "978764d730a285d7",
+  "normalizedPixelHash": "31b5bc87b73cdef6",
   "opaqueMaskHash": "4c794dc107f2cbf1",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 11,
+  "actorVisualProfileKey": 12,
   "resourceId": 0,
   "visualFrameId": 3,
   "sequence": 0,
-  "normalizedPixelHash": "69099a9d8dacb4c1",
+  "normalizedPixelHash": "c83dae35a41a183e",
   "opaqueMaskHash": "45a730efbb2591d6",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 11,
+  "actorVisualProfileKey": 12,
   "resourceId": 0,
   "visualFrameId": 2,
   "sequence": 1,
-  "normalizedPixelHash": "429f4a9da98de7db",
+  "normalizedPixelHash": "881d669319e98c51",
   "opaqueMaskHash": "1805d9c9a3b42745",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 12,
+  "actorVisualProfileKey": 13,
   "resourceId": 0,
   "visualFrameId": 0,
   "sequence": 0,
-  "normalizedPixelHash": "c2f986b6216d6cf9",
+  "normalizedPixelHash": "73b27777e07e911e",
   "opaqueMaskHash": "993a8ecc37ae7f1f",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 12,
+  "actorVisualProfileKey": 13,
   "resourceId": 0,
   "visualFrameId": 1,
   "sequence": 0,
-  "normalizedPixelHash": "b6ab2a3b82df873d",
+  "normalizedPixelHash": "09be018a0c1073d0",
   "opaqueMaskHash": "4e35efa2e8c7deb3",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 12,
+  "actorVisualProfileKey": 13,
   "resourceId": 0,
   "visualFrameId": 3,
   "sequence": 0,
-  "normalizedPixelHash": "f94899f5ac55a357",
+  "normalizedPixelHash": "53c8e0223f139463",
   "opaqueMaskHash": "04d813506bbe0c00",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 12,
+  "actorVisualProfileKey": 13,
   "resourceId": 0,
   "visualFrameId": 2,
   "sequence": 1,
-  "normalizedPixelHash": "6a361340c1e92293",
+  "normalizedPixelHash": "0c7d96b82d2e8726",
   "opaqueMaskHash": "00079281d95cab3d",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 13,
+  "actorVisualProfileKey": 14,
   "resourceId": 0,
   "visualFrameId": 0,
   "sequence": 0,
-  "normalizedPixelHash": "ad539e1e625a6fb4",
+  "normalizedPixelHash": "bc3d334eaf4b75c8",
   "opaqueMaskHash": "e8b94d9721ff5d9a",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 13,
+  "actorVisualProfileKey": 14,
   "resourceId": 0,
   "visualFrameId": 1,
   "sequence": 0,
-  "normalizedPixelHash": "cda6288b435a9c51",
+  "normalizedPixelHash": "26bbb0d0d73180a6",
   "opaqueMaskHash": "a2a3904c88a96ecb",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 13,
+  "actorVisualProfileKey": 14,
   "resourceId": 0,
   "visualFrameId": 3,
   "sequence": 0,
-  "normalizedPixelHash": "f100313922dbf08c",
+  "normalizedPixelHash": "30314796847d00a1",
   "opaqueMaskHash": "9878798061cb9256",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 13,
+  "actorVisualProfileKey": 14,
   "resourceId": 0,
   "visualFrameId": 2,
   "sequence": 1,
-  "normalizedPixelHash": "d22687a461973c93",
+  "normalizedPixelHash": "f59e4b7ca513ecdf",
   "opaqueMaskHash": "fef221197a1374f4",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 14,
+  "actorVisualProfileKey": 15,
   "resourceId": 0,
   "visualFrameId": 0,
   "sequence": 0,
-  "normalizedPixelHash": "1011dd70db3581b4",
+  "normalizedPixelHash": "a3476943e053eaab",
   "opaqueMaskHash": "d06748e325d19c2a",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 14,
+  "actorVisualProfileKey": 15,
   "resourceId": 0,
   "visualFrameId": 1,
   "sequence": 0,
-  "normalizedPixelHash": "77ef70d13e41523e",
+  "normalizedPixelHash": "f2e78351f8930d29",
   "opaqueMaskHash": "560f2792dededf1d",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 14,
+  "actorVisualProfileKey": 15,
   "resourceId": 0,
   "visualFrameId": 2,
   "sequence": 1,
-  "normalizedPixelHash": "e2ddce96e32473ab",
+  "normalizedPixelHash": "8feb2eb108eedd47",
   "opaqueMaskHash": "1c6f6b2a910f0b06",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 15,
+  "actorVisualProfileKey": 16,
   "resourceId": 0,
   "visualFrameId": 0,
   "sequence": 0,
-  "normalizedPixelHash": "fe6ca695d597bed4",
+  "normalizedPixelHash": "51496254620ad293",
   "opaqueMaskHash": "03bddbf977914be8",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 15,
+  "actorVisualProfileKey": 16,
   "resourceId": 0,
   "visualFrameId": 1,
   "sequence": 0,
-  "normalizedPixelHash": "7933a57ae89911c3",
+  "normalizedPixelHash": "9e7986272b5ebe82",
   "opaqueMaskHash": "dad10a8063324ba2",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 15,
+  "actorVisualProfileKey": 16,
   "resourceId": 0,
   "visualFrameId": 3,
   "sequence": 0,
-  "normalizedPixelHash": "41525c422d8885d5",
+  "normalizedPixelHash": "5e665054fa59d583",
   "opaqueMaskHash": "2a6ade5c4d374075",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 15,
+  "actorVisualProfileKey": 16,
   "resourceId": 0,
   "visualFrameId": 2,
   "sequence": 1,
-  "normalizedPixelHash": "f6f77a8457712655",
+  "normalizedPixelHash": "375c1a5f882bd085",
   "opaqueMaskHash": "c2105794db97baee",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 16,
+  "actorVisualProfileKey": 17,
   "resourceId": 0,
   "visualFrameId": 0,
   "sequence": 0,
-  "normalizedPixelHash": "8ca57ecc74035aa0",
+  "normalizedPixelHash": "47daf30113e47e18",
   "opaqueMaskHash": "9e140faba767b4e9",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 16,
+  "actorVisualProfileKey": 17,
   "resourceId": 0,
   "visualFrameId": 1,
   "sequence": 0,
-  "normalizedPixelHash": "2d9a632f270a1ad9",
+  "normalizedPixelHash": "e3d963e796958712",
   "opaqueMaskHash": "40e0cf5682f2f973",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 16,
+  "actorVisualProfileKey": 17,
   "resourceId": 0,
   "visualFrameId": 3,
   "sequence": 0,
-  "normalizedPixelHash": "386efe69dd059676",
+  "normalizedPixelHash": "85c421949c7a6716",
   "opaqueMaskHash": "81f20f6c7a443d95",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 16,
+  "actorVisualProfileKey": 17,
   "resourceId": 0,
   "visualFrameId": 2,
   "sequence": 1,
-  "normalizedPixelHash": "f97b03b5fedd0956",
+  "normalizedPixelHash": "fe668069573ec871",
   "opaqueMaskHash": "4c9c64d3fb8d84b5",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 17,
+  "actorVisualProfileKey": 18,
   "resourceId": 0,
   "visualFrameId": 0,
   "sequence": 0,
-  "normalizedPixelHash": "bc76def7d8af1100",
+  "normalizedPixelHash": "842b5ed9ad1a4aed",
   "opaqueMaskHash": "cfdafbca2c343d19",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 17,
+  "actorVisualProfileKey": 18,
   "resourceId": 0,
   "visualFrameId": 1,
   "sequence": 0,
-  "normalizedPixelHash": "1ed21d4e36335ccb",
+  "normalizedPixelHash": "df2bbf84356f6654",
   "opaqueMaskHash": "abd128196115fe1c",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 17,
+  "actorVisualProfileKey": 18,
   "resourceId": 0,
   "visualFrameId": 3,
   "sequence": 0,
-  "normalizedPixelHash": "0fbf8e7ed48e23dd",
+  "normalizedPixelHash": "a4948ae2554824aa",
   "opaqueMaskHash": "2df29d5e8421593c",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 17,
+  "actorVisualProfileKey": 18,
   "resourceId": 0,
   "visualFrameId": 2,
   "sequence": 1,
-  "normalizedPixelHash": "8a531c064be1d84f",
+  "normalizedPixelHash": "b74fafd83c9d94b3",
   "opaqueMaskHash": "76bc39418fc67c8d",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 18,
+  "actorVisualProfileKey": 19,
   "resourceId": 0,
   "visualFrameId": 0,
   "sequence": 0,
-  "normalizedPixelHash": "18e09f9996663e5b",
+  "normalizedPixelHash": "2f8a04b131125285",
   "opaqueMaskHash": "7ddaa8b79895763f",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 18,
+  "actorVisualProfileKey": 19,
   "resourceId": 0,
   "visualFrameId": 1,
   "sequence": 0,
-  "normalizedPixelHash": "6598dbc5d787aad3",
+  "normalizedPixelHash": "055f8b7961aeebff",
   "opaqueMaskHash": "4a2501ee444d66f6",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 18,
+  "actorVisualProfileKey": 19,
   "resourceId": 0,
   "visualFrameId": 3,
   "sequence": 0,
-  "normalizedPixelHash": "cccb152518512259",
+  "normalizedPixelHash": "45b24dd346025fe2",
   "opaqueMaskHash": "5de8ada114c86abd",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 18,
+  "actorVisualProfileKey": 19,
   "resourceId": 0,
   "visualFrameId": 2,
   "sequence": 1,
-  "normalizedPixelHash": "49f9c18926dd86d7",
+  "normalizedPixelHash": "8b33692475727710",
   "opaqueMaskHash": "a4aed32602c1991d",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 19,
+  "actorVisualProfileKey": 20,
   "resourceId": 0,
   "visualFrameId": 0,
   "sequence": 0,
@@ -684,7 +720,7 @@
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 19,
+  "actorVisualProfileKey": 20,
   "resourceId": 0,
   "visualFrameId": 1,
   "sequence": 0,
@@ -693,7 +729,7 @@
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 19,
+  "actorVisualProfileKey": 20,
   "resourceId": 0,
   "visualFrameId": 3,
   "sequence": 0,
@@ -702,7 +738,7 @@
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 19,
+  "actorVisualProfileKey": 20,
   "resourceId": 0,
   "visualFrameId": 2,
   "sequence": 1,
@@ -711,511 +747,511 @@
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 20,
+  "actorVisualProfileKey": 21,
   "resourceId": 0,
   "visualFrameId": 0,
   "sequence": 0,
-  "normalizedPixelHash": "c75f711836ad30c0",
+  "normalizedPixelHash": "7d50ac015468cecf",
   "opaqueMaskHash": "0d1a20afa250e9b3",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 20,
+  "actorVisualProfileKey": 21,
   "resourceId": 0,
   "visualFrameId": 1,
   "sequence": 0,
-  "normalizedPixelHash": "0fbab4f5be942f98",
+  "normalizedPixelHash": "feb9eec435e8985c",
   "opaqueMaskHash": "bb72decb3e0acef0",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 20,
+  "actorVisualProfileKey": 21,
   "resourceId": 0,
   "visualFrameId": 3,
   "sequence": 0,
-  "normalizedPixelHash": "20762fbe3b5def16",
+  "normalizedPixelHash": "a0f0c45fa0925129",
   "opaqueMaskHash": "ed84e0b1d5d24a06",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 20,
+  "actorVisualProfileKey": 21,
   "resourceId": 0,
   "visualFrameId": 2,
   "sequence": 1,
-  "normalizedPixelHash": "baade58eb13bda66",
+  "normalizedPixelHash": "409f236a61d988b9",
   "opaqueMaskHash": "42d31d3d6129b92f",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 21,
+  "actorVisualProfileKey": 22,
   "resourceId": 0,
   "visualFrameId": 0,
   "sequence": 0,
-  "normalizedPixelHash": "66221cfc345b096d",
+  "normalizedPixelHash": "dedbda562e036202",
   "opaqueMaskHash": "b4b45e147c9ff7ec",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 21,
+  "actorVisualProfileKey": 22,
   "resourceId": 0,
   "visualFrameId": 1,
   "sequence": 0,
-  "normalizedPixelHash": "9a33bfac29be85d2",
+  "normalizedPixelHash": "caaebed44230bbe6",
   "opaqueMaskHash": "5180d13b70531dd3",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 21,
+  "actorVisualProfileKey": 22,
   "resourceId": 0,
   "visualFrameId": 3,
   "sequence": 0,
-  "normalizedPixelHash": "a9271e7230a9a40d",
+  "normalizedPixelHash": "6ff69c715939ef5a",
   "opaqueMaskHash": "0df257a19b1b0c38",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 21,
+  "actorVisualProfileKey": 22,
   "resourceId": 0,
   "visualFrameId": 2,
   "sequence": 1,
-  "normalizedPixelHash": "9a96e8a2392201ac",
+  "normalizedPixelHash": "e5ba1d8544a1c51d",
   "opaqueMaskHash": "ec4a52f943d9f655",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 22,
+  "actorVisualProfileKey": 23,
   "resourceId": 0,
   "visualFrameId": 0,
   "sequence": 0,
-  "normalizedPixelHash": "50643f90a05e7704",
+  "normalizedPixelHash": "64d0c415e9069bc5",
   "opaqueMaskHash": "b64512f224d7c8fc",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 22,
+  "actorVisualProfileKey": 23,
   "resourceId": 0,
   "visualFrameId": 1,
   "sequence": 0,
-  "normalizedPixelHash": "0d13038d730a57cc",
+  "normalizedPixelHash": "aad4d8e0e18f17e2",
   "opaqueMaskHash": "86150247033070c7",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 22,
+  "actorVisualProfileKey": 23,
   "resourceId": 0,
   "visualFrameId": 3,
   "sequence": 0,
-  "normalizedPixelHash": "5bea264d52b2a33a",
+  "normalizedPixelHash": "1ec8e0ec3dc8116c",
   "opaqueMaskHash": "f5a4bfabf6ada615",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 22,
+  "actorVisualProfileKey": 23,
   "resourceId": 0,
   "visualFrameId": 2,
   "sequence": 1,
-  "normalizedPixelHash": "a4cecbc6e717973c",
+  "normalizedPixelHash": "24d9fcac62020595",
   "opaqueMaskHash": "b173f8b02074be25",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 23,
+  "actorVisualProfileKey": 24,
   "resourceId": 0,
   "visualFrameId": 0,
   "sequence": 0,
-  "normalizedPixelHash": "3646a79b87bdda8c",
+  "normalizedPixelHash": "3a98e158cb888e53",
   "opaqueMaskHash": "a90341784c4e127e",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 23,
+  "actorVisualProfileKey": 24,
   "resourceId": 0,
   "visualFrameId": 1,
   "sequence": 0,
-  "normalizedPixelHash": "94ae377a69677cc9",
+  "normalizedPixelHash": "206c42e8838e10a3",
   "opaqueMaskHash": "be017f3e3a2399e5",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 23,
+  "actorVisualProfileKey": 24,
   "resourceId": 0,
   "visualFrameId": 3,
   "sequence": 0,
-  "normalizedPixelHash": "6c65535dfbf6e72e",
+  "normalizedPixelHash": "c09e2f62bea347b1",
   "opaqueMaskHash": "1599a7313910d767",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 23,
+  "actorVisualProfileKey": 24,
   "resourceId": 0,
   "visualFrameId": 2,
   "sequence": 1,
-  "normalizedPixelHash": "a818411b0e3d1266",
+  "normalizedPixelHash": "d64698dbaf38bad4",
   "opaqueMaskHash": "e039c0b88677123a",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 24,
+  "actorVisualProfileKey": 25,
   "resourceId": 0,
   "visualFrameId": 0,
   "sequence": 0,
-  "normalizedPixelHash": "eae19c4d1d259094",
+  "normalizedPixelHash": "9d4ace399f0c8c52",
   "opaqueMaskHash": "14d46f1b546e8d57",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 24,
+  "actorVisualProfileKey": 25,
   "resourceId": 0,
   "visualFrameId": 1,
   "sequence": 0,
-  "normalizedPixelHash": "e4a813442e43a535",
+  "normalizedPixelHash": "a09275edd27dbc92",
   "opaqueMaskHash": "0e56b65dd5842e16",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 24,
+  "actorVisualProfileKey": 25,
   "resourceId": 0,
   "visualFrameId": 3,
   "sequence": 0,
-  "normalizedPixelHash": "4ab57b80b3d37e25",
+  "normalizedPixelHash": "6dcf0127e19150e1",
   "opaqueMaskHash": "15cb3fe28c6b620e",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 24,
+  "actorVisualProfileKey": 25,
   "resourceId": 0,
   "visualFrameId": 2,
   "sequence": 1,
-  "normalizedPixelHash": "5cc9b9ce6725f34e",
+  "normalizedPixelHash": "7bd5192df3e524c4",
   "opaqueMaskHash": "c036f46be95fa260",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 25,
+  "actorVisualProfileKey": 26,
   "resourceId": 0,
   "visualFrameId": 0,
   "sequence": 0,
-  "normalizedPixelHash": "77cb59a780ebc909",
+  "normalizedPixelHash": "5a6e7aaf34bd8df3",
   "opaqueMaskHash": "e22fd56edf1e56dd",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 25,
+  "actorVisualProfileKey": 26,
   "resourceId": 0,
   "visualFrameId": 1,
   "sequence": 0,
-  "normalizedPixelHash": "33533dc3eb807980",
+  "normalizedPixelHash": "af25f77d6091a79e",
   "opaqueMaskHash": "7304c32ab1074d19",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 25,
+  "actorVisualProfileKey": 26,
   "resourceId": 0,
   "visualFrameId": 3,
   "sequence": 0,
-  "normalizedPixelHash": "6cf1fb0cd7d02000",
+  "normalizedPixelHash": "2eeffbf47a8d2a80",
   "opaqueMaskHash": "807ef6a0d9a5b757",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 25,
+  "actorVisualProfileKey": 26,
   "resourceId": 0,
   "visualFrameId": 2,
   "sequence": 1,
-  "normalizedPixelHash": "0c542e62378ca08e",
+  "normalizedPixelHash": "233583d64e805245",
   "opaqueMaskHash": "11d5221dfad86fb7",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 26,
+  "actorVisualProfileKey": 27,
   "resourceId": 0,
   "visualFrameId": 0,
   "sequence": 0,
-  "normalizedPixelHash": "e6a29cd6c3bfeff3",
+  "normalizedPixelHash": "88365556bc6c2000",
   "opaqueMaskHash": "0ee47f205a5bd180",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 26,
+  "actorVisualProfileKey": 27,
   "resourceId": 0,
   "visualFrameId": 1,
   "sequence": 0,
-  "normalizedPixelHash": "678c757feb20557e",
+  "normalizedPixelHash": "5a7bf0251e6cd31c",
   "opaqueMaskHash": "2cca86babe8fedb4",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 26,
+  "actorVisualProfileKey": 27,
   "resourceId": 0,
   "visualFrameId": 3,
   "sequence": 0,
-  "normalizedPixelHash": "e0ce09b471e896eb",
+  "normalizedPixelHash": "7d1250ce45fe3835",
   "opaqueMaskHash": "30e38fc3144f3f4f",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 26,
+  "actorVisualProfileKey": 27,
   "resourceId": 0,
   "visualFrameId": 2,
   "sequence": 1,
-  "normalizedPixelHash": "59b4e787e436944a",
+  "normalizedPixelHash": "54ba0548eba3c71d",
   "opaqueMaskHash": "e8f4b67d38be84a5",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 27,
+  "actorVisualProfileKey": 28,
   "resourceId": 0,
   "visualFrameId": 0,
   "sequence": 0,
-  "normalizedPixelHash": "3532a073474ea83b",
+  "normalizedPixelHash": "840c6be267efed44",
   "opaqueMaskHash": "775ab43d0092277c",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 27,
+  "actorVisualProfileKey": 28,
   "resourceId": 0,
   "visualFrameId": 1,
   "sequence": 0,
-  "normalizedPixelHash": "4a81a3e6e63307ec",
+  "normalizedPixelHash": "076fbebb23f8e6d1",
   "opaqueMaskHash": "23335644ca696d78",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 27,
+  "actorVisualProfileKey": 28,
   "resourceId": 0,
   "visualFrameId": 3,
   "sequence": 0,
-  "normalizedPixelHash": "978d04f944d96a71",
+  "normalizedPixelHash": "606a10f826990824",
   "opaqueMaskHash": "c5fc1f9298e60dde",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 27,
+  "actorVisualProfileKey": 28,
   "resourceId": 0,
   "visualFrameId": 2,
   "sequence": 1,
-  "normalizedPixelHash": "c323f2cd95d4a85a",
+  "normalizedPixelHash": "f15694ba0d767b19",
   "opaqueMaskHash": "d6775eb63dabad4d",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 28,
+  "actorVisualProfileKey": 29,
   "resourceId": 0,
   "visualFrameId": 0,
   "sequence": 0,
-  "normalizedPixelHash": "7b123bcace11a955",
+  "normalizedPixelHash": "897a70c24380d2cc",
   "opaqueMaskHash": "affd51e7dcfdad39",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 28,
+  "actorVisualProfileKey": 29,
   "resourceId": 0,
   "visualFrameId": 1,
   "sequence": 0,
-  "normalizedPixelHash": "c105ec2466841311",
+  "normalizedPixelHash": "80802d7211c99192",
   "opaqueMaskHash": "35ea51e4e5d6bcaf",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 28,
+  "actorVisualProfileKey": 29,
   "resourceId": 0,
   "visualFrameId": 3,
   "sequence": 0,
-  "normalizedPixelHash": "9fd1932feffb23e0",
+  "normalizedPixelHash": "6404051a83e9d316",
   "opaqueMaskHash": "2e367e8e58ae0e9b",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 28,
+  "actorVisualProfileKey": 29,
   "resourceId": 0,
   "visualFrameId": 2,
   "sequence": 1,
-  "normalizedPixelHash": "a117c964f40b0584",
+  "normalizedPixelHash": "71eabfe8a651dbbd",
   "opaqueMaskHash": "512d2175208b3744",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 29,
+  "actorVisualProfileKey": 30,
   "resourceId": 0,
   "visualFrameId": 0,
   "sequence": 0,
-  "normalizedPixelHash": "b694323b862898d5",
+  "normalizedPixelHash": "88d95148f79333a5",
   "opaqueMaskHash": "1c2a1aab2f85e198",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 29,
+  "actorVisualProfileKey": 30,
   "resourceId": 0,
   "visualFrameId": 1,
   "sequence": 0,
-  "normalizedPixelHash": "fa5d828bb8c889c7",
+  "normalizedPixelHash": "589fee6114452c9c",
   "opaqueMaskHash": "c033e2a320035256",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 29,
+  "actorVisualProfileKey": 30,
   "resourceId": 0,
   "visualFrameId": 3,
   "sequence": 0,
-  "normalizedPixelHash": "3c568e95c288ac9e",
+  "normalizedPixelHash": "997728acb87720de",
   "opaqueMaskHash": "6bdc9b8631232f2d",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 29,
+  "actorVisualProfileKey": 30,
   "resourceId": 0,
   "visualFrameId": 2,
   "sequence": 1,
-  "normalizedPixelHash": "ff5faee0b3eec9a5",
+  "normalizedPixelHash": "87de847d819a92c7",
   "opaqueMaskHash": "083da70a0cd4717a",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 30,
+  "actorVisualProfileKey": 31,
   "resourceId": 0,
   "visualFrameId": 0,
   "sequence": 0,
-  "normalizedPixelHash": "69c0dd090a841732",
+  "normalizedPixelHash": "4203a7e7fcd03f9c",
   "opaqueMaskHash": "f4561f02a2911131",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 30,
+  "actorVisualProfileKey": 31,
   "resourceId": 0,
   "visualFrameId": 1,
   "sequence": 0,
-  "normalizedPixelHash": "2da5acec65cb455f",
+  "normalizedPixelHash": "884b2dd5b7d297db",
   "opaqueMaskHash": "6f351c08580ed142",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 30,
+  "actorVisualProfileKey": 31,
   "resourceId": 0,
   "visualFrameId": 3,
   "sequence": 0,
-  "normalizedPixelHash": "3a4ac607faa77fac",
+  "normalizedPixelHash": "5643ec8a09f8ab48",
   "opaqueMaskHash": "ff45d59add69dd5b",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 30,
+  "actorVisualProfileKey": 31,
   "resourceId": 0,
   "visualFrameId": 2,
   "sequence": 1,
-  "normalizedPixelHash": "2a289547388921be",
+  "normalizedPixelHash": "bfb61a60afa40e0d",
   "opaqueMaskHash": "15b0768669aaaa49",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 31,
+  "actorVisualProfileKey": 32,
   "resourceId": 0,
   "visualFrameId": 0,
   "sequence": 0,
-  "normalizedPixelHash": "90cbbaf979ea5830",
+  "normalizedPixelHash": "8dc4c04885a0682c",
   "opaqueMaskHash": "dbdee098454c9231",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 31,
+  "actorVisualProfileKey": 32,
   "resourceId": 0,
   "visualFrameId": 1,
   "sequence": 0,
-  "normalizedPixelHash": "7defeaf2cd962c99",
+  "normalizedPixelHash": "e72fd2198ec5b972",
   "opaqueMaskHash": "d46ee95ef318a4f7",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 31,
+  "actorVisualProfileKey": 32,
   "resourceId": 0,
   "visualFrameId": 3,
   "sequence": 0,
-  "normalizedPixelHash": "cca2ff8dddfc947e",
+  "normalizedPixelHash": "248219bff42bc057",
   "opaqueMaskHash": "0a223901070f2f65",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 31,
+  "actorVisualProfileKey": 32,
   "resourceId": 0,
   "visualFrameId": 2,
   "sequence": 1,
-  "normalizedPixelHash": "656e7fd3a3033d83",
+  "normalizedPixelHash": "f10d35a160b6596c",
   "opaqueMaskHash": "2ec3dc0dad25d443",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 32,
+  "actorVisualProfileKey": 33,
   "resourceId": 0,
   "visualFrameId": 0,
   "sequence": 0,
-  "normalizedPixelHash": "badc699ff4c93cb7",
+  "normalizedPixelHash": "654c1cc4f638d33e",
   "opaqueMaskHash": "5b8f9632f5c39ec1",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 32,
+  "actorVisualProfileKey": 33,
   "resourceId": 0,
   "visualFrameId": 1,
   "sequence": 0,
-  "normalizedPixelHash": "9494fd839abd5810",
+  "normalizedPixelHash": "6c7e1528f611ccb2",
   "opaqueMaskHash": "41ce0f5b1f6b2591",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 32,
+  "actorVisualProfileKey": 33,
   "resourceId": 0,
   "visualFrameId": 3,
   "sequence": 0,
-  "normalizedPixelHash": "d25b70e45d3446c9",
+  "normalizedPixelHash": "e77cfab11c0ca6df",
   "opaqueMaskHash": "9066ee2ce652838e",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 32,
+  "actorVisualProfileKey": 33,
   "resourceId": 0,
   "visualFrameId": 2,
   "sequence": 1,
-  "normalizedPixelHash": "a0b5c9850257f3cd",
+  "normalizedPixelHash": "f48776927e534f54",
   "opaqueMaskHash": "1b561d686558f4e6",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 33,
+  "actorVisualProfileKey": 34,
   "resourceId": 0,
   "visualFrameId": 0,
   "sequence": 0,
-  "normalizedPixelHash": "f2b644d5a99bf5a2",
+  "normalizedPixelHash": "461cfb5cbd6c21c4",
   "opaqueMaskHash": "d87d34459f45b938",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 33,
+  "actorVisualProfileKey": 34,
   "resourceId": 0,
   "visualFrameId": 1,
   "sequence": 0,
-  "normalizedPixelHash": "32952f464150c8ca",
+  "normalizedPixelHash": "3fd2559976b8344d",
   "opaqueMaskHash": "0ebc3f01231fa83a",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 33,
+  "actorVisualProfileKey": 34,
   "resourceId": 0,
   "visualFrameId": 3,
   "sequence": 0,
-  "normalizedPixelHash": "d9da0c9d3ced4f15",
+  "normalizedPixelHash": "bea94799feba2d4f",
   "opaqueMaskHash": "3e5540fe4384e58d",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 33,
+  "actorVisualProfileKey": 34,
   "resourceId": 0,
   "visualFrameId": 2,
   "sequence": 1,
-  "normalizedPixelHash": "8e9619436dacc5a0",
+  "normalizedPixelHash": "a790b87cdeac83a0",
   "opaqueMaskHash": "df2f5f75ad7003ee",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 34,
+  "actorVisualProfileKey": 35,
   "resourceId": 0,
   "visualFrameId": 0,
   "sequence": 0,
@@ -1224,7 +1260,7 @@
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 34,
+  "actorVisualProfileKey": 35,
   "resourceId": 0,
   "visualFrameId": 1,
   "sequence": 0,
@@ -1233,7 +1269,7 @@
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 34,
+  "actorVisualProfileKey": 35,
   "resourceId": 0,
   "visualFrameId": 3,
   "sequence": 0,
@@ -1242,7 +1278,7 @@
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 34,
+  "actorVisualProfileKey": 35,
   "resourceId": 0,
   "visualFrameId": 2,
   "sequence": 1,
@@ -1251,115 +1287,115 @@
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 35,
+  "actorVisualProfileKey": 36,
   "resourceId": 0,
   "visualFrameId": 0,
   "sequence": 0,
-  "normalizedPixelHash": "e2aa20639ad5c62f",
+  "normalizedPixelHash": "bc14bd6c550b3e87",
   "opaqueMaskHash": "e0067b5dd3183c36",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 35,
+  "actorVisualProfileKey": 36,
   "resourceId": 0,
   "visualFrameId": 1,
   "sequence": 0,
-  "normalizedPixelHash": "449d08a52478c6c4",
+  "normalizedPixelHash": "8aa8c63c6c1b4bfc",
   "opaqueMaskHash": "c9e0f033d0bf369a",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 35,
+  "actorVisualProfileKey": 36,
   "resourceId": 0,
   "visualFrameId": 3,
   "sequence": 0,
-  "normalizedPixelHash": "24dc5d0d95da265e",
+  "normalizedPixelHash": "9276388219feba74",
   "opaqueMaskHash": "72d55dd5b9238b11",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 35,
+  "actorVisualProfileKey": 36,
   "resourceId": 0,
   "visualFrameId": 2,
   "sequence": 1,
-  "normalizedPixelHash": "d1305872e8119939",
+  "normalizedPixelHash": "8769e9563ec1f068",
   "opaqueMaskHash": "ca8b71ce953033da",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 36,
+  "actorVisualProfileKey": 37,
   "resourceId": 0,
   "visualFrameId": 0,
   "sequence": 0,
-  "normalizedPixelHash": "1ab6eaa0afb13cc2",
+  "normalizedPixelHash": "15f961d398d8eca8",
   "opaqueMaskHash": "5539f4da519bac68",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 36,
+  "actorVisualProfileKey": 37,
   "resourceId": 0,
   "visualFrameId": 1,
   "sequence": 0,
-  "normalizedPixelHash": "40a5a05d529d98d0",
+  "normalizedPixelHash": "a581f04246b50f85",
   "opaqueMaskHash": "0ce630084c0229bc",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 36,
+  "actorVisualProfileKey": 37,
   "resourceId": 0,
   "visualFrameId": 3,
   "sequence": 0,
-  "normalizedPixelHash": "899879df44177a38",
+  "normalizedPixelHash": "745e5abbf177e8e2",
   "opaqueMaskHash": "f2f86eda15338b5d",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 36,
+  "actorVisualProfileKey": 37,
   "resourceId": 0,
   "visualFrameId": 2,
   "sequence": 1,
-  "normalizedPixelHash": "5cbad417cb56db10",
+  "normalizedPixelHash": "b1a8298bd3f388bc",
   "opaqueMaskHash": "9274c7e483fb5641",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 37,
+  "actorVisualProfileKey": 38,
   "resourceId": 0,
   "visualFrameId": 0,
   "sequence": 0,
-  "normalizedPixelHash": "76366dc1bf245304",
+  "normalizedPixelHash": "b1d2293334d92cf0",
   "opaqueMaskHash": "a659c19eed1856be",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 37,
+  "actorVisualProfileKey": 38,
   "resourceId": 0,
   "visualFrameId": 1,
   "sequence": 0,
-  "normalizedPixelHash": "03d52d3330c6b515",
+  "normalizedPixelHash": "8d759ec51b068142",
   "opaqueMaskHash": "eab6b74fe49b5f84",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 37,
+  "actorVisualProfileKey": 38,
   "resourceId": 0,
   "visualFrameId": 3,
   "sequence": 0,
-  "normalizedPixelHash": "c3c4220db462dd3a",
+  "normalizedPixelHash": "caf41e4cc226de02",
   "opaqueMaskHash": "af421dd505d1e933",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 37,
+  "actorVisualProfileKey": 38,
   "resourceId": 0,
   "visualFrameId": 2,
   "sequence": 1,
-  "normalizedPixelHash": "eebc813f4e388574",
+  "normalizedPixelHash": "c2ca33be4930a7c7",
   "opaqueMaskHash": "f67c8c42b69f2515",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 38,
+  "actorVisualProfileKey": 39,
   "resourceId": 0,
   "visualFrameId": 0,
   "sequence": 0,
@@ -1368,7 +1404,7 @@
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 38,
+  "actorVisualProfileKey": 39,
   "resourceId": 0,
   "visualFrameId": 1,
   "sequence": 0,
@@ -1377,7 +1413,7 @@
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 38,
+  "actorVisualProfileKey": 39,
   "resourceId": 0,
   "visualFrameId": 3,
   "sequence": 0,
@@ -1386,7 +1422,7 @@
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 38,
+  "actorVisualProfileKey": 39,
   "resourceId": 0,
   "visualFrameId": 2,
   "sequence": 1,
@@ -1395,7 +1431,7 @@
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 39,
+  "actorVisualProfileKey": 40,
   "resourceId": 0,
   "visualFrameId": 0,
   "sequence": 0,
@@ -1404,7 +1440,7 @@
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 39,
+  "actorVisualProfileKey": 40,
   "resourceId": 0,
   "visualFrameId": 1,
   "sequence": 0,
@@ -1413,7 +1449,7 @@
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 39,
+  "actorVisualProfileKey": 40,
   "resourceId": 0,
   "visualFrameId": 3,
   "sequence": 0,
@@ -1422,7 +1458,7 @@
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 39,
+  "actorVisualProfileKey": 40,
   "resourceId": 0,
   "visualFrameId": 2,
   "sequence": 1,
@@ -1431,156 +1467,120 @@
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 40,
+  "actorVisualProfileKey": 41,
   "resourceId": 0,
   "visualFrameId": 0,
   "sequence": 0,
-  "normalizedPixelHash": "27decfc048b1464b",
+  "normalizedPixelHash": "9a34c84dc22ae21c",
   "opaqueMaskHash": "adb86827ac533f5f",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 40,
+  "actorVisualProfileKey": 41,
   "resourceId": 0,
   "visualFrameId": 1,
   "sequence": 0,
-  "normalizedPixelHash": "a090146aa248f64a",
+  "normalizedPixelHash": "0296ca458eba9888",
   "opaqueMaskHash": "d5bca85049304696",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 40,
+  "actorVisualProfileKey": 41,
   "resourceId": 0,
   "visualFrameId": 3,
   "sequence": 0,
-  "normalizedPixelHash": "9dff8569b7bbff0f",
+  "normalizedPixelHash": "d721ff7793c4ce63",
   "opaqueMaskHash": "b08bd53e4782a004",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 40,
+  "actorVisualProfileKey": 41,
   "resourceId": 0,
   "visualFrameId": 2,
   "sequence": 1,
-  "normalizedPixelHash": "6bc973a34465d934",
+  "normalizedPixelHash": "3475dd90456702e7",
   "opaqueMaskHash": "e7cc8cc4ff762763",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 41,
+  "actorVisualProfileKey": 42,
   "resourceId": 0,
   "visualFrameId": 0,
   "sequence": 0,
-  "normalizedPixelHash": "6f874d241ad18b74",
+  "normalizedPixelHash": "1c9e06be96bfab94",
   "opaqueMaskHash": "3e6b3f62dfebe83c",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 41,
+  "actorVisualProfileKey": 42,
   "resourceId": 0,
   "visualFrameId": 1,
   "sequence": 0,
-  "normalizedPixelHash": "010113a4c073e1d1",
+  "normalizedPixelHash": "dd2b2d54d574a1e2",
   "opaqueMaskHash": "1e3621902aa7e083",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 41,
+  "actorVisualProfileKey": 42,
   "resourceId": 0,
   "visualFrameId": 3,
   "sequence": 0,
-  "normalizedPixelHash": "3252b50362850de9",
+  "normalizedPixelHash": "2c64d28c8285fd55",
   "opaqueMaskHash": "4cc253cf3791f9a6",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 41,
+  "actorVisualProfileKey": 42,
   "resourceId": 0,
   "visualFrameId": 2,
   "sequence": 1,
-  "normalizedPixelHash": "f1fee55621782927",
+  "normalizedPixelHash": "bfb84e70458b1afb",
   "opaqueMaskHash": "c4a4c4aa41665a58",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 42,
+  "actorVisualProfileKey": 43,
   "resourceId": 0,
   "visualFrameId": 0,
   "sequence": 0,
-  "normalizedPixelHash": "4eb6551b439cd875",
+  "normalizedPixelHash": "f817fd208f8fa795",
   "opaqueMaskHash": "79ce75646435ec55",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 42,
+  "actorVisualProfileKey": 43,
   "resourceId": 0,
   "visualFrameId": 1,
   "sequence": 0,
-  "normalizedPixelHash": "0282c76ea5ae99a9",
+  "normalizedPixelHash": "9bf279e966a5ab66",
   "opaqueMaskHash": "6549a44f089f48a9",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 42,
+  "actorVisualProfileKey": 43,
   "resourceId": 0,
   "visualFrameId": 3,
   "sequence": 0,
-  "normalizedPixelHash": "33f1fe0015aa06bb",
+  "normalizedPixelHash": "584acde1db803499",
   "opaqueMaskHash": "2416358956bcc429",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 42,
+  "actorVisualProfileKey": 43,
   "resourceId": 0,
   "visualFrameId": 2,
   "sequence": 1,
-  "normalizedPixelHash": "6ff94b533b3c0b8d",
+  "normalizedPixelHash": "5075eb86aa32fa5d",
   "opaqueMaskHash": "d11d4afedf25c379",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 43,
-  "resourceId": 0,
-  "visualFrameId": 0,
-  "sequence": 0,
-  "normalizedPixelHash": "fb93743be3cefdcf",
-  "opaqueMaskHash": "d40da7626b5900fd",
-  "provenance": "ROM_UNRESOLVED"
- },
- {
-  "actorVisualProfileKey": 43,
-  "resourceId": 0,
-  "visualFrameId": 1,
-  "sequence": 0,
-  "normalizedPixelHash": "cc7a4cb8b5c31157",
-  "opaqueMaskHash": "455712e1827f5b3d",
-  "provenance": "ROM_UNRESOLVED"
- },
- {
-  "actorVisualProfileKey": 43,
-  "resourceId": 0,
-  "visualFrameId": 3,
-  "sequence": 0,
-  "normalizedPixelHash": "1a5b26e624814944",
-  "opaqueMaskHash": "5d45e8053664407f",
-  "provenance": "ROM_UNRESOLVED"
- },
- {
-  "actorVisualProfileKey": 43,
-  "resourceId": 0,
-  "visualFrameId": 2,
-  "sequence": 1,
-  "normalizedPixelHash": "acf8fc36ee704738",
-  "opaqueMaskHash": "750020eaf32ca0de",
-  "provenance": "ROM_UNRESOLVED"
- },
- {
   "actorVisualProfileKey": 0,
   "resourceId": 3,
   "visualFrameId": 1,
   "sequence": 0,
-  "normalizedPixelHash": "ec3bd37c90afb18f",
-  "opaqueMaskHash": "b6265c84101ee7fc",
+  "normalizedPixelHash": "48c193d39d2acd37",
+  "opaqueMaskHash": "890b0bd2929858c6",
   "provenance": "ROM_UNRESOLVED"
  },
  {
@@ -1588,8 +1588,8 @@
   "resourceId": 3,
   "visualFrameId": 2,
   "sequence": 0,
-  "normalizedPixelHash": "747b46091f73cd63",
-  "opaqueMaskHash": "7d159155f2a82e60",
+  "normalizedPixelHash": "c2b8bf7a15195ab6",
+  "opaqueMaskHash": "d7916f3ba95bbad5",
   "provenance": "ROM_UNRESOLVED"
  },
  {
@@ -1633,8 +1633,8 @@
   "resourceId": 3,
   "visualFrameId": 7,
   "sequence": 4,
-  "normalizedPixelHash": "cfce1f1f34c16fa3",
-  "opaqueMaskHash": "d87366d5c7b24290",
+  "normalizedPixelHash": "f51f96e30862cd72",
+  "opaqueMaskHash": "6647b894a816fbf3",
   "provenance": "ROM_UNRESOLVED"
  },
  {
@@ -1642,8 +1642,8 @@
   "resourceId": 3,
   "visualFrameId": 8,
   "sequence": 4,
-  "normalizedPixelHash": "ec3bd37c90afb18f",
-  "opaqueMaskHash": "b6265c84101ee7fc",
+  "normalizedPixelHash": "48c193d39d2acd37",
+  "opaqueMaskHash": "890b0bd2929858c6",
   "provenance": "ROM_UNRESOLVED"
  },
  {
@@ -1669,8 +1669,8 @@
   "resourceId": 3,
   "visualFrameId": 1,
   "sequence": 0,
-  "normalizedPixelHash": "d71b2a746896c17c",
-  "opaqueMaskHash": "69510b0118483dff",
+  "normalizedPixelHash": "962c9c0566ca57b0",
+  "opaqueMaskHash": "b6265c84101ee7fc",
   "provenance": "ROM_UNRESOLVED"
  },
  {
@@ -1678,8 +1678,8 @@
   "resourceId": 3,
   "visualFrameId": 2,
   "sequence": 0,
-  "normalizedPixelHash": "ace66386f97e2a8e",
-  "opaqueMaskHash": "e85f5a6166d85391",
+  "normalizedPixelHash": "29dbc9189b6316f6",
+  "opaqueMaskHash": "7d159155f2a82e60",
   "provenance": "ROM_UNRESOLVED"
  },
  {
@@ -1723,8 +1723,8 @@
   "resourceId": 3,
   "visualFrameId": 7,
   "sequence": 4,
-  "normalizedPixelHash": "67c8d0a33b44df5c",
-  "opaqueMaskHash": "d5e20c51bab047f0",
+  "normalizedPixelHash": "c869a81e2d8621b8",
+  "opaqueMaskHash": "d87366d5c7b24290",
   "provenance": "ROM_UNRESOLVED"
  },
  {
@@ -1732,8 +1732,8 @@
   "resourceId": 3,
   "visualFrameId": 8,
   "sequence": 4,
-  "normalizedPixelHash": "d71b2a746896c17c",
-  "opaqueMaskHash": "69510b0118483dff",
+  "normalizedPixelHash": "962c9c0566ca57b0",
+  "opaqueMaskHash": "b6265c84101ee7fc",
   "provenance": "ROM_UNRESOLVED"
  },
  {
@@ -1759,8 +1759,8 @@
   "resourceId": 3,
   "visualFrameId": 1,
   "sequence": 0,
-  "normalizedPixelHash": "398e757a21fcf2ce",
-  "opaqueMaskHash": "efb17489bb56fa70",
+  "normalizedPixelHash": "d71b2a746896c17c",
+  "opaqueMaskHash": "69510b0118483dff",
   "provenance": "ROM_UNRESOLVED"
  },
  {
@@ -1768,8 +1768,8 @@
   "resourceId": 3,
   "visualFrameId": 2,
   "sequence": 0,
-  "normalizedPixelHash": "2e5af01606de028d",
-  "opaqueMaskHash": "fba2558fe9774542",
+  "normalizedPixelHash": "ace66386f97e2a8e",
+  "opaqueMaskHash": "e85f5a6166d85391",
   "provenance": "ROM_UNRESOLVED"
  },
  {
@@ -1777,8 +1777,8 @@
   "resourceId": 3,
   "visualFrameId": 3,
   "sequence": 1,
-  "normalizedPixelHash": "ca537d05a666960d",
-  "opaqueMaskHash": "55e69210b0586d13",
+  "normalizedPixelHash": "db4a6bf921ec05c6",
+  "opaqueMaskHash": "c2eb3c03ed593d33",
   "provenance": "ROM_UNRESOLVED"
  },
  {
@@ -1786,8 +1786,8 @@
   "resourceId": 3,
   "visualFrameId": 4,
   "sequence": 1,
-  "normalizedPixelHash": "f98f5651922cecae",
-  "opaqueMaskHash": "1bcbb7b0e4f8235e",
+  "normalizedPixelHash": "4896e002dd307733",
+  "opaqueMaskHash": "986476407265f7f6",
   "provenance": "ROM_UNRESOLVED"
  },
  {
@@ -1795,8 +1795,8 @@
   "resourceId": 3,
   "visualFrameId": 5,
   "sequence": 2,
-  "normalizedPixelHash": "f01cc89078df7343",
-  "opaqueMaskHash": "b4c944ec1c69fcf2",
+  "normalizedPixelHash": "6285146ced26364f",
+  "opaqueMaskHash": "a0f2d7e5f9274509",
   "provenance": "ROM_UNRESOLVED"
  },
  {
@@ -1804,8 +1804,8 @@
   "resourceId": 3,
   "visualFrameId": 6,
   "sequence": 2,
-  "normalizedPixelHash": "6fa812d80d8ba546",
-  "opaqueMaskHash": "94a97f7df77b9438",
+  "normalizedPixelHash": "307b848b6220e9a0",
+  "opaqueMaskHash": "c6e48d25f25b20e7",
   "provenance": "ROM_UNRESOLVED"
  },
  {
@@ -1813,8 +1813,8 @@
   "resourceId": 3,
   "visualFrameId": 7,
   "sequence": 4,
-  "normalizedPixelHash": "62ebab4f6919ee62",
-  "opaqueMaskHash": "acb0b6804cd99dd3",
+  "normalizedPixelHash": "67c8d0a33b44df5c",
+  "opaqueMaskHash": "d5e20c51bab047f0",
   "provenance": "ROM_UNRESOLVED"
  },
  {
@@ -1822,8 +1822,8 @@
   "resourceId": 3,
   "visualFrameId": 8,
   "sequence": 4,
-  "normalizedPixelHash": "398e757a21fcf2ce",
-  "opaqueMaskHash": "efb17489bb56fa70",
+  "normalizedPixelHash": "d71b2a746896c17c",
+  "opaqueMaskHash": "69510b0118483dff",
   "provenance": "ROM_UNRESOLVED"
  },
  {
@@ -1831,8 +1831,8 @@
   "resourceId": 3,
   "visualFrameId": 9,
   "sequence": 5,
-  "normalizedPixelHash": "6fa812d80d8ba546",
-  "opaqueMaskHash": "94a97f7df77b9438",
+  "normalizedPixelHash": "307b848b6220e9a0",
+  "opaqueMaskHash": "c6e48d25f25b20e7",
   "provenance": "ROM_UNRESOLVED"
  },
  {
@@ -1840,8 +1840,8 @@
   "resourceId": 3,
   "visualFrameId": 10,
   "sequence": 5,
-  "normalizedPixelHash": "96b2b2558f7e969f",
-  "opaqueMaskHash": "87c5bda162d6f347",
+  "normalizedPixelHash": "e0f8811874fbc635",
+  "opaqueMaskHash": "c53939ae239e8151",
   "provenance": "ROM_UNRESOLVED"
  },
  {
@@ -1939,12 +1939,102 @@
   "resourceId": 3,
   "visualFrameId": 1,
   "sequence": 0,
+  "normalizedPixelHash": "1e99d1547478e608",
+  "opaqueMaskHash": "a808f5ecacc315d3",
+  "provenance": "ROM_UNRESOLVED"
+ },
+ {
+  "actorVisualProfileKey": 4,
+  "resourceId": 3,
+  "visualFrameId": 2,
+  "sequence": 0,
+  "normalizedPixelHash": "d5c3231c35766340",
+  "opaqueMaskHash": "95bc612667744f8f",
+  "provenance": "ROM_UNRESOLVED"
+ },
+ {
+  "actorVisualProfileKey": 4,
+  "resourceId": 3,
+  "visualFrameId": 3,
+  "sequence": 1,
+  "normalizedPixelHash": "cef10f0205495bcd",
+  "opaqueMaskHash": "b5b14455ab0dcdcd",
+  "provenance": "ROM_UNRESOLVED"
+ },
+ {
+  "actorVisualProfileKey": 4,
+  "resourceId": 3,
+  "visualFrameId": 4,
+  "sequence": 1,
+  "normalizedPixelHash": "65ba6e469f12b055",
+  "opaqueMaskHash": "176c4b910c31d2e2",
+  "provenance": "ROM_UNRESOLVED"
+ },
+ {
+  "actorVisualProfileKey": 4,
+  "resourceId": 3,
+  "visualFrameId": 5,
+  "sequence": 2,
+  "normalizedPixelHash": "83e5d3645e9292a4",
+  "opaqueMaskHash": "99dcf5537598661b",
+  "provenance": "ROM_UNRESOLVED"
+ },
+ {
+  "actorVisualProfileKey": 4,
+  "resourceId": 3,
+  "visualFrameId": 6,
+  "sequence": 2,
+  "normalizedPixelHash": "c0880f80ae4b5bd1",
+  "opaqueMaskHash": "20ea7f7bb9cc9674",
+  "provenance": "ROM_UNRESOLVED"
+ },
+ {
+  "actorVisualProfileKey": 4,
+  "resourceId": 3,
+  "visualFrameId": 7,
+  "sequence": 4,
+  "normalizedPixelHash": "a8d70ee17f081a70",
+  "opaqueMaskHash": "442ff4e08078e0f9",
+  "provenance": "ROM_UNRESOLVED"
+ },
+ {
+  "actorVisualProfileKey": 4,
+  "resourceId": 3,
+  "visualFrameId": 8,
+  "sequence": 4,
+  "normalizedPixelHash": "1e99d1547478e608",
+  "opaqueMaskHash": "a808f5ecacc315d3",
+  "provenance": "ROM_UNRESOLVED"
+ },
+ {
+  "actorVisualProfileKey": 4,
+  "resourceId": 3,
+  "visualFrameId": 9,
+  "sequence": 5,
+  "normalizedPixelHash": "c0880f80ae4b5bd1",
+  "opaqueMaskHash": "20ea7f7bb9cc9674",
+  "provenance": "ROM_UNRESOLVED"
+ },
+ {
+  "actorVisualProfileKey": 4,
+  "resourceId": 3,
+  "visualFrameId": 10,
+  "sequence": 5,
+  "normalizedPixelHash": "0663e33e325223d3",
+  "opaqueMaskHash": "654d32807a53f979",
+  "provenance": "ROM_UNRESOLVED"
+ },
+ {
+  "actorVisualProfileKey": 5,
+  "resourceId": 3,
+  "visualFrameId": 1,
+  "sequence": 0,
   "normalizedPixelHash": "e8ccec5671a051bc",
   "opaqueMaskHash": "0e2084faee38e2eb",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 4,
+  "actorVisualProfileKey": 5,
   "resourceId": 3,
   "visualFrameId": 2,
   "sequence": 0,
@@ -1953,7 +2043,7 @@
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 4,
+  "actorVisualProfileKey": 5,
   "resourceId": 3,
   "visualFrameId": 3,
   "sequence": 1,
@@ -1962,7 +2052,7 @@
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 4,
+  "actorVisualProfileKey": 5,
   "resourceId": 3,
   "visualFrameId": 4,
   "sequence": 1,
@@ -1971,7 +2061,7 @@
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 4,
+  "actorVisualProfileKey": 5,
   "resourceId": 3,
   "visualFrameId": 5,
   "sequence": 2,
@@ -1980,7 +2070,7 @@
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 4,
+  "actorVisualProfileKey": 5,
   "resourceId": 3,
   "visualFrameId": 6,
   "sequence": 2,
@@ -1989,7 +2079,7 @@
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 4,
+  "actorVisualProfileKey": 5,
   "resourceId": 3,
   "visualFrameId": 7,
   "sequence": 4,
@@ -1998,7 +2088,7 @@
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 4,
+  "actorVisualProfileKey": 5,
   "resourceId": 3,
   "visualFrameId": 8,
   "sequence": 4,
@@ -2007,7 +2097,7 @@
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 4,
+  "actorVisualProfileKey": 5,
   "resourceId": 3,
   "visualFrameId": 9,
   "sequence": 5,
@@ -2016,7 +2106,7 @@
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 4,
+  "actorVisualProfileKey": 5,
   "resourceId": 3,
   "visualFrameId": 10,
   "sequence": 5,
@@ -2025,97 +2115,97 @@
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 5,
+  "actorVisualProfileKey": 6,
   "resourceId": 3,
   "visualFrameId": 1,
   "sequence": 0,
-  "normalizedPixelHash": "223160ea64c704a7",
+  "normalizedPixelHash": "5dcda68dfb922610",
   "opaqueMaskHash": "23123bd0d2288bcd",
-  "provenance": "ROM_UNRESOLVED"
- },
- {
-  "actorVisualProfileKey": 5,
-  "resourceId": 3,
-  "visualFrameId": 2,
-  "sequence": 0,
-  "normalizedPixelHash": "53a964f1af26dd95",
-  "opaqueMaskHash": "d55dc9bc43fb310e",
-  "provenance": "ROM_UNRESOLVED"
- },
- {
-  "actorVisualProfileKey": 5,
-  "resourceId": 3,
-  "visualFrameId": 3,
-  "sequence": 1,
-  "normalizedPixelHash": "492acd31548fc579",
-  "opaqueMaskHash": "896c70745a593ee8",
-  "provenance": "ROM_UNRESOLVED"
- },
- {
-  "actorVisualProfileKey": 5,
-  "resourceId": 3,
-  "visualFrameId": 4,
-  "sequence": 1,
-  "normalizedPixelHash": "75e276894bf8e841",
-  "opaqueMaskHash": "900b2c0bd8b5879a",
-  "provenance": "ROM_UNRESOLVED"
- },
- {
-  "actorVisualProfileKey": 5,
-  "resourceId": 3,
-  "visualFrameId": 5,
-  "sequence": 2,
-  "normalizedPixelHash": "40e32a5fe8583d05",
-  "opaqueMaskHash": "f7d2bf63f1f4c845",
-  "provenance": "ROM_UNRESOLVED"
- },
- {
-  "actorVisualProfileKey": 5,
-  "resourceId": 3,
-  "visualFrameId": 6,
-  "sequence": 2,
-  "normalizedPixelHash": "d738c4cd0ea9aeed",
-  "opaqueMaskHash": "61cf14d3fee1e921",
-  "provenance": "ROM_UNRESOLVED"
- },
- {
-  "actorVisualProfileKey": 5,
-  "resourceId": 3,
-  "visualFrameId": 7,
-  "sequence": 4,
-  "normalizedPixelHash": "ec100fcbdf64a729",
-  "opaqueMaskHash": "729ab55ee7d0e3d7",
-  "provenance": "ROM_UNRESOLVED"
- },
- {
-  "actorVisualProfileKey": 5,
-  "resourceId": 3,
-  "visualFrameId": 8,
-  "sequence": 4,
-  "normalizedPixelHash": "223160ea64c704a7",
-  "opaqueMaskHash": "23123bd0d2288bcd",
-  "provenance": "ROM_UNRESOLVED"
- },
- {
-  "actorVisualProfileKey": 5,
-  "resourceId": 3,
-  "visualFrameId": 9,
-  "sequence": 5,
-  "normalizedPixelHash": "d738c4cd0ea9aeed",
-  "opaqueMaskHash": "61cf14d3fee1e921",
-  "provenance": "ROM_UNRESOLVED"
- },
- {
-  "actorVisualProfileKey": 5,
-  "resourceId": 3,
-  "visualFrameId": 10,
-  "sequence": 5,
-  "normalizedPixelHash": "e86c18352b5cefa0",
-  "opaqueMaskHash": "cf0dff01d4e6fa6f",
   "provenance": "ROM_UNRESOLVED"
  },
  {
   "actorVisualProfileKey": 6,
+  "resourceId": 3,
+  "visualFrameId": 2,
+  "sequence": 0,
+  "normalizedPixelHash": "98fcc55f07e3ed87",
+  "opaqueMaskHash": "d55dc9bc43fb310e",
+  "provenance": "ROM_UNRESOLVED"
+ },
+ {
+  "actorVisualProfileKey": 6,
+  "resourceId": 3,
+  "visualFrameId": 3,
+  "sequence": 1,
+  "normalizedPixelHash": "653e8fea7de70b32",
+  "opaqueMaskHash": "896c70745a593ee8",
+  "provenance": "ROM_UNRESOLVED"
+ },
+ {
+  "actorVisualProfileKey": 6,
+  "resourceId": 3,
+  "visualFrameId": 4,
+  "sequence": 1,
+  "normalizedPixelHash": "1c03638d5835234e",
+  "opaqueMaskHash": "900b2c0bd8b5879a",
+  "provenance": "ROM_UNRESOLVED"
+ },
+ {
+  "actorVisualProfileKey": 6,
+  "resourceId": 3,
+  "visualFrameId": 5,
+  "sequence": 2,
+  "normalizedPixelHash": "2e3ac2726f593c5e",
+  "opaqueMaskHash": "f7d2bf63f1f4c845",
+  "provenance": "ROM_UNRESOLVED"
+ },
+ {
+  "actorVisualProfileKey": 6,
+  "resourceId": 3,
+  "visualFrameId": 6,
+  "sequence": 2,
+  "normalizedPixelHash": "de29be6d6b38e390",
+  "opaqueMaskHash": "61cf14d3fee1e921",
+  "provenance": "ROM_UNRESOLVED"
+ },
+ {
+  "actorVisualProfileKey": 6,
+  "resourceId": 3,
+  "visualFrameId": 7,
+  "sequence": 4,
+  "normalizedPixelHash": "346f2c501cdb39e0",
+  "opaqueMaskHash": "729ab55ee7d0e3d7",
+  "provenance": "ROM_UNRESOLVED"
+ },
+ {
+  "actorVisualProfileKey": 6,
+  "resourceId": 3,
+  "visualFrameId": 8,
+  "sequence": 4,
+  "normalizedPixelHash": "5dcda68dfb922610",
+  "opaqueMaskHash": "23123bd0d2288bcd",
+  "provenance": "ROM_UNRESOLVED"
+ },
+ {
+  "actorVisualProfileKey": 6,
+  "resourceId": 3,
+  "visualFrameId": 9,
+  "sequence": 5,
+  "normalizedPixelHash": "de29be6d6b38e390",
+  "opaqueMaskHash": "61cf14d3fee1e921",
+  "provenance": "ROM_UNRESOLVED"
+ },
+ {
+  "actorVisualProfileKey": 6,
+  "resourceId": 3,
+  "visualFrameId": 10,
+  "sequence": 5,
+  "normalizedPixelHash": "d7ba3a65462f3ea7",
+  "opaqueMaskHash": "cf0dff01d4e6fa6f",
+  "provenance": "ROM_UNRESOLVED"
+ },
+ {
+  "actorVisualProfileKey": 7,
   "resourceId": 3,
   "visualFrameId": 1,
   "sequence": 0,
@@ -2124,7 +2214,7 @@
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 6,
+  "actorVisualProfileKey": 7,
   "resourceId": 3,
   "visualFrameId": 2,
   "sequence": 0,
@@ -2133,7 +2223,7 @@
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 6,
+  "actorVisualProfileKey": 7,
   "resourceId": 3,
   "visualFrameId": 3,
   "sequence": 1,
@@ -2142,7 +2232,7 @@
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 6,
+  "actorVisualProfileKey": 7,
   "resourceId": 3,
   "visualFrameId": 4,
   "sequence": 1,
@@ -2151,7 +2241,7 @@
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 6,
+  "actorVisualProfileKey": 7,
   "resourceId": 3,
   "visualFrameId": 5,
   "sequence": 2,
@@ -2160,7 +2250,7 @@
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 6,
+  "actorVisualProfileKey": 7,
   "resourceId": 3,
   "visualFrameId": 6,
   "sequence": 2,
@@ -2169,7 +2259,7 @@
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 6,
+  "actorVisualProfileKey": 7,
   "resourceId": 3,
   "visualFrameId": 7,
   "sequence": 4,
@@ -2178,7 +2268,7 @@
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 6,
+  "actorVisualProfileKey": 7,
   "resourceId": 3,
   "visualFrameId": 8,
   "sequence": 4,
@@ -2187,7 +2277,7 @@
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 6,
+  "actorVisualProfileKey": 7,
   "resourceId": 3,
   "visualFrameId": 9,
   "sequence": 5,
@@ -2196,7 +2286,7 @@
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 6,
+  "actorVisualProfileKey": 7,
   "resourceId": 3,
   "visualFrameId": 10,
   "sequence": 5,
@@ -2205,511 +2295,484 @@
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 7,
+  "actorVisualProfileKey": 8,
   "resourceId": 3,
   "visualFrameId": 1,
   "sequence": 0,
-  "normalizedPixelHash": "c4c7ed06cdd472ea",
+  "normalizedPixelHash": "645122bbb141352c",
   "opaqueMaskHash": "f8e2a5d11012ecfc",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 7,
+  "actorVisualProfileKey": 8,
   "resourceId": 3,
   "visualFrameId": 2,
   "sequence": 0,
-  "normalizedPixelHash": "e416040d017a6685",
+  "normalizedPixelHash": "3688785a8873582b",
   "opaqueMaskHash": "71233b94066386b4",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 7,
+  "actorVisualProfileKey": 8,
   "resourceId": 3,
   "visualFrameId": 3,
   "sequence": 1,
-  "normalizedPixelHash": "81c64fbe08fcd110",
+  "normalizedPixelHash": "74ebd365de56d1c9",
   "opaqueMaskHash": "f73295e9c9f7a554",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 7,
+  "actorVisualProfileKey": 8,
   "resourceId": 3,
   "visualFrameId": 4,
   "sequence": 1,
-  "normalizedPixelHash": "3ca5b67da6dbd6d8",
+  "normalizedPixelHash": "fc79a81319b7cab9",
   "opaqueMaskHash": "db173abbb027aa06",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 7,
+  "actorVisualProfileKey": 8,
   "resourceId": 3,
   "visualFrameId": 5,
   "sequence": 2,
-  "normalizedPixelHash": "52d4542e0825a046",
+  "normalizedPixelHash": "b3d877955f9f4ef3",
   "opaqueMaskHash": "83fc55554e4181c9",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 7,
+  "actorVisualProfileKey": 8,
   "resourceId": 3,
   "visualFrameId": 6,
   "sequence": 2,
-  "normalizedPixelHash": "f7351bf45c65686e",
+  "normalizedPixelHash": "b62bff558f8b1b10",
   "opaqueMaskHash": "a54715e7cb902b50",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 7,
+  "actorVisualProfileKey": 8,
   "resourceId": 3,
   "visualFrameId": 7,
   "sequence": 4,
-  "normalizedPixelHash": "cdbb84cc5e76d96c",
+  "normalizedPixelHash": "79a7c955f34410e7",
   "opaqueMaskHash": "667ed2200aa2be6e",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 7,
+  "actorVisualProfileKey": 8,
   "resourceId": 3,
   "visualFrameId": 8,
   "sequence": 4,
-  "normalizedPixelHash": "c4c7ed06cdd472ea",
+  "normalizedPixelHash": "645122bbb141352c",
   "opaqueMaskHash": "f8e2a5d11012ecfc",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 7,
+  "actorVisualProfileKey": 8,
   "resourceId": 3,
   "visualFrameId": 9,
   "sequence": 5,
-  "normalizedPixelHash": "f7351bf45c65686e",
+  "normalizedPixelHash": "b62bff558f8b1b10",
   "opaqueMaskHash": "a54715e7cb902b50",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 7,
+  "actorVisualProfileKey": 8,
   "resourceId": 3,
   "visualFrameId": 10,
   "sequence": 5,
-  "normalizedPixelHash": "96a33b032d66c1a1",
+  "normalizedPixelHash": "575283abcefad949",
   "opaqueMaskHash": "f678cf16b52fe71f",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 8,
+  "actorVisualProfileKey": 11,
   "resourceId": 3,
   "visualFrameId": 1,
   "sequence": 0,
-  "normalizedPixelHash": "9fb1c1e1a92ac0ce",
-  "opaqueMaskHash": "b53f2cfeff254ac7",
-  "provenance": "ROM_UNRESOLVED"
- },
- {
-  "actorVisualProfileKey": 8,
-  "resourceId": 3,
-  "visualFrameId": 2,
-  "sequence": 0,
-  "normalizedPixelHash": "ce27c5d14a6e5b95",
-  "opaqueMaskHash": "fa50988aa643a541",
-  "provenance": "ROM_UNRESOLVED"
- },
- {
-  "actorVisualProfileKey": 8,
-  "resourceId": 3,
-  "visualFrameId": 3,
-  "sequence": 1,
-  "normalizedPixelHash": "bf7e549a3fba7940",
-  "opaqueMaskHash": "3be2b7292388265f",
-  "provenance": "ROM_UNRESOLVED"
- },
- {
-  "actorVisualProfileKey": 8,
-  "resourceId": 3,
-  "visualFrameId": 4,
-  "sequence": 1,
-  "normalizedPixelHash": "47a20e26d1b95763",
-  "opaqueMaskHash": "cbbaf5805bbc1fc9",
-  "provenance": "ROM_UNRESOLVED"
- },
- {
-  "actorVisualProfileKey": 8,
-  "resourceId": 3,
-  "visualFrameId": 5,
-  "sequence": 2,
-  "normalizedPixelHash": "364ddd9995e1842d",
-  "opaqueMaskHash": "8c96820c553409b3",
-  "provenance": "ROM_UNRESOLVED"
- },
- {
-  "actorVisualProfileKey": 8,
-  "resourceId": 3,
-  "visualFrameId": 6,
-  "sequence": 2,
-  "normalizedPixelHash": "c795873a0019fe1f",
-  "opaqueMaskHash": "bc7511c25fbb8b4e",
-  "provenance": "ROM_UNRESOLVED"
- },
- {
-  "actorVisualProfileKey": 8,
-  "resourceId": 3,
-  "visualFrameId": 7,
-  "sequence": 4,
-  "normalizedPixelHash": "2283d114cc4918fd",
-  "opaqueMaskHash": "f3b2fb471809677d",
-  "provenance": "ROM_UNRESOLVED"
- },
- {
-  "actorVisualProfileKey": 8,
-  "resourceId": 3,
-  "visualFrameId": 8,
-  "sequence": 4,
-  "normalizedPixelHash": "9fb1c1e1a92ac0ce",
-  "opaqueMaskHash": "b53f2cfeff254ac7",
-  "provenance": "ROM_UNRESOLVED"
- },
- {
-  "actorVisualProfileKey": 8,
-  "resourceId": 3,
-  "visualFrameId": 9,
-  "sequence": 5,
-  "normalizedPixelHash": "c795873a0019fe1f",
-  "opaqueMaskHash": "bc7511c25fbb8b4e",
-  "provenance": "ROM_UNRESOLVED"
- },
- {
-  "actorVisualProfileKey": 8,
-  "resourceId": 3,
-  "visualFrameId": 10,
-  "sequence": 5,
-  "normalizedPixelHash": "a9b2848e44f4bd96",
-  "opaqueMaskHash": "6a59bcb9b67b1975",
+  "normalizedPixelHash": "8b0b9c56e8bb7a9a",
+  "opaqueMaskHash": "8dc6f9aed07747ec",
   "provenance": "ROM_UNRESOLVED"
  },
  {
   "actorVisualProfileKey": 11,
   "resourceId": 3,
+  "visualFrameId": 2,
+  "sequence": 0,
+  "normalizedPixelHash": "495deb0f505bb64d",
+  "opaqueMaskHash": "e7e3037bd09d4458",
+  "provenance": "ROM_UNRESOLVED"
+ },
+ {
+  "actorVisualProfileKey": 11,
+  "resourceId": 3,
+  "visualFrameId": 3,
+  "sequence": 1,
+  "normalizedPixelHash": "b10b5372137f78ae",
+  "opaqueMaskHash": "b1b8c86f13f0661a",
+  "provenance": "ROM_UNRESOLVED"
+ },
+ {
+  "actorVisualProfileKey": 11,
+  "resourceId": 3,
+  "visualFrameId": 4,
+  "sequence": 1,
+  "normalizedPixelHash": "d648de63b2630d5e",
+  "opaqueMaskHash": "01ab71aac2960a84",
+  "provenance": "ROM_UNRESOLVED"
+ },
+ {
+  "actorVisualProfileKey": 11,
+  "resourceId": 3,
+  "visualFrameId": 6,
+  "sequence": 2,
+  "normalizedPixelHash": "9d8ea90934379939",
+  "opaqueMaskHash": "8902f26463391a06",
+  "provenance": "ROM_UNRESOLVED"
+ },
+ {
+  "actorVisualProfileKey": 11,
+  "resourceId": 3,
+  "visualFrameId": 7,
+  "sequence": 4,
+  "normalizedPixelHash": "ab5801dfe945b772",
+  "opaqueMaskHash": "f83aef66cf7e04a9",
+  "provenance": "ROM_UNRESOLVED"
+ },
+ {
+  "actorVisualProfileKey": 11,
+  "resourceId": 3,
+  "visualFrameId": 8,
+  "sequence": 4,
+  "normalizedPixelHash": "8b0b9c56e8bb7a9a",
+  "opaqueMaskHash": "8dc6f9aed07747ec",
+  "provenance": "ROM_UNRESOLVED"
+ },
+ {
+  "actorVisualProfileKey": 11,
+  "resourceId": 3,
+  "visualFrameId": 9,
+  "sequence": 5,
+  "normalizedPixelHash": "9d8ea90934379939",
+  "opaqueMaskHash": "8902f26463391a06",
+  "provenance": "ROM_UNRESOLVED"
+ },
+ {
+  "actorVisualProfileKey": 11,
+  "resourceId": 3,
+  "visualFrameId": 10,
+  "sequence": 5,
+  "normalizedPixelHash": "c130780d48ea5d65",
+  "opaqueMaskHash": "cc52079817dbfe9c",
+  "provenance": "ROM_UNRESOLVED"
+ },
+ {
+  "actorVisualProfileKey": 12,
+  "resourceId": 3,
   "visualFrameId": 1,
   "sequence": 0,
-  "normalizedPixelHash": "76a29c37cb45482f",
+  "normalizedPixelHash": "3aad6178c4de7863",
   "opaqueMaskHash": "7177c8d5da1ed76f",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 11,
+  "actorVisualProfileKey": 12,
   "resourceId": 3,
   "visualFrameId": 2,
   "sequence": 0,
-  "normalizedPixelHash": "c4de755414c3a543",
+  "normalizedPixelHash": "7f144e3054fd153c",
   "opaqueMaskHash": "dfa978d585f24f04",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 11,
+  "actorVisualProfileKey": 12,
   "resourceId": 3,
   "visualFrameId": 3,
   "sequence": 1,
-  "normalizedPixelHash": "c601ad4555a94c91",
+  "normalizedPixelHash": "fda193afc0edc198",
   "opaqueMaskHash": "66d6a4f835b0c31a",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 11,
+  "actorVisualProfileKey": 12,
   "resourceId": 3,
   "visualFrameId": 4,
   "sequence": 1,
-  "normalizedPixelHash": "43e4cad4b748c623",
+  "normalizedPixelHash": "eff1d931ef5f35b0",
   "opaqueMaskHash": "0490d3e67508fafc",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 11,
+  "actorVisualProfileKey": 12,
   "resourceId": 3,
   "visualFrameId": 5,
   "sequence": 2,
-  "normalizedPixelHash": "3d47fd6538653d93",
+  "normalizedPixelHash": "0720bb28e9ef9770",
   "opaqueMaskHash": "8b08742b04cdd16e",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 11,
+  "actorVisualProfileKey": 12,
   "resourceId": 3,
   "visualFrameId": 6,
   "sequence": 2,
-  "normalizedPixelHash": "69099a9d8dacb4c1",
+  "normalizedPixelHash": "c83dae35a41a183e",
   "opaqueMaskHash": "45a730efbb2591d6",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 11,
+  "actorVisualProfileKey": 12,
   "resourceId": 3,
   "visualFrameId": 7,
   "sequence": 4,
-  "normalizedPixelHash": "429f4a9da98de7db",
+  "normalizedPixelHash": "881d669319e98c51",
   "opaqueMaskHash": "1805d9c9a3b42745",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 11,
+  "actorVisualProfileKey": 12,
   "resourceId": 3,
   "visualFrameId": 8,
   "sequence": 4,
-  "normalizedPixelHash": "76a29c37cb45482f",
+  "normalizedPixelHash": "3aad6178c4de7863",
   "opaqueMaskHash": "7177c8d5da1ed76f",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 11,
+  "actorVisualProfileKey": 12,
   "resourceId": 3,
   "visualFrameId": 9,
   "sequence": 5,
-  "normalizedPixelHash": "69099a9d8dacb4c1",
+  "normalizedPixelHash": "c83dae35a41a183e",
   "opaqueMaskHash": "45a730efbb2591d6",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 11,
+  "actorVisualProfileKey": 12,
   "resourceId": 3,
   "visualFrameId": 10,
   "sequence": 5,
-  "normalizedPixelHash": "93e3a2885dcfb0a0",
+  "normalizedPixelHash": "7d33170c4479f6d2",
   "opaqueMaskHash": "1bfde4cf717e2ddc",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 12,
+  "actorVisualProfileKey": 15,
   "resourceId": 3,
   "visualFrameId": 1,
   "sequence": 0,
-  "normalizedPixelHash": "e3a01620f0e0c26f",
-  "opaqueMaskHash": "6bc95f9db79f6533",
-  "provenance": "ROM_UNRESOLVED"
- },
- {
-  "actorVisualProfileKey": 12,
-  "resourceId": 3,
-  "visualFrameId": 2,
-  "sequence": 0,
-  "normalizedPixelHash": "17c37d7d1e534871",
-  "opaqueMaskHash": "8231905c911726a8",
-  "provenance": "ROM_UNRESOLVED"
- },
- {
-  "actorVisualProfileKey": 12,
-  "resourceId": 3,
-  "visualFrameId": 3,
-  "sequence": 1,
-  "normalizedPixelHash": "4f38939db623551e",
-  "opaqueMaskHash": "6f33ed87b5c5d920",
-  "provenance": "ROM_UNRESOLVED"
- },
- {
-  "actorVisualProfileKey": 12,
-  "resourceId": 3,
-  "visualFrameId": 4,
-  "sequence": 1,
-  "normalizedPixelHash": "c3767028fb1e68cd",
-  "opaqueMaskHash": "89e3cb4c48449a4c",
-  "provenance": "ROM_UNRESOLVED"
- },
- {
-  "actorVisualProfileKey": 12,
-  "resourceId": 3,
-  "visualFrameId": 5,
-  "sequence": 2,
-  "normalizedPixelHash": "42edd4ddbb645d24",
-  "opaqueMaskHash": "bf5fa127bb846a63",
-  "provenance": "ROM_UNRESOLVED"
- },
- {
-  "actorVisualProfileKey": 12,
-  "resourceId": 3,
-  "visualFrameId": 6,
-  "sequence": 2,
-  "normalizedPixelHash": "f94899f5ac55a357",
-  "opaqueMaskHash": "04d813506bbe0c00",
-  "provenance": "ROM_UNRESOLVED"
- },
- {
-  "actorVisualProfileKey": 12,
-  "resourceId": 3,
-  "visualFrameId": 7,
-  "sequence": 4,
-  "normalizedPixelHash": "6a361340c1e92293",
-  "opaqueMaskHash": "00079281d95cab3d",
-  "provenance": "ROM_UNRESOLVED"
- },
- {
-  "actorVisualProfileKey": 12,
-  "resourceId": 3,
-  "visualFrameId": 8,
-  "sequence": 4,
-  "normalizedPixelHash": "e3a01620f0e0c26f",
-  "opaqueMaskHash": "6bc95f9db79f6533",
-  "provenance": "ROM_UNRESOLVED"
- },
- {
-  "actorVisualProfileKey": 12,
-  "resourceId": 3,
-  "visualFrameId": 9,
-  "sequence": 5,
-  "normalizedPixelHash": "f94899f5ac55a357",
-  "opaqueMaskHash": "04d813506bbe0c00",
-  "provenance": "ROM_UNRESOLVED"
- },
- {
-  "actorVisualProfileKey": 12,
-  "resourceId": 3,
-  "visualFrameId": 10,
-  "sequence": 5,
-  "normalizedPixelHash": "bebc283e73732c47",
-  "opaqueMaskHash": "56969af4ca62bf4a",
+  "normalizedPixelHash": "4200df6b578ccdae",
+  "opaqueMaskHash": "f7e009d2b9ca909e",
   "provenance": "ROM_UNRESOLVED"
  },
  {
   "actorVisualProfileKey": 15,
   "resourceId": 3,
+  "visualFrameId": 3,
+  "sequence": 1,
+  "normalizedPixelHash": "a7e015321e595740",
+  "opaqueMaskHash": "a2a5416b36892b93",
+  "provenance": "ROM_UNRESOLVED"
+ },
+ {
+  "actorVisualProfileKey": 15,
+  "resourceId": 3,
+  "visualFrameId": 4,
+  "sequence": 1,
+  "normalizedPixelHash": "fd9f3bd12650593f",
+  "opaqueMaskHash": "e92ccc4bf61ce1ab",
+  "provenance": "ROM_UNRESOLVED"
+ },
+ {
+  "actorVisualProfileKey": 15,
+  "resourceId": 3,
+  "visualFrameId": 7,
+  "sequence": 4,
+  "normalizedPixelHash": "8feb2eb108eedd47",
+  "opaqueMaskHash": "1c6f6b2a910f0b06",
+  "provenance": "ROM_UNRESOLVED"
+ },
+ {
+  "actorVisualProfileKey": 15,
+  "resourceId": 3,
+  "visualFrameId": 8,
+  "sequence": 4,
+  "normalizedPixelHash": "4200df6b578ccdae",
+  "opaqueMaskHash": "f7e009d2b9ca909e",
+  "provenance": "ROM_UNRESOLVED"
+ },
+ {
+  "actorVisualProfileKey": 15,
+  "resourceId": 3,
+  "visualFrameId": 10,
+  "sequence": 5,
+  "normalizedPixelHash": "ff5872847eac2c4a",
+  "opaqueMaskHash": "c0f2adbd9ef70b22",
+  "provenance": "ROM_UNRESOLVED"
+ },
+ {
+  "actorVisualProfileKey": 16,
+  "resourceId": 3,
   "visualFrameId": 1,
   "sequence": 0,
-  "normalizedPixelHash": "3cd77452ca49b122",
+  "normalizedPixelHash": "0497b1af254ce2de",
   "opaqueMaskHash": "c591cb21586afc15",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 15,
+  "actorVisualProfileKey": 16,
   "resourceId": 3,
   "visualFrameId": 3,
   "sequence": 1,
-  "normalizedPixelHash": "fc10eb3d221ab0b3",
+  "normalizedPixelHash": "aac607974ce0fe41",
   "opaqueMaskHash": "5e840e6afb33a8a7",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 15,
+  "actorVisualProfileKey": 16,
   "resourceId": 3,
   "visualFrameId": 4,
   "sequence": 1,
-  "normalizedPixelHash": "ba476ee63d7a7d00",
+  "normalizedPixelHash": "d8c02618cf401a28",
   "opaqueMaskHash": "1910380330b6e67b",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 15,
+  "actorVisualProfileKey": 16,
   "resourceId": 3,
   "visualFrameId": 6,
   "sequence": 2,
-  "normalizedPixelHash": "41525c422d8885d5",
+  "normalizedPixelHash": "5e665054fa59d583",
   "opaqueMaskHash": "2a6ade5c4d374075",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 15,
+  "actorVisualProfileKey": 16,
   "resourceId": 3,
   "visualFrameId": 7,
   "sequence": 4,
-  "normalizedPixelHash": "f6f77a8457712655",
+  "normalizedPixelHash": "375c1a5f882bd085",
   "opaqueMaskHash": "c2105794db97baee",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 15,
+  "actorVisualProfileKey": 16,
   "resourceId": 3,
   "visualFrameId": 8,
   "sequence": 4,
-  "normalizedPixelHash": "3cd77452ca49b122",
+  "normalizedPixelHash": "0497b1af254ce2de",
   "opaqueMaskHash": "c591cb21586afc15",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 15,
+  "actorVisualProfileKey": 16,
   "resourceId": 3,
   "visualFrameId": 9,
   "sequence": 5,
-  "normalizedPixelHash": "41525c422d8885d5",
+  "normalizedPixelHash": "5e665054fa59d583",
   "opaqueMaskHash": "2a6ade5c4d374075",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 15,
+  "actorVisualProfileKey": 16,
   "resourceId": 3,
   "visualFrameId": 10,
   "sequence": 5,
-  "normalizedPixelHash": "1f7b735d1080c968",
+  "normalizedPixelHash": "6812b33a8b8c0516",
   "opaqueMaskHash": "fde95a48714aaacf",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 16,
+  "actorVisualProfileKey": 19,
   "resourceId": 3,
   "visualFrameId": 1,
   "sequence": 0,
-  "normalizedPixelHash": "4091a3ac833d3f27",
-  "opaqueMaskHash": "cc6b88d3b97b5824",
-  "provenance": "ROM_UNRESOLVED"
- },
- {
-  "actorVisualProfileKey": 16,
-  "resourceId": 3,
-  "visualFrameId": 2,
-  "sequence": 0,
-  "normalizedPixelHash": "8425449f4a53d1d9",
-  "opaqueMaskHash": "68196df6eb6435f0",
-  "provenance": "ROM_UNRESOLVED"
- },
- {
-  "actorVisualProfileKey": 16,
-  "resourceId": 3,
-  "visualFrameId": 3,
-  "sequence": 1,
-  "normalizedPixelHash": "c53df916f40d2971",
-  "opaqueMaskHash": "380a8cfaf4a701ca",
-  "provenance": "ROM_UNRESOLVED"
- },
- {
-  "actorVisualProfileKey": 16,
-  "resourceId": 3,
-  "visualFrameId": 5,
-  "sequence": 2,
-  "normalizedPixelHash": "c16fb82d5d1202e3",
-  "opaqueMaskHash": "fa8f1373c8d9e31d",
-  "provenance": "ROM_UNRESOLVED"
- },
- {
-  "actorVisualProfileKey": 16,
-  "resourceId": 3,
-  "visualFrameId": 6,
-  "sequence": 2,
-  "normalizedPixelHash": "386efe69dd059676",
-  "opaqueMaskHash": "81f20f6c7a443d95",
-  "provenance": "ROM_UNRESOLVED"
- },
- {
-  "actorVisualProfileKey": 16,
-  "resourceId": 3,
-  "visualFrameId": 7,
-  "sequence": 4,
-  "normalizedPixelHash": "f97b03b5fedd0956",
-  "opaqueMaskHash": "4c9c64d3fb8d84b5",
-  "provenance": "ROM_UNRESOLVED"
- },
- {
-  "actorVisualProfileKey": 16,
-  "resourceId": 3,
-  "visualFrameId": 8,
-  "sequence": 4,
-  "normalizedPixelHash": "4091a3ac833d3f27",
-  "opaqueMaskHash": "cc6b88d3b97b5824",
-  "provenance": "ROM_UNRESOLVED"
- },
- {
-  "actorVisualProfileKey": 16,
-  "resourceId": 3,
-  "visualFrameId": 9,
-  "sequence": 5,
-  "normalizedPixelHash": "386efe69dd059676",
-  "opaqueMaskHash": "81f20f6c7a443d95",
+  "normalizedPixelHash": "69450da176a54daf",
+  "opaqueMaskHash": "f7322904be1a0503",
   "provenance": "ROM_UNRESOLVED"
  },
  {
   "actorVisualProfileKey": 19,
+  "resourceId": 3,
+  "visualFrameId": 2,
+  "sequence": 0,
+  "normalizedPixelHash": "f9d53f67d0cbe0de",
+  "opaqueMaskHash": "151793feed3d84ff",
+  "provenance": "ROM_UNRESOLVED"
+ },
+ {
+  "actorVisualProfileKey": 19,
+  "resourceId": 3,
+  "visualFrameId": 3,
+  "sequence": 1,
+  "normalizedPixelHash": "1ea321061eae3e33",
+  "opaqueMaskHash": "d309a7fab9ae6b95",
+  "provenance": "ROM_UNRESOLVED"
+ },
+ {
+  "actorVisualProfileKey": 19,
+  "resourceId": 3,
+  "visualFrameId": 4,
+  "sequence": 1,
+  "normalizedPixelHash": "8020ecef33b92961",
+  "opaqueMaskHash": "d13564c062c4722e",
+  "provenance": "ROM_UNRESOLVED"
+ },
+ {
+  "actorVisualProfileKey": 19,
+  "resourceId": 3,
+  "visualFrameId": 5,
+  "sequence": 2,
+  "normalizedPixelHash": "95a31bbe08381a03",
+  "opaqueMaskHash": "5b3e7702390ef881",
+  "provenance": "ROM_UNRESOLVED"
+ },
+ {
+  "actorVisualProfileKey": 19,
+  "resourceId": 3,
+  "visualFrameId": 6,
+  "sequence": 2,
+  "normalizedPixelHash": "45b24dd346025fe2",
+  "opaqueMaskHash": "5de8ada114c86abd",
+  "provenance": "ROM_UNRESOLVED"
+ },
+ {
+  "actorVisualProfileKey": 19,
+  "resourceId": 3,
+  "visualFrameId": 7,
+  "sequence": 4,
+  "normalizedPixelHash": "8b33692475727710",
+  "opaqueMaskHash": "a4aed32602c1991d",
+  "provenance": "ROM_UNRESOLVED"
+ },
+ {
+  "actorVisualProfileKey": 19,
+  "resourceId": 3,
+  "visualFrameId": 8,
+  "sequence": 4,
+  "normalizedPixelHash": "69450da176a54daf",
+  "opaqueMaskHash": "f7322904be1a0503",
+  "provenance": "ROM_UNRESOLVED"
+ },
+ {
+  "actorVisualProfileKey": 19,
+  "resourceId": 3,
+  "visualFrameId": 9,
+  "sequence": 5,
+  "normalizedPixelHash": "45b24dd346025fe2",
+  "opaqueMaskHash": "5de8ada114c86abd",
+  "provenance": "ROM_UNRESOLVED"
+ },
+ {
+  "actorVisualProfileKey": 19,
+  "resourceId": 3,
+  "visualFrameId": 10,
+  "sequence": 5,
+  "normalizedPixelHash": "03ca31abcb8f918a",
+  "opaqueMaskHash": "b327a24d2fb2de58",
+  "provenance": "ROM_UNRESOLVED"
+ },
+ {
+  "actorVisualProfileKey": 20,
   "resourceId": 3,
   "visualFrameId": 1,
   "sequence": 0,
@@ -2718,7 +2781,7 @@
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 19,
+  "actorVisualProfileKey": 20,
   "resourceId": 3,
   "visualFrameId": 2,
   "sequence": 0,
@@ -2727,7 +2790,7 @@
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 19,
+  "actorVisualProfileKey": 20,
   "resourceId": 3,
   "visualFrameId": 3,
   "sequence": 1,
@@ -2736,7 +2799,7 @@
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 19,
+  "actorVisualProfileKey": 20,
   "resourceId": 3,
   "visualFrameId": 4,
   "sequence": 1,
@@ -2745,7 +2808,7 @@
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 19,
+  "actorVisualProfileKey": 20,
   "resourceId": 3,
   "visualFrameId": 5,
   "sequence": 2,
@@ -2754,7 +2817,7 @@
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 19,
+  "actorVisualProfileKey": 20,
   "resourceId": 3,
   "visualFrameId": 6,
   "sequence": 2,
@@ -2763,7 +2826,7 @@
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 19,
+  "actorVisualProfileKey": 20,
   "resourceId": 3,
   "visualFrameId": 7,
   "sequence": 4,
@@ -2772,7 +2835,7 @@
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 19,
+  "actorVisualProfileKey": 20,
   "resourceId": 3,
   "visualFrameId": 8,
   "sequence": 4,
@@ -2781,7 +2844,7 @@
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 19,
+  "actorVisualProfileKey": 20,
   "resourceId": 3,
   "visualFrameId": 9,
   "sequence": 5,
@@ -2790,7 +2853,7 @@
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 19,
+  "actorVisualProfileKey": 20,
   "resourceId": 3,
   "visualFrameId": 10,
   "sequence": 5,
@@ -2799,174 +2862,93 @@
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 20,
+  "actorVisualProfileKey": 21,
   "resourceId": 3,
   "visualFrameId": 1,
   "sequence": 0,
-  "normalizedPixelHash": "b94ea789fa632169",
+  "normalizedPixelHash": "158ff2be69902eb1",
   "opaqueMaskHash": "bc3016f827f866ce",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 20,
+  "actorVisualProfileKey": 21,
   "resourceId": 3,
   "visualFrameId": 2,
   "sequence": 0,
-  "normalizedPixelHash": "7cd28f83c2b4b4a2",
+  "normalizedPixelHash": "413c8e1746c786ce",
   "opaqueMaskHash": "08d5c01b0751db51",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 20,
+  "actorVisualProfileKey": 21,
   "resourceId": 3,
   "visualFrameId": 3,
   "sequence": 1,
-  "normalizedPixelHash": "10fefd07f58e7e10",
+  "normalizedPixelHash": "59674f4cb6233b83",
   "opaqueMaskHash": "6905864bf70b9ae6",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 20,
+  "actorVisualProfileKey": 21,
   "resourceId": 3,
   "visualFrameId": 4,
   "sequence": 1,
-  "normalizedPixelHash": "31f2cbaf7940d2a0",
+  "normalizedPixelHash": "dfc724ac032c2ee8",
   "opaqueMaskHash": "2189f5ca2f50ca7e",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 20,
+  "actorVisualProfileKey": 21,
   "resourceId": 3,
   "visualFrameId": 5,
   "sequence": 2,
-  "normalizedPixelHash": "da9ec47b8e3a88dd",
+  "normalizedPixelHash": "e0f54414945caf64",
   "opaqueMaskHash": "6a1fdd289a776d83",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 20,
+  "actorVisualProfileKey": 21,
   "resourceId": 3,
   "visualFrameId": 6,
   "sequence": 2,
-  "normalizedPixelHash": "20762fbe3b5def16",
+  "normalizedPixelHash": "a0f0c45fa0925129",
   "opaqueMaskHash": "ed84e0b1d5d24a06",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 20,
+  "actorVisualProfileKey": 21,
   "resourceId": 3,
   "visualFrameId": 7,
   "sequence": 4,
-  "normalizedPixelHash": "baade58eb13bda66",
+  "normalizedPixelHash": "409f236a61d988b9",
   "opaqueMaskHash": "42d31d3d6129b92f",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 20,
+  "actorVisualProfileKey": 21,
   "resourceId": 3,
   "visualFrameId": 8,
   "sequence": 4,
-  "normalizedPixelHash": "b94ea789fa632169",
+  "normalizedPixelHash": "158ff2be69902eb1",
   "opaqueMaskHash": "bc3016f827f866ce",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 20,
+  "actorVisualProfileKey": 21,
   "resourceId": 3,
   "visualFrameId": 9,
   "sequence": 5,
-  "normalizedPixelHash": "20762fbe3b5def16",
+  "normalizedPixelHash": "a0f0c45fa0925129",
   "opaqueMaskHash": "ed84e0b1d5d24a06",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 20,
+  "actorVisualProfileKey": 21,
   "resourceId": 3,
   "visualFrameId": 10,
   "sequence": 5,
-  "normalizedPixelHash": "71bcc01edf8941c9",
+  "normalizedPixelHash": "ce93f54d99f72374",
   "opaqueMaskHash": "dbebef319082589f",
-  "provenance": "ROM_UNRESOLVED"
- },
- {
-  "actorVisualProfileKey": 21,
-  "resourceId": 3,
-  "visualFrameId": 1,
-  "sequence": 0,
-  "normalizedPixelHash": "fc38bdde02b59c03",
-  "opaqueMaskHash": "2236404125ab86cc",
-  "provenance": "ROM_UNRESOLVED"
- },
- {
-  "actorVisualProfileKey": 21,
-  "resourceId": 3,
-  "visualFrameId": 2,
-  "sequence": 0,
-  "normalizedPixelHash": "5ff84a8aeae9e685",
-  "opaqueMaskHash": "882070f096ad9ff4",
-  "provenance": "ROM_UNRESOLVED"
- },
- {
-  "actorVisualProfileKey": 21,
-  "resourceId": 3,
-  "visualFrameId": 3,
-  "sequence": 1,
-  "normalizedPixelHash": "6aef6e048a9e8bdd",
-  "opaqueMaskHash": "76c0596397b56534",
-  "provenance": "ROM_UNRESOLVED"
- },
- {
-  "actorVisualProfileKey": 21,
-  "resourceId": 3,
-  "visualFrameId": 4,
-  "sequence": 1,
-  "normalizedPixelHash": "76209bb0dd780c58",
-  "opaqueMaskHash": "cb2b310c90c35df8",
-  "provenance": "ROM_UNRESOLVED"
- },
- {
-  "actorVisualProfileKey": 21,
-  "resourceId": 3,
-  "visualFrameId": 6,
-  "sequence": 2,
-  "normalizedPixelHash": "a9271e7230a9a40d",
-  "opaqueMaskHash": "0df257a19b1b0c38",
-  "provenance": "ROM_UNRESOLVED"
- },
- {
-  "actorVisualProfileKey": 21,
-  "resourceId": 3,
-  "visualFrameId": 7,
-  "sequence": 4,
-  "normalizedPixelHash": "9a96e8a2392201ac",
-  "opaqueMaskHash": "ec4a52f943d9f655",
-  "provenance": "ROM_UNRESOLVED"
- },
- {
-  "actorVisualProfileKey": 21,
-  "resourceId": 3,
-  "visualFrameId": 8,
-  "sequence": 4,
-  "normalizedPixelHash": "fc38bdde02b59c03",
-  "opaqueMaskHash": "2236404125ab86cc",
-  "provenance": "ROM_UNRESOLVED"
- },
- {
-  "actorVisualProfileKey": 21,
-  "resourceId": 3,
-  "visualFrameId": 9,
-  "sequence": 5,
-  "normalizedPixelHash": "a9271e7230a9a40d",
-  "opaqueMaskHash": "0df257a19b1b0c38",
-  "provenance": "ROM_UNRESOLVED"
- },
- {
-  "actorVisualProfileKey": 21,
-  "resourceId": 3,
-  "visualFrameId": 10,
-  "sequence": 5,
-  "normalizedPixelHash": "1b8354fdb4c748a4",
-  "opaqueMaskHash": "d22fff1125a3cc29",
   "provenance": "ROM_UNRESOLVED"
  },
  {
@@ -3064,8 +3046,8 @@
   "resourceId": 3,
   "visualFrameId": 1,
   "sequence": 0,
-  "normalizedPixelHash": "f442bd11c48c7fb4",
-  "opaqueMaskHash": "5327e4486dedd36b",
+  "normalizedPixelHash": "ed8afb35d072961a",
+  "opaqueMaskHash": "685aa374f73c86eb",
   "provenance": "ROM_UNRESOLVED"
  },
  {
@@ -3073,8 +3055,8 @@
   "resourceId": 3,
   "visualFrameId": 2,
   "sequence": 0,
-  "normalizedPixelHash": "88e3cd7e1ef05ec9",
-  "opaqueMaskHash": "0388af5408c31953",
+  "normalizedPixelHash": "6943703bada749d2",
+  "opaqueMaskHash": "1c8a763337698ff5",
   "provenance": "ROM_UNRESOLVED"
  },
  {
@@ -3082,8 +3064,8 @@
   "resourceId": 3,
   "visualFrameId": 3,
   "sequence": 1,
-  "normalizedPixelHash": "7fbf2ed651fa6fb8",
-  "opaqueMaskHash": "bae870f3b98c6f4c",
+  "normalizedPixelHash": "3dad1e23aa4e4b87",
+  "opaqueMaskHash": "f6641eff38f073d8",
   "provenance": "ROM_UNRESOLVED"
  },
  {
@@ -3091,8 +3073,8 @@
   "resourceId": 3,
   "visualFrameId": 4,
   "sequence": 1,
-  "normalizedPixelHash": "7483600a9dda6d78",
-  "opaqueMaskHash": "c32fc231530d9ef5",
+  "normalizedPixelHash": "f5740ad4000ca846",
+  "opaqueMaskHash": "6b9d9cc9559c6075",
   "provenance": "ROM_UNRESOLVED"
  },
  {
@@ -3100,8 +3082,8 @@
   "resourceId": 3,
   "visualFrameId": 5,
   "sequence": 2,
-  "normalizedPixelHash": "cbfe82772cab61b3",
-  "opaqueMaskHash": "de1e0e98290f2d45",
+  "normalizedPixelHash": "e8fcaf1f924d7b5f",
+  "opaqueMaskHash": "2a69c489df86af23",
   "provenance": "ROM_UNRESOLVED"
  },
  {
@@ -3109,8 +3091,8 @@
   "resourceId": 3,
   "visualFrameId": 6,
   "sequence": 2,
-  "normalizedPixelHash": "978d04f944d96a71",
-  "opaqueMaskHash": "c5fc1f9298e60dde",
+  "normalizedPixelHash": "7d1250ce45fe3835",
+  "opaqueMaskHash": "30e38fc3144f3f4f",
   "provenance": "ROM_UNRESOLVED"
  },
  {
@@ -3118,8 +3100,8 @@
   "resourceId": 3,
   "visualFrameId": 7,
   "sequence": 4,
-  "normalizedPixelHash": "c323f2cd95d4a85a",
-  "opaqueMaskHash": "d6775eb63dabad4d",
+  "normalizedPixelHash": "54ba0548eba3c71d",
+  "opaqueMaskHash": "e8f4b67d38be84a5",
   "provenance": "ROM_UNRESOLVED"
  },
  {
@@ -3127,8 +3109,8 @@
   "resourceId": 3,
   "visualFrameId": 8,
   "sequence": 4,
-  "normalizedPixelHash": "f442bd11c48c7fb4",
-  "opaqueMaskHash": "5327e4486dedd36b",
+  "normalizedPixelHash": "ed8afb35d072961a",
+  "opaqueMaskHash": "685aa374f73c86eb",
   "provenance": "ROM_UNRESOLVED"
  },
  {
@@ -3136,8 +3118,8 @@
   "resourceId": 3,
   "visualFrameId": 9,
   "sequence": 5,
-  "normalizedPixelHash": "978d04f944d96a71",
-  "opaqueMaskHash": "c5fc1f9298e60dde",
+  "normalizedPixelHash": "7d1250ce45fe3835",
+  "opaqueMaskHash": "30e38fc3144f3f4f",
   "provenance": "ROM_UNRESOLVED"
  },
  {
@@ -3145,8 +3127,8 @@
   "resourceId": 3,
   "visualFrameId": 10,
   "sequence": 5,
-  "normalizedPixelHash": "a11b71d119bcb840",
-  "opaqueMaskHash": "f96ddb948390ca70",
+  "normalizedPixelHash": "0fe5530f60059d0e",
+  "opaqueMaskHash": "70de9a481fe01f0b",
   "provenance": "ROM_UNRESOLVED"
  },
  {
@@ -3334,12 +3316,102 @@
   "resourceId": 3,
   "visualFrameId": 1,
   "sequence": 0,
+  "normalizedPixelHash": "b60602ec45709fa9",
+  "opaqueMaskHash": "c12550f6b092e7f7",
+  "provenance": "ROM_UNRESOLVED"
+ },
+ {
+  "actorVisualProfileKey": 34,
+  "resourceId": 3,
+  "visualFrameId": 2,
+  "sequence": 0,
+  "normalizedPixelHash": "c05b4a4ce7b44b8c",
+  "opaqueMaskHash": "81c641cc1084c974",
+  "provenance": "ROM_UNRESOLVED"
+ },
+ {
+  "actorVisualProfileKey": 34,
+  "resourceId": 3,
+  "visualFrameId": 3,
+  "sequence": 1,
+  "normalizedPixelHash": "f4d31f10c0119f60",
+  "opaqueMaskHash": "f4e61c33a042dca6",
+  "provenance": "ROM_UNRESOLVED"
+ },
+ {
+  "actorVisualProfileKey": 34,
+  "resourceId": 3,
+  "visualFrameId": 4,
+  "sequence": 1,
+  "normalizedPixelHash": "1ea84a635dc93c80",
+  "opaqueMaskHash": "303bdf3922374aea",
+  "provenance": "ROM_UNRESOLVED"
+ },
+ {
+  "actorVisualProfileKey": 34,
+  "resourceId": 3,
+  "visualFrameId": 5,
+  "sequence": 2,
+  "normalizedPixelHash": "ef266421f9b42d4a",
+  "opaqueMaskHash": "065a778f519fd23d",
+  "provenance": "ROM_UNRESOLVED"
+ },
+ {
+  "actorVisualProfileKey": 34,
+  "resourceId": 3,
+  "visualFrameId": 6,
+  "sequence": 2,
+  "normalizedPixelHash": "bea94799feba2d4f",
+  "opaqueMaskHash": "3e5540fe4384e58d",
+  "provenance": "ROM_UNRESOLVED"
+ },
+ {
+  "actorVisualProfileKey": 34,
+  "resourceId": 3,
+  "visualFrameId": 7,
+  "sequence": 4,
+  "normalizedPixelHash": "a790b87cdeac83a0",
+  "opaqueMaskHash": "df2f5f75ad7003ee",
+  "provenance": "ROM_UNRESOLVED"
+ },
+ {
+  "actorVisualProfileKey": 34,
+  "resourceId": 3,
+  "visualFrameId": 8,
+  "sequence": 4,
+  "normalizedPixelHash": "b60602ec45709fa9",
+  "opaqueMaskHash": "c12550f6b092e7f7",
+  "provenance": "ROM_UNRESOLVED"
+ },
+ {
+  "actorVisualProfileKey": 34,
+  "resourceId": 3,
+  "visualFrameId": 9,
+  "sequence": 5,
+  "normalizedPixelHash": "bea94799feba2d4f",
+  "opaqueMaskHash": "3e5540fe4384e58d",
+  "provenance": "ROM_UNRESOLVED"
+ },
+ {
+  "actorVisualProfileKey": 34,
+  "resourceId": 3,
+  "visualFrameId": 10,
+  "sequence": 5,
+  "normalizedPixelHash": "d0dc8e5b74cfd854",
+  "opaqueMaskHash": "a92f0de795e214a2",
+  "provenance": "ROM_UNRESOLVED"
+ },
+ {
+  "actorVisualProfileKey": 35,
+  "resourceId": 3,
+  "visualFrameId": 1,
+  "sequence": 0,
   "normalizedPixelHash": "2066079e21fe26e1",
   "opaqueMaskHash": "3bb446cdbfdde55b",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 34,
+  "actorVisualProfileKey": 35,
   "resourceId": 3,
   "visualFrameId": 2,
   "sequence": 0,
@@ -3348,7 +3420,7 @@
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 34,
+  "actorVisualProfileKey": 35,
   "resourceId": 3,
   "visualFrameId": 3,
   "sequence": 1,
@@ -3357,7 +3429,7 @@
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 34,
+  "actorVisualProfileKey": 35,
   "resourceId": 3,
   "visualFrameId": 4,
   "sequence": 1,
@@ -3366,7 +3438,7 @@
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 34,
+  "actorVisualProfileKey": 35,
   "resourceId": 3,
   "visualFrameId": 5,
   "sequence": 2,
@@ -3375,7 +3447,7 @@
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 34,
+  "actorVisualProfileKey": 35,
   "resourceId": 3,
   "visualFrameId": 6,
   "sequence": 2,
@@ -3384,7 +3456,7 @@
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 34,
+  "actorVisualProfileKey": 35,
   "resourceId": 3,
   "visualFrameId": 7,
   "sequence": 4,
@@ -3393,7 +3465,7 @@
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 34,
+  "actorVisualProfileKey": 35,
   "resourceId": 3,
   "visualFrameId": 8,
   "sequence": 4,
@@ -3402,7 +3474,7 @@
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 34,
+  "actorVisualProfileKey": 35,
   "resourceId": 3,
   "visualFrameId": 9,
   "sequence": 5,
@@ -3411,7 +3483,7 @@
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 34,
+  "actorVisualProfileKey": 35,
   "resourceId": 3,
   "visualFrameId": 10,
   "sequence": 5,
@@ -3420,277 +3492,277 @@
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 35,
+  "actorVisualProfileKey": 36,
   "resourceId": 3,
   "visualFrameId": 1,
   "sequence": 0,
-  "normalizedPixelHash": "89c3de73851a622b",
+  "normalizedPixelHash": "27bea9240e38d9bc",
   "opaqueMaskHash": "8c3024b09bcffd7d",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 35,
+  "actorVisualProfileKey": 36,
   "resourceId": 3,
   "visualFrameId": 2,
   "sequence": 0,
-  "normalizedPixelHash": "6d69064c74283ec2",
+  "normalizedPixelHash": "d77f6952118acdbe",
   "opaqueMaskHash": "fe0b862e878d17e1",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 35,
+  "actorVisualProfileKey": 36,
   "resourceId": 3,
   "visualFrameId": 3,
   "sequence": 1,
-  "normalizedPixelHash": "c11ace9b783472bb",
+  "normalizedPixelHash": "98f9ca1f50c20c5c",
   "opaqueMaskHash": "66ad23662ac0de5b",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 35,
+  "actorVisualProfileKey": 36,
   "resourceId": 3,
   "visualFrameId": 4,
   "sequence": 1,
-  "normalizedPixelHash": "47656e249f315f79",
+  "normalizedPixelHash": "8a15ccddee0c642c",
   "opaqueMaskHash": "e6aceded910168d6",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 35,
+  "actorVisualProfileKey": 36,
   "resourceId": 3,
   "visualFrameId": 5,
   "sequence": 2,
-  "normalizedPixelHash": "49b404f3b5fca293",
+  "normalizedPixelHash": "011100c5a3608b63",
   "opaqueMaskHash": "04008681d9c2f968",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 35,
+  "actorVisualProfileKey": 36,
   "resourceId": 3,
   "visualFrameId": 6,
   "sequence": 2,
-  "normalizedPixelHash": "24dc5d0d95da265e",
+  "normalizedPixelHash": "9276388219feba74",
   "opaqueMaskHash": "72d55dd5b9238b11",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 35,
+  "actorVisualProfileKey": 36,
   "resourceId": 3,
   "visualFrameId": 7,
   "sequence": 4,
-  "normalizedPixelHash": "d1305872e8119939",
+  "normalizedPixelHash": "8769e9563ec1f068",
   "opaqueMaskHash": "ca8b71ce953033da",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 35,
+  "actorVisualProfileKey": 36,
   "resourceId": 3,
   "visualFrameId": 8,
   "sequence": 4,
-  "normalizedPixelHash": "89c3de73851a622b",
+  "normalizedPixelHash": "27bea9240e38d9bc",
   "opaqueMaskHash": "8c3024b09bcffd7d",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 35,
+  "actorVisualProfileKey": 36,
   "resourceId": 3,
   "visualFrameId": 9,
   "sequence": 5,
-  "normalizedPixelHash": "24dc5d0d95da265e",
+  "normalizedPixelHash": "9276388219feba74",
   "opaqueMaskHash": "72d55dd5b9238b11",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 35,
+  "actorVisualProfileKey": 36,
   "resourceId": 3,
   "visualFrameId": 10,
   "sequence": 5,
-  "normalizedPixelHash": "e4117167cc1f909d",
+  "normalizedPixelHash": "2695462f85661074",
   "opaqueMaskHash": "559c4e2f9efe9f2f",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 36,
+  "actorVisualProfileKey": 37,
   "resourceId": 3,
   "visualFrameId": 1,
   "sequence": 0,
-  "normalizedPixelHash": "dde99efa85f72bb6",
+  "normalizedPixelHash": "9217956e60e525ae",
   "opaqueMaskHash": "b460e7f97338f8b8",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 36,
+  "actorVisualProfileKey": 37,
   "resourceId": 3,
   "visualFrameId": 2,
   "sequence": 0,
-  "normalizedPixelHash": "60e5599373c32cd7",
+  "normalizedPixelHash": "1cabb75a40a23319",
   "opaqueMaskHash": "d7dabe4a622616bd",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 36,
+  "actorVisualProfileKey": 37,
   "resourceId": 3,
   "visualFrameId": 3,
   "sequence": 1,
-  "normalizedPixelHash": "d0bc9ce7ef7df4b9",
+  "normalizedPixelHash": "79c7ccf17e81ece3",
   "opaqueMaskHash": "af404509f477fb28",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 36,
+  "actorVisualProfileKey": 37,
   "resourceId": 3,
   "visualFrameId": 4,
   "sequence": 1,
-  "normalizedPixelHash": "09e72680298b8ece",
+  "normalizedPixelHash": "060c17b3f956a2cd",
   "opaqueMaskHash": "9943c1efd77c66c6",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 36,
+  "actorVisualProfileKey": 37,
   "resourceId": 3,
   "visualFrameId": 5,
   "sequence": 2,
-  "normalizedPixelHash": "3bb6f8b931c6cce6",
+  "normalizedPixelHash": "7e95ca4d00f7f3a1",
   "opaqueMaskHash": "413431363af1cadc",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 36,
+  "actorVisualProfileKey": 37,
   "resourceId": 3,
   "visualFrameId": 6,
   "sequence": 2,
-  "normalizedPixelHash": "899879df44177a38",
+  "normalizedPixelHash": "745e5abbf177e8e2",
   "opaqueMaskHash": "f2f86eda15338b5d",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 36,
+  "actorVisualProfileKey": 37,
   "resourceId": 3,
   "visualFrameId": 7,
   "sequence": 4,
-  "normalizedPixelHash": "5cbad417cb56db10",
+  "normalizedPixelHash": "b1a8298bd3f388bc",
   "opaqueMaskHash": "9274c7e483fb5641",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 36,
+  "actorVisualProfileKey": 37,
   "resourceId": 3,
   "visualFrameId": 8,
   "sequence": 4,
-  "normalizedPixelHash": "dde99efa85f72bb6",
+  "normalizedPixelHash": "9217956e60e525ae",
   "opaqueMaskHash": "b460e7f97338f8b8",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 36,
+  "actorVisualProfileKey": 37,
   "resourceId": 3,
   "visualFrameId": 9,
   "sequence": 5,
-  "normalizedPixelHash": "899879df44177a38",
+  "normalizedPixelHash": "745e5abbf177e8e2",
   "opaqueMaskHash": "f2f86eda15338b5d",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 36,
+  "actorVisualProfileKey": 37,
   "resourceId": 3,
   "visualFrameId": 10,
   "sequence": 5,
-  "normalizedPixelHash": "f6449867a02006ea",
+  "normalizedPixelHash": "760b6ff3ea5af005",
   "opaqueMaskHash": "e9e7a6cc475e5415",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 37,
+  "actorVisualProfileKey": 38,
   "resourceId": 3,
   "visualFrameId": 1,
   "sequence": 0,
-  "normalizedPixelHash": "45127ea9b62a8452",
+  "normalizedPixelHash": "17f04098427fe8d0",
   "opaqueMaskHash": "e8fe8bd1d8b6e30b",
-  "provenance": "ROM_UNRESOLVED"
- },
- {
-  "actorVisualProfileKey": 37,
-  "resourceId": 3,
-  "visualFrameId": 2,
-  "sequence": 0,
-  "normalizedPixelHash": "8f2021cb74ac2330",
-  "opaqueMaskHash": "654b1cecae65acea",
-  "provenance": "ROM_UNRESOLVED"
- },
- {
-  "actorVisualProfileKey": 37,
-  "resourceId": 3,
-  "visualFrameId": 3,
-  "sequence": 1,
-  "normalizedPixelHash": "3ba8ec66e331a6a7",
-  "opaqueMaskHash": "fa580dbc7000ca9a",
-  "provenance": "ROM_UNRESOLVED"
- },
- {
-  "actorVisualProfileKey": 37,
-  "resourceId": 3,
-  "visualFrameId": 4,
-  "sequence": 1,
-  "normalizedPixelHash": "b4a36bcd059bf972",
-  "opaqueMaskHash": "37ed36be3f41abf7",
-  "provenance": "ROM_UNRESOLVED"
- },
- {
-  "actorVisualProfileKey": 37,
-  "resourceId": 3,
-  "visualFrameId": 5,
-  "sequence": 2,
-  "normalizedPixelHash": "4b7e3046f68deee4",
-  "opaqueMaskHash": "118d52bbb9777d20",
-  "provenance": "ROM_UNRESOLVED"
- },
- {
-  "actorVisualProfileKey": 37,
-  "resourceId": 3,
-  "visualFrameId": 6,
-  "sequence": 2,
-  "normalizedPixelHash": "c3c4220db462dd3a",
-  "opaqueMaskHash": "af421dd505d1e933",
-  "provenance": "ROM_UNRESOLVED"
- },
- {
-  "actorVisualProfileKey": 37,
-  "resourceId": 3,
-  "visualFrameId": 7,
-  "sequence": 4,
-  "normalizedPixelHash": "eebc813f4e388574",
-  "opaqueMaskHash": "f67c8c42b69f2515",
-  "provenance": "ROM_UNRESOLVED"
- },
- {
-  "actorVisualProfileKey": 37,
-  "resourceId": 3,
-  "visualFrameId": 8,
-  "sequence": 4,
-  "normalizedPixelHash": "45127ea9b62a8452",
-  "opaqueMaskHash": "e8fe8bd1d8b6e30b",
-  "provenance": "ROM_UNRESOLVED"
- },
- {
-  "actorVisualProfileKey": 37,
-  "resourceId": 3,
-  "visualFrameId": 9,
-  "sequence": 5,
-  "normalizedPixelHash": "c3c4220db462dd3a",
-  "opaqueMaskHash": "af421dd505d1e933",
-  "provenance": "ROM_UNRESOLVED"
- },
- {
-  "actorVisualProfileKey": 37,
-  "resourceId": 3,
-  "visualFrameId": 10,
-  "sequence": 5,
-  "normalizedPixelHash": "056d10ac956d019f",
-  "opaqueMaskHash": "0e1c3ca7a4725bd3",
   "provenance": "ROM_UNRESOLVED"
  },
  {
   "actorVisualProfileKey": 38,
+  "resourceId": 3,
+  "visualFrameId": 2,
+  "sequence": 0,
+  "normalizedPixelHash": "f70a460b2f105b11",
+  "opaqueMaskHash": "654b1cecae65acea",
+  "provenance": "ROM_UNRESOLVED"
+ },
+ {
+  "actorVisualProfileKey": 38,
+  "resourceId": 3,
+  "visualFrameId": 3,
+  "sequence": 1,
+  "normalizedPixelHash": "67c066e3cd8bf839",
+  "opaqueMaskHash": "fa580dbc7000ca9a",
+  "provenance": "ROM_UNRESOLVED"
+ },
+ {
+  "actorVisualProfileKey": 38,
+  "resourceId": 3,
+  "visualFrameId": 4,
+  "sequence": 1,
+  "normalizedPixelHash": "8512d44c2fd379b0",
+  "opaqueMaskHash": "37ed36be3f41abf7",
+  "provenance": "ROM_UNRESOLVED"
+ },
+ {
+  "actorVisualProfileKey": 38,
+  "resourceId": 3,
+  "visualFrameId": 5,
+  "sequence": 2,
+  "normalizedPixelHash": "fedc04ef3d46eb2d",
+  "opaqueMaskHash": "118d52bbb9777d20",
+  "provenance": "ROM_UNRESOLVED"
+ },
+ {
+  "actorVisualProfileKey": 38,
+  "resourceId": 3,
+  "visualFrameId": 6,
+  "sequence": 2,
+  "normalizedPixelHash": "caf41e4cc226de02",
+  "opaqueMaskHash": "af421dd505d1e933",
+  "provenance": "ROM_UNRESOLVED"
+ },
+ {
+  "actorVisualProfileKey": 38,
+  "resourceId": 3,
+  "visualFrameId": 7,
+  "sequence": 4,
+  "normalizedPixelHash": "c2ca33be4930a7c7",
+  "opaqueMaskHash": "f67c8c42b69f2515",
+  "provenance": "ROM_UNRESOLVED"
+ },
+ {
+  "actorVisualProfileKey": 38,
+  "resourceId": 3,
+  "visualFrameId": 8,
+  "sequence": 4,
+  "normalizedPixelHash": "17f04098427fe8d0",
+  "opaqueMaskHash": "e8fe8bd1d8b6e30b",
+  "provenance": "ROM_UNRESOLVED"
+ },
+ {
+  "actorVisualProfileKey": 38,
+  "resourceId": 3,
+  "visualFrameId": 9,
+  "sequence": 5,
+  "normalizedPixelHash": "caf41e4cc226de02",
+  "opaqueMaskHash": "af421dd505d1e933",
+  "provenance": "ROM_UNRESOLVED"
+ },
+ {
+  "actorVisualProfileKey": 38,
+  "resourceId": 3,
+  "visualFrameId": 10,
+  "sequence": 5,
+  "normalizedPixelHash": "fb8b5a18da12aa81",
+  "opaqueMaskHash": "0e1c3ca7a4725bd3",
+  "provenance": "ROM_UNRESOLVED"
+ },
+ {
+  "actorVisualProfileKey": 39,
   "resourceId": 3,
   "visualFrameId": 1,
   "sequence": 0,
@@ -3699,7 +3771,7 @@
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 38,
+  "actorVisualProfileKey": 39,
   "resourceId": 3,
   "visualFrameId": 2,
   "sequence": 0,
@@ -3708,7 +3780,7 @@
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 38,
+  "actorVisualProfileKey": 39,
   "resourceId": 3,
   "visualFrameId": 3,
   "sequence": 1,
@@ -3717,7 +3789,7 @@
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 38,
+  "actorVisualProfileKey": 39,
   "resourceId": 3,
   "visualFrameId": 4,
   "sequence": 1,
@@ -3726,7 +3798,7 @@
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 38,
+  "actorVisualProfileKey": 39,
   "resourceId": 3,
   "visualFrameId": 5,
   "sequence": 2,
@@ -3735,7 +3807,7 @@
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 38,
+  "actorVisualProfileKey": 39,
   "resourceId": 3,
   "visualFrameId": 6,
   "sequence": 2,
@@ -3744,7 +3816,7 @@
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 38,
+  "actorVisualProfileKey": 39,
   "resourceId": 3,
   "visualFrameId": 7,
   "sequence": 4,
@@ -3753,7 +3825,7 @@
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 38,
+  "actorVisualProfileKey": 39,
   "resourceId": 3,
   "visualFrameId": 8,
   "sequence": 4,
@@ -3762,7 +3834,7 @@
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 38,
+  "actorVisualProfileKey": 39,
   "resourceId": 3,
   "visualFrameId": 9,
   "sequence": 5,
@@ -3771,7 +3843,7 @@
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 38,
+  "actorVisualProfileKey": 39,
   "resourceId": 3,
   "visualFrameId": 10,
   "sequence": 5,
@@ -3780,7 +3852,7 @@
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 39,
+  "actorVisualProfileKey": 40,
   "resourceId": 3,
   "visualFrameId": 1,
   "sequence": 0,
@@ -3789,7 +3861,7 @@
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 39,
+  "actorVisualProfileKey": 40,
   "resourceId": 3,
   "visualFrameId": 2,
   "sequence": 0,
@@ -3798,7 +3870,7 @@
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 39,
+  "actorVisualProfileKey": 40,
   "resourceId": 3,
   "visualFrameId": 3,
   "sequence": 1,
@@ -3807,7 +3879,7 @@
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 39,
+  "actorVisualProfileKey": 40,
   "resourceId": 3,
   "visualFrameId": 4,
   "sequence": 1,
@@ -3816,7 +3888,7 @@
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 39,
+  "actorVisualProfileKey": 40,
   "resourceId": 3,
   "visualFrameId": 5,
   "sequence": 2,
@@ -3825,7 +3897,7 @@
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 39,
+  "actorVisualProfileKey": 40,
   "resourceId": 3,
   "visualFrameId": 6,
   "sequence": 2,
@@ -3834,7 +3906,7 @@
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 39,
+  "actorVisualProfileKey": 40,
   "resourceId": 3,
   "visualFrameId": 7,
   "sequence": 4,
@@ -3843,7 +3915,7 @@
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 39,
+  "actorVisualProfileKey": 40,
   "resourceId": 3,
   "visualFrameId": 8,
   "sequence": 4,
@@ -3852,7 +3924,7 @@
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 39,
+  "actorVisualProfileKey": 40,
   "resourceId": 3,
   "visualFrameId": 9,
   "sequence": 5,
@@ -3861,7 +3933,7 @@
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 39,
+  "actorVisualProfileKey": 40,
   "resourceId": 3,
   "visualFrameId": 10,
   "sequence": 5,
@@ -3870,372 +3942,282 @@
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 40,
+  "actorVisualProfileKey": 41,
   "resourceId": 3,
   "visualFrameId": 1,
   "sequence": 0,
-  "normalizedPixelHash": "d458f036e7a3fad1",
+  "normalizedPixelHash": "f0e843ae332f2f82",
   "opaqueMaskHash": "2e9c2c2e71316dc8",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 40,
+  "actorVisualProfileKey": 41,
   "resourceId": 3,
   "visualFrameId": 2,
   "sequence": 0,
-  "normalizedPixelHash": "f1b4efb2de67f079",
+  "normalizedPixelHash": "f43ea9f1d3da7dbf",
   "opaqueMaskHash": "36aef3a7be9b74d4",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 40,
+  "actorVisualProfileKey": 41,
   "resourceId": 3,
   "visualFrameId": 3,
   "sequence": 1,
-  "normalizedPixelHash": "0625875d46cb997a",
+  "normalizedPixelHash": "4a55a7470c9883c9",
   "opaqueMaskHash": "285a1ed75a40efbf",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 40,
+  "actorVisualProfileKey": 41,
   "resourceId": 3,
   "visualFrameId": 4,
   "sequence": 1,
-  "normalizedPixelHash": "4d702f826418ad4d",
+  "normalizedPixelHash": "3722dc9528ed7663",
   "opaqueMaskHash": "7575b484528210a0",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 40,
+  "actorVisualProfileKey": 41,
   "resourceId": 3,
   "visualFrameId": 5,
   "sequence": 2,
-  "normalizedPixelHash": "66d18c7204869e5e",
+  "normalizedPixelHash": "14f256d5a1fee198",
   "opaqueMaskHash": "27bda3abef4c4f7b",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 40,
+  "actorVisualProfileKey": 41,
   "resourceId": 3,
   "visualFrameId": 6,
   "sequence": 2,
-  "normalizedPixelHash": "9dff8569b7bbff0f",
+  "normalizedPixelHash": "d721ff7793c4ce63",
   "opaqueMaskHash": "b08bd53e4782a004",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 40,
+  "actorVisualProfileKey": 41,
   "resourceId": 3,
   "visualFrameId": 7,
   "sequence": 4,
-  "normalizedPixelHash": "6bc973a34465d934",
+  "normalizedPixelHash": "3475dd90456702e7",
   "opaqueMaskHash": "e7cc8cc4ff762763",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 40,
+  "actorVisualProfileKey": 41,
   "resourceId": 3,
   "visualFrameId": 8,
   "sequence": 4,
-  "normalizedPixelHash": "d458f036e7a3fad1",
+  "normalizedPixelHash": "f0e843ae332f2f82",
   "opaqueMaskHash": "2e9c2c2e71316dc8",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 40,
+  "actorVisualProfileKey": 41,
   "resourceId": 3,
   "visualFrameId": 9,
   "sequence": 5,
-  "normalizedPixelHash": "9dff8569b7bbff0f",
+  "normalizedPixelHash": "d721ff7793c4ce63",
   "opaqueMaskHash": "b08bd53e4782a004",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 40,
+  "actorVisualProfileKey": 41,
   "resourceId": 3,
   "visualFrameId": 10,
   "sequence": 5,
-  "normalizedPixelHash": "2476c1b1cd8c6c3a",
+  "normalizedPixelHash": "c8969e1335c6c231",
   "opaqueMaskHash": "fca0bc95a9111095",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 41,
+  "actorVisualProfileKey": 42,
   "resourceId": 3,
   "visualFrameId": 1,
   "sequence": 0,
-  "normalizedPixelHash": "d569a0d71dd6da02",
+  "normalizedPixelHash": "85bea68b4f3faba6",
   "opaqueMaskHash": "0f58e1c5148ac1b4",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 41,
+  "actorVisualProfileKey": 42,
   "resourceId": 3,
   "visualFrameId": 2,
   "sequence": 0,
-  "normalizedPixelHash": "b85ba490abfd6a54",
+  "normalizedPixelHash": "ae4c99f9f349e105",
   "opaqueMaskHash": "f31e29b569980c28",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 41,
+  "actorVisualProfileKey": 42,
   "resourceId": 3,
   "visualFrameId": 3,
   "sequence": 1,
-  "normalizedPixelHash": "85260ab5126c5ade",
+  "normalizedPixelHash": "4839d765355227c6",
   "opaqueMaskHash": "5d560651b89bba91",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 41,
+  "actorVisualProfileKey": 42,
   "resourceId": 3,
   "visualFrameId": 4,
   "sequence": 1,
-  "normalizedPixelHash": "8915d97576d7be30",
+  "normalizedPixelHash": "fd4e9a89421a17d9",
   "opaqueMaskHash": "049e2d744d550e78",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 41,
+  "actorVisualProfileKey": 42,
   "resourceId": 3,
   "visualFrameId": 5,
   "sequence": 2,
-  "normalizedPixelHash": "f571bfc7b173f017",
+  "normalizedPixelHash": "8a6a99b3d9feef87",
   "opaqueMaskHash": "7095dd210934be44",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 41,
+  "actorVisualProfileKey": 42,
   "resourceId": 3,
   "visualFrameId": 6,
   "sequence": 2,
-  "normalizedPixelHash": "3252b50362850de9",
+  "normalizedPixelHash": "2c64d28c8285fd55",
   "opaqueMaskHash": "4cc253cf3791f9a6",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 41,
+  "actorVisualProfileKey": 42,
   "resourceId": 3,
   "visualFrameId": 7,
   "sequence": 4,
-  "normalizedPixelHash": "f1fee55621782927",
+  "normalizedPixelHash": "bfb84e70458b1afb",
   "opaqueMaskHash": "c4a4c4aa41665a58",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 41,
+  "actorVisualProfileKey": 42,
   "resourceId": 3,
   "visualFrameId": 8,
   "sequence": 4,
-  "normalizedPixelHash": "d569a0d71dd6da02",
+  "normalizedPixelHash": "85bea68b4f3faba6",
   "opaqueMaskHash": "0f58e1c5148ac1b4",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 41,
+  "actorVisualProfileKey": 42,
   "resourceId": 3,
   "visualFrameId": 9,
   "sequence": 5,
-  "normalizedPixelHash": "3252b50362850de9",
+  "normalizedPixelHash": "2c64d28c8285fd55",
   "opaqueMaskHash": "4cc253cf3791f9a6",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 41,
+  "actorVisualProfileKey": 42,
   "resourceId": 3,
   "visualFrameId": 10,
   "sequence": 5,
-  "normalizedPixelHash": "d8a075bff7399d67",
+  "normalizedPixelHash": "a376ef744e8bb01f",
   "opaqueMaskHash": "a4762a06e1331baf",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 42,
+  "actorVisualProfileKey": 43,
   "resourceId": 3,
   "visualFrameId": 1,
   "sequence": 0,
-  "normalizedPixelHash": "fe5c5ec1489b5614",
+  "normalizedPixelHash": "30acc4335b8f59f1",
   "opaqueMaskHash": "2e09505317077f5e",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 42,
+  "actorVisualProfileKey": 43,
   "resourceId": 3,
   "visualFrameId": 2,
   "sequence": 0,
-  "normalizedPixelHash": "aced26a78bd3c580",
+  "normalizedPixelHash": "4bd0baeb54251d9d",
   "opaqueMaskHash": "57cae189025cfdb0",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 42,
+  "actorVisualProfileKey": 43,
   "resourceId": 3,
   "visualFrameId": 3,
   "sequence": 1,
-  "normalizedPixelHash": "8d9adc5c955e8936",
+  "normalizedPixelHash": "0a6c9a9508f8695f",
   "opaqueMaskHash": "c42a2e50a87f8feb",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 42,
+  "actorVisualProfileKey": 43,
   "resourceId": 3,
   "visualFrameId": 4,
   "sequence": 1,
-  "normalizedPixelHash": "6b4ac390bdc9500d",
+  "normalizedPixelHash": "3bb9b45fa75b4887",
   "opaqueMaskHash": "734015e676b2a6db",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 42,
+  "actorVisualProfileKey": 43,
   "resourceId": 3,
   "visualFrameId": 5,
   "sequence": 2,
-  "normalizedPixelHash": "ea06658876597f70",
+  "normalizedPixelHash": "ace2505cf48351d8",
   "opaqueMaskHash": "1b3e97d3237484bd",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 42,
+  "actorVisualProfileKey": 43,
   "resourceId": 3,
   "visualFrameId": 6,
   "sequence": 2,
-  "normalizedPixelHash": "33f1fe0015aa06bb",
+  "normalizedPixelHash": "584acde1db803499",
   "opaqueMaskHash": "2416358956bcc429",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 42,
+  "actorVisualProfileKey": 43,
   "resourceId": 3,
   "visualFrameId": 7,
   "sequence": 4,
-  "normalizedPixelHash": "6ff94b533b3c0b8d",
+  "normalizedPixelHash": "5075eb86aa32fa5d",
   "opaqueMaskHash": "d11d4afedf25c379",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 42,
+  "actorVisualProfileKey": 43,
   "resourceId": 3,
   "visualFrameId": 8,
   "sequence": 4,
-  "normalizedPixelHash": "fe5c5ec1489b5614",
+  "normalizedPixelHash": "30acc4335b8f59f1",
   "opaqueMaskHash": "2e09505317077f5e",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 42,
+  "actorVisualProfileKey": 43,
   "resourceId": 3,
   "visualFrameId": 9,
   "sequence": 5,
-  "normalizedPixelHash": "33f1fe0015aa06bb",
+  "normalizedPixelHash": "584acde1db803499",
   "opaqueMaskHash": "2416358956bcc429",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 42,
+  "actorVisualProfileKey": 43,
   "resourceId": 3,
   "visualFrameId": 10,
   "sequence": 5,
-  "normalizedPixelHash": "40d7047be73acb0b",
+  "normalizedPixelHash": "41a9546768aacb70",
   "opaqueMaskHash": "6fb1aeb5700b8bf9",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 43,
-  "resourceId": 3,
-  "visualFrameId": 1,
-  "sequence": 0,
-  "normalizedPixelHash": "3e7ed930b7bc40db",
-  "opaqueMaskHash": "57eb0740ddb2d69d",
-  "provenance": "ROM_UNRESOLVED"
- },
- {
-  "actorVisualProfileKey": 43,
-  "resourceId": 3,
-  "visualFrameId": 2,
-  "sequence": 0,
-  "normalizedPixelHash": "f2ca64eb4a932375",
-  "opaqueMaskHash": "3797019795226570",
-  "provenance": "ROM_UNRESOLVED"
- },
- {
-  "actorVisualProfileKey": 43,
-  "resourceId": 3,
-  "visualFrameId": 3,
-  "sequence": 1,
-  "normalizedPixelHash": "6721f411a23a06c2",
-  "opaqueMaskHash": "c153014b1c578547",
-  "provenance": "ROM_UNRESOLVED"
- },
- {
-  "actorVisualProfileKey": 43,
-  "resourceId": 3,
-  "visualFrameId": 4,
-  "sequence": 1,
-  "normalizedPixelHash": "131384119617c054",
-  "opaqueMaskHash": "bd22cd756a6b0252",
-  "provenance": "ROM_UNRESOLVED"
- },
- {
-  "actorVisualProfileKey": 43,
-  "resourceId": 3,
-  "visualFrameId": 5,
-  "sequence": 2,
-  "normalizedPixelHash": "462e5702d9b9406f",
-  "opaqueMaskHash": "67d7863c78580d89",
-  "provenance": "ROM_UNRESOLVED"
- },
- {
-  "actorVisualProfileKey": 43,
-  "resourceId": 3,
-  "visualFrameId": 6,
-  "sequence": 2,
-  "normalizedPixelHash": "1a5b26e624814944",
-  "opaqueMaskHash": "5d45e8053664407f",
-  "provenance": "ROM_UNRESOLVED"
- },
- {
-  "actorVisualProfileKey": 43,
-  "resourceId": 3,
-  "visualFrameId": 7,
-  "sequence": 4,
-  "normalizedPixelHash": "acf8fc36ee704738",
-  "opaqueMaskHash": "750020eaf32ca0de",
-  "provenance": "ROM_UNRESOLVED"
- },
- {
-  "actorVisualProfileKey": 43,
-  "resourceId": 3,
-  "visualFrameId": 8,
-  "sequence": 4,
-  "normalizedPixelHash": "3e7ed930b7bc40db",
-  "opaqueMaskHash": "57eb0740ddb2d69d",
-  "provenance": "ROM_UNRESOLVED"
- },
- {
-  "actorVisualProfileKey": 43,
-  "resourceId": 3,
-  "visualFrameId": 9,
-  "sequence": 5,
-  "normalizedPixelHash": "1a5b26e624814944",
-  "opaqueMaskHash": "5d45e8053664407f",
-  "provenance": "ROM_UNRESOLVED"
- },
- {
-  "actorVisualProfileKey": 43,
-  "resourceId": 3,
-  "visualFrameId": 10,
-  "sequence": 5,
-  "normalizedPixelHash": "9cda80d46e46cb91",
-  "opaqueMaskHash": "ae0bd7bc6320a417",
-  "provenance": "ROM_UNRESOLVED"
- },
- {
   "actorVisualProfileKey": 0,
   "resourceId": 4,
   "visualFrameId": 2,
   "sequence": 0,
-  "normalizedPixelHash": "cfce1f1f34c16fa3",
-  "opaqueMaskHash": "d87366d5c7b24290",
+  "normalizedPixelHash": "f51f96e30862cd72",
+  "opaqueMaskHash": "6647b894a816fbf3",
   "provenance": "ROM_UNRESOLVED"
  },
  {
@@ -4243,8 +4225,8 @@
   "resourceId": 4,
   "visualFrameId": 1,
   "sequence": 0,
-  "normalizedPixelHash": "1ac79d646bfed29b",
-  "opaqueMaskHash": "806de24dc10dc6d0",
+  "normalizedPixelHash": "edacdcf54fdf47d0",
+  "opaqueMaskHash": "b84cceafadcfb743",
   "provenance": "ROM_UNRESOLVED"
  },
  {
@@ -4252,8 +4234,8 @@
   "resourceId": 4,
   "visualFrameId": 3,
   "sequence": 0,
-  "normalizedPixelHash": "4a205ed25834f202",
-  "opaqueMaskHash": "ed6ed419ec44f99b",
+  "normalizedPixelHash": "8f731c78d6be6d85",
+  "opaqueMaskHash": "e8a1b1867c25f65d",
   "provenance": "ROM_UNRESOLVED"
  },
  {
@@ -4270,8 +4252,8 @@
   "resourceId": 4,
   "visualFrameId": 2,
   "sequence": 0,
-  "normalizedPixelHash": "67c8d0a33b44df5c",
-  "opaqueMaskHash": "d5e20c51bab047f0",
+  "normalizedPixelHash": "c869a81e2d8621b8",
+  "opaqueMaskHash": "d87366d5c7b24290",
   "provenance": "ROM_UNRESOLVED"
  },
  {
@@ -4279,8 +4261,8 @@
   "resourceId": 4,
   "visualFrameId": 1,
   "sequence": 0,
-  "normalizedPixelHash": "455f086b4b28846f",
-  "opaqueMaskHash": "05bdce22ed41ae0d",
+  "normalizedPixelHash": "e2d1db7933dc2c1e",
+  "opaqueMaskHash": "806de24dc10dc6d0",
   "provenance": "ROM_UNRESOLVED"
  },
  {
@@ -4288,8 +4270,8 @@
   "resourceId": 4,
   "visualFrameId": 3,
   "sequence": 0,
-  "normalizedPixelHash": "acb0e7a815fe4f75",
-  "opaqueMaskHash": "5b6ed6a81bbcfe7e",
+  "normalizedPixelHash": "76e2b662a48cd495",
+  "opaqueMaskHash": "ed6ed419ec44f99b",
   "provenance": "ROM_UNRESOLVED"
  },
  {
@@ -4306,143 +4288,143 @@
   "resourceId": 4,
   "visualFrameId": 2,
   "sequence": 0,
-  "normalizedPixelHash": "62ebab4f6919ee62",
+  "normalizedPixelHash": "67c8d0a33b44df5c",
+  "opaqueMaskHash": "d5e20c51bab047f0",
+  "provenance": "ROM_UNRESOLVED"
+ },
+ {
+  "actorVisualProfileKey": 2,
+  "resourceId": 4,
+  "visualFrameId": 1,
+  "sequence": 0,
+  "normalizedPixelHash": "455f086b4b28846f",
+  "opaqueMaskHash": "05bdce22ed41ae0d",
+  "provenance": "ROM_UNRESOLVED"
+ },
+ {
+  "actorVisualProfileKey": 2,
+  "resourceId": 4,
+  "visualFrameId": 3,
+  "sequence": 0,
+  "normalizedPixelHash": "acb0e7a815fe4f75",
+  "opaqueMaskHash": "5b6ed6a81bbcfe7e",
+  "provenance": "ROM_UNRESOLVED"
+ },
+ {
+  "actorVisualProfileKey": 2,
+  "resourceId": 4,
+  "visualFrameId": 4,
+  "sequence": 1,
+  "normalizedPixelHash": "fe4044e66711eaf0",
+  "opaqueMaskHash": "c5da91d479ac896c",
+  "provenance": "ROM_UNRESOLVED"
+ },
+ {
+  "actorVisualProfileKey": 3,
+  "resourceId": 4,
+  "visualFrameId": 2,
+  "sequence": 0,
+  "normalizedPixelHash": "6dc69214d87eea1f",
   "opaqueMaskHash": "acb0b6804cd99dd3",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 2,
+  "actorVisualProfileKey": 3,
   "resourceId": 4,
   "visualFrameId": 1,
   "sequence": 0,
-  "normalizedPixelHash": "1e4d36ad4b35ae42",
+  "normalizedPixelHash": "b48976bc769ee7e1",
   "opaqueMaskHash": "ef1f98ac28b08439",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 2,
+  "actorVisualProfileKey": 3,
   "resourceId": 4,
   "visualFrameId": 3,
   "sequence": 0,
-  "normalizedPixelHash": "5e072820dc8f46f8",
+  "normalizedPixelHash": "d53cbe875c414671",
   "opaqueMaskHash": "de6b1f7185ac457a",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 2,
+  "actorVisualProfileKey": 3,
   "resourceId": 4,
   "visualFrameId": 4,
   "sequence": 1,
-  "normalizedPixelHash": "36e41ea1b86d27f6",
+  "normalizedPixelHash": "8684162551c93cfd",
   "opaqueMaskHash": "14d788206bff1d2a",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 3,
+  "actorVisualProfileKey": 11,
   "resourceId": 4,
   "visualFrameId": 2,
   "sequence": 0,
-  "normalizedPixelHash": "75f10cf985063ed4",
-  "opaqueMaskHash": "442ff4e08078e0f9",
-  "provenance": "ROM_UNRESOLVED"
- },
- {
-  "actorVisualProfileKey": 3,
-  "resourceId": 4,
-  "visualFrameId": 1,
-  "sequence": 0,
-  "normalizedPixelHash": "d571e261150a0b22",
-  "opaqueMaskHash": "a0551229c12d6237",
-  "provenance": "ROM_UNRESOLVED"
- },
- {
-  "actorVisualProfileKey": 3,
-  "resourceId": 4,
-  "visualFrameId": 3,
-  "sequence": 0,
-  "normalizedPixelHash": "7fbaa463e935f2ca",
-  "opaqueMaskHash": "ca7690597318c855",
-  "provenance": "ROM_UNRESOLVED"
- },
- {
-  "actorVisualProfileKey": 3,
-  "resourceId": 4,
-  "visualFrameId": 4,
-  "sequence": 1,
-  "normalizedPixelHash": "a07e80440e11b088",
-  "opaqueMaskHash": "5a2079ba1ea5f5b5",
+  "normalizedPixelHash": "ab5801dfe945b772",
+  "opaqueMaskHash": "f83aef66cf7e04a9",
   "provenance": "ROM_UNRESOLVED"
  },
  {
   "actorVisualProfileKey": 11,
   "resourceId": 4,
+  "visualFrameId": 1,
+  "sequence": 0,
+  "normalizedPixelHash": "0c72f4b6a756c4d4",
+  "opaqueMaskHash": "dbdf6b6af2fd0edd",
+  "provenance": "ROM_UNRESOLVED"
+ },
+ {
+  "actorVisualProfileKey": 11,
+  "resourceId": 4,
+  "visualFrameId": 3,
+  "sequence": 0,
+  "normalizedPixelHash": "9fba96ea218fd6ba",
+  "opaqueMaskHash": "4f3a601f67433e91",
+  "provenance": "ROM_UNRESOLVED"
+ },
+ {
+  "actorVisualProfileKey": 11,
+  "resourceId": 4,
+  "visualFrameId": 4,
+  "sequence": 1,
+  "normalizedPixelHash": "d39bcc387e70d7d4",
+  "opaqueMaskHash": "2c028916e3f28016",
+  "provenance": "ROM_UNRESOLVED"
+ },
+ {
+  "actorVisualProfileKey": 12,
+  "resourceId": 4,
   "visualFrameId": 2,
   "sequence": 0,
-  "normalizedPixelHash": "429f4a9da98de7db",
+  "normalizedPixelHash": "881d669319e98c51",
   "opaqueMaskHash": "1805d9c9a3b42745",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 11,
+  "actorVisualProfileKey": 12,
   "resourceId": 4,
   "visualFrameId": 1,
   "sequence": 0,
-  "normalizedPixelHash": "978764d730a285d7",
+  "normalizedPixelHash": "31b5bc87b73cdef6",
   "opaqueMaskHash": "4c794dc107f2cbf1",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 11,
+  "actorVisualProfileKey": 12,
   "resourceId": 4,
   "visualFrameId": 3,
   "sequence": 0,
-  "normalizedPixelHash": "09f96db7427b1262",
+  "normalizedPixelHash": "c670c3729ac03781",
   "opaqueMaskHash": "bc825108660e83a6",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 11,
+  "actorVisualProfileKey": 12,
   "resourceId": 4,
   "visualFrameId": 4,
   "sequence": 1,
-  "normalizedPixelHash": "d6e0bd0285e674e7",
+  "normalizedPixelHash": "bda0577ed7192deb",
   "opaqueMaskHash": "c2877356cf01ef6e",
-  "provenance": "ROM_UNRESOLVED"
- },
- {
-  "actorVisualProfileKey": 12,
-  "resourceId": 4,
-  "visualFrameId": 2,
-  "sequence": 0,
-  "normalizedPixelHash": "6a361340c1e92293",
-  "opaqueMaskHash": "00079281d95cab3d",
-  "provenance": "ROM_UNRESOLVED"
- },
- {
-  "actorVisualProfileKey": 12,
-  "resourceId": 4,
-  "visualFrameId": 1,
-  "sequence": 0,
-  "normalizedPixelHash": "b6ab2a3b82df873d",
-  "opaqueMaskHash": "4e35efa2e8c7deb3",
-  "provenance": "ROM_UNRESOLVED"
- },
- {
-  "actorVisualProfileKey": 12,
-  "resourceId": 4,
-  "visualFrameId": 3,
-  "sequence": 0,
-  "normalizedPixelHash": "298649607c978058",
-  "opaqueMaskHash": "ab89217a21eded2d",
-  "provenance": "ROM_UNRESOLVED"
- },
- {
-  "actorVisualProfileKey": 12,
-  "resourceId": 4,
-  "visualFrameId": 4,
-  "sequence": 1,
-  "normalizedPixelHash": "6481fb33710c8cc1",
-  "opaqueMaskHash": "65f6b8b8d9993ce0",
   "provenance": "ROM_UNRESOLVED"
  },
  {
@@ -4522,152 +4504,170 @@
   "resourceId": 4,
   "visualFrameId": 2,
   "sequence": 0,
-  "normalizedPixelHash": "8a531c064be1d84f",
+  "normalizedPixelHash": "fe668069573ec871",
+  "opaqueMaskHash": "4c9c64d3fb8d84b5",
+  "provenance": "ROM_UNRESOLVED"
+ },
+ {
+  "actorVisualProfileKey": 17,
+  "resourceId": 4,
+  "visualFrameId": 1,
+  "sequence": 0,
+  "normalizedPixelHash": "e3d963e796958712",
+  "opaqueMaskHash": "40e0cf5682f2f973",
+  "provenance": "ROM_UNRESOLVED"
+ },
+ {
+  "actorVisualProfileKey": 17,
+  "resourceId": 4,
+  "visualFrameId": 3,
+  "sequence": 0,
+  "normalizedPixelHash": "14a9301335dcb198",
+  "opaqueMaskHash": "20a7481b15fcdb40",
+  "provenance": "ROM_UNRESOLVED"
+ },
+ {
+  "actorVisualProfileKey": 17,
+  "resourceId": 4,
+  "visualFrameId": 4,
+  "sequence": 1,
+  "normalizedPixelHash": "89581638e2783e48",
+  "opaqueMaskHash": "4541dadbf425acf4",
+  "provenance": "ROM_UNRESOLVED"
+ },
+ {
+  "actorVisualProfileKey": 18,
+  "resourceId": 4,
+  "visualFrameId": 2,
+  "sequence": 0,
+  "normalizedPixelHash": "b74fafd83c9d94b3",
   "opaqueMaskHash": "76bc39418fc67c8d",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 17,
+  "actorVisualProfileKey": 18,
   "resourceId": 4,
   "visualFrameId": 1,
   "sequence": 0,
-  "normalizedPixelHash": "1ed21d4e36335ccb",
+  "normalizedPixelHash": "df2bbf84356f6654",
   "opaqueMaskHash": "abd128196115fe1c",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 17,
+  "actorVisualProfileKey": 18,
   "resourceId": 4,
   "visualFrameId": 3,
   "sequence": 0,
-  "normalizedPixelHash": "bbf7d2f40917519d",
+  "normalizedPixelHash": "a24088f83f0043b6",
   "opaqueMaskHash": "d9dd4a873170872b",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 17,
+  "actorVisualProfileKey": 18,
   "resourceId": 4,
   "visualFrameId": 4,
   "sequence": 1,
-  "normalizedPixelHash": "1be1f2e1eaa4b99b",
+  "normalizedPixelHash": "46d61105f2a219ee",
   "opaqueMaskHash": "b0337ac775c98989",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 18,
-  "resourceId": 4,
+  "actorVisualProfileKey": 9,
+  "resourceId": 5,
   "visualFrameId": 2,
   "sequence": 0,
-  "normalizedPixelHash": "49f9c18926dd86d7",
-  "opaqueMaskHash": "a4aed32602c1991d",
-  "provenance": "ROM_UNRESOLVED"
- },
- {
-  "actorVisualProfileKey": 18,
-  "resourceId": 4,
-  "visualFrameId": 1,
-  "sequence": 0,
-  "normalizedPixelHash": "6598dbc5d787aad3",
-  "opaqueMaskHash": "4a2501ee444d66f6",
-  "provenance": "ROM_UNRESOLVED"
- },
- {
-  "actorVisualProfileKey": 18,
-  "resourceId": 4,
-  "visualFrameId": 3,
-  "sequence": 0,
-  "normalizedPixelHash": "4406718ef7178287",
-  "opaqueMaskHash": "2ee49e2dbfb53328",
-  "provenance": "ROM_UNRESOLVED"
- },
- {
-  "actorVisualProfileKey": 18,
-  "resourceId": 4,
-  "visualFrameId": 4,
-  "sequence": 1,
-  "normalizedPixelHash": "9a82251828328dde",
-  "opaqueMaskHash": "b4ec48633be02855",
+  "normalizedPixelHash": "0dc93ac3efe5d6a7",
+  "opaqueMaskHash": "8c96820c553409b3",
   "provenance": "ROM_UNRESOLVED"
  },
  {
   "actorVisualProfileKey": 9,
   "resourceId": 5,
+  "visualFrameId": 1,
+  "sequence": 0,
+  "normalizedPixelHash": "7d963c7f63a779ce",
+  "opaqueMaskHash": "66c0bc6786395c3e",
+  "provenance": "ROM_UNRESOLVED"
+ },
+ {
+  "actorVisualProfileKey": 9,
+  "resourceId": 5,
+  "visualFrameId": 3,
+  "sequence": 0,
+  "normalizedPixelHash": "b77e74f1feea1f13",
+  "opaqueMaskHash": "8d151d65d72058fe",
+  "provenance": "ROM_UNRESOLVED"
+ },
+ {
+  "actorVisualProfileKey": 9,
+  "resourceId": 5,
+  "visualFrameId": 4,
+  "sequence": 1,
+  "normalizedPixelHash": "66edaf28ef11ebe7",
+  "opaqueMaskHash": "10ddfa8010e3e562",
+  "provenance": "ROM_UNRESOLVED"
+ },
+ {
+  "actorVisualProfileKey": 9,
+  "resourceId": 5,
+  "visualFrameId": 5,
+  "sequence": 1,
+  "normalizedPixelHash": "6f8302345dcc9ba1",
+  "opaqueMaskHash": "43f0b9436e59e7fc",
+  "provenance": "ROM_UNRESOLVED"
+ },
+ {
+  "actorVisualProfileKey": 10,
+  "resourceId": 5,
   "visualFrameId": 2,
   "sequence": 0,
-  "normalizedPixelHash": "1f61d10567345a8e",
+  "normalizedPixelHash": "38bf5d4affe874ec",
   "opaqueMaskHash": "980244c3e8279653",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 9,
+  "actorVisualProfileKey": 10,
   "resourceId": 5,
   "visualFrameId": 1,
   "sequence": 0,
-  "normalizedPixelHash": "af0928e75854d3fd",
+  "normalizedPixelHash": "8c6cc54bb926dd10",
   "opaqueMaskHash": "87eeda5467facefe",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 9,
+  "actorVisualProfileKey": 10,
   "resourceId": 5,
   "visualFrameId": 3,
   "sequence": 0,
-  "normalizedPixelHash": "f7b6d0275293cad4",
+  "normalizedPixelHash": "2161d91705d3edb5",
   "opaqueMaskHash": "2f714c030adf6460",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 9,
+  "actorVisualProfileKey": 10,
   "resourceId": 5,
   "visualFrameId": 4,
   "sequence": 1,
-  "normalizedPixelHash": "bf1d84051d6ad221",
+  "normalizedPixelHash": "63907af1eee58f94",
   "opaqueMaskHash": "80b483d83f83c96f",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 9,
+  "actorVisualProfileKey": 10,
   "resourceId": 5,
   "visualFrameId": 5,
   "sequence": 1,
-  "normalizedPixelHash": "9f6b22e7f6f75062",
+  "normalizedPixelHash": "92aa68790412a129",
   "opaqueMaskHash": "d3931a0df9961da3",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 10,
+  "actorVisualProfileKey": 21,
   "resourceId": 5,
-  "visualFrameId": 1,
+  "visualFrameId": 2,
   "sequence": 0,
-  "normalizedPixelHash": "7cce6c7b088b1f63",
-  "opaqueMaskHash": "dbdf6b6af2fd0edd",
-  "provenance": "ROM_UNRESOLVED"
- },
- {
-  "actorVisualProfileKey": 10,
-  "resourceId": 5,
-  "visualFrameId": 3,
-  "sequence": 0,
-  "normalizedPixelHash": "71bed01a7b327371",
-  "opaqueMaskHash": "f12869ea57e1913f",
-  "provenance": "ROM_UNRESOLVED"
- },
- {
-  "actorVisualProfileKey": 10,
-  "resourceId": 5,
-  "visualFrameId": 4,
-  "sequence": 1,
-  "normalizedPixelHash": "b385dd1b6c9157cd",
-  "opaqueMaskHash": "64cc9283646a2226",
-  "provenance": "ROM_UNRESOLVED"
- },
- {
-  "actorVisualProfileKey": 10,
-  "resourceId": 5,
-  "visualFrameId": 5,
-  "sequence": 1,
-  "normalizedPixelHash": "b2147d11118f80ea",
-  "opaqueMaskHash": "e07955158e6d67cf",
+  "normalizedPixelHash": "e0f54414945caf64",
+  "opaqueMaskHash": "6a1fdd289a776d83",
   "provenance": "ROM_UNRESOLVED"
  },
  {
@@ -4675,8 +4675,8 @@
   "resourceId": 5,
   "visualFrameId": 1,
   "sequence": 0,
-  "normalizedPixelHash": "9a33bfac29be85d2",
-  "opaqueMaskHash": "5180d13b70531dd3",
+  "normalizedPixelHash": "feb9eec435e8985c",
+  "opaqueMaskHash": "bb72decb3e0acef0",
   "provenance": "ROM_UNRESOLVED"
  },
  {
@@ -4684,8 +4684,8 @@
   "resourceId": 5,
   "visualFrameId": 3,
   "sequence": 0,
-  "normalizedPixelHash": "bdabb1ea44bf043f",
-  "opaqueMaskHash": "3acf21b3eef831b1",
+  "normalizedPixelHash": "416ce75df2067a4d",
+  "opaqueMaskHash": "0eb4850d989f9441",
   "provenance": "ROM_UNRESOLVED"
  },
  {
@@ -4693,8 +4693,8 @@
   "resourceId": 5,
   "visualFrameId": 4,
   "sequence": 1,
-  "normalizedPixelHash": "63935687fa4b2568",
-  "opaqueMaskHash": "b6a80e5f0d88f356",
+  "normalizedPixelHash": "7c9649f52f1164bf",
+  "opaqueMaskHash": "97fe40df76170ac5",
   "provenance": "ROM_UNRESOLVED"
  },
  {
@@ -4702,8 +4702,8 @@
   "resourceId": 5,
   "visualFrameId": 5,
   "sequence": 1,
-  "normalizedPixelHash": "d56833ab8052c811",
-  "opaqueMaskHash": "4a43527f9d0bb29b",
+  "normalizedPixelHash": "81c0d1fcc174e793",
+  "opaqueMaskHash": "9dcaf052afc9d8f5",
   "provenance": "ROM_UNRESOLVED"
  },
  {
@@ -4756,8 +4756,8 @@
   "resourceId": 8,
   "visualFrameId": 0,
   "sequence": 0,
-  "normalizedPixelHash": "73c04eea981d5626",
-  "opaqueMaskHash": "79ce75646435ec55",
+  "normalizedPixelHash": "eb259d55464fda90",
+  "opaqueMaskHash": "1d3c3b79368e9867",
   "provenance": "ROM_UNRESOLVED"
  },
  {
@@ -4765,8 +4765,8 @@
   "resourceId": 8,
   "visualFrameId": 1,
   "sequence": 0,
-  "normalizedPixelHash": "ee5f06cb8e3ad472",
-  "opaqueMaskHash": "6549a44f089f48a9",
+  "normalizedPixelHash": "6f105f5e784cbd93",
+  "opaqueMaskHash": "a0551229c12d6237",
   "provenance": "ROM_UNRESOLVED"
  },
  {
@@ -4774,8 +4774,8 @@
   "resourceId": 8,
   "visualFrameId": 2,
   "sequence": 0,
-  "normalizedPixelHash": "c0648269c49a6dfe",
-  "opaqueMaskHash": "87ba3e356cd2b60f",
+  "normalizedPixelHash": "d5c3231c35766340",
+  "opaqueMaskHash": "95bc612667744f8f",
   "provenance": "ROM_UNRESOLVED"
  },
  {
@@ -4783,8 +4783,8 @@
   "resourceId": 8,
   "visualFrameId": 3,
   "sequence": 0,
-  "normalizedPixelHash": "1ac92fd9faada6dc",
-  "opaqueMaskHash": "a38ce762053bbcc7",
+  "normalizedPixelHash": "0d39439cd23fd8b7",
+  "opaqueMaskHash": "09b32a907c7dc5bb",
   "provenance": "ROM_UNRESOLVED"
  },
  {
@@ -4792,8 +4792,8 @@
   "resourceId": 18,
   "visualFrameId": 0,
   "sequence": 0,
-  "normalizedPixelHash": "73c04eea981d5626",
-  "opaqueMaskHash": "79ce75646435ec55",
+  "normalizedPixelHash": "eb259d55464fda90",
+  "opaqueMaskHash": "1d3c3b79368e9867",
   "provenance": "ROM_UNRESOLVED"
  },
  {
@@ -4801,8 +4801,8 @@
   "resourceId": 18,
   "visualFrameId": 2,
   "sequence": 0,
-  "normalizedPixelHash": "e8ccec5671a051bc",
-  "opaqueMaskHash": "0e2084faee38e2eb",
+  "normalizedPixelHash": "1e99d1547478e608",
+  "opaqueMaskHash": "a808f5ecacc315d3",
   "provenance": "ROM_UNRESOLVED"
  },
  {
@@ -4810,8 +4810,8 @@
   "resourceId": 18,
   "visualFrameId": 1,
   "sequence": 0,
-  "normalizedPixelHash": "ee5f06cb8e3ad472",
-  "opaqueMaskHash": "6549a44f089f48a9",
+  "normalizedPixelHash": "6f105f5e784cbd93",
+  "opaqueMaskHash": "a0551229c12d6237",
   "provenance": "ROM_UNRESOLVED"
  },
  {
@@ -4819,8 +4819,8 @@
   "resourceId": 18,
   "visualFrameId": 3,
   "sequence": 0,
-  "normalizedPixelHash": "76823cc977fe1baa",
-  "opaqueMaskHash": "ae5b1a8a856e933c",
+  "normalizedPixelHash": "e1858f8ead19fca5",
+  "opaqueMaskHash": "be6bf99b2e1dbd64",
   "provenance": "ROM_UNRESOLVED"
  },
  {
@@ -4828,8 +4828,8 @@
   "resourceId": 18,
   "visualFrameId": 4,
   "sequence": 1,
-  "normalizedPixelHash": "dbfe6779422b3b72",
-  "opaqueMaskHash": "d11d4afedf25c379",
+  "normalizedPixelHash": "a8d70ee17f081a70",
+  "opaqueMaskHash": "442ff4e08078e0f9",
   "provenance": "ROM_UNRESOLVED"
  },
  {
@@ -4837,98 +4837,98 @@
   "resourceId": 18,
   "visualFrameId": 0,
   "sequence": 0,
-  "normalizedPixelHash": "a6b8f391263ff3d6",
+  "normalizedPixelHash": "4a5d65b955ba7e95",
+  "opaqueMaskHash": "a67c0c2382857bc6",
+  "provenance": "ROM_UNRESOLVED"
+ },
+ {
+  "actorVisualProfileKey": 9,
+  "resourceId": 18,
+  "visualFrameId": 2,
+  "sequence": 0,
+  "normalizedPixelHash": "9ac8363b92b6ff9e",
+  "opaqueMaskHash": "b53f2cfeff254ac7",
+  "provenance": "ROM_UNRESOLVED"
+ },
+ {
+  "actorVisualProfileKey": 9,
+  "resourceId": 18,
+  "visualFrameId": 1,
+  "sequence": 0,
+  "normalizedPixelHash": "7d963c7f63a779ce",
+  "opaqueMaskHash": "66c0bc6786395c3e",
+  "provenance": "ROM_UNRESOLVED"
+ },
+ {
+  "actorVisualProfileKey": 9,
+  "resourceId": 18,
+  "visualFrameId": 3,
+  "sequence": 0,
+  "normalizedPixelHash": "d4a4662d1704163f",
+  "opaqueMaskHash": "cba921b2ad456451",
+  "provenance": "ROM_UNRESOLVED"
+ },
+ {
+  "actorVisualProfileKey": 9,
+  "resourceId": 18,
+  "visualFrameId": 4,
+  "sequence": 1,
+  "normalizedPixelHash": "79df093d8c9460a8",
+  "opaqueMaskHash": "f3b2fb471809677d",
+  "provenance": "ROM_UNRESOLVED"
+ },
+ {
+  "actorVisualProfileKey": 10,
+  "resourceId": 18,
+  "visualFrameId": 0,
+  "sequence": 0,
+  "normalizedPixelHash": "2192c2105c0511b8",
   "opaqueMaskHash": "bd973cf3a2fcafa1",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 9,
+  "actorVisualProfileKey": 10,
   "resourceId": 18,
   "visualFrameId": 2,
   "sequence": 0,
-  "normalizedPixelHash": "431366ad4039ae46",
+  "normalizedPixelHash": "bfc959cd45437b56",
   "opaqueMaskHash": "6cf791d5f76fad19",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 9,
+  "actorVisualProfileKey": 10,
   "resourceId": 18,
   "visualFrameId": 1,
   "sequence": 0,
-  "normalizedPixelHash": "af0928e75854d3fd",
+  "normalizedPixelHash": "8c6cc54bb926dd10",
   "opaqueMaskHash": "87eeda5467facefe",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 9,
+  "actorVisualProfileKey": 10,
   "resourceId": 18,
   "visualFrameId": 3,
   "sequence": 0,
-  "normalizedPixelHash": "8688f2c75a6027d7",
+  "normalizedPixelHash": "2c3b72c97350803b",
   "opaqueMaskHash": "451286dfda539ea9",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 9,
+  "actorVisualProfileKey": 10,
   "resourceId": 18,
   "visualFrameId": 4,
   "sequence": 1,
-  "normalizedPixelHash": "3040b500a470279f",
+  "normalizedPixelHash": "4f4bd7ee7b5544cf",
   "opaqueMaskHash": "5252786a872c5c4e",
   "provenance": "ROM_UNRESOLVED"
  },
  {
-  "actorVisualProfileKey": 10,
-  "resourceId": 18,
-  "visualFrameId": 0,
-  "sequence": 0,
-  "normalizedPixelHash": "b656959ee7a2e4e9",
-  "opaqueMaskHash": "3365db322f2b974b",
-  "provenance": "ROM_UNRESOLVED"
- },
- {
-  "actorVisualProfileKey": 10,
-  "resourceId": 18,
-  "visualFrameId": 2,
-  "sequence": 0,
-  "normalizedPixelHash": "f4271878300fe950",
-  "opaqueMaskHash": "8dc6f9aed07747ec",
-  "provenance": "ROM_UNRESOLVED"
- },
- {
-  "actorVisualProfileKey": 10,
-  "resourceId": 18,
-  "visualFrameId": 1,
-  "sequence": 0,
-  "normalizedPixelHash": "7cce6c7b088b1f63",
-  "opaqueMaskHash": "dbdf6b6af2fd0edd",
-  "provenance": "ROM_UNRESOLVED"
- },
- {
-  "actorVisualProfileKey": 10,
-  "resourceId": 18,
-  "visualFrameId": 3,
-  "sequence": 0,
-  "normalizedPixelHash": "d120fddc3847cb22",
-  "opaqueMaskHash": "c8c9150055e156db",
-  "provenance": "ROM_UNRESOLVED"
- },
- {
-  "actorVisualProfileKey": 10,
-  "resourceId": 18,
-  "visualFrameId": 4,
-  "sequence": 1,
-  "normalizedPixelHash": "160e758b88e3c31a",
-  "opaqueMaskHash": "f83aef66cf7e04a9",
-  "provenance": "ROM_UNRESOLVED"
- },
- {
   "actorVisualProfileKey": 21,
   "resourceId": 18,
   "visualFrameId": 0,
   "sequence": 0,
-  "normalizedPixelHash": "66221cfc345b096d",
-  "opaqueMaskHash": "b4b45e147c9ff7ec",
+  "normalizedPixelHash": "7d50ac015468cecf",
+  "opaqueMaskHash": "0d1a20afa250e9b3",
   "provenance": "ROM_UNRESOLVED"
  },
  {
@@ -4936,8 +4936,8 @@
   "resourceId": 18,
   "visualFrameId": 2,
   "sequence": 0,
-  "normalizedPixelHash": "fc38bdde02b59c03",
-  "opaqueMaskHash": "2236404125ab86cc",
+  "normalizedPixelHash": "158ff2be69902eb1",
+  "opaqueMaskHash": "bc3016f827f866ce",
   "provenance": "ROM_UNRESOLVED"
  },
  {
@@ -4945,8 +4945,8 @@
   "resourceId": 18,
   "visualFrameId": 1,
   "sequence": 0,
-  "normalizedPixelHash": "9a33bfac29be85d2",
-  "opaqueMaskHash": "5180d13b70531dd3",
+  "normalizedPixelHash": "feb9eec435e8985c",
+  "opaqueMaskHash": "bb72decb3e0acef0",
   "provenance": "ROM_UNRESOLVED"
  },
  {
@@ -4954,8 +4954,8 @@
   "resourceId": 18,
   "visualFrameId": 3,
   "sequence": 0,
-  "normalizedPixelHash": "209c60368dece6db",
-  "opaqueMaskHash": "d5744aab2c5ac4ef",
+  "normalizedPixelHash": "efe985d89986e5c7",
+  "opaqueMaskHash": "48e7ce42cd8d8da2",
   "provenance": "ROM_UNRESOLVED"
  },
  {
@@ -4963,8 +4963,8 @@
   "resourceId": 18,
   "visualFrameId": 4,
   "sequence": 1,
-  "normalizedPixelHash": "9a96e8a2392201ac",
-  "opaqueMaskHash": "ec4a52f943d9f655",
+  "normalizedPixelHash": "409f236a61d988b9",
+  "opaqueMaskHash": "42d31d3d6129b92f",
   "provenance": "ROM_UNRESOLVED"
  },
  {
@@ -5017,8 +5017,8 @@
   "resourceId": 18,
   "visualFrameId": 0,
   "sequence": 0,
-  "normalizedPixelHash": "7b123bcace11a955",
-  "opaqueMaskHash": "affd51e7dcfdad39",
+  "normalizedPixelHash": "840c6be267efed44",
+  "opaqueMaskHash": "775ab43d0092277c",
   "provenance": "ROM_UNRESOLVED"
  },
  {
@@ -5026,8 +5026,8 @@
   "resourceId": 18,
   "visualFrameId": 2,
   "sequence": 0,
-  "normalizedPixelHash": "e0e788afe9c72b43",
-  "opaqueMaskHash": "be9530deecc3021f",
+  "normalizedPixelHash": "5132c906dbcd2a5f",
+  "opaqueMaskHash": "5327e4486dedd36b",
   "provenance": "ROM_UNRESOLVED"
  },
  {
@@ -5035,8 +5035,8 @@
   "resourceId": 18,
   "visualFrameId": 1,
   "sequence": 0,
-  "normalizedPixelHash": "c105ec2466841311",
-  "opaqueMaskHash": "35ea51e4e5d6bcaf",
+  "normalizedPixelHash": "076fbebb23f8e6d1",
+  "opaqueMaskHash": "23335644ca696d78",
   "provenance": "ROM_UNRESOLVED"
  },
  {
@@ -5044,8 +5044,8 @@
   "resourceId": 18,
   "visualFrameId": 3,
   "sequence": 0,
-  "normalizedPixelHash": "f646cfe76256ece1",
-  "opaqueMaskHash": "a41cf0a848308f66",
+  "normalizedPixelHash": "24f4a72e05f48f66",
+  "opaqueMaskHash": "da78b87e35d8012b",
   "provenance": "ROM_UNRESOLVED"
  },
  {
@@ -5053,8 +5053,8 @@
   "resourceId": 18,
   "visualFrameId": 4,
   "sequence": 1,
-  "normalizedPixelHash": "a117c964f40b0584",
-  "opaqueMaskHash": "512d2175208b3744",
+  "normalizedPixelHash": "f15694ba0d767b19",
+  "opaqueMaskHash": "d6775eb63dabad4d",
   "provenance": "ROM_UNRESOLVED"
  },
  {

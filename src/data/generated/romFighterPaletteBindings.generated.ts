@@ -310,7 +310,7 @@ export const ROM_FIGHTER_PALETTE_BINDINGS = [
     "evidence": "ROM_STATIC_VERIFIED"
   },
   {
-    "formId": "trunks_kid",
+    "formId": "trunks_future",
     "characterId": "trunks",
     "romFormId": 18,
     "actorVisualProfileKey": 13,
@@ -328,7 +328,7 @@ export const ROM_FIGHTER_PALETTE_BINDINGS = [
     "evidence": "ROM_STATIC_VERIFIED"
   },
   {
-    "formId": "trunks_kid_ssj",
+    "formId": "trunks_ssj",
     "characterId": "trunks",
     "romFormId": 19,
     "actorVisualProfileKey": 14,
@@ -382,7 +382,7 @@ export const ROM_FIGHTER_PALETTE_BINDINGS = [
     "evidence": "ROM_STATIC_VERIFIED"
   },
   {
-    "formId": "trunks_future",
+    "formId": "trunks_kid",
     "characterId": "trunks",
     "romFormId": 22,
     "actorVisualProfileKey": 17,
@@ -400,7 +400,7 @@ export const ROM_FIGHTER_PALETTE_BINDINGS = [
     "evidence": "ROM_STATIC_VERIFIED"
   },
   {
-    "formId": "trunks_ssj",
+    "formId": "trunks_kid_ssj",
     "characterId": "trunks",
     "romFormId": 23,
     "actorVisualProfileKey": 18,

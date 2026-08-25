@@ -1,6 +1,6 @@
 # S-MAP2 — ROM PHYSICAL PROVENANCE (REPORT)
 
-Generado: 2026-08-25T12:14:44.744Z · HEAD local.
+Generado: 2026-08-25T17:35:43.365Z · HEAD local.
 
 ## Principio
 
@@ -17,7 +17,7 @@ comparación SOLO por hash físico exacto (R2.4 grammar) — sin fuzzy/resize/re
 | Formas ROM reales (1-48) con perfil | 48/48 (100%) |
 | Keys de perfil únicas | 44 |
 | Keys sin paleta en \$6E00 | 0 () |
-| Identidades ROM renderizadas (occs) | 2487 |
+| Identidades ROM renderizadas (occs) | 2481 |
 | Identidades ROM únicas | 567 |
 | ROM_EXACT únicas | 0 |
 | ROM_SHARED únicas | 0 |

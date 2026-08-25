@@ -459,7 +459,7 @@
   ]
  },
  {
-  "formId": "trunks_kid",
+  "formId": "trunks_future",
   "romFormId": 18,
   "actorVisualProfileKey": 13,
   "graphicsBank": 62,
@@ -486,7 +486,7 @@
   ]
  },
  {
-  "formId": "trunks_kid_ssj",
+  "formId": "trunks_ssj",
   "romFormId": 19,
   "actorVisualProfileKey": 14,
   "graphicsBank": 63,
@@ -567,7 +567,7 @@
   ]
  },
  {
-  "formId": "trunks_future",
+  "formId": "trunks_kid",
   "romFormId": 22,
   "actorVisualProfileKey": 17,
   "graphicsBank": 66,
@@ -594,7 +594,7 @@
   ]
  },
  {
-  "formId": "trunks_ssj",
+  "formId": "trunks_kid_ssj",
   "romFormId": 23,
   "actorVisualProfileKey": 18,
   "graphicsBank": 67,

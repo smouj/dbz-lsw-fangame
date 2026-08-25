@@ -15,7 +15,7 @@ const RESOLVER = resolve(ROOT, 'src/battle/productionFrameResolver.ts');
 const ROSTER = resolve(ROOT, 'src/data/roster.ts');
 const CHARACTER_STUDIO = resolve(ROOT, 'src/devtools/characters.tsx');
 const EXPORT_ROM_FIGHTERS = resolve(ROOT, 'scripts/export-rom-fighter-assets.ts');
-const FORM_DECODE_TABLE = resolve(ROOT, 'docs/rom/generated/fighters/P0_FORM_DECODE_TABLE.json');
+const FORM_DECODE_TABLE = resolve(ROOT, 'docs/rom/generated/fighters/form_identity_48.json');
 const FIGHTER_IDENTITY_AUDIT = resolve(ROOT, 'docs/rom/generated/fighters/P0_FIGHTER_IDENTITY_AUDIT.md');
 const IDENTITY_DECODE_DOC = resolve(ROOT, 'docs/rom/generated/fighters/P0_IDENTITY_DECODE.md');
 
@@ -57,12 +57,12 @@ const romFormOracle: Array<{ formId: string; romFormId: number; actorVisualProfi
   { formId: 'gohan_adult_ssj', romFormId: 15, actorVisualProfileKey: 0x0c, graphicsBank: 0x3d },
   { formId: 'gohan_adult_ssj2', romFormId: 16, actorVisualProfileKey: 0x0c, graphicsBank: 0x3d },
   { formId: 'gohan_adult_ultimate', romFormId: 17, actorVisualProfileKey: 0x0b, graphicsBank: 0x3c },
-  { formId: 'trunks_kid', romFormId: 18, actorVisualProfileKey: 0x0d, graphicsBank: 0x3e },
-  { formId: 'trunks_kid_ssj', romFormId: 19, actorVisualProfileKey: 0x0e, graphicsBank: 0x3f },
+  { formId: 'trunks_future', romFormId: 18, actorVisualProfileKey: 0x0d, graphicsBank: 0x3e },
+  { formId: 'trunks_ssj', romFormId: 19, actorVisualProfileKey: 0x0e, graphicsBank: 0x3f },
   { formId: 'goten_base', romFormId: 20, actorVisualProfileKey: 0x0f, graphicsBank: 0x40 },
   { formId: 'goten_ssj', romFormId: 21, actorVisualProfileKey: 0x10, graphicsBank: 0x41 },
-  { formId: 'trunks_future', romFormId: 22, actorVisualProfileKey: 0x11, graphicsBank: 0x42 },
-  { formId: 'trunks_ssj', romFormId: 23, actorVisualProfileKey: 0x12, graphicsBank: 0x43 },
+  { formId: 'trunks_kid', romFormId: 22, actorVisualProfileKey: 0x11, graphicsBank: 0x42 },
+  { formId: 'trunks_kid_ssj', romFormId: 23, actorVisualProfileKey: 0x12, graphicsBank: 0x43 },
   { formId: 'gotenks_ssj', romFormId: 24, actorVisualProfileKey: 0x13, graphicsBank: 0x44 },
   { formId: 'gotenks_ssj3', romFormId: 25, actorVisualProfileKey: 0x14, graphicsBank: 0x45 },
   { formId: 'vegito_ssj', romFormId: 26, actorVisualProfileKey: 0x15, graphicsBank: 0x46 },
@@ -123,8 +123,8 @@ type DecodeRow = {
   graphicsBank?: number;
 };
 const decodeRows = JSON.parse(readFileSync(FORM_DECODE_TABLE, 'utf8')) as DecodeRow[];
-check('P0_FORM_DECODE_TABLE has 48 ROM-order rows', decodeRows.length === 48, `${decodeRows.length}/48`);
-check('P0_FORM_DECODE_TABLE matches current 48/48 oracle', romFormOracle.every(oracle => {
+check('form_identity_48.json has 48 ROM-order rows', decodeRows.length === 48, `${decodeRows.length}/48`);
+check('form_identity_48.json matches current 48/48 oracle', romFormOracle.every(oracle => {
   const item = decodeRows.find(row => (row.formId ?? row.projectForm) === oracle.formId);
   return !!item &&
     item.romFormId === oracle.romFormId &&
@@ -236,6 +236,27 @@ for (const [profile, allowedForms] of allowedProfileSharing) {
     actual.join(',') === [...allowedForms].sort().join(','),
     actual.join(', ') || 'none');
 }
+
+// ── Trunks golden gate (P0.4R-TRUNKS): kid ↔ future were historically
+//    swapped. Char Form Data oracle (stats_gid_1992672511.csv) + sprite
+//    silhouette (kid 30×37 chibi vs future 27×41 adult) lock the correct
+//    form→profile→bank routing. This must never regress.
+const trunksGate: Record<string, { romFormId: number; profile: number; bank: number }> = {
+  trunks_future: { romFormId: 18, profile: 0x0d, bank: 0x3e },
+  trunks_ssj: { romFormId: 19, profile: 0x0e, bank: 0x3f },
+  trunks_kid: { romFormId: 22, profile: 0x11, bank: 0x42 },
+  trunks_kid_ssj: { romFormId: 23, profile: 0x12, bank: 0x43 },
+};
+check('Trunks golden gate: kid ↔ future physical identity not swapped',
+  Object.entries(trunksGate).every(([formId, oracle]) => {
+    const item = row(formId);
+    return !!item && item.romFormId === oracle.romFormId && item.actorVisualProfileKey === oracle.profile && item.graphicsBank === oracle.bank;
+  }),
+  Object.entries(trunksGate).map(([formId, oracle]) => {
+    const item = row(formId);
+    const got = item ? `f$${item.romFormId.toString(16)}/p$${item.actorVisualProfileKey.toString(16)}/g$${item.graphicsBank.toString(16)}` : 'missing';
+    return `${formId}: got ${got}, want f$${oracle.romFormId.toString(16)}/p$${oracle.profile.toString(16)}/g$${oracle.bank.toString(16)}`;
+  }).join(' | '));
 
 const sharedNonOracleProfiles = [...new Map(ROM_FIGHTER_FORM_IDENTITY.map(item => [
   item.actorVisualProfileKey,

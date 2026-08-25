@@ -388,7 +388,7 @@ function clearGeneratedPhysical(formId: string): void {
   }
   if (existsSync(debugOut)) {
     for (const existing of readdirSync(debugOut)) {
-      if (/^rom-p[0-9a-f]{2}-(?:g[0-9a-f]{2}-)?r[0-9a-f]{2}-vf[0-9a-f]{2}(?:-ms[0-9a-f]{8}-gfx[0-9a-f]{8})?-raw-canvas\.png$/.test(existing)) {
+      if (/^rom-p[0-9a-f]{2}-(?:g[0-9a-f]{2}-)?r[0-9a-f]{2}-vf[0-9a-f]{2}(?:-ms[0-9a-f]{8}-gfx[0-9a-f]{8})?-raw(?:-canvas)?\.png$/.test(existing)) {
         unlinkSync(join(debugOut, existing));
       }
     }

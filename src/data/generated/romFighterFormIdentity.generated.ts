@@ -13226,9 +13226,9 @@ export const ROM_FIGHTER_FORM_IDENTITY = [
     ]
   },
   {
-    "formId": "trunks_kid",
-    "characterId": "trunks_kid",
-    "runtimeFormLabel": "Kid",
+    "formId": "trunks_future",
+    "characterId": "trunks_future",
+    "runtimeFormLabel": "Normal",
     "romFormId": 18,
     "romFormIdHex": "0x12",
     "romRecordBank": 17,
@@ -13446,6 +13446,50 @@ export const ROM_FIGHTER_FORM_IDENTITY = [
         "fxPaletteHex": "0xff"
       },
       {
+        "cardId": 10,
+        "name": "Masenko",
+        "type": "beam",
+        "actorAnim": 4,
+        "actorAnimHex": "0x04",
+        "fxGraphics": 8,
+        "fxGraphicsHex": "0x08",
+        "fxPalette": 45,
+        "fxPaletteHex": "0x2d"
+      },
+      {
+        "cardId": 27,
+        "name": "Sup.Saiyan-2",
+        "type": "support",
+        "actorAnim": 255,
+        "actorAnimHex": "0xff",
+        "fxGraphics": 2,
+        "fxGraphicsHex": "0x02",
+        "fxPalette": 53,
+        "fxPaletteHex": "0x35"
+      },
+      {
+        "cardId": 28,
+        "name": "Sup.Saiyan-3",
+        "type": "support",
+        "actorAnim": 255,
+        "actorAnimHex": "0xff",
+        "fxGraphics": 2,
+        "fxGraphicsHex": "0x02",
+        "fxPalette": 53,
+        "fxPaletteHex": "0x35"
+      },
+      {
+        "cardId": 34,
+        "name": "Rising Kick",
+        "type": "damage",
+        "actorAnim": 48,
+        "actorAnimHex": "0x30",
+        "fxGraphics": 255,
+        "fxGraphicsHex": "0xff",
+        "fxPalette": 255,
+        "fxPaletteHex": "0xff"
+      },
+      {
         "cardId": 35,
         "name": "Burning Atk.",
         "type": "beam",
@@ -13466,17 +13510,6 @@ export const ROM_FIGHTER_FORM_IDENTITY = [
         "fxGraphicsHex": "0x24",
         "fxPalette": 44,
         "fxPaletteHex": "0x2c"
-      },
-      {
-        "cardId": 37,
-        "name": "Flash Punch",
-        "type": "damage",
-        "actorAnim": 49,
-        "actorAnimHex": "0x31",
-        "fxGraphics": 255,
-        "fxGraphicsHex": "0xff",
-        "fxPalette": 255,
-        "fxPaletteHex": "0xff"
       },
       {
         "cardId": 83,
@@ -13963,9 +13996,9 @@ export const ROM_FIGHTER_FORM_IDENTITY = [
     ]
   },
   {
-    "formId": "trunks_kid_ssj",
-    "characterId": "trunks_kid",
-    "runtimeFormLabel": "Kid SSJ",
+    "formId": "trunks_ssj",
+    "characterId": "trunks_future",
+    "runtimeFormLabel": "Super",
     "romFormId": 19,
     "romFormIdHex": "0x13",
     "romRecordBank": 17,
@@ -14183,6 +14216,50 @@ export const ROM_FIGHTER_FORM_IDENTITY = [
         "fxPaletteHex": "0xff"
       },
       {
+        "cardId": 10,
+        "name": "Masenko",
+        "type": "beam",
+        "actorAnim": 4,
+        "actorAnimHex": "0x04",
+        "fxGraphics": 8,
+        "fxGraphicsHex": "0x08",
+        "fxPalette": 45,
+        "fxPaletteHex": "0x2d"
+      },
+      {
+        "cardId": 27,
+        "name": "Sup.Saiyan-2",
+        "type": "support",
+        "actorAnim": 255,
+        "actorAnimHex": "0xff",
+        "fxGraphics": 2,
+        "fxGraphicsHex": "0x02",
+        "fxPalette": 53,
+        "fxPaletteHex": "0x35"
+      },
+      {
+        "cardId": 28,
+        "name": "Sup.Saiyan-3",
+        "type": "support",
+        "actorAnim": 255,
+        "actorAnimHex": "0xff",
+        "fxGraphics": 2,
+        "fxGraphicsHex": "0x02",
+        "fxPalette": 53,
+        "fxPaletteHex": "0x35"
+      },
+      {
+        "cardId": 34,
+        "name": "Rising Kick",
+        "type": "damage",
+        "actorAnim": 48,
+        "actorAnimHex": "0x30",
+        "fxGraphics": 255,
+        "fxGraphicsHex": "0xff",
+        "fxPalette": 255,
+        "fxPaletteHex": "0xff"
+      },
+      {
         "cardId": 35,
         "name": "Burning Atk.",
         "type": "beam",
@@ -14203,17 +14280,6 @@ export const ROM_FIGHTER_FORM_IDENTITY = [
         "fxGraphicsHex": "0x24",
         "fxPalette": 44,
         "fxPaletteHex": "0x2c"
-      },
-      {
-        "cardId": 37,
-        "name": "Flash Punch",
-        "type": "damage",
-        "actorAnim": 49,
-        "actorAnimHex": "0x31",
-        "fxGraphics": 255,
-        "fxGraphicsHex": "0xff",
-        "fxPalette": 255,
-        "fxPaletteHex": "0xff"
       },
       {
         "cardId": 83,
@@ -16152,9 +16218,9 @@ export const ROM_FIGHTER_FORM_IDENTITY = [
     ]
   },
   {
-    "formId": "trunks_future",
-    "characterId": "trunks_future",
-    "runtimeFormLabel": "Normal",
+    "formId": "trunks_kid",
+    "characterId": "trunks_kid",
+    "runtimeFormLabel": "Kid",
     "romFormId": 22,
     "romFormIdHex": "0x16",
     "romRecordBank": 17,
@@ -16372,50 +16438,6 @@ export const ROM_FIGHTER_FORM_IDENTITY = [
         "fxPaletteHex": "0xff"
       },
       {
-        "cardId": 10,
-        "name": "Masenko",
-        "type": "beam",
-        "actorAnim": 4,
-        "actorAnimHex": "0x04",
-        "fxGraphics": 8,
-        "fxGraphicsHex": "0x08",
-        "fxPalette": 45,
-        "fxPaletteHex": "0x2d"
-      },
-      {
-        "cardId": 27,
-        "name": "Sup.Saiyan-2",
-        "type": "support",
-        "actorAnim": 255,
-        "actorAnimHex": "0xff",
-        "fxGraphics": 2,
-        "fxGraphicsHex": "0x02",
-        "fxPalette": 53,
-        "fxPaletteHex": "0x35"
-      },
-      {
-        "cardId": 28,
-        "name": "Sup.Saiyan-3",
-        "type": "support",
-        "actorAnim": 255,
-        "actorAnimHex": "0xff",
-        "fxGraphics": 2,
-        "fxGraphicsHex": "0x02",
-        "fxPalette": 53,
-        "fxPaletteHex": "0x35"
-      },
-      {
-        "cardId": 34,
-        "name": "Rising Kick",
-        "type": "damage",
-        "actorAnim": 48,
-        "actorAnimHex": "0x30",
-        "fxGraphics": 255,
-        "fxGraphicsHex": "0xff",
-        "fxPalette": 255,
-        "fxPaletteHex": "0xff"
-      },
-      {
         "cardId": 35,
         "name": "Burning Atk.",
         "type": "beam",
@@ -16436,6 +16458,17 @@ export const ROM_FIGHTER_FORM_IDENTITY = [
         "fxGraphicsHex": "0x24",
         "fxPalette": 44,
         "fxPaletteHex": "0x2c"
+      },
+      {
+        "cardId": 37,
+        "name": "Flash Punch",
+        "type": "damage",
+        "actorAnim": 49,
+        "actorAnimHex": "0x31",
+        "fxGraphics": 255,
+        "fxGraphicsHex": "0xff",
+        "fxPalette": 255,
+        "fxPaletteHex": "0xff"
       },
       {
         "cardId": 83,
@@ -16922,9 +16955,9 @@ export const ROM_FIGHTER_FORM_IDENTITY = [
     ]
   },
   {
-    "formId": "trunks_ssj",
-    "characterId": "trunks_future",
-    "runtimeFormLabel": "Super",
+    "formId": "trunks_kid_ssj",
+    "characterId": "trunks_kid",
+    "runtimeFormLabel": "Kid SSJ",
     "romFormId": 23,
     "romFormIdHex": "0x17",
     "romRecordBank": 17,
@@ -17142,50 +17175,6 @@ export const ROM_FIGHTER_FORM_IDENTITY = [
         "fxPaletteHex": "0xff"
       },
       {
-        "cardId": 10,
-        "name": "Masenko",
-        "type": "beam",
-        "actorAnim": 4,
-        "actorAnimHex": "0x04",
-        "fxGraphics": 8,
-        "fxGraphicsHex": "0x08",
-        "fxPalette": 45,
-        "fxPaletteHex": "0x2d"
-      },
-      {
-        "cardId": 27,
-        "name": "Sup.Saiyan-2",
-        "type": "support",
-        "actorAnim": 255,
-        "actorAnimHex": "0xff",
-        "fxGraphics": 2,
-        "fxGraphicsHex": "0x02",
-        "fxPalette": 53,
-        "fxPaletteHex": "0x35"
-      },
-      {
-        "cardId": 28,
-        "name": "Sup.Saiyan-3",
-        "type": "support",
-        "actorAnim": 255,
-        "actorAnimHex": "0xff",
-        "fxGraphics": 2,
-        "fxGraphicsHex": "0x02",
-        "fxPalette": 53,
-        "fxPaletteHex": "0x35"
-      },
-      {
-        "cardId": 34,
-        "name": "Rising Kick",
-        "type": "damage",
-        "actorAnim": 48,
-        "actorAnimHex": "0x30",
-        "fxGraphics": 255,
-        "fxGraphicsHex": "0xff",
-        "fxPalette": 255,
-        "fxPaletteHex": "0xff"
-      },
-      {
         "cardId": 35,
         "name": "Burning Atk.",
         "type": "beam",
@@ -17206,6 +17195,17 @@ export const ROM_FIGHTER_FORM_IDENTITY = [
         "fxGraphicsHex": "0x24",
         "fxPalette": 44,
         "fxPaletteHex": "0x2c"
+      },
+      {
+        "cardId": 37,
+        "name": "Flash Punch",
+        "type": "damage",
+        "actorAnim": 49,
+        "actorAnimHex": "0x31",
+        "fxGraphics": 255,
+        "fxGraphicsHex": "0xff",
+        "fxPalette": 255,
+        "fxPaletteHex": "0xff"
       },
       {
         "cardId": 83,

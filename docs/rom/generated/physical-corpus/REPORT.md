@@ -43,12 +43,12 @@ Resource-blocked profiles are not rendered or faked:
 | gohan_adult_ssj | 0x0c | 18 | 76 | 10 | 40 | — | 32×48 |
 | gohan_adult_ssj2 | 0x0c | 18 | 76 | 10 | 40 | — | 32×48 |
 | gohan_adult_ultimate | 0x0b | 17 | 72 | 10 | 40 | — | 32×48 |
-| trunks_kid | 0x0d | 4 | 14 | 2 | 8 | — | 32×48 |
-| trunks_kid_ssj | 0x0e | 4 | 14 | 2 | 8 | — | 32×48 |
+| trunks_future | 0x0d | 8 | 28 | 4 | 16 | — | 32×48 |
+| trunks_ssj | 0x0e | 8 | 28 | 4 | 16 | — | 32×48 |
 | goten_base | 0x0f | 9 | 39 | 7 | 17 | — | 32×48 |
 | goten_ssj | 0x10 | 12 | 50 | 8 | 24 | — | 32×48 |
-| trunks_future | 0x11 | 8 | 28 | 4 | 16 | — | 32×48 |
-| trunks_ssj | 0x12 | 8 | 28 | 4 | 16 | — | 32×48 |
+| trunks_kid | 0x11 | 4 | 14 | 2 | 8 | — | 32×48 |
+| trunks_kid_ssj | 0x12 | 4 | 14 | 2 | 8 | — | 32×48 |
 | gotenks_ssj | 0x13 | 14 | 62 | 8 | 32 | — | 32×48 |
 | gotenks_ssj3 | 0x14 | 14 | 62 | 8 | 32 | — | 32×48 |
 | vegito_ssj | 0x15 | 24 | 114 | 14 | 68 | — | 40×48 |
