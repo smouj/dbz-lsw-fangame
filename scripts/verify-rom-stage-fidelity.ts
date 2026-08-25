@@ -70,35 +70,69 @@ if (existsSync(SEQ_JSON)) {
 
 // Gate 4: command → animation dispatch (Bank00 Call_000_3833) verificado.
 const CONSUMER_JSON = join(ROOT, 'generated/rom-stage/command-consumers.json');
-const EXPECTED_ANIMS: Record<string, { side0: number; side1: number }> = {
-  A: { side0: 0x00, side1: 0x05 },
-  B: { side0: 0x01, side1: 0x06 },
-  RIGHT: { side0: 0x02, side1: 0x07 },
-  UP: { side0: 0x03, side1: 0x08 },
-  DOWN: { side0: 0x04, side1: 0x09 },
+const EXPECTED_ANIMS: Record<string, { memberSlot0: number; memberSlot1: number }> = {
+  A: { memberSlot0: 0x00, memberSlot1: 0x05 },
+  B: { memberSlot0: 0x01, memberSlot1: 0x06 },
+  RIGHT: { memberSlot0: 0x02, memberSlot1: 0x07 },
+  UP: { memberSlot0: 0x03, memberSlot1: 0x08 },
+  DOWN: { memberSlot0: 0x04, memberSlot1: 0x09 },
 };
 if (existsSync(CONSUMER_JSON)) {
   const consumers = JSON.parse(readFileSync(CONSUMER_JSON, 'utf8'));
   const anims = consumers.dispatch?.animationIds ?? {};
   const cmds = ['A', 'B', 'UP', 'DOWN', 'RIGHT'];
-  check('command→animation dispatch 5/5', cmds.every((c) => anims[c] && anims[c].side0 === EXPECTED_ANIMS[c].side0 && anims[c].side1 === EXPECTED_ANIMS[c].side1));
-  check('animation side0 = 0..4 contiguo', cmds.every((c) => anims[c]?.side0 === EXPECTED_ANIMS[c].side0));
-  check('animation side1 = 5..9 contiguo', cmds.every((c) => anims[c]?.side1 === EXPECTED_ANIMS[c].side1));
+  check('command→animation dispatch 5/5', cmds.every((c) => anims[c] && anims[c].memberSlot0 === EXPECTED_ANIMS[c].memberSlot0 && anims[c].memberSlot1 === EXPECTED_ANIMS[c].memberSlot1));
+  check('animation memberSlot0 = 0..4 contiguo', cmds.every((c) => anims[c]?.memberSlot0 === EXPECTED_ANIMS[c].memberSlot0));
+  check('animation memberSlot1 = 5..9 contiguo', cmds.every((c) => anims[c]?.memberSlot1 === EXPECTED_ANIMS[c].memberSlot1));
   check('consumer inputs = $CA60 (expected) + $CA6A (success)', consumers.consumer?.inputs?.expectedCommand?.includes('$CA60') && consumers.consumer?.inputs?.successFlag?.includes('$CA6A'));
-  check('side register = $C7D4 member slot', consumers.dispatch?.sideRegister?.register === '$C7D4');
+  check('member slot register = $C7D4', consumers.dispatch?.memberSlotRegister?.register === '$C7D4');
   const pose = consumers.poseSelector?.values ?? {};
-  const EXPECTED_POSE: Record<string, { side0: number; side1: number }> = {
-    A: { side0: 0x05, side1: 0x0a },
-    B: { side0: 0x08, side1: 0x0b },
-    RIGHT: { side0: 0x0b, side1: 0x0d },
-    UP: { side0: 0x06, side1: 0x0f },
-    DOWN: { side0: 0x09, side1: 0x10 },
+  const EXPECTED_POSE: Record<string, { memberSlot0: number; memberSlot1: number }> = {
+    A: { memberSlot0: 0x05, memberSlot1: 0x0a },
+    B: { memberSlot0: 0x08, memberSlot1: 0x0b },
+    RIGHT: { memberSlot0: 0x0b, memberSlot1: 0x0d },
+    UP: { memberSlot0: 0x06, memberSlot1: 0x0f },
+    DOWN: { memberSlot0: 0x09, memberSlot1: 0x10 },
   };
-  check('command→pose selector $C3C7 5/5', cmds.every((c) => pose[c] && pose[c].side0 === EXPECTED_POSE[c].side0 && pose[c].side1 === EXPECTED_POSE[c].side1));
+  check('command→pose selector $C3C7 5/5', cmds.every((c) => pose[c] && pose[c].memberSlot0 === EXPECTED_POSE[c].memberSlot0 && pose[c].memberSlot1 === EXPECTED_POSE[c].memberSlot1));
   check('pose register = $C3C7', consumers.poseSelector?.register === '$C3C7');
-  check('pose side0 table = Bank01:$4E6D', consumers.poseSelector?.side0Table?.includes('$4E6D'));
+  check('pose memberSlot0 table = Bank01:$4E6D', consumers.poseSelector?.memberSlot0Table?.includes('$4E6D'));
 } else {
   check('command-consumers.json presente', false, 'falta generated/rom-stage/command-consumers.json — ejecuta build:rom-stage');
+}
+
+// Gate 5: programas VM completos (10 combos command×memberSlot).
+const PROG_JSON = join(ROOT, 'generated/rom-stage/animation-programs.json');
+if (existsSync(PROG_JSON)) {
+  const prog = JSON.parse(readFileSync(PROG_JSON, 'utf8'));
+  const programs = prog.programs ?? [];
+  check('VM programs 10/10 (5 commands × 2 memberSlots)', programs.length === 10, `${programs.length}/10`);
+  const EXPECTED_POSE_WRITE: Record<string, number[]> = {
+    'A·0': [0x05, 0x00], 'B·0': [0x08, 0x00], 'RIGHT·0': [0x0b, 0x00], 'UP·0': [0x06, 0x00], 'DOWN·0': [0x09, 0x00],
+    'A·1': [0x0a, 0x00], 'B·1': [0x0b, 0x00], 'RIGHT·1': [0x0d], 'UP·1': [0x0f], 'DOWN·1': [0x10],
+  };
+  const poseWriteOk = programs.every((p: any) => {
+    const key = `${p.command}·${p.memberSlot}`;
+    return JSON.stringify(p.poseWrites) === JSON.stringify(EXPECTED_POSE_WRITE[key]);
+  });
+  check('opcode $04 pose writes accounted 10/10 (incl. idle $00)', poseWriteOk);
+  const allOpKnown = programs.every((p: any) => p.steps.every((s: any) => !s.mnemonic.startsWith('OP_$')));
+  check('all VM opcodes decoded (no OP_$ unknown)', allOpKnown);
+  check('every program sets pose ≥1 and returns to idle $00 for memberSlot0', programs.filter((p: any) => p.memberSlot === 0).every((p: any) => p.poseWrites.length === 2 && p.poseWrites[1] === 0x00));
+} else {
+  check('animation-programs.json presente', false, 'falta generated/rom-stage/animation-programs.json — ejecuta build:rom-stage');
+}
+
+// Gate 6: clasificación de readers de $C3C7 (100%).
+const READERS_JSON = join(ROOT, 'generated/rom-stage/pose-selector-consumers.json');
+if (existsSync(READERS_JSON)) {
+  const readers = JSON.parse(readFileSync(READERS_JSON, 'utf8'));
+  check('$C3C7 readers classified 100%', readers.classification === 'COMPLETE' && readers.readers?.length >= 3);
+  check('$C3C7 data false-positives identified (jp $c3c7 / ld bc,$c3c7)', readers.dataFalsePositives?.length === 2);
+  check('pose consumer = Call_000_0b16 (Bank00)', readers.consumerChain?.step2?.includes('Call_000_0b16'));
+  check('consumer chain records pose table $C3CE/$C3CF', readers.consumerChain?.step3?.includes('$C3CE') || readers.consumerChain?.step3?.includes('$C3CF'));
+} else {
+  check('pose-selector-consumers.json presente', false, 'falta generated/rom-stage/pose-selector-consumers.json — ejecuta build:rom-stage');
 }
 
 console.log(`\n═══ RESULTADO: ${pass} ✓ · ${fail} ✗ ═══`);

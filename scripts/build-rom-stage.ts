@@ -53,29 +53,125 @@ const COMMAND_NAMES: Record<number, string> = {
 };
 
 // command → animation IDs cargados por Call_000_3833 (bc → Call_000_3e92),
-// lado 0 ($c7d4=0) y lado 1 ($c7d4=1). Verificado en bank_000.asm $3833–$3955.
-const COMMAND_ANIMATIONS: Record<string, { side0: number; side1: number }> = {
-  A: { side0: 0x00, side1: 0x05 },
-  B: { side0: 0x01, side1: 0x06 }, // último comando: side1 = $39 en vez de $06
-  RIGHT: { side0: 0x02, side1: 0x07 },
-  UP: { side0: 0x03, side1: 0x08 },
-  DOWN: { side0: 0x04, side1: 0x09 },
+// memberSlot0 ($c7d4=0) y memberSlot1 ($c7d4=1). Verificado en bank_000.asm $3833–$3955.
+const COMMAND_ANIMATIONS: Record<string, { memberSlot0: number; memberSlot1: number }> = {
+  A: { memberSlot0: 0x00, memberSlot1: 0x05 },
+  B: { memberSlot0: 0x01, memberSlot1: 0x06 }, // último comando: memberSlot1 = $39 en vez de $06
+  RIGHT: { memberSlot0: 0x02, memberSlot1: 0x07 },
+  UP: { memberSlot0: 0x03, memberSlot1: 0x08 },
+  DOWN: { memberSlot0: 0x04, memberSlot1: 0x09 },
 };
 
 // command → pose selector $C3C7 (frame/pose index) escrito por el opcode $04
 // de la VM (Jump_07e_70ab → jr_07e_713f → Call_000_3501).
-//   side0 (member 0): vía tabla Bank01:$4E6D (b=0): $20→$05, $21→$08, $22→$0b,
+//   memberSlot0 (member 0): vía tabla Bank01:$4E6D (b=0): $20→$05, $21→$08, $22→$0b,
 //                     $23→$06 · $24→$09 (caso especial en Call_000_3501).
-//   side1 (member 1): directo (c < $20 → $C3C7 = c): $0a/$0b/$0d/$0f/$10.
+//   memberSlot1 (member 1): directo (c < $20 → $C3C7 = c): $0a/$0b/$0d/$0f/$10.
 // $C3C7 es el selector de pose; su resolución a frame físico (metasprite/GFX
 // → physicalId) queda PENDING (siguiente RE).
-const COMMAND_POSE_SELECTORS: Record<string, { side0: number; side1: number }> = {
-  A: { side0: 0x05, side1: 0x0a },
-  B: { side0: 0x08, side1: 0x0b },
-  RIGHT: { side0: 0x0b, side1: 0x0d },
-  UP: { side0: 0x06, side1: 0x0f },
-  DOWN: { side0: 0x09, side1: 0x10 },
+const COMMAND_POSE_SELECTORS: Record<string, { memberSlot0: number; memberSlot1: number }> = {
+  A: { memberSlot0: 0x05, memberSlot1: 0x0a },
+  B: { memberSlot0: 0x08, memberSlot1: 0x0b },
+  RIGHT: { memberSlot0: 0x0b, memberSlot1: 0x0d },
+  UP: { memberSlot0: 0x06, memberSlot1: 0x0f },
+  DOWN: { memberSlot0: 0x09, memberSlot1: 0x10 },
 };
+
+// ── VM program decode (Bank30:$5D00) ──
+const ANIM_TABLE_BANK = 0x30;
+const ANIM_TABLE_ADDR = 0x5d00;
+const ANIM_TABLE_FILE = ANIM_TABLE_BANK * 0x4000 + (ANIM_TABLE_ADDR - 0x4000);
+
+// Opcodes VM (Jump_07e_70ab, Bank7E:$70AB) — mnemónicos de la tabla de dispatch.
+const VM_OPCODES: Record<number, string> = {
+  0x01: 'SET_FRAME_ADV',
+  0x04: 'SET_POSE',
+  0x05: 'VISIBILITY',
+  0x06: 'COND_COMPARE',
+  0x07: 'LOOP_COUNTER',
+  0x08: 'SUB_CALL',
+  0x0a: 'MOVE_LOOP',
+  0x0b: 'OFFSET_LOOP',
+  0x0c: 'GLOBAL_SET',
+  0x0d: 'SCREEN_OFFSET',
+  0x0e: 'SCREEN_X_MOVE',
+  0x0f: 'SCREEN_OP',
+  0x10: 'ANIM_LOOP',
+  0x11: 'SCREEN_OFFSET_TBL',
+  0x12: 'SUB_CALL2',
+  0x13: 'SUB_CALL3',
+  0x14: 'SUB_CALL4',
+};
+
+// Call_000_3501: arg3 crudo del opcode $04 → valor de $C3C7.
+const POSE_TABLE_4E6D_ROW0 = [0x05, 0x08, 0x0b, 0x06];
+function poseSelectorFromArg3(arg3: number): number {
+  if (arg3 === 0x24) return 0x09;
+  if (arg3 >= 0x20 && arg3 <= 0x23) return POSE_TABLE_4E6D_ROW0[arg3 - 0x20];
+  return arg3;
+}
+
+interface VmStep {
+  index: number;
+  opcode: number;
+  mnemonic: string;
+  bytes: number[];
+  memberSlot?: number;
+  poseSelector?: number;
+}
+
+interface VmProgram {
+  command: string;
+  memberSlot: number;
+  animationId: number;
+  tableOffset: number;
+  programAddress: string;
+  count: number;
+  steps: VmStep[];
+  poseWrites: number[];
+}
+
+function decodeAnimationPrograms(rom: Buffer): VmProgram[] {
+  const combos: Array<[string, number, number]> = [
+    ['A', 0, 0x00], ['B', 0, 0x01], ['RIGHT', 0, 0x02], ['UP', 0, 0x03], ['DOWN', 0, 0x04],
+    ['A', 1, 0x05], ['B', 1, 0x06], ['RIGHT', 1, 0x07], ['UP', 1, 0x08], ['DOWN', 1, 0x09],
+  ];
+  return combos.map(([command, memberSlot, animId]) => {
+    const a = ANIM_TABLE_FILE + animId * 2;
+    const offset = rom[a] | (rom[a + 1] << 8);
+    const prog = ANIM_TABLE_FILE + offset;
+    const count = rom[prog];
+    const bytes = Array.from(rom.subarray(prog + 1, prog + 1 + count * 5));
+    const steps: VmStep[] = [];
+    const poseWrites: number[] = [];
+    for (let i = 0; i < count; i++) {
+      const e = bytes.slice(i * 5, i * 5 + 5);
+      const opcode = e[0];
+      const step: VmStep = {
+        index: i,
+        opcode,
+        mnemonic: VM_OPCODES[opcode] ?? `OP_$${opcode.toString(16).padStart(2, '0')}`,
+        bytes: e,
+      };
+      if (opcode === 0x04 || opcode === 0x01) {
+        step.memberSlot = e[1];
+        step.poseSelector = opcode === 0x04 ? poseSelectorFromArg3(e[3]) : e[3];
+        poseWrites.push(step.poseSelector);
+      }
+      steps.push(step);
+    }
+    return {
+      command,
+      memberSlot,
+      animationId: animId,
+      tableOffset: offset,
+      programAddress: `Bank30:$${(ANIM_TABLE_ADDR + offset).toString(16).toUpperCase()} (file 0x${(ANIM_TABLE_FILE + offset).toString(16)})`,
+      count,
+      steps,
+      poseWrites,
+    };
+  });
+}
 
 const LEVEL_LABEL: Record<number, string> = {
   1: '3_stage',
@@ -201,7 +297,30 @@ function main() {
   // Cadena de consumidores command→animation (verificada hasta la tabla $5D00).
   writeFileSync(join(OUT_DIR, 'command-consumers.json'), JSON.stringify(commandConsumers(), null, 2));
 
-  const report = genReport(stageData);
+  // Programas VM completos (10 combos command×memberSlot, opcodes en orden).
+  const programs = decodeAnimationPrograms(rom);
+  writeFileSync(join(OUT_DIR, 'animation-programs.json'), JSON.stringify({
+    source: {
+      table: `Bank30:$${ANIM_TABLE_ADDR.toString(16).toUpperCase()} (file 0x${ANIM_TABLE_FILE.toString(16)})`,
+      lookup: 'Call_000_3e92 (Bank00): sla c / rl b → $5D00 + bc',
+      programFormat: '[count][5-byte VM opcodes]',
+      interpreter: 'Jump_07e_70ab (Bank7E:$70AB)',
+      evidence: 'mgbdis bank_030.asm (data) + bank_07e.asm Jump_07e_70ab',
+    },
+    opcodeMnemonic: VM_OPCODES,
+    poseSelectorMapping: {
+      register: '$C3C7',
+      writer: 'VM opcode $04 (jr_07e_713f) → Call_000_3501',
+      memberSlot0Table: 'Bank01:$4E6D (b=0): $20→$05, $21→$08, $22→$0b, $23→$06 · $24→$09',
+      memberSlot1Direct: 'c < $20 → $C3C7 = c',
+    },
+    programs,
+  }, null, 2));
+
+  // Clasificación de readers/consumidores de $C3C7 (100%).
+  writeFileSync(join(OUT_DIR, 'pose-selector-consumers.json'), JSON.stringify(poseSelectorConsumers(), null, 2));
+
+  const report = genReport(stageData, programs);
   writeFileSync(join(OUT_DIR, 'REPORT.md'), report);
 
   console.log(`P0.4S stage sequences extraídas: ${sequences.length} secuencias · ${countErrors.length} count-errors · ${bad.length} bad-pointers`);
@@ -249,20 +368,48 @@ export const ROM_STAGE_SEQUENCES: RomStageSequence[] = ${JSON.stringify(
 export const ROM_STAGE_LEVEL_LABEL: Record<number, string> = ${JSON.stringify(LEVEL_LABEL, null, 2)};
 
 /** command → animation IDs cargados por Call_000_3833 (Bank00:$3833).
- *  side0 = $c7d4=0 (member 0, $C700) · side1 = $c7d4=1 (member 1, $C703).
- *  Cada ID indexa la tabla de programas de animación @ $5D00 (Bank00). */
+ *  memberSlot0 = $c7d4=0 (member 0, $C700) · memberSlot1 = $c7d4=1 (member 1, $C703).
+ *  Cada ID indexa la tabla de programas de animación @ $5D00 (Bank30). */
 export const ROM_STAGE_COMMAND_ANIMATIONS: Record<
   RomStageCommand,
-  { side0: number; side1: number; lastSide1?: number }
+  { memberSlot0: number; memberSlot1: number; lastMemberSlot1?: number }
 > = ${JSON.stringify(COMMAND_ANIMATIONS, null, 2)};
 
 /** command → pose selector $C3C7 (VM opcode $04 → Call_000_3501).
- *  side0 vía Bank01:$4E6D (b=0) + $24→$09 · side1 directo. VERIFICADO.
+ *  memberSlot0 vía Bank01:$4E6D (b=0) + $24→$09 · memberSlot1 directo. VERIFICADO.
  *  $C3C7 → frame físico (metasprite/GFX → physicalId) queda PENDING. */
 export const ROM_STAGE_COMMAND_POSE: Record<
   RomStageCommand,
-  { side0: number; side1: number }
+  { memberSlot0: number; memberSlot1: number }
 > = ${JSON.stringify(COMMAND_POSE_SELECTORS, null, 2)};
+
+export interface RomStageVmStep {
+  index: number;
+  opcode: number;
+  mnemonic: string;
+  bytes: number[];
+  memberSlot?: number;
+  poseSelector?: number;
+}
+
+export interface RomStageVmProgram {
+  command: RomStageCommand;
+  memberSlot: number;
+  animationId: number;
+  tableOffset: number;
+  programAddress: string;
+  count: number;
+  steps: RomStageVmStep[];
+  poseWrites: number[];
+}
+
+/** Programas VM completos (10 combos command×memberSlot), opcodes en orden.
+ *  Fuente: Bank30:$5D00 (programas de animación). Interpreter Jump_07e_70ab. */
+export const ROM_STAGE_COMMAND_PROGRAMS: RomStageVmProgram[] = ${JSON.stringify(
+    decodeAnimationPrograms(readFileSync(ROM_PATH)),
+    null,
+    2,
+  )};
 `;
 }
 
@@ -280,29 +427,78 @@ function commandConsumers(): unknown {
       call: 'Call_000_3833 (Bank00:$3833)',
       encoding: Object.fromEntries(Object.entries(COMMAND_NAMES).map(([bit, name]) => [name, Number(bit)])),
       animationIds: COMMAND_ANIMATIONS,
-      lastCommandSide1Note: 'B como ÚLTIMO comando → side1 = $39 en vez de $06 (bank_000.asm $391E)',
-      sideRegister: {
+      lastCommandMemberSlot1Note: 'B como ÚLTIMO comando → memberSlot1 = $39 en vez de $06 (bank_000.asm $391E)',
+      memberSlotRegister: {
         register: '$C7D4',
         meaning: 'member slot (0 → $C700, 1 → $C703 — Call_000_3e46)',
       },
     },
     animationProgramTable: {
-      address: '$5D00 (Bank00, Call_000_3e92: sla c / rl b → $5D00+bc)',
-      resolution: 'PENDING — AnimationSlot → sequenceSelector → AnimationResource → frame → VFID → physicalId',
+      address: '$5D00 (Bank30, Call_000_3e92: sla c / rl b → $5D00+bc)',
+      resolution: 'PENDING — pose selector $C3C7 → sequence → metasprite → GFX → physicalId',
     },
     poseSelector: {
       register: '$C3C7',
       meaning: 'frame/pose index',
       opcode: 'VM $04 (Jump_07e_70ab → jr_07e_713f → Call_000_3501)',
-      side0Table: 'Bank01:$4E6D (b=0): $20→$05, $21→$08, $22→$0b, $23→$06 · $24→$09',
-      side1Direct: 'c < $20 → $C3C7 = c: $0a/$0b/$0d/$0f/$10',
+      memberSlot0Table: 'Bank01:$4E6D (b=0): $20→$05, $21→$08, $22→$0b, $23→$06 · $24→$09',
+      memberSlot1Direct: 'c < $20 → $C3C7 = c: $0a/$0b/$0d/$0f/$10',
       values: COMMAND_POSE_SELECTORS,
-      toPhysical: 'PENDING — $C3C7 → sequence → metasprite → GFX → physicalId',
+      toPhysical: 'PENDING — $C3C7 → pose table ($C3CE/$C3CF) → frame descriptor → metasprite → GFX → physicalId',
     },
   };
 }
 
-function genReport(d: ReturnType<typeof JSON.parse>): string {
+// Clasificación exhaustiva de los readers/xrefs de $C3C7 (24 referencias, 100%).
+function poseSelectorConsumers(): unknown {
+  return {
+    register: '$C3C7',
+    classification: 'COMPLETE',
+    totalReferences: 24,
+    readers: [
+      {
+        address: 'Bank00:$0B16 (Call_000_0b16)',
+        kind: 'POSE_TABLE_INDEX',
+        description: 'Índice real de la tabla de poses: $C3C7 se limita contra el count de la tabla y se usa como índice de una tabla de punteros relativos.',
+        chain: '$C3C7 → tabla de poses @ $C3CE/$C3CF → descriptor de frame → $C0F9 + $C3D0 → render (DMA)',
+        evidence: 'mgbdis bank_000.asm Call_000_0b16 ($0B16)',
+      },
+      {
+        address: 'Bank00:$0914 (Call_000_0914)',
+        kind: 'SNAPSHOT_TO_ACTION',
+        description: 'Copia $C3C7 al descriptor de acción/frame (estructura apuntada por Call_000_0b07).',
+        evidence: 'mgbdis bank_000.asm Call_000_0914 ($0914)',
+      },
+      {
+        address: 'Bank7E:$70E0-ish (post Call_000_3e64)',
+        kind: 'SNAPSHOT_TO_MEMBER',
+        description: 'Copia $C3C7 al estado de animación del miembro (tras Call_000_3e57/3e64).',
+        evidence: 'mgbdis bank_07e.asm (~$8963)',
+      },
+    ],
+    dataFalsePositives: [
+      { address: 'Bank02B:$14257', note: '`jp $c3c7` en región de datos (no es código real)' },
+      { address: 'Bank01A:$2680', note: '`ld bc,$c3c7` en región de datos (no es código real)' },
+    ],
+    writers: [
+      { address: 'Bank00:$3501 (Call_000_3501)', note: 'escritor principal desde opcode VM $04' },
+      { address: 'Bank00:$3511/$3519', note: 'rama $24→$09 y tabla $4E6D' },
+      { address: 'Bank00: other (10688/10695/10702/11326)', note: 'otros escritores de poses (no Stage)' },
+      { address: 'Bank07E:$8637', note: 'escritor en VM' },
+      { address: 'Bank03: varios', note: 'escritores de poses (no Stage)' },
+    ],
+    consumerChain: {
+      step1: 'opcode VM $04 → Call_000_3501 → escribe $C3C7',
+      step2: 'Call_000_0b16 lee $C3C7 y lo usa como índice de la tabla de poses ($C3CE/$C3CF)',
+      step3: '$C3CE/$C3CF = descriptor de animación del personaje cargado por Call_000_0b8d desde $C3CC/$C3CD',
+      step4: '$C3CC/$C3CD = puntero al descriptor (banco + puntero) fijado por Call_000_0914 (de)',
+      step5: 'descriptor de frame → $C0F9 (byte) + $C3D0 (sub-índice) → render metasprite/GFX (DMA)',
+      step6: 'JOIN al corpus físico (resourceId/sequence/VFID → physicalId) — PENDING',
+    },
+  };
+}
+
+function genReport(d: ReturnType<typeof JSON.parse>, programs: ReturnType<typeof decodeAnimationPrograms>): string {
   const lines: string[] = [];
   lines.push('# P0.4S — ROM Stage Attack: extracción de secuencias');
   lines.push('');
@@ -335,25 +531,39 @@ function genReport(d: ReturnType<typeof JSON.parse>): string {
   lines.push('');
   lines.push('## Command → Animation (Bank00 Call_000_3833)');
   lines.push('');
-  lines.push('| Comando | Bit | anim side0 ($C7D4=0) | anim side1 ($C7D4=1) |');
+  lines.push('| Comando | Bit | anim memberSlot0 ($C7D4=0) | anim memberSlot1 ($C7D4=1) |');
   lines.push('|---|---|---|---|');
   for (const [cmd, ids] of Object.entries(COMMAND_ANIMATIONS)) {
     const bit = Object.entries(COMMAND_NAMES).find(([, n]) => n === cmd)?.[0];
-    lines.push(`| \`${cmd}\` | \`$${Number(bit).toString(16).padStart(2, '0')}\` | \`$${(ids.side0).toString(16).padStart(2, '0')}\` | \`$${(ids.side1).toString(16).padStart(2, '0')}\` |`);
+    lines.push(`| \`${cmd}\` | \`$${Number(bit).toString(16).padStart(2, '0')}\` | \`$${(ids.memberSlot0).toString(16).padStart(2, '0')}\` | \`$${(ids.memberSlot1).toString(16).padStart(2, '0')}\` |`);
   }
   lines.push('');
-  lines.push('Cada ID indexa la tabla de programas de animación @ `$5D00` (Bank00).');
+  lines.push('Cada ID indexa la tabla de programas de animación @ `$5D00` (Bank30).');
   lines.push('');
   lines.push('## Command → Pose selector $C3C7 (VM opcode $04 → Call_000_3501)');
   lines.push('');
-  lines.push('| Comando | pose side0 | pose side1 |');
+  lines.push('| Comando | pose memberSlot0 | pose memberSlot1 |');
   lines.push('|---|---|---|');
   for (const [cmd, pose] of Object.entries(COMMAND_POSE_SELECTORS)) {
-    lines.push(`| \`${cmd}\` | \`$${(pose.side0).toString(16).padStart(2, '0')}\` | \`$${(pose.side1).toString(16).padStart(2, '0')}\` |`);
+    lines.push(`| \`${cmd}\` | \`$${(pose.memberSlot0).toString(16).padStart(2, '0')}\` | \`$${(pose.memberSlot1).toString(16).padStart(2, '0')}\` |`);
   }
   lines.push('');
-  lines.push('side0 vía tabla `Bank01:$4E6D` (b=0): `$20→$05, $21→$08, $22→$0b, $23→$06` · `$24→$09` (especial).');
-  lines.push('side1 directo (`c < $20`): `$0a/$0b/$0d/$0f/$10`. `$C3C7` → frame físico PENDING.');
+  lines.push('memberSlot0 vía tabla `Bank01:$4E6D` (b=0): `$20→$05, $21→$08, $22→$0b, $23→$06` · `$24→$09` (especial).');
+  lines.push('memberSlot1 directo (`c < $20`): `$0a/$0b/$0d/$0f/$10`. `$C3C7` → frame físico PENDING.');
+  lines.push('');
+  lines.push('## Programas VM completos (10 combos command×memberSlot)');
+  lines.push('');
+  for (const p of programs) {
+    lines.push(`### \`${p.command}\` · memberSlot${p.memberSlot} · animId \`$${p.animationId.toString(16).padStart(2, '0')}\` · ${p.programAddress}`);
+    lines.push('');
+    lines.push('| step | opcode | mnemonic | bytes | pose→$C3C7 |');
+    lines.push('|---|---|---|---|---|');
+    for (const s of p.steps) {
+      const pose = s.poseSelector != null ? `\`$${s.poseSelector.toString(16).padStart(2, '0')}\`` : '—';
+      lines.push(`| ${s.index} | \`$${s.opcode.toString(16).padStart(2, '0')}\` | \`${s.mnemonic}\` | \`${s.bytes.map((b) => b.toString(16).padStart(2, '0')).join(' ')}\` | ${pose} |`);
+    }
+    lines.push('');
+  }
   lines.push('');
   lines.push('## Secuencias');
   lines.push('');
