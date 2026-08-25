@@ -15,7 +15,7 @@
 // ═══════════════════════════════════════════════════════════════════════
 
 import { getCard, type CardDef } from '../../../data/cards';
-import { STAGE_SEQUENCE_POOL, type StageLevel } from '../../stageSequences';
+import { romStageSequenceFor, stageVariantFromTick, type StageLevel } from '../../stageSequences';
 import { stageWindowsTicks } from '../../../config/gameplay.config';
 import { STAGE_PREP_TICKS } from '../clock/clock';
 import { POSITION_DATA } from '../../../data/positions';
@@ -50,8 +50,7 @@ function stageWindowTicksFor(state: BattleState): number {
 /** Crea el QTE de una carta: seq del pool (determinista por tick) + ventana. */
 function qteForCard(state: BattleState, card: CardDef): BattleState['stageQte'] {
   const level = stageLevelOfCardName(card.name);
-  const pool = STAGE_SEQUENCE_POOL[level];
-  const seq = pool[state.tick % pool.length];
+  const seq = romStageSequenceFor(level, stageVariantFromTick(state.tick));
   const windowTicks = stageWindowTicksFor(state);
   // M8.B: el QTE nace en PREPARING; el reloj abre INPUT_WINDOW en
   // inputOpenTick (= último idle de la preparación). El cronómetro de la
@@ -158,7 +157,7 @@ export function reduceAcceptedCommand(state: BattleState, command: BattleCommand
     case 'BASIC_STAGE_ATTACK': {
       // Nivel del stage: 3 sin power window · 4 con window (ROM §100)
       const level: 3 | 4 = state.player.powerWindowCounter > 0 ? 4 : 3;
-      const seq = STAGE_SEQUENCE_POOL[level][state.tick % STAGE_SEQUENCE_POOL[level].length];
+      const seq = romStageSequenceFor(level, stageVariantFromTick(state.tick));
       const windowTicks = stageWindowTicksFor(state);
       // M8.B: el Stage nace en PREPARING — QTE_STARTED lo emite el RELOJ al
       // alcanzar inputOpenTick (nunca al confirmar la acción).

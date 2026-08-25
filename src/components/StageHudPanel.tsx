@@ -40,7 +40,6 @@ export function stageKeyIcon(key: StageKey): string {
   switch (key) {
     case 'UP': return 'arrow_up';
     case 'DOWN': return 'arrow_down';
-    case 'LEFT': return 'arrow_left';
     case 'RIGHT': return 'arrow_right';
     case 'A': return 'key_q';
     case 'B': return 'key_e';
@@ -52,7 +51,6 @@ export function stageKeyLabel(key: StageKey): string {
   switch (key) {
     case 'UP': return 'W / ↑';
     case 'DOWN': return 'S / ↓';
-    case 'LEFT': return 'A / ←';
     case 'RIGHT': return 'D / →';
     case 'A': return 'A (Q)';
     case 'B': return 'B (E)';

@@ -1007,7 +1007,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit, onRemat
   // Ventana GLOBAL para TODA la secuencia (no un timer por input), contada en
   // FRAMES GBC (GBC_NATIVE_FPS). El límite depende de la combinación Front/Back
   // de atacante y rival — 4 ventanas exactas del manual.
-  type StageKey = 'A' | 'B' | 'UP' | 'DOWN' | 'LEFT' | 'RIGHT';
+  type StageKey = 'A' | 'B' | 'UP' | 'DOWN' | 'RIGHT';
   type StageDepthPair = 'BACK_BACK' | 'BACK_FRONT' | 'FRONT_BACK' | 'FRONT_FRONT';
   interface StageQteState {
     state: QteState;
@@ -1612,8 +1612,9 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit, onRemat
       else if (k === 'e') key = 'B';
       else if (k === 'w' || e.key === 'ArrowUp') key = 'UP';
       else if (k === 's' || e.key === 'ArrowDown') key = 'DOWN';
-      else if (k === 'a' || e.key === 'ArrowLeft') key = 'LEFT';
       else if (k === 'd' || e.key === 'ArrowRight') key = 'RIGHT';
+      // LEFT ($02) NO es comando Stage (máscara ROM $3D): 'a'/ArrowLeft no
+      // consumen ningún input del QTE (P0.4S — sin avance de índice).
       if (!key) return;
       e.preventDefault();
       setPressedKey(key);
@@ -2951,7 +2952,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit, onRemat
   // Estado del QTE para el luchador del CAMPO (el panel inferior solo lleva
   // la secuencia; el luchador ejecuta en el campo como en el GBC).
   const qteCurKey = phase === 'stageInput' && stageQte ? stageQte.seq[stageQte.idx] : null;
-  const qteIsDir = qteCurKey === 'UP' || qteCurKey === 'DOWN' || qteCurKey === 'LEFT' || qteCurKey === 'RIGHT';
+  const qteIsDir = qteCurKey === 'UP' || qteCurKey === 'DOWN' || qteCurKey === 'RIGHT';
   const qteFrozen = phase === 'stageInput' && stageQte
     ? (stageQte.state === 'COUNTER_HIT' || stageQte.state === 'COUNTER_WINDOW')
     : false;

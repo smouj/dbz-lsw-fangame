@@ -11,13 +11,16 @@
 //   UP       → golpe ascendente   (attack_ud — NUNCA knockback_up, que es
 //             pose de RECIBIR daño, no de atacar)
 //   DOWN     → golpe descendente  (attack_ud — idem knockback_down)
-//   LEFT     → avance frontal     (move_front → attack_fwd)
 //   RIGHT    → retroceso/guardia  (move_back / guard)
+//
+// LEFT NO existe en el QTE Stage del ROM: la máscara $3D acepta
+// RIGHT|UP|DOWN|A|B (P0.4S — Bank00 Call_000_3833). El StageKey no incluye
+// LEFT; el input de cruceta "izquierda" no consume ningún comando Stage.
 //
 // El runtime usa `pose` para el FighterSprite grande y `fieldPose` para el
 // sprite overworld del campo táctico. Ambos se resuelven con fallbacks.
 
-export type StageKey = 'A' | 'B' | 'UP' | 'DOWN' | 'LEFT' | 'RIGHT';
+export type StageKey = 'A' | 'B' | 'UP' | 'DOWN' | 'RIGHT';
 
 export interface StageInputAnim {
   /** Pose para el sprite grande (ACTION/FighterSprite). */
@@ -35,7 +38,6 @@ export const STAGE_INPUT_FRAMES: Record<StageKey, StageInputAnim> = {
   B: { pose: 'punch_left', fieldPose: 'attack_fwd', label: 'Puño izquierdo', lunge: false },
   UP: { pose: 'attack_ud', fieldPose: 'attack_ud', label: 'Golpe ascendente', lunge: true },
   DOWN: { pose: 'attack_ud', fieldPose: 'attack_ud', label: 'Golpe descendente', lunge: true },
-  LEFT: { pose: 'move_front', fieldPose: 'move_front', label: 'Avance', lunge: true },
   RIGHT: { pose: 'guard', fieldPose: 'guard', label: 'Retroceso/guardia', lunge: false },
 };
 
