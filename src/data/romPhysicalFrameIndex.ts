@@ -16,6 +16,7 @@ import { ROM_FIGHTER_FORM_IDENTITY } from './generated/romFighterFormIdentity.ge
 import {
   physicalContentKey,
   type RomPhysicalContentKey,
+  contentKeyForCatalog,
 } from '../battle/romNativeIdentity';
 
 export interface PhysicalCorpusFrameRef {
@@ -66,12 +67,12 @@ for (const form of ROM_PHYSICAL_CORPUS_SUMMARY.forms as ReadonlyArray<{
 }>) {
   const index = form.physicalFrameIndex ?? [];
   for (const frame of index) {
-    const contentKey = physicalContentKey({
-      profileKey: frame.actorVisualProfileKey,
-      graphicsBank: frame.graphicsBank,
-      resourceId: frame.resourceId,
-      visualFrameId: frame.visualFrameId,
-    });
+    const contentKey = physicalContentKey(contentKeyForCatalog(
+      frame.actorVisualProfileKey,
+      frame.graphicsBank,
+      frame.resourceId,
+      frame.visualFrameId,
+    ));
     const existing = CONTENT_INDEX.get(contentKey);
     if (existing && existing.physicalId !== frame.physicalId) {
       CONTENT_COLLISIONS.push({ key: contentKey, a: existing.physicalId, b: frame.physicalId });
@@ -108,12 +109,12 @@ export function physicalIdForFormFrame(
 ): string | null {
   const profile = FORM_PROFILE.get(formId);
   if (!profile) return null;
-  return physicalIdForContent({
-    profileKey: profile.actorVisualProfileKey,
-    graphicsBank: profile.graphicsBank,
+  return physicalIdForContent(contentKeyForCatalog(
+    profile.actorVisualProfileKey,
+    profile.graphicsBank,
     resourceId,
     visualFrameId,
-  });
+  ));
 }
 
 /** Resolve a `rom-p...` physicalId from a structured logical frame key. */
@@ -123,12 +124,12 @@ export function physicalIdForFrameKey(frame: {
   resourceId: number;
   visualFrameId: number;
 }): string | null {
-  return physicalIdForContent({
-    profileKey: frame.profileKey,
-    graphicsBank: frame.graphicsBank,
-    resourceId: frame.resourceId,
-    visualFrameId: frame.visualFrameId,
-  });
+  return physicalIdForContent(contentKeyForCatalog(
+    frame.profileKey,
+    frame.graphicsBank,
+    frame.resourceId,
+    frame.visualFrameId,
+  ));
 }
 
 /** Full corpus frame ref for a content identity. */

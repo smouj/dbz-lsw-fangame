@@ -23,7 +23,16 @@ import {
   graphicsBankForProfileKey,
   verifyRomIdentityChain,
   detectOffByOne,
+  physicalContentKey,
+  contentKeyForCatalog,
+  animationBankForResourceId,
+  resourceBaseForResourceId,
 } from '../romNativeIdentity';
+import {
+  catalogAnimationBank,
+  catalogResourceBase,
+  ROM_BANK61_RESOURCE_BASES,
+} from '../../data/generated/romAnimationResourceBase.generated';
 
 // ─── ROM-verified expected values (Bank11 raw bytes) ──────────────────
 // Source: scripts/generate-rom-fighter-identity.ts → rawRecord[1] (byte 1)
@@ -270,6 +279,50 @@ describe('P0 ROM Fighter Profile/Bank Alignment', () => {
       expect(graphicsBankForProfileKey(0)).toBe(0x31);
       expect(graphicsBankForProfileKey(5)).toBe(0x36);
       expect(graphicsBankForProfileKey(27)).toBe(0x4c);
+    });
+
+    it('catalog resource base derives animationBank + resourceBase from resourceId', () => {
+      // resourceId 0 → bank $62 localId 0 → base $406C (Call_000_1266).
+      expect(catalogAnimationBank(0)).toBe(0x62);
+      expect(catalogResourceBase(0)).toBe(0x406c);
+      // resourceId 25 → bank $63 localId 0.
+      expect(catalogAnimationBank(25)).toBe(0x63);
+      expect(catalogResourceBase(25)).toBe(0x406c);
+      // resourceId 50 → bank $64 localId 0.
+      expect(catalogAnimationBank(50)).toBe(0x64);
+      expect(catalogResourceBase(50)).toBe(0x4048);
+      // resourceId 65 → bank $64 localId 15.
+      expect(catalogAnimationBank(65)).toBe(0x64);
+      expect(catalogResourceBase(65)).toBe(0x7994);
+      // Fuera de catálogo → null.
+      expect(catalogAnimationBank(66)).toBeNull();
+      expect(catalogResourceBase(-1)).toBeNull();
+    });
+
+    it('bank $61 has 7 standing resources (Stage QTE)', () => {
+      expect(ROM_BANK61_RESOURCE_BASES).toHaveLength(7);
+      expect(ROM_BANK61_RESOURCE_BASES[0]).toBe(0x4030);
+      expect(ROM_BANK61_RESOURCE_BASES[1]).toBe(0x4970);
+      expect(ROM_BANK61_RESOURCE_BASES[6]).toBe(0x5e20);
+    });
+
+    it('animationBankForResourceId returns null for null/basic resourceId', () => {
+      expect(animationBankForResourceId(null)).toBeNull();
+      expect(animationBankForResourceId(0)).toBe(0x62);
+      expect(resourceBaseForResourceId(null)).toBeNull();
+      expect(resourceBaseForResourceId(0)).toBe(0x406c);
+    });
+
+    it('physicalContentKey is collision-free (bank $61 vs $62-$64)', () => {
+      // bank $61 (básica) resource base $4970 vs bank $62 (técnica) resourceId 0.
+      const basic = physicalContentKey({
+        profileKey: 5, graphicsBank: 0x36, animationBank: 0x61, resourceBase: 0x4970, resourceId: null, visualFrameId: 5,
+      });
+      const technique = physicalContentKey(contentKeyForCatalog(5, 0x36, 0, 5));
+      expect(basic).not.toBe(technique);
+      // El catálogo derivado usa animationBank=$62 + resourceBase=$406C.
+      expect(technique).toBe('5:54:98:16492:5');
+      expect(basic).toBe('5:54:97:18800:5');
     });
   });
 

@@ -33,6 +33,11 @@
 //   - visual similarity
 // ═══════════════════════════════════════════════════════════════════════
 
+import {
+  catalogAnimationBank,
+  catalogResourceBase,
+} from '../data/generated/romAnimationResourceBase.generated';
+
 // ─── ROM-Native Keys ──────────────────────────────────────────────────
 
 /**
@@ -58,6 +63,16 @@ export type RomFighterIdentityKey = `${number}:${number}:${number}`;
 export type RomPhysicalFrameKeyString = `${number}:${number}:${number}:${number}:${number}:${number}`;
 
 /**
+ * Canonical collision-free physical frame key (V2) — 7 componentes.
+ * Format: `${profileKey}:${graphicsBank}:${animationBank}:${resourceBase}:${sequence}:${frameIndex}:${visualFrameId}`
+ *
+ * La identidad física primaria es (animationBank, resourceBase), NO el
+ * resourceId del catálogo (que es metadata y queda fuera de la clave).
+ * Así bank $61 (pie/básica) y banks $62-$64 (técnicas) nunca colisionan.
+ */
+export type RomPhysicalFrameKeyStringV2 = `${number}:${number}:${number}:${number}:${number}:${number}:${number}`;
+
+/**
  * Canonical ROM physical frame key — STRUCTURED identity.
  *
  * This is the shared physical identity used across ALL consumers:
@@ -74,8 +89,12 @@ export interface RomPhysicalFrameKey {
   profileKey: number;
   /** Graphics bank (0x31 + profileKey). */
   graphicsBank: number;
-  /** AnimationResource ID. */
-  resourceId: number;
+  /** Animation source bank: $61 (standing/basic) o $62/$63/$64 (técnicas). Identidad física primaria. */
+  animationBank: number;
+  /** Resource base (CPU address) dentro de animationBank: $4000 + u16($4008+idx*4)*4. Identidad física primaria. */
+  resourceBase: number;
+  /** Catalog logical resource id (0-65 para $62-$64); null para bank $61 básica/Stage. Metadata, NO identidad. */
+  resourceId: number | null;
   /** Resolved sequence index. */
   sequence: number;
   /** Frame index within the sequence. */
@@ -92,7 +111,12 @@ export interface RomPhysicalFrameKey {
 export interface RomPhysicalContentKey {
   profileKey: number;
   graphicsBank: number;
-  resourceId: number;
+  /** Animation source bank (physical primary identity). */
+  animationBank: number;
+  /** Resource base CPU address (physical primary identity). */
+  resourceBase: number;
+  /** Catalog logical resource id (metadata), null para bank $61. */
+  resourceId: number | null;
   visualFrameId: number;
 }
 
@@ -250,30 +274,31 @@ export function makeRomFighterIdentityKey(
 }
 
 /**
- * Create a canonical ROM physical frame key string from a structured key.
- * This is the SINGLE canonical serialization used by all consumers.
+ * Canonical collision-free physical frame key string (V2, 7 componentes).
+ * identity física primaria = (animationBank, resourceBase); resourceId es metadata.
  */
-export function physicalFrameKey(frame: RomPhysicalFrameKey): RomPhysicalFrameKeyString {
-  return `${frame.profileKey}:${frame.graphicsBank}:${frame.resourceId}:${frame.sequence}:${frame.frameIndex}:${frame.visualFrameId}`;
+export function physicalFrameKey(frame: RomPhysicalFrameKey): RomPhysicalFrameKeyStringV2 {
+  return `${frame.profileKey}:${frame.graphicsBank}:${frame.animationBank}:${frame.resourceBase}:${frame.sequence}:${frame.frameIndex}:${frame.visualFrameId}`;
 }
 
-/** Parse a canonical ROM physical frame key string into a structured key. */
-export function parsePhysicalFrameKey(key: RomPhysicalFrameKeyString): RomPhysicalFrameKey {
-  const [profileKey, graphicsBank, resourceId, sequence, frameIndex, visualFrameId] = key.split(':').map(Number);
-  return { profileKey, graphicsBank, resourceId, sequence, frameIndex, visualFrameId };
+/** Parse a canonical (V2, 7-component) physical frame key. resourceId queda null (metadata derivable). */
+export function parsePhysicalFrameKey(key: RomPhysicalFrameKeyStringV2): RomPhysicalFrameKey {
+  const [profileKey, graphicsBank, animationBank, resourceBase, sequence, frameIndex, visualFrameId] = key.split(':').map(Number);
+  return { profileKey, graphicsBank, animationBank, resourceBase, resourceId: null, sequence, frameIndex, visualFrameId };
 }
 
 /**
  * Content identity string for the physical corpus join (excludes occurrence).
- * (profileKey, graphicsBank, resourceId, visualFrameId) → `rom-p...` physicalId.
+ * (profileKey, graphicsBank, animationBank, resourceBase, visualFrameId) → `rom-p...`.
+ * Collision-free: bank $61 vs $62-$64 no colisionan (resourceId NO es identidad).
  */
 export function physicalContentKey(content: RomPhysicalContentKey): string {
-  return `${content.profileKey}:${content.graphicsBank}:${content.resourceId}:${content.visualFrameId}`;
+  return `${content.profileKey}:${content.graphicsBank}:${content.animationBank}:${content.resourceBase}:${content.visualFrameId}`;
 }
 
 /**
  * @deprecated Use {@link physicalFrameKey} + the structured {@link RomPhysicalFrameKey}.
- * Kept for backward compatibility with existing tests/consumers.
+ * Kept for backward compatibility (LEGACY 6-component key: p:g:resourceId:s:f:v).
  */
 export function makeRomPhysicalFrameKey(
   profileKey: number,
@@ -283,7 +308,7 @@ export function makeRomPhysicalFrameKey(
   frameIndex: number,
   visualFrameId: number,
 ): RomPhysicalFrameKeyString {
-  return physicalFrameKey({ profileKey, graphicsBank, resourceId: animationResource, sequence, frameIndex, visualFrameId });
+  return `${profileKey}:${graphicsBank}:${animationResource}:${sequence}:${frameIndex}:${visualFrameId}`;
 }
 
 /** Parse a ROM fighter identity key back into components. */
@@ -298,7 +323,7 @@ export function parseRomFighterIdentityKey(key: RomFighterIdentityKey): {
 
 /**
  * @deprecated Use {@link parsePhysicalFrameKey}.
- * Kept for backward compatibility (returns `animationResource`, not `resourceId`).
+ * Kept for backward compatibility (LEGACY 6-component; returns `animationResource`).
  */
 export function parseRomPhysicalFrameKey(key: RomPhysicalFrameKeyString): {
   profileKey: number;
@@ -308,15 +333,8 @@ export function parseRomPhysicalFrameKey(key: RomPhysicalFrameKeyString): {
   frameIndex: number;
   visualFrameId: number;
 } {
-  const parsed = parsePhysicalFrameKey(key);
-  return {
-    profileKey: parsed.profileKey,
-    graphicsBank: parsed.graphicsBank,
-    animationResource: parsed.resourceId,
-    sequence: parsed.sequence,
-    frameIndex: parsed.frameIndex,
-    visualFrameId: parsed.visualFrameId,
-  };
+  const [profileKey, graphicsBank, animationResource, sequence, frameIndex, visualFrameId] = key.split(':').map(Number);
+  return { profileKey, graphicsBank, animationResource, sequence, frameIndex, visualFrameId };
 }
 
 /**
@@ -326,6 +344,43 @@ export function parseRomPhysicalFrameKey(key: RomPhysicalFrameKeyString): {
  */
 export function graphicsBankForProfileKey(profileKey: number): number {
   return 0x31 + profileKey;
+}
+
+/**
+ * Derive animationBank from a catalog resourceId (0-65 → $62/$63/$64).
+ * Null si el resourceId es null (bank $61 básica) o está fuera del catálogo.
+ */
+export function animationBankForResourceId(resourceId: number | null): number | null {
+  if (resourceId == null) return null;
+  return catalogAnimationBank(resourceId);
+}
+
+/**
+ * Derive resourceBase (CPU address) from a catalog resourceId (0-65).
+ * Null si el resourceId es null (bank $61 básica) o está fuera del catálogo.
+ */
+export function resourceBaseForResourceId(resourceId: number | null): number | null {
+  if (resourceId == null) return null;
+  return catalogResourceBase(resourceId);
+}
+
+/**
+ * Build a collision-free content identity from catalog coordinates
+ * (profileKey, graphicsBank, resourceId, visualFrameId), deriving
+ * (animationBank, resourceBase) from resourceId. Convenience for $62-$64.
+ */
+export function contentKeyForCatalog(
+  profileKey: number,
+  graphicsBank: number,
+  resourceId: number,
+  visualFrameId: number,
+): RomPhysicalContentKey {
+  const animationBank = catalogAnimationBank(resourceId);
+  const resourceBase = catalogResourceBase(resourceId);
+  if (animationBank == null || resourceBase == null) {
+    throw new Error(`resourceId ${resourceId} fuera del catálogo ($62-$64)`);
+  }
+  return { profileKey, graphicsBank, animationBank, resourceBase, resourceId, visualFrameId };
 }
 
 /**
