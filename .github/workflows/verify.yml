@@ -20,51 +20,9 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: TypeScript contracts
-        run: npm run typecheck
-
-      - name: Signature action profiles (42) + canonical stage sequences
-        run: npm run verify:profiles
-
-      - name: Cinematic sequences (42 perfiles auditados)
-        run: npm run verify:sequences
-
-      - name: HUD layout canónico (10 invariantes)
-        run: npm run verify:hud-layout
-
-      - name: BattleState puro M1 (30 invariantes)
-        run: npm run verify:battle-engine
-
-      - name: Combate real (71 invariantes)
-        run: npm run verify:battle
-
-      - name: Catálogos V8/V9 (assets canónicos)
-        run: |
-          npm run verify:v8
-          npm run verify:v9
-
-      - name: Sprite manifests / physical frame sizes / beam-ray sets
-        run: npm run audit:sprites
-
-      - name: Sheets sin fondo cyan + canon de sprites
-        run: |
-          npm run audit:sheets
-          npm run audit:sprite-canon
-
-      - name: Presentation Adapter M7 (82 invariantes de cues)
-        run: npm run verify:presentation
-
-      - name: ROM card table (125 cartas idénticas a la ROM — fuente de verdad)
-        run: npm run verify:rom-cards
-
-      - name: Handler execution plans (12 técnicas ROM_CONFIRMED → trazas)
-        run: npm run verify:execution
-
-      - name: GBC canon invariants (positions, deck, sequences, coverage)
-        run: npm run verify:gbc
-
-      - name: Runtime cutover M8 (gaps legacy cuantificados — objetivo 0)
-        run: npm run audit:runtime
-
-      - name: Production build
-        run: npm run build
+      # Portable suite only: typecheck + vitest + build + every verify:* and
+      # audit:* that reads committed data (no raw ROM, no outside-repo decomp).
+      # ROM-dependent verifiers live in `npm run verify:rom-local` and CANNOT
+      # run here (the .gbc + decomp live outside the repository).
+      - name: Portable verification suite (verify:ci)
+        run: npm run verify:ci

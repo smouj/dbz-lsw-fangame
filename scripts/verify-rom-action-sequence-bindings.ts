@@ -21,7 +21,11 @@ import { getRomSequenceRegistry, buildRomSequenceRegistry, setRomSequenceRegistr
 
 // Server-side: build registry with full ROM resolution
 import { readFileSync } from 'fs';
-const ROM_PATH = process.env.ROM_PATH ?? '/home/local-user/.openclaw/media/inbound/Dragon_Ball_Z_-_Guerreros_de_Leyenda_Spain---c05adf5e-bff6-45b8-a5fb-f8e340113eaa.gbc';
+import { resolve } from 'path';
+const ROOT = process.cwd();
+// Canonical ROM location (same as verify-rom-fighter-canon / verify-rom-palette-table):
+// raw ROM lives OUTSIDE the repo at ../dbz-lsw-decomp/13_raw_rom/.
+const ROM_PATH = process.env.ROM_PATH ?? resolve(ROOT, '../dbz-lsw-decomp/13_raw_rom/dbz-lsw-spain.gbc');
 const romBuffer = readFileSync(ROM_PATH);
 const fullRegistry = buildRomSequenceRegistry(romBuffer);
 setRomSequenceRegistryOverride(fullRegistry);
