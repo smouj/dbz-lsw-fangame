@@ -83,7 +83,7 @@ export function CardsModule() {
     <div className="dev-panel">
       <header className="dev-header">
         <h1>Card Database</h1>
-        <p className="dev-sub">{CARDS.length} cartas de la tabla ROM 0x044315 · {filtered.length} visibles</p>
+        <p className="dev-sub">{CARDS.length} cartas de la tabla ROM RO11:$4320 · {filtered.length} visibles</p>
       </header>
 
       <PhysicalReconciliationSummary />

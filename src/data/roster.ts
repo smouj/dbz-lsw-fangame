@@ -1,6 +1,6 @@
 // ═══════════════════════════════════════════════════════════
 // DBZ LSW — Roster de personajes (48 formas)
-// Datos extraídos de la ROM USA (CRC32 025AA88A) como referencia
+// Datos extraídos de la ROM GBC (canónica: España, CRC32 9DAD6E23; misma data que USA 025AA88A)
 // Stats aproximados por tier, sprite sheets auténticos
 // ═══════════════════════════════════════════════════════════
 
@@ -83,7 +83,7 @@ export const FORMS: Record<string, FormDef> = {
   'vegito_ssj': { id: 'vegito_ssj', character: 'vegito', form: 'SSJ', rom: 'Super', hp: 110, str: 17, ki: 18, spd: 10, tier: 3, sheet: 'vegito.png', curves: { hp: [125, 140, 155, 170], str: [24, 30, 37, 44], ki: [24, 29, 34, 39], spd: [17, 24, 31, 38] } },
 };
 
-// ─── Personajes (24) ──────────────────────────────────────
+// ─── Personajes (26) ──────────────────────────────────────
 
 export const CHARACTERS: CharacterDef[] = [
   { id: 'goku', name: 'Goku', forms: ['goku_base', 'goku_ssj', 'goku_ssj2', 'goku_ssj3'], tier: 5, saga: 'Saiyan' },

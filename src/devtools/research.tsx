@@ -85,7 +85,7 @@ export function ResearchModule() {
   const withDir = forms.filter(f => spriteDirFor(f.id)).length;
 
   const findings: Finding[] = [
-    { topic: 'Tabla de cartas ROM', status: 'ROM_ASSET_VERIFIED', note: `${CARDS.length} cartas de la tabla 0x044315 (125×16 bytes).` },
+    { topic: 'Tabla de cartas ROM', status: 'ROM_ASSET_VERIFIED', note: `${CARDS.length} cartas de la tabla RO11:$4320 (125×16 bytes).` },
     { topic: 'Roster', status: 'ROM_ASSET_VERIFIED', note: `${forms.length} formas / ${CHARACTERS.length} personajes de stats_full.json.` },
     { topic: 'Mazos de jefes', status: 'MANUAL_VERIFIED', note: `${Object.keys(STORY_ENEMY_DECKS).length} mazos del spreadsheet oficial (legendarysuperwarriors.wordpress.com).` },
     { topic: 'Stage Attack windows', status: 'ROM_CONFIRMED', note: 'BACK_BACK 50t (0.837s) · BACK_FRONT 80t (1.339s) · FRONT_BACK 120t (2.009s) · FRONT_FRONT 150t (2.511s) — Bank01:$66E4.' },
@@ -113,7 +113,7 @@ export function ResearchModule() {
       <div className="dev-sources">
         <h2>Fuentes</h2>
         <ul className="dev-alerts">
-          <li className="dev-alert info"><strong>INFO</strong> ROM USA — SHA-256 <code>8dab48cc…</code> / CRC32 <code>025AA88A</code> (tabla cartas, stats, mazos, curvas).</li>
+          <li className="dev-alert info"><strong>INFO</strong> ROM canónica España — CRC32 <code>9DAD6E23</code> (tabla cartas, stats, mazos, curvas; misma data que USA <code>025AA88A</code>).</li>
           <li className="dev-alert info"><strong>INFO</strong> Manual USA §9-§10 — Stage Attack, posiciones, movimiento.</li>
           <li className="dev-alert info"><strong>INFO</strong> Spreadsheet oficial — mazos de jefes + AI boosts (wordpress).</li>
           <li className="dev-alert info"><strong>INFO</strong> Walkthrough / foros (RPGClassics) — vulnerabilidades Air/Ground, 2v2.</li>

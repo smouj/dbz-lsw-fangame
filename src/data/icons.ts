@@ -39,12 +39,12 @@ const WIDE_ICONS: string[] = [
 // ═══════════════════════════════════════════════════════════
 // DBZ LSW — Iconos de carta reales (Sprite Database Icons.png)
 // 125 cartas mapeadas por TIPO (beam→icono haz, damage→golpe,...)
-// Asignación por tipo en orden de la tabla ROM (0x044315)
+// Asignación por tipo en orden de la tabla ROM (RO11:$4320)
 // ═══════════════════════════════════════════════════════════
 
 // ═══════════════════════════════════════════════════════════
 // DBZ LSW — Iconos de carta (Sprite Database Icons.png)
-// 125 cartas en orden EXACTO de la tabla ROM (0x044315)
+// 125 cartas en orden EXACTO de la tabla ROM (RO11:$4320)
 // El sheet se lee por columnas: col0=cartas 1-20, col1=21-40...
 // ═══════════════════════════════════════════════════════════
 
