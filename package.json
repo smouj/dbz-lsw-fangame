@@ -49,6 +49,7 @@
     "verify:animation-taxonomy": "esbuild --bundle --format=esm --platform=node scripts/verify-animation-taxonomy.ts --outfile=.vat.mjs && node .vat.mjs; rm -f .vat.mjs",
     "verify:animation-resources": "esbuild --bundle --format=esm --platform=node scripts/verify-animation-resources.ts --outfile=.var.mjs && node .var.mjs; rm -f .var.mjs",
     "verify:animation-resource-completion": "esbuild --bundle --format=esm --platform=node scripts/verify-animation-resource-completion.ts --outfile=.varc.mjs && node .varc.mjs; rm -f .varc.mjs",
+    "verify:rom-action-sequence-bindings": "esbuild --bundle --format=esm --platform=node scripts/verify-rom-action-sequence-bindings.ts --outfile=.vrasb.mjs && node .vrasb.mjs; rm -f .vrasb.mjs",
     "verify:rom-action-execution": "esbuild --bundle --format=esm --platform=node scripts/verify-rom-action-execution.ts --outfile=.vrae.mjs && node .vrae.mjs; rm -f .vrae.mjs",
     "verify:rom-presentation-profiles": "esbuild --bundle --format=esm --platform=node scripts/verify-rom-presentation-profiles.ts --outfile=.vrpp.mjs && node .vrpp.mjs; rm -f .vrpp.mjs",
     "verify:rom-presentation-compiler": "esbuild --bundle --format=esm --platform=node scripts/verify-rom-presentation-compiler.ts --outfile=.vrpc.mjs && node .vrpc.mjs; rm -f .vrpc.mjs",

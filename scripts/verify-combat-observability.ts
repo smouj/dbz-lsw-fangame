@@ -20,6 +20,8 @@
 // ═══════════════════════════════════════════════════════════════════════
 
 import { CARDS } from '../src/data/cards';
+import { readFileSync } from 'fs';
+import { traceActionPresentation } from '../src/battle/actionPresentationTrace';
 import { traceCardAction, classifyRomCue, combatObservabilitySummary } from '../src/battle/combatObservability';
 import { GOLDEN_ACTIONS, runGoldenAction } from '../src/battle/combatTrace';
 import { inspectGoldenAction } from '../src/battle/actionTraceInspector';

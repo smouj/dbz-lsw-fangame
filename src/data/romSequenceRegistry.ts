@@ -111,15 +111,14 @@ export interface RomActionConsumer {
 }
 
 // ── ROM Access ──
+// The registry is built server-side via buildRomSequenceRegistry(romBuffer).
+// Browser code uses the lazy singleton which pre-fills from ROM_TECHNIQUES.
+// Scripts pass a Buffer via buildRomSequenceRegistry().
 
-import { readFileSync } from 'fs';
+let _registry: RomSequenceEntry[] | null = null;
 
 const ROM_DEFAULT =
   '/home/local-user/.openclaw/media/inbound/Dragon_Ball_Z_-_Guerreros_de_Leyenda_Spain---c05adf5e-bff6-45b8-a5fb-f8e340113eaa.gbc';
-
-function getRom(): Buffer {
-  return readFileSync(process.env.ROM_PATH ?? ROM_DEFAULT);
-}
 
 const BANK_LAYOUT = [
   { bank: 0x62, first: 0x00, count: 25 },
@@ -169,8 +168,6 @@ function resolvePhysicalFrame(
   const u16At = (b: number, a: number) => rom[b * 0x4000 + a] | (rom[b * 0x4000 + a + 1] << 8);
   const u8At = (b: number, a: number) => rom[b * 0x4000 + a];
   const s8v = (v: number) => v >= 128 ? v - 256 : v;
-  const { createHash } = require('crypto');
-
   try {
     // A. Frame record
     const w0 = u16At(bank, base);
@@ -248,9 +245,8 @@ const METASPRITE_LINK_PENDING = [
   'Tail',              // $3F
 ];
 
-/** Build the registry from ROM bytes. Call once at module init. */
-export function buildRomSequenceRegistry(): RomSequenceEntry[] {
-  const rom = getRom();
+/** Build the registry from ROM bytes. Server-side only. */
+export function buildRomSequenceRegistry(rom: Buffer): RomSequenceEntry[] {
   const registry: RomSequenceEntry[] = [];
 
   for (const [name, tech] of Object.entries(ROM_TECHNIQUES)) {
@@ -335,15 +331,70 @@ export function buildRomSequenceRegistry(): RomSequenceEntry[] {
   return registry;
 }
 
-/** Lazily-initialized singleton registry. */
-let _registry: RomSequenceEntry[] | null = null;
-
-/** Get the ROM sequence registry (lazily initialized). */
+/** Get the ROM sequence registry (lazily initialized). Browser falls back to technique data without physical linkage. */
 export function getRomSequenceRegistry(): RomSequenceEntry[] {
   if (!_registry) {
-    _registry = buildRomSequenceRegistry();
+    _registry = buildRegistryFromTechniques();
   }
   return _registry;
+}
+
+/** Set the registry override (for server-side scripts that read ROM directly). */
+export function setRomSequenceRegistryOverride(registry: RomSequenceEntry[]): void {
+  _registry = registry;
+}
+
+/** Build registry entries from ROM_TECHNIQUES data alone (no ROM physical resolution). */
+function buildRegistryFromTechniques(): RomSequenceEntry[] {
+  const registry: RomSequenceEntry[] = [];
+  for (const [name, tech] of Object.entries(ROM_TECHNIQUES)) {
+    const t = tech as any;
+    const resourceId = t.animationResource as number;
+    const isFullyClosed = PHYSICALLY_CLOSED_RESOURCES.includes(name);
+    const sequences: RomSequence[] = [];
+    let totalFrameInstances = 0;
+    const vfidSet = new Set<number>();
+
+    for (let si = 0; si < t.sequences.length; si++) {
+      const seq = t.sequences[si] as any;
+      const frames: PhysicalFrame[] = [];
+      for (let fi = 0; fi < seq.frames.length; fi++) {
+        const f = seq.frames[fi] as any;
+        totalFrameInstances++;
+        vfidSet.add(f.meta as number);
+        frames.push({
+          frameIndex: fi,
+          visualFrameId: f.meta as number,
+          durationTicks: f.ticks as number,
+          offsetY: f.dy as number,
+          offsetX: f.dx as number,
+          raw: f.raw as [number, number, number, number],
+          metaspritePieceCount: 0,
+          graphicsBlockCount: 0,
+          physicalId: '',
+          provenance: isFullyClosed ? 'PHYSICAL_RESOURCE_FULLY_CLOSED' : 'FRAME_STREAM_CLOSED',
+        });
+      }
+      sequences.push({ address: seq.addr, totalTicks: seq.totalTicks, frames });
+    }
+
+    registry.push({
+      technique: name,
+      resourceId,
+      resourceHex: `$${resourceId.toString(16).padStart(2, '0')}`,
+      bank: t.bank as number,
+      resourceBase: -1,
+      handler: t.handler as number,
+      status: isFullyClosed ? 'PHYSICAL_RESOURCE_FULLY_CLOSED' : 'FRAME_STREAM_CLOSED',
+      evidence: 'ROM_SEQUENCE_ANCHORED',
+      sequences,
+      vfidRange: [...vfidSet].sort((a, b) => a - b),
+      totalFrameInstances,
+      totalTicks: t.sequences.reduce((s: number, seq: any) => s + seq.totalTicks, 0),
+      consumers: [],
+    });
+  }
+  return registry;
 }
 
 /** Get a specific resource's sequence entry by technique name. */

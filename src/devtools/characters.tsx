@@ -22,6 +22,7 @@ import {
 } from '../data/roster';
 import { spriteDirFor, spriteManifestUrl, spriteFrameUrl } from '../data/spriteManifest';
 import { CARDS, type CardDef, type CardType, CARD_COLORS } from '../data/cards';
+import { romCardData } from '../data/romCardData';
 import {
   bindingsForForm,
   type CharacterFrameBinding,
@@ -38,6 +39,8 @@ import { poseSemantics, parseFrameName } from './frameSemantics';
 import { FormPreview } from './FormPreview';
 import type { DevLinkedTarget, DevModuleId } from './DevStudio';
 import { romBeamConsumersForFormResource } from '../battle/romSequenceSelectors';
+import { getBindingForCard, getConsumersForResource, getBindingSummary, type RomActionSequenceBinding, type RomActionAnimationTrack } from '../data/romActionSequenceBinding';
+import { getRomSequenceRegistry } from '../data/romSequenceRegistry';
 import { ROM_FIGHTER_FORM_IDENTITY } from '../data/generated/romFighterFormIdentity.generated';
 
 // ═══ Escritura real a disco (middleware /__dev/write) ──────────────────
@@ -419,6 +422,9 @@ export function CharactersModule({ onOpenModule }: {
 
           <RomPhysicalFighterPanel formId={form.id} onOpenModule={onOpenModule} />
 
+          {/* SECCIÓN 2.5 — ROM Actions: binding card → handler → track → sequence */}
+          <RomActionsPanel formId={form.id} />
+
           {/* SECCIÓN 3 — Frames del manifest (browser por pose + reemplazo) */}
           <section className="dev-char-block">
             <h3 className="dev-char-block-title">
@@ -649,6 +655,216 @@ function RomSequenceBlock({ sequenceKey, seq, dir, open, onToggle, consumers }: 
         </div>
       )}
     </div>
+  );
+}
+
+// ═══ RomActionsPanel — ROM Action Sequence Bindings for a form ═══
+
+function hex2(v: number): string {
+  return `$0x${v.toString(16).padStart(2, '0')}`;
+}
+
+function cardUsesForm(cardName: string, formIndex: number): boolean {
+  const d = romCardData(cardName);
+  if (!d) return false;
+  const byteIndex = Math.floor(formIndex / 8);
+  const bitIndex = formIndex % 8;
+  const byteVal = parseInt(d.mask.substring(byteIndex * 2, byteIndex * 2 + 2), 16);
+  return (byteVal & (1 << bitIndex)) !== 0;
+}
+
+function statusIcon(status: string): string {
+  switch (status) {
+    case 'PHYSICAL_RESOURCE_FULLY_CLOSED': return '✅';
+    case 'FRAME_STREAM_CLOSED': return '⚠️';
+    case 'NO_ANIMATION_RESOURCE': return '⬜';
+    default: return '❓';
+  }
+}
+
+function RomActionsPanel({ formId }: { formId: string }) {
+  // Find form index in the roster (for mask bit lookup)
+  const formIndex = useMemo(() => {
+    const formIds = Object.keys(FORMS);
+    return formIds.indexOf(formId);
+  }, [formId]);
+  if (formIndex < 0) return null;
+
+  // Get all cards this form can use
+  const formCards = useMemo(() => {
+    return CARDS.filter(c => {
+      const d = romCardData(c.name);
+      if (!d) return false;
+      return cardUsesForm(c.name, formIndex);
+    });
+  }, [formIndex]);
+
+  // Get bindings for each card
+  const cardBindings = useMemo(() => {
+    const result: Array<{ card: typeof CARDS[number]; binding: RomActionSequenceBinding }> = [];
+    for (const card of formCards) {
+      const binding = getBindingForCard(card.id);
+      if (binding) result.push({ card, binding });
+    }
+    return result;
+  }, [formCards]);
+
+  // Filter to cards with actor animation resources
+  const actionCards = useMemo(() => {
+    return cardBindings.filter(({ binding }) =>
+      binding.tracks.some(t => t.trackId === 'actor' && t.resourceId != null)
+    );
+  }, [cardBindings]);
+
+  const [expanded, setExpanded] = useState<number | null>(null);
+  const summary = getBindingSummary();
+
+  // Registry for physical frame lookup
+  const registry = useMemo(() => getRomSequenceRegistry(), []);
+
+  if (actionCards.length === 0) {
+    return (
+      <section className="dev-char-block dev-rom-physical-panel">
+        <h3 className="dev-char-block-title">ROM Actions
+          <span className="dev-sheets-count">no actor animation for this form</span>
+        </h3>
+      </section>
+    );
+  }
+
+  return (
+    <section className="dev-char-block dev-rom-physical-panel">
+      <div className="dev-fmap-head">
+        <h3 className="dev-char-block-title">
+          ROM Actions
+          <span className="dev-sheets-count">{actionCards.length} actions with actor animation</span>
+        </h3>
+        <div className="dev-fmap-summary">
+          <span className="dev-tag">{formId}</span>
+          <span className="dev-tag">{formCards.length} compatible cards</span>
+          <span className="dev-tag ok">{actionCards.filter(({ binding }) => binding.tracks.some(t => t.physicalStatus === 'PHYSICAL_RESOURCE_FULLY_CLOSED')).length} fully closed</span>
+          <span className="dev-tag warn">{actionCards.filter(({ binding }) => binding.tracks.some(t => t.physicalStatus === 'FRAME_STREAM_CLOSED')).length} frame stream only</span>
+        </div>
+      </div>
+
+      <div className="dev-rom-action-list">
+        {actionCards.map(({ card, binding }) => {
+          const actorTrack = binding.tracks.find(t => t.trackId === 'actor');
+          if (!actorTrack || actorTrack.resourceId == null) return null;
+
+          const regEntry = registry.find(r => r.resourceId === actorTrack.resourceId);
+          const isExpanded = expanded === card.id;
+          const icon = statusIcon(actorTrack.physicalStatus);
+
+          return (
+            <div key={card.id} className="dev-rom-sequence">
+              <button className="dev-rom-sequence-head" onClick={() => setExpanded(isExpanded ? null : card.id)}>
+                <code>{icon} {card.name}</code>
+                <span>
+                  {actorTrack.resourceId != null ? hex2(actorTrack.resourceId) : '—'}
+                  {' · '}
+                  handler {binding.execution.handlerHex}
+                  {' · '}
+                  {actorTrack.sequences.length} seq
+                  {' · '}
+                  {actorTrack.totalFrames} frames
+                  {' · '}
+                  {actorTrack.totalTicks} ticks
+                </span>
+                <span className={`dev-tag ${actorTrack.physicalStatus === 'PHYSICAL_RESOURCE_FULLY_CLOSED' ? 'ok' : actorTrack.physicalStatus === 'FRAME_STREAM_CLOSED' ? 'warn' : ''}`}>
+                  {actorTrack.physicalStatus === 'PHYSICAL_RESOURCE_FULLY_CLOSED' ? 'ROM PHYSICAL' : actorTrack.physicalStatus === 'FRAME_STREAM_CLOSED' ? 'FRAME STREAM' : 'PENDING'}
+                </span>
+              </button>
+
+              {/* Track summary */}
+              <div className="dev-rom-consumer-row">
+                {binding.tracks.map(track => (
+                  <span key={track.trackId} className="dev-tag">
+                    {track.trackId === 'actor' ? '🎭' : track.trackId === 'fx' ? '✨' : '🔄'}
+                    {' '}{track.label}
+                    {track.resourceId != null ? ` ${hex2(track.resourceId)}` : ''}
+                  </span>
+                ))}
+                {binding.resultBranches.length > 0 && (
+                  <span className="dev-tag">
+                    → {binding.resultBranches.join(' / ')}
+                  </span>
+                )}
+              </div>
+
+              {/* Selector info */}
+              <div className="dev-rom-consumer-row">
+                <span className="dev-tag">
+                  selector: {actorTrack.selector.kind}
+                </span>
+                {actorTrack.selector.value != null && (
+                  <span className="dev-tag">seq {actorTrack.selector.value}</span>
+                )}
+              </div>
+
+              {/* Expanded: show sequence details */}
+              {isExpanded && regEntry && (
+                <div className="dev-rom-sequence-frames">
+                  {regEntry.sequences.map((seq, si) => (
+                    <div key={si} className="dev-rom-frame-card compact">
+                      <div><strong>Seq {si}</strong> · addr 0x{seq.address.toString(16)} · {seq.frames.length} frames · {seq.totalTicks} ticks</div>
+                      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '2px' }}>
+                        {seq.frames.map((frame, fi) => (
+                          <div key={fi} style={{
+                            padding: '2px 4px',
+                            fontSize: '10px',
+                            background: frame.physicalId ? '#1a3a1a' : '#3a1a1a',
+                            border: '1px solid #333',
+                            borderRadius: '3px',
+                          }}>
+                            f{fi} vf${hex(frame.visualFrameId)} {frame.durationTicks}t
+                            {frame.physicalId && <span style={{ color: '#8f8' }}> ●</span>}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+
+                  {/* Used by: cards that share this resource */}
+                  {(() => {
+                    const consumers = getConsumersForResource(actorTrack.resourceId!);
+                    if (consumers.length === 0) return null;
+                    return (
+                      <div style={{ marginTop: '8px', padding: '4px 8px', background: '#1a1a2e', borderRadius: '4px' }}>
+                        <strong>Used by:</strong>
+                        {consumers.map(c => (
+                          <span key={`${c.cardId}-${c.trackId}`} className="dev-tag" style={{ marginLeft: '4px' }}>
+                            #{c.cardId} {c.cardName}
+                          </span>
+                        ))}
+                      </div>
+                    );
+                  })()}
+
+                  {/* FX track info */}
+                  {binding.fxResourceId != null && (
+                    <div style={{ marginTop: '4px', fontSize: '11px', color: '#aaa' }}>
+                      FX: resource {hex2(binding.fxResourceId)} · palette {binding.fxPaletteId != null ? hex2(binding.fxPaletteId) : '—'} (separate from actor)
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {/* Expanded but no registry data */}
+              {isExpanded && !regEntry && (
+                <div className="dev-rom-sequence-frames">
+                  <div style={{ padding: '8px', color: '#888', fontSize: '12px' }}>
+                    Resource {hex2(actorTrack.resourceId)} not yet decoded into RomSequenceRegistry.
+                    {actorTrack.physicalStatus === 'FRAME_STREAM_CLOSED' && ' Frame stream available but metasprite linkage PENDING.'}
+                    {actorTrack.physicalStatus === 'NO_ANIMATION_RESOURCE' && ' Awaiting decode.'}
+                  </div>
+                </div>
+              )}
+            </div>
+          );
+        })}
+      </div>
+    </section>
   );
 }
 
