@@ -576,3 +576,32 @@ export const ROM_STAGE_LEVEL_LABEL: Record<number, string> = {
   "4": "6_stage",
   "5": "level5_10cmd"
 };
+
+/** command → animation IDs cargados por Call_000_3833 (Bank00:$3833).
+ *  side0 = $c7d4=0 (member 0, $C700) · side1 = $c7d4=1 (member 1, $C703).
+ *  Cada ID indexa la tabla de programas de animación @ $5D00 (Bank00). */
+export const ROM_STAGE_COMMAND_ANIMATIONS: Record<
+  RomStageCommand,
+  { side0: number; side1: number; lastSide1?: number }
+> = {
+  "A": {
+    "side0": 0,
+    "side1": 5
+  },
+  "B": {
+    "side0": 1,
+    "side1": 6
+  },
+  "RIGHT": {
+    "side0": 2,
+    "side1": 7
+  },
+  "UP": {
+    "side0": 3,
+    "side1": 8
+  },
+  "DOWN": {
+    "side0": 4,
+    "side1": 9
+  }
+};

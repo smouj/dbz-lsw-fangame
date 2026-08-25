@@ -68,5 +68,27 @@ if (existsSync(SEQ_JSON)) {
   check('sequences.json presente', false, 'falta generated/rom-stage/sequences.json — ejecuta build:rom-stage');
 }
 
+// Gate 4: command → animation dispatch (Bank00 Call_000_3833) verificado.
+const CONSUMER_JSON = join(ROOT, 'generated/rom-stage/command-consumers.json');
+const EXPECTED_ANIMS: Record<string, { side0: number; side1: number }> = {
+  A: { side0: 0x00, side1: 0x05 },
+  B: { side0: 0x01, side1: 0x06 },
+  RIGHT: { side0: 0x02, side1: 0x07 },
+  UP: { side0: 0x03, side1: 0x08 },
+  DOWN: { side0: 0x04, side1: 0x09 },
+};
+if (existsSync(CONSUMER_JSON)) {
+  const consumers = JSON.parse(readFileSync(CONSUMER_JSON, 'utf8'));
+  const anims = consumers.dispatch?.animationIds ?? {};
+  const cmds = ['A', 'B', 'UP', 'DOWN', 'RIGHT'];
+  check('command→animation dispatch 5/5', cmds.every((c) => anims[c] && anims[c].side0 === EXPECTED_ANIMS[c].side0 && anims[c].side1 === EXPECTED_ANIMS[c].side1));
+  check('animation side0 = 0..4 contiguo', cmds.every((c) => anims[c]?.side0 === EXPECTED_ANIMS[c].side0));
+  check('animation side1 = 5..9 contiguo', cmds.every((c) => anims[c]?.side1 === EXPECTED_ANIMS[c].side1));
+  check('consumer inputs = $CA60 (expected) + $CA6A (success)', consumers.consumer?.inputs?.expectedCommand?.includes('$CA60') && consumers.consumer?.inputs?.successFlag?.includes('$CA6A'));
+  check('side register = $C7D4 member slot', consumers.dispatch?.sideRegister?.register === '$C7D4');
+} else {
+  check('command-consumers.json presente', false, 'falta generated/rom-stage/command-consumers.json — ejecuta build:rom-stage');
+}
+
 console.log(`\n═══ RESULTADO: ${pass} ✓ · ${fail} ✗ ═══`);
 if (fail > 0) process.exit(1);

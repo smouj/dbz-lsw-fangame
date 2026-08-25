@@ -183,6 +183,9 @@ function main() {
   mkdirSync(dirname(OUT_TS), { recursive: true });
   writeFileSync(OUT_TS, ts);
 
+  // Cadena de consumidores command→animation (verificada hasta la tabla $5D00).
+  writeFileSync(join(OUT_DIR, 'command-consumers.json'), JSON.stringify(commandConsumers(), null, 2));
+
   const report = genReport(stageData);
   writeFileSync(join(OUT_DIR, 'REPORT.md'), report);
 
@@ -229,7 +232,42 @@ export const ROM_STAGE_SEQUENCES: RomStageSequence[] = ${JSON.stringify(
   )};
 
 export const ROM_STAGE_LEVEL_LABEL: Record<number, string> = ${JSON.stringify(LEVEL_LABEL, null, 2)};
+
+/** command → animation IDs cargados por Call_000_3833 (Bank00:$3833).
+ *  side0 = $c7d4=0 (member 0, $C700) · side1 = $c7d4=1 (member 1, $C703).
+ *  Cada ID indexa la tabla de programas de animación @ $5D00 (Bank00). */
+export const ROM_STAGE_COMMAND_ANIMATIONS: Record<
+  RomStageCommand,
+  { side0: number; side1: number; lastSide1?: number }
+> = ${JSON.stringify(COMMAND_ANIMATIONS, null, 2)};
 `;
+}
+
+function commandConsumers(): unknown {
+  return {
+    verified: true,
+    consumer: {
+      call: 'Call_000_3822 (Bank00:$3822)',
+      inputs: {
+        expectedCommand: '$CA60[$CA5F] (comando esperado en el índice actual)',
+        successFlag: '$CA6A[$CA5F] (success/failure del comando actual)',
+      },
+    },
+    dispatch: {
+      call: 'Call_000_3833 (Bank00:$3833)',
+      encoding: Object.fromEntries(Object.entries(COMMAND_NAMES).map(([bit, name]) => [name, Number(bit)])),
+      animationIds: COMMAND_ANIMATIONS,
+      lastCommandSide1Note: 'B como ÚLTIMO comando → side1 = $39 en vez de $06 (bank_000.asm $391E)',
+      sideRegister: {
+        register: '$C7D4',
+        meaning: 'member slot (0 → $C700, 1 → $C703 — Call_000_3e46)',
+      },
+    },
+    animationProgramTable: {
+      address: '$5D00 (Bank00, Call_000_3e92: sla c / rl b → $5D00+bc)',
+      resolution: 'PENDING — AnimationSlot → sequenceSelector → AnimationResource → frame → VFID → physicalId',
+    },
+  };
 }
 
 function genReport(d: ReturnType<typeof JSON.parse>): string {
@@ -262,6 +300,17 @@ function genReport(d: ReturnType<typeof JSON.parse>): string {
   for (const e of d.commandEncoding) lines.push(`| \`${e.command}\` | \`${e.hex}\` |`);
   lines.push('');
   lines.push(`Máscara QTE \`$3D\`: ${d.qteMask.accepted.join(' · ')}. **LEFT excluido**.`);
+  lines.push('');
+  lines.push('## Command → Animation (Bank00 Call_000_3833)');
+  lines.push('');
+  lines.push('| Comando | Bit | anim side0 ($C7D4=0) | anim side1 ($C7D4=1) |');
+  lines.push('|---|---|---|---|');
+  for (const [cmd, ids] of Object.entries(COMMAND_ANIMATIONS)) {
+    const bit = Object.entries(COMMAND_NAMES).find(([, n]) => n === cmd)?.[0];
+    lines.push(`| \`${cmd}\` | \`$${Number(bit).toString(16).padStart(2, '0')}\` | \`$${(ids.side0).toString(16).padStart(2, '0')}\` | \`$${(ids.side1).toString(16).padStart(2, '0')}\` |`);
+  }
+  lines.push('');
+  lines.push('Cada ID indexa la tabla de programas de animación @ `$5D00` (Bank00).');
   lines.push('');
   lines.push('## Secuencias');
   lines.push('');
