@@ -91,7 +91,7 @@ check('summary:resources', summary.resources === 66, String(summary.resources));
 check('summary:status total', statusTotal === summary.resources, `${statusTotal}/${summary.resources}`);
 check('summary:cause total', causeTotal === summary.resources, `${causeTotal}/${summary.resources}`);
 check('summary:disposition total', dispositionTotal === summary.resources, `${dispositionTotal}/${summary.resources}`);
-check('summary:partial resources still tracked', summary.partial === 48, String(summary.partial));
+check('summary:partial resources still tracked', summary.partial === 46, String(summary.partial));
 check('summary:special resources tracked', summary.special === 5, String(summary.special));
 check('summary:unknown resources tracked', summary.unknown === 1, String(summary.unknown));
 check('summary:dynamic only justified subset', summary.needsDynamicTrace > 0 && summary.needsDynamicTrace < summary.resources, String(summary.needsDynamicTrace));

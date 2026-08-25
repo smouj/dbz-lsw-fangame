@@ -128,8 +128,8 @@ for (const [techniqueName, technique] of Object.entries(ROM_TECHNIQUES)) {
 const summary = animationResourceSummary();
 check('summary:resources', summary.resources === 66, String(summary.resources));
 check('summary:referenced', summary.referenced === referencedResources.size, `${summary.referenced}/${referencedResources.size}`);
-check('summary:decoded', summary.decoded === 12, String(summary.decoded));
-check('summary:cards covered decoded', summary.cardsCoveredByDecodedResources === 16, String(summary.cardsCoveredByDecodedResources));
+check('summary:decoded', summary.decoded === 14, String(summary.decoded));
+check('summary:cards covered decoded', summary.cardsCoveredByDecodedResources === 18, String(summary.cardsCoveredByDecodedResources));
 
 console.log('═══ ANIMATION RESOURCE DECODING ═══');
 console.log(`resources=${summary.resources}`);
