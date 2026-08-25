@@ -139,7 +139,6 @@ const outDir = resolve(process.cwd(), 'docs/rom/generated/frame-map');
 mkdirSync(outDir, { recursive: true });
 const matrix = frameMapMatrix();
 writeFileSync(resolve(outDir, 'FRAME_MAP_MATRIX.json'), JSON.stringify({
-  generatedAt: new Date().toISOString(),
   summary,
   unresolved: listUnresolved().map(b => ({ formId: b.formId, dir: b.dir, semanticRole: b.semanticRole, physicalFamily: b.physicalFamily, index: b.manifestIndex, file: b.file })),
   matrix,
