@@ -26,6 +26,7 @@ openclaw-workspace-state.json
 generated/rom-fighters/
 generated/rom-fx/
 generated/rom-stage/
+generated/rom-animation-core/
 docs/rom/generated/fighters/
 public/assets/rom-fx/
 public/assets/sprites/*/physical/
