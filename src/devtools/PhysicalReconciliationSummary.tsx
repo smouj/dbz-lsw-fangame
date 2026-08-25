@@ -6,6 +6,7 @@ import { romPresentationCompilerSummary } from '../battle/romPresentationCompile
 import { romPresentationProfileSummary } from '../battle/romPresentationProfiles';
 import { beamBaseRuntimeCutoverSummary } from '../battle/beamBaseRomCutover';
 import { standardDamageRuntimeCutoverSummary } from '../battle/standardDamageRomCutover';
+import { romFxWindowRuntimeSummary } from '../battle/romFxWindow';
 
 const ROM_RESEARCH_SYNC = {
   v3VisualFrames: 411,
@@ -36,6 +37,7 @@ export function PhysicalReconciliationSummary() {
   const compiler = romPresentationCompilerSummary();
   const standardDamageCutover = standardDamageRuntimeCutoverSummary();
   const beamBaseCutover = beamBaseRuntimeCutoverSummary();
+  const fxWindow = romFxWindowRuntimeSummary();
   const decoded = ANIMATION_RESOURCE_CATALOG.filter(resource => resource.status === 'DECODED').length;
   const referenced = ANIMATION_RESOURCE_CATALOG.filter(resource => resource.cards.length > 0).length;
   const complete = PHYSICAL_FRAME_RECONCILIATION.filter(resource => resource.summary.romFrames > 0 && resource.summary.unresolved === 0).length;
@@ -59,7 +61,7 @@ export function PhysicalReconciliationSummary() {
         <span className="dev-tag ok">V4 FX bundles {ROM_RESEARCH_SYNC.v4OffensiveFxBundles}</span>
         <span className="dev-tag ok">V4 BG_TILEMAP · {ROM_RESEARCH_SYNC.v4FxRenders} renders</span>
         <span className="dev-tag">V4 data tables {ROM_RESEARCH_SYNC.v4FxDataTables}</span>
-        <span className="dev-tag">ROM_FX_WINDOW runtime cutover pending</span>
+        <span className={`dev-tag ${fxWindow.staticComplete === 28 && fxWindow.complete === 0 ? 'ok' : ''}`}>ROM_FX_WINDOW runtime STATIC_COMPLETE {fxWindow.staticComplete}/28 · COMPLETE {fxWindow.complete}/28</span>
         <span className="dev-tag ok">V5 Support/Defense grammar static</span>
         <span className="dev-tag ok">V5 Defense cards {ROM_RESEARCH_SYNC.v5DefenseCards}</span>
         <span className="dev-tag ok">V5 Support palettes {ROM_RESEARCH_SYNC.v5SupportPalettes}</span>
