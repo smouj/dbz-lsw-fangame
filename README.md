@@ -36,7 +36,7 @@ npm run verify:gbc            # invariantes GBC: posiciones, mazo, secuencias ca
 
 # ROM canon (P0 / P0.1B / P0.4R) — identidad física + corpus + puente estructurado
 npm run verify:rom-fighter-identity     # identidad de forma 48/48
-npm run verify:rom-physical-corpus      # 552 físicos / 2371 instancias
+npm run verify:rom-physical-corpus      # 505 físicos / 2374 instancias
 npm run verify:rom-fx-film-contract     # FX ofensivos 28/28 STATIC_COMPLETE
 npm run verify:rom-physical-key-bridge  # puente estructurado profile-specific (16 ✓)
 npm run verify:character-frame-map      # F-MAP honesto (22 ✓)
@@ -146,7 +146,7 @@ Se cambia en **Settings → Language** y se guarda en `localStorage` (`dbzlsw_la
 - **42 perfiles firma** — las 66 cartas de combate tienen animación propia (verify:profiles exige cobertura total)
 - Cinemática de acción orquestada por **timeline único** (59.7275 fps GBC): attacker → travel → target → return con FX/CSS sincronizados
 - **48 formas** = ROM exacto, todas con 21 poses (idle..power_up) y manifests con dimensiones físicas verificadas
-- **ROM canon físico (P0)**: identidad 48/48, corpus físico 552/2371, puente estructurado profile-specific (`rom-p...` content-addressed)
+- **ROM canon físico (P0)**: identidad 48/48, corpus físico 505/2374, puente estructurado profile-specific (`rom-p...` content-addressed)
 - Cartas de objeto con **aura azul** (fx-item) vs buffs de ki con aura dorada; FX Afterimage con estelas de teletransporte
 - Sprites de combate animados con facing por silueta; beams procedurales (sin estiramiento ni duplicados)
 - Sheets de personajes byte-idénticos a la ROM (48/48 verificados)
