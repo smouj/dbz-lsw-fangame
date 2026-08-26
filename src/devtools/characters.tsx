@@ -489,11 +489,13 @@ export function CharactersModule({ onOpenModule }: {
         <div className="dev-reported-banner">
           <strong>⚑ {reportedFrames.reported.length} frame{reportedFrames.reported.length !== 1 ? 's' : ''} reported</strong>
           {' '}
+          <button className="dev-btn dev-btn-mini" onClick={() => copyText(JSON.stringify(reportedFrames.reported, null, 2))}>📋 Copiar JSON</button>
+          {' '}
           <button className="dev-btn dev-btn-mini dev-btn-danger" onClick={reportedFrames.clear}>Clear all</button>
           <div className="dev-reported-list">
             {reportedFrames.reported.map(f => (
-              <span key={f.physicalId} className="dev-reported-chip">
-                {f.formId}/{f.physicalId.slice(0, 20)}…
+              <span key={f.physicalId} className="dev-reported-chip" title={`${f.formId} · ${f.physicalId}`}>
+                {f.formId}/{f.physicalId.slice(0, 24)}{f.physicalId.length > 24 ? '…' : ''}
               </span>
             ))}
           </div>
