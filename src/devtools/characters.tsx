@@ -484,6 +484,22 @@ export function CharactersModule({ onOpenModule }: {
         </p>
       </header>
 
+      {/* ── Banner de frames reportados ── */}
+      {reportedFrames.reported.length > 0 && (
+        <div className="dev-reported-banner">
+          <strong>⚑ {reportedFrames.reported.length} frame{reportedFrames.reported.length !== 1 ? 's' : ''} reported</strong>
+          {' '}
+          <button className="dev-btn dev-btn-mini dev-btn-danger" onClick={reportedFrames.clear}>Clear all</button>
+          <div className="dev-reported-list">
+            {reportedFrames.reported.map(f => (
+              <span key={f.physicalId} className="dev-reported-chip">
+                {f.formId}/{f.physicalId.slice(0, 20)}…
+              </span>
+            ))}
+          </div>
+        </div>
+      )}
+
       <div className="dev-chars-layout">
         {/* ── Sidebar: personajes ── */}
         <div className="dev-char-list">
@@ -495,22 +511,6 @@ export function CharactersModule({ onOpenModule }: {
             </button>
           ))}
         </div>
-
-        {/* ── Banner de frames reportados ── */}
-        {reportedFrames.reported.length > 0 && (
-          <div className="dev-reported-banner">
-            <strong>⚑ {reportedFrames.reported.length} frame{reportedFrames.reported.length !== 1 ? 's' : ''} reported</strong>
-            {' '}
-            <button className="dev-btn dev-btn-mini dev-btn-danger" onClick={reportedFrames.clear}>Clear all</button>
-            <div className="dev-reported-list">
-              {reportedFrames.reported.map(f => (
-                <span key={f.physicalId} className="dev-reported-chip">
-                  {f.formId}/{f.physicalId.slice(0, 20)}…
-                </span>
-              ))}
-            </div>
-          </div>
-        )}
 
         {/* ── Detalle ── */}
         <div className="dev-char-detail">
