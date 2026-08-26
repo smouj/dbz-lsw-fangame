@@ -27,6 +27,7 @@ import { CardArtHole } from './components/CardArtHole';
 import { StageHudPanel } from './components/StageHudPanel';
 import { GameViewport } from './components/GameViewport';
 import { TeamSetup } from './components/setup/TeamSetup';
+
 import { useTeamSetupState } from './components/setup/useTeamSetupState';
 import type { TeamMember, TeamSetupResult } from './components/setup/teamSetupTypes';
 import { overworldUrl } from './data/overworld';
@@ -4659,15 +4660,50 @@ function CardsScreen({ onNavigate }: { onNavigate: (s: Screen) => void }) {
 
 function SettingsScreen({ onNavigate }: { onNavigate: (s: Screen) => void }) {
   const { t, lang, setLang } = useLang();
-  const [volume, setVolumeState] = useState(70);
-  const [sfx, setSfxState] = useState(true);
+  const [volume, setVolumeState] = useState(() => {
+    try {
+      const raw = Number(localStorage.getItem('dbzlsw.volume'));
+      return Number.isFinite(raw) && raw >= 0 && raw <= 100 ? raw : 70;
+    } catch { return 70; }
+  });
+  const [sfx, setSfxState] = useState(() => { try { return localStorage.getItem('dbzlsw.sfx') !== 'off'; } catch { return true; } });
   const [music, setMusicState] = useState(() => { try { return localStorage.getItem('dbzlsw.music') !== 'off'; } catch { return true; } });
   const [speed, setSpeed] = useState<'normal' | 'fast'>('normal');
-  const [screenMode, setScreenMode] = useState<'windowed' | 'fullscreen'>('windowed');
+  const [screenMode, setScreenModeState] = useState<'windowed' | 'fullscreen'>(() => document.fullscreenElement ? 'fullscreen' : 'windowed');
 
-  const setVolume = (v: number) => { setVolumeState(v); setVolumeSfx(v / 100); setMusicVolume(v / 100); };
-  const setSfx = (v: boolean) => { setSfxState(v); setSfxEnabled(v); if (v) Sfx.confirm(); };
-  const setMusic = (v: boolean) => { setMusicState(v); setMusicEnabled(v); try { localStorage.setItem('dbzlsw.music', v ? 'on' : 'off'); } catch {} if (v) playMusic(musicForScreen('settings')); };
+  useEffect(() => {
+    setVolumeSfx(volume);
+    setMusicVolume(volume / 100);
+    setSfxEnabled(sfx);
+    setMusicEnabled(music);
+    if (music) playMusic(musicForScreen('settings'));
+  }, []);
+
+  const setVolume = (v: number) => {
+    setVolumeState(v);
+    try { localStorage.setItem('dbzlsw.volume', String(v)); } catch { /* noop */ }
+    setVolumeSfx(v);
+    setMusicVolume(v / 100);
+  };
+  const setSfx = (v: boolean) => {
+    setSfxState(v);
+    setSfxEnabled(v);
+    try { localStorage.setItem('dbzlsw.sfx', v ? 'on' : 'off'); } catch { /* noop */ }
+    if (v) Sfx.confirm();
+  };
+  const setMusic = (v: boolean) => {
+    setMusicState(v);
+    setMusicEnabled(v);
+    if (v) playMusic(musicForScreen('settings'));
+  };
+  const setScreenMode = (mode: 'windowed' | 'fullscreen') => {
+    setScreenModeState(mode);
+    if (mode === 'fullscreen') {
+      void document.documentElement.requestFullscreen?.();
+    } else if (document.fullscreenElement) {
+      void document.exitFullscreen?.();
+    }
+  };
 
   return (
     <div className="page-screen settings-screen">
@@ -4864,7 +4900,7 @@ function AppInner() {
         return;
       }
       initAudio();
-      playMusic(musicForScreen(screen));
+      if (localStorage.getItem('dbzlsw.music') !== 'off') playMusic(musicForScreen(screen));
       window.removeEventListener('pointerdown', onFirst);
     };
     window.addEventListener('pointerdown', onFirst);
@@ -4879,9 +4915,7 @@ function AppInner() {
       stopMusic();
       return;
     }
-    if (screen !== 'battle' && screen !== 'versus') {
-      playMusic(musicForScreen(screen));
-    }
+    if (localStorage.getItem('dbzlsw.music') !== 'off') playMusic(musicForScreen(screen));
     return () => { if (screen === 'main') stopMusic(); };
   }, [screen, inDev]);
 
