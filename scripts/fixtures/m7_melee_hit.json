@@ -105,6 +105,16 @@
   },
   {
    "tick": 45,
+   "type": "ROM_PENDING",
+   "reason": "START_ACTOR_ANIMATION: ProductionFrameResolver blocked because actorFormId/sequenceSelector is not proven",
+   "boundary": "STATIC",
+   "logicalTick": 0,
+   "source": "ACTION_STARTED",
+   "fidelity": "ROM_STATIC_PARTIAL",
+   "profile": "rom-card-5"
+  },
+  {
+   "tick": 45,
    "type": "WAIT_ANIMATION_FRAME",
    "slot": 0,
    "frame": 2,
@@ -130,16 +140,6 @@
    "selectedSourceEvent": "ATTACK_HIT",
    "selectedMacroId": 47,
    "selectedMacroHex": "0x2f",
-   "logicalTick": 0,
-   "source": "ACTION_STARTED",
-   "fidelity": "ROM_STATIC_PARTIAL",
-   "profile": "rom-card-5"
-  },
-  {
-   "tick": 45,
-   "type": "ROM_PENDING",
-   "reason": "actor AnimationResource frame stream still statically closable",
-   "boundary": "STATIC",
    "logicalTick": 0,
    "source": "ACTION_STARTED",
    "fidelity": "ROM_STATIC_PARTIAL",

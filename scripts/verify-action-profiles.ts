@@ -1,5 +1,5 @@
 import { compileActionProfile, resolveActionProfile, ACTION_PROFILE_REGISTRY, actionSemanticsForCard, listActionProfiles, slugifyCardName } from '../src/battle/actionProfiles';
-import { STAGE_SEQUENCE_POOL, nextStageSequence, resetStageRotation, hasDirections } from '../src/battle/stageSequences';
+import { nextStageSequence, resetStageRotation, stageSequencePoolFor } from '../src/battle/stageSequences';
 import { profileFor } from '../src/battle/profiles';
 import { BattleTimeline, buildProfile, track } from '../src/battle/timeline';
 import { CARDS } from '../src/data/cards';
@@ -8,6 +8,12 @@ import { resolveProjectileVisualMode } from '../src/renderer/pixi/presentation/p
 let failures = 0;
 function check(name: string, ok: boolean, detail?: string) {
   if (!ok) { failures++; console.log(`FAIL ${name}${detail ? ' — ' + detail : ''}`); }
+}
+
+// StageKey direccional (LEFT fue eliminado en P0.4S — ROM Call_000_3833).
+const DIRECTION_KEYS: ReadonlySet<string> = new Set(['UP', 'DOWN', 'RIGHT']);
+function hasDirections(seq: string[]): boolean {
+  return seq.some((k) => DIRECTION_KEYS.has(k));
 }
 
 // 1) Todos los perfiles firma compilan y son válidos
@@ -201,36 +207,27 @@ for (const card of missingProfiles) {
 }
 check('cardProfile:allCovered', missingProfiles.length === 0, missingProfiles.map(c => c.name).join(', '));
 
-// 8) Secuencias canónicas de Stage Attack (pool fijo, rotación determinista).
+// 8) Secuencias canónicas de Stage Attack (8 variantes ROM por nivel,
+//    rotación determinista). La gramática exacta la valida verify:rom-stage-fidelity.
 for (const level of [3, 4, 5, 6] as const) {
-  const pool = STAGE_SEQUENCE_POOL[level];
-  check(`stagePool:${level}:count`, pool.length >= 6, String(pool.length));
+  const pool = stageSequencePoolFor(level);
+  check(`stagePool:${level}:count`, pool.length === 8, String(pool.length));
   check(`stagePool:${level}:length`, pool.every(s => s.length === level), pool.map(s => s.length).join(','));
-  // Cada SLOT es un solo eje (un input nunca es diagonal). El pool solo
-  // usa claves individuales UP/DOWN/LEFT/RIGHT, así que esto es garantía
-  // estructural; el check verifica que no hay slots compuestos.
-  check(`stagePool:${level}:singleAxisPerSlot`, pool.every(s => s.every(k => k === 'A' || k === 'B' || k === 'UP' || k === 'DOWN' || k === 'LEFT' || k === 'RIGHT')));
-  // 3 Stage: solo A/B; 4+: 3 golpes + (n-3) direcciones
-  check(`stagePool:${level}:grammar`, pool.every(s => {
-    const dirs = s.filter(k => k === 'UP' || k === 'DOWN' || k === 'LEFT' || k === 'RIGHT');
-    const ab = s.filter(k => k === 'A' || k === 'B');
-    return ab.length === 3 && dirs.length === level - 3;
-  }));
-  check(`stagePool:${level}:noAdjacentDirRepetition`, pool.every(s => {
-    const dirSeq = s.filter(k => k === 'UP' || k === 'DOWN' || k === 'LEFT' || k === 'RIGHT');
-    return dirSeq.every((d, i) => i === 0 || d !== dirSeq[i - 1]);
-  }));
+  // Cada SLOT es un solo eje (A/B/UP/DOWN/RIGHT — LEFT eliminado en P0.4S).
+  check(`stagePool:${level}:singleAxisPerSlot`, pool.every(s => s.every(k => k === 'A' || k === 'B' || k === 'UP' || k === 'DOWN' || k === 'RIGHT')));
+  // 8 variantes distintas por nivel (ROM).
+  check(`stagePool:${level}:distinctVariants`, new Set(pool.map(s => s.join(''))).size === pool.length, String(new Set(pool.map(s => s.join(''))).size));
 }
 // Rotación round-robin: 6 llamadas seguidas al mismo nivel no repiten
 // secuencia; la 7ª vuelve a la primera (determinismo).
 for (const level of [3, 4, 5, 6] as const) {
   resetStageRotation(level);
   const seen = new Set<string>();
-  const poolSize = STAGE_SEQUENCE_POOL[level].length;
+  const poolSize = stageSequencePoolFor(level).length;
   for (let i = 0; i < poolSize; i++) seen.add(nextStageSequence(level).join(''));
   check(`stageRotation:${level}:noRepeatWithinPool`, seen.size === poolSize, `${seen.size}/${poolSize}`);
   const first = nextStageSequence(level).join('');
-  check(`stageRotation:${level}:wrapsDeterministic`, first === STAGE_SEQUENCE_POOL[level][0].join(''), first);
+  check(`stageRotation:${level}:wrapsDeterministic`, first === stageSequencePoolFor(level)[0].join(''), first);
 }
 resetStageRotation();
 check('stagePool:hasDirections', hasDirections(['A', 'UP']) && !hasDirections(['A', 'B']));

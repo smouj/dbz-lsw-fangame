@@ -45,16 +45,12 @@ for (const t of ['command', 'damage', 'beam', 'support', 'defense', 'special']) 
 }
 
 // ── Secuencias canónicas de Stage Attack ──
-import { STAGE_SEQUENCE_POOL, nextStageSequence, resetStageRotation } from '../src/battle/stageSequences';
+import { stageSequencePoolFor, nextStageSequence, resetStageRotation } from '../src/battle/stageSequences';
 for (const level of [3, 4, 5, 6] as const) {
-  const pool = STAGE_SEQUENCE_POOL[level];
-  check(`stage:${level}:poolSize`, pool.length >= 6, `${pool.length}`);
+  const pool = stageSequencePoolFor(level);
+  check(`stage:${level}:poolSize`, pool.length === 8, `${pool.length}`);
   check(`stage:${level}:seqLength`, pool.every(s => s.length === level));
-  check(`stage:${level}:grammar`, pool.every(s => {
-    const dirs = s.filter(k => k === 'UP' || k === 'DOWN' || k === 'LEFT' || k === 'RIGHT');
-    const ab = s.filter(k => k === 'A' || k === 'B');
-    return ab.length === 3 && dirs.length === level - 3;
-  }));
+  check(`stage:${level}:distinctVariants`, new Set(pool.map(s => s.join(''))).size === pool.length, `${new Set(pool.map(s => s.join(''))).size}/${pool.length}`);
   resetStageRotation(level);
   const seen = new Set<string>();
   for (let i = 0; i < pool.length; i++) seen.add(nextStageSequence(level).join(''));

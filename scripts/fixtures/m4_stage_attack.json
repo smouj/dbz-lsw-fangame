@@ -1,6 +1,6 @@
 {
  "name": "m4_stage_attack",
- "description": "BASIC \u2192 Stage Attack (pool 3S) \u2192 preparaci\u00f3n (reloj abre INPUT_WINDOW) \u2192 QTE completo: STAGE_PREP_STARTED al confirmar, QTE_STARTED por el reloj (M8.B)",
+ "description": "BASIC \u2192 Stage Attack (pool 3S) \u2192 preparaci\u00f3n (reloj abre INPUT_WINDOW) \u2192 QTE completo: STAGE_PREP_STARTED al confirmar, QTE_STARTED por el reloj (M8.B). Secuencia ROM-faithful nivel 3 variante 0 = A,A,DOWN (Bank01:$7C47).",
  "setup": {
   "phase": "command",
   "playerCc": 0
@@ -25,11 +25,11 @@
   },
   {
    "type": "QTE_INPUT",
-   "input": "B"
+   "input": "A"
   },
   {
    "type": "QTE_INPUT",
-   "input": "A"
+   "input": "DOWN"
   }
  ],
  "expectedEvents": [

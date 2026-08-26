@@ -25,8 +25,9 @@ function signed(byte: number): number {
 const ROOT = process.cwd();
 const statusValues: PhysicalFrameMappingStatus[] = ['EXACT', 'SHARED', 'COMPOSITE', 'UNRESOLVED'];
 const generatedAgain = JSON.stringify(PHYSICAL_FRAME_RECONCILIATION);
+const decodedResourceCount = ANIMATION_RESOURCE_CATALOG.filter((r) => r.status === 'DECODED').length;
 
-check('catalog:decoded resources only', PHYSICAL_FRAME_RECONCILIATION.length === 12, String(PHYSICAL_FRAME_RECONCILIATION.length));
+check('catalog:decoded resources only', PHYSICAL_FRAME_RECONCILIATION.length === decodedResourceCount, String(PHYSICAL_FRAME_RECONCILIATION.length));
 check('catalog:deterministic same object', JSON.stringify(PHYSICAL_FRAME_RECONCILIATION) === generatedAgain);
 check('manifest index:not empty', MANIFEST_FRAME_INDEX.length > 0, String(MANIFEST_FRAME_INDEX.length));
 
@@ -109,7 +110,7 @@ for (const resource of ANIMATION_RESOURCE_CATALOG) {
 }
 
 const summary = physicalFrameReconciliationSummary();
-check('summary:resources', summary.resources === 12, String(summary.resources));
+check('summary:resources', summary.resources === decodedResourceCount, String(summary.resources));
 check('summary:romFrames', summary.romFrames > 0, String(summary.romFrames));
 check('summary:counts add up', summary.exact + summary.shared + summary.composite + summary.unresolved === summary.romFrames);
 

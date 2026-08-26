@@ -279,7 +279,7 @@ check('builder rejects render/form profile mismatch', builder.includes('render p
 check('builder stores pieceGraphics forensic data', builder.includes('pieceGraphics'));
 check('renderer reads ROM_CGB_PALETTE_TABLE SSOT', renderer.includes('ROM_CGB_PALETTE_TABLE') && !renderer.includes('romFighterPalettes.generated'));
 check('renderer records graphics block hashes', renderer.includes('graphicsBlockHash') && renderer.includes('tile0Hash') && renderer.includes('tile1Hash'));
-check('resolver uses generated physicalFrameIndex instead of weak formula', resolver.includes('physicalFrameFor') && !resolver.includes('function physicalId('));
+check('resolver uses generated physicalFrameIndex instead of weak formula', resolver.includes('romPhysicalFrameIndex') && !resolver.includes('physicalFrameFor'));
 check('roster exports ROM ordered forms and characters from ROM_FIGHTER_FORM_IDENTITY',
   roster.includes('ROM_ORDERED_FORM_IDS') &&
   roster.includes('ROM_ORDERED_CHARACTERS') &&

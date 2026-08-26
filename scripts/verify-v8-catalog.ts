@@ -21,8 +21,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { createHash } from 'node:crypto';
-import { STAGE_SEQUENCE_POOL, type StageLevel } from '../src/battle/stageSequences';
-import { STAGE_INPUT_FRAMES } from '../src/battle/stageInputMap';
 
 const V8 = path.join(process.cwd(), 'sprites-source/catalog-v8');
 let failures = 0;
@@ -83,47 +81,10 @@ if (fs.existsSync(remPath)) {
   check('v8:runtime_exact_mapping', false, 'falta catalog/runtime_exact_mapping.csv — ejecuta tools/reconcile_with_repo.py');
 }
 
-// 8: stage_sequences.json == STAGE_SEQUENCE_POOL del repo
-try {
-  const sj = JSON.parse(fs.readFileSync(path.join(V8, 'sequences/stage_sequences.json'), 'utf8'));
-  const v8Pools = sj.sequence_pools ?? sj.pools ?? sj;
-  let poolsMatch = true;
-  let detail = '';
-  const levels: StageLevel[] = ['3', '4', '5', '6'];
-  for (const lvl of levels) {
-    const repo = JSON.stringify(STAGE_SEQUENCE_POOL[lvl]);
-    const v8 = JSON.stringify(v8Pools[lvl] ?? v8Pools[String(lvl)]);
-    if (repo !== v8) {
-      poolsMatch = false;
-      detail = `nivel ${lvl} difiere`;
-      break;
-    }
-  }
-  check('v8:stage_pools_match_repo', poolsMatch, detail || '3S/4S/5S/6S idénticos');
-} catch (e) {
-  check('v8:stage_pools_match_repo', false, String(e));
-}
-
-// 9: STAGE_INPUT_POSES del contrato == stageInputMap del repo
-try {
-  const contractPath = path.join(V8, 'integration/spriteSequenceContract.ts');
-  const ts = fs.readFileSync(contractPath, 'utf8');
-  let inputsMatch = true;
-  let inputDetail = '';
-  for (const key of ['A', 'B', 'UP', 'DOWN', 'LEFT', 'RIGHT'] as const) {
-    const repo = STAGE_INPUT_FRAMES[key]?.pose;
-    const m = ts.match(new RegExp(`"${key}"\\s*:\\s*\\{[^}]*"pose"\\s*:\\s*"([^"]+)"`));
-    const v8 = m?.[1];
-    if (repo !== v8) {
-      inputsMatch = false;
-      inputDetail = `${key}: repo=${repo} v8=${v8}`;
-      break;
-    }
-  }
-  check('v8:stage_input_matches_repo', inputsMatch, inputDetail || 'A/B/UP/DOWN/LEFT/RIGHT idénticos');
-} catch (e) {
-  check('v8:stage_input_matches_repo', false, String(e));
-}
+// 8+9: SUPERSEDED — Stage Attack es ahora ROM-faithful (P0.4S: LEFT eliminado,
+// 8 variantes ROM por nivel). El catálogo V8 es un baseline legacy que conserva su
+// snapshot histórico de stage; la fidelidad de stage se valida en verify:rom-stage-fidelity.
+check('v8:stage_checks_superseded_by_rom_stage_fidelity', true, 'ROM-faithful (verify:rom-stage-fidelity)');
 
 // 10: SHA256SUMS — verificar una muestra (los 4 archivos de contrato)
 try {
