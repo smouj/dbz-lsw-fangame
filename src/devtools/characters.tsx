@@ -42,6 +42,7 @@ import { romBeamConsumersForFormResource } from '../battle/romSequenceSelectors'
 import { getBindingForCard, getConsumersForResource, getBindingSummary, type RomActionSequenceBinding, type RomActionAnimationTrack } from '../data/romActionSequenceBinding';
 import { getRomSequenceRegistry } from '../data/romSequenceRegistry';
 import { ROM_FIGHTER_FORM_IDENTITY } from '../data/generated/romFighterFormIdentity.generated';
+import { catalogAnimationBank, catalogResourceBase } from '../data/generated/romAnimationResourceBase.generated';
 
 // ═══ Escritura real a disco (middleware /__dev/write) ──────────────────
 async function frameDataUrl(rel: string): Promise<string> {
@@ -97,7 +98,16 @@ interface RomPhysicalFrame {
   originInTrimY?: number;
   trim?: { x: number; y: number; w: number; h: number; originInTrim?: { x: number; y: number } };
   palette: { bgr555: string[]; colors: string[] };
-  metasprite?: { pieces?: unknown[] };
+  actorVisualProfileKey?: number;
+  graphicsBank?: number;
+  metasprite?: { pieces?: unknown[]; provenance?: { tableAddress?: number; entryAddress?: number; pieceAddress?: number; count?: number } };
+  graphics?: { blockCount?: number; provenance?: { tableAddress?: number; entryAddress?: number; layoutAddress?: number } };
+  sourceProvenance?: {
+    metaspriteHash?: string;
+    graphicsTableHash?: string;
+    graphicsHash?: string;
+    sourceProvenanceHash?: string;
+  };
   occurrences: Array<{
     sequence: number;
     frameIndex: number;
@@ -106,6 +116,7 @@ interface RomPhysicalFrame {
     offsetY: number;
     rawOffsetX: number;
     rawOffsetY: number;
+    frameAddress?: number;
   }>;
 }
 
@@ -177,6 +188,131 @@ interface RomFighterIdentityRow {
 
 function hex(value: number): string {
   return value.toString(16).padStart(2, '0');
+}
+
+function hexAddr(value: number | null | undefined): string {
+  return typeof value === 'number' && Number.isFinite(value) ? `0x${value.toString(16).padStart(4, '0')}` : '—';
+}
+
+function romAddr(bank: number | null | undefined, address: number | null | undefined): string {
+  return typeof bank === 'number' && typeof address === 'number'
+    ? `$${hex(bank)}:${address.toString(16).padStart(4, '0')}`
+    : '—';
+}
+
+function frameOccurrenceLabel(frame: Pick<RomPhysicalFrame, 'occurrences'>): string {
+  const first = frame.occurrences[0];
+  if (!first) return '—';
+  return `seq ${first.sequence} · frame ${first.frameIndex} · ${first.durationTicks}t`;
+}
+
+function physicalFrameProvenance(frame: RomPhysicalFrame, formId: string): Record<string, string | number> {
+  const animationBank = catalogAnimationBank(frame.resourceId);
+  const resourceBase = catalogResourceBase(frame.resourceId);
+  const first = frame.occurrences[0];
+  const metaspriteEntry = frame.metasprite?.provenance?.entryAddress;
+  const graphicsEntry = frame.graphics?.provenance?.entryAddress ?? frame.graphics?.provenance?.layoutAddress;
+  return {
+    physicalId: frame.physicalId,
+    form: formId,
+    profileKey: frame.actorVisualProfileKey == null ? '—' : `0x${hex(frame.actorVisualProfileKey)}`,
+    graphicsBank: frame.graphicsBank == null ? '—' : `0x${hex(frame.graphicsBank)}`,
+    animationBank: animationBank == null ? '—' : `0x${hex(animationBank)}`,
+    resourceBase: hexAddr(resourceBase),
+    resourceId: frame.resourceHex,
+    sequence: first?.sequence ?? '—',
+    frameIndex: first?.frameIndex ?? '—',
+    VFID: `0x${hex(frame.visualFrameId)}`,
+    frameRecordAddress: resourceBase != null && first?.frameAddress != null ? romAddr(animationBank, resourceBase + first.frameAddress) : '—',
+    metaspriteAddress: resourceBase != null && metaspriteEntry != null ? romAddr(animationBank, resourceBase + metaspriteEntry) : '—',
+    graphicsDescriptorAddress: resourceBase != null && graphicsEntry != null ? romAddr(animationBank, resourceBase + graphicsEntry) : '—',
+    metaspriteLocalAddress: hexAddr(metaspriteEntry),
+    graphicsDescriptorLocalAddress: hexAddr(graphicsEntry),
+    pieces: frame.metasprite?.pieces?.length ?? '—',
+    graphicsBlocks: frame.graphics?.blockCount ?? '—',
+    metaspriteHash: frame.sourceProvenance?.metaspriteHash ?? '—',
+    graphicsHash: frame.sourceProvenance?.graphicsHash ?? '—',
+    sourceProvenanceHash: frame.sourceProvenance?.sourceProvenanceHash ?? '—',
+  };
+}
+
+function copyText(text: string): void {
+  void navigator.clipboard?.writeText(text);
+}
+
+function copySequenceFrameProvenance(formId: string, seq: RomPhysicalSequence, frame: RomPhysicalSequence['frames'][number]): void {
+  const animationBank = catalogAnimationBank(seq.resource);
+  const resourceBase = catalogResourceBase(seq.resource);
+  copyText(JSON.stringify({
+    physicalId: frame.physicalId,
+    form: formId,
+    animationBank: animationBank == null ? '—' : `0x${hex(animationBank)}`,
+    resourceBase: hexAddr(resourceBase),
+    resourceId: `0x${hex(seq.resource)}`,
+    sequence: seq.sequence,
+    frameIndex: frame.frameIndex,
+    VFID: `0x${hex(frame.visualFrameId)}`,
+    durationTicks: frame.durationTicks,
+    offsetX: frame.offsetX,
+    offsetY: frame.offsetY,
+    rawOffsetX: frame.rawOffsetX,
+    rawOffsetY: frame.rawOffsetY,
+  }, null, 2));
+}
+
+function PhysicalFrameProvenanceTools({ frame, formId, compact = false }: { frame: RomPhysicalFrame; formId: string; compact?: boolean }) {
+  const provenance = physicalFrameProvenance(frame, formId);
+  const copyPhysicalId = () => copyText(frame.physicalId);
+  const copyProvenance = () => copyText(JSON.stringify(provenance, null, 2));
+  const reportIssue = () => copyText([
+    'PHYSICAL ID',
+    frame.physicalId,
+    '',
+    'SYMPTOM',
+    'FRAME_CONTAMINATION_OR_CUT',
+    '',
+    'RAW',
+    frame.rawCanvasFile ?? '—',
+    '',
+    'TRIM',
+    frame.file,
+    '',
+    'PROVENANCE',
+    JSON.stringify(provenance, null, 2),
+    '',
+    'N-1 / N / N+1',
+    'PENDING_COMPARE',
+    '',
+    'CAUSE',
+    'PENDING_TRACE',
+    '',
+    'FIX',
+    'PENDING',
+  ].join('\n'));
+  return (
+    <div className={`dev-rom-provenance-tools ${compact ? 'compact' : ''}`}>
+      <div className="dev-rom-provenance-line">
+        <code>{frame.physicalId}</code>
+        <button className="dev-btn dev-btn-mini" onClick={copyPhysicalId}>COPY PHYSICAL ID</button>
+        <button className="dev-btn dev-btn-mini" onClick={copyProvenance}>COPY PROVENANCE</button>
+        <button className="dev-btn dev-btn-mini" onClick={reportIssue}>REPORT FRAME ISSUE</button>
+      </div>
+      <div className="dev-rom-provenance-grid">
+        <span><strong>form</strong>{formId}</span>
+        <span><strong>profileKey</strong>{provenance.profileKey}</span>
+        <span><strong>graphicsBank</strong>{provenance.graphicsBank}</span>
+        <span><strong>animationBank</strong>{provenance.animationBank}</span>
+        <span><strong>resourceBase</strong>{provenance.resourceBase}</span>
+        <span><strong>resourceId</strong>{provenance.resourceId}</span>
+        <span><strong>sequence</strong>{provenance.sequence}</span>
+        <span><strong>frameIndex</strong>{provenance.frameIndex}</span>
+        <span><strong>VFID</strong>{provenance.VFID}</span>
+        <span><strong>frame record</strong>{provenance.frameRecordAddress}</span>
+        <span><strong>metasprite</strong>{provenance.metaspriteAddress}</span>
+        <span><strong>graphics descriptor</strong>{provenance.graphicsDescriptorAddress}</span>
+      </div>
+    </div>
+  );
 }
 
 type RomFighterIdentity = typeof ROM_FIGHTER_FORM_IDENTITY[number];
@@ -594,10 +730,11 @@ function RomPhysicalFighterPanel({ formId, onOpenModule }: {
                     <img className="dev-rom-facing-right" src={`/assets/sprites/${dir}/${frame.file}`} alt={`${frame.physicalId} right-facing display`} loading="lazy" />
                   </div>
                 </div>
-                <code>{frame.physicalId}</code>
+                <PhysicalFrameProvenanceTools frame={frame} formId={formId} />
                 <span>{frame.resourceHex} · vf ${hex(frame.visualFrameId)} · {frame.width}×{frame.height}</span>
                 <span>uses {frame.occurrences.length} · trim {frame.trim?.x ?? frame.originX},{frame.trim?.y ?? frame.originY} · origin {frame.originInTrimX ?? '—'},{frame.originInTrimY ?? '—'}</span>
-                <span>pieces {frame.metasprite?.pieces?.length ?? '—'} · palette {frame.palette?.bgr555?.join(' ') ?? '—'}</span>
+                <span>{frameOccurrenceLabel(frame)} · pieces {frame.metasprite?.pieces?.length ?? '—'} · blocks {frame.graphics?.blockCount ?? '—'}</span>
+                <span>palette {frame.palette?.bgr555?.join(' ') ?? '—'}</span>
               </div>
             ))}
           </div>
@@ -610,7 +747,8 @@ function RomPhysicalFighterPanel({ formId, onOpenModule }: {
             {selectedSequences.map(([key, seq]) => (
               <RomSequenceBlock key={key} sequenceKey={key} seq={seq} dir={dir ?? ''} open={openSeq === key}
                 onToggle={() => setOpenSeq(openSeq === key ? null : key)}
-                consumers={selectedConsumers.get(`${seq.resource}:${seq.sequence}`) ?? []} />
+                consumers={selectedConsumers.get(`${seq.resource}:${seq.sequence}`) ?? []}
+                formId={formId} />
             ))}
           </div>
 
@@ -620,7 +758,8 @@ function RomPhysicalFighterPanel({ formId, onOpenModule }: {
             {researchSequences.map(([key, seq]) => (
               <RomSequenceBlock key={key} sequenceKey={key} seq={seq} dir={dir ?? ''} open={openSeq === key}
                 onToggle={() => setOpenSeq(openSeq === key ? null : key)}
-                consumers={[]} />
+                consumers={[]}
+                formId={formId} />
             ))}
           </div>
         </>
@@ -629,13 +768,14 @@ function RomPhysicalFighterPanel({ formId, onOpenModule }: {
   );
 }
 
-function RomSequenceBlock({ sequenceKey, seq, dir, open, onToggle, consumers }: {
+function RomSequenceBlock({ sequenceKey, seq, dir, open, onToggle, consumers, formId }: {
   sequenceKey: string;
   seq: RomPhysicalSequence;
   dir: string;
   open: boolean;
   onToggle: () => void;
   consumers: ReturnType<typeof romBeamConsumersForFormResource>;
+  formId: string;
 }) {
   const totalTicks = seq.frames.reduce((total, frame) => total + frame.durationTicks, 0);
   return (
@@ -674,6 +814,10 @@ function RomSequenceBlock({ sequenceKey, seq, dir, open, onToggle, consumers }: 
               <code>f{frame.frameIndex} · vf ${hex(frame.visualFrameId)}</code>
               <span>{frame.durationTicks}t · dx {frame.offsetX} dy {frame.offsetY}</span>
               <span>{frame.physicalId}</span>
+              <div className="dev-rom-provenance-line compact">
+                <button className="dev-btn dev-btn-mini" onClick={() => copyText(frame.physicalId)}>COPY PHYSICAL ID</button>
+                <button className="dev-btn dev-btn-mini" onClick={() => copySequenceFrameProvenance(formId, seq, frame)}>COPY PROVENANCE</button>
+              </div>
             </div>
           ))}
         </div>

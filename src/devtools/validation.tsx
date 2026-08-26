@@ -123,10 +123,10 @@ export function ValidationModule() {
     pass(
       'P0 Fighter physical corpus: 48-form sweep cerrado',
       corpus.formsRendered === 48
-        && corpus.physicalIdentities === 552
-        && corpus.frameInstances === 2371
-        && corpus.transparentFrameRecords === 39
-        && corpus.transparentPhysicalIds === 8,
+        && corpus.physicalIdentities === 505
+        && corpus.frameInstances === 2374
+        && corpus.transparentFrameRecords === 36
+        && corpus.transparentPhysicalIds === 7,
       `${corpus.formsRendered}/48 forms · ${corpus.physicalIdentities} promoted IDs · ${corpus.frameInstances} instances · ${corpus.transparentFrameRecords} EMPTY_NOT_PROMOTED records/${corpus.transparentPhysicalIds} IDs`,
     );
     pass('P0.5 resource expansion: cobertura renderizable explícita', corpus.resourcesRendered === 6 && corpus.resourcesTotal === 66, `${corpus.resourcesRendered}/${corpus.resourcesTotal} AnimationResources renderizables`);

@@ -26,7 +26,7 @@ export interface TeamSetupProps {
   isFormUnlocked?: (formId: string) => boolean;
 }
 
-export function TeamSetup({ useSetup, fallbackDeck, onConfirm, onBack, isFormUnlocked }: TeamSetupProps) {
+export function TeamSetup({ useSetup, fallbackDeck, onConfirm, isFormUnlocked }: TeamSetupProps) {
   const setup = useSetup({ fallbackDeck });
   const { state, active, result, deckValid } = setup;
 
@@ -70,12 +70,6 @@ export function TeamSetup({ useSetup, fallbackDeck, onConfirm, onBack, isFormUnl
 
   return (
     <div className="page-screen setup-screen" data-testid="team-setup">
-      <div className="page-header">
-        <button className="btn-back" onClick={onBack}>←</button>
-        <h1 className="page-title">BATTLE SETUP</h1>
-        <div className="page-spacer" />
-      </div>
-
       {/* Team slots — el roll se reutiliza para cada miembro */}
       <div className="setup-team-slots" data-testid="team-slots">
         {state.members.map((m, i) => {

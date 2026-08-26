@@ -102,6 +102,7 @@ function ensureAudio(): HTMLAudioElement | null {
 
 export function setMusicEnabled(v: boolean) {
   musicEnabled = v;
+  try { localStorage.setItem('dbzlsw.music', v ? 'on' : 'off'); } catch { /* noop */ }
   if (!v) {
     if (audio) { audio.pause(); }
     currentId = null;
@@ -111,6 +112,7 @@ export function isMusicEnabled() { return musicEnabled; }
 
 export function setMusicVolume(v: number) {
   musicVolume = Math.min(1, Math.max(0, v));
+  try { localStorage.setItem('dbzlsw.volume', String(Math.round(musicVolume * 100))); } catch { /* noop */ }
   if (audio) audio.volume = musicVolume;
 }
 export function getMusicVolume() { return musicVolume; }

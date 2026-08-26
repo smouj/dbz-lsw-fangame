@@ -5670,16 +5670,13 @@ button:focus-visible, .chapter-node:focus-visible {
 }
 
 .mi-desc {
-  max-height: none;
-  height: 15px;
-  opacity: .46;
-  transition: opacity 120ms ease, color 120ms ease;
+  max-height: 1.2em;
+  opacity: 1;
+  transition: color 120ms ease;
 }
 
 .menu-item:hover .mi-desc,
-.menu-item.selected .mi-desc {
-  opacity: .9;
-}
+.menu-item.selected .mi-desc { color: rgba(242,235,217,.92); }
 
 .mi-arrow {
   transform: none;
@@ -15085,7 +15082,7 @@ button.linklike:hover { background: rgba(216,168,48,.08); text-decoration: none;
   padding: 5px 9px 5px 0;
   background:
     linear-gradient(90deg, rgba(18,25,39,.5), rgba(18,25,39,.08) 72%, transparent);
-  opacity: .82;
+  opacity: .78;
 }
 
 .menu-item-settings {
@@ -15103,9 +15100,8 @@ button.linklike:hover { background: rgba(216,168,48,.08); text-decoration: none;
 }
 
 .mi-desc {
-  height: auto;
-  max-height: 15px;
-  opacity: .54;
+  max-height: 1.2em;
+  opacity: 1;
 }
 
 .menu-item:hover,

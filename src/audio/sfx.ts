@@ -7,16 +7,20 @@
 // ═══════════════════════════════════════════════════════════
 
 import { SFX_SEMANTICS_BY_ACTION, sfxUrl } from './sfxRegistry';
+import { AUDIO_CONFIG } from '../config/audio.config';
 
 let ctx: AudioContext | null = null;
 let masterGain: GainNode | null = null;
 let sfxEnabled = true;
-let volume = 0.7;
+let volume = AUDIO_CONFIG.sfx;
 
 export function initAudio() {
-  if (ctx) return;
+  if (ctx) {
+    if (ctx.state === 'suspended') void ctx.resume();
+    return;
+  }
   try {
-    ctx = new AudioContext();
+    ctx = new AudioContext({ latencyHint: AUDIO_CONFIG.latencyHint });
     masterGain = ctx.createGain();
     masterGain.gain.value = volume;
     masterGain.connect(ctx.destination);
@@ -27,7 +31,7 @@ export function initAudio() {
 
 export function setSfxEnabled(v: boolean) { sfxEnabled = v; }
 export function setVolume(v: number) {
-  volume = v / 100;
+  volume = Math.min(1, Math.max(0, v > 1 ? v / 100 : v));
   if (masterGain) masterGain.gain.value = volume;
 }
 

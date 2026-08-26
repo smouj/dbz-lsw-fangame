@@ -109,6 +109,18 @@ export interface RomFrameView {
   productionFrames: string[];
 }
 
+function instanceClassification(
+  status: RomFrameView['mappingStatus'],
+  physical: ProductionFrameBinding,
+): FrameMapping {
+  if (physical.source === 'MANIFEST_FALLBACK') return 'FALLBACK';
+  if (physical.source === 'UNRESOLVED') return 'UNRESOLVED';
+  if (status === 'UNRESOLVED') return 'UNRESOLVED';
+  if (status === 'COMPOSITE') return 'COMPOSITE';
+  if (status === 'SHARED') return 'SHARED_PHYSICAL';
+  return physical.physicalId ? 'ROM_EXACT' : 'UNRESOLVED';
+}
+
 /** Recursos DECODED (con secuencias ROM reproducibles). */
 export function decodedStudioResources(): PhysicalResourceReconciliation[] {
   return PHYSICAL_FRAME_RECONCILIATION.filter(r => r.status === 'DECODED' && r.frames.length > 0);
@@ -173,7 +185,7 @@ export function romFrameView(
     mappingStatus: entry.assetMapping.status,
     mappingReason: entry.assetMapping.reason,
     fmap,
-    classification: fmap?.classification ?? null,
+    classification: instanceClassification(entry.assetMapping.status, physical),
     productionFrames,
   };
 }

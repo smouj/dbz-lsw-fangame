@@ -37,9 +37,9 @@ export interface CharacterRollProps {
 /** Parámetros discretos de profundidad por distancia al centro. */
 const DEPTH = [
   { scale: 1.0, opacity: 1.0, z: 12, dx: 0 },    // selected
-  { scale: 0.82, opacity: 0.82, z: 10, dx: 118 }, // ±1
-  { scale: 0.66, opacity: 0.58, z: 8, dx: 200 },  // ±2
-  { scale: 0.52, opacity: 0.32, z: 6, dx: 262 },  // ±3
+  { scale: 0.84, opacity: 0.82, z: 10, dx: 108 }, // ±1
+  { scale: 0.68, opacity: 0.58, z: 8, dx: 184 },  // ±2
+  { scale: 0.54, opacity: 0.32, z: 6, dx: 244 },  // ±3
 ];
 
 function depthFor(offset: number) {
@@ -120,7 +120,11 @@ export function CharacterRoll({ items, selectedIndex, onSelect, disabled }: Char
   }, [onKeyDown]);
 
   useEffect(() => {
-    activeRailRef.current?.scrollIntoView({ block: 'nearest', inline: 'center', behavior: 'smooth' });
+    const rail = railRef.current;
+    const activeRail = activeRailRef.current;
+    if (!rail || !activeRail) return;
+    const left = activeRail.offsetLeft - (rail.clientWidth - activeRail.clientWidth) / 2;
+    rail.scrollTo({ left: Math.max(0, left), behavior: 'smooth' });
   }, [safeIndex]);
 
   // Render: los ±3 alrededor del centro; el resto oculto.

@@ -39,6 +39,10 @@ export function saveLang(lang: LangCode) {
 export type TKey =
   | 'menu.title' | 'menu.subtitle' | 'menu.story' | 'menu.battle' | 'menu.deck'
   | 'menu.characters' | 'menu.cards' | 'menu.settings' | 'menu.continue'
+  | 'menu.versus' | 'menu.newStory'
+  | 'menu.chapter'
+  | 'menu.continue.sub' | 'menu.versus.sub' | 'menu.characters.sub' | 'menu.cards.sub' | 'menu.deck.sub' | 'menu.settings.sub'
+  | 'menu.hint.move' | 'menu.hint.select' | 'menu.hint.back'
   | 'menu.footer'
   | 'common.back' | 'common.start' | 'common.fight' | 'common.retry' | 'common.exit'
   | 'common.newBattle' | 'common.notObtained' | 'common.unknown' | 'common.useInBattle'

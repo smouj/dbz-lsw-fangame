@@ -28,6 +28,7 @@ import {
 import { resolveCharacterVisualSequence } from '../battle/characterFrameMap';
 import { resolvePoseFrameSequence } from '../battle/spriteConfig';
 import type { FrameMapping } from '../battle/characterFrameMap';
+import { catalogAnimationBank, catalogResourceBase } from '../data/generated/romAnimationResourceBase.generated';
 
 // ─── Badges ─────────────────────────────────────────────────────────────
 
@@ -58,6 +59,74 @@ function SourceBadge({ source }: { source: string | null | undefined }) {
         ? { color: '#ff8080', bg: 'rgba(255,128,128,0.10)' }
         : { color: '#a0d0ff', bg: 'rgba(160,208,255,0.10)' };
   return <span className="as-badge" style={{ color: tone.color, background: tone.bg, border: `1px solid ${tone.color}` }}>{source}</span>;
+}
+
+interface StudioPhysicalFrameProvenance {
+  physicalId: string;
+  actorVisualProfileKey?: number;
+  graphicsBank?: number;
+  resourceId: number;
+  resourceHex: string;
+  visualFrameId: number;
+  metasprite?: { pieces?: unknown[]; provenance?: { tableAddress?: number; entryAddress?: number; pieceAddress?: number; count?: number } };
+  graphics?: { blockCount?: number; provenance?: { tableAddress?: number; entryAddress?: number; layoutAddress?: number } };
+  sourceProvenance?: {
+    metaspriteHash?: string;
+    graphicsTableHash?: string;
+    graphicsHash?: string;
+    sourceProvenanceHash?: string;
+  };
+}
+
+interface StudioPhysicalProvenanceFile {
+  frames: StudioPhysicalFrameProvenance[];
+}
+
+function h2(value: number): string {
+  return value.toString(16).padStart(2, '0');
+}
+
+function h4(value: number | null | undefined): string {
+  return typeof value === 'number' && Number.isFinite(value) ? `0x${value.toString(16).padStart(4, '0')}` : '—';
+}
+
+function bankAddr(bank: number | null | undefined, address: number | null | undefined): string {
+  return typeof bank === 'number' && typeof address === 'number'
+    ? `$${h2(bank)}:${address.toString(16).padStart(4, '0')}`
+    : '—';
+}
+
+function copyInspectorText(text: string): void {
+  void navigator.clipboard?.writeText(text);
+}
+
+function animationFrameProvenance(view: RomFrameView, physicalFrame: StudioPhysicalFrameProvenance | null): Record<string, string | number> {
+  const animationBank = catalogAnimationBank(view.resourceId);
+  const resourceBase = catalogResourceBase(view.resourceId);
+  const metaspriteEntry = physicalFrame?.metasprite?.provenance?.entryAddress;
+  const graphicsEntry = physicalFrame?.graphics?.provenance?.entryAddress ?? physicalFrame?.graphics?.provenance?.layoutAddress;
+  return {
+    physicalId: view.physical.physicalId ?? '—',
+    form: view.formId,
+    profileKey: physicalFrame?.actorVisualProfileKey == null ? '—' : `0x${h2(physicalFrame.actorVisualProfileKey)}`,
+    graphicsBank: physicalFrame?.graphicsBank == null ? '—' : `0x${h2(physicalFrame.graphicsBank)}`,
+    animationBank: animationBank == null ? '—' : `0x${h2(animationBank)}`,
+    resourceBase: h4(resourceBase),
+    resourceId: view.resourceHex,
+    sequence: view.sequenceIndex,
+    frameIndex: view.frameIndex,
+    VFID: `0x${h2(view.visualFrameId)}`,
+    frameRecordAddress: 'see raw frame stream',
+    metaspriteAddress: resourceBase != null && metaspriteEntry != null ? bankAddr(animationBank, resourceBase + metaspriteEntry) : '—',
+    graphicsDescriptorAddress: resourceBase != null && graphicsEntry != null ? bankAddr(animationBank, resourceBase + graphicsEntry) : '—',
+    metaspriteLocalAddress: h4(metaspriteEntry),
+    graphicsDescriptorLocalAddress: h4(graphicsEntry),
+    pieces: physicalFrame?.metasprite?.pieces?.length ?? '—',
+    graphicsBlocks: physicalFrame?.graphics?.blockCount ?? '—',
+    metaspriteHash: physicalFrame?.sourceProvenance?.metaspriteHash ?? '—',
+    graphicsHash: physicalFrame?.sourceProvenance?.graphicsHash ?? '—',
+    sourceProvenanceHash: physicalFrame?.sourceProvenance?.sourceProvenanceHash ?? '—',
+  };
 }
 
 // ─── Componente de columna (imagen + metadatos) ─────────────────────────
@@ -167,10 +236,11 @@ function PhysicalTimeline({ resourceId, sequenceIndex, tick, onTick, playing, on
 
 // ─── Inspector de frame ─────────────────────────────────────────────────
 
-function FrameInspector({ view }: { view: RomFrameView | null }) {
+function FrameInspector({ view, physicalFrame }: { view: RomFrameView | null; physicalFrame: StudioPhysicalFrameProvenance | null }) {
   if (!view) return <div className="as-inspector as-empty-box">Selecciona un recurso con secuencia decodificada.</div>;
   const fmap = view.fmap;
   const firstBinding = fmap?.bindings[0];
+  const provenance = view.physical.physicalId ? animationFrameProvenance(view, physicalFrame) : null;
   return (
     <div className="as-inspector">
       <div className="as-inspector-head">
@@ -192,8 +262,48 @@ function FrameInspector({ view }: { view: RomFrameView | null }) {
           <tr><td>canonical</td><td className="as-mono">{firstBinding?.canonicalId ?? '—'}</td></tr>
           <tr><td>semantic role</td><td className="as-mono">{fmap?.semanticRole ?? view.manifestPose ?? '—'}</td></tr>
           <tr><td>fallback reason</td><td className="as-mono">{view.physical.fallbackReason ?? 'NONE'}</td></tr>
+          {provenance && (
+            <>
+              <tr><td>form/profile</td><td className="as-mono">{provenance.form} · p {provenance.profileKey} · gfx {provenance.graphicsBank}</td></tr>
+              <tr><td>bank/base</td><td className="as-mono">anim {provenance.animationBank} · base {provenance.resourceBase}</td></tr>
+              <tr><td>metasprite address</td><td className="as-mono">{provenance.metaspriteAddress}</td></tr>
+              <tr><td>graphics descriptor</td><td className="as-mono">{provenance.graphicsDescriptorAddress}</td></tr>
+              <tr><td>pieces / blocks</td><td className="as-mono">{provenance.pieces} / {provenance.graphicsBlocks}</td></tr>
+            </>
+          )}
         </tbody>
       </table>
+      {provenance && (
+        <div className="as-copy-row">
+          <button onClick={() => copyInspectorText(String(view.physical.physicalId))}>COPY PHYSICAL ID</button>
+          <button onClick={() => copyInspectorText(JSON.stringify(provenance, null, 2))}>COPY PROVENANCE</button>
+          <button onClick={() => copyInspectorText([
+            'PHYSICAL ID',
+            String(view.physical.physicalId),
+            '',
+            'SYMPTOM',
+            'FRAME_CONTAMINATION_OR_CUT',
+            '',
+            'RAW',
+            view.physical.file ?? '—',
+            '',
+            'TRIM',
+            view.physical.file ?? '—',
+            '',
+            'PROVENANCE',
+            JSON.stringify(provenance, null, 2),
+            '',
+            'N-1 / N / N+1',
+            'PENDING_COMPARE',
+            '',
+            'CAUSE',
+            'PENDING_TRACE',
+            '',
+            'FIX',
+            'PENDING',
+          ].join('\n'))}>REPORT FRAME ISSUE</button>
+        </div>
+      )}
       {view.mappingReason && <div className="as-reason"><span>reason</span><code>{view.mappingReason}</code></div>}
       {fmap && fmap.evidence.length > 0 && (
         <div className="as-evidence">
@@ -222,10 +332,27 @@ export function AnimationStudioModule() {
   const [playing, setPlaying] = useState(false);
   const [loop, setLoop] = useState(true);
   const [speed, setSpeed] = useState(1);
+  const [physicalProvenance, setPhysicalProvenance] = useState<StudioPhysicalProvenanceFile | null>(null);
 
   const metrics = useMemo(() => studioUnresolvedMetrics(), []);
   const resources = useMemo(() => studioResourceList(), []);
   const forms = useMemo(() => studioForms(), []);
+
+  useEffect(() => {
+    let cancelled = false;
+    const dir = spriteDirFor(formId);
+    setPhysicalProvenance(null);
+    if (!dir) return;
+    fetch(`/assets/sprites/${dir}/provenance.json`, { cache: 'no-store' })
+      .then(r => (r.ok ? r.json() : null))
+      .then((json: StudioPhysicalProvenanceFile | null) => {
+        if (!cancelled) setPhysicalProvenance(json);
+      })
+      .catch(() => {
+        if (!cancelled) setPhysicalProvenance(null);
+      });
+    return () => { cancelled = true; };
+  }, [formId]);
 
   // Deep-link desde Action Trace Inspector: #dev/animation-studio?form=...&resource=..&sequence=..&frame=..
   useEffect(() => {
@@ -327,6 +454,12 @@ export function AnimationStudioModule() {
     classification: ctxFmap?.classification ?? 'UNRESOLVED',
     productionFrames: ctxProduction,
   } : null);
+
+  const inspectorPhysicalFrame = useMemo(() => {
+    const physicalId = inspectorView?.physical.physicalId;
+    if (!physicalId || !physicalProvenance) return null;
+    return physicalProvenance.frames.find(frame => frame.physicalId === physicalId) ?? null;
+  }, [inspectorView, physicalProvenance]);
 
   const goldenUnresolved = metrics.goldenUnresolved.filter(b => !onlyUnresolved || b.formId === formId);
   const goldenFormList = [...GOLDEN_FORMS];
@@ -482,7 +615,7 @@ export function AnimationStudioModule() {
 
       {/* Inspector + consumidores */}
       <div className="as-bottom">
-        <FrameInspector view={inspectorView} />
+        <FrameInspector view={inspectorView} physicalFrame={inspectorPhysicalFrame} />
         <div className="as-consumers">
           <div className="as-col-head">CONSUMERS <span className="as-mono">cards</span></div>
           {active.hasRomSequence ? (
