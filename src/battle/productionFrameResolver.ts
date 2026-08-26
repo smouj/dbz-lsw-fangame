@@ -22,7 +22,8 @@ import { ROM_PHYSICAL_CORPUS_SUMMARY } from '../data/generated/romPhysicalCorpus
 import { animationResourceById } from './animationResources';
 import { CARDS } from '../data/cards';
 import { romPresentationProfileForCard } from './romPresentationProfiles';
-import type { RomFighterIdentityKey, RomPhysicalFrameKey } from './romNativeIdentity';
+import { contentKeyForCatalog } from './romNativeIdentity';
+import { corpusFrameForContent, profileForForm } from '../data/romPhysicalFrameIndex';
 
 export type ProductionFrameSource =
   | 'ROM_PHYSICAL'
@@ -121,18 +122,6 @@ function formCorpus(formId: string): CorpusForm | null {
   return ROM_PHYSICAL_CORPUS_SUMMARY.forms.find(form => form.formId === formId) ?? null;
 }
 
-function physicalFrameFor(corpus: CorpusForm, resourceId: number, visualFrameId: number): { physicalId: string; file: string } | null {
-  const index = (corpus as unknown as {
-    physicalFrameIndex?: ReadonlyArray<{
-      resourceId: number;
-      visualFrameId: number;
-      physicalId: string;
-      file: string;
-    }>;
-  }).physicalFrameIndex ?? [];
-  return index.find(frame => frame.resourceId === resourceId && frame.visualFrameId === visualFrameId) ?? null;
-}
-
 function paletteBlockedReason(formId: string): string | null {
   return PALETTE_BLOCKED_PROFILES.find(form => form.formId === formId)?.reason ?? null;
 }
@@ -198,9 +187,17 @@ export function resolveProductionFrame(input: ResolveProductionFrameInput): Prod
     return fallback(input, `resource ${resourceHex} sequence ${input.sequenceSelector} frame ${input.frameIndex} is not decoded`);
   }
 
-  const physical = physicalFrameFor(corpus, input.animationResource, frame.visualFrameId);
+  const profile = profileForForm(input.formId);
+  if (!profile) return fallback(input, `form ${input.formId} has no ROM physical profile`);
+
+  const physical = corpusFrameForContent(contentKeyForCatalog(
+    profile.actorVisualProfileKey,
+    profile.graphicsBank,
+    input.animationResource,
+    frame.visualFrameId,
+  ));
   if (!physical) {
-    return fallback(input, `resource ${resourceHex} visualFrameId ${frame.visualFrameId} has no strong physical identity for ${input.formId}`);
+    return fallback(input, `resource ${resourceHex} visualFrameId ${frame.visualFrameId} has no SSOT physical identity for ${input.formId}`);
   }
   const id = physical.physicalId;
   return {

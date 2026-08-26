@@ -35,7 +35,7 @@ check('corpus forms rendered 48/48', totals.forms === 48 && totals.formsIndexed 
 check('corpus has no palette-blocked forms', totals.formsPaletteBlocked === 0, `${totals.formsPaletteBlocked}`);
 check('corpus physical IDs > 0', totals.physicalIdentities > 0, `${totals.physicalIdentities}`);
 check('corpus frame instances > physical IDs', totals.frameInstances > totals.physicalIdentities, `${totals.frameInstances}/${totals.physicalIdentities}`);
-check('transparent ROM frame records are retained outside promoted PNGs', (totals as { transparentFrameRecords?: number; transparentPhysicalIds?: number }).transparentFrameRecords === 39 && (totals as { transparentFrameRecords?: number; transparentPhysicalIds?: number }).transparentPhysicalIds === 8, `records=${(totals as { transparentFrameRecords?: number }).transparentFrameRecords ?? 0} ids=${(totals as { transparentPhysicalIds?: number }).transparentPhysicalIds ?? 0}`);
+check('transparent ROM frame records are retained outside promoted PNGs', (totals as { transparentFrameRecords?: number; transparentPhysicalIds?: number }).transparentFrameRecords === 36 && (totals as { transparentFrameRecords?: number; transparentPhysicalIds?: number }).transparentPhysicalIds === 7, `records=${(totals as { transparentFrameRecords?: number }).transparentFrameRecords ?? 0} ids=${(totals as { transparentPhysicalIds?: number }).transparentPhysicalIds ?? 0}`);
 
 let publicPhysicalPngs = 0;
 let publicFrameEntries = 0;
@@ -219,7 +219,7 @@ check('Character Studio exposes right-facing canonical display preview', charact
 check('Cards reads romPresentationTimelineForCard', cardsSrc.includes('romPresentationTimelineForCard') && cardsSrc.includes('ROM_PHYSICAL_FRAME'));
 check('Dashboard reads physicalMapping/physicalCorpus', dashboardSrc.includes('physicalMapping') && dashboardSrc.includes('physicalCorpus'));
 check('Dashboard labels promoted physical corpus and retained empty ROM frame evidence', dashboardSrc.includes('promoted physical IDs') && dashboardSrc.includes('EMPTY_NOT_PROMOTED'));
-check('Validation gates promoted corpus totals and retained empty ROM frame evidence', validationSrc.includes('physicalIdentities === 552') && validationSrc.includes('frameInstances === 2371') && validationSrc.includes('transparentFrameRecords === 39') && validationSrc.includes('transparentPhysicalIds === 8') && validationSrc.includes('EMPTY_NOT_PROMOTED'));
+check('Validation gates promoted corpus totals and retained empty ROM frame evidence', validationSrc.includes('physicalIdentities === 505') && validationSrc.includes('frameInstances === 2374') && validationSrc.includes('transparentFrameRecords === 36') && validationSrc.includes('transparentPhysicalIds === 7') && validationSrc.includes('EMPTY_NOT_PROMOTED'));
 check('Game Config labels promoted physical corpus and retained empty ROM frame evidence', gameConfigSrc.includes('promoted IDs') && gameConfigSrc.includes('EMPTY_NOT_PROMOTED'));
 check('Animation Studio core resolves ROM physical via ProductionFrameResolver', animationStudioCoreSrc.includes('resolveProductionFrame') && animationStudioCoreSrc.includes('physical: ProductionFrameBinding'));
 check('Animation Studio ROM column renders physical corpus file', animationStudioSrc.includes('view.physical.file') && animationStudioSrc.includes('physicalId · vf · ticks'));

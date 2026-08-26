@@ -10,7 +10,7 @@ Unreferenced resources: 1
 
 | Resource | Consumers | Sequences | Frames | Physical linkage | Profiles rendered | Physical IDs | Frame instances | Status | Blocking reason |
 | -------- | --------: | --------: | -----: | ---------------- | ----------------: | -----------: | --------------: | ------ | --------------- |
-| `0x00` | 1 | 2 | 14 | `FULL` | 44 | 175 | 669 | `RENDERABLE` | — |
+| `0x00` | 1 | 2 | 14 | `FULL` | 44 | 132 | 672 | `RENDERABLE` | — |
 | `0x01` | 1 | 2 | 12 | `FRAME_STREAM_ONLY` | 0 | 0 | 0 | `FRAME_STREAM_ONLY` | Frame stream is decoded, but this resource has not been promoted through metasprite/graphics/profile rendering invariants yet. |
 | `0x02` | 1 | 0 | 0 | `PARTIAL` | 0 | 0 | 0 | `GRAPHICS_PENDING` | Base beam/support handler uses the known resource id, but the resource pointer table entry has not been resolved to complete sequences yet. |
 | `0x03` | 4 | 6 | 48 | `FULL` | 26 | 253 | 1260 | `RENDERABLE` | — |

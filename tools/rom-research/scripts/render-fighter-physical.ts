@@ -195,6 +195,44 @@ function resolveGraphicsBlock(key: number, relativeOffset: number) {
   return { bank, absoluteAddress: start, relativeOffset, raw32: Array.from(rom.subarray(start, start + 32)) };
 }
 
+function resolveMetaspritePieceGraphics(
+  key: number,
+  piece: {
+    tileDelta: number;
+    flipX: boolean;
+    flipY: boolean;
+  },
+  gfx: {
+    relativeOffsets: number[];
+  },
+) {
+  if ((piece.tileDelta & 1) !== 0) {
+    throw new Error(`odd metasprite tileDelta 0x${piece.tileDelta.toString(16)} for OBJ 8x16`);
+  }
+
+  // ROM metasprite byte2 is expressed in 8x8-tile units.
+  // One fighter graphics block = 32 B = two 8x8 tiles = one 8x16 OBJ.
+  const blockIndex = piece.tileDelta >> 1;
+
+  if (blockIndex < 0 || blockIndex >= gfx.relativeOffsets.length) {
+    throw new Error(
+      `tileDelta 0x${piece.tileDelta.toString(16)} resolves block ${blockIndex}, ` +
+      `but descriptor only has ${gfx.relativeOffsets.length} blocks`,
+    );
+  }
+
+  const relativeOffset = gfx.relativeOffsets[blockIndex];
+  const block = resolveGraphicsBlock(key, relativeOffset);
+
+  return {
+    tileDeltaRaw: piece.tileDelta,
+    tileDeltaUnit: 'TILE_8X8' as const,
+    resolvedBlockIndex: blockIndex,
+    relativeOffset,
+    block,
+  };
+}
+
 /** Paleta: $6E00 + key×8 → 4 BGR555 → RGB. */
 function resolvePalette(key: number) {
   const entry = ROM_CGB_PALETTE_TABLE[key];
@@ -317,16 +355,34 @@ for (const key of keys) {
       const frame = resolveFrameRecord(bank, base, seq, f);
       const meta = resolveMetasprite(bank, base, frame.visualFrameId);
       const gfx = resolveFrameGraphics(bank, base, frame.visualFrameId);
-      // invariant: pieces === blockCount
       if (meta.pieces.length !== gfx.blockCount) {
         invariantMismatches++;
-        console.log(`⚠ MISMATCH seq${seq} F${f}: pieces=${meta.pieces.length} blocks=${gfx.blockCount} — invariante R2 violado`);
+        throw new Error(`seq${seq} F${f}: pieces=${meta.pieces.length} blocks=${gfx.blockCount} — invariante R2 violado`);
       }
-      // bloques físicos — cada frame construye sus arrays/canvases de cero.
-      const blocks = gfx.relativeOffsets.map((off) => resolveGraphicsBlock(key, off));
-      const pieces = blocks.map((b, i) => ({
-        pixels: piecePixels(b.raw32, meta.pieces[i]?.flipX ?? false, meta.pieces[i]?.flipY ?? false),
-      }));
+      const oddTileDeltaCount = meta.pieces.filter(piece => (piece.tileDelta & 1) !== 0).length;
+      const outOfRangeBlockCount = meta.pieces.filter(piece => (piece.tileDelta >> 1) < 0 || (piece.tileDelta >> 1) >= gfx.relativeOffsets.length).length;
+      if (oddTileDeltaCount !== 0) {
+        throw new Error(`seq${seq} F${f}: ${oddTileDeltaCount} odd tileDelta values for OBJ 8x16`);
+      }
+      if (outOfRangeBlockCount !== 0) {
+        throw new Error(`seq${seq} F${f}: ${outOfRangeBlockCount} tileDelta values resolve outside descriptor`);
+      }
+      // bloques físicos — resolver por tileDelta ROM, nunca por índice de pieza.
+      const resolvedPieces = meta.pieces.map((piece) => {
+        const resolved = resolveMetaspritePieceGraphics(key, piece, gfx);
+        return {
+          ...resolved,
+          pixels: piecePixels(
+            resolved.block.raw32,
+            piece.flipX,
+            piece.flipY,
+          ),
+        };
+      });
+      if (resolvedPieces.length !== meta.pieces.length) {
+        throw new Error(`seq${seq} F${f}: resolved pieces=${resolvedPieces.length} pieces=${meta.pieces.length}`);
+      }
+      const reorderedPieceCount = resolvedPieces.filter((piece, i) => piece.resolvedBlockIndex !== i).length;
 
       const signedPieces = meta.pieces.map((piece, i) => ({
         ...piece,
@@ -356,7 +412,7 @@ for (const key of keys) {
       let pixelsWrittenOutsideRaw = 0;
       let opaqueMinX = Infinity, opaqueMinY = Infinity, opaqueMaxX = -Infinity, opaqueMaxY = -Infinity;
       signedPieces.forEach((piece, i) => {
-        const rendered = pieces[i]?.pixels;
+        const rendered = resolvedPieces[i]?.pixels;
         if (!rendered) return;
         renderedPieceCount++;
         const rawDrawX = ORIGIN + piece.x;
@@ -388,6 +444,8 @@ for (const key of keys) {
       });
       if (meta.pieces.length !== gfx.blockCount) assemblyErrors.push('ASSEMBLY_BLOCK_COUNT_MISMATCH');
       if (renderedPieceCount !== meta.pieces.length) assemblyErrors.push('ASSEMBLY_RENDERED_COUNT_MISMATCH');
+      if (oddTileDeltaCount !== 0) assemblyErrors.push('ASSEMBLY_ODD_TILE_DELTA');
+      if (outOfRangeBlockCount !== 0) assemblyErrors.push('ASSEMBLY_TILE_DELTA_OUT_OF_RANGE');
       if (piecesOutsideRaw > 0) assemblyErrors.push('RAW_PIECE_OUTSIDE_CANVAS');
       if (pixelsWrittenOutsideRaw > 0) assemblyErrors.push('RAW_EXTRA_PIECE');
       const rawCanvas = new Uint8Array(rgba);
@@ -407,10 +465,14 @@ for (const key of keys) {
       writePng(join(outDir, 'rom_trimmed.png'), trimW, trimH, trimmed);
 
       const pieceGraphics = signedPieces.map((piece, i) => {
-        const block = blocks[i];
+        const resolved = resolvedPieces[i];
+        const block = resolved?.block;
         const raw32 = block?.raw32 ?? [];
         const tile0 = raw32.slice(0, 16);
         const tile1 = raw32.slice(16, 32);
+        const legacyIndexBlock = gfx.relativeOffsets[i] != null
+          ? resolveGraphicsBlock(key, gfx.relativeOffsets[i])
+          : null;
         return {
           pieceIndex: i,
           pieceX: piece.x,
@@ -419,6 +481,14 @@ for (const key of keys) {
           rawY: piece.rawY,
           attributes: piece.attr,
           tileDelta: piece.tileDelta,
+          tileDeltaRaw: piece.tileDelta,
+          tileDeltaUnit: 'TILE_8X8',
+          resolvedBlockIndex: resolved?.resolvedBlockIndex ?? null,
+          expectedBlockRelativeOffset: resolved?.block.relativeOffset ?? null,
+          expectedBlockAddress: resolved?.block.absoluteAddress ?? null,
+          expectedBlockHash: createHash('sha256').update(Buffer.from(raw32)).digest('hex'),
+          legacyIndexBlockAddress: legacyIndexBlock?.absoluteAddress ?? null,
+          blockMatchWithLegacyIndex: resolved?.resolvedBlockIndex === i,
           flipX: piece.flipX,
           flipY: piece.flipY,
           graphicsBank: sourceBank,
@@ -484,6 +554,10 @@ for (const key of keys) {
           pieceCount: meta.pieces.length,
           graphicsBlockCount: gfx.blockCount,
           renderedPieceCount,
+          reorderedPieceCount,
+          oddTileDeltaCount,
+          outOfRangeBlockCount,
+          pieceGraphicsMapping: 'ROM_TILE_DELTA',
           graphicsBlockAddresses: pieceGraphics.map(piece => piece.graphicsBlockAddress),
           renderedBlockAddresses: pieceGraphics.map(piece => piece.graphicsBlockAddress),
           piecesOutsideRaw,

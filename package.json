@@ -120,6 +120,7 @@
     "verify:rom-fighter-canon": "npx tsx scripts/verify-rom-fighter-canon.ts",
     "verify:rom-palette-table": "npx tsx scripts/verify-rom-palette-table.ts",
     "verify:rom-fighter-identity": "npx tsx scripts/verify-rom-fighter-identity.ts",
+    "verify:rom-fighter-assembly": "npm run verify:rom-fighter-frame-assembly",
     "verify:rom-fighter-frame-assembly": "npx tsx scripts/verify-rom-fighter-frame-assembly.ts",
     "verify:rom-fighter-visual-integrity": "npx tsx scripts/verify-rom-fighter-visual-integrity.ts",
     "build:fighter-visual-integrity-sheets": "npx tsx scripts/build-fighter-visual-integrity-sheets.ts",

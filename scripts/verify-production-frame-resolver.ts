@@ -5,7 +5,11 @@ import { buildPresentationTimeline } from '../src/battle/engine/presentation';
 import { romActionExecutionDescriptorForCard } from '../src/battle/romActionExecutionDescriptors';
 import { romPresentationProfileForCard } from '../src/battle/romPresentationProfiles';
 import { resolveProductionFrame, physicalFormStatuses, productionFrameResolverSummary } from '../src/battle/productionFrameResolver';
+import { physicalIdForContent, physicalIndexCollisions } from '../src/data/romPhysicalFrameIndex';
 import { resolveRomSequenceSelector } from '../src/battle/romSequenceSelectors';
+import { physicalContentKey } from '../src/battle/romNativeIdentity';
+import { readFileSync } from 'fs';
+import { join } from 'path';
 import { BEAM_BASE_ROM_HANDLER, beamBaseProfileForAction } from '../src/battle/beamBaseRomCutover';
 import { ProductionRomPresentationAdapter } from '../src/renderer/pixi/presentation/ProductionRomPresentationAdapter';
 import type { BattlePresentation, BattleScene } from '../src/renderer/pixi/presentation/BattlePresentation';
@@ -58,6 +62,16 @@ const gokuR03F0 = resolveProductionFrame({
 check('resolver: goku_base r03 seq0 frame0 -> ROM_PHYSICAL', gokuR03F0.source === 'ROM_PHYSICAL', JSON.stringify(gokuR03F0));
 check('resolver: preserves duration + signed/raw offsets', gokuR03F0.durationTicks != null && gokuR03F0.rawOffsetX != null && gokuR03F0.offsetX != null && gokuR03F0.evidence.includes('offsetEncoding=s8'));
 check('resolver: strong physical file id', gokuR03F0.file === `physical/${gokuR03F0.physicalId}.png` && /^rom-p[0-9a-f]{2}-g[0-9a-f]{2}-r03-vf[0-9a-f]{2}-ms[0-9a-f]{8}-gfx[0-9a-f]{8}$/.test(gokuR03F0.physicalId ?? ''), gokuR03F0.file ?? '');
+
+const sourceA = { profileKey: 5, graphicsBank: 0x36, animationBank: 0x61, resourceBase: 0x4970, resourceId: null, visualFrameId: 7 };
+const sourceB = { profileKey: 5, graphicsBank: 0x36, animationBank: 0x62, resourceBase: 0x406c, resourceId: 0, visualFrameId: 7 };
+check('identity: bank $61 and catalog resource/VFID do not share physical content key', physicalContentKey(sourceA) !== physicalContentKey(sourceB), `${physicalContentKey(sourceA)} vs ${physicalContentKey(sourceB)}`);
+check('identity: bank $61 content lookup accepts resourceId null', physicalIdForContent(sourceA) === null || typeof physicalIdForContent(sourceA) === 'string');
+check('identity: physical index content collisions = 0', physicalIndexCollisions().length === 0, String(physicalIndexCollisions().length));
+
+const resolverSource = readFileSync(join(process.cwd(), 'src/battle/productionFrameResolver.ts'), 'utf8');
+check('resolver source: no local physicalFrameFor weak lookup', !resolverSource.includes('function physicalFrameFor('));
+check('resolver source: no resourceId+visualFrameId authority predicate', !/frame\.resourceId\s*={2,3}[^&]+&&\s*frame\.visualFrameId\s*={2,3}/s.test(resolverSource));
 
 const unsupportedResource = resolveProductionFrame({
   formId: 'android_16',

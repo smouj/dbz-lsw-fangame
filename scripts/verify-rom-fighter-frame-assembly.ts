@@ -57,6 +57,14 @@ interface PieceGraphics {
   pieceIndex: number;
   pieceX: number;
   pieceY: number;
+  tileDeltaRaw?: number;
+  tileDeltaUnit?: 'TILE_8X8';
+  resolvedBlockIndex?: number | null;
+  expectedBlockRelativeOffset?: number | null;
+  expectedBlockAddress?: number | null;
+  expectedBlockHash?: string;
+  legacyIndexBlockAddress?: number | null;
+  blockMatchWithLegacyIndex?: boolean;
   graphicsBank: number;
   graphicsBlockRelativeOffset: number | null;
   graphicsBlockAddress: number | null;
@@ -99,6 +107,10 @@ interface PhysicalFrame {
     pieceCount: number;
     graphicsBlockCount: number;
     renderedPieceCount: number;
+    reorderedPieceCount?: number;
+    oddTileDeltaCount?: number;
+    outOfRangeBlockCount?: number;
+    pieceGraphicsMapping?: 'ROM_TILE_DELTA';
     graphicsBlockAddresses: Array<number | null>;
     renderedBlockAddresses: Array<number | null>;
     piecesOutsideRaw: number;
@@ -136,6 +148,10 @@ let staleOrForeignBlocks = 0;
 let missingTrim = 0;
 let badPiece = 0;
 let badGraphicsAddress = 0;
+let oddTileDelta = 0;
+let outOfRangeBlockIndex = 0;
+let wrongResolvedBlock = 0;
+let weakProductionLookup = 0;
 let crossProfile = 0;
 let duplicatePhysicalIdDifferentSource = 0;
 const physicalIdSourceHashes = new Map<string, string>();
@@ -224,9 +240,13 @@ for (const formId of forms) {
 
     for (const [index, piece] of pieces.entries()) {
       const gfx = pieceGraphics[index];
+      const resolvedBlockIndex = piece.tileDelta >> 1;
+      const expectedRelativeOffset = frame.graphics.relativeOffsets[resolvedBlockIndex] ?? null;
       const expectedGraphicsBlockAddress = gfx?.graphicsBlockRelativeOffset === null || gfx?.graphicsBlockRelativeOffset === undefined
         ? null
         : bankedFileOffset(frame.graphicsBank, gfx.graphicsBlockRelativeOffset);
+      if ((piece.tileDelta & 1) !== 0) oddTileDelta++;
+      if (resolvedBlockIndex < 0 || resolvedBlockIndex >= frame.graphics.relativeOffsets.length) outOfRangeBlockIndex++;
       if (
         !gfx ||
         gfx.pieceIndex !== index ||
@@ -236,8 +256,11 @@ for (const formId of forms) {
         piece.y !== s8(piece.rawY) ||
         piece.width !== 8 ||
         piece.height !== 16 ||
-        piece.tileDelta !== index * 2 ||
-        gfx.graphicsBlockRelativeOffset !== frame.graphics.relativeOffsets[index] ||
+        gfx.tileDeltaUnit !== 'TILE_8X8' ||
+        (gfx.tileDeltaRaw ?? piece.tileDelta) !== piece.tileDelta ||
+        (gfx.resolvedBlockIndex ?? resolvedBlockIndex) !== resolvedBlockIndex ||
+        gfx.graphicsBlockRelativeOffset !== expectedRelativeOffset ||
+        (gfx.expectedBlockRelativeOffset ?? expectedRelativeOffset) !== expectedRelativeOffset ||
         gfx.graphicsBank !== frame.graphicsBank ||
         gfx.graphicsBlockHash.length !== 64 ||
         gfx.tile0Hash.length !== 64 ||
@@ -245,6 +268,14 @@ for (const formId of forms) {
         (gfx.tile0Address !== null && gfx.tile1Address !== gfx.tile0Address + 16)
       ) {
         badPiece++;
+      }
+      if (
+        !gfx ||
+        gfx.expectedBlockAddress !== gfx.graphicsBlockAddress ||
+        gfx.expectedBlockHash !== gfx.graphicsBlockHash ||
+        gfx.blockMatchWithLegacyIndex !== (resolvedBlockIndex === index)
+      ) {
+        wrongResolvedBlock++;
       }
       if (
         !gfx ||
@@ -259,7 +290,10 @@ for (const formId of forms) {
         frame.assembly &&
         (
           frame.assembly.graphicsBlockAddresses[index] !== gfx.graphicsBlockAddress ||
-          frame.assembly.renderedBlockAddresses[index] !== gfx.graphicsBlockAddress
+          frame.assembly.renderedBlockAddresses[index] !== gfx.graphicsBlockAddress ||
+          frame.assembly.pieceGraphicsMapping !== 'ROM_TILE_DELTA' ||
+          frame.assembly.oddTileDeltaCount !== 0 ||
+          frame.assembly.outOfRangeBlockCount !== 0
         )
       ) {
         staleOrForeignBlocks++;
@@ -332,14 +366,21 @@ for (const formId of forms) {
 }
 
 const nondeterministicSources = [...sourceToRawHashes.entries()].filter(([, hashes]) => hashes.size > 1);
+const productionResolverSource = readFileSync(join(ROOT, 'src/battle/productionFrameResolver.ts'), 'utf8');
+if (/resourceId\s*={2,3}[^&]+&&\s*frame\.visualFrameId\s*={2,3}/s.test(productionResolverSource)) weakProductionLookup++;
+if (/frame\.resourceId\s*={2,3}[^&]+&&\s*frame\.visualFrameId\s*={2,3}/s.test(productionResolverSource)) weakProductionLookup++;
 
 check('forms with physical provenance present', forms.length === 48, `${forms.length}/48`);
 check('physical frames inspected', totalFrames > 0, `${totalFrames}`);
 check('piece/block/rendered counts aligned', pieceCountMismatch === 0, `mismatch=${pieceCountMismatch}`);
+check('tileDelta unit TILE_8X8', totalPieces > 0 && oddTileDelta === 0, `odd=${oddTileDelta}`);
+check('out-of-range tileDelta block index = 0', outOfRangeBlockIndex === 0, `bad=${outOfRangeBlockIndex}`);
 check('classified assembly frame errors = 0', classifiedAssemblyErrors === 0, `bad=${classifiedAssemblyErrors}`);
 check('per-piece graphics provenance valid', badPiece === 0, `bad=${badPiece} pieces=${totalPieces}`);
+check('wrong resolved graphics block = 0', wrongResolvedBlock === 0, `bad=${wrongResolvedBlock}`);
 check('graphics CPU banked addresses resolve to correct file offsets', badGraphicsAddress === 0, `bad=${badGraphicsAddress}`);
 check('0 foreign/stale graphics blocks consumed by renderer', staleOrForeignBlocks === 0, `bad=${staleOrForeignBlocks}`);
+check('weak production resource/VFID lookup = 0', weakProductionLookup === 0, `bad=${weakProductionLookup}`);
 check('0 cross-profile frame contamination', crossProfile === 0, `bad=${crossProfile}`);
 check('0 source provenance mismatches', sourceHashMismatch === 0, `bad=${sourceHashMismatch}`);
 check('0 duplicate physicalId with different source provenance', duplicatePhysicalIdDifferentSource === 0, `bad=${duplicatePhysicalIdDifferentSource}`);

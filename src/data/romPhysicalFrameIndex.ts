@@ -121,15 +121,19 @@ export function physicalIdForFormFrame(
 export function physicalIdForFrameKey(frame: {
   profileKey: number;
   graphicsBank: number;
-  resourceId: number;
+  animationBank: number;
+  resourceBase: number;
+  resourceId: number | null;
   visualFrameId: number;
 }): string | null {
-  return physicalIdForContent(contentKeyForCatalog(
-    frame.profileKey,
-    frame.graphicsBank,
-    frame.resourceId,
-    frame.visualFrameId,
-  ));
+  return physicalIdForContent({
+    profileKey: frame.profileKey,
+    graphicsBank: frame.graphicsBank,
+    animationBank: frame.animationBank,
+    resourceBase: frame.resourceBase,
+    resourceId: frame.resourceId,
+    visualFrameId: frame.visualFrameId,
+  });
 }
 
 /** Full corpus frame ref for a content identity. */

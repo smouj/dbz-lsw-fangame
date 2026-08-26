@@ -18,6 +18,9 @@ export interface PoseFrame {
   w: number;
   h: number;
   name?: string;
+  trimmedPixelHash?: string;
+  sourceFileSha256?: string;
+  hash?: string;
 }
 
 export interface PoseAnim {
@@ -46,6 +49,12 @@ export interface FormAtlas {
 
 const CACHE = new Map<string, Promise<FormAtlas | null>>();
 const TEXTURE_CACHE = new Map<string, Promise<Texture | null>>();
+
+function versionedFrameUrl(formId: string, frame: PoseFrame): string {
+  const url = spriteFrameUrl(formId, frame.file);
+  const version = frame.trimmedPixelHash ?? frame.sourceFileSha256 ?? frame.hash;
+  return version ? `${url}?v=${encodeURIComponent(version)}` : url;
+}
 
 /**
  * Carga una textura suelta (fondo, overworld, proyectil) con nearest-neighbour
@@ -111,7 +120,7 @@ async function build(formId: string): Promise<FormAtlas | null> {
       const f = anim.frames[i];
       if (f.w > maxW) maxW = f.w;
       if (f.h > maxH) maxH = f.h;
-      jobs.push({ key: `${pose}:${i}`, url: spriteFrameUrl(formId, f.file) });
+      jobs.push({ key: `${pose}:${i}`, url: versionedFrameUrl(formId, f) });
     }
   }
 
