@@ -16,7 +16,7 @@
 // (Dos bugs de "Rendered more hooks than during the previous render" se
 // corrigieron moviendo useState/useMemo al inicio de los componentes.)
 // ═══════════════════════════════════════════════════════════════════════
-import { useState, useEffect, useRef, useMemo } from 'react';
+import { useState, useEffect, useRef, useMemo, createContext, useContext } from 'react';
 import {
   FORMS, ROM_ORDERED_CHARACTERS, getForm, statAtLevel, sheetUrl, idleSpriteUrl, LIMIT_DEFAULTS,
 } from '../data/roster';
@@ -75,6 +75,33 @@ const STATS: { key: 'hp' | 'str' | 'ki' | 'spd'; label: string; color: string }[
 ];
 
 const NAMES_KEY = 'dbzlsw:char-names';
+const REPORTED_FRAMES_KEY = 'dbzlsw:reported-frames';
+
+type ReportedFrame = {
+  physicalId: string;
+  formId: string;
+  timestamp: number;
+  provenance: Record<string, unknown>;
+  symptom: string;
+  note: string;
+};
+
+function useReportedFrames() {
+  const [reported, setReported] = useState<ReportedFrame[]>(() => loadJson(REPORTED_FRAMES_KEY, [] as ReportedFrame[]));
+  useEffect(() => { try { localStorage.setItem(REPORTED_FRAMES_KEY, JSON.stringify(reported)); } catch { /* noop */ } }, [reported]);
+  const toggle = (physicalId: string, formId: string, provenance: Record<string, unknown>) => {
+    setReported(prev => {
+      const idx = prev.findIndex(f => f.physicalId === physicalId);
+      if (idx >= 0) return prev.filter((_, i) => i !== idx); // unmark
+      return [...prev, { physicalId, formId, timestamp: Date.now(), provenance, symptom: '', note: '' }];
+    });
+  };
+  const isReported = (physicalId: string) => reported.some(f => f.physicalId === physicalId);
+  const clear = () => setReported([]);
+  return { reported, toggle, isReported, clear };
+}
+
+const ReportedFramesContext = createContext<ReturnType<typeof useReportedFrames>>({ reported: [], toggle: () => {}, isReported: () => false, clear: () => {} });
 
 function loadJson<T>(key: string, fallback: T): T {
   try {
@@ -237,7 +264,39 @@ function physicalFrameProvenance(frame: RomPhysicalFrame, formId: string): Recor
 }
 
 function copyText(text: string): void {
-  void navigator.clipboard?.writeText(text);
+  // Save button reference before clipboard (focus may shift)
+  const btn = document.activeElement as HTMLElement | null;
+  const flash = (msg: string) => {
+    if (!btn) return;
+    const orig = btn.textContent ?? '';
+    btn.textContent = msg;
+    btn.style.color = '#4ade80';
+    setTimeout(() => { btn.textContent = orig; btn.style.color = ''; }, 1400);
+  };
+
+  // Try Clipboard API first (requires HTTPS or localhost secure context)
+  if (navigator.clipboard && window.isSecureContext) {
+    navigator.clipboard.writeText(text).then(() => flash('✓ Copied')).catch(() => {
+      fallbackCopy(text); flash('✓ Copied');
+    });
+    return;
+  }
+  // Fallback: textarea + execCommand (works in HTTP)
+  fallbackCopy(text);
+  flash('✓ Copied');
+}
+
+function fallbackCopy(text: string): void {
+  const ta = document.createElement('textarea');
+  ta.value = text;
+  ta.style.position = 'fixed';
+  ta.style.opacity = '0';
+  ta.style.left = '-9999px';
+  document.body.appendChild(ta);
+  ta.focus();
+  ta.select();
+  document.execCommand('copy');
+  document.body.removeChild(ta);
 }
 
 function copySequenceFrameProvenance(formId: string, seq: RomPhysicalSequence, frame: RomPhysicalSequence['frames'][number]): void {
@@ -261,41 +320,21 @@ function copySequenceFrameProvenance(formId: string, seq: RomPhysicalSequence, f
 }
 
 function PhysicalFrameProvenanceTools({ frame, formId, compact = false }: { frame: RomPhysicalFrame; formId: string; compact?: boolean }) {
+  const { toggle, isReported } = useContext(ReportedFramesContext);
   const provenance = physicalFrameProvenance(frame, formId);
+  const reported = isReported(frame.physicalId);
   const copyPhysicalId = () => copyText(frame.physicalId);
   const copyProvenance = () => copyText(JSON.stringify(provenance, null, 2));
-  const reportIssue = () => copyText([
-    'PHYSICAL ID',
-    frame.physicalId,
-    '',
-    'SYMPTOM',
-    'FRAME_CONTAMINATION_OR_CUT',
-    '',
-    'RAW',
-    frame.rawCanvasFile ?? '—',
-    '',
-    'TRIM',
-    frame.file,
-    '',
-    'PROVENANCE',
-    JSON.stringify(provenance, null, 2),
-    '',
-    'N-1 / N / N+1',
-    'PENDING_COMPARE',
-    '',
-    'CAUSE',
-    'PENDING_TRACE',
-    '',
-    'FIX',
-    'PENDING',
-  ].join('\n'));
+  const toggleReport = () => toggle(frame.physicalId, formId, provenance as Record<string, unknown>);
   return (
     <div className={`dev-rom-provenance-tools ${compact ? 'compact' : ''}`}>
       <div className="dev-rom-provenance-line">
         <code>{frame.physicalId}</code>
         <button className="dev-btn dev-btn-mini" onClick={copyPhysicalId}>COPY PHYSICAL ID</button>
         <button className="dev-btn dev-btn-mini" onClick={copyProvenance}>COPY PROVENANCE</button>
-        <button className="dev-btn dev-btn-mini" onClick={reportIssue}>REPORT FRAME ISSUE</button>
+        <button className={`dev-btn dev-btn-mini ${reported ? 'dev-btn-reported' : ''}`} onClick={toggleReport}>
+          {reported ? '✗ UNMARK' : '⚑ REPORT'}
+        </button>
       </div>
       <div className="dev-rom-provenance-grid">
         <span><strong>form</strong>{formId}</span>
@@ -398,6 +437,7 @@ function InlineName({ value, onCommit, className }: {
 export function CharactersModule({ onOpenModule }: {
   onOpenModule?: (id: DevModuleId, target: Omit<DevLinkedTarget, 'nonce'>) => void;
 }) {
+  const reportedFrames = useReportedFrames();
   const [charId, setCharId] = useState(ROM_ORDERED_CHARACTERS[0]?.id ?? 'gohan_kid');
   const [formId, setFormId] = useState(ROM_ORDERED_CHARACTERS[0]?.forms[0] ?? 'gohan_young');
   const [level, setLevel] = useState(50);
@@ -435,6 +475,7 @@ export function CharactersModule({ onOpenModule }: {
   };
 
   return (
+    <ReportedFramesContext.Provider value={reportedFrames}>
     <div className="dev-panel">
       <header className="dev-header">
         <h1>Character Studio</h1>
@@ -454,6 +495,22 @@ export function CharactersModule({ onOpenModule }: {
             </button>
           ))}
         </div>
+
+        {/* ── Banner de frames reportados ── */}
+        {reportedFrames.reported.length > 0 && (
+          <div className="dev-reported-banner">
+            <strong>⚑ {reportedFrames.reported.length} frame{reportedFrames.reported.length !== 1 ? 's' : ''} reported</strong>
+            {' '}
+            <button className="dev-btn dev-btn-mini dev-btn-danger" onClick={reportedFrames.clear}>Clear all</button>
+            <div className="dev-reported-list">
+              {reportedFrames.reported.map(f => (
+                <span key={f.physicalId} className="dev-reported-chip">
+                  {f.formId}/{f.physicalId.slice(0, 20)}…
+                </span>
+              ))}
+            </div>
+          </div>
+        )}
 
         {/* ── Detalle ── */}
         <div className="dev-char-detail">
@@ -600,6 +657,7 @@ export function CharactersModule({ onOpenModule }: {
         </div>
       </div>
     </div>
+    </ReportedFramesContext.Provider>
   );
 }
 

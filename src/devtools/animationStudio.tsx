@@ -97,7 +97,33 @@ function bankAddr(bank: number | null | undefined, address: number | null | unde
 }
 
 function copyInspectorText(text: string): void {
-  void navigator.clipboard?.writeText(text);
+  const btn = document.activeElement as HTMLElement | null;
+  const flash = (msg: string) => {
+    if (!btn) return;
+    const orig = btn.textContent ?? '';
+    btn.textContent = msg;
+    btn.style.color = '#4ade80';
+    setTimeout(() => { btn.textContent = orig; btn.style.color = ''; }, 1400);
+  };
+  if (navigator.clipboard && window.isSecureContext) {
+    navigator.clipboard.writeText(text).then(() => flash('✓ Copied')).catch(() => { fallbackCopy(text); flash('✓ Copied'); });
+    return;
+  }
+  fallbackCopy(text);
+  flash('✓ Copied');
+}
+
+function fallbackCopy(text: string): void {
+  const ta = document.createElement('textarea');
+  ta.value = text;
+  ta.style.position = 'fixed';
+  ta.style.opacity = '0';
+  ta.style.left = '-9999px';
+  document.body.appendChild(ta);
+  ta.focus();
+  ta.select();
+  document.execCommand('copy');
+  document.body.removeChild(ta);
 }
 
 function animationFrameProvenance(view: RomFrameView, physicalFrame: StudioPhysicalFrameProvenance | null): Record<string, string | number> {
