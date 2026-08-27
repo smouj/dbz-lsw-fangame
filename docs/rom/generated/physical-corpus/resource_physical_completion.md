@@ -2,8 +2,8 @@
 
 This matrix separates decoded ROM resources from Fighter physical resources promoted into the certified 48-form corpus.
 
-Renderable resources: 8/66
-Frame-stream-only resources: 6
+Renderable resources: 14/66
+Frame-stream-only resources: 0
 Handler-dependent resources: 18
 Dynamic-pending resources: 5
 Unreferenced resources: 1
@@ -11,7 +11,7 @@ Unreferenced resources: 1
 | Resource | Consumers | Sequences | Frames | Physical linkage | Profiles rendered | Physical IDs | Frame instances | Status | Blocking reason |
 | -------- | --------: | --------: | -----: | ---------------- | ----------------: | -----------: | --------------: | ------ | --------------- |
 | `0x00` | 1 | 2 | 14 | `FULL` | 44 | 132 | 672 | `RENDERABLE` | — |
-| `0x01` | 1 | 2 | 12 | `FRAME_STREAM_ONLY` | 0 | 0 | 0 | `FRAME_STREAM_ONLY` | Frame stream is decoded, but this resource has not been promoted through metasprite/graphics/profile rendering invariants yet. |
+| `0x01` | 1 | 2 | 12 | `FULL` | 5 | 15 | 60 | `RENDERABLE` | — |
 | `0x02` | 1 | 0 | 0 | `PARTIAL` | 0 | 0 | 0 | `GRAPHICS_PENDING` | Base beam/support handler uses the known resource id, but the resource pointer table entry has not been resolved to complete sequences yet. |
 | `0x03` | 4 | 6 | 48 | `FULL` | 26 | 253 | 1260 | `RENDERABLE` | — |
 | `0x04` | 1 | 2 | 14 | `FULL` | 8 | 32 | 154 | `RENDERABLE` | — |
@@ -19,20 +19,20 @@ Unreferenced resources: 1
 | `0x06` | 1 | 0 | 0 | `PARTIAL` | 0 | 0 | 0 | `GRAPHICS_PENDING` | Base beam/support handler uses the known resource id, but the resource pointer table entry has not been resolved to complete sequences yet. |
 | `0x07` | 1 | 0 | 0 | `PARTIAL` | 0 | 0 | 0 | `HANDLER_DEPENDENT` | Projectile/beam variant handler selects a resource sequence path; the handler-specific static selector must be mapped before frame extraction can be called complete. |
 | `0x08` | 1 | 1 | 8 | `FULL` | 1 | 4 | 8 | `RENDERABLE` | — |
-| `0x09` | 1 | 2 | 16 | `FRAME_STREAM_ONLY` | 0 | 0 | 0 | `FRAME_STREAM_ONLY` | Frame stream is decoded, but this resource has not been promoted through metasprite/graphics/profile rendering invariants yet. |
+| `0x09` | 1 | 2 | 16 | `FULL` | 2 | 8 | 48 | `RENDERABLE` | — |
 | `0x0a` | 1 | 0 | 0 | `PARTIAL` | 0 | 0 | 0 | `HANDLER_DEPENDENT` | Projectile/beam variant handler selects a resource sequence path; the handler-specific static selector must be mapped before frame extraction can be called complete. |
-| `0x0b` | 1 | 1 | 7 | `FRAME_STREAM_ONLY` | 0 | 0 | 0 | `FRAME_STREAM_ONLY` | Frame stream is decoded, but this resource has not been promoted through metasprite/graphics/profile rendering invariants yet. |
+| `0x0b` | 1 | 1 | 7 | `FULL` | 1 | 4 | 7 | `RENDERABLE` | — |
 | `0x0c` | 1 | 0 | 0 | `PARTIAL` | 0 | 0 | 0 | `HANDLER_DEPENDENT` | Projectile/beam variant handler selects a resource sequence path; the handler-specific static selector must be mapped before frame extraction can be called complete. |
 | `0x0d` | 0 | 0 | 0 | `NONE` | 0 | 0 | 0 | `UNREFERENCED` | AnimationResource slot exists in the ROM bank layout, but no card in the 125-card table consumes it. |
 | `0x0e` | 1 | 0 | 0 | `PARTIAL` | 0 | 0 | 0 | `HANDLER_DEPENDENT` | Projectile/beam variant handler selects a resource sequence path; the handler-specific static selector must be mapped before frame extraction can be called complete. |
-| `0x0f` | 1 | 2 | 16 | `FRAME_STREAM_ONLY` | 0 | 0 | 0 | `FRAME_STREAM_ONLY` | Frame stream is decoded, but this resource has not been promoted through metasprite/graphics/profile rendering invariants yet. |
+| `0x0f` | 1 | 2 | 16 | `FULL` | 3 | 9 | 72 | `RENDERABLE` | — |
 | `0x10` | 1 | 0 | 0 | `PARTIAL` | 0 | 0 | 0 | `HANDLER_DEPENDENT` | Projectile/beam variant handler selects a resource sequence path; the handler-specific static selector must be mapped before frame extraction can be called complete. |
 | `0x11` | 1 | 0 | 0 | `PARTIAL` | 0 | 0 | 0 | `HANDLER_DEPENDENT` | Projectile/beam variant handler selects a resource sequence path; the handler-specific static selector must be mapped before frame extraction can be called complete. |
 | `0x12` | 2 | 4 | 36 | `FULL` | 5 | 25 | 216 | `RENDERABLE` | — |
 | `0x13` | 1 | 0 | 0 | `PARTIAL` | 0 | 0 | 0 | `HANDLER_DEPENDENT` | Projectile/beam variant handler selects a resource sequence path; the handler-specific static selector must be mapped before frame extraction can be called complete. |
 | `0x14` | 1 | 0 | 0 | `PARTIAL` | 0 | 0 | 0 | `HANDLER_DEPENDENT` | Projectile/beam variant handler selects a resource sequence path; the handler-specific static selector must be mapped before frame extraction can be called complete. |
 | `0x15` | 1 | 0 | 0 | `PARTIAL` | 0 | 0 | 0 | `HANDLER_DEPENDENT` | Projectile/beam variant handler selects a resource sequence path; the handler-specific static selector must be mapped before frame extraction can be called complete. |
-| `0x16` | 1 | 2 | 16 | `FRAME_STREAM_ONLY` | 0 | 0 | 0 | `FRAME_STREAM_ONLY` | Frame stream is decoded, but this resource has not been promoted through metasprite/graphics/profile rendering invariants yet. |
+| `0x16` | 1 | 2 | 16 | `FULL` | 5 | 25 | 112 | `RENDERABLE` | — |
 | `0x17` | 1 | 0 | 0 | `PARTIAL` | 0 | 0 | 0 | `HANDLER_DEPENDENT` | Projectile/beam variant handler selects a resource sequence path; the handler-specific static selector must be mapped before frame extraction can be called complete. |
 | `0x18` | 1 | 0 | 0 | `PARTIAL` | 0 | 0 | 0 | `HANDLER_DEPENDENT` | Projectile/beam variant handler selects a resource sequence path; the handler-specific static selector must be mapped before frame extraction can be called complete. |
 | `0x19` | 1 | 0 | 0 | `PARTIAL` | 0 | 0 | 0 | `GRAPHICS_PENDING` | Base beam/support handler uses the known resource id, but the resource pointer table entry has not been resolved to complete sequences yet. |
@@ -44,7 +44,7 @@ Unreferenced resources: 1
 | `0x1f` | 1 | 0 | 0 | `PARTIAL` | 0 | 0 | 0 | `HANDLER_DEPENDENT` | Projectile/beam variant handler selects a resource sequence path; the handler-specific static selector must be mapped before frame extraction can be called complete. |
 | `0x20` | 1 | 0 | 0 | `PARTIAL` | 0 | 0 | 0 | `HANDLER_DEPENDENT` | Projectile/beam variant handler selects a resource sequence path; the handler-specific static selector must be mapped before frame extraction can be called complete. |
 | `0x21` | 1 | 0 | 0 | `PARTIAL` | 0 | 0 | 0 | `HANDLER_DEPENDENT` | Projectile/beam variant handler selects a resource sequence path; the handler-specific static selector must be mapped before frame extraction can be called complete. |
-| `0x22` | 1 | 1 | 10 | `FRAME_STREAM_ONLY` | 0 | 0 | 0 | `FRAME_STREAM_ONLY` | Frame stream is decoded, but this resource has not been promoted through metasprite/graphics/profile rendering invariants yet. |
+| `0x22` | 1 | 1 | 10 | `FULL` | 4 | 16 | 40 | `RENDERABLE` | — |
 | `0x23` | 1 | 0 | 0 | `PARTIAL` | 0 | 0 | 0 | `HANDLER_DEPENDENT` | Projectile/beam variant handler selects a resource sequence path; the handler-specific static selector must be mapped before frame extraction can be called complete. |
 | `0x24` | 1 | 0 | 0 | `PARTIAL` | 0 | 0 | 0 | `METASPRITE_PENDING` | Support/defense card references an actor resource without a standard attack handler; the static pass must resolve sequence count/boundaries from the resource table. |
 | `0x25` | 1 | 0 | 0 | `PARTIAL` | 0 | 0 | 0 | `METASPRITE_PENDING` | Support/defense card references an actor resource without a standard attack handler; the static pass must resolve sequence count/boundaries from the resource table. |

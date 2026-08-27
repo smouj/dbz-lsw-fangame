@@ -3,8 +3,8 @@
   "scope": "AnimationResource physical promotion matrix; RENDERABLE means promoted into the certified Fighter corpus, not merely decoded.",
   "totals": {
     "resources": 66,
-    "renderable": 8,
-    "frameStreamOnly": 6,
+    "renderable": 14,
+    "frameStreamOnly": 0,
     "metaspritePending": 24,
     "graphicsPending": 4,
     "handlerDependent": 18,
@@ -55,12 +55,12 @@
       ],
       "sequences": 2,
       "frames": 12,
-      "physicalLinkage": "FRAME_STREAM_ONLY",
-      "profilesRendered": 0,
-      "physicalIds": 0,
-      "frameInstances": 0,
-      "status": "FRAME_STREAM_ONLY",
-      "blockingReason": "Frame stream is decoded, but this resource has not been promoted through metasprite/graphics/profile rendering invariants yet."
+      "physicalLinkage": "FULL",
+      "profilesRendered": 5,
+      "physicalIds": 15,
+      "frameInstances": 60,
+      "status": "RENDERABLE",
+      "blockingReason": "—"
     },
     {
       "resourceId": 2,
@@ -273,12 +273,12 @@
       ],
       "sequences": 2,
       "frames": 16,
-      "physicalLinkage": "FRAME_STREAM_ONLY",
-      "profilesRendered": 0,
-      "physicalIds": 0,
-      "frameInstances": 0,
-      "status": "FRAME_STREAM_ONLY",
-      "blockingReason": "Frame stream is decoded, but this resource has not been promoted through metasprite/graphics/profile rendering invariants yet."
+      "physicalLinkage": "FULL",
+      "profilesRendered": 2,
+      "physicalIds": 8,
+      "frameInstances": 48,
+      "status": "RENDERABLE",
+      "blockingReason": "—"
     },
     {
       "resourceId": 10,
@@ -323,12 +323,12 @@
       ],
       "sequences": 1,
       "frames": 7,
-      "physicalLinkage": "FRAME_STREAM_ONLY",
-      "profilesRendered": 0,
-      "physicalIds": 0,
-      "frameInstances": 0,
-      "status": "FRAME_STREAM_ONLY",
-      "blockingReason": "Frame stream is decoded, but this resource has not been promoted through metasprite/graphics/profile rendering invariants yet."
+      "physicalLinkage": "FULL",
+      "profilesRendered": 1,
+      "physicalIds": 4,
+      "frameInstances": 7,
+      "status": "RENDERABLE",
+      "blockingReason": "—"
     },
     {
       "resourceId": 12,
@@ -414,12 +414,12 @@
       ],
       "sequences": 2,
       "frames": 16,
-      "physicalLinkage": "FRAME_STREAM_ONLY",
-      "profilesRendered": 0,
-      "physicalIds": 0,
-      "frameInstances": 0,
-      "status": "FRAME_STREAM_ONLY",
-      "blockingReason": "Frame stream is decoded, but this resource has not been promoted through metasprite/graphics/profile rendering invariants yet."
+      "physicalLinkage": "FULL",
+      "profilesRendered": 3,
+      "physicalIds": 9,
+      "frameInstances": 72,
+      "status": "RENDERABLE",
+      "blockingReason": "—"
     },
     {
       "resourceId": 16,
@@ -595,12 +595,12 @@
       ],
       "sequences": 2,
       "frames": 16,
-      "physicalLinkage": "FRAME_STREAM_ONLY",
-      "profilesRendered": 0,
-      "physicalIds": 0,
-      "frameInstances": 0,
-      "status": "FRAME_STREAM_ONLY",
-      "blockingReason": "Frame stream is decoded, but this resource has not been promoted through metasprite/graphics/profile rendering invariants yet."
+      "physicalLinkage": "FULL",
+      "profilesRendered": 5,
+      "physicalIds": 25,
+      "frameInstances": 112,
+      "status": "RENDERABLE",
+      "blockingReason": "—"
     },
     {
       "resourceId": 23,
@@ -902,12 +902,12 @@
       ],
       "sequences": 1,
       "frames": 10,
-      "physicalLinkage": "FRAME_STREAM_ONLY",
-      "profilesRendered": 0,
-      "physicalIds": 0,
-      "frameInstances": 0,
-      "status": "FRAME_STREAM_ONLY",
-      "blockingReason": "Frame stream is decoded, but this resource has not been promoted through metasprite/graphics/profile rendering invariants yet."
+      "physicalLinkage": "FULL",
+      "profilesRendered": 4,
+      "physicalIds": 16,
+      "frameInstances": 40,
+      "status": "RENDERABLE",
+      "blockingReason": "—"
     },
     {
       "resourceId": 35,

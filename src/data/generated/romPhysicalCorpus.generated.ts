@@ -9,40 +9,21 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
   "romSha256": "bd1df5d6653be9e262f96db3bcdd7bb8ae0cad6186c16f8c1e8eba3f091c8804",
   "reachableResources": [
     "0x00",
+    "0x01",
     "0x03",
     "0x04",
     "0x05",
     "0x08",
+    "0x09",
+    "0x0b",
+    "0x0f",
     "0x12",
+    "0x16",
+    "0x22",
     "0x2c",
     "0x3f"
   ],
-  "rendererPendingResources": [
-    {
-      "resourceId": "0x01",
-      "reason": "Decoded frame stream exists, but current fighter-physical renderer does not pass base resolution and/or pieces===blockCount invariants for this resource."
-    },
-    {
-      "resourceId": "0x09",
-      "reason": "Decoded frame stream exists, but current fighter-physical renderer does not pass base resolution and/or pieces===blockCount invariants for this resource."
-    },
-    {
-      "resourceId": "0x0b",
-      "reason": "Decoded frame stream exists, but current fighter-physical renderer does not pass base resolution and/or pieces===blockCount invariants for this resource."
-    },
-    {
-      "resourceId": "0x0f",
-      "reason": "Decoded frame stream exists, but current fighter-physical renderer does not pass base resolution and/or pieces===blockCount invariants for this resource."
-    },
-    {
-      "resourceId": "0x16",
-      "reason": "Decoded frame stream exists, but current fighter-physical renderer does not pass base resolution and/or pieces===blockCount invariants for this resource."
-    },
-    {
-      "resourceId": "0x22",
-      "reason": "Decoded frame stream exists, but current fighter-physical renderer does not pass base resolution and/or pieces===blockCount invariants for this resource."
-    }
-  ],
+  "rendererPendingResources": [],
   "paletteBlockedProfiles": [],
   "resourceBlockedProfiles": [],
   "resourcePhysicalCompletion": [
@@ -89,12 +70,12 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
       ],
       "sequences": 2,
       "frames": 12,
-      "physicalLinkage": "FRAME_STREAM_ONLY",
-      "profilesRendered": 0,
-      "physicalIds": 0,
-      "frameInstances": 0,
-      "status": "FRAME_STREAM_ONLY",
-      "blockingReason": "Frame stream is decoded, but this resource has not been promoted through metasprite/graphics/profile rendering invariants yet."
+      "physicalLinkage": "FULL",
+      "profilesRendered": 5,
+      "physicalIds": 15,
+      "frameInstances": 60,
+      "status": "RENDERABLE",
+      "blockingReason": "—"
     },
     {
       "resourceId": 2,
@@ -307,12 +288,12 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
       ],
       "sequences": 2,
       "frames": 16,
-      "physicalLinkage": "FRAME_STREAM_ONLY",
-      "profilesRendered": 0,
-      "physicalIds": 0,
-      "frameInstances": 0,
-      "status": "FRAME_STREAM_ONLY",
-      "blockingReason": "Frame stream is decoded, but this resource has not been promoted through metasprite/graphics/profile rendering invariants yet."
+      "physicalLinkage": "FULL",
+      "profilesRendered": 2,
+      "physicalIds": 8,
+      "frameInstances": 48,
+      "status": "RENDERABLE",
+      "blockingReason": "—"
     },
     {
       "resourceId": 10,
@@ -357,12 +338,12 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
       ],
       "sequences": 1,
       "frames": 7,
-      "physicalLinkage": "FRAME_STREAM_ONLY",
-      "profilesRendered": 0,
-      "physicalIds": 0,
-      "frameInstances": 0,
-      "status": "FRAME_STREAM_ONLY",
-      "blockingReason": "Frame stream is decoded, but this resource has not been promoted through metasprite/graphics/profile rendering invariants yet."
+      "physicalLinkage": "FULL",
+      "profilesRendered": 1,
+      "physicalIds": 4,
+      "frameInstances": 7,
+      "status": "RENDERABLE",
+      "blockingReason": "—"
     },
     {
       "resourceId": 12,
@@ -448,12 +429,12 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
       ],
       "sequences": 2,
       "frames": 16,
-      "physicalLinkage": "FRAME_STREAM_ONLY",
-      "profilesRendered": 0,
-      "physicalIds": 0,
-      "frameInstances": 0,
-      "status": "FRAME_STREAM_ONLY",
-      "blockingReason": "Frame stream is decoded, but this resource has not been promoted through metasprite/graphics/profile rendering invariants yet."
+      "physicalLinkage": "FULL",
+      "profilesRendered": 3,
+      "physicalIds": 9,
+      "frameInstances": 72,
+      "status": "RENDERABLE",
+      "blockingReason": "—"
     },
     {
       "resourceId": 16,
@@ -629,12 +610,12 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
       ],
       "sequences": 2,
       "frames": 16,
-      "physicalLinkage": "FRAME_STREAM_ONLY",
-      "profilesRendered": 0,
-      "physicalIds": 0,
-      "frameInstances": 0,
-      "status": "FRAME_STREAM_ONLY",
-      "blockingReason": "Frame stream is decoded, but this resource has not been promoted through metasprite/graphics/profile rendering invariants yet."
+      "physicalLinkage": "FULL",
+      "profilesRendered": 5,
+      "physicalIds": 25,
+      "frameInstances": 112,
+      "status": "RENDERABLE",
+      "blockingReason": "—"
     },
     {
       "resourceId": 23,
@@ -936,12 +917,12 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
       ],
       "sequences": 1,
       "frames": 10,
-      "physicalLinkage": "FRAME_STREAM_ONLY",
-      "profilesRendered": 0,
-      "physicalIds": 0,
-      "frameInstances": 0,
-      "status": "FRAME_STREAM_ONLY",
-      "blockingReason": "Frame stream is decoded, but this resource has not been promoted through metasprite/graphics/profile rendering invariants yet."
+      "physicalLinkage": "FULL",
+      "profilesRendered": 4,
+      "physicalIds": 16,
+      "frameInstances": 40,
+      "status": "RENDERABLE",
+      "blockingReason": "—"
     },
     {
       "resourceId": 35,
@@ -1721,8 +1702,8 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
   ],
   "resourceCompletionTotals": {
     "resources": 66,
-    "renderable": 8,
-    "frameStreamOnly": 6,
+    "renderable": 14,
+    "frameStreamOnly": 0,
     "metaspritePending": 24,
     "graphicsPending": 4,
     "handlerDependent": 18,
@@ -1734,14 +1715,14 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
     "formsIndexed": 48,
     "formsPaletteBlocked": 0,
     "formsResourceBlocked": 0,
-    "resourcesReachable": 8,
-    "resourcesRendered": 8,
-    "resourcesRendererPending": 6,
-    "physicalIdentities": 715,
-    "frameInstances": 5428,
-    "signedNegativeInstances": 3560,
+    "resourcesReachable": 14,
+    "resourcesRendered": 14,
+    "resourcesRendererPending": 0,
+    "physicalIdentities": 809,
+    "frameInstances": 5767,
+    "signedNegativeInstances": 3778,
     "minOffset": -20,
-    "maxOffset": 5,
+    "maxOffset": 6,
     "maxWidth": 40,
     "maxHeight": 48,
     "resourceProfileBlockedPairs": 0,
@@ -2901,17 +2882,19 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
     {
       "formId": "piccolo_evil",
       "actorVisualProfileKey": 3,
-      "physicalFrames": 11,
-      "frameInstances": 90,
-      "sequences": 6,
+      "physicalFrames": 16,
+      "frameInstances": 106,
+      "sequences": 8,
       "resources": [
         "0x00",
         "0x04",
+        "0x16",
         "0x2c"
       ],
       "resourceFrameInstances": {
         "0x00": 14,
         "0x04": 14,
+        "0x16": 16,
         "0x2c": 62
       },
       "resourceProfileBlocked": [],
@@ -3009,6 +2992,71 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
           "trimmedPixelHash": "432f34a9839d3b6a"
         },
         {
+          "physicalId": "rom-p03-g34-r16-vf01-ms7b901e0f-gfx95b850c8",
+          "file": "physical/rom-p03-g34-r16-vf01-ms7b901e0f-gfx95b850c8.png",
+          "resourceId": 22,
+          "resourceHex": "0x16",
+          "visualFrameId": 1,
+          "actorVisualProfileKey": 3,
+          "graphicsBank": 52,
+          "metaspriteHash": "7b901e0fdf090198",
+          "graphicsHash": "95b850c83dcd9640",
+          "sourceProvenanceHash": "24c0bc3aeb0b1f52",
+          "trimmedPixelHash": "a5d0722472e4c6a4"
+        },
+        {
+          "physicalId": "rom-p03-g34-r16-vf02-ms2b449d2e-gfx3c9aef66",
+          "file": "physical/rom-p03-g34-r16-vf02-ms2b449d2e-gfx3c9aef66.png",
+          "resourceId": 22,
+          "resourceHex": "0x16",
+          "visualFrameId": 2,
+          "actorVisualProfileKey": 3,
+          "graphicsBank": 52,
+          "metaspriteHash": "2b449d2e292d8c19",
+          "graphicsHash": "3c9aef6611f46714",
+          "sourceProvenanceHash": "604006a1123a6c1c",
+          "trimmedPixelHash": "1a6e0f4becafb7b9"
+        },
+        {
+          "physicalId": "rom-p03-g34-r16-vf03-ms758e9203-gfx3ff1db11",
+          "file": "physical/rom-p03-g34-r16-vf03-ms758e9203-gfx3ff1db11.png",
+          "resourceId": 22,
+          "resourceHex": "0x16",
+          "visualFrameId": 3,
+          "actorVisualProfileKey": 3,
+          "graphicsBank": 52,
+          "metaspriteHash": "758e9203f5750c68",
+          "graphicsHash": "3ff1db1144809fa3",
+          "sourceProvenanceHash": "eafb268a3280b548",
+          "trimmedPixelHash": "f92810b28e56a135"
+        },
+        {
+          "physicalId": "rom-p03-g34-r16-vf04-msee31647b-gfx9ab59abf",
+          "file": "physical/rom-p03-g34-r16-vf04-msee31647b-gfx9ab59abf.png",
+          "resourceId": 22,
+          "resourceHex": "0x16",
+          "visualFrameId": 4,
+          "actorVisualProfileKey": 3,
+          "graphicsBank": 52,
+          "metaspriteHash": "ee31647b072440f1",
+          "graphicsHash": "9ab59abf34fb47fe",
+          "sourceProvenanceHash": "692dc1925eca1d72",
+          "trimmedPixelHash": "432f34a9839d3b6a"
+        },
+        {
+          "physicalId": "rom-p03-g34-r16-vf05-mscf4903df-gfx48913f79",
+          "file": "physical/rom-p03-g34-r16-vf05-mscf4903df-gfx48913f79.png",
+          "resourceId": 22,
+          "resourceHex": "0x16",
+          "visualFrameId": 5,
+          "actorVisualProfileKey": 3,
+          "graphicsBank": 52,
+          "metaspriteHash": "cf4903df318451fa",
+          "graphicsHash": "48913f7960e17e32",
+          "sourceProvenanceHash": "1daa9d017e5d8b7c",
+          "trimmedPixelHash": "337cb206c239b2a1"
+        },
+        {
           "physicalId": "rom-p03-g34-r2c-vf00-ms88cb7910-gfxb43c3802",
           "file": "physical/rom-p03-g34-r2c-vf00-ms88cb7910-gfxb43c3802.png",
           "resourceId": 44,
@@ -3061,28 +3109,30 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
           "trimmedPixelHash": "91bacfe190d72adc"
         }
       ],
-      "signedNegativeInstances": 62,
+      "signedNegativeInstances": 76,
       "minOffset": -16,
       "maxOffset": 2,
       "minWidth": 32,
-      "maxWidth": 32,
+      "maxWidth": 40,
       "minHeight": 48,
       "maxHeight": 48
     },
     {
       "formId": "piccolo_base",
       "actorVisualProfileKey": 3,
-      "physicalFrames": 11,
-      "frameInstances": 90,
-      "sequences": 6,
+      "physicalFrames": 16,
+      "frameInstances": 106,
+      "sequences": 8,
       "resources": [
         "0x00",
         "0x04",
+        "0x16",
         "0x2c"
       ],
       "resourceFrameInstances": {
         "0x00": 14,
         "0x04": 14,
+        "0x16": 16,
         "0x2c": 62
       },
       "resourceProfileBlocked": [],
@@ -3180,6 +3230,71 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
           "trimmedPixelHash": "432f34a9839d3b6a"
         },
         {
+          "physicalId": "rom-p03-g34-r16-vf01-ms7b901e0f-gfx95b850c8",
+          "file": "physical/rom-p03-g34-r16-vf01-ms7b901e0f-gfx95b850c8.png",
+          "resourceId": 22,
+          "resourceHex": "0x16",
+          "visualFrameId": 1,
+          "actorVisualProfileKey": 3,
+          "graphicsBank": 52,
+          "metaspriteHash": "7b901e0fdf090198",
+          "graphicsHash": "95b850c83dcd9640",
+          "sourceProvenanceHash": "24c0bc3aeb0b1f52",
+          "trimmedPixelHash": "a5d0722472e4c6a4"
+        },
+        {
+          "physicalId": "rom-p03-g34-r16-vf02-ms2b449d2e-gfx3c9aef66",
+          "file": "physical/rom-p03-g34-r16-vf02-ms2b449d2e-gfx3c9aef66.png",
+          "resourceId": 22,
+          "resourceHex": "0x16",
+          "visualFrameId": 2,
+          "actorVisualProfileKey": 3,
+          "graphicsBank": 52,
+          "metaspriteHash": "2b449d2e292d8c19",
+          "graphicsHash": "3c9aef6611f46714",
+          "sourceProvenanceHash": "604006a1123a6c1c",
+          "trimmedPixelHash": "1a6e0f4becafb7b9"
+        },
+        {
+          "physicalId": "rom-p03-g34-r16-vf03-ms758e9203-gfx3ff1db11",
+          "file": "physical/rom-p03-g34-r16-vf03-ms758e9203-gfx3ff1db11.png",
+          "resourceId": 22,
+          "resourceHex": "0x16",
+          "visualFrameId": 3,
+          "actorVisualProfileKey": 3,
+          "graphicsBank": 52,
+          "metaspriteHash": "758e9203f5750c68",
+          "graphicsHash": "3ff1db1144809fa3",
+          "sourceProvenanceHash": "eafb268a3280b548",
+          "trimmedPixelHash": "f92810b28e56a135"
+        },
+        {
+          "physicalId": "rom-p03-g34-r16-vf04-msee31647b-gfx9ab59abf",
+          "file": "physical/rom-p03-g34-r16-vf04-msee31647b-gfx9ab59abf.png",
+          "resourceId": 22,
+          "resourceHex": "0x16",
+          "visualFrameId": 4,
+          "actorVisualProfileKey": 3,
+          "graphicsBank": 52,
+          "metaspriteHash": "ee31647b072440f1",
+          "graphicsHash": "9ab59abf34fb47fe",
+          "sourceProvenanceHash": "692dc1925eca1d72",
+          "trimmedPixelHash": "432f34a9839d3b6a"
+        },
+        {
+          "physicalId": "rom-p03-g34-r16-vf05-mscf4903df-gfx48913f79",
+          "file": "physical/rom-p03-g34-r16-vf05-mscf4903df-gfx48913f79.png",
+          "resourceId": 22,
+          "resourceHex": "0x16",
+          "visualFrameId": 5,
+          "actorVisualProfileKey": 3,
+          "graphicsBank": 52,
+          "metaspriteHash": "cf4903df318451fa",
+          "graphicsHash": "48913f7960e17e32",
+          "sourceProvenanceHash": "1daa9d017e5d8b7c",
+          "trimmedPixelHash": "337cb206c239b2a1"
+        },
+        {
           "physicalId": "rom-p03-g34-r2c-vf00-ms88cb7910-gfxb43c3802",
           "file": "physical/rom-p03-g34-r2c-vf00-ms88cb7910-gfxb43c3802.png",
           "resourceId": 44,
@@ -3232,28 +3347,30 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
           "trimmedPixelHash": "91bacfe190d72adc"
         }
       ],
-      "signedNegativeInstances": 62,
+      "signedNegativeInstances": 76,
       "minOffset": -16,
       "maxOffset": 2,
       "minWidth": 32,
-      "maxWidth": 32,
+      "maxWidth": 40,
       "minHeight": 48,
       "maxHeight": 48
     },
     {
       "formId": "piccolo_kami",
       "actorVisualProfileKey": 3,
-      "physicalFrames": 11,
-      "frameInstances": 90,
-      "sequences": 6,
+      "physicalFrames": 16,
+      "frameInstances": 106,
+      "sequences": 8,
       "resources": [
         "0x00",
         "0x04",
+        "0x16",
         "0x2c"
       ],
       "resourceFrameInstances": {
         "0x00": 14,
         "0x04": 14,
+        "0x16": 16,
         "0x2c": 62
       },
       "resourceProfileBlocked": [],
@@ -3351,6 +3468,71 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
           "trimmedPixelHash": "432f34a9839d3b6a"
         },
         {
+          "physicalId": "rom-p03-g34-r16-vf01-ms7b901e0f-gfx95b850c8",
+          "file": "physical/rom-p03-g34-r16-vf01-ms7b901e0f-gfx95b850c8.png",
+          "resourceId": 22,
+          "resourceHex": "0x16",
+          "visualFrameId": 1,
+          "actorVisualProfileKey": 3,
+          "graphicsBank": 52,
+          "metaspriteHash": "7b901e0fdf090198",
+          "graphicsHash": "95b850c83dcd9640",
+          "sourceProvenanceHash": "24c0bc3aeb0b1f52",
+          "trimmedPixelHash": "a5d0722472e4c6a4"
+        },
+        {
+          "physicalId": "rom-p03-g34-r16-vf02-ms2b449d2e-gfx3c9aef66",
+          "file": "physical/rom-p03-g34-r16-vf02-ms2b449d2e-gfx3c9aef66.png",
+          "resourceId": 22,
+          "resourceHex": "0x16",
+          "visualFrameId": 2,
+          "actorVisualProfileKey": 3,
+          "graphicsBank": 52,
+          "metaspriteHash": "2b449d2e292d8c19",
+          "graphicsHash": "3c9aef6611f46714",
+          "sourceProvenanceHash": "604006a1123a6c1c",
+          "trimmedPixelHash": "1a6e0f4becafb7b9"
+        },
+        {
+          "physicalId": "rom-p03-g34-r16-vf03-ms758e9203-gfx3ff1db11",
+          "file": "physical/rom-p03-g34-r16-vf03-ms758e9203-gfx3ff1db11.png",
+          "resourceId": 22,
+          "resourceHex": "0x16",
+          "visualFrameId": 3,
+          "actorVisualProfileKey": 3,
+          "graphicsBank": 52,
+          "metaspriteHash": "758e9203f5750c68",
+          "graphicsHash": "3ff1db1144809fa3",
+          "sourceProvenanceHash": "eafb268a3280b548",
+          "trimmedPixelHash": "f92810b28e56a135"
+        },
+        {
+          "physicalId": "rom-p03-g34-r16-vf04-msee31647b-gfx9ab59abf",
+          "file": "physical/rom-p03-g34-r16-vf04-msee31647b-gfx9ab59abf.png",
+          "resourceId": 22,
+          "resourceHex": "0x16",
+          "visualFrameId": 4,
+          "actorVisualProfileKey": 3,
+          "graphicsBank": 52,
+          "metaspriteHash": "ee31647b072440f1",
+          "graphicsHash": "9ab59abf34fb47fe",
+          "sourceProvenanceHash": "692dc1925eca1d72",
+          "trimmedPixelHash": "432f34a9839d3b6a"
+        },
+        {
+          "physicalId": "rom-p03-g34-r16-vf05-mscf4903df-gfx48913f79",
+          "file": "physical/rom-p03-g34-r16-vf05-mscf4903df-gfx48913f79.png",
+          "resourceId": 22,
+          "resourceHex": "0x16",
+          "visualFrameId": 5,
+          "actorVisualProfileKey": 3,
+          "graphicsBank": 52,
+          "metaspriteHash": "cf4903df318451fa",
+          "graphicsHash": "48913f7960e17e32",
+          "sourceProvenanceHash": "1daa9d017e5d8b7c",
+          "trimmedPixelHash": "337cb206c239b2a1"
+        },
+        {
           "physicalId": "rom-p03-g34-r2c-vf00-ms88cb7910-gfxb43c3802",
           "file": "physical/rom-p03-g34-r2c-vf00-ms88cb7910-gfxb43c3802.png",
           "resourceId": 44,
@@ -3403,11 +3585,11 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
           "trimmedPixelHash": "91bacfe190d72adc"
         }
       ],
-      "signedNegativeInstances": 62,
+      "signedNegativeInstances": 76,
       "minOffset": -16,
       "maxOffset": 2,
       "minWidth": 32,
-      "maxWidth": 32,
+      "maxWidth": 40,
       "minHeight": 48,
       "maxHeight": 48
     },
@@ -3784,17 +3966,19 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
     {
       "formId": "goku_base",
       "actorVisualProfileKey": 5,
-      "physicalFrames": 17,
-      "frameInstances": 124,
-      "sequences": 10,
+      "physicalFrames": 21,
+      "frameInstances": 134,
+      "sequences": 11,
       "resources": [
         "0x00",
         "0x03",
+        "0x22",
         "0x2c"
       ],
       "resourceFrameInstances": {
         "0x00": 14,
         "0x03": 48,
+        "0x22": 10,
         "0x2c": 62
       },
       "resourceProfileBlocked": [],
@@ -3970,6 +4154,58 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
           "trimmedPixelHash": "f8413b21c695eec1"
         },
         {
+          "physicalId": "rom-p05-g36-r22-vf00-ms9ee66b18-gfx064ccf05",
+          "file": "physical/rom-p05-g36-r22-vf00-ms9ee66b18-gfx064ccf05.png",
+          "resourceId": 34,
+          "resourceHex": "0x22",
+          "visualFrameId": 0,
+          "actorVisualProfileKey": 5,
+          "graphicsBank": 54,
+          "metaspriteHash": "9ee66b1802244cfe",
+          "graphicsHash": "064ccf05fe89a36b",
+          "sourceProvenanceHash": "eb58ae2bc311a764",
+          "trimmedPixelHash": "22c7bf17d9eb8613"
+        },
+        {
+          "physicalId": "rom-p05-g36-r22-vf01-msc0a3fb89-gfx0dcd45cb",
+          "file": "physical/rom-p05-g36-r22-vf01-msc0a3fb89-gfx0dcd45cb.png",
+          "resourceId": 34,
+          "resourceHex": "0x22",
+          "visualFrameId": 1,
+          "actorVisualProfileKey": 5,
+          "graphicsBank": 54,
+          "metaspriteHash": "c0a3fb8968d05af3",
+          "graphicsHash": "0dcd45cba394c3ca",
+          "sourceProvenanceHash": "f9605d9ba6ad1519",
+          "trimmedPixelHash": "cce137f56041d41c"
+        },
+        {
+          "physicalId": "rom-p05-g36-r22-vf02-ms67d77949-gfx9a8f997b",
+          "file": "physical/rom-p05-g36-r22-vf02-ms67d77949-gfx9a8f997b.png",
+          "resourceId": 34,
+          "resourceHex": "0x22",
+          "visualFrameId": 2,
+          "actorVisualProfileKey": 5,
+          "graphicsBank": 54,
+          "metaspriteHash": "67d7794930fbedb9",
+          "graphicsHash": "9a8f997b08aec2e9",
+          "sourceProvenanceHash": "0ca1db0cfcb385b9",
+          "trimmedPixelHash": "f8413b21c695eec1"
+        },
+        {
+          "physicalId": "rom-p05-g36-r22-vf03-msfa005beb-gfx884bc944",
+          "file": "physical/rom-p05-g36-r22-vf03-msfa005beb-gfx884bc944.png",
+          "resourceId": 34,
+          "resourceHex": "0x22",
+          "visualFrameId": 3,
+          "actorVisualProfileKey": 5,
+          "graphicsBank": 54,
+          "metaspriteHash": "fa005beb77c43459",
+          "graphicsHash": "884bc944f800a941",
+          "sourceProvenanceHash": "344c9d5fe7746ae7",
+          "trimmedPixelHash": "b8343d27322bfcc5"
+        },
+        {
           "physicalId": "rom-p05-g36-r2c-vf00-ms88cb7910-gfx9c6a6eac",
           "file": "physical/rom-p05-g36-r2c-vf00-ms88cb7910-gfx9c6a6eac.png",
           "resourceId": 44,
@@ -4022,7 +4258,7 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
           "trimmedPixelHash": "96e816053e1dba1e"
         }
       ],
-      "signedNegativeInstances": 78,
+      "signedNegativeInstances": 83,
       "minOffset": -16,
       "maxOffset": 5,
       "minWidth": 32,
@@ -4033,17 +4269,19 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
     {
       "formId": "goku_ssj",
       "actorVisualProfileKey": 6,
-      "physicalFrames": 17,
-      "frameInstances": 124,
-      "sequences": 10,
+      "physicalFrames": 21,
+      "frameInstances": 134,
+      "sequences": 11,
       "resources": [
         "0x00",
         "0x03",
+        "0x22",
         "0x2c"
       ],
       "resourceFrameInstances": {
         "0x00": 14,
         "0x03": 48,
+        "0x22": 10,
         "0x2c": 62
       },
       "resourceProfileBlocked": [],
@@ -4219,6 +4457,58 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
           "trimmedPixelHash": "a16f2b4e039df73f"
         },
         {
+          "physicalId": "rom-p06-g37-r22-vf00-ms9ee66b18-gfx6b3eb4aa",
+          "file": "physical/rom-p06-g37-r22-vf00-ms9ee66b18-gfx6b3eb4aa.png",
+          "resourceId": 34,
+          "resourceHex": "0x22",
+          "visualFrameId": 0,
+          "actorVisualProfileKey": 6,
+          "graphicsBank": 55,
+          "metaspriteHash": "9ee66b1802244cfe",
+          "graphicsHash": "6b3eb4aa60ed261f",
+          "sourceProvenanceHash": "2f0c2b1f5edf3b48",
+          "trimmedPixelHash": "7e8ea996e8930141"
+        },
+        {
+          "physicalId": "rom-p06-g37-r22-vf01-msc0a3fb89-gfx10e89e5b",
+          "file": "physical/rom-p06-g37-r22-vf01-msc0a3fb89-gfx10e89e5b.png",
+          "resourceId": 34,
+          "resourceHex": "0x22",
+          "visualFrameId": 1,
+          "actorVisualProfileKey": 6,
+          "graphicsBank": 55,
+          "metaspriteHash": "c0a3fb8968d05af3",
+          "graphicsHash": "10e89e5b71617bb9",
+          "sourceProvenanceHash": "fb263f6a149ce662",
+          "trimmedPixelHash": "aeeae6d7ebc22936"
+        },
+        {
+          "physicalId": "rom-p06-g37-r22-vf02-ms67d77949-gfx56c080a8",
+          "file": "physical/rom-p06-g37-r22-vf02-ms67d77949-gfx56c080a8.png",
+          "resourceId": 34,
+          "resourceHex": "0x22",
+          "visualFrameId": 2,
+          "actorVisualProfileKey": 6,
+          "graphicsBank": 55,
+          "metaspriteHash": "67d7794930fbedb9",
+          "graphicsHash": "56c080a83aa3d919",
+          "sourceProvenanceHash": "85476d05fd9e336e",
+          "trimmedPixelHash": "a16f2b4e039df73f"
+        },
+        {
+          "physicalId": "rom-p06-g37-r22-vf03-msfa005beb-gfx84975a73",
+          "file": "physical/rom-p06-g37-r22-vf03-msfa005beb-gfx84975a73.png",
+          "resourceId": 34,
+          "resourceHex": "0x22",
+          "visualFrameId": 3,
+          "actorVisualProfileKey": 6,
+          "graphicsBank": 55,
+          "metaspriteHash": "fa005beb77c43459",
+          "graphicsHash": "84975a735a785eb2",
+          "sourceProvenanceHash": "9f8053ba46dcfc34",
+          "trimmedPixelHash": "acc4e11b33352c46"
+        },
+        {
           "physicalId": "rom-p06-g37-r2c-vf00-ms88cb7910-gfx5fa56e57",
           "file": "physical/rom-p06-g37-r2c-vf00-ms88cb7910-gfx5fa56e57.png",
           "resourceId": 44,
@@ -4271,7 +4561,7 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
           "trimmedPixelHash": "b2c69feef3603d8d"
         }
       ],
-      "signedNegativeInstances": 78,
+      "signedNegativeInstances": 83,
       "minOffset": -16,
       "maxOffset": 5,
       "minWidth": 32,
@@ -4282,17 +4572,19 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
     {
       "formId": "goku_ssj2",
       "actorVisualProfileKey": 7,
-      "physicalFrames": 17,
-      "frameInstances": 124,
-      "sequences": 10,
+      "physicalFrames": 21,
+      "frameInstances": 134,
+      "sequences": 11,
       "resources": [
         "0x00",
         "0x03",
+        "0x22",
         "0x2c"
       ],
       "resourceFrameInstances": {
         "0x00": 14,
         "0x03": 48,
+        "0x22": 10,
         "0x2c": 62
       },
       "resourceProfileBlocked": [],
@@ -4468,6 +4760,58 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
           "trimmedPixelHash": "6951c5374b498981"
         },
         {
+          "physicalId": "rom-p07-g38-r22-vf00-ms9ee66b18-gfx4c731a8a",
+          "file": "physical/rom-p07-g38-r22-vf00-ms9ee66b18-gfx4c731a8a.png",
+          "resourceId": 34,
+          "resourceHex": "0x22",
+          "visualFrameId": 0,
+          "actorVisualProfileKey": 7,
+          "graphicsBank": 56,
+          "metaspriteHash": "9ee66b1802244cfe",
+          "graphicsHash": "4c731a8afe074687",
+          "sourceProvenanceHash": "e1520b7fd366ac56",
+          "trimmedPixelHash": "f0bb24fbebd88351"
+        },
+        {
+          "physicalId": "rom-p07-g38-r22-vf01-msc0a3fb89-gfxbe69fc76",
+          "file": "physical/rom-p07-g38-r22-vf01-msc0a3fb89-gfxbe69fc76.png",
+          "resourceId": 34,
+          "resourceHex": "0x22",
+          "visualFrameId": 1,
+          "actorVisualProfileKey": 7,
+          "graphicsBank": 56,
+          "metaspriteHash": "c0a3fb8968d05af3",
+          "graphicsHash": "be69fc76f4779ed8",
+          "sourceProvenanceHash": "7c95825174c24e03",
+          "trimmedPixelHash": "6a1362efc1212fe4"
+        },
+        {
+          "physicalId": "rom-p07-g38-r22-vf02-ms67d77949-gfx0c8ca8f1",
+          "file": "physical/rom-p07-g38-r22-vf02-ms67d77949-gfx0c8ca8f1.png",
+          "resourceId": 34,
+          "resourceHex": "0x22",
+          "visualFrameId": 2,
+          "actorVisualProfileKey": 7,
+          "graphicsBank": 56,
+          "metaspriteHash": "67d7794930fbedb9",
+          "graphicsHash": "0c8ca8f19f081ca1",
+          "sourceProvenanceHash": "7478f310ac1758e9",
+          "trimmedPixelHash": "6951c5374b498981"
+        },
+        {
+          "physicalId": "rom-p07-g38-r22-vf03-msfa005beb-gfx2d601a35",
+          "file": "physical/rom-p07-g38-r22-vf03-msfa005beb-gfx2d601a35.png",
+          "resourceId": 34,
+          "resourceHex": "0x22",
+          "visualFrameId": 3,
+          "actorVisualProfileKey": 7,
+          "graphicsBank": 56,
+          "metaspriteHash": "fa005beb77c43459",
+          "graphicsHash": "2d601a35d26f23e3",
+          "sourceProvenanceHash": "085a4a00a1e7f271",
+          "trimmedPixelHash": "37870eb92261fef6"
+        },
+        {
           "physicalId": "rom-p07-g38-r2c-vf00-ms88cb7910-gfx27f97dbb",
           "file": "physical/rom-p07-g38-r2c-vf00-ms88cb7910-gfx27f97dbb.png",
           "resourceId": 44,
@@ -4520,7 +4864,7 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
           "trimmedPixelHash": "9316bb8a3a1d7e4d"
         }
       ],
-      "signedNegativeInstances": 78,
+      "signedNegativeInstances": 83,
       "minOffset": -16,
       "maxOffset": 5,
       "minWidth": 32,
@@ -4531,17 +4875,19 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
     {
       "formId": "goku_ssj3",
       "actorVisualProfileKey": 8,
-      "physicalFrames": 17,
-      "frameInstances": 124,
-      "sequences": 10,
+      "physicalFrames": 21,
+      "frameInstances": 134,
+      "sequences": 11,
       "resources": [
         "0x00",
         "0x03",
+        "0x22",
         "0x2c"
       ],
       "resourceFrameInstances": {
         "0x00": 14,
         "0x03": 48,
+        "0x22": 10,
         "0x2c": 62
       },
       "resourceProfileBlocked": [],
@@ -4717,6 +5063,58 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
           "trimmedPixelHash": "8e3e8a0e5a0a7474"
         },
         {
+          "physicalId": "rom-p08-g39-r22-vf00-ms9ee66b18-gfx73b7d030",
+          "file": "physical/rom-p08-g39-r22-vf00-ms9ee66b18-gfx73b7d030.png",
+          "resourceId": 34,
+          "resourceHex": "0x22",
+          "visualFrameId": 0,
+          "actorVisualProfileKey": 8,
+          "graphicsBank": 57,
+          "metaspriteHash": "9ee66b1802244cfe",
+          "graphicsHash": "73b7d0302fbdf257",
+          "sourceProvenanceHash": "2a7ab29a69c88465",
+          "trimmedPixelHash": "b469e281a2b45c72"
+        },
+        {
+          "physicalId": "rom-p08-g39-r22-vf01-msc0a3fb89-gfxcd955c21",
+          "file": "physical/rom-p08-g39-r22-vf01-msc0a3fb89-gfxcd955c21.png",
+          "resourceId": 34,
+          "resourceHex": "0x22",
+          "visualFrameId": 1,
+          "actorVisualProfileKey": 8,
+          "graphicsBank": 57,
+          "metaspriteHash": "c0a3fb8968d05af3",
+          "graphicsHash": "cd955c217e3b2e3e",
+          "sourceProvenanceHash": "66bec5c42dcf57c7",
+          "trimmedPixelHash": "82384359cf6a3573"
+        },
+        {
+          "physicalId": "rom-p08-g39-r22-vf02-ms67d77949-gfx452c01ec",
+          "file": "physical/rom-p08-g39-r22-vf02-ms67d77949-gfx452c01ec.png",
+          "resourceId": 34,
+          "resourceHex": "0x22",
+          "visualFrameId": 2,
+          "actorVisualProfileKey": 8,
+          "graphicsBank": 57,
+          "metaspriteHash": "67d7794930fbedb9",
+          "graphicsHash": "452c01ec7de2db59",
+          "sourceProvenanceHash": "40391bb8fc99d349",
+          "trimmedPixelHash": "8e3e8a0e5a0a7474"
+        },
+        {
+          "physicalId": "rom-p08-g39-r22-vf03-msfa005beb-gfx083fd774",
+          "file": "physical/rom-p08-g39-r22-vf03-msfa005beb-gfx083fd774.png",
+          "resourceId": 34,
+          "resourceHex": "0x22",
+          "visualFrameId": 3,
+          "actorVisualProfileKey": 8,
+          "graphicsBank": 57,
+          "metaspriteHash": "fa005beb77c43459",
+          "graphicsHash": "083fd7741196ff56",
+          "sourceProvenanceHash": "09b464d6b640b40b",
+          "trimmedPixelHash": "06e5fffaf4e8ea1c"
+        },
+        {
           "physicalId": "rom-p08-g39-r2c-vf00-ms88cb7910-gfx38305773",
           "file": "physical/rom-p08-g39-r2c-vf00-ms88cb7910-gfx38305773.png",
           "resourceId": 44,
@@ -4769,7 +5167,7 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
           "trimmedPixelHash": "3a45da03733d1949"
         }
       ],
-      "signedNegativeInstances": 78,
+      "signedNegativeInstances": 83,
       "minOffset": -16,
       "maxOffset": 5,
       "minWidth": 32,
@@ -4780,18 +5178,22 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
     {
       "formId": "vegeta_base",
       "actorVisualProfileKey": 9,
-      "physicalFrames": 17,
-      "frameInstances": 128,
-      "sequences": 10,
+      "physicalFrames": 24,
+      "frameInstances": 162,
+      "sequences": 14,
       "resources": [
         "0x00",
         "0x05",
+        "0x09",
+        "0x0f",
         "0x12",
         "0x2c"
       ],
       "resourceFrameInstances": {
         "0x00": 14,
         "0x05": 16,
+        "0x09": 16,
+        "0x0f": 18,
         "0x12": 36,
         "0x2c": 62
       },
@@ -4901,6 +5303,97 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
           "graphicsHash": "f704b9f5005d1b0f",
           "sourceProvenanceHash": "587158a153141cfd",
           "trimmedPixelHash": "5267326934235372"
+        },
+        {
+          "physicalId": "rom-p09-g3a-r09-vf01-ms22f85ef0-gfx972b2d46",
+          "file": "physical/rom-p09-g3a-r09-vf01-ms22f85ef0-gfx972b2d46.png",
+          "resourceId": 9,
+          "resourceHex": "0x09",
+          "visualFrameId": 1,
+          "actorVisualProfileKey": 9,
+          "graphicsBank": 58,
+          "metaspriteHash": "22f85ef01ea8df3d",
+          "graphicsHash": "972b2d468fd4143e",
+          "sourceProvenanceHash": "2b6061e8c58c9453",
+          "trimmedPixelHash": "3e44df3bd07e0d02"
+        },
+        {
+          "physicalId": "rom-p09-g3a-r09-vf02-msa3ca1121-gfxc25c1e3b",
+          "file": "physical/rom-p09-g3a-r09-vf02-msa3ca1121-gfxc25c1e3b.png",
+          "resourceId": 9,
+          "resourceHex": "0x09",
+          "visualFrameId": 2,
+          "actorVisualProfileKey": 9,
+          "graphicsBank": 58,
+          "metaspriteHash": "a3ca1121f6111607",
+          "graphicsHash": "c25c1e3bb72c4b96",
+          "sourceProvenanceHash": "dca219bc38360960",
+          "trimmedPixelHash": "9836815fcdf42108"
+        },
+        {
+          "physicalId": "rom-p09-g3a-r09-vf03-ms01509e1d-gfxc7728ad7",
+          "file": "physical/rom-p09-g3a-r09-vf03-ms01509e1d-gfxc7728ad7.png",
+          "resourceId": 9,
+          "resourceHex": "0x09",
+          "visualFrameId": 3,
+          "actorVisualProfileKey": 9,
+          "graphicsBank": 58,
+          "metaspriteHash": "01509e1d886c5186",
+          "graphicsHash": "c7728ad7ce9c5eaf",
+          "sourceProvenanceHash": "e266dc7ebfa1b3e6",
+          "trimmedPixelHash": "35af01e104713e8d"
+        },
+        {
+          "physicalId": "rom-p09-g3a-r09-vf04-ms22f602f1-gfx64e5e2bb",
+          "file": "physical/rom-p09-g3a-r09-vf04-ms22f602f1-gfx64e5e2bb.png",
+          "resourceId": 9,
+          "resourceHex": "0x09",
+          "visualFrameId": 4,
+          "actorVisualProfileKey": 9,
+          "graphicsBank": 58,
+          "metaspriteHash": "22f602f139899738",
+          "graphicsHash": "64e5e2bbb5413dd4",
+          "sourceProvenanceHash": "919d8946abf18813",
+          "trimmedPixelHash": "779ba97544fdb18c"
+        },
+        {
+          "physicalId": "rom-p09-g3a-r0f-vf01-msba626564-gfx54f79d68",
+          "file": "physical/rom-p09-g3a-r0f-vf01-msba626564-gfx54f79d68.png",
+          "resourceId": 15,
+          "resourceHex": "0x0f",
+          "visualFrameId": 1,
+          "actorVisualProfileKey": 9,
+          "graphicsBank": 58,
+          "metaspriteHash": "ba62656401b61ecc",
+          "graphicsHash": "54f79d68529b2b1b",
+          "sourceProvenanceHash": "560f80262346c8cd",
+          "trimmedPixelHash": "3e44df3bd07e0d02"
+        },
+        {
+          "physicalId": "rom-p09-g3a-r0f-vf02-ms7fa4b69e-gfxdbbc9842",
+          "file": "physical/rom-p09-g3a-r0f-vf02-ms7fa4b69e-gfxdbbc9842.png",
+          "resourceId": 15,
+          "resourceHex": "0x0f",
+          "visualFrameId": 2,
+          "actorVisualProfileKey": 9,
+          "graphicsBank": 58,
+          "metaspriteHash": "7fa4b69ec4647f3a",
+          "graphicsHash": "dbbc98426d2a3e9a",
+          "sourceProvenanceHash": "20f222dac9002280",
+          "trimmedPixelHash": "362fc1cc7d7ea263"
+        },
+        {
+          "physicalId": "rom-p09-g3a-r0f-vf03-ms72315c73-gfxdc490844",
+          "file": "physical/rom-p09-g3a-r0f-vf03-ms72315c73-gfxdc490844.png",
+          "resourceId": 15,
+          "resourceHex": "0x0f",
+          "visualFrameId": 3,
+          "actorVisualProfileKey": 9,
+          "graphicsBank": 58,
+          "metaspriteHash": "72315c73ee4b93a8",
+          "graphicsHash": "dc4908440e8ec6ad",
+          "sourceProvenanceHash": "82f9d9fcf52483d3",
+          "trimmedPixelHash": "e9bf6380dba60d08"
         },
         {
           "physicalId": "rom-p09-g3a-r12-vf00-ms063daf3e-gfx1cf05814",
@@ -5020,7 +5513,7 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
           "trimmedPixelHash": "3822141ada7df771"
         }
       ],
-      "signedNegativeInstances": 90,
+      "signedNegativeInstances": 114,
       "minOffset": -16,
       "maxOffset": 3,
       "minWidth": 32,
@@ -5031,18 +5524,22 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
     {
       "formId": "vegeta_ssj",
       "actorVisualProfileKey": 10,
-      "physicalFrames": 17,
-      "frameInstances": 128,
-      "sequences": 10,
+      "physicalFrames": 24,
+      "frameInstances": 162,
+      "sequences": 14,
       "resources": [
         "0x00",
         "0x05",
+        "0x09",
+        "0x0f",
         "0x12",
         "0x2c"
       ],
       "resourceFrameInstances": {
         "0x00": 14,
         "0x05": 16,
+        "0x09": 16,
+        "0x0f": 18,
         "0x12": 36,
         "0x2c": 62
       },
@@ -5152,6 +5649,97 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
           "graphicsHash": "ae131f03c72fe9fe",
           "sourceProvenanceHash": "a4440b2d7c032cbf",
           "trimmedPixelHash": "06c9d7141e52ed9e"
+        },
+        {
+          "physicalId": "rom-p0a-g3b-r09-vf01-ms22f85ef0-gfx6c8d004d",
+          "file": "physical/rom-p0a-g3b-r09-vf01-ms22f85ef0-gfx6c8d004d.png",
+          "resourceId": 9,
+          "resourceHex": "0x09",
+          "visualFrameId": 1,
+          "actorVisualProfileKey": 10,
+          "graphicsBank": 59,
+          "metaspriteHash": "22f85ef01ea8df3d",
+          "graphicsHash": "6c8d004dfbe0df5e",
+          "sourceProvenanceHash": "2de348e1a25096b5",
+          "trimmedPixelHash": "02f0cc9b400330d9"
+        },
+        {
+          "physicalId": "rom-p0a-g3b-r09-vf02-msa3ca1121-gfx082cfa0c",
+          "file": "physical/rom-p0a-g3b-r09-vf02-msa3ca1121-gfx082cfa0c.png",
+          "resourceId": 9,
+          "resourceHex": "0x09",
+          "visualFrameId": 2,
+          "actorVisualProfileKey": 10,
+          "graphicsBank": 59,
+          "metaspriteHash": "a3ca1121f6111607",
+          "graphicsHash": "082cfa0c065a50cb",
+          "sourceProvenanceHash": "8f21378392cfb877",
+          "trimmedPixelHash": "2b29d59b92cc2586"
+        },
+        {
+          "physicalId": "rom-p0a-g3b-r09-vf03-ms01509e1d-gfx422915ea",
+          "file": "physical/rom-p0a-g3b-r09-vf03-ms01509e1d-gfx422915ea.png",
+          "resourceId": 9,
+          "resourceHex": "0x09",
+          "visualFrameId": 3,
+          "actorVisualProfileKey": 10,
+          "graphicsBank": 59,
+          "metaspriteHash": "01509e1d886c5186",
+          "graphicsHash": "422915eaa6bb35e1",
+          "sourceProvenanceHash": "d47e685413bc18ce",
+          "trimmedPixelHash": "1d25111011e25ff8"
+        },
+        {
+          "physicalId": "rom-p0a-g3b-r09-vf04-ms22f602f1-gfx9b3fe543",
+          "file": "physical/rom-p0a-g3b-r09-vf04-ms22f602f1-gfx9b3fe543.png",
+          "resourceId": 9,
+          "resourceHex": "0x09",
+          "visualFrameId": 4,
+          "actorVisualProfileKey": 10,
+          "graphicsBank": 59,
+          "metaspriteHash": "22f602f139899738",
+          "graphicsHash": "9b3fe543e3b64ea4",
+          "sourceProvenanceHash": "62a745bd79f6417a",
+          "trimmedPixelHash": "6f485675f4743661"
+        },
+        {
+          "physicalId": "rom-p0a-g3b-r0f-vf01-msba626564-gfxe5f5351f",
+          "file": "physical/rom-p0a-g3b-r0f-vf01-msba626564-gfxe5f5351f.png",
+          "resourceId": 15,
+          "resourceHex": "0x0f",
+          "visualFrameId": 1,
+          "actorVisualProfileKey": 10,
+          "graphicsBank": 59,
+          "metaspriteHash": "ba62656401b61ecc",
+          "graphicsHash": "e5f5351ffd639201",
+          "sourceProvenanceHash": "a5529c5e911939e3",
+          "trimmedPixelHash": "02f0cc9b400330d9"
+        },
+        {
+          "physicalId": "rom-p0a-g3b-r0f-vf02-ms7fa4b69e-gfx8f6ab2ca",
+          "file": "physical/rom-p0a-g3b-r0f-vf02-ms7fa4b69e-gfx8f6ab2ca.png",
+          "resourceId": 15,
+          "resourceHex": "0x0f",
+          "visualFrameId": 2,
+          "actorVisualProfileKey": 10,
+          "graphicsBank": 59,
+          "metaspriteHash": "7fa4b69ec4647f3a",
+          "graphicsHash": "8f6ab2ca87329af8",
+          "sourceProvenanceHash": "c2f83c6a8a7071d0",
+          "trimmedPixelHash": "3489898702851040"
+        },
+        {
+          "physicalId": "rom-p0a-g3b-r0f-vf03-ms72315c73-gfx320352ca",
+          "file": "physical/rom-p0a-g3b-r0f-vf03-ms72315c73-gfx320352ca.png",
+          "resourceId": 15,
+          "resourceHex": "0x0f",
+          "visualFrameId": 3,
+          "actorVisualProfileKey": 10,
+          "graphicsBank": 59,
+          "metaspriteHash": "72315c73ee4b93a8",
+          "graphicsHash": "320352cad6c6617e",
+          "sourceProvenanceHash": "7d8f545007db2434",
+          "trimmedPixelHash": "a39ce9823b425ba5"
         },
         {
           "physicalId": "rom-p0a-g3b-r12-vf00-ms063daf3e-gfxf276b029",
@@ -5271,7 +5859,7 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
           "trimmedPixelHash": "94ef76b7b67e54ed"
         }
       ],
-      "signedNegativeInstances": 90,
+      "signedNegativeInstances": 114,
       "minOffset": -16,
       "maxOffset": 3,
       "minWidth": 32,
@@ -5282,18 +5870,22 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
     {
       "formId": "vegeta_majin",
       "actorVisualProfileKey": 10,
-      "physicalFrames": 17,
-      "frameInstances": 128,
-      "sequences": 10,
+      "physicalFrames": 24,
+      "frameInstances": 162,
+      "sequences": 14,
       "resources": [
         "0x00",
         "0x05",
+        "0x09",
+        "0x0f",
         "0x12",
         "0x2c"
       ],
       "resourceFrameInstances": {
         "0x00": 14,
         "0x05": 16,
+        "0x09": 16,
+        "0x0f": 18,
         "0x12": 36,
         "0x2c": 62
       },
@@ -5403,6 +5995,97 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
           "graphicsHash": "ae131f03c72fe9fe",
           "sourceProvenanceHash": "a4440b2d7c032cbf",
           "trimmedPixelHash": "06c9d7141e52ed9e"
+        },
+        {
+          "physicalId": "rom-p0a-g3b-r09-vf01-ms22f85ef0-gfx6c8d004d",
+          "file": "physical/rom-p0a-g3b-r09-vf01-ms22f85ef0-gfx6c8d004d.png",
+          "resourceId": 9,
+          "resourceHex": "0x09",
+          "visualFrameId": 1,
+          "actorVisualProfileKey": 10,
+          "graphicsBank": 59,
+          "metaspriteHash": "22f85ef01ea8df3d",
+          "graphicsHash": "6c8d004dfbe0df5e",
+          "sourceProvenanceHash": "2de348e1a25096b5",
+          "trimmedPixelHash": "02f0cc9b400330d9"
+        },
+        {
+          "physicalId": "rom-p0a-g3b-r09-vf02-msa3ca1121-gfx082cfa0c",
+          "file": "physical/rom-p0a-g3b-r09-vf02-msa3ca1121-gfx082cfa0c.png",
+          "resourceId": 9,
+          "resourceHex": "0x09",
+          "visualFrameId": 2,
+          "actorVisualProfileKey": 10,
+          "graphicsBank": 59,
+          "metaspriteHash": "a3ca1121f6111607",
+          "graphicsHash": "082cfa0c065a50cb",
+          "sourceProvenanceHash": "8f21378392cfb877",
+          "trimmedPixelHash": "2b29d59b92cc2586"
+        },
+        {
+          "physicalId": "rom-p0a-g3b-r09-vf03-ms01509e1d-gfx422915ea",
+          "file": "physical/rom-p0a-g3b-r09-vf03-ms01509e1d-gfx422915ea.png",
+          "resourceId": 9,
+          "resourceHex": "0x09",
+          "visualFrameId": 3,
+          "actorVisualProfileKey": 10,
+          "graphicsBank": 59,
+          "metaspriteHash": "01509e1d886c5186",
+          "graphicsHash": "422915eaa6bb35e1",
+          "sourceProvenanceHash": "d47e685413bc18ce",
+          "trimmedPixelHash": "1d25111011e25ff8"
+        },
+        {
+          "physicalId": "rom-p0a-g3b-r09-vf04-ms22f602f1-gfx9b3fe543",
+          "file": "physical/rom-p0a-g3b-r09-vf04-ms22f602f1-gfx9b3fe543.png",
+          "resourceId": 9,
+          "resourceHex": "0x09",
+          "visualFrameId": 4,
+          "actorVisualProfileKey": 10,
+          "graphicsBank": 59,
+          "metaspriteHash": "22f602f139899738",
+          "graphicsHash": "9b3fe543e3b64ea4",
+          "sourceProvenanceHash": "62a745bd79f6417a",
+          "trimmedPixelHash": "6f485675f4743661"
+        },
+        {
+          "physicalId": "rom-p0a-g3b-r0f-vf01-msba626564-gfxe5f5351f",
+          "file": "physical/rom-p0a-g3b-r0f-vf01-msba626564-gfxe5f5351f.png",
+          "resourceId": 15,
+          "resourceHex": "0x0f",
+          "visualFrameId": 1,
+          "actorVisualProfileKey": 10,
+          "graphicsBank": 59,
+          "metaspriteHash": "ba62656401b61ecc",
+          "graphicsHash": "e5f5351ffd639201",
+          "sourceProvenanceHash": "a5529c5e911939e3",
+          "trimmedPixelHash": "02f0cc9b400330d9"
+        },
+        {
+          "physicalId": "rom-p0a-g3b-r0f-vf02-ms7fa4b69e-gfx8f6ab2ca",
+          "file": "physical/rom-p0a-g3b-r0f-vf02-ms7fa4b69e-gfx8f6ab2ca.png",
+          "resourceId": 15,
+          "resourceHex": "0x0f",
+          "visualFrameId": 2,
+          "actorVisualProfileKey": 10,
+          "graphicsBank": 59,
+          "metaspriteHash": "7fa4b69ec4647f3a",
+          "graphicsHash": "8f6ab2ca87329af8",
+          "sourceProvenanceHash": "c2f83c6a8a7071d0",
+          "trimmedPixelHash": "3489898702851040"
+        },
+        {
+          "physicalId": "rom-p0a-g3b-r0f-vf03-ms72315c73-gfx320352ca",
+          "file": "physical/rom-p0a-g3b-r0f-vf03-ms72315c73-gfx320352ca.png",
+          "resourceId": 15,
+          "resourceHex": "0x0f",
+          "visualFrameId": 3,
+          "actorVisualProfileKey": 10,
+          "graphicsBank": 59,
+          "metaspriteHash": "72315c73ee4b93a8",
+          "graphicsHash": "320352cad6c6617e",
+          "sourceProvenanceHash": "7d8f545007db2434",
+          "trimmedPixelHash": "a39ce9823b425ba5"
         },
         {
           "physicalId": "rom-p0a-g3b-r12-vf00-ms063daf3e-gfxf276b029",
@@ -5522,7 +6205,7 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
           "trimmedPixelHash": "94ef76b7b67e54ed"
         }
       ],
-      "signedNegativeInstances": 90,
+      "signedNegativeInstances": 114,
       "minOffset": -16,
       "maxOffset": 3,
       "minWidth": 32,
@@ -8718,13 +9401,14 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
     {
       "formId": "vegito_ssj",
       "actorVisualProfileKey": 21,
-      "physicalFrames": 27,
-      "frameInstances": 176,
-      "sequences": 16,
+      "physicalFrames": 30,
+      "frameInstances": 194,
+      "sequences": 18,
       "resources": [
         "0x00",
         "0x03",
         "0x05",
+        "0x0f",
         "0x12",
         "0x2c"
       ],
@@ -8732,6 +9416,7 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
         "0x00": 14,
         "0x03": 48,
         "0x05": 16,
+        "0x0f": 18,
         "0x12": 36,
         "0x2c": 62
       },
@@ -8973,6 +9658,45 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
           "trimmedPixelHash": "e9bd8bcc20c1ad89"
         },
         {
+          "physicalId": "rom-p15-g46-r0f-vf01-msba626564-gfxfa68fd11",
+          "file": "physical/rom-p15-g46-r0f-vf01-msba626564-gfxfa68fd11.png",
+          "resourceId": 15,
+          "resourceHex": "0x0f",
+          "visualFrameId": 1,
+          "actorVisualProfileKey": 21,
+          "graphicsBank": 70,
+          "metaspriteHash": "ba62656401b61ecc",
+          "graphicsHash": "fa68fd11f7239829",
+          "sourceProvenanceHash": "3e8ef4ad263c8b8f",
+          "trimmedPixelHash": "5198d63f2b44077c"
+        },
+        {
+          "physicalId": "rom-p15-g46-r0f-vf02-ms7fa4b69e-gfx0a63cc65",
+          "file": "physical/rom-p15-g46-r0f-vf02-ms7fa4b69e-gfx0a63cc65.png",
+          "resourceId": 15,
+          "resourceHex": "0x0f",
+          "visualFrameId": 2,
+          "actorVisualProfileKey": 21,
+          "graphicsBank": 70,
+          "metaspriteHash": "7fa4b69ec4647f3a",
+          "graphicsHash": "0a63cc650b00093c",
+          "sourceProvenanceHash": "c2231372ec98b106",
+          "trimmedPixelHash": "3de15afbfdd3d27a"
+        },
+        {
+          "physicalId": "rom-p15-g46-r0f-vf03-ms72315c73-gfx6de1de2b",
+          "file": "physical/rom-p15-g46-r0f-vf03-ms72315c73-gfx6de1de2b.png",
+          "resourceId": 15,
+          "resourceHex": "0x0f",
+          "visualFrameId": 3,
+          "actorVisualProfileKey": 21,
+          "graphicsBank": 70,
+          "metaspriteHash": "72315c73ee4b93a8",
+          "graphicsHash": "6de1de2bb54acc79",
+          "sourceProvenanceHash": "8a8fca170dfcedc7",
+          "trimmedPixelHash": "cf8392ce1de231a9"
+        },
+        {
           "physicalId": "rom-p15-g46-r12-vf00-ms063daf3e-gfxbed9da98",
           "file": "physical/rom-p15-g46-r12-vf00-ms063daf3e-gfxbed9da98.png",
           "resourceId": 18,
@@ -9090,7 +9814,7 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
           "trimmedPixelHash": "9be1d56c370c75b1"
         }
       ],
-      "signedNegativeInstances": 114,
+      "signedNegativeInstances": 122,
       "minOffset": -16,
       "maxOffset": 5,
       "minWidth": 32,
@@ -9935,16 +10659,18 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
     {
       "formId": "frieza_final",
       "actorVisualProfileKey": 28,
-      "physicalFrames": 12,
-      "frameInstances": 112,
-      "sequences": 8,
+      "physicalFrames": 15,
+      "frameInstances": 124,
+      "sequences": 10,
       "resources": [
         "0x00",
+        "0x01",
         "0x12",
         "0x2c"
       ],
       "resourceFrameInstances": {
         "0x00": 14,
+        "0x01": 12,
         "0x12": 36,
         "0x2c": 62
       },
@@ -9989,6 +10715,45 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
           "graphicsHash": "9cf8e10ab8d3cd61",
           "sourceProvenanceHash": "861ceca44fbe8098",
           "trimmedPixelHash": "645155a9fda3dc33"
+        },
+        {
+          "physicalId": "rom-p1c-g4d-r01-vf00-ms93336808-gfx60d36162",
+          "file": "physical/rom-p1c-g4d-r01-vf00-ms93336808-gfx60d36162.png",
+          "resourceId": 1,
+          "resourceHex": "0x01",
+          "visualFrameId": 0,
+          "actorVisualProfileKey": 28,
+          "graphicsBank": 77,
+          "metaspriteHash": "93336808549d5b3b",
+          "graphicsHash": "60d3616242c80363",
+          "sourceProvenanceHash": "8c895225849fa2e1",
+          "trimmedPixelHash": "a93ea1e35eebfece"
+        },
+        {
+          "physicalId": "rom-p1c-g4d-r01-vf02-msa561af10-gfx7e34891f",
+          "file": "physical/rom-p1c-g4d-r01-vf02-msa561af10-gfx7e34891f.png",
+          "resourceId": 1,
+          "resourceHex": "0x01",
+          "visualFrameId": 2,
+          "actorVisualProfileKey": 28,
+          "graphicsBank": 77,
+          "metaspriteHash": "a561af1091b99171",
+          "graphicsHash": "7e34891f01573f99",
+          "sourceProvenanceHash": "f9343136626dea1c",
+          "trimmedPixelHash": "7ea6736cc72f9eea"
+        },
+        {
+          "physicalId": "rom-p1c-g4d-r01-vf03-ms166d316a-gfx0b542095",
+          "file": "physical/rom-p1c-g4d-r01-vf03-ms166d316a-gfx0b542095.png",
+          "resourceId": 1,
+          "resourceHex": "0x01",
+          "visualFrameId": 3,
+          "actorVisualProfileKey": 28,
+          "graphicsBank": 77,
+          "metaspriteHash": "166d316ae67e8b0e",
+          "graphicsHash": "0b5420952bf08edd",
+          "sourceProvenanceHash": "8d3f8b2001167de3",
+          "trimmedPixelHash": "d366e5b6d93ab3ad"
         },
         {
           "physicalId": "rom-p1c-g4d-r12-vf00-ms063daf3e-gfx2be1f6b5",
@@ -10108,26 +10873,28 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
           "trimmedPixelHash": "9b62dc2a76fd3dec"
         }
       ],
-      "signedNegativeInstances": 82,
+      "signedNegativeInstances": 86,
       "minOffset": -16,
       "maxOffset": 0,
       "minWidth": 32,
-      "maxWidth": 32,
+      "maxWidth": 40,
       "minHeight": 48,
       "maxHeight": 48
     },
     {
       "formId": "android_16",
       "actorVisualProfileKey": 29,
-      "physicalFrames": 7,
-      "frameInstances": 76,
-      "sequences": 4,
+      "physicalFrames": 11,
+      "frameInstances": 83,
+      "sequences": 5,
       "resources": [
         "0x00",
+        "0x0b",
         "0x2c"
       ],
       "resourceFrameInstances": {
         "0x00": 14,
+        "0x0b": 7,
         "0x2c": 62
       },
       "resourceProfileBlocked": [],
@@ -10171,6 +10938,58 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
           "graphicsHash": "98a1658d8caba215",
           "sourceProvenanceHash": "f478c8cb80b8b964",
           "trimmedPixelHash": "8346c0b6a95324cd"
+        },
+        {
+          "physicalId": "rom-p1d-g4e-r0b-vf02-ms54713525-gfxb7ce87b7",
+          "file": "physical/rom-p1d-g4e-r0b-vf02-ms54713525-gfxb7ce87b7.png",
+          "resourceId": 11,
+          "resourceHex": "0x0b",
+          "visualFrameId": 2,
+          "actorVisualProfileKey": 29,
+          "graphicsBank": 78,
+          "metaspriteHash": "547135258c057fbd",
+          "graphicsHash": "b7ce87b7dd04506a",
+          "sourceProvenanceHash": "8f126c04f1bde3e7",
+          "trimmedPixelHash": "92aab525acf3d2a9"
+        },
+        {
+          "physicalId": "rom-p1d-g4e-r0b-vf03-msf98c431b-gfx6fb63134",
+          "file": "physical/rom-p1d-g4e-r0b-vf03-msf98c431b-gfx6fb63134.png",
+          "resourceId": 11,
+          "resourceHex": "0x0b",
+          "visualFrameId": 3,
+          "actorVisualProfileKey": 29,
+          "graphicsBank": 78,
+          "metaspriteHash": "f98c431b61353045",
+          "graphicsHash": "6fb6313408ee55db",
+          "sourceProvenanceHash": "59f11bd506262a8a",
+          "trimmedPixelHash": "fde1e65fa33306e6"
+        },
+        {
+          "physicalId": "rom-p1d-g4e-r0b-vf04-msf9d45a1b-gfx2a06a25c",
+          "file": "physical/rom-p1d-g4e-r0b-vf04-msf9d45a1b-gfx2a06a25c.png",
+          "resourceId": 11,
+          "resourceHex": "0x0b",
+          "visualFrameId": 4,
+          "actorVisualProfileKey": 29,
+          "graphicsBank": 78,
+          "metaspriteHash": "f9d45a1b4e48ef38",
+          "graphicsHash": "2a06a25cd976c570",
+          "sourceProvenanceHash": "84a9a7997e74f57f",
+          "trimmedPixelHash": "0d539804c8787af2"
+        },
+        {
+          "physicalId": "rom-p1d-g4e-r0b-vf05-ms94a44c0b-gfx4614e802",
+          "file": "physical/rom-p1d-g4e-r0b-vf05-ms94a44c0b-gfx4614e802.png",
+          "resourceId": 11,
+          "resourceHex": "0x0b",
+          "visualFrameId": 5,
+          "actorVisualProfileKey": 29,
+          "graphicsBank": 78,
+          "metaspriteHash": "94a44c0b0ef70ef6",
+          "graphicsHash": "4614e80282f37a57",
+          "sourceProvenanceHash": "c4925f0b0760f60e",
+          "trimmedPixelHash": "b900da648ebf4979"
         },
         {
           "physicalId": "rom-p1d-g4e-r2c-vf00-ms88cb7910-gfx7436632d",
@@ -10227,7 +11046,7 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
       ],
       "signedNegativeInstances": 54,
       "minOffset": -16,
-      "maxOffset": 0,
+      "maxOffset": 6,
       "minWidth": 32,
       "maxWidth": 32,
       "minHeight": 48,
@@ -10704,17 +11523,21 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
     {
       "formId": "cell_imperfect",
       "actorVisualProfileKey": 34,
-      "physicalFrames": 17,
-      "frameInstances": 124,
-      "sequences": 10,
+      "physicalFrames": 25,
+      "frameInstances": 152,
+      "sequences": 14,
       "resources": [
         "0x00",
+        "0x01",
         "0x03",
+        "0x16",
         "0x2c"
       ],
       "resourceFrameInstances": {
         "0x00": 14,
+        "0x01": 12,
         "0x03": 48,
+        "0x16": 16,
         "0x2c": 62
       },
       "resourceProfileBlocked": [],
@@ -10758,6 +11581,45 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
           "graphicsHash": "20611f0df22350f2",
           "sourceProvenanceHash": "73350a79ac65c7f3",
           "trimmedPixelHash": "13d18864cb1444d1"
+        },
+        {
+          "physicalId": "rom-p22-g53-r01-vf00-ms93336808-gfx68c1a048",
+          "file": "physical/rom-p22-g53-r01-vf00-ms93336808-gfx68c1a048.png",
+          "resourceId": 1,
+          "resourceHex": "0x01",
+          "visualFrameId": 0,
+          "actorVisualProfileKey": 34,
+          "graphicsBank": 83,
+          "metaspriteHash": "93336808549d5b3b",
+          "graphicsHash": "68c1a04809b1675f",
+          "sourceProvenanceHash": "3d276378c46b39ae",
+          "trimmedPixelHash": "5ec9e8ce8203f44c"
+        },
+        {
+          "physicalId": "rom-p22-g53-r01-vf02-msa561af10-gfxbe2e10e7",
+          "file": "physical/rom-p22-g53-r01-vf02-msa561af10-gfxbe2e10e7.png",
+          "resourceId": 1,
+          "resourceHex": "0x01",
+          "visualFrameId": 2,
+          "actorVisualProfileKey": 34,
+          "graphicsBank": 83,
+          "metaspriteHash": "a561af1091b99171",
+          "graphicsHash": "be2e10e71d7591e6",
+          "sourceProvenanceHash": "36f97ff2fb29fda0",
+          "trimmedPixelHash": "ed29b5d80fb47ea5"
+        },
+        {
+          "physicalId": "rom-p22-g53-r01-vf03-ms166d316a-gfx6c0233fb",
+          "file": "physical/rom-p22-g53-r01-vf03-ms166d316a-gfx6c0233fb.png",
+          "resourceId": 1,
+          "resourceHex": "0x01",
+          "visualFrameId": 3,
+          "actorVisualProfileKey": 34,
+          "graphicsBank": 83,
+          "metaspriteHash": "166d316ae67e8b0e",
+          "graphicsHash": "6c0233fbc6720e3a",
+          "sourceProvenanceHash": "61d0c666e5e11270",
+          "trimmedPixelHash": "844dc1db5d9dadf2"
         },
         {
           "physicalId": "rom-p22-g53-r03-vf01-ms46655521-gfx8d584ba2",
@@ -10890,6 +11752,71 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
           "trimmedPixelHash": "c2931648e9f25061"
         },
         {
+          "physicalId": "rom-p22-g53-r16-vf01-ms7b901e0f-gfxdc39c2a2",
+          "file": "physical/rom-p22-g53-r16-vf01-ms7b901e0f-gfxdc39c2a2.png",
+          "resourceId": 22,
+          "resourceHex": "0x16",
+          "visualFrameId": 1,
+          "actorVisualProfileKey": 34,
+          "graphicsBank": 83,
+          "metaspriteHash": "7b901e0fdf090198",
+          "graphicsHash": "dc39c2a2f43aa7cb",
+          "sourceProvenanceHash": "33adf28ac89d50dc",
+          "trimmedPixelHash": "caae2a92f0de808e"
+        },
+        {
+          "physicalId": "rom-p22-g53-r16-vf02-ms2b449d2e-gfxa058ace7",
+          "file": "physical/rom-p22-g53-r16-vf02-ms2b449d2e-gfxa058ace7.png",
+          "resourceId": 22,
+          "resourceHex": "0x16",
+          "visualFrameId": 2,
+          "actorVisualProfileKey": 34,
+          "graphicsBank": 83,
+          "metaspriteHash": "2b449d2e292d8c19",
+          "graphicsHash": "a058ace7686b6d23",
+          "sourceProvenanceHash": "86ac32ad03031fdd",
+          "trimmedPixelHash": "192f7e75e0eea94a"
+        },
+        {
+          "physicalId": "rom-p22-g53-r16-vf03-ms758e9203-gfxab229ed0",
+          "file": "physical/rom-p22-g53-r16-vf03-ms758e9203-gfxab229ed0.png",
+          "resourceId": 22,
+          "resourceHex": "0x16",
+          "visualFrameId": 3,
+          "actorVisualProfileKey": 34,
+          "graphicsBank": 83,
+          "metaspriteHash": "758e9203f5750c68",
+          "graphicsHash": "ab229ed0f04a16c4",
+          "sourceProvenanceHash": "af53f9adbc488d82",
+          "trimmedPixelHash": "f652547d2957f8db"
+        },
+        {
+          "physicalId": "rom-p22-g53-r16-vf04-msee31647b-gfx7ac3521c",
+          "file": "physical/rom-p22-g53-r16-vf04-msee31647b-gfx7ac3521c.png",
+          "resourceId": 22,
+          "resourceHex": "0x16",
+          "visualFrameId": 4,
+          "actorVisualProfileKey": 34,
+          "graphicsBank": 83,
+          "metaspriteHash": "ee31647b072440f1",
+          "graphicsHash": "7ac3521c142947a7",
+          "sourceProvenanceHash": "f06fb4e693352b5d",
+          "trimmedPixelHash": "36d1c0e4605f86e9"
+        },
+        {
+          "physicalId": "rom-p22-g53-r16-vf05-mscf4903df-gfx9f56a82b",
+          "file": "physical/rom-p22-g53-r16-vf05-mscf4903df-gfx9f56a82b.png",
+          "resourceId": 22,
+          "resourceHex": "0x16",
+          "visualFrameId": 5,
+          "actorVisualProfileKey": 34,
+          "graphicsBank": 83,
+          "metaspriteHash": "cf4903df318451fa",
+          "graphicsHash": "9f56a82b3111f813",
+          "sourceProvenanceHash": "c677c90dd550c1e5",
+          "trimmedPixelHash": "48dd04c01db60aea"
+        },
+        {
           "physicalId": "rom-p22-g53-r2c-vf00-ms88cb7910-gfx0116a7bc",
           "file": "physical/rom-p22-g53-r2c-vf00-ms88cb7910-gfx0116a7bc.png",
           "resourceId": 44,
@@ -10942,28 +11869,32 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
           "trimmedPixelHash": "b483724ee0641bf0"
         }
       ],
-      "signedNegativeInstances": 78,
+      "signedNegativeInstances": 96,
       "minOffset": -16,
       "maxOffset": 5,
       "minWidth": 32,
-      "maxWidth": 32,
+      "maxWidth": 40,
       "minHeight": 48,
       "maxHeight": 48
     },
     {
       "formId": "cell_semi",
       "actorVisualProfileKey": 35,
-      "physicalFrames": 17,
-      "frameInstances": 124,
-      "sequences": 10,
+      "physicalFrames": 25,
+      "frameInstances": 152,
+      "sequences": 14,
       "resources": [
         "0x00",
+        "0x01",
         "0x03",
+        "0x16",
         "0x2c"
       ],
       "resourceFrameInstances": {
         "0x00": 14,
+        "0x01": 12,
         "0x03": 48,
+        "0x16": 16,
         "0x2c": 62
       },
       "resourceProfileBlocked": [],
@@ -11007,6 +11938,45 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
           "graphicsHash": "1083de58b199fb6a",
           "sourceProvenanceHash": "a4d19a85d6a1f0e9",
           "trimmedPixelHash": "5a42f4ae19becf7c"
+        },
+        {
+          "physicalId": "rom-p23-g54-r01-vf00-ms93336808-gfx1669be1b",
+          "file": "physical/rom-p23-g54-r01-vf00-ms93336808-gfx1669be1b.png",
+          "resourceId": 1,
+          "resourceHex": "0x01",
+          "visualFrameId": 0,
+          "actorVisualProfileKey": 35,
+          "graphicsBank": 84,
+          "metaspriteHash": "93336808549d5b3b",
+          "graphicsHash": "1669be1b061444af",
+          "sourceProvenanceHash": "c80f58ea969861d6",
+          "trimmedPixelHash": "b57c3c28ebcc0dd3"
+        },
+        {
+          "physicalId": "rom-p23-g54-r01-vf02-msa561af10-gfx5b3b1259",
+          "file": "physical/rom-p23-g54-r01-vf02-msa561af10-gfx5b3b1259.png",
+          "resourceId": 1,
+          "resourceHex": "0x01",
+          "visualFrameId": 2,
+          "actorVisualProfileKey": 35,
+          "graphicsBank": 84,
+          "metaspriteHash": "a561af1091b99171",
+          "graphicsHash": "5b3b125973ff59f5",
+          "sourceProvenanceHash": "83114aabac148f86",
+          "trimmedPixelHash": "8755e724cbbed1f1"
+        },
+        {
+          "physicalId": "rom-p23-g54-r01-vf03-ms166d316a-gfx8763a07e",
+          "file": "physical/rom-p23-g54-r01-vf03-ms166d316a-gfx8763a07e.png",
+          "resourceId": 1,
+          "resourceHex": "0x01",
+          "visualFrameId": 3,
+          "actorVisualProfileKey": 35,
+          "graphicsBank": 84,
+          "metaspriteHash": "166d316ae67e8b0e",
+          "graphicsHash": "8763a07e6098e774",
+          "sourceProvenanceHash": "27f992151df0ba5a",
+          "trimmedPixelHash": "7ecf4f1f7dc46110"
         },
         {
           "physicalId": "rom-p23-g54-r03-vf01-ms46655521-gfx5f7c2b72",
@@ -11139,6 +12109,71 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
           "trimmedPixelHash": "bc9a2524487bbb2a"
         },
         {
+          "physicalId": "rom-p23-g54-r16-vf01-ms7b901e0f-gfxaa5d6d93",
+          "file": "physical/rom-p23-g54-r16-vf01-ms7b901e0f-gfxaa5d6d93.png",
+          "resourceId": 22,
+          "resourceHex": "0x16",
+          "visualFrameId": 1,
+          "actorVisualProfileKey": 35,
+          "graphicsBank": 84,
+          "metaspriteHash": "7b901e0fdf090198",
+          "graphicsHash": "aa5d6d93339154a8",
+          "sourceProvenanceHash": "3db4a3f940030ec1",
+          "trimmedPixelHash": "67953cf08c037c80"
+        },
+        {
+          "physicalId": "rom-p23-g54-r16-vf02-ms2b449d2e-gfxdf8158a7",
+          "file": "physical/rom-p23-g54-r16-vf02-ms2b449d2e-gfxdf8158a7.png",
+          "resourceId": 22,
+          "resourceHex": "0x16",
+          "visualFrameId": 2,
+          "actorVisualProfileKey": 35,
+          "graphicsBank": 84,
+          "metaspriteHash": "2b449d2e292d8c19",
+          "graphicsHash": "df8158a73de9d61c",
+          "sourceProvenanceHash": "4576a671cc5bc059",
+          "trimmedPixelHash": "fffa725f9a214ce6"
+        },
+        {
+          "physicalId": "rom-p23-g54-r16-vf03-ms758e9203-gfx648ac633",
+          "file": "physical/rom-p23-g54-r16-vf03-ms758e9203-gfx648ac633.png",
+          "resourceId": 22,
+          "resourceHex": "0x16",
+          "visualFrameId": 3,
+          "actorVisualProfileKey": 35,
+          "graphicsBank": 84,
+          "metaspriteHash": "758e9203f5750c68",
+          "graphicsHash": "648ac633cc68913d",
+          "sourceProvenanceHash": "3e8eba1ea3e11a4e",
+          "trimmedPixelHash": "38cbf8e979e6ba49"
+        },
+        {
+          "physicalId": "rom-p23-g54-r16-vf04-msee31647b-gfx0c863097",
+          "file": "physical/rom-p23-g54-r16-vf04-msee31647b-gfx0c863097.png",
+          "resourceId": 22,
+          "resourceHex": "0x16",
+          "visualFrameId": 4,
+          "actorVisualProfileKey": 35,
+          "graphicsBank": 84,
+          "metaspriteHash": "ee31647b072440f1",
+          "graphicsHash": "0c86309731900637",
+          "sourceProvenanceHash": "03c6ccbde68773a9",
+          "trimmedPixelHash": "498d40c363185682"
+        },
+        {
+          "physicalId": "rom-p23-g54-r16-vf05-mscf4903df-gfx7aff7b86",
+          "file": "physical/rom-p23-g54-r16-vf05-mscf4903df-gfx7aff7b86.png",
+          "resourceId": 22,
+          "resourceHex": "0x16",
+          "visualFrameId": 5,
+          "actorVisualProfileKey": 35,
+          "graphicsBank": 84,
+          "metaspriteHash": "cf4903df318451fa",
+          "graphicsHash": "7aff7b86f139a5f3",
+          "sourceProvenanceHash": "2e9651c302dfda9b",
+          "trimmedPixelHash": "9c2285a8f5990c86"
+        },
+        {
           "physicalId": "rom-p23-g54-r2c-vf00-ms88cb7910-gfx762dbc2e",
           "file": "physical/rom-p23-g54-r2c-vf00-ms88cb7910-gfx762dbc2e.png",
           "resourceId": 44,
@@ -11191,28 +12226,32 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
           "trimmedPixelHash": "a5ab9e7c0cd01c0f"
         }
       ],
-      "signedNegativeInstances": 78,
+      "signedNegativeInstances": 96,
       "minOffset": -16,
       "maxOffset": 5,
       "minWidth": 32,
-      "maxWidth": 32,
+      "maxWidth": 40,
       "minHeight": 48,
       "maxHeight": 48
     },
     {
       "formId": "cell_perfect",
       "actorVisualProfileKey": 36,
-      "physicalFrames": 17,
-      "frameInstances": 124,
-      "sequences": 10,
+      "physicalFrames": 25,
+      "frameInstances": 152,
+      "sequences": 14,
       "resources": [
         "0x00",
+        "0x01",
         "0x03",
+        "0x16",
         "0x2c"
       ],
       "resourceFrameInstances": {
         "0x00": 14,
+        "0x01": 12,
         "0x03": 48,
+        "0x16": 16,
         "0x2c": 62
       },
       "resourceProfileBlocked": [],
@@ -11256,6 +12295,45 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
           "graphicsHash": "cb194a49f9b536ef",
           "sourceProvenanceHash": "a2d627145079a1a7",
           "trimmedPixelHash": "0df21475255f59a1"
+        },
+        {
+          "physicalId": "rom-p24-g55-r01-vf00-ms93336808-gfx5b314c7a",
+          "file": "physical/rom-p24-g55-r01-vf00-ms93336808-gfx5b314c7a.png",
+          "resourceId": 1,
+          "resourceHex": "0x01",
+          "visualFrameId": 0,
+          "actorVisualProfileKey": 36,
+          "graphicsBank": 85,
+          "metaspriteHash": "93336808549d5b3b",
+          "graphicsHash": "5b314c7ac64ebccd",
+          "sourceProvenanceHash": "c7408e8833c59de3",
+          "trimmedPixelHash": "03f58a25f040b4c0"
+        },
+        {
+          "physicalId": "rom-p24-g55-r01-vf02-msa561af10-gfx0cd46df4",
+          "file": "physical/rom-p24-g55-r01-vf02-msa561af10-gfx0cd46df4.png",
+          "resourceId": 1,
+          "resourceHex": "0x01",
+          "visualFrameId": 2,
+          "actorVisualProfileKey": 36,
+          "graphicsBank": 85,
+          "metaspriteHash": "a561af1091b99171",
+          "graphicsHash": "0cd46df44f74c9e9",
+          "sourceProvenanceHash": "d1ad5101a166f344",
+          "trimmedPixelHash": "49490714670cc80a"
+        },
+        {
+          "physicalId": "rom-p24-g55-r01-vf03-ms166d316a-gfx6e5616bf",
+          "file": "physical/rom-p24-g55-r01-vf03-ms166d316a-gfx6e5616bf.png",
+          "resourceId": 1,
+          "resourceHex": "0x01",
+          "visualFrameId": 3,
+          "actorVisualProfileKey": 36,
+          "graphicsBank": 85,
+          "metaspriteHash": "166d316ae67e8b0e",
+          "graphicsHash": "6e5616bfa6aeafce",
+          "sourceProvenanceHash": "2f670ef858e7975e",
+          "trimmedPixelHash": "e2d671ece6d95051"
         },
         {
           "physicalId": "rom-p24-g55-r03-vf01-ms46655521-gfx61947cc9",
@@ -11388,6 +12466,71 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
           "trimmedPixelHash": "8608cb21dfb0f445"
         },
         {
+          "physicalId": "rom-p24-g55-r16-vf01-ms7b901e0f-gfxbfb2f4b8",
+          "file": "physical/rom-p24-g55-r16-vf01-ms7b901e0f-gfxbfb2f4b8.png",
+          "resourceId": 22,
+          "resourceHex": "0x16",
+          "visualFrameId": 1,
+          "actorVisualProfileKey": 36,
+          "graphicsBank": 85,
+          "metaspriteHash": "7b901e0fdf090198",
+          "graphicsHash": "bfb2f4b8affc2241",
+          "sourceProvenanceHash": "ecae8cf070b90079",
+          "trimmedPixelHash": "8a87e58e078334c2"
+        },
+        {
+          "physicalId": "rom-p24-g55-r16-vf02-ms2b449d2e-gfx561f09a8",
+          "file": "physical/rom-p24-g55-r16-vf02-ms2b449d2e-gfx561f09a8.png",
+          "resourceId": 22,
+          "resourceHex": "0x16",
+          "visualFrameId": 2,
+          "actorVisualProfileKey": 36,
+          "graphicsBank": 85,
+          "metaspriteHash": "2b449d2e292d8c19",
+          "graphicsHash": "561f09a88184b851",
+          "sourceProvenanceHash": "6a70c9cb74599f74",
+          "trimmedPixelHash": "7ac621defcedefcf"
+        },
+        {
+          "physicalId": "rom-p24-g55-r16-vf03-ms758e9203-gfx34382fe3",
+          "file": "physical/rom-p24-g55-r16-vf03-ms758e9203-gfx34382fe3.png",
+          "resourceId": 22,
+          "resourceHex": "0x16",
+          "visualFrameId": 3,
+          "actorVisualProfileKey": 36,
+          "graphicsBank": 85,
+          "metaspriteHash": "758e9203f5750c68",
+          "graphicsHash": "34382fe302052af6",
+          "sourceProvenanceHash": "b3c645409038daf4",
+          "trimmedPixelHash": "1ae8889e4e9b1b32"
+        },
+        {
+          "physicalId": "rom-p24-g55-r16-vf04-msee31647b-gfx4e39f7cc",
+          "file": "physical/rom-p24-g55-r16-vf04-msee31647b-gfx4e39f7cc.png",
+          "resourceId": 22,
+          "resourceHex": "0x16",
+          "visualFrameId": 4,
+          "actorVisualProfileKey": 36,
+          "graphicsBank": 85,
+          "metaspriteHash": "ee31647b072440f1",
+          "graphicsHash": "4e39f7cc8a251a34",
+          "sourceProvenanceHash": "a27b0e28599ff40d",
+          "trimmedPixelHash": "c8cd3e8a9e862598"
+        },
+        {
+          "physicalId": "rom-p24-g55-r16-vf05-mscf4903df-gfx48f25153",
+          "file": "physical/rom-p24-g55-r16-vf05-mscf4903df-gfx48f25153.png",
+          "resourceId": 22,
+          "resourceHex": "0x16",
+          "visualFrameId": 5,
+          "actorVisualProfileKey": 36,
+          "graphicsBank": 85,
+          "metaspriteHash": "cf4903df318451fa",
+          "graphicsHash": "48f25153450f1481",
+          "sourceProvenanceHash": "bf8b36fb3b51e814",
+          "trimmedPixelHash": "9cc25338d2bfb6b8"
+        },
+        {
           "physicalId": "rom-p24-g55-r2c-vf00-ms88cb7910-gfx7c1ac547",
           "file": "physical/rom-p24-g55-r2c-vf00-ms88cb7910-gfx7c1ac547.png",
           "resourceId": 44,
@@ -11440,28 +12583,32 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
           "trimmedPixelHash": "45be859ea757d75a"
         }
       ],
-      "signedNegativeInstances": 78,
+      "signedNegativeInstances": 96,
       "minOffset": -16,
       "maxOffset": 5,
       "minWidth": 32,
-      "maxWidth": 32,
+      "maxWidth": 40,
       "minHeight": 48,
       "maxHeight": 48
     },
     {
       "formId": "cell_jr",
       "actorVisualProfileKey": 37,
-      "physicalFrames": 17,
-      "frameInstances": 124,
-      "sequences": 10,
+      "physicalFrames": 25,
+      "frameInstances": 152,
+      "sequences": 14,
       "resources": [
         "0x00",
+        "0x01",
         "0x03",
+        "0x16",
         "0x2c"
       ],
       "resourceFrameInstances": {
         "0x00": 14,
+        "0x01": 12,
         "0x03": 48,
+        "0x16": 16,
         "0x2c": 62
       },
       "resourceProfileBlocked": [],
@@ -11505,6 +12652,45 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
           "graphicsHash": "e80fbaabae55d07f",
           "sourceProvenanceHash": "19e74b6e99fd720e",
           "trimmedPixelHash": "218b631262d7287f"
+        },
+        {
+          "physicalId": "rom-p25-g56-r01-vf00-ms93336808-gfxe0fb46c2",
+          "file": "physical/rom-p25-g56-r01-vf00-ms93336808-gfxe0fb46c2.png",
+          "resourceId": 1,
+          "resourceHex": "0x01",
+          "visualFrameId": 0,
+          "actorVisualProfileKey": 37,
+          "graphicsBank": 86,
+          "metaspriteHash": "93336808549d5b3b",
+          "graphicsHash": "e0fb46c20426173b",
+          "sourceProvenanceHash": "f48a3d201d12227e",
+          "trimmedPixelHash": "f35021077085280e"
+        },
+        {
+          "physicalId": "rom-p25-g56-r01-vf02-msa561af10-gfxac96f71d",
+          "file": "physical/rom-p25-g56-r01-vf02-msa561af10-gfxac96f71d.png",
+          "resourceId": 1,
+          "resourceHex": "0x01",
+          "visualFrameId": 2,
+          "actorVisualProfileKey": 37,
+          "graphicsBank": 86,
+          "metaspriteHash": "a561af1091b99171",
+          "graphicsHash": "ac96f71dffc6f867",
+          "sourceProvenanceHash": "79a12fb04e8523cd",
+          "trimmedPixelHash": "73186167f247e8ea"
+        },
+        {
+          "physicalId": "rom-p25-g56-r01-vf03-ms166d316a-gfxf79e0048",
+          "file": "physical/rom-p25-g56-r01-vf03-ms166d316a-gfxf79e0048.png",
+          "resourceId": 1,
+          "resourceHex": "0x01",
+          "visualFrameId": 3,
+          "actorVisualProfileKey": 37,
+          "graphicsBank": 86,
+          "metaspriteHash": "166d316ae67e8b0e",
+          "graphicsHash": "f79e004882d490e8",
+          "sourceProvenanceHash": "78fcc6a980428a4a",
+          "trimmedPixelHash": "853a50664322cfb0"
         },
         {
           "physicalId": "rom-p25-g56-r03-vf01-ms46655521-gfx0d03adc2",
@@ -11637,6 +12823,71 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
           "trimmedPixelHash": "bdd400d822622372"
         },
         {
+          "physicalId": "rom-p25-g56-r16-vf01-ms7b901e0f-gfx44df2263",
+          "file": "physical/rom-p25-g56-r16-vf01-ms7b901e0f-gfx44df2263.png",
+          "resourceId": 22,
+          "resourceHex": "0x16",
+          "visualFrameId": 1,
+          "actorVisualProfileKey": 37,
+          "graphicsBank": 86,
+          "metaspriteHash": "7b901e0fdf090198",
+          "graphicsHash": "44df22634d92c2d7",
+          "sourceProvenanceHash": "067fb98ad5e14c01",
+          "trimmedPixelHash": "f92edbdba2c3688b"
+        },
+        {
+          "physicalId": "rom-p25-g56-r16-vf02-ms2b449d2e-gfx67252c20",
+          "file": "physical/rom-p25-g56-r16-vf02-ms2b449d2e-gfx67252c20.png",
+          "resourceId": 22,
+          "resourceHex": "0x16",
+          "visualFrameId": 2,
+          "actorVisualProfileKey": 37,
+          "graphicsBank": 86,
+          "metaspriteHash": "2b449d2e292d8c19",
+          "graphicsHash": "67252c2059c97b60",
+          "sourceProvenanceHash": "40e7f5425f052ad4",
+          "trimmedPixelHash": "8c5d7338c7c9bee5"
+        },
+        {
+          "physicalId": "rom-p25-g56-r16-vf03-ms758e9203-gfx001ae3f9",
+          "file": "physical/rom-p25-g56-r16-vf03-ms758e9203-gfx001ae3f9.png",
+          "resourceId": 22,
+          "resourceHex": "0x16",
+          "visualFrameId": 3,
+          "actorVisualProfileKey": 37,
+          "graphicsBank": 86,
+          "metaspriteHash": "758e9203f5750c68",
+          "graphicsHash": "001ae3f9ee2baa52",
+          "sourceProvenanceHash": "d3e6e626ce4bfd54",
+          "trimmedPixelHash": "42b0d53fe0c9b9a6"
+        },
+        {
+          "physicalId": "rom-p25-g56-r16-vf04-msee31647b-gfx688e56aa",
+          "file": "physical/rom-p25-g56-r16-vf04-msee31647b-gfx688e56aa.png",
+          "resourceId": 22,
+          "resourceHex": "0x16",
+          "visualFrameId": 4,
+          "actorVisualProfileKey": 37,
+          "graphicsBank": 86,
+          "metaspriteHash": "ee31647b072440f1",
+          "graphicsHash": "688e56aae4bdc536",
+          "sourceProvenanceHash": "673ca36e1411e68b",
+          "trimmedPixelHash": "bec7d4f1f2e85afc"
+        },
+        {
+          "physicalId": "rom-p25-g56-r16-vf05-mscf4903df-gfx4e6f4de8",
+          "file": "physical/rom-p25-g56-r16-vf05-mscf4903df-gfx4e6f4de8.png",
+          "resourceId": 22,
+          "resourceHex": "0x16",
+          "visualFrameId": 5,
+          "actorVisualProfileKey": 37,
+          "graphicsBank": 86,
+          "metaspriteHash": "cf4903df318451fa",
+          "graphicsHash": "4e6f4de839e32a5b",
+          "sourceProvenanceHash": "bf9790432e6dc4a6",
+          "trimmedPixelHash": "59554e2fd3a20a70"
+        },
+        {
           "physicalId": "rom-p25-g56-r2c-vf00-ms88cb7910-gfx448e8fee",
           "file": "physical/rom-p25-g56-r2c-vf00-ms88cb7910-gfx448e8fee.png",
           "resourceId": 44,
@@ -11689,11 +12940,11 @@ export const ROM_PHYSICAL_CORPUS_SUMMARY = {
           "trimmedPixelHash": "f44ca91e26cc5859"
         }
       ],
-      "signedNegativeInstances": 78,
+      "signedNegativeInstances": 96,
       "minOffset": -16,
       "maxOffset": 5,
       "minWidth": 32,
-      "maxWidth": 32,
+      "maxWidth": 40,
       "minHeight": 48,
       "maxHeight": 48
     },

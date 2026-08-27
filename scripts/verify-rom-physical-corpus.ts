@@ -22,7 +22,7 @@ const ROM_SPAIN_SHA256 = 'bd1df5d6653be9e262f96db3bcdd7bb8ae0cad6186c16f8c1e8eba
 const SCHEMA_VERSION = 2;
 const PHYSICAL_RENDERER_SCHEMA = 3;
 const OFFSET_ENCODING = 's8';
-const FIGHTER_PHYSICAL_RESOURCE_IDS = new Set([0x00, 0x03, 0x04, 0x05, 0x08, 0x12, 0x2c, 0x3f]);
+const FIGHTER_PHYSICAL_RESOURCE_IDS = new Set([0x00, 0x01, 0x03, 0x04, 0x05, 0x08, 0x09, 0x0b, 0x0f, 0x12, 0x16, 0x22, 0x2c, 0x3f]);
 const MAX_REASONABLE_DIMENSION = 128;
 
 let failures = 0;
