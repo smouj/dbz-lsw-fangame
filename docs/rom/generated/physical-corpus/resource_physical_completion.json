@@ -3,8 +3,8 @@
   "scope": "AnimationResource physical promotion matrix; RENDERABLE means promoted into the certified Fighter corpus, not merely decoded.",
   "totals": {
     "resources": 66,
-    "renderable": 6,
-    "frameStreamOnly": 8,
+    "renderable": 7,
+    "frameStreamOnly": 7,
     "metaspritePending": 24,
     "graphicsPending": 4,
     "handlerDependent": 18,
@@ -1627,12 +1627,12 @@
       ],
       "sequences": 2,
       "frames": 26,
-      "physicalLinkage": "FRAME_STREAM_ONLY",
-      "profilesRendered": 0,
-      "physicalIds": 0,
-      "frameInstances": 0,
-      "status": "FRAME_STREAM_ONLY",
-      "blockingReason": "Frame stream is decoded, but this resource has not been promoted through metasprite/graphics/profile rendering invariants yet."
+      "physicalLinkage": "FULL",
+      "profilesRendered": 3,
+      "physicalIds": 18,
+      "frameInstances": 78,
+      "status": "RENDERABLE",
+      "blockingReason": "—"
     },
     {
       "resourceId": 64,

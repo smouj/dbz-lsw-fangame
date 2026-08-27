@@ -2,8 +2,8 @@
 
 This matrix separates decoded ROM resources from Fighter physical resources promoted into the certified 48-form corpus.
 
-Renderable resources: 6/66
-Frame-stream-only resources: 8
+Renderable resources: 7/66
+Frame-stream-only resources: 7
 Handler-dependent resources: 18
 Dynamic-pending resources: 5
 Unreferenced resources: 1
@@ -73,6 +73,6 @@ Unreferenced resources: 1
 | `0x3c` | 1 | 0 | 0 | `PARTIAL` | 0 | 0 | 0 | `METASPRITE_PENDING` | Standard damage handler resources are referenced by the card table, but their frame stream has not been extracted into the static ROM sequence catalog yet. |
 | `0x3d` | 1 | 0 | 0 | `PARTIAL` | 0 | 0 | 0 | `METASPRITE_PENDING` | Standard damage handler resources are referenced by the card table, but their frame stream has not been extracted into the static ROM sequence catalog yet. |
 | `0x3e` | 1 | 0 | 0 | `PARTIAL` | 0 | 0 | 0 | `METASPRITE_PENDING` | Standard damage handler resources are referenced by the card table, but their frame stream has not been extracted into the static ROM sequence catalog yet. |
-| `0x3f` | 1 | 2 | 26 | `FRAME_STREAM_ONLY` | 0 | 0 | 0 | `FRAME_STREAM_ONLY` | Frame stream is decoded, but this resource has not been promoted through metasprite/graphics/profile rendering invariants yet. |
+| `0x3f` | 1 | 2 | 26 | `FULL` | 3 | 18 | 78 | `RENDERABLE` | — |
 | `0x40` | 1 | 0 | 0 | `NONE` | 0 | 0 | 0 | `DYNAMIC_PENDING` | Special/multi-actor handler owns sequence and slot selection at runtime; static card fields preserve the resource id but cannot close actor binding alone. |
 | `0x41` | 1 | 0 | 0 | `NONE` | 0 | 0 | 0 | `DYNAMIC_PENDING` | Special handler owns the sequence branch at runtime; static card fields preserve the resource id but do not prove the selected sequence. |

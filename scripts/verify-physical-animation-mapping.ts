@@ -2,6 +2,7 @@ import { existsSync, readFileSync } from 'fs';
 import { resolve } from 'path';
 import {
   PHYSICAL_FRAME_RECONCILIATION,
+  PHYSICALLY_RENDERED_RESOURCE_HEXES,
   physicalFrameReconciliationSummary,
   staticGapCauseForResourceId,
   type PhysicalFrameMappingStatus,
@@ -23,7 +24,7 @@ function signed(byte: number): number {
 }
 
 const ROOT = process.cwd();
-const statusValues: PhysicalFrameMappingStatus[] = ['EXACT', 'SHARED', 'COMPOSITE', 'UNRESOLVED'];
+const statusValues: PhysicalFrameMappingStatus[] = ['EXACT', 'SHARED', 'COMPOSITE', 'ROM_PHYSICAL', 'UNRESOLVED'];
 const generatedAgain = JSON.stringify(PHYSICAL_FRAME_RECONCILIATION);
 const decodedResourceCount = ANIMATION_RESOURCE_CATALOG.filter((r) => r.status === 'DECODED').length;
 
@@ -52,6 +53,7 @@ for (const resource of PHYSICAL_FRAME_RECONCILIATION) {
   let exact = 0;
   let shared = 0;
   let composite = 0;
+  let romPhysical = 0;
   let unresolved = 0;
   for (const entry of resource.frames) {
     check(`frame:${resource.resourceHex}:${entry.sequenceIndex}.${entry.frameIndex}:status`, statusValues.includes(entry.assetMapping.status));
@@ -64,7 +66,7 @@ for (const resource of PHYSICAL_FRAME_RECONCILIATION) {
     check(`frame:${resource.resourceHex}:${entry.sequenceIndex}.${entry.frameIndex}:raw offsetY`, signed(entry.rom.raw[2]) === entry.rom.offsetY);
     check(`frame:${resource.resourceHex}:${entry.sequenceIndex}.${entry.frameIndex}:raw offsetX`, signed(entry.rom.raw[3]) === entry.rom.offsetX);
 
-    if (entry.assetMapping.status !== 'UNRESOLVED') {
+    if (entry.assetMapping.status === 'EXACT' || entry.assetMapping.status === 'SHARED' || entry.assetMapping.status === 'COMPOSITE') {
       check(`frame:${resource.resourceHex}:${entry.sequenceIndex}.${entry.frameIndex}:physicalFrame present`, !!entry.assetMapping.physicalFrame);
       check(`frame:${resource.resourceHex}:${entry.sequenceIndex}.${entry.frameIndex}:manifestPose present`, !!entry.assetMapping.manifestPose);
       check(`frame:${resource.resourceHex}:${entry.sequenceIndex}.${entry.frameIndex}:manifestIndex present`, entry.assetMapping.manifestIndex != null);
@@ -75,6 +77,11 @@ for (const resource of PHYSICAL_FRAME_RECONCILIATION) {
           check(`frame:${resource.resourceHex}:${entry.sequenceIndex}.${entry.frameIndex}:${formId}:sequence index valid`, manifestFramesFor(formId, entry.assetMapping.manifestPose!).some(f => f.index === entry.assetMapping.manifestIndex));
         }
       }
+    }
+
+    if (entry.assetMapping.status === 'ROM_PHYSICAL') {
+      check(`frame:${resource.resourceHex}:${entry.sequenceIndex}.${entry.frameIndex}:romPhysical never fabricates manifest`, entry.assetMapping.physicalFrame == null && entry.assetMapping.manifestPose == null && entry.assetMapping.manifestIndex == null);
+      check(`frame:${resource.resourceHex}:${entry.sequenceIndex}.${entry.frameIndex}:romPhysical physically rendered resource`, PHYSICALLY_RENDERED_RESOURCE_HEXES.has(resource.resourceHex));
     }
 
     if (entry.assetMapping.status === 'SHARED') {
@@ -94,11 +101,13 @@ for (const resource of PHYSICAL_FRAME_RECONCILIATION) {
     if (entry.assetMapping.status === 'EXACT') exact++;
     if (entry.assetMapping.status === 'SHARED') shared++;
     if (entry.assetMapping.status === 'COMPOSITE') composite++;
+    if (entry.assetMapping.status === 'ROM_PHYSICAL') romPhysical++;
     if (entry.assetMapping.status === 'UNRESOLVED') unresolved++;
   }
   check(`resource:${resource.resourceHex}:summary exact`, resource.summary.exact === exact, `${resource.summary.exact}/${exact}`);
   check(`resource:${resource.resourceHex}:summary shared`, resource.summary.shared === shared, `${resource.summary.shared}/${shared}`);
   check(`resource:${resource.resourceHex}:summary composite`, resource.summary.composite === composite, `${resource.summary.composite}/${composite}`);
+  check(`resource:${resource.resourceHex}:summary romPhysical`, resource.summary.romPhysical === romPhysical, `${resource.summary.romPhysical}/${romPhysical}`);
   check(`resource:${resource.resourceHex}:summary unresolved`, resource.summary.unresolved === unresolved, `${resource.summary.unresolved}/${unresolved}`);
 }
 
@@ -112,7 +121,7 @@ for (const resource of ANIMATION_RESOURCE_CATALOG) {
 const summary = physicalFrameReconciliationSummary();
 check('summary:resources', summary.resources === decodedResourceCount, String(summary.resources));
 check('summary:romFrames', summary.romFrames > 0, String(summary.romFrames));
-check('summary:counts add up', summary.exact + summary.shared + summary.composite + summary.unresolved === summary.romFrames);
+check('summary:counts add up', summary.exact + summary.shared + summary.composite + summary.romPhysical + summary.unresolved === summary.romFrames);
 
 console.log('═══ PHYSICAL FRAME RECONCILIATION ═══');
 console.log(`resources=${summary.resources}`);
@@ -120,6 +129,7 @@ console.log(`romFrames=${summary.romFrames}`);
 console.log(`EXACT=${summary.exact}`);
 console.log(`SHARED=${summary.shared}`);
 console.log(`COMPOSITE=${summary.composite}`);
+console.log(`ROM_PHYSICAL=${summary.romPhysical}`);
 console.log(`UNRESOLVED=${summary.unresolved}`);
 console.log(`statuses=${Object.entries(summary.byStatus).map(([k, v]) => `${k}:${v}`).join(' · ')}`);
 console.log(failures === 0 ? 'ALL CHECKS PASSED ✅' : `${failures} CHECKS FAILED ❌`);

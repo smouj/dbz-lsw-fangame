@@ -20,6 +20,7 @@ export type CardPhysicalCoverageStatus =
   | 'NO_ROM_ANIMATION'
   | 'ROM_RESOURCE_MISSING'
   | 'RESOURCE_DECODED_COMPLETE'
+  | 'RESOURCE_DECODED_ROM_PHYSICAL'
   | 'RESOURCE_DECODED_PARTIAL'
   | 'RESOURCE_DECODED_UNRESOLVED'
   | 'RESOURCE_PARTIAL'
@@ -37,6 +38,7 @@ export interface CardPhysicalCoverageRow {
   exact: number;
   shared: number;
   composite: number;
+  romPhysical: number;
   unresolved: number;
   mappedFrames: number;
   mappingSummary: PhysicalMappingSummary | null;
@@ -54,6 +56,7 @@ export interface CardPhysicalCoverageSummary {
   missingResource: number;
   romFrames: number;
   mappedFrames: number;
+  romPhysicalFrames: number;
   unresolvedFrames: number;
   byStatus: Record<CardPhysicalCoverageStatus, number>;
 }
@@ -71,8 +74,9 @@ function emptySummary(): PhysicalMappingSummary {
     exact: 0,
     shared: 0,
     composite: 0,
+    romPhysical: 0,
     unresolved: 0,
-    byStatus: { EXACT: 0, SHARED: 0, COMPOSITE: 0, UNRESOLVED: 0 },
+    byStatus: { EXACT: 0, SHARED: 0, COMPOSITE: 0, ROM_PHYSICAL: 0, UNRESOLVED: 0 },
   };
 }
 
@@ -85,7 +89,8 @@ function statusFor(
   if (resource.status === 'SPECIAL') return 'RESOURCE_SPECIAL';
   if (resource.status === 'UNKNOWN') return 'RESOURCE_UNKNOWN';
   if (!summary || summary.romFrames === 0 || summary.unresolved === summary.romFrames) return 'RESOURCE_DECODED_UNRESOLVED';
-  if (summary.unresolved === 0) return 'RESOURCE_DECODED_COMPLETE';
+  if (summary.romPhysical === summary.romFrames) return 'RESOURCE_DECODED_ROM_PHYSICAL';
+  if (summary.unresolved === 0 && summary.romPhysical === 0) return 'RESOURCE_DECODED_COMPLETE';
   return 'RESOURCE_DECODED_PARTIAL';
 }
 
@@ -104,6 +109,7 @@ export function cardPhysicalCoverageForCard(card: CardDef): CardPhysicalCoverage
       exact: 0,
       shared: 0,
       composite: 0,
+      romPhysical: 0,
       unresolved: 0,
       mappedFrames: 0,
       mappingSummary: emptySummary(),
@@ -117,6 +123,7 @@ export function cardPhysicalCoverageForCard(card: CardDef): CardPhysicalCoverage
   const exact = summary?.exact ?? 0;
   const shared = summary?.shared ?? 0;
   const composite = summary?.composite ?? 0;
+  const romPhysical = summary?.romPhysical ?? 0;
 
   return {
     card: { id: card.id, name: card.name, type: card.type, effect: card.effect },
@@ -129,6 +136,7 @@ export function cardPhysicalCoverageForCard(card: CardDef): CardPhysicalCoverage
     exact,
     shared,
     composite,
+    romPhysical,
     unresolved: summary?.unresolved ?? 0,
     mappedFrames: exact + shared,
     mappingSummary: summary,
@@ -151,6 +159,7 @@ export function cardPhysicalCoverageSummary(): CardPhysicalCoverageSummary {
     NO_ROM_ANIMATION: 0,
     ROM_RESOURCE_MISSING: 0,
     RESOURCE_DECODED_COMPLETE: 0,
+    RESOURCE_DECODED_ROM_PHYSICAL: 0,
     RESOURCE_DECODED_PARTIAL: 0,
     RESOURCE_DECODED_UNRESOLVED: 0,
     RESOURCE_PARTIAL: 0,
@@ -162,6 +171,7 @@ export function cardPhysicalCoverageSummary(): CardPhysicalCoverageSummary {
   let decodedResourceCards = 0;
   let romFrames = 0;
   let mappedFrames = 0;
+  let romPhysicalFrames = 0;
   let unresolvedFrames = 0;
 
   for (const row of CARD_PHYSICAL_ANIMATION_COVERAGE) {
@@ -170,6 +180,7 @@ export function cardPhysicalCoverageSummary(): CardPhysicalCoverageSummary {
     if (row.resourceStatus === 'DECODED') decodedResourceCards++;
     romFrames += row.romFrames;
     mappedFrames += row.mappedFrames;
+    romPhysicalFrames += row.romPhysical;
     unresolvedFrames += row.unresolved;
   }
 
@@ -185,6 +196,7 @@ export function cardPhysicalCoverageSummary(): CardPhysicalCoverageSummary {
     missingResource: byStatus.ROM_RESOURCE_MISSING,
     romFrames,
     mappedFrames,
+    romPhysicalFrames,
     unresolvedFrames,
     byStatus,
   };
@@ -198,6 +210,7 @@ export function cardPhysicalCoverageByType(): Record<CardType, CardPhysicalCover
       NO_ROM_ANIMATION: 0,
       ROM_RESOURCE_MISSING: 0,
       RESOURCE_DECODED_COMPLETE: 0,
+      RESOURCE_DECODED_ROM_PHYSICAL: 0,
       RESOURCE_DECODED_PARTIAL: 0,
       RESOURCE_DECODED_UNRESOLVED: 0,
       RESOURCE_PARTIAL: 0,
@@ -217,6 +230,7 @@ export function cardPhysicalCoverageByType(): Record<CardType, CardPhysicalCover
       missingResource: byStatus.ROM_RESOURCE_MISSING,
       romFrames: rows.reduce((sum, row) => sum + row.romFrames, 0),
       mappedFrames: rows.reduce((sum, row) => sum + row.mappedFrames, 0),
+      romPhysicalFrames: rows.reduce((sum, row) => sum + row.romPhysical, 0),
       unresolvedFrames: rows.reduce((sum, row) => sum + row.unresolved, 0),
       byStatus,
     };

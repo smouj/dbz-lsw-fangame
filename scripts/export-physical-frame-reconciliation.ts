@@ -23,6 +23,7 @@ const lines: string[] = [
   '- `EXACT` exige frame de manifest existente sin reutilización detectada.',
   '- `SHARED` es válido cuando el runtime reutiliza un frame/pose para varios frames ROM.',
   '- `COMPOSITE` no se trata como frame físico atómico.',
+  '- `ROM_PHYSICAL` es un frame físicamente renderizado desde ROM sin equivalente canónico/manifest (identidad ROM-native, no fabricar).',
   '- `UNRESOLVED` es válido y explícito.',
   '',
   '## Summary',
@@ -32,12 +33,13 @@ const lines: string[] = [
   `- EXACT: ${summary.exact}`,
   `- SHARED: ${summary.shared}`,
   `- COMPOSITE: ${summary.composite}`,
+  `- ROM_PHYSICAL: ${summary.romPhysical}`,
   `- UNRESOLVED: ${summary.unresolved}`,
   '',
   '## Resource Summary',
   '',
-  '| Resource | Technique | Forms | ROM Frames | EXACT | SHARED | COMPOSITE | UNRESOLVED | Gap Cause |',
-  '|---|---|---:|---:|---:|---:|---:|---:|---|',
+  '| Resource | Technique | Forms | ROM Frames | EXACT | SHARED | COMPOSITE | ROM_PHYSICAL | UNRESOLVED | Gap Cause |',
+  '|---|---|---:|---:|---:|---:|---:|---:|---:|---|',
 ];
 
 for (const resource of PHYSICAL_FRAME_RECONCILIATION) {
@@ -49,6 +51,7 @@ for (const resource of PHYSICAL_FRAME_RECONCILIATION) {
     resource.summary.exact,
     resource.summary.shared,
     resource.summary.composite,
+    resource.summary.romPhysical,
     resource.summary.unresolved,
     fmt(resource.gapCause),
   ].join(' | ').replace(/^/, '| ').replace(/$/, ' |'));

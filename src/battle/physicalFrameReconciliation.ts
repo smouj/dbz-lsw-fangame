@@ -8,18 +8,20 @@
 
 import { CARDS, type CardDef } from '../data/cards';
 import { MANIFEST_FRAME_INDEX, manifestFileUsage, manifestFrame, manifestForms, type ManifestFrameRecord } from '../data/generated/manifestFrameIndex.generated';
+import { ROM_PHYSICAL_CORPUS_SUMMARY } from '../data/generated/romPhysicalCorpus.generated';
 import { FORMS } from '../data/roster';
 import { romCardData } from '../data/romCardData';
 import { spriteDirFor } from '../data/spriteManifest';
 import { ANIMATION_RESOURCE_CATALOG, animationResourceById, type AnimationResourceCatalogEntry, type AnimationResourceDecodedFrame } from './animationResources';
 
-export type PhysicalFrameMappingStatus = 'EXACT' | 'SHARED' | 'COMPOSITE' | 'UNRESOLVED';
+export type PhysicalFrameMappingStatus = 'EXACT' | 'SHARED' | 'COMPOSITE' | 'ROM_PHYSICAL' | 'UNRESOLVED';
 
 export type StaticResourceGapCause =
   | 'NONE'
   | 'SEQUENCE_BOUNDARY_PENDING'
   | 'FRAME_TABLE_PARTIAL'
   | 'METASPRITE_MAPPING_PENDING'
+  | 'ROM_PHYSICAL_ONLY'
   | 'MULTI_SEQUENCE_AMBIGUOUS'
   | 'HANDLER_DEPENDENT'
   | 'OTHER_STATIC_PENDING';
@@ -71,6 +73,7 @@ export interface PhysicalMappingSummary {
   exact: number;
   shared: number;
   composite: number;
+  romPhysical: number;
   unresolved: number;
   byStatus: Record<PhysicalFrameMappingStatus, number>;
 }
@@ -80,6 +83,8 @@ interface Candidate {
   index: number;
   reason: string;
 }
+
+export const PHYSICALLY_RENDERED_RESOURCE_HEXES = new Set<string>(ROM_PHYSICAL_CORPUS_SUMMARY.reachableResources);
 
 function hex(value: number): string {
   return `0x${value.toString(16).padStart(2, '0')}`;
@@ -161,8 +166,9 @@ function frameCandidate(resource: AnimationResourceCatalogEntry, sequenceFrames:
   };
 }
 
-function statusForCandidate(candidate: Candidate | null, forms: string[], mapped: ManifestFrameRecord[], logicalUseCount: number): PhysicalFrameMappingStatus {
-  if (!candidate || forms.length === 0 || mapped.length !== forms.length) return 'UNRESOLVED';
+function statusForCandidate(candidate: Candidate | null, forms: string[], mapped: ManifestFrameRecord[], logicalUseCount: number, physicallyRendered: boolean): PhysicalFrameMappingStatus {
+  if (!candidate) return physicallyRendered ? 'ROM_PHYSICAL' : 'UNRESOLVED';
+  if (forms.length === 0 || mapped.length !== forms.length) return 'UNRESOLVED';
   if (mapped.some(frame => frame.pose.includes('composite') || frame.file.includes('composite'))) return 'COMPOSITE';
   if (logicalUseCount > 1) return 'SHARED';
   if (mapped.some(frame => manifestFileUsage(frame.formId, frame.file).length > 1)) return 'SHARED';
@@ -171,6 +177,7 @@ function statusForCandidate(candidate: Candidate | null, forms: string[], mapped
 
 function gapCauseForResource(resource: AnimationResourceCatalogEntry, summary?: PhysicalMappingSummary): StaticResourceGapCause {
   if (resource.status === 'DECODED') {
+    if (summary && summary.romFrames > 0 && summary.romPhysical === summary.romFrames) return 'ROM_PHYSICAL_ONLY';
     return summary && summary.unresolved === 0 ? 'NONE' : 'METASPRITE_MAPPING_PENDING';
   }
   if (resource.status === 'SPECIAL') return 'HANDLER_DEPENDENT';
@@ -186,6 +193,7 @@ function summarizeFrames(frames: PhysicalFrameReconciliationEntry[]): PhysicalMa
     EXACT: 0,
     SHARED: 0,
     COMPOSITE: 0,
+    ROM_PHYSICAL: 0,
     UNRESOLVED: 0,
   };
   for (const frame of frames) byStatus[frame.assetMapping.status]++;
@@ -195,12 +203,14 @@ function summarizeFrames(frames: PhysicalFrameReconciliationEntry[]): PhysicalMa
     exact: byStatus.EXACT,
     shared: byStatus.SHARED,
     composite: byStatus.COMPOSITE,
+    romPhysical: byStatus.ROM_PHYSICAL,
     unresolved: byStatus.UNRESOLVED,
     byStatus,
   };
 }
 
 function buildResourceReconciliation(resource: AnimationResourceCatalogEntry): PhysicalResourceReconciliation {
+  const physicallyRendered = PHYSICALLY_RENDERED_RESOURCE_HEXES.has(resource.resourceHex);
   const compatibleForms = compatibleFormsForResource(resource);
   const candidates: Array<{
     sequenceIndex: number;
@@ -234,7 +244,7 @@ function buildResourceReconciliation(resource: AnimationResourceCatalogEntry): P
       ? compatibleForms.filter(formId => !manifestFrame(formId, item.candidate!.pose, item.candidate!.index))
       : compatibleForms;
     const physicalFrame = item.candidate ? `${item.candidate.pose}[${item.candidate.index}]` : null;
-    const status = statusForCandidate(item.candidate, compatibleForms, mapped, logicalCounts.get(physicalFrame ?? 'UNRESOLVED') ?? 0);
+    const status = statusForCandidate(item.candidate, compatibleForms, mapped, logicalCounts.get(physicalFrame ?? 'UNRESOLVED') ?? 0, physicallyRendered);
     return {
       resourceId: resource.resourceId,
       resourceHex: resource.resourceHex,
@@ -251,7 +261,7 @@ function buildResourceReconciliation(resource: AnimationResourceCatalogEntry): P
         sampleFiles: mapped.slice(0, 6).map(frame => `${frame.formId}:${frame.file}`),
         missingForms,
         status,
-        reason: item.candidate?.reason ?? 'No static manifest pose contract exists for this ROM metasprite yet.',
+        reason: item.candidate?.reason ?? (physicallyRendered ? 'ROM physical frame rendered; no canonical/manifest equivalent (preserve ROM-native identity, do not fabricate).' : 'No static manifest pose contract exists for this ROM metasprite yet.'),
       },
     };
   });

@@ -5,19 +5,19 @@ Schema: `2`
 Physical renderer schema: `3` (signed piece coordinates, piece-extents trim, color0 transparent)
 Offset encoding: `s8` (raw bytes preserved separately)
 
-Scope: 6 fighter-physical renderable AnimationResources from `docs/rom/generated/animation-resources.json`: `$00`, `$03`, `$04`, `$05`, `$08`, `$12`.
-AnimationResource physical promotion: 6/66 renderable; 8 frame-stream-only; 18 handler-dependent; 5 dynamic-pending.
-Renderer-pending decoded resources: `$01`, `$09`, `$0b`, `$0f`, `$16`, `$22`, `$2c`, `$3f`.
+Scope: 7 fighter-physical renderable AnimationResources from `docs/rom/generated/animation-resources.json`: `$00`, `$03`, `$04`, `$05`, `$08`, `$12`, `$3f`.
+AnimationResource physical promotion: 7/66 renderable; 7 frame-stream-only; 18 handler-dependent; 5 dynamic-pending.
+Renderer-pending decoded resources: `$01`, `$09`, `$0b`, `$0f`, `$16`, `$22`, `$2c`.
 Forms rendered: 48/48. Palette-blocked profiles: 0.
 Resource-blocked palette-ready profiles: 0.
 
 Generated via fresh ROM re-render before runtime promotion. Legacy/canonical PNGs are not a source for this corpus.
 
-Physical identities: 505
-Frame instances: 2374
-Signed-negative frame instances: 1307
+Physical identities: 523
+Frame instances: 2452
+Signed-negative frame instances: 1352
 Resource/profile blocked pairs: 0
-Offset range: -10..5
+Offset range: -20..5
 Max dimensions: 40×48
 
 Palette-blocked profiles are not rendered or faked:
@@ -26,9 +26,9 @@ Resource-blocked profiles are not rendered or faked:
 
 | Form | Profile key | Physical IDs | Frame instances | ROM sequences | Signed-negative instances | Blocked pairs | Max dimensions |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| gohan_young | 0x00 | 17 | 76 | 10 | 40 | — | 32×48 |
-| gohan_young_ssj | 0x01 | 17 | 76 | 10 | 40 | — | 32×48 |
-| gohan_young_ssj2 | 0x02 | 17 | 76 | 10 | 40 | — | 32×48 |
+| gohan_young | 0x00 | 23 | 102 | 12 | 55 | — | 40×48 |
+| gohan_young_ssj | 0x01 | 23 | 102 | 12 | 55 | — | 40×48 |
+| gohan_young_ssj2 | 0x02 | 23 | 102 | 12 | 55 | — | 40×48 |
 | piccolo_evil | 0x03 | 7 | 28 | 4 | 16 | — | 32×48 |
 | piccolo_base | 0x03 | 7 | 28 | 4 | 16 | — | 32×48 |
 | piccolo_kami | 0x03 | 7 | 28 | 4 | 16 | — | 32×48 |

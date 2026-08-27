@@ -100,7 +100,7 @@ export interface RomFrameView {
   // physical reconciliation (ROM → manifest pose/index)
   manifestPose: string | null;
   manifestIndex: number | null;
-  mappingStatus: 'EXACT' | 'SHARED' | 'COMPOSITE' | 'UNRESOLVED';
+  mappingStatus: 'EXACT' | 'SHARED' | 'COMPOSITE' | 'ROM_PHYSICAL' | 'UNRESOLVED';
   mappingReason: string | null;
   // F-MAP resolution for the mapped pose
   fmap: ResolvedVisualSequence | null;
