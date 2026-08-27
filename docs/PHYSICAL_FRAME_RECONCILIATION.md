@@ -21,8 +21,8 @@ Este documento enlaza frames ROM ya decodificados con los manifests actuales del
 - EXACT: 4
 - SHARED: 173
 - COMPOSITE: 0
-- ROM_PHYSICAL: 26
-- UNRESOLVED: 98
+- ROM_PHYSICAL: 88
+- UNRESOLVED: 36
 
 ## Resource Summary
 
@@ -40,7 +40,7 @@ Este documento enlaza frames ROM ya decodificados con los manifests actuales del
 | 0x12 | Destructo Disk | 5 | 36 | 0 | 32 | 0 | 0 | 4 | METASPRITE_MAPPING_PENDING |
 | 0x16 | Special Beam Cannon | 5 | 16 | 0 | 14 | 0 | 0 | 2 | METASPRITE_MAPPING_PENDING |
 | 0x22 | Spirit Bomb | 4 | 10 | 0 | 10 | 0 | 0 | 0 | NONE |
-| 0x2c | Cont.Punch | 44 | 62 | 0 | 0 | 0 | 0 | 62 | METASPRITE_MAPPING_PENDING |
+| 0x2c | Cont.Punch | 44 | 62 | 0 | 0 | 0 | 62 | 0 | ROM_PHYSICAL_ONLY |
 | 0x3f | Tail | 3 | 26 | 0 | 0 | 0 | 26 | 0 | ROM_PHYSICAL_ONLY |
 
 ## Frame Matrix
@@ -260,68 +260,68 @@ Este documento enlaza frames ROM ya decodificados con los manifests actuales del
 | 0x22 | 0 | 7 | 3 | 3 | -13,0 | [3,3,0,243] | beam_fire[0] | SHARED | 4/4 | goku_base:goku_base_beam_fire_00.png, goku_ssj:goku_ssj_beam_charge_00.png | Beam handler phase contract: release/recovery frames map to manifest beam_fire when the current manifest has it. |
 | 0x22 | 0 | 8 | 3 | 3 | -12,0 | [3,3,0,244] | beam_fire[0] | SHARED | 4/4 | goku_base:goku_base_beam_fire_00.png, goku_ssj:goku_ssj_beam_charge_00.png | Beam handler phase contract: release/recovery frames map to manifest beam_fire when the current manifest has it. |
 | 0x22 | 0 | 9 | 3 | 3 | -11,0 | [3,3,0,245] | beam_fire[0] | SHARED | 4/4 | goku_base:goku_base_beam_fire_00.png, goku_ssj:goku_ssj_beam_charge_00.png | Beam handler phase contract: release/recovery frames map to manifest beam_fire when the current manifest has it. |
-| 0x2c | 0 | 0 | 1 | 2 | 0,0 | [1,2,0,0] | — | UNRESOLVED | 0/44 | — | No static manifest pose contract exists for this ROM metasprite yet. |
-| 0x2c | 0 | 1 | 1 | 2 | 0,0 | [1,2,0,0] | — | UNRESOLVED | 0/44 | — | No static manifest pose contract exists for this ROM metasprite yet. |
-| 0x2c | 0 | 2 | 2 | 2 | -7,0 | [2,2,0,249] | — | UNRESOLVED | 0/44 | — | No static manifest pose contract exists for this ROM metasprite yet. |
-| 0x2c | 0 | 3 | 2 | 4 | -8,0 | [2,4,0,248] | — | UNRESOLVED | 0/44 | — | No static manifest pose contract exists for this ROM metasprite yet. |
-| 0x2c | 0 | 4 | 2 | 6 | -7,0 | [2,6,0,249] | — | UNRESOLVED | 0/44 | — | No static manifest pose contract exists for this ROM metasprite yet. |
-| 0x2c | 0 | 5 | 1 | 2 | 0,0 | [1,2,0,0] | — | UNRESOLVED | 0/44 | — | No static manifest pose contract exists for this ROM metasprite yet. |
-| 0x2c | 0 | 6 | 3 | 2 | -7,0 | [3,2,0,249] | — | UNRESOLVED | 0/44 | — | No static manifest pose contract exists for this ROM metasprite yet. |
-| 0x2c | 0 | 7 | 3 | 4 | -8,0 | [3,4,0,248] | — | UNRESOLVED | 0/44 | — | No static manifest pose contract exists for this ROM metasprite yet. |
-| 0x2c | 0 | 8 | 3 | 6 | -7,0 | [3,6,0,249] | — | UNRESOLVED | 0/44 | — | No static manifest pose contract exists for this ROM metasprite yet. |
-| 0x2c | 0 | 9 | 1 | 2 | 0,0 | [1,2,0,0] | — | UNRESOLVED | 0/44 | — | No static manifest pose contract exists for this ROM metasprite yet. |
-| 0x2c | 0 | 10 | 2 | 2 | -7,0 | [2,2,0,249] | — | UNRESOLVED | 0/44 | — | No static manifest pose contract exists for this ROM metasprite yet. |
-| 0x2c | 0 | 11 | 2 | 4 | -8,0 | [2,4,0,248] | — | UNRESOLVED | 0/44 | — | No static manifest pose contract exists for this ROM metasprite yet. |
-| 0x2c | 0 | 12 | 2 | 6 | -7,0 | [2,6,0,249] | — | UNRESOLVED | 0/44 | — | No static manifest pose contract exists for this ROM metasprite yet. |
-| 0x2c | 0 | 13 | 1 | 2 | 0,0 | [1,2,0,0] | — | UNRESOLVED | 0/44 | — | No static manifest pose contract exists for this ROM metasprite yet. |
-| 0x2c | 0 | 14 | 3 | 2 | -7,0 | [3,2,0,249] | — | UNRESOLVED | 0/44 | — | No static manifest pose contract exists for this ROM metasprite yet. |
-| 0x2c | 0 | 15 | 3 | 4 | -8,0 | [3,4,0,248] | — | UNRESOLVED | 0/44 | — | No static manifest pose contract exists for this ROM metasprite yet. |
-| 0x2c | 0 | 16 | 3 | 6 | -7,0 | [3,6,0,249] | — | UNRESOLVED | 0/44 | — | No static manifest pose contract exists for this ROM metasprite yet. |
-| 0x2c | 0 | 17 | 1 | 2 | 0,0 | [1,2,0,0] | — | UNRESOLVED | 0/44 | — | No static manifest pose contract exists for this ROM metasprite yet. |
-| 0x2c | 0 | 18 | 2 | 2 | -7,0 | [2,2,0,249] | — | UNRESOLVED | 0/44 | — | No static manifest pose contract exists for this ROM metasprite yet. |
-| 0x2c | 0 | 19 | 2 | 4 | -8,0 | [2,4,0,248] | — | UNRESOLVED | 0/44 | — | No static manifest pose contract exists for this ROM metasprite yet. |
-| 0x2c | 0 | 20 | 2 | 6 | -7,0 | [2,6,0,249] | — | UNRESOLVED | 0/44 | — | No static manifest pose contract exists for this ROM metasprite yet. |
-| 0x2c | 0 | 21 | 1 | 2 | 0,0 | [1,2,0,0] | — | UNRESOLVED | 0/44 | — | No static manifest pose contract exists for this ROM metasprite yet. |
-| 0x2c | 0 | 22 | 3 | 2 | -7,0 | [3,2,0,249] | — | UNRESOLVED | 0/44 | — | No static manifest pose contract exists for this ROM metasprite yet. |
-| 0x2c | 0 | 23 | 3 | 4 | -8,0 | [3,4,0,248] | — | UNRESOLVED | 0/44 | — | No static manifest pose contract exists for this ROM metasprite yet. |
-| 0x2c | 0 | 24 | 3 | 6 | -7,0 | [3,6,0,249] | — | UNRESOLVED | 0/44 | — | No static manifest pose contract exists for this ROM metasprite yet. |
-| 0x2c | 0 | 25 | 1 | 2 | 0,0 | [1,2,0,0] | — | UNRESOLVED | 0/44 | — | No static manifest pose contract exists for this ROM metasprite yet. |
-| 0x2c | 0 | 26 | 2 | 2 | -7,0 | [2,2,0,249] | — | UNRESOLVED | 0/44 | — | No static manifest pose contract exists for this ROM metasprite yet. |
-| 0x2c | 0 | 27 | 2 | 4 | -8,0 | [2,4,0,248] | — | UNRESOLVED | 0/44 | — | No static manifest pose contract exists for this ROM metasprite yet. |
-| 0x2c | 0 | 28 | 2 | 6 | -7,0 | [2,6,0,249] | — | UNRESOLVED | 0/44 | — | No static manifest pose contract exists for this ROM metasprite yet. |
-| 0x2c | 0 | 29 | 1 | 2 | 0,0 | [1,2,0,0] | — | UNRESOLVED | 0/44 | — | No static manifest pose contract exists for this ROM metasprite yet. |
-| 0x2c | 0 | 30 | 3 | 2 | -7,0 | [3,2,0,249] | — | UNRESOLVED | 0/44 | — | No static manifest pose contract exists for this ROM metasprite yet. |
-| 0x2c | 0 | 31 | 3 | 4 | -8,0 | [3,4,0,248] | — | UNRESOLVED | 0/44 | — | No static manifest pose contract exists for this ROM metasprite yet. |
-| 0x2c | 0 | 32 | 3 | 6 | -7,0 | [3,6,0,249] | — | UNRESOLVED | 0/44 | — | No static manifest pose contract exists for this ROM metasprite yet. |
-| 0x2c | 0 | 33 | 1 | 2 | 0,0 | [1,2,0,0] | — | UNRESOLVED | 0/44 | — | No static manifest pose contract exists for this ROM metasprite yet. |
-| 0x2c | 0 | 34 | 2 | 2 | -7,0 | [2,2,0,249] | — | UNRESOLVED | 0/44 | — | No static manifest pose contract exists for this ROM metasprite yet. |
-| 0x2c | 0 | 35 | 2 | 4 | -8,0 | [2,4,0,248] | — | UNRESOLVED | 0/44 | — | No static manifest pose contract exists for this ROM metasprite yet. |
-| 0x2c | 0 | 36 | 2 | 6 | -7,0 | [2,6,0,249] | — | UNRESOLVED | 0/44 | — | No static manifest pose contract exists for this ROM metasprite yet. |
-| 0x2c | 0 | 37 | 1 | 2 | 0,0 | [1,2,0,0] | — | UNRESOLVED | 0/44 | — | No static manifest pose contract exists for this ROM metasprite yet. |
-| 0x2c | 0 | 38 | 3 | 2 | -7,0 | [3,2,0,249] | — | UNRESOLVED | 0/44 | — | No static manifest pose contract exists for this ROM metasprite yet. |
-| 0x2c | 0 | 39 | 3 | 4 | -8,0 | [3,4,0,248] | — | UNRESOLVED | 0/44 | — | No static manifest pose contract exists for this ROM metasprite yet. |
-| 0x2c | 0 | 40 | 3 | 6 | -7,0 | [3,6,0,249] | — | UNRESOLVED | 0/44 | — | No static manifest pose contract exists for this ROM metasprite yet. |
-| 0x2c | 0 | 41 | 1 | 2 | 0,0 | [1,2,0,0] | — | UNRESOLVED | 0/44 | — | No static manifest pose contract exists for this ROM metasprite yet. |
-| 0x2c | 0 | 42 | 2 | 2 | -7,0 | [2,2,0,249] | — | UNRESOLVED | 0/44 | — | No static manifest pose contract exists for this ROM metasprite yet. |
-| 0x2c | 0 | 43 | 2 | 4 | -8,0 | [2,4,0,248] | — | UNRESOLVED | 0/44 | — | No static manifest pose contract exists for this ROM metasprite yet. |
-| 0x2c | 0 | 44 | 2 | 6 | -7,0 | [2,6,0,249] | — | UNRESOLVED | 0/44 | — | No static manifest pose contract exists for this ROM metasprite yet. |
-| 0x2c | 0 | 45 | 1 | 2 | 0,0 | [1,2,0,0] | — | UNRESOLVED | 0/44 | — | No static manifest pose contract exists for this ROM metasprite yet. |
-| 0x2c | 0 | 46 | 3 | 2 | -7,0 | [3,2,0,249] | — | UNRESOLVED | 0/44 | — | No static manifest pose contract exists for this ROM metasprite yet. |
-| 0x2c | 0 | 47 | 3 | 4 | -8,0 | [3,4,0,248] | — | UNRESOLVED | 0/44 | — | No static manifest pose contract exists for this ROM metasprite yet. |
-| 0x2c | 0 | 48 | 3 | 2 | -7,0 | [3,2,0,249] | — | UNRESOLVED | 0/44 | — | No static manifest pose contract exists for this ROM metasprite yet. |
-| 0x2c | 0 | 49 | 1 | 2 | 0,0 | [1,2,0,0] | — | UNRESOLVED | 0/44 | — | No static manifest pose contract exists for this ROM metasprite yet. |
-| 0x2c | 0 | 50 | 3 | 2 | -7,0 | [3,2,0,249] | — | UNRESOLVED | 0/44 | — | No static manifest pose contract exists for this ROM metasprite yet. |
-| 0x2c | 0 | 51 | 3 | 4 | -8,0 | [3,4,0,248] | — | UNRESOLVED | 0/44 | — | No static manifest pose contract exists for this ROM metasprite yet. |
-| 0x2c | 0 | 52 | 3 | 2 | -7,0 | [3,2,0,249] | — | UNRESOLVED | 0/44 | — | No static manifest pose contract exists for this ROM metasprite yet. |
-| 0x2c | 0 | 53 | 0 | 30 | 0,0 | [0,30,0,0] | — | UNRESOLVED | 0/44 | — | No static manifest pose contract exists for this ROM metasprite yet. |
-| 0x2c | 1 | 0 | 1 | 3 | -2,0 | [1,3,0,254] | — | UNRESOLVED | 0/44 | — | No static manifest pose contract exists for this ROM metasprite yet. |
-| 0x2c | 1 | 1 | 3 | 2 | -11,0 | [3,2,0,245] | — | UNRESOLVED | 0/44 | — | No static manifest pose contract exists for this ROM metasprite yet. |
-| 0x2c | 1 | 2 | 3 | 4 | -16,0 | [3,4,0,240] | — | UNRESOLVED | 0/44 | — | No static manifest pose contract exists for this ROM metasprite yet. |
-| 0x2c | 1 | 3 | 3 | 2 | -13,0 | [3,2,0,243] | — | UNRESOLVED | 0/44 | — | No static manifest pose contract exists for this ROM metasprite yet. |
-| 0x2c | 1 | 4 | 3 | 2 | -14,0 | [3,2,0,242] | — | UNRESOLVED | 0/44 | — | No static manifest pose contract exists for this ROM metasprite yet. |
-| 0x2c | 1 | 5 | 3 | 30 | -13,0 | [3,30,0,243] | — | UNRESOLVED | 0/44 | — | No static manifest pose contract exists for this ROM metasprite yet. |
-| 0x2c | 1 | 6 | 3 | 4 | -8,0 | [3,4,0,248] | — | UNRESOLVED | 0/44 | — | No static manifest pose contract exists for this ROM metasprite yet. |
-| 0x2c | 1 | 7 | 0 | 2 | 0,0 | [0,2,0,0] | — | UNRESOLVED | 0/44 | — | No static manifest pose contract exists for this ROM metasprite yet. |
+| 0x2c | 0 | 0 | 1 | 2 | 0,0 | [1,2,0,0] | — | ROM_PHYSICAL | 0/44 | — | ROM physical frame rendered; no canonical/manifest equivalent (preserve ROM-native identity, do not fabricate). |
+| 0x2c | 0 | 1 | 1 | 2 | 0,0 | [1,2,0,0] | — | ROM_PHYSICAL | 0/44 | — | ROM physical frame rendered; no canonical/manifest equivalent (preserve ROM-native identity, do not fabricate). |
+| 0x2c | 0 | 2 | 2 | 2 | -7,0 | [2,2,0,249] | — | ROM_PHYSICAL | 0/44 | — | ROM physical frame rendered; no canonical/manifest equivalent (preserve ROM-native identity, do not fabricate). |
+| 0x2c | 0 | 3 | 2 | 4 | -8,0 | [2,4,0,248] | — | ROM_PHYSICAL | 0/44 | — | ROM physical frame rendered; no canonical/manifest equivalent (preserve ROM-native identity, do not fabricate). |
+| 0x2c | 0 | 4 | 2 | 6 | -7,0 | [2,6,0,249] | — | ROM_PHYSICAL | 0/44 | — | ROM physical frame rendered; no canonical/manifest equivalent (preserve ROM-native identity, do not fabricate). |
+| 0x2c | 0 | 5 | 1 | 2 | 0,0 | [1,2,0,0] | — | ROM_PHYSICAL | 0/44 | — | ROM physical frame rendered; no canonical/manifest equivalent (preserve ROM-native identity, do not fabricate). |
+| 0x2c | 0 | 6 | 3 | 2 | -7,0 | [3,2,0,249] | — | ROM_PHYSICAL | 0/44 | — | ROM physical frame rendered; no canonical/manifest equivalent (preserve ROM-native identity, do not fabricate). |
+| 0x2c | 0 | 7 | 3 | 4 | -8,0 | [3,4,0,248] | — | ROM_PHYSICAL | 0/44 | — | ROM physical frame rendered; no canonical/manifest equivalent (preserve ROM-native identity, do not fabricate). |
+| 0x2c | 0 | 8 | 3 | 6 | -7,0 | [3,6,0,249] | — | ROM_PHYSICAL | 0/44 | — | ROM physical frame rendered; no canonical/manifest equivalent (preserve ROM-native identity, do not fabricate). |
+| 0x2c | 0 | 9 | 1 | 2 | 0,0 | [1,2,0,0] | — | ROM_PHYSICAL | 0/44 | — | ROM physical frame rendered; no canonical/manifest equivalent (preserve ROM-native identity, do not fabricate). |
+| 0x2c | 0 | 10 | 2 | 2 | -7,0 | [2,2,0,249] | — | ROM_PHYSICAL | 0/44 | — | ROM physical frame rendered; no canonical/manifest equivalent (preserve ROM-native identity, do not fabricate). |
+| 0x2c | 0 | 11 | 2 | 4 | -8,0 | [2,4,0,248] | — | ROM_PHYSICAL | 0/44 | — | ROM physical frame rendered; no canonical/manifest equivalent (preserve ROM-native identity, do not fabricate). |
+| 0x2c | 0 | 12 | 2 | 6 | -7,0 | [2,6,0,249] | — | ROM_PHYSICAL | 0/44 | — | ROM physical frame rendered; no canonical/manifest equivalent (preserve ROM-native identity, do not fabricate). |
+| 0x2c | 0 | 13 | 1 | 2 | 0,0 | [1,2,0,0] | — | ROM_PHYSICAL | 0/44 | — | ROM physical frame rendered; no canonical/manifest equivalent (preserve ROM-native identity, do not fabricate). |
+| 0x2c | 0 | 14 | 3 | 2 | -7,0 | [3,2,0,249] | — | ROM_PHYSICAL | 0/44 | — | ROM physical frame rendered; no canonical/manifest equivalent (preserve ROM-native identity, do not fabricate). |
+| 0x2c | 0 | 15 | 3 | 4 | -8,0 | [3,4,0,248] | — | ROM_PHYSICAL | 0/44 | — | ROM physical frame rendered; no canonical/manifest equivalent (preserve ROM-native identity, do not fabricate). |
+| 0x2c | 0 | 16 | 3 | 6 | -7,0 | [3,6,0,249] | — | ROM_PHYSICAL | 0/44 | — | ROM physical frame rendered; no canonical/manifest equivalent (preserve ROM-native identity, do not fabricate). |
+| 0x2c | 0 | 17 | 1 | 2 | 0,0 | [1,2,0,0] | — | ROM_PHYSICAL | 0/44 | — | ROM physical frame rendered; no canonical/manifest equivalent (preserve ROM-native identity, do not fabricate). |
+| 0x2c | 0 | 18 | 2 | 2 | -7,0 | [2,2,0,249] | — | ROM_PHYSICAL | 0/44 | — | ROM physical frame rendered; no canonical/manifest equivalent (preserve ROM-native identity, do not fabricate). |
+| 0x2c | 0 | 19 | 2 | 4 | -8,0 | [2,4,0,248] | — | ROM_PHYSICAL | 0/44 | — | ROM physical frame rendered; no canonical/manifest equivalent (preserve ROM-native identity, do not fabricate). |
+| 0x2c | 0 | 20 | 2 | 6 | -7,0 | [2,6,0,249] | — | ROM_PHYSICAL | 0/44 | — | ROM physical frame rendered; no canonical/manifest equivalent (preserve ROM-native identity, do not fabricate). |
+| 0x2c | 0 | 21 | 1 | 2 | 0,0 | [1,2,0,0] | — | ROM_PHYSICAL | 0/44 | — | ROM physical frame rendered; no canonical/manifest equivalent (preserve ROM-native identity, do not fabricate). |
+| 0x2c | 0 | 22 | 3 | 2 | -7,0 | [3,2,0,249] | — | ROM_PHYSICAL | 0/44 | — | ROM physical frame rendered; no canonical/manifest equivalent (preserve ROM-native identity, do not fabricate). |
+| 0x2c | 0 | 23 | 3 | 4 | -8,0 | [3,4,0,248] | — | ROM_PHYSICAL | 0/44 | — | ROM physical frame rendered; no canonical/manifest equivalent (preserve ROM-native identity, do not fabricate). |
+| 0x2c | 0 | 24 | 3 | 6 | -7,0 | [3,6,0,249] | — | ROM_PHYSICAL | 0/44 | — | ROM physical frame rendered; no canonical/manifest equivalent (preserve ROM-native identity, do not fabricate). |
+| 0x2c | 0 | 25 | 1 | 2 | 0,0 | [1,2,0,0] | — | ROM_PHYSICAL | 0/44 | — | ROM physical frame rendered; no canonical/manifest equivalent (preserve ROM-native identity, do not fabricate). |
+| 0x2c | 0 | 26 | 2 | 2 | -7,0 | [2,2,0,249] | — | ROM_PHYSICAL | 0/44 | — | ROM physical frame rendered; no canonical/manifest equivalent (preserve ROM-native identity, do not fabricate). |
+| 0x2c | 0 | 27 | 2 | 4 | -8,0 | [2,4,0,248] | — | ROM_PHYSICAL | 0/44 | — | ROM physical frame rendered; no canonical/manifest equivalent (preserve ROM-native identity, do not fabricate). |
+| 0x2c | 0 | 28 | 2 | 6 | -7,0 | [2,6,0,249] | — | ROM_PHYSICAL | 0/44 | — | ROM physical frame rendered; no canonical/manifest equivalent (preserve ROM-native identity, do not fabricate). |
+| 0x2c | 0 | 29 | 1 | 2 | 0,0 | [1,2,0,0] | — | ROM_PHYSICAL | 0/44 | — | ROM physical frame rendered; no canonical/manifest equivalent (preserve ROM-native identity, do not fabricate). |
+| 0x2c | 0 | 30 | 3 | 2 | -7,0 | [3,2,0,249] | — | ROM_PHYSICAL | 0/44 | — | ROM physical frame rendered; no canonical/manifest equivalent (preserve ROM-native identity, do not fabricate). |
+| 0x2c | 0 | 31 | 3 | 4 | -8,0 | [3,4,0,248] | — | ROM_PHYSICAL | 0/44 | — | ROM physical frame rendered; no canonical/manifest equivalent (preserve ROM-native identity, do not fabricate). |
+| 0x2c | 0 | 32 | 3 | 6 | -7,0 | [3,6,0,249] | — | ROM_PHYSICAL | 0/44 | — | ROM physical frame rendered; no canonical/manifest equivalent (preserve ROM-native identity, do not fabricate). |
+| 0x2c | 0 | 33 | 1 | 2 | 0,0 | [1,2,0,0] | — | ROM_PHYSICAL | 0/44 | — | ROM physical frame rendered; no canonical/manifest equivalent (preserve ROM-native identity, do not fabricate). |
+| 0x2c | 0 | 34 | 2 | 2 | -7,0 | [2,2,0,249] | — | ROM_PHYSICAL | 0/44 | — | ROM physical frame rendered; no canonical/manifest equivalent (preserve ROM-native identity, do not fabricate). |
+| 0x2c | 0 | 35 | 2 | 4 | -8,0 | [2,4,0,248] | — | ROM_PHYSICAL | 0/44 | — | ROM physical frame rendered; no canonical/manifest equivalent (preserve ROM-native identity, do not fabricate). |
+| 0x2c | 0 | 36 | 2 | 6 | -7,0 | [2,6,0,249] | — | ROM_PHYSICAL | 0/44 | — | ROM physical frame rendered; no canonical/manifest equivalent (preserve ROM-native identity, do not fabricate). |
+| 0x2c | 0 | 37 | 1 | 2 | 0,0 | [1,2,0,0] | — | ROM_PHYSICAL | 0/44 | — | ROM physical frame rendered; no canonical/manifest equivalent (preserve ROM-native identity, do not fabricate). |
+| 0x2c | 0 | 38 | 3 | 2 | -7,0 | [3,2,0,249] | — | ROM_PHYSICAL | 0/44 | — | ROM physical frame rendered; no canonical/manifest equivalent (preserve ROM-native identity, do not fabricate). |
+| 0x2c | 0 | 39 | 3 | 4 | -8,0 | [3,4,0,248] | — | ROM_PHYSICAL | 0/44 | — | ROM physical frame rendered; no canonical/manifest equivalent (preserve ROM-native identity, do not fabricate). |
+| 0x2c | 0 | 40 | 3 | 6 | -7,0 | [3,6,0,249] | — | ROM_PHYSICAL | 0/44 | — | ROM physical frame rendered; no canonical/manifest equivalent (preserve ROM-native identity, do not fabricate). |
+| 0x2c | 0 | 41 | 1 | 2 | 0,0 | [1,2,0,0] | — | ROM_PHYSICAL | 0/44 | — | ROM physical frame rendered; no canonical/manifest equivalent (preserve ROM-native identity, do not fabricate). |
+| 0x2c | 0 | 42 | 2 | 2 | -7,0 | [2,2,0,249] | — | ROM_PHYSICAL | 0/44 | — | ROM physical frame rendered; no canonical/manifest equivalent (preserve ROM-native identity, do not fabricate). |
+| 0x2c | 0 | 43 | 2 | 4 | -8,0 | [2,4,0,248] | — | ROM_PHYSICAL | 0/44 | — | ROM physical frame rendered; no canonical/manifest equivalent (preserve ROM-native identity, do not fabricate). |
+| 0x2c | 0 | 44 | 2 | 6 | -7,0 | [2,6,0,249] | — | ROM_PHYSICAL | 0/44 | — | ROM physical frame rendered; no canonical/manifest equivalent (preserve ROM-native identity, do not fabricate). |
+| 0x2c | 0 | 45 | 1 | 2 | 0,0 | [1,2,0,0] | — | ROM_PHYSICAL | 0/44 | — | ROM physical frame rendered; no canonical/manifest equivalent (preserve ROM-native identity, do not fabricate). |
+| 0x2c | 0 | 46 | 3 | 2 | -7,0 | [3,2,0,249] | — | ROM_PHYSICAL | 0/44 | — | ROM physical frame rendered; no canonical/manifest equivalent (preserve ROM-native identity, do not fabricate). |
+| 0x2c | 0 | 47 | 3 | 4 | -8,0 | [3,4,0,248] | — | ROM_PHYSICAL | 0/44 | — | ROM physical frame rendered; no canonical/manifest equivalent (preserve ROM-native identity, do not fabricate). |
+| 0x2c | 0 | 48 | 3 | 2 | -7,0 | [3,2,0,249] | — | ROM_PHYSICAL | 0/44 | — | ROM physical frame rendered; no canonical/manifest equivalent (preserve ROM-native identity, do not fabricate). |
+| 0x2c | 0 | 49 | 1 | 2 | 0,0 | [1,2,0,0] | — | ROM_PHYSICAL | 0/44 | — | ROM physical frame rendered; no canonical/manifest equivalent (preserve ROM-native identity, do not fabricate). |
+| 0x2c | 0 | 50 | 3 | 2 | -7,0 | [3,2,0,249] | — | ROM_PHYSICAL | 0/44 | — | ROM physical frame rendered; no canonical/manifest equivalent (preserve ROM-native identity, do not fabricate). |
+| 0x2c | 0 | 51 | 3 | 4 | -8,0 | [3,4,0,248] | — | ROM_PHYSICAL | 0/44 | — | ROM physical frame rendered; no canonical/manifest equivalent (preserve ROM-native identity, do not fabricate). |
+| 0x2c | 0 | 52 | 3 | 2 | -7,0 | [3,2,0,249] | — | ROM_PHYSICAL | 0/44 | — | ROM physical frame rendered; no canonical/manifest equivalent (preserve ROM-native identity, do not fabricate). |
+| 0x2c | 0 | 53 | 0 | 30 | 0,0 | [0,30,0,0] | — | ROM_PHYSICAL | 0/44 | — | ROM physical frame rendered; no canonical/manifest equivalent (preserve ROM-native identity, do not fabricate). |
+| 0x2c | 1 | 0 | 1 | 3 | -2,0 | [1,3,0,254] | — | ROM_PHYSICAL | 0/44 | — | ROM physical frame rendered; no canonical/manifest equivalent (preserve ROM-native identity, do not fabricate). |
+| 0x2c | 1 | 1 | 3 | 2 | -11,0 | [3,2,0,245] | — | ROM_PHYSICAL | 0/44 | — | ROM physical frame rendered; no canonical/manifest equivalent (preserve ROM-native identity, do not fabricate). |
+| 0x2c | 1 | 2 | 3 | 4 | -16,0 | [3,4,0,240] | — | ROM_PHYSICAL | 0/44 | — | ROM physical frame rendered; no canonical/manifest equivalent (preserve ROM-native identity, do not fabricate). |
+| 0x2c | 1 | 3 | 3 | 2 | -13,0 | [3,2,0,243] | — | ROM_PHYSICAL | 0/44 | — | ROM physical frame rendered; no canonical/manifest equivalent (preserve ROM-native identity, do not fabricate). |
+| 0x2c | 1 | 4 | 3 | 2 | -14,0 | [3,2,0,242] | — | ROM_PHYSICAL | 0/44 | — | ROM physical frame rendered; no canonical/manifest equivalent (preserve ROM-native identity, do not fabricate). |
+| 0x2c | 1 | 5 | 3 | 30 | -13,0 | [3,30,0,243] | — | ROM_PHYSICAL | 0/44 | — | ROM physical frame rendered; no canonical/manifest equivalent (preserve ROM-native identity, do not fabricate). |
+| 0x2c | 1 | 6 | 3 | 4 | -8,0 | [3,4,0,248] | — | ROM_PHYSICAL | 0/44 | — | ROM physical frame rendered; no canonical/manifest equivalent (preserve ROM-native identity, do not fabricate). |
+| 0x2c | 1 | 7 | 0 | 2 | 0,0 | [0,2,0,0] | — | ROM_PHYSICAL | 0/44 | — | ROM physical frame rendered; no canonical/manifest equivalent (preserve ROM-native identity, do not fabricate). |
 | 0x3f | 0 | 0 | 0 | 31 | 0,0 | [0,31,0,0] | — | ROM_PHYSICAL | 0/3 | — | ROM physical frame rendered; no canonical/manifest equivalent (preserve ROM-native identity, do not fabricate). |
 | 0x3f | 1 | 0 | 1 | 5 | 1,0 | [1,5,0,1] | — | ROM_PHYSICAL | 0/3 | — | ROM physical frame rendered; no canonical/manifest equivalent (preserve ROM-native identity, do not fabricate). |
 | 0x3f | 1 | 1 | 2 | 3 | 1,-1 | [2,3,255,1] | — | ROM_PHYSICAL | 0/3 | — | ROM physical frame rendered; no canonical/manifest equivalent (preserve ROM-native identity, do not fabricate). |

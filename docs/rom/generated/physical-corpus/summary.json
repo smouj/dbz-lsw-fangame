@@ -12,6 +12,7 @@
     "0x05",
     "0x08",
     "0x12",
+    "0x2c",
     "0x3f"
   ],
   "rendererPendingResources": [
@@ -37,10 +38,6 @@
     },
     {
       "resourceId": "0x22",
-      "reason": "Decoded frame stream exists, but current fighter-physical renderer does not pass base resolution and/or pieces===blockCount invariants for this resource."
-    },
-    {
-      "resourceId": "0x2c",
       "reason": "Decoded frame stream exists, but current fighter-physical renderer does not pass base resolution and/or pieces===blockCount invariants for this resource."
     }
   ],
@@ -1187,12 +1184,12 @@
       ],
       "sequences": 2,
       "frames": 62,
-      "physicalLinkage": "FRAME_STREAM_ONLY",
-      "profilesRendered": 0,
-      "physicalIds": 0,
-      "frameInstances": 0,
-      "status": "FRAME_STREAM_ONLY",
-      "blockingReason": "Frame stream is decoded, but this resource has not been promoted through metasprite/graphics/profile rendering invariants yet."
+      "physicalLinkage": "FULL",
+      "profilesRendered": 44,
+      "physicalIds": 176,
+      "frameInstances": 2976,
+      "status": "RENDERABLE",
+      "blockingReason": "—"
     },
     {
       "resourceId": 45,
@@ -1722,8 +1719,8 @@
   ],
   "resourceCompletionTotals": {
     "resources": 66,
-    "renderable": 7,
-    "frameStreamOnly": 7,
+    "renderable": 8,
+    "frameStreamOnly": 6,
     "metaspritePending": 24,
     "graphicsPending": 4,
     "handlerDependent": 18,
@@ -1735,12 +1732,12 @@
     "formsIndexed": 48,
     "formsPaletteBlocked": 0,
     "formsResourceBlocked": 0,
-    "resourcesReachable": 7,
-    "resourcesRendered": 7,
-    "resourcesRendererPending": 7,
-    "physicalIdentities": 523,
-    "frameInstances": 2452,
-    "signedNegativeInstances": 1352,
+    "resourcesReachable": 8,
+    "resourcesRendered": 8,
+    "resourcesRendererPending": 6,
+    "physicalIdentities": 715,
+    "frameInstances": 5428,
+    "signedNegativeInstances": 3560,
     "minOffset": -20,
     "maxOffset": 5,
     "maxWidth": 40,
@@ -1753,19 +1750,21 @@
     {
       "formId": "gohan_young",
       "actorVisualProfileKey": 0,
-      "physicalFrames": 23,
-      "frameInstances": 102,
-      "sequences": 12,
+      "physicalFrames": 27,
+      "frameInstances": 164,
+      "sequences": 14,
       "resources": [
         "0x00",
         "0x03",
         "0x04",
+        "0x2c",
         "0x3f"
       ],
       "resourceFrameInstances": {
         "0x00": 14,
         "0x03": 48,
         "0x04": 14,
+        "0x2c": 62,
         "0x3f": 26
       },
       "resourceProfileBlocked": [],
@@ -1993,6 +1992,58 @@
           "trimmedPixelHash": "8ac750dd2d79a696"
         },
         {
+          "physicalId": "rom-p00-g31-r2c-vf00-ms88cb7910-gfx19328d26",
+          "file": "physical/rom-p00-g31-r2c-vf00-ms88cb7910-gfx19328d26.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 0,
+          "actorVisualProfileKey": 0,
+          "graphicsBank": 49,
+          "metaspriteHash": "88cb7910858e95aa",
+          "graphicsHash": "19328d264e1496fa",
+          "sourceProvenanceHash": "a76f7e1227752952",
+          "trimmedPixelHash": "bb52ccefd71c6eb3"
+        },
+        {
+          "physicalId": "rom-p00-g31-r2c-vf01-ms63521d90-gfx4bdea38b",
+          "file": "physical/rom-p00-g31-r2c-vf01-ms63521d90-gfx4bdea38b.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 1,
+          "actorVisualProfileKey": 0,
+          "graphicsBank": 49,
+          "metaspriteHash": "63521d9054d2e460",
+          "graphicsHash": "4bdea38bdd3ed1e4",
+          "sourceProvenanceHash": "f7eb035a2779c951",
+          "trimmedPixelHash": "e8eb6e1f5ac5f34d"
+        },
+        {
+          "physicalId": "rom-p00-g31-r2c-vf02-msb2d53f54-gfx22f5f89d",
+          "file": "physical/rom-p00-g31-r2c-vf02-msb2d53f54-gfx22f5f89d.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 2,
+          "actorVisualProfileKey": 0,
+          "graphicsBank": 49,
+          "metaspriteHash": "b2d53f545f9cdcd1",
+          "graphicsHash": "22f5f89d51b93870",
+          "sourceProvenanceHash": "ffa4d71f92d85499",
+          "trimmedPixelHash": "41341ef0fa9ee964"
+        },
+        {
+          "physicalId": "rom-p00-g31-r2c-vf03-msf56ddc76-gfx53acaf3e",
+          "file": "physical/rom-p00-g31-r2c-vf03-msf56ddc76-gfx53acaf3e.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 3,
+          "actorVisualProfileKey": 0,
+          "graphicsBank": 49,
+          "metaspriteHash": "f56ddc760ce341fa",
+          "graphicsHash": "53acaf3e12705aaf",
+          "sourceProvenanceHash": "134b764d1815a851",
+          "trimmedPixelHash": "b8dbb65cce95f475"
+        },
+        {
           "physicalId": "rom-p00-g31-r3f-vf00-ms6f8c4c11-gfx53adba5c",
           "file": "physical/rom-p00-g31-r3f-vf00-ms6f8c4c11-gfx53adba5c.png",
           "resourceId": 63,
@@ -2071,7 +2122,7 @@
           "trimmedPixelHash": "9266fc4a7e743d85"
         }
       ],
-      "signedNegativeInstances": 55,
+      "signedNegativeInstances": 101,
       "minOffset": -20,
       "maxOffset": 5,
       "minWidth": 32,
@@ -2082,19 +2133,21 @@
     {
       "formId": "gohan_young_ssj",
       "actorVisualProfileKey": 1,
-      "physicalFrames": 23,
-      "frameInstances": 102,
-      "sequences": 12,
+      "physicalFrames": 27,
+      "frameInstances": 164,
+      "sequences": 14,
       "resources": [
         "0x00",
         "0x03",
         "0x04",
+        "0x2c",
         "0x3f"
       ],
       "resourceFrameInstances": {
         "0x00": 14,
         "0x03": 48,
         "0x04": 14,
+        "0x2c": 62,
         "0x3f": 26
       },
       "resourceProfileBlocked": [],
@@ -2322,6 +2375,58 @@
           "trimmedPixelHash": "98488f9311eb4af1"
         },
         {
+          "physicalId": "rom-p01-g32-r2c-vf00-ms88cb7910-gfxe977df4e",
+          "file": "physical/rom-p01-g32-r2c-vf00-ms88cb7910-gfxe977df4e.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 0,
+          "actorVisualProfileKey": 1,
+          "graphicsBank": 50,
+          "metaspriteHash": "88cb7910858e95aa",
+          "graphicsHash": "e977df4eb651991a",
+          "sourceProvenanceHash": "1afaca77476b2834",
+          "trimmedPixelHash": "20e3be8b98a51a38"
+        },
+        {
+          "physicalId": "rom-p01-g32-r2c-vf01-ms63521d90-gfxa786ac48",
+          "file": "physical/rom-p01-g32-r2c-vf01-ms63521d90-gfxa786ac48.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 1,
+          "actorVisualProfileKey": 1,
+          "graphicsBank": 50,
+          "metaspriteHash": "63521d9054d2e460",
+          "graphicsHash": "a786ac4890369367",
+          "sourceProvenanceHash": "9a9bc98a7f4bc920",
+          "trimmedPixelHash": "8783824537f99671"
+        },
+        {
+          "physicalId": "rom-p01-g32-r2c-vf02-msb2d53f54-gfx7b7d71e5",
+          "file": "physical/rom-p01-g32-r2c-vf02-msb2d53f54-gfx7b7d71e5.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 2,
+          "actorVisualProfileKey": 1,
+          "graphicsBank": 50,
+          "metaspriteHash": "b2d53f545f9cdcd1",
+          "graphicsHash": "7b7d71e5985dadef",
+          "sourceProvenanceHash": "2046380179786c10",
+          "trimmedPixelHash": "e88270f7dbfc7654"
+        },
+        {
+          "physicalId": "rom-p01-g32-r2c-vf03-msf56ddc76-gfxe3a9ffed",
+          "file": "physical/rom-p01-g32-r2c-vf03-msf56ddc76-gfxe3a9ffed.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 3,
+          "actorVisualProfileKey": 1,
+          "graphicsBank": 50,
+          "metaspriteHash": "f56ddc760ce341fa",
+          "graphicsHash": "e3a9ffed8eb1a297",
+          "sourceProvenanceHash": "69f67a5b79517185",
+          "trimmedPixelHash": "c0013f1bf7d6db72"
+        },
+        {
           "physicalId": "rom-p01-g32-r3f-vf00-ms6f8c4c11-gfx5a52b93b",
           "file": "physical/rom-p01-g32-r3f-vf00-ms6f8c4c11-gfx5a52b93b.png",
           "resourceId": 63,
@@ -2400,7 +2505,7 @@
           "trimmedPixelHash": "e048c0cf42cea04f"
         }
       ],
-      "signedNegativeInstances": 55,
+      "signedNegativeInstances": 101,
       "minOffset": -20,
       "maxOffset": 5,
       "minWidth": 32,
@@ -2411,19 +2516,21 @@
     {
       "formId": "gohan_young_ssj2",
       "actorVisualProfileKey": 2,
-      "physicalFrames": 23,
-      "frameInstances": 102,
-      "sequences": 12,
+      "physicalFrames": 27,
+      "frameInstances": 164,
+      "sequences": 14,
       "resources": [
         "0x00",
         "0x03",
         "0x04",
+        "0x2c",
         "0x3f"
       ],
       "resourceFrameInstances": {
         "0x00": 14,
         "0x03": 48,
         "0x04": 14,
+        "0x2c": 62,
         "0x3f": 26
       },
       "resourceProfileBlocked": [],
@@ -2651,6 +2758,58 @@
           "trimmedPixelHash": "98488f9311eb4af1"
         },
         {
+          "physicalId": "rom-p02-g33-r2c-vf00-ms88cb7910-gfx31ffb72e",
+          "file": "physical/rom-p02-g33-r2c-vf00-ms88cb7910-gfx31ffb72e.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 0,
+          "actorVisualProfileKey": 2,
+          "graphicsBank": 51,
+          "metaspriteHash": "88cb7910858e95aa",
+          "graphicsHash": "31ffb72effc01e17",
+          "sourceProvenanceHash": "a58d357b8c9d60db",
+          "trimmedPixelHash": "f3c0286ad13e0aa0"
+        },
+        {
+          "physicalId": "rom-p02-g33-r2c-vf01-ms63521d90-gfx65236b27",
+          "file": "physical/rom-p02-g33-r2c-vf01-ms63521d90-gfx65236b27.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 1,
+          "actorVisualProfileKey": 2,
+          "graphicsBank": 51,
+          "metaspriteHash": "63521d9054d2e460",
+          "graphicsHash": "65236b27daa16578",
+          "sourceProvenanceHash": "285fef8fd1f18759",
+          "trimmedPixelHash": "ffaf6407376b400e"
+        },
+        {
+          "physicalId": "rom-p02-g33-r2c-vf02-msb2d53f54-gfx76923b5c",
+          "file": "physical/rom-p02-g33-r2c-vf02-msb2d53f54-gfx76923b5c.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 2,
+          "actorVisualProfileKey": 2,
+          "graphicsBank": 51,
+          "metaspriteHash": "b2d53f545f9cdcd1",
+          "graphicsHash": "76923b5c02cd8ab7",
+          "sourceProvenanceHash": "f3def9846100c194",
+          "trimmedPixelHash": "d455c694ba37be47"
+        },
+        {
+          "physicalId": "rom-p02-g33-r2c-vf03-msf56ddc76-gfx7da1b69a",
+          "file": "physical/rom-p02-g33-r2c-vf03-msf56ddc76-gfx7da1b69a.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 3,
+          "actorVisualProfileKey": 2,
+          "graphicsBank": 51,
+          "metaspriteHash": "f56ddc760ce341fa",
+          "graphicsHash": "7da1b69a7328b92b",
+          "sourceProvenanceHash": "7e315191ed141e4a",
+          "trimmedPixelHash": "b382e26564157e74"
+        },
+        {
           "physicalId": "rom-p02-g33-r3f-vf00-ms6f8c4c11-gfx055aa7b4",
           "file": "physical/rom-p02-g33-r3f-vf00-ms6f8c4c11-gfx055aa7b4.png",
           "resourceId": 63,
@@ -2729,7 +2888,7 @@
           "trimmedPixelHash": "e048c0cf42cea04f"
         }
       ],
-      "signedNegativeInstances": 55,
+      "signedNegativeInstances": 101,
       "minOffset": -20,
       "maxOffset": 5,
       "minWidth": 32,
@@ -2740,16 +2899,18 @@
     {
       "formId": "piccolo_evil",
       "actorVisualProfileKey": 3,
-      "physicalFrames": 7,
-      "frameInstances": 28,
-      "sequences": 4,
+      "physicalFrames": 11,
+      "frameInstances": 90,
+      "sequences": 6,
       "resources": [
         "0x00",
-        "0x04"
+        "0x04",
+        "0x2c"
       ],
       "resourceFrameInstances": {
         "0x00": 14,
-        "0x04": 14
+        "0x04": 14,
+        "0x2c": 62
       },
       "resourceProfileBlocked": [],
       "transparentFrameRecords": [],
@@ -2844,10 +3005,62 @@
           "graphicsHash": "79415b9168d7242a",
           "sourceProvenanceHash": "709c60701ed956ec",
           "trimmedPixelHash": "432f34a9839d3b6a"
+        },
+        {
+          "physicalId": "rom-p03-g34-r2c-vf00-ms88cb7910-gfxb43c3802",
+          "file": "physical/rom-p03-g34-r2c-vf00-ms88cb7910-gfxb43c3802.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 0,
+          "actorVisualProfileKey": 3,
+          "graphicsBank": 52,
+          "metaspriteHash": "88cb7910858e95aa",
+          "graphicsHash": "b43c3802ab7bad58",
+          "sourceProvenanceHash": "a8d92dc5830536f8",
+          "trimmedPixelHash": "0201bebe3c525cd2"
+        },
+        {
+          "physicalId": "rom-p03-g34-r2c-vf01-ms63521d90-gfxa41e320e",
+          "file": "physical/rom-p03-g34-r2c-vf01-ms63521d90-gfxa41e320e.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 1,
+          "actorVisualProfileKey": 3,
+          "graphicsBank": 52,
+          "metaspriteHash": "63521d9054d2e460",
+          "graphicsHash": "a41e320e84a654c6",
+          "sourceProvenanceHash": "c90d6880c60bb2f2",
+          "trimmedPixelHash": "a5d0722472e4c6a4"
+        },
+        {
+          "physicalId": "rom-p03-g34-r2c-vf02-msb2d53f54-gfxcc92268f",
+          "file": "physical/rom-p03-g34-r2c-vf02-msb2d53f54-gfxcc92268f.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 2,
+          "actorVisualProfileKey": 3,
+          "graphicsBank": 52,
+          "metaspriteHash": "b2d53f545f9cdcd1",
+          "graphicsHash": "cc92268f2a393448",
+          "sourceProvenanceHash": "65b34554cce3860a",
+          "trimmedPixelHash": "74b18407d69c17c7"
+        },
+        {
+          "physicalId": "rom-p03-g34-r2c-vf03-msf56ddc76-gfx22e9720e",
+          "file": "physical/rom-p03-g34-r2c-vf03-msf56ddc76-gfx22e9720e.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 3,
+          "actorVisualProfileKey": 3,
+          "graphicsBank": 52,
+          "metaspriteHash": "f56ddc760ce341fa",
+          "graphicsHash": "22e9720e3cd96365",
+          "sourceProvenanceHash": "69fd4b13329d689a",
+          "trimmedPixelHash": "91bacfe190d72adc"
         }
       ],
-      "signedNegativeInstances": 16,
-      "minOffset": -10,
+      "signedNegativeInstances": 62,
+      "minOffset": -16,
       "maxOffset": 2,
       "minWidth": 32,
       "maxWidth": 32,
@@ -2857,16 +3070,18 @@
     {
       "formId": "piccolo_base",
       "actorVisualProfileKey": 3,
-      "physicalFrames": 7,
-      "frameInstances": 28,
-      "sequences": 4,
+      "physicalFrames": 11,
+      "frameInstances": 90,
+      "sequences": 6,
       "resources": [
         "0x00",
-        "0x04"
+        "0x04",
+        "0x2c"
       ],
       "resourceFrameInstances": {
         "0x00": 14,
-        "0x04": 14
+        "0x04": 14,
+        "0x2c": 62
       },
       "resourceProfileBlocked": [],
       "transparentFrameRecords": [],
@@ -2961,10 +3176,62 @@
           "graphicsHash": "79415b9168d7242a",
           "sourceProvenanceHash": "709c60701ed956ec",
           "trimmedPixelHash": "432f34a9839d3b6a"
+        },
+        {
+          "physicalId": "rom-p03-g34-r2c-vf00-ms88cb7910-gfxb43c3802",
+          "file": "physical/rom-p03-g34-r2c-vf00-ms88cb7910-gfxb43c3802.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 0,
+          "actorVisualProfileKey": 3,
+          "graphicsBank": 52,
+          "metaspriteHash": "88cb7910858e95aa",
+          "graphicsHash": "b43c3802ab7bad58",
+          "sourceProvenanceHash": "a8d92dc5830536f8",
+          "trimmedPixelHash": "0201bebe3c525cd2"
+        },
+        {
+          "physicalId": "rom-p03-g34-r2c-vf01-ms63521d90-gfxa41e320e",
+          "file": "physical/rom-p03-g34-r2c-vf01-ms63521d90-gfxa41e320e.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 1,
+          "actorVisualProfileKey": 3,
+          "graphicsBank": 52,
+          "metaspriteHash": "63521d9054d2e460",
+          "graphicsHash": "a41e320e84a654c6",
+          "sourceProvenanceHash": "c90d6880c60bb2f2",
+          "trimmedPixelHash": "a5d0722472e4c6a4"
+        },
+        {
+          "physicalId": "rom-p03-g34-r2c-vf02-msb2d53f54-gfxcc92268f",
+          "file": "physical/rom-p03-g34-r2c-vf02-msb2d53f54-gfxcc92268f.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 2,
+          "actorVisualProfileKey": 3,
+          "graphicsBank": 52,
+          "metaspriteHash": "b2d53f545f9cdcd1",
+          "graphicsHash": "cc92268f2a393448",
+          "sourceProvenanceHash": "65b34554cce3860a",
+          "trimmedPixelHash": "74b18407d69c17c7"
+        },
+        {
+          "physicalId": "rom-p03-g34-r2c-vf03-msf56ddc76-gfx22e9720e",
+          "file": "physical/rom-p03-g34-r2c-vf03-msf56ddc76-gfx22e9720e.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 3,
+          "actorVisualProfileKey": 3,
+          "graphicsBank": 52,
+          "metaspriteHash": "f56ddc760ce341fa",
+          "graphicsHash": "22e9720e3cd96365",
+          "sourceProvenanceHash": "69fd4b13329d689a",
+          "trimmedPixelHash": "91bacfe190d72adc"
         }
       ],
-      "signedNegativeInstances": 16,
-      "minOffset": -10,
+      "signedNegativeInstances": 62,
+      "minOffset": -16,
       "maxOffset": 2,
       "minWidth": 32,
       "maxWidth": 32,
@@ -2974,16 +3241,18 @@
     {
       "formId": "piccolo_kami",
       "actorVisualProfileKey": 3,
-      "physicalFrames": 7,
-      "frameInstances": 28,
-      "sequences": 4,
+      "physicalFrames": 11,
+      "frameInstances": 90,
+      "sequences": 6,
       "resources": [
         "0x00",
-        "0x04"
+        "0x04",
+        "0x2c"
       ],
       "resourceFrameInstances": {
         "0x00": 14,
-        "0x04": 14
+        "0x04": 14,
+        "0x2c": 62
       },
       "resourceProfileBlocked": [],
       "transparentFrameRecords": [],
@@ -3078,10 +3347,62 @@
           "graphicsHash": "79415b9168d7242a",
           "sourceProvenanceHash": "709c60701ed956ec",
           "trimmedPixelHash": "432f34a9839d3b6a"
+        },
+        {
+          "physicalId": "rom-p03-g34-r2c-vf00-ms88cb7910-gfxb43c3802",
+          "file": "physical/rom-p03-g34-r2c-vf00-ms88cb7910-gfxb43c3802.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 0,
+          "actorVisualProfileKey": 3,
+          "graphicsBank": 52,
+          "metaspriteHash": "88cb7910858e95aa",
+          "graphicsHash": "b43c3802ab7bad58",
+          "sourceProvenanceHash": "a8d92dc5830536f8",
+          "trimmedPixelHash": "0201bebe3c525cd2"
+        },
+        {
+          "physicalId": "rom-p03-g34-r2c-vf01-ms63521d90-gfxa41e320e",
+          "file": "physical/rom-p03-g34-r2c-vf01-ms63521d90-gfxa41e320e.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 1,
+          "actorVisualProfileKey": 3,
+          "graphicsBank": 52,
+          "metaspriteHash": "63521d9054d2e460",
+          "graphicsHash": "a41e320e84a654c6",
+          "sourceProvenanceHash": "c90d6880c60bb2f2",
+          "trimmedPixelHash": "a5d0722472e4c6a4"
+        },
+        {
+          "physicalId": "rom-p03-g34-r2c-vf02-msb2d53f54-gfxcc92268f",
+          "file": "physical/rom-p03-g34-r2c-vf02-msb2d53f54-gfxcc92268f.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 2,
+          "actorVisualProfileKey": 3,
+          "graphicsBank": 52,
+          "metaspriteHash": "b2d53f545f9cdcd1",
+          "graphicsHash": "cc92268f2a393448",
+          "sourceProvenanceHash": "65b34554cce3860a",
+          "trimmedPixelHash": "74b18407d69c17c7"
+        },
+        {
+          "physicalId": "rom-p03-g34-r2c-vf03-msf56ddc76-gfx22e9720e",
+          "file": "physical/rom-p03-g34-r2c-vf03-msf56ddc76-gfx22e9720e.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 3,
+          "actorVisualProfileKey": 3,
+          "graphicsBank": 52,
+          "metaspriteHash": "f56ddc760ce341fa",
+          "graphicsHash": "22e9720e3cd96365",
+          "sourceProvenanceHash": "69fd4b13329d689a",
+          "trimmedPixelHash": "91bacfe190d72adc"
         }
       ],
-      "signedNegativeInstances": 16,
-      "minOffset": -10,
+      "signedNegativeInstances": 62,
+      "minOffset": -16,
       "maxOffset": 2,
       "minWidth": 32,
       "maxWidth": 32,
@@ -3091,20 +3412,22 @@
     {
       "formId": "krillin_base",
       "actorVisualProfileKey": 4,
-      "physicalFrames": 22,
-      "frameInstances": 106,
-      "sequences": 13,
+      "physicalFrames": 26,
+      "frameInstances": 168,
+      "sequences": 15,
       "resources": [
         "0x00",
         "0x03",
         "0x08",
-        "0x12"
+        "0x12",
+        "0x2c"
       ],
       "resourceFrameInstances": {
         "0x00": 14,
         "0x03": 48,
         "0x08": 8,
-        "0x12": 36
+        "0x12": 36,
+        "0x2c": 62
       },
       "resourceProfileBlocked": [],
       "transparentFrameRecords": [],
@@ -3394,10 +3717,62 @@
           "graphicsHash": "1941e9ebb3d835a5",
           "sourceProvenanceHash": "0f9b3d4452955b93",
           "trimmedPixelHash": "800ecdc335d278d5"
+        },
+        {
+          "physicalId": "rom-p04-g35-r2c-vf00-ms88cb7910-gfx668906b1",
+          "file": "physical/rom-p04-g35-r2c-vf00-ms88cb7910-gfx668906b1.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 0,
+          "actorVisualProfileKey": 4,
+          "graphicsBank": 53,
+          "metaspriteHash": "88cb7910858e95aa",
+          "graphicsHash": "668906b1cb42394e",
+          "sourceProvenanceHash": "0252fa49ab0eaf1e",
+          "trimmedPixelHash": "69081facf97fe92a"
+        },
+        {
+          "physicalId": "rom-p04-g35-r2c-vf01-ms63521d90-gfx3d835e7c",
+          "file": "physical/rom-p04-g35-r2c-vf01-ms63521d90-gfx3d835e7c.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 1,
+          "actorVisualProfileKey": 4,
+          "graphicsBank": 53,
+          "metaspriteHash": "63521d9054d2e460",
+          "graphicsHash": "3d835e7c0d1f4aa7",
+          "sourceProvenanceHash": "914fc36f12fafa11",
+          "trimmedPixelHash": "d107120ec3c6749a"
+        },
+        {
+          "physicalId": "rom-p04-g35-r2c-vf02-msb2d53f54-gfx9744f08a",
+          "file": "physical/rom-p04-g35-r2c-vf02-msb2d53f54-gfx9744f08a.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 2,
+          "actorVisualProfileKey": 4,
+          "graphicsBank": 53,
+          "metaspriteHash": "b2d53f545f9cdcd1",
+          "graphicsHash": "9744f08a2486afc2",
+          "sourceProvenanceHash": "c9736603e9d05064",
+          "trimmedPixelHash": "e90a5554e1f95c98"
+        },
+        {
+          "physicalId": "rom-p04-g35-r2c-vf03-msf56ddc76-gfx175fb8a2",
+          "file": "physical/rom-p04-g35-r2c-vf03-msf56ddc76-gfx175fb8a2.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 3,
+          "actorVisualProfileKey": 4,
+          "graphicsBank": 53,
+          "metaspriteHash": "f56ddc760ce341fa",
+          "graphicsHash": "175fb8a2f9cc5147",
+          "sourceProvenanceHash": "c4f522775260d58f",
+          "trimmedPixelHash": "e2aa5851fc51b655"
         }
       ],
-      "signedNegativeInstances": 67,
-      "minOffset": -10,
+      "signedNegativeInstances": 113,
+      "minOffset": -16,
       "maxOffset": 5,
       "minWidth": 32,
       "maxWidth": 40,
@@ -3407,16 +3782,18 @@
     {
       "formId": "goku_base",
       "actorVisualProfileKey": 5,
-      "physicalFrames": 13,
-      "frameInstances": 62,
-      "sequences": 8,
+      "physicalFrames": 17,
+      "frameInstances": 124,
+      "sequences": 10,
       "resources": [
         "0x00",
-        "0x03"
+        "0x03",
+        "0x2c"
       ],
       "resourceFrameInstances": {
         "0x00": 14,
-        "0x03": 48
+        "0x03": 48,
+        "0x2c": 62
       },
       "resourceProfileBlocked": [],
       "transparentFrameRecords": [],
@@ -3589,10 +3966,62 @@
           "graphicsHash": "dd2205e7607afdbd",
           "sourceProvenanceHash": "a404052118f3ae24",
           "trimmedPixelHash": "f8413b21c695eec1"
+        },
+        {
+          "physicalId": "rom-p05-g36-r2c-vf00-ms88cb7910-gfx9c6a6eac",
+          "file": "physical/rom-p05-g36-r2c-vf00-ms88cb7910-gfx9c6a6eac.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 0,
+          "actorVisualProfileKey": 5,
+          "graphicsBank": 54,
+          "metaspriteHash": "88cb7910858e95aa",
+          "graphicsHash": "9c6a6eacc212f702",
+          "sourceProvenanceHash": "1be2c6a43e3f047b",
+          "trimmedPixelHash": "22c7bf17d9eb8613"
+        },
+        {
+          "physicalId": "rom-p05-g36-r2c-vf01-ms63521d90-gfx1e9ad291",
+          "file": "physical/rom-p05-g36-r2c-vf01-ms63521d90-gfx1e9ad291.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 1,
+          "actorVisualProfileKey": 5,
+          "graphicsBank": 54,
+          "metaspriteHash": "63521d9054d2e460",
+          "graphicsHash": "1e9ad291d1904d39",
+          "sourceProvenanceHash": "3ca1bbced582ccb6",
+          "trimmedPixelHash": "cce137f56041d41c"
+        },
+        {
+          "physicalId": "rom-p05-g36-r2c-vf02-msb2d53f54-gfx49361995",
+          "file": "physical/rom-p05-g36-r2c-vf02-msb2d53f54-gfx49361995.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 2,
+          "actorVisualProfileKey": 5,
+          "graphicsBank": 54,
+          "metaspriteHash": "b2d53f545f9cdcd1",
+          "graphicsHash": "493619954f1e663f",
+          "sourceProvenanceHash": "c7affc2d427eff7b",
+          "trimmedPixelHash": "6abc91a81ef8ed5b"
+        },
+        {
+          "physicalId": "rom-p05-g36-r2c-vf03-msf56ddc76-gfx57dd5baf",
+          "file": "physical/rom-p05-g36-r2c-vf03-msf56ddc76-gfx57dd5baf.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 3,
+          "actorVisualProfileKey": 5,
+          "graphicsBank": 54,
+          "metaspriteHash": "f56ddc760ce341fa",
+          "graphicsHash": "57dd5baffd768c88",
+          "sourceProvenanceHash": "5f93c194fc5c3fd1",
+          "trimmedPixelHash": "96e816053e1dba1e"
         }
       ],
-      "signedNegativeInstances": 32,
-      "minOffset": -9,
+      "signedNegativeInstances": 78,
+      "minOffset": -16,
       "maxOffset": 5,
       "minWidth": 32,
       "maxWidth": 32,
@@ -3602,16 +4031,18 @@
     {
       "formId": "goku_ssj",
       "actorVisualProfileKey": 6,
-      "physicalFrames": 13,
-      "frameInstances": 62,
-      "sequences": 8,
+      "physicalFrames": 17,
+      "frameInstances": 124,
+      "sequences": 10,
       "resources": [
         "0x00",
-        "0x03"
+        "0x03",
+        "0x2c"
       ],
       "resourceFrameInstances": {
         "0x00": 14,
-        "0x03": 48
+        "0x03": 48,
+        "0x2c": 62
       },
       "resourceProfileBlocked": [],
       "transparentFrameRecords": [],
@@ -3784,10 +4215,62 @@
           "graphicsHash": "b153c336eff54c4d",
           "sourceProvenanceHash": "491164f311f166dc",
           "trimmedPixelHash": "a16f2b4e039df73f"
+        },
+        {
+          "physicalId": "rom-p06-g37-r2c-vf00-ms88cb7910-gfx5fa56e57",
+          "file": "physical/rom-p06-g37-r2c-vf00-ms88cb7910-gfx5fa56e57.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 0,
+          "actorVisualProfileKey": 6,
+          "graphicsBank": 55,
+          "metaspriteHash": "88cb7910858e95aa",
+          "graphicsHash": "5fa56e57bb388e14",
+          "sourceProvenanceHash": "0cc56f5a4a9241c3",
+          "trimmedPixelHash": "7e8ea996e8930141"
+        },
+        {
+          "physicalId": "rom-p06-g37-r2c-vf01-ms63521d90-gfxc5ce2883",
+          "file": "physical/rom-p06-g37-r2c-vf01-ms63521d90-gfxc5ce2883.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 1,
+          "actorVisualProfileKey": 6,
+          "graphicsBank": 55,
+          "metaspriteHash": "63521d9054d2e460",
+          "graphicsHash": "c5ce2883665e3637",
+          "sourceProvenanceHash": "5854a3ed93bfcc6b",
+          "trimmedPixelHash": "aeeae6d7ebc22936"
+        },
+        {
+          "physicalId": "rom-p06-g37-r2c-vf02-msb2d53f54-gfx5f897788",
+          "file": "physical/rom-p06-g37-r2c-vf02-msb2d53f54-gfx5f897788.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 2,
+          "actorVisualProfileKey": 6,
+          "graphicsBank": 55,
+          "metaspriteHash": "b2d53f545f9cdcd1",
+          "graphicsHash": "5f897788b5694f07",
+          "sourceProvenanceHash": "87fb64d2e8916da0",
+          "trimmedPixelHash": "4bc040a1cf830af4"
+        },
+        {
+          "physicalId": "rom-p06-g37-r2c-vf03-msf56ddc76-gfx8ee2b026",
+          "file": "physical/rom-p06-g37-r2c-vf03-msf56ddc76-gfx8ee2b026.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 3,
+          "actorVisualProfileKey": 6,
+          "graphicsBank": 55,
+          "metaspriteHash": "f56ddc760ce341fa",
+          "graphicsHash": "8ee2b02648cfd481",
+          "sourceProvenanceHash": "53c32a3afcaf7f1c",
+          "trimmedPixelHash": "b2c69feef3603d8d"
         }
       ],
-      "signedNegativeInstances": 32,
-      "minOffset": -9,
+      "signedNegativeInstances": 78,
+      "minOffset": -16,
       "maxOffset": 5,
       "minWidth": 32,
       "maxWidth": 32,
@@ -3797,16 +4280,18 @@
     {
       "formId": "goku_ssj2",
       "actorVisualProfileKey": 7,
-      "physicalFrames": 13,
-      "frameInstances": 62,
-      "sequences": 8,
+      "physicalFrames": 17,
+      "frameInstances": 124,
+      "sequences": 10,
       "resources": [
         "0x00",
-        "0x03"
+        "0x03",
+        "0x2c"
       ],
       "resourceFrameInstances": {
         "0x00": 14,
-        "0x03": 48
+        "0x03": 48,
+        "0x2c": 62
       },
       "resourceProfileBlocked": [],
       "transparentFrameRecords": [],
@@ -3979,10 +4464,62 @@
           "graphicsHash": "fed178fe164618cc",
           "sourceProvenanceHash": "d23022ba30fc1817",
           "trimmedPixelHash": "6951c5374b498981"
+        },
+        {
+          "physicalId": "rom-p07-g38-r2c-vf00-ms88cb7910-gfx27f97dbb",
+          "file": "physical/rom-p07-g38-r2c-vf00-ms88cb7910-gfx27f97dbb.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 0,
+          "actorVisualProfileKey": 7,
+          "graphicsBank": 56,
+          "metaspriteHash": "88cb7910858e95aa",
+          "graphicsHash": "27f97dbbf5ade2ff",
+          "sourceProvenanceHash": "7da0bbae28ae6488",
+          "trimmedPixelHash": "f0bb24fbebd88351"
+        },
+        {
+          "physicalId": "rom-p07-g38-r2c-vf01-ms63521d90-gfxad991598",
+          "file": "physical/rom-p07-g38-r2c-vf01-ms63521d90-gfxad991598.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 1,
+          "actorVisualProfileKey": 7,
+          "graphicsBank": 56,
+          "metaspriteHash": "63521d9054d2e460",
+          "graphicsHash": "ad9915980faca4d2",
+          "sourceProvenanceHash": "1c6f9e8d9706ec83",
+          "trimmedPixelHash": "6a1362efc1212fe4"
+        },
+        {
+          "physicalId": "rom-p07-g38-r2c-vf02-msb2d53f54-gfx1f7c1f9f",
+          "file": "physical/rom-p07-g38-r2c-vf02-msb2d53f54-gfx1f7c1f9f.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 2,
+          "actorVisualProfileKey": 7,
+          "graphicsBank": 56,
+          "metaspriteHash": "b2d53f545f9cdcd1",
+          "graphicsHash": "1f7c1f9fec96a364",
+          "sourceProvenanceHash": "f400486f1bfec60e",
+          "trimmedPixelHash": "37dbed9949db9489"
+        },
+        {
+          "physicalId": "rom-p07-g38-r2c-vf03-msf56ddc76-gfx67fc4717",
+          "file": "physical/rom-p07-g38-r2c-vf03-msf56ddc76-gfx67fc4717.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 3,
+          "actorVisualProfileKey": 7,
+          "graphicsBank": 56,
+          "metaspriteHash": "f56ddc760ce341fa",
+          "graphicsHash": "67fc47171a0dbe3a",
+          "sourceProvenanceHash": "268489cbcebc32db",
+          "trimmedPixelHash": "9316bb8a3a1d7e4d"
         }
       ],
-      "signedNegativeInstances": 32,
-      "minOffset": -9,
+      "signedNegativeInstances": 78,
+      "minOffset": -16,
       "maxOffset": 5,
       "minWidth": 32,
       "maxWidth": 32,
@@ -3992,16 +4529,18 @@
     {
       "formId": "goku_ssj3",
       "actorVisualProfileKey": 8,
-      "physicalFrames": 13,
-      "frameInstances": 62,
-      "sequences": 8,
+      "physicalFrames": 17,
+      "frameInstances": 124,
+      "sequences": 10,
       "resources": [
         "0x00",
-        "0x03"
+        "0x03",
+        "0x2c"
       ],
       "resourceFrameInstances": {
         "0x00": 14,
-        "0x03": 48
+        "0x03": 48,
+        "0x2c": 62
       },
       "resourceProfileBlocked": [],
       "transparentFrameRecords": [],
@@ -4174,10 +4713,62 @@
           "graphicsHash": "275626e22b11337d",
           "sourceProvenanceHash": "83befe1c9c6f9d36",
           "trimmedPixelHash": "8e3e8a0e5a0a7474"
+        },
+        {
+          "physicalId": "rom-p08-g39-r2c-vf00-ms88cb7910-gfx38305773",
+          "file": "physical/rom-p08-g39-r2c-vf00-ms88cb7910-gfx38305773.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 0,
+          "actorVisualProfileKey": 8,
+          "graphicsBank": 57,
+          "metaspriteHash": "88cb7910858e95aa",
+          "graphicsHash": "38305773c40ed671",
+          "sourceProvenanceHash": "13505856ca763c0a",
+          "trimmedPixelHash": "b469e281a2b45c72"
+        },
+        {
+          "physicalId": "rom-p08-g39-r2c-vf01-ms63521d90-gfxc8409f2f",
+          "file": "physical/rom-p08-g39-r2c-vf01-ms63521d90-gfxc8409f2f.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 1,
+          "actorVisualProfileKey": 8,
+          "graphicsBank": 57,
+          "metaspriteHash": "63521d9054d2e460",
+          "graphicsHash": "c8409f2f0aa609fd",
+          "sourceProvenanceHash": "82a33be8a68b9ca8",
+          "trimmedPixelHash": "82384359cf6a3573"
+        },
+        {
+          "physicalId": "rom-p08-g39-r2c-vf02-msb2d53f54-gfx62f9a8d1",
+          "file": "physical/rom-p08-g39-r2c-vf02-msb2d53f54-gfx62f9a8d1.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 2,
+          "actorVisualProfileKey": 8,
+          "graphicsBank": 57,
+          "metaspriteHash": "b2d53f545f9cdcd1",
+          "graphicsHash": "62f9a8d1e7e73893",
+          "sourceProvenanceHash": "efed192d5e76cb49",
+          "trimmedPixelHash": "73b10e7f9c9ab8f7"
+        },
+        {
+          "physicalId": "rom-p08-g39-r2c-vf03-msf56ddc76-gfxd921d7e5",
+          "file": "physical/rom-p08-g39-r2c-vf03-msf56ddc76-gfxd921d7e5.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 3,
+          "actorVisualProfileKey": 8,
+          "graphicsBank": 57,
+          "metaspriteHash": "f56ddc760ce341fa",
+          "graphicsHash": "d921d7e5199d1c2a",
+          "sourceProvenanceHash": "e19ccd3fe7090f4a",
+          "trimmedPixelHash": "3a45da03733d1949"
         }
       ],
-      "signedNegativeInstances": 32,
-      "minOffset": -9,
+      "signedNegativeInstances": 78,
+      "minOffset": -16,
       "maxOffset": 5,
       "minWidth": 32,
       "maxWidth": 32,
@@ -4187,18 +4778,20 @@
     {
       "formId": "vegeta_base",
       "actorVisualProfileKey": 9,
-      "physicalFrames": 13,
-      "frameInstances": 66,
-      "sequences": 8,
+      "physicalFrames": 17,
+      "frameInstances": 128,
+      "sequences": 10,
       "resources": [
         "0x00",
         "0x05",
-        "0x12"
+        "0x12",
+        "0x2c"
       ],
       "resourceFrameInstances": {
         "0x00": 14,
         "0x05": 16,
-        "0x12": 36
+        "0x12": 36,
+        "0x2c": 62
       },
       "resourceProfileBlocked": [],
       "transparentFrameRecords": [],
@@ -4371,10 +4964,62 @@
           "graphicsHash": "bb346f502105f759",
           "sourceProvenanceHash": "7f85cba6277dcc3a",
           "trimmedPixelHash": "779ba97544fdb18c"
+        },
+        {
+          "physicalId": "rom-p09-g3a-r2c-vf00-ms88cb7910-gfx8e0e5be6",
+          "file": "physical/rom-p09-g3a-r2c-vf00-ms88cb7910-gfx8e0e5be6.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 0,
+          "actorVisualProfileKey": 9,
+          "graphicsBank": 58,
+          "metaspriteHash": "88cb7910858e95aa",
+          "graphicsHash": "8e0e5be6ce9f044f",
+          "sourceProvenanceHash": "d9c4279c4c9fe768",
+          "trimmedPixelHash": "52f9f242ebfc9d32"
+        },
+        {
+          "physicalId": "rom-p09-g3a-r2c-vf01-ms63521d90-gfx76bf976d",
+          "file": "physical/rom-p09-g3a-r2c-vf01-ms63521d90-gfx76bf976d.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 1,
+          "actorVisualProfileKey": 9,
+          "graphicsBank": 58,
+          "metaspriteHash": "63521d9054d2e460",
+          "graphicsHash": "76bf976d69bb6e5d",
+          "sourceProvenanceHash": "3f0d48e5b1ad99f7",
+          "trimmedPixelHash": "3e44df3bd07e0d02"
+        },
+        {
+          "physicalId": "rom-p09-g3a-r2c-vf02-msb2d53f54-gfxab78c1df",
+          "file": "physical/rom-p09-g3a-r2c-vf02-msb2d53f54-gfxab78c1df.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 2,
+          "actorVisualProfileKey": 9,
+          "graphicsBank": 58,
+          "metaspriteHash": "b2d53f545f9cdcd1",
+          "graphicsHash": "ab78c1dfba1f1ad6",
+          "sourceProvenanceHash": "bad1d81fbfa098fd",
+          "trimmedPixelHash": "8d425ebf0f377053"
+        },
+        {
+          "physicalId": "rom-p09-g3a-r2c-vf03-msf56ddc76-gfxbddc67dd",
+          "file": "physical/rom-p09-g3a-r2c-vf03-msf56ddc76-gfxbddc67dd.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 3,
+          "actorVisualProfileKey": 9,
+          "graphicsBank": 58,
+          "metaspriteHash": "f56ddc760ce341fa",
+          "graphicsHash": "bddc67ddc3b6e45e",
+          "sourceProvenanceHash": "d43f174be6beb7d3",
+          "trimmedPixelHash": "3822141ada7df771"
         }
       ],
-      "signedNegativeInstances": 44,
-      "minOffset": -10,
+      "signedNegativeInstances": 90,
+      "minOffset": -16,
       "maxOffset": 3,
       "minWidth": 32,
       "maxWidth": 40,
@@ -4384,18 +5029,20 @@
     {
       "formId": "vegeta_ssj",
       "actorVisualProfileKey": 10,
-      "physicalFrames": 13,
-      "frameInstances": 66,
-      "sequences": 8,
+      "physicalFrames": 17,
+      "frameInstances": 128,
+      "sequences": 10,
       "resources": [
         "0x00",
         "0x05",
-        "0x12"
+        "0x12",
+        "0x2c"
       ],
       "resourceFrameInstances": {
         "0x00": 14,
         "0x05": 16,
-        "0x12": 36
+        "0x12": 36,
+        "0x2c": 62
       },
       "resourceProfileBlocked": [],
       "transparentFrameRecords": [],
@@ -4568,10 +5215,62 @@
           "graphicsHash": "d59d0ae495a6efb8",
           "sourceProvenanceHash": "d96f45ba599a5fe2",
           "trimmedPixelHash": "6f485675f4743661"
+        },
+        {
+          "physicalId": "rom-p0a-g3b-r2c-vf00-ms88cb7910-gfx85d9282b",
+          "file": "physical/rom-p0a-g3b-r2c-vf00-ms88cb7910-gfx85d9282b.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 0,
+          "actorVisualProfileKey": 10,
+          "graphicsBank": 59,
+          "metaspriteHash": "88cb7910858e95aa",
+          "graphicsHash": "85d9282b72bba27e",
+          "sourceProvenanceHash": "e1b64445475659e6",
+          "trimmedPixelHash": "f6683b66372dc1b2"
+        },
+        {
+          "physicalId": "rom-p0a-g3b-r2c-vf01-ms63521d90-gfx25464d0a",
+          "file": "physical/rom-p0a-g3b-r2c-vf01-ms63521d90-gfx25464d0a.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 1,
+          "actorVisualProfileKey": 10,
+          "graphicsBank": 59,
+          "metaspriteHash": "63521d9054d2e460",
+          "graphicsHash": "25464d0affb95546",
+          "sourceProvenanceHash": "4b47c933710ff363",
+          "trimmedPixelHash": "02f0cc9b400330d9"
+        },
+        {
+          "physicalId": "rom-p0a-g3b-r2c-vf02-msb2d53f54-gfxa5786c98",
+          "file": "physical/rom-p0a-g3b-r2c-vf02-msb2d53f54-gfxa5786c98.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 2,
+          "actorVisualProfileKey": 10,
+          "graphicsBank": 59,
+          "metaspriteHash": "b2d53f545f9cdcd1",
+          "graphicsHash": "a5786c984c42746b",
+          "sourceProvenanceHash": "d772664e137d77ef",
+          "trimmedPixelHash": "e571e99b81c6f344"
+        },
+        {
+          "physicalId": "rom-p0a-g3b-r2c-vf03-msf56ddc76-gfx43c1c3ed",
+          "file": "physical/rom-p0a-g3b-r2c-vf03-msf56ddc76-gfx43c1c3ed.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 3,
+          "actorVisualProfileKey": 10,
+          "graphicsBank": 59,
+          "metaspriteHash": "f56ddc760ce341fa",
+          "graphicsHash": "43c1c3ed357e88be",
+          "sourceProvenanceHash": "bdfd7356f05f6db4",
+          "trimmedPixelHash": "94ef76b7b67e54ed"
         }
       ],
-      "signedNegativeInstances": 44,
-      "minOffset": -10,
+      "signedNegativeInstances": 90,
+      "minOffset": -16,
       "maxOffset": 3,
       "minWidth": 32,
       "maxWidth": 40,
@@ -4581,18 +5280,20 @@
     {
       "formId": "vegeta_majin",
       "actorVisualProfileKey": 10,
-      "physicalFrames": 13,
-      "frameInstances": 66,
-      "sequences": 8,
+      "physicalFrames": 17,
+      "frameInstances": 128,
+      "sequences": 10,
       "resources": [
         "0x00",
         "0x05",
-        "0x12"
+        "0x12",
+        "0x2c"
       ],
       "resourceFrameInstances": {
         "0x00": 14,
         "0x05": 16,
-        "0x12": 36
+        "0x12": 36,
+        "0x2c": 62
       },
       "resourceProfileBlocked": [],
       "transparentFrameRecords": [],
@@ -4765,10 +5466,62 @@
           "graphicsHash": "d59d0ae495a6efb8",
           "sourceProvenanceHash": "d96f45ba599a5fe2",
           "trimmedPixelHash": "6f485675f4743661"
+        },
+        {
+          "physicalId": "rom-p0a-g3b-r2c-vf00-ms88cb7910-gfx85d9282b",
+          "file": "physical/rom-p0a-g3b-r2c-vf00-ms88cb7910-gfx85d9282b.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 0,
+          "actorVisualProfileKey": 10,
+          "graphicsBank": 59,
+          "metaspriteHash": "88cb7910858e95aa",
+          "graphicsHash": "85d9282b72bba27e",
+          "sourceProvenanceHash": "e1b64445475659e6",
+          "trimmedPixelHash": "f6683b66372dc1b2"
+        },
+        {
+          "physicalId": "rom-p0a-g3b-r2c-vf01-ms63521d90-gfx25464d0a",
+          "file": "physical/rom-p0a-g3b-r2c-vf01-ms63521d90-gfx25464d0a.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 1,
+          "actorVisualProfileKey": 10,
+          "graphicsBank": 59,
+          "metaspriteHash": "63521d9054d2e460",
+          "graphicsHash": "25464d0affb95546",
+          "sourceProvenanceHash": "4b47c933710ff363",
+          "trimmedPixelHash": "02f0cc9b400330d9"
+        },
+        {
+          "physicalId": "rom-p0a-g3b-r2c-vf02-msb2d53f54-gfxa5786c98",
+          "file": "physical/rom-p0a-g3b-r2c-vf02-msb2d53f54-gfxa5786c98.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 2,
+          "actorVisualProfileKey": 10,
+          "graphicsBank": 59,
+          "metaspriteHash": "b2d53f545f9cdcd1",
+          "graphicsHash": "a5786c984c42746b",
+          "sourceProvenanceHash": "d772664e137d77ef",
+          "trimmedPixelHash": "e571e99b81c6f344"
+        },
+        {
+          "physicalId": "rom-p0a-g3b-r2c-vf03-msf56ddc76-gfx43c1c3ed",
+          "file": "physical/rom-p0a-g3b-r2c-vf03-msf56ddc76-gfx43c1c3ed.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 3,
+          "actorVisualProfileKey": 10,
+          "graphicsBank": 59,
+          "metaspriteHash": "f56ddc760ce341fa",
+          "graphicsHash": "43c1c3ed357e88be",
+          "sourceProvenanceHash": "bdfd7356f05f6db4",
+          "trimmedPixelHash": "94ef76b7b67e54ed"
         }
       ],
-      "signedNegativeInstances": 44,
-      "minOffset": -10,
+      "signedNegativeInstances": 90,
+      "minOffset": -16,
       "maxOffset": 3,
       "minWidth": 32,
       "maxWidth": 40,
@@ -4778,18 +5531,20 @@
     {
       "formId": "gohan_adult_ssj",
       "actorVisualProfileKey": 12,
-      "physicalFrames": 17,
-      "frameInstances": 76,
-      "sequences": 10,
+      "physicalFrames": 21,
+      "frameInstances": 138,
+      "sequences": 12,
       "resources": [
         "0x00",
         "0x03",
-        "0x04"
+        "0x04",
+        "0x2c"
       ],
       "resourceFrameInstances": {
         "0x00": 14,
         "0x03": 48,
-        "0x04": 14
+        "0x04": 14,
+        "0x2c": 62
       },
       "resourceProfileBlocked": [],
       "transparentFrameRecords": [],
@@ -5014,10 +5769,62 @@
           "graphicsHash": "e6680100b5336eac",
           "sourceProvenanceHash": "1d4ec72fa0c9589a",
           "trimmedPixelHash": "b32e9567f53d4604"
+        },
+        {
+          "physicalId": "rom-p0c-g3d-r2c-vf00-ms88cb7910-gfx654ceaaa",
+          "file": "physical/rom-p0c-g3d-r2c-vf00-ms88cb7910-gfx654ceaaa.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 0,
+          "actorVisualProfileKey": 12,
+          "graphicsBank": 61,
+          "metaspriteHash": "88cb7910858e95aa",
+          "graphicsHash": "654ceaaa8ddb827f",
+          "sourceProvenanceHash": "b3baa653525408a9",
+          "trimmedPixelHash": "16109e772b71039d"
+        },
+        {
+          "physicalId": "rom-p0c-g3d-r2c-vf01-ms63521d90-gfx0729d75e",
+          "file": "physical/rom-p0c-g3d-r2c-vf01-ms63521d90-gfx0729d75e.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 1,
+          "actorVisualProfileKey": 12,
+          "graphicsBank": 61,
+          "metaspriteHash": "63521d9054d2e460",
+          "graphicsHash": "0729d75e1338368e",
+          "sourceProvenanceHash": "ad182e76f002964a",
+          "trimmedPixelHash": "ba9406314ca268f4"
+        },
+        {
+          "physicalId": "rom-p0c-g3d-r2c-vf02-msb2d53f54-gfx74fcb477",
+          "file": "physical/rom-p0c-g3d-r2c-vf02-msb2d53f54-gfx74fcb477.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 2,
+          "actorVisualProfileKey": 12,
+          "graphicsBank": 61,
+          "metaspriteHash": "b2d53f545f9cdcd1",
+          "graphicsHash": "74fcb47715bfbb32",
+          "sourceProvenanceHash": "47a02291373aa5ab",
+          "trimmedPixelHash": "573af91ceb5f5ef3"
+        },
+        {
+          "physicalId": "rom-p0c-g3d-r2c-vf03-msf56ddc76-gfx4d80099e",
+          "file": "physical/rom-p0c-g3d-r2c-vf03-msf56ddc76-gfx4d80099e.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 3,
+          "actorVisualProfileKey": 12,
+          "graphicsBank": 61,
+          "metaspriteHash": "f56ddc760ce341fa",
+          "graphicsHash": "4d80099ef0d78909",
+          "sourceProvenanceHash": "adcd14ce0a954408",
+          "trimmedPixelHash": "bf6472e89db04a9e"
         }
       ],
-      "signedNegativeInstances": 40,
-      "minOffset": -10,
+      "signedNegativeInstances": 86,
+      "minOffset": -16,
       "maxOffset": 5,
       "minWidth": 32,
       "maxWidth": 32,
@@ -5027,18 +5834,20 @@
     {
       "formId": "gohan_adult_ssj2",
       "actorVisualProfileKey": 12,
-      "physicalFrames": 17,
-      "frameInstances": 76,
-      "sequences": 10,
+      "physicalFrames": 21,
+      "frameInstances": 138,
+      "sequences": 12,
       "resources": [
         "0x00",
         "0x03",
-        "0x04"
+        "0x04",
+        "0x2c"
       ],
       "resourceFrameInstances": {
         "0x00": 14,
         "0x03": 48,
-        "0x04": 14
+        "0x04": 14,
+        "0x2c": 62
       },
       "resourceProfileBlocked": [],
       "transparentFrameRecords": [],
@@ -5263,10 +6072,62 @@
           "graphicsHash": "e6680100b5336eac",
           "sourceProvenanceHash": "1d4ec72fa0c9589a",
           "trimmedPixelHash": "b32e9567f53d4604"
+        },
+        {
+          "physicalId": "rom-p0c-g3d-r2c-vf00-ms88cb7910-gfx654ceaaa",
+          "file": "physical/rom-p0c-g3d-r2c-vf00-ms88cb7910-gfx654ceaaa.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 0,
+          "actorVisualProfileKey": 12,
+          "graphicsBank": 61,
+          "metaspriteHash": "88cb7910858e95aa",
+          "graphicsHash": "654ceaaa8ddb827f",
+          "sourceProvenanceHash": "b3baa653525408a9",
+          "trimmedPixelHash": "16109e772b71039d"
+        },
+        {
+          "physicalId": "rom-p0c-g3d-r2c-vf01-ms63521d90-gfx0729d75e",
+          "file": "physical/rom-p0c-g3d-r2c-vf01-ms63521d90-gfx0729d75e.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 1,
+          "actorVisualProfileKey": 12,
+          "graphicsBank": 61,
+          "metaspriteHash": "63521d9054d2e460",
+          "graphicsHash": "0729d75e1338368e",
+          "sourceProvenanceHash": "ad182e76f002964a",
+          "trimmedPixelHash": "ba9406314ca268f4"
+        },
+        {
+          "physicalId": "rom-p0c-g3d-r2c-vf02-msb2d53f54-gfx74fcb477",
+          "file": "physical/rom-p0c-g3d-r2c-vf02-msb2d53f54-gfx74fcb477.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 2,
+          "actorVisualProfileKey": 12,
+          "graphicsBank": 61,
+          "metaspriteHash": "b2d53f545f9cdcd1",
+          "graphicsHash": "74fcb47715bfbb32",
+          "sourceProvenanceHash": "47a02291373aa5ab",
+          "trimmedPixelHash": "573af91ceb5f5ef3"
+        },
+        {
+          "physicalId": "rom-p0c-g3d-r2c-vf03-msf56ddc76-gfx4d80099e",
+          "file": "physical/rom-p0c-g3d-r2c-vf03-msf56ddc76-gfx4d80099e.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 3,
+          "actorVisualProfileKey": 12,
+          "graphicsBank": 61,
+          "metaspriteHash": "f56ddc760ce341fa",
+          "graphicsHash": "4d80099ef0d78909",
+          "sourceProvenanceHash": "adcd14ce0a954408",
+          "trimmedPixelHash": "bf6472e89db04a9e"
         }
       ],
-      "signedNegativeInstances": 40,
-      "minOffset": -10,
+      "signedNegativeInstances": 86,
+      "minOffset": -16,
       "maxOffset": 5,
       "minWidth": 32,
       "maxWidth": 32,
@@ -5276,18 +6137,20 @@
     {
       "formId": "gohan_adult_ultimate",
       "actorVisualProfileKey": 11,
-      "physicalFrames": 16,
-      "frameInstances": 72,
-      "sequences": 10,
+      "physicalFrames": 20,
+      "frameInstances": 134,
+      "sequences": 12,
       "resources": [
         "0x00",
         "0x03",
-        "0x04"
+        "0x04",
+        "0x2c"
       ],
       "resourceFrameInstances": {
         "0x00": 14,
         "0x03": 44,
-        "0x04": 14
+        "0x04": 14,
+        "0x2c": 62
       },
       "resourceProfileBlocked": [],
       "transparentFrameRecords": [
@@ -5588,10 +6451,62 @@
           "graphicsHash": "4a904a61f77df04c",
           "sourceProvenanceHash": "3cedd95913c1dbd4",
           "trimmedPixelHash": "07f900714b54f8ab"
+        },
+        {
+          "physicalId": "rom-p0b-g3c-r2c-vf00-ms88cb7910-gfx8639c19c",
+          "file": "physical/rom-p0b-g3c-r2c-vf00-ms88cb7910-gfx8639c19c.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 0,
+          "actorVisualProfileKey": 11,
+          "graphicsBank": 60,
+          "metaspriteHash": "88cb7910858e95aa",
+          "graphicsHash": "8639c19c3d552a53",
+          "sourceProvenanceHash": "5e265034b502a7db",
+          "trimmedPixelHash": "4b1506ef938e0f3d"
+        },
+        {
+          "physicalId": "rom-p0b-g3c-r2c-vf01-ms63521d90-gfx552b3e15",
+          "file": "physical/rom-p0b-g3c-r2c-vf01-ms63521d90-gfx552b3e15.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 1,
+          "actorVisualProfileKey": 11,
+          "graphicsBank": 60,
+          "metaspriteHash": "63521d9054d2e460",
+          "graphicsHash": "552b3e15f8547015",
+          "sourceProvenanceHash": "71418459770bba31",
+          "trimmedPixelHash": "3b7967ffaab4d4ef"
+        },
+        {
+          "physicalId": "rom-p0b-g3c-r2c-vf02-msb2d53f54-gfx29053762",
+          "file": "physical/rom-p0b-g3c-r2c-vf02-msb2d53f54-gfx29053762.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 2,
+          "actorVisualProfileKey": 11,
+          "graphicsBank": 60,
+          "metaspriteHash": "b2d53f545f9cdcd1",
+          "graphicsHash": "29053762d1c2f231",
+          "sourceProvenanceHash": "9c104ab23af70620",
+          "trimmedPixelHash": "8e0d746518e7ffb5"
+        },
+        {
+          "physicalId": "rom-p0b-g3c-r2c-vf03-msf56ddc76-gfx74cf022f",
+          "file": "physical/rom-p0b-g3c-r2c-vf03-msf56ddc76-gfx74cf022f.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 3,
+          "actorVisualProfileKey": 11,
+          "graphicsBank": 60,
+          "metaspriteHash": "f56ddc760ce341fa",
+          "graphicsHash": "74cf022faac5e527",
+          "sourceProvenanceHash": "481bba0a35322ec8",
+          "trimmedPixelHash": "b58baa540323e443"
         }
       ],
-      "signedNegativeInstances": 40,
-      "minOffset": -10,
+      "signedNegativeInstances": 86,
+      "minOffset": -16,
       "maxOffset": 5,
       "minWidth": 32,
       "maxWidth": 32,
@@ -5601,16 +6516,18 @@
     {
       "formId": "trunks_future",
       "actorVisualProfileKey": 13,
-      "physicalFrames": 7,
-      "frameInstances": 28,
-      "sequences": 4,
+      "physicalFrames": 11,
+      "frameInstances": 90,
+      "sequences": 6,
       "resources": [
         "0x00",
-        "0x04"
+        "0x04",
+        "0x2c"
       ],
       "resourceFrameInstances": {
         "0x00": 14,
-        "0x04": 14
+        "0x04": 14,
+        "0x2c": 62
       },
       "resourceProfileBlocked": [],
       "transparentFrameRecords": [],
@@ -5705,10 +6622,62 @@
           "graphicsHash": "61cf50b54da8c33b",
           "sourceProvenanceHash": "3e8155e56c6f1968",
           "trimmedPixelHash": "1a1d2cbf50bccb1a"
+        },
+        {
+          "physicalId": "rom-p0d-g3e-r2c-vf00-ms88cb7910-gfxd1ce073a",
+          "file": "physical/rom-p0d-g3e-r2c-vf00-ms88cb7910-gfxd1ce073a.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 0,
+          "actorVisualProfileKey": 13,
+          "graphicsBank": 62,
+          "metaspriteHash": "88cb7910858e95aa",
+          "graphicsHash": "d1ce073a6e36d88a",
+          "sourceProvenanceHash": "d0a09123382fad47",
+          "trimmedPixelHash": "d6124be4bf075ba7"
+        },
+        {
+          "physicalId": "rom-p0d-g3e-r2c-vf01-ms63521d90-gfx0ac1ab56",
+          "file": "physical/rom-p0d-g3e-r2c-vf01-ms63521d90-gfx0ac1ab56.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 1,
+          "actorVisualProfileKey": 13,
+          "graphicsBank": 62,
+          "metaspriteHash": "63521d9054d2e460",
+          "graphicsHash": "0ac1ab56cdccf8b0",
+          "sourceProvenanceHash": "1d98eb369825339c",
+          "trimmedPixelHash": "264bba7879644201"
+        },
+        {
+          "physicalId": "rom-p0d-g3e-r2c-vf02-msb2d53f54-gfx0757cd76",
+          "file": "physical/rom-p0d-g3e-r2c-vf02-msb2d53f54-gfx0757cd76.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 2,
+          "actorVisualProfileKey": 13,
+          "graphicsBank": 62,
+          "metaspriteHash": "b2d53f545f9cdcd1",
+          "graphicsHash": "0757cd76e89a7aad",
+          "sourceProvenanceHash": "e72d1394c6c764a0",
+          "trimmedPixelHash": "b45ff82f0ceba753"
+        },
+        {
+          "physicalId": "rom-p0d-g3e-r2c-vf03-msf56ddc76-gfx7868f21a",
+          "file": "physical/rom-p0d-g3e-r2c-vf03-msf56ddc76-gfx7868f21a.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 3,
+          "actorVisualProfileKey": 13,
+          "graphicsBank": 62,
+          "metaspriteHash": "f56ddc760ce341fa",
+          "graphicsHash": "7868f21a21809ce2",
+          "sourceProvenanceHash": "4ae820cb68face04",
+          "trimmedPixelHash": "6257d4e681cd8774"
         }
       ],
-      "signedNegativeInstances": 16,
-      "minOffset": -10,
+      "signedNegativeInstances": 62,
+      "minOffset": -16,
       "maxOffset": 2,
       "minWidth": 32,
       "maxWidth": 32,
@@ -5718,16 +6687,18 @@
     {
       "formId": "trunks_ssj",
       "actorVisualProfileKey": 14,
-      "physicalFrames": 7,
-      "frameInstances": 28,
-      "sequences": 4,
+      "physicalFrames": 11,
+      "frameInstances": 90,
+      "sequences": 6,
       "resources": [
         "0x00",
-        "0x04"
+        "0x04",
+        "0x2c"
       ],
       "resourceFrameInstances": {
         "0x00": 14,
-        "0x04": 14
+        "0x04": 14,
+        "0x2c": 62
       },
       "resourceProfileBlocked": [],
       "transparentFrameRecords": [],
@@ -5822,10 +6793,62 @@
           "graphicsHash": "b8e375dbd3d6029f",
           "sourceProvenanceHash": "efbf65ac8fa61f1c",
           "trimmedPixelHash": "19550680d092b8ff"
+        },
+        {
+          "physicalId": "rom-p0e-g3f-r2c-vf00-ms88cb7910-gfxfe60db4c",
+          "file": "physical/rom-p0e-g3f-r2c-vf00-ms88cb7910-gfxfe60db4c.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 0,
+          "actorVisualProfileKey": 14,
+          "graphicsBank": 63,
+          "metaspriteHash": "88cb7910858e95aa",
+          "graphicsHash": "fe60db4c6c1e1d5f",
+          "sourceProvenanceHash": "df98fb4ab1210742",
+          "trimmedPixelHash": "50118f7e9ae2fd85"
+        },
+        {
+          "physicalId": "rom-p0e-g3f-r2c-vf01-ms63521d90-gfxe223cca6",
+          "file": "physical/rom-p0e-g3f-r2c-vf01-ms63521d90-gfxe223cca6.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 1,
+          "actorVisualProfileKey": 14,
+          "graphicsBank": 63,
+          "metaspriteHash": "63521d9054d2e460",
+          "graphicsHash": "e223cca6465fd84f",
+          "sourceProvenanceHash": "619adf48459ed39d",
+          "trimmedPixelHash": "d17c3159463893d6"
+        },
+        {
+          "physicalId": "rom-p0e-g3f-r2c-vf02-msb2d53f54-gfx73865deb",
+          "file": "physical/rom-p0e-g3f-r2c-vf02-msb2d53f54-gfx73865deb.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 2,
+          "actorVisualProfileKey": 14,
+          "graphicsBank": 63,
+          "metaspriteHash": "b2d53f545f9cdcd1",
+          "graphicsHash": "73865deb15f7fdc7",
+          "sourceProvenanceHash": "76e749ca14c9d51f",
+          "trimmedPixelHash": "846be4f82d18860d"
+        },
+        {
+          "physicalId": "rom-p0e-g3f-r2c-vf03-msf56ddc76-gfx3f535487",
+          "file": "physical/rom-p0e-g3f-r2c-vf03-msf56ddc76-gfx3f535487.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 3,
+          "actorVisualProfileKey": 14,
+          "graphicsBank": 63,
+          "metaspriteHash": "f56ddc760ce341fa",
+          "graphicsHash": "3f5354874b38db75",
+          "sourceProvenanceHash": "945d3d73553eb827",
+          "trimmedPixelHash": "d396d41c48e31853"
         }
       ],
-      "signedNegativeInstances": 16,
-      "minOffset": -10,
+      "signedNegativeInstances": 62,
+      "minOffset": -16,
       "maxOffset": 2,
       "minWidth": 32,
       "maxWidth": 32,
@@ -5835,16 +6858,18 @@
     {
       "formId": "goten_base",
       "actorVisualProfileKey": 15,
-      "physicalFrames": 9,
-      "frameInstances": 42,
-      "sequences": 7,
+      "physicalFrames": 13,
+      "frameInstances": 104,
+      "sequences": 9,
       "resources": [
         "0x00",
-        "0x03"
+        "0x03",
+        "0x2c"
       ],
       "resourceFrameInstances": {
         "0x00": 14,
-        "0x03": 28
+        "0x03": 28,
+        "0x2c": 62
       },
       "resourceProfileBlocked": [],
       "transparentFrameRecords": [
@@ -6406,10 +7431,62 @@
           "graphicsHash": "20536492b6aefac1",
           "sourceProvenanceHash": "2d6803b4891c2cc3",
           "trimmedPixelHash": "75d08d8a084ad73b"
+        },
+        {
+          "physicalId": "rom-p0f-g40-r2c-vf00-ms88cb7910-gfx53143e3e",
+          "file": "physical/rom-p0f-g40-r2c-vf00-ms88cb7910-gfx53143e3e.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 0,
+          "actorVisualProfileKey": 15,
+          "graphicsBank": 64,
+          "metaspriteHash": "88cb7910858e95aa",
+          "graphicsHash": "53143e3ec321ded4",
+          "sourceProvenanceHash": "538c7d08f77c7fe9",
+          "trimmedPixelHash": "63575299e47a68c0"
+        },
+        {
+          "physicalId": "rom-p0f-g40-r2c-vf01-ms63521d90-gfx3277621c",
+          "file": "physical/rom-p0f-g40-r2c-vf01-ms63521d90-gfx3277621c.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 1,
+          "actorVisualProfileKey": 15,
+          "graphicsBank": 64,
+          "metaspriteHash": "63521d9054d2e460",
+          "graphicsHash": "3277621c17444792",
+          "sourceProvenanceHash": "3dff54082488087b",
+          "trimmedPixelHash": "ea50a466ad8eea2d"
+        },
+        {
+          "physicalId": "rom-p0f-g40-r2c-vf02-msb2d53f54-gfx6305f92c",
+          "file": "physical/rom-p0f-g40-r2c-vf02-msb2d53f54-gfx6305f92c.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 2,
+          "actorVisualProfileKey": 15,
+          "graphicsBank": 64,
+          "metaspriteHash": "b2d53f545f9cdcd1",
+          "graphicsHash": "6305f92c8b867081",
+          "sourceProvenanceHash": "78e706df977c70d3",
+          "trimmedPixelHash": "6db6aeca3ccd1576"
+        },
+        {
+          "physicalId": "rom-p0f-g40-r2c-vf03-msf56ddc76-gfx26784eb2",
+          "file": "physical/rom-p0f-g40-r2c-vf03-msf56ddc76-gfx26784eb2.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 3,
+          "actorVisualProfileKey": 15,
+          "graphicsBank": 64,
+          "metaspriteHash": "f56ddc760ce341fa",
+          "graphicsHash": "26784eb2584f4376",
+          "sourceProvenanceHash": "e0b25e3ac3115543",
+          "trimmedPixelHash": "0955d8a6fab9e472"
         }
       ],
-      "signedNegativeInstances": 20,
-      "minOffset": -9,
+      "signedNegativeInstances": 66,
+      "minOffset": -16,
       "maxOffset": 5,
       "minWidth": 32,
       "maxWidth": 32,
@@ -6419,16 +7496,18 @@
     {
       "formId": "goten_ssj",
       "actorVisualProfileKey": 16,
-      "physicalFrames": 11,
-      "frameInstances": 50,
-      "sequences": 8,
+      "physicalFrames": 15,
+      "frameInstances": 112,
+      "sequences": 10,
       "resources": [
         "0x00",
-        "0x03"
+        "0x03",
+        "0x2c"
       ],
       "resourceFrameInstances": {
         "0x00": 14,
-        "0x03": 36
+        "0x03": 36,
+        "0x2c": 62
       },
       "resourceProfileBlocked": [],
       "transparentFrameRecords": [
@@ -6840,10 +7919,62 @@
           "graphicsHash": "04314179c02be616",
           "sourceProvenanceHash": "3f0ecd8c00e38708",
           "trimmedPixelHash": "4b07fc6656879735"
+        },
+        {
+          "physicalId": "rom-p10-g41-r2c-vf00-ms88cb7910-gfxedbd2213",
+          "file": "physical/rom-p10-g41-r2c-vf00-ms88cb7910-gfxedbd2213.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 0,
+          "actorVisualProfileKey": 16,
+          "graphicsBank": 65,
+          "metaspriteHash": "88cb7910858e95aa",
+          "graphicsHash": "edbd2213df77ab73",
+          "sourceProvenanceHash": "aafc27ab1d8209df",
+          "trimmedPixelHash": "f993cd06723849a5"
+        },
+        {
+          "physicalId": "rom-p10-g41-r2c-vf01-ms63521d90-gfx8ba3cf34",
+          "file": "physical/rom-p10-g41-r2c-vf01-ms63521d90-gfx8ba3cf34.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 1,
+          "actorVisualProfileKey": 16,
+          "graphicsBank": 65,
+          "metaspriteHash": "63521d9054d2e460",
+          "graphicsHash": "8ba3cf341e0ce472",
+          "sourceProvenanceHash": "6d1588d474a97cad",
+          "trimmedPixelHash": "c4e6b8142eb28240"
+        },
+        {
+          "physicalId": "rom-p10-g41-r2c-vf02-msb2d53f54-gfx1f4edfc8",
+          "file": "physical/rom-p10-g41-r2c-vf02-msb2d53f54-gfx1f4edfc8.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 2,
+          "actorVisualProfileKey": 16,
+          "graphicsBank": 65,
+          "metaspriteHash": "b2d53f545f9cdcd1",
+          "graphicsHash": "1f4edfc83bd459a0",
+          "sourceProvenanceHash": "5f2f98477aa60e26",
+          "trimmedPixelHash": "75cecbffdb3ad4c7"
+        },
+        {
+          "physicalId": "rom-p10-g41-r2c-vf03-msf56ddc76-gfx6bfd2922",
+          "file": "physical/rom-p10-g41-r2c-vf03-msf56ddc76-gfx6bfd2922.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 3,
+          "actorVisualProfileKey": 16,
+          "graphicsBank": 65,
+          "metaspriteHash": "f56ddc760ce341fa",
+          "graphicsHash": "6bfd292261467733",
+          "sourceProvenanceHash": "0bba80b994c1a245",
+          "trimmedPixelHash": "1f86e9cbdc267f42"
         }
       ],
-      "signedNegativeInstances": 24,
-      "minOffset": -9,
+      "signedNegativeInstances": 70,
+      "minOffset": -16,
       "maxOffset": 5,
       "minWidth": 32,
       "maxWidth": 32,
@@ -6853,14 +7984,16 @@
     {
       "formId": "trunks_kid",
       "actorVisualProfileKey": 17,
-      "physicalFrames": 3,
-      "frameInstances": 14,
-      "sequences": 2,
+      "physicalFrames": 7,
+      "frameInstances": 76,
+      "sequences": 4,
       "resources": [
-        "0x00"
+        "0x00",
+        "0x2c"
       ],
       "resourceFrameInstances": {
-        "0x00": 14
+        "0x00": 14,
+        "0x2c": 62
       },
       "resourceProfileBlocked": [],
       "transparentFrameRecords": [],
@@ -6903,10 +8036,62 @@
           "graphicsHash": "e9065b052ddf45fb",
           "sourceProvenanceHash": "9f526035ae59e501",
           "trimmedPixelHash": "26d508b2e60127a7"
+        },
+        {
+          "physicalId": "rom-p11-g42-r2c-vf00-ms88cb7910-gfx4704808f",
+          "file": "physical/rom-p11-g42-r2c-vf00-ms88cb7910-gfx4704808f.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 0,
+          "actorVisualProfileKey": 17,
+          "graphicsBank": 66,
+          "metaspriteHash": "88cb7910858e95aa",
+          "graphicsHash": "4704808f3af4d74c",
+          "sourceProvenanceHash": "97771d3466de37c6",
+          "trimmedPixelHash": "29ac8dcefe748c74"
+        },
+        {
+          "physicalId": "rom-p11-g42-r2c-vf01-ms63521d90-gfx845170b4",
+          "file": "physical/rom-p11-g42-r2c-vf01-ms63521d90-gfx845170b4.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 1,
+          "actorVisualProfileKey": 17,
+          "graphicsBank": 66,
+          "metaspriteHash": "63521d9054d2e460",
+          "graphicsHash": "845170b47bd5f39b",
+          "sourceProvenanceHash": "44ad93ce07c9383a",
+          "trimmedPixelHash": "f212eb8513346324"
+        },
+        {
+          "physicalId": "rom-p11-g42-r2c-vf02-msb2d53f54-gfxe864fd1f",
+          "file": "physical/rom-p11-g42-r2c-vf02-msb2d53f54-gfxe864fd1f.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 2,
+          "actorVisualProfileKey": 17,
+          "graphicsBank": 66,
+          "metaspriteHash": "b2d53f545f9cdcd1",
+          "graphicsHash": "e864fd1f8cb7f3da",
+          "sourceProvenanceHash": "34cab6e335f5b010",
+          "trimmedPixelHash": "8c6942d0c47e0adf"
+        },
+        {
+          "physicalId": "rom-p11-g42-r2c-vf03-msf56ddc76-gfx9f40b2b8",
+          "file": "physical/rom-p11-g42-r2c-vf03-msf56ddc76-gfx9f40b2b8.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 3,
+          "actorVisualProfileKey": 17,
+          "graphicsBank": 66,
+          "metaspriteHash": "f56ddc760ce341fa",
+          "graphicsHash": "9f40b2b86748bc1c",
+          "sourceProvenanceHash": "7bd39de21e97f938",
+          "trimmedPixelHash": "a2741c4847bd9da3"
         }
       ],
-      "signedNegativeInstances": 8,
-      "minOffset": -9,
+      "signedNegativeInstances": 54,
+      "minOffset": -16,
       "maxOffset": 0,
       "minWidth": 32,
       "maxWidth": 32,
@@ -6916,14 +8101,16 @@
     {
       "formId": "trunks_kid_ssj",
       "actorVisualProfileKey": 18,
-      "physicalFrames": 3,
-      "frameInstances": 14,
-      "sequences": 2,
+      "physicalFrames": 7,
+      "frameInstances": 76,
+      "sequences": 4,
       "resources": [
-        "0x00"
+        "0x00",
+        "0x2c"
       ],
       "resourceFrameInstances": {
-        "0x00": 14
+        "0x00": 14,
+        "0x2c": 62
       },
       "resourceProfileBlocked": [],
       "transparentFrameRecords": [],
@@ -6966,10 +8153,62 @@
           "graphicsHash": "cb75c147c8ffd6a1",
           "sourceProvenanceHash": "c8baf31ac0114f4c",
           "trimmedPixelHash": "7d3b6277706bdd9b"
+        },
+        {
+          "physicalId": "rom-p12-g43-r2c-vf00-ms88cb7910-gfx4cbb4062",
+          "file": "physical/rom-p12-g43-r2c-vf00-ms88cb7910-gfx4cbb4062.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 0,
+          "actorVisualProfileKey": 18,
+          "graphicsBank": 67,
+          "metaspriteHash": "88cb7910858e95aa",
+          "graphicsHash": "4cbb40624323a5a8",
+          "sourceProvenanceHash": "0a2352173ef84fed",
+          "trimmedPixelHash": "67a12d46498b060b"
+        },
+        {
+          "physicalId": "rom-p12-g43-r2c-vf01-ms63521d90-gfxe0abebff",
+          "file": "physical/rom-p12-g43-r2c-vf01-ms63521d90-gfxe0abebff.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 1,
+          "actorVisualProfileKey": 18,
+          "graphicsBank": 67,
+          "metaspriteHash": "63521d9054d2e460",
+          "graphicsHash": "e0abebffaa23bf73",
+          "sourceProvenanceHash": "9d4bee4cd083ce65",
+          "trimmedPixelHash": "2132b9e8101d2668"
+        },
+        {
+          "physicalId": "rom-p12-g43-r2c-vf02-msb2d53f54-gfxbcda37f7",
+          "file": "physical/rom-p12-g43-r2c-vf02-msb2d53f54-gfxbcda37f7.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 2,
+          "actorVisualProfileKey": 18,
+          "graphicsBank": 67,
+          "metaspriteHash": "b2d53f545f9cdcd1",
+          "graphicsHash": "bcda37f7ef99e1a4",
+          "sourceProvenanceHash": "f7a7580daf36761e",
+          "trimmedPixelHash": "bb81037a37491090"
+        },
+        {
+          "physicalId": "rom-p12-g43-r2c-vf03-msf56ddc76-gfx4dcee5c8",
+          "file": "physical/rom-p12-g43-r2c-vf03-msf56ddc76-gfx4dcee5c8.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 3,
+          "actorVisualProfileKey": 18,
+          "graphicsBank": 67,
+          "metaspriteHash": "f56ddc760ce341fa",
+          "graphicsHash": "4dcee5c8fcff8ea1",
+          "sourceProvenanceHash": "6f964e24be6f1870",
+          "trimmedPixelHash": "8ce403cf71559819"
         }
       ],
-      "signedNegativeInstances": 8,
-      "minOffset": -9,
+      "signedNegativeInstances": 54,
+      "minOffset": -16,
       "maxOffset": 0,
       "minWidth": 32,
       "maxWidth": 32,
@@ -6979,16 +8218,18 @@
     {
       "formId": "gotenks_ssj",
       "actorVisualProfileKey": 19,
-      "physicalFrames": 13,
-      "frameInstances": 62,
-      "sequences": 8,
+      "physicalFrames": 17,
+      "frameInstances": 124,
+      "sequences": 10,
       "resources": [
         "0x00",
-        "0x03"
+        "0x03",
+        "0x2c"
       ],
       "resourceFrameInstances": {
         "0x00": 14,
-        "0x03": 48
+        "0x03": 48,
+        "0x2c": 62
       },
       "resourceProfileBlocked": [],
       "transparentFrameRecords": [],
@@ -7161,10 +8402,62 @@
           "graphicsHash": "943bb60489c5da80",
           "sourceProvenanceHash": "351f0c7dd76a0b8c",
           "trimmedPixelHash": "e8b30c569b4c334c"
+        },
+        {
+          "physicalId": "rom-p13-g44-r2c-vf00-ms88cb7910-gfx34028728",
+          "file": "physical/rom-p13-g44-r2c-vf00-ms88cb7910-gfx34028728.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 0,
+          "actorVisualProfileKey": 19,
+          "graphicsBank": 68,
+          "metaspriteHash": "88cb7910858e95aa",
+          "graphicsHash": "34028728e13b7122",
+          "sourceProvenanceHash": "acf2d760a7fe9908",
+          "trimmedPixelHash": "845e9a486aba331b"
+        },
+        {
+          "physicalId": "rom-p13-g44-r2c-vf01-ms63521d90-gfx3575c64b",
+          "file": "physical/rom-p13-g44-r2c-vf01-ms63521d90-gfx3575c64b.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 1,
+          "actorVisualProfileKey": 19,
+          "graphicsBank": 68,
+          "metaspriteHash": "63521d9054d2e460",
+          "graphicsHash": "3575c64b5c3d3b1c",
+          "sourceProvenanceHash": "05b92d470e85d475",
+          "trimmedPixelHash": "35a4f18b70f5bc73"
+        },
+        {
+          "physicalId": "rom-p13-g44-r2c-vf02-msb2d53f54-gfxf63afeae",
+          "file": "physical/rom-p13-g44-r2c-vf02-msb2d53f54-gfxf63afeae.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 2,
+          "actorVisualProfileKey": 19,
+          "graphicsBank": 68,
+          "metaspriteHash": "b2d53f545f9cdcd1",
+          "graphicsHash": "f63afeaefad786e7",
+          "sourceProvenanceHash": "50783a5fab3333e3",
+          "trimmedPixelHash": "fc62ba010bbb81d0"
+        },
+        {
+          "physicalId": "rom-p13-g44-r2c-vf03-msf56ddc76-gfx58c9d012",
+          "file": "physical/rom-p13-g44-r2c-vf03-msf56ddc76-gfx58c9d012.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 3,
+          "actorVisualProfileKey": 19,
+          "graphicsBank": 68,
+          "metaspriteHash": "f56ddc760ce341fa",
+          "graphicsHash": "58c9d012dcf8afd9",
+          "sourceProvenanceHash": "7939312415e21568",
+          "trimmedPixelHash": "f35fbe076de87134"
         }
       ],
-      "signedNegativeInstances": 32,
-      "minOffset": -9,
+      "signedNegativeInstances": 78,
+      "minOffset": -16,
       "maxOffset": 5,
       "minWidth": 32,
       "maxWidth": 32,
@@ -7174,16 +8467,18 @@
     {
       "formId": "gotenks_ssj3",
       "actorVisualProfileKey": 20,
-      "physicalFrames": 13,
-      "frameInstances": 62,
-      "sequences": 8,
+      "physicalFrames": 17,
+      "frameInstances": 124,
+      "sequences": 10,
       "resources": [
         "0x00",
-        "0x03"
+        "0x03",
+        "0x2c"
       ],
       "resourceFrameInstances": {
         "0x00": 14,
-        "0x03": 48
+        "0x03": 48,
+        "0x2c": 62
       },
       "resourceProfileBlocked": [],
       "transparentFrameRecords": [],
@@ -7356,10 +8651,62 @@
           "graphicsHash": "7ed48216c7fc79b0",
           "sourceProvenanceHash": "78000225d20b107b",
           "trimmedPixelHash": "de7d7a0882d94d5b"
+        },
+        {
+          "physicalId": "rom-p14-g45-r2c-vf00-ms88cb7910-gfxcf0752e1",
+          "file": "physical/rom-p14-g45-r2c-vf00-ms88cb7910-gfxcf0752e1.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 0,
+          "actorVisualProfileKey": 20,
+          "graphicsBank": 69,
+          "metaspriteHash": "88cb7910858e95aa",
+          "graphicsHash": "cf0752e1e1bed57a",
+          "sourceProvenanceHash": "581ae1adc56337ce",
+          "trimmedPixelHash": "2bae7c6397d74a07"
+        },
+        {
+          "physicalId": "rom-p14-g45-r2c-vf01-ms63521d90-gfx9ddba7c9",
+          "file": "physical/rom-p14-g45-r2c-vf01-ms63521d90-gfx9ddba7c9.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 1,
+          "actorVisualProfileKey": 20,
+          "graphicsBank": 69,
+          "metaspriteHash": "63521d9054d2e460",
+          "graphicsHash": "9ddba7c91a3478d1",
+          "sourceProvenanceHash": "c62efaa164b787a2",
+          "trimmedPixelHash": "b6c392ed5c98883e"
+        },
+        {
+          "physicalId": "rom-p14-g45-r2c-vf02-msb2d53f54-gfx38235cff",
+          "file": "physical/rom-p14-g45-r2c-vf02-msb2d53f54-gfx38235cff.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 2,
+          "actorVisualProfileKey": 20,
+          "graphicsBank": 69,
+          "metaspriteHash": "b2d53f545f9cdcd1",
+          "graphicsHash": "38235cff4f355fd9",
+          "sourceProvenanceHash": "91976c55cdde349c",
+          "trimmedPixelHash": "65dad4fc2d7cb159"
+        },
+        {
+          "physicalId": "rom-p14-g45-r2c-vf03-msf56ddc76-gfx0d3dbd11",
+          "file": "physical/rom-p14-g45-r2c-vf03-msf56ddc76-gfx0d3dbd11.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 3,
+          "actorVisualProfileKey": 20,
+          "graphicsBank": 69,
+          "metaspriteHash": "f56ddc760ce341fa",
+          "graphicsHash": "0d3dbd117ba2c9c4",
+          "sourceProvenanceHash": "03cbe48fd7b75e4c",
+          "trimmedPixelHash": "6b50eb899a2885b3"
         }
       ],
-      "signedNegativeInstances": 32,
-      "minOffset": -9,
+      "signedNegativeInstances": 78,
+      "minOffset": -16,
       "maxOffset": 5,
       "minWidth": 32,
       "maxWidth": 32,
@@ -7369,20 +8716,22 @@
     {
       "formId": "vegito_ssj",
       "actorVisualProfileKey": 21,
-      "physicalFrames": 23,
-      "frameInstances": 114,
-      "sequences": 14,
+      "physicalFrames": 27,
+      "frameInstances": 176,
+      "sequences": 16,
       "resources": [
         "0x00",
         "0x03",
         "0x05",
-        "0x12"
+        "0x12",
+        "0x2c"
       ],
       "resourceFrameInstances": {
         "0x00": 14,
         "0x03": 48,
         "0x05": 16,
-        "0x12": 36
+        "0x12": 36,
+        "0x2c": 62
       },
       "resourceProfileBlocked": [],
       "transparentFrameRecords": [],
@@ -7685,10 +9034,62 @@
           "graphicsHash": "f611b581d8bdf486",
           "sourceProvenanceHash": "88bd25b67ca76259",
           "trimmedPixelHash": "3a7966aed55f17a3"
+        },
+        {
+          "physicalId": "rom-p15-g46-r2c-vf00-ms88cb7910-gfx71aa0aa8",
+          "file": "physical/rom-p15-g46-r2c-vf00-ms88cb7910-gfx71aa0aa8.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 0,
+          "actorVisualProfileKey": 21,
+          "graphicsBank": 70,
+          "metaspriteHash": "88cb7910858e95aa",
+          "graphicsHash": "71aa0aa811633e82",
+          "sourceProvenanceHash": "cf2b59419259ae6c",
+          "trimmedPixelHash": "5cbf3168899cd916"
+        },
+        {
+          "physicalId": "rom-p15-g46-r2c-vf01-ms63521d90-gfx2e304ab7",
+          "file": "physical/rom-p15-g46-r2c-vf01-ms63521d90-gfx2e304ab7.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 1,
+          "actorVisualProfileKey": 21,
+          "graphicsBank": 70,
+          "metaspriteHash": "63521d9054d2e460",
+          "graphicsHash": "2e304ab7bf1f5fd1",
+          "sourceProvenanceHash": "3f62d2b17963df5b",
+          "trimmedPixelHash": "5198d63f2b44077c"
+        },
+        {
+          "physicalId": "rom-p15-g46-r2c-vf02-msb2d53f54-gfxe74d3f0a",
+          "file": "physical/rom-p15-g46-r2c-vf02-msb2d53f54-gfxe74d3f0a.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 2,
+          "actorVisualProfileKey": 21,
+          "graphicsBank": 70,
+          "metaspriteHash": "b2d53f545f9cdcd1",
+          "graphicsHash": "e74d3f0af99fabf2",
+          "sourceProvenanceHash": "bd9d971472d8e711",
+          "trimmedPixelHash": "c6df6dbd4ac88261"
+        },
+        {
+          "physicalId": "rom-p15-g46-r2c-vf03-msf56ddc76-gfx3e711a2f",
+          "file": "physical/rom-p15-g46-r2c-vf03-msf56ddc76-gfx3e711a2f.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 3,
+          "actorVisualProfileKey": 21,
+          "graphicsBank": 70,
+          "metaspriteHash": "f56ddc760ce341fa",
+          "graphicsHash": "3e711a2fa2ba8858",
+          "sourceProvenanceHash": "672e29143e0bfcd1",
+          "trimmedPixelHash": "9be1d56c370c75b1"
         }
       ],
-      "signedNegativeInstances": 68,
-      "minOffset": -10,
+      "signedNegativeInstances": 114,
+      "minOffset": -16,
       "maxOffset": 5,
       "minWidth": 32,
       "maxWidth": 40,
@@ -7698,14 +9099,16 @@
     {
       "formId": "nappa",
       "actorVisualProfileKey": 22,
-      "physicalFrames": 3,
-      "frameInstances": 14,
-      "sequences": 2,
+      "physicalFrames": 7,
+      "frameInstances": 76,
+      "sequences": 4,
       "resources": [
-        "0x00"
+        "0x00",
+        "0x2c"
       ],
       "resourceFrameInstances": {
-        "0x00": 14
+        "0x00": 14,
+        "0x2c": 62
       },
       "resourceProfileBlocked": [],
       "transparentFrameRecords": [],
@@ -7748,10 +9151,62 @@
           "graphicsHash": "780fc484f6cf0ded",
           "sourceProvenanceHash": "8a650f3bfb006693",
           "trimmedPixelHash": "196eee1adc4649a9"
+        },
+        {
+          "physicalId": "rom-p16-g47-r2c-vf00-ms88cb7910-gfxb4abc45c",
+          "file": "physical/rom-p16-g47-r2c-vf00-ms88cb7910-gfxb4abc45c.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 0,
+          "actorVisualProfileKey": 22,
+          "graphicsBank": 71,
+          "metaspriteHash": "88cb7910858e95aa",
+          "graphicsHash": "b4abc45c2cee52f2",
+          "sourceProvenanceHash": "9de0e2549ec2f927",
+          "trimmedPixelHash": "7a9436fd231446c6"
+        },
+        {
+          "physicalId": "rom-p16-g47-r2c-vf01-ms63521d90-gfx47098d0b",
+          "file": "physical/rom-p16-g47-r2c-vf01-ms63521d90-gfx47098d0b.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 1,
+          "actorVisualProfileKey": 22,
+          "graphicsBank": 71,
+          "metaspriteHash": "63521d9054d2e460",
+          "graphicsHash": "47098d0bd47aa87b",
+          "sourceProvenanceHash": "f6208a43dd9c6698",
+          "trimmedPixelHash": "7afdc54573e21118"
+        },
+        {
+          "physicalId": "rom-p16-g47-r2c-vf02-msb2d53f54-gfxa66ee45a",
+          "file": "physical/rom-p16-g47-r2c-vf02-msb2d53f54-gfxa66ee45a.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 2,
+          "actorVisualProfileKey": 22,
+          "graphicsBank": 71,
+          "metaspriteHash": "b2d53f545f9cdcd1",
+          "graphicsHash": "a66ee45aafb85eb2",
+          "sourceProvenanceHash": "ff1c1965bb011ee9",
+          "trimmedPixelHash": "f2aebf91547357e0"
+        },
+        {
+          "physicalId": "rom-p16-g47-r2c-vf03-msf56ddc76-gfx09b20999",
+          "file": "physical/rom-p16-g47-r2c-vf03-msf56ddc76-gfx09b20999.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 3,
+          "actorVisualProfileKey": 22,
+          "graphicsBank": 71,
+          "metaspriteHash": "f56ddc760ce341fa",
+          "graphicsHash": "09b20999d7efdae6",
+          "sourceProvenanceHash": "09a9f7783a1e400d",
+          "trimmedPixelHash": "5138f9ced468ee78"
         }
       ],
-      "signedNegativeInstances": 8,
-      "minOffset": -9,
+      "signedNegativeInstances": 54,
+      "minOffset": -16,
       "maxOffset": 0,
       "minWidth": 32,
       "maxWidth": 32,
@@ -7761,14 +9216,16 @@
     {
       "formId": "guldo",
       "actorVisualProfileKey": 23,
-      "physicalFrames": 3,
-      "frameInstances": 14,
-      "sequences": 2,
+      "physicalFrames": 7,
+      "frameInstances": 76,
+      "sequences": 4,
       "resources": [
-        "0x00"
+        "0x00",
+        "0x2c"
       ],
       "resourceFrameInstances": {
-        "0x00": 14
+        "0x00": 14,
+        "0x2c": 62
       },
       "resourceProfileBlocked": [],
       "transparentFrameRecords": [],
@@ -7811,10 +9268,62 @@
           "graphicsHash": "a635112be0653719",
           "sourceProvenanceHash": "67f9b2dc7d4760c4",
           "trimmedPixelHash": "8efe98a600a68db0"
+        },
+        {
+          "physicalId": "rom-p17-g48-r2c-vf00-ms88cb7910-gfx080d3b8a",
+          "file": "physical/rom-p17-g48-r2c-vf00-ms88cb7910-gfx080d3b8a.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 0,
+          "actorVisualProfileKey": 23,
+          "graphicsBank": 72,
+          "metaspriteHash": "88cb7910858e95aa",
+          "graphicsHash": "080d3b8a81306022",
+          "sourceProvenanceHash": "94ab91993753d932",
+          "trimmedPixelHash": "4b784dec92716f1d"
+        },
+        {
+          "physicalId": "rom-p17-g48-r2c-vf01-ms63521d90-gfxd5a8b29f",
+          "file": "physical/rom-p17-g48-r2c-vf01-ms63521d90-gfxd5a8b29f.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 1,
+          "actorVisualProfileKey": 23,
+          "graphicsBank": 72,
+          "metaspriteHash": "63521d9054d2e460",
+          "graphicsHash": "d5a8b29fa301fbe8",
+          "sourceProvenanceHash": "1f02cdeadb5597cf",
+          "trimmedPixelHash": "c51362db2321edf4"
+        },
+        {
+          "physicalId": "rom-p17-g48-r2c-vf02-msb2d53f54-gfxd1f96a7a",
+          "file": "physical/rom-p17-g48-r2c-vf02-msb2d53f54-gfxd1f96a7a.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 2,
+          "actorVisualProfileKey": 23,
+          "graphicsBank": 72,
+          "metaspriteHash": "b2d53f545f9cdcd1",
+          "graphicsHash": "d1f96a7a8f5c98cf",
+          "sourceProvenanceHash": "a6a9e6054313e1de",
+          "trimmedPixelHash": "a6d67a09d03ff9af"
+        },
+        {
+          "physicalId": "rom-p17-g48-r2c-vf03-msf56ddc76-gfx3036c2bd",
+          "file": "physical/rom-p17-g48-r2c-vf03-msf56ddc76-gfx3036c2bd.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 3,
+          "actorVisualProfileKey": 23,
+          "graphicsBank": 72,
+          "metaspriteHash": "f56ddc760ce341fa",
+          "graphicsHash": "3036c2bdcdbc663c",
+          "sourceProvenanceHash": "ba99dcd650749609",
+          "trimmedPixelHash": "8aa104ca42868832"
         }
       ],
-      "signedNegativeInstances": 8,
-      "minOffset": -9,
+      "signedNegativeInstances": 54,
+      "minOffset": -16,
       "maxOffset": 0,
       "minWidth": 32,
       "maxWidth": 32,
@@ -7824,14 +9333,16 @@
     {
       "formId": "recoome",
       "actorVisualProfileKey": 24,
-      "physicalFrames": 3,
-      "frameInstances": 14,
-      "sequences": 2,
+      "physicalFrames": 7,
+      "frameInstances": 76,
+      "sequences": 4,
       "resources": [
-        "0x00"
+        "0x00",
+        "0x2c"
       ],
       "resourceFrameInstances": {
-        "0x00": 14
+        "0x00": 14,
+        "0x2c": 62
       },
       "resourceProfileBlocked": [],
       "transparentFrameRecords": [],
@@ -7874,10 +9385,62 @@
           "graphicsHash": "f3a932fc216fa086",
           "sourceProvenanceHash": "51549a84e9f59381",
           "trimmedPixelHash": "3fe6b570e8a15dc7"
+        },
+        {
+          "physicalId": "rom-p18-g49-r2c-vf00-ms88cb7910-gfx0f56644f",
+          "file": "physical/rom-p18-g49-r2c-vf00-ms88cb7910-gfx0f56644f.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 0,
+          "actorVisualProfileKey": 24,
+          "graphicsBank": 73,
+          "metaspriteHash": "88cb7910858e95aa",
+          "graphicsHash": "0f56644f6781821e",
+          "sourceProvenanceHash": "1ca24ed34fca9464",
+          "trimmedPixelHash": "89518e4bef36a8a1"
+        },
+        {
+          "physicalId": "rom-p18-g49-r2c-vf01-ms63521d90-gfxc449104a",
+          "file": "physical/rom-p18-g49-r2c-vf01-ms63521d90-gfxc449104a.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 1,
+          "actorVisualProfileKey": 24,
+          "graphicsBank": 73,
+          "metaspriteHash": "63521d9054d2e460",
+          "graphicsHash": "c449104aa9f452ca",
+          "sourceProvenanceHash": "9d5ddb1b0a026a72",
+          "trimmedPixelHash": "7e89be88c1c4980e"
+        },
+        {
+          "physicalId": "rom-p18-g49-r2c-vf02-msb2d53f54-gfxf4864608",
+          "file": "physical/rom-p18-g49-r2c-vf02-msb2d53f54-gfxf4864608.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 2,
+          "actorVisualProfileKey": 24,
+          "graphicsBank": 73,
+          "metaspriteHash": "b2d53f545f9cdcd1",
+          "graphicsHash": "f4864608c36140aa",
+          "sourceProvenanceHash": "13878c46885d8c7b",
+          "trimmedPixelHash": "0448901f0321bbe4"
+        },
+        {
+          "physicalId": "rom-p18-g49-r2c-vf03-msf56ddc76-gfxc2a62286",
+          "file": "physical/rom-p18-g49-r2c-vf03-msf56ddc76-gfxc2a62286.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 3,
+          "actorVisualProfileKey": 24,
+          "graphicsBank": 73,
+          "metaspriteHash": "f56ddc760ce341fa",
+          "graphicsHash": "c2a62286c0397b6b",
+          "sourceProvenanceHash": "76f2264e654ba04c",
+          "trimmedPixelHash": "1f6195b0b9c45ac3"
         }
       ],
-      "signedNegativeInstances": 8,
-      "minOffset": -9,
+      "signedNegativeInstances": 54,
+      "minOffset": -16,
       "maxOffset": 0,
       "minWidth": 32,
       "maxWidth": 32,
@@ -7887,14 +9450,16 @@
     {
       "formId": "jeice",
       "actorVisualProfileKey": 25,
-      "physicalFrames": 3,
-      "frameInstances": 14,
-      "sequences": 2,
+      "physicalFrames": 7,
+      "frameInstances": 76,
+      "sequences": 4,
       "resources": [
-        "0x00"
+        "0x00",
+        "0x2c"
       ],
       "resourceFrameInstances": {
-        "0x00": 14
+        "0x00": 14,
+        "0x2c": 62
       },
       "resourceProfileBlocked": [],
       "transparentFrameRecords": [],
@@ -7937,10 +9502,62 @@
           "graphicsHash": "8615807887a37060",
           "sourceProvenanceHash": "734a377b80886cc2",
           "trimmedPixelHash": "3d37ed05b153de18"
+        },
+        {
+          "physicalId": "rom-p19-g4a-r2c-vf00-ms88cb7910-gfxb0fbfa47",
+          "file": "physical/rom-p19-g4a-r2c-vf00-ms88cb7910-gfxb0fbfa47.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 0,
+          "actorVisualProfileKey": 25,
+          "graphicsBank": 74,
+          "metaspriteHash": "88cb7910858e95aa",
+          "graphicsHash": "b0fbfa47334cc0e5",
+          "sourceProvenanceHash": "d296adeae0c832f3",
+          "trimmedPixelHash": "c21f867ee659a0de"
+        },
+        {
+          "physicalId": "rom-p19-g4a-r2c-vf01-ms63521d90-gfx49bc3845",
+          "file": "physical/rom-p19-g4a-r2c-vf01-ms63521d90-gfx49bc3845.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 1,
+          "actorVisualProfileKey": 25,
+          "graphicsBank": 74,
+          "metaspriteHash": "63521d9054d2e460",
+          "graphicsHash": "49bc3845f255702f",
+          "sourceProvenanceHash": "217f34856cd1d237",
+          "trimmedPixelHash": "1242422d2caf1006"
+        },
+        {
+          "physicalId": "rom-p19-g4a-r2c-vf02-msb2d53f54-gfx37770e2d",
+          "file": "physical/rom-p19-g4a-r2c-vf02-msb2d53f54-gfx37770e2d.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 2,
+          "actorVisualProfileKey": 25,
+          "graphicsBank": 74,
+          "metaspriteHash": "b2d53f545f9cdcd1",
+          "graphicsHash": "37770e2d1e5c6335",
+          "sourceProvenanceHash": "724c9db7b92cb228",
+          "trimmedPixelHash": "cbd12bc3f4d1370c"
+        },
+        {
+          "physicalId": "rom-p19-g4a-r2c-vf03-msf56ddc76-gfxe3f259d0",
+          "file": "physical/rom-p19-g4a-r2c-vf03-msf56ddc76-gfxe3f259d0.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 3,
+          "actorVisualProfileKey": 25,
+          "graphicsBank": 74,
+          "metaspriteHash": "f56ddc760ce341fa",
+          "graphicsHash": "e3f259d0511f18a9",
+          "sourceProvenanceHash": "737e7f50c95ec0c7",
+          "trimmedPixelHash": "a4a821f642b90e46"
         }
       ],
-      "signedNegativeInstances": 8,
-      "minOffset": -9,
+      "signedNegativeInstances": 54,
+      "minOffset": -16,
       "maxOffset": 0,
       "minWidth": 32,
       "maxWidth": 32,
@@ -7950,14 +9567,16 @@
     {
       "formId": "burter",
       "actorVisualProfileKey": 26,
-      "physicalFrames": 3,
-      "frameInstances": 14,
-      "sequences": 2,
+      "physicalFrames": 7,
+      "frameInstances": 76,
+      "sequences": 4,
       "resources": [
-        "0x00"
+        "0x00",
+        "0x2c"
       ],
       "resourceFrameInstances": {
-        "0x00": 14
+        "0x00": 14,
+        "0x2c": 62
       },
       "resourceProfileBlocked": [],
       "transparentFrameRecords": [],
@@ -8000,10 +9619,62 @@
           "graphicsHash": "623caa4588c5ffce",
           "sourceProvenanceHash": "c9e50d1d0d1f6550",
           "trimmedPixelHash": "4ee5e53ea7d3f6ba"
+        },
+        {
+          "physicalId": "rom-p1a-g4b-r2c-vf00-ms88cb7910-gfxcdfdd57d",
+          "file": "physical/rom-p1a-g4b-r2c-vf00-ms88cb7910-gfxcdfdd57d.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 0,
+          "actorVisualProfileKey": 26,
+          "graphicsBank": 75,
+          "metaspriteHash": "88cb7910858e95aa",
+          "graphicsHash": "cdfdd57d46655682",
+          "sourceProvenanceHash": "cc7c98e02ecdd6c3",
+          "trimmedPixelHash": "259fdd7e370a3a6a"
+        },
+        {
+          "physicalId": "rom-p1a-g4b-r2c-vf01-ms63521d90-gfx9256decc",
+          "file": "physical/rom-p1a-g4b-r2c-vf01-ms63521d90-gfx9256decc.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 1,
+          "actorVisualProfileKey": 26,
+          "graphicsBank": 75,
+          "metaspriteHash": "63521d9054d2e460",
+          "graphicsHash": "9256decc5a0be01b",
+          "sourceProvenanceHash": "90d885ff4ad3a060",
+          "trimmedPixelHash": "bed21a5ec1ac5b7f"
+        },
+        {
+          "physicalId": "rom-p1a-g4b-r2c-vf02-msb2d53f54-gfx7f0b7bf8",
+          "file": "physical/rom-p1a-g4b-r2c-vf02-msb2d53f54-gfx7f0b7bf8.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 2,
+          "actorVisualProfileKey": 26,
+          "graphicsBank": 75,
+          "metaspriteHash": "b2d53f545f9cdcd1",
+          "graphicsHash": "7f0b7bf84fc7a692",
+          "sourceProvenanceHash": "a0e42c4f9335ade0",
+          "trimmedPixelHash": "db64f436ba38c4d8"
+        },
+        {
+          "physicalId": "rom-p1a-g4b-r2c-vf03-msf56ddc76-gfx8bbc26b3",
+          "file": "physical/rom-p1a-g4b-r2c-vf03-msf56ddc76-gfx8bbc26b3.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 3,
+          "actorVisualProfileKey": 26,
+          "graphicsBank": 75,
+          "metaspriteHash": "f56ddc760ce341fa",
+          "graphicsHash": "8bbc26b317655645",
+          "sourceProvenanceHash": "b83229acf2def99c",
+          "trimmedPixelHash": "c89330432ff1073e"
         }
       ],
-      "signedNegativeInstances": 8,
-      "minOffset": -9,
+      "signedNegativeInstances": 54,
+      "minOffset": -16,
       "maxOffset": 0,
       "minWidth": 32,
       "maxWidth": 32,
@@ -8013,16 +9684,18 @@
     {
       "formId": "ginyu",
       "actorVisualProfileKey": 27,
-      "physicalFrames": 13,
-      "frameInstances": 62,
-      "sequences": 8,
+      "physicalFrames": 17,
+      "frameInstances": 124,
+      "sequences": 10,
       "resources": [
         "0x00",
-        "0x03"
+        "0x03",
+        "0x2c"
       ],
       "resourceFrameInstances": {
         "0x00": 14,
-        "0x03": 48
+        "0x03": 48,
+        "0x2c": 62
       },
       "resourceProfileBlocked": [],
       "transparentFrameRecords": [],
@@ -8195,10 +9868,62 @@
           "graphicsHash": "fec594d4399971be",
           "sourceProvenanceHash": "1498934d661570bd",
           "trimmedPixelHash": "f4b42116132d5432"
+        },
+        {
+          "physicalId": "rom-p1b-g4c-r2c-vf00-ms88cb7910-gfx0e7766c2",
+          "file": "physical/rom-p1b-g4c-r2c-vf00-ms88cb7910-gfx0e7766c2.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 0,
+          "actorVisualProfileKey": 27,
+          "graphicsBank": 76,
+          "metaspriteHash": "88cb7910858e95aa",
+          "graphicsHash": "0e7766c2a2fecee1",
+          "sourceProvenanceHash": "f51be963c158a4a1",
+          "trimmedPixelHash": "ebbd8373f6e12571"
+        },
+        {
+          "physicalId": "rom-p1b-g4c-r2c-vf01-ms63521d90-gfxa26677b1",
+          "file": "physical/rom-p1b-g4c-r2c-vf01-ms63521d90-gfxa26677b1.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 1,
+          "actorVisualProfileKey": 27,
+          "graphicsBank": 76,
+          "metaspriteHash": "63521d9054d2e460",
+          "graphicsHash": "a26677b1a235e75e",
+          "sourceProvenanceHash": "67f79f2a43259ac5",
+          "trimmedPixelHash": "5fdee7c3e3b95331"
+        },
+        {
+          "physicalId": "rom-p1b-g4c-r2c-vf02-msb2d53f54-gfx74783713",
+          "file": "physical/rom-p1b-g4c-r2c-vf02-msb2d53f54-gfx74783713.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 2,
+          "actorVisualProfileKey": 27,
+          "graphicsBank": 76,
+          "metaspriteHash": "b2d53f545f9cdcd1",
+          "graphicsHash": "74783713b5d73006",
+          "sourceProvenanceHash": "58ac7140ebc984f9",
+          "trimmedPixelHash": "427d0621e1609c57"
+        },
+        {
+          "physicalId": "rom-p1b-g4c-r2c-vf03-msf56ddc76-gfx03d0bea8",
+          "file": "physical/rom-p1b-g4c-r2c-vf03-msf56ddc76-gfx03d0bea8.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 3,
+          "actorVisualProfileKey": 27,
+          "graphicsBank": 76,
+          "metaspriteHash": "f56ddc760ce341fa",
+          "graphicsHash": "03d0bea8f10163ab",
+          "sourceProvenanceHash": "290e6d6eb2d34201",
+          "trimmedPixelHash": "20b6264582665a96"
         }
       ],
-      "signedNegativeInstances": 32,
-      "minOffset": -9,
+      "signedNegativeInstances": 78,
+      "minOffset": -16,
       "maxOffset": 5,
       "minWidth": 32,
       "maxWidth": 32,
@@ -8208,16 +9933,18 @@
     {
       "formId": "frieza_final",
       "actorVisualProfileKey": 28,
-      "physicalFrames": 8,
-      "frameInstances": 50,
-      "sequences": 6,
+      "physicalFrames": 12,
+      "frameInstances": 112,
+      "sequences": 8,
       "resources": [
         "0x00",
-        "0x12"
+        "0x12",
+        "0x2c"
       ],
       "resourceFrameInstances": {
         "0x00": 14,
-        "0x12": 36
+        "0x12": 36,
+        "0x2c": 62
       },
       "resourceProfileBlocked": [],
       "transparentFrameRecords": [],
@@ -8325,10 +10052,62 @@
           "graphicsHash": "acce40e12965dbb7",
           "sourceProvenanceHash": "ee239084ccb1ae74",
           "trimmedPixelHash": "fcb4966d86ab49a2"
+        },
+        {
+          "physicalId": "rom-p1c-g4d-r2c-vf00-ms88cb7910-gfxb05cb3c8",
+          "file": "physical/rom-p1c-g4d-r2c-vf00-ms88cb7910-gfxb05cb3c8.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 0,
+          "actorVisualProfileKey": 28,
+          "graphicsBank": 77,
+          "metaspriteHash": "88cb7910858e95aa",
+          "graphicsHash": "b05cb3c8866830e0",
+          "sourceProvenanceHash": "87c2bc73be938bc8",
+          "trimmedPixelHash": "a93ea1e35eebfece"
+        },
+        {
+          "physicalId": "rom-p1c-g4d-r2c-vf01-ms63521d90-gfx3dca0c4f",
+          "file": "physical/rom-p1c-g4d-r2c-vf01-ms63521d90-gfx3dca0c4f.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 1,
+          "actorVisualProfileKey": 28,
+          "graphicsBank": 77,
+          "metaspriteHash": "63521d9054d2e460",
+          "graphicsHash": "3dca0c4f3555be14",
+          "sourceProvenanceHash": "60f7f3ec950cba87",
+          "trimmedPixelHash": "0652738f496cf990"
+        },
+        {
+          "physicalId": "rom-p1c-g4d-r2c-vf02-msb2d53f54-gfxf2ad5315",
+          "file": "physical/rom-p1c-g4d-r2c-vf02-msb2d53f54-gfxf2ad5315.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 2,
+          "actorVisualProfileKey": 28,
+          "graphicsBank": 77,
+          "metaspriteHash": "b2d53f545f9cdcd1",
+          "graphicsHash": "f2ad5315667e53f2",
+          "sourceProvenanceHash": "dcfca79a90ba6776",
+          "trimmedPixelHash": "3376fca5a021437c"
+        },
+        {
+          "physicalId": "rom-p1c-g4d-r2c-vf03-msf56ddc76-gfx0d0a65f9",
+          "file": "physical/rom-p1c-g4d-r2c-vf03-msf56ddc76-gfx0d0a65f9.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 3,
+          "actorVisualProfileKey": 28,
+          "graphicsBank": 77,
+          "metaspriteHash": "f56ddc760ce341fa",
+          "graphicsHash": "0d0a65f9b05d17a6",
+          "sourceProvenanceHash": "1bb2f8da33271ed7",
+          "trimmedPixelHash": "9b62dc2a76fd3dec"
         }
       ],
-      "signedNegativeInstances": 36,
-      "minOffset": -10,
+      "signedNegativeInstances": 82,
+      "minOffset": -16,
       "maxOffset": 0,
       "minWidth": 32,
       "maxWidth": 32,
@@ -8338,14 +10117,16 @@
     {
       "formId": "android_16",
       "actorVisualProfileKey": 29,
-      "physicalFrames": 3,
-      "frameInstances": 14,
-      "sequences": 2,
+      "physicalFrames": 7,
+      "frameInstances": 76,
+      "sequences": 4,
       "resources": [
-        "0x00"
+        "0x00",
+        "0x2c"
       ],
       "resourceFrameInstances": {
-        "0x00": 14
+        "0x00": 14,
+        "0x2c": 62
       },
       "resourceProfileBlocked": [],
       "transparentFrameRecords": [],
@@ -8388,10 +10169,62 @@
           "graphicsHash": "98a1658d8caba215",
           "sourceProvenanceHash": "f478c8cb80b8b964",
           "trimmedPixelHash": "8346c0b6a95324cd"
+        },
+        {
+          "physicalId": "rom-p1d-g4e-r2c-vf00-ms88cb7910-gfx7436632d",
+          "file": "physical/rom-p1d-g4e-r2c-vf00-ms88cb7910-gfx7436632d.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 0,
+          "actorVisualProfileKey": 29,
+          "graphicsBank": 78,
+          "metaspriteHash": "88cb7910858e95aa",
+          "graphicsHash": "7436632d88600ea5",
+          "sourceProvenanceHash": "a8582a4c1fc0000f",
+          "trimmedPixelHash": "9edea3045b9e1be9"
+        },
+        {
+          "physicalId": "rom-p1d-g4e-r2c-vf01-ms63521d90-gfx75610966",
+          "file": "physical/rom-p1d-g4e-r2c-vf01-ms63521d90-gfx75610966.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 1,
+          "actorVisualProfileKey": 29,
+          "graphicsBank": 78,
+          "metaspriteHash": "63521d9054d2e460",
+          "graphicsHash": "756109662e4ccd5c",
+          "sourceProvenanceHash": "14e53b9f9781b42d",
+          "trimmedPixelHash": "3e79988c66fd8070"
+        },
+        {
+          "physicalId": "rom-p1d-g4e-r2c-vf02-msb2d53f54-gfx8d0c4d5e",
+          "file": "physical/rom-p1d-g4e-r2c-vf02-msb2d53f54-gfx8d0c4d5e.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 2,
+          "actorVisualProfileKey": 29,
+          "graphicsBank": 78,
+          "metaspriteHash": "b2d53f545f9cdcd1",
+          "graphicsHash": "8d0c4d5ef9983abb",
+          "sourceProvenanceHash": "e4e80028a3a42841",
+          "trimmedPixelHash": "51b163d3fcf75e92"
+        },
+        {
+          "physicalId": "rom-p1d-g4e-r2c-vf03-msf56ddc76-gfxd76dd7ac",
+          "file": "physical/rom-p1d-g4e-r2c-vf03-msf56ddc76-gfxd76dd7ac.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 3,
+          "actorVisualProfileKey": 29,
+          "graphicsBank": 78,
+          "metaspriteHash": "f56ddc760ce341fa",
+          "graphicsHash": "d76dd7ac37ace606",
+          "sourceProvenanceHash": "01b762f7c890ad43",
+          "trimmedPixelHash": "d6afc34ed9f6aa8c"
         }
       ],
-      "signedNegativeInstances": 8,
-      "minOffset": -9,
+      "signedNegativeInstances": 54,
+      "minOffset": -16,
       "maxOffset": 0,
       "minWidth": 32,
       "maxWidth": 32,
@@ -8401,14 +10234,16 @@
     {
       "formId": "android_17",
       "actorVisualProfileKey": 30,
-      "physicalFrames": 3,
-      "frameInstances": 14,
-      "sequences": 2,
+      "physicalFrames": 7,
+      "frameInstances": 76,
+      "sequences": 4,
       "resources": [
-        "0x00"
+        "0x00",
+        "0x2c"
       ],
       "resourceFrameInstances": {
-        "0x00": 14
+        "0x00": 14,
+        "0x2c": 62
       },
       "resourceProfileBlocked": [],
       "transparentFrameRecords": [],
@@ -8451,10 +10286,62 @@
           "graphicsHash": "853467fb3ebbccf8",
           "sourceProvenanceHash": "c8141b84eb307253",
           "trimmedPixelHash": "3657ec91bbdbb42a"
+        },
+        {
+          "physicalId": "rom-p1e-g4f-r2c-vf00-ms88cb7910-gfx36e80129",
+          "file": "physical/rom-p1e-g4f-r2c-vf00-ms88cb7910-gfx36e80129.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 0,
+          "actorVisualProfileKey": 30,
+          "graphicsBank": 79,
+          "metaspriteHash": "88cb7910858e95aa",
+          "graphicsHash": "36e80129b50761ed",
+          "sourceProvenanceHash": "fa32c3c53d3e021a",
+          "trimmedPixelHash": "2e2e8975dce41b67"
+        },
+        {
+          "physicalId": "rom-p1e-g4f-r2c-vf01-ms63521d90-gfxf587f117",
+          "file": "physical/rom-p1e-g4f-r2c-vf01-ms63521d90-gfxf587f117.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 1,
+          "actorVisualProfileKey": 30,
+          "graphicsBank": 79,
+          "metaspriteHash": "63521d9054d2e460",
+          "graphicsHash": "f587f1177a317b00",
+          "sourceProvenanceHash": "53e1a19fbfc29019",
+          "trimmedPixelHash": "a76750a0050b3494"
+        },
+        {
+          "physicalId": "rom-p1e-g4f-r2c-vf02-msb2d53f54-gfx80e59422",
+          "file": "physical/rom-p1e-g4f-r2c-vf02-msb2d53f54-gfx80e59422.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 2,
+          "actorVisualProfileKey": 30,
+          "graphicsBank": 79,
+          "metaspriteHash": "b2d53f545f9cdcd1",
+          "graphicsHash": "80e59422fe399db0",
+          "sourceProvenanceHash": "2777b62cce2c4c5a",
+          "trimmedPixelHash": "74a3fc07787f3091"
+        },
+        {
+          "physicalId": "rom-p1e-g4f-r2c-vf03-msf56ddc76-gfxc9e94703",
+          "file": "physical/rom-p1e-g4f-r2c-vf03-msf56ddc76-gfxc9e94703.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 3,
+          "actorVisualProfileKey": 30,
+          "graphicsBank": 79,
+          "metaspriteHash": "f56ddc760ce341fa",
+          "graphicsHash": "c9e9470388882fff",
+          "sourceProvenanceHash": "80b1c0d4a6b26e97",
+          "trimmedPixelHash": "bf7609aefe32e5be"
         }
       ],
-      "signedNegativeInstances": 8,
-      "minOffset": -9,
+      "signedNegativeInstances": 54,
+      "minOffset": -16,
       "maxOffset": 0,
       "minWidth": 32,
       "maxWidth": 32,
@@ -8464,14 +10351,16 @@
     {
       "formId": "android_18",
       "actorVisualProfileKey": 31,
-      "physicalFrames": 3,
-      "frameInstances": 14,
-      "sequences": 2,
+      "physicalFrames": 7,
+      "frameInstances": 76,
+      "sequences": 4,
       "resources": [
-        "0x00"
+        "0x00",
+        "0x2c"
       ],
       "resourceFrameInstances": {
-        "0x00": 14
+        "0x00": 14,
+        "0x2c": 62
       },
       "resourceProfileBlocked": [],
       "transparentFrameRecords": [],
@@ -8514,10 +10403,62 @@
           "graphicsHash": "104702bc4c8fbe34",
           "sourceProvenanceHash": "42431002ba43cdce",
           "trimmedPixelHash": "2ac3a7263b83e583"
+        },
+        {
+          "physicalId": "rom-p1f-g50-r2c-vf00-ms88cb7910-gfx5eb94a26",
+          "file": "physical/rom-p1f-g50-r2c-vf00-ms88cb7910-gfx5eb94a26.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 0,
+          "actorVisualProfileKey": 31,
+          "graphicsBank": 80,
+          "metaspriteHash": "88cb7910858e95aa",
+          "graphicsHash": "5eb94a26af6fd70c",
+          "sourceProvenanceHash": "6b21138fb096569c",
+          "trimmedPixelHash": "fb5ff1890dd84436"
+        },
+        {
+          "physicalId": "rom-p1f-g50-r2c-vf01-ms63521d90-gfxfbbb7369",
+          "file": "physical/rom-p1f-g50-r2c-vf01-ms63521d90-gfxfbbb7369.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 1,
+          "actorVisualProfileKey": 31,
+          "graphicsBank": 80,
+          "metaspriteHash": "63521d9054d2e460",
+          "graphicsHash": "fbbb736947d3d57c",
+          "sourceProvenanceHash": "1e1a13107651add8",
+          "trimmedPixelHash": "a70e1a344b900671"
+        },
+        {
+          "physicalId": "rom-p1f-g50-r2c-vf02-msb2d53f54-gfx8e3042b2",
+          "file": "physical/rom-p1f-g50-r2c-vf02-msb2d53f54-gfx8e3042b2.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 2,
+          "actorVisualProfileKey": 31,
+          "graphicsBank": 80,
+          "metaspriteHash": "b2d53f545f9cdcd1",
+          "graphicsHash": "8e3042b29cec1b5d",
+          "sourceProvenanceHash": "7193730b1840dfc4",
+          "trimmedPixelHash": "612c214c3e435acc"
+        },
+        {
+          "physicalId": "rom-p1f-g50-r2c-vf03-msf56ddc76-gfxfaa07fa7",
+          "file": "physical/rom-p1f-g50-r2c-vf03-msf56ddc76-gfxfaa07fa7.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 3,
+          "actorVisualProfileKey": 31,
+          "graphicsBank": 80,
+          "metaspriteHash": "f56ddc760ce341fa",
+          "graphicsHash": "faa07fa720f36b39",
+          "sourceProvenanceHash": "177d8b3fc4748c31",
+          "trimmedPixelHash": "b643a413719d14e5"
         }
       ],
-      "signedNegativeInstances": 8,
-      "minOffset": -9,
+      "signedNegativeInstances": 54,
+      "minOffset": -16,
       "maxOffset": 0,
       "minWidth": 32,
       "maxWidth": 32,
@@ -8527,14 +10468,16 @@
     {
       "formId": "android_19",
       "actorVisualProfileKey": 32,
-      "physicalFrames": 3,
-      "frameInstances": 14,
-      "sequences": 2,
+      "physicalFrames": 7,
+      "frameInstances": 76,
+      "sequences": 4,
       "resources": [
-        "0x00"
+        "0x00",
+        "0x2c"
       ],
       "resourceFrameInstances": {
-        "0x00": 14
+        "0x00": 14,
+        "0x2c": 62
       },
       "resourceProfileBlocked": [],
       "transparentFrameRecords": [],
@@ -8577,10 +10520,62 @@
           "graphicsHash": "c237ded78b4fc578",
           "sourceProvenanceHash": "1e407ed35b84a770",
           "trimmedPixelHash": "015d4ff7da2e7919"
+        },
+        {
+          "physicalId": "rom-p20-g51-r2c-vf00-ms88cb7910-gfx50543be5",
+          "file": "physical/rom-p20-g51-r2c-vf00-ms88cb7910-gfx50543be5.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 0,
+          "actorVisualProfileKey": 32,
+          "graphicsBank": 81,
+          "metaspriteHash": "88cb7910858e95aa",
+          "graphicsHash": "50543be565f3f78b",
+          "sourceProvenanceHash": "a26a66f25b18c666",
+          "trimmedPixelHash": "be4e426fbe5da22f"
+        },
+        {
+          "physicalId": "rom-p20-g51-r2c-vf01-ms63521d90-gfx671ab5c2",
+          "file": "physical/rom-p20-g51-r2c-vf01-ms63521d90-gfx671ab5c2.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 1,
+          "actorVisualProfileKey": 32,
+          "graphicsBank": 81,
+          "metaspriteHash": "63521d9054d2e460",
+          "graphicsHash": "671ab5c214f1045f",
+          "sourceProvenanceHash": "6243e9aba4cd4445",
+          "trimmedPixelHash": "9072de4b1c3d545f"
+        },
+        {
+          "physicalId": "rom-p20-g51-r2c-vf02-msb2d53f54-gfx84bf170f",
+          "file": "physical/rom-p20-g51-r2c-vf02-msb2d53f54-gfx84bf170f.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 2,
+          "actorVisualProfileKey": 32,
+          "graphicsBank": 81,
+          "metaspriteHash": "b2d53f545f9cdcd1",
+          "graphicsHash": "84bf170fc9f57683",
+          "sourceProvenanceHash": "cb5f21ce57935c9b",
+          "trimmedPixelHash": "332d856762a61a2b"
+        },
+        {
+          "physicalId": "rom-p20-g51-r2c-vf03-msf56ddc76-gfx7d4bfabe",
+          "file": "physical/rom-p20-g51-r2c-vf03-msf56ddc76-gfx7d4bfabe.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 3,
+          "actorVisualProfileKey": 32,
+          "graphicsBank": 81,
+          "metaspriteHash": "f56ddc760ce341fa",
+          "graphicsHash": "7d4bfabec02132f9",
+          "sourceProvenanceHash": "4d5d8959c827b40f",
+          "trimmedPixelHash": "672a2bb7be9adf5f"
         }
       ],
-      "signedNegativeInstances": 8,
-      "minOffset": -9,
+      "signedNegativeInstances": 54,
+      "minOffset": -16,
       "maxOffset": 0,
       "minWidth": 32,
       "maxWidth": 32,
@@ -8590,14 +10585,16 @@
     {
       "formId": "android_20",
       "actorVisualProfileKey": 33,
-      "physicalFrames": 3,
-      "frameInstances": 14,
-      "sequences": 2,
+      "physicalFrames": 7,
+      "frameInstances": 76,
+      "sequences": 4,
       "resources": [
-        "0x00"
+        "0x00",
+        "0x2c"
       ],
       "resourceFrameInstances": {
-        "0x00": 14
+        "0x00": 14,
+        "0x2c": 62
       },
       "resourceProfileBlocked": [],
       "transparentFrameRecords": [],
@@ -8640,10 +10637,62 @@
           "graphicsHash": "e5dbced41a5bea58",
           "sourceProvenanceHash": "6c490ef3c0873a8a",
           "trimmedPixelHash": "c270541f8e081746"
+        },
+        {
+          "physicalId": "rom-p21-g52-r2c-vf00-ms88cb7910-gfxb75ba1ad",
+          "file": "physical/rom-p21-g52-r2c-vf00-ms88cb7910-gfxb75ba1ad.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 0,
+          "actorVisualProfileKey": 33,
+          "graphicsBank": 82,
+          "metaspriteHash": "88cb7910858e95aa",
+          "graphicsHash": "b75ba1ad47346deb",
+          "sourceProvenanceHash": "32db2536f316e929",
+          "trimmedPixelHash": "e0a3a7997c557553"
+        },
+        {
+          "physicalId": "rom-p21-g52-r2c-vf01-ms63521d90-gfx91e3846c",
+          "file": "physical/rom-p21-g52-r2c-vf01-ms63521d90-gfx91e3846c.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 1,
+          "actorVisualProfileKey": 33,
+          "graphicsBank": 82,
+          "metaspriteHash": "63521d9054d2e460",
+          "graphicsHash": "91e3846cbe3780f6",
+          "sourceProvenanceHash": "d40ae77ca0c3ee6a",
+          "trimmedPixelHash": "f02fa5e18ca4b004"
+        },
+        {
+          "physicalId": "rom-p21-g52-r2c-vf02-msb2d53f54-gfxee82d390",
+          "file": "physical/rom-p21-g52-r2c-vf02-msb2d53f54-gfxee82d390.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 2,
+          "actorVisualProfileKey": 33,
+          "graphicsBank": 82,
+          "metaspriteHash": "b2d53f545f9cdcd1",
+          "graphicsHash": "ee82d3906c2bbf34",
+          "sourceProvenanceHash": "970c6dddb06003e2",
+          "trimmedPixelHash": "1d105e811dadda66"
+        },
+        {
+          "physicalId": "rom-p21-g52-r2c-vf03-msf56ddc76-gfx203ba338",
+          "file": "physical/rom-p21-g52-r2c-vf03-msf56ddc76-gfx203ba338.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 3,
+          "actorVisualProfileKey": 33,
+          "graphicsBank": 82,
+          "metaspriteHash": "f56ddc760ce341fa",
+          "graphicsHash": "203ba33808dd6dc3",
+          "sourceProvenanceHash": "9eef0463b3279a48",
+          "trimmedPixelHash": "89d43263d3efb3cd"
         }
       ],
-      "signedNegativeInstances": 8,
-      "minOffset": -9,
+      "signedNegativeInstances": 54,
+      "minOffset": -16,
       "maxOffset": 0,
       "minWidth": 32,
       "maxWidth": 32,
@@ -8653,16 +10702,18 @@
     {
       "formId": "cell_imperfect",
       "actorVisualProfileKey": 34,
-      "physicalFrames": 13,
-      "frameInstances": 62,
-      "sequences": 8,
+      "physicalFrames": 17,
+      "frameInstances": 124,
+      "sequences": 10,
       "resources": [
         "0x00",
-        "0x03"
+        "0x03",
+        "0x2c"
       ],
       "resourceFrameInstances": {
         "0x00": 14,
-        "0x03": 48
+        "0x03": 48,
+        "0x2c": 62
       },
       "resourceProfileBlocked": [],
       "transparentFrameRecords": [],
@@ -8835,10 +10886,62 @@
           "graphicsHash": "2030737e9f953934",
           "sourceProvenanceHash": "b68cd4ca9273d43d",
           "trimmedPixelHash": "c2931648e9f25061"
+        },
+        {
+          "physicalId": "rom-p22-g53-r2c-vf00-ms88cb7910-gfx0116a7bc",
+          "file": "physical/rom-p22-g53-r2c-vf00-ms88cb7910-gfx0116a7bc.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 0,
+          "actorVisualProfileKey": 34,
+          "graphicsBank": 83,
+          "metaspriteHash": "88cb7910858e95aa",
+          "graphicsHash": "0116a7bce29dd23e",
+          "sourceProvenanceHash": "f585c61c04e9810b",
+          "trimmedPixelHash": "5ec9e8ce8203f44c"
+        },
+        {
+          "physicalId": "rom-p22-g53-r2c-vf01-ms63521d90-gfxf4b74a94",
+          "file": "physical/rom-p22-g53-r2c-vf01-ms63521d90-gfxf4b74a94.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 1,
+          "actorVisualProfileKey": 34,
+          "graphicsBank": 83,
+          "metaspriteHash": "63521d9054d2e460",
+          "graphicsHash": "f4b74a94269598b3",
+          "sourceProvenanceHash": "c0dfb12edc371229",
+          "trimmedPixelHash": "caae2a92f0de808e"
+        },
+        {
+          "physicalId": "rom-p22-g53-r2c-vf02-msb2d53f54-gfx97c9099b",
+          "file": "physical/rom-p22-g53-r2c-vf02-msb2d53f54-gfx97c9099b.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 2,
+          "actorVisualProfileKey": 34,
+          "graphicsBank": 83,
+          "metaspriteHash": "b2d53f545f9cdcd1",
+          "graphicsHash": "97c9099b16323b4d",
+          "sourceProvenanceHash": "ec863ecbd7e3ef9c",
+          "trimmedPixelHash": "7e8cd98afdb65209"
+        },
+        {
+          "physicalId": "rom-p22-g53-r2c-vf03-msf56ddc76-gfx3c979776",
+          "file": "physical/rom-p22-g53-r2c-vf03-msf56ddc76-gfx3c979776.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 3,
+          "actorVisualProfileKey": 34,
+          "graphicsBank": 83,
+          "metaspriteHash": "f56ddc760ce341fa",
+          "graphicsHash": "3c9797762c803a47",
+          "sourceProvenanceHash": "d7cdb9f3cd12b9bd",
+          "trimmedPixelHash": "b483724ee0641bf0"
         }
       ],
-      "signedNegativeInstances": 32,
-      "minOffset": -9,
+      "signedNegativeInstances": 78,
+      "minOffset": -16,
       "maxOffset": 5,
       "minWidth": 32,
       "maxWidth": 32,
@@ -8848,16 +10951,18 @@
     {
       "formId": "cell_semi",
       "actorVisualProfileKey": 35,
-      "physicalFrames": 13,
-      "frameInstances": 62,
-      "sequences": 8,
+      "physicalFrames": 17,
+      "frameInstances": 124,
+      "sequences": 10,
       "resources": [
         "0x00",
-        "0x03"
+        "0x03",
+        "0x2c"
       ],
       "resourceFrameInstances": {
         "0x00": 14,
-        "0x03": 48
+        "0x03": 48,
+        "0x2c": 62
       },
       "resourceProfileBlocked": [],
       "transparentFrameRecords": [],
@@ -9030,10 +11135,62 @@
           "graphicsHash": "b6a3d817133f107a",
           "sourceProvenanceHash": "13668e749895e27c",
           "trimmedPixelHash": "bc9a2524487bbb2a"
+        },
+        {
+          "physicalId": "rom-p23-g54-r2c-vf00-ms88cb7910-gfx762dbc2e",
+          "file": "physical/rom-p23-g54-r2c-vf00-ms88cb7910-gfx762dbc2e.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 0,
+          "actorVisualProfileKey": 35,
+          "graphicsBank": 84,
+          "metaspriteHash": "88cb7910858e95aa",
+          "graphicsHash": "762dbc2e5c7adfaf",
+          "sourceProvenanceHash": "0e6fc9efe4175391",
+          "trimmedPixelHash": "b57c3c28ebcc0dd3"
+        },
+        {
+          "physicalId": "rom-p23-g54-r2c-vf01-ms63521d90-gfxd0576ca8",
+          "file": "physical/rom-p23-g54-r2c-vf01-ms63521d90-gfxd0576ca8.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 1,
+          "actorVisualProfileKey": 35,
+          "graphicsBank": 84,
+          "metaspriteHash": "63521d9054d2e460",
+          "graphicsHash": "d0576ca8fe1ee36a",
+          "sourceProvenanceHash": "9f0244263eddd480",
+          "trimmedPixelHash": "67953cf08c037c80"
+        },
+        {
+          "physicalId": "rom-p23-g54-r2c-vf02-msb2d53f54-gfxdff1a49b",
+          "file": "physical/rom-p23-g54-r2c-vf02-msb2d53f54-gfxdff1a49b.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 2,
+          "actorVisualProfileKey": 35,
+          "graphicsBank": 84,
+          "metaspriteHash": "b2d53f545f9cdcd1",
+          "graphicsHash": "dff1a49b0bff9659",
+          "sourceProvenanceHash": "a4ce234c2bb022fe",
+          "trimmedPixelHash": "540143a69cebc23d"
+        },
+        {
+          "physicalId": "rom-p23-g54-r2c-vf03-msf56ddc76-gfx74399bea",
+          "file": "physical/rom-p23-g54-r2c-vf03-msf56ddc76-gfx74399bea.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 3,
+          "actorVisualProfileKey": 35,
+          "graphicsBank": 84,
+          "metaspriteHash": "f56ddc760ce341fa",
+          "graphicsHash": "74399bea772a5018",
+          "sourceProvenanceHash": "bc47f86d722ab0c4",
+          "trimmedPixelHash": "a5ab9e7c0cd01c0f"
         }
       ],
-      "signedNegativeInstances": 32,
-      "minOffset": -9,
+      "signedNegativeInstances": 78,
+      "minOffset": -16,
       "maxOffset": 5,
       "minWidth": 32,
       "maxWidth": 32,
@@ -9043,16 +11200,18 @@
     {
       "formId": "cell_perfect",
       "actorVisualProfileKey": 36,
-      "physicalFrames": 13,
-      "frameInstances": 62,
-      "sequences": 8,
+      "physicalFrames": 17,
+      "frameInstances": 124,
+      "sequences": 10,
       "resources": [
         "0x00",
-        "0x03"
+        "0x03",
+        "0x2c"
       ],
       "resourceFrameInstances": {
         "0x00": 14,
-        "0x03": 48
+        "0x03": 48,
+        "0x2c": 62
       },
       "resourceProfileBlocked": [],
       "transparentFrameRecords": [],
@@ -9225,10 +11384,62 @@
           "graphicsHash": "7ebeb49e02638389",
           "sourceProvenanceHash": "d856867b2ff3b599",
           "trimmedPixelHash": "8608cb21dfb0f445"
+        },
+        {
+          "physicalId": "rom-p24-g55-r2c-vf00-ms88cb7910-gfx7c1ac547",
+          "file": "physical/rom-p24-g55-r2c-vf00-ms88cb7910-gfx7c1ac547.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 0,
+          "actorVisualProfileKey": 36,
+          "graphicsBank": 85,
+          "metaspriteHash": "88cb7910858e95aa",
+          "graphicsHash": "7c1ac547823fa983",
+          "sourceProvenanceHash": "f99c9c7779316cb4",
+          "trimmedPixelHash": "03f58a25f040b4c0"
+        },
+        {
+          "physicalId": "rom-p24-g55-r2c-vf01-ms63521d90-gfx95369adf",
+          "file": "physical/rom-p24-g55-r2c-vf01-ms63521d90-gfx95369adf.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 1,
+          "actorVisualProfileKey": 36,
+          "graphicsBank": 85,
+          "metaspriteHash": "63521d9054d2e460",
+          "graphicsHash": "95369adf097e11ae",
+          "sourceProvenanceHash": "476d3d35a18ba1b5",
+          "trimmedPixelHash": "8a87e58e078334c2"
+        },
+        {
+          "physicalId": "rom-p24-g55-r2c-vf02-msb2d53f54-gfxaa5f91a1",
+          "file": "physical/rom-p24-g55-r2c-vf02-msb2d53f54-gfxaa5f91a1.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 2,
+          "actorVisualProfileKey": 36,
+          "graphicsBank": 85,
+          "metaspriteHash": "b2d53f545f9cdcd1",
+          "graphicsHash": "aa5f91a1bb83fa54",
+          "sourceProvenanceHash": "ed1c997d696289ec",
+          "trimmedPixelHash": "aa01bf08f95231bd"
+        },
+        {
+          "physicalId": "rom-p24-g55-r2c-vf03-msf56ddc76-gfx24881671",
+          "file": "physical/rom-p24-g55-r2c-vf03-msf56ddc76-gfx24881671.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 3,
+          "actorVisualProfileKey": 36,
+          "graphicsBank": 85,
+          "metaspriteHash": "f56ddc760ce341fa",
+          "graphicsHash": "2488167111cbd192",
+          "sourceProvenanceHash": "08fcde7e513a64cf",
+          "trimmedPixelHash": "45be859ea757d75a"
         }
       ],
-      "signedNegativeInstances": 32,
-      "minOffset": -9,
+      "signedNegativeInstances": 78,
+      "minOffset": -16,
       "maxOffset": 5,
       "minWidth": 32,
       "maxWidth": 32,
@@ -9238,16 +11449,18 @@
     {
       "formId": "cell_jr",
       "actorVisualProfileKey": 37,
-      "physicalFrames": 13,
-      "frameInstances": 62,
-      "sequences": 8,
+      "physicalFrames": 17,
+      "frameInstances": 124,
+      "sequences": 10,
       "resources": [
         "0x00",
-        "0x03"
+        "0x03",
+        "0x2c"
       ],
       "resourceFrameInstances": {
         "0x00": 14,
-        "0x03": 48
+        "0x03": 48,
+        "0x2c": 62
       },
       "resourceProfileBlocked": [],
       "transparentFrameRecords": [],
@@ -9420,10 +11633,62 @@
           "graphicsHash": "557ab2dbaa1a69d9",
           "sourceProvenanceHash": "470c33512c1bcf6c",
           "trimmedPixelHash": "bdd400d822622372"
+        },
+        {
+          "physicalId": "rom-p25-g56-r2c-vf00-ms88cb7910-gfx448e8fee",
+          "file": "physical/rom-p25-g56-r2c-vf00-ms88cb7910-gfx448e8fee.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 0,
+          "actorVisualProfileKey": 37,
+          "graphicsBank": 86,
+          "metaspriteHash": "88cb7910858e95aa",
+          "graphicsHash": "448e8fee4b538055",
+          "sourceProvenanceHash": "cd59d7150878540e",
+          "trimmedPixelHash": "f35021077085280e"
+        },
+        {
+          "physicalId": "rom-p25-g56-r2c-vf01-ms63521d90-gfx3660dd8a",
+          "file": "physical/rom-p25-g56-r2c-vf01-ms63521d90-gfx3660dd8a.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 1,
+          "actorVisualProfileKey": 37,
+          "graphicsBank": 86,
+          "metaspriteHash": "63521d9054d2e460",
+          "graphicsHash": "3660dd8a3fad1c2b",
+          "sourceProvenanceHash": "cdef1b63309d412b",
+          "trimmedPixelHash": "f92edbdba2c3688b"
+        },
+        {
+          "physicalId": "rom-p25-g56-r2c-vf02-msb2d53f54-gfx6401eb4b",
+          "file": "physical/rom-p25-g56-r2c-vf02-msb2d53f54-gfx6401eb4b.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 2,
+          "actorVisualProfileKey": 37,
+          "graphicsBank": 86,
+          "metaspriteHash": "b2d53f545f9cdcd1",
+          "graphicsHash": "6401eb4b6ca5205c",
+          "sourceProvenanceHash": "06b2a9f87e8b63c5",
+          "trimmedPixelHash": "dee0b91577c8a523"
+        },
+        {
+          "physicalId": "rom-p25-g56-r2c-vf03-msf56ddc76-gfxc7d40884",
+          "file": "physical/rom-p25-g56-r2c-vf03-msf56ddc76-gfxc7d40884.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 3,
+          "actorVisualProfileKey": 37,
+          "graphicsBank": 86,
+          "metaspriteHash": "f56ddc760ce341fa",
+          "graphicsHash": "c7d4088432311ed2",
+          "sourceProvenanceHash": "30cb20c8e91904d1",
+          "trimmedPixelHash": "f44ca91e26cc5859"
         }
       ],
-      "signedNegativeInstances": 32,
-      "minOffset": -9,
+      "signedNegativeInstances": 78,
+      "minOffset": -16,
       "maxOffset": 5,
       "minWidth": 32,
       "maxWidth": 32,
@@ -9433,16 +11698,18 @@
     {
       "formId": "buu_base",
       "actorVisualProfileKey": 38,
-      "physicalFrames": 13,
-      "frameInstances": 62,
-      "sequences": 8,
+      "physicalFrames": 17,
+      "frameInstances": 124,
+      "sequences": 10,
       "resources": [
         "0x00",
-        "0x03"
+        "0x03",
+        "0x2c"
       ],
       "resourceFrameInstances": {
         "0x00": 14,
-        "0x03": 48
+        "0x03": 48,
+        "0x2c": 62
       },
       "resourceProfileBlocked": [],
       "transparentFrameRecords": [],
@@ -9615,10 +11882,62 @@
           "graphicsHash": "f33c8e1bf63fe703",
           "sourceProvenanceHash": "bb84a768f56bdf4b",
           "trimmedPixelHash": "c545e5d8b6283624"
+        },
+        {
+          "physicalId": "rom-p26-g57-r2c-vf00-ms88cb7910-gfx35f4e486",
+          "file": "physical/rom-p26-g57-r2c-vf00-ms88cb7910-gfx35f4e486.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 0,
+          "actorVisualProfileKey": 38,
+          "graphicsBank": 87,
+          "metaspriteHash": "88cb7910858e95aa",
+          "graphicsHash": "35f4e48637ce82d7",
+          "sourceProvenanceHash": "26c86681e771e40b",
+          "trimmedPixelHash": "f70bee3d3b3d5693"
+        },
+        {
+          "physicalId": "rom-p26-g57-r2c-vf01-ms63521d90-gfx3db3914f",
+          "file": "physical/rom-p26-g57-r2c-vf01-ms63521d90-gfx3db3914f.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 1,
+          "actorVisualProfileKey": 38,
+          "graphicsBank": 87,
+          "metaspriteHash": "63521d9054d2e460",
+          "graphicsHash": "3db3914f9e64c239",
+          "sourceProvenanceHash": "dedcbc8661885f1f",
+          "trimmedPixelHash": "d4bd30cc8ebea896"
+        },
+        {
+          "physicalId": "rom-p26-g57-r2c-vf02-msb2d53f54-gfxbe817ff1",
+          "file": "physical/rom-p26-g57-r2c-vf02-msb2d53f54-gfxbe817ff1.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 2,
+          "actorVisualProfileKey": 38,
+          "graphicsBank": 87,
+          "metaspriteHash": "b2d53f545f9cdcd1",
+          "graphicsHash": "be817ff15c7f7752",
+          "sourceProvenanceHash": "f170f3b6ddb992f5",
+          "trimmedPixelHash": "75c8517edf400802"
+        },
+        {
+          "physicalId": "rom-p26-g57-r2c-vf03-msf56ddc76-gfxde7428d2",
+          "file": "physical/rom-p26-g57-r2c-vf03-msf56ddc76-gfxde7428d2.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 3,
+          "actorVisualProfileKey": 38,
+          "graphicsBank": 87,
+          "metaspriteHash": "f56ddc760ce341fa",
+          "graphicsHash": "de7428d2b4c79b4e",
+          "sourceProvenanceHash": "aacec94152115007",
+          "trimmedPixelHash": "aed9478b9f28754d"
         }
       ],
-      "signedNegativeInstances": 32,
-      "minOffset": -9,
+      "signedNegativeInstances": 78,
+      "minOffset": -16,
       "maxOffset": 5,
       "minWidth": 32,
       "maxWidth": 32,
@@ -9628,16 +11947,18 @@
     {
       "formId": "buu_super",
       "actorVisualProfileKey": 39,
-      "physicalFrames": 13,
-      "frameInstances": 62,
-      "sequences": 8,
+      "physicalFrames": 17,
+      "frameInstances": 124,
+      "sequences": 10,
       "resources": [
         "0x00",
-        "0x03"
+        "0x03",
+        "0x2c"
       ],
       "resourceFrameInstances": {
         "0x00": 14,
-        "0x03": 48
+        "0x03": 48,
+        "0x2c": 62
       },
       "resourceProfileBlocked": [],
       "transparentFrameRecords": [],
@@ -9810,10 +12131,62 @@
           "graphicsHash": "cebb204e5afc1766",
           "sourceProvenanceHash": "4e77cb4ca47830f7",
           "trimmedPixelHash": "dbc48615cf7aeac2"
+        },
+        {
+          "physicalId": "rom-p27-g58-r2c-vf00-ms88cb7910-gfx4c7c809c",
+          "file": "physical/rom-p27-g58-r2c-vf00-ms88cb7910-gfx4c7c809c.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 0,
+          "actorVisualProfileKey": 39,
+          "graphicsBank": 88,
+          "metaspriteHash": "88cb7910858e95aa",
+          "graphicsHash": "4c7c809c80e46df4",
+          "sourceProvenanceHash": "2f7445f8448c7206",
+          "trimmedPixelHash": "280329ff10deb0b8"
+        },
+        {
+          "physicalId": "rom-p27-g58-r2c-vf01-ms63521d90-gfx77d84555",
+          "file": "physical/rom-p27-g58-r2c-vf01-ms63521d90-gfx77d84555.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 1,
+          "actorVisualProfileKey": 39,
+          "graphicsBank": 88,
+          "metaspriteHash": "63521d9054d2e460",
+          "graphicsHash": "77d84555aec7057b",
+          "sourceProvenanceHash": "e9f6b8c7328403c7",
+          "trimmedPixelHash": "b66c4f6fc3ba5264"
+        },
+        {
+          "physicalId": "rom-p27-g58-r2c-vf02-msb2d53f54-gfx1afbaa5d",
+          "file": "physical/rom-p27-g58-r2c-vf02-msb2d53f54-gfx1afbaa5d.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 2,
+          "actorVisualProfileKey": 39,
+          "graphicsBank": 88,
+          "metaspriteHash": "b2d53f545f9cdcd1",
+          "graphicsHash": "1afbaa5d500a53b2",
+          "sourceProvenanceHash": "6225892925c11f33",
+          "trimmedPixelHash": "f82a96fb15add7f0"
+        },
+        {
+          "physicalId": "rom-p27-g58-r2c-vf03-msf56ddc76-gfxcefb3881",
+          "file": "physical/rom-p27-g58-r2c-vf03-msf56ddc76-gfxcefb3881.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 3,
+          "actorVisualProfileKey": 39,
+          "graphicsBank": 88,
+          "metaspriteHash": "f56ddc760ce341fa",
+          "graphicsHash": "cefb388137a4cf7a",
+          "sourceProvenanceHash": "4cae816e9fb60a20",
+          "trimmedPixelHash": "154b32b3840160ef"
         }
       ],
-      "signedNegativeInstances": 32,
-      "minOffset": -9,
+      "signedNegativeInstances": 78,
+      "minOffset": -16,
       "maxOffset": 5,
       "minWidth": 32,
       "maxWidth": 32,
@@ -9823,16 +12196,18 @@
     {
       "formId": "buu_gotenks",
       "actorVisualProfileKey": 40,
-      "physicalFrames": 13,
-      "frameInstances": 62,
-      "sequences": 8,
+      "physicalFrames": 17,
+      "frameInstances": 124,
+      "sequences": 10,
       "resources": [
         "0x00",
-        "0x03"
+        "0x03",
+        "0x2c"
       ],
       "resourceFrameInstances": {
         "0x00": 14,
-        "0x03": 48
+        "0x03": 48,
+        "0x2c": 62
       },
       "resourceProfileBlocked": [],
       "transparentFrameRecords": [],
@@ -10005,10 +12380,62 @@
           "graphicsHash": "a8a85010d34ff821",
           "sourceProvenanceHash": "e99f127ba7b42d0b",
           "trimmedPixelHash": "698773de9508a388"
+        },
+        {
+          "physicalId": "rom-p28-g59-r2c-vf00-ms88cb7910-gfx29ee8399",
+          "file": "physical/rom-p28-g59-r2c-vf00-ms88cb7910-gfx29ee8399.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 0,
+          "actorVisualProfileKey": 40,
+          "graphicsBank": 89,
+          "metaspriteHash": "88cb7910858e95aa",
+          "graphicsHash": "29ee839946d96889",
+          "sourceProvenanceHash": "7c638e98440e2579",
+          "trimmedPixelHash": "208bd11a7844f9ac"
+        },
+        {
+          "physicalId": "rom-p28-g59-r2c-vf01-ms63521d90-gfx2cc405d2",
+          "file": "physical/rom-p28-g59-r2c-vf01-ms63521d90-gfx2cc405d2.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 1,
+          "actorVisualProfileKey": 40,
+          "graphicsBank": 89,
+          "metaspriteHash": "63521d9054d2e460",
+          "graphicsHash": "2cc405d29ba68f5f",
+          "sourceProvenanceHash": "616673c937086d87",
+          "trimmedPixelHash": "5b993b687b387baf"
+        },
+        {
+          "physicalId": "rom-p28-g59-r2c-vf02-msb2d53f54-gfxf951b373",
+          "file": "physical/rom-p28-g59-r2c-vf02-msb2d53f54-gfxf951b373.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 2,
+          "actorVisualProfileKey": 40,
+          "graphicsBank": 89,
+          "metaspriteHash": "b2d53f545f9cdcd1",
+          "graphicsHash": "f951b37375ffb62e",
+          "sourceProvenanceHash": "60b737bb2d6815eb",
+          "trimmedPixelHash": "8b06df24309d527d"
+        },
+        {
+          "physicalId": "rom-p28-g59-r2c-vf03-msf56ddc76-gfxb899eeeb",
+          "file": "physical/rom-p28-g59-r2c-vf03-msf56ddc76-gfxb899eeeb.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 3,
+          "actorVisualProfileKey": 40,
+          "graphicsBank": 89,
+          "metaspriteHash": "f56ddc760ce341fa",
+          "graphicsHash": "b899eeeb46161019",
+          "sourceProvenanceHash": "83272bbb6185860f",
+          "trimmedPixelHash": "4bc3026d809b8da3"
         }
       ],
-      "signedNegativeInstances": 32,
-      "minOffset": -9,
+      "signedNegativeInstances": 78,
+      "minOffset": -16,
       "maxOffset": 5,
       "minWidth": 32,
       "maxWidth": 32,
@@ -10018,16 +12445,18 @@
     {
       "formId": "buu_gohan",
       "actorVisualProfileKey": 41,
-      "physicalFrames": 13,
-      "frameInstances": 62,
-      "sequences": 8,
+      "physicalFrames": 17,
+      "frameInstances": 124,
+      "sequences": 10,
       "resources": [
         "0x00",
-        "0x03"
+        "0x03",
+        "0x2c"
       ],
       "resourceFrameInstances": {
         "0x00": 14,
-        "0x03": 48
+        "0x03": 48,
+        "0x2c": 62
       },
       "resourceProfileBlocked": [],
       "transparentFrameRecords": [],
@@ -10200,10 +12629,62 @@
           "graphicsHash": "7b11616ad94d55c1",
           "sourceProvenanceHash": "3fed289937e6fb35",
           "trimmedPixelHash": "40deac848318ce7e"
+        },
+        {
+          "physicalId": "rom-p29-g5a-r2c-vf00-ms88cb7910-gfxdf510cfb",
+          "file": "physical/rom-p29-g5a-r2c-vf00-ms88cb7910-gfxdf510cfb.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 0,
+          "actorVisualProfileKey": 41,
+          "graphicsBank": 90,
+          "metaspriteHash": "88cb7910858e95aa",
+          "graphicsHash": "df510cfb65cc5dfd",
+          "sourceProvenanceHash": "77fe464307c399bf",
+          "trimmedPixelHash": "9d4319edf85db3c8"
+        },
+        {
+          "physicalId": "rom-p29-g5a-r2c-vf01-ms63521d90-gfx7a4ed3a0",
+          "file": "physical/rom-p29-g5a-r2c-vf01-ms63521d90-gfx7a4ed3a0.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 1,
+          "actorVisualProfileKey": 41,
+          "graphicsBank": 90,
+          "metaspriteHash": "63521d9054d2e460",
+          "graphicsHash": "7a4ed3a020ccddd4",
+          "sourceProvenanceHash": "ed14993efdde2c09",
+          "trimmedPixelHash": "e4f67e58b87d690e"
+        },
+        {
+          "physicalId": "rom-p29-g5a-r2c-vf02-msb2d53f54-gfx8263c09c",
+          "file": "physical/rom-p29-g5a-r2c-vf02-msb2d53f54-gfx8263c09c.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 2,
+          "actorVisualProfileKey": 41,
+          "graphicsBank": 90,
+          "metaspriteHash": "b2d53f545f9cdcd1",
+          "graphicsHash": "8263c09cb17c53bd",
+          "sourceProvenanceHash": "d09894e7a41f3ebc",
+          "trimmedPixelHash": "fd81f465f1473ac4"
+        },
+        {
+          "physicalId": "rom-p29-g5a-r2c-vf03-msf56ddc76-gfx66d81304",
+          "file": "physical/rom-p29-g5a-r2c-vf03-msf56ddc76-gfx66d81304.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 3,
+          "actorVisualProfileKey": 41,
+          "graphicsBank": 90,
+          "metaspriteHash": "f56ddc760ce341fa",
+          "graphicsHash": "66d81304624a2143",
+          "sourceProvenanceHash": "64f4560e8410a93e",
+          "trimmedPixelHash": "118404129d5041eb"
         }
       ],
-      "signedNegativeInstances": 32,
-      "minOffset": -9,
+      "signedNegativeInstances": 78,
+      "minOffset": -16,
       "maxOffset": 5,
       "minWidth": 32,
       "maxWidth": 32,
@@ -10213,16 +12694,18 @@
     {
       "formId": "buu_kid",
       "actorVisualProfileKey": 42,
-      "physicalFrames": 13,
-      "frameInstances": 62,
-      "sequences": 8,
+      "physicalFrames": 17,
+      "frameInstances": 124,
+      "sequences": 10,
       "resources": [
         "0x00",
-        "0x03"
+        "0x03",
+        "0x2c"
       ],
       "resourceFrameInstances": {
         "0x00": 14,
-        "0x03": 48
+        "0x03": 48,
+        "0x2c": 62
       },
       "resourceProfileBlocked": [],
       "transparentFrameRecords": [],
@@ -10395,10 +12878,62 @@
           "graphicsHash": "094f770d33cdc430",
           "sourceProvenanceHash": "c7d4f5c7f2c338d3",
           "trimmedPixelHash": "4c0cdc395bd79fc9"
+        },
+        {
+          "physicalId": "rom-p2a-g5b-r2c-vf00-ms88cb7910-gfx9c29e705",
+          "file": "physical/rom-p2a-g5b-r2c-vf00-ms88cb7910-gfx9c29e705.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 0,
+          "actorVisualProfileKey": 42,
+          "graphicsBank": 91,
+          "metaspriteHash": "88cb7910858e95aa",
+          "graphicsHash": "9c29e7058dc49c84",
+          "sourceProvenanceHash": "e3d2da838d027fb4",
+          "trimmedPixelHash": "467e211f48b9eb66"
+        },
+        {
+          "physicalId": "rom-p2a-g5b-r2c-vf01-ms63521d90-gfx7546a424",
+          "file": "physical/rom-p2a-g5b-r2c-vf01-ms63521d90-gfx7546a424.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 1,
+          "actorVisualProfileKey": 42,
+          "graphicsBank": 91,
+          "metaspriteHash": "63521d9054d2e460",
+          "graphicsHash": "7546a42440d04524",
+          "sourceProvenanceHash": "4e2563287deadba4",
+          "trimmedPixelHash": "5dca1c0efb2f22b0"
+        },
+        {
+          "physicalId": "rom-p2a-g5b-r2c-vf02-msb2d53f54-gfx7a4dc64e",
+          "file": "physical/rom-p2a-g5b-r2c-vf02-msb2d53f54-gfx7a4dc64e.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 2,
+          "actorVisualProfileKey": 42,
+          "graphicsBank": 91,
+          "metaspriteHash": "b2d53f545f9cdcd1",
+          "graphicsHash": "7a4dc64e7a4ea60d",
+          "sourceProvenanceHash": "e1a25f195bffcda6",
+          "trimmedPixelHash": "9b59f94f9aba2fb9"
+        },
+        {
+          "physicalId": "rom-p2a-g5b-r2c-vf03-msf56ddc76-gfx7be8694b",
+          "file": "physical/rom-p2a-g5b-r2c-vf03-msf56ddc76-gfx7be8694b.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 3,
+          "actorVisualProfileKey": 42,
+          "graphicsBank": 91,
+          "metaspriteHash": "f56ddc760ce341fa",
+          "graphicsHash": "7be8694b8c1889f1",
+          "sourceProvenanceHash": "5086fe1cc0589197",
+          "trimmedPixelHash": "ae84ca05e1668340"
         }
       ],
-      "signedNegativeInstances": 32,
-      "minOffset": -9,
+      "signedNegativeInstances": 78,
+      "minOffset": -16,
       "maxOffset": 5,
       "minWidth": 32,
       "maxWidth": 32,
@@ -10408,16 +12943,18 @@
     {
       "formId": "ginyu_goku",
       "actorVisualProfileKey": 43,
-      "physicalFrames": 13,
-      "frameInstances": 62,
-      "sequences": 8,
+      "physicalFrames": 17,
+      "frameInstances": 124,
+      "sequences": 10,
       "resources": [
         "0x00",
-        "0x03"
+        "0x03",
+        "0x2c"
       ],
       "resourceFrameInstances": {
         "0x00": 14,
-        "0x03": 48
+        "0x03": 48,
+        "0x2c": 62
       },
       "resourceProfileBlocked": [],
       "transparentFrameRecords": [],
@@ -10590,10 +13127,62 @@
           "graphicsHash": "ed87a27b94925dc5",
           "sourceProvenanceHash": "3e2d1c440a345f8b",
           "trimmedPixelHash": "d4ac5c0bae94ac03"
+        },
+        {
+          "physicalId": "rom-p2b-g5c-r2c-vf00-ms88cb7910-gfx283cd02b",
+          "file": "physical/rom-p2b-g5c-r2c-vf00-ms88cb7910-gfx283cd02b.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 0,
+          "actorVisualProfileKey": 43,
+          "graphicsBank": 92,
+          "metaspriteHash": "88cb7910858e95aa",
+          "graphicsHash": "283cd02b12e7ecdd",
+          "sourceProvenanceHash": "ac0660d258099e23",
+          "trimmedPixelHash": "6aa727bec8958b35"
+        },
+        {
+          "physicalId": "rom-p2b-g5c-r2c-vf01-ms63521d90-gfx81d5a29e",
+          "file": "physical/rom-p2b-g5c-r2c-vf01-ms63521d90-gfx81d5a29e.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 1,
+          "actorVisualProfileKey": 43,
+          "graphicsBank": 92,
+          "metaspriteHash": "63521d9054d2e460",
+          "graphicsHash": "81d5a29e49ec1a41",
+          "sourceProvenanceHash": "3819082831b6fb50",
+          "trimmedPixelHash": "69c50e3493182706"
+        },
+        {
+          "physicalId": "rom-p2b-g5c-r2c-vf02-msb2d53f54-gfxa41f5f73",
+          "file": "physical/rom-p2b-g5c-r2c-vf02-msb2d53f54-gfxa41f5f73.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 2,
+          "actorVisualProfileKey": 43,
+          "graphicsBank": 92,
+          "metaspriteHash": "b2d53f545f9cdcd1",
+          "graphicsHash": "a41f5f73e630f898",
+          "sourceProvenanceHash": "86761b7bb1eef665",
+          "trimmedPixelHash": "5deb6d95a0b2eef6"
+        },
+        {
+          "physicalId": "rom-p2b-g5c-r2c-vf03-msf56ddc76-gfx2c8d467a",
+          "file": "physical/rom-p2b-g5c-r2c-vf03-msf56ddc76-gfx2c8d467a.png",
+          "resourceId": 44,
+          "resourceHex": "0x2c",
+          "visualFrameId": 3,
+          "actorVisualProfileKey": 43,
+          "graphicsBank": 92,
+          "metaspriteHash": "f56ddc760ce341fa",
+          "graphicsHash": "2c8d467ac60554b5",
+          "sourceProvenanceHash": "f7aefec67827da73",
+          "trimmedPixelHash": "8ca9d0278a2632fa"
         }
       ],
-      "signedNegativeInstances": 32,
-      "minOffset": -9,
+      "signedNegativeInstances": 78,
+      "minOffset": -16,
       "maxOffset": 5,
       "minWidth": 32,
       "maxWidth": 32,
