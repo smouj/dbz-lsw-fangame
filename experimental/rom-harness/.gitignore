@@ -1,0 +1,18 @@
+# ROMs y artefactos de emulación — NUNCA commitear
+*.gb
+*.gbc
+*.sav
+*.state
+*.sav.*
+
+# Build Emscripten / WASM
+core/build/
+core/*.wasm
+core/*.js
+*.o
+*.bc
+
+# Fixtures locales de ROM (se cargan vía File API o ruta gitignored)
+fixtures/*.gb
+fixtures/*.gbc
+fixtures/*.sav
