@@ -1155,6 +1155,19 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit, onRemat
   const romAdapterRef = useRef<ProductionRomPresentationAdapter | null>(null);
   const romPlayerRef = useRef<RomPresentationPlayer | null>(null);
   const presentationSourceRef = useRef<'ROM' | 'LEGACY'>('LEGACY');
+
+  // P0 ROM TICKS Browser Validation: expose actor state to window for diagnostic page
+  useEffect(() => {
+    const bridge = {
+      getPresentation: () => pixiPresRef.current,
+      getActors: () => pixiPresRef.current?.inspectActors() ?? { left: null, right: null },
+      getRomAdapter: () => romAdapterRef.current,
+      getRuntime: () => runtimeRef.current,
+    };
+    (window as any).__ROM_TICKS_BRIDGE__ = bridge;
+    return () => { delete (window as any).__ROM_TICKS_BRIDGE__; };
+  }, []);
+
   // ─── Depurador cinematográfico (?debugCinematics=1) ───
   const [debugCin, setDebugCin] = useState<CinematicDebugInfo | null>(null);
   const [debugPaused, setDebugPaused] = useState(false);
@@ -1268,7 +1281,8 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit, onRemat
     // (BEAM_BASE $02 / STANDARD_DAMAGE $0A), Pixi se gobierna por cues ROM
     // (NO por profileFor/applyCinematicEvent). El DOM legacy sigue en paralelo
     // y es quien dispara onDone (se retirará en (b)).
-    const romRoute = pixiPres ? romPresentationTimelineForCard(card, side) : null;
+    const actorFormId = side === 'player' ? activePlayerFormId : enemyFormId;
+    const romRoute = pixiPres ? romPresentationTimelineForCard(card, side, actorFormId) : null;
     const useRomPixi = !!romRoute;
     presentationSourceRef.current = useRomPixi ? 'ROM' : 'LEGACY';
     if (pixiPres) {
@@ -1751,6 +1765,8 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit, onRemat
     (PREP_PHASES.find(ph => pf < ph.until) ?? PREP_PHASES[PREP_PHASES.length - 1]).pose;
 
   const startStageAttack = (card: CardDef) => {
+    // ── STAGE DEBUG: trace lifecycle ──
+    console.log('[STAGE DEBUG] startStageAttack called', { card: card.name, phase, cc: player.cc });
     // M8.C2 — el QTE vive en el ENGINE (estado autoritativo). El legacy
     // genera la secuencia con la MISMA fuente (stageSequences.ts, pool por
     // nivel + ventana por profundidad) y la SINCRONIZA al engine: los
@@ -1796,6 +1812,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit, onRemat
   // propia ventana corta de ENTER COMMAND (A≈0.4s / B≈0.15s, HYPOTHESIS).
   useEffect(() => {
     if (phase !== 'stageInput') return;
+    console.log('[STAGE DEBUG] rAF useEffect started', { phase, qteState: stageQteRef.current?.state });
     let raf = 0;
     let last = performance.now();
     qteDebugRef.current.stepFrames = 0; // limpia steps residuales de otro QTE
@@ -1819,6 +1836,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit, onRemat
         setStageQte(prev => ({ ...prev, prepFrames: pf }));
         if (pf >= STAGE_PREP_TICKS) {
           acc = 0;
+          console.log('[STAGE DEBUG] PREPARING → INPUT_WINDOW transition', { pf, STAGE_PREP_TICKS, acc, state: 'INPUT_WINDOW' });
           setStageQte(prev => ({ ...prev, state: 'INPUT_WINDOW', prepFrames: STAGE_PREP_TICKS, elapsedFrames: 0 }));
           Sfx.confirm();
           addLog('Stage Attack — ¡inputs!');
@@ -3757,13 +3775,6 @@ function MainMenu({ onNavigate }: { onNavigate: (s: Screen) => void }) {
   return (
     <div className="menu-screen">
       <div className="menu-bg" />
-      <div className="menu-bolts" aria-hidden="true">
-        <svg viewBox="0 0 320 180" preserveAspectRatio="none">
-          <polyline className="bolt bolt-1" points="300,8 178,82 232,86 96,158 128,160 44,176" />
-          <polyline className="bolt bolt-2" points="306,64 244,116 262,118 196,164" />
-          <polyline className="bolt bolt-3" points="252,18 196,64 214,66 150,118" />
-        </svg>
-      </div>
       {/* Recompensa post-batalla */}
       {reward && reward.length > 0 && (
         <div className="reward-overlay">

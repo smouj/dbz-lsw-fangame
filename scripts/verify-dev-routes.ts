@@ -59,6 +59,8 @@ if (!typeMatch) {
 // ── 3. Paridad de parsing del hash (guiones soportados) ──
 check('dev-routes: route.ts parsea #dev/ con guiones', route.includes('[a-z-]+'));
 check('dev-routes: DevStudio.tsx parsea #dev/ con guiones', studio.includes('[a-zA-Z-]+'));
+check('dev-routes: #dev limpio abre dashboard', studio.includes("window.location.hash === '#dev'") && studio.includes("return 'dashboard'"));
+check('dev-routes: initialDevModule fallback dashboard', route.includes("return m ? m[1] : 'dashboard'"));
 
 // ── 4. Render switch cubre los 22 ──
 const renderCovers = CANONICAL.every(id => studio.includes(`module === '${id}'`));

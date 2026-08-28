@@ -20,6 +20,7 @@ import type { BattlePresentation, BattleScene } from './BattlePresentation';
 import { resolveProjectileVisualMode, type ProjectileVisualMode } from './projectileVisual';
 import { RomDisplayPresenter } from '../../../battle/romDisplay/RomDisplayPresenter';
 import { RomDisplayLayer } from '../../../battle/romDisplay/RomDisplayLayer';
+import { CameraPresenter } from './CameraPresenter';
 
 export interface PixiPresentationConfig {
   playerFormId: string;
@@ -39,6 +40,11 @@ export class PixiBattlePresentation implements BattlePresentation {
 
   private leftActor: FighterActor | null = null;
   private rightActor: FighterActor | null = null;
+
+  /** P0 ROM TICKS: devuelve el estado actual de ambos actores para diagnóstico. */
+  inspectActors(): { left: FighterActor | null; right: FighterActor | null } {
+    return { left: this.leftActor, right: this.rightActor };
+  }
   private attacker: BattleSide = 'left';
   private projectile: Graphics | null = null;
   private projectileMode: ProjectileVisualMode = 'special';
@@ -49,6 +55,9 @@ export class PixiBattlePresentation implements BattlePresentation {
   private readonly romDisplayPresenter: RomDisplayPresenter;
   private readonly romDisplayLayer: RomDisplayLayer;
 
+  // P0 CAMERA PRESENTER — autoridad ÚNICA de cámara/pantalla.
+  private readonly cameraPresenter: CameraPresenter;
+
   // Rush: movimiento del atacante calculado como f(tick − rushStartTick).
   private rushActive = false;
   private rushStartTick = 0;
@@ -56,12 +65,24 @@ export class PixiBattlePresentation implements BattlePresentation {
   private rushFromX = 0;
   private rushToX = 0;
 
+  // P0 SCENE-CAMERA — ROM discrete motion: position = start + dxPerTick * elapsed.
+  // Replaces easeOutCubic rush for ROM-compiled cards.
+  private romMotionActive = false;
+  private romMotionTargetActor = true; // true = actor, false = target
+  private romMotionStartTick = 0;
+  private romMotionFromX = 0;
+  private romMotionDxPerTick = 0;
+  private romMotionDuration = 0;
+  private romMotionHoldTicks = 0;
+  private romMotionDone = false;
+
   constructor(renderer: BattleRenderer, cfg: PixiPresentationConfig) {
     this.renderer = renderer;
     this.cfg = cfg;
     this.scale = cfg.scale ?? 3;
     this.romDisplayPresenter = new RomDisplayPresenter();
     this.romDisplayLayer = new RomDisplayLayer(this.romDisplayPresenter, this.scale);
+    this.cameraPresenter = new CameraPresenter();
   }
 
   /** Carga fondos, overworld y luchadores; deja el plano en FIELD. */
@@ -143,6 +164,8 @@ export class PixiBattlePresentation implements BattlePresentation {
   moveActor(durationTicks: number): void {
     const a = this.actor;
     if (!a) return;
+    // P0 SCENE-CAMERA: Si hay ROM motion activo, no sobreescribir con legacy rush.
+    if (this.romMotionActive) return;
     const fromX = this.renderer.sceneDirector.action.actorHomeX();
     const toX = this.renderer.sceneDirector.action.targetHomeX();
     const dir = toX > fromX ? 1 : -1;
@@ -153,6 +176,53 @@ export class PixiBattlePresentation implements BattlePresentation {
     this.rushFromX = fromX;
     this.rushToX = endX;
     a.setPos(fromX, ACTION_GROUND_Y);
+  }
+
+  /** P0 SCENE-CAMERA — ROM discrete motion: dxPerTick * elapsed, no easing. */
+  moveActorByRomMotion(deltaPx: number, durationTicks: number, holdTicks: number): void {
+    this.cancelRush(); // ROM motion supersedes legacy rush
+    const a = this.actor;
+    if (!a) return;
+    this.romMotionActive = true;
+    this.romMotionTargetActor = true;
+    this.romMotionStartTick = this.renderer.currentTick;
+    this.romMotionFromX = this.renderer.sceneDirector.action.actorHomeX();
+    this.romMotionDxPerTick = durationTicks > 0 ? deltaPx / durationTicks : 0;
+    this.romMotionDuration = durationTicks;
+    this.romMotionHoldTicks = holdTicks;
+    this.romMotionDone = false;
+    a.setPos(this.romMotionFromX, ACTION_GROUND_Y);
+  }
+
+  /** P0 SCENE-CAMERA — ROM discrete motion for target (CHARA_EXIT/ENTRY). */
+  moveTargetByRomMotion(deltaPx: number, durationTicks: number, holdTicks: number): void {
+    this.cancelRush();
+    const t = this.target;
+    if (!t) return;
+    this.romMotionActive = true;
+    this.romMotionTargetActor = false;
+    this.romMotionStartTick = this.renderer.currentTick;
+    this.romMotionFromX = this.renderer.sceneDirector.action.targetHomeX();
+    this.romMotionDxPerTick = durationTicks > 0 ? deltaPx / durationTicks : 0;
+    this.romMotionDuration = durationTicks;
+    this.romMotionHoldTicks = holdTicks;
+    this.romMotionDone = false;
+    t.setPos(this.romMotionFromX, ACTION_GROUND_Y);
+  }
+
+  /** P0 CAMERA PRESENTER — SCREEN_MOTION $0E: discrete screen displacement. */
+  applyScreenMotion(dxPerTick: number, durationTicks: number, restore: boolean): void {
+    this.cameraPresenter.applyScreenMotion(this.renderer.currentTick, dxPerTick, durationTicks, restore);
+  }
+
+  /** P0 CAMERA PRESENTER — SCREEN_RESTORE $0F: restore to base position. */
+  applyScreenRestore(): void {
+    this.cameraPresenter.applyScreenRestore();
+  }
+
+  /** P0 CAMERA PRESENTER — SCREEN_PATH $11: ROM screen path program. */
+  applyScreenPath(pathId: number | null, durationTicks: number): void {
+    this.cameraPresenter.applyScreenPath(this.renderer.currentTick, pathId, durationTicks);
   }
 
   spawnProjectile(kind: string, timing?: { spawnTick: number; contactTick: number }): void {
@@ -223,6 +293,7 @@ export class PixiBattlePresentation implements BattlePresentation {
     this.renderer.sceneDirector.setScene('FIELD');
     this.clearProjectile();
     this.cancelRush();
+    this.cameraPresenter.reset();
     this.leftActor?.setFlash(0);
     this.rightActor?.setFlash(0);
     this.leftActor?.setPose('idle', this.renderer.currentTick);
@@ -231,18 +302,50 @@ export class PixiBattlePresentation implements BattlePresentation {
     this.rightActor?.setPos(ACTION_RIGHT_X, ACTION_GROUND_Y);
   }
 
+  applyFrameOffset(offsetX: number, offsetY: number): void {
+    this.leftActor?.applyFrameOffset(offsetX, offsetY);
+  }
+
   sync(tick: number): void {
     this.renderer.sync(tick);
 
     // V7.8 — ROM display layer: sincroniza el estado del Presenter con Pixi.
     this.romDisplayLayer.sync(tick);
 
+    // P0 CAMERA PRESENTER — camera authority computes final screen position.
+    // ImpactSystem shake → transient offset, CameraPresenter adds ROM screen offset.
+    const impactSnap = this.renderer.impactSystem.snapshot(this.renderer.currentTick);
+    this.cameraPresenter.setTransientOffset(impactSnap.shakeX, impactSnap.shakeY);
+    const cameraSnap = this.cameraPresenter.compute(this.renderer.currentTick);
+    this.renderer.world.position.set(cameraSnap.screenX, cameraSnap.screenY);
+
     if (this.projectile && this.projectileSpawnTick != null && this.projectileContactTick != null) {
       const duration = Math.max(1, this.projectileContactTick - this.projectileSpawnTick);
       this.setProjectileProgress((this.renderer.currentTick - this.projectileSpawnTick) / duration);
     }
     // Rush: position = f(tick − rushStartTick) — determinista a cualquier Hz.
-    if (this.rushActive) {
+    // P0 SCENE-CAMERA: ROM discrete motion takes priority over legacy rush.
+    if (this.romMotionActive) {
+      const who = this.romMotionTargetActor ? this.actor : this.target;
+      if (who) {
+        const elapsed = this.renderer.currentTick - this.romMotionStartTick;
+        if (!this.romMotionDone) {
+          if (elapsed <= this.romMotionDuration) {
+            // Motion phase: discrete displacement per tick
+            const x = this.romMotionFromX + this.romMotionDxPerTick * elapsed;
+            who.setPos(Math.round(x), ACTION_GROUND_Y);
+          } else {
+            // Hold phase: stay at final position
+            const finalX = this.romMotionFromX + this.romMotionDxPerTick * this.romMotionDuration;
+            who.setPos(Math.round(finalX), ACTION_GROUND_Y);
+            if (elapsed > this.romMotionDuration + this.romMotionHoldTicks) {
+              this.romMotionDone = true;
+              this.romMotionActive = false;
+            }
+          }
+        }
+      }
+    } else if (this.rushActive) {
       const a = this.actor;
       if (a) {
         const p = this.rushDuration > 0
@@ -264,6 +367,7 @@ export class PixiBattlePresentation implements BattlePresentation {
     this.renderer.sync(0);
     this.clearProjectile();
     this.cancelRush();
+    this.cameraPresenter.reset();
     this.leftActor?.setFlash(0);
     this.rightActor?.setFlash(0);
     this.leftActor?.setPose('idle', 0);
@@ -283,6 +387,7 @@ export class PixiBattlePresentation implements BattlePresentation {
     actor: { pose: string | null; frame: number; x: number; y: number; visible: boolean } | null;
     target: { pose: string | null; frame: number; x: number; y: number; visible: boolean } | null;
     romDisplay: RomDisplayPresenter['state'];
+    camera: ReturnType<CameraPresenter['state']>;
   } {
     const a = this.actor;
     const t = this.target;
@@ -292,6 +397,7 @@ export class PixiBattlePresentation implements BattlePresentation {
       actor: a ? { pose: a.pose, frame: a.frameIndex, x: a.position.x, y: a.position.y, visible: a.visible } : null,
       target: t ? { pose: t.pose, frame: t.frameIndex, x: t.position.x, y: t.position.y, visible: t.visible } : null,
       romDisplay: this.romDisplayPresenter.state,
+      camera: this.cameraPresenter.state(),
     };
   }
 
@@ -312,6 +418,12 @@ export class PixiBattlePresentation implements BattlePresentation {
     this.rushDuration = 0;
     this.rushFromX = 0;
     this.rushToX = 0;
+    this.romMotionActive = false;
+    this.romMotionDone = false;
+    this.romMotionStartTick = 0;
+    this.romMotionDxPerTick = 0;
+    this.romMotionDuration = 0;
+    this.romMotionHoldTicks = 0;
   }
 
   /**

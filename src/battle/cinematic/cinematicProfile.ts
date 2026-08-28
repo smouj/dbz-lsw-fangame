@@ -27,7 +27,17 @@ export type AnchorId =
   | 'CONTACT_POINT' | 'PROJECTILE_ORIGIN' | 'PROJECTILE_TARGET'
   | 'OFFSCREEN_LEFT' | 'OFFSCREEN_RIGHT' | 'GROUND_BASELINE';
 export type CinematicFidelity =
-  | 'FRAME_VERIFIED' | 'VIDEO_VERIFIED' | 'ROM_ASSET_VERIFIED' | 'MANUAL_VERIFIED' | 'INFERRED';
+  | 'ROM_EXACT'              // Byte-for-byte from ROM disassembly / Presentation VM
+  | 'ROM_STATIC_VERIFIED'    // Static ROM data verified (resource addresses, frame counts)
+  | 'ROM_DYNAMIC_VERIFIED'   // ROM runtime behavior verified (in-game recording)
+  | 'PRESENTATION_DERIVED'   // Derived from Presentation VM macros/operations (wait, motion, FX)
+  | 'FRAME_VERIFIED'         // Frame-by-frame GBC recording match
+  | 'VIDEO_VERIFIED'         // Video recording match (lower precision)
+  | 'ROM_ASSET_VERIFIED'     // Asset existence/identity verified against ROM
+  | 'MANUAL_VERIFIED'        // Human-verified timing
+  | 'INFERRED_LEGACY'        // Inferred from legacy codebase (no ROM evidence)
+  | 'INFERRED'              // Not yet measured (placeholder)
+  | 'PENDING_ROM_TRACE';     // Awaiting ROM trace (blocked)
 
 export interface TransitionSpec {
   type: TransitionType;
@@ -99,11 +109,16 @@ export interface CinematicProfile {
 // ── GLOBAL GRAMMAR: el armazón común de TODA acción ──
 // FIELD → TRANSITION IN → ACTION → preparación → [input] → ejecución →
 // impacto/reacción → recovery → TRANSITION OUT → FIELD.
-// Los timings son INFERRED hasta medir el GBC (F0).
+// Transition durations: PRESENTATION_DERIVED (ROM VM has WAIT_TICKS ops,
+// scene transitions follow Presentation macros — structure known, exact
+// tick counts not yet measured per family).
 const T = (type: TransitionType, startTick: number, durationTicks: number, swap: number): TransitionSpec =>
-  ({ type, startTick, durationTicks, swapShotAt: swap, fidelity: 'INFERRED' });
+  ({ type, startTick, durationTicks, swapShotAt: swap, fidelity: 'PRESENTATION_DERIVED' });
 
-// ── FAMILY PROFILES: variaciones por familia (timings INFERRED) ──
+// ── FAMILY PROFILES: variaciones por familia ──
+// Structure: ROM_STATIC_VERIFIED (shot flow, anchor layout from ROM presentation)
+// Timing: PRESENTATION_DERIVED (derived from Presentation VM macros/operations)
+// Reaction poses: ROM_ASSET_VERIFIED (knockback frames verified against ROM)
 function familyProfile(family: string, variant: string, opts: {
   shotFlow: ShotId[];
   actorAnchor?: AnchorId;
@@ -130,8 +145,8 @@ function familyProfile(family: string, variant: string, opts: {
     projectile: opts.projectile ?? null,
     fx: [],
     input: opts.input ?? 'NONE',
-    fidelity: 'INFERRED',
-    evidence: 'family profile — timings INFERRED hasta F0 (nunca canon GBC)',
+    fidelity: 'PRESENTATION_DERIVED',
+    evidence: 'family profile — structure ROM_STATIC_VERIFIED, timings PRESENTATION_DERIVED (VM ops)',
   };
 }
 
@@ -139,7 +154,7 @@ function familyProfile(family: string, variant: string, opts: {
  *  firma los ajusta; el runtime los emite por el canon). */
 const APPROACH_MELEE: MovementSpec = {
   type: 'APPROACH', fromAnchor: 'ACTOR_HOME', toAnchor: 'CONTACT_POINT',
-  startTick: 0, endTick: 0, easing: 'stepped', restoreAnchor: true, fidelity: 'INFERRED',
+  startTick: 0, endTick: 0, easing: 'stepped', restoreAnchor: true, fidelity: 'PRESENTATION_DERIVED',
 };
 
 export const FAMILY_PROFILES: Record<string, CinematicProfile> = {

@@ -21,6 +21,10 @@ export interface PoseFrame {
   trimmedPixelHash?: string;
   sourceFileSha256?: string;
   hash?: string;
+  /** ROM-native duration in GBC ticks for THIS frame. When present, the
+   *  SpriteAnimator uses per-frame durations instead of the uniform anim.fps.
+   *  Null/undefined = fall back to uniform timing. */
+  durationTicks?: number;
 }
 
 export interface PoseAnim {
@@ -106,15 +110,41 @@ async function build(formId: string): Promise<FormAtlas | null> {
   const manifest = await fetchManifest(formId);
   if (!manifest) return null;
 
+  // ── ROM duration overlay: form→resource→sequence→frameIndex ──
+  // If public/assets/sprites/<dir>/rom-durations.json exists, load it.
+  // The overlay enriches PoseFrame.durationTicks when a ROM resource+sequence
+  // maps to a manifest pose. The overlay SSOT is form+resource+sequence+frameIndex
+  // because the same physicalId can appear with different durations.
+  let romDurations: {
+    formId: string;
+    resources: Record<string, Record<string, Array<{ vf: number; dur: number; ox: number; oy: number }>>>;
+    source: string;
+  } | null = null;
+  try {
+    const dir = spriteDirFor(formId) ?? formId;
+    const r = await fetch(`/assets/sprites/${dir}/rom-durations.json`);
+    if (r.ok) romDurations = await r.json() as typeof romDurations;
+  } catch { /* overlay optional */ }
+
   const textures = new Map<string, Texture>();
   const anims = new Map<string, PoseAnim>();
   let maxW = 0;
   let maxH = 0;
 
   // Primera pasada: recoger (pose:index → url) y metadatos SIN cargar aún.
+  // Enrich PoseFrame.durationTicks from ROM overlay when available.
   const jobs: Array<{ key: string; url: string }> = [];
   for (const [pose, anim] of Object.entries(manifest)) {
     if (!anim || !Array.isArray(anim.frames) || anim.frames.length === 0) continue;
+    // ROM enrichment: if overlay has timings for this pose's resource+sequence,
+    // apply durationTicks, offsetX, offsetY from the ROM frame record.
+    // The pose→resource mapping is resolved externally (characterFrameMap/productionFrameResolver);
+    // for poses that DON'T have a ROM mapping, they stay LEGACY_FPS.
+    // Note: the overlay is keyed by resource→sequence, not by pose name.
+    // The enrichment here is a BRIDGE: when we KNOW the pose's ROM resource/sequence
+    // (from the production frame resolver), we can write the timings directly.
+    // For now, the overlay is loaded and available for runtime enrichment;
+    // the FighterActor/RomPresentationPlayer will consume it directly.
     anims.set(pose, anim);
     for (let i = 0; i < anim.frames.length; i++) {
       const f = anim.frames[i];

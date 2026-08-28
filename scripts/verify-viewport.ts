@@ -58,7 +58,8 @@ check('R5: 10 presets definidos en la matriz de verificación', VIEWPORT_PRESETS
 check('R5: layout interno usa cq* (independiente del navegador)',
   /--battle-chibi-size:\s*10cqw/.test(css) && /17\.5cqh/.test(css));
 check('R1: App envuelta en <GameViewport>',
-  /<GameViewport>[\s\S]*<AppInner \/>[\s\S]*<\/GameViewport>/.test(mainTsx));
+  /return \(\s*<GameViewport>[\s\S]*<\/GameViewport>\s*\);\s*\}\s*\n\s*export default function App/.test(mainTsx)
+  || /<GameViewport>[\s\S]*<AppInner \/>[\s\S]*<\/GameViewport>/.test(mainTsx));
 check('R2: tokens cq canónicos definidos (--battle-chibi-size, --battle-controls-h)',
   /--battle-chibi-size:\s*10cqw/.test(css) && /--battle-controls-h:\s*clamp\(104px, 17\.5cqh, 136px\)/.test(css));
 

@@ -15,8 +15,9 @@
 import { Container, Sprite, Texture } from 'pixi.js';
 import { facingFlip, type BattleSide } from '../../../data/facing';
 import { resolveCombatPose } from '../../../battle/spriteConfig';
-import { currentFrame } from '../systems/SpriteAnimator';
+import { currentFrame, detectTimingSource } from '../systems/SpriteAnimator';
 import type { FormAtlas, PoseAnim } from '../assets/AtlasLoader';
+import type { TimingSource } from '../../../battle/romTimedFrameInstance';
 
 function resolvePose(atlas: FormAtlas, pose: string): string | null {
   return resolveCombatPose(pose, p => atlas.anims.has(p));
@@ -32,6 +33,9 @@ export class FighterActor extends Container {
   private anim: PoseAnim | null = null;
   private poseStartTick = 0;
   private lastFrameIndex = 0;
+  private _timingSource: TimingSource = 'LEGACY_FPS';
+  private _frameOffsetX = 0;
+  private _frameOffsetY = 0;
   private baseFlip = 1;
   private scaleMag = 1;
 
@@ -68,6 +72,44 @@ export class FighterActor extends Container {
     return this.lastFrameIndex;
   }
 
+  /** Fuente de timing: ROM_TICKS (durationTicks per frame) o LEGACY_FPS (uniform). */
+  get timingSource(): TimingSource {
+    return this._timingSource;
+  }
+
+  /** Aplica offset ROM-native al frame actual. Viene del MISMO frame record
+   *  que durationTicks — nunca timing de ROM y offset de manifest. */
+  applyFrameOffset(offsetX: number, offsetY: number): void {
+    this._frameOffsetX = offsetX;
+    this._frameOffsetY = offsetY;
+    this.applyTransform();
+  }
+
+  /** P0 ROM TICKS: devuelve el estado interno para diagnóstico en browser. */
+  inspect(): {
+    formId: string;
+    pose: string | null;
+    frameIndex: number;
+    timingSource: TimingSource;
+    poseStartTick: number;
+    frameOffsetX: number;
+    frameOffsetY: number;
+    animFrames: number;
+    animDurations: number[];
+  } {
+    return {
+      formId: this.formId,
+      pose: this.activePose,
+      frameIndex: this.lastFrameIndex,
+      timingSource: this._timingSource,
+      poseStartTick: this.poseStartTick,
+      frameOffsetX: this._frameOffsetX,
+      frameOffsetY: this._frameOffsetY,
+      animFrames: this.anim?.frames.length ?? 0,
+      animDurations: this.anim?.frames.map(f => f.durationTicks ?? 0) ?? [],
+    };
+  }
+
   setFlip(side: BattleSide): void {
     this.baseFlip = facingFlip(this.formId, side);
     this.applyTransform();
@@ -101,11 +143,13 @@ export class FighterActor extends Container {
     return this.atlas.textures.get(`${pose}:${index}`) ?? null;
   }
 
-  /** Cambia la pose en el tick absoluto `absTick` (reloj de la pose a cero). */
+  /** Cambia la pose en el tick absoluto `absTick` (reloj de la pose a cero).
+   *  Detecta automáticamente ROM_TICKS vs LEGACY_FPS según durationTicks. */
   setPose(pose: string, absTick: number): void {
     const resolved = resolvePose(this.atlas, pose);
     this.activePose = resolved;
     this.anim = resolved ? (this.atlas.anims.get(resolved) ?? null) : null;
+    this._timingSource = this.anim ? detectTimingSource(this.anim) : 'LEGACY_FPS';
     this.poseStartTick = absTick;
     this.applyTransform();
     this.applyFrame(Math.max(0, absTick - this.poseStartTick));
@@ -120,6 +164,10 @@ export class FighterActor extends Container {
     const sign = this.activePose === 'move_back' ? -this.baseFlip : this.baseFlip;
     this.sprite.scale.set(this.scaleMag * sign, this.scaleMag);
     this.flash.scale.set(this.scaleMag, this.scaleMag);
+    // ROM-native frame offset: applied alongside durationTicks from same record.
+    // This offset shifts the sprite relative to its ground-line anchor position.
+    this.sprite.x = this._frameOffsetX * sign;
+    this.sprite.y = this._frameOffsetY;
   }
 
   private applyFrame(elapsedTicks: number): void {

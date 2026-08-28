@@ -56,6 +56,45 @@ export interface BattlePresentation {
   returnToField(): void;
 
   /**
+   * Aplica offset ROM-native al frame actual del actor (desde ROM_PHYSICAL_FRAME).
+   * Los offsets (offsetX, offsetY) provienen del MISMO frame record ROM que
+   * durationTicks — nunca se obtiene timing de ROM y offsets de manifest.
+   */
+  applyFrameOffset(offsetX: number, offsetY: number): void;
+
+  /**
+   * P0 SCENE-CAMERA — Inicia el movimiento ROM discreto del actor.
+   * El desplazamiento se calcula por tick GBC: position = start + dxPerTick * elapsed.
+   * Reemplaza moveActor/easeOutCubic para cards compiladas por ROM.
+   * Si se llama, anula cualquier rush activo previo.
+   */
+  moveActorByRomMotion(deltaPx: number, durationTicks: number, holdTicks: number): void;
+
+  /**
+   * P0 SCENE-CAMERA — Inicia el movimiento ROM discreto del target.
+   * Para CHARA_EXIT/ENTRY del defensor y motions no-actor.
+   */
+  moveTargetByRomMotion(deltaPx: number, durationTicks: number, holdTicks: number): void;
+
+  /**
+   * P0 CAMERA PRESENTER — Aplica desplazamiento progresivo de pantalla
+   * (SCREEN_MOTION $0E). dxPerTick * elapsed, discrete, no easing.
+   */
+  applyScreenMotion(dxPerTick: number, durationTicks: number, restore: boolean): void;
+
+  /**
+   * P0 CAMERA PRESENTER — Restaura pantalla a posición base
+   * (SCREEN_RESTORE $0F). Limpia offsets ROM de pantalla.
+   */
+  applyScreenRestore(): void;
+
+  /**
+   * P0 CAMERA PRESENTER — Ejecuta path de pantalla ROM
+   * (SCREEN_PATH $11). Programa/path, no tween genérico.
+   */
+  applyScreenPath(pathId: number | null, durationTicks: number): void;
+
+  /**
    * Sincroniza la presentación al tick GBC ABSOLUTO `tick` (reloj único).
    * El frame mostrado es f(tick, poseStartTick) — determinista a cualquier Hz.
    */

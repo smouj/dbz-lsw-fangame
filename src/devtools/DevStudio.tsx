@@ -100,6 +100,7 @@ function initialModule(): DevModuleId {
   if (typeof window === 'undefined') return 'dashboard';
   const hashModule = moduleFromHash();
   if (hashModule) return hashModule;
+  if (window.location.hash === '#dev') return 'dashboard';
   const isPlainDevQuery = new URLSearchParams(window.location.search).has('dev')
     && (window.location.hash === '' || window.location.hash === '#dev');
   if (isPlainDevQuery) return 'dashboard';

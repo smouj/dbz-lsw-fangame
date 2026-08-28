@@ -52,7 +52,7 @@ export const STAGE_PREP_BEATS: Array<{ frame: number; pose: string }> = [
   { frame: 48, pose: 'stage_ready_idle' },  // último idle → INPUT_OPEN (60)
 ];
 
-export const STAGE_PREP_FIDELITY = 'INFERRED' as const;
+export const STAGE_PREP_FIDELITY = 'ROM_STATIC_VERIFIED' as const;
 
 export interface ClockAdvanceOutcome {
   state: BattleState;

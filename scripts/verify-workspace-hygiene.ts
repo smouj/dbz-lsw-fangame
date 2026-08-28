@@ -74,9 +74,9 @@ const requiredCanonFiles = [
 check('current physical-corpus canon files exist', requiredCanonFiles.every(file => existsSync(join(ROOT, file))), requiredCanonFiles.filter(file => !existsSync(join(ROOT, file))).join(', ') || 'all present');
 
 const physicalCorpusGenerated = readFileSync(join(ROOT, 'src/data/generated/romPhysicalCorpus.generated.ts'), 'utf8');
-check('current generated corpus exposes promoted totals 505/2374',
-  physicalCorpusGenerated.includes('"physicalIdentities": 505') &&
-  physicalCorpusGenerated.includes('"frameInstances": 2374') &&
+check('current generated corpus exposes promoted totals 809/5767',
+  physicalCorpusGenerated.includes('"physicalIdentities": 809') &&
+  physicalCorpusGenerated.includes('"frameInstances": 5767') &&
   physicalCorpusGenerated.includes('"transparentPhysicalIds": 7') &&
   physicalCorpusGenerated.includes('"transparentFrameRecords": 36'));
 

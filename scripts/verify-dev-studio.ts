@@ -146,9 +146,9 @@ check(`dev: el render switch cubre los ${EXPECTED_MODULES.length} módulos`, ren
   });
   check('cine: melee → familia melee + shotFlow FIELD→ACTION→ACTION_DUEL→FIELD',
     melee.family === 'melee' && melee.shotFlow.join('→') === 'FIELD→ACTION→ACTION_DUEL→FIELD');
-  check('cine: poses del perfil firma → ROM_ASSET_VERIFIED (manifest), timings INFERRED',
+  check('cine: poses del perfil firma → ROM_ASSET_VERIFIED (manifest), gramática PRESENTATION_DERIVED',
     melee.actorBeats.every(b => b.fidelity === 'ROM_ASSET_VERIFIED')
-    && melee.entryTransition.fidelity === 'INFERRED' && melee.fidelity === 'INFERRED');
+    && melee.entryTransition.fidelity === 'PRESENTATION_DERIVED' && melee.fidelity === 'PRESENTATION_DERIVED');
   check('cine: reacción del objetivo → knockback_back ROM_ASSET_VERIFIED',
     melee.reactionPose?.pose === 'knockback_back' && melee.reactionPose.fidelity === 'ROM_ASSET_VERIFIED');
   check('cine: sin rush declarado → STATIC (el APPROACH solo con evidencia)',

@@ -2,9 +2,15 @@
 import { FORMS } from '../src/data/roster';
 import { readFileSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
+import { ROM_PHYSICAL_CORPUS_SUMMARY } from '../src/data/generated/romPhysicalCorpus.generated';
 
 const ROOT = process.cwd();
 const sheetsDir = join(ROOT, 'public', 'assets', 'sheets');
+const romPhysicalComplete =
+  ROM_PHYSICAL_CORPUS_SUMMARY.totals.forms === 48
+  && ROM_PHYSICAL_CORPUS_SUMMARY.totals.formsIndexed === 48
+  && ROM_PHYSICAL_CORPUS_SUMMARY.totals.physicalIdentities === 809
+  && ROM_PHYSICAL_CORPUS_SUMMARY.totals.frameInstances === 5767;
 
 // Agrupar forms por sheet
 const bySheet: Record<string, string[]> = {};
@@ -32,9 +38,11 @@ for (const [sheet, forms] of Object.entries(bySheet)) {
   mf = Math.round(mf / forms.length);
   const ratio = mf ? jsonFrames / mf : 0;
   const png = existsSync(join(sheetsDir, sheet)) ? '✓' : '✗';
-  const flag = ratio < 0.85 ? ' ⚠️ FALTAN FRAMES' : '';
+  const flag = ratio < 0.85 ? (romPhysicalComplete ? ' ⚠️ LEGACY SHEET SUPERSEDIDA' : ' ⚠️ FALTAN FRAMES') : '';
   console.log(sheet.padEnd(30), forms.join(',').padEnd(30), png, String(jsonFrames).padEnd(6), String(mf).padEnd(8), ratio.toFixed(2), flag);
   if (ratio < 0.85) worst.push({ sheet, forms: forms.join(','), json: jsonFrames, manifest: mf, ratio });
 }
-console.log('\n=== SHEETS CON FALLOS (ratio < 0.85) ===', worst.length);
+console.log(romPhysicalComplete
+  ? '\n=== SHEETS LEGACY SUPERSEDIDAS POR CORPUS ROM FÍSICO (ratio < 0.85) ==='
+  : '\n=== SHEETS CON FALLOS (ratio < 0.85) ===', worst.length);
 for (const w of worst) console.log(w.sheet, '→', w.forms, `(${w.json}/${w.manifest})`);

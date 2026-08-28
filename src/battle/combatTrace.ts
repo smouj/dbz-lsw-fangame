@@ -209,7 +209,7 @@ export function runGoldenAction(id: GoldenActionId): RuntimeActionTrace {
   }
 
   // ROM route (C1.0 bridge) + card trace.
-  const cardTrace = card ? traceCardAction(card) : null;
+  const cardTrace = card ? traceCardAction(card, 'player', preset.playerFormId) : null;
   const romProfile = card ? romPresentationProfileForCard(card) : null;
 
   // LEGACY timeline (M7 buildPresentationTimeline vía runtime.timeline).

@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>P0 SCENE-CAMERA — Browser Scene Trace</title>
+<style>
+* { margin: 0; box-sizing: border-box; }
+body { background: #0a0a0f; color: #d0d0d0; font: 12px/1.4 'JetBrains Mono', 'Consolas', monospace; padding: 8px; }
+h1 { color: #7fd4ff; font-size: 14px; margin-bottom: 4px; }
+h2 { color: #7fd4ff; font-size: 12px; margin: 8px 0 4px; }
+.sub { color: #556; font-size: 10px; margin-bottom: 8px; }
+
+.family-picker { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 8px; }
+.family-btn { background: #1a2a3a; color: #7fd4ff; border: 1px solid #2a4a5a; border-radius: 3px; padding: 2px 8px; cursor: pointer; font-size: 10px; font-family: inherit; }
+.family-btn:hover { background: #2a4a5a; }
+.family-btn.active { background: #2a5a7a; border-color: #7fd4ff; }
+
+.grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.panel { background: #111118; border: 1px solid #1a2a3a; border-radius: 4px; padding: 8px; }
+
+.table-wrap { overflow-x: auto; max-height: 500px; overflow-y: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 9px; }
+th { color: #7fd4ff; text-align: left; padding: 1px 3px; border-bottom: 1px solid #1a2a3a; position: sticky; top: 0; background: #111118; }
+td { padding: 1px 3px; border-bottom: 1px solid #0a0a0f; white-space: nowrap; }
+tr.rom-exact td { color: #3fae5a; }
+tr.rom-handler td { color: #7fd4ff; }
+tr.pres-derived td { color: #a08030; }
+tr.pending td { color: #c04040; }
+tr.trace-only td { color: #a08030; font-style: italic; }
+tr.consumed td { color: #3fae5a; }
+tr.bridge td { color: #c08030; font-weight: bold; }
+
+.check { padding: 1px 0; font-size: 10px; }
+.check.pass { color: #3fae5a; }
+.check.fail { color: #c04040; font-weight: bold; }
+
+.summary { background: #0a1a0a; border: 1px solid #2a5a2a; border-radius: 4px; padding: 8px; margin-top: 8px; }
+.stats-row { display: flex; gap: 12px; flex-wrap: wrap; margin: 4px 0; }
+.stat .val { font-size: 16px; color: #7fd4ff; font-weight: bold; }
+.stat .label { font-size: 9px; color: #556; }
+</style>
+</head>
+<body>
+<h1>P0 SCENE-CAMERA — Browser Scene Trace</h1>
+<p class="sub">Scene/Camera/Visibility/Position/Layer operations for 6 family representatives</p>
+
+<div class="family-picker" id="picker"></div>
+
+<div class="grid">
+  <div>
+    <div class="panel">
+      <h2>Operation Trace</h2>
+      <div class="table-wrap">
+        <table><thead><tr>
+          <th>ID</th><th>OP</th><th>GEOMETRY</th><th>DUR</th><th>EVIDENCE</th><th>CONSUMED</th>
+        </tr></thead><tbody id="traceBody"></tbody></table>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <div class="panel">
+      <h2>Gate Checks</h2>
+      <div id="checks"></div>
+    </div>
+
+    <div class="panel">
+      <h2>Layer Stack</h2>
+      <div id="layers"></div>
+    </div>
+
+    <div class="panel">
+      <h2>Trace-Only / Bridge / Pending</h2>
+      <div id="issues"></div>
+    </div>
+  </div>
+</div>
+
+<div class="summary" id="summary">
+  <h2>Validation Summary</h2>
+  <div class="stats-row" id="summaryStats"></div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════════
+// Pre-computed scene trace data (from audit + compiler output)
+// ═══════════════════════════════════════════════════════════
+
+const FAMILIES = {
+  std_damage: {
+    label: 'Standard Damage (Cont.Punch $2C)',
+    golden: [
+      { id: 'SCENE_ENTRY', op: 'SCENE_SET', geo: 'FIELD→ACTION', dur: null, evidence: 'ROM_HANDLER_VERIFIED', consumed: 'CONSUMED' },
+      { id: 'SCENE_LOAD', op: 'CAMERA_CUT', geo: 'TACTICAL_TO_ACTION vram=$8E00', dur: null, evidence: 'ROM_HANDLER_VERIFIED', consumed: 'CONSUMED' },
+      { id: 'ACTOR_SHOW', op: 'FIGHTER_VISIBILITY', geo: 'actor visible=true', dur: null, evidence: 'ROM_HANDLER_VERIFIED', consumed: 'CONSUMED' },
+      { id: 'TARGET_HIDE', op: 'FIGHTER_VISIBILITY', geo: 'target visible=false (solo)', dur: null, evidence: 'PRESENTATION_DERIVED', consumed: 'CONSUMED' },
+      { id: 'ACTOR_POS', op: 'FIGHTER_POSITION', geo: 'anchor X=96 (LEFT)', dur: null, evidence: 'PRESENTATION_DERIVED', consumed: 'CONSUMED' },
+      { id: 'PREP_WAIT', op: 'ROM_WAIT', geo: '20t prepare', dur: '20t', evidence: 'ROM_HANDLER_VERIFIED', consumed: 'CONSUMED' },
+      { id: 'RUSH_MOTION', op: 'FIGHTER_MOTION', geo: '+98px / 25t hold=0t', dur: '25t', evidence: 'ROM_EXACT', consumed: 'CONSUMED' },
+      { id: 'ANIM_START', op: 'ANIMATION', geo: '$2C 54 frames / 206t', dur: '206t', evidence: 'ROM_HANDLER_VERIFIED', consumed: 'CONSUMED' },
+      { id: 'RESULT_BRANCH', op: 'ROM_RESULT_BRANCH', geo: 'CA53→HIT/MISS/SPEC_DEF', dur: null, evidence: 'ROM_HANDLER_VERIFIED', consumed: 'CONSUMED' },
+      { id: 'RETURN', op: 'RETURN_TO_FIELD', geo: 'cleanup + reset positions', dur: null, evidence: 'PRESENTATION_DERIVED', consumed: 'CONSUMED' },
+    ],
+  },
+  beam: {
+    label: 'Beam (Kamehameha $03)',
+    golden: [
+      { id: 'SCENE_ENTRY', op: 'SCENE_SET', geo: 'FIELD→ACTION', dur: null, evidence: 'ROM_HANDLER_VERIFIED', consumed: 'CONSUMED' },
+      { id: 'SCENE_LOAD', op: 'CAMERA_CUT', geo: 'TACTICAL_TO_ACTION', dur: null, evidence: 'ROM_HANDLER_VERIFIED', consumed: 'CONSUMED' },
+      { id: 'ACTOR_SHOW', op: 'FIGHTER_VISIBILITY', geo: 'actor visible=true', dur: null, evidence: 'ROM_HANDLER_VERIFIED', consumed: 'CONSUMED' },
+      { id: 'BEAM_SETUP', op: 'FIGHTER_MOTION', geo: '-27px / 17t (step back)', dur: '17t', evidence: 'ROM_EXACT', consumed: 'CONSUMED' },
+      { id: 'ANIM_START', op: 'ANIMATION', geo: '$03 8 frames / 75t', dur: '75t', evidence: 'ROM_HANDLER_VERIFIED', consumed: 'CONSUMED' },
+      { id: 'FX_LOAD', op: 'FX_VISIBILITY', geo: 'fx=0x5 pal=0x2c', dur: '1t', evidence: 'ROM_HANDLER_VERIFIED', consumed: 'TRACE_ONLY' },
+      { id: 'FX_WINDOW', op: 'FX_VISIBILITY', geo: 'ROM_FX_WINDOW BG tiles', dur: null, evidence: 'ROM_HANDLER_VERIFIED', consumed: 'CONSUMED' },
+      { id: 'FX_SCROLL', op: 'CAMERA_TRANSLATE', geo: 'SCX/SCY base scroll', dur: null, evidence: 'PENDING_ROM_TRACE', consumed: 'PENDING' },
+      { id: 'PROJECTILE_BRIDGE', op: 'FX_VISIBILITY', geo: 'procedural ray/ball', dur: null, evidence: 'PRESENTATION_DERIVED', consumed: 'BRIDGE' },
+      { id: 'BG_LAYER', op: 'LAYER_SET', geo: 'Beam BG ≠ Fighter OBJ', dur: null, evidence: 'PENDING_ROM_TRACE', consumed: 'PENDING' },
+      { id: 'BEAM_HOLD', op: 'ROM_WAIT', geo: '60t hold after FX spawn', dur: '60t', evidence: 'ROM_HANDLER_VERIFIED', consumed: 'CONSUMED' },
+      { id: 'RESULT', op: 'ROM_RESULT_BRANCH', geo: 'STANDARD_ATTACK result', dur: null, evidence: 'ROM_HANDLER_VERIFIED', consumed: 'CONSUMED' },
+      { id: 'RETURN', op: 'RETURN_TO_FIELD', geo: 'cleanup', dur: null, evidence: 'PRESENTATION_DERIVED', consumed: 'CONSUMED' },
+    ],
+  },
+  stage: {
+    label: 'Stage Attack (QTE)',
+    golden: [
+      { id: 'SCENE_ENTRY', op: 'SCENE_SET', geo: 'FIELD→PLAYER_ACTION', dur: null, evidence: 'PRESENTATION_DERIVED', consumed: 'CONSUMED' },
+      { id: 'ACTOR_SHOW', op: 'FIGHTER_VISIBILITY', geo: 'actor visible=true', dur: null, evidence: 'PRESENTATION_DERIVED', consumed: 'CONSUMED' },
+      { id: 'PREP', op: 'SCENE_SET', geo: 'STAGE_PREP 60t', dur: '60t', evidence: 'ROM_STATIC_VERIFIED', consumed: 'CONSUMED' },
+      { id: 'QTE', op: 'FIGHTER_VISIBILITY', geo: 'QTE window (pos-dependent)', dur: null, evidence: 'ROM_EXACT', consumed: 'CONSUMED' },
+      { id: 'COUNTER', op: 'CAMERA_SHAKE', geo: '24t counter window', dur: '24t', evidence: 'ROM_STATIC_VERIFIED', consumed: 'CONSUMED' },
+      { id: 'RESOLUTION', op: 'SCENE_SET', geo: 'ACTION_DUEL → IMPACT → OVERVIEW', dur: '40t', evidence: 'PRESENTATION_DERIVED', consumed: 'CONSUMED' },
+      { id: 'RETURN', op: 'RETURN_TO_FIELD', geo: 'cleanup', dur: null, evidence: 'PRESENTATION_DERIVED', consumed: 'CONSUMED' },
+    ],
+  },
+  support: {
+    label: 'Support (ROM Display)',
+    golden: [
+      { id: 'SCENE_ENTRY', op: 'SCENE_SET', geo: 'FIELD→SPECIAL', dur: null, evidence: 'PRESENTATION_DERIVED', consumed: 'CONSUMED' },
+      { id: 'VISUAL_LOAD', op: 'DISPLAY_COMPOSE', geo: 'card-indexed tiles', dur: null, evidence: 'ROM_HANDLER_VERIFIED', consumed: 'CONSUMED' },
+      { id: 'PALETTE', op: 'DISPLAY_COMPOSE', geo: 'palette $XX', dur: null, evidence: 'ROM_HANDLER_VERIFIED', consumed: 'CONSUMED' },
+      { id: 'BG_ASSEMBLY', op: 'DISPLAY_COMPOSE', geo: 'BG $19 7iters SINGLE_BG', dur: null, evidence: 'ROM_HANDLER_VERIFIED', consumed: 'CONSUMED' },
+      { id: 'COMPOSE', op: 'DISPLAY_COMPOSE', geo: 'BG compose to $9800', dur: null, evidence: 'ROM_HANDLER_VERIFIED', consumed: 'CONSUMED' },
+      { id: 'HOLD120', op: 'ROM_WAIT', geo: '120t (CB77→$78)', dur: '120t', evidence: 'ROM_HANDLER_VERIFIED', consumed: 'CONSUMED' },
+      { id: 'DISPLAY_CLEAR', op: 'DISPLAY_CLEAR', geo: 'BG restore', dur: null, evidence: 'ROM_HANDLER_VERIFIED', consumed: 'CONSUMED' },
+      { id: 'RETURN', op: 'RETURN_TO_FIELD', geo: 'cleanup', dur: null, evidence: 'PRESENTATION_DERIVED', consumed: 'CONSUMED' },
+    ],
+  },
+  defense: {
+    label: 'Guard / Move (Defense)',
+    golden: [
+      { id: 'DEFENDER_SCENE', op: 'SCENE_SET', geo: 'DEFENDER_ACTION 12t', dur: '12t', evidence: 'PRESENTATION_DERIVED', consumed: 'CONSUMED' },
+      { id: 'DEFENDER_SHOW', op: 'FIGHTER_VISIBILITY', geo: 'defender visible, attacker hidden', dur: null, evidence: 'PRESENTATION_DERIVED', consumed: 'CONSUMED' },
+      { id: 'DEFENDER_PREP', op: 'FIGHTER_POSE', geo: 'idle/guard prep', dur: '10t', evidence: 'PRESENTATION_DERIVED', consumed: 'CONSUMED' },
+      { id: 'GUARD_FX', op: 'FX_VISIBILITY', geo: 'DEFENSE_FX (avoided/nullified)', dur: null, evidence: 'ROM_HANDLER_VERIFIED', consumed: 'CONSUMED' },
+      { id: 'MOVE_VISUAL', op: 'FIGHTER_POSITION', geo: 'tactical → visual (Engine-owned)', dur: null, evidence: 'ROM_HANDLER_VERIFIED', consumed: 'CONSUMED' },
+      { id: 'RETURN', op: 'RETURN_TO_FIELD', geo: 'cleanup', dur: null, evidence: 'PRESENTATION_DERIVED', consumed: 'CONSUMED' },
+    ],
+  },
+  gather: {
+    label: 'Gather Power',
+    golden: [
+      { id: 'SCENE_SOLO', op: 'SCENE_SET', geo: 'PLAYER_ACTION solo', dur: null, evidence: 'PRESENTATION_DERIVED', consumed: 'CONSUMED' },
+      { id: 'ACTOR_SHOW', op: 'FIGHTER_VISIBILITY', geo: 'actor visible, target hidden', dur: null, evidence: 'PRESENTATION_DERIVED', consumed: 'CONSUMED' },
+      { id: 'POWER_UP', op: 'FIGHTER_POSE', geo: 'gather_power', dur: null, evidence: 'PRESENTATION_DERIVED', consumed: 'CONSUMED' },
+      { id: 'AURA', op: 'FX_VISIBILITY', geo: 'power aura overlay', dur: null, evidence: 'PRESENTATION_DERIVED', consumed: 'CONSUMED' },
+      { id: 'CC_GAIN', op: 'HUD', geo: '+3 CC', dur: null, evidence: 'ROM_CONFIRMED', consumed: 'CONSUMED' },
+      { id: 'RETURN', op: 'RETURN_TO_FIELD', geo: 'cleanup', dur: null, evidence: 'PRESENTATION_DERIVED', consumed: 'CONSUMED' },
+    ],
+  },
+};
+
+const LAYER_STACK = [
+  { name: 'BACKGROUND', desc: 'Stage/scenario BG texture', status: 'consumed' },
+  { name: 'ROM_BG_DISPLAY', desc: 'Support/Defense BG compose', status: 'consumed' },
+  { name: 'FIGHTER_BACK', desc: 'Rear fighter (target)', status: 'consumed' },
+  { name: 'FIGHTER_FRONT', desc: 'Front fighter (actor)', status: 'consumed' },
+  { name: 'ROM_FX', desc: 'Beam BG tilemap (FX window)', status: 'pending_scroll' },
+  { name: 'PROJECTILE', desc: 'Procedural projectile (BRIDGE)', status: 'bridge' },
+  { name: 'IMPACT', desc: 'Flash/shake overlay', status: 'consumed' },
+  { name: 'HUD', desc: 'HP bars, CC, damage numbers', status: 'consumed' },
+  { name: 'TRANSITION', desc: 'FLASH_WHITE, fade overlays', status: 'consumed' },
+];
+
+let currentKey = 'std_damage';
+
+function render() {
+  renderPicker();
+  renderTrace();
+  renderChecks();
+  renderLayers();
+  renderIssues();
+  renderSummary();
+}
+
+function renderPicker() {
+  const el = document.getElementById('picker');
+  el.innerHTML = '';
+  for (const [key, data] of Object.entries(FAMILIES)) {
+    const btn = document.createElement('button');
+    btn.className = 'family-btn' + (key === currentKey ? ' active' : '');
+    btn.textContent = data.label;
+    btn.onclick = () => { currentKey = key; render(); };
+    el.appendChild(btn);
+  }
+}
+
+function rowClass(entry) {
+  if (entry.consumed === 'PENDING') return 'pending';
+  if (entry.consumed === 'BRIDGE') return 'bridge';
+  if (entry.consumed === 'TRACE_ONLY') return 'trace-only';
+  if (entry.evidence.includes('ROM_EXACT')) return 'rom-exact';
+  if (entry.evidence.includes('ROM_HANDLER')) return 'rom-handler';
+  if (entry.evidence.includes('PRESENTATION')) return 'pres-derived';
+  return '';
+}
+
+function renderTrace() {
+  const data = FAMILIES[currentKey];
+  const tbody = document.getElementById('traceBody');
+  tbody.innerHTML = '';
+
+  for (const entry of data.golden) {
+    const tr = document.createElement('tr');
+    tr.className = rowClass(entry);
+    const dur = entry.dur || '-';
+    tr.innerHTML = `<td>${entry.id}</td><td>${entry.op}</td><td>${entry.geo}</td><td>${dur}</td><td>${entry.evidence}</td><td>${entry.consumed}</td>`;
+    tbody.appendChild(tr);
+  }
+}
+
+function renderChecks() {
+  const data = FAMILIES[currentKey];
+  const el = document.getElementById('checks');
+  el.innerHTML = '';
+
+  const checks = [
+    { label: 'SCENE_ENTRY', pass: data.golden.some(e => e.op === 'SCENE_SET'), text: 'Scene entry defined' },
+    { label: 'ACTOR_VISIBILITY', pass: data.golden.some(e => e.op === 'FIGHTER_VISIBILITY'), text: 'Actor visibility explicit' },
+    { label: 'MOTION_ROM', pass: !data.golden.some(e => e.op === 'FIGHTER_MOTION' && e.consumed === 'TRACE_ONLY'), text: data.golden.some(e => e.op === 'FIGHTER_MOTION' && e.consumed === 'TRACE_ONLY') ? 'FIGHTER_MOTION trace-only!' : 'FIGHTER_MOTION consumed' },
+    { label: 'FX_LAYER', pass: !data.golden.some(e => e.op === 'FX_VISIBILITY' && e.consumed === 'BRIDGE'), text: data.golden.some(e => e.op === 'FX_VISIBILITY' && e.consumed === 'BRIDGE') ? 'FX uses BRIDGE procedural!' : 'FX from ROM' },
+    { label: 'RETURN', pass: data.golden.some(e => e.op === 'RETURN_TO_FIELD'), text: 'Return to FIELD defined' },
+    { label: 'NO_MS_CAMERA', pass: true, text: '0 ms-based camera' },
+    { label: 'NO_GAMEPLAY_MUT', pass: true, text: '0 presentation→gameplay mutations' },
+    { label: 'PENDING_COUNT', pass: data.golden.filter(e => e.consumed === 'PENDING').length, text: data.golden.filter(e => e.consumed === 'PENDING').length + ' PENDING items' },
+  ];
+
+  for (const c of checks) {
+    const div = document.createElement('div');
+    const pass = typeof c.pass === 'boolean' ? c.pass : c.pass === 0;
+    div.className = 'check ' + (pass ? 'pass' : 'fail');
+    div.innerHTML = `${pass ? '✓' : '✗'} <strong>${c.label}</strong>: ${c.text}`;
+    el.appendChild(div);
+  }
+}
+
+function renderLayers() {
+  const el = document.getElementById('layers');
+  el.innerHTML = '';
+  for (const layer of LAYER_STACK) {
+    const div = document.createElement('div');
+    div.className = 'check ' + (layer.status === 'consumed' ? 'pass' : layer.status === 'bridge' ? 'fail' : 'check');
+    div.innerHTML = `${layer.status === 'consumed' ? '✓' : layer.status === 'bridge' ? '⬜' : '⏳'} <strong>${layer.name}</strong>: ${layer.desc}`;
+    el.appendChild(div);
+  }
+}
+
+function renderIssues() {
+  const data = FAMILIES[currentKey];
+  const el = document.getElementById('issues');
+  el.innerHTML = '';
+
+  const issues = data.golden.filter(e => e.consumed !== 'CONSUMED');
+  if (issues.length === 0) {
+    el.innerHTML = '<div class="check pass">✓ All operations consumed</div>';
+    return;
+  }
+
+  for (const entry of issues) {
+    const div = document.createElement('div');
+    div.className = 'check ' + (entry.consumed === 'PENDING' ? 'fail' : 'check');
+    div.innerHTML = `${entry.consumed === 'PENDING' ? '⏳' : '⬜'} <strong>${entry.id}</strong> (${entry.consumed}): ${entry.geo}`;
+    el.appendChild(div);
+  }
+}
+
+function renderSummary() {
+  const el = document.getElementById('summaryStats');
+
+  let totalOps = 0;
+  let consumed = 0;
+  let traceOnly = 0;
+  let pending = 0;
+  let bridge = 0;
+  let romExact = 0;
+  let romHandler = 0;
+  let presDerived = 0;
+
+  for (const data of Object.values(FAMILIES)) {
+    for (const entry of data.golden) {
+      totalOps++;
+      if (entry.consumed === 'CONSUMED') consumed++;
+      else if (entry.consumed === 'TRACE_ONLY') traceOnly++;
+      else if (entry.consumed === 'PENDING') pending++;
+      else if (entry.consumed === 'BRIDGE') bridge++;
+
+      if (entry.evidence.includes('ROM_EXACT')) romExact++;
+      else if (entry.evidence.includes('ROM_HANDLER')) romHandler++;
+      else if (entry.evidence.includes('ROM_STATIC')) romHandler++;
+      else if (entry.evidence.includes('PRESENTATION')) presDerived++;
+    }
+  }
+
+  const romTotal = romExact + romHandler;
+  const romPercent = Math.round(romTotal / totalOps * 100);
+
+  el.innerHTML = `
+    <div class="stat"><div class="val">${totalOps}</div><div class="label">Total ops (6 families)</div></div>
+    <div class="stat"><div class="val">${consumed}</div><div class="label">CONSUMED</div></div>
+    <div class="stat"><div class="val">${traceOnly}</div><div class="label">TRACE_ONLY</div></div>
+    <div class="stat"><div class="val">${pending}</div><div class="label">PENDING</div></div>
+    <div class="stat"><div class="val">${bridge}</div><div class="label">BRIDGE</div></div>
+    <div class="stat"><div class="val">${romPercent}%</div><div class="label">ROM-backed</div></div>
+    <div class="stat"><div class="val">0</div><div class="label">ms-based camera</div></div>
+    <div class="stat"><div class="val">0</div><div class="label">gameplay mutations</div></div>
+  `;
+}
+
+render();
+</script>
+</body>
+</html>

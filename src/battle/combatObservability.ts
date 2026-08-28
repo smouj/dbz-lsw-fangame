@@ -99,9 +99,6 @@ const TRACE_CUES = new Set<PresentationCue['type']>([
   'APPLY_FRAME_DELTA',
   'FX_AUX',
   'SCENE_CONFIGURE',
-  'SCREEN_MOTION',
-  'SCREEN_RESTORE',
-  'SCREEN_PATH',
   'ROM_SFX',
   'ROM_AUDIO_SCRIPT',
   'ROM_WAIT',
@@ -118,9 +115,15 @@ const TRACE_CUES = new Set<PresentationCue['type']>([
   'EFFECT',
   'HUD',
   'AUDIO',
-  // Motion y FX_LOAD se registran como trazabilidad (no easing procedural).
-  'FIGHTER_MOTION',
+  // FX_LOAD se registra como trazabilidad (no proyectil procedural).
   'FX_LOAD',
+]);
+
+const CONSUMED_CONTROL_CUES = new Set<PresentationCue['type']>([
+  'FIGHTER_MOTION',
+  'SCREEN_MOTION',
+  'SCREEN_RESTORE',
+  'SCREEN_PATH',
 ]);
 
 function effectLabel(cue: PresentationCue): string {
@@ -162,6 +165,9 @@ export function classifyRomCue(cue: PresentationCue): CueClassification {
   }
   if (DISPLAY_CUES.has(cue.type)) {
     return { ...base, destination: 'DISPLAY', display: true };
+  }
+  if (CONSUMED_CONTROL_CUES.has(cue.type)) {
+    return { ...base, destination: 'TRACE' };
   }
   if (TRACE_CUES.has(cue.type)) {
     return { ...base, destination: 'TRACE', trace: true, noVisibleEffect: true };
@@ -225,10 +231,10 @@ export interface CardActionTrace {
  * clasifica cada cue contra el destino de producción. Es la respuesta
  * "¿esta carta está en ROM production?" sin ejecutar una partida.
  */
-export function traceCardAction(card: CardDef, side: BattleSide = 'player'): CardActionTrace {
+export function traceCardAction(card: CardDef, side: BattleSide = 'player', actorFormId?: string | null): CardActionTrace {
   const profile = romPresentationProfileForCard(card);
   const descriptor = romActionExecutionDescriptorForCard(card);
-  const route = romPresentationTimelineForCard(card, side);
+  const route = romPresentationTimelineForCard(card, side, actorFormId ?? null);
 
   const cues: CueTrace[] = [];
   let generated = 0;

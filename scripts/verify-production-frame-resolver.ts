@@ -26,6 +26,7 @@ function check(name: string, ok: boolean, detail = '') {
 }
 
 class ProbePresentation implements BattlePresentation {
+  frameOffsets = 0;
   setScene(_scene: BattleScene): void {}
   setActorPose(_pose: string): void {}
   setTargetPose(_pose: string): void {}
@@ -35,6 +36,7 @@ class ProbePresentation implements BattlePresentation {
   impact(): void {}
   camera(): void {}
   returnToField(): void {}
+  applyFrameOffset(): void { this.frameOffsets++; }
   sync(): void {}
 }
 
@@ -123,12 +125,14 @@ check('timeline physical cues are all ROM_PHYSICAL for rendered golden form', ph
 check('timeline physical cues preserve GBC durations/offsets', physicalCues.every(cue => cue.type === 'ROM_PHYSICAL_FRAME' && cue.durationTicks != null && cue.offsetX != null && cue.offsetY != null));
 check('timeline physical cues use selected ROM sequence', physicalCues.every(cue => cue.type === 'ROM_PHYSICAL_FRAME' && cue.sequence === kameSelector.sequence), physicalCues.map(cue => cue.type === 'ROM_PHYSICAL_FRAME' ? cue.sequence : '?').join(','));
 
-const adapter = new ProductionRomPresentationAdapter(new ProbePresentation());
+const probe = new ProbePresentation();
+const adapter = new ProductionRomPresentationAdapter(probe);
 adapter.reset('ROM');
 for (const entry of timeline.entries) adapter.consume(entry.cue);
 const snap = adapter.snapshot;
 check('adapter records rendered physical provenance', snap.physicalFrames === physicalCues.length && snap.lastPhysicalFrame?.source === 'ROM_PHYSICAL', `${snap.physicalFrames}/${physicalCues.length}`);
 check('adapter has no mixed physical sources for golden beam', Object.keys(snap.physicalFrameSources).length === 1 && snap.physicalFrameSources.ROM_PHYSICAL === physicalCues.length, JSON.stringify(snap.physicalFrameSources));
+check('adapter applies ROM-native frame offsets', probe.frameOffsets === physicalCues.length, `${probe.frameOffsets}/${physicalCues.length}`);
 
 const summary = productionFrameResolverSummary();
 check('summary: ROM physical production counts only selector-backed BEAM_BASE', summary.cards.romPresentationProduction === 16 && summary.cards.legacy === 109, `${summary.cards.romPresentationProduction}/${summary.cards.legacy}`);

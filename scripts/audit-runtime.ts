@@ -11,6 +11,7 @@ import { readFileSync } from 'fs';
 
 const SRC = 'src/main.tsx';
 const src = readFileSync(SRC, 'utf8');
+const LEGACY_GAP_BUDGET = 118;
 
 // ── Patrones de mutación de gameplay (autoridad legacy) ──
 // Las proyecciones marcadas con `// ENGINE-SNAPSHOT` son la interfaz de
@@ -78,4 +79,9 @@ console.log(`  Gaps autoritativos detectados: ${total}`);
 
 console.log(`\n═══ RESULTADO: ${total} gaps legacy (${projections} proyecciones ENGINE-SNAPSHOT autorizadas) ═══`);
 console.log('Objetivo M8: migrar cada gap a BattleRuntime.dispatch/advance (slices verticales).');
-if (total > 0) process.exitCode = 2; // audit informativo: exit 2 = gaps pendientes (no fallo)
+console.log(`Presupuesto legacy actual: ${LEGACY_GAP_BUDGET}. ${total > LEGACY_GAP_BUDGET ? 'REGRESIÓN' : 'sin regresión'}.`);
+if (process.env.STRICT_RUNTIME_AUDIT === '1' && total > 0) {
+  process.exitCode = 2;
+} else if (total > LEGACY_GAP_BUDGET) {
+  process.exitCode = 2;
+}

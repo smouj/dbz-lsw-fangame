@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Golden Gate — Action Pose Detail</title>
+<style>
+  body { background: #111; color: #eee; font-family: monospace; margin: 0; padding: 8px; }
+  h1 { font-size: 16px; margin: 4px 0; }
+  .form-section { margin-bottom: 16px; border: 1px solid #333; padding: 8px; }
+  .form-title { color: #0ff; font-size: 14px; font-weight: bold; margin-bottom: 8px; }
+  .pose-row { display: flex; align-items: flex-start; margin-bottom: 8px; }
+  .pose-name { color: #0f0; font-size: 12px; min-width: 120px; }
+  .pose-frames { display: flex; gap: 8px; flex-wrap: wrap; }
+  .frame-box { text-align: center; }
+  .frame-box img { image-rendering: pixelated; background: #222; border: 1px solid #555; }
+  .frame-label { color: #888; font-size: 9px; }
+  .assembly-check { color: #ff0; font-size: 10px; margin-top: 4px; }
+</style>
+</head>
+<body>
+<h1>🎯 Golden Gate — Action Pose Assembly Verification</h1>
+<div id="forms"></div>
+<script>
+const FORMS = ['goku_base', 'goku_ssj', 'gohan_young', 'vegeta_base', 'piccolo_base', 'krillin_base', 'android_16', 'frieza_final'];
+const ACTION_POSES = ['idle', 'move_front', 'punch_right', 'hurt', 'guard', 'attack_fwd', 'attack_ud', 'beam_charge', 'beam_fire', 'knockback_back'];
+const container = document.getElementById('forms');
+
+FORMS.forEach(formId => {
+  const section = document.createElement('div');
+  section.className = 'form-section';
+  section.innerHTML = `<div class="form-title">${formId}</div>`;
+  
+  ACTION_POSES.forEach(pose => {
+    const row = document.createElement('div');
+    row.className = 'pose-row';
+    row.innerHTML = `<span class="pose-name">${pose}</span><div class="pose-frames" id="${formId}_${pose}"></div>`;
+    section.appendChild(row);
+    
+    fetch(`/assets/sprites/${formId}/manifest.json`)
+      .then(r => r.json())
+      .then(manifest => {
+        const poseData = manifest[pose];
+        const container = document.getElementById(`${formId}_${pose}`);
+        if (!poseData || !poseData.frames) {
+          container.innerHTML = '<span style="color:#f80">MISSING</span>';
+          return;
+        }
+        poseData.frames.forEach((frame, idx) => {
+          const box = document.createElement('div');
+          box.className = 'frame-box';
+          const img = document.createElement('img');
+          img.src = `/assets/sprites/${formId}/${frame.file}`;
+          img.width = frame.w * 4;
+          img.height = frame.h * 4;
+          img.style.imageRendering = 'pixelated';
+          img.title = `${frame.file} (${frame.w}×${frame.h})`;
+          img.onerror = () => { img.style.border = '2px solid red'; };
+          const label = document.createElement('div');
+          label.className = 'frame-label';
+          label.textContent = `${frame.w}×${frame.h}`;
+          box.appendChild(img);
+          box.appendChild(label);
+          container.appendChild(box);
+        });
+      })
+      .catch(e => {
+        document.getElementById(`${formId}_${pose}`).innerHTML = `<span style="color:#f00">ERROR</span>`;
+      });
+  });
+  
+  container.appendChild(section);
+});
+</script>
+</body>
+</html>

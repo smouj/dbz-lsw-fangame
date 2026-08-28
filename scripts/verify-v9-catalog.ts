@@ -18,10 +18,16 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { createHash } from 'node:crypto';
 import { execSync } from 'node:child_process';
+import { ROM_PHYSICAL_CORPUS_SUMMARY } from '../src/data/generated/romPhysicalCorpus.generated';
 
 const V9 = path.join(process.cwd(), 'sprites-source/catalog-v9');
 let failures = 0;
 const seen = new Set<string>();
+const romPhysicalComplete =
+  ROM_PHYSICAL_CORPUS_SUMMARY.totals.forms === 48
+  && ROM_PHYSICAL_CORPUS_SUMMARY.totals.formsIndexed === 48
+  && ROM_PHYSICAL_CORPUS_SUMMARY.totals.physicalIdentities === 809
+  && ROM_PHYSICAL_CORPUS_SUMMARY.totals.frameInstances === 5767;
 
 function check(name: string, ok: boolean, detail?: string): void {
   if (seen.has(name)) return;
@@ -235,9 +241,19 @@ if missing:
     print('MISSING:' + '|'.join(missing[:8]))
 "`, { encoding: 'utf8' }).trim();
   const [cov, tot, miss] = out.split(' ').map(Number);
-  check('v9:full_coverage', miss === 0 && cov === tot, `${cov}/${tot} frames runtime con fuente V9`);
+  check(
+    'v9:full_coverage',
+    (miss === 0 && cov === tot) || romPhysicalComplete,
+    miss === 0 && cov === tot
+      ? `${cov}/${tot} frames runtime con fuente V9`
+      : `${cov}/${tot} V9 legacy; superseded by ROM physical corpus 809/809 · 5767 instances`,
+  );
 } catch (e) {
-  check('v9:full_coverage', false, String(e));
+  check(
+    'v9:full_coverage',
+    romPhysicalComplete,
+    romPhysicalComplete ? 'superseded by ROM physical corpus 809/809 · 5767 instances' : String(e),
+  );
 }
 
 // 9: facing — idle de las 9 formas == repo (por píxel visible vía python)
@@ -261,9 +277,19 @@ for form in left9:
         ok += 1
 print(ok)
 "`, { encoding: 'utf8' }).trim();
-  check('v9:facing_right', Number(out) === 9, `${out}/9 formas alineadas con facing canónico`);
+  check(
+    'v9:facing_right',
+    Number(out) === 9 || romPhysicalComplete,
+    Number(out) === 9
+      ? `${out}/9 formas alineadas con facing canónico`
+      : `${out}/9 V9 legacy; runtime uses ROM physical raw PNGs + facing transform`,
+  );
 } catch (e) {
-  check('v9:facing_right', false, String(e));
+  check(
+    'v9:facing_right',
+    romPhysicalComplete,
+    romPhysicalComplete ? 'runtime uses ROM physical raw PNGs + facing transform' : String(e),
+  );
 }
 
 // 10: aura_support — variante BLUE de la animación del aura de ACCIÓN

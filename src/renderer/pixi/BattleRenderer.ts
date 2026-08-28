@@ -112,13 +112,13 @@ export class BattleRenderer {
     };
   }
 
-  /** Sincroniza TODO el renderer al tick GBC absoluto `tick` (reloj ÚNICO). */
+  /** Sincroniza TODO el renderer al tick GBC absoluto `tick` (reloj ÚNICO).
+   *  P0 CAMERA PRESENTER: world.position is set by CameraPresenter (via
+   *  PixiBattlePresentation.sync), NOT here. CameraPresenter is the sole
+   *  authority for screen position. */
   sync(tick: number): void {
     this.tickCount = tick;
     const snap = this.impactSystem.snapshot(this.tickCount);
-
-    // Sacudida de cámara (f(tick)): desplaza el mundo, no el estado lógico.
-    this.world.position.set(snap.shakeX, snap.shakeY);
 
     // Hitstop: durante la congelación los luchadores NO avanzan (peso del golpe).
     if (snap.hitstop) return;

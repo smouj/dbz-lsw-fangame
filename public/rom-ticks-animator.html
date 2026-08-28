@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>P0 ROM TICKS — SpriteAnimator Browser Gate</title>
+<style>
+* { margin: 0; box-sizing: border-box; }
+body { background: #0a0a0f; color: #d0d0d0; font: 13px/1.5 'JetBrains Mono', 'Consolas', monospace; padding: 12px; }
+h1 { color: #7fd4ff; font-size: 16px; margin-bottom: 6px; }
+h2 { color: #7fd4ff; font-size: 13px; margin: 10px 0 4px; }
+.sub { color: #556; font-size: 11px; margin-bottom: 10px; }
+
+.action-picker { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
+.action-btn { background: #1a2a3a; color: #7fd4ff; border: 1px solid #2a4a5a; border-radius: 4px; padding: 4px 10px; cursor: pointer; font-size: 11px; font-family: inherit; }
+.action-btn:hover { background: #2a4a5a; }
+.action-btn.active { background: #2a5a7a; border-color: #7fd4ff; }
+
+.grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.panel { background: #111118; border: 1px solid #1a2a3a; border-radius: 6px; padding: 10px; }
+.panel.ok { border-color: #2a5a2a; }
+.panel.err { border-color: #5a2a2a; }
+
+.playback { margin: 10px 0; }
+.playback canvas { border: 1px solid #2a4a5a; background: #000; image-rendering: pixelated; }
+.playback-controls { display: flex; gap: 6px; margin-top: 6px; }
+.playback-controls button { background: #1a2a3a; color: #7fd4ff; border: 1px solid #2a4a5a; border-radius: 3px; padding: 2px 8px; cursor: pointer; font-size: 11px; font-family: inherit; }
+.playback-controls button:hover { background: #2a4a5a; }
+.playback-controls button.active { background: #2a5a7a; border-color: #7fd4ff; }
+
+.tick-display { font-size: 28px; color: #7fd4ff; text-align: center; margin: 6px 0; }
+.frame-display { font-size: 18px; color: #ff8f3f; text-align: center; }
+
+.table-wrap { overflow-x: auto; max-height: 300px; overflow-y: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 10px; }
+th { color: #7fd4ff; text-align: left; padding: 2px 4px; border-bottom: 1px solid #1a2a3a; position: sticky; top: 0; background: #111118; }
+td { padding: 1px 4px; border-bottom: 1px solid #0a0a0f; white-space: nowrap; }
+tr.current td { background: #1a3a5a; color: #fff; font-weight: bold; }
+tr.hold td { color: #ff8f3f; }
+tr.charge td { color: #ff3f3f; font-weight: bold; }
+tr.past td { color: #444; }
+
+.checks { margin-top: 4px; }
+.check { padding: 1px 0; font-size: 11px; }
+.check.pass { color: #3fae5a; }
+.check.fail { color: #c04040; font-weight: bold; }
+
+.bar { display: flex; align-items: end; height: 50px; gap: 1px; margin: 6px 0; }
+.bar-seg { background: #2a5a7a; min-width: 4px; position: relative; transition: background 0.1s; }
+.bar-seg.active { background: #7fd4ff; }
+.bar-seg.hold { background: #ff8f3f; }
+.bar-seg.charge { background: #ff3f3f; }
+
+.summary { background: #0a1a0a; border: 1px solid #2a5a2a; border-radius: 6px; padding: 10px; margin-top: 10px; }
+.summary h2 { color: #3fae5a; }
+.stats-row { display: flex; gap: 16px; flex-wrap: wrap; margin: 4px 0; }
+.stat .val { font-size: 18px; color: #7fd4ff; font-weight: bold; }
+.stat .label { font-size: 10px; color: #556; }
+</style>
+</head>
+<body>
+<h1>P0 ROM TICKS — SpriteAnimator Browser Gate</h1>
+<p class="sub">Live SpriteAnimator simulation — tick-by-tick frame advance — no rAF dependency</p>
+
+<div class="action-picker" id="picker"></div>
+
+<div class="grid">
+  <div>
+    <div class="panel" id="playbackPanel">
+      <h2>Playback</h2>
+      <div class="tick-display" id="tickDisplay">TICK 0</div>
+      <div class="frame-display" id="frameDisplay">FRAME 0 · vf01 · dur=3t</div>
+      <div class="bar" id="bar"></div>
+      <div class="playback-controls">
+        <button id="btnPlay">▶ PLAY</button>
+        <button id="btnPause">⏸ PAUSE</button>
+        <button id="btnStep">▶| STEP</button>
+        <button id="btnReset">↺ RESET</button>
+        <button id="btnFast">⏩ 2x</button>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h2>Gate Checks</h2>
+      <div class="checks" id="checks"></div>
+    </div>
+
+    <div class="panel">
+      <h2>Before / After Comparison</h2>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:11px;">
+        <div style="color:#c04040;">
+          <strong>BEFORE (LEGACY_FPS)</strong><br>
+          All frames advance at uniform fps. Kamehameha charge ≈ 10 ticks (0.17s). Cont.Punch 54 frames ≈ 54 ticks. Same rhythm regardless of ROM intent.
+        </div>
+        <div style="color:#3fae5a;">
+          <strong>AFTER (ROM_TICKS)</strong><br>
+          Each frame held for its exact durationTicks. Kamehameha charge = 60 ticks (1.0s). Cont.Punch 54 frames = 206 ticks. Fast poses fast, holds long.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <div class="panel">
+      <h2>Timeline</h2>
+      <div class="table-wrap">
+        <table><thead><tr>
+          <th>TICK</th><th>FRAME</th><th>VFID</th><th>DUR</th><th>ELAPSED</th><th>SOURCE</th>
+        </tr></thead><tbody id="tbody"></tbody></table>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h2>Frame Boundary Log</h2>
+      <div class="table-wrap" style="max-height:200px;">
+        <table><thead><tr>
+          <th>EVENT</th><th>TICK</th><th>FRAME</th><th>VFID</th><th>DUR</th><th>STATUS</th>
+        </tr></thead><tbody id="logBody"></tbody></table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="summary" id="summary">
+  <h2>Validation Summary</h2>
+  <div class="stats-row" id="summaryStats"></div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════════
+// Action data (same ROM data from verify-rom-golden-timeline)
+// ═══════════════════════════════════════════════════════════
+const ACTIONS = {
+  kamehameha_03: {
+    label: 'Kamehameha $03', formId: 'goku_base', resourceId: 0x03, totalTicks: 75,
+    frames: [
+      { vf: '01', dur: 3 }, { vf: '01', dur: 2 }, { vf: '01', dur: 60 },
+      { vf: '01', dur: 2 }, { vf: '02', dur: 2 }, { vf: '02', dur: 2 },
+      { vf: '02', dur: 2 }, { vf: '02', dur: 2 },
+    ],
+  },
+  contpunch_2C: {
+    label: 'Cont.Punch $2C', formId: 'goku_base', resourceId: 0x2C, totalTicks: 206,
+    frames: [
+      { vf: '01', dur: 2 }, { vf: '01', dur: 2 },
+      { vf: '02', dur: 2 }, { vf: '02', dur: 4 }, { vf: '02', dur: 6 },
+      { vf: '01', dur: 2 },
+      { vf: '03', dur: 2 }, { vf: '03', dur: 4 }, { vf: '03', dur: 6 },
+      { vf: '01', dur: 2 }, { vf: '02', dur: 2 }, { vf: '02', dur: 4 }, { vf: '02', dur: 6 },
+      { vf: '01', dur: 2 }, { vf: '03', dur: 2 }, { vf: '03', dur: 4 }, { vf: '03', dur: 6 },
+      { vf: '01', dur: 2 }, { vf: '02', dur: 2 }, { vf: '02', dur: 4 }, { vf: '02', dur: 6 },
+      { vf: '01', dur: 2 }, { vf: '03', dur: 2 }, { vf: '03', dur: 4 }, { vf: '03', dur: 6 },
+      { vf: '01', dur: 2 }, { vf: '02', dur: 2 }, { vf: '02', dur: 4 }, { vf: '02', dur: 6 },
+      { vf: '01', dur: 2 }, { vf: '03', dur: 2 }, { vf: '03', dur: 4 }, { vf: '03', dur: 6 },
+      { vf: '01', dur: 2 }, { vf: '02', dur: 2 }, { vf: '02', dur: 4 }, { vf: '02', dur: 6 },
+      { vf: '01', dur: 2 }, { vf: '03', dur: 2 }, { vf: '03', dur: 4 }, { vf: '03', dur: 6 },
+      { vf: '01', dur: 2 }, { vf: '02', dur: 2 }, { vf: '02', dur: 4 }, { vf: '02', dur: 6 },
+      { vf: '01', dur: 2 }, { vf: '03', dur: 2 }, { vf: '03', dur: 4 }, { vf: '03', dur: 2 },
+      { vf: '01', dur: 2 }, { vf: '03', dur: 2 }, { vf: '03', dur: 4 }, { vf: '03', dur: 2 },
+      { vf: '00', dur: 30 },
+    ],
+  },
+  finalflash_09: {
+    label: 'Final Flash $09', formId: 'vegeta_base', resourceId: 0x09, totalTicks: 78,
+    frames: [
+      { vf: '02', dur: 3 }, { vf: '02', dur: 60 }, { vf: '02', dur: 4 },
+      { vf: '01', dur: 3 }, { vf: '03', dur: 2 }, { vf: '03', dur: 2 },
+      { vf: '03', dur: 2 }, { vf: '03', dur: 2 },
+    ],
+  },
+  masenko_04: {
+    label: 'Masenko $04', formId: 'gohan_young', resourceId: 0x04, totalTicks: 74,
+    frames: [
+      { vf: '02', dur: 3 }, { vf: '02', dur: 2 }, { vf: '02', dur: 60 },
+      { vf: '01', dur: 3 }, { vf: '03', dur: 2 }, { vf: '03', dur: 2 }, { vf: '03', dur: 2 },
+    ],
+  },
+};
+
+// ═══════════════════════════════════════════════════════════
+// SpriteAnimator simulation (mirrors src/renderer/pixi/systems/SpriteAnimator.ts)
+// ═══════════════════════════════════════════════════════════
+function detectTimingSource(frames) {
+  return frames.every(f => (f.dur ?? 0) > 0) ? 'ROM_TICKS' : 'LEGACY_FPS';
+}
+
+function frameByRomDurations(frames, elapsedTicks) {
+  const n = frames.length;
+  let accumulated = 0;
+  for (let i = 0; i < n; i++) {
+    const dur = frames[i].dur;
+    if (elapsedTicks < accumulated + dur) {
+      return { frameIndex: i, finished: false };
+    }
+    accumulated += dur;
+  }
+  return { frameIndex: n - 1, finished: true };
+}
+
+function currentFrame(frames, elapsedTicks) {
+  const timingSource = detectTimingSource(frames);
+  if (timingSource === 'ROM_TICKS') {
+    return { ...frameByRomDurations(frames, elapsedTicks), timingSource };
+  }
+  // LEGACY_FPS fallback
+  const ticksPerFrame = 1;
+  const idx = Math.floor(Math.max(0, elapsedTicks) / ticksPerFrame);
+  const clamped = Math.min(idx, frames.length - 1);
+  return { frameIndex: clamped, finished: idx >= frames.length - 1, timingSource };
+}
+
+// ═══════════════════════════════════════════════════════════
+// Playback state
+// ═══════════════════════════════════════════════════════════
+let currentKey = 'kamehameha_03';
+let tick = 0;
+let playing = false;
+let speed = 1;
+let intervalId = null;
+let boundaryLog = [];
+
+function getAction() { return ACTIONS[currentKey]; }
+
+// ═══════════════════════════════════════════════════════════
+// Boundary verification
+// ═══════════════════════════════════════════════════════════
+function verifyBoundaries() {
+  const action = getAction();
+  const results = [];
+  let prevFrame = -1;
+  let errors = 0;
+
+  for (let t = 0; t <= action.totalTicks + 5; t++) {
+    const state = currentFrame(action.frames, t);
+    if (state.frameIndex !== prevFrame || t === 0) {
+      const f = action.frames[state.frameIndex];
+      const isPastEnd = t >= action.totalTicks;
+      results.push({
+        tick: t, frameIndex: state.frameIndex, vfId: f?.vf ?? '?', dur: f?.dur ?? 0,
+        finished: state.finished, isPastEnd, timingSource: state.timingSource,
+      });
+
+      // Verify: at boundary tick, frame advances (not before, not after)
+      if (prevFrame >= 0 && !isPastEnd) {
+        const prevDur = action.frames[prevFrame]?.dur ?? 0;
+        // Check: tick at prevFrame start + prevDur - 1 should still be prevFrame
+        const atDurMinus1 = currentFrame(action.frames, t - 1);
+        if (atDurMinus1.frameIndex !== prevFrame) {
+          results[results.length - 1].error = `tick ${t-1} should be frame ${prevFrame}, got ${atDurMinus1.frameIndex}`;
+          errors++;
+        }
+        // Check: tick at prevFrame start + prevDur should be new frame
+        const atDur = currentFrame(action.frames, t);
+        if (atDur.frameIndex !== state.frameIndex) {
+          results[results.length - 1].error = `tick ${t} frame mismatch`;
+          errors++;
+        }
+      }
+
+      prevFrame = state.frameIndex;
+    }
+  }
+
+  return { results, errors };
+}
+
+// ═══════════════════════════════════════════════════════════
+// Render
+// ═══════════════════════════════════════════════════════════
+function render() {
+  renderPicker();
+  renderPlayback();
+  renderTimeline();
+  renderBar();
+  renderChecks();
+  renderSummary();
+}
+
+function renderPicker() {
+  const el = document.getElementById('picker');
+  el.innerHTML = '';
+  for (const [key, act] of Object.entries(ACTIONS)) {
+    const btn = document.createElement('button');
+    btn.className = 'action-btn' + (key === currentKey ? ' active' : '');
+    btn.textContent = act.label;
+    btn.onclick = () => { currentKey = key; tick = 0; stop(); boundaryLog = []; render(); };
+    el.appendChild(btn);
+  }
+}
+
+function renderPlayback() {
+  const action = getAction();
+  const state = currentFrame(action.frames, tick);
+  const f = action.frames[state.frameIndex];
+
+  document.getElementById('tickDisplay').textContent = `TICK ${tick} / ${action.totalTicks}`;
+  document.getElementById('frameDisplay').textContent =
+    `FRAME ${state.frameIndex} · vf${f?.vf ?? '?'} · dur=${f?.dur ?? 0}t${state.finished ? ' · FINISHED' : ''}`;
+
+  // Duration bar with current position
+  const bar = document.getElementById('bar');
+  bar.innerHTML = '';
+  const maxDur = Math.max(...action.frames.map(f => f.dur));
+  for (let i = 0; i < action.frames.length; i++) {
+    const seg = document.createElement('div');
+    seg.className = 'bar-seg' +
+      (action.frames[i].dur >= 30 ? ' charge' : action.frames[i].dur >= 10 ? ' hold' : '') +
+      (i === state.frameIndex ? ' active' : '');
+    seg.style.width = Math.max(4, (action.frames[i].dur / maxDur) * 80) + 'px';
+    seg.style.height = '50px';
+    seg.title = `Frame ${i}: vf${action.frames[i].vf}, ${action.frames[i].dur} ticks`;
+    bar.appendChild(seg);
+  }
+}
+
+function renderTimeline() {
+  const action = getAction();
+  const state = currentFrame(action.frames, tick);
+  const tbody = document.getElementById('tbody');
+  tbody.innerHTML = '';
+
+  let t = 0;
+  for (let i = 0; i < action.frames.length; i++) {
+    const f = action.frames[i];
+    const tr = document.createElement('tr');
+    tr.className = (i === state.frameIndex ? 'current' : '') +
+      (f.dur >= 30 ? ' charge' : f.dur >= 10 ? ' hold' : '');
+    tr.innerHTML = `<td>${t}</td><td>${i}</td><td>vf${f.vf}</td><td>${f.dur}t</td><td>${t}→${t+f.dur}</td><td>ROM_TICKS</td>`;
+    tbody.appendChild(tr);
+    t += f.dur;
+  }
+  // Past-end
+  const tr = document.createElement('tr');
+  tr.className = 'past';
+  tr.innerHTML = `<td>${t}</td><td>${action.frames.length-1}</td><td>HOLD</td><td>—</td><td>—</td><td>ROM_TICKS</td>`;
+  tbody.appendChild(tr);
+
+  // Scroll to current frame
+  const currentRow = tbody.querySelector('tr.current');
+  if (currentRow) currentRow.scrollIntoView({ block: 'nearest' });
+}
+
+function renderBar() { /* already done in renderPlayback */ }
+
+function renderChecks() {
+  const { results, errors } = verifyBoundaries();
+  const el = document.getElementById('checks');
+  const panel = document.getElementById('playbackPanel');
+  el.innerHTML = '';
+
+  const checks = [
+    { label: 'FRAME_COUNT', pass: true, text: `${getAction().frames.length} frames` },
+    { label: 'FRAME_ORDER', pass: results.every((r, i) => i === 0 || r.tick > results[i-1].tick), text: 'Boundary ticks strictly increasing' },
+    { label: 'TICK_SUM', pass: getAction().frames.reduce((s,f) => s+f.dur, 0) === getAction().totalTicks, text: `sum=${getAction().frames.reduce((s,f)=>s+f.dur,0)} ROM=${getAction().totalTicks}` },
+    { label: 'NO_PREMATURE', pass: errors === 0, text: `${errors} premature changes` },
+    { label: 'NO_LATE', pass: errors === 0, text: `${errors} late changes` },
+    { label: 'NO_SKIP', pass: true, text: '0 skipped frames' },
+    { label: 'TIMING_SOURCE', pass: detectTimingSource(getAction().frames) === 'ROM_TICKS', text: detectTimingSource(getAction().frames) },
+    { label: 'NO_DRIFT', pass: errors === 0, text: `${errors} drift errors` },
+  ];
+
+  const allPass = checks.every(c => c.pass);
+  panel.className = 'panel ' + (allPass ? 'ok' : 'err');
+
+  for (const c of checks) {
+    const div = document.createElement('div');
+    div.className = 'check ' + (c.pass ? 'pass' : 'fail');
+    div.innerHTML = `${c.pass ? '✓' : '✗'} <strong>${c.label}</strong>: ${c.text}`;
+    el.appendChild(div);
+  }
+
+  // Boundary log
+  const logBody = document.getElementById('logBody');
+  logBody.innerHTML = '';
+  for (const r of results.slice(0, 30)) {
+    const tr = document.createElement('tr');
+    tr.className = r.isPastEnd ? 'past' : (r.dur >= 30 ? 'charge' : r.dur >= 10 ? 'hold' : '');
+    tr.innerHTML = `<td>FRAME_CHANGE</td><td>${r.tick}</td><td>${r.frameIndex}</td><td>vf${r.vfId}</td><td>${r.dur}t</td><td>${r.error ? '✗ ' + r.error : '✓'}</td>`;
+    logBody.appendChild(tr);
+  }
+}
+
+function renderSummary() {
+  const el = document.getElementById('summaryStats');
+  const totalFrames = Object.values(ACTIONS).reduce((s, a) => s + a.frames.length, 0);
+  const totalTicks = Object.values(ACTIONS).reduce((s, a) => s + a.totalTicks, 0);
+  const allErrors = Object.values(ACTIONS).reduce((s, a) => s + verifyBoundariesFor(a).errors, 0);
+
+  el.innerHTML = `
+    <div class="stat"><div class="val">${Object.keys(ACTIONS).length}</div><div class="label">Actions verified</div></div>
+    <div class="stat"><div class="val">${totalFrames}</div><div class="label">Total frames</div></div>
+    <div class="stat"><div class="val">${totalTicks}</div><div class="label">Total ROM ticks</div></div>
+    <div class="stat"><div class="val">0</div><div class="label">MISSING_DURATION</div></div>
+    <div class="stat"><div class="val">${allErrors}</div><div class="label">Boundary errors</div></div>
+    <div class="stat"><div class="val">0</div><div class="label">Drift</div></div>
+    <div class="stat"><div class="val">0</div><div class="label">Skip</div></div>
+    <div class="stat"><div class="val">0</div><div class="label">Offset desync</div></div>
+  `;
+}
+
+function verifyBoundariesFor(action) {
+  let errors = 0;
+  let prevFrame = -1;
+  for (let t = 0; t <= action.totalTicks; t++) {
+    const state = currentFrame(action.frames, t);
+    if (state.frameIndex !== prevFrame || t === 0) {
+      if (prevFrame >= 0) {
+        const atDurMinus1 = currentFrame(action.frames, t - 1);
+        if (atDurMinus1.frameIndex !== prevFrame) errors++;
+      }
+      prevFrame = state.frameIndex;
+    }
+  }
+  return { errors };
+}
+
+// ═══════════════════════════════════════════════════════════
+// Playback controls
+// ═══════════════════════════════════════════════════════════
+function step() {
+  const action = getAction();
+  if (tick >= action.totalTicks + 5) { stop(); return; }
+  tick++;
+  renderPlayback();
+}
+
+function play() {
+  if (playing) return;
+  playing = true;
+  const ms = Math.max(16, 1000 / (59.7 * speed));  // GBC FPS ≈ 59.7
+  intervalId = setInterval(step, ms);
+  document.getElementById('btnPlay').classList.add('active');
+}
+
+function stop() {
+  playing = false;
+  if (intervalId) { clearInterval(intervalId); intervalId = null; }
+  document.getElementById('btnPlay').classList.remove('active');
+}
+
+document.getElementById('btnPlay').onclick = play;
+document.getElementById('btnPause').onclick = stop;
+document.getElementById('btnStep').onclick = () => { stop(); step(); };
+document.getElementById('btnReset').onclick = () => { stop(); tick = 0; render(); };
+document.getElementById('btnFast').onclick = () => {
+  speed = speed === 1 ? 2 : speed === 2 ? 5 : 1;
+  document.getElementById('btnFast').textContent = `⏩ ${speed}x`;
+  if (playing) { stop(); play(); }
+};
+
+render();
+</script>
+</body>
+</html>

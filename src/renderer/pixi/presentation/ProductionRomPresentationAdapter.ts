@@ -52,6 +52,12 @@ export interface ProductionRomPresentationStats {
   motions: number;
   /** Cues FX_LOAD registrados (trazabilidad — no proyectil procedural). */
   fxLoads: number;
+  /** P0 CAMERA PRESENTER — cues SCREEN_MOTION consumidos. */
+  screenMotions: number;
+  /** P0 CAMERA PRESENTER — cues SCREEN_RESTORE consumidos. */
+  screenRestores: number;
+  /** P0 CAMERA PRESENTER — cues SCREEN_PATH consumidos. */
+  screenPaths: number;
   /** Ventanas ROM FX normalizadas enviadas a RomDisplayPresenter. */
   fxWindows: number;
   impacts: number;
@@ -107,9 +113,7 @@ const TRACE_CUES = new Set<PresentationCue['type']>([
   'APPLY_FRAME_DELTA',
   'FX_AUX',
   'SCENE_CONFIGURE',
-  'SCREEN_MOTION',
-  'SCREEN_RESTORE',
-  'SCREEN_PATH',
+  // P0 CAMERA PRESENTER: SCREEN_MOTION/RESTORE/PATH now consumed (moved below)
   'ROM_SFX',
   'ROM_AUDIO_SCRIPT',
   'ROM_WAIT',
@@ -152,6 +156,9 @@ export class ProductionRomPresentationAdapter {
       sceneChanges: 0,
       motions: 0,
       fxLoads: 0,
+      screenMotions: 0,
+      screenRestores: 0,
+      screenPaths: 0,
       fxWindows: 0,
       impacts: 0,
       physicalFrames: 0,
@@ -224,11 +231,25 @@ export class ProductionRomPresentationAdapter {
         break;
       }
       case 'FIGHTER_MOTION': {
-        // ROM motion discreto (segments dx/tick). NO moveActor/easeOutCubic (ban).
-        // El movimiento discreto se aplicará en (b); aquí se REGISTRA como
-        // trazabilidad (no se inventa easing).
+        // P0 SCENE-CAMERA — Consume ROM motion discrete segments.
+        // dxPerTick * elapsed replaces easeOutCubic rush.
+        // CHARA_EXIT/ENTRY, RUSH, BEAM_SETUP all use this path.
+        if (cue.kind === 'CHARA_EXIT' || cue.kind === 'CHARA_ENTRY') {
+          // Target motion (defender exit/entry)
+          const applyMotion = (this.pres as Partial<Pick<BattlePresentation, 'moveTargetByRomMotion'>>).moveTargetByRomMotion;
+          if (typeof applyMotion === 'function') {
+            applyMotion.call(this.pres, cue.deltaPx, cue.durationTicks, cue.holdTicks);
+            visible = true;
+          }
+        } else {
+          // Actor motion (RUSH, BEAM_SETUP)
+          const applyMotion = (this.pres as Partial<Pick<BattlePresentation, 'moveActorByRomMotion'>>).moveActorByRomMotion;
+          if (typeof applyMotion === 'function') {
+            applyMotion.call(this.pres, cue.deltaPx, cue.durationTicks, cue.holdTicks);
+            visible = true;
+          }
+        }
         this.stats.motions++;
-        this.stats.traceCues++;
         break;
       }
       case 'FX_LOAD': {
@@ -237,6 +258,41 @@ export class ProductionRomPresentationAdapter {
         // REGISTRA el resource (trazabilidad).
         this.stats.fxLoads++;
         this.stats.traceCues++;
+        break;
+      }
+      // ── P0 CAMERA PRESENTER — Screen motion/restore/path ──
+      case 'SCREEN_MOTION': {
+        // SCREEN_MOTION $0E: progressive screen displacement.
+        // dxPerTick * elapsed, discrete per tick, no easing.
+        // If restore=true, CameraPresenter clears offset when motion completes.
+        const applyScreenMotion = (this.pres as Partial<Pick<BattlePresentation, 'applyScreenMotion'>>).applyScreenMotion;
+        if (typeof applyScreenMotion === 'function') {
+          applyScreenMotion.call(this.pres, cue.dxPerTick, cue.durationTicks, cue.restore);
+          visible = true;
+        }
+        this.stats.screenMotions++;
+        break;
+      }
+      case 'SCREEN_RESTORE': {
+        // SCREEN_RESTORE $0F: restore screen to base position.
+        // Clears all ROM screen offsets, resets motion state.
+        const applyScreenRestore = (this.pres as Partial<Pick<BattlePresentation, 'applyScreenRestore'>>).applyScreenRestore;
+        if (typeof applyScreenRestore === 'function') {
+          applyScreenRestore.call(this.pres);
+          visible = true;
+        }
+        this.stats.screenRestores++;
+        break;
+      }
+      case 'SCREEN_PATH': {
+        // SCREEN_PATH $11: ROM screen path program.
+        // Path semantics not fully traced yet — CameraPresenter marks as active.
+        const applyScreenPath = (this.pres as Partial<Pick<BattlePresentation, 'applyScreenPath'>>).applyScreenPath;
+        if (typeof applyScreenPath === 'function') {
+          applyScreenPath.call(this.pres, cue.pathId, cue.durationTicks);
+          visible = true;
+        }
+        this.stats.screenPaths++;
         break;
       }
       case 'ROM_RESULT_BRANCH': {
@@ -260,6 +316,19 @@ export class ProductionRomPresentationAdapter {
           offsetY: cue.offsetY,
           durationTicks: cue.durationTicks,
         };
+        // P0 ROM FIDELITY: Apply ROM-native offsets from the SAME frame record.
+        // Never get timing from ROM and offsets from manifest.
+        // The actor pose is set by FIGHTER_POSE cue; offsets come from ROM_PHYSICAL_FRAME.
+        if (cue.offsetX != null || cue.offsetY != null) {
+          const applyFrameOffset = (this.pres as Partial<Pick<BattlePresentation, 'applyFrameOffset'>>).applyFrameOffset;
+          if (typeof applyFrameOffset === 'function') {
+            applyFrameOffset.call(this.pres, cue.offsetX ?? 0, cue.offsetY ?? 0);
+            visible = true;
+          } else {
+            this.stats.pendingCues++;
+            this.stats.pendingReasons.push('BattlePresentation.applyFrameOffset missing');
+          }
+        }
         this.stats.traceCues++;
         break;
       }

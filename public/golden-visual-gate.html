@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Golden Visual Gate — Sprite Verification</title>
+<style>
+  body { background: #111; color: #eee; font-family: monospace; margin: 0; padding: 8px; }
+  h1 { font-size: 14px; margin: 4px 0; }
+  h2 { font-size: 12px; margin: 4px 0; color: #0f0; }
+  .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; }
+  .form-card { background: #222; border: 1px solid #444; padding: 4px; }
+  .form-name { color: #0ff; font-size: 11px; font-weight: bold; }
+  .pose-row { display: flex; align-items: center; gap: 4px; margin: 2px 0; }
+  .pose-label { color: #aaa; font-size: 10px; min-width: 80px; }
+  .pose-frames { display: flex; gap: 2px; }
+  .pose-frames img { image-rendering: pixelated; background: #333; }
+  .status-pass { color: #0f0; }
+  .status-fail { color: #f00; }
+  .status-missing { color: #f80; }
+</style>
+</head>
+<body>
+<h1>🎯 GOLDEN VISUAL GATE — 8 Forms × 12 Key Poses</h1>
+<div id="grid" class="grid"></div>
+<script>
+const FORMS = [
+  'goku_base', 'goku_ssj', 'gohan_young', 'vegeta_base',
+  'piccolo_base', 'krillin_base', 'android_16', 'frieza_final'
+];
+const POSES = [
+  'idle', 'move_front', 'punch_right', 'hurt', 'guard',
+  'beam_charge', 'beam_fire', 'attack_fwd', 'attack_ud',
+  'knockback_back', 'evade', 'gather_power'
+];
+
+const grid = document.getElementById('grid');
+
+FORMS.forEach(formId => {
+  const card = document.createElement('div');
+  card.className = 'form-card';
+  card.innerHTML = `<div class="form-name">${formId}</div>`;
+  
+  POSES.forEach(pose => {
+    const row = document.createElement('div');
+    row.className = 'pose-row';
+    row.innerHTML = `<span class="pose-label">${pose}</span><div class="pose-frames" id="${formId}_${pose}"><span style="color:#888;font-size:10px">loading...</span></div>`;
+    card.appendChild(row);
+    
+    // Fetch manifest
+    fetch(`/assets/sprites/${formId}/manifest.json`)
+      .then(r => r.json())
+      .then(manifest => {
+        const poseData = manifest[pose];
+        const container = document.getElementById(`${formId}_${pose}`);
+        if (!poseData || !poseData.frames || poseData.frames.length === 0) {
+          container.innerHTML = `<span class="status-missing">MISSING</span>`;
+          return;
+        }
+        container.innerHTML = '';
+        poseData.frames.forEach((frame, idx) => {
+          if (idx > 3) return; // Show max 4 frames
+          const img = document.createElement('img');
+          img.src = `/assets/sprites/${formId}/${frame.file}`;
+          img.width = frame.w * 3;
+          img.height = frame.h * 3;
+          img.style.imageRendering = 'pixelated';
+          img.style.background = '#333';
+          img.title = `${frame.file} (${frame.w}×${frame.h})`;
+          img.onerror = () => { img.style.border = '2px solid red'; img.title += ' LOAD FAIL'; };
+          container.appendChild(img);
+        });
+        if (poseData.frames.length > 4) {
+          const more = document.createElement('span');
+          more.textContent = `+${poseData.frames.length - 4}`;
+          more.style.cssText = 'color:#888;font-size:9px;margin-left:2px';
+          container.appendChild(more);
+        }
+      })
+      .catch(e => {
+        const container = document.getElementById(`${formId}_${pose}`);
+        if (container) container.innerHTML = `<span class="status-fail">ERROR: ${e.message}</span>`;
+      });
+  });
+  
+  grid.appendChild(card);
+});
+</script>
+</body>
+</html>

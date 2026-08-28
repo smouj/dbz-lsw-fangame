@@ -10,8 +10,8 @@
 // M8.POWER: `powerWindowCounter` es la ÚNICA fuente de verdad del estado
 // temporal de potencia (fighterState+4). Gather escribe 5, CHARA escribe 2;
 // NUNCA max() ni suma. El decremento está centralizado en
-// decrementPowerWindow() y marcado ROM_CADENCE_PENDING hasta mapear
-// Bank01:$4B66 contra Turn/Exchange (§103).
+// decrementPowerWindow() y se dispara en postActionMaintenance (ROM §132-133).
+// ROM_CONFIRMED: cadencia verificada contra BattleRuntime.postActionMaintenanceIfNeeded
 // ═══════════════════════════════════════════════════════════════════════
 
 import type { StageKey } from '../../../stageInputMap';

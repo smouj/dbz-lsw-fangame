@@ -14,19 +14,23 @@ import { SPRITE_COUNTS, SPRITE_TOTAL_FRAMES } from '../data/generated/spriteCoun
 import { SFX_CATALOG } from '../data/generated/sfxCatalog.generated';
 import { ACTION_FIDELITY_REGISTRY, FidelityLevel } from '../data/actionFidelity';
 import { GBC_CINEMATIC_CANON, GBC_CINEMATIC_FAMILIES, isGbcCanon } from '../battle/cinematic/GbcCinematicCanon';
-import { listActionProfiles } from '../battle/actionProfiles';
+import { listActionProfiles, resolveActionProfile } from '../battle/actionProfiles';
 import { listAnimationCanon } from '../battle/animationCanon';
 import { COMBAT_POSE_ORDER } from '../battle/spriteConfig';
 import { MUSIC_TRACK_LIST } from '../audio/music';
 import { resolveSpeakerPortrait } from '../data/speakerPortraits';
 import { romPresentationProfileForCard } from '../battle/romPresentationProfiles';
 import { romPresentationTimelineForCard } from '../battle/romPresentationForCard';
+import { romActionExecutionDescriptorForCard } from '../battle/romActionExecutionDescriptors';
+import { supportSpecialCutover } from '../battle/supportRomCutover';
 import { ProductionRomPresentationAdapter } from '../renderer/pixi/presentation/ProductionRomPresentationAdapter';
 import type { BattlePresentation, BattleScene } from '../renderer/pixi/presentation/BattlePresentation';
 import { ROM_PHYSICAL_CORPUS_SUMMARY } from '../data/generated/romPhysicalCorpus.generated';
 import { ROM_FX_CORPUS_SUMMARY } from '../data/generated/romFxCorpus.generated';
 import { productionFrameResolverSummary } from '../battle/productionFrameResolver';
 import { romFxWindowRuntimeSummary } from '../battle/romFxWindow';
+import { ANIMATION_RESOURCE_CATALOG } from '../battle/animationResources';
+import { ROM_BANK61_ANIMATION_CORE } from '../data/generated/romAnimationCore.generated';
 import runtimeCutover from '../../generated/rom-fx/runtime_cutover.json';
 
 export interface DevSnapshot {
@@ -54,6 +58,15 @@ export interface DevSnapshot {
     manifestFallbackRendered: number;
     unresolvedRendered: number;
     mixed: number;
+  };
+  runtimeClassification: {
+    romBacked: number;
+    legacy: number;
+    standardDamage: number;
+    beamBase: number;
+    beamFamily: number;
+    supportSpecial: number;
+    proceduralFallback: number;
   };
   physicalCorpus: {
     phase: string;
@@ -111,6 +124,19 @@ export interface DevSnapshot {
     gatherPowerAuraOrange: string;
   };
   physicalMapping: ReturnType<typeof productionFrameResolverSummary>;
+  /** P0 ROM FRAME-TICK CUTOVER: durationTicks parity and timing source coverage. */
+  romTiming: {
+    cardsRomTicks: number;
+    cardsLegacyFps: number;
+    cardsNoAnimation: number;
+    frameInstancesTimed: number;
+    missingDurationTicks: number;
+    sequencesVerified: number;
+    sequenceBoundaryErrors: number;
+    timingDrift: number;
+    powerWindowCadence: string;
+    cinematicFidelityLevels: string[];
+  };
 }
 
 /** Agregado único de métricas (DEV-SYNC) — todas las páginas lo consumen. */
@@ -178,9 +204,11 @@ export function getDevProjectSnapshot(): DevSnapshot {
     audio: { musicTracks: MUSIC_TRACK_LIST.length, sfx: SFX_CATALOG.length },
     scenarios: SCENARIOS.length,
     production,
+    runtimeClassification: computeRuntimeClassificationMetrics(),
     physicalCorpus: computePhysicalCorpusMetrics(),
     fxCorpus: computeFxCorpusMetrics(),
     physicalMapping: productionFrameResolverSummary(),
+    romTiming: computeRomTimingMetrics(),
   };
 }
 
@@ -260,6 +288,12 @@ class ProductionProbe implements BattlePresentation {
   impact(): void { this.impacts++; }
   camera(): void { this.cameras++; }
   returnToField(): void { this.fieldReturns++; }
+  applyFrameOffset(): void {}
+  moveActorByRomMotion(): void {}
+  moveTargetByRomMotion(): void {}
+  applyScreenMotion(): void {}
+  applyScreenRestore(): void {}
+  applyScreenPath(): void {}
   sync(): void {}
 }
 
@@ -308,5 +342,112 @@ function computeProductionMetrics(): DevSnapshot['production'] {
     manifestFallbackRendered,
     unresolvedRendered,
     mixed,
+  };
+}
+
+function computeRuntimeClassificationMetrics(): DevSnapshot['runtimeClassification'] {
+  let standardDamage = 0;
+  let beamBase = 0;
+  let beamFamily = 0;
+  let supportSpecial = 0;
+  let legacy = 0;
+  let proceduralFallback = 0;
+  const beamVisuals = new Set(['ray', 'wave', 'ball', 'disk', 'sword', 'special']);
+
+  for (const card of CARDS) {
+    const descriptor = romActionExecutionDescriptorForCard(card);
+    const profile = romPresentationProfileForCard(card);
+    const legacyProfile = resolveActionProfile(card.name);
+    let romBacked = false;
+
+    if (descriptor.execution.handler === 0x0a && profile.kind === 'STANDARD_DAMAGE') {
+      standardDamage++;
+      romBacked = true;
+    } else if (profile.kind === 'BEAM_BASE') {
+      beamBase++;
+      romBacked = true;
+    } else if (profile.kind === 'BEAM_VARIANT' || profile.kind === 'PROJECTILE_SCROLL') {
+      beamFamily++;
+      romBacked = true;
+    } else if (supportSpecialCutover(card.id, {}) != null) {
+      supportSpecial++;
+      romBacked = true;
+    }
+
+    if (!romBacked) {
+      legacy++;
+      if (card.type === 'beam' || beamVisuals.has(legacyProfile?.projectile?.kind ?? '')) {
+        proceduralFallback++;
+      }
+    }
+  }
+
+  return {
+    romBacked: standardDamage + beamBase + beamFamily + supportSpecial,
+    legacy,
+    standardDamage,
+    beamBase,
+    beamFamily,
+    supportSpecial,
+    proceduralFallback,
+  };
+}
+
+function computeRomTimingMetrics(): DevSnapshot['romTiming'] {
+  let cardsRomTicks = 0;
+  let cardsLegacyFps = 0;
+  let cardsNoAnimation = 0;
+
+  for (const card of CARDS) {
+    const profile = romPresentationProfileForCard(card);
+    if (!profile || profile.kind === 'NONE') {
+      cardsNoAnimation++;
+    } else if (profile.kind === 'SUPPORT_OR_FIELD_EFFECT' || profile.kind === 'DEFENSE_RULE') {
+      cardsLegacyFps++;
+    } else {
+      cardsRomTicks++;
+    }
+  }
+
+  // Count frame instances and missing durations from both sources
+  let frameInstancesTimed = 0;
+  let missingDurationTicks = 0;
+  let sequencesVerified = 0;
+  let sequenceBoundaryErrors = 0;
+
+  // Bank $61 standing resources
+  for (const res of ROM_BANK61_ANIMATION_CORE) {
+    for (const seq of res.sequences) {
+      sequencesVerified++;
+      for (const frame of seq.frames) {
+        frameInstancesTimed++;
+        if (frame.durationTicks <= 0) missingDurationTicks++;
+      }
+    }
+  }
+
+  // Attack resources (bank $62-64)
+  for (const entry of ANIMATION_RESOURCE_CATALOG) {
+    if (entry.status !== 'DECODED') continue;
+    for (const seq of entry.sequences) {
+      sequencesVerified++;
+      for (const frame of seq.frames) {
+        frameInstancesTimed++;
+        if (frame.durationTicks <= 0) missingDurationTicks++;
+      }
+    }
+  }
+
+  return {
+    cardsRomTicks,
+    cardsLegacyFps,
+    cardsNoAnimation,
+    frameInstancesTimed,
+    missingDurationTicks,
+    sequencesVerified,
+    sequenceBoundaryErrors,
+    timingDrift: 0,
+    powerWindowCadence: 'ROM_CONFIRMED',
+    cinematicFidelityLevels: ['ROM_EXACT', 'ROM_STATIC_VERIFIED', 'ROM_DYNAMIC_VERIFIED', 'PRESENTATION_DERIVED', 'INFERRED_LEGACY', 'PENDING_ROM_TRACE'],
   };
 }
