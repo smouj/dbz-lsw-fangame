@@ -38,10 +38,10 @@ function makeConfig(overrides: Partial<Parameters<typeof createInitialBattleStat
   return {
     playerFormId: 'goku_base', playerName: 'GOKU', playerForm: 'Base', playerLevel: 5,
     playerMaxHp: 1000, playerHp: 1000, playerStr: 10, playerKi: 8, playerSpd: 9,
-    playerMaxCc: 99, playerCc: 0,
+    playerMaxCc: 99, playerCc: 10,
     enemyFormId: 'piccolo_base', enemyName: 'PICCOLO', enemyForm: 'Base', enemyLevel: 5,
     enemyMaxHp: 1000, enemyHp: 1000, enemyStr: 9, enemyKi: 10, enemySpd: 7,
-    enemyMaxCc: 99, enemyCc: 0,
+    enemyMaxCc: 99, enemyCc: 10,
     playerPos: BattlePosition.DOWN_BACK, enemyPos: BattlePosition.DOWN_BACK,
     playerDeck: deck([1, 2, 4, 5, 6]), enemyDeck: deck([3, 7, 8, 9, 10]),
     playerLimits: [], playerFighterLimits: [],
@@ -78,6 +78,7 @@ check('vulnerabilidad derivada (DOWN_BACK damage)', isVulnerable(BattlePosition.
 // ── Recursos dentro de límites ──
 check('HP inicial dentro de límites', hpOf(s1, 'player').hp <= hpOf(s1, 'player').maxHp && hpOf(s1, 'player').hp >= 0);
 check('CC inicial dentro de límites', ccOf(s1, 'player') >= 0 && ccOf(s1, 'player') <= s1.player.maxCc);
+check('CC inicial = 10 (contrato battle start)', ccOf(s1, 'player') === 10 && ccOf(s1, 'enemy') === 10);
 check('stages iniciales a 0', s1.pStages.str === 0 && s1.pStages.ki === 0 && s1.pStages.spd === 0 && s1.pStages.guard === 0);
 check('guardia inicial null', s1.playerGuard === null);
 check('power inicial NORMAL (counter 0)', s1.player.powerWindowCounter === 0 && s1.enemy.powerWindowCounter === 0);
@@ -1402,6 +1403,9 @@ const frozen = JSON.stringify(rt2.state);
 rt2.available({ side: 'player' });
 check('M8: consultar available()/can() no muta el estado', JSON.stringify(rt2.state) === frozen);
 
+import { CHARA_SWITCH_COMMIT_OFFSET, CHARA_SWITCH_COMPLETED_OFFSET } from '../src/battle/engine/rom/romDescriptors';
+import type { BattleFighterState } from '../src/battle/engine/state/BattleState';
+
 // ── M8.POWER — powerWindowCounter como SSOT (ROM §102/§127/§132-138) ──
 // Gather escribe 5 · CHARA escribe 2 · nunca max() ni suma · LIMIT/BASIC/+
 // ofensivo/reposition se derivan del contador. El decremento vive en
@@ -1420,18 +1424,34 @@ check('M8: consultar available()/can() no muta el estado', JSON.stringify(rt2.st
   check('M8.POWER: GATHER_POWER emite GATHER_STARTED + POWER_CHANGED', g.ok &&
     g.events.some(e => e.type === 'GATHER_STARTED') && g.events.some(e => e.type === 'POWER_CHANGED'));
 
-  // GATHER → CHARA: la ROM ESCRIBE 2 (no max(5,2), no 5+2)
-  const gc = executeCommand({ ...g.state, phase: 'command' }, { type: 'CHARACTER_ACTION' }, { side: 'player', hasAlly: true });
-  check('M8.POWER: GATHER(5) → CHARA → counter = 2 (escritura, no max/suma)', gc.ok && gc.state.player.powerWindowCounter === 2);
+  // GATHER → CHARA: la ROM ESCRIBE 2 en el miembro ENTRANTE al COMMIT
+  // (no max(5,2), no 5+2). M8.CHARA difiere swap + escritura: al dispatch
+  // el contador del activo sigue en 5; el nuevo activo recibe 2 @ T+63.
+  const makeReserve = (over: Partial<BattleFighterState> = {}): BattleFighterState => ({
+    id: 'gohan_base', name: 'GOHAN', form: 'Base', level: 5,
+    maxHp: 900, hp: 900, str: 8, ki: 7, spd: 8, maxCc: 99, cc: 0,
+    battlePos: BattlePosition.DOWN_BACK, powerWindowCounter: 0, limits: [],
+    ...over,
+  });
+  const gc = executeCommand({ ...g.state, phase: 'command', player2: makeReserve() }, { type: 'CHARACTER_ACTION', side: 'player' }, { side: 'player' });
+  check('M8.POWER: CHARA (team) aceptado → STARTED + pending, contador activo intacto (5)',
+    gc.ok && gc.state.player.powerWindowCounter === 5 &&
+    gc.events.some(e => e.type === 'CHARACTER_SWITCH_STARTED') &&
+    gc.state.pendingCharacterSwitch !== null);
+  const gcCommit = advanceBattleClock(gc.state, CHARA_SWITCH_COMMIT_OFFSET);
+  check('M8.POWER: GATHER(5) → CHARA commit → nuevo activo counter = 2 (escritura, no max/suma)',
+    gcCommit.state.player.powerWindowCounter === 2 &&
+    gcCommit.state.player.id === 'gohan_base' &&
+    gcCommit.events.some(e => e.type === 'CHARACTER_SWITCH_COMMITTED'));
 
-  // CHARA: BACK horizontal + vertical preservada
+  // CHARA: BACK horizontal + vertical preservada — aplicado al ENTRANTE en COMMIT.
   const c0 = createInitialBattleState(makeConfig());
-  const cDown = executeCommand({ ...c0, phase: 'command', player: { ...c0.player, battlePos: BattlePosition.DOWN_FRONT } }, { type: 'CHARACTER_ACTION' }, { side: 'player', hasAlly: true });
-  check('M8.POWER: CHARA → horizontal BACK preservando vertical (GROUND_FRONT → GROUND_BACK)', cDown.ok && cDown.state.player.battlePos === BattlePosition.DOWN_BACK);
-  const cUp = executeCommand({ ...c0, phase: 'command', player: { ...c0.player, battlePos: BattlePosition.UP_FRONT } }, { type: 'CHARACTER_ACTION' }, { side: 'player', hasAlly: true });
-  check('M8.POWER: CHARA → horizontal BACK preservando vertical (AIR_FRONT → AIR_BACK)', cUp.ok && cUp.state.player.battlePos === BattlePosition.UP_BACK);
-  const cSame = executeCommand({ ...c0, phase: 'command', player: { ...c0.player, battlePos: BattlePosition.DOWN_BACK } }, { type: 'CHARACTER_ACTION' }, { side: 'player', hasAlly: true });
-  check('M8.POWER: CHARA con BACK ya activo no cambia posición', cSame.ok && cSame.state.player.battlePos === BattlePosition.DOWN_BACK);
+  const cDown = executeCommand({ ...c0, phase: 'command', player: { ...c0.player, battlePos: BattlePosition.DOWN_FRONT }, player2: makeReserve({ battlePos: BattlePosition.DOWN_FRONT }) }, { type: 'CHARACTER_ACTION', side: 'player' }, { side: 'player' });
+  check('M8.POWER: CHARA → horizontal BACK preservando vertical (GROUND_FRONT → GROUND_BACK)', cDown.ok && advanceBattleClock(cDown.state, CHARA_SWITCH_COMMIT_OFFSET).state.player.battlePos === BattlePosition.DOWN_BACK);
+  const cUp = executeCommand({ ...c0, phase: 'command', player2: makeReserve({ battlePos: BattlePosition.UP_FRONT }) }, { type: 'CHARACTER_ACTION', side: 'player' }, { side: 'player' });
+  check('M8.POWER: CHARA → horizontal BACK preservando vertical (AIR_FRONT → AIR_BACK)', cUp.ok && advanceBattleClock(cUp.state, CHARA_SWITCH_COMMIT_OFFSET).state.player.battlePos === BattlePosition.UP_BACK);
+  const cSame = executeCommand({ ...c0, phase: 'command', player2: makeReserve({ battlePos: BattlePosition.DOWN_BACK }) }, { type: 'CHARACTER_ACTION', side: 'player' }, { side: 'player' });
+  check('M8.POWER: CHARA con BACK ya activo no cambia posición', cSame.ok && advanceBattleClock(cSame.state, CHARA_SWITCH_COMMIT_OFFSET).state.player.battlePos === BattlePosition.DOWN_BACK);
 
   // LIMIT gate: counter > 0 → allowed · 0 → rejected
   const limOn = canExecute({ ...p0, phase: 'command', player: { ...p0.player, powerWindowCounter: 1 } }, { type: 'LIMIT' }, { side: 'player', limitCardsCount: 2 });
@@ -1475,11 +1495,18 @@ check('M8: consultar available()/can() no muta el estado', JSON.stringify(rt2.st
   check('M8.POWER: Runtime GATHER log incluye POST_ACTION_MAINTENANCE',
     rg.log.entries.some(e => e.event.type === 'POST_ACTION_MAINTENANCE'));
 
-  // Runtime: CHARA action completada → 2 → maintenance → 1
-  const rtC = new BattleRuntime({ state: { ...p0, phase: 'command' } });
-  const rc = rtC.dispatch({ type: 'CHARACTER_ACTION' }, { side: 'player', hasAlly: true });
+  // Runtime: CHARA diferida — dispatch no muta, commit @ T+63 escribe 2 en el
+  // entrante, completed @ T+95 → maintenance → 1.
+  const rtC = new BattleRuntime({ state: { ...p0, phase: 'command', player2: makeReserve() } });
+  const rc = rtC.dispatch({ type: 'CHARACTER_ACTION', side: 'player' }, { side: 'player' });
+  check('M8.POWER: Runtime CHARA dispatch NO muta contador (sigue 0, diferido)',
+    rc.ok && rc.state.player.powerWindowCounter === 0);
+  rtC.advance(CHARA_SWITCH_COMMIT_OFFSET);
+  check('M8.POWER: Runtime CHARA commit → contador 2 en el entrante',
+    rtC.state.player.powerWindowCounter === 2);
+  rtC.advance(CHARA_SWITCH_COMPLETED_OFFSET - CHARA_SWITCH_COMMIT_OFFSET);
   check('M8.POWER: Runtime CHARA completada → counter 1 (2 − maintenance)',
-    rc.state.player.powerWindowCounter === 1);
+    rtC.state.player.powerWindowCounter === 1);
 
   // Runtime: acción rechazada NO decrementa (§138)
   const rtR = new BattleRuntime({ state: { ...p0, phase: 'basic', player: { ...p0.player, powerWindowCounter: 4 } } });

@@ -130,6 +130,18 @@ export type DefenseChoice =
 // ─── Guardia activa (cartas Taiyoken/Avoid/Endurance/Absorb/Foresight) ───
 export type GuardType = 'avoid_beam' | 'avoid_damage' | 'reduce' | 'absorb' | 'cancel';
 
+// ─── Character switch diferido (M8.CHARA — ROM §176-178) ───
+// El commit (activeMember = selectedMember) ocurre ENTRE $27 (EXIT 43t) y
+// $28 (ENTRY 32t). El Engine registra los ticks de los hitos; el reloj
+// emite CHARACTER_SWITCH_COMMITTED / CHARACTER_SWITCH_COMPLETED al alcanzarlos.
+export interface PendingCharacterSwitch {
+  side: BattleSide;
+  /** Tick GBC en que se emite CHARACTER_SWITCH_COMMITTED (WAIT20 + EXIT43). */
+  commitTick: number;
+  /** Tick GBC en que se emite CHARACTER_SWITCH_COMPLETED (COMMIT + ENTRY32). */
+  completedTick: number;
+}
+
 // ─── Estado del QTE / Stage Attack (autoritativo, en ticks GBC absolutos) ───
 // M6: el reloj manda — las ventanas usan startedTick/deadlineTick (nunca
 // fracciones ni contadores por frame). Regla de borde (contractual):
@@ -208,6 +220,9 @@ export interface BattleState {
   /** M8.C2a — elección defensiva comprometida (null mientras AWAITING_CHOICE). */
   defenseChoice: DefenseChoice | null;
   pLockOn: boolean;
+
+  /** M8.CHARA — switch de miembro en curso (hitos diferidos del reloj). */
+  pendingCharacterSwitch: PendingCharacterSwitch | null;
 
   // ── cards ──
   deck: BattleDeckState;              // mazo real del jugador

@@ -41,11 +41,22 @@ export interface ActionSceneLoad {
 }
 
 // ─── CHARA exact motion (§176-178) ───
+// CORRECCIÓN (2026-08-28): CHARA_ENTRY total = 32t (no 13t). §177 descompone
+// +8×8 +6×4 +4×3 +2×2 +1×2 = +106px/19t → WAIT 5 → settle -1×8 = -8px/8t.
 export const CHARA_EXIT = {
   deltaPx: -98,
   moveTicks: 28,
   holdTicks: 15,
+  totalTicks: 43,
 } as const;
+
+/** Segmentos discretos exactos de $27 (§176): -1×2 · -2×2 · -3×4 · -4×20 = -98px/28t. */
+export const CHARA_EXIT_MOTION_SEGMENTS: ReadonlyArray<{ dxPerTick: number; dyPerTick: number; ticks: number }> = [
+  { dxPerTick: -1, dyPerTick: 0, ticks: 2 },
+  { dxPerTick: -2, dyPerTick: 0, ticks: 2 },
+  { dxPerTick: -3, dyPerTick: 0, ticks: 4 },
+  { dxPerTick: -4, dyPerTick: 0, ticks: 20 },
+];
 
 export const CHARA_ENTRY = {
   deltaPx: +106,
@@ -53,7 +64,34 @@ export const CHARA_ENTRY = {
   settleTicks: 8,
   netPx: +98,
   holdTicks: 5,
+  entryTicks: 19,
+  totalTicks: 32,
 } as const;
+
+/** Segmentos discretos exactos de $28 (§177): +8×8 +6×4 +4×3 +2×2 +1×2 = +106px/19t. */
+export const CHARA_ENTRY_MOTION_SEGMENTS: ReadonlyArray<{ dxPerTick: number; dyPerTick: number; ticks: number }> = [
+  { dxPerTick: +8, dyPerTick: 0, ticks: 8 },
+  { dxPerTick: +6, dyPerTick: 0, ticks: 4 },
+  { dxPerTick: +4, dyPerTick: 0, ticks: 3 },
+  { dxPerTick: +2, dyPerTick: 0, ticks: 2 },
+  { dxPerTick: +1, dyPerTick: 0, ticks: 2 },
+];
+
+// ─── Coreografía CHARACTER_SWITCH (§178) ───
+//   ACTION SETUP → state 0 → palette $0348 → WAIT 20 → MACRO $27 (EXIT 43t)
+//   → CHARACTER_SWITCH_COMMIT → MACRO $28 (ENTRY 32t) → palette $31 → FX.
+//  El commit (activeMember = selectedMember) ocurre ENTRE $27 y $28; la
+//  presentación no debe cambiar el miembro visible antes de terminar los 43t.
+
+/** §178 — WAIT 20 antes del MACRO $27 (pre-switch). */
+export const CHARA_SWITCH_PRE_WAIT_TICKS = 20;
+
+/** Offset desde CHARACTER_SWITCH_STARTED hasta COMMIT (WAIT 20 + EXIT 43). */
+export const CHARA_SWITCH_COMMIT_OFFSET = CHARA_SWITCH_PRE_WAIT_TICKS + CHARA_EXIT.totalTicks;
+
+/** Offset desde STARTED hasta COMPLETED (COMMIT 63 + ENTRY 32). */
+export const CHARA_SWITCH_COMPLETED_OFFSET = CHARA_SWITCH_COMMIT_OFFSET + CHARA_ENTRY.totalTicks;
+
 
 // ─── Support ROM descriptor (§185: gameplay y presentation SEPARADOS) ───
 export type RomSupportContext = 'ATTACK' | 'DEFENSE';
@@ -182,6 +220,27 @@ export interface RomDiscreteMotion {
 /** Rush físico — macro $1C (§211): +4px×24t + +2px×1t = +98px/25t. */
 export const ROM_RUSH_MOTION: RomDiscreteMotion = {
   segments: [{ dxPerTick: 4, dyPerTick: 0, ticks: 24 }, { dxPerTick: 2, dyPerTick: 0, ticks: 1 }],
+  mirrorBySide: true,
+};
+
+/** CHARA_EXIT — macro $27 (§176): -98px/28t + WAIT 15t = 43t total.
+ *  El hold se codifica como segmento dx=0 para positionAtTick determinista. */
+export const ROM_CHARA_EXIT_MOTION: RomDiscreteMotion = {
+  segments: [
+    ...CHARA_EXIT_MOTION_SEGMENTS,
+    { dxPerTick: 0, dyPerTick: 0, ticks: 15 }, // WAIT 15 (hold)
+  ],
+  mirrorBySide: true,
+};
+
+/** CHARA_ENTRY — macro $28 (§177): +106px/19t → WAIT 5 → settle -8px/8t = 32t total.
+ *  Neto +98px. El hold se codifica como segmento dx=0. */
+export const ROM_CHARA_ENTRY_MOTION: RomDiscreteMotion = {
+  segments: [
+    ...CHARA_ENTRY_MOTION_SEGMENTS,
+    { dxPerTick: 0, dyPerTick: 0, ticks: 5 },    // WAIT 5 (hold)
+    { dxPerTick: -1, dyPerTick: 0, ticks: 8 },   // settle -8px/8t
+  ],
   mirrorBySide: true,
 };
 

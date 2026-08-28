@@ -110,6 +110,16 @@ export type BattleEvent =
    *  window de AMBOS fighters tras una ActionExecution completada. */
   | { type: 'POST_ACTION_MAINTENANCE'; decrementedPowerWindows: BattleSide[] }
 
+  // ── character switch (M8.CHARA — ROM §176-178) ──
+  // El Engine emite el ciclo semántico del switch; la presentación traduce:
+  //   STARTED   → WAIT 20 → CHARA_EXIT (43t)
+  //   COMMITTED → CHARA_ENTRY (32t)
+  //   COMPLETED → cleanup
+  // El commit (activeMember = selectedMember) está alineado entre $27 y $28.
+  | { type: 'CHARACTER_SWITCH_STARTED'; side: BattleSide }
+  | { type: 'CHARACTER_SWITCH_COMMITTED'; side: BattleSide }
+  | { type: 'CHARACTER_SWITCH_COMPLETED'; side: BattleSide }
+
   // ── QTE / Stage Attack ──
   | { type: 'STAGE_PREP_STARTED'; side: BattleSide; level: 3 | 4 | 5 | 6; seq: StageKey[]; prepTicks: number }
   | { type: 'QTE_STARTED'; side: BattleSide; level: 3 | 4 | 5 | 6; seq: StageKey[]; limitFrames: number }

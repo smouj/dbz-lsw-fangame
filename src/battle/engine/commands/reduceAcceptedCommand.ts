@@ -89,10 +89,9 @@ export function reduceAcceptedCommand(state: BattleState, command: BattleCommand
       next = { ...state, phase: 'basic' };
       break;
     case 'CHARACTER_ACTION': {
-      // M8.POWER — CHARA escribe powerWindowCounter=2 + fuerza BACK
-      // (vertical preservada). El commit del miembro activo y su
-      // cinematografía son M8.CHARA (commit diferido Bank01:$7320).
-      const cw = characterSwitchPowerWindow(state);
+      // M8.CHARA — programa el swap diferido (sin mutar el miembro activo).
+      const side = command.side ?? 'player';
+      const cw = characterSwitchPowerWindow(state, side);
       next = cw.state;
       events = cw.events;
       break;

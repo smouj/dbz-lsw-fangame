@@ -33,7 +33,7 @@ export type CinematicBeatKind =
   | 'PRE_ACTION_HOLD'    // Wait before action begins (e.g. 20t STANDARD_DAMAGE prepare)
   | 'POST_ACTION_HOLD'   // Wait after action resolves (e.g. POST_ACTION_MAINTENANCE)
   | 'CHARA_EXIT'         // Character exit motion (-98px / 28t + hold 15t)
-  | 'CHARA_ENTRY'        // Character entry motion (+106→+98, settle 8t + hold 5t)
+  | 'CHARA_ENTRY'        // Character entry motion (+106px/19t + hold 5t + settle -8px/8t = 32t)
   | 'APPROACH'           // Rush/approach motion (RUSH $1C +98px / 25t)
   | 'BEAM_SETUP'         // Beam pre-adjustment motion ($1E -27px / 17t)
   | 'SCREEN_MOTION'      // Screen scroll/pan ($05 -6×19t, $06 -6×16t)
@@ -117,22 +117,22 @@ export const ROM_CINEMATIC_BEATS: readonly RomCinematicBeat[] = [
     family: 'SHARED',
     evidence: 'ROM_EXACT',
     source: { bank: 0x1e, address: null, macro: 0x27, section: '§176' },
-    description: 'Character exit: -98px / 28t move + 15t hold',
-    runtimeLocation: 'romDescriptors.CHARA_EXIT',
-    correctlyUsed: 'no',
-    remediation: 'buildTimeline.ts uses POSE_HOLD (8t) instead of CHARA_EXIT for scene transitions',
+    description: 'Character exit: -98px / 28t (segments -1×2·-2×2·-3×4·-4×20) + 15t hold',
+    runtimeLocation: 'romDescriptors.ROM_CHARA_EXIT_MOTION',
+    correctlyUsed: 'yes',
+    remediation: '',
   },
   {
     id: 'CHARA_ENTRY',
     kind: 'CHARA_ENTRY',
-    durationTicks: 8 + 5,  // 8t settle + 5t hold = 13t total
+    durationTicks: 19 + 5 + 8,  // 19t enter + 5t hold + 8t settle = 32t total
     family: 'SHARED',
     evidence: 'ROM_EXACT',
-    source: { bank: 0x1e, address: null, macro: 0x28, section: '§178' },
-    description: 'Character entry: +106→+98, settle -8px / 8t + hold 5t',
-    runtimeLocation: 'romDescriptors.CHARA_ENTRY',
-    correctlyUsed: 'no',
-    remediation: 'buildTimeline.ts does not use CHARA_ENTRY for ACTION→FIELD returns',
+    source: { bank: 0x1e, address: null, macro: 0x28, section: '§177' },
+    description: 'Character entry: +106px/19t (segments +8×8·+6×4·+4×3·+2×2·+1×2) + 5t hold + settle -8px/8t (net +98px)',
+    runtimeLocation: 'romDescriptors.ROM_CHARA_ENTRY_MOTION',
+    correctlyUsed: 'yes',
+    remediation: '',
   },
   {
     id: 'PALETTE_TRANSITION',
@@ -381,7 +381,7 @@ export const ROM_CINEMATIC_BEATS: readonly RomCinematicBeat[] = [
     description: 'QTE counter defense return to tactical',
     runtimeLocation: 'buildTimeline.ts QTE_COUNTER_RESOLVED DEFEND',
     correctlyUsed: 'yes',
-    remediation: '12t is PRESENTATION_DERIVED. Could use CHARA_ENTRY (13t) for tighter alignment.',
+    remediation: '12t is PRESENTATION_DERIVED. Could use CHARA_ENTRY (32t) for tighter alignment.',
   },
 
   // ── LEGACY GENERIC TIMINGS (profiles.ts — to be eliminated) ──
@@ -419,7 +419,7 @@ export const ROM_CINEMATIC_BEATS: readonly RomCinematicBeat[] = [
     description: 'T.returnField: generic 12t return to FIELD',
     runtimeLocation: 'profiles.ts T.returnField',
     correctlyUsed: 'yes',
-    remediation: '12t is PRESENTATION_DERIVED. CHARA_EXIT (43t) / CHARA_ENTRY (13t) are ROM_EXACT for scene-level transitions but not all returns use them.',
+    remediation: '12t is PRESENTATION_DERIVED. CHARA_EXIT (43t) / CHARA_ENTRY (32t) are ROM_EXACT character-switch motions (§176-178); generic ACTION→FIELD returns do not use them in the ROM.',
   },
   {
     id: 'LEGACY_BEAM_ATTACKER',

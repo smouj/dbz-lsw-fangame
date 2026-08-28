@@ -12,6 +12,10 @@
 // Todos los métodos son IMPERATIVOS y deterministas: el frame mostrado es
 // consecuencia del tick GBC (nunca setInterval/CSS duration/AnimatedSprite.play).
 
+import type { RomMotionSegment } from '../../../battle/romMotionMath';
+
+export type { RomMotionSegment };
+
 export type BattleScene =
   | 'FIELD'        // vista táctica: overworld sprites + posiciones
   | 'ACTION_SOLO'  // un personaje grande (Gather/support)
@@ -64,17 +68,20 @@ export interface BattlePresentation {
 
   /**
    * P0 SCENE-CAMERA — Inicia el movimiento ROM discreto del actor.
-   * El desplazamiento se calcula por tick GBC: position = start + dxPerTick * elapsed.
+   * El desplazamiento se calcula por tick GBC: position = start + Σ(segment.dxPerTick × ticks).
+   * Si se pasa `segments` (multi-segmento, p.ej. RUSH +4×24+2×1, CHARA -1×2·-2×2…), se usa
+   * positionAtTick(segments, elapsed); si no, fallback uniforme deltaPx/durationTicks.
    * Reemplaza moveActor/easeOutCubic para cards compiladas por ROM.
    * Si se llama, anula cualquier rush activo previo.
    */
-  moveActorByRomMotion(deltaPx: number, durationTicks: number, holdTicks: number): void;
+  moveActorByRomMotion(deltaPx: number, durationTicks: number, holdTicks: number, segments?: RomMotionSegment[]): void;
 
   /**
    * P0 SCENE-CAMERA — Inicia el movimiento ROM discreto del target.
-   * Para CHARA_EXIT/ENTRY del defensor y motions no-actor.
+   * (CHARA_EXIT/ENTRY usan moveActorByRomMotion — el miembro activo es el actor.
+   *  Este método queda para motions no-actor explícitos.)
    */
-  moveTargetByRomMotion(deltaPx: number, durationTicks: number, holdTicks: number): void;
+  moveTargetByRomMotion(deltaPx: number, durationTicks: number, holdTicks: number, segments?: RomMotionSegment[]): void;
 
   /**
    * P0 CAMERA PRESENTER — Aplica desplazamiento progresivo de pantalla

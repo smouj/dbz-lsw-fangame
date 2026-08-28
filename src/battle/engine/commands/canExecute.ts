@@ -78,8 +78,13 @@ export function canExecute(state: BattleState, command: BattleCommand, opts?: { 
     case 'JOINT':
     case 'BASIC':
       return ok();
-    case 'CHARACTER_ACTION':
-      return opts?.hasAlly ? ok() : reject('ACTION_LOCKED');
+    case 'CHARACTER_ACTION': {
+      // M8.CHARA — requiere un reserve REAL (player2/enemy2). En 1v1 no hay
+      // miembro entrante → rechazado (paridad ROM §116: selected==activeMember).
+      const side = command.side ?? opts?.side ?? 'player';
+      const reserve = side === 'player' ? state.player2 : state.enemy2;
+      return reserve ? ok() : reject('ACTION_LOCKED');
+    }
     case 'SELECT_CARD':
       return ok();
     case 'PLAY_CARD':

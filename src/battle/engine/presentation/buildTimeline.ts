@@ -25,6 +25,8 @@ import { compileBeamFamilyRuntimeCutover } from '../../beamBaseRomCutover';
 import { compileStandardDamageRuntimeCutover } from '../../standardDamageRomCutover';
 import { compileSupportRomRuntimeCutover } from '../../supportRomCutover';
 import { STAGE_PREP_BEATS, STAGE_PREP_TICKS } from '../clock/clock';
+import { ROM_CHARA_EXIT_MOTION, ROM_CHARA_ENTRY_MOTION, CHARA_SWITCH_PRE_WAIT_TICKS, type RomDiscreteMotion } from '../rom/romDescriptors';
+import { segmentsTotalTicks, segmentsNetDelta, type RomMotionSegment } from '../../romMotionMath';
 import type { ProjectileVisualKind } from '../../actionProfiles';
 import type { BattleEvent, BattleActionDescriptor } from '../events/BattleEvent';
 import type { BattleEventEnvelope } from '../events/EventLog';
@@ -76,6 +78,16 @@ interface ActionState {
 
 /** Duración por defecto de una pose (ticks GBC) hasta el siguiente beat. */
 const POSE_HOLD = 8;
+
+/** Segmentos de motion CHARA reflejados según el lado (mirrorBySide §176). */
+function charaMotionSegments(motion: RomDiscreteMotion, side: BattleSide): RomMotionSegment[] {
+  const mirror = motion.mirrorBySide && side === 'enemy';
+  return motion.segments.map(s => ({
+    dxPerTick: mirror ? -s.dxPerTick : s.dxPerTick,
+    dyPerTick: mirror ? -s.dyPerTick : s.dyPerTick,
+    ticks: s.ticks,
+  }));
+}
 
 export function buildPresentationTimeline(input: PresentationInput): BattleTimeline {
   const { events, context } = input;
@@ -457,6 +469,46 @@ export function buildPresentationTimeline(input: PresentationInput): BattleTimel
         add({ type: 'AURA', tick: env.tick, durationTicks: canon.totalFrames - 12, role: 'ACTOR', side: e.side, variant: 'power', visible: true }, env);
         add({ type: 'AUDIO', tick: env.tick, cue: 'powerUp' }, env);
         add({ type: 'SCENE', tick: env.tick + canon.totalFrames, durationTicks: 1, mode: 'OVERVIEW', background: context.overviewBackground }, env);
+        break;
+      }
+
+      // ── CHARACTER SWITCH (M8.CHARA — ROM §176-178) ──
+      // El Engine emite el ciclo semántico; la presentación traduce a motion:
+      //   STARTED   → WAIT 20 → CHARA_EXIT (43t)
+      //   COMMITTED → CHARA_ENTRY (32t)
+      //   COMPLETED → cleanup (idle).
+      // El commit visual queda ENTRE $27 y $28 (§178): el miembro no cambia
+      // visible antes de terminar los 43t de salida.
+      case 'CHARACTER_SWITCH_STARTED': {
+        const segs = charaMotionSegments(ROM_CHARA_EXIT_MOTION, e.side);
+        add({
+          type: 'FIGHTER_MOTION',
+          tick: env.tick + CHARA_SWITCH_PRE_WAIT_TICKS,
+          durationTicks: segmentsTotalTicks(segs),
+          side: e.side,
+          kind: 'CHARA_EXIT',
+          deltaPx: segmentsNetDelta(segs).x,
+          holdTicks: 0,
+          segments: segs,
+        }, env, 'chara_switch', 'ROM_EXACT');
+        break;
+      }
+      case 'CHARACTER_SWITCH_COMMITTED': {
+        const segs = charaMotionSegments(ROM_CHARA_ENTRY_MOTION, e.side);
+        add({
+          type: 'FIGHTER_MOTION',
+          tick: env.tick,
+          durationTicks: segmentsTotalTicks(segs),
+          side: e.side,
+          kind: 'CHARA_ENTRY',
+          deltaPx: segmentsNetDelta(segs).x,
+          holdTicks: 0,
+          segments: segs,
+        }, env, 'chara_switch', 'ROM_EXACT');
+        break;
+      }
+      case 'CHARACTER_SWITCH_COMPLETED': {
+        add({ type: 'FIGHTER_POSE', tick: env.tick, durationTicks: POSE_HOLD, role: 'ACTOR', side: e.side, pose: 'idle' }, env, 'chara_switch', 'ROM_EXACT');
         break;
       }
 

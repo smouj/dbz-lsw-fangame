@@ -129,7 +129,9 @@ export class BattleRuntime {
    */
   private actionCompletedBy(command: BattleCommand, result: CommandExecutionResult): boolean {
     if (!result.ok) return false;
-    if (command.type === 'CHARACTER_ACTION') return true;
+    // M8.CHARA — la ejecución de CHARACTER_ACTION es DIFERIDA (swap en
+    // COMMITTED@T+63, cierre en COMPLETED@T+95); su mantenimiento se aplica
+    // en advance() al detectar CHARACTER_SWITCH_COMPLETED, NO aquí.
     return result.events.some((e: BattleEvent) => {
       switch (e.type) {
         case 'ACTION_RESOLVED':
@@ -157,12 +159,24 @@ export class BattleRuntime {
   /** Evolución temporal automática (ClockAdapter → ticks enteros). */
   advance(ticks: number): AdvanceResult {
     const outcome = advanceBattleClock(this.state, ticks);
-    this.state = outcome.state;
-    this.log = appendOutcomeToEventLog(this.log, outcome.events, outcome.eventTicks);
+    let state = outcome.state;
+    let events = outcome.events;
+    let eventTicks = outcome.eventTicks;
+    // M8.CHARA — POST_ACTION_MAINTENANCE diferida (§132-133): CHARA cierra su
+    // ActionExecution en COMPLETED@T+95 (no en dispatch), así que el
+    // decremento de power window se aplica aquí, al detectar el cierre.
+    if (events.some(e => e.type === 'CHARACTER_SWITCH_COMPLETED')) {
+      const m = postActionMaintenance(state);
+      state = m.state;
+      events = [...events, ...m.events];
+      eventTicks = [...eventTicks, ...m.events.map(() => state.tick)];
+    }
+    this.state = state;
+    this.log = appendOutcomeToEventLog(this.log, events, eventTicks);
     this.timeline = buildPresentationTimeline({ events: this.log.entries, context: this.context });
     if (this.presenter) this.presenter.consume({ timeline: this.timeline, state: this.state });
     if (this.history) this.history.push(this.timeline);
-    return { outcome, log: this.log, timeline: this.timeline };
+    return { outcome: { state, events, eventTicks }, log: this.log, timeline: this.timeline };
   }
 
   /** Acceso a la historia de timelines (Replay M9 / auditoría). */

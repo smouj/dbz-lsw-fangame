@@ -16,7 +16,8 @@ import type { BattleRenderer } from '../BattleRenderer';
 import type { FighterActor } from '../actors/FighterActor';
 import { ACTION_LEFT_X, ACTION_RIGHT_X } from '../scenes/ActionScene';
 import { ACTION_GROUND_Y, rushX, easeOutCubic } from '../systems/MotionSystem';
-import type { BattlePresentation, BattleScene } from './BattlePresentation';
+import type { BattlePresentation, BattleScene, RomMotionSegment } from './BattlePresentation';
+import { positionFromSegments } from '../../../battle/romMotionMath';
 import { resolveProjectileVisualMode, type ProjectileVisualMode } from './projectileVisual';
 import { RomDisplayPresenter } from '../../../battle/romDisplay/RomDisplayPresenter';
 import { RomDisplayLayer } from '../../../battle/romDisplay/RomDisplayLayer';
@@ -75,6 +76,7 @@ export class PixiBattlePresentation implements BattlePresentation {
   private romMotionDuration = 0;
   private romMotionHoldTicks = 0;
   private romMotionDone = false;
+  private romMotionSegments: RomMotionSegment[] | null = null;
 
   constructor(renderer: BattleRenderer, cfg: PixiPresentationConfig) {
     this.renderer = renderer;
@@ -179,7 +181,7 @@ export class PixiBattlePresentation implements BattlePresentation {
   }
 
   /** P0 SCENE-CAMERA — ROM discrete motion: dxPerTick * elapsed, no easing. */
-  moveActorByRomMotion(deltaPx: number, durationTicks: number, holdTicks: number): void {
+  moveActorByRomMotion(deltaPx: number, durationTicks: number, holdTicks: number, segments?: RomMotionSegment[]): void {
     this.cancelRush(); // ROM motion supersedes legacy rush
     const a = this.actor;
     if (!a) return;
@@ -190,12 +192,13 @@ export class PixiBattlePresentation implements BattlePresentation {
     this.romMotionDxPerTick = durationTicks > 0 ? deltaPx / durationTicks : 0;
     this.romMotionDuration = durationTicks;
     this.romMotionHoldTicks = holdTicks;
+    this.romMotionSegments = segments && segments.length > 0 ? segments : null;
     this.romMotionDone = false;
     a.setPos(this.romMotionFromX, ACTION_GROUND_Y);
   }
 
-  /** P0 SCENE-CAMERA — ROM discrete motion for target (CHARA_EXIT/ENTRY). */
-  moveTargetByRomMotion(deltaPx: number, durationTicks: number, holdTicks: number): void {
+  /** P0 SCENE-CAMERA — ROM discrete motion for target (non-actor motions). */
+  moveTargetByRomMotion(deltaPx: number, durationTicks: number, holdTicks: number, segments?: RomMotionSegment[]): void {
     this.cancelRush();
     const t = this.target;
     if (!t) return;
@@ -206,6 +209,7 @@ export class PixiBattlePresentation implements BattlePresentation {
     this.romMotionDxPerTick = durationTicks > 0 ? deltaPx / durationTicks : 0;
     this.romMotionDuration = durationTicks;
     this.romMotionHoldTicks = holdTicks;
+    this.romMotionSegments = segments && segments.length > 0 ? segments : null;
     this.romMotionDone = false;
     t.setPos(this.romMotionFromX, ACTION_GROUND_Y);
   }
@@ -330,18 +334,24 @@ export class PixiBattlePresentation implements BattlePresentation {
       if (who) {
         const elapsed = this.renderer.currentTick - this.romMotionStartTick;
         if (!this.romMotionDone) {
-          if (elapsed <= this.romMotionDuration) {
-            // Motion phase: discrete displacement per tick
-            const x = this.romMotionFromX + this.romMotionDxPerTick * elapsed;
-            who.setPos(Math.round(x), ACTION_GROUND_Y);
+          let x = this.romMotionFromX;
+          let done = false;
+          if (this.romMotionSegments) {
+            // positionAtTick determinista sobre segmentos ROM discretos.
+            const pos = positionFromSegments(this.romMotionSegments, elapsed);
+            x = this.romMotionFromX + pos.x;
+            done = pos.done;
+          } else if (elapsed <= this.romMotionDuration) {
+            // Fallback uniforme (sin segmentos): dxPerTick * elapsed.
+            x = this.romMotionFromX + this.romMotionDxPerTick * elapsed;
           } else {
-            // Hold phase: stay at final position
-            const finalX = this.romMotionFromX + this.romMotionDxPerTick * this.romMotionDuration;
-            who.setPos(Math.round(finalX), ACTION_GROUND_Y);
-            if (elapsed > this.romMotionDuration + this.romMotionHoldTicks) {
-              this.romMotionDone = true;
-              this.romMotionActive = false;
-            }
+            x = this.romMotionFromX + this.romMotionDxPerTick * this.romMotionDuration;
+            done = elapsed > this.romMotionDuration + this.romMotionHoldTicks;
+          }
+          who.setPos(Math.round(x), ACTION_GROUND_Y);
+          if (done) {
+            this.romMotionDone = true;
+            this.romMotionActive = false;
           }
         }
       }
@@ -424,6 +434,7 @@ export class PixiBattlePresentation implements BattlePresentation {
     this.romMotionDxPerTick = 0;
     this.romMotionDuration = 0;
     this.romMotionHoldTicks = 0;
+    this.romMotionSegments = null;
   }
 
   /**

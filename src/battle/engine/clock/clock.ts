@@ -23,6 +23,7 @@
 
 import { GAMEPLAY_CONFIG } from '../../../config/gameplay.config';
 const GBC_FPS = GAMEPLAY_CONFIG.gbcNativeFps;
+import { BattlePosition, POSITION_DATA } from '../../../data/positions';
 import type { BattleEvent } from '../events/BattleEvent';
 import type { BattleSide, BattleState } from '../state/BattleState';
 import { resolveCounterDamage, resolveStageCard } from '../commands/reducers/damageReducer';
@@ -82,9 +83,13 @@ export function advanceBattleClock(state: BattleState, ticks: number): ClockAdva
       : q.state === 'INPUT_WINDOW' ? q.deadlineTick
       : q.state === 'COUNTER_WINDOW' ? q.counterDeadlineTick
       : 0;
+    // M8.CHARA — switch diferido en curso: también requiere tick-a-tick
+    // para emitir COMMITTED/COMPLETED en los hitos §178 (no bulk advance).
+    const sw = s.pendingCharacterSwitch;
 
-    if (activeDeadline <= 0) {
-      // Sin ventana activa: el tiempo pasa sin hechos (bulk advance).
+    if (activeDeadline <= 0 && !sw) {
+      // Sin ventana activa ni switch pendiente: el tiempo pasa sin hechos
+      // (bulk advance).
       s = { ...s, tick: s.tick + remaining };
       remaining = 0;
       break;
@@ -134,6 +139,33 @@ export function advanceBattleClock(state: BattleState, ticks: number): ClockAdva
       const ticks = counter.events.map(() => nextTick);
       events.push(...counter.events, { type: 'QTE_COUNTER_RESOLVED', side: 'enemy', action: 'TIMEOUT' });
       eventTicks.push(...ticks, nextTick);
+    }
+
+    // M8.CHARA — hitos del switch diferido (§178): commit entre $27 y $28.
+    if (sw) {
+      if (nextTick >= sw.completedTick) {
+        events.push({ type: 'CHARACTER_SWITCH_COMPLETED', side: sw.side });
+        eventTicks.push(nextTick);
+        s = { ...s, pendingCharacterSwitch: null };
+      } else if (nextTick >= sw.commitTick) {
+        // §123-126 — swap AUTORITATIVO del miembro activo (entidad completa)
+        // + efecto CHARA sobre el ENTRANTE: horizontal BACK (vertical
+        // preservada) y powerWindowCounter = 2.
+        const sideFighter = sw.side === 'player' ? s.player : s.enemy;
+        const sideReserve = sw.side === 'player' ? s.player2 : s.enemy2;
+        if (sideReserve) {
+          const alt = POSITION_DATA[sideReserve.battlePos].altitude;
+          const newPos = alt === 'AIR' ? BattlePosition.UP_BACK : BattlePosition.DOWN_BACK;
+          const switchedActive = { ...sideReserve, battlePos: newPos, powerWindowCounter: 2 };
+          s = sw.side === 'player'
+            ? { ...s, player: switchedActive, player2: sideFighter }
+            : { ...s, enemy: switchedActive, enemy2: sideFighter };
+        }
+        events.push({ type: 'CHARACTER_SWITCH_COMMITTED', side: sw.side });
+        eventTicks.push(nextTick);
+        // Marcar el commit como emitido (no re-emitir hasta COMPLETED).
+        s = { ...s, pendingCharacterSwitch: { ...sw, commitTick: Number.POSITIVE_INFINITY } };
+      }
     }
   }
 

@@ -8,13 +8,17 @@
 // ═══════════════════════════════════════════════════════════════════════
 
 import type { StageKey } from '../../stageInputMap';
+import type { BattleSide } from '../state/BattleState';
 
 export type BattleCommand =
   // ── command-strip (fase command) ──
   | { type: 'LIMIT' }
   | { type: 'JOINT' }
   | { type: 'BASIC' }
-  | { type: 'CHARACTER_ACTION' }
+  /** M8.CHARA — cambio de miembro activo (ROM §116-126). `side` identifica
+   *  qué lado cambia (el miembro entrante es su reserve: player2/enemy2).
+   *  El swap autoritativo NO ocurre aquí: se difiere al COMMITTED @ T+63. */
+  | { type: 'CHARACTER_ACTION'; side?: BattleSide }
   // ── mano / cartas ──
   | { type: 'SELECT_CARD'; handIndex: number }
   | { type: 'PLAY_CARD'; handIndex: number }

@@ -232,22 +232,13 @@ export class ProductionRomPresentationAdapter {
       }
       case 'FIGHTER_MOTION': {
         // P0 SCENE-CAMERA — Consume ROM motion discrete segments.
-        // dxPerTick * elapsed replaces easeOutCubic rush.
-        // CHARA_EXIT/ENTRY, RUSH, BEAM_SETUP all use this path.
-        if (cue.kind === 'CHARA_EXIT' || cue.kind === 'CHARA_ENTRY') {
-          // Target motion (defender exit/entry)
-          const applyMotion = (this.pres as Partial<Pick<BattlePresentation, 'moveTargetByRomMotion'>>).moveTargetByRomMotion;
-          if (typeof applyMotion === 'function') {
-            applyMotion.call(this.pres, cue.deltaPx, cue.durationTicks, cue.holdTicks);
-            visible = true;
-          }
-        } else {
-          // Actor motion (RUSH, BEAM_SETUP)
-          const applyMotion = (this.pres as Partial<Pick<BattlePresentation, 'moveActorByRomMotion'>>).moveActorByRomMotion;
-          if (typeof applyMotion === 'function') {
-            applyMotion.call(this.pres, cue.deltaPx, cue.durationTicks, cue.holdTicks);
-            visible = true;
-          }
+        // CHARA_EXIT/ENTRY, RUSH, BEAM_SETUP son motions del ACTOR (el miembro
+        // activo sale/entra o rushea). positionAtTick(segments, elapsed) reemplaza
+        // el easing; los segmentos discretos no se aplanan a dxPerTick uniforme.
+        const applyMotion = (this.pres as Partial<Pick<BattlePresentation, 'moveActorByRomMotion'>>).moveActorByRomMotion;
+        if (typeof applyMotion === 'function') {
+          applyMotion.call(this.pres, cue.deltaPx, cue.durationTicks, cue.holdTicks, cue.segments);
+          visible = true;
         }
         this.stats.motions++;
         break;

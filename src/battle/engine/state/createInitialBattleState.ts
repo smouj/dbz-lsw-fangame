@@ -53,6 +53,10 @@ export interface InitialBattleConfig {
   playerLimits: number[];
   /** Cartas LIMITED del roster del personaje (ids de forma, Fighter.limits). */
   playerFighterLimits: string[];
+  /** M8.CHARA — reserve del jugador (miembro 2) o null en 1v1. */
+  player2?: BattleFighterState | null;
+  /** M8.CHARA — reserve del enemigo (miembro 2) o null en 1v1. */
+  enemy2?: BattleFighterState | null;
   /** Quién ataca primero (SPD resuelta o azar del llamador). */
   firstAttacker: BattleSide;
   /** RNG determinista opcional (M2+): semilla/estado del PRNG. */
@@ -115,8 +119,8 @@ export function createInitialBattleState(cfg: InitialBattleConfig): BattleState 
     intro: true,
     player: fighterFromConfig(cfg, 'player'),
     enemy: fighterFromConfig(cfg, 'enemy'),
-    player2: null,
-    enemy2: null,
+    player2: cfg.player2 ?? null,
+    enemy2: cfg.enemy2 ?? null,
     playerTransformedForm: null,
     pStages: { ...ZERO_STAGES },
     eStages: { ...ZERO_STAGES },
@@ -126,6 +130,7 @@ export function createInitialBattleState(cfg: InitialBattleConfig): BattleState 
     defenseState: 'NONE',
     defenseChoice: null,
     pLockOn: false,
+    pendingCharacterSwitch: null,
     deck: cfg.playerDeck,
     eDeck: cfg.enemyDeck,
     selectedCard: null,

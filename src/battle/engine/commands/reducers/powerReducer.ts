@@ -15,7 +15,7 @@
 // ═══════════════════════════════════════════════════════════════════════
 
 import type { StageKey } from '../../../stageInputMap';
-import { BattlePosition, POSITION_DATA } from '../../../../data/positions';
+import { CHARA_SWITCH_COMMIT_OFFSET, CHARA_SWITCH_COMPLETED_OFFSET } from '../../rom/romDescriptors';
 import type { BattleEvent } from '../../events/BattleEvent';
 import type { BattleSide, BattleState } from '../../state/BattleState';
 import { gainCc } from './resourceReducer';
@@ -87,26 +87,23 @@ export function gatherPower(state: BattleState, side: BattleSide): { state: Batt
   };
 }
 
-/** CHARA (ROM §40/§127/§161): powerWindowCounter = 2 + posición horizontal BACK
- *  (vertical preservada). El swap de miembro activo y su cinematografía
- *  siguen siendo M8.CHARA (commit diferido en Bank01:$7320). */
-export function characterSwitchPowerWindow(state: BattleState): { state: BattleState; events: BattleEvent[] } {
-  const from = powerStateFromCounter(state.player.powerWindowCounter);
-  const to: 'FULL_POWER' = 'FULL_POWER';
-  const fighter = state.player;
-  const alt = POSITION_DATA[fighter.battlePos].altitude;
-  const newPos = alt === 'AIR' ? BattlePosition.UP_BACK : BattlePosition.DOWN_BACK;
-  const positionChanged = newPos !== fighter.battlePos;
+/** CHARA (ROM §116-126): programa el cambio de miembro activo SIN ejecutarlo.
+ *  El swap autoritativo (activeMember = selectedMember) y los efectos de
+ *  CHARA (powerWindowCounter = 2 + horizontal BACK — §124-126) los aplica
+ *  el RELOJ en el hito COMMITTED @ T+63 (§178: WAIT20 + EXIT43). Aquí solo
+ *  se registra la intención y el timing. */
+export function characterSwitchPowerWindow(state: BattleState, side: BattleSide): { state: BattleState; events: BattleEvent[] } {
   return {
     state: {
       ...state,
-      player: { ...fighter, battlePos: newPos, powerWindowCounter: 2 },
+      pendingCharacterSwitch: {
+        side,
+        commitTick: state.tick + CHARA_SWITCH_COMMIT_OFFSET,
+        completedTick: state.tick + CHARA_SWITCH_COMPLETED_OFFSET,
+      },
     },
     events: [
-      ...(positionChanged
-        ? [{ type: 'POSITION_CHANGED' as const, side: 'player' as const, from: fighter.battlePos, to: newPos, axis: 'HORIZONTAL' as const }]
-        : []),
-      { type: 'POWER_CHANGED', from, to },
+      { type: 'CHARACTER_SWITCH_STARTED', side },
     ],
   };
 }

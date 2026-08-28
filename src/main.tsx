@@ -43,6 +43,15 @@ import { stageInputPose, stageInputFieldPose, stageInputLunges } from './battle/
 import { nextStageSequence } from './battle/stageSequences';
 import { nextTransformedForm } from './battle/transforms';
 import { BattleTimeline, type CinematicEvent, type CinematicProfile } from './battle/timeline';
+import {
+  BATTLE_INTRO_PRESENTATION_CONFIG,
+  INITIAL_BATTLE_INTRO_PRESENTATION,
+  buildBattleIntroPresentation,
+  buildPhaseBannerPresentation,
+  reduceBattleIntroPresentation,
+  type BattleIntroPresentationSnapshot,
+  type PhaseBannerKind,
+} from './battle/presentation/battleStartPresentation';
 import { profileFor, type CinematicKind } from './battle/profiles';
 import { actionSemanticsForCard } from './battle/actionProfiles';
 import { resolveCombatPose, type BattleSpritePose } from './battle/spriteConfig';
@@ -61,7 +70,8 @@ import { BattleRuntime, useBattleRuntime, createCuePresenter, type BattlePresent
 import { createInitialBattleState } from './battle/engine/state/createInitialBattleState';
 import { battleOutcome } from './battle/engine/state/battleStateSelectors';
 import { decideEnemyCommand, createEnemySession } from './battle/enemy/enemyController';
-import type { BattleState } from './battle/engine/state/BattleState';
+import type { BattleState, BattleFighterState } from './battle/engine/state/BattleState';
+import { CHARA_SWITCH_COMMIT_OFFSET, CHARA_SWITCH_COMPLETED_OFFSET } from './battle/engine/rom/romDescriptors';
 import { applyCinematicEvent } from './renderer/pixi/presentation/CinematicAdapter';
 import type { PixiBattlePresentation } from './renderer/pixi/presentation/PixiBattlePresentation';
 import { ProductionRomPresentationAdapter } from './renderer/pixi/presentation/ProductionRomPresentationAdapter';
@@ -99,6 +109,16 @@ try { applyHudLayout(); } catch { /* SSR / sin DOM */ }
 try { applyHudButtonVars(); } catch { /* SSR / sin DOM */ }
 
 type BattlePhase = 'position' | 'command' | 'basic' | 'limitSelect' | 'cardSelect' | 'stageInput' | 'enemyTurn' | 'defend' | 'discard' | 'win' | 'lose';
+type BattleControlProjection =
+  | 'INTRO'
+  | 'PHASE_CUE'
+  | 'PLAYER_ATTACK_CHOICE'
+  | 'PLAYER_ACTION_RESOLVING'
+  | 'PLAYER_DEFENSE_CHOICE'
+  | 'ENEMY_ACTION_RESOLVING'
+  | 'ROUND_TRANSITION'
+  | 'TERMINAL'
+  | 'RESULTS';
 
 type CommandType = 'LIMIT' | 'J' | 'B' | 'C';
 
@@ -154,6 +174,18 @@ interface Fighter {
   battlePos: BattlePosition;
   battleId?: 'goku' | 'vegeta';
   limits: string[];
+}
+
+/** Proyecta un BattleFighterState (Engine, id=forma) a Fighter (React, id=personaje).
+ *  El swap C1b es autoritativo en runtime.state; React solo proyecta. */
+function fighterToReact(f: BattleFighterState): Fighter {
+  return {
+    id: getForm(f.id)?.character ?? f.id,
+    name: f.name, form: f.form, level: f.level,
+    maxHp: f.maxHp, hp: f.hp, str: f.str, ki: f.ki, spd: f.spd,
+    maxCc: f.maxCc, cc: f.cc, battlePos: f.battlePos,
+    battleId: f.battleId, limits: f.limits ?? [],
+  };
 }
 
 // Retratos de menú con fondo recortado (transparente) para integrarse en la
@@ -417,7 +449,9 @@ function CharacterSprite({ formId, height = 92, className = '', side }: {
 }
 
 // ─── Barra de HP ──────────────────────────────────────────
-function HPBar({ current, max, side, introFill = false }: { current: number; max: number; side: 'left' | 'right'; introFill?: boolean }) {
+function HPBar({ current, max, side, introFill = false, displayCurrent }: { current: number; max: number; side: 'left' | 'right'; introFill?: boolean; displayCurrent?: number }) {
+  const visibleCurrent = displayCurrent ?? current;
+  const displayPct = Math.max(0, Math.min(100, (visibleCurrent / max) * 100));
   const pct = Math.max(0, Math.min(100, (current / max) * 100));
   // Umbrales VISUALES (derivados del HP existente, sin gameplay nuevo):
   // >50% verde · 25–50% verde/amarillo (mid) · 12–25% naranja (low) ·
@@ -427,8 +461,8 @@ function HPBar({ current, max, side, introFill = false }: { current: number; max
     <div className={`hp-bar ${side} ${level} ${introFill ? 'intro-fill' : ''}`}
       data-tip={tipBlock('HP', [['stats', `${current} / ${max}`]])}>
       <div className="hp-bar-track">
-        <div className="hp-bar-recent" style={{ width: `${pct}%` }} />
-        <div className="hp-bar-current" style={{ width: `${pct}%` }} />
+        <div className="hp-bar-recent" style={{ width: `${displayPct}%` }} />
+        <div className="hp-bar-current" style={{ width: `${displayPct}%` }} />
       </div>
     </div>
   );
@@ -665,13 +699,17 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit, onRemat
   // La prop playerFormId NO se muta; este estado derivado solo vive durante
   // el combate y se descarta al salir (vuelta al form base en menús).
   const [playerTransformedForm, setPlayerTransformedForm] = useState<string | null>(null);
-  const activePlayerFormId = playerTransformedForm ?? playerFormId;
+  // C1c — Form del fighter activo. Se proyecta desde runtime.state.player.id tras
+  // CHARACTER_ACTION (el Engine hace el swap; React solo refleja). Antes del runtime
+  // (pre-battle), usa la prop del capítulo. La transformación SSJ tiene prioridad.
+  const [charaSwitchFormId, setCharaSwitchFormId] = useState<string | null>(null);
+  const activePlayerFormId = playerTransformedForm ?? charaSwitchFormId ?? playerFormId;
 
   const [player, setPlayer] = useState<Fighter>(() => {
     const base: Fighter = {
       id: pf.character, name: getCharacter(pf.character)?.name || pf.character, form: pf.form,
       level: prog.level, maxHp: pf.hp, hp: pf.hp,
-      str: pf.str, ki: pf.ki, spd: pf.spd, maxCc: 99, cc: 0,
+      str: pf.str, ki: pf.ki, spd: pf.spd, maxCc: 99, cc: 10,
       battlePos: BattlePosition.DOWN_BACK, battleId: pf.battleId,
       limits: [],
     };
@@ -688,7 +726,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit, onRemat
     const base: Fighter = {
       id: af.character, name: getCharacter(af.character)?.name || af.character, form: af.form,
       level: prog.level, maxHp: af.hp, hp: af.hp,
-      str: af.str, ki: af.ki, spd: af.spd, maxCc: 99, cc: 0,
+      str: af.str, ki: af.ki, spd: af.spd, maxCc: 99, cc: 10,
       battlePos: BattlePosition.DOWN_BACK, limits: [],
     };
     return applyLevelUps(base, prog.level);
@@ -701,7 +739,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit, onRemat
       id: ef2.character, name: getCharacter(ef2.character)?.name || ef2.character, form: ef2.form,
       level: aiLevel, maxHp: ef2.hp + (b2?.hp || 0), hp: ef2.hp + (b2?.hp || 0),
       str: ef2.str + (b2?.str || 0), ki: ef2.ki + (b2?.ki || 0), spd: ef2.spd + (b2?.spd || 0),
-      maxCc: 99, cc: 0, battlePos: BattlePosition.DOWN_BACK, limits: [],
+      maxCc: 99, cc: 10, battlePos: BattlePosition.DOWN_BACK, limits: [],
     };
     return base;
   });
@@ -712,7 +750,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit, onRemat
       id: ef.character, name: getCharacter(ef.character)?.name || ef.character, form: ef.form,
       level: aiLevel, maxHp: ef.hp + (boost?.hp || 0), hp: ef.hp + (boost?.hp || 0),
       str: ef.str + (boost?.str || 0), ki: ef.ki + (boost?.ki || 0), spd: ef.spd + (boost?.spd || 0),
-      maxCc: 99, cc: 0,
+      maxCc: 99, cc: 10,
       battlePos: BattlePosition.DOWN_BACK, battleId: ef.battleId,
       limits: [],
     };
@@ -721,9 +759,12 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit, onRemat
   });
   const [phase, setPhase] = useState<BattlePhase>('position');
   const [turn, setTurn] = useState(1);
-  // Secuencia cinematográfica de presentación (como el GBC): VS screen sin
-  // texto — sprites desde ±42vw + VS + flash (3s hasta beginTurn)
-  const [intro, setIntro] = useState(true);
+  // Presentación de entrada de combate: bloquea input visible, pero no es
+  // autoridad de gameplay. El HP real ya está inicializado; el fill usa solo
+  // displayedLife calculado por ticks.
+  const [battleIntroPresentation, setBattleIntroPresentation] =
+    useState<BattleIntroPresentationSnapshot>(INITIAL_BATTLE_INTRO_PRESENTATION);
+  const intro = !battleIntroPresentation.completed;
 
   // BSO de resultado: victoria/derrota al resolver el combate (jingle → BGM)
   useEffect(() => {
@@ -788,7 +829,8 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit, onRemat
   // Attack Phase (como el jugador). En story usa el mazo REAL del jefe
   // (STORY_ENEMY_DECKS); en versus un deck genérico de 20. La IA analiza
   // SOLO su mano (nunca el pool global infinito) y las Joint usadas van a
-  // su discardPile. Ref para que enemyAttack lea el estado fresco.
+  // su discardPile. Ref para que la preparación del intent enemigo lea el
+  // estado fresco.
   const [eDeckState, setEDeckState] = useState<JointDeckState>(() => {
     const ids = storyChapter ? (STORY_ENEMY_DECKS[storyChapter] || []) : STARTER_DAMAGE_DECK;
     return createBattleDeck(ids);   // las 20 del jefe, sin filtrar
@@ -817,6 +859,9 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit, onRemat
         playerDeck: { drawPile: deckState.drawPile, hand: deckState.hand, discardPile: deckState.discardPile },
         enemyDeck: { drawPile: eDeckState.drawPile, hand: eDeckState.hand, discardPile: eDeckState.discardPile },
         playerLimits: [], playerFighterLimits: player.limits ?? [],
+        // C1b — reserves (team-mode) alimentan el BattleState; 1v1 conserva null.
+        player2: player2 && teamBattle?.ally ? { ...player2, id: teamBattle.ally, powerWindowCounter: 0 } : null,
+        enemy2: enemy2 && teamBattle?.enemy2 ? { ...enemy2, id: teamBattle.enemy2, powerWindowCounter: 0 } : null,
         firstAttacker: turnOwnerRef.current ?? 'player',
         seed: 4242,
       }),
@@ -908,7 +953,9 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit, onRemat
   const [loading, setLoading] = useState(true);
   const [hitShake, setHitShake] = useState<null | 'player' | 'enemy'>(null);
   const [viewFade, setViewFade] = useState(0);
-  const [phaseCue, setPhaseCue] = useState<{ id: number; title: string; sub: string } | null>(null);
+  const [phaseCue, setPhaseCue] = useState<{ id: number; phase: PhaseBannerKind } | null>(null);
+  const [presentationCueLog, setPresentationCueLog] = useState<string[]>(['BATTLE_SESSION_START']);
+  const phaseCueTimelineRef = useRef<BattleTimeline | null>(null);
   // Precarga de assets clave (sprites + fondos) con skeleton mientras tanto
   useEffect(() => {
     const urls = [
@@ -942,12 +989,29 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit, onRemat
   // original que demuestre un efecto específico.
   // (useEffect desactivado: setViewFade(v => v + 1), [viewMode]);
   const gbcMs = (frames: number) => Math.round((frames / GBC_NATIVE_FPS) * 1000);
-  const showPhaseCue = (title: string, sub: string, next: () => void, frames = 38) => {
-    setPhaseCue({ id: nextUid(), title, sub });
-    window.setTimeout(() => {
-      setPhaseCue(null);
-      next();
-    }, gbcMs(frames));
+  const showPhaseCue = (phaseKind: PhaseBannerKind) => {
+    phaseCueTimelineRef.current?.cancel();
+    const profile = buildPhaseBannerPresentation(phaseKind);
+    setPhaseCue({ id: nextUid(), phase: phaseKind });
+    setPresentationCueLog(prev => [...prev.slice(-16), `PHASE_BANNER:${phaseKind}`]);
+    const tl = new BattleTimeline(profile, {
+      onEvent: (e) => {
+        if (e.type !== 'MESSAGE') return;
+        const payload = e.payload as { cue?: string; phase?: PhaseBannerKind } | undefined;
+        if (payload?.cue) {
+          const cue = payload.cue;
+          setPresentationCueLog(prev => [...prev.slice(-16), payload.phase ? `${cue}:${payload.phase}` : cue]);
+        }
+        if (payload?.cue === 'PHASE_BANNER') setPhaseCue({ id: nextUid(), phase: payload.phase ?? phaseKind });
+        if (payload?.cue === 'PHASE_BANNER_CLEAR') setPhaseCue(null);
+      },
+      onComplete: () => {
+        setPhaseCue(null);
+        phaseCueTimelineRef.current = null;
+      },
+    });
+    phaseCueTimelineRef.current = tl;
+    tl.start();
   };
   // Desplazamiento del lunge del QTE según la distancia real entre luchadores:
   // FAR/MID/CLOSE (resolveRelativeDistance). El lunge NUNCA debe invadir el
@@ -1524,17 +1588,18 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit, onRemat
       const actor = getForm(playerFormId)!.character.toUpperCase();
       // +3 CC por entrar como atacante (spec §4 — battle.shtml)
       setPlayer(prev => ({ ...prev, cc: Math.min(prev.maxCc, prev.cc + 3) }));
-      addLog(`${actor} ${t('battle.strikesFirst')} (+3 CC)`);
+      addLog(`${actor} ${t('battle.strikesFirst')} (+3 CC)`, { gbc: false });
       // La posición PERSISTE entre fases (spec Move): el atacante no elige
       // posición, va directo a seleccionar su acción. Robo de Joint al entrar
       // en Attack Phase (máx 6 transitorio, 5 persistente).
       drawJointForAttack();
-      showPhaseCue('ATTACK PHASE', `${actor} +3 CC`, () => setPhase('command'));
+      setPhase('command');
+      showPhaseCue('ATTACK');
     } else {
       const actor = getForm(enemyFormId)!.character.toUpperCase();
       setEnemy(prev => ({ ...prev, cc: Math.min(prev.maxCc, prev.cc + 3) }));
-      addLog(`${actor} ${t('battle.strikesFirst')} (+3 CC)`);
-      showPhaseCue('ATTACK PHASE', `${actor} +3 CC`, () => enemyAttack());
+      addLog(`${actor} ${t('battle.strikesFirst')} (+3 CC)`, { gbc: false });
+      prepareEnemyIncomingAttack();
     }
   };
 
@@ -1544,8 +1609,11 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit, onRemat
     // comprometida en un exchange anterior bloquearía GUARD/MOVE/carta
     // (DEFENSE_ALREADY_COMMITTED) — el juego quedaría atascado en la
     // segunda defensa del combate.
+    void incomingName;
     engineAct({ type: 'RESET_DEFENSE' }, { side: 'player' });
-    showPhaseCue('DEFENSE PHASE', incomingName.toUpperCase(), () => setPhase('defend'), 34);
+    setDefendMenu(null);
+    setPhase('defend');
+    showPhaseCue('DEFENSE');
   };
 
   // TURN_START: recalcular SPD → fijar firstAttacker → Exchange 1 (spec §1-2)
@@ -1648,23 +1716,46 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit, onRemat
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [phase]);
 
-  // Arranque: primer ROUND del combate tras la intro cinematográfica (~3s)
-  // INTRO SIN TEXTO: sin diálogo GBC de presentación (era invisible: los
-  // controles están ocultos durante intro-active y se borraba antes de
-  // desmontar). La intro dura 3s — la última animación (flash) acaba a los
-  // 1.9s → 1.1s de respiro y arranca el combate (fluido, sin vacíos).
+  // Arranque: presentación determinista por ticks. Al terminar el fill de
+  // vida se entra en el exchange real, que aplica +3 CC/draw y muestra el
+  // banner de fase derivado de la iniciativa.
   const startedRef = useRef(false);
+  const introTimelineRef = useRef<BattleTimeline | null>(null);
   useEffect(() => {
-    const tm = setTimeout(() => setIntro(false), 3000);
-    return () => clearTimeout(tm);
-  }, []);
-  useEffect(() => {
-    if (intro) return;
-    if (startedRef.current) return;
-    startedRef.current = true;
-    beginTurn();
+    const profile = buildBattleIntroPresentation(rtApi.runtime.state);
+    const tl = new BattleTimeline(profile, {
+      onEvent: (e) => {
+        if (e.type !== 'MESSAGE') return;
+        const payload = e.payload as { cue?: string } | undefined;
+        if (!payload?.cue) return;
+        setPresentationCueLog(prev => [...prev.slice(-16), payload.cue!]);
+      },
+      onTick: (tick) => {
+        setBattleIntroPresentation(prev => reduceBattleIntroPresentation(prev, tick));
+      },
+      onComplete: () => {
+        setBattleIntroPresentation(prev => ({
+          ...reduceBattleIntroPresentation(prev, BATTLE_INTRO_PRESENTATION_CONFIG.countersVisible.ticks + 1),
+          completed: true,
+          inputLocked: true,
+          introOverlayVisible: false,
+          cues: [...prev.cues, 'BATTLE_INTRO_COMPLETED'],
+        }));
+        if (!startedRef.current) {
+          startedRef.current = true;
+          beginTurn();
+        }
+      },
+    });
+    introTimelineRef.current = tl;
+    tl.start();
+    return () => {
+      tl.cancel();
+      if (introTimelineRef.current === tl) introTimelineRef.current = null;
+      phaseCueTimelineRef.current?.cancel();
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [intro]);
+  }, []);
 
   const gatherPower = () => {
     // M8.C2 — el ENGINE decide el gather (GATHER_POWER → powerState
@@ -1709,15 +1800,27 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit, onRemat
       return;
     }
     if (cmd === 'C') {
-      // CHARA: cambiar al compañero (Select Character del GBC). Consume la acción.
+      // C1b — CHARA: cambio de miembro AUTORITATIVO en el Engine (ROM §116-126).
+      // React NO decide quién cambia: dispatch CHARACTER_ACTION, el Engine
+      // programa el swap diferido y lo ejecuta en COMMITTED @ T+63; React solo
+      // proyecta runtime.state.
       if (!player2) { addLog(t('battle.noAlly')); Sfx.cancel(); return; }
       Sfx.confirm();
-      const incoming = player2;
-      setPlayer2(player);
-      setPlayer(incoming);
+      const res = engineDispatch({ type: 'CHARACTER_ACTION', side: 'player' }, { side: 'player' });
+      if (!res.ok) { addLog(t('battle.noAlly')); Sfx.cancel(); return; }
+      // COMMIT @ T+63: el Engine intercambia player ↔ player2 (entidad completa).
+      rtApi.advance(CHARA_SWITCH_COMMIT_OFFSET);
+      // Proyección autoritativa desde runtime.state.
+      const rt = rtApi.runtime;
+      setPlayer(fighterToReact(rt.state.player));
+      setPlayer2(rt.state.player2 ? fighterToReact(rt.state.player2) : null);
+      // C1c — El sprite del jugador cambia al nuevo miembro tras el swap.
+      // runtime.state.player.id es el form ID autoritativo (gohan_young / goku_base).
+      setCharaSwitchFormId(rt.state.player.id);
+      // COMPLETED @ T+95: cleanup + maintenance (powerWindow 2 → 1).
+      rtApi.advance(CHARA_SWITCH_COMPLETED_OFFSET - CHARA_SWITCH_COMMIT_OFFSET);
       setPlayerPose('idle');
-      addLog(`${incoming.name} entra al combate! (CHARA)`);
-      // M8.C2a — frontera única: el enemigo entra por DEFENSE (input real).
+      addLog(`${rt.state.player.name} entra al combate! (CHARA)`);
       settleAttackHand(afterPlayerAction);
       return;
     }
@@ -2564,18 +2667,11 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit, onRemat
   // sin autoridad de combate; el controller es puro y determinista).
   const enemySessionRef = useRef(createEnemySession());
 
-  /** M8.C2a — arranca el ataque del enemigo (como atacante del exchange):
-   *  la IA decide su intent (gameplay real) y el juego entra en DEFENSE
-   *  esperando input REAL del jugador. La cinemática enemiga se dispara
-   *  SOLO al comprometer la defensa (defendBasic/defendJoint/defendLimit).
-   *  NUNCA un timer/animación del jugador lanza esto de forma indirecta. */
-  /** PA11 — arranca el ataque del enemigo: el ENEMY ELIGE (EnemyController
-   *  puro y determinista), el ENGINE decide. El controller ve la mano real
-   *  (draw enemigo sincronizado a state.eDeck); su comando pasa canExecute
-   *  (autoridad) y la resolución ocurre en el Engine (resolveCard) cuando el
-   *  jugador compromete la defensa. NUNCA React decide gameplay. */
-  const enemyAttack = () => {
-    setPhase('enemyTurn');
+  /** PA11/B1 — prepara el intent ofensivo enemigo, pero NO lo ejecuta.
+   *  El controller puede elegir carta con la mano real del enemigo; esa carta
+   *  queda en incomingCard y BattleScreen abre PLAYER_DEFENSE_CHOICE. La
+   *  cinemática/resolución enemiga solo empieza tras DEFENSE_COMMITTED. */
+  const prepareEnemyIncomingAttack = () => {
     setEnemyPose('idle');
     const drawn = drawOne(eDeckRef.current);
     if (drawn.card) {
@@ -2587,26 +2683,26 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit, onRemat
     enemySessionRef.current = decision.nextSession;
     if (decision.diagnostic.intent === 'GATHER') {
       const res = engineAct(decision.command, { side: 'enemy' });
-      if (!res.ok) { addLog(`${enemy.name} no puede Gather (${res.reason})`); advanceExchange(); return; }
+      if (!res.ok) { addLog(`${enemy.name} no puede Gather (${res.reason})`, { gbc: false }); advanceExchange(); return; }
       Sfx.powerUp();
       setEnemyPose('gather_power');
-      addLog(`${enemy.name} ${t('battle.gathers')}! (+4 STR/KI — Engine)`);
+      addLog(`${enemy.name} ${t('battle.gathers')}! (+4 STR/KI — Engine)`, { gbc: false });
       setEnemyPose('idle'); advanceExchange();
       return;
     }
     if (decision.diagnostic.intent === 'HEAL') {
       // El Engine no permite support heal ofensiva (heal = defensiva) → el
       // controller no la elige; defensa ante el estado: avance directo.
-      addLog(`${enemy.name} se reagrupa…`);
+      addLog(`${enemy.name} se reagrupa…`, { gbc: false });
       advanceExchange();
       return;
     }
-    // ATTACK_CARD / BASIC / PASS → ataque con la carta decidida (o stage
-    // básico universal). El defensor elige SU defensa ANTES de la cinemática
-    // (orden GBC) — la resolución la hace el Engine al comprometerla.
+    // ATTACK_CARD / BASIC / PASS → intent de ataque con la carta decidida (o
+    // stage básico universal). El defensor elige SU defensa ANTES de la
+    // cinemática (orden GBC).
     const card = decision.card ?? (getCard(1) as CardDef);
     incomingCard.current = card;
-    addLog(`${enemy.name} ${t('battle.uses')} ${card.name}`);
+    addLog(`${enemy.name} ${t('battle.uses')} ${card.name}`, { gbc: false });
     enterDefensePhase(card.name);
   };
 
@@ -2626,37 +2722,11 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit, onRemat
     setTurnOwner(rtApi.runtime.state.activeSide); // ENGINE-SNAPSHOT (initiativa intacta)
     const actor = getForm(enemyFormId)!.character.toUpperCase();
     setEnemy(prev => ({ ...prev, cc: Math.min(prev.maxCc, prev.cc + 3) }));
-    addLog(`${actor} ${t('battle.strikesFirst')} (+3 CC)`);
-    // PA11 — decisión del contraataque vía EnemyController (puro y legal).
-    const drawn = drawOne(eDeckRef.current);
-    if (drawn.card) {
-      eDeckRef.current = drawn.state;
-      setEDeckState(drawn.state);
-      rtApi.runtime.state = { ...rtApi.runtime.state, eDeck: drawn.state };
-    }
-    const decision = decideEnemyCommand({ battle: rtApi.runtime.state, session: enemySessionRef.current });
-    enemySessionRef.current = decision.nextSession;
-    if (decision.diagnostic.intent === 'GATHER') {
-      const res = engineAct(decision.command, { side: 'enemy' });
-      if (!res.ok) { addLog(`${enemy.name} no puede Gather (${res.reason})`); advanceExchange(); return; }
-      Sfx.powerUp();
-      setEnemyPose('gather_power');
-      addLog(`${enemy.name} ${t('battle.gathers')}! (+4 STR/KI — Engine)`);
-      setEnemyPose('idle'); advanceExchange();
-      return;
-    }
-    if (decision.diagnostic.intent === 'HEAL') {
-      addLog(`${enemy.name} se reagrupa…`);
-      advanceExchange();
-      return;
-    }
-    const card = decision.card ?? (getCard(1) as CardDef);
-    incomingCard.current = card;
-    addLog(`${enemy.name} ${t('battle.uses')} ${card.name}`);
+    addLog(`${actor} ${t('battle.strikesFirst')} (+3 CC)`, { gbc: false });
     // DEFENSE real: espera input indefinidamente (sin timers que auto-lancen
     // la cinemática enemiga). El gate de presentación abre cuando el jugador
     // compromete Guard/Move/Support.
-    enterDefensePhase(card.name);
+    prepareEnemyIncomingAttack();
   };
 
   /** M8.C2a — continuación tras la acción del JUGADOR (fin de su ataque/
@@ -2965,6 +3035,8 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit, onRemat
     phase === 'enemyTurn' ? 'ACTION' :
     phase === 'defend' ? 'DEFENSE' :
     phase === 'position' ? 'POSITION' : '';
+  const observedRuntimeState = { ...rtApi.runtime.state, phase: (phase === 'enemyTurn' ? 'defend' : phase) as BattleState['phase'] };
+  const runtimeControlBoundary = getControlBoundary(observedRuntimeState);
   const activeAttackerSide: 'player' | 'enemy' = exchangeIndex === 0
     ? turnOwner
     : turnOwner === 'player' ? 'enemy' : 'player';
@@ -2977,6 +3049,19 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit, onRemat
     : false;
   const qteResolving = phase === 'stageInput'
     && stageQte.state !== 'INPUT_WINDOW' && stageQte.state !== 'PREPARING';
+  const presentationInputLocked = intro || phaseCue !== null;
+  const controlProjection: BattleControlProjection = intro ? 'INTRO'
+    : phaseCue ? 'PHASE_CUE'
+    : phase === 'win' || phase === 'lose' ? 'RESULTS'
+    : runtimeControlBoundary === 'PLAYER_ATTACK_CHOICE' ? 'PLAYER_ATTACK_CHOICE'
+    : runtimeControlBoundary === 'PLAYER_DEFENSE_CHOICE' ? 'PLAYER_DEFENSE_CHOICE'
+    : phase === 'enemyTurn' ? 'ENEMY_ACTION_RESOLVING'
+    : phase === 'stageInput' ? 'PLAYER_ACTION_RESOLVING'
+    : phase === 'discard' ? 'ROUND_TRANSITION'
+    : battleOutcome(rtApi.runtime.state).status !== 'ACTIVE' ? 'TERMINAL'
+    : 'ROUND_TRANSITION';
+  const displayedPlayerHp = intro ? Math.round(player.hp * battleIntroPresentation.lifeFillProgress) : player.hp;
+  const displayedEnemyHp = intro ? Math.round(enemy.hp * battleIntroPresentation.lifeFillProgress) : enemy.hp;
   // Cada tecla del Stage Attack tiene SU pose (docs/FRAMES_ACTIONS_SPEC):
   // A=puño der, B=puño izq, UP=ascendente, DOWN=descendente, LEFT=avance, RIGHT=guardia.
   const qtePose: BattleSpritePose = phase === 'stageInput'
@@ -2999,7 +3084,6 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit, onRemat
     // M8.C2a-L — el boundary se computa con la fase OBSERVADA (la misma que
     // engineAct sincroniza en el puente): el Engine solo la actualiza en
     // dispatch y el inspector debe reflejar el estado real del juego.
-    const observed = { ...rt, phase: (phase === 'enemyTurn' ? 'defend' : phase) as BattleState['phase'] };
     return {
       phase: phase.toUpperCase(),
       round: turn,
@@ -3011,7 +3095,8 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit, onRemat
       defenseState: rt.defenseState,
       tick: rt.tick,
       rng: rt.rngState,
-      control: getControlBoundary(observed),
+      control: runtimeControlBoundary,
+      presentation: presentationInputLocked ? `LOCKED ${presentationCueLog.slice(-4).join(' > ')}` : controlProjection,
       fighters: [
         { side: 'P', name: player.name, level: player.level, hp: player.hp, maxHp: player.maxHp, cc: player.cc, maxCc: player.maxCc, pos: positionLabel(player.battlePos), pose: playerPose },
         ...(player2 ? [{ side: 'P' as const, name: player2.name, level: player2.level, hp: player2.hp, maxHp: player2.maxHp, cc: player2.cc, maxCc: player2.maxCc, pos: positionLabel(player2.battlePos), pose: 'idle' }] : []),
@@ -3033,7 +3118,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit, onRemat
   })() : null;
 
   return (
-    <div className={`battle-screen view-${viewMode.toLowerCase()} ${intro ? 'intro-active' : ''} ${cardFx ? 'is-cinematic' : ''} ${gbcMsg ? 'gbc-msg' : ''} ${pixiPresentationActive ? 'pixi-presentation-active' : ''} ${phase === 'stageInput' ? 'qte-active' : ''} ${qteResolving ? 'qte-resolving' : ''}`}>
+    <div className={`battle-screen view-${viewMode.toLowerCase()} ${presentationInputLocked ? 'presentation-locked' : ''} ${intro ? 'intro-active' : ''} ${cardFx ? 'is-cinematic' : ''} ${gbcMsg ? 'gbc-msg' : ''} ${pixiPresentationActive ? 'pixi-presentation-active' : ''} ${phase === 'stageInput' ? 'qte-active' : ''} ${qteResolving ? 'qte-resolving' : ''}`}>
       {/* ═══ Depurador cinematográfico (?debugCinematics=1) ═══ */}
       {isDebugCinematics() && debugCin && (
         <pre className="cinematic-debug-overlay">{renderDebugOverlay(debugCin, debugPaused)}</pre>
@@ -3061,16 +3146,18 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit, onRemat
       {phaseCue && (
         <div className="phase-cue" key={phaseCue.id}>
           <div className="phase-cue-line" />
-          <div className="phase-cue-title">{phaseCue.title}</div>
-          <div className="phase-cue-sub">{phaseCue.sub}</div>
+          <div className="phase-cue-title">
+            <span>{phaseCue.phase}</span>
+            <span>PHASE</span>
+          </div>
         </div>
       )}
 
       {/* ═══ INTRO FULL-SCREEN: VS de presentación — los 2 sprites entran
           desde FUERA hacia su posición (cinemática), VS en el centro, flash.
           SIN texto (nada de READY/FIGHT ni nombres). Cubre TODA la ventana.
-          La cierra el timeout de 3s (setIntro(false)). ═══ */}
-      {intro && (
+          La desmonta BattleIntroPresentation por ticks. ═══ */}
+      {battleIntroPresentation.introOverlayVisible && (
         <div className="battle-intro">
           <div className="intro-fighter intro-left">
             <div className="intro-portrait">
@@ -3178,7 +3265,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit, onRemat
               </span>
             )}
           </div>
-          <HPBar current={player.hp} max={player.maxHp} side="left" introFill={intro} />
+          <HPBar current={player.hp} max={player.maxHp} side="left" introFill={intro} displayCurrent={displayedPlayerHp} />
           <div className="hud-info-row">
             {/* Fase GBC: badges de estado HACIA AFUERA (borde), fase
                 ATTACK/DEFEND HACIA DENTRO (junto al VS) — lado opuesto al
@@ -3227,7 +3314,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit, onRemat
               </span>
             )}
           </div>
-          <HPBar current={enemy.hp} max={enemy.maxHp} side="right" introFill={intro} />
+          <HPBar current={enemy.hp} max={enemy.maxHp} side="right" introFill={intro} displayCurrent={displayedEnemyHp} />
           <div className="hud-info-row">
             <div className="hud-status right">
               {eStages.str > 0 && <span className="status-chip buff">STR+</span>}
@@ -3306,6 +3393,8 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit, onRemat
 
       {/* Controles */}
       <div className="battle-controls">
+        {presentationInputLocked && !cardFx && !gbcMsg ? null : (
+          <>
         {/* Chips de fase estilo CC GBC: ESQUINA INFERIOR IZQUIERDA —
             fase/exchange (ATTACK 1/2), mismo lenguaje que el 06 de CC.
             Ocultos con diálogo activo (el cuadro GBC los reemplaza) */}
@@ -3676,6 +3765,8 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit, onRemat
               <button className="btn-primary" onClick={onMainMenu}>{t('common.mainMenu')}</button>
             </div>
           </div>
+        )}
+          </>
         )}
           </>
         )}
