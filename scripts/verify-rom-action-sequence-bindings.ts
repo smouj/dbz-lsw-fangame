@@ -1,218 +1,107 @@
-// ═══════════════════════════════════════════════════════════════════════
-// verify-rom-action-sequence-bindings.ts
-//
-// Invariants:
-// 1. Every card has exactly one binding
-// 2. Card resource matches binding resource
-// 3. Binding sequences exist in RomSequenceRegistry when present
-// 4. Sequence frame counts match registry frame counts
-// 5. Duration ticks match registry ticks
-// 6. PHYSICAL_RESOURCE_FULLY_CLOSED bindings have linkageResolved for every frame
-// 7. RomSequenceRegistry never emits physicalId; pixel identity lives in the form corpus
-// 8. No unknown card resources (0xFF means none)
-// 9. No invented sequences (sequences match ROM_TECHNIQUES)
-// 10. No dangling linkage state
-// ═══════════════════════════════════════════════════════════════════════
-
 import { CARDS } from '../src/data/cards';
 import { romCardData } from '../src/data/romCardData';
-import { ROM_TECHNIQUES } from '../src/data/romAnimationData';
-import { getRomSequenceRegistry, buildRomSequenceRegistry, setRomSequenceRegistryOverride } from '../src/data/romSequenceRegistry';
-
-// Server-side: build registry with full ROM resolution
-import { readFileSync } from 'fs';
-import { resolve } from 'path';
-const ROOT = process.cwd();
-// Canonical ROM location (same as verify-rom-fighter-canon / verify-rom-palette-table):
-// raw ROM lives OUTSIDE the repo at ../dbz-lsw-decomp/13_raw_rom/.
-const ROM_PATH = process.env.ROM_PATH ?? resolve(ROOT, '../dbz-lsw-decomp/13_raw_rom/dbz-lsw-spain.gbc');
-const romBuffer = readFileSync(ROM_PATH);
-const fullRegistry = buildRomSequenceRegistry(romBuffer);
-setRomSequenceRegistryOverride(fullRegistry);
+import {
+  buildRomSequenceRegistry,
+  getRomSequenceRegistry,
+  setRomSequenceRegistryOverride,
+} from '../src/data/romSequenceRegistry';
 import {
   getRomActionSequenceBindings,
   getBindingSummary,
   getConsumersForResource,
   getBindingForCard,
 } from '../src/data/romActionSequenceBinding';
+import { readFileSync } from 'fs';
+import { resolve } from 'path';
 
-const NONE = 0xff;
+const ROM_PATH = process.env.ROM_PATH ?? resolve(process.cwd(), '../dbz-lsw-decomp/13_raw_rom/dbz-lsw-spain.gbc');
+const romBuffer = readFileSync(ROM_PATH);
+setRomSequenceRegistryOverride(buildRomSequenceRegistry(romBuffer));
 
-interface CheckResult {
-  pass: boolean;
-  label: string;
-  detail: string;
+let failures = 0;
+function check(name: string, ok: boolean, detail = '') {
+  if (!ok) {
+    failures++;
+    console.log(`FAIL ${name}${detail ? ` — ${detail}` : ''}`);
+  }
 }
 
-function check(label: string, condition: boolean, detail: string): CheckResult {
-  return { pass: condition, label, detail };
-}
+const bindings = getRomActionSequenceBindings();
+const registry = getRomSequenceRegistry();
+const summary = getBindingSummary();
+const byCard = new Map(bindings.map((binding) => [binding.card.id, binding]));
 
-function main() {
-  const bindings = getRomActionSequenceBindings();
-  const registry = getRomSequenceRegistry();
-  const summary = getBindingSummary();
-  const results: CheckResult[] = [];
+check('bindings:125 cards', bindings.length === 125, String(bindings.length));
+check('bindings:unique cards', byCard.size === CARDS.length, `${byCard.size}/${CARDS.length}`);
+check('registry:66 catalog slots', registry.length === 66, String(registry.length));
+check('registry:62 physical resources', registry.filter((entry) => entry.status === 'PHYSICAL_RESOURCE_FULLY_CLOSED').length === 62);
+check('registry:4 empty resource slots', registry.filter((entry) => entry.status === 'EMPTY_RESOURCE_SLOT').length === 4);
 
-  // 1. Every card has exactly one binding
-  const cardIds = new Set(bindings.map(b => b.card.id));
-  const expectedIds = new Set(CARDS.map(c => c.id));
-  results.push(check(
-    'Binding count matches card count',
-    cardIds.size === expectedIds.size && [...expectedIds].every(id => cardIds.has(id)),
-    `bindings=${cardIds.size} cards=${expectedIds.size}`,
-  ));
+for (const card of CARDS) {
+  const binding = byCard.get(card.id);
+  const rom = romCardData(card.name);
+  check(`card:${card.id}:binding`, !!binding, card.name);
+  check(`card:${card.id}:rom`, !!rom, card.name);
+  if (!binding || !rom) continue;
 
-  // 2. Card resource matches binding resource
-  let resourceMatchFails = 0;
-  for (const binding of bindings) {
-    const rom = romCardData(binding.card.name);
-    if (!rom) continue;
-    const actorTrack = binding.tracks.find(t => t.trackId === 'actor');
-    const expectedResId = rom.actorAnim === NONE ? null : rom.actorAnim;
-    if (actorTrack?.resourceId !== expectedResId) {
-      resourceMatchFails++;
-      console.log(`  MISMATCH: card #${binding.card.id} ${binding.card.name}: binding resourceId=${actorTrack?.resourceId} vs rom actorAnim=${expectedResId}`);
-    }
-  }
-  results.push(check('Card resource matches binding resource', resourceMatchFails === 0, `${resourceMatchFails} mismatches`));
+  const actorTrack = binding.tracks.find((track) => track.trackId === 'actor');
+  const expectedResource = rom.actorAnim === 0xff ? null : rom.actorAnim;
+  check(`card:${card.id}:actor resource`, actorTrack?.resourceId === expectedResource, `${actorTrack?.resourceId}/${expectedResource}`);
 
-  // 3. Binding sequences exist in RomSequenceRegistry when resource is DECODED
-  let sequenceExistFails = 0;
-  for (const binding of bindings) {
-    const actorTrack = binding.tracks.find(t => t.trackId === 'actor');
-    if (!actorTrack?.resourceId) continue;
-    const reg = registry.find(r => r.resourceId === actorTrack.resourceId);
-    if (reg && actorTrack.sequences.length > 0) {
-      // Sequences in binding must match registry
-      if (actorTrack.sequences.length !== reg.sequences.length) {
-        sequenceExistFails++;
-        console.log(`  SEQ COUNT MISMATCH: ${binding.card.name} res=$0x${actorTrack.resourceId.toString(16).padStart(2,'0')}: binding=${actorTrack.sequences.length} registry=${reg.sequences.length}`);
-      }
-    }
-  }
-  results.push(check('Binding sequences match registry', sequenceExistFails === 0, `${sequenceExistFails} mismatches`));
-
-  // 4. Fully closed resources have structural linkage for every frame.
-  let missingLinkage = 0;
-  let registryPhysicalIds = 0;
-  for (const entry of registry) {
-    if (entry.status === 'PHYSICAL_RESOURCE_FULLY_CLOSED') {
-      for (const seq of entry.sequences) {
-        for (const frame of seq.frames) {
-          if ('physicalId' in frame && (frame as unknown as { physicalId?: string }).physicalId) {
-            registryPhysicalIds++;
-            console.log(`  FALSE PHYSICAL ID IN SEQUENCE REGISTRY: ${entry.technique} seq=${seq.address} frame=${frame.frameIndex}`);
-          }
-          if (!frame.linkageResolved || frame.metaspritePieceCount <= 0 || frame.graphicsBlockCount <= 0) {
-            missingLinkage++;
-            console.log(`  MISSING linkage: ${entry.technique} seq=${seq.address} frame=${frame.frameIndex} vfid=${frame.visualFrameId}`);
-          }
-        }
-      }
-    }
-  }
-  results.push(check('PHYSICAL_RESOURCE_FULLY_CLOSED has linkageResolved for every frame', missingLinkage === 0, `${missingLinkage} missing linkage`));
-  results.push(check('RomSequenceRegistry emits no physicalId', registryPhysicalIds === 0, `${registryPhysicalIds} false physicalIds`));
-
-  // 5. FRAME_STREAM_CLOSED resources have unresolved linkage (honest status)
-  let falselyClosed = 0;
-  for (const entry of registry) {
-    if (entry.status === 'FRAME_STREAM_CLOSED') {
-      for (const seq of entry.sequences) {
-        for (const frame of seq.frames) {
-          if (frame.linkageResolved || ('physicalId' in frame && (frame as unknown as { physicalId?: string }).physicalId)) {
-            falselyClosed++;
-            console.log(`  FALSELY CLOSED: ${entry.technique} frame=${frame.frameIndex} has linkage/physicalId but status is FRAME_STREAM_CLOSED`);
-          }
-        }
-      }
-    }
-  }
-  results.push(check('FRAME_STREAM_CLOSED has no fake physical linkage', falselyClosed === 0, `${falselyClosed} falsely closed frames`));
-
-  // 6. Known-but-undecoded resources are fine (0xFF = none, not in registry yet)
-  // Only fail for resources that reference something truly impossible
-  let impossibleResources = 0;
-  const knownUndecoded = new Set<number>();
-  for (const binding of bindings) {
-    for (const track of binding.tracks) {
-      if (track.resourceId != null && track.resourceId !== NONE && track.physicalStatus === 'NO_ANIMATION_RESOURCE') {
-        const reg = registry.find(r => r.resourceId === track.resourceId);
-        const tech = techniqueForResource(track.resourceId);
-        if (!reg && !tech) {
-          knownUndecoded.add(track.resourceId);
-        }
-      }
-    }
-  }
-  // These are legitimate undecoded resources — not "unknown" in the sense of wrong
-  // We just haven't decoded them into ROM_TECHNIQUES yet
-  results.push(check('Known undecoded resources (not yet in registry)', knownUndecoded.size > 0, `${knownUndecoded.size} resources await decoding (expected: 52 of 66)`));
-
-  // 7. Consumer graph: every resource with consumers has correct card references
-  let consumerFails = 0;
-  for (const entry of registry) {
-    const consumers = getConsumersForResource(entry.resourceId);
-    // Every consumer should reference a card that actually uses this resource
-    for (const c of consumers) {
-      const binding = getBindingForCard(c.cardId);
-      if (!binding) {
-        consumerFails++;
-        console.log(`  CONSUMER DANGLING: ${entry.technique} consumer card #${c.cardId} has no binding`);
-      } else {
-        const actorTrack = binding.tracks.find(t => t.trackId === 'actor');
-        if (actorTrack?.resourceId !== entry.resourceId && actorTrack?.resourceId !== null) {
-          // Could be in FX track, which is fine
-        }
-      }
-    }
-  }
-  results.push(check('Consumer graph consistent', consumerFails === 0, `${consumerFails} dangling consumers`));
-
-  // Summary
-  console.log('\n═══════════════════════════════════════════════════');
-  console.log('  verify:rom-action-sequence-bindings');
-  console.log('═══════════════════════════════════════════════════\n');
-
-  console.log('Summary:');
-  console.log(`  Bindings: ${summary.totalBindings}`);
-  console.log(`  With actor resource: ${summary.withActorResource}`);
-  console.log(`  With FX resource: ${summary.withFxResource}`);
-  console.log(`  With generic track: ${summary.withGenericTrack}`);
-  console.log();
-  console.log(`  PHYSICAL_RESOURCE_FULLY_CLOSED: ${summary.byPhysicalStatus.PHYSICAL_RESOURCE_FULLY_CLOSED}`);
-  console.log(`  FRAME_STREAM_CLOSED: ${summary.byPhysicalStatus.FRAME_STREAM_CLOSED}`);
-  console.log(`  NO_ANIMATION_RESOURCE: ${summary.byPhysicalStatus.NO_ANIMATION_RESOURCE}`);
-  console.log();
-  console.log(`  Fully closed resources: ${summary.fullyClosedResources.length}`);
-  for (const r of summary.fullyClosedResources) console.log(`    ✅ ${r}`);
-  console.log(`  Frame stream only: ${summary.frameStreamOnlyResources.length}`);
-  for (const r of summary.frameStreamOnlyResources) console.log(`    ⚠️ ${r}`);
-  console.log();
-
-  let allPass = true;
-  for (const r of results) {
-    const icon = r.pass ? '✅' : '❌';
-    console.log(`  ${icon} ${r.label}: ${r.detail}`);
-    if (!r.pass) allPass = false;
+  if (expectedResource == null) {
+    check(`card:${card.id}:no actor sequence`, actorTrack?.sequences.length === 0, String(actorTrack?.sequences.length));
+    continue;
   }
 
-  console.log();
-  if (allPass) {
-    console.log('✅ All checks passed');
-    process.exit(0);
+  const resource = registry.find((entry) => entry.resourceId === expectedResource);
+  check(`card:${card.id}:registry resource`, !!resource, String(expectedResource));
+  if (!resource || !actorTrack) continue;
+
+  if (resource.status === 'EMPTY_RESOURCE_SLOT') {
+    check(`card:${card.id}:empty slot has no sequences`, actorTrack.sequences.length === 0, actorTrack.sequences.join(','));
+    check(`card:${card.id}:empty slot status`, actorTrack.physicalStatus === 'EMPTY_RESOURCE_SLOT', actorTrack.physicalStatus);
   } else {
-    console.log('❌ Some checks failed');
-    process.exit(1);
+    check(`card:${card.id}:all ROM sequences exposed`, actorTrack.sequences.length === resource.sequences.length, `${actorTrack.sequences.length}/${resource.sequences.length}`);
+    check(`card:${card.id}:physical status closed`, actorTrack.physicalStatus === 'PHYSICAL_RESOURCE_FULLY_CLOSED', actorTrack.physicalStatus);
+    check(`card:${card.id}:frame count`, actorTrack.totalFrames === resource.totalFrameInstances, `${actorTrack.totalFrames}/${resource.totalFrameInstances}`);
+    check(`card:${card.id}:tick count`, actorTrack.totalTicks === resource.totalTicks, `${actorTrack.totalTicks}/${resource.totalTicks}`);
   }
 }
 
-function techniqueForResource(resId: number): string | null {
-  for (const [name, tech] of Object.entries(ROM_TECHNIQUES)) {
-    if (tech.animationResource === resId) return name;
+for (const resource of registry) {
+  const consumers = getConsumersForResource(resource.resourceId);
+  for (const consumer of consumers) {
+    const binding = getBindingForCard(consumer.cardId);
+    check(`resource:${resource.resourceHex}:consumer:${consumer.cardId}`, !!binding, consumer.cardName);
+    check(
+      `resource:${resource.resourceHex}:consumer:${consumer.cardId}:track`,
+      !!binding?.tracks.some((track) => track.resourceId === resource.resourceId),
+      consumer.cardName,
+    );
   }
-  return null;
+
+  if (resource.status === 'EMPTY_RESOURCE_SLOT') {
+    check(`resource:${resource.resourceHex}:empty`, resource.sequences.length === 0 && resource.totalFrameInstances === 0 && resource.physicalFrameCount === 0);
+    continue;
+  }
+
+  check(`resource:${resource.resourceHex}:has sequences`, resource.sequences.length > 0, String(resource.sequences.length));
+  for (const [sequenceIndex, sequence] of resource.sequences.entries()) {
+    for (const frame of sequence.frames) {
+      check(`resource:${resource.resourceHex}:seq:${sequenceIndex}:linkage`, frame.linkageResolved);
+      check(`resource:${resource.resourceHex}:seq:${sequenceIndex}:piece count`, frame.metaspritePieceCount > 0, String(frame.metaspritePieceCount));
+      check(`resource:${resource.resourceHex}:seq:${sequenceIndex}:graphics count`, frame.graphicsBlockCount === frame.metaspritePieceCount, `${frame.graphicsBlockCount}/${frame.metaspritePieceCount}`);
+    }
+  }
 }
 
-main();
+check('summary:with actor resource', summary.withActorResource === 70, String(summary.withActorResource));
+check('summary:no resource-level unknown physical status', (summary.byPhysicalStatus.FRAME_STREAM_CLOSED ?? 0) === 0 && (summary.byPhysicalStatus.METASPRITE_LINK_PENDING ?? 0) === 0);
+check('summary:empty actor tracks', (summary.byPhysicalStatus.EMPTY_RESOURCE_SLOT ?? 0) === 4, String(summary.byPhysicalStatus.EMPTY_RESOURCE_SLOT ?? 0));
+
+console.log('═══ ROM ACTION SEQUENCE BINDINGS — FULL PHYSICAL CATALOG ═══');
+console.log(`bindings=${bindings.length} withActorResource=${summary.withActorResource}`);
+console.log(`registry=66 physical=62 empty=4`);
+console.log(`selectorKinds=${Object.entries(summary.bySelectorKind).map(([key, value]) => `${key}:${value}`).join(' · ')}`);
+console.log(failures === 0 ? 'ALL CHECKS PASSED ✅' : `${failures} CHECKS FAILED ❌`);
+process.exit(failures === 0 ? 0 : 1);
