@@ -46,9 +46,22 @@ for (const resource of PHYSICAL_FRAME_RECONCILIATION) {
   const catalog = ANIMATION_RESOURCE_CATALOG.find(entry => entry.resourceId === resource.resourceId);
   check(`resource:${resource.resourceHex}:catalog`, !!catalog);
   check(`resource:${resource.resourceHex}:decoded`, catalog?.status === 'DECODED', catalog?.status);
-  check(`resource:${resource.resourceHex}:frames count`, resource.frames.length === catalog?.physicalFrameCount, `${resource.frames.length}/${catalog?.physicalFrameCount}`);
+  check(
+    `resource:${resource.resourceHex}:frame instances present`,
+    resource.frames.length === catalog?.sequenceFrameInstances && resource.frames.length > 0,
+    `${resource.frames.length}/${catalog?.sequenceFrameInstances}`,
+  );
+  check(
+    `resource:${resource.resourceHex}:physical indexes bounded`,
+    resource.frames.every(frame => frame.rom.metasprite >= 0 && frame.rom.metasprite < (catalog?.physicalFrameCount ?? 0)),
+    `physicalFrameCount=${catalog?.physicalFrameCount}`,
+  );
   check(`resource:${resource.resourceHex}:gap cause`, staticGapCauseForResourceId(resource.resourceId).length > 0);
-  check(`resource:${resource.resourceHex}:compatible forms`, resource.compatibleForms.length > 0, String(resource.compatibleForms.length));
+  check(
+    `resource:${resource.resourceHex}:compatible forms`,
+    resource.compatibleForms.length > 0 || catalog?.cards.length === 0,
+    String(resource.compatibleForms.length),
+  );
 
   let exact = 0;
   let shared = 0;

@@ -11,6 +11,7 @@ import { ROM_PHYSICAL_CORPUS_SUMMARY } from '../src/data/generated/romPhysicalCo
 const ROOT = process.cwd();
 const PUBLIC_SPRITES = join(ROOT, 'public/assets/sprites');
 const EXPORT_ROOT = join(ROOT, 'generated/rom-fighters');
+const REQUIRE_ROM_PHYSICAL_EXPORTS = process.env.REQUIRE_ROM_PHYSICAL_EXPORTS === '1';
 
 let failures = 0;
 function check(name: string, ok: boolean, detail = '') {
@@ -37,38 +38,6 @@ check('corpus physical IDs > 0', totals.physicalIdentities > 0, `${totals.physic
 check('corpus frame instances > physical IDs', totals.frameInstances > totals.physicalIdentities, `${totals.frameInstances}/${totals.physicalIdentities}`);
 check('transparent ROM frame records are retained outside promoted PNGs', (totals as { transparentFrameRecords?: number; transparentPhysicalIds?: number }).transparentFrameRecords === 36 && (totals as { transparentFrameRecords?: number; transparentPhysicalIds?: number }).transparentPhysicalIds === 7, `records=${(totals as { transparentFrameRecords?: number }).transparentFrameRecords ?? 0} ids=${(totals as { transparentPhysicalIds?: number }).transparentPhysicalIds ?? 0}`);
 
-let publicPhysicalPngs = 0;
-let publicFrameEntries = 0;
-for (const form of ROM_PHYSICAL_CORPUS_SUMMARY.forms) {
-  const formDir = join(PUBLIC_SPRITES, form.formId);
-  const physicalDir = join(formDir, 'physical');
-  const manifestPath = join(formDir, 'rom-physical.manifest.json');
-  const provenancePath = join(formDir, 'provenance.json');
-  check(`${form.formId}: public ROM manifest exists`, existsSync(manifestPath));
-  check(`${form.formId}: public provenance exists`, existsSync(provenancePath));
-  check(`${form.formId}: public physical dir exists`, existsSync(physicalDir));
-  if (!existsSync(manifestPath) || !existsSync(provenancePath) || !existsSync(physicalDir)) continue;
-  const manifest = readJson<{ source: string; schemaVersion: number; physicalRendererSchema?: number; offsetEncoding: string; transparentFrameRecords?: unknown[]; sequences: Record<string, { physicalRendererSchema?: number; frames: unknown[] }> }>(manifestPath);
-  const provenance = readJson<{ source: string; physicalRendererSchema?: number; transparentFrameRecords?: Array<{ physicalRender?: string }>; frames: Array<{ file: string; rawCanvasFile?: string; rawImageFile?: string; physicalId: string; physicalRendererSchema?: number; assembly?: { errors?: string[]; assemblyInputHash?: string } }> }>(provenancePath);
-  const pngs = readdirSync(physicalDir).filter(name => name.endsWith('.png'));
-  publicPhysicalPngs += pngs.length;
-  publicFrameEntries += provenance.frames.length;
-  check(`${form.formId}: manifest source ROM_PHYSICAL_FIGHTERS`, manifest.source === 'ROM_PHYSICAL_FIGHTERS');
-  check(`${form.formId}: manifest schema 2/s8`, manifest.schemaVersion === 2 && manifest.offsetEncoding === 's8');
-  check(`${form.formId}: physical renderer schema 3`, manifest.physicalRendererSchema === 3 && provenance.physicalRendererSchema === 3);
-  check(`${form.formId}: provenance source ROM_PHYSICAL_FIGHTERS`, provenance.source === 'ROM_PHYSICAL_FIGHTERS');
-  check(`${form.formId}: transparent frame records are evidence, not promoted PNGs`, (provenance.transparentFrameRecords ?? []).every(frame => frame.physicalRender === 'EMPTY_NOT_PROMOTED') && (manifest.transparentFrameRecords?.length ?? 0) === (provenance.transparentFrameRecords?.length ?? 0));
-  check(`${form.formId}: physical PNG count matches provenance`, pngs.length === provenance.frames.length, `${pngs.length}/${provenance.frames.length}`);
-  check(`${form.formId}: every sequence has frame instances`, Object.values(manifest.sequences).every(seq => seq.physicalRendererSchema === 3 && seq.frames.length > 0));
-  check(`${form.formId}: every provenance PNG exists`, provenance.frames.every(frame => existsSync(join(formDir, frame.file))));
-  check(`${form.formId}: every provenance raw canvas exists`, provenance.frames.every(frame => frame.physicalRendererSchema === 3 && frame.rawCanvasFile && existsSync(join(formDir, frame.rawCanvasFile))));
-  check(`${form.formId}: every provenance clean RAW exists`, provenance.frames.every(frame => frame.physicalRendererSchema === 3 && frame.rawImageFile && existsSync(join(formDir, frame.rawImageFile))));
-  check(`${form.formId}: assembly input hash exists and frame errors are empty`, provenance.frames.every(frame => frame.assembly?.assemblyInputHash && (frame.assembly.errors?.length ?? 0) === 0));
-}
-
-check('public physical PNGs match corpus total', publicPhysicalPngs === totals.physicalIdentities, `${publicPhysicalPngs}/${totals.physicalIdentities}`);
-check('public provenance frame entries match corpus total', publicFrameEntries === totals.physicalIdentities, `${publicFrameEntries}/${totals.physicalIdentities}`);
-
 const catalogPath = join(EXPORT_ROOT, 'catalog.json');
 const physicalCatalogPath = join(EXPORT_ROOT, 'physical_catalog.json');
 const globalContactSheetPath = join(EXPORT_ROOT, 'contact_sheet_48_forms.png');
@@ -78,44 +47,100 @@ const finalSweepJsonPath = join(EXPORT_ROOT, 'final_sweep_48_forms.json');
 const finalSweepMdPath = join(EXPORT_ROOT, 'final_sweep_48_forms.md');
 const resourceCompletionJsonPath = join(EXPORT_ROOT, 'resource_physical_completion.json');
 const resourceCompletionMdPath = join(EXPORT_ROOT, 'resource_physical_completion.md');
-check('generated/rom-fighters catalog exists', existsSync(catalogPath));
-check('generated/rom-fighters physical catalog exists', existsSync(physicalCatalogPath));
-check('generated/rom-fighters 48-form contact sheet exists', existsSync(globalContactSheetPath));
-check('generated/rom-fighters 48-form contact sheet html exists', existsSync(globalContactSheetHtmlPath));
-check('generated/rom-fighters 48-form contact sheet json exists', existsSync(globalContactSheetJsonPath));
-check('generated/rom-fighters final sweep json exists', existsSync(finalSweepJsonPath));
-check('generated/rom-fighters final sweep md exists', existsSync(finalSweepMdPath));
-check('generated/rom-fighters resource physical completion json exists', existsSync(resourceCompletionJsonPath));
-check('generated/rom-fighters resource physical completion md exists', existsSync(resourceCompletionMdPath));
-if (existsSync(globalContactSheetPath)) {
-  const size = pngSize(globalContactSheetPath);
-  check('48-form contact sheet non-empty', statSync(globalContactSheetPath).size > 0 && size.width > 0 && size.height > 0, `${size.width}x${size.height}`);
-}
-if (existsSync(globalContactSheetJsonPath)) {
-  const rows = readJson<Array<{ formId: string; physicalIds: string[] }>>(globalContactSheetJsonPath);
-  check('48-form contact sheet has one row per form', rows.length === 48, `${rows.length}/48`);
-  check('48-form contact sheet has physical IDs per row', rows.every(row => row.formId && row.physicalIds.length > 0));
-}
-if (existsSync(catalogPath)) {
-  const catalog = readJson<{ forms: number; physicalIds: number; frameInstances: number; formsCatalog: Array<{ formId: string; physicalIds: number; frameInstances: number }> }>(catalogPath);
-  check('export catalog forms 48', catalog.forms === 48, `${catalog.forms}`);
-  check('export catalog physical IDs match corpus', catalog.physicalIds === totals.physicalIdentities, `${catalog.physicalIds}/${totals.physicalIdentities}`);
-  check('export catalog frame instances match corpus', catalog.frameInstances === totals.frameInstances, `${catalog.frameInstances}/${totals.frameInstances}`);
-  for (const form of catalog.formsCatalog) {
-    const sheet = join(EXPORT_ROOT, form.formId, 'contact_sheet.png');
-    const html = join(EXPORT_ROOT, form.formId, 'contact_sheet.html');
-    const manifest = join(EXPORT_ROOT, form.formId, 'manifest.json');
-    check(`${form.formId}: contact_sheet.html exists`, existsSync(html));
-    check(`${form.formId}: contact_sheet.png exists`, existsSync(sheet));
-    check(`${form.formId}: generated manifest exists`, existsSync(manifest));
-    if (existsSync(sheet)) {
-      const size = pngSize(sheet);
-      check(`${form.formId}: contact sheet non-empty`, statSync(sheet).size > 0 && size.width > 0 && size.height > 0, `${size.width}x${size.height}`);
+const publicExportPaths = ROM_PHYSICAL_CORPUS_SUMMARY.forms.flatMap((form) => {
+  const formDir = join(PUBLIC_SPRITES, form.formId);
+  return [
+    join(formDir, 'rom-physical.manifest.json'),
+    join(formDir, 'provenance.json'),
+    join(formDir, 'physical'),
+  ];
+});
+const generatedExportPaths = [
+  catalogPath,
+  physicalCatalogPath,
+  globalContactSheetPath,
+  globalContactSheetHtmlPath,
+  globalContactSheetJsonPath,
+  finalSweepJsonPath,
+  finalSweepMdPath,
+  resourceCompletionJsonPath,
+  resourceCompletionMdPath,
+];
+const physicalExportsPresent = [...publicExportPaths, ...generatedExportPaths].every(path => existsSync(path));
+
+if (!physicalExportsPresent && !REQUIRE_ROM_PHYSICAL_EXPORTS) {
+  console.log('SKIP ROM physical export files: generated fighter PNG/manifests are not committed; set REQUIRE_ROM_PHYSICAL_EXPORTS=1 after npm run gen:rom-runtime-assets for the strict local gate.');
+} else {
+  let publicPhysicalPngs = 0;
+  let publicFrameEntries = 0;
+  for (const form of ROM_PHYSICAL_CORPUS_SUMMARY.forms) {
+    const formDir = join(PUBLIC_SPRITES, form.formId);
+    const physicalDir = join(formDir, 'physical');
+    const manifestPath = join(formDir, 'rom-physical.manifest.json');
+    const provenancePath = join(formDir, 'provenance.json');
+    check(`${form.formId}: public ROM manifest exists`, existsSync(manifestPath));
+    check(`${form.formId}: public provenance exists`, existsSync(provenancePath));
+    check(`${form.formId}: public physical dir exists`, existsSync(physicalDir));
+    if (!existsSync(manifestPath) || !existsSync(provenancePath) || !existsSync(physicalDir)) continue;
+    const manifest = readJson<{ source: string; schemaVersion: number; physicalRendererSchema?: number; offsetEncoding: string; transparentFrameRecords?: unknown[]; sequences: Record<string, { physicalRendererSchema?: number; frames: unknown[] }> }>(manifestPath);
+    const provenance = readJson<{ source: string; physicalRendererSchema?: number; transparentFrameRecords?: Array<{ physicalRender?: string }>; frames: Array<{ file: string; rawCanvasFile?: string; rawImageFile?: string; physicalId: string; physicalRendererSchema?: number; assembly?: { errors?: string[]; assemblyInputHash?: string } }> }>(provenancePath);
+    const pngs = readdirSync(physicalDir).filter(name => name.endsWith('.png'));
+    publicPhysicalPngs += pngs.length;
+    publicFrameEntries += provenance.frames.length;
+    check(`${form.formId}: manifest source ROM_PHYSICAL_FIGHTERS`, manifest.source === 'ROM_PHYSICAL_FIGHTERS');
+    check(`${form.formId}: manifest schema 2/s8`, manifest.schemaVersion === 2 && manifest.offsetEncoding === 's8');
+    check(`${form.formId}: physical renderer schema 3`, manifest.physicalRendererSchema === 3 && provenance.physicalRendererSchema === 3);
+    check(`${form.formId}: provenance source ROM_PHYSICAL_FIGHTERS`, provenance.source === 'ROM_PHYSICAL_FIGHTERS');
+    check(`${form.formId}: transparent frame records are evidence, not promoted PNGs`, (provenance.transparentFrameRecords ?? []).every(frame => frame.physicalRender === 'EMPTY_NOT_PROMOTED') && (manifest.transparentFrameRecords?.length ?? 0) === (provenance.transparentFrameRecords?.length ?? 0));
+    check(`${form.formId}: physical PNG count matches provenance`, pngs.length === provenance.frames.length, `${pngs.length}/${provenance.frames.length}`);
+    check(`${form.formId}: every sequence has frame instances`, Object.values(manifest.sequences).every(seq => seq.physicalRendererSchema === 3 && seq.frames.length > 0));
+    check(`${form.formId}: every provenance PNG exists`, provenance.frames.every(frame => existsSync(join(formDir, frame.file))));
+    check(`${form.formId}: every provenance raw canvas exists`, provenance.frames.every(frame => frame.physicalRendererSchema === 3 && frame.rawCanvasFile && existsSync(join(formDir, frame.rawCanvasFile))));
+    check(`${form.formId}: every provenance clean RAW exists`, provenance.frames.every(frame => frame.physicalRendererSchema === 3 && frame.rawImageFile && existsSync(join(formDir, frame.rawImageFile))));
+    check(`${form.formId}: assembly input hash exists and frame errors are empty`, provenance.frames.every(frame => frame.assembly?.assemblyInputHash && (frame.assembly.errors?.length ?? 0) === 0));
+  }
+
+  check('public physical PNGs match corpus total', publicPhysicalPngs === totals.physicalIdentities, `${publicPhysicalPngs}/${totals.physicalIdentities}`);
+  check('public provenance frame entries match corpus total', publicFrameEntries === totals.physicalIdentities, `${publicFrameEntries}/${totals.physicalIdentities}`);
+
+  check('generated/rom-fighters catalog exists', existsSync(catalogPath));
+  check('generated/rom-fighters physical catalog exists', existsSync(physicalCatalogPath));
+  check('generated/rom-fighters 48-form contact sheet exists', existsSync(globalContactSheetPath));
+  check('generated/rom-fighters 48-form contact sheet html exists', existsSync(globalContactSheetHtmlPath));
+  check('generated/rom-fighters 48-form contact sheet json exists', existsSync(globalContactSheetJsonPath));
+  check('generated/rom-fighters final sweep json exists', existsSync(finalSweepJsonPath));
+  check('generated/rom-fighters final sweep md exists', existsSync(finalSweepMdPath));
+  check('generated/rom-fighters resource physical completion json exists', existsSync(resourceCompletionJsonPath));
+  check('generated/rom-fighters resource physical completion md exists', existsSync(resourceCompletionMdPath));
+  if (existsSync(globalContactSheetPath)) {
+    const size = pngSize(globalContactSheetPath);
+    check('48-form contact sheet non-empty', statSync(globalContactSheetPath).size > 0 && size.width > 0 && size.height > 0, `${size.width}x${size.height}`);
+  }
+  if (existsSync(globalContactSheetJsonPath)) {
+    const rows = readJson<Array<{ formId: string; physicalIds: string[] }>>(globalContactSheetJsonPath);
+    check('48-form contact sheet has one row per form', rows.length === 48, `${rows.length}/48`);
+    check('48-form contact sheet has physical IDs per row', rows.every(row => row.formId && row.physicalIds.length > 0));
+  }
+  if (existsSync(catalogPath)) {
+    const catalog = readJson<{ forms: number; physicalIds: number; frameInstances: number; formsCatalog: Array<{ formId: string; physicalIds: number; frameInstances: number }> }>(catalogPath);
+    check('export catalog forms 48', catalog.forms === 48, `${catalog.forms}`);
+    check('export catalog physical IDs match corpus', catalog.physicalIds === totals.physicalIdentities, `${catalog.physicalIds}/${totals.physicalIdentities}`);
+    check('export catalog frame instances match corpus', catalog.frameInstances === totals.frameInstances, `${catalog.frameInstances}/${totals.frameInstances}`);
+    for (const form of catalog.formsCatalog) {
+      const sheet = join(EXPORT_ROOT, form.formId, 'contact_sheet.png');
+      const html = join(EXPORT_ROOT, form.formId, 'contact_sheet.html');
+      const manifest = join(EXPORT_ROOT, form.formId, 'manifest.json');
+      check(`${form.formId}: contact_sheet.html exists`, existsSync(html));
+      check(`${form.formId}: contact_sheet.png exists`, existsSync(sheet));
+      check(`${form.formId}: generated manifest exists`, existsSync(manifest));
+      if (existsSync(sheet)) {
+        const size = pngSize(sheet);
+        check(`${form.formId}: contact sheet non-empty`, statSync(sheet).size > 0 && size.width > 0 && size.height > 0, `${size.width}x${size.height}`);
+      }
     }
   }
-}
-if (existsSync(finalSweepJsonPath)) {
-  const finalSweep = readJson<{
+  if (existsSync(finalSweepJsonPath)) {
+    const finalSweep = readJson<{
     rows: number;
     totalPhysicalIds: number;
     totalFrameInstances: number;
@@ -157,9 +182,9 @@ if (existsSync(finalSweepJsonPath)) {
       .filter(form => (form.assemblyErrors ?? 0) > 0 || (form.rawErrors ?? 0) > 0 || (form.trimErrors ?? 0) > 0)
       .map(form => `${form.formId}:a${form.assemblyErrors}/r${form.rawErrors}/t${form.trimErrors}`)
       .join(', ') || 'none');
-}
-if (existsSync(resourceCompletionJsonPath)) {
-  const resourceCompletion = readJson<{
+  }
+  if (existsSync(resourceCompletionJsonPath)) {
+    const resourceCompletion = readJson<{
     totals: {
       resources: number;
       renderable: number;
@@ -179,20 +204,21 @@ if (existsSync(resourceCompletionJsonPath)) {
       frameInstances: number;
     }>;
   }>(resourceCompletionJsonPath);
-  const statusTotal = resourceCompletion.totals.renderable
+    const statusTotal = resourceCompletion.totals.renderable
     + resourceCompletion.totals.frameStreamOnly
     + resourceCompletion.totals.metaspritePending
     + resourceCompletion.totals.graphicsPending
     + resourceCompletion.totals.handlerDependent
     + resourceCompletion.totals.dynamicPending
     + resourceCompletion.totals.unreferenced;
-  const renderableRows = resourceCompletion.resources.filter(resource => resource.status === 'RENDERABLE');
-  check('resource physical completion covers 66 AnimationResources', resourceCompletion.totals.resources === 66 && resourceCompletion.resources.length === 66, `${resourceCompletion.resources.length}/${resourceCompletion.totals.resources}`);
-  check('resource physical completion statuses cover every row', statusTotal === resourceCompletion.totals.resources, `${statusTotal}/${resourceCompletion.totals.resources}`);
-  check('resource physical completion renderable resources match corpus', resourceCompletion.totals.renderable === totals.resourcesRendered && renderableRows.length === totals.resourcesRendered, `${resourceCompletion.totals.renderable}/${totals.resourcesRendered}`);
-  check('resource physical completion renderable rows have physical outputs',
-    renderableRows.every(resource => resource.physicalLinkage === 'FULL' && resource.profilesRendered > 0 && resource.physicalIds > 0 && resource.frameInstances > 0));
-  check('resource physical completion does not claim 66/66 renderable', resourceCompletion.totals.renderable < resourceCompletion.totals.resources, `${resourceCompletion.totals.renderable}/${resourceCompletion.totals.resources}`);
+    const renderableRows = resourceCompletion.resources.filter(resource => resource.status === 'RENDERABLE');
+    check('resource physical completion covers 66 AnimationResources', resourceCompletion.totals.resources === 66 && resourceCompletion.resources.length === 66, `${resourceCompletion.resources.length}/${resourceCompletion.totals.resources}`);
+    check('resource physical completion statuses cover every row', statusTotal === resourceCompletion.totals.resources, `${statusTotal}/${resourceCompletion.totals.resources}`);
+    check('resource physical completion renderable resources match corpus', resourceCompletion.totals.renderable === totals.resourcesRendered && renderableRows.length === totals.resourcesRendered, `${resourceCompletion.totals.renderable}/${totals.resourcesRendered}`);
+    check('resource physical completion renderable rows have physical outputs',
+      renderableRows.every(resource => resource.physicalLinkage === 'FULL' && resource.profilesRendered > 0 && resource.physicalIds > 0 && resource.frameInstances > 0));
+    check('resource physical completion does not claim 66/66 renderable', resourceCompletion.totals.renderable < resourceCompletion.totals.resources, `${resourceCompletion.totals.renderable}/${resourceCompletion.totals.resources}`);
+  }
 }
 
 const charactersSrc = readFileSync(join(ROOT, 'src/devtools/characters.tsx'), 'utf8');
