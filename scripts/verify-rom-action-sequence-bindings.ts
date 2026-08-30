@@ -11,6 +11,10 @@ import {
   getConsumersForResource,
   getBindingForCard,
 } from '../src/data/romActionSequenceBinding';
+import {
+  ROM_SPECIAL_HANDLER_SEQUENCE_BINDINGS,
+  romSpecialHandlerBinding,
+} from '../src/data/generated/romSpecialHandlerSequenceBindings.generated';
 import { readFileSync } from 'fs';
 import { resolve } from 'path';
 
@@ -31,6 +35,8 @@ const registry = getRomSequenceRegistry();
 const summary = getBindingSummary();
 const byCard = new Map(bindings.map((binding) => [binding.card.id, binding]));
 
+const SPECIAL_HANDLERS = new Set([0x0b, 0x0c, 0x0d, 0x0e]);
+
 check('bindings:125 cards', bindings.length === 125, String(bindings.length));
 check('bindings:unique cards', byCard.size === CARDS.length, `${byCard.size}/${CARDS.length}`);
 check('registry:66 catalog slots', registry.length === 66, String(registry.length));
@@ -44,8 +50,9 @@ for (const card of CARDS) {
   check(`card:${card.id}:rom`, !!rom, card.name);
   if (!binding || !rom) continue;
 
-  const actorTrack = binding.tracks.find((track) => track.trackId === 'actor');
   const expectedResource = rom.actorAnim === 0xff ? null : rom.actorAnim;
+  const actorTracks = binding.tracks.filter((track) => track.resourceId === expectedResource && track.trackId.startsWith('actor'));
+  const actorTrack = actorTracks.find((track) => track.trackId === 'actor');
   check(`card:${card.id}:actor resource`, actorTrack?.resourceId === expectedResource, `${actorTrack?.resourceId}/${expectedResource}`);
 
   if (expectedResource == null) {
@@ -60,12 +67,65 @@ for (const card of CARDS) {
   if (resource.status === 'EMPTY_RESOURCE_SLOT') {
     check(`card:${card.id}:empty slot has no sequences`, actorTrack.sequences.length === 0, actorTrack.sequences.join(','));
     check(`card:${card.id}:empty slot status`, actorTrack.physicalStatus === 'EMPTY_RESOURCE_SLOT', actorTrack.physicalStatus);
-  } else {
-    check(`card:${card.id}:all ROM sequences exposed`, actorTrack.sequences.length === resource.sequences.length, `${actorTrack.sequences.length}/${resource.sequences.length}`);
-    check(`card:${card.id}:physical status closed`, actorTrack.physicalStatus === 'PHYSICAL_RESOURCE_FULLY_CLOSED', actorTrack.physicalStatus);
-    check(`card:${card.id}:frame count`, actorTrack.totalFrames === resource.totalFrameInstances, `${actorTrack.totalFrames}/${resource.totalFrameInstances}`);
-    check(`card:${card.id}:tick count`, actorTrack.totalTicks === resource.totalTicks, `${actorTrack.totalTicks}/${resource.totalTicks}`);
+    continue;
   }
+
+  check(`card:${card.id}:physical status closed`, actorTrack.physicalStatus === 'PHYSICAL_RESOURCE_FULLY_CLOSED', actorTrack.physicalStatus);
+
+  if (SPECIAL_HANDLERS.has(rom.exec)) {
+    // Special handlers now expose fixed phase tracks from the SSOT (literal
+    // $C3C7/$C3C6 selector writes), not a single RESULT_BRANCH actor track.
+    // Only the "signature" card (actorAnim === SSOT actorResource) receives
+    // phase tracks; other cards sharing the handler fall through to the
+    // generic single-track path below.
+    const ssot = romSpecialHandlerBinding(rom.exec);
+    const isSignature = !!ssot && rom.actorAnim === ssot.actorResource;
+    if (isSignature && ssot) {
+      check(`card:${card.id}:special phase count`, actorTracks.length === ssot.phases.length, `${actorTracks.length}/${ssot.phases.length}`);
+      const exposed = actorTracks.map((track) => track.sequences[0]);
+      const expected = ssot.phases.map((phase) => phase.sequence);
+      check(`card:${card.id}:special sequences`, JSON.stringify(exposed) === JSON.stringify(expected), `${exposed.join(',')} vs ${expected.join(',')}`);
+      for (let i = 0; i < ssot.phases.length; i++) {
+        const phase = ssot.phases[i];
+        const track = actorTracks[i];
+        const label = `card:${card.id}:special:${ssot.cardName}:phase${i}`;
+        if (!track) {
+          check(`${label}:exists`, false, 'missing');
+          continue;
+        }
+        check(`${label}:fixed selector`, track.selector.kind === 'FIXED' && track.selector.value === phase.sequence, `${track.selector.kind}/${track.selector.value}`);
+        check(`${label}:slot`, track.slot === phase.slot, `${track.slot}/${phase.slot}`);
+        check(`${label}:frame count`, track.totalFrames === phase.frameCount, `${track.totalFrames}/${phase.frameCount}`);
+        check(`${label}:tick count`, track.totalTicks === phase.totalTicks, `${track.totalTicks}/${phase.totalTicks}`);
+      }
+      continue;
+    }
+  }
+
+  check(`card:${card.id}:all ROM sequences exposed`, actorTrack.sequences.length === resource.sequences.length, `${actorTrack.sequences.length}/${resource.sequences.length}`);
+  check(`card:${card.id}:frame count`, actorTrack.totalFrames === resource.totalFrameInstances, `${actorTrack.totalFrames}/${resource.totalFrameInstances}`);
+  check(`card:${card.id}:tick count`, actorTrack.totalTicks === resource.totalTicks, `${actorTrack.totalTicks}/${resource.totalTicks}`);
+}
+
+// Resource-level coverage: every physical resource used as an actor resource must
+// have ALL its sequences reachable through actor tracks. This accounts for shared
+// resources (e.g. $1C split across Purple Comet and P.Comet Z).
+for (const resource of registry) {
+  if (resource.status === 'EMPTY_RESOURCE_SLOT') continue;
+  const covered = new Set<number>();
+  for (const binding of bindings) {
+    for (const track of binding.tracks) {
+      if (track.resourceId === resource.resourceId && track.trackId.startsWith('actor')) {
+        for (const seq of track.sequences) covered.add(seq);
+      }
+    }
+  }
+  if (covered.size === 0) continue;
+  check(
+    `resource:${resource.resourceHex}:all sequences covered by actor consumers`,
+    covered.size === resource.sequences.length && resource.sequences.every((_, index) => covered.has(index)),
+    `covered=${[...covered].sort((a, b) => a - b).join(',')} total=${resource.sequences.length}`,
+  );
 }
 
 for (const resource of registry) {
@@ -109,15 +169,37 @@ for (const cardId of standardDamageCardIds) {
   check(`standard-damage:${cardId}:seq0+seq1 exposed`, track?.sequences.length === 2, String(track?.sequences.length));
 }
 
-const tailTrack = byCard.get(29)?.tracks.find((track) => track.trackId === 'actor');
-check('Tail $3F:result branch selector', tailTrack?.selector.kind === 'RESULT_BRANCH', tailTrack?.selector.kind);
-check('Tail $3F:seq0+seq1 exposed', tailTrack?.sequences.join(',') === '0,1', tailTrack?.sequences.join(','));
-check('Tail $3F:macro $36 evidence retained', !!tailTrack?.selector.evidence.includes('macro $36'), tailTrack?.selector.evidence);
-
-const vballTrack = byCard.get(41)?.tracks.find((track) => track.trackId === 'actor');
-check('V-ball $41:result branch selector', vballTrack?.selector.kind === 'RESULT_BRANCH', vballTrack?.selector.kind);
-check('V-ball $41:seq0..seq3 exposed', vballTrack?.sequences.join(',') === '0,1,2,3', vballTrack?.sequences.join(','));
-check('V-ball $41:macros $3B/$3C/$3D evidence retained', !!vballTrack?.selector.evidence.includes('$3B/$3C/$3D'), vballTrack?.selector.evidence);
+// Special-handler phase model validation (supersedes the older RESULT_BRANCH checks).
+for (const ssot of ROM_SPECIAL_HANDLER_SEQUENCE_BINDINGS) {
+  const signatureCards = CARDS.filter((card) => {
+    const rom = romCardData(card.name);
+    return rom?.exec === ssot.handler && rom.actorAnim === ssot.actorResource;
+  });
+  check(`special:${ssot.cardName}:signature card`, signatureCards.length === 1, `cards=${signatureCards.map((card) => card.id).join(',')}`);
+  const card = signatureCards[0];
+  if (!card) continue;
+  const binding = byCard.get(card.id);
+  const tracks = binding?.tracks.filter((track) => track.resourceId === ssot.actorResource && track.trackId.startsWith('actor')) ?? [];
+  check(`special:${ssot.cardName}:phase count`, tracks.length === ssot.phases.length, `${tracks.length}/${ssot.phases.length}`);
+  check(`special:${ssot.cardName}:no unresolved sequences`, ssot.unresolvedActorSequences.length === 0, ssot.unresolvedActorSequences.join(','));
+  check(
+    `special:${ssot.cardName}:worker retained`,
+    binding?.execution.worker === `Bank${ssot.worker.bank}:$${ssot.worker.address.toString(16).toUpperCase()}`,
+    String(binding?.execution.worker),
+  );
+  for (let i = 0; i < ssot.phases.length; i++) {
+    const phase = ssot.phases[i];
+    const track = tracks[i];
+    const label = `special:${ssot.cardName}:phase${i}`;
+    if (!track) {
+      check(`${label}:exists`, false, 'missing');
+      continue;
+    }
+    check(`${label}:sequence`, track.sequences.join(',') === String(phase.sequence), `${track.sequences.join(',')}/${phase.sequence}`);
+    check(`${label}:slot`, track.slot === phase.slot, `${track.slot}/${phase.slot}`);
+    check(`${label}:fixed selector`, track.selector.kind === 'FIXED' && track.selector.value === phase.sequence, `${track.selector.kind}/${track.selector.value}`);
+  }
+}
 
 console.log('═══ ROM ACTION SEQUENCE BINDINGS — FULL PHYSICAL CATALOG ═══');
 console.log(`bindings=${bindings.length} withActorResource=${summary.withActorResource}`);
