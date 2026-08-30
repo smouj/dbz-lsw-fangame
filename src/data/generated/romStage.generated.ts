@@ -642,6 +642,8 @@ export interface RomStageVmStep {
   bytes: number[];
   memberSlot?: number;
   poseSelector?: number;
+  waitFrameCounter?: number;
+  syncEvent?: { arg1: number; arg2: number };
 }
 
 export interface RomStageVmProgram {
@@ -655,8 +657,91 @@ export interface RomStageVmProgram {
   poseWrites: number[];
 }
 
+export const ROM_STAGE_VM_CONTRACT = {
+  evidence: 'ROM_STATIC_VERIFIED',
+  source: 'Bank30:$5D00 programs interpreted by Jump_07e_70ab; command dispatch via Bank00:$3833.',
+  programFormat: '[count][5-byte instruction × count]',
+  commandToProgramId: {
+    A: { actor0: 0, actor1: 5 },
+    B: { actor0: 1, actor1: 6 },
+    RIGHT: { actor0: 2, actor1: 7 },
+    UP: { actor0: 3, actor1: 8 },
+    DOWN: { actor0: 4, actor1: 9 },
+  },
+  programLengths: {
+    actor0: { programIds: [0, 1, 2, 3, 4], instructionCount: 3 },
+    actor1AtoB: { programIds: [5, 6], instructionCount: 5 },
+    actor1Directional: { programIds: [7, 8, 9], instructionCount: 4 },
+  },
+  queues: {
+    count: 2,
+    model: 'independent per participant',
+    implication: 'Do not mirror/reuse one animation timeline for both ActionObjects.',
+  },
+  gameplayClock: {
+    waitAnimationOpcode: 0x05,
+    waitFrameCounterOpcode: 0x06,
+    frameCounterField: 'ActionObject+4',
+    syncEventOpcode: 0x13,
+    implication: 'Stage input timing is coupled to the physical frame program, not to setTimeout or fixed pose durations.',
+  },
+} as const;
+
+export const ROM_STAGE_PHYSICAL_COMMANDS = {
+  evidence: 'ROM_STATIC_VERIFIED',
+  source: 'USA ROM canonical with Spain contrast; Bank61 Stage resources and Bank30:$5D00 programs.',
+  actor: {
+    A: { bank: 0x61, resourceIndex: 1, sequence: 'actorVisualProfileKey', frameInstances: 4, totalTicks: 13 },
+    B: { bank: 0x61, resourceIndex: 2, sequence: 'actorVisualProfileKey', frameInstances: 6, totalTicks: 32 },
+    RIGHT: { bank: 0x61, resourceIndex: 3, sequence: 'actorVisualProfileKey', frameInstances: 7, totalTicks: 41 },
+    UP: { bank: 0x61, resourceIndex: 4, sequence: 'actorVisualProfileKey', frameInstances: 7, totalTicks: 41 },
+    DOWN: { bank: 0x61, resourceIndex: 4, sequence: 9, frameInstances: 9, totalTicks: 53 },
+  },
+  target: {
+    resourceIndex: 0,
+    A: { waitActorFrame: 2, sequence: 0x0a, frameInstances: 6, totalTicks: 13 },
+    B: { waitActorFrame: 3, sequence: 0x0b, frameInstances: 8, totalTicks: 27 },
+    RIGHT: { waitActorFrame: 4, sequence: 0x0d, frameInstances: 15, totalTicks: 23 },
+    UP: { waitActorFrame: 4, sequence: 0x0f, frameInstances: 8, totalTicks: 15 },
+    DOWN: { waitActorFrame: 5, sequence: 0x10, frameInstances: 5, totalTicks: 9 },
+  },
+  lastCommandB: {
+    waitActorFrame: 3,
+    waitTicksBeforeTarget: 1,
+    targetSequence: 0x17,
+    frameInstances: 11,
+    totalTicks: 54,
+    emitsSfx: true,
+    applyFrameDelta: true,
+    restoreTargetSequence: 0,
+  },
+} as const;
+
+export const ROM_STAGE_QTE_RUNTIME = {
+  evidence: 'ROM_STATIC_VERIFIED',
+  commandCount: 0xca5e,
+  commandIndex: 0xca5f,
+  expectedCommands: 0xca60,
+  resultPerCommand: 0xca6a,
+  temporalCounter: 0xcb77,
+  acceptedMask: 0x3d,
+  acceptedInputs: ['RIGHT', 'UP', 'DOWN', 'A', 'B'],
+  wrongInputAdvancesIndex: true,
+} as const;
+
+export const ROM_STAGE_AB_WINDOW = {
+  evidence: 'ROM_STATIC_VERIFIED',
+  durationTicks: 30,
+  acceptedInputs: ['A', 'B'],
+  recordsPressedButton: true,
+  recordsPressedTick: true,
+  thresholds: [10, 25, 30],
+  semanticName: 'PENDING_CONTEXT_LINK',
+} as const;
+
 /** Programas VM completos (10 combos command×memberSlot), opcodes en orden.
- *  Fuente: Bank30:$5D00 (programas de animación). Interpreter Jump_07e_70ab. */
+ *  Fuente: Bank30:$5D00 (programas de animación). Interpreter Jump_07e_70ab.
+ *  Cada input Stage despacha un microprograma distinto por participante. */
 export const ROM_STAGE_COMMAND_PROGRAMS: RomStageVmProgram[] = [
   {
     "command": "A",
@@ -669,7 +754,7 @@ export const ROM_STAGE_COMMAND_PROGRAMS: RomStageVmProgram[] = [
       {
         "index": 0,
         "opcode": 4,
-        "mnemonic": "SET_POSE",
+        "mnemonic": "START_ACTION_OBJECT_ANIMATION",
         "bytes": [
           4,
           0,
@@ -683,7 +768,7 @@ export const ROM_STAGE_COMMAND_PROGRAMS: RomStageVmProgram[] = [
       {
         "index": 1,
         "opcode": 5,
-        "mnemonic": "VISIBILITY",
+        "mnemonic": "WAIT_ACTION_OBJECT_ANIMATION",
         "bytes": [
           5,
           0,
@@ -695,7 +780,7 @@ export const ROM_STAGE_COMMAND_PROGRAMS: RomStageVmProgram[] = [
       {
         "index": 2,
         "opcode": 4,
-        "mnemonic": "SET_POSE",
+        "mnemonic": "START_ACTION_OBJECT_ANIMATION",
         "bytes": [
           4,
           0,
@@ -723,7 +808,7 @@ export const ROM_STAGE_COMMAND_PROGRAMS: RomStageVmProgram[] = [
       {
         "index": 0,
         "opcode": 4,
-        "mnemonic": "SET_POSE",
+        "mnemonic": "START_ACTION_OBJECT_ANIMATION",
         "bytes": [
           4,
           0,
@@ -737,7 +822,7 @@ export const ROM_STAGE_COMMAND_PROGRAMS: RomStageVmProgram[] = [
       {
         "index": 1,
         "opcode": 5,
-        "mnemonic": "VISIBILITY",
+        "mnemonic": "WAIT_ACTION_OBJECT_ANIMATION",
         "bytes": [
           5,
           0,
@@ -749,7 +834,7 @@ export const ROM_STAGE_COMMAND_PROGRAMS: RomStageVmProgram[] = [
       {
         "index": 2,
         "opcode": 4,
-        "mnemonic": "SET_POSE",
+        "mnemonic": "START_ACTION_OBJECT_ANIMATION",
         "bytes": [
           4,
           0,
@@ -777,7 +862,7 @@ export const ROM_STAGE_COMMAND_PROGRAMS: RomStageVmProgram[] = [
       {
         "index": 0,
         "opcode": 4,
-        "mnemonic": "SET_POSE",
+        "mnemonic": "START_ACTION_OBJECT_ANIMATION",
         "bytes": [
           4,
           0,
@@ -791,7 +876,7 @@ export const ROM_STAGE_COMMAND_PROGRAMS: RomStageVmProgram[] = [
       {
         "index": 1,
         "opcode": 5,
-        "mnemonic": "VISIBILITY",
+        "mnemonic": "WAIT_ACTION_OBJECT_ANIMATION",
         "bytes": [
           5,
           0,
@@ -803,7 +888,7 @@ export const ROM_STAGE_COMMAND_PROGRAMS: RomStageVmProgram[] = [
       {
         "index": 2,
         "opcode": 4,
-        "mnemonic": "SET_POSE",
+        "mnemonic": "START_ACTION_OBJECT_ANIMATION",
         "bytes": [
           4,
           0,
@@ -831,7 +916,7 @@ export const ROM_STAGE_COMMAND_PROGRAMS: RomStageVmProgram[] = [
       {
         "index": 0,
         "opcode": 4,
-        "mnemonic": "SET_POSE",
+        "mnemonic": "START_ACTION_OBJECT_ANIMATION",
         "bytes": [
           4,
           0,
@@ -845,7 +930,7 @@ export const ROM_STAGE_COMMAND_PROGRAMS: RomStageVmProgram[] = [
       {
         "index": 1,
         "opcode": 5,
-        "mnemonic": "VISIBILITY",
+        "mnemonic": "WAIT_ACTION_OBJECT_ANIMATION",
         "bytes": [
           5,
           0,
@@ -857,7 +942,7 @@ export const ROM_STAGE_COMMAND_PROGRAMS: RomStageVmProgram[] = [
       {
         "index": 2,
         "opcode": 4,
-        "mnemonic": "SET_POSE",
+        "mnemonic": "START_ACTION_OBJECT_ANIMATION",
         "bytes": [
           4,
           0,
@@ -885,7 +970,7 @@ export const ROM_STAGE_COMMAND_PROGRAMS: RomStageVmProgram[] = [
       {
         "index": 0,
         "opcode": 4,
-        "mnemonic": "SET_POSE",
+        "mnemonic": "START_ACTION_OBJECT_ANIMATION",
         "bytes": [
           4,
           0,
@@ -899,7 +984,7 @@ export const ROM_STAGE_COMMAND_PROGRAMS: RomStageVmProgram[] = [
       {
         "index": 1,
         "opcode": 5,
-        "mnemonic": "VISIBILITY",
+        "mnemonic": "WAIT_ACTION_OBJECT_ANIMATION",
         "bytes": [
           5,
           0,
@@ -911,7 +996,7 @@ export const ROM_STAGE_COMMAND_PROGRAMS: RomStageVmProgram[] = [
       {
         "index": 2,
         "opcode": 4,
-        "mnemonic": "SET_POSE",
+        "mnemonic": "START_ACTION_OBJECT_ANIMATION",
         "bytes": [
           4,
           0,
@@ -939,19 +1024,20 @@ export const ROM_STAGE_COMMAND_PROGRAMS: RomStageVmProgram[] = [
       {
         "index": 0,
         "opcode": 6,
-        "mnemonic": "COND_COMPARE",
+        "mnemonic": "WAIT_ACTION_OBJECT_FRAME_COUNTER",
         "bytes": [
           6,
           0,
           2,
           0,
           0
-        ]
+        ],
+        "waitFrameCounter": 2
       },
       {
         "index": 1,
         "opcode": 4,
-        "mnemonic": "SET_POSE",
+        "mnemonic": "START_ACTION_OBJECT_ANIMATION",
         "bytes": [
           4,
           1,
@@ -965,19 +1051,23 @@ export const ROM_STAGE_COMMAND_PROGRAMS: RomStageVmProgram[] = [
       {
         "index": 2,
         "opcode": 19,
-        "mnemonic": "SUB_CALL3",
+        "mnemonic": "EMIT_SYNC_EVENT",
         "bytes": [
           19,
           4,
           3,
           0,
           0
-        ]
+        ],
+        "syncEvent": {
+          "arg1": 4,
+          "arg2": 3
+        }
       },
       {
         "index": 3,
         "opcode": 5,
-        "mnemonic": "VISIBILITY",
+        "mnemonic": "WAIT_ACTION_OBJECT_ANIMATION",
         "bytes": [
           5,
           1,
@@ -989,7 +1079,7 @@ export const ROM_STAGE_COMMAND_PROGRAMS: RomStageVmProgram[] = [
       {
         "index": 4,
         "opcode": 4,
-        "mnemonic": "SET_POSE",
+        "mnemonic": "START_ACTION_OBJECT_ANIMATION",
         "bytes": [
           4,
           1,
@@ -1017,19 +1107,20 @@ export const ROM_STAGE_COMMAND_PROGRAMS: RomStageVmProgram[] = [
       {
         "index": 0,
         "opcode": 6,
-        "mnemonic": "COND_COMPARE",
+        "mnemonic": "WAIT_ACTION_OBJECT_FRAME_COUNTER",
         "bytes": [
           6,
           0,
           3,
           0,
           0
-        ]
+        ],
+        "waitFrameCounter": 3
       },
       {
         "index": 1,
         "opcode": 4,
-        "mnemonic": "SET_POSE",
+        "mnemonic": "START_ACTION_OBJECT_ANIMATION",
         "bytes": [
           4,
           1,
@@ -1043,19 +1134,23 @@ export const ROM_STAGE_COMMAND_PROGRAMS: RomStageVmProgram[] = [
       {
         "index": 2,
         "opcode": 19,
-        "mnemonic": "SUB_CALL3",
+        "mnemonic": "EMIT_SYNC_EVENT",
         "bytes": [
           19,
           22,
           4,
           0,
           0
-        ]
+        ],
+        "syncEvent": {
+          "arg1": 22,
+          "arg2": 4
+        }
       },
       {
         "index": 3,
         "opcode": 5,
-        "mnemonic": "VISIBILITY",
+        "mnemonic": "WAIT_ACTION_OBJECT_ANIMATION",
         "bytes": [
           5,
           1,
@@ -1067,7 +1162,7 @@ export const ROM_STAGE_COMMAND_PROGRAMS: RomStageVmProgram[] = [
       {
         "index": 4,
         "opcode": 4,
-        "mnemonic": "SET_POSE",
+        "mnemonic": "START_ACTION_OBJECT_ANIMATION",
         "bytes": [
           4,
           1,
@@ -1095,19 +1190,20 @@ export const ROM_STAGE_COMMAND_PROGRAMS: RomStageVmProgram[] = [
       {
         "index": 0,
         "opcode": 6,
-        "mnemonic": "COND_COMPARE",
+        "mnemonic": "WAIT_ACTION_OBJECT_FRAME_COUNTER",
         "bytes": [
           6,
           0,
           4,
           0,
           0
-        ]
+        ],
+        "waitFrameCounter": 4
       },
       {
         "index": 1,
         "opcode": 4,
-        "mnemonic": "SET_POSE",
+        "mnemonic": "START_ACTION_OBJECT_ANIMATION",
         "bytes": [
           4,
           1,
@@ -1121,19 +1217,23 @@ export const ROM_STAGE_COMMAND_PROGRAMS: RomStageVmProgram[] = [
       {
         "index": 2,
         "opcode": 19,
-        "mnemonic": "SUB_CALL3",
+        "mnemonic": "EMIT_SYNC_EVENT",
         "bytes": [
           19,
           6,
           1,
           0,
           0
-        ]
+        ],
+        "syncEvent": {
+          "arg1": 6,
+          "arg2": 1
+        }
       },
       {
         "index": 3,
         "opcode": 5,
-        "mnemonic": "VISIBILITY",
+        "mnemonic": "WAIT_ACTION_OBJECT_ANIMATION",
         "bytes": [
           5,
           1,
@@ -1158,19 +1258,20 @@ export const ROM_STAGE_COMMAND_PROGRAMS: RomStageVmProgram[] = [
       {
         "index": 0,
         "opcode": 6,
-        "mnemonic": "COND_COMPARE",
+        "mnemonic": "WAIT_ACTION_OBJECT_FRAME_COUNTER",
         "bytes": [
           6,
           0,
           4,
           0,
           0
-        ]
+        ],
+        "waitFrameCounter": 4
       },
       {
         "index": 1,
         "opcode": 4,
-        "mnemonic": "SET_POSE",
+        "mnemonic": "START_ACTION_OBJECT_ANIMATION",
         "bytes": [
           4,
           1,
@@ -1184,19 +1285,23 @@ export const ROM_STAGE_COMMAND_PROGRAMS: RomStageVmProgram[] = [
       {
         "index": 2,
         "opcode": 19,
-        "mnemonic": "SUB_CALL3",
+        "mnemonic": "EMIT_SYNC_EVENT",
         "bytes": [
           19,
           6,
           1,
           0,
           0
-        ]
+        ],
+        "syncEvent": {
+          "arg1": 6,
+          "arg2": 1
+        }
       },
       {
         "index": 3,
         "opcode": 5,
-        "mnemonic": "VISIBILITY",
+        "mnemonic": "WAIT_ACTION_OBJECT_ANIMATION",
         "bytes": [
           5,
           1,
@@ -1221,19 +1326,20 @@ export const ROM_STAGE_COMMAND_PROGRAMS: RomStageVmProgram[] = [
       {
         "index": 0,
         "opcode": 6,
-        "mnemonic": "COND_COMPARE",
+        "mnemonic": "WAIT_ACTION_OBJECT_FRAME_COUNTER",
         "bytes": [
           6,
           0,
           5,
           0,
           0
-        ]
+        ],
+        "waitFrameCounter": 5
       },
       {
         "index": 1,
         "opcode": 4,
-        "mnemonic": "SET_POSE",
+        "mnemonic": "START_ACTION_OBJECT_ANIMATION",
         "bytes": [
           4,
           1,
@@ -1247,19 +1353,23 @@ export const ROM_STAGE_COMMAND_PROGRAMS: RomStageVmProgram[] = [
       {
         "index": 2,
         "opcode": 19,
-        "mnemonic": "SUB_CALL3",
+        "mnemonic": "EMIT_SYNC_EVENT",
         "bytes": [
           19,
           6,
           1,
           0,
           0
-        ]
+        ],
+        "syncEvent": {
+          "arg1": 6,
+          "arg2": 1
+        }
       },
       {
         "index": 3,
         "opcode": 5,
-        "mnemonic": "VISIBILITY",
+        "mnemonic": "WAIT_ACTION_OBJECT_ANIMATION",
         "bytes": [
           5,
           1,
