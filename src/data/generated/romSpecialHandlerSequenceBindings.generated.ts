@@ -1,7 +1,8 @@
 // ═══════════════════════════════════════════════════════════════════════
 // GENERATED ROM EVIDENCE — special-handler ActionObject sequence bindings.
-// Source: Bank03 workers + Bank30:$5D00 presentation macros, cross-checked
-// byte-for-byte on Spain / USA / RESKIN ROMs. No visual/pose inference.
+// Source: Bank03 workers + Bank30:$5D00 presentation macros + Bank30:$6900
+// selector tables, cross-checked byte-for-byte on Spain / USA / RESKIN ROMs.
+// No visual/pose inference.
 // ═══════════════════════════════════════════════════════════════════════
 
 export interface RomSpecialHandlerSequencePhase {
@@ -42,11 +43,18 @@ export const ROM_SPECIAL_HANDLER_SEQUENCE_BINDINGS: readonly RomSpecialHandlerSe
         totalTicks: 31,
         evidence: 'Bank03:$625B writes $C3C7=0 and $C3C6=0 immediately before START_ACTION_OBJECT ($3EBD).',
       },
+      {
+        state: 0x0b,
+        macroId: 0x36,
+        slot: 0,
+        sequence: 1,
+        role: 'ACTOR_PRIMARY',
+        frameCount: 25,
+        totalTicks: 225,
+        evidence: 'Bank03 Tail state $0B queues macro $36; Bank30:$6211 macro $36 begins opcode $01 [slot0,D=6,seq=1,E=$80].',
+      },
     ],
-    // Sequence 1 (25 frames / 225t) exists physically, but the worker reaches
-    // animation-state macros ($1C/$36); no direct selector write has yet been
-    // proven for seq1. Keep it explicit rather than guessing from appearance.
-    unresolvedActorSequences: [1],
+    unresolvedActorSequences: [],
     evidenceHashes: [
       'worker-spain-usa-reskin:f46db63b1b6fa4da',
       'macro-1c-spain-usa-reskin:daff5c535f3d0994',
@@ -59,6 +67,16 @@ export const ROM_SPECIAL_HANDLER_SEQUENCE_BINDINGS: readonly RomSpecialHandlerSe
     actorResource: 0x41,
     worker: { bank: 0x03, address: 0x62d4 },
     phases: [
+      {
+        state: 0x14,
+        macroId: null,
+        slot: 0,
+        sequence: 0,
+        role: 'ACTOR_PRIMARY',
+        frameCount: 8,
+        totalTicks: 81,
+        evidence: 'Handler $0C falls through to Bank03:$5B38 before states $32-$38. $5B38 reads card actorAnim via $2B1F and calls $3966; resource $41 selector table at Bank30:$6D28 has row [profileKey $14, sequence $00, param0 $FD, param1 $E2], which $3966 writes to $C3C7/$C2D0/$C2D1.',
+      },
       {
         state: 0x32,
         macroId: 0x3b,
@@ -90,11 +108,10 @@ export const ROM_SPECIAL_HANDLER_SEQUENCE_BINDINGS: readonly RomSpecialHandlerSe
         evidence: 'Bank30 macro $3D contains opcode $01 [slot0,D=6,seq=3,E=$80].',
       },
     ],
-    // Sequence 0 (8 frames / 81t) is physically closed but its initial-phase
-    // selector path is outside macros $3B-$3D and remains to be promoted.
-    unresolvedActorSequences: [0],
+    unresolvedActorSequences: [],
     evidenceHashes: [
       'worker-spain-usa-reskin:f88ebc945b0ca061',
+      'selector-$41-row-spain-usa-reskin:profile14-seq00-paramFD-E2',
       'macro-3b-spain-usa-reskin:729d09cdbe33e58a',
       'macro-3c-spain-usa-reskin:7d21dc1b4eb44ea6',
       'macro-3d-spain-usa-reskin:cc2665eeb3dcd502',
