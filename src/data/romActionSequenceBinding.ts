@@ -7,6 +7,7 @@
 import { CARDS, type CardDef } from './cards';
 import { romCardData, type RomCardData } from './romCardData';
 import { ROM_BEAM_SEQUENCE_SELECTORS } from './generated/romBeamSequenceSelectors.generated';
+import { romSpecialHandlerBinding } from './generated/romSpecialHandlerSequenceBindings.generated';
 import {
   getRomSequenceRegistry,
   type PhysicalLinkageStatus,
@@ -110,7 +111,7 @@ function resultBranchSelectorForResource(resourceId: number): RomActionAnimation
     return {
       kind: 'RESULT_BRANCH',
       value: null,
-      evidence: 'V-ball resource $41 seq0..seq3 are statically reachable; worker $0C consumes seq0 fallback and macros $3B/$3C/$3D select seq1/seq2/seq3.',
+      evidence: 'V-ball resource $41 seq0..seq3 are statically reachable; initial selector table chooses seq0 and macros $3B/$3C/$3D select seq1/seq2/seq3.',
     };
   }
   return null;
@@ -209,6 +210,49 @@ function buildActorTrack(card: CardDef, rom: RomCardData): RomActionAnimationTra
   };
 }
 
+function buildSpecialHandlerTracks(rom: RomCardData): RomActionAnimationTrack[] | null {
+  const binding = romSpecialHandlerBinding(rom.exec);
+  if (!binding || rom.actorAnim !== binding.actorResource) return null;
+  const resource = registryForResource(binding.actorResource);
+  if (!resource) return null;
+  const physicalStatus = physicalStatusForResource(binding.actorResource);
+
+  return binding.phases.map((phase, index) => {
+    const sequence = resource.sequences[phase.sequence];
+    const phaseLabel = phase.macroId != null
+      ? `macro ${hex(phase.macroId)}`
+      : phase.state != null
+        ? `state ${hex(phase.state)}`
+        : 'handler phase';
+    const trackId = index === 0
+      ? 'actor'
+      : phase.role === 'ACTOR_SUPPORT'
+        ? 'actor-support'
+        : `actor-phase-${index}`;
+    return {
+      trackId,
+      label: `${phase.role === 'ACTOR_SUPPORT' ? 'Actor Support' : 'Actor Animation'} · ${phaseLabel}`,
+      slot: phase.slot,
+      resourceId: binding.actorResource,
+      selector: {
+        kind: 'FIXED' as const,
+        value: phase.sequence,
+        evidence: phase.evidence,
+      },
+      sequences: [phase.sequence],
+      totalFrames: sequence?.frames.length ?? phase.frameCount ?? 0,
+      totalTicks: sequence?.totalTicks ?? phase.totalTicks ?? 0,
+      physicalStatus,
+      evidence: [
+        phase.evidence,
+        `special handler ${hex(binding.handler)} worker Bank${binding.worker.bank}:$${binding.worker.address.toString(16).toUpperCase()}`,
+        `resource ${hex(binding.actorResource)} sequence ${phase.sequence}`,
+        ...binding.evidenceHashes,
+      ],
+    };
+  });
+}
+
 function buildFxTrack(rom: RomCardData): RomActionAnimationTrack | null {
   if (rom.fxGraphics === NONE) return null;
   const fxPalette = rom.fxPalette === NONE ? null : rom.fxPalette;
@@ -243,15 +287,22 @@ export function buildRomActionSequenceBindings(): RomActionSequenceBinding[] {
   return CARDS.flatMap((card) => {
     const rom = romCardData(card.name);
     if (!rom) return [];
-    const actorTrack = buildActorTrack(card, rom);
+    const specialTracks = buildSpecialHandlerTracks(rom);
+    const actorTracks = specialTracks ?? [buildActorTrack(card, rom)];
     const fxTrack = buildFxTrack(rom);
     const genericTrack = buildGenericTrack(rom);
     const family = HANDLER_FAMILIES[rom.exec]?.family ?? 'UNKNOWN';
+    const special = romSpecialHandlerBinding(rom.exec);
     return [{
       actionId: `card-${card.id}`,
       card: { id: card.id, name: card.name, category: card.type, type: card.type },
-      execution: { handler: rom.exec, handlerHex: hex(rom.exec), family, worker: null },
-      tracks: [actorTrack, ...(fxTrack ? [fxTrack] : []), ...(genericTrack ? [genericTrack] : [])],
+      execution: {
+        handler: rom.exec,
+        handlerHex: hex(rom.exec),
+        family,
+        worker: special ? `Bank${special.worker.bank}:$${special.worker.address.toString(16).toUpperCase()}` : null,
+      },
+      tracks: [...actorTracks, ...(fxTrack ? [fxTrack] : []), ...(genericTrack ? [genericTrack] : [])],
       hasFxTrack: rom.fxGraphics !== NONE,
       fxResourceId: rom.fxGraphics === NONE ? null : rom.fxGraphics,
       fxPaletteId: rom.fxPalette === NONE ? null : rom.fxPalette,
@@ -261,6 +312,7 @@ export function buildRomActionSequenceBindings(): RomActionSequenceBinding[] {
         `actorAnim=${hex(rom.actorAnim)}`,
         `fxGraphics=${hex(rom.fxGraphics)}`,
         `fxPalette=${hex(rom.fxPalette)}`,
+        ...(special ? special.evidenceHashes : []),
       ],
     }];
   });
@@ -334,13 +386,15 @@ export function getBindingSummary(): RomActionSequenceBindingSummary {
 
   for (const binding of bindings) {
     byHandlerFamily[binding.execution.family] = (byHandlerFamily[binding.execution.family] ?? 0) + 1;
+    const actorTracks = binding.tracks.filter((track) => track.trackId.startsWith('actor') && track.resourceId != null);
+    if (actorTracks.length > 0) withActorResource++;
+    if (binding.tracks.some((track) => track.trackId === 'fx')) withFxResource++;
+    if (binding.tracks.some((track) => track.trackId === 'generic')) withGenericTrack++;
+
     for (const track of binding.tracks) {
       byPhysicalStatus[track.physicalStatus]++;
       bySelectorKind[track.selector.kind]++;
-      if (track.trackId === 'actor' && track.resourceId != null) withActorResource++;
-      if (track.trackId === 'fx') withFxResource++;
-      if (track.trackId === 'generic') withGenericTrack++;
-      if (track.trackId === 'actor' && track.resourceId != null) {
+      if (track.trackId.startsWith('actor') && track.resourceId != null) {
         const name = techniqueForResource(track.resourceId);
         if (name && track.physicalStatus === 'PHYSICAL_RESOURCE_FULLY_CLOSED') fullyClosed.add(name);
         if (name && track.physicalStatus === 'FRAME_STREAM_CLOSED') frameStreamOnly.add(name);
