@@ -14,11 +14,15 @@ if [ -f /home/local-user/emsdk/emsdk_env.sh ]; then
 fi
 command -v emcc >/dev/null || { echo "emcc no encontrado; source emsdk_env.sh" >&2; exit 1; }
 
-# Verificar commit (warn, no hard-fail, para permitir iterar local)
+# H0 exige build reproducible: no compilar contra un checkout distinto del pin.
 ACTUAL="$(git -C "$SAMEBOY_DIR" rev-parse HEAD 2>/dev/null || echo '?')"
 if [ "$ACTUAL" != "$SAMEBOY_COMMIT" ]; then
-  echo "WARN: SameBoy HEAD=$ACTUAL != pinned $SAMEBOY_COMMIT" >&2
+  echo "ERROR: SameBoy HEAD=$ACTUAL != pinned $SAMEBOY_COMMIT" >&2
+  echo "Checkout exacto requerido antes de ejecutar H0." >&2
+  exit 1
 fi
+
+echo "SameBoy pin OK: $ACTUAL"
 
 mkdir -p "$OUT_DIR"
 
