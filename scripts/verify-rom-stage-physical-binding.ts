@@ -1,6 +1,8 @@
 import {
   ROM_STAGE_PHYSICAL_BINDINGS,
+  ROM_STAGE_TARGET_REACTIONS,
   stageRomPhysicalBinding,
+  stageRomTargetReaction,
 } from '../src/battle/stageRomPhysical';
 
 let checks = 0;
@@ -47,4 +49,32 @@ ok(finalB.animationId === 0x39 && finalB.sequence === 0x17, 'member1 final B = $
 ok(finalB.totalTicks === 54 && normalB.totalTicks === 27, 'final B is distinct 54t finisher, not normal 27t B');
 ok(finalB.frames[10]?.durationTicks === 30, 'final B holds its terminal physical frame for 30 ticks');
 
-console.log(`ROM Stage physical binding: ${checks}/${checks} checks OK · 11 bindings · final B $39 = 11f/54t`);
+const targetExpected = [
+  ['A', false, 2, 0x0a, 6, 13, 0],
+  ['B', false, 3, 0x0b, 8, 27, 0],
+  ['RIGHT', false, 4, 0x0d, 15, 23, 0],
+  ['UP', false, 4, 0x0f, 8, 15, 0],
+  ['DOWN', false, 5, 0x10, 5, 9, 0],
+  ['B', true, 3, 0x17, 11, 54, 1],
+] as const;
+
+ok(ROM_STAGE_TARGET_REACTIONS.length === targetExpected.length, '6 Stage target reaction contracts');
+for (const [command, finalOnly, waitActorFrame, sequence, frameCount, totalTicks, preWait] of targetExpected) {
+  const reaction = stageRomTargetReaction(command, finalOnly);
+  const tag = `target/${command}${finalOnly ? '/FINAL' : ''}`;
+  ok(reaction.animationBank === 0x61 && reaction.resourceIndex === 0 && reaction.resourceBase === 0x4030, `${tag}: Bank61 resource0`);
+  ok(reaction.waitActorFrame === waitActorFrame, `${tag}: WAIT_FRAME actor boundary`);
+  ok(reaction.preTargetWaitTicks === preWait, `${tag}: pre-target WAIT`);
+  ok(reaction.sequence === sequence, `${tag}: target sequence`);
+  ok(reaction.frameCount === frameCount && reaction.frames.length === frameCount, `${tag}: physical frames`);
+  ok(reaction.totalTicks === totalTicks, `${tag}: totalTicks`);
+  ok(reaction.waitTargetComplete, `${tag}: WAIT_COMPLETE`);
+  ok(reaction.restoreSequence === 0, `${tag}: restore seq0`);
+}
+
+const finalTargetB = stageRomTargetReaction('B', true);
+ok(finalTargetB.preTargetWaitTicks === 1, 'final target B adds exact 1 tick wait');
+ok(finalTargetB.applyFrameDeltaAfterComplete, 'final target B applies ROM frame delta after completion');
+ok(!stageRomTargetReaction('B', false).applyFrameDeltaAfterComplete, 'ordinary target B does not inherit final-only frame delta');
+
+console.log(`ROM Stage physical binding: ${checks}/${checks} checks OK · 11 actor bindings · 6 target reactions · final B $39 = 11f/54t`);
