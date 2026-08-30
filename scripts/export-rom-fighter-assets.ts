@@ -48,6 +48,13 @@ interface RomPhysicalManifest {
   actorVisualProfileKey: number;
   graphicsBank: number;
   sequences: Record<string, SequenceManifest>;
+  stageSequences?: Record<string, {
+    resourceIndex: number;
+    animationBank: number;
+    resourceBase: number;
+    sequence: number;
+    frames: ManifestFrame[];
+  }>;
 }
 
 interface ProvenanceFrame {
@@ -419,6 +426,58 @@ for (const formId of forms) {
     sequenceSections.push(`<section class="seq"><h2>RESOURCE $${hex(sequence.resource)} · SEQ ${sequence.sequence}</h2><div class="grid">${cells.join('\n')}</div></section>`);
   }
 
+  for (const sequence of Object.values(manifest.stageSequences ?? {}).sort((a, b) => a.resourceBase - b.resourceBase || a.sequence - b.sequence)) {
+    const resourceDir = join(formOut, `bank61_b${hex(sequence.resourceBase, 4)}`);
+    const seqDirName = `seq_${hex(sequence.sequence)}`;
+    const seqDir = join(resourceDir, seqDirName);
+    mkdirSync(seqDir, { recursive: true });
+    resources.add(`ab${hex(sequence.animationBank)}-b${hex(sequence.resourceBase, 4)}`);
+    frameInstances += sequence.frames.length;
+
+    const cells: string[] = [];
+    for (const frame of sequence.frames) {
+      const source = join(formSrc, frame.file);
+      const fileName = `frame_${hex(frame.frameIndex)}_vf_${hex(frame.visualFrameId)}.png`;
+      const jsonName = `frame_${hex(frame.frameIndex)}_vf_${hex(frame.visualFrameId)}.json`;
+      copyFileSync(source, join(seqDir, fileName));
+      const physical = frameById.get(frame.physicalId);
+      const metadata = {
+        formId,
+        romFormId: identity?.romFormId ?? null,
+        romRecord: identity?.romRecordCpuAddressHex ?? null,
+        actorVisualProfileKey: manifest.actorVisualProfileKey,
+        graphicsBank: `0x${hex(manifest.graphicsBank)}`,
+        animationBank: `0x${hex(sequence.animationBank)}`,
+        resourceBase: `0x${hex(sequence.resourceBase, 4)}`,
+        resourceIndex: sequence.resourceIndex,
+        sequence: sequence.sequence,
+        frameIndex: frame.frameIndex,
+        visualFrameId: `0x${hex(frame.visualFrameId)}`,
+        durationTicks: frame.durationTicks,
+        rawOffsetX: frame.rawOffsetX,
+        rawOffsetY: frame.rawOffsetY,
+        offsetX: frame.offsetX,
+        offsetY: frame.offsetY,
+        originX: frame.originX,
+        originY: frame.originY,
+        originInTrimX: frame.originInTrimX,
+        originInTrimY: frame.originInTrimY,
+        rawCanvasFile: frame.rawCanvasFile,
+        rawImageFile: frame.rawImageFile,
+        physicalId: frame.physicalId,
+        sourcePhysicalFile: frame.file,
+        rawBounds: physical?.rawBounds,
+        assembly: physical?.assembly,
+        palette: physical?.palette,
+        hashes: physical?.hashes,
+        evidence: 'ROM_PHYSICAL_STAGE_BANK61',
+      };
+      writeFileSync(join(seqDir, jsonName), `${JSON.stringify(metadata, null, 2)}\n`);
+      cells.push(frameCell(frame, `${relative(formOut, join(seqDir, fileName))}`));
+    }
+    sequenceSections.push(`<section class="seq"><h2>BANK $${hex(sequence.animationBank)} · BASE $${hex(sequence.resourceBase, 4)} · SEQ ${sequence.sequence}</h2><div class="grid">${cells.join('\n')}</div></section>`);
+  }
+
   const palette = provenance.formProfile.paletteRaw.map((raw, index) => index % 2 === 0 ? raw : null).filter((v): v is string => v !== null);
   const missingPhysicalPngs = provenance.frames.filter(frame => !existsSync(join(formSrc, frame.file))).length;
   const missingRawCanvases = provenance.frames.filter(frame => !frame.rawCanvasFile || !existsSync(join(formSrc, frame.rawCanvasFile))).length;
@@ -451,7 +510,7 @@ for (const formId of forms) {
     actorVisualProfileKey: manifest.actorVisualProfileKey,
     graphicsBank: manifest.graphicsBank,
     resources: [...resources],
-    sequences: Object.keys(manifest.sequences).length,
+    sequences: Object.keys(manifest.sequences).length + Object.keys(manifest.stageSequences ?? {}).length,
     frameInstances,
     physicalIds: provenance.frames.length,
     missingPhysicalPngs,

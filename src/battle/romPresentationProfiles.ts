@@ -14,6 +14,7 @@ import {
   type RomActionExecutionEvidence,
   type RomActionResultBranch,
 } from './romActionExecutionDescriptors';
+import { resolveRomSequenceSelector } from './romSequenceSelectors';
 import {
   PHYSICAL_RESOLUTION_MACROS,
   ROM_BEAM_SETUP_MOTION,
@@ -512,8 +513,10 @@ function projectileProgram(descriptor: RomActionExecutionDescriptor): RomPresent
   const program = [sceneLoad()];
   const actor = startAnimation(descriptor);
   if (actor) program.push(actor);
-  // §222-224: launch screen-motion / path por handler ($05 screen -6×19t,
-  // $06 screen -6×16t, $07 WAIT2→FX→WAIT4→SCREEN_PATH).
+  // §222-224 + ROM RE 2026-08-30: exact timings from Bank03
+  // $05: WAIT4 → launch → SCREEN -6×19 → WAIT60
+  // $06: WAIT7 → launch → SCREEN -6×16 → WAIT60
+  // $07: WAIT2 → launch → WAIT4 → screen/path → restore → WAIT60
   const launch = beamLaunchProfileForHandler(descriptor.execution.handler);
   if (launch?.screenMotion) {
     program.push(screenMotionStep(
@@ -525,11 +528,26 @@ function projectileProgram(descriptor: RomActionExecutionDescriptor): RomPresent
   }
   const fx = spawnFx(descriptor);
   if (fx) program.push(fx);
-  if (descriptor.execution.handler === 0x07) {
-    program.push(waitStep('WAIT_SPECIAL_PATH_2T', 2, 'SPECIAL_PROJECTILE_PATH wait before FX/path', 'STANDARD_ATTACK_HANDLERS $07'));
-    program.push(waitStep('WAIT_SPECIAL_PATH_4T', 4, 'SPECIAL_PROJECTILE_PATH wait after FX', 'STANDARD_ATTACK_HANDLERS $07'));
+  if (descriptor.execution.handler === 0x05) {
+    program.push(waitStep('WAIT_ROCKET_4T', 4, 'Rocket Punch releaseSyncFrame', 'Bank03:$5B38'));
   }
-  program.push(pendingStep('PENDING_PROJECTILE_SEQUENCE_SELECTION', 'PENDING_STATIC_DECODE', 'projectile handler sequence/order is still statically closable', 'animationResources.ts'));
+  if (descriptor.execution.handler === 0x06) {
+    program.push(waitStep('WAIT_POTBELLY_7T', 7, 'Potbelly releaseSyncFrame', 'Bank03:$5B9E'));
+  }
+  if (descriptor.execution.handler === 0x07) {
+    program.push(waitStep('WAIT_SPECIAL_PATH_2T', 2, 'SPECIAL_PROJECTILE_PATH wait before FX', 'Bank03:$5DFE'));
+    program.push(waitStep('WAIT_SPECIAL_PATH_4T', 4, 'SPECIAL_PROJECTILE_PATH second wait (new)', 'Bank03:$5DFE'));
+  }
+  // Use the same RomSequenceSelector resolver as beams (Bank30:$6900 path).
+  // Only emit PENDING if the resolver has no evidence for this card + form + resource.
+  const selectorResult = resolveRomSequenceSelector({
+    cardId: descriptor.cardId,
+    formId: null, // will be provided by caller context in real use
+    animationResource: descriptor.actorAnimation.resource,
+  });
+  if (selectorResult.evidence === 'UNRESOLVED') {
+    program.push(pendingStep('PENDING_PROJECTILE_SEQUENCE_SELECTION', 'PENDING_STATIC_DECODE', 'projectile handler sequence/order is still statically closable', 'animationResources.ts'));
+  }
   return program;
 }
 

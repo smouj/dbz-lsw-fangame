@@ -178,7 +178,7 @@ for (const profile of corpusProfiles) {
   ));
   check(`${form}: has physical frames`, pngs.length > 0, `${pngs.length}`);
   const bankHex = (0x31 + profile.actorVisualProfileKey).toString(16).padStart(2, '0');
-  check(`${form}: files use strong physical IDs`, pngs.every(name => new RegExp(`^rom-p${keyHex}-g${bankHex}-r[0-9a-f]{2}-vf[0-9a-f]{2}-ms[0-9a-f]{8}-gfx[0-9a-f]{8}\\.png$`).test(name)));
+  check(`${form}: files use strong physical IDs`, pngs.every(name => new RegExp(`^rom-p${keyHex}-g${bankHex}-(?:r[0-9a-f]{2}|ab[0-9a-f]{2}-b[0-9a-f]{4})-vf[0-9a-f]{2}-ms[0-9a-f]{8}-gfx[0-9a-f]{8}\\.png$`).test(name)));
   check(`${form}: no legacy pose names in physical files`, pngs.every(name => !/(attack|guard|hurt|beam|aura|idle|move|pose|special|disk|ray|charge|fire)/.test(name)));
 
   const frameFiles = new Set(frames.map(frame => frame.file.replace('physical/', '')));
@@ -236,8 +236,27 @@ for (const profile of corpusProfiles) {
   check(`${form}: fighter color0 is transparent`, frames.every(frame => frame.palette?.transparentIndex === 0 && frame.palette?.color0Transparent === true));
 
   const seqs = Object.values(manifest.sequences) as any[];
+  const stageSeqs = Object.values(manifest.stageSequences ?? {}) as any[];
   check(`${form}: all sequences declare schema/offset/render contract`, seqs.every(seq => seq.schemaVersion === SCHEMA_VERSION && seq.physicalRendererSchema === PHYSICAL_RENDERER_SCHEMA && seq.offsetEncoding === OFFSET_ENCODING));
   check(`${form}: sequence frames preserve ticks/raw/signed offsets`, seqs.every(seq => seq.frames.every((frame: any) =>
+    typeof frame.durationTicks === 'number' &&
+    typeof frame.rawOffsetX === 'number' &&
+    typeof frame.rawOffsetY === 'number' &&
+    frame.offsetX === s8(frame.rawOffsetX) &&
+    frame.offsetY === s8(frame.rawOffsetY) &&
+    frame.offsetEncoding === OFFSET_ENCODING
+  )));
+  check(`${form}: Stage Bank $61 sequences promoted`, stageSeqs.length > 0 && stageSeqs.every(seq =>
+    seq.source === 'ROM_PHYSICAL_STAGE_BANK61' &&
+    seq.animationBank === 0x61 &&
+    /^ab61-b[0-9a-f]{4}$/.test(`ab61-b${Number(seq.resourceBase).toString(16).padStart(4, '0')}`) &&
+    seq.schemaVersion === SCHEMA_VERSION &&
+    seq.physicalRendererSchema === PHYSICAL_RENDERER_SCHEMA &&
+    seq.offsetEncoding === OFFSET_ENCODING &&
+    Array.isArray(seq.frames) &&
+    seq.frames.length > 0
+  ), `${stageSeqs.length}`);
+  check(`${form}: Stage frames preserve ticks/raw/signed offsets`, stageSeqs.every(seq => seq.frames.every((frame: any) =>
     typeof frame.durationTicks === 'number' &&
     typeof frame.rawOffsetX === 'number' &&
     typeof frame.rawOffsetY === 'number' &&

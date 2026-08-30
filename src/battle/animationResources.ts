@@ -2,8 +2,8 @@
 // DBZ LSW — ANIMATION RESOURCE DECODING
 // ═══════════════════════════════════════════════════════════════════════
 // Inventario por AnimationResource, no por carta.
-// No incluye anchors, BASE_X/BASE_Y ni slot bindings: eso sigue siendo
-// PENDING_ROM_TRACE.
+// No elige secuencias por nombre de pose/duración/parecido visual: la ROM
+// usa selector físico (Bank00:$3966 + Bank30:$6900) y escribe C3C7/C2D0/C2D1.
 // ═══════════════════════════════════════════════════════════════════════
 
 import { CARDS } from '../data/cards';
@@ -83,6 +83,26 @@ export interface AnimationResourceCatalogEntry {
   completion: AnimationResourceCompletion;
   notes: string[];
 }
+
+export const ANIMATION_RESOURCE_SELECTOR_ARCHITECTURE = {
+  evidence: 'ROM_STATIC_VERIFIED',
+  resourceCount: 66,
+  uniqueSelectorTables: 43,
+  multiSequenceResources: [
+    0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x07, 0x09,
+    0x0c, 0x0d, 0x0f, 0x10, 0x12, 0x15, 0x16, 0x18,
+    0x21, 0x23, 0x24, 0x26, 0x27, 0x28,
+  ],
+  selectorRoutine: 'Bank00:$3966',
+  selectorTable: 'Bank30:$6900',
+  rowFormat: ['actorVisualProfileKey', 'sequenceSelector', 'param0', 'param1'],
+  writes: {
+    sequenceSelector: 0xc3c7,
+    param0: 0xc2d0,
+    param1: 0xc2d1,
+  },
+  rule: 'Select sequences from ROM selector rows; never by semantic pose name, duration, or visual similarity.',
+} as const;
 
 const BANK_LAYOUT = [
   { bank: 0x62, first: 0x00, count: 25 },

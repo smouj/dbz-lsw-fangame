@@ -46,6 +46,8 @@ export interface ResolveProductionFrameInput {
   animationResource: number | null;
   sequenceSelector: number | null;
   frameIndex: number;
+  animationBank?: number | null;
+  resourceBase?: number | null;
   fallbackPose?: string | null;
   fallbackIndex?: number | null;
 }
@@ -224,6 +226,84 @@ export function resolveProductionFrame(input: ResolveProductionFrameInput): Prod
   };
 }
 
+export function resolveStageProductionFrame(input: {
+  formId: string;
+  resourceIndex: number;
+  animationBank: number;
+  resourceBase: number;
+  sequenceSelector: number | null;
+  frameIndex: number;
+  visualFrameId: number;
+  durationTicks: number;
+  offsetX: number;
+  offsetY: number;
+}): ProductionFrameBinding {
+  const dir = spriteDirFor(input.formId);
+  if (!dir) return fallback({
+    formId: input.formId,
+    animationResource: input.resourceIndex,
+    sequenceSelector: input.sequenceSelector,
+    frameIndex: input.frameIndex,
+  }, `form ${input.formId} has no spriteDirFor mapping`);
+  if (input.sequenceSelector == null) return fallback({
+    formId: input.formId,
+    animationResource: input.resourceIndex,
+    sequenceSelector: null,
+    frameIndex: input.frameIndex,
+  }, 'Stage Bank $61 sequenceSelector is null');
+
+  const profile = profileForForm(input.formId);
+  if (!profile) return fallback({
+    formId: input.formId,
+    animationResource: input.resourceIndex,
+    sequenceSelector: input.sequenceSelector,
+    frameIndex: input.frameIndex,
+  }, `form ${input.formId} has no ROM physical profile`);
+
+  const physical = corpusFrameForContent({
+    profileKey: profile.actorVisualProfileKey,
+    graphicsBank: profile.graphicsBank,
+    animationBank: input.animationBank,
+    resourceBase: input.resourceBase,
+    resourceId: null,
+    visualFrameId: input.visualFrameId,
+  });
+  if (!physical) {
+    return fallback({
+      formId: input.formId,
+      animationResource: input.resourceIndex,
+      sequenceSelector: input.sequenceSelector,
+      frameIndex: input.frameIndex,
+    }, `Bank $${hex2(input.animationBank)} resourceBase 0x${input.resourceBase.toString(16)} visualFrameId ${input.visualFrameId} has no Stage physical identity for ${input.formId}`);
+  }
+
+  const id = physical.physicalId;
+  return {
+    source: 'ROM_PHYSICAL',
+    physicalId: id,
+    frameInstanceId: `${id}-s${hex2(input.sequenceSelector)}-f${hex2(input.frameIndex)}`,
+    file: physical.file,
+    durationTicks: input.durationTicks,
+    offsetX: input.offsetX,
+    offsetY: input.offsetY,
+    rawOffsetX: input.offsetX < 0 ? input.offsetX + 256 : input.offsetX,
+    rawOffsetY: input.offsetY < 0 ? input.offsetY + 256 : input.offsetY,
+    visualFrameId: input.visualFrameId,
+    evidence: [
+      'ROM_PHYSICAL_STAGE_BANK61',
+      `schemaVersion=${ROM_PHYSICAL_CORPUS_SUMMARY.schemaVersion}`,
+      `offsetEncoding=${ROM_PHYSICAL_CORPUS_SUMMARY.offsetEncoding}`,
+      `form=${input.formId}`,
+      `animationBank=0x${hex2(input.animationBank)}`,
+      `resourceBase=0x${input.resourceBase.toString(16)}`,
+      `resourceIndex=${input.resourceIndex}`,
+      `sequence=${input.sequenceSelector}`,
+      `frame=${input.frameIndex}`,
+    ],
+    fallbackReason: null,
+  };
+}
+
 export function physicalFormStatuses(): PhysicalFormStatus[] {
   const rendered = new Map<string, CorpusForm>(ROM_PHYSICAL_CORPUS_SUMMARY.forms.map(form => [form.formId, form]));
   const paletteBlocked = new Map<string, PaletteBlockedProfile>(PALETTE_BLOCKED_PROFILES.map(form => [form.formId, form]));
@@ -265,11 +345,12 @@ export function productionFrameResolverSummary(): ProductionFrameResolverSummary
   const totals = ROM_PHYSICAL_CORPUS_SUMMARY.totals;
   const romPresentationProduction = CARDS.filter(card => {
     const kind = romPresentationProfileForCard(card).kind;
-    // P0 visual truth: only selector-backed BEAM_BASE currently emits
-    // ROM_PHYSICAL_FRAME cues. STANDARD_DAMAGE remains ROM-grammatical, but
-    // not fighter-physical production until its branch/sequence binding is
-    // proven without a seq0 shortcut.
-    return kind === 'BEAM_BASE';
+    // P0 visual truth: selector-backed BEAM_BASE plus command cards whose
+    // Bank $61 Stage physical frames are promoted into ROM_PHYSICAL_CORPUS.
+    // STANDARD_DAMAGE and most specials remain ROM-grammatical, but not
+    // counted as globally fighter-physical production here yet.
+    const isStageCommand = card.type === 'command' && /^command_[3-6]$/.test(card.effect);
+    return kind === 'BEAM_BASE' || isStageCommand;
   }).length;
   return {
     physicalExtraction: {

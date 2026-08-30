@@ -115,6 +115,7 @@ const TRACE_CUES = new Set<PresentationCue['type']>([
   'EFFECT',
   'HUD',
   'AUDIO',
+  'ROM_PHYSICAL_FRAME',
   // FX_LOAD se registra como trazabilidad (no proyectil procedural).
   'FX_LOAD',
 ]);
@@ -162,6 +163,9 @@ export function classifyRomCue(cue: PresentationCue): CueClassification {
 
   if (VISIBLE_CUES.has(cue.type)) {
     return { ...base, destination: 'VISIBLE', visible: true };
+  }
+  if (cue.type === 'ROM_PHYSICAL_FRAME') {
+    return { ...base, destination: 'TRACE', visible: true, trace: true };
   }
   if (DISPLAY_CUES.has(cue.type)) {
     return { ...base, destination: 'DISPLAY', display: true };
@@ -266,7 +270,7 @@ export function traceCardAction(card: CardDef, side: BattleSide = 'player', acto
         type: cue.type,
         classification: cls,
         traceId,
-        visualFrameId: cue.type === 'ACTION_OBJECT_FRAME'
+        visualFrameId: cue.type === 'ACTION_OBJECT_FRAME' || cue.type === 'ROM_PHYSICAL_FRAME'
           ? (cue as { visualFrameId?: number | null }).visualFrameId ?? null
           : null,
         fidelity: en.fidelity,

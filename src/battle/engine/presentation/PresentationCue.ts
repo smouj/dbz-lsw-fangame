@@ -269,6 +269,8 @@ export interface RomAnimationStartCue {
   tick: number;
   slot: 0 | 1;
   resource: number | null;
+  /** Selector fisico de esta instancia START_ANIMATION, si esta probado. */
+  sequence?: number | null;
 }
 
 /** Binding de producción frame-a-frame decidido por ProductionFrameResolver. */
@@ -453,7 +455,6 @@ export interface RomScreenPathCue {
   type: 'SCREEN_PATH';
   tick: number;
   durationTicks: number;
-  pathId: number | null;
 }
 
 /** SFX directo (opcode $13). */

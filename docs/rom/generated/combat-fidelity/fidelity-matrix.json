@@ -1,5 +1,5 @@
 {
-  "generated": "2026-08-28T12:12:11.624Z",
+  "generated": "2026-08-30T23:15:48.281Z",
   "summary": {
     "cards": 125,
     "byPath": {
@@ -7,7 +7,9 @@
       "ROM_BEAM_BASE": 16,
       "ROM_BEAM_FAMILY": 22,
       "ROM_SUPPORT_SPECIAL": 22,
-      "LEGACY": 46
+      "ROM_SPECIAL_HANDLER": 5,
+      "ROM_STAGE_COMMAND": 4,
+      "LEGACY": 37
     },
     "byHandler": {
       "0x00": 19,
@@ -25,9 +27,9 @@
       "0x06": 1,
       "0x0f": 1
     },
-    "romBacked": 79,
-    "legacy": 46,
-    "proceduralFallback": 2
+    "romBacked": 88,
+    "legacy": 37,
+    "proceduralFallback": 0
   },
   "execSummary": {
     "cards": 125,
@@ -123,7 +125,7 @@
       "staticCompletion": "COMPLETE",
       "resultFamily": "NO_RESULT_BRANCH",
       "branchCount": 0,
-      "runtimePath": "LEGACY",
+      "runtimePath": "ROM_STAGE_COMMAND",
       "legacyInferred": true,
       "proceduralFallback": false
     },
@@ -146,7 +148,7 @@
       "staticCompletion": "COMPLETE",
       "resultFamily": "NO_RESULT_BRANCH",
       "branchCount": 0,
-      "runtimePath": "LEGACY",
+      "runtimePath": "ROM_STAGE_COMMAND",
       "legacyInferred": true,
       "proceduralFallback": false
     },
@@ -169,7 +171,7 @@
       "staticCompletion": "COMPLETE",
       "resultFamily": "NO_RESULT_BRANCH",
       "branchCount": 0,
-      "runtimePath": "LEGACY",
+      "runtimePath": "ROM_STAGE_COMMAND",
       "legacyInferred": true,
       "proceduralFallback": false
     },
@@ -192,7 +194,7 @@
       "staticCompletion": "COMPLETE",
       "resultFamily": "NO_RESULT_BRANCH",
       "branchCount": 0,
-      "runtimePath": "LEGACY",
+      "runtimePath": "ROM_STAGE_COMMAND",
       "legacyInferred": true,
       "proceduralFallback": false
     },
@@ -767,7 +769,7 @@
       "staticCompletion": "COMPLETE",
       "resultFamily": "SPECIAL_HANDLER",
       "branchCount": 0,
-      "runtimePath": "LEGACY",
+      "runtimePath": "ROM_SPECIAL_HANDLER",
       "legacyInferred": true,
       "proceduralFallback": false
     },
@@ -859,9 +861,9 @@
       "staticCompletion": "PARTIAL",
       "resultFamily": "HANDLER_UNPROVEN",
       "branchCount": 0,
-      "runtimePath": "LEGACY",
+      "runtimePath": "ROM_SPECIAL_HANDLER",
       "legacyInferred": true,
-      "proceduralFallback": true
+      "proceduralFallback": false
     },
     {
       "cardId": 34,
@@ -1043,7 +1045,7 @@
       "staticCompletion": "PARTIAL",
       "resultFamily": "HANDLER_UNPROVEN",
       "branchCount": 0,
-      "runtimePath": "LEGACY",
+      "runtimePath": "ROM_SPECIAL_HANDLER",
       "legacyInferred": true,
       "proceduralFallback": false
     },
@@ -1411,9 +1413,9 @@
       "staticCompletion": "COMPLETE",
       "resultFamily": "SPECIAL_HANDLER",
       "branchCount": 0,
-      "runtimePath": "LEGACY",
+      "runtimePath": "ROM_SPECIAL_HANDLER",
       "legacyInferred": true,
-      "proceduralFallback": true
+      "proceduralFallback": false
     },
     {
       "cardId": 58,
@@ -1434,7 +1436,7 @@
       "staticCompletion": "COMPLETE",
       "resultFamily": "SPECIAL_HANDLER",
       "branchCount": 0,
-      "runtimePath": "LEGACY",
+      "runtimePath": "ROM_SPECIAL_HANDLER",
       "legacyInferred": true,
       "proceduralFallback": false
     },

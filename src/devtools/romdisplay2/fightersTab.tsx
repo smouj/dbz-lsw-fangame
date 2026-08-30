@@ -8,8 +8,9 @@
 //    (59.7275 Hz ≈ 16.7427 ms/tick) aplicando offsets.
 // Evidencia estática ROM (research-v3, ROM_STATIC_VERIFIED):
 //    actorVisualProfileKey · graphicsBank = $31 + key · palette Bank30:$6E00+key*8
-// PENDING_ROM_TRACE SOLO para: semantic slot binding / ACTOR_HOME /
-//    TARGET_HOME / CONTACT_POINT / semantic absolute anchors.
+// Gameplay anchors cerrados estáticamente como CENTER / INNER_ACTION /
+//    UNUSED_RESERVED / OFFSCREEN_ENTRY; pendiente: reconciliar offsets de frame
+//    y base positions C3C8..C3CB contra traces dinámicos de ataques.
 import { useEffect, useMemo, useState } from 'react';
 import { MANIFEST_FRAME_INDEX, type ManifestFrameRecord } from '../../data/generated/manifestFrameIndex.generated';
 import { ANIMATION_RESOURCE_CATALOG, animationResourceById } from '../../battle/animationResources';

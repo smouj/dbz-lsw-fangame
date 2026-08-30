@@ -316,10 +316,18 @@ export class ProductionRomPresentationAdapter {
             sequence: cue.sequence,
           };
         }
-        // Wire ROM_PHYSICAL_FRAME to FighterActor per slot
+        // Wire ROM_PHYSICAL_FRAME to FighterActor per slot (direct physical frame consumption)
         const setRomSeq = (this.pres as any).setRomSequenceForSlot;
         if (typeof setRomSeq === 'function') {
           setRomSeq.call(this.pres, cue.slot, cue.resource, cue.sequence);
+        }
+
+        // Direct texture drive from ROM_PHYSICAL_FRAME (to match ROM exactly, bypassing pose fallback)
+        if (cue.visualFrameId != null || cue.file) {
+          const setPhysical = (this.pres as any).setPhysicalFrameForSlot;
+          if (typeof setPhysical === 'function') {
+            setPhysical.call(this.pres, cue.slot, cue);
+          }
         }
         // P0 ROM FIDELITY: Apply ROM-native offsets from the SAME frame record.
         // Never get timing from ROM and offsets from manifest.

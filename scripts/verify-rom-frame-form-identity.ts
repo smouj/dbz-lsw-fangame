@@ -121,7 +121,7 @@ for (const identity of formIdentities) {
   // Check physicalId prefix: must contain the correct profileKey and graphicsBank
   // Physical ID format: rom-p{hex2}-g{hex2}-r{hex2}-vf{hex2}-...
   const expectedPrefix = `rom-p${identity.actorVisualProfileKey.toString(16).padStart(2, '0')}-g${identity.graphicsBank.toString(16).padStart(2, '0')}`;
-  const allFrames: { physicalId: string; resource: number }[] = [];
+  const allFrames: { physicalId: string; resource: number | string }[] = [];
   // Production references live in `physical/` only (via frame.file).
   // physical-debug/ raw canvases are forensic and do NOT participate in
   // stale-production detection.
@@ -129,6 +129,12 @@ for (const identity of formIdentities) {
   for (const seq of Object.values(manifest.sequences) as any[]) {
     for (const frame of seq.frames) {
       allFrames.push({ physicalId: frame.physicalId, resource: seq.resource });
+      productionFiles.add(frame.file);
+    }
+  }
+  for (const seq of Object.values(manifest.stageSequences ?? {}) as any[]) {
+    for (const frame of seq.frames) {
+      allFrames.push({ physicalId: frame.physicalId, resource: `bank${seq.animationBank?.toString(16) ?? '??'}:${seq.resourceBase ?? seq.resourceIndex}` });
       productionFiles.add(frame.file);
     }
   }

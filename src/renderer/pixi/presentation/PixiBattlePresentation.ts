@@ -54,6 +54,13 @@ export class PixiBattlePresentation implements BattlePresentation {
       (actor as any).setRomSequence(resource, sequence);
     }
   }
+
+  setPhysicalFrameForSlot(slot: 0 | 1, cue: any): void {
+    const actor = slot === 0 ? this.leftActor : this.rightActor;
+    if (actor && typeof (actor as any).setPhysicalFrame === 'function') {
+      (actor as any).setPhysicalFrame(cue);
+    }
+  }
   private attacker: BattleSide = 'left';
   private projectile: Graphics | null = null;
   private projectileMode: ProjectileVisualMode = 'special';

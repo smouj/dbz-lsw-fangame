@@ -12,6 +12,7 @@ import { CARDS, type CardDef } from '../src/data/cards';
 import { FORMS } from '../src/data/roster';
 import { romCardData } from '../src/data/romCardData';
 import { ANIMATION_RESOURCE_CATALOG } from '../src/battle/animationResources';
+import { ROM_BANK61_ANIMATION_CORE_RESOURCE_BASES } from '../src/data/generated/romAnimationCore.generated';
 
 const ROOT = process.cwd();
 const FIGHTERS = join(ROOT, 'docs/rom/generated/fighters');
@@ -25,6 +26,13 @@ const SCHEMA_VERSION = 2;
 const PHYSICAL_RENDERER_SCHEMA = 3;
 const OFFSET_ENCODING = 's8';
 const FIGHTER_PHYSICAL_RESOURCE_IDS = new Set([0x00, 0x01, 0x03, 0x04, 0x05, 0x08, 0x09, 0x0b, 0x0f, 0x12, 0x16, 0x22, 0x2c, 0x3f]);
+const STAGE_BANK61_RENDER_TARGETS = [
+  { resourceIndex: 0, sequences: [0x0a, 0x0b, 0x0d, 0x0f, 0x10, 0x17] },
+  { resourceIndex: 1, sequences: null },
+  { resourceIndex: 2, sequences: null },
+  { resourceIndex: 3, sequences: null },
+  { resourceIndex: 4, sequences: null },
+] as const;
 const ROM_SPAIN_SHA256 = 'bd1df5d6653be9e262f96db3bcdd7bb8ae0cad6186c16f8c1e8eba3f091c8804';
 
 interface RomFormProfile {
@@ -38,7 +46,9 @@ interface RomFormProfile {
 
 interface RenderMetadata {
   key: number;
-  resource: number;
+  resource: number | null;
+  animationBank?: number;
+  resourceBase?: number;
   bank: number;
   base: number;
   sequence: number;
@@ -114,7 +124,7 @@ interface RenderMetadata {
 }
 
 interface AnimationResource {
-  resourceId: number;
+  resourceId: number | null;
   bank: number;
   sequences: Array<{ frames: unknown[] }>;
 }
@@ -136,6 +146,9 @@ interface PhysicalFrame {
   file: string;
   sourceRender: string;
   resourceId: number;
+  animationBank: number;
+  resourceBase: number;
+  resourceIdentity: string;
   resourceHex: string;
   visualFrameId: number;
   actorVisualProfileKey: number;
@@ -184,10 +197,13 @@ function hex(value: number, size = 2): string {
   return value.toString(16).padStart(size, '0');
 }
 
-function physicalId(meta: Pick<RenderMetadata, 'key' | 'resource' | 'frameRecord' | 'source' | 'hashes'>): string {
+function physicalId(meta: Pick<RenderMetadata, 'key' | 'resource' | 'animationBank' | 'resourceBase' | 'frameRecord' | 'source' | 'hashes'>): string {
   const metaspriteHash = (meta.hashes.metaspriteHash ?? 'unknown').slice(0, 8);
   const graphicsHash = (meta.hashes.graphicsHash ?? 'unknown').slice(0, 8);
-  return `rom-p${hex(meta.key)}-g${hex(meta.source.bank)}-r${hex(meta.resource)}-vf${hex(meta.frameRecord.visualFrameId)}-ms${metaspriteHash}-gfx${graphicsHash}`;
+  const resourceIdentity = meta.resource == null
+    ? `ab${hex(meta.animationBank ?? 0)}-b${hex(meta.resourceBase ?? 0, 4)}`
+    : `r${hex(meta.resource)}`;
+  return `rom-p${hex(meta.key)}-g${hex(meta.source.bank)}-${resourceIdentity}-vf${hex(meta.frameRecord.visualFrameId)}-ms${metaspriteHash}-gfx${graphicsHash}`;
 }
 
 function sha256(path: string): string {
@@ -335,6 +351,35 @@ function renderReachableResources(resources: AnimationResource[], profilesByReso
   }
 }
 
+function renderStageBank61Resources(profiles: RomFormProfile[]): void {
+  const keys = [...new Set(profiles.map(profile => profile.actorVisualProfileKey))]
+    .sort((a, b) => a - b)
+    .map(key => hex(key))
+    .join(',');
+
+  for (const target of STAGE_BANK61_RENDER_TARGETS) {
+    const base = ROM_BANK61_ANIMATION_CORE_RESOURCE_BASES[target.resourceIndex];
+    if (base == null) throw new Error(`Bank $61 resourceIndex ${target.resourceIndex} has no resource base`);
+    const commonArgs = [
+      'tsx',
+      'tools/rom-research/scripts/render-fighter-physical.ts',
+      '--animation-bank',
+      '61',
+      '--resource-base',
+      hex(base, 4),
+      '--keys',
+      keys,
+    ];
+    if (target.sequences == null) {
+      execFileSync('npx', commonArgs, { cwd: ROOT, stdio: 'pipe' });
+      continue;
+    }
+    for (const selector of target.sequences) {
+      execFileSync('npx', [...commonArgs, '--selector', String(selector)], { cwd: ROOT, stdio: 'pipe' });
+    }
+  }
+}
+
 function bounds(meta: RenderMetadata): {
   width: number;
   height: number;
@@ -381,14 +426,14 @@ function clearGeneratedPhysical(formId: string): void {
   const debugOut = join(formOut, 'physical-debug');
   if (existsSync(physicalOut)) {
     for (const existing of readdirSync(physicalOut)) {
-      if (/^rom-p[0-9a-f]{2}-(?:g[0-9a-f]{2}-)?r[0-9a-f]{2}-vf[0-9a-f]{2}(?:-ms[0-9a-f]{8}-gfx[0-9a-f]{8})?\.png$/.test(existing)) {
+      if (/^rom-p[0-9a-f]{2}-(?:g[0-9a-f]{2}-)?(?:r[0-9a-f]{2}|ab[0-9a-f]{2}-b[0-9a-f]{4})-vf[0-9a-f]{2}(?:-ms[0-9a-f]{8}-gfx[0-9a-f]{8})?\.png$/.test(existing)) {
         unlinkSync(join(physicalOut, existing));
       }
     }
   }
   if (existsSync(debugOut)) {
     for (const existing of readdirSync(debugOut)) {
-      if (/^rom-p[0-9a-f]{2}-(?:g[0-9a-f]{2}-)?r[0-9a-f]{2}-vf[0-9a-f]{2}(?:-ms[0-9a-f]{8}-gfx[0-9a-f]{8})?-raw(?:-canvas)?\.png$/.test(existing)) {
+      if (/^rom-p[0-9a-f]{2}-(?:g[0-9a-f]{2}-)?(?:r[0-9a-f]{2}|ab[0-9a-f]{2}-b[0-9a-f]{4})-vf[0-9a-f]{2}(?:-ms[0-9a-f]{8}-gfx[0-9a-f]{8})?-raw(?:-canvas)?\.png$/.test(existing)) {
         unlinkSync(join(debugOut, existing));
       }
     }
@@ -399,7 +444,7 @@ function clearGeneratedPhysical(formId: string): void {
   }
 }
 
-function buildForForm(profile: RomFormProfile, profilesByResource: Map<number, RomFormProfile[]>): { frames: PhysicalFrame[]; manifest: Record<string, unknown>; provenance: Record<string, unknown>; resourceProfileBlocked: Array<{ resourceId: number; resourceHex: string; reason: string }>; transparentFrameRecords: Array<Record<string, unknown>> } {
+function buildForForm(profile: RomFormProfile, profilesByResource: Map<number, RomFormProfile[]>): { frames: PhysicalFrame[]; stageFrames: PhysicalFrame[]; manifest: Record<string, unknown>; provenance: Record<string, unknown>; resourceProfileBlocked: Array<{ resourceId: number; resourceHex: string; reason: string }>; transparentFrameRecords: Array<Record<string, unknown>> } {
   const formOut = join(PUBLIC_SPRITES, profile.formId);
   const physicalOut = join(formOut, 'physical');
   const debugOut = join(formOut, 'physical-debug');
@@ -409,7 +454,9 @@ function buildForForm(profile: RomFormProfile, profilesByResource: Map<number, R
   mkdirSync(debugOut, { recursive: true });
 
   const byId = new Map<string, PhysicalFrame>();
+  const stageById = new Map<string, PhysicalFrame>();
   const sequences: Record<string, unknown> = {};
+  const stageSequences: Record<string, unknown> = {};
   const resourceProfileBlocked: Array<{ resourceId: number; resourceHex: string; reason: string }> = [];
   const transparentFrameRecords: Array<Record<string, unknown>> = [];
 
@@ -584,11 +631,146 @@ function buildForForm(profile: RomFormProfile, profilesByResource: Map<number, R
     }
   }
 
+  for (const target of STAGE_BANK61_RENDER_TARGETS) {
+    const cpuBase = ROM_BANK61_ANIMATION_CORE_RESOURCE_BASES[target.resourceIndex];
+    if (cpuBase == null) throw new Error(`Bank $61 resourceIndex ${target.resourceIndex} has no base`);
+    const resourceDir = `ab61_b${hex(cpuBase, 4)}`;
+    const profileDir = join(FIGHTERS, resourceDir, `profile_${hex(profile.actorVisualProfileKey)}`);
+    if (!isDir(profileDir)) continue;
+
+    const prepared: Array<{ metaPath: string; meta: RenderMetadata; b: ReturnType<typeof bounds> }> = [];
+    for (const metaPath of walkMetadata(profileDir)) {
+      const meta = readJson<RenderMetadata>(metaPath);
+      prepared.push({ metaPath, meta, b: bounds(meta) });
+    }
+
+    for (const { metaPath, meta, b } of prepared.filter(({ meta }) => meta.bounds.opaqueBounds)) {
+      if (meta.key !== profile.actorVisualProfileKey || meta.source.bank !== profile.graphicsBank) {
+        throw new Error(`${profile.formId}: Stage render profile mismatch (form key=${profile.actorVisualProfileKey}/bank=${profile.graphicsBank}, render key=${meta.key}/bank=${meta.source.bank})`);
+      }
+      if ((meta.pieceGraphics?.length ?? 0) !== meta.metasprite.pieces.length || meta.metasprite.pieces.length !== meta.graphics.blockCount) {
+        throw new Error(`${profile.formId}: Stage piece/block mismatch in bank $61 base 0x${hex(cpuBase, 4)} seq${meta.sequence} frame${meta.frameIndex}`);
+      }
+      const id = physicalId(meta);
+      const file = `physical/${id}.png`;
+      const srcPng = join(metaPath, '..', 'rom_trimmed.png');
+      const rawCanvasFile = meta.rawCanvas ? `physical-debug/${id}-raw-canvas.png` : undefined;
+      const rawImageFile = meta.rawCanvas?.rawFile ? `physical-debug/${id}-raw.png` : undefined;
+      const srcRawCanvas = meta.rawCanvas ? join(metaPath, '..', meta.rawCanvas.file) : null;
+      const srcRawImage = meta.rawCanvas?.rawFile ? join(metaPath, '..', meta.rawCanvas.rawFile) : null;
+      const occurrence = {
+        sequence: meta.sequence,
+        frameIndex: meta.frameIndex,
+        durationTicks: meta.frameRecord.durationTicks,
+        offsetEncoding: OFFSET_ENCODING,
+        rawOffsetX: meta.frameRecord.raw[3],
+        rawOffsetY: meta.frameRecord.raw[2],
+        offsetX: meta.frameRecord.offsetX,
+        offsetY: meta.frameRecord.offsetY,
+        raw: meta.frameRecord.raw,
+        frameAddress: meta.frameRecord.provenance.frameAddress,
+      };
+
+      const existing = stageById.get(id);
+      if (existing) {
+        if (existing.hashes.trimmedPixelHash !== meta.hashes.trimmedPixelHash) {
+          throw new Error(`${id} maps to multiple Stage pixel hashes; sequence cannot be hidden in the filename`);
+        }
+        existing.occurrences.push(occurrence);
+      } else {
+        copyFileSync(srcPng, join(formOut, file));
+        if (rawCanvasFile && srcRawCanvas && existsSync(srcRawCanvas)) {
+          copyFileSync(srcRawCanvas, join(formOut, rawCanvasFile));
+        }
+        if (rawImageFile && srcRawImage && existsSync(srcRawImage)) {
+          copyFileSync(srcRawImage, join(formOut, rawImageFile));
+        }
+        stageById.set(id, {
+          physicalId: id,
+          schemaVersion: SCHEMA_VERSION,
+          physicalRendererSchema: PHYSICAL_RENDERER_SCHEMA,
+          offsetEncoding: OFFSET_ENCODING,
+          file,
+          sourceRender: metaPath.replace(`${ROOT}/`, ''),
+          resourceId: null,
+          animationBank: meta.animationBank ?? 0x61,
+          resourceBase: meta.resourceBase ?? cpuBase,
+          resourceIdentity: `ab${hex(meta.animationBank ?? 0x61)}-b${hex(meta.resourceBase ?? cpuBase, 4)}`,
+          resourceHex: `ab${hex(meta.animationBank ?? 0x61)}-b${hex(meta.resourceBase ?? cpuBase, 4)}`,
+          visualFrameId: meta.frameRecord.visualFrameId,
+          actorVisualProfileKey: profile.actorVisualProfileKey,
+          graphicsBank: profile.graphicsBank,
+          ...b,
+          rawCanvasFile,
+          rawImageFile,
+          hashes: { ...meta.hashes, sourceFileSha256: sha256(srcPng) },
+          palette: meta.palette,
+          metasprite: meta.metasprite,
+          graphics: meta.graphics,
+          pieceGraphics: meta.pieceGraphics ?? [],
+          assembly: meta.assembly ?? {
+            pieceCount: meta.metasprite.pieces.length,
+            graphicsBlockCount: meta.graphics.blockCount,
+            renderedPieceCount: meta.pieceGraphics?.length ?? 0,
+            graphicsBlockAddresses: (meta.pieceGraphics ?? []).map(piece => piece.graphicsBlockAddress),
+            renderedBlockAddresses: (meta.pieceGraphics ?? []).map(piece => piece.graphicsBlockAddress),
+            piecesOutsideRaw: 0,
+            pixelsWrittenOutsideRaw: 0,
+            assemblyInputHash: meta.hashes.assemblyInputHash ?? meta.hashes.sourceProvenanceHash,
+            rawPixelHash: meta.hashes.rawPixelHash,
+            trimmedPixelHash: meta.hashes.trimmedPixelHash,
+            errors: [],
+          },
+          rawBounds: meta.rawBounds,
+          sourceProvenance: meta.sourceProvenance,
+          occurrences: [occurrence],
+        });
+      }
+
+      const sequenceKey = `bank61_resource_${target.resourceIndex}_sequence_${hex(meta.sequence)}`;
+      const list = (stageSequences[sequenceKey] as { source: string; resourceIndex: number; animationBank: number; resourceBase: number; sequence: number; frames: unknown[] } | undefined) ?? {
+        source: 'ROM_PHYSICAL_STAGE_BANK61',
+        schemaVersion: SCHEMA_VERSION,
+        physicalRendererSchema: PHYSICAL_RENDERER_SCHEMA,
+        offsetEncoding: OFFSET_ENCODING,
+        resourceIndex: target.resourceIndex,
+        animationBank: meta.animationBank ?? 0x61,
+        resourceBase: meta.resourceBase ?? cpuBase,
+        sequence: meta.sequence,
+        frames: [],
+      };
+      list.frames.push({
+        file,
+        physicalId: id,
+        frameIndex: meta.frameIndex,
+        visualFrameId: meta.frameRecord.visualFrameId,
+        durationTicks: meta.frameRecord.durationTicks,
+        rawOffsetX: meta.frameRecord.raw[3],
+        rawOffsetY: meta.frameRecord.raw[2],
+        offsetX: meta.frameRecord.offsetX,
+        offsetY: meta.frameRecord.offsetY,
+        offsetEncoding: OFFSET_ENCODING,
+        originX: b.originX,
+        originY: b.originY,
+        originInTrimX: b.originInTrimX,
+        originInTrimY: b.originInTrimY,
+        rawCanvasFile,
+        rawImageFile,
+        assemblyErrors: meta.assembly?.errors ?? [],
+      });
+      stageSequences[sequenceKey] = list;
+    }
+  }
+
   for (const seq of Object.values(sequences) as Array<{ frames: unknown[] }>) {
+    seq.frames.sort((a, b) => ((a as { frameIndex?: number }).frameIndex ?? 0) - ((b as { frameIndex?: number }).frameIndex ?? 0));
+  }
+  for (const seq of Object.values(stageSequences) as Array<{ frames: unknown[] }>) {
     seq.frames.sort((a, b) => ((a as { frameIndex?: number }).frameIndex ?? 0) - ((b as { frameIndex?: number }).frameIndex ?? 0));
   }
 
   const frames = [...byId.values()].sort((a, b) => a.physicalId.localeCompare(b.physicalId));
+  const stageFrames = [...stageById.values()].sort((a, b) => a.physicalId.localeCompare(b.physicalId));
   const manifest = {
     version: 'P0.3B_ROM_PHYSICAL_FIGHTER',
     schemaVersion: SCHEMA_VERSION,
@@ -599,6 +781,7 @@ function buildForForm(profile: RomFormProfile, profilesByResource: Map<number, R
     actorVisualProfileKey: profile.actorVisualProfileKey,
     graphicsBank: profile.graphicsBank,
     sequences,
+    stageSequences,
     semanticMapping: {
       status: 'PENDING_P0.3C',
       note: 'This file maps physical ROM sequences. Semantic roles remain in legacy manifest.json until P0.3C remapping.',
@@ -621,11 +804,13 @@ function buildForForm(profile: RomFormProfile, profilesByResource: Map<number, R
     identityExcludes: ['sequence', 'semanticRole', 'legacyPoseName'],
     resourceProfileBlocked,
     transparentFrameRecords,
-    frames,
+    frames: [...frames, ...stageFrames],
+    fighterFrames: frames,
+    stageFrames,
   };
   writeFileSync(join(formOut, 'rom-physical.manifest.json'), `${JSON.stringify(manifest, null, 2)}\n`);
   writeFileSync(join(formOut, 'provenance.json'), `${JSON.stringify(provenance, null, 2)}\n`);
-  return { frames, manifest, provenance, resourceProfileBlocked, transparentFrameRecords };
+  return { frames, stageFrames, manifest, provenance, resourceProfileBlocked, transparentFrameRecords };
 }
 
 const profiles = readJson<RomFormProfile[]>(PROFILES);
@@ -643,11 +828,14 @@ const corpusProfiles = physicalProfiles.filter(profile =>
   resources.some(resource => (profilesByResource.get(resource.resourceId) ?? []).some(candidate => candidate.formId === profile.formId)));
 const resourceBlockedProfiles = physicalProfiles.filter(profile => !corpusProfiles.some(candidate => candidate.formId === profile.formId));
 renderReachableResources(resources, profilesByResource);
+renderStageBank61Resources(physicalProfiles);
 for (const profile of [...paletteBlockedProfiles, ...resourceBlockedProfiles]) clearGeneratedPhysical(profile.formId);
 
 const summary = corpusProfiles.map(profile => {
   const built = buildForForm(profile, profilesByResource);
   const signedNegativeInstances = built.frames.reduce((total, frame) =>
+    total + frame.occurrences.filter(occurrence => occurrence.rawOffsetX >= 0x80 || occurrence.rawOffsetY >= 0x80).length, 0);
+  const stageSignedNegativeInstances = built.stageFrames.reduce((total, frame) =>
     total + frame.occurrences.filter(occurrence => occurrence.rawOffsetX >= 0x80 || occurrence.rawOffsetY >= 0x80).length, 0);
   const widths = built.frames.map(frame => frame.width);
   const heights = built.frames.map(frame => frame.height);
@@ -662,9 +850,13 @@ const summary = corpusProfiles.map(profile => {
     formId: profile.formId,
     actorVisualProfileKey: profile.actorVisualProfileKey,
     physicalFrames: built.frames.length,
+    stagePhysicalFrames: built.stageFrames.length,
     frameInstances: built.frames.reduce((total, frame) => total + frame.occurrences.length, 0),
+    stageFrameInstances: built.stageFrames.reduce((total, frame) => total + frame.occurrences.length, 0),
     sequences: Object.keys((built.manifest as { sequences: Record<string, unknown> }).sequences).length,
+    stageSequences: Object.keys((built.manifest as { stageSequences: Record<string, unknown> }).stageSequences).length,
     resources: [...new Set(built.frames.map(frame => frame.resourceHex))],
+    stageResources: [...new Set(built.stageFrames.map(frame => frame.resourceHex))],
     resourceFrameInstances,
     resourceProfileBlocked: built.resourceProfileBlocked,
     transparentFrameRecords: built.transparentFrameRecords,
@@ -672,6 +864,23 @@ const summary = corpusProfiles.map(profile => {
       physicalId: frame.physicalId,
       file: frame.file,
       resourceId: frame.resourceId,
+      animationBank: frame.animationBank,
+      resourceBase: frame.resourceBase,
+      resourceHex: frame.resourceHex,
+      visualFrameId: frame.visualFrameId,
+      actorVisualProfileKey: frame.actorVisualProfileKey,
+      graphicsBank: frame.graphicsBank,
+      metaspriteHash: frame.hashes.metaspriteHash,
+      graphicsHash: frame.hashes.graphicsHash,
+      sourceProvenanceHash: frame.hashes.sourceProvenanceHash,
+      trimmedPixelHash: frame.hashes.trimmedPixelHash,
+    })),
+    stagePhysicalFrameIndex: built.stageFrames.map(frame => ({
+      physicalId: frame.physicalId,
+      file: frame.file,
+      resourceId: frame.resourceId,
+      animationBank: frame.animationBank,
+      resourceBase: frame.resourceBase,
       resourceHex: frame.resourceHex,
       visualFrameId: frame.visualFrameId,
       actorVisualProfileKey: frame.actorVisualProfileKey,
@@ -682,6 +891,7 @@ const summary = corpusProfiles.map(profile => {
       trimmedPixelHash: frame.hashes.trimmedPixelHash,
     })),
     signedNegativeInstances,
+    stageSignedNegativeInstances,
     minOffset: Math.min(...offsets),
     maxOffset: Math.max(...offsets),
     minWidth: Math.min(...widths),
@@ -698,10 +908,15 @@ const totals = {
   formsResourceBlocked: resourceBlockedProfiles.length,
   resourcesReachable: resources.length,
   resourcesRendered: resources.length,
+  stageResourcesRendered: STAGE_BANK61_RENDER_TARGETS.length,
   resourcesRendererPending: rendererPending.length,
-  physicalIdentities: summary.reduce((total, row) => total + row.physicalFrames, 0),
-  frameInstances: summary.reduce((total, row) => total + row.frameInstances, 0),
-  signedNegativeInstances: summary.reduce((total, row) => total + row.signedNegativeInstances, 0),
+  fighterPhysicalIdentities: summary.reduce((total, row) => total + row.physicalFrames, 0),
+  fighterFrameInstances: summary.reduce((total, row) => total + row.frameInstances, 0),
+  stagePhysicalIdentities: summary.reduce((total, row) => total + row.stagePhysicalFrames, 0),
+  stageFrameInstances: summary.reduce((total, row) => total + row.stageFrameInstances, 0),
+  physicalIdentities: summary.reduce((total, row) => total + row.physicalFrames + row.stagePhysicalFrames, 0),
+  frameInstances: summary.reduce((total, row) => total + row.frameInstances + row.stageFrameInstances, 0),
+  signedNegativeInstances: summary.reduce((total, row) => total + row.signedNegativeInstances + row.stageSignedNegativeInstances, 0),
   minOffset: Math.min(...summary.map(row => row.minOffset)),
   maxOffset: Math.max(...summary.map(row => row.maxOffset)),
   maxWidth: Math.max(...summary.map(row => row.maxWidth)),
@@ -715,6 +930,7 @@ const physicalIdsByResource = new Map<number, Set<string>>();
 const frameInstancesByResource = new Map<number, number>();
 for (const form of summary) {
   for (const frame of form.physicalFrameIndex) {
+    if (frame.resourceId == null) continue;
     const ids = physicalIdsByResource.get(frame.resourceId) ?? new Set<string>();
     ids.add(frame.physicalId);
     physicalIdsByResource.set(frame.resourceId, ids);

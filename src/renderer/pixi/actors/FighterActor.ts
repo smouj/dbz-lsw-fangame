@@ -106,6 +106,50 @@ export class FighterActor extends Container {
     return null;
   }
 
+  /** Direct physical frame from ROM_PHYSICAL_FRAME cue (exact ROM match, no pose fallback). */
+  setPhysicalFrame(cue: {
+    resource: number;
+    sequence: number;
+    frameIndex: number;
+    visualFrameId?: number | null;
+    file?: string | null;
+    offsetX?: number | null;
+    offsetY?: number | null;
+    durationTicks?: number | null;
+  }): void {
+    this.romResource = cue.resource;
+    this.romSequence = cue.sequence;
+    this.lastFrameIndex = cue.frameIndex;
+
+    if (cue.offsetX != null || cue.offsetY != null) {
+      this._frameOffsetX = cue.offsetX ?? 0;
+      this._frameOffsetY = cue.offsetY ?? 0;
+    }
+
+    // Prefer direct visualFrameId or file if provided by resolver
+    const visualFrameKey = cue.visualFrameId != null ? String(cue.visualFrameId) : null;
+    if (visualFrameKey != null && this.atlas.textures.has(visualFrameKey)) {
+      this.sprite.texture = this.atlas.textures.get(visualFrameKey)!;
+      this.sprite.visible = true;
+      return;
+    }
+    if (cue.file && this.atlas.textures.has(cue.file)) {
+      this.sprite.texture = this.atlas.textures.get(cue.file)!;
+      this.sprite.visible = true;
+      return;
+    }
+
+    // Fallback to the rom-aware key we already have
+    const texKey = `${this.activePose}:${cue.frameIndex}:rom:${cue.resource}:${cue.sequence}`;
+    const tex = this.atlas.textures.get(texKey) ?? this.atlas.textures.get(`${this.activePose}:${cue.frameIndex}`);
+    if (tex) {
+      this.sprite.texture = tex;
+      this.sprite.visible = true;
+    } else {
+      this.sprite.visible = false;
+    }
+  }
+
   /** P0 ROM TICKS: devuelve el estado interno para diagnóstico en browser. */
   inspect(): {
     formId: string;

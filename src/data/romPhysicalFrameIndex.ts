@@ -22,7 +22,7 @@ import {
 export interface PhysicalCorpusFrameRef {
   physicalId: string;
   file: string;
-  resourceId: number;
+  resourceId: number | null;
   visualFrameId: number;
   actorVisualProfileKey: number;
   graphicsBank: number;
@@ -52,7 +52,9 @@ const FORM_PROFILE: Map<string, FormProfileRef> = new Map(
 type CorpusFrame = {
   physicalId: string;
   file: string;
-  resourceId: number;
+  resourceId: number | null;
+  animationBank?: number;
+  resourceBase?: number;
   visualFrameId: number;
   actorVisualProfileKey: number;
   graphicsBank: number;
@@ -64,15 +66,32 @@ const CONTENT_COLLISIONS: Array<{ key: string; a: string; b: string }> = [];
 for (const form of ROM_PHYSICAL_CORPUS_SUMMARY.forms as ReadonlyArray<{
   formId: string;
   physicalFrameIndex?: ReadonlyArray<CorpusFrame>;
+  stagePhysicalFrameIndex?: ReadonlyArray<CorpusFrame>;
 }>) {
-  const index = form.physicalFrameIndex ?? [];
+  const index = [
+    ...(form.physicalFrameIndex ?? []),
+    ...(form.stagePhysicalFrameIndex ?? []),
+  ];
   for (const frame of index) {
-    const contentKey = physicalContentKey(contentKeyForCatalog(
-      frame.actorVisualProfileKey,
-      frame.graphicsBank,
-      frame.resourceId,
-      frame.visualFrameId,
-    ));
+    const content = frame.animationBank != null && frame.resourceBase != null
+      ? {
+          profileKey: frame.actorVisualProfileKey,
+          graphicsBank: frame.graphicsBank,
+          animationBank: frame.animationBank,
+          resourceBase: frame.resourceBase,
+          resourceId: frame.resourceId,
+          visualFrameId: frame.visualFrameId,
+        }
+      : frame.resourceId == null
+        ? null
+        : contentKeyForCatalog(
+            frame.actorVisualProfileKey,
+            frame.graphicsBank,
+            frame.resourceId,
+            frame.visualFrameId,
+          );
+    if (!content) continue;
+    const contentKey = physicalContentKey(content);
     const existing = CONTENT_INDEX.get(contentKey);
     if (existing && existing.physicalId !== frame.physicalId) {
       CONTENT_COLLISIONS.push({ key: contentKey, a: existing.physicalId, b: frame.physicalId });

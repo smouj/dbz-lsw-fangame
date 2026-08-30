@@ -160,7 +160,7 @@ export function ValidationModule() {
     info('P0.1C-E Support/Aura state', `support visuals ${fxCorpus.supportVisuals} · support aura ${fxCorpus.supportAuraBlue} · gather aura ${fxCorpus.gatherPowerAuraOrange}`);
     const physicalMapping = snap.physicalMapping;
     pass('P0.3C ProductionFrameResolver: physical mapping explícito', physicalMapping.physicalMapping.romInstancesMapped === physicalMapping.physicalMapping.romInstancesTotal && physicalMapping.physicalMapping.unresolved === 0, `${physicalMapping.physicalMapping.romInstancesMapped}/${physicalMapping.physicalMapping.romInstancesTotal} mapped · unresolved ${physicalMapping.physicalMapping.unresolved}`);
-    pass('P0.3C ProductionFrameResolver: consumo físico sin MIXED', physicalMapping.cards.romPresentationProduction === 16 && physicalMapping.cards.legacy === 109 && physicalMapping.cards.mixed === 0, `${physicalMapping.cards.romPresentationProduction}/125 ROM_PHYSICAL · ${physicalMapping.cards.legacy} LEGACY/PENDING · MIXED ${physicalMapping.cards.mixed}`);
+    pass('P0.3C ProductionFrameResolver: consumo físico sin MIXED', physicalMapping.cards.romPresentationProduction === 20 && physicalMapping.cards.legacy === 105 && physicalMapping.cards.mixed === 0, `${physicalMapping.cards.romPresentationProduction}/125 ROM_PHYSICAL · ${physicalMapping.cards.legacy} LEGACY/PENDING · MIXED ${physicalMapping.cards.mixed}`);
     // Los frames sin evidencia NO se asignan por aproximación — quedan desconocidos.
     if (snap.sprites.unknown === 0) {
       info('Sprites OUT_frames: 0 frames sin evidencia (UNCLASSIFIED honestos)', 'los frames sin evidencia NO se asignan por aproximación — quedan desconocidos hasta nueva evidencia');

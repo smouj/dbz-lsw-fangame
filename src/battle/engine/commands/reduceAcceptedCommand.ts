@@ -144,11 +144,21 @@ export function reduceAcceptedCommand(state: BattleState, command: BattleCommand
     case 'PLAY_LIMIT_CARD': {
       const card = getCard(command.cardId) ?? null;
       const r = playLimitCard(state, 'player', command.cardId);
-      next = { ...r.state, phase: 'stageInput' };
-      events = [
-        ...r.events,
-        ...(card ? [{ type: 'ACTION_STARTED' as const, side: 'player' as const, action: actionDescriptorForCard(card) }] : []),
-      ];
+      if (state.phase === 'defend') {
+        // Defense LIMIT usa la misma carta equipada reutilizable: paga CC y
+        // compromete la defensa como CARD, pero NO descarta ni compacta mano.
+        next = { ...r.state, defenseState: 'COMMITTED', defenseChoice: { type: 'CARD', cardId: r.cardId } };
+        events = [
+          { type: 'DEFENSE_COMMITTED', side: 'player', choice: { type: 'CARD', cardId: r.cardId } },
+          ...r.events,
+        ];
+      } else {
+        next = { ...r.state, phase: 'stageInput' };
+        events = [
+          ...r.events,
+          ...(card ? [{ type: 'ACTION_STARTED' as const, side: 'player' as const, action: actionDescriptorForCard(card) }] : []),
+        ];
+      }
       break;
     }
 

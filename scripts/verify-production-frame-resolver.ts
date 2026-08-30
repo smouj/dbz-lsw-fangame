@@ -135,7 +135,7 @@ check('adapter has no mixed physical sources for golden beam', Object.keys(snap.
 check('adapter applies ROM-native frame offsets', probe.frameOffsets === physicalCues.length, `${probe.frameOffsets}/${physicalCues.length}`);
 
 const summary = productionFrameResolverSummary();
-check('summary: ROM physical production counts only selector-backed BEAM_BASE', summary.cards.romPresentationProduction === 16 && summary.cards.legacy === 109, `${summary.cards.romPresentationProduction}/${summary.cards.legacy}`);
+check('summary: ROM physical production counts BEAM_BASE + Stage Bank $61', summary.cards.romPresentationProduction === 20 && summary.cards.legacy === 105, `${summary.cards.romPresentationProduction}/${summary.cards.legacy}`);
 check('summary: MIXED invariant zero', summary.cards.mixed === 0, String(summary.cards.mixed));
 check('summary: no unresolved rendered', summary.productionConsumption.unresolvedRendered === 0, String(summary.productionConsumption.unresolvedRendered));
 

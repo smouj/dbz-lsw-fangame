@@ -144,7 +144,7 @@ export function ResearchModule() {
           ))}
         </div>
         <p className="dev-muted" style={{ marginTop: 6 }}>
-          Límites conservados: semantic slot binding, absolute anchors, multi-actor binding,
+          Límites conservados: frame offsets contra base positions, traces HIT/MISS/defensa,
           Lightning C. seq1, renders Support físicos, macros Support y la auditoría global final de slot8 siguen en investigación.
         </p>
       </div>

@@ -27,7 +27,7 @@ import {
   cardPhysicalCoverageSummary,
 } from '../src/battle/cardPhysicalCoverage';
 import { resolveActionProfile } from '../src/battle/actionProfiles';
-import { supportSpecialCutover } from '../src/battle/supportRomCutover';
+import { romPresentationTimelineForCard } from '../src/battle/romPresentationForCard';
 
 let failures = 0;
 function check(name: string, ok: boolean, detail?: string) {
@@ -41,22 +41,32 @@ function hex(value: number | null | undefined): string | null {
   return value == null || value === 0xff ? null : `0x${value.toString(16).padStart(2, '0')}`;
 }
 
-type RuntimePath = 'ROM_STANDARD_DAMAGE' | 'ROM_BEAM_BASE' | 'ROM_BEAM_FAMILY' | 'ROM_SUPPORT_SPECIAL' | 'LEGACY';
+type RuntimePath =
+  | 'ROM_STANDARD_DAMAGE'
+  | 'ROM_BEAM_BASE'
+  | 'ROM_BEAM_FAMILY'
+  | 'ROM_SUPPORT_SPECIAL'
+  | 'ROM_SPECIAL_HANDLER'
+  | 'ROM_STAGE_COMMAND'
+  | 'LEGACY';
 
 /**
- * El runtime (buildTimeline.ts) cablea a la ruta ROM:
- *   $0A → STANDARD_DAMAGE · $02 → BEAM_BASE · $03-$07 → BEAM_FAMILY
- *   $0B/$0D/$0F (category=SUPPORT) → SUPPORT_SPECIAL
- * (compileBeamFamilyRuntimeCutover / compileSupportRomRuntimeCutover /
- *  romPresentationTimelineForCard).
+ * Runtime path is measured from the production router itself. This avoids a
+ * stale second classifier: if romPresentationTimelineForCard routes a family,
+ * the fidelity matrix must report that same family.
  */
-function runtimePathFor(descriptor: RomActionExecutionDescriptor, profile: RomPresentationProfile, cardId: number): RuntimePath {
-  const h = descriptor.execution.handler;
-  if (h === 0x0a && profile.kind === 'STANDARD_DAMAGE') return 'ROM_STANDARD_DAMAGE';
-  if (profile.kind === 'BEAM_BASE') return 'ROM_BEAM_BASE';
-  if (profile.kind === 'BEAM_VARIANT' || profile.kind === 'PROJECTILE_SCROLL') return 'ROM_BEAM_FAMILY';
-  if (supportSpecialCutover(cardId, {}) != null) return 'ROM_SUPPORT_SPECIAL';
-  return 'LEGACY';
+function runtimePathFor(card: CardDef): RuntimePath {
+  const route = romPresentationTimelineForCard(card, 'player', null);
+  switch (route?.kind) {
+    case 'STANDARD_DAMAGE': return 'ROM_STANDARD_DAMAGE';
+    case 'BEAM_BASE': return 'ROM_BEAM_BASE';
+    case 'BEAM_VARIANT':
+    case 'PROJECTILE_SCROLL': return 'ROM_BEAM_FAMILY';
+    case 'SUPPORT_SPECIAL': return 'ROM_SUPPORT_SPECIAL';
+    case 'SPECIAL_HANDLER': return 'ROM_SPECIAL_HANDLER';
+    case 'STAGE_COMMAND': return 'ROM_STAGE_COMMAND';
+    default: return 'LEGACY';
+  }
 }
 
 interface FidelityRow {
@@ -93,7 +103,7 @@ function buildRow(card: CardDef): FidelityRow {
   const coverage = cardPhysicalCoverageForCard(card);
   const legacy = resolveActionProfile(card.name);
 
-  const runtimePath = runtimePathFor(descriptor, profile, card.id);
+  const runtimePath = runtimePathFor(card);
 
   return {
     cardId: card.id,
@@ -127,7 +137,15 @@ check('fidelity:125 cards', rows.length === 125, String(rows.length));
 check('fidelity:unique card ids', new Set(rows.map(r => r.cardId)).size === 125);
 
 // ── Resumen ──
-const byPath: Record<RuntimePath, number> = { ROM_STANDARD_DAMAGE: 0, ROM_BEAM_BASE: 0, ROM_BEAM_FAMILY: 0, ROM_SUPPORT_SPECIAL: 0, LEGACY: 0 };
+const byPath: Record<RuntimePath, number> = {
+  ROM_STANDARD_DAMAGE: 0,
+  ROM_BEAM_BASE: 0,
+  ROM_BEAM_FAMILY: 0,
+  ROM_SUPPORT_SPECIAL: 0,
+  ROM_SPECIAL_HANDLER: 0,
+  ROM_STAGE_COMMAND: 0,
+  LEGACY: 0,
+};
 const byHandler = new Map<string, number>();
 const legacyProcedural: FidelityRow[] = [];
 for (const r of rows) {
@@ -136,7 +154,12 @@ for (const r of rows) {
   if (r.proceduralFallback) legacyProcedural.push(r);
 }
 
-const romBacked = byPath.ROM_STANDARD_DAMAGE + byPath.ROM_BEAM_BASE + byPath.ROM_BEAM_FAMILY + byPath.ROM_SUPPORT_SPECIAL;
+const romBacked = byPath.ROM_STANDARD_DAMAGE
+  + byPath.ROM_BEAM_BASE
+  + byPath.ROM_BEAM_FAMILY
+  + byPath.ROM_SUPPORT_SPECIAL
+  + byPath.ROM_SPECIAL_HANDLER
+  + byPath.ROM_STAGE_COMMAND;
 const legacy = byPath.LEGACY;
 
 // ── Verificaciones del gate (no afirmamos nada falso; solo medimos) ──
@@ -159,13 +182,15 @@ console.log(`ROM_STANDARD_DAMAGE=${byPath.ROM_STANDARD_DAMAGE}`);
 console.log(`ROM_BEAM_BASE=${byPath.ROM_BEAM_BASE}`);
 console.log(`ROM_BEAM_FAMILY=${byPath.ROM_BEAM_FAMILY}`);
 console.log(`ROM_SUPPORT_SPECIAL=${byPath.ROM_SUPPORT_SPECIAL}`);
+console.log(`ROM_SPECIAL_HANDLER=${byPath.ROM_SPECIAL_HANDLER}`);
+console.log(`ROM_STAGE_COMMAND=${byPath.ROM_STAGE_COMMAND}`);
 console.log(`ROM_BACKED_TOTAL=${romBacked}`);
 console.log(`LEGACY=${legacy}`);
 console.log(`proceduralFallback(LEGACY+beam)=${legacyProcedural.length}`);
 console.log('');
 console.log('── handlers ──');
 for (const [h, count] of [...byHandler.entries()].sort()) {
-  const wired = ['0x02', '0x03', '0x04', '0x05', '0x06', '0x07', '0x0a', '0x0b', '0x0d', '0x0f'].includes(h) ? ' ← wired' : '';
+  const wired = ['0x00', '0x02', '0x03', '0x04', '0x05', '0x06', '0x07', '0x08', '0x0a', '0x0b', '0x0c', '0x0d', '0x0e', '0x0f'].includes(h) ? ' ← wired' : '';
   console.log(`  ${h}: ${count}${wired}`);
 }
 console.log('');

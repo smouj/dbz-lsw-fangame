@@ -13,8 +13,8 @@
 //
 // Consumes:
 //   SCREEN_MOTION  $0E — dxPerTick * elapsed, discrete per tick
-//   SCREEN_RESTORE $0F — restore to baseSceneX/baseSceneY
-//   SCREEN_PATH    $11 — ROM program path (reserved)
+//   SCREEN_RESTORE $0F — disables STAT/HBlank cinematic viewport
+//   SCREEN_PATH    $11 — single fixed ROM path (no pathId family)
 //   ImpactSystem shake — transient overlay (sine decay)
 //
 // PROHIBIDO mantener en otro sitio:
@@ -24,6 +24,8 @@
 //   setTimeout camera
 //   requestAnimationFrame-based camera completion
 // ═══════════════════════════════════════════════════════════
+
+import { screenPathOffsetAt, SCREEN_PATH_STEPS } from '../../../battle/romScreenPath';
 
 export interface CameraState {
   /** Base scene origin X (FIELD=0, ACTION=0 by default). */
@@ -42,6 +44,8 @@ export interface CameraState {
   screenMotionActive: boolean;
   /** Whether a screen path is active. */
   screenPathActive: boolean;
+  /** Whether the C5 STAT/HBlank cinematic viewport is enabled. */
+  cinematicViewportEnabled: boolean;
 }
 
 export interface CameraSnapshot {
@@ -61,6 +65,7 @@ export interface CameraSnapshot {
   /** Active motion state. */
   screenMotionActive: boolean;
   screenPathActive: boolean;
+  cinematicViewportEnabled: boolean;
 }
 
 export class CameraPresenter {
@@ -79,7 +84,9 @@ export class CameraPresenter {
 
   // ── Screen path (SCREEN_PATH $11) ──
   private screenPathActive = false;
-  private screenPathId: number | null = null;
+  private screenPathStartTick = 0;
+  private screenPathDone = false;
+  private screenPathSide: 'SIDE_1' | 'SIDE_2' = 'SIDE_1';
 
   // ── Computed ROM offsets (updated per tick) ──
   private romScreenOffsetX = 0;
@@ -89,17 +96,16 @@ export class CameraPresenter {
   private transientOffsetX = 0;
   private transientOffsetY = 0;
 
-  // ── Beam BG scroll (separate from world camera) ──
-  // GBC beam FX uses BG tilemap at $9800 with its own SCX/SCY.
-  // Formula: SCY(FF42) = base $C407 + $C405; SCX(FF43) = base $C409 + $C406
-  // Where $C405/$C406 come from selector rows (per-frame offsets)
-  // and $C407/$C409 are base scroll values set by OPEN_SFX_V4_05.
+  // ── C5 cinematic viewport (separate from whole-world camera) ──
+  // Formula outside viewport: SCY=low(C407), SCX=low(C409)
+  // Formula inside viewport:  SCY=low(C407)+C405, SCX=low(C409)+C406
+  // $0F disables STAT/HBlank viewport but preserves C405/C406.
   private beamBaseScx: number | null = null;
   private beamBaseScy: number | null = null;
   private beamFrameDeltaScx = 0; // $C406 (side-dependent)
   private beamFrameDeltaScy = 0; // $C405
   private beamSide: 'SIDE_1' | 'SIDE_2' | null = null;
-  private beamBgActive = false;
+  private cinematicViewportEnabled = false;
 
   /**
    * Set base scene position. Called when scene changes (FIELD→ACTION, etc.).
@@ -126,8 +132,8 @@ export class CameraPresenter {
   }
 
   /**
-   * SCREEN_RESTORE $0F — restore screen to base position.
-   * Clears all ROM screen offsets, resets motion state.
+   * SCREEN_RESTORE $0F — restore screen visually to base position.
+   * Disables STAT/HBlank viewport, but preserves C405/C406 cinematic deltas.
    */
   applyScreenRestore(): void {
     this.romScreenOffsetX = 0;
@@ -135,17 +141,24 @@ export class CameraPresenter {
     this.screenMotionActive = false;
     this.screenMotionDone = false;
     this.screenPathActive = false;
+    this.cinematicViewportEnabled = false;
   }
 
   /**
-   * SCREEN_PATH $11 — execute ROM screen path program.
-   * Reserved: path semantics not yet fully traced.
+   * SCREEN_PATH $11 — ejecuta la trayectoria ROM fija de 18 pasos (Bank7E:$73C5).
+   * El path ya NO es TRACE_ONLY: la tabla es estática (ver romScreenPath.ts).
+   *
+   * El X se refleja por lado: SIDE_1 → negativo, SIDE_2 → positivo (net ΔSCX ±156).
+   * La Y no se refleja (net ΔSCY -42).
+   *
+   * ⚠ Coordenadas en espacio GBC (sin ×2): mismo convenio que SCREEN_MOTION. La
+   * reconciliación de escala (ACTION ×2 vs luchadores ×3) sigue pendiente aparte.
    */
-  applyScreenPath(tick: number, pathId: number | null, durationTicks: number): void {
+  applyScreenPath(tick: number, durationTicks: number, side: 'SIDE_1' | 'SIDE_2' = 'SIDE_1'): void {
     this.screenPathActive = true;
-    this.screenPathId = pathId;
-    // Path execution is currently TRACE_ONLY until ROM trace completes.
-    // Mark as active but don't apply displacement (honest: we don't know the path yet).
+    this.screenPathStartTick = tick;
+    this.screenPathDone = false;
+    this.screenPathSide = side;
   }
 
   /**
@@ -160,9 +173,8 @@ export class CameraPresenter {
   // ── Beam BG scroll (separate domain from world camera) ──
 
   /**
-   * Set beam BG base scroll values ($C407/$C409).
-   * These are the base SCX/SCY that the beam FX window starts with.
-   * Per ROM: OPEN_SFX_V4_05 sets these before FX window display.
+   * Set C5 base scroll values ($C407/$C409).
+   * These are base camera/BG scroll, not beam-exclusive state.
    */
   setBeamBaseScroll(baseScx: number | null, baseScy: number | null): void {
     this.beamBaseScx = baseScx;
@@ -178,11 +190,11 @@ export class CameraPresenter {
     this.beamFrameDeltaScx = deltaScx;
     this.beamFrameDeltaScy = deltaScy;
     this.beamSide = side;
-    this.beamBgActive = true;
+    this.cinematicViewportEnabled = true;
   }
 
   /**
-   * Clear beam BG scroll state (after FX window is done).
+   * Clear cinematic viewport state (hard reset after FX window is fully done).
    */
   clearBeamBg(): void {
     this.beamBaseScx = null;
@@ -190,16 +202,16 @@ export class CameraPresenter {
     this.beamFrameDeltaScx = 0;
     this.beamFrameDeltaScy = 0;
     this.beamSide = null;
-    this.beamBgActive = false;
+    this.cinematicViewportEnabled = false;
   }
 
   /**
-   * Compute beam BG final SCX/SCY.
-   * SCY = baseScy + deltaScy (C407 + C405)
-   * SCX = baseScx + deltaScx (C409 + C406)
+   * Compute C5 viewport SCX/SCY while STAT/HBlank viewport is enabled.
+   * SCY = baseScrollY + cinematicDeltaY (C407 + C405)
+   * SCX = baseScrollX + cinematicDeltaX (C409 + C406)
    */
   beamBgScroll(): { scx: number | null; scy: number | null } {
-    if (!this.beamBgActive || this.beamBaseScx == null || this.beamBaseScy == null) {
+    if (!this.cinematicViewportEnabled || this.beamBaseScx == null || this.beamBaseScy == null) {
       return { scx: null, scy: null };
     }
     return {
@@ -237,6 +249,20 @@ export class CameraPresenter {
       }
     }
 
+    // Advance ROM screen path if active (SCREEN_PATH $11 — 18 fixed steps)
+    if (this.screenPathActive && !this.screenPathDone) {
+      const elapsed = tick - this.screenPathStartTick;
+      const steps = Math.min(SCREEN_PATH_STEPS.length, Math.max(0, elapsed));
+      const offset = screenPathOffsetAt(steps);
+      this.romScreenOffsetY = offset.deltaY;
+      // X reflejado por lado: SIDE_1 negativo, SIDE_2 positivo (ΔSCX ±156).
+      this.romScreenOffsetX = this.screenPathSide === 'SIDE_1' ? offset.deltaX : -offset.deltaX;
+      if (elapsed >= SCREEN_PATH_STEPS.length) {
+        this.screenPathDone = true;
+        this.screenPathActive = false;
+      }
+    }
+
     const screenX = this.baseSceneX + this.romScreenOffsetX + this.transientOffsetX;
     const screenY = this.baseSceneY + this.romScreenOffsetY + this.transientOffsetY;
 
@@ -253,6 +279,7 @@ export class CameraPresenter {
       },
       screenMotionActive: this.screenMotionActive,
       screenPathActive: this.screenPathActive,
+      cinematicViewportEnabled: this.cinematicViewportEnabled,
     };
   }
 
@@ -273,13 +300,15 @@ export class CameraPresenter {
     this.screenMotionDuration = 0;
     this.screenMotionRestore = false;
     this.screenPathActive = false;
-    this.screenPathId = null;
+    this.screenPathStartTick = 0;
+    this.screenPathDone = false;
+    this.screenPathSide = 'SIDE_1';
     this.beamBaseScx = null;
     this.beamBaseScy = null;
     this.beamFrameDeltaScx = 0;
     this.beamFrameDeltaScy = 0;
     this.beamSide = null;
-    this.beamBgActive = false;
+    this.cinematicViewportEnabled = false;
   }
 
   /** Current state for diagnostics. */
@@ -293,12 +322,14 @@ export class CameraPresenter {
       transientOffsetY: this.transientOffsetY,
       screenMotionActive: this.screenMotionActive,
       screenPathActive: this.screenPathActive,
+      cinematicViewportEnabled: this.cinematicViewportEnabled,
     };
   }
 
-  /** Beam BG state for diagnostics. */
+  /** Cinematic viewport state for diagnostics (legacy method name kept for callers). */
   beamBgState(): {
     active: boolean;
+    viewportEnabled: boolean;
     baseScx: number | null;
     baseScy: number | null;
     deltaScx: number;
@@ -309,7 +340,8 @@ export class CameraPresenter {
   } {
     const scroll = this.beamBgScroll();
     return {
-      active: this.beamBgActive,
+      active: this.cinematicViewportEnabled,
+      viewportEnabled: this.cinematicViewportEnabled,
       baseScx: this.beamBaseScx,
       baseScy: this.beamBaseScy,
       deltaScx: this.beamFrameDeltaScx,
@@ -334,6 +366,7 @@ export class CameraPresenter {
     motionActive: boolean;
     pathActive: boolean;
     beamBgActive: boolean;
+    cinematicViewportEnabled: boolean;
     beamBgScx: number | null;
     beamBgScy: number | null;
     beamSide: 'SIDE_1' | 'SIDE_2' | null;
@@ -352,7 +385,8 @@ export class CameraPresenter {
       transientY: snap.components.transientOffsetY,
       motionActive: snap.screenMotionActive,
       pathActive: snap.screenPathActive,
-      beamBgActive: this.beamBgActive,
+      beamBgActive: this.cinematicViewportEnabled,
+      cinematicViewportEnabled: this.cinematicViewportEnabled,
       beamBgScx: beamScroll.scx,
       beamBgScy: beamScroll.scy,
       beamSide: this.beamSide,

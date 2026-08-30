@@ -1,9 +1,10 @@
 // ═══════════════════════════════════════════════════════════
 // DBZ LSW — Stage Attack: mapeo INPUT → pose/frame del luchador
 // ═══════════════════════════════════════════════════════════
-// Cada tecla del Stage Attack (A/B/↑/↓/←/→) dispara una pose distinta del
-// luchador en el campo, como en el GBC: el QTE no es solo UI, el sprite
-// ejecuta el golpe correspondiente a la tecla pulsada.
+// BRIDGE: cada tecla del Stage Attack (A/B/↑/↓/→) todavía resuelve a una
+// pose semántica para UI/fallback. La ROM real no ejecuta una pose única:
+// despacha un microprograma distinto por participante (ver stageSequences.ts
+// romStageProgramPairForCommand + ROM_STAGE_VM_CONTRACT).
 //
 // Convención (docs/FRAMES_ACTIONS_SPEC.md — body families):
 //   A        → puñetazo derecho   (attack_fwd / punch_right)
@@ -17,8 +18,10 @@
 // RIGHT|UP|DOWN|A|B (P0.4S — Bank00 Call_000_3833). El StageKey no incluye
 // LEFT; el input de cruceta "izquierda" no consume ningún comando Stage.
 //
-// El runtime usa `pose` para el FighterSprite grande y `fieldPose` para el
-// sprite overworld del campo táctico. Ambos se resuelven con fallbacks.
+// El runtime legacy usa `pose` para el FighterSprite grande y `fieldPose` para
+// el sprite overworld del campo táctico. Esto debe ser sustituido por la VM
+// Stage ROM: $04 start animation, $05 wait animation, $06 wait ActionObject+4,
+// $13 sync event.
 
 export type StageKey = 'A' | 'B' | 'UP' | 'DOWN' | 'RIGHT';
 

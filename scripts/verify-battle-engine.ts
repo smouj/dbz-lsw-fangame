@@ -19,6 +19,7 @@ import type { BattleCommand } from '../src/battle/engine/commands/BattleCommand'
 import { PRESENTATION_SCENARIOS, runPresentationScenario } from '../src/devtools/presentationScenarios';
 import { BattlePosition } from '../src/data/positions';
 import { getCard, type CardDef } from '../src/data/cards';
+import { ROM_LIMIT_JOINT_SOURCE_CONTRACT, STANDARD_ATTACK_SCENE_TRANSITION } from '../src/battle/engine/rom/romDescriptors';
 
 let passed = 0;
 let failed = 0;
@@ -1019,12 +1020,34 @@ if (m5DmgPlay.ok) {
 // ── P2: LIMIT cobra el CC real del catálogo ──
 const limitCard = getCard(13) as CardDef; // S.Kamehameha cc 23
 const m5LimitState: typeof m5s0 = { ...m5s0, phase: 'limitSelect', limits: [13], player: { ...m5s0.player, cc: 30, powerWindowCounter: 2 } };
-const m5Limit = executeCommand(m5LimitState, { type: 'PLAY_LIMIT_CARD', cardId: 13 }, { side: 'player', limitCardsCount: 3 });
+const m5Limit = executeCommand(m5LimitState, { type: 'PLAY_LIMIT_CARD', cardId: 13 }, { side: 'player', characterId: 'goku', limitCardsCount: 3 });
 check('M5-P2: PLAY_LIMIT_CARD cobra el CC real (30 − 23 = 7)', m5Limit.ok && m5Limit.state.player.cc === 7);
 check('M5-P2: CC_SPENT emitido con amount=23', m5Limit.ok && m5Limit.events.some(e => e.type === 'CC_SPENT' && e.amount === 23));
 const m5Poor = { ...m5LimitState, player: { ...m5s0.player, cc: 10 } };
-const m5LimitPoor = executeCommand(m5Poor, { type: 'PLAY_LIMIT_CARD', cardId: 13 }, { side: 'player', limitCardsCount: 3 });
+const m5LimitPoor = executeCommand(m5Poor, { type: 'PLAY_LIMIT_CARD', cardId: 13 }, { side: 'player', characterId: 'goku', limitCardsCount: 3 });
 check('M5-P2: CC insuficiente para LIMITED → INSUFFICIENT_CC sin cobro', !m5LimitPoor.ok && m5LimitPoor.reason === 'INSUFFICIENT_CC' && m5LimitPoor.state.player.cc === 10);
+check('M5-P2: ROM LIMIT source = active member equipped limits',
+  ROM_LIMIT_JOINT_SOURCE_CONTRACT.limit.source === 'ACTIVE_MEMBER_EQUIPPED_LIMITS' &&
+  ROM_LIMIT_JOINT_SOURCE_CONTRACT.activeMemberLimitSlots === 5);
+check('M5-P2: ROM LIMIT is reusable and does not remove hand cards',
+  ROM_LIMIT_JOINT_SOURCE_CONTRACT.limit.reusable === true &&
+  ROM_LIMIT_JOINT_SOURCE_CONTRACT.limit.removesCardFromHand === false);
+check('M5-P2: ROM JOINT source = six hand slots and compacts hand',
+  ROM_LIMIT_JOINT_SOURCE_CONTRACT.joint.source === 'HAND_6_PHYSICAL_SLOTS' &&
+  ROM_LIMIT_JOINT_SOURCE_CONTRACT.joint.compactsHand === true);
+check('M5-P2: Defense LIMIT allows Support/Defense only',
+  ROM_LIMIT_JOINT_SOURCE_CONTRACT.limit.defenseAllowedTypes.join(',') === 'support,defense');
+
+// ── P2b: transición tactical↔action de STANDARD_ATTACK ──
+check('M5-P2b: STANDARD_ATTACK entrada ACTION usa 16 pasos de paleta',
+  STANDARD_ATTACK_SCENE_TRANSITION.palette.entrySteps === 16);
+check('M5-P2b: STANDARD_ATTACK salida TACTICAL usa 16 pasos de paleta',
+  STANDARD_ATTACK_SCENE_TRANSITION.palette.exitSteps === 16);
+check('M5-P2b: transición de paleta usa channelStep=2 BGR555 entero',
+  STANDARD_ATTACK_SCENE_TRANSITION.palette.channelStep === 2 &&
+  STANDARD_ATTACK_SCENE_TRANSITION.palette.interpolation === 'INTEGER_BGR555_STEPPED');
+check('M5-P2b: ACTION continúa tras 1 iteración display/tilemap',
+  STANDARD_ATTACK_SCENE_TRANSITION.displayTilemapJob.iterationsAfterEntryPalette === 1);
 
 // ── QTE completado → DAMAGE_APPLIED real (command determinista) ──
 const m5Stage = createInitialBattleState({ ...m5cfg, seed: 42, playerPos: BattlePosition.DOWN_FRONT, enemyPos: BattlePosition.DOWN_BACK, playerCc: 0 });
@@ -1459,6 +1482,29 @@ import type { BattleFighterState } from '../src/battle/engine/state/BattleState'
   check('M8.POWER: LIMIT allowed con counter > 0', limOn.ok);
   check('M8.POWER: LIMIT rejected con counter = 0', !limOff.ok);
 
+  // Defense LIMIT: fuente equipada/reutilizable. Humano permite Support/Defense
+  // (type $04/$05), no Damage; no descarta ni compacta mano.
+  const defLimitBase = {
+    ...p0,
+    phase: 'defend' as const,
+    activeSide: 'enemy' as const,
+    exchange: 0,
+    limits: [23, 19, 5],
+    player: { ...p0.player, cc: 30, powerWindowCounter: 2 },
+    defenseState: 'AWAITING_CHOICE' as const,
+    defenseChoice: null,
+  };
+  const defLimitSupport = canExecute(defLimitBase, { type: 'PLAY_LIMIT_CARD', cardId: 23 }, { side: 'player', characterId: 'goku', limitCardsCount: 3 });
+  const defLimitDefense = canExecute(defLimitBase, { type: 'PLAY_LIMIT_CARD', cardId: 19 }, { side: 'player', characterId: 'goku', limitCardsCount: 3 });
+  const defLimitDamage = canExecute(defLimitBase, { type: 'PLAY_LIMIT_CARD', cardId: 5 }, { side: 'player', characterId: 'goku', limitCardsCount: 3 });
+  check('M8.POWER: Defense LIMIT permite Support equipada', defLimitSupport.ok);
+  check('M8.POWER: Defense LIMIT permite Defense equipada', defLimitDefense.ok);
+  check('M8.POWER: Defense LIMIT rechaza Damage equipada', !defLimitDamage.ok && defLimitDamage.reason === 'WRONG_PHASE');
+  const playDefLimit = executeCommand(defLimitBase, { type: 'PLAY_LIMIT_CARD', cardId: 19 }, { side: 'player', characterId: 'goku', limitCardsCount: 3 });
+  check('M8.POWER: Defense LIMIT cobra CC y no descarta', playDefLimit.ok && playDefLimit.state.player.cc === 25 && playDefLimit.state.deck.discardPile.length === 0);
+  check('M8.POWER: Defense LIMIT no elimina el Limit equipado', playDefLimit.ok && playDefLimit.state.limits.includes(19));
+  check('M8.POWER: Defense LIMIT compromete defensa como CARD', playDefLimit.ok && playDefLimit.state.defenseState === 'COMMITTED' && playDefLimit.state.defenseChoice?.type === 'CARD' && playDefLimit.state.defenseChoice.cardId === 19);
+
   // GATHER gate: counter > 0 → bloqueado
   const gLocked = canExecute({ ...p0, phase: 'basic', player: { ...p0.player, powerWindowCounter: 5 } }, { type: 'GATHER_POWER' });
   check('M8.POWER: GATHER_POWER bloqueado con counter > 0', !gLocked.ok);
@@ -1644,6 +1690,14 @@ import type { BattleFighterState } from '../src/battle/engine/state/BattleState'
     ACTION_OBJECT_MEMORY.slot1 === 0xc3b3 && ACTION_OBJECT_MEMORY.slot1 - ACTION_OBJECT_MEMORY.base === 0x13);
   check('L8: exactamente dos slots (0 y 1)',
     ACTION_OBJECT_MEMORY.base + ACTION_OBJECT_MEMORY.stride === ACTION_OBJECT_MEMORY.slot1);
+  check('L8: base position fuera del record C3C8..C3CB',
+    ACTION_OBJECT_MEMORY.basePosition.object0.baseY === 0xc3c8 &&
+    ACTION_OBJECT_MEMORY.basePosition.object0.baseX === 0xc3c9 &&
+    ACTION_OBJECT_MEMORY.basePosition.object1.baseY === 0xc3ca &&
+    ACTION_OBJECT_MEMORY.basePosition.object1.baseX === 0xc3cb);
+  check('L8: set/add base position $0943/$0955',
+    ACTION_OBJECT_MEMORY.basePosition.setRoutine === 0x0943 &&
+    ACTION_OBJECT_MEMORY.basePosition.addRoutine === 0x0955);
 
   // §269: handlers especiales con worker/family propios
   check('L8: $08 → Bank03:$5E67 SPECIAL',
@@ -1665,7 +1719,7 @@ import type { BattleFighterState } from '../src/battle/engine/state/BattleState'
     SPECIAL_HANDLER_DESCRIPTORS[0x0d].family !== 'BEAM' && SPECIAL_HANDLER_DESCRIPTORS[0x0e].family !== 'BEAM');
 
   // §257-261: sin releaseSyncFrame fabricado, sin anchor absoluto fabricado
-  check('L8: sin anchor absoluto fabricado (ACTOR_HOME/TARGET_HOME PENDING)',
+  check('L8: sin anchor absoluto fabricado (no ACTOR_HOME/TARGET_HOME)',
     !('actorHomeX' in SPECIAL_HANDLER_DESCRIPTORS) && !('targetHomeX' in SPECIAL_HANDLER_DESCRIPTORS));
   check('L8: evidence = ROM_HANDLER_VERIFIED (no sequence inventada)',
     SPECIAL_HANDLER_DESCRIPTORS[0x08].evidence === 'ROM_HANDLER_VERIFIED' &&
@@ -1674,10 +1728,15 @@ import type { BattleFighterState } from '../src/battle/engine/state/BattleState'
   // §270-271: multi-actor profile
   const multiActor: RomMultiActorProfile = {
     handler: 0x0d, variant: 'PURPLE_COMET', maxSimultaneousActionObjects: 2,
-    bindings: 'DYNAMIC', sequenceEvidence: 'PENDING_ROM_TRACE',
+    bindings: 'STATIC_CLOSED_TEMPORARY_TARGET_OBJECT_REBIND',
+    partnerRule: 'attackerFormId XOR 1',
+    sequenceOwnership: 'PHYSICAL_OBJECT',
+    sequenceEvidence: 'ROM_HANDLER_VERIFIED',
   };
-  check('L8: max 2 ActionObjects simultáneos · bindings DYNAMIC',
-    multiActor.maxSimultaneousActionObjects === 2 && multiActor.bindings === 'DYNAMIC');
+  check('L8: max 2 ActionObjects simultáneos · target-object rebind cerrado',
+    multiActor.maxSimultaneousActionObjects === 2 &&
+    multiActor.bindings === 'STATIC_CLOSED_TEMPORARY_TARGET_OBJECT_REBIND' &&
+    multiActor.partnerRule === 'attackerFormId XOR 1');
 
   // §263: slot ≠ rol permanente (binding puede cambiar)
   const binding: ActionObjectBinding = { slot: 0, role: 'ACTOR_PRIMARY', fighterSide: 'PLAYER' };

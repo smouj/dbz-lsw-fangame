@@ -15,7 +15,17 @@
 // LEFT ($02) NO forma parte del conjunto Stage activo ($3D).
 // ═══════════════════════════════════════════════════════════════
 
-import { ROM_STAGE_SEQUENCES, type RomStageCommand } from '../data/generated/romStage.generated';
+import {
+  ROM_STAGE_COMMAND_ANIMATIONS,
+  ROM_STAGE_COMMAND_PROGRAMS,
+  ROM_STAGE_PHYSICAL_COMMANDS,
+  ROM_STAGE_QTE_RUNTIME,
+  ROM_STAGE_AB_WINDOW,
+  ROM_STAGE_SEQUENCES,
+  ROM_STAGE_VM_CONTRACT,
+  type RomStageCommand,
+  type RomStageVmProgram,
+} from '../data/generated/romStage.generated';
 import type { StageKey } from './stageInputMap';
 
 export type StageLevel = 3 | 4 | 5 | 6;
@@ -67,4 +77,35 @@ export function resetStageRotation(level?: StageLevel): void {
 /** Pool completo de un nivel (8 variantes ROM) para debugging/UI. */
 export function stageSequencePoolFor(level: StageLevel): StageKey[][] {
   return romStageCommandsFor(level);
+}
+
+export {
+  ROM_STAGE_VM_CONTRACT,
+  ROM_STAGE_COMMAND_PROGRAMS,
+  ROM_STAGE_PHYSICAL_COMMANDS,
+  ROM_STAGE_QTE_RUNTIME,
+  ROM_STAGE_AB_WINDOW,
+};
+
+export interface RomStageProgramPair {
+  command: StageKey;
+  actor0ProgramId: number;
+  actor1ProgramId: number;
+  actor0: RomStageVmProgram;
+  actor1: RomStageVmProgram;
+}
+
+/** Microprogramas ROM que debe ejecutar una tecla Stage para ambos participantes. */
+export function romStageProgramPairForCommand(command: StageKey): RomStageProgramPair {
+  const ids = ROM_STAGE_COMMAND_ANIMATIONS[command];
+  const actor0 = ROM_STAGE_COMMAND_PROGRAMS.find((p) => p.animationId === ids.memberSlot0);
+  const actor1 = ROM_STAGE_COMMAND_PROGRAMS.find((p) => p.animationId === ids.memberSlot1);
+  if (!actor0 || !actor1) throw new Error(`Missing ROM Stage VM program for ${command}`);
+  return {
+    command,
+    actor0ProgramId: ids.memberSlot0,
+    actor1ProgramId: ids.memberSlot1,
+    actor0,
+    actor1,
+  };
 }

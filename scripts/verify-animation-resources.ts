@@ -1,5 +1,6 @@
 import {
   ANIMATION_RESOURCE_CATALOG,
+  ANIMATION_RESOURCE_SELECTOR_ARCHITECTURE,
   animationResourceBank,
   animationResourceById,
   animationResourceSummary,
@@ -37,6 +38,11 @@ check('catalog:bank layout count', entries.length === 66, String(entries.length)
 check('catalog:unique resource ids', byId.size === entries.length, `${byId.size}/${entries.length}`);
 check('catalog:deterministic const/list', JSON.stringify(entries) === JSON.stringify(entriesAgain));
 check('catalog:lookup identity', entries.every(entry => animationResourceById(entry.resourceId) === entry));
+check('selector: 66 resources explained', ANIMATION_RESOURCE_SELECTOR_ARCHITECTURE.resourceCount === 66);
+check('selector: 43 unique selector tables', ANIMATION_RESOURCE_SELECTOR_ARCHITECTURE.uniqueSelectorTables === 43);
+check('selector: 22 multi-sequence resources', ANIMATION_RESOURCE_SELECTOR_ARCHITECTURE.multiSequenceResources.length === 22);
+check('selector: row format profile/selector/param0/param1', ANIMATION_RESOURCE_SELECTOR_ARCHITECTURE.rowFormat.join(',') === 'actorVisualProfileKey,sequenceSelector,param0,param1');
+check('selector: writes C3C7/C2D0/C2D1', ANIMATION_RESOURCE_SELECTOR_ARCHITECTURE.writes.sequenceSelector === 0xc3c7 && ANIMATION_RESOURCE_SELECTOR_ARCHITECTURE.writes.param0 === 0xc2d0 && ANIMATION_RESOURCE_SELECTOR_ARCHITECTURE.writes.param1 === 0xc2d1);
 
 for (const card of CARDS) {
   const rom = romCardData(card.name);

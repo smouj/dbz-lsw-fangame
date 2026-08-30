@@ -216,9 +216,16 @@ function compileStep(
     }
 
     case 'START_ANIMATION': {
-      const cues: PresentationCue[] = [{ type: 'ANIMATION_START', tick: cursor, slot: 0, resource: step.resource }];
+      const slot = step.slot ?? 0;
       // sequence from step wins (physical selector for THIS START_ANIMATION instance)
       const effectiveSequence = step.sequence ?? sequenceSelector;
+      const cues: PresentationCue[] = [{
+        type: 'ANIMATION_START',
+        tick: cursor,
+        slot,
+        resource: step.resource,
+        sequence: effectiveSequence,
+      }];
       if (step.resource != null && actorFormId && effectiveSequence != null) {
         const resource = step.resource;
         // Guardrail: declared sequence must be valid; no silent fallback to 0
@@ -230,6 +237,7 @@ function compileStep(
             reason: `${step.id}: invalid sequence ${step.sequence} for resource 0x${resource.toString(16).padStart(2, '0')} (count=${seqCount})`,
             boundary: 'STATIC',
           });
+          return { cues, advanceTicks: 0 };
         }
         const sequence = animationResourceById(resource)?.sequences[effectiveSequence];
         let tick = cursor;
@@ -243,7 +251,7 @@ function compileStep(
           cues.push({
             type: 'ROM_PHYSICAL_FRAME',
             tick,
-            slot: 0,
+            slot,
             formId: actorFormId,
             resource,
             sequence: effectiveSequence,
@@ -267,7 +275,7 @@ function compileStep(
           cues.push({
             type: 'ROM_PENDING',
             tick: cursor,
-            reason: `${step.id}: sequence ${sequenceSelector} is not decoded for resource 0x${resource.toString(16).padStart(2, '0')}`,
+            reason: `${step.id}: sequence ${effectiveSequence} is not decoded for resource 0x${resource.toString(16).padStart(2, '0')}`,
             boundary: 'STATIC',
           });
         }

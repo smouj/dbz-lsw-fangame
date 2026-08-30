@@ -37,6 +37,11 @@ export interface FormManifest {
   [pose: string]: PoseAnim;
 }
 
+interface RomPhysicalManifest {
+  sequences?: Record<string, { frames: Array<{ file: string; physicalId: string; w?: number; h?: number; sourceFileSha256?: string; trimmedPixelHash?: string }> }>;
+  stageSequences?: Record<string, { frames: Array<{ file: string; physicalId: string; w?: number; h?: number; sourceFileSha256?: string; trimmedPixelHash?: string }> }>;
+}
+
 export interface FormAtlas {
   formId: string;
   /** Directorio de sprites (slug snake_case) — para debug/anclaje. */
@@ -90,6 +95,17 @@ async function fetchManifest(formId: string): Promise<FormManifest | null> {
   }
 }
 
+async function fetchRomPhysicalManifest(formId: string): Promise<RomPhysicalManifest | null> {
+  const dir = spriteDirFor(formId);
+  if (!dir) return null;
+  try {
+    const r = await fetch(`/assets/sprites/${dir}/rom-physical.manifest.json`);
+    return r.ok ? (r.json() as Promise<RomPhysicalManifest>) : null;
+  } catch {
+    return null;
+  }
+}
+
 /** Nearest-neighbour + sin mipmaps: pixel art nítido, sin blur. */
 function pixelate(t: Texture): Texture {
   const src = t.source;
@@ -109,6 +125,7 @@ export function loadFormAtlas(formId: string): Promise<FormAtlas | null> {
 async function build(formId: string): Promise<FormAtlas | null> {
   const manifest = await fetchManifest(formId);
   if (!manifest) return null;
+  const romPhysicalManifest = await fetchRomPhysicalManifest(formId);
 
   // ── ROM duration overlay: form→resource→sequence→frameIndex ──
   // If public/assets/sprites/<dir>/rom-durations.json exists, load it.
@@ -152,6 +169,19 @@ async function build(formId: string): Promise<FormAtlas | null> {
       if (f.h > maxH) maxH = f.h;
       jobs.push({ key: `${pose}:${i}`, url: versionedFrameUrl(formId, f) });
     }
+  }
+
+  const dir = spriteDirFor(formId) ?? formId;
+  const physicalFrames = [
+    ...Object.values(romPhysicalManifest?.sequences ?? {}).flatMap(sequence => sequence.frames),
+    ...Object.values(romPhysicalManifest?.stageSequences ?? {}).flatMap(sequence => sequence.frames),
+  ];
+  for (const frame of physicalFrames) {
+    if (!frame.file || !frame.physicalId) continue;
+    const version = frame.trimmedPixelHash ?? frame.sourceFileSha256;
+    const url = `/assets/sprites/${dir}/${frame.file}${version ? `?v=${encodeURIComponent(version)}` : ''}`;
+    jobs.push({ key: frame.file, url });
+    jobs.push({ key: frame.physicalId, url });
   }
 
   // Segunda pasada: cargar en PARALELO (un round-trip por frame, no

@@ -9,8 +9,12 @@ const sheetsDir = join(ROOT, 'public', 'assets', 'sheets');
 const romPhysicalComplete =
   ROM_PHYSICAL_CORPUS_SUMMARY.totals.forms === 48
   && ROM_PHYSICAL_CORPUS_SUMMARY.totals.formsIndexed === 48
-  && ROM_PHYSICAL_CORPUS_SUMMARY.totals.physicalIdentities === 809
-  && ROM_PHYSICAL_CORPUS_SUMMARY.totals.frameInstances === 5767;
+  && ROM_PHYSICAL_CORPUS_SUMMARY.totals.fighterPhysicalIdentities === 809
+  && ROM_PHYSICAL_CORPUS_SUMMARY.totals.fighterFrameInstances === 5767
+  && ROM_PHYSICAL_CORPUS_SUMMARY.totals.stagePhysicalIdentities === 2448
+  && ROM_PHYSICAL_CORPUS_SUMMARY.totals.stageFrameInstances === 15312
+  && ROM_PHYSICAL_CORPUS_SUMMARY.totals.physicalIdentities === 3257
+  && ROM_PHYSICAL_CORPUS_SUMMARY.totals.frameInstances === 21079;
 
 // Agrupar forms por sheet
 const bySheet: Record<string, string[]> = {};

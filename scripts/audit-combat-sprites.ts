@@ -60,8 +60,13 @@ const spriteRoot = path.join(root, 'public/assets/sprites');
 const romPhysicalComplete =
   ROM_PHYSICAL_CORPUS_SUMMARY.totals.forms === 48
   && ROM_PHYSICAL_CORPUS_SUMMARY.totals.formsIndexed === 48
-  && ROM_PHYSICAL_CORPUS_SUMMARY.totals.physicalIdentities === 809
-  && ROM_PHYSICAL_CORPUS_SUMMARY.totals.frameInstances === 5767;
+  && ROM_PHYSICAL_CORPUS_SUMMARY.totals.fighterPhysicalIdentities === 809
+  && ROM_PHYSICAL_CORPUS_SUMMARY.totals.fighterFrameInstances === 5767
+  && ROM_PHYSICAL_CORPUS_SUMMARY.totals.physicalIdentities >= 809
+  && ROM_PHYSICAL_CORPUS_SUMMARY.totals.frameInstances >= 5767
+  && ROM_PHYSICAL_CORPUS_SUMMARY.forms.every(form =>
+    Array.isArray(form.stagePhysicalFrameIndex) && form.stagePhysicalFrameIndex.length > 0
+  );
 let failures = 0;
 let legacyWarnings = 0;
 

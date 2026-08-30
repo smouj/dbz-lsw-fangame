@@ -31,11 +31,12 @@ import { resolveCounterDamage, resolveStageCard } from '../commands/reducers/dam
 /** Ventana del contraataque (paridad legacy COUNTER_A_FRAMES ≈ 0.4s). */
 export const COUNTER_WINDOW_TICKS = Math.round(0.4 * GBC_FPS);
 
-// ═══ PREPARACIÓN del Stage (M8.B — contrato canónico) ═══
+// ═══ PREPARACIÓN del Stage (M8.B — bridge pendiente de VM ROM) ═══
 // Tras confirmar la acción: fade → ACTION → idle → estira brazos → encoge
 // brazos → idle. En el ÚLTIMO idle (inputOpenTick) el Engine abre la
-// ventana de inputs. Los ticks son INFERRED (perfil provisional hasta la
-// pasada FRAME_VERIFIED sobre la ROM) — nunca setTimeout.
+// ventana de inputs. Este bloque de 60t sigue siendo un bridge: la ROM real
+// ejecuta microprogramas Stage por input/participante ($04/$05/$06/$13), y
+// $06 espera ActionObject+4. Nunca usar setTimeout como sustituto.
 //
 // SEMÁNTICA vs ASSET: los beats usan poses SEMÁNTICAS propias del Stage
 // (stage_ready_*) que NO reutilizan el vocabulario de combate
@@ -53,7 +54,7 @@ export const STAGE_PREP_BEATS: Array<{ frame: number; pose: string }> = [
   { frame: 48, pose: 'stage_ready_idle' },  // último idle → INPUT_OPEN (60)
 ];
 
-export const STAGE_PREP_FIDELITY = 'ROM_STATIC_VERIFIED' as const;
+export const STAGE_PREP_FIDELITY = 'ROM_STAGE_VM_PENDING_CUTOVER' as const;
 
 export interface ClockAdvanceOutcome {
   state: BattleState;

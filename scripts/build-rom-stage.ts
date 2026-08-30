@@ -82,12 +82,14 @@ const ANIM_TABLE_BANK = 0x30;
 const ANIM_TABLE_ADDR = 0x5d00;
 const ANIM_TABLE_FILE = ANIM_TABLE_BANK * 0x4000 + (ANIM_TABLE_ADDR - 0x4000);
 
-// Opcodes VM (Jump_07e_70ab, Bank7E:$70AB) — mnemónicos de la tabla de dispatch.
+// Opcodes VM (Jump_07e_70ab, Bank7E:$70AB) — nombres físicos conservadores.
+// En Stage estos opcodes son reloj de gameplay: $06 compara ActionObject+4,
+// y $13 emite un evento sincronizado. No son poses/timers genéricos.
 const VM_OPCODES: Record<number, string> = {
   0x01: 'SET_FRAME_ADV',
-  0x04: 'SET_POSE',
-  0x05: 'VISIBILITY',
-  0x06: 'COND_COMPARE',
+  0x04: 'START_ACTION_OBJECT_ANIMATION',
+  0x05: 'WAIT_ACTION_OBJECT_ANIMATION',
+  0x06: 'WAIT_ACTION_OBJECT_FRAME_COUNTER',
   0x07: 'LOOP_COUNTER',
   0x08: 'SUB_CALL',
   0x0a: 'MOVE_LOOP',
@@ -99,7 +101,7 @@ const VM_OPCODES: Record<number, string> = {
   0x10: 'ANIM_LOOP',
   0x11: 'SCREEN_OFFSET_TBL',
   0x12: 'SUB_CALL2',
-  0x13: 'SUB_CALL3',
+  0x13: 'EMIT_SYNC_EVENT',
   0x14: 'SUB_CALL4',
 };
 
@@ -118,6 +120,8 @@ interface VmStep {
   bytes: number[];
   memberSlot?: number;
   poseSelector?: number;
+  waitFrameCounter?: number;
+  syncEvent?: { arg1: number; arg2: number };
 }
 
 interface VmProgram {
@@ -158,6 +162,8 @@ function decodeAnimationPrograms(rom: Buffer): VmProgram[] {
         step.poseSelector = opcode === 0x04 ? poseSelectorFromArg3(e[3]) : e[3];
         poseWrites.push(step.poseSelector);
       }
+      if (opcode === 0x06) step.waitFrameCounter = e[2];
+      if (opcode === 0x13) step.syncEvent = { arg1: e[1], arg2: e[2] };
       steps.push(step);
     }
     return {
@@ -305,6 +311,7 @@ function main() {
       lookup: 'Call_000_3e92 (Bank00): sla c / rl b → $5D00 + bc',
       programFormat: '[count][5-byte VM opcodes]',
       interpreter: 'Jump_07e_70ab (Bank7E:$70AB)',
+      queueModel: 'two independent per-participant queues',
       evidence: 'mgbdis bank_030.asm (data) + bank_07e.asm Jump_07e_70ab',
     },
     opcodeMnemonic: VM_OPCODES,
@@ -393,6 +400,8 @@ export interface RomStageVmStep {
   bytes: number[];
   memberSlot?: number;
   poseSelector?: number;
+  waitFrameCounter?: number;
+  syncEvent?: { arg1: number; arg2: number };
 }
 
 export interface RomStageVmProgram {
@@ -406,8 +415,91 @@ export interface RomStageVmProgram {
   poseWrites: number[];
 }
 
+export const ROM_STAGE_VM_CONTRACT = {
+  evidence: 'ROM_STATIC_VERIFIED',
+  source: 'Bank30:$5D00 programs interpreted by Jump_07e_70ab; command dispatch via Bank00:$3833.',
+  programFormat: '[count][5-byte instruction × count]',
+  commandToProgramId: {
+    A: { actor0: 0, actor1: 5 },
+    B: { actor0: 1, actor1: 6 },
+    RIGHT: { actor0: 2, actor1: 7 },
+    UP: { actor0: 3, actor1: 8 },
+    DOWN: { actor0: 4, actor1: 9 },
+  },
+  programLengths: {
+    actor0: { programIds: [0, 1, 2, 3, 4], instructionCount: 3 },
+    actor1AtoB: { programIds: [5, 6], instructionCount: 5 },
+    actor1Directional: { programIds: [7, 8, 9], instructionCount: 4 },
+  },
+  queues: {
+    count: 2,
+    model: 'independent per participant',
+    implication: 'Do not mirror/reuse one animation timeline for both ActionObjects.',
+  },
+  gameplayClock: {
+    waitAnimationOpcode: 0x05,
+    waitFrameCounterOpcode: 0x06,
+    frameCounterField: 'ActionObject+4',
+    syncEventOpcode: 0x13,
+    implication: 'Stage input timing is coupled to the physical frame program, not to setTimeout or fixed pose durations.',
+  },
+} as const;
+
+export const ROM_STAGE_PHYSICAL_COMMANDS = {
+  evidence: 'ROM_STATIC_VERIFIED',
+  source: 'USA ROM canonical with Spain contrast; Bank61 Stage resources and Bank30:$5D00 programs.',
+  actor: {
+    A: { bank: 0x61, resourceIndex: 1, sequence: 'actorVisualProfileKey', frameInstances: 4, totalTicks: 13 },
+    B: { bank: 0x61, resourceIndex: 2, sequence: 'actorVisualProfileKey', frameInstances: 6, totalTicks: 32 },
+    RIGHT: { bank: 0x61, resourceIndex: 3, sequence: 'actorVisualProfileKey', frameInstances: 7, totalTicks: 41 },
+    UP: { bank: 0x61, resourceIndex: 4, sequence: 'actorVisualProfileKey', frameInstances: 7, totalTicks: 41 },
+    DOWN: { bank: 0x61, resourceIndex: 4, sequence: 9, frameInstances: 9, totalTicks: 53 },
+  },
+  target: {
+    resourceIndex: 0,
+    A: { waitActorFrame: 2, sequence: 0x0a, frameInstances: 6, totalTicks: 13 },
+    B: { waitActorFrame: 3, sequence: 0x0b, frameInstances: 8, totalTicks: 27 },
+    RIGHT: { waitActorFrame: 4, sequence: 0x0d, frameInstances: 15, totalTicks: 23 },
+    UP: { waitActorFrame: 4, sequence: 0x0f, frameInstances: 8, totalTicks: 15 },
+    DOWN: { waitActorFrame: 5, sequence: 0x10, frameInstances: 5, totalTicks: 9 },
+  },
+  lastCommandB: {
+    waitActorFrame: 3,
+    waitTicksBeforeTarget: 1,
+    targetSequence: 0x17,
+    frameInstances: 11,
+    totalTicks: 54,
+    emitsSfx: true,
+    applyFrameDelta: true,
+    restoreTargetSequence: 0,
+  },
+} as const;
+
+export const ROM_STAGE_QTE_RUNTIME = {
+  evidence: 'ROM_STATIC_VERIFIED',
+  commandCount: 0xca5e,
+  commandIndex: 0xca5f,
+  expectedCommands: 0xca60,
+  resultPerCommand: 0xca6a,
+  temporalCounter: 0xcb77,
+  acceptedMask: 0x3d,
+  acceptedInputs: ['RIGHT', 'UP', 'DOWN', 'A', 'B'],
+  wrongInputAdvancesIndex: true,
+} as const;
+
+export const ROM_STAGE_AB_WINDOW = {
+  evidence: 'ROM_STATIC_VERIFIED',
+  durationTicks: 30,
+  acceptedInputs: ['A', 'B'],
+  recordsPressedButton: true,
+  recordsPressedTick: true,
+  thresholds: [10, 25, 30],
+  semanticName: 'PENDING_CONTEXT_LINK',
+} as const;
+
 /** Programas VM completos (10 combos command×memberSlot), opcodes en orden.
- *  Fuente: Bank30:$5D00 (programas de animación). Interpreter Jump_07e_70ab. */
+ *  Fuente: Bank30:$5D00 (programas de animación). Interpreter Jump_07e_70ab.
+ *  Cada input Stage despacha un microprograma distinto por participante. */
 export const ROM_STAGE_COMMAND_PROGRAMS: RomStageVmProgram[] = ${JSON.stringify(
     decodeAnimationPrograms(readFileSync(ROM_PATH)),
     null,

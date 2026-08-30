@@ -40,6 +40,23 @@ export interface ActionSceneLoad {
   paletteTransition: PaletteTransitionJob;
 }
 
+/** Tactical↔Action scene transition used by STANDARD_ATTACK.
+ *  ROM cadence is fixed-step palette work, not a CSS/time-based fade. */
+export const STANDARD_ATTACK_SCENE_TRANSITION = {
+  evidence: 'ROM_STATIC_VERIFIED',
+  source: 'STANDARD_ATTACK scene load path: palette worker 16 steps, channel delta 2; display/tilemap job follows with one iteration.',
+  palette: {
+    entrySteps: 16,
+    exitSteps: 16,
+    channelStep: 2,
+    interpolation: 'INTEGER_BGR555_STEPPED',
+  },
+  displayTilemapJob: {
+    iterationsAfterEntryPalette: 1,
+  },
+  runtimeRule: 'No arbitrary millisecond fade; ACTION continues after 16-step palette transition plus one display/tilemap worker iteration.',
+} as const;
+
 // ─── CHARA exact motion (§176-178) ───
 // CORRECCIÓN (2026-08-28): CHARA_ENTRY total = 32t (no 13t). §177 descompone
 // +8×8 +6×4 +4×3 +2×2 +1×2 = +106px/19t → WAIT 5 → settle -1×8 = -8px/8t.
@@ -184,6 +201,34 @@ export const DEFENSE_ROM_RULES: Record<number, DefenseRomRuleDescriptor> = {
 /** Todos los IDs de Defense Cards con descriptor ROM (para verificación). */
 export const DEFENSE_CARD_IDS = Object.keys(DEFENSE_ROM_RULES).map(Number);
 
+export const ROM_LIMIT_JOINT_SOURCE_CONTRACT = {
+  evidence: 'ROM_STATIC_VERIFIED',
+  source: 'Human menu path: active member battleBlock + 3 + memberIndex×5 for LIMIT; hand slots for JOINT.',
+  activeMemberLimitSlots: 5,
+  battleMembersPerSide: 3,
+  activeMemberLimitOffset: 'battleBlock + 3 + memberIndex×5',
+  menus: {
+    attack: ['LIMIT', 'JOINT', 'BASIC', 'CHARA'],
+    defense: ['LIMIT', 'JOINT', 'BASIC'],
+  },
+  limit: {
+    source: 'ACTIVE_MEMBER_EQUIPPED_LIMITS',
+    reusable: true,
+    requiresPowerWindowCounter: true,
+    paysCc: true,
+    removesCardFromHand: false,
+    attackAllowedTypes: ['damage', 'beam', 'command', 'special'],
+    defenseAllowedTypes: ['support', 'defense'],
+  },
+  joint: {
+    source: 'HAND_6_PHYSICAL_SLOTS',
+    reusable: false,
+    paysCc: true,
+    removesCardFromHand: true,
+    compactsHand: true,
+  },
+} as const;
+
 // ─── Fidelity / trazabilidad ───
 export type RomFidelity = 'ROM_CONFIRMED' | 'ROM_INFERRED' | 'REMAKE_CANON' | 'OBSOLETE';
 
@@ -287,7 +332,8 @@ export interface RomStandardAttackProfile {
   launch?: {
     syncFrame: number | null;
     screenMotion?: RomScreenMotion;
-    pathId?: number;
+    /** $07 uses the single implicit SCREEN_PATH $11 table; no pathId exists in ROM. */
+    screenPath?: true;
   };
   resolution: {
     normalHitMacro: number | null;
@@ -395,7 +441,16 @@ export const ACTION_OBJECT_MEMORY = {
   base: 0xc3a0,
   stride: 0x13, // 19 bytes
   slot1: 0xc3b3,
+  slot0End: 0xc3b2,
+  slot1End: 0xc3c5,
   activeIndex: 0xc3c6,
+  pointOrFrameIndex: 0xc3c7,
+  basePosition: {
+    object0: { baseY: 0xc3c8, baseX: 0xc3c9 },
+    object1: { baseY: 0xc3ca, baseX: 0xc3cb },
+    setRoutine: 0x0943,
+    addRoutine: 0x0955,
+  },
 } as const;
 
 /** Estado cinematográfico de un ActionObject (§245). */
@@ -411,6 +466,16 @@ export interface RomActionObjectState {
   flipX: boolean;
   flipY: boolean;
   renderPriority: number;
+  /** Canonical base position lives at C3C8..C3CB, outside the 19-byte object records. */
+  basePosition?: {
+    baseX: number;
+    baseY: number;
+  };
+  /** Current animation frame offset; only committed into base by explicit ROM opcodes. */
+  frameOffset?: {
+    offsetX: number;
+    offsetY: number;
+  };
   /** Útil mientras los 19 bytes no estén completamente decodificados. */
   raw?: readonly number[];
 }
@@ -453,15 +518,23 @@ export interface RuntimePoseFrame {
   };
 }
 
+export interface RomActionObjectPosition {
+  baseX: number;
+  baseY: number;
+  frameOffsetX: number;
+  frameOffsetY: number;
+  commitMode: 'FRAME_RELATIVE' | 'COMMITTED_BY_OPCODE_10';
+}
+
 /** Orden de dibujo derivado de la rama $CA39 == 2 (§264). */
 export type ActionDrawOrder = 'SLOT_0_THEN_1' | 'SLOT_1_THEN_0';
 
 /** Opcode $0A — semántica PARTIAL (§265). */
 export interface RomSetObjectPosition {
   slot: 0 | 1;
-  x: number;
-  y: number;
-  semantics: 'ABSOLUTE_OR_BASE_POSITION_UNRESOLVED';
+  baseY: number;
+  baseX: number;
+  semantics: 'SET_CANONICAL_BASE_POSITION';
 }
 
 /** Descriptor de handler ROM (§269). */
@@ -487,7 +560,9 @@ export interface RomMultiActorProfile {
   handler: 0x0d | 0x0e;
   variant: 'PURPLE_COMET' | 'PURPLE_COMET_Z';
   maxSimultaneousActionObjects: 2;
-  bindings: 'DYNAMIC';
+  bindings: 'STATIC_CLOSED_TEMPORARY_TARGET_OBJECT_REBIND';
+  partnerRule: 'attackerFormId XOR 1';
+  sequenceOwnership: 'PHYSICAL_OBJECT';
   sequenceEvidence: 'ROM_HANDLER_VERIFIED' | 'ROM_SEQUENCE_VERIFIED' | 'PENDING_ROM_TRACE';
 }
 

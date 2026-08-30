@@ -11,7 +11,7 @@ import type { CommandCheck } from './CommandResult';
 import { ok, reject } from './CommandResult';
 import type { BattlePhase, BattleSide, BattleState } from '../state/BattleState';
 import { getCard } from '../../../data/cards';
-import { canPlayCard, canPlayDefenseCard } from './rules/cardRules';
+import { canPlayCard, canPlayDefenseCard, isCardCompatible, isDefensiveCard, isOffensiveCard } from './rules/cardRules';
 import { canMove } from './rules/movementRules';
 import { canGuard, canGatherPower, canOpenLimit, canStageAttack, canUseDefenseLimit } from './rules/defenseRules';
 import { isBattleTerminal } from '../state/battleStateSelectors';
@@ -24,7 +24,7 @@ const PHASE_REQUIREMENTS: Partial<Record<BattleCommand['type'], BattlePhase[]>> 
   CHARACTER_ACTION: ['command'],
   SELECT_CARD: ['cardSelect'],
   PLAY_CARD: ['cardSelect'],
-  PLAY_LIMIT_CARD: ['limitSelect', 'cardSelect'],
+  PLAY_LIMIT_CARD: ['limitSelect', 'cardSelect', 'defend'],
   BASIC_STAGE_ATTACK: ['basic'],
   GATHER_POWER: ['basic'],
   DEFENSE_LIMIT: ['defend'],
@@ -65,7 +65,7 @@ export function canExecute(state: BattleState, command: BattleCommand, opts?: { 
   if (opts?.side) {
     const attacker = activeAttackSide(state);
     const isOffensive =
-      command.type === 'PLAY_CARD' || command.type === 'PLAY_LIMIT_CARD' ||
+      command.type === 'PLAY_CARD' || (command.type === 'PLAY_LIMIT_CARD' && state.phase !== 'defend') ||
       command.type === 'BASIC_STAGE_ATTACK' || command.type === 'GATHER_POWER' ||
       command.type === 'LIMIT' || command.type === 'JOINT' || command.type === 'BASIC';
     if (isOffensive && opts.side !== attacker) return reject('NOT_ACTIVE_SIDE');
@@ -90,11 +90,23 @@ export function canExecute(state: BattleState, command: BattleCommand, opts?: { 
     case 'PLAY_CARD':
       return canPlayCard(state, opts?.side ?? activeAttackSide(state), command.handIndex, opts?.characterId ?? '');
     case 'PLAY_LIMIT_CARD': {
-      // Coste CC REAL de la LIMITED (carta del catálogo) + disponibilidad
+      // LIMIT = fuente equipada/reutilizable del miembro activo; JOINT =
+      // mano/consumible. En defensa, el menú humano permite Support/Defense
+      // (type $04/$05), no solo Defense.
       const card = getCard(command.cardId);
       const side = opts?.side ?? activeAttackSide(state);
       const fighter = side === 'player' ? state.player : state.enemy;
       if (!state.limits.includes(command.cardId) || !card) return reject('LIMIT_UNAVAILABLE');
+      if (state.phase === 'defend') {
+        if (side === 'player' && !playerIsDefender(state)) return reject('NOT_DEFENDER');
+        if (!isDefensiveCard(card)) return reject('WRONG_PHASE');
+        if (!isCardCompatible(card, opts?.characterId ?? '')) return reject('CARD_NOT_COMPATIBLE');
+        if (side === 'player' && (state.defenseState === 'COMMITTED' || state.defenseChoice !== null)) return reject('DEFENSE_ALREADY_COMMITTED');
+        if (fighter.cc < (card.cc ?? 0)) return reject('INSUFFICIENT_CC');
+        return canUseDefenseLimit(state, opts?.limitCardsCount ?? 0);
+      }
+      if (!isOffensiveCard(card)) return reject('WRONG_PHASE');
+      if (!isCardCompatible(card, opts?.characterId ?? '')) return reject('CARD_NOT_COMPATIBLE');
       if (fighter.cc < (card.cc ?? 0)) return reject('INSUFFICIENT_CC');
       return canOpenLimit(state, opts?.limitCardsCount ?? 0);
     }

@@ -7,6 +7,14 @@
 
 import { readFileSync, existsSync } from 'fs';
 import { join, resolve } from 'path';
+import {
+  ROM_STAGE_COMMAND_ANIMATIONS,
+  ROM_STAGE_COMMAND_PROGRAMS,
+  ROM_STAGE_PHYSICAL_COMMANDS,
+  ROM_STAGE_QTE_RUNTIME,
+  ROM_STAGE_AB_WINDOW,
+  ROM_STAGE_VM_CONTRACT,
+} from '../src/data/generated/romStage.generated';
 
 const ROOT = process.cwd();
 const ROM_PATH = resolve(ROOT, '../dbz-lsw-decomp/13_raw_rom/dbz-lsw-spain.gbc');
@@ -121,6 +129,95 @@ if (existsSync(PROG_JSON)) {
   check('every program sets pose ≥1 and returns to idle $00 for memberSlot0', programs.filter((p: any) => p.memberSlot === 0).every((p: any) => p.poseWrites.length === 2 && p.poseWrites[1] === 0x00));
 } else {
   check('animation-programs.json presente', false, 'falta generated/rom-stage/animation-programs.json — ejecuta build:rom-stage');
+}
+
+// Gate 5b: Stage gameplay microprogram contract. No longitud fija, no animación
+// reflejada entre participantes, no timers inventados como fuente visual.
+{
+  const byId = (id: number) => ROM_STAGE_COMMAND_PROGRAMS.find((p) => p.animationId === id);
+  const commands = ['A', 'B', 'RIGHT', 'UP', 'DOWN'] as const;
+  check('Stage VM contract: ROM_STATIC_VERIFIED', ROM_STAGE_VM_CONTRACT.evidence === 'ROM_STATIC_VERIFIED');
+  check('Stage VM contract: 5 commands × 2 participants = 10 programs', ROM_STAGE_COMMAND_PROGRAMS.length === 10);
+  check('Stage VM dispatch A/B/R/UP/DOWN → 0..4 and 5..9',
+    commands.every((c) => {
+      const anim = ROM_STAGE_COMMAND_ANIMATIONS[c];
+      const contract = ROM_STAGE_VM_CONTRACT.commandToProgramId[c];
+      return anim.memberSlot0 === contract.actor0 && anim.memberSlot1 === contract.actor1;
+    }));
+  check('Stage VM actor0 programs 0..4 are 3 instructions',
+    ROM_STAGE_VM_CONTRACT.programLengths.actor0.programIds.every((id) => byId(id)?.count === 3));
+  check('Stage VM actor1 A/B programs 5..6 are 5 instructions',
+    ROM_STAGE_VM_CONTRACT.programLengths.actor1AtoB.programIds.every((id) => byId(id)?.count === 5));
+  check('Stage VM actor1 directional programs 7..9 are 4 instructions',
+    ROM_STAGE_VM_CONTRACT.programLengths.actor1Directional.programIds.every((id) => byId(id)?.count === 4));
+  check('Stage VM uses variable instruction counts, not fixed length',
+    new Set(ROM_STAGE_COMMAND_PROGRAMS.map((p) => p.count)).size === 3);
+  check('Stage VM opcodes include $04/$05/$06/$13',
+    [0x04, 0x05, 0x06, 0x13].every((op) => ROM_STAGE_COMMAND_PROGRAMS.some((p) => p.steps.some((s) => s.opcode === op))));
+  check('Stage VM $04 names start animation',
+    ROM_STAGE_COMMAND_PROGRAMS.some((p) => p.steps.some((s) => s.opcode === 0x04 && s.mnemonic === 'START_ACTION_OBJECT_ANIMATION')));
+  check('Stage VM $05 names wait animation',
+    ROM_STAGE_COMMAND_PROGRAMS.some((p) => p.steps.some((s) => s.opcode === 0x05 && s.mnemonic === 'WAIT_ACTION_OBJECT_ANIMATION')));
+  check('Stage VM $06 waits ActionObject+4 frame counter',
+    ROM_STAGE_VM_CONTRACT.gameplayClock.frameCounterField === 'ActionObject+4' &&
+    ROM_STAGE_COMMAND_PROGRAMS.some((p) => p.steps.some((s) => s.opcode === 0x06 && typeof s.waitFrameCounter === 'number')));
+  check('Stage VM $13 emits sync events with args',
+    ROM_STAGE_COMMAND_PROGRAMS.some((p) => p.steps.some((s) => s.opcode === 0x13 && s.syncEvent?.arg1 !== undefined)));
+  check('Stage VM queues are independent per participant',
+    ROM_STAGE_VM_CONTRACT.queues.count === 2 && ROM_STAGE_VM_CONTRACT.queues.model.includes('independent'));
+  check('Stage VM participant programs are not mirrored/reused',
+    commands.every((c) => {
+      const anim = ROM_STAGE_COMMAND_ANIMATIONS[c];
+      return JSON.stringify(byId(anim.memberSlot0)?.steps.map((s) => s.bytes)) !==
+        JSON.stringify(byId(anim.memberSlot1)?.steps.map((s) => s.bytes));
+    }));
+}
+
+// Gate 5c: physical Stage command resources, timings and target reactions.
+{
+  const p = ROM_STAGE_PHYSICAL_COMMANDS;
+  check('Stage physical: evidence static', p.evidence === 'ROM_STATIC_VERIFIED');
+  check('Stage physical: actor A/B/RIGHT/UP/DOWN resources 1/2/3/4/4',
+    p.actor.A.resourceIndex === 1 && p.actor.B.resourceIndex === 2 &&
+    p.actor.RIGHT.resourceIndex === 3 && p.actor.UP.resourceIndex === 4 &&
+    p.actor.DOWN.resourceIndex === 4);
+  check('Stage physical: DOWN uses fixed seq 9', p.actor.DOWN.sequence === 9);
+  check('Stage physical: actor timings A13 B32 RIGHT41 UP41 DOWN53',
+    p.actor.A.totalTicks === 13 && p.actor.B.totalTicks === 32 &&
+    p.actor.RIGHT.totalTicks === 41 && p.actor.UP.totalTicks === 41 &&
+    p.actor.DOWN.totalTicks === 53);
+  check('Stage physical: target reactions use resource 0', p.target.resourceIndex === 0);
+  check('Stage physical: target wait frames 2/3/4/4/5',
+    p.target.A.waitActorFrame === 2 && p.target.B.waitActorFrame === 3 &&
+    p.target.RIGHT.waitActorFrame === 4 && p.target.UP.waitActorFrame === 4 &&
+    p.target.DOWN.waitActorFrame === 5);
+  check('Stage physical: target sequences $0A/$0B/$0D/$0F/$10',
+    p.target.A.sequence === 0x0a && p.target.B.sequence === 0x0b &&
+    p.target.RIGHT.sequence === 0x0d && p.target.UP.sequence === 0x0f &&
+    p.target.DOWN.sequence === 0x10);
+  check('Stage physical: B last-command film seq $17, 54t',
+    p.lastCommandB.targetSequence === 0x17 && p.lastCommandB.totalTicks === 54 &&
+    p.lastCommandB.waitTicksBeforeTarget === 1);
+  check('Stage physical: B last-command applies frame delta and restores target seq0',
+    p.lastCommandB.applyFrameDelta === true && p.lastCommandB.restoreTargetSequence === 0);
+}
+
+// Gate 5d: Stage QTE runtime memory and A/B subwindow.
+{
+  check('Stage QTE memory: CA5E/CA5F command count/index',
+    ROM_STAGE_QTE_RUNTIME.commandCount === 0xca5e && ROM_STAGE_QTE_RUNTIME.commandIndex === 0xca5f);
+  check('Stage QTE memory: CA60 expected, CA6A results, CB77 timer',
+    ROM_STAGE_QTE_RUNTIME.expectedCommands === 0xca60 &&
+    ROM_STAGE_QTE_RUNTIME.resultPerCommand === 0xca6a &&
+    ROM_STAGE_QTE_RUNTIME.temporalCounter === 0xcb77);
+  check('Stage QTE input: accepted mask $3D and wrong input advances',
+    ROM_STAGE_QTE_RUNTIME.acceptedMask === 0x3d && ROM_STAGE_QTE_RUNTIME.wrongInputAdvancesIndex === true);
+  check('Stage A/B window: 30 ticks, A/B only, thresholds 10/25/30',
+    ROM_STAGE_AB_WINDOW.durationTicks === 30 &&
+    ROM_STAGE_AB_WINDOW.acceptedInputs.join(',') === 'A,B' &&
+    ROM_STAGE_AB_WINDOW.thresholds.join(',') === '10,25,30');
+  check('Stage A/B window: semantic name pending',
+    ROM_STAGE_AB_WINDOW.semanticName === 'PENDING_CONTEXT_LINK');
 }
 
 // Gate 6: clasificación de readers de $C3C7 (100%).
