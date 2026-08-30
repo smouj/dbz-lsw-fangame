@@ -27,6 +27,11 @@ jobs:
       - name: Materialize portable ROM-FX runtime contract
         run: npm run build:rom-fx-runtime-cutover
 
+      # Portable Stage physical contract: uses the committed Bank $61 core,
+      # including the memberSlot1 final-B $39 finisher. No raw ROM required.
+      - name: Verify ROM Stage physical bindings
+        run: npx tsx scripts/verify-rom-stage-physical-binding.ts
+
       # Portable suite only: typecheck + vitest + build + every verify:* and
       # audit:* that reads committed data (no raw ROM, no outside-repo decomp).
       # ROM-dependent verifiers live in `npm run verify:rom-local` and CANNOT
