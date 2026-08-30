@@ -23,6 +23,7 @@ import {
   type RomDefenseResult,
   type RomStandardAttackProfile,
 } from './engine/rom/romDescriptors';
+import { romSpecialHandlerBinding } from '../data/generated/romSpecialHandlerSequenceBindings.generated';
 
 const NONE = 0xff;
 
@@ -93,6 +94,7 @@ export interface RomActionExecutionDescriptor {
       totalTicks: number;
       sourceTechnique: string | null;
     } | null;
+    sequenceBinding: RomSpecialHandlerSequenceBindingRef | null;
     physicalMapping: {
       status: CardPhysicalCoverageStatus;
       gapCause: StaticResourceGapCause | 'NO_ROM_ANIMATION';
@@ -118,6 +120,23 @@ export interface RomActionExecutionDescriptor {
     steps: RomActionExecutionStep[];
   };
   evidence: string[];
+}
+
+export interface RomSpecialHandlerSequenceBindingRef {
+  handler: number;
+  cardName: string;
+  actorResource: number;
+  phases: readonly {
+    state: number | null;
+    macroId: number | null;
+    slot: 0 | 1;
+    sequence: number;
+    role: 'ACTOR_PRIMARY' | 'ACTOR_SUPPORT' | 'TARGET';
+    frameCount: number | null;
+    totalTicks: number | null;
+  }[];
+  unresolvedActorSequences: readonly number[];
+  evidence: 'ROM_HANDLER_VERIFIED';
 }
 
 export interface RomActionExecutionSummary {
@@ -248,6 +267,7 @@ function handlerSteps(
   resource: AnimationResourceCatalogEntry | undefined,
   standard: RomStandardAttackProfile | null,
   special: RomActionHandlerDescriptor | null,
+  sequenceBinding: RomSpecialHandlerSequenceBindingRef | null,
 ): RomActionExecutionStep[] {
   const steps: RomActionExecutionStep[] = [
     {
@@ -300,9 +320,18 @@ function handlerSteps(
   }
 
   if (special) {
+    if (sequenceBinding) {
+      const phases = sequenceBinding.phases.map((phase) => `seq${phase.sequence}(slot${phase.slot})`).join(' + ');
+      steps.push({
+        id: 'SPECIAL_HANDLER_SEQUENCE_BINDING',
+        label: `${special.family}${special.variant ? `/${special.variant}` : ''} · ${bankAddress(special.worker.bank, special.worker.address)} · FIXED ${phases} (SSOT)`,
+        evidence: 'ROM_HANDLER_VERIFIED',
+        source: 'romSpecialHandlerSequenceBindings.generated',
+      });
+    }
     steps.push({
       id: 'SPECIAL_HANDLER_BOUNDARY',
-      label: `${special.family}${special.variant ? `/${special.variant}` : ''} · ${bankAddress(special.worker.bank, special.worker.address)}`,
+      label: `${special.family}${special.variant ? `/${special.variant}` : ''} · ${bankAddress(special.worker.bank, special.worker.address)} · result branch HIT/MISS/GUARD dynamic`,
       evidence: 'PENDING_ROM_TRACE',
       source: 'SPECIAL_HANDLER_DESCRIPTORS',
     });
@@ -334,6 +363,26 @@ export function romActionExecutionDescriptorForCard(card: CardDef): RomActionExe
   const standard = standardAttackProfileFor(card);
   const special = specialHandlerForCard(card) ?? SPECIAL_HANDLER_DESCRIPTORS[rom.exec] ?? null;
   const result = resultBranches(card, standard);
+  const rawSpecialBinding = romSpecialHandlerBinding(rom.exec);
+  const sequenceBinding: RomSpecialHandlerSequenceBindingRef | null =
+    rawSpecialBinding && rawSpecialBinding.actorResource === rom.actorAnim
+      ? {
+          handler: rawSpecialBinding.handler,
+          cardName: rawSpecialBinding.cardName,
+          actorResource: rawSpecialBinding.actorResource,
+          phases: rawSpecialBinding.phases.map((phase) => ({
+            state: phase.state,
+            macroId: phase.macroId,
+            slot: phase.slot,
+            sequence: phase.sequence,
+            role: phase.role,
+            frameCount: phase.frameCount,
+            totalTicks: phase.totalTicks,
+          })),
+          unresolvedActorSequences: rawSpecialBinding.unresolvedActorSequences,
+          evidence: 'ROM_HANDLER_VERIFIED',
+        }
+      : null;
 
   return {
     cardId: card.id,
@@ -364,6 +413,7 @@ export function romActionExecutionDescriptorForCard(card: CardDef): RomActionExe
           sourceTechnique: resource.sourceTechnique,
         }
         : null,
+      sequenceBinding,
       physicalMapping: {
         status: coverage.physicalStatus,
         gapCause: coverage.gapCause,
@@ -387,7 +437,7 @@ export function romActionExecutionDescriptorForCard(card: CardDef): RomActionExe
     result,
     handlerScript: {
       source: 'romCardData + romDescriptors + animationResources',
-      steps: handlerSteps(rom, resource, standard, special),
+      steps: handlerSteps(rom, resource, standard, special, sequenceBinding),
     },
     evidence: [
       'romCardData.ts',
