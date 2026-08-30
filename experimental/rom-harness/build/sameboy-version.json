@@ -1,0 +1,19 @@
+{
+  "sameboy": {
+    "repository": "https://github.com/LIJI32/SameBoy",
+    "commit": "213a12ce93d66b105a113debd9396306066a7cfc",
+    "license": "Expat (MIT)",
+    "note": "CORE API directa (NO libretro). Modelo GB_MODEL_CGB_E (0x205)."
+  },
+  "emscripten": {
+    "version": "6.0.8",
+    "emcc": "emcc (Emscripten gcc/clang-like replacement) 6.0.8 (aeb67926e7de656da38bc807d83050af93578758)"
+  },
+  "rom": {
+    "primary": "dbz-lsw-spain.gbc",
+    "primarySha256": "bd1df5d6653be9e262f96db3bcdd7bb8ae0cad6186c16f8c1e8eba3f091c8804",
+    "allowlist": [
+      "8dab48cc81d14bcee7c73274df09cf5c4dd44c3b93d10a5a3175e04fead25dee"
+    ]
+  }
+}

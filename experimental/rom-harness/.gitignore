@@ -6,7 +6,7 @@
 *.sav.*
 
 # Build Emscripten / WASM
-core/build/
+build/out/
 core/*.wasm
 core/*.js
 *.o
