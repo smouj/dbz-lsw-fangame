@@ -91,6 +91,31 @@ function physicalStatusForResource(resourceId: number): RomTrackPhysicalStatus {
   return registryForResource(resourceId)?.status ?? 'NO_ANIMATION_RESOURCE';
 }
 
+function resultBranchSelectorForResource(resourceId: number): RomActionAnimationTrack['selector'] | null {
+  if (resourceId >= 0x2c && resourceId <= 0x3e) {
+    return {
+      kind: 'RESULT_BRANCH',
+      value: null,
+      evidence: 'STANDARD_DAMAGE resource seq0+seq1 are statically reachable; seq1 is consumed by result macros $2F/$30/$31 on AnimationSlot 6.',
+    };
+  }
+  if (resourceId === 0x3f) {
+    return {
+      kind: 'RESULT_BRANCH',
+      value: null,
+      evidence: 'Tail resource $3F seq0+seq1 are statically reachable; Bank03:$62BB executes macro $36 (AnimationSlot 6, sequence 1, flags $80).',
+    };
+  }
+  if (resourceId === 0x41) {
+    return {
+      kind: 'RESULT_BRANCH',
+      value: null,
+      evidence: 'V-ball resource $41 seq0..seq3 are statically reachable; worker $0C consumes seq0 fallback and macros $3B/$3C/$3D select seq1/seq2/seq3.',
+    };
+  }
+  return null;
+}
+
 function selectorFor(card: CardDef, rom: RomCardData, resource: RomSequenceEntry | null): RomActionAnimationTrack['selector'] {
   if (!resource) {
     return { kind: 'FIXED', value: null, evidence: 'No actor AnimationResource in the ROM card record.' };
@@ -119,6 +144,8 @@ function selectorFor(card: CardDef, rom: RomCardData, resource: RomSequenceEntry
   }
 
   if (rom.exec === 0x0a) {
+    const resultBranch = resultBranchSelectorForResource(resource.resourceId);
+    if (resultBranch) return resultBranch;
     return {
       kind: 'HANDLER_SELECTED',
       value: resource.sequences.length === 1 ? 0 : null,
@@ -131,6 +158,8 @@ function selectorFor(card: CardDef, rom: RomCardData, resource: RomSequenceEntry
   }
 
   if (rom.exec === 0x0b || rom.exec === 0x0c || rom.exec === 0x0d || rom.exec === 0x0e) {
+    const resultBranch = resultBranchSelectorForResource(resource.resourceId);
+    if (resultBranch) return resultBranch;
     return {
       kind: 'HANDLER_SELECTED',
       value: null,

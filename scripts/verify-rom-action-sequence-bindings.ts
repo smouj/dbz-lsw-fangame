@@ -99,6 +99,26 @@ check('summary:with actor resource', summary.withActorResource === 70, String(su
 check('summary:no resource-level unknown physical status', (summary.byPhysicalStatus.FRAME_STREAM_CLOSED ?? 0) === 0 && (summary.byPhysicalStatus.METASPRITE_LINK_PENDING ?? 0) === 0);
 check('summary:empty actor tracks', (summary.byPhysicalStatus.EMPTY_RESOURCE_SLOT ?? 0) === 4, String(summary.byPhysicalStatus.EMPTY_RESOURCE_SLOT ?? 0));
 
+const standardDamageCardIds = CARDS
+  .filter((card) => romCardData(card.name)?.exec === 0x0a)
+  .map((card) => card.id);
+check('standard-damage:19 cards', standardDamageCardIds.length === 19, String(standardDamageCardIds.length));
+for (const cardId of standardDamageCardIds) {
+  const track = byCard.get(cardId)?.tracks.find((item) => item.trackId === 'actor');
+  check(`standard-damage:${cardId}:result branch selector`, track?.selector.kind === 'RESULT_BRANCH', track?.selector.kind);
+  check(`standard-damage:${cardId}:seq0+seq1 exposed`, track?.sequences.length === 2, String(track?.sequences.length));
+}
+
+const tailTrack = byCard.get(29)?.tracks.find((track) => track.trackId === 'actor');
+check('Tail $3F:result branch selector', tailTrack?.selector.kind === 'RESULT_BRANCH', tailTrack?.selector.kind);
+check('Tail $3F:seq0+seq1 exposed', tailTrack?.sequences.join(',') === '0,1', tailTrack?.sequences.join(','));
+check('Tail $3F:macro $36 evidence retained', !!tailTrack?.selector.evidence.includes('macro $36'), tailTrack?.selector.evidence);
+
+const vballTrack = byCard.get(41)?.tracks.find((track) => track.trackId === 'actor');
+check('V-ball $41:result branch selector', vballTrack?.selector.kind === 'RESULT_BRANCH', vballTrack?.selector.kind);
+check('V-ball $41:seq0..seq3 exposed', vballTrack?.sequences.join(',') === '0,1,2,3', vballTrack?.sequences.join(','));
+check('V-ball $41:macros $3B/$3C/$3D evidence retained', !!vballTrack?.selector.evidence.includes('$3B/$3C/$3D'), vballTrack?.selector.evidence);
+
 console.log('═══ ROM ACTION SEQUENCE BINDINGS — FULL PHYSICAL CATALOG ═══');
 console.log(`bindings=${bindings.length} withActorResource=${summary.withActorResource}`);
 console.log(`registry=66 physical=62 empty=4`);
