@@ -34,7 +34,8 @@
 #define GB_SCREEN_PIXELS (160 * 144)
 
 static GB_gameboy_t *g_gb = NULL;
-/* Copia estable del framebuffer (SameBoy rota buffers internos). */
+/* Framebuffer estable propiedad del harness. SameBoy necesita que el frontend
+ * registre un output válido ANTES de GB_run_frame(); no posee uno implícito. */
 static uint32_t *g_pixels = NULL;
 
 /* Empaqueta r,g,b → uint32 RGBA (A=0xFF en byte alto). En little-endian
@@ -51,16 +52,25 @@ HARNESS_EXPORT int harness_init(void) {
     if (g_gb) return 0;
     g_gb = GB_init(GB_alloc(), H0_MODEL);
     if (!g_gb) return -1;
+
+    if (!g_pixels) {
+        g_pixels = (uint32_t *)malloc(sizeof(uint32_t) * GB_SCREEN_PIXELS);
+        if (!g_pixels) { GB_free(g_gb); g_gb = NULL; return -2; }
+    }
+    memset(g_pixels, 0, sizeof(uint32_t) * GB_SCREEN_PIXELS);
+
+    /* SameBoy no crea un framebuffer de frontend por defecto. GB_init() deja
+     * gb->screen a NULL; el PPU escribe ahí durante VBlank. El frontend oficial
+     * (incluido libretro) llama GB_set_pixels_output antes de ejecutar frames.
+     * Sin este binding, WASM puede trapear/corromper memoria al primer render. */
+    GB_set_pixels_output(g_gb, g_pixels);
+
     /* IMPRESCINDIBLE: GB_convert_rgb15 SIEMPRE llama a rgb_encode_callback;
      * el frontend de SameBoy lo configura, el harness debe hacerlo o crashea
      * con un call_indirect nulo en el primer vblank. */
     GB_set_rgb_encode_callback(g_gb, rgb_encode);
     /* H0: colores crudos (sin emulación de curva LCD). Simplifica y evita pow(). */
     GB_set_color_correction_mode(g_gb, GB_COLOR_CORRECTION_DISABLED);
-    if (!g_pixels) {
-        g_pixels = (uint32_t *)malloc(sizeof(uint32_t) * GB_SCREEN_PIXELS);
-        if (!g_pixels) { GB_free(g_gb); g_gb = NULL; return -2; }
-    }
     return 0;
 }
 
@@ -72,8 +82,18 @@ HARNESS_EXPORT void harness_free(void) {
 /* ------------------------------- ROM --------------------------------- */
 
 HARNESS_EXPORT int harness_load_rom(uint8_t *rom, size_t len) {
-    if (!g_gb || !rom) return -1;
+    if (!g_gb || !rom || len == 0) return -1;
+
+    /* SameBoy expone esta API como void. Por tanto el wrapper NO puede fingir
+     * un rc del loader: valida el resultado observable mediante direct access. */
     GB_load_rom_from_buffer(g_gb, rom, len);
+
+    size_t loaded_size = 0;
+    uint16_t loaded_bank = 0;
+    void *loaded_rom = GB_get_direct_access(
+        g_gb, GB_DIRECT_ACCESS_ROM, &loaded_size, &loaded_bank);
+    (void)loaded_bank;
+    if (!loaded_rom || loaded_size < len) return -2;
     return 0;
 }
 
@@ -103,12 +123,17 @@ HARNESS_EXPORT void harness_set_key(int key, int pressed) {
 
 /* --------------------------- framebuffer ----------------------------- */
 
-/* Copia el framebuffer actual a g_pixels y devuelve el puntero. */
+/* Devuelve el framebuffer actual. Normalmente SameBoy ya renderiza directamente
+ * en g_pixels; la copia solo cubre frontends que sustituyan el output. */
 HARNESS_EXPORT uint32_t *harness_get_pixels(void) {
     if (g_pixels) {
         const uint32_t *src = g_gb ? GB_get_pixels_output(g_gb) : NULL;
-        if (src) memcpy(g_pixels, src, sizeof(uint32_t) * GB_SCREEN_PIXELS);
-        else memset(g_pixels, 0, sizeof(uint32_t) * GB_SCREEN_PIXELS);
+        if (src && src != g_pixels) {
+            memcpy(g_pixels, src, sizeof(uint32_t) * GB_SCREEN_PIXELS);
+        }
+        else if (!src) {
+            memset(g_pixels, 0, sizeof(uint32_t) * GB_SCREEN_PIXELS);
+        }
     }
     return g_pixels;
 }
