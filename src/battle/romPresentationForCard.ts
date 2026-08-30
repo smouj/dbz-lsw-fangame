@@ -22,13 +22,14 @@ import { compileRomPresentationProfile } from './romPresentationCompiler';
 import { resolveRomSequenceSelector } from './romSequenceSelectors';
 import { supportSpecialCutover } from './supportRomCutover';
 
-export type RomPresentationRouteKind = 'BEAM_BASE' | 'STANDARD_DAMAGE' | 'BEAM_VARIANT' | 'PROJECTILE_SCROLL' | 'SUPPORT_SPECIAL';
+export type RomPresentationRouteKind = 'BEAM_BASE' | 'STANDARD_DAMAGE' | 'BEAM_VARIANT' | 'PROJECTILE_SCROLL' | 'SPECIAL_HANDLER' | 'SUPPORT_SPECIAL';
 
 const BRIDGE_ELIGIBLE_KINDS: ReadonlySet<RomPresentationProfile['kind']> = new Set([
   'BEAM_BASE',
   'STANDARD_DAMAGE',
   'BEAM_VARIANT',
   'PROJECTILE_SCROLL',
+  'SPECIAL_HANDLER',
 ]);
 
 export interface RomPresentationRoute {
@@ -45,18 +46,21 @@ export function romPresentationTimelineForCard(
   actorFormId?: string | null,
 ): RomPresentationRoute | null {
   const profile = romPresentationProfileForCard(card);
+  // Support especial ($0B/$0D/$0F) usa su propio compilador (V7.3). Gana SIEMPRE
+  // sobre el bridge genérico: hay cards de soporte que comparten handler con un
+  // special de ataque (p.ej. $0B/$0D) y cuyo profile.kind es SPECIAL_HANDLER,
+  // pero su presentación correcta es SUPPORT_SPECIAL, no la ruta de ataque.
+  const support = supportSpecialCutover(card.id, {});
+  if (support) {
+    return {
+      cardId: card.id,
+      kind: 'SUPPORT_SPECIAL',
+      profile,
+      timeline: support.timeline,
+      pendingCues: support.timeline.entries.filter(en => en.cue.type === 'ROM_PENDING').length,
+    };
+  }
   if (!BRIDGE_ELIGIBLE_KINDS.has(profile.kind)) {
-    // Support especial ($0B/$0D/$0F) usa su propio compilador (V7.3).
-    const support = supportSpecialCutover(card.id, {});
-    if (support) {
-      return {
-        cardId: card.id,
-        kind: 'SUPPORT_SPECIAL',
-        profile,
-        timeline: support.timeline,
-        pendingCues: support.timeline.entries.filter(en => en.cue.type === 'ROM_PENDING').length,
-      };
-    }
     return null;
   }
   const selector = resolveRomSequenceSelector({

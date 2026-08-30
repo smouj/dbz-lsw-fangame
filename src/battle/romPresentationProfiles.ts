@@ -79,6 +79,8 @@ export interface RomPresentationStep {
   palette: number | null;
   paletteHex: string | null;
   frame: number | null;
+  sequence?: number;
+  slot?: 0 | 1;
   motion: RomPresentationMotionRef | null;
   branchFamily: string | null;
   label: string;
@@ -245,7 +247,11 @@ function motionStep(id: string, macroId: number, kind: RomPresentationMotionRef[
   });
 }
 
-function startAnimation(descriptor: RomActionExecutionDescriptor): RomPresentationStep | null {
+function startAnimation(
+  descriptor: RomActionExecutionDescriptor,
+  sequence?: number,
+  slot?: 0 | 1,
+): RomPresentationStep | null {
   if (descriptor.actorAnimation.resource == null) return null;
   return step({
     id: 'START_ACTOR_ANIMATION',
@@ -257,9 +263,11 @@ function startAnimation(descriptor: RomActionExecutionDescriptor): RomPresentati
     fxResource: null,
     palette: null,
     frame: null,
+    sequence,
+    slot,
     motion: null,
     branchFamily: null,
-    label: `Start AnimationResource ${descriptor.actorAnimation.resourceHex}`,
+    label: `Start AnimationResource ${descriptor.actorAnimation.resourceHex}${sequence != null ? ` seq ${sequence}` : ''}${slot != null ? ` slot ${slot}` : ''}`,
     evidence: descriptor.actorAnimation.evidence,
     source: 'RomActionExecutionDescriptor.actorAnimation',
   });
@@ -565,12 +573,29 @@ function defenseProgram(descriptor: RomActionExecutionDescriptor): RomPresentati
 }
 
 function specialProgram(descriptor: RomActionExecutionDescriptor): RomPresentationStep[] {
-  const program = [sceneLoad('ROM_HANDLER_VERIFIED')];
-  const actor = startAnimation(descriptor);
-  if (actor) program.push(actor);
+  const program: RomPresentationStep[] = [sceneLoad('ROM_HANDLER_VERIFIED')];
+  const binding = descriptor.actorAnimation.sequenceBinding;
+  if (binding && binding.phases.length > 0) {
+    // Fases físicas demostradas por la SSOT: una START_ANIMATION por fase con
+    // su selector de secuencia y slot físicos. NO fabricamos WAITs entre fases:
+    // la transición exacta entre estados la gobierna el FSM del handler y
+    // sigue siendo territorio dinámico (se refleja en el pending final).
+    for (const phase of binding.phases) {
+      const anim = startAnimation(descriptor, phase.sequence, phase.slot);
+      if (anim) program.push(anim);
+    }
+  } else {
+    const actor = startAnimation(descriptor);
+    if (actor) program.push(actor);
+  }
   const fx = spawnFx(descriptor);
   if (fx) program.push(fx);
-  program.push(pendingStep('PENDING_SPECIAL_RUNTIME', 'PENDING_ROM_TRACE', 'special handler FSM, slot binding or runtime branch remains dynamic trace territory', 'SPECIAL_HANDLER_DESCRIPTORS'));
+  program.push(pendingStep(
+    'PENDING_SPECIAL_RESULT_BRANCH',
+    'PENDING_ROM_TRACE',
+    'special handler result branch (HIT/MISS/GUARD) and inter-phase state transitions remain dynamic trace territory',
+    'SPECIAL_HANDLER_DESCRIPTORS',
+  ));
   return program;
 }
 

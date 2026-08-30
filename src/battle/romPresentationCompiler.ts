@@ -216,25 +216,42 @@ function compileStep(
     }
 
     case 'START_ANIMATION': {
-      const cues: PresentationCue[] = [{ type: 'ANIMATION_START', tick: cursor, slot: 0, resource: step.resource }];
-      if (step.resource != null && actorFormId && sequenceSelector != null) {
+      // step.sequence (selector físico de ESTA instancia) gana sobre el
+      // sequenceSelector global. step.slot es el AnimationSlot físico.
+      const slot = step.slot ?? 0;
+      const sequence = step.sequence ?? sequenceSelector;
+      const cues: PresentationCue[] = [{ type: 'ANIMATION_START', tick: cursor, slot, resource: step.resource }];
+      if (step.resource != null && actorFormId && sequence != null) {
         const resource = step.resource;
-        const sequence = animationResourceById(resource)?.sequences[sequenceSelector];
+        const resourceEntry = animationResourceById(resource);
+        const sequenceCount = resourceEntry?.sequenceCount ?? 0;
+        if (sequence < 0 || sequence >= sequenceCount) {
+          // Guardrail: un selector canónico fuera de rango debe aflorar, nunca
+          // caer silenciosamente a seq0.
+          cues.push({
+            type: 'ROM_PENDING',
+            tick: cursor,
+            reason: `${step.id}: sequence ${sequence} out of range for resource 0x${resource.toString(16).padStart(2, '0')} (sequenceCount=${sequenceCount})`,
+            boundary: 'STATIC',
+          });
+          return { cues, advanceTicks: 0 };
+        }
+        const frames = resourceEntry?.sequences[sequence]?.frames ?? [];
         let tick = cursor;
-        for (let frameIndex = 0; frameIndex < (sequence?.frames.length ?? 0); frameIndex++) {
+        for (let frameIndex = 0; frameIndex < frames.length; frameIndex++) {
           const binding = resolveProductionFrame({
             formId: actorFormId,
             animationResource: resource,
-            sequenceSelector,
+            sequenceSelector: sequence,
             frameIndex,
           });
           cues.push({
             type: 'ROM_PHYSICAL_FRAME',
             tick,
-            slot: 0,
+            slot,
             formId: actorFormId,
             resource,
-            sequence: sequenceSelector,
+            sequence,
             frameIndex,
             source: binding.source,
             physicalId: binding.physicalId,
@@ -251,11 +268,11 @@ function compileStep(
           });
           tick += Math.max(1, binding.durationTicks ?? 1);
         }
-        if (!sequence) {
+        if (frames.length === 0) {
           cues.push({
             type: 'ROM_PENDING',
             tick: cursor,
-            reason: `${step.id}: sequence ${sequenceSelector} is not decoded for resource 0x${resource.toString(16).padStart(2, '0')}`,
+            reason: `${step.id}: sequence ${sequence} is not decoded for resource 0x${resource.toString(16).padStart(2, '0')}`,
             boundary: 'STATIC',
           });
         }
