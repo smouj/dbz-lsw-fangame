@@ -292,6 +292,7 @@ class ProductionProbe implements BattlePresentation {
   moveActorByRomMotion(): void {}
   moveTargetByRomMotion(): void {}
   applyScreenMotion(): void {}
+  setRomSequenceForSlot(): void {}
   applyScreenRestore(): void {}
   applyScreenPath(): void {}
   sync(): void {}

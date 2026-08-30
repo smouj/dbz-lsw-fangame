@@ -39,6 +39,10 @@ export class FighterActor extends Container {
   private baseFlip = 1;
   private scaleMag = 1;
 
+  /** ROM sequence state per slot (for SPECIAL_HANDLER multi-actor: Purple Comet, P.Comet Z, etc.) */
+  private romResource: number | null = null;
+  private romSequence: number | null = null;
+
   constructor(atlas: FormAtlas, formId: string, side: BattleSide) {
     super();
     this.formId = formId;
@@ -83,6 +87,23 @@ export class FighterActor extends Container {
     this._frameOffsetX = offsetX;
     this._frameOffsetY = offsetY;
     this.applyTransform();
+  }
+
+  /** Establece la secuencia ROM física para este actor/slot.
+   *  Usado por ROM_PHYSICAL_FRAME para SPECIAL_HANDLER (Tail, V-Ball, Purple Comet, P.Comet Z).
+   */
+  setRomSequence(resource: number, sequence: number): void {
+    this.romResource = resource;
+    this.romSequence = sequence;
+    // TODO: trigger SpriteAnimator / atlas lookup con (resource, sequence)
+    // por ahora solo almacena el estado para que el resolver físico lo use
+  }
+
+  get currentRomSequence(): { resource: number; sequence: number } | null {
+    if (this.romResource != null && this.romSequence != null) {
+      return { resource: this.romResource, sequence: this.romSequence };
+    }
+    return null;
   }
 
   /** P0 ROM TICKS: devuelve el estado interno para diagnóstico en browser. */
@@ -178,7 +199,16 @@ export class FighterActor extends Container {
     }
     const state = currentFrame(this.anim, elapsedTicks);
     this.lastFrameIndex = state.frameIndex;
-    const tex = this.atlas.textures.get(`${this.activePose}:${state.frameIndex}`);
+
+    // When romSequence is set (SPECIAL_HANDLER), the frame selection should prefer
+    // the physical frame from (resource + sequence + frameIndex) over pose-only.
+    // The cue already resolved the physicalId; here we keep the context for the resolver.
+    const romCtx = this.currentRomSequence;
+    const texKey = romCtx
+      ? `${this.activePose}:${state.frameIndex}:rom:${romCtx.resource}:${romCtx.sequence}`
+      : `${this.activePose}:${state.frameIndex}`;
+
+    const tex = this.atlas.textures.get(texKey) ?? this.atlas.textures.get(`${this.activePose}:${state.frameIndex}`);
     if (!tex) {
       this.sprite.visible = false;
       return;

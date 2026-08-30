@@ -75,6 +75,8 @@ export interface ProductionRomPresentationStats {
     offsetY: number | null;
     durationTicks: number | null;
   } | null;
+  /** Per-slot ROM sequence tracks (independent for Purple Comet / P.Comet Z / multi-actor specials) */
+  romSequenceBySlot: Array<{ resource: number; sequence: number } | null>;
 }
 
 const SCENE_MODE_TO_BATTLE_SCENE: Record<string, BattleScene> = {
@@ -164,6 +166,7 @@ export class ProductionRomPresentationAdapter {
       physicalFrames: 0,
       physicalFrameSources: {},
       lastPhysicalFrame: null,
+      romSequenceBySlot: [null, null],
     };
   }
 
@@ -265,8 +268,8 @@ export class ProductionRomPresentationAdapter {
         break;
       }
       case 'SCREEN_RESTORE': {
-        // SCREEN_RESTORE $0F: restore screen to base position.
-        // Clears all ROM screen offsets, resets motion state.
+        // SCREEN_RESTORE $0F: visually returns to base by disabling STAT/HBlank viewport.
+        // It does not clear C405/C406 cinematic deltas.
         const applyScreenRestore = (this.pres as Partial<Pick<BattlePresentation, 'applyScreenRestore'>>).applyScreenRestore;
         if (typeof applyScreenRestore === 'function') {
           applyScreenRestore.call(this.pres);
@@ -276,11 +279,10 @@ export class ProductionRomPresentationAdapter {
         break;
       }
       case 'SCREEN_PATH': {
-        // SCREEN_PATH $11: ROM screen path program.
-        // Path semantics not fully traced yet — CameraPresenter marks as active.
+        // SCREEN_PATH $11: single fixed ROM path (Bank7E:$73C5), no pathId family.
         const applyScreenPath = (this.pres as Partial<Pick<BattlePresentation, 'applyScreenPath'>>).applyScreenPath;
         if (typeof applyScreenPath === 'function') {
-          applyScreenPath.call(this.pres, cue.pathId, cue.durationTicks);
+          applyScreenPath.call(this.pres, cue.durationTicks);
           visible = true;
         }
         this.stats.screenPaths++;
@@ -307,13 +309,27 @@ export class ProductionRomPresentationAdapter {
           offsetY: cue.offsetY,
           durationTicks: cue.durationTicks,
         };
+        // Maintain independent ROM sequence track per slot (Purple Comet / P.Comet Z requirement)
+        if (cue.slot === 0 || cue.slot === 1) {
+          this.stats.romSequenceBySlot[cue.slot] = {
+            resource: cue.resource,
+            sequence: cue.sequence,
+          };
+        }
+        // Wire ROM_PHYSICAL_FRAME to FighterActor per slot
+        const setRomSeq = (this.pres as any).setRomSequenceForSlot;
+        if (typeof setRomSeq === 'function') {
+          setRomSeq.call(this.pres, cue.slot, cue.resource, cue.sequence);
+        }
         // P0 ROM FIDELITY: Apply ROM-native offsets from the SAME frame record.
         // Never get timing from ROM and offsets from manifest.
         // The actor pose is set by FIGHTER_POSE cue; offsets come from ROM_PHYSICAL_FRAME.
         if (cue.offsetX != null || cue.offsetY != null) {
           const applyFrameOffset = (this.pres as Partial<Pick<BattlePresentation, 'applyFrameOffset'>>).applyFrameOffset;
           if (typeof applyFrameOffset === 'function') {
-            applyFrameOffset.call(this.pres, cue.offsetX ?? 0, cue.offsetY ?? 0);
+            // P7 — NO dropear cue.slot: aplicar el offset al actor correcto.
+            // slot 0 = actor, slot 1 = target (antes se aplicaba siempre al izquierdo).
+            applyFrameOffset.call(this.pres, cue.offsetX ?? 0, cue.offsetY ?? 0, cue.slot);
             visible = true;
           } else {
             this.stats.pendingCues++;

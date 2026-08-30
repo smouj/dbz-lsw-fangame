@@ -80,6 +80,7 @@ export interface RomPresentationStep {
   paletteHex: string | null;
   frame: number | null;
   sequence?: number;
+  slot?: 0 | 1;
   motion: RomPresentationMotionRef | null;
   branchFamily: string | null;
   label: string;
@@ -246,7 +247,7 @@ function motionStep(id: string, macroId: number, kind: RomPresentationMotionRef[
   });
 }
 
-function startAnimation(descriptor: RomActionExecutionDescriptor, sequence?: number): RomPresentationStep | null {
+function startAnimation(descriptor: RomActionExecutionDescriptor, sequence?: number, slot?: 0 | 1): RomPresentationStep | null {
   if (descriptor.actorAnimation.resource == null) return null;
   const seq = sequence ?? null;
   return step({
@@ -260,9 +261,10 @@ function startAnimation(descriptor: RomActionExecutionDescriptor, sequence?: num
     palette: null,
     frame: null,
     sequence: seq ?? undefined,
+    slot: slot ?? 0,
     motion: null,
     branchFamily: null,
-    label: `Start AnimationResource ${descriptor.actorAnimation.resourceHex}${seq != null ? ` seq ${seq}` : ''}`,
+    label: `Start AnimationResource ${descriptor.actorAnimation.resourceHex}${seq != null ? ` seq ${seq}` : ''} slot ${slot ?? 0}`,
     evidence: descriptor.actorAnimation.evidence,
     source: 'RomActionExecutionDescriptor.actorAnimation',
   });
@@ -587,15 +589,14 @@ function specialProgram(descriptor: RomActionExecutionDescriptor): RomPresentati
         if (a) program.push(a);
       }
     } else if (cardId === 57) { // Purple Comet
-      const a0 = startAnimation(descriptor, 0);
+      const a0 = startAnimation(descriptor, 0, 0);
       if (a0) program.push(a0);
-      // slot1 seq1 would require slot field; for now sequence distinguishes
-      const a1 = startAnimation(descriptor, 1);
+      const a1 = startAnimation(descriptor, 1, 1);
       if (a1) program.push(a1);
     } else if (cardId === 58) { // P.Comet Z
-      const a2 = startAnimation(descriptor, 2);
+      const a2 = startAnimation(descriptor, 2, 0);
       if (a2) program.push(a2);
-      const a3 = startAnimation(descriptor, 3);
+      const a3 = startAnimation(descriptor, 3, 1);
       if (a3) program.push(a3);
     } else {
       const actor = startAnimation(descriptor);

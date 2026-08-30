@@ -46,6 +46,14 @@ export class PixiBattlePresentation implements BattlePresentation {
   inspectActors(): { left: FighterActor | null; right: FighterActor | null } {
     return { left: this.leftActor, right: this.rightActor };
   }
+
+  setRomSequenceForSlot(slot: 0 | 1, resource: number, sequence: number): void {
+    // Route by slot: slot 0 = left/attacker actor, slot 1 = right/target actor (for specials)
+    const actor = slot === 0 ? this.leftActor : this.rightActor;
+    if (actor && typeof (actor as any).setRomSequence === 'function') {
+      (actor as any).setRomSequence(resource, sequence);
+    }
+  }
   private attacker: BattleSide = 'left';
   private projectile: Graphics | null = null;
   private projectileMode: ProjectileVisualMode = 'special';
@@ -219,14 +227,16 @@ export class PixiBattlePresentation implements BattlePresentation {
     this.cameraPresenter.applyScreenMotion(this.renderer.currentTick, dxPerTick, durationTicks, restore);
   }
 
-  /** P0 CAMERA PRESENTER — SCREEN_RESTORE $0F: restore to base position. */
+  /** P0 CAMERA PRESENTER — SCREEN_RESTORE $0F: disable HBlank viewport, preserve C405/C406. */
   applyScreenRestore(): void {
     this.cameraPresenter.applyScreenRestore();
   }
 
-  /** P0 CAMERA PRESENTER — SCREEN_PATH $11: ROM screen path program. */
-  applyScreenPath(pathId: number | null, durationTicks: number): void {
-    this.cameraPresenter.applyScreenPath(this.renderer.currentTick, pathId, durationTicks);
+  /** P0 CAMERA PRESENTER — SCREEN_PATH $11: unique ROM screen path program (18 pasos). */
+  applyScreenPath(durationTicks: number): void {
+    // X reflejado por lado: el lado físico lo deriva del atacante actual.
+    const side: 'SIDE_1' | 'SIDE_2' = this.attacker === 'left' ? 'SIDE_1' : 'SIDE_2';
+    this.cameraPresenter.applyScreenPath(this.renderer.currentTick, durationTicks, side);
   }
 
   spawnProjectile(kind: string, timing?: { spawnTick: number; contactTick: number }): void {
@@ -306,8 +316,11 @@ export class PixiBattlePresentation implements BattlePresentation {
     this.rightActor?.setPos(ACTION_RIGHT_X, ACTION_GROUND_Y);
   }
 
-  applyFrameOffset(offsetX: number, offsetY: number): void {
-    this.leftActor?.applyFrameOffset(offsetX, offsetY);
+  applyFrameOffset(offsetX: number, offsetY: number, slot: 0 | 1 = 0): void {
+    // slot 0 = participante activo (actor), slot 1 = contraparte (target).
+    // NUNCA aplicar siempre al luchador izquierdo: el actor puede ser el enemigo.
+    const who = slot === 0 ? this.actor : this.target;
+    who?.applyFrameOffset(offsetX, offsetY);
   }
 
   sync(tick: number): void {

@@ -60,11 +60,19 @@ export interface BattlePresentation {
   returnToField(): void;
 
   /**
-   * Aplica offset ROM-native al frame actual del actor (desde ROM_PHYSICAL_FRAME).
+   * Aplica offset ROM-native al frame actual (desde ROM_PHYSICAL_FRAME).
    * Los offsets (offsetX, offsetY) provienen del MISMO frame record ROM que
    * durationTicks — nunca se obtiene timing de ROM y offsets de manifest.
+   *
+   * `slot` es el ActionObject ROM (0 | 1): slot 0 = participante activo (actor),
+   * slot 1 = contraparte (target). El adaptador NO debe dropear el slot: aplicar
+   * el offset al actor equivocado es un bug real (frame ROM correcto sobre el
+   * luchador erróneo). Default slot 0 (actor) por compat.
    */
-  applyFrameOffset(offsetX: number, offsetY: number): void;
+  applyFrameOffset(offsetX: number, offsetY: number, slot?: 0 | 1): void;
+
+  /** Consume ROM_PHYSICAL_FRAME per slot for SPECIAL_HANDLER sequences (Tail, V-Ball, Purple Comet, P.Comet Z). */
+  setRomSequenceForSlot(slot: 0 | 1, resource: number, sequence: number): void;
 
   /**
    * P0 SCENE-CAMERA — Inicia el movimiento ROM discreto del actor.
@@ -90,16 +98,16 @@ export interface BattlePresentation {
   applyScreenMotion(dxPerTick: number, durationTicks: number, restore: boolean): void;
 
   /**
-   * P0 CAMERA PRESENTER — Restaura pantalla a posición base
-   * (SCREEN_RESTORE $0F). Limpia offsets ROM de pantalla.
+   * P0 CAMERA PRESENTER — Restaura pantalla a posición base visual
+   * (SCREEN_RESTORE $0F). Desactiva viewport HBlank; no destruye C405/C406.
    */
   applyScreenRestore(): void;
 
   /**
-   * P0 CAMERA PRESENTER — Ejecuta path de pantalla ROM
-   * (SCREEN_PATH $11). Programa/path, no tween genérico.
+   * P0 CAMERA PRESENTER — Ejecuta el único path de pantalla ROM
+   * (SCREEN_PATH $11). No hay pathId en la ROM.
    */
-  applyScreenPath(pathId: number | null, durationTicks: number): void;
+  applyScreenPath(durationTicks: number): void;
 
   /**
    * Sincroniza la presentación al tick GBC ABSOLUTO `tick` (reloj único).
