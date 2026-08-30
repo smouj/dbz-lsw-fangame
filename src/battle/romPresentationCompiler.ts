@@ -217,15 +217,27 @@ function compileStep(
 
     case 'START_ANIMATION': {
       const cues: PresentationCue[] = [{ type: 'ANIMATION_START', tick: cursor, slot: 0, resource: step.resource }];
-      if (step.resource != null && actorFormId && sequenceSelector != null) {
+      // sequence from step wins (physical selector for THIS START_ANIMATION instance)
+      const effectiveSequence = step.sequence ?? sequenceSelector;
+      if (step.resource != null && actorFormId && effectiveSequence != null) {
         const resource = step.resource;
-        const sequence = animationResourceById(resource)?.sequences[sequenceSelector];
+        // Guardrail: declared sequence must be valid; no silent fallback to 0
+        const seqCount = animationResourceById(resource)?.sequences.length ?? 0;
+        if (step.sequence != null && (step.sequence < 0 || step.sequence >= seqCount)) {
+          cues.push({
+            type: 'ROM_PENDING',
+            tick: cursor,
+            reason: `${step.id}: invalid sequence ${step.sequence} for resource 0x${resource.toString(16).padStart(2, '0')} (count=${seqCount})`,
+            boundary: 'STATIC',
+          });
+        }
+        const sequence = animationResourceById(resource)?.sequences[effectiveSequence];
         let tick = cursor;
         for (let frameIndex = 0; frameIndex < (sequence?.frames.length ?? 0); frameIndex++) {
           const binding = resolveProductionFrame({
             formId: actorFormId,
             animationResource: resource,
-            sequenceSelector,
+            sequenceSelector: effectiveSequence,
             frameIndex,
           });
           cues.push({
@@ -234,7 +246,7 @@ function compileStep(
             slot: 0,
             formId: actorFormId,
             resource,
-            sequence: sequenceSelector,
+            sequence: effectiveSequence,
             frameIndex,
             source: binding.source,
             physicalId: binding.physicalId,

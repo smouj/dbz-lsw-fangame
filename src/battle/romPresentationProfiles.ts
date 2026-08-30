@@ -79,6 +79,7 @@ export interface RomPresentationStep {
   palette: number | null;
   paletteHex: string | null;
   frame: number | null;
+  sequence?: number;
   motion: RomPresentationMotionRef | null;
   branchFamily: string | null;
   label: string;
@@ -245,10 +246,11 @@ function motionStep(id: string, macroId: number, kind: RomPresentationMotionRef[
   });
 }
 
-function startAnimation(descriptor: RomActionExecutionDescriptor): RomPresentationStep | null {
+function startAnimation(descriptor: RomActionExecutionDescriptor, sequence?: number): RomPresentationStep | null {
   if (descriptor.actorAnimation.resource == null) return null;
+  const seq = sequence ?? null;
   return step({
-    id: 'START_ACTOR_ANIMATION',
+    id: sequence != null ? `START_ACTOR_ANIMATION_SEQ_${sequence}` : 'START_ACTOR_ANIMATION',
     kind: 'START_ANIMATION',
     tick: null,
     durationTicks: null,
@@ -257,9 +259,10 @@ function startAnimation(descriptor: RomActionExecutionDescriptor): RomPresentati
     fxResource: null,
     palette: null,
     frame: null,
+    sequence: seq ?? undefined,
     motion: null,
     branchFamily: null,
-    label: `Start AnimationResource ${descriptor.actorAnimation.resourceHex}`,
+    label: `Start AnimationResource ${descriptor.actorAnimation.resourceHex}${seq != null ? ` seq ${seq}` : ''}`,
     evidence: descriptor.actorAnimation.evidence,
     source: 'RomActionExecutionDescriptor.actorAnimation',
   });
@@ -566,11 +569,45 @@ function defenseProgram(descriptor: RomActionExecutionDescriptor): RomPresentati
 
 function specialProgram(descriptor: RomActionExecutionDescriptor): RomPresentationStep[] {
   const program = [sceneLoad('ROM_HANDLER_VERIFIED')];
-  const actor = startAnimation(descriptor);
-  if (actor) program.push(actor);
+
+  // Multi-phase physical emission for SPECIAL_HANDLER (ROM_HANDLER_VERIFIED phases)
+  // result branch remains PENDING_ROM_TRACE (spatial semantics, HIT/MISS/ownership)
+  const cardId = descriptor.cardId;
+  const resource = descriptor.actorAnimation.resource;
+
+  if (resource != null) {
+    if (cardId === 29) { // Tail $0B / $3F
+      const a0 = startAnimation(descriptor, 0);
+      if (a0) program.push(a0);
+      const a1 = startAnimation(descriptor, 1);
+      if (a1) program.push(a1);
+    } else if (cardId === 41) { // V-Ball
+      for (let s = 0; s <= 3; s++) {
+        const a = startAnimation(descriptor, s);
+        if (a) program.push(a);
+      }
+    } else if (cardId === 57) { // Purple Comet
+      const a0 = startAnimation(descriptor, 0);
+      if (a0) program.push(a0);
+      // slot1 seq1 would require slot field; for now sequence distinguishes
+      const a1 = startAnimation(descriptor, 1);
+      if (a1) program.push(a1);
+    } else if (cardId === 58) { // P.Comet Z
+      const a2 = startAnimation(descriptor, 2);
+      if (a2) program.push(a2);
+      const a3 = startAnimation(descriptor, 3);
+      if (a3) program.push(a3);
+    } else {
+      const actor = startAnimation(descriptor);
+      if (actor) program.push(actor);
+    }
+  }
+
   const fx = spawnFx(descriptor);
   if (fx) program.push(fx);
-  program.push(pendingStep('PENDING_SPECIAL_RUNTIME', 'PENDING_ROM_TRACE', 'special handler FSM, slot binding or runtime branch remains dynamic trace territory', 'SPECIAL_HANDLER_DESCRIPTORS'));
+
+  // Result-dependent remainder stays PENDING_ROM_TRACE (not collapsed into one dynamic action)
+  program.push(pendingStep('PENDING_SPECIAL_RESULT_BRANCH', 'PENDING_ROM_TRACE', 'result branch / multi-actor spatial semantics remain dynamic trace territory', 'SPECIAL_HANDLER_DESCRIPTORS'));
   return program;
 }
 
