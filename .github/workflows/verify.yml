@@ -20,13 +20,6 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      # devSnapshot imports this generated portable contract at compile time.
-      # Materialize it before typecheck so a clean checkout is reproducible.
-      # This builder consumes committed ROM-FX corpus/film data only; it does
-      # not require the private/raw .gbc or the outside-repo decomp.
-      - name: Materialize portable ROM-FX runtime contract
-        run: npm run build:rom-fx-runtime-cutover
-
       # Portable Stage physical contract: uses the committed Bank $61 core,
       # including the memberSlot1 final-B $39 finisher. No raw ROM required.
       - name: Verify ROM Stage physical bindings
