@@ -70,6 +70,7 @@ export function TeamSetup({ useSetup, fallbackDeck, onConfirm, isFormUnlocked }:
 
   return (
     <div className="page-screen setup-screen" data-testid="team-setup">
+      <div className="setup-workshop">
       {/* Team slots — el roll se reutiliza para cada miembro */}
       <div className="setup-team-slots" data-testid="team-slots">
         {state.members.map((m, i) => {
@@ -139,7 +140,8 @@ export function TeamSetup({ useSetup, fallbackDeck, onConfirm, isFormUnlocked }:
         onReset={setup.resetDeck}
       />
 
-      {/* Ready */}
+      </div>
+      {/* Ready stays outside the scrolling workshop so it never covers controls. */}
       <div className="setup-ready">
         <div className="setup-ready-info">
           <span>{activeChar?.name ?? ''} · {selectedForm?.form ?? ''}</span>

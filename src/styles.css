@@ -605,7 +605,7 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   pointer-events: none;
 }
 
-./* Línea de lectura sutil: gradiente transparente para dar contraste al texto
+/* Línea de lectura sutil: gradiente transparente para dar contraste al texto
    sin panel negro opaco — el arte de fondo se ve completo. */
 .menu-screen::before {
   content: '';

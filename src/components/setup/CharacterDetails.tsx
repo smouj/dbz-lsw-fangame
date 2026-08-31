@@ -51,6 +51,8 @@ export function CharacterDetails({ formId, level = 1 }: CharacterDetailsProps) {
         {form.curves ? <span>GROWTH {form.curves.hp.length}×</span> : null}
       </div>
       {form.curves ? (
+        <details className="setup-details-growth-disclosure">
+        <summary>LEVEL PROGRESSION</summary>
         <div className="setup-details-growth">
           {([25, 50, 75, 100] as const).map(lv => (
             <span key={lv} className="setup-details-growth-col">
@@ -62,6 +64,7 @@ export function CharacterDetails({ formId, level = 1 }: CharacterDetailsProps) {
             </span>
           ))}
         </div>
+        </details>
       ) : null}
     </div>
   );

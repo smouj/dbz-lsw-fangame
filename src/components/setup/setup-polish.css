@@ -1,0 +1,143 @@
+/* Battle preparation and its shared Dev preview. Never targets combat. */
+.dev-team-builder .setup-roll {
+  --page-line:#3c4658; --page-muted:#b8bfcd; --page-paper:#151c2894;
+  --page-accent:#ffc858; --shell-body:'Segoe UI',Arial,sans-serif;
+  --shell-display:'Bangers',Impact,'Arial Narrow',sans-serif;
+}
+:is(.shell-surface,.dev-team-builder) .setup-roll {
+  flex:0 0 232px; height:232px; min-height:232px; max-height:none;
+  overflow:hidden; isolation:isolate; border:1px solid var(--page-line);
+  background:var(--page-paper); box-shadow:none;
+}
+:is(.shell-surface,.dev-team-builder) .setup-roll-heading {
+  position:absolute; top:14px; left:20px; right:20px; display:flex;
+  justify-content:space-between; color:var(--page-muted);
+  font:700 11px/1 var(--shell-body); letter-spacing:.12em;
+}
+:is(.shell-surface,.dev-team-builder) .setup-roll-stage {
+  top:40px; bottom:auto; left:50%; width:160px; height:148px;
+  border:0; border-bottom:2px solid var(--page-accent); box-shadow:none;
+  background:linear-gradient(0deg,#ffc8580b,transparent 70%);
+}
+:is(.shell-surface,.dev-team-builder) .setup-roll-item {
+  left:50%; top:36px; margin-left:-88px; width:176px; height:156px;
+  border:0; border-radius:0; background:none; box-shadow:none; padding:0 4px;
+  transition:transform 300ms cubic-bezier(.22,.68,.22,1),opacity 240ms ease-out;
+  will-change:transform; animation:setup-neighbour-enter 220ms ease-out;
+}
+:is(.shell-surface,.dev-team-builder) .setup-roll-item-center { width:176px; height:156px; background:none; box-shadow:none; }
+:is(.shell-surface,.dev-team-builder) .setup-roll-item:hover { background:#ffffff05; }
+:is(.shell-surface,.dev-team-builder) .setup-roll-form {
+  position:static; flex:0 0 18px; min-height:18px; margin:0; padding:0;
+  font:600 12px/18px var(--shell-body); letter-spacing:.06em; color:#d9c28b;
+}
+:is(.shell-surface,.dev-team-builder) .setup-roll-chibi {
+  flex:1; display:flex; align-items:flex-end; justify-content:center;
+  width:100%; height:100px; min-height:0; margin:0; padding-bottom:7px;
+}
+:is(.shell-surface,.dev-team-builder) .setup-roll-name {
+  flex:0 0 32px; min-height:32px; width:100%; padding:7px 0 0;
+  font:600 14px/20px var(--shell-body); color:#c9ced8; letter-spacing:0;
+}
+:is(.shell-surface,.dev-team-builder) .setup-roll-item-center .setup-roll-name { font:24px/1.1 var(--shell-display); color:var(--page-accent); }
+:is(.shell-surface,.dev-team-builder) .setup-roll-idle,:is(.shell-surface,.dev-team-builder) .setup-roll-power {
+  width:auto; height:auto; max-height:none; max-width:none;
+  image-rendering:pixelated; object-fit:contain; animation:none; filter:none;
+  transform:scale(4); transform-origin:50% 100%;
+}
+:is(.shell-surface,.dev-team-builder) .setup-roll-item[data-distance='1'] > .setup-roll-chibi > .setup-roll-idle { transform:scale(3); }
+:is(.shell-surface,.dev-team-builder) .setup-roll-item[data-distance='2'] > .setup-roll-chibi > .setup-roll-idle { transform:scale(2); }
+:is(.shell-surface,.dev-team-builder) .setup-power-preview { position:relative; display:block; width:128px; height:96px; isolation:isolate; }
+:is(.shell-surface,.dev-team-builder) .setup-power-preview > img { position:absolute; z-index:2; bottom:0; left:50%; transform:translateX(-50%) scale(4); }
+:is(.shell-surface,.dev-team-builder) .setup-power-aura-layer {
+  position:absolute; inset:0; z-index:1; pointer-events:none;
+  animation:setup-aura-arrive 180ms ease-out both;
+}
+:is(.shell-surface,.dev-team-builder) .setup-roll-aura {
+  position:absolute; bottom:0; left:50%; width:auto; height:auto;
+  max-width:none; max-height:none; object-fit:contain; image-rendering:pixelated;
+  mix-blend-mode:normal; transform:translateX(-50%) scale(5); transform-origin:50% 100%; filter:none;
+  animation:setup-ow-aura-loop 720ms steps(1,end) infinite;
+}
+/* The extracted OW effect is a single tile, not an animation strip. This
+   presentation loop flips that tile without stretching pixels or the actor;
+   its pacing is a menu treatment, not a claim of traced GBC frame timing. */
+@keyframes setup-ow-aura-loop {
+  0%,100% { transform:translateX(-50%) scale(5,5); opacity:.58; }
+  25% { transform:translateX(-50%) scale(5,5); opacity:.72; }
+  50% { transform:translateX(-50%) scale(-5,5); opacity:.62; }
+  75% { transform:translateX(-50%) scale(-5,5); opacity:.76; }
+}
+@keyframes setup-aura-arrive { from { opacity:0; } to { opacity:1; } }
+@keyframes setup-neighbour-enter { from { filter:opacity(0); } to { filter:opacity(1); } }
+:is(.shell-surface,.dev-team-builder) .setup-roll-nav {
+  top:91px; width:40px; height:44px; border:1px solid #515b6c;
+  border-radius:0; background:#151c28; color:#f3dfad; box-shadow:none;
+}
+:is(.shell-surface,.dev-team-builder) .setup-roll-nav:hover:not(:disabled) { border-color:var(--page-accent); background:#252c38; }
+:is(.shell-surface,.dev-team-builder) .setup-roll-nav-left { left:20px; }
+:is(.shell-surface,.dev-team-builder) .setup-roll-nav-right { right:20px; }
+:is(.shell-surface,.dev-team-builder) .setup-roll-rail {
+  left:72px; right:72px; bottom:2px; height:32px; padding:0; gap:2px;
+  align-items:center; justify-content:safe center; background:none; border:0;
+}
+:is(.shell-surface,.dev-team-builder) .setup-roll-rail-dot {
+  width:24px; height:28px; flex:0 0 24px; opacity:1;
+  border:0; border-radius:0; background:none; color:#536075; box-shadow:none;
+}
+:is(.shell-surface,.dev-team-builder) .setup-roll-rail-dot-mark { width:12px; height:3px; border-radius:0; background:currentColor; }
+:is(.shell-surface,.dev-team-builder) .setup-roll-rail-dot.active { background:none; box-shadow:none; color:var(--page-accent); }
+:is(.shell-surface,.dev-team-builder) .setup-roll-rail-dot.active .setup-roll-rail-dot-mark { background:currentColor; }
+:is(.shell-surface,.dev-team-builder) .setup-roll-rail-dot:hover { color:#f1dbab; }
+.setup-selection-announcement { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip-path:inset(50%); white-space:nowrap; }
+
+.shell-surface .setup-enemy-row { border:0; }
+.shell-surface .setup-enemy-select { min-height:36px; font:14px var(--shell-body); }
+.shell-surface .setup-team-slot { box-shadow:none; border-width:1px; }
+.shell-surface .setup-team-slot.active { border-color:var(--page-accent); box-shadow:inset 3px 0 var(--page-accent); }
+.shell-surface .setup-team-slot-btn { min-width:172px; gap:3px; padding:10px 20px; }
+.shell-surface .setup-team-slot-add { min-width:154px; font:700 12px var(--shell-body); }
+.shell-surface .setup-team-slot-remove { top:6px; right:6px; width:24px; height:24px; }
+.shell-surface .setup-form-selector { min-height:40px; gap:18px; }
+.shell-surface .setup-form-label { font:700 12px var(--shell-body); color:var(--page-muted); }
+.shell-surface .setup-form-chip { min-height:34px; padding:7px 14px; font:600 13px var(--shell-body); border-radius:0; }
+.shell-surface .setup-form-chip.active { color:#161b25; background:var(--page-accent); border-color:var(--page-accent); }
+.shell-surface .setup-body { grid-template-columns:minmax(0,1fr) minmax(0,1fr); align-items:start; gap:16px; }
+.shell-surface :is(.setup-details,.setup-limits,.setup-deck-lib,.setup-deck-current,.setup-deck-details) {
+  min-width:0; padding:18px; border-width:1px; font:14px/1.4 var(--shell-body); box-shadow:none;
+}
+.shell-surface .setup-panel-title { min-height:28px; font:700 13px var(--shell-body); letter-spacing:.06em; border-color:var(--page-line); }
+.shell-surface .setup-details-head { gap:12px; flex-wrap:wrap; }
+.shell-surface .setup-details-name { font:26px/1 var(--shell-display); }
+.shell-surface .setup-details-form { font-size:13px; }
+.shell-surface .setup-details-stat { grid-template-columns:110px minmax(0,1fr) 40px; min-height:23px; }
+.shell-surface .setup-details-stat-label { font:600 12px var(--shell-body); letter-spacing:.03em; }
+.shell-surface .setup-details-stat-val { font:700 14px var(--shell-body); font-variant-numeric:tabular-nums; }
+.shell-surface .setup-details-meta { font:11px var(--shell-body); color:var(--page-muted); gap:18px; }
+.shell-surface .setup-details-growth-disclosure { margin-top:14px; border-top:1px solid var(--page-line); }
+.shell-surface .setup-details-growth-disclosure summary { padding:12px 0 0; font:700 11px var(--shell-body); letter-spacing:.06em; color:#bfc7d5; cursor:pointer; }
+.shell-surface .setup-details-growth { margin-top:12px; border:0; }
+.shell-surface .setup-details-growth-col { font:12px/1.6 var(--shell-body); }
+.shell-surface .setup-details-growth-col i { font-style:normal; }
+.shell-surface .setup-limit-slot { min-height:56px; padding:10px 12px; border-width:1px; }
+.shell-surface .setup-limit-slot-card { display:flex; align-items:center; flex-wrap:wrap; gap:12px; }
+.shell-surface .setup-limit-slot-card b { font:700 15px var(--shell-body); }
+.shell-surface .setup-limit-slot-card i { font:12px var(--shell-body); }
+.shell-surface .setup-limits-note { margin-top:12px; font:12px/1.5 var(--shell-body); color:var(--page-muted); }
+.shell-surface .setup-limits-picker { border-width:1px; padding:12px; background:#161e2c; }
+.shell-surface .setup-limit-option { min-height:36px; }
+.shell-surface .setup-deck { grid-template-columns:minmax(0,1.15fr) minmax(0,1fr) minmax(0,.85fr); gap:16px; }
+.shell-surface .setup-search { width:100%; min-height:34px; font:14px var(--shell-body); }
+.shell-surface :is(.setup-filter-btn,.setup-small-btn) { min-height:28px; font:700 10px var(--shell-body); padding:6px 8px; border-radius:0; }
+.shell-surface :is(.setup-lib-card,.setup-deck-row) { min-height:34px; font:13px var(--shell-body); }
+.shell-surface :is(.setup-lib-meta,.setup-deck-meta,.setup-limit-option-meta) { font:11px var(--shell-body); }
+.shell-surface .setup-deck-lib-list { max-height:340px; }
+.shell-surface .setup-deck-list { max-height:310px; }
+.shell-surface .setup-card-art-name { font:18px/1.2 var(--shell-display); }
+.shell-surface .setup-card-preview-power { animation:none; }
+.shell-surface .setup-ready { border-width:1px; border-left-width:4px; }
+@media (prefers-reduced-motion:reduce) {
+  :is(.shell-surface,.dev-team-builder) .setup-roll-item { transition:none; animation:none; }
+  :is(.shell-surface,.dev-team-builder) :is(.setup-roll-aura,.setup-power-aura-layer) { animation:none; }
+  :is(.shell-surface,.dev-team-builder) .setup-roll-aura { opacity:.65; }
+}
