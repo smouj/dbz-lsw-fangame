@@ -1,0 +1,93 @@
+/* Main Menu structural background fix.
+   The artwork must not exist underneath the left navigation column.
+   This is intentionally a cascade lock: styles.css contains historical
+   menu layers that are still needed elsewhere, so we override only the
+   final composition without changing menu geometry. */
+
+.menu-bg {
+  background: #05070d !important;
+  isolation: isolate;
+}
+
+/* Keep the source artwork at its original full-screen geometry, but expose
+   it only on the right. clip-path hides the left 48% instead of merely
+   darkening it, so no fighter can ghost through translucent menu surfaces. */
+.menu-bg::before {
+  content: '' !important;
+  position: absolute !important;
+  inset: 0 !important;
+  background:
+    linear-gradient(180deg, rgba(4,6,11,.08), rgba(4,6,11,.5)),
+    url('/menu-art-desktop.png') 66% 46% / cover no-repeat !important;
+  clip-path: inset(0 0 0 48%);
+  opacity: 1 !important;
+  z-index: 0 !important;
+  pointer-events: none !important;
+}
+
+/* Boundary blend + right-edge vignette. The dark transition masks the hard
+   clip while preserving the artwork itself: no zoom, duplicate layer, or
+   second semi-transparent copy is introduced. */
+.menu-bg::after {
+  content: '' !important;
+  position: absolute !important;
+  inset: 0 !important;
+  background:
+    linear-gradient(90deg,
+      #05070d 0%,
+      #05070d 39%,
+      rgba(5,7,13,.99) 44%,
+      rgba(5,7,13,.88) 49%,
+      rgba(5,7,13,.42) 56%,
+      rgba(5,7,13,.10) 64%,
+      transparent 70%),
+    linear-gradient(90deg,
+      transparent 78%,
+      rgba(4,6,11,.34) 91%,
+      rgba(4,6,11,.76) 100%),
+    radial-gradient(ellipse 100% 92% at 56% 44%, transparent 48%, rgba(4,5,12,.34) 100%) !important;
+  z-index: 1 !important;
+  pointer-events: none !important;
+}
+
+/* Left UI is an actual opaque composition layer now. It overlaps the clipped
+   boundary only to create the blend; it is no longer responsible for hiding
+   duplicated artwork. */
+.menu-screen::before {
+  width: min(54cqw, 720px) !important;
+  background: linear-gradient(90deg,
+    #05070d 0%,
+    #070b12 68%,
+    rgba(7,11,18,.98) 80%,
+    rgba(7,11,18,.76) 90%,
+    transparent 100%) !important;
+}
+
+.menu-content {
+  z-index: 2 !important;
+}
+
+/* Small/mobile layout keeps its dedicated source while preserving the same
+   no-art-under-navigation invariant. */
+@media (max-width: 520px) {
+  .menu-bg::before {
+    background:
+      linear-gradient(180deg, rgba(4,6,11,.18), rgba(4,6,11,.58)),
+      url('/menu-art.png') center / cover no-repeat !important;
+    clip-path: inset(0 0 0 55%);
+  }
+
+  .menu-bg::after {
+    background: linear-gradient(90deg,
+      #05070d 0%,
+      #05070d 47%,
+      rgba(5,7,13,.94) 56%,
+      rgba(5,7,13,.52) 68%,
+      transparent 78%) !important;
+  }
+
+  .menu-screen::before {
+    width: 100% !important;
+    background: linear-gradient(90deg, rgba(5,7,13,.98), rgba(5,7,13,.76)) !important;
+  }
+}
