@@ -50,6 +50,8 @@ export interface ProductionRomPresentationStats {
   sceneChanges: number;
   /** Cues FIGHTER_MOTION registrados (trazabilidad — no easeOutCubic). */
   motions: number;
+  /** Cues DEFENSE_FX con pose guard/evade aplicada al defensor. */
+  defenseFx: number;
   /** Cues FX_LOAD registrados (trazabilidad — no proyectil procedural). */
   fxLoads: number;
   /** P0 CAMERA PRESENTER — cues SCREEN_MOTION consumidos. */
@@ -157,6 +159,7 @@ export class ProductionRomPresentationAdapter {
       pendingReasons: [],
       sceneChanges: 0,
       motions: 0,
+      defenseFx: 0,
       fxLoads: 0,
       screenMotions: 0,
       screenRestores: 0,
@@ -291,6 +294,22 @@ export class ProductionRomPresentationAdapter {
       case 'ROM_RESULT_BRANCH': {
         this.pres.impact();
         this.stats.impacts++;
+        visible = true;
+        break;
+      }
+      case 'DEFENSE_FX': {
+        // ROM defense: el defensor muestra la pose de guardia (slot8 preload).
+        // Antes este cue se registraba como COMPOSED sin efecto visible — el
+        // personaje se quedaba en idle. La pose es f(result, side):
+        //   AVOIDED → evade · NULLIFIED/ATTENUATED/ABSORBED → guard ·
+        //   COMMAND_CANCELLED → idle.
+        const defensePose =
+          cue.result === 'AVOIDED' ? 'evade'
+          : cue.result === 'COMMAND_CANCELLED' ? 'idle'
+          : 'guard';
+        if (cue.side === 'enemy') this.pres.setTargetPose(defensePose);
+        else this.pres.setActorPose(defensePose);
+        this.stats.defenseFx++;
         visible = true;
         break;
       }

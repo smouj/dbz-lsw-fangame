@@ -83,6 +83,7 @@ const DISPLAY_CUES = new Set<PresentationCue['type']>([
   'DEFENSE_FX',
   'SUPPORT_FX',
   'ROM_FX_WINDOW',
+  'DEFENSE_FX',
 ]);
 
 /** Cues de trazabilidad ROM (macros/waits/animation/screen/audio…). */
