@@ -31,8 +31,8 @@ export interface CanonicalStoryIdentity {
   label: string;
   title: string;
   arc: CanonicalStoryArc;
-  /** Legacy editorial script key. null for EX stories; never a ROM-text claim. */
-  editorialScriptKey: number | null;
+  /** Legacy editorial script key; this is never a ROM-text claim. */
+  editorialScriptKey: number;
   rom: {
     bank: number;
     address: number;
@@ -115,7 +115,9 @@ function extra(sequenceIndex: number, extraNumber: number, romStoryId: 33 | 34):
     label: `EX Story ${extraNumber}`,
     title: EXTRA_TITLES[extraNumber],
     arc: 'FUTURE_TRUNKS',
-    editorialScriptKey: null,
+    // storyScript.ts stores its two editorial EX reconstructions at 31/32.
+    // Canonical identity still points to physical ROM Story ids 33/34 above.
+    editorialScriptKey: 30 + extraNumber,
     rom: romLocation(romStoryId),
   };
 }
@@ -141,7 +143,7 @@ export function storyDisplayLabel(sequenceIndex: number): string {
 }
 
 /** Maps the remake progression slot to the old PDF/editorial script key. */
-export function editorialStoryKeyForSequence(sequenceIndex: number): number | null {
+export function editorialStoryKeyForSequence(sequenceIndex: number): number {
   return storyIdentityForSequence(sequenceIndex).editorialScriptKey;
 }
 
@@ -155,5 +157,6 @@ export const STORY_SEQUENCE_CANON = {
   extraStories: 2,
   extraSequenceIndexes: [21, 22] as const,
   extraRomStoryIds: [33, 34] as const,
+  extraEditorialScriptKeys: [31, 32] as const,
   mapRuntimeIncluded: false,
 } as const;
