@@ -81,10 +81,12 @@ function verifyNarrativeProjection(): void {
   }
 
   // The historical bug: EX entries must never consume Buu Story 21/22 text.
+  // Evidence class per StoryTextEvidence union: EX entries are editorial
+  // reconstructions (never ROM_LITERAL_TEXT) — see storyNarrativeCanon.ts.
   assert.equal(canonicalStoryNarrative(21).identity.id, 'EX_STORY_01');
-  assert.equal(canonicalStoryNarrative(21).textEvidence, 'REFERENCE_SUMMARY');
+  assert.equal(canonicalStoryNarrative(21).textEvidence, 'EDITORIAL_RECONSTRUCTION');
   assert.equal(canonicalStoryNarrative(22).identity.id, 'EX_STORY_02');
-  assert.equal(canonicalStoryNarrative(22).textEvidence, 'REFERENCE_SUMMARY');
+  assert.equal(canonicalStoryNarrative(22).textEvidence, 'EDITORIAL_RECONSTRUCTION');
   assert.equal(canonicalStoryNarrative(23).identity.id, 'STORY_21');
 }
 
