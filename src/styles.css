@@ -584,12 +584,12 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   background: var(--bg);
 }
 
-/* Fondo 16:9: arte visible a la derecha, interfaz integrada a la izquierda. */
+/* Fondo 16:9: arte completo visible, gradiente de lectura sutil a la izquierda. */
 .menu-bg {
   position: absolute; inset: 0;
   background:
-    linear-gradient(90deg, rgba(8, 8, 10,.97) 0%, rgba(8, 8, 10,.9) 26%, rgba(8, 8, 10,.38) 50%, rgba(8, 8, 10,.12) 72%, rgba(8, 8, 10,.55) 100%),
-    linear-gradient(180deg, rgba(8,8,18,.34) 0%, rgba(8,8,18,.08) 42%, rgba(4,4,12,.78) 100%),
+    linear-gradient(90deg, rgba(8,8,10,.72) 0%, rgba(8,8,10,.58) 22%, rgba(8,8,10,.18) 46%, transparent 62%, rgba(8,8,10,.08) 80%, rgba(8,8,10,.42) 100%),
+    linear-gradient(180deg, rgba(8,8,18,.22) 0%, transparent 40%, rgba(4,4,12,.48) 100%),
     url('/menu-art-desktop.png') 70% center / cover no-repeat;
   z-index: 0;
   overflow: hidden;
@@ -605,14 +605,15 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   pointer-events: none;
 }
 
+./* Línea de lectura sutil: gradiente transparente para dar contraste al texto
+   sin panel negro opaco — el arte de fondo se ve completo. */
 .menu-screen::before {
   content: '';
   position: absolute;
   left: 0; top: 0; bottom: 0;
   width: 52cqw;
   background:
-    linear-gradient(90deg, rgba(9,13,22,.96) 0%, rgba(9,13,22,.86) 46%, rgba(9,13,22,.52) 78%, rgba(9,13,22,.08) 100%),
-    radial-gradient(ellipse 70% 60% at 20% 52%, rgba(247,147,30,.08), transparent 64%);
+    linear-gradient(90deg, rgba(9,13,22,.48) 0%, rgba(9,13,22,.28) 40%, rgba(9,13,22,.08) 72%, transparent 100%);
   z-index: 0;
   pointer-events: none;
 }
@@ -637,18 +638,8 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   box-sizing: border-box;
   outline: none;
 }
-.menu-content::before {
-  content: '';
-  position: absolute;
-  left: 0; right: -34px; top: 92px; bottom: 40px;
-  background:
-    radial-gradient(ellipse 70% 42% at 28% 22%, rgba(247,147,30,.12), transparent 68%),
-    linear-gradient(90deg, rgba(9,13,22,.72), rgba(9,13,22,.3) 58%, transparent);
-  border-left: 1px solid rgba(246,199,68,.18);
-  box-shadow: inset 1px 0 0 rgba(255,255,255,.04);
-  pointer-events: none;
-  z-index: -1;
-}
+/* Panel negro detrás de botones ELIMINADO: los botones flotan sobre el arte
+   con su propio fondo semitransparente y borde izquierdo de acento. */
 
 .menu-logo-title {
   position: relative;
@@ -2380,8 +2371,8 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 @media (max-width: 900px) {
   .menu-bg {
     background:
-      linear-gradient(90deg, rgba(8, 8, 10,.96) 0%, rgba(8, 8, 10,.88) 42%, rgba(8, 8, 10,.42) 100%),
-      linear-gradient(180deg, rgba(10,10,24,0.45) 0%, rgba(8,8,20,0.85) 100%),
+      linear-gradient(90deg, rgba(8,8,10,.72) 0%, rgba(8,8,10,.58) 22%, rgba(8,8,10,.18) 46%, transparent 62%, rgba(8,8,10,.08) 80%, rgba(8,8,10,.42) 100%),
+      linear-gradient(180deg, rgba(8,8,18,.22) 0%, transparent 40%, rgba(4,4,12,.48) 100%),
       url('/menu-art.png') center center / cover no-repeat;
     animation: none;
   }
@@ -2407,7 +2398,6 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   .menu-screen::before { width: 100vw; }
   .menu-screen::after { left: 5cqw; }
   .menu-content { width: 500px; padding: 24px 5vw 16px 8vw; max-width: 94vw; }
-  .menu-content::before { left: 5cqw; right: 4cqw; top: 86px; bottom: 38px; }
   .menu-logo-title { width: clamp(260px, 30cqw, 420px); }
   .menu-subtitle { font-size: 9px; margin-bottom: 8px; }
   .menu-continue-card { min-height: 112px; padding: 12px; border-radius: 6px 4px 4px 6px; }
@@ -2426,7 +2416,6 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   .menu-logo-title { width: clamp(200px, 52vw, 300px); }
   .menu-subtitle { font-size: 8px; margin-left: 2px; }
   .menu-content { padding: 18px 4vw 14px 7vw; max-width: 96vw; gap: 9px; }
-  .menu-content::before { left: 4vw; right: 3vw; top: 74px; bottom: 30px; }
   .menu-continue-card { min-height: 92px; padding: 10px; gap: 8px; }
   .mc-play { font-size: 22px; }
   .mc-title { font-size: 20px; }
@@ -2449,7 +2438,6 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 
 @media (max-height: 560px) and (min-width: 700px) {
   .menu-content { padding: 12px 0 10px 7vw; gap: 6px; width: 440px; max-width: 58vw; }
-  .menu-content::before { left: 5cqw; right: -12px; top: 58px; bottom: 24px; }
   .menu-logo-title { width: clamp(190px, 26cqw, 300px); }
   .menu-subtitle { font-size: 8px; margin-bottom: 2px; padding-bottom: 3px; }
   .menu-continue-card { min-height: 78px; padding: 8px 10px; gap: 8px; flex-shrink: 0; }
@@ -5922,11 +5910,6 @@ button:focus-visible, .chapter-node:focus-visible {
   overflow-x: clip;
 }
 
-.menu-content::before {
-  top: 108px;
-  bottom: 44px;
-  right: 0;
-}
 
 .menu-logo-title {
   width: clamp(280px, 38cqw, 560px);
@@ -6245,12 +6228,6 @@ button:focus-visible, .chapter-node:focus-visible {
     gap: 8px;
   }
 
-  .menu-content::before {
-    left: 5cqw;
-    right: 4cqw;
-    top: 84px;
-    bottom: 34px;
-  }
 
   .menu-logo-title { width: clamp(260px, 30cqw, 420px); }
   .menu-subtitle { margin-bottom: 4px; }
@@ -6279,12 +6256,6 @@ button:focus-visible, .chapter-node:focus-visible {
     max-width: 58vw;
   }
 
-  .menu-content::before {
-    left: 5cqw;
-    right: 0;
-    top: 56px;
-    bottom: 22px;
-  }
 
   .menu-continue-card { height: 88px; min-height: 88px; }
   .menu-item { height: 40px; min-height: 40px; }
@@ -10081,7 +10052,6 @@ button:focus-visible, .chapter-node:focus-visible {
 
 @media (max-height: 640px) {
   .menu-content { padding-top: 12px; gap: 6px; }
-  .menu-content::before { top: 76px; bottom: 30px; }
   .menu-logo-title { width: clamp(200px, 34vh, 320px); margin-bottom: 0; }
   .menu-subtitle { margin-bottom: 4px; padding-bottom: 3px; }
   .menu-continue-card { min-height: 84px; padding: 8px 12px; gap: 8px; }
@@ -10098,7 +10068,6 @@ button:focus-visible, .chapter-node:focus-visible {
 
 @media (max-height: 520px) {
   .menu-content { padding-top: 10px; gap: 5px; }
-  .menu-content::before { top: 66px; bottom: 22px; }
   .menu-logo-title { width: clamp(160px, 28vh, 240px); }
   .menu-subtitle { font-size: 8px; margin-bottom: 2px; padding-bottom: 2px; }
   .menu-continue-card { min-height: 68px; padding: 6px 10px; }
@@ -10120,7 +10089,6 @@ button:focus-visible, .chapter-node:focus-visible {
 /* ─── Menú: rango medio (641-720px) también compacto, sin scroll ─── */
 @media (max-height: 720px) and (min-height: 641px) {
   .menu-content { padding-top: 18px; gap: 8px; }
-  .menu-content::before { top: 88px; bottom: 38px; }
   .menu-logo-title { width: clamp(200px, 32cqh, 300px); }
   .menu-subtitle { margin-bottom: 6px; padding-bottom: 4px; }
   .menu-continue-card { min-height: clamp(72px, 13cqh, 112px); padding: 10px 12px; }
@@ -15381,8 +15349,8 @@ button.linklike:hover { background: rgba(216,168,48,.08); text-decoration: none;
 
 .menu-bg {
   background:
-    linear-gradient(90deg, rgba(4,6,11,.97) 0%, rgba(4,6,11,.94) 38%, rgba(4,6,11,.6) 52%, rgba(4,6,11,.14) 70%, rgba(4,6,11,.55) 100%),
-    linear-gradient(180deg, rgba(4,6,11,.08), rgba(4,6,11,.5)),
+    linear-gradient(90deg, rgba(8,8,10,.72) 0%, rgba(8,8,10,.58) 22%, rgba(8,8,10,.18) 46%, transparent 62%, rgba(8,8,10,.08) 80%, rgba(8,8,10,.42) 100%),
+    linear-gradient(180deg, rgba(8,8,18,.22) 0%, transparent 40%, rgba(4,4,12,.48) 100%),
     url('/menu-art-desktop.png') 66% 46% / cover no-repeat;
 }
 
@@ -15399,7 +15367,7 @@ button.linklike:hover { background: rgba(216,168,48,.08); text-decoration: none;
 .menu-screen::before {
   width: min(54cqw, 720px);
   background:
-    linear-gradient(90deg, rgba(5,8,14,.97), rgba(8,12,19,.86) 62%, rgba(8,12,19,.35) 88%, transparent);
+    linear-gradient(90deg, rgba(9,13,22,.48) 0%, rgba(9,13,22,.28) 40%, rgba(9,13,22,.08) 72%, transparent 100%);
 }
 
 .menu-content {
@@ -15410,14 +15378,6 @@ button.linklike:hover { background: rgba(216,168,48,.08); text-decoration: none;
   gap: clamp(6px, 1.3cqh, 10px);
 }
 
-.menu-content::before {
-  top: clamp(88px, 15cqh, 116px);
-  bottom: clamp(30px, 6cqh, 48px);
-  right: -10px;
-  border-left-color: rgba(246,199,68,.18);
-  background:
-    linear-gradient(90deg, rgba(247,147,30,.08), rgba(8,12,19,.1) 58%, transparent);
-}
 
 .menu-logo-title {
   width: clamp(286px, 36cqw, 520px);
@@ -15710,7 +15670,7 @@ button.linklike:hover { background: rgba(216,168,48,.08); text-decoration: none;
 
   .menu-bg {
     background:
-      linear-gradient(90deg, rgba(4,6,11,.92), rgba(4,6,11,.62)),
+      linear-gradient(90deg, rgba(4,6,11,.62), rgba(4,6,11,.32)),
       url('/menu-art.png') center / cover no-repeat;
   }
 
@@ -15725,7 +15685,6 @@ button.linklike:hover { background: rgba(216,168,48,.08); text-decoration: none;
     gap: 3px;
   }
 
-  .menu-content::before,
   .menu-screen::after,
   .menu-footer,
   .mc-chapter,
