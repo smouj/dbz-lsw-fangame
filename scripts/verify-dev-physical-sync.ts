@@ -257,7 +257,9 @@ check('BEAM_BASE cutover uses ROM selector table, not seq0 shortcut', beamBaseCu
 check('STANDARD_DAMAGE physical frames are pending, not fake seq0', standardDamageCutoverSrc.includes('sequenceSelector: null') && !standardDamageCutoverSrc.includes('sequenceSelector: 0'));
 check('Production summary counts BEAM_BASE + Stage Bank $61 ROM_PHYSICAL cards', productionFrameResolverSrc.includes("kind === 'BEAM_BASE' || isStageCommand") && productionFrameResolverSrc.includes('Bank $61 Stage physical frames'));
 check('ROM selector helper fails closed when selector is missing', romSequenceSelectorsSrc.includes('No fallback to seq0') && romSequenceSelectorsSrc.includes("evidence: 'UNRESOLVED'"));
-check('Game character selector is an overworld roller', characterRollSrc.includes('setup-roll-rail') && characterRollSrc.includes('setup-roll-nav') && characterRollSrc.includes('OW ROM'));
+// CharacterRoll refined (codex/ui-visual-polish): rail/nav/stage/dots structure kept,
+// visible 'OW ROM' source badge removed from the center item — assert the new structure.
+check('Game character selector is an overworld roller', characterRollSrc.includes('setup-roll-rail') && characterRollSrc.includes('setup-roll-nav') && characterRollSrc.includes('setup-roll-stage'));
 check('Game character roller has stable framed visual CSS', stylesSrc.includes('.setup-roll-stage') && stylesSrc.includes('.setup-roll-rail-dot.active'));
 check('ROM physical raw/trimmed/layout/facing CSS exists', stylesSrc.includes('.dev-rom-frame-img-pair') && stylesSrc.includes('.dev-rom-frame-img.raw') && stylesSrc.includes('.dev-rom-facing-right') && stylesSrc.includes('.dev-rom-display-preview'));
 
