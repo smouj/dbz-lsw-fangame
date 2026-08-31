@@ -25,15 +25,19 @@ export interface FrameHole {
 
 const cache = new Map<string, FrameHole | null>();
 
-function measureHole(frameUrl: string): FrameHole | null {
-  const img = new Image();
-  img.src = frameUrl;
+function measureHole(frameUrl: string, img?: HTMLImageElement): FrameHole | null {
+  const source = img ?? new Image();
+  if (!img) source.src = frameUrl;
+  // Guard: si la imagen aún no tiene dimensiones reales (no cargada o
+  // src roto), NO se puede medir — devolver null sin lanzar IndexSizeError
+  // (getImageData con source width 0). El hook reintentará vía onload.
+  if (!source.naturalWidth || !source.naturalHeight) return null;
   const c = document.createElement('canvas');
-  c.width = img.naturalWidth;
-  c.height = img.naturalHeight;
+  c.width = source.naturalWidth;
+  c.height = source.naturalHeight;
   const ctx = c.getContext('2d', { willReadFrequently: true });
   if (!ctx) return null;
-  ctx.drawImage(img, 0, 0);
+  ctx.drawImage(source, 0, 0);
   const { data, width: w, height: h } = ctx.getImageData(0, 0, c.width, c.height);
   // El RECUADRO BLANCO interior del frame (donde va el arte en el GBC):
   // flood fill desde el centro de la zona BLANCA (lum alta). El marco y el
@@ -82,9 +86,16 @@ export function useFrameHole(frameUrl: string | undefined): FrameHole | null {
     const img = new Image();
     img.onload = () => {
       if (!alive) return;
-      const h = measureHole(frameUrl);
+      // Pasar la imagen YA cargada: measureHole con una Image nueva leería
+      // naturalWidth=0 (aún sin decodificar) y rompería con IndexSizeError.
+      const h = measureHole(frameUrl, img);
       cache.set(frameUrl, h);
       if (alive) setHole(h);
+    };
+    img.onerror = () => {
+      if (!alive) return;
+      cache.set(frameUrl, null);
+      if (alive) setHole(null);
     };
     img.src = frameUrl;
     return () => { alive = false; };

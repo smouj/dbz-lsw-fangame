@@ -840,3 +840,44 @@
 
   .menu-item { min-height: 5cqh !important; }
 }
+
+/* ═══════════════════════════════════════════════════════════════════
+   MAIN MENU — PANEL DE BOTONES (cascade lock FINAL).
+   styles.css dejó min-height en px absolutos distintos por grupo
+   (STORY/BATTLE 54px, DECK/CHARACTERS/CARDS 28px, SETTINGS 50px) y el
+   compact tier de arriba pone 5cqh — el panel parecía escalonado.
+   Autoridad única aquí (último stylesheet): TODOS los items con la
+   misma altura en cqh, contenido centrado, descripciones 1 línea.
+   ═══════════════════════════════════════════════════════════════════ */
+.menu-nav {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 0.9cqh !important;
+}
+
+.menu-item,
+.menu-item.group-modes,
+.menu-item.group-collection,
+.menu-item-settings {
+  min-height: 6.4cqh !important;
+  height: 6.4cqh !important;
+  margin-top: 0 !important;
+  padding: 0 1.5cqw 0 0 !important;
+  grid-template-columns: 4.5cqw 4.8cqw 1fr 2.8cqw !important;
+  align-items: center !important;
+}
+
+.menu-item .mi-copy {
+  justify-content: center !important;
+}
+
+.menu-item .mi-desc {
+  max-height: 1.2em !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+
+.menu-item-settings {
+  opacity: .9 !important;
+}
