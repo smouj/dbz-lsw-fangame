@@ -18,18 +18,28 @@ export interface UseTeamSetupStateArgs {
   fallbackDeck: number[];
   /** ¿Empezar con el personaje por defecto (Gohan Kid)? */
   initialCharacterId?: string;
+  /** Forma concreta al entrar desde Characters. Debe pertenecer al personaje inicial. */
+  initialFormId?: string;
+  /** Id del preset guardado que corresponde a fallbackDeck. */
+  initialDeckId?: string;
+  /** Battle no debe fabricar ni editar mazos: conserva exactamente el preset recibido. */
+  strictDeckAssignment?: boolean;
 }
 
-export function useTeamSetupState({ fallbackDeck, initialCharacterId }: UseTeamSetupStateArgs) {  const firstChar = initialCharacterId && getCharacter(initialCharacterId)
+export function useTeamSetupState({ fallbackDeck, initialCharacterId, initialFormId, initialDeckId, strictDeckAssignment = false }: UseTeamSetupStateArgs) {  const firstChar = initialCharacterId && getCharacter(initialCharacterId)
     ? initialCharacterId
     : (ROM_ORDERED_CHARACTERS[0]?.id ?? 'gohan_kid');
-  const firstForm = getCharacter(firstChar)?.forms[0] ?? 'goku_base';
+  const requestedForm = initialFormId ? getForm(initialFormId) : undefined;
+  const firstForm = requestedForm?.character === firstChar
+    ? requestedForm.id
+    : (getCharacter(firstChar)?.forms[0] ?? 'goku_base');
 
-  const [state, setState] = useState<TeamSetupState>(() => ({
-    members: [makeMember(firstChar, firstForm, fallbackDeck)],
-    activeMember: 0,
-    selectedCharacter: firstChar,
-  }));
+  const [state, setState] = useState<TeamSetupState>(() => {
+    const member = makeMember(firstChar, firstForm, fallbackDeck);
+    if (strictDeckAssignment) member.jointDeck = [...fallbackDeck];
+    member.deckId = initialDeckId;
+    return { members: [member], activeMember: 0, selectedCharacter: firstChar };
+  });
 
   const active = state.members[state.activeMember];
 
@@ -51,7 +61,9 @@ export function useTeamSetupState({ fallbackDeck, initialCharacterId }: UseTeamS
       const sameChar = cur.characterId === characterId;
       const formId = sameChar && getForm(cur.formId) ? cur.formId : char.forms[0];
       const limits = sameChar ? cur.limits : cleanLimitsFor(characterId, cur.limits);
-      const deck = sameChar ? cur.jointDeck : defaultJointDeck(characterId, cur.jointDeck);
+      const deck = sameChar || strictDeckAssignment
+        ? [...cur.jointDeck]
+        : defaultJointDeck(characterId, cur.jointDeck);
       return {
         ...s,
         selectedCharacter: characterId,
@@ -60,7 +72,7 @@ export function useTeamSetupState({ fallbackDeck, initialCharacterId }: UseTeamS
           : m),
       };
     });
-  }, []);
+  }, [strictDeckAssignment]);
 
   const selectForm = useCallback((formId: string) => {
     updateActive(m => {
@@ -106,9 +118,11 @@ export function useTeamSetupState({ fallbackDeck, initialCharacterId }: UseTeamS
       const prev = s.members[next - 1];
       const char = ROM_ORDERED_CHARACTERS[next % ROM_ORDERED_CHARACTERS.length];
       const m = makeMember(char.id, char.forms[0], prev.jointDeck);
+      if (strictDeckAssignment) m.jointDeck = [...prev.jointDeck];
+      m.deckId = prev.deckId;
       return { ...s, members: [...s.members, m], activeMember: next, selectedCharacter: char.id };
     });
-  }, []);
+  }, [strictDeckAssignment]);
 
   const removeMember = useCallback((i: number) => {
     setState(s => {
@@ -120,6 +134,10 @@ export function useTeamSetupState({ fallbackDeck, initialCharacterId }: UseTeamS
   }, []);
 
   // ─── Joint Deck ───
+
+  const assignDeck = useCallback((deckId: string, cards: number[]) => {
+    updateActive(m => ({ ...m, deckId, jointDeck: cards.slice(0, DECK_SIZE) }));
+  }, [updateActive]);
 
   const addCard = useCallback((cardId: number) => {
     updateActive(m => {
@@ -165,10 +183,17 @@ export function useTeamSetupState({ fallbackDeck, initialCharacterId }: UseTeamS
   }, [updateActive]);
 
   const resetDeck = useCallback(() => {
-    updateActive(m => ({ ...m, jointDeck: defaultJointDeck(m.characterId, fallbackDeck) }));
-  }, [updateActive, fallbackDeck]);
+    updateActive(m => ({
+      ...m,
+      jointDeck: strictDeckAssignment ? [...fallbackDeck] : defaultJointDeck(m.characterId, fallbackDeck),
+    }));
+  }, [updateActive, fallbackDeck, strictDeckAssignment]);
 
-  const deckValid = active.jointDeck.length === DECK_SIZE;
+  // El Joint Deck puede contener cartas de otro luchador: el canon conserva
+  // siempre las 20 cartas y deshabilita las incompatibles al robarlas. Aquí
+  // solo validamos integridad y tamaño; Battle resuelve la usabilidad por mano.
+  const deckValid = active.jointDeck.length === DECK_SIZE
+    && active.jointDeck.every(id => Boolean(getCard(id)));
 
   const result = useMemo<TeamSetupResult>(() => ({
     member: active,
@@ -187,6 +212,7 @@ export function useTeamSetupState({ fallbackDeck, initialCharacterId }: UseTeamS
     setActiveMember,
     addMember,
     removeMember,
+    assignDeck,
     addCard,
     removeCard,
     replaceCard,

@@ -26,6 +26,16 @@ Comprobación de esta segunda entrega: seis botones con posición y tamaño de l
 
 Validación de esta entrega: TypeScript PASS; 227 pruebas (seis nuevas para secuencia, carga lenta, cancelación, fallos, timeout y movimiento reducido); viewport 27/27; HUD 10/10; rutas Dev 12/12; Dev Studio 58/58; build PASS, incluido un segundo build tras el ajuste de compatibilidad con Dev. Revisión en navegador de iconos, cambios rápidos, vuelta del último al primer personaje, capas y escalas de los sprites, nombres sin recortes, progresión desplegable, mazo sin desbordamientos y READY visible. La preferencia de movimiento reducido del navegador estaba activa; la secuencia temporal normal se verifica con reloj controlado en las pruebas. El motor, la ROM y los recursos gráficos no se modifican.
 
+## Cuarto pulido: biblioteca de mazos e identidad visual
+
+- Deck es el único editor. Admite hasta seis presets persistentes, nombre, alta, duplicado, selección y borrado. Migra la key histórica sin perder el orden de cartas y mantiene un bridge compatible con las herramientas existentes.
+- Battle solo asigna presets completos. Muestra los iconos reales de las veinte cartas y su compatibilidad informativa; no modifica la biblioteca al iniciar el combate. Las cartas no compatibles permanecen en el Joint Deck y se deshabilitan al robar, como exige el contrato canónico del runtime.
+- Las fichas de equipo usan el retrato Story de la forma elegida. Characters combina retrato Story, idle de combate, retrato HUD y sprite OW; las barras se normalizan contra los máximos reales del roster. `USE IN BATTLE` abre la preparación con la forma seleccionada en lugar de saltarse el setup.
+- Cards sigue siendo una colección informativa y muestra la elección inicial Damage/Beam con sus iconos, sin controles de edición.
+- La biblioteca se normaliza ante datos corruptos, limita ids y tamaños, y conserva al menos un preset. Se añadieron seis pruebas de migración, CRUD, aislamiento de copias, persistencia y validez de veinte cartas.
+
+Validación de esta entrega: TypeScript PASS; Vitest 233/233; biblioteca y power-up 12/12 focalizadas; viewport 27/27; HUD 10/10; rutas Dev 12/12; Dev Studio 58/58; bucle jugable PASS y build Vite PASS. La sonda de navegador comprobó Deck, Cards, Characters, la ruta Characters → Battle Setup, `READY` habilitado y el handoff del mazo al combate.
+
 ## Cambios
 
 - Menú de seis paneles con composición de cómic, tipografía legible, progreso real de historia y foco visible. Continuar abre Story. Enter y Espacio activan el botón enfocado; las flechas siguen la disposición visual.
@@ -65,4 +75,4 @@ El checkout se preparó en `D:\CodexProjects\dbz-lsw-fangame` por falta de espac
 
 Un checkout nuevo necesita los recursos generados habituales del proyecto para las vistas físicas de Dev (`gen:rom-runtime-assets`; véanse los requisitos ROM del repositorio). Los scripts antiguos de verificación que usan sintaxis POSIX requieren una shell compatible; el nuevo `verify:game-shell` funciona también en Windows.
 
-La revisión no certifica todos los fotogramas, cartas o desenlaces del motor. Los pendientes de fidelidad ROM que muestra Dev siguen siendo información real y no se ocultan. La compilación conserva el aviso de bundles grandes; no se eleva el umbral para silenciarlo. La entrega se hace en `origin/codex/ui-visual-polish`, sin fusionar en `main` ni desplegar.
+La revisión no certifica todos los fotogramas, cartas o desenlaces del motor. Los pendientes de fidelidad ROM que muestra Dev siguen siendo información real y no se ocultan. La compilación conserva el aviso de bundles grandes; no se eleva el umbral para silenciarlo. La entrega final se integra en `main` después de repetir los gates y verificar que los refs local y remoto señalan al mismo commit.

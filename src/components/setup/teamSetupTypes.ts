@@ -14,6 +14,8 @@ export interface TeamMember {
   /** Joint Deck: exactamente DECK_SIZE (20) ids de carta. LOS LIMITS NO
    *  ENTRAN AQUÍ — sistema separado (corpus §47). */
   jointDeck: number[];
+  /** Preset guardado asignado; solo identifica la selección, no edita la biblioteca. */
+  deckId?: string;
 }
 
 export interface TeamSetupState {

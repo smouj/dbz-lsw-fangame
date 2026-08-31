@@ -19,6 +19,20 @@ import { BattlePosition, POSITION_DATA, resolveRelativeDistance, isBeamVulnerabl
 import { BATTLE_PORTRAITS } from './data/battlePortraits';
 import { UNLOCK_KEY, STARTER_DAMAGE_DECK, STARTER_BEAM_DECK, STARTER_CHARACTERS, cardsForLevel, pickRewards, VS_UNLOCKS, isFormUnlocked, FORM_UNLOCK_LEVELS } from './data/unlocks';
 import { CARDS, CARD_COLORS, CARD_COLORS_ON_LIGHT, CARD_TYPE_NAMES, CardDef, CardType, DECK_SIZE, MAX_COPIES, getCard, CardEffect } from './data/cards';
+import {
+  MAX_SAVED_DECKS,
+  activeSavedDeck,
+  addSavedDeck,
+  deleteSavedDeck,
+  isSavedDeckReady,
+  loadDeckLibrary,
+  renameSavedDeck,
+  saveDeckLibrary,
+  selectSavedDeck,
+  starterDeckLibrary,
+  updateActiveDeckCards,
+  type DeckLibraryState,
+} from './data/deckLibrary';
 import { tipBlock, tipCard, TipPart } from './data/tooltips';
 import {
   createBattleDeck, drawOne, playJoint, discardOne, needsDiscard,
@@ -659,8 +673,9 @@ function DamageNumber({ value, type, x, y }: { value: number; type: 'damage' | '
 // PANTALLA DE BATALLA
 // ═══════════════════════════════════════════════════════════
 
-function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit, onRematch, onMainMenu }: {
+function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, onExit, onRematch, onMainMenu }: {
   playerFormId: string; enemyFormId: string; storyChapter: number | null; onExit: (won: boolean) => void;
+  playerDeck?: number[];
   onRematch: () => void; onMainMenu: () => void;
 }) {
   const { t } = useLang();
@@ -795,7 +810,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit, onRemat
   // no seleccionable). CHARA recalcula qué cartas de la misma mano son
   // usables al intercambiar. Filtrar el deck alteraba probabilidades.
   const [deckState, setDeckState] = useState<JointDeckState>(() =>
-    createBattleDeck(loadDeck()));
+    createBattleDeck(playerDeck ?? loadDeck()));
   const { hand, drawPile, discardPile } = deckState;
 
   // ── MAZO REAL DEL ENEMIGO ──
@@ -3987,8 +4002,9 @@ function startWithDeck(kind: 'damage' | 'beam') {
   u.cards = [...new Set([...u.cards, ...deck])];
   u.pendingReward = null;
   saveUnlocks(u);
-  // El mazo de batalla por defecto pasa a ser el elegido
-  try { localStorage.setItem(DECK_KEY, JSON.stringify(deck)); } catch { /* noop */ }
+  // La elección inicial crea la primera entrada de la biblioteca. El bridge
+  // mantiene también la key legacy para las herramientas que aún la consumen.
+  saveDeckLibrary(starterDeckLibrary(kind, deck));
 }
 
 // Cartas desbloqueadas efectivas = iniciales + por nivel
@@ -4349,6 +4365,17 @@ function statProfile(f: { hp: number; str: number; ki: number; spd: number }) {
   return { top, power };
 }
 
+const CHARACTER_STAT_MAX = {
+  hp: Math.max(...Object.values(FORMS).map(form => form.hp)),
+  str: Math.max(...Object.values(FORMS).map(form => form.str)),
+  ki: Math.max(...Object.values(FORMS).map(form => form.ki)),
+  spd: Math.max(...Object.values(FORMS).map(form => form.spd)),
+};
+
+function statWidth(value: number, max: number): string {
+  return `${Math.max(5, Math.min(100, Math.round((value / max) * 100)))}%`;
+}
+
 function CharactersScreen({ onNavigate, onSelectFighter }: {
   onNavigate: (s: Screen) => void; onSelectFighter: (formId: string) => void;
 }) {
@@ -4369,6 +4396,9 @@ function CharactersScreen({ onNavigate, onSelectFighter }: {
   const selUnlocked = isCharacterUnlocked(selChar.id);
   const unlockedForms = selChar.forms.filter(fid => isFormUnlocked(fid, loadProgress().level)).length;
   const profile = statProfile(sel);
+  const storyPortrait = resolveSpeakerPortrait(selChar.id, selected);
+  const battlePortrait = BATTLE_PORTRAITS[selected];
+  const owPortrait = overworldUrl(selected);
 
   return (
     <div className="page-screen characters-screen">
@@ -4392,7 +4422,9 @@ function CharactersScreen({ onNavigate, onSelectFighter }: {
             return (
               <button key={c.id} className={`char-cell ui-char-card ${active ? 'active' : ''}`}
                 onClick={() => setSelected(baseForm.id)}>
-                <CharacterSprite formId={baseForm.id} height={64} className="char-thumb" />
+                <span className="char-thumb-frame">
+                  <img className="char-thumb-story" src={resolveSpeakerPortrait(c.id, baseForm.id)} alt="" draggable={false} />
+                </span>
                 <div className="char-name">{c.name}</div>
                 <div className="char-forms">{c.forms.length} {t('characters.forms')}</div>
               </button>
@@ -4406,8 +4438,15 @@ function CharactersScreen({ onNavigate, onSelectFighter }: {
           <div className="char-detail-header">
             <div className={`char-detail-sprite-wrap ${transformFx ? 'transforming' : ''}`} key={transformFx}>
               {transformFx > 0 && <div className="transform-flash" />}
-              <div className="transform-aura" />
-              <CharacterSprite formId={selected} height={160} className="char-detail-sprite" />
+              <div className="char-identity-story">
+                {storyPortrait ? <img src={storyPortrait} alt={`${selChar.name} ${sel.form}`} draggable={false} /> : null}
+                <span>STORY PORTRAIT</span>
+              </div>
+              <div className="char-identity-combat">
+                <div className="transform-aura" />
+                <CharacterSprite formId={selected} height={116} className="char-detail-sprite" />
+                <span>COMBAT IDLE</span>
+              </div>
             </div>
             <div className="char-detail-info">
               <div className="char-detail-name">{selChar.name}</div>
@@ -4417,12 +4456,27 @@ function CharactersScreen({ onNavigate, onSelectFighter }: {
             </div>
           </div>
 
+          <div className="char-asset-rail" aria-label="Character sprite sources">
+            {battlePortrait ? (
+              <div className="char-asset-chip">
+                <img src={battlePortrait} alt="" draggable={false} />
+                <span><b>BATTLE</b> HUD PORTRAIT</span>
+              </div>
+            ) : null}
+            {owPortrait ? (
+              <div className="char-asset-chip ow">
+                <img src={owPortrait} alt="" draggable={false} />
+                <span><b>OW</b> FIELD SPRITE</span>
+              </div>
+            ) : null}
+          </div>
+
           {/* Stats */}
           <div className="stat-block">
-            <div className="ui-statbar"><span className="ui-stat-label">{t('attr.hp')}</span><div className="ui-stat-track"><div className="ui-stat-fill hp" style={{ width: `${sel.hp / 6}%` }} /></div><span className="ui-stat-val">{sel.hp}</span></div>
-            <div className="ui-statbar"><span className="ui-stat-label">{t('attr.str')}</span><div className="ui-stat-track"><div className="ui-stat-fill str" style={{ width: `${sel.str / 1.2}%` }} /></div><span className="ui-stat-val">{sel.str}</span></div>
-            <div className="ui-statbar"><span className="ui-stat-label">{t('attr.ki')}</span><div className="ui-stat-track"><div className="ui-stat-fill ki" style={{ width: `${sel.ki / 1.2}%` }} /></div><span className="ui-stat-val">{sel.ki}</span></div>
-            <div className="ui-statbar"><span className="ui-stat-label">{t('attr.spd')}</span><div className="ui-stat-track"><div className="ui-stat-fill spd" style={{ width: `${sel.spd}%` }} /></div><span className="ui-stat-val">{sel.spd}</span></div>
+            <div className="ui-statbar"><span className="ui-stat-label">{t('attr.hp')}</span><div className="ui-stat-track"><div className="ui-stat-fill hp" style={{ width: statWidth(sel.hp, CHARACTER_STAT_MAX.hp) }} /></div><span className="ui-stat-val">{sel.hp}</span></div>
+            <div className="ui-statbar"><span className="ui-stat-label">{t('attr.str')}</span><div className="ui-stat-track"><div className="ui-stat-fill str" style={{ width: statWidth(sel.str, CHARACTER_STAT_MAX.str) }} /></div><span className="ui-stat-val">{sel.str}</span></div>
+            <div className="ui-statbar"><span className="ui-stat-label">{t('attr.ki')}</span><div className="ui-stat-track"><div className="ui-stat-fill ki" style={{ width: statWidth(sel.ki, CHARACTER_STAT_MAX.ki) }} /></div><span className="ui-stat-val">{sel.ki}</span></div>
+            <div className="ui-statbar"><span className="ui-stat-label">{t('attr.spd')}</span><div className="ui-stat-track"><div className="ui-stat-fill spd" style={{ width: statWidth(sel.spd, CHARACTER_STAT_MAX.spd) }} /></div><span className="ui-stat-val">{sel.spd}</span></div>
           </div>
 
           {/* Lore del personaje (rellena el panel como ficha de colección) */}
@@ -4470,33 +4524,28 @@ function CharactersScreen({ onNavigate, onSelectFighter }: {
 // DECK — Constructor de mazos
 // ═══════════════════════════════════════════════════════════
 
-const DECK_KEY = 'dbzlsw_deck';
 // ⚠️ SOLO cartas genéricas (Users=48): el mazo por defecto debe ser usable
 // por cualquier luchador (Gohan/Piccolo de salida). Las cartas de personaje
 // se desbloquean y añaden desde el constructor de mazos.
 const DEFAULT_DECK = [1, 1, 2, 2, 4, 5, 5, 6, 11, 29, 7, 8, 20, 43, 124, 124, 88, 117, 125, 121];
 
 function loadDeck(): number[] {
-  try {
-    const raw = localStorage.getItem(DECK_KEY);
-    if (!raw) return DEFAULT_DECK;
-    const parsed = JSON.parse(raw);
-    if (Array.isArray(parsed) && parsed.length > 0 && parsed.length <= DECK_SIZE) return parsed;
-    return DEFAULT_DECK;
-  } catch { return DEFAULT_DECK; }
+  return activeSavedDeck(loadDeckLibrary(DEFAULT_DECK)).cards;
 }
 
 function DeckScreen({ onNavigate }: { onNavigate: (s: Screen) => void }) {
   const { t } = useLang();
-  const [deck, setDeck] = useState<number[]>(loadDeck);
+  const [library, setLibrary] = useState<DeckLibraryState>(() => loadDeckLibrary(DEFAULT_DECK));
   const [filter, setFilter] = useState<CardType | 'all'>('all');
   const [search, setSearch] = useState('');
   const owned = ownedCards(loadUnlocks(), loadProgress().level);
+  const activeDeck = activeSavedDeck(library);
+  const deck = activeDeck.cards;
 
-  // Persist deck on change
-  useEffect(() => {
-    try { localStorage.setItem(DECK_KEY, JSON.stringify(deck)); } catch { /* noop */ }
-  }, [deck]);
+  const commitLibrary = (update: (current: DeckLibraryState) => DeckLibraryState) => {
+    setLibrary(current => saveDeckLibrary(update(current)));
+  };
+  const setDeck = (cards: number[]) => commitLibrary(current => updateActiveDeckCards(current, cards));
 
   const deckCounts: Record<number, number> = {};
   deck.forEach(id => { deckCounts[id] = (deckCounts[id] || 0) + 1; });
@@ -4530,7 +4579,7 @@ function DeckScreen({ onNavigate }: { onNavigate: (s: Screen) => void }) {
   return (
     <div className="page-screen deck-screen">
       <GamePageHeader title={t('deck.title')} onBack={() => onNavigate('main')}>
-        <div className="deck-count">{deck.length}/{DECK_SIZE}</div>
+        <div className="deck-count">{library.decks.length} DECKS · {deck.length}/{DECK_SIZE}</div>
       </GamePageHeader>
 
       <div className="deck-layout">
@@ -4557,6 +4606,37 @@ function DeckScreen({ onNavigate }: { onNavigate: (s: Screen) => void }) {
         {/* Deck actual */}
         <div className="deck-current">
           <div className="deck-current-title">{t('deck.yourDeck')}</div>
+          <div className="deck-library" aria-label="Saved deck library">
+            <div className="deck-library-tabs" role="list">
+              {library.decks.map(saved => (
+                <button
+                  type="button"
+                  role="listitem"
+                  key={saved.id}
+                  className={`deck-library-tab${saved.id === library.activeDeckId ? ' active' : ''}`}
+                  aria-pressed={saved.id === library.activeDeckId}
+                  onClick={() => commitLibrary(current => selectSavedDeck(current, saved.id))}
+                >
+                  <span>{saved.name}</span><small>{saved.cards.length}/{DECK_SIZE}</small>
+                </button>
+              ))}
+            </div>
+            <input
+              className="deck-name-input"
+              aria-label="Deck name"
+              value={activeDeck.name}
+              maxLength={24}
+              onChange={event => commitLibrary(current => renameSavedDeck(current, current.activeDeckId, event.target.value))}
+            />
+            <div className="deck-library-actions">
+              <button type="button" disabled={library.decks.length >= MAX_SAVED_DECKS}
+                onClick={() => commitLibrary(current => addSavedDeck(current, false))}>+ NEW</button>
+              <button type="button" disabled={library.decks.length >= MAX_SAVED_DECKS}
+                onClick={() => commitLibrary(current => addSavedDeck(current, true))}>DUPLICATE</button>
+              <button type="button" disabled={library.decks.length <= 1}
+                onClick={() => commitLibrary(current => deleteSavedDeck(current, current.activeDeckId))}>DELETE</button>
+            </div>
+          </div>
           <div className="deck-summary">
             <div className="deck-summary-row"><span>CARDS</span><b>{deck.length}/{DECK_SIZE}</b></div>
             <div className="deck-summary-row"><span>POWER</span><b>{deckPower}</b></div>
@@ -4573,7 +4653,7 @@ function DeckScreen({ onNavigate }: { onNavigate: (s: Screen) => void }) {
               const card = getCard(cardId)!;
               return (
                 <div key={i} className="deck-row">
-                  <span className="deck-row-icon">{(() => { const I = TYPE_ICONS[card.type]; return <I size={14} />; })()}</span>
+                  <span className="deck-row-icon"><img src={cardIconUrl(card.id)} alt="" draggable={false} /></span>
                   <span className="deck-row-name" style={{ color: CARD_COLORS[card.type] }}>{card.name}</span>
                   <span className="deck-row-atk">{card.atk > 0 ? `ATK ${card.atk}` : ''}</span>
                   <button className="deck-row-remove" aria-label={`Remove ${card.name}`} onClick={() => removeCard(cardId)}><X size={10} /></button>
@@ -4597,9 +4677,12 @@ function DeckScreen({ onNavigate }: { onNavigate: (s: Screen) => void }) {
 function CardsScreen({ onNavigate }: { onNavigate: (s: Screen) => void }) {
   const { t } = useLang();
   const prog = loadProgress();
-  const [owned, setOwned] = useState<Set<number>>(() => ownedCards(loadUnlocks(), prog.level));
+  const unlocks = loadUnlocks();
+  const [owned] = useState<Set<number>>(() => ownedCards(unlocks, prog.level));
   const [filter, setFilter] = useState<CardType | 'all'>('all');
   const [selectedId, setSelectedId] = useState<number>(() => CARDS.find(c => ownedCards(loadUnlocks(), prog.level).has(c.id))?.id ?? CARDS[0].id);
+  const starterCards = (unlocks.starterDeck === 'beam' ? STARTER_BEAM_DECK : STARTER_DAMAGE_DECK)
+    .map(getCard).filter(Boolean) as CardDef[];
 
   const filtered = CARDS.filter(c => filter === 'all' || c.type === filter);
   const selectedCard = filtered.find(c => c.id === selectedId) ?? filtered[0] ?? CARDS[0];
@@ -4617,6 +4700,20 @@ function CardsScreen({ onNavigate }: { onNavigate: (s: Screen) => void }) {
       </GamePageHeader>
       <div className="cards-layout">
         <div className="cards-collection-panel">
+          <div className={`starter-deck-record${unlocks.starterDeck ? '' : ' empty'}`}>
+            <div className="starter-deck-record-copy">
+              <span>STARTER DECK · PERMANENT RECORD</span>
+              <strong>{unlocks.starterDeck === 'beam' ? 'ENERGY / BEAM' : unlocks.starterDeck === 'damage' ? 'PHYSICAL / DAMAGE' : 'NOT SELECTED'}</strong>
+              <small>{unlocks.starterDeck ? `${starterCards.length} cards · original collection choice` : 'Choose a starter deck to begin your collection.'}</small>
+            </div>
+            {unlocks.starterDeck ? (
+              <div className="starter-deck-record-icons" aria-label="Starter deck card icons">
+                {starterCards.slice(0, 8).map((card, index) => (
+                  <img key={`${card.id}-${index}`} src={cardIconUrl(card.id)} alt={card.name} title={card.name} draggable={false} />
+                ))}
+              </div>
+            ) : null}
+          </div>
           <div className="deck-toolbar cards-toolbar">
             <div className="deck-filters">
               {(['all', 'command', 'damage', 'beam', 'support', 'defense', 'special'] as const).map(tp => (
@@ -4804,12 +4901,20 @@ function SettingsScreen({ onNavigate }: { onNavigate: (s: Screen) => void }) {
 // VERSUS — Selección de batalla
 // ═══════════════════════════════════════════════════════════
 
-function TeamSetupScreen({ onNavigate, onStartVersus }: {
+function TeamSetupScreen({ onNavigate, onStartVersus, initialFormId }: {
   onNavigate: (s: Screen) => void;
   onStartVersus: (enemyFormId: string, member?: TeamMember) => void;
+  initialFormId?: string;
 }) {
   const { t } = useLang();
   const [enemyForm, setEnemyForm] = useState('piccolo_base');
+  const deckLibrary = loadDeckLibrary(DEFAULT_DECK);
+  const savedActiveDeck = activeSavedDeck(deckLibrary);
+  const battleDefaultPreset = (isSavedDeckReady(savedActiveDeck)
+    ? savedActiveDeck
+    : deckLibrary.decks.find(isSavedDeckReady));
+  const battleDefaultDeck = battleDefaultPreset?.cards ?? [];
+  const initialCharacterId = initialFormId ? getForm(initialFormId)?.character : undefined;
   return (
     <div className="page-screen versus-screen setup-screen-wrap">
       <GamePageHeader title={t('versus.title')} onBack={() => onNavigate('main')} />
@@ -4829,8 +4934,13 @@ function TeamSetupScreen({ onNavigate, onStartVersus }: {
       </div>
       <TeamSetup
         useSetup={useTeamSetupState}
-        fallbackDeck={loadDeck()}
+        fallbackDeck={battleDefaultDeck}
+        savedDecks={deckLibrary.decks}
+        initialCharacterId={initialCharacterId}
+        initialFormId={initialFormId}
+        initialDeckId={battleDefaultPreset?.id}
         onConfirm={(result: TeamSetupResult) => onStartVersus(enemyForm, result.member)}
+        onEditDecks={() => onNavigate('deck')}
         onBack={() => onNavigate('main')}
         isFormUnlocked={fid => isFormUnlocked(fid, loadProgress().level)}
       />
@@ -4893,6 +5003,7 @@ function AppInner() {
   const [needsStarter, setNeedsStarter] = useState(() => loadUnlocks().starterDeck === null);
   const [playerForm, setPlayerForm] = useState('gohan_young');
   const [enemyForm, setEnemyForm] = useState('piccolo_base');
+  const [battleDeck, setBattleDeck] = useState<number[] | undefined>(undefined);
   const [storyChapter, setStoryChapter] = useState<number | null>(null);
   const [storyScene, setStoryScene] = useState<{ chapter: number; phase: 'intro' | 'outro' } | null>(null);
   const [battleKey, setBattleKey] = useState(0);
@@ -4942,26 +5053,23 @@ function AppInner() {
     return () => { if (screen === 'main') stopMusic(); };
   }, [screen, inDev]);
 
-  const startBattle = (playerFormId?: string) => {
-    if (playerFormId) setPlayerForm(playerFormId);
+  const openBattleSetup = (playerFormId: string) => {
+    setPlayerForm(playerFormId);
+    setBattleDeck(undefined);
     setStoryChapter(null);
-    setEnemyForm('piccolo_base');
-    setBattleKey(k => k + 1);
-    setScreen('battle');
+    setScreen('versus');
   };
 
   const startVersus = (enemyFormId: string, member?: TeamMember) => {
     if (member) {
-      // Handoff único: el Team Setup produce el miembro listo → BattleConfig.
-      // Se persisten deck y limits con los keys canónicos (deck global,
-      // limits por characterId) para que la batalla los lea sin cambios.
+      // Handoff único: Battle recibe una COPIA del mazo asignado. La biblioteca
+      // no se edita ni se cambia de preset desde esta pantalla.
       setPlayerForm(member.formId);
-      try {
-        localStorage.setItem('dbzlsw_deck', JSON.stringify(member.jointDeck));
-      } catch { /* noop */ }
+      setBattleDeck([...member.jointDeck]);
       saveLimits(member.characterId, member.limits.filter(id => id !== 0));
     } else {
       setPlayerForm('gohan_young');
+      setBattleDeck(undefined);
     }
     setEnemyForm(enemyFormId);
     setStoryChapter(null);
@@ -4970,6 +5078,7 @@ function AppInner() {
   };
 
   const startChapter = (enemyFormId: string, chapterId: number) => {
+    setBattleDeck(undefined);
     setEnemyForm(enemyFormId);
     setStoryChapter(chapterId);
     // El protagonista del capítulo (Gohan en el 1, no Goku — historia real del GBC)
@@ -5053,6 +5162,7 @@ function AppInner() {
           setNeedsStarter(false);
         }
         setPlayerForm(playerFormId);
+        setBattleDeck(undefined);
         setEnemyForm(enemyFormId);
         setStoryChapter(chapter);
         setBattleKey(k => k + 1);
@@ -5075,13 +5185,13 @@ function AppInner() {
   const screenEl = (() => {
     switch (screen) {
       case 'story': return <StoryScreen onNavigate={setScreen} onStartChapter={startChapter} />;
-      case 'versus': return <TeamSetupScreen onNavigate={setScreen} onStartVersus={startVersus} />;
+      case 'versus': return <TeamSetupScreen onNavigate={setScreen} onStartVersus={startVersus} initialFormId={playerForm} />;
       case 'deck': return <DeckScreen onNavigate={setScreen} />;
-      case 'characters': return <CharactersScreen onNavigate={setScreen} onSelectFighter={startBattle} />;
+      case 'characters': return <CharactersScreen onNavigate={setScreen} onSelectFighter={openBattleSetup} />;
       case 'cards': return <CardsScreen onNavigate={setScreen} />;
       case 'settings': return <SettingsScreen onNavigate={setScreen} />;
       case 'storyScene': return <StorySceneScreen key={`scene-${storyScene?.chapter}-${storyScene?.phase}`} chapter={storyScene?.chapter ?? 1} phase={storyScene?.phase ?? 'intro'} onFinish={finishStoryScene} onNavigate={setScreen} />;
-      case 'battle': return <BattleScreen key={battleKey} playerFormId={playerForm} enemyFormId={enemyForm} storyChapter={storyChapter} onExit={exitBattle}
+      case 'battle': return <BattleScreen key={battleKey} playerFormId={playerForm} enemyFormId={enemyForm} storyChapter={storyChapter} playerDeck={battleDeck} onExit={exitBattle}
         onRematch={() => { setStoryScene(null); setBattleKey(k => k + 1); setScreen('battle'); }}
         onMainMenu={() => { setStoryScene(null); setScreen('main'); }} />;
       default: return <MainMenu onNavigate={setScreen} />;

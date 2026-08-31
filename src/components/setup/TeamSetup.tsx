@@ -10,24 +10,41 @@ import { useMemo } from 'react';
 import { ROM_ORDERED_CHARACTERS, getCharacter, getForm } from '../../data/roster';
 import { overworldUrl } from '../../data/overworld';
 import { battleOverworldActorUrl } from '../../data/battleOverworld';
+import { resolveSpeakerPortrait } from '../../data/speakerPortraits';
+import type { SavedDeck } from '../../data/deckLibrary';
 import { CharacterRoll, type RollCharacterAsset } from './CharacterRoll';
 import { FormSelector } from './FormSelector';
 import { CharacterDetails } from './CharacterDetails';
 import { LimitLoadoutPanel } from './LimitLoadoutPanel';
-import { DeckBuilder } from './DeckBuilder';
+import { DeckAssignment } from './DeckAssignment';
 import type { TeamSetupResult } from './teamSetupTypes';
 import type { UseTeamSetupStateArgs } from './useTeamSetupState';
 
 export interface TeamSetupProps {
   useSetup: (args: UseTeamSetupStateArgs) => ReturnType<typeof import('./useTeamSetupState').useTeamSetupState>;
   fallbackDeck: number[];
+  savedDecks: SavedDeck[];
+  initialCharacterId?: string;
+  initialFormId?: string;
+  initialDeckId?: string;
   onConfirm: (result: TeamSetupResult) => void;
+  onEditDecks: () => void;
   onBack: () => void;
   isFormUnlocked?: (formId: string) => boolean;
 }
 
-export function TeamSetup({ useSetup, fallbackDeck, onConfirm, isFormUnlocked }: TeamSetupProps) {
-  const setup = useSetup({ fallbackDeck });
+export function TeamSetup({
+  useSetup,
+  fallbackDeck,
+  savedDecks,
+  initialCharacterId,
+  initialFormId,
+  initialDeckId,
+  onConfirm,
+  onEditDecks,
+  isFormUnlocked,
+}: TeamSetupProps) {
+  const setup = useSetup({ fallbackDeck, initialCharacterId, initialFormId, initialDeckId, strictDeckAssignment: true });
   const { state, active, result, deckValid } = setup;
 
   // Assets del roll: chibis OW (forma base para los laterales) + power pose
@@ -76,13 +93,17 @@ export function TeamSetup({ useSetup, fallbackDeck, onConfirm, isFormUnlocked }:
         {state.members.map((m, i) => {
           const char = getCharacter(m.characterId);
           const form = getForm(m.formId);
+          const portrait = resolveSpeakerPortrait(m.characterId, m.formId);
           return (
             <div key={i} className={`setup-team-slot${i === state.activeMember ? ' active' : ''}`}>
               <button type="button" className="setup-team-slot-btn"
                 onClick={() => setup.setActiveMember(i)}>
-                <span className="setup-team-slot-num">SLOT {i + 1}</span>
-                <span className="setup-team-slot-name">{char?.name ?? '—'}</span>
-                <span className="setup-team-slot-form">{form?.form ?? ''}</span>
+                {portrait ? <img className="setup-team-slot-portrait" src={portrait} alt="" draggable={false} /> : null}
+                <span className="setup-team-slot-copy">
+                  <span className="setup-team-slot-num">SLOT {i + 1}</span>
+                  <span className="setup-team-slot-name">{char?.name ?? '—'}</span>
+                  <span className="setup-team-slot-form">{form?.form ?? ''}</span>
+                </span>
               </button>
               {state.members.length > 1 ? (
                 <button type="button" className="setup-team-slot-remove" title="Remove member"
@@ -128,16 +149,14 @@ export function TeamSetup({ useSetup, fallbackDeck, onConfirm, isFormUnlocked }:
         />
       </div>
 
-      {/* Deck Workshop */}
-      <DeckBuilder
+      {/* Battle only assigns a saved deck; editing lives in the Deck page. */}
+      <DeckAssignment
         characterId={active.characterId}
-        deck={active.jointDeck}
-        onAdd={setup.addCard}
-        onRemove={setup.removeCard}
-        onReplace={setup.replaceCard}
-        onMove={setup.moveCard}
-        onClear={setup.clearDeck}
-        onReset={setup.resetDeck}
+        decks={savedDecks}
+        assignedDeckId={active.deckId}
+        assignedCards={active.jointDeck}
+        onAssign={setup.assignDeck}
+        onEditDecks={onEditDecks}
       />
 
       </div>

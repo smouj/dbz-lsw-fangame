@@ -96,8 +96,45 @@
 .shell-surface .setup-team-slot { box-shadow:none; border-width:1px; }
 .shell-surface .setup-team-slot.active { border-color:var(--page-accent); box-shadow:inset 3px 0 var(--page-accent); }
 .shell-surface .setup-team-slot-btn { min-width:172px; gap:3px; padding:10px 20px; }
+.shell-surface .setup-team-slot-btn { display:flex; align-items:center; text-align:left; }
+.shell-surface .setup-team-slot-portrait { flex:0 0 42px; width:42px; height:46px; margin:-6px 6px -6px -12px; object-fit:contain; object-position:center bottom; image-rendering:pixelated; border-right:1px solid #46536a; }
+.shell-surface .setup-team-slot-copy { display:flex; flex-direction:column; min-width:0; }
 .shell-surface .setup-team-slot-add { min-width:154px; font:700 12px var(--shell-body); }
 .shell-surface .setup-team-slot-remove { top:6px; right:6px; width:24px; height:24px; }
+
+/* Battle assigns saved decks. Editing stays in the main Deck page. */
+.shell-surface .setup-deck-assignment { display:flex; flex-direction:column; gap:12px; padding:16px; border:1px solid #46536a; background:rgb(20 28 41 / .82); }
+.shell-surface .setup-deck-assignment-head { display:flex; align-items:flex-start; justify-content:space-between; gap:20px; padding-bottom:11px; border-bottom:1px solid #3d4a60; }
+.shell-surface .setup-section-kicker { color:#9db0c8; font:700 9px/1.3 var(--shell-body); letter-spacing:.14em; }
+.shell-surface .setup-deck-assignment h3 { margin:1px 0 3px; color:#f2ead8; font:25px/1 var(--shell-display); }
+.shell-surface .setup-deck-assignment p { max-width:620px; margin:0; color:#b6c2d2; font:11px/1.4 var(--shell-body); }
+.shell-surface .setup-edit-decks { flex:0 0 auto; min-height:34px; padding:6px 10px; color:var(--page-accent); border:1px solid #59677d; background:#172231; font:700 10px var(--shell-body); }
+.shell-surface .setup-edit-decks:hover { border-color:var(--page-accent); }
+.shell-surface .setup-deck-presets { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:8px; }
+.shell-surface .setup-deck-preset { position:relative; display:grid; grid-template-columns:minmax(0,1fr) auto; grid-template-rows:auto auto; min-width:0; min-height:88px; gap:6px 10px; padding:9px; color:#e6e9e9; text-align:left; border:1px solid #465269; background:#121c2a; }
+.shell-surface .setup-deck-preset:hover:not(:disabled) { border-color:var(--page-accent); }
+.shell-surface .setup-deck-preset.active { border:2px solid var(--page-accent); padding:8px; background:#263228; box-shadow:inset 3px 0 var(--page-accent); }
+.shell-surface .setup-deck-preset:disabled { cursor:not-allowed; opacity:.48; }
+.shell-surface .setup-deck-preset-copy { display:flex; flex-direction:column; min-width:0; }
+.shell-surface .setup-deck-preset-copy strong { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font:700 12px/1.3 var(--shell-body); }
+.shell-surface .setup-deck-preset-copy small { color:#9facc0; font:8px/1.4 var(--shell-body); }
+.shell-surface .setup-deck-preset-icons { display:flex; align-items:center; align-self:start; }
+.shell-surface .setup-deck-preset-icons img { width:26px; height:26px; margin-left:-5px; padding:1px; object-fit:contain; image-rendering:pixelated; border:1px solid #4e5a70; background:#0d1420; }
+.shell-surface .setup-deck-preset-icons img:first-child { margin-left:0; }
+.shell-surface .setup-deck-preset-state { grid-column:1 / -1; align-self:end; color:#aab7c8; font:700 8px var(--shell-body); letter-spacing:.12em; }
+.shell-surface .setup-deck-preset.active .setup-deck-preset-state { color:var(--page-accent); }
+.shell-surface .setup-assigned-deck-preview { padding:10px; border:1px solid #3f4c61; background:#0e1723; }
+.shell-surface .setup-assigned-deck-summary { display:flex; justify-content:space-between; gap:12px; margin-bottom:8px; color:#b9c5d5; font:700 9px var(--shell-body); letter-spacing:.08em; }
+.shell-surface .setup-assigned-deck-summary .valid { color:#9bd5a8; }
+.shell-surface .setup-assigned-deck-summary .warning { color:#f1ad82; }
+.shell-surface .setup-assigned-card-icons { display:grid; grid-template-columns:repeat(10,minmax(0,1fr)); gap:5px; }
+.shell-surface .setup-assigned-card-icon { position:relative; display:grid; place-items:center; min-width:0; aspect-ratio:1; border:1px solid color-mix(in srgb,var(--card-accent) 55%,#3c485c); background:#111a27; }
+.shell-surface .setup-assigned-card-icon img { width:100%; height:100%; padding:3px; object-fit:contain; image-rendering:pixelated; }
+.shell-surface .setup-assigned-card-icon span { position:absolute; right:1px; bottom:1px; min-width:13px; padding:1px; color:#fff; background:#0a1019; text-align:center; font:700 7px var(--shell-body); }
+
+@media (max-width:900px) {
+  .shell-surface .setup-deck-presets { grid-template-columns:repeat(2,minmax(0,1fr)); }
+}
 .shell-surface .setup-form-selector { min-height:40px; gap:18px; }
 .shell-surface .setup-form-label { font:700 12px var(--shell-body); color:var(--page-muted); }
 .shell-surface .setup-form-chip { min-height:34px; padding:7px 14px; font:600 13px var(--shell-body); border-radius:0; }
