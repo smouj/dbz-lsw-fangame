@@ -144,9 +144,9 @@
   align-items: stretch !important;
 }
 
-/* Rebalanced 2-panel split: detail panel gains ~2cqw for better proportion */
+/* Rebalanced 2-panel split: detail panel gains ~5-7cqw for better proportion */
 .game-viewport .story-layout {
-  grid-template-columns: minmax(0, 1fr) clamp(330px, 31cqw, 400px) !important;
+  grid-template-columns: minmax(0, 1fr) clamp(360px, 35cqw, 420px) !important;
 }
 .game-viewport .characters-layout {
   grid-template-columns: minmax(0, 1fr) clamp(360px, 35cqw, 420px) !important;
