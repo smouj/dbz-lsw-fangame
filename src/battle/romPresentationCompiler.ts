@@ -220,7 +220,7 @@ function compileStep(
       // sequenceSelector global. step.slot es el AnimationSlot físico.
       const slot = step.slot ?? 0;
       const sequence = step.sequence ?? sequenceSelector;
-      const cues: PresentationCue[] = [{ type: 'ANIMATION_START', tick: cursor, slot, resource: step.resource }];
+      const cues: PresentationCue[] = [{ type: 'ANIMATION_START', tick: cursor, slot, resource: step.resource, sequence }];
       if (step.resource != null && actorFormId && sequence != null) {
         const resource = step.resource;
         const resourceEntry = animationResourceById(resource);
@@ -231,7 +231,7 @@ function compileStep(
           cues.push({
             type: 'ROM_PENDING',
             tick: cursor,
-            reason: `${step.id}: sequence ${sequence} out of range for resource 0x${resource.toString(16).padStart(2, '0')} (sequenceCount=${sequenceCount})`,
+            reason: `invalid sequence ${sequence} for resource 0x${resource.toString(16).padStart(2, '0')} (sequenceCount=${sequenceCount})`,
             boundary: 'STATIC',
           });
           return { cues, advanceTicks: 0 };
