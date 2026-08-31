@@ -1,338 +1,244 @@
-// ═══════════════════════════════════════════════════════════
-// DBZ LSW — Viñetas del modo historia (manga interactivo)
-// ═══════════════════════════════════════════════════════════
-// El modo historia es una experiencia narrativa LINEAL presentada con
-// viñetas manga dinámicas que conectan directamente los combates.
-// NO existe exploración de mapa ni movimiento libre entre encuentros.
+// ═══════════════════════════════════════════════════════════════════════
+// DBZ LSW — STORY PANELS (DIALOGUE-ONLY PRESENTATION PROJECTION)
+// ═══════════════════════════════════════════════════════════════════════
+// This file no longer owns Story content. It projects storyNarrativeCanon.ts
+// into the panel shape consumed by StorySceneScreen and Story Studio.
 //
-// Cada capítulo tiene una secuencia de VIÑETAS antes del combate (intro)
-// y opcionalmente después (outro). Cada viñeta usa:
-//   - fondo: /assets/backgrounds/NN_world.png (13 escenarios de la ROM)
-//   - retratos: /assets/portraits/cell_XX_XX.png (113 story portraits 40×56)
-//   - sprites overworld (panel_sprites) para personajes completos
-//   - efectos: flash/zoom/shake simples
+// Canon order is 30 MAIN Stories + 2 EX Stories. sequenceIndex 1..32 remains
+// only for save/runtime compatibility.
 //
-// El motor SOLO interpreta datos: editar la historia no toca código.
+// STRICT SCOPE: dialogue/cutscene presentation only. No Story Map VM, RPG
+// exploration, NPC movement, hotspots, triggers or pickups are represented.
+// ═══════════════════════════════════════════════════════════════════════
 
 import type { PortraitEmotion } from './storyPortraits';
-import { STORY_SCRIPT } from './storyScript';
+import { canonicalStoryNarrative, type StoryTextEvidence } from './storyNarrativeCanon';
+import {
+  STORY_PROLOGUE_CUTSCENES,
+  storyCutsceneAsset,
+  type CutsceneBindingEvidence,
+} from './storyCutsceneCanon';
+import type { StoryPortraitBindingEvidence } from './storyPortraitCanon';
 
 export type PanelLayout =
-  | 'FULL'              // ilustración a pantalla completa
-  | 'SPLIT_2'           // dos personajes enfrentados
-  | 'PORTRAIT_DIALOGUE' // escenario + retratos + caja de diálogo (estilo LSW)
-  | 'IMPACT';           // viñeta que rompe el layout (transformación/ataque)
+  | 'FULL'
+  | 'SPLIT_2'
+  | 'PORTRAIT_DIALOGUE'
+  | 'IMPACT';
 
 export interface StoryPortrait {
-  character: string;    // id de personaje (goku, piccolo...) para el retrato
-  form?: string;        // forma (base, ssj...) — opcional
+  character: string;
+  form?: string;
   side?: 'left' | 'right' | 'center';
-  emotion?: PortraitEmotion;  // normal/smile/surprised/angry/wounded/visor
+  emotion?: PortraitEmotion;
   flip?: boolean;
+}
+
+export interface StoryPanelProvenance {
+  sequenceIndex: number;
+  canonicalStoryId: string;
+  romStoryId: number;
+  textEvidence?: StoryTextEvidence;
+  backgroundAssetId: number;
+  backgroundEvidence: CutsceneBindingEvidence | 'ROM_PROLOGUE_PHYSICAL';
+  portraitEvidence?: StoryPortraitBindingEvidence;
+  /** Always false. The remake intentionally does not implement Story RPG maps. */
+  mapRuntimeIncluded: false;
 }
 
 export interface StoryPanel {
   id: string;
   layout: PanelLayout;
-  background: string;              // /assets/backgrounds/NN_world.png
-  title?: string;                  // título de escena (ej: 'CAPÍTULO 1')
+  /** Physical GBC cutscene PNG under public/assets/cutscenes. */
+  background: string;
+  title?: string;
   subtitle?: string;
   characters?: StoryPortrait[];
   dialogue?: {
-    speaker: string;               // nombre del que habla
-    text: string;                  // texto (localizable vía i18n si aplica)
+    speaker: string;
+    text: string;
     side?: 'left' | 'right' | 'center';
-    emotion?: PortraitEmotion;     // expresión del HABLANTE (guion V2)
+    emotion?: PortraitEmotion;
   };
   effects?: ('flash' | 'zoom' | 'shake' | 'speed')[];
   transition?: 'fade' | 'slash' | 'zoom-in';
+  provenance?: StoryPanelProvenance;
 }
 
 export interface StoryChapterFlow {
+  /** Existing progression slot (1..32), NOT the displayed cartridge Story id. */
   chapter: number;
-  intro: StoryPanel[];   // viñetas antes del combate
-  outro?: StoryPanel[];  // viñetas después del combate
+  canonicalStoryId: string;
+  romStoryId: number;
+  displayLabel: string;
+  intro: StoryPanel[];
+  outro?: StoryPanel[];
 }
 
-// ─── Datos de viñetas por capítulo ─────────────────────────
-// Los capítulos 1-13 tienen viñetas específicas; el resto usa un generador
-// por defecto con el escenario del jefe (para no bloquear el progreso).
-
 const NAME: Record<string, string> = {
-  goku: 'Goku', piccolo: 'Piccolo', gohan: 'Gohan', vegeta: 'Vegeta',
-  krillin: 'Krillin', frieza: 'Freezer', cell: 'Cell', trunks: 'Trunks',
-  goten: 'Goten', buu: 'Buu', android_16: 'Android 16', android_17: 'Android 17',
+  goku: 'Goku', piccolo: 'Piccolo', gohan: 'Gohan', gohan_kid: 'Gohan', gohan_young: 'Gohan',
+  gohan_adult: 'Gohan', vegeta: 'Vegeta', krillin: 'Krillin', frieza: 'Freezer', cell: 'Cell',
+  cell_imperfect: 'Cell', cell_semi: 'Cell', cell_semi_perfect: 'Cell', cell_perfect: 'Cell',
+  trunks: 'Trunks', trunks_kid: 'Trunks', trunks_future: 'Trunks', goten: 'Goten',
+  buu: 'Buu', buu_base: 'Buu', buu_super: 'Buu', buu_kid: 'Kid Buu', kid_buu: 'Kid Buu',
+  majin_buu: 'Buu', android_16: 'Android 16', android_17: 'Android 17',
   android_18: 'Android 18', android_19: 'Android 19', android_20: 'Android 20',
-  ginyu: 'Ginyu', recoome: 'Reacoom', guldo: 'Guldo', jeice: 'Jeice', burter: 'Burter',
+  ginyu: 'Ginyu', recoome: 'Recoome', guldo: 'Guldo', jeice: 'Jeice', burter: 'Burter',
   nappa: 'Nappa', cell_jr: 'Cell Jr.', vegito: 'Vegito', gotenks: 'Gotenks',
-  gohan_kid: 'Gohan Kid', gohan_adult: 'Gohan Adult',
-  trunks_kid: 'Trunks Kid', trunks_future: 'Trunks Futuro',
+  yamcha: 'Yamcha', tien: 'Tien', yajirobe: 'Yajirobe', chi_chi: 'Chi-Chi', bulma: 'Bulma',
+  dende: 'Dende', nail: 'Nail', guru: 'Guru', roshi: 'Roshi', hercule: 'Hercule',
+  videl: 'Videl', babidi: 'Babidi', dabura: 'Dabura', supreme_kai: 'Supreme Kai',
+  kibito: 'Kibito', elder_kai: 'Elder Kai', baba: 'Baba', spopovich: 'Spopovich', yamu: 'Yamu',
 };
 
 export function characterName(id: string): string {
   return NAME[id] ?? id;
 }
 
-const bg = (n: number) => `/assets/backgrounds/${String(n).padStart(2, '0')}_world.png`;
-
-// ─── Cutscenes REALES del GBC (160×96, extraídos del paquete pixel-perfect) ───
-// Los fondos auténticos de las viñetas de historia (public/assets/cutscenes/).
-// Mapa por capítulo: el cutscene que mejor representa la escena de esa saga.
-const CS = (n: number) => {
-  const files: Record<number, string> = {
-    1: '005_grassy_valley_battlefield.png',
-    2: '006_stormy_grassy_valley.png',
-    3: '010_rocky_wasteland.png',
-    4: '012_goku_vs_great_ape_vegeta.png',
-    5: '016_namek_cliffs_and_water.png',
-    6: '017_namek_shoreline.png',
-    7: '020_ginyu_force_group_pose.png',
-    8: '021_frieza_spaceship_exterior.png',
-    9: '025_frieza_fires_energy_beam.png',
-    10: '026_namek_destruction_lightning.png',
-    11: '027_earth_tree_and_mountain_plain.png',
-    12: '032_rocky_plain.png',
-    13: '034_rocky_wasteland_overlook.png',
-    14: '039_kamis_lookout.png',
-    15: '035_rock_wall_and_rubble.png',
-    16: '040_coastal_grassland.png',
-    17: '042_cell_games_arena.png',
-    18: '044_cell_games_crater.png',
-    19: '042_cell_games_arena.png',
-    20: '046_cell_self_destruct_swollen.png',
-    21: '049_future_city_ruins.png',
-    22: '050_future_city_skyline.png',
-    23: '051_world_martial_arts_tournament_stadium.png',
-    24: '055_damaged_world_tournament_stadium.png',
-    25: '058_majin_vegeta_sacrifice_explosion.png',
-    26: '054_babidis_ship_crater.png',
-    27: '049_future_city_ruins.png',
-    28: '063_pink_energy_silhouette.png',
-    29: '059_gohan_on_sacred_world_of_kai.png',
-    30: '060_sacred_world_of_kai_purple_sky.png',
-    31: '065_giant_energy_sphere.png',
-    32: '066_kid_buu_vs_goku.png',
+/** Physical four-image DBZ recap shown only before Story 1. */
+export const INTRO_CUTSCENES: StoryPanel[] = STORY_PROLOGUE_CUTSCENES.map((id, index) => {
+  const asset = storyCutsceneAsset(id);
+  return {
+    id: `intro${index + 1}`,
+    layout: 'FULL',
+    background: asset.url,
+    title: index === 0 ? 'DRAGON BALL Z' : index === 3 ? 'THE STORY BEGINS…' : undefined,
+    subtitle: index === 0 ? 'LEGENDARY SUPER WARRIORS' : undefined,
+    effects: index === 3 ? ['zoom', 'flash'] : ['zoom'],
+    provenance: {
+      sequenceIndex: 1,
+      canonicalStoryId: 'PROLOGUE',
+      romStoryId: 1,
+      backgroundAssetId: asset.id,
+      backgroundEvidence: 'ROM_PROLOGUE_PHYSICAL',
+      mapRuntimeIncluded: false,
+    },
   };
-  return `/assets/cutscenes/${files[n] ?? '001_seven_dragon_balls_on_grass.png'}`;
-};
+});
 
-// Intro del GBC (recapitulación): las 4 viñetas de la introducción
-export const INTRO_CUTSCENES: StoryPanel[] = [
-  { id: 'intro1', layout: 'FULL', background: '/assets/cutscenes/001_seven_dragon_balls_on_grass.png', title: 'DRAGON BALL Z', subtitle: 'LEGENDARY SUPER WARRIORS', effects: ['zoom'] },
-  { id: 'intro2', layout: 'FULL', background: '/assets/cutscenes/002_kid_goku_riding_flying_nimbus.png', effects: ['zoom'] },
-  { id: 'intro3', layout: 'FULL', background: '/assets/cutscenes/003_goku_chichi_and_gohan_family.png', effects: ['zoom'] },
-  { id: 'intro4', layout: 'FULL', background: '/assets/cutscenes/004_goku_holds_raditz_for_special_beam_cannon.png', title: 'LA HISTORIA COMIENZA…', effects: ['zoom', 'flash'] },
-];
+function sideForSpeaker(
+  speakerSides: Map<string, 'left' | 'right'>,
+  character: string,
+): 'left' | 'right' {
+  const known = speakerSides.get(character);
+  if (known) return known;
+  const side = speakerSides.size % 2 === 0 ? 'left' : 'right';
+  speakerSides.set(character, side);
+  return side;
+}
 
-// Viñetas específicas (caps 1-13 con escenario propio)
-export const STORY_PANELS: Record<number, StoryChapterFlow> = {
-  1: {
-    chapter: 1,
-    intro: [
-      { id: 'c1p1', layout: 'FULL', background: bg(1), title: 'CAPÍTULO 1', subtitle: 'Entrenamiento', effects: ['zoom'], transition: 'zoom-in' },
-      { id: 'c1p2', layout: 'PORTRAIT_DIALOGUE', background: bg(1), characters: [{ character: 'piccolo', side: 'left' }, { character: 'gohan_kid', side: 'right' }], dialogue: { speaker: 'Piccolo', text: 'Gohan… entrena tu ki. ¡Te espera un gran poder!' } },
-      { id: 'c1p3', layout: 'SPLIT_2', background: bg(1), characters: [{ character: 'piccolo', side: 'left' }, { character: 'gohan_kid', side: 'right' }], dialogue: { speaker: 'Gohan', text: '¡Lo intentaré, Piccolo!' } },
-      { id: 'c1p4', layout: 'IMPACT', background: bg(1), title: '¡COMBATE!', subtitle: 'Gohan vs Piccolo', effects: ['flash', 'shake'], transition: 'slash' },
-    ],
-    outro: [
-      { id: 'c1o1', layout: 'PORTRAIT_DIALOGUE', background: bg(1), characters: [{ character: 'piccolo', side: 'left' }], dialogue: { speaker: 'Piccolo', text: 'Bien… ¡pero esto solo es el principio!' } },
-    ],
-  },
-  2: {
-    chapter: 2,
-    intro: [
-      { id: 'c2p1', layout: 'FULL', background: bg(2), title: 'CAPÍTULO 2', subtitle: 'Llegan los Saiyans', effects: ['zoom'] },
-      { id: 'c2p2', layout: 'PORTRAIT_DIALOGUE', background: bg(2), characters: [{ character: 'goku', side: 'center' }], dialogue: { speaker: 'Goku', text: '¡No dejaré que destruyan la Tierra!' } },
-      { id: 'c2p3', layout: 'IMPACT', background: bg(2), title: '¡COMBATE!', subtitle: 'Goku vs Nappa', effects: ['flash', 'shake'], transition: 'slash' },
-    ],
-  },
-  3: {
-    chapter: 3,
-    intro: [
-      { id: 'c3p1', layout: 'FULL', background: bg(3), title: 'CAPÍTULO 3', subtitle: 'Vegeta, el príncipe Saiyan', effects: ['zoom'] },
-      { id: 'c3p2', layout: 'SPLIT_2', background: bg(3), characters: [{ character: 'goku', side: 'left' }, { character: 'vegeta', side: 'right', emotion: 'angry' }], dialogue: { speaker: 'Vegeta', text: 'Soy Vegeta, el príncipe de los Saiyans. ¡Ríndete!' } },
-      { id: 'c3p3', layout: 'IMPACT', background: bg(3), title: '¡COMBATE!', subtitle: 'Goku vs Vegeta', effects: ['flash', 'shake'], transition: 'slash' },
-    ],
-  },
-  4: {
-    chapter: 4,
-    intro: [
-      { id: 'c4p1', layout: 'FULL', background: bg(4), title: 'CAPÍTULO 4', subtitle: 'Hacia Namek', effects: ['zoom'] },
-      { id: 'c4p2', layout: 'IMPACT', background: bg(4), title: '¡COMBATE!', subtitle: 'Gohan vs Vegeta', effects: ['flash', 'shake'], transition: 'slash' },
-    ],
-  },
-  5: {
-    chapter: 5,
-    intro: [
-      { id: 'c5p1', layout: 'FULL', background: bg(5), title: 'CAPÍTULO 5', subtitle: 'El planeta Namek', effects: ['zoom'] },
-      { id: 'c5p2', layout: 'IMPACT', background: bg(5), title: '¡COMBATE!', subtitle: 'Gohan vs Guldo', effects: ['flash', 'shake'], transition: 'slash' },
-    ],
-  },
-  6: {
-    chapter: 6,
-    intro: [
-      { id: 'c6p1', layout: 'FULL', background: bg(6), title: 'CAPÍTULO 6', subtitle: 'La fuerza de Reacoom', effects: ['zoom'] },
-      { id: 'c6p2', layout: 'IMPACT', background: bg(6), title: '¡COMBATE!', subtitle: 'Gohan vs Reacoom', effects: ['flash', 'shake'], transition: 'slash' },
-    ],
-  },
-  7: {
-    chapter: 7,
-    intro: [
-      { id: 'c7p1', layout: 'FULL', background: bg(7), title: 'CAPÍTULO 7', subtitle: 'Jeice y Burter', effects: ['zoom'] },
-      { id: 'c7p2', layout: 'SPLIT_2', background: bg(7), characters: [{ character: 'jeice', side: 'left' }, { character: 'burter', side: 'right' }], dialogue: { speaker: 'Burter', text: '¡Soy el más rápido del universo!' } },
-      { id: 'c7p3', layout: 'IMPACT', background: bg(7), title: '¡COMBATE!', subtitle: 'Gohan y Goku vs Jeice y Burter', effects: ['flash', 'shake'], transition: 'slash' },
-    ],
-  },
-  8: {
-    chapter: 8,
-    intro: [
-      { id: 'c8p1', layout: 'FULL', background: bg(8), title: 'CAPÍTULO 8', subtitle: 'Ginyu y su cuerpo robado', effects: ['zoom'] },
-      { id: 'c8p2', layout: 'IMPACT', background: bg(8), title: '¡COMBATE!', subtitle: 'Gohan vs Ginyu (Goku)', effects: ['flash', 'shake'], transition: 'slash' },
-    ],
-  },
-  9: {
-    chapter: 9,
-    intro: [
-      { id: 'c9p1', layout: 'FULL', background: bg(9), title: 'CAPÍTULO 9', subtitle: 'Freezer, el tirano galáctico', effects: ['zoom'] },
-      { id: 'c9p2', layout: 'SPLIT_2', background: bg(9), characters: [{ character: 'goku', side: 'left' }, { character: 'frieza', side: 'right', form: 'final', emotion: 'angry' }], dialogue: { speaker: 'Freezer', text: '¡Miserable Saiyan! ¡Te haré pedazos!' } },
-      { id: 'c9p3', layout: 'IMPACT', background: bg(9), title: '¡COMBATE!', subtitle: 'Goku vs Freezer', effects: ['flash', 'shake'], transition: 'slash' },
-    ],
-  },
-  10: {
-    chapter: 10,
-    intro: [
-      { id: 'c10p1', layout: 'FULL', background: bg(9), title: 'CAPÍTULO 10', subtitle: 'La furia de un Super Saiyan', effects: ['zoom', 'flash'] },
-      { id: 'c10p2', layout: 'IMPACT', background: bg(9), title: '¡COMBATE!', subtitle: 'Goku SSJ vs Freezer', effects: ['flash', 'shake'], transition: 'slash' },
-    ],
-  },
-  11: {
-    chapter: 11,
-    intro: [
-      { id: 'c11p1', layout: 'FULL', background: bg(7), title: 'CAPÍTULO 11', subtitle: 'El regreso a la Tierra', effects: ['zoom'] },
-      { id: 'c11p2', layout: 'IMPACT', background: bg(7), title: '¡COMBATE!', subtitle: 'Gohan vs Goku', effects: ['flash', 'shake'], transition: 'slash' },
-    ],
-  },
-  12: {
-    chapter: 12,
-    intro: [
-      { id: 'c12p1', layout: 'FULL', background: bg(8), title: 'CAPÍTULO 12', subtitle: 'Los Androides', effects: ['zoom'] },
-      { id: 'c12p2', layout: 'IMPACT', background: bg(8), title: '¡COMBATE!', subtitle: 'Goku vs Android 19', effects: ['flash', 'shake'], transition: 'slash' },
-    ],
-  },
-  13: {
-    chapter: 13,
-    intro: [
-      { id: 'c13p1', layout: 'FULL', background: bg(8), title: 'CAPÍTULO 13', subtitle: 'Android 20', effects: ['zoom'] },
-      { id: 'c13p2', layout: 'IMPACT', background: bg(8), title: '¡COMBATE!', subtitle: 'Goku vs Android 20', effects: ['flash', 'shake'], transition: 'slash' },
-    ],
-  },
-  14: {
-    chapter: 14,
-    intro: [
-      { id: 'c14p1', layout: 'FULL', background: bg(10), title: 'CAPÍTULO 14', subtitle: 'Cell, el bioandroide', effects: ['zoom'] },
-      { id: 'c14p2', layout: 'SPLIT_2', background: bg(10), characters: [{ character: 'piccolo', side: 'left', form: 'kami', emotion: 'grinding' }, { character: 'cell_imperfect', side: 'right' }], dialogue: { speaker: 'Piccolo', text: '¡Esta vez no huiré, Cell!' } },
-      { id: 'c14p3', layout: 'IMPACT', background: bg(10), title: '¡COMBATE!', subtitle: 'Piccolo vs Cell', effects: ['flash', 'shake'], transition: 'slash' },
-    ],
-  },
-  16: {
-    chapter: 16,
-    intro: [
-      { id: 'c16p1', layout: 'FULL', background: bg(8), title: 'CAPÍTULO 16', subtitle: 'Los Androides 16 y 18', effects: ['zoom'] },
-      { id: 'c16p2', layout: 'SPLIT_2', background: bg(8), characters: [{ character: 'goku', side: 'left', form: 'ssj' }, { character: 'android_18', side: 'right' }], dialogue: { speaker: 'Android 18', text: 'No me subestimes, Saiyan.' } },
-      { id: 'c16p3', layout: 'IMPACT', background: bg(8), title: '¡COMBATE!', subtitle: 'Goku SSJ vs Androides', effects: ['flash', 'shake'], transition: 'slash' },
-    ],
-  },
-  18: {
-    chapter: 18,
-    intro: [
-      { id: 'c18p1', layout: 'FULL', background: bg(10), title: 'CAPÍTULO 18', subtitle: 'La furia de Gohan SSJ2', effects: ['zoom', 'flash'] },
-      { id: 'c18p2', layout: 'SPLIT_2', background: bg(10), characters: [{ character: 'gohan_kid', side: 'left', form: 'ssj2', emotion: 'angry' }, { character: 'cell_jr', side: 'right' }], dialogue: { speaker: 'Gohan', text: '¡No tocaréis a mis amigos!' } },
-      { id: 'c18p3', layout: 'IMPACT', background: bg(10), title: '¡COMBATE!', subtitle: 'Gohan SSJ2 vs Cell Jr.', effects: ['flash', 'shake'], transition: 'slash' },
-    ],
-  },
-  25: {
-    chapter: 25,
-    intro: [
-      { id: 'c25p1', layout: 'FULL', background: bg(11), title: 'CAPÍTULO 25', subtitle: 'Majin Vegeta', effects: ['zoom'] },
-      { id: 'c25p2', layout: 'SPLIT_2', background: bg(11), characters: [{ character: 'goku', side: 'left', form: 'ssj2' }, { character: 'vegeta', side: 'right', form: 'majin', emotion: 'angry' }], dialogue: { speaker: 'Vegeta', text: '¡Goku… esta vez te aniquilaré!' } },
-      { id: 'c25p3', layout: 'IMPACT', background: bg(11), title: '¡COMBATE!', subtitle: 'Goku SSJ2 vs Majin Vegeta', effects: ['flash', 'shake'], transition: 'slash' },
-    ],
-  },
-  28: {
-    chapter: 28,
-    intro: [
-      { id: 'c28p1', layout: 'FULL', background: bg(12), title: 'CAPÍTULO 28', subtitle: 'Gotenks SSJ3', effects: ['zoom', 'flash'] },
-      { id: 'c28p2', layout: 'SPLIT_2', background: bg(12), characters: [{ character: 'gotenks', side: 'left', form: 'ssj3' }, { character: 'majin_buu', side: 'right', emotion: 'angry' }], dialogue: { speaker: 'Gotenks', text: '¡Soy el más fuerte del universo!' } },
-      { id: 'c28p3', layout: 'IMPACT', background: bg(12), title: '¡COMBATE!', subtitle: 'Gotenks SSJ3 vs Super Buu', effects: ['flash', 'shake'], transition: 'slash' },
-    ],
-  },
-  32: {
-    chapter: 32,
-    intro: [
-      { id: 'c32p1', layout: 'FULL', background: bg(13), title: 'CAPÍTULO 32', subtitle: 'Kid Buu', effects: ['zoom'] },
-      { id: 'c32p2', layout: 'SPLIT_2', background: bg(13), characters: [{ character: 'goku', side: 'left', form: 'ssj3' }, { character: 'kid_buu', side: 'right', emotion: 'angry' }], dialogue: { speaker: 'Goku', text: '¡Voy a acabar con esto… con la Genkidama!' } },
-      { id: 'c32p3', layout: 'IMPACT', background: bg(13), title: '¡COMBATE!', subtitle: 'Goku SSJ3 vs Kid Buu', effects: ['flash', 'shake'], transition: 'slash' },
-    ],
-  },
-};
-
-// Generador por defecto para caps 14-32 (escenario según la saga)
-// ═══ GUION CANÓNICO (V2 SIN RPG): el guion construye la intro de TODOS los
-// capítulos — título de escena → UNA viñeta de diálogo por línea (retrato +
-// emoción del hablante) → viñeta ¡COMBATE!. Los outros específicos se
-// conservan (resolución post-batalla). NARRADOR → caja neutra sobre fondo.
-export function panelsForChapter(chapter: number): StoryChapterFlow {
-  const specific = STORY_PANELS[chapter];
-  const outro = specific?.outro;
-  const script = STORY_SCRIPT[chapter];
-  const bgUrl = CS(chapter);   // cutscene REAL del capítulo (arte GBC de la ROM)
-
+/**
+ * Canonical dialogue-only panel flow.
+ *
+ * `sequenceIndex` is intentionally retained because battle/save tables already
+ * use 1..32. The canonical identity is resolved before selecting any text,
+ * portrait or cutscene, so sequence 21/22 are EX Story 1/2 and sequence 23 is
+ * Story 21. This prevents the historical EX→Buu dialogue shift.
+ */
+export function panelsForChapter(sequenceIndex: number): StoryChapterFlow {
+  const narrative = canonicalStoryNarrative(sequenceIndex);
+  const { identity } = narrative;
   const intro: StoryPanel[] = [];
-  if (chapter === 1) intro.push(...INTRO_CUTSCENES);
 
-  if (script) {
-    // 1) Título de escena (FULL) — saga + título del guion
+  if (sequenceIndex === 1) intro.push(...INTRO_CUTSCENES);
+
+  const openingAssetId = narrative.lines[0]?.backgroundAssetId ?? 1;
+  intro.push({
+    id: `${identity.id.toLowerCase()}-title`,
+    layout: 'FULL',
+    background: narrative.openingBackground,
+    title: identity.label.toUpperCase(),
+    subtitle: narrative.title,
+    effects: ['zoom'],
+    transition: 'zoom-in',
+    provenance: {
+      sequenceIndex,
+      canonicalStoryId: identity.id,
+      romStoryId: identity.romStoryId,
+      textEvidence: narrative.textEvidence,
+      backgroundAssetId: openingAssetId,
+      backgroundEvidence: narrative.lines[0]?.backgroundEvidence ?? 'SEMANTIC_PHYSICAL_ORDER',
+      mapRuntimeIncluded: false,
+    },
+  });
+
+  const speakerSides = new Map<string, 'left' | 'right'>();
+  for (const line of narrative.lines) {
+    if (!line.character) {
+      intro.push({
+        id: `${identity.id.toLowerCase()}-narrator-${line.index}`,
+        layout: 'FULL',
+        background: line.background,
+        subtitle: line.text,
+        transition: 'fade',
+        provenance: {
+          sequenceIndex,
+          canonicalStoryId: identity.id,
+          romStoryId: identity.romStoryId,
+          textEvidence: line.textEvidence,
+          backgroundAssetId: line.backgroundAssetId,
+          backgroundEvidence: line.backgroundEvidence,
+          mapRuntimeIncluded: false,
+        },
+      });
+      continue;
+    }
+
+    const side = sideForSpeaker(speakerSides, line.character);
     intro.push({
-      id: `s${chapter}t`, layout: 'FULL', background: bgUrl,
-      title: `CAPÍTULO ${chapter}`, subtitle: script.title, effects: ['zoom'], transition: 'zoom-in',
+      id: `${identity.id.toLowerCase()}-dialogue-${line.index}`,
+      layout: 'PORTRAIT_DIALOGUE',
+      background: line.background,
+      characters: [{
+        character: line.character,
+        form: line.form,
+        side,
+        emotion: line.emotion,
+      }],
+      dialogue: {
+        speaker: line.speaker,
+        text: line.text,
+        side,
+        emotion: line.emotion,
+      },
+      transition: 'fade',
+      provenance: {
+        sequenceIndex,
+        canonicalStoryId: identity.id,
+        romStoryId: identity.romStoryId,
+        textEvidence: line.textEvidence,
+        backgroundAssetId: line.backgroundAssetId,
+        backgroundEvidence: line.backgroundEvidence,
+        portraitEvidence: line.portraitEvidence,
+        mapRuntimeIncluded: false,
+      },
     });
-    // 2) Una viñeta por línea de diálogo (retrato del hablante + emoción)
-    //    LADO por hablante: el 1er personaje a la IZQUIERDA, el 2º distinto a
-    //    la DERECHA, y cada hablante conserva su lado (dinámica de conversación).
-    const speakerSides = new Map<string, 'left' | 'right'>();
-    script.dialogue.forEach((line, i) => {
-      if (line.character) {
-        let side = speakerSides.get(line.character);
-        if (!side) {
-          side = speakerSides.size === 0 ? 'left' : (speakerSides.size === 1 ? 'right' : (speakerSides.size % 2 === 0 ? 'left' : 'right'));
-          speakerSides.set(line.character, side);
-        }
-        intro.push({
-          id: `s${chapter}d${i}`, layout: 'PORTRAIT_DIALOGUE', background: bgUrl,
-          characters: [{ character: line.character, side }],
-          dialogue: { speaker: line.speaker, text: line.text, emotion: line.emotion },
-        });
-      } else {
-        // NARRADOR: caja neutra sobre el fondo (sin retrato)
-        intro.push({
-          id: `s${chapter}n${i}`, layout: 'FULL', background: bgUrl,
-          subtitle: line.text, effects: [], transition: 'fade',
-        });
-      }
-    });
-    // 3) Cierre: ¡COMBATE! (el guion fija el enfrentamiento)
-    intro.push({
-      id: `s${chapter}f`, layout: 'IMPACT', background: bgUrl,
-      title: '¡COMBATE!', subtitle: script.battle ?? undefined,
-      effects: ['flash', 'shake'], transition: 'slash',
-    });
-  } else {
-    // Fallback genérico (sin guion): título + combate
-    intro.push(
-      { id: `c${chapter}p1`, layout: 'FULL', background: CS(chapter), title: `CAPÍTULO ${chapter}`, subtitle: 'La saga continúa…', effects: ['zoom'] },
-      { id: `c${chapter}p2`, layout: 'IMPACT', background: CS(chapter), title: '¡COMBATE!', subtitle: '¡Enfréntate al enemigo!', effects: ['flash', 'shake'], transition: 'slash' },
-    );
   }
 
-  return { chapter, intro, outro };
+  const closingLine = narrative.lines[narrative.lines.length - 1];
+  intro.push({
+    id: `${identity.id.toLowerCase()}-battle`,
+    layout: 'IMPACT',
+    background: narrative.closingBackground,
+    title: 'BATTLE',
+    subtitle: narrative.battle ?? undefined,
+    effects: ['flash', 'shake'],
+    transition: 'slash',
+    provenance: {
+      sequenceIndex,
+      canonicalStoryId: identity.id,
+      romStoryId: identity.romStoryId,
+      backgroundAssetId: closingLine?.backgroundAssetId ?? openingAssetId,
+      backgroundEvidence: closingLine?.backgroundEvidence ?? 'SEMANTIC_PHYSICAL_ORDER',
+      mapRuntimeIncluded: false,
+    },
+  });
+
+  return {
+    chapter: sequenceIndex,
+    canonicalStoryId: identity.id,
+    romStoryId: identity.romStoryId,
+    displayLabel: identity.label,
+    intro,
+  };
 }
