@@ -25,7 +25,7 @@ import { compileBeamFamilyRuntimeCutover } from '../../beamBaseRomCutover';
 import { compileStandardDamageRuntimeCutover } from '../../standardDamageRomCutover';
 import { compileSupportRomRuntimeCutover } from '../../supportRomCutover';
 import { STAGE_PREP_BEATS, STAGE_PREP_TICKS } from '../clock/clock';
-import { ROM_CHARA_EXIT_MOTION, ROM_CHARA_ENTRY_MOTION, CHARA_SWITCH_PRE_WAIT_TICKS, type RomDiscreteMotion } from '../rom/romDescriptors';
+import { ROM_CHARA_EXIT_MOTION, ROM_CHARA_ENTRY_MOTION, ROM_RUSH_MOTION, CHARA_SWITCH_PRE_WAIT_TICKS, type RomDiscreteMotion } from '../rom/romDescriptors';
 import { segmentsTotalTicks, segmentsNetDelta, type RomMotionSegment } from '../../romMotionMath';
 import type { ProjectileVisualKind } from '../../actionProfiles';
 import type { BattleEvent, BattleActionDescriptor } from '../events/BattleEvent';
@@ -272,6 +272,14 @@ export function buildPresentationTimeline(input: PresentationInput): BattleTimel
           // OVERVIEW > IMPACT.
           add({ type: 'SCENE', tick: r(0), durationTicks: 40, mode: 'ACTION_DUEL', background: context.actionBackground }, env, action, fidelity);
           add({ type: 'FIGHTER_VISIBILITY', tick: r(0), role: 'TARGET', side: e.target, visible: true }, env, action, fidelity);
+          // M8.F1 — APPROACH REAL: el actor CORRE hacia el plano del rival con
+          // el motion ROM exacto (ROM_RUSH_MOTION +98px/25t, macro $1C) mientras
+          // hace la pose move_front. Antes solo se emitía la pose sin
+          // desplazamiento — el personaje cambiaba de frame pero no se movía.
+          {
+            const segs = charaMotionSegments(ROM_RUSH_MOTION, e.source);
+            add({ type: 'FIGHTER_MOTION', tick: r(0), durationTicks: segmentsTotalTicks(segs), side: e.source, kind: 'RUSH', deltaPx: segmentsNetDelta(segs).x, holdTicks: 0, segments: segs }, env, action, fidelity);
+          }
           add({ type: 'FIGHTER_POSE', tick: r(8), durationTicks: 6, role: 'ACTOR', side: e.source, pose: 'move_front' }, env, action, fidelity);   // approach
           add({ type: 'CAMERA', tick: r(8), action: 'TRACK' }, env, action, fidelity);
           add({ type: 'FIGHTER_POSE', tick: r(14), durationTicks: 6, role: 'ACTOR', side: e.source, pose: 'idle' }, env, action, fidelity);        // stop + idle
@@ -281,6 +289,13 @@ export function buildPresentationTimeline(input: PresentationInput): BattleTimel
           add({ type: 'CAMERA', tick: r(26), action: 'IMPACT' }, env, action, fidelity);
           add({ type: 'AUDIO', tick: r(26), cue: e.outcome === 'hit' ? 'hit' : e.outcome === 'block' ? 'block' : 'guard' }, env, action, fidelity);
           add({ type: 'FIGHTER_POSE', tick: r(34), durationTicks: 6, role: 'ACTOR', side: e.source, pose: 'idle' }, env, action, fidelity);        // recovery
+          // M8.F1 — RETORNO: el actor vuelve a su plano con el motion ROM
+          // inverso (el RUSH lo llevó al plano del rival; OVERVIEW espera al
+          // actor en su home). Simetría exacta del approach.
+          {
+            const segs = charaMotionSegments(ROM_RUSH_MOTION, e.source).map(seg => ({ ...seg, dxPerTick: -seg.dxPerTick }));
+            add({ type: 'FIGHTER_MOTION', tick: r(34), durationTicks: segmentsTotalTicks(segs), side: e.source, kind: 'RUSH', deltaPx: -segmentsNetDelta(charaMotionSegments(ROM_RUSH_MOTION, e.source)).x, holdTicks: 0, segments: segs }, env, action, fidelity);
+          }
           add({ type: 'SCENE', tick: r(40), durationTicks: 1, mode: 'OVERVIEW', background: context.overviewBackground }, env, action, fidelity);
           add({ type: 'FIGHTER_VISIBILITY', tick: r(40), role: 'TARGET', side: e.target, visible: true }, env, action, fidelity);
           add({ type: 'CAMERA', tick: r(40), action: 'RESET' }, env, action, fidelity);
