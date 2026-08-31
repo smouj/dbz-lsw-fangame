@@ -2648,8 +2648,8 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   background: linear-gradient(180deg, var(--panel-hi) 0%, var(--panel) 22%, var(--panel) 100%);
   border: 3px solid var(--border);
   box-shadow: inset 2px 2px 0 var(--border-lo), inset -2px -2px 0 var(--panel-lo), var(--shadow-3);
-  padding: var(--sp-4);
-  display: flex; flex-direction: column; gap: var(--sp-3);
+  padding: var(--sp-3);
+  display: flex; flex-direction: column; gap: var(--sp-2);
   overflow-y: auto;
 }
 
@@ -2771,11 +2771,11 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 .form-chip.active { border-color: var(--gold); color: var(--gold); background: #2a2a3a; box-shadow: inset 1px 1px 0 rgba(216,168,48,.25); }
 .form-chip-locked {
   background: var(--panel-lo);
-  border: 2px solid var(--border-lo);
-  color: rgba(242,235,217,.5);
+  border: 2px dashed var(--border-lo);
+  color: rgba(242,235,217,.45);
   font-family: var(--fpx);
   font-size: 9px;
-  padding: 7px 12px;
+  padding: 7px 10px;
   opacity: .85;
   flex: 1;
   min-width: 70px;
@@ -2784,7 +2784,8 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 4px;
+  gap: 3px;
+  cursor: not-allowed;
 }
 
 /* ─── Deck ─── */
@@ -3390,6 +3391,10 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 .versus-layout .btn-primary {
   margin-top: auto;
   width: 100%;
+  min-height: 34px;
+  font-size: 11px;
+  letter-spacing: 1px;
+  padding: 6px 16px;
 }
 
 /* Detalle personaje: sprite centrado con plataforma */
@@ -3532,20 +3537,33 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 
 .char-cell.char-locked {
   cursor: not-allowed;
-  opacity: 0.72;
-  filter: grayscale(0.6);
-  background: var(--panel-lo);
+  opacity: 0.55;
+  filter: grayscale(0.5) brightness(0.7);
+  background: rgba(10,14,20,.55);
+  border: 2px dashed var(--border-lo);
   justify-content: center;
-  gap: 8px;
+  gap: 6px;
   min-height: 108px;
 }
 
 .char-locked-icon {
   color: var(--dim);
   display: flex; align-items: center; justify-content: center;
-  width: 32px; height: 32px;
-  border: 2px solid var(--border);
-  background: var(--panel);
+  width: 28px; height: 28px;
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  background: rgba(5,8,14,.6);
+  opacity: 0.7;
+}
+
+.char-cell.char-locked .char-name {
+  font-size: 8px;
+  letter-spacing: 0.5px;
+  color: var(--text-dim, rgba(242,235,217,.4));
+}
+
+.char-cell.char-locked .char-forms {
+  display: none;
 }
 
 /* ─── Recompensa post-batalla ─── */

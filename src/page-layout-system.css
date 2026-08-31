@@ -581,21 +581,31 @@
 }
 .game-viewport .char-detail .btn-primary,
 .game-viewport .char-detail button.btn-primary {
-  min-height: clamp(36px, 5cqh, 44px) !important;
+  min-height: clamp(30px, 4cqh, 36px) !important;
   font-family: var(--fmenu) !important;
-  font-size: clamp(12px, 1.4cqw, 16px) !important;
-  letter-spacing: .04em !important;
+  font-size: clamp(10px, 1.1cqw, 13px) !important;
+  letter-spacing: .08em !important;
   border: 2px solid var(--page-accent) !important;
   margin-top: clamp(4px, .5cqh, 8px) !important;
+  padding: 5px 14px !important;
 }
 
 /* ─── Characters: locked cell visibility ────────────────── */
 .game-viewport .char-cell.locked {
-  opacity: .45 !important;
-  border: 1px solid var(--page-border) !important;
+  opacity: .55 !important;
+  filter: grayscale(.5) brightness(.7) !important;
+  border: 2px dashed var(--border-lo) !important;
+  background: rgba(10,14,20,.55) !important;
 }
 .game-viewport .char-cell.locked .char-name {
-  color: rgba(255,255,255,.3) !important;
+  color: rgba(242,235,217,.4) !important;
+  font-size: 8px !important;
+}
+.game-viewport .char-cell.locked .char-forms {
+  display: none !important;
+}
+.game-viewport .char-cell.locked .char-locked-icon {
+  opacity: .7 !important;
 }
 
 /* ─── Versus / Team Setup wrapper ───────────────────────── */
