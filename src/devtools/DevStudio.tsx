@@ -126,6 +126,14 @@ export function DevStudio({ onExit, onLaunchBattle }: DevStudioProps) {
   const [module, setModule] = useState<DevModuleId>(() => initialModule());
   const [pixelTarget, setPixelTarget] = useState<PixelArtTarget | null>(null);
   const [linkedTarget, setLinkedTarget] = useState<DevLinkedTarget | null>(null);
+  const [navOpen, setNavOpen] = useState(false);
+  const [compact, setCompact] = useState(() => window.matchMedia('(max-width: 900px)').matches);
+  useEffect(() => {
+    const query = window.matchMedia('(max-width: 900px)');
+    const update = () => { setCompact(query.matches); setNavOpen(false); };
+    query.addEventListener('change', update);
+    return () => query.removeEventListener('change', update);
+  }, []);
 
   // ═══ HEADERS ELIMINADOS (decisión del usuario) ═══
   // Los .dev-header están ocultos con display:none (ver styles.css).
@@ -150,6 +158,7 @@ export function DevStudio({ onExit, onLaunchBattle }: DevStudioProps) {
 
   const navigate = (id: DevModuleId) => {
     setModule(id);
+    setNavOpen(false);
     try {
       window.localStorage.setItem(DEV_MODULE_STORAGE_KEY, id);
       // Actualizar el hash sin perder el modo dev
@@ -171,13 +180,26 @@ export function DevStudio({ onExit, onLaunchBattle }: DevStudioProps) {
   };
 
   const goHome = () => {
-    try { window.location.hash = ''; } catch { /* noop */ }
+    try {
+      const url = new URL(window.location.href);
+      url.searchParams.delete('dev');
+      url.hash = '';
+      window.history.replaceState(null, '', url.toString());
+    } catch { /* noop */ }
     onExit();
   };
 
   return (
-    <div className="devstudio">
-      <aside className="dev-sidebar">
+    <div className={`devstudio${navOpen ? ' dev-nav-open' : ''}`} onKeyDown={event => {
+      if (event.key === 'Escape' && navOpen) { event.preventDefault(); setNavOpen(false); }
+    }}>
+      <div className="dev-mobile-bar">
+        <button type="button" aria-expanded={navOpen} aria-controls="dev-navigation" onClick={() => setNavOpen(open => !open)}>☰ Módulos</button>
+        <strong>{DEV_MODULES.find(item => item.id === module)?.label}</strong>
+        <button type="button" onClick={goHome} aria-label="Volver al juego"><ArrowLeft size={20} /></button>
+      </div>
+      {navOpen && <button type="button" className="dev-nav-backdrop" aria-label="Cerrar navegación" onClick={() => setNavOpen(false)} />}
+      <aside className="dev-sidebar" id="dev-navigation" inert={compact && !navOpen}>
         <div className="dev-logo">
           <img className="dev-logo-img" src="/logo-128.png" alt="" />
           <div className="dev-logo-text">
@@ -185,7 +207,7 @@ export function DevStudio({ onExit, onLaunchBattle }: DevStudioProps) {
             <small>Development Studio</small>
           </div>
         </div>
-        <nav className="dev-nav">
+        <nav className="dev-nav" aria-label="Módulos del Dev Studio">
           {DEV_MODULES.map((m, i) => {
             const Icon = m.icon;
             const prev = i > 0 ? DEV_MODULES[i - 1] : null;
@@ -197,6 +219,7 @@ export function DevStudio({ onExit, onLaunchBattle }: DevStudioProps) {
                 className={`dev-nav-item ${module === m.id ? 'active' : ''}`}
                 onClick={() => navigate(m.id)}
                 title={m.desc}
+                aria-current={module === m.id ? 'page' : undefined}
                 aria-label={`${m.label}: ${m.desc}`}>
                 <Icon className="dev-nav-icon" size={16} strokeWidth={1.8} />
                 <span className="dev-nav-label">{m.label}</span>
@@ -209,13 +232,13 @@ export function DevStudio({ onExit, onLaunchBattle }: DevStudioProps) {
           <button className="dev-exit" onClick={goHome}><ArrowLeft size={15} /> Volver al juego</button>
         </div>
       </aside>
-      <main className="dev-main" ref={mainRef}>
+      <main className="dev-main" ref={mainRef} inert={compact && navOpen}>
         {/* Slot FIJO del header: fuera del flujo de scroll. El useEffect
             mueve aquí el .dev-header de cada módulo (que vive dentro del
             panel scrolleable). El header NO puede desplazarse porque NO
             está dentro del contenedor que scrollea. */}
         <div className="dev-header-slot" />
-        <div className="dev-module">
+        <div className="dev-module" data-module={module}>
           {module === 'dashboard' && <DashboardModule onNavigate={navigate} />}
           {module === 'characters' && <CharactersModule onOpenModule={openLinkedModule} />}
           {module === 'cards' && <CardsModule />}

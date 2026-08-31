@@ -3,6 +3,11 @@ import React, { useState, useEffect, useRef, useCallback, useMemo, lazy, Suspens
 import { createRoot } from 'react-dom/client';
 import { createPortal } from 'react-dom';
 import './styles.css';
+import './game-pages.css';
+import './game-shell.css';
+import './devtools/dev-layout.css';
+import { GameShellSurface } from './components/GameShellSurface';
+import { GamePageHeader } from './components/GamePageHeader';
 import { applyHudTheme, loadHudTheme } from './data/hudTheme';
 import { applyHudLayout } from './data/hudLayout';
 import { applyHudButtonVars } from './data/hudAssets';
@@ -3816,162 +3821,80 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit, onRemat
 function MainMenu({ onNavigate }: { onNavigate: (s: Screen) => void }) {
   const { t, lang } = useLang();
   const [reward, setReward] = useState<number[] | null>(() => loadUnlocks().pendingReward);
-  const [selectedMenuIndex, setSelectedMenuIndex] = useState(0);
-  const [hoveredMenuIndex, setHoveredMenuIndex] = useState<number | null>(null);
-  const [keyboardMenuActive, setKeyboardMenuActive] = useState(false);
-
+  const navRef = useRef<HTMLElement>(null);
+  const rewardRef = useRef<HTMLDivElement>(null);
+  const progress = loadStoryProgress();
+  const chapter = CHAPTERS.find(c => c.id === Math.min(progress, CHAPTERS.length)) ?? CHAPTERS[0];
+  const prog = loadProgress();
+  const es = lang === 'es';
+  const items: Array<{ screen: Screen; label: string; desc: string; Icon: LucideIcon; art?: string }> = [
+    { screen: 'story', label: t('menu.story'), desc: es ? 'Tu próxima batalla empieza aquí' : 'Your next battle starts here', Icon: BookOpen },
+    { screen: 'versus', label: t('menu.battle'), desc: es ? 'Prepara tu equipo y lucha' : 'Build your team. Take the fight.', Icon: Swords, art: MENU_PORTRAITS_CUT.goku },
+    { screen: 'deck', label: t('menu.deck'), desc: es ? '20 cartas. Tu estrategia.' : '20 cards. Your strategy.', Icon: Library },
+    { screen: 'characters', label: t('menu.characters'), desc: es ? 'Guerreros, formas y poder' : 'Warriors, forms and power', Icon: Users, art: MENU_PORTRAITS_CUT.vegeta },
+    { screen: 'cards', label: t('menu.cards'), desc: es ? 'Explora tu colección' : 'Explore your collection', Icon: Sparkles },
+    { screen: 'settings', label: t('menu.settings'), desc: es ? 'Audio · Idioma · Pantalla' : 'Audio · Language · Display', Icon: Settings },
+  ];
+  useEffect(() => {
+    (reward ? rewardRef.current : navRef.current)?.querySelector<HTMLButtonElement>('button')?.focus({ preventScroll: true });
+  }, [reward]);
+  const navigate = (screen: Screen) => { Sfx.confirm(); onNavigate(screen); };
+  const onMenuKeyDown = (event: React.KeyboardEvent<HTMLElement>) => {
+    if (!['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(event.key)) return;
+    event.preventDefault();
+    const buttons = Array.from(navRef.current?.querySelectorAll<HTMLButtonElement>('button') ?? []);
+    const active = buttons.indexOf(document.activeElement as HTMLButtonElement);
+    // The focus graph follows the drawn panels: hero | battle / characters | deck / cards | settings.
+    const neighbors: Record<string, number[]> = {
+      ArrowRight: [1, 3, 4, 0, 0, 0], ArrowLeft: [3, 0, 0, 1, 2, 0],
+      ArrowDown: [5, 2, 5, 4, 5, 0], ArrowUp: [5, 5, 1, 5, 3, 2],
+    };
+    buttons[neighbors[event.key][Math.max(0, active)]]?.focus({ preventScroll: true });
+    Sfx.select();
+  };
   const claimReward = (cardId: number) => {
-    const u = loadUnlocks();
-    u.cards = [...new Set([...u.cards, cardId])];
-    u.pendingReward = null;
-    saveUnlocks(u);
+    const unlocks = loadUnlocks();
+    unlocks.cards = [...new Set([...unlocks.cards, cardId])];
+    unlocks.pendingReward = null;
+    saveUnlocks(unlocks);
     setReward(null);
     Sfx.confirm();
   };
-
-  // ── Tarjeta CONTINUAR: progreso real de la partida ──
-  const prog = loadProgress();
-  const storyProgress = loadStoryProgress();
-  const currentChapter = Math.min(storyProgress, CHAPTERS.length);
-  const ch = CHAPTERS.find(c => c.id === currentChapter);
-  // Retrato del héroe activo: el PORTRAIT de menú del GBC (40×56) recortado a
-  // transparencia (fondo eliminado) por defecto — el chibi de overworld 13×16
-  // escalado se veía borroso (bug reportado 2026-08-12). Fallbacks: retrato de
-  // batalla (32×24) y por último el overworld.
-  const heroForm = ch ? getForm(ch.player) : undefined;
-  const heroCharId = heroForm?.character
-    || (ch ? ch.player.replace(/_base|_young|_ssj.*|_kami|_ultimate|_future|_kid.*/g, '') : '');
-  const heroUrl = ch
-    ? (MENU_PORTRAITS_CUT[heroCharId] || MENU_PORTRAITS[heroCharId] || portraitFor(heroCharId, ch.player) || overworldUrl(ch.player))
-    : undefined;
-  const heroChar = heroCharId ? characterName(heroCharId) : '';
-  const pct = Math.round((storyProgress / CHAPTERS.length) * 100);
-  // Saga actual según el capítulo (para la tarjeta de progreso)
-  const sagaName = currentChapter <= 3 ? 'SAIYAN'
-    : currentChapter <= 10 ? 'NAMEK'
-    : currentChapter <= 22 ? 'ANDROIDES'
-    : 'MAJIN BUU';
-  const menuCopy = lang === 'es'
-    ? {
-      story: 'Saga, episodios y recompensas',
-      battle: 'Combate libre y desafios',
-      deck: 'Cartas, energia y estrategia',
-      characters: 'Formas, progreso y afinidad',
-      cards: 'Coleccion y rarezas',
-      settings: 'Audio, idioma y pantalla',
-      footer: 'v0.3 fanmade',
-    }
-    : {
-      story: 'Saga, episodes and rewards',
-      battle: 'Free battle and challenges',
-      deck: 'Cards, energy and strategy',
-      characters: 'Forms, progress and affinity',
-      cards: 'Collection and rarities',
-      settings: 'Audio, language and display',
-      footer: 'v0.3 fanmade',
-    };
-  const menuItems: Array<{ n: string; label: string; desc: string; screen: Screen; Icon: LucideIcon; tone?: string; secondary?: boolean; group?: 'modes' | 'collection' }> = [
-    { n: '01', label: t('menu.story'), desc: menuCopy.story, screen: 'story', Icon: BookOpen, group: 'modes' },
-    { n: '02', label: t('menu.battle'), desc: menuCopy.battle, screen: 'versus', Icon: Swords, tone: 'hot', group: 'modes' },
-    { n: '03', label: t('menu.deck'), desc: menuCopy.deck, screen: 'deck', Icon: Library, group: 'collection' },
-    { n: '04', label: t('menu.characters'), desc: menuCopy.characters, screen: 'characters', Icon: Users, group: 'collection' },
-    { n: '05', label: t('menu.cards'), desc: menuCopy.cards, screen: 'cards', Icon: Sparkles, group: 'collection' },
-    { n: '06', label: t('menu.settings'), desc: menuCopy.settings, screen: 'settings', Icon: Settings, secondary: true },
-  ];
-  const keyboardVisualMenuIndex = keyboardMenuActive && hoveredMenuIndex === null ? selectedMenuIndex : null;
-  const onMenuKeyDown = (ev: React.KeyboardEvent<HTMLDivElement>) => {
-    if (ev.key === 'ArrowDown' || ev.key === 'ArrowUp') {
-      ev.preventDefault();
-      Sfx.select();
-      setKeyboardMenuActive(true);
-      setHoveredMenuIndex(null);
-      setSelectedMenuIndex(i => {
-        const dir = ev.key === 'ArrowDown' ? 1 : -1;
-        return (i + dir + menuItems.length) % menuItems.length;
-      });
-    }
-    if (ev.key === 'Enter' || ev.key === ' ') {
-      ev.preventDefault();
-      Sfx.confirm();
-      onNavigate(menuItems[selectedMenuIndex].screen);
-    }
-  };
-
-  return (
-    <div className="menu-screen">
-      <div className="menu-bg" />
-      {/* Recompensa post-batalla */}
-      {reward && reward.length > 0 && (
-        <div className="reward-overlay">
-          <div className="reward-panel">
-            <div className="reward-title">CHOOSE REWARD CARD</div>
-            <div className="reward-cards">
-              {reward.map(cardId => {
-                const card = getCard(cardId)!;
-                return (
-                  <button key={cardId} className="reward-card" onClick={() => claimReward(cardId)}>
-                    <img className="reward-card-img" src={`/assets/cards/icons/card_${String(cardId).padStart(3, '0')}.png`} alt="" />
-                    <div className="reward-card-name">{card.name}</div>
-                    <div className="reward-card-type">{CARD_TYPE_NAMES[card.type]}</div>
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-        </div>
-      )}
-
-      <div className="menu-content" tabIndex={0} onKeyDown={onMenuKeyDown}>
-        <img className="menu-logo-title" src="/logo-dbz-title.png" alt="DRAGON BALL Z" />
-        <h2 className="menu-subtitle">{t('menu.subtitle')}</h2>
-
-        {/* Bloque hero integrado en la banda izquierda, sin ventana exterior. */}
-        <button className="menu-continue-card" onClick={() => { Sfx.confirm(); onNavigate('battle'); }}>
-          <span className="mc-play">▶</span>
-          <span className="mc-body">
-            <span className="mc-kicker">SAGA {sagaName} · CAPÍTULO {currentChapter}</span>
-            <span className="mc-title">{t('menu.continue')}</span>
-            <span className="mc-chapter">{ch ? t(ch.nameKey).toUpperCase() : '—'}</span>
-            <span className="mc-progress-line">
-              <span className="mc-progress-track"><span className="mc-progress-fill" style={{ width: `${pct}%` }} /></span>
-              <span className="mc-percent">{pct}%</span>
-            </span>
-            <span className="mc-meta">{heroChar} · Nv. {prog.level}</span>
-          </span>
-          {heroUrl && (
-            <span className="mc-hero-wrap">
-              <img className="mc-hero" src={heroUrl} alt="" />
-              <span className="mc-hero-name">{heroChar}</span>
-            </span>
-          )}
-        </button>
-
-        <nav className="menu-nav" aria-label="Main menu" onMouseLeave={() => setHoveredMenuIndex(null)}>
-          {menuItems.map(({ n, label, desc, screen, Icon, tone, secondary, group }, index) => (
-            <button
-              key={screen}
-              className={`menu-item ${tone ? `tone-${tone}` : ''} ${secondary ? 'menu-item-settings' : ''} ${group ? `group-${group}` : ''} ${index === hoveredMenuIndex ? 'selected' : ''} ${index === keyboardVisualMenuIndex ? 'keyboard-selected' : ''}`}
-              onMouseEnter={() => { setHoveredMenuIndex(index); setKeyboardMenuActive(false); }}
-              onMouseLeave={() => setHoveredMenuIndex(null)}
-              onFocus={() => { setSelectedMenuIndex(index); setKeyboardMenuActive(true); }}
-              onClick={() => { Sfx.select(); onNavigate(screen); }}
-              aria-current={index === keyboardVisualMenuIndex ? 'true' : undefined}
-            >
-              <span className="mi-num">{n}</span>
-              <span className="mi-icon"><Icon size={18} strokeWidth={2.4} /></span>
-              <span className="mi-copy">
-                <span className="mi-label">{label}</span>
-                <span className="mi-desc">{desc}</span>
-              </span>
-              <ChevronRight className="mi-arrow" size={18} strokeWidth={2.8} />
-            </button>
-          ))}
-        </nav>
-
-        <div className="menu-footer">{menuCopy.footer}</div>
-      </div>
-    </div>
-  );
+  return <main className="shell-menu">
+    <header className="shell-masthead">
+      <img src="/logo-dbz-title.png" className="shell-brand" alt="Dragon Ball Z" />
+      <div className="shell-edition"><span>LEGENDARY SUPER WARRIORS</span><strong>{es ? 'ELIGE TU HISTORIA' : 'CHOOSE YOUR STORY'}</strong></div>
+      <div className="shell-player"><span>{es ? 'GUERRERO' : 'WARRIOR'}</span><strong>LV. {prog.level.toString().padStart(2, '0')}</strong></div>
+    </header>
+    <nav className="shell-panels" ref={navRef} aria-label={es ? 'Menú principal' : 'Main menu'} onKeyDown={onMenuKeyDown}>
+      {items.map(({ screen, label, desc, Icon, art }, index) => <button key={screen} type="button"
+        className={`shell-panel shell-panel-${screen}`} data-screen={screen} onClick={() => navigate(screen)}>
+        <span className="shell-panel-index">0{index + 1}</span>
+        <Icon className="shell-panel-icon" aria-hidden="true" />
+        {art && <img className="shell-panel-art" src={art} alt="" draggable={false} />}
+        <span className="shell-panel-copy"><strong>{label}</strong><span>{desc}</span></span>
+        {screen === 'story' && <span className="shell-story-progress">
+          <span>{es ? 'CAPÍTULO' : 'CHAPTER'} {String(chapter.id).padStart(2, '0')} / {CHAPTERS.length}</span>
+          <strong>{t(chapter.nameKey)}</strong>
+          <span className="shell-story-cta">{t('menu.continue')} <ChevronRight size={22} aria-hidden="true" /></span>
+        </span>}
+        {screen !== 'story' && <ChevronRight className="shell-panel-arrow" aria-hidden="true" />}
+      </button>)}
+    </nav>
+    <footer className="shell-footer"><span>DBZ LSW Fangame · FAN GAME</span><span>↑ ↓ ← → {es ? 'NAVEGAR' : 'NAVIGATE'} <b>ENTER</b> {es ? 'ELEGIR' : 'SELECT'}</span></footer>
+    {reward && reward.length > 0 && <div className="reward-overlay"><div className="reward-panel" ref={rewardRef} role="dialog" aria-modal="true" aria-labelledby="reward-title"
+      onKeyDown={event => {
+        if (event.key !== 'Tab') return;
+        const buttons = Array.from(rewardRef.current?.querySelectorAll<HTMLButtonElement>('button') ?? []);
+        const next = (buttons.indexOf(document.activeElement as HTMLButtonElement) + (event.shiftKey ? -1 : 1) + buttons.length) % buttons.length;
+        event.preventDefault(); buttons[next]?.focus();
+      }}>
+      <h2 className="reward-title" id="reward-title">{es ? 'ELIGE TU RECOMPENSA' : 'CHOOSE YOUR REWARD'}</h2>
+      <div className="reward-cards">{reward.map(id => { const card = getCard(id)!; return <button key={id} className="reward-card" onClick={() => claimReward(id)}>
+        <img className="reward-card-img" src={cardIconUrl(id)} alt="" /><strong className="reward-card-name">{card.name}</strong><span className="reward-card-type">{CARD_TYPE_NAMES[card.type]}</span>
+      </button>; })}</div>
+    </div></div>}
+  </main>;
 }
 
 // ═══════════════════════════════════════════════════════════
@@ -4192,14 +4115,12 @@ function StoryScreen({ onNavigate, onStartChapter }: {
 
   return (
     <div className="page-screen story-screen">
-      <div className="page-header">
-        <button className="btn-back" onClick={() => onNavigate('main')}><ArrowLeft size={14} /></button>
-        <h1 className="page-title">{t('story.title')}</h1>
+      <GamePageHeader title={t('story.title')} onBack={() => onNavigate('main')}>
         <div className="story-progress">
           <span className="story-progress-num">{progress}/{total}</span>
           <span className="story-progress-bar"><span style={{ width: `${pct}%` }} /></span>
         </div>
-      </div>
+      </GamePageHeader>
 
       {/* Pestañas de sagas (spec §6) */}
       <div className="saga-tabs">
@@ -4225,7 +4146,7 @@ function StoryScreen({ onNavigate, onStartChapter }: {
             const boss = overworldUrl(ch.enemy);
             const hero = overworldUrl(ch.player);
             return (
-              <div key={ch.id}
+              <button type="button" key={ch.id} disabled={!unlocked} aria-pressed={isSel}
                 className={`chapter-node ${isSel ? 'active' : ''} ${unlocked ? 'unlocked' : 'locked'} ${done ? 'done' : ''}`}
                 onClick={() => unlocked && (Sfx.select(), setSelected(ch.id))}>
                 <div className="chapter-icon">{unlocked ? ch.id : <Lock size={14} />}</div>
@@ -4244,7 +4165,7 @@ function StoryScreen({ onNavigate, onStartChapter }: {
                     : isSel ? <ChevronRight size={14} />
                     : <span className="chapter-num-tag">{String(ch.id).padStart(2, '0')}</span>}
                 </div>
-              </div>
+              </button>
             );
           })}
           <div className="story-route-footer">
@@ -4327,7 +4248,9 @@ function StorySceneScreen({ chapter, phase, onFinish, onNavigate }: {
   useEffect(() => {
     setChars(0);
     if (!fullText) return;
-    const spd = Math.max(14, GAMEPLAY_CONFIG.storyTextSpeedMs);
+    let fast = false;
+    try { fast = localStorage.getItem('dbzlsw.textSpeed') === 'fast'; } catch { /* unavailable storage */ }
+    const spd = Math.max(14, GAMEPLAY_CONFIG.storyTextSpeedMs / (fast ? 2 : 1));
     let i = 0;
     const tm = setInterval(() => {
       i += 1;
@@ -4482,11 +4405,7 @@ function CharactersScreen({ onNavigate, onSelectFighter }: {
 
   return (
     <div className="page-screen characters-screen">
-      <div className="page-header">
-        <button className="btn-back" onClick={() => onNavigate('main')}><ArrowLeft size={14} /></button>
-        <h1 className="page-title">{t('characters.title')}</h1>
-        <div className="page-spacer" />
-      </div>
+      <GamePageHeader title={t('characters.title')} onBack={() => onNavigate('main')} />
       <div className="characters-layout">
         {/* Grid de personajes: solo desbloqueados; bloqueados con candado */}
         <div className="char-grid">
@@ -4516,6 +4435,7 @@ function CharactersScreen({ onNavigate, onSelectFighter }: {
 
         {/* Detalle */}
         <div className="char-detail ui-sidebar">
+          <div className="char-detail-scroll">
           <div className="char-detail-header">
             <div className={`char-detail-sprite-wrap ${transformFx ? 'transforming' : ''}`} key={transformFx}>
               {transformFx > 0 && <div className="transform-flash" />}
@@ -4570,6 +4490,7 @@ function CharactersScreen({ onNavigate, onSelectFighter }: {
             })}
           </div>
 
+          </div>
           {selUnlocked && <button className="btn-primary" onClick={() => onSelectFighter(selected)}>{t('common.useInBattle')}</button>}
           {!selUnlocked && <div className="deck-warning">DEFEAT THIS FIGHTER TO UNLOCK</div>}
         </div>
@@ -4641,26 +4562,25 @@ function DeckScreen({ onNavigate }: { onNavigate: (s: Screen) => void }) {
 
   return (
     <div className="page-screen deck-screen">
-      <div className="page-header">
-        <button className="btn-back" onClick={() => onNavigate('main')}><ArrowLeft size={14} /></button>
-        <h1 className="page-title">{t('deck.title')}</h1>
+      <GamePageHeader title={t('deck.title')} onBack={() => onNavigate('main')}>
         <div className="deck-count">{deck.length}/{DECK_SIZE}</div>
-      </div>
+      </GamePageHeader>
 
       <div className="deck-layout">
         {/* Colección */}
         <div className="deck-collection">
           <div className="deck-toolbar">
-            <input className="deck-search" placeholder={t('deck.search')} value={search}
+            <input className="deck-search" aria-label={t('deck.search')} placeholder={t('deck.search')} value={search}
               onChange={e => setSearch(e.target.value)} />
             <div className="deck-filters">
               {(['all', 'command', 'damage', 'beam', 'support', 'defense', 'special'] as const).map(tp => (
-                <button key={tp} className={`filter-chip ${filter === tp ? 'active' : ''}`}
+                <button key={tp} aria-pressed={filter === tp} className={`filter-chip ${filter === tp ? 'active' : ''}`}
                   onClick={() => setFilter(tp)}>{tp === 'all' ? t('deck.all') : CARD_TYPE_NAMES[tp]}</button>
               ))}
             </div>
           </div>
           <div className="card-collection-grid">
+            {filtered.length === 0 && <p className="shell-empty-state">{search ? `No cards match “${search}”.` : 'No available cards in this category.'}</p>}
             {filtered.map(card => (
               <CardVisual key={card.id} card={card} onClick={() => addCard(card)} small />
             ))}
@@ -4689,7 +4609,7 @@ function DeckScreen({ onNavigate }: { onNavigate: (s: Screen) => void }) {
                   <span className="deck-row-icon">{(() => { const I = TYPE_ICONS[card.type]; return <I size={14} />; })()}</span>
                   <span className="deck-row-name" style={{ color: CARD_COLORS[card.type] }}>{card.name}</span>
                   <span className="deck-row-atk">{card.atk > 0 ? `ATK ${card.atk}` : ''}</span>
-                  <button className="deck-row-remove" onClick={() => removeCard(cardId)}><X size={10} /></button>
+                  <button className="deck-row-remove" aria-label={`Remove ${card.name}`} onClick={() => removeCard(cardId)}><X size={10} /></button>
                 </div>
               );
             })}
@@ -4725,17 +4645,15 @@ function CardsScreen({ onNavigate }: { onNavigate: (s: Screen) => void }) {
 
   return (
     <div className="page-screen cards-screen">
-      <div className="page-header">
-        <button className="btn-back" onClick={() => onNavigate('main')}><ArrowLeft size={14} /></button>
-        <h1 className="page-title">{t('cards.title')}</h1>
+      <GamePageHeader title={t('cards.title')} onBack={() => onNavigate('main')}>
         <div className="deck-count">{owned.size}/{CARDS.length}</div>
-      </div>
+      </GamePageHeader>
       <div className="cards-layout">
         <div className="cards-collection-panel">
           <div className="deck-toolbar cards-toolbar">
             <div className="deck-filters">
               {(['all', 'command', 'damage', 'beam', 'support', 'defense', 'special'] as const).map(tp => (
-                <button key={tp} className={`filter-chip ${filter === tp ? 'active' : ''}`}
+                <button key={tp} aria-pressed={filter === tp} className={`filter-chip ${filter === tp ? 'active' : ''}`}
                   onClick={() => setFilter(tp)}>{tp === 'all' ? t('deck.all') : CARD_TYPE_NAMES[tp]}</button>
               ))}
             </div>
@@ -4798,13 +4716,24 @@ function SettingsScreen({ onNavigate }: { onNavigate: (s: Screen) => void }) {
   const { t, lang, setLang } = useLang();
   const [volume, setVolumeState] = useState(() => {
     try {
-      const raw = Number(localStorage.getItem('dbzlsw.volume'));
+      const raw = Number(localStorage.getItem('dbzlsw.volume') ?? '70');
       return Number.isFinite(raw) && raw >= 0 && raw <= 100 ? raw : 70;
     } catch { return 70; }
   });
   const [sfx, setSfxState] = useState(() => { try { return localStorage.getItem('dbzlsw.sfx') !== 'off'; } catch { return true; } });
   const [music, setMusicState] = useState(() => { try { return localStorage.getItem('dbzlsw.music') !== 'off'; } catch { return true; } });
-  const [speed, setSpeed] = useState<'normal' | 'fast'>('normal');
+  const [speed, setSpeedState] = useState<'normal' | 'fast'>(() => {
+    try { return localStorage.getItem('dbzlsw.textSpeed') === 'fast' ? 'fast' : 'normal'; } catch { return 'normal'; }
+  });
+  const setSpeed = (value: 'normal' | 'fast') => {
+    setSpeedState(value);
+    try { localStorage.setItem('dbzlsw.textSpeed', value); } catch { /* unavailable storage */ }
+  };
+  useEffect(() => {
+    const sync = () => setScreenModeState(document.fullscreenElement ? 'fullscreen' : 'windowed');
+    document.addEventListener('fullscreenchange', sync);
+    return () => document.removeEventListener('fullscreenchange', sync);
+  }, []);
   const [screenMode, setScreenModeState] = useState<'windowed' | 'fullscreen'>(() => document.fullscreenElement ? 'fullscreen' : 'windowed');
 
   useEffect(() => {
@@ -4832,29 +4761,24 @@ function SettingsScreen({ onNavigate }: { onNavigate: (s: Screen) => void }) {
     setMusicEnabled(v);
     if (v) playMusic(musicForScreen('settings'));
   };
-  const setScreenMode = (mode: 'windowed' | 'fullscreen') => {
-    setScreenModeState(mode);
-    if (mode === 'fullscreen') {
-      void document.documentElement.requestFullscreen?.();
-    } else if (document.fullscreenElement) {
-      void document.exitFullscreen?.();
-    }
+  const setScreenMode = async (mode: 'windowed' | 'fullscreen') => {
+    try {
+      if (mode === 'fullscreen') await document.documentElement.requestFullscreen?.();
+      else if (document.fullscreenElement) await document.exitFullscreen?.();
+    } catch { /* Keep the displayed state in sync if the browser denies fullscreen. */ }
+    setScreenModeState(document.fullscreenElement ? 'fullscreen' : 'windowed');
   };
 
   return (
     <div className="page-screen settings-screen">
-      <div className="page-header">
-        <button className="btn-back" onClick={() => onNavigate('main')}><ArrowLeft size={14} /></button>
-        <h1 className="page-title">{t('settings.title')}</h1>
-        <div className="page-spacer" />
-      </div>
+      <GamePageHeader title={t('settings.title')} onBack={() => onNavigate('main')} />
       <div className="settings-list">
         {/* ── IDIOMA / LANGUAGE ── */}
         <div className="setting-row language-row">
           <span className="setting-label"><Languages size={12} /> {t('settings.language')}</span>
           <div className="language-grid">
             {LANGUAGES.map(l => (
-              <button key={l.code} className={`filter-chip lang-chip ${lang === l.code ? 'active' : ''}`}
+              <button key={l.code} aria-pressed={lang === l.code} className={`filter-chip lang-chip ${lang === l.code ? 'active' : ''}`}
                 onClick={() => { setLang(l.code); Sfx.confirm(); }}>
                 <span className="lang-tag">{l.tag}</span> {l.name}
               </button>
@@ -4864,19 +4788,19 @@ function SettingsScreen({ onNavigate }: { onNavigate: (s: Screen) => void }) {
 
         <div className="setting-row">
           <span className="setting-label"><Volume2 size={12} /> {t('settings.bgmVolume')}</span>
-          <input type="range" min={0} max={100} value={volume}
+          <input type="range" aria-label={t('settings.bgmVolume')} min={0} max={100} value={volume}
             onChange={e => setVolume(Number(e.target.value))} />
           <span className="setting-value">{volume}%</span>
         </div>
         <div className="setting-row">
           <span className="setting-label"><Zap size={12} /> {t('settings.soundFx')}</span>
-          <button className={`toggle ${sfx ? 'on' : ''}`} onClick={() => setSfx(!sfx)}>
+          <button aria-pressed={sfx} className={`toggle ${sfx ? 'on' : ''}`} onClick={() => setSfx(!sfx)}>
             {sfx ? t('settings.on') : t('settings.off')}
           </button>
         </div>
         <div className="setting-row">
           <span className="setting-label"><Music size={12} /> Música (BSO)</span>
-          <button className={`toggle ${music ? 'on' : ''}`} onClick={() => setMusic(!music)}>
+          <button aria-pressed={music} className={`toggle ${music ? 'on' : ''}`} onClick={() => setMusic(!music)}>
             {music ? t('settings.on') : t('settings.off')}
           </button>
         </div>
@@ -4921,11 +4845,7 @@ function TeamSetupScreen({ onNavigate, onStartVersus }: {
   const [enemyForm, setEnemyForm] = useState('piccolo_base');
   return (
     <div className="page-screen versus-screen setup-screen-wrap">
-      <div className="page-header">
-        <button className="btn-back" onClick={() => onNavigate('main')}><ArrowLeft size={14} /></button>
-        <h1 className="page-title">{t('versus.title')}</h1>
-        <div className="page-spacer" />
-      </div>
+      <GamePageHeader title={t('versus.title')} onBack={() => onNavigate('main')} />
       {/* Selector de rival (versus) — compacto; el foco del setup es el equipo */}
       <div className="setup-enemy-row">
         <span className="setup-enemy-label">OPPONENT</span>
@@ -5158,7 +5078,7 @@ function AppInner() {
   };
 
   if (inDev && DevStudio) {
-    return <DevStudio
+    return <Suspense fallback={<div className="dev-loading" role="status">Loading Development Studio…</div>}><DevStudio
       onExit={() => setInDev(false)}
       onLaunchBattle={(playerFormId, enemyFormId, chapter) => {
         if (loadUnlocks().starterDeck === null) {
@@ -5178,11 +5098,11 @@ function AppInner() {
           window.history.replaceState(null, '', url.toString());
         } catch { /* noop */ }
       }}
-    />;
+    /></Suspense>;
   }
 
   if (needsStarter) {
-    return <StarterScreen onDone={() => setNeedsStarter(false)} />;
+    return <GameViewport><GameShellSurface><StarterScreen onDone={() => setNeedsStarter(false)} /></GameShellSurface></GameViewport>;
   }
 
   const screenEl = (() => {
@@ -5203,7 +5123,9 @@ function AppInner() {
   // Transición de entrada por pantalla (fade + slide sutil, estilo GBC)
   return (
     <GameViewport>
-      <div key={screen === 'battle' ? `battle-${battleKey}` : screen} className="screen-enter">{screenEl}</div>
+      <div key={screen === 'battle' ? `battle-${battleKey}` : screen} className="screen-enter">
+        {screen === 'battle' ? screenEl : <GameShellSurface onBack={screen === 'main' ? undefined : () => setScreen(screen === 'storyScene' ? 'story' : 'main')}>{screenEl}</GameShellSurface>}
+      </div>
       <GlobalTooltip />
     </GameViewport>
   );

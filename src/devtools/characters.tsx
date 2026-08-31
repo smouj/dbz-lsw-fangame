@@ -114,7 +114,9 @@ interface RomPhysicalFrame {
   physicalId: string;
   file: string;
   rawCanvasFile?: string;
-  resourceId: number;
+  resourceId: number | null;
+  animationBank?: number;
+  resourceBase?: number;
   resourceHex: string;
   visualFrameId: number;
   width: number;
@@ -234,8 +236,9 @@ function frameOccurrenceLabel(frame: Pick<RomPhysicalFrame, 'occurrences'>): str
 }
 
 function physicalFrameProvenance(frame: RomPhysicalFrame, formId: string): Record<string, string | number> {
-  const animationBank = catalogAnimationBank(frame.resourceId);
-  const resourceBase = catalogResourceBase(frame.resourceId);
+  // Bank $61 frames have a direct bank/base identity and no catalog resource id.
+  const animationBank = frame.animationBank ?? (frame.resourceId == null ? null : catalogAnimationBank(frame.resourceId));
+  const resourceBase = frame.resourceBase ?? (frame.resourceId == null ? null : catalogResourceBase(frame.resourceId));
   const first = frame.occurrences[0];
   const metaspriteEntry = frame.metasprite?.provenance?.entryAddress;
   const graphicsEntry = frame.graphics?.provenance?.entryAddress ?? frame.graphics?.provenance?.layoutAddress;

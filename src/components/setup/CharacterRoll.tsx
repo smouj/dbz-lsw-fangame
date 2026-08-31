@@ -105,6 +105,7 @@ export function CharacterRoll({ items, selectedIndex, onSelect, disabled }: Char
   // desde el TeamSetup (la pantalla completa es navegable sin ratón).
   const onKeyDown = useCallback((e: KeyboardEvent) => {
     if (disabled || items.length === 0) return;
+    if (!(e.target instanceof HTMLElement) || !e.target.closest('.setup-roll')) return;
     if (e.key === 'ArrowRight') {
       e.preventDefault();
       onSelect((safeIndex + 1) % items.length);
@@ -144,7 +145,7 @@ export function CharacterRoll({ items, selectedIndex, onSelect, disabled }: Char
   const selectNext = () => { if (!disabled && items.length > 0) onSelect((safeIndex + 1) % items.length); };
 
   return (
-    <div className={`setup-roll ${rolling ? 'setup-roll-rolling' : ''}`} data-testid="character-roll">
+    <div className={`setup-roll ${rolling ? 'setup-roll-rolling' : ''}`} data-testid="character-roll" tabIndex={0} aria-label="Character selection">
       <button type="button" className="setup-roll-nav setup-roll-nav-left" onClick={selectPrev} disabled={disabled} aria-label="Previous character">
         <ChevronLeft size={18} strokeWidth={2.5} />
       </button>
