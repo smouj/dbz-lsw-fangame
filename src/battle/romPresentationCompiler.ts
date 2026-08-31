@@ -231,7 +231,7 @@ function compileStep(
           cues.push({
             type: 'ROM_PENDING',
             tick: cursor,
-            reason: `invalid sequence ${sequence} for resource 0x${resource.toString(16).padStart(2, '0')} (sequenceCount=${sequenceCount})`,
+            reason: `invalid sequence ${sequence} out of range for resource 0x${resource.toString(16).padStart(2, '0')} (sequenceCount=${sequenceCount})`,
             boundary: 'STATIC',
           });
           return { cues, advanceTicks: 0 };
