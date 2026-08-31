@@ -984,6 +984,31 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 .menu-item-settings .mi-label { font-size: 18px; color: rgba(242,235,217,.78); }
 .menu-item-settings .mi-desc { font-size: 13px; }
 
+/* ─── Jerarquía del menú (spec): MODOS > COLECCIÓN > AJUSTES ─── */
+.menu-nav-entry {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.menu-group-label {
+  font-family: var(--fpx);
+  font-size: 9px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: rgba(246,199,68,.55);
+  padding: 8px 2px 2px 8px;
+  text-shadow: 1px 1px 0 #000;
+}
+/* Los modos de juego (Historia/Batalla) tienen mayor peso que la colección. */
+.menu-item.group-modes {
+  min-height: clamp(40px, 6.4cqh, 58px);
+}
+.menu-item.group-modes .mi-label { font-size: 27px; }
+.menu-item.group-collection .mi-label { font-size: 21px; color: rgba(242,235,217,.82); }
+.menu-item.group-collection .mi-num { color: rgba(246,199,68,.55); }
+.menu-item.group-collection .mi-icon { width: 32px; height: 32px; }
+.menu-item.group-collection { min-height: clamp(30px, 4.8cqh, 44px); }
+
 .menu-footer {
   color: var(--gold-lt);
   font-family: var(--fui);
@@ -15997,4 +16022,303 @@ button.linklike:hover { background: rgba(216,168,48,.08); text-decoration: none;
     min-height: 28px;
     padding: 4px 8px;
   }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   SECTION IDENTITY — acentos propios por página (spec UI)
+   Solo presentación: las clases vienen del JSX real (nada nuevo,
+   ningún control añadido). Cada sección conserva la base global
+   naranja/dorado pero recibe un acento reconocible.
+   ═══════════════════════════════════════════════════════════ */
+
+.story-screen { --section-accent: #3890d8; --section-accent-lt: #6fc0f0; }
+.versus-screen { --section-accent: #f08830; --section-accent-lt: #ffc060; }
+.deck-screen { --section-accent: #40b848; --section-accent-lt: #74e07c; }
+.characters-screen { --section-accent: #d8a830; --section-accent-lt: #f0d060; }
+.cards-screen { --section-accent: #b060d8; --section-accent-lt: #d090f0; }
+.settings-screen { --section-accent: #8890a0; --section-accent-lt: #aab2c0; }
+
+/* Cabecera: filete inferior con el acento de la sección */
+.story-screen .page-header::after,
+.versus-screen .page-header::after,
+.deck-screen .page-header::after,
+.characters-screen .page-header::after,
+.cards-screen .page-header::after,
+.settings-screen .page-header::after {
+  background: linear-gradient(90deg, var(--section-accent), var(--section-accent-lt), transparent 82%);
+  opacity: .85;
+}
+
+/* Título: halo del acento (mantiene la tipografía épica) */
+.story-screen .page-title,
+.versus-screen .page-title,
+.deck-screen .page-title,
+.characters-screen .page-title,
+.cards-screen .page-title,
+.settings-screen .page-title {
+  color: var(--section-accent-lt);
+  text-shadow: 0 0 14px color-mix(in srgb, var(--section-accent) 55%, transparent), 2px 2px 0 #000;
+}
+
+/* Botón de regreso: acento al hover */
+.story-screen .btn-back:hover,
+.versus-screen .btn-back:hover,
+.deck-screen .btn-back:hover,
+.characters-screen .btn-back:hover,
+.cards-screen .btn-back:hover,
+.settings-screen .btn-back:hover {
+  background: var(--section-accent);
+  border-color: var(--section-accent-lt);
+}
+
+/* Chips/filtros activos: acento de sección */
+.story-screen .filter-chip.active,
+.story-screen .saga-tab.active,
+.versus-screen .filter-chip.active,
+.deck-screen .filter-chip.active,
+.characters-screen .filter-chip.active,
+.cards-screen .filter-chip.active,
+.settings-screen .filter-chip.active,
+.settings-screen .lang-chip.active {
+  background: var(--section-accent);
+  border-color: var(--section-accent-lt);
+  color: #000;
+}
+
+/* Panel de detalle: filete izquierdo con el acento */
+.story-screen .chapter-detail-panel,
+.versus-screen .versus-sidebar,
+.deck-screen .deck-current,
+.characters-screen .char-detail,
+.cards-screen .card-detail-panel {
+  border-left: 4px solid var(--section-accent);
+}
+
+/* Rangos (settings): acento en el thumb */
+.settings-screen input[type="range"] { accent-color: var(--section-accent); }
+
+/* ═══════════════════════════════════════════════════════════
+   MENU HEIGHT-AWARE — el menú vive en el viewport 16:9 del juego
+   (container .game-viewport). Los media queries de ventana no sirven:
+   la altura real es la del contenedor. Todas las dimensiones verticales
+   usan cqh para que el menú SIEMPRE quepa sin solapes ni recortes.
+   ═══════════════════════════════════════════════════════════ */
+
+.menu-content {
+  padding: 3cqh 0 1.6cqh 5.5cqw;
+  gap: 1.1cqh;
+}
+
+.menu-logo-title {
+  width: clamp(240px, 38cqw, 560px);
+  max-height: 15cqh;
+  margin: 0.6cqh 0 0 -3px;
+}
+
+.menu-subtitle {
+  font-size: 1.5cqh;
+  margin: 0 0 1.4cqh 6px;
+  padding-bottom: 0.8cqh;
+}
+
+.menu-continue-card {
+  min-height: clamp(64px, 14cqh, 148px);
+  padding: 1.8cqh 1.8cqh 1.6cqh 2cqh;
+  flex-shrink: 0;
+}
+
+.mc-play { font-size: 3.4cqh; }
+.mc-title { font-size: 3.8cqh; }
+.mc-kicker { font-size: 1.9cqh; }
+.mc-chapter { font-size: 2.2cqh; }
+.mc-progress-track { height: 1.2cqh; }
+.mc-percent { font-size: 2.2cqh; min-width: 5cqh; }
+.mc-meta { font-size: 1.9cqh; }
+.mc-hero-wrap { width: 10cqh; min-height: 12cqh; }
+.mc-hero { height: 10cqh; max-width: 8cqh; }
+.mc-hero-name { font-size: 1.5cqh; }
+
+.menu-nav { gap: 0.7cqh; }
+
+.menu-nav-entry { gap: 0.3cqh; }
+.menu-group-label { font-size: 1.2cqh; padding: 0.8cqh 2px 0.2cqh 8px; }
+
+.menu-item { min-height: clamp(30px, 6.6cqh, 52px); padding: 0.8cqh 1.2cqh 0.8cqh 0; }
+.menu-item.group-modes { min-height: clamp(34px, 7.2cqh, 58px); }
+.menu-item.group-collection { min-height: clamp(28px, 5.8cqh, 44px); }
+.menu-item-settings { min-height: clamp(26px, 5.4cqh, 48px); margin-top: 1cqh; }
+
+.mi-num { font-size: 2.2cqh; }
+.mi-icon { width: 4cqh; height: 4cqh; }
+.mi-label { font-size: 3cqh; }
+.mi-label.mi-label { font-size: 3cqh; }
+.menu-item.group-modes .mi-label { font-size: 3.4cqh; }
+.menu-item.group-collection .mi-label { font-size: 2.6cqh; }
+.mi-desc { font-size: 1.7cqh; }
+
+.menu-footer { font-size: 1.6cqh; padding-top: 0.8cqh; }
+
+/* Si aún así el contenido excede la altura (ventanas muy bajas), el nav
+   scrollea internamente en vez de recortar/desbordar. */
+.menu-nav {
+  overflow-y: auto;
+  min-height: 0;
+  flex: 0 1 auto;
+  scrollbar-width: thin;
+}
+.menu-content { overflow: hidden; }
+
+/* ═══════════════════════════════════════════════════════════
+   MENU COMPACT v2 — contenido interno de los items en cqh.
+   El min-height por sí solo no basta: iconos (36px), paddings y gaps
+   internos fijos fuerzan la altura real (44px+). Compactamos TODO el
+   contenido vertical para que el menú quepa en el viewport 16:9.
+   ═══════════════════════════════════════════════════════════ */
+
+.menu-item {
+  padding: 0.5cqh 1cqh 0.5cqh 0;
+  gap: 0.8cqh;
+  grid-template-columns: 3.4cqh 3.8cqh 1fr 2cqh;
+}
+.menu-item.group-modes { padding: 0.6cqh 1cqh 0.6cqh 0; }
+.menu-item.group-collection { padding: 0.4cqh 1cqh 0.4cqh 0; }
+
+.mi-icon {
+  width: 3.8cqh;
+  height: 3.8cqh;
+}
+.menu-item.group-collection .mi-icon { width: 3.4cqh; height: 3.4cqh; }
+
+.mi-num { line-height: 1; }
+.mi-label { line-height: 1; }
+.mi-desc { line-height: 1.05; max-height: 1.2em; }
+.mi-arrow { width: 2cqh; height: 2cqh; }
+
+.mc-hero-wrap { width: 9cqh; min-height: 10.5cqh; gap: 0.4cqh; }
+.mc-hero { height: 9cqh; max-width: 7cqh; margin-top: 0.4cqh; }
+.mc-body { gap: 0.35cqh; }
+.mc-progress-line { margin-top: 0.45cqh; }
+
+.menu-continue-card { gap: 0.9cqh; }
+
+/* ═══════════════════════════════════════════════════════════
+   MENU WIDTH CANONICAL — la composición exige 38-42% del ancho del
+   viewport del juego (spec UI). Los media queries de ventana con
+   min-width:400px y las 17 reglas .menu-content previas desvirtúan
+   el ancho en pantallas pequeñas; esta regla final lo fija en cqw.
+   ═══════════════════════════════════════════════════════════ */
+
+.menu-content {
+  width: clamp(320px, 40cqw, 760px);
+  min-width: clamp(280px, 38cqw, 420px);
+  max-width: 44cqw;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   MENU ITEM HEIGHT UNLOCK — el bloque duplicado (~mitad del archivo)
+   fija height:54px en .menu-item; anularlo con height:auto permite
+   que el min-height cqh (compacto) gobierne la altura real.
+   ═══════════════════════════════════════════════════════════ */
+
+.menu-item,
+.menu-item-settings,
+.menu-item.group-modes,
+.menu-item.group-collection {
+  height: auto;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   PAGE LAYOUT FIX — grids internos colapsados (min-height:auto en
+   flex). El grid de colección (deck/cards) necesita min-height:0
+   para scrollear dentro del panel en vez de colapsar a 0px.
+   ═══════════════════════════════════════════════════════════ */
+
+.deck-collection .card-collection-grid,
+.cards-collection-panel .card-collection-grid.full,
+.char-grid,
+.story-map {
+  min-height: 0;
+  flex: 1 1 0%;
+}
+
+.deck-collection {
+  min-height: 0;
+  overflow: hidden;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   MENU POLISH (revisión visual) — correcciones del análisis:
+   · footer con padding inferior (safe-area)
+   · numeración con más contraste sobre el arte
+   · padding derecho consistente de los iconos
+   · tarjeta CONTINUAR alineada con la columna de opciones
+   ═══════════════════════════════════════════════════════════ */
+
+.menu-footer {
+  padding-bottom: 1.4cqh;
+  margin-bottom: 0.6cqh;
+}
+
+.mi-num {
+  color: rgba(246,199,68,.92);
+  text-shadow: 1px 1px 0 #000, 0 0 6px rgba(0,0,0,.9);
+  font-weight: 700;
+}
+
+.menu-item {
+  padding-right: 1.4cqh;
+}
+
+.menu-continue-card {
+  margin-left: 0;
+}
+
+/* Refuerzo de legibilidad de la banda izquierda sobre el arte:
+   los items y la tarjeta ya tienen fondo; el logo gana un halo. */
+.menu-logo-title {
+  filter: drop-shadow(0 3px 0 rgba(10,10,20,.9)) drop-shadow(0 0 28px rgba(255,170,60,.5)) drop-shadow(0 0 10px rgba(255,215,110,.35));
+}
+
+/* ═══════════════════════════════════════════════════════════
+   CHAR DETAIL COMPACT — el panel de detalle de personaje desborda
+   (botón USE IN BATTLE cortado). Compactamos los bloques internos
+   para que TODO quepa sin scroll: header sprite, stats, lore,
+   char-file, formas y el botón final.
+   ═══════════════════════════════════════════════════════════ */
+
+.char-detail {
+  gap: 0.8cqh;
+  padding: 1.4cqh;
+}
+
+.char-detail-header { gap: 1.2cqh; }
+
+.char-detail-sprite-wrap .char-detail-sprite {
+  height: 21cqh !important;
+  width: auto;
+}
+
+.char-detail-sprite-wrap {
+  flex-shrink: 0;
+}
+
+.stat-block { gap: 0.5cqh; }
+.ui-statbar { gap: 0.6cqh; }
+.ui-stat-label { font-size: 1.3cqh; }
+.ui-stat-track { height: 1.2cqh; }
+
+.char-lore { padding: 0.6cqh 0.8cqh; gap: 0.2cqh; }
+.lore-label { font-size: 1.1cqh; }
+.lore-text { font-size: 1.3cqh; }
+
+.char-file { gap: 0.3cqh; padding: 0.7cqh 0.9cqh; }
+.char-file-row { font-size: 1.25cqh; }
+
+.form-select { gap: 0.5cqh; }
+.form-chip { font-size: 1.2cqh; padding: 0.35cqh 0.8cqh; }
+
+.char-detail .btn-primary {
+  min-height: 4.6cqh;
+  font-size: 1.6cqh;
+  flex-shrink: 0;
 }
