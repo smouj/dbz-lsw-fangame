@@ -1,19 +1,18 @@
 // ═══════════════════════════════════════════════════════════════════════
 // DBZ LSW — DIALOGUE-ONLY STORY NARRATIVE CANON
 // ═══════════════════════════════════════════════════════════════════════
-// This is the single presentation-facing Story source.
+// Single presentation-facing Story source.
 //
 // Included: Story identity/order, dialogue text, speaker, portrait/form/emotion,
-// physical cutscene background, transition to battle.
+// physical cutscene background and transition to battle.
 // Excluded by design: Story Map VM, free movement, NPCs, hotspots, triggers,
 // pickups and every exploration/RPG mechanic ($29-$2F).
 //
 // Text precedence:
 //   1) ROM_STORY_DIALOGUE when a persisted beat is ROM_LITERAL_TEXT.
-//   2) STORY_SCRIPT as an explicitly-labelled editorial reconstruction for
-//      MAIN stories only. It is NEVER reported as literal ROM text.
-//   3) The two EX stories use neutral reference summaries until their literal
-//      $10 streams are persisted; they never borrow Story 21/22 Buu dialogue.
+//   2) STORY_SCRIPT as an explicitly-labelled editorial reconstruction.
+//      MAIN Story keys are 1..30; the two EX reconstructions are 31/32.
+//      It is NEVER reported as literal ROM text.
 // ═══════════════════════════════════════════════════════════════════════
 
 import { STORY_SCRIPT, type StoryScriptLine } from './storyScript';
@@ -39,10 +38,7 @@ import {
   type RomStoryDialogueBeat,
 } from './generated/storyDialogueRom.generated';
 
-export type StoryTextEvidence =
-  | 'ROM_LITERAL_TEXT'
-  | 'EDITORIAL_RECONSTRUCTION'
-  | 'REFERENCE_SUMMARY';
+export type StoryTextEvidence = 'ROM_LITERAL_TEXT' | 'EDITORIAL_RECONSTRUCTION';
 
 export interface CanonicalStoryDialogueLine {
   index: number;
@@ -100,29 +96,86 @@ const SPEAKER_CHARACTERS: Record<number, string | null> = {
   47: 'baba',
 };
 
-/** Form corrections that are contextual to a MAIN Story rather than a speaker id. */
+/**
+ * Corrects overloaded editorial character ids using Story context.
+ * `storyScript.ts` intentionally uses broad ids such as `cell`, `fat_buu` and
+ * `trunks`; this layer chooses the physical Story portrait family without
+ * modifying the editorial source.
+ */
+function canonicalCharacterForLine(
+  identity: CanonicalStoryIdentity,
+  line: StoryScriptLine,
+): string | null {
+  const character = line.character;
+  if (!character) return null;
+
+  // Story 14 and EX Story 2 explicitly feature Cell's first/imperfect form.
+  if (character === 'cell' && (identity.id === 'STORY_14' || identity.id === 'EX_STORY_02')) {
+    return 'cell_imperfect';
+  }
+
+  // From Story 26 onward the Buu fighting Gotenks/Gohan is Super Buu, not Fat Buu.
+  if (character === 'fat_buu' && identity.kind === 'MAIN' && identity.storyNumber >= 26 && identity.storyNumber <= 29) {
+    return 'majin_buu';
+  }
+
+  // The editorial script uses `trunks` for both timelines. Explicit kid form
+  // remains kid; unqualified "TRUNKS DEL FUTURO" remains the Future portrait.
+  if (character === 'trunks') {
+    if (line.form === 'kid' || line.speaker.includes('NIÑO')) return 'trunks_kid';
+    if (line.speaker.includes('FUTURO') || identity.kind === 'EXTRA') return 'trunks_future';
+  }
+
+  // Adult Gohan must never fall through to the young-Gohan portrait family.
+  if (character === 'gohan' && identity.kind === 'MAIN' && identity.storyNumber >= 21) {
+    return 'gohan_adult';
+  }
+
+  return character;
+}
+
+/** Beat-aware physical form selection for dialogue portraits. */
 function canonicalFormForLine(
   identity: CanonicalStoryIdentity,
   line: StoryScriptLine,
+  index: number,
 ): string | undefined {
   const character = line.character ?? '';
-  const explicit = line.form;
-  if (explicit) return explicit;
+  if (line.form) return line.form;
 
   // Namek finale.
   if (identity.id === 'STORY_10' && character === 'goku') return 'ssj';
-  if ((identity.storyNumber === 9 || identity.storyNumber === 10) && character === 'frieza') return 'final';
+  if ((identity.id === 'STORY_09' || identity.id === 'STORY_10') && character === 'frieza') return 'final';
 
-  // Cell-era forms.
-  if (identity.kind === 'MAIN' && identity.storyNumber >= 17 && identity.storyNumber <= 20) {
+  // Cell Games / Room of Spirit and Time progression.
+  if (identity.id === 'STORY_16' && character === 'gohan') {
+    // Editorial beat 5 states that Gohan starts mastering the transformation.
+    return index >= 6 ? 'ssj' : undefined;
+  }
+  if (identity.id === 'STORY_17') {
+    if (character === 'gohan' || character === 'goku') return 'ssj';
+  }
+  if (identity.id === 'STORY_18') {
+    if (character === 'goku') return 'ssj';
+    if (character === 'gohan') {
+      // Beat 9 is the explicit SSJ2 transformation narration.
+      return index >= 10 ? 'ssj2' : 'ssj';
+    }
+  }
+  if (identity.id === 'STORY_19' || identity.id === 'STORY_20') {
     if (character === 'gohan') return 'ssj2';
+    if (character === 'goku') return 'ssj';
   }
 
   // Buu-era age/form identity.
   if (identity.kind === 'MAIN' && identity.storyNumber >= 21) {
-    if (character === 'gohan') return identity.storyNumber >= 27 ? 'ultimate' : 'adult';
-    if (character === 'trunks') return 'kid';
-    if (character === 'vegeta' && identity.storyNumber === 24) return 'majin';
+    if (character === 'gohan') {
+      // Story 27 activates Ultimate form at narration beat 6; prior Gohan line is adult base.
+      if (identity.storyNumber === 27) return index >= 7 ? 'ultimate' : 'adult';
+      return identity.storyNumber >= 28 ? 'ultimate' : 'adult';
+    }
+    // Majin Vegeta spans the duel, Buu fight and sacrifice opening of Story 25.
+    if (character === 'vegeta' && identity.storyNumber >= 23 && identity.storyNumber <= 25) return 'majin';
     if (character === 'vegito') return 'ssj';
   }
 
@@ -136,14 +189,15 @@ function buildEditorialLine(
   count: number,
 ): CanonicalStoryDialogueLine {
   const background = cutsceneForDialogueBeat(identity.sequenceIndex, index, count);
-  const form = canonicalFormForLine(identity, line);
-  const portraitUrl = line.character
-    ? canonicalStoryPortraitUrl(line.character, form, line.emotion)
+  const character = canonicalCharacterForLine(identity, line);
+  const form = canonicalFormForLine(identity, line, index);
+  const portraitUrl = character
+    ? canonicalStoryPortraitUrl(character, form, line.emotion)
     : undefined;
   return {
     index,
     speaker: line.speaker,
-    character: line.character,
+    character,
     form,
     emotion: line.emotion,
     text: line.text,
@@ -190,49 +244,6 @@ function buildRomLine(
   };
 }
 
-const EX_REFERENCE: Record<number, {
-  battle: string;
-  lines: readonly string[];
-}> = {
-  1: {
-    battle: 'Future Trunks vs. Android 17 & Android 18',
-    lines: ['Trunks returns to his future to stop Android 17 and Android 18.'],
-  },
-  2: {
-    battle: 'Future Trunks vs. Cell',
-    lines: ['After the androids are defeated, Cell appears in Trunks’ future for the final confrontation.'],
-  },
-};
-
-function buildExtraReference(identity: CanonicalStoryIdentity): CanonicalStoryNarrative {
-  const ref = EX_REFERENCE[identity.storyNumber];
-  const lines = ref.lines.map((text, index) => {
-    const background = cutsceneForDialogueBeat(identity.sequenceIndex, index, ref.lines.length);
-    return {
-      index,
-      speaker: 'NARRATOR',
-      character: null,
-      emotion: 'normal' as PortraitEmotion,
-      text,
-      textEvidence: 'REFERENCE_SUMMARY' as StoryTextEvidence,
-      background: background.url,
-      backgroundAssetId: background.id,
-      backgroundEvidence: STORY_CUTSCENE_BINDING_EVIDENCE,
-    };
-  });
-  return {
-    identity,
-    title: identity.title,
-    battle: ref.battle,
-    saga: 'Future Trunks',
-    textEvidence: 'REFERENCE_SUMMARY',
-    lines,
-    openingBackground: firstCutsceneForStory(identity.sequenceIndex).url,
-    closingBackground: lastCutsceneForStory(identity.sequenceIndex).url,
-    mapRuntimeIncluded: false,
-  };
-}
-
 export function canonicalStoryNarrative(sequenceIndex: number): CanonicalStoryNarrative {
   const identity = storyIdentityForSequence(sequenceIndex);
   const romBeats = ROM_STORY_DIALOGUE[identity.romStoryId];
@@ -252,11 +263,8 @@ export function canonicalStoryNarrative(sequenceIndex: number): CanonicalStoryNa
     };
   }
 
-  if (identity.kind === 'EXTRA') return buildExtraReference(identity);
-
-  const scriptKey = identity.editorialScriptKey;
-  const script = scriptKey == null ? undefined : STORY_SCRIPT[scriptKey];
-  if (!script) throw new Error(`Missing editorial Story fallback for ${identity.id}`);
+  const script = STORY_SCRIPT[identity.editorialScriptKey];
+  if (!script) throw new Error(`Missing editorial Story fallback for ${identity.id} (key ${identity.editorialScriptKey})`);
   const lines = script.dialogue.map((line, index) =>
     buildEditorialLine(identity, line, index, script.dialogue.length));
 
@@ -277,6 +285,5 @@ export const STORY_NARRATIVE_CANON = {
   mode: 'DIALOGUE_ONLY',
   mapRuntimeIncluded: false,
   textAuthority: '$10 PRINT_LITERAL_TEXT when generated corpus is present',
-  fallbackTextAuthority: 'storyScript.ts editorial reconstruction (MAIN only)',
-  extraFallback: 'neutral reference summary; never Story 21/22 Buu dialogue',
+  fallbackTextAuthority: 'storyScript.ts editorial reconstruction (MAIN 1..30 + EX 31/32)',
 } as const;
