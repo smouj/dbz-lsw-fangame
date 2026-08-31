@@ -542,3 +542,28 @@
     min-width: 0 !important;
   }
 }
+
+/* ─────────────────────────────────────────────────────────────
+   PULIDO FINO — pestañas de saga: peso uniforme en todas las
+   pestañas (la activa se diferencia por color/borde, no por grosor
+   de fuente, que desplaza el texto 1-2px y rompe el baseline).
+   ───────────────────────────────────────────────────────────── */
+.saga-tabs .saga-tab,
+.saga-tabs .saga-tab.active {
+  font-weight: 400;
+}
+
+/* Alineación vertical de iconos + texto en filas de capítulos y
+   filas del route footer: baseline consistente. */
+.chapter-row,
+.story-chapter-row,
+.saga-row,
+.route-footer-row {
+  align-items: center;
+}
+.chapter-row img,
+.story-chapter-row img,
+.saga-row img,
+.route-footer-row img {
+  vertical-align: middle;
+}
