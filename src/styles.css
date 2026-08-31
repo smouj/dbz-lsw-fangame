@@ -15381,15 +15381,25 @@ button.linklike:hover { background: rgba(216,168,48,.08); text-decoration: none;
 
 .menu-bg {
   background:
-    linear-gradient(90deg, rgba(4,6,11,.78) 0%, rgba(4,6,11,.5) 30%, rgba(4,6,11,.16) 56%, rgba(4,6,11,.1) 100%),
+    linear-gradient(90deg, rgba(4,6,11,.97) 0%, rgba(4,6,11,.94) 38%, rgba(4,6,11,.6) 52%, rgba(4,6,11,.14) 70%, rgba(4,6,11,.55) 100%),
     linear-gradient(180deg, rgba(4,6,11,.08), rgba(4,6,11,.5)),
-    url('/menu-art-desktop.png') 68% center / cover no-repeat;
+    url('/menu-art-desktop.png') 66% 46% / cover no-repeat;
+}
+
+/* Viñeta derecha: los personajes del arte tocan el borde de la
+   ilustración fuente; la oscurecemos para que se fundan con el marco
+   en vez de cortarse bruscamente. */
+.menu-bg::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(90deg, transparent 78%, rgba(4,6,11,.42) 92%, rgba(4,6,11,.78) 100%);
+  pointer-events: none;
 }
 
 .menu-screen::before {
   width: min(54cqw, 720px);
   background:
-    linear-gradient(90deg, rgba(5,8,14,.76), rgba(8,12,19,.52) 72%, transparent);
+    linear-gradient(90deg, rgba(5,8,14,.97), rgba(8,12,19,.86) 62%, rgba(8,12,19,.35) 88%, transparent);
 }
 
 .menu-content {
