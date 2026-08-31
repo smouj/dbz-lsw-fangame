@@ -149,7 +149,7 @@
   grid-template-columns: minmax(0, 1fr) clamp(330px, 31cqw, 400px) !important;
 }
 .game-viewport .characters-layout {
-  grid-template-columns: minmax(0, 1fr) clamp(330px, 30cqw, 395px) !important;
+  grid-template-columns: minmax(0, 1fr) clamp(360px, 35cqw, 420px) !important;
 }
 .game-viewport .deck-layout,
 .game-viewport .cards-layout {
@@ -452,7 +452,7 @@
   box-shadow: 0 0 6px color-mix(in srgb, var(--page-accent) 12%, transparent) !important;
 }
 
-/* ─── Story: detail panel footer anchor ─────────────────── */
+/* ─── Story: detail panel fills vertical, START anchored bottom ── */
 .game-viewport .chapter-detail-panel {
   display: flex !important;
   flex-direction: column !important;
@@ -460,6 +460,16 @@
 .game-viewport .cdp-body {
   flex: 1 1 auto !important;
   min-height: 0 !important;
+}
+.game-viewport .cdp-start,
+.game-viewport .chapter-detail-panel .btn-primary,
+.game-viewport .chapter-detail-panel button.btn-primary {
+  margin-top: auto !important;
+  border: 2px solid var(--page-accent) !important;
+  min-height: clamp(36px, 5cqh, 44px) !important;
+  font-family: var(--fmenu) !important;
+  font-size: clamp(12px, 1.4cqw, 16px) !important;
+  letter-spacing: .04em !important;
 }
 
 /* ─── Deck: unify row rhythm ─────────────────────────────── */
@@ -518,6 +528,64 @@
   color: rgba(255,255,255,.35) !important;
   margin-top: auto !important;
   padding-top: clamp(6px, .8cqh, 10px) !important;
+}
+
+/* ─── Characters: detail dossier compact + CTA authority ── */
+.game-viewport .char-detail-header {
+  flex: 0 0 auto !important;
+  min-height: 0 !important;
+  margin: 0 !important;
+  padding: clamp(5px, .7cqh, 9px) !important;
+  gap: clamp(4px, .5cqh, 7px) !important;
+  border: 1px solid var(--page-border) !important;
+  border-left: 3px solid var(--page-accent) !important;
+  background: rgba(5,8,14,.38) !important;
+}
+.game-viewport .char-detail-header .char-name,
+.game-viewport .char-detail-header h3 {
+  font-size: clamp(13px, 1.6cqw, 17px) !important;
+  line-height: 1.2 !important;
+}
+.game-viewport .char-detail .stat-block {
+  gap: clamp(2px, .3cqh, 4px) !important;
+  margin: 0 !important;
+}
+.game-viewport .char-detail .stat-block .stat-row {
+  display: grid !important;
+  grid-template-columns: 40px 1fr 32px !important;
+  gap: clamp(4px, .5cqw, 8px) !important;
+  align-items: baseline !important;
+  font-size: clamp(10px, 1.1cqw, 13px) !important;
+}
+.game-viewport .char-detail .stat-row .stat-label {
+  color: var(--muted, rgba(255,255,255,.45)) !important;
+  text-transform: uppercase !important;
+  letter-spacing: .04em !important;
+  font-size: clamp(9px, 1cqw, 11px) !important;
+}
+.game-viewport .char-detail .stat-row .stat-value {
+  color: var(--text-hi, #fff) !important;
+  font-weight: 600 !important;
+}
+.game-viewport .char-detail .char-lore {
+  font-size: clamp(10px, 1.1cqw, 13px) !important;
+  line-height: 1.35 !important;
+  color: rgba(255,255,255,.55) !important;
+}
+.game-viewport .char-detail .char-file {
+  font-size: clamp(10px, 1cqw, 12px) !important;
+}
+.game-viewport .char-detail .form-select {
+  gap: clamp(4px, .5cqw, 6px) !important;
+}
+.game-viewport .char-detail .btn-primary,
+.game-viewport .char-detail button.btn-primary {
+  min-height: clamp(36px, 5cqh, 44px) !important;
+  font-family: var(--fmenu) !important;
+  font-size: clamp(12px, 1.4cqw, 16px) !important;
+  letter-spacing: .04em !important;
+  border: 2px solid var(--page-accent) !important;
+  margin-top: clamp(4px, .5cqh, 8px) !important;
 }
 
 /* ─── Characters: locked cell visibility ────────────────── */
