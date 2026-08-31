@@ -29,7 +29,7 @@ const referenced = new Set<number>();
 
 check('catalog:bank layout count', entries.length === 66, String(entries.length));
 check('catalog:unique resource ids', byId.size === entries.length, `${byId.size}/${entries.length}`);
-check('catalog:deterministic const/list', JSON.stringify(entries) === JSON.stringify(entriesAgain));
+check('catalog:deterministic const/list', JSON.stringify(entries) === JSON.stringify(listAnimationResources()));
 check('catalog:lookup identity', entries.every(entry => animationResourceById(entry.resourceId) === entry));
 check('selector: 66 resources explained', ANIMATION_RESOURCE_SELECTOR_ARCHITECTURE.resourceCount === 66);
 check('selector: 43 unique selector tables', ANIMATION_RESOURCE_SELECTOR_ARCHITECTURE.uniqueSelectorTables === 43);
