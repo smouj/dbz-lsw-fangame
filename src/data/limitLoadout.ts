@@ -14,7 +14,7 @@
 //   battle block +03..17 = 5 BYTES DE ALMACENAMIENTO por miembro
 //   ≠ 5 LIMITS EQUIPABLES.
 //   NUNCA derivar limitCapacity del width físico 5 del battle block.
-//   Capacidad real: NORMAL 3 · registros con 2 (corpus §47, verificado R5).
+//   Capacidad real: NORMAL 3 · SOLO Androids 19/20 = 2 (corpus §47, verificado R5).
 // ═══════════════════════════════════════════════════════════════════════
 
 import { LIMIT_DEFAULTS, type CharacterDef } from './roster';
@@ -22,19 +22,16 @@ import { LIMIT_DEFAULTS, type CharacterDef } from './roster';
 /**
  * Capacidad semántica de Limits de un personaje.
  *
- * Derivada de la fuente canónica (LIMIT_DEFAULTS — loadout del walkthrough
- * ROM por personaje): la longitud del loadout por defecto ES la capacidad
- * real del registro persistente (+8 capacity). El piso documentado en la
- * ROM es 2 ("existen registros cuya capacidad es 2", corpus §47) — los
- * loadouts con 1/0 entradas son registros parciales, no capacidad 1/0.
+ * Regla canónica (corpus §47 + R5): TODOS los personajes tienen 3 slots;
+ * SOLO Androids 19/20 tienen 2. NO se deriva de la longitud del loadout por
+ * defecto (LIMIT_DEFAULTS es el loadout del walkthrough, no la capacidad).
  *
  * NUNCA devuelve 5. El battle block reserva 5 bytes físicos por miembro
  * (+03..17) pero eso es almacenamiento, no capacidad equipable.
  */
 export function getLimitCapacity(characterId: string): number {
-  const defaults = LIMIT_DEFAULTS[characterId] ?? [];
-  // piso 2 = mínimo documentado en la ROM (registros con capacidad 2)
-  return Math.max(2, defaults.length);
+  if (characterId === 'android_19' || characterId === 'android_20') return 2;
+  return 3;
 }
 
 /** Definición del loadout por defecto (cartas equipadas por el walkthrough). */

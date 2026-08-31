@@ -26,6 +26,6 @@ export interface TeamSetupState {
 export interface TeamSetupResult {
   /** Miembro listo para la batalla (el Engine actual es 1v1). */
   member: TeamMember;
-  /** Equipo completo configurado (3 slots). */
+  /** Equipo completo configurado (2 slots — battle 2v2, máx 2 personajes). */
   team: TeamMember[];
 }

@@ -91,7 +91,7 @@ export function TeamSetup({ useSetup, fallbackDeck, onConfirm, isFormUnlocked }:
             </div>
           );
         })}
-        {state.members.length < 3 ? (
+        {state.members.length < 2 ? (
           <button type="button" className="setup-team-slot setup-team-slot-add"
             onClick={setup.addMember}>+ ADD MEMBER</button>
         ) : null}

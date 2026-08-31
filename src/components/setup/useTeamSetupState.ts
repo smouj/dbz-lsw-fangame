@@ -101,7 +101,7 @@ export function useTeamSetupState({ fallbackDeck, initialCharacterId }: UseTeamS
 
   const addMember = useCallback(() => {
     setState(s => {
-      if (s.members.length >= 3) return s;
+      if (s.members.length >= 2) return s; // Battle: máx 2 personajes (GBC 2v2)
       const next = s.members.length;
       const prev = s.members[next - 1];
       const char = ROM_ORDERED_CHARACTERS[next % ROM_ORDERED_CHARACTERS.length];

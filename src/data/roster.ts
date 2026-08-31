@@ -205,6 +205,9 @@ export function statAtLevel(form: FormDef, level: number, stat: 'hp' | 'str' | '
 // ─── Limited Cards (L) — fiel al GBC ───
 // Cada personaje puede usar hasta 3 Limited Cards (Androids 19/20 solo 2),
 // reutilizables mientras tengas CC suficiente. Se configuran en menu→team→limit.
+// ⚠️ La CAPACIDAD es una regla plana en limitLoadout.getLimitCapacity (3, androids
+// 19/20 = 2) — estos arrays son SOLO el loadout del walkthrough (qué cartas
+// vienen equipadas por defecto), no la capacidad.
 // Valores por defecto basados en el walkthrough (ej. "equipa a Goku con
 // Super Kamehameha + Kaioken", "Super Kamehameha en Gohan", "Final Flash/Big
 // Bang Attack" en Vegeta, "Super Kamehameha + Teleport + Big Bang" en Vegito).

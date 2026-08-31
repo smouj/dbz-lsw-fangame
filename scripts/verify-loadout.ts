@@ -44,21 +44,26 @@ pass(`character/form registry válido (${CHARACTERS.length} chars · ${formsTota
 const capMap = limitCapacityMap();
 const allCapacities = new Set<number>();
 let cap3 = 0, cap2 = 0;
+const cap2Chars: string[] = [];
 for (const cid of charIds) {
   const cap = getLimitCapacity(cid);
   allCapacities.add(cap);
   if (cap === 3) cap3++;
-  if (cap === 2) cap2++;
+  if (cap === 2) { cap2++; cap2Chars.push(cid); }
   if (cap === 5) fail(`${cid}: capacity derivada = 5 (¡guardrail roto! battle block width ≠ capacidad)`);
   if (cap > 5) fail(`${cid}: capacity ${cap} > 5 (imposible)`);
   if (cap < 0) fail(`${cid}: capacity negativa`);
 }
 if (allCapacities.has(5)) fail('existe capacity=5 en algún registro');
 else pass('NUNCA se deriva capacity del width físico 5 del battle block');
-pass(`capacidades: normal 3 (${cap3} personajes) · registros con 2 (${cap2}) · valores ${[...allCapacities].join('/')}`);
+pass(`capacidades: normal 3 (${cap3} personajes) · capacity 2 (${cap2}) · valores ${[...allCapacities].join('/')}`);
 if (!allCapacities.has(3)) fail('la capacidad normal 3 no aparece');
 if (!allCapacities.has(2)) fail('no hay registros con capacidad 2');
 else pass('capacidad 3 normal + registros con 2 conservados');
+// Regla canónica: SOLO Androids 19/20 tienen capacity 2 (corpus §47, verificado R5)
+const onlyAndroids19_20 = cap2Chars.every(c => c === 'android_19' || c === 'android_20');
+if (onlyAndroids19_20 && cap2 === 2) pass('capacity 2 SOLO en Android 19 y Android 20 (regla canónica)');
+else fail(`capacity 2 en personajes no-Androids: ${cap2Chars.join(',')}`);
 
 // ── 6) ningún loadout excede capacity ──
 let loadoutOk = true;
@@ -167,7 +172,7 @@ if (baseFormIdOf('goku') === 'goku_base') pass('baseFormIdOf resuelve la forma b
 else fail('baseFormIdOf incorrecto');
 
 // ── reporte de capacidades ──
-console.log('\nCapacidad de Limits por personaje (fuente LIMIT_DEFAULTS + piso 2):');
+console.log('\nCapacidad de Limits por personaje (regla canónica: 3 · androids 19/20 = 2):');
 const rows = CHARACTERS.map(c => `${c.id}: ${getLimitCapacity(c.id)} (${getLimitLoadoutDefinition(c.id).length} defaults)`);
 for (const r of rows) console.log(`  ${r}`);
 
