@@ -11,12 +11,12 @@
    ═══════════════════════════════════════════════════════════════ */
 
 .game-viewport {
-  --page-pad-x: clamp(14px, 1.55cqw, 22px);
-  --page-pad-y: clamp(10px, 1.45cqh, 16px);
-  --page-gap: clamp(11px, 1.35cqh, 16px);
-  --page-header-h: clamp(46px, 6.6cqh, 56px);
-  --page-panel-pad: clamp(12px, 1.55cqh, 18px);
-  --page-panel-gap: clamp(9px, 1.15cqh, 13px);
+  --page-pad-x: 1.55cqw;
+  --page-pad-y: 1.45cqh;
+  --page-gap: 1.35cqh;
+  --page-header-h: 6.6cqh;
+  --page-panel-pad: 1.55cqh;
+  --page-panel-gap: 1.15cqh;
 
   --page-bg: #070b12;
   --page-bg-hi: #0b111c;
@@ -76,7 +76,7 @@
   display: grid !important;
   grid-template-columns: auto minmax(0, 1fr) auto !important;
   align-items: center !important;
-  gap: clamp(10px, 1cqw, 16px) !important;
+  gap: 1cqw !important;
   padding: 0 2px 7px !important;
   overflow: visible !important;
   background: transparent !important;
@@ -90,7 +90,7 @@
   position: absolute;
   left: 0;
   bottom: -1px;
-  width: clamp(58px, 7cqw, 104px);
+  width: 7cqw;
   height: 2px;
   background: var(--page-accent);
   box-shadow: 0 0 12px color-mix(in srgb, var(--page-accent) 18%, transparent);
@@ -111,7 +111,7 @@
   transform: none !important;
   color: var(--text-hi) !important;
   font-family: var(--fmenu) !important;
-  font-size: clamp(17px, 1.85cqw, 24px) !important;
+  font-size: 1.85cqw !important;
   line-height: 1.05 !important;
   letter-spacing: .025em !important;
   text-shadow: 2px 2px 0 #000 !important;
@@ -176,20 +176,20 @@
   height: auto !important;
   margin: 0 !important;
   padding: 0 !important;
-  gap: clamp(13px, 1.35cqw, 19px) !important;
+  gap: 1.35cqw !important;
   overflow: hidden !important;
   align-items: stretch !important;
 }
 
 .game-viewport .story-layout {
-  grid-template-columns: minmax(0, 1.48fr) minmax(300px, .72fr) !important;
+  grid-template-columns: minmax(0, 1.48fr) minmax(0, .72fr) !important;
 }
 .game-viewport .characters-layout {
-  grid-template-columns: minmax(0, 1.55fr) minmax(300px, .70fr) !important;
+  grid-template-columns: minmax(0, 1.55fr) minmax(0, .70fr) !important;
 }
 .game-viewport .deck-layout,
 .game-viewport .cards-layout {
-  grid-template-columns: minmax(0, 1.62fr) minmax(286px, .62fr) !important;
+  grid-template-columns: minmax(0, 1.62fr) minmax(0, .62fr) !important;
 }
 
 /* ─── Surface hierarchy: canvas vs inspector ─────────────── */
@@ -239,7 +239,7 @@
   left: -2px;
   top: 0;
   width: 2px;
-  height: clamp(44px, 7cqh, 72px);
+  height: 7cqh;
   background: color-mix(in srgb, var(--page-accent) 86%, white 8%);
 }
 
@@ -298,7 +298,7 @@
 .game-viewport .cards-toolbar {
   flex: 0 0 auto !important;
   margin: calc(var(--page-panel-pad) * -1) calc(var(--page-panel-pad) * -1) var(--page-panel-gap) !important;
-  padding: clamp(9px, 1.1cqh, 12px) var(--page-panel-pad) !important;
+  padding: 1.1cqh var(--page-panel-pad) !important;
   gap: 7px !important;
   border-bottom: 1px solid var(--page-line) !important;
   background: rgba(4,8,14,.34) !important;
@@ -408,7 +408,7 @@
   position: relative !important;
   min-height: 30px !important;
   margin: 0 !important;
-  padding: 5px clamp(10px, 1.1cqw, 16px) 7px !important;
+  padding: 5px 1.1cqw 7px !important;
   border: 0 !important;
   border-radius: 0 !important;
   background: transparent !important;
@@ -445,10 +445,10 @@
 
 .game-viewport .chapter-node {
   position: relative !important;
-  min-height: clamp(50px, 7.35cqh, 62px) !important;
+  min-height: 7.35cqh !important;
   gap: 10px !important;
-  padding-left: clamp(10px, .9cqw, 14px) !important;
-  padding-right: clamp(10px, .9cqw, 14px) !important;
+  padding-left: .9cqw !important;
+  padding-right: .9cqw !important;
   border: 0 !important;
   border-bottom: 1px solid rgba(151,169,199,.12) !important;
   border-left: 2px solid transparent !important;
@@ -473,7 +473,7 @@
 }
 
 .game-viewport .cdp-visual {
-  flex: 0 0 clamp(128px, 23cqh, 184px) !important;
+  flex: 0 0 23cqh !important;
   min-height: 0 !important;
   margin: 0 !important;
   border: 0 !important;
@@ -484,13 +484,13 @@
 .game-viewport .cdp-body {
   flex: 1 1 auto !important;
   min-height: 0 !important;
-  padding: clamp(12px, 1.55cqh, 18px) !important;
-  gap: clamp(7px, .95cqh, 11px) !important;
+  padding: 1.55cqh !important;
+  gap: .95cqh !important;
   overflow-y: auto !important;
 }
 
 .game-viewport .cdp-name {
-  font-size: clamp(15px, 1.4cqw, 20px) !important;
+  font-size: 1.4cqw !important;
   line-height: 1.1 !important;
 }
 
@@ -524,8 +524,8 @@
 
 /* ─── Characters: collection plane + fighter dossier ─────── */
 .game-viewport .char-grid {
-  grid-template-columns: repeat(auto-fill, minmax(clamp(82px, 8.8cqw, 112px), 1fr)) !important;
-  grid-auto-rows: minmax(clamp(82px, 12.5cqh, 112px), auto) !important;
+  grid-template-columns: repeat(auto-fill, minmax(8.8cqw, 1fr)) !important;
+  grid-auto-rows: minmax(12.5cqh, auto) !important;
   align-content: start !important;
 }
 
@@ -533,7 +533,7 @@
 .game-viewport .ui-char-card {
   min-height: 0 !important;
   height: auto !important;
-  padding: clamp(7px, .9cqh, 10px) !important;
+  padding: .9cqh !important;
   gap: 5px !important;
   border: 1px solid transparent !important;
   border-bottom-color: rgba(151,169,199,.13) !important;
@@ -556,7 +556,7 @@
 .game-viewport .char-detail {
   display: flex !important;
   flex-direction: column !important;
-  gap: clamp(9px, 1.15cqh, 13px) !important;
+  gap: 1.15cqh !important;
   overflow-y: auto !important;
 }
 
@@ -564,7 +564,7 @@
   flex: 0 0 auto !important;
   min-height: 0 !important;
   margin: 0 !important;
-  padding: 0 0 clamp(10px, 1.25cqh, 14px) !important;
+  padding: 0 0 1.25cqh !important;
   border: 0 !important;
   border-bottom: 1px solid var(--page-line) !important;
   background: transparent !important;
@@ -575,7 +575,7 @@
 }
 
 .game-viewport .char-detail-name {
-  font-size: clamp(15px, 1.45cqw, 20px) !important;
+  font-size: 1.45cqw !important;
   line-height: 1.1 !important;
 }
 
@@ -587,7 +587,7 @@
 
 .game-viewport .stat-block,
 .game-viewport .char-lore {
-  padding-top: clamp(7px, .8cqh, 10px) !important;
+  padding-top: .8cqh !important;
   border-top: 1px solid rgba(151,169,199,.11) !important;
 }
 
@@ -645,7 +645,7 @@
 .game-viewport .card-detail-inner {
   height: 100% !important;
   padding: 0 !important;
-  gap: clamp(8px, 1cqh, 12px) !important;
+  gap: 1cqh !important;
 }
 
 .game-viewport .card-detail-preview {
@@ -660,7 +660,7 @@
   max-width: 980px !important;
   height: auto !important;
   margin: 0 auto !important;
-  padding: clamp(4px, .55cqh, 7px) var(--page-panel-pad) !important;
+  padding: .55cqh var(--page-panel-pad) !important;
   align-content: start !important;
   border: 1px solid var(--page-line) !important;
   border-left: 2px solid color-mix(in srgb, var(--page-accent) 54%, var(--page-line-hi)) !important;
@@ -670,9 +670,9 @@
 }
 
 .game-viewport .setting-row {
-  min-height: clamp(52px, 7.5cqh, 66px) !important;
-  gap: clamp(12px, 1.4cqw, 20px) !important;
-  padding: clamp(9px, 1.15cqh, 13px) 4px !important;
+  min-height: 7.5cqh !important;
+  gap: 1.4cqw !important;
+  padding: 1.15cqh 4px !important;
   border: 0 !important;
   border-bottom: 1px solid var(--page-line) !important;
   background: transparent !important;
@@ -691,7 +691,7 @@
 }
 
 .game-viewport .setting-controls {
-  min-width: clamp(170px, 19cqw, 250px) !important;
+  min-width: 19cqw !important;
   padding: 5px 7px !important;
   border: 0 !important;
   border-left: 1px solid var(--page-line) !important;
@@ -729,8 +729,8 @@
   height: auto !important;
   min-height: 0 !important;
   margin: 0 !important;
-  padding: clamp(8px, 1.05cqh, 12px) 0 0 !important;
-  gap: clamp(9px, 1.1cqh, 13px) !important;
+  padding: 1.05cqh 0 0 !important;
+  gap: 1.1cqh !important;
   overflow-y: auto !important;
   overflow-x: hidden !important;
   background: transparent !important;
@@ -772,103 +772,71 @@
 /* ─── Container responsive: game viewport, never window ───── */
 @container game (max-height: 600px) {
   .page-screen:not(.setup-screen) {
-    --page-header-h: 44px;
-    --page-pad-y: 7px;
-    --page-pad-x: 11px;
-    --page-gap: 8px;
-    --page-panel-pad: 10px;
-    --page-panel-gap: 7px;
+    --page-header-h: 5cqh;
+    --page-pad-y: 5px;
+    --page-pad-x: 1cqw;
+    --page-gap: .7cqh;
+    --page-panel-pad: .8cqh;
+    --page-panel-gap: .6cqh;
   }
 
-  .page-title { font-size: clamp(15px, 1.7cqw, 20px) !important; }
-  .btn-back { width: 35px !important; height: 29px !important; min-width: 35px !important; min-height: 29px !important; }
+  .page-title { font-size: 1.5cqw !important; }
+  .btn-back { width: 4cqw !important; height: 3.5cqh !important; min-width: 28px !important; min-height: 24px !important; }
 
-  .story-layout { grid-template-columns: minmax(0, 1.5fr) minmax(270px, .7fr) !important; }
-  .characters-layout { grid-template-columns: minmax(0, 1.55fr) minmax(276px, .68fr) !important; }
+  .story-layout { grid-template-columns: minmax(0, 1.5fr) minmax(0, .7fr) !important; }
+  .characters-layout { grid-template-columns: minmax(0, 1.55fr) minmax(0, .68fr) !important; }
   .deck-layout,
-  .cards-layout { grid-template-columns: minmax(0, 1.62fr) minmax(252px, .6fr) !important; }
+  .cards-layout { grid-template-columns: minmax(0, 1.62fr) minmax(0, .6fr) !important; }
 
-  .story-screen .saga-tabs { min-height: 28px !important; }
-  .story-screen .saga-tabs .saga-tab { min-height: 27px !important; padding-top: 3px !important; padding-bottom: 5px !important; }
-  .chapter-node { min-height: 44px !important; }
-  .cdp-visual { flex-basis: 116px !important; }
-  .setting-row { min-height: 44px !important; }
+  .story-screen .saga-tabs { min-height: 4cqh !important; }
+  .story-screen .saga-tabs .saga-tab { min-height: 3.5cqh !important; padding-top: 2px !important; padding-bottom: 4px !important; }
+  .chapter-node { min-height: 6cqh !important; }
+  .cdp-visual { flex-basis: 16cqh !important; }
+  .setting-row { min-height: 6cqh !important; }
 }
 
+/* ─── Compact tier: denser but SAME 2-column topology ─── */
 @container game (max-width: 760px) {
   .page-screen:not(.setup-screen) {
-    overflow-y: auto !important;
-  }
-
-  .page-screen > .page-header {
-    position: sticky !important;
-    top: 0 !important;
-    z-index: 20 !important;
-    grid-template-columns: auto minmax(0, 1fr) auto !important;
-    background: rgba(7,11,18,.96) !important;
+    --page-pad-x: 1cqw !important;
+    --page-pad-y: .8cqh !important;
+    --page-gap: .7cqh !important;
+    --page-header-h: 5cqh !important;
+    --page-panel-pad: .8cqh !important;
+    --page-panel-gap: .6cqh !important;
   }
 
   .page-title {
-    max-width: 100%;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    font-size: 15px !important;
+    font-size: 1.3cqw !important;
   }
 
   .page-header .story-progress,
   .page-header .deck-count {
-    max-width: 58px;
-    min-width: 0;
-    overflow: hidden;
-    padding: 3px 4px !important;
+    font-size: .9cqw !important;
+    padding: 2px 4px !important;
   }
 
-  .story-layout,
-  .characters-layout,
-  .deck-layout,
-  .cards-layout {
-    grid-template-columns: 1fr !important;
-    grid-template-rows: auto auto !important;
-    overflow: visible !important;
-  }
-
-  .story-map,
-  .char-grid,
-  .deck-collection,
-  .cards-collection-panel {
-    min-height: 220px !important;
-    max-height: 55cqh !important;
-  }
-
-  .chapter-detail-panel,
-  .char-detail,
-  .deck-current,
-  .card-detail-panel {
-    min-height: 200px !important;
-  }
+  /* Keep 2-column layout, just compact */
+  .story-layout { grid-template-columns: minmax(0, 1.6fr) minmax(0, .65fr) !important; }
+  .characters-layout { grid-template-columns: minmax(0, 1.6fr) minmax(0, .65fr) !important; }
+  .deck-layout { grid-template-columns: minmax(0, 1.7fr) minmax(0, .6fr) !important; }
+  .cards-layout { grid-template-columns: minmax(0, 1.7fr) minmax(0, .6fr) !important; }
 
   .story-screen .saga-tabs {
     overflow-x: auto !important;
     scrollbar-width: none;
   }
   .story-screen .saga-tabs::-webkit-scrollbar { display: none; }
-  .story-screen .saga-tabs .saga-tab { flex: 0 0 auto !important; }
+  .story-screen .saga-tabs .saga-tab { flex: 0 0 auto !important; font-size: .9cqw !important; }
 
-  .settings-list {
-    overflow: visible !important;
-  }
+  .chapter-node { min-height: 38px !important; }
+  .char-cell { padding: 4px !important; }
+  .char-name { font-size: 8px !important; }
+  .char-thumb { height: 48px !important; }
 
   .setting-row {
-    align-items: flex-start !important;
-    flex-direction: column !important;
+    min-height: 36px !important;
   }
 
-  .setting-controls,
-  .setting-options,
-  .language-grid {
-    width: 100% !important;
-    min-width: 0 !important;
-    border-left: 0 !important;
-    padding-left: 0 !important;
-  }
+  .menu-item { min-height: 5cqh !important; }
 }
