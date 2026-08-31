@@ -36,7 +36,9 @@ Estándar de calidad visual y frontend del remake: la UI debe verse diseñada po
 - Los personajes del arte tocan el borde de la ilustración fuente (diseño del PNG, no bug). Fúndelos con una viñeta (`.menu-bg::after` degradado derecho) en vez de "arreglar" el arte.
 - Los media queries de ventana (`@media max-height`) NO gobiernan el viewport del juego encajado 16:9.
 - No uses `!important` sobre el bloque CASCADE LOCK salvo que la regla anterior también lo sea.
+- **Orden de carga del CSS**: `page-layout-system.css` y `menu-structural-fix.css` se cargan por `<link>` en index.html, pero `styles.css` se importa desde main.tsx y Vite lo inyecta DESPUÉS — con igual especificidad gana styles.css aunque tu regla esté al final del archivo. Si un fix en page-layout-system.css "no aplica", sube especificidad (p.ej. `.saga-tabs .saga-tab.active` en vez de `.saga-tab.active`), nunca repitas la regla en styles.css. Verifica con `getComputedStyle` en browser antes de seguir.
 - Un elemento que "cabe" por 1-2px no está bien: el contenedor scrolleable necesita `scroll-padding-bottom` para que el contenido no quede oculto tras barras sticky.
+- **Barrido de pulido fino**: el modelo de visión genera ruido sub-pixel (offsets de 1px, "kerning", "baseline") en TODA página analizada. Antes de tocar CSS, verifica cada hallazgo con métricas DOM reales (tamaños uniformes de celdas/toggles, paddings simétricos, `bottom <= viewport.bottom`); aplica solo lo que el DOM confirma — en un barrido completo de 6 páginas, típicamente solo 1-2 hallazgos son reales.
 
 ## Criterio de done
 
