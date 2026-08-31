@@ -2,7 +2,25 @@
 
 Todos los cambios notables en `dbz-lsw-fangame`. Formato basado en [Keep a Changelog](https://keepachangelog.com/es/1.1.0/).
 
+## [0.10.0] — 2026-08-31
+
+### Feat: sistema de composición unificado de páginas internas
+- `src/page-layout-system.css`: SSOT visual de la composición (layout 2 columnas
+  en cqw, encabezados normalizados, paneles, scroll interno con scrollbar-gutter,
+  botones/chips/estados, adaptación por `@container game` en vez de `@media` de
+  ventana) para STORY / VERSUS / CHARACTERS / DECK / CARDS / SETTINGS.
+- Menú principal: fondo con arte de la ROM sin efecto fantasma (banda izquierda
+  opaca + viñeta derecha); rail de selección de batalla sin sprites duplicados
+  (dots de navegación puros).
+
+### Docs / repo
+- README reescrito: screenshots reales de las 8 pantallas, estructura del repo,
+  mapeado de documentación, estado de desarrollo actualizado.
+- Docs históricos (spec V1 ES, informe cinematografía V2, compliance V1) movidos
+  a `docs/archive/` con trazabilidad.
+
 ## [Unreleased]
+
 
 ### Fix: cartas `compatible` auditadas contra CSV Users + matriz de mazos (2026-08-15)
 - 21 cartas corregidas (separación Gohan/Trunks + preexistentes sobredimensionadas).

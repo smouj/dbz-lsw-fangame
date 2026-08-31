@@ -1,6 +1,6 @@
 // ═══════════════════════════════════════════════════════════
 // DBZ LSW — Registro cinematográfico declarativo de las 125 cartas
-// Fuente: docs/DBZ_LSW_INFORME_CINEMATICAS_125_CARTAS_V2.md (sección 10).
+// Fuente: docs/archive/DBZ_LSW_INFORME_CINEMATICAS_125_CARTAS_V2.md (sección 10).
 // Cada carta se construye SOBRE PLANTILLAS (T01–T12), nunca como máquina
 // de estados independiente. Los datos son editables (contrato V2 §16).
 // Generado 2026-08-17 — regenerar con el script de export si cambia la tabla.

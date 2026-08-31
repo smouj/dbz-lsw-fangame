@@ -11,3 +11,7 @@ usarse como referencia del estado actual. Para el estado real, leer
 
 Los JSON de `docs/audit/` (facing_map, native-strike-dir, overworld-*) se
 mantienen en su sitio: son datos históricos citados por scripts/comentarios.
+
+| `DBZ_LSW_ESPECIFICACION_FRAMES_ACCIONES_V1.md` (869 líneas) | Spec V1 en español, superada por `docs/FRAMES_ACTIONS_SPEC.md` (canónica) |
+| `DBZ_LSW_INFORME_CINEMATICAS_125_CARTAS_V2.md` (657 líneas) | Informe V2 de cinematografía, superado; citado por comentario en `src/data/cardsCinematic.ts` |
+| `FRAME_SPEC_V1_COMPLIANCE.md` (108 líneas) | Auditoría de cumplimiento de la spec V1, histórica |

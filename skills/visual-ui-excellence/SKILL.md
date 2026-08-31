@@ -45,3 +45,4 @@ Estándar de calidad visual y frontend del remake: la UI debe verse diseñada po
 - Todo `bottom <= viewport.bottom`, 0 solapes, 0 `img.src` duplicados en pantallas de selección.
 - Veredicto del modelo de visión sobre screenshot recortado: LISTO.
 - `verify:ci` exit 0 y worktree limpio, con commit en main.
+- Clasificación anti-hallucination: claims sobre layout verificados con DOM metrics o visión recortada (ROM-verified si aplica a assets).
