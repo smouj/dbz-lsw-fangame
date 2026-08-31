@@ -548,8 +548,8 @@
   height: auto !important;
   min-height: 0 !important;
   margin: 0 !important;
-  padding: var(--page-panel-pad) !important;
-  gap: var(--page-panel-gap) !important;
+  padding: clamp(3px, .4cqh, 6px) clamp(5px, .7cqw, 10px) !important;
+  gap: clamp(2px, .3cqh, 5px) !important;
   overflow-y: auto !important;
   overflow-x: hidden !important;
   background: var(--page-surface-lo) !important;
@@ -557,22 +557,170 @@
   scrollbar-gutter: stable;
   overscroll-behavior: contain;
 }
+
+/* ─── Battle: Roll compact ───────────────────────────────── */
+.game-viewport .setup-roll {
+  height: clamp(90px, 16cqh, 120px) !important;
+  max-height: clamp(90px, 16cqh, 120px) !important;
+  min-height: 0 !important;
+}
+.game-viewport .setup-roll-stage {
+  top: clamp(14px, 2cqh, 20px) !important;
+  height: clamp(56px, 10cqh, 80px) !important;
+}
+.game-viewport .setup-roll-item {
+  top: clamp(10px, 2cqh, 16px) !important;
+  height: clamp(56px, 10cqh, 80px) !important;
+}
+.game-viewport .setup-roll-chibi {
+  height: clamp(34px, 6cqh, 52px) !important;
+}
+.game-viewport .setup-roll-idle,
+.game-viewport .setup-roll-power {
+  max-height: clamp(30px, 5cqh, 44px) !important;
+  max-width: clamp(26px, 4cqw, 40px) !important;
+}
+.game-viewport .setup-roll-rail {
+  bottom: 4px !important;
+  height: clamp(22px, 4cqh, 30px) !important;
+}
+.game-viewport .setup-roll-rail-dot {
+  width: clamp(16px, 2.5cqw, 22px) !important;
+  height: clamp(18px, 3.5cqh, 26px) !important;
+  flex: 0 0 clamp(16px, 2.5cqw, 22px) !important;
+}
+.game-viewport .setup-roll-rail-dot img {
+  max-width: clamp(12px, 1.8cqw, 18px) !important;
+  max-height: clamp(14px, 2.5cqh, 20px) !important;
+}
+.game-viewport .setup-roll-name {
+  font-size: clamp(10px, 1.3cqw, 14px) !important;
+  padding: 2px 3px 3px !important;
+}
+.game-viewport .setup-roll-form {
+  font-size: clamp(9px, 1.1cqw, 12px) !important;
+  padding: 1px 3px !important;
+}
+.game-viewport .setup-roll-nav {
+  top: clamp(50px, 9cqh, 72px) !important;
+  width: clamp(26px, 3cqw, 34px) !important;
+  height: clamp(32px, 5cqh, 44px) !important;
+}
+
+/* ─── Battle: Team slots compact ──────────────────────────── */
 .game-viewport .setup-team-slots,
 .game-viewport .setup-body,
 .game-viewport .setup-ready {
   gap: var(--page-panel-gap) !important;
 }
-.game-viewport .setup-team-slot,
-.game-viewport .setup-roll,
-.game-viewport .setup-details,
-.game-viewport .setup-limits,
-.game-viewport .setup-deck-lib,
-.game-viewport .setup-deck-current,
-.game-viewport .setup-deck-details,
-.game-viewport .setup-ready {
+.game-viewport .setup-team-slot {
   border-radius: 0 !important;
   border-color: var(--page-border) !important;
   box-shadow: inset 0 1px 0 rgba(255,255,255,.025) !important;
+}
+.game-viewport .setup-team-slot.active {
+  border-color: var(--page-accent) !important;
+  border-width: 2px !important;
+  background: color-mix(in srgb, var(--page-accent) 8%, rgba(7,11,18,.80)) !important;
+}
+.game-viewport .setup-team-slot-btn {
+  min-width: clamp(100px, 14cqw, 160px) !important;
+  padding: 4px 10px !important;
+}
+
+/* ─── Battle: Form selector compact ───────────────────────── */
+.game-viewport .setup-form-selector {
+  gap: clamp(4px, .5cqw, 8px) !important;
+  padding: 2px 0 !important;
+}
+.game-viewport .setup-form-chip,
+.game-viewport .setup-form-chip:hover,
+.game-viewport .setup-form-chip.active {
+  min-height: clamp(22px, 3.5cqh, 28px) !important;
+  padding: 2px 6px !important;
+  border-radius: 0 !important;
+  border-color: var(--page-border) !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.025) !important;
+  transform: none !important;
+}
+.game-viewport .setup-form-chip.active {
+  border-color: var(--page-accent) !important;
+  background: color-mix(in srgb, var(--page-accent) 20%, rgba(7,11,18,.90)) !important;
+  color: #fff !important;
+}
+
+/* ─── Battle: Details + Limits compact ────────────────────── */
+.game-viewport .setup-details {
+  border-top: 2px solid color-mix(in srgb, var(--page-accent) 40%, var(--page-border)) !important;
+  padding: clamp(5px, .7cqh, 8px) !important;
+  gap: clamp(2px, .3cqh, 4px) !important;
+  font-size: clamp(10px, 1.1cqw, 13px) !important;
+}
+.game-viewport .setup-details-stat {
+  gap: clamp(3px, .4cqw, 6px) !important;
+  margin-bottom: clamp(1px, .2cqh, 3px) !important;
+}
+.game-viewport .setup-details-head {
+  margin-bottom: clamp(3px, .4cqh, 6px) !important;
+}
+.game-viewport .setup-panel-title {
+  font-size: clamp(8px, .9cqw, 10px) !important;
+  padding-bottom: clamp(3px, .4cqh, 5px) !important;
+  margin-bottom: clamp(4px, .5cqh, 6px) !important;
+}
+.game-viewport .setup-limits {
+  padding: clamp(5px, .7cqh, 8px) !important;
+  gap: clamp(2px, .3cqh, 4px) !important;
+}
+.game-viewport .setup-limit-slot {
+  padding: clamp(3px, .4cqh, 5px) clamp(5px, .7cqw, 8px) !important;
+}
+.game-viewport .setup-body {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  gap: clamp(4px, .5cqh, 6px) !important;
+}
+
+/* ─── Battle: Deck compact with max-height ────────────────── */
+.game-viewport .setup-deck {
+  display: grid !important;
+  grid-template-columns: 1.2fr 1fr 0.8fr !important;
+  gap: clamp(4px, .6cqh, 8px) !important;
+  max-height: clamp(180px, 30cqh, 260px) !important;
+  overflow-y: auto !important;
+}
+.game-viewport .setup-deck-lib-list {
+  max-height: clamp(100px, 16cqh, 160px) !important;
+}
+.game-viewport .setup-deck-list {
+  max-height: clamp(80px, 12cqh, 130px) !important;
+}
+.game-viewport .setup-limits-list {
+  max-height: clamp(80px, 14cqh, 140px) !important;
+}
+
+/* ─── Battle: READY anchored to bottom ─────────────────────── */
+.game-viewport .setup-ready {
+  border-radius: 0 !important;
+  border-color: var(--page-border) !important;
+  border-top: 2px solid color-mix(in srgb, var(--page-accent) 50%, var(--page-border)) !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.025) !important;
+  background: var(--page-surface) !important;
+  padding: clamp(6px, .8cqh, 10px) var(--page-panel-pad) !important;
+  gap: var(--page-panel-gap) !important;
+}
+.game-viewport .setup-ready-info {
+  gap: clamp(8px, 1cqw, 14px) !important;
+  font-size: clamp(10px, 1.2cqw, 13px) !important;
+}
+.game-viewport .setup-ready-btn,
+.game-viewport .btn-primary.setup-ready-btn {
+  min-width: clamp(160px, 22cqw, 240px) !important;
+}
+
+/* ─── Battle: Enemy row ───────────────────────────────────── */
+.game-viewport .setup-enemy-row {
+  gap: clamp(6px, 1cqw, 10px) !important;
 }
 
 /* ─── Container-responsive: adapt to the GAME viewport, not browser. ─ */
