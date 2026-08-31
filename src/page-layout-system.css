@@ -1,0 +1,544 @@
+/* ═══════════════════════════════════════════════════════════════
+   DBZ LSW Fangame — INTERNAL PAGE COMPOSITION SYSTEM
+   Scope: pages reached from Main Menu. No battle HUD/gameplay changes.
+   This file intentionally loads after the historical stylesheet and acts
+   as the single geometry/composition contract for Story, Versus, Characters,
+   Cards, Deck and Settings.
+   ═══════════════════════════════════════════════════════════════ */
+
+.game-viewport {
+  --page-pad-x: clamp(8px, 1.05cqw, 16px);
+  --page-pad-y: clamp(7px, 1.15cqh, 12px);
+  --page-gap: clamp(7px, 1.05cqh, 11px);
+  --page-header-h: clamp(50px, 7.2cqh, 60px);
+  --page-panel-pad: clamp(8px, 1.2cqh, 14px);
+  --page-panel-gap: clamp(6px, .9cqh, 10px);
+  --page-border: rgba(246,199,68,.20);
+  --page-border-hi: rgba(246,199,68,.34);
+  --page-surface: rgba(8,12,19,.86);
+  --page-surface-hi: rgba(13,19,29,.94);
+  --page-surface-lo: rgba(5,8,14,.82);
+  --page-shadow: inset 0 1px 0 rgba(255,255,255,.035), 0 8px 24px rgba(0,0,0,.20);
+  --page-accent: var(--orange);
+}
+
+.story-screen { --page-accent: #4f9ee8; }
+.versus-screen { --page-accent: var(--orange); }
+.characters-screen { --page-accent: var(--gold-lt); }
+.deck-screen { --page-accent: #64b86a; }
+.cards-screen { --page-accent: #a783d8; }
+.settings-screen { --page-accent: #95a1b5; }
+
+/* ─── Page shell ───────────────────────────────────────────── */
+.game-viewport .page-screen:not(.setup-screen) {
+  width: 100% !important;
+  height: 100cqh !important;
+  min-height: 0 !important;
+  padding: var(--page-pad-y) var(--page-pad-x) !important;
+  gap: var(--page-gap) !important;
+  overflow: hidden !important;
+  background:
+    radial-gradient(ellipse 74% 54% at 50% 0%, color-mix(in srgb, var(--page-accent) 8%, transparent), transparent 72%),
+    linear-gradient(180deg, #090d15 0%, #070a11 100%) !important;
+}
+
+/* Canonical header: same height, centered title, balanced left/right slots. */
+.game-viewport .page-screen > .page-header {
+  flex: 0 0 var(--page-header-h) !important;
+  width: 100% !important;
+  min-height: var(--page-header-h) !important;
+  height: var(--page-header-h) !important;
+  display: grid !important;
+  grid-template-columns: minmax(96px, 1fr) auto minmax(96px, 1fr) !important;
+  align-items: center !important;
+  gap: 12px !important;
+  padding: 0 clamp(8px, 1cqw, 14px) !important;
+  overflow: hidden !important;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.035), transparent 46%),
+    rgba(10,15,24,.96) !important;
+  border: 1px solid var(--page-border) !important;
+  border-bottom: 2px solid color-mix(in srgb, var(--page-accent) 62%, var(--page-border)) !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.035), 0 3px 0 rgba(0,0,0,.22) !important;
+}
+
+.game-viewport .page-screen > .page-header::after {
+  display: none !important;
+}
+
+.game-viewport .page-header > :first-child { justify-self: start; }
+.game-viewport .page-header > :last-child { justify-self: end; }
+
+.game-viewport .page-title {
+  justify-self: center !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  transform: none !important;
+  color: var(--text-hi) !important;
+  font-family: var(--fmenu) !important;
+  font-size: clamp(17px, 2cqw, 25px) !important;
+  line-height: 1 !important;
+  letter-spacing: .03em !important;
+  text-shadow: 2px 2px 0 #000 !important;
+  white-space: nowrap;
+}
+
+.game-viewport .page-spacer {
+  width: 44px !important;
+  min-width: 44px !important;
+  height: 1px;
+}
+
+.game-viewport .btn-back {
+  width: 42px !important;
+  height: 34px !important;
+  min-width: 42px !important;
+  min-height: 34px !important;
+  padding: 0 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border: 1px solid var(--page-border-hi) !important;
+  border-left: 3px solid var(--page-accent) !important;
+  background: rgba(7,11,18,.92) !important;
+  color: var(--text-hi) !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.04), 2px 2px 0 rgba(0,0,0,.55) !important;
+  transform: none !important;
+}
+.game-viewport .btn-back:hover {
+  border-color: color-mix(in srgb, var(--page-accent) 72%, white) !important;
+  background: color-mix(in srgb, var(--page-accent) 16%, #080c13) !important;
+  color: #fff !important;
+  transform: none !important;
+}
+
+.game-viewport .deck-count,
+.game-viewport .story-progress {
+  min-height: 30px;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 7px !important;
+  padding: 5px 9px !important;
+  border: 1px solid var(--page-border) !important;
+  background: rgba(5,8,14,.62) !important;
+  color: var(--gold-lt) !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.03);
+}
+
+/* ─── Canonical content layouts ───────────────────────────── */
+.game-viewport .story-layout,
+.game-viewport .characters-layout,
+.game-viewport .deck-layout,
+.game-viewport .cards-layout {
+  flex: 1 1 auto !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  min-height: 0 !important;
+  height: auto !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  gap: var(--page-gap) !important;
+  overflow: hidden !important;
+  align-items: stretch !important;
+}
+
+.game-viewport .story-layout {
+  grid-template-columns: minmax(0, 1fr) clamp(320px, 29cqw, 390px) !important;
+}
+.game-viewport .characters-layout {
+  grid-template-columns: minmax(0, 1fr) clamp(320px, 28cqw, 380px) !important;
+}
+.game-viewport .deck-layout,
+.game-viewport .cards-layout {
+  grid-template-columns: minmax(0, 1fr) clamp(305px, 25cqw, 350px) !important;
+}
+
+/* One panel language. No double frames, no arbitrary radius/offsets. */
+.game-viewport .story-map,
+.game-viewport .chapter-detail-panel,
+.game-viewport .char-grid,
+.game-viewport .char-detail,
+.game-viewport .deck-collection,
+.game-viewport .deck-current,
+.game-viewport .cards-collection-panel,
+.game-viewport .card-detail-panel,
+.game-viewport .settings-list {
+  box-sizing: border-box !important;
+  min-width: 0 !important;
+  min-height: 0 !important;
+  margin: 0 !important;
+  border: 1px solid var(--page-border) !important;
+  border-top: 2px solid color-mix(in srgb, var(--page-accent) 46%, var(--page-border)) !important;
+  border-left: 1px solid var(--page-border) !important;
+  border-radius: 0 !important;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.025), transparent 14%),
+    var(--page-surface) !important;
+  box-shadow: var(--page-shadow) !important;
+}
+
+.game-viewport .story-map,
+.game-viewport .char-grid,
+.game-viewport .deck-collection,
+.game-viewport .cards-collection-panel {
+  padding: var(--page-panel-pad) !important;
+}
+
+.game-viewport .chapter-detail-panel,
+.game-viewport .char-detail,
+.game-viewport .deck-current,
+.game-viewport .card-detail-panel {
+  padding: var(--page-panel-pad) !important;
+}
+
+/* Scroll belongs to the content region, never to the whole game page. */
+.game-viewport .story-map,
+.game-viewport .char-grid,
+.game-viewport .deck-collection,
+.game-viewport .deck-list,
+.game-viewport .card-collection-grid,
+.game-viewport .settings-list,
+.game-viewport .chapter-detail-panel,
+.game-viewport .char-detail {
+  scrollbar-gutter: stable;
+  overscroll-behavior: contain;
+}
+
+.game-viewport .story-map,
+.game-viewport .char-grid,
+.game-viewport .deck-collection,
+.game-viewport .card-collection-grid,
+.game-viewport .settings-list {
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+}
+
+/* ─── Spacing rhythm inside collections/detail panels ────── */
+.game-viewport .story-map,
+.game-viewport .char-grid,
+.game-viewport .card-collection-grid,
+.game-viewport .deck-list,
+.game-viewport .settings-list {
+  gap: var(--page-panel-gap) !important;
+}
+
+.game-viewport .chapter-node,
+.game-viewport .char-cell,
+.game-viewport .ui-char-card,
+.game-viewport .setting-row,
+.game-viewport .deck-row {
+  margin: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.025) !important;
+}
+
+.game-viewport .chapter-node,
+.game-viewport .setting-row,
+.game-viewport .deck-row {
+  padding-left: clamp(8px, .8cqw, 12px) !important;
+  padding-right: clamp(8px, .8cqw, 12px) !important;
+}
+
+.game-viewport .chapter-node:hover,
+.game-viewport .char-cell:hover:not(.locked),
+.game-viewport .ui-char-card:hover,
+.game-viewport .setting-row:hover,
+.game-viewport .deck-row:hover {
+  border-color: color-mix(in srgb, var(--page-accent) 62%, var(--border)) !important;
+  background-color: color-mix(in srgb, var(--page-accent) 7%, var(--panel)) !important;
+  transform: none !important;
+}
+
+/* Toolbars do not float independently from their panel. */
+.game-viewport .deck-toolbar,
+.game-viewport .cards-toolbar,
+.game-viewport .deck-current-title,
+.game-viewport .card-detail-kicker {
+  flex: 0 0 auto;
+}
+.game-viewport .deck-toolbar,
+.game-viewport .cards-toolbar {
+  margin: 0 0 var(--page-panel-gap) !important;
+  padding: 0 !important;
+  gap: 6px !important;
+}
+
+/* Chips/buttons share a compact physical language. */
+.game-viewport .filter-chip,
+.game-viewport .form-chip,
+.game-viewport .diff-btn,
+.game-viewport .toggle,
+.game-viewport .setup-form-chip,
+.game-viewport .setup-filter-btn,
+.game-viewport .setup-small-btn {
+  min-height: 28px !important;
+  padding: 5px 8px !important;
+  border: 1px solid var(--page-border) !important;
+  border-radius: 0 !important;
+  background: rgba(7,11,18,.90) !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.025) !important;
+  transform: none !important;
+}
+.game-viewport .filter-chip:hover,
+.game-viewport .form-chip:hover,
+.game-viewport .diff-btn:hover,
+.game-viewport .setup-form-chip:hover,
+.game-viewport .setup-filter-btn:hover,
+.game-viewport .setup-small-btn:hover {
+  border-color: color-mix(in srgb, var(--page-accent) 68%, white) !important;
+  background: color-mix(in srgb, var(--page-accent) 12%, #080c13) !important;
+  transform: none !important;
+}
+.game-viewport .filter-chip.active,
+.game-viewport .toggle.on,
+.game-viewport .form-chip.active,
+.game-viewport .setup-form-chip.active,
+.game-viewport .setup-filter-btn.active {
+  border-color: var(--page-accent) !important;
+  background: color-mix(in srgb, var(--page-accent) 24%, #0a0e15) !important;
+  color: #fff !important;
+}
+
+.game-viewport .btn-primary {
+  min-height: 38px;
+  border-radius: 0 !important;
+  border: 1px solid color-mix(in srgb, var(--page-accent) 68%, #fff) !important;
+  border-left-width: 3px !important;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.08), transparent 48%),
+    color-mix(in srgb, var(--page-accent) 28%, #0b1018) !important;
+  color: #fff !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.06), 2px 2px 0 rgba(0,0,0,.48) !important;
+  transform: none !important;
+}
+.game-viewport .btn-primary:hover:not(:disabled) {
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.12), transparent 48%),
+    color-mix(in srgb, var(--page-accent) 38%, #0b1018) !important;
+  filter: brightness(1.06);
+  transform: none !important;
+}
+
+/* ─── Story ──────────────────────────────────────────────── */
+.game-viewport .story-map {
+  align-content: start !important;
+  padding: var(--page-panel-pad) !important;
+}
+.game-viewport .chapter-node {
+  min-height: clamp(52px, 7.8cqh, 66px) !important;
+  gap: 9px !important;
+  border: 1px solid rgba(246,199,68,.13) !important;
+  border-left: 3px solid transparent !important;
+  background: rgba(7,11,18,.68) !important;
+}
+.game-viewport .chapter-node.active {
+  border-left-color: var(--page-accent) !important;
+  background: color-mix(in srgb, var(--page-accent) 10%, rgba(7,11,18,.84)) !important;
+}
+.game-viewport .cdp-body {
+  min-height: 0 !important;
+  padding: clamp(8px, 1.15cqh, 13px) !important;
+  gap: clamp(5px, .8cqh, 9px) !important;
+}
+
+/* ─── Characters ─────────────────────────────────────────── */
+.game-viewport .char-grid {
+  grid-template-columns: repeat(auto-fill, minmax(clamp(76px, 8.3cqw, 108px), 1fr)) !important;
+  grid-auto-rows: minmax(clamp(74px, 12cqh, 108px), auto) !important;
+  align-content: start !important;
+}
+.game-viewport .char-cell,
+.game-viewport .ui-char-card {
+  min-height: 0 !important;
+  height: auto !important;
+  padding: clamp(5px, .75cqh, 8px) !important;
+  gap: 4px !important;
+}
+.game-viewport .char-detail {
+  gap: clamp(7px, 1cqh, 11px) !important;
+  overflow-y: auto !important;
+}
+.game-viewport .char-detail-header {
+  flex: 0 0 auto !important;
+  min-height: 0 !important;
+  margin: 0 !important;
+  padding: clamp(6px, .9cqh, 10px) !important;
+  border: 1px solid rgba(246,199,68,.12) !important;
+  background: rgba(5,8,14,.38) !important;
+}
+
+/* ─── Deck / Cards ───────────────────────────────────────── */
+.game-viewport .deck-collection,
+.game-viewport .deck-current,
+.game-viewport .cards-collection-panel,
+.game-viewport .card-detail-panel {
+  overflow: hidden !important;
+}
+.game-viewport .card-collection-grid.full {
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  align-content: start !important;
+}
+.game-viewport .deck-list {
+  min-height: 0 !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  padding-right: 2px !important;
+}
+.game-viewport .deck-summary {
+  margin-top: var(--page-panel-gap) !important;
+}
+.game-viewport .card-detail-inner {
+  height: 100% !important;
+  padding: 0 !important;
+  gap: clamp(6px, .9cqh, 10px) !important;
+}
+
+/* ─── Settings ───────────────────────────────────────────── */
+.game-viewport .settings-list {
+  flex: 1 1 auto !important;
+  width: min(100%, 980px) !important;
+  max-width: 980px !important;
+  height: auto !important;
+  margin: 0 auto !important;
+  padding: var(--page-panel-pad) !important;
+  align-content: start !important;
+}
+.game-viewport .setting-row {
+  min-height: clamp(46px, 7.2cqh, 62px) !important;
+  gap: 12px !important;
+  background: rgba(7,11,18,.66) !important;
+  border: 1px solid rgba(246,199,68,.13) !important;
+}
+.game-viewport .setting-controls {
+  min-width: clamp(150px, 18cqw, 230px) !important;
+  border: 1px solid rgba(246,199,68,.12) !important;
+  background: rgba(4,7,12,.40) !important;
+}
+
+/* ─── Versus / Team Setup wrapper ───────────────────────── */
+.game-viewport .versus-screen.setup-screen-wrap {
+  overflow: hidden !important;
+}
+.game-viewport .setup-screen-wrap > .setup-enemy-row {
+  flex: 0 0 auto !important;
+  min-height: 38px !important;
+  margin: 0 !important;
+  padding: 6px 9px !important;
+  border: 1px solid var(--page-border) !important;
+  border-left: 3px solid var(--page-accent) !important;
+  background: rgba(7,11,18,.80) !important;
+}
+.game-viewport .setup-screen-wrap > .setup-screen {
+  flex: 1 1 auto !important;
+  width: 100% !important;
+  height: auto !important;
+  min-height: 0 !important;
+  margin: 0 !important;
+  padding: var(--page-panel-pad) !important;
+  gap: var(--page-panel-gap) !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  background: var(--page-surface-lo) !important;
+  border: 1px solid var(--page-border) !important;
+  scrollbar-gutter: stable;
+  overscroll-behavior: contain;
+}
+.game-viewport .setup-team-slots,
+.game-viewport .setup-body,
+.game-viewport .setup-ready {
+  gap: var(--page-panel-gap) !important;
+}
+.game-viewport .setup-team-slot,
+.game-viewport .setup-roll,
+.game-viewport .setup-details,
+.game-viewport .setup-limits,
+.game-viewport .setup-deck-lib,
+.game-viewport .setup-deck-current,
+.game-viewport .setup-deck-details,
+.game-viewport .setup-ready {
+  border-radius: 0 !important;
+  border-color: var(--page-border) !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.025) !important;
+}
+
+/* ─── Container-responsive: adapt to the GAME viewport, not browser. ─ */
+@container game (max-height: 600px) {
+  .page-screen:not(.setup-screen) {
+    --page-header-h: 48px;
+    --page-pad-y: 6px;
+    --page-gap: 6px;
+    --page-panel-pad: 7px;
+    --page-panel-gap: 5px;
+  }
+  .page-title { font-size: clamp(15px, 1.8cqw, 21px) !important; }
+  .btn-back { width: 38px !important; height: 30px !important; min-width: 38px !important; min-height: 30px !important; }
+  .story-layout { grid-template-columns: minmax(0, 1fr) clamp(292px, 28cqw, 340px) !important; }
+  .characters-layout { grid-template-columns: minmax(0, 1fr) clamp(292px, 27cqw, 340px) !important; }
+  .deck-layout,
+  .cards-layout { grid-template-columns: minmax(0, 1fr) clamp(270px, 24cqw, 320px) !important; }
+  .chapter-node { min-height: 46px !important; }
+  .setting-row { min-height: 42px !important; }
+}
+
+@container game (max-width: 760px) {
+  .page-screen:not(.setup-screen) {
+    overflow-y: auto !important;
+  }
+  .page-screen > .page-header {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    grid-template-columns: 48px minmax(0, 1fr) 48px !important;
+  }
+  .page-title {
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 15px !important;
+  }
+  .page-header .story-progress,
+  .page-header .deck-count {
+    max-width: 48px;
+    min-width: 0;
+    overflow: hidden;
+    padding: 4px !important;
+  }
+  .story-layout,
+  .characters-layout,
+  .deck-layout,
+  .cards-layout {
+    grid-template-columns: 1fr !important;
+    grid-template-rows: auto auto !important;
+    overflow: visible !important;
+  }
+  .story-map,
+  .char-grid,
+  .deck-collection,
+  .cards-collection-panel {
+    min-height: 210px !important;
+    max-height: 55cqh !important;
+  }
+  .chapter-detail-panel,
+  .char-detail,
+  .deck-current,
+  .card-detail-panel {
+    min-height: 180px !important;
+  }
+  .settings-list {
+    overflow: visible !important;
+  }
+  .setting-row {
+    align-items: flex-start !important;
+    flex-direction: column !important;
+  }
+  .setting-controls,
+  .setting-options,
+  .language-grid {
+    width: 100% !important;
+    min-width: 0 !important;
+  }
+}
