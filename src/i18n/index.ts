@@ -63,6 +63,7 @@ export type TKey =
   | 'settings.title' | 'settings.bgmVolume' | 'settings.soundFx' | 'settings.textSpeed'
   | 'settings.screen' | 'settings.controls' | 'settings.language' | 'settings.on' | 'settings.off'
   | 'settings.normal' | 'settings.fast' | 'settings.windowed' | 'settings.fullscreen'
+  | 'settings.music' | 'settings.ctrlCard' | 'settings.ctrlNav' | 'settings.ctrlConfirm' | 'settings.ctrlBack' | 'settings.ctrlPower'
   | 'battle.start' | 'battle.position' | 'battle.selectCommand' | 'battle.selectCard' | 'battle.enemyTurn'
   | 'battle.choosePosition' | 'battle.airBack' | 'battle.airFront' | 'battle.gndBack' | 'battle.gndFront'
   | 'battle.limit' | 'battle.limitHelp' | 'battle.ccInsufficient' | 'battle.hand' | 'battle.turn'

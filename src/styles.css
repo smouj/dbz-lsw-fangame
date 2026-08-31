@@ -3358,9 +3358,9 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 
 .starter-bg {
   position: absolute; inset: 0;
-  background:
-    linear-gradient(180deg, rgba(10,10,24,0.7) 0%, rgba(10,10,24,0.4) 50%, rgba(8,8,20,0.85) 100%),
-    url('/menu-art.png') center center / cover no-repeat;
+  /* Fondo del main menu (shell-menu): negro + puntillista, sin arte de fondo */
+  background: #151820 radial-gradient(#333845 .7px, transparent .7px);
+  background-size: 6px 6px;
 }
 
 .starter-content {

@@ -4766,7 +4766,7 @@ function SettingsScreen({ onNavigate }: { onNavigate: (s: Screen) => void }) {
           </button>
         </div>
         <div className="setting-row">
-          <span className="setting-label"><Music size={12} /> Música (BSO)</span>
+          <span className="setting-label"><Music size={12} /> {t('settings.music')}</span>
           <button aria-pressed={music} className={`toggle ${music ? 'on' : ''}`} onClick={() => setMusic(!music)}>
             {music ? t('settings.on') : t('settings.off')}
           </button>
@@ -4788,11 +4788,11 @@ function SettingsScreen({ onNavigate }: { onNavigate: (s: Screen) => void }) {
         <div className="setting-row">
           <span className="setting-label"><Keyboard size={12} /> {t('settings.controls')}</span>
           <div className="setting-controls">
-            <div>1-5: Select card</div>
-            <div>WASD: Navigate</div>
-            <div>ENTER: Confirm</div>
-            <div>ESC: Back / Cancel</div>
-            <div>SPACE: Power Up</div>
+            <div>{t('settings.ctrlCard')}</div>
+            <div>{t('settings.ctrlNav')}</div>
+            <div>{t('settings.ctrlConfirm')}</div>
+            <div>{t('settings.ctrlBack')}</div>
+            <div>{t('settings.ctrlPower')}</div>
           </div>
         </div>
       </div>
