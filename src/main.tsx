@@ -194,39 +194,6 @@ function fighterToReact(f: BattleFighterState): Fighter {
   };
 }
 
-// Retratos de menú con fondo recortado (transparente) para integrarse en la
-// tarjeta CONTINUAR del menú principal (2026-08-12: el fondo gris original del
-// asset LSW 40×56 se veía como un recuadro separado; el recorte lo funde con
-// el tema oscuro de la tarjeta). Regenerados desde los story VERIFICADOS
-// (mismo recorte de fondo, nombres por personaje — los cell_00_XX antiguos
-// estaban mal mapeados).
-const MENU_PORTRAITS_CUT: Record<string, string> = {
-  goku: '/assets/portraits/menu_cut/goku.png',
-  vegeta: '/assets/portraits/menu_cut/vegeta.png',
-  gohan: '/assets/portraits/menu_cut/gohan.png',
-  piccolo: '/assets/portraits/menu_cut/piccolo.png',
-  krillin: '/assets/portraits/menu_cut/krillin.png',
-  trunks: '/assets/portraits/menu_cut/trunks.png',
-  goten: '/assets/portraits/menu_cut/goten.png',
-  gotenks: '/assets/portraits/menu_cut/gotenks.png',
-  frieza: '/assets/portraits/menu_cut/frieza.png',
-  cell: '/assets/portraits/menu_cut/cell.png',
-  buu: '/assets/portraits/menu_cut/buu.png',
-  nappa: '/assets/portraits/menu_cut/nappa.png',
-  ginyu: '/assets/portraits/menu_cut/ginyu.png',
-  recoome: '/assets/portraits/menu_cut/recoome.png',
-  guldo: '/assets/portraits/menu_cut/guldo.png',
-  jeice: '/assets/portraits/menu_cut/jeice.png',
-  burter: '/assets/portraits/menu_cut/burter.png',
-  android_16: '/assets/portraits/menu_cut/android_16.png',
-  android_17: '/assets/portraits/menu_cut/android_17.png',
-  android_18: '/assets/portraits/menu_cut/android_18.png',
-  android_19: '/assets/portraits/menu_cut/android_19.png',
-  android_20: '/assets/portraits/menu_cut/android_20.png',
-  cell_jr: '/assets/portraits/menu_cut/cell_jr.png',
-  vegito: '/assets/portraits/menu_cut/vegito.png',
-};
-
 // ─── Retratos (Sprite Database) ────────────────────────────
 const PORTRAITS: Record<string, string> = MENU_PORTRAITS;
 
@@ -3827,11 +3794,11 @@ function MainMenu({ onNavigate }: { onNavigate: (s: Screen) => void }) {
   const chapter = CHAPTERS.find(c => c.id === Math.min(progress, CHAPTERS.length)) ?? CHAPTERS[0];
   const prog = loadProgress();
   const es = lang === 'es';
-  const items: Array<{ screen: Screen; label: string; desc: string; Icon: LucideIcon; art?: string }> = [
+  const items: Array<{ screen: Screen; label: string; desc: string; Icon: LucideIcon }> = [
     { screen: 'story', label: t('menu.story'), desc: es ? 'Tu próxima batalla empieza aquí' : 'Your next battle starts here', Icon: BookOpen },
-    { screen: 'versus', label: t('menu.battle'), desc: es ? 'Prepara tu equipo y lucha' : 'Build your team. Take the fight.', Icon: Swords, art: MENU_PORTRAITS_CUT.goku },
+    { screen: 'versus', label: t('menu.battle'), desc: es ? 'Prepara tu equipo y lucha' : 'Build your team. Take the fight.', Icon: Swords },
     { screen: 'deck', label: t('menu.deck'), desc: es ? '20 cartas. Tu estrategia.' : '20 cards. Your strategy.', Icon: Library },
-    { screen: 'characters', label: t('menu.characters'), desc: es ? 'Guerreros, formas y poder' : 'Warriors, forms and power', Icon: Users, art: MENU_PORTRAITS_CUT.vegeta },
+    { screen: 'characters', label: t('menu.characters'), desc: es ? 'Guerreros, formas y poder' : 'Warriors, forms and power', Icon: Users },
     { screen: 'cards', label: t('menu.cards'), desc: es ? 'Explora tu colección' : 'Explore your collection', Icon: Sparkles },
     { screen: 'settings', label: t('menu.settings'), desc: es ? 'Audio · Idioma · Pantalla' : 'Audio · Language · Display', Icon: Settings },
   ];
@@ -3867,11 +3834,10 @@ function MainMenu({ onNavigate }: { onNavigate: (s: Screen) => void }) {
       <div className="shell-player"><span>{es ? 'GUERRERO' : 'WARRIOR'}</span><strong>LV. {prog.level.toString().padStart(2, '0')}</strong></div>
     </header>
     <nav className="shell-panels" ref={navRef} aria-label={es ? 'Menú principal' : 'Main menu'} onKeyDown={onMenuKeyDown}>
-      {items.map(({ screen, label, desc, Icon, art }, index) => <button key={screen} type="button"
+      {items.map(({ screen, label, desc, Icon }, index) => <button key={screen} type="button"
         className={`shell-panel shell-panel-${screen}`} data-screen={screen} onClick={() => navigate(screen)}>
         <span className="shell-panel-index">0{index + 1}</span>
         <Icon className="shell-panel-icon" aria-hidden="true" />
-        {art && <img className="shell-panel-art" src={art} alt="" draggable={false} />}
         <span className="shell-panel-copy"><strong>{label}</strong><span>{desc}</span></span>
         {screen === 'story' && <span className="shell-story-progress">
           <span>{es ? 'CAPÍTULO' : 'CHAPTER'} {String(chapter.id).padStart(2, '0')} / {CHAPTERS.length}</span>

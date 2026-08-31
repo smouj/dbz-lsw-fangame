@@ -21,16 +21,17 @@
 .shell-panel-copy strong { font:40px/1.02 var(--shell-display); letter-spacing:.02em; overflow-wrap:anywhere; }
 .shell-panel-copy > span { font-size:15px; line-height:1.35; max-width:200px; font-weight:600; }
 .shell-panel-arrow { position:absolute; right:18px; bottom:17px; width:22px; height:22px; }
-.shell-panel-art { position:absolute; right:10px; bottom:0; width:auto; height:154px; image-rendering:pixelated; opacity:.94; z-index:0; }
-.shell-panel-versus { grid-area:versus; background-color:#ffb647; }
-.shell-panel-characters { grid-area:characters; background-color:#8ebee1; }
+/* Story cutscenes form a tinted backdrop; button and text geometry stay unchanged. */
+.shell-panel:not(.shell-panel-story)::after { content:''; position:absolute; inset:0; z-index:-2; pointer-events:none; background-image:var(--panel-scene); background-size:var(--panel-scene-size,cover); background-position:var(--panel-scene-position,center); background-repeat:no-repeat; image-rendering:pixelated; filter:grayscale(1); mix-blend-mode:multiply; opacity:var(--panel-scene-opacity,.62); mask-image:linear-gradient(90deg,transparent,rgba(0,0,0,.28) 32%,#000 78%); }
+.shell-panel-versus { grid-area:versus; background-color:#ffb647; --panel-scene:url('/assets/cutscenes/012_goku_vs_great_ape_vegeta.png'); --panel-scene-position:62% center; }
+.shell-panel-characters { grid-area:characters; background-color:#8ebee1; --panel-scene:url('/assets/cutscenes/070_ending_goku_family_and_friends.png'); --panel-scene-position:right center; }
 .shell-panel-versus .shell-panel-copy,.shell-panel-characters .shell-panel-copy { padding-top:24px; padding-bottom:52px; }
 .shell-panel-versus .shell-panel-copy > span,.shell-panel-characters .shell-panel-copy > span { max-width:165px; }
 .shell-panel-characters .shell-panel-copy strong { font-size:35px; }
-.shell-panel-deck { grid-area:deck; background-color:#c1d09b; }
-.shell-panel-cards { grid-area:cards; background-color:#c8b9dc; }
+.shell-panel-deck { grid-area:deck; background-color:#c1d09b; --panel-scene:url('/assets/cutscenes/023_namek_dragon_balls.png'); }
+.shell-panel-cards { grid-area:cards; background-color:#c8b9dc; --panel-scene:url('/assets/cutscenes/061_z_sword_in_pedestal.png'); --panel-scene-position:30% center; }
 .shell-panel-deck .shell-panel-icon,.shell-panel-cards .shell-panel-icon { width:72px; height:72px; top:auto; bottom:-7px; right:22px; opacity:.2; transform:rotate(-12deg); }
-.shell-panel-settings { grid-area:settings; padding:12px 64px; background-color:#e5ddca; }
+.shell-panel-settings { grid-area:settings; padding:12px 64px; background-color:#e5ddca; --panel-scene:url('/assets/cutscenes/037_kame_house.png'); --panel-scene-size:auto 200%; --panel-scene-position:right 60%; --panel-scene-opacity:.38; }
 .shell-panel-settings .shell-panel-index { top:29px; }
 .shell-panel-settings .shell-panel-copy { flex-direction:row; align-items:center; gap:24px; }
 .shell-panel-settings .shell-panel-copy strong { font-size:30px; }

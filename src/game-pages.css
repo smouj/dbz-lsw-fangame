@@ -1,11 +1,11 @@
 /* One layout contract for the game shell. No battle selectors. */
-.shell-surface { --page-accent:#ffc858; --page-line:#3c4658; --page-muted:#b8bfcd; --page-paper:#151c28; }
+.shell-surface { --page-accent:#ffc858; --page-line:#3c4658; --page-muted:#b8bfcd; --page-paper:rgb(21 28 40 / .58); }
 .shell-surface .story-screen { --page-accent:#88c7ee; }
 .shell-surface .characters-screen { --page-accent:#ffd363; }
 .shell-surface .deck-screen { --page-accent:#b4d293; }
 .shell-surface .cards-screen { --page-accent:#ccafe8; }
 .shell-surface .settings-screen { --page-accent:#d5dcea; }
-.game-viewport .shell-surface .page-screen:not(.setup-screen):not(.story-scene-screen):not(.starter-screen) { position:relative; display:flex; flex-direction:column; width:100%; height:720px; min-height:0; padding:20px 24px; gap:16px; overflow:hidden; color:#f3eee2; background:#0e1420; font:16px/1.4 var(--shell-body); animation:none; }
+.game-viewport .shell-surface .page-screen:not(.setup-screen):not(.story-scene-screen):not(.starter-screen) { position:relative; display:flex; flex-direction:column; width:100%; height:720px; min-height:0; padding:20px 24px; gap:16px; overflow:hidden; color:#f3eee2; background:#151820 radial-gradient(#333845 .7px,transparent .7px); background-size:6px 6px; font:16px/1.4 var(--shell-body); animation:none; }
 .shell-surface .page-screen > .page-header { position:relative; display:flex; align-items:center; flex:0 0 60px; height:60px; min-height:60px; width:100%; gap:20px; padding:0 0 14px; margin:0; border:0; border-bottom:2px solid var(--page-line); background:none; box-shadow:none; }
 .shell-surface .page-screen > .page-header::before,.shell-surface .page-screen > .page-header::after { display:none; }
 .shell-surface .page-title { margin:0; padding:0; color:#f8eed7; font:38px/1.1 var(--shell-display); letter-spacing:.025em; text-shadow:none; transform:none; white-space:normal; }
@@ -140,6 +140,7 @@
 .shell-surface .deck-row-remove { width:30px; height:30px; flex:0 0 30px; }
 /* Settings: controls align to one baseline. */
 .shell-surface .settings-list { display:flex; flex-direction:column; gap:0; width:100%; max-width:1100px; flex:1; min-height:0; margin:0 auto; padding:8px 24px; overflow-y:auto; border:1px solid var(--page-line); background:var(--page-paper); }
+.shell-surface .settings-list::before { background:none; }
 .shell-surface .setting-row { flex:0 0 auto; display:flex; align-items:center; min-height:68px; gap:20px; padding:14px 0; border:0; border-bottom:1px solid #3c4658; border-radius:0; background:none; }
 .shell-surface .setting-row:last-child { border-bottom:0; }
 .shell-surface .setting-label { min-width:200px; flex:0 0 200px; font:700 15px/1.3 var(--shell-body); }
@@ -160,7 +161,7 @@
 .shell-surface .setup-screen > .setup-workshop { display:flex; flex-direction:column; flex:1; min-height:0; padding:0 6px 8px 0; gap:14px; overflow:auto; scrollbar-width:thin; scroll-padding:16px; }
 .shell-surface .setup-workshop > * { flex-shrink:0; }
 .shell-surface .setup-screen > * { flex-shrink:0; }
-.shell-surface :is(.setup-team-slot,.setup-roll,.setup-details,.setup-limits,.setup-deck-lib,.setup-deck-current,.setup-deck-details) { border-radius:0; border-color:#445066; background:#151c28; }
+.shell-surface :is(.setup-team-slot,.setup-roll,.setup-details,.setup-limits,.setup-deck-lib,.setup-deck-current,.setup-deck-details) { border-radius:0; border-color:#445066; background:var(--page-paper); }
 .shell-surface .setup-team-slot { min-height:52px; }
 .shell-surface .setup-team-slot-name { font:700 16px var(--shell-body); }
 .shell-surface .setup-team-slot-form,.shell-surface .setup-team-slot-num { font:11px var(--shell-body); }

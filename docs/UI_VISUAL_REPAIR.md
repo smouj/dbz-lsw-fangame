@@ -1,6 +1,20 @@
 # Revisión visual del juego y Dev Studio — 2026-08-31
 
-Implementación local en `codex/ui-visual-polish`, sobre `571ee20`.
+Implementación en `codex/ui-visual-polish`, sobre `571ee20`. Primera entrega: `42d8246`, pusheada antes del segundo pulido solicitado.
+
+## Segundo pulido: únicamente fondos
+
+Según la aclaración del usuario, se conservan la composición, tamaños, posiciones y tipografías de los botones, el arte de Continuar y el fondo de puntillismo del menú. Se retiran los dos retratos recortados y se usan viñetas de Story como fondos decorativos, con una mezcla monocroma que mantiene los tonos actuales y un degradado que protege la lectura:
+
+- Battle: Goku contra Vegeta Ozaru, naranja.
+- Deck: esferas de Namek, verde.
+- Characters: familia y amigos del epílogo, azul.
+- Cards: espada Z, violeta.
+- Settings: Kame House, crema.
+
+Story, Battle Mode (preparación), Deck, Characters, Cards y Settings comparten el mismo patrón de puntos de 6×6 del menú. Los paneles dejan ver suavemente la textura. No se sustituyen los fondos de las escenas narrativas ni del campo de batalla.
+
+Comprobación de esta segunda entrega: seis botones con posición y tamaño de layout idénticos al primer commit; fondos del menú y Continuar sin cambios; seis interiores sin imágenes faltantes ni desbordamiento horizontal; consola del navegador sin errores. TypeScript, 221 pruebas, contratos de viewport/HUD/Dev y build vuelven a pasar. Se reutilizan cinco PNG ya versionados, sin generar ni duplicar imágenes.
 
 ## Cambios
 
@@ -41,4 +55,4 @@ El checkout se preparó en `D:\CodexProjects\dbz-lsw-fangame` por falta de espac
 
 Un checkout nuevo necesita los recursos generados habituales del proyecto para las vistas físicas de Dev (`gen:rom-runtime-assets`; véanse los requisitos ROM del repositorio). Los scripts antiguos de verificación que usan sintaxis POSIX requieren una shell compatible; el nuevo `verify:game-shell` funciona también en Windows.
 
-La revisión no certifica todos los fotogramas, cartas o desenlaces del motor. Los pendientes de fidelidad ROM que muestra Dev siguen siendo información real y no se ocultan. La compilación conserva el aviso de bundles grandes; no se eleva el umbral para silenciarlo. Los cambios no se han publicado ni enviado a GitHub.
+La revisión no certifica todos los fotogramas, cartas o desenlaces del motor. Los pendientes de fidelidad ROM que muestra Dev siguen siendo información real y no se ocultan. La compilación conserva el aviso de bundles grandes; no se eleva el umbral para silenciarlo. La entrega se hace en `origin/codex/ui-visual-polish`, sin fusionar en `main` ni desplegar.
