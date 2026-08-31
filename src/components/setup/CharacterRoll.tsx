@@ -203,7 +203,7 @@ export function CharacterRoll({ items, selectedIndex, onSelect, disabled }: Char
             aria-label={item.name}
             aria-current={index === safeIndex ? 'true' : undefined}
           >
-            {item.idleUrl ? <img src={item.idleUrl} alt="" draggable={false} /> : <span />}
+            <span className="setup-roll-rail-dot-mark" />
           </button>
         ))}
       </div>
