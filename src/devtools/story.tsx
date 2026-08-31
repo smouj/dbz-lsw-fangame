@@ -1,54 +1,47 @@
-// ═══════════════════════════════════════════════════════════
-// DEV STUDIO — Story Studio
-// Capítulos 1-32: mazo del jefe, AI boost, combates 2v2, viñetas
-// + PREVIEW DE DIÁLOGO: cómo y dónde se colocan los sprites de
-// personajes (retrato real GBC, side left/right, emoción, fallback)
-// exactamente como los renderiza StorySceneScreen.
-// ═══════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════════════════════
+// DEV STUDIO — STORY DIALOGUE CANON INSPECTOR
+// ═══════════════════════════════════════════════════════════════════════
+// 30 MAIN Stories + EX Story 1/2 in cartridge order. Dialogue presentation
+// only: physical cutscene BG + Story portrait/form/emotion + text provenance.
+// Story Map/RPG runtime is intentionally outside this tool.
+// ═══════════════════════════════════════════════════════════════════════
+
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { STORY_ENEMY_DECKS, STORY_AI_BOOSTS, TEAM_BATTLES } from '../data/enemy_decks';
 import { panelsForChapter, characterName, type StoryPanel } from '../data/storyPanels';
-import { STORY_PORTRAITS } from '../data/storyPortraits';
-import { resolveSpeakerPortrait } from '../data/speakerPortraits';
+import { canonicalStoryPortraitUrl } from '../data/storyPortraitCanon';
+import { storyIdentityForSequence, CANONICAL_STORY_ORDER } from '../data/storyCanonical';
+import { canonicalStoryNarrative } from '../data/storyNarrativeCanon';
 import { getCard, cardColor } from '../data/cards';
 
-const CHAPTER_IDS = Object.keys(STORY_ENEMY_DECKS).map(Number).sort((a, b) => a - b);
+const SEQUENCE_IDS = CANONICAL_STORY_ORDER.map((story) => story.sequenceIndex);
 
-/** Resolución canónica del retrato de una viñeta — M8.P0: la MISMA cadena
- *  que el diálogo de la partida y el panel de Stage (resolveSpeakerPortrait).
- *  Para viñetas con emoción explícita se prioriza el retrato de story con
- *  emoción; el resto cae en la cadena única (story → mini → menú). */
 function resolvePortrait(c: { character: string; form?: string; emotion?: string }): string | undefined {
-  if (c.emotion) {
-    const emo = STORY_PORTRAITS[c.character]?.emotions?.[c.emotion as never];
-    if (emo) return emo;
-  }
-  return resolveSpeakerPortrait(c.character, c.form);
+  return canonicalStoryPortraitUrl(c.character, c.form, c.emotion as never);
 }
 
 export function StoryModule() {
-  const [chapter, setChapter] = useState(1);
-  const [selected, setSelected] = useState<{ phase: 'intro' | 'outro'; id: string } | null>(null);
-  // Preview = viewport fijo del juego (1082×605) escalado para caber en la
-  // columna → SIEMPRE se ve exactamente como en el juego, a cualquier tamaño.
+  const [sequenceIndex, setSequenceIndex] = useState(1);
+  const [selectedId, setSelectedId] = useState<string | null>(null);
   const stageRef = useRef<HTMLDivElement>(null);
   const [stageScale, setStageScale] = useState(1);
+
   useEffect(() => {
     const el = stageRef.current;
     if (!el) return;
     const ro = new ResizeObserver(() => {
-      const w = el.clientWidth;
-      const h = el.clientHeight;
-      setStageScale(Math.min(1, w / 1082, h / 605));
+      setStageScale(Math.min(1, el.clientWidth / 1082, el.clientHeight / 605));
     });
     ro.observe(el);
     return () => ro.disconnect();
   }, []);
 
-  const deck = STORY_ENEMY_DECKS[chapter] ?? [];
-  const boost = STORY_AI_BOOSTS[chapter];
-  const team = TEAM_BATTLES[chapter];
-  const flow = panelsForChapter(chapter);
+  const identity = storyIdentityForSequence(sequenceIndex);
+  const narrative = canonicalStoryNarrative(sequenceIndex);
+  const flow = panelsForChapter(sequenceIndex);
+  const deck = STORY_ENEMY_DECKS[sequenceIndex] ?? [];
+  const boost = STORY_AI_BOOSTS[sequenceIndex];
+  const team = TEAM_BATTLES[sequenceIndex];
 
   const deckBreakdown = useMemo(() => {
     const map = new Map<number, number>();
@@ -56,125 +49,133 @@ export function StoryModule() {
     return [...map.entries()].sort((a, b) => a[0] - b[0]);
   }, [deck]);
 
-  // Viñeta seleccionada
-  const allPanels: { phase: 'intro' | 'outro'; panel: StoryPanel }[] = [
-    ...flow.intro.map(p => ({ phase: 'intro' as const, panel: p })),
-    ...(flow.outro ?? []).map(p => ({ phase: 'outro' as const, panel: p })),
-  ];
-  const current = selected
-    ? allPanels.find(x => x.phase === selected.phase && x.panel.id === selected.id) ?? null
-    : (allPanels.find(x => x.panel.dialogue || (x.panel.characters?.length ?? 0) > 0) ?? null);
+  const panels = flow.intro;
+  const current: StoryPanel | null = selectedId
+    ? panels.find((panel) => panel.id === selectedId) ?? null
+    : panels.find((panel) => panel.dialogue) ?? panels[0] ?? null;
 
-  // Auditoría de cobertura de retratos del capítulo
   const audit = useMemo(() => {
-    let withChars = 0, realPortraits = 0, fallbacks = 0;
+    let speakers = 0;
+    let portraits = 0;
     const missing: string[] = [];
-    for (const { panel } of allPanels) {
+    for (const panel of panels) {
       for (const c of panel.characters ?? []) {
-        withChars++;
-        const url = resolvePortrait(c);
-        if (url) realPortraits++;
-        else { fallbacks++; missing.push(`${panel.id}:${c.character}`); }
+        speakers++;
+        if (resolvePortrait(c)) portraits++;
+        else missing.push(`${panel.id}:${c.character}:${c.form ?? 'base'}`);
       }
     }
-    return { withChars, realPortraits, fallbacks, missing };
-  }, [chapter]); // eslint-disable-line react-hooks/exhaustive-deps
-
-  const select = (phase: 'intro' | 'outro', id: string) => setSelected({ phase, id });
+    return { speakers, portraits, missing };
+  }, [panels]);
 
   return (
     <div className="dev-panel">
       <header className="dev-header">
-        <h1>Story Studio</h1>
-        <p className="dev-sub">{CHAPTER_IDS.length} capítulos · viñetas motor-interpretadas · preview de diálogo con los sprites del juego.</p>
+        <h1>Story Studio — Dialogue Canon</h1>
+        <p className="dev-sub">
+          30 Stories + 2 EX · orden físico de ROM · diálogo/viñetas/retratos únicamente · Story Map/RPG excluido.
+        </p>
       </header>
 
       <div className="dev-story-select">
-        {CHAPTER_IDS.map(ch => (
-          <button key={ch} className={`dev-story-chip ${chapter === ch ? 'active' : ''}`} onClick={() => setChapter(ch)}>
-            {ch}
-          </button>
-        ))}
+        {SEQUENCE_IDS.map((seq) => {
+          const story = storyIdentityForSequence(seq);
+          return (
+            <button
+              key={story.id}
+              className={`dev-story-chip ${sequenceIndex === seq ? 'active' : ''}`}
+              onClick={() => { setSequenceIndex(seq); setSelectedId(null); }}
+              title={`${story.id} · ROM storyId ${story.romStoryId}`}
+            >
+              {story.kind === 'EXTRA' ? `EX${story.storyNumber}` : story.storyNumber}
+            </button>
+          );
+        })}
       </div>
 
-      {/* ══ PREVIEW DE VIÑETA (render idéntico al juego) ══ */}
+      <section className="dev-story-card">
+        <h2>{identity.label} — {identity.title}</h2>
+        <div className="dev-story-meta">
+          <div><label>sequenceIndex</label><strong>{identity.sequenceIndex}</strong></div>
+          <div><label>ROM storyId</label><strong>{identity.romStoryId}</strong></div>
+          <div><label>ROM</label><strong>Bank ${identity.rom.bank.toString(16).toUpperCase()} : ${identity.rom.address.toString(16).toUpperCase()}</strong></div>
+          <div><label>Tipo</label><strong>{identity.kind}</strong></div>
+          <div><label>Arco</label><strong>{identity.arc}</strong></div>
+          <div><label>Texto</label><strong>{narrative.textEvidence}</strong></div>
+          <div><label>Story Map</label><strong>EXCLUIDO</strong></div>
+        </div>
+      </section>
+
       {current && (
         <section className="dev-story-card dev-story-preview-wrap">
-          <h2>Preview de diálogo — {current.panel.id} ({current.phase})</h2>
+          <h2>Preview — {current.id}</h2>
           <p className="dev-muted" style={{ margin: '-4px 0 10px', fontSize: 12 }}>
-            Render idéntico a <code>StorySceneScreen</code> en viewport fijo del juego (1082×605 escalado): retrato real GBC → mini → menú; posición por <code>side</code> (junto a la caja, como en el diálogo de gameplay); caja GBC blanco/negro.
+            Mismo contrato visual que producción. El inspector muestra procedencia de texto, fondo y retrato para impedir que una reconstrucción se presente como ROM literal.
           </p>
           <div className="dev-story-preview-layout">
             <div className="dev-story-stage" ref={stageRef}>
-            <div className={`story-panel story-panel-${current.panel.layout.toLowerCase()}`} style={{ transform: `scale(${stageScale})`, transformOrigin: 'center center' }}>
-              <div className="story-panel-bg" style={{ backgroundImage: `url(${current.panel.background})`, backgroundSize: 'cover', backgroundPosition: 'center' }} />
-              <div className="story-panel-dim" />
-              {current.panel.title && (
-                <div className="story-panel-title">
-                  <h2>{current.panel.title}</h2>
-                  {current.panel.subtitle && <p>{current.panel.subtitle}</p>}
-                </div>
-              )}
-              {current.panel.characters && current.panel.characters.length > 0 && (
-                <div className={`story-characters layout-${current.panel.layout.toLowerCase()}`}>
-                  {current.panel.characters.map((c, i) => {
-                    const url = resolvePortrait(c);
-                    const nChars = current.panel.characters?.length ?? 0;
-                    const side = c.side ?? (nChars === 1 ? 'center' : i === 0 ? 'left' : 'right');
-                    const sp = current.panel.dialogue?.speaker.trim().toLowerCase() ?? '';
-                    const isSpeaker = current.panel.dialogue
-                      ? (characterName(c.character).toLowerCase() === sp
-                        || c.character.toLowerCase().replace(/[^a-z0-9]/g, '') === sp.replace(/[^a-z0-9]/g, ''))
-                      : false;
-                    return (
-                      <div key={i} className={`story-character ${side}${isSpeaker ? ' speaking' : current.panel.dialogue ? ' muted' : ''}`}>
-                        {url
-                          ? <img src={url} alt={characterName(c.character)} className="story-portrait" />
-                          : <div className="story-portrait story-portrait-none">{characterName(c.character).slice(0, 1)}</div>}
-                      </div>
-                    );
-                  })}
-                </div>
-              )}
-              {current.panel.dialogue && (
-                <div className="story-dialogue">
-                  <div className="story-speaker">{current.panel.dialogue.speaker}</div>
-                  <div className="story-text visible">{current.panel.dialogue.text}</div>
-                </div>
-              )}
-            </div>
+              <div
+                className={`story-panel story-panel-${current.layout.toLowerCase()}`}
+                style={{ transform: `scale(${stageScale})`, transformOrigin: 'center center' }}
+              >
+                <div
+                  className="story-panel-bg"
+                  style={{ backgroundImage: `url(${current.background})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
+                />
+                <div className="story-panel-dim" />
+                {current.title && (
+                  <div className="story-panel-title">
+                    <h2>{current.title}</h2>
+                    {current.subtitle && <p>{current.subtitle}</p>}
+                  </div>
+                )}
+                {(current.characters?.length ?? 0) > 0 && (
+                  <div className={`story-characters layout-${current.layout.toLowerCase()}`}>
+                    {current.characters!.map((c, i) => {
+                      const url = resolvePortrait(c);
+                      const side = c.side ?? (current.characters!.length === 1 ? 'center' : i === 0 ? 'left' : 'right');
+                      return (
+                        <div key={`${c.character}-${i}`} className={`story-character ${side} speaking`}>
+                          {url
+                            ? <img src={url} alt={characterName(c.character)} className="story-portrait" />
+                            : <div className="story-portrait story-portrait-none">{characterName(c.character).slice(0, 1)}</div>}
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
+                {current.dialogue && (
+                  <div className="story-dialogue">
+                    <div className="story-speaker">{current.dialogue.speaker}</div>
+                    <div className="story-text visible">{current.dialogue.text}</div>
+                  </div>
+                )}
+              </div>
             </div>
 
-            {/* Datos canónicos de la viñeta */}
             <div className="dev-story-inspector">
-              <h3>Datos de la viñeta</h3>
+              <h3>Binding canónico</h3>
               <div className="cfg-grid">
-                <div className="cfg-row"><span className="cfg-key">layout</span><span className="cfg-val">{current.panel.layout}</span></div>
-                <div className="cfg-row"><span className="cfg-key">background</span><span className="cfg-val">{current.panel.background.split('/').pop()}</span></div>
-                <div className="cfg-row"><span className="cfg-key">effects</span><span className="cfg-val">{(current.panel.effects ?? []).join(', ') || '—'}</span></div>
-                <div className="cfg-row"><span className="cfg-key">transition</span><span className="cfg-val">{current.panel.transition ?? '—'}</span></div>
+                <div className="cfg-row"><span className="cfg-key">Story</span><span className="cfg-val">{current.provenance?.canonicalStoryId ?? identity.id}</span></div>
+                <div className="cfg-row"><span className="cfg-key">romStoryId</span><span className="cfg-val">{current.provenance?.romStoryId ?? identity.romStoryId}</span></div>
+                <div className="cfg-row"><span className="cfg-key">layout</span><span className="cfg-val">{current.layout}</span></div>
+                <div className="cfg-row"><span className="cfg-key">cutscene</span><span className="cfg-val">#{current.provenance?.backgroundAssetId ?? '?'} · {current.background.split('/').pop()}</span></div>
+                <div className="cfg-row"><span className="cfg-key">BG evidence</span><span className="cfg-val">{current.provenance?.backgroundEvidence ?? '—'}</span></div>
+                <div className="cfg-row"><span className="cfg-key">text evidence</span><span className="cfg-val">{current.provenance?.textEvidence ?? '—'}</span></div>
+                <div className="cfg-row"><span className="cfg-key">portrait evidence</span><span className="cfg-val">{current.provenance?.portraitEvidence ?? '—'}</span></div>
+                <div className="cfg-row"><span className="cfg-key">Story Map</span><span className="cfg-val">NO</span></div>
               </div>
-              {(current.panel.characters ?? []).map((c, i) => {
+              {(current.characters ?? []).map((c, i) => {
                 const url = resolvePortrait(c);
-                const side = c.side ?? (i === 0 ? 'left' : 'right');
                 return (
                   <div key={i} className="cfg-grid" style={{ marginTop: 6 }}>
-                    <div className="cfg-row"><span className="cfg-key">personaje {i + 1}</span><span className="cfg-val">{characterName(c.character)}</span></div>
-                    <div className="cfg-row"><span className="cfg-key">side</span><span className="cfg-val">{side}</span></div>
-                    <div className="cfg-row"><span className="cfg-key">form</span><span className="cfg-val">{c.form ?? '—'}</span></div>
-                    <div className="cfg-row"><span className="cfg-key">emotion</span><span className="cfg-val">{c.emotion ?? '—'}</span></div>
-                    <div className="cfg-row"><span className="cfg-key">retrato</span>
-                      <span className={`cfg-val ${url ? 'ok' : 'bad'}`}>{url ? url.split('/').pop() : 'FALLBACK/MISSING'}</span>
-                    </div>
+                    <div className="cfg-row"><span className="cfg-key">personaje</span><span className="cfg-val">{characterName(c.character)}</span></div>
+                    <div className="cfg-row"><span className="cfg-key">form</span><span className="cfg-val">{c.form ?? 'base/fallback físico'}</span></div>
+                    <div className="cfg-row"><span className="cfg-key">emotion</span><span className="cfg-val">{c.emotion ?? 'normal'}</span></div>
+                    <div className="cfg-row"><span className="cfg-key">retrato</span><span className={`cfg-val ${url ? 'ok' : 'bad'}`}>{url?.split('/').pop() ?? 'MISSING'}</span></div>
                   </div>
                 );
               })}
-              {current.panel.dialogue && (
-                <div className="cfg-grid" style={{ marginTop: 6 }}>
-                  <div className="cfg-row"><span className="cfg-key">speaker</span><span className="cfg-val">{current.panel.dialogue.speaker}</span></div>
-                  <div className="cfg-row"><span className="cfg-key">side diálogo</span><span className="cfg-val">{current.panel.dialogue.side ?? '—'}</span></div>
-                </div>
-              )}
             </div>
           </div>
         </section>
@@ -182,16 +183,13 @@ export function StoryModule() {
 
       <div className="dev-story-grid">
         <section className="dev-story-card">
-          <h2>Capítulo {chapter}</h2>
+          <h2>Combate / cobertura</h2>
           <div className="dev-story-meta">
-            <div><label>Mazo del jefe</label><strong>{deck.length} cartas</strong></div>
-            {boost && (
-              <div><label>AI boost</label><strong>HP+{boost.hp} STR+{boost.str} KI+{boost.ki} SPD+{boost.spd}</strong></div>
-            )}
-            {team && (
-              <div><label>2v2</label><strong>+{characterName(team.enemy2)}{team.ally ? ` (ally ${characterName(team.ally)})` : ' (solo)'}</strong></div>
-            )}
-            <div><label>Viñetas</label><strong>{flow.intro.length} intro{flow.outro ? ` + ${flow.outro.length} outro` : ''}</strong></div>
+            <div><label>Mazo enemigo</label><strong>{deck.length} cartas</strong></div>
+            {boost && <div><label>AI boost</label><strong>HP+{boost.hp} STR+{boost.str} KI+{boost.ki} SPD+{boost.spd}</strong></div>}
+            {team && <div><label>2v2</label><strong>+{characterName(team.enemy2)}{team.ally ? ` · ally ${characterName(team.ally)}` : ''}</strong></div>}
+            <div><label>Retratos</label><strong>{audit.portraits}/{audit.speakers}</strong></div>
+            <div><label>Paneles</label><strong>{panels.length}</strong></div>
           </div>
 
           <h3>Mazo ({deckBreakdown.length} cartas distintas)</h3>
@@ -208,46 +206,27 @@ export function StoryModule() {
               );
             })}
           </div>
-
-          <h3>Cobertura de retratos (capítulo)</h3>
-          <div className="dev-tag-row">
-            <span className="dev-tag ok">✓ {audit.realPortraits}/{audit.withChars} con retrato real</span>
-            {audit.fallbacks > 0 && <span className="dev-tag bad">{audit.fallbacks} con fallback</span>}
-          </div>
-          {audit.missing.length > 0 && (
-            <p className="dev-muted" style={{ marginTop: 6, fontSize: 11 }}>
-              Sin retrato real: {audit.missing.slice(0, 6).join(' · ')}{audit.missing.length > 6 ? ` +${audit.missing.length - 6}` : ''}
-            </p>
-          )}
+          {audit.missing.length > 0 && <p className="dev-muted">Missing: {audit.missing.join(' · ')}</p>}
         </section>
 
         <section className="dev-story-card">
-          <h2>Viñetas — selecciona para previsualizar</h2>
+          <h2>Secuencia narrativa</h2>
           <div className="dev-panel-list">
-            {flow.intro.map(p => (
-              <button key={p.id}
-                className={`dev-panel-row dev-panel-btn ${current?.panel.id === p.id && current?.phase === 'intro' ? 'active' : ''}`}
-                onClick={() => select('intro', p.id)}>
-                <span className="dev-panel-layout">{p.layout}</span>
-                <span className="dev-panel-title">{p.title ?? p.id}</span>
-                <span className="dev-panel-sub">{(p.characters ?? []).map(c => characterName(c.character)).join('+')}</span>
-                {p.dialogue && <span className="dev-panel-dialogue">“{p.dialogue.text}”</span>}
-              </button>
-            ))}
-            {flow.outro?.map(p => (
-              <button key={p.id}
-                className={`dev-panel-row dev-panel-btn ${current?.panel.id === p.id && current?.phase === 'outro' ? 'active' : ''}`}
-                onClick={() => select('outro', p.id)}>
-                <span className="dev-panel-layout">{p.layout}</span>
-                <span className="dev-panel-title">{p.title ?? p.id}</span>
-                <span className="dev-panel-sub">{(p.characters ?? []).map(c => characterName(c.character)).join('+')}</span>
-                {p.dialogue && <span className="dev-panel-dialogue">“{p.dialogue.text}”</span>}
+            {panels.map((panel) => (
+              <button
+                key={panel.id}
+                className={`dev-panel-row dev-panel-btn ${current?.id === panel.id ? 'active' : ''}`}
+                onClick={() => setSelectedId(panel.id)}
+              >
+                <span className="dev-panel-layout">{panel.layout}</span>
+                <span className="dev-panel-title">{panel.title ?? panel.dialogue?.speaker ?? panel.id}</span>
+                <span className="dev-panel-sub">#{panel.provenance?.backgroundAssetId ?? '?'} {(panel.characters ?? []).map(c => characterName(c.character)).join('+')}</span>
+                {panel.dialogue && <span className="dev-panel-dialogue">“{panel.dialogue.text}”</span>}
               </button>
             ))}
           </div>
         </section>
       </div>
-
     </div>
   );
 }

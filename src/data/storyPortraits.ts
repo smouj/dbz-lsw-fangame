@@ -2,25 +2,26 @@
 // DBZ LSW — Story Portraits (retratos de diálogo del GBC, 40×56)
 // ═══════════════════════════════════════════════════════════
 // Retratos extraídos de la ROM (paquete 01_Story_Portraits_FixedLast, 137
-// assets corregidos por el usuario: nombres y personajes 100% verificados)
-// organizados por saga y personaje en public/assets/portraits/story/.
-// Cada personaje tiene variantes de expresión reales (Normal/Sonrisa/
-// Sorpresa/Enfurecido/Wounded...) y formas (SSJ, Final Form, etc.).
+// assets corregidos: nombres e identidades de personaje verificados) bajo
+// public/assets/portraits/story/.
 //
-// Convención de archivo: {Saga}/{Personaje}/R{row}_C{col}__{Expresión}.png
+// Regla: nunca inventar una variante que no exista en el corpus físico.
+// Future Trunks SSJ y Goku SSJ3, por ejemplo, no tienen retrato Story dedicado
+// en este corpus y deben caer al retrato físico verificado más cercano.
+// ═══════════════════════════════════════════════════════════
 
 export type PortraitEmotion = 'normal' | 'smile' | 'surprised' | 'angry' | 'wounded' | 'visor' | 'scared' | 'screaming' | 'serious' | 'grinding' | 'crying' | 'final_angry';
 
 interface PortraitEntry {
-  base: string;                                        // retrato por defecto
-  emotions?: Partial<Record<PortraitEmotion, string>>; // variantes por emoción
-  forms?: Record<string, string>;                      // variantes por forma
+  base: string;
+  emotions?: Partial<Record<PortraitEmotion, string>>;
+  forms?: Record<string, string>;
 }
 
-const P = 'assets/portraits/story';
+const P = '/assets/portraits/story';
 
-// ═══ Saga Saiyan (01) ═══
 export const STORY_PORTRAITS: Record<string, PortraitEntry> = {
+  // ═══ Saga Saiyan ═══
   goku: {
     base: `${P}/goku_01.png`,
     emotions: {
@@ -47,6 +48,7 @@ export const STORY_PORTRAITS: Record<string, PortraitEntry> = {
       ssj: `${P}/gohan_young_ssj_01.png`,
       ssj2: `${P}/gohan_young_ssj2_01.png`,
       adult: `${P}/gohan_adult_01.png`,
+      adult_ssj: `${P}/gohan_adult_ssj.png`,
       ultimate: `${P}/gohan_adult_03.png`,
     },
   },
@@ -59,9 +61,7 @@ export const STORY_PORTRAITS: Record<string, PortraitEntry> = {
       wounded: `${P}/piccolo_wounded.png`,
       grinding: `${P}/piccolo_05.png`,
     },
-    forms: {
-      kami: `${P}/piccolo_05.png`,
-    },
+    forms: { kami: `${P}/piccolo_05.png` },
   },
   vegeta: {
     base: `${P}/vegeta_01.png`,
@@ -74,7 +74,8 @@ export const STORY_PORTRAITS: Record<string, PortraitEntry> = {
     },
     forms: {
       ssj: `${P}/vegeta_ssj.png`,
-      majin: `${P}/gohan_adult_ssj.png`,
+      majin: `${P}/majin_vegeta_01.png`,
+      majin_angry: `${P}/majin_vegeta_02.png`,
       great_ape: `${P}/great_ape_general.png`,
     },
   },
@@ -93,48 +94,22 @@ export const STORY_PORTRAITS: Record<string, PortraitEntry> = {
   },
   nappa: {
     base: `${P}/nappa_01.png`,
-    emotions: {
-      angry: `${P}/nappa_02.png`,
-      wounded: `${P}/nappa_wounded.png`,
-    },
+    emotions: { angry: `${P}/nappa_02.png`, wounded: `${P}/nappa_wounded.png` },
   },
   raditz: { base: `${P}/raditz.png` },
   bulma: {
     base: `${P}/bulma_01.png`,
-    forms: {
-      young: `${P}/bulma_02.png`,
-      older: `${P}/bulma_03.png`,
-    },
+    forms: { young: `${P}/bulma_02.png`, older: `${P}/bulma_03.png` },
   },
-  chi_chi: {
-    base: `${P}/chi_chi_01.png`,
-    forms: {
-      buu: `${P}/chi_chi_02.png`,
-    },
-  },
-  yajirobe: {
-    base: `${P}/yajirobe_01.png`,
-    emotions: {
-      surprised: `${P}/yajirobe_02.png`,
-    },
-  },
-  tien: {
-    base: `${P}/tien_shinhan.png`,
-    emotions: {
-      wounded: `${P}/tien_shinhan_wounded.png`,
-    },
-  },
+  chi_chi: { base: `${P}/chi_chi_01.png`, forms: { buu: `${P}/chi_chi_02.png` } },
+  yajirobe: { base: `${P}/yajirobe_01.png`, emotions: { surprised: `${P}/yajirobe_02.png` } },
+  tien: { base: `${P}/tien_shinhan.png`, emotions: { wounded: `${P}/tien_shinhan_wounded.png` } },
   chiaotzu: { base: `${P}/chiaotzu.png` },
-  yamcha: {
-    base: `${P}/yamcha.png`,
-    emotions: {
-      wounded: `${P}/yamcha_wounded.png`,
-    },
-  },
+  yamcha: { base: `${P}/yamcha.png`, emotions: { wounded: `${P}/yamcha_wounded.png` } },
   king_kai: { base: `${P}/king_kai.png` },
   great_ape_vegeta: { base: `${P}/great_ape_general.png` },
 
-  // ═══ Saga Namek / Freezer (02) ═══
+  // ═══ Saga Namek / Freezer ═══
   frieza: {
     base: `${P}/frieza_first_form_01.png`,
     emotions: {
@@ -149,61 +124,28 @@ export const STORY_PORTRAITS: Record<string, PortraitEntry> = {
       final_angry: `${P}/frieza_final_form_02.png`,
     },
   },
-  guldo: {
-    base: `${P}/guldo.png`,
-    emotions: {
-      wounded: `${P}/guldo_wounded.png`,
-    },
-  },
-  recoome: {
-    base: `${P}/recoome.png`,
-    emotions: {
-      wounded: `${P}/recoome_wounded.png`,
-    },
-  },
-  burter: {
-    base: `${P}/burter.png`,
-    emotions: {
-      wounded: `${P}/burter_wounded.png`,
-    },
-  },
+  guldo: { base: `${P}/guldo.png`, emotions: { wounded: `${P}/guldo_wounded.png` } },
+  recoome: { base: `${P}/recoome.png`, emotions: { wounded: `${P}/recoome_wounded.png` } },
+  burter: { base: `${P}/burter.png`, emotions: { wounded: `${P}/burter_wounded.png` } },
   jeice: { base: `${P}/jeice.png` },
-  ginyu: {
-    base: `${P}/captain_ginyu_01.png`,
-    forms: {
-      goku_body: `${P}/captain_ginyu_goku_body.png`,
-    },
-  },
+  ginyu: { base: `${P}/captain_ginyu_01.png`, forms: { goku_body: `${P}/captain_ginyu_goku_body.png` } },
   ginyu_frog: { base: `${P}/captain_ginyu_frog.png` },
   dende: { base: `${P}/dende.png` },
   kami: { base: `${P}/kami.png` },
   nail: { base: `${P}/nail.png` },
   guru: { base: `${P}/guru.png` },
 
-  // ═══ Saga Androides / Cell (03) ═══
-  android_16: {
-    base: `${P}/android_16.png`,
-    emotions: {
-      wounded: `${P}/android_16_wounded.png`,
-    },
-  },
+  // ═══ Saga Androides / Cell ═══
+  android_16: { base: `${P}/android_16.png`, emotions: { wounded: `${P}/android_16_wounded.png` } },
   android_17: { base: `${P}/android_17.png` },
   android_18: { base: `${P}/android_18.png` },
   android_19: { base: `${P}/android_19.png` },
   android_20: { base: `${P}/android_20_dr_gero.png` },
   cell_imperfect: { base: `${P}/cell_imperfect.png` },
   cell_semi: { base: `${P}/cell_semi_perfect.png` },
-  cell: {
-    base: `${P}/cell_perfect_01.png`,
-    emotions: {
-      surprised: `${P}/cell_perfect_02.png`,
-    },
-  },
+  cell: { base: `${P}/cell_perfect_01.png`, emotions: { surprised: `${P}/cell_perfect_02.png` } },
   cell_jr: { base: `${P}/cell_jr.png` },
   trunks: {
-    // TRUNKS DEL FUTURO (saga Cell): el paquete solo contiene retratos base
-    // (pelo morado). NO existe retrato SSJ en la fuente de 137 — si llega una
-    // forma ssj se cae al base (no se inventa un alias falso).
     base: `${P}/trunks_future_01.png`,
     emotions: {
       surprised: `${P}/trunks_future_02.png`,
@@ -216,51 +158,22 @@ export const STORY_PORTRAITS: Record<string, PortraitEntry> = {
       baby_cry: `${P}/trunks_baby_crying.png`,
     },
   },
-  hercule: {
-    base: `${P}/mr_satan_01.png`,
-    emotions: {
-      surprised: `${P}/mr_satan_02.png`,
-    },
-  },
+  hercule: { base: `${P}/mr_satan_01.png`, emotions: { surprised: `${P}/mr_satan_02.png` } },
   roshi: { base: `${P}/master_roshi.png` },
 
-  // ═══ Saga Majin Buu (04) ═══
+  // ═══ Saga Majin Buu ═══
   babidi: { base: `${P}/babidi.png` },
   kid_buu: { base: `${P}/kid_buu.png` },
-  fat_buu: {
-    base: `${P}/majin_buu_01.png`,
-    emotions: {
-      angry: `${P}/majin_buu_02.png`,
-    },
-  },
+  fat_buu: { base: `${P}/majin_buu_01.png`, emotions: { angry: `${P}/majin_buu_02.png` } },
   majin_buu: {
     base: `${P}/super_buu_01.png`,
-    emotions: {
-      angry: `${P}/super_buu_02.png`,
-    },
-    forms: {
-      gohan_form: `${P}/super_buu_gohan_03.png`,
-    },
+    emotions: { angry: `${P}/super_buu_02.png` },
+    forms: { gohan_form: `${P}/super_buu_gohan_03.png` },
   },
-  goten: {
-    base: `${P}/goten_01.png`,
-    emotions: {
-      surprised: `${P}/goten_02.png`,
-    },
-  },
+  goten: { base: `${P}/goten_01.png`, emotions: { surprised: `${P}/goten_02.png` } },
   gotenks: { base: `${P}/gotenks_ssj3.png` },
-  vegito: {
-    base: `${P}/vegito.png`,
-    forms: {
-      ssj: `${P}/vegito_ssj.png`,
-    },
-  },
-  dabura: {
-    base: `${P}/dabura_01.png`,
-    emotions: {
-      surprised: `${P}/dabura_02.png`,
-    },
-  },
+  vegito: { base: `${P}/vegito.png`, forms: { ssj: `${P}/vegito_ssj.png` } },
+  dabura: { base: `${P}/dabura_01.png`, emotions: { surprised: `${P}/dabura_02.png` } },
   elder_kai: { base: `${P}/elder_kai.png` },
   kibito: { base: `${P}/kibito.png` },
   kibito_kai: { base: `${P}/kibito_kai.png` },
@@ -270,25 +183,18 @@ export const STORY_PORTRAITS: Record<string, PortraitEntry> = {
   yamu: { base: `${P}/yamu.png` },
   yakon: { base: `${P}/yakon.png` },
   puipui: { base: `${P}/pui_pui.png` },
-  saiyaman: {
-    base: `${P}/great_saiyaman.png`,
-    forms: {
-      no_helmet: `${P}/great_saiyaman_unmasked.png`,
-    },
-  },
+  saiyaman: { base: `${P}/great_saiyaman.png`, forms: { no_helmet: `${P}/great_saiyaman_unmasked.png` } },
   bee: { base: `${P}/bee.png` },
   baba: { base: `${P}/fortuneteller_baba.png` },
   tournament_announcer: { base: `${P}/world_tournament_announcer.png` },
   spectator: { base: `${P}/tournament_spectator_girl.png` },
 };
 
-// Normaliza ids de forma del roster ('goku_ssj', 'future_trunks_super_saiyan',
-// 'trunks_kid_ssj', 'young_gohan_super_saiyan_2', 'super'...) a la clave del
-// mapa forms del personaje. Va recortando prefijos hasta encontrar un alias.
 const FORM_ALIAS: Record<string, string> = {
   base: 'base', normal: 'base', ssj: 'ssj', super: 'ssj', super_saiyan: 'ssj',
   ssj2: 'ssj2', super2: 'ssj2', super_saiyan_2: 'ssj2',
   ssj3: 'ssj3', super3: 'ssj3', super_saiyan_3: 'ssj3',
+  adult_ssj: 'adult_ssj', adult_super_saiyan: 'adult_ssj',
   ultimate: 'ultimate', kami: 'kami', majin: 'majin', kid: 'kid', adult: 'adult',
   final: 'final', first: 'first', second: 'second', third: 'third',
   goku_body: 'goku_body', young: 'young', older: 'older', no_helmet: 'no_helmet',
@@ -298,6 +204,7 @@ const FORM_ALIAS: Record<string, string> = {
 
 function normalizeStoryForm(formId: string): string | undefined {
   const f = formId.toLowerCase().replace(/[\s-]+/g, '_');
+  if (FORM_ALIAS[f]) return FORM_ALIAS[f];
   const tokens = f.split('_');
   for (let i = 0; i < tokens.length; i++) {
     const cand = tokens.slice(i).join('_');
@@ -306,46 +213,69 @@ function normalizeStoryForm(formId: string): string | undefined {
   return undefined;
 }
 
-// Resolver el retrato de historia para (personaje, forma, emoción)
+function emotionFallback(entry: PortraitEntry, emotion?: PortraitEmotion): string | undefined {
+  if (!emotion || !entry.emotions) return undefined;
+  if (entry.emotions[emotion]) return entry.emotions[emotion];
+  const fallback: Partial<Record<PortraitEmotion, PortraitEmotion>> = {
+    scared: 'surprised',
+    screaming: 'angry',
+    crying: 'wounded',
+    grinding: 'angry',
+    final_angry: 'angry',
+  };
+  const fb = fallback[emotion];
+  return fb ? entry.emotions[fb] : undefined;
+}
+
+/** Resolve the physical Story portrait for character + form + expression. */
 export function storyPortraitUrl(
   character: string,
   formId?: string,
   emotion?: PortraitEmotion,
 ): string | undefined {
-  // Alias de personajes separados → retrato del personaje base (GBC)
-  const CHAR_ALIAS: Record<string, string> = {
-    gohan_kid: 'gohan', gohan_adult: 'gohan',
-    trunks_kid: 'trunks', trunks_future: 'trunks',
-  };
-  const key = CHAR_ALIAS[character] ?? character;
+  const raw = character.toLowerCase().replace(/[\s-]+/g, '_');
+  let key = raw;
+  let forcedForm: string | undefined;
+
+  // Age/timeline identity must be resolved BEFORE generic character aliasing.
+  if (raw === 'gohan_kid' || raw === 'gohan_young') {
+    key = 'gohan';
+  } else if (raw === 'gohan_adult') {
+    key = 'gohan';
+    const requested = normalizeStoryForm(formId ?? 'adult');
+    forcedForm = requested === 'ssj' ? 'adult_ssj' : (requested ?? 'adult');
+  } else if (raw === 'trunks_kid') {
+    key = 'trunks';
+    forcedForm = 'kid';
+  } else if (raw === 'trunks_future') {
+    key = 'trunks';
+    // No physical Future Trunks SSJ Story portrait in this corpus.
+    forcedForm = undefined;
+  } else if (raw === 'cell_perfect') {
+    key = 'cell';
+  } else if (raw === 'cell_semi_perfect') {
+    key = 'cell_semi';
+  } else if (raw === 'buu_base' || raw === 'buu') {
+    key = 'fat_buu';
+  } else if (raw === 'buu_super' || raw === 'super_buu') {
+    key = 'majin_buu';
+  } else if (raw === 'buu_kid' || raw === 'kid_buu') {
+    key = 'kid_buu';
+  }
+
   const entry = STORY_PORTRAITS[key];
   if (!entry) return undefined;
-  // 1) Variante por FORMA si existe (ssj/ssj2/ultimate/majin/kid/kami/final...)
-  if (formId) {
-    const alias = normalizeStoryForm(formId);
-    if (alias && entry.forms) {
-      // forma + emoción (ej. kid + surprised → kid_surprised) si existe
-      if (emotion && entry.forms[`${alias}_${emotion}`]) return entry.forms[`${alias}_${emotion}`];
-      if (entry.forms[alias]) return entry.forms[alias];
-    }
+
+  let alias = forcedForm ?? (formId ? normalizeStoryForm(formId) : undefined);
+  if (key === 'gohan' && raw === 'gohan_adult' && alias === 'ssj') alias = 'adult_ssj';
+
+  if (alias && entry.forms) {
+    // Exact form+emotion first: e.g. Majin Vegeta angry, Trunks kid surprised.
+    if (emotion && entry.forms[`${alias}_${emotion}`]) return entry.forms[`${alias}_${emotion}`];
+    if (entry.forms[alias]) return entry.forms[alias];
   }
-  // 2) Variante por EMOCIÓN si existe
-  if (emotion && entry.emotions && entry.emotions[emotion]) return entry.emotions[emotion];
-  // 2b) Fallback de emoción CERCANA (misma familia facial) antes de la base:
-  //     scared→surprised (ojos abiertos) · screaming→angry · crying→wounded
-  //     · grinding→angry · final_angry→angry. serious/normal → base (la base
-  //     ES la cara seria/normal del personaje).
-  if (emotion && entry.emotions) {
-    const EMOTION_FALLBACK: Partial<Record<PortraitEmotion, PortraitEmotion>> = {
-      scared: 'surprised',
-      screaming: 'angry',
-      crying: 'wounded',
-      grinding: 'angry',
-      final_angry: 'angry',
-    };
-    const fb = EMOTION_FALLBACK[emotion];
-    if (fb && entry.emotions[fb]) return entry.emotions[fb];
-  }
-  // 3) Retrato base
+
+  const byEmotion = emotionFallback(entry, emotion);
+  if (byEmotion) return byEmotion;
   return entry.base;
 }
