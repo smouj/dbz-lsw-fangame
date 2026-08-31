@@ -4,6 +4,7 @@ import { existsSync, readdirSync, readFileSync, statSync } from 'fs';
 import { join, relative } from 'path';
 
 const ROOT = process.cwd();
+const REQUIRE_ROM_PHYSICAL_EXPORTS = process.env.REQUIRE_ROM_PHYSICAL_EXPORTS === '1';
 
 let failures = 0;
 function check(name: string, ok: boolean, detail = ''): void {
@@ -64,14 +65,22 @@ for (const path of activeTextFiles) {
 }
 check('active docs/code do not claim stale promoted corpus totals', stalePromotedCorpusClaims.length === 0, stalePromotedCorpusClaims.slice(0, 8).join(' | ') || 'none');
 
-const requiredCanonFiles = [
-  'generated/rom-fighters/final_sweep_48_forms.json',
-  'generated/rom-fighters/resource_physical_completion.json',
+const requiredVersionedCanonFiles = [
   'docs/rom/generated/physical-corpus/summary.json',
   'docs/rom/generated/physical-corpus/resource_physical_completion.json',
   'src/data/generated/romPhysicalCorpus.generated.ts',
 ];
-check('current physical-corpus canon files exist', requiredCanonFiles.every(file => existsSync(join(ROOT, file))), requiredCanonFiles.filter(file => !existsSync(join(ROOT, file))).join(', ') || 'all present');
+check('current versioned physical-corpus canon files exist', requiredVersionedCanonFiles.every(file => existsSync(join(ROOT, file))), requiredVersionedCanonFiles.filter(file => !existsSync(join(ROOT, file))).join(', ') || 'all present');
+
+const requiredLocalExportFiles = [
+  'generated/rom-fighters/final_sweep_48_forms.json',
+  'generated/rom-fighters/resource_physical_completion.json',
+];
+if (REQUIRE_ROM_PHYSICAL_EXPORTS) {
+  check('current local physical-corpus export files exist', requiredLocalExportFiles.every(file => existsSync(join(ROOT, file))), requiredLocalExportFiles.filter(file => !existsSync(join(ROOT, file))).join(', ') || 'all present');
+} else {
+  console.log('SKIP current local physical-corpus export files exist - generated/rom-fighters is not committed; set REQUIRE_ROM_PHYSICAL_EXPORTS=1 after npm run gen:rom-runtime-assets for the strict local gate');
+}
 
 const physicalCorpusGenerated = readFileSync(join(ROOT, 'src/data/generated/romPhysicalCorpus.generated.ts'), 'utf8');
 check('current generated corpus exposes fighter and Stage-promoted totals',

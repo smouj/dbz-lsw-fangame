@@ -6,8 +6,8 @@
     "physicalFramesIndexed": 3677,
     "manifestFramesIndexed": 3375,
     "byMapping": {
-      "ROM_EXACT": 4,
-      "ROM_PHASE": 175,
+      "ROM_EXACT": 16,
+      "ROM_PHASE": 163,
       "CANONICAL_PHYSICAL": 0,
       "SHARED_PHYSICAL": 1089,
       "COMPOSITE": 2005,
@@ -22,8 +22,8 @@
       "NO_MATCH": 3548
     },
     "romReachableBindings": 179,
-    "romPhaseBindings": 175,
-    "romPhysicalBindings": 179,
+    "romPhaseBindings": 163,
+    "romPhysicalBindings": 165,
     "sharedForms": 7,
     "compositeBindings": 2005,
     "fallbackRoles": 0,
@@ -6372,10 +6372,10 @@
     {
       "formId": "android_18",
       "semanticRole": "beam_charge",
-      "classification": "ROM_PHASE",
+      "classification": "ROM_EXACT",
       "source": "ROM_DERIVED",
       "frameCount": 4,
-      "romFrames": 0
+      "romFrames": 2
     },
     {
       "formId": "android_18",
@@ -6876,10 +6876,10 @@
     {
       "formId": "ginyu",
       "semanticRole": "beam_charge",
-      "classification": "ROM_PHASE",
+      "classification": "ROM_EXACT",
       "source": "ROM_DERIVED",
       "frameCount": 5,
-      "romFrames": 0
+      "romFrames": 1
     },
     {
       "formId": "ginyu",
@@ -7044,10 +7044,10 @@
     {
       "formId": "ginyu_goku",
       "semanticRole": "beam_charge",
-      "classification": "ROM_PHASE",
+      "classification": "ROM_EXACT",
       "source": "ROM_DERIVED",
       "frameCount": 3,
-      "romFrames": 0
+      "romFrames": 1
     },
     {
       "formId": "ginyu_goku",
@@ -7212,10 +7212,10 @@
     {
       "formId": "recoome",
       "semanticRole": "beam_charge",
-      "classification": "ROM_PHASE",
+      "classification": "ROM_EXACT",
       "source": "ROM_DERIVED",
       "frameCount": 3,
-      "romFrames": 0
+      "romFrames": 1
     },
     {
       "formId": "recoome",
@@ -7380,10 +7380,10 @@
     {
       "formId": "guldo",
       "semanticRole": "beam_charge",
-      "classification": "ROM_PHASE",
+      "classification": "ROM_EXACT",
       "source": "ROM_DERIVED",
       "frameCount": 4,
-      "romFrames": 0
+      "romFrames": 2
     },
     {
       "formId": "guldo",
@@ -7548,10 +7548,10 @@
     {
       "formId": "jeice",
       "semanticRole": "beam_charge",
-      "classification": "ROM_PHASE",
+      "classification": "ROM_EXACT",
       "source": "ROM_DERIVED",
       "frameCount": 3,
-      "romFrames": 0
+      "romFrames": 3
     },
     {
       "formId": "jeice",
@@ -8892,10 +8892,10 @@
     {
       "formId": "vegito_ssj",
       "semanticRole": "beam_charge",
-      "classification": "ROM_PHASE",
+      "classification": "ROM_EXACT",
       "source": "ROM_DERIVED",
       "frameCount": 6,
-      "romFrames": 0
+      "romFrames": 2
     },
     {
       "formId": "vegito_ssj",

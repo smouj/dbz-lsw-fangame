@@ -1,105 +1,54 @@
 // ═══════════════════════════════════════════════════════════════════════
-// romSequenceRegistry.ts — SSOT for ROM sequence structure/linkage data
+// romSequenceRegistry.ts — SSOT for physical AnimationResource structure.
 //
-// Each entry is a physical sequence from ROM bytes, fully resolved:
-//   resource → base → sequence table → metasprite table → graphics table
-//   frame → visualFrameId → metasprite → pieces → graphics blocks → linkageResolved
+// Authority chain:
+//   ROM catalog slot -> resource header -> sequence table -> frame record
+//   -> metasprite table -> graphics table.
 //
-// ONLY entries with FULL physical linkage (base+0/+2/+4 resolved) are included.
-// Resources with METASPRITE_LINK_PENDING are excluded until their pointer
-// format is understood.
-//
-// Authority: ROM bytes. No manifest, no heuristic, no semantic guess.
-// Pixel identity lives in the form-aware ROM physical corpus, not here.
+// All 66 catalog slots ($00-$41) are represented. 62 contain complete
+// physical resources; four are byte-exact empty slots ($28/$29/$2A/$40).
+// Semantic actor/target binding still belongs to handlers/traces, not here.
 // ═══════════════════════════════════════════════════════════════════════
 
-import { ROM_TECHNIQUES } from './romAnimationData';
-
-// ── Types ──
+import { CARDS } from './cards';
+import { romCardData } from './romCardData';
+import {
+  ROM_FULL_ANIMATION_EMPTY_SLOTS,
+  ROM_FULL_ANIMATION_RESOURCES,
+  type RomFullAnimationResourceRecord,
+} from './generated/romFullAnimationResources.generated';
 
 export type PhysicalLinkageStatus =
-  | 'PHYSICAL_RESOURCE_FULLY_CLOSED'  // base+0/+2/+4 all resolve, metasprite+graphics linkage proven
-  | 'FRAME_STREAM_CLOSED'            // sequences decoded, but metasprite/graphics linkage unresolved
-  | 'METASPRITE_LINK_PENDING';       // pointer format unknown, only frame stream available
+  | 'PHYSICAL_RESOURCE_FULLY_CLOSED'
+  | 'EMPTY_RESOURCE_SLOT'
+  // Kept for compatibility with old snapshots; the full catalog no longer emits them.
+  | 'FRAME_STREAM_CLOSED'
+  | 'METASPRITE_LINK_PENDING';
 
 export type RomEvidence =
-  | 'ROM_BYTE_EXACT'          // Every byte comes from ROM, no inference
-  | 'ROM_BASE_CROSS_VALIDATED' // Base found by cross-validating against known sequence addresses
-  | 'ROM_SEQUENCE_ANCHORED';    // Sequences anchored by known tick totals
-
-export interface MetaspritePiece {
-  rawY: number;
-  rawX: number;
-  tileDelta: number;
-  attr: number;
-  flipX: boolean;
-  flipY: boolean;
-}
-
-export interface GraphicsBlock {
-  bank: number;
-  relativeOffset: number;
-}
+  | 'ROM_BYTE_EXACT'
+  | 'ROM_CATALOG_ENTRY_VERIFIED'
+  | 'ROM_EMPTY_SLOT_VERIFIED'
+  | 'ROM_BASE_CROSS_VALIDATED'
+  | 'ROM_SEQUENCE_ANCHORED';
 
 export interface PhysicalFrame {
-  /** Frame index within the sequence. */
   frameIndex: number;
-  /** visualFrameId (metasprite index) from ROM frame record byte[0]. */
   visualFrameId: number;
-  /** Duration in ticks from ROM frame record byte[1]. */
   durationTicks: number;
-  /** Signed Y offset from ROM frame record byte[2]. */
   offsetY: number;
-  /** Signed X offset from ROM frame record byte[3]. */
   offsetX: number;
-  /** Raw 4-byte frame record [meta, ticks, dy_u8, dx_u8]. */
   raw: readonly [number, number, number, number];
-  /** Metasprite piece count (0 if linkage unresolved). */
   metaspritePieceCount: number;
-  /** Graphics block count (0 if linkage unresolved). */
   graphicsBlockCount: number;
-  /** Structural linkage is resolved for this frame. Pixel identity belongs to the form-aware corpus. */
   linkageResolved: boolean;
-  /** Provenance of this frame. */
   provenance: PhysicalLinkageStatus;
 }
 
 export interface RomSequence {
-  /** Bank-local address of the sequence data. */
   address: number;
-  /** Total ticks across all frames. */
   totalTicks: number;
-  /** Physical frames in this sequence. */
   frames: PhysicalFrame[];
-}
-
-export interface RomSequenceEntry {
-  /** Technique name from ROM_TECHNIQUES. */
-  technique: string;
-  /** AnimationResource ID (e.g., 0x03 for Kamehameha). */
-  resourceId: number;
-  /** Resource hex string (e.g., '$03'). */
-  resourceHex: string;
-  /** ROM bank (0x62, 0x63, or 0x64). */
-  bank: number;
-  /** Bank-local base address resolved by cross-validation. */
-  resourceBase: number;
-  /** Handler ID from ROM_TECHNIQUES. */
-  handler: number;
-  /** Physical linkage status. */
-  status: PhysicalLinkageStatus;
-  /** Evidence for this entry. */
-  evidence: RomEvidence;
-  /** Sequences in this resource. */
-  sequences: RomSequence[];
-  /** Unique visualFrameIds used across all sequences. */
-  vfidRange: number[];
-  /** Total frame instances across all sequences. */
-  totalFrameInstances: number;
-  /** Total ticks across all sequences. */
-  totalTicks: number;
-  /** Consumer cards (from card table). */
-  consumers: RomActionConsumer[];
 }
 
 export interface RomActionConsumer {
@@ -111,15 +60,24 @@ export interface RomActionConsumer {
   evidence: string;
 }
 
-// ── ROM Access ──
-// The registry is built server-side via buildRomSequenceRegistry(romBuffer).
-// Browser code uses the lazy singleton which pre-fills from ROM_TECHNIQUES.
-// Scripts pass a Buffer via buildRomSequenceRegistry().
-
-let _registry: RomSequenceEntry[] | null = null;
-
-const ROM_DEFAULT =
-  '/home/local-user/.openclaw/media/inbound/Dragon_Ball_Z_-_Guerreros_de_Leyenda_Spain---c05adf5e-bff6-45b8-a5fb-f8e340113eaa.gbc';
+export interface RomSequenceEntry {
+  technique: string;
+  resourceId: number;
+  resourceHex: string;
+  bank: number;
+  localId: number;
+  resourceBase: number;
+  resourceLength: number;
+  physicalFrameCount: number;
+  handler: number;
+  status: PhysicalLinkageStatus;
+  evidence: RomEvidence;
+  sequences: RomSequence[];
+  vfidRange: number[];
+  totalFrameInstances: number;
+  totalTicks: number;
+  consumers: RomActionConsumer[];
+}
 
 const BANK_LAYOUT = [
   { bank: 0x62, first: 0x00, count: 25 },
@@ -127,201 +85,244 @@ const BANK_LAYOUT = [
   { bank: 0x64, first: 0x32, count: 16 },
 ] as const;
 
-// ── Resolution Functions ──
+function hex(value: number): string {
+  return `$${value.toString(16).padStart(2, '0')}`;
+}
 
-function resourceBase(rom: Buffer, bank: number, seqAddrs: number[]): number {
-  const u16At = (b: number, a: number) => rom[b * 0x4000 + a] | (rom[b * 0x4000 + a + 1] << 8);
-  const u8At = (b: number, a: number) => rom[b * 0x4000 + a];
-
-  for (let base = 0x40; base < 0x4000 - 8; base++) {
-    const w0 = u16At(bank, base);
-    const T = (base + w0) & 0xffff;
-    if (T + 2 >= 0x4000) continue;
-    const count = u8At(bank, T);
-    if (count !== seqAddrs.length) continue;
-    let ok = true;
-    for (let sel = 0; sel < seqAddrs.length; sel++) {
-      const entry = T + 1 + sel * 2;
-      if (entry + 2 >= 0x4000) { ok = false; break; }
-      const off = u16At(bank, entry);
-      if (((T + 1 + sel * 2 + off) & 0xffff) !== seqAddrs[sel]) { ok = false; break; }
+function layoutForResource(resourceId: number): { bank: number; localId: number } {
+  for (const layout of BANK_LAYOUT) {
+    if (resourceId >= layout.first && resourceId < layout.first + layout.count) {
+      return { bank: layout.bank, localId: resourceId - layout.first };
     }
-    if (ok) return base;
   }
-  return -1;
+  throw new Error(`AnimationResource out of catalog range: ${resourceId}`);
 }
 
-function resolvePhysicalFrame(
-  rom: Buffer,
-  bank: number,
-  base: number,
-  selector: number,
-  frameIndex: number,
-): {
-  visualFrameId: number;
-  durationTicks: number;
-  offsetY: number;
-  offsetX: number;
-  metaspritePieceCount: number;
-  graphicsBlockCount: number;
-  linkageResolved: boolean;
-} | null {
-  const u16At = (b: number, a: number) => rom[b * 0x4000 + a] | (rom[b * 0x4000 + a + 1] << 8);
-  const u8At = (b: number, a: number) => rom[b * 0x4000 + a];
-  const s8v = (v: number) => v >= 128 ? v - 256 : v;
-  try {
-    // A. Frame record
-    const w0 = u16At(bank, base);
-    const T = (base + w0) & 0xffff;
-    const count = u8At(bank, T);
-    const sel = selector < count ? selector : 0;
-    const entry = (T + 1 + sel * 2) & 0xffff;
-    const off = u16At(bank, entry);
-    const seqAddr = (T + 1 + sel * 2 + off) & 0xffff;
-    const frameAddr = (seqAddr + 1 + frameIndex * 4) & 0xffff;
-
-    const visualFrameId = u8At(bank, frameAddr);
-    const durationTicks = u8At(bank, frameAddr + 1);
-    const offsetY = s8v(u8At(bank, frameAddr + 2));
-    const offsetX = s8v(u8At(bank, frameAddr + 3));
-
-    // B. Metasprite
-    const w2 = u16At(bank, base + 2);
-    const metaTable = (base + 2 + w2) & 0xffff;
-    if (metaTable >= 0x4000) return null;
-    const metaEntry = (metaTable + visualFrameId * 2) & 0xffff;
-    const metaOff = u16At(bank, metaEntry);
-    const pieceAddr = (metaTable + visualFrameId * 2 + metaOff) & 0xffff;
-    const pieceCount = u8At(bank, pieceAddr);
-    if (pieceCount === 0 || pieceCount > 40) return null;
-
-    // C. Graphics
-    const w4 = u16At(bank, base + 4);
-    const gfxTable = (base + 4 + w4) & 0xffff;
-    if (gfxTable >= 0x4000) return null;
-    const gfxEntry = (gfxTable + visualFrameId * 2) & 0xffff;
-    const gfxOff = u16At(bank, gfxEntry);
-    const layoutAddr = (gfxTable + visualFrameId * 2 + gfxOff) & 0xffff;
-    const blockCount = u8At(bank, layoutAddr);
-    if (blockCount === 0 || blockCount > 40) return null;
-
-    return {
-      visualFrameId,
-      durationTicks,
-      offsetY,
-      offsetX,
-      metaspritePieceCount: pieceCount,
-      graphicsBlockCount: blockCount,
-      linkageResolved: pieceCount > 0 && blockCount > 0,
-    };
-  } catch {
-    return null;
+function consumersForResource(resourceId: number): RomActionConsumer[] {
+  const consumers: RomActionConsumer[] = [];
+  for (const card of CARDS) {
+    const rom = romCardData(card.name);
+    if (!rom || rom.actorAnim !== resourceId) continue;
+    consumers.push({
+      cardId: card.id,
+      cardName: card.name,
+      handler: rom.exec,
+      handlerHex: hex(rom.exec),
+      slot: rom.exec === 0x0a ? 6 : 0,
+      evidence: `ROM card byte[6] = ${hex(resourceId)}`,
+    });
   }
+  return consumers;
 }
 
-// ── Build Registry ──
+function identityForResource(resourceId: number, consumers: RomActionConsumer[]): { technique: string; handler: number } {
+  const handlers = [...new Set(consumers.map((consumer) => consumer.handler))];
+  return {
+    technique: consumers[0]?.cardName ?? `AnimationResource ${hex(resourceId)}`,
+    handler: handlers.length === 1 ? handlers[0] : -1,
+  };
+}
 
-// Resources with fully proven physical linkage (base+0/+2/+4 all resolve)
-const PHYSICALLY_CLOSED_RESOURCES = [
-  'Kamehameha',    // $03
-  'Masenko',       // $04
-  'Galick-Ho',     // $05
-  'Energy Wave',   // $00
-  'Misty KiWave',  // $08
-  'Destructo Disk', // $12
-  'Hell Flash',    // $0B
-  'Cont.Punch',    // $2C
-];
+function entryFromGenerated(resource: RomFullAnimationResourceRecord): RomSequenceEntry {
+  const consumers = consumersForResource(resource.resourceId);
+  const identity = identityForResource(resource.resourceId, consumers);
+  const vfids = new Set<number>();
+  let totalFrameInstances = 0;
 
-// Resources with sequence data but metasprite linkage PENDING
-const METASPRITE_LINK_PENDING = [
-  'Finger Beam',        // $01
-  'Final Flash',        // $09
-  'Big Bang Attack',    // $0F
-  'Special Beam Cannon', // $16
-  'Spirit Bomb',        // $22
-  'Tail',              // $3F
-];
+  const sequences: RomSequence[] = resource.sequences.map((sequence) => ({
+    address: sequence.address,
+    totalTicks: sequence.totalTicks,
+    frames: sequence.frames.map((frame, frameIndex) => {
+      totalFrameInstances++;
+      vfids.add(frame.physicalFrameIndex);
+      const pieceCount = resource.physicalPartCounts[frame.physicalFrameIndex] ?? 0;
+      return {
+        frameIndex,
+        visualFrameId: frame.physicalFrameIndex,
+        durationTicks: frame.durationTicks,
+        offsetY: frame.offsetY,
+        offsetX: frame.offsetX,
+        raw: frame.raw,
+        metaspritePieceCount: pieceCount,
+        graphicsBlockCount: pieceCount,
+        linkageResolved: pieceCount > 0,
+        provenance: 'PHYSICAL_RESOURCE_FULLY_CLOSED',
+      };
+    }),
+  }));
 
-/** Build the registry from ROM bytes. Server-side only. */
+  return {
+    technique: identity.technique,
+    resourceId: resource.resourceId,
+    resourceHex: hex(resource.resourceId),
+    bank: resource.bank,
+    localId: resource.localId,
+    resourceBase: resource.resourceBaseLocal,
+    resourceLength: resource.resourceLength,
+    physicalFrameCount: resource.physicalFrameCount,
+    handler: identity.handler,
+    status: 'PHYSICAL_RESOURCE_FULLY_CLOSED',
+    evidence: 'ROM_CATALOG_ENTRY_VERIFIED',
+    sequences,
+    vfidRange: [...vfids].sort((a, b) => a - b),
+    totalFrameInstances,
+    totalTicks: sequences.reduce((sum, sequence) => sum + sequence.totalTicks, 0),
+    consumers,
+  };
+}
+
+function emptyEntry(resourceId: number, bank: number, localId: number, resourceBase: number): RomSequenceEntry {
+  const consumers = consumersForResource(resourceId);
+  const identity = identityForResource(resourceId, consumers);
+  return {
+    technique: identity.technique,
+    resourceId,
+    resourceHex: hex(resourceId),
+    bank,
+    localId,
+    resourceBase,
+    resourceLength: 0,
+    physicalFrameCount: 0,
+    handler: identity.handler,
+    status: 'EMPTY_RESOURCE_SLOT',
+    evidence: 'ROM_EMPTY_SLOT_VERIFIED',
+    sequences: [],
+    vfidRange: [],
+    totalFrameInstances: 0,
+    totalTicks: 0,
+    consumers,
+  };
+}
+
+function buildRegistryFromGenerated(): RomSequenceEntry[] {
+  const entries: RomSequenceEntry[] = ROM_FULL_ANIMATION_RESOURCES.map(entryFromGenerated);
+  for (const slot of ROM_FULL_ANIMATION_EMPTY_SLOTS) {
+    entries.push(emptyEntry(slot.resourceId, slot.bank, slot.localId, slot.resourceBaseLocal));
+  }
+  return entries.sort((a, b) => a.resourceId - b.resourceId);
+}
+
+function readU16(buffer: Buffer, offset: number): number {
+  return buffer[offset] | (buffer[offset + 1] << 8);
+}
+
+function readS8(value: number): number {
+  return value >= 0x80 ? value - 0x100 : value;
+}
+
+function bankOffset(bank: number): number {
+  return bank * 0x4000;
+}
+
+function selfPointer(rom: Buffer, bank: number, entryLocal: number): number {
+  return entryLocal + readU16(rom, bankOffset(bank) + entryLocal);
+}
+
+/**
+ * Parse all 66 catalog slots directly from ROM bytes. This is deliberately
+ * independent from the generated browser snapshot and is used by verifiers.
+ */
 export function buildRomSequenceRegistry(rom: Buffer): RomSequenceEntry[] {
   const registry: RomSequenceEntry[] = [];
 
-  for (const [name, tech] of Object.entries(ROM_TECHNIQUES)) {
-    const t = tech as any;
-    const resourceId = t.animationResource as number;
-    const bank = t.bank as number;
-    const seqAddrs = t.sequences.map((s: any) => s.addr as number);
-    const isFullyClosed = PHYSICALLY_CLOSED_RESOURCES.includes(name);
+  for (let resourceId = 0; resourceId < 66; resourceId++) {
+    const { bank, localId } = layoutForResource(resourceId);
+    const baseOffset = bankOffset(bank);
+    const catalogEntry = baseOffset + 8 + localId * 4;
+    const resourceBase = readU16(rom, catalogEntry) * 4;
+    const resourceLength = readU16(rom, catalogEntry + 2) * 4;
 
-    const base = isFullyClosed ? resourceBase(rom, bank, seqAddrs) : -1;
-    const status: PhysicalLinkageStatus = isFullyClosed && base >= 0
-      ? 'PHYSICAL_RESOURCE_FULLY_CLOSED'
-      : 'FRAME_STREAM_CLOSED';
+    if (resourceLength === 0) {
+      registry.push(emptyEntry(resourceId, bank, localId, resourceBase));
+      continue;
+    }
 
-    const vfidSet = new Set<number>();
+    const sequenceTable = resourceBase + readU16(rom, baseOffset + resourceBase);
+    const sequenceCount = rom[baseOffset + sequenceTable];
+
+    const metaspriteField = resourceBase + 2;
+    const metaspriteTable = metaspriteField + readU16(rom, baseOffset + metaspriteField);
+    const graphicsField = resourceBase + 4;
+    const graphicsTable = graphicsField + readU16(rom, baseOffset + graphicsField);
+    const physicalFrameCount = readU16(rom, baseOffset + metaspriteTable) >> 1;
+    const graphicsFrameCount = readU16(rom, baseOffset + graphicsTable) >> 1;
+    if (physicalFrameCount !== graphicsFrameCount) {
+      throw new Error(`AnimationResource ${hex(resourceId)} physical table mismatch ${physicalFrameCount} != ${graphicsFrameCount}`);
+    }
+
+    const partCounts: number[] = [];
+    for (let physicalFrameIndex = 0; physicalFrameIndex < physicalFrameCount; physicalFrameIndex++) {
+      const metaEntry = metaspriteTable + physicalFrameIndex * 2;
+      const metaRecord = selfPointer(rom, bank, metaEntry);
+      const graphicsEntry = graphicsTable + physicalFrameIndex * 2;
+      const graphicsRecord = selfPointer(rom, bank, graphicsEntry);
+      const partCount = rom[baseOffset + metaRecord];
+      const graphicsCount = rom[baseOffset + graphicsRecord];
+      if (partCount !== graphicsCount) {
+        throw new Error(`AnimationResource ${hex(resourceId)} frame ${physicalFrameIndex}: metasprite/graphics ${partCount} != ${graphicsCount}`);
+      }
+      partCounts.push(partCount);
+    }
+
+    const consumers = consumersForResource(resourceId);
+    const identity = identityForResource(resourceId, consumers);
     const sequences: RomSequence[] = [];
+    const vfids = new Set<number>();
     let totalFrameInstances = 0;
 
-    for (let si = 0; si < t.sequences.length; si++) {
-      const seq = t.sequences[si] as any;
+    for (let selector = 0; selector < sequenceCount; selector++) {
+      const pointerEntry = sequenceTable + 1 + selector * 2;
+      const sequenceAddress = selfPointer(rom, bank, pointerEntry);
+      const frameCount = rom[baseOffset + sequenceAddress];
       const frames: PhysicalFrame[] = [];
+      let totalTicks = 0;
 
-      for (let fi = 0; fi < seq.frames.length; fi++) {
-        const f = seq.frames[fi] as any;
-        totalFrameInstances++;
-
-        let metaspritePieceCount = 0;
-        let graphicsBlockCount = 0;
-        let linkageResolved = false;
-
-        if (base >= 0 && isFullyClosed) {
-          const resolved = resolvePhysicalFrame(rom, bank, base, si, fi);
-          if (resolved) {
-            metaspritePieceCount = resolved.metaspritePieceCount;
-            graphicsBlockCount = resolved.graphicsBlockCount;
-            linkageResolved = resolved.linkageResolved;
-            vfidSet.add(resolved.visualFrameId);
-          }
+      for (let frameIndex = 0; frameIndex < frameCount; frameIndex++) {
+        const address = baseOffset + sequenceAddress + 1 + frameIndex * 4;
+        const physicalFrameIndex = rom[address];
+        const durationTicks = rom[address + 1];
+        const rawY = rom[address + 2];
+        const rawX = rom[address + 3];
+        if (physicalFrameIndex >= physicalFrameCount) {
+          throw new Error(`AnimationResource ${hex(resourceId)} seq ${selector} references physical frame ${physicalFrameIndex}/${physicalFrameCount}`);
         }
-
+        const pieceCount = partCounts[physicalFrameIndex] ?? 0;
+        totalFrameInstances++;
+        totalTicks += durationTicks;
+        vfids.add(physicalFrameIndex);
         frames.push({
-          frameIndex: fi,
-          visualFrameId: f.meta as number,
-          durationTicks: f.ticks as number,
-          offsetY: f.dy as number,
-          offsetX: f.dx as number,
-          raw: f.raw as [number, number, number, number],
-          metaspritePieceCount,
-          graphicsBlockCount,
-          linkageResolved,
-          provenance: status,
+          frameIndex,
+          visualFrameId: physicalFrameIndex,
+          durationTicks,
+          offsetY: readS8(rawY),
+          offsetX: readS8(rawX),
+          raw: [physicalFrameIndex, durationTicks, rawY, rawX],
+          metaspritePieceCount: pieceCount,
+          graphicsBlockCount: pieceCount,
+          linkageResolved: pieceCount > 0,
+          provenance: 'PHYSICAL_RESOURCE_FULLY_CLOSED',
         });
       }
 
-      sequences.push({
-        address: seq.addr,
-        totalTicks: seq.totalTicks,
-        frames,
-      });
+      sequences.push({ address: sequenceAddress, totalTicks, frames });
     }
 
-    // TODO: consumers will be populated by RomActionSequenceBinding
-    const consumers: RomActionConsumer[] = [];
-
     registry.push({
-      technique: name,
+      technique: identity.technique,
       resourceId,
-      resourceHex: `$${resourceId.toString(16).padStart(2, '0')}`,
+      resourceHex: hex(resourceId),
       bank,
-      resourceBase: base >= 0 ? base : -1,
-      handler: t.handler,
-      status,
-      evidence: base >= 0 ? 'ROM_BASE_CROSS_VALIDATED' : 'ROM_SEQUENCE_ANCHORED',
+      localId,
+      resourceBase,
+      resourceLength,
+      physicalFrameCount,
+      handler: identity.handler,
+      status: 'PHYSICAL_RESOURCE_FULLY_CLOSED',
+      evidence: 'ROM_BYTE_EXACT',
       sequences,
-      vfidRange: [...vfidSet].sort((a, b) => a - b),
+      vfidRange: [...vfids].sort((a, b) => a - b),
       totalFrameInstances,
-      totalTicks: t.sequences.reduce((s: number, seq: any) => s + seq.totalTicks, 0),
+      totalTicks: sequences.reduce((sum, sequence) => sum + sequence.totalTicks, 0),
       consumers,
     });
   }
@@ -329,102 +330,50 @@ export function buildRomSequenceRegistry(rom: Buffer): RomSequenceEntry[] {
   return registry;
 }
 
-/** Get the ROM sequence registry (lazily initialized). Browser falls back to technique data without physical linkage. */
+let registryOverride: RomSequenceEntry[] | null = null;
+const GENERATED_REGISTRY = buildRegistryFromGenerated();
+
 export function getRomSequenceRegistry(): RomSequenceEntry[] {
-  if (!_registry) {
-    _registry = buildRegistryFromTechniques();
-  }
-  return _registry;
+  return registryOverride ?? GENERATED_REGISTRY;
 }
 
-/** Set the registry override (for server-side scripts that read ROM directly). */
 export function setRomSequenceRegistryOverride(registry: RomSequenceEntry[]): void {
-  _registry = registry;
+  registryOverride = registry;
 }
 
-/** Build registry entries from ROM_TECHNIQUES data alone (no ROM physical resolution). */
-function buildRegistryFromTechniques(): RomSequenceEntry[] {
-  const registry: RomSequenceEntry[] = [];
-  for (const [name, tech] of Object.entries(ROM_TECHNIQUES)) {
-    const t = tech as any;
-    const resourceId = t.animationResource as number;
-    const isFullyClosed = PHYSICALLY_CLOSED_RESOURCES.includes(name);
-    const sequences: RomSequence[] = [];
-    let totalFrameInstances = 0;
-    const vfidSet = new Set<number>();
-
-    for (let si = 0; si < t.sequences.length; si++) {
-      const seq = t.sequences[si] as any;
-      const frames: PhysicalFrame[] = [];
-      for (let fi = 0; fi < seq.frames.length; fi++) {
-        const f = seq.frames[fi] as any;
-        totalFrameInstances++;
-        vfidSet.add(f.meta as number);
-        frames.push({
-          frameIndex: fi,
-          visualFrameId: f.meta as number,
-          durationTicks: f.ticks as number,
-          offsetY: f.dy as number,
-          offsetX: f.dx as number,
-          raw: f.raw as [number, number, number, number],
-          metaspritePieceCount: 0,
-          graphicsBlockCount: 0,
-          linkageResolved: false,
-          provenance: isFullyClosed ? 'PHYSICAL_RESOURCE_FULLY_CLOSED' : 'FRAME_STREAM_CLOSED',
-        });
-      }
-      sequences.push({ address: seq.addr, totalTicks: seq.totalTicks, frames });
-    }
-
-    registry.push({
-      technique: name,
-      resourceId,
-      resourceHex: `$${resourceId.toString(16).padStart(2, '0')}`,
-      bank: t.bank as number,
-      resourceBase: -1,
-      handler: t.handler as number,
-      status: isFullyClosed ? 'PHYSICAL_RESOURCE_FULLY_CLOSED' : 'FRAME_STREAM_CLOSED',
-      evidence: 'ROM_SEQUENCE_ANCHORED',
-      sequences,
-      vfidRange: [...vfidSet].sort((a, b) => a - b),
-      totalFrameInstances,
-      totalTicks: t.sequences.reduce((s: number, seq: any) => s + seq.totalTicks, 0),
-      consumers: [],
-    });
-  }
-  return registry;
+export function clearRomSequenceRegistryOverride(): void {
+  registryOverride = null;
 }
 
-/** Get a specific resource's sequence entry by technique name. */
 export function getRomSequenceByName(technique: string): RomSequenceEntry | undefined {
-  return getRomSequenceRegistry().find(e => e.technique === technique);
+  return getRomSequenceRegistry().find((entry) => entry.technique === technique);
 }
 
-/** Get a specific resource's sequence entry by resource ID. */
 export function getRomSequenceByResourceId(resourceId: number): RomSequenceEntry | undefined {
-  return getRomSequenceRegistry().find(e => e.resourceId === resourceId);
+  return getRomSequenceRegistry().find((entry) => entry.resourceId === resourceId);
 }
 
-/** Summary of the registry for debugging. */
 export function romSequenceRegistrySummary() {
   const registry = getRomSequenceRegistry();
-  const fullyClosed = registry.filter(e => e.status === 'PHYSICAL_RESOURCE_FULLY_CLOSED');
-  const frameStreamOnly = registry.filter(e => e.status === 'FRAME_STREAM_CLOSED');
+  const closed = registry.filter((entry) => entry.status === 'PHYSICAL_RESOURCE_FULLY_CLOSED');
+  const empty = registry.filter((entry) => entry.status === 'EMPTY_RESOURCE_SLOT');
   return {
     total: registry.length,
-    physicalResourceFullyClosed: fullyClosed.length,
-    frameStreamClosed: frameStreamOnly.length,
-    totalFrameInstances: registry.reduce((s, e) => s + e.totalFrameInstances, 0),
-    totalTicks: registry.reduce((s, e) => s + e.totalTicks, 0),
-    totalVfids: new Set(fullyClosed.flatMap(e => e.vfidRange)).size,
-    techniques: registry.map(e => ({
-      technique: e.technique,
-      resourceId: e.resourceHex,
-      status: e.status,
-      sequences: e.sequences.length,
-      frames: e.totalFrameInstances,
-      vfids: e.vfidRange,
-      base: e.resourceBase >= 0 ? `0x${e.resourceBase.toString(16)}` : 'N/A',
+    physicalResourceFullyClosed: closed.length,
+    emptyResourceSlots: empty.length,
+    frameStreamClosed: registry.filter((entry) => entry.status === 'FRAME_STREAM_CLOSED').length,
+    totalFrameInstances: registry.reduce((sum, entry) => sum + entry.totalFrameInstances, 0),
+    totalPhysicalFrameDefinitions: registry.reduce((sum, entry) => sum + entry.physicalFrameCount, 0),
+    totalTicks: registry.reduce((sum, entry) => sum + entry.totalTicks, 0),
+    totalVfids: new Set(closed.flatMap((entry) => entry.vfidRange)).size,
+    emptyResourceIds: empty.map((entry) => entry.resourceId),
+    techniques: registry.map((entry) => ({
+      technique: entry.technique,
+      resourceId: entry.resourceId,
+      status: entry.status,
+      sequences: entry.sequences.length,
+      frames: entry.totalFrameInstances,
+      physicalFrames: entry.physicalFrameCount,
     })),
   };
 }

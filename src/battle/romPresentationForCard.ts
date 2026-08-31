@@ -63,9 +63,10 @@ export function romPresentationTimelineForCard(
     };
   }
 
-  // Support especial ($0B/$0D/$0F) comparte handlers con SPECIAL_HANDLER,
-  // pero usa su propio compilador display. Resolverlo primero evita que entre
-  // por el bridge ofensivo y rompa las rutas SUPPORT_SPECIAL.
+  // Support especial ($0B/$0D/$0F) usa su propio compilador (V7.3). Gana SIEMPRE
+  // sobre el bridge genérico: hay cards de soporte que comparten handler con un
+  // special de ataque (p.ej. $0B/$0D) y cuyo profile.kind es SPECIAL_HANDLER,
+  // pero su presentación correcta es SUPPORT_SPECIAL, no la ruta de ataque.
   const support = supportSpecialCutover(card.id, {});
   if (support) {
     return {
@@ -76,7 +77,6 @@ export function romPresentationTimelineForCard(
       pendingCues: support.timeline.entries.filter(en => en.cue.type === 'ROM_PENDING').length,
     };
   }
-
   if (!BRIDGE_ELIGIBLE_KINDS.has(profile.kind)) {
     return null;
   }

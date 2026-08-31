@@ -248,7 +248,11 @@ function motionStep(id: string, macroId: number, kind: RomPresentationMotionRef[
   });
 }
 
-function startAnimation(descriptor: RomActionExecutionDescriptor, sequence?: number, slot?: 0 | 1): RomPresentationStep | null {
+function startAnimation(
+  descriptor: RomActionExecutionDescriptor,
+  sequence?: number,
+  slot?: 0 | 1,
+): RomPresentationStep | null {
   if (descriptor.actorAnimation.resource == null) return null;
   const seq = sequence ?? null;
   return step({
@@ -261,11 +265,11 @@ function startAnimation(descriptor: RomActionExecutionDescriptor, sequence?: num
     fxResource: null,
     palette: null,
     frame: null,
-    sequence: seq ?? undefined,
-    slot: slot ?? 0,
+    sequence,
+    slot,
     motion: null,
     branchFamily: null,
-    label: `Start AnimationResource ${descriptor.actorAnimation.resourceHex}${seq != null ? ` seq ${seq}` : ''} slot ${slot ?? 0}`,
+    label: `Start AnimationResource ${descriptor.actorAnimation.resourceHex}${sequence != null ? ` seq ${sequence}` : ''}${slot != null ? ` slot ${slot}` : ''}`,
     evidence: descriptor.actorAnimation.evidence,
     source: 'RomActionExecutionDescriptor.actorAnimation',
   });
@@ -588,45 +592,29 @@ function defenseProgram(descriptor: RomActionExecutionDescriptor): RomPresentati
 }
 
 function specialProgram(descriptor: RomActionExecutionDescriptor): RomPresentationStep[] {
-  const program = [sceneLoad('ROM_HANDLER_VERIFIED')];
-
-  // Multi-phase physical emission for SPECIAL_HANDLER (ROM_HANDLER_VERIFIED phases)
-  // result branch remains PENDING_ROM_TRACE (spatial semantics, HIT/MISS/ownership)
-  const cardId = descriptor.cardId;
-  const resource = descriptor.actorAnimation.resource;
-
-  if (resource != null) {
-    if (cardId === 29) { // Tail $0B / $3F
-      const a0 = startAnimation(descriptor, 0);
-      if (a0) program.push(a0);
-      const a1 = startAnimation(descriptor, 1);
-      if (a1) program.push(a1);
-    } else if (cardId === 41) { // V-Ball
-      for (let s = 0; s <= 3; s++) {
-        const a = startAnimation(descriptor, s);
-        if (a) program.push(a);
-      }
-    } else if (cardId === 57) { // Purple Comet
-      const a0 = startAnimation(descriptor, 0, 0);
-      if (a0) program.push(a0);
-      const a1 = startAnimation(descriptor, 1, 1);
-      if (a1) program.push(a1);
-    } else if (cardId === 58) { // P.Comet Z
-      const a2 = startAnimation(descriptor, 2, 0);
-      if (a2) program.push(a2);
-      const a3 = startAnimation(descriptor, 3, 1);
-      if (a3) program.push(a3);
-    } else {
-      const actor = startAnimation(descriptor);
-      if (actor) program.push(actor);
+  const program: RomPresentationStep[] = [sceneLoad('ROM_HANDLER_VERIFIED')];
+  const binding = descriptor.actorAnimation.sequenceBinding;
+  if (binding && binding.phases.length > 0) {
+    // Fases físicas demostradas por la SSOT: una START_ANIMATION por fase con
+    // su selector de secuencia y slot físicos. NO fabricamos WAITs entre fases:
+    // la transición exacta entre estados la gobierna el FSM del handler y
+    // sigue siendo territorio dinámico (se refleja en el pending final).
+    for (const phase of binding.phases) {
+      const anim = startAnimation(descriptor, phase.sequence, phase.slot);
+      if (anim) program.push(anim);
     }
+  } else {
+    const actor = startAnimation(descriptor);
+    if (actor) program.push(actor);
   }
-
   const fx = spawnFx(descriptor);
   if (fx) program.push(fx);
-
-  // Result-dependent remainder stays PENDING_ROM_TRACE (not collapsed into one dynamic action)
-  program.push(pendingStep('PENDING_SPECIAL_RESULT_BRANCH', 'PENDING_ROM_TRACE', 'result branch / multi-actor spatial semantics remain dynamic trace territory', 'SPECIAL_HANDLER_DESCRIPTORS'));
+  program.push(pendingStep(
+    'PENDING_SPECIAL_RESULT_BRANCH',
+    'PENDING_ROM_TRACE',
+    'special handler result branch (HIT/MISS/GUARD) and inter-phase state transitions remain dynamic trace territory',
+    'SPECIAL_HANDLER_DESCRIPTORS',
+  ));
   return program;
 }
 

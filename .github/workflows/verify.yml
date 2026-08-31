@@ -21,6 +21,15 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      # Portable Stage physical contract: uses the committed Bank $61 core,
+      # including the memberSlot1 final-B $39 finisher and defender WAIT_FRAME reactions.
+      - name: Verify ROM Stage physical bindings
+        run: npx tsx scripts/verify-rom-stage-physical-binding.ts
+
+      # Portable STANDARD_DAMAGE result choreography ($2F/$30/$31).
+      - name: Verify ROM standard-damage result physicals
+        run: npx tsx scripts/verify-rom-standard-damage-result-physical.ts
+
       # Portable suite only: typecheck + vitest + build + every verify:* and
       # audit:* that reads committed data (no raw ROM, no outside-repo decomp).
       # ROM-dependent verifiers live in `npm run verify:rom-local` and CANNOT

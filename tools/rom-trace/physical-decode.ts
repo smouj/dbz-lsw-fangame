@@ -8,6 +8,7 @@
 import { readFileSync, existsSync, readdirSync, statSync } from 'fs';
 import { resolve, join, dirname } from 'path';
 import { fileURLToPath } from 'url';
+import { ROM_PHYSICAL_CORPUS_SUMMARY } from '../../src/data/generated/romPhysicalCorpus.generated';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
 const ROM_PATH = resolve(ROOT, '../dbz-lsw-decomp/13_raw_rom/dbz-lsw-usa.gbc');
@@ -81,6 +82,14 @@ export function physicalFrameHash(key: number, resourceId: number, vfid: number)
   const identity = `${key.toString(16)}:${resourceId.toString(16)}:${vfid.toString(16)}`;
   const cached = hashCache.get(identity);
   if (cached) return cached;
+  for (const form of ROM_PHYSICAL_CORPUS_SUMMARY.forms) {
+    if (form.actorVisualProfileKey !== key) continue;
+    const frame = form.physicalFrameIndex.find(item =>
+      item.resourceId === resourceId && item.visualFrameId === vfid);
+    if (!frame) continue;
+    hashCache.set(identity, frame.trimmedPixelHash);
+    return frame.trimmedPixelHash;
+  }
   // buscar en los renders existentes (docs/rom/generated/fighters/resource_XX/profile_YY/...)
   const resDir = join(ROOT, 'docs/rom/generated/fighters', `resource_${resourceId.toString(16).padStart(2, '0')}`);
   if (!existsSync(resDir)) return null;
