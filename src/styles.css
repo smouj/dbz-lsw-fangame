@@ -2555,9 +2555,10 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 }
 .chapter-node:hover { background: var(--panel); border-left-color: var(--border-hi); transform: translateX(2px); }
 .chapter-node.active {
-  background: linear-gradient(90deg, rgba(240,136,48,.14), rgba(240,136,48,.03) 70%);
-  border-left-color: var(--border-accent);
-  box-shadow: inset 0 0 0 1px rgba(240,136,48,.2);
+  background: linear-gradient(90deg, rgba(240,136,48,.18), rgba(240,136,48,.04) 70%);
+  border-left-color: var(--orange);
+  border-left-width: 5px;
+  box-shadow: inset 0 0 0 1px rgba(240,136,48,.28), 0 0 12px rgba(247,147,30,.15);
 }
 .chapter-node.locked { opacity: .65; filter: grayscale(.25); }
 
@@ -14129,7 +14130,7 @@ button.linklike:hover { background: rgba(216,168,48,.08); text-decoration: none;
 .setup-ready-btn { min-width: 220px; }
 
 .setup-form-selector { display: flex; align-items: center; gap: 10px; }
-.setup-form-label { font-family: 'Press Start 2P', monospace; font-size: 10px; color: var(--muted); }
+.setup-form-label { font-family: 'Press Start 2P', monospace; font-size: 10px; color: rgba(246,199,68,.7); letter-spacing: 1px; text-transform: uppercase; }
 .setup-form-chips { display: flex; gap: 6px; flex-wrap: wrap; }
 .setup-form-chip {
   border: 1px solid var(--border);
@@ -14139,7 +14140,7 @@ button.linklike:hover { background: rgba(216,168,48,.08); text-decoration: none;
   padding: 3px 10px;
   cursor: pointer;
 }
-.setup-form-chip.active { border-color: var(--border-accent); color: var(--orange-lt); }
+.setup-form-chip.active { border-color: var(--orange); color: var(--orange-lt); background: rgba(247,147,30,.12); }
 .setup-form-chip.locked { opacity: 0.4; cursor: not-allowed; }
 
 @media (max-width: 1100px) {
