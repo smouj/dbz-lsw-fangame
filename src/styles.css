@@ -985,20 +985,6 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 .menu-item-settings .mi-desc { font-size: 13px; }
 
 /* ─── Jerarquía del menú (spec): MODOS > COLECCIÓN > AJUSTES ─── */
-.menu-nav-entry {
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
-}
-.menu-group-label {
-  font-family: var(--fpx);
-  font-size: 9px;
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  color: rgba(246,199,68,.55);
-  padding: 8px 2px 2px 8px;
-  text-shadow: 1px 1px 0 #000;
-}
 /* Los modos de juego (Historia/Batalla) tienen mayor peso que la colección. */
 .menu-item.group-modes {
   min-height: clamp(40px, 6.4cqh, 58px);
@@ -16158,13 +16144,13 @@ button.linklike:hover { background: rgba(216,168,48,.08); text-decoration: none;
 
 .menu-footer { font-size: 1.6cqh; padding-top: 0.8cqh; }
 
-/* Si aún así el contenido excede la altura (ventanas muy bajas), el nav
-   scrollea internamente en vez de recortar/desbordar. */
+/* El menú escala con cqh y siempre cabe: sin scrollbar (el scroll feo no
+   debe aparecer). En ventanas extremadamente bajas, recorta el sobrante
+   en vez de mostrar un scroll. */
 .menu-nav {
-  overflow-y: auto;
+  overflow: hidden;
   min-height: 0;
   flex: 0 1 auto;
-  scrollbar-width: thin;
 }
 .menu-content { overflow: hidden; }
 

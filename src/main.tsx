@@ -3947,33 +3947,25 @@ function MainMenu({ onNavigate }: { onNavigate: (s: Screen) => void }) {
         </button>
 
         <nav className="menu-nav" aria-label="Main menu" onMouseLeave={() => setHoveredMenuIndex(null)}>
-          {menuItems.map(({ n, label, desc, screen, Icon, tone, secondary, group }, index) => {
-            // Kicker de grupo (MODOS / COLECCIÓN): marca visual de jerarquía,
-            // solo presentación — no añade controles ni cambia la navegación.
-            const prev = index > 0 ? menuItems[index - 1].group : undefined;
-            const showGroupLabel = group && group !== prev;
-            return (
-              <span key={screen} className={`menu-nav-entry ${group ? `entry-${group}` : ''}`}>
-                {showGroupLabel && <span className="menu-group-label" aria-hidden="true">{group === 'modes' ? 'MODOS' : 'COLECCIÓN'}</span>}
-                <button
-                  className={`menu-item ${tone ? `tone-${tone}` : ''} ${secondary ? 'menu-item-settings' : ''} ${group ? `group-${group}` : ''} ${index === hoveredMenuIndex ? 'selected' : ''} ${index === keyboardVisualMenuIndex ? 'keyboard-selected' : ''}`}
-                  onMouseEnter={() => { setHoveredMenuIndex(index); setKeyboardMenuActive(false); }}
-                  onMouseLeave={() => setHoveredMenuIndex(null)}
-                  onFocus={() => { setSelectedMenuIndex(index); setKeyboardMenuActive(true); }}
-                  onClick={() => { Sfx.select(); onNavigate(screen); }}
-                  aria-current={index === keyboardVisualMenuIndex ? 'true' : undefined}
-                >
-                  <span className="mi-num">{n}</span>
-                  <span className="mi-icon"><Icon size={18} strokeWidth={2.4} /></span>
-                  <span className="mi-copy">
-                    <span className="mi-label">{label}</span>
-                    <span className="mi-desc">{desc}</span>
-                  </span>
-                  <ChevronRight className="mi-arrow" size={18} strokeWidth={2.8} />
-                </button>
+          {menuItems.map(({ n, label, desc, screen, Icon, tone, secondary, group }, index) => (
+            <button
+              key={screen}
+              className={`menu-item ${tone ? `tone-${tone}` : ''} ${secondary ? 'menu-item-settings' : ''} ${group ? `group-${group}` : ''} ${index === hoveredMenuIndex ? 'selected' : ''} ${index === keyboardVisualMenuIndex ? 'keyboard-selected' : ''}`}
+              onMouseEnter={() => { setHoveredMenuIndex(index); setKeyboardMenuActive(false); }}
+              onMouseLeave={() => setHoveredMenuIndex(null)}
+              onFocus={() => { setSelectedMenuIndex(index); setKeyboardMenuActive(true); }}
+              onClick={() => { Sfx.select(); onNavigate(screen); }}
+              aria-current={index === keyboardVisualMenuIndex ? 'true' : undefined}
+            >
+              <span className="mi-num">{n}</span>
+              <span className="mi-icon"><Icon size={18} strokeWidth={2.4} /></span>
+              <span className="mi-copy">
+                <span className="mi-label">{label}</span>
+                <span className="mi-desc">{desc}</span>
               </span>
-            );
-          })}
+              <ChevronRight className="mi-arrow" size={18} strokeWidth={2.8} />
+            </button>
+          ))}
         </nav>
 
         <div className="menu-footer">{menuCopy.footer}</div>
