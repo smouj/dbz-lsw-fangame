@@ -631,9 +631,9 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 .menu-content {
   position: relative; z-index: 1;
   display: flex; flex-direction: column; align-items: flex-start;
-  gap: 12px;
-  width: clamp(500px, 39cqw, 760px);
-  padding: 30px 0 18px 5.5cqw;
+  gap: 1.2cqh;
+  width: 39cqw;
+  padding: 3cqh 0 2cqh 5.5cqw;
   height: 100cqh;
   box-sizing: border-box;
   outline: none;
@@ -643,33 +643,33 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 
 .menu-logo-title {
   position: relative;
-  width: clamp(300px, 42cqw, 660px);
+  width: 42cqw;
   height: auto;
   object-fit: contain;
   flex-shrink: 0;
   filter: drop-shadow(0 3px 0 rgba(10,10,20,.8)) drop-shadow(0 0 28px rgba(255,170,60,.42)) drop-shadow(0 0 10px rgba(255,215,110,.28));
   transform: rotate(-0.8deg);
-  margin: 6px 0 0 -3px;
+  margin: 0;
   align-self: flex-start;
 }
 
 .menu-subtitle {
   font-family: var(--fpx);
-  font-size: 12px;
+  font-size: 1.5cqh;
   letter-spacing: 2.5px;
   color: var(--gold-lt);
   text-shadow: 2px 2px 0 #000, 0 0 12px rgba(216,168,48,.4);
-  margin: 0 0 16px 6px;
-  padding: 0 0 8px;
-  width: min(100%, 520px);
+  margin: 0 0 2cqh 6px;
+  padding: 0 0 1cqh;
+  width: 100%;
   border-bottom: 1px solid rgba(246,199,68,.2);
 }
 
 /* ─── Continuar: bloque hero, no tarjeta web ─── */
 .menu-continue-card {
-  display: flex; align-items: center; gap: 14px;
+  display: flex; align-items: center; gap: 1.8cqw;
   width: 100%;
-  min-height: clamp(74px, 15cqh, 148px);
+  min-height: 13cqh;
   text-align: left;
   background:
     linear-gradient(90deg, rgba(247,147,30,.28), rgba(247,147,30,.1) 50%, rgba(9,13,22,.1) 100%),
@@ -684,7 +684,7 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
     0 14px 34px rgba(0,0,0,.34),
     0 0 28px rgba(247,147,30,.15),
     0 0 0 1px rgba(246,199,68,.24);
-  padding: 18px 18px 16px 20px;
+  padding: 1.5cqh 2cqw 1.2cqh 2.5cqw;
   cursor: pointer;
   transition: transform 120ms ease, box-shadow 120ms ease, border-color 120ms ease, background 120ms ease;
   position: relative;
@@ -722,17 +722,17 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 
 .mc-play {
   font-family: system-ui, sans-serif;
-  font-size: 28px;
+  font-size: 3.4cqh;
   line-height: 1;
   color: var(--orange-lt);
   text-shadow: 0 0 14px rgba(242,138,40,.8), 2px 2px 0 #000;
   animation: sel-blink 1.6s infinite alternate;
   flex-shrink: 0;
 }
-.mc-body { display: flex; flex-direction: column; gap: 4px; flex: 1; min-width: 0; }
+.mc-body { display: flex; flex-direction: column; gap: 0.5cqh; flex: 1; min-width: 0; }
 .mc-kicker {
   font-family: var(--fui);
-  font-size: 15px;
+  font-size: 1.9cqh;
   color: #f6c744;
   letter-spacing: 1px;
   text-transform: uppercase;
@@ -740,26 +740,26 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 }
 .mc-title {
   font-family: var(--fepic);
-  font-size: 30px;
+  font-size: 3.8cqh;
   color: var(--orange-lt);
   letter-spacing: 1px;
   text-shadow: 2px 2px 0 #000;
   line-height: 1;
 }
 .mc-chapter {
-  font-family: var(--fui); font-size: 18px; letter-spacing: 0;
+  font-family: var(--fui); font-size: 2.2cqh; letter-spacing: 0;
   color: var(--text-hi); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
   text-shadow: 1px 1px 0 #000;
 }
 .mc-progress-line {
   display: flex;
   align-items: center;
-  gap: 10px;
-  margin-top: 6px;
+  gap: 1cqw;
+  margin-top: 0.5cqh;
 }
 .mc-progress-track {
   flex: 1;
-  height: 11px;
+  height: 1.2cqh;
   background:
     repeating-linear-gradient(90deg, rgba(255,255,255,.09) 0 1px, transparent 1px 10px),
     rgba(0,0,0,.66);
@@ -778,26 +778,26 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 }
 .mc-percent {
   font-family: var(--fui);
-  font-size: 19px;
+  font-size: 2.4cqh;
   color: #f6c744;
-  min-width: 44px;
+  min-width: 5cqw;
   text-align: right;
   text-shadow: 1px 1px 0 #000;
 }
 .mc-meta {
   font-family: var(--fui);
-  font-size: 16px;
+  font-size: 1.9cqh;
   color: rgba(242,235,217,.86);
-  margin-top: 2px;
+  margin-top: 0.3cqh;
 }
 .mc-hero-wrap {
-  width: 92px;
-  min-height: 106px;
+  width: 10cqh;
+  min-height: 12cqh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-end;
-  gap: 5px;
+  gap: 0.5cqh;
   background:
     radial-gradient(circle at 50% 58%, rgba(247,147,30,.26), transparent 58%),
     rgba(3,5,10,.42);
@@ -810,25 +810,25 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 /* Retrato del héroe (LSW_Portraits 40×56 recortado a transparencia). Se ve
    grande y nítido, integrado con el glow cálido de la tarjeta (2026-08-12). */
 .mc-hero {
-  height: 92px; width: auto;
-  max-width: 72px;
+  height: 10cqh; width: auto;
+  max-width: 8cqh;
   object-fit: contain;
   image-rendering: pixelated;
   filter: drop-shadow(0 0 12px rgba(247,147,30,.42));
   transition: transform 120ms ease;
-  margin-top: 6px;
+  margin-top: 0.5cqh;
 }
 .mc-hero-name {
   font-family: var(--fui);
-  font-size: 12px;
+  font-size: 1.5cqh;
   line-height: 1;
   color: rgba(242,235,217,.78);
   text-transform: uppercase;
-  max-width: 80px;
+  max-width: 10cqw;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  padding-bottom: 6px;
+  padding-bottom: 0.5cqh;
 }
 .menu-continue-card:hover .mc-hero { transform: none; filter: drop-shadow(0 0 14px rgba(247,147,30,.48)); }
 
@@ -840,16 +840,16 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 /* ─── Opciones principales: entradas de juego, no filas de tabla ─── */
 .menu-nav {
   display: flex; flex-direction: column;
-  gap: 6px;
+  gap: 0.7cqh;
   width: 100%;
 }
 
 .menu-item {
-  min-height: clamp(34px, 5.6cqh, 52px);
+  min-height: 5.6cqh;
   display: grid;
-  grid-template-columns: 36px 38px 1fr 22px;
+  grid-template-columns: 4.5cqw 4.8cqw 1fr 2.8cqw;
   align-items: center;
-  gap: 11px;
+  gap: 1.4cqw;
   text-align: left;
   background: linear-gradient(90deg, rgba(13,18,30,.92), rgba(13,18,30,.62) 62%, rgba(13,18,30,.34) 100%);
   border: 0;
@@ -858,7 +858,7 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   font-family: var(--fui);
   cursor: pointer;
   letter-spacing: 0;
-  padding: 8px 12px 8px 0;
+  padding: 1cqh 1.5cqw 1cqh 0;
   text-transform: uppercase;
   text-shadow: 1px 1px 0 rgba(0,0,0,.9);
   transition: background 120ms ease, color 120ms ease, box-shadow 120ms ease, opacity 120ms ease, filter 120ms ease;
@@ -903,12 +903,12 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 
 .mi-num {
   font-family: var(--fui);
-  font-size: 19px;
+  font-size: 2.2cqh;
   color: rgba(246,199,68,.8);
   text-align: right;
 }
 .mi-icon {
-  width: 36px; height: 36px;
+  width: 4.5cqh; height: 4.5cqh;
   display: grid; place-items: center;
   color: rgba(246,199,68,.78);
   background: rgba(9,13,22,.46);
@@ -920,11 +920,11 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   min-width: 0;
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 0.3cqh;
 }
 .mi-label {
   font-family: var(--fepic);
-  font-size: 25px;
+  font-size: 3cqh;
   line-height: .92;
   letter-spacing: .5px;
   color: rgba(242,235,217,.9);
@@ -932,7 +932,7 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 }
 .mi-desc {
   font-family: var(--fui);
-  font-size: 14px;
+  font-size: 1.7cqh;
   line-height: 1.1;
   color: rgba(242,235,217,.8);
   text-transform: none;
@@ -965,34 +965,34 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 .menu-item.selected .mi-desc { color: rgba(242,235,217,.94); }
 .menu-item.tone-hot .mi-icon { color: #f7931e; }
 .menu-item-settings {
-  min-height: 48px;
-  margin-top: 10px;
-  grid-template-columns: 36px 34px 1fr 22px;
+  min-height: 5.6cqh;
+  margin-top: 1cqh;
+  grid-template-columns: 4.5cqw 4.3cqw 1fr 2.8cqw;
   opacity: .9;
   background: linear-gradient(90deg, rgba(13,18,30,.72), rgba(13,18,30,.4) 78%, rgba(13,18,30,.2));
 }
 .menu-item-settings::before { background: linear-gradient(180deg, rgba(246,199,68,.7), rgba(247,147,30,.7)); }
-.menu-item-settings .mi-label { font-size: 18px; color: rgba(242,235,217,.78); }
-.menu-item-settings .mi-desc { font-size: 13px; }
+.menu-item-settings .mi-label { font-size: 3cqh; color: rgba(242,235,217,.78); }
+.menu-item-settings .mi-desc { font-size: 1.7cqh; }
 
-/* ─── Jerarquía del menú (spec): MODOS > COLECCIÓN > AJUSTES ─── */
-/* Los modos de juego (Historia/Batalla) tienen mayor peso que la colección. */
+/* ─── Jerarquía del menú: MODOS > COLECCIÓN > AJUSTES ─── */
+/* Jerarquía por icono y color, NO por tamaño de fuente. */
 .menu-item.group-modes {
-  min-height: clamp(40px, 6.4cqh, 58px);
+  min-height: 6cqh;
 }
-.menu-item.group-modes .mi-label { font-size: 27px; }
-.menu-item.group-collection .mi-label { font-size: 21px; color: rgba(242,235,217,.82); }
+.menu-item.group-modes .mi-label { font-size: 3cqh; }
+.menu-item.group-collection .mi-label { font-size: 3cqh; color: rgba(242,235,217,.82); }
 .menu-item.group-collection .mi-num { color: rgba(246,199,68,.55); }
-.menu-item.group-collection .mi-icon { width: 32px; height: 32px; }
-.menu-item.group-collection { min-height: clamp(30px, 4.8cqh, 44px); }
+.menu-item.group-collection .mi-icon { width: 4cqh; height: 4cqh; }
+.menu-item.group-collection { min-height: 5.6cqh; }
 
 .menu-footer {
   color: var(--gold-lt);
   font-family: var(--fui);
-  font-size: 13px;
+  font-size: 1.6cqh;
   margin-top: auto;
   margin-bottom: 0;
-  padding: 8px 2px 0;
+  padding: 1cqh 2px 0;
   letter-spacing: 2px;
   background: transparent;
   border: 0;
@@ -2386,20 +2386,6 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   .card { padding: 2px; gap: 0; }
   .card-name { font-size: 5px; }
   .card-art { width: 46px; height: 30px; font-size: 18px; }
-  .menu-screen::before { width: 100vw; }
-  .menu-screen::after { left: 5cqw; }
-  .menu-content { width: 500px; padding: 24px 5vw 16px 8vw; max-width: 94vw; }
-  .menu-logo-title { width: clamp(260px, 30cqw, 420px); }
-  .menu-subtitle { font-size: 9px; margin-bottom: 8px; }
-  .menu-continue-card { min-height: 112px; padding: 12px; border-radius: 6px 4px 4px 6px; }
-  .mc-title { font-size: 24px; }
-  .mc-chapter { font-size: 15px; }
-  .mc-kicker, .mc-meta { font-size: 13px; }
-  .mc-hero-wrap { width: 78px; min-height: 92px; }
-  .mc-hero { height: 74px; max-width: 60px; }
-  .menu-item { min-height: 50px; grid-template-columns: 30px 32px 1fr 18px; gap: 8px; }
-  .mi-label { font-size: 20px; }
-  .mi-desc { font-size: 13px; }
 }
 
 
