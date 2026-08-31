@@ -26,9 +26,8 @@ import { speedOrder, isBattleTerminal } from '../state/battleStateSelectors';
 import { moveFighter } from './reducers/movementReducer';
 import { playCard, playDefenseCard, playLimitCard } from './reducers/cardReducer';
 import { gatherPower, guard, qteCorrectInput, qteWrongInput, qteCounterContinue, qteCounterDefend, characterSwitchPowerWindow } from './reducers/powerReducer';
-import { resolveCardAction, resolveCounterDamage, resolvePartialStageDamage, resolveStageCard } from './reducers/damageReducer';
+import { resolveCardAction, resolveCounterDamage, resolvePartialStageDamage, resolveStageCard, applyStagePoweredReposition } from './reducers/damageReducer';
 import { actionDescriptorForCard, actionDescriptorForStage } from './buildActionDescriptor';
-import { stageProgress } from '../combat/resolution';
 
 /** Nivel de Stage de una carta command (3/4/5/6) según su nombre (paridad legacy). */
 function stageLevelOfCardName(name: string): StageLevel {
@@ -56,10 +55,10 @@ function qteForCard(state: BattleState, card: CardDef): BattleState['stageQte'] 
   // inputOpenTick (= último idle de la preparación). El cronómetro de la
   // secuencia NO corre durante la preparación (deadline = inputOpen + ventana).
   return {
-    state: 'PREPARING', seq, idx: 0, correct: 0, card,
+    state: 'PREPARING', seq, idx: 0, correct: 0, repaired: 0, card,
     startedTick: state.tick, inputOpenTick: state.tick + STAGE_PREP_TICKS,
     deadlineTick: state.tick + STAGE_PREP_TICKS + windowTicks, windowTicks,
-    counterDeadlineTick: 0, result: null,
+    counterStartTick: 0, counterDeadlineTick: 0, result: null,
   };
 }
 
@@ -174,10 +173,10 @@ export function reduceAcceptedCommand(state: BattleState, command: BattleCommand
         ...state,
         phase: 'stageInput',
         stageQte: {
-          state: 'PREPARING', seq, idx: 0, correct: 0, card: null,
+          state: 'PREPARING', seq, idx: 0, correct: 0, repaired: 0, card: null,
           startedTick: state.tick, inputOpenTick: state.tick + STAGE_PREP_TICKS,
           deadlineTick: state.tick + STAGE_PREP_TICKS + windowTicks, windowTicks,
-          counterDeadlineTick: 0, result: null,
+          counterStartTick: 0, counterDeadlineTick: 0, result: null,
         },
       };
       events = [
@@ -290,6 +289,11 @@ export function reduceAcceptedCommand(state: BattleState, command: BattleCommand
             ...resolution.events,
             { type: 'ACTION_RESOLVED', side: 'player', action: actionDescriptorForStage(level) },
           ];
+          // ROM §97-99: con power window activa, el prefijo resuelto del
+          // Stage reposiciona al defensor (direccionales del prefijo).
+          const reposition = applyStagePoweredReposition(next, 'player', q.seq, q.correct + q.repaired + 1);
+          next = reposition.state;
+          events = [...events, ...reposition.events];
         }
       } else {
         // M5: input equivocado → COUNTER_WINDOW (el GBC no rechaza: el
@@ -301,23 +305,51 @@ export function reduceAcceptedCommand(state: BattleState, command: BattleCommand
       break;
     }
     case 'QTE_COUNTER_DEFEND': {
-      // A = SAFE_ABORT: conserva CC, daño parcial del Stage según progreso
+      // A = SAFE_ABORT: conserva CC, daño parcial del Stage según los
+      // comandos RESUELTOS (ROM §93/§94: resolved = correct + repaired;
+      // A finaliza con el progreso acumulado → resolvedCommandCount, no
+      // una fracción). ROM §97-99: con power window activa, el prefijo
+      // resuelto reposiciona al defensor (direccionales).
       const q = state.stageQte;
       const r = qteCounterDefend(state, 'player');
       next = r.state;
       events = r.events;
       const card = q.card ?? resolveStageCard(state, q.seq.length);
-      const progress = stageProgress(q.correct, q.seq.length);
-      const partial = resolvePartialStageDamage(next, 'player', card, progress);
+      const resolved = q.correct + q.repaired;
+      const partial = resolvePartialStageDamage(next, 'player', card, resolved);
       next = partial.state;
       events = [...events, ...partial.events];
+      const reposition = applyStagePoweredReposition(next, 'player', q.seq, resolved);
+      next = reposition.state;
+      events = [...events, ...reposition.events];
       break;
     }
     case 'QTE_COUNTER_CONTINUE': {
-      // B = RECOVER: repara y continúa el Stage (sin daño, sin tiradas)
+      // B = REPAIR (ROM §94): repara el comando fallado (cuenta como
+      // resuelto, +1 CC) y continúa la secuencia con el timer GLOBAL
+      // original. Si la reparación completa la secuencia (correct +
+      // repaired == seq.length), la acción se RESUELVE igual que un
+      // QTE completado.
+      const q = state.stageQte;
       const r = qteCounterContinue(state, 'player');
       next = r.state;
       events = r.events;
+      const q2 = next.stageQte;
+      if (q2.correct + q2.repaired >= q2.seq.length && q2.seq.length > 0) {
+        const level: 3 | 4 = q2.seq.length === 4 ? 4 : 3;
+        const cardResolved = q.card ?? resolveStageCard(state, q.seq.length);
+        const resolution = resolveCardAction(next, 'player', cardResolved);
+        next = { ...resolution.state, rngState: resolution.rngState };
+        events = [
+          ...events,
+          ...resolution.events,
+          { type: 'QTE_COMPLETED', side: 'player', correct: q2.correct + q2.repaired, total: q2.seq.length, result: 'FULL_SUCCESS' },
+          { type: 'ACTION_RESOLVED', side: 'player', action: actionDescriptorForStage(level) },
+        ];
+        const reposition = applyStagePoweredReposition(next, 'player', q2.seq, q2.correct + q2.repaired);
+        next = reposition.state;
+        events = [...events, ...reposition.events];
+      }
       break;
     }
     default:

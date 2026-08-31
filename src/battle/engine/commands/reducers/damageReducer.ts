@@ -14,6 +14,7 @@
 // ═══════════════════════════════════════════════════════════════════════
 
 import { getCard, type CardDef } from '../../../../data/cards';
+import type { StageKey } from '../../../stageInputMap';
 import type { BattleEvent, DamageCause } from '../../events/BattleEvent';
 import type { RngState } from '../../random/prng';
 import { nextRng } from '../../random/prng';
@@ -27,11 +28,11 @@ import {
   hitBlockAvoidFromRoll,
   moveAxisFromRoll,
   powerFor,
+  romStageDamage,
   spdFor,
-  stageAttackDamage,
-  stagePartialDamage,
 } from '../../combat/resolution';
 import type { MoveAxis } from '../../../../data/positions';
+import { BattlePosition, POSITION_DATA } from '../../../../data/positions';
 import { moveFighter } from './movementReducer';
 
 export interface DamageOutcome {
@@ -105,7 +106,26 @@ export function resolveCardAction(state: BattleState, side: BattleSide, card: Ca
 
   // ── Stage Attack (command): determinista, 0 tiradas ──
   if (stageLevelOf(card)) {
-    const dmg = stageAttackDamage(card.atk, attacker.str, defender.battlePos, card.type);
+    // M5 → ROM §130: el daño Stage usa su fórmula específica (NO la de
+    // damage/beam). Resolved count = comandos correctos del QTE (CA7F);
+    // el QTE completo suma seq.length; el safe-abort usa el progreso.
+    // Los tiers son NETOS (pStages/eStages): strStage = buff−debuff STR,
+    // guardStage = defBuff−vuln del defensor. Basic Guard (CA82==2) −4.
+    const attackerStages = side === 'player' ? state.pStages : state.eStages;
+    const defenderStages = side === 'player' ? state.eStages : state.pStages;
+    const resolved = state.stageQte?.state === 'COMPLETED'
+      ? (state.stageQte.correct + state.stageQte.repaired)
+      : stageLevelOf(card) ?? 3;
+    const dmg = romStageDamage({
+      strength: attacker.str,
+      powerWindow: attacker.powerWindowCounter > 0,
+      strStage: attackerStages.str,
+      guardStage: defenderStages.guard,
+      attackerBack: POSITION_DATA[attacker.battlePos].depth === 'BACK',
+      defenderBack: POSITION_DATA[defender.battlePos].depth === 'BACK',
+      basicGuard: target === 'player' && state.playerGuard === 'reduce',
+      resolvedCommandCount: resolved,
+    });
     const hit: BattleEvent = { type: 'ATTACK_HIT', source: side, target, outcome: 'hit' };
     const applied = applyDamage(state, target, dmg, { type: 'CARD', cardId: card.id }, side);
     return {
@@ -278,11 +298,25 @@ export function resolveCounterDamage(state: BattleState, cardType: CardDef['type
   return { state: applied.state, events: [...events, ...applied.events] };
 }
 
-/** Daño parcial del Stage abortado (SAFE_ABORT) — fórmula legacy. */
-export function resolvePartialStageDamage(state: BattleState, side: BattleSide, card: CardDef, progress: number): DamageOutcome {
+/** Daño parcial del Stage abortado (SAFE_ABORT) — ROM §92/§94: el progreso
+ *  acumulado (comandos resueltos) determina el daño: base + resolvedCount.
+ *  Con 0 aciertos → 0 (la ROM fuerza CA7F = 0). */
+export function resolvePartialStageDamage(state: BattleState, side: BattleSide, card: CardDef, resolvedCount: number): DamageOutcome {
   const attacker = side === 'player' ? state.player : state.enemy;
+  const defender = side === 'player' ? state.enemy : state.player;
   const target: BattleSide = side === 'player' ? 'enemy' : 'player';
-  const dmg = stagePartialDamage(card.atk, attacker.str, (side === 'player' ? state.enemy : state.player).battlePos, card.type, progress);
+  const attackerStages = side === 'player' ? state.pStages : state.eStages;
+  const defenderStages = side === 'player' ? state.eStages : state.pStages;
+  const dmg = romStageDamage({
+    strength: attacker.str,
+    powerWindow: attacker.powerWindowCounter > 0,
+    strStage: attackerStages.str,
+    guardStage: defenderStages.guard,
+    attackerBack: POSITION_DATA[attacker.battlePos].depth === 'BACK',
+    defenderBack: POSITION_DATA[defender.battlePos].depth === 'BACK',
+    basicGuard: target === 'player' && state.playerGuard === 'reduce',
+    resolvedCommandCount: resolvedCount,
+  });
   if (dmg <= 0) return { state, events: [] };
   const events: BattleEvent[] = [{ type: 'ATTACK_HIT', source: side, target, outcome: 'guard' }];
   const applied = applyDamage(state, target, dmg, { type: 'CARD', cardId: card.id }, side);
@@ -296,4 +330,67 @@ export function resolvePartialStageDamage(state: BattleState, side: BattleSide, 
 export function resolveStageCard(state: BattleState, seqLen: number): CardDef {
   const stages = seqLen >= 4 ? 4 : 3;
   return getCard(stages - 2) as CardDef;
+}
+
+/**
+ * Powered repositioning del Stage (ROM §97-99 — SUPERSEDE §78/§79).
+ *
+ * La rutina Bank01:$6E43–$6E6B consulta CA60 (expected sequence) y recorre
+ * CA5F comandos — se aplican los DIRECCIONALES DEL PREFIJO DE LA SECUENCIA
+ * que terminó siendo resuelto/procesado (un comando reparado con B cuenta;
+ * con A el fallo corta antes). Sólo si `powerWindowCounter != 0` del
+ * ATACANTE (propiedad STAGE + POWER WINDOW, no del card ID — §99) y
+ * `CA82 != 1` (modo especial SPECIAL_SUPPORT_RESOLUTION — contrato §170,
+ * pendiente de cablear en el Engine; el flujo normal Stage nunca lo activa).
+ *
+ * Por cada comando resuelto (ROM §98):
+ *   RIGHT $01 → position |= $02  → FORCE BACK
+ *   UP    $04 → position |= $01  → FORCE AIR
+ *   DOWN  $08 → position &= $02  → FORCE GROUND (preserva FRONT/BACK)
+ *   A/B        → no modifican posición
+ *
+ * Es posición táctica PERSISTENTE (BattleState.battlePos del defensor), NO
+ * knockback cinematográfico (ROM §80). Devuelve el estado con la posición
+ * del defensor reescrita y los eventos POSITION_CHANGED correspondientes.
+ */
+export function applyStagePoweredReposition(
+  state: BattleState,
+  side: BattleSide,
+  seq: readonly StageKey[],
+  resolvedCount: number,
+): { state: BattleState; events: BattleEvent[] } {
+  const attacker = side === 'player' ? state.player : state.enemy;
+  // §99: propiedad STAGE + POWER WINDOW. Sin power window → sin reposicionar.
+  if (attacker.powerWindowCounter <= 0) return { state, events: [] };
+  // §98/§170: CA82 == 1 (special-support) desactiva el reposicionamiento.
+  // El flujo normal Stage no modela CA82 (contrato pendiente), así que la
+  // condición se cumple por defecto aquí.
+
+  const defenderSide: BattleSide = side === 'player' ? 'enemy' : 'player';
+  const defender = defenderSide === 'player' ? state.player : state.enemy;
+  const current = POSITION_DATA[defender.battlePos];
+  let altitude: 'AIR' | 'GROUND' = current.altitude;
+  let depth: 'FRONT' | 'BACK' = current.depth;
+
+  const prefix = seq.slice(0, resolvedCount);
+  for (const cmd of prefix) {
+    if (cmd === 'RIGHT') depth = 'BACK';
+    else if (cmd === 'UP') altitude = 'AIR';
+    else if (cmd === 'DOWN') altitude = 'GROUND';
+    // A / B → no modifican posición (ROM §98)
+  }
+
+  const next = (altitude === 'AIR'
+    ? (depth === 'BACK' ? BattlePosition.UP_BACK : BattlePosition.UP_FRONT)
+    : (depth === 'BACK' ? BattlePosition.DOWN_BACK : BattlePosition.DOWN_FRONT));
+  if (next === defender.battlePos) return { state, events: [] };
+
+  const axis: MoveAxis = (depth !== current.depth) ? 'HORIZONTAL' : 'VERTICAL';
+  const defenderState = { ...defender, battlePos: next };
+  return {
+    state: defenderSide === 'player'
+      ? { ...state, player: defenderState }
+      : { ...state, enemy: defenderState },
+    events: [{ type: 'POSITION_CHANGED', side: defenderSide, from: defender.battlePos, to: next, axis }],
+  };
 }

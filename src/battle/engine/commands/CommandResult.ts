@@ -23,6 +23,7 @@ export type CommandRejectionReason =
   | 'INVALID_TARGET'          // objetivo inválido
   | 'LIMIT_UNAVAILABLE'       // mazo LIMITED no activo (GATHER) o vacío
   | 'QTE_NOT_ACTIVE'          // no hay ventana QTE activa
+  | 'QTE_COUNTER_WINDOW_EXPIRED' // ROM §7: A válida <25t · B <10t desde counterStart
   | 'INVALID_QTE_INPUT'       // input fuera de la secuencia esperada
   | 'ACTION_LOCKED'           // acción bloqueada por estado temporal
   | 'DEFENSE_ALREADY_COMMITTED' // M8.C2a: una elección defensiva por ventana

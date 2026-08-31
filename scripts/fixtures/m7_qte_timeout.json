@@ -184,44 +184,48 @@
    "fidelity": "NONE"
   },
   {
-   "tick": 204,
+   "tick": 210,
    "type": "SCENE",
    "mode": "ACTION_DUEL",
    "background": "/assets/backgrounds/scenarios/01_action.png",
    "durationTicks": 40,
-   "logicalTick": 204,
+   "logicalTick": 210,
    "source": "ATTACK_HIT",
    "fidelity": "INFERRED",
    "profile": "stage_3"
   },
   {
-   "tick": 204,
+   "tick": 210,
    "type": "FIGHTER_VISIBILITY",
    "role": "TARGET",
    "side": "player",
    "visible": true,
-   "logicalTick": 204,
+   "logicalTick": 210,
    "source": "ATTACK_HIT",
    "fidelity": "INFERRED",
    "profile": "stage_3"
   },
   {
-   "tick": 212,
-   "type": "FIGHTER_POSE",
-   "durationTicks": 6,
-   "role": "ACTOR",
+   "tick": 210,
+   "type": "FIGHTER_MOTION",
+   "durationTicks": 25,
    "side": "enemy",
-   "pose": "move_front",
-   "logicalTick": 204,
-   "source": "ATTACK_HIT",
-   "fidelity": "INFERRED",
-   "profile": "stage_3"
-  },
-  {
-   "tick": 212,
-   "type": "CAMERA",
-   "action": "TRACK",
-   "logicalTick": 204,
+   "kind": "RUSH",
+   "deltaPx": -98,
+   "holdTicks": 0,
+   "segments": [
+    {
+     "dxPerTick": -4,
+     "dyPerTick": 0,
+     "ticks": 24
+    },
+    {
+     "dxPerTick": -2,
+     "dyPerTick": 0,
+     "ticks": 1
+    }
+   ],
+   "logicalTick": 210,
    "source": "ATTACK_HIT",
    "fidelity": "INFERRED",
    "profile": "stage_3"
@@ -232,8 +236,17 @@
    "durationTicks": 6,
    "role": "ACTOR",
    "side": "enemy",
-   "pose": "idle",
-   "logicalTick": 204,
+   "pose": "move_front",
+   "logicalTick": 210,
+   "source": "ATTACK_HIT",
+   "fidelity": "INFERRED",
+   "profile": "stage_3"
+  },
+  {
+   "tick": 218,
+   "type": "CAMERA",
+   "action": "TRACK",
+   "logicalTick": 210,
    "source": "ATTACK_HIT",
    "fidelity": "INFERRED",
    "profile": "stage_3"
@@ -244,101 +257,138 @@
    "durationTicks": 6,
    "role": "ACTOR",
    "side": "enemy",
-   "pose": "attack_fwd",
-   "logicalTick": 204,
+   "pose": "idle",
+   "logicalTick": 210,
    "source": "ATTACK_HIT",
    "fidelity": "INFERRED",
    "profile": "stage_3"
   },
   {
    "tick": 230,
+   "type": "FIGHTER_POSE",
+   "durationTicks": 6,
+   "role": "ACTOR",
+   "side": "enemy",
+   "pose": "attack_fwd",
+   "logicalTick": 210,
+   "source": "ATTACK_HIT",
+   "fidelity": "INFERRED",
+   "profile": "stage_3"
+  },
+  {
+   "tick": 236,
    "type": "IMPACT",
    "side": "player",
    "outcome": "hit",
-   "logicalTick": 204,
+   "logicalTick": 210,
    "source": "ATTACK_HIT",
    "fidelity": "INFERRED",
    "profile": "stage_3"
   },
   {
-   "tick": 230,
+   "tick": 236,
    "type": "FIGHTER_POSE",
    "durationTicks": 10,
    "role": "TARGET",
    "side": "player",
    "pose": "knockback_back",
-   "logicalTick": 204,
+   "logicalTick": 210,
    "source": "ATTACK_HIT",
    "fidelity": "INFERRED",
    "profile": "stage_3"
   },
   {
-   "tick": 230,
+   "tick": 236,
    "type": "CAMERA",
    "action": "IMPACT",
-   "logicalTick": 204,
+   "logicalTick": 210,
    "source": "ATTACK_HIT",
    "fidelity": "INFERRED",
    "profile": "stage_3"
   },
   {
-   "tick": 230,
+   "tick": 236,
    "type": "AUDIO",
    "cue": "hit",
-   "logicalTick": 204,
+   "logicalTick": 210,
    "source": "ATTACK_HIT",
    "fidelity": "INFERRED",
    "profile": "stage_3"
   },
   {
-   "tick": 230,
+   "tick": 236,
    "type": "HUD",
    "side": "player",
    "kind": "damage_number",
    "value": 4,
-   "logicalTick": 204,
+   "logicalTick": 210,
    "source": "DAMAGE_APPLIED",
    "fidelity": "NONE"
   },
   {
-   "tick": 238,
+   "tick": 244,
    "type": "FIGHTER_POSE",
    "durationTicks": 6,
    "role": "ACTOR",
    "side": "enemy",
    "pose": "idle",
-   "logicalTick": 204,
+   "logicalTick": 210,
    "source": "ATTACK_HIT",
    "fidelity": "INFERRED",
    "profile": "stage_3"
   },
   {
    "tick": 244,
+   "type": "FIGHTER_MOTION",
+   "durationTicks": 25,
+   "side": "enemy",
+   "kind": "RUSH",
+   "deltaPx": 98,
+   "holdTicks": 0,
+   "segments": [
+    {
+     "dxPerTick": 4,
+     "dyPerTick": 0,
+     "ticks": 24
+    },
+    {
+     "dxPerTick": 2,
+     "dyPerTick": 0,
+     "ticks": 1
+    }
+   ],
+   "logicalTick": 210,
+   "source": "ATTACK_HIT",
+   "fidelity": "INFERRED",
+   "profile": "stage_3"
+  },
+  {
+   "tick": 250,
    "type": "SCENE",
    "mode": "OVERVIEW",
    "background": "/assets/backgrounds/scenarios/01_world.png",
    "durationTicks": 1,
-   "logicalTick": 204,
+   "logicalTick": 210,
    "source": "ATTACK_HIT",
    "fidelity": "INFERRED",
    "profile": "stage_3"
   },
   {
-   "tick": 244,
+   "tick": 250,
    "type": "FIGHTER_VISIBILITY",
    "role": "TARGET",
    "side": "player",
    "visible": true,
-   "logicalTick": 204,
+   "logicalTick": 210,
    "source": "ATTACK_HIT",
    "fidelity": "INFERRED",
    "profile": "stage_3"
   },
   {
-   "tick": 244,
+   "tick": 250,
    "type": "CAMERA",
    "action": "RESET",
-   "logicalTick": 204,
+   "logicalTick": 210,
    "source": "ATTACK_HIT",
    "fidelity": "INFERRED",
    "profile": "stage_3"

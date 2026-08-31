@@ -141,23 +141,28 @@ export function qteCorrectInput(state: BattleState, side: BattleSide, input: Sta
   const events: BattleEvent[] = [
     ...withCc.events,
     { type: 'QTE_INPUT_RESOLVED', side, input, success: true, indexBefore, indexAfter: nextIdx },
-    ...(completed ? [{ type: 'QTE_COMPLETED' as const, side, correct: q.correct + 1, total: q.seq.length, result: 'FULL_SUCCESS' as const }] : []),
+    ...(completed ? [{ type: 'QTE_COMPLETED' as const, side, correct: q.correct + 1 + q.repaired, total: q.seq.length, result: 'FULL_SUCCESS' as const }] : []),
   ];
   return { state: { ...withCc.state, stageQte: nextQte }, events, completed, failed: false };
 }
 
-/** QTE_INPUT fallido: → COUNTER_WINDOW (el contraataque del rival). */
+/** QTE_INPUT fallido: result[index]=0, index++ y → COUNTER_WINDOW (ROM §7/§94:
+ *  el GBC AVANZA el índice con el input erróneo — el comando fallado queda
+ *  marcado como 0 — y entra en recuperación/corrección A/B). */
 export function qteWrongInput(state: BattleState, side: BattleSide, input: StageKey): QteStepOutcome {
   const q = state.stageQte;
+  const nextIdx = q.idx + 1;
   const nextQte = {
     ...q,
+    idx: nextIdx,
     state: 'COUNTER_WINDOW' as const,
+    counterStartTick: state.tick,
     counterDeadlineTick: state.tick + COUNTER_WINDOW_TICKS,
   };
   return {
     state: { ...state, stageQte: nextQte },
     events: [
-      { type: 'QTE_INPUT_RESOLVED', side, input, success: false, indexBefore: q.idx, indexAfter: q.idx },
+      { type: 'QTE_INPUT_RESOLVED', side, input, success: false, indexBefore: q.idx, indexAfter: nextIdx },
       { type: 'QTE_FAILED', side, input },
       { type: 'QTE_COUNTER_STARTED', side },
     ],
@@ -166,7 +171,8 @@ export function qteWrongInput(state: BattleState, side: BattleSide, input: Stage
   };
 }
 
-/** QTE_COUNTER_DEFEND: defensa contra el contraataque → guardia activa. */
+/** QTE_COUNTER_DEFEND: A<25t — SAFE_ABORT: guardia + conserva CC + daño
+ *  parcial con el progreso acumulado (resolved = correct + repaired). */
 export function qteCounterDefend(state: BattleState, side: BattleSide): { state: BattleState; events: BattleEvent[] } {
   return {
     state: {
@@ -181,19 +187,26 @@ export function qteCounterDefend(state: BattleState, side: BattleSide): { state:
   };
 }
 
-/** QTE_COUNTER_CONTINUE: reparar y continuar la secuencia (reabre la ventana). */
+/** QTE_COUNTER_CONTINUE: B<10t — REPAIR: repara el comando fallado (cuenta
+ *  como resuelto, +1 CC) y continúa la secuencia con el TIMER GLOBAL original
+ *  (ROM §7/§94: el timer NO se reinicia — solo se reabre la ventana de inputs
+ *  con el deadline original; el índice ya avanzó con el fallo). */
 export function qteCounterContinue(state: BattleState, side: BattleSide): { state: BattleState; events: BattleEvent[] } {
   const q = state.stageQte;
+  const withCc = gainCc(state, side, 1);
   return {
     state: {
-      ...state,
+      ...withCc.state,
       stageQte: {
         ...q,
+        repaired: q.repaired + 1,
         state: 'INPUT_WINDOW' as const,
-        // legacy: "el reloj de la secuencia se reinicia para los inputs
-        // restantes" → se reabre la ventana completa desde el tick actual.
-        startedTick: state.tick,
-        deadlineTick: state.tick + (q.windowTicks || 1),
+        // M8.D — el deadline GLOBAL de la secuencia NO se reinicia (ROM §7:
+        // single global timer). La reparación devuelve a la ventana de inputs
+        // con el deadline original; si este ya expiró durante la recuperación,
+        // el reloj cerrará la ventana en el siguiente tick (timeout).
+        deadlineTick: q.deadlineTick,
+        counterStartTick: 0,
         counterDeadlineTick: 0,
       },
     },

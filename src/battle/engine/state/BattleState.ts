@@ -156,6 +156,8 @@ export interface BattleQteState {
   seq: StageKey[];
   idx: number;
   correct: number;
+  /** Comandos fallados reparados con B (ROM §93: resolved = correct + repaired). */
+  repaired: number;
   card: CardDef | null;
   /** Tick GBC absoluto en que se abrió la ventana actual. */
   startedTick: number;
@@ -165,6 +167,8 @@ export interface BattleQteState {
   deadlineTick: number;
   /** Duración de la ventana de inputs en ticks (para RECOVER/reabrir). */
   windowTicks: number;
+  /** Tick GBC absoluto en que se abrió COUNTER_WINDOW (ROM §7: B<10t · A<25t). */
+  counterStartTick: number;
   /** Tick GBC absoluto de expiración de la ventana COUNTER_WINDOW. */
   counterDeadlineTick: number;
   result: 'FULL_SUCCESS' | 'SAFE_ABORT' | 'COUNTER_HIT' | null;

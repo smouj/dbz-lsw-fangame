@@ -60,7 +60,7 @@ import { isDebugCinematics, bindDebugControls, renderDebugOverlay, type Cinemati
 import { isDebugState, bindQteDebugControls, renderStateOverlay, type StateDebugSnapshot } from './battle/debugState';
 import { getControlBoundary } from './battle/engine/state';
 import { applyDamage } from './battle/engine/commands/reducers/damageReducer';
-import { stagePartialDamage } from './battle/engine/combat/resolution';
+import { romStageDamage } from './battle/engine/combat/resolution';
 import { isPixiField } from './renderer/pixi/flag';
 // M8 — BattleRuntime: frontera única del combate (Engine → EventLog → M7
 // Timeline → Presenter). M8.C1 migra MOVE + GUARD: la UI despacha al
@@ -1099,8 +1099,9 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit, onRemat
   // Ventana de contraataque (manual GBC §Stage Attack): tras fallar, el rival
   // contraataca y aparece ENTER COMMAND. Ventanas cortas por botón (guía de la
   // comunidad — HYPOTHESIS hasta captura ROM): A ≈ 0.4s · B ≈ 0.15s.
-  const COUNTER_A_FRAMES = Math.round(0.4 * GBC_NATIVE_FPS);   // ~24f defenderte
-  const COUNTER_B_FRAMES = Math.round(0.15 * GBC_NATIVE_FPS);  // ~9f reparar
+  const COUNTER_A_FRAMES = 25;   // ROM §7: A antes de 25 ticks (< 0,419 s)
+  const COUNTER_B_FRAMES = 10;   // ROM §7: B antes de 10 ticks (< 0,167 s)
+  const COUNTER_WINDOW_FRAMES = 30; // ROM §7: ventana A/B total 30 ticks
   const [stageQte, setStageQte] = useState<StageQteState>({
     state: 'WAITING', seq: [], idx: 0, correct: 0, covering: false, card: null,
     elapsedFrames: 0, limitFrames: 0, counterFrames: 0, prepFrames: 0,
@@ -1890,10 +1891,10 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit, onRemat
       phase: 'stageInput',
       player: { ...rt.state.player, cc: player.cc },
       stageQte: {
-        state: 'PREPARING', seq, idx: 0, correct: 0, card: null,
+        state: 'PREPARING', seq, idx: 0, correct: 0, repaired: 0, card: null,
         startedTick: rt.state.tick, inputOpenTick: rt.state.tick + STAGE_PREP_TICKS,
         deadlineTick: rt.state.tick + STAGE_PREP_TICKS + sequenceWindow, windowTicks: sequenceWindow,
-        counterDeadlineTick: 0, result: null,
+        counterStartTick: 0, counterDeadlineTick: 0, result: null,
       },
     };
     commitQte({
@@ -1958,7 +1959,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit, onRemat
         const cf = Math.floor(counterAcc);
         setStageQte(prev => ({ ...prev, counterFrames: cf }));
         // Si no reaccionas a tiempo → el contraataque conecta (COUNTER_HIT)
-        if (cf >= COUNTER_A_FRAMES) {
+        if (cf >= COUNTER_WINDOW_FRAMES) {
           addLog(`${enemy.name} ${t('battle.counterHit')}`);
           resolveStageResult();
         }
@@ -2038,7 +2039,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit, onRemat
   const stageRecoverInput = (pressed: StageKey) => {
     const st = stageQteRef.current;
     if (st.state !== 'COUNTER_WINDOW') return;
-    if (pressed === 'A' && st.counterFrames <= COUNTER_A_FRAMES) {
+    if (pressed === 'A' && st.counterFrames < COUNTER_A_FRAMES) {
       const res = engineDispatch({ type: 'QTE_COUNTER_DEFEND' });
       void res;
       // A = BANK/DEFEND: conserva CC, evita el daño del contraataque.
@@ -2048,16 +2049,18 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit, onRemat
       addLog(`${player.name} se defiende del contraataque (conserva +${st.correct} CC)`);
       commitQte({ ...st, state: 'SAFE_ABORT', covering: true, result: 'SAFE_ABORT' });
       resolveStageResult();
-    } else if (pressed === 'B' && st.counterFrames <= COUNTER_B_FRAMES) {
+    } else if (pressed === 'B' && st.counterFrames < COUNTER_B_FRAMES) {
       const res = engineDispatch({ type: 'QTE_COUNTER_CONTINUE' });
       void res;
-      // B = RECOVER: repara y continúa el Stage Attack (el reloj de la
-      // secuencia se reinicia para los inputs restantes — HYPOTHESIS)
+      // B = REPAIR (ROM §7/§94): repara el comando fallado (cuenta como
+      // resuelto, +1 CC) y continúa la secuencia con el TIMER GLOBAL
+      // original — el reloj NO se reinicia (ROM §7).
       Sfx.confirm();
       addLog(`${player.name} repara el Stage Attack!`);
       commitQte({
         ...st, state: 'INPUT_WINDOW', counterFrames: 0,
-        elapsedFrames: 0, // nueva ventana para los comandos restantes
+        // El deadline global sigue corriendo (el engine lo autoriza);
+        // la UI solo refleja el estado del engine.
       });
     } else {
       // Timing incorrecto (B tarde o tecla equivocada) → el counter conecta
@@ -2135,16 +2138,25 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit, onRemat
     if (safeAbort) {
       commitQte({ ...st, state: 'SAFE_ABORT', result: 'SAFE_ABORT' });
       setViewMode('OVERVIEW');
-      // Daño parcial del Stage abortado: proporcional a los aciertos
-      // (HYPOTHESIS — misma fórmula de daño que el stage completo × progreso).
-      // M8.C2 — el monto lo calcula el ENGINE (stagePartialDamage, misma
-      // fórmula) y se aplica por applyDamage (única ruta de mutación HP).
-      const totalSeq = st.seq.length || 1;
-      const progress = Math.min(1, st.correct / totalSeq);
+      // ROM §94-95: A correcto (< 25 ticks) NO repara; finaliza con el
+      // progreso acumulado → resolvedCommandCount = aciertos hasta el error.
+      // ROM §92: daño = stageBase + resolvedCommandCount (0 si count == 0).
+      // M8.C2 — el monto lo calcula el ENGINE (romStageDamage — ROM §130)
+      // y se aplica por applyDamage (única ruta de mutación HP).
+      const rt = rtApi.runtime;
+      const resolved = st.correct;
       let partialDmg = 0;
-      if (progress > 0) {
-        const rt = rtApi.runtime;
-        const pd = stagePartialDamage(card.atk, rt.state.player.str, rt.state.enemy.battlePos, card.type, progress);
+      if (resolved > 0) {
+        const pd = romStageDamage({
+          strength: rt.state.player.str,
+          powerWindow: rt.state.player.powerWindowCounter > 0,
+          strStage: rt.state.pStages.str,
+          guardStage: rt.state.eStages.guard,
+          attackerBack: POSITION_DATA[rt.state.player.battlePos].depth === 'BACK',
+          defenderBack: POSITION_DATA[rt.state.enemy.battlePos].depth === 'BACK',
+          basicGuard: false,
+          resolvedCommandCount: resolved,
+        });
         partialDmg = pd;
         const outcome = applyDamage(rt.state, 'enemy', pd, { type: 'CARD', cardId: card.id }, 'player');
         rt.state = outcome.state;
@@ -2158,12 +2170,12 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit, onRemat
           setFlashEnemy(true);
           hitImpact('enemy');
           setDamageNums(prev => [...prev, { value: partialDmg, type: 'damage', ...dmgPos('enemy'), id: nextUid() }]);
-          addLog(`${player.name} se defiende del contraataque — ${partialDmg} dmg parcial (${Math.round(progress * 100)}% del Stage) +${ccGained} CC`);
+          addLog(`${player.name} se defiende del contraataque — ${partialDmg} dmg parcial (${resolved}/${st.seq.length} comandos) +${ccGained} CC`);
         } else {
           addLog(`${player.name} se defiende del contraataque (sin daño — 0 aciertos) +${ccGained} CC`);
         }
         finishPlayerTurnStage(ccGained);
-      }, gbcMs(24)); // ~0.4s: ventana A del counter (pose defensiva breve)
+      }, gbcMs(30)); // ~0.5s: ventana A/B ROM 30t (§7)
       return;
     }
     // COUNTER_HIT: el contraataque del rival conecta sobre el jugador.
@@ -2197,7 +2209,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, onExit, onRemat
         return;
       }
       finishPlayerTurnStage(ccGained);
-    }, gbcMs(24)); // ~0.4s: la ventana A del counter expira
+    }, gbcMs(30)); // ~0.5s: ventana A/B ROM 30t expirada (§7)
   };
 
   // Variante de finishPlayerTurn para stage attacks (no usar carta de la mano)

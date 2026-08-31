@@ -74,11 +74,13 @@ function emptyQte(): BattleQteState {
     seq: [],
     idx: 0,
     correct: 0,
+    repaired: 0,
     card: null,
     startedTick: 0,
     inputOpenTick: 0,
     deadlineTick: 0,
     windowTicks: 0,
+    counterStartTick: 0,
     counterDeadlineTick: 0,
     result: null,
   };

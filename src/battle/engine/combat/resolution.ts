@@ -84,6 +84,52 @@ export function stagePartialDamage(cardAtk: number, str: number, ePos: BattlePos
   return Math.max(0, Math.floor((cardAtk + str) * positionMultiplier(ePos, cardType) * progress));
 }
 
+// ─── Stage Attack — fórmula ROM §86-93/§130 (SUPERSEDE el legacy de arriba) ───
+// ROM §130 (COMBAT_MECHANICS_ROM_CONFIRMED):
+//   attack = str (×2 si kaioKen — el engine modela kaioKen como +2 tiers
+//            vía buff_kaio, así que aquí entra como tier neto) + (pw>0 ? 4 : 0)
+//            + strBuffTier×8 − strDebuffTier×8   (clamp ≥ 0)
+//   defense = vulnTier×8 − defBuffTier×8 − (defBack ? 8 : 0) − (basicGuard ? 4 : 0)
+//   raw = max(0, attack + vulnerability − defense)
+//   base = raw >> 2  (÷4)
+//   attacker BACK → base >>= 1 · defender BACK → base >>= 1
+//   final = resolvedCommandCount === 0 ? 0 : base + resolvedCommandCount
+// El engine mantiene tiers NETOS (buffs positivos, debuffs negativos):
+//   strStage neto ≡ strBuff − strDebuff · guardStage neto ≡ defBuff − vuln
+// ⇒ raw = max(0, attack − guardStage×8 − (defBack?8:0) − (basicGuard?4:0))
+export interface RomStageDamageInput {
+  /** Fuerza base del atacante (sin tiers). */
+  strength: number;
+  /** powerWindowCounter > 0 → +4 ofensivo (ROM §87). */
+  powerWindow: boolean;
+  /** Tier neto de STR del atacante (buffs − debuffs). */
+  strStage: number;
+  /** Tier neto de GUARD del defensor (defBuff − vuln; se resta). */
+  guardStage: number;
+  /** depth === 'BACK' del atacante (base >>= 1 tras ÷4). */
+  attackerBack: boolean;
+  /** depth === 'BACK' del defensor (−8 en defense + base >>= 1). */
+  defenderBack: boolean;
+  /** Basic Guard (CA82 == 2) → −4 en defense (ROM §89). */
+  basicGuard: boolean;
+  /** Comandos resueltos (CA7F): daño = base + count; 0 → 0 forzado. */
+  resolvedCommandCount: number;
+}
+
+/** Fórmula Stage ROM §86-93/§130. Sustituye al legacy para el engine. */
+export function romStageDamage(input: RomStageDamageInput): number {
+  let attack = input.strength;
+  if (input.powerWindow) attack += 4;
+  attack += input.strStage * 8;
+  attack = Math.max(0, attack);
+
+  let raw = Math.max(0, attack - input.guardStage * 8 - (input.defenderBack ? 8 : 0) - (input.basicGuard ? 4 : 0));
+  let base = raw >> 2;
+  if (input.attackerBack) base >>= 1;
+  if (input.defenderBack) base >>= 1;
+  return input.resolvedCommandCount === 0 ? 0 : base + input.resolvedCommandCount;
+}
+
 /** Daño del contraataque (COUNTER_HIT): max(1, (str+ki) × posMult × 0.5). */
 export function counterDamage(str: number, ki: number, pPos: BattlePosition, cardType: CardType): number {
   return Math.max(1, Math.floor((str + ki) * positionMultiplier(pPos, cardType) * 0.5));

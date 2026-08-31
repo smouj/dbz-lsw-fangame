@@ -28,8 +28,9 @@ import type { BattleEvent } from '../events/BattleEvent';
 import type { BattleSide, BattleState } from '../state/BattleState';
 import { resolveCounterDamage, resolveStageCard } from '../commands/reducers/damageReducer';
 
-/** Ventana del contraataque (paridad legacy COUNTER_A_FRAMES ≈ 0.4s). */
-export const COUNTER_WINDOW_TICKS = Math.round(0.4 * GBC_FPS);
+/** Ventana del contraataque (ROM §7: 30 ticks ≈ 0,502s — A<25t · B<10t).
+ *  SUPERSEDE la paridad legacy COUNTER_A_FRAMES ≈ 0.4s (24t). */
+export const COUNTER_WINDOW_TICKS = 30;
 
 // ═══ PREPARACIÓN del Stage (M8.B — bridge pendiente de VM ROM) ═══
 // Tras confirmar la acción: fade → ACTION → idle → estira brazos → encoge
@@ -122,6 +123,7 @@ export function advanceBattleClock(state: BattleState, ticks: number): ClockAdva
         ...s,
         stageQte: {
           ...q2, state: 'COUNTER_WINDOW' as const,
+          counterStartTick: nextTick,
           counterDeadlineTick: nextTick + COUNTER_WINDOW_TICKS,
         },
       };

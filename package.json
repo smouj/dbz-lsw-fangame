@@ -123,6 +123,7 @@
     "verify:rom-fx-corpus": "npx tsx scripts/verify-rom-fx-corpus.ts",
     "build:rom-stage": "npx tsx scripts/build-rom-stage.ts",
     "verify:rom-stage-fidelity": "npx tsx scripts/verify-rom-stage-fidelity.ts",
+    "verify:rom-stage-damage": "npx tsx scripts/verify-rom-stage-damage.ts",
     "build:rom-animation-resource-base": "npx tsx scripts/build-rom-animation-resource-base.ts",
     "build:rom-animation-core": "npx tsx scripts/build-rom-animation-core.ts",
     "verify:rom-animation-core": "npx tsx scripts/verify-rom-animation-core.ts",

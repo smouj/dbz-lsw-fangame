@@ -147,7 +147,13 @@ export function canExecute(state: BattleState, command: BattleCommand, opts?: { 
     }
     case 'QTE_COUNTER_DEFEND':
     case 'QTE_COUNTER_CONTINUE': {
-      return state.stageQte.state === 'COUNTER_WINDOW' ? ok() : reject('QTE_NOT_ACTIVE');
+      const q = state.stageQte;
+      if (q.state !== 'COUNTER_WINDOW') return reject('QTE_NOT_ACTIVE');
+      // ROM §7/§94-95: la ventana A/B dura 30t totales desde counterStart;
+      // B (repair) solo es válida en los primeros 10t · A (abort) hasta 25t.
+      const elapsed = state.tick - q.counterStartTick;
+      const limit = command.type === 'QTE_COUNTER_CONTINUE' ? 10 : 25;
+      return elapsed < limit ? ok() : reject('QTE_COUNTER_WINDOW_EXPIRED');
     }
     default:
       return reject('ACTION_LOCKED');

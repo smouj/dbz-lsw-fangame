@@ -262,6 +262,31 @@
    "profile": "stage_3"
   },
   {
+   "tick": 145,
+   "type": "FIGHTER_MOTION",
+   "durationTicks": 25,
+   "side": "player",
+   "kind": "RUSH",
+   "deltaPx": 98,
+   "holdTicks": 0,
+   "segments": [
+    {
+     "dxPerTick": 4,
+     "dyPerTick": 0,
+     "ticks": 24
+    },
+    {
+     "dxPerTick": 2,
+     "dyPerTick": 0,
+     "ticks": 1
+    }
+   ],
+   "logicalTick": 145,
+   "source": "ATTACK_HIT",
+   "fidelity": "INFERRED",
+   "profile": "stage_3"
+  },
+  {
    "tick": 153,
    "type": "FIGHTER_POSE",
    "durationTicks": 6,
@@ -351,7 +376,7 @@
    "type": "HUD",
    "side": "enemy",
    "kind": "damage_number",
-   "value": 5,
+   "value": 3,
    "logicalTick": 145,
    "source": "DAMAGE_APPLIED",
    "fidelity": "NONE"
@@ -363,6 +388,31 @@
    "role": "ACTOR",
    "side": "player",
    "pose": "idle",
+   "logicalTick": 145,
+   "source": "ATTACK_HIT",
+   "fidelity": "INFERRED",
+   "profile": "stage_3"
+  },
+  {
+   "tick": 179,
+   "type": "FIGHTER_MOTION",
+   "durationTicks": 25,
+   "side": "player",
+   "kind": "RUSH",
+   "deltaPx": -98,
+   "holdTicks": 0,
+   "segments": [
+    {
+     "dxPerTick": -4,
+     "dyPerTick": 0,
+     "ticks": 24
+    },
+    {
+     "dxPerTick": -2,
+     "dyPerTick": 0,
+     "ticks": 1
+    }
+   ],
    "logicalTick": 145,
    "source": "ATTACK_HIT",
    "fidelity": "INFERRED",

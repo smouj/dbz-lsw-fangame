@@ -350,7 +350,7 @@ function enemyAttackState(cfg: InitialBattleConfig): BattleState {
   check('G4b. 0 comandos enemigos rechazados', r1.rejected === 0, `rejected=${r1.rejected}`);
   console.log(`   [stress] turns=${r1.turns} decisions=${r1.decisions} attacks=${r1.attacks} maxGather=${r1.maxGather} maxHeal=${r1.maxHeal} maxStall=${r1.maxStall} outcome=${r1.outcome}`);
 
-  const r2 = run(makeConfig({ playerStr: 30, playerKi: 30, enemyStr: 30, enemyKi: 30, playerHp: 400, enemyHp: 400 }), 60);
+  const r2 = run(makeConfig({ playerStr: 30, playerKi: 30, enemyStr: 30, enemyKi: 30, playerHp: 120, enemyHp: 120 }), 60);
   check('G5. stress stats altos → llega a KO (win/lose)', r2.outcome === 'VICTORY' || r2.outcome === 'DEFEAT', r2.outcome);
   check('G6. max stall (turns sin daño) acotado', r2.maxStall <= 30, `maxStall=${r2.maxStall}`);
   console.log(`   [stress-ko] turns=${r2.turns} decisions=${r2.decisions} attacks=${r2.attacks} maxGather=${r2.maxGather} maxHeal=${r2.maxHeal} outcome=${r2.outcome}`);

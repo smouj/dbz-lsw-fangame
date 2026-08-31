@@ -337,11 +337,11 @@ export const ROM_CINEMATIC_BEATS: readonly RomCinematicBeat[] = [
   {
     id: 'COUNTER_WINDOW',
     kind: 'QTE_COUNTER',
-    durationTicks: 24,  // Math.round(0.4 × 59.7275) ≈ 24t
+    durationTicks: 30,
     family: 'STAGE',
-    evidence: 'ROM_STATIC_VERIFIED',
-    source: { bank: null, address: null, macro: null, section: 'Counter window' },
-    description: 'Counter window after QTE failure: ~24t',
+    evidence: 'ROM_EXACT',
+    source: { bank: 0x01, address: null, macro: null, section: '§7 Ventana A/B tras el fallo' },
+    description: 'Counter window after QTE failure: 30t total — A<25t · B<10t (ROM §7)',
     runtimeLocation: 'clock.ts COUNTER_WINDOW_TICKS',
     correctlyUsed: 'yes',
   },

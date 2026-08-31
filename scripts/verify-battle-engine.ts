@@ -17,7 +17,8 @@ import {
 import { canExecute, getAvailableCommands } from '../src/battle/engine/commands/canExecute';
 import type { BattleCommand } from '../src/battle/engine/commands/BattleCommand';
 import { PRESENTATION_SCENARIOS, runPresentationScenario } from '../src/devtools/presentationScenarios';
-import { BattlePosition } from '../src/data/positions';
+import { BattlePosition, POSITION_DATA } from '../src/data/positions';
+import type { StageKey } from '../src/battle/stageInputMap';
 import { getCard, type CardDef } from '../src/data/cards';
 import { ROM_LIMIT_JOINT_SOURCE_CONTRACT, STANDARD_ATTACK_SCENE_TRANSITION } from '../src/battle/engine/rom/romDescriptors';
 
@@ -206,11 +207,11 @@ check('destino vertical derivado = UP_BACK', destV === BattlePosition.UP_BACK);
 check('MOVE nunca deja la misma posición', destH !== BattlePosition.DOWN_BACK && destV !== BattlePosition.DOWN_BACK);
 
 // ── Stage / QTE ──
-const qteActive = { ...m2State, phase: 'stageInput' as const, stageQte: { state: 'INPUT_WINDOW' as const, seq: ['A', 'A', 'RIGHT', 'DOWN'] as const, idx: 0, correct: 0, card: null, startedTick: 0, deadlineTick: 150, windowTicks: 150, counterDeadlineTick: 0, result: null } };
+const qteActive = { ...m2State, phase: 'stageInput' as const, stageQte: { state: 'INPUT_WINDOW' as const, seq: ['A', 'A', 'RIGHT', 'DOWN'] as const, idx: 0, correct: 0, repaired: 0, card: null, startedTick: 0, deadlineTick: 150, windowTicks: 150, counterStartTick: 0, counterDeadlineTick: 0, result: null } };
 check('QTE_INPUT rechazado sin QTE activo', !canExecute(m2State, { type: 'QTE_INPUT', input: 'A' }).ok);
 check('QTE_INPUT válido con la tecla esperada', canExecute(qteActive, { type: 'QTE_INPUT', input: 'A' }).ok);
 check('M5: QTE_INPUT con tecla equivocada ES legal (fallo → COUNTER_WINDOW)', canExecute(qteActive, { type: 'QTE_INPUT', input: 'B' }).ok);
-const counterWindow = { ...m2State, phase: 'stageInput' as const, stageQte: { state: 'COUNTER_WINDOW' as const, seq: [] as string[], idx: 0, correct: 0, card: null, startedTick: 0, deadlineTick: 0, windowTicks: 0, counterDeadlineTick: 24, result: null } };
+const counterWindow = { ...m2State, phase: 'stageInput' as const, stageQte: { state: 'COUNTER_WINDOW' as const, seq: [] as string[], idx: 0, correct: 0, repaired: 0, card: null, startedTick: 0, deadlineTick: 0, windowTicks: 0, counterStartTick: 0, counterDeadlineTick: 24, result: null } };
 check('contraataque: DEFEND solo en COUNTER_WINDOW', canExecute(counterWindow, { type: 'QTE_COUNTER_DEFEND' }).ok && !canExecute(qteActive, { type: 'QTE_COUNTER_DEFEND' }).ok);
 check('contraataque: CONTINUE solo en COUNTER_WINDOW', canExecute(counterWindow, { type: 'QTE_COUNTER_CONTINUE' }).ok && !canExecute(qteActive, { type: 'QTE_COUNTER_CONTINUE' }).ok);
 
@@ -833,7 +834,7 @@ if (m4Move.ok) {
     pc?.type === 'POSITION_CHANGED' && pc.from === BattlePosition.DOWN_BACK && pc.to === BattlePosition.DOWN_FRONT && pc.axis === 'HORIZONTAL' && pc.side === 'player');
 }
 // QTE: input correcto produce QTE_INPUT_RESOLVED con índices before/after
-const m4QteState: typeof m4Base = { ...m4Base, phase: 'stageInput', stageQte: { state: 'INPUT_WINDOW', seq: ['A', 'B', 'A'], idx: 1, correct: 1, card: null, startedTick: 0, deadlineTick: 150, windowTicks: 150, counterDeadlineTick: 0, result: null } };
+const m4QteState: typeof m4Base = { ...m4Base, phase: 'stageInput', stageQte: { state: 'INPUT_WINDOW', seq: ['A', 'B', 'A'], idx: 1, correct: 1, repaired: 0, card: null, startedTick: 0, deadlineTick: 150, windowTicks: 150, counterStartTick: 0, counterDeadlineTick: 0, result: null } };
 const m4Qte = executeCommand(m4QteState, { type: 'QTE_INPUT', input: 'B' }, { side: 'player' });
 if (m4Qte.ok) {
   const qr = m4Qte.events.find(e => e.type === 'QTE_INPUT_RESOLVED');
@@ -865,7 +866,7 @@ check('M4: eventos sin funciones (todos objetos planos serializables)', m4Play.e
 const m4Det1 = executeCommand(m4QteState, { type: 'QTE_INPUT', input: 'B' }, { side: 'player' });
 const m4Det2 = executeCommand(m4QteState, { type: 'QTE_INPUT', input: 'B' }, { side: 'player' });
 check('M4: mismo input ⇒ mismo state + mismo event stream', m4Det1.ok && m4Det2.ok && JSON.stringify(m4Det1.state) === JSON.stringify(m4Det2.state) && JSON.stringify(m4Det1.events) === JSON.stringify(m4Det2.events));
-check('M4: ejecutar no muta el estado origen', JSON.stringify(m4QteState) === JSON.stringify({ ...m4Base, phase: 'stageInput', stageQte: { state: 'INPUT_WINDOW', seq: ['A', 'B', 'A'], idx: 1, correct: 1, card: null, startedTick: 0, deadlineTick: 150, windowTicks: 150, counterDeadlineTick: 0, result: null } }));
+check('M4: ejecutar no muta el estado origen', JSON.stringify(m4QteState) === JSON.stringify({ ...m4Base, phase: 'stageInput', stageQte: { state: 'INPUT_WINDOW', seq: ['A', 'B', 'A'], idx: 1, correct: 1, repaired: 0, card: null, startedTick: 0, deadlineTick: 150, windowTicks: 150, counterStartTick: 0, counterDeadlineTick: 0, result: null } }));
 
 // ── EventLog ──
 const log0 = emptyEventLog();
@@ -1059,11 +1060,48 @@ sim5 = advanceBattleClock(sim5, sim5.stageQte.inputOpenTick - sim5.tick).state;
 const seq5 = [...sim5.stageQte.seq];
 for (const k of seq5) sim5 = mustExecute(sim5, { type: 'QTE_INPUT', input: k }, { side: 'player' });
 {
-  // stage 3 (command, atk 0): dmg = floor((0 + str 10) × posMult); DOWN_FRONT vs DOWN_BACK
-  // depth FRONT + command → no vulnerable → posMult 0.5 → dmg = floor(10 × 0.5) = 5
+  // stage 3 (command, atk 0): ROM §130 — DOWN_FRONT vs DOWN_BACK
+  // attack = str 10 + 0 tiers = 10 · defense = −8 (defender BACK)
+  // raw = max(0, 10 − 8) = 2 → base = 2>>2 = 0 → defender BACK → 0
+  // damage = 0 + resolvedCommandCount (3 comandos) = 3
   const enemyHpAfter = sim5.enemy.hp;
-  check('M5: Stage completo aplica daño real (floor((atk+str)×posMult) = 5)', sim5.enemy.hp === m5Stage.enemy.hp - 5);
+  check('M5: Stage completo aplica daño real (ROM §130 = 3: base 0 + 3 comandos)', sim5.enemy.hp === m5Stage.enemy.hp - 3);
   check('M5: rngState intacto en Stage completo (0 tiradas)', sim5.rngState === m5StageCmd.rngState);
+}
+// M5.4 (ROM §97-99): powered repositioning — con power window activa, los
+// direccionales del prefijo resuelto reescriben la posición del DEFENSOR
+// (RIGHT→BACK · UP→AIR · DOWN→GROUND · A/B sin cambio).
+{
+  const applyDir = (pos: BattlePosition, dirs: StageKey[]): BattlePosition => {
+    let alt = POSITION_DATA[pos].altitude;
+    let dep = POSITION_DATA[pos].depth;
+    for (const d of dirs) {
+      if (d === 'RIGHT') dep = 'BACK';
+      else if (d === 'UP') alt = 'AIR';
+      else if (d === 'DOWN') alt = 'GROUND';
+    }
+    return alt === 'AIR' ? (dep === 'BACK' ? BattlePosition.UP_BACK : BattlePosition.UP_FRONT)
+      : (dep === 'BACK' ? BattlePosition.DOWN_BACK : BattlePosition.DOWN_FRONT);
+  };
+  const pw = createInitialBattleState({ ...m5cfg, seed: 7, playerPos: BattlePosition.DOWN_FRONT, enemyPos: BattlePosition.DOWN_FRONT, playerCc: 0 });
+  const pwState = { ...pw, player: { ...pw.player, powerWindowCounter: 1 } };
+  let simP = mustExecute({ ...pwState, phase: 'command' }, { type: 'BASIC' });
+  simP = mustExecute(simP, { type: 'BASIC_STAGE_ATTACK' }, { side: 'player' });
+  simP = advanceBattleClock(simP, simP.stageQte.inputOpenTick - simP.tick).state;
+  const seqP = [...simP.stageQte.seq];
+  const dirSeq = seqP.some((k) => k === 'RIGHT' || k === 'UP' || k === 'DOWN') ? seqP : ['RIGHT', 'A', 'B'];
+  const prePos = simP.enemy.battlePos;
+  const simP2 = { ...simP, stageQte: { ...simP.stageQte, seq: dirSeq } };
+  let simR = simP2;
+  for (const k of [...simR.stageQte.seq]) simR = mustExecute(simR, { type: 'QTE_INPUT', input: k }, { side: 'player' });
+  const hasDir = dirSeq.some((k) => k === 'RIGHT' || k === 'UP' || k === 'DOWN');
+  check('M5.4: powered Stage reposiciona al defensor (direccionales del prefijo)',
+    !hasDir || simR.enemy.battlePos === applyDir(prePos, dirSeq.filter((k) => k !== 'A' && k !== 'B')));
+  // Sin power window → sin reposicionamiento (mismo prefijo, posición intacta).
+  const simN = { ...simP, player: { ...simP.player, powerWindowCounter: 0 }, stageQte: { ...simP.stageQte, seq: dirSeq } };
+  let simNR = simN;
+  for (const k of [...simNR.stageQte.seq]) simNR = mustExecute(simNR, { type: 'QTE_INPUT', input: k }, { side: 'player' });
+  check('M5.4: sin power window → posición del defensor intacta', simNR.enemy.battlePos === simP.enemy.battlePos);
 }
 // FIGHTER_DEFEATED: daño suficiente para KO
 const m5Ko = createInitialBattleState({ ...m5cfg, seed: 7, playerPos: BattlePosition.DOWN_FRONT, enemyPos: BattlePosition.DOWN_BACK, playerCc: 0, enemyHp: 3 });
@@ -1085,6 +1123,19 @@ simF = advanceBattleClock(simF, simF.stageQte.inputOpenTick - simF.tick).state;
 const wrongKey = simF.stageQte.seq[0] === 'A' ? 'B' : 'A';
 const simF2 = executeCommand(simF, { type: 'QTE_INPUT', input: wrongKey }, { side: 'player' });
 check('M5: input equivocado → accepted + COUNTER_WINDOW + QTE_FAILED', simF2.ok && simF2.state.stageQte.state === 'COUNTER_WINDOW' && simF2.events.some(e => e.type === 'QTE_FAILED'));
+// M5.2 (ROM §7/§94): wrong input AVANZA el índice (result[index]=0, index++)
+// y el contador A/B arranca en el tick del fallo (counterStartTick).
+check('M5.2: wrong input avanza índice (ROM result[idx]=0, index++)',
+  simF2.ok && simF2.state.stageQte.idx === 1 && simF2.state.stageQte.counterStartTick === simF.tick);
+// M5.3 (ROM §7): B (repair) solo válido <10t · A (abort) <25t · 30t timeout.
+const lateA = executeCommand({ ...simF2.state, tick: simF2.state.stageQte.counterStartTick + 25 }, { type: 'QTE_COUNTER_DEFEND' }, { side: 'player' });
+const lateB = executeCommand({ ...simF2.state, tick: simF2.state.stageQte.counterStartTick + 10 }, { type: 'QTE_COUNTER_CONTINUE' }, { side: 'player' });
+const earlyB = executeCommand({ ...simF2.state, tick: simF2.state.stageQte.counterStartTick + 9 }, { type: 'QTE_COUNTER_CONTINUE' }, { side: 'player' });
+check('M5.3: A rechazado en tick 25+ (QTE_COUNTER_WINDOW_EXPIRED)', !lateA.ok && lateA.reason === 'QTE_COUNTER_WINDOW_EXPIRED');
+check('M5.3: B rechazado en tick 10+ (QTE_COUNTER_WINDOW_EXPIRED)', !lateB.ok && lateB.reason === 'QTE_COUNTER_WINDOW_EXPIRED');
+check('M5.3: B válido en tick 9 (<10t) y repara (repaired=1, sin reset timer global)',
+  earlyB.ok && earlyB.state.stageQte.state === 'INPUT_WINDOW' && earlyB.state.stageQte.repaired === 1
+  && earlyB.state.stageQte.deadlineTick === simF2.state.stageQte.deadlineTick);
 // DEFEND (A): daño parcial del Stage abortado (progreso 0 → 0 daño)
 const simDef = executeCommand(simF2.state, { type: 'QTE_COUNTER_DEFEND' }, { side: 'player' });
 check('M5: DEFEND con 0 aciertos → sin daño (parcial 0)', simDef.ok && simDef.state.enemy.hp === m5Fail.enemy.hp && simDef.state.stageQte.state === 'WAITING');
