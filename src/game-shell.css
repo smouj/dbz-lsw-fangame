@@ -30,7 +30,6 @@
 .shell-panel-characters .shell-panel-copy strong { font-size:35px; }
 .shell-panel-deck { grid-area:deck; background-color:#c1d09b; --panel-scene:url('/assets/cutscenes/023_namek_dragon_balls.png'); }
 .shell-panel-cards { grid-area:cards; background-color:#c8b9dc; --panel-scene:url('/assets/cutscenes/061_z_sword_in_pedestal.png'); --panel-scene-position:30% center; }
-.shell-panel-deck .shell-panel-icon,.shell-panel-cards .shell-panel-icon { width:72px; height:72px; top:auto; bottom:-7px; right:22px; opacity:.2; transform:rotate(-12deg); }
 .shell-panel-settings { grid-area:settings; padding:12px 64px; background-color:#e5ddca; --panel-scene:url('/assets/cutscenes/037_kame_house.png'); --panel-scene-size:auto 200%; --panel-scene-position:right 60%; --panel-scene-opacity:.38; }
 .shell-panel-settings .shell-panel-index { top:29px; }
 .shell-panel-settings .shell-panel-copy { flex-direction:row; align-items:center; gap:24px; }

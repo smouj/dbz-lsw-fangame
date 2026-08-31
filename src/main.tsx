@@ -5,6 +5,7 @@ import { createPortal } from 'react-dom';
 import './styles.css';
 import './game-pages.css';
 import './game-shell.css';
+import './components/setup/setup-polish.css';
 import './devtools/dev-layout.css';
 import { GameShellSurface } from './components/GameShellSurface';
 import { GamePageHeader } from './components/GamePageHeader';

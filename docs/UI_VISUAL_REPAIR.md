@@ -16,6 +16,16 @@ Story, Battle Mode (preparación), Deck, Characters, Cards y Settings comparten 
 
 Comprobación de esta segunda entrega: seis botones con posición y tamaño de layout idénticos al primer commit; fondos del menú y Continuar sin cambios; seis interiores sin imágenes faltantes ni desbordamiento horizontal; consola del navegador sin errores. TypeScript, 221 pruebas, contratos de viewport/HUD/Dev y build vuelven a pasar. Se reutilizan cinco PNG ya versionados, sin generar ni duplicar imágenes.
 
+## Tercer pulido: iconos y selección de Battle
+
+- Deck y Cards vuelven a usar el icono Lucide común de 24×24, a 18 px de la esquina superior derecha. No se cambia la geometría, el contenido ni los fondos de los botones.
+- Selector de cinco personajes, con identidades estables al desplazarse, nombres completos y una sola marca de selección. Se retiran cajas, brillos y jitter superpuestos. Escalas enteras de los gráficos OW: 2×/3×/4×, sin deformar el actor.
+- Entrada de presentación: desplazamiento/asentado de 300 ms, pose de carga durante 240 ms y poder sostenido. El aura se dibuja detrás del personaje. La baldosa OW extraída es una imagen única: el bucle alterna su orientación y opacidad por pasos; no se presenta como una secuencia de fotogramas ni un timing GBC verificados.
+- Precarga compartida de imágenes, límite de espera y cancelación de cargas/timers obsoletos al cambiar personaje, forma o salir. Un recurso ausente conserva el idle/pose válido, sin iconos de imagen rota. Movimiento reducido evita entrada y parpadeo del aura.
+- Tipografía, contraste y espaciado coherentes en equipo, formas, estadísticas, límites y mazo. La progresión de niveles se puede desplegar; READY permanece fuera del scroll. El selector compartido de Dev Team Builder conserva el mismo comportamiento y presentación.
+
+Validación de esta entrega: TypeScript PASS; 227 pruebas (seis nuevas para secuencia, carga lenta, cancelación, fallos, timeout y movimiento reducido); viewport 27/27; HUD 10/10; rutas Dev 12/12; Dev Studio 58/58; build PASS, incluido un segundo build tras el ajuste de compatibilidad con Dev. Revisión en navegador de iconos, cambios rápidos, vuelta del último al primer personaje, capas y escalas de los sprites, nombres sin recortes, progresión desplegable, mazo sin desbordamientos y READY visible. La preferencia de movimiento reducido del navegador estaba activa; la secuencia temporal normal se verifica con reloj controlado en las pruebas. El motor, la ROM y los recursos gráficos no se modifican.
+
 ## Cambios
 
 - Menú de seis paneles con composición de cómic, tipografía legible, progreso real de historia y foco visible. Continuar abre Story. Enter y Espacio activan el botón enfocado; las flechas siguen la disposición visual.
@@ -30,7 +40,7 @@ Comprobación de esta segunda entrega: seis botones con posición y tamaño de l
 
 ## Validación reproducible
 
-Resultado de la última ejecución: TypeScript PASS; Vitest 221/221; `verify:viewport` 27/27; `verify:hud-layout` 10/10; `verify:dev-routes` 12/12; `verify:dev-studio` 58/58; build PASS. Navegador: 70 comprobaciones de shell, 44 visitas Dev y tres tamaños de batalla, sin excepciones JavaScript. `verify:playable-alpha-loop` finaliza con código 0 y 117 intercambios por escenario, pero alcanza el límite de 4000 pasos sin KO; no se utiliza como evidencia de victoria o derrota completas.
+Validación de las primeras entregas: TypeScript PASS; Vitest 221/221; `verify:viewport` 27/27; `verify:hud-layout` 10/10; `verify:dev-routes` 12/12; `verify:dev-studio` 58/58; build PASS. Navegador: 70 comprobaciones de shell, 44 visitas Dev y tres tamaños de batalla, sin excepciones JavaScript. `verify:playable-alpha-loop` finaliza con código 0 y 117 intercambios por escenario, pero alcanza el límite de 4000 pasos sin KO; no se utiliza como evidencia de victoria o derrota completas.
 
 Con dependencias y recursos locales disponibles:
 
