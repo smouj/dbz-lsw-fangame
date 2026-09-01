@@ -23,6 +23,8 @@ jobs:
       - run: npm ci
       - name: Apply portrait domain migration
         run: node scripts/apply-portrait-domain-isolation.mjs
+      - name: Prepare generated CI assets
+        run: npm run prepare:ci-generated
       - name: Typecheck
         run: npm run typecheck
       - name: Portrait domain gate
