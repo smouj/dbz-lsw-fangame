@@ -102,6 +102,19 @@ try {
   await page.locator('.setting-options').first().locator('button').nth(1).click();
   await back();
   await page.locator('[data-screen="versus"]').click();
+  const limitPanel=page.locator('.setup-limits');
+  const limitMetrics=()=>limitPanel.evaluate(el=>({clientHeight:el.clientHeight,scrollHeight:el.scrollHeight}));
+  const closedLimits=await limitMetrics();
+  assert.ok(closedLimits.scrollHeight<=closedLimits.clientHeight+1,`closed Limit Loadout must fit without a panel scrollbar: ${JSON.stringify(closedLimits)}`);
+  await page.locator('[data-testid="limit-slot-0"]').click();
+  const openLimits=await limitMetrics();
+  assert.ok(openLimits.scrollHeight<=openLimits.clientHeight+1,`open Limit picker must not grow the panel: ${JSON.stringify(openLimits)}`);
+  const pickerContainment=await page.locator('.setup-limits-picker').evaluate(el=>{
+    const picker=el.getBoundingClientRect(); const panel=el.parentElement.getBoundingClientRect();
+    return picker.left>=panel.left && picker.right<=panel.right && picker.top>=panel.top && picker.bottom<=panel.bottom;
+  });
+  assert.equal(pickerContainment,true,'Limit picker remains contained inside the Limit Loadout panel');
+  await page.getByRole('button',{name:'CLOSE'}).click();
   const playerSlot=page.locator('[data-testid="team-slots"] .setup-team-slot').first();
   const rivalSlot=page.locator('[data-testid="rival-team-slots"] .setup-team-slot-btn').first();
   const beforePlayer=await playerSlot.locator('.setup-team-slot-name').textContent();

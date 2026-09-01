@@ -368,7 +368,17 @@
   grid-column:2; grid-row:1; width:100%;
 }
 .shell-surface .setup-screen-command .setup-limits {
-  grid-column:1; grid-row:2; display:flex; flex-direction:column; height:100%; min-height:0;
+  grid-column:1; grid-row:2; position:relative; display:flex; flex-direction:column;
+  height:100%; min-height:0; overflow:hidden;
+}
+.shell-surface .setup-screen-command .setup-limits > .setup-panel-title {
+  flex:0 0 auto;
+}
+.shell-surface .setup-screen-command .setup-limits-slots {
+  display:grid; grid-auto-rows:minmax(0,1fr); flex:1 1 auto; min-height:0;
+}
+.shell-surface .setup-screen-command .setup-limit-slot {
+  height:auto; min-height:0;
 }
 .shell-surface .setup-screen-command .setup-deck-assignment {
   grid-column:2; grid-row:2; height:100%; min-height:0;
@@ -377,11 +387,11 @@
   grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
 }
 .shell-surface .setup-screen-command .setup-limits-note {
-  margin-top:auto; padding:8px 9px; color:#aebbd0; border:1px solid #354258;
+  flex:0 0 auto; margin-top:8px; padding:8px 9px; color:#aebbd0; border:1px solid #354258;
   background:#111a27; line-height:1.35;
 }
 .shell-surface .setup-screen-command .setup-limits-capacity {
-  display:grid; grid-template-columns:auto minmax(0,1fr) auto; align-items:center;
+  display:grid; grid-template-columns:auto minmax(0,1fr) auto; align-items:center; flex:0 0 auto;
   gap:9px; margin-top:10px; color:#94a6bd; font:700 8px/1 var(--shell-body);
   letter-spacing:.08em;
 }
@@ -394,6 +404,15 @@
 .shell-surface .setup-screen-command .setup-limits-capacity-track i.filled {
   border-color:#d9a53e; background:#ffc858;
 }
+.shell-surface .setup-screen-command .setup-limits-picker {
+  position:absolute; z-index:8; inset:10px 12px; display:flex; flex-direction:column;
+  min-height:0; margin:0; overflow:hidden; box-shadow:0 8px 24px rgb(0 0 0 / .45);
+}
+.shell-surface .setup-screen-command .setup-limits-picker-head { flex:0 0 auto; }
+.shell-surface .setup-screen-command .setup-limits-list {
+  flex:1 1 auto; min-height:0; max-height:none; overflow-y:auto; scrollbar-width:thin;
+}
+.shell-surface .setup-screen-command .setup-clear-slot { flex:0 0 auto; margin-top:6px; }
 .shell-surface .setup-screen-command .setup-assigned-deck-preview {
   display:grid; grid-template-rows:auto minmax(0,1fr); flex:1 1 auto; min-height:0;
 }
