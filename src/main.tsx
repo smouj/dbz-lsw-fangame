@@ -4987,7 +4987,7 @@ function TeamSetupScreen({ onNavigate, onStartVersus, initialFormId }: {
   // Rival slot rendering (mirrors player team slots)
   const rivalSlots = (
     <div className="setup-team-slots" data-testid="rival-team-slots">
-      {rival.state.members.map((m, i) => {
+      {rival.state.members.map((m, i) => ({ m, i })).reverse().map(({ m, i }) => {
         const char = getCharacter(m.characterId);
         const form = getForm(m.formId);
         const portrait = resolveBattlePortraitStrict(m.formId);

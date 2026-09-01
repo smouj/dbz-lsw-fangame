@@ -172,7 +172,7 @@ export function TeamSetup({
           )}
           <div className="setup-command-team setup-command-team-rival" role="group" aria-label="Rival team">
             {rivalSlots}
-            <span className="setup-command-team-label setup-enemy-label">RIVAL <span className="setup-rom-badge">🔒</span></span>
+            <span className="setup-command-team-label setup-enemy-label">RIVAL</span>
           </div>
         </div>
       ) : null}
