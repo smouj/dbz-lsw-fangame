@@ -407,7 +407,6 @@
 .shell-surface .setup-team-slot-rival .setup-team-slot-form { color:#f2a2a9; }
 .shell-surface .setup-team-slot-add-rival { border-color:#5a3845; color:#f2a2a9; }
 .shell-surface .setup-team-slot-add-rival:hover { border-color:#ef8d95; color:white; }
-.shell-surface .setup-command-team-rival { flex:1 1 390px; direction:rtl; }
-.shell-surface .setup-command-team-rival > * { direction:ltr; }
-.shell-surface .setup-command-team-rival .setup-team-slots { flex:1 1 auto; justify-content:flex-end; width:auto; flex-direction:row-reverse; }
-.shell-surface .setup-command-team-rival .setup-command-team-label { order:999; }
+.shell-surface .setup-command-team-rival { flex:1 1 390px; }
+.shell-surface .setup-command-team-rival .setup-team-slots { flex:1 1 auto; justify-content:flex-end; width:auto; }
+.shell-surface .setup-command-team-rival .setup-command-team-label { margin-left:auto; }
