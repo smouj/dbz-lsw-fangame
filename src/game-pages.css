@@ -176,8 +176,10 @@
 .shell-surface .deck-row-remove { width:22px; height:22px; flex:0 0 22px; }
 .shell-surface .deck-screen .card-collection-grid { grid-auto-rows:140px; }
 .shell-surface .deck-screen .card-collection-grid .card { height:140px; padding:6px; gap:2px; }
+.shell-surface .deck-screen .card-collection-grid .card-header { height:16px; min-height:16px; }
 .shell-surface .deck-screen .card-collection-grid .card-art { width:54px !important; height:40px !important; flex-basis:40px; }
 .shell-surface .deck-screen .card-collection-grid .card-name { min-height:24px; font-size:10px; }
+.shell-surface .deck-screen .card-collection-grid .card-rarity { font-size:10px; line-height:1; }
 /* Settings: controls align to one baseline. */
 .shell-surface .settings-list { display:flex; flex-direction:column; gap:0; width:100%; max-width:1100px; flex:1; min-height:0; margin:0 auto; padding:8px 24px; overflow-y:auto; border:1px solid var(--page-line); background:var(--page-paper); }
 .shell-surface .settings-list::before { background:none; }

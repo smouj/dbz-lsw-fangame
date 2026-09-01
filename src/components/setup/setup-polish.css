@@ -205,15 +205,15 @@
 .shell-surface .setup-form-chip { min-height:30px; padding:4px 10px; font-size:11px; }
 .shell-surface .setup-screen .setup-body { display:contents; }
 .shell-surface .setup-details { grid-column:1; grid-row:4; height:170px; padding:6px 12px; overflow:hidden; }
-.shell-surface .setup-details-head { gap:8px; }
+.shell-surface .setup-details-head { gap:8px; margin-bottom:0; }
 .shell-surface .setup-details-name { font-size:21px; }
 .shell-surface .setup-details-stats { margin-top:6px; gap:2px; }
-.shell-surface .setup-details-stat { grid-template-columns:82px minmax(0,1fr) 32px; min-height:19px; }
+.shell-surface .setup-details-stat { grid-template-columns:82px minmax(0,1fr) 32px; min-height:19px; margin-bottom:0; }
 .shell-surface .setup-details-stat-label { font-size:10px; }
 .shell-surface .setup-details-stat-val { font-size:11px; }
-.shell-surface .setup-details-meta { margin-top:4px; font-size:9px; }
-.shell-surface .setup-details-growth-disclosure { margin-top:5px; }
-.shell-surface .setup-details-growth-disclosure summary { padding-top:5px; font-size:9px; }
+.shell-surface .setup-details-meta { margin:4px 0 0; font-size:9px; }
+.shell-surface .setup-details-growth-disclosure { margin-top:0; }
+.shell-surface .setup-details-growth-disclosure summary { padding-top:1px; font-size:9px; }
 .shell-surface .setup-limits { grid-column:2; grid-row:2; height:176px; padding:10px 12px; overflow:auto; scrollbar-width:thin; }
 .shell-surface .setup-limits-slots { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:6px; }
 .shell-surface .setup-limit-slot { min-height:48px; height:48px; padding:6px 8px; }

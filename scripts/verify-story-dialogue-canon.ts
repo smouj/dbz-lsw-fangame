@@ -10,7 +10,7 @@ import {
   STORY_CUTSCENE_CANON,
 } from '../src/data/storyCutsceneCanon';
 import { canonicalStoryNarrative } from '../src/data/storyNarrativeCanon';
-import { storyPortraitUrl } from '../src/data/storyPortraits';
+import { resolveStoryPortraitStrict } from '../src/data/portraitResolvers';
 import { panelsForChapter } from '../src/data/storyPanels';
 import { ROM_STORY_DIALOGUE_GENERATION } from '../src/data/generated/storyDialogueRom.generated';
 
@@ -91,12 +91,17 @@ function verifyNarrativeProjection(): void {
 }
 
 function verifyPortraitIdentity(): void {
-  assert.match(storyPortraitUrl('vegeta', 'majin', 'angry') ?? '', /majin_vegeta_02\.png$/);
-  assert.match(storyPortraitUrl('vegeta', 'majin', 'normal') ?? '', /majin_vegeta_01\.png$/);
-  assert.match(storyPortraitUrl('gohan_adult', 'ssj', 'normal') ?? '', /gohan_adult_ssj\.png$/);
-  assert.match(storyPortraitUrl('gohan_adult', undefined, 'normal') ?? '', /gohan_adult_01\.png$/);
-  assert.match(storyPortraitUrl('trunks_kid', undefined, 'surprised') ?? '', /trunks_kid_02\.png$/);
-  assert.match(storyPortraitUrl('trunks_future', 'ssj', 'normal') ?? '', /trunks_future_01\.png$/);
+  assert.match(resolveStoryPortraitStrict('vegeta', 'majin', 'angry').url ?? '', /majin_vegeta_02\.png$/);
+  assert.match(resolveStoryPortraitStrict('vegeta', 'majin', 'normal').url ?? '', /majin_vegeta_01\.png$/);
+  assert.match(resolveStoryPortraitStrict('gohan_adult', 'ssj', 'normal').url ?? '', /gohan_adult_ssj\.png$/);
+  assert.match(resolveStoryPortraitStrict('gohan_adult', undefined, 'normal').url ?? '', /gohan_adult_01\.png$/);
+  assert.match(resolveStoryPortraitStrict('trunks_kid', undefined, 'surprised').url ?? '', /trunks_kid_02\.png$/);
+
+  // There is no exact Future Trunks SSJ Story portrait in the physical corpus.
+  // Keep it missing instead of silently showing the base transformation.
+  const futureTrunksSsj = resolveStoryPortraitStrict('trunks_future', 'ssj', 'normal');
+  assert.equal(futureTrunksSsj.status, 'MISSING');
+  assert.equal(futureTrunksSsj.url, undefined);
 }
 
 function verifyLiteralTextHonesty(): void {
@@ -122,5 +127,5 @@ console.log('  30 MAIN + 2 EX identities: OK');
 console.log('  71 physical Story cutscenes: OK');
 console.log('  EX1/EX2 placement and future-city isolation: OK');
 console.log('  dialogue-only / no Story Map runtime: OK');
-console.log('  Majin Vegeta, adult Gohan, kid/future Trunks portraits: OK');
+console.log('  Majin Vegeta, adult Gohan, kid/future Trunks portrait policy: OK');
 console.log('  text provenance cannot masquerade as ROM literal: OK');
