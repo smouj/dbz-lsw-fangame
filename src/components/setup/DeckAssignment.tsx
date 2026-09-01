@@ -27,10 +27,8 @@ export function DeckAssignment({ characterId, decks, assignedDeckId, assignedCar
   return (
     <section className="setup-deck-assignment" aria-labelledby="setup-deck-assignment-title">
       <div className="setup-deck-assignment-head">
-        <div>
-          <span className="setup-section-kicker">BATTLE LOADOUT</span>
-          <h3 id="setup-deck-assignment-title">ASSIGNED DECK</h3>
-          <p>Select a saved deck for this fighter. Decks are edited only in the Deck page.</p>
+        <div className="setup-panel-title" id="setup-deck-assignment-title">
+          <span>ASSIGNED DECK</span>
         </div>
         <button type="button" className="setup-edit-decks" onClick={onEditDecks} disabled={readOnly}>{readOnly ? '🔒 ROM LOADOUT' : 'OPEN DECK EDITOR'}</button>
       </div>

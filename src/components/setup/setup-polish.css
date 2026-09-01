@@ -128,9 +128,7 @@
 /* Battle assigns saved decks. Editing stays in the main Deck page. */
 .shell-surface .setup-deck-assignment { display:flex; flex-direction:column; gap:12px; padding:16px; border:1px solid #46536a; background:rgb(20 28 41 / .82); }
 .shell-surface .setup-deck-assignment-head { display:flex; align-items:flex-start; justify-content:space-between; gap:20px; padding-bottom:11px; border-bottom:1px solid #3d4a60; }
-.shell-surface .setup-section-kicker { color:#9db0c8; font:700 10px/1.4 var(--shell-body); letter-spacing:.14em; }
-.shell-surface .setup-deck-assignment h3 { margin:1px 0 3px; color:#f2ead8; font:22px/1 var(--shell-display); }
-.shell-surface .setup-deck-assignment p { max-width:620px; margin:0; color:#b6c2d2; font:11px/1.4 var(--shell-body); }
+.shell-surface .setup-deck-assignment-head .setup-panel-title { flex:1 1 auto; margin-bottom:0; padding-bottom:0; border-bottom:0; }
 .shell-surface .setup-edit-decks { flex:0 0 auto; min-height:34px; padding:6px 10px; color:var(--page-accent); border:1px solid #59677d; background:#172231; font:700 10px var(--shell-body); }
 .shell-surface .setup-edit-decks:hover { border-color:var(--page-accent); }
 .shell-surface .setup-deck-presets { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:8px; }
@@ -246,8 +244,6 @@
 .shell-surface .setup-limits-note { margin-top:auto; padding-top:8px; font-size:9px; line-height:1.3; color:var(--page-muted); }
 .shell-surface .setup-deck-assignment { grid-column:2; grid-row:3 / 5; min-height:0; padding:8px 10px; gap:8px; display:flex; flex-direction:column; overflow:hidden; }
 .shell-surface .setup-deck-assignment-head { gap:10px; padding-bottom:4px; }
-.shell-surface .setup-deck-assignment h3 { margin:0; font-size:20px; }
-.shell-surface .setup-deck-assignment p { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:9px; }
 .shell-surface .setup-edit-decks { min-height:28px; padding:4px 8px; font-size:9px; }
 .shell-surface .setup-deck-presets { gap:5px; max-height:88px; overflow:auto; scrollbar-width:thin; }
 .shell-surface .setup-deck-preset { min-height:42px; gap:2px 6px; padding:5px 6px; }
@@ -266,12 +262,7 @@
 .shell-surface .setup-screen-command :is(.setup-panel-title,.setup-roll-heading) {
   color:#dce4ef; font:700 11px/1 var(--shell-body); letter-spacing:.1em;
 }
-.shell-surface .setup-screen-command .setup-section-kicker {
-  color:#8fa4be; font:700 8px/1 var(--shell-body); letter-spacing:.14em;
-}
-.shell-surface .setup-screen-command .setup-deck-assignment h3 {
-  color:#f4ead3; font:19px/1 var(--shell-display); letter-spacing:.02em;
-}
+
 
 /* Battle command strip: the reading order is unambiguous — player team,
    active form, rival team. The shared Dev builder keeps its own composition. */
