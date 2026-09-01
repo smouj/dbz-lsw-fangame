@@ -8,6 +8,7 @@
 
 import { useCallback, useMemo, useState } from 'react';
 import { ROM_ORDERED_CHARACTERS, getCharacter, getForm } from '../../data/roster';
+import { getLimitCapacity } from '../../data/limitLoadout';
 import { baseFormIdOf, makeMember } from './setupLogic';
 import type { TeamMember, TeamSetupState, TeamSetupResult } from './teamSetupTypes';
 
@@ -85,6 +86,29 @@ export function useRivalSetupState({ initialFormId = 'piccolo_base' }: UseRivalS
     });
   }, []);
 
+  // ── Limits y Deck (para edición desde Versus cuando rival tiene foco) ──
+  const equipLimit = useCallback((slot: number, cardId: number) => {
+    updateActive(m => {
+      const cap = getLimitCapacity(m.characterId);
+      if (slot < 0 || slot >= cap) return m;
+      const limits = [...m.limits];
+      limits[slot] = cardId;
+      return { ...m, limits };
+    });
+  }, [updateActive]);
+
+  const clearLimitSlot = useCallback((slot: number) => {
+    updateActive(m => {
+      const limits = [...m.limits];
+      if (slot >= 0 && slot < limits.length) limits[slot] = 0;
+      return { ...m, limits };
+    });
+  }, [updateActive]);
+
+  const assignDeck = useCallback((deckId: string, cards: number[]) => {
+    updateActive(m => ({ ...m, deckId, jointDeck: cards.slice(0, 20) }));
+  }, [updateActive]);
+
   const result = useMemo((): TeamSetupResult => ({
     member: state.members[0],
     team: state.members,
@@ -102,5 +126,8 @@ export function useRivalSetupState({ initialFormId = 'piccolo_base' }: UseRivalS
     setActiveMember,
     addMember,
     removeMember,
+    equipLimit,
+    clearLimitSlot,
+    assignDeck,
   };
 }

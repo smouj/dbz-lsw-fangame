@@ -400,6 +400,16 @@
 }
 
 /* Rival team slots — red accent to distinguish from player blue */
+/* Player team slots — blue accent */
+.shell-surface .setup-command-team-player .setup-team-slot.active { border-color:#6ab8ff; box-shadow:inset 3px 0 #6ab8ff; }
+.shell-surface .setup-command-team-player .setup-team-slot-btn { border-color:#3a506a; }
+.shell-surface .setup-command-team-player .setup-team-slot-num { color:#8fc8ff; }
+.shell-surface .setup-command-team-player .setup-team-slot-name { color:#f0f4fa; }
+.shell-surface .setup-command-team-player .setup-team-slot-add { border-color:#3a506a; color:#8fc8ff; }
+.shell-surface .setup-command-team-player .setup-team-slot-add:hover { border-color:#6ab8ff; color:white; }
+/* Command row: hide form names in compact slots */
+.shell-surface .setup-command-row .setup-team-slot-form { display:none; }
+/* Rival team slots — red accent */
 .shell-surface .setup-team-slot-rival.active { border-color:#ef8d95; box-shadow:inset 3px 0 #ef8d95; }
 .shell-surface .setup-team-slot-rival .setup-team-slot-btn { border-color:#5a3845; }
 .shell-surface .setup-team-slot-rival .setup-team-slot-num { color:#d4939a; }

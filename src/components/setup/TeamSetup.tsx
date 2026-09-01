@@ -40,6 +40,28 @@ export interface TeamSetupProps {
   rivalActive?: boolean;
   /** Battle-only: callback when player team slot is clicked (to set focus). */
   onPlayerSlotClick?: () => void;
+  /** Battle-only: rival character selection callback (for Character Roll). */
+  onRivalSelectCharacter?: (characterId: string) => void;
+  /** Battle-only: rival form selection callback. */
+  onRivalSelectForm?: (formId: string) => void;
+  /** Battle-only: rival current form id (for details/limits). */
+  rivalFormId?: string;
+  /** Battle-only: rival character id (for limits). */
+  rivalCharacterId?: string;
+  /** Battle-only: rival limits array. */
+  rivalLimits?: number[];
+  /** Battle-only: rival limit equip callback. */
+  onRivalEquipLimit?: (slot: number, cardId: number) => void;
+  /** Battle-only: rival limit clear callback. */
+  onRivalClearLimit?: (slot: number) => void;
+  /** Battle-only: rival deck assignment callback. */
+  onRivalAssignDeck?: (deckId: string, cards: number[]) => void;
+  /** Battle-only: rival assigned deck id. */
+  rivalDeckId?: string;
+  /** Battle-only: rival assigned cards. */
+  rivalCards?: number[];
+  /** Battle-only: rival is form unlocked (always true for AI). */
+  isRivalFormUnlocked?: (formId: string) => boolean;
 }
 
 export function TeamSetup({
@@ -56,20 +78,28 @@ export function TeamSetup({
   rivalFormSelector,
   rivalActive,
   onPlayerSlotClick,
+  onRivalSelectCharacter,
+  onRivalSelectForm,
+  rivalFormId,
+  rivalCharacterId,
+  rivalLimits,
+  onRivalEquipLimit,
+  onRivalClearLimit,
+  onRivalAssignDeck,
+  rivalDeckId,
+  rivalCards,
+  isRivalFormUnlocked,
 }: TeamSetupProps) {
   const setup = useSetup({ fallbackDeck, initialCharacterId, initialFormId, initialDeckId, strictDeckAssignment: true });
   const { state, active, result, deckValid } = setup;
 
   // Assets del roll: chibis OW (forma base para los laterales) + power pose
-  // real del battle OW. El CENTRO refleja la forma ACTIVA, no la base —
-  // punto de identidad del remake (Base/SSJ cambian chibi + power-up).
+  // real del battle OW. El CENTRO refleja la forma ACTIVA, no la base.
   const selectedIdx = Math.max(0, ROM_ORDERED_CHARACTERS.findIndex(c => c.id === state.selectedCharacter));
   const activeFormId = active.formId;
 
   const rollItems = useMemo<RollCharacterAsset[]>(() =>
     ROM_ORDERED_CHARACTERS.map(c => {
-      // La forma BASE es la declarada en el roster (piccolo_base/Normal), NO
-      // forms[0] del orden ROM (romFormId: piccolo_evil=4 < piccolo_base=5).
       const baseFormId = baseFormIdOf(c.id);
       return {
         characterId: c.id,
@@ -82,20 +112,29 @@ export function TeamSetup({
       };
     }), []);
 
-  // Override del centro con la forma seleccionada (idle + power pose de ESA
-  // forma). El aura se resuelve dentro de CharacterRoll por formId.
+  // When rival has focus, the Roll selects rival characters;
+  // when player has focus, it selects player characters.
+  const rollOnSelect = rivalActive && onRivalSelectCharacter
+    ? (idx: number) => { const c = ROM_ORDERED_CHARACTERS[idx]; if (c) onRivalSelectCharacter(c.id); }
+    : (idx: number) => { const c = ROM_ORDERED_CHARACTERS[idx]; if (c) setup.selectCharacter(c.id); };
+  const rollSelectedIdx = rivalActive
+    ? Math.max(0, ROM_ORDERED_CHARACTERS.findIndex(c => c.id === (rivalCharacterId ?? state.selectedCharacter)))
+    : selectedIdx;
+
+  // Override del centro con la forma seleccionada (idle + power pose de ESA forma).
+  const rollActiveFormId = rivalActive ? (rivalFormId ?? active.formId) : active.formId;
   const rollItemsWithActiveForm = useMemo(() =>
     rollItems.map((it, i) => {
-      if (i !== selectedIdx) return it;
-      const f = getForm(activeFormId);
+      if (i !== rollSelectedIdx) return it;
+      const f = getForm(rollActiveFormId);
       return {
         ...it,
-        formId: activeFormId,
+        formId: rollActiveFormId,
         formLabel: f?.form ?? it.formLabel,
-        idleUrl: overworldUrl(activeFormId) ?? it.idleUrl,
-        powerUrl: battleOverworldActorUrl(activeFormId, 'gather_power_pose') ?? it.powerUrl,
+        idleUrl: overworldUrl(rollActiveFormId) ?? it.idleUrl,
+        powerUrl: battleOverworldActorUrl(rollActiveFormId, 'gather_power_pose') ?? it.powerUrl,
       };
-    }), [rollItems, selectedIdx, activeFormId]);
+    }), [rollItems, rollSelectedIdx, rollActiveFormId]);
 
   const activeChar = getCharacter(active.characterId);
   const selectedForm = getForm(active.formId);
@@ -160,11 +199,8 @@ export function TeamSetup({
       {/* Character Roll */}
       <CharacterRoll
         items={rollItemsWithActiveForm}
-        selectedIndex={selectedIdx}
-        onSelect={idx => {
-          const c = ROM_ORDERED_CHARACTERS[idx];
-          if (c) setup.selectCharacter(c.id);
-        }}
+        selectedIndex={rollSelectedIdx}
+        onSelect={rollOnSelect}
       />
 
       {/* Form selector del personaje central */}
@@ -179,24 +215,24 @@ export function TeamSetup({
 
       <div className="setup-body">
         {/* Detalles */}
-        <CharacterDetails formId={active.formId} />
+        <CharacterDetails formId={rivalActive && rivalFormId ? rivalFormId : active.formId} />
 
         {/* Limit Loadout */}
         <LimitLoadoutPanel
-          characterId={active.characterId}
-          limits={active.limits}
-          onEquip={setup.equipLimit}
-          onClear={setup.clearLimitSlot}
+          characterId={rivalActive && rivalCharacterId ? rivalCharacterId : active.characterId}
+          limits={rivalActive && rivalLimits ? rivalLimits : active.limits}
+          onEquip={rivalActive && onRivalEquipLimit ? onRivalEquipLimit : setup.equipLimit}
+          onClear={rivalActive && onRivalClearLimit ? onRivalClearLimit : setup.clearLimitSlot}
         />
       </div>
 
       {/* Battle only assigns a saved deck; editing lives in the Deck page. */}
       <DeckAssignment
-        characterId={active.characterId}
+        characterId={rivalActive && rivalCharacterId ? rivalCharacterId : active.characterId}
         decks={savedDecks}
-        assignedDeckId={active.deckId}
-        assignedCards={active.jointDeck}
-        onAssign={setup.assignDeck}
+        assignedDeckId={rivalActive && rivalDeckId ? rivalDeckId : active.deckId}
+        assignedCards={rivalActive && rivalCards ? rivalCards : active.jointDeck}
+        onAssign={rivalActive && onRivalAssignDeck ? onRivalAssignDeck : setup.assignDeck}
         onEditDecks={onEditDecks}
       />
 

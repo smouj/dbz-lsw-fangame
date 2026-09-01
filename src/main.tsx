@@ -5009,6 +5009,17 @@ function TeamSetupScreen({ onNavigate, onStartVersus, initialFormId }: {
           />
         )}
         rivalActive={focusTeam === 'rival'}
+        onRivalSelectCharacter={(id) => { rival.selectCharacter(id); setFocusTeam('rival'); }}
+        onRivalSelectForm={rival.selectForm}
+        rivalFormId={rivalActive?.formId}
+        rivalCharacterId={rivalActive?.characterId}
+        rivalLimits={rivalActive?.limits}
+        onRivalEquipLimit={rival.equipLimit}
+        onRivalClearLimit={rival.clearLimitSlot}
+        onRivalAssignDeck={rival.assignDeck}
+        rivalDeckId={rivalActive?.deckId}
+        rivalCards={rivalActive?.jointDeck}
+        isRivalFormUnlocked={() => true}
         onConfirm={(result: TeamSetupResult) => onStartVersus(rival.state.members)}
         onEditDecks={() => onNavigate('deck')}
         onBack={() => onNavigate('main')}
