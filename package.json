@@ -148,7 +148,8 @@
     "verify:game-shell": "node scripts/verify-game-shell.mjs",
     "verify:story-dialogue-canon": "npx tsx scripts/verify-story-dialogue-canon.ts",
     "verify:portrait-domains": "npx tsx scripts/verify-portrait-domains.ts",
-    "dev:wasm": "ESBUILD_BINARY_PATH=$(node -e \"console.log(require.resolve(\"esbuild-wasm/bin/esbuild\"))\") vite --host 0.0.0.0 --port 5178"
+    "dev:wasm": "ESBUILD_BINARY_PATH=$(node -e \"console.log(require.resolve(\"esbuild-wasm/bin/esbuild\"))\") vite --host 0.0.0.0 --port 5178",
+    "serve": "node scripts/serve.mjs"
   },
   "dependencies": {
     "@vitejs/plugin-react": "^4.3.4",
