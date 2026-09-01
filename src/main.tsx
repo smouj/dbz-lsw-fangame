@@ -47,6 +47,7 @@ import { GameViewport } from './components/GameViewport';
 import { TeamSetup } from './components/setup/TeamSetup';
 
 import { useTeamSetupState } from './components/setup/useTeamSetupState';
+import { baseFormIdOf } from './components/setup/setupLogic';
 import type { TeamMember, TeamSetupResult } from './components/setup/teamSetupTypes';
 import { overworldUrl } from './data/overworld';
 import { battleOverworldActorUrl, battleOverworldAuraUrl } from './data/battleOverworld';
@@ -4396,7 +4397,7 @@ function CharactersScreen({ onNavigate, onSelectFighter }: {
         {/* Grid de personajes: solo desbloqueados; bloqueados con candado */}
         <div className="char-grid">
           {ROM_ORDERED_CHARACTERS.map(c => {
-            const baseForm = getForm(c.forms[0])!;
+            const baseForm = getForm(baseFormIdOf(c.id))!;
             const portrait = resolveBattlePortraitStrict(baseForm.id);
             const active = c.id === sel.character;
             const unlocked = isCharacterUnlocked(c.id);

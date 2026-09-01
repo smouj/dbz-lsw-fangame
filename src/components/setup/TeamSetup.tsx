@@ -8,6 +8,7 @@
 
 import { useMemo } from 'react';
 import { ROM_ORDERED_CHARACTERS, getCharacter, getForm } from '../../data/roster';
+import { baseFormIdOf } from './setupLogic';
 import { overworldUrl } from '../../data/overworld';
 import { battleOverworldActorUrl } from '../../data/battleOverworld';
 import { resolveBattlePortraitStrict } from '../../data/portraitResolvers';
@@ -55,7 +56,9 @@ export function TeamSetup({
 
   const rollItems = useMemo<RollCharacterAsset[]>(() =>
     ROM_ORDERED_CHARACTERS.map(c => {
-      const baseFormId = c.forms[0];
+      // La forma BASE es la declarada en el roster (piccolo_base/Normal), NO
+      // forms[0] del orden ROM (romFormId: piccolo_evil=4 < piccolo_base=5).
+      const baseFormId = baseFormIdOf(c.id);
       return {
         characterId: c.id,
         name: c.name,

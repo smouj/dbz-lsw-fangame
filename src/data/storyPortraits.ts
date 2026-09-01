@@ -358,5 +358,5 @@ export function storyPortraitUrlApproximate(
   return entry.base;
 }
 
-/** @deprecated Diagnostic compatibility alias. Never use in production rendering. */
-export const storyPortraitUrl = storyPortraitUrlApproximate;
+// @deprecated Diagnostic compatibility alias removed (2026-09-01): production must
+// use resolveStoryPortraitStrict(); devtools use storyPortraitUrlApproximate explicitly.
