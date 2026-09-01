@@ -45,8 +45,10 @@ import { CardArtHole } from './components/CardArtHole';
 import { StageHudPanel } from './components/StageHudPanel';
 import { GameViewport } from './components/GameViewport';
 import { TeamSetup } from './components/setup/TeamSetup';
+import { FormSelector } from './components/setup/FormSelector';
 
 import { useTeamSetupState } from './components/setup/useTeamSetupState';
+import { useRivalSetupState } from './components/setup/useRivalSetupState';
 import { baseFormIdOf } from './components/setup/setupLogic';
 import type { TeamMember, TeamSetupResult } from './components/setup/teamSetupTypes';
 import { overworldUrl } from './data/overworld';
@@ -664,9 +666,9 @@ function DamageNumber({ value, type, x, y }: { value: number; type: 'damage' | '
 // PANTALLA DE BATALLA
 // ═══════════════════════════════════════════════════════════
 
-function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, onExit, onRematch, onMainMenu }: {
+function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, rivalReserve, onExit, onRematch, onMainMenu }: {
   playerFormId: string; enemyFormId: string; storyChapter: number | null; onExit: (won: boolean) => void;
-  playerDeck?: number[];
+  playerDeck?: number[]; rivalReserve?: TeamMember | null;
   onRematch: () => void; onMainMenu: () => void;
 }) {
   const { t } = useLang();
@@ -712,16 +714,31 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, onE
     return applyLevelUps(base, prog.level);
   });
   const [enemy2, setEnemy2] = useState<Fighter | null>(() => {
-    if (!teamBattle?.enemy2) return null;
-    const ef2 = getForm(teamBattle.enemy2)!;
-    const b2 = storyChapter ? STORY_AI_BOOSTS[storyChapter] : null;
-    const base: Fighter = {
-      id: ef2.character, formId: teamBattle.enemy2, name: getCharacter(ef2.character)?.name || ef2.character, form: ef2.form,
-      level: aiLevel, maxHp: ef2.hp + (b2?.hp || 0), hp: ef2.hp + (b2?.hp || 0),
-      str: ef2.str + (b2?.str || 0), ki: ef2.ki + (b2?.ki || 0), spd: ef2.spd + (b2?.spd || 0),
-      maxCc: 99, cc: 10, battlePos: BattlePosition.DOWN_BACK, limits: [],
-    };
-    return base;
+    // Story mode: 2v2 from chapter config
+    if (teamBattle?.enemy2) {
+      const ef2 = getForm(teamBattle.enemy2)!;
+      const b2 = storyChapter ? STORY_AI_BOOSTS[storyChapter] : null;
+      const base: Fighter = {
+        id: ef2.character, formId: teamBattle.enemy2, name: getCharacter(ef2.character)?.name || ef2.character, form: ef2.form,
+        level: aiLevel, maxHp: ef2.hp + (b2?.hp || 0), hp: ef2.hp + (b2?.hp || 0),
+        str: ef2.str + (b2?.str || 0), ki: ef2.ki + (b2?.ki || 0), spd: ef2.spd + (b2?.spd || 0),
+        maxCc: 99, cc: 10, battlePos: BattlePosition.DOWN_BACK, limits: [],
+      };
+      return base;
+    }
+    // Versus mode: 2v2 from rival reserve
+    if (rivalReserve) {
+      const rf = getForm(rivalReserve.formId);
+      if (!rf) return null;
+      const base: Fighter = {
+        id: rf.character, formId: rivalReserve.formId, name: getCharacter(rf.character)?.name || rf.character, form: rf.form,
+        level: aiLevel, maxHp: rf.hp, hp: rf.hp,
+        str: rf.str, ki: rf.ki, spd: rf.spd,
+        maxCc: 99, cc: 10, battlePos: BattlePosition.DOWN_BACK, limits: [],
+      };
+      return applyLevelUps(base, aiLevel);
+    }
+    return null;
   });
   const [enemy, setEnemy] = useState<Fighter>(() => {
     // Story mode: stats FIJOS del jefe + su AI boost real (spreadsheet oficial)
@@ -4888,20 +4905,48 @@ function SettingsScreen({ onNavigate }: { onNavigate: (s: Screen) => void }) {
 
 function TeamSetupScreen({ onNavigate, onStartVersus, initialFormId }: {
   onNavigate: (s: Screen) => void;
-  onStartVersus: (enemyFormId: string, member?: TeamMember) => void;
+  onStartVersus: (rivalTeam: TeamMember[]) => void;
   initialFormId?: string;
 }) {
   const { t } = useLang();
-  const [enemyForm, setEnemyForm] = useState('piccolo_base');
-  const enemyForms = useMemo(() => ROM_ORDERED_CHARACTERS.flatMap(c => c.forms), []);
-  const enemyIndex = Math.max(0, enemyForms.indexOf(enemyForm));
-  const enemyDef = getForm(enemyForm);
-  const enemyChar = enemyDef ? getCharacter(enemyDef.character) : undefined;
-  const enemyPortrait = resolveBattlePortraitStrict(enemyForm);
-  const shiftEnemy = (delta: number) => {
-    const next = enemyForms[(enemyIndex + delta + enemyForms.length) % enemyForms.length];
-    if (next) { Sfx.select(); setEnemyForm(next); }
-  };
+  // ── Rival team state (2 slots, mirror of player team) ──
+  const rival = useRivalSetupState({ initialFormId: 'piccolo_base' });
+  const rivalActive = rival.state.members[rival.state.activeMember];
+  const rivalRollItems = useMemo(() =>
+    ROM_ORDERED_CHARACTERS.map(c => {
+      const baseFormId = baseFormIdOf(c.id);
+      const f = getForm(baseFormId);
+      return {
+        characterId: c.id,
+        name: c.name,
+        formId: baseFormId,
+        formLabel: f?.form,
+        idleUrl: overworldUrl(baseFormId),
+        powerUrl: battleOverworldActorUrl(baseFormId, 'gather_power_pose') ?? undefined,
+        auraUrl: undefined,
+      };
+    }), []);
+
+  // Override centre with active rival's selected form
+  const rivalSelectedIdx = Math.max(0, ROM_ORDERED_CHARACTERS.findIndex(c => c.id === rival.state.selectedCharacter));
+  const rivalActiveFormId = rivalActive?.formId ?? 'piccolo_base';
+  const rivalRollItemsWithActiveForm = useMemo(() =>
+    rivalRollItems.map((it, i) => {
+      if (i !== rivalSelectedIdx) return it;
+      const f = getForm(rivalActiveFormId);
+      return {
+        ...it,
+        formId: rivalActiveFormId,
+        formLabel: f?.form ?? it.formLabel,
+        idleUrl: overworldUrl(rivalActiveFormId) ?? it.idleUrl,
+        powerUrl: battleOverworldActorUrl(rivalActiveFormId, 'gather_power_pose') ?? it.powerUrl,
+      };
+    }), [rivalRollItems, rivalSelectedIdx, rivalActiveFormId]);
+
+  const rivalActiveChar = rivalActive ? getCharacter(rivalActive.characterId) : undefined;
+  const rivalActiveForm = rivalActive ? getForm(rivalActive.formId) : undefined;
+  const rivalPortrait = rivalActive ? resolveBattlePortraitStrict(rivalActive.formId) : { url: undefined };
+
   const deckLibrary = loadDeckLibrary(DEFAULT_DECK);
   const savedActiveDeck = activeSavedDeck(deckLibrary);
   const battleDefaultPreset = (isSavedDeckReady(savedActiveDeck)
@@ -4909,6 +4954,39 @@ function TeamSetupScreen({ onNavigate, onStartVersus, initialFormId }: {
     : deckLibrary.decks.find(isSavedDeckReady));
   const battleDefaultDeck = battleDefaultPreset?.cards ?? [];
   const initialCharacterId = initialFormId ? getForm(initialFormId)?.character : undefined;
+
+  // Rival slot rendering (mirrors player team slots)
+  const rivalSlots = (
+    <div className="setup-team-slots" data-testid="rival-team-slots">
+      {rival.state.members.map((m, i) => {
+        const char = getCharacter(m.characterId);
+        const form = getForm(m.formId);
+        const portrait = resolveBattlePortraitStrict(m.formId);
+        return (
+          <div key={i} className={`setup-team-slot setup-team-slot-rival${i === rival.state.activeMember ? ' active' : ''}`}>
+            <button type="button" className="setup-team-slot-btn"
+              onClick={() => rival.setActiveMember(i)}>
+              {portrait.url ? <img className="setup-team-slot-portrait battle" src={portrait.url} alt="" draggable={false} /> : null}
+              <span className="setup-team-slot-copy">
+                <span className="setup-team-slot-num">SLOT {i + 1}</span>
+                <span className="setup-team-slot-name">{char?.name ?? '—'}</span>
+                <span className="setup-team-slot-form">{form?.form ?? ''}</span>
+              </span>
+            </button>
+            {rival.state.members.length > 1 ? (
+              <button type="button" className="setup-team-slot-remove" title="Remove member"
+                onClick={() => rival.removeMember(i)}>✕</button>
+            ) : null}
+          </div>
+        );
+      })}
+      {rival.state.members.length < 2 ? (
+        <button type="button" className="setup-team-slot setup-team-slot-add setup-team-slot-add-rival"
+          onClick={rival.addMember}>+ ADD RIVAL</button>
+      ) : null}
+    </div>
+  );
+
   return (
     <div className="page-screen versus-screen setup-screen-wrap">
       <GamePageHeader title={t('versus.title')} onBack={() => onNavigate('main')} />
@@ -4920,40 +4998,27 @@ function TeamSetupScreen({ onNavigate, onStartVersus, initialFormId }: {
         initialFormId={initialFormId}
         initialDeckId={battleDefaultPreset?.id}
         topControls={(
-          <div className="setup-enemy-row" role="group" aria-label="Rival team">
-            <span className="setup-command-team-label setup-enemy-label">RIVAL TEAM</span>
-            <div className="setup-opponent-picker">
-              <button type="button" className="setup-opponent-nav" aria-label="Previous opponent"
-                onClick={() => shiftEnemy(-1)}>‹</button>
-              <div className="setup-opponent-card">
-                {enemyPortrait.url ? (
-                  <img src={enemyPortrait.url} alt="" className="setup-opponent-portrait" draggable={false} />
-                ) : null}
-                <span className="setup-opponent-copy">
-                  <small>SLOT 1</small>
-                  <strong>{enemyChar?.name ?? '—'}</strong>
-                  <span>{enemyDef?.form ?? ''}</span>
-                </span>
-                <select
-                  className="setup-enemy-select"
-                  aria-label="Select opponent"
-                  value={enemyForm}
-                  onChange={e => { Sfx.select(); setEnemyForm(e.target.value); }}
-                >
-                  {enemyForms.map(fid => {
-                    const f = getForm(fid);
-                    const c = f ? getCharacter(f.character) : undefined;
-                    return f ? <option key={fid} value={fid}>{c?.name ?? f.character} — {f.form}</option> : null;
-                  })}
-                </select>
-              </div>
-              <span className="setup-opponent-count">{String(enemyIndex + 1).padStart(2, '0')} / {enemyForms.length}</span>
-              <button type="button" className="setup-opponent-nav" aria-label="Next opponent"
-                onClick={() => shiftEnemy(1)}>›</button>
+          <div className="setup-command-row" role="group" aria-label="Team selection">
+            {/* ── Player team ── */}
+            <div className="setup-command-team setup-command-team-player" role="group" aria-label="Your team">
+              <span className="setup-command-team-label">YOUR TEAM</span>
+              {/* Team slots rendered by TeamSetup */}
             </div>
+            {/* ── Rival team ── */}
+            <div className="setup-command-team setup-command-team-rival" role="group" aria-label="Rival team">
+              <span className="setup-command-team-label setup-enemy-label">RIVAL TEAM</span>
+              {rivalSlots}
+            </div>
+            {/* ── Rival character roll + form selector ── */}
+            <FormSelector
+              characterId={rivalActive?.characterId ?? 'piccolo'}
+              selectedFormId={rivalActive?.formId ?? 'piccolo_base'}
+              onSelect={rival.selectForm}
+              isUnlocked={() => true} // Rival can use any form
+            />
           </div>
         )}
-        onConfirm={(result: TeamSetupResult) => onStartVersus(enemyForm, result.member)}
+        onConfirm={(result: TeamSetupResult) => onStartVersus(rival.state.members)}
         onEditDecks={() => onNavigate('deck')}
         onBack={() => onNavigate('main')}
         isFormUnlocked={fid => isFormUnlocked(fid, loadProgress().level)}
@@ -5017,6 +5082,7 @@ function AppInner() {
   const [needsStarter, setNeedsStarter] = useState(() => loadUnlocks().starterDeck === null);
   const [playerForm, setPlayerForm] = useState('gohan_young');
   const [enemyForm, setEnemyForm] = useState('piccolo_base');
+  const [rivalReserve, setRivalReserve] = useState<TeamMember | null>(null);
   const [battleDeck, setBattleDeck] = useState<number[] | undefined>(undefined);
   const [storyChapter, setStoryChapter] = useState<number | null>(null);
   const [storyScene, setStoryScene] = useState<{ chapter: number; phase: 'intro' | 'outro' } | null>(null);
@@ -5074,18 +5140,15 @@ function AppInner() {
     setScreen('versus');
   };
 
-  const startVersus = (enemyFormId: string, member?: TeamMember) => {
+  const startVersus = (rivalTeam: TeamMember[]) => {
+    const member = rivalTeam[0];
     if (member) {
-      // Handoff único: Battle recibe una COPIA del mazo asignado. La biblioteca
-      // no se edita ni se cambia de preset desde esta pantalla.
-      setPlayerForm(member.formId);
-      setBattleDeck([...member.jointDeck]);
-      saveLimits(member.characterId, member.limits.filter(id => id !== 0));
-    } else {
-      setPlayerForm('gohan_young');
-      setBattleDeck(undefined);
+      setPlayerForm(playerForm); // Player form set by TeamSetup
     }
-    setEnemyForm(enemyFormId);
+    // Rival team: primary enemy + reserve (2v2)
+    setEnemyForm(member?.formId ?? 'piccolo_base');
+    // Store rival reserve for BattleConfig.enemy2
+    setRivalReserve(rivalTeam.length > 1 ? rivalTeam[1] : null);
     setStoryChapter(null);
     setBattleKey(k => k + 1);
     setScreen('battle');
@@ -5205,7 +5268,7 @@ function AppInner() {
       case 'cards': return <CardsScreen onNavigate={setScreen} />;
       case 'settings': return <SettingsScreen onNavigate={setScreen} />;
       case 'storyScene': return <StorySceneScreen key={`scene-${storyScene?.chapter}-${storyScene?.phase}`} chapter={storyScene?.chapter ?? 1} phase={storyScene?.phase ?? 'intro'} onFinish={finishStoryScene} onNavigate={setScreen} />;
-      case 'battle': return <BattleScreen key={battleKey} playerFormId={playerForm} enemyFormId={enemyForm} storyChapter={storyChapter} playerDeck={battleDeck} onExit={exitBattle}
+      case 'battle': return <BattleScreen key={battleKey} playerFormId={playerForm} enemyFormId={enemyForm} storyChapter={storyChapter} playerDeck={battleDeck} rivalReserve={rivalReserve} onExit={exitBattle}
         onRematch={() => { setStoryScene(null); setBattleKey(k => k + 1); setScreen('battle'); }}
         onMainMenu={() => { setStoryScene(null); setScreen('main'); }} />;
       default: return <MainMenu onNavigate={setScreen} />;

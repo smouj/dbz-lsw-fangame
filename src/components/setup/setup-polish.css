@@ -71,12 +71,13 @@
 @keyframes setup-aura-arrive { from { opacity:0; } to { opacity:1; } }
 @keyframes setup-neighbour-enter { from { filter:opacity(0); } to { filter:opacity(1); } }
 :is(.shell-surface,.dev-team-builder) .setup-roll-nav {
-  top:91px; width:40px; height:44px; border:1px solid #515b6c;
-  border-radius:0; background:#151c28; color:#f3dfad; box-shadow:none;
+  top:50%; margin-top:-18px; width:32px; height:36px; border:1px solid #515b6c;
+  border-radius:0; background:rgb(21 28 40 / .92); color:#f3dfad; box-shadow:none;
+  z-index:20;
 }
 :is(.shell-surface,.dev-team-builder) .setup-roll-nav:hover:not(:disabled) { border-color:var(--page-accent); background:#252c38; }
-:is(.shell-surface,.dev-team-builder) .setup-roll-nav-left { left:20px; }
-:is(.shell-surface,.dev-team-builder) .setup-roll-nav-right { right:20px; }
+:is(.shell-surface,.dev-team-builder) .setup-roll-nav-left { left:8px; }
+:is(.shell-surface,.dev-team-builder) .setup-roll-nav-right { right:8px; }
 :is(.shell-surface,.dev-team-builder) .setup-roll-rail {
   left:72px; right:72px; bottom:2px; height:32px; padding:0; gap:2px;
   align-items:center; justify-content:safe center; background:none; border:0;
@@ -105,8 +106,8 @@
 /* Battle assigns saved decks. Editing stays in the main Deck page. */
 .shell-surface .setup-deck-assignment { display:flex; flex-direction:column; gap:12px; padding:16px; border:1px solid #46536a; background:rgb(20 28 41 / .82); }
 .shell-surface .setup-deck-assignment-head { display:flex; align-items:flex-start; justify-content:space-between; gap:20px; padding-bottom:11px; border-bottom:1px solid #3d4a60; }
-.shell-surface .setup-section-kicker { color:#9db0c8; font:700 9px/1.3 var(--shell-body); letter-spacing:.14em; }
-.shell-surface .setup-deck-assignment h3 { margin:1px 0 3px; color:#f2ead8; font:25px/1 var(--shell-display); }
+.shell-surface .setup-section-kicker { color:#9db0c8; font:700 10px/1.4 var(--shell-body); letter-spacing:.14em; }
+.shell-surface .setup-deck-assignment h3 { margin:1px 0 3px; color:#f2ead8; font:22px/1 var(--shell-display); }
 .shell-surface .setup-deck-assignment p { max-width:620px; margin:0; color:#b6c2d2; font:11px/1.4 var(--shell-body); }
 .shell-surface .setup-edit-decks { flex:0 0 auto; min-height:34px; padding:6px 10px; color:var(--page-accent); border:1px solid #59677d; background:#172231; font:700 10px var(--shell-body); }
 .shell-surface .setup-edit-decks:hover { border-color:var(--page-accent); }
@@ -199,7 +200,7 @@
 .shell-surface .setup-screen .setup-roll-chibi { height:68px; }
 .shell-surface .setup-screen .setup-roll-name { flex-basis:24px; min-height:24px; padding-top:3px; }
 .shell-surface .setup-screen .setup-roll-form { display:none; }
-.shell-surface .setup-screen .setup-roll-nav { top:63px; }
+.shell-surface .setup-screen .setup-roll-nav { top:50%; margin-top:-18px; }
 .shell-surface .setup-screen .setup-roll-rail { bottom:0; }
 .shell-surface .setup-form-selector { grid-column:1; grid-row:3; min-height:36px; height:36px; gap:10px; overflow:hidden; }
 .shell-surface .setup-form-chip { min-height:30px; padding:4px 10px; font-size:11px; }
@@ -214,14 +215,14 @@
 .shell-surface .setup-details-meta { margin:4px 0 0; font-size:9px; }
 .shell-surface .setup-details-growth-disclosure { margin-top:0; }
 .shell-surface .setup-details-growth-disclosure summary { padding-top:1px; font-size:9px; }
-.shell-surface .setup-limits { grid-column:2; grid-row:2; height:176px; padding:10px 12px; overflow:auto; scrollbar-width:thin; }
+.shell-surface .setup-limits { grid-column:2; grid-row:2; height:176px; padding:10px 12px; display:flex; flex-direction:column; overflow:auto; scrollbar-width:thin; }
 .shell-surface .setup-limits-slots { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:6px; }
-.shell-surface .setup-limit-slot { min-height:48px; height:48px; padding:6px 8px; }
+.shell-surface .setup-limit-slot { min-height:52px; height:52px; padding:8px 10px; }
 .shell-surface .setup-limit-slot-card { gap:5px; }
 .shell-surface .setup-limit-slot-card b { font-size:11px; }
 .shell-surface .setup-limit-slot-card i,.shell-surface .setup-limit-slot-num { font-size:9px; }
-.shell-surface .setup-limits-note { margin-top:6px; font-size:9px; line-height:1.3; }
-.shell-surface .setup-deck-assignment { grid-column:2; grid-row:3 / 5; min-height:0; padding:8px 10px; gap:6px; overflow:hidden; }
+.shell-surface .setup-limits-note { margin-top:auto; padding-top:8px; font-size:9px; line-height:1.3; color:var(--page-muted); }
+.shell-surface .setup-deck-assignment { grid-column:2; grid-row:3 / 5; min-height:0; padding:8px 10px; gap:8px; display:flex; flex-direction:column; overflow:hidden; }
 .shell-surface .setup-deck-assignment-head { gap:10px; padding-bottom:4px; }
 .shell-surface .setup-deck-assignment h3 { margin:0; font-size:20px; }
 .shell-surface .setup-deck-assignment p { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:9px; }
@@ -232,7 +233,7 @@
 .shell-surface .setup-deck-preset-copy strong { font-size:10px; }
 .shell-surface .setup-deck-preset-copy small { font-size:7px; }
 .shell-surface .setup-deck-preset-icons img { width:20px; height:20px; }
-.shell-surface .setup-assigned-deck-preview { padding:5px 6px; }
+.shell-surface .setup-assigned-deck-preview { padding:6px 8px; flex:1 1 auto; min-height:0; }
 .shell-surface .setup-assigned-deck-summary { margin-bottom:4px; font-size:8px; }
 .shell-surface .setup-assigned-card-icons { grid-template-columns:repeat(20,minmax(0,1fr)); gap:3px; }
 .shell-surface .setup-assigned-card-icon { height:32px; aspect-ratio:auto; }
@@ -252,7 +253,7 @@
 .shell-surface .setup-command-team-label {
   display:flex; align-items:center; justify-content:center; flex:0 0 46px;
   width:46px; height:38px; color:#8fc8ff; text-align:center;
-  font:700 8px/1.15 var(--shell-body); letter-spacing:.08em;
+  font:700 9px/1.2 var(--shell-body); letter-spacing:.1em;
 }
 .shell-surface .setup-command-team-player .setup-team-slots {
   flex:1 1 auto; justify-content:flex-start; width:auto;
@@ -394,3 +395,14 @@
   border: 2px solid #222c3f;
   background: #0b0f18;
 }
+
+/* Rival team slots — red accent to distinguish from player blue */
+.shell-surface .setup-team-slot-rival.active { border-color:#ef8d95; box-shadow:inset 3px 0 #ef8d95; }
+.shell-surface .setup-team-slot-rival .setup-team-slot-btn { border-color:#5a3845; }
+.shell-surface .setup-team-slot-rival .setup-team-slot-num { color:#d4939a; }
+.shell-surface .setup-team-slot-rival .setup-team-slot-name { color:#f3ead6; }
+.shell-surface .setup-team-slot-rival .setup-team-slot-form { color:#f2a2a9; }
+.shell-surface .setup-team-slot-add-rival { border-color:#5a3845; color:#f2a2a9; }
+.shell-surface .setup-team-slot-add-rival:hover { border-color:#ef8d95; color:white; }
+.shell-surface .setup-command-team-rival { flex:1 1 390px; }
+.shell-surface .setup-command-team-rival .setup-team-slots { flex:1 1 auto; justify-content:flex-start; width:auto; }
