@@ -216,7 +216,7 @@
 .shell-surface .setup-details-growth-disclosure { margin-top:0; }
 .shell-surface .setup-details-growth-disclosure summary { padding-top:1px; font-size:9px; }
 .shell-surface .setup-limits { grid-column:2; grid-row:2; height:176px; padding:10px 12px; display:flex; flex-direction:column; overflow:auto; scrollbar-width:thin; }
-.shell-surface .setup-limits-slots { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:6px; }
+.shell-surface .setup-limits-slots { display:flex; flex-direction:column; gap:6px; }
 .shell-surface .setup-limit-slot { min-height:52px; height:52px; padding:8px 10px; }
 .shell-surface .setup-limit-slot-card { gap:5px; }
 .shell-surface .setup-limit-slot-card b { font-size:11px; }
@@ -235,10 +235,10 @@
 .shell-surface .setup-deck-preset-icons img { width:20px; height:20px; }
 .shell-surface .setup-assigned-deck-preview { padding:6px 8px; flex:1 1 auto; min-height:0; }
 .shell-surface .setup-assigned-deck-summary { margin-bottom:4px; font-size:8px; }
-.shell-surface .setup-assigned-card-icons { grid-template-columns:repeat(20,minmax(0,1fr)); gap:3px; }
-.shell-surface .setup-assigned-card-icon { height:32px; aspect-ratio:auto; }
-.shell-surface .setup-assigned-card-icon img { padding:1px; }
-.shell-surface .setup-assigned-card-icon span { min-width:10px; font-size:6px; }
+.shell-surface .setup-assigned-card-icons { grid-template-columns:repeat(10,minmax(0,1fr)); gap:4px 3px; }
+.shell-surface .setup-assigned-card-icon { height:34px; aspect-ratio:auto; }
+.shell-surface .setup-assigned-card-icon img { padding:2px; }
+.shell-surface .setup-assigned-card-icon span { min-width:11px; font-size:7px; }
 
 /* Battle command strip: the reading order is unambiguous — player team,
    active form, rival team. The shared Dev builder keeps its own composition. */
@@ -407,5 +407,7 @@
 .shell-surface .setup-team-slot-rival .setup-team-slot-form { color:#f2a2a9; }
 .shell-surface .setup-team-slot-add-rival { border-color:#5a3845; color:#f2a2a9; }
 .shell-surface .setup-team-slot-add-rival:hover { border-color:#ef8d95; color:white; }
-.shell-surface .setup-command-team-rival { flex:1 1 390px; }
-.shell-surface .setup-command-team-rival .setup-team-slots { flex:1 1 auto; justify-content:flex-start; width:auto; }
+.shell-surface .setup-command-team-rival { flex:1 1 390px; direction:rtl; }
+.shell-surface .setup-command-team-rival > * { direction:ltr; }
+.shell-surface .setup-command-team-rival .setup-team-slots { flex:1 1 auto; justify-content:flex-end; width:auto; flex-direction:row-reverse; }
+.shell-surface .setup-command-team-rival .setup-command-team-label { order:999; }

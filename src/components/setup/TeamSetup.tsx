@@ -147,8 +147,8 @@ export function TeamSetup({
             />
           ) : null}
           <div className="setup-command-team setup-command-team-rival" role="group" aria-label="Rival team">
-            <span className="setup-command-team-label setup-enemy-label">RIVAL TEAM</span>
             {rivalSlots}
+            <span className="setup-command-team-label setup-enemy-label">RIVAL TEAM</span>
           </div>
           {rivalActive ? rivalFormSelector : null}
         </div>
