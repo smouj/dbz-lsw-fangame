@@ -8,9 +8,10 @@
 
 import { useMemo } from 'react';
 import { ROM_ORDERED_CHARACTERS, getCharacter, getForm } from '../../data/roster';
+import { baseFormIdOf } from './setupLogic';
 import { overworldUrl } from '../../data/overworld';
 import { battleOverworldActorUrl } from '../../data/battleOverworld';
-import { rosterPortraitAsset } from '../../data/rosterPortraits';
+import { resolveBattlePortraitStrict } from '../../data/portraitResolvers';
 import type { SavedDeck } from '../../data/deckLibrary';
 import { CharacterRoll, type RollCharacterAsset } from './CharacterRoll';
 import { FormSelector } from './FormSelector';
@@ -55,7 +56,9 @@ export function TeamSetup({
 
   const rollItems = useMemo<RollCharacterAsset[]>(() =>
     ROM_ORDERED_CHARACTERS.map(c => {
-      const baseFormId = c.forms[0];
+      // La forma BASE es la declarada en el roster (piccolo_base/Normal), NO
+      // forms[0] del orden ROM (romFormId: piccolo_evil=4 < piccolo_base=5).
+      const baseFormId = baseFormIdOf(c.id);
       return {
         characterId: c.id,
         name: c.name,
@@ -88,17 +91,17 @@ export function TeamSetup({
   return (
     <div className="page-screen setup-screen" data-testid="team-setup">
       <div className="setup-workshop">
-      {/* Team slots — el roll se reutiliza para cada miembro */}
+      {/* Team slots — Battle Setup consumes Battle portraits only. */}
       <div className="setup-team-slots" data-testid="team-slots">
         {state.members.map((m, i) => {
           const char = getCharacter(m.characterId);
           const form = getForm(m.formId);
-          const portrait = rosterPortraitAsset(m.characterId, m.formId);
+          const portrait = resolveBattlePortraitStrict(m.formId);
           return (
             <div key={i} className={`setup-team-slot${i === state.activeMember ? ' active' : ''}`}>
               <button type="button" className="setup-team-slot-btn"
                 onClick={() => setup.setActiveMember(i)}>
-                {portrait.url ? <img className={`setup-team-slot-portrait ${portrait.source}`} src={portrait.url} alt="" draggable={false} /> : null}
+                {portrait.url ? <img className="setup-team-slot-portrait battle" src={portrait.url} alt="" draggable={false} /> : null}
                 <span className="setup-team-slot-copy">
                   <span className="setup-team-slot-num">SLOT {i + 1}</span>
                   <span className="setup-team-slot-name">{char?.name ?? '—'}</span>

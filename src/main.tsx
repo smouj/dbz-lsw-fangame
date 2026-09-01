@@ -16,7 +16,6 @@ import { FORMS, CHARACTERS, ROM_ORDERED_CHARACTERS, getCharacter, getForm, idleS
 import { STORY_ENEMY_DECKS, STORY_AI_BOOSTS, TEAM_BATTLES } from './data/enemy_decks';
 import { facingFlip, needsFlip } from './data/facing';
 import { BattlePosition, POSITION_DATA, resolveRelativeDistance, isBeamVulnerable, isDamageVulnerable, anchorFor, applyMoveAxis, positionLabel, type MoveAxis } from './data/positions';
-import { BATTLE_PORTRAITS } from './data/battlePortraits';
 import { UNLOCK_KEY, STARTER_DAMAGE_DECK, STARTER_BEAM_DECK, STARTER_CHARACTERS, cardsForLevel, pickRewards, VS_UNLOCKS, isFormUnlocked, FORM_UNLOCK_LEVELS } from './data/unlocks';
 import { CARDS, CARD_COLORS, CARD_COLORS_ON_LIGHT, CARD_TYPE_NAMES, CardDef, CardType, DECK_SIZE, MAX_COPIES, getCard, CardEffect } from './data/cards';
 import {
@@ -41,7 +40,6 @@ import {
 import { resolveHitBlockAvoid, attackDamage } from './battle/combat';
 import { CARD_FRAME_BY_TYPE, CARD_FRAME_SELECTED, CARD_FRAME_DISABLED } from './data/cardVisuals';
 import { cardIconUrl, MENU_PORTRAITS, TYPE_ICONS } from './data/icons';
-import { resolveSpeakerPortrait } from './data/speakerPortraits';
 import { FitArt } from './components/FitArt';
 import { CardArtHole } from './components/CardArtHole';
 import { StageHudPanel } from './components/StageHudPanel';
@@ -49,12 +47,12 @@ import { GameViewport } from './components/GameViewport';
 import { TeamSetup } from './components/setup/TeamSetup';
 
 import { useTeamSetupState } from './components/setup/useTeamSetupState';
+import { baseFormIdOf } from './components/setup/setupLogic';
 import type { TeamMember, TeamSetupResult } from './components/setup/teamSetupTypes';
 import { overworldUrl } from './data/overworld';
 import { battleOverworldActorUrl, battleOverworldAuraUrl } from './data/battleOverworld';
 import { panelsForChapter, type StoryPanel, characterName } from './data/storyPanels';
-import { storyPortraitUrl } from './data/storyPortraits';
-import { rosterPortraitAsset } from './data/rosterPortraits';
+import { resolveBattlePortraitStrict, resolveStoryPortraitStrict } from './data/portraitResolvers';
 import { spriteManifestUrl, spriteFrameUrl, spriteDirFor } from './data/spriteManifest';
 import { SCENARIOS, SPECIAL_ACTION_BACKGROUND, type BattleViewMode } from './data/scenarios';
 import { stageForChapter, BATTLE_STAGES } from './data/battleBackgrounds';
@@ -187,6 +185,7 @@ function cardProjectileClass(card: CardDef): string {
 
 interface Fighter {
   id: string;
+  formId: string;
   name: string;
   form: string;
   level: number;
@@ -203,6 +202,7 @@ interface Fighter {
 function fighterToReact(f: BattleFighterState): Fighter {
   return {
     id: getForm(f.id)?.character ?? f.id,
+    formId: f.id,
     name: f.name, form: f.form, level: f.level,
     maxHp: f.maxHp, hp: f.hp, str: f.str, ki: f.ki, spd: f.spd,
     maxCc: f.maxCc, cc: f.cc, battlePos: f.battlePos,
@@ -210,19 +210,9 @@ function fighterToReact(f: BattleFighterState): Fighter {
   };
 }
 
-// ─── Retratos (Sprite Database) ────────────────────────────
-const PORTRAITS: Record<string, string> = MENU_PORTRAITS;
-
-// Alias de personajes separados → retrato del personaje base (GBC)
-const CHAR_PORTRAIT_ALIAS: Record<string, string> = {
-  gohan_kid: 'gohan', gohan_adult: 'gohan',
-  trunks_kid: 'trunks', trunks_future: 'trunks',
-};
-
-function portraitFor(charId: string, formId?: string): string | undefined {
-  // Prioridad: retrato de BATALLA pixel-perfect por formId (32×24 del GBC)
-  if (formId && BATTLE_PORTRAITS[formId]) return BATTLE_PORTRAITS[formId];
-  return PORTRAITS[CHAR_PORTRAIT_ALIAS[charId] ?? charId];
+// ─── Retratos de batalla: dominio estricto por formId ─────
+function battlePortraitFor(formId: string): string | undefined {
+  return resolveBattlePortraitStrict(formId).url;
 }
 
 // ─── Sistema de cartas para batalla ───────────────────────
@@ -697,7 +687,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, onE
 
   const [player, setPlayer] = useState<Fighter>(() => {
     const base: Fighter = {
-      id: pf.character, name: getCharacter(pf.character)?.name || pf.character, form: pf.form,
+      id: pf.character, formId: playerFormId, name: getCharacter(pf.character)?.name || pf.character, form: pf.form,
       level: prog.level, maxHp: pf.hp, hp: pf.hp,
       str: pf.str, ki: pf.ki, spd: pf.spd, maxCc: 99, cc: 10,
       battlePos: BattlePosition.DOWN_BACK, battleId: pf.battleId,
@@ -714,7 +704,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, onE
     if (!teamBattle?.ally) return null;
     const af = getForm(teamBattle.ally)!;
     const base: Fighter = {
-      id: af.character, name: getCharacter(af.character)?.name || af.character, form: af.form,
+      id: af.character, formId: teamBattle.ally, name: getCharacter(af.character)?.name || af.character, form: af.form,
       level: prog.level, maxHp: af.hp, hp: af.hp,
       str: af.str, ki: af.ki, spd: af.spd, maxCc: 99, cc: 10,
       battlePos: BattlePosition.DOWN_BACK, limits: [],
@@ -726,7 +716,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, onE
     const ef2 = getForm(teamBattle.enemy2)!;
     const b2 = storyChapter ? STORY_AI_BOOSTS[storyChapter] : null;
     const base: Fighter = {
-      id: ef2.character, name: getCharacter(ef2.character)?.name || ef2.character, form: ef2.form,
+      id: ef2.character, formId: teamBattle.enemy2, name: getCharacter(ef2.character)?.name || ef2.character, form: ef2.form,
       level: aiLevel, maxHp: ef2.hp + (b2?.hp || 0), hp: ef2.hp + (b2?.hp || 0),
       str: ef2.str + (b2?.str || 0), ki: ef2.ki + (b2?.ki || 0), spd: ef2.spd + (b2?.spd || 0),
       maxCc: 99, cc: 10, battlePos: BattlePosition.DOWN_BACK, limits: [],
@@ -737,7 +727,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, onE
     // Story mode: stats FIJOS del jefe + su AI boost real (spreadsheet oficial)
     const boost = storyChapter ? STORY_AI_BOOSTS[storyChapter] : null;
     const base: Fighter = {
-      id: ef.character, name: getCharacter(ef.character)?.name || ef.character, form: ef.form,
+      id: ef.character, formId: enemyFormId, name: getCharacter(ef.character)?.name || ef.character, form: ef.form,
       level: aiLevel, maxHp: ef.hp + (boost?.hp || 0), hp: ef.hp + (boost?.hp || 0),
       str: ef.str + (boost?.str || 0), ki: ef.ki + (boost?.ki || 0), spd: ef.spd + (boost?.spd || 0),
       maxCc: 99, cc: 10,
@@ -950,7 +940,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, onE
   useEffect(() => {
     const urls = [
       overworldUrl(playerFormId), overworldUrl(enemyFormId),
-      BATTLE_PORTRAITS[playerFormId], BATTLE_PORTRAITS[enemyFormId],
+      resolveBattlePortraitStrict(playerFormId).url, resolveBattlePortraitStrict(enemyFormId).url,
       scenario.overviewBackground, scenario.actionBackground,
     ].filter((u): u is string => !!u);
     // Formas a precargar (incluye aliado y 2º jefe en combates 2v2).
@@ -3184,14 +3174,14 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, onE
         <div className="battle-intro">
           <div className="intro-fighter intro-left">
             <div className="intro-portrait">
-              <img src={portraitFor(player.id, activePlayerFormId) || ''} alt={player.name}
+              <img src={battlePortraitFor(activePlayerFormId) || ''} alt={player.name}
                 onError={e => (e.currentTarget.style.display = 'none')} />
             </div>
           </div>
           <div className="intro-vs">{t('battle.vs')}</div>
           <div className="intro-fighter intro-right">
             <div className="intro-portrait">
-              <img src={portraitFor(enemy.id, enemyFormId) || ''} alt={enemy.name}
+              <img src={battlePortraitFor(enemyFormId) || ''} alt={enemy.name}
                 onError={e => (e.currentTarget.style.display = 'none')} />
             </div>
           </div>
@@ -3272,8 +3262,8 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, onE
             ['desc', `POS: ${player.battlePos.replace('_', ' ')}`],
           ])}>
             <span className="hud-portrait">
-              <img src={portraitFor(player.id, activePlayerFormId) || ''} alt="" onError={e => (e.currentTarget.style.display = 'none')} />
-              {!portraitFor(player.id) && <Sword size={14} />}
+              <img src={battlePortraitFor(activePlayerFormId) || ''} alt="" onError={e => (e.currentTarget.style.display = 'none')} />
+              {!battlePortraitFor(activePlayerFormId) && <Sword size={14} />}
             </span>
             <strong>{player.name}</strong>
             <span className="hud-form">{player.form}</span>
@@ -3281,7 +3271,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, onE
             {player2 && (
               <span className="team-reserve left in-name" data-tip={tipBlock(`${player2.name}`, [['stats', `HP ${player2.hp}/${player2.maxHp}`]])}>
                 <span className="team-reserve-portrait">
-                  <img src={portraitFor(player2.id) || ''} alt="" onError={e => (e.currentTarget.style.display = 'none')} />
+                  <img src={battlePortraitFor(player2.formId) || ''} alt="" onError={e => (e.currentTarget.style.display = 'none')} />
                 </span>
                 <span className="team-reserve-name">{player2.name}</span>
                 <span className="team-reserve-hp">{player2.hp}/{player2.maxHp}</span>
@@ -3321,8 +3311,8 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, onE
             ['desc', `POS: ${enemy.battlePos.replace('_', ' ')}`],
           ])}>
             <span className="hud-portrait">
-              <img src={portraitFor(enemy.id, enemyFormId) || ''} alt="" onError={e => (e.currentTarget.style.display = 'none')} />
-              {!portraitFor(enemy.id) && <Shield size={14} />}
+              <img src={battlePortraitFor(enemyFormId) || ''} alt="" onError={e => (e.currentTarget.style.display = 'none')} />
+              {!battlePortraitFor(enemyFormId) && <Shield size={14} />}
             </span>
             <strong>{enemy.name}</strong>
             <span className="hud-form">{enemy.form}</span>
@@ -3330,7 +3320,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, onE
             {enemy2 && (
               <span className="team-reserve right in-name" data-tip={tipBlock(`${enemy2.name}`, [['stats', `HP ${enemy2.hp}/${enemy2.maxHp}`]])}>
                 <span className="team-reserve-portrait">
-                  <img src={portraitFor(enemy2.id) || ''} alt="" onError={e => (e.currentTarget.style.display = 'none')} />
+                  <img src={battlePortraitFor(enemy2.formId) || ''} alt="" onError={e => (e.currentTarget.style.display = 'none')} />
                 </span>
                 <span className="team-reserve-name">{enemy2.name}</span>
                 <span className="team-reserve-hp">{enemy2.hp}/{enemy2.maxHp}</span>
@@ -3469,7 +3459,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, onE
             ? getForm(enemyFormId)?.character ?? 'goku'
             : getForm(activePlayerFormId)?.character ?? 'goku';
           const speakerForm = isEnemy ? enemyFormId : activePlayerFormId;
-          const spriteUrl = resolveSpeakerPortrait(speakerChar, speakerForm);
+          const spriteUrl = resolveStoryPortraitStrict(speakerChar, speakerForm).url;
           return (
             <div className={`gbc-dialogue speaker-${side ?? 'none'}`} key={gbcMsg}>
               <GbcDialogueText msg={gbcMsg} side={side} spriteUrl={spriteUrl} />
@@ -3633,7 +3623,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, onE
              componente, misma geometría (portrait fijo · track centrado ·
              timer fijo). NUNCA volver a componer el QTE a mano en main.tsx. */
           <StageHudPanel
-            portraitUrl={resolveSpeakerPortrait(player.id, activePlayerFormId) ?? ''}
+            portraitUrl={resolveBattlePortraitStrict(activePlayerFormId).url ?? ''}
             seq={q.seq}
             idx={q.idx}
             state={q.state}
@@ -4314,7 +4304,7 @@ function StorySceneScreen({ chapter, phase, onFinish, onNavigate }: {
               // — la emoción del DIÁLOGO (guion V2) manda sobre la del personaje
               const isSpeaker = hasDialogue && speakingIdx === i;
               const emo = isSpeaker && panel.dialogue?.emotion ? panel.dialogue.emotion : c.emotion;
-              const url = storyPortraitUrl(c.character, c.form, emo) || MENU_PORTRAITS[CHAR_PORTRAIT_ALIAS[c.character] ?? c.character];
+              const url = resolveStoryPortraitStrict(c.character, c.form, emo).url;
               const nChars = panel.characters?.length ?? 0;
               const side = c.side ?? (nChars === 1 ? 'center' : i === 0 ? 'left' : 'right');
               return (
@@ -4397,8 +4387,7 @@ function CharactersScreen({ onNavigate, onSelectFighter }: {
   const selUnlocked = isCharacterUnlocked(selChar.id);
   const unlockedForms = selChar.forms.filter(fid => isFormUnlocked(fid, loadProgress().level)).length;
   const profile = statProfile(sel);
-  const identityPortrait = rosterPortraitAsset(selChar.id, selected);
-  const battlePortrait = BATTLE_PORTRAITS[selected];
+  const identityPortrait = resolveBattlePortraitStrict(selected);
   const owPortrait = overworldUrl(selected);
 
   return (
@@ -4408,8 +4397,8 @@ function CharactersScreen({ onNavigate, onSelectFighter }: {
         {/* Grid de personajes: solo desbloqueados; bloqueados con candado */}
         <div className="char-grid">
           {ROM_ORDERED_CHARACTERS.map(c => {
-            const baseForm = getForm(c.forms[0])!;
-            const portrait = rosterPortraitAsset(c.id, baseForm.id);
+            const baseForm = getForm(baseFormIdOf(c.id))!;
+            const portrait = resolveBattlePortraitStrict(baseForm.id);
             const active = c.id === sel.character;
             const unlocked = isCharacterUnlocked(c.id);
             if (!unlocked) {
@@ -4425,7 +4414,7 @@ function CharactersScreen({ onNavigate, onSelectFighter }: {
               <button key={c.id} className={`char-cell ui-char-card ${active ? 'active' : ''}`}
                 onClick={() => setSelected(baseForm.id)}>
                 <span className="char-thumb-frame">
-                  {portrait.url ? <img className={`char-thumb-story ${portrait.source}`} src={portrait.url} alt="" draggable={false} /> : null}
+                  {portrait.url ? <img className="char-thumb-story battle" src={portrait.url} alt="" draggable={false} /> : null}
                 </span>
                 <div className="char-name">{c.name}</div>
                 <div className="char-forms">{c.forms.length} {t('characters.forms')}</div>
@@ -4441,8 +4430,8 @@ function CharactersScreen({ onNavigate, onSelectFighter }: {
             <div className={`char-detail-sprite-wrap ${transformFx ? 'transforming' : ''}`} key={transformFx}>
               {transformFx > 0 && <div className="transform-flash" />}
               <div className="char-identity-story">
-                {identityPortrait.url ? <img className={identityPortrait.source} src={identityPortrait.url} alt={`${selChar.name} ${sel.form}`} draggable={false} /> : null}
-                <span>{identityPortrait.source === 'story' ? 'STORY PORTRAIT' : identityPortrait.source === 'battle' ? 'BATTLE PORTRAIT' : 'CHARACTER PORTRAIT'}</span>
+                {identityPortrait.url ? <img className="battle" src={identityPortrait.url} alt={`${selChar.name} ${sel.form}`} draggable={false} /> : null}
+                <span>BATTLE PORTRAIT</span>
               </div>
               <div className="char-identity-combat">
                 <div className="transform-aura" />
@@ -4459,12 +4448,6 @@ function CharactersScreen({ onNavigate, onSelectFighter }: {
           </div>
 
           <div className="char-asset-rail" aria-label="Character sprite sources">
-            {battlePortrait && identityPortrait.source !== 'battle' ? (
-              <div className="char-asset-chip">
-                <img src={battlePortrait} alt="" draggable={false} />
-                <span><b>BATTLE</b> HUD PORTRAIT</span>
-              </div>
-            ) : null}
             {owPortrait ? (
               <div className="char-asset-chip ow">
                 <img src={owPortrait} alt="" draggable={false} />

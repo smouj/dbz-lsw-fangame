@@ -30,7 +30,7 @@ import {
 } from '../battle/characterFrameMap';
 import { BATTLE_PORTRAITS } from '../data/battlePortraits';
 import { MENU_PORTRAITS } from '../data/icons';
-import { STORY_PORTRAITS, storyPortraitUrl } from '../data/storyPortraits';
+import { STORY_PORTRAITS, storyPortraitUrlApproximate as storyPortraitUrl } from '../data/storyPortraits';
 import { overworldUrl } from '../data/overworld';
 import { battleOverworldActorUrl, battleOverworldAuraUrlAsync } from '../data/battleOverworld';
 import { characterName } from '../data/storyPanels';

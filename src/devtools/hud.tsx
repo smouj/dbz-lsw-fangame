@@ -19,7 +19,7 @@ import { BATTLE_STAGES } from '../data/battleBackgrounds';
 import { getForm } from '../data/roster';
 import { spriteDirFor, spriteFrameUrl } from '../data/spriteManifest';
 import { BATTLE_PORTRAITS } from '../data/battlePortraits';
-import { storyPortraitUrl } from '../data/storyPortraits';
+import { storyPortraitUrlApproximate as storyPortraitUrl } from '../data/storyPortraits';
 import { resolveSpeakerPortrait } from '../data/speakerPortraits';
 import { anchorFor, BattlePosition, actionAnchorFor } from '../data/positions';
 import { downloadJson } from './spriteEditing';

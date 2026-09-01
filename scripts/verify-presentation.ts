@@ -186,19 +186,26 @@ check('M7: facing — actor player → scaleX 1 · actor enemy → scaleX −1',
 // ── M8.P0: PARIDAD DE RETRATO Stage ↔ Diálogo ──
 // El Stage/QTE y el Diálogo deben resolver el retrato con la MISMA cadena
 // canónica (resolveSpeakerPortrait) → mismo asset para el mismo personaje.
+// Contrato de aislamiento de dominios: la cadena es Story-estricta — un
+// formId inexistente (p.ej. 'cell_base') es MISSING, NUNCA se aproxima a
+// otra forma (la aproximación cross-form era el comportamiento LEGACY).
 {
   const goku = resolveSpeakerPortrait('goku', 'goku_base');
-  const cell = resolveSpeakerPortrait('cell', 'cell_base');
+  const cell = resolveSpeakerPortrait('cell', 'cell_perfect');
   const gokuNoForm = resolveSpeakerPortrait('goku');
+  const cellBaseMissing = resolveSpeakerPortrait('cell', 'cell_base'); // formId inexistente
   // El paquete real de 137 retratos usa convención story/{id}.png (goku_01,
   // cell_perfect_01) — NO la vieja 'Goku_Normal'/'Cell_Perfect'. El check
   // valida la cadena real: retrato de STORY (no battle 32×24) por forma.
   check('M8.P0: retrato Goku base → story portrait de la viñeta GBC (no battle 32×24)',
     !!goku && goku.includes('portraits/story') && !goku.includes('/battle/'));
-  check('M8.P0: retrato Cell base → story portrait de la viñeta GBC',
+  check('M8.P0: retrato Cell Perfect → story portrait de la viñeta GBC',
     !!cell && cell.includes('portraits/story') && cell.includes('cell_perfect'));
   check('M8.P0: retrato Goku sin forma → mismo asset base (fallback por personaje)',
     !!gokuNoForm && gokuNoForm === goku);
+  // Aislamiento de dominios: formId inexistente ⇒ MISSING (nunca aproximar).
+  check('M8.P0: formId inexistente (cell_base) ⇒ MISSING, sin aproximación cross-form',
+    cellBaseMissing === undefined);
   // La cadena canónica NUNCA devuelve un BATTLE_PORTRAITS (32×24 GBC): esos
   // retratos son para el HUD de batalla, no para el marco 57×80 del speaker.
   check('M8.P0: la cadena canónica no cae en battlePortraits',

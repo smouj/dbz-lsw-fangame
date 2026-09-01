@@ -12,12 +12,19 @@
 //   └─ SHEET      → sheet fuente (referencia HISTÓRICA V9 — NO autoridad
 //                   física; la autoridad P0 es rom-physical.manifest.json
 //                   + provenance.json + ROM trace)
+//
+// Portrait contract: this diagnostic bundle keeps Story/Battle/Menu in
+// independent labelled fields. It never chooses one domain as fallback for
+// another, and the current Story form uses the strict resolver.
 // ═══════════════════════════════════════════════════════════════════════
 
 import { spriteDirFor, spriteManifestUrl, resolvePoseInfo } from './spriteManifest';
-import { BATTLE_PORTRAITS } from './battlePortraits';
-import { MENU_PORTRAITS } from './icons';
-import { STORY_PORTRAITS, storyPortraitUrl } from './storyPortraits';
+import { STORY_PORTRAITS } from './storyPortraits';
+import {
+  resolveBattlePortraitStrict,
+  resolveMenuPortrait,
+  resolveStoryPortraitStrict,
+} from './portraitResolvers';
 import { overworldUrl } from './overworld';
 import { battleOverworldActorUrl, battleOverworldAuraUrlAsync } from './battleOverworld';
 import { COMBAT_POSE_ORDER, combatPoseMeta } from '../battle/spriteConfig';
@@ -75,7 +82,9 @@ export function getCharacterAssetBundle(characterId: string, formId: string): Ch
   const spriteDir = spriteDirFor(formId);
   const charKey = form?.character ?? characterId;
 
-  // Story: todas las variantes REALES del personaje (base + emociones + formas)
+  // Dev/diagnostic Story rail: all real variants remain in the Story column.
+  // The exact current form is resolved strictly and never substituted by a
+  // neighbouring transformation.
   const story: StoryPortraitAsset[] = [];
   const seen = new Set<string>();
   const pushStory = (url: string | undefined, label: string) => {
@@ -89,15 +98,15 @@ export function getCharacterAssetBundle(characterId: string, formId: string): Ch
     for (const [k, v] of Object.entries(entry.emotions ?? {})) pushStory(v, `story ${k}`);
     for (const [k, v] of Object.entries(entry.forms ?? {})) pushStory(v, `story ${k}`);
   }
-  pushStory(storyPortraitUrl(charKey, formId), 'story forma actual');
+  pushStory(resolveStoryPortraitStrict(charKey, formId).url, 'story forma actual exacta');
 
   return {
     characterId,
     formId,
     spriteDir,
     portraits: {
-      battle: BATTLE_PORTRAITS[formId],
-      menu: MENU_PORTRAITS[characterId],
+      battle: resolveBattlePortraitStrict(formId).url,
+      menu: resolveMenuPortrait(characterId).url,
       story,
     },
     overworld: {
@@ -154,6 +163,6 @@ export async function resolveBundlePoses(
 /**
  * M8.P0 — RETRATO CANÓNICO del hablante. Vive en ./speakerPortraits (módulo
  * ligero, sin battleOverworld) para que los verify headless lo importen;
- * aquí se re-exporta por compatibilidad con consumidores del bundle.
+ * aquí se re-exporta por compatibilidad con consumidores Story.
  */
 export { resolveSpeakerPortrait } from './speakerPortraits';

@@ -6,6 +6,7 @@
 // ═══════════════════════════════════════════════════════════════════════
 
 import { getCharacter, getForm, statAtLevel } from '../../data/roster';
+import { resolveBattlePortraitStrict } from '../../data/portraitResolvers';
 
 export interface CharacterDetailsProps {
   formId: string;
@@ -24,11 +25,16 @@ export function CharacterDetails({ formId, level = 1 }: CharacterDetailsProps) {
   const form = getForm(formId);
   if (!form) return null;
   const char = getCharacter(form.character);
+  // Battle Setup consumes Battle portraits only (domain isolation contract).
+  const portrait = resolveBattlePortraitStrict(form.id);
   const pct = (v: number) => Math.min(100, Math.round((v / 40) * 100));
 
   return (
     <div className="setup-details" data-testid="character-details">
       <div className="setup-details-head">
+        {portrait.url ? (
+          <img className="setup-details-portrait battle" src={portrait.url} alt="" draggable={false} />
+        ) : null}
         <span className="setup-details-name">{char?.name ?? form.character}</span>
         <span className="setup-details-form">{form.form}</span>
         {form.rom ? <span className="setup-details-rom">ROM: {form.rom}</span> : null}

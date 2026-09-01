@@ -1,0 +1,52 @@
+name: Portrait Domain Final Verification
+
+on:
+  push:
+    branches:
+      - fix/portrait-domain-isolation
+
+permissions:
+  contents: write
+
+jobs:
+  verify:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - name: Remove deprecated Story compatibility alias
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p = Path('src/data/storyPortraits.ts')
+          s = p.read_text()
+          s = s.replace(
+              "\n/** @deprecated Diagnostic compatibility alias. Never use in production rendering. */\nexport const storyPortraitUrl = storyPortraitUrlApproximate;\n",
+              "\n",
+          )
+          s = s.replace(
+              "// Future Trunks SSJ y Goku SSJ3, por ejemplo, no tienen retrato Story dedicado\n// en este corpus y deben caer al retrato físico verificado más cercano.\n",
+              "// Una forma sin retrato Story exacto permanece MISSING en producción; nunca se\n// sustituye silenciosamente por otra transformación ni por Battle/Menu.\n",
+          )
+          p.write_text(s)
+          PY
+      - name: Full repository verification
+        run: npm run verify:ci
+      - name: Commit final Story cleanup
+        run: |
+          if git diff --quiet; then
+            echo "No cleanup diff"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "[redacted-email]"
+          git add src/data/storyPortraits.ts
+          git commit -m "refactor(portraits): remove approximate Story compatibility alias [skip ci]"
+          git push

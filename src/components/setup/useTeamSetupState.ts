@@ -10,7 +10,7 @@ import { ROM_ORDERED_CHARACTERS, getCharacter, getForm } from '../../data/roster
 import { getLimitCapacity, normalizeLoadout } from '../../data/limitLoadout';
 import { DECK_SIZE, getCard } from '../../data/cards';
 import { cardUsableByCharacter } from '../../data/cardCompatibility';
-import { cleanLimitsFor, defaultJointDeck, makeMember } from './setupLogic';
+import { cleanLimitsFor, defaultJointDeck, makeMember, baseFormIdOf } from './setupLogic';
 import type { TeamMember, TeamSetupResult, TeamSetupState } from './teamSetupTypes';
 
 export interface UseTeamSetupStateArgs {
@@ -117,7 +117,8 @@ export function useTeamSetupState({ fallbackDeck, initialCharacterId, initialFor
       const next = s.members.length;
       const prev = s.members[next - 1];
       const char = ROM_ORDERED_CHARACTERS[next % ROM_ORDERED_CHARACTERS.length];
-      const m = makeMember(char.id, char.forms[0], prev.jointDeck);
+      // Forma base por declaración (piccolo_base/Normal), no forms[0] del orden ROM
+      const m = makeMember(char.id, baseFormIdOf(char.id), prev.jointDeck);
       if (strictDeckAssignment) m.jointDeck = [...prev.jointDeck];
       m.deckId = prev.deckId;
       return { ...s, members: [...s.members, m], activeMember: next, selectedCharacter: char.id };

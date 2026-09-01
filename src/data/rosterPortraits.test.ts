@@ -1,18 +1,25 @@
 import { describe, expect, it } from 'vitest';
 import { CHARACTERS } from './roster';
-import { rosterPortraitAsset } from './rosterPortraits';
+import {
+  resolveBattlePortraitStrict,
+  resolveStoryPortraitStrict,
+} from './portraitResolvers';
+import { rosterPortraitDiagnostics } from './rosterPortraits';
 
-describe('roster portrait policy', () => {
-  it('resolves every playable form to a real portrait asset', () => {
+describe('portrait domain isolation', () => {
+  it('resolves every playable Battle form only through the Battle domain', () => {
     for (const character of CHARACTERS) {
       for (const formId of character.forms) {
-        const portrait = rosterPortraitAsset(character.id, formId);
-        expect(portrait.url, `${character.id}/${formId}`).toMatch(/^\/assets\/portraits\//);
+        const portrait = resolveBattlePortraitStrict(formId);
+        expect(portrait.domain).toBe('battle');
+        expect(portrait.status, `${character.id}/${formId}`).toBe('EXACT');
+        expect(portrait.resolvedFormId).toBe(formId);
+        expect(portrait.url, `${character.id}/${formId}`).toMatch(/^\/assets\/portraits\/battle\//);
       }
     }
   });
 
-  it('uses exact Battle portraits when the Story corpus lacks that form', () => {
+  it('keeps missing Story forms missing instead of substituting another transformation', () => {
     for (const [characterId, formId] of [
       ['goku', 'goku_ssj3'],
       ['gohan_adult', 'gohan_adult_ssj2'],
@@ -20,15 +27,30 @@ describe('roster portrait policy', () => {
       ['buu', 'buu_gotenks'],
       ['piccolo', 'piccolo_evil'],
     ]) {
-      const portrait = rosterPortraitAsset(characterId, formId);
-      expect(portrait.source, formId).toBe('battle');
-      expect(portrait.url, formId).toContain(`/battle/${formId === 'gohan_adult_ssj2' ? 'gohan_adult_ssj2' : formId}.png`);
+      const portrait = resolveStoryPortraitStrict(characterId, formId);
+      expect(portrait.domain).toBe('story');
+      expect(portrait.status, formId).toBe('MISSING');
+      expect(portrait.url, formId).toBeUndefined();
+      expect(portrait.resolvedFormId, formId).toBeUndefined();
     }
   });
 
-  it('prefers exact Story portraits when they exist', () => {
-    expect(rosterPortraitAsset('cell', 'cell_imperfect')).toMatchObject({ source: 'story' });
-    expect(rosterPortraitAsset('ginyu', 'ginyu_goku')).toMatchObject({ source: 'story' });
-    expect(rosterPortraitAsset('buu', 'buu_gohan')).toMatchObject({ source: 'story' });
+  it('allows expression fallback only within the exact same Story form', () => {
+    const portrait = resolveStoryPortraitStrict('cell', 'cell_perfect', 'angry');
+    expect(portrait.domain).toBe('story');
+    expect(portrait.status).toBe('EXPRESSION_FALLBACK');
+    expect(portrait.requestedFormId).toBe('cell_perfect');
+    expect(portrait.resolvedFormId).toBe('cell_perfect');
+    expect(portrait.resolvedExpression).toBe('normal');
+    expect(portrait.url).toContain('/story/cell_perfect_01.png');
+  });
+
+  it('exposes Story, Battle and Menu as separate diagnostic columns without choosing a source', () => {
+    const diagnostics = rosterPortraitDiagnostics('goku', 'goku_ssj3');
+    expect(diagnostics.story.status).toBe('MISSING');
+    expect(diagnostics.battle.status).toBe('EXACT');
+    expect(diagnostics.menu.domain).toBe('menu');
+    expect(diagnostics).not.toHaveProperty('source');
+    expect(diagnostics).not.toHaveProperty('url');
   });
 });

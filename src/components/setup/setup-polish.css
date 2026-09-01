@@ -243,3 +243,13 @@
   :is(.shell-surface,.dev-team-builder) :is(.setup-roll-aura,.setup-power-aura-layer) { animation:none; }
   :is(.shell-surface,.dev-team-builder) .setup-roll-aura { opacity:.65; }
 }
+
+/* CharacterDetails — retrato Battle exacto de la forma activa (dominio Battle). */
+.setup-details-portrait {
+  flex: 0 0 40px; width: 40px; height: 44px;
+  object-fit: contain; object-position: center bottom;
+  image-rendering: pixelated;
+  align-self: flex-start;
+  border: 2px solid #222c3f;
+  background: #0b0f18;
+}
