@@ -1,14 +1,16 @@
 // ═══════════════════════════════════════════════════════════════════════
-// useRivalSetupState — estado del Rival Team (espejo de useTeamSetupState)
+// useRivalSetupState — estado del Rival Team (CPU preset, READ-ONLY)
 // ═══════════════════════════════════════════════════════════════════════
-// Capa de CONFIGURACIÓN: NO muta BattleState. Produce rival team en el
-// confirm → BattleConfig → BattleRuntime. Misma interfaz que el player
-// team pero sin edición de decks/limits (la IA usa deck genérico).
+// Capa de CONFIGURACIÓN: NO muta BattleState.
+// Rival = SELECTABLE (choose opponent), INSPECTABLE (see limits/deck),
+// NOT EDITABLE (CPU uses ROM preset).
+// Limits & Deck come from resolveEnemyLoadout() — canonical ROM data.
 // ═══════════════════════════════════════════════════════════════════════
 
 import { useCallback, useMemo, useState } from 'react';
 import { ROM_ORDERED_CHARACTERS, getCharacter, getForm } from '../../data/roster';
 import { getLimitCapacity } from '../../data/limitLoadout';
+import { resolveEnemyLoadout, isLoadoutResolved } from '../../data/enemyLoadouts';
 import { baseFormIdOf, makeMember } from './setupLogic';
 import type { TeamMember, TeamSetupState, TeamSetupResult } from './teamSetupTypes';
 
@@ -17,11 +19,26 @@ export interface UseRivalSetupStateArgs {
   initialFormId?: string;
 }
 
+/** Load ROM preset limits/deck into a TeamMember from resolveEnemyLoadout. */
+function applyRomPreset(member: TeamMember): TeamMember {
+  const preset = resolveEnemyLoadout(member.formId);
+  if (isLoadoutResolved(preset)) {
+    return {
+      ...member,
+      limits: preset.limits,
+      jointDeck: preset.deck,
+      deckId: `cpu-${preset.formId}`,
+    };
+  }
+  // UNRESOLVED: keep whatever defaults makeMember gave
+  return member;
+}
+
 export function useRivalSetupState({ initialFormId = 'piccolo_base' }: UseRivalSetupStateArgs) {
   const initialChar = getForm(initialFormId)?.character ?? 'piccolo';
 
   const [state, setState] = useState<TeamSetupState>(() => {
-    const member = makeMember(initialChar, initialFormId, []);
+    const member = applyRomPreset(makeMember(initialChar, initialFormId, []));
     return { members: [member], activeMember: 0, selectedCharacter: initialChar };
   });
 
@@ -41,24 +58,30 @@ export function useRivalSetupState({ initialFormId = 'piccolo_base' }: UseRivalS
       const cur = s.members[s.activeMember];
       const sameChar = cur.characterId === characterId;
       const formId = sameChar && getForm(cur.formId) ? cur.formId : char.forms[0];
+      // Apply ROM preset for the new form
+      const updated = applyRomPreset({ ...cur, characterId, formId });
       return {
         ...s,
         selectedCharacter: characterId,
-        members: s.members.map((m, i) => i === s.activeMember
-          ? { ...m, characterId, formId }
-          : m),
+        members: s.members.map((m, i) => i === s.activeMember ? updated : m),
       };
     });
   }, []);
 
   const selectForm = useCallback((formId: string) => {
-    updateActive(m => {
+    setState(s => {
       const form = getForm(formId);
-      if (!form) return m;
-      return { ...m, formId, characterId: form.character };
+      if (!form) return s;
+      const cur = s.members[s.activeMember];
+      // Apply ROM preset for the new form
+      const updated = applyRomPreset({ ...cur, formId, characterId: form.character });
+      return {
+        ...s,
+        members: s.members.map((m, i) => i === s.activeMember ? updated : m),
+        selectedCharacter: form.character,
+      };
     });
-    setState(s => ({ ...s, selectedCharacter: getForm(formId)?.character ?? s.selectedCharacter }));
-  }, [updateActive]);
+  }, []);
 
   const setActiveMember = useCallback((i: number) => {
     setState(s => {
@@ -70,12 +93,12 @@ export function useRivalSetupState({ initialFormId = 'piccolo_base' }: UseRivalS
   const addMember = useCallback(() => {
     setState(s => {
       if (s.members.length >= 2) return s; // Battle: máx 2 rivales (GBC 2v2)
-      // Pick first unlocked character not already in the team
+      // Rival can use any form — no unlock gate
       const used = new Set(s.members.map(m => m.characterId));
       const char = ROM_ORDERED_CHARACTERS.find(c => !used.has(c.id)) ?? ROM_ORDERED_CHARACTERS[0];
-      const m = makeMember(char.id, baseFormIdOf(char.id), []);
+      const member = applyRomPreset(makeMember(char.id, baseFormIdOf(char.id), []));
       const next = s.members.length;
-      return { ...s, members: [...s.members, m], activeMember: next, selectedCharacter: char.id };
+      return { ...s, members: [...s.members, member], activeMember: next, selectedCharacter: char.id };
     });
   }, []);
 
@@ -88,35 +111,28 @@ export function useRivalSetupState({ initialFormId = 'piccolo_base' }: UseRivalS
     });
   }, []);
 
-  // ── Limits y Deck (para edición desde Versus cuando rival tiene foco) ──
-  const equipLimit = useCallback((slot: number, cardId: number) => {
-    updateActive(m => {
-      const cap = getLimitCapacity(m.characterId);
-      if (slot < 0 || slot >= cap) return m;
-      const limits = [...m.limits];
-      limits[slot] = cardId;
-      return { ...m, limits };
-    });
-  }, [updateActive]);
+  // ── Limits y Deck: READ-ONLY for rival ──
+  // These callbacks exist for interface compatibility but are no-ops
+  // because rival limits/deck come from ROM presets.
+  // The UI disables editing when rivalActive=true.
+  const equipLimit = useCallback((_slot: number, _cardId: number) => {
+    // NO-OP: rival limits are ROM-prescribed, not player-editable
+  }, []);
 
-  const clearLimitSlot = useCallback((slot: number) => {
-    updateActive(m => {
-      const limits = [...m.limits];
-      if (slot >= 0 && slot < limits.length) limits[slot] = 0;
-      return { ...m, limits };
-    });
-  }, [updateActive]);
+  const clearLimitSlot = useCallback((_slot: number) => {
+    // NO-OP: rival limits are ROM-prescribed, not player-editable
+  }, []);
 
-  const assignDeck = useCallback((deckId: string, cards: number[]) => {
-    updateActive(m => ({ ...m, deckId, jointDeck: cards.slice(0, 20) }));
-  }, [updateActive]);
+  const assignDeck = useCallback((_deckId: string, _cards: number[]) => {
+    // NO-OP: rival deck is ROM-prescribed, not player-editable
+  }, []);
 
   const result = useMemo((): TeamSetupResult => ({
     member: state.members[0],
     team: state.members,
   }), [state.members]);
 
-  const deckValid = true; // Rival deck is always valid (IA uses generic)
+  const deckValid = true; // Rival deck is always valid (ROM preset)
 
   return {
     state,
