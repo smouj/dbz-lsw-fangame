@@ -1,22 +1,22 @@
 // ═══════════════════════════════════════════════════════════════════════
-// M8.P0 — speakerPortraits: RETRATO CANÓNICO del hablante (diálogo GBC y
-// panel de Stage/QTE usan la MISMA cadena → mismo asset, mismo aspecto).
+// Story speaker portraits — PRODUCTION STORY DOMAIN ONLY
 // ═══════════════════════════════════════════════════════════════════════
-// Cadena ÚNICA (la del diálogo de la partida):
-//   1. storyPortraitUrl(char, form)  — retrato de las viñetas GBC (forma)
-//   2. MENU_PORTRAITS[char]          — retrato de menú del personaje
+// This resolver is intentionally Story-only. Stage/QTE and Battle consumers
+// must use resolveBattlePortraitStrict() instead.
 //
-// NUNCA BATTLE_PORTRAITS (32×24 del GBC): esos son los retratos pixel de
-// batalla y NO encajan en el marco 57×80 del diálogo/Stage (se ven distintos
-// al escalar). El diálogo y el Stage deben verse IGUAL para el mismo
-// personaje. Módulo LIGERO a propósito: solo storyPortraits + icons (sin
-// battleOverworld) para que los verify headless puedan importarlo.
+// Contract:
+//   Story -> Story only
+//   expression fallback -> same requested form only
+//   missing form -> MISSING/undefined, never Battle/Menu
+// ═══════════════════════════════════════════════════════════════════════
 
-import { storyPortraitUrl } from './storyPortraits';
-import { MENU_PORTRAITS } from './icons';
+import { resolveStoryPortraitStrict } from './portraitResolvers';
+import type { PortraitEmotion } from './storyPortraits';
 
-export function resolveSpeakerPortrait(charId: string, formId?: string): string | undefined {
-  return storyPortraitUrl(charId, formId)
-    || MENU_PORTRAITS[charId]
-    || undefined;
+export function resolveSpeakerPortrait(
+  charId: string,
+  formId?: string,
+  emotion?: PortraitEmotion,
+): string | undefined {
+  return resolveStoryPortraitStrict(charId, formId, emotion).url;
 }
