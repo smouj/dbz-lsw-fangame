@@ -664,8 +664,9 @@ function DamageNumber({ value, type, x, y }: { value: number; type: 'damage' | '
 // PANTALLA DE BATALLA
 // ═══════════════════════════════════════════════════════════
 
-function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, onExit, onRematch, onMainMenu }: {
+function BattleScreen({ playerFormId, enemyFormId, playerTeam, enemyTeam, storyChapter, playerDeck, onExit, onRematch, onMainMenu }: {
   playerFormId: string; enemyFormId: string; storyChapter: number | null; onExit: (won: boolean) => void;
+  playerTeam?: TeamMember[]; enemyTeam?: string[];
   playerDeck?: number[];
   onRematch: () => void; onMainMenu: () => void;
 }) {
@@ -700,11 +701,13 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, onE
   const aiLevel = Math.max(1, (prog.level - 1) * 2 + 1);
   // Combates 2v2 (cap 7 Jeice&Burter, 16 16&18, 21 17&18): compañero y 2º jefe
   const teamBattle = storyChapter ? TEAM_BATTLES[storyChapter] : null;
+  const playerReserveFormId = teamBattle?.ally ?? playerTeam?.[1]?.formId ?? null;
+  const enemyReserveFormId = teamBattle?.enemy2 ?? enemyTeam?.[1] ?? null;
   const [player2, setPlayer2] = useState<Fighter | null>(() => {
-    if (!teamBattle?.ally) return null;
-    const af = getForm(teamBattle.ally)!;
+    if (!playerReserveFormId) return null;
+    const af = getForm(playerReserveFormId)!;
     const base: Fighter = {
-      id: af.character, formId: teamBattle.ally, name: getCharacter(af.character)?.name || af.character, form: af.form,
+      id: af.character, formId: playerReserveFormId, name: getCharacter(af.character)?.name || af.character, form: af.form,
       level: prog.level, maxHp: af.hp, hp: af.hp,
       str: af.str, ki: af.ki, spd: af.spd, maxCc: 99, cc: 10,
       battlePos: BattlePosition.DOWN_BACK, limits: [],
@@ -712,11 +715,11 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, onE
     return applyLevelUps(base, prog.level);
   });
   const [enemy2, setEnemy2] = useState<Fighter | null>(() => {
-    if (!teamBattle?.enemy2) return null;
-    const ef2 = getForm(teamBattle.enemy2)!;
+    if (!enemyReserveFormId) return null;
+    const ef2 = getForm(enemyReserveFormId)!;
     const b2 = storyChapter ? STORY_AI_BOOSTS[storyChapter] : null;
     const base: Fighter = {
-      id: ef2.character, formId: teamBattle.enemy2, name: getCharacter(ef2.character)?.name || ef2.character, form: ef2.form,
+      id: ef2.character, formId: enemyReserveFormId, name: getCharacter(ef2.character)?.name || ef2.character, form: ef2.form,
       level: aiLevel, maxHp: ef2.hp + (b2?.hp || 0), hp: ef2.hp + (b2?.hp || 0),
       str: ef2.str + (b2?.str || 0), ki: ef2.ki + (b2?.ki || 0), spd: ef2.spd + (b2?.spd || 0),
       maxCc: 99, cc: 10, battlePos: BattlePosition.DOWN_BACK, limits: [],
@@ -737,6 +740,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, onE
     // En versus: la IA escala con aiLevel=(playerLevel-1)*2+1; en story, stats fijos
     return storyChapter ? base : applyLevelUps(base, aiLevel);
   });
+  const activeEnemyFormId = enemy.formId;
   const [phase, setPhase] = useState<BattlePhase>('position');
   const [turn, setTurn] = useState(1);
   // Presentación de entrada de combate: bloquea input visible, pero no es
@@ -840,8 +844,8 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, onE
         enemyDeck: { drawPile: eDeckState.drawPile, hand: eDeckState.hand, discardPile: eDeckState.discardPile },
         playerLimits: [], playerFighterLimits: player.limits ?? [],
         // C1b — reserves (team-mode) alimentan el BattleState; 1v1 conserva null.
-        player2: player2 && teamBattle?.ally ? { ...player2, id: teamBattle.ally, powerWindowCounter: 0 } : null,
-        enemy2: enemy2 && teamBattle?.enemy2 ? { ...enemy2, id: teamBattle.enemy2, powerWindowCounter: 0 } : null,
+        player2: player2 && playerReserveFormId ? { ...player2, id: playerReserveFormId, powerWindowCounter: 0 } : null,
+        enemy2: enemy2 && enemyReserveFormId ? { ...enemy2, id: enemyReserveFormId, powerWindowCounter: 0 } : null,
         firstAttacker: turnOwnerRef.current ?? 'player',
         seed: 4242,
       }),
@@ -881,6 +885,26 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, onE
   }), []);
   const rtApi = useBattleRuntime({ runtime: runtimeRef.current, presenter });
   const { can: engineCan } = rtApi;
+  const promoteReserveAfterKo = (side: 'player' | 'enemy', forceDefeated = false): Fighter | null => {
+    if (forceDefeated) {
+      const state = rtApi.runtime.state;
+      rtApi.runtime.state = side === 'player'
+        ? { ...state, player: { ...state.player, hp: 0 } }
+        : { ...state, enemy: { ...state.enemy, hp: 0 } };
+    }
+    const promoted = rtApi.runtime.promoteDefeatedReserve(side);
+    if (!promoted) return null;
+    const next = fighterToReact(promoted);
+    if (side === 'player') {
+      setPlayer(next);
+      setPlayer2(null);
+      setCharaSwitchFormId(next.formId);
+    } else {
+      setEnemy(next);
+      setEnemy2(null);
+    }
+    return next;
+  };
   // Snapshots proyectadas (selectores sobre runtime.state — autoridad).
   const enginePlayerPos = rtApi.runtime.state.player.battlePos;
   const engineEnemyPos = rtApi.runtime.state.enemy.battlePos;
@@ -945,8 +969,8 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, onE
     ].filter((u): u is string => !!u);
     // Formas a precargar (incluye aliado y 2º jefe en combates 2v2).
     const forms = [playerFormId, enemyFormId];
-    if (teamBattle?.ally) forms.push(teamBattle.ally);
-    if (teamBattle?.enemy2) forms.push(teamBattle.enemy2);
+    if (playerReserveFormId) forms.push(playerReserveFormId);
+    if (enemyReserveFormId) forms.push(enemyReserveFormId);
     const total = urls.length + forms.length;
     let done = 0; let fired = false;
     const finish = () => { if (!fired) { fired = true; setLoading(false); } };
@@ -1330,7 +1354,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, onE
     // (BEAM_BASE $02 / STANDARD_DAMAGE $0A), Pixi se gobierna por cues ROM
     // (NO por profileFor/applyCinematicEvent). El DOM legacy sigue en paralelo
     // y es quien dispara onDone (se retirará en (b)).
-    const actorFormId = side === 'player' ? activePlayerFormId : enemyFormId;
+    const actorFormId = side === 'player' ? activePlayerFormId : activeEnemyFormId;
     const romRoute = pixiPres ? romPresentationTimelineForCard(card, side, actorFormId) : null;
     const useRomPixi = !!romRoute;
     presentationSourceRef.current = useRomPixi ? 'ROM' : 'LEGACY';
@@ -1553,9 +1577,9 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, onE
         ? (spriteManifestUrl(activePlayerFormId)
             ? <FighterSprite formId={activePlayerFormId} pose={cardFxActorPose(cardFx.card, step)} side="left" scale={14} />
             : <CharacterSprite formId={activePlayerFormId} className="fx-sprite" height={200} side="left" />)
-        : (spriteManifestUrl(enemyFormId)
-            ? <FighterSprite formId={enemyFormId} pose={cardFxActorPose(cardFx.card, step)} side="right" scale={14} />
-            : <CharacterSprite formId={enemyFormId} className="fx-sprite" height={200} side="right" />)}
+        : (spriteManifestUrl(activeEnemyFormId)
+            ? <FighterSprite formId={activeEnemyFormId} pose={cardFxActorPose(cardFx.card, step)} side="right" scale={14} />
+            : <CharacterSprite formId={activeEnemyFormId} className="fx-sprite" height={200} side="right" />)}
     </div> : null
   );
 
@@ -1581,7 +1605,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, onE
       setPhase('command');
       showPhaseCue('ATTACK');
     } else {
-      const actor = getForm(enemyFormId)!.character.toUpperCase();
+      const actor = getForm(activeEnemyFormId)!.character.toUpperCase();
       setEnemy(prev => ({ ...prev, cc: Math.min(prev.maxCc, prev.cc + 3) }));
       addLog(`${actor} ${t('battle.strikesFirst')} (+3 CC)`, { gbc: false });
       prepareEnemyIncomingAttack();
@@ -2136,9 +2160,8 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, onE
         setTimeout(() => setFlashEnemy(false), gbcMs(9)); // 9 ticks ≈ 151ms (hit flash, HYPOTHESIS)
         if (rt.state.enemy.hp <= 0 && enemy2) {
           const fallen = enemy.name;
-          const next = enemy2;
-          setEnemy(next);
-          setEnemy2(null);
+          const next = promoteReserveAfterKo('enemy');
+          if (!next) { enterResults(); return; }
           setEnemyPose('idle');
           addLog(`${fallen} K.O.! ${next.name} entra al combate!`);
           finishPlayerTurnStage(ccGained);
@@ -2566,8 +2589,8 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, onE
     if (plan.ohko || (enemy.hp - plan.damage <= 0)) {
       if (enemy2 && !plan.ohko) {
         const fallen = enemy.name;
-        const next = enemy2;
-        setEnemy(next); setEnemy2(null);
+        const next = promoteReserveAfterKo('enemy', true);
+        if (!next) { enterResults(); return; }
         setEnemyPose('idle'); setFlashEnemy(false);
         addLog(`${fallen} K.O.! ${next.name} entra al combate!`);
         plan.ended = true;
@@ -2733,7 +2756,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, onE
     engineAct({ type: 'END_EXCHANGE' }, { side: 'player' });
     setExchangeIndex(1);
     setTurnOwner(rtApi.runtime.state.activeSide); // ENGINE-SNAPSHOT (initiativa intacta)
-    const actor = getForm(enemyFormId)!.character.toUpperCase();
+    const actor = getForm(activeEnemyFormId)!.character.toUpperCase();
     setEnemy(prev => ({ ...prev, cc: Math.min(prev.maxCc, prev.cc + 3) }));
     addLog(`${actor} ${t('battle.strikesFirst')} (+3 CC)`, { gbc: false });
     // DEFENSE real: espera input indefinidamente (sin timers que auto-lancen
@@ -2939,9 +2962,8 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, onE
   const _finishDefenseResolution = (projectedPlayerHp = player.hp) => {
     if (projectedPlayerHp <= 0 && player2) {
       const fallen = player.name;
-      const next = player2;
-      setPlayer2(null);
-      setPlayer(next);
+      const next = promoteReserveAfterKo('player', true);
+      if (!next) { enterResults(); return; }
       setPlayerPose('idle');
       setFlashPlayer(false);
       addLog(`${fallen} K.O.! ${next.name} entra al combate!`);
@@ -3010,9 +3032,8 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, onE
       if (player2) {
         // 2v2: cae el jugador activo, entra el compañero con HP completo
         const fallen = player.name;
-        const next = player2;
-        setPlayer2(null);
-        setPlayer(next);
+        const next = promoteReserveAfterKo('player');
+        if (!next) { enterResults(); return; }
         setPlayerPose('idle');
         setFlashPlayer(false);
         addLog(`${fallen} K.O.! ${next.name} entra al combate!`);
@@ -3181,7 +3202,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, onE
           <div className="intro-vs">{t('battle.vs')}</div>
           <div className="intro-fighter intro-right">
             <div className="intro-portrait">
-              <img src={battlePortraitFor(enemyFormId) || ''} alt={enemy.name}
+              <img src={battlePortraitFor(activeEnemyFormId) || ''} alt={enemy.name}
                 onError={e => (e.currentTarget.style.display = 'none')} />
             </div>
           </div>
@@ -3215,9 +3236,9 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, onE
                   de pegar/recibir, no un golpe hacia el vacío. */}
               <div className="fx-fighter fx-target">
                 {cardFx.side === 'player'
-                  ? (spriteManifestUrl(enemyFormId)
-                      ? <FighterSprite formId={enemyFormId} pose="guard" side="right" scale={14} />
-                      : <CharacterSprite formId={enemyFormId} className="fx-sprite" height={200} side="right" />)
+                  ? (spriteManifestUrl(activeEnemyFormId)
+                      ? <FighterSprite formId={activeEnemyFormId} pose="guard" side="right" scale={14} />
+                      : <CharacterSprite formId={activeEnemyFormId} className="fx-sprite" height={200} side="right" />)
                   : (spriteManifestUrl(activePlayerFormId)
                       ? <FighterSprite formId={activePlayerFormId} pose="guard" side="left" scale={14} />
                       : <CharacterSprite formId={activePlayerFormId} className="fx-sprite" height={200} side="left" />)}
@@ -3231,9 +3252,9 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, onE
               <div className="fx-scene-label">IMPACT</div>
               <div className="fx-fighter fx-target">
                 {cardFx.side === 'player'
-                  ? (spriteManifestUrl(enemyFormId)
-                      ? <FighterSprite formId={enemyFormId} pose="hurt" side="right" scale={14} />
-                      : <CharacterSprite formId={enemyFormId} className="fx-sprite" height={200} side="right" />)
+                  ? (spriteManifestUrl(activeEnemyFormId)
+                      ? <FighterSprite formId={activeEnemyFormId} pose="hurt" side="right" scale={14} />
+                      : <CharacterSprite formId={activeEnemyFormId} className="fx-sprite" height={200} side="right" />)
                   : (spriteManifestUrl(activePlayerFormId)
                       ? <FighterSprite formId={activePlayerFormId} pose="hurt" side="left" scale={14} />
                       : <CharacterSprite formId={activePlayerFormId} className="fx-sprite" height={200} side="left" />)}
@@ -3311,8 +3332,8 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, onE
             ['desc', `POS: ${enemy.battlePos.replace('_', ' ')}`],
           ])}>
             <span className="hud-portrait">
-              <img src={battlePortraitFor(enemyFormId) || ''} alt="" onError={e => (e.currentTarget.style.display = 'none')} />
-              {!battlePortraitFor(enemyFormId) && <Shield size={14} />}
+              <img src={battlePortraitFor(activeEnemyFormId) || ''} alt="" onError={e => (e.currentTarget.style.display = 'none')} />
+              {!battlePortraitFor(activeEnemyFormId) && <Shield size={14} />}
             </span>
             <strong>{enemy.name}</strong>
             <span className="hud-form">{enemy.form}</span>
@@ -3359,7 +3380,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, onE
             <BattlePixiStage
               scenario={scenario}
               playerFormId={activePlayerFormId}
-              enemyFormId={enemyFormId}
+              enemyFormId={activeEnemyFormId}
               playerPos={player.battlePos}
               enemyPos={enemy.battlePos}
               presentationRef={pixiPresRef}
@@ -3391,13 +3412,13 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, onE
           </div>
           <div ref={enemyRef} className={`fighter-container enemy ${POSITION_DATA[enemy.battlePos].altitude.toLowerCase()} ${POSITION_DATA[enemy.battlePos].depth.toLowerCase()}`}
             style={{ left: `${anchorFor(enemy.battlePos, 'RIGHT').x}%`, top: `${anchorFor(enemy.battlePos, 'RIGHT').y}%` }}>
-            {phase === 'stageInput' && spriteManifestUrl(enemyFormId)
-              ? <FighterSprite formId={enemyFormId} pose={qteEnemyPose} side="right" scale={15} flash={qteResolving ? true : false} />
-              : (enemyPose === 'idle' && overworldUrl(enemyFormId)
-                  ? <img src={overworldUrl(enemyFormId)!} alt="" className="overworld-sprite" style={{ transform: `scaleX(${facingFlip(enemyFormId, 'right')})` }} />
-                  : (spriteManifestUrl(enemyFormId)
-                      ? <FighterSprite formId={enemyFormId} pose={enemyPose} side="right" scale={15} flash={flashEnemy} />
-                      : <CharacterSprite formId={enemyFormId} className="sheet-sprite" height={152} side="right" />))}
+            {phase === 'stageInput' && spriteManifestUrl(activeEnemyFormId)
+              ? <FighterSprite formId={activeEnemyFormId} pose={qteEnemyPose} side="right" scale={15} flash={qteResolving ? true : false} />
+              : (enemyPose === 'idle' && overworldUrl(activeEnemyFormId)
+                  ? <img src={overworldUrl(activeEnemyFormId)!} alt="" className="overworld-sprite" style={{ transform: `scaleX(${facingFlip(activeEnemyFormId, 'right')})` }} />
+                  : (spriteManifestUrl(activeEnemyFormId)
+                      ? <FighterSprite formId={activeEnemyFormId} pose={enemyPose} side="right" scale={15} flash={flashEnemy} />
+                      : <CharacterSprite formId={activeEnemyFormId} className="sheet-sprite" height={152} side="right" />))}
             <div className="fighter-position-tag hidden">{enemy.battlePos.replace('_', ' ')}</div>
           </div>
         </div>
@@ -3456,9 +3477,9 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, onE
             : (isEnemy ? 'right' : 'left');
           // Sprite de STORY del personaje que habla (retrato de las viñetas GBC)
           const speakerChar = isEnemy
-            ? getForm(enemyFormId)?.character ?? 'goku'
+            ? getForm(activeEnemyFormId)?.character ?? 'goku'
             : getForm(activePlayerFormId)?.character ?? 'goku';
-          const speakerForm = isEnemy ? enemyFormId : activePlayerFormId;
+          const speakerForm = isEnemy ? activeEnemyFormId : activePlayerFormId;
           const spriteUrl = resolveStoryPortraitStrict(speakerChar, speakerForm).url;
           return (
             <div className={`gbc-dialogue speaker-${side ?? 'none'}`} key={gbcMsg}>
@@ -4888,19 +4909,27 @@ function SettingsScreen({ onNavigate }: { onNavigate: (s: Screen) => void }) {
 
 function TeamSetupScreen({ onNavigate, onStartVersus, initialFormId }: {
   onNavigate: (s: Screen) => void;
-  onStartVersus: (enemyFormId: string, member?: TeamMember) => void;
+  onStartVersus: (enemyTeam: string[], playerTeam: TeamMember[]) => void;
   initialFormId?: string;
 }) {
   const { t } = useLang();
-  const [enemyForm, setEnemyForm] = useState('piccolo_base');
   const enemyForms = useMemo(() => ROM_ORDERED_CHARACTERS.flatMap(c => c.forms), []);
-  const enemyIndex = Math.max(0, enemyForms.indexOf(enemyForm));
-  const enemyDef = getForm(enemyForm);
-  const enemyChar = enemyDef ? getCharacter(enemyDef.character) : undefined;
-  const enemyPortrait = resolveBattlePortraitStrict(enemyForm);
-  const shiftEnemy = (delta: number) => {
-    const next = enemyForms[(enemyIndex + delta + enemyForms.length) % enemyForms.length];
-    if (next) { Sfx.select(); setEnemyForm(next); }
+  const [enemyTeam, setEnemyTeam] = useState<string[]>(['piccolo_base']);
+  const updateEnemy = (slot: number, formId: string) => {
+    Sfx.select();
+    setEnemyTeam(team => team.map((current, index) => index === slot ? formId : current));
+  };
+  const addEnemy = () => {
+    setEnemyTeam(team => {
+      if (team.length >= 2) return team;
+      const next = enemyForms.find(formId => !team.includes(formId)) ?? enemyForms[0];
+      return next ? [...team, next] : team;
+    });
+    Sfx.confirm();
+  };
+  const removeEnemy = (slot: number) => {
+    setEnemyTeam(team => team.length > 1 ? team.filter((_, index) => index !== slot) : team);
+    Sfx.cancel();
   };
   const deckLibrary = loadDeckLibrary(DEFAULT_DECK);
   const savedActiveDeck = activeSavedDeck(deckLibrary);
@@ -4922,38 +4951,38 @@ function TeamSetupScreen({ onNavigate, onStartVersus, initialFormId }: {
         topControls={(
           <div className="setup-enemy-row" role="group" aria-label="Rival team">
             <span className="setup-command-team-label setup-enemy-label">RIVAL TEAM</span>
-            <div className="setup-opponent-picker">
-              <button type="button" className="setup-opponent-nav" aria-label="Previous opponent"
-                onClick={() => shiftEnemy(-1)}>‹</button>
-              <div className="setup-opponent-card">
-                {enemyPortrait.url ? (
-                  <img src={enemyPortrait.url} alt="" className="setup-opponent-portrait" draggable={false} />
-                ) : null}
-                <span className="setup-opponent-copy">
-                  <small>SLOT 1</small>
-                  <strong>{enemyChar?.name ?? '—'}</strong>
-                  <span>{enemyDef?.form ?? ''}</span>
-                </span>
-                <select
-                  className="setup-enemy-select"
-                  aria-label="Select opponent"
-                  value={enemyForm}
-                  onChange={e => { Sfx.select(); setEnemyForm(e.target.value); }}
-                >
-                  {enemyForms.map(fid => {
-                    const f = getForm(fid);
-                    const c = f ? getCharacter(f.character) : undefined;
-                    return f ? <option key={fid} value={fid}>{c?.name ?? f.character} — {f.form}</option> : null;
-                  })}
-                </select>
-              </div>
-              <span className="setup-opponent-count">{String(enemyIndex + 1).padStart(2, '0')} / {enemyForms.length}</span>
-              <button type="button" className="setup-opponent-nav" aria-label="Next opponent"
-                onClick={() => shiftEnemy(1)}>›</button>
+            <div className="setup-rival-slots" role="list" aria-label="Rival slots">
+              {enemyTeam.map((formId, slot) => {
+                const form = getForm(formId);
+                const character = form ? getCharacter(form.character) : undefined;
+                const portrait = resolveBattlePortraitStrict(formId);
+                return (
+                  <div key={`${slot}:${formId}`} className="setup-team-slot setup-rival-slot" role="listitem">
+                    {portrait.url ? <img src={portrait.url} alt="" className="setup-opponent-portrait" draggable={false} /> : null}
+                    <span className="setup-opponent-copy">
+                      <small>SLOT {slot + 1}</small>
+                      <strong>{character?.name ?? '—'}</strong>
+                      <span>{form?.form ?? ''}</span>
+                    </span>
+                    <select className="setup-enemy-select" aria-label={`Select rival slot ${slot + 1}`}
+                      value={formId} onChange={event => updateEnemy(slot, event.target.value)}>
+                      {enemyForms.map(fid => {
+                        const optionForm = getForm(fid);
+                        const optionCharacter = optionForm ? getCharacter(optionForm.character) : undefined;
+                        return optionForm ? <option key={fid} value={fid}>{optionCharacter?.name ?? optionForm.character} — {optionForm.form}</option> : null;
+                      })}
+                    </select>
+                    {enemyTeam.length > 1 ? <button type="button" className="setup-team-slot-remove setup-rival-remove"
+                      aria-label={`Remove rival slot ${slot + 1}`} onClick={() => removeEnemy(slot)}>✕</button> : null}
+                  </div>
+                );
+              })}
+              {enemyTeam.length < 2 ? <button type="button" className="setup-team-slot setup-team-slot-add setup-rival-add"
+                onClick={addEnemy}>+ ADD RIVAL</button> : null}
             </div>
           </div>
         )}
-        onConfirm={(result: TeamSetupResult) => onStartVersus(enemyForm, result.member)}
+        onConfirm={(result: TeamSetupResult) => onStartVersus([...enemyTeam], result.team)}
         onEditDecks={() => onNavigate('deck')}
         onBack={() => onNavigate('main')}
         isFormUnlocked={fid => isFormUnlocked(fid, loadProgress().level)}
@@ -5018,6 +5047,8 @@ function AppInner() {
   const [playerForm, setPlayerForm] = useState('gohan_young');
   const [enemyForm, setEnemyForm] = useState('piccolo_base');
   const [battleDeck, setBattleDeck] = useState<number[] | undefined>(undefined);
+  const [battlePlayerTeam, setBattlePlayerTeam] = useState<TeamMember[] | undefined>(undefined);
+  const [battleEnemyTeam, setBattleEnemyTeam] = useState<string[] | undefined>(undefined);
   const [storyChapter, setStoryChapter] = useState<number | null>(null);
   const [storyScene, setStoryScene] = useState<{ chapter: number; phase: 'intro' | 'outro' } | null>(null);
   const [battleKey, setBattleKey] = useState(0);
@@ -5070,22 +5101,28 @@ function AppInner() {
   const openBattleSetup = (playerFormId: string) => {
     setPlayerForm(playerFormId);
     setBattleDeck(undefined);
+    setBattlePlayerTeam(undefined);
+    setBattleEnemyTeam(undefined);
     setStoryChapter(null);
     setScreen('versus');
   };
 
-  const startVersus = (enemyFormId: string, member?: TeamMember) => {
+  const startVersus = (enemyTeam: string[], playerTeam: TeamMember[]) => {
+    const member = playerTeam[0];
     if (member) {
       // Handoff único: Battle recibe una COPIA del mazo asignado. La biblioteca
       // no se edita ni se cambia de preset desde esta pantalla.
       setPlayerForm(member.formId);
       setBattleDeck([...member.jointDeck]);
-      saveLimits(member.characterId, member.limits.filter(id => id !== 0));
+      playerTeam.forEach(teamMember => saveLimits(teamMember.characterId, teamMember.limits.filter(id => id !== 0)));
     } else {
       setPlayerForm('gohan_young');
       setBattleDeck(undefined);
     }
-    setEnemyForm(enemyFormId);
+    const firstEnemy = enemyTeam[0] ?? 'piccolo_base';
+    setEnemyForm(firstEnemy);
+    setBattlePlayerTeam(playerTeam.map(teamMember => ({ ...teamMember, limits: [...teamMember.limits], jointDeck: [...teamMember.jointDeck] })));
+    setBattleEnemyTeam([...enemyTeam]);
     setStoryChapter(null);
     setBattleKey(k => k + 1);
     setScreen('battle');
@@ -5093,6 +5130,8 @@ function AppInner() {
 
   const startChapter = (enemyFormId: string, chapterId: number) => {
     setBattleDeck(undefined);
+    setBattlePlayerTeam(undefined);
+    setBattleEnemyTeam(undefined);
     setEnemyForm(enemyFormId);
     setStoryChapter(chapterId);
     // El protagonista del capítulo (Gohan en el 1, no Goku — historia real del GBC)
@@ -5154,14 +5193,14 @@ function AppInner() {
       }
       // En Versus además se desbloquea el personaje vencido
       if (!storyChapter) {
-        const form = getForm(enemyForm);
-        if (form) {
+        const unlockedNames: string[] = [];
+        for (const defeatedFormId of battleEnemyTeam ?? [enemyForm]) {
+          const form = getForm(defeatedFormId);
+          if (!form) continue;
           const charId = VS_UNLOCKS[form.id] || form.character;
-          const newlyUnlocked = unlockCharacter(charId);
-          if (newlyUnlocked) {
-            setTimeout(() => alert(`${charId.toUpperCase()} UNLOCKED!`), 300);
-          }
+          if (unlockCharacter(charId)) unlockedNames.push(charId.toUpperCase());
         }
+        if (unlockedNames.length > 0) setTimeout(() => alert(`${unlockedNames.join(' + ')} UNLOCKED!`), 300);
       }
     }
     setScreen('main');
@@ -5177,6 +5216,8 @@ function AppInner() {
         }
         setPlayerForm(playerFormId);
         setBattleDeck(undefined);
+        setBattlePlayerTeam(undefined);
+        setBattleEnemyTeam(undefined);
         setEnemyForm(enemyFormId);
         setStoryChapter(chapter);
         setBattleKey(k => k + 1);
@@ -5205,7 +5246,8 @@ function AppInner() {
       case 'cards': return <CardsScreen onNavigate={setScreen} />;
       case 'settings': return <SettingsScreen onNavigate={setScreen} />;
       case 'storyScene': return <StorySceneScreen key={`scene-${storyScene?.chapter}-${storyScene?.phase}`} chapter={storyScene?.chapter ?? 1} phase={storyScene?.phase ?? 'intro'} onFinish={finishStoryScene} onNavigate={setScreen} />;
-      case 'battle': return <BattleScreen key={battleKey} playerFormId={playerForm} enemyFormId={enemyForm} storyChapter={storyChapter} playerDeck={battleDeck} onExit={exitBattle}
+      case 'battle': return <BattleScreen key={battleKey} playerFormId={playerForm} enemyFormId={enemyForm}
+        playerTeam={battlePlayerTeam} enemyTeam={battleEnemyTeam} storyChapter={storyChapter} playerDeck={battleDeck} onExit={exitBattle}
         onRematch={() => { setStoryScene(null); setBattleKey(k => k + 1); setScreen('battle'); }}
         onMainMenu={() => { setStoryScene(null); setScreen('main'); }} />;
       default: return <MainMenu onNavigate={setScreen} />;
