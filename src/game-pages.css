@@ -207,6 +207,7 @@
 .shell-surface .setup-team-slot { min-height:52px; }
 .shell-surface .setup-team-slot-name { font:700 16px var(--shell-body); }
 .shell-surface .setup-team-slot-form,.shell-surface .setup-team-slot-num { font:11px var(--shell-body); }
+.shell-surface .setup-command-row .setup-team-slot-form { display:none; }
 .shell-surface .setup-deck { padding-bottom:0; }
 .shell-surface .setup-ready { position:relative; inset:auto; min-height:68px; padding:12px 16px; margin:0; gap:16px; border:2px solid var(--page-accent); border-radius:0; background:#1b2331; box-shadow:none; }
 .shell-surface .setup-ready-info { font:13px/1.5 var(--shell-body); }

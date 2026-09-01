@@ -138,19 +138,19 @@ export function TeamSetup({
             <span className="setup-command-team-label">YOUR TEAM</span>
             {teamSlots}
           </div>
-          {!rivalActive ? (
+          {/* Single FormSelector in the center — shows player forms or rival forms based on focus */}
+          {rivalActive ? rivalFormSelector : (
             <FormSelector
               characterId={active.characterId}
               selectedFormId={active.formId}
               onSelect={setup.selectForm}
               isUnlocked={isFormUnlocked}
             />
-          ) : null}
+          )}
           <div className="setup-command-team setup-command-team-rival" role="group" aria-label="Rival team">
             {rivalSlots}
             <span className="setup-command-team-label setup-enemy-label">RIVAL TEAM</span>
           </div>
-          {rivalActive ? rivalFormSelector : null}
         </div>
       ) : null}
       <div className="setup-workshop">
