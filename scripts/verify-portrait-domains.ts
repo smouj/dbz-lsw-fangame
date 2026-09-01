@@ -56,7 +56,10 @@ for (const form of Object.values(FORMS)) {
 }
 
 // Known regression-prone forms: Story must never silently impersonate another form.
-for (const formId of ['goku_ssj2', 'goku_ssj3', 'gohan_adult_ssj2', 'trunks_kid_ssj', 'trunks_ssj', 'goten_ssj', 'gotenks_ssj', 'piccolo_evil', 'buu_gotenks']) {
+for (const formId of [
+  'goku_ssj2', 'goku_ssj3', 'gohan_adult_ssj2', 'trunks_kid_ssj',
+  'trunks_ssj', 'goten_ssj', 'gotenks_ssj', 'piccolo_evil', 'buu_gotenks',
+]) {
   const form = FORMS[formId];
   if (!form) continue;
   const resolved = resolveStoryPortraitStrict(form.character, form.id);
@@ -80,7 +83,8 @@ const productionFiles = srcFiles.filter(file => !file.includes(`${path.sep}devto
 
 const forbiddenProductionPatterns: Array<[RegExp, string]> = [
   [/rosterPortraitAsset\s*\(/, 'universal roster portrait resolver'],
-  [/storyPortraitUrl\s*\(/, 'approximate Story resolver'],
+  [/storyPortraitUrl\s*\(/, 'legacy approximate Story resolver'],
+  [/storyPortraitUrlApproximate\b/, 'approximate Story resolver'],
 ];
 
 for (const file of productionFiles) {
@@ -94,6 +98,10 @@ for (const file of productionFiles) {
 const main = fs.readFileSync('src/main.tsx', 'utf8');
 const speaker = fs.readFileSync('src/data/speakerPortraits.ts', 'utf8');
 const roster = fs.readFileSync('src/data/rosterPortraits.ts', 'utf8');
+const storyPortraits = fs.readFileSync('src/data/storyPortraits.ts', 'utf8');
+const teamSetup = fs.readFileSync('src/components/setup/TeamSetup.tsx', 'utf8');
+const characterDetails = fs.readFileSync('src/components/setup/CharacterDetails.tsx', 'utf8');
+const characterAssets = fs.readFileSync('src/data/characterAssets.ts', 'utf8');
 
 const crossDomain = {
   'Story -> Battle': 0,
@@ -117,6 +125,7 @@ for (const [name, count] of Object.entries(crossDomain)) {
   if (count !== 0) failures.push(`${name}: ${count}`);
 }
 
+// Production wiring assertions.
 if (!/StageHudPanel[\s\S]{0,500}resolveBattlePortraitStrict/.test(main)) {
   failures.push('StageHudPanel is not explicitly wired to resolveBattlePortraitStrict');
 }
@@ -125,6 +134,26 @@ if (!/resolveStoryPortraitStrict\(c\.character, c\.form, emo\)\.url/.test(main))
 }
 if (!/resolveBattlePortraitStrict\(selected\)/.test(main)) {
   failures.push('Characters detail is not explicitly wired to Battle portraits');
+}
+if (!/resolveBattlePortraitStrict\(m\.formId\)/.test(teamSetup)) {
+  failures.push('Battle Setup team slots are not explicitly wired to resolveBattlePortraitStrict');
+}
+if (/resolveStoryPortraitStrict|resolveSpeakerPortrait|MENU_PORTRAITS|rosterPortraitAsset/.test(teamSetup)) {
+  failures.push('Battle Setup contains a non-Battle portrait dependency');
+}
+if (!/(?:BATTLE_PORTRAITS\[form\.id\]|resolveBattlePortraitStrict\(form\.id\))/.test(characterDetails)) {
+  failures.push('CharacterDetails is not explicitly wired to an exact Battle portrait');
+}
+if (/export const storyPortraitUrl\b/.test(storyPortraits)) {
+  failures.push('Legacy storyPortraitUrl compatibility alias is still exported');
+}
+
+// Dev/diagnostic aggregation is allowed only as independent labelled columns.
+if (!/portraits:\s*\{\s*battle:\s*string \| undefined;\s*menu:\s*string \| undefined;\s*story:\s*StoryPortraitAsset\[\];\s*\}/m.test(characterAssets)) {
+  failures.push('Dev character asset bundle does not expose Story/Battle/Menu as separate portrait columns');
+}
+if (/resolveStoryPortraitStrict[\s\S]{0,120}\|\|[\s\S]{0,120}resolveBattlePortraitStrict/.test(characterAssets)) {
+  failures.push('Dev character asset bundle silently falls back Story -> Battle');
 }
 
 console.log('\nPORTRAIT DOMAIN MATRIX');
