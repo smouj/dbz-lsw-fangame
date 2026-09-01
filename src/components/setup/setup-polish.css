@@ -238,6 +238,61 @@
 .shell-surface .setup-assigned-card-icon { height:32px; aspect-ratio:auto; }
 .shell-surface .setup-assigned-card-icon img { padding:1px; }
 .shell-surface .setup-assigned-card-icon span { min-width:10px; font-size:6px; }
+
+/* Battle command strip: opponent and the two-member team share one anchored
+   row. The shared Dev builder keeps the original workshop composition. */
+.shell-surface .setup-screen-command > .setup-command-row {
+  display:flex; align-items:stretch; flex:0 0 52px; width:100%; height:52px;
+  min-height:52px; gap:12px; overflow:hidden;
+}
+.shell-surface .setup-command-row .setup-enemy-row {
+  display:flex; align-items:center; flex:1 1 auto; min-width:0; height:52px;
+  margin:0; padding:0; gap:12px;
+}
+.shell-surface .setup-command-row .setup-enemy-select { width:min(100%,430px); }
+.shell-surface .setup-command-row .setup-team-slots {
+  display:flex; justify-content:flex-end; flex:0 0 auto; min-width:0; height:52px;
+  gap:8px;
+}
+
+/* Requested Battle panel order: dossier → limits on the left, character roll
+   → deck assignment on the right. Form controls remain under the dossier. */
+.shell-surface .setup-screen-command > .setup-workshop {
+  grid-template-rows:176px 36px 170px;
+}
+.shell-surface .setup-screen-command .setup-details {
+  grid-column:1; grid-row:1; position:relative; height:176px;
+  padding-bottom:23px; overflow:hidden;
+}
+.shell-surface .setup-screen-command .setup-roll {
+  grid-column:2; grid-row:1; width:100%;
+}
+.shell-surface .setup-screen-command .setup-form-selector { grid-column:1; grid-row:2; }
+.shell-surface .setup-screen-command .setup-limits {
+  grid-column:1; grid-row:3; height:170px;
+}
+.shell-surface .setup-screen-command .setup-deck-assignment { grid-column:2; grid-row:2 / 4; }
+
+/* Level progression opens inside the dossier as a contained sheet. Native
+   details semantics remain intact, but the grid never grows or moves. */
+.shell-surface .setup-screen-command .setup-details-growth-disclosure {
+  position:absolute; z-index:5; left:12px; right:12px; bottom:5px;
+  margin:0; border-top:1px solid var(--page-line);
+}
+.shell-surface .setup-screen-command .setup-details-growth-disclosure summary {
+  padding:2px 0 0; font-size:9px;
+}
+.shell-surface .setup-screen-command .setup-details-growth-disclosure[open] {
+  top:6px; bottom:6px; padding:7px 9px; overflow:hidden;
+  border:1px solid #56657a; background:#0d1521;
+  box-shadow:0 8px 20px rgb(0 0 0 / .36);
+}
+.shell-surface .setup-screen-command .setup-details-growth-disclosure[open] summary {
+  padding:0 0 5px; color:var(--page-accent);
+}
+.shell-surface .setup-screen-command .setup-details-growth-disclosure[open] .setup-details-growth {
+  margin-top:4px; padding-top:5px;
+}
 @media (prefers-reduced-motion:reduce) {
   :is(.shell-surface,.dev-team-builder) .setup-roll-item { transition:none; animation:none; }
   :is(.shell-surface,.dev-team-builder) :is(.setup-roll-aura,.setup-power-aura-layer) { animation:none; }

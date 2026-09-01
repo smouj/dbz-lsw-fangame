@@ -6,7 +6,7 @@
 // Capa de CONFIGURACIÓN: nunca muta BattleState.
 // ═══════════════════════════════════════════════════════════════════════
 
-import { useMemo } from 'react';
+import { useMemo, type ReactNode } from 'react';
 import { ROM_ORDERED_CHARACTERS, getCharacter, getForm } from '../../data/roster';
 import { baseFormIdOf } from './setupLogic';
 import { overworldUrl } from '../../data/overworld';
@@ -32,6 +32,8 @@ export interface TeamSetupProps {
   onEditDecks: () => void;
   onBack: () => void;
   isFormUnlocked?: (formId: string) => boolean;
+  /** Optional Battle-only command placed beside the team slots. */
+  topControls?: ReactNode;
 }
 
 export function TeamSetup({
@@ -44,6 +46,7 @@ export function TeamSetup({
   onConfirm,
   onEditDecks,
   isFormUnlocked,
+  topControls,
 }: TeamSetupProps) {
   const setup = useSetup({ fallbackDeck, initialCharacterId, initialFormId, initialDeckId, strictDeckAssignment: true });
   const { state, active, result, deckValid } = setup;
@@ -87,39 +90,43 @@ export function TeamSetup({
 
   const activeChar = getCharacter(active.characterId);
   const selectedForm = getForm(active.formId);
+  const teamSlots = (
+    <div className="setup-team-slots" data-testid="team-slots">
+      {state.members.map((m, i) => {
+        const char = getCharacter(m.characterId);
+        const form = getForm(m.formId);
+        const portrait = resolveBattlePortraitStrict(m.formId);
+        return (
+          <div key={i} className={`setup-team-slot${i === state.activeMember ? ' active' : ''}`}>
+            <button type="button" className="setup-team-slot-btn"
+              onClick={() => setup.setActiveMember(i)}>
+              {portrait.url ? <img className="setup-team-slot-portrait battle" src={portrait.url} alt="" draggable={false} /> : null}
+              <span className="setup-team-slot-copy">
+                <span className="setup-team-slot-num">SLOT {i + 1}</span>
+                <span className="setup-team-slot-name">{char?.name ?? '—'}</span>
+                <span className="setup-team-slot-form">{form?.form ?? ''}</span>
+              </span>
+            </button>
+            {state.members.length > 1 ? (
+              <button type="button" className="setup-team-slot-remove" title="Remove member"
+                onClick={() => setup.removeMember(i)}>✕</button>
+            ) : null}
+          </div>
+        );
+      })}
+      {state.members.length < 2 ? (
+        <button type="button" className="setup-team-slot setup-team-slot-add"
+          onClick={setup.addMember}>+ ADD MEMBER</button>
+      ) : null}
+    </div>
+  );
 
   return (
-    <div className="page-screen setup-screen" data-testid="team-setup">
+    <div className={`page-screen setup-screen${topControls ? ' setup-screen-command' : ''}`} data-testid="team-setup">
+      {topControls ? <div className="setup-command-row">{topControls}{teamSlots}</div> : null}
       <div className="setup-workshop">
-      {/* Team slots — Battle Setup consumes Battle portraits only. */}
-      <div className="setup-team-slots" data-testid="team-slots">
-        {state.members.map((m, i) => {
-          const char = getCharacter(m.characterId);
-          const form = getForm(m.formId);
-          const portrait = resolveBattlePortraitStrict(m.formId);
-          return (
-            <div key={i} className={`setup-team-slot${i === state.activeMember ? ' active' : ''}`}>
-              <button type="button" className="setup-team-slot-btn"
-                onClick={() => setup.setActiveMember(i)}>
-                {portrait.url ? <img className="setup-team-slot-portrait battle" src={portrait.url} alt="" draggable={false} /> : null}
-                <span className="setup-team-slot-copy">
-                  <span className="setup-team-slot-num">SLOT {i + 1}</span>
-                  <span className="setup-team-slot-name">{char?.name ?? '—'}</span>
-                  <span className="setup-team-slot-form">{form?.form ?? ''}</span>
-                </span>
-              </button>
-              {state.members.length > 1 ? (
-                <button type="button" className="setup-team-slot-remove" title="Remove member"
-                  onClick={() => setup.removeMember(i)}>✕</button>
-              ) : null}
-            </div>
-          );
-        })}
-        {state.members.length < 2 ? (
-          <button type="button" className="setup-team-slot setup-team-slot-add"
-            onClick={setup.addMember}>+ ADD MEMBER</button>
-        ) : null}
-      </div>
+      {/* Shared Dev composition keeps slots in the workshop. */}
+      {!topControls ? teamSlots : null}
 
       {/* Character Roll */}
       <CharacterRoll

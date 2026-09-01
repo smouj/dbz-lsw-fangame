@@ -4903,20 +4903,6 @@ function TeamSetupScreen({ onNavigate, onStartVersus, initialFormId }: {
   return (
     <div className="page-screen versus-screen setup-screen-wrap">
       <GamePageHeader title={t('versus.title')} onBack={() => onNavigate('main')} />
-      {/* Selector de rival (versus) — compacto; el foco del setup es el equipo */}
-      <div className="setup-enemy-row">
-        <span className="setup-enemy-label">OPPONENT</span>
-        <select
-          className="setup-enemy-select"
-          value={enemyForm}
-          onChange={e => { Sfx.select(); setEnemyForm(e.target.value); }}
-        >
-          {ROM_ORDERED_CHARACTERS.map(c => c.forms.map(fid => {
-            const f = getForm(fid);
-            return f ? <option key={fid} value={fid}>{c.name} — {f.form}</option> : null;
-          }))}
-        </select>
-      </div>
       <TeamSetup
         useSetup={useTeamSetupState}
         fallbackDeck={battleDefaultDeck}
@@ -4924,6 +4910,21 @@ function TeamSetupScreen({ onNavigate, onStartVersus, initialFormId }: {
         initialCharacterId={initialCharacterId}
         initialFormId={initialFormId}
         initialDeckId={battleDefaultPreset?.id}
+        topControls={(
+          <div className="setup-enemy-row">
+            <span className="setup-enemy-label">OPPONENT</span>
+            <select
+              className="setup-enemy-select"
+              value={enemyForm}
+              onChange={e => { Sfx.select(); setEnemyForm(e.target.value); }}
+            >
+              {ROM_ORDERED_CHARACTERS.map(c => c.forms.map(fid => {
+                const f = getForm(fid);
+                return f ? <option key={fid} value={fid}>{c.name} — {f.form}</option> : null;
+              }))}
+            </select>
+          </div>
+        )}
         onConfirm={(result: TeamSetupResult) => onStartVersus(enemyForm, result.member)}
         onEditDecks={() => onNavigate('deck')}
         onBack={() => onNavigate('main')}
