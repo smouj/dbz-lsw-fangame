@@ -1,4 +1,4 @@
-name: Portrait Domain Isolation
+name: Portrait Domain Final Verification
 
 on:
   push:
@@ -9,7 +9,7 @@ permissions:
   contents: write
 
 jobs:
-  migrate-and-verify:
+  verify:
     if: github.actor != 'github-actions[bot]'
     runs-on: ubuntu-latest
     steps:
@@ -21,22 +21,32 @@ jobs:
           node-version: 20
           cache: npm
       - run: npm ci
-      - name: Apply portrait domain migration
-        run: node scripts/apply-portrait-domain-isolation.mjs
-      - name: Prepare generated CI assets
-        run: npm run prepare:ci-generated
-      - name: Typecheck
-        run: npm run typecheck
-      - name: Portrait domain gate
-        run: npm run verify:portrait-domains
-      - name: Commit migration
+      - name: Remove deprecated Story compatibility alias
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p = Path('src/data/storyPortraits.ts')
+          s = p.read_text()
+          s = s.replace(
+              "\n/** @deprecated Diagnostic compatibility alias. Never use in production rendering. */\nexport const storyPortraitUrl = storyPortraitUrlApproximate;\n",
+              "\n",
+          )
+          s = s.replace(
+              "// Future Trunks SSJ y Goku SSJ3, por ejemplo, no tienen retrato Story dedicado\n// en este corpus y deben caer al retrato físico verificado más cercano.\n",
+              "// Una forma sin retrato Story exacto permanece MISSING en producción; nunca se\n// sustituye silenciosamente por otra transformación ni por Battle/Menu.\n",
+          )
+          p.write_text(s)
+          PY
+      - name: Full repository verification
+        run: npm run verify:ci
+      - name: Commit final Story cleanup
         run: |
           if git diff --quiet; then
-            echo "No migration diff"
+            echo "No cleanup diff"
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "[redacted-email]"
-          git add src/main.tsx src/data/storyPortraits.ts package.json
-          git commit -m "refactor(portraits): enforce domain isolation [skip ci]"
+          git add src/data/storyPortraits.ts
+          git commit -m "refactor(portraits): remove approximate Story compatibility alias [skip ci]"
           git push
