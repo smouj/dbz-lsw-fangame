@@ -1,0 +1,40 @@
+name: Portrait Domain Isolation
+
+on:
+  push:
+    branches:
+      - fix/portrait-domain-isolation
+
+permissions:
+  contents: write
+
+jobs:
+  migrate-and-verify:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - name: Apply portrait domain migration
+        run: node scripts/apply-portrait-domain-isolation.mjs
+      - name: Typecheck
+        run: npm run typecheck
+      - name: Portrait domain gate
+        run: npm run verify:portrait-domains
+      - name: Commit migration
+        run: |
+          if git diff --quiet; then
+            echo "No migration diff"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "[redacted-email]"
+          git add src/main.tsx src/data/storyPortraits.ts package.json
+          git commit -m "refactor(portraits): enforce domain isolation [skip ci]"
+          git push
