@@ -4909,6 +4909,8 @@ function TeamSetupScreen({ onNavigate, onStartVersus, initialFormId }: {
   initialFormId?: string;
 }) {
   const { t } = useLang();
+  // ── Which team has focus (player or rival) ──
+  const [focusTeam, setFocusTeam] = useState<'player' | 'rival'>('player');
   // ── Rival team state (2 slots, mirror of player team) ──
   const rival = useRivalSetupState({ initialFormId: 'piccolo_base' });
   const rivalActive = rival.state.members[rival.state.activeMember];
@@ -4965,7 +4967,7 @@ function TeamSetupScreen({ onNavigate, onStartVersus, initialFormId }: {
         return (
           <div key={i} className={`setup-team-slot setup-team-slot-rival${i === rival.state.activeMember ? ' active' : ''}`}>
             <button type="button" className="setup-team-slot-btn"
-              onClick={() => rival.setActiveMember(i)}>
+              onClick={() => { rival.setActiveMember(i); setFocusTeam('rival'); }}>
               {portrait.url ? <img className="setup-team-slot-portrait battle" src={portrait.url} alt="" draggable={false} /> : null}
               <span className="setup-team-slot-copy">
                 <span className="setup-team-slot-num">SLOT {i + 1}</span>
@@ -4982,7 +4984,7 @@ function TeamSetupScreen({ onNavigate, onStartVersus, initialFormId }: {
       })}
       {rival.state.members.length < 2 ? (
         <button type="button" className="setup-team-slot setup-team-slot-add setup-team-slot-add-rival"
-          onClick={rival.addMember}>+ ADD RIVAL</button>
+          onClick={() => { rival.addMember(); setFocusTeam('rival'); }}>+ ADD RIVAL</button>
       ) : null}
     </div>
   );
@@ -4997,30 +4999,20 @@ function TeamSetupScreen({ onNavigate, onStartVersus, initialFormId }: {
         initialCharacterId={initialCharacterId}
         initialFormId={initialFormId}
         initialDeckId={battleDefaultPreset?.id}
-        topControls={(
-          <div className="setup-command-row" role="group" aria-label="Team selection">
-            {/* ── Player team ── */}
-            <div className="setup-command-team setup-command-team-player" role="group" aria-label="Your team">
-              <span className="setup-command-team-label">YOUR TEAM</span>
-              {/* Team slots rendered by TeamSetup */}
-            </div>
-            {/* ── Rival team ── */}
-            <div className="setup-command-team setup-command-team-rival" role="group" aria-label="Rival team">
-              <span className="setup-command-team-label setup-enemy-label">RIVAL TEAM</span>
-              {rivalSlots}
-            </div>
-            {/* ── Rival character roll + form selector ── */}
-            <FormSelector
-              characterId={rivalActive?.characterId ?? 'piccolo'}
-              selectedFormId={rivalActive?.formId ?? 'piccolo_base'}
-              onSelect={rival.selectForm}
-              isUnlocked={() => true} // Rival can use any form
-            />
-          </div>
+        rivalSlots={rivalSlots}
+        rivalFormSelector={(
+          <FormSelector
+            characterId={rivalActive?.characterId ?? 'piccolo'}
+            selectedFormId={rivalActive?.formId ?? 'piccolo_base'}
+            onSelect={rival.selectForm}
+            isUnlocked={() => true}
+          />
         )}
+        rivalActive={focusTeam === 'rival'}
         onConfirm={(result: TeamSetupResult) => onStartVersus(rival.state.members)}
         onEditDecks={() => onNavigate('deck')}
         onBack={() => onNavigate('main')}
+        onPlayerSlotClick={() => setFocusTeam('player')}
         isFormUnlocked={fid => isFormUnlocked(fid, loadProgress().level)}
       />
     </div>

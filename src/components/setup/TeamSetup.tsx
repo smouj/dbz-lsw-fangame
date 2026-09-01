@@ -32,8 +32,14 @@ export interface TeamSetupProps {
   onEditDecks: () => void;
   onBack: () => void;
   isFormUnlocked?: (formId: string) => boolean;
-  /** Optional Battle-only command placed beside the team slots. */
-  topControls?: ReactNode;
+  /** Battle-only: rival team slots injected beside player in command row. */
+  rivalSlots?: ReactNode;
+  /** Battle-only: rival form selector shown when rival team is active. */
+  rivalFormSelector?: ReactNode;
+  /** Whether the rival team (not player) is currently in focus. */
+  rivalActive?: boolean;
+  /** Battle-only: callback when player team slot is clicked (to set focus). */
+  onPlayerSlotClick?: () => void;
 }
 
 export function TeamSetup({
@@ -46,7 +52,10 @@ export function TeamSetup({
   onConfirm,
   onEditDecks,
   isFormUnlocked,
-  topControls,
+  rivalSlots,
+  rivalFormSelector,
+  rivalActive,
+  onPlayerSlotClick,
 }: TeamSetupProps) {
   const setup = useSetup({ fallbackDeck, initialCharacterId, initialFormId, initialDeckId, strictDeckAssignment: true });
   const { state, active, result, deckValid } = setup;
@@ -99,7 +108,7 @@ export function TeamSetup({
         return (
           <div key={i} className={`setup-team-slot${i === state.activeMember ? ' active' : ''}`}>
             <button type="button" className="setup-team-slot-btn"
-              onClick={() => setup.setActiveMember(i)}>
+              onClick={() => { setup.setActiveMember(i); onPlayerSlotClick?.(); }}>
               {portrait.url ? <img className="setup-team-slot-portrait battle" src={portrait.url} alt="" draggable={false} /> : null}
               <span className="setup-team-slot-copy">
                 <span className="setup-team-slot-num">SLOT {i + 1}</span>
@@ -122,25 +131,31 @@ export function TeamSetup({
   );
 
   return (
-    <div className={`page-screen setup-screen${topControls ? ' setup-screen-command' : ''}`} data-testid="team-setup">
-      {topControls ? (
+    <div className={`page-screen setup-screen${rivalSlots ? ' setup-screen-command' : ''}`} data-testid="team-setup">
+      {rivalSlots ? (
         <div className="setup-command-row">
           <div className="setup-command-team setup-command-team-player" role="group" aria-label="Your team">
             <span className="setup-command-team-label">YOUR TEAM</span>
             {teamSlots}
           </div>
-          <FormSelector
-            characterId={active.characterId}
-            selectedFormId={active.formId}
-            onSelect={setup.selectForm}
-            isUnlocked={isFormUnlocked}
-          />
-          {topControls}
+          {!rivalActive ? (
+            <FormSelector
+              characterId={active.characterId}
+              selectedFormId={active.formId}
+              onSelect={setup.selectForm}
+              isUnlocked={isFormUnlocked}
+            />
+          ) : null}
+          <div className="setup-command-team setup-command-team-rival" role="group" aria-label="Rival team">
+            <span className="setup-command-team-label setup-enemy-label">RIVAL TEAM</span>
+            {rivalSlots}
+          </div>
+          {rivalActive ? rivalFormSelector : null}
         </div>
       ) : null}
       <div className="setup-workshop">
       {/* Shared Dev composition keeps slots in the workshop. */}
-      {!topControls ? teamSlots : null}
+      {!rivalSlots ? teamSlots : null}
 
       {/* Character Roll */}
       <CharacterRoll
@@ -153,7 +168,7 @@ export function TeamSetup({
       />
 
       {/* Form selector del personaje central */}
-      {!topControls ? (
+      {!rivalSlots ? (
         <FormSelector
           characterId={active.characterId}
           selectedFormId={active.formId}
