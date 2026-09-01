@@ -123,7 +123,18 @@ export function TeamSetup({
 
   return (
     <div className={`page-screen setup-screen${topControls ? ' setup-screen-command' : ''}`} data-testid="team-setup">
-      {topControls ? <div className="setup-command-row">{topControls}{teamSlots}</div> : null}
+      {topControls ? (
+        <div className="setup-command-row">
+          {topControls}
+          <FormSelector
+            characterId={active.characterId}
+            selectedFormId={active.formId}
+            onSelect={setup.selectForm}
+            isUnlocked={isFormUnlocked}
+          />
+          {teamSlots}
+        </div>
+      ) : null}
       <div className="setup-workshop">
       {/* Shared Dev composition keeps slots in the workshop. */}
       {!topControls ? teamSlots : null}
@@ -139,12 +150,14 @@ export function TeamSetup({
       />
 
       {/* Form selector del personaje central */}
-      <FormSelector
-        characterId={active.characterId}
-        selectedFormId={active.formId}
-        onSelect={setup.selectForm}
-        isUnlocked={isFormUnlocked}
-      />
+      {!topControls ? (
+        <FormSelector
+          characterId={active.characterId}
+          selectedFormId={active.formId}
+          onSelect={setup.selectForm}
+          isUnlocked={isFormUnlocked}
+        />
+      ) : null}
 
       <div className="setup-body">
         {/* Detalles */}

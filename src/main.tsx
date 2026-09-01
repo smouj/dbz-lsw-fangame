@@ -4893,6 +4893,15 @@ function TeamSetupScreen({ onNavigate, onStartVersus, initialFormId }: {
 }) {
   const { t } = useLang();
   const [enemyForm, setEnemyForm] = useState('piccolo_base');
+  const enemyForms = useMemo(() => ROM_ORDERED_CHARACTERS.flatMap(c => c.forms), []);
+  const enemyIndex = Math.max(0, enemyForms.indexOf(enemyForm));
+  const enemyDef = getForm(enemyForm);
+  const enemyChar = enemyDef ? getCharacter(enemyDef.character) : undefined;
+  const enemyPortrait = resolveBattlePortraitStrict(enemyForm);
+  const shiftEnemy = (delta: number) => {
+    const next = enemyForms[(enemyIndex + delta + enemyForms.length) % enemyForms.length];
+    if (next) { Sfx.select(); setEnemyForm(next); }
+  };
   const deckLibrary = loadDeckLibrary(DEFAULT_DECK);
   const savedActiveDeck = activeSavedDeck(deckLibrary);
   const battleDefaultPreset = (isSavedDeckReady(savedActiveDeck)
@@ -4913,16 +4922,35 @@ function TeamSetupScreen({ onNavigate, onStartVersus, initialFormId }: {
         topControls={(
           <div className="setup-enemy-row">
             <span className="setup-enemy-label">OPPONENT</span>
-            <select
-              className="setup-enemy-select"
-              value={enemyForm}
-              onChange={e => { Sfx.select(); setEnemyForm(e.target.value); }}
-            >
-              {ROM_ORDERED_CHARACTERS.map(c => c.forms.map(fid => {
-                const f = getForm(fid);
-                return f ? <option key={fid} value={fid}>{c.name} — {f.form}</option> : null;
-              }))}
-            </select>
+            <div className="setup-opponent-picker">
+              <button type="button" className="setup-opponent-nav" aria-label="Previous opponent"
+                onClick={() => shiftEnemy(-1)}>‹</button>
+              <div className="setup-opponent-card">
+                {enemyPortrait.url ? (
+                  <img src={enemyPortrait.url} alt="" className="setup-opponent-portrait" draggable={false} />
+                ) : null}
+                <span className="setup-opponent-copy">
+                  <small>RIVAL</small>
+                  <strong>{enemyChar?.name ?? '—'}</strong>
+                  <span>{enemyDef?.form ?? ''}</span>
+                </span>
+                <select
+                  className="setup-enemy-select"
+                  aria-label="Select opponent"
+                  value={enemyForm}
+                  onChange={e => { Sfx.select(); setEnemyForm(e.target.value); }}
+                >
+                  {enemyForms.map(fid => {
+                    const f = getForm(fid);
+                    const c = f ? getCharacter(f.character) : undefined;
+                    return f ? <option key={fid} value={fid}>{c?.name ?? f.character} — {f.form}</option> : null;
+                  })}
+                </select>
+              </div>
+              <span className="setup-opponent-count">{String(enemyIndex + 1).padStart(2, '0')} / {enemyForms.length}</span>
+              <button type="button" className="setup-opponent-nav" aria-label="Next opponent"
+                onClick={() => shiftEnemy(1)}>›</button>
+            </div>
           </div>
         )}
         onConfirm={(result: TeamSetupResult) => onStartVersus(enemyForm, result.member)}
