@@ -96,7 +96,7 @@
 .shell-surface .setup-team-slot { box-shadow:none; border-width:1px; }
 .shell-surface .setup-team-slot.active { border-color:var(--page-accent); box-shadow:inset 3px 0 var(--page-accent); }
 .shell-surface .setup-team-slot-btn { min-width:172px; gap:3px; padding:10px 20px; }
-.shell-surface .setup-team-slot-btn { display:flex; align-items:center; text-align:left; }
+.shell-surface .setup-team-slot-btn { display:flex; flex-direction:row; align-items:center; text-align:left; }
 .shell-surface .setup-team-slot-portrait { flex:0 0 42px; width:42px; height:46px; margin:-6px 6px -6px -12px; object-fit:contain; object-position:center bottom; image-rendering:pixelated; border-right:1px solid #46536a; }
 .shell-surface .setup-team-slot-copy { display:flex; flex-direction:column; min-width:0; }
 .shell-surface .setup-team-slot-add { min-width:154px; font:700 12px var(--shell-body); }
@@ -173,6 +173,71 @@
 .shell-surface .setup-card-art-name { font:18px/1.2 var(--shell-display); }
 .shell-surface .setup-card-preview-power { animation:none; }
 .shell-surface .setup-ready { border-width:1px; border-left-width:4px; }
+
+/* Canonical 1280×720 composition: the complete default setup fits without a
+   page-length workshop scroll. Limits may scroll locally only while their
+   picker is open; large saved-deck libraries scroll inside their own list. */
+.shell-surface .setup-screen > .setup-workshop {
+  display:grid;
+  grid-template-columns:460px minmax(0,1fr);
+  grid-template-rows:52px 176px 36px 170px;
+  gap:8px 12px;
+  padding:0;
+  overflow:hidden;
+}
+.shell-surface .setup-team-slots { grid-column:1 / -1; grid-row:1; display:flex; align-items:stretch; gap:8px; min-height:0; height:52px; }
+.shell-surface .setup-team-slot { min-height:0; height:52px; }
+.shell-surface .setup-team-slot-btn { min-width:188px; height:50px; padding:6px 18px; }
+.shell-surface .setup-team-slot-portrait { width:40px; height:44px; margin:-3px 6px -3px -10px; }
+.shell-surface .setup-team-slot-portrait.battle { height:34px; align-self:center; }
+.shell-surface .setup-team-slot-add { min-height:50px; height:50px; }
+.shell-surface .setup-screen .setup-roll { grid-column:1; grid-row:2; flex:none; width:100%; height:176px; min-height:176px; }
+.shell-surface .setup-screen .setup-roll-heading { top:9px; }
+.shell-surface .setup-screen .setup-roll-stage { top:30px; height:112px; }
+.shell-surface .setup-screen .setup-roll-item { top:28px; height:114px; }
+.shell-surface .setup-screen .setup-roll-item-center { height:114px; }
+.shell-surface .setup-screen .setup-roll-chibi { height:68px; }
+.shell-surface .setup-screen .setup-roll-name { flex-basis:24px; min-height:24px; padding-top:3px; }
+.shell-surface .setup-screen .setup-roll-form { display:none; }
+.shell-surface .setup-screen .setup-roll-nav { top:63px; }
+.shell-surface .setup-screen .setup-roll-rail { bottom:0; }
+.shell-surface .setup-form-selector { grid-column:1; grid-row:3; min-height:36px; height:36px; gap:10px; overflow:hidden; }
+.shell-surface .setup-form-chip { min-height:30px; padding:4px 10px; font-size:11px; }
+.shell-surface .setup-screen .setup-body { display:contents; }
+.shell-surface .setup-details { grid-column:1; grid-row:4; height:170px; padding:6px 12px; overflow:hidden; }
+.shell-surface .setup-details-head { gap:8px; }
+.shell-surface .setup-details-name { font-size:21px; }
+.shell-surface .setup-details-stats { margin-top:6px; gap:2px; }
+.shell-surface .setup-details-stat { grid-template-columns:82px minmax(0,1fr) 32px; min-height:19px; }
+.shell-surface .setup-details-stat-label { font-size:10px; }
+.shell-surface .setup-details-stat-val { font-size:11px; }
+.shell-surface .setup-details-meta { margin-top:4px; font-size:9px; }
+.shell-surface .setup-details-growth-disclosure { margin-top:5px; }
+.shell-surface .setup-details-growth-disclosure summary { padding-top:5px; font-size:9px; }
+.shell-surface .setup-limits { grid-column:2; grid-row:2; height:176px; padding:10px 12px; overflow:auto; scrollbar-width:thin; }
+.shell-surface .setup-limits-slots { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:6px; }
+.shell-surface .setup-limit-slot { min-height:48px; height:48px; padding:6px 8px; }
+.shell-surface .setup-limit-slot-card { gap:5px; }
+.shell-surface .setup-limit-slot-card b { font-size:11px; }
+.shell-surface .setup-limit-slot-card i,.shell-surface .setup-limit-slot-num { font-size:9px; }
+.shell-surface .setup-limits-note { margin-top:6px; font-size:9px; line-height:1.3; }
+.shell-surface .setup-deck-assignment { grid-column:2; grid-row:3 / 5; min-height:0; padding:8px 10px; gap:6px; overflow:hidden; }
+.shell-surface .setup-deck-assignment-head { gap:10px; padding-bottom:4px; }
+.shell-surface .setup-deck-assignment h3 { margin:0; font-size:20px; }
+.shell-surface .setup-deck-assignment p { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:9px; }
+.shell-surface .setup-edit-decks { min-height:28px; padding:4px 8px; font-size:9px; }
+.shell-surface .setup-deck-presets { gap:5px; max-height:88px; overflow:auto; scrollbar-width:thin; }
+.shell-surface .setup-deck-preset { min-height:42px; gap:2px 6px; padding:5px 6px; }
+.shell-surface .setup-deck-preset.active { padding:4px 5px; }
+.shell-surface .setup-deck-preset-copy strong { font-size:10px; }
+.shell-surface .setup-deck-preset-copy small { font-size:7px; }
+.shell-surface .setup-deck-preset-icons img { width:20px; height:20px; }
+.shell-surface .setup-assigned-deck-preview { padding:5px 6px; }
+.shell-surface .setup-assigned-deck-summary { margin-bottom:4px; font-size:8px; }
+.shell-surface .setup-assigned-card-icons { grid-template-columns:repeat(20,minmax(0,1fr)); gap:3px; }
+.shell-surface .setup-assigned-card-icon { height:32px; aspect-ratio:auto; }
+.shell-surface .setup-assigned-card-icon img { padding:1px; }
+.shell-surface .setup-assigned-card-icon span { min-width:10px; font-size:6px; }
 @media (prefers-reduced-motion:reduce) {
   :is(.shell-surface,.dev-team-builder) .setup-roll-item { transition:none; animation:none; }
   :is(.shell-surface,.dev-team-builder) :is(.setup-roll-aura,.setup-power-aura-layer) { animation:none; }

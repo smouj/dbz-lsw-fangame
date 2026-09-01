@@ -54,6 +54,7 @@ import { overworldUrl } from './data/overworld';
 import { battleOverworldActorUrl, battleOverworldAuraUrl } from './data/battleOverworld';
 import { panelsForChapter, type StoryPanel, characterName } from './data/storyPanels';
 import { storyPortraitUrl } from './data/storyPortraits';
+import { rosterPortraitAsset } from './data/rosterPortraits';
 import { spriteManifestUrl, spriteFrameUrl, spriteDirFor } from './data/spriteManifest';
 import { SCENARIOS, SPECIAL_ACTION_BACKGROUND, type BattleViewMode } from './data/scenarios';
 import { stageForChapter, BATTLE_STAGES } from './data/battleBackgrounds';
@@ -4396,7 +4397,7 @@ function CharactersScreen({ onNavigate, onSelectFighter }: {
   const selUnlocked = isCharacterUnlocked(selChar.id);
   const unlockedForms = selChar.forms.filter(fid => isFormUnlocked(fid, loadProgress().level)).length;
   const profile = statProfile(sel);
-  const storyPortrait = resolveSpeakerPortrait(selChar.id, selected);
+  const identityPortrait = rosterPortraitAsset(selChar.id, selected);
   const battlePortrait = BATTLE_PORTRAITS[selected];
   const owPortrait = overworldUrl(selected);
 
@@ -4408,6 +4409,7 @@ function CharactersScreen({ onNavigate, onSelectFighter }: {
         <div className="char-grid">
           {ROM_ORDERED_CHARACTERS.map(c => {
             const baseForm = getForm(c.forms[0])!;
+            const portrait = rosterPortraitAsset(c.id, baseForm.id);
             const active = c.id === sel.character;
             const unlocked = isCharacterUnlocked(c.id);
             if (!unlocked) {
@@ -4423,7 +4425,7 @@ function CharactersScreen({ onNavigate, onSelectFighter }: {
               <button key={c.id} className={`char-cell ui-char-card ${active ? 'active' : ''}`}
                 onClick={() => setSelected(baseForm.id)}>
                 <span className="char-thumb-frame">
-                  <img className="char-thumb-story" src={resolveSpeakerPortrait(c.id, baseForm.id)} alt="" draggable={false} />
+                  {portrait.url ? <img className={`char-thumb-story ${portrait.source}`} src={portrait.url} alt="" draggable={false} /> : null}
                 </span>
                 <div className="char-name">{c.name}</div>
                 <div className="char-forms">{c.forms.length} {t('characters.forms')}</div>
@@ -4439,8 +4441,8 @@ function CharactersScreen({ onNavigate, onSelectFighter }: {
             <div className={`char-detail-sprite-wrap ${transformFx ? 'transforming' : ''}`} key={transformFx}>
               {transformFx > 0 && <div className="transform-flash" />}
               <div className="char-identity-story">
-                {storyPortrait ? <img src={storyPortrait} alt={`${selChar.name} ${sel.form}`} draggable={false} /> : null}
-                <span>STORY PORTRAIT</span>
+                {identityPortrait.url ? <img className={identityPortrait.source} src={identityPortrait.url} alt={`${selChar.name} ${sel.form}`} draggable={false} /> : null}
+                <span>{identityPortrait.source === 'story' ? 'STORY PORTRAIT' : identityPortrait.source === 'battle' ? 'BATTLE PORTRAIT' : 'CHARACTER PORTRAIT'}</span>
               </div>
               <div className="char-identity-combat">
                 <div className="transform-aura" />
@@ -4457,7 +4459,7 @@ function CharactersScreen({ onNavigate, onSelectFighter }: {
           </div>
 
           <div className="char-asset-rail" aria-label="Character sprite sources">
-            {battlePortrait ? (
+            {battlePortrait && identityPortrait.source !== 'battle' ? (
               <div className="char-asset-chip">
                 <img src={battlePortrait} alt="" draggable={false} />
                 <span><b>BATTLE</b> HUD PORTRAIT</span>

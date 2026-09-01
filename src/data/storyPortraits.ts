@@ -190,6 +190,78 @@ export const STORY_PORTRAITS: Record<string, PortraitEntry> = {
   spectator: { base: `${P}/tournament_spectator_girl.png` },
 };
 
+/** Retratos Story que representan de forma física y exacta una forma del roster.
+ * Si una forma no aparece aquí, la UI de selección debe usar su retrato Battle
+ * exacto antes de enseñar otra transformación como si fuera la seleccionada. */
+const ROSTER_STORY_PORTRAITS: Readonly<Record<string, string>> = {
+  goku_base: `${P}/goku_01.png`,
+  goku_ssj: `${P}/goku_ssj_01.png`,
+  vegeta_base: `${P}/vegeta_01.png`,
+  vegeta_ssj: `${P}/vegeta_ssj.png`,
+  vegeta_majin: `${P}/majin_vegeta_01.png`,
+  gohan_young: `${P}/gohan_young_01.png`,
+  gohan_young_ssj: `${P}/gohan_young_ssj_01.png`,
+  gohan_young_ssj2: `${P}/gohan_young_ssj2_01.png`,
+  gohan_adult_ssj: `${P}/gohan_adult_ssj.png`,
+  gohan_adult_ultimate: `${P}/gohan_adult_03.png`,
+  trunks_kid: `${P}/trunks_kid_01.png`,
+  trunks_future: `${P}/trunks_future_01.png`,
+  goten_base: `${P}/goten_01.png`,
+  gotenks_ssj3: `${P}/gotenks_ssj3.png`,
+  piccolo_base: `${P}/piccolo_01.png`,
+  piccolo_kami: `${P}/piccolo_05.png`,
+  krillin_base: `${P}/krillin_01.png`,
+  frieza_final: `${P}/frieza_final_form_01.png`,
+  cell_imperfect: `${P}/cell_imperfect.png`,
+  cell_semi: `${P}/cell_semi_perfect.png`,
+  cell_perfect: `${P}/cell_perfect_01.png`,
+  cell_jr: `${P}/cell_jr.png`,
+  android_16: `${P}/android_16.png`,
+  android_17: `${P}/android_17.png`,
+  android_18: `${P}/android_18.png`,
+  android_19: `${P}/android_19.png`,
+  android_20: `${P}/android_20_dr_gero.png`,
+  ginyu: `${P}/captain_ginyu_01.png`,
+  ginyu_goku: `${P}/captain_ginyu_goku_body.png`,
+  recoome: `${P}/recoome.png`,
+  guldo: `${P}/guldo.png`,
+  jeice: `${P}/jeice.png`,
+  burter: `${P}/burter.png`,
+  nappa: `${P}/nappa_01.png`,
+  buu_base: `${P}/majin_buu_01.png`,
+  buu_super: `${P}/super_buu_01.png`,
+  buu_gohan: `${P}/super_buu_gohan_03.png`,
+  buu_kid: `${P}/kid_buu.png`,
+  vegito_ssj: `${P}/vegito_ssj.png`,
+};
+
+export function storyPortraitForRosterForm(formId: string): string | undefined {
+  return ROSTER_STORY_PORTRAITS[formId];
+}
+
+/** Identidad narrativa para formas cuyo nombre no puede inferirse por tokens.
+ * Algunas son aproximaciones Story verificadas; la UI del roster usa Battle
+ * cuando no existe una entrada exacta en ROSTER_STORY_PORTRAITS. */
+const ROSTER_STORY_FORM_RESOLUTION: Readonly<Record<string, { key: string; alias?: string }>> = {
+  goku_ssj2: { key: 'goku', alias: 'ssj' },
+  goku_ssj3: { key: 'goku', alias: 'ssj' },
+  gohan_adult_ssj2: { key: 'gohan', alias: 'adult_ssj' },
+  trunks_kid_ssj: { key: 'trunks', alias: 'kid' },
+  trunks_ssj: { key: 'trunks' },
+  goten_ssj: { key: 'goten' },
+  gotenks_ssj: { key: 'gotenks' },
+  piccolo_evil: { key: 'piccolo' },
+  cell_imperfect: { key: 'cell_imperfect' },
+  cell_semi: { key: 'cell_semi' },
+  cell_perfect: { key: 'cell' },
+  ginyu_goku: { key: 'ginyu', alias: 'goku_body' },
+  buu_base: { key: 'fat_buu' },
+  buu_super: { key: 'majin_buu' },
+  buu_gotenks: { key: 'majin_buu' },
+  buu_gohan: { key: 'majin_buu', alias: 'gohan_form' },
+  buu_kid: { key: 'kid_buu' },
+};
+
 const FORM_ALIAS: Record<string, string> = {
   base: 'base', normal: 'base', ssj: 'ssj', super: 'ssj', super_saiyan: 'ssj',
   ssj2: 'ssj2', super2: 'ssj2', super_saiyan_2: 'ssj2',
@@ -261,6 +333,12 @@ export function storyPortraitUrl(
     key = 'majin_buu';
   } else if (raw === 'buu_kid' || raw === 'kid_buu') {
     key = 'kid_buu';
+  }
+
+  const rosterResolution = formId ? ROSTER_STORY_FORM_RESOLUTION[formId] : undefined;
+  if (rosterResolution) {
+    key = rosterResolution.key;
+    forcedForm = rosterResolution.alias;
   }
 
   const entry = STORY_PORTRAITS[key];

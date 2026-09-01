@@ -10,7 +10,7 @@ import { useMemo } from 'react';
 import { ROM_ORDERED_CHARACTERS, getCharacter, getForm } from '../../data/roster';
 import { overworldUrl } from '../../data/overworld';
 import { battleOverworldActorUrl } from '../../data/battleOverworld';
-import { resolveSpeakerPortrait } from '../../data/speakerPortraits';
+import { rosterPortraitAsset } from '../../data/rosterPortraits';
 import type { SavedDeck } from '../../data/deckLibrary';
 import { CharacterRoll, type RollCharacterAsset } from './CharacterRoll';
 import { FormSelector } from './FormSelector';
@@ -93,12 +93,12 @@ export function TeamSetup({
         {state.members.map((m, i) => {
           const char = getCharacter(m.characterId);
           const form = getForm(m.formId);
-          const portrait = resolveSpeakerPortrait(m.characterId, m.formId);
+          const portrait = rosterPortraitAsset(m.characterId, m.formId);
           return (
             <div key={i} className={`setup-team-slot${i === state.activeMember ? ' active' : ''}`}>
               <button type="button" className="setup-team-slot-btn"
                 onClick={() => setup.setActiveMember(i)}>
-                {portrait ? <img className="setup-team-slot-portrait" src={portrait} alt="" draggable={false} /> : null}
+                {portrait.url ? <img className={`setup-team-slot-portrait ${portrait.source}`} src={portrait.url} alt="" draggable={false} /> : null}
                 <span className="setup-team-slot-copy">
                   <span className="setup-team-slot-num">SLOT {i + 1}</span>
                   <span className="setup-team-slot-name">{char?.name ?? '—'}</span>

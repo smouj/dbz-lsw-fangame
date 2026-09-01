@@ -36,6 +36,16 @@ Validación de esta entrega: TypeScript PASS; 227 pruebas (seis nuevas para secu
 
 Validación de esta entrega: TypeScript PASS; Vitest 233/233; biblioteca y power-up 12/12 focalizadas; viewport 27/27; HUD 10/10; rutas Dev 12/12; Dev Studio 58/58; bucle jugable PASS y build Vite PASS. La sonda de navegador comprobó Deck, Cards, Characters, la ruta Characters → Battle Setup, `READY` habilitado y el handoff del mazo al combate.
 
+## Quinto pulido: layouts sin scroll e identidad por forma
+
+- Battle usa una cuadrícula canónica de dos columnas: selector y ficha a la izquierda; Limits y mazo asignado a la derecha. El taller pasa de 1225 px de contenido en 462 px útiles a 462/462. Los 20 iconos permanecen visibles en una fila y READY sigue fuera del taller.
+- Characters muestra los 26 luchadores en seis columnas y cinco filas. La parrilla queda en 603/603 y el dossier en 512/512, sin scroll. La ficha agrupa cabecera, fuentes visuales, estadísticas, rol, archivo y formas en una cuadrícula compacta.
+- Deck muestra sus 20 cartas en dos columnas de diez filas; colección y mazo quedan en 452/452 y 257/257. Cards conserva scroll únicamente en la colección de 125 cartas; el detalle queda en 571/571. Settings ya cabía y mantiene su distribución sin scroll efectivo.
+- Story distribuye cada saga en dos columnas. La saga Cell, la más larga con 12 capítulos, cabe completa junto al resumen de ruta sin desplazar la página.
+- La política compartida de portraits usa primero un retrato Story verificado para esa forma exacta, después el retrato Battle exacto y finalmente el fallback de identidad. Corrige Cell imperfecto/semi/perfecto, Ginyu en cuerpo de Goku y formas de Buu; SSJ2/SSJ3 y otras formas sin portrait Story dedicado dejan de mostrarse como otra transformación.
+
+Validación de esta entrega: TypeScript PASS; Vitest 240/240; cobertura focalizada de portraits, Deck y power-up 19/19; viewport 27/27; HUD 10/10; rutas Dev 12/12; Dev Studio 58/58; bucle jugable y build Vite PASS. `verify:story-dialogue-canon` valida 30 capítulos principales, 2 EX y 71 escenas físicas. Playwright pasa siete resoluciones, 70 checks del shell, 44 de Dev y cero excepciones JavaScript.
+
 ## Cambios
 
 - Menú de seis paneles con composición de cómic, tipografía legible, progreso real de historia y foco visible. Continuar abre Story. Enter y Espacio activan el botón enfocado; las flechas siguen la disposición visual.
