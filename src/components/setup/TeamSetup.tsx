@@ -125,14 +125,17 @@ export function TeamSetup({
     <div className={`page-screen setup-screen${topControls ? ' setup-screen-command' : ''}`} data-testid="team-setup">
       {topControls ? (
         <div className="setup-command-row">
-          {topControls}
+          <div className="setup-command-team setup-command-team-player" role="group" aria-label="Your team">
+            <span className="setup-command-team-label">YOUR TEAM</span>
+            {teamSlots}
+          </div>
           <FormSelector
             characterId={active.characterId}
             selectedFormId={active.formId}
             onSelect={setup.selectForm}
             isUnlocked={isFormUnlocked}
           />
-          {teamSlots}
+          {topControls}
         </div>
       ) : null}
       <div className="setup-workshop">

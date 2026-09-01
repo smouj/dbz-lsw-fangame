@@ -4920,8 +4920,8 @@ function TeamSetupScreen({ onNavigate, onStartVersus, initialFormId }: {
         initialFormId={initialFormId}
         initialDeckId={battleDefaultPreset?.id}
         topControls={(
-          <div className="setup-enemy-row">
-            <span className="setup-enemy-label">OPPONENT</span>
+          <div className="setup-enemy-row" role="group" aria-label="Rival team">
+            <span className="setup-command-team-label setup-enemy-label">RIVAL TEAM</span>
             <div className="setup-opponent-picker">
               <button type="button" className="setup-opponent-nav" aria-label="Previous opponent"
                 onClick={() => shiftEnemy(-1)}>‹</button>
@@ -4930,7 +4930,7 @@ function TeamSetupScreen({ onNavigate, onStartVersus, initialFormId }: {
                   <img src={enemyPortrait.url} alt="" className="setup-opponent-portrait" draggable={false} />
                 ) : null}
                 <span className="setup-opponent-copy">
-                  <small>RIVAL</small>
+                  <small>SLOT 1</small>
                   <strong>{enemyChar?.name ?? '—'}</strong>
                   <span>{enemyDef?.form ?? ''}</span>
                 </span>

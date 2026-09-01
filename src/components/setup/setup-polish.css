@@ -239,18 +239,33 @@
 .shell-surface .setup-assigned-card-icon img { padding:1px; }
 .shell-surface .setup-assigned-card-icon span { min-width:10px; font-size:6px; }
 
-/* Battle command strip: opponent and the two-member team share one anchored
-   row. The shared Dev builder keeps the original workshop composition. */
+/* Battle command strip: the reading order is unambiguous — player team,
+   active form, rival team. The shared Dev builder keeps its own composition. */
 .shell-surface .setup-screen-command > .setup-command-row {
   display:flex; align-items:stretch; flex:0 0 52px; width:100%; height:52px;
-  min-height:52px; gap:12px; overflow:hidden;
+  min-height:52px; gap:10px; overflow:hidden;
+}
+.shell-surface .setup-command-team {
+  display:flex; align-items:center; min-width:0; height:52px; gap:7px;
+}
+.shell-surface .setup-command-team-player { flex:1 1 470px; }
+.shell-surface .setup-command-team-label {
+  display:flex; align-items:center; justify-content:center; flex:0 0 46px;
+  width:46px; height:38px; color:#8fc8ff; text-align:center;
+  font:700 8px/1.15 var(--shell-body); letter-spacing:.08em;
+}
+.shell-surface .setup-command-team-player .setup-team-slots {
+  flex:1 1 auto; justify-content:flex-start; width:auto;
 }
 .shell-surface .setup-command-row .setup-enemy-row {
-  display:flex; align-items:center; flex:1 1 360px; min-width:300px; height:52px;
-  margin:0; padding:0; gap:8px;
+  display:flex; align-items:center; flex:1 1 390px; min-width:320px; height:52px;
+  margin:0; padding:0; gap:7px;
+}
+.shell-surface .setup-command-row .setup-enemy-label {
+  color:#f0a0a0;
 }
 .shell-surface .setup-opponent-picker {
-  display:grid; grid-template-columns:28px minmax(150px,1fr) auto 28px;
+  display:grid; grid-template-columns:28px minmax(142px,1fr) auto 28px;
   align-items:center; flex:1; min-width:0; height:50px; gap:5px;
 }
 .shell-surface .setup-opponent-nav {
@@ -260,26 +275,27 @@
 }
 .shell-surface .setup-opponent-nav:hover { color:var(--page-accent); border-color:var(--page-accent); }
 .shell-surface .setup-opponent-card {
-  position:relative; display:grid; grid-template-columns:38px minmax(0,1fr);
-  align-items:center; min-width:0; height:46px; padding:3px 7px;
-  border:1px solid #4c5a70; background:#111a27;
+  position:relative; display:grid; grid-template-columns:42px minmax(0,1fr);
+  align-items:center; min-width:0; height:46px; padding:5px 7px; gap:6px;
+  border:1px solid #7b4850; background:#1a1219;
 }
-.shell-surface .setup-opponent-card:hover { border-color:var(--page-accent); }
+.shell-surface .setup-opponent-card:hover { border-color:#ef8d95; }
 .shell-surface .setup-opponent-portrait {
-  width:34px; height:38px; object-fit:contain; object-position:center bottom;
-  image-rendering:pixelated;
+  display:block; width:40px; height:30px; padding:0; object-fit:contain;
+  object-position:center; image-rendering:pixelated; border:1px solid #6a4650;
+  background:#0c1018;
 }
 .shell-surface .setup-opponent-copy { display:flex; flex-direction:column; min-width:0; line-height:1.05; }
-.shell-surface .setup-opponent-copy small { color:#8fa1ba; font:700 7px var(--shell-body); letter-spacing:.12em; }
+.shell-surface .setup-opponent-copy small { color:#d4939a; font:700 7px var(--shell-body); letter-spacing:.12em; }
 .shell-surface .setup-opponent-copy strong { overflow:hidden; color:#f3ead6; font:18px/1 var(--shell-display); text-overflow:ellipsis; white-space:nowrap; }
-.shell-surface .setup-opponent-copy span { color:var(--page-accent); font:700 8px var(--shell-body); }
+.shell-surface .setup-opponent-copy span { color:#f2a2a9; font:700 8px var(--shell-body); }
 .shell-surface .setup-command-row .setup-enemy-select {
   position:absolute; inset:0; width:100%; height:100%; min-height:0;
   opacity:0; cursor:pointer;
 }
 .shell-surface .setup-opponent-count { color:#9eabc0; font:700 8px var(--shell-body); white-space:nowrap; }
 .shell-surface .setup-command-row .setup-form-selector {
-  display:flex; align-items:center; flex:0 1 330px; min-width:250px; height:52px;
+  display:flex; align-items:center; flex:0 1 270px; min-width:220px; height:52px;
   gap:6px; overflow:hidden;
 }
 .shell-surface .setup-command-row .setup-form-label { flex:0 0 auto; font-size:9px; }
@@ -288,8 +304,20 @@
   overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
 }
 .shell-surface .setup-command-row .setup-team-slots {
-  display:flex; justify-content:flex-end; flex:0 0 auto; min-width:0; height:52px;
-  gap:8px;
+  display:flex; min-width:0; height:52px; gap:6px;
+}
+.shell-surface .setup-command-row .setup-team-slot { flex:1 1 0; min-width:0; max-width:190px; }
+.shell-surface .setup-command-row .setup-team-slot-btn {
+  width:100%; min-width:0; height:50px; padding:5px 8px; gap:6px;
+}
+.shell-surface .setup-command-row .setup-team-slot-portrait.battle {
+  flex:0 0 40px; width:40px; height:30px; margin:0; padding:0;
+  object-fit:contain; object-position:center; border:1px solid #665d49;
+  background:#0c1018;
+}
+.shell-surface .setup-command-row .setup-team-slot-add {
+  flex:0 1 134px; min-width:104px; max-width:134px; height:50px; padding:5px 8px;
+  font-size:10px;
 }
 
 /* The workshop uses every available pixel: dossier/limits on the left and
@@ -359,7 +387,7 @@
 
 /* CharacterDetails — retrato Battle exacto de la forma activa (dominio Battle). */
 .setup-details-portrait {
-  flex: 0 0 40px; width: 40px; height: 44px;
+  flex: 0 0 42px; width: 42px; height: 32px;
   object-fit: contain; object-position: center bottom;
   image-rendering: pixelated;
   align-self: flex-start;
