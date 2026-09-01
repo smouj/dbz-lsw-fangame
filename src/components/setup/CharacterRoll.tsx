@@ -36,7 +36,10 @@ export function CharacterRoll({ items, selectedIndex, onSelect, disabled }: Char
   }), [items, safeIndex]);
 
   const select = (index: number) => {
-    if (!disabled && items.length) onSelect((index + items.length) % items.length);
+    if (!disabled && items.length) {
+      const item = items[(index + items.length) % items.length];
+      if (!item.locked) onSelect((index + items.length) % items.length);
+    }
   };
   const onKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
     if (disabled || !items.length) return;
@@ -85,15 +88,16 @@ export function CharacterRoll({ items, selectedIndex, onSelect, disabled }: Char
           <button key={item.characterId} type="button"
             className={`setup-roll-item${isCenter ? ' setup-roll-item-center' : ''}${item.locked ? ' setup-roll-locked' : ''}`}
             style={{ transform: `translate3d(${x}px, ${distance * 6}px, 0)`, opacity: [1, .78, .48][distance], zIndex: 10 - distance }}
-            onClick={() => select(index)} disabled={disabled} tabIndex={-1}
-            aria-label={item.name} aria-pressed={isCenter} data-selected={isCenter || undefined} data-distance={distance}>
-            <span className="setup-roll-form">{isCenter ? item.formLabel : ''}</span>
+            onClick={item.locked ? undefined : () => select(index)} disabled={disabled || !!item.locked} tabIndex={-1}
+            aria-label={item.locked ? `${item.name} (locked)` : item.name} aria-pressed={isCenter && !item.locked} data-selected={isCenter && !item.locked || undefined} data-distance={distance} data-locked={item.locked || undefined}>
+            <span className="setup-roll-form">{isCenter && !item.locked ? item.formLabel : ''}</span>
             <span className="setup-roll-chibi">
               {isCenter ? (
                 <CharacterPowerPreview key={`${item.characterId}:${item.formId}`} item={item} />
               ) : item.idleUrl ? (
                 <img src={item.idleUrl} alt="" className="setup-roll-idle" draggable={false} />
               ) : null}
+              {item.locked ? <span className="setup-roll-lock-overlay" aria-hidden="true">🔒</span> : null}
             </span>
             <span className="setup-roll-name">{item.name}</span>
           </button>
@@ -104,7 +108,7 @@ export function CharacterRoll({ items, selectedIndex, onSelect, disabled }: Char
           <button key={item.characterId} ref={index === safeIndex ? activeRailRef : undefined}
             type="button" className={`setup-roll-rail-dot${index === safeIndex ? ' active' : ''}`}
             onClick={() => select(index)} aria-label={item.name} title={item.name}
-            aria-current={index === safeIndex ? 'true' : undefined} disabled={disabled}>
+            aria-current={index === safeIndex ? 'true' : undefined} disabled={disabled || !!item.locked}>
             <span className="setup-roll-rail-dot-mark" />
           </button>
         ))}

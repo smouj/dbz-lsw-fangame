@@ -9,8 +9,8 @@ export interface DeckAssignmentProps {
   decks: SavedDeck[];
   assignedDeckId?: string;
   assignedCards: number[];
-  onAssign: (deckId: string, cards: number[]) => void;
-  onEditDecks: () => void;
+  onAssign?: (deckId: string, cards: number[]) => void;
+  onEditDecks?: () => void;
 }
 
 function sameCards(left: number[], right: number[]): boolean {
@@ -18,6 +18,7 @@ function sameCards(left: number[], right: number[]): boolean {
 }
 
 export function DeckAssignment({ characterId, decks, assignedDeckId, assignedCards, onAssign, onEditDecks }: DeckAssignmentProps) {
+  const readOnly = !onAssign || !onEditDecks;
   const selected = decks.find(deck => deck.id === assignedDeckId)
     ?? decks.find(deck => sameCards(deck.cards, assignedCards));
   const selectedCards = useMemo(() => selected?.cards.map(getCard).filter(Boolean) ?? [], [selected]);
@@ -31,7 +32,7 @@ export function DeckAssignment({ characterId, decks, assignedDeckId, assignedCar
           <h3 id="setup-deck-assignment-title">ASSIGNED DECK</h3>
           <p>Select a saved deck for this fighter. Decks are edited only in the Deck page.</p>
         </div>
-        <button type="button" className="setup-edit-decks" onClick={onEditDecks}>OPEN DECK EDITOR</button>
+        <button type="button" className="setup-edit-decks" onClick={onEditDecks} disabled={readOnly}>{readOnly ? '🔒 ROM LOADOUT' : 'OPEN DECK EDITOR'}</button>
       </div>
 
       <div className="setup-deck-presets" role="list" aria-label="Saved decks">
@@ -48,7 +49,7 @@ export function DeckAssignment({ characterId, decks, assignedDeckId, assignedCar
               className={`setup-deck-preset${active ? ' active' : ''}${ready ? '' : ' incomplete'}`}
               aria-pressed={active}
               disabled={!ready}
-              onClick={() => onAssign(deck.id, [...deck.cards])}
+              onClick={readOnly ? undefined : (() => { if (onAssign) onAssign(deck.id, [...deck.cards]); })}
             >
               <span className="setup-deck-preset-copy">
                 <strong>{deck.name}</strong>

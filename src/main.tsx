@@ -14,6 +14,7 @@ import { applyHudLayout } from './data/hudLayout';
 import { applyHudButtonVars } from './data/hudAssets';
 import { FORMS, CHARACTERS, ROM_ORDERED_CHARACTERS, getCharacter, getForm, idleSpriteUrl, statAtLevel, LIMIT_DEFAULTS, loadLimits, saveLimits } from './data/roster';
 import { STORY_ENEMY_DECKS, STORY_AI_BOOSTS, TEAM_BATTLES } from './data/enemy_decks';
+import { resolveEnemyLoadout, isLoadoutResolved } from './data/enemyLoadouts';
 import { facingFlip, needsFlip } from './data/facing';
 import { BattlePosition, POSITION_DATA, resolveRelativeDistance, isBeamVulnerable, isDamageVulnerable, anchorFor, applyMoveAxis, positionLabel, type MoveAxis } from './data/positions';
 import { UNLOCK_KEY, STARTER_DAMAGE_DECK, STARTER_BEAM_DECK, STARTER_CHARACTERS, cardsForLevel, pickRewards, VS_UNLOCKS, isFormUnlocked, FORM_UNLOCK_LEVELS } from './data/unlocks';
@@ -5148,10 +5149,23 @@ function AppInner() {
     if (member) {
       setPlayerForm(playerForm); // Player form set by TeamSetup
     }
+    // Rival team: resolve ROM loadout for each member
+    // The rival uses their canonical CPU preset (deck + limits from story encounter data)
+    // NOT the player's deck, NOT a generic deck, NOT random.
+    const resolvedTeam = rivalTeam.map(m => {
+      const preset = resolveEnemyLoadout(m.formId);
+      return {
+        ...m,
+        // Override limits/deck with ROM preset when resolved
+        limits: isLoadoutResolved(preset) ? preset.limits : m.limits,
+        jointDeck: isLoadoutResolved(preset) ? preset.deck : m.jointDeck,
+      };
+    });
+    const primary = resolvedTeam[0];
     // Rival team: primary enemy + reserve (2v2)
-    setEnemyForm(member?.formId ?? 'piccolo_base');
+    setEnemyForm(primary?.formId ?? 'piccolo_base');
     // Store rival reserve for BattleConfig.enemy2
-    setRivalReserve(rivalTeam.length > 1 ? rivalTeam[1] : null);
+    setRivalReserve(resolvedTeam.length > 1 ? resolvedTeam[1] : null);
     setStoryChapter(null);
     setBattleKey(k => k + 1);
     setScreen('battle');

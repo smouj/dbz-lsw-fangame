@@ -16,8 +16,8 @@ import type { CardDef, CardType } from '../../data/cards';
 export interface LimitLoadoutPanelProps {
   characterId: string;
   limits: number[];
-  onEquip: (slot: number, cardId: number) => void;
-  onClear: (slot: number) => void;
+  onEquip?: (slot: number, cardId: number) => void;
+  onClear?: (slot: number) => void;
   /** Muestra también cartas incompatibles (Dev) — nunca confirma ilegal. */
   showIncompatible?: boolean;
 }
@@ -27,6 +27,7 @@ export function LimitLoadoutPanel({ characterId, limits, onEquip, onClear, showI
   const [openSlot, setOpenSlot] = useState<number | null>(null);
   const [search, setSearch] = useState('');
   const [incompatibleVisible, setIncompatibleVisible] = useState(showIncompatible ?? false);
+  const readOnly = !onEquip || !onClear;
 
   const equipped = useMemo(() => new Set(limits.filter(id => id !== 0)), [limits]);
   const equippedCount = equipped.size;
@@ -47,7 +48,7 @@ export function LimitLoadoutPanel({ characterId, limits, onEquip, onClear, showI
     <div className="setup-limits" data-testid="limit-loadout">
       <div className="setup-panel-title">
         <span>LIMIT LOADOUT</span>
-        <span className="setup-limits-count">{equippedCount} / {capacity} EQUIPPED</span>
+        {readOnly ? <span className="setup-limits-locked">🔒 ROM LOADOUT</span> : <span className="setup-limits-count">{equippedCount} / {capacity} EQUIPPED</span>}
       </div>
 
       {/* Slots — renderizados por la capacidad REAL del personaje */}
@@ -59,8 +60,8 @@ export function LimitLoadoutPanel({ characterId, limits, onEquip, onClear, showI
             <button
               key={slot}
               type="button"
-              className={`setup-limit-slot${openSlot === slot ? ' open' : ''}${card ? ' filled' : ''}`}
-              onClick={() => setOpenSlot(openSlot === slot ? null : slot)}
+              className={`setup-limit-slot${openSlot === slot ? ' open' : ''}${card ? ' filled' : ''}${readOnly ? ' locked' : ''}`}
+              onClick={readOnly ? undefined : () => setOpenSlot(openSlot === slot ? null : slot)}
               data-testid={`limit-slot-${slot}`}
             >
               <span className="setup-limit-slot-num">LIMIT {slot + 1}</span>
@@ -105,8 +106,8 @@ export function LimitLoadoutPanel({ characterId, limits, onEquip, onClear, showI
                   key={card.id}
                   type="button"
                   className={`setup-limit-option${compatible ? '' : ' incompatible'}`}
-                  onClick={() => { if (compatible) { onEquip(openSlot, card.id); setOpenSlot(null); } }}
-                  disabled={!compatible}
+                  onClick={readOnly ? undefined : () => { if (compatible && onEquip) { onEquip(openSlot, card.id); setOpenSlot(null); } }}
+                  disabled={!compatible || readOnly}
                 >
                   <span className="setup-limit-option-name">{card.name}</span>
                   <span className="setup-limit-option-meta">
@@ -118,9 +119,9 @@ export function LimitLoadoutPanel({ characterId, limits, onEquip, onClear, showI
             })}
             {available.length === 0 ? <span className="setup-empty-hint">No compatible cards left</span> : null}
           </div>
-          {limits[openSlot] ? (
+          {!readOnly && limits[openSlot] ? (
             <button type="button" className="setup-small-btn setup-clear-slot"
-              onClick={() => { onClear(openSlot); setOpenSlot(null); }}>
+              onClick={() => { if (onClear) { onClear(openSlot); setOpenSlot(null); } }}>
               CLEAR SLOT {openSlot + 1}
             </button>
           ) : null}

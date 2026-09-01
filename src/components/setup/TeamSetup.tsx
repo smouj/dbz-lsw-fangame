@@ -219,23 +219,23 @@ export function TeamSetup({
         {/* Detalles */}
         <CharacterDetails formId={rivalActive && rivalFormId ? rivalFormId : active.formId} />
 
-        {/* Limit Loadout */}
+        {/* Limit Loadout — read-only when rival is active (CPU loadout) */}
         <LimitLoadoutPanel
           characterId={rivalActive && rivalCharacterId ? rivalCharacterId : active.characterId}
           limits={rivalActive && rivalLimits ? rivalLimits : active.limits}
-          onEquip={rivalActive && onRivalEquipLimit ? onRivalEquipLimit : setup.equipLimit}
-          onClear={rivalActive && onRivalClearLimit ? onRivalClearLimit : setup.clearLimitSlot}
+          onEquip={rivalActive ? undefined : setup.equipLimit}
+          onClear={rivalActive ? undefined : setup.clearLimitSlot}
         />
       </div>
 
-      {/* Battle only assigns a saved deck; editing lives in the Deck page. */}
+      {/* Deck — read-only when rival is active (CPU ROM loadout) */}
       <DeckAssignment
         characterId={rivalActive && rivalCharacterId ? rivalCharacterId : active.characterId}
         decks={savedDecks}
         assignedDeckId={rivalActive && rivalDeckId ? rivalDeckId : active.deckId}
         assignedCards={rivalActive && rivalCards ? rivalCards : active.jointDeck}
-        onAssign={rivalActive && onRivalAssignDeck ? onRivalAssignDeck : setup.assignDeck}
-        onEditDecks={onEditDecks}
+        onAssign={rivalActive ? undefined : setup.assignDeck}
+        onEditDecks={rivalActive ? undefined : onEditDecks}
       />
 
       </div>

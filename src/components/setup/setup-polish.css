@@ -90,7 +90,27 @@
 :is(.shell-surface,.dev-team-builder) .setup-roll-rail-dot.active { background:none; box-shadow:none; color:var(--page-accent); }
 :is(.shell-surface,.dev-team-builder) .setup-roll-rail-dot.active .setup-roll-rail-dot-mark { background:currentColor; }
 :is(.shell-surface,.dev-team-builder) .setup-roll-rail-dot:hover { color:#f1dbab; }
-:is(.shell-surface,.dev-team-builder) .setup-roll-locked { opacity:.45; filter:grayscale(.6) brightness(.7); pointer-events:none; }
+:is(.shell-surface,.dev-team-builder) .setup-roll-locked {
+  opacity:.55;
+  filter:grayscale(1) saturate(.15) brightness(.32) contrast(.9);
+  pointer-events:none;
+  cursor:not-allowed;
+}
+:is(.shell-surface,.dev-team-builder) .setup-roll-locked .setup-roll-chibi {
+  position:relative;
+}
+:is(.shell-surface,.dev-team-builder) .setup-roll-locked .setup-roll-chibi img,
+:is(.shell-surface,.dev-team-builder) .setup-roll-locked .setup-roll-chibi canvas {
+  filter:grayscale(1) saturate(.15) brightness(.32) contrast(.9);
+}
+.setup-roll-lock-overlay {
+  position:absolute; inset:0;
+  display:flex; align-items:center; justify-content:center;
+  font-size:28px; line-height:1;
+  text-shadow:0 1px 4px rgba(0,0,0,.9);
+  pointer-events:none;
+  z-index:5;
+}
 .setup-selection-announcement { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip-path:inset(50%); white-space:nowrap; }
 
 .shell-surface .setup-enemy-row { border:0; }

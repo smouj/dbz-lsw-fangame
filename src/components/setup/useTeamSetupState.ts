@@ -24,9 +24,11 @@ export interface UseTeamSetupStateArgs {
   initialDeckId?: string;
   /** Battle no debe fabricar ni editar mazos: conserva exactamente el preset recibido. */
   strictDeckAssignment?: boolean;
+  /** Unlock gate: returns true if the form is available. Used to skip locked characters. */
+  isFormUnlocked?: (formId: string) => boolean;
 }
 
-export function useTeamSetupState({ fallbackDeck, initialCharacterId, initialFormId, initialDeckId, strictDeckAssignment = false }: UseTeamSetupStateArgs) {  const firstChar = initialCharacterId && getCharacter(initialCharacterId)
+export function useTeamSetupState({ fallbackDeck, initialCharacterId, initialFormId, initialDeckId, strictDeckAssignment = false, isFormUnlocked }: UseTeamSetupStateArgs) {  const firstChar = initialCharacterId && getCharacter(initialCharacterId)
     ? initialCharacterId
     : (ROM_ORDERED_CHARACTERS[0]?.id ?? 'gohan_kid');
   const requestedForm = initialFormId ? getForm(initialFormId) : undefined;
@@ -115,15 +117,15 @@ export function useTeamSetupState({ fallbackDeck, initialCharacterId, initialFor
     setState(s => {
       if (s.members.length >= 2) return s; // Battle: máx 2 personajes (GBC 2v2)
       const prev = s.members[s.members.length - 1];
-      // Pick first character not already in the team
+      // Pick first unlocked character not already in the team
       const used = new Set(s.members.map(m => m.characterId));
-      const char = ROM_ORDERED_CHARACTERS.find(c => !used.has(c.id)) ?? ROM_ORDERED_CHARACTERS[0];
+      const char = ROM_ORDERED_CHARACTERS.find(c => !used.has(c.id) && (!isFormUnlocked || isFormUnlocked(baseFormIdOf(c.id)))) ?? ROM_ORDERED_CHARACTERS[0];
       const m = makeMember(char.id, baseFormIdOf(char.id), prev.jointDeck);
       if (strictDeckAssignment) m.jointDeck = [...prev.jointDeck];
       m.deckId = prev.deckId;
       return { ...s, members: [...s.members, m], activeMember: s.members.length, selectedCharacter: char.id };
     });
-  }, [strictDeckAssignment]);
+  }, [strictDeckAssignment, isFormUnlocked]);
 
   const removeMember = useCallback((i: number) => {
     setState(s => {
