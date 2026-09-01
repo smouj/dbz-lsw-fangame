@@ -1,29 +1,33 @@
-import { BATTLE_PORTRAITS } from './battlePortraits';
-import { resolveSpeakerPortrait } from './speakerPortraits';
-import { storyPortraitForRosterForm } from './storyPortraits';
-
-export type RosterPortraitSource = 'story' | 'battle' | 'menu';
-
-export interface RosterPortraitAsset {
-  url?: string;
-  source: RosterPortraitSource;
-}
+import {
+  resolveBattlePortraitStrict,
+  resolveMenuPortrait,
+  resolveStoryPortraitStrict,
+  type BattlePortraitResolution,
+  type MenuPortraitResolution,
+  type StoryPortraitResolution,
+} from './portraitResolvers';
 
 /**
- * Portrait policy for roster/setup cards:
- * 1. a physically verified Story portrait of this exact form;
- * 2. the exact 32×24 Battle portrait for the form;
- * 3. the canonical speaker/menu fallback for identities outside the roster.
- *
- * This prevents a missing Story variant (SSJ2/SSJ3, absorptions, etc.) from
- * being presented as a different transformation in character selection UI.
+ * Dev/diagnostic aggregate only. Production must ask a domain-specific resolver
+ * directly; this object never chooses one portrait on behalf of a consumer.
  */
-export function rosterPortraitAsset(characterId: string, formId: string): RosterPortraitAsset {
-  const story = storyPortraitForRosterForm(formId);
-  if (story) return { url: story, source: 'story' };
+export interface RosterPortraitDiagnostics {
+  characterId: string;
+  formId: string;
+  story: StoryPortraitResolution;
+  battle: BattlePortraitResolution;
+  menu: MenuPortraitResolution;
+}
 
-  const battle = BATTLE_PORTRAITS[formId];
-  if (battle) return { url: battle, source: 'battle' };
-
-  return { url: resolveSpeakerPortrait(characterId, formId), source: 'menu' };
+export function rosterPortraitDiagnostics(
+  characterId: string,
+  formId: string,
+): RosterPortraitDiagnostics {
+  return {
+    characterId,
+    formId,
+    story: resolveStoryPortraitStrict(characterId, formId),
+    battle: resolveBattlePortraitStrict(formId),
+    menu: resolveMenuPortrait(characterId),
+  };
 }
