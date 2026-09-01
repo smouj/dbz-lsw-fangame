@@ -5015,12 +5015,6 @@ function TeamSetupScreen({ onNavigate, onStartVersus, initialFormId }: {
         rivalFormId={rivalActive?.formId}
         rivalCharacterId={rivalActive?.characterId}
         rivalLimits={rivalActive?.limits}
-        onRivalEquipLimit={rival.equipLimit}
-        onRivalClearLimit={rival.clearLimitSlot}
-        onRivalAssignDeck={rival.assignDeck}
-        rivalDeckId={rivalActive?.deckId}
-        rivalCards={rivalActive?.jointDeck}
-        isRivalFormUnlocked={() => true}
         onConfirm={(result: TeamSetupResult) => onStartVersus(rival.state.members)}
         onEditDecks={() => onNavigate('deck')}
         onBack={() => onNavigate('main')}

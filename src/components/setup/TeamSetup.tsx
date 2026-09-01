@@ -50,18 +50,6 @@ export interface TeamSetupProps {
   rivalCharacterId?: string;
   /** Battle-only: rival limits array. */
   rivalLimits?: number[];
-  /** Battle-only: rival limit equip callback. */
-  onRivalEquipLimit?: (slot: number, cardId: number) => void;
-  /** Battle-only: rival limit clear callback. */
-  onRivalClearLimit?: (slot: number) => void;
-  /** Battle-only: rival deck assignment callback. */
-  onRivalAssignDeck?: (deckId: string, cards: number[]) => void;
-  /** Battle-only: rival assigned deck id. */
-  rivalDeckId?: string;
-  /** Battle-only: rival assigned cards. */
-  rivalCards?: number[];
-  /** Battle-only: rival is form unlocked (always true for AI). */
-  isRivalFormUnlocked?: (formId: string) => boolean;
 }
 
 export function TeamSetup({
@@ -83,12 +71,6 @@ export function TeamSetup({
   rivalFormId,
   rivalCharacterId,
   rivalLimits,
-  onRivalEquipLimit,
-  onRivalClearLimit,
-  onRivalAssignDeck,
-  rivalDeckId,
-  rivalCards,
-  isRivalFormUnlocked,
 }: TeamSetupProps) {
   const setup = useSetup({ fallbackDeck, initialCharacterId, initialFormId, initialDeckId, strictDeckAssignment: true });
   const { state, active, result, deckValid } = setup;
@@ -189,8 +171,8 @@ export function TeamSetup({
             />
           )}
           <div className="setup-command-team setup-command-team-rival" role="group" aria-label="Rival team">
-            <span className="setup-command-team-label setup-enemy-label">RIVAL <span className="setup-cpu-badge">CPU</span> <span className="setup-rom-badge">🔒 ROM</span></span>
             {rivalSlots}
+            <span className="setup-command-team-label setup-enemy-label">RIVAL <span className="setup-rom-badge">🔒</span></span>
           </div>
         </div>
       ) : null}
@@ -228,15 +210,17 @@ export function TeamSetup({
         />
       </div>
 
-      {/* Deck — read-only when rival is active (CPU ROM loadout) */}
-      <DeckAssignment
-        characterId={rivalActive && rivalCharacterId ? rivalCharacterId : active.characterId}
-        decks={savedDecks}
-        assignedDeckId={rivalActive && rivalDeckId ? rivalDeckId : active.deckId}
-        assignedCards={rivalActive && rivalCards ? rivalCards : active.jointDeck}
-        onAssign={rivalActive ? undefined : setup.assignDeck}
-        onEditDecks={rivalActive ? undefined : onEditDecks}
-      />
+      {/* Deck — only shown for player (rival deck is ROM-prescribed, not shown) */}
+      {!rivalActive ? (
+        <DeckAssignment
+          characterId={active.characterId}
+          decks={savedDecks}
+          assignedDeckId={active.deckId}
+          assignedCards={active.jointDeck}
+          onAssign={setup.assignDeck}
+          onEditDecks={onEditDecks}
+        />
+      ) : null}
 
       </div>
       {/* Ready stays outside the scrolling workshop so it never covers controls. */}
