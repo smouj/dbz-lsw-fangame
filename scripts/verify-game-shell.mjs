@@ -92,6 +92,11 @@ try {
           };
         });
         assert.deepEqual(rows,{full:12,partial:0},'Card Collection opens on two complete six-card rows');
+        const collection=page.locator('.cards-screen .card-collection-grid');
+        await collection.evaluate(grid=>{ grid.scrollTop=grid.scrollHeight; });
+        await page.locator('.cards-screen .filter-chip').nth(2).click();
+        assert.equal(await page.locator('.cards-screen .card-collection-grid').evaluate(grid=>grid.scrollTop),0,
+          'Card Collection resets to its first row when the filter changes');
       }
       await back();
     }

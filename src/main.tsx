@@ -4751,7 +4751,7 @@ function CardsScreen({ onNavigate }: { onNavigate: (s: Screen) => void }) {
               ))}
             </div>
           </div>
-          <div className="card-collection-grid full">
+          <div key={filter} className="card-collection-grid full">
             {filtered.map(card => {
               const isOwned = owned.has(card.id);
               const isSelected = card.id === selectedCard.id;
