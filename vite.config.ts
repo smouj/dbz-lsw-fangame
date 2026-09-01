@@ -284,6 +284,16 @@ export default defineConfig(({ mode }) => ({
   server: {
     port: 5178
   },
+  optimizeDeps: {
+    noDiscovery: true,
+  },
+  build: {
+    rollupOptions: {
+      input: {
+        main: resolve(rootDir, 'index.html'),
+      },
+    },
+  },
   // En release, el Dev Studio se sustituye por un stub vacío: no entra
   // en el bundle ni se genera su chunk (política DEV_ONLY → producción).
   ...(mode === 'release' ? {

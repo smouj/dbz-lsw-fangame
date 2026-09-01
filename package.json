@@ -4,7 +4,7 @@
   "version": "0.10.0",
   "type": "module",
   "scripts": {
-    "dev": "vite --host 0.0.0.0 --port 5178",
+    "dev": "node scripts/dev.mjs",
     "build": "vite build",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
@@ -147,7 +147,8 @@
     "verify:rom-special-handler-cutover": "esbuild --bundle --format=esm --platform=node scripts/verify-rom-special-handler-cutover.ts --outfile=.vrshc.mjs && node .vrshc.mjs; code=$?; rm -f .vrshc.mjs; exit $code",
     "verify:game-shell": "node scripts/verify-game-shell.mjs",
     "verify:story-dialogue-canon": "npx tsx scripts/verify-story-dialogue-canon.ts",
-    "verify:portrait-domains": "npx tsx scripts/verify-portrait-domains.ts"
+    "verify:portrait-domains": "npx tsx scripts/verify-portrait-domains.ts",
+    "dev:wasm": "ESBUILD_BINARY_PATH=$(node -e \"console.log(require.resolve(\"esbuild-wasm/bin/esbuild\"))\") vite --host 0.0.0.0 --port 5178"
   },
   "dependencies": {
     "@vitejs/plugin-react": "^4.3.4",
@@ -162,8 +163,9 @@
     "@types/pngjs": "^6.0.5",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
+    "esbuild-wasm": "^0.25.12",
+    "playwright": "^1.62.1",
     "pngjs": "^7.0.0",
-    "vitest": "^4.1.11",
-    "playwright": "^1.62.1"
+    "vitest": "^4.1.11"
   }
 }
