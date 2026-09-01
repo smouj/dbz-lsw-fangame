@@ -438,6 +438,9 @@
 .shell-surface .setup-team-slot-rival .setup-team-slot-form { display:none; }
 .shell-surface .setup-team-slot-add-rival { border-color:#5a3845; color:#f2a2a9; }
 .shell-surface .setup-team-slot-add-rival:hover { border-color:#ef8d95; color:white; }
+/* Rival command labels */
+.setup-cpu-badge { display:inline-block; font:700 10px/1 var(--shell-body); background:#4a2030; color:#ef8d95; border:1px solid #6a3040; border-radius:3px; padding:1px 5px; margin-left:4px; letter-spacing:.5px; vertical-align:middle; }
+.setup-rom-badge { display:inline-block; font:600 10px/1 var(--shell-body); background:#2a2040; color:#8a9ab8; border:1px solid #3a3060; border-radius:3px; padding:1px 5px; margin-left:3px; letter-spacing:.5px; vertical-align:middle; }
 .shell-surface .setup-command-team-rival { flex:1 1 390px; }
 .shell-surface .setup-command-team-rival .setup-team-slots { flex:1 1 auto; justify-content:flex-end; width:auto; }
 .shell-surface .setup-command-team-rival .setup-command-team-label { margin-left:auto; }
