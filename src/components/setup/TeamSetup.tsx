@@ -101,6 +101,7 @@ export function TeamSetup({
   const rollItems = useMemo<RollCharacterAsset[]>(() =>
     ROM_ORDERED_CHARACTERS.map(c => {
       const baseFormId = baseFormIdOf(c.id);
+      const locked = isFormUnlocked ? !isFormUnlocked(baseFormId) : false;
       return {
         characterId: c.id,
         name: c.name,
@@ -109,8 +110,9 @@ export function TeamSetup({
         idleUrl: overworldUrl(baseFormId),
         powerUrl: battleOverworldActorUrl(baseFormId, 'gather_power_pose') ?? undefined,
         auraUrl: undefined,
+        locked,
       };
-    }), []);
+    }), [isFormUnlocked]);
 
   // When rival has focus, the Roll selects rival characters;
   // when player has focus, it selects player characters.

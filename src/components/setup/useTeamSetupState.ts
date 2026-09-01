@@ -114,14 +114,14 @@ export function useTeamSetupState({ fallbackDeck, initialCharacterId, initialFor
   const addMember = useCallback(() => {
     setState(s => {
       if (s.members.length >= 2) return s; // Battle: máx 2 personajes (GBC 2v2)
-      const next = s.members.length;
-      const prev = s.members[next - 1];
-      const char = ROM_ORDERED_CHARACTERS[next % ROM_ORDERED_CHARACTERS.length];
-      // Forma base por declaración (piccolo_base/Normal), no forms[0] del orden ROM
+      const prev = s.members[s.members.length - 1];
+      // Pick first character not already in the team
+      const used = new Set(s.members.map(m => m.characterId));
+      const char = ROM_ORDERED_CHARACTERS.find(c => !used.has(c.id)) ?? ROM_ORDERED_CHARACTERS[0];
       const m = makeMember(char.id, baseFormIdOf(char.id), prev.jointDeck);
       if (strictDeckAssignment) m.jointDeck = [...prev.jointDeck];
       m.deckId = prev.deckId;
-      return { ...s, members: [...s.members, m], activeMember: next, selectedCharacter: char.id };
+      return { ...s, members: [...s.members, m], activeMember: s.members.length, selectedCharacter: char.id };
     });
   }, [strictDeckAssignment]);
 

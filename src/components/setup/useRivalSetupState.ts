@@ -70,9 +70,11 @@ export function useRivalSetupState({ initialFormId = 'piccolo_base' }: UseRivalS
   const addMember = useCallback(() => {
     setState(s => {
       if (s.members.length >= 2) return s; // Battle: máx 2 rivales (GBC 2v2)
-      const next = s.members.length;
-      const char = ROM_ORDERED_CHARACTERS[next % ROM_ORDERED_CHARACTERS.length];
+      // Pick first unlocked character not already in the team
+      const used = new Set(s.members.map(m => m.characterId));
+      const char = ROM_ORDERED_CHARACTERS.find(c => !used.has(c.id)) ?? ROM_ORDERED_CHARACTERS[0];
       const m = makeMember(char.id, baseFormIdOf(char.id), []);
+      const next = s.members.length;
       return { ...s, members: [...s.members, m], activeMember: next, selectedCharacter: char.id };
     });
   }, []);

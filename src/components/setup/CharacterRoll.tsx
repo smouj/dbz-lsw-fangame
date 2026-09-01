@@ -10,6 +10,7 @@ export interface RollCharacterAsset {
   idleUrl: string | undefined;
   powerUrl: string | undefined;
   auraUrl: string | undefined;
+  locked?: boolean;
 }
 
 export interface CharacterRollProps {
@@ -82,7 +83,7 @@ export function CharacterRoll({ items, selectedIndex, onSelect, disabled }: Char
         const x = Math.sign(offset) * (distance === 2 ? 320 : distance * 172);
         return (
           <button key={item.characterId} type="button"
-            className={`setup-roll-item${isCenter ? ' setup-roll-item-center' : ''}`}
+            className={`setup-roll-item${isCenter ? ' setup-roll-item-center' : ''}${item.locked ? ' setup-roll-locked' : ''}`}
             style={{ transform: `translate3d(${x}px, ${distance * 6}px, 0)`, opacity: [1, .78, .48][distance], zIndex: 10 - distance }}
             onClick={() => select(index)} disabled={disabled} tabIndex={-1}
             aria-label={item.name} aria-pressed={isCenter} data-selected={isCenter || undefined} data-distance={distance}>
