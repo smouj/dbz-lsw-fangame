@@ -82,7 +82,7 @@ export class BattleRuntime {
   log: BattleEventLog;
   timeline: BattleTimeline;
   presenter: BattlePresenter | null;
-  private readonly context: BattlePresentationContext;
+  private context: BattlePresentationContext;
   private readonly history: BattleTimeline[];
 
   constructor(opts: BattleRuntimeOptions) {
@@ -102,6 +102,23 @@ export class BattleRuntime {
   /** Comandos disponibles (derivado de canExecute — una sola regla). */
   available(opts?: Parameters<typeof executeCommand>[2]): BattleCommand[] {
     return getAvailableCommands(this.state, opts);
+  }
+
+  /** ROM team battle: when the active fighter reaches 0 HP, promote the
+   * living reserve and consume that reserve slot. Presentation context is
+   * updated at the same boundary so subsequent DOM/Pixi timelines resolve
+   * the entering form instead of the defeated fighter. */
+  promoteDefeatedReserve(side: BattleSide): BattleState['player'] | null {
+    const active = side === 'player' ? this.state.player : this.state.enemy;
+    const reserve = side === 'player' ? this.state.player2 : this.state.enemy2;
+    if (active.hp > 0 || !reserve || reserve.hp <= 0) return null;
+    this.state = side === 'player'
+      ? { ...this.state, player: reserve, player2: null }
+      : { ...this.state, enemy: reserve, enemy2: null };
+    this.context = side === 'player'
+      ? { ...this.context, playerFormId: reserve.id }
+      : { ...this.context, enemyFormId: reserve.id };
+    return reserve;
   }
 
   /** Intención externa (UI o IA): resuelve, loguea, construye timeline, presenta. */

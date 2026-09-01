@@ -78,6 +78,16 @@ export function LimitLoadoutPanel({ characterId, limits, onEquip, onClear, showI
         })}
       </div>
 
+      <div className="setup-limits-capacity" aria-label={`${equippedCount} of ${capacity} Limit slots equipped`}>
+        <span>ACTIVE CAPACITY</span>
+        <span className="setup-limits-capacity-track" aria-hidden="true">
+          {Array.from({ length: capacity }, (_, slot) => (
+            <i key={slot} className={limits[slot] ? 'filled' : ''} />
+          ))}
+        </span>
+        <b>{equippedCount}/{capacity}</b>
+      </div>
+
       {/* Picker de límites del slot abierto */}
       {openSlot !== null && (
         <div className="setup-limits-picker">
