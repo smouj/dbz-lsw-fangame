@@ -91,7 +91,7 @@ export const CHARACTERS: CharacterDef[] = [
   { id: 'gohan_kid', name: 'Gohan Kid', forms: ['gohan_young', 'gohan_young_ssj', 'gohan_young_ssj2'], tier: 3, saga: 'Cell' },
   { id: 'gohan_adult', name: 'Gohan Adult', forms: ['gohan_adult_ssj', 'gohan_adult_ssj2', 'gohan_adult_ultimate'], tier: 5, saga: 'Buu' },
   { id: 'trunks_kid', name: 'Trunks Kid', forms: ['trunks_kid', 'trunks_kid_ssj'], tier: 3, saga: 'Android' },
-  { id: 'trunks_future', name: 'Trunks Futuro', forms: ['trunks_future', 'trunks_ssj'], tier: 4, saga: 'Android' },
+  { id: 'trunks_future', name: 'Trunks Future', forms: ['trunks_future', 'trunks_ssj'], tier: 4, saga: 'Android' },
   { id: 'goten', name: 'Goten', forms: ['goten_base', 'goten_ssj'], tier: 3, saga: 'Buu' },
   { id: 'gotenks', name: 'Gotenks', forms: ['gotenks_ssj', 'gotenks_ssj3'], tier: 5, saga: 'Buu' },
   { id: 'piccolo', name: 'Piccolo', forms: ['piccolo_base', 'piccolo_kami', 'piccolo_evil'], tier: 4, saga: 'Saiyan' },

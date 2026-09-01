@@ -8,7 +8,7 @@
 .game-viewport .shell-surface .page-screen:not(.setup-screen):not(.story-scene-screen):not(.starter-screen) { position:relative; display:flex; flex-direction:column; width:100%; height:720px; min-height:0; padding:20px 24px; gap:16px; overflow:hidden; color:#f3eee2; background:#151820 radial-gradient(#333845 .7px,transparent .7px); background-size:6px 6px; font:16px/1.4 var(--shell-body); animation:none; }
 .shell-surface .page-screen > .page-header { position:relative; display:flex; align-items:center; flex:0 0 60px; height:60px; min-height:60px; width:100%; gap:20px; padding:0 0 14px; margin:0; border:0; border-bottom:2px solid var(--page-line); background:none; box-shadow:none; }
 .shell-surface .page-screen > .page-header::before,.shell-surface .page-screen > .page-header::after { display:none; }
-.shell-surface .page-title { margin:0; padding:0; color:#f8eed7; font:38px/1.1 var(--shell-display); letter-spacing:.025em; text-shadow:none; transform:none; white-space:normal; }
+.shell-surface .page-title { margin:0; padding:0; color:#f8eed7; font:25px/1.35 var(--shell-display); letter-spacing:.018em; text-shadow:none; transform:none; white-space:normal; }
 .shell-surface .btn-back { display:grid; place-items:center; width:44px; min-width:44px; height:44px; padding:0; border:2px solid var(--page-line); border-radius:0; color:var(--page-accent); background:#1b2331; box-shadow:none; }
 .shell-surface .btn-back:hover { border-color:var(--page-accent); transform:none; }
 .shell-surface .page-header-meta { margin-left:auto; flex:0 0 auto; }
@@ -54,7 +54,7 @@
 .shell-surface .chapter-detail-panel { display:flex; flex-direction:column; padding:0; }
 .shell-surface .cdp-visual { flex:0 0 164px; height:164px; min-height:0; margin:0; background-position:center; border:0; border-bottom:2px solid #0c131d; }
 .shell-surface .cdp-body { flex:1; display:flex; flex-direction:column; min-height:0; gap:10px; padding:18px; overflow-y:auto; }
-.shell-surface .cdp-name { font:30px/1.1 var(--shell-display); }
+.shell-surface .cdp-name { font:20px/1.4 var(--shell-display); }
 .shell-surface .cdp-desc { font:15px/1.4 var(--shell-body); color:#c1cbda; }
 .shell-surface .cdp-meta { gap:8px; margin:0; }
 .shell-surface .cdp-badge { font:12px var(--shell-body); padding:5px 8px; }
@@ -84,7 +84,7 @@
 .shell-surface :is(.char-identity-story,.char-identity-combat) > span { position:relative; z-index:3; width:100%; padding:3px 2px; color:#b9c5d6; background:#0c1420; text-align:center; font:700 8px/1.2 var(--shell-body); letter-spacing:.08em; }
 .shell-surface .char-identity-combat .transform-aura { position:absolute; z-index:1; left:50%; bottom:19px; width:84px; height:108px; transform:translateX(-50%); opacity:.65; }
 .shell-surface .char-detail-info { min-width:0; }
-.shell-surface .char-detail-name { font:26px/1.05 var(--shell-display); white-space:normal; }
+.shell-surface .char-detail-name { font:18px/1.4 var(--shell-display); white-space:normal; }
 .shell-surface :is(.char-detail-form,.char-detail-saga,.char-tier) { font:11px/1.35 var(--shell-body); }
 .shell-surface .char-asset-rail { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; }
 .shell-surface .char-asset-chip { display:grid; grid-template-columns:46px minmax(0,1fr); align-items:center; min-height:52px; gap:8px; padding:5px 8px; border:1px solid #435067; background:#111b29; }
@@ -124,7 +124,7 @@
 .shell-surface .card-art-img { width:100%; height:100%; object-fit:contain; image-rendering:pixelated; }
 .shell-surface .card-header { justify-content:flex-end; }
 .shell-surface .card-detail-preview .card-art { width:96px !important; height:72px !important; flex-basis:72px; }
-.shell-surface .card-unknown-label { font:30px var(--shell-display); }
+.shell-surface .card-unknown-label { font:20px/1.4 var(--shell-display); }
 .shell-surface .card-unknown-sub { font:10px/1.3 var(--shell-body); }
 .shell-surface .card-detail-inner { display:flex; flex-direction:column; gap:7px; height:100%; min-height:0; padding:0; overflow:hidden; }
 .shell-surface .card-detail-inner > * { flex-shrink:0; }
@@ -132,7 +132,7 @@
 .shell-surface .card-detail-preview { flex:0 0 auto; margin:0 auto; }
 .shell-surface .card-detail-preview .card { width:132px; height:188px; padding:7px; gap:3px; transform:none; }
 .shell-surface .card-detail-preview .card > * { flex-shrink:0; }
-.shell-surface .card-detail-name { font:24px/1.05 var(--shell-display); white-space:normal; }
+.shell-surface .card-detail-name { font:17px/1.4 var(--shell-display); white-space:normal; }
 .shell-surface .card-detail-type { font:12px var(--shell-body); }
 .shell-surface .card-detail-stats { gap:10px; }
 .shell-surface .card-detail-stats span { font:11px var(--shell-body); }
@@ -144,11 +144,11 @@
 .shell-surface .starter-deck-record { display:flex; align-items:center; justify-content:space-between; flex:0 0 auto; min-height:76px; gap:16px; margin:0 0 12px; padding:10px 12px; border:1px solid #5e5070; border-left:4px solid var(--page-accent); background:linear-gradient(90deg,#211e31,#141b28); }
 .shell-surface .starter-deck-record-copy { display:flex; flex-direction:column; min-width:180px; }
 .shell-surface .starter-deck-record-copy > span { color:#bba9d2; font:700 9px/1.3 var(--shell-body); letter-spacing:.12em; }
-.shell-surface .starter-deck-record-copy strong { color:#f4e9ff; font:20px/1.2 var(--shell-display); }
+.shell-surface .starter-deck-record-copy strong { color:#f4e9ff; font:15px/1.4 var(--shell-display); }
 .shell-surface .starter-deck-record-copy small { color:#b7c2d2; font:10px/1.3 var(--shell-body); }
 .shell-surface .starter-deck-record-icons { display:flex; flex-wrap:nowrap; align-items:center; gap:4px; overflow:hidden; }
 .shell-surface .starter-deck-record-icons img { width:38px; height:38px; padding:2px; object-fit:contain; image-rendering:pixelated; border:1px solid #4d5265; background:#0e1521; }
-.shell-surface .deck-current-title { font:28px var(--shell-display); margin:0 0 12px; }
+.shell-surface .deck-current-title { font:18px/1.4 var(--shell-display); margin:0 0 12px; }
 .shell-surface .deck-library { display:flex; flex-direction:column; flex:0 0 auto; gap:7px; margin:0 0 12px; padding:9px; border:1px solid #445268; background:#101925; }
 .shell-surface .deck-library-tabs { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:5px; max-height:84px; overflow:auto; scrollbar-width:thin; }
 .shell-surface .deck-library-tab { display:flex; align-items:center; justify-content:space-between; min-width:0; min-height:32px; gap:6px; padding:5px 7px; color:#bec8d7; border:1px solid #414e62; background:#182334; font:700 10px/1.2 var(--shell-body); text-align:left; }
@@ -205,13 +205,14 @@
 .shell-surface .setup-screen > * { flex-shrink:0; }
 .shell-surface :is(.setup-team-slot,.setup-roll,.setup-details,.setup-limits,.setup-deck-lib,.setup-deck-current,.setup-deck-details) { border-radius:0; border-color:#445066; background:var(--page-paper); }
 .shell-surface .setup-team-slot { min-height:52px; }
-.shell-surface .setup-team-slot-name { font:700 16px var(--shell-body); }
+.shell-surface .setup-team-slot-name { font:700 13px/1.25 var(--shell-body); }
 .shell-surface .setup-team-slot-form,.shell-surface .setup-team-slot-num { font:11px var(--shell-body); }
 .shell-surface .setup-command-row .setup-team-slot-form { display:none; }
 .shell-surface .setup-deck { padding-bottom:0; }
 .shell-surface .setup-ready { position:relative; inset:auto; min-height:68px; padding:12px 16px; margin:0; gap:16px; border:2px solid var(--page-accent); border-radius:0; background:#1b2331; box-shadow:none; }
 .shell-surface .setup-ready-info { font:13px/1.5 var(--shell-body); }
-.shell-surface .setup-roll-name { font:700 16px var(--shell-body); }
+.shell-surface .setup-roll-name { font:700 12px/1.25 var(--shell-body); }
+.shell-surface .setup-roll-item-center .setup-roll-name { font-size:14px; }
 .shell-surface .setup-roll { min-height:210px; }
 .shell-surface .setup-roll-source { display:none; }
 .shell-surface .setup-roll-form { position:absolute; top:8px; width:100%; font:12px var(--shell-body); }
@@ -312,7 +313,7 @@
 /* Deck and collection inspectors: give metadata enough horizontal room while
    preserving six collection columns and the existing card/button geometry. */
 .shell-surface :is(.deck-layout,.cards-layout) { grid-template-columns:minmax(0,1fr) 392px; gap:20px; }
-.shell-surface .deck-current-title { margin-bottom:10px; color:#f0e7d2; }
+.shell-surface .deck-current-title { margin-bottom:10px; padding-block:1px 2px; color:#f0e7d2; }
 .shell-surface .deck-library { padding:10px; }
 .shell-surface .deck-library-tab,
 .shell-surface .deck-name-input { font-size:11px; }
@@ -323,7 +324,7 @@
 .shell-surface .deck-row-remove { color:#c98e96; }
 .shell-surface .deck-row:hover { background:#182231; }
 .shell-surface .card-detail-kicker { color:#d8c8e8; letter-spacing:.1em; }
-.shell-surface .card-detail-name { font-size:26px; }
+.shell-surface .card-detail-name { font-size:17px; }
 .shell-surface .card-detail-block { border-color:#465168; background:#111a28; }
 .shell-surface .card-detail-status { min-height:34px; display:grid; place-items:center; letter-spacing:.14em; }
 .shell-surface .starter-deck-record-copy > span { font-size:10px; }

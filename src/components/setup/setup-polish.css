@@ -40,6 +40,7 @@
   font:600 14px/20px var(--shell-body); color:#c9ced8; letter-spacing:0;
 }
 :is(.shell-surface,.dev-team-builder) .setup-roll-item-center .setup-roll-name { font:24px/1.1 var(--shell-display); color:var(--page-accent); }
+.shell-surface .setup-roll-item-center .setup-roll-name { font:700 14px/1.25 var(--shell-body); }
 :is(.shell-surface,.dev-team-builder) .setup-roll-idle,:is(.shell-surface,.dev-team-builder) .setup-roll-power {
   width:auto; height:auto; max-height:none; max-width:none;
   image-rendering:pixelated; object-fit:contain; animation:none; filter:none;
@@ -317,7 +318,7 @@
 }
 .shell-surface .setup-opponent-copy { display:flex; flex-direction:column; min-width:0; line-height:1.05; }
 .shell-surface .setup-opponent-copy small { color:#d4939a; font:700 7px var(--shell-body); letter-spacing:.12em; }
-.shell-surface .setup-opponent-copy strong { overflow:hidden; color:#f3ead6; font:18px/1 var(--shell-display); text-overflow:ellipsis; white-space:nowrap; }
+.shell-surface .setup-opponent-copy strong { overflow:hidden; color:#f3ead6; font:700 13px/1.2 var(--shell-body); text-overflow:ellipsis; white-space:nowrap; }
 .shell-surface .setup-opponent-copy span { color:#f2a2a9; font:700 8px var(--shell-body); }
 .shell-surface .setup-command-row .setup-enemy-select {
   position:absolute; inset:0; width:100%; height:100%; min-height:0;

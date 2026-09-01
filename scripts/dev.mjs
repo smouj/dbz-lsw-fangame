@@ -19,9 +19,11 @@ import { fileURLToPath } from "node:url";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = resolve(__dirname, "..");
+const viteEntry = resolve(root, "node_modules/vite/bin/vite.js");
 
 // Check if running under WSL2
 const isWSL2 = (() => {
+  if (process.platform !== "linux") return false;
   try {
     const release = execSync("uname -r", { encoding: "utf8" }).trim();
     return release.includes("microsoft-standard-WSL2");
@@ -53,7 +55,7 @@ if (isWSL2) {
   });
 
   // Start vite build --watch
-  const watcher = spawn("node", [resolve(root, "node_modules/.bin/vite"), "build", "--watch"], {
+  const watcher = spawn(process.execPath, [viteEntry, "build", "--watch"], {
     cwd: root,
     env,
     stdio: "inherit",
@@ -82,7 +84,7 @@ if (isWSL2) {
 
   // Standard vite dev server (fast HMR)
   const args = ["--host", "0.0.0.0", "--port", "5178", ...process.argv.slice(2)];
-  const child = spawn("node", [resolve(root, "node_modules/.bin/vite"), ...args], {
+  const child = spawn(process.execPath, [viteEntry, ...args], {
     cwd: root,
     env,
     stdio: "inherit",

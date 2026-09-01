@@ -81,7 +81,7 @@ export const en: Dict = {
   'settings.fast': 'FAST',
   'settings.windowed': 'WINDOWED',
   'settings.fullscreen': 'FULLSCREEN',
-  'settings.music': 'MUSIC (BSO)',
+  'settings.music': 'MUSIC (OST)',
   'settings.ctrlCard': '1-5: Select card',
   'settings.ctrlNav': 'WASD: Navigate',
   'settings.ctrlConfirm': 'ENTER: Confirm',

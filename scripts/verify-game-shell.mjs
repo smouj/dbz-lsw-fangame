@@ -51,7 +51,7 @@ async function layout(label) {
 }
 async function back() { await page.locator('.btn-back').click(); await page.locator('.shell-menu').waitFor(); }
 try {
-  await page.goto(url,{waitUntil:'networkidle',timeout:90000});
+  await page.goto(url,{waitUntil:'domcontentloaded',timeout:90000});
   await page.locator('.starter-deck-card').first().waitFor();
   await layout('starter'); await shot('starter');
   await page.locator('.starter-deck-card').first().click();
@@ -102,10 +102,17 @@ try {
   await page.locator('.setting-options').first().locator('button').nth(1).click();
   await back();
   await page.locator('[data-screen="versus"]').click();
-  const beforeCharacter=await page.locator('.setup-roll-item-center').getAttribute('aria-label');
-  await page.locator('.setup-enemy-select').focus();
+  const playerSlot=page.locator('[data-testid="team-slots"] .setup-team-slot').first();
+  const rivalSlot=page.locator('[data-testid="rival-team-slots"] .setup-team-slot-btn').first();
+  const beforePlayer=await playerSlot.locator('.setup-team-slot-name').textContent();
+  await rivalSlot.click();
+  const beforeRival=await page.locator('.setup-roll-item-center').getAttribute('aria-label');
+  await page.locator('.setup-roll').focus();
   await page.keyboard.press('ArrowRight');
-  assert.equal(await page.locator('.setup-roll-item-center').getAttribute('aria-label'),beforeCharacter,'enemy select does not change the player character');
+  assert.notEqual(await page.locator('.setup-roll-item-center').getAttribute('aria-label'),beforeRival,'focused rival carousel responds to arrow keys');
+  assert.equal(await playerSlot.locator('.setup-team-slot-name').textContent(),beforePlayer,'rival selection does not change the player character');
+  await playerSlot.locator('.setup-team-slot-btn').click();
+  const beforeCharacter=await page.locator('.setup-roll-item-center').getAttribute('aria-label');
   await page.locator('.setup-roll').focus();
   await page.keyboard.press('ArrowRight');
   assert.notEqual(await page.locator('.setup-roll-item-center').getAttribute('aria-label'),beforeCharacter,'focused carousel responds to arrow keys');
@@ -122,7 +129,7 @@ try {
     assert.deepEqual(missing,[],'battle images loaded');
     await shot(`battle-${width}`);
   }
-  await page.goto(url,{waitUntil:'networkidle'});
+  await page.goto(url,{waitUntil:'domcontentloaded'});
   await page.setViewportSize({width:1280,height:720});
   await page.locator('[data-screen="settings"]').click();
   assert.ok((await page.locator('.setting-options').first().locator('button').nth(1).getAttribute('class')).includes('active'),'text speed persists');

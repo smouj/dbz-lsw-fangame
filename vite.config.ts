@@ -284,9 +284,6 @@ export default defineConfig(({ mode }) => ({
   server: {
     port: 5178
   },
-  optimizeDeps: {
-    noDiscovery: true,
-  },
   build: {
     rollupOptions: {
       input: {

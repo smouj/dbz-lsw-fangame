@@ -464,14 +464,16 @@ const CARD_TYPE_FRAME: Record<string, string> = CARD_FRAME_BY_TYPE;
 function CardVisual({ card, selected, onClick, small, disabled }: {
   card: CardDef; selected?: boolean; onClick?: () => void; small?: boolean; disabled?: boolean;
 }) {
+  const { lang } = useLang();
+  const es = lang === 'es';
   const color = CARD_COLORS[card.type];
   const iconUrl = cardIconUrl(card.id);
   const IconCmp = TYPE_ICONS[card.type];
   const stars = '★'.repeat(card.rarity) + '☆'.repeat(5 - card.rarity);
   const compat = card.compatible && card.compatible.length > 0
-    ? `\nUsable por: ${card.compatible.map(id => characterName(id)).join(', ')}`
+    ? `\n${es ? 'Usable por' : 'Usable by'}: ${card.compatible.map(id => characterName(id)).join(', ')}`
     : card.notCompatible && card.notCompatible.length > 0
-      ? `\nNO usable por: ${card.notCompatible.map(id => characterName(id)).join(', ')}`
+      ? `\n${es ? 'NO usable por' : 'NOT usable by'}: ${card.notCompatible.map(id => characterName(id)).join(', ')}`
       : '';
   // Frame GBC por tipo (la carta SE VE como el GBC: marco + arte interior)
   const frameUrl = disabled ? CARD_FRAME_DISABLED : selected ? CARD_FRAME_SELECTED : (CARD_TYPE_FRAME[card.type] ?? undefined);
@@ -481,7 +483,7 @@ function CardVisual({ card, selected, onClick, small, disabled }: {
   const richTip = tipCard(card.name, CARD_TYPE_NAMES[card.type], CARD_COLORS_ON_LIGHT[card.type], card.rarity, [
     ['stats', `CC ${card.cc} · ATK ${card.atk > 0 ? card.atk : '—'} · ACC ${card.acc}%`],
     card.description ? ['desc', card.description] : null,
-    ['effect', `Efecto: ${cardEffectSummary(card.effect)}`],
+    ['effect', `${es ? 'Efecto' : 'Effect'}: ${cardEffectSummary(card.effect)}`],
     compat.trim() ? ['compat', compat.trim()] : null,
   ]);
   return (
@@ -672,7 +674,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, riv
   playerDeck?: number[]; rivalReserve?: TeamMember | null;
   onRematch: () => void; onMainMenu: () => void;
 }) {
-  const { t } = useLang();
+  const { t, lang } = useLang();
   const pf = getForm(playerFormId)!;
   const ef = getForm(enemyFormId)!;
   const prog = loadProgress();
@@ -3533,7 +3535,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, riv
                     data-tip={tipBlock(`${c.name} — ${CARD_TYPE_NAMES[c.type]} ★${c.rarity}`, [
                       ['stats', `CC ${c.cc} · ATK ${c.atk > 0 ? c.atk : '—'} · ACC ${c.acc}%`],
                       c.description ? ['desc', c.description] : null,
-                      ['effect', `Efecto: ${cardEffectSummary(c.effect)}`],
+                      ['effect', `${lang === 'es' ? 'Efecto' : 'Effect'}: ${cardEffectSummary(c.effect)}`],
                     ])}>
                     <img src={CARD_FRAME_BY_TYPE[c.type] ?? CARD_FRAME_BY_TYPE.command} alt="" className="discard-frame" />
                     {cardIconUrl(c.id) && <img src={cardIconUrl(c.id)!} alt={c.name} className="discard-art" />}
@@ -4093,7 +4095,8 @@ function applyLevelUps(base: Fighter, level: number): Fighter {
 function StoryScreen({ onNavigate, onStartChapter }: {
   onNavigate: (s: Screen) => void; onStartChapter: (enemyFormId: string, chapterId: number) => void;
 }) {
-  const { t } = useLang();
+  const { t, lang } = useLang();
+  const es = lang === 'es';
   const [progress, setProgress] = useState(loadStoryProgress);
   const [selected, setSelected] = useState(1);
   const [sagaTab, setSagaTab] = useState(0);
@@ -4181,9 +4184,9 @@ function StoryScreen({ onNavigate, onStartChapter }: {
             );
           })}
           <div className="story-route-footer">
-            <div className="route-footer-kicker">{activeSaga.name} ROUTE</div>
-            <div className="route-footer-row"><span>OPEN</span><b>{sagaOpen}/{visibleChapters.length}</b></div>
-            <div className="route-footer-row"><span>CLEARED</span><b>{sagaDone}/{visibleChapters.length}</b></div>
+            <div className="route-footer-kicker">{activeSaga.name} {es ? 'RUTA' : 'ROUTE'}</div>
+            <div className="route-footer-row"><span>{es ? 'ABIERTOS' : 'OPEN'}</span><b>{sagaOpen}/{visibleChapters.length}</b></div>
+            <div className="route-footer-row"><span>{es ? 'SUPERADOS' : 'CLEARED'}</span><b>{sagaDone}/{visibleChapters.length}</b></div>
             <div className="route-footer-next">{nextChapter ? t(nextChapter.nameKey) : activeSaga.name}</div>
           </div>
         </div>
@@ -4197,7 +4200,7 @@ function StoryScreen({ onNavigate, onStartChapter }: {
                 {selHero && <img src={selHero} alt="" className="cdp-hero" />}
                 {selBoss && <img src={selBoss} alt="" className="cdp-boss" />}
               </div>
-              <span className="cdp-chapter-tag">CAPÍTULO {String(sel.id).padStart(2, '0')}</span>
+              <span className="cdp-chapter-tag">{es ? 'CAPÍTULO' : 'CHAPTER'} {String(sel.id).padStart(2, '0')}</span>
             </div>
           )}
           <div className="cdp-body ui-sidebar-body">
@@ -4206,23 +4209,25 @@ function StoryScreen({ onNavigate, onStartChapter }: {
             <div className="cdp-meta">
               <span className="cdp-badge hero">{selHero ? <img src={selHero} alt="" /> : null} {characterName(sel.player.split('_')[0])}</span>
               <span className="cdp-badge boss">{selBoss ? <img src={selBoss} alt="" /> : null} {characterName(sel.enemy.split('_')[0])}</span>
-              {selDone && <span className="cdp-badge done">✓ COMPLETADO</span>}
+              {selDone && <span className="cdp-badge done">✓ {es ? 'COMPLETADO' : 'CLEARED'}</span>}
             </div>
             <div className="cdp-objective">
-              <span className="obj-label">OBJETIVO</span>
-              {selDone ? 'Victoria conseguida. ¡El siguiente capítulo te espera!' : `Derrota a ${characterName(sel.enemy.split('_')[0])} para continuar la saga.`}
+              <span className="obj-label">{es ? 'OBJETIVO' : 'OBJECTIVE'}</span>
+              {selDone
+                ? (es ? 'Victoria conseguida. ¡El siguiente capítulo te espera!' : 'Victory achieved. The next chapter awaits!')
+                : (es ? `Derrota a ${characterName(sel.enemy.split('_')[0])} para continuar la saga.` : `Defeat ${characterName(sel.enemy.split('_')[0])} to continue the saga.`)}
             </div>
             <div className="cdp-intel">
               <div className="intel-row">
-                <span className="intel-key">DIFICULTAD</span>
-                <span className="intel-val">{sel.id <= 3 ? 'NORMAL' : sel.id <= 10 ? 'DIFÍCIL' : 'LETAL'}</span>
+                <span className="intel-key">{es ? 'DIFICULTAD' : 'DIFFICULTY'}</span>
+                <span className="intel-val">{sel.id <= 3 ? 'NORMAL' : sel.id <= 10 ? (es ? 'DIFÍCIL' : 'HARD') : (es ? 'LETAL' : 'LETHAL')}</span>
               </div>
               <div className="intel-row">
-                <span className="intel-key">RECOMPENSA</span>
-                <span className="intel-val">CARTA + EXP</span>
+                <span className="intel-key">{es ? 'RECOMPENSA' : 'REWARD'}</span>
+                <span className="intel-val">{es ? 'CARTA' : 'CARD'} + EXP</span>
               </div>
               <div className="intel-row">
-                <span className="intel-key">MODO</span>
+                <span className="intel-key">{es ? 'MODO' : 'MODE'}</span>
                 <span className="intel-val">{sel.id === 7 || sel.id === 16 || sel.id === 21 ? '2 VS 2' : '1 VS 1'}</span>
               </div>
             </div>
@@ -4408,7 +4413,8 @@ function statWidth(value: number, max: number): string {
 function CharactersScreen({ onNavigate, onSelectFighter }: {
   onNavigate: (s: Screen) => void; onSelectFighter: (formId: string) => void;
 }) {
-  const { t } = useLang();
+  const { t, lang } = useLang();
+  const es = lang === 'es';
   const [selected, setSelected] = useState<string>('gohan_young');
   // Secuencia de transformación: flash + aura al cambiar de forma (como el GBC)
   const [transformFx, setTransformFx] = useState(0);
@@ -4504,8 +4510,8 @@ function CharactersScreen({ onNavigate, onSelectFighter }: {
 
           {/* Lore del personaje (rellena el panel como ficha de colección) */}
           <div className="char-lore">
-            <span className="lore-label">SAGA · ROL</span>
-            <span className="lore-text">{selChar.saga} — Tier {selChar.tier} · {selChar.forms.length} formas</span>
+            <span className="lore-label">SAGA · {es ? 'ROL' : 'ROLE'}</span>
+            <span className="lore-text">{selChar.saga} — {t('characters.tier')} {selChar.tier} · {selChar.forms.length} {t('characters.forms')}</span>
           </div>
 
           <div className="char-file">
