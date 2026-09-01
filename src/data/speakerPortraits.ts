@@ -1,22 +1,69 @@
 // ═══════════════════════════════════════════════════════════════════════
-// M8.P0 — speakerPortraits: RETRATO CANÓNICO del hablante (diálogo GBC y
-// panel de Stage/QTE usan la MISMA cadena → mismo asset, mismo aspecto).
+// DBZ LSW — SPEAKER PORTRAIT RESOLUTION
 // ═══════════════════════════════════════════════════════════════════════
-// Cadena ÚNICA (la del diálogo de la partida):
-//   1. storyPortraitUrl(char, form)  — retrato de las viñetas GBC (forma)
-//   2. MENU_PORTRAITS[char]          — retrato de menú del personaje
-//
-// NUNCA BATTLE_PORTRAITS (32×24 del GBC): esos son los retratos pixel de
-// batalla y NO encajan en el marco 57×80 del diálogo/Stage (se ven distintos
-// al escalar). El diálogo y el Stage deben verse IGUAL para el mismo
-// personaje. Módulo LIGERO a propósito: solo storyPortraits + icons (sin
-// battleOverworld) para que los verify headless puedan importarlo.
+// Dialogue and Stage/QTE share this resolver. Exact form identity always wins:
+// Story exact → Battle exact same form → menu identity only when no explicit
+// form-specific physical portrait is required.
+// ═══════════════════════════════════════════════════════════════════════
 
-import { storyPortraitUrl } from './storyPortraits';
+import {
+  resolveCanonicalStoryPortrait,
+  type StoryPortraitMatch,
+} from './storyPortraitCanon';
 import { MENU_PORTRAITS } from './icons';
 
+export type SpeakerPortraitSource = 'story' | 'battle' | 'menu' | 'none';
+
+export interface SpeakerPortraitAsset {
+  url?: string;
+  source: SpeakerPortraitSource;
+  match: StoryPortraitMatch | 'MENU_IDENTITY';
+  requestedCharacterId: string;
+  requestedFormId?: string;
+  reason: string;
+}
+
+export function resolveSpeakerPortraitAsset(
+  charId: string,
+  formId?: string,
+): SpeakerPortraitAsset {
+  const physical = resolveCanonicalStoryPortrait(charId, formId);
+  if (physical.url) {
+    return {
+      url: physical.url,
+      source: physical.source,
+      match: physical.match,
+      requestedCharacterId: charId,
+      requestedFormId: formId,
+      reason: physical.reason,
+    };
+  }
+
+  // Menu portraits are identity-level artwork, not form evidence. They are safe
+  // only when no explicit form was requested (NPC/speaker identity fallback).
+  if (!formId) {
+    const menu = MENU_PORTRAITS[charId];
+    if (menu) {
+      return {
+        url: menu,
+        source: 'menu',
+        match: 'MENU_IDENTITY',
+        requestedCharacterId: charId,
+        reason: 'No Story/Battle form was requested; using canonical menu identity portrait.',
+      };
+    }
+  }
+
+  return {
+    source: 'none',
+    match: 'UNAVAILABLE',
+    requestedCharacterId: charId,
+    requestedFormId: formId,
+    reason: physical.reason,
+  };
+}
+
+/** Compatibility wrapper for existing UI consumers. */
 export function resolveSpeakerPortrait(charId: string, formId?: string): string | undefined {
-  return storyPortraitUrl(charId, formId)
-    || MENU_PORTRAITS[charId]
-    || undefined;
+  return resolveSpeakerPortraitAsset(charId, formId).url;
 }
