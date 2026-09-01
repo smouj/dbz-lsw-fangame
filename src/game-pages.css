@@ -245,3 +245,96 @@
 .shell-surface .char-cell.locked { opacity:.72; }
 .shell-surface .char-cell.locked .char-name { font:600 12px/1.25 var(--shell-body); color:#b9c4d5; }
 .shell-surface .shell-empty-state { grid-column:1 / -1; align-self:start; padding:24px; color:#c1cddd; font:16px/1.5 var(--shell-body); }
+
+/* Final interior-page polish (2026-09-01).
+   Keep the established compositions intact while improving hierarchy,
+   breathing room and keyboard clarity across every Main Menu destination. */
+.shell-surface .page-screen:not(.setup-screen):not(.story-scene-screen) {
+  --page-paper:rgb(16 23 35 / .68);
+}
+.shell-surface .page-screen > .page-header {
+  padding-bottom:15px;
+}
+.shell-surface .page-header-hint {
+  color:#bdc7d6;
+  font-size:13px;
+}
+.shell-surface :is(.story-map,.char-grid,.deck-collection,.deck-current,.cards-collection-panel,.card-detail-panel,.char-detail,.chapter-detail-panel,.settings-list) {
+  border-color:#465267;
+  box-shadow:inset 0 1px 0 rgb(255 255 255 / .025);
+}
+.shell-surface :is(button,input,select,[tabindex]):focus-visible {
+  outline:2px solid var(--page-accent);
+  outline-offset:2px;
+}
+
+/* Story: make the route ledger a deliberate summary instead of a loose tail. */
+.shell-surface .story-route-footer {
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto auto;
+  grid-template-areas:'route open cleared' 'next next next';
+  align-items:center;
+  gap:7px 18px;
+  margin-top:8px;
+  padding:12px 14px;
+  border:1px solid #40506a;
+  border-left:3px solid var(--page-accent);
+  background:linear-gradient(90deg,#101d2b,#111824 72%);
+}
+.shell-surface .story-route-footer .route-footer-kicker { grid-area:route; color:#dfe9f4; letter-spacing:.12em; }
+.shell-surface .story-route-footer .route-footer-row:nth-child(2) { grid-area:open; }
+.shell-surface .story-route-footer .route-footer-row:nth-child(3) { grid-area:cleared; }
+.shell-surface .story-route-footer .route-footer-row { gap:7px; color:#aebed1; }
+.shell-surface .story-route-footer .route-footer-row b { color:var(--page-accent); }
+.shell-surface .story-route-footer .route-footer-next {
+  grid-area:next;
+  padding-top:7px;
+  border-top:1px solid #34445a;
+  color:#c8d3e2;
+}
+.shell-surface .chapter-node { padding:10px; }
+.shell-surface .chapter-name { font-size:14px; }
+.shell-surface .chapter-desc { font-size:11px; }
+
+/* Characters: portraits retain their full pixel frame and dossier microcopy
+   stays readable without adding a second scrollbar. */
+.shell-surface .char-thumb-frame { height:58px; }
+.shell-surface .char-thumb-story.battle { width:86%; height:46px; }
+.shell-surface .char-name { font-size:12px; }
+.shell-surface .char-forms { font-size:10px; }
+.shell-surface .char-identity-story img.battle { width:94%; height:76px; }
+.shell-surface .char-asset-chip span,
+.shell-surface .char-file-row { font-size:10px; }
+.shell-surface .char-file-row b { color:#f2d67e; }
+.shell-surface .char-detail > .btn-primary { min-height:48px; }
+
+/* Deck and collection inspectors: give metadata enough horizontal room while
+   preserving six collection columns and the existing card/button geometry. */
+.shell-surface :is(.deck-layout,.cards-layout) { grid-template-columns:minmax(0,1fr) 392px; gap:20px; }
+.shell-surface .deck-current-title { margin-bottom:10px; color:#f0e7d2; }
+.shell-surface .deck-library { padding:10px; }
+.shell-surface .deck-library-tab,
+.shell-surface .deck-name-input { font-size:11px; }
+.shell-surface .deck-summary { justify-content:space-between; gap:12px; }
+.shell-surface .deck-summary-row { flex:1 1 0; padding-left:9px; border-left:2px solid #3b485c; }
+.shell-surface .deck-summary-row:first-child { border-left-color:var(--page-accent); }
+.shell-surface .deck-row-name { font-size:11px; }
+.shell-surface .deck-row-remove { color:#c98e96; }
+.shell-surface .deck-row:hover { background:#182231; }
+.shell-surface .card-detail-kicker { color:#d8c8e8; letter-spacing:.1em; }
+.shell-surface .card-detail-name { font-size:26px; }
+.shell-surface .card-detail-block { border-color:#465168; background:#111a28; }
+.shell-surface .card-detail-status { min-height:34px; display:grid; place-items:center; letter-spacing:.14em; }
+.shell-surface .starter-deck-record-copy > span { font-size:10px; }
+.shell-surface .starter-deck-record-copy small { font-size:11px; }
+
+/* Settings: stronger baseline and larger secondary text, still one sheet and
+   still fully visible at the canonical 1280x720 composition. */
+.shell-surface .settings-list { padding-inline:28px; }
+.shell-surface .setting-row { min-height:70px; }
+.shell-surface .setting-label { font-size:16px; letter-spacing:.025em; }
+.shell-surface .setting-options { margin-left:auto; }
+.shell-surface .setting-options .toggle { min-height:36px; min-width:70px; }
+.shell-surface .setting-controls { font-size:14px; color:#c7d0de; }
+.shell-surface .language-grid .lang-chip { border-color:#4a566b; }
+.shell-surface .setting-row input[type='range'] { max-width:500px; }
