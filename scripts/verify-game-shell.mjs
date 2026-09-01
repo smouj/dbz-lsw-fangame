@@ -17,7 +17,10 @@ const results=[];
 page.on('pageerror',error=>{ errors.push(error.message); console.error(error.stack); });
 const screens=['story','versus','deck','characters','cards','settings'];
 const sizes=[[320,180],[640,360],[1280,720],[1920,1080],[2560,1440],[844,390],[390,844]];
-async function shot(name) { await page.screenshot({path:`${output}/${name}.png`}); }
+async function shot(name) {
+  await page.mouse.move(1,1);
+  await page.screenshot({path:`${output}/${name}.png`});
+}
 async function layout(label) {
   await page.waitForFunction(() => {
     const surface=document.querySelector('.shell-surface')?.getBoundingClientRect();
@@ -71,6 +74,24 @@ try {
         const action=page.locator(screen==='characters'?'.char-detail > .btn-primary':'.setup-ready-btn');
         const box=await action.boundingBox(); const viewport=await page.locator('.game-viewport').boundingBox();
         assert.ok(box.y>=viewport.y && box.y+box.height<=viewport.y+viewport.height, `${screen} action fully visible`);
+      }
+      if(width===1280 && screen==='deck') {
+        const overflowingCards=await page.locator('.deck-screen .card-collection-grid .card').evaluateAll(cards=>
+          cards.filter(card=>card.scrollHeight>card.clientHeight+1).length
+        );
+        assert.equal(overflowingCards,0,'Deck editor cards fit their frames without clipped content');
+      }
+      if(width===1280 && screen==='cards') {
+        const rows=await page.locator('.cards-screen .card-collection-grid').evaluate(grid=>{
+          const bounds=grid.getBoundingClientRect();
+          const visible=[...grid.children].map(card=>card.getBoundingClientRect())
+            .filter(card=>card.bottom>bounds.top && card.top<bounds.bottom);
+          return {
+            full:visible.filter(card=>card.top>=bounds.top && card.bottom<=bounds.bottom).length,
+            partial:visible.filter(card=>card.top<bounds.top || card.bottom>bounds.bottom).length,
+          };
+        });
+        assert.deepEqual(rows,{full:12,partial:0},'Card Collection opens on two complete six-card rows');
       }
       await back();
     }

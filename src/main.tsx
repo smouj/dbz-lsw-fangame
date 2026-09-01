@@ -3843,7 +3843,7 @@ function MainMenu({ onNavigate }: { onNavigate: (s: Screen) => void }) {
   const es = lang === 'es';
   const items: Array<{ screen: Screen; label: string; desc: string; Icon: LucideIcon }> = [
     { screen: 'story', label: t('menu.story'), desc: es ? 'Tu próxima batalla empieza aquí' : 'Your next battle starts here', Icon: BookOpen },
-    { screen: 'versus', label: t('menu.battle'), desc: es ? 'Prepara tu equipo y lucha' : 'Build your team. Take the fight.', Icon: Swords },
+    { screen: 'versus', label: t('menu.battle'), desc: es ? 'Prepara tu equipo y lucha' : 'Build your team. Enter the fight.', Icon: Swords },
     { screen: 'deck', label: t('menu.deck'), desc: es ? '20 cartas. Tu estrategia.' : '20 cards. Your strategy.', Icon: Library },
     { screen: 'characters', label: t('menu.characters'), desc: es ? 'Guerreros, formas y poder' : 'Warriors, forms and power', Icon: Users },
     { screen: 'cards', label: t('menu.cards'), desc: es ? 'Explora tu colección' : 'Explore your collection', Icon: Sparkles },
