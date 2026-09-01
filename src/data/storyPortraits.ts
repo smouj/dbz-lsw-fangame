@@ -299,8 +299,8 @@ function emotionFallback(entry: PortraitEntry, emotion?: PortraitEmotion): strin
   return fb ? entry.emotions[fb] : undefined;
 }
 
-/** Resolve the physical Story portrait for character + form + expression. */
-export function storyPortraitUrl(
+/** DEV/diagnostic only: may approximate across Story forms. Production must use resolveStoryPortraitStrict(). */
+export function storyPortraitUrlApproximate(
   character: string,
   formId?: string,
   emotion?: PortraitEmotion,
@@ -357,3 +357,6 @@ export function storyPortraitUrl(
   if (byEmotion) return byEmotion;
   return entry.base;
 }
+
+/** @deprecated Diagnostic compatibility alias. Never use in production rendering. */
+export const storyPortraitUrl = storyPortraitUrlApproximate;
