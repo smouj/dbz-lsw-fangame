@@ -1,18 +1,33 @@
-// ═══════════════════════════════════════════════════════════
-// DBZ LSW — Story Portraits (retratos de diálogo del GBC, 40×56)
-// ═══════════════════════════════════════════════════════════
-// Retratos extraídos de la ROM (paquete 01_Story_Portraits_FixedLast, 137
-// assets corregidos: nombres e identidades de personaje verificados) bajo
-// public/assets/portraits/story/.
+// ═══════════════════════════════════════════════════════════════════════
+// DBZ LSW — STORY PORTRAIT PHYSICAL CATALOG (GBC, 40×56)
+// ═══════════════════════════════════════════════════════════════════════
+// Physical portraits extracted from the cartridge live under
+// public/assets/portraits/story/. Semantic names in this file are downstream
+// aliases for those physical assets; they are NOT a replacement for the ROM's
+// numeric portrait-index/resource selection.
 //
-// Regla: nunca inventar una variante que no exista en el corpus físico.
-// Future Trunks SSJ y Goku SSJ3, por ejemplo, no tienen retrato Story dedicado
-// en este corpus y deben caer al retrato físico verificado más cercano.
-// ═══════════════════════════════════════════════════════════
+// Canon rule:
+//   - an exact Story portrait may represent only the identity/form it depicts;
+//   - a missing transformation returns undefined from the strict Story layer;
+//   - callers that need a playable-form fallback must use the exact Battle
+//     portrait for that SAME form, never another Story transformation.
+// ═══════════════════════════════════════════════════════════════════════
 
-export type PortraitEmotion = 'normal' | 'smile' | 'surprised' | 'angry' | 'wounded' | 'visor' | 'scared' | 'screaming' | 'serious' | 'grinding' | 'crying' | 'final_angry';
+export type PortraitEmotion =
+  | 'normal'
+  | 'smile'
+  | 'surprised'
+  | 'angry'
+  | 'wounded'
+  | 'visor'
+  | 'scared'
+  | 'screaming'
+  | 'serious'
+  | 'grinding'
+  | 'crying'
+  | 'final_angry';
 
-interface PortraitEntry {
+export interface PortraitEntry {
   base: string;
   emotions?: Partial<Record<PortraitEmotion, string>>;
   forms?: Record<string, string>;
@@ -20,8 +35,8 @@ interface PortraitEntry {
 
 const P = '/assets/portraits/story';
 
-export const STORY_PORTRAITS: Record<string, PortraitEntry> = {
-  // ═══ Saga Saiyan ═══
+export const STORY_PORTRAITS: Readonly<Record<string, PortraitEntry>> = {
+  // ── Saiyan ─────────────────────────────────────────────────────────
   goku: {
     base: `${P}/goku_01.png`,
     emotions: {
@@ -32,9 +47,10 @@ export const STORY_PORTRAITS: Record<string, PortraitEntry> = {
     forms: {
       ssj: `${P}/goku_ssj_01.png`,
       ssj_cell: `${P}/goku_ssj_02.png`,
-      ginyu: `${P}/goku_ssj_01.png`,
     },
   },
+  // Goku after Ginyu's body-change: this is a distinct physical identity.
+  goku_in_ginyu_body: { base: `${P}/goku_with_body_captain_ginyu.png` },
   gohan: {
     base: `${P}/gohan_young_01.png`,
     emotions: {
@@ -109,7 +125,7 @@ export const STORY_PORTRAITS: Record<string, PortraitEntry> = {
   king_kai: { base: `${P}/king_kai.png` },
   great_ape_vegeta: { base: `${P}/great_ape_general.png` },
 
-  // ═══ Saga Namek / Freezer ═══
+  // ── Namek / Frieza ─────────────────────────────────────────────────
   frieza: {
     base: `${P}/frieza_first_form_01.png`,
     emotions: {
@@ -128,14 +144,17 @@ export const STORY_PORTRAITS: Record<string, PortraitEntry> = {
   recoome: { base: `${P}/recoome.png`, emotions: { wounded: `${P}/recoome_wounded.png` } },
   burter: { base: `${P}/burter.png`, emotions: { wounded: `${P}/burter_wounded.png` } },
   jeice: { base: `${P}/jeice.png` },
-  ginyu: { base: `${P}/captain_ginyu_01.png`, forms: { goku_body: `${P}/captain_ginyu_goku_body.png` } },
+  ginyu: {
+    base: `${P}/captain_ginyu_01.png`,
+    forms: { goku_body: `${P}/captain_ginyu_goku_body.png` },
+  },
   ginyu_frog: { base: `${P}/captain_ginyu_frog.png` },
   dende: { base: `${P}/dende.png` },
   kami: { base: `${P}/kami.png` },
   nail: { base: `${P}/nail.png` },
   guru: { base: `${P}/guru.png` },
 
-  // ═══ Saga Androides / Cell ═══
+  // ── Android / Cell ─────────────────────────────────────────────────
   android_16: { base: `${P}/android_16.png`, emotions: { wounded: `${P}/android_16_wounded.png` } },
   android_17: { base: `${P}/android_17.png` },
   android_18: { base: `${P}/android_18.png` },
@@ -143,7 +162,10 @@ export const STORY_PORTRAITS: Record<string, PortraitEntry> = {
   android_20: { base: `${P}/android_20_dr_gero.png` },
   cell_imperfect: { base: `${P}/cell_imperfect.png` },
   cell_semi: { base: `${P}/cell_semi_perfect.png` },
-  cell: { base: `${P}/cell_perfect_01.png`, emotions: { surprised: `${P}/cell_perfect_02.png` } },
+  cell: {
+    base: `${P}/cell_perfect_01.png`,
+    emotions: { surprised: `${P}/cell_perfect_02.png` },
+  },
   cell_jr: { base: `${P}/cell_jr.png` },
   trunks: {
     base: `${P}/trunks_future_01.png`,
@@ -158,20 +180,27 @@ export const STORY_PORTRAITS: Record<string, PortraitEntry> = {
       baby_cry: `${P}/trunks_baby_crying.png`,
     },
   },
-  hercule: { base: `${P}/mr_satan_01.png`, emotions: { surprised: `${P}/mr_satan_02.png` } },
+  hercule: {
+    base: `${P}/mr_satan_01.png`,
+    emotions: { surprised: `${P}/mr_satan_02.png` },
+  },
   roshi: { base: `${P}/master_roshi.png` },
 
-  // ═══ Saga Majin Buu ═══
+  // ── Majin Buu ──────────────────────────────────────────────────────
   babidi: { base: `${P}/babidi.png` },
   kid_buu: { base: `${P}/kid_buu.png` },
-  fat_buu: { base: `${P}/majin_buu_01.png`, emotions: { angry: `${P}/majin_buu_02.png` } },
+  fat_buu: {
+    base: `${P}/majin_buu_01.png`,
+    emotions: { angry: `${P}/majin_buu_02.png` },
+  },
   majin_buu: {
     base: `${P}/super_buu_01.png`,
     emotions: { angry: `${P}/super_buu_02.png` },
     forms: { gohan_form: `${P}/super_buu_gohan_03.png` },
   },
   goten: { base: `${P}/goten_01.png`, emotions: { surprised: `${P}/goten_02.png` } },
-  gotenks: { base: `${P}/gotenks_ssj3.png` },
+  // The verified Story corpus contains only the SSJ3 Gotenks portrait.
+  gotenks: { base: `${P}/gotenks_ssj3.png`, forms: { ssj3: `${P}/gotenks_ssj3.png` } },
   vegito: { base: `${P}/vegito.png`, forms: { ssj: `${P}/vegito_ssj.png` } },
   dabura: { base: `${P}/dabura_01.png`, emotions: { surprised: `${P}/dabura_02.png` } },
   elder_kai: { base: `${P}/elder_kai.png` },
@@ -183,17 +212,22 @@ export const STORY_PORTRAITS: Record<string, PortraitEntry> = {
   yamu: { base: `${P}/yamu.png` },
   yakon: { base: `${P}/yakon.png` },
   puipui: { base: `${P}/pui_pui.png` },
-  saiyaman: { base: `${P}/great_saiyaman.png`, forms: { no_helmet: `${P}/great_saiyaman_unmasked.png` } },
+  saiyaman: {
+    base: `${P}/great_saiyaman.png`,
+    forms: { no_helmet: `${P}/great_saiyaman_unmasked.png` },
+  },
   bee: { base: `${P}/bee.png` },
   baba: { base: `${P}/fortuneteller_baba.png` },
   tournament_announcer: { base: `${P}/world_tournament_announcer.png` },
   spectator: { base: `${P}/tournament_spectator_girl.png` },
 };
 
-/** Retratos Story que representan de forma física y exacta una forma del roster.
- * Si una forma no aparece aquí, la UI de selección debe usar su retrato Battle
- * exacto antes de enseñar otra transformación como si fuera la seleccionada. */
-const ROSTER_STORY_PORTRAITS: Readonly<Record<string, string>> = {
+/**
+ * Physical Story portraits that depict an exact playable roster form.
+ * This table is intentionally strict. A form absent here must NOT be replaced
+ * by another transformation inside the Story layer.
+ */
+export const ROSTER_STORY_PORTRAITS: Readonly<Record<string, string>> = {
   goku_base: `${P}/goku_01.png`,
   goku_ssj: `${P}/goku_ssj_01.png`,
   vegeta_base: `${P}/vegeta_01.png`,
@@ -235,52 +269,106 @@ const ROSTER_STORY_PORTRAITS: Readonly<Record<string, string>> = {
   vegito_ssj: `${P}/vegito_ssj.png`,
 };
 
-export function storyPortraitForRosterForm(formId: string): string | undefined {
-  return ROSTER_STORY_PORTRAITS[formId];
+/** Playable forms with no dedicated exact Story portrait in the verified corpus. */
+export const ROSTER_STORY_PORTRAIT_MISSING_EXACT = Object.freeze([
+  'goku_ssj2',
+  'goku_ssj3',
+  'gohan_adult_ssj2',
+  'trunks_kid_ssj',
+  'trunks_ssj',
+  'goten_ssj',
+  'gotenks_ssj',
+  'piccolo_evil',
+  'buu_gotenks',
+] as const);
+
+const ROSTER_FORM_IDS = new Set<string>([
+  ...Object.keys(ROSTER_STORY_PORTRAITS),
+  ...ROSTER_STORY_PORTRAIT_MISSING_EXACT,
+]);
+
+const EXACT_EMOTION_OVERRIDE: Readonly<Record<string, Partial<Record<PortraitEmotion, string>>>> = {
+  goku_base: {
+    smile: `${P}/goku_02.png`,
+    surprised: `${P}/goku_03.png`,
+    wounded: `${P}/goku_04.png`,
+  },
+  vegeta_base: {
+    visor: `${P}/vegeta_visor.png`,
+    smile: `${P}/vegeta_03.png`,
+    surprised: `${P}/vegeta_04.png`,
+    angry: `${P}/vegeta_02.png`,
+    wounded: `${P}/vegeta_wounded.png`,
+  },
+  vegeta_majin: { angry: `${P}/majin_vegeta_02.png`, screaming: `${P}/majin_vegeta_02.png` },
+  trunks_kid: { surprised: `${P}/trunks_kid_02.png` },
+  trunks_future: { surprised: `${P}/trunks_future_02.png`, smile: `${P}/trunks_future_03.png` },
+  cell_perfect: { surprised: `${P}/cell_perfect_02.png` },
+  buu_base: { angry: `${P}/majin_buu_02.png` },
+  buu_super: { angry: `${P}/super_buu_02.png` },
+};
+
+export function storyPortraitForRosterForm(
+  formId: string,
+  emotion?: PortraitEmotion,
+): string | undefined {
+  const exact = ROSTER_STORY_PORTRAITS[formId];
+  if (!exact) return undefined;
+  return (emotion && EXACT_EMOTION_OVERRIDE[formId]?.[emotion]) || exact;
 }
 
-/** Identidad narrativa para formas cuyo nombre no puede inferirse por tokens.
- * Algunas son aproximaciones Story verificadas; la UI del roster usa Battle
- * cuando no existe una entrada exacta en ROSTER_STORY_PORTRAITS. */
-const ROSTER_STORY_FORM_RESOLUTION: Readonly<Record<string, { key: string; alias?: string }>> = {
-  goku_ssj2: { key: 'goku', alias: 'ssj' },
-  goku_ssj3: { key: 'goku', alias: 'ssj' },
-  gohan_adult_ssj2: { key: 'gohan', alias: 'adult_ssj' },
-  trunks_kid_ssj: { key: 'trunks', alias: 'kid' },
-  trunks_ssj: { key: 'trunks' },
-  goten_ssj: { key: 'goten' },
-  gotenks_ssj: { key: 'gotenks' },
-  piccolo_evil: { key: 'piccolo' },
-  cell_imperfect: { key: 'cell_imperfect' },
-  cell_semi: { key: 'cell_semi' },
-  cell_perfect: { key: 'cell' },
-  ginyu_goku: { key: 'ginyu', alias: 'goku_body' },
-  buu_base: { key: 'fat_buu' },
-  buu_super: { key: 'majin_buu' },
-  buu_gotenks: { key: 'majin_buu' },
-  buu_gohan: { key: 'majin_buu', alias: 'gohan_form' },
-  buu_kid: { key: 'kid_buu' },
+const FORM_ALIAS: Readonly<Record<string, string>> = {
+  base: 'base',
+  normal: 'base',
+  ssj: 'ssj',
+  super: 'ssj',
+  super_saiyan: 'ssj',
+  ssj2: 'ssj2',
+  super2: 'ssj2',
+  super_saiyan_2: 'ssj2',
+  ssj3: 'ssj3',
+  super3: 'ssj3',
+  super_saiyan_3: 'ssj3',
+  adult: 'adult',
+  adult_ssj: 'adult_ssj',
+  adult_ssj2: 'adult_ssj2',
+  adult_super_saiyan: 'adult_ssj',
+  adult_super_saiyan_2: 'adult_ssj2',
+  ultimate: 'ultimate',
+  kami: 'kami',
+  majin: 'majin',
+  kid: 'kid',
+  kid_ssj: 'kid_ssj',
+  future: 'future',
+  future_ssj: 'future_ssj',
+  final: 'final',
+  first: 'first',
+  second: 'second',
+  third: 'third',
+  goku_body: 'goku_body',
+  young: 'young',
+  older: 'older',
+  no_helmet: 'no_helmet',
+  baby: 'baby',
+  baby_cry: 'baby_cry',
+  great_ape: 'great_ape',
+  gohan_form: 'gohan_form',
+  gotenks_form: 'gotenks_form',
+  hair: 'hair',
+  serious: 'serious',
 };
 
-const FORM_ALIAS: Record<string, string> = {
-  base: 'base', normal: 'base', ssj: 'ssj', super: 'ssj', super_saiyan: 'ssj',
-  ssj2: 'ssj2', super2: 'ssj2', super_saiyan_2: 'ssj2',
-  ssj3: 'ssj3', super3: 'ssj3', super_saiyan_3: 'ssj3',
-  adult_ssj: 'adult_ssj', adult_super_saiyan: 'adult_ssj',
-  ultimate: 'ultimate', kami: 'kami', majin: 'majin', kid: 'kid', adult: 'adult',
-  final: 'final', first: 'first', second: 'second', third: 'third',
-  goku_body: 'goku_body', young: 'young', older: 'older', no_helmet: 'no_helmet',
-  baby: 'baby', baby_cry: 'baby_cry', great_ape: 'great_ape', gohan_form: 'gohan_form',
-  hair: 'hair', serious: 'serious',
-};
+function token(value: string): string {
+  return value.toLowerCase().replace(/[\s-]+/g, '_');
+}
 
 function normalizeStoryForm(formId: string): string | undefined {
-  const f = formId.toLowerCase().replace(/[\s-]+/g, '_');
-  if (FORM_ALIAS[f]) return FORM_ALIAS[f];
-  const tokens = f.split('_');
+  const normalized = token(formId);
+  if (FORM_ALIAS[normalized]) return FORM_ALIAS[normalized];
+  const tokens = normalized.split('_');
   for (let i = 0; i < tokens.length; i++) {
-    const cand = tokens.slice(i).join('_');
-    if (FORM_ALIAS[cand]) return FORM_ALIAS[cand];
+    const candidate = tokens.slice(i).join('_');
+    if (FORM_ALIAS[candidate]) return FORM_ALIAS[candidate];
   }
   return undefined;
 }
@@ -295,65 +383,81 @@ function emotionFallback(entry: PortraitEntry, emotion?: PortraitEmotion): strin
     grinding: 'angry',
     final_angry: 'angry',
   };
-  const fb = fallback[emotion];
-  return fb ? entry.emotions[fb] : undefined;
+  const next = fallback[emotion];
+  return next ? entry.emotions[next] : undefined;
 }
 
-/** Resolve the physical Story portrait for character + form + expression. */
+interface SemanticPortraitIdentity {
+  key: string;
+  forcedForm?: string;
+}
+
+function semanticIdentity(raw: string, formId?: string): SemanticPortraitIdentity {
+  if (raw === 'ginyu_goku') return { key: 'ginyu', forcedForm: 'goku_body' };
+  if (raw === 'goku_in_ginyu_body') return { key: 'goku_in_ginyu_body' };
+
+  if (raw === 'gohan_kid' || raw === 'gohan_young') return { key: 'gohan' };
+  if (raw === 'gohan_adult') {
+    const requested = normalizeStoryForm(formId ?? 'adult');
+    if (requested === 'ssj') return { key: 'gohan', forcedForm: 'adult_ssj' };
+    if (requested === 'ssj2') return { key: 'gohan', forcedForm: 'adult_ssj2' };
+    return { key: 'gohan', forcedForm: requested ?? 'adult' };
+  }
+
+  if (raw === 'trunks_kid') return { key: 'trunks', forcedForm: normalizeStoryForm(formId ?? 'kid') ?? 'kid' };
+  if (raw === 'trunks_future') {
+    const requested = normalizeStoryForm(formId ?? 'future');
+    return { key: 'trunks', forcedForm: requested === 'ssj' ? 'future_ssj' : requested };
+  }
+
+  if (raw === 'cell_perfect') return { key: 'cell' };
+  if (raw === 'cell_semi_perfect') return { key: 'cell_semi' };
+
+  if (raw === 'buu' || raw === 'buu_base' || raw === 'fat_buu') return { key: 'fat_buu' };
+  if (raw === 'buu_super' || raw === 'super_buu') return { key: 'majin_buu' };
+  if (raw === 'buu_gohan') return { key: 'majin_buu', forcedForm: 'gohan_form' };
+  if (raw === 'buu_gotenks') return { key: 'majin_buu', forcedForm: 'gotenks_form' };
+  if (raw === 'buu_kid' || raw === 'kid_buu') return { key: 'kid_buu' };
+
+  if (raw === 'android_20_dr_gero') return { key: 'android_20' };
+  if (raw === 'mr_satan') return { key: 'hercule' };
+
+  return { key: raw };
+}
+
+/**
+ * Strict Story-only resolver.
+ *
+ * An explicit form request is a contract: if that physical Story variant does
+ * not exist, this function returns undefined rather than silently substituting
+ * another transformation. Consumers that need a guaranteed playable portrait
+ * must fall back to BATTLE_PORTRAITS for the exact same form.
+ */
 export function storyPortraitUrl(
   character: string,
   formId?: string,
   emotion?: PortraitEmotion,
 ): string | undefined {
-  const raw = character.toLowerCase().replace(/[\s-]+/g, '_');
-  let key = raw;
-  let forcedForm: string | undefined;
+  const raw = token(character);
 
-  // Age/timeline identity must be resolved BEFORE generic character aliasing.
-  if (raw === 'gohan_kid' || raw === 'gohan_young') {
-    key = 'gohan';
-  } else if (raw === 'gohan_adult') {
-    key = 'gohan';
-    const requested = normalizeStoryForm(formId ?? 'adult');
-    forcedForm = requested === 'ssj' ? 'adult_ssj' : (requested ?? 'adult');
-  } else if (raw === 'trunks_kid') {
-    key = 'trunks';
-    forcedForm = 'kid';
-  } else if (raw === 'trunks_future') {
-    key = 'trunks';
-    // No physical Future Trunks SSJ Story portrait in this corpus.
-    forcedForm = undefined;
-  } else if (raw === 'cell_perfect') {
-    key = 'cell';
-  } else if (raw === 'cell_semi_perfect') {
-    key = 'cell_semi';
-  } else if (raw === 'buu_base' || raw === 'buu') {
-    key = 'fat_buu';
-  } else if (raw === 'buu_super' || raw === 'super_buu') {
-    key = 'majin_buu';
-  } else if (raw === 'buu_kid' || raw === 'kid_buu') {
-    key = 'kid_buu';
-  }
+  // A playable form id is already the strongest semantic identity we have.
+  if (ROSTER_FORM_IDS.has(raw)) return storyPortraitForRosterForm(raw, emotion);
+  if (formId && ROSTER_FORM_IDS.has(formId)) return storyPortraitForRosterForm(formId, emotion);
 
-  const rosterResolution = formId ? ROSTER_STORY_FORM_RESOLUTION[formId] : undefined;
-  if (rosterResolution) {
-    key = rosterResolution.key;
-    forcedForm = rosterResolution.alias;
-  }
-
-  const entry = STORY_PORTRAITS[key];
+  const identity = semanticIdentity(raw, formId);
+  const entry = STORY_PORTRAITS[identity.key];
   if (!entry) return undefined;
 
-  let alias = forcedForm ?? (formId ? normalizeStoryForm(formId) : undefined);
-  if (key === 'gohan' && raw === 'gohan_adult' && alias === 'ssj') alias = 'adult_ssj';
+  const requestedAlias = identity.forcedForm ?? (formId ? normalizeStoryForm(formId) : undefined);
 
-  if (alias && entry.forms) {
-    // Exact form+emotion first: e.g. Majin Vegeta angry, Trunks kid surprised.
-    if (emotion && entry.forms[`${alias}_${emotion}`]) return entry.forms[`${alias}_${emotion}`];
-    if (entry.forms[alias]) return entry.forms[alias];
+  // Explicit form: exact physical variant or unavailable. Never fall back to
+  // entry.base/emotion from a different transformation.
+  if (requestedAlias && requestedAlias !== 'base' && requestedAlias !== 'normal') {
+    const formEmotion = emotion ? entry.forms?.[`${requestedAlias}_${emotion}`] : undefined;
+    if (formEmotion) return formEmotion;
+    return entry.forms?.[requestedAlias];
   }
 
   const byEmotion = emotionFallback(entry, emotion);
-  if (byEmotion) return byEmotion;
-  return entry.base;
+  return byEmotion ?? entry.base;
 }
