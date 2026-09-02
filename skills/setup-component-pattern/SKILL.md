@@ -45,7 +45,8 @@ Rival team in Versus mode is SELECTABLE (choose opponent) and INSPECTABLE (see l
 2. **`equipLimit`/`clearLimitSlot`/`assignDeck` are NO-OPs** — the interface matches `useTeamSetupState` for compatibility but does nothing.
 3. **`startVersus`** resolves the rival team through `resolveEnemyLoadout()` before creating `BattleConfig`. If `isLoadoutResolved`, use preset limits+deck; otherwise keep `makeMember` defaults.
 4. **TeamSetup hides DeckAssignment entirely when rival has focus** — rival deck auto-generates from ROM preset, there is nothing for the player to configure. Only LimitLoadoutPanel is shown (read-only, inspectable).
-5. **Rival label**: just "RIVAL 🔒" — no "CPU" badge. It's obvious it's the CPU opponent.
+5. **Rival label**: just "RIVAL TEAM" — no "CPU" or "🔒" badges (removed by user feedback). It's obvious it's the CPU opponent.
+6. **Rival command-row composition**: render rival slots reversed (`.map((m,i)=>({m,i})).reverse().map(...)` preserving real index) so visual order reads `SLOT 2 | SLOT 1 | RIVAL TEAM` — label after the slots, pushed right via `.setup-command-team-rival .setup-command-team-label { margin-left:auto }`.
 6. **Player deck never changes on character switch** — the deck belongs to the player, not the character. `useTeamSetupState` keeps the same `jointDeck`/`deckId` across character changes; only the character/form changes.
 
 ## Unlock Gate Pattern
@@ -62,3 +63,10 @@ Player character unlocking uses `isFormUnlocked(formId, level)`:
 - Don't apply locked CSS only to the wrapper div — the sprite image/canvas needs the filter directly, or it shows at full brightness under the dimmed wrapper.
 - Don't use `require()` for ESM module imports — pass arrays as parameters (`allVersusPresets(formIds: string[])`) instead.
 - Don't conflate `useTeamSetupState.addMember` (which skips locked characters) with `useRivalSetupState.addMember` (which skips used characters but not locked — rival can use any form).
+
+## Panel Title Convention
+
+Setup sub-panels share one title header: `<div className="setup-panel-title">` — a flex row (`space-between`, `center`) with a left `<span>` title and an optional right-aligned status `<span>` (`🔒 ROM LOADOUT`, `N / M EQUIPPED`). LimitLoadoutPanel and DeckBuilder ("CARD LIBRARY", "CARD DETAILS") both use it; the compact sizing lives in setup-polish.css (13px shell-body base, 11px under `.setup-screen-command`).
+
+1. Render panel titles with `.setup-panel-title`, never `<h3>`. An `<h3>` styled with `--shell-display` (19–22px, e.g. `.setup-deck-assignment h3`) is the "enormous title" outlier.
+2. When a setup panel title looks oversized, convert the `<h3>` to `.setup-panel-title` instead of adding font-size overrides.
