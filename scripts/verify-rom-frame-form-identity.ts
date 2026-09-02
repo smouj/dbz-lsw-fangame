@@ -13,8 +13,9 @@
 
 import { readFileSync, existsSync, readdirSync } from 'fs';
 import { resolve, dirname } from 'path';
+import { fileURLToPath } from 'url';
 
-const ROOT = resolve(dirname(new URL(import.meta.url).pathname).replace(/\/$/, ''), '..');
+const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const SPRITES_DIR = resolve(ROOT, 'public/assets/sprites');
 const REQUIRE_ROM_PHYSICAL_EXPORTS = process.env.REQUIRE_ROM_PHYSICAL_EXPORTS === '1';
 

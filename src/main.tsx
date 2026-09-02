@@ -14,7 +14,6 @@ import { applyHudLayout } from './data/hudLayout';
 import { applyHudButtonVars } from './data/hudAssets';
 import { FORMS, CHARACTERS, ROM_ORDERED_CHARACTERS, getCharacter, getForm, idleSpriteUrl, statAtLevel, LIMIT_DEFAULTS, loadLimits, saveLimits } from './data/roster';
 import { STORY_ENEMY_DECKS, STORY_AI_BOOSTS, TEAM_BATTLES } from './data/enemy_decks';
-import { resolveEnemyLoadout, isLoadoutResolved } from './data/enemyLoadouts';
 import { facingFlip, needsFlip } from './data/facing';
 import { BattlePosition, POSITION_DATA, resolveRelativeDistance, isBeamVulnerable, isDamageVulnerable, anchorFor, applyMoveAxis, positionLabel, type MoveAxis } from './data/positions';
 import { UNLOCK_KEY, STARTER_DAMAGE_DECK, STARTER_BEAM_DECK, STARTER_CHARACTERS, cardsForLevel, pickRewards, VS_UNLOCKS, isFormUnlocked, FORM_UNLOCK_LEVELS } from './data/unlocks';
@@ -52,6 +51,7 @@ import { useTeamSetupState } from './components/setup/useTeamSetupState';
 import { useRivalSetupState } from './components/setup/useRivalSetupState';
 import { baseFormIdOf } from './components/setup/setupLogic';
 import type { TeamMember, TeamSetupResult } from './components/setup/teamSetupTypes';
+import { resolveVersusBattleSetup } from './components/setup/versusBattleSetup';
 import { overworldUrl } from './data/overworld';
 import { battleOverworldActorUrl, battleOverworldAuraUrl } from './data/battleOverworld';
 import { panelsForChapter, type StoryPanel, characterName } from './data/storyPanels';
@@ -669,9 +669,9 @@ function DamageNumber({ value, type, x, y }: { value: number; type: 'damage' | '
 // PANTALLA DE BATALLA
 // ═══════════════════════════════════════════════════════════
 
-function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, rivalReserve, onExit, onRematch, onMainMenu }: {
+function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, playerLimits, playerReserve, rivalReserve, onExit, onRematch, onMainMenu }: {
   playerFormId: string; enemyFormId: string; storyChapter: number | null; onExit: (won: boolean) => void;
-  playerDeck?: number[]; rivalReserve?: TeamMember | null;
+  playerDeck?: number[]; playerLimits?: number[]; playerReserve?: TeamMember | null; rivalReserve?: TeamMember | null;
   onRematch: () => void; onMainMenu: () => void;
 }) {
   const { t, lang } = useLang();
@@ -705,7 +705,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, riv
   const aiLevel = Math.max(1, (prog.level - 1) * 2 + 1);
   // Combates 2v2 (cap 7 Jeice&Burter, 16 16&18, 21 17&18): compañero y 2º jefe
   const teamBattle = storyChapter ? TEAM_BATTLES[storyChapter] : null;
-  const playerReserveFormId = teamBattle?.ally ?? null;
+  const playerReserveFormId = teamBattle?.ally ?? (playerReserve?.formId ?? null);
   const enemyReserveFormId = teamBattle?.enemy2 ?? (rivalReserve?.formId ?? null);
   const [player2, setPlayer2] = useState<Fighter | null>(() => {
     if (!playerReserveFormId) return null;
@@ -861,7 +861,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, riv
         playerPos: player.battlePos, enemyPos: enemy.battlePos,
         playerDeck: { drawPile: deckState.drawPile, hand: deckState.hand, discardPile: deckState.discardPile },
         enemyDeck: { drawPile: eDeckState.drawPile, hand: eDeckState.hand, discardPile: eDeckState.discardPile },
-        playerLimits: [], playerFighterLimits: player.limits ?? [],
+        playerLimits: playerLimits ?? [], playerFighterLimits: player.limits ?? [],
         // C1b — reserves (team-mode) alimentan el BattleState; 1v1 conserva null.
         player2: player2 && playerReserveFormId ? { ...player2, id: playerReserveFormId, powerWindowCounter: 0 } : null,
         enemy2: enemy2 && enemyReserveFormId ? { ...enemy2, id: enemyReserveFormId, powerWindowCounter: 0 } : null,
@@ -4932,7 +4932,7 @@ function SettingsScreen({ onNavigate }: { onNavigate: (s: Screen) => void }) {
 
 function TeamSetupScreen({ onNavigate, onStartVersus, initialFormId }: {
   onNavigate: (s: Screen) => void;
-  onStartVersus: (rivalTeam: TeamMember[]) => void;
+  onStartVersus: (playerSetup: TeamSetupResult, rivalTeam: TeamMember[]) => void;
   initialFormId?: string;
 }) {
   const { t } = useLang();
@@ -5041,7 +5041,7 @@ function TeamSetupScreen({ onNavigate, onStartVersus, initialFormId }: {
         rivalFormId={rivalActive?.formId}
         rivalCharacterId={rivalActive?.characterId}
         rivalLimits={rivalActive?.limits}
-        onConfirm={(result: TeamSetupResult) => onStartVersus(rival.state.members)}
+        onConfirm={(result: TeamSetupResult) => onStartVersus(result, rival.state.members)}
         onEditDecks={() => onNavigate('deck')}
         onBack={() => onNavigate('main')}
         onPlayerSlotClick={() => setFocusTeam('player')}
@@ -5168,28 +5168,13 @@ function AppInner() {
     setScreen('versus');
   };
 
-  const startVersus = (rivalTeam: TeamMember[]) => {
-    const member = rivalTeam[0];
-    if (member) {
-      setPlayerForm(playerForm); // Player form set by TeamSetup
-    }
-    // Rival team: resolve ROM loadout for each member
-    // The rival uses their canonical CPU preset (deck + limits from story encounter data)
-    // NOT the player's deck, NOT a generic deck, NOT random.
-    const resolvedTeam = rivalTeam.map(m => {
-      const preset = resolveEnemyLoadout(m.formId);
-      return {
-        ...m,
-        // Override limits/deck with ROM preset when resolved
-        limits: isLoadoutResolved(preset) ? preset.limits : m.limits,
-        jointDeck: isLoadoutResolved(preset) ? preset.deck : m.jointDeck,
-      };
-    });
-    const primary = resolvedTeam[0];
-    // Rival team: primary enemy + reserve (2v2)
-    setEnemyForm(primary?.formId ?? 'piccolo_base');
-    // Store rival reserve for BattleConfig.enemy2
-    setRivalReserve(resolvedTeam.length > 1 ? resolvedTeam[1] : null);
+  const startVersus = (playerSetup: TeamSetupResult, rivalTeam: TeamMember[]) => {
+    const setup = resolveVersusBattleSetup(playerSetup, rivalTeam);
+    setPlayerForm(setup.playerFormId);
+    setBattleDeck(setup.playerDeck);
+    setBattlePlayerTeam(setup.playerTeam);
+    setEnemyForm(setup.enemyFormId);
+    setRivalReserve(setup.rivalReserve);
     setStoryChapter(null);
     setBattleKey(k => k + 1);
     setScreen('battle');
@@ -5199,6 +5184,7 @@ function AppInner() {
     setBattleDeck(undefined);
     setBattlePlayerTeam(undefined);
     setBattleEnemyTeam(undefined);
+    setRivalReserve(null);
     setEnemyForm(enemyFormId);
     setStoryChapter(chapterId);
     // El protagonista del capítulo (Gohan en el 1, no Goku — historia real del GBC)
@@ -5285,6 +5271,7 @@ function AppInner() {
         setBattleDeck(undefined);
         setBattlePlayerTeam(undefined);
         setBattleEnemyTeam(undefined);
+        setRivalReserve(null);
         setEnemyForm(enemyFormId);
         setStoryChapter(chapter);
         setBattleKey(k => k + 1);
@@ -5313,7 +5300,7 @@ function AppInner() {
       case 'cards': return <CardsScreen onNavigate={setScreen} />;
       case 'settings': return <SettingsScreen onNavigate={setScreen} />;
       case 'storyScene': return <StorySceneScreen key={`scene-${storyScene?.chapter}-${storyScene?.phase}`} chapter={storyScene?.chapter ?? 1} phase={storyScene?.phase ?? 'intro'} onFinish={finishStoryScene} onNavigate={setScreen} />;
-      case 'battle': return <BattleScreen key={battleKey} playerFormId={playerForm} enemyFormId={enemyForm} storyChapter={storyChapter} playerDeck={battleDeck} rivalReserve={rivalReserve} onExit={exitBattle}
+      case 'battle': return <BattleScreen key={battleKey} playerFormId={playerForm} enemyFormId={enemyForm} storyChapter={storyChapter} playerDeck={battleDeck} playerLimits={battlePlayerTeam?.[0]?.limits} playerReserve={battlePlayerTeam?.[1] ?? null} rivalReserve={rivalReserve} onExit={exitBattle}
         onRematch={() => { setStoryScene(null); setBattleKey(k => k + 1); setScreen('battle'); }}
         onMainMenu={() => { setStoryScene(null); setScreen('main'); }} />;
       default: return <MainMenu onNavigate={setScreen} />;

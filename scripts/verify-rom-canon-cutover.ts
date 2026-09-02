@@ -17,8 +17,9 @@
 
 import { readFileSync } from 'fs';
 import { resolve, dirname } from 'path';
+import { fileURLToPath } from 'url';
 
-const ROOT = resolve(dirname(new URL(import.meta.url).pathname).replace(/\/$/, ''), '..');
+const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const CHARACTERS_TSX = readFileSync(resolve(ROOT, 'src/devtools/characters.tsx'), 'utf8');
 const ROM_SEQUENCE_REGISTRY_TS = readFileSync(resolve(ROOT, 'src/data/romSequenceRegistry.ts'), 'utf8');
 const ROM_ACTION_SEQUENCE_BINDING_TS = readFileSync(resolve(ROOT, 'src/data/romActionSequenceBinding.ts'), 'utf8');

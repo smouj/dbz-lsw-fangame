@@ -17,10 +17,48 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { createHash } from 'node:crypto';
-import { execSync } from 'node:child_process';
+import { createRequire } from 'node:module';
+import type { PNG as PngImage } from 'pngjs';
 import { ROM_PHYSICAL_CORPUS_SUMMARY } from '../src/data/generated/romPhysicalCorpus.generated';
 
+const nodeRequire = createRequire(import.meta.url);
+const { PNG } = nodeRequire('pngjs') as typeof import('pngjs');
 const V9 = path.join(process.cwd(), 'sprites-source/catalog-v9');
+function readPng(file: string): PngImage {
+  return PNG.sync.read(fs.readFileSync(file));
+}
+
+function shapeSignature(file: string): string | null {
+  const image = readPng(file);
+  const points: [number, number][] = [];
+  let minX = image.width;
+  let minY = image.height;
+  for (let y = 0; y < image.height; y++) {
+    for (let x = 0; x < image.width; x++) {
+      const offset = (y * image.width + x) * 4;
+      if (image.data[offset + 3] === 0) continue;
+      points.push([x, y]);
+      minX = Math.min(minX, x);
+      minY = Math.min(minY, y);
+    }
+  }
+  if (points.length === 0) return null;
+  const normalized = points.map(([x, y]) => `${x - minX},${y - minY}`).join(';');
+  return createHash('md5').update(normalized).digest('hex');
+}
+
+function visibleSignature(file: string): string {
+  const image = readPng(file);
+  const visible: string[] = [];
+  for (let y = 0; y < image.height; y++) {
+    for (let x = 0; x < image.width; x++) {
+      const offset = (y * image.width + x) * 4;
+      const [r, g, b, alpha] = image.data.subarray(offset, offset + 4);
+      if (alpha > 0) visible.push(`${x},${y},${r},${g},${b}`);
+    }
+  }
+  return createHash('md5').update(visible.join(';')).digest('hex');
+}
 let failures = 0;
 const seen = new Set<string>();
 const romPhysicalComplete =
@@ -134,32 +172,23 @@ check('v9:transparency_audit_42', csvRows('catalog/transparency_audit.csv') === 
 const sj = JSON.parse(fs.readFileSync(path.join(V9, 'cards/stage_sequences.json'), 'utf8'));
 check('v9:stage_pools_4', Object.keys(sj.pools ?? {}).length === 4, `niveles ${Object.keys(sj.pools ?? {}).join(',')}`);
 
-// 8: transparencia (muestreo completo de atomic — 1.966 PNG: 1.952 V7 + 14 añadidos)
+// 8: transparencia completa de atomic, usando el mismo lector PNG de Node que CI.
 let hidden = 0;
 let checked = 0;
 try {
-  const out = execSync(`python3 -c "
-import os, sys
-from PIL import Image
-root = 'sprites-source/catalog-v9/forms_by_runtime'
-bad = 0
-n = 0
-for d in sorted(os.listdir(root)):
-    a = os.path.join(root, d, 'atomic')
-    if not os.path.isdir(a): continue
-    for fn in sorted(os.listdir(a)):
-        if not fn.endswith('.png'): continue
-        im = Image.open(os.path.join(a, fn)).convert('RGBA')
-        px = im.load()
-        for y in range(im.height):
-            for x in range(im.width):
-                r,g,b,al = px[x,y]
-                if al == 0 and (r,g,b) != (0,0,0): bad += 1
-        n += 1
-print(f'{n} {bad}')
-"`, { encoding: 'utf8' }).trim().split(' ');
-  checked = Number(out[0]);
-  hidden = Number(out[1]);
+  const root = path.join(V9, 'forms_by_runtime');
+  for (const form of fs.readdirSync(root).sort()) {
+    const atomic = path.join(root, form, 'atomic');
+    if (!fs.existsSync(atomic)) continue;
+    for (const file of fs.readdirSync(atomic).filter(name => name.endsWith('.png')).sort()) {
+      const image = readPng(path.join(atomic, file));
+      for (let offset = 0; offset < image.data.length; offset += 4) {
+        const [r, g, b, alpha] = image.data.subarray(offset, offset + 4);
+        if (alpha === 0 && (r !== 0 || g !== 0 || b !== 0)) hidden++;
+      }
+      checked++;
+    }
+  }
 } catch (e) {
   check('v9:transparency', false, String(e));
 }
@@ -185,112 +214,77 @@ check('v9:fixed_only_pngs', fixedPngs === 392, `${fixedPngs} PNG fixed_only`);
 
 // 8c: cobertura completa — cada frame runtime base tiene fuente V9 (atomic|fixed_only)
 try {
-  const out = execSync(`python3 -c "
-import os, json, hashlib
-from PIL import Image
+  const v9Root = path.join(V9, 'forms_by_runtime');
+  const v9Shapes = new Map<string, Set<string>>();
+  for (const form of fs.readdirSync(v9Root).sort()) {
+    const signatures = new Set<string>();
+    for (const subdir of ['atomic', 'fixed_only']) {
+      const source = path.join(v9Root, form, subdir);
+      if (!fs.existsSync(source)) continue;
+      for (const file of fs.readdirSync(source).filter(name => name.endsWith('.png'))) {
+        const signature = shapeSignature(path.join(source, file));
+        if (signature) signatures.add(signature);
+      }
+    }
+    v9Shapes.set(form, signatures);
+  }
 
-def shape_sig(im):
-    im = im.convert('RGBA')
-    px = im.load()
-    pts = set()
-    for y in range(im.height):
-        for x in range(im.width):
-            r,g,b,a = px[x,y]
-            if a == 0: continue
-            pts.add((x,y))
-    if not pts: return None
-    minx = min(p[0] for p in pts); miny = min(p[1] for p in pts)
-    return frozenset((x-minx, y-miny) for x,y in pts)
-
-def shape_hash(sig): return hashlib.md5(repr(sorted(sig)).encode()).hexdigest()
-
-# formas del V9: atomic + fixed_only
-V9 = 'sprites-source/catalog-v9/forms_by_runtime'
-v9_shapes = {}
-for d in sorted(os.listdir(V9)):
-    s = set()
-    for sub in ('atomic', 'fixed_only'):
-        dd = os.path.join(V9, d, sub)
-        if os.path.isdir(dd):
-            for fn in os.listdir(dd):
-                if not fn.endswith('.png'): continue
-                sig = shape_sig(Image.open(os.path.join(dd, fn)))
-                if sig: s.add(shape_hash(sig))
-    v9_shapes[d] = s
-
-# frames runtime base
-base_poses = {'idle','move_front','move_back','guard','attack_fwd','attack_ud','hurt','beam_charge','beam_fire'}
-total = 0
-covered = 0
-missing = []
-for d in sorted(os.listdir('public/assets/sprites')):
-    if d == 'effects': continue
-    mp = f'public/assets/sprites/{d}/manifest.json'
-    if not os.path.exists(mp): continue
-    m = json.load(open(mp))
-    seen = set()
-    for pose, spec in m.items():
-        if not isinstance(spec, dict) or 'frames' not in spec or pose not in base_poses: continue
-        for fr in spec['frames']:
-            fn = fr.get('file') if isinstance(fr, dict) else fr
-            if fn in seen: continue
-            seen.add(fn)
-            fp = f'public/assets/sprites/{d}/{fn}'
-            if not os.path.exists(fp): continue
-            sig = shape_sig(Image.open(fp))
-            if sig is None: continue
-            total += 1
-            if shape_hash(sig) in v9_shapes.get(d, set()):
-                covered += 1
-            else:
-                missing.append(f'{d}/{pose}/{fn}')
-print(f'{covered} {total} {len(missing)}')
-if missing:
-    print('MISSING:' + '|'.join(missing[:8]))
-"`, { encoding: 'utf8' }).trim();
-  const [cov, tot, miss] = out.split(' ').map(Number);
+  const sprites = path.join(process.cwd(), 'public', 'assets', 'sprites');
+  const basePoses = new Set(['idle', 'move_front', 'move_back', 'guard', 'attack_fwd', 'attack_ud', 'hurt', 'beam_charge', 'beam_fire']);
+  let total = 0;
+  let covered = 0;
+  const missing: string[] = [];
+  for (const form of fs.readdirSync(sprites).sort()) {
+    if (form === 'effects') continue;
+    const manifestFile = path.join(sprites, form, 'manifest.json');
+    if (!fs.existsSync(manifestFile)) continue;
+    const manifest = JSON.parse(fs.readFileSync(manifestFile, 'utf8')) as Record<string, { frames?: ({ file?: string } | string)[] }>;
+    const seenFiles = new Set<string>();
+    for (const [pose, spec] of Object.entries(manifest)) {
+      if (!basePoses.has(pose) || !Array.isArray(spec?.frames)) continue;
+      for (const frame of spec.frames) {
+        const file = typeof frame === 'string' ? frame : frame.file;
+        if (!file || seenFiles.has(file)) continue;
+        seenFiles.add(file);
+        const runtimeFile = path.join(sprites, form, file);
+        if (!fs.existsSync(runtimeFile)) continue;
+        const signature = shapeSignature(runtimeFile);
+        if (!signature) continue;
+        total++;
+        if (v9Shapes.get(form)?.has(signature)) covered++;
+        else missing.push(`${form}/${pose}/${file}`);
+      }
+    }
+  }
+  const complete = missing.length === 0 && covered === total;
   check(
     'v9:full_coverage',
-    (miss === 0 && cov === tot) || romPhysicalComplete,
-    miss === 0 && cov === tot
-      ? `${cov}/${tot} frames runtime con fuente V9`
-      : `${cov}/${tot} V9 legacy; ${romPhysicalSupersedesV9Detail()}`,
+    complete || romPhysicalComplete,
+    complete ? `${covered}/${total} frames runtime con fuente V9` : `${covered}/${total} V9 legacy; ${romPhysicalSupersedesV9Detail()}`,
   );
 } catch (e) {
-  check(
-    'v9:full_coverage',
-    romPhysicalComplete,
-    romPhysicalComplete ? romPhysicalSupersedesV9Detail() : String(e),
-  );
+  check('v9:full_coverage', romPhysicalComplete, romPhysicalComplete ? romPhysicalSupersedesV9Detail() : String(e));
 }
 
-// 9: facing — idle de las 9 formas == repo (por píxel visible vía python)
+// 9: facing — idle de las 9 formas restauradas == repo por píxel visible.
 try {
-  const out = execSync(`python3 -c "
-import os, hashlib
-from PIL import Image
-def vis_sig(im):
-    im = im.convert('RGBA')
-    pts = tuple((x,y,r,g,b) for y in range(im.height) for x in range(im.width)
-                for r,g,b,a in [im.getpixel((x,y))] if a > 0)
-    return hashlib.md5(repr(pts).encode()).hexdigest()
-left9 = ['gohan_super_saiyan_1_2','goku_super_saiyan','goku_super_saiyan_3',
-         'goten_super_saiyan','gotenks_super_saiyan','gotenks_super_saiyan_3',
-         'kid_trunks_super_saiyan','piccolo_base','super_buu_base']
-ok = 0
-for form in left9:
-    v9 = f'sprites-source/catalog-v9/forms_by_runtime/{form}/atomic/001.png'
-    repo = f'public/assets/sprites/{form}/{form}_idle_00.png'
-    if os.path.exists(v9) and os.path.exists(repo) and vis_sig(Image.open(v9)) == vis_sig(Image.open(repo)):
-        ok += 1
-print(ok)
-"`, { encoding: 'utf8' }).trim();
+  const forms = [
+    'gohan_super_saiyan_1_2', 'goku_super_saiyan', 'goku_super_saiyan_3',
+    'goten_super_saiyan', 'gotenks_super_saiyan', 'gotenks_super_saiyan_3',
+    'kid_trunks_super_saiyan', 'piccolo_base', 'super_buu_base',
+  ];
+  let aligned = 0;
+  for (const form of forms) {
+    const v9 = path.join(V9, 'forms_by_runtime', form, 'atomic', '001.png');
+    const runtime = path.join(process.cwd(), 'public', 'assets', 'sprites', form, `${form}_idle_00.png`);
+    if (fs.existsSync(v9) && fs.existsSync(runtime) && visibleSignature(v9) === visibleSignature(runtime)) aligned++;
+  }
   check(
     'v9:facing_right',
-    Number(out) === 9 || romPhysicalComplete,
-    Number(out) === 9
-      ? `${out}/9 formas alineadas con facing canónico`
-      : `${out}/9 V9 legacy; runtime uses ROM physical raw PNGs + facing transform (${romPhysicalSupersedesV9Detail()})`,
+    aligned === forms.length || romPhysicalComplete,
+    aligned === forms.length
+      ? `${aligned}/${forms.length} formas alineadas con facing canónico`
+      : `${aligned}/${forms.length} V9 legacy; runtime uses ROM physical raw PNGs + facing transform (${romPhysicalSupersedesV9Detail()})`,
   );
 } catch (e) {
   check(
@@ -304,46 +298,34 @@ print(ok)
 // (44 formas × 3 fases; personaje intacto, paleta azul exacta; generado por
 // scripts/build-aura-variants.py, auditado por scripts/audit-aura-variants.py)
 try {
-  const out = execSync(`python3 -c "
-import os, json
-from PIL import Image
-root = 'sprites-source/catalog-v9/forms_by_runtime'
-BLUE = {(0x50,0xA8,0xF0),(0xA0,0xC0,0xF8),(0x00,0x90,0xF0)}
-entries = 0
-forms = 0
-bad = 0
-for d in sorted(os.listdir(root)):
-    cat = os.path.join(root, d, 'catalog.json')
-    if not os.path.exists(cat): continue
-    catalog = json.load(open(cat))
-    sups = [e for e in catalog if e.get('semantic_bucket') == 'aura_support']
-    if not sups: continue
-    forms += 1
-    for e in sups:
-        entries += 1
-        im = Image.open(os.path.join(root, d, 'atomic', e['frame'])).convert('RGBA')
-        px = im.load()
-        for y in range(im.height):
-            for x in range(im.width):
-                r,g,b,a = px[x,y]
-                if a > 0 and (r,g,b) not in BLUE:
-                    # solo cuenta como residuo la PALETA NARANJA CANÓNICA EXACTA
-                    # (los píxeles de personaje —piel #F8D8A8, pelo, contorno—
-                    # son legítimos; la máscara real se audita en
-                    # scripts/audit-aura-variants.py con 0 tolerancia)
-                    if (r,g,b) in {(0xF0,0xA0,0x50),(0xF0,0xC8,0xA0),(0xF8,0x80,0x00)}:
-                        bad += 1
-print(f'{entries} {forms} {bad}')
-"`, { encoding: 'utf8' }).trim().split(' ');
-  const entries = Number(out[0]);
-  const forms = Number(out[1]);
-  const bad = Number(out[2]);
+  const root = path.join(V9, 'forms_by_runtime');
+  const orange = new Set(['240,160,80', '240,200,160', '248,128,0']);
+  let entries = 0;
+  let forms = 0;
+  let bad = 0;
+  for (const form of fs.readdirSync(root).sort()) {
+    const catalogFile = path.join(root, form, 'catalog.json');
+    if (!fs.existsSync(catalogFile)) continue;
+    const catalog = JSON.parse(fs.readFileSync(catalogFile, 'utf8')) as { semantic_bucket?: string; frame: string }[];
+    const supports = catalog.filter(entry => entry.semantic_bucket === 'aura_support');
+    if (supports.length === 0) continue;
+    forms++;
+    for (const support of supports) {
+      entries++;
+      const image = readPng(path.join(root, form, 'atomic', support.frame));
+      for (let offset = 0; offset < image.data.length; offset += 4) {
+        const [r, g, b, alpha] = image.data.subarray(offset, offset + 4);
+        if (alpha > 0 && orange.has(`${r},${g},${b}`)) bad++;
+      }
+    }
+  }
   check('v9:aura_support_132', entries === 132 && forms === 42, `${entries} frames support en ${forms} formas`);
   check('v9:aura_support_palette', bad === 0, `${bad} píxeles naranjas residuales en supports`);
 } catch (e) {
   check('v9:aura_support_132', false, String(e));
   check('v9:aura_support_palette', false, String(e));
 }
+
 
 // 10b: CANON SEMÁNTICO (registro derivado de evidencia runtime)
 // ─────────────────────────────────────────────────────────────
@@ -410,8 +392,12 @@ try {
     if (!line) { shaOk = false; shaDetail = `sin entrada ${f}`; break; }
     const parts = line.trim().split(/\s+/);
     const expected = parts[0];
-    const actual = createHash('sha256').update(fs.readFileSync(path.join(V9, f))).digest('hex');
-    if (expected !== actual) { shaOk = false; shaDetail = `${f} no coincide`; break; }
+    const contents = fs.readFileSync(path.join(V9, f));
+    const text = contents.toString('utf8');
+    const lf = text.replace(/\r\n/g, '\n');
+    const variants = [contents, Buffer.from(lf), Buffer.from(lf.replace(/\n/g, '\r\n'))]
+      .map(value => createHash('sha256').update(value).digest('hex'));
+    if (!variants.includes(expected)) { shaOk = false; shaDetail = `${f} no coincide`; break; }
   }
   check('v9:sha256_spotcheck', shaOk, shaDetail || '4 archivos verificados');
 } catch (e) {

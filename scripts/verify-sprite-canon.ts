@@ -9,9 +9,9 @@
 // puede etiquetar nada como GBC canonical hasta que pase.
 // ═══════════════════════════════════════════════════════════════════════
 
-import { execSync } from 'child_process';
+import { execFileSync } from 'child_process';
 import { createHash } from 'crypto';
-import { readFileSync, existsSync } from 'fs';
+import { readFileSync, writeFileSync, existsSync } from 'fs';
 import { SPRITE_CANON } from '../src/data/generated/spriteCanon.generated';
 
 let passed = 0;
@@ -34,7 +34,16 @@ function sha(file: string): string {
   return createHash('sha256').update(readFileSync(file)).digest('hex');
 }
 const before = new Map(OUTPUTS.map(f => [f, sha(f)]));
-execSync('python3 scripts/build-sprite-canon.py', { stdio: 'ignore', timeout: 300000 });
+const beforeContents = new Map(OUTPUTS.map(f => [f, readFileSync(f)]));
+try {
+  execFileSync(process.execPath, ['scripts/run-python.mjs', 'scripts/build-sprite-canon.py'], {
+    stdio: 'ignore',
+    timeout: 300000,
+  });
+} catch (error) {
+  for (const [file, contents] of beforeContents) writeFileSync(file, contents);
+  throw error;
+}
 let deterministic = true;
 for (const f of OUTPUTS) {
   const after = sha(f);
@@ -49,6 +58,7 @@ check('F0: build-sprite-canon.py determinista (misma entrada → mismos hashes)'
 // pero el disco debe quedar como estaba si el generador no es estable).
 if (!deterministic) {
   console.log('  ⚠ canon NO determinista — revisar build-sprite-canon.py antes de continuar');
+  for (const [file, contents] of beforeContents) writeFileSync(file, contents);
 }
 
 // ── 2. Invariantes del canon (sobre el TS recién regenerado) ──

@@ -15,7 +15,8 @@ const ROM_PATH = resolve(ROOT, '../dbz-lsw-decomp/13_raw_rom/dbz-lsw-usa.gbc');
 const CATALOG = join(ROOT, 'docs/rom/generated/animation-resources.json');
 const BANK61 = join(ROOT, 'tools/rom-trace/bank61-resources.json');
 
-const rom = readFileSync(ROM_PATH);
+export const HAS_LOCAL_ROM = existsSync(ROM_PATH);
+const rom = HAS_LOCAL_ROM ? readFileSync(ROM_PATH) : null;
 const catalog = JSON.parse(readFileSync(CATALOG, 'utf8'));
 
 export interface DecodedActionObjectTick {
@@ -37,8 +38,8 @@ export interface DecodedActionObjectTick {
   physicalFrame: { identity: string; trimmedPixelHash: string } | null;
 }
 
-const u16 = (b: number, a: number) => rom[b * 0x4000 + a] | (rom[b * 0x4000 + a + 1] << 8);
-const u8 = (b: number, a: number) => rom[b * 0x4000 + a];
+const u16 = (b: number, a: number) => rom![b * 0x4000 + a] | (rom![b * 0x4000 + a + 1] << 8);
+const u8 = (b: number, a: number) => rom![b * 0x4000 + a];
 
 /** Índice inverso (bank, base) → resourceId, construido con el resolver R2.3. */
 let resourceByBase: Map<string, number> | null = null;
@@ -61,6 +62,7 @@ export function resourceIndex(): Map<string, number> {
 }
 
 function resolveResourceBase(bank: number, resourceId: number, seqAddrs: number[]): number | null {
+  if (!rom) return null;
   for (let base = 0x20; base < 0x4000 - 8; base++) {
     const w0 = u16(bank, base);
     const T = (base + w0) & 0xffff;

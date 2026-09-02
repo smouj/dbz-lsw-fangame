@@ -600,7 +600,11 @@ lines.append('  }')
 lines.append('  return [...m.entries()].map(([family, roles]) => ({ family, roles: [...roles].sort() }));')
 lines.append('}')
 lines.append('')
-open(os.path.join(ROOT, 'src', 'data', 'generated', 'spriteCanon.generated.ts'), 'w').write('\n'.join(lines))
+ts_output = os.path.join(ROOT, 'src', 'data', 'generated', 'spriteCanon.generated.ts')
+ts_temp = f'{ts_output}.tmp'
+with open(ts_temp, 'w', encoding='utf-8', newline='\n') as output_file:
+    output_file.write('\n'.join(lines))
+os.replace(ts_temp, ts_output)
 
 # audit (stats sobre el registro dedupeado)
 final_stats = collections.Counter(e['canonStatus'] for e in registry)

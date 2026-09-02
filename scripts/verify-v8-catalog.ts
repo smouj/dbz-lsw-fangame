@@ -96,8 +96,12 @@ try {
     const line = sums.split(/\r?\n/).find(l => l.trim().endsWith(rel));
     if (!line) { shaOk = false; shaDetail = `sin entrada ${rel}`; break; }
     const expected = line.trim().split(/\s+/)[0];
-    const actual = createHash('sha256').update(fs.readFileSync(path.join(V8, rel))).digest('hex');
-    if (expected !== actual) { shaOk = false; shaDetail = `${rel} no coincide`; break; }
+    const contents = fs.readFileSync(path.join(V8, rel));
+    const text = contents.toString('utf8');
+    const lf = text.replace(/\r\n/g, '\n');
+    const variants = [contents, Buffer.from(lf), Buffer.from(lf.replace(/\n/g, '\r\n'))]
+      .map(value => createHash('sha256').update(value).digest('hex'));
+    if (!variants.includes(expected)) { shaOk = false; shaDetail = `${rel} no coincide`; break; }
   }
   check('v8:sha256_spotcheck', shaOk, shaDetail || '4 archivos verificados');
 } catch (e) {
