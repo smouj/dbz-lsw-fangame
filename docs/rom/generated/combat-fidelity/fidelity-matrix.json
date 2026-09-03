@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-03T22:11:11.090Z",
+  "generated": "2026-09-03T23:09:45.680Z",
   "summary": {
     "cards": 125,
     "byPath": {
@@ -7,9 +7,10 @@
       "ROM_BEAM_BASE": 16,
       "ROM_BEAM_FAMILY": 22,
       "ROM_SUPPORT_SPECIAL": 22,
+      "ROM_DEFENSE_RULE": 11,
       "ROM_SPECIAL_HANDLER": 5,
       "ROM_STAGE_COMMAND": 4,
-      "LEGACY": 37
+      "LEGACY": 26
     },
     "byHandler": {
       "0x00": 19,
@@ -27,8 +28,8 @@
       "0x06": 1,
       "0x0f": 1
     },
-    "romBacked": 88,
-    "legacy": 37,
+    "romBacked": 99,
+    "legacy": 26,
     "proceduralFallback": 0
   },
   "execSummary": {
@@ -539,7 +540,7 @@
       "staticCompletion": "COMPLETE",
       "resultFamily": "ROM_DEFENSE",
       "branchCount": 1,
-      "runtimePath": "LEGACY",
+      "runtimePath": "ROM_DEFENSE_RULE",
       "legacyInferred": false,
       "proceduralFallback": false
     },
@@ -700,7 +701,7 @@
       "staticCompletion": "PARTIAL",
       "resultFamily": "ROM_DEFENSE",
       "branchCount": 1,
-      "runtimePath": "LEGACY",
+      "runtimePath": "ROM_DEFENSE_RULE",
       "legacyInferred": false,
       "proceduralFallback": false
     },
@@ -1137,7 +1138,7 @@
       "staticCompletion": "COMPLETE",
       "resultFamily": "ROM_DEFENSE",
       "branchCount": 1,
-      "runtimePath": "LEGACY",
+      "runtimePath": "ROM_DEFENSE_RULE",
       "legacyInferred": false,
       "proceduralFallback": false
     },
@@ -1298,7 +1299,7 @@
       "staticCompletion": "PARTIAL",
       "resultFamily": "ROM_DEFENSE",
       "branchCount": 1,
-      "runtimePath": "LEGACY",
+      "runtimePath": "ROM_DEFENSE_RULE",
       "legacyInferred": false,
       "proceduralFallback": false
     },
@@ -1321,7 +1322,7 @@
       "staticCompletion": "COMPLETE",
       "resultFamily": "ROM_DEFENSE",
       "branchCount": 1,
-      "runtimePath": "LEGACY",
+      "runtimePath": "ROM_DEFENSE_RULE",
       "legacyInferred": false,
       "proceduralFallback": false
     },
@@ -1850,7 +1851,7 @@
       "staticCompletion": "COMPLETE",
       "resultFamily": "ROM_DEFENSE",
       "branchCount": 1,
-      "runtimePath": "LEGACY",
+      "runtimePath": "ROM_DEFENSE_RULE",
       "legacyInferred": false,
       "proceduralFallback": false
     },
@@ -2885,7 +2886,7 @@
       "staticCompletion": "COMPLETE",
       "resultFamily": "ROM_DEFENSE",
       "branchCount": 1,
-      "runtimePath": "LEGACY",
+      "runtimePath": "ROM_DEFENSE_RULE",
       "legacyInferred": false,
       "proceduralFallback": false
     },
@@ -2908,7 +2909,7 @@
       "staticCompletion": "COMPLETE",
       "resultFamily": "ROM_DEFENSE",
       "branchCount": 1,
-      "runtimePath": "LEGACY",
+      "runtimePath": "ROM_DEFENSE_RULE",
       "legacyInferred": false,
       "proceduralFallback": false
     },
@@ -2931,7 +2932,7 @@
       "staticCompletion": "COMPLETE",
       "resultFamily": "ROM_DEFENSE",
       "branchCount": 1,
-      "runtimePath": "LEGACY",
+      "runtimePath": "ROM_DEFENSE_RULE",
       "legacyInferred": false,
       "proceduralFallback": false
     },
@@ -2954,7 +2955,7 @@
       "staticCompletion": "COMPLETE",
       "resultFamily": "ROM_DEFENSE",
       "branchCount": 1,
-      "runtimePath": "LEGACY",
+      "runtimePath": "ROM_DEFENSE_RULE",
       "legacyInferred": false,
       "proceduralFallback": false
     },
@@ -2977,7 +2978,7 @@
       "staticCompletion": "COMPLETE",
       "resultFamily": "ROM_DEFENSE",
       "branchCount": 1,
-      "runtimePath": "LEGACY",
+      "runtimePath": "ROM_DEFENSE_RULE",
       "legacyInferred": false,
       "proceduralFallback": false
     }

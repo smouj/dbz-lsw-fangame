@@ -24,6 +24,7 @@ import { resolveActionProfileById, type ActionProfileSpec } from '../../actionPr
 import { compileBeamFamilyRuntimeCutover } from '../../beamBaseRomCutover';
 import { compileStandardDamageRuntimeCutover } from '../../standardDamageRomCutover';
 import { compileSupportRomRuntimeCutover } from '../../supportRomCutover';
+import { compileDefenseRomRuntimeCutover, defenseCardForChoice } from '../../defenseRomCutover';
 import { STAGE_PREP_BEATS, STAGE_PREP_TICKS } from '../clock/clock';
 import { ROM_CHARA_EXIT_MOTION, ROM_CHARA_ENTRY_MOTION, ROM_RUSH_MOTION, CHARA_SWITCH_PRE_WAIT_TICKS, type RomDiscreteMotion } from '../rom/romDescriptors';
 import { segmentsTotalTicks, segmentsNetDelta, type RomMotionSegment } from '../../romMotionMath';
@@ -98,6 +99,13 @@ export function buildPresentationTimeline(input: PresentationInput): BattleTimel
    *  en el CONTACTO del ataque (ATTACK_HIT) — contrato C2a §7 (guard idle →
    *  block en contacto). Se limpia al retornar a OVERVIEW. */
   let defenseSide: BattleSide | null = null;
+  /** Paso 3 (RESCUE) — elección COMPLETA cuando la defensa comprometida es una
+   *  carta keyed por DEFENSE_ROM_RULES. El timeline ROM de la carta (family
+   *  DEFENSE_RULE: DEFENSE_FX + ROM_WAIT/ROM_PENDING/SUPPORT_MACRO) se emite en
+   *  el CONTACTO del ataque entrante (compileDefenseRomRuntimeCutover escanea el
+   *  mismo EventLog desde el commit); la guardia genérica del ATTACK_HIT no se
+   *  duplica cuando esta carta gobierna la pose del defensor. */
+  let defenseCard: { side: BattleSide; cardId: number } | null = null;
 
   const other = (side: BattleSide): BattleSide => (side === 'player' ? 'enemy' : 'player');
 
@@ -231,6 +239,7 @@ export function buildPresentationTimeline(input: PresentationInput): BattleTimel
           add({ type: 'CAMERA', tick: env.tick + canon.totalFrames, action: 'RESET' }, env, e.action.id, e.action.fidelity);
           // M8.C2a — el exchange cerró: la frontera defensiva expira.
           defenseSide = null;
+          defenseCard = null;
         }
         break;
       }
@@ -300,6 +309,7 @@ export function buildPresentationTimeline(input: PresentationInput): BattleTimel
           add({ type: 'FIGHTER_VISIBILITY', tick: r(40), role: 'TARGET', side: e.target, visible: true }, env, action, fidelity);
           add({ type: 'CAMERA', tick: r(40), action: 'RESET' }, env, action, fidelity);
           defenseSide = null; // M8.C2a — el exchange cerró (frontera defensiva expira)
+          defenseCard = null;
           break;
         }
         // Resto de acciones (melee/beam sin QTE): el impacto se ancla al beat
@@ -321,6 +331,13 @@ export function buildPresentationTimeline(input: PresentationInput): BattleTimel
         // en el contacto (contrato §7). Sin defensa: reacción legacy por
         // perfil/outcome.
         const defending = defenseSide === e.target;
+        // Paso 3 (RESCUE) — defensa con carta keyed por DEFENSE_ROM_RULES: la
+        // pose del defensor la gobierna el cue DEFENSE_FX de su timeline ROM
+        // (emitido en este mismo contacto por DEFENSE_COMMITTED → cutover). No
+        // se duplica la guardia genérica: la pose sale de la regla CA83 (§62-64:
+        // AVOIDED→evade · NULLIFIED/ATTENUATED/ABSORBED→guard ·
+        // COMMAND_CANCELLED→idle), no de un guard/beam_guard inferido.
+        const romDefenseGovernsPose = defending && defenseCard?.side === e.target;
         const isBeamAttack = !!activeAction && ['ray', 'wave', 'ball', 'disk', 'sword', 'special'].includes(activeAction.action.visual);
         const reactionPose = defending
           ? (isBeamAttack ? 'beam_guard' : 'guard')
@@ -330,7 +347,9 @@ export function buildPresentationTimeline(input: PresentationInput): BattleTimel
         const strikePose = e.outcome === 'hit'
           ? (activeAction?.profile?.actor?.beats?.find(b => b.pose !== 'idle' && b.pose !== 'move_front')?.pose ?? 'attack_fwd')
           : 'attack_fwd';
-        add({ type: 'FIGHTER_POSE', tick: contactTick, durationTicks: 10, role: 'TARGET', side: e.target, pose: reactionPose }, env, action, fidelity);
+        if (!romDefenseGovernsPose) {
+          add({ type: 'FIGHTER_POSE', tick: contactTick, durationTicks: 10, role: 'TARGET', side: e.target, pose: reactionPose }, env, action, fidelity);
+        }
         add({ type: 'FIGHTER_POSE', tick: contactTick, durationTicks: 10, role: 'ACTOR', side: e.source, pose: strikePose }, env, action, fidelity);
         add({ type: 'CAMERA', tick: contactTick, action: 'IMPACT' }, env, action, fidelity);
         add({ type: 'AUDIO', tick: contactTick, cue: e.outcome === 'hit' ? 'hit' : e.outcome === 'block' ? 'block' : 'guard' }, env, action, fidelity);
@@ -440,6 +459,30 @@ export function buildPresentationTimeline(input: PresentationInput): BattleTimel
         // reparenta actores: los mismos FighterActor cambian de visibilidad.
         const defender = e.side;
         defenseSide = defender;
+        // Paso 3 (RESCUE) — carta defensiva con regla ROM (§62 DEFENSE_ROM_RULES):
+        // se guarda la elección COMPLETA; su timeline ROM (family DEFENSE_RULE)
+        // se ancla al ATTACK_HIT entrante del mismo exchange (abajo), no aquí.
+        let romBackedDefense = false;
+        if (e.choice.type === 'CARD') {
+          const romCard = defenseCardForChoice(e.choice);
+          if (romCard) {
+            defenseCard = { side: defender, cardId: romCard.id };
+            romBackedDefense = true;
+            // Emisión en el contacto: si el EventLog ya contiene la resolución
+            // del ataque entrante (dispatch posterior del BattleRuntime), el
+            // cutover la encuentra y emite DEFENSE_FX & co. anclados a ese tick.
+            // Si aún no está (primer rebuild tras el commit), devuelve null y el
+            // rebuild que añada el ATTACK_HIT lo emitirá (log acumulativo, M7).
+            const romDefense = compileDefenseRomRuntimeCutover(
+              events,
+              eventIndex,
+              env as BattleEventEnvelope & { event: { type: 'DEFENSE_COMMITTED' } },
+            );
+            if (romDefense) {
+              out.push(...romDefense.timeline.entries);
+            }
+          }
+        }
         const prepPose =
           e.choice.type === 'GUARD' ? 'idle'
           : e.choice.type === 'MOVE' ? (e.choice.axis === 'HORIZONTAL' ? 'move_front' : 'move_back')
@@ -447,8 +490,12 @@ export function buildPresentationTimeline(input: PresentationInput): BattleTimel
         // Prep breve (12 ticks) antes de que el atacante pueda entrar.
         add({ type: 'SCENE', tick: env.tick, durationTicks: 12, mode: 'DEFENDER_ACTION', background: context.actionBackground }, env, 'defense_prep', 'INFERRED');
         add({ type: 'FIGHTER_POSE', tick: env.tick, durationTicks: 10, role: 'TARGET', side: defender, pose: prepPose }, env, 'defense_prep', 'INFERRED');
-        // Carta defensiva/support: FX visible ANTES del contacto (C2a §9).
-        if (e.choice.type === 'CARD') {
+        // Carta defensiva/support SIN regla ROM: FX previo legacy INFERRED antes
+        // del contacto (C2a §9). Las keyed por DEFENSE_ROM_RULES NO emiten el
+        // aura inventada: su programa ROM (DEFENSE_FX en el contacto) la
+        // sustituye con evidencia (§62-64: ZERO DAMAGE no implica la misma
+        // reacción visual — la pose sale de la regla CA83, no de un aura genérica).
+        if (e.choice.type === 'CARD' && !romBackedDefense) {
           add({ type: 'AURA', tick: env.tick, durationTicks: 10, role: 'TARGET', side: defender, variant: 'support', visible: true }, env, 'defense_prep', 'INFERRED');
         }
         add({ type: 'AUDIO', tick: env.tick, cue: e.choice.type === 'MOVE' ? 'step' : 'guard' }, env, 'defense_prep', 'INFERRED');

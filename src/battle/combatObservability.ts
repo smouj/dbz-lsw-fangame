@@ -70,6 +70,11 @@ const VISIBLE_CUES = new Set<PresentationCue['type']>([
   'IMPACT',
   'SCENE_LOAD',
   'ROM_RESULT_BRANCH',
+  // DEFENSE_FX: el adapter la consume con pose visible (case propio que
+  // intercede ANTES del ruteo DISPLAY — guard/evade/idle por resultado CA53).
+  // Espejo exacto: si el case del adapter cambiara, este set diverge y el
+  // verifier lo detecta.
+  'DEFENSE_FX',
 ]);
 
 /** Cues de display Support/Defense → RomDisplayPresenter. */
@@ -80,10 +85,8 @@ const DISPLAY_CUES = new Set<PresentationCue['type']>([
   'DISPLAY_COMPOSE',
   'SUPPORT_MACRO',
   'DISPLAY_CLEAR',
-  'DEFENSE_FX',
   'SUPPORT_FX',
   'ROM_FX_WINDOW',
-  'DEFENSE_FX',
 ]);
 
 /** Cues de trazabilidad ROM (macros/waits/animation/screen/audio…). */

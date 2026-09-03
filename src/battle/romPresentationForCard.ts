@@ -4,8 +4,9 @@
 // Punto de entrada card-level para el puente de producción: dado un CardDef
 // (sin BattleEventLog — la lógica de batalla ya resolvió el resultado antes),
 // compila el timeline ROM de su presentación. Devuelve ruta para las familias
-// con programa ROM maduro (BEAM/STANDARD/PROJECTILE/SPECIAL_HANDLER) y Support
-// especial por su propio compilador SUPPORT_SPECIAL. El resto → null
+// con programa ROM maduro (BEAM/STANDARD/PROJECTILE/SPECIAL_HANDLER), Support
+// especial por su propio compilador SUPPORT_SPECIAL (V7.3) y las 11 Defense
+// Cards por su cutover DEFENSE_RULE (V7.7, §62 DEFENSE_ROM_RULES). El resto → null
 // → el llamador cae a LEGACY (fallback honesto).
 //
 // NO resuelve el outcome (outcome plumbing pendiente — directiva C1.0 §5):
@@ -22,8 +23,9 @@ import { compileRomPresentationProfile } from './romPresentationCompiler';
 import { resolveRomSequenceSelector } from './romSequenceSelectors';
 import { romStagePresentationForCard } from './romStagePresentation';
 import { supportSpecialCutover } from './supportRomCutover';
+import { compileDefenseRomCutover } from './defenseRomCutover';
 
-export type RomPresentationRouteKind = 'BEAM_BASE' | 'STANDARD_DAMAGE' | 'BEAM_VARIANT' | 'PROJECTILE_SCROLL' | 'SPECIAL_HANDLER' | 'SUPPORT_SPECIAL' | 'STAGE_COMMAND';
+export type RomPresentationRouteKind = 'BEAM_BASE' | 'STANDARD_DAMAGE' | 'BEAM_VARIANT' | 'PROJECTILE_SCROLL' | 'SPECIAL_HANDLER' | 'SUPPORT_SPECIAL' | 'DEFENSE_RULE' | 'STAGE_COMMAND';
 
 const BRIDGE_ELIGIBLE_KINDS: ReadonlySet<RomPresentationProfile['kind']> = new Set([
   'BEAM_BASE',
@@ -75,6 +77,25 @@ export function romPresentationTimelineForCard(
       profile,
       timeline: support.timeline,
       pendingCues: support.timeline.entries.filter(en => en.cue.type === 'ROM_PENDING').length,
+    };
+  }
+  // Defense (§62 DEFENSE_ROM_RULES): las 11 Defense Cards enrutan por su cutover
+  // (V7.7) ANTES del bridge genérico — su profile.kind es DEFENSE_RULE (no
+  // elegible por el bridge) y su presentación NO es una acción de ataque: la
+  // ofensiva entrante la consume (CA83 → CA53). El timeline sale del perfil
+  // V7.6 (DEFENSE_FX 30t + ROM_WAIT/ROM_PENDING/SUPPORT_MACRO según slot8).
+  // Criterio honesto (análogo al bridge con unresolvedPhysical): si el perfil
+  // dependiera de frames físicos UNRESOLVED no se inventaría ruta — las cues
+  // de defensa no contienen ROM_PHYSICAL_FRAME, así que compilan siempre; los
+  // ROM_PENDING se cuentan y se reportan (nunca se silencian).
+  const defense = compileDefenseRomCutover(card.id, { side });
+  if (defense) {
+    return {
+      cardId: card.id,
+      kind: 'DEFENSE_RULE',
+      profile,
+      timeline: defense.timeline,
+      pendingCues: defense.pendingCues,
     };
   }
   if (!BRIDGE_ELIGIBLE_KINDS.has(profile.kind)) {

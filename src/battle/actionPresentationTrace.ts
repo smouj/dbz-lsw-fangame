@@ -29,6 +29,7 @@ import { resolvePoseFrameSequence } from './spriteConfig';
 import { romFrameView, tickBoundaries } from './animationStudio';
 import { getCard } from '../data/cards';
 import { romPresentationProfileForCard } from './romPresentationProfiles';
+import { romPresentationTimelineForCard } from './romPresentationForCard';
 import { animationResourceById } from './animationResources';
 
 // ─── Modelo ─────────────────────────────────────────────────────────────
@@ -294,6 +295,17 @@ function collectRomFrames(
   const profile = romPresentationProfileForCard(card);
   const resourceId = profile.dependencies.animationResource;
   if (resourceId == null) return [];
+  // SEGMENTO SOLO por rutas que conducen una animación del ACTOR. Una ruta
+  // ROM sin ANIMATION_START/ROM_PHYSICAL_FRAME (DEFENSE_RULE: la defensa la
+  // consume la ofensiva entrante §62-65 — el recurso de la fila pertenece al
+  // slot8 ofensivo, no a un actor atacando) no produce frames físicos del
+  // actor: exigirlos sería un falso positivo. El stream visible de esas rutas
+  // son los cues (DEFENSE_FX → pose guard/evade/idle) del stream semántico.
+  const route = romPresentationTimelineForCard(card, 'player', preset.playerFormId);
+  const drivesActorAnimation = route?.timeline.entries.some(
+    (en) => en.cue.type === 'ANIMATION_START' || en.cue.type === 'ROM_PHYSICAL_FRAME',
+  ) ?? false;
+  if (!drivesActorAnimation) return [];
   const catalog = animationResourceById(resourceId);
   if (!catalog) return [];
 
