@@ -74,7 +74,7 @@ interface ActionState {
   /** Stage — anchor real usado por la resolución (para HUD de daño). */
   stageResolveAnchor: number | null;
   /** Esta acción ya obtuvo su timeline principal desde el compiler ROM. */
-  romBackedProfileFamily?: 'STANDARD_DAMAGE' | 'BEAM_BASE' | 'BEAM_FAMILY' | 'SUPPORT_SPECIAL';
+  romBackedProfileFamily?: 'STANDARD_DAMAGE' | 'BEAM_BASE' | 'BEAM_FAMILY' | 'SUPPORT_SPECIAL' | 'SUPPORT_FIELD_EFFECT';
 }
 
 /** Duración por defecto de una pose (ticks GBC) hasta el siguiente beat. */
@@ -137,7 +137,12 @@ export function buildPresentationTimeline(input: PresentationInput): BattleTimel
         }
         const supportCutover = compileSupportRomRuntimeCutover(events, eventIndex, env as BattleEventEnvelope & { event: { type: 'ACTION_STARTED' } });
         if (supportCutover) {
-          activeAction.romBackedProfileFamily = 'SUPPORT_SPECIAL';
+          // V8: el cutover Support captura AMBOS tiers (worker $0B/$0D/$0F y
+          // field-effect $00/$02) ANTES del fallback LEGACY de escena — el
+          // timeline ROM de support no necesita SCENE/cámara propia (mismo
+          // contrato que los workers ya en producción: el visual vive en la
+          // capa display del RomDisplayPresenter).
+          activeAction.romBackedProfileFamily = supportCutover.tier === 'field-effect' ? 'SUPPORT_FIELD_EFFECT' : 'SUPPORT_SPECIAL';
           out.push(...supportCutover.timeline.entries);
           break;
         }

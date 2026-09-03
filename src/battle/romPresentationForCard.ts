@@ -22,10 +22,10 @@ import { romPresentationProfileForCard, type RomPresentationProfile } from './ro
 import { compileRomPresentationProfile } from './romPresentationCompiler';
 import { resolveRomSequenceSelector } from './romSequenceSelectors';
 import { romStagePresentationForCard } from './romStagePresentation';
-import { supportSpecialCutover } from './supportRomCutover';
+import { supportSpecialCutover, supportFieldEffectCutover } from './supportRomCutover';
 import { compileDefenseRomCutover } from './defenseRomCutover';
 
-export type RomPresentationRouteKind = 'BEAM_BASE' | 'STANDARD_DAMAGE' | 'BEAM_VARIANT' | 'PROJECTILE_SCROLL' | 'SPECIAL_HANDLER' | 'SUPPORT_SPECIAL' | 'DEFENSE_RULE' | 'STAGE_COMMAND';
+export type RomPresentationRouteKind = 'BEAM_BASE' | 'STANDARD_DAMAGE' | 'BEAM_VARIANT' | 'PROJECTILE_SCROLL' | 'SPECIAL_HANDLER' | 'SUPPORT_SPECIAL' | 'SUPPORT_FIELD_EFFECT' | 'DEFENSE_RULE' | 'STAGE_COMMAND';
 
 const BRIDGE_ELIGIBLE_KINDS: ReadonlySet<RomPresentationProfile['kind']> = new Set([
   'BEAM_BASE',
@@ -65,7 +65,7 @@ export function romPresentationTimelineForCard(
     };
   }
 
-  // Support especial ($0B/$0D/$0F) usa su propio compilador (V7.3). Gana SIEMPRE
+  // Support worker ($0B/$0D/$0F) usa su propio compilador (V7.3). Gana SIEMPRE
   // sobre el bridge genérico: hay cards de soporte que comparten handler con un
   // special de ataque (p.ej. $0B/$0D) y cuyo profile.kind es SPECIAL_HANDLER,
   // pero su presentación correcta es SUPPORT_SPECIAL, no la ruta de ataque.
@@ -76,7 +76,24 @@ export function romPresentationTimelineForCard(
       kind: 'SUPPORT_SPECIAL',
       profile,
       timeline: support.timeline,
-      pendingCues: support.timeline.entries.filter(en => en.cue.type === 'ROM_PENDING').length,
+      pendingCues: support.pendingCues,
+    };
+  }
+  // Support field-effect ($00/$02, V8): compilación plana del profile V6.8
+  // (BG $19 + HOLD120). Mismo criterio honesto que el worker: las cards
+  // type 'support' comparten handler con beams ($02) pero NUNCA enrutan por
+  // el bridge de ataque (guardrail §205 beamBaseRomCutover). Las Defense
+  // Cards con DEFENSE_ROM_RULES se excluyen en la elegibilidad (van por
+  // DEFENSE_RULE, §62). #9 "Special Card" (type special, kind NONE) queda
+  // LEGACY por el mismo criterio (no es type 'support').
+  const fieldEffect = supportFieldEffectCutover(card.id);
+  if (fieldEffect) {
+    return {
+      cardId: card.id,
+      kind: 'SUPPORT_FIELD_EFFECT',
+      profile,
+      timeline: fieldEffect.timeline,
+      pendingCues: fieldEffect.pendingCues,
     };
   }
   // Defense (§62 DEFENSE_ROM_RULES): las 11 Defense Cards enrutan por su cutover

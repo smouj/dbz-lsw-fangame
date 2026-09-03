@@ -22,7 +22,7 @@ import { resolveSpeakerPortrait } from '../data/speakerPortraits';
 import { romPresentationProfileForCard } from '../battle/romPresentationProfiles';
 import { romPresentationTimelineForCard } from '../battle/romPresentationForCard';
 import { romActionExecutionDescriptorForCard } from '../battle/romActionExecutionDescriptors';
-import { supportSpecialCutover } from '../battle/supportRomCutover';
+import { supportSpecialCutover, supportFieldEffectCutover } from '../battle/supportRomCutover';
 import { ProductionRomPresentationAdapter } from '../renderer/pixi/presentation/ProductionRomPresentationAdapter';
 import type { BattlePresentation, BattleScene } from '../renderer/pixi/presentation/BattlePresentation';
 import { ROM_PHYSICAL_CORPUS_SUMMARY } from '../data/generated/romPhysicalCorpus.generated';
@@ -66,6 +66,7 @@ export interface DevSnapshot {
     beamBase: number;
     beamFamily: number;
     supportSpecial: number;
+    supportFieldEffect: number;
     proceduralFallback: number;
   };
   physicalCorpus: {
@@ -351,6 +352,7 @@ function computeRuntimeClassificationMetrics(): DevSnapshot['runtimeClassificati
   let beamBase = 0;
   let beamFamily = 0;
   let supportSpecial = 0;
+  let supportFieldEffect = 0;
   let legacy = 0;
   let proceduralFallback = 0;
   const beamVisuals = new Set(['ray', 'wave', 'ball', 'disk', 'sword', 'special']);
@@ -373,6 +375,10 @@ function computeRuntimeClassificationMetrics(): DevSnapshot['runtimeClassificati
     } else if (supportSpecialCutover(card.id, {}) != null) {
       supportSpecial++;
       romBacked = true;
+    } else if (supportFieldEffectCutover(card.id) != null) {
+      // V8: tier field-effect ($00/$02, 25 cartas) también ROM-backed.
+      supportFieldEffect++;
+      romBacked = true;
     }
 
     if (!romBacked) {
@@ -384,12 +390,13 @@ function computeRuntimeClassificationMetrics(): DevSnapshot['runtimeClassificati
   }
 
   return {
-    romBacked: standardDamage + beamBase + beamFamily + supportSpecial,
+    romBacked: standardDamage + beamBase + beamFamily + supportSpecial + supportFieldEffect,
     legacy,
     standardDamage,
     beamBase,
     beamFamily,
     supportSpecial,
+    supportFieldEffect,
     proceduralFallback,
   };
 }

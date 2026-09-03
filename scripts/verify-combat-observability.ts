@@ -95,9 +95,11 @@ const supportWithOffensiveFxRoute = CARDS.filter(card => {
   return route != null && ['BEAM_BASE', 'BEAM_VARIANT', 'PROJECTILE_SCROLL'].includes(route.kind);
 });
 const supportSpecialRoutes = CARDS.filter(card => card.type === 'support' && romPresentationTimelineForCard(card, 'player')?.kind === 'SUPPORT_SPECIAL');
+const supportFieldEffectRoutes = CARDS.filter(card => card.type === 'support' && romPresentationTimelineForCard(card, 'player')?.kind === 'SUPPORT_FIELD_EFFECT');
 check('0 support cards con profile BEAM_BASE/BEAM_VARIANT', misroutedSupport.length === 0, misroutedSupport.map(c => `#${c.id} ${c.name}`).join(', '));
 check('0 support cards con ruta Beam/FX ofensiva', supportWithOffensiveFxRoute.length === 0, supportWithOffensiveFxRoute.map(c => `#${c.id} ${c.name}`).join(', '));
-check('Support ROM route solo por SUPPORT_SPECIAL', supportSpecialRoutes.length === 22, `${supportSpecialRoutes.length}/22`);
+check('Support worker ($0B/$0D/$0F) ROM route solo por SUPPORT_SPECIAL', supportSpecialRoutes.length === 22, `${supportSpecialRoutes.length}/22`);
+check('Support field-effect ($00/$02) ROM route por SUPPORT_FIELD_EFFECT (V8)', supportFieldEffectRoutes.length === 25, `${supportFieldEffectRoutes.length}/25`);
 
 // ═══ 4. generated/consumed correlacionan (ningún cue se pierde) ═══
 section('Correlación generated/consumed');

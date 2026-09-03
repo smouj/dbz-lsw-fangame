@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-03T23:09:45.680Z",
+  "generated": "2026-09-03T23:30:19.288Z",
   "summary": {
     "cards": 125,
     "byPath": {
@@ -7,10 +7,11 @@
       "ROM_BEAM_BASE": 16,
       "ROM_BEAM_FAMILY": 22,
       "ROM_SUPPORT_SPECIAL": 22,
+      "ROM_SUPPORT_FIELD_EFFECT": 25,
       "ROM_DEFENSE_RULE": 11,
       "ROM_SPECIAL_HANDLER": 5,
       "ROM_STAGE_COMMAND": 4,
-      "LEGACY": 26
+      "LEGACY": 1
     },
     "byHandler": {
       "0x00": 19,
@@ -28,8 +29,8 @@
       "0x06": 1,
       "0x0f": 1
     },
-    "romBacked": 99,
-    "legacy": 26,
+    "romBacked": 124,
+    "legacy": 1,
     "proceduralFallback": 0
   },
   "execSummary": {
@@ -471,7 +472,7 @@
       "staticCompletion": "COMPLETE",
       "resultFamily": "NO_RESULT_BRANCH",
       "branchCount": 0,
-      "runtimePath": "LEGACY",
+      "runtimePath": "ROM_SUPPORT_FIELD_EFFECT",
       "legacyInferred": false,
       "proceduralFallback": false
     },
@@ -632,7 +633,7 @@
       "staticCompletion": "COMPLETE",
       "resultFamily": "NO_RESULT_BRANCH",
       "branchCount": 0,
-      "runtimePath": "LEGACY",
+      "runtimePath": "ROM_SUPPORT_FIELD_EFFECT",
       "legacyInferred": true,
       "proceduralFallback": false
     },
@@ -724,7 +725,7 @@
       "staticCompletion": "COMPLETE",
       "resultFamily": "NO_RESULT_BRANCH",
       "branchCount": 0,
-      "runtimePath": "LEGACY",
+      "runtimePath": "ROM_SUPPORT_FIELD_EFFECT",
       "legacyInferred": false,
       "proceduralFallback": false
     },
@@ -747,7 +748,7 @@
       "staticCompletion": "COMPLETE",
       "resultFamily": "NO_RESULT_BRANCH",
       "branchCount": 0,
-      "runtimePath": "LEGACY",
+      "runtimePath": "ROM_SUPPORT_FIELD_EFFECT",
       "legacyInferred": false,
       "proceduralFallback": false
     },
@@ -1460,7 +1461,7 @@
       "staticCompletion": "COMPLETE",
       "resultFamily": "NO_RESULT_BRANCH",
       "branchCount": 0,
-      "runtimePath": "LEGACY",
+      "runtimePath": "ROM_SUPPORT_FIELD_EFFECT",
       "legacyInferred": false,
       "proceduralFallback": false
     },
@@ -1667,7 +1668,7 @@
       "staticCompletion": "COMPLETE",
       "resultFamily": "NO_RESULT_BRANCH",
       "branchCount": 0,
-      "runtimePath": "LEGACY",
+      "runtimePath": "ROM_SUPPORT_FIELD_EFFECT",
       "legacyInferred": false,
       "proceduralFallback": false
     },
@@ -1920,7 +1921,7 @@
       "staticCompletion": "COMPLETE",
       "resultFamily": "NO_RESULT_BRANCH",
       "branchCount": 0,
-      "runtimePath": "LEGACY",
+      "runtimePath": "ROM_SUPPORT_FIELD_EFFECT",
       "legacyInferred": false,
       "proceduralFallback": false
     },
@@ -2127,7 +2128,7 @@
       "staticCompletion": "COMPLETE",
       "resultFamily": "NO_RESULT_BRANCH",
       "branchCount": 0,
-      "runtimePath": "LEGACY",
+      "runtimePath": "ROM_SUPPORT_FIELD_EFFECT",
       "legacyInferred": false,
       "proceduralFallback": false
     },
@@ -2150,7 +2151,7 @@
       "staticCompletion": "COMPLETE",
       "resultFamily": "NO_RESULT_BRANCH",
       "branchCount": 0,
-      "runtimePath": "LEGACY",
+      "runtimePath": "ROM_SUPPORT_FIELD_EFFECT",
       "legacyInferred": false,
       "proceduralFallback": false
     },
@@ -2219,7 +2220,7 @@
       "staticCompletion": "COMPLETE",
       "resultFamily": "NO_RESULT_BRANCH",
       "branchCount": 0,
-      "runtimePath": "LEGACY",
+      "runtimePath": "ROM_SUPPORT_FIELD_EFFECT",
       "legacyInferred": false,
       "proceduralFallback": false
     },
@@ -2334,7 +2335,7 @@
       "staticCompletion": "COMPLETE",
       "resultFamily": "NO_RESULT_BRANCH",
       "branchCount": 0,
-      "runtimePath": "LEGACY",
+      "runtimePath": "ROM_SUPPORT_FIELD_EFFECT",
       "legacyInferred": false,
       "proceduralFallback": false
     },
@@ -2380,7 +2381,7 @@
       "staticCompletion": "COMPLETE",
       "resultFamily": "NO_RESULT_BRANCH",
       "branchCount": 0,
-      "runtimePath": "LEGACY",
+      "runtimePath": "ROM_SUPPORT_FIELD_EFFECT",
       "legacyInferred": false,
       "proceduralFallback": false
     },
@@ -2403,7 +2404,7 @@
       "staticCompletion": "COMPLETE",
       "resultFamily": "NO_RESULT_BRANCH",
       "branchCount": 0,
-      "runtimePath": "LEGACY",
+      "runtimePath": "ROM_SUPPORT_FIELD_EFFECT",
       "legacyInferred": false,
       "proceduralFallback": false
     },
@@ -2495,7 +2496,7 @@
       "staticCompletion": "COMPLETE",
       "resultFamily": "NO_RESULT_BRANCH",
       "branchCount": 0,
-      "runtimePath": "LEGACY",
+      "runtimePath": "ROM_SUPPORT_FIELD_EFFECT",
       "legacyInferred": false,
       "proceduralFallback": false
     },
@@ -2518,7 +2519,7 @@
       "staticCompletion": "COMPLETE",
       "resultFamily": "NO_RESULT_BRANCH",
       "branchCount": 0,
-      "runtimePath": "LEGACY",
+      "runtimePath": "ROM_SUPPORT_FIELD_EFFECT",
       "legacyInferred": false,
       "proceduralFallback": false
     },
@@ -2541,7 +2542,7 @@
       "staticCompletion": "COMPLETE",
       "resultFamily": "NO_RESULT_BRANCH",
       "branchCount": 0,
-      "runtimePath": "LEGACY",
+      "runtimePath": "ROM_SUPPORT_FIELD_EFFECT",
       "legacyInferred": false,
       "proceduralFallback": false
     },
@@ -2564,7 +2565,7 @@
       "staticCompletion": "COMPLETE",
       "resultFamily": "NO_RESULT_BRANCH",
       "branchCount": 0,
-      "runtimePath": "LEGACY",
+      "runtimePath": "ROM_SUPPORT_FIELD_EFFECT",
       "legacyInferred": false,
       "proceduralFallback": false
     },
@@ -2587,7 +2588,7 @@
       "staticCompletion": "COMPLETE",
       "resultFamily": "NO_RESULT_BRANCH",
       "branchCount": 0,
-      "runtimePath": "LEGACY",
+      "runtimePath": "ROM_SUPPORT_FIELD_EFFECT",
       "legacyInferred": false,
       "proceduralFallback": false
     },
@@ -2610,7 +2611,7 @@
       "staticCompletion": "COMPLETE",
       "resultFamily": "NO_RESULT_BRANCH",
       "branchCount": 0,
-      "runtimePath": "LEGACY",
+      "runtimePath": "ROM_SUPPORT_FIELD_EFFECT",
       "legacyInferred": false,
       "proceduralFallback": false
     },
@@ -2656,7 +2657,7 @@
       "staticCompletion": "COMPLETE",
       "resultFamily": "NO_RESULT_BRANCH",
       "branchCount": 0,
-      "runtimePath": "LEGACY",
+      "runtimePath": "ROM_SUPPORT_FIELD_EFFECT",
       "legacyInferred": false,
       "proceduralFallback": false
     },
@@ -2725,7 +2726,7 @@
       "staticCompletion": "COMPLETE",
       "resultFamily": "NO_RESULT_BRANCH",
       "branchCount": 0,
-      "runtimePath": "LEGACY",
+      "runtimePath": "ROM_SUPPORT_FIELD_EFFECT",
       "legacyInferred": false,
       "proceduralFallback": false
     },
@@ -2794,7 +2795,7 @@
       "staticCompletion": "COMPLETE",
       "resultFamily": "NO_RESULT_BRANCH",
       "branchCount": 0,
-      "runtimePath": "LEGACY",
+      "runtimePath": "ROM_SUPPORT_FIELD_EFFECT",
       "legacyInferred": false,
       "proceduralFallback": false
     },
@@ -2817,7 +2818,7 @@
       "staticCompletion": "COMPLETE",
       "resultFamily": "NO_RESULT_BRANCH",
       "branchCount": 0,
-      "runtimePath": "LEGACY",
+      "runtimePath": "ROM_SUPPORT_FIELD_EFFECT",
       "legacyInferred": false,
       "proceduralFallback": false
     },
@@ -2840,7 +2841,7 @@
       "staticCompletion": "COMPLETE",
       "resultFamily": "NO_RESULT_BRANCH",
       "branchCount": 0,
-      "runtimePath": "LEGACY",
+      "runtimePath": "ROM_SUPPORT_FIELD_EFFECT",
       "legacyInferred": false,
       "proceduralFallback": false
     },
@@ -2863,7 +2864,7 @@
       "staticCompletion": "COMPLETE",
       "resultFamily": "NO_RESULT_BRANCH",
       "branchCount": 0,
-      "runtimePath": "LEGACY",
+      "runtimePath": "ROM_SUPPORT_FIELD_EFFECT",
       "legacyInferred": false,
       "proceduralFallback": false
     },

@@ -46,6 +46,7 @@ type RuntimePath =
   | 'ROM_BEAM_BASE'
   | 'ROM_BEAM_FAMILY'
   | 'ROM_SUPPORT_SPECIAL'
+  | 'ROM_SUPPORT_FIELD_EFFECT'
   | 'ROM_DEFENSE_RULE'
   | 'ROM_SPECIAL_HANDLER'
   | 'ROM_STAGE_COMMAND'
@@ -55,6 +56,12 @@ type RuntimePath =
  * Runtime path is measured from the production router itself. This avoids a
  * stale second classifier: if romPresentationTimelineForCard routes a family,
  * the fidelity matrix must report that same family.
+ *
+ * Familia SUPPORT_OR_FIELD_EFFECT (V8): el router distingue DOS tiers —
+ *   SUPPORT_SPECIAL       = worker $0B/$0D/$0F (22 cartas, V7.5)
+ *   SUPPORT_FIELD_EFFECT  = field-effect $00/$02 (25 cartas, BG $19 + HOLD120)
+ * El verifier reporta el tier del router (contrato de la matriz), no el kind
+ * del profile (que agrupa ambos en SUPPORT_OR_FIELD_EFFECT).
  */
 function runtimePathFor(card: CardDef): RuntimePath {
   const route = romPresentationTimelineForCard(card, 'player', null);
@@ -64,6 +71,7 @@ function runtimePathFor(card: CardDef): RuntimePath {
     case 'BEAM_VARIANT':
     case 'PROJECTILE_SCROLL': return 'ROM_BEAM_FAMILY';
     case 'SUPPORT_SPECIAL': return 'ROM_SUPPORT_SPECIAL';
+    case 'SUPPORT_FIELD_EFFECT': return 'ROM_SUPPORT_FIELD_EFFECT';
     case 'DEFENSE_RULE': return 'ROM_DEFENSE_RULE';
     case 'SPECIAL_HANDLER': return 'ROM_SPECIAL_HANDLER';
     case 'STAGE_COMMAND': return 'ROM_STAGE_COMMAND';
@@ -144,6 +152,7 @@ const byPath: Record<RuntimePath, number> = {
   ROM_BEAM_BASE: 0,
   ROM_BEAM_FAMILY: 0,
   ROM_SUPPORT_SPECIAL: 0,
+  ROM_SUPPORT_FIELD_EFFECT: 0,
   ROM_DEFENSE_RULE: 0,
   ROM_SPECIAL_HANDLER: 0,
   ROM_STAGE_COMMAND: 0,
@@ -161,6 +170,7 @@ const romBacked = byPath.ROM_STANDARD_DAMAGE
   + byPath.ROM_BEAM_BASE
   + byPath.ROM_BEAM_FAMILY
   + byPath.ROM_SUPPORT_SPECIAL
+  + byPath.ROM_SUPPORT_FIELD_EFFECT
   + byPath.ROM_DEFENSE_RULE
   + byPath.ROM_SPECIAL_HANDLER
   + byPath.ROM_STAGE_COMMAND;
@@ -186,6 +196,7 @@ console.log(`ROM_STANDARD_DAMAGE=${byPath.ROM_STANDARD_DAMAGE}`);
 console.log(`ROM_BEAM_BASE=${byPath.ROM_BEAM_BASE}`);
 console.log(`ROM_BEAM_FAMILY=${byPath.ROM_BEAM_FAMILY}`);
 console.log(`ROM_SUPPORT_SPECIAL=${byPath.ROM_SUPPORT_SPECIAL}`);
+console.log(`ROM_SUPPORT_FIELD_EFFECT=${byPath.ROM_SUPPORT_FIELD_EFFECT}`);
 console.log(`ROM_DEFENSE_RULE=${byPath.ROM_DEFENSE_RULE}`);
 console.log(`ROM_SPECIAL_HANDLER=${byPath.ROM_SPECIAL_HANDLER}`);
 console.log(`ROM_STAGE_COMMAND=${byPath.ROM_STAGE_COMMAND}`);
