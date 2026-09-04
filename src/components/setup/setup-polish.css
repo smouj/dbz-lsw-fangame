@@ -321,12 +321,13 @@
   color:#d4939a; border-color:#70434b; font-size:10px;
 }
 .shell-surface .setup-command-row .setup-form-selector {
-  display:flex; align-items:center; flex:0 1 270px; min-width:220px; height:52px;
+  display:flex; align-items:center; flex:0 1 300px; min-width:250px; height:52px;
   gap:6px; overflow:hidden;
 }
 .shell-surface .setup-command-row .setup-form-label { flex:0 0 auto; font-size:9px; }
+.shell-surface .setup-command-row .setup-form-chips { flex:1 1 auto; min-width:0; }
 .shell-surface .setup-command-row .setup-form-chip {
-  flex:1 1 0; min-width:0; min-height:30px; padding:4px 6px; font-size:9px;
+  flex:1 1 0; min-width:0; min-height:30px; padding:4px; font-size:9px;
   overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
 }
 .shell-surface .setup-command-row .setup-team-slots {

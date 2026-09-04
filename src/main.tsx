@@ -580,28 +580,83 @@ function GlobalTooltip() {
 
   useEffect(() => {
     let cur: HTMLElement | null = null;
+    let revealTimer: number | null = null;
+    let pointerArmed = true;
+    let pointerOrigin = { x: 0, y: 0 };
+    const clearReveal = () => {
+      if (revealTimer !== null) window.clearTimeout(revealTimer);
+      revealTimer = null;
+    };
+    const hide = () => {
+      clearReveal();
+      cur = null;
+      setTip(null);
+    };
+    const reveal = (target: HTMLElement, delay: number) => {
+      clearReveal();
+      cur = target;
+      const text = target.getAttribute('data-tip') || '';
+      if (!text) { hide(); return; }
+      const show = () => {
+        if (cur !== target || !target.isConnected) return;
+        const rect = target.getBoundingClientRect();
+        const dir: 'top' | 'bottom' = rect.top > 150 ? 'top' : 'bottom';
+        setTip({ text, x: rect.left + rect.width / 2, y: dir === 'top' ? rect.top : rect.bottom, dir });
+      };
+      if (delay === 0) show();
+      else revealTimer = window.setTimeout(show, delay);
+    };
     const onOver = (e: MouseEvent) => {
       const t = (e.target as HTMLElement).closest?.('[data-tip]') as HTMLElement | null;
-      if (!t) { setTip(null); cur = null; return; }
+      if (!t) { hide(); return; }
+      if (!pointerArmed) return;
       if (cur === t) return;
-      cur = t;
-      const text = t.getAttribute('data-tip') || '';
-      if (!text) { setTip(null); return; }
-      const r = t.getBoundingClientRect();
-      const dir: 'top' | 'bottom' = r.top > 150 ? 'top' : 'bottom';
-      setTip({ text, x: r.left + r.width / 2, y: dir === 'top' ? r.top : r.bottom, dir });
+      // Avoid an accidental popup when a newly opened page renders under the
+      // stationary pointer. Keyboard focus remains immediate.
+      reveal(t, 320);
+    };
+    const onPointerDown = (e: PointerEvent) => {
+      pointerArmed = false;
+      pointerOrigin = { x: e.clientX, y: e.clientY };
+      hide();
+    };
+    const onPointerMove = (e: PointerEvent) => {
+      if (pointerArmed || Math.hypot(e.clientX - pointerOrigin.x, e.clientY - pointerOrigin.y) < 4) return;
+      pointerArmed = true;
+      const t = (e.target as HTMLElement).closest?.('[data-tip]') as HTMLElement | null;
+      if (t) reveal(t, 320);
     };
     const onOut = (e: MouseEvent) => {
       const t = (e.target as HTMLElement).closest?.('[data-tip]') as HTMLElement | null;
-      if (!t) { setTip(null); cur = null; return; }
+      if (!t) { hide(); return; }
       const related = (e as MouseEvent).relatedTarget as HTMLElement | null;
       if (!related || !related.closest?.('[data-tip]') || related.closest('[data-tip]') !== t) {
-        setTip(null); cur = null;
+        hide();
       }
+    };
+    const onFocusIn = (e: FocusEvent) => {
+      const t = (e.target as HTMLElement).closest?.('[data-tip]') as HTMLElement | null;
+      if (t) reveal(t, 0);
+    };
+    const onFocusOut = (e: FocusEvent) => {
+      const next = e.relatedTarget as HTMLElement | null;
+      if (!next?.closest?.('[data-tip]')) hide();
     };
     document.addEventListener('mouseover', onOver);
     document.addEventListener('mouseout', onOut);
-    return () => { document.removeEventListener('mouseover', onOver); document.removeEventListener('mouseout', onOut); };
+    document.addEventListener('pointerdown', onPointerDown, true);
+    document.addEventListener('pointermove', onPointerMove);
+    document.addEventListener('focusin', onFocusIn);
+    document.addEventListener('focusout', onFocusOut);
+    return () => {
+      clearReveal();
+      document.removeEventListener('mouseover', onOver);
+      document.removeEventListener('mouseout', onOut);
+      document.removeEventListener('pointerdown', onPointerDown, true);
+      document.removeEventListener('pointermove', onPointerMove);
+      document.removeEventListener('focusin', onFocusIn);
+      document.removeEventListener('focusout', onFocusOut);
+    };
   }, []);
 
   if (!tip) return null;

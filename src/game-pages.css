@@ -346,3 +346,11 @@
 .shell-surface .setting-controls { font-size:14px; color:#c7d0de; }
 .shell-surface .language-grid .lang-chip { border-color:#4a566b; }
 .shell-surface .setting-row input[type='range'] { max-width:500px; }
+
+/* Measured final-fit corrections: preserve the established geometry while
+   keeping display glyphs and compact form labels inside their own boxes. */
+.shell-surface .deck-current-title {
+  min-height:28px;
+  line-height:1.35;
+  overflow:visible;
+}
