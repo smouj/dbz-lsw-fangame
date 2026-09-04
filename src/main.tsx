@@ -83,6 +83,7 @@ import { isDebugCinematics, bindDebugControls, renderDebugOverlay, type Cinemati
 import { isDebugState, bindQteDebugControls, renderStateOverlay, type StateDebugSnapshot } from './battle/debugState';
 import { getControlBoundary } from './battle/engine/state';
 import { applyDamage } from './battle/engine/commands/reducers/damageReducer';
+import { isDefensiveCard, isOffensiveCard } from './battle/engine/commands/rules/cardRules';
 import { romStageDamage } from './battle/engine/combat/resolution';
 import { isPixiField } from './renderer/pixi/flag';
 // M8 — BattleRuntime: frontera única del combate (Engine → EventLog → M7
@@ -510,11 +511,11 @@ function CardVisual({ card, selected, onClick, small, disabled }: {
 }
 
 function canPlayInAttack(card: CardDef): boolean {
-  return card.type === 'command' || card.type === 'damage' || card.type === 'beam' || card.type === 'support' || card.type === 'special';
+  return isOffensiveCard(card);
 }
 
 function canPlayInDefense(card: CardDef): boolean {
-  return card.type === 'defense' || card.type === 'support' || card.type === 'special';
+  return isDefensiveCard(card) || card.type === 'special';
 }
 
 // Compatibilidad de carta por personaje — CANON en ./battle/cardPoses.ts

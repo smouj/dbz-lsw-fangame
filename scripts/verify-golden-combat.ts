@@ -531,25 +531,31 @@ function runChara(): BattleRuntime {
 }
 
 // ═══════════════════════════════════════════════════════════════════════
-// 12) SUPPORT — BLOCKED: gap de legalidad del engine (evidencia abajo).
-//     La ruta ROM SUPPORT_FIELD_EFFECT existe (trace estático ROM_CLEAN con
-//     capa display) pero ningún dispatch legal llega a ACTION_STARTED de una
-//     support: canExecute PLAY_CARD → WRONG_PHASE (isOffensiveCard excluye
-//     type 'support') mientras la UI legacy la permite (canPlayInAttack,
-//     main.tsx:512) y la resuelve por shadow fuera del Engine.
+// 12) SUPPORT — ruta nativa: legalidad, coste, descarte y efecto pertenecen
+//     al Engine; ACTION_STARTED alimenta el cutover SUPPORT_FIELD_EFFECT.
 // ═══════════════════════════════════════════════════════════════════════
-function runSupportBlocker(): BattleRuntime {
+function runSupport(): BattleRuntime {
   const rt = new BattleRuntime({ state: createInitialBattleState(baseCfg({ playerFormId: 'piccolo_base' })), context: ctxFor('piccolo_base') });
   withHand(rt, 16); // Resurrection — compatible piccolo
+  rt.state = { ...rt.state, player: { ...rt.state.player, hp: Math.floor(rt.state.player.maxHp / 2) } };
+  const hpBefore = rt.state.player.hp;
+  const ccBefore = rt.state.player.cc;
   const r = rt.dispatch({ type: 'PLAY_CARD', handIndex: 0 } as BattleCommand, { side: 'player', characterId: 'piccolo' });
-  check('support: evidencia del gap — PLAY_CARD(support #16) RECHAZADO por canExecute',
-    r.ok === false, `ok=${String(r.ok)}`);
-  check('support: razón WRONG_PHASE (isOffensiveCard excluye type support)',
-    (r as { reason?: string }).reason === 'WRONG_PHASE', `reason=${String((r as { reason?: string }).reason)}`);
-  // La ruta ROM existe a nivel estático (para el informe honesto).
-  const route = romPresentationTimelineForCard(getCard(16) as CardDef, 'player', 'piccolo_base');
-  check('support: ruta estática SUPPORT_FIELD_EFFECT existe (trace ROM, capa display)',
-    route?.kind === 'SUPPORT_FIELD_EFFECT', `route=${route?.kind ?? 'null'}`);
+  check('support: PLAY_CARD #16 aceptado por canExecute', r.ok, `reason=${String((r as { reason?: string }).reason)}`);
+  check('support: coste CC y descarte resueltos por el Engine',
+    rt.state.player.cc === ccBefore - (getCard(16)?.cc ?? 0)
+    && rt.state.deck.hand.length === 0 && rt.state.deck.discardPile.some((c) => c.id === 16));
+  check('support: Resurrection cura al actor dentro del Engine', rt.state.player.hp > hpBefore,
+    `hp=${rt.state.player.hp}/${hpBefore}`);
+  check('support: ACTION_STARTED + ACTION_RESOLVED presentes',
+    hasEvent(rt, 'ACTION_STARTED') && hasEvent(rt, 'ACTION_RESOLVED'));
+  check('support: timeline runtime usa SUPPORT_FIELD_EFFECT',
+    romFamilyEntries(rt, 'rom-support-16') > 0);
+  const unhandled = unhandledCues(rt);
+  check('support: 0 cues UNHANDLED', unhandled.length === 0, unhandled.map((u) => u.type).join(', '));
+  const logLen = rt.log.entries.length;
+  rt.advance(10000);
+  check('support: 10.000 ticks → 0 eventos (STOP)', rt.log.entries.length === logLen);
   return rt;
 }
 
@@ -600,14 +606,10 @@ function runDefenseCard(): BattleRuntime {
 }
 
 // ═══════════════════════════════════════════════════════════════════════
-// 14) LIMIT — BLOCKED: gap de resolución del engine (evidencia abajo).
-//     LIMIT (command-strip) es legal con power window + limits, pero
-//     PLAY_LIMIT_CARD en ataque abre 'stageInput' SIN QTE y SIN resolución
-//     (reduceAcceptedCommand) — no emite ACTION_RESOLVED/ATTACK_HIT/daño.
-//     Producción resuelve el ataque LIMIT por shadow legacy (playLimit →
-//     computeActionOutcome en main.tsx), fuera del dispatch del Engine.
+// 14) LIMIT — ruta nativa: coste, resultado, RNG, daño y timeline salen del
+//     mismo dispatch; la carta equipada permanece reutilizable.
 // ═══════════════════════════════════════════════════════════════════════
-function runLimitBlocker(): BattleRuntime {
+function runLimit(): BattleRuntime {
   const rt = new BattleRuntime({ state: createInitialBattleState(baseCfg()), context: ctxDefault() });
   rt.state = {
     ...rt.state, phase: 'command' as never,
@@ -618,13 +620,23 @@ function runLimitBlocker(): BattleRuntime {
   check('limit: LIMIT aceptado (power window + limits) → phase limitSelect',
     r1.ok && rt.state.phase === 'limitSelect', `phase=${rt.state.phase}`);
   const hpBefore = rt.state.enemy.hp;
+  const ccBefore = rt.state.player.cc;
   const r2 = rt.dispatch({ type: 'PLAY_LIMIT_CARD', cardId: 13 } as BattleCommand, { side: 'player', characterId: 'goku', limitCardsCount: 1 } as never);
-  check('limit: evidencia del gap — PLAY_LIMIT_CARD aceptado pero SIN resolución',
-    r2.ok && !hasEvent(rt, 'ACTION_RESOLVED') && !hasEvent(rt, 'ATTACK_HIT') && !hasEvent(rt, 'DAMAGE_APPLIED'),
+  check('limit: PLAY_LIMIT_CARD aceptado y resuelto por el Engine',
+    r2.ok && hasEvent(rt, 'ACTION_RESOLVED') && hasEvent(rt, 'ATTACK_HIT'),
     `events=${rt.log.entries.map((e) => e.event.type).join(',')}`);
-  check('limit: fase stageInput sin QTE (stageQte WAITING) y HP intacto',
-    rt.state.phase === 'stageInput' && rt.state.stageQte.state === 'WAITING' && rt.state.enemy.hp === hpBefore,
+  check('limit: daño aplicado, QTE cerrado y coste CC cobrado',
+    rt.state.enemy.hp < hpBefore && rt.state.stageQte.state === 'WAITING'
+    && rt.state.player.cc === ccBefore - (getCard(13)?.cc ?? 0),
     `phase=${rt.state.phase} qte=${rt.state.stageQte.state} hp=${rt.state.enemy.hp}/${hpBefore}`);
+  check('limit: carta equipada sigue disponible y no entra al descarte',
+    rt.state.limits.includes(13) && !rt.state.deck.discardPile.some((c) => c.id === 13));
+  check('limit: timeline runtime lleva familia ROM', romFamilyEntries(rt, 'rom-card-13') > 0);
+  const unhandled = unhandledCues(rt);
+  check('limit: 0 cues UNHANDLED', unhandled.length === 0, unhandled.map((u) => u.type).join(', '));
+  const logLen = rt.log.entries.length;
+  rt.advance(10000);
+  check('limit: 10.000 ticks → 0 eventos (STOP)', rt.log.entries.length === logLen);
   return rt;
 }
 
@@ -709,23 +721,22 @@ console.log('\n═══ 11) CHARA ═══');
 assertDeterministic('chara', runChara);
 finishAction('chara', 'CHARA', 'PASS', 'swap @T+63 + motion ROM_EXACT §176-178');
 
-// ── 12) Support (BLOCKED) ──
+// ── 12) Support ──
 console.log('\n═══ 12) SUPPORT ═══');
-assertDeterministic('support_blocked', runSupportBlocker);
-const supportRoute = romPresentationTimelineForCard(getCard(16) as CardDef, 'player', 'piccolo_base');
-finishAction('support', 'Support (#16 Resurrection)', 'BLOCKED',
-  `canExecute PLAY_CARD → WRONG_PHASE (isOffensiveCard excluye support; la UI canPlayInAttack main.tsx:512 la permite por shadow legacy). Ruta estática ${supportRoute?.kind ?? 'null'} existe (capa display ROM_CLEAN) pero ningún dispatch legal llega a ACTION_STARTED → el cutover SUPPORT_* runtime es inalcanzable por dispatch. Evidencia: reject WRONG_PHASE + reducer PLAY_CARD no ejecutable.`);
+assertDeterministic('support', runSupport);
+finishAction('support', 'Support (#16 Resurrection)', 'PASS',
+  'BattleRuntime nativo: legalidad + CC + descarte + heal + EventLog + SUPPORT_FIELD_EFFECT');
 
 // ── 13) Defense Card ──
 console.log('\n═══ 13) DEFENSE CARD (Taiyoken #19) ═══');
 assertDeterministic('defense_card', runDefenseCard);
 finishAction('defense_card', 'Defense Card (Taiyoken)', 'PASS', 'DEFENSE_RULE en contacto + CA53 AVOIDED §62-67 (la mitigación CA53 de daño sigue sin aplicarse en la resolución M5 — fuera del alcance del gate)');
 
-// ── 14) LIMIT (BLOCKED) ──
+// ── 14) LIMIT ──
 console.log('\n═══ 14) LIMIT ═══');
-assertDeterministic('limit_blocked', runLimitBlocker);
-finishAction('limit', 'LIMIT', 'BLOCKED',
-  'PLAY_LIMIT_CARD en ataque abre stageInput sin QTE y sin resolución (reduceAcceptedCommand): 0 ACTION_RESOLVED/ATTACK_HIT/daño. Producción lo resuelve por shadow legacy playLimit→computeActionOutcome (main.tsx), fuera del Engine. Evidencia: HP intacto + fase stageInput + qte WAITING.');
+assertDeterministic('limit', runLimit);
+finishAction('limit', 'LIMIT', 'PASS',
+  'BattleRuntime nativo: carta equipada reutilizable + CC + RNG + daño + EventLog + timeline ROM');
 
 // ── 15) KO ──
 console.log('\n═══ 15) KO ═══');
@@ -747,10 +758,16 @@ console.log('\nBloqueados documentados (gaps del engine, no regresiones):');
 for (const v of verdicts.filter((v) => v.verdict === 'BLOCKED')) {
   console.log(`  ⛔ ${v.label}: ${v.note}`);
 }
+if (blockedCount > 0) {
+  fail += blockedCount;
+  for (const v of verdicts.filter((v) => v.verdict === 'BLOCKED')) {
+    failures.push(`${v.label}: BLOCKED`);
+  }
+}
 console.log(`\n═══ RESULTADO: ${pass} ✓ · ${fail} ✗ ═══`);
 if (fail > 0) {
   console.log('\nFallos:');
   for (const f of failures) console.log(`  ✗ ${f}`);
   process.exit(1);
 }
-console.log('PASS — Golden Combat Set: las acciones verificables son reales en ejecución (ROM family runtime + cues consumidos + determinismo); bloqueados listados explícitamente.');
+console.log('PASS — Golden Combat Set: 0 BLOCKED; rutas verificables reales (Engine → EventLog → timeline ROM → consumer).');

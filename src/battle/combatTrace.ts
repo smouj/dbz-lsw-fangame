@@ -62,7 +62,7 @@ export const GOLDEN_ACTIONS: GoldenActionPreset[] = [
   { id: 'move_v', label: 'Move Vertical', playerFormId: 'goku_base', enemyFormId: 'piccolo_base', cardId: null, command: { type: 'MOVE', axis: 'VERTICAL' }, enemyHp: 1000, seed: 20260818, expectedFamily: 'NONE', expectedControlBoundary: 'PLAYER_ATTACK_CHOICE', description: 'Move V: sin ruta ROM → LEGACY (POSITION_CHANGED)' },
   { id: 'stage3', label: '3 Stage', playerFormId: 'goku_base', enemyFormId: 'piccolo_base', cardId: 1, command: null, enemyHp: 1000, seed: 20260818, expectedFamily: 'NONE', expectedControlBoundary: 'PLAYER_ATTACK_CHOICE', description: 'Stage Attack (command): determinista, sin ruta ROM' },
   { id: 'defense_card', label: 'Defense Card', playerFormId: 'goku_base', enemyFormId: 'piccolo_base', cardId: 19, command: null, enemyHp: 1000, seed: 20260818, expectedFamily: 'DEFENSE_RULE', expectedControlBoundary: 'PLAYER_ATTACK_CHOICE', description: 'Defense $Taiyoken: DEFENSE_RULE → LEGACY (guard)' },
-  { id: 'support', label: 'Support', playerFormId: 'goku_base', enemyFormId: 'piccolo_base', cardId: 16, command: null, enemyHp: 1000, seed: 20260818, expectedFamily: 'SUPPORT_OR_FIELD_EFFECT', expectedControlBoundary: 'PLAYER_ATTACK_CHOICE', description: 'Support heal (#16 Resurrection): ruta ROM SUPPORT_FIELD_EFFECT (capa display)' },
+  { id: 'support', label: 'Support', playerFormId: 'piccolo_base', enemyFormId: 'goku_base', cardId: 16, command: { type: 'PLAY_CARD', handIndex: 0 }, enemyHp: 1000, seed: 20260818, expectedFamily: 'SUPPORT_OR_FIELD_EFFECT', expectedControlBoundary: 'PLAYER_ATTACK_CHOICE', description: 'Support heal (#16 Resurrection): dispatch nativo → SUPPORT_FIELD_EFFECT' },
   { id: 'defense_limit', label: 'Defense LIMIT', playerFormId: 'goku_base', enemyFormId: 'piccolo_base', cardId: null, command: { type: 'DEFENSE_LIMIT' }, enemyHp: 1000, seed: 20260818, expectedFamily: 'NONE', expectedControlBoundary: 'PLAYER_ATTACK_CHOICE', description: 'Defense LIMIT: frontera defensiva' },
   { id: 'ko', label: 'KO', playerFormId: 'goku_base', enemyFormId: 'piccolo_base', cardId: 12, command: null, enemyHp: 1, seed: 20260818, expectedFamily: 'BEAM_BASE', expectedControlBoundary: 'NONE', description: 'Kamehameha con rival a 1 HP → FIGHTER_DEFEATED → NONE' },
   // ── Frente Golden piloto (P0.4): beams por forma piloto ──
@@ -165,12 +165,23 @@ function cardOf(id: number | null): CardDef | null {
 export function runGoldenAction(id: GoldenActionId): RuntimeActionTrace {
   const preset = GOLDEN_ACTIONS.find(p => p.id === id) ?? GOLDEN_ACTIONS[0];
   const cfg = baseConfig(preset);
-  const state = { ...createInitialBattleState(cfg), phase: 'command' as const };
+  const initial = createInitialBattleState(cfg);
+  const supportCard = preset.id === 'support' ? cardOf(preset.cardId) : null;
+  const state = preset.id === 'support' && supportCard
+    ? {
+        ...initial,
+        phase: 'cardSelect' as const,
+        player: { ...initial.player, hp: Math.floor(initial.player.maxHp / 2) },
+        deck: { drawPile: [], hand: [supportCard], discardPile: [] },
+      }
+    : { ...initial, phase: 'command' as const };
   const runtime = new BattleRuntime({ state, keepHistory: true });
 
   const card = cardOf(preset.cardId);
   let result;
-  if (card && preset.command == null) {
+  if (preset.id === 'support') {
+    result = runtime.dispatch({ type: 'PLAY_CARD', handIndex: 0 }, { side: 'player', characterId: 'piccolo' });
+  } else if (card && preset.command == null) {
     result = runtime.resolveCard('player', card);
   } else {
     result = runtime.dispatch(preset.command ?? { type: 'GUARD' });

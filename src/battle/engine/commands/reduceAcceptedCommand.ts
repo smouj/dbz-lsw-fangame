@@ -152,11 +152,36 @@ export function reduceAcceptedCommand(state: BattleState, command: BattleCommand
           ...r.events,
         ];
       } else {
-        next = { ...r.state, phase: 'stageInput' };
-        events = [
-          ...r.events,
-          ...(card ? [{ type: 'ACTION_STARTED' as const, side: 'player' as const, action: actionDescriptorForCard(card) }] : []),
-        ];
+        if (card?.type === 'command') {
+          // Una LIMITED Stage usa exactamente el mismo QTE autoritativo que
+          // su equivalente JOINT; la carta equipada se conserva y solo paga CC.
+          const qte = qteForCard(r.state, card);
+          next = { ...r.state, phase: 'stageInput', selectedCard: null, stageQte: qte };
+          events = [
+            ...r.events,
+            { type: 'ACTION_STARTED', side: 'player', action: actionDescriptorForCard(card) },
+            { type: 'STAGE_PREP_STARTED', side: 'player', level: stageLevelOfCardName(card.name), seq: qte.seq, prepTicks: STAGE_PREP_TICKS },
+          ];
+        } else if (card) {
+          // LIMITED no command: resolución completa dentro del Engine. No se
+          // descarta porque el loadout LIMITED es equipado y reutilizable.
+          const resolution = resolveCardAction(r.state, 'player', card);
+          next = {
+            ...resolution.state,
+            rngState: resolution.rngState,
+            selectedCard: null,
+            stageQte: { ...r.state.stageQte, state: 'WAITING' as const },
+          };
+          events = [
+            ...r.events,
+            { type: 'ACTION_STARTED', side: 'player', action: actionDescriptorForCard(card) },
+            ...resolution.events,
+            { type: 'ACTION_RESOLVED', side: 'player', action: actionDescriptorForCard(card) },
+          ];
+        } else {
+          next = r.state;
+          events = r.events;
+        }
       }
       break;
     }

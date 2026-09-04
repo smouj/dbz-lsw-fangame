@@ -1,7 +1,7 @@
 // ═══════════════════════════════════════════════════════════════════════
 // M2 — rules/cardRules: legalidad de cartas (mano, compatibilidad, fase).
 // ═══════════════════════════════════════════════════════════════════════
-// Fuente de verdad: canPlayInAttack + cardUsableBy + costes (main.tsx).
+// Fuente de verdad: estas funciones. React y la IA solo las consultan.
 // ═══════════════════════════════════════════════════════════════════════
 
 import type { CardDef, CardType } from '../../../../data/cards';
@@ -22,9 +22,11 @@ export function isCardCompatible(card: CardDef, characterId: string): boolean {
   return card.compatible.includes(characterId);
 }
 
-/** ¿La carta es ofensiva (jugable en ATTACK PHASE)? — canPlayInAttack. */
+/** ¿La carta es jugable en ATTACK PHASE? El GBC permite Support aquí;
+ *  `support` describe la familia de efecto, no una fase exclusiva. */
 export function isOffensiveCard(card: CardDef): boolean {
-  return card.type === 'damage' || card.type === 'beam' || card.type === 'command' || card.type === 'special';
+  return card.type === 'damage' || card.type === 'beam' || card.type === 'command'
+    || card.type === 'support' || card.type === 'special';
 }
 
 /** ¿La carta es defensiva/soporte (jugable en DEFENSE PHASE)? */

@@ -139,7 +139,7 @@ function enemyAttackState(cfg: InitialBattleConfig): BattleState {
 
   // D4. sin ofensivas → BASIC/Stage domina (jerarquía del usuario: Stage > Gather).
   //      Gather es ÚLTIMO recurso (solo si ni siquiera el Stage básico es legal).
-  const st4 = withHand(enemyAttackState(makeConfig()), [getCard(16) as CardDef]); // Resurrection (heal — no ofensiva)
+  const st4 = withHand(enemyAttackState(makeConfig()), [getCard(16) as CardDef]); // Resurrection con HP completo
   const d4 = decideEnemyCommand({ battle: st4, session: createEnemySession(1) });
   check('D4. sin ofensivas legales → BASIC/Stage (no Gather)', d4.diagnostic.intent === 'BASIC', `${d4.diagnostic.intent} — ${d4.diagnostic.reason}`);
 
@@ -147,15 +147,13 @@ function enemyAttackState(cfg: InitialBattleConfig): BattleState {
   const d5 = decideEnemyCommand({ battle: st4, session: { ...createEnemySession(1), consecutiveGather: 2 } });
   check('D5. gather repetido 2× → NO GATHER (anti-loop)', d5.diagnostic.intent !== 'GATHER', `${d5.diagnostic.intent} — ${d5.diagnostic.reason}`);
 
-  // D6. heal en mano + HP bajo: el Engine NO permite support heal ofensiva
-  //     (canPlayCard exige ofensiva; heal es DEFENSIVA) → el controller no
-  //     puede elegir HEAL en ataque → BASIC (paridad con el flujo actual;
-  //     el heal enemigo solo existe en contexto defensivo como DEFENSE_CARD).
+  // D6. heal en mano + HP bajo: Support es legal durante el ataque, como en
+  //     la ROM. El controller debe aprovecharlo sin saltarse canExecute.
   const st6 = withHand(enemyAttackState(makeConfig({ enemyHp: 100 })), [getCard(16) as CardDef]); // Resurrection
   const d6 = decideEnemyCommand({ battle: st6, session: createEnemySession(2) });
-  check('D6. heal en ataque no es legal → NO HEAL (Engine: heal = defensiva)', d6.diagnostic.intent !== 'HEAL', d6.diagnostic.intent);
+  check('D6. HP bajo + heal legal → HEAL', d6.diagnostic.intent === 'HEAL' && d6.command.type === 'PLAY_CARD', d6.diagnostic.intent);
 
-  // D7. heal a HP full → NO HEAL (idem: no legal en ataque)
+  // D7. heal a HP full → NO HEAL (legal pero inútil)
   const st7 = withHand(enemyAttackState(makeConfig()), [getCard(16) as CardDef]);
   const d7 = decideEnemyCommand({ battle: st7, session: createEnemySession(2) });
   check('D7. HP full + heal → NO HEAL', d7.diagnostic.intent !== 'HEAL', d7.diagnostic.intent);
