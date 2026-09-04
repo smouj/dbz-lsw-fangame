@@ -15,7 +15,7 @@ import { applyHudButtonVars } from './data/hudAssets';
 import { FORMS, CHARACTERS, ROM_ORDERED_CHARACTERS, getCharacter, getForm, idleSpriteUrl, statAtLevel, LIMIT_DEFAULTS, loadLimits, saveLimits } from './data/roster';
 import { STORY_ENEMY_DECKS, STORY_AI_BOOSTS, TEAM_BATTLES } from './data/enemy_decks';
 import { facingFlip, needsFlip } from './data/facing';
-import { BattlePosition, POSITION_DATA, resolveRelativeDistance, isBeamVulnerable, isDamageVulnerable, anchorFor, applyMoveAxis, positionLabel, type MoveAxis } from './data/positions';
+import { BattlePosition, POSITION_DATA, resolveRelativeDistance, anchorFor, applyMoveAxis, positionLabel, type MoveAxis } from './data/positions';
 import { UNLOCK_KEY, STARTER_DAMAGE_DECK, STARTER_BEAM_DECK, STARTER_CHARACTERS, cardsForLevel, pickRewards, VS_UNLOCKS, isFormUnlocked, FORM_UNLOCK_LEVELS } from './data/unlocks';
 import { CARDS, CARD_COLORS, CARD_COLORS_ON_LIGHT, CARD_TYPE_NAMES, CardDef, CardType, DECK_SIZE, MAX_COPIES, getCard, CardEffect } from './data/cards';
 import {
@@ -34,10 +34,9 @@ import {
 } from './data/deckLibrary';
 import { tipBlock, tipCard, TipPart } from './data/tooltips';
 import {
-  createBattleDeck, drawOne, playJoint, discardOne, needsDiscard,
+  createBattleDeck, drawOne, discardOne, needsDiscard,
   registerCardResolver, JointDeckState, HAND_MAX_TRANSITORY,
 } from './battle/state';
-import { resolveHitBlockAvoid, attackDamage } from './battle/combat';
 import { CARD_FRAME_BY_TYPE, CARD_FRAME_SELECTED, CARD_FRAME_DISABLED } from './data/cardVisuals';
 import { cardIconUrl, MENU_PORTRAITS, TYPE_ICONS } from './data/icons';
 import { FitArt } from './components/FitArt';
@@ -63,8 +62,6 @@ import { GBC_NATIVE_FPS, type QteState } from './data/actionFidelity';
 import { stageWindowsTicks, GAMEPLAY_CONFIG } from './config/gameplay.config';
 import { stageInputPose, stageInputFieldPose, stageInputLunges } from './battle/stageInputMap';
 import { GbcClockAdapter } from './battle/GbcClockAdapter';
-import { nextStageSequence } from './battle/stageSequences';
-import { nextTransformedForm } from './battle/transforms';
 import { BattleTimeline, type CinematicEvent, type CinematicProfile } from './battle/timeline';
 import {
   BATTLE_INTRO_PRESENTATION_CONFIG,
@@ -82,9 +79,7 @@ import { cardBattlePose, cardUsableBy, OFFENSIVE_SUPPORT_EFFECTS, DEFENSIVE_EFFE
 import { isDebugCinematics, bindDebugControls, renderDebugOverlay, type CinematicDebugInfo, type CinematicDebugController } from './battle/debugCinematics';
 import { isDebugState, bindQteDebugControls, renderStateOverlay, type StateDebugSnapshot } from './battle/debugState';
 import { getControlBoundary } from './battle/engine/state';
-import { applyDamage } from './battle/engine/commands/reducers/damageReducer';
 import { isDefensiveCard, isOffensiveCard } from './battle/engine/commands/rules/cardRules';
-import { romStageDamage } from './battle/engine/combat/resolution';
 import { isPixiField } from './renderer/pixi/flag';
 // M8 — BattleRuntime: frontera única del combate (Engine → EventLog → M7
 // Timeline → Presenter). M8.C1 migra MOVE + GUARD: la UI despacha al
@@ -1002,7 +997,24 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, pla
     // mapea a 'defend' (la ventana ya está comprometida si el jugador
     // eligió; si no, sigue esperando elección — el contrato no cambia).
     const enginePhase: BattleState['phase'] = phase === 'enemyTurn' ? 'defend' : phase as BattleState['phase'];
-    rt.state = { ...rt.state, phase: enginePhase };
+    // Puente de estado durante el corte: toda resolución sale del Engine,
+    // pero los controles aún conservan snapshots React para pintar el HUD.
+    // Se copian aquí antes de validar; después del dispatch React solo proyecta
+    // la snapshot y los eventos resultantes.
+    rt.state = {
+      ...rt.state,
+      phase: enginePhase,
+      player: { ...rt.state.player, ...player, id: activePlayerFormId, powerWindowCounter: rt.state.player.powerWindowCounter },
+      enemy: { ...rt.state.enemy, ...enemy, id: enemy.formId, powerWindowCounter: rt.state.enemy.powerWindowCounter },
+      deck: { drawPile: deckState.drawPile, hand: deckState.hand, discardPile: deckState.discardPile },
+      eDeck: { drawPile: eDeckState.drawPile, hand: eDeckState.hand, discardPile: eDeckState.discardPile },
+      pStages,
+      eStages,
+      pAcc,
+      pEva,
+      pLockOn,
+      playerGuard: playerGuard?.type ?? null,
+    };
     pendingLotStart.current = rt.state.tick;
     const res = rt.dispatch(cmd, opts);
     pendingLotStart.current = -1;
@@ -1912,16 +1924,6 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, pla
   };
 
   // ═══ Stage Attack: secuencia de inputs A/B a tiempo ═══
-  // La ventana GLOBAL de la secuencia depende de la combinación Front/Back de
-  // atacante y rival (manual GBC — 4 ventanas): REAR+REAR=1.2s · REAR+FRONT=1.7s
-  // · FRONT+REAR=2.4s · FRONT+FRONT=2.9s. NO se recalcula entre inputs.
-  const resolveStageWindow = (): number => {
-    const aDepth = POSITION_DATA[player.battlePos].depth;
-    const bDepth = POSITION_DATA[enemy.battlePos].depth;
-    const pair: StageDepthPair = `${aDepth}_${bDepth}`;
-    return STAGE_SEQUENCE_WINDOW[pair];
-  };
-
   // Ref espejo para el handler de teclado (evita re-suscribir el listener).
   const stageQteRef = useRef(stageQte);
   stageQteRef.current = stageQte;
@@ -1952,37 +1954,20 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, pla
     (PREP_PHASES.find(ph => pf < ph.until) ?? PREP_PHASES[PREP_PHASES.length - 1]).pose;
 
   const startStageAttack = (card: CardDef) => {
-    // ── STAGE DEBUG: trace lifecycle ──
-    console.log('[STAGE DEBUG] startStageAttack called', { card: card.name, phase, cc: player.cc });
-    // M8.C2 — el QTE vive en el ENGINE (estado autoritativo). El legacy
-    // genera la secuencia con la MISMA fuente (stageSequences.ts, pool por
-    // nivel + ventana por profundidad) y la SINCRONIZA al engine: los
-    // QTE_INPUT posteriores validan contra runtime.state.stageQte y las
-    // mutaciones (CC/correct/COMPLETED) salen de ahí (shadow parity).
-    // (El deck de la mano sigue legacy en este slice — PLAY_CARD del engine
-    //  requiere mano sincronizada, pendiente del slice de cartas.)
-    const stages: 3 | 4 | 5 | 6 = card.name.includes('6') ? 6
-      : card.name.includes('5') ? 5
-      : card.name.includes('4') ? 4 : 3;
-    const seq = nextStageSequence(stages);
-    const sequenceWindow = resolveStageWindow();
     const rt = rtApi.runtime;
-    // Sincronizar CC del engine con el legacy (el coste se pagó en legacy;
-    // el engine suma la ganancia del QTE sobre este valor).
-    rt.state = {
-      ...rt.state,
-      phase: 'stageInput',
-      player: { ...rt.state.player, cc: player.cc },
-      stageQte: {
-        state: 'PREPARING', seq, idx: 0, correct: 0, repaired: 0, card: null,
-        startedTick: rt.state.tick, inputOpenTick: rt.state.tick + STAGE_PREP_TICKS,
-        deadlineTick: rt.state.tick + STAGE_PREP_TICKS + sequenceWindow, windowTicks: sequenceWindow,
-        counterStartTick: 0, counterDeadlineTick: 0, result: null,
-      },
-    };
+    const qte = rt.state.stageQte;
+    if (qte.state !== 'PREPARING') {
+      addLog(`${card.name}: el Engine no abrió la preparación Stage`);
+      Sfx.cancel();
+      return;
+    }
+    // La secuencia, ventana, coste y carta activa ya proceden del dispatch.
+    // React conserva únicamente el espejo necesario para pintar el QTE.
+    setPlayer(fighterToReact(rt.state.player));
+    setDeckState(rt.state.deck);
     commitQte({
-      state: 'PREPARING', seq, idx: 0, correct: 0, covering: false, card,
-      elapsedFrames: 0, limitFrames: sequenceWindow, counterFrames: 0,
+      state: 'PREPARING', seq: qte.seq, idx: 0, correct: 0, covering: false, card,
+      elapsedFrames: 0, limitFrames: qte.windowTicks, counterFrames: 0,
       prepFrames: 0, result: null,
       cardHpBefore: rt.state.enemy.hp,
       playerHpBefore: rt.state.player.hp,
@@ -2280,13 +2265,8 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, pla
       }, gbcMs(30)); // ~0.5s: ventana A/B ROM 30t (§7)
       return;
     }
-    // COUNTER_HIT: el contraataque del rival conecta sobre el jugador.
-    // El engine (clock) ya aplicó resolveCounterDamage en el timeout del
-    // COUNTER_WINDOW — el shadow proyecta el daño recibido.
-    const pPos = player.battlePos;
-    const pVuln = (isBeamVulnerable(pPos) && card.type === 'beam') || (isDamageVulnerable(pPos) && card.type === 'damage');
-    const pPosMult = (POSITION_DATA[pPos].depth === 'FRONT' && pVuln) ? 0.8 : 0.5;
-    const counterDmg = Math.max(1, Math.floor((enemy.str + enemy.ki) * pPosMult * 0.5));
+    // COUNTER_HIT: el Engine ya resolvió y aplicó el contraataque. React solo
+    // presenta el delta de HP producido por el Runtime; no recalcula daño.
     commitQte({ ...st, state: 'COUNTER_HIT', result: 'COUNTER_HIT' });
     setViewMode('OVERVIEW');
     setTimeout(() => {
@@ -2299,8 +2279,8 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, pla
       setPlayerPose('hurt');
       setFlashPlayer(true);
       hitImpact('player');
-      setDamageNums(prev => [...prev, { value: Math.max(counterDmg, dmg), type: 'damage', ...dmgPos('player'), id: nextUid() }]);
-      addLog(`${enemy.name} ${t('battle.counterHit')} — ${Math.max(counterDmg, dmg)} ${t('battle.dmg')} (conservas ${ccGained} CC)`);
+      setDamageNums(prev => [...prev, { value: dmg, type: 'damage', ...dmgPos('player'), id: nextUid() }]);
+      addLog(`${enemy.name} ${t('battle.counterHit')} — ${dmg} ${t('battle.dmg')} (conservas ${ccGained} CC)`);
       Sfx.hit();
       setTimeout(() => setFlashPlayer(false), gbcMs(9)); // 9 ticks (hit flash, HYPOTHESIS)
       if (rt2.state.player.hp <= 0) {
@@ -2377,317 +2357,153 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, pla
 
     // Stage Attack (command): secuencia de inputs A/B a tiempo
     if (card.type === 'command' && card.effect.startsWith('command_')) {
-      // Pagar coste (las command cards también cuestan CC)
-      setPlayer(prev => ({ ...prev, cc: Math.max(0, prev.cc - card.cc) }));
+      const result = engineDispatch(
+        { type: 'PLAY_CARD', handIndex: idx },
+        { side: 'player', characterId: getForm(activePlayerFormId)!.character },
+      );
+      if (!result.ok) { Sfx.cancel(); setSelectedCard(null); return; }
       startStageAttack(card);
       return;
     }
 
     Sfx.cardPlay();
-    // Fase 3: el OUTCOME se calcula ANTES de la cinemática (un solo roll) y el
-    // COMMIT ocurre en APPLY_DAMAGE (el impacto visual) — el daño/HP/número
-    // salen EXACTAMENTE cuando golpea, no al final con setTimeout extra.
-    planCardRef.current = card;
-    const plan = computeActionOutcome(card);
-    endTurnRef.current = () => {
-      setPlayerPose('idle');
-      setEnemyPose('idle');
-      finishPlayerTurn(idx);
+    const before = { playerHp: player.hp, enemyHp: enemy.hp, transformedForm: playerTransformedForm };
+    const result = engineDispatch(
+      { type: 'PLAY_CARD', handIndex: idx },
+      { side: 'player', characterId: getForm(activePlayerFormId)!.character },
+    );
+    if (!result.ok) { Sfx.cancel(); setSelectedCard(null); return; }
+    presentRuntimeCard(card, result, before);
+  };
+
+  // La resolución ya ocurrió en BattleRuntime. Este adaptador solo refleja
+  // BattleState/BattleEvent en el HUD y dispara feedback audiovisual.
+  type RuntimeCardResult = ReturnType<BattleRuntime['dispatch']>;
+
+  const projectRuntimeCardResult = (
+    before: { playerHp: number; enemyHp: number; transformedForm: string | null },
+    result: RuntimeCardResult,
+    card: CardDef,
+  ): boolean => {
+    if (!result.ok) return false;
+    const next = result.state;
+    setPlayer(fighterToReact(next.player));
+    setEnemy(fighterToReact(next.enemy));
+    setPlayer2(next.player2 ? fighterToReact(next.player2) : null);
+    setEnemy2(next.enemy2 ? fighterToReact(next.enemy2) : null);
+    setDeckState(next.deck);
+    setEDeckState(next.eDeck);
+    setPStages(next.pStages);
+    setEStages(next.eStages);
+    setPAcc(next.pAcc);
+    setPEva(next.pEva);
+    setPLockOn(next.pLockOn);
+    setPlayerGuard(next.playerGuard ? { type: next.playerGuard } : null);
+    setPlayerTransformedForm(next.playerTransformedForm);
+
+    if (next.playerTransformedForm !== before.transformedForm) {
+      Sfx.transform();
+      setBattleTransform(nextUid());
+    }
+
+    let hasDamage = false;
+    for (const event of result.events) {
+      if (event.type === 'DAMAGE_APPLIED') {
+        hasDamage = true;
+        const target = event.target;
+        if (target === 'enemy') {
+          setEnemyPose('hurt');
+          setFlashEnemy(true);
+          hitImpact('enemy');
+          setTimeout(() => setFlashEnemy(false), gbcMs(9));
+        } else {
+          setPlayerPose('hurt');
+          setFlashPlayer(true);
+          hitImpact('player');
+          setTimeout(() => setFlashPlayer(false), gbcMs(9));
+        }
+        setDamageNums(prev => [...prev, {
+          value: event.amount,
+          type: 'damage',
+          ...dmgPos(target),
+          id: nextUid(),
+        }]);
+        addLog((event.source === 'player' ? player.name : enemy.name) + ' → ' + card.name + ' — ' + event.amount + ' ' + t('battle.dmg'));
+      } else if (event.type === 'ATTACK_MISSED') {
+        setDamageNums(prev => [...prev, { value: 0, type: 'miss', ...dmgPos(event.target), id: nextUid() }]);
+        addLog(card.name + ' — ' + t('battle.miss') + '!');
+        Sfx.dodge();
+      } else if (event.type === 'ATTACK_HIT' && event.outcome !== 'hit') {
+        setDamageNums(prev => [...prev, { value: 0, type: 'guard', ...dmgPos(event.target), id: nextUid() }]);
+      }
+    }
+
+    const healed = next.player.hp - before.playerHp;
+    if (healed > 0 && !hasDamage) {
+      setDamageNums(prev => [...prev, { value: healed, type: 'heal', ...dmgPos('player'), id: nextUid() }]);
+      addLog(player.name + ' ' + t('battle.uses') + ' ' + card.name + ' — +' + healed + ' ' + t('battle.hp') + '!');
+    } else if (!hasDamage && !result.events.some(event => event.type === 'ATTACK_MISSED')) {
+      addLog(player.name + ' ' + t('battle.uses') + ' ' + card.name);
+    }
+
+    if (card.type === 'beam') Sfx.beam();
+    else if (hasDamage) Sfx.hit();
+
+    const enemyDefeated = result.events.some(event => event.type === 'FIGHTER_DEFEATED' && event.side === 'enemy');
+    if (enemyDefeated) {
+      const fallen = enemy.name;
+      const promoted = promoteReserveAfterKo('enemy');
+      if (promoted) {
+        setEnemyPose('idle');
+        setFlashEnemy(false);
+        addLog(fallen + ' K.O.! ' + promoted.name + ' entra al combate!');
+      } else {
+        const progress = loadProgress();
+        const gained = 80 + enemy.level * 20;
+        let exp = progress.exp + gained;
+        let level = progress.level;
+        while (exp >= expToNext(level)) { exp -= expToNext(level); level++; }
+        saveProgress({ level, exp });
+        enterResults();
+        if (level > progress.level) addLog('LEVEL UP! ' + level + ' (+HP/STR/KI/SPD)');
+        return true;
+      }
+    }
+    if (result.events.some(event => event.type === 'FIGHTER_DEFEATED' && event.side === 'player')) {
+      enterResults();
+      return true;
+    }
+    return false;
+  };
+
+  const presentRuntimeCard = (
+    card: CardDef,
+    result: RuntimeCardResult,
+    before: { playerHp: number; enemyHp: number; transformedForm: string | null },
+  ) => {
+    let projected = false;
+    let terminal = false;
+    const project = () => {
+      if (projected) return;
+      projected = true;
+      terminal = projectRuntimeCardResult(before, result, card);
     };
     playCardCinematic(card, 'player', () => {
-      if (!plan.committed) commitActionOutcome(plan);   // fallback (support puro)
-      if (plan.ended) return;
+      project();
+      if (terminal || !result.ok) return;
       setPlayerPose('idle');
       setEnemyPose('idle');
-      finishPlayerTurn(idx);
-    }, (e) => {
-      if (e.type === 'APPLY_DAMAGE') commitActionOutcome(plan);
+      setSelectedCard(null);
+      if (needsDiscard(result.state.deck)) {
+        discardNextRef.current = () => afterPlayerAction();
+        setPhase('discard');
+      } else {
+        afterPlayerAction();
+      }
+    }, event => {
+      if (event.type === 'APPLY_DAMAGE') project();
     });
   };
-
-  // Resolución de una carta JOINT o LIMITED (misma mecánica; solo cambia la mano)
-  // ═══ RESOLUCIÓN DE ACCIÓN: cálculo PURO (plan) + commit sincronizado ═══
-  // Fase 3 (auditoría): el daño ya NO se aplica al final de la cinemática
-  // con setTimeout extra. El OUTCOME se calcula ANTES (un solo roll) y se
-  // COMMITEA en el evento APPLY_DAMAGE del timeline (el impacto visual) —
-  // HP/número/flash/hurt/SFX ocurren EXACTAMENTE cuando golpea. El fallback
-  // en onDone cubre perfiles sin APPLY_DAMAGE (support puro).
-  interface ActionPlan {
-    committed: boolean;
-    ended: boolean;                 // win/lose/enemy2Fall ya gestionado por el commit
-    // soporte/efectos
-    heal: number; drain: number; ccGain: number;
-    guardType: 'avoid_beam' | 'avoid_damage' | 'reduce' | 'absorb' | 'cancel' | null;
-    ohko: boolean;
-    pStageDelta: { str: number; ki: number; spd: number; guard: number };
-    resetPStages: boolean;
-    pAcc: number; pEva: number;     // 0 = no tocar
-    pLockOn: boolean; consumeLockOn: boolean;
-    eStageDelta: { str: number; ki: number; spd: number; guard: number };
-    resetEStages: boolean; endGather: boolean;
-    transformFx: boolean; transformForm: string | null;
-    bombDmg: number;                // gamebomb/candy/naughty/knockdown
-    // ataque
-    hitType: 'damage' | 'miss' | 'guard';
-    damage: number;
-    ePosMove: BattlePosition | null;
-    suicideHp1: boolean;
-    // flujo
-    win: boolean; enemy2Fall: boolean;
-    damageNum: { value: number; type: 'damage' | 'heal' | 'miss' | 'guard' } | null;
-    logs: string[];
-    sfx: string[];
-    endDelayMs: number;
-  }
-
-  const zeroStages = () => ({ str: 0, ki: 0, spd: 0, guard: 0 });
-
-  // ── COMPUTE: calcula el resultado completo SIN mutar estado (un solo roll) ──
-  const computeActionOutcome = (card: CardDef): ActionPlan => {
-    const plan: ActionPlan = {
-      committed: false, ended: false,
-      heal: 0, drain: 0, ccGain: 0, guardType: null, ohko: false,
-      pStageDelta: zeroStages(), resetPStages: false,
-      pAcc: 0, pEva: 0, pLockOn: false, consumeLockOn: false,
-      eStageDelta: zeroStages(), resetEStages: false, endGather: false,
-      transformFx: false, transformForm: null, bombDmg: 0,
-      hitType: 'damage', damage: 0, ePosMove: null, suicideHp1: false,
-      win: false, enemy2Fall: false, damageNum: null,
-      logs: [], sfx: [], endDelayMs: 700,
-    };
-    const acc = card.acc / 100;
-    const roll = Math.random();
-
-    const supEffects = ['heal_25pct','heal_strong','heal_light','buff_kaio','buff_ki8','buff_str8','buff_speed8','buff_guard8','buff_str_ki8','debuff_str8','debuff_ki8','debuff_speed8','debuff_speed8_lowacc','debuff_guard8','attack_power_down','powerup_dispel','support_dispel','powerdown_cleanse','avoid_beam','avoid_damage','avoid_damage_taiyoken','reduce_damage','absorb_beam','command_cancel','accuracy_up','evasion_up','knockdown_dmg','knockdown_min','life_drain','cc_recovery','lock_on','sunglasses','beam_shield','damage_shield','ohko_lowacc','android_kill','special_card','gamebomb','candy','naughty_book'];
-    if (card.type === 'support' || card.type === 'defense' || card.type === 'special' || supEffects.includes(card.effect)) {
-      const eff = card.effect;
-      let supportImpact = false;
-      if (eff === 'heal_25pct' || eff === 'heal_strong' || eff === 'heal_light') {
-        const pct = eff === 'heal_strong' ? (1 / 4 + 1 / 3) : eff === 'heal_light' ? 0.3 : 0.25;
-        plan.heal = Math.floor(player.maxHp * pct);
-        plan.damageNum = { value: plan.heal, type: 'heal' };
-        plan.logs.push(`${player.name} ${t('battle.uses')} ${card.name} — +${plan.heal} ${t('battle.hp')}!`);
-        supportImpact = true;
-      } else if (eff === 'medical_machine') {
-        plan.heal = card.atk + Math.floor(player.spd / 2) * 4;
-        plan.damageNum = { value: plan.heal, type: 'heal' };
-        plan.logs.push(`${player.name} ${t('battle.uses')} ${card.name} — +${plan.heal} ${t('battle.hp')}!`);
-        supportImpact = true;
-      } else if (eff === 'life_drain') {
-        plan.drain = Math.floor((card.atk + player.str) * 0.5);
-        supportImpact = plan.drain > 0;
-        plan.damageNum = { value: plan.drain, type: 'damage' };
-        plan.logs.push(`${player.name} ${t('battle.uses')} ${card.name} — ${plan.drain} ${t('battle.dmg')} (+${plan.drain} HP)`);
-        plan.endDelayMs = 500;
-      } else if (eff === 'cc_recovery') {
-        plan.ccGain = card.id === 97 ? 5 : 3;
-        plan.logs.push(`${player.name} ${t('battle.uses')} ${card.name} — +${plan.ccGain} CC!`);
-        supportImpact = true;
-      } else if (eff === 'avoid_beam' || eff === 'avoid_damage' || eff === 'avoid_damage_taiyoken' || eff === 'reduce_damage' || eff === 'absorb_beam' || eff === 'beam_shield' || eff === 'damage_shield' || eff === 'command_cancel') {
-        plan.guardType =
-          eff === 'avoid_damage' || eff === 'avoid_damage_taiyoken' || eff === 'damage_shield' ? 'avoid_damage'
-          : eff === 'absorb_beam' || eff === 'beam_shield' ? 'absorb'
-          : eff === 'reduce_damage' ? 'reduce'
-          : eff === 'command_cancel' ? 'cancel'
-          : 'avoid_beam';
-        const label = plan.guardType === 'avoid_beam' ? 'BEAM GUARD' : plan.guardType === 'avoid_damage' ? 'DAMAGE GUARD' : plan.guardType === 'absorb' ? 'ABSORB' : 'ENDURANCE';
-        plan.logs.push(`${player.name} ${t('battle.uses')} ${card.name} — ${label}!`);
-        supportImpact = true;
-      } else if (eff === 'ohko_lowacc' || eff === 'android_kill') {
-        if (Math.random() < card.acc / 100) {
-          plan.ohko = true; plan.damage = 999; plan.win = true;
-          plan.damageNum = { value: 999, type: 'damage' };
-          plan.logs.push(`${player.name} ${t('battle.uses')} ${card.name} — OHKO!`);
-        } else {
-          plan.logs.push(`${player.name} → ${card.name} — ${t('battle.miss')}!`);
-          supportImpact = true;
-        }
-      } else if (eff.startsWith('buff_') || eff.startsWith('debuff_') || eff === 'accuracy_up' || eff === 'evasion_up' || eff === 'lock_on' || eff === 'powerup_dispel' || eff === 'support_dispel' || eff === 'powerdown_cleanse' || eff === 'knockdown_dmg' || eff === 'knockdown_min' || eff === 'attack_power_down' || eff === 'sunglasses' || eff === 'gamebomb' || eff === 'candy' || eff === 'naughty_book' || eff === 'special_card') {
-        // (los buffs no caducan: persisten hasta el final de la batalla)
-        if (card.id === 27 || card.id === 28) {
-          plan.transformFx = true;
-          plan.logs.push(`${player.name} ${t('battle.powerOn')}!`);
-          const nextForm = nextTransformedForm(activePlayerFormId);
-          if (nextForm && nextForm !== activePlayerFormId) {
-            plan.transformForm = nextForm;
-            plan.logs.push(`${player.name} → ${getForm(nextForm)?.form ?? nextForm}!`);
-          }
-        }
-        if (eff === 'buff_ki8' || eff === 'buff_str_ki8') plan.pStageDelta.ki += 1;
-        if (eff === 'buff_str8' || eff === 'buff_str_ki8') plan.pStageDelta.str += 1;
-        if (eff === 'buff_speed8') plan.pStageDelta.spd += 1;
-        if (eff === 'buff_guard8') plan.pStageDelta.guard += 1;
-        if (eff === 'buff_kaio') { plan.pStageDelta.str += 2; plan.pStageDelta.ki += 2; }
-        // (los debuffs no caducan: persisten hasta que una carta los anule)
-        if (eff === 'debuff_str8') plan.eStageDelta.str -= 1;
-        if (eff === 'debuff_ki8') plan.eStageDelta.ki -= 1;
-        if (eff === 'debuff_speed8' || eff === 'debuff_speed8_lowacc') plan.eStageDelta.spd -= 1;
-        if (eff === 'debuff_guard8') plan.eStageDelta.guard -= 1;
-        if (eff === 'powerup_dispel') { plan.resetEStages = true; plan.logs.push(`${card.name}: mejoras del enemigo eliminadas!`); }
-        if (card.id === 95) { plan.endGather = true; plan.logs.push(`${card.name}: el poder de ${enemy.name} se disipa!`); }
-        if (eff === 'lock_on') plan.pLockOn = true;
-        if (eff === 'accuracy_up') plan.pAcc = 2;
-        if (eff === 'evasion_up') plan.pEva = 2;
-        if (eff === 'gamebomb' || eff === 'candy' || eff === 'naughty_book' || eff === 'knockdown_dmg' || eff === 'knockdown_min') {
-          plan.bombDmg = Math.floor((card.atk || 20) + player.str);
-          supportImpact = plan.bombDmg > 0;
-          plan.damageNum = { value: plan.bombDmg, type: 'damage' };
-          plan.logs.push(`${player.name} ${t('battle.uses')} ${card.name} — ${plan.bombDmg} ${t('battle.dmg')}`);
-        } else {
-          plan.logs.push(`${player.name} ${t('battle.uses')} ${card.name} — ${t('battle.buff')}`);
-        }
-        supportImpact = supportImpact || plan.bombDmg > 0;
-      }
-      plan.endDelayMs = supportImpact ? 500 : 350;
-      return plan;
-    }
-
-    // ── Cartas de ATAQUE (damage/beam/command): la fórmula real del GBC ──
-    const effAcc = pAcc > 0 ? Math.min(100, acc + 30) : acc;
-    if (roll > effAcc && !pLockOn) {
-      plan.hitType = 'miss';
-      plan.logs.push(`${player.name} → ${card.name} — ${t('battle.miss')}!`);
-    } else {
-      if (pLockOn) { plan.consumeLockOn = true; plan.logs.push('LOCK ON!'); }
-      const eResp = Math.random() < 0.55 ? 'defend' : 'move';
-      if (eResp === 'move') {
-        const axis: MoveAxis = Math.random() < 0.5 ? 'HORIZONTAL' : 'VERTICAL';
-        plan.ePosMove = applyMoveAxis(enemy.battlePos, axis);
-      }
-      const power = card.type === 'beam' ? player.ki + pBuffs.ki : player.str + pBuffs.str;
-      // Fórmula compartida (battle/combat.ts — única fuente): daño base + mult
-      plan.damage = attackDamage(card.atk, power, plan.ePosMove ?? enemy.battlePos, card.type);
-      const isPierce = card.effect === 'damage_pierce';
-      const isTeamAtk = card.effect === 'damage_special_team' || card.effect === 'beam_team';
-      const isBodyChange = card.effect === 'beam_varhp';
-      if (isBodyChange) plan.damage = Math.floor(enemy.hp * 0.5);
-      if (isTeamAtk && !player2) {
-        plan.logs.push(`${card.name}: técnica de equipo — daño reducido sin compañero`);
-        plan.damage = Math.floor(plan.damage * 0.6);
-      }
-      if (eResp === 'defend') {
-        if (isPierce) {
-          plan.damage = Math.floor(plan.damage * 0.5);
-          plan.hitType = 'guard';
-          plan.logs.push(`${enemy.name} BLOCK — ${plan.damage} ${t('battle.dmg')} (Tail atraviesa)`);
-        } else {
-          // Sistema HIT/BLOCK/AVOID compartido (battle/combat.ts — única fuente)
-          const spdDef = enemy.spd + eStages.spd * 8;
-          const outcome = resolveHitBlockAvoid(spdDef, card.acc);
-          if (outcome === 'avoid') {
-            plan.damage = 0; plan.hitType = 'guard';
-            plan.logs.push(`${enemy.name} AVOID! (0 ${t('battle.dmg')})`);
-          } else if (outcome === 'block') {
-            plan.damage = Math.floor(plan.damage * 0.25);
-            plan.hitType = 'guard';
-            plan.logs.push(`${enemy.name} BLOCK — ${plan.damage} ${t('battle.dmg')}`);
-          } else {
-            plan.logs.push(`${enemy.name} ${t('battle.defends')} — ${plan.damage} ${t('battle.dmg')}`);
-          }
-        }
-      } else {
-        plan.logs.push(`${player.name} → ${card.name} — ${plan.damage} ${t('battle.dmg')}`);
-      }
-      if (card.effect === 'beam_suicide') {
-        plan.suicideHp1 = true;
-        plan.logs.push(`${player.name} ${t('battle.uses')} ${card.name} — ¡queda al borde!`);
-      }
-    }
-    if (plan.damage > 0) plan.damageNum = { value: plan.damage, type: 'damage' };
-    else if (plan.hitType === 'miss') plan.damageNum = { value: 0, type: 'miss' };
-    if (card.type === 'beam') plan.sfx.push('beam');
-    else if (plan.damage > 0) plan.sfx.push('hit');
-    else if (plan.hitType === 'miss') plan.sfx.push('dodge');
-    return plan;
-  };
-
-  // ── COMMIT: aplica el plan (SOLO en APPLY_DAMAGE o fallback onDone) ──
-  const commitActionOutcome = (plan: ActionPlan) => {
-    if (plan.committed) return;
-    plan.committed = true;
-    // Soporte/efectos
-    if (plan.heal > 0) {
-      setPlayer(prev => ({ ...prev, hp: Math.min(prev.maxHp, prev.hp + plan.heal) }));
-      setDamageNums(prev => [...prev, { value: plan.heal, type: 'heal', ...dmgPos('player'), id: nextUid() }]);
-    }
-    if (plan.drain > 0) {
-      setEnemy(prev => ({ ...prev, hp: Math.max(0, prev.hp - plan.drain) }));
-      setPlayer(prev => ({ ...prev, hp: Math.min(prev.maxHp, prev.hp + plan.drain) }));
-      setEnemyPose('hurt');
-      setDamageNums(prev => [...prev, { value: plan.drain, type: 'damage', ...dmgPos('enemy'), id: nextUid() }]);
-    }
-    if (plan.ccGain > 0) setPlayer(prev => ({ ...prev, cc: Math.min(prev.maxCc, prev.cc + plan.ccGain) }));
-    if (plan.guardType) setPlayerGuard({ type: plan.guardType });
-    if (plan.pLockOn) setPLockOn(true);
-    if (plan.pAcc > 0) setPAcc(plan.pAcc);
-    if (plan.pEva > 0) setPEva(plan.pEva);
-
-    if (plan.pStageDelta.str || plan.pStageDelta.ki || plan.pStageDelta.spd || plan.pStageDelta.guard) {
-      setPStages(s => ({ str: clampStage(s.str + plan.pStageDelta.str), ki: clampStage(s.ki + plan.pStageDelta.ki), spd: clampStage(s.spd + plan.pStageDelta.spd), guard: clampStage(s.guard + plan.pStageDelta.guard) }));
-    }
-    if (plan.resetPStages) setPStages(zeroStages());
-
-    if (plan.eStageDelta.str || plan.eStageDelta.ki || plan.eStageDelta.spd || plan.eStageDelta.guard) {
-      setEStages(s => ({ str: clampStage(s.str + plan.eStageDelta.str), ki: clampStage(s.ki + plan.eStageDelta.ki), spd: clampStage(s.spd + plan.eStageDelta.spd), guard: clampStage(s.guard + plan.eStageDelta.guard) }));
-    }
-    if (plan.resetEStages) setEStages(zeroStages());
-    if (plan.endGather) { aiRef.current.mode = 0; aiRef.current.gathered = false; }
-    if (plan.transformFx) { Sfx.transform(); setBattleTransform(nextUid()); }
-    if (plan.transformForm) setPlayerTransformedForm(plan.transformForm);
-    if (plan.bombDmg > 0) {
-      setEnemy(prev => ({ ...prev, hp: Math.max(0, prev.hp - plan.bombDmg) }));
-      setEnemyPose('hurt');
-      setDamageNums(prev => [...prev, { value: plan.bombDmg, type: 'damage', ...dmgPos('enemy'), id: nextUid() }]);
-    }
-    // Ataque
-    if (plan.ePosMove) setEnemy(prev => ({ ...prev, battlePos: plan.ePosMove! }));
-    if (plan.consumeLockOn) setPLockOn(false);
-    if (plan.suicideHp1) setPlayer(prev => ({ ...prev, hp: 1 }));
-    if (plan.damage > 0) setEnemy(prev => ({ ...prev, hp: Math.max(0, prev.hp - plan.damage) }));
-    if (plan.damage > 0 || plan.hitType !== 'damage') {
-      setFlashEnemy(true);
-      hitImpact('enemy');
-      setTimeout(() => setFlashEnemy(false), gbcMs(9)); // 9 ticks ≈ 151ms (hit flash, HYPOTHESIS)
-    }
-    for (const s of plan.sfx) { if (s === 'beam') Sfx.beam(); else if (s === 'hit') Sfx.hit(); else if (s === 'dodge') Sfx.dodge(); }
-    if (plan.damageNum && plan.damageNum.type !== 'heal') {
-      if (plan.damageNum.value > 0) setEnemyPose('hurt');
-      setDamageNums(prev => [...prev, { value: plan.damageNum!.value, type: plan.damageNum!.type, ...dmgPos('enemy'), id: nextUid() }]);
-    }
-    for (const l of plan.logs) addLog(l);
-
-    // Coste real de la carta (JOINT)
-    // (el coste se descuenta aquí, en el mismo commit del impacto)
-    if (!plan.ohko) setPlayer(prev => ({ ...prev, cc: Math.max(0, prev.cc - cardOf(plan).cc) }));
-
-    // 2v2 / win (misma mecánica que antes, ahora en el punto del impacto)
-    if (plan.ohko || (enemy.hp - plan.damage <= 0)) {
-      if (enemy2 && !plan.ohko) {
-        const fallen = enemy.name;
-        const next = promoteReserveAfterKo('enemy', true);
-        if (!next) { enterResults(); return; }
-        setEnemyPose('idle'); setFlashEnemy(false);
-        addLog(`${fallen} K.O.! ${next.name} entra al combate!`);
-        plan.ended = true;
-        endTurnRef.current();
-      } else {
-        const prog = loadProgress();
-        const gained = 80 + enemy.level * 20;
-        let newExp = prog.exp + gained;
-        let newLevel = prog.level;
-        while (newExp >= expToNext(newLevel)) { newExp -= expToNext(newLevel); newLevel++; }
-        saveProgress({ level: newLevel, exp: newExp });
-        plan.ended = true;
-        enterResults();
-          if (newLevel > prog.level) addLog(`LEVEL UP! ${newLevel} (+HP/STR/KI/SPD)`);
-      }
-    }
-  };
-  const endTurnRef = useRef<() => void>(() => {});
-  // Referencia de la carta en curso para el coste (el commit no recibe la carta)
-  const cardOf = (plan: ActionPlan): CardDef => planCardRef.current;
-  const planCardRef = useRef<CardDef>(null as unknown as CardDef);
-
 
   // ─── BASIC: acciones gratuitas del GBC (no cuestan CC) ───
   // M8.C2a-L — GUARD NO pertenece al menú BASIC de ataque (contrato:
@@ -2707,11 +2523,13 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, pla
       cc: 0,
       rarity: 1,
     };
+    const result = engineDispatch({ type: 'BASIC_STAGE_ATTACK' });
+    if (!result.ok) { Sfx.cancel(); return; }
     startStageAttack(basicCard);
   };
 
   // ─── LIMITED CARDS (L): reutilizables, cuestan CC, no salen de la mano ───
-  const playLimit = (card: CardDef) => {
+  const selectLimitCard = (card: CardDef) => {
     if (!limitsPowered) {
       addLog(t('battle.needGather'));
       Sfx.cancel();
@@ -2728,47 +2546,23 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, pla
       return;
     }
     if (card.type === 'command' && card.effect.startsWith('command_')) {
-      setPlayer(prev => ({ ...prev, cc: Math.max(0, prev.cc - card.cc) }));
+      const result = engineDispatch(
+        { type: 'PLAY_LIMIT_CARD', cardId: card.id },
+        { side: 'player', characterId: getForm(activePlayerFormId)!.character },
+      );
+      if (!result.ok) { Sfx.cancel(); return; }
       startStageAttack(card);
       return;
     }
     Sfx.cardPlay();
     setSelectedCard(null);
-    // Mismo patrón fase 3: commit del outcome en el impacto (APPLY_DAMAGE)
-    planCardRef.current = card;
-    const plan = computeActionOutcome(card);
-    endTurnRef.current = () => {
-      setPlayerPose('idle');
-      setEnemyPose('idle');
-      // M8.C2a — frontera única: sin auto-start enemigo tras la carta.
-      settleAttackHand(afterPlayerAction);
-    };
-    playCardCinematic(card, 'player', () => {
-      if (!plan.committed) commitActionOutcome(plan);
-      if (plan.ended) return;
-      setPlayerPose('idle');
-      setEnemyPose('idle');
-      // M8.C2a — frontera única: el enemigo entra por DEFENSE (input real).
-      settleAttackHand(afterPlayerAction);
-    }, (e) => {
-      if (e.type === 'APPLY_DAMAGE') commitActionOutcome(plan);
-    });
-  };
-
-  const finishPlayerTurn = (idx: number) => {
-    // La Joint usada sale de la mano → discardPile (consumible real).
-    // HAND CHECK evaluado sobre el estado RESULTANTE (no el stale): tras
-    // jugar una Joint de 6, quedan 5 → NO hay descarte (regla GBC).
-    const next = playJoint(deckState, idx);
-    setDeckState(next);
-    setSelectedCard(null);
-    if (needsDiscard(next)) {
-      // M8.C2a — frontera única (el beat de 36t solo da respiro al OVERVIEW).
-      discardNextRef.current = () => afterPlayerAction();
-      setPhase('discard');
-    } else {
-      afterPlayerAction();
-    }
+    const before = { playerHp: player.hp, enemyHp: enemy.hp, transformedForm: playerTransformedForm };
+    const result = engineDispatch(
+      { type: 'PLAY_LIMIT_CARD', cardId: card.id },
+      { side: 'player', characterId: getForm(activePlayerFormId)!.character },
+    );
+    if (!result.ok) { Sfx.cancel(); return; }
+    presentRuntimeCard(card, result, before);
   };
 
   // ═══ ENEMY INTENT (M8.C2a): la IA decide SU ataque — SIN presentarlo ═══
@@ -2959,78 +2753,19 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, pla
     if (player.cc < card.cc) return;
     setPhase('enemyTurn');
     setDefendMenu(null);
-    setPlayer(prev => ({ ...prev, cc: Math.max(0, prev.cc - card.cc) }));
+    const result = engineAct(
+      { type: 'PLAY_LIMIT_CARD', cardId: card.id },
+      { side: 'player', characterId: getForm(activePlayerFormId)!.character, limitCardsCount: limitCards.length },
+    );
+    if (!result.ok) {
+      addLog(`${card.name}: no puede defenderse (${result.reason})`);
+      setPhase('defend');
+      return;
+    }
+    setPlayer(fighterToReact(result.state.player));
     // Cinemática del ataque enemigo tras elegir el Limit defensivo (orden GBC)
     const cardIncoming = incomingCard.current || CARDS[25];
-    playCardCinematic(cardIncoming, 'enemy', () => resolveDefenseCard(card, -1));
-  };
-
-  // Resolver una carta defensiva/support del JOINT contra el ataque enemigo
-  const resolveDefenseCard = (card: CardDef, _handIdx: number) => {
-    setPlayerPose(cardBattlePose(card, 'field'));
-    const cardIncoming = incomingCard.current || CARDS[25];
-    const eff = card.effect;
-    let damage = 0;
-    let heal = 0;
-    let hitType: 'damage' | 'miss' | 'guard' = 'guard';
-    const acc = pEva > 0 ? Math.max(0, cardIncoming.acc - 30) : cardIncoming.acc;
-    const hits = Math.random() <= acc / 100;
-    const power = cardIncoming.type === 'beam' ? enemy.ki + eBuffs.ki : enemy.str + eBuffs.str;
-    const pPos = player.battlePos;
-    const vulnerable = (isBeamVulnerable(pPos) && cardIncoming.type === 'beam') || (isDamageVulnerable(pPos) && cardIncoming.type === 'damage');
-    const posMult = (POSITION_DATA[pPos].depth === 'FRONT' && vulnerable) ? 0.8 : 0.5;
-    damage = Math.floor((cardIncoming.atk + power) * posMult);
-    const handleDamage = (mult: number, label: string) => {
-      if (!hits) {
-        damage = 0; hitType = 'miss';
-        addLog(`${enemy.name} → ${cardIncoming.name} — ${t('battle.miss')}!`);
-      } else {
-        damage = Math.floor(damage * mult);
-        hitType = 'guard';
-        addLog(`${player.name} ${label} — ${damage} ${t('battle.dmg')}`);
-      }
-    };
-    // Guardias reales del GBC (defensa anticipada contra la acción que viene)
-    if (eff === 'beam_shield') {
-      handleDamage(cardIncoming.type === 'beam' ? 0 : 1, 'KIBITO — beam absorbido');
-      if (cardIncoming.type === 'beam') damage = 0;
-    } else if (eff === 'knockdown_dmg') {
-      handleDamage(0.25, 'CHOQUE — bloquea');
-    } else if (eff.startsWith('heal_')) {
-      const pct = eff === 'heal_strong' ? (1/4 + 1/3) : eff === 'heal_light' ? 0.3 : 0.25;
-      const healed = Math.floor(player.maxHp * pct);
-      heal = healed;
-      setPlayer(prev => ({ ...prev, hp: Math.min(prev.maxHp, prev.hp + healed) }));
-      setDamageNums(prev => [...prev, { value: healed, type: 'heal', ...dmgPos('player'), id: nextUid() }]);
-      addLog(`${player.name} usa ${card.name} — +${healed} HP!`);
-      handleDamage(0.5, 'DEFIENDE');
-    } else if (eff.startsWith('buff_') || eff.startsWith('debuff_') || eff.startsWith('powerup_')) {
-      handleDamage(0.5, 'DEFIENDE');
-      addLog(`${player.name} usa ${card.name} (efecto activo)`);
-    } else if (eff === 'lock_on') {
-      handleDamage(0.25, 'BLOQUEA');
-    } else {
-      // Carta defensiva genérica (Endurance/Avoiding/Afterimage...)
-      handleDamage(0.25, 'BLOQUEA');
-    }
-    if (damage > 0) {
-      const substantial = damage >= player.maxHp * 0.15;
-      const gain = substantial ? 2 : 1;
-      setPlayer(prev => ({ ...prev, cc: Math.min(prev.maxCc, prev.cc + gain), hp: Math.max(0, prev.hp - damage) }));
-      addLog(`${player.name} +${gain} CC (${t('battle.hp')} bajo)`);
-      setFlashPlayer(true); hitImpact('player');
-      setPlayerPose('hurt');
-      setDamageNums(prev => [...prev, { value: damage, type: 'damage', ...dmgPos('player'), id: nextUid() }]);
-      if (cardIncoming.type === 'beam') Sfx.beam(); else Sfx.punch();
-      setTimeout(() => setFlashPlayer(false), gbcMs(9)); // 9 ticks (hit flash, HYPOTHESIS)
-    } else {
-      setPlayer(prev => ({ ...prev, hp: Math.max(0, prev.hp - 0) }));
-      if (hitType === 'guard') setDamageNums(prev => [...prev, { value: 0, type: 'guard', ...dmgPos('player'), id: nextUid() }]);
-      else setDamageNums(prev => [...prev, { value: 0, type: 'miss', ...dmgPos('player'), id: nextUid() }]);
-    }
-    setEnemy(prev => ({ ...prev, cc: Math.max(0, prev.cc - cardIncoming.cc) }));
-    const projectedPlayerHp = Math.max(0, Math.min(player.maxHp, player.hp + heal) - damage);
-    _finishDefenseResolution(projectedPlayerHp);
+    playCardCinematic(cardIncoming, 'enemy', () => resolveEnemyAttackViaEngine());
   };
 
   // Cierre común de la resolución defensiva (KO / cambio de fase)
@@ -3673,7 +3408,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, pla
               <div className="hand-cards">
                 {limitCards.map((c, i) => (
                   <button key={i} className={`limit-card ${player.cc < c.cc ? 'locked' : ''}`}
-                    disabled={player.cc < c.cc} onClick={() => playLimit(c)}
+                    disabled={player.cc < c.cc} onClick={() => selectLimitCard(c)}
                     style={{ '--card-frame': `url('${CARD_FRAME_BY_TYPE[c.type] ?? CARD_FRAME_BY_TYPE.special}')` } as React.CSSProperties}
                     data-tip={tipBlock(`${c.name} — ${CARD_TYPE_NAMES[c.type]} ★${c.rarity}`, [
                       ['stats', `CC ${c.cc} · ATK ${c.atk > 0 ? c.atk : '—'} · ACC ${c.acc}%`],

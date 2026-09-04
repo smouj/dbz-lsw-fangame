@@ -34,6 +34,8 @@ import {
 import type { MoveAxis } from '../../../../data/positions';
 import { BattlePosition, POSITION_DATA } from '../../../../data/positions';
 import { moveFighter } from './movementReducer';
+import { DEFENSE_ROM_RULES } from '../../rom/romDescriptors';
+import { nextTransformedForm } from '../../../transforms';
 
 export interface DamageOutcome {
   state: BattleState;
@@ -89,6 +91,63 @@ export interface CardResolutionOutcome {
   rngState: RngState;
 }
 
+export interface RomDefenseDamageOutcome {
+  state: BattleState;
+  damage: number;
+  outcome: 'hit' | 'block' | 'guard';
+  applied: boolean;
+}
+
+/** Restricción de familia confirmada por las ramas CA83/CA53 de la ROM. */
+function defenseAppliesToIncoming(cardId: number, incoming: CardDef): boolean {
+  if (cardId === 45 || cardId === 53 || cardId === 76) return incoming.type === 'beam';
+  if (cardId === 52 || cardId === 122 || cardId === 123) return incoming.type === 'command';
+  if (cardId === 19 || cardId === 124) return incoming.type === 'damage';
+  return cardId === 26 || cardId === 121 || cardId === 125;
+}
+
+/**
+ * Aplica la consecuencia mecánica CA53 de la carta defensiva comprometida.
+ * La elección ya fue validada y consumida por PLAY_DEFENSE_CARD; aquí, en el
+ * contacto de la ofensiva, se decide el daño/curación real una sola vez.
+ *
+ * ROM §59/63-67:
+ *   CA53=1 AVOIDED      → 0 daño
+ *   CA53=2 ATTENUATED   → daño = CC de la carta entrante
+ *   CA53=3 NULLIFIED    → 0 daño
+ *   CA53=4 ABSORBED     → 0 daño y cura = power de la Beam (Card.atk)
+ *   CA53=0 COMMAND_CANCELLED → 0 comandos resueltos (0 daño Stage)
+ */
+export function applyRomDefenseToIncomingDamage(
+  state: BattleState,
+  attackerSide: BattleSide,
+  incoming: CardDef,
+  damage: number,
+): RomDefenseDamageOutcome {
+  if (attackerSide !== 'enemy' || state.defenseChoice?.type !== 'CARD') {
+    return { state, damage: Math.max(0, damage), outcome: 'hit', applied: false };
+  }
+  const defenseCardId = state.defenseChoice.cardId;
+  const rule = DEFENSE_ROM_RULES[defenseCardId];
+  if (!rule || !defenseAppliesToIncoming(defenseCardId, incoming)) {
+    return { state, damage: Math.max(0, damage), outcome: 'hit', applied: false };
+  }
+
+  if (rule.result === 'ATTENUATED') {
+    return { state, damage: Math.max(0, incoming.cc), outcome: 'block', applied: true };
+  }
+  if (rule.result === 'ABSORBED') {
+    const hp = Math.min(state.player.maxHp, state.player.hp + Math.max(0, incoming.atk));
+    return {
+      state: { ...state, player: { ...state.player, hp } },
+      damage: 0,
+      outcome: 'guard',
+      applied: true,
+    };
+  }
+  return { state, damage: 0, outcome: 'guard', applied: true };
+}
+
 /**
  * Resuelve la acción de la carta al completar el Stage QTE.
  * - command (Stage Attack): daño determinista — 0 tiradas.
@@ -126,8 +185,9 @@ export function resolveCardAction(state: BattleState, side: BattleSide, card: Ca
       basicGuard: target === 'player' && state.playerGuard === 'reduce',
       resolvedCommandCount: resolved,
     });
-    const hit: BattleEvent = { type: 'ATTACK_HIT', source: side, target, outcome: 'hit' };
-    const applied = applyDamage(state, target, dmg, { type: 'CARD', cardId: card.id }, side);
+    const defense = applyRomDefenseToIncomingDamage(state, side, card, dmg);
+    const hit: BattleEvent = { type: 'ATTACK_HIT', source: side, target, outcome: defense.outcome };
+    const applied = applyDamage(defense.state, target, defense.damage, { type: 'CARD', cardId: card.id }, side);
     return {
       state: applied.state,
       events: [hit, ...applied.events],
@@ -175,25 +235,58 @@ export function resolveCardAction(state: BattleState, side: BattleSide, card: Ca
 
     // 4) Daño base (fórmula única legacy) + HIT/BLOCK/AVOID si defiende
     const power = powerFor(card.type, attacker.str, attacker.ki, stages.str, stages.ki);
-    let damage = attackDamage(card.atk, power, defender.battlePos, card.type);
+    let damage = card.effect === 'beam_varhp'
+      ? Math.floor(defender.hp * 0.5)
+      : attackDamage(card.atk, power, defender.battlePos, card.type);
+    const isPierce = card.effect === 'damage_pierce';
+    const isTeamAttack = card.effect === 'damage_special_team' || card.effect === 'beam_team';
+    const ally = side === 'player' ? state.player2 : state.enemy2;
+    if (isTeamAttack && !ally) damage = Math.floor(damage * 0.6);
     if (eResp === 'defend') {
-      const spdDef = spdFor(defender.spd, (side === 'player' ? state.eStages : state.pStages).spd);
-      const gRoll = nextRng(rng);
-      rng = gRoll.rngState;
-      const verdict = hitBlockAvoidFromRoll(gRoll.value, spdDef, card.acc);
-      if (verdict === 'avoid') {
-        damage = 0;
-        events[events.length - 1] = { type: 'ATTACK_HIT', source: side, target, outcome: 'guard' };
-      } else if (verdict === 'block') {
-        damage = Math.floor(damage * 0.25);
+      if (isPierce) {
+        damage = Math.floor(damage * 0.5);
         events[events.length - 1] = { type: 'ATTACK_HIT', source: side, target, outcome: 'block' };
+      } else {
+        const spdDef = spdFor(defender.spd, (side === 'player' ? state.eStages : state.pStages).spd);
+        const gRoll = nextRng(rng);
+        rng = gRoll.rngState;
+        const verdict = hitBlockAvoidFromRoll(gRoll.value, spdDef, card.acc);
+        if (verdict === 'avoid') {
+          damage = 0;
+          events[events.length - 1] = { type: 'ATTACK_HIT', source: side, target, outcome: 'guard' };
+        } else if (verdict === 'block') {
+          damage = Math.floor(damage * 0.25);
+          events[events.length - 1] = { type: 'ATTACK_HIT', source: side, target, outcome: 'block' };
+        }
       }
     }
 
+    const defense = applyRomDefenseToIncomingDamage(next, side, card, damage);
+    next = defense.state;
+    damage = defense.damage;
+    if (defense.applied) {
+      const contactIndex = events.findIndex((event) => event.type === 'ATTACK_HIT');
+      if (contactIndex >= 0) events[contactIndex] = { type: 'ATTACK_HIT', source: side, target, outcome: defense.outcome };
+    }
     if (damage > 0) {
       const applied = applyDamage(next, target, damage, { type: 'CARD', cardId: card.id }, side);
       next = applied.state;
       events.push(...applied.events);
+      if (card.effect === 'life_drain') {
+        const dealt = applied.events
+          .filter((event): event is Extract<BattleEvent, { type: 'DAMAGE_APPLIED' }> => event.type === 'DAMAGE_APPLIED')
+          .reduce((total, event) => total + event.amount, 0);
+        const actor = side === 'player' ? next.player : next.enemy;
+        const healed = { ...actor, hp: Math.min(actor.maxHp, actor.hp + dealt) };
+        next = side === 'player' ? { ...next, player: healed } : { ...next, enemy: healed };
+      }
+    }
+    if (card.effect === 'beam_suicide') {
+      const actor = side === 'player' ? next.player : next.enemy;
+      const exhausted = { ...actor, hp: Math.min(actor.hp, 1) };
+      next = side === 'player'
+        ? { ...next, player: exhausted }
+        : { ...next, enemy: exhausted };
     }
     return { state: next, events, rngState: rng };
   }
@@ -205,8 +298,7 @@ export function resolveCardAction(state: BattleState, side: BattleSide, card: Ca
 /**
  * Efectos de soporte DETERMINISTAS (paridad con computeActionOutcome):
  * heal_* · cc_recovery · buff_* / debuff_* (stages) · guard types ·
- * life_drain · bomb/knockdown (daño directo). Transformaciones, OHKO y
- * efectos de equipo quedan para M8 (cutover) — sin tiradas aquí.
+ * life_drain · bomb/knockdown (daño directo) · transformación · limpieza.
  * El heal muta HP pero no emite DAMAGE_APPLIED (no es daño; el evento de
  * heal llega con el soporte completo en M8).
  */
@@ -239,13 +331,6 @@ export function resolveSupportAction(state: BattleState, side: BattleSide, card:
       };
       events.push({ type: 'CC_GAINED', side, amount: after - before, before, after });
     }
-  } else if (eff === 'life_drain') {
-    const drain = Math.floor((card.atk + fighter.str) * 0.5);
-    if (drain > 0) {
-      const applied = applyDamage(next, target, drain, { type: 'CARD', cardId: card.id }, side);
-      next = applied.state;
-      events.push(...applied.events);
-    }
   } else if (eff === 'avoid_beam' || eff === 'avoid_damage' || eff === 'avoid_damage_taiyoken' || eff === 'reduce_damage' || eff === 'absorb_beam' || eff === 'beam_shield' || eff === 'damage_shield' || eff === 'command_cancel') {
     const guardType =
       eff === 'avoid_damage' || eff === 'avoid_damage_taiyoken' || eff === 'damage_shield' ? 'avoid_damage'
@@ -262,7 +347,9 @@ export function resolveSupportAction(state: BattleState, side: BattleSide, card:
       next = applied.state;
       events.push(...applied.events);
     }
-  } else if (eff.startsWith('buff_') || eff.startsWith('debuff_') || eff === 'accuracy_up' || eff === 'evasion_up' || eff === 'lock_on') {
+  } else if (eff.startsWith('buff_') || eff.startsWith('debuff_') || eff === 'accuracy_up' || eff === 'evasion_up' || eff === 'lock_on'
+    || eff === 'powerup_dispel' || eff === 'support_dispel' || eff === 'powerdown_cleanse'
+    || eff === 'attack_power_down' || eff === 'sunglasses' || eff === 'special_card') {
     const pStages = side === 'player' ? next.pStages : next.eStages;
     const eStages = side === 'player' ? next.eStages : next.pStages;
     const s = { ...pStages };
@@ -276,17 +363,52 @@ export function resolveSupportAction(state: BattleState, side: BattleSide, card:
     if (eff === 'debuff_ki8') es.ki -= 1;
     if (eff === 'debuff_speed8' || eff === 'debuff_speed8_lowacc') es.spd -= 1;
     if (eff === 'debuff_guard8') es.guard -= 1;
+    if (eff === 'attack_power_down') { es.str -= 1; es.ki -= 1; }
+    if (eff === 'powerup_dispel') {
+      es.str = Math.min(0, es.str);
+      es.ki = Math.min(0, es.ki);
+      es.spd = Math.min(0, es.spd);
+      es.guard = Math.min(0, es.guard);
+    }
+    if (eff === 'powerdown_cleanse') {
+      s.str = Math.max(0, s.str);
+      s.ki = Math.max(0, s.ki);
+      s.spd = Math.max(0, s.spd);
+      s.guard = Math.max(0, s.guard);
+    }
+    if (eff === 'support_dispel') {
+      next = { ...next, pAcc: 0, pEva: 0, pLockOn: false, playerGuard: null };
+    }
+    if (card.id === 95) {
+      const opponent = side === 'player' ? next.enemy : next.player;
+      const stripped = { ...opponent, powerWindowCounter: 0 };
+      next = side === 'player' ? { ...next, enemy: stripped } : { ...next, player: stripped };
+    }
     if (eff === 'accuracy_up') next = { ...next, pAcc: 2 };
     if (eff === 'evasion_up') next = { ...next, pEva: 2 };
     if (eff === 'lock_on') next = { ...next, pLockOn: true };
     next = {
       ...next,
-      pStages: side === 'player' ? s : es,
-      eStages: side === 'enemy' ? s : es,
+      pStages: side === 'player' ? clampStages(s) : clampStages(es),
+      eStages: side === 'enemy' ? clampStages(s) : clampStages(es),
     };
+    if ((card.id === 27 || card.id === 28) && side === 'player') {
+      const transformed = nextTransformedForm(next.playerTransformedForm ?? next.player.id);
+      if (transformed) next = { ...next, playerTransformedForm: transformed };
+    }
   }
 
   return { state: next, events, rngState: state.rngState };
+}
+
+function clampStages(stages: BattleState['pStages']): BattleState['pStages'] {
+  const clamp = (value: number) => Math.max(-3, Math.min(3, value));
+  return {
+    str: clamp(stages.str),
+    ki: clamp(stages.ki),
+    spd: clamp(stages.spd),
+    guard: clamp(stages.guard),
+  };
 }
 
 /** Daño del contraataque (COUNTER_HIT) — fórmula legacy determinista. */

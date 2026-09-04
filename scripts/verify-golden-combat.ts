@@ -420,8 +420,8 @@ function defendSetup(): BattleRuntime {
 }
 
 /** Resuelve el ataque enemigo tras el commit defensivo (ruta runtime real). */
-function resolveEnemyAttack(rt: BattleRuntime): ReturnType<BattleRuntime['resolveCard']> {
-  return rt.resolveCard('enemy', getCard(7) as CardDef); // Energy Wave (beam)
+function resolveEnemyAttack(rt: BattleRuntime, cardId = 7): ReturnType<BattleRuntime['resolveCard']> {
+  return rt.resolveCard('enemy', getCard(cardId) as CardDef);
 }
 
 function runGuard(): BattleRuntime {
@@ -551,6 +551,29 @@ function runSupport(): BattleRuntime {
     hasEvent(rt, 'ACTION_STARTED') && hasEvent(rt, 'ACTION_RESOLVED'));
   check('support: timeline runtime usa SUPPORT_FIELD_EFFECT',
     romFamilyEntries(rt, 'rom-support-16') > 0);
+
+  const drain = new BattleRuntime({ state: createInitialBattleState(baseCfg({ playerFormId: 'android_19' })), context: ctxFor('android_19') });
+  drain.state = { ...drain.state, player: { ...drain.state.player, hp: drain.state.player.maxHp - 100 } };
+  const drainPlayerHp = drain.state.player.hp;
+  const drainEnemyHp = drain.state.enemy.hp;
+  const drainResult = playCard(drain, 75, 'android_19');
+  check('support: Life Drain aplica daño y curación dentro del Engine',
+    drainResult.ok && drain.state.enemy.hp < drainEnemyHp && drain.state.player.hp > drainPlayerHp);
+
+  const transform = new BattleRuntime({ state: createInitialBattleState(baseCfg({ playerFormId: 'goku_base' })), context: ctxFor('goku_base') });
+  const transformResult = playCard(transform, 27, 'goku');
+  check('support: transformación y Ki tier proceden del Engine',
+    transformResult.ok && transform.state.playerTransformedForm !== null && transform.state.pStages.ki === 1,
+    `form=${transform.state.playerTransformedForm} kiTier=${transform.state.pStages.ki}`);
+
+  const soloTeam = new BattleRuntime({ state: createInitialBattleState(baseCfg({ playerFormId: 'gohan_young' })), context: ctxFor('gohan_young') });
+  const pairedTeam = new BattleRuntime({ state: createInitialBattleState(baseCfg({ playerFormId: 'gohan_young' })), context: ctxFor('gohan_young') });
+  pairedTeam.state = { ...pairedTeam.state, player2: makeReserve() };
+  playCard(soloTeam, 14, 'gohan_kid');
+  playCard(pairedTeam, 14, 'gohan_kid');
+  check('support: técnica de equipo pierde potencia sin reserva real',
+    damageTo(soloTeam, 'enemy') < damageTo(pairedTeam, 'enemy'),
+    `solo=${damageTo(soloTeam, 'enemy')} team=${damageTo(pairedTeam, 'enemy')}`);
   const unhandled = unhandledCues(rt);
   check('support: 0 cues UNHANDLED', unhandled.length === 0, unhandled.map((u) => u.type).join(', '));
   const logLen = rt.log.entries.length;
@@ -575,7 +598,8 @@ function runDefenseCard(): BattleRuntime {
   const before = romFamilyEntries(rt, 'rom-defense-19');
   check('defense_card: sin emisión prematura al comprometer (contacto ausente — M8.C2a)',
     before === 0, `entries=${before}`);
-  const res = resolveEnemyAttack(rt);
+  const hpBefore = rt.state.player.hp;
+  const res = resolveEnemyAttack(rt, 5); // Cont.Punch: Taiyoken intercepta STANDARD_DAMAGE.
   check('defense_card: ataque enemigo contacta (ATTACK_HIT en el log)',
     res.events.some((e) => e.type === 'ATTACK_HIT'));
   // El rebuild con el contacto emite el timeline DEFENSE_RULE anclado ahí.
@@ -593,6 +617,75 @@ function runDefenseCard(): BattleRuntime {
     rule?.ca83 === 0x01 && rule?.resultFamily === 1 && rule?.result === 'AVOIDED');
   check('defense_card: semántica CA53 esperada (§62-67) = AVOID',
     semanticOutcomeForCA53(1, { sourceEvent: 'ATTACK_HIT', defenseCardId: 19 }) === 'AVOID');
+  check('defense_card: Taiyoken aplica CA53=1 al daño real (HP intacto)',
+    rt.state.player.hp === hpBefore, `hp=${rt.state.player.hp}/${hpBefore}`);
+  check('defense_card: Taiyoken no emite DAMAGE_APPLIED',
+    !res.events.some((e) => e.type === 'DAMAGE_APPLIED'));
+
+  // Oráculos mecánicos adicionales: cada familia CA53 modifica el HP dentro
+  // del Runtime; la presentación no participa en estas decisiones.
+  const barrier = defendSetup();
+  withHandDefend(barrier, 45);
+  barrier.dispatch({ type: 'PLAY_DEFENSE_CARD', handIndex: 0 } as BattleCommand, { side: 'player', characterId: 'android_17' });
+  const barrierHp = barrier.state.player.hp;
+  resolveEnemyAttack(barrier, 7);
+  check('defense_card: Barrier CA53=3 anula Beam', barrier.state.player.hp === barrierHp);
+
+  const endurance = defendSetup();
+  withHandDefend(endurance, 121);
+  endurance.dispatch({ type: 'PLAY_DEFENSE_CARD', handIndex: 0 } as BattleCommand, { side: 'player', characterId: 'goku' });
+  const enduranceHp = endurance.state.player.hp;
+  const incoming = getCard(7) as CardDef;
+  resolveEnemyAttack(endurance, incoming.id);
+  check('defense_card: Endurance CA53=2 deja daño igual al CC entrante',
+    enduranceHp - endurance.state.player.hp === incoming.cc,
+    `damage=${enduranceHp - endurance.state.player.hp} cc=${incoming.cc}`);
+
+  const absorb = defendSetup();
+  absorb.state = { ...absorb.state, player: { ...absorb.state.player, hp: absorb.state.player.maxHp - 50 } };
+  withHandDefend(absorb, 76);
+  absorb.dispatch({ type: 'PLAY_DEFENSE_CARD', handIndex: 0 } as BattleCommand, { side: 'player', characterId: 'android_19' });
+  const absorbHp = absorb.state.player.hp;
+  resolveEnemyAttack(absorb, incoming.id);
+  check('defense_card: Energy Absorb CA53=4 cura power de la Beam sin daño',
+    absorb.state.player.hp === Math.min(absorb.state.player.maxHp, absorbHp + incoming.atk),
+    `hp=${absorb.state.player.hp} expected=${Math.min(absorb.state.player.maxHp, absorbHp + incoming.atk)}`);
+
+  const cancel = defendSetup();
+  withHandDefend(cancel, 122);
+  cancel.dispatch({ type: 'PLAY_DEFENSE_CARD', handIndex: 0 } as BattleCommand, { side: 'player', characterId: 'goku' });
+  const cancelHp = cancel.state.player.hp;
+  resolveEnemyAttack(cancel, 1);
+  check('defense_card: CA83 $40 cancela Command/Stage (0 daño)', cancel.state.player.hp === cancelHp);
+
+  const mismatch = defendSetup();
+  withHandDefend(mismatch, 45);
+  mismatch.dispatch({ type: 'PLAY_DEFENSE_CARD', handIndex: 0 } as BattleCommand, { side: 'player', characterId: 'android_17' });
+  const mismatchHp = mismatch.state.player.hp;
+  const mismatchResult = resolveEnemyAttack(mismatch, 5);
+  check('defense_card: Barrier no se aplica a daño físico fuera de su familia', mismatch.state.player.hp < mismatchHp);
+
+  const noDefense = defendSetup();
+  const noDefenseHp = noDefense.state.player.hp;
+  const noDefenseResult = resolveEnemyAttack(noDefense, 5);
+  check('defense_card: sin carta defensiva el daño conserva la ruta ofensiva normal',
+    noDefense.state.player.hp < noDefenseHp
+    && noDefenseResult.events.some((event) => event.type === 'DAMAGE_APPLIED'));
+
+  const lethal = defendSetup();
+  lethal.state = { ...lethal.state, player: { ...lethal.state.player, hp: 1 } };
+  withHandDefend(lethal, 121);
+  lethal.dispatch({ type: 'PLAY_DEFENSE_CARD', handIndex: 0 } as BattleCommand, { side: 'player', characterId: 'goku' });
+  const lethalResult = resolveEnemyAttack(lethal, incoming.id);
+  const lethalDamage = lethalResult.events.find((event) => event.type === 'DAMAGE_APPLIED');
+  check('defense_card: CA53 atenuada puede causar KO y nunca deja HP negativo',
+    lethal.state.player.hp === 0
+    && lethalDamage?.type === 'DAMAGE_APPLIED'
+    && lethalDamage.amount === 1
+    && lethalResult.events.some((event) => event.type === 'FIGHTER_DEFEATED'),
+    `hp=${lethal.state.player.hp} damage=${lethalDamage?.type === 'DAMAGE_APPLIED' ? lethalDamage.amount : 'none'}`);
+  check('defense_card: el evento de daño físico no defensible mantiene resultado hit',
+    mismatchResult.events.some((event) => event.type === 'ATTACK_HIT' && event.outcome === 'hit'));
   const unhandled = unhandledCues(rt);
   check('defense_card: 0 cues UNHANDLED', unhandled.length === 0, unhandled.map((u) => u.type).join(', '));
   const ex = rt.dispatch({ type: 'END_EXCHANGE' } as BattleCommand);
@@ -730,7 +823,7 @@ finishAction('support', 'Support (#16 Resurrection)', 'PASS',
 // ── 13) Defense Card ──
 console.log('\n═══ 13) DEFENSE CARD (Taiyoken #19) ═══');
 assertDeterministic('defense_card', runDefenseCard);
-finishAction('defense_card', 'Defense Card (Taiyoken)', 'PASS', 'DEFENSE_RULE en contacto + CA53 AVOIDED §62-67 (la mitigación CA53 de daño sigue sin aplicarse en la resolución M5 — fuera del alcance del gate)');
+finishAction('defense_card', 'Defense Card (Taiyoken)', 'PASS', 'DEFENSE_RULE en contacto + CA53 §62-67 aplicada por el Engine a daño, curación, EventLog, HP y KO');
 
 // ── 14) LIMIT ──
 console.log('\n═══ 14) LIMIT ═══');
