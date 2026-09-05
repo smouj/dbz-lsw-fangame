@@ -51,9 +51,10 @@ export function PhysicalReconciliationSummary() {
           <strong>{corpus.physicalIdentities.toLocaleString()} physical IDs</strong>
           <small>{corpus.frameInstances.toLocaleString()} occurrences across {corpus.formsIndexed}/48 forms</small>
           <div className="dev-physical-summary-chips">
-            <span className={`dev-tag ${corpusReady ? 'ok' : 'bad'}`}>{corpus.resourcesRendered}/{corpus.resourcesReachable} promoted resources</span>
-            <span className="dev-tag ok">Bank $61: {corpus.stagePhysicalIdentities.toLocaleString()} IDs</span>
-            <span className="dev-tag">$62–$64: {corpus.fighterPhysicalIdentities.toLocaleString()} IDs</span>
+            <span className={`dev-tag ${corpusReady ? 'ok' : 'bad'}`}>Fighter rendered {corpus.resourcesRendered}/{corpus.resourcesReachable}</span>
+            <span className="dev-tag warn">Fighter renderer pending {corpus.resourcesRendererPending}</span>
+            <span className="dev-tag ok">Stage Bank $61 rendered {corpus.stageResourcesRendered} · {corpus.stagePhysicalIdentities.toLocaleString()} IDs</span>
+            <span className="dev-tag">$62–$64 Fighter: {corpus.fighterPhysicalIdentities.toLocaleString()} IDs</span>
           </div>
         </div>
 

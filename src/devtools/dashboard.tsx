@@ -69,7 +69,7 @@ function ratio(value: number, total: number): string {
 
 export function DashboardModule({ onNavigate }: { onNavigate: (m: DevModuleId) => void }) {
   const snap = useMemo(() => getDevProjectSnapshot(), []);
-  const { roster, cards, sprites, cinematics, story, audio, scenarios, production, runtimeClassification, physicalCorpus, fxCorpus, physicalMapping, romTiming } = snap;
+  const { roster, cards, sprites, cinematics, story, audio, scenarios, production, presentationDeployment, runtimeClassification, physicalCorpus, fxCorpus, physicalMapping, romTiming } = snap;
 
   const healthWarnings = [
     roster.forms !== roster.formsTotal,
@@ -100,17 +100,18 @@ export function DashboardModule({ onNavigate }: { onNavigate: (m: DevModuleId) =
       action: { label: 'Abrir validacion', module: 'validation' },
     },
     {
-      title: 'Produccion visual',
+      title: 'Deployment de presentacion',
       icon: PlayCircle,
-      status: runtimeClassification.legacy === 0 && production.mixed === 0 ? 'ok' : 'warn',
-      summary: 'Clasificacion real: ROM wired por familia, LEGACY restante y frames fisicos medidos con el adapter de produccion.',
+      status: presentationDeployment.pixiActiveByDefault ? 'ok' : 'warn',
+      summary: 'Separa capacidad ROM, consumo del adapter y lo que BattleScreen muestra por defecto. La sonda headless no equivale al renderer activo del jugador.',
       stats: [
-        { label: 'ROM wired', value: runtimeClassification.romBacked, total: cards.total, status: runtimeClassification.romBacked === cards.total ? 'ok' : 'warn', progress: pct(runtimeClassification.romBacked, cards.total), hint: `${runtimeClassification.standardDamage} dmg · ${runtimeClassification.beamBase + runtimeClassification.beamFamily} beam · ${runtimeClassification.supportSpecial} support` },
-        { label: 'LEGACY path', value: runtimeClassification.legacy, total: cards.total, status: runtimeClassification.legacy === 0 ? 'ok' : 'warn', progress: pct(runtimeClassification.legacy, cards.total), hint: `${runtimeClassification.proceduralFallback} procedural` },
-        { label: 'Cards ROM physical', value: physicalMapping.cards.romPresentationProduction, total: cards.total, status: physicalMapping.cards.mixed === 0 ? 'ok' : 'warn', progress: pct(physicalMapping.cards.romPresentationProduction, cards.total), hint: `${physicalMapping.cards.legacy} legacy` },
-        { label: 'Adapter strict', value: production.romBackedStrict, total: cards.total, status: production.mixed === 0 ? 'ok' : 'warn', progress: pct(production.romBackedStrict, cards.total), hint: `${production.legacyVisible} visible legacy` },
+        { label: 'ROM data available', value: production.romDataAvailable, total: cards.total, status: 'info', progress: pct(production.romDataAvailable, cards.total), hint: 'estructura/perfil disponible' },
+        { label: 'ROM route available', value: runtimeClassification.romBacked, total: cards.total, status: runtimeClassification.romBacked === cards.total ? 'ok' : 'warn', progress: pct(runtimeClassification.romBacked, cards.total), hint: `${runtimeClassification.legacy} rutas legacy` },
+        { label: 'ROM adapter capable', value: production.romBackedStrict, total: cards.total, status: production.mixed === 0 ? 'info' : 'warn', progress: pct(production.romBackedStrict, cards.total), hint: 'sonda headless, no BattleScreen live' },
+        { label: 'Default player visible', value: presentationDeployment.defaultRenderer, status: 'warn', hint: `Pixi: ?${presentationDeployment.pixiQuery}` },
+        { label: 'Completion owner', value: presentationDeployment.legacyCompletionOwner ? 'DOM LEGACY' : 'ROM RUNTIME', status: presentationDeployment.legacyCompletionOwner ? 'warn' : 'ok' },
       ],
-      action: { label: 'Abrir Cards', module: 'cards' },
+      action: { label: 'Abrir Combat Lab', module: 'lab' },
     },
     {
       title: 'Corpus ROM fisico',
@@ -120,7 +121,7 @@ export function DashboardModule({ onNavigate }: { onNavigate: (m: DevModuleId) =
       stats: [
         { label: 'Formas renderizadas', value: physicalCorpus.formsRendered, total: physicalCorpus.formsIndexed, status: physicalCorpus.formsRendered === physicalCorpus.formsIndexed ? 'ok' : 'warn', progress: pct(physicalCorpus.formsRendered, physicalCorpus.formsIndexed) },
         { label: 'Promoted physical IDs', value: physicalCorpus.physicalIdentities, status: 'ok', hint: `promoted physical IDs · ${physicalCorpus.frameInstances} frame instances` },
-        { label: 'Resources rendered', value: physicalCorpus.resourcesRendered, total: physicalCorpus.resourcesTotal, status: physicalCorpus.resourcesRendered > 0 ? 'info' : 'warn', progress: pct(physicalCorpus.resourcesRendered, physicalCorpus.resourcesTotal), hint: `${physicalCorpus.resourcesFrameStreamOnly} frame-stream` },
+        { label: 'Fighter rendered', value: physicalCorpus.resourcesRendered, total: physicalCorpus.resourcesReachable, status: physicalCorpus.resourcesRendered === physicalCorpus.resourcesReachable ? 'ok' : 'warn', progress: pct(physicalCorpus.resourcesRendered, physicalCorpus.resourcesReachable), hint: `${physicalCorpus.resourcesRendererPending} renderer pending · 5 Stage Bank $61` },
         { label: 'Empty records', value: physicalCorpus.transparentFrameRecords, status: 'info', hint: `${physicalCorpus.transparentPhysicalIds} IDs (EMPTY_NOT_PROMOTED)` },
       ],
       action: { label: 'Abrir Characters', module: 'characters' },
@@ -175,7 +176,7 @@ export function DashboardModule({ onNavigate }: { onNavigate: (m: DevModuleId) =
     {
       level: 'warn',
       title: 'Gap ROM -> runtime',
-      text: `${runtimeClassification.legacy} cartas siguen usando ruta LEGACY; ${runtimeClassification.proceduralFallback} de ellas aun tienen grafica procedural. Objetivo siguiente: migrar esas familias, no solo documentarlas.`,
+      text: `${runtimeClassification.legacy} cartas siguen usando ruta LEGACY; el renderer visible por defecto es ${presentationDeployment.defaultRenderer} y Pixi ROM requiere ?${presentationDeployment.pixiQuery}.`,
     },
     {
       level: 'warn',

@@ -1,12 +1,12 @@
 // ═══════════════════════════════════════════════════════════════════════
-// AttackPreview — PREVIEW ANIMADA del ataque de una carta (Card Database).
-// Reproduce la secuencia REAL de frames de la pose de la carta (canon
+// AttackPreview — REMAKE MANIFEST PREVIEW de una carta (Card Database).
+// Reproduce frames del manifest asociados a la pose semántica del remake
 // cardBattlePose → resolvePoseFrameSequence) sobre un personaje compatible:
 // un "gif" hecho con frames del manifest, no una imagen estática.
 //
 //   card → cardBattlePose (beam_charge/attack_fwd/guard/gather_power…)
 //        → resolvePoseFrameSequence (frames reales del manifest)
-//        → <img> que cicla los frames a velocidad GBC (~12 fps)
+//        → <img> que cicla los frames a 12 fps de preview (no timing ROM)
 //
 // Para beams se reproduce la cadena completa: charge → fire (→ ray si el
 // manifest tiene frames de proyectil separados). Fuente ÚNICA: el manifest
@@ -20,7 +20,7 @@ import { resolveCombatPose, resolvePoseFrameSequence } from '../battle/spriteCon
 import { spriteFrameUrl, _spriteManifestInternals, spriteDirFor } from '../data/spriteManifest';
 import { getForm } from '../data/roster';
 
-const PREVIEW_FPS = 12; // ~12 fps: suficiente para ver la secuencia sin lag
+const PREVIEW_FPS = 12; // preview del manifest; no representa durationTicks ROM
 
 interface Props {
   card: CardDef;
@@ -104,6 +104,7 @@ export function AttackPreview({ card, formId, size = 96 }: Props) {
         )}
       </div>
       <div className="dev-attack-preview-meta">
+        <span className="dev-attack-preview-source">MANIFEST</span>
         <span className="dev-attack-preview-pose">{pose}</span>
         <span className="dev-attack-preview-frames">{allFiles.length} fr</span>
         {card.type === 'beam' && <span className="dev-attack-preview-beam">beam</span>}

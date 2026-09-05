@@ -10,3 +10,12 @@
 export function isPixiField(): boolean {
   return typeof window !== 'undefined' && new URLSearchParams(window.location.search).has('pixiField');
 }
+
+/** Deployment truth consumed by Dev Studio; keep in sync with BattleScreen wiring. */
+export const BATTLE_PRESENTATION_DEPLOYMENT = {
+  defaultRenderer: 'DOM_LEGACY',
+  pixiActivation: 'DEV_QUERY_FLAG',
+  pixiQuery: 'pixiField=1',
+  legacyCompletionOwner: true,
+  timelineLiveSurface: 'RUNTIME_SANDBOX',
+} as const;

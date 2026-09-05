@@ -2,6 +2,8 @@ import { readFileSync } from 'node:fs';
 import { romSequenceRegistrySummary } from '../src/data/romSequenceRegistry';
 import { getBindingSummary, getRomActionSequenceBindings } from '../src/data/romActionSequenceBinding';
 import { ROM_PHYSICAL_CORPUS_SUMMARY } from '../src/data/generated/romPhysicalCorpus.generated';
+import { getDevProjectSnapshot } from '../src/devtools/devSnapshot';
+import { BATTLE_PRESENTATION_DEPLOYMENT } from '../src/renderer/pixi/flag';
 
 let passed = 0;
 const failures: string[] = [];
@@ -19,6 +21,14 @@ const animationUi = readFileSync('src/devtools/animationStudio.tsx', 'utf8');
 const cardsUi = readFileSync('src/devtools/cards.tsx', 'utf8');
 const charactersUi = readFileSync('src/devtools/characters.tsx', 'utf8');
 const summaryUi = readFileSync('src/devtools/PhysicalReconciliationSummary.tsx', 'utf8');
+const validationUi = readFileSync('src/devtools/validation.tsx', 'utf8');
+const dashboardUi = readFileSync('src/devtools/dashboard.tsx', 'utf8');
+const timelineUi = readFileSync('src/devtools/timeline.tsx', 'utf8');
+const battleLabUi = readFileSync('src/devtools/battlelab.tsx', 'utf8');
+const gameConfigUi = readFileSync('src/devtools/gameconfig.tsx', 'utf8');
+const attackPreviewUi = readFileSync('src/devtools/AttackPreview.tsx', 'utf8');
+const mainUi = readFileSync('src/main.tsx', 'utf8');
+const snapshot = getDevProjectSnapshot();
 
 check('registry keeps all 66 catalog slots', registry.total === 66);
 check('registry closes 62 physical resources', registry.physicalResourceFullyClosed === 62);
@@ -40,6 +50,31 @@ check('Characters keeps $FF actor actions visible', charactersUi.includes('retur
   && charactersUi.includes('NO ACTOR (ROM)'));
 check('current summary has no historical OPEN milestones', !summaryUi.includes('V7 OPEN')
   && !summaryUi.includes('runtime cutover pending') && !summaryUi.includes('Legacy Tail'));
+check('physical summary separates rendered and renderer-pending resources', summaryUi.includes('Fighter rendered')
+  && summaryUi.includes('Fighter renderer pending') && summaryUi.includes('Stage Bank $61 rendered'));
+check('Validation has no frozen historical corpus counters', !validationUi.includes('physicalIdentities === 505')
+  && !validationUi.includes('frameInstances === 2374') && !validationUi.includes('resourcesRendered === 6'));
+check('Validation does not promote legacy maps to blocking authority', validationUi.includes('Legacy manifest pose map (diagnóstico, no autoridad física)')
+  && validationUi.includes('Legacy AnimationResource completion taxonomy (diagnóstico)'));
+check('Validation reconciles the current resource universe', snapshot.physicalCorpus.resourcesRendered
+  + snapshot.physicalCorpus.resourcesRendererPending + snapshot.physicalCorpus.resourcesEmpty
+  === snapshot.physicalCorpus.resourcesTotal);
+check('Dashboard separates route, adapter and player-visible deployment', dashboardUi.includes('ROM route available')
+  && dashboardUi.includes('ROM adapter capable') && dashboardUi.includes('Default player visible'));
+check('deployment truth matches current BattleScreen gate', BATTLE_PRESENTATION_DEPLOYMENT.defaultRenderer === 'DOM_LEGACY'
+  && BATTLE_PRESENTATION_DEPLOYMENT.pixiActivation === 'DEV_QUERY_FLAG'
+  && BATTLE_PRESENTATION_DEPLOYMENT.legacyCompletionOwner === true
+  && mainUi.includes('isPixiField()'));
+check('Cards labels semantic preview as remake manifest', cardsUi.includes('REMAKE MANIFEST PREVIEW')
+  && attackPreviewUi.includes('MANIFEST') && !attackPreviewUi.includes('secuencia REAL'));
+check('Animation Studio exposes closed sequence vs pending PNG', animationUi.includes('ROM SEQUENCE CLOSED')
+  && animationUi.includes('PHYSICAL PNG:') && animationUi.includes('RENDERER PENDING'));
+check('Timeline live mode is honestly named Runtime Sandbox', timelineUi.includes('Runtime Sandbox')
+  && !timelineUi.includes('En vivo (Engine Runtime)'));
+check('Combat Lab identifies BattleScreen and completion owner', battleLabUi.includes('BattleScreen real')
+  && battleLabUi.includes('Completion owner') && battleLabUi.includes('DOM LEGACY onDone'));
+check('Game Config consumes deployment truth and current corpus', gameConfigUi.includes('presentationDeployment')
+  && !gameConfigUi.includes('resourcesRendered === 6'));
 
 console.log(`\nDEV ROM TRUTH: ${passed} passed · ${failures.length} failed`);
 if (failures.length) {

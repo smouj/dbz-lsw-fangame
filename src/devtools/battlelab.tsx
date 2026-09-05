@@ -11,6 +11,7 @@ import { useState } from 'react';
 import { Bug, Clapperboard, Cpu, Play } from 'lucide-react';
 import { FORMS, CHARACTERS, ROM_ORDERED_FORM_IDS } from '../data/roster';
 import { STORY_ENEMY_DECKS } from '../data/enemy_decks';
+import { BATTLE_PRESENTATION_DEPLOYMENT } from '../renderer/pixi/flag';
 const CHAPTERS = Object.keys(STORY_ENEMY_DECKS).map(Number).sort((a, b) => a - b);
 
 interface Props {
@@ -114,10 +115,14 @@ export function BattleLabModule({ onLaunchBattle, embedded }: Props) {
             pixiField ? 'pixi' : null,
           ].filter(Boolean).join(' · ') || 'off'}</strong></div>
           <div><label>Motor</label><strong className="dev-ok">conectado — lanza BattleScreen real</strong></div>
+          <div><label>Renderer de este lanzamiento</label><strong className={pixiField ? 'dev-ok' : ''}>{pixiField ? 'PIXI ROM + DOM PARALLEL' : BATTLE_PRESENTATION_DEPLOYMENT.defaultRenderer}</strong></div>
+          <div><label>Ruta por carta</label><strong>ROM_ROUTE / LEGACY — resuelta en runtime</strong></div>
+          <div><label>Completion owner</label><strong>{BATTLE_PRESENTATION_DEPLOYMENT.legacyCompletionOwner ? 'DOM LEGACY onDone' : 'ROM RUNTIME'}</strong></div>
+          <div><label>Inspector BattleScreen</label><strong>{debugState && debugCinematics ? 'estado + cue/tick activos' : 'activa Estado + Cinemática'}</strong></div>
           <p className="dev-hint" style={{ marginTop: 12 }}>
-            Este panel LANZA la batalla real. Para ver el engine en vivo con el
-            battle-screen canónico (pausa/step frame a frame) usa{' '}
-            <strong>Timeline → En vivo</strong>.
+            Este panel lanza la BattleScreen real y es el gate end-to-end.{' '}
+            <strong>Timeline → Runtime Sandbox</strong> crea otra instancia aislada para
+            pausa/step; no observa esta partida.
           </p>
         </div>
       </div>

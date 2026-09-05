@@ -18,7 +18,7 @@ type LabTab = 'battle' | 'renderer' | 'sequence' | 'trace';
 
 const TABS: { id: LabTab; label: string; icon: typeof Swords; desc: string }[] = [
   { id: 'battle', label: 'Batalla real', icon: Swords, desc: 'Lanza el motor de combate completo (Versus / Historia) con depurador' },
-  { id: 'renderer', label: 'Renderer Pixi', icon: Clapperboard, desc: 'Presentación del combate en vivo: escenas, posiciones, poses, reloj GBC' },
+  { id: 'renderer', label: 'Renderer Pixi', icon: Clapperboard, desc: 'Harness aislado del renderer: demuestra capacidad, no wiring de BattleScreen' },
   { id: 'sequence', label: 'Secuencias', icon: Sparkles, desc: 'Pipeline BattleTimeline → presentación determinista' },
   { id: 'trace', label: 'Trace Inspector', icon: Activity, desc: 'Acción golden → rol → frame → ROM → clasificación → fallback' },
 ];
@@ -31,7 +31,7 @@ export function LabModule({ onLaunchBattle }: {
     <div className="dev-panel">
       <header className="dev-header">
         <h1>Combat Lab</h1>
-        <p className="dev-sub">Laboratorio único de combate: batalla real · renderer Pixi en vivo · secuencias deterministas.</p>
+        <p className="dev-sub">Laboratorio único: BattleScreen real · harness Pixi aislado · secuencias deterministas.</p>
       </header>
 
       <div className="dev-lab-tabs" role="tablist">

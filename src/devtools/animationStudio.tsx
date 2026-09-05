@@ -593,6 +593,10 @@ export function AnimationStudioModule() {
                   <div className="as-mono">dx {view.offsetX >= 128 ? view.offsetX - 256 : view.offsetX} dy {view.offsetY >= 128 ? view.offsetY - 256 : view.offsetY}</div>
                 </div>
                 <div className="as-mono as-muted">{view.physical.frameInstanceId ?? view.physical.fallbackReason ?? '→ sin frame físico resuelto'}</div>
+                <div className="dev-compat-chips">
+                  <span className="dev-tag ok">ROM SEQUENCE CLOSED</span>
+                  <span className={`dev-tag ${view.physical.file ? 'ok' : 'warn'}`}>PHYSICAL PNG: {view.physical.file ? 'RENDERED' : 'RENDERER PENDING'}</span>
+                </div>
                 <FrameImg formId={formId} file={view.physical.file} zoom={zoom} flipped={side === 'LEFT'} />
               </>
             ) : (
@@ -629,7 +633,7 @@ export function AnimationStudioModule() {
         </div>
 
         <div className="as-col">
-          <div className="as-col-head">PRODUCTION <span className="as-mono">spriteConfig</span></div>
+          <div className="as-col-head">REMAKE MANIFEST <span className="as-mono">spriteConfig · not BattleScreen live</span></div>
           <div className="as-col-body">
             {(() => {
               const frames = active.hasRomSequence ? view?.productionFrames : ctxProduction;

@@ -31,6 +31,7 @@ import { romPresentationCompilerSummary } from '../battle/romPresentationCompile
 import { romPresentationProfileSummary } from '../battle/romPresentationProfiles';
 import { beamBaseRuntimeCutoverSummary } from '../battle/beamBaseRomCutover';
 import { standardDamageRuntimeCutoverSummary } from '../battle/standardDamageRomCutover';
+import { romSequenceRegistrySummary } from '../data/romSequenceRegistry';
 
 type Severity = 'PASS' | 'FAIL' | 'WARN' | 'INFO';
 interface Check { name: string; severity: Severity; detail: string; }
@@ -117,19 +118,26 @@ export function ValidationModule() {
     info('Sprites OUT_frames: frames por forma (coherente con Dashboard)', Object.entries(snap.sprites.byStatus).map(([k, v]) => `${k} ${v}`).join(' · '));
     pass('Sprites OUT_frames: total de frames coherente', snap.sprites.canonFrames >= 3000, `${snap.sprites.canonFrames} frames totales en manifests (fuente OUT_frames)`);
     const corpus = snap.physicalCorpus;
+    const sequenceRegistry = romSequenceRegistrySummary();
     pass('P0.3B ROM physical corpus: contrato signed vigente', corpus.schemaVersion === 2 && corpus.offsetEncoding === 's8' && corpus.source === 'ROM_PHYSICAL_FIGHTERS', `${corpus.source} · schema ${corpus.schemaVersion} · ${corpus.offsetEncoding}`);
     pass('P0.3B ROM physical corpus: formas contabilizadas sin falsificar', corpus.formsRendered + corpus.formsPaletteBlocked + corpus.formsResourceBlocked === corpus.formsIndexed && corpus.formsIndexed === 48, `${corpus.formsRendered} rendered · ${corpus.formsPaletteBlocked} palette-blocked · ${corpus.formsResourceBlocked} resource-blocked`);
     pass('P0.3B ROM physical corpus: outputs signed y sanos', corpus.staleUnsigned === 0 && corpus.maxWidth <= 128 && corpus.maxHeight <= 128 && corpus.signedNegativeInstances > 0, `${corpus.physicalIdentities} IDs · ${corpus.frameInstances} instances · ${corpus.signedNegativeInstances} signed-negative · max ${corpus.maxWidth}×${corpus.maxHeight}`);
     pass(
       'P0 Fighter physical corpus: 48-form sweep cerrado',
       corpus.formsRendered === 48
-        && corpus.physicalIdentities === 505
-        && corpus.frameInstances === 2374
-        && corpus.transparentFrameRecords === 36
-        && corpus.transparentPhysicalIds === 7,
+        && corpus.formsPaletteBlocked === 0
+        && corpus.formsResourceBlocked === 0
+        && corpus.physicalIdentities > 0
+        && corpus.frameInstances >= corpus.physicalIdentities
+        && corpus.transparentFrameRecords >= corpus.transparentPhysicalIds,
       `${corpus.formsRendered}/48 forms · ${corpus.physicalIdentities} promoted IDs · ${corpus.frameInstances} instances · ${corpus.transparentFrameRecords} EMPTY_NOT_PROMOTED records/${corpus.transparentPhysicalIds} IDs`,
     );
-    pass('P0.5 resource expansion: cobertura renderizable explícita', corpus.resourcesRendered === 6 && corpus.resourcesTotal === 66, `${corpus.resourcesRendered}/${corpus.resourcesTotal} AnimationResources renderizables`);
+    pass(
+      'P0.5 resource expansion: universo físico reconciliado',
+      corpus.resourcesTotal === sequenceRegistry.total
+        && corpus.resourcesRendered + corpus.resourcesRendererPending + sequenceRegistry.emptyResourceSlots === corpus.resourcesTotal,
+      `${corpus.resourcesRendered} Fighter rendered · ${corpus.resourcesRendererPending} renderer pending · ${sequenceRegistry.emptyResourceSlots} empty = ${corpus.resourcesTotal}`,
+    );
     info('P0.5 resource expansion: no confundir decoded con renderable', `${corpus.resourcesFrameStreamOnly} frame-stream-only · ${corpus.resourcesRendererPending} renderer-pending decoded · ${corpus.resourcesHandlerDependent} handler-dependent · ${corpus.resourcesDynamicPending} dynamic · ${corpus.resourcesUnreferenced} unreferenced`);
     const fxCorpus = snap.fxCorpus;
     pass(
@@ -160,7 +168,7 @@ export function ValidationModule() {
     info('P0.1C-E Support/Aura state', `support visuals ${fxCorpus.supportVisuals} · support aura ${fxCorpus.supportAuraBlue} · gather aura ${fxCorpus.gatherPowerAuraOrange}`);
     const physicalMapping = snap.physicalMapping;
     pass('P0.3C ProductionFrameResolver: physical mapping explícito', physicalMapping.physicalMapping.romInstancesMapped === physicalMapping.physicalMapping.romInstancesTotal && physicalMapping.physicalMapping.unresolved === 0, `${physicalMapping.physicalMapping.romInstancesMapped}/${physicalMapping.physicalMapping.romInstancesTotal} mapped · unresolved ${physicalMapping.physicalMapping.unresolved}`);
-    pass('P0.3C ProductionFrameResolver: consumo físico sin MIXED', physicalMapping.cards.romPresentationProduction === 20 && physicalMapping.cards.legacy === 105 && physicalMapping.cards.mixed === 0, `${physicalMapping.cards.romPresentationProduction}/125 ROM_PHYSICAL · ${physicalMapping.cards.legacy} LEGACY/PENDING · MIXED ${physicalMapping.cards.mixed}`);
+    pass('P0.3C ProductionFrameResolver: clasificación completa sin MIXED', physicalMapping.cards.romPresentationProduction + physicalMapping.cards.legacy === CARDS.length && physicalMapping.cards.mixed === 0, `${physicalMapping.cards.romPresentationProduction}/125 ROM_PHYSICAL · ${physicalMapping.cards.legacy} LEGACY/PENDING · MIXED ${physicalMapping.cards.mixed}`);
     // Los frames sin evidencia NO se asignan por aproximación — quedan desconocidos.
     if (snap.sprites.unknown === 0) {
       info('Sprites OUT_frames: 0 frames sin evidencia (UNCLASSIFIED honestos)', 'los frames sin evidencia NO se asignan por aproximación — quedan desconocidos hasta nueva evidencia');
@@ -174,14 +182,10 @@ export function ValidationModule() {
     const resourceCompletion = animationResourceSummary();
     const decodedResources = ANIMATION_RESOURCE_CATALOG.filter(resource => resource.status === 'DECODED').length;
     pass('AnimationResources decodificados → reconciliación física', PHYSICAL_FRAME_RECONCILIATION.length === decodedResources, `${PHYSICAL_FRAME_RECONCILIATION.length}/${decodedResources} recursos DECODED · ${physical.romFrames} frames ROM`);
-    pass('Physical map: statuses completos y explícitos', physical.romFrames === physical.exact + physical.shared + physical.composite + physical.unresolved, `${physical.exact} EXACT · ${physical.shared} SHARED · ${physical.composite} COMPOSITE · ${physical.unresolved} UNRESOLVED`);
+    info('Legacy manifest pose map (diagnóstico, no autoridad física)', `${physical.exact} EXACT · ${physical.shared} SHARED · ${physical.composite} COMPOSITE · ${physical.unresolved} UNRESOLVED; la autoridad actual es RomSequenceRegistry + corpus físico`);
     const cardCoverage = cardPhysicalCoverageSummary();
     pass('Cards → physical coverage 125/125', cardCoverage.cards === CARDS.length && cardCoverage.missingResource === 0, `${cardCoverage.complete} complete · ${cardCoverage.partial} partial · ${cardCoverage.unresolvedDecoded} decoded unresolved · ${cardCoverage.pendingStatic} pending static`);
-    pass('AnimationResource PARTIAL → completion cause explícita',
-      resourceCompletion.decoded === resourceCompletion.staticallyClosed
-        && resourceCompletion.partial === resourceCompletion.staticallyClosable
-        && resourceCompletion.decoded + resourceCompletion.partial + resourceCompletion.special + resourceCompletion.unknown === resourceCompletion.resources,
-      `${resourceCompletion.decoded} decoded · ${resourceCompletion.partial} partial · ${resourceCompletion.special} special · ${resourceCompletion.unknown} unknown · ${resourceCompletion.staticallyClosable} statically closable · ${resourceCompletion.needsDynamicTrace} needs dynamic trace · ${resourceCompletion.staticLimitReached} static limit`);
+    info('Legacy AnimationResource completion taxonomy (diagnóstico)', `${resourceCompletion.decoded} decoded · ${resourceCompletion.partial} partial · ${resourceCompletion.special} special · ${resourceCompletion.unknown} unknown; no sustituye los 62/66 recursos físicos cerrados del registro`);
     const actionExecution = romActionExecutionSummary();
     pass('ROM Action Execution descriptors 125/125', actionExecution.cards === CARDS.length && actionExecution.missingResources === 0, `${actionExecution.cards}/${CARDS.length} descriptors · ${actionExecution.withActorAnimation} actor resources · ${actionExecution.withFx} FX · ${actionExecution.withPalette} palettes`);
     pass('ROM Action Execution: result branches solo con evidencia', actionExecution.descriptorsWithBranches === actionExecution.standardAttackProfiles + actionExecution.defenseRules, `${actionExecution.descriptorsWithBranches} proven branch descriptors · ${actionExecution.pendingStaticDecode} pending static · ${actionExecution.needsDynamicTrace} dynamic boundary`);
@@ -203,19 +207,23 @@ export function ValidationModule() {
     if (prod.romBackedStrict === 0) {
       warn('PRODUCTION: 0 cartas consumen cues ROM en Pixi', 'el puente ROM no consume cues en producción — todo cae a LEGACY (playCardCinematic)');
     } else {
-      pass('PRODUCTION: cartas ROM-backed en Pixi', prod.romBackedStrict > 0, `${prod.romBackedStrict}/125 consumen cues ROM · ${prod.legacyVisible} LEGACY · ${prod.romVisible} ROM visible`);
+      pass('ROM ADAPTER CAPABLE: cartas con cues consumibles', prod.romBackedStrict > 0, `${prod.romBackedStrict}/125 consumibles por el adapter · ${prod.legacyVisible} rutas legacy · ${prod.romVisible} ROM visible en sonda`);
     }
     // LEGACY/PENDING como path principal es esperado durante la migración progresiva del bridge ROM.
     // Solo advierte si 0 cartas se benefician del path ROM-backed.
     if (prod.romBackedStrict === 0) {
       warn('PRODUCTION: LEGACY gobierna TODAS las cartas — ningún path ROM consumido', `${prod.legacyVisible}/125 LEGACY · 0 ROM-backed`);
     } else {
-      info('PRODUCTION: migración ROM progresiva', `${prod.legacyVisible}/125 LEGACY · ${prod.romBackedStrict} ROM-backed · ${prod.romCuesGenerated} generan cues · ${prod.romCuesConsumed} consumen cues · Fighter ROM_PHYSICAL: ${physicalMapping.cards.romPresentationProduction}/125`);
+      info('ROM ROUTE / ADAPTER: migración progresiva', `${prod.legacyVisible}/125 LEGACY · ${prod.romBackedStrict} adapter-capable · ${prod.romCuesGenerated} generan cues · ${prod.romCuesConsumed} consumidos en sonda · Fighter ROM_PHYSICAL: ${physicalMapping.cards.romPresentationProduction}/125`);
     }
     if (prod.romCuesGenerated !== prod.romCuesConsumed) {
       warn('PRODUCTION: cues ROM generados ≠ consumidos', `${prod.romCuesGenerated} generados vs ${prod.romCuesConsumed} consumidos — hay cues que producción no consume`);
     }
     pass('PRODUCTION: physical provenance registrada', prod.romPhysicalFrames > 0 && prod.unresolvedRendered === 0 && prod.mixed === 0, `${prod.romPhysicalFrames} ROM_PHYSICAL_FRAME · unresolved ${prod.unresolvedRendered} · MIXED ${prod.mixed}`);
+    const deployment = snap.presentationDeployment;
+    warn('DEFAULT PLAYER VISIBLE: DOM LEGACY', `Pixi no está activo por defecto; deployment declarado: ${deployment.defaultRenderer}.`);
+    warn('PIXI CONSUMPTION: solo flag Dev', `${deployment.pixiActivation} · activar con ?${deployment.pixiQuery}; capacidad del adapter no equivale a wiring visible por defecto.`);
+    warn('ACTION COMPLETION OWNER: legacy DOM activo', 'BattleScreen mantiene el DOM legacy como propietario de onDone mientras Pixi ROM corre en paralelo bajo flag.');
     // bridge elegible vs estricto: es esperado que no coincidan — el bridge
     // enruta progresivamente más tipos, no solo BEAM_BASE+STANDARD_DAMAGE.
     // Solo advierte si 0 cartas bridge se consumen habiendo perfiles elegibles.

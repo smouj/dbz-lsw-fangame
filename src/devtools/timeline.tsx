@@ -173,8 +173,9 @@ export function TimelineModule() {
         <h1>Timeline (M7/M8) — Presentation Adapter + Runtime</h1>
         <p className="dev-sub">
           BattleEvent → BattleTimeline (cues puras en ticks GBC). Mismo EventLog ⇒ mismo
-          Timeline, independiente de FPS. <strong>En vivo</strong> = primer slice vertical M8
-          (UI → Engine → EventLog → Timeline → Presenter). V4 añade Beam físico
+          Timeline, independiente de FPS. <strong>Runtime Sandbox</strong> ejecuta su propia
+          instancia aislada (UI → Engine → EventLog → Timeline → Presenter); no inspecciona
+          la BattleScreen que juega el usuario. V4 añade Beam físico
           <code>ROM_FX_WINDOW</code>; V5 añade Support/Defense como BG assembly, Move net0
           y slot8 preload/start boundary.
         </p>
@@ -184,7 +185,7 @@ export function TimelineModule() {
         <button className={`dev-hud-view-chip ${mode === 'scenarios' ? 'active' : ''}`}
           onClick={() => setMode('scenarios')}>Escenarios (headless)</button>
         <button className={`dev-hud-view-chip ${mode === 'live' ? 'active' : ''}`}
-          onClick={() => setMode('live')}>En vivo (Engine Runtime)</button>
+          onClick={() => setMode('live')}>Runtime Sandbox</button>
         <button className={`dev-hud-view-chip ${mode === 'replay' ? 'active' : ''}`}
           onClick={() => setMode('replay')}>Replay (M9)</button>
         <button className={`dev-hud-view-chip ${mode === 'execution' ? 'active' : ''}`}

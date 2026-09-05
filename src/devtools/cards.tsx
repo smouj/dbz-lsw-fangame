@@ -265,6 +265,7 @@ function CardDetail({ card }: { card: CardDef }) {
         </div>
       </div>
       <div className="dev-card-attack-preview-big">
+        <span className="dev-truth-kicker">REMAKE MANIFEST PREVIEW · 12 FPS FIXED</span>
         <AttackPreview card={card} size={128} />
       </div>
       <div className="dev-card-stats-big">

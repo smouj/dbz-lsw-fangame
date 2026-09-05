@@ -31,7 +31,9 @@ import { productionFrameResolverSummary } from '../battle/productionFrameResolve
 import { romFxWindowRuntimeSummary } from '../battle/romFxWindow';
 import { ANIMATION_RESOURCE_CATALOG } from '../battle/animationResources';
 import { ROM_BANK61_ANIMATION_CORE } from '../data/generated/romAnimationCore.generated';
+import { romSequenceRegistrySummary } from '../data/romSequenceRegistry';
 import runtimeCutover from '../../generated/rom-fx/runtime_cutover.json';
+import { BATTLE_PRESENTATION_DEPLOYMENT } from '../renderer/pixi/flag';
 
 export interface DevSnapshot {
   roster: { forms: number; formsTotal: number; characters: number; withSpriteDir: number; withoutSpriteDir: string[] };
@@ -59,6 +61,14 @@ export interface DevSnapshot {
     unresolvedRendered: number;
     mixed: number;
   };
+  presentationDeployment: {
+    defaultRenderer: 'DOM_LEGACY';
+    pixiActivation: 'DEV_QUERY_FLAG';
+    pixiQuery: string;
+    pixiActiveByDefault: false;
+    legacyCompletionOwner: true;
+    timelineLiveSurface: 'RUNTIME_SANDBOX';
+  };
   runtimeClassification: {
     romBacked: number;
     legacy: number;
@@ -82,6 +92,7 @@ export interface DevSnapshot {
     resourcesReachable: number;
     resourcesRendered: number;
     resourcesRendererPending: number;
+    resourcesEmpty: number;
     resourcesFrameStreamOnly: number;
     resourcesHandlerDependent: number;
     resourcesDynamicPending: number;
@@ -205,6 +216,10 @@ export function getDevProjectSnapshot(): DevSnapshot {
     audio: { musicTracks: MUSIC_TRACK_LIST.length, sfx: SFX_CATALOG.length },
     scenarios: SCENARIOS.length,
     production,
+    presentationDeployment: {
+      ...BATTLE_PRESENTATION_DEPLOYMENT,
+      pixiActiveByDefault: false,
+    },
     runtimeClassification: computeRuntimeClassificationMetrics(),
     physicalCorpus: computePhysicalCorpusMetrics(),
     fxCorpus: computeFxCorpusMetrics(),
@@ -215,6 +230,7 @@ export function getDevProjectSnapshot(): DevSnapshot {
 
 function computePhysicalCorpusMetrics(): DevSnapshot['physicalCorpus'] {
   const totals = ROM_PHYSICAL_CORPUS_SUMMARY.totals;
+  const registry = romSequenceRegistrySummary();
   return {
     phase: ROM_PHYSICAL_CORPUS_SUMMARY.phase,
     schemaVersion: ROM_PHYSICAL_CORPUS_SUMMARY.schemaVersion,
@@ -228,6 +244,7 @@ function computePhysicalCorpusMetrics(): DevSnapshot['physicalCorpus'] {
     resourcesReachable: totals.resourcesReachable,
     resourcesRendered: totals.resourcesRendered,
     resourcesRendererPending: totals.resourcesRendererPending,
+    resourcesEmpty: registry.emptyResourceSlots,
     resourcesFrameStreamOnly: ROM_PHYSICAL_CORPUS_SUMMARY.resourceCompletionTotals.frameStreamOnly,
     resourcesHandlerDependent: ROM_PHYSICAL_CORPUS_SUMMARY.resourceCompletionTotals.handlerDependent,
     resourcesDynamicPending: ROM_PHYSICAL_CORPUS_SUMMARY.resourceCompletionTotals.dynamicPending,
