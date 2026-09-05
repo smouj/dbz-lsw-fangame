@@ -8386,7 +8386,7 @@ button:focus-visible, .chapter-node:focus-visible {
 .dev-canon-beat-label { font-size: 8px; font-weight: 700; color: var(--dev-muted); letter-spacing: .5px; margin-right: 2px; }
 .dev-physical-summary {
   display: grid;
-  grid-template-columns: minmax(190px, 0.8fr) minmax(0, 2fr);
+  grid-template-columns: 1fr;
   gap: 10px 12px;
   align-items: start;
   padding: 10px 12px;
@@ -8415,6 +8415,51 @@ button:focus-visible, .chapter-node:focus-visible {
   flex-wrap: wrap;
   gap: 5px;
   align-items: center;
+}
+.dev-truth-lanes,
+.dev-rom-truth-lanes {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+  width: 100%;
+}
+.dev-truth-lane,
+.dev-rom-truth-track {
+  min-width: 0;
+  padding: 10px;
+  border: 1px solid rgba(109,157,190,.28);
+  background: rgba(6,16,27,.72);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+}
+.dev-truth-kicker { color: #78bfe8; font: 700 10px/1.2 var(--font-mono); letter-spacing: .09em; }
+.dev-truth-lane strong,
+.dev-rom-truth-track strong { color: #f3f7fb; font-size: 13px; }
+.dev-truth-lane small,
+.dev-rom-truth-track small,
+.dev-rom-actor-none span { color: #9eb0bf; line-height: 1.45; }
+.dev-rom-truth-card > .dev-hint { margin: 0 0 8px; }
+.dev-rom-truth-track code,
+.dev-rom-actor-none code { max-width: 100%; overflow-wrap: anywhere; color: #b8cddd; font-size: 10px; }
+.dev-truth-lane .dev-tag,
+.dev-rom-truth-track .dev-tag { max-width: 100%; white-space: normal; overflow-wrap: anywhere; line-height: 1.35; }
+.dev-rom-actor-none {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 9px;
+  border-left: 3px solid #5fc18b;
+  background: rgba(31,81,59,.18);
+}
+@media (max-width: 1100px) {
+  .dev-truth-lanes,
+  .dev-rom-truth-lanes { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 700px) {
+  .dev-truth-lanes,
+  .dev-rom-truth-lanes { grid-template-columns: 1fr; }
 }
 
 /* ─── Dashboard: tarjeta del BattleEngine ─── */

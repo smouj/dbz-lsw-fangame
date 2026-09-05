@@ -19,6 +19,9 @@ import { physicalMappingSummaryForCard, staticGapCauseForResourceId } from '../b
 import { romActionExecutionDescriptorForCard } from '../battle/romActionExecutionDescriptors';
 import { romPresentationProfileForCard } from '../battle/romPresentationProfiles';
 import { romPresentationTimelineForCard } from '../battle/romPresentationForCard';
+import { ROM_STANDARD_DAMAGE_RESULT_PHYSICAL } from '../battle/romStandardDamageResultPhysical';
+import { getBindingForCard } from '../data/romActionSequenceBinding';
+import { getRomSequenceRegistry } from '../data/romSequenceRegistry';
 import { AttackPreview } from './AttackPreview';
 import { PhysicalReconciliationSummary } from './PhysicalReconciliationSummary';
 
@@ -269,6 +272,7 @@ function CardDetail({ card }: { card: CardDef }) {
         <div><label>ACC</label><strong>{card.acc}</strong></div>
         <div><label>CC</label><strong>{card.cc}</strong></div>
       </div>
+      <RomPhysicalCardProductionInfo card={card} />
       {card.description && <p className="dev-card-desc">{card.description}</p>}
       <div className="dev-card-compat">
         <h4>Usable por</h4>
@@ -281,10 +285,6 @@ function CardDetail({ card }: { card: CardDef }) {
       <div className="dev-card-code">
         <code>{JSON.stringify({ id: card.id, type: card.type, effect: card.effect, atk: card.atk, acc: card.acc, cc: card.cc, rarity: card.rarity, compatible: card.compatible ?? null, notCompatible: card.notCompatible ?? null }, null, 2)}</code>
       </div>
-      <AnimationTaxonomyInfo card={card} />
-      <RomActionExecutionInfo card={card} />
-      <RomPhysicalCardProductionInfo card={card} />
-      <RomPresentationProfileInfo card={card} />
       <ActionCanonInfo card={card} />
       <CinematicCardInfo card={card} />
     </div>
@@ -363,24 +363,66 @@ function RomPhysicalCardProductionInfo({ card }: { card: CardDef }) {
     }), [card]);
 
   const timeline = useMemo(() => romPresentationTimelineForCard(card, 'player', formId), [card, formId]);
+  const binding = useMemo(() => getBindingForCard(card.id), [card.id]);
+  const registry = useMemo(() => getRomSequenceRegistry(), []);
+  const profile = useMemo(() => romPresentationProfileForCard(card), [card]);
   const physicalCues = useMemo(() => timeline?.timeline.entries
     .map(entry => ({ tick: entry.cue.tick, cue: entry.cue }))
     .filter(entry => entry.cue.type === 'ROM_PHYSICAL_FRAME') ?? [], [timeline]);
   const dir = spriteDirFor(formId);
+  const actorTrack = binding?.tracks.find(track => track.trackId === 'actor') ?? null;
+  const actorResource = actorTrack?.resourceId == null
+    ? null
+    : registry.find(resource => resource.resourceId === actorTrack.resourceId) ?? null;
+  const standardResultTracks = binding?.execution.family === 'STANDARD_DAMAGE'
+    ? Object.values(ROM_STANDARD_DAMAGE_RESULT_PHYSICAL)
+    : [];
 
   return (
-    <div className="dev-card-compat dev-card-rom-physical">
-      <h4>Production physical preview</h4>
+    <div className="dev-card-compat dev-card-rom-physical dev-rom-truth-card">
+      <h4>ROM Truth Card</h4>
+      <p className="dev-hint">Una sola lectura de la carta: pista de actor, selector semántico, pista visual/FX y película de producción.</p>
+      <div className="dev-rom-truth-lanes">
+        <section className="dev-rom-truth-track">
+          <span className="dev-truth-kicker">ACTOR TRACK</span>
+          <strong>{actorTrack?.resourceId == null ? 'NONE — ROM byte[6] = $FF' : `${actorResource?.resourceHex ?? `$${actorTrack.resourceId.toString(16).padStart(2, '0')}`} · ${actorResource?.technique ?? actorTrack.label}`}</strong>
+          <small>{actorTrack?.resourceId == null
+            ? 'Estado válido: el handler, BG, FX o resultado compone la parte visible.'
+            : `${actorResource?.sequences.length ?? actorTrack.sequences.length} secuencias · ${actorTrack.totalFrames} frames · ${actorTrack.totalTicks} ticks`}</small>
+          <span className={`dev-tag ${actorTrack?.physicalStatus === 'PHYSICAL_RESOURCE_FULLY_CLOSED' || actorTrack?.resourceId == null ? 'ok' : 'pending'}`}>
+            {actorTrack?.resourceId == null ? 'NO ACTOR (ROM)' : actorTrack?.physicalStatus}
+          </span>
+        </section>
+        <section className="dev-rom-truth-track">
+          <span className="dev-truth-kicker">SELECTION</span>
+          <strong>{actorTrack?.selector.kind ?? 'HANDLER OWNED'}</strong>
+          <small>{actorTrack?.selector.value != null ? `selected sequence ${actorTrack.selector.value}` : 'La secuencia física y la decisión que la selecciona se muestran por separado.'}</small>
+          <code>{actorTrack?.selector.evidence ?? binding?.evidence[0] ?? 'No actor selector required.'}</code>
+        </section>
+        <section className="dev-rom-truth-track">
+          <span className="dev-truth-kicker">VISUAL / FX TRACK</span>
+          <strong>{binding?.fxResourceId != null ? `FX $${binding.fxResourceId.toString(16).padStart(2, '0').toUpperCase()}` : standardResultTracks.length > 0 ? 'Bank $61 result track' : 'Handler / BG grammar'}</strong>
+          <small>{binding?.fxPaletteId != null ? `palette $${binding.fxPaletteId.toString(16).padStart(2, '0').toUpperCase()}` : 'No se fabrica una Fighter sequence cuando la ROM usa otra pista.'}</small>
+          {standardResultTracks.map(branch => (
+            <code key={branch.branch}>{branch.branch}: {branch.target.map(track => `$61:${track.resourceBase.toString(16).toUpperCase()} seq $${track.sequence.toString(16).toUpperCase()} · ${track.frameCount}f/${track.totalTicks}t`).join(' → ')}</code>
+          ))}
+        </section>
+        <section className="dev-rom-truth-track">
+          <span className="dev-truth-kicker">PRODUCTION FILM</span>
+          <strong>{timeline ? `${timeline.kind} · ROM route` : 'LEGACY / unresolved route'}</strong>
+          <small>{profile.completion.static} static · {profile.completion.dynamic} dynamic · {timeline?.pendingCues ?? profile.completion.pending.length} pending</small>
+          <span className={`dev-tag ${timeline && (timeline.pendingCues ?? 0) === 0 ? 'ok' : 'pending'}`}>{physicalCues.length} physical cues for selected form</span>
+        </section>
+      </div>
       <div className="dev-compat-chips">
-        <span className={`dev-tag ${timeline ? 'ok' : 'pending'}`}>presentation: {timeline ? 'ROM' : 'LEGACY/UNRESOLVED'}</span>
-        <span className="dev-tag">form selector</span>
+        <span className="dev-tag">Preview form</span>
         <select className="dev-mini-select" value={formId} onChange={event => setFormId(event.target.value)}>
           {compatibleForms.map(form => <option key={form.id} value={form.id}>{form.id}</option>)}
         </select>
         <span className="dev-tag">physical cues: {physicalCues.length}</span>
       </div>
       {physicalCues.length === 0 ? (
-        <div className="dev-hint">Esta carta todavía no emite ROM_PHYSICAL_FRAME para {formId}; si se renderiza, debe quedar como fallback explícito.</div>
+        <div className="dev-hint">No hay ROM_PHYSICAL_FRAME de actor para {formId}. Esto es correcto cuando la pista de actor es NONE; los FX, BG, macros de soporte/defensa o pistas Bank $61 se auditan arriba.</div>
       ) : (
         <div className="dev-rom-card-frame-strip">
           {physicalCues.map(({ tick, cue }, index) => {

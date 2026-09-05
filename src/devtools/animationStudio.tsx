@@ -13,7 +13,6 @@ import { GBC_FPS } from '../battle/timeline';
 import {
   GOLDEN_FORMS,
   GOLDEN_CONTEXTS,
-  decodedStudioResources,
   studioResourceList,
   studioForms,
   romFrameView,
@@ -29,6 +28,7 @@ import { resolveCharacterVisualSequence } from '../battle/characterFrameMap';
 import { resolvePoseFrameSequence } from '../battle/spriteConfig';
 import type { FrameMapping } from '../battle/characterFrameMap';
 import { catalogAnimationBank, catalogResourceBase } from '../data/generated/romAnimationResourceBase.generated';
+import { PhysicalReconciliationSummary } from './PhysicalReconciliationSummary';
 
 // ─── Badges ─────────────────────────────────────────────────────────────
 
@@ -444,8 +444,9 @@ export function AnimationStudioModule() {
 
   const consumers = useMemo(() => (active.hasRomSequence ? cardsForStudioResource(active.resourceId, formId) : []), [active.resourceId, formId, active.hasRomSequence]);
 
-  // si no hay ROM sequence, sintetizar un "view" para el inspector
-  const inspectorView: RomFrameView | null = view ?? (active.context ? {
+  // STATIC contexts may still expose a manifest pose. Handler-owned Bank $61
+  // tracks intentionally have no single AnimationResource inspector row.
+  const inspectorView: RomFrameView | null = view ?? (active.context && active.context.actorPath !== 'ROM_HANDLER_TRACK' ? {
     formId,
     dir: spriteDirFor(formId),
     resourceId: active.context.resourceId ?? -1,
@@ -500,12 +501,14 @@ export function AnimationStudioModule() {
         </p>
       </header>
 
+      <PhysicalReconciliationSummary />
+
       {/* Métricas */}
       <div className="as-metrics">
-        <div className="as-metric"><span>TOTAL UNRESOLVED</span><b>{metrics.totalUnresolved}</b></div>
-        <div className="as-metric"><span>PRODUCTION REACHABLE</span><b>{metrics.productionReachableUnresolved}</b></div>
-        <div className="as-metric"><span>GOLDEN REACHABLE</span><b>{metrics.goldenReachableUnresolved}</b></div>
-        <div className="as-metric as-metric-goal"><span>objetivo</span><b>GOLDEN → 0</b></div>
+        <div className="as-metric"><span>MANIFEST MAPPING GAPS</span><b>{metrics.totalUnresolved}</b></div>
+        <div className="as-metric"><span>REACHABLE MAPPING GAPS</span><b>{metrics.productionReachableUnresolved}</b></div>
+        <div className="as-metric"><span>GOLDEN MAPPING GAPS</span><b>{metrics.goldenReachableUnresolved}</b></div>
+        <div className="as-metric as-metric-goal"><span>scope</span><b>ASSET MAP ONLY</b></div>
       </div>
 
       {/* Selectores */}
@@ -550,7 +553,7 @@ export function AnimationStudioModule() {
         <label className="as-check"><input type="checkbox" checked={showOffsets} onChange={e => setShowOffsets(e.target.checked)} />offsets</label>
       </div>
 
-      {/* Contexto golden sin ROM */}
+      {/* Contexto golden sin AnimationResource */}
       {active.context && !active.hasRomSequence && (
         <div className="as-ctx-note">
           <span className="as-mono">{active.context.label}</span>
@@ -593,7 +596,11 @@ export function AnimationStudioModule() {
                 <FrameImg formId={formId} file={view.physical.file} zoom={zoom} flipped={side === 'LEFT'} />
               </>
             ) : (
-              <div className="as-empty-box">Sin secuencia ROM decodificada para este contexto (PENDING_ROM_TRACE).</div>
+              <div className="as-empty-box">
+                {active.context?.actorPath === 'ROM_HANDLER_TRACK'
+                  ? 'Pista física conocida en Bank $61 y seleccionada por el handler/resultado. No corresponde a un AnimationResource de actor.'
+                  : 'Este contexto no usa una secuencia de actor; la pose y el FX se resuelven por su pista específica.'}
+              </div>
             )}
           </div>
         </div>

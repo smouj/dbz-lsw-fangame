@@ -940,11 +940,10 @@ function RomActionsPanel({ formId }: { formId: string }) {
     return result;
   }, [formCards]);
 
-  // Filter to cards with actor animation resources
+  // Every compatible action belongs here. $FF actor resources are valid ROM
+  // truth and must remain visible alongside handler/BG/FX tracks.
   const actionCards = useMemo(() => {
-    return cardBindings.filter(({ binding }) =>
-      binding.tracks.some(t => t.trackId === 'actor' && t.resourceId != null)
-    );
+    return cardBindings;
   }, [cardBindings]);
 
   const [expanded, setExpanded] = useState<number | null>(null);
@@ -957,7 +956,7 @@ function RomActionsPanel({ formId }: { formId: string }) {
     return (
       <section className="dev-char-block dev-rom-physical-panel">
         <h3 className="dev-char-block-title">ROM Actions
-          <span className="dev-sheets-count">no actor animation for this form</span>
+          <span className="dev-sheets-count">no compatible ROM actions for this form</span>
         </h3>
       </section>
     );
@@ -968,7 +967,7 @@ function RomActionsPanel({ formId }: { formId: string }) {
       <div className="dev-fmap-head">
         <h3 className="dev-char-block-title">
           ROM Actions
-          <span className="dev-sheets-count">{actionCards.length} actions with actor animation</span>
+          <span className="dev-sheets-count">{actionCards.length} compatible actions · actor + handler/FX truth</span>
         </h3>
         <div className="dev-fmap-summary">
           <span className="dev-tag">{formId}</span>
@@ -981,18 +980,19 @@ function RomActionsPanel({ formId }: { formId: string }) {
       <div className="dev-rom-action-list">
         {actionCards.map(({ card, binding }) => {
           const actorTrack = binding.tracks.find(t => t.trackId === 'actor');
-          if (!actorTrack || actorTrack.resourceId == null) return null;
+          if (!actorTrack) return null;
 
-          const regEntry = registry.find(r => r.resourceId === actorTrack.resourceId);
+          const regEntry = actorTrack.resourceId == null ? null : registry.find(r => r.resourceId === actorTrack.resourceId);
           const isExpanded = expanded === card.id;
-          const icon = statusIcon(actorTrack.physicalStatus);
+          const actorNone = actorTrack.resourceId == null;
+          const icon = actorNone ? '✓' : statusIcon(actorTrack.physicalStatus);
 
           return (
             <div key={card.id} className="dev-rom-sequence">
               <button className="dev-rom-sequence-head" onClick={() => setExpanded(isExpanded ? null : card.id)}>
                 <code>{icon} {card.name}</code>
                 <span>
-                  {actorTrack.resourceId != null ? hex2(actorTrack.resourceId) : '—'}
+                  {actorNone ? 'NONE ($FF)' : hex2(actorTrack.resourceId!)}
                   {' · '}
                   handler {binding.execution.handlerHex}
                   {' · '}
@@ -1002,8 +1002,8 @@ function RomActionsPanel({ formId }: { formId: string }) {
                   {' · '}
                   {actorTrack.totalTicks} ticks
                 </span>
-                <span className={`dev-tag ${actorTrack.physicalStatus === 'PHYSICAL_RESOURCE_FULLY_CLOSED' ? 'ok' : actorTrack.physicalStatus === 'FRAME_STREAM_CLOSED' ? 'warn' : ''}`}>
-                  {actorTrack.physicalStatus === 'PHYSICAL_RESOURCE_FULLY_CLOSED' ? 'ROM PHYSICAL' : actorTrack.physicalStatus === 'FRAME_STREAM_CLOSED' ? 'FRAME STREAM' : 'PENDING'}
+                <span className={`dev-tag ${actorNone || actorTrack.physicalStatus === 'PHYSICAL_RESOURCE_FULLY_CLOSED' ? 'ok' : actorTrack.physicalStatus === 'FRAME_STREAM_CLOSED' ? 'warn' : ''}`}>
+                  {actorNone ? 'NO ACTOR (ROM)' : actorTrack.physicalStatus === 'PHYSICAL_RESOURCE_FULLY_CLOSED' ? 'ROM PHYSICAL' : actorTrack.physicalStatus === 'FRAME_STREAM_CLOSED' ? 'FRAME STREAM' : 'PENDING'}
                 </span>
               </button>
 
@@ -1022,6 +1022,22 @@ function RomActionsPanel({ formId }: { formId: string }) {
                   </span>
                 )}
               </div>
+
+              {isExpanded && actorNone && (
+                <div className="dev-rom-sequence-frames">
+                  <div className="dev-rom-actor-none">
+                    <strong>Actor track: NONE — ROM card byte[6] = $FF</strong>
+                    <span>This is a closed ROM state. Visible choreography belongs to handler, result, BG or FX tracks; no Fighter sequence may be fabricated.</span>
+                    <code>{actorTrack.selector.evidence}</code>
+                  </div>
+                  {binding.fxResourceId != null && (
+                    <div className="dev-rom-actor-none">
+                      <strong>FX/display track {hex2(binding.fxResourceId)}</strong>
+                      <span>palette {binding.fxPaletteId != null ? hex2(binding.fxPaletteId) : '—'} · separate visual grammar</span>
+                    </div>
+                  )}
+                </div>
+              )}
 
               {/* Selector info */}
               <div className="dev-rom-consumer-row">
@@ -1082,12 +1098,10 @@ function RomActionsPanel({ formId }: { formId: string }) {
               )}
 
               {/* Expanded but no registry data */}
-              {isExpanded && !regEntry && (
+              {isExpanded && !actorNone && !regEntry && (
                 <div className="dev-rom-sequence-frames">
                   <div style={{ padding: '8px', color: '#888', fontSize: '12px' }}>
-                    Resource {hex2(actorTrack.resourceId)} not yet decoded into RomSequenceRegistry.
-                    {actorTrack.physicalStatus === 'FRAME_STREAM_CLOSED' && ' Frame stream available but metasprite linkage PENDING.'}
-                    {actorTrack.physicalStatus === 'NO_ANIMATION_RESOURCE' && ' Awaiting decode.'}
+                    Registry invariant violation: resource {hex2(actorTrack.resourceId!)} is referenced by this action but absent from the current RomSequenceRegistry.
                   </div>
                 </div>
               )}

@@ -49,6 +49,7 @@ import {
   resolveProductionFrame,
   type ProductionFrameBinding,
 } from './productionFrameResolver';
+import { getRomSequenceRegistry } from '../data/romSequenceRegistry';
 
 export type StudioSide = 'LEFT' | 'RIGHT';
 
@@ -63,7 +64,7 @@ export interface GoldenContext {
   /** rol semántico (pose manifest) que el contexto resuelve. */
   semanticRole: string;
   /** camino del actor en la ROM. */
-  actorPath: 'ROM_SEQUENCE' | 'STATIC' | 'UNRESOLVED';
+  actorPath: 'ROM_SEQUENCE' | 'ROM_HANDLER_TRACK' | 'STATIC' | 'UNRESOLVED';
   fxResource: number | null;
   palette: number | null;
   note: string;
@@ -72,9 +73,9 @@ export interface GoldenContext {
 export const GOLDEN_FORMS = ['goku_base', 'goku_ssj', 'piccolo_base', 'android_16'] as const;
 
 export const GOLDEN_CONTEXTS: GoldenContext[] = [
-  { id: 'standard_damage', label: 'STANDARD DAMAGE', technique: null, resourceId: null, semanticRole: 'attack_fwd', actorPath: 'UNRESOLVED', fxResource: null, palette: null, note: 'handler $0A — frame stream no extraído aún (FRAME_TABLE_PARTIAL).' },
-  { id: 'hurt', label: 'HURT', technique: null, resourceId: null, semanticRole: 'hurt', actorPath: 'UNRESOLVED', fxResource: null, palette: null, note: 'reacción de daño — sin recurso ROM decodificado dedicado.' },
-  { id: 'guard', label: 'GUARD', technique: null, resourceId: null, semanticRole: 'guard', actorPath: 'UNRESOLVED', fxResource: null, palette: null, note: 'bloqueo — sin recurso ROM decodificado dedicado.' },
+  { id: 'standard_damage', label: 'STANDARD DAMAGE', technique: 'Cont.Punch', resourceId: 0x2c, semanticRole: 'attack_fwd', actorPath: 'ROM_SEQUENCE', fxResource: null, palette: null, note: 'handler $0A · actor resource $2C seq0/seq1; HIT/MISS target tracks are physical Bank $61 result macros.' },
+  { id: 'hurt', label: 'HURT / HIT REACTION', technique: null, resourceId: null, semanticRole: 'hurt', actorPath: 'ROM_HANDLER_TRACK', fxResource: null, palette: null, note: 'Physical Bank $61 target track selected by the HIT/MISS/SPECIAL_DEFENSE result macro; it is outside the $62–$64 AnimationResource catalog.' },
+  { id: 'guard', label: 'GUARD / DEFENSE', technique: null, resourceId: null, semanticRole: 'guard', actorPath: 'ROM_HANDLER_TRACK', fxResource: null, palette: null, note: 'Defense choreography is selected by handler/result cues and Bank $61 tracks. No dedicated actor AnimationResource is expected.' },
   { id: 'kamehameha', label: 'KAMEHAMEHA', technique: 'Kamehameha', resourceId: 3, semanticRole: 'beam_fire', actorPath: 'ROM_SEQUENCE', fxResource: 5, palette: 44, note: 'resource $03 · seq seleccionada por actorVisualProfileKey.' },
   { id: 'gather', label: 'GATHER', technique: null, resourceId: null, semanticRole: 'gather_power', actorPath: 'STATIC', fxResource: 0x1a, palette: 0x33, note: 'actor NEUTRAL/STATIC + FX $1A + palette $33 (no animación de actor).' },
 ];
@@ -123,7 +124,10 @@ function instanceClassification(
 
 /** Recursos DECODED (con secuencias ROM reproducibles). */
 export function decodedStudioResources(): PhysicalResourceReconciliation[] {
-  return PHYSICAL_FRAME_RECONCILIATION.filter(r => r.status === 'DECODED' && r.frames.length > 0);
+  const closedIds = new Set(getRomSequenceRegistry()
+    .filter(entry => entry.status === 'PHYSICAL_RESOURCE_FULLY_CLOSED')
+    .map(entry => entry.resourceId));
+  return PHYSICAL_FRAME_RECONCILIATION.filter(r => closedIds.has(r.resourceId) && r.frames.length > 0);
 }
 
 /** Formas compatibles de un recurso ROM (dirs manifest). */
@@ -308,12 +312,14 @@ export function cardsForStudioResource(resourceId: number, formId: string): Stud
 
 /** Recursos ROM ordenados por técnica para el selector. */
 export function studioResourceList(): Array<{ resourceId: number; resourceHex: string; technique: string | null; sequenceCount: number }> {
-  return decodedStudioResources().map(r => ({
-    resourceId: r.resourceId,
-    resourceHex: r.resourceHex,
-    technique: r.sourceTechnique,
-    sequenceCount: r.frames.reduce((m, f) => Math.max(m, f.sequenceIndex + 1), 0),
-  }));
+  return getRomSequenceRegistry()
+    .filter(entry => entry.status === 'PHYSICAL_RESOURCE_FULLY_CLOSED')
+    .map(entry => ({
+      resourceId: entry.resourceId,
+      resourceHex: entry.resourceHex,
+      technique: entry.technique,
+      sequenceCount: entry.sequences.length,
+    }));
 }
 
 /** Formas con manifest (para el selector de forma). */
