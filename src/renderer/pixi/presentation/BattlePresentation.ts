@@ -13,6 +13,7 @@
 // consecuencia del tick GBC (nunca setInterval/CSS duration/AnimatedSprite.play).
 
 import type { RomMotionSegment } from '../../../battle/romMotionMath';
+import type { BattlePosition } from '../../../data/positions';
 
 export type { RomMotionSegment };
 
@@ -29,7 +30,19 @@ export type BattleScene =
 
 export interface BattlePresentation {
   /** Cambia el plano cinematográfico (mapea SHOT). */
-  setScene(scene: BattleScene): void;
+  setScene(scene: BattleScene, background?: string): void;
+
+  /** Aplica visibilidad explícita del timeline al actor o target. */
+  setFighterVisibility(role: 'ACTOR' | 'TARGET', visible: boolean): void;
+
+  /** Proyecta una posición táctica verificada al lado indicado. */
+  setFighterPosition(side: 'player' | 'enemy', position: BattlePosition): void;
+
+  /** Posición física absoluta de un ActionObject ROM, cuando el cue aporta X/Y. */
+  setActionObjectPosition(slot: 0 | 1, x: number, y: number): void;
+
+  /** Movimiento físico de un ActionObject ROM gobernado por ticks. */
+  moveActionObject(slot: 0 | 1, dxPerTick: number, dyPerTick: number, durationTicks: number): void;
 
   /** Pose del ATACANTE (mapea ACTOR_POSE). */
   setActorPose(pose: string): void;

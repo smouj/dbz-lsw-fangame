@@ -120,47 +120,6 @@
    "profile": "rom-card-12"
   },
   {
-   "tick": 17,
-   "type": "FX_LOAD",
-   "durationTicks": 1,
-   "resource": 5,
-   "palette": 44,
-   "logicalTick": 0,
-   "source": "ACTION_STARTED",
-   "fidelity": "ROM_STATIC_COMPLETE",
-   "profile": "rom-card-12"
-  },
-  {
-   "tick": 17,
-   "type": "ROM_FX_WINDOW",
-   "durationTicks": 1,
-   "side": "LEFT",
-   "resource": 5,
-   "palette": 44,
-   "logicalTick": 0,
-   "source": "ACTION_STARTED",
-   "fidelity": "ROM_STATIC_COMPLETE",
-   "profile": "rom-card-12"
-  },
-  {
-   "tick": 17,
-   "type": "ROM_AUDIO_SCRIPT",
-   "logicalTick": 0,
-   "source": "ACTION_STARTED",
-   "fidelity": "ROM_STATIC_COMPLETE",
-   "profile": "rom-card-12"
-  },
-  {
-   "tick": 17,
-   "type": "ROM_WAIT",
-   "durationTicks": 60,
-   "reason": "BEAM hold after FX spawn",
-   "logicalTick": 0,
-   "source": "ACTION_STARTED",
-   "fidelity": "ROM_STATIC_COMPLETE",
-   "profile": "rom-card-12"
-  },
-  {
    "tick": 20,
    "type": "ROM_PHYSICAL_FRAME",
    "durationTicks": 2,
@@ -183,31 +142,6 @@
    "profile": "rom-card-12"
   },
   {
-   "tick": 77,
-   "type": "ROM_RESULT_BRANCH",
-   "family": "STANDARD_ATTACK result",
-   "selectedFamily": "SPECIAL_DEFENSE",
-   "selectedSourceEvent": "ATTACK_HIT",
-   "selectedMacroId": null,
-   "selectedMacroHex": null,
-   "logicalTick": 0,
-   "source": "ACTION_STARTED",
-   "fidelity": "ROM_STATIC_COMPLETE",
-   "profile": "rom-card-12"
-  },
-  {
-   "tick": 77,
-   "type": "ROM_FX_WINDOW",
-   "durationTicks": 1,
-   "side": "LEFT",
-   "resource": 5,
-   "palette": 44,
-   "logicalTick": 0,
-   "source": "ACTION_STARTED",
-   "fidelity": "ROM_STATIC_COMPLETE",
-   "profile": "rom-card-12"
-  },
-  {
    "tick": 82,
    "type": "ROM_PHYSICAL_FRAME",
    "durationTicks": 2,
@@ -224,6 +158,47 @@
    "durationTicks": 2,
    "resource": 3,
    "slot": 0,
+   "logicalTick": 0,
+   "source": "ACTION_STARTED",
+   "fidelity": "ROM_STATIC_COMPLETE",
+   "profile": "rom-card-12"
+  },
+  {
+   "tick": 84,
+   "type": "FX_LOAD",
+   "durationTicks": 1,
+   "resource": 5,
+   "palette": 44,
+   "logicalTick": 0,
+   "source": "ACTION_STARTED",
+   "fidelity": "ROM_STATIC_COMPLETE",
+   "profile": "rom-card-12"
+  },
+  {
+   "tick": 84,
+   "type": "ROM_FX_WINDOW",
+   "durationTicks": 1,
+   "side": "LEFT",
+   "resource": 5,
+   "palette": 44,
+   "logicalTick": 0,
+   "source": "ACTION_STARTED",
+   "fidelity": "ROM_STATIC_COMPLETE",
+   "profile": "rom-card-12"
+  },
+  {
+   "tick": 84,
+   "type": "ROM_AUDIO_SCRIPT",
+   "logicalTick": 0,
+   "source": "ACTION_STARTED",
+   "fidelity": "ROM_STATIC_COMPLETE",
+   "profile": "rom-card-12"
+  },
+  {
+   "tick": 84,
+   "type": "ROM_WAIT",
+   "durationTicks": 60,
+   "reason": "BEAM hold after FX spawn",
    "logicalTick": 0,
    "source": "ACTION_STARTED",
    "fidelity": "ROM_STATIC_COMPLETE",
@@ -257,6 +232,31 @@
    "durationTicks": 2,
    "resource": 3,
    "slot": 0,
+   "logicalTick": 0,
+   "source": "ACTION_STARTED",
+   "fidelity": "ROM_STATIC_COMPLETE",
+   "profile": "rom-card-12"
+  },
+  {
+   "tick": 144,
+   "type": "ROM_RESULT_BRANCH",
+   "family": "STANDARD_ATTACK result",
+   "selectedFamily": "SPECIAL_DEFENSE",
+   "selectedSourceEvent": "ATTACK_HIT",
+   "selectedMacroId": null,
+   "selectedMacroHex": null,
+   "logicalTick": 0,
+   "source": "ACTION_STARTED",
+   "fidelity": "ROM_STATIC_COMPLETE",
+   "profile": "rom-card-12"
+  },
+  {
+   "tick": 144,
+   "type": "ROM_FX_WINDOW",
+   "durationTicks": 1,
+   "side": "LEFT",
+   "resource": 5,
+   "palette": 44,
    "logicalTick": 0,
    "source": "ACTION_STARTED",
    "fidelity": "ROM_STATIC_COMPLETE",

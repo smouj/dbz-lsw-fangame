@@ -281,6 +281,10 @@ function computeFxCorpusMetrics(): DevSnapshot['fxCorpus'] {
 class ProductionProbe implements BattlePresentation {
   scenes = 0; moves = 0; projectiles = 0; impacts = 0; cameras = 0; fieldReturns = 0;
   setScene(_s: BattleScene): void { this.scenes++; }
+  setFighterVisibility(): void {}
+  setFighterPosition(): void {}
+  setActionObjectPosition(): void {}
+  moveActionObject(): void {}
   setActorPose(_p: string): void {}
   setTargetPose(_p: string): void {}
   moveActor(): void { this.moves++; }

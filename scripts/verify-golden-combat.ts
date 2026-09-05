@@ -12,8 +12,7 @@
 //   2. 0 fallback silencioso: para acciones de carta con ruta ROM estática,
 //      el timeline runtime lleva la familia ROM (entries rom-card-N /
 //      rom-defense-N con fidelity ROM_*) y no cae a LEGACY/INFERRED. Todo
-//      ROM_PENDING / frame físico UNRESOLVED queda CONTADO y con razón
-//      permitida (allowlist por acción) — nunca silenciado, nunca nuevo.
+//      ROM_PENDING / frame físico UNRESOLVED es fallo inmediato, sin excepciones.
 //   3. 0 cues sin consumir: cada cue del timeline de la acción tiene destino
 //      en el espejo del adapter (classifyRomCue: VISIBLE/DISPLAY/TRACE/
 //      PENDING — nunca UNHANDLED).
@@ -21,11 +20,7 @@
 //   5. Determinismo: cada escenario ×2 con el mismo seed → mismo EventLog
 //      (type + sequence) — sin Math.random.
 //
-// Veredictos por acción: PASS · PARTIAL (pendientes reportados con razón,
-// allowlist congelada) · BLOCKED (gap real del engine, evidenciado). El gate
-// nace verde con PASS/PARTIAL y lista los BLOCKED explícitamente; si un
-// BLOCKED deja de estarlo (el engine lo implementa) el gate se pone ROJO
-// pidiendo actualizar la tabla — un bloqueo no puede desaparecer en silencio.
+// Contrato de salida: 15 PASS · 0 PARTIAL · 0 BLOCKED.
 //
 // Evidencia ROM citada con § de docs/rom/COMBAT_MECHANICS_ROM_CONFIRMED.md.
 // ═══════════════════════════════════════════════════════════════════════
@@ -133,7 +128,7 @@ function unhandledCues(rt: BattleRuntime): { type: string; destination: CueDesti
   return out;
 }
 
-/** Cues ROM_PENDING del timeline runtime con su razón (para allowlist). */
+/** Cues ROM_PENDING del timeline runtime. Golden Combat no admite excepciones. */
 function pendingCueReasons(rt: BattleRuntime): string[] {
   return rt.timeline.entries
     .filter((en) => en.cue.type === 'ROM_PENDING')
@@ -150,17 +145,8 @@ function romFamilyEntries(rt: BattleRuntime, prefix: string): number {
   return rt.timeline.entries.filter((en) => (en.profileId ?? '').startsWith(prefix)).length;
 }
 
-/** Aserción común 2+3: familia ROM en runtime + 0 UNHANDLED + pendientes en allowlist. */
-function assertRomRouting(label: string, rt: BattleRuntime, opts: {
-  /** Prefijo de profileId esperado en el timeline runtime ('' si la acción no
-   *  emite familia ROM en runtime todavía — caso Stage, PARTIAL explícito). */
-  profilePrefix?: string;
-  /** Razones de ROM_PENDING permitidas (substring). Vacío = 0 pendientes. */
-  allowPending?: string[];
-  /** Máximo de frames físicos UNRESOLVED permitidos. */
-  maxUnresolvedPhysical?: number;
-}): void {
-  const { profilePrefix, allowPending = [], maxUnresolvedPhysical = 0 } = opts;
+/** Aserción común 2+3: familia ROM + cero fallback, pendientes o cues huérfanas. */
+function assertRomRouting(label: string, rt: BattleRuntime, profilePrefix?: string): void {
   if (profilePrefix) {
     check(`${label}: timeline runtime lleva familia ROM (${profilePrefix}*)`,
       romFamilyEntries(rt, profilePrefix) > 0,
@@ -170,14 +156,9 @@ function assertRomRouting(label: string, rt: BattleRuntime, opts: {
   check(`${label}: 0 cues UNHANDLED (espejo classifyRomCue)`, unhandled.length === 0,
     unhandled.map((u) => u.type).join(', '));
   const reasons = pendingCueReasons(rt);
-  const unallowed = reasons.filter((r) => !allowPending.some((a) => r.includes(a)));
-  check(`${label}: ROM_PENDING solo con razón permitida (${reasons.length})`,
-    unallowed.length === 0,
-    `nuevas: ${unallowed.join(' || ')}`);
+  check(`${label}: 0 ROM_PENDING`, reasons.length === 0, reasons.join(' || '));
   const unresolved = unresolvedPhysicalCount(rt);
-  check(`${label}: frames físicos UNRESOLVED ≤ ${maxUnresolvedPhysical}`,
-    unresolved <= maxUnresolvedPhysical,
-    `unresolved=${unresolved}`);
+  check(`${label}: 0 frames físicos UNRESOLVED`, unresolved === 0, `unresolved=${unresolved}`);
 }
 
 /** Aserción común 1+5: contrato STOP del orquestador tras un terminal ofensivo. */
@@ -289,13 +270,23 @@ function runStandardDamage(cardId: number, label: string, animResourceHex: numbe
   const totalTicks = res?.sequences[0]?.frames.reduce((s, f) => s + f.durationTicks, 0) ?? 0;
   check(`${label}: oráculo recurso $${animResourceHex.toString(16).padStart(2, '0').toUpperCase()} = ${oracleTicks}t`,
     res?.status === 'DECODED' && totalTicks === oracleTicks, `total=${totalTicks} status=${res?.status ?? 'null'}`);
-  assertRomRouting(label, rt, {
-    profilePrefix: `rom-card-${cardId}`,
-    // Pendiente reportado (no silenciado): la secuencia de animación del
-    // actor aún no está probada para esta forma (ProductionFrameResolver).
-    allowPending: ['ProductionFrameResolver blocked because actorFormId/sequenceSelector is not proven'],
-    maxUnresolvedPhysical: 0,
-  });
+  assertRomRouting(label, rt, `rom-card-${cardId}`);
+  const entries = rt.timeline.entries.filter(en => (en.profileId ?? '').startsWith(`rom-card-${cardId}`));
+  const starts = entries.filter(en => en.cue.type === 'ANIMATION_START').map(en => en.cue as { sequence?: number | null; slot?: number });
+  check(`${label}: doble track físico ROM seq0/slot0 → seq1/slot1`,
+    starts.length === 2 && starts[0]?.sequence === 0 && starts[0]?.slot === 0 && starts[1]?.sequence === 1 && starts[1]?.slot === 1,
+    JSON.stringify(starts));
+  const physical = entries.filter(en => en.cue.type === 'ROM_PHYSICAL_FRAME');
+  const expectedFrames = (res?.sequences[0]?.frames.length ?? 0) + (res?.sequences[1]?.frames.length ?? 0);
+  check(`${label}: película física completa (ambas secuencias, sin attack_fwd)`,
+    physical.length === expectedFrames && physical.every(en => (en.cue as { source?: string }).source === 'ROM_PHYSICAL'),
+    `physical=${physical.length} expected=${expectedFrames}`);
+  const resultStart = entries.find(en => en.cue.type === 'ANIMATION_START' && (en.cue as { sequence?: number }).sequence === 1);
+  const stops = entries.filter(en => en.cue.type === 'ACTION_OBJECT_STOP');
+  const restore = entries.find(en => en.cue.type === 'SCENE_LOAD' && (en.cue as { mode?: string }).mode === 'RESTORE_TACTICAL');
+  check(`${label}: impacto/reacción termina antes de cleanup y retorno`,
+    !!resultStart && stops.length === 2 && !!restore && stops.every(en => en.cue.tick >= resultStart.cue.tick + (res?.sequences[1]?.frames.reduce((s, f) => s + f.durationTicks, 0) ?? 0)) && restore.cue.tick >= stops[1]!.cue.tick,
+    `result=${resultStart?.cue.tick ?? '?'} stops=${stops.map(en => en.cue.tick).join(',')} restore=${restore?.cue.tick ?? '?'}`);
   assertStopsAtDefenseChoice(label, rt);
   return rt;
 }
@@ -325,9 +316,50 @@ function runKamehameha(): BattleRuntime {
   const phys = rt.timeline.entries.filter((en) => en.cue.type === 'ROM_PHYSICAL_FRAME' && (en.cue as { source?: string }).source === 'ROM_PHYSICAL');
   check('kamehameha: frames físicos ROM emitidos (hold del recurso)',
     phys.length >= 3, `frames=${phys.length}`);
-  assertRomRouting('kamehameha', rt, { profilePrefix: 'rom-card-12', allowPending: [], maxUnresolvedPhysical: 0 });
+  assertRomRouting('kamehameha', rt, 'rom-card-12');
   assertStopsAtDefenseChoice('kamehameha', rt);
   return rt;
+}
+
+function assertProjectileLifecycle(
+  label: string,
+  rt: BattleRuntime,
+  cardId: number,
+  resource: number,
+  expectedDurations: number[],
+  travelType: 'SCREEN_MOTION' | 'SCREEN_PATH',
+): void {
+  const entries = rt.timeline.entries.filter(en => (en.profileId ?? '').startsWith(`rom-card-${cardId}`));
+  const cues = entries.map(en => en.cue);
+  const indexOf = (type: string) => cues.findIndex(cue => cue.type === type);
+  const release = indexOf('WAIT_ANIMATION_FRAME');
+  const spawn = indexOf('FX_LOAD');
+  const travel = indexOf(travelType);
+  const restore = indexOf('SCREEN_RESTORE');
+  const impact = indexOf('ROM_RESULT_BRANCH');
+  const cleanup = indexOf('ACTION_OBJECT_STOP');
+  const home = cues.findIndex(cue => cue.type === 'SCENE_LOAD' && (cue as { mode?: string }).mode === 'RESTORE_TACTICAL');
+  check(`${label}: lifecycle ROM release → spawn → travel → restore → impact → cleanup → return`,
+    release >= 0 && release < spawn && spawn < travel && travel < restore && restore < impact && impact < cleanup && cleanup < home,
+    `indices=${[release, spawn, travel, restore, impact, cleanup, home].join(',')}`);
+  check(`${label}: un solo spawn físico, sin doble proyectil`,
+    cues.filter(cue => cue.type === 'FX_LOAD').length === 1);
+  const frames = cues.filter(cue => cue.type === 'ROM_PHYSICAL_FRAME' && (cue as { resource?: number }).resource === resource) as Array<{ type: string; tick: number; durationTicks?: number | null; source?: string; sequence?: number; frameIndex?: number }>;
+  check(`${label}: frame stream físico exacto y ordenado`,
+    frames.length === expectedDurations.length && frames.every((frame, index) =>
+      frame.source === 'ROM_PHYSICAL' && frame.sequence === 0 && frame.frameIndex === index && frame.durationTicks === expectedDurations[index]),
+    `durations=${frames.map(frame => frame.durationTicks).join(',')}`);
+  const lastFrameEnd = Math.max(...frames.map(frame => frame.tick + (frame.durationTicks ?? 0)));
+  const cleanupTick = cleanup >= 0 ? cues[cleanup]!.tick : -1;
+  check(`${label}: cleanup posterior al último frame; 0 actores/proyectiles huérfanos`,
+    cleanupTick >= lastFrameEnd, `lastFrameEnd=${lastFrameEnd} cleanup=${cleanupTick}`);
+  const eventTypes = rt.log.entries.map(en => en.event.type);
+  const hit = eventTypes.indexOf('ATTACK_HIT');
+  const damage = eventTypes.indexOf('DAMAGE_APPLIED');
+  const resolved = eventTypes.indexOf('ACTION_RESOLVED');
+  check(`${label}: Engine ordena ATTACK_HIT → DAMAGE_APPLIED → ACTION_RESOLVED`,
+    hit >= 0 && hit < damage && damage < resolved,
+    `indices=${hit},${damage},${resolved}`);
 }
 
 // ═══════════════════════════════════════════════════════════════════════
@@ -339,22 +371,12 @@ function runEnergyBomb(): BattleRuntime {
   check('energy_bomb: PLAY_CARD aceptado y resuelto',
     r.ok && hasEvent(rt, 'ACTION_STARTED') && hasEvent(rt, 'ACTION_RESOLVED') && hasEvent(rt, 'ATTACK_HIT'));
   check('energy_bomb: daño aplicado al enemigo', damageTo(rt, 'enemy') > 0, `dmg=${damageTo(rt, 'enemy')}`);
-  // Familia runtime BEAM_FAMILY: el cutover beam emite con perfil ROM aunque
-  // la ruta estática devuelva null (frames físicos UNRESOLVED en la compilación
-  // estática por rama no seleccionada). Verificado empíricamente: entries
-  // rom-card-8 con ROM_PHYSICAL_FRAME + FX_LOAD + ROM_FX_WINDOW + SCREEN_MOTION.
-  assertRomRouting('energy_bomb', rt, {
-    profilePrefix: 'rom-card-8',
-    // Pendiente del handler $05: orden secuencia/proyectil aún no cerrable
-    // estáticamente (§218-224; release-frame del scroll). Reportado, no oculto.
-    allowPending: ['projectile handler sequence/order is still statically closable'],
-    // Frames físicos UNRESOLVED (ticks 0-6 del film del proyectil): gap
-    // reportado — el static route por eso devuelve null hoy.
-    maxUnresolvedPhysical: 7,
-  });
+  assertRomRouting('energy_bomb', rt, 'rom-card-8');
+  assertProjectileLifecycle('energy_bomb', rt, 8, 0x0c, [3, 2, 2, 2, 2, 2, 2], 'SCREEN_MOTION');
   const route = romPresentationTimelineForCard(getCard(8) as CardDef, 'player', 'goku_base');
-  check('energy_bomb: ruta estática null por frames UNRESOLVED (divergencia documentada static/runtime)',
-    route === null, `route=${route?.kind ?? 'null'}`);
+  check('energy_bomb: ruta estática PROJECTILE_SCROLL completa y sin pendientes',
+    route?.kind === 'PROJECTILE_SCROLL' && route.pendingCues === 0,
+    `route=${route?.kind ?? 'null'} pending=${route?.pendingCues ?? '?'}`);
   assertStopsAtDefenseChoice('energy_bomb', rt);
   return rt;
 }
@@ -373,11 +395,8 @@ function runDestructDisk(): BattleRuntime {
     !!anim && (anim.cue as { sequence?: number | null }).sequence != null, JSON.stringify(anim?.cue ?? null));
   const phys = rt.timeline.entries.filter((en) => en.cue.type === 'ROM_PHYSICAL_FRAME' && (en.cue as { source?: string }).source === 'ROM_PHYSICAL');
   check('destruct_disk: frames físicos ROM emitidos', phys.length >= 3, `frames=${phys.length}`);
-  assertRomRouting('destruct_disk', rt, {
-    profilePrefix: 'rom-card-21',
-    allowPending: ['projectile handler sequence/order is still statically closable'],
-    maxUnresolvedPhysical: 0,
-  });
+  assertRomRouting('destruct_disk', rt, 'rom-card-21');
+  assertProjectileLifecycle('destruct_disk', rt, 21, 0x12, [3, 2, 3, 60, 3, 2, 2, 2, 2], 'SCREEN_PATH');
   assertStopsAtDefenseChoice('destruct_disk', rt);
   return rt;
 }
@@ -773,10 +792,10 @@ finishAction('stage3', '3 Stage (QTE)', 'PASS', 'QTE engine + daño ROM §130 + 
 // ── 2/3) Cont.Punch / Cont.Kick ──
 console.log('\n═══ 2) CONT.PUNCH ═══');
 assertDeterministic('cont_punch', () => runStandardDamage(5, 'cont_punch', 0x2c, 206));
-finishAction('cont_punch', 'Cont.Punch', 'PARTIAL', 'STANDARD_DAMAGE runtime; 1 ROM_PENDING reportado (secuencia actor no probada)');
+finishAction('cont_punch', 'Cont.Punch', 'PASS', 'STANDARD_DAMAGE físico seq0+seq1; impacto, recuperación y cleanup ROM');
 console.log('\n═══ 3) CONT.KICK ═══');
 assertDeterministic('cont_kick', () => runStandardDamage(6, 'cont_kick', 0x2d, 134));
-finishAction('cont_kick', 'Cont.Kick', 'PARTIAL', 'STANDARD_DAMAGE runtime; 1 ROM_PENDING reportado (secuencia actor no probada)');
+finishAction('cont_kick', 'Cont.Kick', 'PASS', 'STANDARD_DAMAGE físico seq0+seq1; impacto, recuperación y cleanup ROM');
 
 // ── 4) Kamehameha ──
 console.log('\n═══ 4) KAMEHAMEHA ═══');
@@ -786,12 +805,12 @@ finishAction('kamehameha', 'Kamehameha', 'PASS', 'BEAM_BASE clean; film $03 ancl
 // ── 5) Energy Bomb ──
 console.log('\n═══ 5) ENERGY BOMB ═══');
 assertDeterministic('energy_bomb', runEnergyBomb);
-finishAction('energy_bomb', 'Energy Bomb', 'PARTIAL', 'BEAM_FAMILY runtime; 7 frames físicos UNRESOLVED + 1 pending proyectil reportados');
+finishAction('energy_bomb', 'Energy Bomb', 'PASS', 'PROJECTILE_SCROLL físico completo; lifecycle $05 cerrado');
 
 // ── 6) Destruct-Disk ──
 console.log('\n═══ 6) DESTRUCT-DISK ═══');
 assertDeterministic('destruct_disk', runDestructDisk);
-finishAction('destruct_disk', 'Destruct-Disk', 'PARTIAL', 'BEAM_FAMILY runtime (krillin); 1 pending orden-proyectil reportado');
+finishAction('destruct_disk', 'Destruct-Disk', 'PASS', 'PROJECTILE_SCROLL físico completo; lifecycle $07 cerrado');
 
 // ── 7) Gather Power ──
 console.log('\n═══ 7) GATHER POWER ═══');
@@ -847,6 +866,8 @@ const passCount = verdicts.filter((v) => v.verdict === 'PASS').length;
 const partialCount = verdicts.filter((v) => v.verdict === 'PARTIAL').length;
 const blockedCount = verdicts.filter((v) => v.verdict === 'BLOCKED').length;
 console.log(`\n  PASS=${passCount} · PARTIAL=${partialCount} · BLOCKED=${blockedCount} · total=${verdicts.length}`);
+check('golden combat: contrato exacto 15 PASS / 0 PARTIAL / 0 BLOCKED',
+  passCount === 15 && partialCount === 0 && blockedCount === 0 && verdicts.length === 15);
 console.log('\nBloqueados documentados (gaps del engine, no regresiones):');
 for (const v of verdicts.filter((v) => v.verdict === 'BLOCKED')) {
   console.log(`  ⛔ ${v.label}: ${v.note}`);

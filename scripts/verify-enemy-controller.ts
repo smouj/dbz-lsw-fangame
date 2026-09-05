@@ -253,9 +253,10 @@ function enemyAttackState(cfg: InitialBattleConfig): BattleState {
           maxGather = Math.max(maxGather, session.consecutiveGather);
           turnsWithoutDamage++;
         } else {
-          runtime.resolveCard('enemy', getCard(1) as CardDef); // BASIC stage
+          const res = runtime.resolveCard('enemy', getCard(1) as CardDef); // BASIC stage
           attacks++;
-          turnsWithoutDamage++;
+          if (res.events.some((e) => e.type === 'DAMAGE_APPLIED' && e.target === 'player' && e.amount > 0)) turnsWithoutDamage = 0;
+          else turnsWithoutDamage++;
         }
         maxStall = Math.max(maxStall, turnsWithoutDamage);
         enemyAttackPending = false; enemyAttackDone = true;

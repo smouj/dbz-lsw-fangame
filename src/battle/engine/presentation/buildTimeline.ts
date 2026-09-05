@@ -261,6 +261,17 @@ export function buildPresentationTimeline(input: PresentationInput): BattleTimel
       // ── RESULTADO DEL ATAQUE: event-driven, nunca mirar HP ──
       case 'ATTACK_HIT': {
         if (activeAction?.romBackedProfileFamily && e.source === activeAction.side) {
+          // The ROM offensive cutover owns actor/projectile/impact cues, but a
+          // committed generic GUARD still belongs to the defender at contact.
+          // ROM defense cards emit their own DEFENSE_FX via the contact scanner
+          // and therefore do not receive this additional pose.
+          if (defenseSide === e.target && defenseCard?.side !== e.target) {
+            const beam = ['ray', 'wave', 'ball', 'disk', 'sword', 'special'].includes(activeAction.action.visual);
+            add({
+              type: 'FIGHTER_POSE', tick: env.tick, durationTicks: 10,
+              role: 'TARGET', side: e.target, pose: beam ? 'beam_guard' : 'guard',
+            }, env, activeAction.action.id, activeAction.action.fidelity);
+          }
           break;
         }
         const stage = activeAction && activeAction.action.kind === 'command' ? activeAction : null;

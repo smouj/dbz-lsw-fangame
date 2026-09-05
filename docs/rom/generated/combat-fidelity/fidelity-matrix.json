@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-04T14:44:20.688Z",
+  "generated": "2026-09-05T22:19:12.519Z",
   "summary": {
     "cards": 125,
     "byPath": {
@@ -87,21 +87,21 @@
     "decodedResourceCards": 66,
     "complete": 23,
     "partial": 18,
-    "unresolvedDecoded": 27,
+    "unresolvedDecoded": 26,
     "pendingStatic": 0,
     "noRomAnimation": 55,
     "missingResource": 0,
     "romFrames": 2787,
     "mappedFrames": 1018,
-    "romPhysicalFrames": 88,
-    "unresolvedFrames": 1681,
+    "romPhysicalFrames": 151,
+    "unresolvedFrames": 1618,
     "byStatus": {
       "NO_ROM_ANIMATION": 55,
       "ROM_RESOURCE_MISSING": 0,
       "RESOURCE_DECODED_COMPLETE": 23,
-      "RESOURCE_DECODED_ROM_PHYSICAL": 2,
+      "RESOURCE_DECODED_ROM_PHYSICAL": 3,
       "RESOURCE_DECODED_PARTIAL": 18,
-      "RESOURCE_DECODED_UNRESOLVED": 27,
+      "RESOURCE_DECODED_UNRESOLVED": 26,
       "RESOURCE_PARTIAL": 0,
       "RESOURCE_SPECIAL": 0,
       "RESOURCE_UNKNOWN": 0
@@ -235,7 +235,7 @@
       "seqCount": 2,
       "romFrames": 63,
       "mappedFrames": 0,
-      "unresolved": 63,
+      "unresolved": 0,
       "fxResource": null,
       "palette": null,
       "profileKind": "STANDARD_DAMAGE",

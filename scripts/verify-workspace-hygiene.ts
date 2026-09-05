@@ -84,10 +84,10 @@ if (REQUIRE_ROM_PHYSICAL_EXPORTS) {
 
 const physicalCorpusGenerated = readFileSync(join(ROOT, 'src/data/generated/romPhysicalCorpus.generated.ts'), 'utf8');
 check('current generated corpus exposes fighter and Stage-promoted totals',
-  physicalCorpusGenerated.includes('"fighterPhysicalIdentities": 809') &&
-  physicalCorpusGenerated.includes('"fighterFrameInstances": 5767') &&
-  physicalCorpusGenerated.includes('"physicalIdentities": 3257') &&
-  physicalCorpusGenerated.includes('"frameInstances": 21079') &&
+  physicalCorpusGenerated.includes('"fighterPhysicalIdentities": 1193') &&
+  physicalCorpusGenerated.includes('"fighterFrameInstances": 9463') &&
+  physicalCorpusGenerated.includes('"physicalIdentities": 3641') &&
+  physicalCorpusGenerated.includes('"frameInstances": 24775') &&
   physicalCorpusGenerated.includes('"transparentPhysicalIds": 7') &&
   physicalCorpusGenerated.includes('"transparentFrameRecords": 36'));
 

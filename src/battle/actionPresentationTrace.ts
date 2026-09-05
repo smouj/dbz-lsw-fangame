@@ -26,11 +26,10 @@ import {
 } from './characterFrameMap';
 import { spriteDirFor } from '../data/spriteManifest';
 import { resolvePoseFrameSequence } from './spriteConfig';
-import { romFrameView, tickBoundaries } from './animationStudio';
+import { romFrameView } from './animationStudio';
 import { getCard } from '../data/cards';
 import { romPresentationProfileForCard } from './romPresentationProfiles';
 import { romPresentationTimelineForCard } from './romPresentationForCard';
-import { animationResourceById } from './animationResources';
 
 // ─── Modelo ─────────────────────────────────────────────────────────────
 
@@ -284,7 +283,14 @@ export function traceActionPresentation(id: GoldenActionId): ActionPresentationT
   };
 }
 
-/** Frames FÍSICOS ROM del actor (ticks absolutos acumulados entre secuencias). */
+/**
+ * Frames FÍSICOS realmente emitidos por el compilador ROM.
+ *
+ * Antes este tracer volvía a recorrer todas las secuencias del recurso. Eso
+ * incluía secuencias que la ruta no ejecutaba y podía mezclar bindings de otra
+ * forma. La timeline compilada ya es la autoridad de qué frame se presenta,
+ * en qué slot y en qué tick.
+ */
 function collectRomFrames(
   preset: (typeof GOLDEN_ACTIONS)[number],
   trace: ReturnType<typeof runGoldenAction>,
@@ -293,48 +299,44 @@ function collectRomFrames(
   const card = getCard(preset.cardId);
   if (!card) return [];
   const profile = romPresentationProfileForCard(card);
-  const resourceId = profile.dependencies.animationResource;
-  if (resourceId == null) return [];
-  // SEGMENTO SOLO por rutas que conducen una animación del ACTOR. Una ruta
-  // ROM sin ANIMATION_START/ROM_PHYSICAL_FRAME (DEFENSE_RULE: la defensa la
-  // consume la ofensiva entrante §62-65 — el recurso de la fila pertenece al
-  // slot8 ofensivo, no a un actor atacando) no produce frames físicos del
-  // actor: exigirlos sería un falso positivo. El stream visible de esas rutas
-  // son los cues (DEFENSE_FX → pose guard/evade/idle) del stream semántico.
   const route = romPresentationTimelineForCard(card, 'player', preset.playerFormId);
-  const drivesActorAnimation = route?.timeline.entries.some(
-    (en) => en.cue.type === 'ANIMATION_START' || en.cue.type === 'ROM_PHYSICAL_FRAME',
-  ) ?? false;
-  if (!drivesActorAnimation) return [];
-  const catalog = animationResourceById(resourceId);
-  if (!catalog) return [];
+  if (!route) return [];
 
-  const out: RomFrameSample[] = [];
-  let acc = 0;
-  for (let si = 0; si < catalog.sequences.length; si++) {
-    const bounds = tickBoundaries(resourceId, si);
-    for (let fi = 0; fi < bounds.length; fi++) {
-      const fv = resolveRomFighterVisual(preset.playerFormId, resourceId, si, fi, 'LEFT');
-      if (!fv) continue;
-      out.push({
-        absoluteTick: acc + bounds[fi].startTick,
-        resourceId,
-        resourceHex: profile.dependencies.animationResourceHex ?? `$${resourceId.toString(16).padStart(2, '0')}`,
-        sequenceIndex: si,
-        frameIndex: fi,
-        visualFrameId: fv.visualFrameId ?? 0,
-        durationTicks: bounds[fi].durationTicks,
-        actor: fv,
-      });
-    }
-    acc += sequenceTotalTicksOf(resourceId, si);
-  }
-  return out;
-}
-
-function sequenceTotalTicksOf(resourceId: number, sequenceIndex: number): number {
-  const bounds = tickBoundaries(resourceId, sequenceIndex);
-  return bounds.length ? bounds[bounds.length - 1].endTick : 0;
+  return route.timeline.entries.flatMap((entry): RomFrameSample[] => {
+    const cue = entry.cue;
+    if (cue.type !== 'ROM_PHYSICAL_FRAME') return [];
+    const mapping: FrameMapping = cue.source === 'ROM_PHYSICAL'
+      ? 'ROM_EXACT'
+      : cue.source === 'CANONICAL_PHYSICAL'
+        ? 'CANONICAL_PHYSICAL'
+        : cue.source === 'MANIFEST_FALLBACK'
+          ? 'FALLBACK'
+          : 'UNRESOLVED';
+    return [{
+      absoluteTick: cue.tick,
+      resourceId: cue.resource,
+      resourceHex: `$${cue.resource.toString(16).padStart(2, '0')}`,
+      sequenceIndex: cue.sequence,
+      frameIndex: cue.frameIndex,
+      visualFrameId: cue.visualFrameId ?? 0,
+      durationTicks: cue.durationTicks ?? 0,
+      actor: {
+        side: cue.slot === 0 ? 'LEFT' : 'RIGHT',
+        formId: cue.formId,
+        sequenceIndex: cue.sequence,
+        frameIndex: cue.frameIndex,
+        file: cue.file ?? undefined,
+        physicalStatus: physicalStatusOf(mapping),
+        mapping,
+        sourceResource: cue.resource,
+        sourceSequence: cue.sequence,
+        visualFrameId: cue.visualFrameId ?? undefined,
+        offsetX: cue.offsetX ?? undefined,
+        offsetY: cue.offsetY ?? undefined,
+        fallbackReason: cue.fallbackReason ?? undefined,
+      },
+    }];
+  });
 }
 
 /** Resumen de trazas para el Lab (conteos + alarmas). */

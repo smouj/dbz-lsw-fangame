@@ -112,8 +112,6 @@ const TRACE_CUES = new Set<PresentationCue['type']>([
   'ANIMATION_STATE',
   'WAIT_ANIMATION',
   'WAIT_ANIMATION_FRAME',
-  'ACTION_OBJECT_POSITION',
-  'ACTION_OBJECT_MOTION',
   'APPLY_FRAME_DELTA',
   'FX_AUX',
   'SCENE_CONFIGURE',
@@ -128,8 +126,6 @@ const TRACE_CUES = new Set<PresentationCue['type']>([
   'ACTION_OBJECT_FRAME_OFFSET',
   'ACTION_OBJECT_STOP',
   'MULTI_ACTOR_SYNC',
-  'FIGHTER_VISIBILITY',
-  'FIGHTER_POSITION',
   'AURA',
   'EFFECT',
   'HUD',
@@ -198,7 +194,7 @@ export class ProductionRomPresentationAdapter {
     switch (cue.type) {
       // ── SEMÁNTICOS (buildTimeline: MOVE/GUARD + futuros cutovers) ──
       case 'SCENE': {
-        this.pres.setScene(SCENE_MODE_TO_BATTLE_SCENE[cue.mode] ?? 'ACTION_DUEL');
+        this.pres.setScene(SCENE_MODE_TO_BATTLE_SCENE[cue.mode] ?? 'ACTION_DUEL', cue.background);
         this.stats.sceneChanges++;
         visible = true;
         break;
@@ -206,6 +202,16 @@ export class ProductionRomPresentationAdapter {
       case 'FIGHTER_POSE': {
         if (cue.role === 'ACTOR') this.pres.setActorPose(cue.pose);
         else this.pres.setTargetPose(cue.pose);
+        visible = true;
+        break;
+      }
+      case 'FIGHTER_VISIBILITY': {
+        this.pres.setFighterVisibility(cue.role, cue.visible);
+        visible = true;
+        break;
+      }
+      case 'FIGHTER_POSITION': {
+        this.pres.setFighterPosition(cue.side, cue.position);
         visible = true;
         break;
       }
@@ -247,6 +253,21 @@ export class ProductionRomPresentationAdapter {
           visible = true;
         }
         this.stats.motions++;
+        break;
+      }
+      case 'ACTION_OBJECT_POSITION': {
+        if (cue.x != null && cue.y != null) {
+          this.pres.setActionObjectPosition(cue.slot, cue.x, cue.y);
+          visible = true;
+        } else {
+          this.stats.traceCues++;
+        }
+        break;
+      }
+      case 'ACTION_OBJECT_MOTION': {
+        this.pres.moveActionObject(cue.slot, cue.dxPerTick, cue.dyPerTick, cue.durationTicks);
+        this.stats.motions++;
+        visible = true;
         break;
       }
       case 'FX_LOAD': {

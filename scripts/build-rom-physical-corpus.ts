@@ -15,6 +15,15 @@ import { ANIMATION_RESOURCE_CATALOG } from '../src/battle/animationResources';
 import { ROM_BANK61_ANIMATION_CORE_RESOURCE_BASES } from '../src/data/generated/romAnimationCore.generated';
 
 const ROOT = process.cwd();
+function runTsx(args: string[]): void {
+  const command = process.platform === 'win32'
+    ? (process.env.ComSpec ?? 'cmd.exe')
+    : 'npx';
+  const commandArgs = process.platform === 'win32'
+    ? ['/d', '/s', '/c', 'npx.cmd', 'tsx', ...args]
+    : ['tsx', ...args];
+  execFileSync(command, commandArgs, { cwd: ROOT, stdio: 'pipe' });
+}
 const FIGHTERS = join(ROOT, 'docs/rom/generated/fighters');
 const PROFILES = join(ROOT, 'docs/rom/generated/sprite-mapping/rom-form-profiles.json');
 const OUT_REPORT = join(ROOT, 'docs/rom/generated/physical-corpus');
@@ -25,7 +34,7 @@ const GENERATED_TS = join(ROOT, 'src/data/generated/romPhysicalCorpus.generated.
 const SCHEMA_VERSION = 2;
 const PHYSICAL_RENDERER_SCHEMA = 3;
 const OFFSET_ENCODING = 's8';
-const FIGHTER_PHYSICAL_RESOURCE_IDS = new Set([0x00, 0x01, 0x03, 0x04, 0x05, 0x08, 0x09, 0x0b, 0x0f, 0x12, 0x16, 0x22, 0x2c, 0x3f]);
+const FIGHTER_PHYSICAL_RESOURCE_IDS = new Set([0x00, 0x01, 0x03, 0x04, 0x05, 0x08, 0x09, 0x0b, 0x0c, 0x0f, 0x12, 0x16, 0x22, 0x2c, 0x2d, 0x3f]);
 const STAGE_BANK61_RENDER_TARGETS = [
   { resourceIndex: 0, sequences: [0x0a, 0x0b, 0x0d, 0x0f, 0x10, 0x17] },
   { resourceIndex: 1, sequences: null },
@@ -337,17 +346,13 @@ function renderReachableResources(resources: AnimationResource[], profilesByReso
       .map(key => hex(key))
       .join(',');
 
-    execFileSync('npx', [
-      'tsx',
+    runTsx([
       'tools/rom-research/scripts/render-fighter-physical.ts',
       '--resource',
       hex(resource.resourceId),
       '--keys',
       keys,
-    ], {
-      cwd: ROOT,
-      stdio: 'pipe',
-    });
+    ]);
   }
 }
 
@@ -371,11 +376,11 @@ function renderStageBank61Resources(profiles: RomFormProfile[]): void {
       keys,
     ];
     if (target.sequences == null) {
-      execFileSync('npx', commonArgs, { cwd: ROOT, stdio: 'pipe' });
+      runTsx(commonArgs.slice(1));
       continue;
     }
     for (const selector of target.sequences) {
-      execFileSync('npx', [...commonArgs, '--selector', String(selector)], { cwd: ROOT, stdio: 'pipe' });
+      runTsx([...commonArgs.slice(1), '--selector', String(selector)]);
     }
   }
 }

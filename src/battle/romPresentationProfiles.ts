@@ -14,7 +14,6 @@ import {
   type RomActionExecutionEvidence,
   type RomActionResultBranch,
 } from './romActionExecutionDescriptors';
-import { resolveRomSequenceSelector } from './romSequenceSelectors';
 import {
   PHYSICAL_RESOLUTION_MACROS,
   ROM_BEAM_SETUP_MOTION,
@@ -41,11 +40,17 @@ export type RomPresentationStepKind =
   | 'PRESENTATION_MACRO'
   | 'ROM_MOTION'
   | 'START_ANIMATION'
+  | 'WAIT_ANIMATION'
   | 'WAIT'
   | 'WAIT_ANIMATION_FRAME'
   | 'SPAWN_FX'
   | 'AUDIO_SCRIPT'
   | 'SCREEN_MOTION'
+  | 'SCREEN_PATH'
+  | 'SCREEN_RESTORE'
+  | 'APPLY_FRAME_DELTA'
+  | 'STOP_ANIMATION'
+  | 'SCENE_RESTORE'
   | 'BRANCH_RESULT'
   | 'PENDING_STATIC_DECODE'
   | 'PENDING_ROM_TRACE';
@@ -294,6 +299,52 @@ function waitFrame(frame: number, source: string): RomPresentationStep {
   });
 }
 
+function waitAnimation(resource: number, sequence: number, slot: 0 | 1, source: string): RomPresentationStep {
+  return step({
+    id: `WAIT_ANIMATION_R${resource.toString(16).padStart(2, '0')}_SEQ_${sequence}`,
+    kind: 'WAIT_ANIMATION',
+    tick: null,
+    durationTicks: null,
+    macroId: null,
+    resource,
+    fxResource: null,
+    palette: null,
+    frame: null,
+    sequence,
+    slot,
+    motion: null,
+    branchFamily: null,
+    label: `Wait AnimationResource 0x${resource.toString(16).padStart(2, '0')} sequence ${sequence}`,
+    evidence: 'ROM_HANDLER_VERIFIED',
+    source,
+  });
+}
+
+function simpleVmStep(
+  id: string,
+  kind: Extract<RomPresentationStepKind, 'SCREEN_PATH' | 'SCREEN_RESTORE' | 'APPLY_FRAME_DELTA' | 'STOP_ANIMATION' | 'SCENE_RESTORE'>,
+  source: string,
+  slot?: 0 | 1,
+): RomPresentationStep {
+  return step({
+    id,
+    kind,
+    tick: null,
+    durationTicks: null,
+    macroId: null,
+    resource: null,
+    fxResource: null,
+    palette: null,
+    frame: null,
+    slot,
+    motion: null,
+    branchFamily: null,
+    label: id,
+    evidence: 'ROM_HANDLER_VERIFIED',
+    source,
+  });
+}
+
 function spawnFx(descriptor: RomActionExecutionDescriptor): RomPresentationStep | null {
   if (descriptor.visualEffect.resource == null && descriptor.visualEffect.palette == null) return null;
   return step({
@@ -470,16 +521,27 @@ function standardDamageProgram(descriptor: RomActionExecutionDescriptor): RomPre
     macroStep('MACRO_RUSH_1C', 0x1c, 'physical rush setup'),
     motionStep('ROM_RUSH_MOTION', 0x1c, 'RUSH', ROM_RUSH_MOTION, 'RUSH +98px / 25 ticks, mirrored by side'),
   ];
-  const actor = startAnimation(descriptor);
+  // V3 static reachability: every $0A resource uses both physical tracks.
+  // seq0 is the card technique; seq1 is started by result macros $2F/$30/$31.
+  const actor = startAnimation(descriptor, 0, 0);
   if (actor) program.push(actor);
   program.push(waitFrame(2, 'STANDARD_DAMAGE handler grammar'));
   const fx = spawnFx(descriptor);
   if (fx) program.push(fx);
+  if (descriptor.actorAnimation.resource != null) {
+    program.push(waitAnimation(descriptor.actorAnimation.resource, 0, 0, 'Bank03:$5FE3 STANDARD_DAMAGE main track'));
+  }
   program.push(macroStep('MACRO_RESULT_PREP_2E', 0x2e, 'prepare physical resolution branch'));
   program.push(branchStep('CA53 -> HIT/MISS/SPECIAL_DEFENSE'));
-  if (descriptor.actorAnimation.evidence === 'PENDING_STATIC_DECODE') {
-    program.push(pendingStep('PENDING_ACTOR_FRAME_STREAM', 'PENDING_STATIC_DECODE', 'actor AnimationResource frame stream still statically closable', 'animationResources.ts'));
+  if (descriptor.actorAnimation.resource != null) {
+    const result = startAnimation(descriptor, 1, 1);
+    if (result) program.push(result);
+    program.push(waitAnimation(descriptor.actorAnimation.resource, 1, 1, 'V3 STANDARD_DAMAGE result macro track'));
+    program.push(simpleVmStep('APPLY_ATTACKER_FRAME_DELTA', 'APPLY_FRAME_DELTA', 'Bank03:$5FE3 + macro $2F/$30/$31', 0));
+    program.push(simpleVmStep('STOP_STANDARD_DAMAGE_SLOT_0', 'STOP_ANIMATION', 'opcode $08 cleanup', 0));
+    program.push(simpleVmStep('STOP_STANDARD_DAMAGE_SLOT_1', 'STOP_ANIMATION', 'opcode $08 cleanup', 1));
   }
+  program.push(simpleVmStep('RESTORE_TACTICAL_AFTER_STANDARD_DAMAGE', 'SCENE_RESTORE', 'Bank03:$5FE3 return'));
   return program;
 }
 
@@ -522,7 +584,13 @@ function projectileProgram(descriptor: RomActionExecutionDescriptor): RomPresent
   // $06: WAIT7 → launch → SCREEN -6×16 → WAIT60
   // $07: WAIT2 → launch → WAIT4 → screen/path → restore → WAIT60
   const launch = beamLaunchProfileForHandler(descriptor.execution.handler);
-  if (launch?.screenMotion) {
+  if (launch) program.push(waitFrame(launch.releaseSyncFrame, `BeamLaunchProfile $${descriptor.execution.handlerHex}`));
+  const fx = spawnFx(descriptor);
+  if (fx) program.push(fx);
+  if (descriptor.execution.handler === 0x07) {
+    program.push(waitStep('WAIT_SPECIAL_PATH_4T', 4, 'SPECIAL_PROJECTILE_PATH wait after FX', 'Bank03:$5DFE'));
+    program.push(simpleVmStep('SCREEN_PATH_SPECIAL_PROJECTILE', 'SCREEN_PATH', 'Bank03:$5DFE opcode $11'));
+  } else if (launch?.screenMotion) {
     program.push(screenMotionStep(
       `SCREEN_MOTION_${launch.screenMotion.ticks}T`,
       launch.screenMotion.ticks,
@@ -530,28 +598,14 @@ function projectileProgram(descriptor: RomActionExecutionDescriptor): RomPresent
       launch.screenMotion.restore,
     ));
   }
-  const fx = spawnFx(descriptor);
-  if (fx) program.push(fx);
-  if (descriptor.execution.handler === 0x05) {
-    program.push(waitStep('WAIT_ROCKET_4T', 4, 'Rocket Punch releaseSyncFrame', 'Bank03:$5B38'));
+  program.push(simpleVmStep('RESTORE_PROJECTILE_SCREEN', 'SCREEN_RESTORE', 'Bank03:$5776 opcode $0F'));
+  program.push(waitStep('WAIT_PROJECTILE_HOLD_60T', 60, 'Beam-family result hold', 'Bank03:$5776 opcode $07:0x3C'));
+  program.push(branchStep('BEAM_FAMILY result'));
+  if (descriptor.actorAnimation.resource != null && launch) {
+    program.push(waitAnimation(descriptor.actorAnimation.resource, 0, 0, 'Bank03:$5776 wait actor completion before cleanup'));
   }
-  if (descriptor.execution.handler === 0x06) {
-    program.push(waitStep('WAIT_POTBELLY_7T', 7, 'Potbelly releaseSyncFrame', 'Bank03:$5B9E'));
-  }
-  if (descriptor.execution.handler === 0x07) {
-    program.push(waitStep('WAIT_SPECIAL_PATH_2T', 2, 'SPECIAL_PROJECTILE_PATH wait before FX', 'Bank03:$5DFE'));
-    program.push(waitStep('WAIT_SPECIAL_PATH_4T', 4, 'SPECIAL_PROJECTILE_PATH second wait (new)', 'Bank03:$5DFE'));
-  }
-  // Use the same RomSequenceSelector resolver as beams (Bank30:$6900 path).
-  // Only emit PENDING if the resolver has no evidence for this card + form + resource.
-  const selectorResult = resolveRomSequenceSelector({
-    cardId: descriptor.cardId,
-    formId: null, // will be provided by caller context in real use
-    animationResource: descriptor.actorAnimation.resource,
-  });
-  if (selectorResult.evidence === 'UNRESOLVED') {
-    program.push(pendingStep('PENDING_PROJECTILE_SEQUENCE_SELECTION', 'PENDING_STATIC_DECODE', 'projectile handler sequence/order is still statically closable', 'animationResources.ts'));
-  }
+  program.push(simpleVmStep('STOP_PROJECTILE_ACTOR', 'STOP_ANIMATION', 'Bank03:$5776 state $53 cleanup', 0));
+  program.push(simpleVmStep('RESTORE_TACTICAL_AFTER_PROJECTILE', 'SCENE_RESTORE', 'Bank03:$5776 state $53 cleanup'));
   return program;
 }
 

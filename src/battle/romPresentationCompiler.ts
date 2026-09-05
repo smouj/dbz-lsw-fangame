@@ -21,6 +21,7 @@ import {
 import { resolveProductionFrame } from './productionFrameResolver';
 import { animationResourceById } from './animationResources';
 import { romFxWindowFor, type RomFxWindowPhase } from './romFxWindow';
+import { SCREEN_PATH_TABLE } from './romScreenPath';
 
 export type RomCompiledPresentationCompleteness = 'COMPLETE' | 'PARTIAL';
 
@@ -168,6 +169,16 @@ function entry(
   };
 }
 
+interface CompileAnimationState {
+  resource: number;
+  sequence: number;
+  startTick: number;
+}
+
+interface CompileState {
+  animations: Map<0 | 1, CompileAnimationState>;
+}
+
 function compileStep(
   step: RomPresentationStep,
   profile: RomPresentationProfile,
@@ -177,6 +188,7 @@ function compileStep(
   sequenceSelector: number | null,
   selectedResultFamily: string | null,
   selectedResultSourceEvent: string | null,
+  state: CompileState,
 ): { cues: PresentationCue[]; advanceTicks: number } {
   switch (step.kind) {
     case 'NONE':
@@ -220,6 +232,9 @@ function compileStep(
       // sequenceSelector global. step.slot es el AnimationSlot físico.
       const slot = step.slot ?? 0;
       const sequence = step.sequence ?? sequenceSelector;
+      if (step.resource != null && sequence != null) {
+        state.animations.set(slot, { resource: step.resource, sequence, startTick: cursor });
+      }
       const cues: PresentationCue[] = [{ type: 'ANIMATION_START', tick: cursor, slot, resource: step.resource, sequence }];
       if (step.resource != null && actorFormId && sequence != null) {
         const resource = step.resource;
@@ -287,6 +302,30 @@ function compileStep(
       return { cues, advanceTicks: 0 };
     }
 
+    case 'WAIT_ANIMATION': {
+      const slot = step.slot ?? 0;
+      const sequence = step.sequence ?? sequenceSelector;
+      const frames = step.resource != null && sequence != null
+        ? animationResourceById(step.resource)?.sequences[sequence]?.frames ?? []
+        : [];
+      const totalTicks = frames.reduce((sum, frame) => sum + Math.max(1, frame.durationTicks), 0);
+      if (step.resource == null || sequence == null || totalTicks <= 0) {
+        return {
+          cues: [{ type: 'ROM_PENDING', tick: cursor, reason: `${step.id}: animation wait has no decoded resource/sequence`, boundary: 'STATIC' }],
+          advanceTicks: 0,
+        };
+      }
+      const animation = state.animations.get(slot);
+      const animationEndTick = animation?.resource === step.resource && animation.sequence === sequence
+        ? animation.startTick + totalTicks
+        : cursor + totalTicks;
+      const durationTicks = Math.max(0, animationEndTick - cursor);
+      return {
+        cues: [{ type: 'WAIT_ANIMATION', tick: cursor, durationTicks, slot }],
+        advanceTicks: durationTicks,
+      };
+    }
+
     case 'WAIT':
       return {
         cues: [{
@@ -298,16 +337,27 @@ function compileStep(
         advanceTicks: step.durationTicks ?? 1,
       };
 
-    case 'WAIT_ANIMATION_FRAME':
+    case 'WAIT_ANIMATION_FRAME': {
+      const slot = step.slot ?? 0;
+      const animation = state.animations.get(slot);
+      let advanceTicks = 0;
+      if (animation) {
+        const frames = animationResourceById(animation.resource)?.sequences[animation.sequence]?.frames ?? [];
+        const targetTicks = frames
+          .slice(0, Math.max(0, step.frame ?? 0))
+          .reduce((sum, frame) => sum + Math.max(1, frame.durationTicks), 0);
+        advanceTicks = Math.max(0, animation.startTick + targetTicks - cursor);
+      }
       return {
         cues: [{
           type: 'WAIT_ANIMATION_FRAME',
           tick: cursor,
-          slot: 0,
+          slot,
           frame: step.frame ?? 0,
         }],
-        advanceTicks: 0,
+        advanceTicks,
       };
+    }
 
     case 'SPAWN_FX':
     {
@@ -344,6 +394,33 @@ function compileStep(
         advanceTicks: step.durationTicks ?? 1,
       };
 
+    case 'SCREEN_PATH':
+      return {
+        cues: [
+          {
+            type: 'SCREEN_PATH',
+            tick: cursor,
+            durationTicks: SCREEN_PATH_TABLE.stepCount,
+          },
+        ],
+        advanceTicks: SCREEN_PATH_TABLE.stepCount,
+      };
+
+    case 'SCREEN_RESTORE':
+      return { cues: [{ type: 'SCREEN_RESTORE', tick: cursor }], advanceTicks: 0 };
+
+    case 'APPLY_FRAME_DELTA':
+      return { cues: [{ type: 'APPLY_FRAME_DELTA', tick: cursor, slot: step.slot ?? 0 }], advanceTicks: 0 };
+
+    case 'STOP_ANIMATION':
+      return { cues: [{ type: 'ACTION_OBJECT_STOP', tick: cursor, slot: step.slot ?? 0 }], advanceTicks: 0 };
+
+    case 'SCENE_RESTORE':
+      return {
+        cues: [{ type: 'SCENE_LOAD', tick: cursor, vramLoad: '$8E00', mode: 'RESTORE_TACTICAL' }],
+        advanceTicks: 0,
+      };
+
     case 'BRANCH_RESULT': {
       const selectedBranch = selectedResultFamily
         ? profile.resultBranches.find(branch => branch.family === selectedResultFamily)
@@ -363,7 +440,13 @@ function compileStep(
           macroHex: branch.macroHex,
         })),
       }];
-      const windowCue = fxWindowCue(profile, cursor, actorSide, 'RESULT');
+      // A RESULT window exists only when the ROM profile has an actual
+      // CA53/result-macro branch. Projectile handlers also expose a semantic
+      // result boundary, but reuse their single launched FX window; creating a
+      // second one there duplicates the physical effect and leaves an orphan.
+      const windowCue = profile.resultBranches.length > 0
+        ? fxWindowCue(profile, cursor, actorSide, 'RESULT')
+        : null;
       if (windowCue) cues.push(windowCue);
       return {
         cues,
@@ -409,10 +492,11 @@ export function compileRomPresentationProfile(
   const selectedResultFamily = options.selectedResultFamily ?? null;
   const selectedResultSourceEvent = options.selectedResultSourceEvent ?? null;
   const entries: TimelineEntry[] = [];
+  const state: CompileState = { animations: new Map() };
   let cursor = startTick;
 
   for (const programStep of profile.program) {
-    const compiled = compileStep(programStep, profile, cursor, actorSide, actorFormId, sequenceSelector, selectedResultFamily, selectedResultSourceEvent);
+    const compiled = compileStep(programStep, profile, cursor, actorSide, actorFormId, sequenceSelector, selectedResultFamily, selectedResultSourceEvent, state);
     for (const cue of compiled.cues) entries.push(entry(cue, profile, sourceEvent, logicalTick));
     cursor += compiled.advanceTicks;
   }

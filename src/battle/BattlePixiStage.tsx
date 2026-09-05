@@ -15,6 +15,7 @@ import { BattleRenderer } from '../renderer/pixi/BattleRenderer';
 import { PixiBattlePresentation } from '../renderer/pixi/presentation/PixiBattlePresentation';
 import { BATTLE_LOGICAL_W, BATTLE_LOGICAL_H } from '../renderer/pixi/config';
 import type { BattleScenario } from '../data/scenarios';
+import { SPECIAL_ACTION_BACKGROUND } from '../data/scenarios';
 import type { BattlePosition } from '../data/positions';
 
 interface BattlePixiStageProps {
@@ -73,6 +74,7 @@ export function BattlePixiStage({ scenario, playerFormId, enemyFormId, playerPos
         enemyFormId,
         overviewBackground: scenario.overviewBackground,
         actionBackground: scenario.actionBackground,
+        specialActionBackground: SPECIAL_ACTION_BACKGROUND,
         playerPos,
         enemyPos,
         scale: 3,

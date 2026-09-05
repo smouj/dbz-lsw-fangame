@@ -60,10 +60,15 @@ const spriteRoot = path.join(root, 'public/assets/sprites');
 const romPhysicalComplete =
   ROM_PHYSICAL_CORPUS_SUMMARY.totals.forms === 48
   && ROM_PHYSICAL_CORPUS_SUMMARY.totals.formsIndexed === 48
-  && ROM_PHYSICAL_CORPUS_SUMMARY.totals.fighterPhysicalIdentities === 809
-  && ROM_PHYSICAL_CORPUS_SUMMARY.totals.fighterFrameInstances === 5767
-  && ROM_PHYSICAL_CORPUS_SUMMARY.totals.physicalIdentities >= 809
-  && ROM_PHYSICAL_CORPUS_SUMMARY.totals.frameInstances >= 5767
+  && ROM_PHYSICAL_CORPUS_SUMMARY.totals.formsPaletteBlocked === 0
+  && ROM_PHYSICAL_CORPUS_SUMMARY.totals.formsResourceBlocked === 0
+  && ROM_PHYSICAL_CORPUS_SUMMARY.totals.resourcesRendered === ROM_PHYSICAL_CORPUS_SUMMARY.totals.resourcesReachable
+  // These are monotonic coverage floors, not frozen output counts. Expanding the
+  // ROM decoder must not reactivate the superseded hand-authored pose contract.
+  && ROM_PHYSICAL_CORPUS_SUMMARY.totals.fighterPhysicalIdentities >= 809
+  && ROM_PHYSICAL_CORPUS_SUMMARY.totals.fighterFrameInstances >= 5767
+  && ROM_PHYSICAL_CORPUS_SUMMARY.totals.physicalIdentities >= ROM_PHYSICAL_CORPUS_SUMMARY.totals.fighterPhysicalIdentities
+  && ROM_PHYSICAL_CORPUS_SUMMARY.totals.frameInstances >= ROM_PHYSICAL_CORPUS_SUMMARY.totals.fighterFrameInstances
   && ROM_PHYSICAL_CORPUS_SUMMARY.forms.every(form =>
     Array.isArray(form.stagePhysicalFrameIndex) && form.stagePhysicalFrameIndex.length > 0
   );

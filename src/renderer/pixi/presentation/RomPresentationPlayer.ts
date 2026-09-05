@@ -10,24 +10,42 @@
 // el Presenter, el Presenter sustituirá a este scheduler de canary.
 // ═══════════════════════════════════════════════════════════════════════
 
-import { GAMEPLAY_CONFIG } from '../../../config/gameplay.config';
 import type { BattleTimeline } from '../../../battle/engine/presentation/PresentationCue';
+import { GbcClockAdapter } from '../../../battle/GbcClockAdapter';
 import type { ProductionRomPresentationAdapter } from './ProductionRomPresentationAdapter';
 
-const GBC_FPS = GAMEPLAY_CONFIG.gbcNativeFps;
+export interface BattleTickAuthority {
+  /** Tick absoluto y monotónico del BattleRuntime. */
+  getTick(): number;
+  /** Única vía por la que el tiempo lógico puede avanzar. */
+  advance(ticks: number): void;
+}
+
+/** Avanza exactamente un tick mediante la autoridad y verifica monotonicidad. */
+export function advanceAuthoritativeBattleTick(clock: BattleTickAuthority): number {
+  const before = clock.getTick();
+  clock.advance(1);
+  const after = clock.getTick();
+  if (after !== before + 1) {
+    throw new Error(`Battle tick authority must advance exactly one tick (${before} -> ${after})`);
+  }
+  return after;
+}
 
 export interface RomPresentationPlayerOptions {
-  onTick?: (tick: number) => void;
+  clock: BattleTickAuthority;
+  onTick?: (presentationTick: number, battleTick: number) => void;
   onComplete: () => void;
 }
 
 export class RomPresentationPlayer {
   private raf = 0;
   private last = 0;
-  private acc = 0;
   private tickCursor = -1;
   private done = false;
   private readonly totalTicks: number;
+  private readonly realClock = new GbcClockAdapter();
+  private battleStartTick = 0;
 
   constructor(
     private readonly timeline: BattleTimeline,
@@ -43,7 +61,13 @@ export class RomPresentationPlayer {
 
   start(): void {
     if (this.done) return;
+    this.battleStartTick = this.opts.clock.getTick();
+    this.tickCursor = this.timeline.startTick - 1;
+    this.realClock.reset();
     this.last = performance.now();
+    // El tick inicial también procede de la autoridad. No se inventa un tick
+    // local para consumir los cues que empiezan en timeline.startTick.
+    this.presentCurrentTick(this.timeline.startTick, this.battleStartTick);
     this.raf = requestAnimationFrame(this.tickLoop);
   }
 
@@ -54,22 +78,16 @@ export class RomPresentationPlayer {
 
   private tickLoop = (now: number): void => {
     if (this.done) return;
-    const delta = ((now - this.last) / 1000) * GBC_FPS;
+    const ticksDue = this.realClock.push(now - this.last);
     this.last = now;
-    this.acc += delta;
 
-    const target = Math.min(Math.floor(this.acc), this.totalTicks);
-    while (this.tickCursor < target) {
-      this.tickCursor += 1;
-      const at = this.tickCursor;
-      // Sincroniza el reloj ANTES de aplicar los cues del tick (frame = f(tick)).
-      this.adapter.sync(at);
-      for (const entry of this.timeline.entries) {
-        if (entry.cue.tick === at) this.adapter.consume(entry.cue);
-      }
+    // RAF solo entrega cadencia real al GbcClockAdapter. Cada paso lógico pasa
+    // por BattleRuntime.advance(1), y Pixi siempre lee después su tick real.
+    for (let i = 0; i < ticksDue && this.tickCursor < this.totalTicks; i++) {
+      const battleTick = advanceAuthoritativeBattleTick(this.opts.clock);
+      const presentationTick = this.timeline.startTick + (battleTick - this.battleStartTick);
+      this.presentCurrentTick(presentationTick, battleTick);
     }
-
-    this.opts.onTick?.(target);
 
     if (this.tickCursor >= this.totalTicks) {
       this.finish();
@@ -77,6 +95,20 @@ export class RomPresentationPlayer {
     }
     this.raf = requestAnimationFrame(this.tickLoop);
   };
+
+  private presentCurrentTick(presentationTick: number, battleTick: number): void {
+    const target = Math.min(presentationTick, this.totalTicks);
+    while (this.tickCursor < target) {
+      this.tickCursor += 1;
+      // El renderer recibe el tick ABSOLUTO del Runtime; el timeline conserva
+      // sus ticks relativos únicamente para seleccionar qué cues corresponden.
+      this.adapter.sync(battleTick - (target - this.tickCursor));
+      for (const entry of this.timeline.entries) {
+        if (entry.cue.tick === this.tickCursor) this.adapter.consume(entry.cue);
+      }
+    }
+    this.opts.onTick?.(target, battleTick);
+  }
 
   private finish(): void {
     if (this.done) return;

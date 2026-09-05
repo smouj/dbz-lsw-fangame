@@ -3,12 +3,12 @@
   "scope": "AnimationResource physical promotion matrix; RENDERABLE means promoted into the certified Fighter corpus, not merely decoded.",
   "totals": {
     "resources": 66,
-    "renderable": 14,
-    "frameStreamOnly": 0,
-    "metaspritePending": 24,
+    "renderable": 16,
+    "frameStreamOnly": 45,
+    "metaspritePending": 0,
     "graphicsPending": 4,
-    "handlerDependent": 18,
-    "dynamicPending": 5,
+    "handlerDependent": 0,
+    "dynamicPending": 0,
     "unreferenced": 1
   },
   "resources": [
@@ -78,14 +78,14 @@
       "handlers": [
         "0x02"
       ],
-      "sequences": 0,
-      "frames": 0,
-      "physicalLinkage": "PARTIAL",
+      "sequences": 2,
+      "frames": 14,
+      "physicalLinkage": "FRAME_STREAM_ONLY",
       "profilesRendered": 0,
       "physicalIds": 0,
       "frameInstances": 0,
-      "status": "GRAPHICS_PENDING",
-      "blockingReason": "Base beam/support handler uses the known resource id, but the resource pointer table entry has not been resolved to complete sequences yet."
+      "status": "FRAME_STREAM_ONLY",
+      "blockingReason": "Frame stream is decoded, but this resource has not been promoted through metasprite/graphics/profile rendering invariants yet."
     },
     {
       "resourceId": 3,
@@ -196,14 +196,14 @@
       "handlers": [
         "0x02"
       ],
-      "sequences": 0,
-      "frames": 0,
-      "physicalLinkage": "PARTIAL",
+      "sequences": 2,
+      "frames": 14,
+      "physicalLinkage": "FRAME_STREAM_ONLY",
       "profilesRendered": 0,
       "physicalIds": 0,
       "frameInstances": 0,
-      "status": "GRAPHICS_PENDING",
-      "blockingReason": "Base beam/support handler uses the known resource id, but the resource pointer table entry has not been resolved to complete sequences yet."
+      "status": "FRAME_STREAM_ONLY",
+      "blockingReason": "Frame stream is decoded, but this resource has not been promoted through metasprite/graphics/profile rendering invariants yet."
     },
     {
       "resourceId": 7,
@@ -221,14 +221,14 @@
       "handlers": [
         "0x04"
       ],
-      "sequences": 0,
-      "frames": 0,
-      "physicalLinkage": "PARTIAL",
+      "sequences": 2,
+      "frames": 41,
+      "physicalLinkage": "FRAME_STREAM_ONLY",
       "profilesRendered": 0,
       "physicalIds": 0,
       "frameInstances": 0,
-      "status": "HANDLER_DEPENDENT",
-      "blockingReason": "Projectile/beam variant handler selects a resource sequence path; the handler-specific static selector must be mapped before frame extraction can be called complete."
+      "status": "FRAME_STREAM_ONLY",
+      "blockingReason": "Frame stream is decoded, but this resource has not been promoted through metasprite/graphics/profile rendering invariants yet."
     },
     {
       "resourceId": 8,
@@ -296,14 +296,14 @@
       "handlers": [
         "0x03"
       ],
-      "sequences": 0,
-      "frames": 0,
-      "physicalLinkage": "PARTIAL",
+      "sequences": 1,
+      "frames": 10,
+      "physicalLinkage": "FRAME_STREAM_ONLY",
       "profilesRendered": 0,
       "physicalIds": 0,
       "frameInstances": 0,
-      "status": "HANDLER_DEPENDENT",
-      "blockingReason": "Projectile/beam variant handler selects a resource sequence path; the handler-specific static selector must be mapped before frame extraction can be called complete."
+      "status": "FRAME_STREAM_ONLY",
+      "blockingReason": "Frame stream is decoded, but this resource has not been promoted through metasprite/graphics/profile rendering invariants yet."
     },
     {
       "resourceId": 11,
@@ -346,14 +346,14 @@
       "handlers": [
         "0x05"
       ],
-      "sequences": 0,
-      "frames": 0,
-      "physicalLinkage": "PARTIAL",
-      "profilesRendered": 0,
-      "physicalIds": 0,
-      "frameInstances": 0,
-      "status": "HANDLER_DEPENDENT",
-      "blockingReason": "Projectile/beam variant handler selects a resource sequence path; the handler-specific static selector must be mapped before frame extraction can be called complete."
+      "sequences": 2,
+      "frames": 14,
+      "physicalLinkage": "FULL",
+      "profilesRendered": 44,
+      "physicalIds": 132,
+      "frameInstances": 672,
+      "status": "RENDERABLE",
+      "blockingReason": "—"
     },
     {
       "resourceId": 13,
@@ -362,8 +362,8 @@
       "consumers": [],
       "consumerCount": 0,
       "handlers": [],
-      "sequences": 0,
-      "frames": 0,
+      "sequences": 2,
+      "frames": 64,
       "physicalLinkage": "NONE",
       "profilesRendered": 0,
       "physicalIds": 0,
@@ -387,14 +387,14 @@
       "handlers": [
         "0x05"
       ],
-      "sequences": 0,
-      "frames": 0,
-      "physicalLinkage": "PARTIAL",
+      "sequences": 1,
+      "frames": 8,
+      "physicalLinkage": "FRAME_STREAM_ONLY",
       "profilesRendered": 0,
       "physicalIds": 0,
       "frameInstances": 0,
-      "status": "HANDLER_DEPENDENT",
-      "blockingReason": "Projectile/beam variant handler selects a resource sequence path; the handler-specific static selector must be mapped before frame extraction can be called complete."
+      "status": "FRAME_STREAM_ONLY",
+      "blockingReason": "Frame stream is decoded, but this resource has not been promoted through metasprite/graphics/profile rendering invariants yet."
     },
     {
       "resourceId": 15,
@@ -413,7 +413,7 @@
         "0x05"
       ],
       "sequences": 2,
-      "frames": 16,
+      "frames": 18,
       "physicalLinkage": "FULL",
       "profilesRendered": 3,
       "physicalIds": 9,
@@ -437,14 +437,14 @@
       "handlers": [
         "0x05"
       ],
-      "sequences": 0,
-      "frames": 0,
-      "physicalLinkage": "PARTIAL",
+      "sequences": 2,
+      "frames": 15,
+      "physicalLinkage": "FRAME_STREAM_ONLY",
       "profilesRendered": 0,
       "physicalIds": 0,
       "frameInstances": 0,
-      "status": "HANDLER_DEPENDENT",
-      "blockingReason": "Projectile/beam variant handler selects a resource sequence path; the handler-specific static selector must be mapped before frame extraction can be called complete."
+      "status": "FRAME_STREAM_ONLY",
+      "blockingReason": "Frame stream is decoded, but this resource has not been promoted through metasprite/graphics/profile rendering invariants yet."
     },
     {
       "resourceId": 17,
@@ -462,14 +462,14 @@
       "handlers": [
         "0x05"
       ],
-      "sequences": 0,
-      "frames": 0,
-      "physicalLinkage": "PARTIAL",
+      "sequences": 1,
+      "frames": 10,
+      "physicalLinkage": "FRAME_STREAM_ONLY",
       "profilesRendered": 0,
       "physicalIds": 0,
       "frameInstances": 0,
-      "status": "HANDLER_DEPENDENT",
-      "blockingReason": "Projectile/beam variant handler selects a resource sequence path; the handler-specific static selector must be mapped before frame extraction can be called complete."
+      "status": "FRAME_STREAM_ONLY",
+      "blockingReason": "Frame stream is decoded, but this resource has not been promoted through metasprite/graphics/profile rendering invariants yet."
     },
     {
       "resourceId": 18,
@@ -518,14 +518,14 @@
       "handlers": [
         "0x07"
       ],
-      "sequences": 0,
-      "frames": 0,
-      "physicalLinkage": "PARTIAL",
+      "sequences": 1,
+      "frames": 9,
+      "physicalLinkage": "FRAME_STREAM_ONLY",
       "profilesRendered": 0,
       "physicalIds": 0,
       "frameInstances": 0,
-      "status": "HANDLER_DEPENDENT",
-      "blockingReason": "Projectile/beam variant handler selects a resource sequence path; the handler-specific static selector must be mapped before frame extraction can be called complete."
+      "status": "FRAME_STREAM_ONLY",
+      "blockingReason": "Frame stream is decoded, but this resource has not been promoted through metasprite/graphics/profile rendering invariants yet."
     },
     {
       "resourceId": 20,
@@ -543,14 +543,14 @@
       "handlers": [
         "0x05"
       ],
-      "sequences": 0,
-      "frames": 0,
-      "physicalLinkage": "PARTIAL",
+      "sequences": 1,
+      "frames": 8,
+      "physicalLinkage": "FRAME_STREAM_ONLY",
       "profilesRendered": 0,
       "physicalIds": 0,
       "frameInstances": 0,
-      "status": "HANDLER_DEPENDENT",
-      "blockingReason": "Projectile/beam variant handler selects a resource sequence path; the handler-specific static selector must be mapped before frame extraction can be called complete."
+      "status": "FRAME_STREAM_ONLY",
+      "blockingReason": "Frame stream is decoded, but this resource has not been promoted through metasprite/graphics/profile rendering invariants yet."
     },
     {
       "resourceId": 21,
@@ -568,14 +568,14 @@
       "handlers": [
         "0x05"
       ],
-      "sequences": 0,
-      "frames": 0,
-      "physicalLinkage": "PARTIAL",
+      "sequences": 2,
+      "frames": 16,
+      "physicalLinkage": "FRAME_STREAM_ONLY",
       "profilesRendered": 0,
       "physicalIds": 0,
       "frameInstances": 0,
-      "status": "HANDLER_DEPENDENT",
-      "blockingReason": "Projectile/beam variant handler selects a resource sequence path; the handler-specific static selector must be mapped before frame extraction can be called complete."
+      "status": "FRAME_STREAM_ONLY",
+      "blockingReason": "Frame stream is decoded, but this resource has not been promoted through metasprite/graphics/profile rendering invariants yet."
     },
     {
       "resourceId": 22,
@@ -618,14 +618,14 @@
       "handlers": [
         "0x05"
       ],
-      "sequences": 0,
-      "frames": 0,
-      "physicalLinkage": "PARTIAL",
+      "sequences": 1,
+      "frames": 12,
+      "physicalLinkage": "FRAME_STREAM_ONLY",
       "profilesRendered": 0,
       "physicalIds": 0,
       "frameInstances": 0,
-      "status": "HANDLER_DEPENDENT",
-      "blockingReason": "Projectile/beam variant handler selects a resource sequence path; the handler-specific static selector must be mapped before frame extraction can be called complete."
+      "status": "FRAME_STREAM_ONLY",
+      "blockingReason": "Frame stream is decoded, but this resource has not been promoted through metasprite/graphics/profile rendering invariants yet."
     },
     {
       "resourceId": 24,
@@ -643,14 +643,14 @@
       "handlers": [
         "0x07"
       ],
-      "sequences": 0,
-      "frames": 0,
-      "physicalLinkage": "PARTIAL",
+      "sequences": 2,
+      "frames": 20,
+      "physicalLinkage": "FRAME_STREAM_ONLY",
       "profilesRendered": 0,
       "physicalIds": 0,
       "frameInstances": 0,
-      "status": "HANDLER_DEPENDENT",
-      "blockingReason": "Projectile/beam variant handler selects a resource sequence path; the handler-specific static selector must be mapped before frame extraction can be called complete."
+      "status": "FRAME_STREAM_ONLY",
+      "blockingReason": "Frame stream is decoded, but this resource has not been promoted through metasprite/graphics/profile rendering invariants yet."
     },
     {
       "resourceId": 25,
@@ -668,14 +668,14 @@
       "handlers": [
         "0x02"
       ],
-      "sequences": 0,
-      "frames": 0,
-      "physicalLinkage": "PARTIAL",
+      "sequences": 1,
+      "frames": 8,
+      "physicalLinkage": "FRAME_STREAM_ONLY",
       "profilesRendered": 0,
       "physicalIds": 0,
       "frameInstances": 0,
-      "status": "GRAPHICS_PENDING",
-      "blockingReason": "Base beam/support handler uses the known resource id, but the resource pointer table entry has not been resolved to complete sequences yet."
+      "status": "FRAME_STREAM_ONLY",
+      "blockingReason": "Frame stream is decoded, but this resource has not been promoted through metasprite/graphics/profile rendering invariants yet."
     },
     {
       "resourceId": 26,
@@ -693,14 +693,14 @@
       "handlers": [
         "0x03"
       ],
-      "sequences": 0,
-      "frames": 0,
-      "physicalLinkage": "PARTIAL",
+      "sequences": 1,
+      "frames": 9,
+      "physicalLinkage": "FRAME_STREAM_ONLY",
       "profilesRendered": 0,
       "physicalIds": 0,
       "frameInstances": 0,
-      "status": "HANDLER_DEPENDENT",
-      "blockingReason": "Projectile/beam variant handler selects a resource sequence path; the handler-specific static selector must be mapped before frame extraction can be called complete."
+      "status": "FRAME_STREAM_ONLY",
+      "blockingReason": "Frame stream is decoded, but this resource has not been promoted through metasprite/graphics/profile rendering invariants yet."
     },
     {
       "resourceId": 27,
@@ -718,14 +718,14 @@
       "handlers": [
         "0x07"
       ],
-      "sequences": 0,
-      "frames": 0,
-      "physicalLinkage": "PARTIAL",
+      "sequences": 1,
+      "frames": 8,
+      "physicalLinkage": "FRAME_STREAM_ONLY",
       "profilesRendered": 0,
       "physicalIds": 0,
       "frameInstances": 0,
-      "status": "HANDLER_DEPENDENT",
-      "blockingReason": "Projectile/beam variant handler selects a resource sequence path; the handler-specific static selector must be mapped before frame extraction can be called complete."
+      "status": "FRAME_STREAM_ONLY",
+      "blockingReason": "Frame stream is decoded, but this resource has not been promoted through metasprite/graphics/profile rendering invariants yet."
     },
     {
       "resourceId": 28,
@@ -750,14 +750,14 @@
         "0x0d",
         "0x0e"
       ],
-      "sequences": 0,
-      "frames": 0,
-      "physicalLinkage": "NONE",
+      "sequences": 4,
+      "frames": 213,
+      "physicalLinkage": "FRAME_STREAM_ONLY",
       "profilesRendered": 0,
       "physicalIds": 0,
       "frameInstances": 0,
-      "status": "DYNAMIC_PENDING",
-      "blockingReason": "Special/multi-actor handler owns sequence and slot selection at runtime; static card fields preserve the resource id but cannot close actor binding alone."
+      "status": "FRAME_STREAM_ONLY",
+      "blockingReason": "Frame stream is decoded, but this resource has not been promoted through metasprite/graphics/profile rendering invariants yet."
     },
     {
       "resourceId": 29,
@@ -775,14 +775,14 @@
       "handlers": [
         "0x05"
       ],
-      "sequences": 0,
-      "frames": 0,
-      "physicalLinkage": "PARTIAL",
+      "sequences": 1,
+      "frames": 9,
+      "physicalLinkage": "FRAME_STREAM_ONLY",
       "profilesRendered": 0,
       "physicalIds": 0,
       "frameInstances": 0,
-      "status": "HANDLER_DEPENDENT",
-      "blockingReason": "Projectile/beam variant handler selects a resource sequence path; the handler-specific static selector must be mapped before frame extraction can be called complete."
+      "status": "FRAME_STREAM_ONLY",
+      "blockingReason": "Frame stream is decoded, but this resource has not been promoted through metasprite/graphics/profile rendering invariants yet."
     },
     {
       "resourceId": 30,
@@ -800,14 +800,14 @@
       "handlers": [
         "0x02"
       ],
-      "sequences": 0,
-      "frames": 0,
-      "physicalLinkage": "PARTIAL",
+      "sequences": 1,
+      "frames": 8,
+      "physicalLinkage": "FRAME_STREAM_ONLY",
       "profilesRendered": 0,
       "physicalIds": 0,
       "frameInstances": 0,
-      "status": "GRAPHICS_PENDING",
-      "blockingReason": "Base beam/support handler uses the known resource id, but the resource pointer table entry has not been resolved to complete sequences yet."
+      "status": "FRAME_STREAM_ONLY",
+      "blockingReason": "Frame stream is decoded, but this resource has not been promoted through metasprite/graphics/profile rendering invariants yet."
     },
     {
       "resourceId": 31,
@@ -825,14 +825,14 @@
       "handlers": [
         "0x06"
       ],
-      "sequences": 0,
-      "frames": 0,
-      "physicalLinkage": "PARTIAL",
+      "sequences": 1,
+      "frames": 12,
+      "physicalLinkage": "FRAME_STREAM_ONLY",
       "profilesRendered": 0,
       "physicalIds": 0,
       "frameInstances": 0,
-      "status": "HANDLER_DEPENDENT",
-      "blockingReason": "Projectile/beam variant handler selects a resource sequence path; the handler-specific static selector must be mapped before frame extraction can be called complete."
+      "status": "FRAME_STREAM_ONLY",
+      "blockingReason": "Frame stream is decoded, but this resource has not been promoted through metasprite/graphics/profile rendering invariants yet."
     },
     {
       "resourceId": 32,
@@ -850,14 +850,14 @@
       "handlers": [
         "0x03"
       ],
-      "sequences": 0,
-      "frames": 0,
-      "physicalLinkage": "PARTIAL",
+      "sequences": 1,
+      "frames": 9,
+      "physicalLinkage": "FRAME_STREAM_ONLY",
       "profilesRendered": 0,
       "physicalIds": 0,
       "frameInstances": 0,
-      "status": "HANDLER_DEPENDENT",
-      "blockingReason": "Projectile/beam variant handler selects a resource sequence path; the handler-specific static selector must be mapped before frame extraction can be called complete."
+      "status": "FRAME_STREAM_ONLY",
+      "blockingReason": "Frame stream is decoded, but this resource has not been promoted through metasprite/graphics/profile rendering invariants yet."
     },
     {
       "resourceId": 33,
@@ -875,14 +875,14 @@
       "handlers": [
         "0x07"
       ],
-      "sequences": 0,
-      "frames": 0,
-      "physicalLinkage": "PARTIAL",
+      "sequences": 3,
+      "frames": 33,
+      "physicalLinkage": "FRAME_STREAM_ONLY",
       "profilesRendered": 0,
       "physicalIds": 0,
       "frameInstances": 0,
-      "status": "HANDLER_DEPENDENT",
-      "blockingReason": "Projectile/beam variant handler selects a resource sequence path; the handler-specific static selector must be mapped before frame extraction can be called complete."
+      "status": "FRAME_STREAM_ONLY",
+      "blockingReason": "Frame stream is decoded, but this resource has not been promoted through metasprite/graphics/profile rendering invariants yet."
     },
     {
       "resourceId": 34,
@@ -925,14 +925,14 @@
       "handlers": [
         "0x05"
       ],
-      "sequences": 0,
-      "frames": 0,
-      "physicalLinkage": "PARTIAL",
+      "sequences": 2,
+      "frames": 12,
+      "physicalLinkage": "FRAME_STREAM_ONLY",
       "profilesRendered": 0,
       "physicalIds": 0,
       "frameInstances": 0,
-      "status": "HANDLER_DEPENDENT",
-      "blockingReason": "Projectile/beam variant handler selects a resource sequence path; the handler-specific static selector must be mapped before frame extraction can be called complete."
+      "status": "FRAME_STREAM_ONLY",
+      "blockingReason": "Frame stream is decoded, but this resource has not been promoted through metasprite/graphics/profile rendering invariants yet."
     },
     {
       "resourceId": 36,
@@ -950,14 +950,14 @@
       "handlers": [
         "0x00"
       ],
-      "sequences": 0,
-      "frames": 0,
-      "physicalLinkage": "PARTIAL",
+      "sequences": 3,
+      "frames": 141,
+      "physicalLinkage": "FRAME_STREAM_ONLY",
       "profilesRendered": 0,
       "physicalIds": 0,
       "frameInstances": 0,
-      "status": "METASPRITE_PENDING",
-      "blockingReason": "Support/defense card references an actor resource without a standard attack handler; the static pass must resolve sequence count/boundaries from the resource table."
+      "status": "FRAME_STREAM_ONLY",
+      "blockingReason": "Frame stream is decoded, but this resource has not been promoted through metasprite/graphics/profile rendering invariants yet."
     },
     {
       "resourceId": 37,
@@ -975,14 +975,14 @@
       "handlers": [
         "0x00"
       ],
-      "sequences": 0,
-      "frames": 0,
-      "physicalLinkage": "PARTIAL",
+      "sequences": 1,
+      "frames": 47,
+      "physicalLinkage": "FRAME_STREAM_ONLY",
       "profilesRendered": 0,
       "physicalIds": 0,
       "frameInstances": 0,
-      "status": "METASPRITE_PENDING",
-      "blockingReason": "Support/defense card references an actor resource without a standard attack handler; the static pass must resolve sequence count/boundaries from the resource table."
+      "status": "FRAME_STREAM_ONLY",
+      "blockingReason": "Frame stream is decoded, but this resource has not been promoted through metasprite/graphics/profile rendering invariants yet."
     },
     {
       "resourceId": 38,
@@ -1000,14 +1000,14 @@
       "handlers": [
         "0x00"
       ],
-      "sequences": 0,
-      "frames": 0,
-      "physicalLinkage": "PARTIAL",
+      "sequences": 3,
+      "frames": 147,
+      "physicalLinkage": "FRAME_STREAM_ONLY",
       "profilesRendered": 0,
       "physicalIds": 0,
       "frameInstances": 0,
-      "status": "METASPRITE_PENDING",
-      "blockingReason": "Support/defense card references an actor resource without a standard attack handler; the static pass must resolve sequence count/boundaries from the resource table."
+      "status": "FRAME_STREAM_ONLY",
+      "blockingReason": "Frame stream is decoded, but this resource has not been promoted through metasprite/graphics/profile rendering invariants yet."
     },
     {
       "resourceId": 39,
@@ -1025,14 +1025,14 @@
       "handlers": [
         "0x00"
       ],
-      "sequences": 0,
-      "frames": 0,
-      "physicalLinkage": "PARTIAL",
+      "sequences": 2,
+      "frames": 100,
+      "physicalLinkage": "FRAME_STREAM_ONLY",
       "profilesRendered": 0,
       "physicalIds": 0,
       "frameInstances": 0,
-      "status": "METASPRITE_PENDING",
-      "blockingReason": "Support/defense card references an actor resource without a standard attack handler; the static pass must resolve sequence count/boundaries from the resource table."
+      "status": "FRAME_STREAM_ONLY",
+      "blockingReason": "Frame stream is decoded, but this resource has not been promoted through metasprite/graphics/profile rendering invariants yet."
     },
     {
       "resourceId": 40,
@@ -1056,8 +1056,8 @@
       "profilesRendered": 0,
       "physicalIds": 0,
       "frameInstances": 0,
-      "status": "METASPRITE_PENDING",
-      "blockingReason": "Support/defense card references an actor resource without a standard attack handler; the static pass must resolve sequence count/boundaries from the resource table."
+      "status": "GRAPHICS_PENDING",
+      "blockingReason": "ROM catalog length is zero for a referenced slot (Teleport.). This is a handler/preload token, not an undecoded actor frame stream."
     },
     {
       "resourceId": 41,
@@ -1077,12 +1077,12 @@
       ],
       "sequences": 0,
       "frames": 0,
-      "physicalLinkage": "NONE",
+      "physicalLinkage": "PARTIAL",
       "profilesRendered": 0,
       "physicalIds": 0,
       "frameInstances": 0,
-      "status": "DYNAMIC_PENDING",
-      "blockingReason": "Special/multi-actor handler owns sequence and slot selection at runtime; static card fields preserve the resource id but cannot close actor binding alone."
+      "status": "GRAPHICS_PENDING",
+      "blockingReason": "ROM catalog length is zero for a referenced slot (Paralysis). This is a handler/preload token, not an undecoded actor frame stream."
     },
     {
       "resourceId": 42,
@@ -1106,8 +1106,8 @@
       "profilesRendered": 0,
       "physicalIds": 0,
       "frameInstances": 0,
-      "status": "METASPRITE_PENDING",
-      "blockingReason": "Support/defense card references an actor resource without a standard attack handler; the static pass must resolve sequence count/boundaries from the resource table."
+      "status": "GRAPHICS_PENDING",
+      "blockingReason": "ROM catalog length is zero for a referenced slot (Time Freeze). This is a handler/preload token, not an undecoded actor frame stream."
     },
     {
       "resourceId": 43,
@@ -1125,14 +1125,14 @@
       "handlers": [
         "0x08"
       ],
-      "sequences": 0,
-      "frames": 0,
-      "physicalLinkage": "NONE",
+      "sequences": 1,
+      "frames": 40,
+      "physicalLinkage": "FRAME_STREAM_ONLY",
       "profilesRendered": 0,
       "physicalIds": 0,
       "frameInstances": 0,
-      "status": "DYNAMIC_PENDING",
-      "blockingReason": "Special handler owns the sequence branch at runtime; static card fields preserve the resource id but do not prove the selected sequence."
+      "status": "FRAME_STREAM_ONLY",
+      "blockingReason": "Frame stream is decoded, but this resource has not been promoted through metasprite/graphics/profile rendering invariants yet."
     },
     {
       "resourceId": 44,
@@ -1175,14 +1175,14 @@
       "handlers": [
         "0x0a"
       ],
-      "sequences": 0,
-      "frames": 0,
-      "physicalLinkage": "PARTIAL",
-      "profilesRendered": 0,
-      "physicalIds": 0,
-      "frameInstances": 0,
-      "status": "METASPRITE_PENDING",
-      "blockingReason": "Standard damage handler resources are referenced by the card table, but their frame stream has not been extracted into the static ROM sequence catalog yet."
+      "sequences": 2,
+      "frames": 63,
+      "physicalLinkage": "FULL",
+      "profilesRendered": 44,
+      "physicalIds": 220,
+      "frameInstances": 3024,
+      "status": "RENDERABLE",
+      "blockingReason": "—"
     },
     {
       "resourceId": 46,
@@ -1200,14 +1200,14 @@
       "handlers": [
         "0x0a"
       ],
-      "sequences": 0,
-      "frames": 0,
-      "physicalLinkage": "PARTIAL",
+      "sequences": 2,
+      "frames": 35,
+      "physicalLinkage": "FRAME_STREAM_ONLY",
       "profilesRendered": 0,
       "physicalIds": 0,
       "frameInstances": 0,
-      "status": "METASPRITE_PENDING",
-      "blockingReason": "Standard damage handler resources are referenced by the card table, but their frame stream has not been extracted into the static ROM sequence catalog yet."
+      "status": "FRAME_STREAM_ONLY",
+      "blockingReason": "Frame stream is decoded, but this resource has not been promoted through metasprite/graphics/profile rendering invariants yet."
     },
     {
       "resourceId": 47,
@@ -1225,14 +1225,14 @@
       "handlers": [
         "0x0a"
       ],
-      "sequences": 0,
-      "frames": 0,
-      "physicalLinkage": "PARTIAL",
+      "sequences": 2,
+      "frames": 64,
+      "physicalLinkage": "FRAME_STREAM_ONLY",
       "profilesRendered": 0,
       "physicalIds": 0,
       "frameInstances": 0,
-      "status": "METASPRITE_PENDING",
-      "blockingReason": "Standard damage handler resources are referenced by the card table, but their frame stream has not been extracted into the static ROM sequence catalog yet."
+      "status": "FRAME_STREAM_ONLY",
+      "blockingReason": "Frame stream is decoded, but this resource has not been promoted through metasprite/graphics/profile rendering invariants yet."
     },
     {
       "resourceId": 48,
@@ -1250,14 +1250,14 @@
       "handlers": [
         "0x0a"
       ],
-      "sequences": 0,
-      "frames": 0,
-      "physicalLinkage": "PARTIAL",
+      "sequences": 2,
+      "frames": 52,
+      "physicalLinkage": "FRAME_STREAM_ONLY",
       "profilesRendered": 0,
       "physicalIds": 0,
       "frameInstances": 0,
-      "status": "METASPRITE_PENDING",
-      "blockingReason": "Standard damage handler resources are referenced by the card table, but their frame stream has not been extracted into the static ROM sequence catalog yet."
+      "status": "FRAME_STREAM_ONLY",
+      "blockingReason": "Frame stream is decoded, but this resource has not been promoted through metasprite/graphics/profile rendering invariants yet."
     },
     {
       "resourceId": 49,
@@ -1275,14 +1275,14 @@
       "handlers": [
         "0x0a"
       ],
-      "sequences": 0,
-      "frames": 0,
-      "physicalLinkage": "PARTIAL",
+      "sequences": 2,
+      "frames": 50,
+      "physicalLinkage": "FRAME_STREAM_ONLY",
       "profilesRendered": 0,
       "physicalIds": 0,
       "frameInstances": 0,
-      "status": "METASPRITE_PENDING",
-      "blockingReason": "Standard damage handler resources are referenced by the card table, but their frame stream has not been extracted into the static ROM sequence catalog yet."
+      "status": "FRAME_STREAM_ONLY",
+      "blockingReason": "Frame stream is decoded, but this resource has not been promoted through metasprite/graphics/profile rendering invariants yet."
     },
     {
       "resourceId": 50,
@@ -1300,14 +1300,14 @@
       "handlers": [
         "0x0a"
       ],
-      "sequences": 0,
-      "frames": 0,
-      "physicalLinkage": "PARTIAL",
+      "sequences": 2,
+      "frames": 84,
+      "physicalLinkage": "FRAME_STREAM_ONLY",
       "profilesRendered": 0,
       "physicalIds": 0,
       "frameInstances": 0,
-      "status": "METASPRITE_PENDING",
-      "blockingReason": "Standard damage handler resources are referenced by the card table, but their frame stream has not been extracted into the static ROM sequence catalog yet."
+      "status": "FRAME_STREAM_ONLY",
+      "blockingReason": "Frame stream is decoded, but this resource has not been promoted through metasprite/graphics/profile rendering invariants yet."
     },
     {
       "resourceId": 51,
@@ -1325,14 +1325,14 @@
       "handlers": [
         "0x0a"
       ],
-      "sequences": 0,
-      "frames": 0,
-      "physicalLinkage": "PARTIAL",
+      "sequences": 2,
+      "frames": 49,
+      "physicalLinkage": "FRAME_STREAM_ONLY",
       "profilesRendered": 0,
       "physicalIds": 0,
       "frameInstances": 0,
-      "status": "METASPRITE_PENDING",
-      "blockingReason": "Standard damage handler resources are referenced by the card table, but their frame stream has not been extracted into the static ROM sequence catalog yet."
+      "status": "FRAME_STREAM_ONLY",
+      "blockingReason": "Frame stream is decoded, but this resource has not been promoted through metasprite/graphics/profile rendering invariants yet."
     },
     {
       "resourceId": 52,
@@ -1350,14 +1350,14 @@
       "handlers": [
         "0x0a"
       ],
-      "sequences": 0,
-      "frames": 0,
-      "physicalLinkage": "PARTIAL",
+      "sequences": 2,
+      "frames": 55,
+      "physicalLinkage": "FRAME_STREAM_ONLY",
       "profilesRendered": 0,
       "physicalIds": 0,
       "frameInstances": 0,
-      "status": "METASPRITE_PENDING",
-      "blockingReason": "Standard damage handler resources are referenced by the card table, but their frame stream has not been extracted into the static ROM sequence catalog yet."
+      "status": "FRAME_STREAM_ONLY",
+      "blockingReason": "Frame stream is decoded, but this resource has not been promoted through metasprite/graphics/profile rendering invariants yet."
     },
     {
       "resourceId": 53,
@@ -1375,14 +1375,14 @@
       "handlers": [
         "0x0a"
       ],
-      "sequences": 0,
-      "frames": 0,
-      "physicalLinkage": "PARTIAL",
+      "sequences": 2,
+      "frames": 80,
+      "physicalLinkage": "FRAME_STREAM_ONLY",
       "profilesRendered": 0,
       "physicalIds": 0,
       "frameInstances": 0,
-      "status": "METASPRITE_PENDING",
-      "blockingReason": "Standard damage handler resources are referenced by the card table, but their frame stream has not been extracted into the static ROM sequence catalog yet."
+      "status": "FRAME_STREAM_ONLY",
+      "blockingReason": "Frame stream is decoded, but this resource has not been promoted through metasprite/graphics/profile rendering invariants yet."
     },
     {
       "resourceId": 54,
@@ -1400,14 +1400,14 @@
       "handlers": [
         "0x0a"
       ],
-      "sequences": 0,
-      "frames": 0,
-      "physicalLinkage": "PARTIAL",
+      "sequences": 2,
+      "frames": 80,
+      "physicalLinkage": "FRAME_STREAM_ONLY",
       "profilesRendered": 0,
       "physicalIds": 0,
       "frameInstances": 0,
-      "status": "METASPRITE_PENDING",
-      "blockingReason": "Standard damage handler resources are referenced by the card table, but their frame stream has not been extracted into the static ROM sequence catalog yet."
+      "status": "FRAME_STREAM_ONLY",
+      "blockingReason": "Frame stream is decoded, but this resource has not been promoted through metasprite/graphics/profile rendering invariants yet."
     },
     {
       "resourceId": 55,
@@ -1425,14 +1425,14 @@
       "handlers": [
         "0x0a"
       ],
-      "sequences": 0,
-      "frames": 0,
-      "physicalLinkage": "PARTIAL",
+      "sequences": 2,
+      "frames": 35,
+      "physicalLinkage": "FRAME_STREAM_ONLY",
       "profilesRendered": 0,
       "physicalIds": 0,
       "frameInstances": 0,
-      "status": "METASPRITE_PENDING",
-      "blockingReason": "Standard damage handler resources are referenced by the card table, but their frame stream has not been extracted into the static ROM sequence catalog yet."
+      "status": "FRAME_STREAM_ONLY",
+      "blockingReason": "Frame stream is decoded, but this resource has not been promoted through metasprite/graphics/profile rendering invariants yet."
     },
     {
       "resourceId": 56,
@@ -1450,14 +1450,14 @@
       "handlers": [
         "0x0a"
       ],
-      "sequences": 0,
-      "frames": 0,
-      "physicalLinkage": "PARTIAL",
+      "sequences": 2,
+      "frames": 60,
+      "physicalLinkage": "FRAME_STREAM_ONLY",
       "profilesRendered": 0,
       "physicalIds": 0,
       "frameInstances": 0,
-      "status": "METASPRITE_PENDING",
-      "blockingReason": "Standard damage handler resources are referenced by the card table, but their frame stream has not been extracted into the static ROM sequence catalog yet."
+      "status": "FRAME_STREAM_ONLY",
+      "blockingReason": "Frame stream is decoded, but this resource has not been promoted through metasprite/graphics/profile rendering invariants yet."
     },
     {
       "resourceId": 57,
@@ -1475,14 +1475,14 @@
       "handlers": [
         "0x0a"
       ],
-      "sequences": 0,
-      "frames": 0,
-      "physicalLinkage": "PARTIAL",
+      "sequences": 2,
+      "frames": 52,
+      "physicalLinkage": "FRAME_STREAM_ONLY",
       "profilesRendered": 0,
       "physicalIds": 0,
       "frameInstances": 0,
-      "status": "METASPRITE_PENDING",
-      "blockingReason": "Standard damage handler resources are referenced by the card table, but their frame stream has not been extracted into the static ROM sequence catalog yet."
+      "status": "FRAME_STREAM_ONLY",
+      "blockingReason": "Frame stream is decoded, but this resource has not been promoted through metasprite/graphics/profile rendering invariants yet."
     },
     {
       "resourceId": 58,
@@ -1500,14 +1500,14 @@
       "handlers": [
         "0x0a"
       ],
-      "sequences": 0,
-      "frames": 0,
-      "physicalLinkage": "PARTIAL",
+      "sequences": 2,
+      "frames": 62,
+      "physicalLinkage": "FRAME_STREAM_ONLY",
       "profilesRendered": 0,
       "physicalIds": 0,
       "frameInstances": 0,
-      "status": "METASPRITE_PENDING",
-      "blockingReason": "Standard damage handler resources are referenced by the card table, but their frame stream has not been extracted into the static ROM sequence catalog yet."
+      "status": "FRAME_STREAM_ONLY",
+      "blockingReason": "Frame stream is decoded, but this resource has not been promoted through metasprite/graphics/profile rendering invariants yet."
     },
     {
       "resourceId": 59,
@@ -1525,14 +1525,14 @@
       "handlers": [
         "0x0a"
       ],
-      "sequences": 0,
-      "frames": 0,
-      "physicalLinkage": "PARTIAL",
+      "sequences": 2,
+      "frames": 36,
+      "physicalLinkage": "FRAME_STREAM_ONLY",
       "profilesRendered": 0,
       "physicalIds": 0,
       "frameInstances": 0,
-      "status": "METASPRITE_PENDING",
-      "blockingReason": "Standard damage handler resources are referenced by the card table, but their frame stream has not been extracted into the static ROM sequence catalog yet."
+      "status": "FRAME_STREAM_ONLY",
+      "blockingReason": "Frame stream is decoded, but this resource has not been promoted through metasprite/graphics/profile rendering invariants yet."
     },
     {
       "resourceId": 60,
@@ -1550,14 +1550,14 @@
       "handlers": [
         "0x0a"
       ],
-      "sequences": 0,
-      "frames": 0,
-      "physicalLinkage": "PARTIAL",
+      "sequences": 2,
+      "frames": 53,
+      "physicalLinkage": "FRAME_STREAM_ONLY",
       "profilesRendered": 0,
       "physicalIds": 0,
       "frameInstances": 0,
-      "status": "METASPRITE_PENDING",
-      "blockingReason": "Standard damage handler resources are referenced by the card table, but their frame stream has not been extracted into the static ROM sequence catalog yet."
+      "status": "FRAME_STREAM_ONLY",
+      "blockingReason": "Frame stream is decoded, but this resource has not been promoted through metasprite/graphics/profile rendering invariants yet."
     },
     {
       "resourceId": 61,
@@ -1575,14 +1575,14 @@
       "handlers": [
         "0x0a"
       ],
-      "sequences": 0,
-      "frames": 0,
-      "physicalLinkage": "PARTIAL",
+      "sequences": 2,
+      "frames": 55,
+      "physicalLinkage": "FRAME_STREAM_ONLY",
       "profilesRendered": 0,
       "physicalIds": 0,
       "frameInstances": 0,
-      "status": "METASPRITE_PENDING",
-      "blockingReason": "Standard damage handler resources are referenced by the card table, but their frame stream has not been extracted into the static ROM sequence catalog yet."
+      "status": "FRAME_STREAM_ONLY",
+      "blockingReason": "Frame stream is decoded, but this resource has not been promoted through metasprite/graphics/profile rendering invariants yet."
     },
     {
       "resourceId": 62,
@@ -1600,14 +1600,14 @@
       "handlers": [
         "0x0a"
       ],
-      "sequences": 0,
-      "frames": 0,
-      "physicalLinkage": "PARTIAL",
+      "sequences": 2,
+      "frames": 78,
+      "physicalLinkage": "FRAME_STREAM_ONLY",
       "profilesRendered": 0,
       "physicalIds": 0,
       "frameInstances": 0,
-      "status": "METASPRITE_PENDING",
-      "blockingReason": "Standard damage handler resources are referenced by the card table, but their frame stream has not been extracted into the static ROM sequence catalog yet."
+      "status": "FRAME_STREAM_ONLY",
+      "blockingReason": "Frame stream is decoded, but this resource has not been promoted through metasprite/graphics/profile rendering invariants yet."
     },
     {
       "resourceId": 63,
@@ -1652,12 +1652,12 @@
       ],
       "sequences": 0,
       "frames": 0,
-      "physicalLinkage": "NONE",
+      "physicalLinkage": "PARTIAL",
       "profilesRendered": 0,
       "physicalIds": 0,
       "frameInstances": 0,
-      "status": "DYNAMIC_PENDING",
-      "blockingReason": "Special/multi-actor handler owns sequence and slot selection at runtime; static card fields preserve the resource id but cannot close actor binding alone."
+      "status": "GRAPHICS_PENDING",
+      "blockingReason": "ROM catalog length is zero for a referenced slot (Kiai). This is a handler/preload token, not an undecoded actor frame stream."
     },
     {
       "resourceId": 65,
@@ -1675,14 +1675,14 @@
       "handlers": [
         "0x0c"
       ],
-      "sequences": 0,
-      "frames": 0,
-      "physicalLinkage": "NONE",
+      "sequences": 4,
+      "frames": 61,
+      "physicalLinkage": "FRAME_STREAM_ONLY",
       "profilesRendered": 0,
       "physicalIds": 0,
       "frameInstances": 0,
-      "status": "DYNAMIC_PENDING",
-      "blockingReason": "Special handler owns the sequence branch at runtime; static card fields preserve the resource id but do not prove the selected sequence."
+      "status": "FRAME_STREAM_ONLY",
+      "blockingReason": "Frame stream is decoded, but this resource has not been promoted through metasprite/graphics/profile rendering invariants yet."
     }
   ]
 }

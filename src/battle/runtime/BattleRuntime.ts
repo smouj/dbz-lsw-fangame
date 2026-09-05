@@ -15,6 +15,7 @@
 
 import { executeCommand, canExecute, getAvailableCommands } from '../engine/commands';
 import { resolveCardAction } from '../engine/commands/reducers/damageReducer';
+import { actionDescriptorForCard } from '../engine/commands/buildActionDescriptor';
 import { postActionMaintenance } from '../engine/commands/reducers/powerReducer';
 import type { BattleCommand, CommandCheck, CommandExecutionResult } from '../engine/commands';
 import { advanceBattleClock, type ClockAdvanceOutcome } from '../engine/clock';
@@ -210,10 +211,21 @@ export class BattleRuntime {
    */
   resolveCard(side: BattleSide, card: CardDef): DispatchResult {
     const outcome = resolveCardAction(this.state, side, card);
+    const action = actionDescriptorForCard(card);
     const result: CommandExecutionResult = {
       ok: true,
-      state: outcome.state,
-      events: outcome.events,
+      // resolveCardAction returns the advanced canonical PRNG separately.
+      // Persist it exactly as the PLAY_CARD reducer does; otherwise a miss is
+      // replayed forever from the same RNG state on every enemy retry.
+      state: { ...outcome.state, rngState: outcome.rngState },
+      // Enemy actions use this production bridge too. They need the same
+      // ACTION_STARTED/RESOLVED envelope as PLAY_CARD so M7 can build the ROM
+      // actor/projectile timeline instead of leaving their visuals to legacy UI.
+      events: [
+        { type: 'ACTION_STARTED', side, action },
+        ...outcome.events,
+        { type: 'ACTION_RESOLVED', side, action },
+      ],
     };
     // resolveCard es UNA resolución de carta completada (puente cutover):
     // maintenance siempre, sin depender de marcadores de evento.

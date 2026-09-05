@@ -7,7 +7,7 @@
 // FIELD_RETURN) a estos métodos. Cada método es determinista: el frame es
 // consecuencia del tick GBC absoluto (renderer.tick).
 
-import { Graphics } from 'pixi.js';
+import { Graphics, type Texture } from 'pixi.js';
 import type { BattleSide } from '../../../data/facing';
 import { facingFlip } from '../../../data/facing';
 import { overworldUrl } from '../../../data/overworld';
@@ -28,6 +28,7 @@ export interface PixiPresentationConfig {
   enemyFormId: string;
   overviewBackground: string;
   actionBackground: string;
+  specialActionBackground?: string;
   playerPos: BattlePosition;
   enemyPos: BattlePosition;
   /** Escala del luchador grande en ACTION (px por píxel de asset). */
@@ -38,6 +39,9 @@ export class PixiBattlePresentation implements BattlePresentation {
   private readonly renderer: BattleRenderer;
   private readonly cfg: PixiPresentationConfig;
   private readonly scale: number;
+  private readonly sceneTextures = new Map<string, Texture>();
+  private playerTacticalPos: BattlePosition;
+  private enemyTacticalPos: BattlePosition;
 
   private leftActor: FighterActor | null = null;
   private rightActor: FighterActor | null = null;
@@ -87,7 +91,9 @@ export class PixiBattlePresentation implements BattlePresentation {
   private romMotionTargetActor = true; // true = actor, false = target
   private romMotionStartTick = 0;
   private romMotionFromX = 0;
+  private romMotionFromY = 0;
   private romMotionDxPerTick = 0;
+  private romMotionDyPerTick = 0;
   private romMotionDuration = 0;
   private romMotionHoldTicks = 0;
   private romMotionDone = false;
@@ -97,6 +103,8 @@ export class PixiBattlePresentation implements BattlePresentation {
     this.renderer = renderer;
     this.cfg = cfg;
     this.scale = cfg.scale ?? 3;
+    this.playerTacticalPos = cfg.playerPos;
+    this.enemyTacticalPos = cfg.enemyPos;
     this.romDisplayPresenter = new RomDisplayPresenter();
     this.romDisplayLayer = new RomDisplayLayer(this.romDisplayPresenter, this.scale);
     this.cameraPresenter = new CameraPresenter();
@@ -110,9 +118,12 @@ export class PixiBattlePresentation implements BattlePresentation {
     // vez (el navegador satura conexiones) en lugar de encadenarse.
     const pOwUrl = overworldUrl(this.cfg.playerFormId);
     const eOwUrl = overworldUrl(this.cfg.enemyFormId);
-    const [overview, action, pOw, eOw, leftActor, rightActor] = await Promise.all([
+    const [overview, action, special, pOw, eOw, leftActor, rightActor] = await Promise.all([
       this.renderer.loadTexture(this.cfg.overviewBackground),
       this.renderer.loadTexture(this.cfg.actionBackground),
+      this.cfg.specialActionBackground
+        ? this.renderer.loadTexture(this.cfg.specialActionBackground)
+        : Promise.resolve(null),
       pOwUrl ? this.renderer.loadTexture(pOwUrl) : Promise.resolve(null),
       eOwUrl ? this.renderer.loadTexture(eOwUrl) : Promise.resolve(null),
       this.renderer.addFighter(this.cfg.playerFormId, 'left', this.scale),
@@ -121,6 +132,11 @@ export class PixiBattlePresentation implements BattlePresentation {
 
     dir.tactical.setBackground(overview);
     dir.action.setBackground(action);
+    if (overview) this.sceneTextures.set(this.cfg.overviewBackground, overview);
+    if (action) this.sceneTextures.set(this.cfg.actionBackground, action);
+    if (special && this.cfg.specialActionBackground) {
+      this.sceneTextures.set(this.cfg.specialActionBackground, special);
+    }
     dir.tactical.setOverworld('left', pOw, this.cfg.playerPos, facingFlip(this.cfg.playerFormId, 'left'));
     dir.tactical.setOverworld('right', eOw, this.cfg.enemyPos, facingFlip(this.cfg.enemyFormId, 'right'));
 
@@ -157,15 +173,55 @@ export class PixiBattlePresentation implements BattlePresentation {
     return this.attacker === 'left' ? this.rightActor : this.leftActor;
   }
 
-  setScene(scene: BattleScene): void {
+  setScene(scene: BattleScene, background?: string): void {
     this.prepareScene(scene);
+    const texture = background ? this.sceneTextures.get(background) : null;
+    if (texture) {
+      if (scene === 'FIELD') this.renderer.sceneDirector.tactical.setBackground(texture);
+      else this.renderer.sceneDirector.action.setBackground(texture);
+    }
     this.renderer.sceneDirector.setScene(scene);
+  }
+
+  setFighterVisibility(role: 'ACTOR' | 'TARGET', visible: boolean): void {
+    const fighter = role === 'ACTOR' ? this.actor : this.target;
+    if (fighter) fighter.visible = visible;
+  }
+
+  setFighterPosition(side: 'player' | 'enemy', position: BattlePosition): void {
+    if (side === 'player') this.playerTacticalPos = position;
+    else this.enemyTacticalPos = position;
+    this.updateTactical(this.playerTacticalPos, this.enemyTacticalPos);
+  }
+
+  setActionObjectPosition(slot: 0 | 1, x: number, y: number): void {
+    const fighter = slot === 0 ? this.actor : this.target;
+    fighter?.setPos(x, y);
+  }
+
+  moveActionObject(slot: 0 | 1, dxPerTick: number, dyPerTick: number, durationTicks: number): void {
+    this.cancelRush();
+    const fighter = slot === 0 ? this.actor : this.target;
+    if (!fighter) return;
+    this.romMotionActive = true;
+    this.romMotionTargetActor = slot === 0;
+    this.romMotionStartTick = this.renderer.currentTick;
+    this.romMotionFromX = fighter.x;
+    this.romMotionFromY = fighter.y;
+    this.romMotionDxPerTick = dxPerTick;
+    this.romMotionDyPerTick = dyPerTick;
+    this.romMotionDuration = Math.max(0, durationTicks);
+    this.romMotionHoldTicks = 0;
+    this.romMotionSegments = null;
+    this.romMotionDone = false;
   }
 
   /** Refleja un cambio de posición táctica (MOVE) en el overworld del FIELD.
    *  El plano táctico debe mostrar el estado real del combate (gramática §0):
    *  recoloca los sprites overworld sin reinicializar el renderer. */
   updateTactical(playerPos: BattlePosition, enemyPos: BattlePosition): void {
+    this.playerTacticalPos = playerPos;
+    this.enemyTacticalPos = enemyPos;
     this.renderer.sceneDirector.tactical.setOverworldPosition('left', playerPos);
     this.renderer.sceneDirector.tactical.setOverworldPosition('right', enemyPos);
   }
@@ -204,7 +260,9 @@ export class PixiBattlePresentation implements BattlePresentation {
     this.romMotionTargetActor = true;
     this.romMotionStartTick = this.renderer.currentTick;
     this.romMotionFromX = this.renderer.sceneDirector.action.actorHomeX();
+    this.romMotionFromY = ACTION_GROUND_Y;
     this.romMotionDxPerTick = durationTicks > 0 ? deltaPx / durationTicks : 0;
+    this.romMotionDyPerTick = 0;
     this.romMotionDuration = durationTicks;
     this.romMotionHoldTicks = holdTicks;
     this.romMotionSegments = segments && segments.length > 0 ? segments : null;
@@ -221,7 +279,9 @@ export class PixiBattlePresentation implements BattlePresentation {
     this.romMotionTargetActor = false;
     this.romMotionStartTick = this.renderer.currentTick;
     this.romMotionFromX = this.renderer.sceneDirector.action.targetHomeX();
+    this.romMotionFromY = ACTION_GROUND_Y;
     this.romMotionDxPerTick = durationTicks > 0 ? deltaPx / durationTicks : 0;
+    this.romMotionDyPerTick = 0;
     this.romMotionDuration = durationTicks;
     this.romMotionHoldTicks = holdTicks;
     this.romMotionSegments = segments && segments.length > 0 ? segments : null;
@@ -368,7 +428,9 @@ export class PixiBattlePresentation implements BattlePresentation {
             x = this.romMotionFromX + this.romMotionDxPerTick * this.romMotionDuration;
             done = elapsed > this.romMotionDuration + this.romMotionHoldTicks;
           }
-          who.setPos(Math.round(x), ACTION_GROUND_Y);
+          const motionElapsed = Math.max(0, Math.min(elapsed, this.romMotionDuration));
+          const y = this.romMotionFromY + this.romMotionDyPerTick * motionElapsed;
+          who.setPos(Math.round(x), Math.round(y));
           if (done) {
             this.romMotionDone = true;
             this.romMotionActive = false;
@@ -451,7 +513,9 @@ export class PixiBattlePresentation implements BattlePresentation {
     this.romMotionActive = false;
     this.romMotionDone = false;
     this.romMotionStartTick = 0;
+    this.romMotionFromY = 0;
     this.romMotionDxPerTick = 0;
+    this.romMotionDyPerTick = 0;
     this.romMotionDuration = 0;
     this.romMotionHoldTicks = 0;
     this.romMotionSegments = null;

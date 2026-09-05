@@ -159,11 +159,16 @@ export function defenseContactFromEvents(
   committedIndex: number,
   defender: BattleSide,
 ): { tick: number; kind: 'ATTACK_HIT' } | null {
+  let incomingActionStarted = false;
   for (let index = committedIndex + 1; index < events.length; index++) {
     const event = events[index].event;
     // Frontera del exchange: una acción nueva o una nueva ventana defensiva
     // cierran la ventana de este commit sin consumirlo.
-    if (event.type === 'ACTION_STARTED') break;
+    if (event.type === 'ACTION_STARTED') {
+      if (event.side === defender || incomingActionStarted) break;
+      incomingActionStarted = true;
+      continue;
+    }
     if (event.type === 'DEFENSE_COMMITTED') break;
     if (event.type === 'ATTACK_HIT' && event.target === defender && event.source !== defender) {
       return { tick: events[index].tick, kind: 'ATTACK_HIT' };

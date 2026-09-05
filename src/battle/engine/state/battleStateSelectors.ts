@@ -197,8 +197,12 @@ export type BattleOutcome =
   | { status: 'DEFEAT'; winner: 'enemy' };
 
 export function battleOutcome(state: BattleState): BattleOutcome {
-  const pHp = state.player.hp <= 0;
-  const eHp = state.enemy.hp <= 0;
+  // In a ROM team battle, KO of the active fighter is an entry boundary for
+  // the living reserve, not the end of the match. The terminal authority must
+  // therefore consider the whole side; otherwise canExecute locks the battle
+  // before BattleRuntime can promote player2/enemy2.
+  const pHp = state.player.hp <= 0 && !(state.player2 && state.player2.hp > 0);
+  const eHp = state.enemy.hp <= 0 && !(state.enemy2 && state.enemy2.hp > 0);
   if (!pHp && !eHp) return { status: 'ACTIVE' };
   if (eHp && !pHp) return { status: 'VICTORY', winner: 'player' };
   if (pHp && !eHp) return { status: 'DEFEAT', winner: 'enemy' };

@@ -894,6 +894,17 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, pla
   const [selectedCard, setSelectedCard] = useState<number | null>(null);
   const [, setLog] = useState<string[]>([t('battle.start')]);
 
+  // Presentación de producción. Estas refs viven junto al Runtime para que el
+  // Presenter pueda proyectar el timeline acumulativo durante el propio QTE,
+  // antes de que React arranque la capa cinematográfica legacy.
+  const pixiPresRef = useRef<PixiBattlePresentation | null>(null);
+  const [pixiPresentationReady, setPixiPresentationReady] = useState(false);
+  const romAdapterRef = useRef<ProductionRomPresentationAdapter | null>(null);
+  const romPlayerRef = useRef<RomPresentationPlayer | null>(null);
+  const presentationSourceRef = useRef<'ROM' | 'LEGACY'>('LEGACY');
+  const stageRomActiveRef = useRef(false);
+  const runtimeTimelineCursorRef = useRef(0);
+
   // ═══ M8.C1 — BattleRuntime: frontera única (Engine → EventLog → Timeline → Presenter) ═══
   // La UI despacha MOVE/GUARD al Engine; la posición/guardia finales se
   // PROYECTAN desde runtime.state (snapshot autoritativa) — React NO
@@ -937,7 +948,24 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, pla
   const pendingLotStart = useRef(-1);
   const [engineTick, setEngineTick] = useState(0);
   const presenter = useMemo<BattlePresenter>(() => ({
-    consume({ timeline }) {
+    consume({ timeline, state }) {
+      // Stage se presenta en vivo desde el timeline real del Runtime. Cada cue
+      // se consume una sola vez y en su tick absoluto; después se sincroniza el
+      // renderer al tick actual. Así QTE, SOLO, DUEL, impacto y retorno no
+      // dependen de un segundo timeline card-level incompleto.
+      const runtimeAdapter = romAdapterRef.current;
+      if (stageRomActiveRef.current && runtimeAdapter) {
+        let cursor = runtimeTimelineCursorRef.current;
+        while (cursor < timeline.entries.length) {
+          const cue = timeline.entries[cursor].cue;
+          if (cue.tick > state.tick) break;
+          runtimeAdapter.sync(cue.tick);
+          runtimeAdapter.consume(cue);
+          cursor++;
+        }
+        runtimeTimelineCursorRef.current = cursor;
+        runtimeAdapter.sync(state.tick);
+      }
       const lotStart = pendingLotStart.current;
       if (lotStart < 0) return;
       for (const en of timeline.entries) {
@@ -1307,14 +1335,8 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, pla
   const cinematicRef = useRef<BattleTimeline | null>(null);
   // ─── Presentación Pixi (dev flag ?pixiField=1): instancia que recibe los
   //     eventos del timeline en paralelo al DOM (sin reemplazarlo). ───
-  const pixiPresRef = useRef<PixiBattlePresentation | null>(null);
-  const [pixiPresentationReady, setPixiPresentationReady] = useState(false);
-  // C1.0 — Production ROM Bridge: adaptador (frontera única cue→Pixi) + player
-  // + instrumentación provenance (ROM|LEGACY). El adaptador es el MISMO que (b)
-  // reutilizará (BattleRuntime.timeline → Presenter → este adaptador → Pixi).
-  const romAdapterRef = useRef<ProductionRomPresentationAdapter | null>(null);
-  const romPlayerRef = useRef<RomPresentationPlayer | null>(null);
-  const presentationSourceRef = useRef<'ROM' | 'LEGACY'>('LEGACY');
+  // C1.0 — las refs del puente ROM se declaran junto al Runtime, arriba, para
+  // que este bloque y el Presenter compartan exactamente la misma instancia.
 
   // P0 ROM TICKS Browser Validation: expose actor state to window for diagnostic page
   useEffect(() => {
@@ -1393,18 +1415,23 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, pla
       nextEvent: next,
     });
   };
-  const clearCinematicTimers = () => {
+  const clearCinematicTimers = (preserveRuntimeRom = false) => {
     cinematicTimers.current.forEach(id => window.clearTimeout(id));
     cinematicTimers.current = [];
     cinematicRef.current?.cancel();
     cinematicRef.current = null;
-    romPlayerRef.current?.cancel();
-    romPlayerRef.current = null;
-    romAdapterRef.current = null;
+    if (!preserveRuntimeRom) {
+      romPlayerRef.current?.cancel();
+      romPlayerRef.current = null;
+      romAdapterRef.current = null;
+      stageRomActiveRef.current = false;
+      runtimeTimelineCursorRef.current = 0;
+    }
   };
   useEffect(() => clearCinematicTimers, []);
   const playCardCinematic = (card: CardDef, side: 'player' | 'enemy', onDone: () => void, onEvent?: (e: CinematicEvent) => void) => {
-    clearCinematicTimers();
+    const continuingRuntimeStage = card.type === 'command' && stageRomActiveRef.current && !!romAdapterRef.current;
+    clearCinematicTimers(continuingRuntimeStage);
     let cinematicFinished = false;
     const setActorPose = (pose: BattleSpritePose) => side === 'player' ? setPlayerPose(pose) : setEnemyPose(pose);
     const setTargetPose = (pose: BattleSpritePose) => side === 'player' ? setEnemyPose(pose) : setPlayerPose(pose);
@@ -1442,19 +1469,46 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, pla
     // (NO por profileFor/applyCinematicEvent). El DOM legacy sigue en paralelo
     // y es quien dispara onDone (se retirará en (b)).
     const actorFormId = side === 'player' ? activePlayerFormId : activeEnemyFormId;
-    const romRoute = pixiPres ? romPresentationTimelineForCard(card, side, actorFormId) : null;
-    const useRomPixi = !!romRoute;
+    const romRoute = pixiPres && !continuingRuntimeStage ? romPresentationTimelineForCard(card, side, actorFormId) : null;
+    const useRomPixi = continuingRuntimeStage || !!romRoute;
     presentationSourceRef.current = useRomPixi ? 'ROM' : 'LEGACY';
-    if (pixiPres) {
+    if (pixiPres && !continuingRuntimeStage) {
       pixiPres.reset();
       pixiPres.setAttacker(side === 'player' ? 'left' : 'right');
     }
-    if (useRomPixi && romRoute && pixiPres) {
+    if (continuingRuntimeStage && pixiPres && romAdapterRef.current) {
+      const currentTick = rtApi.runtime.state.tick;
+      const completeTimeline = rtApi.runtime.timeline;
+      const tail = {
+        startTick: currentTick,
+        endTick: Math.max(currentTick, completeTimeline.endTick),
+        entries: completeTimeline.entries.filter(entry => entry.cue.tick > currentTick),
+      };
+      const adapter = romAdapterRef.current;
+      const player = new RomPresentationPlayer(tail, adapter, {
+        clock: {
+          getTick: () => rtApi.runtime.state.tick,
+          advance: (ticks) => { rtApi.runtime.advance(ticks); },
+        },
+        onComplete: () => {
+          romPlayerRef.current = null;
+          stageRomActiveRef.current = false;
+          runtimeTimelineCursorRef.current = 0;
+          pixiPres.returnToField();
+        },
+      });
+      romPlayerRef.current = player;
+      player.start();
+    } else if (useRomPixi && romRoute && pixiPres) {
       const adapter = new ProductionRomPresentationAdapter(pixiPres, pixiPres.romPresenter);
       adapter.reset('ROM');
       romAdapterRef.current = adapter;
       romPlayerRef.current?.cancel();
       const player = new RomPresentationPlayer(romRoute.timeline, adapter, {
+        clock: {
+          getTick: () => rtApi.runtime.state.tick,
+          advance: (ticks) => { rtApi.runtime.advance(ticks); },
+        },
         onComplete: () => { romPlayerRef.current = null; pixiPres.returnToField(); },
       });
       romPlayerRef.current = player;
@@ -1960,6 +2014,31 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, pla
       addLog(`${card.name}: el Engine no abrió la preparación Stage`);
       Sfx.cancel();
       return;
+    }
+    // La película Stage empieza cuando empieza la acción, no después del QTE.
+    // Consumimos el timeline acumulativo del Runtime hasta su tick actual y el
+    // Presenter continuará entregando los cues futuros conforme advance() los
+    // haga efectivos. No se crea aquí ningún reloj adicional.
+    const pixiPres = pixiPresRef.current;
+    if (pixiPres) {
+      pixiPres.reset();
+      pixiPres.setAttacker('left');
+      const adapter = new ProductionRomPresentationAdapter(pixiPres, pixiPres.romPresenter);
+      adapter.reset('ROM');
+      romAdapterRef.current = adapter;
+      presentationSourceRef.current = 'ROM';
+      stageRomActiveRef.current = true;
+      runtimeTimelineCursorRef.current = 0;
+      let cursor = 0;
+      while (cursor < rt.timeline.entries.length) {
+        const cue = rt.timeline.entries[cursor].cue;
+        if (cue.tick > rt.state.tick) break;
+        adapter.sync(cue.tick);
+        adapter.consume(cue);
+        cursor++;
+      }
+      runtimeTimelineCursorRef.current = cursor;
+      adapter.sync(rt.state.tick);
     }
     // La secuencia, ventana, coste y carta activa ya proceden del dispatch.
     // React conserva únicamente el espejo necesario para pintar el QTE.
