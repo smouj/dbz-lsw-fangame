@@ -97,7 +97,8 @@ import type { PixiBattlePresentation } from './renderer/pixi/presentation/PixiBa
 import { ProductionRomPresentationAdapter } from './renderer/pixi/presentation/ProductionRomPresentationAdapter';
 import { RomPresentationPlayer } from './renderer/pixi/presentation/RomPresentationPlayer';
 import { romPresentationTimelineForCard } from './battle/romPresentationForCard';
-import { latestStandardDamageRuntimeCutover } from './battle/standardDamageRomCutover';
+import { latestStandardDamageRuntimeCutover, STANDARD_DAMAGE_ROM_HANDLER } from './battle/standardDamageRomCutover';
+import { romActionExecutionDescriptorForCard } from './battle/romActionExecutionDescriptors';
 // Code-split: pixi.js (~790KB) solo se descarga cuando ?pixiField=1 está activo.
 const BattlePixiStage = lazy(() => import('./battle/BattlePixiStage').then((m) => ({ default: m.BattlePixiStage })));
 import { initAudio, Sfx, setSfxEnabled, setVolume as setVolumeSfx } from './audio/sfx';
@@ -2689,6 +2690,11 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, pla
   // ═══ ENEMY INTENT (M8.C2a): la IA decide SU ataque — SIN presentarlo ═══
   // Carta entrante del enemigo (la consume la fase de defensa al resolver).
   const incomingCard = useRef<CardDef | null>(null);
+  // Root C — resolución pre-dispatch del ataque enemigo $0A (ver
+  // presentIncomingEnemyAttack): el DispatchResult se guarda entre el commit
+  // defensivo y el cierre del film para que resolveEnemyAttackViaEngine lo
+  // consuma UNA vez (nunca resuelve dos veces la misma acción).
+  const enemyAttackResultRef = useRef<ReturnType<BattleRuntime['resolveCard']> | null>(null);
   // PA11 — memoria privada de la IA (EnemySessionState: fuera del Engine,
   // sin autoridad de combate; el controller es puro y determinista).
   const enemySessionRef = useRef(createEnemySession());
@@ -2779,11 +2785,6 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, pla
 
   const defendBasic = (choice: 'defense' | 'move', posOrAxis?: BattlePosition | MoveAxis) => {
     setPhase('enemyTurn'); // desmonta el menú YA (evita doble disparo)
-    const card = incomingCard.current || CARDS[25];
-    const runEnemyCinematic = (onDone: () => void) => {
-      // La animación del ataque enemigo se ejecuta DESPUÉS de elegir defensa (orden GBC)
-      playCardCinematic(card, 'enemy', onDone);
-    };
     if (choice === 'move' && posOrAxis) {
       // M8.C1 — MOVE a través del Engine: el destino (y el empuje GBC §9)
       // los calcula movementReducer (applyMoveAxis). React NO computa
@@ -2811,8 +2812,11 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, pla
         setEnemy(prev => ({ ...prev, battlePos: pushed })); // ENGINE-SNAPSHOT (M8.C1)
         addLog(`${enemy.name} retrocede a FRONT (empuje)`);
       }
-      runEnemyCinematic(() => resolveEnemyAttackViaEngine());
+      presentIncomingEnemyAttack();
     } else {
+      // Root C — presentIncomingEnemyAttack: la animación del ataque enemigo
+      // se ejecuta DESPUÉS de elegir defensa (orden GBC); la familia $0A con
+      // presentación ROM activa se pre-resuelve en el commit defensivo.
       // M8.C1 — GUARD a través del Engine: guardia = snapshot del runtime.
       // M8.C2a-L — si el Engine RECHAZA (p.ej. NOT_DEFENDER por desfase de
       // exchange), NO continuar con la cinemática enemiga: volver al menú
@@ -2823,7 +2827,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, pla
       if (g) setPlayerGuard({ type: g }); // ENGINE-SNAPSHOT (M8.C1)
       setPlayerPose('guard');
       addLog(`${player.name} ${t('battle.defends')} (−50% ${t('battle.dmg')})`);
-      runEnemyCinematic(() => resolveEnemyAttackViaEngine());
+      presentIncomingEnemyAttack();
     }
   };
 
@@ -2859,9 +2863,10 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, pla
     }
     setPlayer(prev => ({ ...prev, cc: rtApi.runtime.state.player.cc })); // ENGINE-SNAPSHOT
     setDeckState(rtApi.runtime.state.deck);
-    // Cinemática del ataque enemigo tras elegir la carta defensiva (orden GBC)
-    const cardIncoming = incomingCard.current || CARDS[25];
-    playCardCinematic(cardIncoming, 'enemy', () => resolveEnemyAttackViaEngine());
+    // Cinemática del ataque enemigo tras elegir la carta defensiva (orden GBC).
+    // Root C: presentIncomingEnemyAttack pre-resuelve la familia $0A con la
+    // presentación ROM activa y pasa el DispatchResult a playCardCinematic.
+    presentIncomingEnemyAttack();
   };
 
   // LIMIT durante Defense: solo Limits DEFENSE/SUPPORT y solo si powered
@@ -2884,9 +2889,10 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, pla
       return;
     }
     setPlayer(fighterToReact(result.state.player));
-    // Cinemática del ataque enemigo tras elegir el Limit defensivo (orden GBC)
-    const cardIncoming = incomingCard.current || CARDS[25];
-    playCardCinematic(cardIncoming, 'enemy', () => resolveEnemyAttackViaEngine());
+    // Cinemática del ataque enemigo tras elegir el Limit defensivo (orden GBC).
+    // Root C: presentIncomingEnemyAttack pre-resuelve la familia $0A con la
+    // presentación ROM activa y pasa el DispatchResult a playCardCinematic.
+    presentIncomingEnemyAttack();
   };
 
   // Cierre común de la resolución defensiva (KO / cambio de fase)
@@ -2953,10 +2959,10 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, pla
     if (cardIn.type === 'beam') Sfx.beam();
   };
 
-  /** Resuelve el ataque enemigo pendiente (incomingCard) en el Engine. */
-  const resolveEnemyAttackViaEngine = () => {
-    const card = incomingCard.current ?? (getCard(1) as CardDef);
-    const res = rtApi.runtime.resolveCard('enemy', card);
+  /** Proyección + continuación del ataque enemigo YA resuelto por el Engine
+   *  (estado terminal / autoridad: state del Runtime). Compartido por el
+   *  cierre del film DOM legacy y por el cierre del film ROM (Root C). */
+  const applyEnemyResolutionResult = (res: ReturnType<BattleRuntime['resolveCard']>) => {
     projectEnemyResolution(res);
     // ── estado terminal / continuación (autoridad: state del Engine) ──
     if (rtApi.runtime.state.player.hp <= 0) {
@@ -2979,6 +2985,41 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, pla
     setEnemyPose('idle');
     setSelectedCard(null);
     advanceExchange();
+  };
+
+  /** Root C — presentación del ataque enemigo entrante (call-site único de
+   *  los commits defensivos: GUARD/MOVE/JOINT/LIMIT). Para la familia
+   *  STANDARD_DAMAGE ($0A) CON la presentación ROM activa (?pixiField=1), la
+   *  resolución del Engine ocurre en el COMMIT defensivo (orden GBC) y su
+   *  DispatchResult se pasa a playCardCinematic como 5º argumento: la rama
+   *  romOwnsCompletion recibe el EventLog real (log.entries), el film ROM
+   *  gobierna el completion (un solo reloj — tick del BattleRuntime — y un
+   *  solo onDone: finishRomCinematic) y la movie DOM legacy NO corre en
+   *  paralelo. El resto de rutas (DOM legacy, beam/stage estáticos, soporte)
+   *  conserva el orden actual intacto: resolución al cierre del film. */
+  const presentIncomingEnemyAttack = () => {
+    const card = incomingCard.current ?? (getCard(1) as CardDef);
+    const pixiPres = pixiPresRef.current;
+    const romEligible = !!pixiPres
+      && romActionExecutionDescriptorForCard(card).execution.handler === STANDARD_DAMAGE_ROM_HANDLER;
+    if (romEligible) {
+      const res = rtApi.runtime.resolveCard('enemy', card);
+      enemyAttackResultRef.current = res;
+      playCardCinematic(card, 'enemy', () => resolveEnemyAttackViaEngine(), undefined, res);
+      return;
+    }
+    playCardCinematic(card, 'enemy', () => resolveEnemyAttackViaEngine());
+  };
+
+  /** Resuelve el ataque enemigo pendiente (incomingCard) en el Engine. */
+  const resolveEnemyAttackViaEngine = () => {
+    const card = incomingCard.current ?? (getCard(1) as CardDef);
+    // Root C — si el commit ya pre-resolvió la acción ($0A + presentación
+    // ROM), consume ESE resultado; la acción nunca se resuelve dos veces.
+    const preResolved = enemyAttackResultRef.current;
+    enemyAttackResultRef.current = null;
+    const res = preResolved ?? rtApi.runtime.resolveCard('enemy', card);
+    applyEnemyResolutionResult(res);
   };
 
   useEffect(() => {

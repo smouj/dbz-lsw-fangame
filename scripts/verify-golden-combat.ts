@@ -25,6 +25,7 @@
 // Evidencia ROM citada con § de docs/rom/COMBAT_MECHANICS_ROM_CONFIRMED.md.
 // ═══════════════════════════════════════════════════════════════════════
 import { BattleRuntime } from '../src/battle/runtime/BattleRuntime';
+import { latestStandardDamageRuntimeCutover } from '../src/battle/standardDamageRomCutover';
 import { createInitialBattleState, type InitialBattleConfig } from '../src/battle/engine/state/createInitialBattleState';
 import { getControlBoundary, activeAttacker, battleOutcome, isBattleTerminal } from '../src/battle/engine/state/battleStateSelectors';
 import { BattlePosition, POSITION_DATA } from '../src/data/positions';
@@ -97,6 +98,48 @@ const damageTo = (rt: BattleRuntime, target: 'player' | 'enemy'): number =>
   eventsOf(rt, 'DAMAGE_APPLIED')
     .filter((e) => (e as { target?: string }).target === target)
     .reduce((acc, e) => acc + ((e as { amount?: number }).amount ?? 0), 0);
+
+/** Root C — contrato de COMPLETION OWNERSHIP ROM (espejo headless del wiring
+ *  de playCardCinematic): cuando la carta resuelve vía BattleRuntime, el
+ *  call-site pasa el DispatchResult y la presentación ROM recibe el EventLog
+ *  real. Gate: el cutover (latestStandardDamageRuntimeCutover) existe sobre
+ *  ese resultado (romOwnsCompletion se activa en vivo), su film es ALCANZABLE
+ *  en el reloj del Runtime (el RomPresentationPlayer avanza 1 tick por tick y
+ *  termina en el endTick compilado — retorno al tick ROM, no a 132/152t del
+ *  scheduler DOM legacy) y durante el film NO se emite NINGÚN evento nuevo
+ *  (un solo reloj — regresión = cualquier contador local en paralelo). */
+function assertRomCompletionContract(
+  label: string,
+  rt: BattleRuntime,
+  result: ReturnType<BattleRuntime['dispatch']>,
+  side: 'player' | 'enemy',
+  card: CardDef,
+  actorFormId: string,
+): void {
+  const cutover = latestStandardDamageRuntimeCutover(result.log.entries, side, card, actorFormId);
+  check(`${label}: cutover runtime presente sobre el DispatchResult (romOwnsCompletion se activa)`,
+    !!cutover, 'cutover=null — el call-site no recibiría ruta ROM de completion');
+  if (!cutover) return;
+  const tl = cutover.timeline;
+  const actionStarted = result.log.entries.find((en) => en.event.type === 'ACTION_STARTED' && en.event.side === side);
+  check(`${label}: film anclado en el ACTION_STARTED real del EventLog (startTick) y con duración > 0`,
+    tl.startTick === (actionStarted?.tick ?? -1) && tl.endTick > tl.startTick,
+    `start=${tl.startTick} env=${actionStarted?.tick ?? '?'} end=${tl.endTick}`);
+  const unresolved = tl.entries.filter((en) => en.cue.type === 'ROM_PHYSICAL_FRAME' && (en.cue as { source?: string }).source === 'UNRESOLVED').length;
+  check(`${label}: película física resuelta para la forma real (0 UNRESOLVED)`,
+    unresolved === 0, `unresolved=${unresolved}`);
+  const tick0 = rt.state.tick;
+  const logLen = rt.log.entries.length;
+  // Simulación del reloj del RomPresentationPlayer: avanza el BattleRuntime
+  // hasta el endTick del film compilado (retorno al tick ROM).
+  rt.advance(tl.endTick - rt.state.tick);
+  check(`${label}: retorno al tick ROM — Runtime en el endTick del film`,
+    rt.state.tick === tl.endTick, `tick=${rt.state.tick} end=${tl.endTick}`);
+  check(`${label}: 0 eventos durante el film (un solo reloj, sin scheduler paralelo)`,
+    rt.log.entries.length === logLen, `events=${rt.log.entries.length - logLen}`);
+  check(`${label}: tick inicial respetado (startTick ${tick0} intacto antes del film)`,
+    tick0 === tl.startTick, `t0=${tick0}`);
+}
 
 /** Pone la carta en la mano del player y abre cardSelect (flujo real). */
 function withHand(rt: BattleRuntime, cardId: number): BattleRuntime {
@@ -281,6 +324,10 @@ function runStandardDamage(cardId: number, label: string, animResourceHex: numbe
   check(`${label}: película física completa (ambas secuencias, sin attack_fwd)`,
     physical.length === expectedFrames && physical.every(en => (en.cue as { source?: string }).source === 'ROM_PHYSICAL'),
     `physical=${physical.length} expected=${expectedFrames}`);
+  // Root C — completion ownership ROM del JUGADOR (wiring real 62001cc1:
+  // presentRuntimeCard pasa el DispatchResult como 5º arg). El film compilado
+  // debe ser alcanzable en el reloj del Runtime con retorno al tick ROM.
+  assertRomCompletionContract(label, rt, r, 'player', getCard(cardId) as CardDef, 'goku_base');
   const resultStart = entries.find(en => en.cue.type === 'ANIMATION_START' && (en.cue as { sequence?: number }).sequence === 1);
   const stops = entries.filter(en => en.cue.type === 'ACTION_OBJECT_STOP');
   const restore = entries.find(en => en.cue.type === 'SCENE_LOAD' && (en.cue as { mode?: string }).mode === 'RESTORE_TACTICAL');
@@ -451,7 +498,10 @@ function runGuard(): BattleRuntime {
   check('guard: GUARD_STARTED (reduce) — CA82=2 BASIC_GUARD (§197)',
     hasEvent(rt, 'GUARD_STARTED') && rt.state.playerGuard === 'reduce' && RomResolutionMode.BASIC_GUARD === 2,
     `guard=${rt.state.playerGuard}`);
-  const res = resolveEnemyAttack(rt);
+  // Root C — el ataque entrante del rival es la familia $0A real observada en
+  // browser (Cont.Kick del rival, rom-r1): con la presentación ROM activa el
+  // commit defensivo pre-resuelve y pasa el DispatchResult a la cinemática.
+  const res = resolveEnemyAttack(rt, 6); // Cont.Kick #6 — STANDARD_DAMAGE $0A
   check('guard: ataque enemigo resuelto por el engine (contacto)',
     res.events.some((e) => e.type === 'ATTACK_HIT'), res.events.map((e) => e.type).join(','));
   // M8.C2a §7: la pose de guardia se presenta en el CONTACTO (ATTACK_HIT),
@@ -463,6 +513,9 @@ function runGuard(): BattleRuntime {
     JSON.stringify(contactPose?.cue ?? null));
   const unhandled = unhandledCues(rt);
   check('guard: 0 cues UNHANDLED', unhandled.length === 0, unhandled.map((u) => u.type).join(', '));
+  // Root C — completion ownership ROM del RIVAL (wiring nuevo: la resolución
+  // ocurre en el commit y su resultado alimenta romOwnsCompletion en vivo).
+  assertRomCompletionContract('guard(rival-$0A)', rt, res, 'enemy', getCard(6) as CardDef, 'piccolo_base');
   // Terminal defensivo: END_EXCHANGE (ex0→1) + phase command → ATTACK_CHOICE.
   const ex = rt.dispatch({ type: 'END_EXCHANGE' } as BattleCommand);
   rt.state = { ...rt.state, phase: 'command' as never };
@@ -792,10 +845,10 @@ finishAction('stage3', '3 Stage (QTE)', 'PASS', 'QTE engine + daño ROM §130 + 
 // ── 2/3) Cont.Punch / Cont.Kick ──
 console.log('\n═══ 2) CONT.PUNCH ═══');
 assertDeterministic('cont_punch', () => runStandardDamage(5, 'cont_punch', 0x2c, 206));
-finishAction('cont_punch', 'Cont.Punch', 'PASS', 'STANDARD_DAMAGE físico seq0+seq1; impacto, recuperación y cleanup ROM');
+finishAction('cont_punch', 'Cont.Punch', 'PASS', 'STANDARD_DAMAGE físico seq0+seq1; impacto, recuperación y cleanup ROM; completion ROM (retorno al tick 300 del Runtime)');
 console.log('\n═══ 3) CONT.KICK ═══');
 assertDeterministic('cont_kick', () => runStandardDamage(6, 'cont_kick', 0x2d, 134));
-finishAction('cont_kick', 'Cont.Kick', 'PASS', 'STANDARD_DAMAGE físico seq0+seq1; impacto, recuperación y cleanup ROM');
+finishAction('cont_kick', 'Cont.Kick', 'PASS', 'STANDARD_DAMAGE físico seq0+seq1; impacto, recuperación y cleanup ROM; completion ROM (retorno al tick 237 del Runtime)');
 
 // ── 4) Kamehameha ──
 console.log('\n═══ 4) KAMEHAMEHA ═══');
@@ -820,7 +873,7 @@ finishAction('gather', 'Gather Power', 'PASS', 'máquina POWER §102/§132-133')
 // ── 8/9/10) Guard · Move H · Move V ──
 console.log('\n═══ 8) GUARD ═══');
 assertDeterministic('guard', runGuard);
-finishAction('guard', 'Guard', 'PASS', 'CA82=2 + contacto M8.C2a');
+finishAction('guard', 'Guard', 'PASS', 'CA82=2 + contacto M8.C2a + completion ROM del ataque $0A rival (Cont.Kick #6, retorno al tick 237 del Runtime)');
 console.log('\n═══ 9) MOVE HORIZONTAL ═══');
 assertDeterministic('move_h', () => runMove('HORIZONTAL', 'move_h'));
 finishAction('move_h', 'Move H', 'PASS', 'POSITION_CHANGED axis HORIZONTAL');
