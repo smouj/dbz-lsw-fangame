@@ -10,7 +10,7 @@
 // el Presenter, el Presenter sustituirá a este scheduler de canary.
 // ═══════════════════════════════════════════════════════════════════════
 
-import type { BattleTimeline } from '../../../battle/engine/presentation/PresentationCue';
+import type { BattleTimeline, PresentationCue } from '../../../battle/engine/presentation/PresentationCue';
 import { GbcClockAdapter } from '../../../battle/GbcClockAdapter';
 import type { ProductionRomPresentationAdapter } from './ProductionRomPresentationAdapter';
 
@@ -35,6 +35,8 @@ export function advanceAuthoritativeBattleTick(clock: BattleTickAuthority): numb
 export interface RomPresentationPlayerOptions {
   clock: BattleTickAuthority;
   onTick?: (presentationTick: number, battleTick: number) => void;
+  /** Observes an already-authored visual cue; it never mutates gameplay. */
+  onCue?: (cue: PresentationCue, presentationTick: number, battleTick: number) => void;
   onComplete: () => void;
 }
 
@@ -104,7 +106,10 @@ export class RomPresentationPlayer {
       // sus ticks relativos únicamente para seleccionar qué cues corresponden.
       this.adapter.sync(battleTick - (target - this.tickCursor));
       for (const entry of this.timeline.entries) {
-        if (entry.cue.tick === this.tickCursor) this.adapter.consume(entry.cue);
+        if (entry.cue.tick === this.tickCursor) {
+          this.adapter.consume(entry.cue);
+          this.opts.onCue?.(entry.cue, this.tickCursor, battleTick - (target - this.tickCursor));
+        }
       }
     }
     this.opts.onTick?.(target, battleTick);

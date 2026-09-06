@@ -30,6 +30,8 @@ export interface StandardDamageRuntimeOutcome {
 }
 
 export interface StandardDamageRuntimeCutover {
+  actionId: string;
+  actionSequence: number;
   card: CardDef;
   profile: RomPresentationProfile;
   outcome: StandardDamageRuntimeOutcome;
@@ -103,6 +105,8 @@ export function compileStandardDamageRuntimeCutover(
   });
 
   return {
+    actionId: `${env.sequence}:${env.event.side}:${resolved.card.id}`,
+    actionSequence: env.sequence,
     card: resolved.card,
     profile: resolved.profile,
     outcome,
@@ -129,6 +133,11 @@ export function latestStandardDamageRuntimeCutover(
     );
   }
   return null;
+}
+
+export function isStandardDamageRomCard(card: CardDef): boolean {
+  return romActionExecutionDescriptorForCard(card).execution.handler === STANDARD_DAMAGE_ROM_HANDLER
+    && romPresentationProfileForCard(card).kind === 'STANDARD_DAMAGE';
 }
 
 export function standardDamageRuntimeCutoverSummary(): StandardDamageRuntimeCutoverSummary {

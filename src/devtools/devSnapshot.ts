@@ -67,7 +67,7 @@ export interface DevSnapshot {
     pixiQuery: string;
     pixiActiveByDefault: false;
     completionOwnership: 'ROUTE_SCOPED';
-    romCompletionRoutes: readonly ['PLAYER_STANDARD_DAMAGE'];
+    romCompletionRoutes: readonly ['PLAYER_STANDARD_DAMAGE', 'ENEMY_STANDARD_DAMAGE'];
     legacyCompletionFallback: true;
     timelineLiveSurface: 'RUNTIME_SANDBOX';
   };

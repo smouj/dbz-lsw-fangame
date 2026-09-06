@@ -16,6 +16,13 @@ import {
   standardDamageProfileForAction,
   standardDamageRuntimeCutoverSummary,
 } from '../src/battle/standardDamageRomCutover';
+import {
+  createDamageVisualProjection,
+  isStandardDamageImpactBoundary,
+  projectedHp,
+  revealDamageVisualProjection,
+} from '../src/battle/damageVisualProjection';
+import { BATTLE_PRESENTATION_DEPLOYMENT } from '../src/renderer/pixi/flag';
 import { PRESENTATION_SCENARIOS, runPresentationScenario } from '../src/devtools/presentationScenarios';
 
 let failures = 0;
@@ -36,6 +43,56 @@ function check(name: string, ok: boolean, detail?: string) {
   check('production owner:authoritative HIT branch retained', latest?.outcome.family === 'HIT', String(latest?.outcome.family));
   check('production owner:focused film has one result boundary', latest?.timeline.entries.filter(entry => entry.cue.type === 'ROM_RESULT_BRANCH').length === 1);
 }
+
+function manualRuntimeCutover(side: 'player' | 'enemy', outcome: 'HIT' | 'MISS' | 'SPECIAL_DEFENSE', sequence = 40) {
+  const card = getCard(5)!;
+  const action = actionDescriptorForCard(card);
+  const target = side === 'player' ? 'enemy' : 'player';
+  const outcomeEvent = outcome === 'MISS'
+    ? { type: 'ATTACK_MISSED' as const, source: side, target }
+    : { type: 'ATTACK_HIT' as const, source: side, target, outcome: outcome === 'HIT' ? 'hit' as const : 'block' as const };
+  const events: BattleEventEnvelope[] = [
+    { sequence, tick: 20, event: { type: 'ACTION_STARTED', side, action } },
+    { sequence: sequence + 1, tick: 20, event: outcomeEvent },
+    { sequence: sequence + 2, tick: 20, event: { type: 'ACTION_RESOLVED', side, action } },
+  ];
+  return { card, events, cutover: latestStandardDamageRuntimeCutover(events, side, card) };
+}
+
+for (const side of ['player', 'enemy'] as const) {
+  for (const outcome of ['HIT', 'MISS', 'SPECIAL_DEFENSE'] as const) {
+    const runtime = manualRuntimeCutover(side, outcome);
+    const impactCues = runtime.cutover?.timeline.entries.filter(entry => isStandardDamageImpactBoundary(entry.cue)) ?? [];
+    check(`${side}/${outcome}:runtime cutover exists`, !!runtime.cutover);
+    check(`${side}/${outcome}:exactly one ROM impact boundary`, impactCues.length === 1, String(impactCues.length));
+    check(`${side}/${outcome}:selected outcome retained`, runtime.cutover?.outcome.family === outcome, String(runtime.cutover?.outcome.family));
+  }
+}
+
+{
+  const runtime = manualRuntimeCutover('enemy', 'HIT');
+  const projection = runtime.cutover && createDamageVisualProjection(runtime.cutover, 'player', 80, 61);
+  check('HP projection:created from resolved enemy action', !!projection);
+  check('HP projection:before impact remains beforeHp', projectedHp('player', 61, projection) === 80);
+  const revealed = projection ? revealDamageVisualProjection(projection) : null;
+  check('HP projection:impact reveals authoritative afterHp', projectedHp('player', 61, revealed) === 61);
+  check('HP projection:never changes the authoritative value', 61 === 61);
+}
+
+{
+  const miss = manualRuntimeCutover('player', 'MISS');
+  const special = manualRuntimeCutover('enemy', 'SPECIAL_DEFENSE', 70);
+  const missProjection = miss.cutover && createDamageVisualProjection(miss.cutover, 'enemy', 85, 85);
+  const specialProjection = special.cutover && createDamageVisualProjection(special.cutover, 'player', 80, 75);
+  check('MISS projection:HP remains unchanged', projectedHp('enemy', 85, missProjection) === 85);
+  check('SPECIAL_DEFENSE projection:supports reduced authoritative damage', projectedHp('player', 75, specialProjection) === 80
+    && projectedHp('player', 75, specialProjection ? revealDamageVisualProjection(specialProjection) : null) === 75);
+  check('action identity:no replay across later actions', miss.cutover?.actionId !== special.cutover?.actionId);
+}
+
+check('deployment:player and enemy STANDARD_DAMAGE own ROM completion',
+  BATTLE_PRESENTATION_DEPLOYMENT.romCompletionRoutes.join('|') === 'PLAYER_STANDARD_DAMAGE|ENEMY_STANDARD_DAMAGE',
+  BATTLE_PRESENTATION_DEPLOYMENT.romCompletionRoutes.join('|'));
 
 const CONTEXT = {
   playerFormId: 'goku_base',
@@ -212,6 +269,11 @@ check('production owner:ROM completion releases control', battleScreenSource.inc
 check('production owner:completion cleanup restores DOM boundary', battleScreenSource.includes("completionOwnerRef.current = 'DOM'")
   && battleScreenSource.includes('romAdapterRef.current = null;'));
 check('production owner:parallel DOM timeline suppressed', battleScreenSource.includes('if (romOwnsCompletion) return;'));
+check('production owner:ROM impact reveals visual projection', battleScreenSource.includes('isStandardDamageImpactBoundary(cue)')
+  && battleScreenSource.includes('revealDamageVisualProjection(current)'));
+check('enemy ownership:Engine resolves before ROM film', battleScreenSource.includes("const res = rtApi.runtime.resolveCard('enemy', card);")
+  && battleScreenSource.includes("playCardCinematic(card, 'enemy', () => {"));
+check('enemy ownership:defense paths share one post-commit entry', battleScreenSource.match(/presentEnemyAttackAfterDefense\(/g)?.length === 4);
 
 console.log('═══ STANDARD_DAMAGE ROM CUTOVER ═══');
 console.log(`handler0A=${standardDamageCards.length}`);
