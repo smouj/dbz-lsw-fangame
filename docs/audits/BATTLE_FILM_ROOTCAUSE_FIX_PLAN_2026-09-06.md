@@ -5,6 +5,23 @@
 > cada root se arregla UNA vez en su autoridad y se cierra con su verifier/golden. HEAD
 > baseline: typecheck PASS · combat-fidelity PASS (1 LEGACY #9) · combat-camera-film 21/21 PASS.
 
+## Estado integrado · 2026-09-07
+
+- **Root C cerrado** (`33493fe2`, integrado en `29de59ad`): jugador y rival $0A
+  entregan el `DispatchResult` real al film ROM, sin timeline DOM paralelo y
+  con un único reloj/completion. La afirmación original de que ningún call-site
+  pasaba el resultado era demasiado amplia: el jugador ya lo hacía en
+  `62001cc1`; el hueco real estaba en los commits defensivos del rival.
+- **Root D1 cerrado** (commit posterior a `29de59ad`): el HP mostrado se modela
+  como una proyección inmutable `beforeHp → afterHp`. Runtime conserva la
+  autoridad desde la resolución; HUD, tooltip y texto de HP mantienen
+  `beforeHp` hasta consumir el único `ROM_RESULT_BRANCH`, frontera de impacto
+  de STANDARD_DAMAGE. HIT, MISS y SPECIAL_DEFENSE comparten el contrato; el
+  feedback audiovisual se dispara una sola vez en esa frontera.
+- **Root D sigue parcial**: quedan las variantes físicas completas $2F/$30/$31
+  y `FLASH_WHITE` real dentro del adapter/renderer. La proyección de HP no
+  declara cerradas esas tareas ni activa Pixi por defecto.
+
 ## Taxonomía (clasificar cada fallo antes de tocar)
 
 ```text
