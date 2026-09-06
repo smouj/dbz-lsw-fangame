@@ -32,6 +32,13 @@ Canonical example: `scripts/verify-golden-stage.ts` (Stage/QTE P0.3 gate, commit
 
 8. **Register + gate.** Add npm script `verify:<name>` next to the other mechanic verifies in package.json; append it to the single-line `verify:ci` chain right before `verify:portrait-domains`; run the FULL `verify:ci` (exit 0 required — it includes a build); commit.
 
+9. **Multi-action golden sets (P0.5 — pattern: `verify:golden-combat`).** When the gate spans many actions (Stage + cards + machine actions: Guard/Move/Gather/CHARA/LIMIT/KO), probe EVERY action on the real runtime BEFORE writing assertions, then map it to legal dispatch commands:
+   - Cards carry `compatible[]`: dispatch PLAY_CARD with the fighter's `characterId` as opts and set BOTH `playerFormId` in the state AND the runtime presentation context form to the card's owner (Destruct-Disk #21 → `krillin_base` + `characterId: 'krillin'`). A rejected PLAY_CARD is usually wrong character/phase, not a broken scenario — read `(result).reason`.
+   - When the card goes into the DEFEND window, keep `phase: 'defend'` (a hand-helper that resets phase to `cardSelect` makes PLAY_DEFENSE_CARD fail WRONG_PHASE).
+   - Doc/oracle tick numbers go stale (Cont.Punch $2C: doc 251t → current decode 206t): assert the CURRENT catalog value (`animationResourceById`), cite the doc as reference only.
+   - Assert "familia ROM en ejecución" from the runtime timeline itself: cutover entries carry their own `profileId` (`rom-card-<id>` / `rom-defense-<id>` / …) and fidelity `ROM_*`, while LEGACY entries use the action id + `INFERRED`. 0 silent fallback = expected prefix present AND every cue classified by `classifyRomCue` without UNHANDLED.
+   - Verdict model per action: PASS / PARTIAL / BLOCKED. PARTIAL only with a per-action allowlist of pending-cue reasons (frozen: a NEW reason fails the gate; a resolved reason passes). BLOCKED only for engine gaps (no legal command / unreachable phase); assert the blocker's evidence (canExecute rejection reason, or resolution events absent) so the gate turns RED when the engine fixes it — blockers never disappear silently. Gate exits 0 with PASS + PARTIAL and prints the BLOCKED list explicitly (better 9+4+2 honest than 15/15 fakes).
+
 ## Pitfalls
 
 - Don't assert only reducer state — go through dispatch/advance so clock deadlines fire (QTE_STARTED/QTE_TIMEOUT/counter) exactly once.
