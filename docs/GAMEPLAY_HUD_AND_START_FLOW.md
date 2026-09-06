@@ -46,6 +46,8 @@ Tooltips:
 - Cards show their effect summary + compatibility ("Usable por: …") in the tooltip; HUD fighter names show the full combat file (HP, STR/KI/SPD, position).
 - Card action cinematics are constrained to the battlefield area between the top HUD and lower controls. They must not render over the bottom HUD tray.
 - During a card/action cinematic, the lower tray becomes contextual copy for the action name/effect instead of continuing to show the hand.
+- The ATTACK phase banner completes before the 28-tick Joint draw begins. During that draw, the lower tray exposes only the authentic card frame and ROM art; COMMAND controls appear after the card lands.
+- Defense JOINT/LIMIT selectors reuse the same 96×80 card frame mask and ROM art as the attack hand. Empty legal selections use the authentic `NO CARD` sprite; explanatory copy remains in tooltips.
 - Menu/page buttons and tabs must never change layout geometry on hover. Feedback is color, light, border or opacity only.
 
 Sprite animation rule:

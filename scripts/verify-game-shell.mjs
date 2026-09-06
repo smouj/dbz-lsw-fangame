@@ -150,6 +150,8 @@ try {
   await page.keyboard.press('ArrowRight');
   assert.notEqual(await page.locator('.setup-roll-item-center').getAttribute('aria-label'),beforeRival,'focused rival carousel responds to arrow keys');
   assert.equal(await playerSlot.locator('.setup-team-slot-name').textContent(),beforePlayer,'rival selection does not change the player character');
+  await page.keyboard.press('ArrowLeft');
+  assert.equal(await page.locator('.setup-roll-item-center').getAttribute('aria-label'),beforeRival,'rival carousel restores the deterministic baseline opponent');
   await playerSlot.locator('.setup-team-slot-btn').click();
   const beforeCharacter=await page.locator('.setup-roll-item-center').getAttribute('aria-label');
   await page.locator('.setup-roll').focus();
@@ -159,7 +161,30 @@ try {
   await page.locator('.setup-workshop').evaluate(el=>el.scrollTop=el.scrollHeight);
   await page.locator('.setup-ready-btn').click();
   await page.locator('.battle-screen').waitFor();
-  await page.waitForTimeout(5000);
+  // El banner ATTACK y el robo son fronteras secuenciales. Durante los 28
+  // ticks del vuelo solo puede verse la carta GBC compacta: ningún botón,
+  // texto auxiliar ni chip debe quedar debajo.
+  const drawFx=page.locator('.draw-fx');
+  await drawFx.waitFor({state:'visible',timeout:10000});
+  const drawVisual=await page.locator('.battle-controls').evaluate(controls=>{
+    const visible=[...controls.children].filter(el=>{
+      const style=getComputedStyle(el); const rect=el.getBoundingClientRect();
+      return style.display!=='none' && style.visibility!=='hidden' && rect.width>0 && rect.height>0;
+    });
+    const card=controls.querySelector('.draw-fx .card');
+    const art=controls.querySelector('.draw-fx .card-art-img');
+    return {
+      drawing:controls.closest('.battle-screen')?.classList.contains('is-drawing'),
+      visibleClasses:visible.map(el=>el.className),
+      frame:card?getComputedStyle(card,'::after').backgroundImage:'none',
+      artLoaded:art instanceof HTMLImageElement && art.complete && art.naturalWidth>0,
+    };
+  });
+  assert.equal(drawVisual.drawing,true,'draw flight owns an explicit visual boundary');
+  assert.deepEqual(drawVisual.visibleClasses,['draw-fx hand-cards'],'draw flight is not composed over controls or text');
+  assert.match(drawVisual.frame,/card_frames\//,'draw flight uses a GBC card frame');
+  assert.equal(drawVisual.artLoaded,true,'draw flight uses loaded ROM card art');
+  await drawFx.waitFor({state:'hidden',timeout:5000});
   for(const [width,height] of [[1280,720],[640,360],[390,844]]) {
     await page.setViewportSize({width,height});
     await page.waitForTimeout(200);

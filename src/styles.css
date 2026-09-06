@@ -1993,6 +1993,19 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   animation: draw-card-land 0.18s ease-out 0.34s both;
 }
 
+/* La carta robada comparte el frame-máscara y el hueco de arte con la mano.
+   El contenedor conserva su anclaje absoluto durante el vuelo. */
+.battle-controls .draw-fx.hand-cards {
+  min-height: 0;
+  display: block;
+}
+
+/* El aterrizaje es una frontera visual propia: no se compone sobre los
+   botones de COMMAND ni sobre los chips laterales. */
+.battle-screen.is-drawing .battle-controls > *:not(.draw-fx) {
+  display: none;
+}
+
 @keyframes draw-card-land {
   0%   { transform: translateY(-4px); filter: brightness(1.35) saturate(1.2); }
   100% { transform: translateY(0); filter: brightness(1) saturate(1); }
@@ -5067,10 +5080,12 @@ button:focus-visible, .chapter-node:focus-visible {
 /* ─── Menú de defensa completo (BASIC Defense/Move + JOINT + LIMIT) ─── */
 .defense-menu {
   display: flex; flex-direction: column;
-  gap: 8px; align-items: center;
-  width: min(520px, 92cqw);
-  padding: 4px 0 2px;
+  gap: 0; align-items: center;
+  width: min(720px, 92cqw);
+  padding: 0;
 }
+
+.defense-card-panel { width: min(720px, 92cqw); }
 
 .defense-sources {
   display: flex; gap: 10px;

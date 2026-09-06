@@ -32,11 +32,24 @@ check('caja controles contiene botones', HUD_LAYOUT.controlsHeight >= HUD_LAYOUT
 // 2) El CSS del combate consume las vars del contrato (fallback último)
 console.log('\n▸ Conexión CSS ← contrato');
 const css = readFileSync(join(ROOT, 'src', 'styles.css'), 'utf8');
+const main = readFileSync(join(ROOT, 'src', 'main.tsx'), 'utf8');
+const defenseJointView = main.match(/\{defendMenu === 'joint'[\s\S]*?\{defendMenu === 'limit'/)?.[0] ?? '';
+const defenseLimitView = main.match(/\{defendMenu === 'limit'[\s\S]*?\n\s*<\/div>\n\s*\)}/)?.[0] ?? '';
 for (const k of ['controls-h', 'hud-controls-h', 'hud-layout-controls-h']) {
   check(`battle-controls usa var(--${k})`, css.includes(`var(--${k}`) || css.includes(`--${k}`), 'en battle-controls height');
 }
-check('contrato inyectado en :root (applyHudLayout en main)', readFileSync(join(ROOT, 'src', 'main.tsx'), 'utf8').includes('applyHudLayout()'));
+check('contrato inyectado en :root (applyHudLayout en main)', main.includes('applyHudLayout()'));
 check('HUD Studio muestra el contrato', readFileSync(join(ROOT, 'src', 'devtools', 'hud.tsx'), 'utf8').includes('HUD_LAYOUT'));
+
+// 3) Paridad de las vistas que antes escapaban del visual compacto.
+console.log('\n▸ Paridad runtime del panel inferior');
+check('carta robada reutiliza hand-cards', main.includes('className="draw-fx hand-cards"'));
+check('robo espera a completar el banner ATTACK', main.includes("showPhaseCue('ATTACK', drawJointForAttack)"));
+check('robo tiene frontera visual exclusiva', main.includes("drawFx ? 'is-drawing' : ''") && css.includes('.battle-screen.is-drawing .battle-controls > *:not(.draw-fx)'));
+check('sin ayudas textuales encima de botones', !main.includes('className="command-help"') && !main.includes('className="control-label"'));
+check('JOINT defensivo usa CardVisual', defenseJointView.includes('<CardVisual') && defenseJointView.includes('defendJoint'));
+check('LIMIT defensivo usa frame + CardArtHole', defenseLimitView.includes('className="limit-card"') && defenseLimitView.includes('<CardArtHole'));
+check('selectores defensivos sin títulos flotantes', !defenseJointView.includes('limit-title') && !defenseLimitView.includes('limit-title'));
 
 console.log(`\n═══ RESULTADO: ${passed} passed · ${failed} failed ═══`);
 if (failed > 0) process.exit(1);

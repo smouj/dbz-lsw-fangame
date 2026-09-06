@@ -23,14 +23,14 @@
 | Vista | Estructura canónica | Clases compartidas |
 |---|---|---|
 | **COMMAND** | Command strip: `[LIMIT] [JOINT] [BASIC]` (+CHARA con aliado) — sprites 48×40 ×2 = 96×80, hover lift −2px + brightness | `command-select` `command-strip` `cmd-limit/j/b/c` |
-| **MANO** | Mano con cartas GBC (frame máscara + arte) + huecos vacíos con `no_card_red.png` (sprite real del juego) | `hand-area` `hand-cards` `card` `CardArtHole` `hand-empty-slot` `hand-no-card` |
+| **MANO** | Mano con cartas GBC (frame máscara + arte) + huecos vacíos con `no_card_red.png`. El robo espera a que termine el banner ATTACK y usa esta misma composición en una frontera visual exclusiva. | `hand-area` `hand-cards` `card` `CardArtHole` `draw-fx` `is-drawing` `hand-empty-slot` `hand-no-card` |
 | **BASIC** | `[STAGE ATTACK (carta real)] [GATHER POWER] [BACK]` — pulso canónico 3D en stage | `basic-menu` `basic-stage-card` `basic-gather` `basic-back` |
 | **MOVE** | `[LEFT/RIGHT] [UP/DOWN] [EXIT]` — 3 botones 96×80 en UNA fila, sin texto (tooltip) | `move-axis-pad` `move-axis-btn axis-h/v` `basic-back` |
 | **STAGE** | Diálogo GBC con CHIPS oscuros por input: `[✓][Q][E][↑][→]` + prompt relleno + tiempo a la derecha. Layout ESTABLE con 3-6 inputs (flex-shrink 0, prompt anclado) | `gbc-dialogue` `stage-inline` `stage-sequence` `stage-seq-item` `stage-inline-prompt` `stage-inline-time` |
 | **LIMIT** | Cartas LIMITED en UNA línea + hueco candado (no obtenida) + BACK | `limit-cards-row` `limit-card` `limit-slot` |
 | **DIALOGO** | Caja GBC blanca `#f8f4e4` + speaker FUERA (57×80, marco negro) + texto negro + actor rojo `#b03030` | `gbc-dialogue` `gbc-dialogue-speaker` `gbc-dialogue-actor` `gbc-dialogue-text` |
 | **DISCARD** | HAND CHECK — panel con discard-grid de cartas (frame + arte + nombre) para elegir descarte | `discard-panel` `discard-grid` `discard-card` `discard-frame` `discard-art` `discard-name` |
-| **DEFENSA** | Fuentes de defensa: `[LIMITED] [JOINT] [BASIC DEFENSE]` (botones basic-btn src-*) | `defense-sources` `src-limit` `src-joint` `src-basic` |
+| **DEFENSA** | Fuentes: `[LIMITED] [JOINT] [BASIC DEFENSE]`. JOINT y LIMITED muestran las cartas legales con el mismo frame máscara y arte que ataque; si no hay carta muestran `NO CARD`. Sin listas ni ayudas textuales sobre los botones. | `defense-sources` `src-limit` `src-joint` `src-basic` `defense-card-panel` `CardVisual` `limit-card` |
 | **RESULTADO** | Pantalla final: VICTORY (LV/EXP/HP) o DEFEAT (TURN/HP) + botón NEW BATTLE/RETRY (toggle) — panel GBC horizontal compacto (no altera la altura) | `result-screen` `result-title` `result-info` `btn-primary` |
 | **MENU** | Pantalla principal: `.menu-bg` (arte + Ken Burns), 3 rayos eléctricos SVG pixelados animados, logo, título VT323 dorado, continuar (progreso), 6 items de navegación (1 seleccionado) y footer — reutiliza el markup real del juego, compacto en px para el preview | `menu-screen` `menu-bg` `menu-bolts` `menu-content` `menu-logo-mark` `menu-title` `menu-subtitle` `menu-continue-card` `menu-nav` `menu-item` `menu-footer` |
 | **INTRO** | VS full-screen SIN texto: los 2 sprites entran DESDE FUERA (±42vw) hasta su posición (entrada cinematográfica ÚNICA), VS VT323 pixel pop central + glow, flash blanco 1.5s, banda de energía. NO hay READY/FIGHT/nombres/formas. `hud-in` del hud-top desactivado durante la intro (intro-active) — una sola animación de entrada | `battle-intro` `intro-fighter` `intro-portrait` `intro-vs` `intro-flash` |
@@ -52,6 +52,8 @@
 13. **Fase ATTACK/DEFEND**: inline en la fila de info, SIEMPRE en el lado INTERIOR (junto al VS) — los badges de estado quedan en el borde EXTERIOR (fase `[ATTACK]` izquierda → x≈406, `[DEFEND]` derecha → x≈628). La reserva del 2º miembro del equipo vive en la FILA DEL NOMBRE (hud-top de 3 filas: nombre+reserva · HP · info).
 14. **Info de fase en chip estilo CC**: `FASE n/2` (exchange del turno) vive como chip GBC (negro carbón `#1a1a1a` + VT323 blanco 19px + outline `#d8d0b8`, MISMO lenguaje que el chip 06 de CC) en la ESQUINA INFERIOR IZQUIERDA del panel con cartas — espejo del cc-panel a la derecha. OCULTO con diálogo GBC activo y en STAGE/DIÁLOGO/RESULTADO/INTRO/MENÚ. NO hay fase-bar, ni `TURN n` (ROUND central), ni `X STRIKES FIRST` (la fase bajo HP ya indica quién ataca).
 15. **Elementos eliminados del HUD (no duplicar)**: phase-bar (fila sobre los controles), battle-log (barra de mensajes — `addLog` sigue vivo porque dispara `showGbc`), cc-dock (P/E — el CC vive en el chip del panel), fila de stats del hud-top (STR/KI/SPD/CC bajo la HP — la fase + badges viven en `.hud-info-row`), `CCDisplay` y su CSS (muerto).
+16. **Robo de JOINT**: `PHASE_BANNER_CLEAR → draw-fx (28 ticks) → COMMAND`. Mientras `is-drawing` está activo, la carta robada es el único hijo visible de `.battle-controls`; no se superpone a botones, chips o texto.
+17. **Selectores defensivos**: JOINT y LIMITED reutilizan la geometría 96×80, `CardArtHole` y los frames por tipo. Los nombres, coste, compatibilidad y efecto viven en tooltip.
 
 ## Verificación de paridad
 
@@ -60,7 +62,7 @@
 comm -12 <(grep -oE 'className="[a-z-]+' src/devtools/hud.tsx | sort -u) \
          <(grep -oE 'className="[a-z-]+' src/main.tsx | sort -u) | wc -l
 
-npm run verify:hud-layout   # 10/10 invariantes
+npm run verify:hud-layout   # 16/16 invariantes, incluida paridad runtime inferior
 npm run verify:battle       # 71/71 lógica
 ```
 

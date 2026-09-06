@@ -1108,7 +1108,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, pla
   // original que demuestre un efecto específico.
   // (useEffect desactivado: setViewFade(v => v + 1), [viewMode]);
   const gbcMs = (frames: number) => Math.round((frames / GBC_NATIVE_FPS) * 1000);
-  const showPhaseCue = (phaseKind: PhaseBannerKind) => {
+  const showPhaseCue = (phaseKind: PhaseBannerKind, onComplete?: () => void) => {
     phaseCueTimelineRef.current?.cancel();
     const profile = buildPhaseBannerPresentation(phaseKind);
     setPhaseCue({ id: nextUid(), phase: phaseKind });
@@ -1127,6 +1127,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, pla
       onComplete: () => {
         setPhaseCue(null);
         phaseCueTimelineRef.current = null;
+        onComplete?.();
       },
     });
     phaseCueTimelineRef.current = tl;
@@ -1742,9 +1743,12 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, pla
       // La posición PERSISTE entre fases (spec Move): el atacante no elige
       // posición, va directo a seleccionar su acción. Robo de Joint al entrar
       // en Attack Phase (máx 6 transitorio, 5 persistente).
-      drawJointForAttack();
       setPhase('command');
-      showPhaseCue('ATTACK');
+      // El robo empieza al cerrar el banner ATTACK. Antes ambos timelines se
+      // solapaban y los 28 ticks del vuelo ocurrían enteros con los controles
+      // desmontados por `presentationInputLocked`, por lo que el jugador veía
+      // un salto directo de mano en vez de la carta ROM entrando.
+      showPhaseCue('ATTACK', drawJointForAttack);
     } else {
       const actor = getForm(activeEnemyFormId)!.character.toUpperCase();
       setEnemy(prev => ({ ...prev, cc: Math.min(prev.maxCc, prev.cc + 3) }));
@@ -3041,7 +3045,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, pla
   })() : null;
 
   return (
-    <div className={`battle-screen view-${viewMode.toLowerCase()} ${presentationInputLocked ? 'presentation-locked' : ''} ${intro ? 'intro-active' : ''} ${cardFx ? 'is-cinematic' : ''} ${gbcMsg ? 'gbc-msg' : ''} ${pixiPresentationActive ? 'pixi-presentation-active' : ''} ${phase === 'stageInput' ? 'qte-active' : ''} ${qteResolving ? 'qte-resolving' : ''}`}>
+    <div className={`battle-screen view-${viewMode.toLowerCase()} ${presentationInputLocked ? 'presentation-locked' : ''} ${intro ? 'intro-active' : ''} ${drawFx ? 'is-drawing' : ''} ${cardFx ? 'is-cinematic' : ''} ${gbcMsg ? 'gbc-msg' : ''} ${pixiPresentationActive ? 'pixi-presentation-active' : ''} ${phase === 'stageInput' ? 'qte-active' : ''} ${qteResolving ? 'qte-resolving' : ''}`}>
       {/* ═══ Depurador cinematográfico (?debugCinematics=1) ═══ */}
       {isDebugCinematics() && debugCin && (
         <pre className="cinematic-debug-overlay">{renderDebugOverlay(debugCin, debugPaused)}</pre>
@@ -3377,7 +3381,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, pla
           );
         })()}
         {drawFx && (
-          <div className="draw-fx" key={drawFx.nonce} aria-label="drawing card">
+          <div className="draw-fx hand-cards" key={drawFx.nonce} aria-label="drawing card">
             <CardVisual card={drawFx.card} selected={false} disabled={false} onClick={() => {}} />
           </div>
         )}
@@ -3474,7 +3478,6 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, pla
                 ])} />
               <button className="basic-btn basic-back" data-tip={tipBlock('BACK', TIP_BACK)} onClick={() => { Sfx.cancel(); setPhase('command'); }} />
             </div>
-            <div className="command-help">{t('battle.basicFree')}</div>
           </div>
         )}
         {phase === 'limitSelect' && (
@@ -3511,7 +3514,6 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, pla
               </div>
               <button className="basic-btn basic-back" data-tip={tipBlock('BACK', TIP_BACK)} onClick={() => { Sfx.cancel(); setPhase('command'); }} />
             </div>
-            <div className="command-help">{t('battle.limitedHelp')}</div>
           </div>
         )}
         {phase === 'cardSelect' && (
@@ -3551,7 +3553,6 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, pla
           <div className="defense-menu">
             {defendMenu === null && (
               <>
-                <div className="control-label">{t('battle.defendAction')} — {t('battle.chooseDefense')}</div>
                 <div className="defense-sources">
                   <button className="basic-btn src-limit" onClick={() => { Sfx.select(); setDefendMenu('limit'); }} disabled={powerState === 'NORMAL' || limitCards.length === 0}
                     data-tip={tipBlock('LIMITED', [
@@ -3569,12 +3570,10 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, pla
                       ['effect', 'Gratis, sin gastar CC.'],
                     ])} />
                 </div>
-                <div className="command-help">{t('battle.defenseHelp')}</div>
               </>
             )}
             {defendMenu === 'basic' && (
               <>
-                <div className="control-label">{t('battle.basicDefense')}</div>
                 <div className="basic-menu">
                   <button className="basic-btn act-guard" onClick={() => defendBasic('defense')}
                     data-tip={tipBlock('DEFEND', [
@@ -3618,43 +3617,46 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, pla
             )}
             {defendMenu === 'joint' && (
               <div className="command-select">
-                <div className="limit-panel">
-                  <div className="limit-title">JOINT — {t('battle.defenseOnly')}</div>
-                  {(() => {
-                    const defCards = hand.filter(c => canPlayInDefense(c) && cardUsableBy(c, getForm(activePlayerFormId)!.character));
-                    if (defCards.length === 0) return <div className="limit-empty">{t('battle.noDefenseCards')}</div>;
-                    return defCards.map((c, i) => {
-                      const handIdx = hand.indexOf(c);
-                      return (
-                        <button key={i} className={`limit-row ${player.cc < c.cc ? 'locked' : ''}`} disabled={player.cc < c.cc} onClick={() => defendJoint(c, handIdx)}>
-                          <span className="limit-name">{c.name}</span>
-                          <span className="limit-cost">{c.cc} CC · {c.type.toUpperCase()}</span>
-                          {player.cc < c.cc && <span className="limit-lock">{t('battle.insufficientCc')}</span>}
-                        </button>
-                      );
-                    });
-                  })()}
-                  <button className="basic-btn basic-back" data-tip={tipBlock('BACK', TIP_BACK)} onClick={() => { Sfx.cancel(); setDefendMenu(null); }} />
+                <div className="limit-panel defense-card-panel">
+                  <div className="limit-cards-row">
+                    <div className="hand-cards">
+                      {(() => {
+                        const defCards = hand.filter(c => canPlayInDefense(c) && cardUsableBy(c, getForm(activePlayerFormId)!.character));
+                        if (defCards.length === 0) return <div className="hand-empty-slot" title={t('battle.noDefenseCards')}><img src="/assets/ui/hud_buttons/no_card_red.png" alt="NO CARD" className="hand-no-card" /></div>;
+                        return defCards.map((c, i) => {
+                          const handIdx = hand.indexOf(c);
+                          return <CardVisual key={`${c.id}-${i}`} card={c} disabled={player.cc < c.cc} onClick={() => defendJoint(c, handIdx)} />;
+                        });
+                      })()}
+                    </div>
+                    <button className="basic-btn basic-back" data-tip={tipBlock('BACK', TIP_BACK)} onClick={() => { Sfx.cancel(); setDefendMenu(null); }} />
+                  </div>
                 </div>
               </div>
             )}
             {defendMenu === 'limit' && (
               <div className="command-select">
-                <div className="limit-panel">
-                  <div className="limit-title">LIMITED — {t('battle.defenseOnly')}</div>
-                  {(() => {
-                    const defLimits = limitCards.filter(canPlayInDefense);
-                    if (defLimits.length === 0) return <div className="limit-empty">{t('battle.noDefenseLimits')}</div>;
-                    return defLimits.map((c, i) => (
-                      <button key={i} className={`limit-row ${player.cc < c.cc ? 'locked' : ''}`}
-                        disabled={player.cc < c.cc} onClick={() => defendLimit(c)}>
-                        <span className="limit-name">{c.name}</span>
-                        <span className="limit-cost">{c.cc} CC</span>
-                        {player.cc < c.cc && <span className="limit-lock">{t('battle.insufficientCc')}</span>}
-                      </button>
-                    ));
-                  })()}
-                  <button className="basic-btn basic-back" data-tip={tipBlock('BACK', TIP_BACK)} onClick={() => { Sfx.cancel(); setDefendMenu(null); }} />
+                <div className="limit-panel defense-card-panel">
+                  <div className="limit-cards-row">
+                    <div className="hand-cards">
+                      {(() => {
+                        const defLimits = limitCards.filter(canPlayInDefense);
+                        if (defLimits.length === 0) return <div className="hand-empty-slot" title={t('battle.noDefenseLimits')}><img src="/assets/ui/hud_buttons/no_card_red.png" alt="NO CARD" className="hand-no-card" /></div>;
+                        return defLimits.map((c, i) => (
+                          <button key={i} className="limit-card" disabled={player.cc < c.cc} onClick={() => defendLimit(c)}
+                            style={{ '--card-frame': `url('${CARD_FRAME_BY_TYPE[c.type] ?? CARD_FRAME_BY_TYPE.special}')` } as React.CSSProperties}
+                            data-tip={tipBlock(`${c.name} — ${CARD_TYPE_NAMES[c.type]} ★${c.rarity}`, [
+                              ['stats', `CC ${c.cc} · ATK ${c.atk > 0 ? c.atk : '—'} · ACC ${c.acc}%`],
+                              c.description ? ['desc', c.description] : null,
+                              ['effect', 'Defensa LIMITED reutilizable mientras tengas CC.'],
+                            ])}>
+                            <CardArtHole frameUrl={CARD_FRAME_BY_TYPE[c.type] ?? CARD_FRAME_BY_TYPE.special} iconUrl={cardIconUrl(c.id)} />
+                          </button>
+                        ));
+                      })()}
+                    </div>
+                    <button className="basic-btn basic-back" data-tip={tipBlock('BACK', TIP_BACK)} onClick={() => { Sfx.cancel(); setDefendMenu(null); }} />
+                  </div>
                 </div>
               </div>
             )}
