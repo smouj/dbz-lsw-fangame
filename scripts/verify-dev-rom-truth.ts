@@ -64,7 +64,7 @@ check('Dashboard separates route, adapter and player-visible deployment', dashbo
 check('deployment truth matches current BattleScreen gate', BATTLE_PRESENTATION_DEPLOYMENT.defaultRenderer === 'DOM_LEGACY'
   && BATTLE_PRESENTATION_DEPLOYMENT.pixiActivation === 'DEV_QUERY_FLAG'
   && BATTLE_PRESENTATION_DEPLOYMENT.completionOwnership === 'ROUTE_SCOPED'
-  && BATTLE_PRESENTATION_DEPLOYMENT.romCompletionRoutes.join(',') === 'PLAYER_STANDARD_DAMAGE'
+  && BATTLE_PRESENTATION_DEPLOYMENT.romCompletionRoutes.join(',') === 'PLAYER_STANDARD_DAMAGE,ENEMY_STANDARD_DAMAGE'
   && BATTLE_PRESENTATION_DEPLOYMENT.legacyCompletionFallback === true
   && mainUi.includes('isPixiField()')
   && mainUi.includes('if (romOwnsCompletion) return;'));
