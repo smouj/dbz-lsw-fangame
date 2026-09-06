@@ -70,6 +70,7 @@ const VISIBLE_CUES = new Set<PresentationCue['type']>([
   'IMPACT',
   'SCENE_LOAD',
   'ROM_RESULT_BRANCH',
+  'FIGHTER_VISIBILITY',
   // DEFENSE_FX: el adapter la consume con pose visible (case propio que
   // intercede ANTES del ruteo DISPLAY — guard/evade/idle por resultado CA53).
   // Espejo exacto: si el case del adapter cambiara, este set diverge y el
@@ -113,7 +114,6 @@ const TRACE_CUES = new Set<PresentationCue['type']>([
   'ACTION_OBJECT_FRAME_OFFSET',
   'ACTION_OBJECT_STOP',
   'MULTI_ACTOR_SYNC',
-  'FIGHTER_VISIBILITY',
   'FIGHTER_POSITION',
   'AURA',
   'EFFECT',

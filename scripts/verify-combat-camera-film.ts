@@ -3,6 +3,7 @@ import { join } from 'node:path';
 import { BattleRuntime } from '../src/battle/runtime/BattleRuntime';
 import { createInitialBattleState, type InitialBattleConfig } from '../src/battle/engine/state/createInitialBattleState';
 import type { BattleTimeline, PresentationCue } from '../src/battle/engine/presentation/PresentationCue';
+import type { BattleSide } from '../src/battle/engine/state/BattleState';
 import { romPresentationTimelineForCard } from '../src/battle/romPresentationForCard';
 import { getCard, type CardDef } from '../src/data/cards';
 import { createBattleDeck } from '../src/battle/state';
@@ -11,6 +12,8 @@ import type { BattlePresentation, BattleScene } from '../src/renderer/pixi/prese
 import { CameraPresenter } from '../src/renderer/pixi/presentation/CameraPresenter';
 import { ProductionRomPresentationAdapter } from '../src/renderer/pixi/presentation/ProductionRomPresentationAdapter';
 import { advanceAuthoritativeBattleTick } from '../src/renderer/pixi/presentation/RomPresentationPlayer';
+import { canonForAction } from '../src/battle/animationCanon';
+import { actionDescriptorForCard } from '../src/battle/engine/commands/buildActionDescriptor';
 
 let failures = 0;
 let checks = 0;
@@ -120,8 +123,8 @@ function playFilm(timeline: BattleTimeline, seed = 4242): { frames: FilmFrame[];
   return { frames: probe.frames, runtime: rt, clockExact };
 }
 
-function route(cardId: number, formId: string): BattleTimeline {
-  const value = romPresentationTimelineForCard(getCard(cardId) as CardDef, 'player', formId);
+function route(cardId: number, formId: string, side: BattleSide = 'player'): BattleTimeline {
+  const value = romPresentationTimelineForCard(getCard(cardId) as CardDef, side, formId);
   if (!value) throw new Error(`missing ROM route for card ${cardId}`);
   return value.timeline;
 }
@@ -154,6 +157,29 @@ check('SCREEN_PATH activates the production viewport', pathActive?.pathActive ==
 check('fixed ROM path changes both viewport axes', !!pathMoved && pathMoved.offsetX !== 0 && pathMoved.offsetY !== 0,
   `offset=${pathMoved?.offsetX},${pathMoved?.offsetY}`);
 check('Destruct-Disk restores the viewport exactly', diskFinal.offsetX === 0 && diskFinal.offsetY === 0 && !diskFinal.pathActive);
+
+function assertStaticDefenderEntrance(cardId: number, formId: string, label: string, side: BattleSide = 'player'): void {
+  const card = getCard(cardId) as CardDef;
+  const timeline = route(cardId, formId, side);
+  const defenderIn = canonForAction(actionDescriptorForCard(card)).defenderIn;
+  const targetSide: BattleSide = side === 'player' ? 'enemy' : 'player';
+  const film = playFilm(timeline, 5150 + cardId);
+  const before = film.frames.find(frame => frame.presentationTick === timeline.startTick);
+  const entrance = film.frames.find(frame => frame.presentationTick === timeline.startTick + defenderIn);
+  check(`${label} hides the target in the attacker-only shot`, before?.scene === 'ACTION_SOLO' && before.targetVisible === false);
+  check(`${label} emits the verified defenderIn boundary`, timeline.entries.some(entry =>
+    entry.cue.type === 'FIGHTER_VISIBILITY'
+    && entry.cue.role === 'TARGET'
+    && entry.cue.side === targetSide
+    && entry.cue.visible
+    && entry.cue.tick === timeline.startTick + defenderIn));
+  check(`${label} composes the duel from target visibility`, entrance?.targetVisible === true && entrance.scene === 'ACTION_DUEL');
+}
+
+assertStaticDefenderEntrance(5, 'goku_base', 'Cont.Punch STANDARD_DAMAGE');
+assertStaticDefenderEntrance(5, 'piccolo_base', 'Enemy Cont.Punch STANDARD_DAMAGE', 'enemy');
+assertStaticDefenderEntrance(7, 'goku_base', 'Energy Wave BEAM_BASE');
+assertStaticDefenderEntrance(1, 'goku_base', '3 stage atk. static bridge');
 
 type FlatFixtureCue = PresentationCue & { logicalTick?: number; source?: string; fidelity?: string; profile?: string };
 const fixture = JSON.parse(readFileSync(join(process.cwd(), 'scripts/fixtures/m7_stage_attack.json'), 'utf8')) as {

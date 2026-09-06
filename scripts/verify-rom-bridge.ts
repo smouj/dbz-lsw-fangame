@@ -29,6 +29,10 @@ class FakePresentation implements BattlePresentation {
   fieldReturns = 0;
   syncs = 0;
   setScene(s: BattleScene): void { this.scenes.push(s); }
+  setFighterVisibility(): void {}
+  setFighterPosition(): void {}
+  setActionObjectPosition(): void {}
+  moveActionObject(): void {}
   setActorPose(p: string): void { this.actorPoses.push(p); }
   setTargetPose(p: string): void { this.targetPoses.push(p); }
   moveActor(): void { this.moves++; }
@@ -37,6 +41,13 @@ class FakePresentation implements BattlePresentation {
   impact(): void { this.impacts++; }
   camera(): void { this.cameras++; }
   returnToField(): void { this.fieldReturns++; }
+  applyFrameOffset(): void {}
+  setRomSequenceForSlot(): void {}
+  moveActorByRomMotion(): void {}
+  moveTargetByRomMotion(): void {}
+  applyScreenMotion(): void {}
+  applyScreenRestore(): void {}
+  applyScreenPath(): void {}
   sync(): void { this.syncs++; }
 }
 

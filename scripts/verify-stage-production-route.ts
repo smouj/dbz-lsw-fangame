@@ -41,6 +41,10 @@ class FakePresentation implements BattlePresentation {
 
   sync(): void {}
   setScene(scene: BattleScene): void { this.scenes.push(scene); }
+  setFighterVisibility(): void {}
+  setFighterPosition(): void {}
+  setActionObjectPosition(): void {}
+  moveActionObject(): void {}
   setActorPose(): void {}
   setTargetPose(): void {}
   spawnProjectile(): void {}
@@ -49,6 +53,11 @@ class FakePresentation implements BattlePresentation {
   camera(): void {}
   moveActor(): void {}
   returnToField(): void {}
+  moveActorByRomMotion(): void {}
+  moveTargetByRomMotion(): void {}
+  applyScreenMotion(): void {}
+  applyScreenRestore(): void {}
+  applyScreenPath(): void {}
 
   setRomSequenceForSlot(slot: 0 | 1, resource: number, sequence: number): void {
     this.romSequences[slot] = { resource, sequence };

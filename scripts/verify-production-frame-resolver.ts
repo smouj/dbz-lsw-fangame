@@ -28,6 +28,10 @@ function check(name: string, ok: boolean, detail = '') {
 class ProbePresentation implements BattlePresentation {
   frameOffsets = 0;
   setScene(_scene: BattleScene): void {}
+  setFighterVisibility(): void {}
+  setFighterPosition(): void {}
+  setActionObjectPosition(): void {}
+  moveActionObject(): void {}
   setActorPose(_pose: string): void {}
   setTargetPose(_pose: string): void {}
   moveActor(): void {}
@@ -37,6 +41,12 @@ class ProbePresentation implements BattlePresentation {
   camera(): void {}
   returnToField(): void {}
   applyFrameOffset(): void { this.frameOffsets++; }
+  setRomSequenceForSlot(): void {}
+  moveActorByRomMotion(): void {}
+  moveTargetByRomMotion(): void {}
+  applyScreenMotion(): void {}
+  applyScreenRestore(): void {}
+  applyScreenPath(): void {}
   sync(): void {}
 }
 

@@ -80,6 +80,28 @@
   },
   {
    "tick": 0,
+   "type": "FIGHTER_VISIBILITY",
+   "role": "ACTOR",
+   "side": "player",
+   "visible": true,
+   "logicalTick": 0,
+   "source": "ACTION_STARTED",
+   "fidelity": "ROM_STATIC_COMPLETE",
+   "profile": "rom-card-12"
+  },
+  {
+   "tick": 0,
+   "type": "FIGHTER_VISIBILITY",
+   "role": "TARGET",
+   "side": "enemy",
+   "visible": false,
+   "logicalTick": 0,
+   "source": "ACTION_STARTED",
+   "fidelity": "ROM_STATIC_COMPLETE",
+   "profile": "rom-card-12"
+  },
+  {
+   "tick": 0,
    "type": "HUD",
    "side": "enemy",
    "kind": "damage_number",
@@ -136,6 +158,17 @@
    "durationTicks": 60,
    "resource": 3,
    "slot": 0,
+   "logicalTick": 0,
+   "source": "ACTION_STARTED",
+   "fidelity": "ROM_STATIC_COMPLETE",
+   "profile": "rom-card-12"
+  },
+  {
+   "tick": 70,
+   "type": "FIGHTER_VISIBILITY",
+   "role": "TARGET",
+   "side": "enemy",
+   "visible": true,
    "logicalTick": 0,
    "source": "ACTION_STARTED",
    "fidelity": "ROM_STATIC_COMPLETE",

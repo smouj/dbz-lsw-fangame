@@ -21,6 +21,7 @@ import {
 } from './romPresentationProfiles';
 import { resolveRomSequenceSelector } from './romSequenceSelectors';
 import { cardForBattleAction } from './standardDamageRomCutover';
+import { withStaticDefenderEntrance } from './staticActionVisibility';
 
 export const BEAM_BASE_ROM_HANDLER = 0x02;
 
@@ -145,12 +146,13 @@ export function compileBeamBaseRuntimeCutover(
     selectedResultFamily: outcome.family,
     selectedResultSourceEvent: outcome.sourceEvent,
   });
+  const timeline = withStaticDefenderEntrance(compiled.timeline, env.event.action, env.event.side);
 
   return {
     card: resolved.card,
     profile: resolved.profile,
     outcome,
-    timeline: compiled.timeline,
+    timeline,
   };
 }
 
@@ -187,12 +189,13 @@ export function compileBeamFamilyRuntimeCutover(
     selectedResultFamily: outcome.family,
     selectedResultSourceEvent: outcome.sourceEvent,
   });
+  const timeline = withStaticDefenderEntrance(compiled.timeline, env.event.action, env.event.side);
 
   return {
     card: resolved.card,
     profile: resolved.profile,
     outcome,
-    timeline: compiled.timeline,
+    timeline,
   };
 }
 

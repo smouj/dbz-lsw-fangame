@@ -21,6 +21,14 @@
 - **Root D sigue parcial**: quedan las variantes físicas completas $2F/$30/$31
   y `FLASH_WHITE` real dentro del adapter/renderer. La proyección de HP no
   declara cerradas esas tareas ni activa Pixi por defecto.
+- **Root A cerrado** (2026-09-07): los timelines ROM estáticos de
+  STANDARD_DAMAGE, BEAM/PROJECTILE y el puente Stage emiten el plano inicial
+  con actor visible/target oculto y revelan al defensor exactamente en
+  `animationCanon.defenderIn` (melee 40t, Stage 34t, beam 70t). El adapter
+  deriva `ACTION_SOLO → ACTION_DUEL` del propio `FIGHTER_VISIBILITY`; no usa
+  el tipo de carta ni estado React. `verify:combat-camera-film` cubre ambos
+  bandos y las tres familias; `verify:combat-observability` mantiene el espejo
+  cue→efecto visible.
 
 ## Taxonomía (clasificar cada fallo antes de tocar)
 

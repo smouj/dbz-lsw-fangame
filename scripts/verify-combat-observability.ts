@@ -54,6 +54,10 @@ function stubPresentation(): BattlePresentation {
   const calls: string[] = [];
   return {
     setScene: (_s: BattleScene) => { calls.push(`scene`); },
+    setFighterVisibility: (_role: 'ACTOR' | 'TARGET', _visible: boolean) => { calls.push('visibility'); },
+    setFighterPosition: () => { calls.push('position'); },
+    setActionObjectPosition: () => { calls.push('object-position'); },
+    moveActionObject: () => { calls.push('object-motion'); },
     setActorPose: (_p: string) => { calls.push('actor'); },
     setTargetPose: (_p: string) => { calls.push('target'); },
     moveActor: (_d: number) => { calls.push('move'); },

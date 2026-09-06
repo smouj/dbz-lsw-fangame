@@ -24,6 +24,8 @@ import { resolveRomSequenceSelector } from './romSequenceSelectors';
 import { romStagePresentationForCard } from './romStagePresentation';
 import { supportSpecialCutover, supportFieldEffectCutover } from './supportRomCutover';
 import { compileDefenseRomCutover } from './defenseRomCutover';
+import { actionDescriptorForCard } from './engine/commands/buildActionDescriptor';
+import { withStaticDefenderEntrance } from './staticActionVisibility';
 
 export type RomPresentationRouteKind = 'BEAM_BASE' | 'STANDARD_DAMAGE' | 'BEAM_VARIANT' | 'PROJECTILE_SCROLL' | 'SPECIAL_HANDLER' | 'SUPPORT_SPECIAL' | 'SUPPORT_FIELD_EFFECT' | 'DEFENSE_RULE' | 'STAGE_COMMAND';
 
@@ -60,7 +62,7 @@ export function romPresentationTimelineForCard(
       cardId: card.id,
       kind: 'STAGE_COMMAND',
       profile,
-      timeline: stage.timeline,
+      timeline: withStaticDefenderEntrance(stage.timeline, actionDescriptorForCard(card), side),
       pendingCues: stage.pendingCues,
     };
   }
@@ -133,9 +135,12 @@ export function romPresentationTimelineForCard(
     selectedResultFamily: null,
     selectedResultSourceEvent: null,
   });
+  const timeline = ['STANDARD_DAMAGE', 'BEAM_BASE', 'BEAM_VARIANT', 'PROJECTILE_SCROLL'].includes(profile.kind)
+    ? withStaticDefenderEntrance(compiled.timeline, actionDescriptorForCard(card), side)
+    : compiled.timeline;
 
-  const pendingCues = compiled.timeline.entries.filter(en => en.cue.type === 'ROM_PENDING').length;
-  const unresolvedPhysical = compiled.timeline.entries.some(en =>
+  const pendingCues = timeline.entries.filter(en => en.cue.type === 'ROM_PENDING').length;
+  const unresolvedPhysical = timeline.entries.some(en =>
     en.cue.type === 'ROM_PHYSICAL_FRAME' && en.cue.source === 'UNRESOLVED'
   );
   if (unresolvedPhysical) {
@@ -146,7 +151,7 @@ export function romPresentationTimelineForCard(
     cardId: card.id,
     kind: profile.kind as RomPresentationRouteKind,
     profile,
-    timeline: compiled.timeline,
+    timeline,
     pendingCues,
   };
 }

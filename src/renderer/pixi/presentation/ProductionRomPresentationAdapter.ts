@@ -136,6 +136,7 @@ export class ProductionRomPresentationAdapter {
   private readonly pres: BattlePresentation;
   private readonly romDisplay: RomDisplayPresenter | null;
   private stats: ProductionRomPresentationStats;
+  private currentScene: BattleScene = 'FIELD';
 
   constructor(pres: BattlePresentation, romDisplay?: RomDisplayPresenter) {
     this.pres = pres;
@@ -171,6 +172,7 @@ export class ProductionRomPresentationAdapter {
 
   reset(source: ProductionPresentationSource = 'NONE'): void {
     this.stats = this.blank(source);
+    this.currentScene = 'FIELD';
   }
 
   get snapshot(): ProductionRomPresentationStats {
@@ -194,7 +196,8 @@ export class ProductionRomPresentationAdapter {
     switch (cue.type) {
       // ── SEMÁNTICOS (buildTimeline: MOVE/GUARD + futuros cutovers) ──
       case 'SCENE': {
-        this.pres.setScene(SCENE_MODE_TO_BATTLE_SCENE[cue.mode] ?? 'ACTION_DUEL', cue.background);
+        this.currentScene = SCENE_MODE_TO_BATTLE_SCENE[cue.mode] ?? 'ACTION_DUEL';
+        this.pres.setScene(this.currentScene, cue.background);
         this.stats.sceneChanges++;
         visible = true;
         break;
@@ -207,6 +210,15 @@ export class ProductionRomPresentationAdapter {
       }
       case 'FIGHTER_VISIBILITY': {
         this.pres.setFighterVisibility(cue.role, cue.visible);
+        // Static ROM films begin with an attacker-only shot. The verified
+        // defender entrance cue is the scene boundary: once the target becomes
+        // visible, the same action background is composed as a duel. No card
+        // type or React state decides this transition.
+        if (cue.role === 'TARGET' && cue.visible && this.currentScene === 'ACTION_SOLO') {
+          this.currentScene = 'ACTION_DUEL';
+          this.pres.setScene(this.currentScene);
+          this.stats.sceneChanges++;
+        }
         visible = true;
         break;
       }
@@ -237,7 +249,8 @@ export class ProductionRomPresentationAdapter {
 
       // ── ROM VM — efectos visibles no-semánticos ──
       case 'SCENE_LOAD': {
-        this.pres.setScene(cue.mode === 'RESTORE_TACTICAL' ? 'FIELD' : 'ACTION_SOLO');
+        this.currentScene = cue.mode === 'RESTORE_TACTICAL' ? 'FIELD' : 'ACTION_SOLO';
+        this.pres.setScene(this.currentScene);
         this.stats.sceneChanges++;
         visible = true;
         break;

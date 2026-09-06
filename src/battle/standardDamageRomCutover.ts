@@ -19,6 +19,7 @@ import {
   romPresentationProfileForCard,
   type RomPresentationProfile,
 } from './romPresentationProfiles';
+import { withStaticDefenderEntrance } from './staticActionVisibility';
 
 export const STANDARD_DAMAGE_ROM_HANDLER = 0x0a;
 
@@ -103,6 +104,7 @@ export function compileStandardDamageRuntimeCutover(
     selectedResultFamily: outcome.family,
     selectedResultSourceEvent: outcome.sourceEvent,
   });
+  const timeline = withStaticDefenderEntrance(compiled.timeline, env.event.action, env.event.side);
 
   return {
     actionId: `${env.sequence}:${env.event.side}:${resolved.card.id}`,
@@ -110,7 +112,7 @@ export function compileStandardDamageRuntimeCutover(
     card: resolved.card,
     profile: resolved.profile,
     outcome,
-    timeline: compiled.timeline,
+    timeline,
   };
 }
 

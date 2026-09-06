@@ -23,6 +23,7 @@ import {
   revealDamageVisualProjection,
 } from '../src/battle/damageVisualProjection';
 import { BATTLE_PRESENTATION_DEPLOYMENT } from '../src/renderer/pixi/flag';
+import { canonForAction } from '../src/battle/animationCanon';
 import { PRESENTATION_SCENARIOS, runPresentationScenario } from '../src/devtools/presentationScenarios';
 
 let failures = 0;
@@ -228,6 +229,13 @@ assertScenarioBranch('m7_melee_miss', 'MISS');
   check('cutover:compiles directly from ACTION_STARTED', !!cutover);
   check('cutover:profile source STANDARD_DAMAGE', cutover?.profile.kind === 'STANDARD_DAMAGE');
   check('cutover:timeline deterministic', JSON.stringify(cutover?.timeline) === JSON.stringify(compileStandardDamageRuntimeCutover(run.log.entries, index, env as BattleEventEnvelope & { event: { type: 'ACTION_STARTED' } })?.timeline));
+  const defenderIn = canonForAction(env.event.action).defenderIn;
+  check('cutover:target hidden in attacker-only shot', cutover?.timeline.entries.some(entry =>
+    entry.cue.type === 'FIGHTER_VISIBILITY' && entry.cue.role === 'TARGET'
+    && entry.cue.tick === env.tick && entry.cue.visible === false));
+  check('cutover:target enters at canonical defenderIn', cutover?.timeline.entries.some(entry =>
+    entry.cue.type === 'FIGHTER_VISIBILITY' && entry.cue.role === 'TARGET'
+    && entry.cue.tick === env.tick + defenderIn && entry.cue.visible === true));
 }
 
 {

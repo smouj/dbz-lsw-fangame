@@ -50,6 +50,28 @@
    "profile": "rom-card-6"
   },
   {
+   "tick": 0,
+   "type": "FIGHTER_VISIBILITY",
+   "role": "ACTOR",
+   "side": "player",
+   "visible": true,
+   "logicalTick": 0,
+   "source": "ACTION_STARTED",
+   "fidelity": "ROM_STATIC_PARTIAL",
+   "profile": "rom-card-6"
+  },
+  {
+   "tick": 0,
+   "type": "FIGHTER_VISIBILITY",
+   "role": "TARGET",
+   "side": "enemy",
+   "visible": false,
+   "logicalTick": 0,
+   "source": "ACTION_STARTED",
+   "fidelity": "ROM_STATIC_PARTIAL",
+   "profile": "rom-card-6"
+  },
+  {
    "tick": 20,
    "type": "ROM_MACRO",
    "macroId": 28,
@@ -78,6 +100,17 @@
      "ticks": 1
     }
    ],
+   "logicalTick": 0,
+   "source": "ACTION_STARTED",
+   "fidelity": "ROM_STATIC_PARTIAL",
+   "profile": "rom-card-6"
+  },
+  {
+   "tick": 40,
+   "type": "FIGHTER_VISIBILITY",
+   "role": "TARGET",
+   "side": "enemy",
+   "visible": true,
    "logicalTick": 0,
    "source": "ACTION_STARTED",
    "fidelity": "ROM_STATIC_PARTIAL",
