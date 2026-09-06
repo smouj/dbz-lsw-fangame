@@ -109,7 +109,7 @@ export function DashboardModule({ onNavigate }: { onNavigate: (m: DevModuleId) =
         { label: 'ROM route available', value: runtimeClassification.romBacked, total: cards.total, status: runtimeClassification.romBacked === cards.total ? 'ok' : 'warn', progress: pct(runtimeClassification.romBacked, cards.total), hint: `${runtimeClassification.legacy} rutas legacy` },
         { label: 'ROM adapter capable', value: production.romBackedStrict, total: cards.total, status: production.mixed === 0 ? 'info' : 'warn', progress: pct(production.romBackedStrict, cards.total), hint: 'sonda headless, no BattleScreen live' },
         { label: 'Default player visible', value: presentationDeployment.defaultRenderer, status: 'warn', hint: `Pixi: ?${presentationDeployment.pixiQuery}` },
-        { label: 'Completion owner', value: presentationDeployment.legacyCompletionOwner ? 'DOM LEGACY' : 'ROM RUNTIME', status: presentationDeployment.legacyCompletionOwner ? 'warn' : 'ok' },
+        { label: 'Completion owner', value: presentationDeployment.completionOwnership, status: 'warn', hint: `${presentationDeployment.romCompletionRoutes.join(', ')} → ROM con Pixi` },
       ],
       action: { label: 'Abrir Combat Lab', module: 'lab' },
     },

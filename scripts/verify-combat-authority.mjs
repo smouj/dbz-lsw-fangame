@@ -32,11 +32,11 @@ for (const file of files) {
   }
 }
 
-const main = fs.readFileSync('src/main.tsx', 'utf8');
+const main = fs.readFileSync('src/main.tsx', 'utf8').replace(/\r\n/g, '\n');
 const combatUi = main.slice(main.indexOf('  const selectCard ='));
 if (/Math\.random\s*\(/.test(combatUi)) violations.push('src/main.tsx: gameplay Math.random after selectCard');
 for (const required of [
-  "engineDispatch(\n      { type: 'PLAY_CARD'",
+  "engineDispatch(\n        { type: 'PLAY_CARD'",
   "{ type: 'PLAY_LIMIT_CARD', cardId: card.id }",
   'projectRuntimeCardResult',
   'resolveEnemyAttackViaEngine',

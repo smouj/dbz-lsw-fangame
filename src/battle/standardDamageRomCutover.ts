@@ -110,6 +110,27 @@ export function compileStandardDamageRuntimeCutover(
   };
 }
 
+/** Compile only the latest resolved STANDARD_DAMAGE film from the Runtime log. */
+export function latestStandardDamageRuntimeCutover(
+  events: BattleEventEnvelope[],
+  actorSide: BattleSide,
+  card: CardDef,
+  actorFormId?: string | null,
+): StandardDamageRuntimeCutover | null {
+  for (let index = events.length - 1; index >= 0; index--) {
+    const env = events[index];
+    if (env.event.type !== 'ACTION_STARTED') continue;
+    if (env.event.side !== actorSide || env.event.action.label !== card.name) continue;
+    return compileStandardDamageRuntimeCutover(
+      events,
+      index,
+      env as BattleEventEnvelope & { event: { type: 'ACTION_STARTED' } },
+      actorFormId,
+    );
+  }
+  return null;
+}
+
 export function standardDamageRuntimeCutoverSummary(): StandardDamageRuntimeCutoverSummary {
   const standardDamageProfiles = ROM_PRESENTATION_PROFILES.filter(profile => profile.kind === 'STANDARD_DAMAGE').length;
   const romBacked = CARDS.filter(card => romActionExecutionDescriptorForCard(card).execution.handler === STANDARD_DAMAGE_ROM_HANDLER).length;

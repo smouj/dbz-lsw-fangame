@@ -12,6 +12,7 @@ import { romPresentationProfileForCard } from '../src/battle/romPresentationProf
 import {
   STANDARD_DAMAGE_ROM_HANDLER,
   compileStandardDamageRuntimeCutover,
+  latestStandardDamageRuntimeCutover,
   standardDamageProfileForAction,
   standardDamageRuntimeCutoverSummary,
 } from '../src/battle/standardDamageRomCutover';
@@ -24,6 +25,16 @@ function check(name: string, ok: boolean, detail?: string) {
     failures++;
     console.log(`FAIL ${name}${detail ? ` — ${detail}` : ''}`);
   }
+}
+
+{
+  const hit = PRESENTATION_SCENARIOS.find(item => item.id === 'm7_melee_hit')!;
+  const run = runPresentationScenario(hit);
+  const card = getCard(5)!;
+  const latest = latestStandardDamageRuntimeCutover(run.log.entries, 'player', card, 'goku_base');
+  check('production owner:latest Runtime action compiles', !!latest);
+  check('production owner:authoritative HIT branch retained', latest?.outcome.family === 'HIT', String(latest?.outcome.family));
+  check('production owner:focused film has one result boundary', latest?.timeline.entries.filter(entry => entry.cue.type === 'ROM_RESULT_BRANCH').length === 1);
 }
 
 const CONTEXT = {
@@ -192,9 +203,15 @@ assertScenarioBranch('m7_melee_miss', 'MISS');
 const adapterSource = readFileSync('src/battle/engine/presentation/buildTimeline.ts', 'utf8');
 const cutoverSource = readFileSync('src/battle/standardDamageRomCutover.ts', 'utf8');
 const compilerSource = readFileSync('src/battle/romPresentationCompiler.ts', 'utf8');
+const battleScreenSource = readFileSync('src/main.tsx', 'utf8');
 check('adapter:0 Math.random', !/Math\.random\s*\(/.test(adapterSource + cutoverSource + compilerSource));
 check('adapter:0 cardId switch for cutover', !/switch\s*\([^)]*card/i.test(cutoverSource) && !/card\.id\s*===/.test(cutoverSource));
 check('adapter:0 damage calculation authority', !/calculateDamage|applyDamage|damageReducer|accuracyRoll|resolveAccuracy|rngNext/.test(cutoverSource));
+check('production owner:BattleScreen uses focused Runtime film', battleScreenSource.includes('latestStandardDamageRuntimeCutover(runtimeResult.log.entries'));
+check('production owner:ROM completion releases control', battleScreenSource.includes('if (romOwnsCompletion) finishRomCinematic()'));
+check('production owner:completion cleanup restores DOM boundary', battleScreenSource.includes("completionOwnerRef.current = 'DOM'")
+  && battleScreenSource.includes('romAdapterRef.current = null;'));
+check('production owner:parallel DOM timeline suppressed', battleScreenSource.includes('if (romOwnsCompletion) return;'));
 
 console.log('═══ STANDARD_DAMAGE ROM CUTOVER ═══');
 console.log(`handler0A=${standardDamageCards.length}`);

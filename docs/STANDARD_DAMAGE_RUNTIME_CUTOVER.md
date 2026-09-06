@@ -1,8 +1,8 @@
 # STANDARD_DAMAGE Runtime Cutover
 
-Status: `CLOSED`
+Status: `CLOSED · PRODUCTION OWNER PILOT`
 
-Scope: only cards whose ROM execution handler is `$0A` (`STANDARD_DAMAGE`).
+Scope: player-side cards whose ROM execution handler is `$0A` (`STANDARD_DAMAGE`).
 
 ## Runtime Route
 
@@ -15,6 +15,12 @@ ACTION_STARTED
 ```
 
 The cutover is gated by handler, not by individual card IDs. Non-`$0A` cards stay on the legacy presentation path.
+
+With `?pixiField=1`, BattleScreen compiles the latest resolved player `$0A` action
+from the authoritative Runtime EventLog and gives its focused film to Pixi.
+That ROM player owns completion for this route, so the legacy DOM timeline is
+not started in parallel. The default renderer and every other family retain
+their current fallback while the migration remains progressive.
 
 ## Canonical Counts
 
@@ -33,6 +39,8 @@ Branches                                 HIT / MISS / SPECIAL_DEFENSE
 - No `BASE_X`, `BASE_Y`, anchors, absolute coordinates or slot bindings are introduced.
 - Animation resources remain resource provenance (`ANIMATION_START resource $XX`), not semantic pose claims.
 - The legacy STANDARD_DAMAGE semantic path is suppressed for `$0A` after ACTION_STARTED.
+- The cumulative Runtime log is reduced to the latest matching action before playback; previous films cannot replay.
+- Pixi `onComplete` is the only presentation boundary that releases control for player `$0A` while the flag is active. Enemy actions retain the legacy completion path until their resolve/present order is migrated.
 
 ## Verification
 

@@ -115,9 +115,9 @@ export function BattleLabModule({ onLaunchBattle, embedded }: Props) {
             pixiField ? 'pixi' : null,
           ].filter(Boolean).join(' · ') || 'off'}</strong></div>
           <div><label>Motor</label><strong className="dev-ok">conectado — lanza BattleScreen real</strong></div>
-          <div><label>Renderer de este lanzamiento</label><strong className={pixiField ? 'dev-ok' : ''}>{pixiField ? 'PIXI ROM + DOM PARALLEL' : BATTLE_PRESENTATION_DEPLOYMENT.defaultRenderer}</strong></div>
+          <div><label>Renderer de este lanzamiento</label><strong className={pixiField ? 'dev-ok' : ''}>{pixiField ? 'PIXI ROM · CUTOVER POR RUTA' : BATTLE_PRESENTATION_DEPLOYMENT.defaultRenderer}</strong></div>
           <div><label>Ruta por carta</label><strong>ROM_ROUTE / LEGACY — resuelta en runtime</strong></div>
-          <div><label>Completion owner</label><strong>{BATTLE_PRESENTATION_DEPLOYMENT.legacyCompletionOwner ? 'DOM LEGACY onDone' : 'ROM RUNTIME'}</strong></div>
+          <div><label>Completion owner</label><strong>PLAYER STANDARD_DAMAGE → ROM · RESTO → DOM</strong></div>
           <div><label>Inspector BattleScreen</label><strong>{debugState && debugCinematics ? 'estado + cue/tick activos' : 'activa Estado + Cinemática'}</strong></div>
           <p className="dev-hint" style={{ marginTop: 12 }}>
             Este panel lanza la BattleScreen real y es el gate end-to-end.{' '}

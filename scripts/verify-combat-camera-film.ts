@@ -198,7 +198,8 @@ check('production Stage continuation consumes BattleRuntime.timeline',
   && battleScreen.includes('completeTimeline.entries.filter(entry => entry.cue.tick > currentTick)'));
 check('production Stage does not restart the partial card-level timeline after QTE',
   battleScreen.includes("const continuingRuntimeStage = card.type === 'command'")
-  && battleScreen.includes('pixiPres && !continuingRuntimeStage ? romPresentationTimelineForCard'));
+  && battleScreen.includes('pixiPres && !runtimeStandardDamage && !continuingRuntimeStage')
+  && battleScreen.includes('romPresentationTimelineForCard(card, side, actorFormId)'));
 
 console.log(`\ncombat-camera-film: checks=${checks} failures=${failures}`);
 if (failures > 0) process.exit(1);

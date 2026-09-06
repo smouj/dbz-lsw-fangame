@@ -16,6 +16,8 @@ export const BATTLE_PRESENTATION_DEPLOYMENT = {
   defaultRenderer: 'DOM_LEGACY',
   pixiActivation: 'DEV_QUERY_FLAG',
   pixiQuery: 'pixiField=1',
-  legacyCompletionOwner: true,
+  completionOwnership: 'ROUTE_SCOPED',
+  romCompletionRoutes: ['PLAYER_STANDARD_DAMAGE'],
+  legacyCompletionFallback: true,
   timelineLiveSurface: 'RUNTIME_SANDBOX',
 } as const;

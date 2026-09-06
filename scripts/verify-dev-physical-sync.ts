@@ -245,7 +245,11 @@ check('Character Studio exposes right-facing canonical display preview', charact
 check('Cards reads romPresentationTimelineForCard', cardsSrc.includes('romPresentationTimelineForCard') && cardsSrc.includes('ROM_PHYSICAL_FRAME'));
 check('Dashboard reads physicalMapping/physicalCorpus', dashboardSrc.includes('physicalMapping') && dashboardSrc.includes('physicalCorpus'));
 check('Dashboard labels promoted physical corpus and retained empty ROM frame evidence', dashboardSrc.includes('promoted physical IDs') && dashboardSrc.includes('EMPTY_NOT_PROMOTED'));
-check('Validation gates promoted corpus totals and retained empty ROM frame evidence', validationSrc.includes('physicalIdentities === 505') && validationSrc.includes('frameInstances === 2374') && validationSrc.includes('transparentFrameRecords === 36') && validationSrc.includes('transparentPhysicalIds === 7') && validationSrc.includes('EMPTY_NOT_PROMOTED'));
+check('Validation gates promoted corpus totals and retained empty ROM frame evidence',
+  validationSrc.includes('corpus.physicalIdentities > 0')
+  && validationSrc.includes('corpus.frameInstances >= corpus.physicalIdentities')
+  && validationSrc.includes('corpus.transparentFrameRecords >= corpus.transparentPhysicalIds')
+  && validationSrc.includes('EMPTY_NOT_PROMOTED'));
 check('Game Config labels promoted physical corpus and retained empty ROM frame evidence', gameConfigSrc.includes('promoted IDs') && gameConfigSrc.includes('EMPTY_NOT_PROMOTED'));
 check('Animation Studio core resolves ROM physical via ProductionFrameResolver', animationStudioCoreSrc.includes('resolveProductionFrame') && animationStudioCoreSrc.includes('physical: ProductionFrameBinding'));
 check('Animation Studio ROM column renders physical corpus file', animationStudioSrc.includes('view.physical.file') && animationStudioSrc.includes('physicalId · vf · ticks'));

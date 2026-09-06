@@ -97,6 +97,7 @@ import type { PixiBattlePresentation } from './renderer/pixi/presentation/PixiBa
 import { ProductionRomPresentationAdapter } from './renderer/pixi/presentation/ProductionRomPresentationAdapter';
 import { RomPresentationPlayer } from './renderer/pixi/presentation/RomPresentationPlayer';
 import { romPresentationTimelineForCard } from './battle/romPresentationForCard';
+import { latestStandardDamageRuntimeCutover } from './battle/standardDamageRomCutover';
 // Code-split: pixi.js (~790KB) solo se descarga cuando ?pixiField=1 está activo.
 const BattlePixiStage = lazy(() => import('./battle/BattlePixiStage').then((m) => ({ default: m.BattlePixiStage })));
 import { initAudio, Sfx, setSfxEnabled, setVolume as setVolumeSfx } from './audio/sfx';
@@ -903,6 +904,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, pla
   const romAdapterRef = useRef<ProductionRomPresentationAdapter | null>(null);
   const romPlayerRef = useRef<RomPresentationPlayer | null>(null);
   const presentationSourceRef = useRef<'ROM' | 'LEGACY'>('LEGACY');
+  const completionOwnerRef = useRef<'ROM' | 'DOM'>('DOM');
   const stageRomActiveRef = useRef(false);
   const runtimeTimelineCursorRef = useRef(0);
 
@@ -1335,8 +1337,8 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, pla
   // emite eventos por tick (SHOT/ACTOR_POSE/HIT_FRAME/APPLY_DAMAGE/…); los
   // setTimeout NO son autoridad de gameplay (plan del usuario, punto 1-2).
   const cinematicRef = useRef<BattleTimeline | null>(null);
-  // ─── Presentación Pixi (dev flag ?pixiField=1): instancia que recibe los
-  //     eventos del timeline en paralelo al DOM (sin reemplazarlo). ───
+  // ─── Presentación Pixi (dev flag ?pixiField=1). STANDARD_DAMAGE usa
+  //     ownership ROM; las demás familias conservan fallback progresivo. ───
   // C1.0 — las refs del puente ROM se declaran junto al Runtime, arriba, para
   // que este bloque y el Presenter compartan exactamente la misma instancia.
 
@@ -1347,6 +1349,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, pla
       getActors: () => pixiPresRef.current?.inspectActors() ?? { left: null, right: null },
       getRomAdapter: () => romAdapterRef.current,
       getRuntime: () => runtimeRef.current,
+      getCompletionOwner: () => completionOwnerRef.current,
     };
     (window as any).__ROM_TICKS_BRIDGE__ = bridge;
     return () => { delete (window as any).__ROM_TICKS_BRIDGE__; };
@@ -1431,7 +1434,13 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, pla
     }
   };
   useEffect(() => clearCinematicTimers, []);
-  const playCardCinematic = (card: CardDef, side: 'player' | 'enemy', onDone: () => void, onEvent?: (e: CinematicEvent) => void) => {
+  const playCardCinematic = (
+    card: CardDef,
+    side: 'player' | 'enemy',
+    onDone: () => void,
+    onEvent?: (e: CinematicEvent) => void,
+    runtimeResult?: ReturnType<BattleRuntime['dispatch']>,
+  ) => {
     const continuingRuntimeStage = card.type === 'command' && stageRomActiveRef.current && !!romAdapterRef.current;
     clearCinematicTimers(continuingRuntimeStage);
     let cinematicFinished = false;
@@ -1452,6 +1461,18 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, pla
         onDone();
       }, gbcMs(12)));
     };
+    const finishRomCinematic = () => {
+      if (cinematicFinished) return;
+      cinematicFinished = true;
+      completionOwnerRef.current = 'DOM';
+      romAdapterRef.current = null;
+      setViewMode('OVERVIEW');
+      setCardFx(null);
+      resetActorPose();
+      resetTargetPose();
+      if (isDebugCinematics()) setDebugCin(null);
+      onDone();
+    };
 
     // Kind de perfil: qué cinematografía declara esta carta
     const hasTargetCut = card.type === 'beam' || card.type === 'damage' || card.type === 'command' || OFFENSIVE_SUPPORT_EFFECTS.has(card.effect);
@@ -1462,18 +1483,25 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, pla
       : card.type === 'support' ? 'support' : 'support';
     const profile = profileFor(kind, card.name);
 
-    // Pixi (dev flag ?pixiField=1): preparar la presentación para esta acción.
-    // Se enruta en PARALELO al DOM (que sigue siendo la presentación por
-    // defecto); si la presentación aún no está lista, el DOM cubre el caso.
+    // Pixi (dev flag ?pixiField=1): prepara la presentación de esta acción.
     const pixiPres = pixiPresRef.current;
     // C1.0 — Production ROM Bridge: si la carta tiene ruta ROM madura
     // (BEAM_BASE $02 / STANDARD_DAMAGE $0A), Pixi se gobierna por cues ROM
-    // (NO por profileFor/applyCinematicEvent). El DOM legacy sigue en paralelo
-    // y es quien dispara onDone (se retirará en (b)).
+    // (NO por profileFor/applyCinematicEvent). STANDARD_DAMAGE usa el EventLog
+    // resuelto y el player ROM posee onDone; las demás familias conservan el
+    // fallback DOM hasta cerrar por separado ramas y efectos físicos.
     const actorFormId = side === 'player' ? activePlayerFormId : activeEnemyFormId;
-    const romRoute = pixiPres && !continuingRuntimeStage ? romPresentationTimelineForCard(card, side, actorFormId) : null;
-    const useRomPixi = continuingRuntimeStage || !!romRoute;
+    const runtimeStandardDamage = pixiPres && runtimeResult && !continuingRuntimeStage
+      ? latestStandardDamageRuntimeCutover(runtimeResult.log.entries, side, card, actorFormId)
+      : null;
+    const cardRomRoute = pixiPres && !runtimeStandardDamage && !continuingRuntimeStage
+      ? romPresentationTimelineForCard(card, side, actorFormId)
+      : null;
+    const romTimeline = runtimeStandardDamage?.timeline ?? cardRomRoute?.timeline ?? null;
+    const romOwnsCompletion = !!runtimeStandardDamage && !!pixiPres;
+    const useRomPixi = continuingRuntimeStage || !!romTimeline;
     presentationSourceRef.current = useRomPixi ? 'ROM' : 'LEGACY';
+    completionOwnerRef.current = romOwnsCompletion ? 'ROM' : 'DOM';
     if (pixiPres && !continuingRuntimeStage) {
       pixiPres.reset();
       pixiPres.setAttacker(side === 'player' ? 'left' : 'right');
@@ -1501,17 +1529,21 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, pla
       });
       romPlayerRef.current = player;
       player.start();
-    } else if (useRomPixi && romRoute && pixiPres) {
+    } else if (useRomPixi && romTimeline && pixiPres) {
       const adapter = new ProductionRomPresentationAdapter(pixiPres, pixiPres.romPresenter);
       adapter.reset('ROM');
       romAdapterRef.current = adapter;
       romPlayerRef.current?.cancel();
-      const player = new RomPresentationPlayer(romRoute.timeline, adapter, {
+      const player = new RomPresentationPlayer(romTimeline, adapter, {
         clock: {
           getTick: () => rtApi.runtime.state.tick,
           advance: (ticks) => { rtApi.runtime.advance(ticks); },
         },
-        onComplete: () => { romPlayerRef.current = null; pixiPres.returnToField(); },
+        onComplete: () => {
+          romPlayerRef.current = null;
+          pixiPres.returnToField();
+          if (romOwnsCompletion) finishRomCinematic();
+        },
       });
       romPlayerRef.current = player;
       player.start();
@@ -1531,6 +1563,11 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, pla
     setViewMode('ACTION');
     setCardFx({ card, side, step: 'attacker', visual: cardProjectileClass(card) });
     setActorPose(cardBattlePose(card, 'field'));
+
+    // STANDARD_DAMAGE pilot: Pixi consumes the focused Runtime film and its
+    // ROM completion boundary releases control. Do not start a parallel DOM
+    // timeline for the same action.
+    if (romOwnsCompletion) return;
 
     // Guard: si es beam/damage con target cut, el defensor espera en guard
     const resetCinematicReplay = () => {
@@ -2586,7 +2623,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, pla
       }
     }, event => {
       if (event.type === 'APPLY_DAMAGE') project();
-    });
+    }, result);
   };
 
   // ─── BASIC: acciones gratuitas del GBC (no cuestan CC) ───

@@ -63,8 +63,11 @@ check('Dashboard separates route, adapter and player-visible deployment', dashbo
   && dashboardUi.includes('ROM adapter capable') && dashboardUi.includes('Default player visible'));
 check('deployment truth matches current BattleScreen gate', BATTLE_PRESENTATION_DEPLOYMENT.defaultRenderer === 'DOM_LEGACY'
   && BATTLE_PRESENTATION_DEPLOYMENT.pixiActivation === 'DEV_QUERY_FLAG'
-  && BATTLE_PRESENTATION_DEPLOYMENT.legacyCompletionOwner === true
-  && mainUi.includes('isPixiField()'));
+  && BATTLE_PRESENTATION_DEPLOYMENT.completionOwnership === 'ROUTE_SCOPED'
+  && BATTLE_PRESENTATION_DEPLOYMENT.romCompletionRoutes.join(',') === 'PLAYER_STANDARD_DAMAGE'
+  && BATTLE_PRESENTATION_DEPLOYMENT.legacyCompletionFallback === true
+  && mainUi.includes('isPixiField()')
+  && mainUi.includes('if (romOwnsCompletion) return;'));
 check('Cards labels semantic preview as remake manifest', cardsUi.includes('REMAKE MANIFEST PREVIEW')
   && attackPreviewUi.includes('MANIFEST') && !attackPreviewUi.includes('secuencia REAL'));
 check('Animation Studio exposes closed sequence vs pending PNG', animationUi.includes('ROM SEQUENCE CLOSED')
@@ -72,7 +75,7 @@ check('Animation Studio exposes closed sequence vs pending PNG', animationUi.inc
 check('Timeline live mode is honestly named Runtime Sandbox', timelineUi.includes('Runtime Sandbox')
   && !timelineUi.includes('En vivo (Engine Runtime)'));
 check('Combat Lab identifies BattleScreen and completion owner', battleLabUi.includes('BattleScreen real')
-  && battleLabUi.includes('Completion owner') && battleLabUi.includes('DOM LEGACY onDone'));
+  && battleLabUi.includes('Completion owner') && battleLabUi.includes('PLAYER STANDARD_DAMAGE → ROM'));
 check('Game Config consumes deployment truth and current corpus', gameConfigUi.includes('presentationDeployment')
   && !gameConfigUi.includes('resourcesRendered === 6'));
 

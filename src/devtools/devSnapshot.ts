@@ -66,7 +66,9 @@ export interface DevSnapshot {
     pixiActivation: 'DEV_QUERY_FLAG';
     pixiQuery: string;
     pixiActiveByDefault: false;
-    legacyCompletionOwner: true;
+    completionOwnership: 'ROUTE_SCOPED';
+    romCompletionRoutes: readonly ['PLAYER_STANDARD_DAMAGE'];
+    legacyCompletionFallback: true;
     timelineLiveSurface: 'RUNTIME_SANDBOX';
   };
   runtimeClassification: {

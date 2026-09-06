@@ -126,8 +126,11 @@ function enterPlayerDefenseChoice(rt: BattleRuntime) {
 // E — auditoría estática de BattleScreen.
 {
   const mainSrc = readFileSync(resolve(process.cwd(), 'src/main.tsx'), 'utf8');
-  check('showPhaseCue no acepta callback de gameplay', /const showPhaseCue = \(phaseKind: PhaseBannerKind\)/.test(mainSrc));
-  check('0 llamadas showPhaseCue con segundo argumento', !/showPhaseCue\([^)\n]+,/.test(mainSrc));
+  check('showPhaseCue acepta solo callback de secuenciación visual',
+    /const showPhaseCue = \(phaseKind: PhaseBannerKind, onComplete\?: \(\) => void\)/.test(mainSrc));
+  const phaseCueCallbacks = mainSrc.match(/showPhaseCue\([^)\n]+,/g) ?? [];
+  check('único callback: ATTACK banner → draw Joint',
+    phaseCueCallbacks.length === 1 && phaseCueCallbacks[0] === "showPhaseCue('ATTACK',");
   check('0 símbolo legacy enemyAttack en BattleScreen', !/\benemyAttack\b/.test(mainSrc));
   check('BattleScreen usa proyección explícita de control', /type BattleControlProjection[\s\S]+PLAYER_ATTACK_CHOICE[\s\S]+PLAYER_DEFENSE_CHOICE/.test(mainSrc));
   check('preparación enemiga abre DEFENSE, no playCardCinematic directo', /const prepareEnemyIncomingAttack[\s\S]+incomingCard\.current = card[\s\S]+enterDefensePhase\(card\.name\)/.test(mainSrc));

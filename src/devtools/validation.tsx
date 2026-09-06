@@ -223,7 +223,7 @@ export function ValidationModule() {
     const deployment = snap.presentationDeployment;
     warn('DEFAULT PLAYER VISIBLE: DOM LEGACY', `Pixi no está activo por defecto; deployment declarado: ${deployment.defaultRenderer}.`);
     warn('PIXI CONSUMPTION: solo flag Dev', `${deployment.pixiActivation} · activar con ?${deployment.pixiQuery}; capacidad del adapter no equivale a wiring visible por defecto.`);
-    warn('ACTION COMPLETION OWNER: legacy DOM activo', 'BattleScreen mantiene el DOM legacy como propietario de onDone mientras Pixi ROM corre en paralelo bajo flag.');
+    info('ACTION COMPLETION OWNER: cutover por ruta', `${deployment.romCompletionRoutes.join(', ')} usa la frontera ROM con Pixi; el resto conserva DOM legacy durante la migración.`);
     // bridge elegible vs estricto: es esperado que no coincidan — el bridge
     // enruta progresivamente más tipos, no solo BEAM_BASE+STANDARD_DAMAGE.
     // Solo advierte si 0 cartas bridge se consumen habiendo perfiles elegibles.
