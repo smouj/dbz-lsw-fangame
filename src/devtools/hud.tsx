@@ -7,7 +7,7 @@
 // el Combat Lab. "Aplicar al juego" inyecta las variables en :root y
 // persiste en localStorage.
 // ═══════════════════════════════════════════════════════════════════════
-import { Check, Download, RotateCcw, Lock, BookOpen, Swords, Library, Users, Sparkles, Settings as SettingsIcon, ChevronRight, Play } from 'lucide-react';
+import { Check, Download, RotateCcw, Lock, BookOpen, Swords, Library, Users, Sparkles, Settings as SettingsIcon, Play } from 'lucide-react';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import {
   HUD_THEME_VARS, HudTheme, currentHudTheme, defaultHudTheme,
@@ -31,6 +31,7 @@ import { CardArtHole } from '../components/CardArtHole';
 import { CARD_FRAME_BY_TYPE, CARD_FRAME_SELECTED, CARD_FRAME_DISABLED } from '../data/cardVisuals';
 import { HUD_LAYOUT, validateHudLayout } from '../data/hudLayout';
 import { StageHudPanel } from '../components/StageHudPanel';
+import { MainMenuPresentation, type MainMenuPresentationItem } from '../components/MainMenuPresentation';
 
 // Formas de ejemplo del mockup (Goku vs Piccolo, como el Battle Lab).
 const P_FORM = 'goku_base';
@@ -56,6 +57,15 @@ const VIEWS: { id: HudView; label: string; tip: string }[] = [
   { id: 'RESULTADO', label: 'Resultado', tip: 'Pantalla final: VICTORIA / DERROTA' },
   { id: 'MENU', label: 'Menú', tip: 'Pantalla principal: logo, continuar, navegación y footer' },
   { id: 'INTRO', label: 'Intro', tip: 'Presentación VS: sprites entran desde fuera + VS + flash (sin texto)' },
+];
+
+const MENU_PREVIEW_ITEMS: MainMenuPresentationItem[] = [
+  { screen: 'story', label: 'HISTORIA', desc: 'Tu próxima batalla empieza aquí', Icon: BookOpen },
+  { screen: 'versus', label: 'BATALLA', desc: 'Prepara tu equipo y lucha', Icon: Swords },
+  { screen: 'deck', label: 'MAZO', desc: '20 cartas. Tu estrategia.', Icon: Library },
+  { screen: 'characters', label: 'PERSONAJES', desc: 'Guerreros, formas y poder', Icon: Users },
+  { screen: 'cards', label: 'CARTAS', desc: 'Explora tu colección', Icon: Sparkles },
+  { screen: 'settings', label: 'AJUSTES', desc: 'Audio · Idioma · Pantalla', Icon: SettingsIcon },
 ];
 
 function PreviewHpBar({ current, max, side }: { current: number; max: number; side: 'left' | 'right' }) {
@@ -387,52 +397,21 @@ export function HudModule() {
             {/* MENU PRINCIPAL: logo, continuar, navegación y footer — MISMO
                 markup que el juego (main.tsx), escalado al preview */}
             {view === 'MENU' && (
-              <div className="menu-screen dev-menu-screen">
-                <div className="menu-bg" />
-                <div className="menu-content">
-                  <img className="menu-logo-title" src="/logo-dbz-title.png" alt="DRAGON BALL Z" />
-                  <h2 className="menu-subtitle">LEGENDARY SUPER WARRIORS</h2>
-                  <button className="menu-continue-card" data-tip={tipBlock('CONTINUAR', [['desc', 'Sigue la historia en el capítulo actual.']])}>
-                    <span className="mc-play">▶</span>
-                    <span className="mc-body">
-                      <span className="mc-kicker">SAGA SAIYAN · CAPÍTULO 1</span>
-                      <span className="mc-title">CONTINUAR</span>
-                      <span className="mc-chapter">EL REGRESO DE RADITZ</span>
-                      <span className="mc-progress-line">
-                        <span className="mc-progress-track"><span className="mc-progress-fill" style={{ width: '42%' }} /></span>
-                        <span className="mc-percent">42%</span>
-                      </span>
-                      <span className="mc-meta">GOKU · Nv. 12</span>
-                    </span>
-                    <span className="mc-hero-wrap">
-                      <img className="mc-hero" src="/assets/portraits/menu_cut/goku.png" alt="" />
-                      <span className="mc-hero-name">GOKU</span>
-                    </span>
-                  </button>
-                  <nav className="menu-nav">
-                    {[
-                      { n: '01', label: 'HISTORIA', desc: 'Campaña por capítulos', Icon: BookOpen },
-                      { n: '02', label: 'BATALLA', desc: 'Combate libre / versus', Icon: Swords, tone: 'hot', selected: true },
-                      { n: '03', label: 'MAZO', desc: 'Edita tu deck de 20 cartas', Icon: Library },
-                      { n: '04', label: 'PERSONAJES', desc: 'Formas y estadísticas', Icon: Users },
-                      { n: '05', label: 'CARTAS', desc: 'Colección completa', Icon: Sparkles },
-                      { n: '06', label: 'AJUSTES', desc: 'Opciones del juego', Icon: SettingsIcon, secondary: true },
-                    ].map(item => (
-                      <button key={item.n} className={`menu-item ${item.tone ?? ''} ${item.secondary ? 'menu-item-settings' : ''} ${item.selected ? 'selected' : ''}`}
-                        data-tip={tipBlock(item.label, [['desc', item.desc]])}>
-                        <span className="mi-num">{item.n}</span>
-                        <span className="mi-icon"><item.Icon size={18} strokeWidth={2.4} /></span>
-                        <span className="mi-copy">
-                          <span className="mi-label">{item.label}</span>
-                          <span className="mi-desc">{item.desc}</span>
-                        </span>
-                        <ChevronRight className="mi-arrow" size={18} strokeWidth={2.8} />
-                      </button>
-                    ))}
-                  </nav>
-                  <div className="menu-footer">© 2026 DBZ LSW Fangame — REMASTER GBC</div>
-                </div>
-              </div>
+              <MainMenuPresentation
+                items={MENU_PREVIEW_ITEMS}
+                playerLevel={12}
+                chapterNumber={1}
+                chapterCount={32}
+                chapterName="EL REGRESO DE RADITZ"
+                storyLabel="CAPÍTULO"
+                continueLabel="CONTINUAR"
+                chooseStoryLabel="ELIGE TU HISTORIA"
+                playerLabel="GUERRERO"
+                mainMenuLabel="Vista previa del menú principal"
+                navigateLabel="NAVEGAR"
+                selectLabel="ELEGIR"
+                preview
+              />
             )}
 
             {/* HUD superior SIEMPRE visible (como el juego: durante la intro

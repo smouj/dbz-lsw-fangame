@@ -32,7 +32,7 @@
 | **DISCARD** | HAND CHECK — panel con discard-grid de cartas (frame + arte + nombre) para elegir descarte | `discard-panel` `discard-grid` `discard-card` `discard-frame` `discard-art` `discard-name` |
 | **DEFENSA** | Fuentes: `[LIMITED] [JOINT] [BASIC DEFENSE]`. JOINT y LIMITED muestran las cartas legales con el mismo frame máscara y arte que ataque; si no hay carta muestran `NO CARD`. Sin listas ni ayudas textuales sobre los botones. | `defense-sources` `src-limit` `src-joint` `src-basic` `defense-card-panel` `CardVisual` `limit-card` |
 | **RESULTADO** | Pantalla final: VICTORY (LV/EXP/HP) o DEFEAT (TURN/HP) + botón NEW BATTLE/RETRY (toggle) — panel GBC horizontal compacto (no altera la altura) | `result-screen` `result-title` `result-info` `btn-primary` |
-| **MENU** | Pantalla principal: `.menu-bg` (arte + Ken Burns), 3 rayos eléctricos SVG pixelados animados, logo, título VT323 dorado, continuar (progreso), 6 items de navegación (1 seleccionado) y footer — reutiliza el markup real del juego, compacto en px para el preview | `menu-screen` `menu-bg` `menu-bolts` `menu-content` `menu-logo-mark` `menu-title` `menu-subtitle` `menu-continue-card` `menu-nav` `menu-item` `menu-footer` |
+| **MENU** | Menú principal actual: cabecera, nivel del jugador, retícula de 6 paneles y progreso de historia. Producción y Studio renderizan el mismo `MainMenuPresentation`; el Studio solo aplica una escala compacta al marco de preview. | `MainMenuPresentation` `shell-menu` `shell-masthead` `shell-panels` `shell-panel` `shell-story-progress` `shell-footer` |
 | **INTRO** | VS full-screen SIN texto: los 2 sprites entran DESDE FUERA (±42vw) hasta su posición (entrada cinematográfica ÚNICA), VS VT323 pixel pop central + glow, flash blanco 1.5s, banda de energía. NO hay READY/FIGHT/nombres/formas. `hud-in` del hud-top desactivado durante la intro (intro-active) — una sola animación de entrada | `battle-intro` `intro-fighter` `intro-portrait` `intro-vs` `intro-flash` |
 
 ## Invariantes clave (no romper)
@@ -62,7 +62,7 @@
 comm -12 <(grep -oE 'className="[a-z-]+' src/devtools/hud.tsx | sort -u) \
          <(grep -oE 'className="[a-z-]+' src/main.tsx | sort -u) | wc -l
 
-npm run verify:hud-layout   # 16/16 invariantes, incluida paridad runtime inferior
+npm run verify:hud-layout   # 19/19 invariantes, incluida paridad runtime inferior y menú compartido
 npm run verify:battle       # 71/71 lógica
 ```
 

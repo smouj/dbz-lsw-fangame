@@ -8717,73 +8717,51 @@ button:focus-visible, .chapter-node:focus-visible {
 /* retrato a tamaño canónico (120×168) y caja a bottom canónico (40px) —
    el retrato queda centrado con la caja como en el diálogo de gameplay */
 /* ─── Vista MENÚ del HUD Studio ───
-   Reutiliza el markup REAL del juego (.menu-screen + .menu-bg + rayos).
-   El menú usa vh/vw del viewport → en el preview se fuerza un layout
-   COMPACTO con tamaños fijos (px) para que encaje sin transform. */
-.dev-hud-preview .menu-screen.dev-menu-screen {
+   Consume MainMenuPresentation, la misma composición que producción. Solo
+   reduce la escala tipográfica y los espacios al marco 1056×570 del preview. */
+.dev-hud-preview .shell-menu.dev-menu-preview {
   position: absolute;
   inset: 0;
-  height: 100%;
   z-index: 60;
-  background: var(--bg-deep);
+  grid-template-rows: 72px minmax(0, 1fr) 18px;
+  gap: 10px;
+  padding: 14px;
+  --shell-display: var(--fmenu);
+  --shell-body: 'DotGothic16', Consolas, 'Lucida Console', monospace;
 }
-.dev-hud-preview .menu-screen.dev-menu-screen::before {
-  width: 66%;
-}
-.dev-hud-preview .menu-screen.dev-menu-screen::after {
-  left: 20px;
-}
-.dev-hud-preview .menu-screen.dev-menu-screen .menu-content {
-  height: 100%;
-  width: 470px;
-  padding: 12px 0 8px 24px;
-  gap: 5px;
-}
-.dev-hud-preview .menu-screen.dev-menu-screen .menu-logo-title {
-  width: 210px;
-}
-.dev-hud-preview .menu-screen.dev-menu-screen .menu-subtitle {
-  font-size: 10px;
-  margin-bottom: 0;
-}
-.dev-hud-preview .menu-screen.dev-menu-screen .menu-continue-card {
-  min-height: 62px;
-  padding: 6px 10px;
-  gap: 8px;
-}
-.dev-hud-preview .menu-screen.dev-menu-screen .mc-hero {
-  height: 50px;
-  width: auto;
-}
-.dev-hud-preview .menu-screen.dev-menu-screen .mc-title {
-  font-size: 15px;
-}
-.dev-hud-preview .menu-screen.dev-menu-screen .mc-kicker {
-  font-size: 8px;
-}
-.dev-hud-preview .menu-screen.dev-menu-screen .mc-progress-line {
-  margin-top: 2px;
-}
-.dev-hud-preview .menu-screen.dev-menu-screen .menu-item {
-  min-height: 33px;
-  grid-template-columns: 26px 28px 1fr 18px;
-  gap: 6px;
-  padding: 0 8px;
-}
-.dev-hud-preview .menu-screen.dev-menu-screen .mi-icon svg {
-  width: 14px;
-  height: 14px;
-}
-.dev-hud-preview .menu-screen.dev-menu-screen .mi-label {
-  font-size: 12px;
-}
-.dev-hud-preview .menu-screen.dev-menu-screen .mi-desc {
-  font-size: 9px;
-}
-.dev-hud-preview .menu-screen.dev-menu-screen .menu-footer {
-  font-size: 10px;
-  margin-top: auto;
-}
+.dev-hud-preview .dev-menu-preview .shell-masthead { gap: 18px; padding-bottom: 10px; }
+.dev-hud-preview .dev-menu-preview .shell-brand { width: 190px; height: 58px; }
+.dev-hud-preview .dev-menu-preview .shell-edition { gap: 2px; }
+.dev-hud-preview .dev-menu-preview .shell-edition span { font-size: 9px; }
+.dev-hud-preview .dev-menu-preview .shell-edition strong { font-size: 18px; }
+.dev-hud-preview .dev-menu-preview .shell-player { padding-left: 16px; }
+.dev-hud-preview .dev-menu-preview .shell-player span { font-size: 9px; }
+.dev-hud-preview .dev-menu-preview .shell-player strong { font-size: 16px; }
+.dev-hud-preview .dev-menu-preview .shell-panels { grid-template-rows: 1fr 1fr 58px; gap: 8px; }
+.dev-hud-preview .dev-menu-preview .shell-panel { border-width: 2px; padding: 16px; box-shadow: 2px 2px #070b12; }
+.dev-hud-preview .dev-menu-preview .shell-panel-index { top: 10px; left: 13px; font-size: 10px; }
+.dev-hud-preview .dev-menu-preview .shell-panel-icon { top: 11px; right: 12px; width: 18px; height: 18px; }
+.dev-hud-preview .dev-menu-preview .shell-panel-copy { gap: 5px; }
+.dev-hud-preview .dev-menu-preview .shell-panel-copy strong { font-size: 19px; white-space: nowrap; overflow-wrap: normal; }
+.dev-hud-preview .dev-menu-preview .shell-panel-copy > span { font-size: 11px; }
+.dev-hud-preview .dev-menu-preview .shell-panel-versus .shell-panel-copy,
+.dev-hud-preview .dev-menu-preview .shell-panel-characters .shell-panel-copy { padding-top: 17px; padding-bottom: 34px; }
+.dev-hud-preview .dev-menu-preview .shell-panel-characters .shell-panel-copy strong { font-size: 14px; }
+.dev-hud-preview .dev-menu-preview .shell-panel-settings { padding: 8px 46px; }
+.dev-hud-preview .dev-menu-preview .shell-panel-settings .shell-panel-index { top: 20px; }
+.dev-hud-preview .dev-menu-preview .shell-panel-settings .shell-panel-icon { top: 17px; }
+.dev-hud-preview .dev-menu-preview .shell-panel-settings .shell-panel-copy { gap: 16px; }
+.dev-hud-preview .dev-menu-preview .shell-panel-settings .shell-panel-copy strong { font-size: 16px; }
+.dev-hud-preview .dev-menu-preview .shell-panel-settings .shell-panel-copy > span { font-size: 10px; }
+.dev-hud-preview .dev-menu-preview .shell-panel-story { padding: 40px 20px 17px; }
+.dev-hud-preview .dev-menu-preview .shell-panel-story .shell-panel-copy strong { font-size: 26px; }
+.dev-hud-preview .dev-menu-preview .shell-panel-story .shell-panel-copy > span { font-size: 12px; }
+.dev-hud-preview .dev-menu-preview .shell-story-progress { gap: 5px; padding-top: 11px; }
+.dev-hud-preview .dev-menu-preview .shell-story-progress > span:first-child { font-size: 9px; }
+.dev-hud-preview .dev-menu-preview .shell-story-progress > strong { font-size: 15px; }
+.dev-hud-preview .dev-menu-preview .shell-story-cta { margin-top: 4px; padding: 8px 11px; font-size: 11px; }
+.dev-hud-preview .dev-menu-preview .shell-panel-arrow { right: 12px; bottom: 11px; width: 17px; height: 17px; }
+.dev-hud-preview .dev-menu-preview .shell-footer { font-size: 8px; }
 /* (intro-fight eliminado: la intro ya no tiene texto — solo entrada de
    sprites + VS + flash) */
 .dev-hud-preview .dev-intro-view .intro-flash {

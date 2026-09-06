@@ -33,13 +33,17 @@ check('caja controles contiene botones', HUD_LAYOUT.controlsHeight >= HUD_LAYOUT
 console.log('\n▸ Conexión CSS ← contrato');
 const css = readFileSync(join(ROOT, 'src', 'styles.css'), 'utf8');
 const main = readFileSync(join(ROOT, 'src', 'main.tsx'), 'utf8');
+const hudStudio = readFileSync(join(ROOT, 'src', 'devtools', 'hud.tsx'), 'utf8');
+const mainMenuPresentation = readFileSync(join(ROOT, 'src', 'components', 'MainMenuPresentation.tsx'), 'utf8');
 const defenseJointView = main.match(/\{defendMenu === 'joint'[\s\S]*?\{defendMenu === 'limit'/)?.[0] ?? '';
-const defenseLimitView = main.match(/\{defendMenu === 'limit'[\s\S]*?\n\s*<\/div>\n\s*\)}/)?.[0] ?? '';
+const defenseLimitView = main.match(/\{defendMenu === 'limit'[\s\S]*?\{phase === 'win'/)?.[0] ?? '';
 for (const k of ['controls-h', 'hud-controls-h', 'hud-layout-controls-h']) {
   check(`battle-controls usa var(--${k})`, css.includes(`var(--${k}`) || css.includes(`--${k}`), 'en battle-controls height');
 }
 check('contrato inyectado en :root (applyHudLayout en main)', main.includes('applyHudLayout()'));
-check('HUD Studio muestra el contrato', readFileSync(join(ROOT, 'src', 'devtools', 'hud.tsx'), 'utf8').includes('HUD_LAYOUT'));
+check('HUD Studio muestra el contrato', hudStudio.includes('HUD_LAYOUT'));
+check('menú de producción y Studio comparten presentación', main.includes('<MainMenuPresentation') && hudStudio.includes('<MainMenuPresentation') && mainMenuPresentation.includes('shell-panels'));
+check('HUD Studio no conserva el mock de menú antiguo', !hudStudio.includes('menu-screen dev-menu-screen'));
 
 // 3) Paridad de las vistas que antes escapaban del visual compacto.
 console.log('\n▸ Paridad runtime del panel inferior');

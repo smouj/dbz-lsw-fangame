@@ -42,6 +42,7 @@ import { cardIconUrl, MENU_PORTRAITS, TYPE_ICONS } from './data/icons';
 import { FitArt } from './components/FitArt';
 import { CardArtHole } from './components/CardArtHole';
 import { StageHudPanel } from './components/StageHudPanel';
+import { MainMenuPresentation, type MainMenuPresentationItem } from './components/MainMenuPresentation';
 import { GameViewport } from './components/GameViewport';
 import { TeamSetup } from './components/setup/TeamSetup';
 import { FormSelector } from './components/setup/FormSelector';
@@ -3713,7 +3714,7 @@ function MainMenu({ onNavigate }: { onNavigate: (s: Screen) => void }) {
   const chapter = CHAPTERS.find(c => c.id === Math.min(progress, CHAPTERS.length)) ?? CHAPTERS[0];
   const prog = loadProgress();
   const es = lang === 'es';
-  const items: Array<{ screen: Screen; label: string; desc: string; Icon: LucideIcon }> = [
+  const items: MainMenuPresentationItem[] = [
     { screen: 'story', label: t('menu.story'), desc: es ? 'Tu próxima batalla empieza aquí' : 'Your next battle starts here', Icon: BookOpen },
     { screen: 'versus', label: t('menu.battle'), desc: es ? 'Prepara tu equipo y lucha' : 'Build your team. Enter the fight.', Icon: Swords },
     { screen: 'deck', label: t('menu.deck'), desc: es ? '20 cartas. Tu estrategia.' : '20 cards. Your strategy.', Icon: Library },
@@ -3746,27 +3747,24 @@ function MainMenu({ onNavigate }: { onNavigate: (s: Screen) => void }) {
     setReward(null);
     Sfx.confirm();
   };
-  return <main className="shell-menu">
-    <header className="shell-masthead">
-      <img src="/logo-dbz-title.png" className="shell-brand" alt="Dragon Ball Z" />
-      <div className="shell-edition"><span>LEGENDARY SUPER WARRIORS</span><strong>{es ? 'ELIGE TU HISTORIA' : 'CHOOSE YOUR STORY'}</strong></div>
-      <div className="shell-player"><span>{es ? 'GUERRERO' : 'WARRIOR'}</span><strong>LV. {prog.level.toString().padStart(2, '0')}</strong></div>
-    </header>
-    <nav className="shell-panels" ref={navRef} aria-label={es ? 'Menú principal' : 'Main menu'} onKeyDown={onMenuKeyDown}>
-      {items.map(({ screen, label, desc, Icon }, index) => <button key={screen} type="button"
-        className={`shell-panel shell-panel-${screen}`} data-screen={screen} onClick={() => navigate(screen)}>
-        <span className="shell-panel-index">0{index + 1}</span>
-        <Icon className="shell-panel-icon" aria-hidden="true" />
-        <span className="shell-panel-copy"><strong>{label}</strong><span>{desc}</span></span>
-        {screen === 'story' && <span className="shell-story-progress">
-          <span>{es ? 'CAPÍTULO' : 'CHAPTER'} {String(chapter.id).padStart(2, '0')} / {CHAPTERS.length}</span>
-          <strong>{t(chapter.nameKey)}</strong>
-          <span className="shell-story-cta">{t('menu.continue')} <ChevronRight size={22} aria-hidden="true" /></span>
-        </span>}
-        {screen !== 'story' && <ChevronRight className="shell-panel-arrow" aria-hidden="true" />}
-      </button>)}
-    </nav>
-    <footer className="shell-footer"><span>DBZ LSW Fangame · FAN GAME</span><span>↑ ↓ ← → {es ? 'NAVEGAR' : 'NAVIGATE'} <b>ENTER</b> {es ? 'ELEGIR' : 'SELECT'}</span></footer>
+  return <>
+    <MainMenuPresentation
+      items={items}
+      playerLevel={prog.level}
+      chapterNumber={chapter.id}
+      chapterCount={CHAPTERS.length}
+      chapterName={t(chapter.nameKey)}
+      storyLabel={es ? 'CAPÍTULO' : 'CHAPTER'}
+      continueLabel={t('menu.continue')}
+      chooseStoryLabel={es ? 'ELIGE TU HISTORIA' : 'CHOOSE YOUR STORY'}
+      playerLabel={es ? 'GUERRERO' : 'WARRIOR'}
+      mainMenuLabel={es ? 'Menú principal' : 'Main menu'}
+      navigateLabel={es ? 'NAVEGAR' : 'NAVIGATE'}
+      selectLabel={es ? 'ELEGIR' : 'SELECT'}
+      navRef={navRef}
+      onMenuKeyDown={onMenuKeyDown}
+      onNavigate={navigate}
+    />
     {reward && reward.length > 0 && <div className="reward-overlay"><div className="reward-panel" ref={rewardRef} role="dialog" aria-modal="true" aria-labelledby="reward-title"
       onKeyDown={event => {
         if (event.key !== 'Tab') return;
@@ -3779,7 +3777,7 @@ function MainMenu({ onNavigate }: { onNavigate: (s: Screen) => void }) {
         <img className="reward-card-img" src={cardIconUrl(id)} alt="" /><strong className="reward-card-name">{card.name}</strong><span className="reward-card-type">{CARD_TYPE_NAMES[card.type]}</span>
       </button>; })}</div>
     </div></div>}
-  </main>;
+  </>;
 }
 
 // ═══════════════════════════════════════════════════════════
