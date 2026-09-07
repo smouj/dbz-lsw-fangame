@@ -777,10 +777,10 @@
    "type": "ANIMATION_START",
    "resource": 44,
    "slot": 0,
-   "logicalTick": 251,
+   "logicalTick": 0,
    "source": "ACTION_STARTED",
-   "fidelity": "ROM_STATIC_COMPLETE",
-   "profile": "rom-standard-damage-result"
+   "fidelity": "ROM_STATIC_PARTIAL",
+   "profile": "rom-card-5"
   },
   {
    "tick": 251,
@@ -788,20 +788,20 @@
    "durationTicks": 3,
    "resource": 44,
    "slot": 0,
-   "logicalTick": 251,
+   "logicalTick": 0,
    "source": "ACTION_STARTED",
-   "fidelity": "ROM_STATIC_COMPLETE",
-   "profile": "rom-standard-damage-result"
+   "fidelity": "ROM_STATIC_PARTIAL",
+   "profile": "rom-card-5"
   },
   {
    "tick": 251,
    "type": "WAIT_ANIMATION_FRAME",
    "slot": 0,
    "frame": 2,
-   "logicalTick": 251,
+   "logicalTick": 0,
    "source": "ACTION_STARTED",
-   "fidelity": "ROM_STATIC_COMPLETE",
-   "profile": "rom-standard-damage-result"
+   "fidelity": "ROM_STATIC_PARTIAL",
+   "profile": "rom-card-5"
   },
   {
    "tick": 254,
@@ -809,10 +809,10 @@
    "durationTicks": 2,
    "resource": 44,
    "slot": 0,
-   "logicalTick": 254,
+   "logicalTick": 0,
    "source": "ACTION_STARTED",
-   "fidelity": "ROM_STATIC_COMPLETE",
-   "profile": "rom-standard-damage-result"
+   "fidelity": "ROM_STATIC_PARTIAL",
+   "profile": "rom-card-5"
   },
   {
    "tick": 256,
@@ -820,20 +820,20 @@
    "durationTicks": 4,
    "resource": 44,
    "slot": 0,
-   "logicalTick": 256,
+   "logicalTick": 0,
    "source": "ACTION_STARTED",
-   "fidelity": "ROM_STATIC_COMPLETE",
-   "profile": "rom-standard-damage-result"
+   "fidelity": "ROM_STATIC_PARTIAL",
+   "profile": "rom-card-5"
   },
   {
    "tick": 256,
    "type": "ANIMATION_START",
    "resource": 0,
    "slot": 1,
-   "logicalTick": 256,
+   "logicalTick": 0,
    "source": "ACTION_STARTED",
-   "fidelity": "ROM_STATIC_COMPLETE",
-   "profile": "rom-standard-damage-result"
+   "fidelity": "ROM_STATIC_PARTIAL",
+   "profile": "rom-card-5"
   },
   {
    "tick": 256,
@@ -841,10 +841,10 @@
    "durationTicks": 2,
    "resource": 0,
    "slot": 1,
-   "logicalTick": 256,
+   "logicalTick": 0,
    "source": "ACTION_STARTED",
-   "fidelity": "ROM_STATIC_COMPLETE",
-   "profile": "rom-standard-damage-result"
+   "fidelity": "ROM_STATIC_PARTIAL",
+   "profile": "rom-card-5"
   },
   {
    "tick": 258,
@@ -852,10 +852,10 @@
    "durationTicks": 2,
    "resource": 0,
    "slot": 1,
-   "logicalTick": 258,
+   "logicalTick": 0,
    "source": "ACTION_STARTED",
-   "fidelity": "ROM_STATIC_COMPLETE",
-   "profile": "rom-standard-damage-result"
+   "fidelity": "ROM_STATIC_PARTIAL",
+   "profile": "rom-card-5"
   },
   {
    "tick": 260,
@@ -863,10 +863,10 @@
    "durationTicks": 2,
    "resource": 44,
    "slot": 0,
-   "logicalTick": 260,
+   "logicalTick": 0,
    "source": "ACTION_STARTED",
-   "fidelity": "ROM_STATIC_COMPLETE",
-   "profile": "rom-standard-damage-result"
+   "fidelity": "ROM_STATIC_PARTIAL",
+   "profile": "rom-card-5"
   },
   {
    "tick": 260,
@@ -874,10 +874,10 @@
    "durationTicks": 1,
    "resource": 0,
    "slot": 1,
-   "logicalTick": 260,
+   "logicalTick": 0,
    "source": "ACTION_STARTED",
-   "fidelity": "ROM_STATIC_COMPLETE",
-   "profile": "rom-standard-damage-result"
+   "fidelity": "ROM_STATIC_PARTIAL",
+   "profile": "rom-card-5"
   },
   {
    "tick": 261,
@@ -885,10 +885,10 @@
    "durationTicks": 2,
    "resource": 0,
    "slot": 1,
-   "logicalTick": 261,
+   "logicalTick": 0,
    "source": "ACTION_STARTED",
-   "fidelity": "ROM_STATIC_COMPLETE",
-   "profile": "rom-standard-damage-result"
+   "fidelity": "ROM_STATIC_PARTIAL",
+   "profile": "rom-card-5"
   },
   {
    "tick": 262,
@@ -896,10 +896,10 @@
    "durationTicks": 2,
    "resource": 44,
    "slot": 0,
-   "logicalTick": 262,
+   "logicalTick": 0,
    "source": "ACTION_STARTED",
-   "fidelity": "ROM_STATIC_COMPLETE",
-   "profile": "rom-standard-damage-result"
+   "fidelity": "ROM_STATIC_PARTIAL",
+   "profile": "rom-card-5"
   },
   {
    "tick": 263,
@@ -907,10 +907,10 @@
    "durationTicks": 1,
    "resource": 0,
    "slot": 1,
-   "logicalTick": 263,
+   "logicalTick": 0,
    "source": "ACTION_STARTED",
-   "fidelity": "ROM_STATIC_COMPLETE",
-   "profile": "rom-standard-damage-result"
+   "fidelity": "ROM_STATIC_PARTIAL",
+   "profile": "rom-card-5"
   },
   {
    "tick": 264,
@@ -918,10 +918,10 @@
    "durationTicks": 30,
    "resource": 44,
    "slot": 0,
-   "logicalTick": 264,
+   "logicalTick": 0,
    "source": "ACTION_STARTED",
-   "fidelity": "ROM_STATIC_COMPLETE",
-   "profile": "rom-standard-damage-result"
+   "fidelity": "ROM_STATIC_PARTIAL",
+   "profile": "rom-card-5"
   },
   {
    "tick": 264,
@@ -929,10 +929,10 @@
    "durationTicks": 2,
    "resource": 0,
    "slot": 1,
-   "logicalTick": 264,
+   "logicalTick": 0,
    "source": "ACTION_STARTED",
-   "fidelity": "ROM_STATIC_COMPLETE",
-   "profile": "rom-standard-damage-result"
+   "fidelity": "ROM_STATIC_PARTIAL",
+   "profile": "rom-card-5"
   },
   {
    "tick": 266,
@@ -940,10 +940,10 @@
    "durationTicks": 1,
    "resource": 0,
    "slot": 1,
-   "logicalTick": 266,
+   "logicalTick": 0,
    "source": "ACTION_STARTED",
-   "fidelity": "ROM_STATIC_COMPLETE",
-   "profile": "rom-standard-damage-result"
+   "fidelity": "ROM_STATIC_PARTIAL",
+   "profile": "rom-card-5"
   },
   {
    "tick": 267,
@@ -951,10 +951,10 @@
    "durationTicks": 2,
    "resource": 0,
    "slot": 1,
-   "logicalTick": 267,
+   "logicalTick": 0,
    "source": "ACTION_STARTED",
-   "fidelity": "ROM_STATIC_COMPLETE",
-   "profile": "rom-standard-damage-result"
+   "fidelity": "ROM_STATIC_PARTIAL",
+   "profile": "rom-card-5"
   },
   {
    "tick": 269,
@@ -962,10 +962,10 @@
    "durationTicks": 1,
    "resource": 0,
    "slot": 1,
-   "logicalTick": 269,
+   "logicalTick": 0,
    "source": "ACTION_STARTED",
-   "fidelity": "ROM_STATIC_COMPLETE",
-   "profile": "rom-standard-damage-result"
+   "fidelity": "ROM_STATIC_PARTIAL",
+   "profile": "rom-card-5"
   },
   {
    "tick": 270,
@@ -973,10 +973,10 @@
    "durationTicks": 2,
    "resource": 0,
    "slot": 1,
-   "logicalTick": 270,
+   "logicalTick": 0,
    "source": "ACTION_STARTED",
-   "fidelity": "ROM_STATIC_COMPLETE",
-   "profile": "rom-standard-damage-result"
+   "fidelity": "ROM_STATIC_PARTIAL",
+   "profile": "rom-card-5"
   },
   {
    "tick": 272,
@@ -984,10 +984,10 @@
    "durationTicks": 1,
    "resource": 0,
    "slot": 1,
-   "logicalTick": 272,
+   "logicalTick": 0,
    "source": "ACTION_STARTED",
-   "fidelity": "ROM_STATIC_COMPLETE",
-   "profile": "rom-standard-damage-result"
+   "fidelity": "ROM_STATIC_PARTIAL",
+   "profile": "rom-card-5"
   },
   {
    "tick": 273,
@@ -995,10 +995,10 @@
    "durationTicks": 2,
    "resource": 0,
    "slot": 1,
-   "logicalTick": 273,
+   "logicalTick": 0,
    "source": "ACTION_STARTED",
-   "fidelity": "ROM_STATIC_COMPLETE",
-   "profile": "rom-standard-damage-result"
+   "fidelity": "ROM_STATIC_PARTIAL",
+   "profile": "rom-card-5"
   },
   {
    "tick": 275,
@@ -1006,10 +1006,10 @@
    "durationTicks": 1,
    "resource": 0,
    "slot": 1,
-   "logicalTick": 275,
+   "logicalTick": 0,
    "source": "ACTION_STARTED",
-   "fidelity": "ROM_STATIC_COMPLETE",
-   "profile": "rom-standard-damage-result"
+   "fidelity": "ROM_STATIC_PARTIAL",
+   "profile": "rom-card-5"
   },
   {
    "tick": 276,
@@ -1017,10 +1017,10 @@
    "durationTicks": 2,
    "resource": 0,
    "slot": 1,
-   "logicalTick": 276,
+   "logicalTick": 0,
    "source": "ACTION_STARTED",
-   "fidelity": "ROM_STATIC_COMPLETE",
-   "profile": "rom-standard-damage-result"
+   "fidelity": "ROM_STATIC_PARTIAL",
+   "profile": "rom-card-5"
   },
   {
    "tick": 278,
@@ -1028,20 +1028,20 @@
    "durationTicks": 1,
    "resource": 0,
    "slot": 1,
-   "logicalTick": 278,
+   "logicalTick": 0,
    "source": "ACTION_STARTED",
-   "fidelity": "ROM_STATIC_COMPLETE",
-   "profile": "rom-standard-damage-result"
+   "fidelity": "ROM_STATIC_PARTIAL",
+   "profile": "rom-card-5"
   },
   {
    "tick": 279,
    "type": "ANIMATION_START",
    "resource": 0,
    "slot": 1,
-   "logicalTick": 279,
+   "logicalTick": 0,
    "source": "ACTION_STARTED",
-   "fidelity": "ROM_STATIC_COMPLETE",
-   "profile": "rom-standard-damage-result"
+   "fidelity": "ROM_STATIC_PARTIAL",
+   "profile": "rom-card-5"
   },
   {
    "tick": 279,
@@ -1049,10 +1049,10 @@
    "durationTicks": 2,
    "resource": 0,
    "slot": 1,
-   "logicalTick": 279,
+   "logicalTick": 0,
    "source": "ACTION_STARTED",
-   "fidelity": "ROM_STATIC_COMPLETE",
-   "profile": "rom-standard-damage-result"
+   "fidelity": "ROM_STATIC_PARTIAL",
+   "profile": "rom-card-5"
   },
   {
    "tick": 281,
@@ -1060,10 +1060,10 @@
    "durationTicks": 2,
    "resource": 0,
    "slot": 1,
-   "logicalTick": 281,
+   "logicalTick": 0,
    "source": "ACTION_STARTED",
-   "fidelity": "ROM_STATIC_COMPLETE",
-   "profile": "rom-standard-damage-result"
+   "fidelity": "ROM_STATIC_PARTIAL",
+   "profile": "rom-card-5"
   },
   {
    "tick": 283,
@@ -1071,10 +1071,10 @@
    "durationTicks": 1,
    "resource": 0,
    "slot": 1,
-   "logicalTick": 283,
+   "logicalTick": 0,
    "source": "ACTION_STARTED",
-   "fidelity": "ROM_STATIC_COMPLETE",
-   "profile": "rom-standard-damage-result"
+   "fidelity": "ROM_STATIC_PARTIAL",
+   "profile": "rom-card-5"
   },
   {
    "tick": 284,
@@ -1082,10 +1082,10 @@
    "durationTicks": 2,
    "resource": 0,
    "slot": 1,
-   "logicalTick": 284,
+   "logicalTick": 0,
    "source": "ACTION_STARTED",
-   "fidelity": "ROM_STATIC_COMPLETE",
-   "profile": "rom-standard-damage-result"
+   "fidelity": "ROM_STATIC_PARTIAL",
+   "profile": "rom-card-5"
   },
   {
    "tick": 286,
@@ -1093,10 +1093,10 @@
    "durationTicks": 1,
    "resource": 0,
    "slot": 1,
-   "logicalTick": 286,
+   "logicalTick": 0,
    "source": "ACTION_STARTED",
-   "fidelity": "ROM_STATIC_COMPLETE",
-   "profile": "rom-standard-damage-result"
+   "fidelity": "ROM_STATIC_PARTIAL",
+   "profile": "rom-card-5"
   },
   {
    "tick": 287,
@@ -1104,10 +1104,10 @@
    "durationTicks": 2,
    "resource": 0,
    "slot": 1,
-   "logicalTick": 287,
+   "logicalTick": 0,
    "source": "ACTION_STARTED",
-   "fidelity": "ROM_STATIC_COMPLETE",
-   "profile": "rom-standard-damage-result"
+   "fidelity": "ROM_STATIC_PARTIAL",
+   "profile": "rom-card-5"
   },
   {
    "tick": 289,
@@ -1115,10 +1115,10 @@
    "durationTicks": 1,
    "resource": 0,
    "slot": 1,
-   "logicalTick": 289,
+   "logicalTick": 0,
    "source": "ACTION_STARTED",
-   "fidelity": "ROM_STATIC_COMPLETE",
-   "profile": "rom-standard-damage-result"
+   "fidelity": "ROM_STATIC_PARTIAL",
+   "profile": "rom-card-5"
   },
   {
    "tick": 290,
@@ -1126,10 +1126,10 @@
    "durationTicks": 2,
    "resource": 0,
    "slot": 1,
-   "logicalTick": 290,
+   "logicalTick": 0,
    "source": "ACTION_STARTED",
-   "fidelity": "ROM_STATIC_COMPLETE",
-   "profile": "rom-standard-damage-result"
+   "fidelity": "ROM_STATIC_PARTIAL",
+   "profile": "rom-card-5"
   },
   {
    "tick": 292,
@@ -1137,10 +1137,10 @@
    "durationTicks": 2,
    "resource": 0,
    "slot": 1,
-   "logicalTick": 292,
+   "logicalTick": 0,
    "source": "ACTION_STARTED",
-   "fidelity": "ROM_STATIC_COMPLETE",
-   "profile": "rom-standard-damage-result"
+   "fidelity": "ROM_STATIC_PARTIAL",
+   "profile": "rom-card-5"
   },
   {
    "tick": 294,
@@ -1148,10 +1148,10 @@
    "durationTicks": 4,
    "resource": 44,
    "slot": 0,
-   "logicalTick": 294,
+   "logicalTick": 0,
    "source": "ACTION_STARTED",
-   "fidelity": "ROM_STATIC_COMPLETE",
-   "profile": "rom-standard-damage-result"
+   "fidelity": "ROM_STATIC_PARTIAL",
+   "profile": "rom-card-5"
   },
   {
    "tick": 294,
@@ -1159,10 +1159,10 @@
    "durationTicks": 3,
    "resource": 0,
    "slot": 1,
-   "logicalTick": 294,
+   "logicalTick": 0,
    "source": "ACTION_STARTED",
-   "fidelity": "ROM_STATIC_COMPLETE",
-   "profile": "rom-standard-damage-result"
+   "fidelity": "ROM_STATIC_PARTIAL",
+   "profile": "rom-card-5"
   },
   {
    "tick": 297,
@@ -1170,10 +1170,10 @@
    "durationTicks": 2,
    "resource": 0,
    "slot": 1,
-   "logicalTick": 297,
+   "logicalTick": 0,
    "source": "ACTION_STARTED",
-   "fidelity": "ROM_STATIC_COMPLETE",
-   "profile": "rom-standard-damage-result"
+   "fidelity": "ROM_STATIC_PARTIAL",
+   "profile": "rom-card-5"
   },
   {
    "tick": 298,
@@ -1181,10 +1181,10 @@
    "durationTicks": 2,
    "resource": 44,
    "slot": 0,
-   "logicalTick": 298,
+   "logicalTick": 0,
    "source": "ACTION_STARTED",
-   "fidelity": "ROM_STATIC_COMPLETE",
-   "profile": "rom-standard-damage-result"
+   "fidelity": "ROM_STATIC_PARTIAL",
+   "profile": "rom-card-5"
   },
   {
    "tick": 299,
@@ -1192,47 +1192,47 @@
    "durationTicks": 3,
    "resource": 0,
    "slot": 1,
-   "logicalTick": 299,
+   "logicalTick": 0,
    "source": "ACTION_STARTED",
-   "fidelity": "ROM_STATIC_COMPLETE",
-   "profile": "rom-standard-damage-result"
+   "fidelity": "ROM_STATIC_PARTIAL",
+   "profile": "rom-card-5"
   },
   {
    "tick": 302,
    "type": "APPLY_FRAME_DELTA",
    "slot": 0,
-   "logicalTick": 302,
+   "logicalTick": 0,
    "source": "ACTION_STARTED",
-   "fidelity": "ROM_STATIC_COMPLETE",
-   "profile": "rom-standard-damage-result"
+   "fidelity": "ROM_STATIC_PARTIAL",
+   "profile": "rom-card-5"
   },
   {
    "tick": 302,
    "type": "ACTION_OBJECT_STOP",
    "slot": 0,
-   "logicalTick": 302,
+   "logicalTick": 0,
    "source": "ACTION_STARTED",
-   "fidelity": "ROM_STATIC_COMPLETE",
-   "profile": "rom-standard-damage-result"
+   "fidelity": "ROM_STATIC_PARTIAL",
+   "profile": "rom-card-5"
   },
   {
    "tick": 302,
    "type": "ACTION_OBJECT_STOP",
    "slot": 1,
-   "logicalTick": 302,
+   "logicalTick": 0,
    "source": "ACTION_STARTED",
-   "fidelity": "ROM_STATIC_COMPLETE",
-   "profile": "rom-standard-damage-result"
+   "fidelity": "ROM_STATIC_PARTIAL",
+   "profile": "rom-card-5"
   },
   {
    "tick": 302,
    "type": "SCENE_LOAD",
    "mode": "RESTORE_TACTICAL",
    "vramLoad": "$8E00",
-   "logicalTick": 302,
+   "logicalTick": 0,
    "source": "ACTION_STARTED",
-   "fidelity": "ROM_STATIC_COMPLETE",
-   "profile": "rom-standard-damage-result"
+   "fidelity": "ROM_STATIC_PARTIAL",
+   "profile": "rom-card-5"
   }
  ]
 }
