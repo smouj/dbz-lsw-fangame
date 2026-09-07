@@ -41,6 +41,20 @@ let verifiedPngs = 0;
 let verifiedOccurrences = 0;
 const globalPhysicalIds = new Map<string, string>();
 
+// Physical PNG exports are generated and never committed (.gitignore keeps
+// public/assets/sprites/*/physical/ out of the repo), so CI cannot run the
+// byte-level PNG checks. Mirror verify:rom-physical-corpus: strict PNG checks
+// run locally (exports present) or on demand via REQUIRE_ROM_PHYSICAL_EXPORTS=1
+// after `npm run gen:rom-runtime-assets`; provenance/consumer/route checks on
+// committed data below still run everywhere.
+const REQUIRE_ROM_PHYSICAL_EXPORTS = process.env.REQUIRE_ROM_PHYSICAL_EXPORTS === '1';
+const physicalExportsPresent = ROM_FIGHTER_FORM_IDENTITY.some(identity =>
+  existsSync(join(ROOT, 'public', 'assets', 'sprites', identity.formId, 'rom-physical.manifest.json')));
+const strictPhysicalExports = physicalExportsPresent || REQUIRE_ROM_PHYSICAL_EXPORTS;
+if (!strictPhysicalExports) {
+  console.log('SKIP ROM physical export PNG checks: generated fighter PNGs are not committed; set REQUIRE_ROM_PHYSICAL_EXPORTS=1 after npm run gen:rom-runtime-assets for the strict local gate.');
+}
+
 for (const identity of ROM_FIGHTER_FORM_IDENTITY) {
   const provenancePath = join(ROOT, 'public', 'assets', 'sprites', identity.formId, 'provenance.json');
   check(existsSync(provenancePath), `${identity.formId}: missing provenance.json`);
@@ -76,6 +90,7 @@ for (const identity of ROM_FIGHTER_FORM_IDENTITY) {
   );
 
   for (const frame of provenance.frames.filter(frame => renderable.has(frame.resourceId))) {
+    if (!strictPhysicalExports) continue; // PNG byte checks need the uncommitted export corpus
     const pngPath = join(ROOT, 'public', 'assets', 'sprites', identity.formId, frame.file);
     check(existsSync(pngPath), `${identity.formId}/${frame.file}: PNG missing`);
     if (!existsSync(pngPath)) continue;
