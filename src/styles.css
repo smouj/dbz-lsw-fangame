@@ -10053,6 +10053,21 @@ button.linklike:hover { background: rgba(216,168,48,.08); text-decoration: none;
 .dev-hud-preview .battlefield .dev-hud-fighter-sprite.dev-hud-anchored.action-mode.enemy {
   transform: translate(-50%, -100%) scaleX(-1);
 }
+.dev-action-frame-readout {
+  position: absolute;
+  left: 50%;
+  bottom: 10px;
+  transform: translateX(-50%);
+  z-index: 8;
+  padding: 4px 9px;
+  border: 1px solid rgba(246,199,68,.55);
+  background: rgba(5,7,12,.82);
+  color: var(--hud-text, #fff4cf);
+  font: 700 10px/1 var(--fpx, monospace);
+  letter-spacing: .08em;
+  white-space: nowrap;
+  pointer-events: none;
+}
 
 /* En el mockup del HUD Studio el cuadro de diálogo se previsualiza
    visible (en el juego solo aparece durante acciones). */
