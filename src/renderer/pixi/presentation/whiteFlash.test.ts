@@ -75,7 +75,7 @@ describe('ROM playback ownership', () => {
       maxW: 8,
       maxH: 8,
     };
-    const actor = new FighterActor(atlas, 'goku_base', 'player');
+    const actor = new FighterActor(atlas, 'goku_base', 'left');
 
     expect(actor.isPlaybackEnabled).toBe(false);
     actor.sync(20);

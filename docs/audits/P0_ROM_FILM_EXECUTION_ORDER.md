@@ -7,14 +7,15 @@ comprobación de navegador por una aproximación procedural.
 ## Orden
 
 0. CI completa sobre el commit publicado.
-1. Cerrar P0.2: visibilidad, pose y reproducción son fronteras distintas.
-2. Consumir una ruta BEAM exacta y validarla en navegador.
-3. Validar Stage player en navegador.
-4. Validar Stage enemy de forma independiente, incluidos multi-impactos y roles.
-5. Cerrar ownership de fondo, cámara y flash.
-6. Cerrar cleanup, STOP y contaminación de la segunda acción.
-7. Ejecutar el golden conjunto Standard Damage + Beam + Stage.
-8. Hacer el cutover por defecto al final.
+1. Cerrar P0.0: paridad estructural `#dev/hud` ↔ `BattleScreen`.
+2. Cerrar P0.1: visibilidad, pose y reproducción son fronteras distintas.
+3. Consumir una ruta BEAM exacta y validarla en navegador.
+4. Validar Stage player en navegador.
+5. Validar Stage enemy de forma independiente, incluidos multi-impactos y roles.
+6. Cerrar ownership de fondo, cámara y flash.
+7. Cerrar cleanup, STOP y contaminación de la segunda acción.
+8. Ejecutar el golden conjunto Standard Damage + Beam + Stage.
+9. Hacer el cutover por defecto al final.
 
 ## Reglas de aceptación
 
@@ -33,7 +34,10 @@ comprobación de navegador por una aproximación procedural.
 ## Estado publicado
 
 - P0.1 divergence audit: cerrado.
-- P0.2 visibility/playback: cerrado en código y cubierto por
+- P0.0 HUD parity: en ejecución; el descarte usa ahora la misma fila canónica
+  `hand-cards`/`CardVisual` que `#dev/hud`, eliminando el grid legacy que podía
+  envolver cartas y superponer texto.
+- P0.1 visibility/playback: cerrado en código y cubierto por
   `verify-combat-film-consumption` (75/75) y los tests Pixi de ownership.
 - Standard Damage player/enemy: ownership ROM y result splice publicados.
 - CI completa del baseline y los commits remotos integrados: verde.

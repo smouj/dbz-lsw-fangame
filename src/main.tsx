@@ -3546,18 +3546,12 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, pla
             <div className="limit-panel discard-panel">
               <div className="limit-title">HAND CHECK — {hand.length} JOINT</div>
               <div className="discard-help">Demasiadas cartas ({hand.length} &gt; 5). Elige cuál descartar:</div>
-              <div className="discard-grid">
+              {/* The discard canary uses the same canonical row as #dev/hud and
+                  the normal hand. Keeping CardVisual + hand-cards here prevents
+                  legacy grid wrapping, overlaid labels and geometry drift. */}
+              <div className="hand-cards discard-cards">
                 {hand.map((c, i) => (
-                  <button key={`${c.id}-${i}`} className="discard-card" onClick={() => chooseDiscard(i)}
-                    data-tip={tipBlock(`${c.name} — ${CARD_TYPE_NAMES[c.type]} ★${c.rarity}`, [
-                      ['stats', `CC ${c.cc} · ATK ${c.atk > 0 ? c.atk : '—'} · ACC ${c.acc}%`],
-                      c.description ? ['desc', c.description] : null,
-                      ['effect', `${lang === 'es' ? 'Efecto' : 'Effect'}: ${cardEffectSummary(c.effect)}`],
-                    ])}>
-                    <img src={CARD_FRAME_BY_TYPE[c.type] ?? CARD_FRAME_BY_TYPE.command} alt="" className="discard-frame" />
-                    {cardIconUrl(c.id) && <img src={cardIconUrl(c.id)!} alt={c.name} className="discard-art" />}
-                    <span className="discard-name">{c.name}</span>
-                  </button>
+                  <CardVisual key={`${c.id}-${i}`} card={c} selected={false} disabled={false} onClick={() => chooseDiscard(i)} />
                 ))}
               </div>
             </div>
