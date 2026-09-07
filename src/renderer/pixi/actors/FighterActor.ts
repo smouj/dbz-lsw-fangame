@@ -34,7 +34,7 @@ export class FighterActor extends Container {
   private poseStartTick = 0;
   private lastFrameIndex = 0;
   /** ROM track ownership: visibility never starts or advances playback. */
-  private playbackEnabled = true;
+  private playbackEnabled = false;
   private _timingSource: TimingSource = 'LEGACY_FPS';
   private _frameOffsetX = 0;
   private _frameOffsetY = 0;

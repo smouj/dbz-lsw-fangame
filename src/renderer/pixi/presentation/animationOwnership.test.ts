@@ -20,7 +20,7 @@ import type { FormAtlas } from '../assets/AtlasLoader';
 import { BattlePosition } from '../../../data/positions';
 
 function fakeAtlas(): FormAtlas {
-  return { anims: new Map(), textures: new Map(), maxW: 16, maxH: 16 };
+  return { formId: 'gohan_young', dir: '', anims: new Map(), textures: new Map(), maxW: 16, maxH: 16 };
 }
 
 function rendererFixture() {
@@ -37,15 +37,16 @@ function rendererFixture() {
     tactical: { setBackground: vi.fn(), setOverworld: vi.fn() },
     projectileLayer: new Container(),
   };
-  const renderer = {
+  const rendererObj = {
     app,
     world,
     currentTick: 100,
     impactSystem: new ImpactSystem(),
     sceneDirector,
-    sync(tick: number) { this.currentTick = tick; },
-  } as unknown as BattleRenderer;
-  return renderer;
+    sync: null as unknown as (tick: number) => void,
+  };
+  rendererObj.sync = (tick: number) => { rendererObj.currentTick = tick; };
+  return rendererObj as unknown as BattleRenderer;
 }
 
 function presentationWith(renderer: BattleRenderer) {
@@ -59,6 +60,7 @@ function presentationWith(renderer: BattleRenderer) {
   });
   return pres;
 }
+
 
 describe('FighterActor track ownership (G7)', () => {
   it('freezeTrack detiene el avance: sync() no cambia frame con playback off', () => {
@@ -137,5 +139,26 @@ describe('ActionObject slot mapping por ROL (P0.4/P0.7)', () => {
     expect(left.isPlaybackEnabled).toBe(true);   // target intacto
     adapter.consume({ type: 'ACTION_OBJECT_STOP', tick: 0, slot: 1 } as never);
     expect(left.isPlaybackEnabled).toBe(false);
+  });
+});
+
+describe('P0.13 cleanup — baseline visual real entre acciones', () => {
+  it('returnToField limpia offsets ROM y deja el idle estatico (playback off)', () => {
+    const renderer = rendererFixture();
+    const pres = presentationWith(renderer);
+    const left = new FighterActor(fakeAtlas(), 'gohan_young', 'left');
+    (pres as any).leftActor = left;
+    (pres as any).rightActor = new FighterActor(fakeAtlas(), 'piccolo_evil', 'right');
+    pres.setAttacker('left');
+    // Frame offset ROM aplicado durante la pelicula (slot0 → actor = left).
+    pres.applyFrameOffset(12, -4, 0);
+    expect(left.inspect().frameOffsetX).toBe(12);
+    expect(left.inspect().frameOffsetY).toBe(-4);
+    pres.returnToField();
+    // ACTION N+1 no hereda offset residual: baseline limpio y estatico.
+    expect(left.inspect().frameOffsetX).toBe(0);
+    expect(left.inspect().frameOffsetY).toBe(0);
+    expect(left.isPlaybackEnabled).toBe(false);
+    expect(left.currentRomSequence).toBeNull();
   });
 });
