@@ -33,6 +33,8 @@ export class FighterActor extends Container {
   private anim: PoseAnim | null = null;
   private poseStartTick = 0;
   private lastFrameIndex = 0;
+  /** ROM track ownership: visibility never starts or advances playback. */
+  private playbackEnabled = true;
   private _timingSource: TimingSource = 'LEGACY_FPS';
   private _frameOffsetX = 0;
   private _frameOffsetY = 0;
@@ -64,6 +66,9 @@ export class FighterActor extends Container {
     this.baseFlip = facingFlip(formId, side);
     this.applyTransform();
     this.setPose('idle', 0);
+    // The idle pose is only an initial frame. A presentation cue must opt the
+    // track into playback; hidden actors therefore cannot animate in advance.
+    this.playbackEnabled = false;
   }
 
   /** Pose activa (resuelta con fallbacks) — para verificación/depuración. */
@@ -97,6 +102,15 @@ export class FighterActor extends Container {
     this.romSequence = sequence;
     // TODO: trigger SpriteAnimator / atlas lookup con (resource, sequence)
     // por ahora solo almacena el estado para que el resolver físico lo use
+  }
+
+  /** Explicit ROM ownership gate for frame advancement. */
+  setPlaybackEnabled(enabled: boolean): void {
+    this.playbackEnabled = enabled;
+  }
+
+  get isPlaybackEnabled(): boolean {
+    return this.playbackEnabled;
   }
 
   get currentRomSequence(): { resource: number; sequence: number } | null {
@@ -161,6 +175,7 @@ export class FighterActor extends Container {
     frameOffsetY: number;
     animFrames: number;
     animDurations: number[];
+    playbackEnabled: boolean;
   } {
     return {
       formId: this.formId,
@@ -172,6 +187,7 @@ export class FighterActor extends Container {
       frameOffsetY: this._frameOffsetY,
       animFrames: this.anim?.frames.length ?? 0,
       animDurations: this.anim?.frames.map(f => f.durationTicks ?? 0) ?? [],
+      playbackEnabled: this.playbackEnabled,
     };
   }
 
@@ -211,6 +227,7 @@ export class FighterActor extends Container {
   /** Cambia la pose en el tick absoluto `absTick` (reloj de la pose a cero).
    *  Detecta automáticamente ROM_TICKS vs LEGACY_FPS según durationTicks. */
   setPose(pose: string, absTick: number): void {
+    this.playbackEnabled = true;
     const resolved = resolvePose(this.atlas, pose);
     this.activePose = resolved;
     this.anim = resolved ? (this.atlas.anims.get(resolved) ?? null) : null;
@@ -222,6 +239,7 @@ export class FighterActor extends Container {
 
   /** Sincroniza el frame al tick GBC absoluto (reloj ÚNICO, f(tick)). */
   sync(absTick: number): void {
+    if (!this.playbackEnabled) return;
     this.applyFrame(Math.max(0, absTick - this.poseStartTick));
   }
 

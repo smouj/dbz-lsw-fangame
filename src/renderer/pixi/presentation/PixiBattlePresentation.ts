@@ -194,7 +194,15 @@ export class PixiBattlePresentation implements BattlePresentation {
 
   setFighterVisibility(role: 'ACTOR' | 'TARGET', visible: boolean): void {
     const fighter = role === 'ACTOR' ? this.actor : this.target;
-    if (fighter) fighter.visible = visible;
+    if (fighter) {
+      fighter.visible = visible;
+      // Visibility is a composition decision, never a playback trigger. A
+      // track that the ROM has hidden must stop advancing until a later pose or
+      // physical-frame cue explicitly starts it again.
+      if (!visible && typeof (fighter as any).setPlaybackEnabled === 'function') {
+        (fighter as any).setPlaybackEnabled(false);
+      }
+    }
   }
 
   setFighterPosition(side: 'player' | 'enemy', position: BattlePosition): void {
