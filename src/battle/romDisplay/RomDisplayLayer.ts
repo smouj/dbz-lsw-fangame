@@ -11,7 +11,7 @@
 // LAYERING, CLEANUP — cada check corresponde a un state observable.
 // ═════════════════════════════════════════════════════════════════════════
 
-import { Container, Graphics, Sprite, Text } from 'pixi.js';
+import { Container, Graphics, Sprite, Text, Texture } from 'pixi.js';
 import type { RomDisplayPresenter, RomDisplayState } from './RomDisplayPresenter';
 
 /** Dimensiones lógicas GBC para el display ROM. */
@@ -209,7 +209,7 @@ export class RomDisplayLayer {
     // or a procedural projectile.
     if (st.fxWindow) {
       if (this.fxSourceImage !== st.fxWindow.sourceImage) {
-        this.fxSprite.texture = Sprite.from(st.fxWindow.sourceImage).texture;
+        this.fxSprite.texture = Texture.from(st.fxWindow.sourceImage);
         this.fxSourceImage = st.fxWindow.sourceImage;
       }
       this.fxSprite.visible = !st.cleared;
