@@ -14,7 +14,7 @@ import { overworldUrl } from '../../../data/overworld';
 import type { BattlePosition } from '../../../data/positions';
 import type { BattleRenderer } from '../BattleRenderer';
 import type { FighterActor } from '../actors/FighterActor';
-import { ACTION_LEFT_X, ACTION_RIGHT_X } from '../scenes/ActionScene';
+import { ACTION_LEFT_X, ACTION_RIGHT_X, ACTION_SPECIAL_LEFT_X, ACTION_SPECIAL_RIGHT_X } from '../scenes/ActionScene';
 import { ACTION_GROUND_Y, rushX, easeOutCubic } from '../systems/MotionSystem';
 import type { BattlePresentation, BattleScene, RomMotionSegment } from './BattlePresentation';
 import { positionFromSegments } from '../../../battle/romMotionMath';
@@ -45,6 +45,7 @@ export class PixiBattlePresentation implements BattlePresentation {
 
   private leftActor: FighterActor | null = null;
   private rightActor: FighterActor | null = null;
+  private specialActionActive = false;
 
   /** P0 ROM TICKS: devuelve el estado actual de ambos actores para diagnóstico. */
   inspectActors(): { left: FighterActor | null; right: FighterActor | null } {
@@ -196,6 +197,8 @@ export class PixiBattlePresentation implements BattlePresentation {
   }
 
   setScene(scene: BattleScene, background?: string): void {
+    if (scene === 'FIELD') this.specialActionActive = false;
+    else if (background && background === this.cfg.specialActionBackground) this.specialActionActive = true;
     this.prepareScene(scene);
     const texture = background ? this.sceneTextures.get(background) : null;
     if (texture) {
@@ -203,6 +206,10 @@ export class PixiBattlePresentation implements BattlePresentation {
       else this.renderer.sceneDirector.action.setBackground(texture);
     }
     this.renderer.sceneDirector.setScene(scene);
+    if (this.specialActionActive && scene !== 'FIELD') {
+      this.leftActor?.setPos(ACTION_SPECIAL_LEFT_X, ACTION_GROUND_Y);
+      this.rightActor?.setPos(ACTION_SPECIAL_RIGHT_X, ACTION_GROUND_Y);
+    }
   }
 
   setFighterVisibility(role: 'ACTOR' | 'TARGET', visible: boolean): void {
@@ -419,6 +426,7 @@ export class PixiBattlePresentation implements BattlePresentation {
   }
 
   returnToField(): void {
+    this.specialActionActive = false;
     this.whiteFlashStartTick = -1;
     this.syncWhiteFlash(this.renderer.currentTick);
     this.renderer.sceneDirector.setScene('FIELD');

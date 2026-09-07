@@ -123,7 +123,11 @@ export const RIGHT_ANCHORS = DEFAULT_RIGHT_ANCHORS;
 //   ENEMIGO → DERECHA (x 80, espejo 100−20) mirando a la izquierda
 //   y 1-2px MÁS ABAJO (y 70 — ajuste fino de composición).
 export const ACTION_CENTER_ANCHOR = { x: 50, y: 68 } as const;          // escenario: centrado
-export const ACTION_SPECIAL_ANCHOR = { x: 20, y: 70 } as const;        // especial: player izquierda
+// Optical anchor del plano especial: el centro útil de los metasprites ROM
+// queda unos píxeles hacia dentro respecto al canvas transparente. No es un
+// hitbox de gameplay; es una corrección de composición basada en el bounds
+// físico renderizado (simétrica para ambos lados).
+export const ACTION_SPECIAL_ANCHOR = { x: 24, y: 70 } as const;        // especial: player izquierda
 
 export function actionAnchorFor(side: 'player' | 'enemy', special = false): PositionAnchor {
   if (!special) return { x: ACTION_CENTER_ANCHOR.x, y: ACTION_CENTER_ANCHOR.y };  // centrado siempre

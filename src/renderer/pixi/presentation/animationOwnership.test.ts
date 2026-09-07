@@ -18,6 +18,7 @@ import type { BattleRenderer } from '../BattleRenderer';
 import { ImpactSystem } from '../systems/ImpactSystem';
 import type { FormAtlas } from '../assets/AtlasLoader';
 import { BattlePosition } from '../../../data/positions';
+import { ACTION_LEFT_X, ACTION_RIGHT_X, ACTION_SPECIAL_LEFT_X, ACTION_SPECIAL_RIGHT_X } from '../scenes/ActionScene';
 
 function fakeAtlas(): FormAtlas {
   return { formId: 'gohan_young', dir: '', anims: new Map(), textures: new Map(), maxW: 16, maxH: 16 };
@@ -89,6 +90,16 @@ describe('FighterActor track ownership (G7)', () => {
     expect(actor.isPlaybackEnabled).toBe(false);
     actor.setPose('attack_fwd', 10);
     expect(actor.isPlaybackEnabled).toBe(true);
+  });
+});
+
+describe('SPECIAL_ACTION optical anchors', () => {
+  it('moves only the special plane inward while preserving normal ACTION spacing', () => {
+    expect(ACTION_LEFT_X).toBe(96);
+    expect(ACTION_RIGHT_X).toBe(224);
+    expect(ACTION_SPECIAL_LEFT_X).toBeGreaterThan(ACTION_LEFT_X);
+    expect(ACTION_SPECIAL_RIGHT_X).toBeLessThan(ACTION_RIGHT_X);
+    expect(ACTION_SPECIAL_LEFT_X + ACTION_SPECIAL_RIGHT_X).toBe(ACTION_LEFT_X + ACTION_RIGHT_X);
   });
 });
 

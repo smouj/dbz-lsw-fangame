@@ -26,6 +26,10 @@ import type { BattleSide } from '../../../data/facing';
 //   right (enemigo) → x ≈ 224
 export const ACTION_LEFT_X = 96;
 export const ACTION_RIGHT_X = 224;
+/** Optical anchors for SPECIAL_ACTION: move each fighter toward screen
+ * centre while preserving the normal ACTION composition. */
+export const ACTION_SPECIAL_LEFT_X = 112;
+export const ACTION_SPECIAL_RIGHT_X = 208;
 // Aliases de compatibilidad (consumidores previos)
 export const ACTION_ACTOR_X = ACTION_LEFT_X;
 export const ACTION_TARGET_X = ACTION_RIGHT_X;
