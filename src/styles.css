@@ -4569,6 +4569,9 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 }
 .intro-left { left: clamp(64px, 10cqw, 170px); animation: intro-slide-left .55s cubic-bezier(.2,.8,.3,1) .25s both; }
 .intro-right { right: clamp(64px, 10cqw, 170px); animation: intro-slide-right .55s cubic-bezier(.2,.8,.3,1) .25s both; }
+.intro-team .intro-fighter:nth-child(2) { margin-top: 104px; }
+.intro-team-left .intro-fighter:nth-child(2) { left: calc(clamp(64px, 10cqw, 170px) + 88px); }
+.intro-team-right .intro-fighter:nth-child(2) { right: calc(clamp(64px, 10cqw, 170px) + 88px); }
 /* ENTRADA CINEMATOGRÁFICA ÚNICA: los sprites vienen DESDE FUERA de la
    pantalla (±42vw) hasta su posición — no hay otra animación de entrada
    en la partida (sin READY/FIGHT ni nombres) */
@@ -10808,6 +10811,18 @@ button.linklike:hover { background: rgba(216,168,48,.08); text-decoration: none;
   color: #8b96a8;
   margin-right: 2px;
 }
+
+/* Action canaries in HUD Studio share the same compact control rhythm as
+   Stage. They expose ROM phase names without introducing a second layout. */
+.dev-hud-action-preview { display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-top:8px; }
+.dev-hud-action-label { color:#ffd45a; font:700 10px/1 var(--font-pixel, monospace); letter-spacing:.12em; }
+.dev-hud-action-state { color:#c7d8ed; font:600 10px/1.2 var(--font-pixel, monospace); }
+.action-state-panel { display:flex; flex-direction:column; gap:8px; align-items:center; justify-content:center; min-height:100%; }
+.action-state-track { display:flex; gap:6px; flex-wrap:nowrap; justify-content:center; }
+.action-state-chip { border:1px solid rgba(145,172,207,.35); color:#94a8c2; padding:4px 6px; font:700 8px/1 var(--font-pixel, monospace); letter-spacing:.06em; }
+.action-state-chip.active { border-color:#ffd45a; color:#ffd45a; background:rgba(255,212,90,.1); }
+.action-state-card { display:flex; align-items:center; gap:10px; color:#c7d8ed; font:600 9px/1.2 var(--font-pixel, monospace); }
+.action-state-card .card { flex:0 0 auto; }
 .stage-len-btn {
   min-height: 30px;
   background: var(--dev-panel-lo);

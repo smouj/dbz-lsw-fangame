@@ -40,7 +40,7 @@ const E_FORM = 'piccolo_base';
 const GROUPS = ['Colores', 'HUD', 'Cartas', 'Posición', 'Escala', 'Tipografía'];
 
 // Vista del preview: cómo se ve el HUD en cada estado (sin motor — visual).
-type HudView = 'COMMAND' | 'MANO' | 'BASIC' | 'MOVE' | 'STAGE' | 'LIMIT' | 'DIALOGO' | 'STORY_DIALOGO' | 'INTRO' | 'DISCARD' | 'DEFENSA' | 'RESULTADO' | 'MENU';
+type HudView = 'COMMAND' | 'MANO' | 'BASIC' | 'MOVE' | 'STAGE' | 'BEAM' | 'DAMAGE' | 'LIMIT' | 'DIALOGO' | 'STORY_DIALOGO' | 'INTRO' | 'DISCARD' | 'DEFENSA' | 'RESULTADO' | 'MENU';
 
 const VIEWS: { id: HudView; label: string; tip: string }[] = [
   // Flujo de batalla: comandos → cartas → fases → flujo global
@@ -49,6 +49,8 @@ const VIEWS: { id: HudView; label: string; tip: string }[] = [
   { id: 'BASIC', label: 'BASIC', tip: 'Stage Attack (frame de carta) · Gather · Back' },
   { id: 'MOVE', label: 'MOVE', tip: 'Selección de eje: HORIZONTAL ↔ o VERTICAL ↕' },
   { id: 'STAGE', label: 'STAGE', tip: 'QTE del Stage Attack: inputs con los sprites del paquete' },
+  { id: 'BEAM', label: 'BEAM', tip: 'Acción de carta Beam: carga · lanzamiento · viaje · contacto · reacción' },
+  { id: 'DAMAGE', label: 'DAMAGE', tip: 'Acción de carta Damage: preparación · avance · impacto · reacción' },
   { id: 'LIMIT', label: 'LIMIT', tip: 'Cartas LIMITED del personaje + huecos' },
   { id: 'DEFENSA', label: 'Defensa', tip: 'Menú de defensa (contrato): GUARD · MOVE(H|V) · carta defensiva/support — SIN Stage/QTE' },
   { id: 'DISCARD', label: 'Descarte', tip: 'HAND CHECK — demasiadas cartas, elige cuál descartar' },
@@ -132,6 +134,7 @@ export function HudModule() {
   const [stageLen, setStageLen] = useState(5);
   // Resultado del mockup: victoria o derrota
   const [result, setResult] = useState<'victory' | 'defeat'>('victory');
+  const [introMatchup, setIntroMatchup] = useState<'1v1' | '1v2' | '2v1' | '2v2'>('1v1');
   // INTRO ▶ PLAY: reproducir la secuencia de entrada completa (slide-in →
   // VS pop → flash). El remount (key) reinicia las CSS animations; los
   // chips de fase muestran los tiempos de la secuencia (para canonizar).
@@ -288,10 +291,25 @@ export function HudModule() {
             ))}
           </div>
         )}
+        {(view === 'BEAM' || view === 'DAMAGE') && (
+          <div className="dev-hud-action-preview" title="Canario de película ROM: los estados se muestran en el mismo plano ACTION que BattleScreen">
+            <span className="dev-hud-action-label">ACTION</span>
+            <span className="dev-hud-action-state">{view === 'BEAM' ? 'BEAM · CHARGE → TRAVEL → CONTACT → REACTION' : 'DAMAGE · PREPARE → APPROACH → IMPACT → REACTION'}</span>
+            <button className="dev-btn dev-btn-primary" onClick={() => { setBgMode('action'); setActionSpecial(false); setIntroPhase('idle'); }}>
+              <Play size={14} /> Reiniciar plano
+            </button>
+          </div>
+        )}
         {/* INTRO ▶ PLAY: reproducir la secuencia de entrada completa y
             ver/actualizar/canonizar las transiciones (slide → VS → flash) */}
         {view === 'INTRO' && (
           <div className="dev-hud-intro-play" title="Reproduce la entrada de combate: slide-in → VS pop → flash (reinicia en cada click)">
+            <div className="dev-intro-matchup" role="group" aria-label="Número de combatientes">
+              <span>TEAMS</span>
+              {(['1v1', '1v2', '2v1', '2v2'] as const).map(mode => (
+                <button key={mode} className={`stage-len-btn ${introMatchup === mode ? 'active' : ''}`} onClick={() => setIntroMatchup(mode)}>{mode}</button>
+              ))}
+            </div>
             <button className="dev-btn dev-btn-primary" onClick={playIntro}>
               <Play size={14} /> {introPhase === 'idle' ? 'Reproducir entrada' : '↺ Replay'}
             </button>
@@ -353,16 +371,20 @@ export function HudModule() {
                  key={introPlayKey} remonta el bloque: las CSS animations se
                  reinician en cada ▶ Play. */
               <div className="battle-intro" key={introPlayKey}>
-                <div className="intro-fighter intro-left">
-                  <div className="intro-portrait">
-                    {pPortrait ? <img src={pPortrait} alt={P_FORM} /> : <span className="dev-hud-mock-ph">?</span>}
-                  </div>
+                <div className="intro-team intro-team-left">
+                  {(['2v1', '2v2'].includes(introMatchup) ? [P_FORM, 'gohan_young'] : [P_FORM]).map((form, i) => (
+                    <div className="intro-fighter intro-left" key={`${form}-${i}`}><div className="intro-portrait">
+                      {i === 0 && pPortrait ? <img src={pPortrait} alt={form} /> : <img src={BATTLE_PORTRAITS[form] ?? pPortrait ?? ''} alt={form} />}
+                    </div></div>
+                  ))}
                 </div>
                 <div className="intro-vs">VS</div>
-                <div className="intro-fighter intro-right">
-                  <div className="intro-portrait">
-                    {ePortrait ? <img src={ePortrait} alt={E_FORM} /> : <span className="dev-hud-mock-ph">?</span>}
-                  </div>
+                <div className="intro-team intro-team-right">
+                  {(['1v2', '2v2'].includes(introMatchup) ? [E_FORM, 'cell_perfect'] : [E_FORM]).map((form, i) => (
+                    <div className="intro-fighter intro-right" key={`${form}-${i}`}><div className="intro-portrait">
+                      {i === 0 && ePortrait ? <img src={ePortrait} alt={form} /> : <img src={BATTLE_PORTRAITS[form] ?? ePortrait ?? ''} alt={form} />}
+                    </div></div>
+                  ))}
                 </div>
                 <div className="intro-flash" />
               </div>
@@ -661,6 +683,23 @@ export function HudModule() {
                   limitSec={1.2}
                   side={dlgSide}
                 />
+              )}
+
+              {/* BEAM/DAMAGE: estados de acción ROM visibles en el mismo HUD
+                  compartido. La tarjeta es real; la secuencia se valida en
+                  Combat Lab y no se inventa una película desde el preview. */}
+              {(view === 'BEAM' || view === 'DAMAGE') && (
+                <div className="action-state-panel">
+                  <div className="action-state-track">
+                    {(view === 'BEAM' ? ['CHARGE', 'RELEASE', 'TRAVEL', 'CONTACT', 'REACTION'] : ['PREPARE', 'APPROACH', 'IMPACT', 'REACTION', 'RETURN']).map((state, i) => (
+                      <span key={state} className={`action-state-chip ${i === 0 ? 'active' : ''}`}>{state}</span>
+                    ))}
+                  </div>
+                  <div className="action-state-card">
+                    <HudCard card={getCard(view === 'BEAM' ? 8 : 5)!} selected />
+                    <span>{view === 'BEAM' ? 'Energy Bomb · ROM BEAM_BASE' : 'Cont.Punch · ROM STANDARD_DAMAGE'}</span>
+                  </div>
+                </div>
               )}
 
               {/* LIMIT: MISMO layout que la mano (una línea, marco + arte) */}
