@@ -3231,8 +3231,9 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, pla
         <div className="battle-intro">
           <div className="intro-team intro-team-left" data-team="PLAYER" aria-label="PLAYER TEAM">
             {[activePlayerFormId, player2?.formId].filter((id, i, all): id is string => Boolean(id) && all.indexOf(id) === i).map((formId, index) => (
-              <div className="intro-fighter intro-left" key={`player-${formId}-${index}`}>
+              <div className={`intro-fighter intro-left intro-fighter--${index + 1}`} key={`player-${formId}-${index}`}>
                 <div className="intro-portrait">
+                  <span className="intro-order" aria-label={`Entrada ${index + 1}`}>{index + 1}º</span>
                   <img src={battlePortraitFor(formId) || ''} alt={getCharacter(getForm(formId)?.character ?? '')?.name ?? player.name}
                     onError={e => (e.currentTarget.style.display = 'none')} />
                 </div>
@@ -3242,8 +3243,9 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, pla
           <div className="intro-vs">{t('battle.vs')}</div>
           <div className="intro-team intro-team-right" data-team="ENEMY" aria-label="ENEMY TEAM">
             {[activeEnemyFormId, enemy2?.formId].filter((id, i, all): id is string => Boolean(id) && all.indexOf(id) === i).map((formId, index) => (
-              <div className="intro-fighter intro-right" key={`enemy-${formId}-${index}`}>
+              <div className={`intro-fighter intro-right intro-fighter--${index + 1}`} key={`enemy-${formId}-${index}`}>
                 <div className="intro-portrait">
+                  <span className="intro-order" aria-label={`Entrada ${index + 1}`}>{index + 1}º</span>
                   <img src={battlePortraitFor(formId) || ''} alt={getCharacter(getForm(formId)?.character ?? '')?.name ?? enemy.name}
                     onError={e => (e.currentTarget.style.display = 'none')} />
                 </div>

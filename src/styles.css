@@ -4542,6 +4542,8 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   /* El plano VS conserva el ámbar ROM, con energía de equipo contenida a
      cada lado para que PLAYER y ENEMY se lean antes de que entren los retratos. */
   background:
+    linear-gradient(118deg, rgba(43, 121, 183, .16) 0%, transparent 34%),
+    linear-gradient(242deg, rgba(181, 65, 49, .16) 0%, transparent 34%),
     radial-gradient(ellipse at 11% 50%, rgba(43, 121, 183, .18) 0%, transparent 31%),
     radial-gradient(ellipse at 89% 50%, rgba(181, 65, 49, .18) 0%, transparent 31%),
     radial-gradient(ellipse at 50% 42%, rgba(120,80,36,.20) 0%, transparent 55%),
@@ -4556,6 +4558,8 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 .battle-intro::before {
   content: ''; position: absolute; inset: 0;
   background:
+    linear-gradient(118deg, rgba(105, 188, 241, .12) 0 12%, transparent 12% 100%),
+    linear-gradient(242deg, rgba(239, 121, 93, .12) 0 12%, transparent 12% 100%),
     repeating-linear-gradient(0deg, rgba(255,255,255,.025) 0 1px, transparent 1px 3px),
     repeating-linear-gradient(90deg, rgba(255,255,255,.016) 0 1px, transparent 1px 4px);
   pointer-events: none;
@@ -4566,7 +4570,7 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   content: ''; position: absolute; left: 0; right: 0; top: 50%;
   height: 170px; transform: translateY(-50%);
   background:
-    linear-gradient(90deg, transparent 0%, rgba(230,180,90,.09) 22%, rgba(255,214,130,.13) 50%, rgba(230,180,90,.09) 78%, transparent 100%),
+    linear-gradient(90deg, transparent 0%, rgba(66,160,224,.10) 18%, rgba(230,180,90,.10) 42%, rgba(255,214,130,.15) 50%, rgba(230,180,90,.10) 58%, rgba(215,87,67,.10) 82%, transparent 100%),
     repeating-linear-gradient(0deg, rgba(255,214,130,.045) 0 2px, transparent 2px 6px);
   pointer-events: none;
   z-index: 1;
@@ -4579,21 +4583,21 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 }
 .intro-left { left: clamp(32px, 8cqw, 140px); animation: intro-slide-left .55s cubic-bezier(.2,.8,.3,1) .25s both; }
 .intro-right { right: clamp(32px, 8cqw, 140px); animation: intro-slide-right .55s cubic-bezier(.2,.8,.3,1) .25s both; }
-/* En 2v2 el segundo luchador es una reserva escalonada, no una copia de
-   la composición 1v1. Se conservan módulos 32×24 a ×3/×4 para el pixel art. */
+/* En 2v2 hay dos plazas independientes por equipo: ninguna caja puede
+   invadir la otra ni el VS. Se conservan módulos 32×24 a ×3/×4. */
+.intro-team:has(> .intro-fighter:nth-child(2)) {
+  --intro-team-row-offset: clamp(64px, 9cqh, 82px);
+}
 .intro-team:has(> .intro-fighter:nth-child(2)) .intro-portrait img {
   width: clamp(96px, 13cqw, 128px);
   height: auto;
   aspect-ratio: 4 / 3;
 }
+.intro-team:has(> .intro-fighter:nth-child(2)) .intro-fighter:first-child {
+  margin-top: calc(var(--intro-team-row-offset) * -1);
+}
 .intro-team:has(> .intro-fighter:nth-child(2)) .intro-fighter:nth-child(2) {
-  margin-top: clamp(54px, 7cqw, 78px);
-}
-.intro-team-left:has(> .intro-fighter:nth-child(2)) .intro-fighter:nth-child(2) {
-  left: calc(clamp(32px, 8cqw, 140px) + clamp(42px, 6cqw, 72px));
-}
-.intro-team-right:has(> .intro-fighter:nth-child(2)) .intro-fighter:nth-child(2) {
-  right: calc(clamp(32px, 8cqw, 140px) + clamp(42px, 6cqw, 72px));
+  margin-top: var(--intro-team-row-offset);
 }
 .intro-team::before {
   position: absolute;
@@ -4616,6 +4620,7 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 @keyframes intro-slide-left { from { transform: translateY(-50%) translateX(-42vw); opacity: 0; } to { transform: translateY(-50%) translateX(0); opacity: 1; } }
 @keyframes intro-slide-right { from { transform: translateY(-50%) translateX(42vw); opacity: 0; } to { transform: translateY(-50%) translateX(0); opacity: 1; } }
 .intro-portrait {
+  position: relative;
   display: flex; align-items: center; justify-content: center;
   background: #14120f;
   border: 3px solid currentColor;
@@ -4623,6 +4628,24 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   padding: 7px;
   animation: intro-float 2.6s ease-in-out 1.4s infinite alternate;
 }
+.intro-order {
+  display: none;
+  position: absolute;
+  inset-block-start: -11px;
+  inset-inline-start: -11px;
+  min-width: 28px;
+  min-height: 22px;
+  place-items: center;
+  padding: 2px 4px;
+  border: 2px solid currentColor;
+  background: #080a10;
+  box-shadow: 2px 2px 0 #000;
+  color: currentColor;
+  font: 700 11px/1 var(--fpx, monospace);
+  letter-spacing: .03em;
+  z-index: 2;
+}
+.intro-team:has(> .intro-fighter:nth-child(2)) .intro-order { display: grid; }
 @keyframes intro-float { from { transform: translateY(0); } to { transform: translateY(-7px); } }
 .intro-portrait img {
   image-rendering: pixelated;

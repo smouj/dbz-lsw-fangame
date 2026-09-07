@@ -412,17 +412,19 @@ export function HudModule() {
                  key={introPlayKey} remonta el bloque: las CSS animations se
                  reinician en cada ▶ Play. */
               <div className="battle-intro" key={introPlayKey}>
-                <div className="intro-team intro-team-left">
+                <div className="intro-team intro-team-left" data-team="PLAYER" aria-label="PLAYER TEAM">
                   {(['2v1', '2v2'].includes(introMatchup) ? [P_FORM, 'gohan_young'] : [P_FORM]).map((form, i) => (
-                    <div className="intro-fighter intro-left" key={`${form}-${i}`}><div className="intro-portrait">
+                    <div className={`intro-fighter intro-left intro-fighter--${i + 1}`} key={`${form}-${i}`}><div className="intro-portrait">
+                      <span className="intro-order" aria-label={`Entrada ${i + 1}`}>{i + 1}º</span>
                       {i === 0 && pPortrait ? <img src={pPortrait} alt={form} /> : <img src={BATTLE_PORTRAITS[form] ?? pPortrait ?? ''} alt={form} />}
                     </div></div>
                   ))}
                 </div>
                 <div className="intro-vs">VS</div>
-                <div className="intro-team intro-team-right">
+                <div className="intro-team intro-team-right" data-team="ENEMY" aria-label="ENEMY TEAM">
                   {(['1v2', '2v2'].includes(introMatchup) ? [E_FORM, 'cell_perfect'] : [E_FORM]).map((form, i) => (
-                    <div className="intro-fighter intro-right" key={`${form}-${i}`}><div className="intro-portrait">
+                    <div className={`intro-fighter intro-right intro-fighter--${i + 1}`} key={`${form}-${i}`}><div className="intro-portrait">
+                      <span className="intro-order" aria-label={`Entrada ${i + 1}`}>{i + 1}º</span>
                       {i === 0 && ePortrait ? <img src={ePortrait} alt={form} /> : <img src={BATTLE_PORTRAITS[form] ?? ePortrait ?? ''} alt={form} />}
                     </div></div>
                   ))}
