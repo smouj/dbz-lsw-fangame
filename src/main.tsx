@@ -3229,18 +3229,26 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, pla
           La desmonta BattleIntroPresentation por ticks. ═══ */}
       {battleIntroPresentation.introOverlayVisible && (
         <div className="battle-intro">
-          <div className="intro-fighter intro-left">
-            <div className="intro-portrait">
-              <img src={battlePortraitFor(activePlayerFormId) || ''} alt={player.name}
-                onError={e => (e.currentTarget.style.display = 'none')} />
-            </div>
+          <div className="intro-team intro-team-left" data-team="PLAYER" aria-label="PLAYER TEAM">
+            {[activePlayerFormId, player2?.formId].filter((id, i, all): id is string => Boolean(id) && all.indexOf(id) === i).map((formId, index) => (
+              <div className="intro-fighter intro-left" key={`player-${formId}-${index}`}>
+                <div className="intro-portrait">
+                  <img src={battlePortraitFor(formId) || ''} alt={getCharacter(getForm(formId)?.character ?? '')?.name ?? player.name}
+                    onError={e => (e.currentTarget.style.display = 'none')} />
+                </div>
+              </div>
+            ))}
           </div>
           <div className="intro-vs">{t('battle.vs')}</div>
-          <div className="intro-fighter intro-right">
-            <div className="intro-portrait">
-              <img src={battlePortraitFor(activeEnemyFormId) || ''} alt={enemy.name}
-                onError={e => (e.currentTarget.style.display = 'none')} />
-            </div>
+          <div className="intro-team intro-team-right" data-team="ENEMY" aria-label="ENEMY TEAM">
+            {[activeEnemyFormId, enemy2?.formId].filter((id, i, all): id is string => Boolean(id) && all.indexOf(id) === i).map((formId, index) => (
+              <div className="intro-fighter intro-right" key={`enemy-${formId}-${index}`}>
+                <div className="intro-portrait">
+                  <img src={battlePortraitFor(formId) || ''} alt={getCharacter(getForm(formId)?.character ?? '')?.name ?? enemy.name}
+                    onError={e => (e.currentTarget.style.display = 'none')} />
+                </div>
+              </div>
+            ))}
           </div>
           <div className="intro-flash" />
         </div>
