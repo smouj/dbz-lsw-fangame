@@ -264,7 +264,7 @@ export function HudModule() {
             </div>
           )}
         </div>
-        {(view === 'DIALOGO' || view === 'STORY_DIALOGO') && (
+        {(view === 'DIALOGO' || view === 'BEAM' || view === 'DAMAGE' || view === 'STORY_DIALOGO') && (
           <button className={`dev-hud-view-chip side-toggle ${dlgSide === 'right' ? 'active' : ''}`}
             onClick={() => setDlgSide(s => (s === 'left' ? 'right' : 'left'))}
             title="Alterna el lado del personaje que habla (izquierda/derecha)">
@@ -578,7 +578,7 @@ export function HudModule() {
               )}
               {/* DIÁLOGO (cuadro GBC estructurado) — dentro de la caja,
                   misma altura que los botones */}
-              {view === 'DIALOGO' && (
+              {(view === 'DIALOGO' || view === 'BEAM' || view === 'DAMAGE') && (
                 <div className={`gbc-dialogue speaker-${dlgSide}`}>
                   {/* Sprite de STORY del que habla, FUERA de la caja (izquierda
                       o derecha según el lado), con máscara y marco negro —
@@ -589,7 +589,7 @@ export function HudModule() {
                   <div className="gbc-dialogue-body">
                     <div className="gbc-dialogue-content">
                       <div className="gbc-dialogue-actor">{dlgSide === 'left' ? 'GOKU' : 'CELL'}</div>
-                      <div className="gbc-dialogue-text">uses {dlgSide === 'left' ? 'KAMEHAMEHA!' : 'SPECIAL BEAM CANNON!'}<span className="gbc-dialogue-cursor">▼</span></div>
+                      <div className="gbc-dialogue-text">uses {view === 'BEAM' ? 'ENERGY BOMB!' : view === 'DAMAGE' ? 'CONT. PUNCH!' : (dlgSide === 'left' ? 'KAMEHAMEHA!' : 'SPECIAL BEAM CANNON!')}<span className="gbc-dialogue-cursor">▼</span></div>
                     </div>
                   </div>
                 </div>
@@ -690,22 +690,9 @@ export function HudModule() {
                 />
               )}
 
-              {/* BEAM/DAMAGE: estados de acción ROM visibles en el mismo HUD
-                  compartido. La tarjeta es real; la secuencia se valida en
-                  Combat Lab y no se inventa una película desde el preview. */}
-              {(view === 'BEAM' || view === 'DAMAGE') && (
-                <div className="action-state-panel">
-                  <div className="action-state-track">
-                    {(view === 'BEAM' ? ['CHARGE', 'RELEASE', 'TRAVEL', 'CONTACT', 'REACTION'] : ['PREPARE', 'APPROACH', 'IMPACT', 'REACTION', 'RETURN']).map((state, i) => (
-                      <span key={state} className={`action-state-chip ${i === 0 ? 'active' : ''}`}>{state}</span>
-                    ))}
-                  </div>
-                  <div className="action-state-card">
-                    <HudCard card={getCard(view === 'BEAM' ? 8 : 5)!} selected />
-                    <span>{view === 'BEAM' ? 'Energy Bomb · ROM BEAM_BASE' : 'Cont.Punch · ROM STANDARD_DAMAGE'}</span>
-                  </div>
-                </div>
-              )}
+              {/* BEAM/DAMAGE usan el mismo diálogo GBC que la vista Diálogo:
+                  la carta se anuncia en la caja inferior, sin una composición
+                  alternativa ni texto superpuesto sobre la mano. */}
 
               {/* LIMIT: MISMO layout que la mano (una línea, marco + arte) */}
               {view === 'LIMIT' && (
