@@ -33,6 +33,16 @@ export interface RomDisplayState {
   macroRuns: number;
   cleared: boolean;
   pendingReasons: string[];
+  /** Última ventana FX física ROM compuesta por el display layer. */
+  fxWindow: {
+    sourceImage: string;
+    phase: 'PREFIX' | 'RESULT';
+    sourceMap: 'SIDE_1' | 'SIDE_2';
+    screenX: number;
+    screenY: number;
+    width: number;
+    height: number;
+  } | null;
   events: RomDisplayEvent[];
 }
 
@@ -64,6 +74,7 @@ export class RomDisplayPresenter {
     macroRuns: 0,
     cleared: false,
     pendingReasons: [],
+    fxWindow: null,
     events: [],
   };
 
@@ -95,6 +106,15 @@ export class RomDisplayPresenter {
       }
       case 'ROM_FX_WINDOW': {
         this.state.fxWindows++;
+        this.state.fxWindow = {
+          sourceImage: cue.sourceImage,
+          phase: cue.phase,
+          sourceMap: cue.sourceMap,
+          screenX: cue.screen.x,
+          screenY: cue.screen.y,
+          width: cue.viewport.width,
+          height: cue.viewport.height,
+        };
         const ev = this.push(
           'FX_WINDOW_APPLIED',
           cardId,
@@ -118,6 +138,7 @@ export class RomDisplayPresenter {
         this.state.bgAssembled = false;
         this.state.cleared = true;
         this.state.activeCardId = null;
+        this.state.fxWindow = null;
         const ev = this.push('CLEARED', cardId, cue.tick, 'display cleared');
         return ev;
       }
@@ -153,6 +174,7 @@ export class RomDisplayPresenter {
     this.state.macroRuns = 0;
     this.state.cleared = false;
     this.state.pendingReasons = [];
+    this.state.fxWindow = null;
     this.state.events = [];
   }
 

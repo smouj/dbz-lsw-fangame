@@ -11,7 +11,7 @@
 // LAYERING, CLEANUP — cada check corresponde a un state observable.
 // ═════════════════════════════════════════════════════════════════════════
 
-import { Container, Graphics, Text } from 'pixi.js';
+import { Container, Graphics, Sprite, Text } from 'pixi.js';
 import type { RomDisplayPresenter, RomDisplayState } from './RomDisplayPresenter';
 
 /** Dimensiones lógicas GBC para el display ROM. */
@@ -126,6 +126,8 @@ export class RomDisplayLayer {
   private readonly clearOverlay: Graphics;
   private readonly clearLabel: Text;
   private readonly labelLayer: Text;
+  private readonly fxSprite: Sprite;
+  private fxSourceImage = '';
   private readonly presenter: RomDisplayPresenter;
   private readonly scale: number;
   private lastStateJson = '';
@@ -163,10 +165,14 @@ export class RomDisplayLayer {
       },
     });
     this.labelLayer.label = 'rom-display-label';
+    this.fxSprite = new Sprite();
+    this.fxSprite.label = 'rom-display-fx-window';
+    this.fxSprite.visible = false;
 
     this.container.addChild(this.bgLayer);
     this.container.addChild(this.visualLayer);
     this.container.addChild(this.composeOverlay);
+    this.container.addChild(this.fxSprite);
     this.container.addChild(this.clearOverlay);
     this.container.addChild(this.clearLabel);
     this.container.addChild(this.labelLayer);
@@ -185,6 +191,7 @@ export class RomDisplayLayer {
     const stateJson = JSON.stringify({
       a: st.activeCardId, p: st.paletteIndex, c: st.composed,
       bg: st.bgAssembled, m: st.macroRuns, cl: st.cleared,
+      fx: st.fxWindow ? `${st.fxWindow.sourceImage}:${st.fxWindow.phase}:${st.fxWindow.sourceMap}` : null,
     });
     if (stateJson === this.lastStateJson) return;
     this.lastStateJson = stateJson;
@@ -195,6 +202,24 @@ export class RomDisplayLayer {
   /** Dibuja el estado completo de ROM display. */
   private redraw(st: RomDisplayState, tick: number): void {
     const s = this.scale;
+
+    // ROM_FX_WINDOW: use the physical exported BG window. The source image
+    // is the ROM tilemap render selected by resource/palette/side/phase; it
+    // is mounted as a separate display layer and never treated as a fighter
+    // or a procedural projectile.
+    if (st.fxWindow) {
+      if (this.fxSourceImage !== st.fxWindow.sourceImage) {
+        this.fxSprite.texture = Sprite.from(st.fxWindow.sourceImage).texture;
+        this.fxSourceImage = st.fxWindow.sourceImage;
+      }
+      this.fxSprite.visible = !st.cleared;
+      this.fxSprite.x = st.fxWindow.screenX * s;
+      this.fxSprite.y = st.fxWindow.screenY * s;
+      this.fxSprite.width = st.fxWindow.width * s;
+      this.fxSprite.height = st.fxWindow.height * s;
+    } else {
+      this.fxSprite.visible = false;
+    }
 
     // ── CLEANUP: si se limpió, oscurecer y mostrar texto ──
     this.clearOverlay.clear();
@@ -270,6 +295,8 @@ export class RomDisplayLayer {
     this.clearOverlay.clear();
     this.clearLabel.visible = false;
     this.labelLayer.text = '';
+    this.fxSprite.visible = false;
+    this.fxSourceImage = '';
     this.lastStateJson = '';
   }
 
