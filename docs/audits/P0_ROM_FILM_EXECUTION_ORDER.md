@@ -42,6 +42,24 @@ por ticks ROM. En `OVERVIEW` se ocultan para mantener el campo táctico limpio;
 se selecciona `ACTION` para revisar actor (`PLAYER`/`ENEMY`) y plano
 (`ESCENARIO`/`ESPECIAL`).
 
+### Contrato `SPECIAL_ACTION` para beams/proyectiles
+
+`SPECIAL_ACTION` identifica el plano cinematográfico de la ROM, no una
+posición alternativa permanente. La película debe conservar esta secuencia
+semántica: `ACTION_SOLO` para la preparación del atacante, entrada del objetivo
+en el beat ROM `defenderIn`, `PROJECTILE` desde el lado del atacante hasta el
+objetivo, `IMPACT` en `contactFrame`, reacción `hurt`/knockback del objetivo y
+retorno al campo táctico. La identidad física izquierda/derecha permanece
+estable; sólo cambian los roles `ACTOR` y `TARGET`.
+
+El fondo `special_action.png` pertenece a ese plano y se consume durante la
+película especial. No autoriza a mostrar un objetivo antes de su beat, ni a
+mantenerlo en idle durante todo el viaje. Los perfiles ROM (`BEAM_BASE`,
+`BEAM_VARIANT`, `PROJECTILE_SCROLL` y `SPECIAL_HANDLER`) son la fuente de
+`resource`, `sequence`, `contactFrame`, pantalla y cleanup. El proyectil
+procedural actual queda marcado como puente hasta que el FX físico ROM esté
+separado del frame que contiene también el cuerpo del personaje.
+
 ## Estado publicado
 
 - P0.1 divergence audit: cerrado.
