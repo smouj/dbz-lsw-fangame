@@ -69,6 +69,9 @@ export interface BattlePresentation {
   /** Sacudida/zoom de cámara: intensidad 0..1 (mapea CAMERA). */
   camera(shake: number): void;
 
+  /** Destello blanco de pantalla completa gobernado por ticks ROM. */
+  flashWhite(durationTicks: number): void;
+
   /** Vuelve al plano FIELD (mapea FIELD_RETURN). */
   returnToField(): void;
 

@@ -235,8 +235,13 @@ export class ProductionRomPresentationAdapter {
         break;
       }
       case 'CAMERA': {
-        const shake = cue.action === 'IMPACT' ? 0.4 : cue.action === 'FLASH_WHITE' ? 0.15 : 0.2;
-        this.pres.camera(shake);
+        if (cue.action === 'FLASH_WHITE') {
+          // White-screen entrance. Two ticks is the presentation policy;
+          // exact hardware duration still requires independent ROM evidence.
+          this.pres.flashWhite(2);
+        } else {
+          this.pres.camera(cue.action === 'IMPACT' ? 0.4 : 0.2);
+        }
         visible = true;
         break;
       }

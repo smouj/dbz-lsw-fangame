@@ -50,6 +50,7 @@ interface FilmFrame {
   actorVisible: boolean;
   targetVisible: boolean;
   impactCount: number;
+  whiteFlashCount: number;
 }
 
 class CameraFilmProbe implements BattlePresentation {
@@ -60,6 +61,7 @@ class CameraFilmProbe implements BattlePresentation {
   actorVisible = true;
   targetVisible = true;
   impactCount = 0;
+  whiteFlashCount = 0;
   frames: FilmFrame[] = [];
 
   setScene(scene: BattleScene, background = this.background): void { this.scene = scene; this.background = background; }
@@ -76,6 +78,7 @@ class CameraFilmProbe implements BattlePresentation {
   setProjectileProgress(): void {}
   impact(): void { this.impactCount++; }
   camera(): void {}
+  flashWhite(): void { this.whiteFlashCount++; }
   returnToField(): void { this.scene = 'FIELD'; this.cameraPresenter.reset(); }
   applyFrameOffset(): void {}
   setRomSequenceForSlot(): void {}
@@ -95,6 +98,7 @@ class CameraFilmProbe implements BattlePresentation {
       motionActive: camera.screenMotionActive, pathActive: camera.screenPathActive,
       offsetX: camera.components.romScreenOffsetX, offsetY: camera.components.romScreenOffsetY,
       actorVisible: this.actorVisible, targetVisible: this.targetVisible, impactCount: this.impactCount,
+      whiteFlashCount: this.whiteFlashCount,
     });
   }
 }
@@ -199,6 +203,7 @@ const stageB = playFilm(stageTimeline, 4242);
 check('Stage Attack film uses the exact BattleRuntime tick', stageA.clockExact && stageB.clockExact);
 const scenes = stageA.frames.map(frame => frame.scene);
 check('Stage Attack enters SOLO', scenes.includes('ACTION_SOLO'));
+check('Stage entrance consumes a white-screen transition', stageA.frames.some(frame => frame.whiteFlashCount > 0));
 check('Stage Attack enters DUEL', scenes.includes('ACTION_DUEL'));
 check('Stage Attack reaches impact', stageA.frames.some(frame => frame.impactCount > 0));
 check('Stage Attack returns to TACTICAL', stageA.frames.at(-1)?.scene === 'FIELD');

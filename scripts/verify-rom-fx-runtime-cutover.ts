@@ -126,6 +126,7 @@ const fakePresentation: BattlePresentation = {
   setProjectileProgress() {},
   impact() {},
   camera() {},
+  flashWhite() {},
   returnToField() {},
   sync() {},
 };

@@ -18,9 +18,14 @@
   `beforeHp` hasta consumir el único `ROM_RESULT_BRANCH`, frontera de impacto
   de STANDARD_DAMAGE. HIT, MISS y SPECIAL_DEFENSE comparten el contrato; el
   feedback audiovisual se dispara una sola vez en esa frontera.
-- **Root D sigue parcial**: quedan las variantes físicas completas $2F/$30/$31
-  y `FLASH_WHITE` real dentro del adapter/renderer. La proyección de HP no
-  declara cerradas esas tareas ni activa Pixi por defecto.
+- **Root D2 implementado**: `CAMERA FLASH_WHITE` consume `flashWhite(2)` y
+  dibuja una capa blanca sobre todo el viewport, fuera del mundo desplazado
+  por la cámara. Se limpia al terminar los ticks, volver al campo o resetear.
+  Dos ticks es política de presentación; la duración hardware exacta sigue
+  pendiente de evidencia independiente. Ver `memory/2026-09-07-white-flash.md`.
+- **Root D sigue parcial**: quedan las variantes físicas completas $2F/$30/$31.
+  La proyección de HP y el destello no cierran esas variantes ni activan Pixi
+  por defecto.
 - **Root A cerrado** (2026-09-07): los timelines ROM estáticos de
   STANDARD_DAMAGE, BEAM/PROJECTILE y el puente Stage emiten el plano inicial
   con actor visible/target oculto y revelan al defensor exactamente en

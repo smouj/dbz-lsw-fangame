@@ -39,6 +39,7 @@ class ProbePresentation implements BattlePresentation {
   setProjectileProgress(): void {}
   impact(): void {}
   camera(): void {}
+  flashWhite(): void {}
   returnToField(): void {}
   applyFrameOffset(): void { this.frameOffsets++; }
   setRomSequenceForSlot(): void {}

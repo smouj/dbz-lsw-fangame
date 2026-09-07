@@ -51,6 +51,7 @@ class FakePresentation implements BattlePresentation {
   setProjectileProgress(): void {}
   impact(): void {}
   camera(): void {}
+  flashWhite(): void {}
   moveActor(): void {}
   returnToField(): void {}
   moveActorByRomMotion(): void {}

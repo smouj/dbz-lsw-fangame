@@ -311,6 +311,7 @@ class ProductionProbe implements BattlePresentation {
   setProjectileProgress(): void {}
   impact(): void { this.impacts++; }
   camera(): void { this.cameras++; }
+  flashWhite(): void {}
   returnToField(): void { this.fieldReturns++; }
   applyFrameOffset(): void {}
   moveActorByRomMotion(): void {}

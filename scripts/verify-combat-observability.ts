@@ -65,6 +65,7 @@ function stubPresentation(): BattlePresentation {
     setProjectileProgress: (_p: number) => { calls.push('prog'); },
     impact: () => { calls.push('impact'); },
     camera: (_s: number) => { calls.push('cam'); },
+    flashWhite: (_d: number) => { calls.push('flash-white'); },
     returnToField: () => { calls.push('field'); },
     sync: (_t: number) => { calls.push('sync'); },
     setRomSequenceForSlot: (_slot: 0 | 1, _resource: number, _sequence: number) => { calls.push('rom-seq'); },

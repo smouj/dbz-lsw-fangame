@@ -70,6 +70,9 @@ export class PixiBattlePresentation implements BattlePresentation {
   private projectileMode: ProjectileVisualMode = 'special';
   private projectileSpawnTick: number | null = null;
   private projectileContactTick: number | null = null;
+  private readonly whiteFlash: Graphics;
+  private whiteFlashStartTick = -1;
+  private whiteFlashDurationTicks = 0;
 
   // V7.8 — ROM display layer (separada de Fighter/FX/HUD).
   private readonly romDisplayPresenter: RomDisplayPresenter;
@@ -108,6 +111,12 @@ export class PixiBattlePresentation implements BattlePresentation {
     this.romDisplayPresenter = new RomDisplayPresenter();
     this.romDisplayLayer = new RomDisplayLayer(this.romDisplayPresenter, this.scale);
     this.cameraPresenter = new CameraPresenter();
+    // Screen-space overlay: it hangs from app.stage, outside the camera/world,
+    // so ROM screen motion cannot displace or crop the white transition.
+    this.whiteFlash = new Graphics();
+    this.whiteFlash.eventMode = 'none';
+    this.whiteFlash.visible = false;
+    this.renderer.app.stage.addChild(this.whiteFlash);
   }
 
   /** Carga fondos, overworld y luchadores; deja el plano en FIELD. */
@@ -370,7 +379,27 @@ export class PixiBattlePresentation implements BattlePresentation {
     this.renderer.impactSystem.shake(this.renderer.currentTick, shake);
   }
 
+  flashWhite(durationTicks: number): void {
+    this.whiteFlashStartTick = this.renderer.currentTick;
+    this.whiteFlashDurationTicks = Math.max(1, Math.floor(durationTicks));
+    this.syncWhiteFlash(this.renderer.currentTick);
+  }
+
+  private syncWhiteFlash(tick: number): void {
+    const elapsed = tick - this.whiteFlashStartTick;
+    const active = this.whiteFlashStartTick >= 0
+      && elapsed >= 0
+      && elapsed < this.whiteFlashDurationTicks;
+    this.whiteFlash.clear();
+    this.whiteFlash.visible = active;
+    if (active) {
+      this.whiteFlash.rect(0, 0, this.renderer.app.screen.width, this.renderer.app.screen.height).fill(0xffffff);
+    }
+  }
+
   returnToField(): void {
+    this.whiteFlashStartTick = -1;
+    this.syncWhiteFlash(this.renderer.currentTick);
     this.renderer.sceneDirector.setScene('FIELD');
     this.clearProjectile();
     this.cancelRush();
@@ -392,6 +421,7 @@ export class PixiBattlePresentation implements BattlePresentation {
 
   sync(tick: number): void {
     this.renderer.sync(tick);
+    this.syncWhiteFlash(tick);
 
     // V7.8 — ROM display layer: sincroniza el estado del Presenter con Pixi.
     this.romDisplayLayer.sync(tick);
@@ -460,6 +490,10 @@ export class PixiBattlePresentation implements BattlePresentation {
     this.clearProjectile();
     this.cancelRush();
     this.cameraPresenter.reset();
+    this.whiteFlashStartTick = -1;
+    this.whiteFlashDurationTicks = 0;
+    this.whiteFlash.clear();
+    this.whiteFlash.visible = false;
     this.leftActor?.setFlash(0);
     this.rightActor?.setFlash(0);
     this.leftActor?.setPose('idle', 0);
@@ -528,6 +562,8 @@ export class PixiBattlePresentation implements BattlePresentation {
    */
   private prepareScene(scene: BattleScene): void {
     if (scene === 'FIELD') {
+      this.whiteFlashStartTick = -1;
+      this.syncWhiteFlash(this.renderer.currentTick);
       this.clearProjectile();
       this.cancelRush();
       this.leftActor?.setPos(ACTION_LEFT_X, ACTION_GROUND_Y);
