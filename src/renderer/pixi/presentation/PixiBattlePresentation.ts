@@ -52,17 +52,30 @@ export class PixiBattlePresentation implements BattlePresentation {
   }
 
   setRomSequenceForSlot(slot: 0 | 1, resource: number, sequence: number): void {
-    // Route by slot: slot 0 = left/attacker actor, slot 1 = right/target actor (for specials)
-    const actor = slot === 0 ? this.leftActor : this.rightActor;
+    // P0 ANIMATION OWNERSHIP — slot mapping POR ROL (slot 0 = actor, slot 1 =
+    // target), consistente con moveActionObject/setActionObjectPosition/
+    // applyFrameOffset. El mapping fijo slot0→left/slot1→right rompía TODAS
+    // las acciones del enemigo: la secuencia del actor (slot0) se aplicaba al
+    // FighterActor del jugador y la del target (slot1) al del enemigo.
+    const actor = slot === 0 ? this.actor : this.target;
     if (actor && typeof (actor as any).setRomSequence === 'function') {
       (actor as any).setRomSequence(resource, sequence);
     }
   }
 
   setPhysicalFrameForSlot(slot: 0 | 1, cue: any): void {
-    const actor = slot === 0 ? this.leftActor : this.rightActor;
+    // Mismo mapeo por ROL que setRomSequenceForSlot (ver arriba).
+    const actor = slot === 0 ? this.actor : this.target;
     if (actor && typeof (actor as any).setPhysicalFrame === 'function') {
       (actor as any).setPhysicalFrame(cue);
+    }
+  }
+
+  /** P0 ANIMATION OWNERSHIP — ROM $08: congela el track del slot (sin ocultar). */
+  stopActionObject(slot: 0 | 1): void {
+    const fighter = slot === 0 ? this.actor : this.target;
+    if (fighter && typeof (fighter as any).freezeTrack === 'function') {
+      (fighter as any).freezeTrack();
     }
   }
   private attacker: BattleSide = 'left';
@@ -414,8 +427,16 @@ export class PixiBattlePresentation implements BattlePresentation {
     this.cameraPresenter.reset();
     this.leftActor?.setFlash(0);
     this.rightActor?.setFlash(0);
+    // P0 CLEANUP — baseline visual real: offsets/rom-track borrados ANTES de
+    // reposar idle, para que ACTION N+1 no herede frame offset ni secuencia
+    // residual de N. El idle de FIELD es un frame ESTÁTICO (playback off): el
+    // avance solo lo reactiva una cue FIGHTER_POSE/animación del programa.
+    this.leftActor?.resetRomTrackState();
+    this.rightActor?.resetRomTrackState();
     this.leftActor?.setPose('idle', this.renderer.currentTick);
     this.rightActor?.setPose('idle', this.renderer.currentTick);
+    this.leftActor?.freezeTrack();
+    this.rightActor?.freezeTrack();
     this.leftActor?.setPos(ACTION_LEFT_X, ACTION_GROUND_Y);
     this.rightActor?.setPos(ACTION_RIGHT_X, ACTION_GROUND_Y);
   }
@@ -504,8 +525,12 @@ export class PixiBattlePresentation implements BattlePresentation {
     this.whiteFlash.visible = false;
     this.leftActor?.setFlash(0);
     this.rightActor?.setFlash(0);
+    this.leftActor?.resetRomTrackState();
+    this.rightActor?.resetRomTrackState();
     this.leftActor?.setPose('idle', 0);
     this.rightActor?.setPose('idle', 0);
+    this.leftActor?.freezeTrack();
+    this.rightActor?.freezeTrack();
     this.leftActor?.setPos(ACTION_LEFT_X, ACTION_GROUND_Y);
     this.rightActor?.setPos(ACTION_RIGHT_X, ACTION_GROUND_Y);
     this.setAttacker(this.attacker);

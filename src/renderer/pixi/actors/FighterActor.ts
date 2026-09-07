@@ -113,6 +113,25 @@ export class FighterActor extends Container {
     return this.playbackEnabled;
   }
 
+  /**
+   * P0 ANIMATION OWNERSHIP — ROM $08 (STOP/cleanup de un ActionObject):
+   * congela el track en su frame actual y desactiva el avance. La visibilidad
+   * NO cambia aquí: la gobiernan las cues FIGHTER_VISIBILITY/escena.
+   * La textura actual se conserva (HOLD), nunca se reinicia ni hace loop.
+   */
+  freezeTrack(): void {
+    this.playbackEnabled = false;
+  }
+
+  /** P0 CLEANUP — limpia offsets de frame ROM y secuencia residual (baseline). */
+  resetRomTrackState(): void {
+    this.romResource = null;
+    this.romSequence = null;
+    this._frameOffsetX = 0;
+    this._frameOffsetY = 0;
+    this.applyTransform();
+  }
+
   get currentRomSequence(): { resource: number; sequence: number } | null {
     if (this.romResource != null && this.romSequence != null) {
       return { resource: this.romResource, sequence: this.romSequence };

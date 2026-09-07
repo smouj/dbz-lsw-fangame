@@ -123,7 +123,6 @@ const TRACE_CUES = new Set<PresentationCue['type']>([
   'ACTION_OBJECT_DRAW_ORDER',
   'ACTION_OBJECT_FRAME',
   'ACTION_OBJECT_FRAME_OFFSET',
-  'ACTION_OBJECT_STOP',
   'MULTI_ACTOR_SYNC',
   'AURA',
   'EFFECT',
@@ -427,6 +426,23 @@ export class ProductionRomPresentationAdapter {
         break;
       }
 
+      case 'ACTION_OBJECT_STOP': {
+        // P0 ANIMATION OWNERSHIP — ROM $08: el programa DESACTIVA/detiene el
+        // track del ActionObject. No es un no-op de trazabilidad: el luchador
+        // del slot congela su frame (playback off) hasta que otra cue/escena
+        // lo reactive u oculte. Sin esto, un track terminado podía seguir
+        // avanzando/loopeando por inercia fuera del programa ROM.
+        const stop = (this.pres as Partial<Pick<BattlePresentation, 'stopActionObject'>>).stopActionObject;
+        if (typeof stop === 'function') {
+          stop.call(this.pres, cue.slot ?? 0);
+          visible = true;
+        } else {
+          this.stats.pendingCues++;
+          this.stats.pendingReasons.push('BattlePresentation.stopActionObject missing');
+        }
+        this.stats.traceCues++;
+        break;
+      }
       default: {
         if (DISPLAY_CUES.has(cue.type)) {
           if (this.romDisplay) {
