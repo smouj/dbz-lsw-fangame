@@ -40,7 +40,7 @@ const E_FORM = 'piccolo_base';
 const GROUPS = ['Colores', 'HUD', 'Cartas', 'Posición', 'Escala', 'Tipografía'];
 
 // Vista del preview: cómo se ve el HUD en cada estado (sin motor — visual).
-type HudView = 'COMMAND' | 'MANO' | 'BASIC' | 'MOVE' | 'STAGE' | 'BEAM' | 'DAMAGE' | 'LIMIT' | 'DIALOGO' | 'STORY_DIALOGO' | 'INTRO' | 'DISCARD' | 'DEFENSA' | 'RESULTADO' | 'MENU';
+type HudView = 'COMMAND' | 'MANO' | 'BASIC' | 'MOVE' | 'MOVE_ACTION' | 'GATHER_ACTION' | 'STAGE' | 'STAGE_ACTION' | 'BEAM' | 'DAMAGE' | 'LIMIT' | 'DIALOGO' | 'STORY_DIALOGO' | 'INTRO' | 'DISCARD' | 'DEFENSA' | 'RESULTADO' | 'MENU';
 
 const VIEWS: { id: HudView; label: string; tip: string }[] = [
   // Flujo de batalla: comandos → cartas → fases → flujo global
@@ -48,7 +48,10 @@ const VIEWS: { id: HudView; label: string; tip: string }[] = [
   { id: 'MANO', label: 'Mano', tip: 'JOINT — cartas de la mano con sus frames GBC + huecos' },
   { id: 'BASIC', label: 'BASIC', tip: 'Stage Attack (frame de carta) · Gather · Back' },
   { id: 'MOVE', label: 'MOVE', tip: 'Selección de eje: HORIZONTAL ↔ o VERTICAL ↕' },
+  { id: 'MOVE_ACTION', label: 'MOVE ACTION', tip: 'Preview de la acción MOVE en el plano ACTION' },
+  { id: 'GATHER_ACTION', label: 'GATHER', tip: 'Preview de Gather Power en el plano ACTION' },
   { id: 'STAGE', label: 'STAGE', tip: 'QTE del Stage Attack: inputs con los sprites del paquete' },
+  { id: 'STAGE_ACTION', label: 'STAGE ATTACK', tip: 'Preview de la película Stage completa' },
   { id: 'BEAM', label: 'BEAM', tip: 'Acción de carta Beam: carga · lanzamiento · viaje · contacto · reacción' },
   { id: 'DAMAGE', label: 'DAMAGE', tip: 'Acción de carta Damage: preparación · avance · impacto · reacción' },
   { id: 'LIMIT', label: 'LIMIT', tip: 'Cartas LIMITED del personaje + huecos' },
@@ -182,9 +185,8 @@ export function HudModule() {
   const limitCards = [23, 13, 24].map(id => getCard(id)).filter((c): c is CardDef => !!c);
   // Film inspectors are ACTION-only. They are removed from the DOM entirely
   // while the preview is in Overview so the tactical HUD keeps its geometry.
-  const visibleViews = bgMode === 'action'
-    ? VIEWS
-    : VIEWS.filter(v => v.id !== 'BEAM' && v.id !== 'DAMAGE');
+  const actionOnlyViews = new Set(['MOVE_ACTION', 'GATHER_ACTION', 'STAGE_ACTION', 'BEAM', 'DAMAGE']);
+  const visibleViews = bgMode === 'action' ? VIEWS : VIEWS.filter(v => !actionOnlyViews.has(v.id));
 
   const setVar = (key: string, val: string) => setTheme(prev => ({ ...prev, [key]: val }));
 
@@ -235,7 +237,7 @@ export function HudModule() {
       <div className="dev-hud-view-select" role="tablist" aria-label="Vista del HUD">
         {visibleViews.map(v => (
           <button key={v.id} className={`dev-hud-view-chip ${view === v.id ? 'active' : ''}`}
-            onClick={() => setView(v.id)} title={v.tip}>
+            onClick={() => { setView(v.id); if (['MOVE_ACTION', 'GATHER_ACTION', 'STAGE_ACTION', 'BEAM', 'DAMAGE'].includes(v.id)) setBgMode('action'); }} title={v.tip}>
             {v.label}
           </button>
         ))}
@@ -246,7 +248,7 @@ export function HudModule() {
             {SCENARIOS.map((s, i) => <option key={s.id} value={i}>{BATTLE_STAGES[i] ? `SC ${String(i + 1).padStart(2, '0')} — ${BATTLE_STAGES[i].locationEs}` : s.id.replace('scenario_', 'SC ')}</option>)}
           </select>
           <div className="dev-hud-bgmode">
-            <button className={`bgmode-btn ${bgMode === 'overview' ? 'active' : ''}`} onClick={() => { setBgMode('overview'); if (view === 'BEAM' || view === 'DAMAGE') setView('COMMAND'); }}>OVERVIEW</button>
+            <button className={`bgmode-btn ${bgMode === 'overview' ? 'active' : ''}`} onClick={() => { setBgMode('overview'); if (actionOnlyViews.has(view)) setView('COMMAND'); }}>OVERVIEW</button>
             <button className={`bgmode-btn ${bgMode === 'action' ? 'active' : ''}`} onClick={() => setBgMode('action')}>ACTION</button>
           </div>
           {bgMode === 'action' && (
@@ -578,7 +580,7 @@ export function HudModule() {
               )}
               {/* DIÁLOGO (cuadro GBC estructurado) — dentro de la caja,
                   misma altura que los botones */}
-              {(view === 'DIALOGO' || view === 'BEAM' || view === 'DAMAGE') && (
+              {(view === 'DIALOGO' || view === 'BEAM' || view === 'DAMAGE' || view === 'GATHER_ACTION' || view === 'MOVE_ACTION' || view === 'STAGE_ACTION') && (
                 <div className={`gbc-dialogue speaker-${dlgSide}`}>
                   {/* Sprite de STORY del que habla, FUERA de la caja (izquierda
                       o derecha según el lado), con máscara y marco negro —
@@ -589,7 +591,7 @@ export function HudModule() {
                   <div className="gbc-dialogue-body">
                     <div className="gbc-dialogue-content">
                       <div className="gbc-dialogue-actor">{dlgSide === 'left' ? 'GOKU' : 'CELL'}</div>
-                      <div className="gbc-dialogue-text">uses {view === 'BEAM' ? 'ENERGY BOMB!' : view === 'DAMAGE' ? 'CONT. PUNCH!' : (dlgSide === 'left' ? 'KAMEHAMEHA!' : 'SPECIAL BEAM CANNON!')}<span className="gbc-dialogue-cursor">▼</span></div>
+                      <div className="gbc-dialogue-text">{view === 'GATHER_ACTION' ? 'GATHER POWER!' : view === 'MOVE_ACTION' ? 'MOVE!' : view === 'STAGE_ACTION' ? 'STAGE ATTACK!' : `uses ${view === 'BEAM' ? 'ENERGY BOMB!' : view === 'DAMAGE' ? 'CONT. PUNCH!' : (dlgSide === 'left' ? 'KAMEHAMEHA!' : 'SPECIAL BEAM CANNON!')}`}<span className="gbc-dialogue-cursor">▼</span></div>
                     </div>
                   </div>
                 </div>
