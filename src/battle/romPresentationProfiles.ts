@@ -534,9 +534,16 @@ function standardDamageProgram(descriptor: RomActionExecutionDescriptor): RomPre
   program.push(macroStep('MACRO_RESULT_PREP_2E', 0x2e, 'prepare physical resolution branch'));
   program.push(branchStep('CA53 -> HIT/MISS/SPECIAL_DEFENSE'));
   if (descriptor.actorAnimation.resource != null) {
-    const result = startAnimation(descriptor, 1, 1);
+    // Resultado: los macros $2F/$30/$31 arrancan SIEMPRE la seq1 del actor en
+    // slot0 (el track del atacante hace el follow-through del golpe) y esperan
+    // a su frame 2 (WAIT_FRAME). El tramo del TARGET (Bank61 fijo por rama:
+    // $0D/$19 hit · $13 miss · $14 special-defense) lo splica el runtime
+    // cutover con la familia resuelta (standardDamageResultSplice). Este tramo
+    // estatico cubre SOLO la parte comun: nunca fabrica frames del rival en el
+    // slot del actor ni secuencias del actor en el slot del target.
+    const result = startAnimation(descriptor, 1, 0);
     if (result) program.push(result);
-    program.push(waitAnimation(descriptor.actorAnimation.resource, 1, 1, 'V3 STANDARD_DAMAGE result macro track'));
+    program.push(waitAnimation(descriptor.actorAnimation.resource, 1, 0, 'STANDARD_DAMAGE result macro track (slot0 actor seq1, macros $2F/$30/$31)'));
     program.push(simpleVmStep('APPLY_ATTACKER_FRAME_DELTA', 'APPLY_FRAME_DELTA', 'Bank03:$5FE3 + macro $2F/$30/$31', 0));
     program.push(simpleVmStep('STOP_STANDARD_DAMAGE_SLOT_0', 'STOP_ANIMATION', 'opcode $08 cleanup', 0));
     program.push(simpleVmStep('STOP_STANDARD_DAMAGE_SLOT_1', 'STOP_ANIMATION', 'opcode $08 cleanup', 1));

@@ -123,7 +123,7 @@ export function buildPresentationTimeline(input: PresentationInput): BattleTimel
         const profile = resolveActionProfileById(e.action.id);
         activeAction = { side: e.side, action: e.action, canon, profile, startTick: env.tick, prepTicks: null, stageResolvedTick: null, stageResolveAnchor: null };
         const actorFormId = e.side === 'player' ? context.playerFormId : context.enemyFormId;
-        const romCutover = compileStandardDamageRuntimeCutover(events, eventIndex, env as BattleEventEnvelope & { event: { type: 'ACTION_STARTED' } }, actorFormId);
+        const romCutover = compileStandardDamageRuntimeCutover(events, eventIndex, env as BattleEventEnvelope & { event: { type: 'ACTION_STARTED' } }, actorFormId, e.side === 'player' ? context.enemyFormId : context.playerFormId);
         if (romCutover) {
           activeAction.romBackedProfileFamily = 'STANDARD_DAMAGE';
           out.push(...romCutover.timeline.entries);
