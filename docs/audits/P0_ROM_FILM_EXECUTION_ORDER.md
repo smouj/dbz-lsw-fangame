@@ -31,6 +31,17 @@ comprobación de navegador por una aproximación procedural.
   easing inventado, proyectiles procedurales cuando existe física ROM ni cámara
   residual después de cleanup.
 
+## Previews de acciones en Dev Studio
+
+El módulo `#dev/hud` ofrece cinco previews de inspección dentro del plano
+`ACTION`: `MOVE ACTION`, `GATHER`, `STAGE ATTACK`, `BEAM` y `DAMAGE`.
+Cada vista reutiliza el cuadro de diálogo GBC canónico y la composición del
+actor del plano de acción. Son vistas de inspección: no arrancan una segunda
+película, no mutan el estado de combate y no sustituyen la película dirigida
+por ticks ROM. En `OVERVIEW` se ocultan para mantener el campo táctico limpio;
+se selecciona `ACTION` para revisar actor (`PLAYER`/`ENEMY`) y plano
+(`ESCENARIO`/`ESPECIAL`).
+
 ## Estado publicado
 
 - P0.1 divergence audit: cerrado.
