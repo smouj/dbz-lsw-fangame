@@ -440,7 +440,6 @@ export class ProductionRomPresentationAdapter {
           this.stats.pendingCues++;
           this.stats.pendingReasons.push('BattlePresentation.stopActionObject missing');
         }
-        this.stats.traceCues++;
         break;
       }
       default: {
