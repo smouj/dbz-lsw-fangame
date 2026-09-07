@@ -33,6 +33,7 @@ import { HUD_LAYOUT, validateHudLayout } from '../data/hudLayout';
 import { StageHudPanel } from '../components/StageHudPanel';
 import { MainMenuPresentation, type MainMenuPresentationItem } from '../components/MainMenuPresentation';
 import { resolveCharacterVisualSequence } from '../battle/characterFrameMap';
+import { runtimeActionPreview } from '../battle/actionPreviewParity';
 
 // Formas de ejemplo del mockup (Goku vs Piccolo, como el Battle Lab).
 const P_FORM = 'goku_base';
@@ -182,15 +183,26 @@ export function HudModule() {
       default: return [];
     }
   }, [view]);
+  // DAMAGE/BEAM use the exact physical stream emitted by BattleRuntime. The
+  // legacy semantic resolver remains only for non-ROM action views.
+  const runtimePreview = useMemo(() => (
+    view === 'BEAM' || view === 'DAMAGE' ? runtimeActionPreview(view) : null
+  ), [view]);
+  const actionFrames = useMemo(() => runtimePreview && actor === 'player'
+    ? runtimePreview.beats
+    : actionFrameFiles.map(file => ({ file, durationTicks: 10, formId: actor === 'player' ? P_FORM : E_FORM })),
+  [runtimePreview, actor, actionFrameFiles]);
   const [actionFrameIndex, setActionFrameIndex] = useState(0);
   useEffect(() => {
     setActionFrameIndex(0);
-    if (actionFrameFiles.length < 2) return;
-    const timer = window.setInterval(() => {
-      setActionFrameIndex(i => (i + 1) % actionFrameFiles.length);
-    }, 180);
-    return () => window.clearInterval(timer);
-  }, [actionFrameFiles]);
+  }, [actionFrames]);
+  useEffect(() => {
+    if (actionFrames.length < 2) return;
+    const timer = window.setTimeout(() => {
+      setActionFrameIndex(i => (i + 1) % actionFrames.length);
+    }, Math.max(50, (actionFrames[actionFrameIndex]?.durationTicks ?? 10) * (1000 / 60)));
+    return () => window.clearTimeout(timer);
+  }, [actionFrames, actionFrameIndex]);
 
   const player = useMemo(() => getForm(P_FORM), []);
   const enemy = useMemo(() => getForm(E_FORM), []);
@@ -203,6 +215,8 @@ export function HudModule() {
   const pAction = pDir ? spriteFrameUrl(P_FORM, `${pDir}_idle_00.png`) : undefined;
   const eAction = eDir ? spriteFrameUrl(E_FORM, `${eDir}_idle_00.png`) : undefined;
   const actionPreviewFrameFor = (formId: string, fallback: string | undefined) => {
+    const runtimeFrame = runtimePreview && actor === 'player' ? runtimePreview.beats[actionFrameIndex] : null;
+    if (runtimeFrame) return spriteFrameUrl(runtimeFrame.formId, runtimeFrame.file);
     if (actionFrameFiles.length === 0) return fallback;
     const file = actionFrameFiles[actionFrameIndex].replace(/^goku_base_/, `${formId}_`);
     return spriteFrameUrl(formId, file);
@@ -582,12 +596,12 @@ export function HudModule() {
                           la derecha (x 80) mirando a la izquierda; en el
                           plano ESPECIAL 2px más abajo (y 70) + 2px menor
                           (190px, CSS .special-actor) */}
-                      {(bgMode === 'overview' ? pIdle : (actionFrameFiles.length > 0 && actor === 'player' ? pAction : undefined)) && (
+                      {(bgMode === 'overview' ? pIdle : (actionFrames.length > 0 && actor === 'player' ? pAction : undefined)) && (
                         <img src={bgMode === 'overview' ? pIdle : actionPreviewFrameFor(P_FORM, pAction)} alt=""
                           className={`dev-hud-ow dev-hud-fighter-sprite dev-hud-anchored player ${bgMode === 'action' ? 'action-mode' : ''} ${bgMode === 'action' && actionSpecial ? 'special-actor' : ''}`}
                           style={bgMode === 'action' ? (() => { const aa = actionAnchorFor(actor, actionSpecial); return { left: `${aa.x}%`, top: `${aa.y}%` }; })() : { left: `${pa.x}%`, top: `${pa.y}%` }} />
                       )}
-                      {(bgMode === 'overview' ? eIdle : (actionFrameFiles.length > 0 && actor === 'enemy' ? eAction : undefined)) && (
+                      {(bgMode === 'overview' ? eIdle : (actionFrames.length > 0 && actor === 'enemy' ? eAction : undefined)) && (
                         <img src={bgMode === 'overview' ? eIdle : actionPreviewFrameFor(E_FORM, eAction)} alt=""
                           className={`dev-hud-ow dev-hud-fighter-sprite dev-hud-anchored enemy ${bgMode === 'action' ? 'action-mode' : ''} ${bgMode === 'action' && actionSpecial ? 'special-actor' : ''}`}
                           style={bgMode === 'action' ? (() => { const aa = actionAnchorFor(actor, actionSpecial); return { left: `${aa.x}%`, top: `${aa.y}%` }; })() : { left: `${ea.x}%`, top: `${ea.y}%` }} />
@@ -595,9 +609,11 @@ export function HudModule() {
                     </>
                   );
                 })()}
-                {bgMode === 'action' && actionFrameFiles.length > 0 && (
+                {bgMode === 'action' && actionFrames.length > 0 && (
                   <div className="dev-action-frame-readout" aria-live="polite">
-                    ROM PREVIEW · FRAME {String(actionFrameIndex + 1).padStart(2, '0')} / {String(actionFrameFiles.length).padStart(2, '0')}
+                    {runtimePreview && actor === 'player'
+                      ? `RUNTIME ROM · T${runtimePreview.beats[actionFrameIndex]?.tick ?? 0} · $${(runtimePreview.beats[actionFrameIndex]?.resource ?? 0).toString(16).padStart(2, '0')} S${runtimePreview.beats[actionFrameIndex]?.sequence ?? 0} F${runtimePreview.beats[actionFrameIndex]?.frameIndex ?? 0}`
+                      : `ROM PREVIEW · FRAME ${String(actionFrameIndex + 1).padStart(2, '0')} / ${String(actionFrames.length).padStart(2, '0')}`}
                   </div>
                 )}
               </div>

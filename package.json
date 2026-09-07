@@ -106,6 +106,7 @@
     "verify:loadout": "npx tsx scripts/verify-loadout.ts",
     "verify:combat-fidelity": "npx tsx scripts/verify-combat-fidelity.ts",
     "verify:combat-observability": "npx tsx scripts/verify-combat-observability.ts",
+    "verify:action-preview-runtime-parity": "npx tsx scripts/verify-action-preview-runtime-parity.ts",
     "verify:chara-motion": "npx tsx scripts/verify-chara-motion.ts",
     "verify:chara-switch": "npx tsx scripts/verify-chara-switch.ts",
     "audit:rom-consumption": "npx tsx scripts/audit-rom-runtime-consumption.ts",
