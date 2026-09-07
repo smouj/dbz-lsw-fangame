@@ -1974,7 +1974,10 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
    mantiene su tamaño nativo; solo se desplaza/rota en 3D. */
 .draw-fx {
   position: absolute;
-  left: 50%;
+  /* The physical draw starts beyond the panel's right edge and travels into
+     the canonical hand row; it never fades in at the destination slot. */
+  left: auto;
+  right: -112px;
   bottom: 8px;
   z-index: 60;
   pointer-events: none;
@@ -1983,9 +1986,9 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 }
 
 @keyframes draw-card-fly {
-  0%   { transform: translateX(calc(-50% - 46vw)) translateY(14px) rotateZ(-14deg) rotateY(70deg); opacity: 0; }
+  0%   { transform: translateX(120px) translateY(10px) rotateZ(8deg) rotateY(70deg); opacity: 0; }
   22%  { opacity: 1; }
-  100% { transform: translateX(-50%) translateY(0) rotateZ(0deg) rotateY(0deg); opacity: 1; }
+  100% { transform: translateX(0) translateY(0) rotateZ(0deg) rotateY(0deg); opacity: 1; }
 }
 
 /* la carta interior recibe el drop-in al aterrizar */

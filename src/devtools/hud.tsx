@@ -180,6 +180,11 @@ export function HudModule() {
   // Cartas reales del catálogo para la vista Mano (como el build)
   const handCards = [13, 7, 5, 1].map(id => getCard(id)).filter((c): c is CardDef => !!c);
   const limitCards = [23, 13, 24].map(id => getCard(id)).filter((c): c is CardDef => !!c);
+  // Film inspectors are ACTION-only. They are removed from the DOM entirely
+  // while the preview is in Overview so the tactical HUD keeps its geometry.
+  const visibleViews = bgMode === 'action'
+    ? VIEWS
+    : VIEWS.filter(v => v.id !== 'BEAM' && v.id !== 'DAMAGE');
 
   const setVar = (key: string, val: string) => setTheme(prev => ({ ...prev, [key]: val }));
 
@@ -228,7 +233,7 @@ export function HudModule() {
       {status && <div className="dev-hud-status">{status}</div>}
 
       <div className="dev-hud-view-select" role="tablist" aria-label="Vista del HUD">
-        {VIEWS.map(v => (
+        {visibleViews.map(v => (
           <button key={v.id} className={`dev-hud-view-chip ${view === v.id ? 'active' : ''}`}
             onClick={() => setView(v.id)} title={v.tip}>
             {v.label}
@@ -241,7 +246,7 @@ export function HudModule() {
             {SCENARIOS.map((s, i) => <option key={s.id} value={i}>{BATTLE_STAGES[i] ? `SC ${String(i + 1).padStart(2, '0')} — ${BATTLE_STAGES[i].locationEs}` : s.id.replace('scenario_', 'SC ')}</option>)}
           </select>
           <div className="dev-hud-bgmode">
-            <button className={`bgmode-btn ${bgMode === 'overview' ? 'active' : ''}`} onClick={() => setBgMode('overview')}>OVERVIEW</button>
+            <button className={`bgmode-btn ${bgMode === 'overview' ? 'active' : ''}`} onClick={() => { setBgMode('overview'); if (view === 'BEAM' || view === 'DAMAGE') setView('COMMAND'); }}>OVERVIEW</button>
             <button className={`bgmode-btn ${bgMode === 'action' ? 'active' : ''}`} onClick={() => setBgMode('action')}>ACTION</button>
           </div>
           {bgMode === 'action' && (
