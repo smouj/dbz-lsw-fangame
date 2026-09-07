@@ -5,6 +5,9 @@ import { ImpactSystem } from '../systems/ImpactSystem';
 import { PixiBattlePresentation } from './PixiBattlePresentation';
 import { ProductionRomPresentationAdapter } from './ProductionRomPresentationAdapter';
 import { BattlePosition } from '../../../data/positions';
+import { FighterActor } from '../actors/FighterActor';
+import { Texture } from 'pixi.js';
+import type { FormAtlas, PoseAnim } from '../assets/AtlasLoader';
 
 function fixture() {
   const stage = new Container();
@@ -48,5 +51,47 @@ describe('white screen transition', () => {
     expect(overlay.visible).toBe(false);
     presentation.sync(51);
     expect(overlay.visible).toBe(false);
+  });
+});
+
+describe('ROM playback ownership', () => {
+  it('keeps visibility and playback independent until an explicit pose start', () => {
+    const idle: PoseAnim = {
+      fps: 60,
+      loop: true,
+      frames: [
+        { file: 'idle-0.png', w: 8, h: 8, durationTicks: 2 },
+        { file: 'idle-1.png', w: 8, h: 8, durationTicks: 2 },
+      ],
+    };
+    const atlas: FormAtlas = {
+      formId: 'goku_base',
+      dir: 'goku_base',
+      textures: new Map([
+        ['idle:0', Texture.WHITE],
+        ['idle:1', Texture.WHITE],
+      ]),
+      anims: new Map([['idle', idle]]),
+      maxW: 8,
+      maxH: 8,
+    };
+    const actor = new FighterActor(atlas, 'goku_base', 'player');
+
+    expect(actor.isPlaybackEnabled).toBe(false);
+    actor.sync(20);
+    expect(actor.frameIndex).toBe(0);
+
+    actor.setPose('idle', 20);
+    expect(actor.isPlaybackEnabled).toBe(true);
+    actor.sync(22);
+    expect(actor.frameIndex).toBe(1);
+
+    actor.visible = false;
+    actor.setPlaybackEnabled(false);
+    actor.sync(24);
+    expect(actor.frameIndex).toBe(1);
+    actor.visible = true;
+    actor.sync(26);
+    expect(actor.frameIndex).toBe(1);
   });
 });
