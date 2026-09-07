@@ -32,6 +32,7 @@ import { CARD_FRAME_BY_TYPE, CARD_FRAME_SELECTED, CARD_FRAME_DISABLED } from '..
 import { HUD_LAYOUT, validateHudLayout } from '../data/hudLayout';
 import { StageHudPanel } from '../components/StageHudPanel';
 import { MainMenuPresentation, type MainMenuPresentationItem } from '../components/MainMenuPresentation';
+import { resolveCharacterVisualSequence } from '../battle/characterFrameMap';
 
 // Formas de ejemplo del mockup (Goku vs Piccolo, como el Battle Lab).
 const P_FORM = 'goku_base';
@@ -162,31 +163,22 @@ export function HudModule() {
   // Actor de la ACCIÓN: en el plano ACTION solo aparece el character que
   // va a ejecutar la acción (idle del sheet de batalla) — no ambos.
   const [actor, setActor] = useState<'player' | 'enemy'>('player');
-  // Action previews use a deterministic, ROM-backed demo sequence from the
-  // canonical Goku sheet. This keeps the inspector independent of whichever
-  // fighter is selected elsewhere while still showing the real frame cadence.
+  // Action previews consume the ROM-derived form→semantic-role bindings. No
+  // hand-authored PNG list is allowed here: if a role has no ROM evidence the
+  // inspector stays explicit instead of drawing an invented frame.
   const actionFrameFiles = useMemo(() => {
+    const framesFor = (role: string) => {
+      const sequence = resolveCharacterVisualSequence({ formId: P_FORM, semanticRole: role });
+      return sequence.source === 'ROM_DERIVED' || sequence.source === 'CANONICAL'
+        ? sequence.frames
+        : [];
+    };
     switch (view) {
-      case 'MOVE_ACTION': return ['goku_base_move_front_00.png', 'goku_base_move_front_01.png'];
-      case 'GATHER_ACTION': return [
-        'goku_base_gather_power_00.png',
-        'goku_base_aura_power_00.png', 'goku_base_aura_power_01.png', 'goku_base_aura_power_02.png',
-      ];
-      case 'STAGE_ACTION': return [
-        'goku_base_attack_fwd_00.png', 'goku_base_attack_fwd_01.png', 'goku_base_attack_fwd_02.png',
-        'goku_base_attack_fwd_03.png', 'goku_base_attack_fwd_04.png', 'goku_base_attack_fwd_05.png',
-        'goku_base_attack_fwd_06.png', 'goku_base_attack_fwd_07.png',
-      ];
-      case 'BEAM': return [
-        'goku_base_beam_charge_00.png', 'goku_base_beam_charge_01.png', 'goku_base_beam_charge_02.png',
-        // The shared release pose is present for every demo fighter; the
-        // actual beam FX is owned by the runtime film, not this inspector.
-        'goku_base_attack_fwd_03.png',
-      ];
-      case 'DAMAGE': return [
-        'goku_base_attack_fwd_00.png', 'goku_base_attack_fwd_01.png', 'goku_base_attack_fwd_02.png',
-        'goku_base_hurt_00.png', 'goku_base_hurt_01.png', 'goku_base_hurt_02.png',
-      ];
+      case 'MOVE_ACTION': return framesFor('move_front');
+      case 'GATHER_ACTION': return framesFor('gather_power');
+      case 'STAGE_ACTION': return framesFor('attack_fwd');
+      case 'BEAM': return [...framesFor('beam_charge'), ...framesFor('beam_fire')];
+      case 'DAMAGE': return [...framesFor('attack_fwd'), ...framesFor('hurt')];
       default: return [];
     }
   }, [view]);
@@ -588,12 +580,12 @@ export function HudModule() {
                           la derecha (x 80) mirando a la izquierda; en el
                           plano ESPECIAL 2px más abajo (y 70) + 2px menor
                           (190px, CSS .special-actor) */}
-                      {(bgMode === 'overview' ? pIdle : (actor === 'player' ? pAction : undefined)) && (
+                      {(bgMode === 'overview' ? pIdle : (actionFrameFiles.length > 0 && actor === 'player' ? pAction : undefined)) && (
                         <img src={bgMode === 'overview' ? pIdle : actionPreviewFrameFor(P_FORM, pAction)} alt=""
                           className={`dev-hud-ow dev-hud-fighter-sprite dev-hud-anchored player ${bgMode === 'action' ? 'action-mode' : ''} ${bgMode === 'action' && actionSpecial ? 'special-actor' : ''}`}
                           style={bgMode === 'action' ? (() => { const aa = actionAnchorFor(actor, actionSpecial); return { left: `${aa.x}%`, top: `${aa.y}%` }; })() : { left: `${pa.x}%`, top: `${pa.y}%` }} />
                       )}
-                      {(bgMode === 'overview' ? eIdle : (actor === 'enemy' ? eAction : undefined)) && (
+                      {(bgMode === 'overview' ? eIdle : (actionFrameFiles.length > 0 && actor === 'enemy' ? eAction : undefined)) && (
                         <img src={bgMode === 'overview' ? eIdle : actionPreviewFrameFor(E_FORM, eAction)} alt=""
                           className={`dev-hud-ow dev-hud-fighter-sprite dev-hud-anchored enemy ${bgMode === 'action' ? 'action-mode' : ''} ${bgMode === 'action' && actionSpecial ? 'special-actor' : ''}`}
                           style={bgMode === 'action' ? (() => { const aa = actionAnchorFor(actor, actionSpecial); return { left: `${aa.x}%`, top: `${aa.y}%` }; })() : { left: `${ea.x}%`, top: `${ea.y}%` }} />
