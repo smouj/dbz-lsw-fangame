@@ -71,6 +71,9 @@ const VISIBLE_CUES = new Set<PresentationCue['type']>([
   'SCENE_LOAD',
   'ROM_RESULT_BRANCH',
   'FIGHTER_VISIBILITY',
+  // START_ANIMATION with a proven resource/sequence is routed to the actor
+  // slot bridge by ProductionRomPresentationAdapter.
+  'ANIMATION_START',
   // DEFENSE_FX: el adapter la consume con pose visible (case propio que
   // intercede ANTES del ruteo DISPLAY — guard/evade/idle por resultado CA53).
   // Espejo exacto: si el case del adapter cambiara, este set diverge y el
@@ -95,7 +98,6 @@ const TRACE_CUES = new Set<PresentationCue['type']>([
   'MACRO',
   'ROM_MACRO',
   'PALETTE_TRANSITION',
-  'ANIMATION_START',
   'ANIMATION_STATE',
   'WAIT_ANIMATION',
   'WAIT_ANIMATION_FRAME',
@@ -165,6 +167,13 @@ export function classifyRomCue(cue: PresentationCue): CueClassification {
     effect: effectLabel(cue),
   };
 
+  if (cue.type === 'ANIMATION_START') {
+    const animation = cue as Extract<PresentationCue, { type: 'ANIMATION_START' }>;
+    if (animation.resource != null && animation.sequence != null) {
+      return { ...base, destination: 'VISIBLE', visible: true };
+    }
+    return { ...base, destination: 'TRACE', trace: true, noVisibleEffect: true };
+  }
   if (VISIBLE_CUES.has(cue.type)) {
     return { ...base, destination: 'VISIBLE', visible: true };
   }

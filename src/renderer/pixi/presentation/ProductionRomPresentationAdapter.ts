@@ -108,7 +108,6 @@ const TRACE_CUES = new Set<PresentationCue['type']>([
   'MACRO',
   'ROM_MACRO',
   'PALETTE_TRANSITION',
-  'ANIMATION_START',
   'ANIMATION_STATE',
   'WAIT_ANIMATION',
   'WAIT_ANIMATION_FRAME',
@@ -220,6 +219,28 @@ export class ProductionRomPresentationAdapter {
           this.stats.sceneChanges++;
         }
         visible = true;
+        break;
+      }
+      case 'ANIMATION_START': {
+        // START_ANIMATION ($01) is a VM state transition, but it also carries
+        // the physical sequence selected for this actor. Once the compiler has
+        // proven that selector, route it through the same slot bridge as the
+        // frame resolver. This keeps the first visible frame owned by ROM
+        // instead of waiting for a later synthetic pose/frame cue.
+        const setRomSeq = (this.pres as Partial<Pick<BattlePresentation, 'setRomSequenceForSlot'>>)
+          .setRomSequenceForSlot;
+        if (cue.resource != null && cue.sequence != null && typeof setRomSeq === 'function') {
+          setRomSeq.call(this.pres, cue.slot, cue.resource, cue.sequence);
+          this.stats.romSequenceBySlot[cue.slot] = {
+            resource: cue.resource,
+            sequence: cue.sequence,
+          };
+          visible = true;
+        } else {
+          // Unresolved selectors remain honest trace-only cues; do not invent
+          // an animation or a fallback sequence at runtime.
+          this.stats.traceCues++;
+        }
         break;
       }
       case 'FIGHTER_POSITION': {
