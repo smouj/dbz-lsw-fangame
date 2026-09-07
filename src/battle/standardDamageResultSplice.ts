@@ -52,13 +52,13 @@ export interface StandardDamageResultSpliceOptions {
 function frameCueBase(
   tick: number,
   slot: 0 | 1,
-  sourceEvent: string,
+  meta: { logicalTick: number; sourceEvent: string; profileId: string | null; fidelity: string },
 ): Pick<TimelineEntry, 'logicalTick' | 'sourceEvent' | 'profileId' | 'fidelity'> {
   return {
-    logicalTick: tick,
-    sourceEvent,
-    profileId: 'rom-standard-damage-result',
-    fidelity: 'ROM_STATIC_COMPLETE',
+    logicalTick: meta.logicalTick,
+    sourceEvent: meta.sourceEvent,
+    profileId: meta.profileId,
+    fidelity: meta.fidelity,
   };
 }
 
@@ -77,8 +77,18 @@ export function spliceStandardDamageResult(input: StandardDamageResultSpliceOpti
   const branchIndex = entries.findIndex(entry => entry.cue.type === 'ROM_RESULT_BRANCH');
   if (branchIndex < 0) return timeline;
 
-  const branchCue = entries[branchIndex].cue as Extract<PresentationCue, { type: 'ROM_RESULT_BRANCH' }>;
+  const branchEntry = entries[branchIndex];
+  const branchCue = branchEntry.cue as Extract<PresentationCue, { type: 'ROM_RESULT_BRANCH' }>;
   const branchTick = branchCue.tick;
+  // El splice pertenece a la MISMA película de la carta (mismo profileId /
+  // logicalTick / sourceEvent que el cue del branch): los gates que filtran
+  // por profile rom-card-N cuentan el film completo.
+  const meta = {
+    logicalTick: branchEntry.logicalTick,
+    sourceEvent: branchEntry.sourceEvent,
+    profileId: branchEntry.profileId,
+    fidelity: branchEntry.fidelity,
+  };
   const head = entries.slice(0, branchIndex + 1);
 
   const result = standardDamageResultPhysical(branch);
@@ -92,9 +102,8 @@ export function spliceStandardDamageResult(input: StandardDamageResultSpliceOpti
   const out: TimelineEntry[] = [...head];
 
   // ── slot0 (actor): seq1 de la carta, con su estructura de frames ──
-  const sourceEvent = entries[branchIndex]?.sourceEvent ?? 'ACTION_STARTED';
   out.push({
-    ...frameCueBase(branchTick, 0, sourceEvent),
+    ...frameCueBase(branchTick, 0, meta),
     cue: { type: 'ANIMATION_START', tick: branchTick, slot: 0, resource: actorAnimationResource, sequence: result.actor.sequence },
   });
   const actorDurations: number[] = [];
@@ -110,7 +119,7 @@ export function spliceStandardDamageResult(input: StandardDamageResultSpliceOpti
       const duration = Math.max(1, binding.durationTicks ?? actorSeq.frames[frameIndex].durationTicks ?? 1);
       actorDurations.push(duration);
       out.push({
-        ...frameCueBase(tick, 0, sourceEvent),
+        ...frameCueBase(tick, 0, meta),
         cue: {
           type: 'ROM_PHYSICAL_FRAME',
           tick,
@@ -142,7 +151,7 @@ export function spliceStandardDamageResult(input: StandardDamageResultSpliceOpti
   const waitFrame = Math.min(2, actorDurations.length);
   const targetStartTick = branchTick + actorDurations.slice(0, waitFrame).reduce((sum, d) => sum + d, 0);
   out.push({
-    ...frameCueBase(branchTick, 0, sourceEvent),
+    ...frameCueBase(branchTick, 0, meta),
     cue: { type: 'WAIT_ANIMATION_FRAME', tick: branchTick, slot: 0, frame: waitFrame },
   });
 
@@ -156,7 +165,7 @@ export function spliceStandardDamageResult(input: StandardDamageResultSpliceOpti
     const frames = coreSeq?.frames ?? [];
     if (frames.length === 0) continue;
     out.push({
-      ...frameCueBase(cursor, 1, sourceEvent),
+      ...frameCueBase(cursor, 1, meta),
       cue: {
         type: 'ANIMATION_START',
         tick: cursor,
@@ -180,7 +189,7 @@ export function spliceStandardDamageResult(input: StandardDamageResultSpliceOpti
       });
       const resolved = binding?.source === 'ROM_PHYSICAL' ? binding : null;
       out.push({
-        ...frameCueBase(cursor, 1, sourceEvent),
+        ...frameCueBase(cursor, 1, meta),
         cue: {
           type: 'ROM_PHYSICAL_FRAME',
           tick: cursor,
@@ -218,11 +227,11 @@ export function spliceStandardDamageResult(input: StandardDamageResultSpliceOpti
 
   // ── Cleanup anclado al final visual real (P0.13) ──
   const endTick = Math.max(actorEndTick, cursor);
-  out.push({ ...frameCueBase(endTick, 0, sourceEvent), cue: { type: 'APPLY_FRAME_DELTA', tick: endTick, slot: 0 } });
-  out.push({ ...frameCueBase(endTick, 0, sourceEvent), cue: { type: 'ACTION_OBJECT_STOP', tick: endTick, slot: 0 } });
-  out.push({ ...frameCueBase(endTick, 1, sourceEvent), cue: { type: 'ACTION_OBJECT_STOP', tick: endTick, slot: 1 } });
+  out.push({ ...frameCueBase(endTick, 0, meta), cue: { type: 'APPLY_FRAME_DELTA', tick: endTick, slot: 0 } });
+  out.push({ ...frameCueBase(endTick, 0, meta), cue: { type: 'ACTION_OBJECT_STOP', tick: endTick, slot: 0 } });
+  out.push({ ...frameCueBase(endTick, 1, meta), cue: { type: 'ACTION_OBJECT_STOP', tick: endTick, slot: 1 } });
   out.push({
-    ...frameCueBase(endTick, 0, sourceEvent),
+    ...frameCueBase(endTick, 0, meta),
     cue: { type: 'SCENE_LOAD', tick: endTick, vramLoad: '$8E00', mode: 'RESTORE_TACTICAL' },
   });
 
