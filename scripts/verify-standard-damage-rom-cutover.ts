@@ -272,7 +272,7 @@ const battleScreenSource = readFileSync('src/main.tsx', 'utf8');
 check('adapter:0 Math.random', !/Math\.random\s*\(/.test(adapterSource + cutoverSource + compilerSource));
 check('adapter:0 cardId switch for cutover', !/switch\s*\([^)]*card/i.test(cutoverSource) && !/card\.id\s*===/.test(cutoverSource));
 check('adapter:0 damage calculation authority', !/calculateDamage|applyDamage|damageReducer|accuracyRoll|resolveAccuracy|rngNext/.test(cutoverSource));
-check('production owner:BattleScreen uses focused Runtime film', battleScreenSource.includes('latestStandardDamageRuntimeCutover(runtimeResult.log.entries'));
+check('production owner:BattleScreen uses focused Runtime film', /latestStandardDamageRuntimeCutover\(\s*runtimeResult\.log\.entries/.test(battleScreenSource));
 check('production owner:ROM completion releases control', battleScreenSource.includes('if (romOwnsCompletion) finishRomCinematic()'));
 check('production owner:completion cleanup restores DOM boundary', battleScreenSource.includes("completionOwnerRef.current = 'DOM'")
   && battleScreenSource.includes('romAdapterRef.current = null;'));

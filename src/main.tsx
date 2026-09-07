@@ -1501,7 +1501,13 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, pla
     // fallback DOM hasta cerrar por separado ramas y efectos físicos.
     const actorFormId = side === 'player' ? activePlayerFormId : activeEnemyFormId;
     const runtimeStandardDamage = pixiPres && runtimeResult && !continuingRuntimeStage
-      ? latestStandardDamageRuntimeCutover(runtimeResult.log.entries, side, card, actorFormId)
+      ? latestStandardDamageRuntimeCutover(
+          runtimeResult.log.entries,
+          side,
+          card,
+          actorFormId,
+          side === 'player' ? activeEnemyFormId : activePlayerFormId,
+        )
       : null;
     const cardRomRoute = pixiPres && !runtimeStandardDamage && !continuingRuntimeStage
       ? romPresentationTimelineForCard(card, side, actorFormId)
@@ -2627,7 +2633,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, pla
     before: { playerHp: number; enemyHp: number; transformedForm: string | null },
   ) => {
     const cutover = result.ok && pixiPresRef.current
-      ? latestStandardDamageRuntimeCutover(result.log.entries, 'player', card, activePlayerFormId)
+      ? latestStandardDamageRuntimeCutover(result.log.entries, 'player', card, activePlayerFormId, activeEnemyFormId)
       : null;
     const projection = cutover && result.ok
       ? createDamageVisualProjection(cutover, 'enemy', before.enemyHp, result.state.enemy.hp)
@@ -3056,7 +3062,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, pla
   const resolveEnemyStandardDamageViaEngine = (card: CardDef) => {
     const beforeHp = player.hp;
     const res = rtApi.runtime.resolveCard('enemy', card);
-    const cutover = latestStandardDamageRuntimeCutover(res.log.entries, 'enemy', card, activeEnemyFormId);
+    const cutover = latestStandardDamageRuntimeCutover(res.log.entries, 'enemy', card, activeEnemyFormId, activePlayerFormId);
     const projection = cutover
       ? createDamageVisualProjection(cutover, 'player', beforeHp, res.state.player.hp)
       : null;

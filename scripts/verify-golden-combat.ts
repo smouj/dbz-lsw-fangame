@@ -38,6 +38,7 @@ import { romPresentationTimelineForCard } from '../src/battle/romPresentationFor
 import { stageWindowsTicks } from '../src/config/gameplay.config';
 import { STAGE_PREP_TICKS } from '../src/battle/engine/clock/clock';
 import { animationResourceById } from '../src/battle/animationResources';
+import { standardDamageResultPhysical } from '../src/battle/romStandardDamageResultPhysical';
 import { DEFENSE_ROM_RULES, RomResolutionMode, semanticOutcomeForCA53 } from '../src/battle/engine/rom/romDescriptors';
 import {
   CHARA_SWITCH_COMMIT_OFFSET,
@@ -115,8 +116,9 @@ function assertRomCompletionContract(
   side: 'player' | 'enemy',
   card: CardDef,
   actorFormId: string,
+  targetFormId?: string | null,
 ): void {
-  const cutover = latestStandardDamageRuntimeCutover(result.log.entries, side, card, actorFormId);
+  const cutover = latestStandardDamageRuntimeCutover(result.log.entries, side, card, actorFormId, targetFormId);
   check(`${label}: cutover runtime presente sobre el DispatchResult (romOwnsCompletion se activa)`,
     !!cutover, 'cutover=null — el call-site no recibiría ruta ROM de completion');
   if (!cutover) return;
@@ -316,18 +318,26 @@ function runStandardDamage(cardId: number, label: string, animResourceHex: numbe
   assertRomRouting(label, rt, `rom-card-${cardId}`);
   const entries = rt.timeline.entries.filter(en => (en.profileId ?? '').startsWith(`rom-card-${cardId}`));
   const starts = entries.filter(en => en.cue.type === 'ANIMATION_START').map(en => en.cue as { sequence?: number | null; slot?: number });
-  check(`${label}: doble track físico ROM seq0/slot0 → seq1/slot1`,
-    starts.length === 2 && starts[0]?.sequence === 0 && starts[0]?.slot === 0 && starts[1]?.sequence === 1 && starts[1]?.slot === 1,
+  // ROM macros $2F/$30/$31 (Bank30): la seq1 del actor corre en slot0 (WAIT_FRAME 2);
+  // el target (slot1) reproduce sus secuencias Bank61 fijas ($0D/$19 en HIT).
+  const targetStarts = starts.filter(st => st.slot === 1);
+  check(`${label}: tracks ROM seq0/slot0 → seq1/slot0 + target Bank61 en slot1 (macros $2F/$30/$31)`,
+    starts.length === 4 && starts[0]?.sequence === 0 && starts[0]?.slot === 0
+      && starts[1]?.sequence === 1 && starts[1]?.slot === 0
+      && targetStarts.length === 2 && targetStarts.every(st => st.resource !== undefined),
     JSON.stringify(starts));
   const physical = entries.filter(en => en.cue.type === 'ROM_PHYSICAL_FRAME');
-  const expectedFrames = (res?.sequences[0]?.frames.length ?? 0) + (res?.sequences[1]?.frames.length ?? 0);
-  check(`${label}: película física completa (ambas secuencias, sin attack_fwd)`,
+  const branchTargetFrames = standardDamageResultPhysical('HIT').target.reduce((sum, seq) => sum + seq.frameCount, 0);
+  const expectedFrames = (res?.sequences[0]?.frames.length ?? 0)
+    + (res?.sequences[1]?.frames.length ?? 0)
+    + branchTargetFrames;
+  check(`${label}: película física completa (seq0+seq1 actor + rama Bank61 target, sin attack_fwd)`,
     physical.length === expectedFrames && physical.every(en => (en.cue as { source?: string }).source === 'ROM_PHYSICAL'),
     `physical=${physical.length} expected=${expectedFrames}`);
   // Root C — completion ownership ROM del JUGADOR (wiring real 62001cc1:
   // presentRuntimeCard pasa el DispatchResult como 5º arg). El film compilado
   // debe ser alcanzable en el reloj del Runtime con retorno al tick ROM.
-  assertRomCompletionContract(label, rt, r, 'player', getCard(cardId) as CardDef, 'goku_base');
+  assertRomCompletionContract(label, rt, r, 'player', getCard(cardId) as CardDef, 'goku_base', 'piccolo_base');
   const resultStart = entries.find(en => en.cue.type === 'ANIMATION_START' && (en.cue as { sequence?: number }).sequence === 1);
   const stops = entries.filter(en => en.cue.type === 'ACTION_OBJECT_STOP');
   const restore = entries.find(en => en.cue.type === 'SCENE_LOAD' && (en.cue as { mode?: string }).mode === 'RESTORE_TACTICAL');
@@ -515,7 +525,7 @@ function runGuard(): BattleRuntime {
   check('guard: 0 cues UNHANDLED', unhandled.length === 0, unhandled.map((u) => u.type).join(', '));
   // Root C — completion ownership ROM del RIVAL (wiring nuevo: la resolución
   // ocurre en el commit y su resultado alimenta romOwnsCompletion en vivo).
-  assertRomCompletionContract('guard(rival-$0A)', rt, res, 'enemy', getCard(6) as CardDef, 'piccolo_base');
+  assertRomCompletionContract('guard(rival-$0A)', rt, res, 'enemy', getCard(6) as CardDef, 'piccolo_base', 'goku_base');
   // Terminal defensivo: END_EXCHANGE (ex0→1) + phase command → ATTACK_CHOICE.
   const ex = rt.dispatch({ type: 'END_EXCHANGE' } as BattleCommand);
   rt.state = { ...rt.state, phase: 'command' as never };

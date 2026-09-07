@@ -20,6 +20,7 @@ import {
   type RomPresentationProfile,
 } from './romPresentationProfiles';
 import { withStaticDefenderEntrance } from './staticActionVisibility';
+import { spliceStandardDamageResult } from './standardDamageResultSplice';
 
 export const STANDARD_DAMAGE_ROM_HANDLER = 0x0a;
 
@@ -89,6 +90,7 @@ export function compileStandardDamageRuntimeCutover(
   actionStartedIndex: number,
   env: BattleEventEnvelope & { event: { type: 'ACTION_STARTED' } },
   actorFormId?: string | null,
+  targetFormId?: string | null,
 ): StandardDamageRuntimeCutover | null {
   const resolved = standardDamageProfileForAction(env.event.action);
   if (!resolved) return null;
@@ -104,7 +106,21 @@ export function compileStandardDamageRuntimeCutover(
     selectedResultFamily: outcome.family,
     selectedResultSourceEvent: outcome.sourceEvent,
   });
-  const timeline = withStaticDefenderEntrance(compiled.timeline, env.event.action, env.event.side);
+  // P0 ROM PRESENTATION: con la familia resuelta (HIT/MISS/SPECIAL_DEFENSE),
+  // la pelicula consume los macros $2F/$30/$31 (actor seq1 + target Bank61)
+  // en vez de la cola generica sin rama. El target se resuelve con el form del
+  // DEFENSOR (targetFormId) — jamas con el form del actor.
+  const animResource = resolved.profile.dependencies.animationResource;
+  const spliced = outcome.family && animResource != null
+    ? spliceStandardDamageResult({
+        timeline: compiled.timeline,
+        actorAnimationResource: animResource,
+        branch: outcome.family as 'HIT' | 'MISS' | 'SPECIAL_DEFENSE',
+        actorFormId: actorFormId ?? null,
+        targetFormId: targetFormId ?? null,
+      })
+    : compiled.timeline;
+  const timeline = withStaticDefenderEntrance(spliced, env.event.action, env.event.side);
 
   return {
     actionId: `${env.sequence}:${env.event.side}:${resolved.card.id}`,
@@ -122,6 +138,7 @@ export function latestStandardDamageRuntimeCutover(
   actorSide: BattleSide,
   card: CardDef,
   actorFormId?: string | null,
+  targetFormId?: string | null,
 ): StandardDamageRuntimeCutover | null {
   for (let index = events.length - 1; index >= 0; index--) {
     const env = events[index];
@@ -132,6 +149,7 @@ export function latestStandardDamageRuntimeCutover(
       index,
       env as BattleEventEnvelope & { event: { type: 'ACTION_STARTED' } },
       actorFormId,
+      targetFormId,
     );
   }
   return null;

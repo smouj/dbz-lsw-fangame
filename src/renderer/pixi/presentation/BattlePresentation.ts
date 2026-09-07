@@ -87,8 +87,22 @@ export interface BattlePresentation {
    */
   applyFrameOffset(offsetX: number, offsetY: number, slot?: 0 | 1): void;
 
-  /** Consume ROM_PHYSICAL_FRAME per slot for SPECIAL_HANDLER sequences (Tail, V-Ball, Purple Comet, P.Comet Z). */
+  /**
+   * P0 ANIMATION OWNERSHIP — Declara la secuencia ROM de un ActionObject.
+   * Los slots se mapean por ROL (slot 0 = actor, slot 1 = target), igual que
+   * moveActionObject/setActionObjectPosition/applyFrameOffset: un mapping por
+   * lado FIJO (slot0→left) rompe las acciones del enemigo (el actor es right).
+   * Solo registra el track: NUNCA arranca playback ni cambia visibilidad.
+   * (SPECIAL_HANDLER multi-slot: Tail, V-Ball, Purple Comet, P.Comet Z.)
+   */
   setRomSequenceForSlot(slot: 0 | 1, resource: number, sequence: number): void;
+
+  /**
+   * P0 ANIMATION OWNERSHIP — Detiene el track del ActionObject (ROM $08).
+   * Congela el frame actual y desactiva el avance (playback off). Un STOP no
+   * oculta por sí mismo: la visibilidad la gobierna la siguiente cue/escena.
+   */
+  stopActionObject(slot: 0 | 1): void;
 
   /**
    * P0 SCENE-CAMERA — Inicia el movimiento ROM discreto del actor.

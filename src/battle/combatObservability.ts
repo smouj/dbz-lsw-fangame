@@ -76,9 +76,12 @@ const VISIBLE_CUES = new Set<PresentationCue['type']>([
   'ANIMATION_START',
   // DEFENSE_FX: el adapter la consume con pose visible (case propio que
   // intercede ANTES del ruteo DISPLAY — guard/evade/idle por resultado CA53).
+  // ACTION_OBJECT_STOP (ROM $08): el adapter la consume con stopActionObject
+  // (freeze del track — P0 animation ownership), no como trace no-op.
   // Espejo exacto: si el case del adapter cambiara, este set diverge y el
   // verifier lo detecta.
   'DEFENSE_FX',
+  'ACTION_OBJECT_STOP',
 ]);
 
 /** Cues de display Support/Defense → RomDisplayPresenter. */
@@ -114,7 +117,6 @@ const TRACE_CUES = new Set<PresentationCue['type']>([
   'ACTION_OBJECT_DRAW_ORDER',
   'ACTION_OBJECT_FRAME',
   'ACTION_OBJECT_FRAME_OFFSET',
-  'ACTION_OBJECT_STOP',
   'MULTI_ACTOR_SYNC',
   'FIGHTER_POSITION',
   'AURA',

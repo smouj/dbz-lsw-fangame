@@ -69,6 +69,7 @@ function stubPresentation(): BattlePresentation {
     returnToField: () => { calls.push('field'); },
     sync: (_t: number) => { calls.push('sync'); },
     setRomSequenceForSlot: (_slot: 0 | 1, _resource: number, _sequence: number) => { calls.push('rom-seq'); },
+    stopActionObject: (_slot: 0 | 1) => { calls.push('stop-object'); },
     setPhysicalFrameForSlot: (_slot: 0 | 1, _cue: Extract<import('../src/battle/engine/presentation/PresentationCue').PresentationCue, { type: 'ROM_PHYSICAL_FRAME' }>) => { calls.push('rom-frame'); },
     applyFrameOffset: (_x: number, _y: number, _slot?: 0 | 1) => { calls.push('offset'); },
   };
