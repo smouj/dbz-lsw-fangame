@@ -4539,12 +4539,16 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
    5.2s desmonta. Ambient: float de retratos + pulso dorado del VS. ═══ */
 .battle-intro {
   position: fixed; inset: 0; z-index: 120;
-  /* fondo cálido oscuro (adiós azul): carbón con brillo ámbar sutil */
+  /* El plano VS conserva el ámbar ROM, con energía de equipo contenida a
+     cada lado para que PLAYER y ENEMY se lean antes de que entren los retratos. */
   background:
+    radial-gradient(ellipse at 11% 50%, rgba(43, 121, 183, .18) 0%, transparent 31%),
+    radial-gradient(ellipse at 89% 50%, rgba(181, 65, 49, .18) 0%, transparent 31%),
     radial-gradient(ellipse at 50% 42%, rgba(120,80,36,.20) 0%, transparent 55%),
     linear-gradient(180deg, #14120f 0%, #1a1712 48%, #0d0b09 100%);
   display: flex; align-items: center; justify-content: center;
   overflow: hidden;
+  container-type: size;
   animation: intro-bg-in .45s ease both;
 }
 @keyframes intro-bg-in { from { opacity: 0; } to { opacity: 1; } }
@@ -4555,6 +4559,7 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
     repeating-linear-gradient(0deg, rgba(255,255,255,.025) 0 1px, transparent 1px 3px),
     repeating-linear-gradient(90deg, rgba(255,255,255,.016) 0 1px, transparent 1px 4px);
   pointer-events: none;
+  z-index: 0;
 }
 /* banda horizontal de energía dorada detrás del VS */
 .battle-intro::after {
@@ -4564,17 +4569,32 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
     linear-gradient(90deg, transparent 0%, rgba(230,180,90,.09) 22%, rgba(255,214,130,.13) 50%, rgba(230,180,90,.09) 78%, transparent 100%),
     repeating-linear-gradient(0deg, rgba(255,214,130,.045) 0 2px, transparent 2px 6px);
   pointer-events: none;
+  z-index: 1;
 }
 .intro-fighter {
   position: absolute; top: 50%;
   transform: translateY(-50%);
   display: flex; flex-direction: column; align-items: center; gap: 12px;
+  z-index: 3;
 }
-.intro-left { left: clamp(64px, 10cqw, 170px); animation: intro-slide-left .55s cubic-bezier(.2,.8,.3,1) .25s both; }
-.intro-right { right: clamp(64px, 10cqw, 170px); animation: intro-slide-right .55s cubic-bezier(.2,.8,.3,1) .25s both; }
-.intro-team .intro-fighter:nth-child(2) { margin-top: 104px; }
-.intro-team-left .intro-fighter:nth-child(2) { left: calc(clamp(64px, 10cqw, 170px) + 88px); }
-.intro-team-right .intro-fighter:nth-child(2) { right: calc(clamp(64px, 10cqw, 170px) + 88px); }
+.intro-left { left: clamp(32px, 8cqw, 140px); animation: intro-slide-left .55s cubic-bezier(.2,.8,.3,1) .25s both; }
+.intro-right { right: clamp(32px, 8cqw, 140px); animation: intro-slide-right .55s cubic-bezier(.2,.8,.3,1) .25s both; }
+/* En 2v2 el segundo luchador es una reserva escalonada, no una copia de
+   la composición 1v1. Se conservan módulos 32×24 a ×3/×4 para el pixel art. */
+.intro-team:has(> .intro-fighter:nth-child(2)) .intro-portrait img {
+  width: clamp(96px, 13cqw, 128px);
+  height: auto;
+  aspect-ratio: 4 / 3;
+}
+.intro-team:has(> .intro-fighter:nth-child(2)) .intro-fighter:nth-child(2) {
+  margin-top: clamp(54px, 7cqw, 78px);
+}
+.intro-team-left:has(> .intro-fighter:nth-child(2)) .intro-fighter:nth-child(2) {
+  left: calc(clamp(32px, 8cqw, 140px) + clamp(42px, 6cqw, 72px));
+}
+.intro-team-right:has(> .intro-fighter:nth-child(2)) .intro-fighter:nth-child(2) {
+  right: calc(clamp(32px, 8cqw, 140px) + clamp(42px, 6cqw, 72px));
+}
 .intro-team::before {
   position: absolute;
   top: calc(50% - 112px);
@@ -4584,11 +4604,12 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   font: 700 10px/1 var(--fpx, monospace);
   letter-spacing: .14em;
   pointer-events: none;
+  z-index: 4;
 }
 .intro-team-left { color: #6cb7e8; }
-.intro-team-left::before { content: 'PLAYER'; left: clamp(64px, 10cqw, 170px); }
+.intro-team-left::before { content: 'PLAYER'; left: clamp(32px, 8cqw, 140px); }
 .intro-team-right { color: #e08a6a; }
-.intro-team-right::before { content: 'ENEMY'; right: clamp(64px, 10cqw, 170px); }
+.intro-team-right::before { content: 'ENEMY'; right: clamp(32px, 8cqw, 140px); }
 /* ENTRADA CINEMATOGRÁFICA ÚNICA: los sprites vienen DESDE FUERA de la
    pantalla (±42vw) hasta su posición — no hay otra animación de entrada
    en la partida (sin READY/FIGHT ni nombres) */
@@ -4598,7 +4619,7 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   display: flex; align-items: center; justify-content: center;
   background: #14120f;
   border: 3px solid currentColor;
-  box-shadow: 5px 5px 0 #000;
+  box-shadow: 5px 5px 0 #000, 0 0 18px color-mix(in srgb, currentColor 25%, transparent);
   padding: 7px;
   animation: intro-float 2.6s ease-in-out 1.4s infinite alternate;
 }
@@ -4619,12 +4640,15 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   animation: intro-vs-pop .55s cubic-bezier(.2,1.5,.4,1) .7s both,
              intro-vs-glow 2s ease-in-out 1.3s infinite alternate;
   transform-origin: center;
+  position: relative;
+  z-index: 4;
 }
 @keyframes intro-vs-pop { from { transform: scale(3.2) rotate(5deg); opacity: 0; } to { transform: scale(1) rotate(0); opacity: 1; } }
 @keyframes intro-vs-glow { from { filter: drop-shadow(0 0 4px rgba(255,214,130,.25)); } to { filter: drop-shadow(0 0 20px rgba(255,200,90,.55)); } }
 .intro-flash {
   position: absolute; inset: 0; background: #fff; opacity: 0; pointer-events: none;
   animation: intro-flash-anim .4s ease 1.5s both;
+  z-index: 5;
 }
 @keyframes intro-flash-anim { 0% { opacity: 0; } 25% { opacity: 1; } 100% { opacity: 0; } }
 
