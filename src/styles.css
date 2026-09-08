@@ -1478,6 +1478,27 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   transition: none;
 }
 
+/* ── ROM-correct scene visibility: planos cinematográficos ──
+ *  ACTION_SOLO (attacker step): solo el ATACANTE visible; el DEFENSOR se oculta.
+ *  El sprite grande del card-fx ya muestra al atacante correctamente.
+ *  En ACTION_DUEL/IMPACT (travel/target): ambos visibles (el defensor entra).
+ *  En FIELD (sin cardFx): ambos visibles (vista táctica).
+ *  Mapeo: ActionScene.applySceneVisibility() — misma lógica que Pixi. */
+.battlefield-fighters.hide-player .fighter-container.player {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity .28s cubic-bezier(.2,.8,.3,1), visibility 0s .28s;
+}
+.battlefield-fighters.hide-enemy .fighter-container.enemy {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity .28s cubic-bezier(.2,.8,.3,1), visibility 0s .28s;
+}
+/* Cuando sale de ACTION_SOLO (travel/target), el sprite reaparece suavemente */
+.battlefield-fighters:not(.hide-player):not(.hide-enemy) .fighter-container {
+  transition: opacity .2s ease, transform .12s ease, filter .12s ease;
+}
+
 .fighter-container {
   display: flex;
   flex-direction: column;

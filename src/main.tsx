@@ -3095,7 +3095,20 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, pla
   const battleBgUrl = viewMode === 'ACTION' ? scenario.actionBackground
     : viewMode === 'SPECIAL_ACTION' ? SPECIAL_ACTION_BACKGROUND
     : scenario.overviewBackground;
+  // ── ROM-correct scene visibility ──
+  // ACTION_SOLO (attacker step): solo el atacante visible, el defensor OCULTO
+  // ACTION_DUEL/IMPACT (travel/target): ambos visibles
+  // FIELD (sin cardFx): ambos visibles
+  // DEFENDER_ACTION no existe en DOM cardFx — las defensas usan el mismo flujo
   const suppressFieldActors = !!cardFx;
+  // En ACTION_SOLO (attacker step), ocultar el sprite del defensor del campo
+  // (el sprite grande del card-fx ya lo muestra correctamente)
+  const hideFieldTarget = cardFx?.step === 'attacker';
+  // Si el atacante es el enemigo, en ACTION_SOLO ocultamos el sprite del jugador;
+  // si es el jugador, ocultamos el del enemigo. Mapeo ROM: ACTION_SOLO solo
+  // muestra al actor.
+  const hideFieldPlayer = hideFieldTarget && cardFx?.side === 'enemy';
+  const hideFieldEnemy  = hideFieldTarget && cardFx?.side === 'player';
   const pixiPresentationActive = isPixiField() && pixiPresentationReady;
   const phaseShortLabel =
     phase === 'command' || phase === 'cardSelect' || phase === 'limitSelect' ? 'ATTACK' :
@@ -3440,7 +3453,7 @@ function BattleScreen({ playerFormId, enemyFormId, storyChapter, playerDeck, pla
             se hace con fade/scale suave por CSS (clase .field-action), no desmontando
             los sprites de golpe (2026-08-12: antes suppressFieldActors los eliminaba
             al instante y el cambio de vista era brusco). */}
-        <div className={`battlefield-fighters ${suppressFieldActors ? 'suppressed' : ''}`}>
+        <div className={`battlefield-fighters ${suppressFieldActors ? 'suppressed' : ''} ${hideFieldPlayer ? 'hide-player' : ''} ${hideFieldEnemy ? 'hide-enemy' : ''}`}>
           {/* Anchors por lado: LEFT (jugador) y RIGHT (enemigo) usan X
               reflejadas — BACK apunta al borde propio de cada lado (spec) */}
           <div ref={playerRef} className={`fighter-container player ${POSITION_DATA[player.battlePos].altitude.toLowerCase()} ${POSITION_DATA[player.battlePos].depth.toLowerCase()} ${phase === 'stageInput' ? (qteFrozen ? 'qte-frozen' : qteIsDir ? 'qte-lunge' : 'qte-idle') : ''}`}
