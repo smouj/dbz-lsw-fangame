@@ -569,12 +569,13 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
    MENÚ PRINCIPAL
    ═══════════════════════════════════════════════════════════ */
 
-.screen-enter { animation: screen-in 0.18s ease-out both; }
-/* Transición de página: corte tipo manga (spec §15) */
-.page-screen { animation: page-in 0.2s ease-out both; }
+.screen-enter { animation: screen-in .32s cubic-bezier(.2,.8,.3,1) both; }
+/* Transición de página: GBC feel — fade-in suave con ligero ascenso,
+   más pausado que un snap instantáneo, menos que un fade completo */
+.page-screen { animation: page-in .28s cubic-bezier(.2,.8,.3,1) both; }
 @keyframes screen-in {
-  from { opacity: 0; transform: translateY(10px) scale(0.995); }
-  to { opacity: 1; transform: translateY(0) scale(1); }
+  from { opacity: 0; transform: translateY(12px) scale(.99); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
 }
 
 .menu-screen {
@@ -1055,7 +1056,7 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 /* ─── HUD Superior (ventana GBC) ─── */
 
 .hud-top {
-  animation: hud-in 0.32s steps(3, end) both;
+  animation: hud-in .38s cubic-bezier(.2,.8,.3,1) both;
   display: flex;
   justify-content: space-between;
   align-items: stretch;
@@ -1477,6 +1478,27 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   transition: none;
 }
 
+/* ── ROM-correct scene visibility: planos cinematográficos ──
+ *  ACTION_SOLO (attacker step): solo el ATACANTE visible; el DEFENSOR se oculta.
+ *  El sprite grande del card-fx ya muestra al atacante correctamente.
+ *  En ACTION_DUEL/IMPACT (travel/target): ambos visibles (el defensor entra).
+ *  En FIELD (sin cardFx): ambos visibles (vista táctica).
+ *  Mapeo: ActionScene.applySceneVisibility() — misma lógica que Pixi. */
+.battlefield-fighters.hide-player .fighter-container.player {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity .28s cubic-bezier(.2,.8,.3,1), visibility 0s .28s;
+}
+.battlefield-fighters.hide-enemy .fighter-container.enemy {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity .28s cubic-bezier(.2,.8,.3,1), visibility 0s .28s;
+}
+/* Cuando sale de ACTION_SOLO (travel/target), el sprite reaparece suavemente */
+.battlefield-fighters:not(.hide-player):not(.hide-enemy) .fighter-container {
+  transition: opacity .2s ease, transform .12s ease, filter .12s ease;
+}
+
 .fighter-container {
   display: flex;
   flex-direction: column;
@@ -1599,7 +1621,8 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   border-top: 2px solid rgba(246,199,68,.72);
   border-bottom: 2px solid rgba(246,199,68,.72);
   box-shadow: 0 18px 44px rgba(0,0,0,.62), 0 0 24px rgba(247,147,30,.22);
-  animation: phase-cue-in .64s steps(5, end) both;
+  animation: phase-cue-in .5s cubic-bezier(.2,.8,.3,1) both,
+             phase-cue-out .3s ease-in 0.8s both;
 }
 
 .phase-cue-line {
@@ -1637,16 +1660,18 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 }
 
 @keyframes phase-cue-in {
-  0% { opacity: 0; filter: brightness(1.8); }
-  18% { opacity: 1; }
-  76% { opacity: 1; }
-  100% { opacity: 0; filter: brightness(1); }
+  from { opacity: 0; transform: translate(-50%, -50%) scale(1.08); }
+  to   { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+}
+@keyframes phase-cue-out {
+  from { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+  to   { opacity: 0; transform: translate(-50%, -50%) scale(.96); }
 }
 
 /* Entrada del HUD de batalla (tras la intro VS) */
 @keyframes hud-in {
-  from { opacity: 0; transform: translateY(-10px); }
-  to { opacity: 1; transform: translateY(0); }
+  from { opacity: 0; transform: translateY(-12px) scale(.98); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
 }
 
 /* ─── Números de daño ─── */
@@ -1668,11 +1693,11 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 .damage-number.guard { color: var(--def-color); }
 
 @keyframes dmg-float {
-  0% { opacity: 0; transform: translateY(4px) scale(0.5); }
-  12% { opacity: 1; transform: translateY(0) scale(1.5); }
-  30% { opacity: 1; transform: translateY(-10px) scale(1.05); }
-  70% { opacity: 0.9; transform: translateY(-26px) scale(0.95); }
-  100% { opacity: 0; transform: translateY(-44px) scale(0.8); }
+  0%   { opacity: 0; transform: translateY(6px) scale(.4); }
+  10%  { opacity: 1; transform: translateY(-2px) scale(1.4); }
+  28%  { opacity: 1; transform: translateY(-14px) scale(1.05); }
+  65%  { opacity: .85; transform: translateY(-30px) scale(.95); }
+  100% { opacity: 0; transform: translateY(-50px) scale(.75); }
 }
 
 /* ─── Barra de fase ─── */
@@ -1981,19 +2006,19 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   bottom: 8px;
   z-index: 60;
   pointer-events: none;
-  animation: draw-card-fly 0.46s cubic-bezier(.22,.9,.3,1) forwards;
+  animation: draw-card-fly .52s cubic-bezier(.22,.9,.3,1) forwards;
   transform-origin: 50% 50%;
 }
 
 @keyframes draw-card-fly {
   0%   { transform: translateX(120px) translateY(10px) rotateZ(8deg) rotateY(70deg); opacity: 0; }
-  22%  { opacity: 1; }
+  18%  { opacity: 1; }
   100% { transform: translateX(0) translateY(0) rotateZ(0deg) rotateY(0deg); opacity: 1; }
 }
 
 /* la carta interior recibe el drop-in al aterrizar */
 .draw-fx .card {
-  animation: draw-card-land 0.18s ease-out 0.34s both;
+  animation: draw-card-land .22s ease-out .36s both;
 }
 
 /* La carta robada comparte el frame-máscara y el hueco de arte con la mano.
@@ -2010,7 +2035,7 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 }
 
 @keyframes draw-card-land {
-  0%   { transform: translateY(-4px); filter: brightness(1.35) saturate(1.2); }
+  0%   { transform: translateY(-6px); filter: brightness(1.35) saturate(1.2); }
   100% { transform: translateY(0); filter: brightness(1) saturate(1); }
 }
 
@@ -2417,8 +2442,8 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   overflow: hidden;
 }
 @keyframes page-in {
-  from { opacity: 0; transform: translateY(8px); }
-  to { opacity: 1; transform: translateY(0); }
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 .page-header {
@@ -4551,7 +4576,7 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   display: flex; align-items: center; justify-content: center;
   overflow: hidden;
   container-type: size;
-  animation: intro-bg-in .45s ease both;
+  animation: intro-bg-in .65s ease-out both;
 }
 @keyframes intro-bg-in { from { opacity: 0; } to { opacity: 1; } }
 /* textura GBC sutil: dither/scanlines estáticos */
@@ -4581,8 +4606,8 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   display: flex; flex-direction: column; align-items: center; gap: 12px;
   z-index: 3;
 }
-.intro-left { left: clamp(32px, 8cqw, 140px); animation: intro-slide-left .55s cubic-bezier(.2,.8,.3,1) .25s both; }
-.intro-right { right: clamp(32px, 8cqw, 140px); animation: intro-slide-right .55s cubic-bezier(.2,.8,.3,1) .25s both; }
+.intro-left { left: clamp(32px, 8cqw, 140px); animation: intro-slide-left .6s cubic-bezier(.2,.8,.3,1) .35s both; }
+.intro-right { right: clamp(32px, 8cqw, 140px); animation: intro-slide-right .6s cubic-bezier(.2,.8,.3,1) .35s both; }
 /* En 2v2 hay dos plazas independientes por equipo: ninguna caja puede
    invadir la otra ni el VS. Se conservan módulos 32×24 a ×3/×4. */
 .intro-team:has(> .intro-fighter:nth-child(2)) {
@@ -4617,8 +4642,8 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 /* ENTRADA CINEMATOGRÁFICA ÚNICA: los sprites vienen DESDE FUERA de la
    pantalla (±42vw) hasta su posición — no hay otra animación de entrada
    en la partida (sin READY/FIGHT ni nombres) */
-@keyframes intro-slide-left { from { transform: translateY(-50%) translateX(-42vw); opacity: 0; } to { transform: translateY(-50%) translateX(0); opacity: 1; } }
-@keyframes intro-slide-right { from { transform: translateY(-50%) translateX(42vw); opacity: 0; } to { transform: translateY(-50%) translateX(0); opacity: 1; } }
+@keyframes intro-slide-left { from { transform: translateY(-50%) translateX(-42vw); opacity: 0; } 30% { opacity: 1; } to { transform: translateY(-50%) translateX(0); opacity: 1; } }
+@keyframes intro-slide-right { from { transform: translateY(-50%) translateX(42vw); opacity: 0; } 30% { opacity: 1; } to { transform: translateY(-50%) translateX(0); opacity: 1; } }
 .intro-portrait {
   position: relative;
   display: flex; align-items: center; justify-content: center;
@@ -4626,7 +4651,7 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   border: 3px solid currentColor;
   box-shadow: 5px 5px 0 #000, 0 0 18px color-mix(in srgb, currentColor 25%, transparent);
   padding: 7px;
-  animation: intro-float 2.6s ease-in-out 1.4s infinite alternate;
+  animation: intro-float 2.6s ease-in-out 1.6s infinite alternate;
 }
 .intro-order {
   display: none;
@@ -4660,8 +4685,8 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   color: #f8f4e4;
   text-shadow: 4px 4px 0 #000, -2px 2px 0 #000, 2px -2px 0 #000, -2px -2px 0 #000, 3px 3px 0 #8a3030;
   letter-spacing: .04em;
-  animation: intro-vs-pop .55s cubic-bezier(.2,1.5,.4,1) .7s both,
-             intro-vs-glow 2s ease-in-out 1.3s infinite alternate;
+  animation: intro-vs-pop .6s cubic-bezier(.2,1.5,.4,1) .8s both,
+             intro-vs-glow 2s ease-in-out 1.5s infinite alternate;
   transform-origin: center;
   position: relative;
   z-index: 4;
@@ -4673,7 +4698,7 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   animation: intro-flash-anim .4s ease 1.5s both;
   z-index: 5;
 }
-@keyframes intro-flash-anim { 0% { opacity: 0; } 25% { opacity: 1; } 100% { opacity: 0; } }
+@keyframes intro-flash-anim { 0% { opacity: 0; } 20% { opacity: 1; } 100% { opacity: 0; } }
 
 /* Banner de ROUND (X STRIKES FIRST) con entrada animada */
 /* (eliminado: la fase vive ahora en los chips phase-chip del panel inferior) */
@@ -4760,10 +4785,10 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
   z-index: 9;
   pointer-events: none;
   overflow: hidden;
-  /* Entrada suave de la vista ACTION: fade + leve zoom (no steps bruscos) */
-  animation: fx-scene-in .3s ease-out both;
+  /* Entrada suave de la vista ACTION: fade + leve zoom con cubic-bezier GBC feel */
+  animation: fx-scene-in .36s cubic-bezier(.2,.8,.3,1) both;
 }
-.card-fx.scene-return { animation: fx-scene-out .26s ease-in both; }
+.card-fx.scene-return { animation: fx-scene-out .3s ease-in both; }
 .battle-screen.pixi-presentation-active .card-fx {
   display: none;
 }
@@ -4792,8 +4817,8 @@ img { image-rendering: pixelated; image-rendering: crisp-edges; }
 .card-fx.scene-attacker.enemy .fx-actor { animation: fx-actor-center-enemy .8s ease-out both; }
 .card-fx.scene-travel.player .fx-actor { left: 8vw; animation: fx-actor-hold-player .7s ease both; }
 .card-fx.scene-travel.enemy .fx-actor { right: 8vw; animation: fx-actor-hold-enemy .7s ease both; }
-@keyframes fx-scene-in { from { opacity: 0; filter: brightness(1.2); transform: scale(.985); } to { opacity: 1; filter: brightness(1); transform: scale(1); } }
-@keyframes fx-scene-out { from { opacity: 1; filter: brightness(1); } to { opacity: 0; filter: brightness(.85); } }
+@keyframes fx-scene-in { from { opacity: 0; filter: brightness(1.15); transform: scale(.98); } to { opacity: 1; filter: brightness(1); transform: scale(1); } }
+@keyframes fx-scene-out { from { opacity: 1; filter: brightness(1); } to { opacity: 0; filter: brightness(.8); } }
 @keyframes fx-zoom-in { from { transform: translateY(14px) scale(.94); opacity: 0; } to { transform: translateY(0) scale(1); opacity: 1; } }
 @keyframes fx-actor-center-player {
   0% { left: 8vw; transform: translateX(0) translateY(10px) scale(.9); opacity: 0; }
@@ -5190,7 +5215,7 @@ button:focus-visible, .chapter-node:focus-visible {
   position: relative;
   user-select: none;
   overflow: hidden;
-  transition: opacity .18s ease-out, transform .18s ease-out;
+  transition: opacity .28s cubic-bezier(.2,.8,.3,1), transform .28s cubic-bezier(.2,.8,.3,1);
 }
 
 .scene-exiting { opacity: 0; transform: scale(1.03); }
@@ -5264,9 +5289,9 @@ button:focus-visible, .chapter-node:focus-visible {
   z-index: 3;
   text-align: center;
   text-shadow: 3px 3px 0 #000, -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000;
-  animation: storyTitleIn 1.15s cubic-bezier(.18,.8,.28,1) both;
+  animation: storyTitleIn 1.3s cubic-bezier(.18,.8,.28,1) both;
 }
-.story-panel-title p { animation: storySubIn .85s ease .4s both; }
+.story-panel-title p { animation: storySubIn .9s ease .45s both; }
 @keyframes storyTitleIn {
   from { opacity: 0; transform: scale(1.4); letter-spacing: 18px; filter: blur(3px); }
   55%  { opacity: 1; }
