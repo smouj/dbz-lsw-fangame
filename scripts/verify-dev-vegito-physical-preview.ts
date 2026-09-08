@@ -9,6 +9,14 @@ import { getForm } from '../src/data/roster';
 import { spriteDirFor } from '../src/data/spriteManifest';
 import { romPresentationTimelineForCard } from '../src/battle/romPresentationForCard';
 
+// Portable guard (sibling pattern: verify-dev-physical-sync). The promoted
+// physical PNGs under public/assets/sprites/*/physical are gitignored build
+// output regenerated from the local ROM. CI (clean checkout) only has the
+// committed metadata, so file-existence checks over those PNGs must SKIP
+// unless the strict local exports are present (REQUIRE_ROM_PHYSICAL_EXPORTS=1
+// after npm run gen:rom-runtime-assets / sync:rom-physical-public-assets).
+const REQUIRE_ROM_PHYSICAL_EXPORTS = process.env.REQUIRE_ROM_PHYSICAL_EXPORTS === '1';
+
 let passed = 0;
 let failed = 0;
 function check(name: string, ok: boolean, detail = ''): void {
@@ -45,10 +53,20 @@ const nonPhysical = physical.filter(({ cue }) =>
 check('every displayed Vegito card frame is a promoted ROM physical asset', nonPhysical.length === 0,
   nonPhysical.map(({ card, cue }) => `#${card.id}:${cue.source}:${cue.file ?? 'none'}`).join(', '));
 const vegitoDirectory = spriteDirFor('vegito_ssj');
-const missingFiles = physical.filter(({ cue }) => !vegitoDirectory || !cue.file
-  || !existsSync(join(process.cwd(), 'public/assets/sprites', vegitoDirectory, cue.file)));
-check('every displayed Vegito card frame exists in the public physical corpus', missingFiles.length === 0,
-  missingFiles.map(({ card, cue }) => `#${card.id}:${cue.file ?? 'none'}`).join(', '));
+// Strict file-existence probe over the gitignored public physical PNGs. In a
+// clean checkout (CI) those PNGs are absent by design; only the committed
+// metadata remains, so this block runs only when strict exports are present.
+const physicalPngsPresent = vegitoDirectory
+  && existsSync(join(process.cwd(), 'public/assets/sprites', vegitoDirectory, 'physical'));
+const strictPhysicalExports = REQUIRE_ROM_PHYSICAL_EXPORTS || Boolean(physicalPngsPresent);
+if (!strictPhysicalExports) {
+  console.log('SKIP Vegito public physical PNG presence: physical PNGs are not committed; set REQUIRE_ROM_PHYSICAL_EXPORTS=1 after npm run sync:rom-physical-public-assets for the strict local gate.');
+} else {
+  const missingFiles = physical.filter(({ cue }) => !vegitoDirectory || !cue.file
+    || !existsSync(join(process.cwd(), 'public/assets/sprites', vegitoDirectory, cue.file)));
+  check('every displayed Vegito card frame exists in the public physical corpus', missingFiles.length === 0,
+    missingFiles.map(({ card, cue }) => `#${card.id}:${cue.file ?? 'none'}`).join(', '));
+}
 
 const previewSource = readFileSync(join(process.cwd(), 'src/devtools/AttackPreview.tsx'), 'utf8');
 check('Cards preview has no semantic sprite URL dependency',
